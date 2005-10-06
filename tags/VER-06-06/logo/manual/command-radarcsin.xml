@@ -1,0 +1,31 @@
+<section id="command-radarcsin">
+    <title>RADARCSIN</title>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>RADARCSIN</command> <parameter>num</parameter></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+Outputs the arcsine angle, in radians, of its input.
+See also <link linkend="command-arcsin">ARCSIN</link>.
+</para>
+
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Example</term>
+<listitem>
+    <programlisting><userinput>SHOW (RADARCSIN 1) = PI/2</userinput>
+true</programlisting>
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</section>

@@ -1,0 +1,50 @@
+<section id="command-arc">
+    <title>ARC</title>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>ARC</command> <parameter>angle</parameter> <parameter>radius</parameter></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+ARC does not move the turtle.
+It draws an arc (part of a circle) based on the turtle heading, turtle position and given arguments.
+The arc starts at the rear of the turtle heading and sweeps by the amount of <parameter>angle</parameter>.
+The size is based on the <parameter>radius</parameter> parameter.
+The center-point of the arc will be the turtle's current position.
+</para>
+
+<para>
+If the radius is 360, then ARC will draw an entire circle.
+</para>
+
+<para>
+See also <link linkend="command-arc2">ARC2</link>.
+</para>
+
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Example</term>
+<listitem>
+    <programlisting><userinput>; a 2D example
+ARC 360 100
+ARC 90 50</userinput>
+</programlisting>
+
+    <programlisting><userinput>; a 3D example
+PERSPECTIVE
+REPEAT 36 [RIGHTROLL 10 ARC 90 100]</userinput>
+</programlisting>
+
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</section>

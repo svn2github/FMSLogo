@@ -1,0 +1,33 @@
+<section id="command-arcsin">
+    <title>ARCSIN</title>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>ARCSIN</command> <parameter>num</parameter></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+Outputs the arcsine angle, in degrees, of its input.
+See also <link linkend="command-radarcsin">RADARCSIN</link>.
+</para>
+
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Example</term>
+<listitem>
+    <programlisting><userinput>SHOW ARCSIN 0.5</userinput>
+30</programlisting>
+    <programlisting><userinput>SHOW ARCSIN SIN 45</userinput>
+45</programlisting>
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</section>

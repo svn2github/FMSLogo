@@ -1,0 +1,46 @@
+<section id="command-dribble">
+    <title>DRIBBLE</title>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>DRIBBLE</command> <parameter>filename</parameter></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+Command that creates a new file whose name is the input, like <link linkend="command-openwrite">OPENWRITE</link>, and begins recording in that file everything that is read from the keyboard.
+This writing is in addition to the writing to <link linkend="command-writer">WRITER</link>.
+The intent is to create a transcript of a Logo session, including things like prompt characters and interactions.
+</para>
+
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Example</term>
+<listitem>
+    <programlisting><userinput>DRIBBLE "dummy.fil
+FORWARD 100
+RIGHT 90
+NODRIBBLE
+OPENREAD "dummy.fil
+SETREAD "dummy.fil
+REPEAT 3 [SHOW READLIST]
+</userinput>
+[FORWARD 100]
+[RIGHT 90]
+[NODRIBBLE]
+<userinput>SETREAD []
+CLOSE "dummy.fil
+</userinput>
+
+</programlisting>
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</section>

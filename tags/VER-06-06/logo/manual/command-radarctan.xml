@@ -1,0 +1,33 @@
+<section id="command-radarctan">
+    <title>RADARCTAN</title>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>RADARCTAN</command> <parameter>angle</parameter>
+(<command>RADARCTAN</command> <parameter>x</parameter> <parameter>y</parameter>)</synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+With one input, outputs the arctangent angle of <parameter>num</parameter>, in radians.
+With two inputs, outputs the arctangent angle of <parameter>y</parameter> / <parameter>x</parameter>, in radians.
+See also <link linkend="command-arctan">ARCTAN</link>.
+</para>
+
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Example</term>
+<listitem>
+    <programlisting><userinput>SHOW (RADARCTAN 1) = PI/4</userinput>
+true</programlisting>
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</section>

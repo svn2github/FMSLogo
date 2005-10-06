@@ -1,0 +1,48 @@
+<section id="command-arc2">
+    <title>ARC2</title>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>ARC2</command> <parameter>angle</parameter> <parameter>radius</parameter></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+Moves the turtle along an arc (part of a circle).
+The arc sweeps by the amount of <parameter>angle</parameter>.
+The size of the arc is based on the <parameter>radius</parameter> parameter.
+</para>
+
+<para>
+If the radius is 360, then ARC2 will draw an entire circle.
+</para>
+
+<para>
+See also <link linkend="command-arc">ARC</link>.
+</para>
+
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Example</term>
+<listitem>
+    <programlisting><userinput>; a 2D example
+ARC2 360 100
+ARC2 90 50</userinput>
+</programlisting>
+
+    <programlisting><userinput>; a 3D example
+PERSPECTIVE
+REPEAT 36 [RIGHTROLL 10 ARC2 180 100 ARC2 -180 100]</userinput>
+</programlisting>
+
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</section>
