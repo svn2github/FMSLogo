@@ -1,0 +1,38 @@
+<section id="command-setorientation">
+    <title>SETORIENTATION</title>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>SETORIENTATION</command> <parameter>orientation</parameter></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+Orients the turtle to a new absolute orientation.
+The argument is a list, the [roll pitch heading] in degrees.
+It is important to <link linkend="understand-your-orientation-in-3D">understand your orientation in 3D</link>.
+See also <link linkend="command-orientation">ORIENTATION</link>.
+</para>
+<para>
+This command is designed to run in <link linkend="command-perspective">PERSPECTIVE</link> mode.
+</para>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Example</term>
+<listitem>
+    <programlisting><userinput>SETORIENTATION [180 45 90]
+SHOW ORIENTATION</userinput>
+[180 45 90]
+</programlisting>
+
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</section>

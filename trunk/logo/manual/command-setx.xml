@@ -1,0 +1,35 @@
+<section id="command-setx">
+    <title>SETX</title>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>SETX</command> <parameter>xcor</parameter></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+Moves the turtle along the X axis from its current position to a new absolute X coordinate.
+The argument is the new X coordinate.
+See also <link linkend="command-sety">SETY</link> and <link linkend="command-setz">SETZ</link>.
+</para>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Example</term>
+<listitem>
+    <programlisting><userinput>SETX 100
+SETY 100
+SETX 0
+SETY 0</userinput>
+</programlisting>
+
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</section>

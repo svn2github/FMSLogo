@@ -1,0 +1,34 @@
+<section id="command-readchar">
+    <title>READCHAR</title>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>READCHAR</command>
+<command>RC</command></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+Reads a single character from the read stream and outputs that character as a word. 
+If the read stream is a file, and the end of file is reached, READCHAR outputs the empty list (not the empty word).
+If the read stream is a terminal, echoing is turned off when READCHAR is invoked, and remains off until <link linkend="command-readlist">READLIST</link> or <link linkend="command-readword">READWORD</link> are invoked or a Logo prompt is printed.
+Backslash, vertical bar, and tilde characters have no special meaning in this context.
+</para>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Example</term>
+<listitem>
+    <programlisting><userinput>SHOW READCHAR
+Hello how are you?
+</userinput>H</programlisting>
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</section>
