@@ -64,7 +64,7 @@ Each turtle can be represented as a <link linkend="command-bitmapturtle">BITMAPT
 Note that turtles start at index 0, which is the default turtle.
 Because there is a limit of 1024 turtles, the highest turtle index is 1023.
 All turtles between 0 and the highest turtle ever selected will be "activated", so don't choose turtle 100 and 200 if you only need 2 turtles.
-Click the "Reset" button or executing <link linkend="clearscreen">CLEARSCREEN</link> will select turtle 0 and deactivate all other turtles.
+Click the "Reset" button or executing <link linkend="command-clearscreen">CLEARSCREEN</link> will select turtle 0 and deactivate all other turtles.
 </para>
 
 <para>
@@ -172,6 +172,37 @@ Each time you enter <link linkend="command-perspective">PERSPECTIVE</link> mode 
         &command-pixel;
         &command-scrunch;
 
+   </section>
+
+   <section>
+       <title>Turtle Motion Queries</title>
+        &command-showturtle;
+        &command-hideturtle;
+        &command-clean;
+        &command-clearscreen;
+        &command-wrap;
+        &command-window;
+        &command-fence;
+        &command-perspective;
+        &command-fill;
+        &command-label;
+        &command-setpixel;
+        &command-setlabelfont;
+        &command-labelfont;
+        &command-labelsize;
+        &command-textscreen;
+        &command-fullscreen;
+        &command-splitscreen;
+        &command-setscrunch;
+        &command-refresh;
+        &command-norefresh;
+        &command-zoom;
+        &command-scrollx;
+        &command-scrolly;
+        &command-setfocus;
+        &command-icon;
+        &command-unicon;
+        &command-windowset;
    </section>
 
 </chapter>

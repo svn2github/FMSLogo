@@ -1,0 +1,25 @@
+<section id="command-norefresh">
+    <title>NOREFRESH</title>
+
+<note>NOREFRESH is not supported (or needed) in MSWLogo.</note>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>NOREFRESH</command></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+Tells Logo not to remember the turtle's motions.
+This will make drawing faster, but prevents recovery if the window is overlaid.
+</para>
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</section>

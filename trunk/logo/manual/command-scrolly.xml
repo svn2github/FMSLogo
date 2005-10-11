@@ -1,0 +1,35 @@
+<section id="command-scrolly">
+    <title>SCROLLY</title>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>SCROLLY</command> <parameter>deltay</parameter></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+Scrolls the vertical scrollbar of the "Screen" window by <parameter>deltay</parameter>.
+The argument is the amount to move the scroll position by.
+A positive number scrolls down and negative number scrolls up.
+If <parameter>deltay</parameter> is 0 the scroller will reset to the center position.
+</para>
+
+</listitem>
+</varlistentry>
+
+
+<varlistentry><term>Example</term>
+<listitem>
+    <programlisting><userinput>REPEAT 10 [SCROLLY 10]</userinput>
+</programlisting>
+
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</section>

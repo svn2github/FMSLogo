@@ -1,0 +1,33 @@
+<section id="command-clearscreen">
+    <title>CLEARSCREEN</title>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>CLEARSCREEN</command>
+<command>CS</command></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+Erases the graphics window and sends the turtle to its initial position and heading.
+This is equivalent to executing <link linkend="command-home">HOME</link> and <link linkend="command-clean">CLEAN</link> together.
+</para>
+</listitem>
+</varlistentry>
+
+
+<varlistentry><term>Example</term>
+<listitem>
+    <programlisting><userinput>FORWARD 100
+CLEARSCREEN</userinput>
+</programlisting>
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</section>

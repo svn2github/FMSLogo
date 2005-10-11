@@ -1,0 +1,30 @@
+<section id="command-textscreen">
+    <title>TEXTSCREEN</title>
+
+<note>TEXTSCREEN is not supported in MSWLogo.</note>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>TEXTSCREEN</command>
+<command>TS</command></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+Rearranges the size and position of windows to maximize the space available in the text window (the window used for interaction with Logo).
+</para>
+
+<para>
+Compare this command with <link linkend="command-splitscreen">SPLITSCREEN</link> and <link linkend="command-fullscreen">FULLSCREEN</link>.
+</para>
+
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</section>

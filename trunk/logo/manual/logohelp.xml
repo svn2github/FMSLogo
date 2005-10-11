@@ -227,6 +227,35 @@
   <!ENTITY command-pixel          SYSTEM "command-pixel.xml">
   <!ENTITY command-scrunch        SYSTEM "command-scrunch.xml">
 
+  <!ENTITY command-showturtle     SYSTEM "command-showturtle.xml">
+  <!ENTITY command-hideturtle     SYSTEM "command-hideturtle.xml">
+  <!ENTITY command-clean          SYSTEM "command-clean.xml">
+  <!ENTITY command-clearscreen    SYSTEM "command-clearscreen.xml">
+  <!ENTITY command-wrap           SYSTEM "command-wrap.xml">
+  <!ENTITY command-window         SYSTEM "command-window.xml">
+  <!ENTITY command-fence          SYSTEM "command-fence.xml">
+  <!ENTITY command-perspective    SYSTEM "command-perspective.xml">
+  <!ENTITY command-fill           SYSTEM "command-fill.xml">
+  <!ENTITY command-label          SYSTEM "command-label.xml">
+  <!ENTITY command-setpixel       SYSTEM "command-setpixel.xml">
+  <!ENTITY command-setlabelfont   SYSTEM "command-setlabelfont.xml">
+  <!ENTITY command-labelfont      SYSTEM "command-labelfont.xml">
+  <!ENTITY command-labelsize      SYSTEM "command-labelsize.xml">
+  <!ENTITY command-textscreen     SYSTEM "command-textscreen.xml">
+  <!ENTITY command-fullscreen     SYSTEM "command-fullscreen.xml">
+  <!ENTITY command-splitscreen    SYSTEM "command-splitscreen.xml">
+  <!ENTITY command-setscrunch     SYSTEM "command-setscrunch.xml">
+  <!ENTITY command-refresh        SYSTEM "command-refresh.xml">
+  <!ENTITY command-norefresh      SYSTEM "command-norefresh.xml">
+  <!ENTITY command-zoom           SYSTEM "command-zoom.xml">
+  <!ENTITY command-scrollx        SYSTEM "command-scrollx.xml">
+  <!ENTITY command-scrolly        SYSTEM "command-scrolly.xml">
+  <!ENTITY command-setfocus       SYSTEM "command-setfocus.xml">
+  <!ENTITY command-getfocus       SYSTEM "command-getfocus.xml">
+  <!ENTITY command-icon           SYSTEM "command-icon.xml">
+  <!ENTITY command-unicon         SYSTEM "command-unicon.xml">
+  <!ENTITY command-windowset      SYSTEM "command-windowset.xml">
+
 ]>
 
 <book>
