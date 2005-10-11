@@ -20,7 +20,7 @@ Note the clipboard must have a bitmap in it (or MSWLogo will complain).
 </para>
 
 <para>
-Both <link linkend="command-nobitmapturtle">NOBITMAPTURTLE</link> and <link linkend="clearscreen">CLEARSCREEN</link> will restore the turtle to its normal shape (it does not erase the corresponding bitmap).
+Both <link linkend="command-nobitmapturtle">NOBITMAPTURTLE</link> and <link linkend="command-clearscreen">CLEARSCREEN</link> will restore the turtle to its normal shape (it does not erase the corresponding bitmap).
 </para>
 </listitem>
 </varlistentry>
