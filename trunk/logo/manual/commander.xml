@@ -67,7 +67,7 @@ See also the <link linkend="command-halt">HALT</link> command.</para>
    <section>
       <anchor id="commander-halt" />
       <title>Reset Button</title>
-      <para>The reset button is like the <link linkend="commande-clearscreen">CLEARSCREEN</link> command; it resets the LOGO screen.</para>
+      <para>The reset button is like the <link linkend="command-clearscreen">CLEARSCREEN</link> command; it resets the LOGO screen.</para>
    </section>
 
 
