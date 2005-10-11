@@ -139,7 +139,7 @@ You can compensate for this by increasing your work space (and you're drawing si
 You can also select the pen size with the Logo command <link linkend="command-setpensize">SETPENSIZE</link> and obtain it with the Logo command <link linkend="command-pensize">PENSIZE</link>.</para>
         </section>
 
-        <section>
+        <section id="menu-set-labelfont">
           <title>Set-Label Font Command</title>
           <para>This command allows you to select the font in which the command <link linkend="command-label">LABEL</link> will draw with.
 You can also select the font with the Logo command <link linkend="command-setlabelfont">SETLABELFONT</link> and obtain it with the Logo command <link linkend="command-labelfont">LABELFONT</link>.</para>
@@ -173,7 +173,7 @@ You can also select the screen color with the Logo command <link linkend="comman
       </section>
 
 
-      <section>
+      <section id="menu-zoom">
         <title>Zoom Menu</title>
         <para>The Zoom menu allows you set the zoom factor.
 You can also set the zoom factor with the Logo command <link linkend="command-zoom">ZOOM</link>.</para>
