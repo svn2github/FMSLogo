@@ -331,5 +331,161 @@ When using color-by-index, the index to color mapping is given in the following 
 
    </section>
 
+   <section id="understand-your-orientation-in-3D">
+       <title>Understand Your Orientation in 3D</title>
+
+<para>
+In 2D life is simple:
+<itemizedlist>
+  <listitem>
+    <para>
+      <link linkend="command-heading">HEADING</link> is affected by <link linkend="command-left">LEFT</link>, <link linkend="command-right">RIGHT</link>, and <link linkend="command-setheading">SETHEADING</link>.
+    </para>
+  </listitem>
+</itemizedlist>
+</para>
+
+<para>
+In 3D, (<link linkend="command-perspective">PERSPECTIVE</link>) mode things are bit more complicated:
+
+<itemizedlist>
+  <listitem>
+      <link linkend="command-heading">HEADING</link> is affected by <link linkend="command-left">LEFT</link>, <link linkend="command-right">RIGHT</link>, and <link linkend="command-setheading">SETHEADING</link>.
+  </listitem>
+  <listitem>
+      <link linkend="command-roll">ROLL</link> is affected by <link linkend="command-leftroll">LEFTROLL</link>, <link linkend="command-rightroll">RIGHTROLL</link>, and <link linkend="command-setroll">SETROLL</link>.
+  </listitem>
+  <listitem>
+      <link linkend="command-pitch">PITCH</link> is affected by <link linkend="command-uppitch">UPPITCH</link>, <link linkend="command-downpitch">DOWNPITCH</link>, and <link linkend="command-setpitch">SETPITCH</link>.
+  </listitem>
+</itemizedlist>
+</para>
+
+<para>
+However, there is more to it than that.
+ROLL can also affect your HEADING.
+PITCH can also affect your ROLL, and so on.
+They all interact with one another.
+The easiest way to understand this is with an example:
+
+<programlisting><userinput>PERSPECTIVE
+RIGHT 90
+(SHOW ROUND ROLL ROUND PITCH ROUND HEADING)</userinput>
+0 0 90
+<userinput>CLEARSCREEN
+DOWNPITCH 90
+RIGHTROLL 90
+UPPITCH 90
+(SHOW ROUND ROLL ROUND PITCH ROUND HEADING)</userinput>
+0 0 90
+</programlisting>
+
+</para>
+
+<para>
+The example above only uses rolls and pitches but the heading changed.
+But it is correct, think about the maneuvers I made and where the turtle should be pointing.
+</para>
+
+<para>
+But don't worry, MSWLogo makes it easy, you just need to understand some basic rules so that you don't get lost in 3D space.
+The turtle controls ROLL, PITCH, and HEADING do affect one another but in a certain way which is important.
+The most important is that a change in HEADING (with RIGHT, LEFT or SETHEADING) will not effect your ROLL or PITCH.
+This is what allows you to use a lot of your existing 2D code in 3D.
+</para>
+
+<para>
+There is also another rule to understand, you cannot simply say:
+
+<programlisting><userinput>PERSPECTIVE
+SETROLL 45
+SETPITCH 45
+SETHEADING 45
+(SHOW ROUND ROLL ROUND PITCH ROUND HEADING)</userinput>
+45 45 45
+</programlisting>
+
+And expect to be at an absolute orientation of 45, 45, 45.
+</para>
+
+<para>
+<programlisting><userinput>CLEARSCREEN
+RIGHT 45
+RIGHTROLL 30
+UPPITCH 30
+; Now try to set your self up to 45,45,45 again
+SETROLL 45
+SETPITCH 45
+SETHEADING 45
+(SHOW ROUND ROLL ROUND PITCH ROUND HEADING)</userinput>
+248 29 45
+</programlisting>
+</para>
+
+<para>
+But don't worry there is an easy solution, the <link linkend="command-setorientation">SETORIENTATION</link> command.
+</para>
+
+<para>
+<programlisting><userinput>CLEARSCREEN
+RIGHT 45
+RIGHTROLL 30
+UPPITCH 30
+; Now try to set your self up to 45,45,45 again
+SETORIENTATION [45 45 45]
+(SHOW ROUND ROLL ROUND PITCH ROUND HEADING)</userinput>
+45 45 45
+</programlisting>
+</para>
+
+<para>
+SETORIENTATION understands the interactions between ROLL, PITCH and HEADING.
+All SETORIENTATION knows is that it has to do things in the correct order.
+It basically backs out your current orientation and applies the requested one.
+It does this in a very specific order.
+Your current orientation can also be reported or saved using the <link linkend="command-orientation">ORIENTATION</link> command.
+</para>
+
+<programlisting><userinput>CLEARSCREEN
+RIGHT 45
+SHOW ORIENTATION</userinput>
+[0 0 45]
+<userinput>MAKE "saveit ORIENTATION
+RIGHT 90
+UPPITCH 180
+SETORIENTATION :saveit
+SHOW ORIENTATION</userinput>
+[0 0 45]
+</programlisting>
+
+<para>
+There is also another command that knows about your ORIENTATION and that is <link linkend="command-towardsxyz">TOWARDSXYZ</link>.
+TOWARDSXYZ will output an orientation that is compatible with SETORIENTATION.
+</para>
+
+
+<programlisting><userinput>SETORIENTATION TOWARDSXYZ [100 100 0]
+SHOW ORIENTATION</userinput>
+[0 0 45]
+<userinput>FORWARD DISTANCEXYZ [100 100 0]
+SHOW POSXYZ</userinput>
+[100 100 0]
+</programlisting>
+
+<para>
+Having said all that, you don't really need to think in terms of absolute ORIENTATION.
+ORIENTATION and SETORIENTATION will be used mostly to save, report and restore your ORIENTATION (just like you do with HEADING and SETHEADING in 2D).
+And like explained earlier changes in your heading with RIGHT, LEFT and SETHEADING only effect what they effected in 2D (your HEADING).
+</para>
+
+<para>
+You should also be thinking the same way you do in 2D.
+You don't often worry about your absolute HEADING in 2D, it's most often a turn relative to your current HEADING.
+It's no different in 3D except you have more ways to turn.
+Think like you're an airplane and that you're in the cockpit of the turtle 
+Then decide where you want to go next.
+</para>
+
+   </section>
 
 </chapter>
