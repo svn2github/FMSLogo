@@ -116,13 +116,13 @@ Section "FMSLogo"
   SetOutPath $INSTDIR
   
   ; Put file there
-  File "..\bc5\fmslogo.exe"
-  File "..\bc5\logo.hlp"
-  File "..\bc5\Mcistrwh.hlp"
-  File "..\bc5\fmslogo.txt"
-  File "..\bc5\license.txt"
-  File /r /x CVS "..\bc5\logolib"
-  File /r /x CVS "..\bc5\examples"
+  File "..\src\fmslogo.exe"
+  File "..\src\logo.hlp"
+  File "..\src\Mcistrwh.hlp"
+  File "..\src\fmslogo.txt"
+  File "..\src\license.txt"
+  File /r /x CVS "..\src\logolib"
+  File /r /x CVS "..\src\examples"
 
   ; Write the installation path into the registry
   WriteRegStr HKLM "Software\FMSLogo" "Install_Dir" "$INSTDIR"
