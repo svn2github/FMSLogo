@@ -1,0 +1,26 @@
+TO BITLOADSIZETEST
+  ; this is a regression test for bug #1324580
+  CLEARSCREEN
+  REPEAT 100 [ FORWARD REPCOUNT RIGHT 91 ]
+  PENUP
+  HOME
+  PENDOWN
+
+  ; save the bitmap
+  SETACTIVEAREA [ -100 -100 100 100 ]
+  (BITSAVE "bitmap-test.bmp 1)
+  CLEARSCREEN
+
+  CLEARSCREEN
+  LOCALMAKE "bitmapsize BITLOADSIZE "bitmap-test.bmp
+  IFELSE (AND (ITEM 1 :bitmapsize) = 200 (ITEM 2 :bitmapsize) = 200) [
+    MESSAGEBOX [Pass] [Test Passed]
+  ] [
+    MESSAGEBOX [Fail] (list "Test "Failed :bitmapsize)
+  ]
+END
+
+TO BITMAPTEST
+  BITLOADSIZETEST
+END
+
