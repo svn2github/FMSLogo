@@ -1224,45 +1224,34 @@ BOOL TMainFrame::DumpBitmapFile(LPSTR Name, int MaxBitCount)
 
 BOOL TMainFrame::OpenDIB(int TheFile, DWORD &dwPixelWidth, DWORD &dwPixelHeight)
    {
-   WORD ReadbitCount;
-
-   long longWidth;
-   LPSTR BitsPtr;
-   BITMAPINFO *ReadBitmapInfo;
-
-   HBITMAP BitsHandle;
-   HBITMAP NewBitmapHandle;
-
+   /* get header */
+   _llseek(TheFile, 0, 0);
 
    BITMAPFILEHEADER BitmapFileHeader;
-
-   /* get header */
-
-   _llseek(TheFile, 0, 0);
-   _lread(TheFile, (LPSTR) & BitmapFileHeader, sizeof(BitmapFileHeader));
+   _lread(TheFile, (LPSTR) &BitmapFileHeader, sizeof(BitmapFileHeader));
 
    /* bfOffbits should be equal to BitmapInfoHeader */
 
-   ReadBitmapInfo = (BITMAPINFO *) new char[BitmapFileHeader.bfOffBits - sizeof(BitmapFileHeader)];
+   BITMAPINFO * ReadBitmapInfo = (BITMAPINFO *) new char[BitmapFileHeader.bfOffBits - sizeof(BitmapFileHeader)];
 
    _lread(TheFile, (LPSTR) ReadBitmapInfo, BitmapFileHeader.bfOffBits - sizeof(BitmapFileHeader));
 
+   /* save some typing */
+   DWORD NewPixelWidth = ReadBitmapInfo->bmiHeader.biWidth;
+   DWORD NewPixelHeight = ReadBitmapInfo->bmiHeader.biHeight;
+
    if (dwPixelWidth)
       {
-
       /* do what the spec says */
-
       if (ReadBitmapInfo->bmiHeader.biClrUsed == 0)
          {
          ReadBitmapInfo->bmiHeader.biClrUsed = 1 << ReadBitmapInfo->bmiHeader.biBitCount;
          }
 
       /* only allow bitcount equal to display capability */
-
-      ReadbitCount = ReadBitmapInfo->bmiHeader.biBitCount;
+      WORD ReadbitCount = ReadBitmapInfo->bmiHeader.biBitCount;
 
       /* if palette load up palette from bitmap color table */
-
       if (EnablePalette)
          {
          if (ReadbitCount == 8)
@@ -1284,28 +1273,22 @@ BOOL TMainFrame::OpenDIB(int TheFile, DWORD &dwPixelWidth, DWORD &dwPixelHeight)
                      LoadColor(i * 42, j * 42, k * 42);
             }
          }
-      
-      /* save some typing */
-      DWORD NewPixelWidth = ReadBitmapInfo->bmiHeader.biWidth;
-      DWORD NewPixelHeight = ReadBitmapInfo->bmiHeader.biHeight;
+
 
       /* compute image size if not set */
-
       if (ReadBitmapInfo->bmiHeader.biSizeImage == 0)
          {
-         longWidth = (((NewPixelWidth * ReadbitCount) + 31) / 32) * 4;
+         long longWidth = (((NewPixelWidth * ReadbitCount) + 31) / 32) * 4;
 
          ReadBitmapInfo->bmiHeader.biSizeImage = longWidth * NewPixelHeight;
          }
-      
+
       /* pack and allocate */
-      
-      BitsHandle = (HBITMAP) GlobalAlloc(
+      HBITMAP BitsHandle = (HBITMAP) GlobalAlloc(
          GMEM_MOVEABLE | GMEM_ZEROINIT,
          ReadBitmapInfo->bmiHeader.biSizeImage);
-      
+
       /* sorry */
-      
       if (!BitsHandle)
          {
          delete [] ReadBitmapInfo;
@@ -1327,7 +1310,6 @@ BOOL TMainFrame::OpenDIB(int TheFile, DWORD &dwPixelWidth, DWORD &dwPixelHeight)
       HPALETTE oldPalette2 = NULL;
 
       /* if palette yank it */
-
       if (EnablePalette)
          {
          oldPalette = SelectPalette(memoryDC, ThePalette, FALSE);
@@ -1338,12 +1320,10 @@ BOOL TMainFrame::OpenDIB(int TheFile, DWORD &dwPixelWidth, DWORD &dwPixelHeight)
          }
 
       /* find it */
-
-      BitsPtr = (LPSTR) GlobalLock((HGLOBAL) BitsHandle);
+      LPSTR BitsPtr = (LPSTR) GlobalLock((HGLOBAL) BitsHandle);
 
       /* now create the bitmap with the bits just loaded */
-
-      NewBitmapHandle = CreateDIBitmap(
+      HBITMAP NewBitmapHandle = CreateDIBitmap(
          screen,
          &ReadBitmapInfo->bmiHeader,
          CBM_INIT,
@@ -1355,8 +1335,6 @@ BOOL TMainFrame::OpenDIB(int TheFile, DWORD &dwPixelWidth, DWORD &dwPixelHeight)
 
       GlobalUnlock(BitsHandle);
       GlobalFree(BitsHandle);
-
-      delete [] ReadBitmapInfo;
 
       if (EnablePalette)
          {
@@ -1447,11 +1425,12 @@ BOOL TMainFrame::OpenDIB(int TheFile, DWORD &dwPixelWidth, DWORD &dwPixelHeight)
       DeleteDC(DCHandle);
 
       DeleteObject(NewBitmapHandle);
-      
-      dwPixelWidth  = NewPixelWidth;
-      dwPixelHeight = NewPixelHeight;
       }
 
+   delete [] ReadBitmapInfo;
+
+   dwPixelWidth  = NewPixelWidth;
+   dwPixelHeight = NewPixelHeight;
    return TRUE;
    }
 
@@ -1528,20 +1507,15 @@ a LongType type to simplify the process. */
 
 void TMainFrame::GetBitmapData(int TheFile, HANDLE BitsHandle, long BitsByteSize)
    {
-   long Count;
-   long Start;
-   long ToAddr;
-   long Bits;
+   long Bits = (long) GlobalLock(BitsHandle);
 
-   Bits = (long) GlobalLock(BitsHandle);
+   long Start = 0L;
 
-   Start = 0L;
-
-   Count = BitsByteSize;
+   long Count = BitsByteSize;
 
    while (Count > 0)
       {
-      ToAddr = Bits + Start;
+      long ToAddr = Bits + Start;
 
       if (Count > 0x4000)
          {
