@@ -1,9 +1,12 @@
+; Compiler Flags
+SetCompressor /SOLID lzma
 
 ; The name of the installer
 Name "FMSLogo"
 
 ; The file to write
-OutFile "fmslogo-6.6.exe"
+OutFile "fmslogo.exe"
+
 
 ; The default installation directory
 InstallDir "$PROGRAMFILES\FMSLogo"
