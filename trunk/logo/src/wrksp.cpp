@@ -1109,30 +1109,27 @@ char *addsep(char *path)
 
 NODE *ledit(NODE *args)
    {
-   FILE *holdstrm;
-   NODE *args_list = NIL;
-   int save_yield_flag;
-   HWND EditH;
-
-   EditH =::FindWindow(NULL, "Editor");
-   if (EditH)
+   
+   if (!bExpert)
       {
-      if (!bExpert)
+      // if an editor is already open, just give it focus
+      HWND editorWindow = ::FindWindow(NULL, "Editor");
+      if (editorWindow)
          {
-         ::ShowWindow(EditH, SW_SHOWNORMAL);
-         ::SetWindowPos(EditH, HWND_TOP, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
+         ::ShowWindow(editorWindow, SW_SHOWNORMAL);
+         ::SetWindowPos(editorWindow, HWND_TOP, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
          JustDidEdit = 1;
-         return (UNBOUND);
+         return UNBOUND;
          }
       }
 
-   save_yield_flag = yield_flag;
+   int save_yield_flag = yield_flag;
    yield_flag = 0;
    lsetcursorwait();
 
    if (args != NIL)
       {
-      holdstrm = writestream;
+      FILE * holdstrm = writestream;
       writestream = fopen(TempPathName, "w");
       if (writestream != NULL)
          {
@@ -1142,15 +1139,20 @@ NODE *ledit(NODE *args)
          }
       else
          {
-         err_logo(FILE_ERROR,
+         err_logo(
+            FILE_ERROR,
             make_static_strnode("Could not create editor file"));
          writestream = holdstrm;
-         return (UNBOUND);
+         return UNBOUND;
          }
       }
 
-   if (in_graphics_mode) text_screen;
-   args_list = reref(args_list, args);
+   if (in_graphics_mode)
+      {
+      text_screen;
+      }
+
+   NODE * args_list = reref(NIL, args);
    if (TMyWindow_MyPopupEdit(TempPathName, args_list))
       {
       err_logo(FILE_ERROR, make_static_strnode("Could not launch the editor"));
@@ -1164,23 +1166,16 @@ NODE *ledit(NODE *args)
    lsetcursorarrow();
    yield_flag = save_yield_flag;
 
-   return (UNBOUND);
+   return UNBOUND;
    }
 
 int lendedit(void)
    {
-   FILE *holdstrm;
-
-   NODE *tmp_line = NIL;
-   NODE *exec_list = NIL;
-
-   int sv_val_status = val_status;
    int realsave = 0;
-   int save_yield_flag;
 
-   holdstrm = loadstream;
-   tmp_line = reref(tmp_line, current_line);
-   save_yield_flag = yield_flag;
+   FILE * holdstrm = loadstream;
+   NODE * tmp_line = reref(NIL, current_line);
+   int save_yield_flag = yield_flag;
    yield_flag = 0;
    lsetcursorwait();
 
@@ -1189,14 +1184,20 @@ int lendedit(void)
    loadstream = fopen(TempPathName, "r");
    if (loadstream != NULL)
       {
+      int sv_val_status = val_status;
+
       realsave = 1;
       while (!feof(loadstream) && NOT_THROWING)
          {
          fgetpos(loadstream, &LinesLoadedOnEdit);
          current_line = reref(current_line, reader(loadstream, ""));
-         exec_list = parser(current_line, TRUE);
+         
          val_status = 0;
-         if (exec_list != NIL) eval_driver(exec_list);
+         NODE * exec_list = parser(current_line, TRUE);
+         if (exec_list != NIL)
+            {
+            eval_driver(exec_list);
+            }
          }
       fclose(loadstream);
       val_status = sv_val_status;
@@ -1212,7 +1213,7 @@ int lendedit(void)
    loadstream = holdstrm;
    current_line = reref(current_line, tmp_line);
 
-   return (realsave);
+   return realsave;
    }
 
 NODE *lthing(NODE *args)
