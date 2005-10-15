@@ -640,43 +640,65 @@ void TMyApp::InitMainWindow()
    MakeHelpPathName(LibPathName, "logolib\\");
    logolib = LibPathName;
    MakeHelpPathName(szHelpFileName, "logo.hlp");
-   if (getenv("TEMP") != NULL)
+
+   DWORD tempPathLength;
+   char  tempPath[MAX_PATH];
+   bool  tempPathIsValid = false;
+
+   tempPathLength = GetTempPath(
+      sizeof tempPath,
+      tempPath);
+   if (tempPathLength != 0)
       {
-      strcpy(TempPathName, getenv("TEMP"));
-      strcpy(TempBmpName, getenv("TEMP"));
-      strcpy(TempClipName, getenv("TEMP"));
+      DWORD tempPathAttributes = GetFileAttributes(tempPath);
+      if (tempPathAttributes != 0xFFFFFFFF)
+         {
+         // tempPath must be a directory that we can write to
+         if ( (tempPathAttributes & FILE_ATTRIBUTE_DIRECTORY) &&
+             !(tempPathAttributes & FILE_ATTRIBUTE_READONLY))
+            {
+            tempPathIsValid = true;
+            }
+         }
       }
-   else
+
+   if (!tempPathIsValid)
       {
       MessageBox(
          0,
-         "The Environment variable TEMP is not defined\n"
-            "Using C:\\ as TEMP",
+         "The environment variable TMP is not defined or invalid.\n"
+            "FMSLogo will attempt to use C:\\ for storing temporary files",
          "Warning",
          MB_OK);
 
-      strcpy(TempPathName, "C:");
+      strcpy(tempPath, "C:");
+      tempPathLength = strlen("C:");
       }
-   int i = strlen(TempPathName);
-   if (TempPathName[i - 1] == '\\')
+
+   // construct the name of the temporary editor file
+   strcpy(TempPathName, tempPath);
+   if (TempPathName[tempPathLength - 1] == '\\')
       {
-      TempPathName[i - 1] = '\0';
+      TempPathName[tempPathLength - 1] = '\0';
       }
    strcat(TempPathName, "\\mswlogo.tmp");
 
-   i = strlen(TempBmpName);
-   if (TempBmpName[i - 1] == '\\')
+   // construct the name of the temporary bitmap file
+   strcpy(TempBmpName, tempPath);
+   if (TempBmpName[tempPathLength - 1] == '\\')
       {
-      TempBmpName[i - 1] = '\0';
+      TempBmpName[tempPathLength - 1] = '\0';
       }
    strcat(TempBmpName, "\\mswlogo.bmp");
 
-   i = strlen(TempClipName);
-   if (TempClipName[i - 1] == '\\')
+   // construct the name of the clipboard file
+   strcpy(TempClipName, tempPath);
+   if (TempClipName[tempPathLength - 1] == '\\')
       {
-      TempClipName[i - 1] = '\0';
+      TempClipName[tempPathLength - 1] = '\0';
       }
    strcat(TempClipName, "\\mswlogo.clp");
+
 
    MakeHelpPathName(MCIHelpFileName, "mcistrwh.hlp");
 
