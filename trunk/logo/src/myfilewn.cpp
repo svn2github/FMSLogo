@@ -40,9 +40,9 @@ TMyFileWindow::TMyFileWindow(
 TMyFileWindow::~TMyFileWindow()
    {
    if (hEdtFont)
-     {
-     DeleteObject(hEdtFont);
-     }
+      {
+      DeleteObject(hEdtFont);
+      }
    }
 
 void TMyFileWindow::CMExit()
@@ -289,6 +289,14 @@ void TMyFileWindow::CMEditSetFont()
       // save the new font preference to persistent storage
       SetPrivateProfileFont("EditFont", lf);
 
+      // Changing the font counts a modification as far as
+      // the edit control is concerned, but not as far as
+      // Logo is concerned.
+      // Therefore, we must preserve the IsModified() state
+      // ourselves to prevent spurious warnings when closing
+      // an unedited document.
+      bool editorIsModified = Editor->IsModified();
+
       HFONT hFont = CreateFontIndirect(&lf);
       Editor->SetWindowFont(hFont, true);
 
@@ -297,6 +305,11 @@ void TMyFileWindow::CMEditSetFont()
          DeleteObject(hEdtFont);
          }
       hEdtFont = hFont;
+
+      if (!editorIsModified)
+         {
+         Editor->ClearModify();
+         }
 
       // The next block of code looks like it does nothing,
       // but it forces a redraw, which forces the existing text
@@ -365,7 +378,8 @@ void TMyFileWindow::EvDestroy()
       if (error_happen)
          {
          if (MainWindowx->CommandWindow->MessageBox(
-               "The cursor will be positioned just after last successful definition.\nCheck Commander Window for possible error Message.\n"
+               "The cursor will be positioned just after last successful definition.\n"
+                  "Check Commander Window for possible error Message.\n"
                   "\n"
                   "Return to edit?",
                "Your Edit has FAILED to load",
