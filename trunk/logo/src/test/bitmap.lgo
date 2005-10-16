@@ -1,3 +1,21 @@
+
+TO REPORTTESTPASSED :message
+    MESSAGEBOX [Pass] (SENTENCE "|Test Passed:| :message)
+END
+
+TO REPORTTESTFAILED :message
+    MESSAGEBOX [Fail] (SENTENCE "|Test Failed| :message)
+END
+
+TO REPORTTEST :testpassed :result :expected
+  IFELSE :testpassed [
+    REPORTTESTPASSED (sentence :result "|, as expected.|)
+  ] [
+    REPORTTESTFAILED (sentence :result "|. We expected| :expected)
+  ]
+END
+
+
 TO BITLOADSIZETEST :width :height :bitdepth
   ; this is a regression test for bug #1324580
   CLEARSCREEN
@@ -12,11 +30,10 @@ TO BITLOADSIZETEST :width :height :bitdepth
 
   CLEARSCREEN
   LOCALMAKE "bitmapsize BITLOADSIZE "bitmap-test.bmp
-  IFELSE (AND (ITEM 1 :bitmapsize) = :width (ITEM 2 :bitmapsize) = :height) [
-    MESSAGEBOX [Pass] [Test Passed]
-  ] [
-    MESSAGEBOX [Fail] (list "Test "Failed: "Size "Is :bitmapsize)
-  ]
+  REPORTTEST ~
+    (AND (ITEM 1 :bitmapsize) = :width (ITEM 2 :bitmapsize) = :height) ~
+    (list "|Size is| :bitmapsize) ~
+    (list "|[| :width :height "|]|)
 END
 
 TO BITMAPTEST
