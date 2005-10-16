@@ -1,4 +1,5 @@
 #include <windows.h>
+#include "version.h"
 #include "logorc.h"
 
 #include <owl\editfile.rh>
@@ -250,16 +251,12 @@ FONT 10, "MS Sans Serif"
  CONTROL "", ID_SIZE8, "SizeControl", 0 | WS_CHILD | WS_VISIBLE, 147, 15, 10, 10
 }
 
-// This DIALOG MUST be accessable by the user at runtime through Help About.
-// You are required to leave what is here in tact except for version.
-// You are welcome to ADD to it (if you can find room :-)).
-
 ABOUTBOX DIALOG 9, 22, 192, 264
 STYLE DS_MODALFRAME | WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU
 CAPTION "About FMSLogo"
 FONT 8, "MS Sans Serif"
 {
- CONTROL "FMSLogo Version 6.6", -1, "STATIC", SS_CENTER | SS_NOPREFIX | SS_SUNKEN | WS_CHILD | WS_VISIBLE | WS_GROUP, 4, 4, 184, 16
+ CONTROL "FMSLogo Version " FMSLOGO_VERSION, -1, "STATIC", SS_CENTER | SS_NOPREFIX | SS_SUNKEN | WS_CHILD | WS_VISIBLE | WS_GROUP, 4, 4, 184, 16
  CONTROL "GUI by George Mills (mills@softronix.com)\nSoftronics, Inc.\nhttp://www.softronix.com/", -1, "STATIC", SS_CENTER | SS_NOPREFIX | SS_SUNKEN | WS_CHILD | WS_VISIBLE | WS_GROUP, 4, 25, 184, 28
  CONTROL "Installer based on Nullsoft Scriptable Install System\nhttp://nsis.sourceforge.net", -1, "STATIC", SS_CENTER | SS_NOPREFIX | SS_SUNKEN | WS_CHILD | WS_VISIBLE | WS_GROUP, 4, 82, 184, 20
  CONTROL "The Great Logo Adventure (ISBN 0-9651934-6-2)\nWritten and donated by Jim Muller\nAvailable at http://www.softronix.com/", -1, "STATIC", SS_CENTER | SS_NOPREFIX | SS_SUNKEN | WS_CHILD | WS_VISIBLE | WS_GROUP, 4, 107, 184, 28
@@ -271,9 +268,6 @@ FONT 8, "MS Sans Serif"
  CONTROL "Core by Brian Harvey (bh@cs.berkeley.edu)\nUniversity of California Berkeley", -1, "static", SS_CENTER | SS_SUNKEN | WS_CHILD | WS_VISIBLE | WS_GROUP, 4, 58, 184, 20
 }
 
-// This DIALOG MUST be accessable by the user at runtime through Help About.
-// You are required to leave what is here in tact except for version.
-// You are welcome to ADD to it (if you can find room :-)).
 
 ABOUTMSBOX DIALOG 9, 22, 181, 81
 STYLE DS_MODALFRAME | WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU
