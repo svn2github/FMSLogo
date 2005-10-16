@@ -1,5 +1,5 @@
 
-     FMSLogo Version 6.6 for Microsoft Windows 95/98/NT/2000/XP/Vista
+     FMSLogo Version 6.6a for Microsoft Windows 95/98/NT/2000/XP/Vista
      -----------------------------------------------------------------
 
                                 Contents
@@ -10,21 +10,26 @@ Part   II) New features/bugs fixed:
 Part  III) Installation:
 Part   IV) Standard features:
 Part    V) Recommended usage:
-Part   VI) Bugs / Missing features / Wish List:
-Part  VII) Reporting bugs:
-Part VIII) Sources:
-Part   IX) Minimum System Requirements:
+Part   VI) Reporting bugs:
+Part  VII) Sources:
+Part VIII) Minimum System Requirements:
 
 
 Part I) Kit Description/Location (http://sourceforge.net/projects/fmslogo):
 
-  fmslogo-6.6.exe       (binary kit: Windows)
-  fmslogo-src-6.6.zip   (source kit)
+  fmslogo-6.6a.exe       (binary kit: Windows self-extracting installer)
+  fmslogo-6.6a.zip       (binary kit: Windows ZIP archive)
+  fmslogo-src-6.6a.zip   (source kit)
 
-I do not supply UCBLOGO, please contact Brian Harvey
+For information about UCBLogo, please contact Brian Harvey
 <bh@cs.berkeley.edu> or the Logo Foundation <michaelt@media.mit.edu>.
 
 Part II) New features/bugs fixed:
+
+  * Added for 6.6a,
+    o Fix bug #1324580; BITLOADSIZE works correctly again.
+    o Mitigate bug #1327300; FMSLogo now verifies %TMP% on startup
+      and warns the user of problems.
 
   * Added for 6.6,
     o Rename application to FMSLogo for trademark reasons.
@@ -125,40 +130,16 @@ Part IV) Standard features:
 
 Part V) Recommended usage:
 
-  * Ages 6 and up, from beginner (Forward 100, Right 90) to expert
-    (develop Graphical User Interfaces). 
+  * Ages 6 and up
+     o Beginner     - Forward 100, Right 90
+     o Intermediate - Explore mathematics, art, music, robotics, language, and more.
+     o Expert       - Develop games
 
-Part VI) Bugs / Missing features / Wish List:
-  * Set Active Area write Logo instruction to commander history.
-  * Zoom file selections write Logo instruction to commander history.
-  * GUI elements that write logo instructions also write to dribble file.
-  * Internationalization.
-  * Syntax Highlighting in editors.
-  * Logo to run in least user mode (Windows Vista)
-  * Remove all win16 code.
-  * Support pasting multiple lines into the commander's edit control.
-  * Support automatic \n to \r\n conversion for pasting.
-  * Fix the bug where pressing up arrow in the commander's edit control
-    moves to a blank line in the commander history.
-  * Remove the "beep" when typing and a commander button has focus.
-  * Convert help file to a .CHM file (or HTML).
-  * Replace Status, Step, and Trace buttons with checkboxes.
-  * Installer to create shortcuts for "all users".
-  * Installer to default to writable install path.
-  * Fix access violation when running INPORT on XP.
-  * Fix turtle being drawn outside of area when zoomed out bug
-  * Fix bug where setting width/height from command line makes screen window
-    smaller than drawable surface.
-  * Fix bug "rawascii char 192 = -64" (should be 192)
-  * Remove dangerous debugging form of FORM (it can crash)
-  * Rename ELLIPSA2 to something sensible (with all the letters)
+Part VI) Reporting bugs:
 
+  Report bugs at http://sourceforge.net/projects/fmslogo/
 
-Part VII) Reporting bugs:
-
-  Report bugs http://sourceforge.net/projects/fmslogo/
-
-Part VIII) Sources:
+Part VII) Sources:
  
   Source code is available.  It's your legal right!  (See LICENSE.TXT).
 
@@ -169,6 +150,6 @@ Part VIII) Sources:
     OpenOffice.org or MS Word 97 (for online help and DOC's)
     Nullsoft Scriptable Install System (NSIS) (for the installer)
 
-Part IX) Minimum System Requirements:
+Part VIII) Minimum System Requirements:
 
-   Pentium with Minimum of 16 MB RAM running Windows 95.
+   Pentium class processor with Minimum of 16 MB RAM running Windows 95.
