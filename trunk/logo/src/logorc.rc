@@ -274,7 +274,7 @@ STYLE DS_MODALFRAME | WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU
 CAPTION "About FMS"
 FONT 8, "MS Sans Serif"
 {
- CONTROL "FMS stand for Fight Multiple Sclerosis.", -1, "STATIC", SS_CENTER | SS_NOPREFIX | SS_SUNKEN | WS_CHILD | WS_VISIBLE | WS_GROUP, 4, 7, 171, 14
+ CONTROL "FMS stands for Fight Multiple Sclerosis.", -1, "STATIC", SS_CENTER | SS_NOPREFIX | SS_SUNKEN | WS_CHILD | WS_VISIBLE | WS_GROUP, 4, 7, 171, 14
  CONTROL "Please consider donating to the\nNational Multiple Sclerosis Society.\nhttp://www.nmss.org\n1-800-FIGHT-MS", -1, "STATIC", SS_CENTER | SS_NOPREFIX | SS_SUNKEN | WS_CHILD | WS_VISIBLE | WS_GROUP, 4, 24, 171, 34
  CONTROL "&OK", IDOK, "BUTTON", BS_DEFPUSHBUTTON | WS_CHILD | WS_VISIBLE | WS_GROUP | WS_TABSTOP, 74, 64, 32, 14
 }
