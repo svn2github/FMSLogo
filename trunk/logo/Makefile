@@ -1,6 +1,6 @@
-VERSION=6.6
+!include version.mk
 
-SOURCEZIP=fmslogo-src-$(VERSION).zip
+SOURCEZIP=fmslogo-src-$(FMSLOGO_VERSION).zip
 
 all : $(SOURCEZIP) ;
 
