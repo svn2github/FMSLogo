@@ -1,0 +1,110 @@
+<chapter>
+  <title>Command Line Options</title>
+
+  <section>
+    <para>Command line options can be set as properties of your shortcut to MSWLogo.  Just add these switches after the LOGO32.EXE.</para>
+  </section>
+
+
+  <section id="command-line-w">
+    <title>-W</title>
+
+    <cmdsynopsis>-W <option>width</option></cmdsynopsis>
+
+    <para>This sets the width of your virtual drawing workspace to <option>width</option>.  Be aware that the larger you set this the more memory is required.  The default is 1000.</para>
+
+    <para>Example:</para>
+
+    <cmdsynopsis>LOGO32.EXE -W 2000 -H 2000</cmdsynopsis>
+  </section>
+
+
+  <section id="command-line-h">
+    <title>-H</title>
+
+    <cmdsynopsis>-H <option>height</option></cmdsynopsis>
+
+    <para>This sets the width of your virtual drawing workspace to <option>height</option>.  Be aware that the larger you set this the more memory is required.  The default is 1000.</para>
+
+    <para>Example:</para>
+
+    <cmdsynopsis>LOGO32.EXE -W 2000 -H 2000</cmdsynopsis>
+  </section>
+
+
+
+  <section id="command-line-f">
+    <title>-F</title>
+
+    <cmdsynopsis>-F</cmdsynopsis>
+
+    <para>This tells MSWLogo to not use scrollbars ("f" is for fixed window).  The default is with scroll bars.  If you use this option without using <link linkend="command-line-h">-H</link> or <link linkend="command-line-w">-W</link> it will automatically calculate a workspace to fit your full screen exactly and the turtle will always be in view.</para>
+
+    <para>Example:</para>
+
+    <cmdsynopsis>LOGO32.EXE -F</cmdsynopsis>
+    <cmdsynopsis>LOGO32.EXE -F -W 400 -H 200</cmdsynopsis>
+  </section>
+
+
+
+  <section id="command-line-p">
+    <title>-P</title>
+
+    <cmdsynopsis>-P</cmdsynopsis>
+
+    <para>This enables <link linkend="command-perspective">PERSPECTIVE</link> mode to be the default mode to start in.</para>
+
+    <para>Example:</para>
+
+    <cmdsynopsis>LOGO32.EXE -P</cmdsynopsis>
+  </section>
+
+
+  <section id="command-line-e">
+    <title>-E</title>
+
+    <cmdsynopsis>-E</cmdsynopsis>
+
+    <para>This enables "Expert" mode.</para>
+
+    <para>In "Expert" mode the following occurs:</para>
+
+    <para>POS and POSXYZ will not "round" the returned data and you may see positions such as [0 -1.0e-12].  This is due to "normal" floating point errors.  Rounding POS serves no purpose other than to make the POS look good.  But in some applications this rounding can introduce error if you save and restore the position.  In other words SETPOS POS has no side effect (will not round) in "Expert" mode.</para>
+
+    <para>MSWLogo will allow Multiple Edit Sessions.  Multiple edit sessions can lead to unexpected behavior if you don't understand how MSWLogo manages the workspace.  If procedures are lost or have unexpected changes then you should not be using expert mode.</para>
+
+    <para>MSWLogo will allow saves directly to the Workspace.  Saving directly to workspace can lead to unexpected behavior if you don't understand how MSWLogo manages the workspace.  If procedures are lost or unexpected changes then you should not be using expert mode.</para>
+
+    <para>Example:</para>
+
+    <cmdsynopsis>LOGO32.EXE -E</cmdsynopsis>
+  </section>
+
+  <section id="command-line-l">
+    <title>-L</title>
+
+    <cmdsynopsis>-L <option>file1</option> <option>[file2]</option> </cmdsynopsis>
+
+    <para>MSWLogo allows you to <link linkend="command-load">LOAD</link> one or more filenames on the command line when starting MSWLogo.  These files will be loaded before the interpreter starts reading commands from the commander.  If you load a file that executes some program that includes a <link linkend="command-bye">BYE</link> command, MSWLogo will run that program and exit.  You can therefore write standalone programs in Logo and run them as new shortcuts.  Note, the "-L" switch must follow any other switches.</para>
+
+    <para>Example:</para>
+
+    <cmdsynopsis>LOGO32.EXE -L myprog.lgo</cmdsynopsis>
+  </section>
+
+
+  <section>
+      <title>Invoking and Exiting MSWLogo</title>
+
+      <para>To start MSWLogo, just click on the MSWLogo icon.
+To leave Logo, enter the command <link linkend="command-bye">BYE</link> or <link linkend="menu-file-exit">File-Exit</link>.</para>
+
+      <para>If you invoke a procedure that has not been defined, Logo first looks for a file in the current directory named <filename>proc.lgo</filename> where "proc" is the procedure name in lower case letters.
+If such a file exists, Logo loads that file.
+If the missing procedure is still undefined, or if there is no such file, Logo then looks in the library directory for a file named proc (no ".lgo") and, if it exists, loads it.
+If neither file contains a definition for the procedure, then Logo signals an error.
+Several procedures that are primitive in most versions of Logo are included in the default library, so if you use a different library you may want to include some or all of the default library in it.</para>
+   </section>
+
+</chapter>

@@ -1,0 +1,34 @@
+<section id="command-home">
+    <title>HOME</title>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>HOME</command></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+Moves the turtle to the center of the screen.
+HOME is equivalent to <code>SETPOS [0 0]</code> in 2D mode and <code>SETPOSXYZ [0 0 0]</code> in PERSPECTIVE mode.
+</para>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Example</term>
+<listitem>
+    <programlisting><userinput>FORWARD 100 
+RIGHT 90
+FORWARD 100
+HOME</userinput>
+</programlisting>
+
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</section>

@@ -1,0 +1,45 @@
+// ObjectWindows - (C) Copyright 1992 by Borland International
+
+IDM_FILECOMMANDS MENU 
+{
+ POPUP "&File"
+ {
+  MENUITEM "&Save and Exit", CM_FILESAVEANDEXIT
+  MENUITEM "Save to &Workspace", CM_FILESAVETOWORKSPACE
+  MENUITEM "&Print...", CM_FILEPRINT
+  MENUITEM SEPARATOR
+  MENUITEM "E&xit", CM_EDALLEXIT
+ }
+
+ POPUP "&Edit"
+ {
+  MENUITEM "&Undo\tCtrl+Z", CM_EDITUNDO
+  MENUITEM SEPARATOR
+  MENUITEM "&Cut\tCtrl+X", CM_EDITCUT
+  MENUITEM "C&opy\tCtrl+C", CM_EDITCOPY
+  MENUITEM "&Paste\tCtrl+V", CM_EDITPASTE
+  MENUITEM "&Delete\tDel", CM_EDITDELETE
+  MENUITEM "C&lear All\tCtrl+Del", CM_EDITCLEAR
+ }
+
+ POPUP "&Search"
+ {
+  MENUITEM "&Find...", CM_EDITFIND
+  MENUITEM "&Replace...", CM_EDITREPLACE
+  MENUITEM "&Next\tF3", CM_EDITFINDNEXT
+ }
+
+ POPUP "Se&t"
+ {
+  MENUITEM "&Font...", CM_EDITSETFONT
+ }
+
+ MENUITEM "Test!", CM_TEST
+ POPUP "&Help"
+ {
+  MENUITEM "&Index", CM_HELP
+  MENUITEM "&Editor", CM_HELPEDIT
+  MENUITEM "&Topic Search\tF1", CM_HELPEDIT_TOPIC
+ }
+
+}

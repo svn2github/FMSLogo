@@ -1,0 +1,30 @@
+<section id="command-splitscreen">
+    <title>SPLITSCREEN</title>
+
+<note>SPLITSCREEN is not supported in MSWLogo.</note>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>SPLITSCREEN</command>
+<command>SS</command></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+Rearranges the size and position of windows to allow some room for text interaction while also keeping most of the graphics window visible.
+</para>
+
+<para>
+Compare this command with <link linkend="command-fullscreen">FULLSCREEN</link> and <link linkend="command-textscreen">TEXTSCREEN</link>.
+</para>
+
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</section>

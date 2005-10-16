@@ -1,0 +1,43 @@
+<section id="command-fence">
+    <title>FENCE</title>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>FENCE</command></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+Tells the turtle to enter "fence" mode.
+From now on, if the turtle is asked to move past the boundary of the graphics window, it will move as far as it can and then stop at the edge with an "out of bounds" error message.
+</para>
+
+<para>
+Compare this command with <link linkend="command-wrap">WRAP</link>, <link linkend="command-window">WINDOW</link>, and <link linkend="command-perspective">PERSPECTIVE</link>.
+</para>
+</listitem>
+</varlistentry>
+
+
+<varlistentry><term>Example</term>
+<listitem>
+    <programlisting><userinput>WRAP
+FORWARD 950
+RIGHT 90
+FENCE
+FORWARD 950</userinput>
+turtle out of bounds
+<userinput>FORWARD 100</userinput>
+turtle out of bounds
+<userinput>BACK 500</userinput>
+</programlisting>
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</section>

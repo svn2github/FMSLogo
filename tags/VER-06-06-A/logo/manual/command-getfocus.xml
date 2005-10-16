@@ -1,0 +1,36 @@
+<section id="command-getfocus">
+    <title>GETFOCUS</title>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>GETFOCUS</command></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+Outputs the caption (title) of the window in focus.
+</para>
+
+<para>
+See also <link linkend="command-setfocus">SETFOCUS</link>.
+</para>
+</listitem>
+</varlistentry>
+
+
+<varlistentry><term>Example</term>
+<listitem>
+    <programlisting><userinput>SETFOCUS [MSWLogo Screen]
+SHOW GETFOCUS</userinput>
+MSWLogo Screen
+</programlisting>
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</section>

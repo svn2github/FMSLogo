@@ -1,0 +1,38 @@
+<section id="command-remainder">
+    <title>REMAINDER</title>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>REMAINDER</command> <parameter>dividend</parameter> <parameter>divisor</parameter></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+Outputs the remainder of dividing <parameter>dividend</parameter> by <parameter>divisor</parameter>.
+Both <parameter>dividend</parameter> and <parameter>divisor</parameter> must be integers.
+The result is an integer with the same sign as <code>dividend</code>.
+</para>
+
+<para>
+It is an error to call REMAINDER with a <parameter>divisor</parameter> of 0.
+</para>
+
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Example</term>
+<listitem>
+    <programlisting><userinput>SHOW REMAINDER 6 4</userinput>
+2</programlisting>
+<programlisting><userinput>SHOW REMAINDER 6 2</userinput>
+0</programlisting>
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</section>

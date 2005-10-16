@@ -1,0 +1,11 @@
+Edit FMSLOGO.TXT
+Edit examples.html
+Fresh Get from CVS
+Update hard-coded version
+Use WinZip to make fmslogo-src-XX.zip
+Build fmslogo-XX.exe with logo32.ide BC 5.02
+Run Help Compiler on Logo.HPJ
+Run NSIS 2.0.7
+Upload fmslogo-src-XX.zip, fmslogo-XX.exe
+Update links on Web site.
+

@@ -1,0 +1,43 @@
+<section id="command-setxyz">
+    <title>SETXYZ</title>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>SETXYZ</command> <parameter>xcor</parameter> <parameter>ycor</parameter> <parameter>zcor</parameter></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+Moves the turtle to an absolute 3D position.
+The three arguments are numbers, the X, Y, and Z coordinates.
+See also <link linkend="command-posxyz">POSXYZ</link>.
+</para>
+<para>
+This command is designed to run in <link linkend="command-perspective">PERSPECTIVE</link> mode.
+</para>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Example</term>
+<listitem>
+    <programlisting><userinput>; draw some sine waves in 3D
+PERSPECTIVE
+FOR [i 0 360 10] [
+   FOR [j 0 360] [SETXYZ :j :i*SIN :j -:i]
+   PENUP
+   SETXYZ 0 0 -:i
+   PENDOWN
+]
+</userinput>
+</programlisting>
+
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</section>

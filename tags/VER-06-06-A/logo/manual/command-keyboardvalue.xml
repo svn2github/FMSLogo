@@ -1,0 +1,37 @@
+<section id="command-keyboardvalue">
+    <title>KEYBOARDVALUE</title>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>KEYBOARDVALUE</command></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+
+<para>
+Output the ASCII value of the last key that was either pushed or released.
+</para>
+
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Example</term>
+<listitem>
+    <programlisting><userinput>KEYBOARDON [PRINT CHAR KEYBOARDVALUE]
+SETFOCUS [MSWLogo Screen]
+a</userinput>
+a
+<userinput>b</userinput>
+b
+KEYBOARDOFF
+</programlisting>
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</section>

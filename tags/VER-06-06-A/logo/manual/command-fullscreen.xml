@@ -1,0 +1,30 @@
+<section id="command-fullscreen">
+    <title>FULLSCREEN</title>
+
+<note>FULLSCREEN is not supported in MSWLogo.</note>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>FULLSCREEN</command>
+<command>FS</command></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+Rearranges the size and position of windows to maximize the space available in the graphics window.
+</para>
+
+<para>
+Compare this command with <link linkend="command-splitscreen">SPLITSCREEN</link> and <link linkend="command-textscreen">TEXTSCREEN</link>.
+</para>
+
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</section>

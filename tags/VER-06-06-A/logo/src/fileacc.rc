@@ -1,0 +1,18 @@
+//----------------------------------------------------------------------------
+// ObjectWindows - (C) Copyright 1991, 1993 by Borland International
+//----------------------------------------------------------------------------
+
+FILECOMMANDS ACCELERATORS 
+{
+ "X", CM_EDITCUT, VIRTKEY, CONTROL
+ VK_DELETE, CM_EDITCUT, VIRTKEY, SHIFT
+ "C", CM_EDITCOPY, VIRTKEY, CONTROL
+ VK_INSERT, CM_EDITCOPY, VIRTKEY, CONTROL
+ "V", CM_EDITPASTE, VIRTKEY, CONTROL
+ VK_INSERT, CM_EDITPASTE, VIRTKEY, SHIFT
+ VK_DELETE, CM_EDITCLEAR, VIRTKEY, CONTROL
+ "Z", CM_EDITUNDO, CONTROL, VIRTKEY
+ VK_F3, CM_EDITFINDNEXT, VIRTKEY
+ VK_F1, CM_HELPEDIT_TOPIC, VIRTKEY
+ VK_TAB, CM_CONTROLEXECUTE, VIRTKEY, NOINVERT, CONTROL
+}
