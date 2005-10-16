@@ -262,6 +262,10 @@ void TMyFileWindow::SetupWindow()
    GetPrivateProfileFont("EditFont", lf);
    hEdtFont = CreateFontIndirect(&lf);
    Editor->SetWindowFont(hEdtFont, true);
+
+   // We must clear the modify flag again, because
+   // updating the font counts as a modification on WinXP
+   Editor->ClearModify();
    }
 
 void TMyFileWindow::CMEditSetFont()
