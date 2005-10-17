@@ -245,71 +245,18 @@ long LoadColor(int dpenr, int dpeng, int dpenb)
    }
 
 
-/* this routine is here to allow a non object call */
-static
-void
-CreateTemplateLogoFileForEditor(
-   const char * FileName,
-   NODE       * Args
-)
-   {
-   FILE* logoFile = fopen(FileName, "w");
-   if (logoFile != NULL)
-      {
-      if (Args != NULL)
-         {
-         fwrite("to\n", 1, 3, logoFile);
-         fwrite("end\n", 1, 4, logoFile);
-         }
-      else
-         {
-         fwrite("\n", 1, 1, logoFile);
-         }
-      }
-      fclose(logoFile);
-   }
-
-
-int TMyWindow_MyPopupEdit(char *FileName, NODE *args)
-   {
-   // If no file (or empty) create template
-   FILE * logoFile = fopen(FileName, "r");
-   if (logoFile != NULL)
-      {
-      // file exists.  check if it's empty.
-      bool fileIsEmpty = getc(logoFile) == EOF;
-      fclose(logoFile);
-
-      if (fileIsEmpty)
-         {
-         CreateTemplateLogoFileForEditor(FileName, args);
-         }
-      }
-   else
-      {
-      // file doesn't exist.  Create it.
-      CreateTemplateLogoFileForEditor(FileName, args);
-      }
-
-   MainWindowx->MyPopupEdit(FileName, args);
-   return 0;
-   }
-
 void clearcombobox()
    {
-
    /* clear the recall box */
-
    MainWindowx->CommandWindow->Listbox->SetReadOnly(FALSE);
    MainWindowx->CommandWindow->Listbox->Clear();
    MainWindowx->CommandWindow->Listbox->SetReadOnly(TRUE);
    }
 
+   
 void putcombobox(char *str)
    {
-
    /* only if OK to write to recall box do we do it */
-
    if (Command_OK)
       {
       UINT uBefore;

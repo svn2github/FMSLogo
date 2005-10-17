@@ -1963,6 +1963,7 @@ void TMainFrame::CMFileErase()
 void TMainFrame::MyPopupEdit(const char *FileName, NODE *args)
    {
    /* if called with NULL filename then prompt user */
+   // BUG: This is never deleted!
    EditWindow = new TMyFileWindow(this, "Editor", FileName, args);
 
    /* Do win.ini stuff. Build default coords */
@@ -2017,6 +2018,57 @@ void TMainFrame::MyPopupEdit(const char *FileName, NODE *args)
          }
       }
    }
+
+   
+static
+void
+CreateTemplateLogoFileForEditor(
+   const char * FileName,
+   NODE       * Args
+)
+   {
+   FILE* logoFile = fopen(FileName, "w");
+   if (logoFile != NULL)
+      {
+      if (Args != NULL)
+         {
+         fwrite("to\n", 1, 3, logoFile);
+         fwrite("end\n", 1, 4, logoFile);
+         }
+      else
+         {
+         fwrite("\n", 1, 1, logoFile);
+         }
+      }
+      fclose(logoFile);
+   }
+
+
+int TMainFrame::PopupEditorForFile(const char *FileName, NODE *args)
+   {
+   // If no file (or empty) create template
+   FILE * logoFile = fopen(FileName, "r");
+   if (logoFile != NULL)
+      {
+      // file exists.  check if it's empty.
+      bool fileIsEmpty = getc(logoFile) == EOF;
+      fclose(logoFile);
+
+      if (fileIsEmpty)
+         {
+         CreateTemplateLogoFileForEditor(FileName, args);
+         }
+      }
+   else
+      {
+      // file doesn't exist.  Create it.
+      CreateTemplateLogoFileForEditor(FileName, args);
+      }
+
+   MainWindowx->MyPopupEdit(FileName, args);
+   return 0;
+   }
+
 
 int TMainFrame::MyPopupInput(char *str, char *pmt)
    {

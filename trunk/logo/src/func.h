@@ -295,7 +295,6 @@ extern void putcombobox(char *str);
 extern void putfileeditcombo(char *str);
 extern void clearcombobox(void);
 extern long LoadColor(int dpenr, int dpeng, int dpenb);
-extern int TMyWindow_MyPopupEdit(char *FileName, NODE *args);
 extern void exit_program(void);
 extern int promptuser(char *str, char *pmt);
 extern void getcombobox(char *str);

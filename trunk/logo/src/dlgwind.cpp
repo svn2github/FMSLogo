@@ -2910,7 +2910,7 @@ NODE *lwindowfileedit(NODE *args)
 
    strcpy(edit_editexit, editexit);
 
-   TMyWindow_MyPopupEdit(filename, (NODE *) NULL);
+   TMainFrame::PopupEditorForFile(filename, NULL);
    return UNBOUND;
    }
 

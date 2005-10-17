@@ -1153,7 +1153,7 @@ NODE *ledit(NODE *args)
       }
 
    NODE * args_list = reref(NIL, args);
-   if (TMyWindow_MyPopupEdit(TempPathName, args_list))
+   if (TMainFrame::PopupEditorForFile(TempPathName, args_list))
       {
       err_logo(FILE_ERROR, make_static_strnode("Could not launch the editor"));
       }

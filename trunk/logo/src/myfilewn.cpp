@@ -385,7 +385,7 @@ void TMyFileWindow::EvDestroy()
                "Your Edit has FAILED to load",
                MB_OKCANCEL | MB_ICONQUESTION) == IDOK)
             {
-            if (TMyWindow_MyPopupEdit(TempPathName, args_list))
+            if (TMainFrame::PopupEditorForFile(TempPathName, args_list))
                {
                MainWindowx->CommandWindow->MessageBox(
                   "Cannot restart editor",

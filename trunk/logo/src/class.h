@@ -269,6 +269,7 @@ class TMainFrame : public TDecoratedFrame
    TMainFrame(TWindow * AParent, LPCSTR ATitle, TPaneSplitter * PaneSplitter);
    ~TMainFrame();
 
+   static int PopupEditorForFile(const char *FileName, NODE *args);
    void MyPopupEdit(const char *FileName, NODE * args);
    void MyPopupStatus();
    void MyPopupStatusKill();
