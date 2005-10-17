@@ -2437,32 +2437,42 @@ void TMainFrame::CMHelpTutorial()
    do_help("Where to Start");
    }
 
-void TMainFrame::CMHelpExamples()
+
+static
+void
+OpenFileWithDefaultApplication(
+   HWND          HWindow,
+   const char *  FileName
+)
    {
-   char szFileName[EXE_NAME_MAX_SIZE + 1];
-
-   MakeHelpPathName(szFileName, "EXAMPLES\\INDEX.HTML");
-
-   HINSTANCE examples = ShellExecute(
+   HINSTANCE childApplication = ShellExecute(
       HWindow,        // handle to parent window
       "open",         // operation to perform
-      szFileName,     // pointer to filename string
+      FileName,       // pointer to filename string
       NULL,           // pointer to string that specifies executable-file parameters
       NULL,           // pointer to string that specifies default directory
       SW_SHOWNORMAL); // whether file is shown when opened
-   if (examples != NULL)
+   if (childApplication != NULL)
       {
-      CloseHandle(examples);
+      CloseHandle(childApplication);
       }
+   }
+
+
+void TMainFrame::CMHelpExamples()
+   {
+   char szFileName[EXE_NAME_MAX_SIZE + 1];
+   MakeHelpPathName(szFileName, "EXAMPLES\\INDEX.HTML");
+
+   OpenFileWithDefaultApplication(HWindow, szFileName);
    }
 
 void TMainFrame::CMHelpReleaseNotes()
    {
    char szFileName[EXE_NAME_MAX_SIZE + 1];
+   MakeHelpPathName(szFileName, "FMSLOGO.TXT");
 
-   strcpy(szFileName, "NOTEPAD ");
-   MakeHelpPathName(&szFileName[8], "FMSLOGO.TXT");
-   WinExec(szFileName, SW_SHOWNORMAL);
+   OpenFileWithDefaultApplication(HWindow, szFileName);
    }
 
 void TMainFrame::CMHelpAbout()
