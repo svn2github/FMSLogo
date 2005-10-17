@@ -794,33 +794,39 @@ FLONUM float_arg(NODE *args)
 
 NODE *lform(NODE *args)
    {
-   FLONUM number;
-   int width, precision;
-   char result[100];
-   char format[20];
+   FLONUM number = float_arg(args);
 
-   number = float_arg(args);
-   width = (int) int_arg(cdr(args));
+   NODE * width_arg = cdr(args);
+   int    width = (int) int_arg(width_arg);
    if (width < 0)
       {
-      print_stringptr = format;
-      print_stringlen = 20;
-      ndprintf((FILE *) NULL, "%p\n", string_arg(cddr(args)));
-      *print_stringptr = '\0';
+      NODE * error_node = err_logo(BAD_DATA, car(width_arg));
+      setcar(args, error_node);
+      return UNBOUND;
       }
-   else
-      precision = (int) int_arg(cddr(args));
+
+   int precision = (int) int_arg(cddr(args));
+
    if (NOT_THROWING)
       {
-      if (width >= 100) width = 99;
-      if (width < 0)
-         sprintf(result, format, number);
-      else
-         sprintf(result, "%*.*f", width, precision, number);
-      return (make_strnode(result, (char *) NULL, (int) strlen(result),
-            STRING, strnzcpy));
+      char result[100];
+      
+      if (width >= sizeof(result))
+         {
+         width = sizeof(result) - 1;
+         }
+
+      sprintf(result, "%*.*f", width, precision, number);
+
+      return make_strnode(
+         result,
+         (char *) NULL,
+         (int) strlen(result),
+         STRING,
+         strnzcpy);
       }
-   return (UNBOUND);
+
+   return UNBOUND;
    }
 
 NODE *lscan(NODE */*args*/)
@@ -857,4 +863,4 @@ NODE *l_setbf(NODE *args)
    setcdr(list, newval);
    return (UNBOUND);
    }
-
+
