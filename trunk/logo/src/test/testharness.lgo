@@ -1,4 +1,6 @@
 LOAD "bitmap.lgo
+LOAD "form.lgo
+LOAD "port.lgo
 
 
 TO REPORTTESTPASSED :message
@@ -21,8 +23,12 @@ END
 
 TO TESTALL
   BITMAPTEST ; from bitmap.lgo
+  FORMTEST   ; from form.lgo
+
+;  PORTTEST   ; from port.lgo
 END
 
 ; execute all tests on startup
 make "startup [TESTALL]
+
 
