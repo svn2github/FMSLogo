@@ -246,50 +246,53 @@ long LoadColor(int dpenr, int dpeng, int dpenb)
 
 
 /* this routine is here to allow a non object call */
+static
+void
+CreateTemplateLogoFileForEditor(
+   const char * FileName,
+   NODE       * Args
+)
+   {
+   FILE* logoFile = fopen(FileName, "w");
+   if (logoFile != NULL)
+      {
+      if (Args != NULL)
+         {
+         fwrite("to\n", 1, 3, logoFile);
+         fwrite("end\n", 1, 4, logoFile);
+         }
+      else
+         {
+         fwrite("\n", 1, 1, logoFile);
+         }
+      }
+      fclose(logoFile);
+   }
+
 
 int TMyWindow_MyPopupEdit(char *FileName, NODE *args)
    {
-   FILE *edfd;
-
-   /* If no file (or empty) create template */
-
-   if ((edfd = fopen(FileName, "r")) == NULL)
+   // If no file (or empty) create template
+   FILE * logoFile = fopen(FileName, "r");
+   if (logoFile != NULL)
       {
-      if ((edfd = fopen(FileName, "w")) != NULL)
+      // file exists.  check if it's empty.
+      bool fileIsEmpty = getc(logoFile) == EOF;
+      fclose(logoFile);
+
+      if (fileIsEmpty)
          {
-         if (args != NULL)
-            {
-            fwrite("to\n", 1, 3, edfd);
-            fwrite("end\n", 1, 4, edfd);
-            }
-         else
-            {
-            fwrite("\n", 1, 1, edfd);
-            }
-         fclose(edfd);
+         CreateTemplateLogoFileForEditor(FileName, args);
          }
       }
    else
       {
-      if (getc(edfd) == EOF)
-         {
-         fclose(edfd);
-         edfd = fopen(FileName, "w");
-         if (args != NULL)
-            {
-            fwrite("to\n", 1, 3, edfd);
-            fwrite("end\n", 1, 4, edfd);
-            }
-         else
-            {
-            fwrite("\n", 1, 1, edfd);
-            }
-         }
-      fclose(edfd);
+      // file doesn't exist.  Create it.
+      CreateTemplateLogoFileForEditor(FileName, args);
       }
 
    MainWindowx->MyPopupEdit(FileName, args);
-   return (0);
+   return 0;
    }
 
 void clearcombobox()
