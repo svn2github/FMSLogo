@@ -122,11 +122,11 @@ void TEditWindow::EvRButtonUp(UINT, TPoint &)
 void TEditWindow::CmFilePrint()
    {
    // Create Printout window and set characteristics.
-   TRichEditPrintout printout(*MainWindowx->Printer, *Editor, "Logo");
+   TRichEditPrintout printout(MainWindowx->Printer, *Editor, "Logo");
    printout.SetBanding(false);
 
    // Bring up the Print dialog and print the document.
-   MainWindowx->Printer->Print(this, printout, true);
+   MainWindowx->Printer.Print(this, printout, true);
    }
 
 //

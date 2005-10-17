@@ -346,7 +346,7 @@ class TMainFrame : public TDecoratedFrame
    LRESULT OnNetworkListenReceiveFinish(WPARAM, LPARAM);
 
  public:
-   class TPrinter             * Printer;
+   class TPrinter               Printer;
    class TMyFileWindow        * EditWindow;
    class TMyCommandWindow     * CommandWindow;
    class TMyStatusWindow      * StatusWindow;

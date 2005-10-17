@@ -800,7 +800,6 @@ TMainFrame::TMainFrame(
    LPCSTR          ATitle,
    TPaneSplitter * PaneSplitter
 ) : TDecoratedFrame(AParent, ATitle, PaneSplitter),
-    Printer(new TPrinter),
     EditWindow(NULL),
     CommandWindow(new TMyCommandWindow(0, "DIALOGCOMMAND")),
     StatusWindow(NULL),
@@ -856,11 +855,7 @@ TMainFrame::TMainFrame(
 
 TMainFrame::~TMainFrame()
    {
-   int i;
-
    /* clean things up */
-
-   delete Printer;
    DeleteObject(MemoryBitMap);
    delete CommandWindow;
 
@@ -876,9 +871,13 @@ TMainFrame::~TMainFrame()
    free(hash_table);
 
    /* Note Bitmap index 0 belongs to Clipboard */
-
-   for (i = 1; i < MaxBitCuts; i++)
-      if (CutBmp[i].CutFlag) DeleteObject(CutBmp[i].CutMemoryBitMap);
+   for (int i = 1; i < MaxBitCuts; i++)
+      {
+      if (CutBmp[i].CutFlag)
+         {
+         DeleteObject(CutBmp[i].CutMemoryBitMap);
+         }
+      }
    free(CutBmp);
 
    if (hCursorWait) DestroyCursor(hCursorWait);
@@ -2527,12 +2526,9 @@ void TMainFrame::CMHelpAboutMS()
 
 void TMainFrame::CMBitmapPrint()
    {
-   if (Printer)
-      {
-      TRulerOut Printout("Logo Picture");
-      Printout.SetBanding(false);
-      Printer->Print(this, Printout, true);
-      }
+   TRulerOut Printout("Logo Picture");
+   Printout.SetBanding(false);
+   Printer.Print(this, Printout, true);
    }
 
 
@@ -2540,7 +2536,7 @@ void TMainFrame::CMBitmapPrint()
 
 void TMainFrame::CMBitmapPrinterSetup()
    {
-   if (Printer) Printer->Setup(this);
+   Printer.Setup(this);
    }
 
 void TMainFrame::EvDestroy()
