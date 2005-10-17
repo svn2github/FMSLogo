@@ -1,5 +1,6 @@
 LOAD "bitmap.lgo
 LOAD "form.lgo
+LOAD "editor.lgo
 LOAD "port.lgo
 
 
@@ -8,7 +9,7 @@ TO REPORTTESTPASSED :message
 END
 
 TO REPORTTESTFAILED :message
-    MESSAGEBOX [Fail] (SENTENCE "|Test Failed| :message)
+    MESSAGEBOX [Fail] (SENTENCE "|Test Failed:| :message)
 END
 
 TO REPORTTEST :testpassed :result :expected
@@ -24,11 +25,11 @@ END
 TO TESTALL
   BITMAPTEST ; from bitmap.lgo
   FORMTEST   ; from form.lgo
+  EDITORTEST ; from editor.lgo
 
 ;  PORTTEST   ; from port.lgo
 END
 
 ; execute all tests on startup
 make "startup [TESTALL]
-
 
