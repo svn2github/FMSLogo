@@ -617,3 +617,4 @@ void init()
    the_generation = valref(cons(NIL, NIL));
    Not_Enough_Node = valref(cons(NIL, NIL));
    }
+
