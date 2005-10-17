@@ -203,7 +203,7 @@
   <!ENTITY command-setpitch       SYSTEM "command-setpitch.xml">
   <!ENTITY command-setorientation SYSTEM "command-setorientation.xml">
   <!ENTITY command-ellipsearc     SYSTEM "command-ellipsearc.xml">
-  <!ENTITY command-ellipsa2       SYSTEM "command-ellipsa2.xml">
+  <!ENTITY command-ellipsearc2    SYSTEM "command-ellipsearc2.xml">
   <!ENTITY command-ellipse        SYSTEM "command-ellipse.xml">
   <!ENTITY command-ellipse2       SYSTEM "command-ellipse2.xml">
   <!ENTITY command-arc            SYSTEM "command-arc.xml">

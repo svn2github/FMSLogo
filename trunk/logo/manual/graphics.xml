@@ -143,7 +143,7 @@ Each time you enter <link linkend="command-perspective">PERSPECTIVE</link> mode 
         &command-setpitch;
         &command-setorientation;
         &command-ellipsearc;
-        &command-ellipsa2;
+        &command-ellipsearc2;
         &command-ellipse;
         &command-ellipse2;
         &command-arc;
