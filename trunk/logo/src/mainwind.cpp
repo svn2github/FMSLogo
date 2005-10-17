@@ -800,9 +800,20 @@ TMainFrame::TMainFrame(
    LPCSTR          ATitle,
    TPaneSplitter * PaneSplitter
 ) : TDecoratedFrame(AParent, ATitle, PaneSplitter),
-    PaneSplitterWindow(PaneSplitter)
+    Printer(new TPrinter),
+    EditWindow(NULL),
+    CommandWindow(new TMyCommandWindow(0, "DIALOGCOMMAND")),
+    StatusWindow(NULL),
+    PrinterAreaWindow(NULL),
+    FileEditWindow(NULL),
+    PaneSplitterWindow(PaneSplitter),
+    ScreenWindow(new TScreenWindow(0, "FMSLogo Screen")),
+    IsNewFile(true),
+    IsNewBitmap(true)
    {
    /* main window initialization */
+   strcpy(BitmapName, "Logo.Bmp");
+   strcpy(FileName, "Logo.Lgo");
 
    AssignMenu("IDM_COMMANDS");
 
@@ -822,17 +833,7 @@ TMainFrame::TMainFrame(
       DeleteDC(screen);
    }
 
-   /* create printer object */
-
-   Printer = new TPrinter;
-
-   /* flag that screen clean */
-
-   IsNewFile = true;
-   IsNewBitmap = true;
-
    /* If palette then build one */
-
    if (EnablePalette)
       {
       MyLogPalette = (LPLOGPALETTE) new char[sizeof(LOGPALETTE) + sizeof(PALETTEENTRY) * MaxColors];
@@ -851,17 +852,6 @@ TMainFrame::TMainFrame(
 
       ThePalette = CreatePalette(MyLogPalette);
       }
-
-
-   // create the drawing surface
-   ScreenWindow = new TScreenWindow(0, "FMSLogo Screen");
-
-   // create resourced window
-   CommandWindow = new TMyCommandWindow(0, "DIALOGCOMMAND");
-//   CommandWindow->Create();
-
-   strcpy(BitmapName, "Logo.Bmp");
-   strcpy(FileName, "Logo.Lgo");
    }
 
 TMainFrame::~TMainFrame()
@@ -1970,13 +1960,12 @@ void TMainFrame::CMFileErase()
       }
    }
 
-void TMainFrame::MyPopupEdit(char *FileName, NODE *args)
+void TMainFrame::MyPopupEdit(const char *FileName, NODE *args)
    {
    /* if called with NULL filename then prompt user */
    EditWindow = new TMyFileWindow(this, "Editor", FileName, args);
 
    /* Do win.ini stuff. Build default coords */
-
    int x = (int) (MaxWidth * 0.25);
    int y = (int) (MaxHeight * 0.25);
    int w = (int) (MaxWidth * 0.75);
@@ -1993,11 +1982,9 @@ void TMainFrame::MyPopupEdit(char *FileName, NODE *args)
    checkwindow(&x, &y, &w, &h);
 
    /* now set them */
-
    EditWindow->Attr.Style = WS_VISIBLE | WS_POPUPWINDOW | WS_CAPTION | WS_THICKFRAME | WS_MINIMIZEBOX | WS_MAXIMIZEBOX;
 
    /* flag for how to handle focus */
-
    if (args != NULL)
       {
       JustDidEdit = 1;
@@ -2014,7 +2001,6 @@ void TMainFrame::MyPopupEdit(char *FileName, NODE *args)
 
    if (args != NULL)
       {
-
       // retitle without filename
       EditWindow->SetWindowText("Editor");
 

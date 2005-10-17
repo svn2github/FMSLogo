@@ -269,7 +269,7 @@ class TMainFrame : public TDecoratedFrame
    TMainFrame(TWindow * AParent, LPCSTR ATitle, TPaneSplitter * PaneSplitter);
    ~TMainFrame();
 
-   void MyPopupEdit(char *FileName, NODE * args);
+   void MyPopupEdit(const char *FileName, NODE * args);
    void MyPopupStatus();
    void MyPopupStatusKill();
    int MyPopupInput(char *str, char *pmt);
@@ -355,7 +355,6 @@ class TMainFrame : public TDecoratedFrame
    class TScreenWindow        * ScreenWindow;
 
  protected:
-   HDC PrintMemDC;
    char FileName[MAXPATH];
    char BitmapName[MAXPATH];
    bool IsNewFile;
