@@ -93,7 +93,6 @@ Dep_fmslogodexe = \
    RELEASE\ibmterm.obj\
    RELEASE\init.obj\
    RELEASE\intern.obj\
-   RELEASE\libloc.obj\
    RELEASE\lists.obj\
    logo32.def\
    RELEASE\logodata.obj\
@@ -151,7 +150,6 @@ RELEASE\graphwin.obj+
 RELEASE\ibmterm.obj+
 RELEASE\init.obj+
 RELEASE\intern.obj+
-RELEASE\libloc.obj+
 RELEASE\lists.obj+
 RELEASE\logodata.obj+
 RELEASE\main.obj+
@@ -325,11 +323,6 @@ RELEASE\init.obj :  init.cpp
 RELEASE\intern.obj :  intern.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ intern.cpp
-|
-
-RELEASE\libloc.obj :  libloc.cpp
-  $(BCC32) -c @&&|
- $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ libloc.cpp
 |
 
 RELEASE\lists.obj :  lists.cpp

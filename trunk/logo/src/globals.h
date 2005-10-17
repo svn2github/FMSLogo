@@ -149,9 +149,6 @@ extern FIXNUM ift_iff_flag;
 extern int x_coord, y_coord, x_max, y_max;
 extern int interactive;
 
-/* libloc.c */
-extern char *libloc;
-
 /* paren.c */
 extern NODE *the_generation;
 
