@@ -62,7 +62,6 @@ class TEditWindow : public TFrameWindow
    void  CmFilePrint();     // CM_FILEPRINT
 
    DECLARE_RESPONSE_TABLE(TEditWindow);
-   DECLARE_STREAMABLE(_EXPCLASS, TEditWindow, 1);
    }
 ;
 

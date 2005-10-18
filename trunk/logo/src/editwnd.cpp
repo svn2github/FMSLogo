@@ -129,28 +129,6 @@ void TEditWindow::CmFilePrint()
    MainWindowx->Printer.Print(this, printout, true);
    }
 
-//
-// reads an instance of TEditWindow from the passed ipstream
-//
-void *TEditWindow::Streamer::Read(ipstream &is, uint32 /*version*/)const
-   {
-   TEditWindow *o = GetObject();
-   ReadBaseObject((TWindow *) o, is);
-
-   is >> (TEditFile *) o->Editor;
-
-   return o;
-   }
-
-//
-// writes the TEditWindow to the passed opstream
-//
-void TEditWindow::Streamer::Write(opstream &os)const
-   {
-   TEditWindow *o = GetObject();
-   WriteBaseObject((TWindow *) o, os);
-   os << o->Editor;
-   }
 
 DEFINE_RESPONSE_TABLE1(TEditWindow, TFrameWindow)
   EV_WM_SIZE,
@@ -158,6 +136,4 @@ DEFINE_RESPONSE_TABLE1(TEditWindow, TFrameWindow)
   EV_WM_RBUTTONUP,
   EV_COMMAND(CM_FILEPRINT, CmFilePrint),
 END_RESPONSE_TABLE;
-
-IMPLEMENT_STREAMABLE1(TEditWindow, TFrameWindow);
 
