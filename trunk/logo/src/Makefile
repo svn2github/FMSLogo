@@ -82,7 +82,6 @@ Dep_fmslogodexe = \
    RELEASE\eval.obj\
    RELEASE\files.obj\
    RELEASE\fileswnd.obj\
-   RELEASE\filewnd.obj\
    RELEASE\gbm.obj\
    RELEASE\gbmhelp.obj\
    RELEASE\gbmgif.obj\
@@ -139,7 +138,6 @@ RELEASE\error.obj+
 RELEASE\eval.obj+
 RELEASE\files.obj+
 RELEASE\fileswnd.obj+
-RELEASE\filewnd.obj+
 RELEASE\gbm.obj+
 RELEASE\gbmhelp.obj+
 RELEASE\gbmgif.obj+
@@ -268,11 +266,6 @@ RELEASE\files.obj :  files.cpp
 RELEASE\fileswnd.obj :  fileswnd.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ fileswnd.cpp
-|
-
-RELEASE\filewnd.obj :  filewnd.cpp
-  $(BCC32) -c @&&|
- $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ filewnd.cpp
 |
 
 RELEASE\gbm.obj :  gbm.cpp

@@ -28,13 +28,15 @@ TMyFileWindow::TMyFileWindow(
    LPCSTR   ATitle,
    LPCSTR   AFileName,
    NODE *   args
-) : TFileWindow(AParent, ATitle, AFileName),
-    hEdtFont(NULL)
+) : TEditWindow(AParent, ATitle),
+    hEdtFont(NULL),
+    args_list(args),
+    FileName(NULL)
    {
-   args_list = args;
-
    AssignMenu("IDM_FILECOMMANDS");
    Attr.AccelTable = "FILECOMMANDS";
+
+   FileName = AFileName ? strnewdup(AFileName) : 0;
    }
 
 TMyFileWindow::~TMyFileWindow()
@@ -43,7 +45,163 @@ TMyFileWindow::~TMyFileWindow()
       {
       DeleteObject(hEdtFont);
       }
+      
+   if (HWindow)
+      {
+      HMENU oldMenu = GetMenu();
+      if (oldMenu)
+         {
+         ::DestroyMenu(oldMenu);
+         }
+      }
+
+   delete FileName;
    }
+
+//
+// saves the contents of the TEdit child control into the file currently
+// being editted
+//
+// returns true if the file was saved or Editor->IsModified returns false
+//(contents already saved)
+//
+bool TMyFileWindow::Save()
+   {
+   if (Editor->IsModified())
+      {
+      if (FileName != NULL)
+         {
+         return Write();
+         }
+      }
+   else
+      {
+      return true; //editor's contents haven't been changed
+      }
+   }
+
+//
+// reads the contents of a previously-specified file into the TEdit
+// child control
+//
+bool TMyFileWindow::Read(const char *fileName)
+   {
+   Editor->LimitText(0x7FFFFFF);
+
+   if (!fileName)
+      {
+      if (FileName)
+         {
+         fileName = FileName;
+         }
+      else
+         {
+         return false;
+         }
+      }
+
+   bool success = false;
+   int file = _lopen(fileName, OF_READ);
+
+   if (file != -1)
+      {
+      long charsToRead = _llseek(file, 0, SEEK_END);
+      _llseek(file, 0, SEEK_SET);
+
+      if (charsToRead < INT_MAX && charsToRead > 0)
+         {
+         Editor->Clear();
+         //
+         // Lock and resize Editor's buffer to the size of the file
+         // Then if OK, read the file into editBuffer
+         //
+         char *editBuffer = new char[charsToRead + 1];
+         if (editBuffer)
+            {
+            if (_lread(file, editBuffer, charsToRead) == charsToRead)
+               {
+               editBuffer[charsToRead] = '\0';
+               success = true;
+               Editor->SetWindowText(editBuffer);
+               Editor->ClearModify();
+               }
+            delete [] editBuffer;
+            }
+         }
+      _lclose(file);
+      }
+
+   if (!success)
+      {
+      char err[MAXPATH + 33];
+
+      wsprintf(err, "Unable to read file \"%s\" from disk", FileName);
+      MessageBox(err, GetModule()->GetName(), MB_ICONEXCLAMATION | MB_OK);
+      }
+   return success;
+   }
+
+//
+// writes the contents of the TEdit child control to a previously-specified
+// file
+//
+bool TMyFileWindow::Write(const char * fileName)
+   {
+   if (!fileName)
+      {
+      if (FileName)
+         {
+         fileName = FileName;
+         }
+      else
+         {
+         return false;
+         }
+      }
+
+   int file = _lcreat(fileName, 0);
+   if (file == -1)
+      {
+      char msg[MAXPATH + 33];
+
+      wsprintf(msg, "Unable to write file \"%s\" to disk", FileName);
+      MessageBox(msg, GetModule()->GetName(), MB_ICONEXCLAMATION | MB_OK);
+      return false;
+      }
+
+   bool success = false;
+
+   char *editBuffer = new char [Editor->GetWindowTextLength() + 4];
+   if (editBuffer)
+      {
+      memset(editBuffer, 0, Editor->GetWindowTextLength() + 4);
+
+      long iLength = Editor->GetWindowTextLength();
+      Editor->GetWindowText(editBuffer, iLength + 1);
+      if (editBuffer[iLength - 1] != '\n')
+         {
+         editBuffer[iLength + 0] = '\r';
+         editBuffer[iLength + 1] = '\n';
+         editBuffer[iLength + 2] = '\0';
+         }
+
+      success = _lwrite(
+         file,
+         editBuffer,
+         Editor->GetWindowTextLength() + 4) != (WORD) - 1;
+
+      delete [] editBuffer;
+
+      if (success)
+         {
+         Editor->ClearModify();
+         }
+      }
+   _lclose(file);
+
+   return success;
+   }
+
 
 void TMyFileWindow::CMExit()
    {
@@ -253,11 +411,44 @@ void TMyFileWindow::CMTest()
    delete [] theText;
    }
 
+//
+// sets the file name of the window and updates the caption
+//
+void TMyFileWindow::SetFileName(const char *fileName)
+   {
+   // BUG: this should be strcmp while accounting for NULL
+   if (FileName != fileName)
+      {
+      delete FileName;
+      FileName = fileName ? strnewdup(fileName) : 0;
+      }
+
+   const char *p = FileName ? FileName : "(Untitled)";
+
+   if (!Title || !*Title)
+      {
+      SetWindowText(p);
+      }
+   else
+      {
+      char newCaption[81];
+
+      wsprintf(newCaption, "%s - %s", Title, p);
+      SetWindowText(newCaption);
+      }
+   }
+
 
 void TMyFileWindow::SetupWindow()
    {
-   TFileWindow::SetupWindow();
+   TEditWindow::SetupWindow();
+   SetFileName(FileName);
 
+   if (FileName && !Read())
+      {
+      SetFileName(0);
+      }
+   
    LOGFONT lf;
    GetPrivateProfileFont("EditFont", lf);
    hEdtFont = CreateFontIndirect(&lf);
@@ -456,7 +647,7 @@ void TMyFileWindow::EvDestroy()
          wrect.Height());
       }
 
-   TFileWindow::DefaultProcessing();
+   TEditWindow::DefaultProcessing();
    }
 
 
@@ -482,7 +673,7 @@ bool TMyFileWindow::CanClose()
    return true;
    }
 
-DEFINE_RESPONSE_TABLE1(TMyFileWindow, TFileWindow)
+DEFINE_RESPONSE_TABLE1(TMyFileWindow, TEditWindow)
   EV_COMMAND(CM_EDALLEXIT, CMExit),
   EV_COMMAND(CM_FILESAVETOWORKSPACE, CMSaveToWorkspace),
   EV_COMMAND(CM_FILESAVEANDEXIT, CMSaveAndExit),

@@ -42,15 +42,17 @@ typedef struct
    }
 CUTMAP;
 
-class TMyFileWindow : public TFileWindow
+class TMyFileWindow : public TEditWindow
    {
  public:
 
-   NODE *args_list;
-   HFONT hEdtFont;
-
    TMyFileWindow(TWindow *, LPCSTR, LPCSTR, NODE *);
    ~TMyFileWindow();
+
+   bool Save();
+   bool Read(const char *fileName = NULL);
+   bool Write(const char *FileName = NULL);
+   void SetFileName(const char *fileName);
 
    bool CanClose();
    int EndEdit();
@@ -72,6 +74,12 @@ class TMyFileWindow : public TFileWindow
    virtual void SetupWindow();
 
    DECLARE_RESPONSE_TABLE(TMyFileWindow);
+
+private:
+   char *FileName;
+   bool IsNewFile;
+   NODE *args_list;
+   HFONT hEdtFont;
    }
 ;
 

@@ -63,7 +63,6 @@
 #include "3dsolid.h"
 #include "globals.h"
 #include "editwnd.h"
-#include "filewnd.h"
 #include "class.h"
 #include "colordlg.h"
 #include "sizedlg.h"
