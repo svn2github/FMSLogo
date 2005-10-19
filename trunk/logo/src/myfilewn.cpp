@@ -171,31 +171,35 @@ bool TMyFileWindow::Write(const char * fileName)
 
    bool success = false;
 
-   char *editBuffer = new char [Editor->GetWindowTextLength() + 4];
-   if (editBuffer)
+   int windowTextLength = Editor->GetWindowTextLength();
+   int editBufferLength = windowTextLength + 2; // "\r\n"
+   char *editBuffer = new char [editBufferLength];
+   if (editBuffer != NULL)
       {
-      memset(editBuffer, 0, Editor->GetWindowTextLength() + 4);
+      memset(editBuffer, 0, editBufferLength);
 
-      long iLength = Editor->GetWindowTextLength();
-      Editor->GetWindowText(editBuffer, iLength + 1);
-      if (editBuffer[iLength - 1] != '\n')
+      Editor->GetWindowText(editBuffer, windowTextLength);
+      if (windowTextLength != 0 && editBuffer[windowTextLength - 1] != '\n')
          {
-         editBuffer[iLength + 0] = '\r';
-         editBuffer[iLength + 1] = '\n';
-         editBuffer[iLength + 2] = '\0';
+         editBuffer[windowTextLength + 0] = '\r';
+         editBuffer[windowTextLength + 1] = '\n';
+         }
+      else
+         {
+         editBufferLength = windowTextLength;
          }
 
       success = _lwrite(
          file,
          editBuffer,
-         Editor->GetWindowTextLength() + 4) != (WORD) - 1;
-
-      delete [] editBuffer;
+         editBufferLength) != (WORD) -1;
 
       if (success)
          {
          Editor->ClearModify();
          }
+
+      delete [] editBuffer;
       }
    _lclose(file);
 
