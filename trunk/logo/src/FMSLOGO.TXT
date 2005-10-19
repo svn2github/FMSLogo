@@ -26,6 +26,18 @@ For information about UCBLogo, please contact Brian Harvey
 
 Part II) New features/bugs fixed:
 
+  * Added for ???,
+    o Fix bug #1327817; The editor now only prompts you to save your
+      changes if you actually changed something.
+    o Fix bug #1327706; FORM no longer supports the "debugging aid"
+      of passing the parameters to printf when the width is negative.
+    o Implement feature request #1327732; FMSLogo now implements
+      ELLIPSEARC2 as a more consistent name for ELLIPSA2.
+    o Fix bug #1327719; FMSLogo now uses the registered applicaton
+      for reading the release notes.
+    o Fix bug #1330752; FMSLogo no longer appends garbage bytes to 
+      saved files.
+
   * Added for 6.6a,
     o Fix bug #1324580; BITLOADSIZE works correctly again.
     o Mitigate bug #1327300; FMSLogo now verifies %TMP% on startup
