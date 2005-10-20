@@ -39,6 +39,8 @@ TRichEditWithPopup::TRichEditWithPopup(
    PopupMenu.AppendMenu(MF_STRING, CM_EDITCOPY,   "Copy");
    PopupMenu.AppendMenu(MF_STRING, CM_EDITPASTE,  "Paste");
    PopupMenu.AppendMenu(MF_STRING, CM_EDITDELETE, "Delete");
+   PopupMenu.AppendMenu(MF_SEPARATOR, 0, NULL);
+   PopupMenu.AppendMenu(MF_STRING, CM_HELPEDIT_TOPIC, "Topic Search");
    }
 
 TRichEditWithPopup::~TRichEditWithPopup()
@@ -71,9 +73,62 @@ void TRichEditWithPopup::CmPasteAsText()
    }
 
 
+// paste as raw text so that we don't preserve any
+// formatting of rich text.
+void TRichEditWithPopup::CmHelpEditTopic()
+   {
+   bool didHelp = false;
+
+   // get the keyword selected
+   UINT start;
+   UINT end;
+   GetSelection(start, end);
+   if (start < end && end < start + 80)
+      {
+      char buffer[100] = {0};
+
+      GetSubText(buffer, start, end);
+
+      char * selection       = buffer;
+      int    selectionLength = end - start;
+
+      // remove leading whitespace
+      while (isspace(selection[0]))
+         {
+         selection++;
+         selectionLength--;
+         }
+
+      // strip off everything after the first word
+      char * ptr = selection;
+      while (*ptr != '\0' && !isspace(*ptr))
+         {
+         ptr++;
+         }
+
+      // if there was some non-space selected,
+      if (ptr != selection)
+         {
+         // truncate the selection after the first word
+         *ptr = '\0';
+
+         // and look it up in the online help
+         do_help(selection);
+         didHelp = true;
+         }
+      }
+
+   if (!didHelp)
+      {
+      do_help(NULL);
+      }
+   }
+
+
 DEFINE_RESPONSE_TABLE1(TRichEditWithPopup, TRichEdit)
   EV_WM_RBUTTONUP,
-  EV_COMMAND(CM_EDITPASTE, CmPasteAsText),
+  EV_COMMAND(CM_EDITPASTE,      CmPasteAsText),
+  EV_COMMAND(CM_HELPEDIT_TOPIC, CmHelpEditTopic),
 END_RESPONSE_TABLE;
 
 

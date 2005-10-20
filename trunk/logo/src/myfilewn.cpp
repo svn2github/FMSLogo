@@ -273,65 +273,7 @@ void TMyFileWindow::CMHelp()
 
 void TMyFileWindow::CMHelpEditTopic()
    {
-   bool didHelp = false;
-
-   // get the keyword selected
-   UINT start;
-   UINT end;
-   Editor->GetSelection(start, end);
-   if ((start < end) && (end-start < 80))
-      {
-      char theText[100];
-      Editor->GetSubText(theText, start, end);
-
-      // clean up line before passing to help
-      if (strlen(theText) > 0)
-         {
-         int i = strlen(theText) - 1;
-         while ((i > 0) && (theText[i] == ' '))
-            {
-            theText[i--] = '\0';
-            }
-
-         if (strlen(theText) > 0)
-            {
-            i = 0;
-            while ((i < strlen(theText)) && (theText[i] == ' '))
-               {
-               i++;
-               }
-
-            char * ptr = theText + i;
-
-            if (strlen(ptr) > 0)
-               {
-               if (strchr(ptr,'\r'))
-                  {
-                  *strchr(ptr,'\r') = '\0';
-                  }
-
-               if (strlen(ptr) > 0)
-                  {
-                  if (strchr(ptr,'\n'))
-                     {
-                     *strchr(ptr,'\n') = '\0';
-                     }
-
-                  if (strlen(ptr) > 0)
-                     {
-                     do_help(ptr);
-                     }
-                     didHelp = true;
-                  }
-               }
-            }
-         }
-      }
-
-   if (!didHelp)
-      {
-      do_help(NULL);
-      }
+   Editor->CmHelpEditTopic();
    }
 
 void TMyFileWindow::CMTest()

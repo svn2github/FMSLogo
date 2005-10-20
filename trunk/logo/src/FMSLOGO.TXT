@@ -37,6 +37,7 @@ Part II) New features/bugs fixed:
       for reading the release notes.
     o Fix bug #1330752; FMSLogo no longer appends garbage bytes to 
       saved files.
+    o Add a "Topic Search" item to the editor's context menu.
 
   * Added for 6.6a,
     o Fix bug #1324580; BITLOADSIZE works correctly again.

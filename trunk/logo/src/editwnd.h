@@ -31,10 +31,12 @@ public:
 
    ~TRichEditWithPopup();
 
+   void  CmHelpEditTopic(); // CM_HELPEDIT_TOPIC
+
 protected:
 
    void  EvRButtonUp(UINT, TPoint &);
-   void  CmPasteAsText();  // CM_PASTE
+   void  CmPasteAsText();   // CM_PASTE
 
    TPopupMenu PopupMenu;
 
@@ -44,7 +46,7 @@ protected:
 class TEditWindow : public TFrameWindow
    {
  public:
-   TRichEdit *Editor;
+   TRichEditWithPopup *Editor;
 
    TEditWindow(TWindow * parent, const char far * title, TModule * module = 0);
 
