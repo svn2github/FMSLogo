@@ -85,18 +85,16 @@ void TRichEditWithPopup::CmHelpEditTopic()
    GetSelection(start, end);
    if (start < end && end < start + 80)
       {
-      char buffer[100] = {0};
+      char buffer[100] = {0}; // NUL-terminate
 
       GetSubText(buffer, start, end);
-
-      char * selection       = buffer;
-      int    selectionLength = end - start;
+      
+      char * selection = buffer;
 
       // remove leading whitespace
       while (isspace(selection[0]))
          {
          selection++;
-         selectionLength--;
          }
 
       // strip off everything after the first word
