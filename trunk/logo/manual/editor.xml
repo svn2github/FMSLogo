@@ -1,4 +1,4 @@
-<chapter>
+<chapter id="editor">
     <title>Editor</title>
 
     <para>When you exit the editor, Logo loads the revised definitions and modifies the workspace accordingly.
