@@ -1,0 +1,22 @@
+TO SHOWGAMEPORTSTATE
+
+  LOCALMAKE "x INGAMEPORT 1
+  LOCALMAKE "y INGAMEPORT 2
+  LOCALMAKE "z INGAMEPORT 4
+  LOCALMAKE "a INGAMEPORT 8
+
+  LOCALMAKE "state INPORT 513
+
+  LOCALMAKE "vec0 IFELSE (BitAND :state 1)   = 0 [0] [1]
+  LOCALMAKE "vec1 IFELSE (BitAND :state 2)   = 0 [0] [1]
+  LOCALMAKE "vec2 IFELSE (BitAND :state 4)   = 0 [0] [1]
+  LOCALMAKE "vec3 IFELSE (BitAND :state 8)   = 0 [0] [1]
+  LOCALMAKE "vec4 IFELSE (BitAND :state 16)  = 0 [0] [1]
+  LOCALMAKE "vec5 IFELSE (BitAND :state 32)  = 0 [0] [1]
+  LOCALMAKE "vec6 IFELSE (BitAND :state 64)  = 0 [0] [1]
+  LOCALMAKE "vec7 IFELSE (BitAND :state 128) = 0 [0] [1]
+  LOCALMAKE "vec8 IFELSE (BitAND :state 256) = 0 [0] [1]
+
+  print (word "x= :x "| y=| :y "| z=| :z "| a=| :a "| vec=| :vec0 :vec1 :vec2 :vec3 :vec4 :vec4 :vec5 :vec6 :vec7 :vec8)
+END
+
