@@ -8,6 +8,7 @@ TO BITLOADSIZETEST :width :height :bitdepth
   PENDOWN
 
   ; save the bitmap
+  LOCALMAKE "oldactivearea ACTIVEAREA
   SETACTIVEAREA (list 0 0 :width :height)
   (BITSAVE "bitmap-test.bmp :bitdepth)
 
@@ -20,6 +21,8 @@ TO BITLOADSIZETEST :width :height :bitdepth
     (list "|Size is| :bitmapsize) ~
     (list "|[| :width :height "|]|)
 
+  ; restore the previous active area
+  SETACTIVEAREA :oldactivearea
 END
 
 TO BITMAPTEST
