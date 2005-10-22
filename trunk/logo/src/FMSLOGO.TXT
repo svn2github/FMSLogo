@@ -38,6 +38,8 @@ Part II) New features/bugs fixed:
     o Fix bug #1330752; FMSLogo no longer appends garbage bytes to 
       saved files.
     o Add a "Topic Search" item to the editor's context menu.
+    o Fix INGAMEPORT to work on Windows XP (instead of crash).
+    o Fix bug #1327707; INPORT no longer crashes on Win XP.
 
   * Added for 6.6a,
     o Fix bug #1324580; BITLOADSIZE works correctly again.

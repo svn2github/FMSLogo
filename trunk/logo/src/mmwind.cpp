@@ -59,22 +59,12 @@ NODE *lsound(NODE *arg)
                }
 
             /* play it */
-            long frequency = hertz;
-            if (frequency < 37)
-               {
-               frequency = 37;
-               }
-               
-            if (g_OsVersionInformation.dwPlatformId == VER_PLATFORM_WIN32_NT)
-               {
-               Beep(frequency, duration);
-               }
-            else
-               {
-               MyBeep(frequency, duration);
-               }
+            tone(hertz, duration);
 
-            if (arg != NIL) arg = cdr(arg);
+            if (arg != NIL)
+               {
+               arg = cdr(arg);
+               }
             }
          }
       else

@@ -21,99 +21,128 @@
 
 #include "allwind.h"
 
-BOOL MyBeep(DWORD dwFreq, DWORD dwDuration)
+BOOL MyBeep(DWORD frequency, DWORD duration)
    {
+   
+   // Beep() ignores frequency/duration on Win9X series
+   if (g_OsVersionInformation.dwPlatformId == VER_PLATFORM_WIN32_NT)
+      {
+      // use the Win32 Beep
+      Beep(frequency, duration);
+      }
+   else
+      {
+      // interface directly with the hardware
+      
 #ifndef NOASM
-   WORD count = 1193180L / dwFreq;
-   unsigned char count_lo = LOBYTE(count);
-   unsigned char count_hi = HIBYTE(count);
+      WORD count = 1193180L / frequency;
+      unsigned char count_lo = LOBYTE(count);
+      unsigned char count_hi = HIBYTE(count);
 
-   _asm
-      {
-      mov al, 0xB6
-      out 0x43, al
-      mov al, count_lo
-      out 0x42, al
-      mov al, count_hi
-      out 0x42, al
-      xor al, al
-      in al, 0x61
-      or al, 0x03
-      out 0x61, al
-      }
+      _asm
+         {
+         mov al, 0xB6
+         out 0x43, al
+         mov al, count_lo
+         out 0x42, al
+         mov al, count_hi
+         out 0x42, al
+         xor al, al
+         in al, 0x61
+         or al, 0x03
+         out 0x61, al
+         }
 
-   clock_t endTime = dwDuration + clock();
-   while (endTime > clock())
-      {
-      // empty loop
-      }
+      clock_t endTime = duration + clock();
+      while (endTime > clock())
+         {
+         // empty loop
+         }
 
-   _asm
-      {
-      xor al, al
-      in al, 0x61
-      xor al, 0x03
-      out 0x61, al
+      _asm
+         {
+         xor al, al
+         in al, 0x61
+         xor al, 0x03
+         out 0x61, al
+         }
+#endif // NOASM
       }
-#endif
 
    return TRUE;
    }
 
 void Myoutportb(short portid, unsigned char value)
    {
-#ifndef NOASM
-   _asm
+
+   // the assembly code would crash on Windows NT
+   if (g_OsVersionInformation.dwPlatformId != VER_PLATFORM_WIN32_NT)
       {
-      mov dx, portid
-      mov al, value
-      out dx, al
+#ifndef NOASM
+     _asm
+        {
+        mov dx, portid
+        mov al, value
+        out dx, al
+        }
+#endif // NOASM
       }
-#endif
    }
 
 unsigned char Myinportb(short portid)
    {
    unsigned char value = 0;
 
-#ifndef NOASM
-   _asm
+   // the assembly code would crash on Windows NT
+   if (g_OsVersionInformation.dwPlatformId != VER_PLATFORM_WIN32_NT)
       {
-      mov dx, portid
-      xor al, al
-      in al, dx
-      mov value, al
+#ifndef NOASM
+      _asm
+         {
+         mov dx, portid
+         xor al, al
+         in al, dx
+         mov value, al
+         }
+#endif // NOASM
       }
-#endif
 
    return value;
    }
 
 void Myoutport(short portid, short value)
    {
-#ifndef NOASM
-   _asm
+   // the assembly code would crash on Windows NT
+   if (g_OsVersionInformation.dwPlatformId != VER_PLATFORM_WIN32_NT)
       {
-      mov dx, portid
-      mov ax, value
-      out dx, ax
+#ifndef NOASM
+      _asm
+         {
+         mov dx, portid
+         mov ax, value
+         out dx, ax
+         }
+#endif // NOASM
       }
-#endif
    }
 
 short Myinport(short portid)
    {
    short value = 0;
 
-#ifndef NOASM
-   _asm
+   // the assembly code would crash on Windows NT
+   if (g_OsVersionInformation.dwPlatformId != VER_PLATFORM_WIN32_NT)
       {
-      mov dx, portid
-      xor ax, ax
-      in ax, dx
-      mov value, ax
+#ifndef NOASM
+      _asm
+         {
+         mov dx, portid
+         xor ax, ax
+         in ax, dx
+         mov value, ax
+         }
+#endif // NOASM
       }
-#endif
 
    return value;
    }

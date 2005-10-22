@@ -293,25 +293,12 @@ BOOLEANx Button()
 
 void tone(FIXNUM frequency, FIXNUM duration)
    {
-   OSVERSIONINFO VersionInformation;
-   memset(&VersionInformation, 0, sizeof(OSVERSIONINFO));
-   VersionInformation.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
-   GetVersionEx(&VersionInformation);
-
    if (frequency < 37)
       {
       frequency = 37;
       }
 
-   // Beep() ignores frequency/duration on Win9X series
-   if (VersionInformation.dwPlatformId == VER_PLATFORM_WIN32_NT)
-      {
-      Beep(frequency, duration);
-      }
-   else
-      {
-      MyBeep(frequency, duration);
-      }
+   MyBeep(frequency, duration);
    }
 
 FIXNUM t_height()
