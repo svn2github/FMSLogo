@@ -511,8 +511,6 @@ extern HPALETTE OldPalette2;
 
 extern HBRUSH OldBrush;
 
-extern HFONT OldFont;
-
 extern LOGFONT FontRec;
 
 extern LOGPEN NormalPen;
