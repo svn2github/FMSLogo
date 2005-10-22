@@ -1,0 +1,12 @@
+PASS: Size is [100 100] , as expected.
+PASS: Size is [100 101] , as expected.
+PASS: Size is [101 100] , as expected.
+PASS: FORM 123.1 10 10 returned 123.1000000000 , as expected.
+PASS: 'FORM 123.1 10000 10' did not crash
+PASS: 'FORM 123.1 10 10000' did not crash
+PASS: 'FORM -1 -1 "%s%s' did not crash
+FAIL: The editor window did not popup
+PASS: INPORT did not crash
+PASS: INPORTB did not crash
+PASS: OUTPORT did not crash
+PASS: OUTPORTB did not crash
