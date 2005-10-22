@@ -582,5 +582,7 @@ extern LINEX TurtlePoints[][4];
 extern void MakeHelpPathName(char *szFileName, LPCSTR);
 extern void ContextHelp(HWND hWindow, TEdit *Editor);
 
+extern OSVERSIONINFO g_OsVersionInformation;
+
 #endif // __CLASS_H_
 

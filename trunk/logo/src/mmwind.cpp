@@ -25,30 +25,16 @@ HMIDIOUT hMidiOut = 0;
 
 NODE *lsound(NODE *arg)
    {
-   int duration;
-   int hertz;
-   int odd;
-
-   NODE *args;
-
-   long frequency;
-
    /* open sound and get arg list */
-   OSVERSIONINFO VersionInformation;
-   memset(&VersionInformation, 0, sizeof(OSVERSIONINFO));
-   VersionInformation.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
-
-   args = car(arg);
+   NODE *args = car(arg);
 
    /* must be a list that contains something */
-
    if (is_list(args) && (args != NIL))
       {
 
       /* count items in list and check that they are pairs */
-
       arg = args;
-      odd = 0;
+      int odd = 0;
 
       while (arg != NIL)
          {
@@ -57,22 +43,29 @@ NODE *lsound(NODE *arg)
          }
 
       /* if sound creation ok and we have pairs continue */
-
       if (!odd)
          {
          arg = args;
 
-         /* fill queue with freq/duration pairs */
-
+         /* play each freq/duration pair */
          while (arg != NIL)
             {
-            hertz = int_arg(arg);
-            if (cdr(arg) != NIL) duration = int_arg(arg = cdr(arg));
+            int duration = 0;
 
-            frequency = hertz;
-            if (frequency < 37) frequency = 37;
-            GetVersionEx(&VersionInformation);
-            if (VersionInformation.dwPlatformId == VER_PLATFORM_WIN32_NT)
+            int hertz = int_arg(arg);
+            if (cdr(arg) != NIL)
+               {
+               duration = int_arg(arg = cdr(arg));
+               }
+
+            /* play it */
+            long frequency = hertz;
+            if (frequency < 37)
+               {
+               frequency = 37;
+               }
+               
+            if (g_OsVersionInformation.dwPlatformId == VER_PLATFORM_WIN32_NT)
                {
                Beep(frequency, duration);
                }
@@ -83,8 +76,6 @@ NODE *lsound(NODE *arg)
 
             if (arg != NIL) arg = cdr(arg);
             }
-
-         /* play it */
          }
       else
          {

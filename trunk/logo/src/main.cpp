@@ -173,6 +173,8 @@ LINEX TurtlePoints[TURTLES][4];        /* used to store 3 vertices of turtle    
 
 TThreeDSolid ThreeD;
 
+OSVERSIONINFO g_OsVersionInformation;
+
 void putfileeditcombo(char *str)
    {
    MainWindowx->FileEditWindow->SendDlgItemMsg(
@@ -750,6 +752,14 @@ WinMain(
       // cleanly, or if some other application created the mutex,
       // it would more confusing if this Logo didn't start up.
       }
+
+
+
+   /* open sound and get arg list */
+   memset(&g_OsVersionInformation, 0, sizeof g_OsVersionInformation);
+   g_OsVersionInformation.dwOSVersionInfoSize = sizeof g_OsVersionInformation;
+   GetVersionEx(&g_OsVersionInformation);
+
 
    _control87( EM_OVERFLOW, EM_OVERFLOW );
    _control87( EM_UNDERFLOW, EM_UNDERFLOW );
