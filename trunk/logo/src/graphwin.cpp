@@ -2642,28 +2642,33 @@ NODE *lmachine(void)
 
 SIZE labelsize(const char *s)
    {
+   SIZE size = {0};
+   
    HDC screen = GetDC(MainWindowx->ScreenWindow->HWindow);
+   if (screen != NULL)
+      {
+      // get a handle to the label's font
+      HFONT tempFont = CreateFontIndirect(&FontRec);
+      if (tempFont != NULL)
+         {
+         HFONT oldFont = (HFONT) SelectObject(screen, tempFont);
 
-   HFONT TempFont = CreateFontIndirect(&FontRec);
+         GetTextExtentPoint(screen, s, strlen(s), &size);
 
-   OldFont = (HFONT) SelectObject(screen, TempFont);
+         // restore the original font
+         SelectObject(screen, oldFont);
 
-   SIZE size;
-   GetTextExtentPoint(screen, s, strlen(s), &size);
+         DeleteObject(tempFont);
+         }
 
-   SelectObject(screen, OldFont);
-
-   DeleteObject(TempFont);
-
-   ReleaseDC(MainWindowx->ScreenWindow->HWindow, screen);
+      ReleaseDC(MainWindowx->ScreenWindow->HWindow, screen);
+      }
 
    return size;
    }
 
-void label(char *s)
+void label(const char *s)
    {
-   HFONT TempFont;
-
    POINT dest;
 
    if (current_mode == perspectivemode)
@@ -2684,12 +2689,9 @@ void label(char *s)
 
    HDC ScreenDC = GetDC(MainWindowx->ScreenWindow->HWindow);
 
-   FontRec.lfEscapement = (360.0 - (turtle_heading[turtle_which] - 90.0)) * 10;
-   TempFont = CreateFontIndirect(&FontRec);
-
    // memory
    HDC MemDC = CreateCompatibleDC(ScreenDC);
-   OldBitmap = (HBITMAP) SelectObject(MemDC, MemoryBitMap);
+   HBITMAP oldBitmap = (HBITMAP) SelectObject(MemDC, MemoryBitMap);
 
    if (EnablePalette)
       {
@@ -2709,7 +2711,9 @@ void label(char *s)
       SetTextColor(MemDC, pcolor);
       }
 
-   OldFont = (HFONT) SelectObject(MemDC, TempFont);
+   FontRec.lfEscapement = (360.0 - (turtle_heading[turtle_which] - 90.0)) * 10;
+   HFONT tempFont = CreateFontIndirect(&FontRec);
+   HFONT oldFont = (HFONT) SelectObject(MemDC, tempFont);
 
    TextOut(
       MemDC,
@@ -2723,12 +2727,12 @@ void label(char *s)
       SelectPalette(MemDC, OldPalette, FALSE);
       }
 
-   SelectObject(MemDC, OldFont);
-   SelectObject(MemDC, OldBitmap);
+   SelectObject(MemDC, oldFont);
+   SelectObject(MemDC, oldBitmap);
    DeleteDC(MemDC);
 
-   //screen
 
+   // screen
    if (EnablePalette)
       {
       OldPalette = SelectPalette(ScreenDC, ThePalette, FALSE);
@@ -2747,7 +2751,7 @@ void label(char *s)
       SetTextColor(ScreenDC, pcolor);
       }
 
-   OldFont = (HFONT) SelectObject(ScreenDC, TempFont);
+   oldFont = (HFONT) SelectObject(ScreenDC, tempFont);
 
    if (zoom_flag)
       {
@@ -2764,14 +2768,14 @@ void label(char *s)
          strlen(s));
       }
 
-   SelectObject(ScreenDC, OldFont);
+   SelectObject(ScreenDC, oldFont);
 
    if (EnablePalette)
       {
       SelectPalette(ScreenDC, OldPalette, FALSE);
       }
 
-   DeleteObject(TempFont);
+   DeleteObject(tempFont);
 
    ReleaseDC(MainWindowx->ScreenWindow->HWindow, ScreenDC);
    }

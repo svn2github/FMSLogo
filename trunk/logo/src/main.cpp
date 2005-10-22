@@ -83,8 +83,6 @@ HPALETTE OldPalette2;
 
 HBRUSH OldBrush;
 
-HFONT OldFont;
-
 LOGFONT FontRec;
 LOGFONT EditFontRec;
 
