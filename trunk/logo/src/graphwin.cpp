@@ -2640,7 +2640,7 @@ NODE *lmachine(void)
 
    }
 
-SIZE labelsize(char *s)
+SIZE labelsize(const char *s)
    {
    HDC screen = GetDC(MainWindowx->ScreenWindow->HWindow);
 
