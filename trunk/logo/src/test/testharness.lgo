@@ -25,9 +25,8 @@ END
 TO TESTALL
   BITMAPTEST ; from bitmap.lgo
   FORMTEST   ; from form.lgo
-  EDITORTEST ; from editor.lgo
-
-;  PORTTEST   ; from port.lgo
+  EDITORTEST ; from editor.lgo 
+  PORTTEST   ; from port.lgo
 END
 
 ; execute all tests on startup
