@@ -684,7 +684,6 @@ extern NODE *lsetlabelfont(NODE *arg);
 extern NODE *llabelfont(void);
 extern NODE *lsetactivearea(NODE *arg);
 extern NODE *lactivearea(void);
-extern void label(char *s);
 
 extern NODE *lportopen(NODE *args);
 extern NODE *lportclose(void);
