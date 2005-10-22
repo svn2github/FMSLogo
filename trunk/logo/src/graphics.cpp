@@ -142,7 +142,7 @@ void draw_turtle(int erase)
       ThreeD.SetUp();
       ThreeD.SetVolume();
       ThreeD.SetEye();
-		ThreeD.SetLight();
+      ThreeD.SetLight();
 //		if (ThreeD.Tree) ThreeD.View();
       }
 
