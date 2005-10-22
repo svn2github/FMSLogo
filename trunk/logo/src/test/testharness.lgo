@@ -5,11 +5,14 @@ LOAD "port.lgo
 
 
 TO REPORTTESTPASSED :message
-    MESSAGEBOX [Pass] (SENTENCE "|Test Passed:| :message)
+  LOCALMAKE "result (SENTENCE "PASS: :message)
+  PRINT :result
 END
 
 TO REPORTTESTFAILED :message
-    MESSAGEBOX [Fail] (SENTENCE "|Test Failed:| :message)
+  LOCALMAKE "result (SENTENCE "FAIL: :message)
+  PRINT :result
+  MESSAGEBOX [Test Failed] :result
 END
 
 TO REPORTTEST :testpassed :result :expected
@@ -21,14 +24,29 @@ TO REPORTTEST :testpassed :result :expected
 END
 
 
+TO REPORTTESTINITIALIZE
+  OPENWRITE "testlog.txt
+  SETWRITE  "testlog.txt
+END
+
+
+TO REPORTTESTUNINITIALIZE
+  SETWRITE []
+  CLOSE    "testlog.txt
+END
+
 
 TO TESTALL
+
+  REPORTTESTINITIALIZE
+
   BITMAPTEST ; from bitmap.lgo
   FORMTEST   ; from form.lgo
   EDITORTEST ; from editor.lgo 
   PORTTEST   ; from port.lgo
+
+  REPORTTESTUNINITIALIZE
 END
 
 ; execute all tests on startup
 make "startup [TESTALL]
-
