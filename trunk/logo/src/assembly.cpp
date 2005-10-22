@@ -120,7 +120,7 @@ short Myinport(short portid)
 
 int Myingameport(short portid, short mask)
    {
-   short value = -1;
+   int value = -1;
 
    JOYINFOEX joystickInfo;
    joystickInfo.dwSize  = sizeof joystickInfo;
