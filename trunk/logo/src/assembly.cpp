@@ -118,38 +118,69 @@ short Myinport(short portid)
    return value;
    }
 
-short Myingameport(short portid, short mask)
+int Myingameport(short portid, short mask)
    {
-   short value = 0;
+   short value = -1;
 
-#ifndef NOASM
-   _asm
-       {
-       mov bx, mask   /* Store mask in bx   */
-       mov dx, portid /* Store port in dx   */
-       mov cx, 0x0000 /* Init counter       */
-anal1: in al, dx      /* Sample port        */
-       test al, bl    /* Test Idle?         */
-       jz anal2       /* Branch if done     */
-       loop anal1     /* Loop and dec cx    */
-       jmp error      /* Time out (cx wrap?)*/
-anal2: mov cx, 0x0000 /* Init counter       */
-       cli            /* Disable interrupts */
-       mov ax, mask   /* Get mask into al   */
-       out dx, al     /* Reset Gameport     */
-anal3: in al, dx      /* Sample Gameport    */
-       test al, bl    /* Test if done       */
-       jz anal4       /* Branch if done     */
-       loop anal3     /* loop and dec cx    */
-       sti            /* Restore interrupts */
-       jmp error      /* Time out           */
-anal4: sti            /* restor interrupts  */
-       neg cx         /* negate counter     */
-       jmp anal5      /* return             */
-error: mov cx, 0xffff /* return error code  */
-anal5: mov value, cx  /* return value       */
+   JOYINFOEX joystickInfo;
+   joystickInfo.dwSize  = sizeof joystickInfo;
+   joystickInfo.dwFlags = JOY_RETURNX | JOY_RETURNY | JOY_RETURNZ | JOY_RETURNR;
+
+   UINT totalJoysticks = joyGetNumDevs();
+   if (totalJoysticks == 0)
+      {
+      return -1;
       }
-#endif
+
+   JOYCAPS joystickCapabilities;
+
+   MMRESULT result = joyGetDevCaps(
+      JOYSTICKID1,
+      &joystickCapabilities,
+      sizeof joystickCapabilities);
+   if (result != JOYERR_NOERROR)
+      {
+      return -1;
+      }
+
+   result = joyGetPosEx(
+      JOYSTICKID1,
+      &joystickInfo);
+   if (result == JOYERR_NOERROR)
+      {
+      if (mask == 1)
+         {
+         if (joystickCapabilities.wXmin != joystickCapabilities.wXmax)
+            {
+            value = (joystickInfo.dwXpos - joystickCapabilities.wXmin) * 1000 /
+               (joystickCapabilities.wXmax - joystickCapabilities.wXmin);
+            }
+         }
+      else if (mask == 2)
+         {
+         if (joystickCapabilities.wYmin != joystickCapabilities.wYmax)
+            {
+            value = (joystickInfo.dwYpos - joystickCapabilities.wYmin) * 1000 /
+               (joystickCapabilities.wYmax - joystickCapabilities.wYmin);
+            }
+         }
+      else if (mask == 4)
+         {
+         if (joystickCapabilities.wRmin != joystickCapabilities.wRmax)
+            {
+            value = (joystickInfo.dwRpos - joystickCapabilities.wRmin) * 1000 /
+              (joystickCapabilities.wRmax - joystickCapabilities.wRmin);
+            }
+         }
+      else if (mask == 8)
+         {
+         if (joystickCapabilities.wZmin != joystickCapabilities.wZmax)
+            {
+            value = (joystickInfo.dwZpos - joystickCapabilities.wZmin) * 1000 /
+               (joystickCapabilities.wZmax - joystickCapabilities.wZmin);
+            }
+         }
+     }
 
    return value;
    }

@@ -10,7 +10,7 @@ void Myoutportb(short portid, unsigned char value);
 unsigned char Myinportb(short portid);
 void Myoutport(short portid, short value);
 short Myinport(short portid);
-short Myingameport (short portid, short mask);
+int Myingameport (short portid, short mask);
 
 extern void gr_mode(void);             /*routine                              */
 extern void ibm_prepare_to_draw_turtle(void);
