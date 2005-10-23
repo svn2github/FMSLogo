@@ -7,7 +7,7 @@
 
 Part    I) Kit Description/Location:
 Part   II) New features/bugs fixed:
-Part  III) Installation:
+Part  III) Special Thanks:
 Part   IV) Standard features:
 Part    V) Recommended usage:
 Part   VI) Reporting bugs:
@@ -106,15 +106,17 @@ Part II) New features/bugs fixed:
     o Fixed command line version of SETLABELFONT not always
       finding all fonts.
 
-Thanks to many folks for supporting FMSLogo.
+Part III) Special Thanks:
 
-Special thanks to:
+  Thanks to many folks for supporting FMSLogo.
 
-  George Mills <gmills@softronix.com>
-  Brian Harvey <bh@cs.berkeley.edu>
-  Jim Muller
-  Erich Neuwirth <neuwirth@smc.univie.ac.at>
-  Yehuda Katz <yehuka@softhome.net>
+  Special thanks to:
+
+    George Mills <gmills@softronix.com>
+    Brian Harvey <bh@cs.berkeley.edu>
+    Jim Muller
+    Erich Neuwirth <neuwirth@smc.univie.ac.at>
+    Yehuda Katz <yehuka@softhome.net>
 
 Part IV) Standard features:
 
