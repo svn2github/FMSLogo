@@ -34,8 +34,7 @@ TMyFileWindow::TMyFileWindow(
     FileName(NULL)
    {
    AssignMenu("IDM_FILECOMMANDS");
-   Attr.AccelTable = "FILECOMMANDS";
-
+   Attr.AccelTable = "IDM_FILECOMMANDS";
    FileName = AFileName ? strnewdup(AFileName) : 0;
    }
 

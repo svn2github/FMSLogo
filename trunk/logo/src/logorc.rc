@@ -9,7 +9,6 @@
 #include <owl\except.rc>
 
 #include "stdwnds.rc"
-#include "fileacc.rc"
 #include "filemenu.rc"
 #ifdef CTL3D
 #include "ctl3d.rc"
@@ -347,5 +346,3 @@ STRINGTABLE
 {
  IDS_CANNOTFIND, "Cannot find %s"
 }
-
-
