@@ -5,8 +5,7 @@
 
 <varlistentry><term>Synopsis</term>
 <listitem>
-<synopsis><command>INGAMEPORT</command> <parameter>mask</parameter>
-(<command>INGAMEPORT</command> <parameter>mask</parameter> <parameter>portid</parameter>)</synopsis>
+<synopsis><command>INGAMEPORT</command> <parameter>mask</parameter></synopsis>
 </listitem>
 </varlistentry>
 
@@ -15,12 +14,13 @@
 <para>
 Reads the value (or resistance across) the game port channel specified by <parameter>mask</parameter>.
 The <parameter>mask</parameter> parameter must be either 1, 2, 4, or 8.
-The <parameter>portid</parameter> parameter specifies which hardware port you wish to read from (default is 513).
-You can read the button states directly using <code>INPORT 513</code>. 
+If <parameter>mask</parameter> is 1, then INGAMEPORT reads the x-axis.
+If <parameter>mask</parameter> is 1, then INGAMEPORT reads the y-axis.
+You can read the button states using <code>INPORT 513</code>. 
 </para>
 
 <para>
-If nothing is connected to a game port channel the command will eventually time out and output -1.
+INGAMEPORT outputs -1 if nothing is connected to the game port.
 </para>
 </listitem>
 </varlistentry>
