@@ -714,7 +714,12 @@ POLYVIEW
 </userinput></programlisting>
 </para>
 
+   </section>
 
+   <section>
+       <title>Turtle And Window Queries</title>
+      
+        &command-shownp;
    </section>
 
 </chapter>

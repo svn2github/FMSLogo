@@ -262,6 +262,8 @@
   <!ENTITY command-setlight       SYSTEM "command-setlight.xml">
   <!ENTITY command-light          SYSTEM "command-light.xml">
 
+  <!ENTITY command-shownp         SYSTEM "command-shownp.xml">
+
 ]>
 
 <book>
