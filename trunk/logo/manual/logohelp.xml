@@ -256,6 +256,12 @@
   <!ENTITY command-unicon         SYSTEM "command-unicon.xml">
   <!ENTITY command-windowset      SYSTEM "command-windowset.xml">
 
+  <!ENTITY command-polystart      SYSTEM "command-polystart.xml">
+  <!ENTITY command-polyend        SYSTEM "command-polyend.xml">
+  <!ENTITY command-polyview       SYSTEM "command-polyview.xml">
+  <!ENTITY command-setlight       SYSTEM "command-setlight.xml">
+  <!ENTITY command-light          SYSTEM "command-light.xml">
+
 ]>
 
 <book>
