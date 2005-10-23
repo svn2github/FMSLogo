@@ -22,7 +22,7 @@ The center-point of the ellipse will be the turtle's current position.
 </para>
 
 <para>
-See also <link linkend="command-ellipsa2">ELLIPSA2</link>.
+See also <link linkend="command-ellipsearc2">ELLIPSEARC2</link>.
 </para>
 
 </listitem>
