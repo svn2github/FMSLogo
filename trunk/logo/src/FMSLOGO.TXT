@@ -40,6 +40,7 @@ Part II) New features/bugs fixed:
     o Add a "Topic Search" item to the editor's context menu.
     o Fix INGAMEPORT to work on Windows XP (instead of crash).
     o Fix bug #1327707; INPORT no longer crashes on Win XP.
+    o Fix file corruption in mcistrwh.hlp (was corrupted in 6.6).
 
   * Added for 6.6a,
     o Fix bug #1324580; BITLOADSIZE works correctly again.
