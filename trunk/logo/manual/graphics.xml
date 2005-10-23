@@ -493,11 +493,11 @@ Then decide where you want to go next.
        <title>Drawing 3D Solids</title>
 
 <para>
-3D Solids in MSWLogo uses all the standard 3D commands except a few additional commands to help MSWLogo understand what you're drawing.
-In order to do hidden line removal or hidden surface removal you have to define surfaces (not just vectors).
+3D Solids in MSWLogo uses all the standard 3D commands and a few additional commands to help MSWLogo understand what you're drawing.
+In order to do hidden line removal or hidden surface removal, you must define surfaces, not just vectors.
 Surfaces are simply filled polygons.
 You just need to tell MSWLogo when you're starting a surface and when you're done.
-If you used only vectors to draw a box, MSWLogo would not know if it's a 6 Sided closed box (solid cube) or a 4 Sided Box with the top and bottom open.
+If you used only vectors to draw a box, MSWLogo would not know if it's a 6-sided closed box (solid cube) or a 4-sided box with an open top and bottom.
 Vectors alone are ambiguous with respect to surfaces.
 </para>
 
@@ -528,12 +528,12 @@ Here are the new commands:
 <para>
 The PEN color when drawing 3D surfaces is the color of the surface.
 If you drew a BOX in 3D (6 Polygons) that all were drawn the same color, all you'd see is a FILLed octagon looking thing.
-Color is affected by the angle of the surface between your eye ( TURTLE -1) and the light source (TURTLE -3).
+Color is affected by the angle of the surface between your eye (turtle -1) and the light source (turtle -3).
 </para>
 
 <para>
-The 3D lighting model in MSWLogo is very powerful and uses some of the most modern techniques used but it is designed for performance.
-It will not do shadows and reflections etc.
+The 3D lighting model in MSWLogo uses some modern techniques, but is primarily designed for performance.
+It will not do shadows, reflections, etc.
 You may see pixel errors sometimes.
 This is an expected artifact of the algorithm I chose.
 </para>
@@ -720,6 +720,30 @@ POLYVIEW
        <title>Turtle And Window Queries</title>
       
         &command-shownp;
+   </section>
+
+   <section>
+       <title>Pen Control</title>
+      
+<para>
+The turtle carries a pen that can draw pictures.
+At any time the pen can be UP (in which case moving the turtle does not change what's on the graphics screen) or DOWN (in which case the turtle leaves a trace).
+If the pen is down, it can operate in one of three modes: PAINT (so that it draws lines when the turtle moves), ERASE (so that it erases any lines that might have been drawn on or through that path earlier), or REVERSE (so that it inverts the color of each point along the turtle's path).
+</para>
+
+        &command-pendown;
+        &command-penup;
+        &command-penpaint;
+        &command-penerase;
+        &command-penreverse;
+        &command-pennormal;
+        &command-setpencolor;
+        &command-setfloodcolor;
+        &command-setscreencolor;
+        &command-setpensize;
+        &command-setpenpattern;
+        &command-setpen;
+        &command-clearpalette;
    </section>
 
 </chapter>

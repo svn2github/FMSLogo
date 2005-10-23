@@ -264,6 +264,20 @@
 
   <!ENTITY command-shownp         SYSTEM "command-shownp.xml">
 
+  <!ENTITY command-pendown        SYSTEM "command-pendown.xml">
+  <!ENTITY command-penup          SYSTEM "command-penup.xml">
+  <!ENTITY command-penpaint       SYSTEM "command-penpaint.xml">
+  <!ENTITY command-penerase       SYSTEM "command-penerase.xml">
+  <!ENTITY command-penreverse     SYSTEM "command-penreverse.xml">
+  <!ENTITY command-pennormal      SYSTEM "command-pennormal.xml">
+  <!ENTITY command-setpencolor    SYSTEM "command-setpencolor.xml">
+  <!ENTITY command-setfloodcolor  SYSTEM "command-setfloodcolor.xml">
+  <!ENTITY command-setscreencolor SYSTEM "command-setscreencolor.xml">
+  <!ENTITY command-setpensize     SYSTEM "command-setpensize.xml">
+  <!ENTITY command-setpenpattern  SYSTEM "command-setpenpattern.xml">
+  <!ENTITY command-setpen         SYSTEM "command-setpen.xml">
+  <!ENTITY command-clearpalette   SYSTEM "command-clearpalette.xml">
+
 ]>
 
 <book>
