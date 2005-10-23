@@ -12,12 +12,12 @@ TO FORMTEST
     (list :expectedstring)
 
   ; bad input tests
-  CATCH "ERROR [(FORM)]
-  CATCH "ERROR [(FORM 123.1)]
-  CATCH "ERROR [(FORM 123.1 10)]
-  CATCH "ERROR [FORM "string 10 10]
-  CATCH "ERROR [FORM 123.1   12.3 10]
-  CATCH "ERROR [FORM 123.1   10   12.3]
+  RUNBADINPUTTEST [(FORM)]
+  RUNBADINPUTTEST [(FORM 123.1)]
+  RUNBADINPUTTEST [(FORM 123.1 10)]
+  RUNBADINPUTTEST [FORM "string 10 10]
+  RUNBADINPUTTEST [FORM 123.1   12.3 10]
+  RUNBADINPUTTEST [FORM 123.1   10   12.3]
 
   MAKE "string FORM 123.1 10000 10
   REPORTTESTPASSED (sentence "|'FORM 123.1 10000 10' did not crash|)
@@ -26,7 +26,7 @@ TO FORMTEST
   REPORTTESTPASSED (sentence "|'FORM 123.1 10 10000' did not crash|)
 
   ; regression test for bug #1327706 
-  CATCH "ERROR [FORM -1 -1 "%s%s]
+  RUNBADINPUTTEST [FORM -1 -1 "%s%s]
   REPORTTESTPASSED (sentence "|'FORM -1 -1 "%s%s' did not crash|)
 END
 

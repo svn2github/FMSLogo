@@ -2,11 +2,15 @@ LOAD "bitmap.lgo
 LOAD "form.lgo
 LOAD "editor.lgo
 LOAD "port.lgo
+LOAD "label.lgo
 
+
+TO REPORTTESTINFO :message
+  PRINT (SENTENCE "INFO: :message)
+END
 
 TO REPORTTESTPASSED :message
-  LOCALMAKE "result (SENTENCE "PASS: :message)
-  PRINT :result
+  PRINT (SENTENCE "PASS: :message)
 END
 
 TO REPORTTESTFAILED :message
@@ -36,6 +40,18 @@ TO REPORTTESTUNINITIALIZE
 END
 
 
+TO RUNBADINPUTTEST :instructions
+
+  REPORTTESTINFO (SENTENCE "|Executing invalid instruction: '| :instructions "' )
+
+  CATCH "ERROR [ 
+    RUN :instructions 
+    REPORTTESTFAILED (SENTENCE "|Executing '| :instructions "|' did not throw an error|)
+  ]
+
+END
+
+
 TO TESTALL
 
   REPORTTESTINITIALIZE
@@ -44,6 +60,7 @@ TO TESTALL
   FORMTEST   ; from form.lgo
   EDITORTEST ; from editor.lgo 
   PORTTEST   ; from port.lgo
+  LABELTEST  ; from label.lgo
 
   REPORTTESTUNINITIALIZE
 END

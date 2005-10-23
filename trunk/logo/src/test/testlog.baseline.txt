@@ -2,11 +2,33 @@ PASS: Size is [100 100] , as expected.
 PASS: Size is [100 101] , as expected.
 PASS: Size is [101 100] , as expected.
 PASS: FORM 123.1 10 10 returned 123.1000000000 , as expected.
+INFO: Executing invalid instruction: ' (FORM) '
+INFO: Executing invalid instruction: ' (FORM 123.1) '
+INFO: Executing invalid instruction: ' (FORM 123.1 10) '
+INFO: Executing invalid instruction: ' FORM "string 10 10 '
+INFO: Executing invalid instruction: ' FORM 123.1 12.3 10 '
+INFO: Executing invalid instruction: ' FORM 123.1 10 12.3 '
 PASS: 'FORM 123.1 10000 10' did not crash
 PASS: 'FORM 123.1 10 10000' did not crash
+INFO: Executing invalid instruction: ' FORM -1 -1 "%s%s '
 PASS: 'FORM -1 -1 "%s%s' did not crash
 FAIL: The editor window did not popup
 PASS: INPORT did not crash
+INFO: Executing invalid instruction: ' (INPORT) '
+INFO: Executing invalid instruction: ' INPORT [192] '
+INFO: Executing invalid instruction: ' INPORT -1 '
 PASS: INPORTB did not crash
+INFO: Executing invalid instruction: ' (INPORTB) '
+INFO: Executing invalid instruction: ' INPORTB [192] '
+INFO: Executing invalid instruction: ' INPORTB -1 '
 PASS: OUTPORT did not crash
+INFO: Executing invalid instruction: ' (OUTPORT) '
+INFO: Executing invalid instruction: ' (OUTPORT 192) '
+INFO: Executing invalid instruction: ' OUTPORT [192] 0 '
+INFO: Executing invalid instruction: ' OUTPORT -1 0 '
 PASS: OUTPORTB did not crash
+INFO: Executing invalid instruction: ' (OUTPORTB) '
+INFO: Executing invalid instruction: ' (OUTPORTB 192) '
+INFO: Executing invalid instruction: ' OUTPORTB [192] 0 '
+INFO: Executing invalid instruction: ' OUTPORTB -1 0 '
+PASS: The font circle was drawn correctly
