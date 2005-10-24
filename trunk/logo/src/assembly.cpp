@@ -93,8 +93,56 @@ unsigned char Myinportb(short portid)
    {
    unsigned char value = 0;
 
-   // the assembly code would crash on Windows NT
-   if (g_OsVersionInformation.dwPlatformId != VER_PLATFORM_WIN32_NT)
+   if (g_OsVersionInformation.dwPlatformId == VER_PLATFORM_WIN32_NT)
+      {
+      // Add a Special case for reading the joystick port on WinNT.
+      // Reading it directly would cause an access violation,
+      // but we can read it through the Win32 API.
+      if (portid == 0x201)
+         {
+         // hardware port for the joystick port
+         UINT totalJoysticks = joyGetNumDevs();
+         if (totalJoysticks == 0)
+           {
+           return 0;
+           }
+
+         JOYCAPS joystickCapabilities;
+
+         MMRESULT result = joyGetDevCaps(
+            JOYSTICKID1,
+            &joystickCapabilities,
+            sizeof joystickCapabilities);
+         if (result != JOYERR_NOERROR)
+            {
+            return 0;
+            }
+
+         JOYINFOEX joystickInfo;
+         joystickInfo.dwSize  = sizeof joystickInfo;
+         joystickInfo.dwFlags = JOY_RETURNBUTTONS;
+
+         result = joyGetPosEx(
+            JOYSTICKID1,
+            &joystickInfo);
+         if (result == JOYERR_NOERROR)
+            {
+            // Reassemble the original value from the hardware port
+            // It doesn't have to be exact, just good enough.
+            int button1Released = (joystickInfo.dwButtons & JOY_BUTTON1) == 0;
+            int button2Released = (joystickInfo.dwButtons & JOY_BUTTON2) == 0;
+            int button3Released = (joystickInfo.dwButtons & JOY_BUTTON3) == 0;
+            int button4Released = (joystickInfo.dwButtons & JOY_BUTTON4) == 0;
+
+            value =
+                (button1Released << 4) |
+                (button2Released << 5) |
+                (button3Released << 6) |
+                (button4Released << 7);
+            }
+         }
+      }
+   else
       {
 #ifndef NOASM
       _asm
@@ -130,8 +178,57 @@ short Myinport(short portid)
    {
    short value = 0;
 
-   // the assembly code would crash on Windows NT
-   if (g_OsVersionInformation.dwPlatformId != VER_PLATFORM_WIN32_NT)
+   if (g_OsVersionInformation.dwPlatformId == VER_PLATFORM_WIN32_NT)
+      {
+      // Add a Special case for reading the joystick port on WinNT.
+      // Reading it directly would cause an access violation,
+      // but we can read it through the Win32 API.
+      if (portid == 0x201)
+         {
+         // hardware port for the joystick port
+         UINT totalJoysticks = joyGetNumDevs();
+         if (totalJoysticks == 0)
+           {
+           return 0;
+           }
+
+         JOYCAPS joystickCapabilities;
+
+         MMRESULT result = joyGetDevCaps(
+            JOYSTICKID1,
+            &joystickCapabilities,
+            sizeof joystickCapabilities);
+         if (result != JOYERR_NOERROR)
+            {
+            return 0;
+            }
+
+
+         JOYINFOEX joystickInfo;
+         joystickInfo.dwSize  = sizeof joystickInfo;
+         joystickInfo.dwFlags = JOY_RETURNBUTTONS;
+
+         result = joyGetPosEx(
+            JOYSTICKID1,
+            &joystickInfo);
+         if (result == JOYERR_NOERROR)
+            {
+            // Reassemble the original value from the hardware port
+            // It doesn't have to be exact, just good enough.
+            int button1Released = (joystickInfo.dwButtons & JOY_BUTTON1) == 0;
+            int button2Released = (joystickInfo.dwButtons & JOY_BUTTON2) == 0;
+            int button3Released = (joystickInfo.dwButtons & JOY_BUTTON3) == 0;
+            int button4Released = (joystickInfo.dwButtons & JOY_BUTTON4) == 0;
+
+            value =
+                (button1Released << 4) |
+                (button2Released << 5) |
+                (button3Released << 6) |
+                (button4Released << 7);
+            }
+         }
+      }
+   else
       {
 #ifndef NOASM
       _asm
@@ -151,10 +248,6 @@ int Myingameport(short portid, short mask)
    {
    int value = -1;
 
-   JOYINFOEX joystickInfo;
-   joystickInfo.dwSize  = sizeof joystickInfo;
-   joystickInfo.dwFlags = JOY_RETURNX | JOY_RETURNY | JOY_RETURNZ | JOY_RETURNR;
-
    UINT totalJoysticks = joyGetNumDevs();
    if (totalJoysticks == 0)
       {
@@ -171,6 +264,10 @@ int Myingameport(short portid, short mask)
       {
       return -1;
       }
+
+   JOYINFOEX joystickInfo;
+   joystickInfo.dwSize  = sizeof joystickInfo;
+   joystickInfo.dwFlags = JOY_RETURNX | JOY_RETURNY | JOY_RETURNZ | JOY_RETURNR;
 
    result = joyGetPosEx(
       JOYSTICKID1,
