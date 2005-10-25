@@ -1,0 +1,38 @@
+<section id="command-rawascii">
+    <title>RAWASCII</title>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>RAWASCII</command> <parameter>character</parameter></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+Outputs the number (between 0 and 127) that represents <parameter>character</parameter> in the ASCII character set.
+</para>
+<para>
+ASCII interprets control characters as representing themselves.
+</para>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Example</term>
+<listitem>
+    <programlisting><userinput>SHOW RAWASCII "a
+</userinput>97</programlisting>
+
+    <programlisting><userinput>SHOW RAWASCII "A
+</userinput>65</programlisting>
+
+    <programlisting><userinput>SHOW RAWASCII "|(|
+</userinput>6</programlisting>
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</section>

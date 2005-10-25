@@ -1,0 +1,33 @@
+<section id="command-arctan">
+    <title>ARCTAN</title>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>ARCTAN</command> <parameter>num</parameter>
+(<command>ARCTAN</command> <parameter>x</parameter> <parameter>y</parameter>)</synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+With one input, outputs the arctangent angle of <parameter>num</parameter>, in degrees.
+With two inputs, outputs the arctangent angle of <parameter>y</parameter> / <parameter>x</parameter>, in degrees.
+See also <link linkend="command-radarctan">RADARCTAN</link>.
+</para>
+
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Example</term>
+<listitem>
+    <programlisting><userinput>SHOW ARCTAN 1</userinput>
+45</programlisting>
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</section>

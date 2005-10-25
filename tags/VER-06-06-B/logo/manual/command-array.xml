@@ -1,0 +1,37 @@
+<section id="command-array">
+   <title>ARRAY</title>
+
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>ARRAY</command> <parameter>size</parameter>
+(<command>ARRAY</command> <parameter>size</parameter> origin)</synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+   <para>Outputs an array of <parameter>size</parameter> elements (must be a positive integer), each of which initially is an empty list.
+Array elements can be selected with <link linkend="command-item">ITEM</link> and changed with <link linkend="command-setitem">SETITEM</link>.
+The first element of the array is element number 1, unless an origin input (must be an integer) is given, in which case the first element of the array has that number as its index.
+(Typically 0 is used as the origin if anything.)
+Arrays are printed by <link linkend="command-print">PRINT</link> and friends, and can be typed in, inside curly braces; indicate an origin with <code>{a b c}@0</code>.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Example</term>
+<listitem>
+    <programlisting><userinput>MAKE "myarray (ARRAY 3 0)
+SETITEM 2 :myarray 1
+SETITEM 1 :myarray 2
+SETITEM 0 :myarray 3
+SHOW :myarray</userinput>
+{3 2 1}</programlisting>
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</section>

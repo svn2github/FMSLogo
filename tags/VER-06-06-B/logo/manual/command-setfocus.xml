@@ -1,0 +1,40 @@
+<section id="command-setfocus">
+    <title>SETFOCUS</title>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>SETFOCUS</command> <parameter>caption</parameter></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+Selects a window whose caption (or title) is <parameter>caption</parameter>.
+When a window has focus, it is selected and all keyboard input is directed to it.
+</para>
+
+<para>
+The term "caption" is not the same as the window's "name" used in the WINDOWS functions.
+</para>
+
+<para>
+See also <link linkend="command-getfocus">GETFOCUS</link>.
+</para>
+</listitem>
+</varlistentry>
+
+
+<varlistentry><term>Example</term>
+<listitem>
+    <programlisting><userinput>SETFOCUS [MSWLogo Screen]</userinput>
+</programlisting>
+
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</section>

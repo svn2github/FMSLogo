@@ -1,0 +1,46 @@
+<section id="command-icon">
+    <title>ICON</title>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>ICON</command> <parameter>caption</parameter></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+Minimizes the window whose title matches <parameter>caption</parameter>.
+The term "ICON" comes from the old days when Windows applications were minimized into small icons.
+</para>
+
+<para>
+The term "caption" is not the same as the window's "name" used in the WINDOWS functions.
+</para>
+
+<para>
+See also <link linkend="command-unicon">UNICON</link>.
+</para>
+
+</listitem>
+</varlistentry>
+
+
+<varlistentry><term>Example</term>
+<listitem>
+    <programlisting><userinput>TO HIDEANDSHOW
+  ICON "FMSLogo
+  WAIT 120
+  UNICON "FMSLogo
+END
+
+HIDEANDSHOW</userinput>
+</programlisting>
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</section>

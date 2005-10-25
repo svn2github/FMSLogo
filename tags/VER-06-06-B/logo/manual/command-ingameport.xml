@@ -1,0 +1,38 @@
+<section id="command-ingameport">
+    <title>INGAMEPORT</title>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>INGAMEPORT</command> <parameter>mask</parameter>
+(<command>INGAMEPORT</command> <parameter>mask</parameter> <parameter>portid</parameter>)</synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+Reads the value (or resistance across) the game port channel specified by <parameter>mask</parameter>.
+The <parameter>mask</parameter> parameter must be either 1, 2, 4, or 8.
+The <parameter>portid</parameter> parameter specifies which hardware port you wish to read from (default is 513).
+You can read the button states directly using <code>INPORT 513</code>. 
+</para>
+
+<para>
+If nothing is connected to a game port channel the command will eventually time out and output -1.
+</para>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Example</term>
+<listitem>
+    <programlisting><userinput>REPEAT 10000 [SHOW INGAMEPORT 1]
+</userinput></programlisting>
+Now move the Joystick around.
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</section>

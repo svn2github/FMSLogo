@@ -1,0 +1,32 @@
+<section id="command-turtle">
+    <title>TURTLE</title>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>TURTLE</command></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+Outputs the currently selected turtle (the one that is obeying all turtle commands).
+Use <link linkend="command-setturtle">SETTURTLE</link> to select a turtle.
+</para>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Example</term>
+<listitem>
+    <programlisting><userinput>SETTURTLE 8
+SHOW TURTLE</userinput>
+8
+</programlisting>
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</section>

@@ -1,0 +1,348 @@
+#include <windows.h>
+#include "version.h"
+#include "logorc.h"
+
+#include <owl\editfile.rh>
+#include <owl\printer.rc>
+#include <owl\inputdia.rc>
+#include <owl\picklist.rc>
+#include <owl\except.rc>
+
+#include "stdwnds.rc"
+#include "filemenu.rc"
+#ifdef CTL3D
+#include "ctl3d.rc"
+#undef SS_SUNKEN
+#define SS_SUNKEN SS_BLACKFRAME
+#endif
+
+LOGOICON ICON "logo.ico"
+
+IDM_COMMANDS MENU 
+{
+ POPUP "&File"
+ {
+  MENUITEM "&New", CM_FILENEW
+  MENUITEM "&Open...", CM_FILEOPEN
+  MENUITEM "&Save", CM_FILESAVE
+  MENUITEM "Save &As...", CM_FILESAVEAS
+  MENUITEM SEPARATOR
+  MENUITEM "&Edit...", CM_FILEEDIT
+  MENUITEM "E&rase...", CM_FILEERASE
+  MENUITEM SEPARATOR
+  MENUITEM "E&xit", CM_EXIT
+ }
+
+ POPUP "&Bitmap"
+ {
+  MENUITEM "&New", CM_BITMAPNEW
+  MENUITEM "&Load...", CM_BITMAPOPEN
+  MENUITEM "&Save", CM_BITMAPSAVE
+  MENUITEM "Save &As...", CM_BITMAPSAVEAS
+  MENUITEM SEPARATOR
+  MENUITEM "&Print...", CM_BITMAPPRINT
+  MENUITEM "P&rinter Setup...", CM_BITMAPPRINTERSETUP
+  MENUITEM SEPARATOR
+  MENUITEM "A&ctive Area...", CM_BITMAPPRINTERAREA
+ }
+
+ POPUP "&Set"
+ {
+  MENUITEM "Pen Si&ze...", CM_SETPENSIZE
+  MENUITEM SEPARATOR
+  MENUITEM "&Label Font...", CM_SETFONT
+  MENUITEM "&Commander Font...", CM_SETCOMMANDERFONT
+  MENUITEM SEPARATOR
+  MENUITEM "&Pen Color...", CM_SETPENCOLOR
+  MENUITEM "F&lood Color...", CM_SETFLOODCOLOR
+  MENUITEM "&Screen Color...", CM_SETSCREENCOLOR
+ }
+
+ POPUP "&Zoom"
+ {
+  MENUITEM "&In", CM_ZOOMIN
+  MENUITEM "&Out", CM_ZOOMOUT
+  MENUITEM "&Normal", CM_ZOOMNORMAL
+ }
+
+ POPUP "&Help"
+ {
+  MENUITEM "&Index", CM_HELP
+  MENUITEM "&MCI", CM_HELPMCI
+  MENUITEM "&Using Help", CM_HELPHELP
+  MENUITEM SEPARATOR
+  MENUITEM "&Tutorial", CM_HELPTUTORIAL
+  MENUITEM "&Demo", CM_HELPDEMO
+  MENUITEM "&Examples", CM_HELPEXAMPLES
+  MENUITEM "&Release Notes", CM_HELPRELEASENOTES
+  MENUITEM SEPARATOR
+  MENUITEM "&About FMSLogo...", CM_HELPABOUT
+  MENUITEM "&About MS...", CM_HELPABOUTMS
+ }
+
+}
+
+PRINTERAREA DIALOG 17, 21, 160, 124
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Select Active Area"
+FONT 8, "MS Sans Serif"
+{
+ CONTROL "", -1, "static", SS_LEFT | SS_SUNKEN | WS_CHILD | WS_VISIBLE, 4, 8, 150, 74
+ CONTROL "These affect Printing and Saving Bitmaps", -1, "STATIC", SS_LEFT | WS_CHILD | WS_VISIBLE | WS_GROUP, 12, 11, 139, 10
+ CONTROL "Y-High", -1, "STATIC", SS_CENTER | WS_CHILD | WS_VISIBLE | WS_GROUP, 36, 24, 25, 15
+ CONTROL "X-Low", -1, "STATIC", SS_LEFT | WS_CHILD | WS_VISIBLE | WS_GROUP, 14, 32, 25, 10
+ CONTROL "X-High", -1, "STATIC", SS_LEFT | WS_CHILD | WS_VISIBLE | WS_GROUP, 114, 32, 25, 10
+ CONTROL "Y-Low", -1, "STATIC", SS_LEFT | WS_CHILD | WS_VISIBLE | WS_GROUP, 40, 62, 20, 10
+ CONTROL "Turtle steps per inch printed:", -1, "STATIC", SS_LEFT | WS_CHILD | WS_VISIBLE | WS_GROUP, 12, 86, 100, 10
+ CONTROL "", ID_YHIGH, "EDIT", ES_LEFT | ES_AUTOHSCROLL | WS_CHILD | WS_VISIBLE | WS_BORDER | WS_TABSTOP, 64, 22, 30, 15
+ CONTROL "", ID_XLOW, "EDIT", ES_LEFT | ES_AUTOHSCROLL | WS_CHILD | WS_VISIBLE | WS_BORDER | WS_TABSTOP, 14, 42, 30, 15
+ CONTROL "", ID_XHIGH, "EDIT", ES_LEFT | ES_AUTOHSCROLL | WS_CHILD | WS_VISIBLE | WS_BORDER | WS_TABSTOP, 114, 42, 30, 15
+ CONTROL "", ID_YLOW, "EDIT", ES_LEFT | ES_AUTOHSCROLL | WS_CHILD | WS_VISIBLE | WS_BORDER | WS_TABSTOP, 64, 60, 30, 15
+ CONTROL "", ID_PIXELS, "EDIT", ES_LEFT | ES_AUTOHSCROLL | WS_CHILD | WS_VISIBLE | WS_BORDER | WS_TABSTOP, 114, 84, 30, 15
+ CONTROL "&Reset", ID_RESETEXTENT, "BUTTON", BS_PUSHBUTTON | WS_CHILD | WS_VISIBLE | WS_TABSTOP, 8, 104, 38, 15
+ CONTROL "&Cancel", IDCANCEL, "BUTTON", BS_PUSHBUTTON | WS_CHILD | WS_VISIBLE | WS_TABSTOP, 60, 104, 38, 15
+ CONTROL "&OK", IDOK, "BUTTON", BS_DEFPUSHBUTTON | WS_CHILD | WS_VISIBLE | WS_TABSTOP, 112, 104, 38, 15
+ CONTROL "", -1, "static", SS_SUNKEN | WS_CHILD | WS_VISIBLE, 45, 47, 69, 1
+ CONTROL "", -1, "static", SS_SUNKEN | WS_CHILD | WS_VISIBLE, 79, 37, 1, 23
+}
+
+DIALOGCOMMAND DIALOG LOADONCALL MOVEABLE NONDISCARDABLE IMPURE 0, 177, 291, 54
+STYLE WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_BORDER
+CLASS "LogoCommander"
+CAPTION ""
+FONT 10, "MS Sans Serif"
+{
+ CONTROL "", ID_LISTBOX, "EDIT", ES_LEFT | ES_MULTILINE | ES_AUTOVSCROLL | ES_AUTOHSCROLL | ES_READONLY | WS_CHILD | WS_VISIBLE | WS_BORDER | WS_VSCROLL | WS_HSCROLL | WS_TABSTOP, 1, 1, 214, 35
+ CONTROL "", ID_EDITINPUT, "EDIT", ES_LEFT | ES_AUTOHSCROLL | WS_CHILD | WS_VISIBLE | WS_BORDER | WS_TABSTOP, 1, 41, 214, 10
+ CONTROL "Halt", ID_HALT, "BUTTON", BS_PUSHBUTTON | WS_CHILD | WS_VISIBLE | WS_TABSTOP, 220, 0, 34, 11
+ CONTROL "Trace", ID_TRACE, "BUTTON", BS_PUSHBUTTON | WS_CHILD | WS_VISIBLE | WS_TABSTOP, 256, 0, 34, 11
+ CONTROL "Pause", ID_PAUSE, "BUTTON", BS_PUSHBUTTON | WS_CHILD | WS_VISIBLE | WS_TABSTOP, 220, 12, 34, 11
+ CONTROL "Status", ID_STATUS, "BUTTON", BS_PUSHBUTTON | WS_CHILD | WS_VISIBLE | WS_TABSTOP, 256, 12, 34, 11
+ CONTROL "Step", ID_YIELD, "BUTTON", BS_PUSHBUTTON | WS_CHILD | WS_VISIBLE | WS_TABSTOP, 220, 24, 34, 11
+ CONTROL "Reset", ID_RESET, "BUTTON", BS_PUSHBUTTON | WS_CHILD | WS_VISIBLE | WS_TABSTOP, 256, 24, 34, 11
+ CONTROL "Execute", ID_EXECUTE, "BUTTON", BS_DEFPUSHBUTTON | WS_CHILD | WS_VISIBLE | WS_TABSTOP, 220, 40, 34, 11
+ CONTROL "Edall", ID_EDALL, "BUTTON", BS_PUSHBUTTON | WS_CHILD | WS_VISIBLE | WS_TABSTOP, 256, 40, 34, 11
+}
+
+DIALOGSTATUS DIALOG 12, 20, 113, 226
+STYLE WS_POPUP | WS_CAPTION
+CAPTION "Status"
+FONT 8, "MS Sans Serif"
+{
+ CONTROL "", -1, "static", SS_SUNKEN | WS_CHILD | WS_VISIBLE, 2, 13, 109, 31
+ CONTROL "", -1, "static", SS_SUNKEN | WS_CHILD | WS_VISIBLE, 2, 55, 109, 31
+ CONTROL "", -1, "static", SS_SUNKEN | WS_CHILD | WS_VISIBLE, 2, 98, 109, 31
+ CONTROL "", -1, "static", SS_SUNKEN | WS_CHILD | WS_VISIBLE, 2, 141, 109, 38
+ CONTROL "", -1, "static", SS_SUNKEN | WS_CHILD | WS_VISIBLE, 2, 193, 109, 31
+ LTEXT "Contact:", -1, 4, 14, 47, 9, SS_LEFT | WS_CHILD | WS_VISIBLE
+ LTEXT "Pen(RGB):", -1, 4, 142, 47, 9, SS_LEFT | WS_CHILD | WS_VISIBLE
+ LTEXT "Flood(RGB):", -1, 4, 151, 47, 9, SS_LEFT | WS_CHILD | WS_VISIBLE
+ LTEXT "Screen(RGB):", -1, 4, 160, 47, 9, SS_LEFT | WS_CHILD | WS_VISIBLE
+ LTEXT "Palette use:", -1, 4, 169, 47, 9, SS_LEFT | WS_CHILD | WS_VISIBLE
+ LTEXT "Width:", -1, 4, 23, 47, 9, SS_LEFT | WS_CHILD | WS_VISIBLE
+ LTEXT "Position(XYZ):", -1, 4, 100, 47, 9, SS_LEFT | WS_CHILD | WS_VISIBLE
+ LTEXT "Which:", -1, 4, 109, 47, 9, SS_LEFT | WS_CHILD | WS_VISIBLE
+ LTEXT "Visibility:", -1, 4, 118, 47, 9, SS_LEFT | WS_CHILD | WS_VISIBLE
+ LTEXT "Style:", -1, 4, 32, 47, 9, SS_LEFT | WS_CHILD | WS_VISIBLE
+ LTEXT "Heading:", -1, 4, 56, 47, 9, SS_LEFT | WS_CHILD | WS_VISIBLE
+ LTEXT "Pitch:", -1, 4, 65, 47, 9, SS_LEFT | WS_CHILD | WS_VISIBLE
+ LTEXT "Roll:", -1, 4, 74, 47, 9, SS_LEFT | WS_CHILD | WS_VISIBLE
+ CTEXT "Pen", -1, 3, 3, 107, 9, SS_CENTER | WS_CHILD | WS_VISIBLE
+ CTEXT "Orientation", -1, 3, 45, 107, 9, SS_CENTER | WS_CHILD | WS_VISIBLE
+ CTEXT "Turtle", -1, 3, 88, 107, 9, SS_CENTER | WS_CHILD | WS_VISIBLE
+ CTEXT "Color", -1, 3, 131, 107, 9, SS_CENTER | WS_CHILD | WS_VISIBLE
+ CTEXT "Kernel", -1, 3, 184, 107, 9, SS_CENTER | WS_CHILD | WS_VISIBLE
+ LTEXT "Calls:", -1, 4, 194, 47, 9, SS_LEFT | WS_CHILD | WS_VISIBLE
+ LTEXT "Peak Memory:", -1, 4, 203, 47, 9, SS_LEFT | WS_CHILD | WS_VISIBLE
+ LTEXT "", ID_THINGS, 4, 212, 47, 9, SS_LEFT | WS_CHILD | WS_VISIBLE
+ LTEXT "", ID_PENCONTACT, 57, 14, 52, 9, SS_LEFT | WS_CHILD | WS_VISIBLE
+ LTEXT "", ID_PENCOLOR, 57, 142, 52, 9, SS_LEFT | WS_CHILD | WS_VISIBLE
+ LTEXT "", ID_FLOODCOLOR, 57, 151, 52, 9, SS_LEFT | WS_CHILD | WS_VISIBLE
+ LTEXT "", ID_SCREENCOLOR, 57, 160, 52, 9, SS_LEFT | WS_CHILD | WS_VISIBLE
+ LTEXT "", ID_PALETTEUSE, 57, 169, 52, 9, SS_LEFT | WS_CHILD | WS_VISIBLE
+ LTEXT "", ID_PENWIDTH, 57, 23, 52, 9, SS_LEFT | WS_CHILD | WS_VISIBLE
+ LTEXT "", ID_PENSTYLE, 57, 32, 52, 9, SS_LEFT | WS_CHILD | WS_VISIBLE
+ LTEXT "", ID_TURTLEHEADING, 57, 56, 52, 9, SS_LEFT | WS_CHILD | WS_VISIBLE
+ LTEXT "", ID_TURTLEPITCH, 57, 65, 52, 9, SS_LEFT | WS_CHILD | WS_VISIBLE
+ LTEXT "", ID_TURTLEROLL, 57, 74, 52, 9, SS_LEFT | WS_CHILD | WS_VISIBLE
+ LTEXT "", ID_TURTLEPOSITION, 57, 100, 52, 9, SS_LEFT | WS_CHILD | WS_VISIBLE
+ LTEXT "", ID_TURTLEWHICH, 57, 109, 52, 9, SS_LEFT | WS_CHILD | WS_VISIBLE
+ LTEXT "", ID_TURTLEVISABILITY, 57, 118, 52, 9, SS_LEFT | WS_CHILD | WS_VISIBLE
+ LTEXT "", ID_EVALS, 57, 194, 52, 9, SS_LEFT | WS_CHILD | WS_VISIBLE
+ LTEXT "", ID_MEMORY, 57, 203, 52, 9, SS_LEFT | WS_CHILD | WS_VISIBLE
+ LTEXT "", ID_VECTORS, 57, 212, 52, 9, SS_LEFT | WS_CHILD | WS_VISIBLE
+}
+
+DIALOGERASE DIALOG 13, 17, 142, 105
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Erase Procedure"
+FONT 8, "MS Sans Serif"
+{
+ COMBOBOX ID_FILEEDITCOMBO, 14, 9, 116, 59, CBS_SIMPLE | CBS_AUTOHSCROLL | CBS_SORT | CBS_DISABLENOSCROLL | WS_CHILD | WS_VISIBLE | WS_VSCROLL | WS_TABSTOP
+ DEFPUSHBUTTON "&OK", IDOK, 14, 80, 32, 16
+ PUSHBUTTON "&All", ID_FILEEDITALL, 56, 80, 32, 16
+ PUSHBUTTON "&Cancel", IDCANCEL, 98, 80, 32, 16
+}
+
+DIALOGEDIT DIALOG 13, 17, 142, 105
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Edit Procedure"
+FONT 8, "MS Sans Serif"
+{
+ COMBOBOX ID_FILEEDITCOMBO, 14, 9, 116, 59, CBS_SIMPLE | CBS_AUTOHSCROLL | CBS_SORT | CBS_DISABLENOSCROLL | WS_CHILD | WS_VISIBLE | WS_VSCROLL | WS_TABSTOP
+ DEFPUSHBUTTON "&OK", IDOK, 14, 80, 32, 16
+ PUSHBUTTON "&All", ID_FILEEDITALL, 56, 80, 32, 16
+ PUSHBUTTON "&Cancel", IDCANCEL, 98, 80, 32, 16
+}
+
+DIALOGSTUB DIALOG 18, 18, 142, 92
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION
+BEGIN
+END
+
+IDD_PICKCOLOR DIALOG 19, 27, 223, 100
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Color Dialog"
+FONT 10, "MS Sans Serif"
+{
+ CONTROL "", -1, "static", SS_SUNKEN | WS_CHILD | WS_VISIBLE, 10, 5, 160, 30
+ CONTROL "", -1, "static", SS_SUNKEN | WS_CHILD | WS_VISIBLE, 10, 40, 160, 55
+ CONTROL "", -1, "static", SS_SUNKEN | WS_CHILD | WS_VISIBLE, 175, 5, 40, 90
+ CONTROL "", ID_COLOR1, "ColorControl", 0 | WS_CHILD | WS_VISIBLE, 21, 15, 10, 10
+ CONTROL "", ID_COLOR2, "ColorControl", 0 | WS_CHILD | WS_VISIBLE, 39, 15, 10, 10
+ CONTROL "", ID_COLOR3, "ColorControl", 0 | WS_CHILD | WS_VISIBLE, 57, 15, 10, 10
+ CONTROL "", ID_COLOR4, "ColorControl", 0 | WS_CHILD | WS_VISIBLE, 75, 15, 10, 10
+ CONTROL "", ID_COLOR5, "ColorControl", 0 | WS_CHILD | WS_VISIBLE, 93, 15, 10, 10
+ CONTROL "", ID_COLOR6, "ColorControl", 0 | WS_CHILD | WS_VISIBLE, 111, 15, 10, 10
+ CONTROL "", ID_COLOR7, "ColorControl", 0 | WS_CHILD | WS_VISIBLE, 129, 15, 10, 10
+ CONTROL "", ID_COLOR8, "ColorControl", 0 | WS_CHILD | WS_VISIBLE, 147, 15, 10, 10
+ CONTROL "Red", ID_STATIC, "STATIC", SS_CENTER | WS_CHILD | WS_VISIBLE | WS_GROUP, 12, 46, 22, 9
+ CONTROL "", ID_COLORBAR1, "SCROLLBAR", SBS_HORZ | SBS_LEFTALIGN | WS_CHILD | WS_VISIBLE | WS_TABSTOP, 38, 46, 124, 9
+ CONTROL "Green", ID_STATIC, "STATIC", SS_CENTER | WS_CHILD | WS_VISIBLE | WS_GROUP, 12, 62, 22, 9
+ CONTROL "", ID_COLORBAR2, "SCROLLBAR", SBS_HORZ | SBS_LEFTALIGN | WS_CHILD | WS_VISIBLE | WS_TABSTOP, 38, 62, 124, 9
+ CONTROL "Blue", ID_STATIC, "STATIC", SS_CENTER | WS_CHILD | WS_VISIBLE | WS_GROUP, 12, 78, 22, 9
+ CONTROL "", ID_COLORBAR3, "SCROLLBAR", SBS_HORZ | SBS_LEFTALIGN | WS_CHILD | WS_VISIBLE | WS_TABSTOP, 38, 78, 124, 9
+ CONTROL "", ID_SELCOLOR, "ColorControl", 0 | WS_CHILD | WS_VISIBLE, 180, 10, 30, 20
+ CONTROL "&OK", IDOK, "BUTTON", BS_PUSHBUTTON | WS_CHILD | WS_VISIBLE | WS_TABSTOP, 180, 61, 30, 12
+ CONTROL "&Cancel", IDCANCEL, "BUTTON", BS_PUSHBUTTON | WS_CHILD | WS_VISIBLE | WS_TABSTOP, 180, 79, 30, 12
+}
+
+SIZEDIALOG DIALOG 21, 53, 223, 100
+STYLE WS_POPUP | WS_CAPTION | WS_SYSMENU | 0x80L
+CAPTION "Size Dialog"
+FONT 10, "MS Sans Serif"
+{
+ CONTROL "", -1, "static", SS_SUNKEN | WS_CHILD | WS_VISIBLE, 10, 5, 160, 30
+ CONTROL "", -1, "static", SS_SUNKEN | WS_CHILD | WS_VISIBLE, 10, 40, 160, 55
+ CONTROL "", -1, "static", SS_SUNKEN | WS_CHILD | WS_VISIBLE, 175, 5, 40, 90
+ CONTROL "", ID_SELSIZE, "SizeControl", 0 | WS_CHILD | WS_VISIBLE, 180, 10, 30, 20
+ PUSHBUTTON "&OK", IDOK, 180, 61, 30, 12
+ PUSHBUTTON "&Cancel", IDCANCEL, 180, 79, 30, 12
+ CTEXT "Size", ID_STATIC, 12, 46, 22, 9, SS_CENTER | WS_CHILD | WS_VISIBLE
+ SCROLLBAR ID_SIZEBAR, 38, 46, 124, 9, SBS_HORZ | SBS_LEFTALIGN | WS_TABSTOP
+ CONTROL "", ID_SIZE1, "SizeControl", 0 | WS_CHILD | WS_VISIBLE, 21, 15, 10, 10
+ CONTROL "", ID_SIZE2, "SizeControl", 0 | WS_CHILD | WS_VISIBLE, 39, 15, 10, 10
+ CONTROL "", ID_SIZE3, "SizeControl", 0 | WS_CHILD | WS_VISIBLE, 57, 15, 10, 10
+ CONTROL "", ID_SIZE4, "SizeControl", 0 | WS_CHILD | WS_VISIBLE, 75, 15, 10, 10
+ CONTROL "", ID_SIZE5, "SizeControl", 0 | WS_CHILD | WS_VISIBLE, 93, 15, 10, 10
+ CONTROL "", ID_SIZE6, "SizeControl", 0 | WS_CHILD | WS_VISIBLE, 111, 15, 10, 10
+ CONTROL "", ID_SIZE7, "SizeControl", 0 | WS_CHILD | WS_VISIBLE, 129, 15, 10, 10
+ CONTROL "", ID_SIZE8, "SizeControl", 0 | WS_CHILD | WS_VISIBLE, 147, 15, 10, 10
+}
+
+ABOUTBOX DIALOG 9, 22, 192, 264
+STYLE DS_MODALFRAME | WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU
+CAPTION "About FMSLogo"
+FONT 8, "MS Sans Serif"
+{
+ CONTROL "FMSLogo Version " FMSLOGO_VERSION, -1, "STATIC", SS_CENTER | SS_NOPREFIX | SS_SUNKEN | WS_CHILD | WS_VISIBLE | WS_GROUP, 4, 4, 184, 16
+ CONTROL "GUI by George Mills (mills@softronix.com)\nSoftronics, Inc.\nhttp://www.softronix.com/", -1, "STATIC", SS_CENTER | SS_NOPREFIX | SS_SUNKEN | WS_CHILD | WS_VISIBLE | WS_GROUP, 4, 25, 184, 28
+ CONTROL "Installer based on Nullsoft Scriptable Install System\nhttp://nsis.sourceforge.net", -1, "STATIC", SS_CENTER | SS_NOPREFIX | SS_SUNKEN | WS_CHILD | WS_VISIBLE | WS_GROUP, 4, 82, 184, 20
+ CONTROL "The Great Logo Adventure (ISBN 0-9651934-6-2)\nWritten and donated by Jim Muller\nAvailable at http://www.softronix.com/", -1, "STATIC", SS_CENTER | SS_NOPREFIX | SS_SUNKEN | WS_CHILD | WS_VISIBLE | WS_GROUP, 4, 107, 184, 28
+ CONTROL "Thanks to Yehuda Katz yehuka@softhome.net)\nand Erich Neuwirth (erich.neuwirth@univie.ac.at)", -1, "static", SS_CENTER | SS_NOPREFIX | SS_SUNKEN | WS_CHILD | WS_VISIBLE | WS_GROUP, 4, 140, 184, 20
+ CONTROL "FMSLogo is free software\nSee GNU Public License", -1, "STATIC", SS_CENTER | SS_NOPREFIX | SS_SUNKEN | WS_CHILD | WS_VISIBLE | WS_GROUP, 4, 165, 184, 20
+ CONTROL "Internet News Group: comp.lang.logo\nVisit the Logo-Forum at\nhttp://groups.yahoo.com/group/LogoForum/", -1, "static", SS_CENTER | SS_NOPREFIX | SS_SUNKEN | WS_CHILD | WS_VISIBLE | WS_GROUP, 4, 190, 184, 30
+ CONTROL "To learn the internals of computers,\ntry MultiMedia Logic from Softronics, Inc.", -1, "static", SS_CENTER | SS_NOPREFIX | SS_SUNKEN | WS_CHILD | WS_VISIBLE | WS_GROUP, 4, 224, 184, 20
+ CONTROL "&OK", IDOK, "BUTTON", BS_DEFPUSHBUTTON | WS_CHILD | WS_VISIBLE | WS_GROUP | WS_TABSTOP, 76, 248, 40, 14
+ CONTROL "Core by Brian Harvey (bh@cs.berkeley.edu)\nUniversity of California Berkeley", -1, "static", SS_CENTER | SS_SUNKEN | WS_CHILD | WS_VISIBLE | WS_GROUP, 4, 58, 184, 20
+}
+
+
+ABOUTMSBOX DIALOG 9, 22, 181, 81
+STYLE DS_MODALFRAME | WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU
+CAPTION "About FMS"
+FONT 8, "MS Sans Serif"
+{
+ CONTROL "FMS stands for Fight Multiple Sclerosis.", -1, "STATIC", SS_CENTER | SS_NOPREFIX | SS_SUNKEN | WS_CHILD | WS_VISIBLE | WS_GROUP, 4, 7, 171, 14
+ CONTROL "Please consider donating to the\nNational Multiple Sclerosis Society.\nhttp://www.nmss.org\n1-800-FIGHT-MS", -1, "STATIC", SS_CENTER | SS_NOPREFIX | SS_SUNKEN | WS_CHILD | WS_VISIBLE | WS_GROUP, 4, 24, 171, 34
+ CONTROL "&OK", IDOK, "BUTTON", BS_DEFPUSHBUTTON | WS_CHILD | WS_VISIBLE | WS_GROUP | WS_TABSTOP, 74, 64, 32, 14
+}
+
+LOGOACC ACCELERATORS
+BEGIN
+  VK_TAB, CM_CONTROLEXECUTE, VIRTKEY, NOINVERT, CONTROL
+END
+
+
+STRINGTABLE 
+{
+ CM_FILESAVEAS, "Saves the contents of the EDALL window to a new file"
+ CM_FILEOPEN, "Locates and opens a Logo program"
+ CM_FILENEW, "Erases the contents of the EDALL session"
+ CM_FILESAVE, "Saves the contents of the EDALL window"
+ CM_FILEEDIT, "Selects a procedure to edit"
+ CM_FILEERASE, "Selects a procedure to erase"
+ CM_EXIT, "Exits Logo"
+ CM_BITMAPNEW, "Clears the screen"
+ CM_BITMAPOPEN, "Loads a new screen from a Windows bitmap file"
+ CM_BITMAPSAVE, "Saves the contents of the screen to a bitmap"
+ CM_BITMAPSAVEAS, "Saves the contents of the screen to a different file"
+ CM_BITMAPPRINT, "Prints the contents of the screen"
+ CM_BITMAPPRINTERSETUP, "Configures your printer"
+ CM_BITMAPPRINTERAREA, "Sets the area of the screen that will be printed or saved to a bitmap"
+ CM_SETPENSIZE, "Sets the thickness of the turtle's pen"
+ CM_SETFONT, "Sets the font that is used by the LABEL command"
+ CM_SETCOMMANDERFONT, "Sets the font used in the commander window"
+ CM_SETPENCOLOR, "Sets the color of the turtle's pen"
+ CM_SETFLOODCOLOR, "Sets the color used by the FILL command"
+ CM_SETSCREENCOLOR, "Clears the screen and sets it to a new color"
+ CM_ZOOMIN, "Zooms in on the screen"
+ CM_ZOOMOUT, "Zooms out on the screen"
+ CM_ZOOMNORMAL, "Restores the screen to its original size"
+ CM_HELP, "Opens an index of help topics"
+ CM_HELPMCI, "Opens an index of help topics for the Media Control Interface"
+ CM_HELPHELP, "Opens help on using help"
+ CM_HELPTUTORIAL, "Opens a short tutorial on using FMSLogo"
+ CM_HELPDEMO, "Shows a demonstration of some things you can do in FMSLogo"
+ CM_HELPEXAMPLES, "Displays an index of the sample programs"
+ CM_HELPRELEASENOTES, "Displays the release notes for this version of FMSLogo"
+ CM_HELPABOUT, "Displays version and copyright information"
+ CM_HELPABOUTMS, "Displays a message about Multiple Sclerosis"
+ CM_EDITDELETE, "Deletes the current selection (and does not copy to the clipboard)"
+ CM_EDITCLEAR, "Deletes all text"
+ CM_EDITUNDO, "Undoes the previous action"
+ CM_EDITCUT, "Removes the selected text and puts it on the clipboard"
+ CM_EDITCOPY, "Copies the selected text to the clipboard"
+ CM_EDITPASTE, "Inserts the text from the clipboard at the current position"
+ CM_EDITFIND, "Searches for text"
+ CM_EDITREPLACE, "Searches for text and replaces it with other text"
+ CM_EDITFINDNEXT, "Repeats the previous Find or Replace command"
+ CM_EDITSETFONT, "Sets the font for the EDALL window"
+ CM_TEST, "Checks the syntax"
+ CM_HELPEDIT, "Displays help on using the editor"
+ CM_HELPEDIT_TOPIC, "Displays help for Logo"
+ CM_FILESAVEANDEXIT, "Saves and exits the current EDALL session"
+ CM_FILESAVETOWORKSPACE, "Saves the current EDALL session"
+ CM_FILEPRINT, "Prints the current EDALL session"
+ CM_EDALLEXIT, "Closes the EDALL session"
+}
+
+COMMANDS ACCELERATORS 
+{
+ VK_F1, CM_HELP, VIRTKEY
+}
+
+STRINGTABLE 
+{
+ IDS_CANNOTFIND, "Cannot find %s"
+}

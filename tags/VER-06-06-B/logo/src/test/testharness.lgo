@@ -1,0 +1,69 @@
+LOAD "bitmap.lgo
+LOAD "form.lgo
+LOAD "editor.lgo
+LOAD "port.lgo
+LOAD "label.lgo
+
+
+TO REPORTTESTINFO :message
+  PRINT (SENTENCE "INFO: :message)
+END
+
+TO REPORTTESTPASSED :message
+  PRINT (SENTENCE "PASS: :message)
+END
+
+TO REPORTTESTFAILED :message
+  LOCALMAKE "result (SENTENCE "FAIL: :message)
+  PRINT :result
+  MESSAGEBOX [Test Failed] :result
+END
+
+TO REPORTTEST :testpassed :result :expected
+  IFELSE :testpassed [
+    REPORTTESTPASSED (sentence :result "|, as expected.|)
+  ] [
+    REPORTTESTFAILED (sentence :result "|. We expected| :expected)
+  ]
+END
+
+
+TO REPORTTESTINITIALIZE
+  OPENWRITE "testlog.txt
+  SETWRITE  "testlog.txt
+END
+
+
+TO REPORTTESTUNINITIALIZE
+  SETWRITE []
+  CLOSE    "testlog.txt
+END
+
+
+TO RUNBADINPUTTEST :instructions
+
+  REPORTTESTINFO (SENTENCE "|Executing invalid instruction: '| :instructions "' )
+
+  CATCH "ERROR [ 
+    RUN :instructions 
+    REPORTTESTFAILED (SENTENCE "|Executing '| :instructions "|' did not throw an error|)
+  ]
+
+END
+
+
+TO TESTALL
+
+  REPORTTESTINITIALIZE
+
+  BITMAPTEST ; from bitmap.lgo
+  FORMTEST   ; from form.lgo
+  EDITORTEST ; from editor.lgo 
+  PORTTEST   ; from port.lgo
+  LABELTEST  ; from label.lgo
+
+  REPORTTESTUNINITIALIZE
+END
+
+; execute all tests on startup
+make "startup [TESTALL]

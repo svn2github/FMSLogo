@@ -1,0 +1,37 @@
+<section id="command-keyboardoff">
+    <title>KEYBOARDOFF</title>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>KEYBOARDOFF</command></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+
+<para>
+Disables trapping of keyboard events.
+</para>
+
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Example</term>
+<listitem>
+    <programlisting><userinput>KEYBOARDON [PRINT CHAR KEYBOARDVALUE]
+SETFOCUS [MSWLogo Screen]
+a</userinput>
+a
+<userinput>b</userinput>
+b
+KEYBOARDOFF
+</programlisting>
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</section>

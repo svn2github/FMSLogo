@@ -1,0 +1,36 @@
+<section id="command-nobitmapturtle">
+    <title>NOBITMAPTURTLE</title>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>NOBITMAPTURTLE</command></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+This command restores the turtle to its original triangle shape.
+It is the opposite of <link linkend="command-bitmapturtle">BITMAPTURTLE</link>.
+</para>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Example</term>
+<listitem>
+    <programlisting><userinput>CLEARSCREEN
+LABEL "+ 
+BITCUT 20 20
+BITMAPTURTLE
+FD 100
+NOBITMAPTURTLE
+</userinput>
+</programlisting>
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</section>

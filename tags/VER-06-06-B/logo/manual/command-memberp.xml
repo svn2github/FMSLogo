@@ -1,0 +1,37 @@
+<section id="command-memberp">
+    <title>MEMBERP</title>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>MEMBERP</command> <parameter>thing1</parameter> <parameter>thing2</parameter>
+<command>MEMBER?</command> <parameter>thing1</parameter> <parameter>thing2</parameter></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>Outputs TRUE if <parameter>thing1</parameter> is a member of <parameter>thing2</parameter>.  Outputs FALSE, otherwise.</para>
+
+<para>If <parameter>thing2</parameter> is a list or an array, outputs TRUE if <parameter>thing1</parameter> is <link linkend="command-equalp">EQUALP</link> to a member or element of <parameter>thing2</parameter>, FALSE otherwise.</para>
+<para>If <parameter>thing2</parameter> is a word, outputs TRUE if <parameter>thing1</parameter> is <link linkend="command-equalp">EQUALP</link> to a substring of <parameter>thing2</parameter>, FALSE otherwise.
+Note that this behavior for words is different from other Logo systems, in which <parameter>thing1</parameter> must be a single character to make MEMBERP output TRUE when <parameter>thing2</parameter> is a word.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Example</term>
+
+<listitem>
+    <programlisting><userinput>SHOW MEMBERP 1 [1 2 3]
+</userinput>true</programlisting>
+
+    <programlisting><userinput>SHOW MEMBERP 4 [1 2 3]
+</userinput>false</programlisting>
+
+</listitem>
+
+</varlistentry>
+</variablelist>
+
+</section>

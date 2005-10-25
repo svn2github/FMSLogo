@@ -1,0 +1,176 @@
+
+     FMSLogo Version 6.6b for Microsoft Windows 95/98/NT/2000/XP/Vista
+     -----------------------------------------------------------------
+
+                                Contents
+                                --------
+
+Part    I) Kit Description/Location:
+Part   II) New features/bugs fixed:
+Part  III) Special Thanks:
+Part   IV) Standard features:
+Part    V) Recommended usage:
+Part   VI) Reporting bugs:
+Part  VII) Sources:
+Part VIII) Minimum System Requirements:
+
+
+Part I) Kit Description/Location (http://sourceforge.net/projects/fmslogo):
+
+  fmslogo-6.6b.exe       (binary kit: Windows self-extracting installer)
+  fmslogo-6.6b.zip       (binary kit: Windows ZIP archive)
+  fmslogo-src-6.6b.zip   (source kit)
+
+For information about UCBLogo, please contact Brian Harvey
+<bh@cs.berkeley.edu> or the Logo Foundation <michaelt@media.mit.edu>.
+
+Part II) New features/bugs fixed:
+
+  * Added for 6.6b,
+    o Fix bug #1327817; The editor now only prompts you to save your
+      changes if you actually changed something.
+    o Fix bug #1327706; FORM no longer supports the "debugging aid"
+      of passing the parameters to printf when the width is negative.
+    o Implement feature request #1327732; FMSLogo now implements
+      ELLIPSEARC2 as a more consistent name for ELLIPSA2.
+    o Fix bug #1327719; FMSLogo now uses the registered applicaton
+      for reading the release notes.
+    o Fix bug #1330752; FMSLogo no longer appends garbage bytes to 
+      saved files.
+    o Add a "Topic Search" item to the editor's context menu.
+    o Fix INGAMEPORT to work on Windows XP (instead of crash).
+    o Fix bug #1327707; INPORT no longer crashes on Win XP.
+    o Fix file corruption in mcistrwh.hlp (was corrupted in 6.6).
+    o Add CTRL+F and CTRL+H accelerators to editor.
+    o Fix bug #1335260; INGAMEPORT now works under XP.
+      (INPORT 513) and (INPORTB 513) also work in limited capacity.
+
+  * Added for 6.6a,
+    o Fix bug #1324580; BITLOADSIZE works correctly again.
+    o Mitigate bug #1327300; FMSLogo now verifies %TMP% on startup
+      and warns the user of problems.
+
+  * Added for 6.6,
+    o Rename application to FMSLogo for trademark reasons.
+
+  * Added for 6.5h,
+    o Fix a regression where SETFOCUS didn't honor "MSWLogo Screen".
+    o Rework the way SETLABELFONT works to try to fix a crash on Vista.
+
+  * Added for 6.5g,
+    o Separate the screen from the commander with a splitter,
+      instead of having separate windows.
+    o Get TONE command working.
+    o Convert "Examples" index to HTML.
+    o Installer Updates
+      * Add Start Menu shortcuts for Logo examples.
+      * Add file association for .LGO files.
+    o Many internal changes.
+
+  * Added for 6.5f,
+    o Do not start multiple instances of Logo
+    o Fix editor font-changing bug on Windows 95.
+    o Many internal changes.
+
+  * Added for 6.5e,
+    o Send all key presses to the commander's edit control.
+      * NEW BUG: key presses on buttons currently beep on Win 9x.
+    o Pasting to the EDALL window now only pastes plain text.
+    o Add the DOS keyboard shortcuts (for example, SHIFT+INS for paste)
+    o Many internal changes.
+
+  * Added for 6.5d,
+    o Make "Set - Label" Font write Logo command into history.
+    o Add a pop-up menu to editor window.
+    o Disable commands in menu that are not applicable.
+
+  * Added for 6.5c,
+    o Use standard keyboard shortcuts (for example, CTRL+V for paste)
+    o Make GUI elements write Logo command into history
+    o Fix tab order in some dialog boxes
+
+  * Added for 6.5b, 
+    o Fix MSWLogo using too much CPU when idle.
+
+  * Added for 6.5a, 
+    o Remove OLE server since it broke command line
+
+  * Added for 6.5
+    o Add installation system for Windows XP.
+    o Drop support for all systems older than Win95
+    o Switch to pentium processor only for higher speed.
+    o Fix missing resources for some Borland OWL Exceptions.
+    o Fix crash when closing some network connections.
+    o Fix crash when moving turtle past the max floating point number.
+    o Add proplistp and proplist?.
+    o Fix bug with argument to OUTPUT missing causing a crash.
+    o Enabled MSWLogo to be an OLE Server (Experimental no docs).
+    o Fixed command line version of SETLABELFONT not always
+      finding all fonts.
+
+Part III) Special Thanks:
+
+  Thanks to many folks for supporting FMSLogo.
+
+  Special thanks to:
+
+    George Mills <gmills@softronix.com>
+    Brian Harvey <bh@cs.berkeley.edu>
+    Jim Muller
+    Erich Neuwirth <neuwirth@smc.univie.ac.at>
+    Yehuda Katz <yehuka@softhome.net>
+
+Part IV) Standard features:
+
+  * Supports Window 95/98/ME/NT/2000/XP.
+  * Supports TCP/IP WinSock Networking.
+  * Supports Text in all available fonts and sizes.
+  * Supports 1024 independent Turtles.
+  * Supports Bitmapped Turtles.
+  * Supports Cut, Paste and stretching bitmaps.
+  * Supports Clipboard Text and Bitmaps.
+  * Supports MIDI devices.
+  * Supports Direct I/O for Controlling External hardware.
+  * Supports Serial and Parallel Port communications.
+  * Supports Zooming.
+  * Supports Tail recursion (optimizes most recursive functions).
+  * Supports User error handling.
+  * Supports "Standard" Logo parsing.
+  * Supports Floodfill.
+  * Supports Save and restore images in .BMP format files.
+  * Supports 1, 4, 8, 16, 24 bits per pixels colors.
+  * Supports standard Windows Hypertext Help.
+  * Supports standard Windows Printing.
+  * Supports separate library and work area.
+  * Supports construction of Windows Dialog Boxes.
+  * Supports Event Driven programming (Mouse, KeyBoard, Timer).
+  * Supports MultiMedia Devices (.WAV sound files, CD-ROM control etc.)
+  * Supports Event Timers allowing multiprocessing.
+  * Supports 3D Perspective drawing (Wireframe and Solids).
+  * Supports Animated GIF generation.
+
+Part V) Recommended usage:
+
+  * Ages 6 and up
+     o Beginner     - Forward 100, Right 90
+     o Intermediate - Explore mathematics, art, music, robotics, language, and more.
+     o Expert       - Develop games
+
+Part VI) Reporting bugs:
+
+  Report bugs at http://sourceforge.net/projects/fmslogo/
+
+Part VII) Sources:
+ 
+  Source code is available.  It's your legal right!  (See LICENSE.TXT).
+
+  The FMSLogo sources are written using:
+
+    Borland C++ 5.02 for windows (for .EXE)
+    Borland Turbo 32bit Assembler (for .EXE)
+    OpenOffice.org or MS Word 97 (for online help and DOC's)
+    Nullsoft Scriptable Install System (NSIS) (for the installer)
+
+Part VIII) Minimum System Requirements:
+
+   Pentium class processor with Minimum of 16 MB RAM running Windows 95.

@@ -1,0 +1,33 @@
+
+TO BITLOADSIZETEST :width :height :bitdepth
+  ; this is a regression test for bug #1324580
+  CLEARSCREEN
+  REPEAT 500 [ FORWARD REPCOUNT RIGHT 91 ]
+  PENUP
+  HOME
+  PENDOWN
+
+  ; save the bitmap
+  LOCALMAKE "oldactivearea ACTIVEAREA
+  SETACTIVEAREA (list 0 0 :width :height)
+  (BITSAVE "bitmap-test.bmp :bitdepth)
+
+  CLEARSCREEN
+  LOCALMAKE "bitmapsize BITLOADSIZE "bitmap-test.bmp
+  ERASEFILE "bitmap-test.bmp
+
+  REPORTTEST ~
+    (AND (ITEM 1 :bitmapsize) = :width (ITEM 2 :bitmapsize) = :height) ~
+    (list "|Size is| :bitmapsize) ~
+    (list "|[| :width :height "|]|)
+
+  ; restore the previous active area
+  SETACTIVEAREA :oldactivearea
+END
+
+TO BITMAPTEST
+  BITLOADSIZETEST 100 100 1
+  BITLOADSIZETEST 100 101 1
+  BITLOADSIZETEST 101 100 1
+END
+

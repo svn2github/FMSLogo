@@ -1,0 +1,32 @@
+<section id="command-char">
+    <title>CHAR</title>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>CHAR</command> <parameter>number</parameter></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+Outputs the character represented in the ASCII code by <parameter>number</parameter>, which must be an number between 0 and 127.
+</para>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Example</term>
+<listitem>
+    <programlisting><userinput>SHOW CHAR 97
+</userinput>a</programlisting>
+
+    <programlisting><userinput>SHOW CHAR 65
+</userinput>A</programlisting>
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</section>
