@@ -1,5 +1,5 @@
 
-     FMSLogo Version 6.6a for Microsoft Windows 95/98/NT/2000/XP/Vista
+     FMSLogo Version 6.6b for Microsoft Windows 95/98/NT/2000/XP/Vista
      -----------------------------------------------------------------
 
                                 Contents
@@ -17,16 +17,16 @@ Part VIII) Minimum System Requirements:
 
 Part I) Kit Description/Location (http://sourceforge.net/projects/fmslogo):
 
-  fmslogo-6.6a.exe       (binary kit: Windows self-extracting installer)
-  fmslogo-6.6a.zip       (binary kit: Windows ZIP archive)
-  fmslogo-src-6.6a.zip   (source kit)
+  fmslogo-6.6b.exe       (binary kit: Windows self-extracting installer)
+  fmslogo-6.6b.zip       (binary kit: Windows ZIP archive)
+  fmslogo-src-6.6b.zip   (source kit)
 
 For information about UCBLogo, please contact Brian Harvey
 <bh@cs.berkeley.edu> or the Logo Foundation <michaelt@media.mit.edu>.
 
 Part II) New features/bugs fixed:
 
-  * Added for ???,
+  * Added for 6.6b,
     o Fix bug #1327817; The editor now only prompts you to save your
       changes if you actually changed something.
     o Fix bug #1327706; FORM no longer supports the "debugging aid"
@@ -42,6 +42,8 @@ Part II) New features/bugs fixed:
     o Fix bug #1327707; INPORT no longer crashes on Win XP.
     o Fix file corruption in mcistrwh.hlp (was corrupted in 6.6).
     o Add CTRL+F and CTRL+H accelerators to editor.
+    o Fix bug #1335260; INGAMEPORT now works under XP.
+      (INPORT 513) and (INPORTB 513) also work in limited capacity.
 
   * Added for 6.6a,
     o Fix bug #1324580; BITLOADSIZE works correctly again.
