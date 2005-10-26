@@ -76,7 +76,6 @@ HINSTANCE ModulehInstance;             /* About box instance handle           */
 /* place holders for windows resources */
 
 HBITMAP OldBitmap;
-HBITMAP OldBitmap2;
 
 HPALETTE OldPalette;
 HPALETTE OldPalette2;

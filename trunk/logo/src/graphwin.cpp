@@ -1434,20 +1434,10 @@ PasteFromClipboardToCutIndex(
    }
 
 
-NODE *lbitcut(NODE *arg)
+static
+NODE *
+BitCopyOrCut(NODE *arg, bool IsCut)
    {
-   HDC ScreenDC;
-   HDC MemDC;
-   HDC TempMemDC;
-
-   HBRUSH TempBrush;
-
-   RECT TempRect;
-
-   int TempWidth;
-   int TempHeight;
-   int havebitmap;
-
    POINT dest;
 
    if (current_mode == perspectivemode)
@@ -1458,7 +1448,10 @@ NODE *lbitcut(NODE *arg)
       from3d.y = turtle_p[turtle_which].y / WorldHeight;
       from3d.z = turtle_p[turtle_which].z / WorldDepth;
 
-      if (!ThreeD.TransformPoint(from3d, dest)) return (UNBOUND);
+      if (!ThreeD.TransformPoint(from3d, dest))
+         {
+         return UNBOUND;
+         }
       }
    else
       {
@@ -1466,185 +1459,18 @@ NODE *lbitcut(NODE *arg)
       dest.y = g_round(turtle_p[turtle_which].y);
       }
 
-   havebitmap = 0;
+   int havebitmap = 0;
 
-   TempWidth = getint(pos_int_arg(arg));
-   TempHeight = getint(pos_int_arg(cdr(arg)));
-
-   if (NOT_THROWING)
-      {
-
-      // if we had a old cut get rid of it, we won't go in for clipboard
-
-      if (CutBmp[CutIndex].CutFlag)
-         {
-
-         // if same size reuse the bitmap
-
-         if ((TempWidth == CutBmp[CutIndex].CutWidth) && (TempHeight == CutBmp[CutIndex].CutHeight))
-            {
-            havebitmap = 1;
-            }
-
-         // else get rid of it and make a new one later
-
-         else
-            {
-            DeleteObject(CutBmp[CutIndex].CutMemoryBitMap);
-            }
-         CutBmp[CutIndex].CutFlag = 0;
-         }
-
-      CutBmp[CutIndex].CutWidth = TempWidth;
-      CutBmp[CutIndex].CutHeight = TempHeight;
-
-      // only if we have a surface continue
-
-      if ((CutBmp[CutIndex].CutWidth != 0) && (CutBmp[CutIndex].CutHeight != 0))
-         {
-
-         // flag it so we will delete it
-
-         CutBmp[CutIndex].CutFlag = 1;
-
-         ScreenDC = GetDC(MainWindowx->ScreenWindow->HWindow);
-
-         MemDC = CreateCompatibleDC(ScreenDC);
-         OldBitmap = (HBITMAP) SelectObject(MemDC, MemoryBitMap);
-
-         if (!havebitmap) CutBmp[CutIndex].CutMemoryBitMap = CreateCompatibleBitmap(ScreenDC, (int) (CutBmp[CutIndex].CutWidth), (int) (CutBmp[CutIndex].CutHeight));
-         if (!CutBmp[CutIndex].CutMemoryBitMap)
-            {
-            MainWindowx->CommandWindow->MessageBox(
-               "Cut failed, Possibly not enough Memory",
-               "Error");
-            err_logo(STOP_ERROR, NIL);
-            return (UNBOUND);
-            }
-
-         TempMemDC = CreateCompatibleDC(ScreenDC);
-         OldBitmap2 = (HBITMAP) SelectObject(TempMemDC, CutBmp[CutIndex].CutMemoryBitMap);
-
-         BitBlt(
-            TempMemDC,
-            0,
-            0,
-            (int) (CutBmp[CutIndex].CutWidth),
-            (int) (CutBmp[CutIndex].CutHeight),
-            MemDC,
-            +dest.x + xoffset,
-            -dest.y + yoffset + LL - CutBmp[CutIndex].CutHeight,
-            SRCCOPY);
-
-         SelectObject(TempMemDC, OldBitmap2);
-         DeleteDC(TempMemDC);
-
-         // memory
-
-         SetRect(
-            &TempRect,
-            +dest.x + xoffset,
-            -dest.y + yoffset + LL - CutBmp[CutIndex].CutHeight,
-            +dest.x + xoffset + CutBmp[CutIndex].CutWidth,
-            -dest.y + yoffset + LL);
-
-         TempBrush = CreateBrushIndirect(&ScreenBrush);
-
-         FillRect(MemDC, &TempRect, TempBrush);
-
-         SelectObject(MemDC, OldBitmap);
-         DeleteDC(MemDC);
-
-         //screen
-
-         draw_turtle(0);
-
-         if (zoom_flag)
-            {
-//            TRect temp;
-//
-//            temp.Set(
-//               (+turtle_p[turtle_which].x - MainWindowx->Scroller->XPos / the_zoom + xoffset                                  ) * the_zoom,
-//               (-turtle_p[turtle_which].y - MainWindowx->Scroller->YPos / the_zoom + yoffset + LL - CutBmp[CutIndex].CutHeight) * the_zoom,
-//               (+turtle_p[turtle_which].x - MainWindowx->Scroller->XPos / the_zoom + xoffset + CutBmp[CutIndex].CutWidth      ) * the_zoom,
-//               (-turtle_p[turtle_which].y - MainWindowx->Scroller->YPos / the_zoom + yoffset + LL                             ) * the_zoom);
-//
-//            temp.Normalize();
-//            temp.Inflate(1+the_zoom,1+the_zoom);
-
-            MainWindowx->ScreenWindow->Invalidate(false);
-            }
-         else
-            {
-            SetRect(&TempRect,
-               +turtle_p[turtle_which].x - MainWindowx->ScreenWindow->Scroller->XPos + xoffset,
-               -turtle_p[turtle_which].y - MainWindowx->ScreenWindow->Scroller->YPos + yoffset + LL - CutBmp[CutIndex].CutHeight,
-               +turtle_p[turtle_which].x - MainWindowx->ScreenWindow->Scroller->XPos + xoffset + CutBmp[CutIndex].CutWidth,
-               -turtle_p[turtle_which].y - MainWindowx->ScreenWindow->Scroller->YPos + yoffset + LL);
-
-            FillRect(ScreenDC, &TempRect, TempBrush);
-            }
-
-         ReleaseDC(MainWindowx->ScreenWindow->HWindow, ScreenDC);
-
-         DeleteObject(TempBrush);
-
-         draw_turtle(1);
-
-         // if CutIndex == 0 then do Clipboard
-
-         if (CutIndex == 0)
-            {
-            CopyCutIndexToClipboard(CutIndex);
-            }
-         }
-
-      }
-   return (UNBOUND);
-   }
-
-NODE *lbitcopy(NODE *arg)
-   {
-   HDC ScreenDC;
-   HDC MemDC;
-   HDC TempMemDC;
-   int TempWidth;
-   int TempHeight;
-   int havebitmap;
-
-   POINT dest;
-
-   if (current_mode == perspectivemode)
-      {
-      VECTOR from3d;
-
-      from3d.x = turtle_p[turtle_which].x / WorldWidth;
-      from3d.y = turtle_p[turtle_which].y / WorldHeight;
-      from3d.z = turtle_p[turtle_which].z / WorldDepth;
-
-      if (!ThreeD.TransformPoint(from3d, dest)) return (UNBOUND);
-      }
-   else
-      {
-      dest.x = g_round(turtle_p[turtle_which].x);
-      dest.y = g_round(turtle_p[turtle_which].y);
-      }
-
-   havebitmap = 0;
-
-   TempWidth = getint(pos_int_arg(arg));
-   TempHeight = getint(pos_int_arg(cdr(arg)));
+   int TempWidth = getint(pos_int_arg(arg));
+   int TempHeight = getint(pos_int_arg(cdr(arg)));
 
    if (NOT_THROWING)
       {
 
       // if we had a old cut get rid of it, we won't go in for clipboard
-
       if (CutBmp[CutIndex].CutFlag)
          {
-
          // if same size reuse the bitmap
-
          if ((TempWidth == CutBmp[CutIndex].CutWidth) &&
              (TempHeight == CutBmp[CutIndex].CutHeight))
             {
@@ -1662,31 +1488,39 @@ NODE *lbitcopy(NODE *arg)
       CutBmp[CutIndex].CutHeight = TempHeight;
 
       // only if we have a surface continue
-
       if ((CutBmp[CutIndex].CutWidth != 0) && (CutBmp[CutIndex].CutHeight != 0))
          {
-
          // flag it so we will delete it
-
          CutBmp[CutIndex].CutFlag = 1;
 
-         ScreenDC = GetDC(MainWindowx->ScreenWindow->HWindow);
+         HDC ScreenDC = GetDC(MainWindowx->ScreenWindow->HWindow);
 
-         MemDC = CreateCompatibleDC(ScreenDC);
+         HDC MemDC = CreateCompatibleDC(ScreenDC);
+
          OldBitmap = (HBITMAP) SelectObject(MemDC, MemoryBitMap);
 
-         if (!havebitmap) CutBmp[CutIndex].CutMemoryBitMap = CreateCompatibleBitmap(ScreenDC, (int) (CutBmp[CutIndex].CutWidth), (int) (CutBmp[CutIndex].CutHeight));
+         if (!havebitmap)
+            {
+            CutBmp[CutIndex].CutMemoryBitMap = CreateCompatibleBitmap(
+               ScreenDC,
+               (int) (CutBmp[CutIndex].CutWidth),
+               (int) (CutBmp[CutIndex].CutHeight));
+            }
+
          if (!CutBmp[CutIndex].CutMemoryBitMap)
             {
             MainWindowx->CommandWindow->MessageBox(
                "Cut failed, Possibly not enough Memory",
                "Error");
             err_logo(STOP_ERROR, NIL);
-            return (UNBOUND);
+            return UNBOUND;
             }
 
-         TempMemDC = CreateCompatibleDC(ScreenDC);
-         OldBitmap2 = (HBITMAP) SelectObject(TempMemDC, CutBmp[CutIndex].CutMemoryBitMap);
+         HDC TempMemDC = CreateCompatibleDC(ScreenDC);
+
+         HBITMAP oldBitmap2 = (HBITMAP) SelectObject(
+            TempMemDC,
+            CutBmp[CutIndex].CutMemoryBitMap);
 
          BitBlt(
             TempMemDC,
@@ -1696,25 +1530,90 @@ NODE *lbitcopy(NODE *arg)
             (int) (CutBmp[CutIndex].CutHeight),
             MemDC,
             +dest.x + xoffset,
-            -dest.y + yoffset + LL - CutBmp[CutIndex].CutHeight, SRCCOPY);
+            -dest.y + yoffset + LL - CutBmp[CutIndex].CutHeight,
+            SRCCOPY);
 
-         SelectObject(TempMemDC, OldBitmap2);
+         SelectObject(TempMemDC, oldBitmap2);
          DeleteDC(TempMemDC);
 
+         if (IsCut)
+            {
+            // this is a cut operation (as opposed to a copy operation)
+
+            // memory
+            RECT TempRect;
+            SetRect(
+               &TempRect,
+               +dest.x + xoffset,
+               -dest.y + yoffset + LL - CutBmp[CutIndex].CutHeight,
+               +dest.x + xoffset + CutBmp[CutIndex].CutWidth,
+               -dest.y + yoffset + LL);
+
+            HBRUSH TempBrush = CreateBrushIndirect(&ScreenBrush);
+
+            FillRect(MemDC, &TempRect, TempBrush);
+
+            //screen
+            draw_turtle(0);
+
+            if (zoom_flag)
+               {
+//               TRect temp;
+//
+//               temp.Set(
+//                  (+turtle_p[turtle_which].x - MainWindowx->Scroller->XPos / the_zoom + xoffset                                  ) * the_zoom,
+//                  (-turtle_p[turtle_which].y - MainWindowx->Scroller->YPos / the_zoom + yoffset + LL - CutBmp[CutIndex].CutHeight) * the_zoom,
+//                  (+turtle_p[turtle_which].x - MainWindowx->Scroller->XPos / the_zoom + xoffset + CutBmp[CutIndex].CutWidth      ) * the_zoom,
+//                  (-turtle_p[turtle_which].y - MainWindowx->Scroller->YPos / the_zoom + yoffset + LL                             ) * the_zoom);
+//
+//               temp.Normalize();
+//               temp.Inflate(1+the_zoom,1+the_zoom);
+
+               MainWindowx->ScreenWindow->Invalidate(false);
+               }
+            else
+               {
+               SetRect(
+                  &TempRect,
+                  +turtle_p[turtle_which].x - MainWindowx->ScreenWindow->Scroller->XPos + xoffset,
+                  -turtle_p[turtle_which].y - MainWindowx->ScreenWindow->Scroller->YPos + yoffset + LL - CutBmp[CutIndex].CutHeight,
+                  +turtle_p[turtle_which].x - MainWindowx->ScreenWindow->Scroller->XPos + xoffset + CutBmp[CutIndex].CutWidth,
+                  -turtle_p[turtle_which].y - MainWindowx->ScreenWindow->Scroller->YPos + yoffset + LL);
+
+               FillRect(ScreenDC, &TempRect, TempBrush);
+               }
+
+            ReleaseDC(MainWindowx->ScreenWindow->HWindow, ScreenDC);
+
+            DeleteObject(TempBrush);
+
+            draw_turtle(1);
+         }
+
+         
          SelectObject(MemDC, OldBitmap);
          DeleteDC(MemDC);
 
-         ReleaseDC(MainWindowx->ScreenWindow->HWindow, ScreenDC);
-
          // if CutIndex == 0 then do Clipboard
-
          if (CutIndex == 0)
             {
             CopyCutIndexToClipboard(CutIndex);
             }
          }
       }
-   return (UNBOUND);
+      
+   return UNBOUND;
+   }
+
+
+NODE *lbitcut(NODE *arg)
+   {
+   return BitCopyOrCut(arg, true);
+   }
+
+NODE *lbitcopy(NODE *arg)
+   {
+   return BitCopyOrCut(arg, false);
    }
 
 NODE *lbitfit(NODE *arg)
@@ -1767,7 +1666,7 @@ NODE *lbitfit(NODE *arg)
             }
 
          TempMemDC = CreateCompatibleDC(ScreenDC);
-         OldBitmap2 = (HBITMAP) SelectObject(TempMemDC, TempMemoryBitMap);
+         HBITMAP oldBitmap2 = (HBITMAP) SelectObject(TempMemDC, TempMemoryBitMap);
 
          if (EnablePalette)
             {
@@ -1809,7 +1708,7 @@ NODE *lbitfit(NODE *arg)
             SelectPalette(TempMemDC, OldPalette2, FALSE);
             }
 
-         SelectObject(TempMemDC, OldBitmap2);
+         SelectObject(TempMemDC, oldBitmap2);
          DeleteDC(TempMemDC);
 
          SelectObject(MemDC, OldBitmap);
@@ -1876,7 +1775,9 @@ NODE *lbitpaste(void)
          ScreenDC = GetDC(MainWindowx->ScreenWindow->HWindow);
 
          TempMemDC = CreateCompatibleDC(ScreenDC);
-         OldBitmap2 = (HBITMAP) SelectObject(TempMemDC, CutBmp[CutIndex].CutMemoryBitMap);
+         HBITMAP oldBitmap2 = (HBITMAP) SelectObject(
+            TempMemDC,
+            CutBmp[CutIndex].CutMemoryBitMap);
 
          //memory
 
@@ -1931,7 +1832,7 @@ NODE *lbitpaste(void)
 
          draw_turtle(1);
 
-         SelectObject(TempMemDC, OldBitmap2);
+         SelectObject(TempMemDC, oldBitmap2);
          DeleteDC(TempMemDC);
 
          // Clipboard owns what we paste in not what we converted
@@ -1942,7 +1843,8 @@ NODE *lbitpaste(void)
          err_logo(STOP_ERROR, NIL);
          }
       }
-   return (UNBOUND);
+
+   return UNBOUND;
    }
 
 NODE *lbitpastetoindex(NODE *arg)
@@ -1999,7 +1901,9 @@ NODE *lbitpastetoindex(NODE *arg)
          ScreenDC = GetDC(MainWindowx->ScreenWindow->HWindow);
 
          TempMemDC = CreateCompatibleDC(ScreenDC);
-         OldBitmap2 = (HBITMAP) SelectObject(TempMemDC, CutBmp[CutIndex].CutMemoryBitMap);
+         HBITMAP oldBitmap2 = (HBITMAP) SelectObject(
+            TempMemDC,
+            CutBmp[CutIndex].CutMemoryBitMap);
 
          //memory
 
@@ -2022,7 +1926,7 @@ NODE *lbitpastetoindex(NODE *arg)
 
          ReleaseDC(MainWindowx->ScreenWindow->HWindow, ScreenDC);
 
-         SelectObject(TempMemDC, OldBitmap2);
+         SelectObject(TempMemDC, oldBitmap2);
          DeleteDC(TempMemDC);
 
          // Clipboard owns what we paste in not what we converted
@@ -2169,7 +2073,9 @@ void turtlepaste(int turtle_which)
          ScreenDC = GetDC(MainWindowx->ScreenWindow->HWindow);
 
          TempMemDC = CreateCompatibleDC(ScreenDC);
-         OldBitmap2 = (HBITMAP) SelectObject(TempMemDC, CutBmp[turtle_which].CutMemoryBitMap);
+         HBITMAP oldBitmap2 = (HBITMAP) SelectObject(
+            TempMemDC,
+            CutBmp[turtle_which].CutMemoryBitMap);
 
          //screen
 
@@ -2202,7 +2108,7 @@ void turtlepaste(int turtle_which)
 
          ReleaseDC(MainWindowx->ScreenWindow->HWindow, ScreenDC);
 
-         SelectObject(TempMemDC, OldBitmap2);
+         SelectObject(TempMemDC, oldBitmap2);
          DeleteDC(TempMemDC);
          }
       else

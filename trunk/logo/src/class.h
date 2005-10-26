@@ -479,7 +479,6 @@ extern calllist calllists;
 
 extern HBITMAP MemoryBitMap;
 extern HBITMAP OldBitmap;
-extern HBITMAP OldBitmap2;
 
 extern HICON hCursor;
 extern HICON hCursorWait;
