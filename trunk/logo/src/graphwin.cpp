@@ -33,7 +33,6 @@ int iDelay;
 int bAppendMode;
 int iLoop;
 int iTrans;
-int LL = 1;
 
 static int CutIndex = 0;            // Pointer into CutBmp initially "ClipBoard"
 

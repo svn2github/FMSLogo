@@ -168,7 +168,6 @@ extern FLONUM z_scale;
 extern int turtle_which;
 extern int turtle_max;
 extern TThreeDSolid ThreeD;
-extern int LL;
 
 #ifdef mac
 
@@ -194,3 +193,4 @@ extern int ibm_screen_top;
 #ifdef x_window
 /* xgraphics.c */
 #endif
+
