@@ -1,6 +1,7 @@
 PASS: Size is [100 100] , as expected.
 PASS: Size is [100 101] , as expected.
 PASS: Size is [101 100] , as expected.
+PASS: The bitpaste was drawn correctly
 PASS: FORM 123.1 10 10 returned 123.1000000000 , as expected.
 INFO: Executing invalid instruction: ' (FORM) '
 INFO: Executing invalid instruction: ' (FORM 123.1) '
