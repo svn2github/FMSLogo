@@ -26,17 +26,18 @@ if not namep "ZeroLeftHeading [localmake "ShouldWe "True]
 if not :ShouldWe [localmake "ShouldWe YesNoBox [Calibrate] [Do you wish to Calibrate?]]
 if :ShouldWe~
   [
-  MessageBox [Calibrate] [We are now calibrating the Joy Stick, Hands Free]
-  localmake "ZeroRoll ingameport 1
-  localmake "ZeroSpeed   ingameport 2
-  MessageBox [Calibrate] [Hold Full Right]
+  MessageBox [Calibrate] [We will now calibrate the joystick.  Leave the joystick in the center and click OK.]
+  localmake "ZeroRoll  ingameport 1
+  localmake "ZeroSpeed ingameport 2
+
+  MessageBox [Calibrate] [Move the joystick to the upper-right corner and click OK.]
   make "FullRightRoll  ingameport 1
-  MessageBox [Calibrate] [Hold Full Left]
-  make "FullLeftRoll   ingameport 1
-  MessageBox [Calibrate] [Hold Full Forward]
   make "FullDownPitch  ingameport 2
-  MessageBox [Calibrate] [Hold Full Back]
-  make "FullUpPitch ingameport 2
+
+  MessageBox [Calibrate] [Move the joystick to the lower-left corner and click OK.]
+  make "FullLeftRoll   ingameport 1
+  make "FullUpPitch    ingameport 2
+
   make "ZeroLeftRoll   int (:ZeroRoll  - (:ZeroRoll      - :FullLeftRoll ) * :DeadRange)
   make "ZeroRightRoll  int (:ZeroRoll  + (:FullRightRoll - :ZeroRoll     ) * :DeadRange)
   make "ZeroDownPitch  int (:ZeroSpeed - (:ZeroSpeed     - :FullDownPitch) * :DeadRange)
