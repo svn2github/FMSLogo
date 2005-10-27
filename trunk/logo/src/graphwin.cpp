@@ -71,7 +71,6 @@ gifsave_helper(
 COLORREF GetRGBorIndexColor(NODE* &args)
    {
    NODE *cnode;
-   int icolor;
    NODE *arg;
 
    COLORREF color = (COLORREF) -1;
@@ -109,8 +108,7 @@ COLORREF GetRGBorIndexColor(NODE* &args)
 
       if (NOT_THROWING)
          {
-
-         icolor = (nodetype(cnode) == FLOAT) ?
+         int icolor = (nodetype(cnode) == FLOAT) ?
             (FIXNUM) getfloat(cnode) :
             getint(cnode);
 
@@ -136,31 +134,20 @@ COLORREF GetRGBorIndexColor(NODE* &args)
 
 NODE *lgifsave(NODE *args)
    {
-   char textbuf[MAX_BUFFER_SIZE];
-   NODE *val1;
-   NODE *val3;
-   NODE *val4;
-   int iMaxColorDepth;
-   int iDelay;
-   int bAppendMode;
-   int iLoop;
-   int iTrans;
-
    /* same as BITMAP-SAVE but gets file name from logo command */
-
+   char textbuf[MAX_BUFFER_SIZE];
    cnv_strnode_string(textbuf, args);
 
    /* check for optional callback routine */
-
-   iDelay = -1;
-   bAppendMode = 0;
-   iLoop = -1;
-   iMaxColorDepth = 8;
-   iTrans = -1;
+   int iDelay = -1;
+   int bAppendMode = 0;
+   int iLoop = -1;
+   int iMaxColorDepth = 8;
+   int iTrans = -1;
 
    if (cdr(args) != NIL)
       {
-      val1 = integer_arg(cdr(args));
+      NODE *val1 = integer_arg(cdr(args));
       if (NOT_THROWING)
          {
          iDelay = getint(val1);
@@ -171,13 +158,13 @@ NODE *lgifsave(NODE *args)
                {
                if (cdr(cdr(cdr(args))) != NIL)
                   {
-                  val3 = integer_arg(cdr(cdr(cdr(args))));
+                  NODE *val3 = integer_arg(cdr(cdr(cdr(args))));
                   if (NOT_THROWING)
                      {
                      iLoop = getint(val3);
                      if (cdr(cdr(cdr(cdr(args)))) != NIL)
                         {
-                        val4 = integer_arg(cdr(cdr(cdr(cdr(args)))));
+                        NODE *val4 = integer_arg(cdr(cdr(cdr(cdr(args)))));
                         if (NOT_THROWING)
                            {
                            iMaxColorDepth = getint(val4);
@@ -204,36 +191,32 @@ NODE *lgifsave(NODE *args)
       gifsave_helper(textbuf, iDelay, bAppendMode, iLoop, iTrans, iMaxColorDepth);
       }
 
-   return (UNBOUND);
+   return UNBOUND;
    }
 
 NODE *lbitsave(NODE *args)
    {
-   char textbuf[MAX_BUFFER_SIZE];
-   int iMaxBitCount;
-   NODE *val1;
-
    /* same as BITMAP-SAVE but gets file name from logo command */
-
+   char textbuf[MAX_BUFFER_SIZE];
    cnv_strnode_string(textbuf, args);
 
    if (NOT_THROWING)
       {
-      iMaxBitCount = 32;
-      
+      int iMaxBitCount = 32;
+
       if (cdr(args) != NIL)
          {
-         val1 = integer_arg(cdr(args));
+         NODE *val1 = integer_arg(cdr(args));
          if (NOT_THROWING)
             {
             iMaxBitCount = getint(val1);
             }
          }
-      
+
       MainWindowx->DumpBitmapFile(textbuf, iMaxBitCount);
       }
 
-   return (UNBOUND);
+   return UNBOUND;
    }
 
 void gifload_helper(char *textbuf, DWORD &dwPixelWidth, DWORD &dwPixelHeight)
@@ -253,34 +236,32 @@ void gifload_helper(char *textbuf, DWORD &dwPixelWidth, DWORD &dwPixelHeight)
 
 NODE *lgifload(NODE *arg)
    {
-   char textbuf[MAX_BUFFER_SIZE];
-   DWORD dwPixelWidth = 1;
-   DWORD dwPixelHeight = 1;
-
    /* same as BITMAP-SAVE but gets file name from logo command */
 
+   char textbuf[MAX_BUFFER_SIZE];
    cnv_strnode_string(textbuf, arg);
 
    if (NOT_THROWING)
       {
+      DWORD dwPixelWidth = 1;
+      DWORD dwPixelHeight = 1;
       gifload_helper(textbuf, dwPixelWidth, dwPixelHeight);
       }
 
-   return (UNBOUND);
+   return UNBOUND;
    }
 
 NODE *lgifsize(NODE *args)
    {
-   char textbuf[MAX_BUFFER_SIZE];
-   DWORD dwPixelWidth = 0;
-   DWORD dwPixelHeight = 0;
-
    /* same as BITMAP-SAVE but gets file name from logo command */
 
+   char textbuf[MAX_BUFFER_SIZE];
    cnv_strnode_string(textbuf, args);
 
    if (NOT_THROWING)
       {
+      DWORD dwPixelWidth = 0;
+      DWORD dwPixelHeight = 0;
       gifload_helper(textbuf, dwPixelWidth, dwPixelHeight);
 
       return (
@@ -295,34 +276,32 @@ NODE *lgifsize(NODE *args)
 
 NODE *lbitload(NODE *arg)
    {
-   char textbuf[MAX_BUFFER_SIZE];
-   DWORD dwPixelWidth = 1;
-   DWORD dwPixelHeight = 1;
-
    /* same as BITMAP-LOAD except callable from logo command */
 
+   char textbuf[MAX_BUFFER_SIZE];
    cnv_strnode_string(textbuf, arg);
 
    if (NOT_THROWING)
       {
+      DWORD dwPixelWidth = 1;
+      DWORD dwPixelHeight = 1;
       MainWindowx->LoadBitmapFile(textbuf, dwPixelWidth, dwPixelHeight);
       }
 
-   return (UNBOUND);
+   return UNBOUND;
    }
 
 NODE *lbitloadsize(NODE *arg)
    {
-   char textbuf[MAX_BUFFER_SIZE];
-   DWORD dwPixelWidth = 0;
-   DWORD dwPixelHeight = 0;
-
    /* same as BITMAP-LOAD except callable from logo command */
 
+   char textbuf[MAX_BUFFER_SIZE];
    cnv_strnode_string(textbuf, arg);
 
    if (NOT_THROWING)
       {
+      DWORD dwPixelWidth = 0;
+      DWORD dwPixelHeight = 0;
       MainWindowx->LoadBitmapFile(textbuf, dwPixelWidth, dwPixelHeight);
 
       return (
@@ -332,17 +311,12 @@ NODE *lbitloadsize(NODE *arg)
          )));
       }
 
-   return (UNBOUND);
+   return UNBOUND;
    }
 
 NODE *lbitsize(void)
    {
    BITMAP temp;
-
-   HANDLE hDIB;
-   HBITMAP hMemoryBitMap;
-   LPBITMAPINFOHEADER lpDIBHdr;
-
    temp.bmWidth  = 0;
    temp.bmHeight = 0;
 
@@ -352,12 +326,12 @@ NODE *lbitsize(void)
       ::OpenClipboard(MainWindowx->HWindow);
 
       // Try a DIB first
-      hDIB = (HBITMAP) ::GetClipboardData(CF_DIB);
+      HANDLE hDIB = (HBITMAP) ::GetClipboardData(CF_DIB);
 
       // If it exists get the size
       if (hDIB)
          {
-         lpDIBHdr = (LPBITMAPINFOHEADER) GlobalLock(hDIB);
+         LPBITMAPINFOHEADER lpDIBHdr = (LPBITMAPINFOHEADER) GlobalLock(hDIB);
 
          if (lpDIBHdr)
             {
@@ -366,11 +340,10 @@ NODE *lbitsize(void)
             GlobalUnlock(hDIB);
             }
          }
-
-      // else try for a bitmap
       else
          {
-         hMemoryBitMap = (HBITMAP) ::GetClipboardData(CF_BITMAP);
+         // else try for a bitmap
+         HBITMAP hMemoryBitMap = (HBITMAP) ::GetClipboardData(CF_BITMAP);
 
          // If it exists get the size
          if (hMemoryBitMap)
@@ -402,12 +375,8 @@ NODE *lbitsize(void)
 
 NODE *lsetpixel(NODE *args)
    {
-   HDC ScreenDC;
-   HDC MemDC;
    NODE *arg;
    NODE *cnode;
-   COLORREF color;
-   int icolor;
 
    POINT dest;
 
@@ -419,7 +388,10 @@ NODE *lsetpixel(NODE *args)
       from3d.y = turtle_p[turtle_which].y / WorldHeight;
       from3d.z = turtle_p[turtle_which].z / WorldDepth;
 
-      if (!ThreeD.TransformPoint(from3d, dest)) return (UNBOUND);
+      if (!ThreeD.TransformPoint(from3d, dest))
+         {
+         return UNBOUND;
+         }
       }
    else
       {
@@ -428,67 +400,15 @@ NODE *lsetpixel(NODE *args)
       }
 
    // get args
-
-   if (is_list(car(args)))
-      {
-      arg = pos_int_vector_3_arg(args);
-
-      if (NOT_THROWING)
-         {
-         if (EnablePalette)
-            {
-            color = LoadColor(
-               ((nodetype(     car(arg) ) == FLOAT) ? (FIXNUM) getfloat(     car(arg) ) : getint(     car(arg)) ),
-               ((nodetype(    cadr(arg) ) == FLOAT) ? (FIXNUM) getfloat(    cadr(arg) ) : getint(    cadr(arg)) ),
-               ((nodetype(cadr(cdr(arg))) == FLOAT) ? (FIXNUM) getfloat(cadr(cdr(arg))) : getint(cadr(cdr(arg)))));
-            }
-         else
-            {
-            color = RGB(
-               ((nodetype(     car(arg) ) == FLOAT) ? (FIXNUM) getfloat(     car(arg) ) : getint(     car(arg)) ),
-               ((nodetype(    cadr(arg) ) == FLOAT) ? (FIXNUM) getfloat(    cadr(arg) ) : getint(    cadr(arg)) ),
-               ((nodetype(cadr(cdr(arg))) == FLOAT) ? (FIXNUM) getfloat(cadr(cdr(arg))) : getint(cadr(cdr(arg)))));
-            }
-         }
-
-      bIndexMode = FALSE;
-      }
-   else
-      {
-      cnode = numeric_arg(args);
-
-      if (NOT_THROWING)
-         {
-         icolor = (nodetype(cnode) == FLOAT) ?
-            (FIXNUM) getfloat(cnode) :
-            getint(cnode);
-
-         icolor = icolor % 16;
-         if (EnablePalette)
-            {
-            color = LoadColor(
-               GetRValue(colortable[icolor]),
-               GetGValue(colortable[icolor]),
-               GetBValue(colortable[icolor]));
-            }
-         else
-            {
-            color = colortable[icolor];
-            }
-         }
-
-      bIndexMode = TRUE;
-      }
+   COLORREF color = GetRGBorIndexColor(args);
 
    if (NOT_THROWING)
       {
-
-      ScreenDC = GetDC(MainWindowx->ScreenWindow->HWindow);
+      HDC ScreenDC = GetDC(MainWindowx->ScreenWindow->HWindow);
 
       // memory
-
-      MemDC = CreateCompatibleDC(ScreenDC);
-      OldBitmap = (HBITMAP) SelectObject(MemDC, MemoryBitMap);
+      HDC MemDC = CreateCompatibleDC(ScreenDC);
+      HBITMAP oldBitmap = (HBITMAP) SelectObject(MemDC, MemoryBitMap);
 
       if (EnablePalette)
          {
@@ -502,7 +422,7 @@ NODE *lsetpixel(NODE *args)
          -dest.y + yoffset,
          color);
 
-      SelectObject(MemDC, OldBitmap);
+      SelectObject(MemDC, oldBitmap);
       if (EnablePalette)
          {
          SelectPalette(MemDC, OldPalette, FALSE);
@@ -549,10 +469,9 @@ NODE *lsetpixel(NODE *args)
       ReleaseDC(MainWindowx->ScreenWindow->HWindow, ScreenDC);
 
       draw_turtle(1);
-
       }
 
-   return (UNBOUND);
+   return UNBOUND;
    }
 
 int getindexcolor(COLORREF color)
@@ -565,10 +484,6 @@ int getindexcolor(COLORREF color)
 
 NODE *lpixel()
    {
-   HDC MemDC;
-   HDC ScreenDC;
-   COLORREF the_color;
-
    POINT dest;
 
    if (current_mode == perspectivemode)
@@ -595,12 +510,11 @@ NODE *lpixel()
       dest.y = g_round(turtle_p[turtle_which].y);
       }
 
-   ScreenDC = GetDC(MainWindowx->ScreenWindow->HWindow);
+   HDC ScreenDC = GetDC(MainWindowx->ScreenWindow->HWindow);
 
    // memory
-
-   MemDC = CreateCompatibleDC(ScreenDC);
-   OldBitmap = (HBITMAP) SelectObject(MemDC, MemoryBitMap);
+   HDC MemDC = CreateCompatibleDC(ScreenDC);
+   HBITMAP oldBitmap = (HBITMAP) SelectObject(MemDC, MemoryBitMap);
 
    if (EnablePalette)
       {
@@ -608,7 +522,7 @@ NODE *lpixel()
       RealizePalette(MemDC);
       }
 
-   the_color = GetPixel(MemDC, dest.x + xoffset, -dest.y + yoffset);
+   COLORREF the_color = GetPixel(MemDC, dest.x + xoffset, -dest.y + yoffset);
 
    if (EnablePalette)
       {
@@ -658,7 +572,7 @@ void logofill(BOOL bOld)
 
    // memory
    HDC MemDC = CreateCompatibleDC(ScreenDC);
-   OldBitmap = (HBITMAP) SelectObject(MemDC, MemoryBitMap);
+   HBITMAP oldBitmap = (HBITMAP) SelectObject(MemDC, MemoryBitMap);
 
    if (EnablePalette)
       {
@@ -693,7 +607,7 @@ void logofill(BOOL bOld)
       }
 
    SelectObject(MemDC, OldBrush);
-   SelectObject(MemDC, OldBitmap);
+   SelectObject(MemDC, oldBitmap);
 
    DeleteDC(MemDC);
    DeleteObject(JunkBrush);
@@ -832,7 +746,7 @@ void thescreencolor(int r, int g, int b)
    // memory
 
    HDC MemDC = CreateCompatibleDC(ScreenDC);
-   OldBitmap = (HBITMAP) SelectObject(MemDC, MemoryBitMap);
+   HBITMAP oldBitmap = (HBITMAP) SelectObject(MemDC, MemoryBitMap);
 
    if (EnablePalette)
       {
@@ -847,7 +761,7 @@ void thescreencolor(int r, int g, int b)
       SelectPalette(MemDC, OldPalette, FALSE);
       }
 
-   SelectObject(MemDC, OldBitmap);
+   SelectObject(MemDC, oldBitmap);
    DeleteDC(MemDC);
    ReleaseDC(MainWindowx->ScreenWindow->HWindow, ScreenDC);
 
@@ -879,7 +793,6 @@ void set_ibm_pen_width(int w)
 
 NODE *lclearpalette(void)
    {
-
    // kill the palette and recreate it with just black and white
 
    if (NOT_THROWING)
@@ -898,32 +811,28 @@ NODE *lclearpalette(void)
          }
       }
 
-   return (UNBOUND);
+   return UNBOUND;
    }
 
 NODE *lstatus(void)
    {
-
    // if status not running then run it
-
    if (!status_flag)
       {
       MainWindowx->MyPopupStatus();
       JustDidEdit = 1;
       }
-   return (UNBOUND);
+   return UNBOUND;
    }
 
 NODE *lnostatus(void)
    {
-
    // if running then kill it
-
    if (status_flag)
       {
       MainWindowx->MyPopupStatusKill();
       }
-   return (UNBOUND);
+   return UNBOUND;
    }
 
 
@@ -1016,32 +925,32 @@ NODE *lzoom(NODE *arg)
    {
    NUMBER temp_zoom;
 
-   NODE *val;
-
    // get arg
 
-   val = numeric_arg(arg);
+   NODE *val = numeric_arg(arg);
 
-   if (nodetype(val) == INT) temp_zoom = (NUMBER) getint(val);
-   else temp_zoom = getfloat(val);
+   if (nodetype(val) == INT)
+      {
+      temp_zoom = (NUMBER) getint(val);
+      }
+   else
+      {
+      temp_zoom = getfloat(val);
+      }
 
-   if (temp_zoom <= 0.0) temp_zoom = 1.0;
+   if (temp_zoom <= 0.0)
+      {
+      temp_zoom = 1.0;
+      }
 
    zoom_helper(temp_zoom);
 
-   return (UNBOUND);
+   return UNBOUND;
    }
 
 
 NODE *lbitblock(NODE *arg)
    {
-   HDC ScreenDC;
-   HDC MemDC;
-   HBRUSH TempBrush;
-   RECT TempRect;
-   int CutWidth;
-   int CutHeight;
-
    POINT dest;
 
    if (current_mode == perspectivemode)
@@ -1052,7 +961,10 @@ NODE *lbitblock(NODE *arg)
       from3d.y = turtle_p[turtle_which].y / WorldHeight;
       from3d.z = turtle_p[turtle_which].z / WorldDepth;
 
-      if (!ThreeD.TransformPoint(from3d, dest)) return (UNBOUND);
+      if (!ThreeD.TransformPoint(from3d, dest))
+         {
+         return UNBOUND;
+         }
       }
    else
       {
@@ -1061,26 +973,21 @@ NODE *lbitblock(NODE *arg)
       }
 
    // get args
-
-   CutWidth = getint(pos_int_arg(arg));
-   CutHeight = getint(pos_int_arg(cdr(arg)));
+   int CutWidth = getint(pos_int_arg(arg));
+   int CutHeight = getint(pos_int_arg(cdr(arg)));
 
    if (NOT_THROWING)
       {
-
       // only if a surface was specified continue or UAEs big time
-
       if ((CutWidth != 0) && (CutHeight != 0))
          {
+         HBRUSH TempBrush = CreateBrushIndirect(&FloodBrush);
 
-         TempBrush = CreateBrushIndirect(&FloodBrush);
-
-         ScreenDC = GetDC(MainWindowx->ScreenWindow->HWindow);
+         HDC ScreenDC = GetDC(MainWindowx->ScreenWindow->HWindow);
 
          // memory
-
-         MemDC = CreateCompatibleDC(ScreenDC);
-         OldBitmap = (HBITMAP) SelectObject(MemDC, MemoryBitMap);
+         HDC MemDC = CreateCompatibleDC(ScreenDC);
+         HBITMAP oldBitmap = (HBITMAP) SelectObject(MemDC, MemoryBitMap);
 
          if (EnablePalette)
             {
@@ -1088,7 +995,9 @@ NODE *lbitblock(NODE *arg)
             RealizePalette(MemDC);
             }
 
-         SetRect(&TempRect,
+         RECT TempRect;
+         SetRect(
+            &TempRect,
             +dest.x + xoffset,
             -dest.y + yoffset + LL - CutHeight,
             +dest.x + xoffset + CutWidth,
@@ -1096,7 +1005,7 @@ NODE *lbitblock(NODE *arg)
 
          FillRect(MemDC, &TempRect, TempBrush);
 
-         SelectObject(MemDC, OldBitmap);
+         SelectObject(MemDC, oldBitmap);
          if (EnablePalette)
             {
             SelectPalette(MemDC, OldPalette, FALSE);
@@ -1143,7 +1052,8 @@ NODE *lbitblock(NODE *arg)
          }
 
       }
-   return (UNBOUND);
+
+   return UNBOUND;
    }
 
 NODE *lbitmode(void)
@@ -1496,7 +1406,7 @@ BitCopyOrCut(NODE *arg, bool IsCut)
 
          HDC MemDC = CreateCompatibleDC(ScreenDC);
 
-         OldBitmap = (HBITMAP) SelectObject(MemDC, MemoryBitMap);
+         HBITMAP oldBitmap = (HBITMAP) SelectObject(MemDC, MemoryBitMap);
 
          if (!havebitmap)
             {
@@ -1589,8 +1499,8 @@ BitCopyOrCut(NODE *arg, bool IsCut)
             draw_turtle(1);
          }
 
-         
-         SelectObject(MemDC, OldBitmap);
+
+         SelectObject(MemDC, oldBitmap);
          DeleteDC(MemDC);
 
          // if CutIndex == 0 then do Clipboard
@@ -1600,7 +1510,7 @@ BitCopyOrCut(NODE *arg, bool IsCut)
             }
          }
       }
-      
+
    return UNBOUND;
    }
 
@@ -1617,17 +1527,8 @@ NODE *lbitcopy(NODE *arg)
 
 NODE *lbitfit(NODE *arg)
    {
-   HDC ScreenDC;
-   HDC MemDC;
-   HDC TempMemDC;
-
-   NUMBER FitHeight;
-   NUMBER FitWidth;
-
-   HBITMAP TempMemoryBitMap;
-
-   FitWidth = getint(pos_int_arg(arg));
-   FitHeight = getint(pos_int_arg(cdr(arg)));
+   NUMBER FitWidth = getint(pos_int_arg(arg));
+   NUMBER FitHeight = getint(pos_int_arg(cdr(arg)));
 
    if (NOT_THROWING)
       {
@@ -1642,10 +1543,10 @@ NODE *lbitfit(NODE *arg)
       if ((FitWidth != 0) && (FitHeight != 0) && CutBmp[CutIndex].CutFlag)
          {
 
-         ScreenDC = GetDC(MainWindowx->ScreenWindow->HWindow);
+         HDC ScreenDC = GetDC(MainWindowx->ScreenWindow->HWindow);
 
-         MemDC = CreateCompatibleDC(ScreenDC);
-         OldBitmap = (HBITMAP) SelectObject(MemDC, CutBmp[CutIndex].CutMemoryBitMap);
+         HDC MemDC = CreateCompatibleDC(ScreenDC);
+         HBITMAP oldBitmap = (HBITMAP) SelectObject(MemDC, CutBmp[CutIndex].CutMemoryBitMap);
 
          if (EnablePalette)
             {
@@ -1656,7 +1557,7 @@ NODE *lbitfit(NODE *arg)
             RealizePalette(MemDC);
             }
 
-         TempMemoryBitMap = CreateCompatibleBitmap(ScreenDC, (int) (FitWidth), (int) (FitHeight));
+         HBITMAP TempMemoryBitMap = CreateCompatibleBitmap(ScreenDC, (int) FitWidth, (int) FitHeight);
          if (!TempMemoryBitMap)
             {
             MainWindowx->CommandWindow->MessageBox("Fit failed, Possibly not enough Memory", "Error");
@@ -1664,7 +1565,7 @@ NODE *lbitfit(NODE *arg)
             return (UNBOUND);
             }
 
-         TempMemDC = CreateCompatibleDC(ScreenDC);
+         HDC TempMemDC = CreateCompatibleDC(ScreenDC);
          HBITMAP oldBitmap2 = (HBITMAP) SelectObject(TempMemDC, TempMemoryBitMap);
 
          if (EnablePalette)
@@ -1710,7 +1611,7 @@ NODE *lbitfit(NODE *arg)
          SelectObject(TempMemDC, oldBitmap2);
          DeleteDC(TempMemDC);
 
-         SelectObject(MemDC, OldBitmap);
+         SelectObject(MemDC, oldBitmap);
          DeleteDC(MemDC);
 
          DeleteObject(CutBmp[CutIndex].CutMemoryBitMap);
@@ -1725,15 +1626,11 @@ NODE *lbitfit(NODE *arg)
             }
          }
       }
-   return (UNBOUND);
+   return UNBOUND;
    }
 
 NODE *lbitpaste(void)
    {
-   HDC ScreenDC;
-   HDC MemDC;
-   HDC TempMemDC;
-
    POINT dest;
 
    if (current_mode == perspectivemode)
@@ -1771,17 +1668,16 @@ NODE *lbitpaste(void)
             CutBmp[CutIndex].CutFlag = 0;
             }
 
-         ScreenDC = GetDC(MainWindowx->ScreenWindow->HWindow);
+         HDC ScreenDC = GetDC(MainWindowx->ScreenWindow->HWindow);
 
-         TempMemDC = CreateCompatibleDC(ScreenDC);
+         HDC TempMemDC = CreateCompatibleDC(ScreenDC);
          HBITMAP oldBitmap2 = (HBITMAP) SelectObject(
             TempMemDC,
             CutBmp[CutIndex].CutMemoryBitMap);
 
          //memory
-
-         MemDC = CreateCompatibleDC(ScreenDC);
-         OldBitmap = (HBITMAP) SelectObject(MemDC, MemoryBitMap);
+         HDC MemDC = CreateCompatibleDC(ScreenDC);
+         HBITMAP oldBitmap = (HBITMAP) SelectObject(MemDC, MemoryBitMap);
 
          BitBlt(
             MemDC,
@@ -1791,7 +1687,7 @@ NODE *lbitpaste(void)
             (int) (CutBmp[CutIndex].CutHeight),
             TempMemDC, 0, 0, bitmode);
 
-         SelectObject(MemDC, OldBitmap);
+         SelectObject(MemDC, oldBitmap);
          DeleteDC(MemDC);
 
          //screen
@@ -1848,10 +1744,6 @@ NODE *lbitpaste(void)
 
 NODE *lbitpastetoindex(NODE *arg)
    {
-   HDC ScreenDC;
-   HDC MemDC;
-   HDC TempMemDC;
-
    // set the current bitmap index if within range
    int i = getint(pos_int_arg(arg));
    int x = getint(pos_int_arg(cdr(arg)));
@@ -1897,17 +1789,16 @@ NODE *lbitpastetoindex(NODE *arg)
             CutBmp[CutIndex].CutFlag = 0;
             }
 
-         ScreenDC = GetDC(MainWindowx->ScreenWindow->HWindow);
+         HDC ScreenDC = GetDC(MainWindowx->ScreenWindow->HWindow);
 
-         TempMemDC = CreateCompatibleDC(ScreenDC);
+         HDC TempMemDC = CreateCompatibleDC(ScreenDC);
          HBITMAP oldBitmap2 = (HBITMAP) SelectObject(
             TempMemDC,
             CutBmp[CutIndex].CutMemoryBitMap);
 
          //memory
-
-         MemDC = CreateCompatibleDC(ScreenDC);
-         OldBitmap = (HBITMAP) SelectObject(MemDC, CutBmp[i].CutMemoryBitMap);
+         HDC MemDC = CreateCompatibleDC(ScreenDC);
+         HBITMAP oldBitmap = (HBITMAP) SelectObject(MemDC, CutBmp[i].CutMemoryBitMap);
 
          BitBlt(
             MemDC,
@@ -1920,7 +1811,7 @@ NODE *lbitpastetoindex(NODE *arg)
             0,
             bitmode);
 
-         SelectObject(MemDC, OldBitmap);
+         SelectObject(MemDC, oldBitmap);
          DeleteDC(MemDC);
 
          ReleaseDC(MainWindowx->ScreenWindow->HWindow, ScreenDC);
@@ -1936,7 +1827,7 @@ NODE *lbitpastetoindex(NODE *arg)
          err_logo(STOP_ERROR, NIL);
          }
       }
-   return (UNBOUND);
+   return UNBOUND;
    }
 
 NODE *lsetturtle(NODE *arg)
