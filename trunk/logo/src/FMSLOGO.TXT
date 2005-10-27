@@ -26,6 +26,9 @@ For information about UCBLogo, please contact Brian Harvey
 
 Part II) New features/bugs fixed:
 
+  * Added for ???,
+    o Improve joystick samples.
+
   * Added for 6.6b,
     o Fix bug #1327817; The editor now only prompts you to save your
       changes if you actually changed something.
