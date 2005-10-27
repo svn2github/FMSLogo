@@ -34,7 +34,7 @@ int bAppendMode;
 int iLoop;
 int iTrans;
 
-static int CutIndex = 0;            // Pointer into CutBmp initially "ClipBoard"
+static int CutIndex = 0; // Pointer into CutBmp initially "ClipBoard"
 
 static const char *tempfont;
 static int found;
@@ -68,19 +68,19 @@ gifsave_helper(
    unlink(TempBmpName);
    }
 
-COLORREF GetRGBorIndexColor(NODE* &args)
-   {
-   NODE *cnode;
-   NODE *arg;
 
+static
+COLORREF
+GetRGBorIndexColor(
+   NODE* &args
+)
+   {
    COLORREF color = (COLORREF) -1;
 
    // get args
-
    if (is_list(car(args)))
       {
-
-      arg = pos_int_vector_3_arg(args);
+      NODE * arg = pos_int_vector_3_arg(args);
 
       if (NOT_THROWING)
          {
@@ -104,7 +104,7 @@ COLORREF GetRGBorIndexColor(NODE* &args)
    }
    else
       {
-      cnode = numeric_arg(args);
+      NODE * cnode = numeric_arg(args);
 
       if (NOT_THROWING)
          {
@@ -373,13 +373,17 @@ NODE *lbitsize(void)
       NIL)));
    }
 
-NODE *lsetpixel(NODE *args)
+// Fills TurtlePoint with the location of the current
+// turtle on the 2D screen.
+//
+// returns true on success.
+// returns false on error.
+static
+bool
+GetScreenPointOfCurrentTurtle(
+   POINT & TurtlePoint
+)
    {
-   NODE *arg;
-   NODE *cnode;
-
-   POINT dest;
-
    if (current_mode == perspectivemode)
       {
       VECTOR from3d;
@@ -388,15 +392,28 @@ NODE *lsetpixel(NODE *args)
       from3d.y = turtle_p[turtle_which].y / WorldHeight;
       from3d.z = turtle_p[turtle_which].z / WorldDepth;
 
-      if (!ThreeD.TransformPoint(from3d, dest))
+      if (!ThreeD.TransformPoint(from3d, TurtlePoint))
          {
-         return UNBOUND;
+         return false;
          }
       }
    else
       {
-      dest.x = g_round(turtle_p[turtle_which].x);
-      dest.y = g_round(turtle_p[turtle_which].y);
+      TurtlePoint.x = g_round(turtle_p[turtle_which].x);
+      TurtlePoint.y = g_round(turtle_p[turtle_which].y);
+      }
+
+   return true;
+   }
+
+
+
+NODE *lsetpixel(NODE *args)
+   {
+   POINT dest;
+   if (!GetScreenPointOfCurrentTurtle(dest))
+      {
+      return UNBOUND;
       }
 
    // get args
@@ -474,40 +491,34 @@ NODE *lsetpixel(NODE *args)
    return UNBOUND;
    }
 
-int getindexcolor(COLORREF color)
+static
+int
+getindexcolor(
+   const COLORREF & color
+)
    {
-   for (int i=0;i<16;i++) if (color == colortable[i]) return i;
+   for (int i=0;i<16;i++)
+      {
+      if (color == colortable[i])
+         {
+         return i;
+         }
+      }
    return -1;
    }
 
-// function that returns the RGB vector of the pixel the turtle is on top of
 
+// function that returns the RGB vector of the pixel the turtle is on top of
 NODE *lpixel()
    {
    POINT dest;
-
-   if (current_mode == perspectivemode)
+   if (!GetScreenPointOfCurrentTurtle(dest))
       {
-      VECTOR from3d;
-
-      from3d.x = turtle_p[turtle_which].x / WorldWidth;
-      from3d.y = turtle_p[turtle_which].y / WorldHeight;
-      from3d.z = turtle_p[turtle_which].z / WorldDepth;
-
-      if (!ThreeD.TransformPoint(from3d, dest))
-         {
-         return (
+      return
+         cons(make_intnode((FIXNUM) - 1),
             cons(make_intnode((FIXNUM) - 1),
                cons(make_intnode((FIXNUM) - 1),
-                  cons(make_intnode((FIXNUM) - 1),
-                     NIL
-                  ))));
-         }
-      }
-   else
-      {
-      dest.x = g_round(turtle_p[turtle_which].x);
-      dest.y = g_round(turtle_p[turtle_which].y);
+                  NIL)));
       }
 
    HDC ScreenDC = GetDC(MainWindowx->ScreenWindow->HWindow);
@@ -547,23 +558,10 @@ NODE *lpixel()
 
 void logofill(BOOL bOld)
    {
-
    POINT dest;
-
-   if (current_mode == perspectivemode)
+   if (!GetScreenPointOfCurrentTurtle(dest))
       {
-      VECTOR from3d;
-
-      from3d.x = turtle_p[turtle_which].x / WorldWidth;
-      from3d.y = turtle_p[turtle_which].y / WorldHeight;
-      from3d.z = turtle_p[turtle_which].z / WorldDepth;
-
-      if (!ThreeD.TransformPoint(from3d, dest)) return;
-      }
-   else
-      {
-      dest.x = g_round(turtle_p[turtle_which].x);
-      dest.y = g_round(turtle_p[turtle_which].y);
+      return;
       }
 
    HDC ScreenDC = GetDC(MainWindowx->ScreenWindow->HWindow);
@@ -951,25 +949,11 @@ NODE *lzoom(NODE *arg)
 
 NODE *lbitblock(NODE *arg)
    {
+
    POINT dest;
-
-   if (current_mode == perspectivemode)
+   if (!GetScreenPointOfCurrentTurtle(dest))
       {
-      VECTOR from3d;
-
-      from3d.x = turtle_p[turtle_which].x / WorldWidth;
-      from3d.y = turtle_p[turtle_which].y / WorldHeight;
-      from3d.z = turtle_p[turtle_which].z / WorldDepth;
-
-      if (!ThreeD.TransformPoint(from3d, dest))
-         {
-         return UNBOUND;
-         }
-      }
-   else
-      {
-      dest.x = g_round(turtle_p[turtle_which].x);
-      dest.y = g_round(turtle_p[turtle_which].y);
+      return UNBOUND;
       }
 
    // get args
@@ -1061,7 +1045,6 @@ NODE *lbitmode(void)
    int temp;
 
    // return the logo "code" for the bit mode
-
    switch (bitmode)
       {
        case SRCCOPY: temp = 1; break;
@@ -1101,7 +1084,7 @@ NODE *lsetbitmode(NODE *arg)
            }
       }
 
-   return (UNBOUND);
+   return UNBOUND;
    }
 
 NODE *lturtlemode(void)
@@ -1131,7 +1114,6 @@ NODE *lsetturtlemode(NODE *arg)
    {
 
    // convert from logo "code" to Windows constants
-
    if (turtle_bitmap[turtle_which])
       {
       prepare_to_draw;
@@ -1159,23 +1141,19 @@ NODE *lsetturtlemode(NODE *arg)
       done_drawing;
       }
 
-   return (UNBOUND);
+   return UNBOUND;
    }
 
 NODE *lbitindex(void)
    {
    // return the current bitmap index
-
-   return (make_intnode((FIXNUM) CutIndex));
+   return make_intnode((FIXNUM) CutIndex);
    }
 
 NODE *lsetbitindex(NODE *arg)
    {
-   int i;
-
    // set the current bitmap index if within range
-
-   i = getint(pos_int_arg(arg));
+   int i = getint(pos_int_arg(arg));
 
    if (i < MaxBitCuts)
       {
@@ -1348,33 +1326,17 @@ NODE *
 BitCopyOrCut(NODE *arg, bool IsCut)
    {
    POINT dest;
-
-   if (current_mode == perspectivemode)
+   if (!GetScreenPointOfCurrentTurtle(dest))
       {
-      VECTOR from3d;
-
-      from3d.x = turtle_p[turtle_which].x / WorldWidth;
-      from3d.y = turtle_p[turtle_which].y / WorldHeight;
-      from3d.z = turtle_p[turtle_which].z / WorldDepth;
-
-      if (!ThreeD.TransformPoint(from3d, dest))
-         {
-         return UNBOUND;
-         }
+      return UNBOUND;
       }
-   else
-      {
-      dest.x = g_round(turtle_p[turtle_which].x);
-      dest.y = g_round(turtle_p[turtle_which].y);
-      }
-
-   int havebitmap = 0;
 
    int TempWidth = getint(pos_int_arg(arg));
    int TempHeight = getint(pos_int_arg(cdr(arg)));
 
    if (NOT_THROWING)
       {
+      bool havebitmap = false;
 
       // if we had a old cut get rid of it, we won't go in for clipboard
       if (CutBmp[CutIndex].CutFlag)
@@ -1383,7 +1345,7 @@ BitCopyOrCut(NODE *arg, bool IsCut)
          if ((TempWidth == CutBmp[CutIndex].CutWidth) &&
              (TempHeight == CutBmp[CutIndex].CutHeight))
             {
-            havebitmap = 1;
+            havebitmap = true;
             }
          else
             {
@@ -1498,7 +1460,6 @@ BitCopyOrCut(NODE *arg, bool IsCut)
 
             draw_turtle(1);
          }
-
 
          SelectObject(MemDC, oldBitmap);
          DeleteDC(MemDC);
@@ -1632,21 +1593,9 @@ NODE *lbitfit(NODE *arg)
 NODE *lbitpaste(void)
    {
    POINT dest;
-
-   if (current_mode == perspectivemode)
+   if (!GetScreenPointOfCurrentTurtle(dest))
       {
-      VECTOR from3d;
-
-      from3d.x = turtle_p[turtle_which].x / WorldWidth;
-      from3d.y = turtle_p[turtle_which].y / WorldHeight;
-      from3d.z = turtle_p[turtle_which].z / WorldDepth;
-
-      if (!ThreeD.TransformPoint(from3d, dest)) return (UNBOUND);
-      }
-   else
-      {
-      dest.x = g_round(turtle_p[turtle_which].x);
-      dest.y = g_round(turtle_p[turtle_which].y);
+      return UNBOUND;
       }
 
    if (NOT_THROWING)
@@ -1757,7 +1706,7 @@ NODE *lbitpastetoindex(NODE *arg)
       {
       MainWindowx->CommandWindow->MessageBox("BitMap Index out of range", "Error");
       err_logo(STOP_ERROR, NIL);
-      return (UNBOUND);
+      return UNBOUND;
       }
 
    if (!CutBmp[i].CutFlag)
@@ -1766,7 +1715,7 @@ NODE *lbitpastetoindex(NODE *arg)
          "BitMap at Index must be initialized with a bitmap",
          "Error");
       err_logo(STOP_ERROR, NIL);
-      return (UNBOUND);
+      return UNBOUND;
       }
 
    if (NOT_THROWING)
@@ -1832,15 +1781,12 @@ NODE *lbitpastetoindex(NODE *arg)
 
 NODE *lsetturtle(NODE *arg)
    {
-   NODE *val;
-   int temp;
-
-   val = numeric_arg(arg);
+   NODE * val = numeric_arg(arg);
 
    if (NOT_THROWING)
       {
       draw_turtles(0);
-      temp = getint(val);
+      int temp = getint(val);
       if ((temp >= (TURTLES - TURTLEN)) || (temp < -TURTLEN))
          {
          MainWindowx->CommandWindow->MessageBox("Bad Turtle Id", "Error");
@@ -1874,7 +1820,10 @@ NODE *lsetturtle(NODE *arg)
             turtle_max = turtle_which;
             }
 
-         if (turtle_which < 0) turtle_which = (TURTLES - (TURTLEN+1)) - turtle_which;
+         if (turtle_which < 0)
+            {
+            turtle_which = (TURTLES - (TURTLEN+1)) - turtle_which;
+            }
 
          if (status_flag)
             {
@@ -1899,7 +1848,7 @@ extern FLONUM wanna_z;
          }
       }
 
-   return (UNBOUND);
+   return UNBOUND;
    }
 
 NODE *lturtle()
@@ -1917,52 +1866,34 @@ NODE *lturtles()
 
 void turtlepaste(int turtle_which)
    {
-   HDC ScreenDC;
-   HDC TempMemDC;
-
    POINT dest;
-
-   if (current_mode == perspectivemode)
+   if (!GetScreenPointOfCurrentTurtle(dest))
       {
-      VECTOR from3d;
-
-      from3d.x = turtle_p[turtle_which].x / WorldWidth;
-      from3d.y = turtle_p[turtle_which].y / WorldHeight;
-      from3d.z = turtle_p[turtle_which].z / WorldDepth;
-
-      if (!ThreeD.TransformPoint(from3d, dest)) return;
-      }
-   else
-      {
-      dest.x = g_round(turtle_p[turtle_which].x);
-      dest.y = g_round(turtle_p[turtle_which].y);
+      return;
       }
 
    if (NOT_THROWING)
       {
 
       // If ClipBoard check with ClipBoard only
-
       if (turtle_which == 0)
          {
          PasteFromClipboardToCutIndex(turtle_which);
          }
 
       // only if we have something to paste
-
       if (CutBmp[turtle_which].CutFlag)
          {
 
          // if clipboard then never leave Cut Flag true
-
          if (turtle_which == 0)
             {
             CutBmp[turtle_which].CutFlag = 0;
             }
 
-         ScreenDC = GetDC(MainWindowx->ScreenWindow->HWindow);
+         HDC ScreenDC = GetDC(MainWindowx->ScreenWindow->HWindow);
 
-         TempMemDC = CreateCompatibleDC(ScreenDC);
+         HDC TempMemDC = CreateCompatibleDC(ScreenDC);
          HBITMAP oldBitmap2 = (HBITMAP) SelectObject(
             TempMemDC,
             CutBmp[turtle_which].CutMemoryBitMap);
@@ -1983,7 +1914,10 @@ void turtlepaste(int turtle_which)
                -dest.y - MainWindowx->ScreenWindow->Scroller->YPos / the_zoom + yoffset + LL - CutBmp[turtle_which].CutHeight,
                (int) (CutBmp[turtle_which].CutWidth),
                (int) (CutBmp[turtle_which].CutHeight),
-               TempMemDC, 0, 0, turtle_bitmap[turtle_which]);
+               TempMemDC,
+               0,
+               0,
+               turtle_bitmap[turtle_which]);
             }
          else
             {
@@ -1993,7 +1927,10 @@ void turtlepaste(int turtle_which)
                -dest.y - MainWindowx->ScreenWindow->Scroller->YPos + yoffset + LL - CutBmp[turtle_which].CutHeight,
                (int) (CutBmp[turtle_which].CutWidth),
                (int) (CutBmp[turtle_which].CutHeight),
-               TempMemDC, 0, 0, turtle_bitmap[turtle_which]);
+               TempMemDC,
+               0,
+               0,
+               turtle_bitmap[turtle_which]);
             }
 
          ReleaseDC(MainWindowx->ScreenWindow->HWindow, ScreenDC);
@@ -2025,7 +1962,7 @@ NODE *lscrollx(NODE *arg)
          {
          TRect screenRect;
          MainWindowx->ScreenWindow->GetClientRect(screenRect);
-         
+
          MainWindowx->ScreenWindow->Scroller->ScrollTo(
             ((BitMapWidth * the_zoom) / 2) - (0.5 * screenRect.right),
             MainWindowx->ScreenWindow->Scroller->YPos);
@@ -2038,7 +1975,7 @@ NODE *lscrollx(NODE *arg)
          }
       }
 
-   return (UNBOUND);
+   return UNBOUND;
    }
 
 NODE *lscrolly(NODE *arg)
@@ -2067,7 +2004,7 @@ NODE *lscrolly(NODE *arg)
          }
       }
 
-   return (UNBOUND);
+   return UNBOUND;
    }
 
 NODE *lsetfocus(NODE *arg)
@@ -2085,7 +2022,7 @@ NODE *lsetfocus(NODE *arg)
       {
       // get handle to Window with arg as Caption
       HWND window = FindWindow(NULL, textbuf);
-      
+
       // Now set focus to it, if it exists
       if (window != NULL)
          {
@@ -2095,22 +2032,18 @@ NODE *lsetfocus(NODE *arg)
 
    JustDidEdit = 1;
 
-   return (UNBOUND);
+   return UNBOUND;
    }
 
 NODE *lgetfocus(void)
    {
-   NODE *arg;
-   NODE *val;
-
    char textbuf[MAX_BUFFER_SIZE];
    memset(textbuf, 0, MAX_BUFFER_SIZE);
 
    // Get handle to active window
    HWND TempH = GetActiveWindow();
 
-   // It better exist, get it's caption
-
+   // It better exist, get its caption
    if (TempH != NULL)
       {
       ::GetWindowText(TempH, textbuf, MAX_BUFFER_SIZE);
@@ -2119,28 +2052,22 @@ NODE *lgetfocus(void)
    JustDidEdit = 1;
 
    // Return caption as a list
-
-   arg = make_strnode(textbuf, NULL, strlen(textbuf), STRING, strnzcpy);
-   val = arg; // parser(arg, FALSE);
-   return (val);
+   NODE * arg = make_strnode(textbuf, NULL, strlen(textbuf), STRING, strnzcpy);
+   NODE * val = arg; // parser(arg, FALSE);
+   return val;
    }
 
 NODE *lwindowset(NODE *args)
    {
    char textbuf[MAX_BUFFER_SIZE];
-   int value;
-
-   HWND EditH;
-
    cnv_strnode_string(textbuf, args);
-   value = getint(pos_int_arg(cdr(args)));
+
+   int value = getint(pos_int_arg(cdr(args)));
 
    // get handle to Window with arg as Caption
+   HWND EditH = FindWindow(NULL, textbuf);
 
-   EditH = FindWindow(NULL, textbuf);
-
-   // if it exists icon it.
-
+   // if it exists set its state it.
    if (EditH != NULL)
       {
       ShowWindow(EditH, value);
@@ -2148,7 +2075,7 @@ NODE *lwindowset(NODE *args)
 
    JustDidEdit = 1;
 
-   return (UNBOUND);
+   return UNBOUND;
    }
 
 void ibm_clear_screen(void)
@@ -2172,20 +2099,13 @@ void ibm_clear_screen(void)
 
       ::ReleaseDC(MainWindowx->ScreenWindow->HWindow, screen);
       ::DeleteObject(tempBrush);
-   }
+      }
 
    MainWindowx->ScreenWindow->Invalidate(false);
    }
 
-void option_helper(short *var, NODE *arg)
-   {
-   NODE *val = integer_arg(arg);
-   if (NOT_THROWING)
-      {
-      *var = (short) getint(val);
-      }
-   }
 
+static
 int CALLBACK
 FindFont(
     const LOGFONT    *  LogFont,     // pointer to logical-font data
@@ -2207,6 +2127,7 @@ FindFont(
    }
 
 
+static
 int CALLBACK
 PrintFont(
     const LOGFONT    * LogFont,     // pointer to logical-font data
@@ -2220,7 +2141,11 @@ PrintFont(
    }
 
 
-void setfont(const char *fontname)
+static
+void
+setfont(
+   const char *fontname
+)
    {
    HDC hdc = GetDC(::GetFocus());
 
@@ -2245,9 +2170,7 @@ void setfont(const char *fontname)
 
 void do_help(char *arg)
    {
-
-   /* if arg NULL then jump to index else try to lookup key */
-
+   // if arg NULL then jump to index else try to lookup key
    if (arg == NULL)
       {
       MainWindowx->WinHelp(szHelpFileName, HELP_INDEX, 0L);
@@ -2297,7 +2220,7 @@ NODE *lwinhelp(NODE *arg)
       MainWindowx->WinHelp(textbuf, HELP_INDEX, 0L);
       }
 
-   return (UNBOUND);
+   return UNBOUND;
    }
 
 NODE *lsetlabelfont(NODE *arg)
@@ -2306,7 +2229,7 @@ NODE *lsetlabelfont(NODE *arg)
    NODE *args = list_arg(arg);
    if (car(args) == NIL)
       {
-      return (NIL);
+      return NIL;
       }
 
    if (NOT_THROWING)
@@ -2359,13 +2282,9 @@ NODE *lsetlabelfont(NODE *arg)
 
 NODE *llabelfont(void)
    {
-   NODE *val;
-   NODE *targ;
-
    // put the Font name in a list
-
-   targ = make_strnode(FontRec.lfFaceName, NULL, strlen(FontRec.lfFaceName), STRING, strnzcpy);
-   val = parser(targ, FALSE);
+   NODE *targ = make_strnode(FontRec.lfFaceName, NULL, strlen(FontRec.lfFaceName), STRING, strnzcpy);
+   NODE *val = parser(targ, FALSE);
 
    // now return the whole thing as a list
 
@@ -2403,15 +2322,11 @@ NODE *llabelfont(void)
 
 NODE *lmachine(void)
    {
-   int ScreenWidth;
-   int ScreenHeight;
-
    // build list with system specific information
-
    HDC tempDC = GetDC(0);
 
-   ScreenWidth  = GetDeviceCaps(tempDC, HORZRES);
-   ScreenHeight = GetDeviceCaps(tempDC, VERTRES);
+   int ScreenWidth  = GetDeviceCaps(tempDC, HORZRES);
+   int ScreenHeight = GetDeviceCaps(tempDC, VERTRES);
 
    ReleaseDC(0, tempDC);
 
@@ -2433,7 +2348,6 @@ NODE *lmachine(void)
       cons(make_intnode((FIXNUM) (wrect.right - wrect.left)),
       cons(make_intnode((FIXNUM) (wrect.bottom - wrect.top)),
       NIL))))))))))))));
-
    }
 
 SIZE labelsize(const char *s)
@@ -2466,21 +2380,9 @@ SIZE labelsize(const char *s)
 void label(const char *s)
    {
    POINT dest;
-
-   if (current_mode == perspectivemode)
+   if (!GetScreenPointOfCurrentTurtle(dest))
       {
-      VECTOR from3d;
-
-      from3d.x = turtle_p[turtle_which].x / WorldWidth;
-      from3d.y = turtle_p[turtle_which].y / WorldHeight;
-      from3d.z = turtle_p[turtle_which].z / WorldDepth;
-
-      if (!ThreeD.TransformPoint(from3d, dest)) return;
-      }
-   else
-      {
-      dest.x = g_round(turtle_p[turtle_which].x);
-      dest.y = g_round(turtle_p[turtle_which].y);
+      return;
       }
 
    HDC ScreenDC = GetDC(MainWindowx->ScreenWindow->HWindow);
