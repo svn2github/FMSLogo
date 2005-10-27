@@ -1,6 +1,6 @@
 // Threed: Three dimentional viewer.
 
-// Three dimentional viewing class
+// Three dimensional viewing class
 class TThreeD
    {
  public:
@@ -32,4 +32,3 @@ class TThreeD
    }
 ;
 
-
