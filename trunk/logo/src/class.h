@@ -482,7 +482,6 @@ struct calllist : qlist
 extern calllist calllists;
 
 extern HBITMAP MemoryBitMap;
-extern HBITMAP OldBitmap;
 
 extern HICON hCursor;
 extern HICON hCursorWait;

@@ -74,9 +74,6 @@ char *keyboard_keyup = NULL;           /* KeyBoard key up                     */
 HINSTANCE ModulehInstance;             /* About box instance handle           */
 
 /* place holders for windows resources */
-
-HBITMAP OldBitmap;
-
 HPALETTE OldPalette;
 HPALETTE OldPalette2;
 
@@ -570,11 +567,11 @@ void TMyApp::InitMainWindow()
       HDC memoryDC = CreateCompatibleDC(screenDC);
       if (memoryDC != NULL)
          {
-         OldBitmap = (HBITMAP) SelectObject(memoryDC, MemoryBitMap);
+         HBITMAP oldBitmap = (HBITMAP) SelectObject(memoryDC, MemoryBitMap);
 
          PatBlt(memoryDC, 0, 0, BitMapWidth, BitMapHeight, WHITENESS);
 
-         SelectObject(memoryDC, OldBitmap);
+         SelectObject(memoryDC, oldBitmap);
 
          DeleteDC(memoryDC);
          }
@@ -968,7 +965,7 @@ void transline3d(LOGPEN &logPen, long modex, FLONUM fromx, FLONUM fromy, FLONUM 
 
    HDC ScreenDC = GetDC(MainWindowx->ScreenWindow->HWindow);
    HDC MemDC = CreateCompatibleDC(ScreenDC);
-   OldBitmap = (HBITMAP) SelectObject(MemDC, MemoryBitMap);
+   HBITMAP oldBitmap = (HBITMAP) SelectObject(MemDC, MemoryBitMap);
 
    if (EnablePalette)
       {
@@ -990,7 +987,7 @@ void transline3d(LOGPEN &logPen, long modex, FLONUM fromx, FLONUM fromy, FLONUM 
 
    // restore the pen and bitmap
    SelectObject(MemDC, oldPen);
-   SelectObject(MemDC, OldBitmap);
+   SelectObject(MemDC, oldBitmap);
    DeleteDC(MemDC);
 
    // screen

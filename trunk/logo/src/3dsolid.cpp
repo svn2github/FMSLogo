@@ -1028,7 +1028,7 @@ void TThreeDSolid::View()
    // memory
 
    MemDC = CreateCompatibleDC(ScreenDC);
-   OldBitmap = (HBITMAP) SelectObject(MemDC, MemoryBitMap);
+   HBITMAP oldBitmap = (HBITMAP) SelectObject(MemDC, MemoryBitMap);
 
    if (EnablePalette)
       {
@@ -1050,7 +1050,7 @@ void TThreeDSolid::View()
       SelectPalette(MemDC, OldPalette, FALSE);
       }
 
-   SelectObject(MemDC, OldBitmap);
+   SelectObject(MemDC, oldBitmap);
 
    DeleteDC(MemDC);
    ReleaseDC(MainWindowx->ScreenWindow->HWindow, ScreenDC);
