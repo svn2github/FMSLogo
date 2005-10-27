@@ -316,4 +316,4 @@ BOOL TThreeD::TransformPoint(VECTOR &from3d, POINT &from2d)
 
    return Clip3DPoint(p1, from2d);
    }
-
+

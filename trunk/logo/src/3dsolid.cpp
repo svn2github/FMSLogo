@@ -15,38 +15,38 @@ const double epsilon2=0.001;
 
 // Sets up the dimensions of the window and various default values
 TThreeDSolid::TThreeDSolid() : TThreeD()
-	{
-	Ambient = 0.30; Diffuse = 0.60;
-	Light.x =	-10.0;	Light.y = 100;	Light.z = 100;
-	Light.x =	-10.0;	Light.y = 100;	Light.z = 50;
+   {
+   Ambient = 0.30; Diffuse = 0.60;
+   Light.x = -10.0; Light.y = 100; Light.z = 100;
+   Light.x = -10.0; Light.y = 100; Light.z = 50;
 
-	Tree = 0;
-	iPolyCount = 0;
+   Tree = 0;
+   iPolyCount = 0;
 #ifdef NOASM
-	iSplitPolyCount = 0;
+   iSplitPolyCount = 0;
 #endif
-	}
+   }
 
 TThreeDSolid::~TThreeDSolid()
-	{
+   {
    DisposeTree();
-	}
+   }
 
 void TThreeDSolid::DisposePolygon(POLYGON* Poly)
-	{
+   {
    DisposeVertices(Poly->Vertices);
-	delete Poly;
-	}
+   delete Poly;
+   }
 
 void TThreeDSolid::DisposeTree()
-	{
-	DisposeBSP(Tree);
-	Tree = 0;
-	iPolyCount = 0;
+   {
+   DisposeBSP(Tree);
+   Tree = 0;
+   iPolyCount = 0;
 #ifdef NOASM
-	iSplitPolyCount = 0;
+   iSplitPolyCount = 0;
 #endif
-	}
+   }
 
 // Sets up the dimensions of the window and various default values
 void TThreeDSolid::AddPolygon(VERTEXLIST* Vertices, COLORREF ColorNdx)
