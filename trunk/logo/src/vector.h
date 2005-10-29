@@ -1,13 +1,13 @@
 class VECTOR
    {
-	public:
-		double x, y, z;
+public:
+   double x, y, z;
    }
 ;
 
 class MATRIX
    {
-	public:
+public:
 
    double e11;
    double e12;
@@ -38,4 +38,4 @@ VECTOR MVyMultiply(MATRIX &v, VECTOR &m);
 VECTOR MVy1Multiply(MATRIX &v, VECTOR &m);
 VECTOR MVzMultiply(MATRIX &v, VECTOR &m);
 MATRIX MMMultiply(MATRIX &v, MATRIX &m);
-
+
