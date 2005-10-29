@@ -56,76 +56,76 @@ struct RGBCOLOR
 class TThreeDSolid : public TThreeD
    {
 public:
-      HDC MemDC;
-      HDC ScreenDC;
+   HDC MemDC;
+   HDC ScreenDC;
 
-      long iPolyCount;
+   long iPolyCount;
 #ifdef NOASM
-      long iSplitPolyCount;
+   long iSplitPolyCount;
 #endif
-      VECTOR TraverseTree_s;
-      BSPNode* Tree;     // Pointer to the root of the BSP tree
+   VECTOR TraverseTree_s;
+   BSPNode* Tree;     // Pointer to the root of the BSP tree
 
-      double Ambient;
-      double Diffuse;	 // Contributions of light. 0 <- >- 1.0
+   double Ambient;
+   double Diffuse;	 // Contributions of light. 0 <- >- 1.0
 
-      int PolyClass;	    // Local variables to Recursive AddtoBSPTree
+   int PolyClass;	    // Local variables to Recursive AddtoBSPTree
 #ifdef SHARE
-      int ThisPointClass;
-      int LastInOutPointClass;
+   int ThisPointClass;
+   int LastInOutPointClass;
 #endif
 
 #if !defined(__WIN32__)
-      long iPolyDepth;
-      BOOL bDepthExceeded;
+   long iPolyDepth;
+   BOOL bDepthExceeded;
 #endif
 
-      POLYGON* polyA;
-      POLYGON* polyB;
+   POLYGON* polyA;
+   POLYGON* polyB;
 
-      double sideA;
-      double sideB;
+   double sideA;
+   double sideB;
 
-      Point pt;
-      Point ptA;
-      Point ptB;
+   Point pt;
+   Point ptA;
+   Point ptB;
 
-      VERTEXLIST* VerticesStart;
-      VERTEXLIST* Vertices;
-      VERTEXLIST* VerticesIn;
+   VERTEXLIST* VerticesStart;
+   VERTEXLIST* Vertices;
+   VERTEXLIST* VerticesIn;
 
 #ifdef SHARE
-      VERTEXLIST* shareA;
-      VERTEXLIST* shareB;
-      VERTEXLIST* DeferVerticesOut;
-      VERTEXLIST* DeferVerticesIn;
+   VERTEXLIST* shareA;
+   VERTEXLIST* shareB;
+   VERTEXLIST* DeferVerticesOut;
+   VERTEXLIST* DeferVerticesIn;
 #endif
 
-      BOOL bDefer;
+   BOOL bDefer;
 
-      TThreeDSolid();
-      ~TThreeDSolid();
-      void View();
-      void DisposeTree();
-      void DisposePolygon(POLYGON* Poly);
-      void AddPoint(VERTEXLIST** v, Point &pt);
-      void RemovePoint(VERTEXLIST* v);
-      void InsertPoint(VERTEXLIST* v, Point &pt);
-      void DisposeVertices(VERTEXLIST* v);
-      void DisposeFalseShares(VERTEXLIST* v);
-      void CalcPlaneEq(POLYGON *Poly);
-      void CalcPolyNormal(POLYGON *Poly);
-      void PrecomputeCentroid(POLYGON *Poly);
-      void DisposeBSP(BSPNode* tree);
-      void AddPolygon(VERTEXLIST* Vertices, COLORREF ColorNdx);
-      BSPNode* MakeBSPNode(POLYGON* Poly);
-      void AddList(PLIST** tlist, POLYGON* Poly);
-      double CalcSign(Point& p, POLYGON* Poly);
-      void Intersect(POLYGON* Poly, Point& v1, Point& v2, Point& bc);
-      void AddToBSPTree(POLYGON* T, BSPNode** Root);
-      BOOL WorldToDisplay(double x, double y, double z, POINT& disp);
-      COLORREF ComputeColor(Point& p, VECTOR& normal, COLORREF colorNdx);
-      void DisplayPolygon(POLYGON* Poly);
-      void TraverseTree(BSPNode* tree);
+   TThreeDSolid();
+   ~TThreeDSolid();
+   void View();
+   void DisposeTree();
+   void DisposePolygon(POLYGON* Poly);
+   void AddPoint(VERTEXLIST** v, Point &pt);
+   void RemovePoint(VERTEXLIST* v);
+   void InsertPoint(VERTEXLIST* v, Point &pt);
+   void DisposeVertices(VERTEXLIST* v);
+   void DisposeFalseShares(VERTEXLIST* v);
+   void CalcPlaneEq(POLYGON *Poly);
+   void CalcPolyNormal(POLYGON *Poly);
+   void PrecomputeCentroid(POLYGON *Poly);
+   void DisposeBSP(BSPNode* tree);
+   void AddPolygon(VERTEXLIST* Vertices, COLORREF ColorNdx);
+   BSPNode* MakeBSPNode(POLYGON* Poly);
+   void AddList(PLIST** tlist, POLYGON* Poly);
+   double CalcSign(Point& p, POLYGON* Poly);
+   void Intersect(POLYGON* Poly, Point& v1, Point& v2, Point& bc);
+   void AddToBSPTree(POLYGON* T, BSPNode** Root);
+   BOOL WorldToDisplay(double x, double y, double z, POINT& disp);
+   COLORREF ComputeColor(Point& p, VECTOR& normal, COLORREF colorNdx);
+   void DisplayPolygon(POLYGON* Poly);
+   void TraverseTree(BSPNode* tree);
    };
 
