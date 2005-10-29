@@ -3,6 +3,7 @@ LOAD "form.lgo
 LOAD "editor.lgo
 LOAD "port.lgo
 LOAD "label.lgo
+LOAD "fill.lgo
 
 
 TO REPORTTESTINFO :message
@@ -61,9 +62,11 @@ TO TESTALL
   EDITORTEST ; from editor.lgo 
   PORTTEST   ; from port.lgo
   LABELTEST  ; from label.lgo
+  FILLTEST   ; from fill.lgo
 
   REPORTTESTUNINITIALIZE
 END
 
 ; execute all tests on startup
 make "startup [TESTALL]
+
