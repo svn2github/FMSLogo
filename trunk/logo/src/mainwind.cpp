@@ -1184,7 +1184,7 @@ BOOL TMainFrame::DumpBitmapFile(LPSTR Name, int MaxBitCount)
    if (file != -1)
       {
       // Load hour-glass cursor.
-      hCursor =::SetCursor(hCursorWait);
+      HCURSOR oldCursor = ::SetCursor(hCursorWait);
 
       /* do it and if error then let user know */
 
@@ -1194,8 +1194,8 @@ BOOL TMainFrame::DumpBitmapFile(LPSTR Name, int MaxBitCount)
          err_logo(STOP_ERROR, NIL);
          }
 
-      // Reload arrow cursor.
-      ::SetCursor(hCursor);
+      // Restore the arrow cursor.
+      ::SetCursor(oldCursor);
 
       _lclose(file);
       }
@@ -1444,7 +1444,7 @@ BOOL TMainFrame::LoadBitmapFile(LPSTR Name, DWORD &dwPixelWidth, DWORD &dwPixelH
       if (TestWin30Bitmap == 40)
          {
          // Load hour-glass cursor.
-         hCursor =::SetCursor(hCursorWait);
+         HCURSOR oldCursor = ::SetCursor(hCursorWait);
 
          /* if loaded ok then invalidate to display */
 
@@ -1457,8 +1457,8 @@ BOOL TMainFrame::LoadBitmapFile(LPSTR Name, DWORD &dwPixelWidth, DWORD &dwPixelH
             errorMessage = "Unable to create Windows 3.0 bitmap";
             }
 
-         // Reload arrow cursor.
-         ::SetCursor(hCursor);
+         // Restore the arrow cursor.
+         ::SetCursor(oldCursor);
          }
       else
          {

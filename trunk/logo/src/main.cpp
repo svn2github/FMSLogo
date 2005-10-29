@@ -34,9 +34,8 @@ BOOL bHeight;                      /* Height mode                         */
 
 HBITMAP MemoryBitMap;              /* Backing store bitmap                */
 
-HICON hCursor;                         /* handle for saved cursor             */
-HICON hCursorWait;                     /* handle for hour glass cursor        */
-HICON hCursorArrow;                    /* handle for hour glass cursor        */
+HCURSOR hCursorWait;               /* handle for hour glass cursor    */
+HCURSOR hCursorArrow;              /* handle for normal cursor        */
 
 HPALETTE ThePalette;                   /* Handle for the single color palette */
 

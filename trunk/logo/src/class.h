@@ -483,9 +483,8 @@ extern calllist calllists;
 
 extern HBITMAP MemoryBitMap;
 
-extern HICON hCursor;
-extern HICON hCursorWait;
-extern HICON hCursorArrow;
+extern HCURSOR hCursorWait;
+extern HCURSOR hCursorArrow;
 
 extern HPALETTE ThePalette;
 

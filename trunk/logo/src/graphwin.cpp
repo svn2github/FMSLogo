@@ -1648,7 +1648,7 @@ NODE *lbitfit(NODE *arg)
          SetStretchBltMode(TempMemDC, COLORONCOLOR);
 
          // Load hour-glass cursor.
-         hCursor =::SetCursor(hCursorWait);
+         HCURSOR oldCursor =::SetCursor(hCursorWait);
 
          StretchBlt(
             TempMemDC,
@@ -1663,8 +1663,8 @@ NODE *lbitfit(NODE *arg)
             CutBmp[CutIndex].CutHeight,
             SRCCOPY);
 
-         // Reload arrow cursor.
-         ::SetCursor(hCursor);
+         // Restore the arrow cursor.
+         ::SetCursor(oldCursor);
 
          if (EnablePalette)
             {
