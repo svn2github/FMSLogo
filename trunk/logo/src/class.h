@@ -508,7 +508,6 @@ extern char SelectedText[];
 extern HINSTANCE ModulehInstance;
 
 extern HPALETTE OldPalette;
-extern HPALETTE OldPalette2;
 
 extern LOGFONT FontRec;
 

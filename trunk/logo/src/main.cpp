@@ -74,7 +74,6 @@ HINSTANCE ModulehInstance;             /* About box instance handle           */
 
 /* place holders for windows resources */
 HPALETTE OldPalette;
-HPALETTE OldPalette2;
 
 LOGFONT FontRec;
 LOGFONT EditFontRec;

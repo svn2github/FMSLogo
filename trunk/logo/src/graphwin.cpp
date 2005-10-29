@@ -523,9 +523,10 @@ NODE *lsetpixel(NODE *args)
 
       draw_turtle(0);
 
+      HPALETTE oldPalette2;
       if (EnablePalette)
          {
-         OldPalette2 = SelectPalette(ScreenDC, ThePalette, FALSE);
+         oldPalette2 = SelectPalette(ScreenDC, ThePalette, FALSE);
          RealizePalette(ScreenDC);
          }
 
@@ -553,7 +554,7 @@ NODE *lsetpixel(NODE *args)
 
       if (EnablePalette)
          {
-         SelectPalette(ScreenDC, OldPalette2, FALSE);
+         SelectPalette(ScreenDC, oldPalette2, FALSE);
          }
 
       ReleaseDC(MainWindowx->ScreenWindow->HWindow, ScreenDC);
@@ -1087,9 +1088,11 @@ NODE *lbitblock(NODE *arg)
 
          draw_turtle(0);
 
+         
+         HPALETTE oldPalette2;
          if (EnablePalette)
             {
-            OldPalette2 = SelectPalette(ScreenDC, ThePalette, FALSE);
+            oldPalette2 = SelectPalette(ScreenDC, ThePalette, FALSE);
             RealizePalette(ScreenDC);
             }
 
@@ -1111,7 +1114,7 @@ NODE *lbitblock(NODE *arg)
 
          if (EnablePalette)
             {
-            SelectPalette(ScreenDC, OldPalette2, FALSE);
+            SelectPalette(ScreenDC, oldPalette2, FALSE);
             }
 
          ReleaseDC(MainWindowx->ScreenWindow->HWindow, ScreenDC);
@@ -1612,9 +1615,10 @@ NODE *lbitfit(NODE *arg)
          HDC MemDC = CreateCompatibleDC(ScreenDC);
          HBITMAP oldBitmap = (HBITMAP) SelectObject(MemDC, CutBmp[CutIndex].CutMemoryBitMap);
 
+         HPALETTE oldPalette2;
          if (EnablePalette)
             {
-            OldPalette2 = SelectPalette(ScreenDC, ThePalette, FALSE);
+            oldPalette2 = SelectPalette(ScreenDC, ThePalette, FALSE);
             RealizePalette(ScreenDC);
 
             OldPalette = SelectPalette(MemDC, ThePalette, FALSE);
@@ -1634,14 +1638,14 @@ NODE *lbitfit(NODE *arg)
 
          if (EnablePalette)
             {
-            SelectPalette(ScreenDC, OldPalette2, FALSE);
+            SelectPalette(ScreenDC, oldPalette2, FALSE);
             }
 
          ReleaseDC(MainWindowx->ScreenWindow->HWindow, ScreenDC);
 
          if (EnablePalette)
             {
-            OldPalette2 = SelectPalette(TempMemDC, ThePalette, FALSE);
+            oldPalette2 = SelectPalette(TempMemDC, ThePalette, FALSE);
             RealizePalette(TempMemDC);
             }
 
@@ -1669,7 +1673,7 @@ NODE *lbitfit(NODE *arg)
          if (EnablePalette)
             {
             SelectPalette(MemDC, OldPalette, FALSE);
-            SelectPalette(TempMemDC, OldPalette2, FALSE);
+            SelectPalette(TempMemDC, oldPalette2, FALSE);
             }
 
          SelectObject(TempMemDC, oldBitmap2);

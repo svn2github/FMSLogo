@@ -1070,10 +1070,10 @@ BOOL TMainFrame::WriteDIB(int TheFile, int MaxBitCount)
    BitsPtr = (LPSTR) GlobalLock((HGLOBAL) BitsHandle);
 
    /* if palette yank it in */
-
+   HPALETTE oldPalette2;
    if (EnablePalette)
       {
-      OldPalette2 = SelectPalette(screen, ThePalette, FALSE);
+      oldPalette2 = SelectPalette(screen, ThePalette, FALSE);
       RealizePalette(screen);
       }
 
@@ -1146,7 +1146,7 @@ BOOL TMainFrame::WriteDIB(int TheFile, int MaxBitCount)
    /* restore some of the resourese */
    if (EnablePalette)
       {
-      SelectPalette(screen, OldPalette2, FALSE);
+      SelectPalette(screen, oldPalette2, FALSE);
       }
 
    DeleteDC(screen);
