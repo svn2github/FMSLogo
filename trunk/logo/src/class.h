@@ -511,8 +511,6 @@ extern HINSTANCE ModulehInstance;
 extern HPALETTE OldPalette;
 extern HPALETTE OldPalette2;
 
-extern HBRUSH OldBrush;
-
 extern LOGFONT FontRec;
 
 extern LOGPEN NormalPen;

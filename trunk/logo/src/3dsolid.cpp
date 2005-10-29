@@ -941,7 +941,7 @@ void TThreeDSolid::DisplayPolygon(POLYGON* Poly)
 #else
    hBrush = CreateSolidBrush(Color);
 #endif
-   OldBrush = HBRUSH(SelectObject(MemDC, hBrush));
+   HBRUSH oldBrush = (HBRUSH) SelectObject(MemDC, hBrush);
 
 //if (Poly->ColorNdx != 0x000000FF)
    if (i > 2) Polygon(MemDC, t, i);    // Display the POLYGON
@@ -1012,7 +1012,7 @@ void TThreeDSolid::DisplayPolygon(POLYGON* Poly)
 
 // SelectObject(MemDC, OldPen);
 
-   SelectObject(MemDC, OldBrush);
+   SelectObject(MemDC, oldBrush);
    DeleteObject(hBrush);
 
 //	DeleteObject(hPen);
