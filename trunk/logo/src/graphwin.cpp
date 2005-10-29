@@ -40,6 +40,76 @@ static const char *tempfont;
 static int found;
 static long bitmode = SRCCOPY;
 
+#ifdef NDEBUG
+#  define ASSERT_TURTLE_INVARIANT
+#else
+#  define ASSERT_TURTLE_INVARIANT CTurtlesInvariant invariant;
+
+class CTurtlesInvariant
+   {
+public:
+
+   CTurtlesInvariant()
+      {
+      AssertInvariant();
+      }
+
+   ~CTurtlesInvariant()
+   {
+      AssertInvariant();
+   }
+
+   void
+   AssertInvariant(
+      void
+   )
+      {
+      assert(turtle_max < TURTLES);
+
+      // the turtle_which is within range
+      assert(0 <= turtle_which);
+      assert((turtle_which <= turtle_max) ||
+             (TURTLES - TURTLEN <= turtle_which && turtle_which <= TURTLES));
+
+      for (int i = 0; i <= turtle_max; i++)
+         {
+         assert(
+            turtle_shown[i] == TRUE ||
+            turtle_shown[i] == FALSE);
+
+         assert(
+            turtle_bitmap[i] == 0           ||
+            turtle_bitmap[i] == SRCCOPY     ||
+            turtle_bitmap[i] == SRCPAINT    ||
+            turtle_bitmap[i] == SRCAND      ||
+            turtle_bitmap[i] == SRCINVERT   ||
+            turtle_bitmap[i] == SRCERASE    ||
+            turtle_bitmap[i] == NOTSRCCOPY  ||
+            turtle_bitmap[i] == NOTSRCERASE ||
+            turtle_bitmap[i] == MERGEPAINT  ||
+            turtle_bitmap[i] == DSTINVERT);
+         }
+
+      // the CutIndex is within range
+      assert(0 <= CutIndex);
+      assert(CutIndex < MaxBitCuts);
+
+      assert(
+            bitmode == SRCCOPY     ||
+            bitmode == SRCPAINT    ||
+            bitmode == SRCAND      ||
+            bitmode == SRCINVERT   ||
+            bitmode == SRCERASE    ||
+            bitmode == NOTSRCCOPY  ||
+            bitmode == NOTSRCERASE ||
+            bitmode == MERGEPAINT  ||
+            bitmode == DSTINVERT);
+      }
+};
+
+#endif
+
+
 void
 gifsave_helper(
    char *textbuf,
@@ -380,27 +450,28 @@ NODE *lbitsize(void)
 // returns false on error.
 static
 bool
-GetScreenPointOfCurrentTurtle(
-   POINT & TurtlePoint
+WorldCoordinateToScreenCoordinate(
+   const VECTOR &  TurtleWorldPosition,
+   POINT &         TurtleScreenPosition
 )
    {
    if (current_mode == perspectivemode)
       {
       VECTOR from3d;
 
-      from3d.x = turtle_p[turtle_which].x / WorldWidth;
-      from3d.y = turtle_p[turtle_which].y / WorldHeight;
-      from3d.z = turtle_p[turtle_which].z / WorldDepth;
+      from3d.x = TurtleWorldPosition.x / WorldWidth;
+      from3d.y = TurtleWorldPosition.y / WorldHeight;
+      from3d.z = TurtleWorldPosition.z / WorldDepth;
 
-      if (!ThreeD.TransformPoint(from3d, TurtlePoint))
+      if (!ThreeD.TransformPoint(from3d, TurtleScreenPosition))
          {
          return false;
          }
       }
    else
       {
-      TurtlePoint.x = g_round(turtle_p[turtle_which].x);
-      TurtlePoint.y = g_round(turtle_p[turtle_which].y);
+      TurtleScreenPosition.x = g_round(TurtleWorldPosition.x);
+      TurtleScreenPosition.y = g_round(TurtleWorldPosition.y);
       }
 
    return true;
@@ -410,8 +481,10 @@ GetScreenPointOfCurrentTurtle(
 
 NODE *lsetpixel(NODE *args)
    {
+   ASSERT_TURTLE_INVARIANT
+
    POINT dest;
-   if (!GetScreenPointOfCurrentTurtle(dest))
+   if (!WorldCoordinateToScreenCoordinate(turtle_p[turtle_which], dest))
       {
       return UNBOUND;
       }
@@ -511,8 +584,10 @@ getindexcolor(
 // function that returns the RGB vector of the pixel the turtle is on top of
 NODE *lpixel()
    {
+   ASSERT_TURTLE_INVARIANT
+
    POINT dest;
-   if (!GetScreenPointOfCurrentTurtle(dest))
+   if (!WorldCoordinateToScreenCoordinate(turtle_p[turtle_which], dest))
       {
       return
          cons(make_intnode((FIXNUM) - 1),
@@ -559,7 +634,7 @@ NODE *lpixel()
 void logofill(BOOL bOld)
    {
    POINT dest;
-   if (!GetScreenPointOfCurrentTurtle(dest))
+   if (!WorldCoordinateToScreenCoordinate(turtle_p[turtle_which], dest))
       {
       return;
       }
@@ -580,14 +655,16 @@ void logofill(BOOL bOld)
 
    SetTextColor(MemDC, pcolor);
 
-   OldBrush = (HBRUSH) SelectObject(MemDC, JunkBrush);
+   HBRUSH oldBrush = (HBRUSH) SelectObject(MemDC, JunkBrush);
 
    if (bOld)
       {
       ExtFloodFill(
          MemDC,
          +dest.x + xoffset,
-         -dest.y + yoffset, pcolor, FLOODFILLBORDER);
+         -dest.y + yoffset,
+         pcolor,
+         FLOODFILLBORDER);
       }
    else
       {
@@ -596,7 +673,9 @@ void logofill(BOOL bOld)
       ExtFloodFill(
          MemDC,
          +dest.x + xoffset,
-         -dest.y + yoffset, tcolor, FLOODFILLSURFACE);
+         -dest.y + yoffset,
+         tcolor,
+         FLOODFILLSURFACE);
       }
 
    if (EnablePalette)
@@ -604,7 +683,7 @@ void logofill(BOOL bOld)
       SelectPalette(MemDC, OldPalette, FALSE);
       }
 
-   SelectObject(MemDC, OldBrush);
+   SelectObject(MemDC, oldBrush);
    SelectObject(MemDC, oldBitmap);
 
    DeleteDC(MemDC);
@@ -614,6 +693,8 @@ void logofill(BOOL bOld)
 
 NODE *lpencolor()
    {
+   ASSERT_TURTLE_INVARIANT
+
    if (bIndexMode)
       {
       int icolor = getindexcolor(RGB(dpenr, dpeng, dpenb));
@@ -654,6 +735,8 @@ void thepencolor(int r, int g, int b)
 
 NODE *lfloodcolor()
    {
+   ASSERT_TURTLE_INVARIANT
+
    if (bIndexMode)
       {
       int icolor = getindexcolor(RGB(dfldr, dfldg, dfldb));
@@ -814,6 +897,8 @@ NODE *lclearpalette(void)
 
 NODE *lstatus(void)
    {
+   ASSERT_TURTLE_INVARIANT
+
    // if status not running then run it
    if (!status_flag)
       {
@@ -921,10 +1006,11 @@ void zoom_helper(NUMBER temp_zoom)
 
 NODE *lzoom(NODE *arg)
    {
+   ASSERT_TURTLE_INVARIANT
+
    NUMBER temp_zoom;
 
    // get arg
-
    NODE *val = numeric_arg(arg);
 
    if (nodetype(val) == INT)
@@ -949,9 +1035,10 @@ NODE *lzoom(NODE *arg)
 
 NODE *lbitblock(NODE *arg)
    {
+   ASSERT_TURTLE_INVARIANT
 
    POINT dest;
-   if (!GetScreenPointOfCurrentTurtle(dest))
+   if (!WorldCoordinateToScreenCoordinate(turtle_p[turtle_which], dest))
       {
       return UNBOUND;
       }
@@ -1042,6 +1129,8 @@ NODE *lbitblock(NODE *arg)
 
 NODE *lbitmode(void)
    {
+   ASSERT_TURTLE_INVARIANT
+
    int temp;
 
    // return the logo "code" for the bit mode
@@ -1063,6 +1152,7 @@ NODE *lbitmode(void)
 
 NODE *lsetbitmode(NODE *arg)
    {
+   ASSERT_TURTLE_INVARIANT
 
    // convert from logo "code" to Windows constants
 
@@ -1089,6 +1179,8 @@ NODE *lsetbitmode(NODE *arg)
 
 NODE *lturtlemode(void)
    {
+   ASSERT_TURTLE_INVARIANT
+
    int temp;
 
    // return the logo "code" for the bit mode
@@ -1105,6 +1197,9 @@ NODE *lturtlemode(void)
        case NOTSRCERASE: temp = 7; break;
        case MERGEPAINT: temp = 8; break;
        case DSTINVERT: temp = 9; break;
+       default:
+          assert(0); // invalid state
+          temp=0;
       }
 
    return (make_intnode((FIXNUM) temp));
@@ -1112,6 +1207,7 @@ NODE *lturtlemode(void)
 
 NODE *lsetturtlemode(NODE *arg)
    {
+   ASSERT_TURTLE_INVARIANT
 
    // convert from logo "code" to Windows constants
    if (turtle_bitmap[turtle_which])
@@ -1146,12 +1242,15 @@ NODE *lsetturtlemode(NODE *arg)
 
 NODE *lbitindex(void)
    {
+   ASSERT_TURTLE_INVARIANT
    // return the current bitmap index
    return make_intnode((FIXNUM) CutIndex);
    }
 
 NODE *lsetbitindex(NODE *arg)
    {
+   ASSERT_TURTLE_INVARIANT
+
    // set the current bitmap index if within range
    int i = getint(pos_int_arg(arg));
 
@@ -1326,7 +1425,7 @@ NODE *
 BitCopyOrCut(NODE *arg, bool IsCut)
    {
    POINT dest;
-   if (!GetScreenPointOfCurrentTurtle(dest))
+   if (!WorldCoordinateToScreenCoordinate(turtle_p[turtle_which], dest))
       {
       return UNBOUND;
       }
@@ -1374,8 +1473,8 @@ BitCopyOrCut(NODE *arg, bool IsCut)
             {
             CutBmp[CutIndex].CutMemoryBitMap = CreateCompatibleBitmap(
                ScreenDC,
-               (int) (CutBmp[CutIndex].CutWidth),
-               (int) (CutBmp[CutIndex].CutHeight));
+               CutBmp[CutIndex].CutWidth,
+               CutBmp[CutIndex].CutHeight);
             }
 
          if (!CutBmp[CutIndex].CutMemoryBitMap)
@@ -1397,8 +1496,8 @@ BitCopyOrCut(NODE *arg, bool IsCut)
             TempMemDC,
             0,
             0,
-            (int) (CutBmp[CutIndex].CutWidth),
-            (int) (CutBmp[CutIndex].CutHeight),
+            CutBmp[CutIndex].CutWidth,
+            CutBmp[CutIndex].CutHeight,
             MemDC,
             +dest.x + xoffset,
             -dest.y + yoffset + LL - CutBmp[CutIndex].CutHeight,
@@ -1478,16 +1577,20 @@ BitCopyOrCut(NODE *arg, bool IsCut)
 
 NODE *lbitcut(NODE *arg)
    {
+   ASSERT_TURTLE_INVARIANT
    return BitCopyOrCut(arg, true);
    }
 
 NODE *lbitcopy(NODE *arg)
    {
+   ASSERT_TURTLE_INVARIANT
    return BitCopyOrCut(arg, false);
    }
 
 NODE *lbitfit(NODE *arg)
    {
+   ASSERT_TURTLE_INVARIANT
+
    NUMBER FitWidth = getint(pos_int_arg(arg));
    NUMBER FitHeight = getint(pos_int_arg(cdr(arg)));
 
@@ -1592,8 +1695,10 @@ NODE *lbitfit(NODE *arg)
 
 NODE *lbitpaste(void)
    {
+   ASSERT_TURTLE_INVARIANT
+
    POINT dest;
-   if (!GetScreenPointOfCurrentTurtle(dest))
+   if (!WorldCoordinateToScreenCoordinate(turtle_p[turtle_which], dest))
       {
       return UNBOUND;
       }
@@ -1634,7 +1739,10 @@ NODE *lbitpaste(void)
             -dest.y + yoffset + LL - CutBmp[CutIndex].CutHeight,
             (int) (CutBmp[CutIndex].CutWidth),
             (int) (CutBmp[CutIndex].CutHeight),
-            TempMemDC, 0, 0, bitmode);
+            TempMemDC,
+            0,
+            0,
+            bitmode);
 
          SelectObject(MemDC, oldBitmap);
          DeleteDC(MemDC);
@@ -1693,6 +1801,8 @@ NODE *lbitpaste(void)
 
 NODE *lbitpastetoindex(NODE *arg)
    {
+   ASSERT_TURTLE_INVARIANT
+
    // set the current bitmap index if within range
    int i = getint(pos_int_arg(arg));
    int x = getint(pos_int_arg(cdr(arg)));
@@ -1781,6 +1891,8 @@ NODE *lbitpastetoindex(NODE *arg)
 
 NODE *lsetturtle(NODE *arg)
    {
+   ASSERT_TURTLE_INVARIANT
+
    NODE * val = numeric_arg(arg);
 
    if (NOT_THROWING)
@@ -1853,6 +1965,8 @@ extern FLONUM wanna_z;
 
 NODE *lturtle()
    {
+   ASSERT_TURTLE_INVARIANT
+
    if (turtle_which >= TURTLES - TURTLEN)
       return (make_intnode(-(turtle_which - (TURTLES - (TURTLEN+1)))));
    else
@@ -1861,13 +1975,18 @@ NODE *lturtle()
 
 NODE *lturtles()
    {
+   ASSERT_TURTLE_INVARIANT
    return (make_intnode(turtle_max));
    }
 
-void turtlepaste(int turtle_which)
+void turtlepaste(int TurtleToPaste)
    {
+   ASSERT_TURTLE_INVARIANT
+
+   POINT turtle_which;
+
    POINT dest;
-   if (!GetScreenPointOfCurrentTurtle(dest))
+   if (!WorldCoordinateToScreenCoordinate(turtle_p[TurtleToPaste], dest))
       {
       return;
       }
@@ -1876,19 +1995,19 @@ void turtlepaste(int turtle_which)
       {
 
       // If ClipBoard check with ClipBoard only
-      if (turtle_which == 0)
+      if (TurtleToPaste == 0)
          {
-         PasteFromClipboardToCutIndex(turtle_which);
+         PasteFromClipboardToCutIndex(TurtleToPaste);
          }
 
       // only if we have something to paste
-      if (CutBmp[turtle_which].CutFlag)
+      if (CutBmp[TurtleToPaste].CutFlag)
          {
 
          // if clipboard then never leave Cut Flag true
-         if (turtle_which == 0)
+         if (TurtleToPaste == 0)
             {
-            CutBmp[turtle_which].CutFlag = 0;
+            CutBmp[TurtleToPaste].CutFlag = 0;
             }
 
          HDC ScreenDC = GetDC(MainWindowx->ScreenWindow->HWindow);
@@ -1896,7 +2015,7 @@ void turtlepaste(int turtle_which)
          HDC TempMemDC = CreateCompatibleDC(ScreenDC);
          HBITMAP oldBitmap2 = (HBITMAP) SelectObject(
             TempMemDC,
-            CutBmp[turtle_which].CutMemoryBitMap);
+            CutBmp[TurtleToPaste].CutMemoryBitMap);
 
          //screen
 
@@ -1911,26 +2030,26 @@ void turtlepaste(int turtle_which)
             BitBlt(
                ScreenDC,
                +dest.x - MainWindowx->ScreenWindow->Scroller->XPos / the_zoom + xoffset,
-               -dest.y - MainWindowx->ScreenWindow->Scroller->YPos / the_zoom + yoffset + LL - CutBmp[turtle_which].CutHeight,
-               (int) (CutBmp[turtle_which].CutWidth),
-               (int) (CutBmp[turtle_which].CutHeight),
+               -dest.y - MainWindowx->ScreenWindow->Scroller->YPos / the_zoom + yoffset + LL - CutBmp[TurtleToPaste].CutHeight,
+               CutBmp[TurtleToPaste].CutWidth,
+               CutBmp[TurtleToPaste].CutHeight,
                TempMemDC,
                0,
                0,
-               turtle_bitmap[turtle_which]);
+               turtle_bitmap[TurtleToPaste]);
             }
          else
             {
             BitBlt(
                ScreenDC,
                +dest.x - MainWindowx->ScreenWindow->Scroller->XPos + xoffset,
-               -dest.y - MainWindowx->ScreenWindow->Scroller->YPos + yoffset + LL - CutBmp[turtle_which].CutHeight,
-               (int) (CutBmp[turtle_which].CutWidth),
-               (int) (CutBmp[turtle_which].CutHeight),
+               -dest.y - MainWindowx->ScreenWindow->Scroller->YPos + yoffset + LL - CutBmp[TurtleToPaste].CutHeight,
+               CutBmp[TurtleToPaste].CutWidth,
+               CutBmp[TurtleToPaste].CutHeight,
                TempMemDC,
                0,
                0,
-               turtle_bitmap[turtle_which]);
+               turtle_bitmap[TurtleToPaste]);
             }
 
          ReleaseDC(MainWindowx->ScreenWindow->HWindow, ScreenDC);
@@ -1940,7 +2059,7 @@ void turtlepaste(int turtle_which)
          }
       else
          {
-         turtle_bitmap[turtle_which] = 0;
+         turtle_bitmap[TurtleToPaste] = 0;
          char szWinLocStr[WININISIZ];
          sprintf(szWinLocStr, "Turtle %d has no picture, will Halt", turtle_which);
          MainWindowx->CommandWindow->MessageBox(szWinLocStr, "Error");
@@ -1951,6 +2070,8 @@ void turtlepaste(int turtle_which)
 
 NODE *lscrollx(NODE *arg)
    {
+   ASSERT_TURTLE_INVARIANT
+
    // get args and scroll the scroller
    NODE *args = numeric_arg(arg);
 
@@ -1980,6 +2101,8 @@ NODE *lscrollx(NODE *arg)
 
 NODE *lscrolly(NODE *arg)
    {
+   ASSERT_TURTLE_INVARIANT
+
    // get args and scroll the scroller
    NODE * args = numeric_arg(arg);
 
@@ -2009,6 +2132,8 @@ NODE *lscrolly(NODE *arg)
 
 NODE *lsetfocus(NODE *arg)
    {
+   ASSERT_TURTLE_INVARIANT
+
    char textbuf[MAX_BUFFER_SIZE];
    cnv_strnode_string(textbuf, arg);
 
@@ -2037,6 +2162,8 @@ NODE *lsetfocus(NODE *arg)
 
 NODE *lgetfocus(void)
    {
+   ASSERT_TURTLE_INVARIANT
+
    char textbuf[MAX_BUFFER_SIZE];
    memset(textbuf, 0, MAX_BUFFER_SIZE);
 
@@ -2080,6 +2207,8 @@ NODE *lwindowset(NODE *args)
 
 void ibm_clear_screen(void)
    {
+   ASSERT_TURTLE_INVARIANT
+
    HBRUSH tempBrush = ::CreateBrushIndirect(&ScreenBrush);
    if (tempBrush != NULL)
       {
@@ -2204,6 +2333,8 @@ NODE *lhelp(NODE *arg)
 
 NODE *lwinhelp(NODE *arg)
    {
+   ASSERT_TURTLE_INVARIANT
+
    char textbuf[MAX_BUFFER_SIZE];
    cnv_strnode_string(textbuf, arg);
 
@@ -2225,6 +2356,7 @@ NODE *lwinhelp(NODE *arg)
 
 NODE *lsetlabelfont(NODE *arg)
    {
+   ASSERT_TURTLE_INVARIANT
 
    NODE *args = list_arg(arg);
    if (car(args) == NIL)
@@ -2282,6 +2414,8 @@ NODE *lsetlabelfont(NODE *arg)
 
 NODE *llabelfont(void)
    {
+   ASSERT_TURTLE_INVARIANT
+
    // put the Font name in a list
    NODE *targ = make_strnode(FontRec.lfFaceName, NULL, strlen(FontRec.lfFaceName), STRING, strnzcpy);
    NODE *val = parser(targ, FALSE);
@@ -2322,6 +2456,8 @@ NODE *llabelfont(void)
 
 NODE *lmachine(void)
    {
+   ASSERT_TURTLE_INVARIANT
+
    // build list with system specific information
    HDC tempDC = GetDC(0);
 
@@ -2352,8 +2488,10 @@ NODE *lmachine(void)
 
 SIZE labelsize(const char *s)
    {
+   ASSERT_TURTLE_INVARIANT
+
    SIZE size = {0};
-   
+
    HDC screen = GetDC(MainWindowx->ScreenWindow->HWindow);
    if (screen != NULL)
       {
@@ -2379,8 +2517,10 @@ SIZE labelsize(const char *s)
 
 void label(const char *s)
    {
+   ASSERT_TURTLE_INVARIANT
+
    POINT dest;
-   if (!GetScreenPointOfCurrentTurtle(dest))
+   if (!WorldCoordinateToScreenCoordinate(turtle_p[turtle_which], dest))
       {
       return;
       }
