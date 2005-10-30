@@ -156,11 +156,16 @@ extern mode_type current_mode;
 extern BOOL bPolyFlag;
 extern VERTEXLIST* ThePolygon;
 
-extern VECTOR turtle_p[];
-extern FLONUM turtle_heading[];
-extern MATRIX turtle_matrix[];
-extern BOOLEANx turtle_shown[];
-extern long turtle_bitmap[];
+typedef struct _Turtle
+   {
+   MATRIX   Matrix;
+   VECTOR   Position;
+   FLONUM   Heading;
+   BOOLEANx IsShown;
+   long     Bitmap;
+   } Turtle;
+
+extern Turtle g_Turtles[];
 extern FLONUM x_scale;
 extern FLONUM y_scale;
 extern FLONUM z_scale;
