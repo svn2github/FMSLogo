@@ -61,22 +61,19 @@ bool TMyFileEditWindow::CanClose()
 
 void TMyFileEditWindow::SetupWindow()
    {
-   NODE *proclst;
-   char tempbuff[MAX_BUFFER_SIZE];
-
    // get procedures
-
-   proclst = lprocedures();
+   NODE * proclst = lprocedures(NIL);
 
    // pop them into the list box
-
    while (proclst != NIL)
       {
+      char tempbuff[MAX_BUFFER_SIZE];
       cnv_strnode_string(tempbuff, proclst);
       SendDlgItemMsg(ID_FILEEDITCOMBO, CB_ADDSTRING, 0, (LONG) tempbuff);
       proclst = cdr(proclst);
       }
 
+   // REVISIT: does this leak proclst?
    }
 
 DEFINE_RESPONSE_TABLE1(TMyFileEditWindow, TDialog)

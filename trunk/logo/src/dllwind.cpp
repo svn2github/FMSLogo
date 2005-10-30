@@ -58,7 +58,7 @@ NODE *ldllload(NODE *arg)
    return (UNBOUND);
    }
 
-NODE *ldllfree()
+NODE *ldllfree(NODE *)
    {
    if (!hDLLModule)
       {

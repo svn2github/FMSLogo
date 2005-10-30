@@ -107,7 +107,7 @@ NODE *ldribble(NODE *arg)
    return (UNBOUND);
    }
 
-NODE *lnodribble()
+NODE *lnodribble(NODE *)
    {
    if (dribblestream != NULL)
       {
@@ -144,6 +144,7 @@ FILE *find_file(NODE *arg, BOOLEANx remove)
    return fp;
    }
 
+static
 NODE *lopen(NODE *arg, char *mode)
    {
    FILE *tmp;
@@ -219,21 +220,21 @@ NODE *lopenupdate(NODE *args)
    {
    BOOL bBinary = FALSE;
 
-	if (cdr(args) != NIL)
-		bBinary = torf_arg(cdr(args));
+   if (cdr(args) != NIL)
+      bBinary = torf_arg(cdr(args));
 
-	if (NOT_THROWING)
-		{
-		if (bBinary)
-			return (lopen(args, "r+b"));
-		else
-			return (lopen(args, "r+"));
-		}
+   if (NOT_THROWING)
+      {
+      if (bBinary)
+         return (lopen(args, "r+b"));
+      else
+         return (lopen(args, "r+"));
+      }
 
    return(UNBOUND);
    }
 
-NODE *lallopen()
+NODE *lallopen(NODE *)
    {
    return (file_list);
    }
@@ -335,12 +336,12 @@ NODE *lsetread(NODE *arg)
    return (UNBOUND);
    }
 
-NODE *lreader()
+NODE *lreader(NODE *)
    {
    return (reader_name);
    }
 
-NODE *lwriter()
+NODE *lwriter(NODE *)
    {
    return (writer_name);
    }
@@ -377,14 +378,14 @@ NODE *lsave(NODE *arg)
 
       save_yield_flag = yield_flag;
       yield_flag = 0;
-      lsetcursorwait();
+      lsetcursorwait(NIL);
 
-      setcar(arg, cons(lcontents(), NIL));
+      setcar(arg, cons(lcontents(NIL), NIL));
       lpo(car(arg));
       fclose(writestream);
       IsDirty = 0;
 
-      lsetcursorarrow();
+      lsetcursorarrow(NIL);
       yield_flag = save_yield_flag;
       }
    else
@@ -481,7 +482,7 @@ void silent_load(NODE *arg, char *prefix)
 
       save_yield_flag = yield_flag;
       yield_flag = 0; // Why?
-      lsetcursorwait();
+      lsetcursorwait(NIL);
 
       while (!feof(loadstream) && NOT_THROWING)
          {
@@ -491,7 +492,7 @@ void silent_load(NODE *arg, char *prefix)
          if (exec_list != NIL) eval_driver(exec_list);
          }
 
-      lsetcursorarrow();
+      lsetcursorarrow(NIL);
       yield_flag = save_yield_flag;
 
       fclose(loadstream);
@@ -532,7 +533,7 @@ NODE *lload(NODE *arg)
 
       save_yield_flag = yield_flag;
       yield_flag = 0;
-      lsetcursorwait();
+      lsetcursorwait(NIL);
 
       while (!feof(loadstream) && NOT_THROWING)
          {
@@ -543,7 +544,7 @@ NODE *lload(NODE *arg)
          }
       fclose(loadstream);
 
-      lsetcursorarrow();
+      lsetcursorarrow(NIL);
       yield_flag = save_yield_flag;
 
       runstartup(st);
@@ -558,7 +559,7 @@ NODE *lload(NODE *arg)
    return (UNBOUND);
    }
 
-NODE *lreadlist()
+NODE *lreadlist(NODE *)
    {
    NODE *val;
 
@@ -573,7 +574,7 @@ NODE *lreadlist()
    return (val);
    }
 
-NODE *lreadword()
+NODE *lreadword(NODE *)
    {
    NODE *val;
 
@@ -586,7 +587,7 @@ NODE *lreadword()
    return (val);
    }
 
-NODE *lreadchar()
+NODE *lreadchar(NODE *)
    {
    char c;
 
@@ -677,7 +678,7 @@ NODE *lreadchars(NODE *args)
    return (make_strnode(strptr, strhead, (int) c, type, strnzcpy));
    }
 
-NODE *leofp()
+NODE *leofp(NODE *)
    {
    ungetc(getc(readstream), readstream);
    if (feof(readstream))
@@ -686,7 +687,7 @@ NODE *leofp()
       return (Falsex);
    }
 
-NODE *lkeyp()
+NODE *lkeyp(NODE *)
    {
    //    long nc;
 #ifdef mac
@@ -729,7 +730,7 @@ NODE *lkeyp()
       return (Falsex);
    }
 
-NODE *lreadpos()
+NODE *lreadpos(NODE *)
    {
    return (make_intnode(ftell(readstream)));
    }
@@ -745,7 +746,7 @@ NODE *lsetreadpos(NODE *arg)
    return (UNBOUND);
    }
 
-NODE *lwritepos()
+NODE *lwritepos(NODE *)
    {
    return (make_intnode(ftell(writestream)));
    }

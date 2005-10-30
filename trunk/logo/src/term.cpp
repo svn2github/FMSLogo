@@ -153,7 +153,7 @@ void charmode_off()
    */
    }
 
-NODE *lcleartext()
+NODE *lcleartext(NODE *)
    {
    ibm_clear_text();
    /*
@@ -175,7 +175,7 @@ NODE *lcleartext()
    return (UNBOUND);
    }
 
-NODE *lcursor()
+NODE *lcursor(NODE *)
    {
    /*
       return(cons(make_intnode((FIXNUM)(x_coord-x_margin)),
@@ -223,7 +223,7 @@ NODE *lsetmargins(NODE *  /*args*/)
       {
       x_margin = getint(car(arg));
       y_margin = getint(cadr(arg));
-      lcleartext();
+      lcleartext(NIL);
       }
     */
    return (UNBOUND);
@@ -241,4 +241,4 @@ NODE *lstandout(NODE *args)
    *print_stringptr = '\0';
    return (make_strnode(textbuf, NULL, (int) strlen(textbuf), STRING, strnzcpy));
    }
-
+

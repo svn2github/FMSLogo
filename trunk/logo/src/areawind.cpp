@@ -143,7 +143,7 @@ NODE *lsetactivearea(NODE *arg)
    return UNBOUND;
    }
 
-NODE *lactivearea(void)
+NODE *lactivearea(NODE *arg)
    {
    // if custom return settings
 

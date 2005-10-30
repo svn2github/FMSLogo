@@ -533,7 +533,7 @@ class TMyButton : public TButton
    }
 ;
 
-NODE *leventcheck(void)
+NODE *leventcheck(NODE *)
    {
    MSG msg;
 
@@ -1225,7 +1225,7 @@ NODE *llistboxcreate(NODE *args)
    if (NOT_THROWING)
       {
       // if unique continue
-      
+
       if (dialogboxes.get(childname) == NULL)
          {
          // If modeless parent then continue
@@ -1709,7 +1709,7 @@ NODE *lscrollbarcreate(NODE *args)
             y = (y * BaseUnitsy) / 8;
             w = (w * BaseUnitsx) / 4;
             h = (h * BaseUnitsy) / 8;
-            
+
             child = new dialogthing;
             
             if (w > h)
@@ -1907,7 +1907,7 @@ NODE *lstaticcreate(NODE *args)
             h = (h * BaseUnitsy) / 8;
             
             child = new dialogthing;
-            
+
             child->TSmybox = new TMyStatic(parent->TWmybox, MYSTATIC_ID, titlename, x, y, w, h, 0);
             
             child->TSmybox->Create();
@@ -1929,7 +1929,7 @@ NODE *lstaticcreate(NODE *args)
             child->TSmybox = new TMyStatic(parent->TDmybox, MYSTATIC_ID, titlename, x, y, w, h, 0);
             
             child->TSmybox->Create();
-            
+
             MyMessageScan();
             
             strcpy(child->TSmybox->key, childname);
@@ -2821,14 +2821,14 @@ NODE *lyesnobox(NODE *args)
    return UNBOUND;
    }
 
-NODE *lsetcursorwait()
+NODE *lsetcursorwait(NODE *)
    {
    hCursorSave =::SetCursor(hCursorWait);
 
    return UNBOUND;
    }
 
-NODE *lsetcursorarrow()
+NODE *lsetcursorarrow(NODE *)
    {
 
    if (hCursorSave)

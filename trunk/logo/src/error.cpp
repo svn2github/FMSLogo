@@ -348,7 +348,7 @@ NODE *err_logo(ERR_TYPES error_type, NODE *error_desc)
    return (unref(val));
    }
 
-NODE *lerror()
+NODE *lerror(NODE *)
    {
    NODE *val;
 
@@ -365,7 +365,7 @@ void bcopy(char *from, char *to, int len)
    }
 #endif
 
-NODE *lpause()
+NODE *lpause(NODE*)
    {
    NODE *elist = NIL, *val = UNBOUND, *uname = NIL;
    int sav_input_blocking;
@@ -409,7 +409,7 @@ NODE *lpause()
          else elist = reref(elist, NIL);
          input_mode = NO_MODE;
          MyMessageScan();
-         if (feof(stdin) /*ggm && !isatty(0)*/) lbye();
+         if (feof(stdin) /*ggm && !isatty(0)*/) lbye(NIL);
 #ifdef __ZTC__
          if (feof(stdin)) rewind(stdin);
 #endif

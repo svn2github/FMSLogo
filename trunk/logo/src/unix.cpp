@@ -187,7 +187,7 @@ NODE *lpushdir(NODE *arg)
    return (UNBOUND);
    }
 
-NODE *lpopdir(void)
+NODE *lpopdir(NODE *)
    {
    char fname[80];
 
@@ -236,7 +236,7 @@ NODE *lrmdir(NODE *arg)
    return (UNBOUND);
    }
 
-NODE *lfiles(void)
+NODE *lfiles(NODE *)
    {
    struct find_t ffblk;
    int done;
@@ -265,15 +265,14 @@ NODE *lfiles(void)
    return (directory);
    }
 
-NODE *ldirectories(void)
+NODE *ldirectories(NODE *)
    {
    struct find_t ffblk;
-   int done;
 
    NODE *directory = NULL;
    NODE *file;
 
-   done = _dos_findfirst("*.*", FA_DIREC, &ffblk);
+   int done = _dos_findfirst("*.*", FA_DIREC, &ffblk);
    while (!done)
       {
       if (ffblk.attrib == FA_DIREC)
@@ -345,11 +344,11 @@ void logo_pause(int /*sig*/)
    signal(SIGQUIT, logo_pause);
 #endif
 #ifndef unix
-   lpause();
+   lpause(NIL);
 #else
    if (ufun != NIL)
       {
-      lpause();
+      lpause(NIL);
       }
    else
       {
@@ -359,5 +358,4 @@ void logo_pause(int /*sig*/)
 #endif
    }
 
-
 

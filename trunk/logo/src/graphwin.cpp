@@ -126,7 +126,7 @@ gifsave_helper(
    iTrans      = iTrans_;
 
    MainWindowx->DumpBitmapFile(TempBmpName, iMaxColorDepth);
-   lsetcursorwait();
+   lsetcursorwait(NIL);
    if (gbmBmpToGif(TempBmpName, textbuf) != 0)
       {
       MainWindowx->MessageBox(
@@ -134,7 +134,7 @@ gifsave_helper(
          "Error");
       err_logo(STOP_ERROR, NIL);
       }
-   lsetcursorarrow();
+   lsetcursorarrow(NIL);
    unlink(TempBmpName);
    }
 
@@ -291,7 +291,7 @@ NODE *lbitsave(NODE *args)
 
 void gifload_helper(char *textbuf, DWORD &dwPixelWidth, DWORD &dwPixelHeight)
    {
-   lsetcursorwait();
+   lsetcursorwait(NIL);
    if (gbmGifToBmp(textbuf, TempBmpName) != 0)
       {
       MainWindowx->CommandWindow->MessageBox(
@@ -299,7 +299,7 @@ void gifload_helper(char *textbuf, DWORD &dwPixelWidth, DWORD &dwPixelHeight)
          "Error");
       err_logo(STOP_ERROR, NIL);
       }
-   lsetcursorarrow();
+   lsetcursorarrow(NIL);
    MainWindowx->LoadBitmapFile(TempBmpName, dwPixelWidth, dwPixelHeight);
    unlink(TempBmpName);
    }
@@ -384,7 +384,7 @@ NODE *lbitloadsize(NODE *arg)
    return UNBOUND;
    }
 
-NODE *lbitsize(void)
+NODE *lbitsize(NODE *)
    {
    BITMAP temp;
    temp.bmWidth  = 0;
@@ -583,7 +583,7 @@ getindexcolor(
 
 
 // function that returns the RGB vector of the pixel the turtle is on top of
-NODE *lpixel()
+NODE *lpixel(NODE *)
    {
    ASSERT_TURTLE_INVARIANT
 
@@ -692,7 +692,7 @@ void logofill(BOOL bOld)
    ReleaseDC(MainWindowx->ScreenWindow->HWindow, ScreenDC);
    }
 
-NODE *lpencolor()
+NODE *lpencolor(NODE *)
    {
    ASSERT_TURTLE_INVARIANT
 
@@ -734,7 +734,7 @@ void thepencolor(int r, int g, int b)
 
 // function to return flood color as a RGB list
 
-NODE *lfloodcolor()
+NODE *lfloodcolor(NODE *)
    {
    ASSERT_TURTLE_INVARIANT
 
@@ -777,7 +777,7 @@ void thefloodcolor(int r, int g, int b)
 
 // function to return screen color as a RGB list
 
-NODE *lscreencolor()
+NODE *lscreencolor(NODE *)
    {
    if (bIndexMode)
       {
@@ -873,7 +873,7 @@ void set_ibm_pen_width(int w)
    ErasePen.lopnColor = scolor;
    }
 
-NODE *lclearpalette(void)
+NODE *lclearpalette(NODE *)
    {
    // kill the palette and recreate it with just black and white
 
@@ -896,7 +896,7 @@ NODE *lclearpalette(void)
    return UNBOUND;
    }
 
-NODE *lstatus(void)
+NODE *lstatus(NODE *)
    {
    ASSERT_TURTLE_INVARIANT
 
@@ -909,7 +909,7 @@ NODE *lstatus(void)
    return UNBOUND;
    }
 
-NODE *lnostatus(void)
+NODE *lnostatus(NODE *)
    {
    // if running then kill it
    if (status_flag)
@@ -1130,7 +1130,7 @@ NODE *lbitblock(NODE *arg)
    return UNBOUND;
    }
 
-NODE *lbitmode(void)
+NODE *lbitmode(NODE *)
    {
    ASSERT_TURTLE_INVARIANT
 
@@ -1180,7 +1180,7 @@ NODE *lsetbitmode(NODE *arg)
    return UNBOUND;
    }
 
-NODE *lturtlemode(void)
+NODE *lturtlemode(NODE *)
    {
    ASSERT_TURTLE_INVARIANT
 
@@ -1243,7 +1243,7 @@ NODE *lsetturtlemode(NODE *arg)
    return UNBOUND;
    }
 
-NODE *lbitindex(void)
+NODE *lbitindex(NODE *arg)
    {
    ASSERT_TURTLE_INVARIANT
    // return the current bitmap index
@@ -1697,7 +1697,7 @@ NODE *lbitfit(NODE *arg)
    return UNBOUND;
    }
 
-NODE *lbitpaste(void)
+NODE *lbitpaste(NODE *)
    {
    ASSERT_TURTLE_INVARIANT
 
@@ -1967,7 +1967,7 @@ extern FLONUM wanna_z;
    return UNBOUND;
    }
 
-NODE *lturtle()
+NODE *lturtle(NODE *)
    {
    ASSERT_TURTLE_INVARIANT
 
@@ -1977,7 +1977,7 @@ NODE *lturtle()
       return (make_intnode(turtle_which));
    }
 
-NODE *lturtles()
+NODE *lturtles(NODE *)
    {
    ASSERT_TURTLE_INVARIANT
    return (make_intnode(turtle_max));
@@ -2065,7 +2065,7 @@ void turtlepaste(int TurtleToPaste)
          {
          turtle_bitmap[TurtleToPaste] = 0;
          char szWinLocStr[WININISIZ];
-         sprintf(szWinLocStr, "Turtle %d has no picture, will Halt", turtle_which);
+         sprintf(szWinLocStr, "Turtle %d has no picture, will Halt", TurtleToPaste);
          MainWindowx->CommandWindow->MessageBox(szWinLocStr, "Error");
          err_logo(STOP_ERROR, NIL);
          }
@@ -2164,7 +2164,7 @@ NODE *lsetfocus(NODE *arg)
    return UNBOUND;
    }
 
-NODE *lgetfocus(void)
+NODE *lgetfocus(NODE *)
    {
    ASSERT_TURTLE_INVARIANT
 
@@ -2416,7 +2416,7 @@ NODE *lsetlabelfont(NODE *arg)
    return (UNBOUND);
    }
 
-NODE *llabelfont(void)
+NODE *llabelfont(NODE *)
    {
    ASSERT_TURTLE_INVARIANT
 
@@ -2458,7 +2458,7 @@ NODE *llabelfont(void)
 
    }
 
-NODE *lmachine(void)
+NODE *lmachine(NODE *)
    {
    ASSERT_TURTLE_INVARIANT
 

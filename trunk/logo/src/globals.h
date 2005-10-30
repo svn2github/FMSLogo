@@ -115,7 +115,6 @@ extern NODE *If, *Ifelse, *To, *Macro, *Unbound, *Not_Enough_Node;
 extern NODE *Minus_Sign, *Minus_Tight, *Startup, *Query, *Output, *Op, *Stop, *Goto, *Tag;
 
 /* wrksp.c */
-extern char *editor, *editorname;
 extern int to_pending;
 extern fpos_t LinesLoadedOnEdit;
 

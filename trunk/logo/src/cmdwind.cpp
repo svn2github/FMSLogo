@@ -565,13 +565,13 @@ void TMyCommandWindow::ChooseNewFont()
    }
 
 
-NODE *lhalt()
+NODE *lhalt(NODE *)
    {
    MainWindowx->CommandWindow->PostMessage(WM_COMMAND, ID_HALT, ID_HALT);
    return UNBOUND;
    }
 
-NODE *lyield()
+NODE *lyield(NODE *)
    {
 
    // set flag and update button label
@@ -582,7 +582,7 @@ NODE *lyield()
    return UNBOUND;
    }
 
-NODE *lnoyield()
+NODE *lnoyield(NODE *)
    {
 
    // clear flag and update button label

@@ -44,7 +44,7 @@ NODE *lmouseon(NODE *args)
    return (UNBOUND);
    }
 
-NODE *lmouseoff(void)
+NODE *lmouseoff(NODE *)
    {
 
    // tell handler not to do anything with messages for mouse
@@ -94,7 +94,7 @@ NODE *lkeyboardon(NODE *args)
    return (UNBOUND);
    }
 
-NODE *lkeyboardoff(void)
+NODE *lkeyboardoff(NODE *)
    {
 
    // tell handler not to do anything with messages for keyboard
@@ -104,7 +104,7 @@ NODE *lkeyboardoff(void)
    return (UNBOUND);
    }
 
-NODE *lmousepos()
+NODE *lmousepos(NODE *)
    {
 
    // return current mouse position
@@ -119,7 +119,7 @@ NODE *lmousepos()
    );
    }
 
-NODE *lkeyboardvalue()
+NODE *lkeyboardvalue(NODE *)
    {
 
    // return current keyboard value
@@ -132,7 +132,7 @@ int min(int a, int b)
    if (a < b) return (a); else return (b);
    }
 
-NODE *lportclose(void)
+NODE *lportclose(NODE *)
    {
    // if port closed output error else close it
    if (!ComIsOpen)
@@ -465,7 +465,7 @@ NODE *lportwritechar(NODE *args)
    return (make_intnode(0));
    }
 
-NODE *lportreadchar(void)
+NODE *lportreadchar(NODE *)
    {
 
    DWORD Error;

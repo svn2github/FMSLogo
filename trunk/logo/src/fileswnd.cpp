@@ -46,14 +46,14 @@ void filesave(char *temp)
 
       save_yield_flag = yield_flag;
       yield_flag = 0;
-      lsetcursorwait();
+      lsetcursorwait(NIL);
 
-      setcar(arg, cons(lcontents(), NIL));
+      setcar(arg, cons(lcontents(NIL), NIL));
       lpo(car(arg));
       fclose(writestream);
       IsDirty = 0;
 
-      lsetcursorarrow();
+      lsetcursorarrow(NIL);
       yield_flag = save_yield_flag;
 
       }
@@ -84,7 +84,7 @@ void fileload(char *temp)
 
       save_yield_flag = yield_flag;
       yield_flag = 0;
-      lsetcursorwait();
+      lsetcursorwait(NIL);
 
       while (!feof(loadstream) && NOT_THROWING)
          {
@@ -95,7 +95,7 @@ void fileload(char *temp)
          }
       fclose(loadstream);
 
-      lsetcursorarrow();
+      lsetcursorarrow(NIL);
       yield_flag = save_yield_flag;
 
       runstartup(st);

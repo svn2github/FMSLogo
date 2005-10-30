@@ -63,7 +63,7 @@ mode_type;
 
 #define WORDSIZE        32             /* bits per int                        */
 
-#define NIL             (NODE *) 0
+#define NIL             ((NODE *) 0)
 #define UNBOUND         Unbound
 #define UNDEFINED       Unbound
 #define END_OF_LIST     (NODE *) 2
@@ -196,7 +196,7 @@ typedef struct logo_node
          nstring;
       struct
          {
-         struct logo_node * (*nprim_fun)();
+         struct logo_node * (*nprim_fun)(struct logo_node *);
          short npriority;
          short nmin_args;
          short ndef_args;

@@ -1697,7 +1697,7 @@ void TMainFrame::CMFileNew()
    IsNewFile = TRUE;
    IsDirty = FALSE;
 
-   arg = lcontents();
+   arg = lcontents(NIL);
 
    lerase(arg);
    }
@@ -1905,7 +1905,7 @@ void TMainFrame::CMFileEdit()
 
       if (FileEditWindow.FileEditAll == 1)
          {
-         arg = lprocedures();
+         arg = lprocedures(NIL);
          }
 
       // else find what user selected
@@ -1939,7 +1939,7 @@ void TMainFrame::CMFileErase()
       if (FileEditWindow.FileEditAll == 1)
          {
          // if user clicked EDALL get all procedures
-         arg = lprocedures();
+         arg = lprocedures(NIL);
 
          IsNewFile = TRUE;
          IsDirty = FALSE;

@@ -379,7 +379,7 @@ bool TMyApp::IdleAction(long idleCount)
    if (bPerspective)
       {
       bPerspective = FALSE;
-      lperspective();
+      lperspective(NIL);
       }
 
    // if command arg loaded then execute
@@ -916,7 +916,7 @@ WinMain(
 
    MyApp.Run();
 
-   lnetshutdown();
+   lnetshutdown(NIL);
 
    CloseHandle(singleInstanceMutex);
    return MyApp.Status;

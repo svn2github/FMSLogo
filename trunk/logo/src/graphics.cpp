@@ -802,7 +802,7 @@ NODE *lback(NODE *arg)
    return (UNBOUND);
    }
 
-NODE *lbitmapturtle()
+NODE *lbitmapturtle(NODE *)
    {
    prepare_to_draw;
    draw_turtle(0);
@@ -812,7 +812,7 @@ NODE *lbitmapturtle()
    return (UNBOUND);
    }
 
-NODE *lnobitmapturtle()
+NODE *lnobitmapturtle(NODE *)
    {
    prepare_to_draw;
    draw_turtle(0);
@@ -822,7 +822,7 @@ NODE *lnobitmapturtle()
    return (UNBOUND);
    }
 
-NODE *lshowturtle()
+NODE *lshowturtle(NODE *)
    {
    prepare_to_draw;
    if (!turtle_shown[turtle_which])
@@ -835,7 +835,7 @@ NODE *lshowturtle()
    return (UNBOUND);
    }
 
-NODE *lhideturtle()
+NODE *lhideturtle(NODE *)
    {
    prepare_to_draw;
    if (turtle_shown[turtle_which])
@@ -848,7 +848,7 @@ NODE *lhideturtle()
    return (UNBOUND);
    }
 
-NODE *lshownp()
+NODE *lshownp(NODE *)
    {
    return (turtle_shown[turtle_which] ? Truex : Falsex);
    }
@@ -1061,7 +1061,7 @@ FLONUM rotation_x()
    if (result < 0.0) return result + 360.0; else return result;
    }
 
-NODE *lheading()
+NODE *lheading(NODE *)
    {
    if (current_mode == perspectivemode)
       return (make_floatnode(rotation_z()));
@@ -1069,7 +1069,7 @@ NODE *lheading()
       return (make_floatnode(turtle_heading[turtle_which]));
    }
 
-NODE *lroll()
+NODE *lroll(NODE *)
    {
    if (current_mode == perspectivemode)
       return (make_floatnode(rotation_y()));
@@ -1077,7 +1077,7 @@ NODE *lroll()
       return (make_floatnode(0.0));
    }
 
-NODE *lpitch()
+NODE *lpitch(NODE *)
    {
    if (current_mode == perspectivemode)
       return (make_floatnode(rotation_x()));
@@ -1343,14 +1343,14 @@ NODE *ltowardsxyz(NODE *args)
    return (UNBOUND);
    }
 
-NODE *lpos()
+NODE *lpos(NODE *)
    {
    return (
       cons(make_floatnode(cut_error(turtle_p[turtle_which].x / x_scale)),
          cons(make_floatnode(cut_error(turtle_p[turtle_which].y / y_scale)), NIL)));
    }
 
-NODE *lposxyz()
+NODE *lposxyz(NODE *)
    {
    return (
       cons(make_floatnode(cut_error(turtle_p[turtle_which].x / x_scale)),
@@ -1358,12 +1358,12 @@ NODE *lposxyz()
             cons(make_floatnode(cut_error(turtle_p[turtle_which].z / z_scale)), NIL))));
    }
 
-NODE *lscrunch()
+NODE *lscrunch(NODE *)
    {
    return (cons(make_floatnode(x_scale), cons(make_floatnode(y_scale), NIL)));
    }
 
-NODE *lhome()
+NODE *lhome(NODE *)
    {
    NODE *tmp1;
    NODE *tmp2;
@@ -1442,14 +1442,14 @@ void cs_helper(int centerp, int clearp)
    done_drawing;
    }
 
-NODE *lclearscreen()
+NODE *lclearscreen(NODE *)
    {
    cs_helper(TRUE, TRUE);
 //   InvalidateControls();
    return (UNBOUND);
    }
 
-NODE *lclean()
+NODE *lclean(NODE *)
    {
    cs_helper(FALSE, TRUE);
    return (UNBOUND);
@@ -1636,7 +1636,7 @@ NODE *lsetz(NODE *args)
    return (UNBOUND);
    }
 
-NODE *lwrap()
+NODE *lwrap(NODE *)
    {
    draw_turtle(0);
    cs_helper(TRUE, FALSE);
@@ -1645,7 +1645,7 @@ NODE *lwrap()
    return (UNBOUND);
    }
 
-NODE *lfence()
+NODE *lfence(NODE *)
    {
    draw_turtle(0);
    current_mode = fencemode;
@@ -1653,7 +1653,7 @@ NODE *lfence()
    return (UNBOUND);
    }
 
-NODE *lwindow()
+NODE *lwindow(NODE *)
    {
    draw_turtle(0);
    current_mode = windowmode;
@@ -1667,89 +1667,96 @@ NODE *lsetlight(NODE *args)
    NODE *ambient = UNBOUND;
    NODE *diffuse = UNBOUND;
    NODE *arg;
-   
-	arg = vector_arg(args);
-	
+
+   arg = vector_arg(args);
+
    if (NOT_THROWING)
       {
       ambient = car(arg);
       diffuse = cadr(arg);
-		
-      ThreeD.Ambient = ((nodetype(ambient) == FLOAT) ? getfloat(ambient) :
-		(FLONUM) getint(ambient));
-      ThreeD.Diffuse = ((nodetype(diffuse) == FLOAT) ? getfloat(diffuse) :
-		(FLONUM) getint(diffuse));
-		
-		if (ThreeD.Tree) ThreeD.View();
-      }
-	
-   return (UNBOUND);
-	}
 
-NODE *llight()
+      ThreeD.Ambient = ((nodetype(ambient) == FLOAT) ?
+         getfloat(ambient) :
+         (FLONUM) getint(ambient));
+
+      ThreeD.Diffuse = ((nodetype(diffuse) == FLOAT) ?
+         getfloat(diffuse) :
+         (FLONUM) getint(diffuse));
+
+      if (ThreeD.Tree) ThreeD.View();
+      }
+
+   return (UNBOUND);
+   }
+
+NODE *llight(NODE *)
    {
    return (
       cons(make_floatnode(ThreeD.Ambient),
          cons(make_floatnode(ThreeD.Diffuse), NIL)));
-	}
+   }
 
-NODE *lpolystart()
+NODE *lpolystart(NODE *)
    {
 
-	if (bPolyFlag)
-		{
+   if (bPolyFlag)
+      {
       bPolyFlag = FALSE;
       ThreeD.DisposeVertices(ThePolygon);
-		ThePolygon = NULL;
-		MainWindowx->CommandWindow->MessageBox("You already have a Polygon started", "PolyStart Error");
+      ThePolygon = NULL;
+      MainWindowx->CommandWindow->MessageBox("You already have a Polygon started", "PolyStart Error");
       err_logo(STOP_ERROR, NIL);
-		}
+      }
    else
       {
       bPolyFlag = TRUE;
       }
 
    return (UNBOUND);
-	}
+   }
 
-NODE *lpolyview()
+NODE *lpolyview(NODE *)
    {
-	if (ThreeD.Tree) ThreeD.View();
+   if (ThreeD.Tree) ThreeD.View();
 
    return (UNBOUND);
    }
 
-NODE *lpolyend()
+NODE *lpolyend(NODE *)
    {
 
-	if (bPolyFlag)
-		{
-		if (ThePolygon && (ThePolygon != ThePolygon->Next) && (ThePolygon->Next != ThePolygon->Next->Next))
-			{
-			ThreeD.AddPolygon(ThePolygon, pcolor);
-			}
-		else
-			{
+   if (bPolyFlag)
+      {
+      if (ThePolygon && (ThePolygon != ThePolygon->Next) && (ThePolygon->Next != ThePolygon->Next->Next))
+         {
+         ThreeD.AddPolygon(ThePolygon, pcolor);
+         }
+      else
+         {
          ThreeD.DisposeVertices(ThePolygon);
          ThePolygon = NULL;
-			MainWindowx->CommandWindow->MessageBox("You must have at least 3 vectors to define a polygon", "PolyEnd Error");
-			err_logo(STOP_ERROR, NIL);
-			}
-		}
-	else
-		{
+         MainWindowx->CommandWindow->MessageBox(
+            "You must have at least 3 vectors to define a polygon",
+            "PolyEnd Error");
+         err_logo(STOP_ERROR, NIL);
+         }
+      }
+   else
+      {
       ThreeD.DisposeVertices(ThePolygon);
-		MainWindowx->CommandWindow->MessageBox("You have not started a Polygon", "PolyEnd Error");
-		err_logo(STOP_ERROR, NIL);
-		}
-	
-	ThePolygon = NULL;
-	bPolyFlag = FALSE;
-	
-   return (UNBOUND);
-	}
+      MainWindowx->CommandWindow->MessageBox(
+         "You have not started a Polygon",
+         "PolyEnd Error");
+      err_logo(STOP_ERROR, NIL);
+      }
 
-NODE *lperspective()
+   ThePolygon = NULL;
+   bPolyFlag = FALSE;
+
+   return (UNBOUND);
+   }
+
+NODE *lperspective(NODE *)
    {
    draw_turtle(0);
    current_mode = perspectivemode;
@@ -1802,7 +1809,7 @@ NODE *lperspective()
    ThreeD.SetVolume();
    ThreeD.SetEye();
    ThreeD.SetClip(60.0, 100000.0, -100000.0);
-	if (ThreeD.Tree) ThreeD.View();
+   if (ThreeD.Tree) ThreeD.View();
 
    draw_turtle(1);
    return (UNBOUND);
@@ -1879,13 +1886,13 @@ NODE *llabel(NODE *arg)
    return (UNBOUND);
    }
 
-NODE *ltextscreen()
+NODE *ltextscreen(NODE *)
    {
    text_screen;
    return (UNBOUND);
    }
 
-NODE *lsplitscreen()
+NODE *lsplitscreen(NODE *)
    {
    split_screen;
    return (UNBOUND);
@@ -1909,35 +1916,35 @@ NODE *lfullscreen()
 //   return (UNBOUND);
 //   }
 
-NODE *lpendownp()
+NODE *lpendownp(NODE *)
    {
    return (pen_vis == 0 ? Truex : Falsex);
    }
 
-NODE *lpenmode()
+NODE *lpenmode(NODE *)
    {
    return (get_node_pen_mode);
    }
 
-NODE *lpensize()
+NODE *lpensize(NODE *)
    {
    return (cons(make_intnode((FIXNUM) pen_width),
          cons(make_intnode((FIXNUM) pen_height), NIL)));
    }
 
-NODE *lpenpattern()
+NODE *lpenpattern(NODE *)
    {
    return (get_node_pen_pattern);
    }
 
-NODE *lpendown()
+NODE *lpendown(NODE *)
    {
    pen_vis = 0;
    save_vis();
    return (UNBOUND);
    }
 
-NODE *lpenup()
+NODE *lpenup(NODE *)
    {
    if (pen_vis == 0)
       pen_vis--;
@@ -1945,25 +1952,25 @@ NODE *lpenup()
    return (UNBOUND);
    }
 
-NODE *lpenpaint()
+NODE *lpenpaint(NODE *)
    {
    pen_down;
    save_mode();
-   return (lpendown());
+   return (lpendown(NIL));
    }
 
-NODE *lpenerase()
+NODE *lpenerase(NODE *)
    {
    pen_erase;
    save_mode();
-   return (lpendown());
+   return (lpendown(NIL));
    }
 
-NODE *lpenreverse()
+NODE *lpenreverse(NODE *)
    {
    pen_reverse;
    save_mode();
-   return (lpendown());
+   return (lpendown(NIL));
    }
 
 COLORREF colortable[16] =
@@ -2179,7 +2186,7 @@ NODE *lsetscrunch(NODE *args)
    return (UNBOUND);
    }
 
-NODE *lbuttonp()
+NODE *lbuttonp(NODE *)
    {
    if (button)
       return (Truex);

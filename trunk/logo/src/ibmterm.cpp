@@ -85,7 +85,7 @@ BOOLEANx check_ibm_stop(int scan)
       {
       Time_To_Pause = 0;
       to_pending = 0;
-      lpause();
+      lpause(NIL);
       }
 
    return (0);

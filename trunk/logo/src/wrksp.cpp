@@ -22,7 +22,6 @@
 
 #include "allwind.h"
 
-char *editor, *editorname;
 int to_pending = 0;
 fpos_t LinesLoadedOnEdit;
 
@@ -595,7 +594,7 @@ NODE *get_contents()
    return (cnt_list);
    }
 
-NODE *lcontents()
+NODE *lcontents(NODE *)
    {
    NODE *ret;
 
@@ -616,7 +615,7 @@ NODE *lcontents()
    return (unref(ret));
    }
 
-NODE *ltraced()
+NODE *ltraced(NODE *)
 	{
 	NODE *ret;
 	
@@ -637,7 +636,7 @@ NODE *ltraced()
 	return(ret);
 	}
 
-NODE *lstepped()
+NODE *lstepped(NODE *)
 	{
 	NODE *ret;
 	
@@ -658,7 +657,7 @@ NODE *lstepped()
 	return(ret);
 	}
 
-NODE *lburied()
+NODE *lburied(NODE *)
    {
    NODE *ret;
 
@@ -679,7 +678,7 @@ NODE *lburied()
    return (unref(ret));
    }
 
-NODE *lprocedures()
+NODE *lprocedures(NODE *)
    {
    NODE *ret;
 
@@ -693,7 +692,7 @@ NODE *lprocedures()
    return (unref(ret));
    }
 
-NODE *lnames()
+NODE *lnames(NODE *)
    {
    NODE *ret;
 
@@ -707,7 +706,7 @@ NODE *lnames()
    return (unref(ret));
    }
 
-NODE *lplists()
+NODE *lplists(NODE *)
    {
    NODE *ret;
 
@@ -908,11 +907,11 @@ NODE *lpo(NODE *arg)
    {
    NODE *temp;
 
-   lsetcursorwait();
+   lsetcursorwait(NIL);
 
    temp = po_helper(arg, 0);
 
-   lsetcursorarrow();
+   lsetcursorarrow(NIL);
 
    return (temp);
    }
@@ -1125,7 +1124,7 @@ NODE *ledit(NODE *args)
 
    int save_yield_flag = yield_flag;
    yield_flag = 0;
-   lsetcursorwait();
+   lsetcursorwait(NIL);
 
    if (args != NIL)
       {
@@ -1163,13 +1162,13 @@ NODE *ledit(NODE *args)
       IsDirty = 1;
       }
 
-   lsetcursorarrow();
+   lsetcursorarrow(NIL);
    yield_flag = save_yield_flag;
 
    return UNBOUND;
    }
 
-int lendedit(void)
+int lendedit()
    {
    int realsave = 0;
 
@@ -1177,7 +1176,7 @@ int lendedit(void)
    NODE * tmp_line = reref(NIL, current_line);
    int save_yield_flag = yield_flag;
    yield_flag = 0;
-   lsetcursorwait();
+   lsetcursorwait(NIL);
 
    LinesLoadedOnEdit = 0;
 
@@ -1208,7 +1207,7 @@ int lendedit(void)
       //              make_static_strnode("Could not read editor file"));
       }
 
-   lsetcursorarrow();
+   lsetcursorarrow(NIL);
    yield_flag = save_yield_flag;
    loadstream = holdstrm;
    current_line = reref(current_line, tmp_line);

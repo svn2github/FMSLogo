@@ -55,7 +55,7 @@ NODE *loutput(NODE *arg)
    return (UNBOUND);
    }
 
-NODE *lstop()
+NODE *lstop(NODE *arg)
    {
    if (NOT_THROWING)
       stopping_flag = STOP;
@@ -269,7 +269,7 @@ NODE *lrepeat(NODE *args)
    return (retval);
    }
 
-NODE *lrepcount()
+NODE *lrepcount(NODE *args)
    {
    return (make_intnode((FIXNUM) repcountup));
    }
@@ -332,7 +332,7 @@ void prepare_to_exit(BOOLEANx /* okay */)
 #endif
 #ifdef ibm
    exit_program();
-   ltextscreen();
+   ltextscreen(NIL);
    ibm_plain_mode();
 #endif
 #ifdef unix
@@ -345,7 +345,7 @@ void prepare_to_exit(BOOLEANx /* okay */)
 #endif
    }
 
-NODE *lbye()
+NODE *lbye(NODE *args)
    {
    prepare_to_exit(TRUE);
    //    if (ufun != NIL || loadstream != stdin) exit(0);
@@ -355,7 +355,7 @@ NODE *lbye()
    return (UNBOUND);
    }
 
-NODE *ltime(void)
+NODE *ltime(NODE *)
 /* LOGO time */
    {
    NODE *arg, *val = UNBOUND;
@@ -373,7 +373,7 @@ NODE *ltime(void)
    //   return(make_static_strnode(Xtim));
    }
 
-NODE *ltimemilli(void)
+NODE *ltimemilli(NODE *)
 /* LOGO time */
    {
    return (make_intnode((FIXNUM) GetCurrentTime()));

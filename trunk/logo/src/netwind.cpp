@@ -309,7 +309,7 @@ NODE *lnetstartup(NODE *args)
 
 // put everything back to original state
 
-NODE *lnetshutdown()
+NODE *lnetshutdown(NODE *)
    {
 
    // cleanup receive
@@ -472,7 +472,7 @@ NODE *lnetreceiveon(NODE *args)
    return (UNBOUND);
    }
 
-NODE *lnetreceiveoff(void)
+NODE *lnetreceiveoff(NODE *)
    {
 
    // tell handler not to do anything with messages for network receive
@@ -492,7 +492,7 @@ NODE *lnetreceiveoff(void)
    return (UNBOUND);
    }
 
-NODE *lnetreceivereceivevalue(void)
+NODE *lnetreceivereceivevalue(NODE *)
    {
    NODE *targ;
    NODE *val;
@@ -512,7 +512,7 @@ NODE *lnetreceivereceivevalue(void)
 
    }
 
-NODE *lnetsendreceivevalue(void)
+NODE *lnetsendreceivevalue(NODE *)
    {
    NODE *targ;
    NODE *val;
@@ -646,7 +646,7 @@ NODE *lnetsendon(NODE *args)
 
    }
 
-NODE *lnetsendoff(void)
+NODE *lnetsendoff(NODE *)
    {
 
    // tell handler not to do anything with messages for network send
@@ -751,7 +751,5 @@ NODE *lnetreceivesendvalue(NODE *args)
       }
 
    return (UNBOUND);
-
    }
 
-
