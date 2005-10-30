@@ -25,8 +25,27 @@
 extern int status_flag;
 extern FLONUM degrad;
 
-/* NOTE: See the files (macterm.c and macterm.h) or (ibmterm.c and ibmterm.h)
-for examples of the functions and macros that this file assumes exist. */
+COLORREF colortable[16] =
+   {
+   0x00000000, // black
+   0x00FF0000, // blue
+   0x0000FF00, // green
+   0x00FFFF00, // cyan
+   0x000000FF, // red
+   0x00FF00FF, // magenta
+   0x0000FFFF, // yellow
+   0x00FFFFFF, // white
+   0x003B609B, // brown
+   0x001288C5, // tan
+   0x0040A264, // forest
+   0x00BBBB78, // aqua
+   0x007795FF, // salmon
+   0x00D07190, // purple
+   0x0000A3FF, // orange
+   0x00B7B7B7, // grey
+   };
+
+BOOL bIndexMode = FALSE;
 
 BOOL bPolyFlag = FALSE;
 VERTEXLIST* ThePolygon = NULL;
@@ -74,11 +93,12 @@ FLONUM wanna_z = 0.0;
 BOOLEANx out_of_bounds = FALSE;
 
 //char record[GR_SIZE];
-int record_index = 0;
-pen_info orig_pen;
-int forward_count = 0;
+static int record_index = 0;
+static pen_info orig_pen; // DELETEME
+static int forward_count = 0; // DELETEME
 
-BOOLEANx record_next_move = FALSE, refresh_p = TRUE;
+BOOLEANx record_next_move = FALSE;
+BOOLEANx refresh_p = TRUE;
 
 /************************************************************/
 
@@ -1973,27 +1993,6 @@ NODE *lpenreverse(NODE *)
    return (lpendown(NIL));
    }
 
-COLORREF colortable[16] =
-   {
-   0x00000000, // black
-   0x00FF0000, // blue
-   0x0000FF00, // green
-   0x00FFFF00, // cyan
-   0x000000FF, // red
-   0x00FF00FF, // magenta
-   0x0000FFFF, // yellow
-   0x00FFFFFF, // white
-   0x003B609B, // brown
-   0x001288C5, // tan
-   0x0040A264, // forest
-   0x00BBBB78, // aqua
-   0x007795FF, // salmon
-   0x00D07190, // purple
-   0x0000A3FF, // orange
-   0x00B7B7B7  // grey
-   };
-
-BOOL bIndexMode = FALSE;
 
 NODE *lsetpencolor(NODE *args)
    {
