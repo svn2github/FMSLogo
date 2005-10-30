@@ -36,8 +36,12 @@ int iTrans;
 
 static int CutIndex = 0; // Pointer into CutBmp initially "ClipBoard"
 
-static const char *tempfont;
-static int found;
+struct font_find_t
+   {
+   const char *fontname;
+   bool        found;
+   };
+
 static long bitmode = SRCCOPY;
 
 #ifdef NDEBUG
@@ -2247,12 +2251,14 @@ FindFont(
     LPARAM              lParam       // address of application-defined data
 )
    {
+   struct font_find_t * context = reinterpret_cast<struct font_find_t *>(lParam);
+
    // check for a match
-   if (stricmp(tempfont, LogFont->lfFaceName) == 0)
+   if (stricmp(context->fontname, LogFont->lfFaceName) == 0)
       {
       // take a copy, flag one was found and return
       FontRec = *LogFont;
-      found = 1;
+      context->found = true;
       return 0;  // stop enumerating fonts
       }
 
@@ -2283,13 +2289,17 @@ setfont(
    HDC hdc = GetDC(::GetFocus());
 
    // set global font to compare to (FontRec will get filled if found)
-   // BUG: use the user context, instead of global variables
-   found = 0;
-   tempfont = fontname;
-   EnumFontFamilies(hdc, NULL, FindFont, NULL);
+   struct font_find_t context; 
+   context.found    = false;
+   context.fontname = fontname;
+   EnumFontFamilies(
+      hdc,
+      NULL,
+      FindFont,
+      reinterpret_cast<LPARAM>(&context));
 
-   // if not found enumerate again with printing enabled
-   if (!found)
+   // if not found print all available fonts
+   if (!context.found)
       {
       printfx(
          "Sorry, no font named %s was found.  Choose one of the following:\n",
