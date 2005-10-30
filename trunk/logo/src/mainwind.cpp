@@ -274,9 +274,9 @@ void TScreenWindow::Paint(TDC &PaintDC, bool /* erase */, TRect &PaintRect)
 
    for (int j = 0; j <= turtle_max; j++)
       {
-      if (turtle_shown[j])
+      if (g_Turtles[j].IsShown)
          {
-         if (turtle_bitmap[j])
+         if (g_Turtles[j].Bitmap)
             {
             turtlepaste(j);
             }
@@ -1376,9 +1376,9 @@ BOOL TMainFrame::OpenDIB(int TheFile, DWORD &dwPixelWidth, DWORD &dwPixelHeight)
             {
             VECTOR from3d;
 
-            from3d.x = turtle_p[turtle_which].x / WorldWidth;
-            from3d.y = turtle_p[turtle_which].y / WorldHeight;
-            from3d.z = turtle_p[turtle_which].z / WorldDepth;
+            from3d.x = g_Turtles[turtle_which].Position.x / WorldWidth;
+            from3d.y = g_Turtles[turtle_which].Position.y / WorldHeight;
+            from3d.z = g_Turtles[turtle_which].Position.z / WorldDepth;
 
             if (!ThreeD.TransformPoint(from3d, dest))
                {
@@ -1387,8 +1387,8 @@ BOOL TMainFrame::OpenDIB(int TheFile, DWORD &dwPixelWidth, DWORD &dwPixelHeight)
             }
          else
             {
-            dest.x = g_round(turtle_p[turtle_which].x);
-            dest.y = g_round(turtle_p[turtle_which].y);
+            dest.x = g_round(g_Turtles[turtle_which].Position.x);
+            dest.y = g_round(g_Turtles[turtle_which].Position.y);
             }
 
          BitBlt(

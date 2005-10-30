@@ -78,20 +78,20 @@ public:
       for (int i = 0; i <= turtle_max; i++)
          {
          assert(
-            turtle_shown[i] == TRUE ||
-            turtle_shown[i] == FALSE);
+            g_Turtles[i].IsShown == true ||
+            g_Turtles[i].IsShown == false);
 
          assert(
-            turtle_bitmap[i] == 0           ||
-            turtle_bitmap[i] == SRCCOPY     ||
-            turtle_bitmap[i] == SRCPAINT    ||
-            turtle_bitmap[i] == SRCAND      ||
-            turtle_bitmap[i] == SRCINVERT   ||
-            turtle_bitmap[i] == SRCERASE    ||
-            turtle_bitmap[i] == NOTSRCCOPY  ||
-            turtle_bitmap[i] == NOTSRCERASE ||
-            turtle_bitmap[i] == MERGEPAINT  ||
-            turtle_bitmap[i] == DSTINVERT);
+            g_Turtles[i].Bitmap == 0           ||
+            g_Turtles[i].Bitmap == SRCCOPY     ||
+            g_Turtles[i].Bitmap == SRCPAINT    ||
+            g_Turtles[i].Bitmap == SRCAND      ||
+            g_Turtles[i].Bitmap == SRCINVERT   ||
+            g_Turtles[i].Bitmap == SRCERASE    ||
+            g_Turtles[i].Bitmap == NOTSRCCOPY  ||
+            g_Turtles[i].Bitmap == NOTSRCERASE ||
+            g_Turtles[i].Bitmap == MERGEPAINT  ||
+            g_Turtles[i].Bitmap == DSTINVERT);
          }
 
       // the CutIndex is within range
@@ -488,7 +488,7 @@ NODE *lsetpixel(NODE *args)
    ASSERT_TURTLE_INVARIANT
 
    POINT dest;
-   if (!WorldCoordinateToScreenCoordinate(turtle_p[turtle_which], dest))
+   if (!WorldCoordinateToScreenCoordinate(g_Turtles[turtle_which].Position, dest))
       {
       return UNBOUND;
       }
@@ -592,7 +592,7 @@ NODE *lpixel(NODE *)
    ASSERT_TURTLE_INVARIANT
 
    POINT dest;
-   if (!WorldCoordinateToScreenCoordinate(turtle_p[turtle_which], dest))
+   if (!WorldCoordinateToScreenCoordinate(g_Turtles[turtle_which].Position, dest))
       {
       return
          cons(make_intnode((FIXNUM) - 1),
@@ -639,7 +639,7 @@ NODE *lpixel(NODE *)
 void logofill(BOOL bOld)
    {
    POINT dest;
-   if (!WorldCoordinateToScreenCoordinate(turtle_p[turtle_which], dest))
+   if (!WorldCoordinateToScreenCoordinate(g_Turtles[turtle_which].Position, dest))
       {
       return;
       }
@@ -1043,7 +1043,7 @@ NODE *lbitblock(NODE *arg)
    ASSERT_TURTLE_INVARIANT
 
    POINT dest;
-   if (!WorldCoordinateToScreenCoordinate(turtle_p[turtle_which], dest))
+   if (!WorldCoordinateToScreenCoordinate(g_Turtles[turtle_which].Position, dest))
       {
       return UNBOUND;
       }
@@ -1192,7 +1192,7 @@ NODE *lturtlemode(NODE *)
 
    // return the logo "code" for the bit mode
 
-   switch (turtle_bitmap[turtle_which])
+   switch (g_Turtles[turtle_which].Bitmap)
       {
        case 0:
        case SRCCOPY: temp = 1; break;
@@ -1217,22 +1217,22 @@ NODE *lsetturtlemode(NODE *arg)
    ASSERT_TURTLE_INVARIANT
 
    // convert from logo "code" to Windows constants
-   if (turtle_bitmap[turtle_which])
+   if (g_Turtles[turtle_which].Bitmap)
       {
       prepare_to_draw;
       draw_turtle(0);
 
       switch (int_arg(arg))
          {
-          case 1: turtle_bitmap[turtle_which] = SRCCOPY; break;
-          case 2: turtle_bitmap[turtle_which] = SRCPAINT; break;
-          case 3: turtle_bitmap[turtle_which] = SRCAND; break;
-          case 4: turtle_bitmap[turtle_which] = SRCINVERT; break;
-          case 5: turtle_bitmap[turtle_which] = SRCERASE; break;
-          case 6: turtle_bitmap[turtle_which] = NOTSRCCOPY; break;
-          case 7: turtle_bitmap[turtle_which] = NOTSRCERASE; break;
-          case 8: turtle_bitmap[turtle_which] = MERGEPAINT; break;
-          case 9: turtle_bitmap[turtle_which] = DSTINVERT; break;
+          case 1: g_Turtles[turtle_which].Bitmap = SRCCOPY; break;
+          case 2: g_Turtles[turtle_which].Bitmap = SRCPAINT; break;
+          case 3: g_Turtles[turtle_which].Bitmap = SRCAND; break;
+          case 4: g_Turtles[turtle_which].Bitmap = SRCINVERT; break;
+          case 5: g_Turtles[turtle_which].Bitmap = SRCERASE; break;
+          case 6: g_Turtles[turtle_which].Bitmap = NOTSRCCOPY; break;
+          case 7: g_Turtles[turtle_which].Bitmap = NOTSRCERASE; break;
+          case 8: g_Turtles[turtle_which].Bitmap = MERGEPAINT; break;
+          case 9: g_Turtles[turtle_which].Bitmap = DSTINVERT; break;
           default:
               {
                  MainWindowx->CommandWindow->MessageBox("Illegal Bitmode", "Error");
@@ -1432,7 +1432,7 @@ NODE *
 BitCopyOrCut(NODE *arg, bool IsCut)
    {
    POINT dest;
-   if (!WorldCoordinateToScreenCoordinate(turtle_p[turtle_which], dest))
+   if (!WorldCoordinateToScreenCoordinate(g_Turtles[turtle_which].Position, dest))
       {
       return UNBOUND;
       }
@@ -1538,10 +1538,10 @@ BitCopyOrCut(NODE *arg, bool IsCut)
 //               TRect temp;
 //
 //               temp.Set(
-//                  (+turtle_p[turtle_which].x - MainWindowx->Scroller->XPos / the_zoom + xoffset                                  ) * the_zoom,
-//                  (-turtle_p[turtle_which].y - MainWindowx->Scroller->YPos / the_zoom + yoffset + LL - CutBmp[CutIndex].CutHeight) * the_zoom,
-//                  (+turtle_p[turtle_which].x - MainWindowx->Scroller->XPos / the_zoom + xoffset + CutBmp[CutIndex].CutWidth      ) * the_zoom,
-//                  (-turtle_p[turtle_which].y - MainWindowx->Scroller->YPos / the_zoom + yoffset + LL                             ) * the_zoom);
+//                  (+g_Turtles[turtle_which].Position.x - MainWindowx->Scroller->XPos / the_zoom + xoffset                                  ) * the_zoom,
+//                  (-g_Turtles[turtle_which].Position.y - MainWindowx->Scroller->YPos / the_zoom + yoffset + LL - CutBmp[CutIndex].CutHeight) * the_zoom,
+//                  (+g_Turtles[turtle_which].Position.x - MainWindowx->Scroller->XPos / the_zoom + xoffset + CutBmp[CutIndex].CutWidth      ) * the_zoom,
+//                  (-g_Turtles[turtle_which].Position.y - MainWindowx->Scroller->YPos / the_zoom + yoffset + LL                             ) * the_zoom);
 //
 //               temp.Normalize();
 //               temp.Inflate(1+the_zoom,1+the_zoom);
@@ -1552,10 +1552,10 @@ BitCopyOrCut(NODE *arg, bool IsCut)
                {
                SetRect(
                   &TempRect,
-                  +turtle_p[turtle_which].x - MainWindowx->ScreenWindow->Scroller->XPos + xoffset,
-                  -turtle_p[turtle_which].y - MainWindowx->ScreenWindow->Scroller->YPos + yoffset + LL - CutBmp[CutIndex].CutHeight,
-                  +turtle_p[turtle_which].x - MainWindowx->ScreenWindow->Scroller->XPos + xoffset + CutBmp[CutIndex].CutWidth,
-                  -turtle_p[turtle_which].y - MainWindowx->ScreenWindow->Scroller->YPos + yoffset + LL);
+                  +g_Turtles[turtle_which].Position.x - MainWindowx->ScreenWindow->Scroller->XPos + xoffset,
+                  -g_Turtles[turtle_which].Position.y - MainWindowx->ScreenWindow->Scroller->YPos + yoffset + LL - CutBmp[CutIndex].CutHeight,
+                  +g_Turtles[turtle_which].Position.x - MainWindowx->ScreenWindow->Scroller->XPos + xoffset + CutBmp[CutIndex].CutWidth,
+                  -g_Turtles[turtle_which].Position.y - MainWindowx->ScreenWindow->Scroller->YPos + yoffset + LL);
 
                FillRect(ScreenDC, &TempRect, TempBrush);
                }
@@ -1706,7 +1706,7 @@ NODE *lbitpaste(NODE *)
    ASSERT_TURTLE_INVARIANT
 
    POINT dest;
-   if (!WorldCoordinateToScreenCoordinate(turtle_p[turtle_which], dest))
+   if (!WorldCoordinateToScreenCoordinate(g_Turtles[turtle_which].Position, dest))
       {
       return UNBOUND;
       }
@@ -1764,10 +1764,10 @@ NODE *lbitpaste(NODE *)
 //            TRect temp;
 //
 //            temp.Set(
-//               (+turtle_p[turtle_which].x - MainWindowx->Scroller->XPos / the_zoom + xoffset                                  ) * the_zoom,
-//               (-turtle_p[turtle_which].y - MainWindowx->Scroller->YPos / the_zoom + yoffset + LL - CutBmp[CutIndex].CutHeight) * the_zoom,
-//               (+turtle_p[turtle_which].x - MainWindowx->Scroller->XPos / the_zoom + xoffset + CutBmp[CutIndex].CutWidth      ) * the_zoom,
-//               (-turtle_p[turtle_which].y - MainWindowx->Scroller->YPos / the_zoom + yoffset + LL                             ) * the_zoom);
+//               (+g_Turtles[turtle_which].Position.x - MainWindowx->Scroller->XPos / the_zoom + xoffset                                  ) * the_zoom,
+//               (-g_Turtles[turtle_which].Position.y - MainWindowx->Scroller->YPos / the_zoom + yoffset + LL - CutBmp[CutIndex].CutHeight) * the_zoom,
+//               (+g_Turtles[turtle_which].Position.x - MainWindowx->Scroller->XPos / the_zoom + xoffset + CutBmp[CutIndex].CutWidth      ) * the_zoom,
+//               (-g_Turtles[turtle_which].Position.y - MainWindowx->Scroller->YPos / the_zoom + yoffset + LL                             ) * the_zoom);
 //
 //            temp.Normalize();
 //            temp.Inflate(1+the_zoom,1+the_zoom);
@@ -1921,21 +1921,21 @@ NODE *lsetturtle(NODE *arg)
             {
             for (int i = turtle_max + 1; i <= turtle_which; i++)
                {
-               turtle_p[i].x = 0.0;
-               turtle_p[i].y = 0.0;
-               turtle_p[i].z = 0.0;
-               turtle_heading[i] = 0.0;
-               turtle_shown[i] = TRUE;
-               turtle_bitmap[i] = 0;
-               turtle_matrix[i].e11 = 1.0;
-               turtle_matrix[i].e12 = 0.0;
-               turtle_matrix[i].e13 = 0.0;
-               turtle_matrix[i].e21 = 0.0;
-               turtle_matrix[i].e22 = 1.0;
-               turtle_matrix[i].e23 = 0.0;
-               turtle_matrix[i].e31 = 0.0;
-               turtle_matrix[i].e32 = 0.0;
-               turtle_matrix[i].e33 = 1.0;
+               g_Turtles[i].Position.x = 0.0;
+               g_Turtles[i].Position.y = 0.0;
+               g_Turtles[i].Position.z = 0.0;
+               g_Turtles[i].Heading = 0.0;
+               g_Turtles[i].IsShown = true;
+               g_Turtles[i].Bitmap = 0;
+               g_Turtles[i].Matrix.e11 = 1.0;
+               g_Turtles[i].Matrix.e12 = 0.0;
+               g_Turtles[i].Matrix.e13 = 0.0;
+               g_Turtles[i].Matrix.e21 = 0.0;
+               g_Turtles[i].Matrix.e22 = 1.0;
+               g_Turtles[i].Matrix.e23 = 0.0;
+               g_Turtles[i].Matrix.e31 = 0.0;
+               g_Turtles[i].Matrix.e32 = 0.0;
+               g_Turtles[i].Matrix.e33 = 1.0;
                }
             turtle_max = turtle_which;
             }
@@ -1960,9 +1960,9 @@ extern FLONUM wanna_x;
 extern FLONUM wanna_y;
 extern FLONUM wanna_z;
 
-         wanna_x = turtle_p[turtle_which].x;
-         wanna_y = turtle_p[turtle_which].y;
-         wanna_z = turtle_p[turtle_which].z;
+         wanna_x = g_Turtles[turtle_which].Position.x;
+         wanna_y = g_Turtles[turtle_which].Position.y;
+         wanna_z = g_Turtles[turtle_which].Position.z;
 
          draw_turtles(1);
          }
@@ -1994,7 +1994,7 @@ void turtlepaste(int TurtleToPaste)
    POINT turtle_which;
 
    POINT dest;
-   if (!WorldCoordinateToScreenCoordinate(turtle_p[TurtleToPaste], dest))
+   if (!WorldCoordinateToScreenCoordinate(g_Turtles[TurtleToPaste].Position, dest))
       {
       return;
       }
@@ -2044,7 +2044,7 @@ void turtlepaste(int TurtleToPaste)
                TempMemDC,
                0,
                0,
-               turtle_bitmap[TurtleToPaste]);
+               g_Turtles[TurtleToPaste].Bitmap);
             }
          else
             {
@@ -2057,7 +2057,7 @@ void turtlepaste(int TurtleToPaste)
                TempMemDC,
                0,
                0,
-               turtle_bitmap[TurtleToPaste]);
+               g_Turtles[TurtleToPaste].Bitmap);
             }
 
          ReleaseDC(MainWindowx->ScreenWindow->HWindow, ScreenDC);
@@ -2067,7 +2067,7 @@ void turtlepaste(int TurtleToPaste)
          }
       else
          {
-         turtle_bitmap[TurtleToPaste] = 0;
+         g_Turtles[TurtleToPaste].Bitmap = 0;
          char szWinLocStr[WININISIZ];
          sprintf(szWinLocStr, "Turtle %d has no picture, will Halt", TurtleToPaste);
          MainWindowx->CommandWindow->MessageBox(szWinLocStr, "Error");
@@ -2534,7 +2534,7 @@ void label(const char *s)
    ASSERT_TURTLE_INVARIANT
 
    POINT dest;
-   if (!WorldCoordinateToScreenCoordinate(turtle_p[turtle_which], dest))
+   if (!WorldCoordinateToScreenCoordinate(g_Turtles[turtle_which].Position, dest))
       {
       return;
       }
@@ -2563,7 +2563,7 @@ void label(const char *s)
       SetTextColor(MemDC, pcolor);
       }
 
-   FontRec.lfEscapement = (360.0 - (turtle_heading[turtle_which] - 90.0)) * 10;
+   FontRec.lfEscapement = (360.0 - (g_Turtles[turtle_which].Heading - 90.0)) * 10;
    HFONT tempFont = CreateFontIndirect(&FontRec);
    HFONT oldFont = (HFONT) SelectObject(MemDC, tempFont);
 

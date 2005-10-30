@@ -40,9 +40,9 @@ void update_status_turtleposition(void)
    sprintf(
       text,
       "%1.0f,%1.0f,%1.0f",
-      turtle_p[turtle_which].x,
-      turtle_p[turtle_which].y,
-      turtle_p[turtle_which].z);
+      g_Turtles[turtle_which].Position.x,
+      g_Turtles[turtle_which].Position.y,
+      g_Turtles[turtle_which].Position.z);
 
    MainWindowx->StatusWindow->SetDlgItemText(ID_TURTLEPOSITION, text);
    }
@@ -121,7 +121,7 @@ void update_status_turtleheading(void)
       }
    else
       {
-      sprintf(text, "%1.2f", turtle_heading[turtle_which]);
+      sprintf(text, "%1.2f", g_Turtles[turtle_which].Heading);
       }
    MainWindowx->StatusWindow->SetDlgItemText(ID_TURTLEHEADING, text);
    }
@@ -164,7 +164,7 @@ void update_status_turtlevisability(void)
    {
    const char * text;
 
-   if (turtle_shown[turtle_which])
+   if (g_Turtles[turtle_which].IsShown)
       {
       text = "Shown";
       }

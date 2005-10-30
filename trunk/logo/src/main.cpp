@@ -1172,17 +1172,17 @@ void ibmturt(int hide)
 
          if (current_mode == perspectivemode)
             {
-            rp = MVxyMultiply(turtle_matrix[turtle_which], turtle_vertices[j].from);
+            rp = MVxyMultiply(g_Turtles[turtle_which].Matrix, turtle_vertices[j].from);
 
-            from3d.x = (turtle_p[turtle_which].x + rp.x) / BitMapWidth;
-            from3d.y = (turtle_p[turtle_which].y + rp.y) / BitMapWidth;
-            from3d.z = (turtle_p[turtle_which].z + rp.z) / BitMapWidth;
+            from3d.x = (g_Turtles[turtle_which].Position.x + rp.x) / BitMapWidth;
+            from3d.y = (g_Turtles[turtle_which].Position.y + rp.y) / BitMapWidth;
+            from3d.z = (g_Turtles[turtle_which].Position.z + rp.z) / BitMapWidth;
 
-            rp = MVxyMultiply(turtle_matrix[turtle_which], turtle_vertices[j].to);
+            rp = MVxyMultiply(g_Turtles[turtle_which].Matrix, turtle_vertices[j].to);
 
-            to3d.x = (turtle_p[turtle_which].x + rp.x) / BitMapWidth;
-            to3d.y = (turtle_p[turtle_which].y + rp.y) / BitMapWidth;
-            to3d.z = (turtle_p[turtle_which].z + rp.z) / BitMapWidth;
+            to3d.x = (g_Turtles[turtle_which].Position.x + rp.x) / BitMapWidth;
+            to3d.y = (g_Turtles[turtle_which].Position.y + rp.y) / BitMapWidth;
+            to3d.z = (g_Turtles[turtle_which].Position.z + rp.z) / BitMapWidth;
 
             if (ThreeD.TransformSegment(from3d, to3d, from2d, to2d))
                {
@@ -1211,20 +1211,20 @@ void ibmturt(int hide)
             }
          else
             {
-            Cz = cos(-turtle_heading[turtle_which] * RADCVT);
-            Sz = sin(-turtle_heading[turtle_which] * RADCVT);
+            Cz = cos(-g_Turtles[turtle_which].Heading * RADCVT);
+            Sz = sin(-g_Turtles[turtle_which].Heading * RADCVT);
 
             rx = Cz * turtle_vertices[j].from.x - Sz * turtle_vertices[j].from.y;
             ry = Sz * turtle_vertices[j].from.x + Cz * turtle_vertices[j].from.y;
 
-            oldx = turtle_p[turtle_which].x + rx;
-            oldy = turtle_p[turtle_which].y + ry;
+            oldx = g_Turtles[turtle_which].Position.x + rx;
+            oldy = g_Turtles[turtle_which].Position.y + ry;
             
             rx = Cz * turtle_vertices[j].to.x - Sz * turtle_vertices[j].to.y;
             ry = Sz * turtle_vertices[j].to.x + Cz * turtle_vertices[j].to.y;
             
-            newx = turtle_p[turtle_which].x + rx;
-            newy = turtle_p[turtle_which].y + ry;
+            newx = g_Turtles[turtle_which].Position.x + rx;
+            newy = g_Turtles[turtle_which].Position.y + ry;
             
             iOldx = g_round(oldx);
             iOldy = g_round(oldy);
@@ -1269,7 +1269,7 @@ void ibmturt(int hide)
          }
       }
    
-   if (turtle_bitmap[turtle_which])
+   if (g_Turtles[turtle_which].Bitmap)
       {
       POINT dest;
 
@@ -1277,9 +1277,9 @@ void ibmturt(int hide)
          {
          VECTOR from3d;
 
-         from3d.x = turtle_p[turtle_which].x / WorldWidth;
-         from3d.y = turtle_p[turtle_which].y / WorldHeight;
-         from3d.z = turtle_p[turtle_which].z / WorldDepth;
+         from3d.x = g_Turtles[turtle_which].Position.x / WorldWidth;
+         from3d.y = g_Turtles[turtle_which].Position.y / WorldHeight;
+         from3d.z = g_Turtles[turtle_which].Position.z / WorldDepth;
 
          if (ThreeD.TransformPoint(from3d, dest))
             {
@@ -1292,8 +1292,8 @@ void ibmturt(int hide)
          }
       else
          {
-         dest.x = g_round(turtle_p[turtle_which].x);
-         dest.y = g_round(turtle_p[turtle_which].y);
+         dest.x = g_round(g_Turtles[turtle_which].Position.x);
+         dest.y = g_round(g_Turtles[turtle_which].Position.y);
          }
 
       temp.Set(

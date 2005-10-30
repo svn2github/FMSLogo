@@ -25,9 +25,9 @@ void TThreeD::WORLDtoPC(double xw, double yw, POINT &pc)
 // Default value for AT
 void TThreeD::SetAt()
    {
-   At.x = turtle_p[TURTLES - 2].x / WorldWidth;
-   At.y = turtle_p[TURTLES - 2].y / WorldHeight;
-   At.z = turtle_p[TURTLES - 2].z / WorldDepth;
+   At.x = g_Turtles[TURTLES - 2].Position.x / WorldWidth;
+   At.y = g_Turtles[TURTLES - 2].Position.y / WorldHeight;
+   At.z = g_Turtles[TURTLES - 2].Position.z / WorldDepth;
    }
 
 void TThreeD::SetClip(double _Angle, double _Zmin, double _Zmax)
@@ -53,7 +53,7 @@ void TThreeD::SetUp()
    v.y = 1.0;
    v.z = 0.0;
 
-   Up = MVy1Multiply(turtle_matrix[TURTLES - 2], v);
+   Up = MVy1Multiply(g_Turtles[TURTLES - 2].Matrix, v);
    }
 
 void TThreeD::SetVolume()
@@ -72,17 +72,17 @@ void TThreeD::SetVolume()
 // default value for FROM
 void TThreeD::SetLight()
    {
-   Light.x = turtle_p[TURTLES - 1].x / WorldWidth;
-   Light.y = turtle_p[TURTLES - 1].y / WorldHeight;
-   Light.z = turtle_p[TURTLES - 1].z / WorldDepth;
+   Light.x = g_Turtles[TURTLES - 1].Position.x / WorldWidth;
+   Light.y = g_Turtles[TURTLES - 1].Position.y / WorldHeight;
+   Light.z = g_Turtles[TURTLES - 1].Position.z / WorldDepth;
    }
 
 // default value for FROM
 void TThreeD::SetFrom()
    {
-   From.x = turtle_p[TURTLES - 3].x / WorldWidth;
-   From.y = turtle_p[TURTLES - 3].y / WorldHeight;
-   From.z = turtle_p[TURTLES - 3].z / WorldDepth;
+   From.x = g_Turtles[TURTLES - 3].Position.x / WorldWidth;
+   From.y = g_Turtles[TURTLES - 3].Position.y / WorldHeight;
+   From.z = g_Turtles[TURTLES - 3].Position.z / WorldDepth;
    }
 
 // Set up parameters in the world to eye transformation.
