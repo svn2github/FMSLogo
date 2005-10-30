@@ -52,6 +52,17 @@ TO RUNBADINPUTTEST :instructions
 
 END
 
+; Outputs how long it takes to execute given instructions
+TO TIMECOMMAND :instructions
+  LOCALMAKE "beforetime timemilli
+
+  RUN :instructions
+
+  LOCALMAKE "aftertime timemilli
+
+  OUTPUT :aftertime - :beforetime
+END
+
 
 TO TESTALL
 
