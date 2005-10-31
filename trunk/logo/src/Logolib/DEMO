@@ -200,6 +200,7 @@ setxy -250 -50
 bitblock 550 150
 setxy -200 0
 repeat 9 [setbitmode repcount bitpaste fd 50 wait 5]
+setbitmode 1
 end
 
 to demo.14
