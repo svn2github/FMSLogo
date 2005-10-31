@@ -47,9 +47,11 @@ END
 ; smoke test for BITCUT, BITCOPY, and BITPASTE
 TO BITCOPYTEST
 
-  ; draw a red pattern
   CLEARSCREEN
+  SETBITMODE 1
   PENDOWN
+
+  ; draw a red pattern
   SETPENSIZE [2 2]
   REPEAT 72 [
     REPEAT 4 [FORWARD 100 RIGHT 90] 
