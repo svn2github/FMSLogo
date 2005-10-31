@@ -81,7 +81,6 @@ class TMyFileWindow : public TEditWindow
 
 private:
    char *FileName;
-   bool IsNewFile;
    NODE *args_list;
    HFONT hEdtFont;
    }
