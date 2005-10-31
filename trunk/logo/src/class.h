@@ -550,7 +550,6 @@ extern int EnablePalette;
 extern bool IsPrinterSettingCustom;
 extern bool IsTPrinterSettingCustom;
 extern int Command_OK;
-extern int halt_flag;
 extern int traceflag;
 extern int stepflag;
 extern int pause_flag;
