@@ -80,15 +80,15 @@ FLONUM z_scale = 1.0;
 FLONUM wanna_x = 0.0;
 FLONUM wanna_y = 0.0;
 FLONUM wanna_z = 0.0;
-BOOLEANx out_of_bounds = FALSE;
+bool out_of_bounds = FALSE;
 
 //char record[GR_SIZE];
 static int record_index = 0;
 static pen_info orig_pen; // DELETEME
 static int forward_count = 0; // DELETEME
 
-BOOLEANx record_next_move = FALSE;
-BOOLEANx refresh_p = TRUE;
+bool record_next_move = FALSE;
+bool refresh_p = TRUE;
 
 /************************************************************/
 
@@ -1104,7 +1104,7 @@ NODE *lpitch(NODE *)
       return (make_floatnode(0.0));
    }
 
-NODE *vec_arg_helper(NODE *args, BOOLEANx floatok)
+NODE *vec_arg_helper(NODE *args, bool floatok)
    {
    NODE *arg = car(args), *val1, *val2;
 
@@ -1140,7 +1140,7 @@ NODE *vec_arg_helper(NODE *args, BOOLEANx floatok)
    return (UNBOUND);
    }
 
-NODE *vec_3_arg_helper(NODE *args, BOOLEANx floatok)
+NODE *vec_3_arg_helper(NODE *args, bool floatok)
    {
    NODE *arg = car(args), *val1, *val2, *val3;
 
@@ -1184,7 +1184,7 @@ NODE *vec_3_arg_helper(NODE *args, BOOLEANx floatok)
    return (UNBOUND);
    }
 
-NODE *vec_4_arg_helper(NODE *args, BOOLEANx floatok)
+NODE *vec_4_arg_helper(NODE *args, bool floatok)
    {
    NODE *arg = car(args), *val1, *val2, *val3, *val4;
 
@@ -1488,7 +1488,7 @@ void setpos_helper(NODE *xnode, NODE *ynode, NODE *znode, BOOL bEraseTurtle)
 
    FLONUM save_heading;
 
-   BOOLEANx wrapping = FALSE;
+   bool wrapping = FALSE;
 
    if (NOT_THROWING)
       {
@@ -2225,7 +2225,7 @@ graphics window can get erased and need to be redrawn.  On
 machines where no graphics redrawing is necessary, set the size
 of the recording buffer to 1 in logo.h. */
 
-BOOLEANx safe_to_save()
+bool safe_to_save()
    {
    /*
       return(refresh_p && record_index < (GR_SIZE - 300));

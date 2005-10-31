@@ -66,7 +66,7 @@ mode_type;
 #define NIL             ((NODE *) 0)
 #define UNBOUND         Unbound
 #define UNDEFINED       Unbound
-#define END_OF_LIST     (NODE *) 2
+#define END_OF_LIST     ((NODE *) 2)
 #define HASH_LEN        1021           /* a prime number                      */
 #define SEG_SIZE        1000           /* 1 for debugging internal leaks      */
 //#define MAX_PHYS_LINE   5000
@@ -77,7 +77,7 @@ mode_type;
 #define PREFIX_PRIORITY 2
 #define MACRO_PRIORITY  1
 #define TAIL_PRIORITY   0
-#define TURTLEN         3
+#define TURTLEN         3 // number of special turtles
 #define TURTLES         1024+TURTLEN
 
 typedef short NODETYPES;
@@ -152,9 +152,6 @@ typedef enum
    OUT_OF_MEM_UNREC
    }
 ERR_TYPES;
-
-
-typedef bool BOOLEANx;
 
 #define FALSE   0
 #define TRUE    1

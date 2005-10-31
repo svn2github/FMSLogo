@@ -305,14 +305,14 @@ NODE *list_to_array(NODE *list)
 #define white_space(ch) (ch == ' ' || ch == '\t' || ch == '\n')
 
 NODE *parser_iterate(char **inln, char *inlimit, char *inhead,
-         BOOLEANx semi, int endchar)
+         bool semi, int endchar)
    {
    char ch, *wptr = NULL;
    static char terminate = '\0';       /* KLUDGE                              */
    NODE *outline = NIL, *lastnode = NIL, *tnode = NIL;
    int windex = 0, vbar = 0;
    NODETYPES this_type = STRING;
-   BOOLEANx broken = FALSE;
+   bool broken = FALSE;
 
    do
       {
@@ -451,7 +451,7 @@ NODE *parser_iterate(char **inln, char *inlimit, char *inhead,
    return (unref(outline));
    }
 
-NODE *parser(NODE *nd, BOOLEANx semi)
+NODE *parser(NODE *nd, bool semi)
    {
    NODE *rtn;
    int slen;
@@ -485,7 +485,7 @@ NODE *runparse_node(NODE *nd, NODE **ndsptr)
    char *wptr, *tptr, *whead;
    int wlen, wcnt, tcnt, isnumb;
    NODETYPES wtyp;
-   BOOLEANx monadic_minus = FALSE;
+   bool monadic_minus = FALSE;
 
    if (nd == Minus_Tight) return cons(nd, NIL);
    snd = cnv_node_to_strnode(nd);

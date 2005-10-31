@@ -106,7 +106,7 @@ void make_tree_from_body(NODE *body)
    settype(body, TREE);
    }
 
-BOOLEANx tree_dk_how;
+bool tree_dk_how;
 
 /* Treeify a list of tokens (runparsed or not).
 */
@@ -140,8 +140,8 @@ NODE *paren_line(NODE *line)
 
    NODE *retval = NIL;
    // NODE *save = line;
-   NODE *paren_expr(NODE **expr, BOOLEANx inparen);
-   NODE *paren_infix(NODE *left, NODE **rest, int old_pri, BOOLEANx inparen);
+   NODE *paren_expr(NODE **expr, bool inparen);
+   NODE *paren_infix(NODE *left, NODE **rest, int old_pri, bool inparen);
 
    if (line == NIL) return line;
    retval = paren_expr(&line, FALSE);
@@ -156,14 +156,14 @@ NODE *paren_line(NODE *line)
 /* Parenthesize an expression.  Set expr to the node after the first full
 * expression.
 */
-NODE *paren_expr(NODE **expr, BOOLEANx inparen)
+NODE *paren_expr(NODE **expr, bool inparen)
    {
 
    NODE *first = NIL, *tree = NIL, *proc, *retval;
    //    NODE *save = *expr;
    NODE **ifnode = (NODE **) NIL;
-   NODE *gather_args(NODE *, NODE **, BOOLEANx, NODE **);
-   NODE *paren_infix(NODE *, NODE **, int, BOOLEANx);
+   NODE *gather_args(NODE *, NODE **, bool, NODE **);
+   NODE *paren_infix(NODE *, NODE **, int, bool);
 
    if (*expr == NIL)
       {
@@ -257,11 +257,11 @@ NODE *paren_expr(NODE **expr, BOOLEANx inparen)
 /* Gather the correct number of arguments to proc into a list.  Set args to
 * immediately after the last arg.
 */
-NODE *gather_args(NODE *proc, NODE **args, BOOLEANx inparen, NODE **ifnode)
+NODE *gather_args(NODE *proc, NODE **args, bool inparen, NODE **ifnode)
    {
 
    int min, max;
-   NODE *gather_some_args(int, int, NODE **, BOOLEANx, NODE **);
+   NODE *gather_some_args(int, int, NODE **, bool, NODE **);
 
    if (nodetype(proc) == CONS)
       {
@@ -289,11 +289,11 @@ NODE *gather_args(NODE *proc, NODE **args, BOOLEANx inparen, NODE **ifnode)
 /* Make a list of the next n expressions, where n is between min and max.
 * Set args to immediately after the last expression.
 */
-NODE *gather_some_args(int min, int max, NODE **args, BOOLEANx inparen,
+NODE *gather_some_args(int min, int max, NODE **args, bool inparen,
          NODE **ifnode)
    {
    //    int parens;
-   NODE *paren_infix(NODE *left, NODE **rest, int old_pri, BOOLEANx inparen);
+   NODE *paren_infix(NODE *left, NODE **rest, int old_pri, bool inparen);
 
    if (*args == NIL || car(*args) == Right_Paren ||
          (nodetype(car(*args)) == CASEOBJ &&
@@ -351,7 +351,7 @@ int priority(NODE *proc_obj)
 * infix procedure, if it's there.  Set rest to after the right end of the
 * infix expression.
 */
-NODE *paren_infix(NODE *left_arg, NODE **rest, int old_pri, BOOLEANx inparen)
+NODE *paren_infix(NODE *left_arg, NODE **rest, int old_pri, bool inparen)
    {
 
    NODE *infix_proc, *retval;
@@ -367,4 +367,3 @@ NODE *paren_infix(NODE *left_arg, NODE **rest, int old_pri, BOOLEANx inparen)
    deref(infix_proc);
    return paren_infix(retval, rest, old_pri, inparen);
    }
-

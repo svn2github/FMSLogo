@@ -30,9 +30,9 @@
 
 //extern unsigned _stklen = 8000; /* 5000 for debugging, 65000 for real */
 
-BOOLEANx in_graphics_mode = FALSE;
-BOOLEANx have_been_in_graphics_mode = FALSE;
-BOOLEANx in_erase_mode = FALSE;
+bool in_graphics_mode = FALSE;
+bool have_been_in_graphics_mode = FALSE;
+bool in_erase_mode = FALSE;
 
 int ibm_screen_top, ibm_turtle_top_max;
 int current_write_mode = COPY_PUT;
@@ -53,7 +53,7 @@ void nop()
 
 extern int *TopOfStack;
 
-BOOLEANx check_ibm_stop(int scan)
+bool check_ibm_stop(int scan)
    {
    //   int key;
 
@@ -77,7 +77,7 @@ BOOLEANx check_ibm_stop(int scan)
       Time_To_Halt = 0;
       emptyqueue();
       err_logo(STOP_ERROR, NIL);
-      return (1);
+      return true;
       }
 
    if (Time_To_Pause)
@@ -87,7 +87,7 @@ BOOLEANx check_ibm_stop(int scan)
       lpause(NIL);
       }
 
-   return (0);
+   return false;
    }
 
 void term_init_ibm()
@@ -285,9 +285,9 @@ FIXNUM mickey_y()
    return 0;
    }
 
-BOOLEANx Button()
+bool Button()
    {
-   return FALSE;
+   return false;
    }
 
 void tone(FIXNUM frequency, FIXNUM duration)

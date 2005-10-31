@@ -134,7 +134,7 @@ extern char *logolib;
 extern FIXNUM tailcall, val_status, dont_fix_ift;
 
 /* print.c */
-extern BOOLEANx print_backslashes;
+extern bool print_backslashes;
 
 /* lists.c */
 
@@ -160,7 +160,7 @@ typedef struct _Turtle
    MATRIX   Matrix;
    VECTOR   Position;
    FLONUM   Heading;
-   BOOLEANx IsShown;
+   bool     IsShown;
    long     Bitmap;
    } Turtle;
 
@@ -182,11 +182,11 @@ extern WindowPtr graphics_window, listener_window;
 
 #ifdef ibm
 /* ibmterm.c/ztcterm.c */
-extern BOOLEANx in_graphics_mode;
+extern bool in_graphics_mode;
 extern int MaxX, MaxY;
 #ifdef __ZTC__
 extern int ibm_screen_bottom, turtle_color;
-extern BOOLEANx in_splitscreen;
+extern bool in_splitscreen;
 #else
 extern int ibm_screen_top;
 #define SIGQUIT 15

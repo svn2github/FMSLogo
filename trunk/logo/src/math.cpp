@@ -169,7 +169,7 @@ double myfake(double a)
 NODE *binary(NODE *args, char fcn)
    {
    NODE *arg, *val;
-   BOOLEANx imode;
+   bool imode;
    FIXNUM iarg, ival, oval, nval;
    FLONUM farg, fval;
    int wantint = 0;
@@ -697,7 +697,7 @@ int compare_numnodes(NODE *n1, NODE *n2)
       }
    }
 
-NODE *torf(BOOLEANx tf)
+NODE *torf(bool tf)
    {
    return (tf ? Truex : Falsex);
    }
@@ -730,7 +730,7 @@ NODE *lgreaterp(NODE *args)
    return (UNBOUND);
    }
 
-int compare_node(NODE *n1, NODE *n2, BOOLEANx ignorecase)
+int compare_node(NODE *n1, NODE *n2, bool ignorecase)
    {
    NODE *a1 = NIL, *a2 = NIL, *nn1 = NIL, *nn2 = NIL;
    int icmp, cmp_len;
@@ -818,7 +818,7 @@ int compare_node(NODE *n1, NODE *n2, BOOLEANx ignorecase)
    return (icmp);
    }
 
-BOOLEANx equalp_help(NODE *arg1, NODE *arg2, BOOLEANx ingc)
+bool equalp_help(NODE *arg1, NODE *arg2, bool ingc)
    {
    if (is_list(arg1))
       {
@@ -848,7 +848,7 @@ BOOLEANx equalp_help(NODE *arg1, NODE *arg2, BOOLEANx ingc)
 NODE *lequalp(NODE *args)
    {
    NODE *arg1, *arg2;
-   BOOLEANx val;
+   bool val;
 
    arg1 = car(args);
    arg2 = cadr(args);

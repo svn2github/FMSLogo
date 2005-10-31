@@ -564,10 +564,10 @@ NODE *luppercase(NODE *args)
 
 /* property list stuff */
 
-NODE *getprop(NODE *plist, NODE *name, BOOLEANx before)
+NODE *getprop(NODE *plist, NODE *name, bool before)
    {
    NODE *prev = NIL;
-   BOOLEANx caseig = FALSE;
+   bool caseig = false;
 
    if (compare_node(valnode__caseobj(Caseignoredp), Truex, TRUE) == 0)
       caseig = TRUE;
@@ -633,10 +633,10 @@ NODE *lpprop(NODE *args)
 NODE *lremprop(NODE *args)
    {
    NODE *plname, *pname, *plist, *val = NIL;
-   BOOLEANx caseig = FALSE;
+   bool caseig = false;
 
    if (compare_node(valnode__caseobj(Caseignoredp), Truex, TRUE) == 0)
-      caseig = TRUE;
+      caseig = true;
    plname = string_arg(args);
    pname = string_arg(cdr(args));
    if (NOT_THROWING)
@@ -693,4 +693,4 @@ NODE *lplist(NODE *args)
       }
    return (val);
    }
-
+

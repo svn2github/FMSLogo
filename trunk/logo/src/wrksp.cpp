@@ -122,7 +122,7 @@ NODE *lfulltext(NODE *args)
    return UNBOUND;
    }
 
-NODE *define_helper(NODE *args, BOOLEANx macro_flag)
+NODE *define_helper(NODE *args, bool macro_flag)
    {
    NODE *name, *val, *arg = NIL;
    int minimum = 0, deflt = 0, maximum = 0, old_default = -1;
@@ -239,7 +239,7 @@ NODE *anonymous_function(NODE *text)
    return define_helper(text, -1);
    }
 
-NODE *to_helper(NODE *args, BOOLEANx macro_flag)
+NODE *to_helper(NODE *args, bool macro_flag)
    {
    NODE *arg = NIL, *tnode = NIL, *proc_name, *formals = NIL, *lastnode = NIL,
       *body_words, *lastnode2, *body_list, *ttnode = NIL;

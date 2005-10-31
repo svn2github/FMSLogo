@@ -72,7 +72,7 @@ void err_print()
 
 NODE *err_logo(ERR_TYPES error_type, NODE *error_desc)
    {
-   BOOLEANx recoverable = FALSE, warning = FALSE, uplevel = FALSE;
+   bool recoverable = FALSE, warning = FALSE, uplevel = FALSE;
    NODE *err_act, *val = UNBOUND;
 
    ref(error_desc);

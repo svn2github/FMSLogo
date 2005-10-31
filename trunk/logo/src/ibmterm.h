@@ -104,5 +104,4 @@ extern FLONUM degrad;
 
 /* definitions from ibmterm.c for graphics.c */
 extern int current_vis[], ibm_screen_top, ibm_turtle_top_max;
-extern BOOLEANx in_erase_mode;
-
+extern bool in_erase_mode;

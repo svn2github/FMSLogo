@@ -117,7 +117,7 @@ NODE *lnodribble(NODE *)
    return (UNBOUND);
    }
 
-FILE *find_file(NODE *arg, BOOLEANx remove)
+FILE *find_file(NODE *arg, bool remove)
    {
    NODE *t, *prev = NIL;
    FILE *fp = NULL;

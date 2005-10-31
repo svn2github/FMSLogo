@@ -488,7 +488,7 @@ NODE *larrayp(NODE *arg)
    return torf(nodetype(car(arg)) == ARRAY);
    }
 
-NODE *memberp_help(NODE *args, BOOLEANx notp, BOOLEANx substr)
+NODE *memberp_help(NODE *args, bool notp, bool substr)
    {
    NODE *obj1, *obj2;                  //, *val;
    int leng;
@@ -705,7 +705,7 @@ int circular(NODE *arr, NODE *newx)
    else return (0);
    }
 
-NODE *setitem_helper(NODE *args, BOOLEANx safe)
+NODE *setitem_helper(NODE *args, bool safe)
    {
    int i;
    NODE *obj, *val, *cont;

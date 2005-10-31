@@ -317,13 +317,13 @@ NODE *liffalse(NODE *args)
    }
 
 #ifdef mac
-void prepare_to_exit(BOOLEANx okay)
+void prepare_to_exit(bool okay)
 #else
-void prepare_to_exit(BOOLEANx /* okay */)
+void prepare_to_exit(bool /* okay */)
 #endif
    {
 #ifdef mac
-   void prepare_to_exit(BOOLEANx okay)
+   void prepare_to_exit(bool okay)
    if (okay)
          {
          console_options.pause_atexit = 0;

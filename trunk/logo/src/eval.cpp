@@ -265,7 +265,7 @@ NODE *evaluator(NODE *list, enum labels where)
 
    int i;
    //    int nargs;
-   BOOLEANx tracing;                  /* are we tracing the current procedure?*/
+   bool tracing;                  /* are we tracing the current procedure?*/
    FIXNUM oldtailcall;                /* in case of reentrant use of evaluator*/
    FIXNUM repcount;                    /* count for repeat                    */
    FIXNUM repcountuppoint = 0;         /* up count for repeat                 */

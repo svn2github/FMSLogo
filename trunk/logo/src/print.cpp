@@ -25,7 +25,7 @@ int print_stringlen;
 char *print_stringptr;
 extern char special_chars[];
 
-BOOLEANx print_backslashes = FALSE;
+bool print_backslashes = false;
 
 void update_coords(char /*ch*/)
    {
