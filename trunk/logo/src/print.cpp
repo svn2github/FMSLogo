@@ -23,18 +23,9 @@
 
 int print_stringlen;
 char *print_stringptr;
-extern void real_print_help(), real_print_node();
 extern char special_chars[];
-int x_margin = 0, y_margin = 0;
 
 BOOLEANx print_backslashes = FALSE;
-
-#ifdef mac
-BOOLEANx boldmode = 0;
-#endif
-#ifdef ibm
-extern BOOLEANx in_graphics_mode;
-#endif
 
 void update_coords(char /*ch*/)
    {
@@ -74,8 +65,6 @@ void print_space(FILE *strm)
 void ndprintf(FILE *strm, char *fmt, ...)
    {
    va_list ap;
-   NODE *nd;
-   char *cp;
    char ch;
 
    va_start(ap, fmt);
@@ -84,22 +73,28 @@ void ndprintf(FILE *strm, char *fmt, ...)
       if (ch == '%')
          {
          ch = *fmt++;
-         if (ch == 's')                /* show                                */
+         if (ch == 's') // show
+            {
             print_node(strm, va_arg(ap, NODE *));
-         else if (ch == 'p')
+            }
+         else if (ch == 'p')  // print
             {
             /* print */
-            nd = va_arg(ap, NODE *);
+            NODE * nd = va_arg(ap, NODE *);
             if (is_list(nd))
+               {
                print_help(strm, nd);
+               }
             else
                print_node(strm, nd);
             }
-         else if (ch == 't')
+         else if (ch == 't') // text
             {
-            /* text */
-            cp = va_arg(ap, char *);
-            while (ch = *cp++) print_char(strm, ch);
+            char *cp = va_arg(ap, char *);
+            while (ch = *cp++)
+               {
+               print_char(strm, ch);
+               }
             }
          else
             {
@@ -119,10 +114,16 @@ void real_print_help(FILE *strm, NODE *ndlist, int depth, int width)
 
    while (ndlist != NIL)
       {
-      if (!is_list(ndlist)) return;
+      if (!is_list(ndlist))
+         {
+         return;
+         }
       arg = car(ndlist);
       ndlist = cdr(ndlist);
-      if (check_throwing) break;
+      if (check_throwing)
+         {
+         break;
+         }
       real_print_node(strm, arg, depth, width);
       if (ndlist != NIL)
          {
@@ -172,6 +173,13 @@ char *typename(NODE *nd)
 int debug_print = 1;
 #endif
 
+// prints a node to a file stream in a way that is consistent
+// with how FMSLogo parses nodes.
+//
+//   strm - the file stream.
+//   nd - the node to print.
+//   depth - how "deep" to go (how many elements of a list)
+//   width - how many bytes to print at most ???
 void real_print_node(FILE *strm, NODE *nd, int depth, int width)
    {
    int i;
@@ -186,12 +194,16 @@ void real_print_node(FILE *strm, NODE *nd, int depth, int width)
 #ifdef MEM_DEBUG
    if (debug_print && nd != NIL)
       {
-      fprintf(stderr, "
-         {
-         % s: % d: 0x % lX
-         }
-      ",
-      typename(nd), getrefcnt(nd), (long) nd);
+      fprintf(
+         stderr,
+         "\n"
+            "  {\n"
+            "  %s: %d: 0x%lX\n"
+            "  }\n"
+            "\n",
+         typename(nd), 
+         getrefcnt(nd), 
+         nd);
       }
 #endif
    if (nd == NIL)
@@ -380,4 +392,4 @@ NODE *lprint(NODE *args)
    new_line(writestream);
    return (UNBOUND);
    }
-
+
