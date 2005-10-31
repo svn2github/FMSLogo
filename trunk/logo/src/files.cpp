@@ -383,13 +383,16 @@ NODE *lsave(NODE *arg)
       setcar(arg, cons(lcontents(NIL), NIL));
       lpo(car(arg));
       fclose(writestream);
-      IsDirty = 0;
+      IsDirty = false;
 
       lsetcursorarrow(NIL);
       yield_flag = save_yield_flag;
       }
    else
+      {
       err_logo(FILE_ERROR, make_static_strnode("Could not open file"));
+      }
+
    writestream = tmp;
    return (UNBOUND);
    }
@@ -449,7 +452,6 @@ void silent_load(NODE *arg, char *prefix)
    char load_path[200];
    NODE *st = valnode__caseobj(Startup);
    int sv_val_status = val_status;
-   int IsDirtySave;
    int save_yield_flag;
 
    /* This procedure is called three ways:
@@ -459,7 +461,7 @@ void silent_load(NODE *arg, char *prefix)
     * The "/" or ".lg" is supplied by this procedure as needed.
     */
 
-   IsDirtySave = IsDirty;
+   bool IsDirtySave = IsDirty;
    if (prefix == NULL && arg == NIL) return;
    strcpy(load_path, (prefix == NULL ? "" : prefix));
    if (arg != NIL)
@@ -516,15 +518,22 @@ NODE *lload(NODE *arg)
    NODE *tmp_line, *exec_list;
    NODE *st = valnode__caseobj(Startup);
    int sv_val_status = val_status;
-   int IsDirtySave;
    int save_yield_flag;
 
    if (IsDirty)
       {
-      if (MainWindowx->CommandWindow->MessageBox("The file being loaded may over write your changes.\n\nContinue Loading?", "You have not saved to disk", MB_OKCANCEL | MB_ICONQUESTION) == IDCANCEL) return (UNBOUND);
+      if (MainWindowx->CommandWindow->MessageBox(
+         "The file being loaded may over write your changes.\n"
+            "\n"
+            "Continue Loading?", 
+         "You have not saved to disk", 
+         MB_OKCANCEL | MB_ICONQUESTION) == IDCANCEL) 
+         {
+         return (UNBOUND);
+         }
       }
 
-   IsDirtySave = IsDirty;
+   bool IsDirtySave = IsDirty;
    tmp = loadstream;
    tmp_line = vref(current_line);
    loadstream = open_file(car(arg), "r");

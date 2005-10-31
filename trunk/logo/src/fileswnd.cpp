@@ -51,7 +51,7 @@ void filesave(char *temp)
       setcar(arg, cons(lcontents(NIL), NIL));
       lpo(car(arg));
       fclose(writestream);
-      IsDirty = 0;
+      IsDirty = false;
 
       lsetcursorarrow(NIL);
       yield_flag = save_yield_flag;
@@ -70,12 +70,11 @@ void fileload(char *temp)
    NODE *tmp_line, *exec_list, *arg;
    NODE *st = valnode__caseobj(Startup);
    int sv_val_status = val_status;
-   int IsDirtySave;
    int save_yield_flag;
 
    arg = make_strnode(temp, NULL, strlen(temp), STRING, strnzcpy);
 
-   IsDirtySave = IsDirty;
+   bool IsDirtySave = IsDirty;
    tmp = loadstream;
    tmp_line = vref(current_line);
    loadstream = open_file(arg, "r");

@@ -35,7 +35,7 @@ extern int Time_To_Pause;
 extern int Time_To_Halt;
 extern int halt_flag;
 extern int traceflag;
-extern int IsDirty;
+extern bool IsDirty;
 extern int error_happen;
 extern long eval_count;
 extern long vector_count;

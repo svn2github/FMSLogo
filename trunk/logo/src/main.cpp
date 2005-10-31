@@ -114,7 +114,7 @@ int dfldb;                             /* Current flood pen color blue          
 int dscnr;                             /* Current screen pen color red                  */
 int dscng;                             /* Current screen pen color green                */
 int dscnb;                             /* Current screen pen color blue                 */
-int IsDirty = 0;                       /* Flag to signal to query user ok to quit       */
+bool IsDirty = false;                  // Flag to signal to query user ok to quiu
 int BitMapWidth = 1000;                /* Current bitmap size in X                      */
 int BitMapHeight = 1000;               /* Current bitmap size in Y                      */
 int WorldWidth = 1000;                 /* Current World size in X                       */

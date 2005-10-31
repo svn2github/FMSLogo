@@ -366,23 +366,20 @@ NODE *to_helper(NODE *args, bool macro_flag)
 
 NODE *lto(NODE *args)
    {
-
-   IsDirty = 1;
+   IsDirty = true;
    input_mode = TO_MODE;
    to_helper(args, FALSE);
    input_mode = NO_MODE;
-   return (UNBOUND);
-
+   return UNBOUND;
    }
 
 NODE *lmacro(NODE *args)
    {
-
-   IsDirty = 1;
+   IsDirty = true;
    input_mode = TO_MODE;
    to_helper(args, TRUE);
    input_mode = NO_MODE;
-   return (UNBOUND);
+   return UNBOUND;
 
    }
 
@@ -1159,7 +1156,7 @@ NODE *ledit(NODE *args)
    else
       {
       unlink(TempPathName);
-      IsDirty = 1;
+      IsDirty = true;
       }
 
    lsetcursorarrow(NIL);

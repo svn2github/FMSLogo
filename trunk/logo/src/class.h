@@ -542,7 +542,6 @@ extern int dfldb;
 extern int dscnr;
 extern int dscng;
 extern int dscnb;
-extern int IsDirty;
 extern int BitMapWidth;
 extern int BitMapHeight;
 extern int WorldWidth;

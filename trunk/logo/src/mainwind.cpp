@@ -1695,7 +1695,7 @@ void TMainFrame::CMFileNew()
    // else start with a clean plate
 
    IsNewFile = TRUE;
-   IsDirty = FALSE;
+   IsDirty = false;
 
    arg = lcontents(NIL);
 
@@ -1942,7 +1942,7 @@ void TMainFrame::CMFileErase()
          arg = lprocedures(NIL);
 
          IsNewFile = TRUE;
-         IsDirty = FALSE;
+         IsDirty = false;
          }
       else
          {

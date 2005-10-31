@@ -238,7 +238,7 @@ void TMyFileWindow::CMSaveToWorkspace()
       EndEdit();
 
       unlink(TempPathName);
-      IsDirty = 1;
+      IsDirty = true;
 
       if (error_happen)
          {
@@ -531,7 +531,7 @@ void TMyFileWindow::EvDestroy()
             else
                {
                unlink(TempPathName);
-               IsDirty = 1;
+               IsDirty = true;
                }
             }
          else
