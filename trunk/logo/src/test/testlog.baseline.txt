@@ -36,7 +36,6 @@ PASS: The font circle was drawn correctly
 INFO: Executing invalid instruction: ' (LABEL) '
 INFO: Executing invalid instruction: ' (LABEL 1 1) '
 PASS: The circle was drawn correctly
-PASS: The circle was drawn correctly
 PASS: (FILL "true) worked as expected
 INFO: Executing invalid instruction: ' (FILL 10) '
 INFO: Executing invalid instruction: ' (FILL ["true] ) '
