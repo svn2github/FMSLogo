@@ -428,8 +428,6 @@ enum labels
 #define PAUSE_MODE 3
 
 #define ScreenSz 0.70                  /* Default,proportion of screen size   */
-#define TRUE    1                      /* Define some handy constants         */
-#define FALSE   0                      /* Define some handy constants         */
 #define RADCVT 0.01745329251994        /* Convert to radians                  */
 #define WININISIZ 40
 /* displayed in FontDemo */
