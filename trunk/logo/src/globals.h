@@ -30,7 +30,7 @@ extern NODE **gctop;
 extern NODE *current_line;
 extern NODE *exec_list;
 extern char TempPathName[];
-extern int Time_To_Exit;
+extern bool IsTimeToExit;
 extern int Time_To_Pause;
 extern int Time_To_Halt;
 extern int halt_flag;

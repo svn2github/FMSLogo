@@ -136,7 +136,7 @@ int MaxHeight = 0;                     /* Actual Main window size y             
 int xoffset = 0;                       /* Used to go from logo to windows coords x      */
 int yoffset = 0;                       /* Used to go from logo to windows coords y      */
 int JustDidEdit = 0;                   /* Flag to signal last command was edit (like)   */
-int Time_To_Exit = 0;                  /* Flag to signal it's time to exit              */
+bool IsTimeToExit = false;             // Flag to signal it's time to exit
 int Time_To_Pause = 0;                 /* UCBLOGO? pause flag                           */
 int Time_To_Halt = 0;                  /* UCBLOGO? halt flag                            */
 int error_happen;                      /* FLag to signal Error happened on edit reload  */
@@ -369,10 +369,9 @@ void TMyApp::InitInstance()
 bool TMyApp::IdleAction(long idleCount)
    {
    // this is the time to exit, when things are settled down
-
-   if (Time_To_Exit)
+   if (IsTimeToExit)
       {
-      Time_To_Exit = 0;
+      IsTimeToExit = false;
       MainWindow->PostMessage(WM_CLOSE);
       }
 

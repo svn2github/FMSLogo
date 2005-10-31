@@ -981,7 +981,7 @@ void TMainFrame::CMExit()
       {
       Time_To_Halt = 1;
       }
-   Time_To_Exit = 1;
+   IsTimeToExit = true;
    }
 
 BOOL TMainFrame::WriteDIB(int TheFile, int MaxBitCount)

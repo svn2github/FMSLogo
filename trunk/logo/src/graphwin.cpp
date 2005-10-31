@@ -2638,6 +2638,6 @@ void exit_program(void)
       {
       Time_To_Halt = 1;
       }
-   Time_To_Exit = 1;
+   IsTimeToExit = true;
    }
 
