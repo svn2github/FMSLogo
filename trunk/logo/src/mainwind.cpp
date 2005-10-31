@@ -1694,7 +1694,7 @@ void TMainFrame::CMFileNew()
 
    // else start with a clean plate
 
-   IsNewFile = TRUE;
+   IsNewFile = true;
    IsDirty = false;
 
    arg = lcontents(NIL);
@@ -1941,7 +1941,7 @@ void TMainFrame::CMFileErase()
          // if user clicked EDALL get all procedures
          arg = lprocedures(NIL);
 
-         IsNewFile = TRUE;
+         IsNewFile = true;
          IsDirty = false;
          }
       else
