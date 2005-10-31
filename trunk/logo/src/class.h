@@ -209,7 +209,7 @@ class TMyFileEditWindow : public TDialog
    {
  public:
 
-   int FileEditAll;
+   bool FileEditAll;
 
    TMyFileEditWindow(TWindow *, LPSTR);
    ~TMyFileEditWindow();

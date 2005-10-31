@@ -1894,7 +1894,7 @@ void TMainFrame::CMFileEdit()
 
    TMyFileEditWindow FileEditWindow(this, "DIALOGEDIT");
 
-   FileEditWindow.FileEditAll = 0;
+   FileEditWindow.FileEditAll = false;
 
    // now do it
 
@@ -1903,7 +1903,7 @@ void TMainFrame::CMFileEdit()
 
       // if user clicked ALL get all procedures
 
-      if (FileEditWindow.FileEditAll == 1)
+      if (FileEditWindow.FileEditAll)
          {
          arg = lprocedures(NIL);
          }
@@ -1930,13 +1930,13 @@ void TMainFrame::CMFileErase()
 
    TMyFileEditWindow FileEditWindow(this, "DIALOGERASE");
 
-   FileEditWindow.FileEditAll = 0;
+   FileEditWindow.FileEditAll = false;
 
    // now do it
 
    if (FileEditWindow.Execute() == IDOK)
       {
-      if (FileEditWindow.FileEditAll == 1)
+      if (FileEditWindow.FileEditAll)
          {
          // if user clicked EDALL get all procedures
          arg = lprocedures(NIL);

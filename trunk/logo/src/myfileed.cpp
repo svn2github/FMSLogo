@@ -34,7 +34,7 @@ TMyFileEditWindow::~TMyFileEditWindow()
 
 void TMyFileEditWindow::DoAll(UINT)
    {
-   FileEditAll = 1;
+   FileEditAll = true;
    CloseWindow(TRUE);
    }
 
