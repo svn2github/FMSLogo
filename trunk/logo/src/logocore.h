@@ -78,12 +78,7 @@ mode_type;
 #define MACRO_PRIORITY  1
 #define TAIL_PRIORITY   0
 #define TURTLEN         3
-#if !defined(__WIN32__)
-#define TURTLES         910
-#define OFN_EXPLORER    0x00000000
-#else
 #define TURTLES         1024+TURTLEN
-#endif
 
 typedef short NODETYPES;
 
@@ -158,9 +153,8 @@ typedef enum
    }
 ERR_TYPES;
 
-//#if !defined(__WIN32__)
-typedef int BOOLEANx;
-//#endif
+
+typedef bool BOOLEANx;
 
 #define FALSE   0
 #define TRUE    1
