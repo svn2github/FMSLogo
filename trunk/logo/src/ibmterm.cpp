@@ -26,7 +26,6 @@
 #define COPY_PUT 12
 //
 
-extern x_margin, y_margin;
 /************************************************************/
 
 //extern unsigned _stklen = 8000; /* 5000 for debugging, 65000 for real */

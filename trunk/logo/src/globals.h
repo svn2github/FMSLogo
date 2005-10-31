@@ -106,7 +106,6 @@ extern int input_mode;
 /* print.c */
 extern int print_stringlen;
 extern char *print_stringptr;
-extern int x_margin, y_margin;
 
 /* init.c */
 extern NODE *Truex, *Falsex, *Left_Paren, *Right_Paren, *Null_Word, *Toplevel, *System, *Error;
