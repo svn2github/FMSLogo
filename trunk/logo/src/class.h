@@ -288,11 +288,9 @@ class TMainFrame : public TDecoratedFrame
 
    void CheckForFileError();
    bool LoadBitmapFile(LPCSTR, DWORD &, DWORD &);
-   bool OpenDIB(int, DWORD &, DWORD &);
-   void GetBitmapData(int TheFile, HANDLE, long);
-   bool DumpBitmapFile(LPCSTR, int);
-   bool WriteDIB(int TheFile, int MaxBitCount);
-   void PutBitmapData(int TheFile, HANDLE, long);
+   bool OpenDIB(FILE* File, DWORD &, DWORD &);
+   bool DumpBitmapFile(LPCSTR Filename, int MaxBitCount);
+   bool WriteDIB(FILE* File, int MaxBitCount);
    void SaveFile();
    void SaveFileAs();
    void SaveBitmap();
