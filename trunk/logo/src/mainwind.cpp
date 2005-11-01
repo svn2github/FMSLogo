@@ -303,35 +303,20 @@ void TScreenWindow::Paint(TDC &PaintDC, bool /* erase */, TRect &PaintRect)
 void TScreenWindow::Printit(TDC &PrintDC)
    {
 
-   /*
-      Must of rewrote this at least 25 times :-) and it still does not
-      work in some situations. This is just the "Paint" of printing.
-      See the print module for all the other stuff.
-   */
+   // Must of rewrote this at least 26 times :-) and it still does not
+   // work in some situations. This is just the "Paint" of printing.
+   // See the print module for all the other stuff.
 
-   long TempWidth;
-   long TempHeight;
-   long ScanLines;
    long Status;
 
-   LPSTR BitsPtr;
-   HBITMAP BitsHandle;
-
-   BITMAPINFO *PrintBitmapInfo;
-
-   WORD PrintbitCount;
-   WORD ScreenbitCount;
-   WORD size;
-
-   /* do we even have a chance ? */
-
+   // do we even have a chance?
    if ((GetDeviceCaps(PrintDC, RASTERCAPS) & RC_STRETCHDIB) == 0)
       {
       MessageBox("Print driver does not support this function", "Error");
       return;
       }
 
-   PrintbitCount = GetDeviceCaps(PrintDC, BITSPIXEL);
+   WORD PrintbitCount = GetDeviceCaps(PrintDC, BITSPIXEL);
    PrintbitCount *= GetDeviceCaps(PrintDC, PLANES);
 
    // If a mono printer lets let it try to dither a 256 grey scale image
@@ -340,7 +325,7 @@ void TScreenWindow::Printit(TDC &PrintDC)
    // Get screen bitCount
    HDC ScreenDC = GetDC(0);
 
-   ScreenbitCount = GetDeviceCaps(ScreenDC, BITSPIXEL);
+   WORD ScreenbitCount = GetDeviceCaps(ScreenDC, BITSPIXEL);
    ScreenbitCount *= GetDeviceCaps(ScreenDC, PLANES);
 
    // Don't bother creating a DIB with more colors than we have
@@ -356,6 +341,7 @@ void TScreenWindow::Printit(TDC &PrintDC)
 
    PrintbitCount = GetPrivateProfileInt("LOGO", "PrintColorDepth", PrintbitCount, "LOGO.INI");
 
+   WORD size;
    if (PrintbitCount <= 8)
       {
       size = sizeof(BITMAPINFOHEADER) + ((1 << PrintbitCount) * sizeof(RGBQUAD));
@@ -365,7 +351,7 @@ void TScreenWindow::Printit(TDC &PrintDC)
       size = sizeof(BITMAPINFOHEADER);
       }
 
-   PrintBitmapInfo = (BITMAPINFO *) new char[size];
+   BITMAPINFO * PrintBitmapInfo = (BITMAPINFO *) new char[size];
 
    PrintBitmapInfo->bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
    PrintBitmapInfo->bmiHeader.biWidth = BitMapWidth;
@@ -379,126 +365,96 @@ void TScreenWindow::Printit(TDC &PrintDC)
    PrintBitmapInfo->bmiHeader.biClrUsed = 0;
    PrintBitmapInfo->bmiHeader.biClrImportant = 0;
 
-   /* we don't need hour glass here because print module takes care of it */
+   // we don't need hour glass here because print module takes care of it 
 
-   BitsHandle = (HBITMAP) GlobalAlloc(GMEM_MOVEABLE | GMEM_ZEROINIT, PrintBitmapInfo->bmiHeader.biSizeImage);
+   // allocate space for the raw DIB data
+   unsigned char * BitsPtr = new unsigned char [PrintBitmapInfo->bmiHeader.biSizeImage];
+   memset(BitsPtr, 0x00, PrintBitmapInfo->bmiHeader.biSizeImage);
 
-   /* If fail try again after a compact */
+   // get printer size per inch 
+   long TempWidth = GetDeviceCaps(PrintDC, LOGPIXELSX);
+   long TempHeight = GetDeviceCaps(PrintDC, LOGPIXELSY);
 
-   if (!BitsHandle)
+   // if palette allocate it
+   if (EnablePalette)
       {
-      GlobalCompact(-1);
-      BitsHandle = (HBITMAP) GlobalAlloc(GMEM_MOVEABLE | GMEM_ZEROINIT, PrintBitmapInfo->bmiHeader.biSizeImage);
+      OldPalette = SelectPalette(ScreenDC, ThePalette, FALSE);
+      RealizePalette(ScreenDC);
       }
 
-   /* if we got the memory continue */
+   // set up an assured contrast ?
+   SetTextColor(PrintDC, 0x00000000L);
+   SetBkColor(PrintDC, 0x00ffffffL);
 
-   if (BitsHandle)
+   long ScanLines = GetDIBits(
+      ScreenDC,
+      MemoryBitMap,
+      0,
+      BitMapHeight,
+      BitsPtr,
+      PrintBitmapInfo,
+      DIB_RGB_COLORS);
+
+   // check we got something
+   if (ScanLines != 0)
       {
-
-      /* get printer size per inch */
-
-      TempWidth = GetDeviceCaps(PrintDC, LOGPIXELSX);
-      TempHeight = GetDeviceCaps(PrintDC, LOGPIXELSY);
-
-      /* if palette allocate it */
-
-      if (EnablePalette)
+      // if "active area" just print that 
+      if (IsPrinterSettingCustom)
          {
-         OldPalette = SelectPalette(ScreenDC, ThePalette, FALSE);
-         RealizePalette(ScreenDC);
+         Status = StretchDIBits(
+            PrintDC,
+            0,
+            0,
+            (TempWidth * (PrinterAreaXHigh - PrinterAreaXLow)) / PrinterAreaPixels,
+            (TempHeight * (PrinterAreaYHigh - PrinterAreaYLow)) / PrinterAreaPixels,
+            +PrinterAreaXLow + xoffset,
+            BitMapHeight - (-PrinterAreaYLow + yoffset),
+            PrinterAreaXHigh - PrinterAreaXLow,
+            PrinterAreaYHigh - PrinterAreaYLow,
+            BitsPtr,
+            PrintBitmapInfo,
+            DIB_RGB_COLORS,
+            SRCCOPY);
+         }
+      else
+         {
+         // else print the whole thing
+         Status = StretchDIBits(
+            PrintDC,
+            0,
+            0,
+            (TempWidth * BitMapWidth) / PrinterAreaPixels,
+            (TempHeight * BitMapHeight) / PrinterAreaPixels,
+            0,
+            0,
+            BitMapWidth,
+            BitMapHeight,
+            BitsPtr,
+            PrintBitmapInfo,
+            DIB_RGB_COLORS,
+            SRCCOPY);
          }
 
-      /* set up an assured contrast ? */
-
-      SetTextColor(PrintDC, 0x00000000L);
-      SetBkColor(PrintDC, 0x00ffffffL);
-
-      /* where is that memory anyway */
-
-      BitsPtr = (LPSTR) GlobalLock((HGLOBAL) BitsHandle);
-
-      ScanLines = GetDIBits(
-         ScreenDC,
-         MemoryBitMap,
-         0,
-         BitMapHeight,
-         BitsPtr,
-         PrintBitmapInfo,
-         DIB_RGB_COLORS);
-
-      /* check we got something */
-
-      if (ScanLines != 0)
+      if (Status <= 0)
          {
-         /* if "active area" just print that */
-
-         if (IsPrinterSettingCustom)
-            {
-            Status = StretchDIBits(
-               PrintDC,
-               0,
-               0,
-               (TempWidth * (PrinterAreaXHigh - PrinterAreaXLow)) / PrinterAreaPixels,
-               (TempHeight * (PrinterAreaYHigh - PrinterAreaYLow)) / PrinterAreaPixels,
-               +PrinterAreaXLow + xoffset,
-               BitMapHeight - (-PrinterAreaYLow + yoffset),
-               PrinterAreaXHigh - PrinterAreaXLow,
-               PrinterAreaYHigh - PrinterAreaYLow,
-               BitsPtr,
-               PrintBitmapInfo,
-               DIB_RGB_COLORS,
-               SRCCOPY);
-            }
-
-         /* else print the whole thing */
-         else
-            {
-            Status = StretchDIBits(
-               PrintDC,
-               0,
-               0,
-               (TempWidth * BitMapWidth) / PrinterAreaPixels,
-               (TempHeight * BitMapHeight) / PrinterAreaPixels,
-               0,
-               0,
-               BitMapWidth,
-               BitMapHeight,
-               BitsPtr,
-               PrintBitmapInfo,
-               DIB_RGB_COLORS,
-               SRCCOPY);
-            }
-
-         if (Status <= 0)
-            {
-            MessageBox("Cannot draw image", "Error");
-            char buffer[64];
-            MessageBox(itoa(GetLastError(), buffer, 10), "Sub Code");
-            }
+         MessageBox("Cannot draw image", "Error");
+         char buffer[64];
+         MessageBox(itoa(GetLastError(), buffer, 10), "Sub Code");
          }
-       else
-         {
-         /* can't do it */
-         MessageBox("Cannot extract image", "Error");
-         }
-
-      /* restore resources */
-
-      if (EnablePalette)
-         {
-         SelectPalette(ScreenDC, OldPalette, FALSE);
-         }
-
-      GlobalUnlock(BitsHandle);
-
-      GlobalFree(BitsHandle);
       }
-   else
+    else
       {
       /* can't do it */
-      MessageBox("No Memory to Print", "Error");
+      MessageBox("Cannot extract image", "Error");
       }
+
+   // restore resources 
+   if (EnablePalette)
+      {
+      SelectPalette(ScreenDC, OldPalette, FALSE);
+      }
+
+   delete [] BitsPtr;
 
    ReleaseDC(0, ScreenDC);
 
@@ -982,9 +938,9 @@ void TMainFrame::CMExit()
    IsTimeToExit = true;
    }
 
-bool TMainFrame::WriteDIB(int TheFile, int MaxBitCount)
+bool TMainFrame::WriteDIB(FILE* File, int MaxBitCount)
    {
-   /* grab a DC */
+   // grab a DC 
    HDC screen = CreateDC("DISPLAY", NULL, NULL, NULL);
 
    // hard code to screen mode
@@ -1027,7 +983,6 @@ bool TMainFrame::WriteDIB(int TheFile, int MaxBitCount)
    SaveBitmapInfo->bmiHeader.biPlanes = 1;
    SaveBitmapInfo->bmiHeader.biBitCount = SavebitCount;
    SaveBitmapInfo->bmiHeader.biCompression = BI_RGB;
-   SaveBitmapInfo->bmiHeader.biSizeImage = ((((SaveBitmapInfo->bmiHeader.biWidth * SaveBitmapInfo->bmiHeader.biBitCount) + 31) / 32) * 4) * SaveBitmapInfo->bmiHeader.biHeight;
    SaveBitmapInfo->bmiHeader.biXPelsPerMeter = 0;
    SaveBitmapInfo->bmiHeader.biYPelsPerMeter = 0;
    SaveBitmapInfo->bmiHeader.biClrUsed = 0;
@@ -1042,19 +997,8 @@ bool TMainFrame::WriteDIB(int TheFile, int MaxBitCount)
    SaveBitmapInfo->bmiHeader.biSizeImage = ((((SaveBitmapInfo->bmiHeader.biWidth * SaveBitmapInfo->bmiHeader.biBitCount) + 31) / 32) * 4) * SaveBitmapInfo->bmiHeader.biHeight;
 
    // allocate space for the raw DIB data
-   HBITMAP BitsHandle = (HBITMAP) GlobalAlloc(
-      GMEM_MOVEABLE | GMEM_ZEROINIT,
-      SaveBitmapInfo->bmiHeader.biSizeImage);
-
-   // bummer
-   if (!BitsHandle)
-      {
-      DeleteDC(screen);
-      return false;
-      }
-
-   // go find it
-   LPSTR BitsPtr = (LPSTR) GlobalLock((HGLOBAL) BitsHandle);
+   unsigned char * BitsPtr = new unsigned char[SaveBitmapInfo->bmiHeader.biSizeImage];
+   memset(BitsPtr, 0x00, SaveBitmapInfo->bmiHeader.biSizeImage);
 
    // if palette yank it in 
    HPALETTE oldPalette2;
@@ -1143,18 +1087,14 @@ bool TMainFrame::WriteDIB(int TheFile, int MaxBitCount)
    BitmapFileHeader.bfReserved2 = 0;
    BitmapFileHeader.bfOffBits = size + sizeof(BITMAPFILEHEADER);
 
-   // write header
-   _lwrite(TheFile, (LPSTR) &BitmapFileHeader, sizeof(BitmapFileHeader));
-
-   _lwrite(TheFile, (LPSTR) SaveBitmapInfo, size);
+   // write headers
+   fwrite(&BitmapFileHeader, sizeof(char), sizeof(BitmapFileHeader), File);
+   fwrite(SaveBitmapInfo, sizeof(char), size, File);
 
    // write out raw DIB data to file
-   GlobalUnlock(BitsHandle);
+   fwrite(BitsPtr, sizeof(char), SaveBitmapInfo->bmiHeader.biSizeImage, File);
 
-   PutBitmapData(TheFile, BitsHandle, SaveBitmapInfo->bmiHeader.biSizeImage);
-
-   GlobalFree(BitsHandle);
-
+   delete [] BitsPtr;
    delete SaveBitmapInfo;
 
    return true;
@@ -1163,14 +1103,13 @@ bool TMainFrame::WriteDIB(int TheFile, int MaxBitCount)
 bool TMainFrame::DumpBitmapFile(LPCSTR Filename, int MaxBitCount)
    {
    // open and check if ok 
-   int file = _lcreat(Filename, 0);
-   if (file != -1)
+   FILE* file = fopen(Filename, "wb");
+   if (file != NULL)
       {
       // Load hour-glass cursor.
       HCURSOR oldCursor = ::SetCursor(hCursorWait);
 
-      /* do it and if error then let user know */
-
+      // do it and if error then let user know 
       if (!WriteDIB(file, MaxBitCount))
          {
          MessageBox("Could not Write .BMP", "Error");
@@ -1180,7 +1119,7 @@ bool TMainFrame::DumpBitmapFile(LPCSTR Filename, int MaxBitCount)
       // Restore the arrow cursor
       ::SetCursor(oldCursor);
 
-      _lclose(file);
+      fclose(file);
       }
    else
       {
@@ -1192,23 +1131,21 @@ bool TMainFrame::DumpBitmapFile(LPCSTR Filename, int MaxBitCount)
    return true;
    }
 
-/* Attempt to open a Windows 3.0 device independent bitmap. */
 
-bool TMainFrame::OpenDIB(int TheFile, DWORD &dwPixelWidth, DWORD &dwPixelHeight)
+// Attempt to open a Windows 3.0 device independent bitmap
+bool TMainFrame::OpenDIB(FILE* File, DWORD &dwPixelWidth, DWORD &dwPixelHeight)
    {
-   /* get header */
-   _llseek(TheFile, 0, 0);
+   // get header 
+   rewind(File);
 
    BITMAPFILEHEADER BitmapFileHeader;
-   _lread(TheFile, (LPSTR) &BitmapFileHeader, sizeof(BitmapFileHeader));
+   fread(&BitmapFileHeader, sizeof(char), sizeof(BitmapFileHeader), File);
 
-   /* bfOffbits should be equal to BitmapInfoHeader */
-
+   // bfOffbits should be equal to BitmapInfoHeader
    BITMAPINFO * ReadBitmapInfo = (BITMAPINFO *) new char[BitmapFileHeader.bfOffBits - sizeof(BitmapFileHeader)];
+   fread(ReadBitmapInfo, sizeof(char), BitmapFileHeader.bfOffBits - sizeof(BitmapFileHeader), File);
 
-   _lread(TheFile, (LPSTR) ReadBitmapInfo, BitmapFileHeader.bfOffBits - sizeof(BitmapFileHeader));
-
-   /* save some typing */
+   // save some typing 
    DWORD NewPixelWidth = ReadBitmapInfo->bmiHeader.biWidth;
    DWORD NewPixelHeight = ReadBitmapInfo->bmiHeader.biHeight;
 
@@ -1255,24 +1192,14 @@ bool TMainFrame::OpenDIB(int TheFile, DWORD &dwPixelWidth, DWORD &dwPixelHeight)
          ReadBitmapInfo->bmiHeader.biSizeImage = longWidth * NewPixelHeight;
          }
 
-      /* pack and allocate */
-      HBITMAP BitsHandle = (HBITMAP) GlobalAlloc(
-         GMEM_MOVEABLE | GMEM_ZEROINIT,
-         ReadBitmapInfo->bmiHeader.biSizeImage);
+      // pack and allocate
+      unsigned char * BitsPtr = new unsigned char[ReadBitmapInfo->bmiHeader.biSizeImage];
+      memset(BitsPtr, 0x00, ReadBitmapInfo->bmiHeader.biSizeImage);
 
-      /* sorry */
-      if (!BitsHandle)
-         {
-         delete [] ReadBitmapInfo;
-         return FALSE;
-         }
+      // read the file into the bitmap
+      fread(BitsPtr, sizeof(char), ReadBitmapInfo->bmiHeader.biSizeImage, File);
 
-      /* read the file into the bitmap */
-
-      GetBitmapData(TheFile, BitsHandle, ReadBitmapInfo->bmiHeader.biSizeImage);
-
-      /* Create DC comaptible with screen */
-
+      // Create DC comaptible with screen 
       HDC screen = GetDC(MainWindowx->ScreenWindow->HWindow);
 
       HDC memoryDC = CreateCompatibleDC(screen);
@@ -1281,7 +1208,7 @@ bool TMainFrame::OpenDIB(int TheFile, DWORD &dwPixelWidth, DWORD &dwPixelHeight)
       HPALETTE oldPalette  = NULL;
       HPALETTE oldPalette2 = NULL;
 
-      /* if palette yank it */
+      // if palette yank it
       if (EnablePalette)
          {
          oldPalette = SelectPalette(memoryDC, ThePalette, FALSE);
@@ -1291,10 +1218,7 @@ bool TMainFrame::OpenDIB(int TheFile, DWORD &dwPixelWidth, DWORD &dwPixelHeight)
          RealizePalette(screen);
          }
 
-      /* find it */
-      LPSTR BitsPtr = (LPSTR) GlobalLock((HGLOBAL) BitsHandle);
-
-      /* now create the bitmap with the bits just loaded */
+      // now create the bitmap with the bits just loaded
       HBITMAP NewBitmapHandle = CreateDIBitmap(
          screen,
          &ReadBitmapInfo->bmiHeader,
@@ -1303,11 +1227,9 @@ bool TMainFrame::OpenDIB(int TheFile, DWORD &dwPixelWidth, DWORD &dwPixelHeight)
          ReadBitmapInfo,
          0);
 
-      /* now dump the bits */
-
-      GlobalUnlock(BitsHandle);
-      GlobalFree(BitsHandle);
-
+      // now dump the bits 
+      delete [] BitsPtr;
+      
       if (EnablePalette)
          {
          SelectPalette(screen, oldPalette2, FALSE);
@@ -1315,18 +1237,16 @@ bool TMainFrame::OpenDIB(int TheFile, DWORD &dwPixelWidth, DWORD &dwPixelHeight)
 
       ReleaseDC(MainWindowx->ScreenWindow->HWindow, screen);
 
-      /* now that things are clean we can check if we are ok */
+
+      // now that things are clean we can check if we are ok 
 
       if (!NewBitmapHandle)
          {
          return false;
          }
 
-      /*
-      We've now made a bonafied bitmap. But we want to copy it into the
-      existing backing store.
-      */
-
+      // We've now made a bonefide bitmap. 
+      // But we want to copy it into the existing backing store.
       if (EnablePalette)
          {
          oldPalette2 = SelectPalette(DCHandle, ThePalette, FALSE);
@@ -1379,11 +1299,14 @@ bool TMainFrame::OpenDIB(int TheFile, DWORD &dwPixelWidth, DWORD &dwPixelHeight)
             +dest.x + xoffset,
             -dest.y + yoffset + LL - NewPixelHeight,
             NewPixelWidth,
-            NewPixelHeight, DCHandle, 0, 0, SRCCOPY);
+            NewPixelHeight, 
+            DCHandle, 
+            0, 
+            0, 
+            SRCCOPY);
          }
 
-      /* return resources */
-
+      // return resources
       if (EnablePalette)
          {
          SelectPalette(memoryDC, oldPalette, FALSE);
@@ -1408,29 +1331,26 @@ bool TMainFrame::OpenDIB(int TheFile, DWORD &dwPixelWidth, DWORD &dwPixelHeight)
 
 bool TMainFrame::LoadBitmapFile(LPCSTR Filename, DWORD &dwPixelWidth, DWORD &dwPixelHeight)
    {
-
    // Test if the passed file is a Windows 3.0 DIB bitmap and if so read it
    const char * errorMessage = NULL;
    bool retval;
 
-   /* open then check if open */
-
-   int file = _lopen(Filename, OF_READ);
-   if (file != -1)
+   // open then check if open 
+   FILE* file = fopen(Filename, "rb");
+   if (file != NULL)
       {
 
       // check if valid bitmap
-      _llseek(file, 14, 0);
+      fseek(file, 14, SEEK_SET);
 
-      long TestWin30Bitmap;
-      _lread(file, (LPSTR) & TestWin30Bitmap, sizeof(TestWin30Bitmap));
+      long TestWin30Bitmap = 0;
+      fread(&TestWin30Bitmap, sizeof(char), sizeof(TestWin30Bitmap), file);
       if (TestWin30Bitmap == 40)
          {
          // Load hour-glass cursor.
          HCURSOR oldCursor = ::SetCursor(hCursorWait);
 
-         /* if loaded ok then invalidate to display */
-
+         // if loaded ok then invalidate to display 
          if (OpenDIB(file, dwPixelWidth, dwPixelHeight))
             {
             ScreenWindow->Invalidate(true);
@@ -1448,7 +1368,7 @@ bool TMainFrame::LoadBitmapFile(LPCSTR Filename, DWORD &dwPixelWidth, DWORD &dwP
          /* not a bitmap */
          errorMessage = "Not a Windows 3.0 bitmap";
          }
-      _lclose(file);
+      fclose(file);
       }
    else
       {
@@ -1469,70 +1389,6 @@ bool TMainFrame::LoadBitmapFile(LPCSTR Filename, DWORD &dwPixelWidth, DWORD &dwP
       }
 
    return retval;
-   }
-
-/* Copies the bitmap bit data from the file into memory. Since
-copying cannot cross a segment (64K) boundary, we are forced
-to do segment arithmetic to compute the next segment.  Created
-a LongType type to simplify the process. */
-
-void TMainFrame::GetBitmapData(int TheFile, HANDLE BitsHandle, long BitsByteSize)
-   {
-   long Bits = (long) GlobalLock(BitsHandle);
-
-   long Start = 0L;
-
-   long Count = BitsByteSize;
-
-   while (Count > 0)
-      {
-      long ToAddr = Bits + Start;
-
-      if (Count > 0x4000)
-         {
-         Count = 0x4000;
-         }
-      _lread(TheFile, (LPSTR) ToAddr, (WORD) Count);
-      Start = Start + Count;
-      Count = BitsByteSize - Start;
-      }
-
-   GlobalUnlock(BitsHandle);
-   }
-
-/* Copys the bitmap bit data from the memory into file. Since
-copying cannot cross a segment (64K) boundary, we are forced
-to do segment arithmetic to compute the next segment.  Created
-a LongType type to simplify the process. */
-
-void TMainFrame::PutBitmapData(int TheFile, HANDLE BitsHandle, long BitsByteSize)
-   {
-   long Count;
-   long Start;
-   long ToAddr;
-   long Bits;
-
-   Bits = (long) GlobalLock(BitsHandle);
-
-   Start = 0L;
-
-   Count = BitsByteSize;
-
-   while (Count > 0)
-      {
-      ToAddr = Bits + Start;
-
-      if (Count > 0x4000)
-         {
-         Count = 0x4000;
-         }
-
-      _lwrite(TheFile, (LPSTR) ToAddr, (WORD) Count);
-      Start = Start + Count;
-      Count = BitsByteSize - Start;
-      }
-
-   GlobalUnlock(BitsHandle);
    }
 
 
