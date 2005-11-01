@@ -547,7 +547,7 @@ extern int WorldDepth;
 extern int EnablePalette;
 extern bool IsPrinterSettingCustom;
 extern bool IsTPrinterSettingCustom;
-extern int Command_OK;
+extern bool IsOkayToUseCommanderWindow;
 extern int traceflag;
 extern int stepflag;
 extern int pause_flag;

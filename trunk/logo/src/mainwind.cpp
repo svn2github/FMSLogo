@@ -1981,8 +1981,7 @@ void TMainFrame::SetupWindow()
       ScreenWindow,
       moveDistance);
 
-   Command_OK = 1;
-
+   IsOkayToUseCommanderWindow = true;
 
    // it's show time for our little friend
    draw_turtle(1);

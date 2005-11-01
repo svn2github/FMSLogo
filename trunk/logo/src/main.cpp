@@ -123,7 +123,7 @@ int WorldDepth = 1000;                 /* Current World size in Z               
 int EnablePalette;                     /* Flag to signal 256 color mode with palette    */
 bool IsPrinterSettingCustom = false;   /* Flag to signal Active area is active          */
 bool IsTPrinterSettingCustom = false;  /* Dynamic copy of CustomFlag                    */
-int Command_OK = 0;                    /* Flag to signal it's OK to write to recall box */
+bool IsOkayToUseCommanderWindow = false; // Flag to signal it's OK to write to recall box
 int halt_flag = 0;                     /* Flag to signal it's OK to halt                */
 int traceflag = 0;                     /* Flag to signal trace button is active         */
 int stepflag = 0;                      /* Flag to signal trace button is active         */
@@ -249,7 +249,7 @@ void clearcombobox()
 void putcombobox(char *str)
    {
    /* only if OK to write to recall box do we do it */
-   if (Command_OK)
+   if (IsOkayToUseCommanderWindow)
       {
       UINT uBefore;
       UINT uAfter;
