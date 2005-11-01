@@ -75,7 +75,7 @@ FIXNUM repcountup;                     /* up count for repeat                 */
 
 
 CTRLTYPE stopping_flag = RUN;
-char *logolib, *helpfiles;
+char *logolib;
 FIXNUM tailcall;                      /* 0 in sequence, 1 for tail, -1 for arg*/
 FIXNUM val_status;                    /* 0 means no value allowed (body of cmd),
 1 means value required (arg),
