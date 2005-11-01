@@ -926,7 +926,7 @@ bool TMainFrame::CanClose()
    if (halt_flag != 0)
       {
       // if we already tried warn user of doom
-      if (Time_To_Halt)
+      if (IsTimeToHalt)
          {
          if (MessageBox(
                "FMSLogo does not like exiting while not halted.\n"
@@ -974,12 +974,10 @@ bool TMainFrame::CanClose()
 
 void TMainFrame::CMExit()
    {
-
-   /* here on FILE-EXIT main window (screen) */
-
+   // here on FILE-EXIT main window (screen)
    if (halt_flag != 0)
       {
-      Time_To_Halt = 1;
+      IsTimeToHalt = true;
       }
    IsTimeToExit = true;
    }

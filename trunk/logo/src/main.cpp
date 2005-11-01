@@ -138,7 +138,7 @@ int yoffset = 0;                       /* Used to go from logo to windows coords
 int JustDidEdit = 0;                   /* Flag to signal last command was edit (like)   */
 bool IsTimeToExit = false;             // Flag to signal it's time to exit
 bool IsTimeToPause = false;            // UCBLOGO? pause flag
-int Time_To_Halt = 0;                  /* UCBLOGO? halt flag                            */
+bool IsTimeToHalt = false;             // UCBLOGO? halt flag
 int error_happen;                      /* FLag to signal Error happened on edit reload  */
 int keyboard_on = 0;                   /* Flag to signal Keyboard is enabled            */
 int keyboard_value = 0;                /* Value of Keyboard key                         */
@@ -302,7 +302,7 @@ int promptuser(char *str, char *pmt)
    if (MainWindowx->MyPopupInput(str, pmt) == 0)
       {
       return 0;
-      //    if (halt_flag) Time_To_Halt = 1;
+      //    if (halt_flag) IsTimeToHalt = true;
       //      MainWindowx->CommandWindow->PostMessage(WM_COMMAND, ID_HALT, ID_HALT);
       }
    else

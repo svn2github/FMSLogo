@@ -381,11 +381,7 @@ NODE *ltimemilli(NODE *)
 
 NODE *lwait(NODE *args)
    {
-   NODE *num;
-   //    long itim;
-   clock_t NumTicksToWait;
-
-   num = pos_int_arg(args);
+   NODE * num = pos_int_arg(args);
    if (NOT_THROWING)
       {
       //        fflush(stdout); /* csls v. 1 p. 7 */
@@ -404,24 +400,24 @@ NODE *lwait(NODE *args)
          usleep(n);
 #endif
 #else
-         NumTicksToWait = (((unsigned int) getint(num) * CLK_TCK) / 60) + clock();
-         while (NumTicksToWait > clock() && !Time_To_Halt) MyMessageScan();
+         clock_t NumTicksToWait = (((unsigned int) getint(num) * CLK_TCK) / 60) + clock();
+         while (NumTicksToWait > clock() && !IsTimeToHalt) 
+           {
+           MyMessageScan();
+           }
 #endif
          }
       }
-   return (UNBOUND);
+   return UNBOUND;
    }
 
 NODE *lshell(NODE *args)
    {
    char textbuf[MAX_BUFFER_SIZE];
-
    cnv_strnode_string(textbuf, args);
 
    if (WinExec(textbuf, SW_SHOW) > 31)
-      return (Truex);
+      return Truex;
    else
-      return (Falsex);
+      return Falsex;
    }
-
-

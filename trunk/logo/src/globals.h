@@ -32,7 +32,7 @@ extern NODE *exec_list;
 extern char TempPathName[];
 extern bool IsTimeToExit;
 extern bool IsTimeToPause;
-extern int Time_To_Halt;
+extern bool IsTimeToHalt;
 extern int halt_flag;
 extern int traceflag;
 extern bool IsDirty;

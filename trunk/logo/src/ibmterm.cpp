@@ -68,13 +68,16 @@ bool check_ibm_stop(int scan)
    //    long base, top;
 
    //    IsTimeToPause = false;
-   //    Time_To_Halt = 0;
+   //    IsTimeToHalt = false;
 
-   if (scan) MyMessageScan();
-
-   if (Time_To_Halt)
+   if (scan)
       {
-      Time_To_Halt = 0;
+      MyMessageScan();
+      }
+
+   if (IsTimeToHalt)
+      {
+      IsTimeToHalt = false;
       emptyqueue();
       err_logo(STOP_ERROR, NIL);
       return true;

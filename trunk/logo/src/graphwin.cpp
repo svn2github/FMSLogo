@@ -2636,7 +2636,7 @@ void exit_program(void)
    {
    if (halt_flag != 0)
       {
-      Time_To_Halt = 1;
+      IsTimeToHalt = true;
       }
    IsTimeToExit = true;
    }
