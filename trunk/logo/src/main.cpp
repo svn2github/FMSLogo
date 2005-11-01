@@ -41,12 +41,10 @@ HPALETTE ThePalette;                   /* Handle for the single color palette */
 
 LPLOGPALETTE MyLogPalette;      /* Handle for the single logical color palette*/
 
-NUMBER the_zoom = 1.0;                 /* current zoom factor                 */
-NUMBER ibmoldx;                        /* global store for x "From" routine   */
-NUMBER ibmoldy;                        /* global store for y "From" routine   */
-NUMBER ibmoldz;                        /* global store for z "From" routine   */
+NUMBER the_zoom = 1.0;             // current zoom factor
+Point  g_OldPos = {0.0, 0.0, 0.0}; // global store for x,y,z "From" routine
 
-NODE *current_line = NIL;              /* current line to be parsed           */
+NODE *current_line = NIL;       // current line to be parsed
 
 char LibPathName[EXE_NAME_MAX_SIZE + 1];    /* path to library                */
 char TempPathName[EXE_NAME_MAX_SIZE + 1];   /* path to temp edit file         */
@@ -1322,15 +1320,15 @@ void ibmturt(int hide)
 
 void ibmfrom(NUMBER x, NUMBER y)
    {
-   ibmoldx = x;
-   ibmoldy = y;
+   g_OldPos.x = x;
+   g_OldPos.y = y;
    }
 
 void ibmfrom3d(NUMBER x, NUMBER y, NUMBER z)
    {
-   ibmoldx = x;
-   ibmoldy = y;
-   ibmoldz = z;
+   g_OldPos.x = x;
+   g_OldPos.y = y;
+   g_OldPos.z = z;
    }
 
 void ibmto(NUMBER x, NUMBER y)
@@ -1344,15 +1342,15 @@ void ibmto(NUMBER x, NUMBER y)
 
       if (in_erase_mode)
          {
-         transline(ErasePen, R2_COPYPEN, ibmoldx, ibmoldy, x, y);
+         transline(ErasePen, R2_COPYPEN, g_OldPos.x, g_OldPos.y, x, y);
          }
       else if (current_write_mode == XOR_PUT)
          {
-         transline(NormalPen, R2_NOT, ibmoldx, ibmoldy, x, y);
+         transline(NormalPen, R2_NOT, g_OldPos.x, g_OldPos.y, x, y);
          }
       else
          {
-         transline(NormalPen, R2_COPYPEN, ibmoldx, ibmoldy, x, y);
+         transline(NormalPen, R2_COPYPEN, g_OldPos.x, g_OldPos.y, x, y);
          }
       }
    }
@@ -1368,15 +1366,15 @@ void ibmto3d(NUMBER x, NUMBER y, NUMBER z)
 
       if (in_erase_mode)
          {
-         transline3d(ErasePen, R2_COPYPEN, ibmoldx, ibmoldy, ibmoldz, x, y, z);
+         transline3d(ErasePen, R2_COPYPEN, g_OldPos.x, g_OldPos.y, g_OldPos.z, x, y, z);
          }
       else if (current_write_mode == XOR_PUT)
          {
-         transline3d(NormalPen, R2_NOT, ibmoldx, ibmoldy, ibmoldz, x, y, z);
+         transline3d(NormalPen, R2_NOT, g_OldPos.x, g_OldPos.y, g_OldPos.z, x, y, z);
          }
       else
          {
-         transline3d(NormalPen, R2_COPYPEN, ibmoldx, ibmoldy, ibmoldz, x, y, z);
+         transline3d(NormalPen, R2_COPYPEN, g_OldPos.x, g_OldPos.y, g_OldPos.z, x, y, z);
          }
       }
    }

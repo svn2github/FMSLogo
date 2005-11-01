@@ -488,9 +488,7 @@ extern HPALETTE ThePalette;
 extern LPLOGPALETTE MyLogPalette;
 
 extern NUMBER the_zoom;
-extern NUMBER ibmoldx;
-extern NUMBER ibmoldy;
-extern NUMBER ibmoldz;
+extern Point  g_OldPos;
 
 extern NODE *current_line;
 
