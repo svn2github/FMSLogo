@@ -137,7 +137,7 @@ int xoffset = 0;                       /* Used to go from logo to windows coords
 int yoffset = 0;                       /* Used to go from logo to windows coords y      */
 int JustDidEdit = 0;                   /* Flag to signal last command was edit (like)   */
 bool IsTimeToExit = false;             // Flag to signal it's time to exit
-int Time_To_Pause = 0;                 /* UCBLOGO? pause flag                           */
+bool IsTimeToPause = false;            // UCBLOGO? pause flag
 int Time_To_Halt = 0;                  /* UCBLOGO? halt flag                            */
 int error_happen;                      /* FLag to signal Error happened on edit reload  */
 int keyboard_on = 0;                   /* Flag to signal Keyboard is enabled            */

@@ -31,7 +31,7 @@ extern NODE *current_line;
 extern NODE *exec_list;
 extern char TempPathName[];
 extern bool IsTimeToExit;
-extern int Time_To_Pause;
+extern bool IsTimeToPause;
 extern int Time_To_Halt;
 extern int halt_flag;
 extern int traceflag;

@@ -67,7 +67,7 @@ bool check_ibm_stop(int scan)
 
    //    long base, top;
 
-   //    Time_To_Pause = 0;
+   //    IsTimeToPause = false;
    //    Time_To_Halt = 0;
 
    if (scan) MyMessageScan();
@@ -80,9 +80,9 @@ bool check_ibm_stop(int scan)
       return true;
       }
 
-   if (Time_To_Pause)
+   if (IsTimeToPause)
       {
-      Time_To_Pause = 0;
+      IsTimeToPause = false;
       to_pending = 0;
       lpause(NIL);
       }

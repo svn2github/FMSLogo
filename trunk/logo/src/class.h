@@ -556,7 +556,6 @@ extern int pause_flag;
 extern int MaxWidth;
 extern int MaxHeight;
 extern int JustDidEdit;
-extern int Time_To_Pause;
 extern int Time_To_Halt;
 extern int BaseUnitsx;
 extern int BaseUnitsy;

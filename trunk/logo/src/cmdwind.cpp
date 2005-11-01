@@ -392,7 +392,7 @@ void TMyCommandWindow::DoButtonPause(UINT)
    Editbox->SetFocus();
    if (halt_flag != 0)
       {
-      Time_To_Pause = 1;
+      IsTimeToPause = true;
       }
    }
 
