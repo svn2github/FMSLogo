@@ -102,12 +102,16 @@ bool TMyFileWindow::Read(const char *fileName)
       }
 
    bool success = false;
-   int file = _lopen(fileName, OF_READ);
+   FILE* file = fopen(fileName, "rb");
 
-   if (file != -1)
+   if (file != NULL)
       {
-      long charsToRead = _llseek(file, 0, SEEK_END);
-      _llseek(file, 0, SEEK_SET);
+      // seek to the end
+      fseek(file, 0, SEEK_END);
+
+      long charsToRead = ftell(file);
+
+      rewind(file);
 
       if (charsToRead < INT_MAX && charsToRead > 0)
          {
@@ -119,7 +123,7 @@ bool TMyFileWindow::Read(const char *fileName)
          char *editBuffer = new char[charsToRead + 1];
          if (editBuffer)
             {
-            if (_lread(file, editBuffer, charsToRead) == charsToRead)
+            if (fread(editBuffer, sizeof(char), charsToRead, file) == charsToRead)
                {
                editBuffer[charsToRead] = '\0';
                success = true;
@@ -129,7 +133,7 @@ bool TMyFileWindow::Read(const char *fileName)
             delete [] editBuffer;
             }
          }
-      _lclose(file);
+      fclose(file);
       }
 
    if (!success)
