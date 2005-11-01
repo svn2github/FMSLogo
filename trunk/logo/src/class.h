@@ -544,7 +544,7 @@ extern int BitMapHeight;
 extern int WorldWidth;
 extern int WorldHeight;
 extern int WorldDepth;
-extern int EnablePalette;
+extern bool EnablePalette;
 extern bool IsPrinterSettingCustom;
 extern bool IsTPrinterSettingCustom;
 extern bool IsOkayToUseCommanderWindow;

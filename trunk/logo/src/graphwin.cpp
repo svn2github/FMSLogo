@@ -2488,7 +2488,7 @@ NODE *lmachine(NODE *)
       cons(make_intnode((FIXNUM) 32),
       cons(make_intnode((FIXNUM) BitMapWidth),
       cons(make_intnode((FIXNUM) BitMapHeight),
-      cons(make_intnode((FIXNUM) EnablePalette),
+      cons(make_intnode((FIXNUM) (EnablePalette ? 1 : 0)),
       cons(make_intnode((FIXNUM) (LOBYTE(LOWORD(GetVersion())))),
       cons(make_intnode((FIXNUM) (HIBYTE(LOWORD(GetVersion())))),
       cons(make_intnode((FIXNUM) MaxWidth),

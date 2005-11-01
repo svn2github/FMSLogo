@@ -778,11 +778,11 @@ TMainFrame::TMainFrame(
       {
       if ((GetDeviceCaps(screen, RASTERCAPS) & RC_PALETTE) == 0)
          {
-         EnablePalette = 0;
+         EnablePalette = false;
          }
       else
          {
-         EnablePalette = 1;
+         EnablePalette = true;
          }
 
       DeleteDC(screen);

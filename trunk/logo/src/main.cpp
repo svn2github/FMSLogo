@@ -120,7 +120,7 @@ int BitMapHeight = 1000;               /* Current bitmap size in Y              
 int WorldWidth = 1000;                 /* Current World size in X                       */
 int WorldHeight = 1000;                /* Current World size in Y                       */
 int WorldDepth = 1000;                 /* Current World size in Z                       */
-int EnablePalette;                     /* Flag to signal 256 color mode with palette    */
+bool EnablePalette;                    // Flag to signal 256 color mode with palette
 bool IsPrinterSettingCustom = false;   /* Flag to signal Active area is active          */
 bool IsTPrinterSettingCustom = false;  /* Dynamic copy of CustomFlag                    */
 bool IsOkayToUseCommanderWindow = false; // Flag to signal it's OK to write to recall box
