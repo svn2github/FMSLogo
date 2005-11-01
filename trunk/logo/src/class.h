@@ -287,11 +287,11 @@ class TMainFrame : public TDecoratedFrame
    int MyPopupInput(char *str, char *pmt);
 
    void CheckForFileError();
-   BOOL LoadBitmapFile(LPSTR, DWORD &, DWORD &);
-   BOOL OpenDIB(int, DWORD &, DWORD &);
+   bool LoadBitmapFile(LPCSTR, DWORD &, DWORD &);
+   bool OpenDIB(int, DWORD &, DWORD &);
    void GetBitmapData(int TheFile, HANDLE, long);
-   BOOL DumpBitmapFile(LPSTR, int);
-   BOOL WriteDIB(int TheFile, int MaxBitCount);
+   bool DumpBitmapFile(LPCSTR, int);
+   bool WriteDIB(int TheFile, int MaxBitCount);
    void PutBitmapData(int TheFile, HANDLE, long);
    void SaveFile();
    void SaveFileAs();

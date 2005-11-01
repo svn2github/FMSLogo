@@ -982,20 +982,12 @@ void TMainFrame::CMExit()
    IsTimeToExit = true;
    }
 
-BOOL TMainFrame::WriteDIB(int TheFile, int MaxBitCount)
+bool TMainFrame::WriteDIB(int TheFile, int MaxBitCount)
    {
-   WORD size;
-
-   LPSTR BitsPtr;
-   HBITMAP BitsHandle;
-   BITMAPFILEHEADER BitmapFileHeader;
-   BITMAPINFO *SaveBitmapInfo;
-
    /* grab a DC */
    HDC screen = CreateDC("DISPLAY", NULL, NULL, NULL);
 
-   /* hard code to screen mode */
-
+   // hard code to screen mode
    WORD SavebitCount = GetDeviceCaps(screen, BITSPIXEL);
    SavebitCount *= GetDeviceCaps(screen, PLANES);
 
@@ -1007,8 +999,7 @@ BOOL TMainFrame::WriteDIB(int TheFile, int MaxBitCount)
          }
       }
 
-   /* compute size of bitmap */
-
+   // compute size of bitmap
    if (SavebitCount == 16)
       {
       SavebitCount = 24;
@@ -1018,6 +1009,7 @@ BOOL TMainFrame::WriteDIB(int TheFile, int MaxBitCount)
       SavebitCount = 24;
       }
 
+   WORD size;
    if (SavebitCount <= 8)
       {
       size = sizeof(BITMAPINFOHEADER) + ((1 << SavebitCount) * sizeof(RGBQUAD));
@@ -1027,7 +1019,7 @@ BOOL TMainFrame::WriteDIB(int TheFile, int MaxBitCount)
       size = sizeof(BITMAPINFOHEADER);
       }
 
-   SaveBitmapInfo = (BITMAPINFO *) new char[size];
+   BITMAPINFO * SaveBitmapInfo = (BITMAPINFO *) new char[size];
 
    SaveBitmapInfo->bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
    SaveBitmapInfo->bmiHeader.biWidth = BitMapWidth;
@@ -1050,24 +1042,21 @@ BOOL TMainFrame::WriteDIB(int TheFile, int MaxBitCount)
    SaveBitmapInfo->bmiHeader.biSizeImage = ((((SaveBitmapInfo->bmiHeader.biWidth * SaveBitmapInfo->bmiHeader.biBitCount) + 31) / 32) * 4) * SaveBitmapInfo->bmiHeader.biHeight;
 
    // allocate space for the raw DIB data
-
-   BitsHandle = (HBITMAP) GlobalAlloc(
+   HBITMAP BitsHandle = (HBITMAP) GlobalAlloc(
       GMEM_MOVEABLE | GMEM_ZEROINIT,
       SaveBitmapInfo->bmiHeader.biSizeImage);
 
-   /* bummer */
-
+   // bummer
    if (!BitsHandle)
       {
       DeleteDC(screen);
-      return FALSE;
+      return false;
       }
 
-   /* go find it */
+   // go find it
+   LPSTR BitsPtr = (LPSTR) GlobalLock((HGLOBAL) BitsHandle);
 
-   BitsPtr = (LPSTR) GlobalLock((HGLOBAL) BitsHandle);
-
-   /* if palette yank it in */
+   // if palette yank it in 
    HPALETTE oldPalette2;
    if (EnablePalette)
       {
@@ -1075,8 +1064,7 @@ BOOL TMainFrame::WriteDIB(int TheFile, int MaxBitCount)
       RealizePalette(screen);
       }
 
-   /* if custom then use custom dimensions */
-
+   // if custom then use custom dimensions
    if (IsPrinterSettingCustom)
       {
       HBITMAP AreaMemoryBitMap = CreateCompatibleBitmap(
@@ -1125,11 +1113,9 @@ BOOL TMainFrame::WriteDIB(int TheFile, int MaxBitCount)
 
       DeleteObject(AreaMemoryBitMap);
       }
-
-   /* else do whole thing */
-
    else
       {
+      // else do whole thing
       // convert logo bitmap to raw DIB in BitsPtr
       GetDIBits(
          screen,
@@ -1141,7 +1127,7 @@ BOOL TMainFrame::WriteDIB(int TheFile, int MaxBitCount)
          DIB_RGB_COLORS);
       }
 
-   /* restore some of the resourese */
+   // restore some of the resources
    if (EnablePalette)
       {
       SelectPalette(screen, oldPalette2, FALSE);
@@ -1149,7 +1135,8 @@ BOOL TMainFrame::WriteDIB(int TheFile, int MaxBitCount)
 
    DeleteDC(screen);
 
-   // build header */
+   // build header
+   BITMAPFILEHEADER BitmapFileHeader;
    BitmapFileHeader.bfType = 19778;
    BitmapFileHeader.bfSize = size + sizeof(BITMAPFILEHEADER) + (int) (SaveBitmapInfo->bmiHeader.biWidth * SaveBitmapInfo->bmiHeader.biHeight * (SavebitCount / 8));
    BitmapFileHeader.bfReserved1 = 0;
@@ -1162,7 +1149,6 @@ BOOL TMainFrame::WriteDIB(int TheFile, int MaxBitCount)
    _lwrite(TheFile, (LPSTR) SaveBitmapInfo, size);
 
    // write out raw DIB data to file
-
    GlobalUnlock(BitsHandle);
 
    PutBitmapData(TheFile, BitsHandle, SaveBitmapInfo->bmiHeader.biSizeImage);
@@ -1171,14 +1157,13 @@ BOOL TMainFrame::WriteDIB(int TheFile, int MaxBitCount)
 
    delete SaveBitmapInfo;
 
-   return TRUE;
+   return true;
    }
 
-BOOL TMainFrame::DumpBitmapFile(LPSTR Name, int MaxBitCount)
+bool TMainFrame::DumpBitmapFile(LPCSTR Filename, int MaxBitCount)
    {
-   /* open and check if ok */
-
-   int file = _lcreat(Name, 0);
+   // open and check if ok 
+   int file = _lcreat(Filename, 0);
    if (file != -1)
       {
       // Load hour-glass cursor.
@@ -1192,24 +1177,24 @@ BOOL TMainFrame::DumpBitmapFile(LPSTR Name, int MaxBitCount)
          err_logo(STOP_ERROR, NIL);
          }
 
-      // Restore the arrow cursor.
+      // Restore the arrow cursor
       ::SetCursor(oldCursor);
 
       _lclose(file);
       }
    else
       {
-      /* else file never opened */
+      // else file never opened
       MessageBox("Could not Open .BMP", "Error");
       err_logo(STOP_ERROR, NIL);
       }
 
-   return TRUE;
+   return true;
    }
 
 /* Attempt to open a Windows 3.0 device independent bitmap. */
 
-BOOL TMainFrame::OpenDIB(int TheFile, DWORD &dwPixelWidth, DWORD &dwPixelHeight)
+bool TMainFrame::OpenDIB(int TheFile, DWORD &dwPixelWidth, DWORD &dwPixelHeight)
    {
    /* get header */
    _llseek(TheFile, 0, 0);
@@ -1334,7 +1319,7 @@ BOOL TMainFrame::OpenDIB(int TheFile, DWORD &dwPixelWidth, DWORD &dwPixelHeight)
 
       if (!NewBitmapHandle)
          {
-         return FALSE;
+         return false;
          }
 
       /*
@@ -1380,7 +1365,7 @@ BOOL TMainFrame::OpenDIB(int TheFile, DWORD &dwPixelWidth, DWORD &dwPixelHeight)
 
             if (!ThreeD.TransformPoint(from3d, dest))
                {
-               return TRUE;
+               return true;
                }
             }
          else
@@ -1418,26 +1403,26 @@ BOOL TMainFrame::OpenDIB(int TheFile, DWORD &dwPixelWidth, DWORD &dwPixelHeight)
 
    dwPixelWidth  = NewPixelWidth;
    dwPixelHeight = NewPixelHeight;
-   return TRUE;
+   return true;
    }
 
-BOOL TMainFrame::LoadBitmapFile(LPSTR Name, DWORD &dwPixelWidth, DWORD &dwPixelHeight)
+bool TMainFrame::LoadBitmapFile(LPCSTR Filename, DWORD &dwPixelWidth, DWORD &dwPixelHeight)
    {
 
    // Test if the passed file is a Windows 3.0 DIB bitmap and if so read it
-   long TestWin30Bitmap;
    const char * errorMessage = NULL;
-   BOOL retval;
+   bool retval;
 
    /* open then check if open */
 
-   int file = _lopen(Name, OF_READ);
+   int file = _lopen(Filename, OF_READ);
    if (file != -1)
       {
 
-      /* check if valid bitmap */
-
+      // check if valid bitmap
       _llseek(file, 14, 0);
+
+      long TestWin30Bitmap;
       _lread(file, (LPSTR) & TestWin30Bitmap, sizeof(TestWin30Bitmap));
       if (TestWin30Bitmap == 40)
          {
@@ -1471,17 +1456,16 @@ BOOL TMainFrame::LoadBitmapFile(LPSTR Name, DWORD &dwPixelWidth, DWORD &dwPixelH
       errorMessage = "Cannot open bitmap file";
       }
 
-   /* if no message the we are ok else display error message */
-
+   // if no message the we are ok else display error message
    if (errorMessage == NULL)
       {
-      retval = TRUE;
+      retval = true;
       }
    else
       {
       MessageBox(errorMessage, "Error", MB_OK);
       err_logo(STOP_ERROR, NIL);
-      retval = FALSE;
+      retval = false;
       }
 
    return retval;
