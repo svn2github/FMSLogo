@@ -62,7 +62,7 @@ TMyFileWindow::~TMyFileWindow()
 // being editted
 //
 // returns true if the file was saved or Editor->IsModified returns false
-//(contents already saved)
+// (contents already saved)
 //
 bool TMyFileWindow::Save()
    {
@@ -77,6 +77,8 @@ bool TMyFileWindow::Save()
       {
       return true; //editor's contents haven't been changed
       }
+
+   return false;
    }
 
 //
@@ -158,8 +160,8 @@ bool TMyFileWindow::Write(const char * fileName)
          }
       }
 
-   int file = _lcreat(fileName, 0);
-   if (file == -1)
+   FILE* file = fopen(fileName, "w");
+   if (file == NULL) 
       {
       char msg[MAXPATH + 33];
 
@@ -188,10 +190,15 @@ bool TMyFileWindow::Write(const char * fileName)
          editBufferLength = windowTextLength;
          }
 
-      success = _lwrite(
-         file,
+      size_t bytesWritten = fwrite(
          editBuffer,
-         editBufferLength) != (WORD) -1;
+         sizeof(char),
+         editBufferLength,
+         file);
+      if (bytesWritten == editBufferLength)
+         {
+         success = true;
+         }
 
       if (success)
          {
@@ -200,7 +207,8 @@ bool TMyFileWindow::Write(const char * fileName)
 
       delete [] editBuffer;
       }
-   _lclose(file);
+
+   fclose(file);
 
    return success;
    }
