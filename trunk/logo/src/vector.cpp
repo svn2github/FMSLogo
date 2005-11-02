@@ -64,9 +64,10 @@ VECTOR Divide(VECTOR &v, double num)
       num = 0.0000000000000000000000001;
       }
 
-   res.x = v.x / num;
-   res.y = v.y / num;
-   res.z = v.z / num;
+   const double one_over_num = 1 / num;
+   res.x = v.x * one_over_num;
+   res.y = v.y * one_over_num;
+   res.z = v.z * one_over_num;
 
    return res;
    }
@@ -76,10 +77,7 @@ void Normalize(VECTOR &v)
    {
    double len = Mag(v);
 
-   //   if (len != 0.0)
-   {
-      v = Divide(v, len);
-   }
+   v = Divide(v, len);
    }
 
 // Multiply by constant
@@ -183,4 +181,4 @@ MATRIX MMMultiply(MATRIX &m, MATRIX &v)
 
    return s;
    }
-
+
