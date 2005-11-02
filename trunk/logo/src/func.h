@@ -298,8 +298,6 @@ extern long LoadColor(int dpenr, int dpeng, int dpenb);
 extern void exit_program(void);
 extern int promptuser(char *str, char *pmt);
 extern void getcombobox(char *str);
-extern void transline(LOGPEN &logPen, long modex, FLONUM fromx, FLONUM fromy, FLONUM tox, FLONUM toy);
-extern void transline3d(LOGPEN &logPen, long modex, FLONUM fromx, FLONUM fromy, FLONUM fromz, FLONUM tox, FLONUM toy, FLONUM toz);
 extern void ibmturt(int hide);
 extern void ibmfrom(FLONUM x, FLONUM y);
 extern void ibmto(FLONUM x, FLONUM y);
