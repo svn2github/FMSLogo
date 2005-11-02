@@ -163,6 +163,22 @@ TThreeDSolid ThreeD;
 
 OSVERSIONINFO g_OsVersionInformation;
 
+
+typedef struct line_segent
+   {
+   VECTOR from;
+   VECTOR to;
+   } LINE3D;
+
+static const LINE3D turtle_vertices[4] =
+   {
+      {{-16.0, 0.0, 0.0},{ 16.0,  0.0, 0.0}},
+      {{ 16.0, 0.0, 0.0},{  0.0, 16.0, 0.0}},
+      {{  0.0,16.0, 0.0},{-16.0,  0.0, 0.0}},
+      {{  8.0, 0.0, 0.0},{  8.0,  8.0, 0.0}},
+   }
+;
+
 void putfileeditcombo(char *str)
    {
    MainWindowx->FileEditWindow->SendDlgItemMsg(
@@ -919,7 +935,18 @@ WinMain(
    return MyApp.Status;
    }
 
-void transline3d(LOGPEN &logPen, long modex, FLONUM fromx, FLONUM fromy, FLONUM fromz, FLONUM tox, FLONUM toy, FLONUM toz)
+static
+void 
+transline3d(
+   const LOGPEN &logPen, 
+   long          modex, 
+   FLONUM        fromx, 
+   FLONUM        fromy, 
+   FLONUM        fromz, 
+   FLONUM        tox, 
+   FLONUM        toy, 
+   FLONUM        toz
+)
    {
    VECTOR from3d;
    from3d.x = fromx / WorldWidth;
@@ -1025,7 +1052,16 @@ void transline3d(LOGPEN &logPen, long modex, FLONUM fromx, FLONUM fromy, FLONUM 
    ReleaseDC(MainWindowx->ScreenWindow->HWindow, ScreenDC);
    }
 
-void transline(LOGPEN &logPen, long modex, FLONUM fromx, FLONUM fromy, FLONUM tox, FLONUM toy)
+static
+void 
+transline(
+   const LOGPEN &logPen, 
+   long          modex, 
+   FLONUM        fromx, 
+   FLONUM        fromy, 
+   FLONUM        tox, 
+   FLONUM        toy
+)
    {
    long iFromx =  g_round(fromx) + xoffset;
    long iFromy = -g_round(fromy) + yoffset;
@@ -1105,21 +1141,6 @@ void transline(LOGPEN &logPen, long modex, FLONUM fromx, FLONUM fromy, FLONUM to
    //   ReleaseCapture();
    ReleaseDC(MainWindowx->ScreenWindow->HWindow, ScreenDC);
    }
-
-typedef struct line_segent
-   {
-   VECTOR from;
-   VECTOR to;
-   } LINE3D;
-
-LINE3D turtle_vertices[4] =
-   {
-      {{-16.0, 0.0, 0.0},{ 16.0,  0.0, 0.0}},
-      {{ 16.0, 0.0, 0.0},{  0.0, 16.0, 0.0}},
-      {{  0.0,16.0, 0.0},{-16.0,  0.0, 0.0}},
-      {{  8.0, 0.0, 0.0},{  8.0,  8.0, 0.0}}
-   }
-;
 
 void ibmturt(int hide)
    {
