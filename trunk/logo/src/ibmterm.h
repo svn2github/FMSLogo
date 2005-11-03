@@ -41,7 +41,6 @@
 
 #define line_to(x,y) ibmto(x,y)
 #define move_to(x,y) ibmfrom(x,y)
-#define line_to_3d(x,y,z) ibmto3d(x,y,z)
 #define move_to_3d(x,y,z) ibmfrom3d(x,y,z)
 #define draw_string(s)                 //outtext((char far *)s)
 #define set_pen_vis(v) current_vis[turtle_which] = v
