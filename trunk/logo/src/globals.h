@@ -144,7 +144,7 @@ extern FIXNUM ift_iff_flag;
 
 /* term.c */
 extern int x_coord, y_coord, x_max, y_max;
-extern int interactive;
+extern bool interactive;
 
 /* paren.c */
 extern NODE *the_generation;
