@@ -22,11 +22,6 @@
 *
 */
 
-#ifdef ibm
-extern int getch(void);
-//extern char *combo_buff;
-#endif
-
 #ifndef TIOCSTI
 extern jmp_buf iblk_buf;
 #endif
@@ -38,9 +33,9 @@ FILE *dribblestream = NULL;
 int input_blocking = 0;
 int input_mode = 0;
 
-int buffer_length = 0;
-int buffer_index = 0;
-char buffer_input[MAX_BUFFER_SIZE];
+static int buffer_length = 0;
+static int buffer_index = 0;
+static char buffer_input[MAX_BUFFER_SIZE];
 
 int rd_getc(FILE *strm)
    {
@@ -672,4 +667,4 @@ NODE *lrunparse(NODE *args)
       return runparse(arg);
    return UNBOUND;
    }
-
+
