@@ -626,7 +626,7 @@ void forward_helper3d(FLONUM d)
    g_Turtles[turtle_which].Position.y += direction.y;
    g_Turtles[turtle_which].Position.z += direction.z;
 
-   line_to_3d(g_Turtles[turtle_which].Position.x, g_Turtles[turtle_which].Position.y, g_Turtles[turtle_which].Position.z);
+   ibmto3d(g_Turtles[turtle_which].Position);
    save_line();
    }
 
@@ -1529,10 +1529,7 @@ void setpos_helper(NODE *xnode, NODE *ynode, NODE *znode, BOOL bEraseTurtle)
          wanna_y = g_Turtles[turtle_which].Position.y = target_y;
          wanna_z = g_Turtles[turtle_which].Position.z = target_z;
          out_of_bounds = FALSE;
-         line_to_3d(
-            g_Turtles[turtle_which].Position.x,
-            g_Turtles[turtle_which].Position.y,
-            g_Turtles[turtle_which].Position.z);
+         ibmto3d(g_Turtles[turtle_which].Position);
          save_line();
          }
       else

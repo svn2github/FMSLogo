@@ -1,5 +1,7 @@
 /* File IBMTERM.CPP: */
 
+#include "3dsolid.h"
+
 extern void single_step_box(NODE *the_line);
 extern void checkqueue(void);
 extern void emptyqueue(void);
@@ -302,7 +304,7 @@ extern void ibmturt(int hide);
 extern void ibmfrom(FLONUM x, FLONUM y);
 extern void ibmto(FLONUM x, FLONUM y);
 extern void ibmfrom3d(FLONUM x, FLONUM y, FLONUM z);
-extern void ibmto3d(FLONUM x, FLONUM y, FLONUM z);
+extern void ibmto3d(const Point & ToPoint);
 extern void thepencolor(int, int, int);
 extern void thefloodcolor(int, int, int);
 extern void thescreencolor(int, int, int);
