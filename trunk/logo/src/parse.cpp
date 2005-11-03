@@ -224,7 +224,7 @@ NODE *reader(FILE *strm, char *prompt)
             else if (bracket && c == ']') bracket--;
             else if (c == '{') brace++;//ignore//
             else if (brace && c == '}') brace--;//ignore//
-				else if (c == ';') insemi++;
+            else if (c == ';') insemi++;
             }
          if (/* (vbar || paren ...) && */ c == '\n')
             {
@@ -244,7 +244,7 @@ NODE *reader(FILE *strm, char *prompt)
             into_line(c);
             if (c == '\n' && strm == stdin)
                {
-					insemi = 0;
+               insemi = 0;
                if (interactive) zrd_print_prompt("~ ");
                if (dribbling)
                   fprintf(dribblestream, "~ ");
