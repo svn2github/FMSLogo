@@ -41,7 +41,6 @@ extern long eval_count;
 extern long vector_count;
 extern int memory_count;
 extern int status_flag;
-extern unsigned int uCurrentTime;
 extern int keyboard_on;
 extern int keyboard_value;
 extern int mouse_on;

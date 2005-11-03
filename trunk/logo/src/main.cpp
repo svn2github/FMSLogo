@@ -128,7 +128,6 @@ int stepflag = 0;                      /* Flag to signal trace button is active 
 int pause_flag = 0;                    /* Flag to signal pause button is pushed         */
 int yield_flag = 1;                    /* Flag to signal yield state                    */
 int status_flag = 0;                   /* Flag to signal status box is poped up         */
-unsigned int uCurrentTime = 0;         /* Flag to signal status box is poped up         */
 int MaxWidth = 0;                      /* Actual Main window size x                     */
 int MaxHeight = 0;                     /* Actual Main window size y                     */
 int xoffset = 0;                       /* Used to go from logo to windows coords x      */

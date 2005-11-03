@@ -2017,7 +2017,6 @@ void TMainFrame::MyPopupStatus()
    {
    // flag so that updates are sent
    status_flag = 1;
-   uCurrentTime = GetCurrentTime();
 
    // pop it up
    StatusWindow = new TMyStatusWindow(this, "DIALOGSTATUS");
