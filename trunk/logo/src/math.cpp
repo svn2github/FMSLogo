@@ -358,36 +358,51 @@ NODE *binary(NODE *args, char fcn)
                     break;
 #endif
                 case '/':
-						 if (iarg == 0)
-							 err_logo(BAD_DATA_UNREC, arg);
-						 else
-							 {
-							 if (ival % iarg != 0)
-								 {
-								 imode = FALSE;
-								 fval = (FLONUM) ival;
-								 farg = (FLONUM) iarg;
-								 }
-							 else
-								 ival /= iarg;
-							 }
-						 break;
-					 case '%':
-						 if (iarg == 0)
-							 err_logo(BAD_DATA_UNREC, arg);
-						 else
-							 ival %= iarg;
-						 break;
-					 case 'm':
-						 if (iarg == 0)
-							 err_logo(BAD_DATA_UNREC, arg);
-						 else
-							 {
-							 ival %= iarg;
-							 if ((ival < 0) != (iarg < 0))
-								 ival += iarg;
-							 }
-						 break;
+                   if (iarg == 0)
+                      {
+                      err_logo(BAD_DATA_UNREC, arg);
+                      }
+                   else
+                      {
+                      if (ival % iarg != 0)
+                         {
+                         imode = FALSE;
+                         fval = (FLONUM) ival;
+                         farg = (FLONUM) iarg;
+                         }
+                      else
+                         {
+                         ival /= iarg;
+                         }
+                      }
+                   break;
+
+                case '%':
+                   if (iarg == 0)
+                      {
+                      err_logo(BAD_DATA_UNREC, arg);
+                      }
+                   else
+                      {
+                      ival %= iarg;
+                      }
+                   break;
+
+                case 'm':
+                   if (iarg == 0)
+                      {
+                      err_logo(BAD_DATA_UNREC, arg);
+                      }
+                   else
+                      {
+                      ival %= iarg;
+                      if ((ival < 0) != (iarg < 0))
+                         {
+                         ival += iarg;
+                         }
+                      }
+                   break;
+
                 case '&': ival &= iarg; break;
                 case '|': ival |= iarg; break;
                 case '^': ival ^= iarg; break;
@@ -414,7 +429,7 @@ NODE *binary(NODE *args, char fcn)
                        }
                     wantint++;
 #endif
-                default:                /* math library                        */
+                default:                /* math library */
                     imode = FALSE;
                     fval = (FLONUM) ival;
                     farg = (FLONUM) iarg;
@@ -881,4 +896,4 @@ NODE *lbeforep(NODE *args)
 
    return (val < 0 ? Truex : Falsex);
    }
-
+
