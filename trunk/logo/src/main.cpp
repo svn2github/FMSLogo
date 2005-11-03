@@ -940,23 +940,19 @@ void
 transline3d(
    const LOGPEN &logPen, 
    long          modex, 
-   FLONUM        fromx, 
-   FLONUM        fromy, 
-   FLONUM        fromz, 
-   FLONUM        tox, 
-   FLONUM        toy, 
-   FLONUM        toz
+   const Point & from,
+   const Point & to
 )
    {
    VECTOR from3d;
-   from3d.x = fromx / WorldWidth;
-   from3d.y = fromy / WorldHeight;
-   from3d.z = fromz / WorldDepth;
+   from3d.x = from.x / WorldWidth;
+   from3d.y = from.y / WorldHeight;
+   from3d.z = from.z / WorldDepth;
 
    VECTOR to3d;
-   to3d.x = tox / WorldWidth;
-   to3d.y = toy / WorldHeight;
-   to3d.z = toz / WorldDepth;
+   to3d.x = to.x / WorldWidth;
+   to3d.y = to.y / WorldHeight;
+   to3d.z = to.z / WorldDepth;
 
    if (bPolyFlag)
       {
@@ -1057,16 +1053,14 @@ void
 transline(
    const LOGPEN &logPen, 
    long          modex, 
-   FLONUM        fromx, 
-   FLONUM        fromy, 
-   FLONUM        tox, 
-   FLONUM        toy
+   const Point & from,
+   const Point & to
 )
    {
-   long iFromx =  g_round(fromx) + xoffset;
-   long iFromy = -g_round(fromy) + yoffset;
-   long iTox   =  g_round(tox)   + xoffset;
-   long iToy   = -g_round(toy)   + yoffset;
+   long iFromx =  g_round(from.x) + xoffset;
+   long iFromy = -g_round(from.y) + yoffset;
+   long iTox   =  g_round(to.x)   + xoffset;
+   long iToy   = -g_round(to.y)   + yoffset;
 
    HPEN hPen = CreatePenIndirect(&logPen);
 
@@ -1356,57 +1350,67 @@ void ibmto(NUMBER x, NUMBER y)
    {
    if (pen_vis == 0)
       {
-      if (turtle_which >= (TURTLES - TURTLEN)) return;
+      if (turtle_which >= (TURTLES - TURTLEN)) 
+         {
+         return;
+         }
 
       vector_count++;
-      if (status_flag) update_status_vectors();
+      if (status_flag) 
+         {
+         update_status_vectors();
+         }
+
+      Point toPoint;
+      toPoint.x = x;
+      toPoint.y = y;
 
       if (in_erase_mode)
          {
-         transline(ErasePen, R2_COPYPEN, g_OldPos.x, g_OldPos.y, x, y);
+         transline(ErasePen, R2_COPYPEN, g_OldPos, toPoint);
          }
       else if (current_write_mode == XOR_PUT)
          {
-         transline(NormalPen, R2_NOT, g_OldPos.x, g_OldPos.y, x, y);
+         transline(NormalPen, R2_NOT, g_OldPos, toPoint);
          }
       else
          {
-         transline(NormalPen, R2_COPYPEN, g_OldPos.x, g_OldPos.y, x, y);
+         transline(NormalPen, R2_COPYPEN, g_OldPos, toPoint);
          }
       }
    }
 
-void ibmto3d(NUMBER x, NUMBER y, NUMBER z)
+void ibmto3d(const Point & ToPoint)
    {
    if (pen_vis == 0)
       {
       if (turtle_which >= (TURTLES - TURTLEN)) return;
 
       vector_count++;
-      if (status_flag) update_status_vectors();
+      if (status_flag) 
+         {
+         update_status_vectors();
+         }
 
       if (in_erase_mode)
          {
-         transline3d(ErasePen, R2_COPYPEN, g_OldPos.x, g_OldPos.y, g_OldPos.z, x, y, z);
+         transline3d(ErasePen, R2_COPYPEN, g_OldPos, ToPoint);
          }
       else if (current_write_mode == XOR_PUT)
          {
-         transline3d(NormalPen, R2_NOT, g_OldPos.x, g_OldPos.y, g_OldPos.z, x, y, z);
+         transline3d(NormalPen, R2_NOT, g_OldPos, ToPoint);
          }
       else
          {
-         transline3d(NormalPen, R2_COPYPEN, g_OldPos.x, g_OldPos.y, g_OldPos.z, x, y, z);
+         transline3d(NormalPen, R2_COPYPEN, g_OldPos, ToPoint);
          }
       }
    }
 
 void MakeHelpPathName(char *OutBuffer, const char * TheFileName)
    {
-   char *pcFileName;
-   int nFileNameLen;
-
-   nFileNameLen = GetModuleFileName(ModulehInstance, OutBuffer, EXE_NAME_MAX_SIZE);
-   pcFileName = OutBuffer + nFileNameLen;
+   int nFileNameLen = GetModuleFileName(ModulehInstance, OutBuffer, EXE_NAME_MAX_SIZE);
+   char * pcFileName = OutBuffer + nFileNameLen;
 
    while (pcFileName > OutBuffer)
       {
