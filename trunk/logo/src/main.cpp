@@ -137,7 +137,7 @@ int JustDidEdit = 0;                   /* Flag to signal last command was edit (
 bool IsTimeToExit = false;             // Flag to signal it's time to exit
 bool IsTimeToPause = false;            // UCBLOGO? pause flag
 bool IsTimeToHalt = false;             // UCBLOGO? halt flag
-int error_happen;                      /* FLag to signal Error happened on edit reload  */
+bool error_happen;                     // Flag to signal Error happened on edit reload
 int keyboard_on = 0;                   /* Flag to signal Keyboard is enabled            */
 int keyboard_value = 0;                /* Value of Keyboard key                         */
 int mouse_on = 0;                      /* Flag to signal Mouse is enabled               */

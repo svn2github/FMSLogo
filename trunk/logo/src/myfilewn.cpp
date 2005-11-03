@@ -245,7 +245,7 @@ void TMyFileWindow::CMSaveToWorkspace()
 
    if (args_list != NULL)
       {
-      error_happen = 0;
+      error_happen = false;
 
       EndEdit();
 
@@ -260,7 +260,7 @@ void TMyFileWindow::CMSaveToWorkspace()
             "Your Edit has FAILED to load",
             MB_OK);
 
-         error_happen = 0;
+         error_happen = false;
          Editor->SetSelection(0, 0);
          Editor->Insert(" ");
          Editor->DeleteSubText(0, 1);
@@ -485,14 +485,14 @@ int TMyFileWindow::EndEdit()
          if (compare_node(throw_node, Error, TRUE) == 0)
             {
             err_print();
-            error_happen = 1;
+            error_happen = true;
             }
          else if (compare_node(throw_node, System, TRUE) == 0) break;
          else if (compare_node(throw_node, Toplevel, TRUE) != 0)
             {
             err_logo(NO_CATCH_TAG, throw_node);
             err_print();
-            error_happen = 1;
+            error_happen = true;
             }
          stopping_flag = RUN;
          }
@@ -510,16 +510,14 @@ int TMyFileWindow::EndEdit()
 
 void TMyFileWindow::EvDestroy()
    {
-   int realsave;
-   callthing *callevent;
 
    // if args_list specified no user callabled editor
 
    if (args_list != NULL)
       {
-      error_happen = 0;
+      error_happen = false;
 
-      realsave = EndEdit();
+      int realsave = EndEdit();
 
       // if error the ask user to reedit
 
@@ -548,7 +546,7 @@ void TMyFileWindow::EvDestroy()
             }
          else
             {
-            error_happen = 0;
+            error_happen = false;
             MainWindowx->CommandWindow->Editbox->SetFocus();
             }
          }
@@ -572,12 +570,10 @@ void TMyFileWindow::EvDestroy()
          MainWindowx->CommandWindow->Editbox->SetFocus();
          }
       }
-
-   // else execute callback for user callable editor
-
    else
       {
-      callevent = new callthing;
+      // else execute callback for user callable editor
+      callthing *callevent = new callthing;
 
       callevent->func = edit_editexit;
       callevent->kind = 3;

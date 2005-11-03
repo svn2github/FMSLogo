@@ -1846,7 +1846,7 @@ void TMainFrame::MyPopupEdit(const char *FileName, NODE *args)
       // "dirty" state
       if (error_happen)
          {
-         error_happen = 0;
+         error_happen = false;
          EditWindow->Editor->Insert(" ");
          EditWindow->Editor->DeleteSubText(0, 1);
          int iLine = EditWindow->Editor->GetLineFromPos(LinesLoadedOnEdit);

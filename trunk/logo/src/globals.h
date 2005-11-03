@@ -36,7 +36,7 @@ extern bool IsTimeToHalt;
 extern int halt_flag;
 extern int traceflag;
 extern bool IsDirty;
-extern int error_happen;
+extern bool error_happen;
 extern long eval_count;
 extern long vector_count;
 extern int memory_count;
