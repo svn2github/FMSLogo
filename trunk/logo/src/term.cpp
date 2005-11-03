@@ -22,12 +22,11 @@
 
 #include "allwind.h"
 
-int x_coord, y_coord, x_max, y_max;
+int x_coord;
+int y_coord;
+int x_max;
+int y_max;
 
-char PC;
-char *BC;
-char *UP;
-short ospeed;
 /*
 char bp[1024];
 char cl_arr[40];
@@ -44,11 +43,10 @@ struct sgttyb tty_cooked, tty_cbreak;
 #endif
 #endif
 
-int interactive, tty_charmode;
+bool interactive;
+int tty_charmode;
 
-extern char **environ, *tgoto(), *tgetstr();
-
-char *termcap_ptr;
+static char *termcap_ptr;
 
 void termcap_putter(char /*ch*/)
    {
@@ -72,8 +70,7 @@ void termcap_getter(char *cap, char *buf)
 void term_init()
    {
    //    int term_sg;
-
-   interactive = 1;                    //isatty(0);
+   interactive = true;  //isatty(0);
    ift_iff_flag = -1;
    term_init_ibm();
    /*
