@@ -47,7 +47,7 @@ COLORREF colortable[16] =
 
 BOOL bIndexMode = FALSE;
 
-BOOL bPolyFlag = FALSE;
+bool        bPolyFlag  = false;
 VERTEXLIST* ThePolygon = NULL;
 
 mode_type current_mode = wrapmode;
@@ -166,7 +166,7 @@ void uppitch(FLONUM a)
 
 // if (bPolyFlag)
 //    {
-//    bPolyFlag = FALSE;
+//    bPolyFlag = false;
 //    ThreeD.DisposeVertices(ThePolygon);
 //    ThePolygon = NULL;
 //    MainWindowx->CommandWindow->MessageBox("You cannot change pitch while defining a planar polygon", "Pitch Error");
@@ -203,7 +203,7 @@ void rightroll(FLONUM a)
    {
 // if (bPolyFlag)
 //   {
-//   bPolyFlag = FALSE;
+//   bPolyFlag = false;
 //   ThreeD.DisposeVertices(ThePolygon);
 //   ThePolygon = NULL;
 //   MainWindowx->CommandWindow->MessageBox("You cannot change roll while defining a planar polygon", "Roll Error");
@@ -1413,10 +1413,10 @@ void cs_helper(int centerp, int clearp)
    {
    prepare_to_draw;
 
-	bPolyFlag = FALSE;
-	ThreeD.DisposeVertices(ThePolygon);
-	ThePolygon = NULL;
-	ThreeD.DisposeTree();
+   bPolyFlag = false;
+   ThreeD.DisposeVertices(ThePolygon);
+   ThePolygon = NULL;
+   ThreeD.DisposeTree();
    if (status_flag) update_status_vectors();
 
    if (clearp) clear_screen;
@@ -1725,7 +1725,7 @@ NODE *lpolystart(NODE *)
 
    if (bPolyFlag)
       {
-      bPolyFlag = FALSE;
+      bPolyFlag = false;
       ThreeD.DisposeVertices(ThePolygon);
       ThePolygon = NULL;
       MainWindowx->CommandWindow->MessageBox("You already have a Polygon started", "PolyStart Error");
@@ -1733,7 +1733,7 @@ NODE *lpolystart(NODE *)
       }
    else
       {
-      bPolyFlag = TRUE;
+      bPolyFlag = true;
       }
 
    return (UNBOUND);
@@ -1775,7 +1775,7 @@ NODE *lpolyend(NODE *)
       }
 
    ThePolygon = NULL;
-   bPolyFlag = FALSE;
+   bPolyFlag = false;
 
    return (UNBOUND);
    }

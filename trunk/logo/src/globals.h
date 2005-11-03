@@ -150,8 +150,8 @@ extern bool interactive;
 extern NODE *the_generation;
 
 /* graphics.c */
-extern mode_type current_mode;
-extern BOOL bPolyFlag;
+extern mode_type   current_mode;
+extern bool        bPolyFlag;
 extern VERTEXLIST* ThePolygon;
 
 typedef struct _Turtle
@@ -171,14 +171,6 @@ extern int turtle_which;
 extern int turtle_max;
 extern TThreeDSolid ThreeD;
 
-#ifdef mac
-
-#define SIGQUIT SIGABRT
-
-/* macterm.c */
-extern WindowPtr graphics_window, listener_window;
-#endif
-
 #ifdef ibm
 /* ibmterm.c/ztcterm.c */
 extern bool in_graphics_mode;
@@ -191,8 +183,3 @@ extern int ibm_screen_top;
 #define SIGQUIT 15
 #endif
 #endif
-
-#ifdef x_window
-/* xgraphics.c */
-#endif
-
