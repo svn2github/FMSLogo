@@ -155,7 +155,6 @@ long pcolor = 1;                       /* pen color                             
 long width = 1;                        /* pen width                                     */
 long zoom_flag = 0;                    /* flag to signal in zoomed state                */
 long MaxColors = 0;                    /* The maximum # of colors available             */
-long first_init = 0;                   /* hack flag to signal one time initialization   */
 
 LINEX TurtlePoints[TURTLES][4];        /* used to store 3 vertices of turtle            */
 

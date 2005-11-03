@@ -562,7 +562,6 @@ extern long pcolor;
 extern long width;
 extern long zoom_flag;
 extern long MaxColors;
-extern long first_init;
 
 extern LINEX TurtlePoints[][4];
 
