@@ -25,12 +25,11 @@ CUTMAP *CutBmp;              /* Pointer to Bit Cut memory array malloc on init*/
 
 //HANDLE HashHandle = 0;           /* Handle to Hashtable                 */
 //HANDLE StackHandle = 0;          /* Handle to Gargebage Collector Stack */
-BOOL bPerspective;                 /* Perspetive mode startt up           */
-BOOL bExpert;                      /* Expert mode                         */
-BOOL bFixed;                       /* Fixed mode                          */
-BOOL bWidth;                       /* Width mode                          */
-BOOL bHeight;                      /* Height mode                         */
-//BOOL bSilent;                    /* Silent mode                         */
+bool bExpert;                      // Expert mode
+bool bFixed;                       // Fixed mode
+bool bWidth;                       // Width mode
+bool bHeight;                      // Height mode
+static bool bPerspective;          // Perspetive mode start up
 
 HBITMAP MemoryBitMap;              /* Backing store bitmap                */
 
@@ -182,7 +181,8 @@ void putfileeditcombo(char *str)
    MainWindowx->FileEditWindow->SendDlgItemMsg(
       ID_FILEEDITCOMBO,
       CB_ADDSTRING,
-      0, (LONG) str);
+      0,
+      (LONG) str);
    }
 
 void cnv_strnode_string(char *textbuf, NODE *arg)
@@ -193,22 +193,15 @@ void cnv_strnode_string(char *textbuf, NODE *arg)
    *print_stringptr = '\0';
    }
 
+/* adds color to palette */
 long LoadColor(int dpenr, int dpeng, int dpenb)
    {
 
-   /* adds color to palette */
-
-   int Index;
-   long color;
-
    /* convert to color and find nearest match */
-
-   color = PALETTERGB(dpenr, dpeng, dpenb);
-
-   Index = GetNearestPaletteIndex(ThePalette, color);
+   long color = PALETTERGB(dpenr, dpeng, dpenb);
+   int Index = GetNearestPaletteIndex(ThePalette, color);
 
    /* if not exact and room for more then allocate it */
-
    if ((PALETTERGB(
                MyLogPalette->palPalEntry[Index].peRed,
                MyLogPalette->palPalEntry[Index].peGreen,
@@ -216,12 +209,10 @@ long LoadColor(int dpenr, int dpeng, int dpenb)
       {
 
       /* Why do check again? */
-
       if (MyLogPalette->palNumEntries < 255)
          {
 
          /* kill old palette */
-
          DeleteObject(ThePalette);
 
          MyLogPalette->palPalEntry[MyLogPalette->palNumEntries].peRed = dpenr;
@@ -231,21 +222,18 @@ long LoadColor(int dpenr, int dpeng, int dpenb)
          MyLogPalette->palNumEntries++;
 
          /* if status window then update palette usage */
-
          if (status_flag)
             {
             update_status_paletteuse();
             }
 
          /* make new palette with added color */
-
          ThePalette = CreatePalette(MyLogPalette);
          }
       }
 
    /* return color new, matched or close */
-
-   return (color);
+   return color;
    }
 
 
@@ -389,7 +377,7 @@ bool TMyApp::IdleAction(long idleCount)
 
    if (bPerspective)
       {
-      bPerspective = FALSE;
+      bPerspective = false;
       lperspective(NIL);
       }
 
@@ -770,11 +758,11 @@ WinMain(
    // parse -h height -w width as being the bitmap size
 
    commandarg[0] = '\0';
-   bPerspective = FALSE;
-   bExpert      = FALSE;
-   bFixed       = FALSE;
-   bWidth       = FALSE;
-   bHeight      = FALSE;
+   bPerspective = false;
+   bExpert      = false;
+   bFixed       = false;
+   bWidth       = false;
+   bHeight      = false;
 
    for (ptr = lpCmdLine; *ptr != '\0'; ptr++)
       {
@@ -789,17 +777,17 @@ WinMain(
             {
              case 'p':
              case 'P':
-                bPerspective = TRUE;
+                bPerspective = true;
                 break;
 
              case 'e':
              case 'E':
-                bExpert = TRUE;
+                bExpert = true;
                 break;
 
              case 'f':
              case 'F':
-                bFixed = TRUE;
+                bFixed = true;
                 break;
 
              case 'h':
@@ -813,7 +801,7 @@ WinMain(
                 commandarg[i] = '\0';
                 sscanf(commandarg, "%d", &BitMapHeight);
                 commandarg[0] = '\0';
-                bHeight = TRUE;
+                bHeight = true;
                 break;
 
              case 'w':
@@ -827,7 +815,7 @@ WinMain(
                 commandarg[i] = '\0';
                 sscanf(commandarg, "%d", &BitMapWidth);
                 commandarg[0] = '\0';
-                bWidth = TRUE;
+                bWidth = true;
                 break;
 
              case 'l':

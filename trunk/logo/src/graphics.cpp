@@ -1928,18 +1928,6 @@ NODE *lfullscreen()
    return (UNBOUND);
    }
 
-//NODE *lsilent()
-//   {
-//   bSilent = TRUE;
-//   return (UNBOUND);
-//   }
-//
-//NODE *lunsilent()
-//   {
-//   bSilent = FALSE;
-//   return (UNBOUND);
-//   }
-
 NODE *lpendownp(NODE *)
    {
    return (pen_vis == 0 ? Truex : Falsex);
