@@ -265,9 +265,9 @@ void right(FLONUM a)
 
 NODE *numeric_arg(NODE *args)
    {
-   NODE *arg = car(args), *val;
+   NODE *arg = car(args);
 
-   val = cnv_node_to_numnode(arg);
+   NODE * val = cnv_node_to_numnode(arg);
    while (val == UNBOUND && NOT_THROWING)
       {
       gcref(val);
@@ -281,10 +281,9 @@ NODE *numeric_arg(NODE *args)
 
 NODE *luppitch(NODE *arg)
    {
-   NODE *val;
    FLONUM a;
 
-   val = numeric_arg(arg);
+   NODE* val = numeric_arg(arg);
    if (NOT_THROWING)
       {
       if (nodetype(val) == INT)
@@ -298,10 +297,9 @@ NODE *luppitch(NODE *arg)
 
 NODE *ldownpitch(NODE *arg)
    {
-   NODE *val;
    FLONUM a;
 
-   val = numeric_arg(arg);
+   NODE* val = numeric_arg(arg);
    if (NOT_THROWING)
       {
       if (nodetype(val) == INT)
@@ -316,10 +314,9 @@ NODE *ldownpitch(NODE *arg)
 
 NODE *lrightroll(NODE *arg)
    {
-   NODE *val;
    FLONUM a;
 
-   val = numeric_arg(arg);
+   NODE* val = numeric_arg(arg);
    if (NOT_THROWING)
       {
       if (nodetype(val) == INT)
@@ -334,10 +331,9 @@ NODE *lrightroll(NODE *arg)
 
 NODE *lleftroll(NODE *arg)
    {
-   NODE *val;
    FLONUM a;
 
-   val = numeric_arg(arg);
+   NODE* val = numeric_arg(arg);
    if (NOT_THROWING)
       {
       if (nodetype(val) == INT)
@@ -351,10 +347,9 @@ NODE *lleftroll(NODE *arg)
 
 NODE *lright(NODE *arg)
    {
-   NODE *val;
    FLONUM a;
 
-   val = numeric_arg(arg);
+   NODE* val = numeric_arg(arg);
    if (NOT_THROWING)
       {
       if (nodetype(val) == INT)
@@ -369,10 +364,9 @@ NODE *lright(NODE *arg)
 
 NODE *lleft(NODE *arg)
    {
-   NODE *val;
    FLONUM a;
 
-   val = numeric_arg(arg);
+   NODE* val = numeric_arg(arg);
    if (NOT_THROWING)
       {
       if (nodetype(val) == INT)
