@@ -71,7 +71,7 @@ HMODULE hWinSockDLL = NULL;
 
 // converts winsock errorcode to string
 
-LPSTR WSAGetLastErrorString(int error_arg)
+LPCSTR WSAGetLastErrorString(int error_arg)
    {
    int error;
 
