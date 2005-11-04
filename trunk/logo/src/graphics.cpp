@@ -1820,7 +1820,7 @@ NODE *lperspective(NODE *)
 
 NODE *lfill(NODE *arg)
    {
-   BOOL bOld;
+   bool bOld;
 
    draw_turtles(0);
    MainWindowx->ScreenWindow->UpdateWindow();
@@ -1830,7 +1830,7 @@ NODE *lfill(NODE *arg)
       }
    else
       {
-      bOld = FALSE;
+      bOld = false;
       }
    logofill(bOld);
    MainWindowx->ScreenWindow->Invalidate(false);

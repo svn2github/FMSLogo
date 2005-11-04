@@ -636,7 +636,7 @@ NODE *lpixel(NODE *)
       NIL))));
    }
 
-void logofill(BOOL bOld)
+void logofill(bool bOld)
    {
    POINT dest;
    if (!WorldCoordinateToScreenCoordinate(g_Turtles[turtle_which].Position, dest))
