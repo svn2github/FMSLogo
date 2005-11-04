@@ -45,7 +45,7 @@ COLORREF colortable[16] =
    0x00B7B7B7, // grey
    };
 
-BOOL bIndexMode = FALSE;
+bool bIndexMode = false;
 
 bool        bPolyFlag  = false;
 VERTEXLIST* ThePolygon = NULL;
@@ -2006,7 +2006,7 @@ NODE *lsetpencolor(NODE *args)
          save_color_pen();
          }
 
-      bIndexMode = FALSE;
+      bIndexMode = false;
       }
    else
       {
@@ -2021,7 +2021,7 @@ NODE *lsetpencolor(NODE *args)
          save_color_pen();
          }
 
-      bIndexMode = TRUE;
+      bIndexMode = true;
       }
 
    return (UNBOUND);
@@ -2046,7 +2046,7 @@ NODE *lsetfloodcolor(NODE *args)
          save_color_flood();
          }
 
-      bIndexMode = FALSE;
+      bIndexMode = false;
       }
    else
       {
@@ -2061,7 +2061,7 @@ NODE *lsetfloodcolor(NODE *args)
          save_color_flood();
          }
 
-      bIndexMode = TRUE;
+      bIndexMode = true;
       }
 
    return (UNBOUND);
@@ -2086,7 +2086,7 @@ NODE *lsetscreencolor(NODE *args)
          save_color_screen();
          }
 
-      bIndexMode = FALSE;
+      bIndexMode = false;
       }
    else
       {
@@ -2101,7 +2101,7 @@ NODE *lsetscreencolor(NODE *args)
          save_color_screen();
          }
 
-      bIndexMode = TRUE;
+      bIndexMode = true;
       }
 
    return (UNBOUND);

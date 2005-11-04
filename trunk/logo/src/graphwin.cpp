@@ -22,7 +22,7 @@
 #include "allwind.h"
 
 extern COLORREF colortable[];
-extern BOOL bIndexMode;
+extern bool bIndexMode;
 
 extern HBITMAP DIBToBitmap(HANDLE hDIB, HPALETTE hPal);
 extern HANDLE BitmapToDIB(HBITMAP hBitmap, HPALETTE hPal);
@@ -174,7 +174,7 @@ GetRGBorIndexColor(
             }
          }
 
-      bIndexMode = FALSE;
+      bIndexMode = false;
    }
    else
       {
@@ -200,7 +200,7 @@ GetRGBorIndexColor(
             }
          }
 
-      bIndexMode = TRUE;
+      bIndexMode = true;
       }
 
    return color;
@@ -1990,8 +1990,6 @@ NODE *lturtles(NODE *)
 void turtlepaste(int TurtleToPaste)
    {
    ASSERT_TURTLE_INVARIANT
-
-   POINT turtle_which;
 
    POINT dest;
    if (!WorldCoordinateToScreenCoordinate(g_Turtles[TurtleToPaste].Position, dest))
