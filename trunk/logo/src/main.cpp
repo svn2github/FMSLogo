@@ -1124,38 +1124,9 @@ transline(
 
 void ibmturt(bool erase)
    {
-   FLONUM rx;
-   FLONUM ry;
+   TRect screenBoundingBox;
 
-   FLONUM oldx;
-   FLONUM oldy;
-   FLONUM Cz;
-   FLONUM Sz;
-
-   long iOldx;
-   long iOldy;
-   long iNewx;
-   long iNewy;
-   long j;
-   long iFromx;
-   long iFromy;
-   long iTox;
-   long iToy;
-
-   TRect temp;
-
-   VECTOR rp;
-
-   VECTOR from3d;
-   VECTOR to3d;
-
-   POINT from2d;
-   POINT to2d;
-
-   BOOL bMinMax = FALSE;
-
-   FLONUM newx = 0.0;
-   FLONUM newy = 0.0;
+   bool bMinMax = false;
 
    long minx = 100000;
    long miny = 100000;
@@ -1165,96 +1136,107 @@ void ibmturt(bool erase)
    if (erase)
       {
 
-      for (j = 0; j < 4; j++)
+      if (current_mode == perspectivemode)
          {
-
-         if (current_mode == perspectivemode)
+         // in 3D mode
+         for (int j = 0; j < 4; j++)
             {
-            rp = MVxyMultiply(g_Turtles[turtle_which].Matrix, turtle_vertices[j].from);
+            VECTOR rp = MVxyMultiply(g_Turtles[turtle_which].Matrix, turtle_vertices[j].from);
 
+            VECTOR from3d;
             from3d.x = (g_Turtles[turtle_which].Position.x + rp.x) / BitMapWidth;
             from3d.y = (g_Turtles[turtle_which].Position.y + rp.y) / BitMapWidth;
             from3d.z = (g_Turtles[turtle_which].Position.z + rp.z) / BitMapWidth;
 
             rp = MVxyMultiply(g_Turtles[turtle_which].Matrix, turtle_vertices[j].to);
 
+            VECTOR to3d;
             to3d.x = (g_Turtles[turtle_which].Position.x + rp.x) / BitMapWidth;
             to3d.y = (g_Turtles[turtle_which].Position.y + rp.y) / BitMapWidth;
             to3d.z = (g_Turtles[turtle_which].Position.z + rp.z) / BitMapWidth;
 
+            POINT from2d;
+            POINT to2d;
             if (ThreeD.TransformSegment(from3d, to3d, from2d, to2d))
                {
-               iFromx =  from2d.x + xoffset;
-               iFromy = -from2d.y + yoffset;
-               iTox   =  to2d.x   + xoffset;
-               iToy   = -to2d.y   + yoffset;
+               long iFromx =  from2d.x + xoffset;
+               long iFromy = -from2d.y + yoffset;
+               long iTox   =  to2d.x   + xoffset;
+               long iToy   = -to2d.y   + yoffset;
                
                minx = min(minx, (long) from2d.x);
                miny = min(miny, (long) from2d.y);
                maxx = max(maxx, (long) from2d.x);
                maxy = max(maxy, (long) from2d.y);
 
-               bMinMax = TRUE;
+               bMinMax = true;
                
                TurtlePoints[turtle_which][j].from.x = iFromx;
                TurtlePoints[turtle_which][j].from.y = iFromy;
                TurtlePoints[turtle_which][j].to.x   = iTox;
                TurtlePoints[turtle_which][j].to.y   = iToy;
-               TurtlePoints[turtle_which][j].bValid = TRUE;
+               TurtlePoints[turtle_which][j].bValid = true;
                }
             else
                {
-               TurtlePoints[turtle_which][j].bValid = FALSE;
+               TurtlePoints[turtle_which][j].bValid = false;
                }
             }
-         else
+         }
+      else
+         {
+         // 2D mode
+         for (int j = 0; j < 3; j++)
             {
-            Cz = cos(-g_Turtles[turtle_which].Heading * RADCVT);
-            Sz = sin(-g_Turtles[turtle_which].Heading * RADCVT);
+            FLONUM Cz = cos(-g_Turtles[turtle_which].Heading * RADCVT);
+            FLONUM Sz = sin(-g_Turtles[turtle_which].Heading * RADCVT);
 
-            rx = Cz * turtle_vertices[j].from.x - Sz * turtle_vertices[j].from.y;
-            ry = Sz * turtle_vertices[j].from.x + Cz * turtle_vertices[j].from.y;
+            FLONUM rx = Cz * turtle_vertices[j].from.x - Sz * turtle_vertices[j].from.y;
+            FLONUM ry = Sz * turtle_vertices[j].from.x + Cz * turtle_vertices[j].from.y;
 
-            oldx = g_Turtles[turtle_which].Position.x + rx;
-            oldy = g_Turtles[turtle_which].Position.y + ry;
+            FLONUM oldx = g_Turtles[turtle_which].Position.x + rx;
+            FLONUM oldy = g_Turtles[turtle_which].Position.y + ry;
             
             rx = Cz * turtle_vertices[j].to.x - Sz * turtle_vertices[j].to.y;
             ry = Sz * turtle_vertices[j].to.x + Cz * turtle_vertices[j].to.y;
             
-            newx = g_Turtles[turtle_which].Position.x + rx;
-            newy = g_Turtles[turtle_which].Position.y + ry;
+            FLONUM newx = g_Turtles[turtle_which].Position.x + rx;
+            FLONUM newy = g_Turtles[turtle_which].Position.y + ry;
             
-            iOldx = g_round(oldx);
-            iOldy = g_round(oldy);
-            iNewx = g_round(newx);
-            iNewy = g_round(newy);
+            long iOldx = g_round(oldx);
+            long iOldy = g_round(oldy);
+            long iNewx = g_round(newx);
+            long iNewy = g_round(newy);
             
-            iFromx =  iOldx + xoffset;
-            iFromy = -iOldy + yoffset;
-            iTox   =  iNewx + xoffset;
-            iToy   = -iNewy + yoffset;
+            long iFromx =  iOldx + xoffset;
+            long iFromy = -iOldy + yoffset;
+            long iTox   =  iNewx + xoffset;
+            long iToy   = -iNewy + yoffset;
                         
             minx = min(minx, iOldx);
             miny = min(miny, iOldy);
             maxx = max(maxx, iOldx);
             maxy = max(maxy, iOldy);
 
-            bMinMax = TRUE;
+            bMinMax = true;
             
             TurtlePoints[turtle_which][j].from.x = iFromx;
             TurtlePoints[turtle_which][j].from.y = iFromy;
             TurtlePoints[turtle_which][j].to.x   = iTox;
             TurtlePoints[turtle_which][j].to.y   = iToy;
 
-            TurtlePoints[turtle_which][j].bValid = TRUE;
-            TurtlePoints[turtle_which][3].bValid = FALSE;
+            TurtlePoints[turtle_which][j].bValid = true;
             }
+
+         // The line that distingiushes left from right is not needed
+         // in 2D modes.
+         TurtlePoints[turtle_which][3].bValid = false;
          }
       }
    else
       {
       // consider adding these to turtle points for efficiency
-      for (j = 0; j < 4; j++)
+      for (int j = 0; j < 4; j++)
          {
          if (TurtlePoints[turtle_which][j].bValid)
             {
@@ -1262,7 +1244,7 @@ void ibmturt(bool erase)
             miny = min(miny, (long) (-(TurtlePoints[turtle_which][j].from.y - yoffset)));
             maxx = max(maxx, (long) (+(TurtlePoints[turtle_which][j].from.x - xoffset)));
             maxy = max(maxy, (long) (-(TurtlePoints[turtle_which][j].from.y - yoffset)));
-            bMinMax = TRUE;
+            bMinMax = true;
             }
          }
       }
@@ -1281,11 +1263,11 @@ void ibmturt(bool erase)
 
          if (ThreeD.TransformPoint(from3d, dest))
             {
-            bMinMax = TRUE;
+            bMinMax = true;
             }
          else
             {
-            bMinMax = FALSE;
+            bMinMax = false;
             }
          }
       else
@@ -1294,28 +1276,28 @@ void ibmturt(bool erase)
          dest.y = g_round(g_Turtles[turtle_which].Position.y);
          }
 
-      temp.Set(
+      screenBoundingBox.Set(
          (+dest.x - MainWindowx->ScreenWindow->Scroller->XPos / the_zoom + xoffset                                      ) * the_zoom,
          (-dest.y - MainWindowx->ScreenWindow->Scroller->YPos / the_zoom + yoffset + LL - CutBmp[turtle_which].CutHeight) * the_zoom,
          (+dest.x - MainWindowx->ScreenWindow->Scroller->XPos / the_zoom + xoffset + CutBmp[turtle_which].CutWidth      ) * the_zoom,
          (-dest.y - MainWindowx->ScreenWindow->Scroller->YPos / the_zoom + yoffset + LL                                 ) * the_zoom);
 
-      temp.Normalize();
+      screenBoundingBox.Normalize();
       }
    else
       {
-      temp.left   = (+minx - MainWindowx->ScreenWindow->Scroller->XPos / the_zoom + xoffset) * the_zoom;
-      temp.top    = (-maxy - MainWindowx->ScreenWindow->Scroller->YPos / the_zoom + yoffset) * the_zoom;
-      temp.right  = (+maxx - MainWindowx->ScreenWindow->Scroller->XPos / the_zoom + xoffset) * the_zoom;
-      temp.bottom = (-miny - MainWindowx->ScreenWindow->Scroller->YPos / the_zoom + yoffset) * the_zoom;
+      screenBoundingBox.left   = (+minx - MainWindowx->ScreenWindow->Scroller->XPos / the_zoom + xoffset) * the_zoom;
+      screenBoundingBox.top    = (-maxy - MainWindowx->ScreenWindow->Scroller->YPos / the_zoom + yoffset) * the_zoom;
+      screenBoundingBox.right  = (+maxx - MainWindowx->ScreenWindow->Scroller->XPos / the_zoom + xoffset) * the_zoom;
+      screenBoundingBox.bottom = (-miny - MainWindowx->ScreenWindow->Scroller->YPos / the_zoom + yoffset) * the_zoom;
       }
 
 
-   temp.Inflate(1+the_zoom,1+the_zoom);
+   screenBoundingBox.Inflate(1+the_zoom,1+the_zoom);
    
    if (bMinMax)
       {
-      MainWindowx->ScreenWindow->InvalidateRect(temp, false);
+      MainWindowx->ScreenWindow->InvalidateRect(screenBoundingBox, false);
       }
    }
 
