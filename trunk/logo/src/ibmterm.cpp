@@ -44,10 +44,6 @@ int turtle_color;
 int prev_color;
 void *window_image;
 
-void nop()
-   {
-   }
-
 extern int *TopOfStack;
 
 bool check_ibm_stop(int scan)
@@ -298,20 +294,5 @@ void tone(FIXNUM frequency, FIXNUM duration)
       }
 
    MyBeep(frequency, duration);
-   }
-
-FIXNUM t_height()
-   {
-   return 18;
-   }
-
-FLONUM t_half_bottom()
-   {
-   return 6.0;
-   }
-
-FLONUM t_side()
-   {
-   return 19.0;
    }
 

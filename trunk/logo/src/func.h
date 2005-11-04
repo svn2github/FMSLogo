@@ -17,7 +17,6 @@ int Myingameport (short portid, short mask);
 extern void gr_mode(void);             /*routine                              */
 extern void ibm_prepare_to_draw_turtle(void);
 extern void ibm_done_drawing_turtle(void);
-extern void nop(void);
 extern void init_ibm_memory(void);
 extern bool check_ibm_stop(int scan);
 extern void term_init_ibm(void);
@@ -53,9 +52,6 @@ extern FIXNUM mickey_x(void);
 extern FIXNUM mickey_y(void);
 extern bool Button(void);
 extern void tone(FIXNUM pitch, FIXNUM duration);
-extern FIXNUM t_height(void);
-extern FLONUM t_half_bottom(void);
-extern FLONUM t_side(void);
 extern void check_scroll(void);
 
 /* File WRKSP.CPP: */

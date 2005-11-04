@@ -1219,7 +1219,6 @@ NODE *lsetturtlemode(NODE *arg)
    // convert from logo "code" to Windows constants
    if (g_Turtles[turtle_which].Bitmap)
       {
-      prepare_to_draw;
       draw_turtle(0);
 
       switch (int_arg(arg))
@@ -1241,7 +1240,6 @@ NODE *lsetturtlemode(NODE *arg)
          }
 
       draw_turtle(1);
-      done_drawing;
       }
 
    return UNBOUND;

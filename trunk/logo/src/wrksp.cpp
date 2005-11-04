@@ -1143,10 +1143,10 @@ NODE *ledit(NODE *args)
          }
       }
 
-   if (in_graphics_mode)
-      {
-      text_screen;
-      }
+   //if (in_graphics_mode)
+   //   {
+   //   text_screen;
+   //   }
 
    NODE * args_list = reref(NIL, args);
    if (TMainFrame::PopupEditorForFile(TempPathName, args_list))

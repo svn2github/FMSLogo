@@ -451,7 +451,6 @@ NODE *lellipsearc(NODE *arg)
       else
          startangle = getfloat(val4);
 
-      prepare_to_draw;
       draw_turtle(0);
 
       /* save and force turle state */
@@ -574,7 +573,6 @@ NODE *lellipsearc(NODE *arg)
       if (status_flag) update_status_turtleposition();
 
       draw_turtle(1);
-      done_drawing;
       wanna_x = g_Turtles[turtle_which].Position.x;
       wanna_y = g_Turtles[turtle_which].Position.y;
       wanna_z = g_Turtles[turtle_which].Position.z;
@@ -586,7 +584,6 @@ NODE *lellipsearc(NODE *arg)
 
 void forward(FLONUM d)
    {
-   prepare_to_draw;
    draw_turtle(0);
    if (current_mode == perspectivemode)
       forward_helper3d(d);
@@ -594,7 +591,6 @@ void forward(FLONUM d)
       forward_helper(d);
 
    draw_turtle(1);
-   done_drawing;
    wanna_x = g_Turtles[turtle_which].Position.x;
    wanna_y = g_Turtles[turtle_which].Position.y;
    wanna_z = g_Turtles[turtle_which].Position.z;
@@ -820,47 +816,39 @@ NODE *lback(NODE *arg)
 
 NODE *lbitmapturtle(NODE *)
    {
-   prepare_to_draw;
    draw_turtle(0);
    g_Turtles[turtle_which].Bitmap = SRCCOPY;
    draw_turtle(1);
-   done_drawing;
    return (UNBOUND);
    }
 
 NODE *lnobitmapturtle(NODE *)
    {
-   prepare_to_draw;
    draw_turtle(0);
    g_Turtles[turtle_which].Bitmap = 0;
    draw_turtle(1);
-   done_drawing;
    return (UNBOUND);
    }
 
 NODE *lshowturtle(NODE *)
    {
-   prepare_to_draw;
    if (!g_Turtles[turtle_which].IsShown)
       {
       g_Turtles[turtle_which].IsShown = TRUE;
       if (status_flag) update_status_turtlevisability();
       draw_turtle(1);
       }
-   done_drawing;
    return (UNBOUND);
    }
 
 NODE *lhideturtle(NODE *)
    {
-   prepare_to_draw;
    if (g_Turtles[turtle_which].IsShown)
       {
       draw_turtle(0);
       g_Turtles[turtle_which].IsShown = FALSE;
       if (status_flag) update_status_turtlevisability();
       }
-   done_drawing;
    return (UNBOUND);
    }
 
@@ -1408,8 +1396,6 @@ NODE *lhome(NODE *)
 
 void cs_helper(int centerp, int clearp)
    {
-   prepare_to_draw;
-
    bPolyFlag = false;
    ThreeD.DisposeVertices(ThePolygon);
    ThePolygon = NULL;
@@ -1455,7 +1441,6 @@ void cs_helper(int centerp, int clearp)
    //   p_info_x(orig_pen) = g_round(screen_x_coord);
    //   p_info_y(orig_pen) = g_round(screen_y_coord);
    record_index = 0;
-   done_drawing;
    }
 
 NODE *lclearscreen(NODE *)
@@ -1489,7 +1474,6 @@ void setpos_helper(NODE *xnode, NODE *ynode, NODE *znode, BOOL bEraseTurtle)
 
    if (NOT_THROWING)
       {
-      prepare_to_draw;
       if (bEraseTurtle) draw_turtle(0);
       if (current_mode == perspectivemode)
          {
@@ -1565,8 +1549,6 @@ void setpos_helper(NODE *xnode, NODE *ynode, NODE *znode, BOOL bEraseTurtle)
             save_line();
             }
          }
-
-      done_drawing;
 
       if (bEraseTurtle) draw_turtle(1);
       }
@@ -1909,19 +1891,16 @@ NODE *llabel(NODE *arg)
 
 NODE *ltextscreen(NODE *)
    {
-   text_screen;
    return (UNBOUND);
    }
 
 NODE *lsplitscreen(NODE *)
    {
-   split_screen;
    return (UNBOUND);
    }
 
 NODE *lfullscreen()
    {
-   full_screen;
    return (UNBOUND);
    }
 
@@ -1995,7 +1974,6 @@ NODE *lsetpencolor(NODE *args)
 
       if (NOT_THROWING)
          {
-         prepare_to_draw;
          set_pen_color(
             ((nodetype(     car(arg) ) == FLOAT) ? (FIXNUM) getfloat(     car(arg) ) : getint(     car(arg)) ),
             ((nodetype(    cadr(arg) ) == FLOAT) ? (FIXNUM) getfloat(    cadr(arg) ) : getint(    cadr(arg)) ),
@@ -2013,7 +1991,6 @@ NODE *lsetpencolor(NODE *args)
          {
          icolor = (nodetype(cnode) == FLOAT) ? (FIXNUM) getfloat(cnode) : getint(cnode);
          icolor = icolor % 16;
-         prepare_to_draw;
          set_pen_color(GetRValue(colortable[icolor]), GetGValue(colortable[icolor]), GetBValue(colortable[icolor]));
          save_color_pen();
          }
@@ -2053,7 +2030,6 @@ NODE *lsetfloodcolor(NODE *args)
          {
          icolor = (nodetype(cnode) == FLOAT) ? (FIXNUM) getfloat(cnode) : getint(cnode);
          icolor = icolor % 16;
-         prepare_to_draw;
          set_flood_color(GetRValue(colortable[icolor]), GetGValue(colortable[icolor]), GetBValue(colortable[icolor]));
          save_color_flood();
          }
@@ -2093,7 +2069,6 @@ NODE *lsetscreencolor(NODE *args)
          {
          icolor = (nodetype(cnode) == FLOAT) ? (FIXNUM) getfloat(cnode) : getint(cnode);
          icolor = icolor % 16;
-         prepare_to_draw;
          set_screen_color(GetRValue(colortable[icolor]), GetGValue(colortable[icolor]), GetBValue(colortable[icolor]));
          save_color_screen();
          }
@@ -2112,7 +2087,6 @@ NODE *lsetpensize(NODE *args)
 
    if (NOT_THROWING)
       {
-      prepare_to_draw;
       set_pen_width(
          ((nodetype(     car(arg) ) == FLOAT) ? (FIXNUM) getfloat(     car(arg) ) : getint(     car(arg)) ));
       set_pen_height(
@@ -2133,7 +2107,6 @@ NODE *lsetpenpattern(NODE *args)
 
    if (NOT_THROWING)
       {
-      prepare_to_draw;
       set_list_pen_pattern(arg);
       save_pattern();
       }
@@ -2151,14 +2124,12 @@ NODE *lsetscrunch(NODE *args)
 
    if (NOT_THROWING)
       {
-      prepare_to_draw;
       draw_turtle(0);
       x_scale = (nodetype(xnode) == FLOAT) ? getfloat(xnode) :
          (FLONUM) getint(xnode);
       y_scale = (nodetype(ynode) == FLOAT) ? getfloat(ynode) :
          (FLONUM) getint(ynode);
       draw_turtle(1);
-      done_drawing;
 #ifdef __ZTC__
       {
          FILE *fp = fopen("scrunch.dat", "w");

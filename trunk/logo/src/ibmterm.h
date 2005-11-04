@@ -10,12 +10,6 @@
 
 #define GR_SIZE 10000
 
-#define prepare_to_draw nop()
-#define done_drawing nop()
-
-#define prepare_to_draw_turtle nop()
-#define done_drawing_turtle nop()
-
 #define screen_height (screen_bottom - screen_top)
 #define screen_width (screen_right - screen_left)
 
@@ -28,14 +22,6 @@
 #define turtle_right_max  ( BitMapWidth/2)
 #define turtle_bottom_max (-BitMapHeight/2)
 #define turtle_top_max    ( BitMapHeight/2)
-
-#define turtle_height t_height()
-#define turtle_half_bottom t_half_bottom()
-#define turtle_side t_side()
-
-//#define screen_x_coord turtle_p[turtle_which].x
-//#define screen_y_coord turtle_p[turtle_which].y
-//#define screen_z_coord turtle_p[turtle_which].z
 
 #define clear_screen erase_screen()
 
@@ -89,10 +75,6 @@ pen_info;
 #define button Button()
 #define mouse_x mickey_x()
 #define mouse_y mickey_y()
-
-#define full_screen nop()
-#define split_screen nop()
-#define text_screen nop()
 
 /* definitions from term.c and math.c for ibmterm.c */
 extern int x_coord, y_coord, x_max, y_max, tty_charmode;
