@@ -525,7 +525,7 @@ NODE *lsetpixel(NODE *args)
 
       //screen
 
-      draw_turtle(0);
+      draw_turtle(false);
 
       HPALETTE oldPalette2;
       if (EnablePalette)
@@ -563,7 +563,7 @@ NODE *lsetpixel(NODE *args)
 
       ReleaseDC(MainWindowx->ScreenWindow->HWindow, ScreenDC);
 
-      draw_turtle(1);
+      draw_turtle(true);
       }
 
    return UNBOUND;
@@ -998,11 +998,11 @@ void zoom_helper(NUMBER temp_zoom)
       MainWindowx->ScreenWindow->Scroller->ScrollTo(XRatio * Xr, YRatio * Yr);
 
       // hide turtle while we do this
-      draw_turtle(0);
+      draw_turtle(false);
 
       UpdateZoomControlFlag();
 
-      draw_turtle(1);
+      draw_turtle(true);
 
       // paint
       MainWindowx->ScreenWindow->Invalidate(true);
@@ -1090,7 +1090,7 @@ NODE *lbitblock(NODE *arg)
 
          //screen
 
-         draw_turtle(0);
+         draw_turtle(false);
 
          
          HPALETTE oldPalette2;
@@ -1125,8 +1125,7 @@ NODE *lbitblock(NODE *arg)
 
          DeleteObject(TempBrush);
 
-         draw_turtle(1);
-
+         draw_turtle(true);
          }
 
       }

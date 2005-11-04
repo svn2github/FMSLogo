@@ -15,7 +15,6 @@ short Myinport(short portid);
 int Myingameport (short portid, short mask);
 
 extern void gr_mode(void);             /*routine                              */
-extern void init_ibm_memory(void);
 extern bool check_ibm_stop(int scan);
 extern void term_init_ibm(void);
 extern void ibm_gotoxy(int x, int y);
@@ -113,8 +112,8 @@ extern NODE *lscrunch(NODE *arg);
 extern double pfmod(double x, double y);
 extern FLONUM cut_error(FLONUM n);
 extern FIXNUM round(FLONUM n);
-extern void draw_turtle(int erase);
-extern void draw_turtles(int erase);
+extern void draw_turtle(bool erase);
+extern void draw_turtles(bool erase);
 extern void right(FLONUM a);
 extern void rightroll(FLONUM a);
 extern void uppitch(FLONUM a);
@@ -291,7 +290,7 @@ extern long LoadColor(int dpenr, int dpeng, int dpenb);
 extern void exit_program(void);
 extern int promptuser(char *str, char *pmt);
 extern void getcombobox(char *str);
-extern void ibmturt(int hide);
+extern void ibmturt(bool hide);
 extern void ibmfrom(FLONUM x, FLONUM y);
 extern void ibmto(FLONUM x, FLONUM y);
 extern void ibmfrom3d(FLONUM x, FLONUM y, FLONUM z);

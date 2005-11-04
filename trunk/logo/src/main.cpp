@@ -1122,7 +1122,7 @@ transline(
    ReleaseDC(MainWindowx->ScreenWindow->HWindow, ScreenDC);
    }
 
-void ibmturt(int hide)
+void ibmturt(bool erase)
    {
    FLONUM rx;
    FLONUM ry;
@@ -1162,7 +1162,7 @@ void ibmturt(int hide)
    long maxx = -100000;
    long maxy = -100000;
 
-   if (hide == 1)
+   if (erase)
       {
 
       for (j = 0; j < 4; j++)
