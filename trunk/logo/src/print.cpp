@@ -23,7 +23,6 @@
 
 int print_stringlen;
 char *print_stringptr;
-extern char special_chars[];
 
 bool print_backslashes = false;
 
