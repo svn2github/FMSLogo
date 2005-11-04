@@ -4,7 +4,6 @@
 #include <windows.h>
 #include <windowsx.h>
 #include <commdlg.h>
-#include <ddeml.h>
 #include <mmsystem.h>
 #include <owl\compat.h>
 #include <owl\owlpch.h>
