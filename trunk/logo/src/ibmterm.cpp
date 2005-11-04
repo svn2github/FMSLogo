@@ -271,16 +271,6 @@ void erase_screen()
    ibm_clear_screen();
    }
 
-FIXNUM mickey_x()
-   {
-   return 0;
-   }
-
-FIXNUM mickey_y()
-   {
-   return 0;
-   }
-
 bool Button()
    {
    return false;

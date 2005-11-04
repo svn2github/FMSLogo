@@ -73,8 +73,6 @@ pen_info;
 #define pen_down ibm_pen_down()
 
 #define button Button()
-#define mouse_x mickey_x()
-#define mouse_y mickey_y()
 
 /* definitions from term.c and math.c for ibmterm.c */
 extern int x_coord, y_coord, x_max, y_max, tty_charmode;
