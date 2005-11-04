@@ -15,8 +15,6 @@ short Myinport(short portid);
 int Myingameport (short portid, short mask);
 
 extern void gr_mode(void);             /*routine                              */
-extern void ibm_prepare_to_draw_turtle(void);
-extern void ibm_done_drawing_turtle(void);
 extern void init_ibm_memory(void);
 extern bool check_ibm_stop(int scan);
 extern void term_init_ibm(void);
@@ -769,7 +767,7 @@ extern NODE *ldialogfileopen(NODE *arg);
 extern NODE *ldialogfilesave(NODE *arg);
 extern NODE *lwindowfileedit(NODE *arg);
 
-extern LPSTR WSAGetLastErrorString(int);
+extern LPCSTR WSAGetLastErrorString(int);
 
 typedef int (CALLBACK * LPWSAASYNCSELECT) (SOCKET, HWND, u_int, long);
 typedef int (CALLBACK *LPCONNECT) (SOCKET, const struct sockaddr FAR *, int);
