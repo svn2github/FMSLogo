@@ -33,7 +33,7 @@ typedef struct
    {
    POINT from;
    POINT to;
-   BOOL  bValid;
+   bool  bValid;
    }
 LINEX;
 
