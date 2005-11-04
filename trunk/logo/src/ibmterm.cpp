@@ -30,9 +30,8 @@
 
 //extern unsigned _stklen = 8000; /* 5000 for debugging, 65000 for real */
 
-bool in_graphics_mode = FALSE;
-bool have_been_in_graphics_mode = FALSE;
-bool in_erase_mode = FALSE;
+bool in_graphics_mode = false;
+bool in_erase_mode = false;
 
 int ibm_screen_top, ibm_turtle_top_max;
 int current_write_mode = COPY_PUT;
@@ -43,8 +42,6 @@ int current_vis[TURTLES]=
 ;
 int turtle_color;
 int prev_color;
-int texth;
-extern int MaxX, MaxY;
 void *window_image;
 
 void nop()
