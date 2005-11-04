@@ -22,9 +22,6 @@
 
 #include "allwind.h"
 
-extern int status_flag;
-extern FLONUM degrad;
-
 COLORREF colortable[16] =
    {
    0x00000000, // black
