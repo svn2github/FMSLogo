@@ -86,8 +86,6 @@ extern int ecma_size;
 #endif
 
 /* mem.c */
-extern NODE *free_list;
-extern struct segment *segment_list;
 
 /* parse.c */
 extern FILE *loadstream, *writestream, *readstream, *dribblestream;
