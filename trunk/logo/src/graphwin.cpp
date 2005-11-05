@@ -908,7 +908,7 @@ NODE *lstatus(NODE *)
    if (!status_flag)
       {
       MainWindowx->MyPopupStatus();
-      JustDidEdit = 1;
+      JustDidEdit = true;
       }
    return UNBOUND;
    }
@@ -1218,7 +1218,7 @@ NODE *lsetturtlemode(NODE *arg)
    // convert from logo "code" to Windows constants
    if (g_Turtles[turtle_which].Bitmap)
       {
-      draw_turtle(0);
+      draw_turtle(false);
 
       switch (int_arg(arg))
          {
@@ -1238,7 +1238,7 @@ NODE *lsetturtlemode(NODE *arg)
               }
          }
 
-      draw_turtle(1);
+      draw_turtle(true);
       }
 
    return UNBOUND;
@@ -1528,7 +1528,7 @@ BitCopyOrCut(NODE *arg, bool IsCut)
             FillRect(MemDC, &TempRect, TempBrush);
 
             //screen
-            draw_turtle(0);
+            draw_turtle(false);
 
             if (zoom_flag)
                {
@@ -1561,7 +1561,7 @@ BitCopyOrCut(NODE *arg, bool IsCut)
 
             DeleteObject(TempBrush);
 
-            draw_turtle(1);
+            draw_turtle(true);
          }
 
          SelectObject(MemDC, oldBitmap);
@@ -1754,7 +1754,7 @@ NODE *lbitpaste(NODE *)
 
          //screen
 
-         draw_turtle(0);
+         draw_turtle(false);
 
          if (zoom_flag)
             {
@@ -1787,7 +1787,7 @@ NODE *lbitpaste(NODE *)
 
          ReleaseDC(MainWindowx->ScreenWindow->HWindow, ScreenDC);
 
-         draw_turtle(1);
+         draw_turtle(true);
 
          SelectObject(TempMemDC, oldBitmap2);
          DeleteDC(TempMemDC);
@@ -1902,7 +1902,7 @@ NODE *lsetturtle(NODE *arg)
 
    if (NOT_THROWING)
       {
-      draw_turtles(0);
+      draw_turtles(false);
       int temp = getint(val);
       if ((temp >= (TURTLES - TURTLEN)) || (temp < -TURTLEN))
          {
@@ -1961,7 +1961,7 @@ extern FLONUM wanna_z;
          wanna_y = g_Turtles[turtle_which].Position.y;
          wanna_z = g_Turtles[turtle_which].Position.z;
 
-         draw_turtles(1);
+         draw_turtles(true);
          }
       }
 
@@ -2158,7 +2158,7 @@ NODE *lsetfocus(NODE *arg)
          }
       }
 
-   JustDidEdit = 1;
+   JustDidEdit = true;
 
    return UNBOUND;
    }
@@ -2179,7 +2179,7 @@ NODE *lgetfocus(NODE *)
       ::GetWindowText(TempH, textbuf, MAX_BUFFER_SIZE);
       }
 
-   JustDidEdit = 1;
+   JustDidEdit = true;
 
    // Return caption as a list
    NODE * arg = make_strnode(textbuf, NULL, strlen(textbuf), STRING, strnzcpy);
@@ -2203,7 +2203,7 @@ NODE *lwindowset(NODE *args)
       ShowWindow(EditH, value);
       }
 
-   JustDidEdit = 1;
+   JustDidEdit = true;
 
    return UNBOUND;
    }
