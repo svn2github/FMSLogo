@@ -95,7 +95,6 @@ class TMyEditboxWindow : public TEdit
 
  protected:
    void EvKeyDown(UINT, UINT, UINT);
-   void EvRButtonUp(UINT, TPoint &);
 
    DECLARE_RESPONSE_TABLE(TMyEditboxWindow);
    }
@@ -111,7 +110,6 @@ class TMyListboxWindow : public TEdit
    void EvKeyDown(UINT, UINT, UINT);
    void EvLButtonDown(UINT modKeys, TPoint & point);
    void EvLButtonDblClk(UINT modKeys, TPoint & point);
-   void EvRButtonUp(UINT, TPoint &);
 
    DECLARE_RESPONSE_TABLE(TMyListboxWindow);
    }

@@ -55,7 +55,6 @@ class TEditWindow : public TFrameWindow
    // message response functions
    //
    void  EvSize(UINT sizeType, TSize &);
-   void  EvRButtonUp(UINT, TPoint &);
    void  EvSetFocus(HWND lostFocus);
 
    //

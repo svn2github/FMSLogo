@@ -626,12 +626,6 @@ void TMyEditboxWindow::EvKeyDown(UINT, UINT, UINT)
    DefaultProcessing();
    }
 
-void TMyEditboxWindow::EvRButtonUp(UINT, TPoint &)
-   {
-//   ContextHelp(MainWindowx->CommandWindow->HWindow, this);
-   DefaultProcessing();
-   }
-
 /* Listbox members */
 
 TMyListboxWindow::TMyListboxWindow(
@@ -710,22 +704,14 @@ void TMyListboxWindow::EvLButtonDblClk(UINT /* modKeys */, TPoint & /* point */)
    MainWindowx->CommandWindow->DoButtonExecute(0);
    }
 
-void TMyListboxWindow::EvRButtonUp(UINT, TPoint &)
-   {
-//   ContextHelp(MainWindowx->CommandWindow->HWindow, this);
-   DefaultProcessing();
-   }
-
 DEFINE_RESPONSE_TABLE1(TMyEditboxWindow, TEdit)
   EV_WM_KEYDOWN,
-  EV_WM_RBUTTONUP,
 END_RESPONSE_TABLE;
 
 DEFINE_RESPONSE_TABLE1(TMyListboxWindow, TEdit)
   EV_WM_KEYDOWN,
   EV_WM_LBUTTONDOWN,
   EV_WM_LBUTTONDBLCLK,
-  EV_WM_RBUTTONUP,
 END_RESPONSE_TABLE;
 
 DEFINE_RESPONSE_TABLE1(TMyCommandWindow, TDialog)

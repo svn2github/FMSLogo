@@ -167,11 +167,6 @@ void TEditWindow::EvSetFocus(HWND)
    Editor->SetFocus();
    }
 
-void TEditWindow::EvRButtonUp(UINT, TPoint &)
-   {
-   DefaultProcessing();
-   }
-
 void TEditWindow::CmFilePrint()
    {
    // Create Printout window and set characteristics.
@@ -186,7 +181,6 @@ void TEditWindow::CmFilePrint()
 DEFINE_RESPONSE_TABLE1(TEditWindow, TFrameWindow)
   EV_WM_SIZE,
   EV_WM_SETFOCUS,
-  EV_WM_RBUTTONUP,
   EV_COMMAND(CM_FILEPRINT, CmFilePrint),
 END_RESPONSE_TABLE;
 
