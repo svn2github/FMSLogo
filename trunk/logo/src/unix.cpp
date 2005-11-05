@@ -30,48 +30,46 @@ size_t combo_buff_size = 0;
 
 static
 void
-mputcombobox(
-   const char *str
+prepare_combo_buff(
+   const char * str
 )
    {
-   char *tempbuff;
-
-   int i;
-   int j;
-   int l;
-
-   // if never called allocate it
-
+   // if combo_buff has never been allocated, do so now.
    if (combo_buff == NULL)
       {
-      combo_buff = (char *) malloc(MAX_BUFFER_SIZE);
-      memset(combo_buff, 0, MAX_BUFFER_SIZE);
+      combo_buff = (char *) calloc(MAX_BUFFER_SIZE, sizeof(char));
       combo_buff_size = MAX_BUFFER_SIZE;
       }
 
    // if it won't fit extend it
-
-   l = strlen(combo_buff) + strlen(str) + 1;
-   if (l > combo_buff_size)
+   size_t length = strlen(combo_buff) + strlen(str) + 1;
+   if (combo_buff_size < length)
       {
-      combo_buff = (char *) realloc(combo_buff, l);
-      combo_buff_size = l;
+      combo_buff = (char *) realloc(combo_buff, length);
+      combo_buff_size = length;
       }
+   }
 
-   // append it
+static
+void
+mputcombobox(
+   const char *str
+)
+   {
+   // resize combo_buff to be large enough to hold str
+   prepare_combo_buff(str);
 
+   // append str
    strcat(combo_buff, str);
 
    // process lines
+   char * tempbuff = combo_buff;
+   size_t i = strlen(combo_buff);
 
-   tempbuff = combo_buff;
-   i = strlen(combo_buff);
-
-   for (j = 0; j < i; j++)
+   for (size_t j = 0; j < i; j++)
       {
 
       // if <cr> pump it out
-
       if (combo_buff[j] == '\n')
          {
          combo_buff[j] = '\0';
@@ -82,47 +80,29 @@ mputcombobox(
          }
       }
 
-   if (tempbuff != '\0') putcombobox(tempbuff);
+   if (tempbuff != '\0') 
+      {
+      putcombobox(tempbuff);
+      }
 
    combo_buff[0] = '\0';
    }
 
 void putcombochar(char c)
    {
-   int i;
-   int l;
-
-   // if never called allocate it
-
-   if (combo_buff == NULL)
-      {
-      combo_buff = (char *) malloc(MAX_BUFFER_SIZE);
-      memset(combo_buff, 0, MAX_BUFFER_SIZE);
-      combo_buff_size = MAX_BUFFER_SIZE;
-      }
-
-   // if it won't fit extend it
-
-   l = strlen(combo_buff) + 1 + 1;
-   if (l > combo_buff_size)
-      {
-      combo_buff = (char *) realloc(combo_buff, l);
-      combo_buff_size = l;
-      }
+   // resize combo_buff to be large enough to one more character
+   prepare_combo_buff("x");
 
    // if <cr> pump it out
-
    if (c == '\n')
       {
       putcombobox(combo_buff);
       combo_buff[0] = '\0';
       }
-
-   // else append it
-
    else
       {
-      i = strlen(combo_buff);
+      // else append it
+      size_t i = strlen(combo_buff);
       combo_buff[i] = c;
       combo_buff[i + 1] = '\0';
       }
@@ -132,7 +112,10 @@ void nputs(char *str)
    {
    char c;
 
-   while ((c = *str++) != 0) putcombochar(c);
+   while ((c = *str++) != 0) 
+      {
+      putcombochar(c);
+      }
    }
 
 int printfx(const char *fmt)
@@ -144,10 +127,8 @@ int printfx(const char *fmt)
 
 int printfx(const char *fmt, const char *str)
    {
-   long cnt;                           /* Result of SPRINTF for return        */
    char buff[MAX_BUFFER_SIZE];
-
-   cnt = sprintf(buff, fmt, str);
+   int cnt = sprintf(buff, fmt, str);
 
    mputcombobox(buff);
 
@@ -239,17 +220,15 @@ NODE *lrmdir(NODE *arg)
 NODE *lfiles(NODE *)
    {
    struct find_t ffblk;
-   int done;
 
    NODE *directory = NULL;
-   NODE *file;
 
-   done = _dos_findfirst("*.*", 0, &ffblk);
+   int done = _dos_findfirst("*.*", 0, &ffblk);
    while (!done)
       {
       if (ffblk.attrib != FA_DIREC)
          {
-         file = make_strnode(ffblk.name, NULL, strlen(ffblk.name), STRING, strnzcpy);
+         NODE* file = make_strnode(ffblk.name, NULL, strlen(ffblk.name), STRING, strnzcpy);
          if (directory == NULL)
             {
             directory = cons(file,NIL);
@@ -270,14 +249,13 @@ NODE *ldirectories(NODE *)
    struct find_t ffblk;
 
    NODE *directory = NULL;
-   NODE *file;
 
    int done = _dos_findfirst("*.*", FA_DIREC, &ffblk);
    while (!done)
       {
       if (ffblk.attrib == FA_DIREC)
          {
-         file = make_strnode(ffblk.name, NULL, strlen(ffblk.name), STRING, strnzcpy);
+         NODE* file = make_strnode(ffblk.name, NULL, strlen(ffblk.name), STRING, strnzcpy);
          if (directory == NULL)
             {
             directory = cons(file,NIL);
