@@ -1114,7 +1114,7 @@ NODE *ledit(NODE *args)
          {
          ::ShowWindow(editorWindow, SW_SHOWNORMAL);
          ::SetWindowPos(editorWindow, HWND_TOP, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
-         JustDidEdit = 1;
+         JustDidEdit = true;
          return UNBOUND;
          }
       }

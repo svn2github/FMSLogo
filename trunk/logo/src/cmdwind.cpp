@@ -319,8 +319,7 @@ void TMyCommandWindow::DoButtonExecute(UINT)
       {
       Editbox->SetFocus();
       }
-   JustDidEdit = 0;
-
+   JustDidEdit = false;
    }
 
 void TMyCommandWindow::DoButtonEdall(UINT)

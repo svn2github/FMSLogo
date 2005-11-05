@@ -864,7 +864,7 @@ bool TMainFrame::CanClose()
       {
       ::ShowWindow(editH, SW_SHOWNORMAL);
       ::SetWindowPos(editH, HWND_TOP, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
-      JustDidEdit = 1;
+      JustDidEdit = true;
 
       if (MessageBox(
             "Changes in this edit session may be lost.\n"
@@ -1825,7 +1825,7 @@ void TMainFrame::MyPopupEdit(const char *FileName, NODE *args)
    /* flag for how to handle focus */
    if (args != NULL)
       {
-      JustDidEdit = 1;
+      JustDidEdit = true;
       }
 
    EditWindow->Editor->Attr.Style |= ES_NOHIDESEL;
@@ -1984,7 +1984,7 @@ void TMainFrame::SetupWindow()
    IsOkayToUseCommanderWindow = true;
 
    // it's show time for our little friend
-   draw_turtle(1);
+   draw_turtle(true);
    term_init();
    }
 

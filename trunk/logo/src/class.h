@@ -551,7 +551,7 @@ extern int stepflag;
 extern int pause_flag;
 extern int MaxWidth;
 extern int MaxHeight;
-extern int JustDidEdit;
+extern bool JustDidEdit;
 extern int BaseUnitsx;
 extern int BaseUnitsy;
 extern int current_write_mode;
