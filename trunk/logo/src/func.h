@@ -168,7 +168,6 @@ extern NODE *lhome(NODE *arg);
 extern void cs_helper(int centerp, int clearp);
 extern NODE *lclearscreen(NODE *arg);
 extern NODE *lclean(NODE *arg);
-extern void setpos_helper(NODE *xnode, NODE *ynode, NODE *znode, BOOL bEraseTurtle=TRUE);
 extern NODE *lsetlight(NODE *args);
 extern NODE *lsetpos(NODE *args);
 extern NODE *lsetposxyz(NODE *args);

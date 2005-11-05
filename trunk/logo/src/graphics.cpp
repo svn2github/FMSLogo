@@ -62,7 +62,7 @@ Turtle g_Turtles[TURTLES] =
 
          0.0,
 
-         TRUE,
+         true,
 
          0,
       },
@@ -77,15 +77,17 @@ FLONUM z_scale = 1.0;
 FLONUM wanna_x = 0.0;
 FLONUM wanna_y = 0.0;
 FLONUM wanna_z = 0.0;
-bool out_of_bounds = FALSE;
+bool out_of_bounds = false;
 
 //char record[GR_SIZE];
 static int record_index = 0;
 static pen_info orig_pen; // DELETEME
 static int forward_count = 0; // DELETEME
 
-bool record_next_move = FALSE;
-bool refresh_p = TRUE;
+bool record_next_move = false;
+bool refresh_p = true;
+
+#define sq(z) ((z)*(z))
 
 /************************************************************/
 
@@ -120,6 +122,27 @@ FIXNUM g_round(FLONUM n)
       return LONG_MIN;
    else
       return (FIXNUM) n;
+   }
+
+
+static
+FLONUM 
+numeric_node_to_flonum(
+   NODE * numeric_node // TODO: const
+)
+   {
+   FLONUM number;
+
+   if (nodetype(numeric_node) == INT)
+      {
+      number = (FLONUM) getint(numeric_node);
+      }
+   else
+      {
+      number = getfloat(numeric_node);
+      }
+
+   return number;
    }
 
 /************************************************************/
@@ -281,81 +304,56 @@ NODE *numeric_arg(NODE *args)
 
 NODE *luppitch(NODE *arg)
    {
-   FLONUM a;
-
    NODE* val = numeric_arg(arg);
    if (NOT_THROWING)
       {
-      if (nodetype(val) == INT)
-         a = (FLONUM) getint(val);
-      else
-         a = getfloat(val);
+      FLONUM a = numeric_node_to_flonum(val);
       uppitch(a);
       }
-   return (UNBOUND);
+   return UNBOUND;
    }
 
 NODE *ldownpitch(NODE *arg)
    {
-   FLONUM a;
-
    NODE* val = numeric_arg(arg);
    if (NOT_THROWING)
       {
-      if (nodetype(val) == INT)
-         a = (FLONUM) getint(val);
-      else
-         a = getfloat(val);
+      FLONUM a = numeric_node_to_flonum(val);
       uppitch(-a);
       }
 
-   return (UNBOUND);
+   return UNBOUND;
    }
 
 NODE *lrightroll(NODE *arg)
    {
-   FLONUM a;
-
    NODE* val = numeric_arg(arg);
    if (NOT_THROWING)
       {
-      if (nodetype(val) == INT)
-         a = (FLONUM) getint(val);
-      else
-         a = getfloat(val);
+      FLONUM a = numeric_node_to_flonum(val);
       rightroll(a);
       }
 
-   return (UNBOUND);
+   return UNBOUND;
    }
 
 NODE *lleftroll(NODE *arg)
    {
-   FLONUM a;
-
    NODE* val = numeric_arg(arg);
    if (NOT_THROWING)
       {
-      if (nodetype(val) == INT)
-         a = (FLONUM) getint(val);
-      else
-         a = getfloat(val);
+      FLONUM a = numeric_node_to_flonum(val);
       rightroll(-a);
       }
-   return (UNBOUND);
+   return UNBOUND;
    }
 
 NODE *lright(NODE *arg)
    {
-   FLONUM a;
-
    NODE* val = numeric_arg(arg);
    if (NOT_THROWING)
       {
-      if (nodetype(val) == INT)
-         a = (FLONUM) getint(val);
-      else
-         a = getfloat(val);
+      FLONUM a = numeric_node_to_flonum(val);
       right(a);
       }
 
@@ -364,104 +362,171 @@ NODE *lright(NODE *arg)
 
 NODE *lleft(NODE *arg)
    {
-   FLONUM a;
-
    NODE* val = numeric_arg(arg);
    if (NOT_THROWING)
       {
-      if (nodetype(val) == INT)
-         a = (FLONUM) getint(val);
-      else
-         a = getfloat(val);
+      FLONUM a = numeric_node_to_flonum(val);
       right(-a);
       }
 
-   return (UNBOUND);
+   return UNBOUND;
+   }
+
+static
+void 
+setpos_helper(
+   NODE *xnode, 
+   NODE *ynode, 
+   NODE *znode, 
+   bool bEraseTurtle = true
+)
+   {
+   FLONUM scaled_x;
+   FLONUM scaled_y;
+   FLONUM tx;
+   FLONUM ty;
+
+   FLONUM save_heading;
+
+   bool wrapping = false;
+
+   if (NOT_THROWING)
+      {
+      if (bEraseTurtle) 
+         { 
+         draw_turtle(false);
+         }
+
+      if (current_mode == perspectivemode)
+         {
+         move_to_3d(
+            g_Turtles[turtle_which].Position.x,
+            g_Turtles[turtle_which].Position.y,
+            g_Turtles[turtle_which].Position.z);
+         }
+      else
+         {
+         move_to(
+            g_Turtles[turtle_which].Position.x,
+            g_Turtles[turtle_which].Position.y);
+         }
+
+      FLONUM target_x = (xnode == NIL) ?
+            g_Turtles[turtle_which].Position.x :
+            numeric_node_to_flonum(xnode);
+
+      FLONUM target_y = (ynode == NIL) ?
+            g_Turtles[turtle_which].Position.y :
+            numeric_node_to_flonum(ynode);
+
+      FLONUM target_z = (znode == NIL) ?
+            g_Turtles[turtle_which].Position.z :
+            numeric_node_to_flonum(znode);
+
+      if (current_mode == perspectivemode)
+         {
+         wanna_x = g_Turtles[turtle_which].Position.x = target_x;
+         wanna_y = g_Turtles[turtle_which].Position.y = target_y;
+         wanna_z = g_Turtles[turtle_which].Position.z = target_z;
+         out_of_bounds = false;
+         ibmto3d(g_Turtles[turtle_which].Position);
+         save_line();
+         }
+      else
+         {
+         scaled_x = target_x * x_scale;
+         scaled_y = target_y * y_scale;
+
+         wrapping =
+            scaled_x > turtle_right_max ||
+            scaled_x < turtle_left_max ||
+            scaled_y > turtle_top_max ||
+            scaled_y < turtle_bottom_max;
+
+         if ((current_mode == fencemode) && wrapping)
+            {
+            err_logo(TURTLE_OUT_OF_BOUNDS, NIL);
+            }
+         else if ((current_mode == wrapmode) && (wrapping || out_of_bounds))
+            {
+            save_heading = g_Turtles[turtle_which].Heading;
+            g_Turtles[turtle_which].Heading = towards_helper(target_x, target_y, wanna_x, wanna_y);
+            tx = wanna_x / x_scale;
+            ty = wanna_y / y_scale;
+            forward_helper(sqrt(sq(target_x - tx) + sq(target_y - ty)));
+            g_Turtles[turtle_which].Heading = save_heading;
+            wanna_x = scaled_x;
+            wanna_y = scaled_y;
+            out_of_bounds = wrapping;
+            }
+         else
+            {
+            wanna_x = g_Turtles[turtle_which].Position.x = scaled_x;
+            wanna_y = g_Turtles[turtle_which].Position.y = scaled_y;
+            out_of_bounds = false;
+            line_to(g_Turtles[turtle_which].Position.x, g_Turtles[turtle_which].Position.y);
+            save_line();
+            }
+         }
+
+      if (bEraseTurtle) 
+         {
+         draw_turtle(true);
+         }
+      }
    }
 
 NODE *lellipsearc(NODE *arg)
    {
-   NODE *val1;
-   NODE *val2;
-   NODE *val3;
-   NODE *val4;
    NODE *tmp1;
    NODE *tmp2;
    NODE *tmp3;
 
-   FLONUM angle;
-   FLONUM startangle;
-   FLONUM radius_x;
-   FLONUM radius_y;
    FLONUM ang;
-   FLONUM tx;
-   FLONUM ty;
-   FLONUM tz;
-   FLONUM th;
    FLONUM rx;
    FLONUM ry;
-   FLONUM x;
-   FLONUM y;
-   FLONUM count;
-   FLONUM delta;
    FLONUM i;
 
    VECTOR r;
    VECTOR rp;
 
-   int turtle_state;
-   int pen_state;
-
-   pen_state = pen_vis;
+   int pen_state = pen_vis;
 
    /* get args */
 
-   val1 = numeric_arg(arg);
-   val2 = numeric_arg(cdr(arg));
-   val3 = numeric_arg(cdr(cdr(arg)));
-   val4 = numeric_arg(cdr(cdr(cdr(arg))));
+   NODE * val1 = numeric_arg(arg);
+   NODE * val2 = numeric_arg(cdr(arg));
+   NODE * val3 = numeric_arg(cdr(cdr(arg)));
+   NODE * val4 = numeric_arg(cdr(cdr(cdr(arg))));
 
    if (NOT_THROWING)
       {
 
-      if (nodetype(val1) == INT)
-         angle = (FLONUM) getint(val1);
-      else
-         angle = getfloat(val1);
-
-      if (nodetype(val2) == INT)
-         radius_x = (FLONUM) getint(val2);
-      else
-         radius_x = getfloat(val2);
-
-      if (nodetype(val3) == INT)
-         radius_y = (FLONUM) getint(val3);
-      else
-         radius_y = getfloat(val3);
-
-      if (nodetype(val4) == INT)
-         startangle = (FLONUM) getint(val4);
-      else
-         startangle = getfloat(val4);
+      FLONUM angle      = numeric_node_to_flonum(val1);
+      FLONUM radius_x   = numeric_node_to_flonum(val2);
+      FLONUM radius_y   = numeric_node_to_flonum(val3);
+      FLONUM startangle = numeric_node_to_flonum(val4);
 
       draw_turtle(false);
 
-      /* save and force turle state */
-      turtle_state = g_Turtles[turtle_which].IsShown;
-      g_Turtles[turtle_which].IsShown = 0;
+      /* save and force turtle state */
+      bool turtle_state = g_Turtles[turtle_which].IsShown;
+      g_Turtles[turtle_which].IsShown = false;
 
       /* grab things before they change and use for restore */
 
-      th = g_Turtles[turtle_which].Heading;
-      tx = g_Turtles[turtle_which].Position.x;
-      ty = g_Turtles[turtle_which].Position.y;
-      tz = g_Turtles[turtle_which].Position.z;
+      FLONUM th = g_Turtles[turtle_which].Heading;
+      FLONUM tx = g_Turtles[turtle_which].Position.x;
+      FLONUM ty = g_Turtles[turtle_which].Position.y;
+      FLONUM tz = g_Turtles[turtle_which].Position.z;
 
       /* calculate resolution parameters */
-
-      count = abs(angle * max(radius_x, radius_y) / 200.0);
-      if (count == 0.0) count = 1.0;
-      delta = angle / count;
+      FLONUM count = abs(angle * max(radius_x, radius_y) / 200.0);
+      if (count == 0.0)
+         {
+         count = 1.0;
+         }
+      FLONUM delta = angle / count;
 
       /* draw each line segment of arc (will do wrap) */
 
@@ -470,8 +535,8 @@ NODE *lellipsearc(NODE *arg)
          {
 
          /* calc x y */
-         x = -sin(ang * degrad) * radius_x;
-         y = -cos(ang * degrad) * radius_y;
+         FLONUM x = -sin(ang * degrad) * radius_x;
+         FLONUM y = -cos(ang * degrad) * radius_y;
 
          /* jump to begin of first line segment without drawing */
          if (i == 0.0) pen_vis = 1;
@@ -489,7 +554,7 @@ NODE *lellipsearc(NODE *arg)
                tmp1 = make_floatnode(tx + rp.x),
                tmp2 = make_floatnode(ty + rp.y),
                tmp3 = make_floatnode(tz + rp.z),
-               FALSE);
+               false);
             gcref(tmp3);
             }
          else
@@ -503,7 +568,7 @@ NODE *lellipsearc(NODE *arg)
                tmp1 = make_floatnode(tx + rx),
                tmp2 = make_floatnode(ty + ry),
                NIL,
-               FALSE);
+               false);
             }
 
          gcref(tmp1);
@@ -519,8 +584,8 @@ NODE *lellipsearc(NODE *arg)
 
 //      if (ang != angle + startangle)
          {
-         x = -sin((angle + startangle) * degrad) * radius_x;
-         y = -cos((angle + startangle) * degrad) * radius_y;
+         FLONUM x = -sin((angle + startangle) * degrad) * radius_x;
+         FLONUM y = -cos((angle + startangle) * degrad) * radius_y;
 
          if (current_mode == perspectivemode)
             {
@@ -587,7 +652,7 @@ void forward(FLONUM d)
    wanna_x = g_Turtles[turtle_which].Position.x;
    wanna_y = g_Turtles[turtle_which].Position.y;
    wanna_z = g_Turtles[turtle_which].Position.z;
-   out_of_bounds = FALSE;
+   out_of_bounds = false;
    }
 
 void forward_helper3d(FLONUM d)
@@ -775,16 +840,10 @@ int wrap_down(FLONUM d, FLONUM x1, FLONUM y1, FLONUM x2, FLONUM y2)
 
 NODE *lforward(NODE *arg)
    {
-   NODE *val;
-   FLONUM d;
-
-   val = numeric_arg(arg);
+   NODE * val = numeric_arg(arg);
    if (NOT_THROWING)
       {
-      if (nodetype(val) == INT)
-         d = (FLONUM) getint(val);
-      else
-         d = getfloat(val);
+      FLONUM d = numeric_node_to_flonum(val);
       forward(d);
       }
    return (UNBOUND);
@@ -792,16 +851,10 @@ NODE *lforward(NODE *arg)
 
 NODE *lback(NODE *arg)
    {
-   NODE *val;
-   FLONUM d;
-
-   val = numeric_arg(arg);
+   NODE* val = numeric_arg(arg);
    if (NOT_THROWING)
       {
-      if (nodetype(val) == INT)
-         d = (FLONUM) getint(val);
-      else
-         d = getfloat(val);
+      FLONUM d = numeric_node_to_flonum(val);
       forward(-d);
       }
    return (UNBOUND);
@@ -852,18 +905,12 @@ NODE *lshownp(NODE *)
 
 NODE *lsetheading(NODE *arg)
    {
-   NODE *val;
-   FLONUM a;
-
-   val = numeric_arg(arg);
+   NODE *val = numeric_arg(arg);
    if (NOT_THROWING)
       {
       draw_turtle(false);
 
-      if (nodetype(val) == INT)
-         a = (FLONUM) getint(val);
-      else
-         a = getfloat(val);
+      FLONUM a = numeric_node_to_flonum(val);
       a = pfmod(a, 360.0);
 
       if (current_mode == perspectivemode)
@@ -885,18 +932,14 @@ NODE *lsetheading(NODE *arg)
 
 NODE *lsetroll(NODE *arg)
    {
-   FLONUM a;
-
    NODE* val = numeric_arg(arg);
    if (NOT_THROWING)
       {
       draw_turtle(false);
-      if (nodetype(val) == INT)
-         a = (FLONUM) getint(val);
-      else
-         a = getfloat(val);
 
+      FLONUM a = numeric_node_to_flonum(val);
       a = pfmod(a, 360.0);
+
       rightroll(a - rotation_y());
 
       if (status_flag)
@@ -913,17 +956,12 @@ NODE *lsetroll(NODE *arg)
 
 NODE *lsetpitch(NODE *arg)
    {
-   FLONUM a;
-
    NODE * val = numeric_arg(arg);
    if (NOT_THROWING)
       {
       draw_turtle(false);
-      if (nodetype(val) == INT)
-         a = (FLONUM) getint(val);
-      else
-         a = getfloat(val);
 
+      FLONUM a = numeric_node_to_flonum(val);
       a = pfmod(a, 360.0);
       uppitch(a - rotation_x());
 
@@ -949,24 +987,9 @@ NODE *lsetclip(NODE *args)
       {
       draw_turtle(false);
 
-      double _Angle;
-      double _Zmin;
-      double _Zmax;
-
-      if (nodetype(angle) == INT)
-         _Angle = (FLONUM) getint(angle);
-      else
-         _Angle = getfloat(angle);
-
-      if (nodetype(zmin) == INT)
-         _Zmin = (FLONUM) getint(zmin);
-      else
-         _Zmin = getfloat(zmin);
-
-      if (nodetype(zmax) == INT)
-         _Zmax = (FLONUM) getint(zmax);
-      else
-         _Zmax = getfloat(zmax);
+      FLONUM _Angle = numeric_node_to_flonum(angle);
+      FLONUM _Zmin  = numeric_node_to_flonum(zmin);
+      FLONUM _Zmax  = numeric_node_to_flonum(zmax);
 
       ThreeD.SetClip(_Angle, _Zmin, _Zmax);
 
@@ -1256,21 +1279,15 @@ FLONUM towards_helper(FLONUM x, FLONUM y, FLONUM from_x, FLONUM from_y)
 
 NODE *ltowards(NODE *args)
    {
-   NODE *xnode = UNBOUND;
-   NODE *ynode = UNBOUND;
-   NODE *arg;
-   FLONUM x, y;
-
-   arg = vector_arg(args);
+   NODE * arg = vector_arg(args);
    if (NOT_THROWING)
       {
-      xnode = car(arg);
-      ynode = cadr(arg);
+      NODE * xnode = car(arg);
+      NODE * ynode = cadr(arg);
 
-      x = ((nodetype(xnode) == FLOAT) ? getfloat(xnode) :
-            (FLONUM) getint(xnode));
-      y = ((nodetype(ynode) == FLOAT) ? getfloat(ynode) :
-            (FLONUM) getint(ynode));
+      FLONUM x = numeric_node_to_flonum(xnode);
+      FLONUM y = numeric_node_to_flonum(ynode);
+
       return make_floatnode(towards_helper(x, y, g_Turtles[turtle_which].Position.x, g_Turtles[turtle_which].Position.y));
       }
    return (UNBOUND);
@@ -1278,52 +1295,38 @@ NODE *ltowards(NODE *args)
 
 NODE *ltowardsxyz(NODE *args)
    {
-   NODE *xnode = UNBOUND;
-   NODE *ynode = UNBOUND;
-   NODE *znode = UNBOUND;
-   NODE *arg;
-
-   VECTOR to;
-   VECTOR diff;
-
-   FLONUM Rx;
-   FLONUM Ry;
-   FLONUM Rz;
-
-   arg = vector_3_arg(args);
+   NODE * arg = vector_3_arg(args);
    if (NOT_THROWING)
       {
-      xnode = car(arg);
-      ynode = cadr(arg);
-      znode = cadr(cdr(arg));
+      NODE * xnode = car(arg);
+      NODE * ynode = cadr(arg);
+      NODE * znode = cadr(cdr(arg));
 
-      to.x = ((nodetype(xnode) == FLOAT) ? getfloat(xnode) :
-            (FLONUM) getint(xnode));
-      to.y = ((nodetype(ynode) == FLOAT) ? getfloat(ynode) :
-            (FLONUM) getint(ynode));
-      to.z = ((nodetype(znode) == FLOAT) ? getfloat(znode) :
-            (FLONUM) getint(znode));
+      VECTOR to;
+      to.x = numeric_node_to_flonum(xnode);
+      to.y = numeric_node_to_flonum(ynode);
+      to.z = numeric_node_to_flonum(znode);
 
       // Generate a Vector to represent direction we need to head
-      diff = Subtract(to, g_Turtles[turtle_which].Position);
+      VECTOR diff = Subtract(to, g_Turtles[turtle_which].Position);
       Normalize(diff);
 
       // Compute angle between Y Axis and Vector [DOT] (Rotation about Z)
-      Rz = acos(diff.y) / degrad;
+      FLONUM Rz = acos(diff.y) / degrad;
 
       // Project point onto X-Z plane and renormalize to measure roll
       diff.y = 0.0;
       Normalize(diff);
 
       // Compute angle between X Axis and Projection [DOT] (Rotation about Y)
-      Ry = acos(diff.x) / degrad;
+      FLONUM Ry = acos(diff.x) / degrad;
 
       // Heading was limited to 0 to 180 but we must be able to roll -180 to 180
       // if point is in positive Z hemisphere then "roll" left to it.
       if (diff.z > 0.0) Ry = -Ry;
 
       // No Pitch needed
-      Rx = 0.0;
+      FLONUM Rx = 0.0;
 
       return (
          cons(make_floatnode(Ry),
@@ -1360,7 +1363,7 @@ NODE *lhome(NODE *)
    NODE *tmp2;
    NODE *tmp3;
 
-   out_of_bounds = FALSE;
+   out_of_bounds = false;
    setpos_helper(tmp1 = make_intnode((FIXNUM) 0), tmp2 = make_intnode((FIXNUM) 0), tmp3 = make_intnode((FIXNUM) 0));
    gcref(tmp1);
    gcref(tmp2);
@@ -1441,104 +1444,6 @@ NODE *lclean(NODE *)
    {
    cs_helper(FALSE, TRUE);
    return (UNBOUND);
-   }
-
-#define sq(z) ((z)*(z))
-
-void setpos_helper(NODE *xnode, NODE *ynode, NODE *znode, BOOL bEraseTurtle)
-   {
-   FLONUM scaled_x;
-   FLONUM scaled_y;
-   FLONUM target_x;
-   FLONUM target_y;
-   FLONUM target_z;
-   FLONUM tx;
-   FLONUM ty;
-
-   FLONUM save_heading;
-
-   bool wrapping = FALSE;
-
-   if (NOT_THROWING)
-      {
-      if (bEraseTurtle) draw_turtle(false);
-      if (current_mode == perspectivemode)
-         {
-         move_to_3d(
-            g_Turtles[turtle_which].Position.x,
-            g_Turtles[turtle_which].Position.y,
-            g_Turtles[turtle_which].Position.z);
-         }
-      else
-         {
-         move_to(
-            g_Turtles[turtle_which].Position.x,
-            g_Turtles[turtle_which].Position.y);
-         }
-
-      target_x = ((xnode == NIL) ?
-            g_Turtles[turtle_which].Position.x :
-            ((nodetype(xnode) == FLOAT) ? getfloat(xnode) :
-                  (FLONUM) getint(xnode)));
-
-      target_y = ((ynode == NIL) ?
-            g_Turtles[turtle_which].Position.y :
-            ((nodetype(ynode) == FLOAT) ? getfloat(ynode) :
-                  (FLONUM) getint(ynode)));
-
-      target_z = ((znode == NIL) ?
-            g_Turtles[turtle_which].Position.z :
-            ((nodetype(znode) == FLOAT) ? getfloat(znode) :
-                  (FLONUM) getint(znode)));
-
-      if (current_mode == perspectivemode)
-         {
-         wanna_x = g_Turtles[turtle_which].Position.x = target_x;
-         wanna_y = g_Turtles[turtle_which].Position.y = target_y;
-         wanna_z = g_Turtles[turtle_which].Position.z = target_z;
-         out_of_bounds = FALSE;
-         ibmto3d(g_Turtles[turtle_which].Position);
-         save_line();
-         }
-      else
-         {
-         scaled_x = target_x * x_scale;
-         scaled_y = target_y * y_scale;
-
-         wrapping =
-            scaled_x > turtle_right_max ||
-            scaled_x < turtle_left_max ||
-            scaled_y > turtle_top_max ||
-            scaled_y < turtle_bottom_max;
-
-         if ((current_mode == fencemode) && wrapping)
-            {
-            err_logo(TURTLE_OUT_OF_BOUNDS, NIL);
-            }
-         else if ((current_mode == wrapmode) && (wrapping || out_of_bounds))
-            {
-            save_heading = g_Turtles[turtle_which].Heading;
-            g_Turtles[turtle_which].Heading = towards_helper(target_x, target_y, wanna_x, wanna_y);
-            tx = wanna_x / x_scale;
-            ty = wanna_y / y_scale;
-            forward_helper(sqrt(sq(target_x - tx) + sq(target_y - ty)));
-            g_Turtles[turtle_which].Heading = save_heading;
-            wanna_x = scaled_x;
-            wanna_y = scaled_y;
-            out_of_bounds = wrapping;
-            }
-         else
-            {
-            wanna_x = g_Turtles[turtle_which].Position.x = scaled_x;
-            wanna_y = g_Turtles[turtle_which].Position.y = scaled_y;
-            out_of_bounds = FALSE;
-            line_to(g_Turtles[turtle_which].Position.x, g_Turtles[turtle_which].Position.y);
-            save_line();
-            }
-         }
-
-      if (bEraseTurtle) draw_turtle(true);
-      }
    }
 
 NODE *lsetpos(NODE *args)
@@ -1654,26 +1559,19 @@ NODE *lwindow(NODE *)
 
 NODE *lsetlight(NODE *args)
    {
-   NODE *ambient = UNBOUND;
-   NODE *diffuse = UNBOUND;
-   NODE *arg;
-
-   arg = vector_arg(args);
-
+   NODE * arg = vector_arg(args);
    if (NOT_THROWING)
       {
-      ambient = car(arg);
-      diffuse = cadr(arg);
+      NODE * ambient = car(arg);
+      NODE * diffuse = cadr(arg);
 
-      ThreeD.Ambient = ((nodetype(ambient) == FLOAT) ?
-         getfloat(ambient) :
-         (FLONUM) getint(ambient));
+      ThreeD.Ambient = numeric_node_to_flonum(ambient);
+      ThreeD.Diffuse = numeric_node_to_flonum(diffuse);
 
-      ThreeD.Diffuse = ((nodetype(diffuse) == FLOAT) ?
-         getfloat(diffuse) :
-         (FLONUM) getint(diffuse));
-
-      if (ThreeD.Tree) ThreeD.View();
+      if (ThreeD.Tree) 
+         {
+         ThreeD.View();
+         }
       }
 
    return (UNBOUND);
@@ -2106,10 +2004,8 @@ NODE *lsetscrunch(NODE *args)
    if (NOT_THROWING)
       {
       draw_turtle(false);
-      x_scale = (nodetype(xnode) == FLOAT) ? getfloat(xnode) :
-         (FLONUM) getint(xnode);
-      y_scale = (nodetype(ynode) == FLOAT) ? getfloat(ynode) :
-         (FLONUM) getint(ynode);
+      x_scale = numeric_node_to_flonum(xnode);
+      y_scale = numeric_node_to_flonum(ynode);
       draw_turtle(true);
 #ifdef __ZTC__
       {
@@ -2129,8 +2025,8 @@ NODE *lsetscrunch(NODE *args)
 NODE *lbuttonp(NODE *)
    {
    if (button)
-      return (Truex);
-   return (Falsex);
+      return Truex;
+   return Falsex;
    }
 
 NODE *ltone(NODE *args)
