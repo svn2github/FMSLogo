@@ -24,21 +24,26 @@
 NODE **gcstack;
 NODE **gctop;
 
-NODE *free_list = NIL;                 /* global ptr to free node list        */
-struct segment *segment_list = NULL;   /* global ptr to segment list          */
-
 #ifdef MEM_DEBUG
-long int mem_allocated = 0, mem_freed = 0;
+long int mem_allocated = 0;
+long int mem_freed = 0;
 #endif
 
-long int mem_nodes = 0, mem_max = 0;
+static NODE           *free_list    = NIL;    // global ptr to free node list
+static struct segment *segment_list = NULL;   // global ptr to segment list
+
+static long int mem_nodes = 0;
+static long int mem_max = 0;
+
+static NODE *reserve_tank;
 
 #ifdef MEM_DEBUG
 #define MAX_RECORD_ALLOC 10000
 
-NODE *allocated[MAX_RECORD_ALLOC];
-int allocated_id[MAX_RECORD_ALLOC];
-int current_allocated_id;
+static NODE *allocated[MAX_RECORD_ALLOC];
+static int allocated_id[MAX_RECORD_ALLOC];
+static int current_allocated_id;
+
 
 void record_alloced_pointer(NODE *nd)
    {
@@ -289,8 +294,6 @@ NODE *lnodes(NODE *  /* args */)
       cons(make_intnode(temp_max), NIL));
    }
 
-NODE *reserve_tank;
-
 void fill_reserve_tank()
    {
    NODE *p = NIL;
@@ -312,4 +315,4 @@ void check_reserve_tank()
    {
    if (reserve_tank == NIL) fill_reserve_tank();
    }
-
+
