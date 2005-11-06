@@ -1,9 +1,15 @@
+; This is the testharness.
+; It provides test primatives.
+; It also loads all unit tests and executes them.
+
+LOAD "logic.lgo
 LOAD "bitmap.lgo
 LOAD "form.lgo
 LOAD "editor.lgo
 LOAD "port.lgo
 LOAD "label.lgo
 LOAD "fill.lgo
+LOAD "mkdir.lgo
 
 
 TO REPORTTESTINFO :message
@@ -46,7 +52,7 @@ TO RUNBADINPUTTEST :instructions
   REPORTTESTINFO (SENTENCE "|Executing invalid instruction: '| :instructions "' )
 
   CATCH "ERROR [ 
-    RUN :instructions 
+    IGNORE RUN :instructions 
     REPORTTESTFAILED (SENTENCE "|Executing '| :instructions "|' did not throw an error|)
   ]
 
@@ -68,12 +74,14 @@ TO TESTALL
 
   REPORTTESTINITIALIZE
 
+  LOGICTEST  ; from logic.lgo
   BITMAPTEST ; from bitmap.lgo
   FORMTEST   ; from form.lgo
   EDITORTEST ; from editor.lgo 
   PORTTEST   ; from port.lgo
   LABELTEST  ; from label.lgo
   FILLTEST   ; from fill.lgo
+;  MKDIRTEST  ; from mkdir.lgo
 
   REPORTTESTUNINITIALIZE
 END
