@@ -27,16 +27,21 @@ extern jmp_buf iblk_buf;
 #endif
 
 NODE *file_list = NULL;
-NODE *reader_name = NIL, *writer_name = NIL;
+NODE *reader_name = NIL;
+NODE *writer_name = NIL;
 
-FILE *open_file(NODE *arg, char *access)
+FILE *open_file(NODE *arg, const char *access)
    {
    char *fnstr;
    FILE *tstrm;
 
    ref(arg);
    arg = reref(arg, cnv_node_to_strnode(arg));
-   if (arg == UNBOUND) return (NULL);
+   if (arg == UNBOUND) 
+      {
+      return NULL;
+      }
+
    fnstr = (char *) malloc((size_t) getstrlen(arg) + 1);
    strnzcpy(fnstr, getstrptr(arg), getstrlen(arg));
 
@@ -85,9 +90,12 @@ FILE *open_file(NODE *arg, char *access)
       tstrm = fopen(fnstr, access);
       }
 
-   if (strcmp(access, "r+") == 0)
+   if (strncmp(access, "r+", 2) == 0)
       {
-      fseek(tstrm, 0, 2);// a+ does not work so r+ and seek to end
+      // When we open in "r+", we want to read/write from the
+      // end of the file until the user seeks somewhere else.
+      // This mode is only used from OPENUPDATE.
+      fseek(tstrm, 0, SEEK_END);
       }
 
    deref(arg);
@@ -98,13 +106,19 @@ FILE *open_file(NODE *arg, char *access)
 NODE *ldribble(NODE *arg)
    {
    if (dribblestream != NULL)
+      {
       err_logo(ALREADY_DRIBBLING, NIL);
+      }
    else
       {
-      dribblestream = open_file(car(arg), "w+");
-      if (dribblestream == NULL) err_logo(FILE_ERROR, NIL);
+      dribblestream = open_file(car(arg), "w");
+      if (dribblestream == NULL) 
+         {
+         err_logo(FILE_ERROR, NIL);
+         }
       }
-   return (UNBOUND);
+
+   return UNBOUND;
    }
 
 NODE *lnodribble(NODE *)
@@ -145,113 +159,65 @@ FILE *find_file(NODE *arg, bool remove)
    }
 
 static
-NODE *lopen(NODE *arg, char *mode)
+NODE *
+open_helper(
+   NODE       *Arguments, 
+   const char *DefaultMode,
+   const char *BinaryMode
+)
    {
-   FILE *tmp;
+   bool useBinaryMode = false;
 
-   arg = car(arg);
-   if (find_file(arg, FALSE) != NULL)
-      err_logo(FILE_ERROR, make_static_strnode("File already open"));
-   else if ((tmp = open_file(arg, mode)) != NULL)
+   if (cdr(Arguments) != NIL)
       {
-      push(arg, file_list);
-      file_list->n_obj = (NODE *) tmp;
+      useBinaryMode = boolean_arg(cdr(Arguments));
       }
-   else
-      err_logo(FILE_ERROR, make_static_strnode("I can't open that file"));
-   return (UNBOUND);
+
+   if (NOT_THROWING)
+      {
+      const char * mode = DefaultMode;
+      if (useBinaryMode)
+         {
+         mode = BinaryMode;
+         }
+
+      FILE* tmp;
+      Arguments = car(Arguments);
+      if (find_file(Arguments, FALSE) != NULL)
+         {
+         err_logo(FILE_ERROR, make_static_strnode("File already open"));
+         }
+      else if ((tmp = open_file(Arguments, mode)) != NULL)
+         {
+         push(Arguments, file_list);
+         file_list->n_obj = (NODE *) tmp;
+         }
+      else
+         {
+         err_logo(FILE_ERROR, make_static_strnode("I can't open that file"));
+         }
+      }
+   return UNBOUND;
    }
 
 NODE *lopenread(NODE *args)
    {
-   bool bBinary = false;
-
-   if (cdr(args) != NIL)
-      {
-      bBinary = boolean_arg(cdr(args));
-      }
-
-   if (NOT_THROWING)
-      {
-      if (bBinary)
-         return (lopen(args, "rb"));
-      else
-         return (lopen(args, "r"));
-      }
-
-   return(UNBOUND);
+   return open_helper(args, "r", "rb");
    }
 
 NODE *lopenwrite(NODE *args)
    {
-   bool bBinary = false;
-
-   if (cdr(args) != NIL)
-      {
-      bBinary = boolean_arg(cdr(args));
-      }
-
-   if (NOT_THROWING)
-      {
-      if (bBinary)
-         {
-         return lopen(args, "wb");
-         }
-      else
-         {
-         return lopen(args, "w");
-         }
-      }
-
-   return UNBOUND;
+   return open_helper(args, "w", "wb");
    }
 
 NODE *lopenappend(NODE *args)
    {
-   bool bBinary = false;
-
-   if (cdr(args) != NIL)
-      {
-      bBinary = boolean_arg(cdr(args));
-      }
-
-   if (NOT_THROWING)
-      {
-      if (bBinary)
-         {
-         return lopen(args, "ab");
-         }
-      else
-         {
-         return (lopen(args, "a"));
-         }
-      }
-
-   return UNBOUND;
+   return open_helper(args, "a", "ab");
    }
 
 NODE *lopenupdate(NODE *args)
    {
-   bool bBinary = false;
-
-   if (cdr(args) != NIL)
-      {
-      bBinary = boolean_arg(cdr(args));
-      }
-
-   if (NOT_THROWING)
-      {
-      if (bBinary)
-         {
-         return lopen(args, "r+b");
-         }
-      else
-         {
-         return (lopen(args, "r+"));
-         }
-      }
-
-   return UNBOUND;
+   return open_helper(args, "r+", "r+b");
    }
 
 NODE *lallopen(NODE *)
@@ -261,9 +227,6 @@ NODE *lallopen(NODE *)
 
 NODE *lclose(NODE *arg)
    {
-   FILE *tmp;
-   char *fnstr;
-   
    arg = car(arg);
    
    ref(arg);
@@ -273,9 +236,10 @@ NODE *lclose(NODE *arg)
       return (NULL); // why not UNBOUND?
       }
 
-   fnstr = (char *) malloc((size_t) getstrlen(arg) + 1);
+   char * fnstr = (char *) malloc((size_t) getstrlen(arg) + 1);
    strnzcpy(fnstr, getstrptr(arg), getstrlen(arg));
 
+   FILE *tmp;
    if ((tmp = find_file(arg, TRUE)) == NULL)
       {
       err_logo(FILE_ERROR, make_static_strnode("File not open"));
