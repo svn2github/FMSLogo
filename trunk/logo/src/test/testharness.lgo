@@ -10,20 +10,46 @@ LOAD "port.lgo
 LOAD "label.lgo
 LOAD "fill.lgo
 LOAD "mkdir.lgo
+LOAD "file.lgo
 
+MAKE "testlog []
 
 TO REPORTTESTINFO :message
+
+  ; backup the current writer
+  LOCALMAKE "previouswriter WRITER
+  SETWRITE :testlog
+
   PRINT (SENTENCE "INFO: :message)
+
+  ; restore the current writer
+  SETWRITE :previouswriter
 END
 
 TO REPORTTESTPASSED :message
+
+  ; backup the current writer
+  LOCALMAKE "previouswriter WRITER
+  SETWRITE :testlog
+
   PRINT (SENTENCE "PASS: :message)
+
+  ; restore the current writer
+  SETWRITE :previouswriter
 END
 
 TO REPORTTESTFAILED :message
+
+  ; backup the current writer
+  LOCALMAKE "previouswriter WRITER
+  SETWRITE :testlog
+
   LOCALMAKE "result (SENTENCE "FAIL: :message)
   PRINT :result
   MESSAGEBOX [Test Failed] :result
+
+  ; restore the current writer
+  SETWRITE :previouswriter
 END
 
 TO REPORTTEST :testpassed :result :expected
@@ -45,14 +71,20 @@ END
 
 
 TO REPORTTESTINITIALIZE
-  OPENWRITE "testlog.txt
-  SETWRITE  "testlog.txt
+
+  MAKE "testlog  "testlog.txt
+
+  ; close the test log, if it is already open
+  CATCH "ERROR [ CLOSE :testlog ]
+
+  ; open (and truncate) the test log
+  OPENWRITE :testlog
 END
 
 
 TO REPORTTESTUNINITIALIZE
-  SETWRITE []
-  CLOSE    "testlog.txt
+  CLOSE    :testlog
+  MAKE     :testlog []
 END
 
 
@@ -90,6 +122,7 @@ TO TESTALL
   PORTTEST   ; from port.lgo
   LABELTEST  ; from label.lgo
   FILLTEST   ; from fill.lgo
+  FILETEST   ; from file.lgo
 ;  MKDIRTEST  ; from mkdir.lgo
 
   REPORTTESTUNINITIALIZE
