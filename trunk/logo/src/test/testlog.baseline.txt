@@ -34,6 +34,12 @@ INFO: Executing invalid instruction: ' (AND 1 "true) '
 INFO: Executing invalid instruction: ' (AND "false 0) '
 FAIL: Executing ' (AND "false 0) ' did not throw an error
 INFO: Executing invalid instruction: ' (AND 0 "false) '
+PASS: (NOT "true) returned false , as expected.
+PASS: (NOT "false) returned true , as expected.
+INFO: Executing invalid instruction: ' (NOT) '
+INFO: Executing invalid instruction: ' (NOT 0) '
+INFO: Executing invalid instruction: ' (NOT "truex) '
+INFO: Executing invalid instruction: ' (NOT "true "true) '
 PASS: Size is [100 100] , as expected.
 PASS: Size is [100 101] , as expected.
 PASS: Size is [101 100] , as expected.

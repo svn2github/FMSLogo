@@ -1,5 +1,4 @@
 TO ORTEST
-  LOCAL "value
 
   SIMPLEREPORTTEST [(OR) ]       "false
   SIMPLEREPORTTEST [(OR "true)]  "true
@@ -24,7 +23,6 @@ TO ORTEST
 END
 
 TO ANDTEST
-  LOCAL "value
 
   SIMPLEREPORTTEST [(AND)]        "true
   SIMPLEREPORTTEST [(AND "true)]  "true
@@ -48,8 +46,20 @@ TO ANDTEST
   RUNBADINPUTTEST [(AND 0 "false)]
 END
 
+TO NOTTEST
+
+  SIMPLEREPORTTEST [(NOT "true)]  "false
+  SIMPLEREPORTTEST [(NOT "false)] "true
+
+  RUNBADINPUTTEST [(NOT)]
+  RUNBADINPUTTEST [(NOT 0)]
+  RUNBADINPUTTEST [(NOT "truex)]
+  RUNBADINPUTTEST [(NOT "true "true)]
+END
+
 TO LOGICTEST
   ORTEST
   ANDTEST
+  NOTTEST
 END
 
