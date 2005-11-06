@@ -957,7 +957,7 @@ WindowEnableHelper(
    {
    char childname[MAX_BUFFER_SIZE];
    cnv_strnode_string(childname, args);
-   BOOL bEnable = torf_arg(cdr(args));
+   bool bEnable = boolean_arg(cdr(args));
 
    dialogthing *temp;
    if ((temp = dialogboxes.get2(childname, WindowType)) != NULL)
@@ -2448,12 +2448,11 @@ NODE *lradiobuttonget(NODE *args)
 NODE *lradiobuttonset(NODE *args)
    {
    dialogthing *parent;
-   char parentname[MAX_BUFFER_SIZE];
-   int pos;
 
+   char parentname[MAX_BUFFER_SIZE];
    cnv_strnode_string(parentname, args);
-   //   pos = getint(pos_int_arg(args=cdr(args)));
-   pos = torf_arg(args = cdr(args));
+
+   bool pos = boolean_arg(args = cdr(args));
 
    if ((parent = dialogboxes.get2(parentname, TRadioButton_type)) != NULL)
       {
@@ -2646,7 +2645,7 @@ NODE *lcheckboxset(NODE *args)
 
    cnv_strnode_string(parentname, args);
 //   pos = getint(pos_int_arg(args = cdr(args)));
-   pos = torf_arg(args = cdr(args));
+   pos = boolean_arg(args = cdr(args));
 
    if ((parent = dialogboxes.get2(parentname, TCheckBox_type)) != NULL)
       {

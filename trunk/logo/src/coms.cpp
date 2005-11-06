@@ -91,18 +91,27 @@ NODE *lcatch(NODE *args)
    return make_cont(catch_continuation, cons(car(args), lrun(cdr(args))));
    }
 
-int torf_arg(NODE *args)
+bool boolean_arg(NODE *args)
    {
    NODE *arg = car(args);
 
    while (NOT_THROWING)
       {
-      if (compare_node(arg, Truex, TRUE) == 0) return TRUE;
-      if (compare_node(arg, Falsex, TRUE) == 0) return FALSE;
+      if (compare_node(arg, Truex, TRUE) == 0) 
+         {
+         return true;
+         }
+      if (compare_node(arg, Falsex, TRUE) == 0) 
+         {
+         return false;
+         }
       setcar(args, err_logo(BAD_DATA, arg));
       arg = car(args);
       }
-   return -1;
+
+   // default to "true" for backward compatability.
+   // (This used to return to -1, which is more likely to behave like "true" than "false").
+   return true;
    }
 
 NODE *lgoto(NODE *args)
@@ -117,48 +126,85 @@ NODE *ltag(NODE */* args */)
 
 NODE *lnot(NODE *args)
    {
-   int arg = torf_arg(args);
+   bool arg = boolean_arg(args);
 
    if (NOT_THROWING)
       {
-      if (arg) return (Falsex);
-      else return (Truex);
+      if (arg) 
+         {
+         return Falsex;
+         }
+      else 
+         {
+         return Truex;
+         }
       }
-   return (UNBOUND);
+
+   return UNBOUND;
    }
 
 NODE *land(NODE *args)
    {
-   int arg;
+   if (args == NIL) 
+      {
+      return Truex;
+      }
 
-   if (args == NIL) return (Truex);
    while (NOT_THROWING)
       {
-      arg = torf_arg(args);
-      if (arg == FALSE)
-         return (Falsex);
+      bool arg = boolean_arg(args);
+      if (!arg)
+         {
+         // found a false argument, so entire expression is false
+         return Falsex;
+         }
+
       args = cdr(args);
-      if (args == NIL) break;
+      if (args == NIL) 
+         {
+         break;
+         }
       }
-   if (NOT_THROWING) return (Truex);
-   else return (UNBOUND);
+
+   if (NOT_THROWING) 
+      {
+      // there were no false arguments, so entire expression is true
+      return Truex;
+      }
+
+   return UNBOUND;
    }
 
 NODE *lor(NODE *args)
    {
-   int arg;
+   if (args == NIL)
+      {
+      return Falsex;
+      }
 
-   if (args == NIL) return (Falsex);
    while (NOT_THROWING)
       {
-      arg = torf_arg(args);
-      if (arg == TRUE)
-         return (Truex);
+      bool arg = boolean_arg(args);
+      if (arg)
+         {
+         // found a true argument, so entire expression is true
+         return Truex;
+         }
+
       args = cdr(args);
-      if (args == NIL) break;
+      if (args == NIL) 
+         {
+         break;
+         }
       }
-   if (NOT_THROWING) return (Falsex);
-   else return (UNBOUND);
+
+   if (NOT_THROWING) 
+      {
+      // there were no true arguments, so entire expression is false
+      return Falsex;
+      }
+
+   return UNBOUND;
    }
 
 NODE *runnable_arg(NODE *args)
@@ -178,45 +224,52 @@ NODE *runnable_arg(NODE *args)
    return (arg);
    }
 
-NODE *lif(NODE *args)                  /* macroized                           */
+NODE *lif(NODE *args)  // macroized
    {
-   NODE *yes;
-   int pred;
+   if (cddr(args) != NIL)
+      {
+      return lifelse(args);
+      }
 
-   if (cddr(args) != NIL) return (lifelse(args));
-
-   pred = torf_arg(args);
-   yes = runnable_arg(cdr(args));
+   bool pred = boolean_arg(args);
+   NODE * yes = runnable_arg(cdr(args));
    if (NOT_THROWING)
       {
-      if (pred) return (yes);
-      return (NIL);
+      if (pred) 
+         {
+         return yes;
+         }
+      return NIL;
       }
-   return (UNBOUND);
+
+   return UNBOUND;
    }
 
 NODE *lifelse(NODE *args)              /* macroized                           */
    {
-   NODE *yes, *no;
-   int pred;
-
-   pred = torf_arg(args);
-   yes = runnable_arg(cdr(args));
-   no = runnable_arg(cddr(args));
+   bool pred = boolean_arg(args);
+   NODE* yes = runnable_arg(cdr(args));
+   NODE* no = runnable_arg(cddr(args));
    if (NOT_THROWING)
       {
-      if (pred) return (yes);
-      return (no);
+      if (pred) 
+         {
+         return yes;
+         }
+      return no;
       }
-   return (UNBOUND);
+   return UNBOUND;
    }
 
 NODE *lrun(NODE *args)                 /* macroized                           */
    {
    NODE *arg = runnable_arg(args);
 
-   if (NOT_THROWING) return (arg);
-   return (UNBOUND);
+   if (NOT_THROWING)
+      {
+      return arg;
+      }
+   return UNBOUND;
    }
 
 NODE *lrunresult(NODE *args)
@@ -226,22 +279,19 @@ NODE *lrunresult(NODE *args)
 
 NODE *pos_int_arg(NODE *args)
    {
-   NODE *arg = car(args), *val;
+   NODE *arg = car(args);
    FIXNUM i;
    FLONUM f;
 
-   val = cnv_node_to_numnode(arg);
+   NODE * val = cnv_node_to_numnode(arg);
    while ((nodetype(val) != INT || getint(val) < 0) && NOT_THROWING)
       {
       if (nodetype(val) == FLOAT &&
             fmod((f = getfloat(val)), 1.0) == 0.0 &&
             f >= 0.0 && f < (FLONUM) MAXINT)
          {
-#ifdef mac
          i = f;
-#else
-         i = f;
-#endif
+
          gcref(val);
          val = make_intnode(i);
          break;
@@ -285,12 +335,12 @@ NODE *lforever(NODE *args)
 
 NODE *ltest(NODE *args)
    {
-   int arg = torf_arg(args);
+   bool arg = boolean_arg(args);
 
    if (tailcall != 0) return UNBOUND;
    if (NOT_THROWING)
       {
-      ift_iff_flag = arg;
+      ift_iff_flag = arg ? 1 : 0;
       dont_fix_ift = 1;
       }
    return (UNBOUND);

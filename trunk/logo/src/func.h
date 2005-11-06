@@ -313,7 +313,7 @@ extern NODE *lthrow(NODE *arg);
 extern NODE *lcatch(NODE *args);
 extern NODE *lgoto(NODE *arg);
 extern NODE *ltag(NODE *arg);
-extern int torf_arg(NODE *args);
+extern bool  boolean_arg(NODE *args);
 extern NODE *lnot(NODE *args);
 extern NODE *land(NODE *args);
 extern NODE *lor(NODE *args);

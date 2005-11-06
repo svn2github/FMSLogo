@@ -1714,12 +1714,13 @@ NODE *lfill(NODE *arg)
    MainWindowx->ScreenWindow->UpdateWindow();
    if (arg != NIL)
       {
-      bOld = torf_arg(arg);
+      bOld = boolean_arg(arg);
       }
    else
       {
       bOld = false;
       }
+
    logofill(bOld);
    MainWindowx->ScreenWindow->Invalidate(false);
    draw_turtles(true);

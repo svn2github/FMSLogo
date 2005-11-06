@@ -164,10 +164,12 @@ NODE *lopen(NODE *arg, char *mode)
 
 NODE *lopenread(NODE *args)
    {
-   BOOL bBinary = FALSE;
+   bool bBinary = false;
 
    if (cdr(args) != NIL)
-      bBinary = torf_arg(cdr(args));
+      {
+      bBinary = boolean_arg(cdr(args));
+      }
 
    if (NOT_THROWING)
       {
@@ -182,56 +184,74 @@ NODE *lopenread(NODE *args)
 
 NODE *lopenwrite(NODE *args)
    {
-   BOOL bBinary = FALSE;
-
-	if (cdr(args) != NIL)
-		bBinary = torf_arg(cdr(args));
-
-	if (NOT_THROWING)
-		{
-		if (bBinary)
-			return (lopen(args, "wb"));
-		else
-			return (lopen(args, "w"));
-		}
-
-   return(UNBOUND);
-   }
-
-NODE *lopenappend(NODE *args)
-   {
-   BOOL bBinary = FALSE;
-
-	if (cdr(args) != NIL)
-		bBinary = torf_arg(cdr(args));
-
-	if (NOT_THROWING)
-		{
-		if (bBinary)
-			return (lopen(args, "ab"));
-		else
-			return (lopen(args, "a"));
-		}
-
-   return(UNBOUND);
-   }
-
-NODE *lopenupdate(NODE *args)
-   {
-   BOOL bBinary = FALSE;
+   bool bBinary = false;
 
    if (cdr(args) != NIL)
-      bBinary = torf_arg(cdr(args));
+      {
+      bBinary = boolean_arg(cdr(args));
+      }
 
    if (NOT_THROWING)
       {
       if (bBinary)
-         return (lopen(args, "r+b"));
+         {
+         return lopen(args, "wb");
+         }
       else
-         return (lopen(args, "r+"));
+         {
+         return lopen(args, "w");
+         }
       }
 
-   return(UNBOUND);
+   return UNBOUND;
+   }
+
+NODE *lopenappend(NODE *args)
+   {
+   bool bBinary = false;
+
+   if (cdr(args) != NIL)
+      {
+      bBinary = boolean_arg(cdr(args));
+      }
+
+   if (NOT_THROWING)
+      {
+      if (bBinary)
+         {
+         return lopen(args, "ab");
+         }
+      else
+         {
+         return (lopen(args, "a"));
+         }
+      }
+
+   return UNBOUND;
+   }
+
+NODE *lopenupdate(NODE *args)
+   {
+   bool bBinary = false;
+
+   if (cdr(args) != NIL)
+      {
+      bBinary = boolean_arg(cdr(args));
+      }
+
+   if (NOT_THROWING)
+      {
+      if (bBinary)
+         {
+         return lopen(args, "r+b");
+         }
+      else
+         {
+         return (lopen(args, "r+"));
+         }
+      }
+
+   return UNBOUND;
    }
 
 NODE *lallopen(NODE *)
@@ -248,7 +268,11 @@ NODE *lclose(NODE *arg)
    
    ref(arg);
    arg = reref(arg, cnv_node_to_strnode(arg));
-   if (arg == UNBOUND) return (NULL);
+   if (arg == UNBOUND) 
+      {
+      return (NULL); // why not UNBOUND?
+      }
+
    fnstr = (char *) malloc((size_t) getstrlen(arg) + 1);
    strnzcpy(fnstr, getstrptr(arg), getstrlen(arg));
 
@@ -293,7 +317,7 @@ NODE *lclose(NODE *arg)
    deref(arg);
    free(fnstr);
 
-   return (UNBOUND);
+   return UNBOUND;
    }
 
 NODE *lsetwrite(NODE *arg)
@@ -312,8 +336,10 @@ NODE *lsetwrite(NODE *arg)
       writer_name = reref(writer_name, car(arg));
       }
    else
+      {
       err_logo(FILE_ERROR, make_static_strnode("File not open"));
-   return (UNBOUND);
+      }
+   return UNBOUND;
    }
 
 NODE *lsetread(NODE *arg)

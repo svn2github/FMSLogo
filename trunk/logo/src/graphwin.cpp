@@ -213,11 +213,11 @@ NODE *lgifsave(NODE *args)
    cnv_strnode_string(textbuf, args);
 
    /* check for optional callback routine */
-   int iDelay = -1;
-   int bAppendMode = 0;
-   int iLoop = -1;
-   int iMaxColorDepth = 8;
-   int iTrans = -1;
+   int  iDelay = -1;
+   bool bAppendMode = false;
+   int  iLoop = -1;
+   int  iMaxColorDepth = 8;
+   int  iTrans = -1;
 
    if (cdr(args) != NIL)
       {
@@ -227,7 +227,7 @@ NODE *lgifsave(NODE *args)
          iDelay = getint(val1);
          if (cdr(cdr(args)) != NIL)
             {
-            bAppendMode = torf_arg(cdr(cdr(args)));
+            bAppendMode = boolean_arg(cdr(cdr(args)));
             if (NOT_THROWING)
                {
                if (cdr(cdr(cdr(args))) != NIL)
@@ -2317,7 +2317,7 @@ void do_help(char *arg)
       {
       MainWindowx->WinHelp(szHelpFileName, HELP_PARTIALKEY, (DWORD) arg);
       }
-   JustDidEdit = 1;
+   JustDidEdit = true;
    }
 
 NODE *lhelp(NODE *arg)
