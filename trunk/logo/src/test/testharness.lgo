@@ -12,6 +12,7 @@ LOAD "label.lgo
 LOAD "fill.lgo
 LOAD "mkdir.lgo
 LOAD "file.lgo
+LOAD "procedure.lgo
 
 MAKE "testlog []
 
@@ -116,16 +117,17 @@ TO TESTALL
 
   REPORTTESTINITIALIZE
 
-  ARRAYTEST  ; from array.lgo
-  LOGICTEST  ; from logic.lgo
-  BITMAPTEST ; from bitmap.lgo
-  FORMTEST   ; from form.lgo
-  EDITORTEST ; from editor.lgo 
-  PORTTEST   ; from port.lgo
-  LABELTEST  ; from label.lgo
-  FILLTEST   ; from fill.lgo
-  FILETEST   ; from file.lgo
-;  MKDIRTEST  ; from mkdir.lgo
+  ARRAYTEST     ; from array.lgo
+  LOGICTEST     ; from logic.lgo
+  PROCEDURETEST ; from procedure.lgo
+  BITMAPTEST    ; from bitmap.lgo
+  FORMTEST      ; from form.lgo
+  EDITORTEST    ; from editor.lgo 
+  PORTTEST      ; from port.lgo
+  LABELTEST     ; from label.lgo
+  FILLTEST      ; from fill.lgo
+  FILETEST      ; from file.lgo
+;  MKDIRTEST     ; from mkdir.lgo
 
   REPORTTESTUNINITIALIZE
 END

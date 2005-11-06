@@ -44,6 +44,24 @@ INFO: Executing invalid instruction: ' (NOT) '
 INFO: Executing invalid instruction: ' (NOT 0) '
 INFO: Executing invalid instruction: ' (NOT "truex) '
 INFO: Executing invalid instruction: ' (NOT "true "true) '
+PASS: TEXT "SAMPLEPROC returned [a b] [PRINT :a] [SHOW :b] , as expected.
+PASS: FULLTEXT "SAMPLEPROC returned TO SAMPLEPROC  :a  :b   PRINT :a ; print   SHOW  :b ; show END , as expected.
+PASS: DEFINEDP "nonexistent returned false , as expected.
+PASS: DEFINED? "nonexistent returned false , as expected.
+PASS: DEFINED? "FORWARD returned false , as expected.
+PASS: DEFINED? "SAMPLEPROC returned true , as expected.
+PASS: DEFINED? "sampleproc returned true , as expected.
+PASS: ECHO "input returned input , as expected.
+PASS: DEFINEDP "ECHO returned true , as expected.
+PASS: DEFINED? "ECHO returned true , as expected.
+INFO: Executing invalid instruction: ' (PO) '
+INFO: Executing invalid instruction: ' (TEXT) '
+INFO: Executing invalid instruction: ' (TEXT "nonexistent) '
+INFO: Executing invalid instruction: ' (FULLTEXT) '
+INFO: Executing invalid instruction: ' (FULLTEXT "nonexistent) '
+INFO: Executing invalid instruction: ' (DEFINE) '
+INFO: Executing invalid instruction: ' (DEFINE "function) '
+INFO: Executing invalid instruction: ' (DEFINE "function [] ) '
 PASS: Size is [100 100] , as expected.
 PASS: Size is [100 101] , as expected.
 PASS: Size is [101 100] , as expected.

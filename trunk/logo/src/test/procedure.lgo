@@ -1,0 +1,55 @@
+TO SAMPLEPROC  :a  :b
+  PRINT :a ; print
+  SHOW  :b ; show
+END
+
+TO PROCEDURETEST
+
+  SIMPLEREPORTTEST ~
+     [TEXT "SAMPLEPROC] ~
+     [[a b] [PRINT :a] [SHOW :b]]
+
+  SIMPLEREPORTTEST ~
+     [FULLTEXT "SAMPLEPROC] ~
+     (LIST 
+        "|TO SAMPLEPROC  :a  :b|
+        "|  PRINT :a ; print| 
+        "|  SHOW  :b ; show| 
+        "END)
+
+   ; test DEFINEDP
+   SIMPLEREPORTTEST [DEFINEDP "nonexistent] "false
+   SIMPLEREPORTTEST [DEFINED? "nonexistent] "false
+   SIMPLEREPORTTEST [DEFINED? "FORWARD]     "false
+   SIMPLEREPORTTEST [DEFINED? "SAMPLEPROC]  "true
+   SIMPLEREPORTTEST [DEFINED? "sampleproc]  "true
+   
+
+   ; test DEFINE
+   DEFINE "ECHO [[a] [output :a] ]
+   SIMPLEREPORTTEST [ECHO "input] "input
+   SIMPLEREPORTTEST [DEFINEDP "ECHO] "true
+   SIMPLEREPORTTEST [DEFINED? "ECHO] "true
+
+   ; Just exercise these functions
+   ; we'll figure out how to test their output later
+   IGNORE NAMES
+
+   OPENWRITE "po.dump.txt
+   LOCALMAKE "previouswriter WRITER
+   SETWRITE "po.dump.txt
+   PO CONTENTS
+   SETWRITE :previouswriter
+   CLOSE "po.dump.txt
+   ERASEFILE "po.dump.txt
+
+   RUNBADINPUTTEST [(PO)]
+   RUNBADINPUTTEST [(TEXT)]
+   RUNBADINPUTTEST [(TEXT "nonexistent)]
+   RUNBADINPUTTEST [(FULLTEXT)]
+   RUNBADINPUTTEST [(FULLTEXT "nonexistent)]
+   RUNBADINPUTTEST [(DEFINE)]
+   RUNBADINPUTTEST [(DEFINE "function)]
+   RUNBADINPUTTEST [(DEFINE "function [])]
+END
+
