@@ -182,7 +182,7 @@ int debug_print = 1;
 void real_print_node(FILE *strm, NODE *nd, int depth, int width)
    {
    int i;
-   char *cp;
+   const char *cp;
    NODETYPES ndty;
 
    if (depth == 0)

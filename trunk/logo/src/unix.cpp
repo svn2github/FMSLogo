@@ -228,7 +228,7 @@ NODE *lfiles(NODE *)
       {
       if (ffblk.attrib != FA_DIREC)
          {
-         NODE* file = make_strnode(ffblk.name, NULL, strlen(ffblk.name), STRING, strnzcpy);
+         NODE* file = make_strnode(ffblk.name, strlen(ffblk.name), STRING, strnzcpy);
          if (directory == NULL)
             {
             directory = cons(file,NIL);
@@ -255,7 +255,7 @@ NODE *ldirectories(NODE *)
       {
       if (ffblk.attrib == FA_DIREC)
          {
-         NODE* file = make_strnode(ffblk.name, NULL, strlen(ffblk.name), STRING, strnzcpy);
+         NODE* file = make_strnode(ffblk.name, strlen(ffblk.name), STRING, strnzcpy);
          if (directory == NULL)
             {
             directory = cons(file,NIL);

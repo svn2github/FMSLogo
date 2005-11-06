@@ -236,6 +236,6 @@ NODE *lstandout(NODE *args)
    print_stringlen = 300;
    ndprintf((FILE *) NULL, fmtbuf, car(args));
    *print_stringptr = '\0';
-   return (make_strnode(textbuf, NULL, (int) strlen(textbuf), STRING, strnzcpy));
+   return make_strnode(textbuf, (int) strlen(textbuf), STRING, strnzcpy);
    }
 

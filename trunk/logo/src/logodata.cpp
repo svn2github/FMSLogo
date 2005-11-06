@@ -63,179 +63,182 @@ int ecma_get(int ch)
 
 #endif
 
-char *strnzcpy(char *s1, char *s2, int n)
+char *strnzcpy(char *dst, const char *src, int len)
    {
-   strncpy(s1, s2, n);
-   s1[n] = '\0';
-   return (s1);
+   strncpy(dst, src, len);
+   dst[len] = '\0';
+   return dst;
    }
 
-char *word_strnzcpy(char *s1, NODE *kludge, int n)   /* KLUDGE!               */
+char *word_strnzcpy(char *dst, NODE *kludge, int len)   /* KLUDGE!               */
    {
-   char *temp = s1;
+   char *temp = dst;
 
    while (kludge != NIL)
       {
-      strncpy(s1, getstrptr(car(kludge)), getstrlen(car(kludge)));
-      s1 += getstrlen(car(kludge));
+      strncpy(dst, getstrptr(car(kludge)), getstrlen(car(kludge)));
+      dst += getstrlen(car(kludge));
       kludge = cdr(kludge);
       }
-   temp[n] = '\0';
+   temp[len] = '\0';
    return (temp);
    }
 
-char *noparity_strnzcpy(char *s1, char *s2, int n)
+char *noparity_strnzcpy(char *dst, const char * src, int len)
    {
    int i;
 
-   for (i = 0; i < n; i++)
-      s1[i] = clearparity(s2[i]);
-   s1[n] = '\0';
-   return (s1);
+   for (i = 0; i < len; i++)
+      dst[i] = clearparity(src[i]);
+   dst[len] = '\0';
+   return (dst);
    }
 
-char *mend_strnzcpy(char *s1, char *s2, int n)
+char *mend_strnzcpy(char *dst, const char * src, int len)
    {
    int i, vbar = 0;
 
-   for (i = 0; i < n;)
+   for (i = 0; i < len;)
       {
-      while (*s2 == '|')
+      while (*src == '|')
          {
          vbar = !vbar;
-         s2++;
+         src++;
          }
       if (vbar)
          {
-         if (strchr(special_chars, (int) * s2))
-            s1[i++] = setparity(*s2++);
+         if (strchr(special_chars, (int) * src))
+            dst[i++] = setparity(*src++);
          else
-            s1[i++] = *s2++;
+            dst[i++] = *src++;
          }
       else
          {
-         while (*s2 == ';' || (*s2 == '~' && *(s2 + 1) == '\n'))
+         while (*src == ';' || (*src == '~' && *(src + 1) == '\n'))
             {
-            while (*s2 == '~' && *(s2 + 1) == '\n') s2 += 2;
-            if (*s2 == ';')
+            while (*src == '~' && *(src + 1) == '\n') src += 2;
+            if (*src == ';')
                do
                   {
-                  s2++;
+                  src++;
                   }
-               while (*s2 != '\0' && *s2 != '~' && *(s2 + 1) != '\n');
+               while (*src != '\0' && *src != '~' && *(src + 1) != '\n');
             }
-         if (*s2 != '|') s1[i++] = *s2++;
+         if (*src != '|') dst[i++] = *src++;
          }
       }
-   s1[n] = '\0';
-   return (s1);
+   dst[len] = '\0';
+   return (dst);
    }
 
-char *mend_nosemi(char *s1, char *s2, int n)
+char *mend_nosemi(char *dst, const char * src, int len)
    {
    int i, vbar = 0;
 
-   for (i = 0; i < n;)
+   for (i = 0; i < len;)
       {
-      while (*s2 == '|')
+      while (*src == '|')
          {
          vbar = !vbar;
-         s2++;
+         src++;
          }
       if (vbar)
          {
-         if (strchr(special_chars, (int) * s2))
-            s1[i++] = setparity(*s2++);
+         if (strchr(special_chars, (int) * src))
+            dst[i++] = setparity(*src++);
          else
-            s1[i++] = *s2++;
+            dst[i++] = *src++;
          }
       else
          {
-         while ((*s2 == '~' && *(s2 + 1) == '\n'))
+         while ((*src == '~' && *(src + 1) == '\n'))
             {
-            while (*s2 == '~' && *(s2 + 1) == '\n') s2 += 2;
+            while (*src == '~' && *(src + 1) == '\n') src += 2;
             }
-         if (*s2 != '|') s1[i++] = *s2++;
+         if (*src != '|') dst[i++] = *src++;
          }
       }
-   s1[n] = '\0';
-   return (s1);
+   dst[len] = '\0';
+   return (dst);
    }
 
-char *quote_strnzcpy(char *s1, char *s2, int n)
+char *quote_strnzcpy(char *dst, const char *src, int len)
    {
-   s1[0] = '"';
-   strncpy(s1 + 1, s2, n - 1);
-   s1[n] = '\0';
-   return (s1);
+   dst[0] = '"';
+   strncpy(dst + 1, src, len - 1);
+   dst[len] = '\0';
+   return dst;
    }
 
-char *colon_strnzcpy(char *s1, char *s2, int n)
+char *colon_strnzcpy(char *dst, const char * src, int len)
    {
-   s1[0] = ':';
-   strncpy(s1 + 1, s2, n - 1);
-   s1[n] = '\0';
-   return (s1);
+   dst[0] = ':';
+   strncpy(dst + 1, src, len - 1);
+   dst[len] = '\0';
+   return (dst);
    }
 
 #define uncapital(c)    (c - 'A' + 'a')
 
-char *low_strnzcpy(char *s1, char *s2, int n)
+char *low_strnzcpy(char *dst, const char * src, int len)
    {
-   char *temp = s1;
+   char *temp = dst;
    int i;
 
-   for (i = 0; i < n; i++)
+   for (i = 0; i < len; i++)
       {
-      if (upper_p(*s2))
-         *s1++ = uncapital(*s2++);
+      if (upper_p(*src))
+         *dst++ = uncapital(*src++);
       else
-         *s1++ = *s2++;
+         *dst++ = *src++;
       }
-   *s1 = '\0';
+   *dst = '\0';
    return (temp);
    }
 
 #define capital(c)    (c - 'a' + 'A')
 
-char *cap_strnzcpy(char *s1, char *s2, int n)
+char *cap_strnzcpy(char *dst, const char * src, int len)
    {
-   char *temp = s1;
+   char *temp = dst;
    int i;
 
-   for (i = 0; i < n; i++)
+   for (i = 0; i < len; i++)
       {
-      if (lower_p(*s2))
-         *s1++ = capital(*s2++);
+      if (lower_p(*src))
+         *dst++ = capital(*src++);
       else
-         *s1++ = *s2++;
+         *dst++ = *src++;
       }
-   *s1 = '\0';
+   *dst = '\0';
    return (temp);
    }
 
-char *noparitylow_strnzcpy(char *s1, char *s2, int n)
+char *noparitylow_strnzcpy(char *dst, const char *src, int len)
    {
-   int i;
-   char c, *temp = s1;
+   char *temp = dst;
 
-   for (i = 0; i < n; i++)
+   for (int i = 0; i < len; i++)
       {
-      c = clearparity(*s2++);
+      char c = clearparity(*src++);
       if (upper_p(c))
-         *s1++ = uncapital(c);
+         {
+         *dst++ = uncapital(c);
+         }
       else
-         *s1++ = c;
+         {
+         *dst++ = c;
+         }
       }
-   *s1 = '\0';
-   return (temp);
+   *dst = '\0';
+   return temp;
    }
 
-int low_strncmp(char *s1, char *s2, int n)
+int low_strncmp(const char *s1, const char * s2, int len)
    {
    int i;
 
-   for (i = 0; i < n; i++)
+   for (i = 0; i < len; i++)
       {
       if (*s1 != *s2)
          {
@@ -264,11 +267,11 @@ int low_strncmp(char *s1, char *s2, int n)
    return (0);
    }
 
-int noparity_strncmp(char *s1, char *s2, int n)
+int noparity_strncmp(const char * s1, const char * s2, int len)
    {
    int i;
 
-   for (i = 0; i < n; i++)
+   for (i = 0; i < len; i++)
       {
       if (clearparity(*s1) != clearparity(*s2))
          return (clearparity(*s1) - clearparity(*s2));
@@ -277,12 +280,12 @@ int noparity_strncmp(char *s1, char *s2, int n)
    return (0);
    }
 
-int noparitylow_strncmp(char *s1, char *s2, int n)
+int noparitylow_strncmp(const char * s1, const char * s2, int len)
    {
    int i;
    char c1, c2;
 
-   for (i = 0; i < n; i++)
+   for (i = 0; i < len; i++)
       {
       c1 = clearparity(*s1);
       c2 = clearparity(*s2);
@@ -313,33 +316,71 @@ int noparitylow_strncmp(char *s1, char *s2, int n)
    return (0);
    }
 
-NODE *make_strnode(char *strptr, char *strhead, int len,
-         NODETYPES typ, char * (*copy_routine) (char *, char *, int))
+// Makes a string node by copying a NUL-terminated string
+// into a NODE structure.
+NODE * 
+make_strnode(
+   const char *string, 
+   int         len,
+   NODETYPES   typ,  
+   char *    (*copy_routine) (char *, const char *, int)
+)
    {
-   NODE *strnode;
-   unsigned short *temp;
+   if (len == 0 && Null_Word != NIL)
+      {
+      return Null_Word;
+      }
 
-   if (len == 0 && Null_Word != NIL) return (Null_Word);
-   strnode = newnode(typ);
+   NODE * strnode = newnode(typ);
+
+   // allocate enough to hold the header, the string, and NUL.
+   char * strhead = (char *) malloc(sizeof(short) + len + 1);
    if (strhead == NULL)
       {
-      strhead = (char *) malloc((size_t) len + sizeof(short) + 1);
-      if (strhead == NULL)
-         {
-         err_logo(OUT_OF_MEM, NIL);
-         return UNBOUND;
-         }
-      (*copy_routine) (strhead + sizeof(short), strptr, len);
-      strptr = strhead + sizeof(short);
-      temp = (unsigned short *) strhead;
-      setstrrefcnt(temp, 0);
+      err_logo(OUT_OF_MEM, NIL);
+      return UNBOUND;
       }
+
+   // set the "string pointer" to just after the header
+   char * strptr = strhead + sizeof(short);
+   copy_routine(strptr, string, len);
+
+   // set the reference count to 1.
+   unsigned short *header = (unsigned short *) strhead;
+   setstrrefcnt(header, 1);
+
    setstrlen(strnode, len);
    setstrptr(strnode, strptr);
    setstrhead(strnode, strhead);
-   temp = (unsigned short *) strhead;
-   incstrrefcnt(temp);
-   return (strnode);
+   return strnode;
+   }
+
+
+// Makes a string node by referencing an existing NUL-terminated string.
+// This string is modified and must not be in static memory.
+NODE *
+make_strnode_no_copy(
+   const char *strptr, 
+   char       *strhead, 
+   int         len,
+   NODETYPES   typ
+)
+   {
+   if (len == 0 && Null_Word != NIL)
+      {
+      return Null_Word;
+      }
+
+   NODE * strnode = newnode(typ);
+   setstrlen(strnode, len);
+   setstrptr(strnode, strptr);
+   setstrhead(strnode, strhead);
+
+   // increment the reference count
+   unsigned short * header = (unsigned short *) strhead;
+   incstrrefcnt(header);
+
+   return strnode;
    }
 
 void make_runparse(NODE *ndi)
@@ -453,37 +494,40 @@ NODE *cnv_node_to_strnode(NODE *nd)
        case BACKSLASH_STRING:
        case VBAR_STRING:
            return (nd);
+
        case CASEOBJ:
            return strnode__caseobj(nd);
+
        case QUOTE:
            nd = valref(cnv_node_to_strnode(node__quote(nd)));
-           nd = reref(nd, make_strnode(getstrptr(nd),
-                 (char *) NULL, getstrlen(nd) + 1,
-                 nodetype(nd), quote_strnzcpy));
+           nd = reref(
+              nd, 
+              make_strnode(getstrptr(nd), getstrlen(nd) + 1, nodetype(nd), quote_strnzcpy));
            unref(nd);
-           return (nd);
+           return nd;
+
        case COLON:
            nd = valref(cnv_node_to_strnode(node__colon(nd)));
-           nd = reref(nd, make_strnode(getstrptr(nd),
-                 (char *) NULL, getstrlen(nd) + 1,
-                 nodetype(nd), colon_strnzcpy));
+           nd = reref(
+              nd, 
+              make_strnode(getstrptr(nd), getstrlen(nd) + 1, nodetype(nd), colon_strnzcpy));
            unref(nd);
-           return (nd);
+           return nd;
+
        case INT:
            sprintf(s, "%ld", getint(nd));
-           return (make_strnode(s, (char *) NULL, (int) strlen(s),
-                 STRING, strnzcpy));
+           return make_strnode(s, (int) strlen(s), STRING, strnzcpy);
+
        case FLOAT:
            sprintf(s, "%0.15g", getfloat(nd));
-           return (make_strnode(s, (char *) NULL, (int) strlen(s),
-                 STRING, strnzcpy));
+           return make_strnode(s, (int) strlen(s), STRING, strnzcpy);
       }
 
    /*NOTREACHED*/
    return (NIL);
    }
 
-NODE *make_static_strnode(char *strptr)
+NODE *make_static_strnode(const char *strptr)
    {
    NODE *strnode = newnode(STRING);
 
@@ -568,26 +612,20 @@ NODE *make_array(int len)
 
 NODE *llowercase(NODE *args)
    {
-   NODE *arg;
-
-   arg = string_arg(args);
+   NODE * arg = string_arg(args);
    if (NOT_THROWING)
       {
-      return make_strnode(getstrptr(arg), (char *) NULL,
-         getstrlen(arg), nodetype(arg), low_strnzcpy);
+      return make_strnode(getstrptr(arg), getstrlen(arg), nodetype(arg), low_strnzcpy);
       }
    return UNBOUND;
    }
 
 NODE *luppercase(NODE *args)
    {
-   NODE *arg;
-
-   arg = string_arg(args);
+   NODE * arg = string_arg(args);
    if (NOT_THROWING)
       {
-      return make_strnode(getstrptr(arg), (char *) NULL,
-         getstrlen(arg), nodetype(arg), cap_strnzcpy);
+      return make_strnode(getstrptr(arg), getstrlen(arg), nodetype(arg), cap_strnzcpy);
       }
    return UNBOUND;
    }

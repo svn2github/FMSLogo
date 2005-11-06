@@ -271,10 +271,9 @@ NODE *reader(FILE *strm, char *prompt)
    if (phys_line == p_line)
       {
       //      free(p_line);
-      return (Null_Word);              /* so emptyp works                     */
+      return Null_Word; // so emptyp works
       }
-   ret = make_strnode(p_line, (char *) NULL, (int) strlen(p_line),
-      this_type, strnzcpy);
+   ret = make_strnode(p_line, (int) strlen(p_line), this_type, strnzcpy);
    //   free(p_line);
    return (ret);
    }
@@ -299,10 +298,11 @@ NODE *list_to_array(NODE *list)
 #define infixs(ch)      (ch == '*' || ch == '/' || ch == '+' || ch == '-' || ch == '=' || ch == '<' || ch == '>')
 #define white_space(ch) (ch == ' ' || ch == '\t' || ch == '\n')
 
-NODE *parser_iterate(char **inln, char *inlimit, char *inhead,
+NODE *parser_iterate(const char **inln, const char *inlimit, const char *inhead,
          bool semi, int endchar)
    {
-   char ch, *wptr = NULL;
+   char ch;
+   const char *wptr = NULL;
    static char terminate = '\0';       /* KLUDGE                              */
    NODE *outline = NIL, *lastnode = NIL, *tnode = NIL;
    int windex = 0, vbar = 0;
@@ -418,13 +418,13 @@ NODE *parser_iterate(char **inln, char *inlimit, char *inhead,
          if (windex > 0)
             {
             if (broken == FALSE)
-               tnode = cons(make_strnode(wptr, inhead, windex,
-                     this_type, strnzcpy),
+               tnode = cons(
+                  make_strnode(wptr, windex, this_type, strnzcpy),
                   NIL);
             else
                {
-               tnode = cons(make_strnode(wptr, (char *) NULL, windex,
-                     this_type, (semi ? mend_strnzcpy : mend_nosemi)),
+               tnode = cons(
+                  make_strnode(wptr, windex, this_type, (semi ? mend_strnzcpy : mend_nosemi)),
                   NIL);
                broken = FALSE;
                }
@@ -448,16 +448,15 @@ NODE *parser_iterate(char **inln, char *inlimit, char *inhead,
 
 NODE *parser(NODE *nd, bool semi)
    {
-   NODE *rtn;
-   int slen;
-   char *lnsav;
 
-   rtn = cnv_node_to_strnode(nd);
+   NODE * rtn = cnv_node_to_strnode(nd);
    ref(rtn);
    gcref(nd);
-   slen = getstrlen(rtn);
-   lnsav = getstrptr(rtn);
-   rtn = reref(rtn,
+
+   int slen = getstrlen(rtn);
+   const char * lnsav = getstrptr(rtn);
+   rtn = reref(
+      rtn,
       parser_iterate(&lnsav, lnsav + slen, getstrhead(rtn), semi, -1));
    return (unref(rtn));
    }
@@ -477,7 +476,9 @@ NODE *lparse(NODE *args)
 NODE *runparse_node(NODE *nd, NODE **ndsptr)
    {
    NODE *outline = NIL, *tnode = NIL, *lastnode = NIL, *snd;
-   char *wptr, *tptr, *whead;
+   const char *wptr;
+   const char *tptr;
+   char *whead;
    int wlen, wcnt, tcnt, isnumb;
    NODETYPES wtyp;
    bool monadic_minus = FALSE;
@@ -512,12 +513,16 @@ NODE *runparse_node(NODE *nd, NODE **ndsptr)
          if (wtyp == PUNBOUND)
             {
             wtyp = BACKSLASH_STRING;
-            tnode = cons(make_quote(intern(make_strnode(tptr, NULL,
-                        tcnt, wtyp, noparity_strnzcpy))), NIL);
+            tnode = cons(
+               make_quote(intern(make_strnode(tptr, tcnt, wtyp, noparity_strnzcpy))), 
+               NIL);
             }
          else
-            tnode = cons(make_quote(intern(make_strnode(tptr, whead, tcnt,
-                        wtyp, strnzcpy))), NIL);
+            {
+            tnode = cons(
+               make_quote(intern(make_strnode(tptr, tcnt, wtyp, strnzcpy))), 
+               NIL);
+            }
          }
       else if (*wptr == ':')
          {
@@ -525,9 +530,12 @@ NODE *runparse_node(NODE *nd, NODE **ndsptr)
          tptr = ++wptr;
          wcnt++;
          while (wcnt < wlen && !parens(*wptr) && !infixs(*wptr))
+            {
             wptr++, wcnt++, tcnt++;
-         tnode = cons(make_colon(intern(make_strnode(tptr, whead, tcnt,
-                     wtyp, strnzcpy))), NIL);
+            }
+         tnode = cons(
+            make_colon(intern(make_strnode(tptr, tcnt, wtyp, strnzcpy))), 
+            NIL);
          }
       else if (wcnt == 0 && *wptr == '-' && monadic_minus == FALSE &&
             wcnt+1 < wlen && !white_space(*(wptr + 1)))
@@ -539,10 +547,15 @@ NODE *runparse_node(NODE *nd, NODE **ndsptr)
       else if (parens(*wptr) || infixs(*wptr))
          {
          if (monadic_minus)
+            {
             tnode = cons(Minus_Tight, NIL);
+            }
          else
-            tnode = cons(intern(make_strnode(wptr, whead, 1,
-                     STRING, strnzcpy)), NIL);
+            {
+            tnode = cons(
+               intern(make_strnode(wptr, 1, STRING, strnzcpy)), 
+               NIL);
+            }
          monadic_minus = FALSE;
          wptr++, wcnt++;
          }
@@ -576,7 +589,7 @@ NODE *runparse_node(NODE *nd, NODE **ndsptr)
             NODE * qmtnode = cons_list(
                Left_Paren,
                Query,
-               cnv_node_to_numnode(make_strnode(tptr + 1, whead, tcnt - 1, wtyp, strnzcpy)));
+               cnv_node_to_numnode(make_strnode(tptr + 1, tcnt - 1, wtyp, strnzcpy)));
             if (outline == NIL)
                {
                outline = vref(qmtnode);
@@ -590,18 +603,26 @@ NODE *runparse_node(NODE *nd, NODE **ndsptr)
             }
          else if (isnumb < 2 && tcnt > 0)
             {
-            tnode = cons(cnv_node_to_numnode(make_strnode(tptr, whead, tcnt,
-                     wtyp, strnzcpy)),
+            tnode = cons(
+               cnv_node_to_numnode(make_strnode(tptr, tcnt, wtyp, strnzcpy)),
                NIL);
             }
          else
-            tnode = cons(intern(make_strnode(tptr, whead, tcnt,
-                     wtyp, strnzcpy)),
+            {
+            tnode = cons(
+               intern(make_strnode(tptr, tcnt, wtyp, strnzcpy)),
                NIL);
+            }
          }
 
-      if (outline == NIL) outline = vref(tnode);
-      else setcdr(lastnode, tnode);
+      if (outline == NIL)
+         {
+         outline = vref(tnode);
+         }
+      else 
+         {
+         setcdr(lastnode, tnode);
+         }
       lastnode = tnode;
       }
    deref(snd);

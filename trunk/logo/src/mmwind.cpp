@@ -123,7 +123,7 @@ NODE *lmidiopen(NODE *args)
          }
       else
          {
-         targ = make_strnode(moc.szPname, NULL, strlen(moc.szPname), STRING, strnzcpy);
+         targ = make_strnode(moc.szPname, strlen(moc.szPname), STRING, strnzcpy);
          val = parser(targ, FALSE);
          return (val);
          }
@@ -345,7 +345,7 @@ NODE *lmci(NODE *args)
 
       if (strlen(MciReturnBuffer))
          {
-         targ = make_strnode(MciReturnBuffer, NULL, strlen(MciReturnBuffer), STRING, strnzcpy);
+         targ = make_strnode(MciReturnBuffer, strlen(MciReturnBuffer), STRING, strnzcpy);
          val = parser(targ, FALSE);
          return (val);
          }

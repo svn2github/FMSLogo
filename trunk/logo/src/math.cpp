@@ -25,7 +25,7 @@
 int numberp(NODE *snd)
    {
    int dl, dr, pcnt, plen;
-   char *p;
+   const char *p;
 
    if (is_number(snd)) return (1);
 

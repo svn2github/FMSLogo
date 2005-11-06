@@ -505,7 +505,7 @@ NODE *lnetreceivereceivevalue(NODE *)
       }
    else
       {
-      targ = make_strnode(network_receive_value, NULL, strlen(network_receive_value), STRING, strnzcpy);
+      targ = make_strnode(network_receive_value, strlen(network_receive_value), STRING, strnzcpy);
       val = parser(targ, FALSE);
       return (val);
       }
@@ -525,7 +525,7 @@ NODE *lnetsendreceivevalue(NODE *)
       }
    else
       {
-      targ = make_strnode(network_send_value, NULL, strlen(network_send_value), STRING, strnzcpy);
+      targ = make_strnode(network_send_value, strlen(network_send_value), STRING, strnzcpy);
       val = parser(targ, FALSE);
       return (val);
       }

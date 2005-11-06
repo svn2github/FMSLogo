@@ -755,7 +755,9 @@ void three_lists(NODE *arg, NODE **proclst, NODE **varlst, NODE **plistlst)
 
 char *expand_slash(NODE *wd)
    {
-   char *result, *cp, *cp2;
+   char *result;
+   const char *cp;
+   char *cp2;
    int i, len = getstrlen(wd), j;
 
    for (cp = getstrptr(wd), i = 0, j = len; --j >= 0;)
