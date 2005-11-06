@@ -26,7 +26,7 @@ TO FILLTEST
   IFELSE :isok [
     REPORTTESTPASSED (sentence "|(FILL "true) worked as expected|) 
   ] [
-    REPORTTESTPASSED (sentence "|(FILL "true) did not work as expected|) 
+    REPORTTESTFAILED (sentence "|(FILL "true) did not work as expected|) 
   ]
 
   RUNBADINPUTTEST [(FILL 10)]
