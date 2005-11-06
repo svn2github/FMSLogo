@@ -1,3 +1,36 @@
+PASS: (OR) returned false , as expected.
+PASS: (OR "true) returned true , as expected.
+PASS: (OR "false) returned false , as expected.
+PASS: (OR "true "false) returned true , as expected.
+PASS: (OR "false "true) returned true , as expected.
+PASS: (OR "false "FALSE "false "FALSE) returned false , as expected.
+PASS: (OR "false "FALSE "false "TRUE) returned true , as expected.
+INFO: Executing invalid instruction: ' (OR 1) '
+INFO: Executing invalid instruction: ' (OR 0) '
+INFO: Executing invalid instruction: ' (OR "truex) '
+INFO: Executing invalid instruction: ' (OR "falsex) '
+INFO: Executing invalid instruction: ' (OR "true 1) '
+FAIL: Executing ' (OR "true 1) ' did not throw an error
+INFO: Executing invalid instruction: ' (OR 1 "true) '
+INFO: Executing invalid instruction: ' (OR "false 0) '
+INFO: Executing invalid instruction: ' (OR 0 "false) '
+PASS: (AND) returned true , as expected.
+PASS: (AND "true) returned true , as expected.
+PASS: (AND "false) returned false , as expected.
+PASS: (AND "true "false) returned false , as expected.
+PASS: (OR "false "true) returned false , as expected.
+PASS: (OR "true "true) returned true , as expected.
+PASS: (AND "TRUE "true "TRUE "false) returned false , as expected.
+PASS: (AND "TRUE "true "TRUE "true) returned true , as expected.
+INFO: Executing invalid instruction: ' (AND 1) '
+INFO: Executing invalid instruction: ' (AND 0) '
+INFO: Executing invalid instruction: ' (AND "truex) '
+INFO: Executing invalid instruction: ' (AND "falsex) '
+INFO: Executing invalid instruction: ' (AND "true 1) '
+INFO: Executing invalid instruction: ' (AND 1 "true) '
+INFO: Executing invalid instruction: ' (AND "false 0) '
+FAIL: Executing ' (AND "false 0) ' did not throw an error
+INFO: Executing invalid instruction: ' (AND 0 "false) '
 PASS: Size is [100 100] , as expected.
 PASS: Size is [100 101] , as expected.
 PASS: Size is [101 100] , as expected.
