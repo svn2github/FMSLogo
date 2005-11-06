@@ -222,8 +222,8 @@ NODE *reader(FILE *strm, char *prompt)
             else if (paren && c == ')') paren--;
             else if (c == '[') bracket++;
             else if (bracket && c == ']') bracket--;
-            else if (c == '{') brace++;//ignore//
-            else if (brace && c == '}') brace--;//ignore//
+            else if (c == '{') brace++;
+            else if (brace && c == '}') brace--;
             else if (c == ';') insemi++;
             }
          if (/* (vbar || paren ...) && */ c == '\n')
@@ -328,7 +328,7 @@ NODE *parser_iterate(char **inln, char *inlimit, char *inhead,
             else
                {
                if (**inln == ']' || **inln == '[' ||
-                     **inln == '{' || **inln == '}')//ignore//
+                     **inln == '{' || **inln == '}')
                   {
                   ch = ' ';
                   break;
@@ -368,7 +368,7 @@ NODE *parser_iterate(char **inln, char *inlimit, char *inhead,
          }
 
       else if (vbar || (!white_space(ch) && ch != ']' &&
-               ch != '{' && ch != '}' &&//ignore//
+               ch != '{' && ch != '}' &&
                ch != '[' && ch != '\0'))
          windex++;
 
@@ -377,7 +377,7 @@ NODE *parser_iterate(char **inln, char *inlimit, char *inhead,
       else if (ch == endchar) break;
 
       else if (ch == ']') err_logo(UNEXPECTED_BRACKET, NIL);
-      else if (ch == '}') err_logo(UNEXPECTED_BRACE, NIL);//ignore//
+      else if (ch == '}') err_logo(UNEXPECTED_BRACE, NIL);
 
       /* if this is a '[', parse a new list */
       else if (ch == '[')
@@ -386,10 +386,10 @@ NODE *parser_iterate(char **inln, char *inlimit, char *inhead,
          if (**inln == '\0') ch = '\0';
          }
 
-      else if (ch == '{')              //ignore//
+      else if (ch == '{')
          {
          tnode = cons(list_to_array
-            (parser_iterate(inln, inlimit, inhead, semi, '}')), NIL);//ignore//
+            (parser_iterate(inln, inlimit, inhead, semi, '}')), NIL);
          if (**inln == '@')
             {
             int i = 0, sign = 1;
@@ -413,7 +413,7 @@ NODE *parser_iterate(char **inln, char *inlimit, char *inhead,
       /* if this character or the next one will terminate string, make the word */
       else if (white_space(ch) || ch == '\0' ||
             **inln == ']' || **inln == '[' ||
-            **inln == '{' || **inln == '}')//ignore//
+            **inln == '{' || **inln == '}')
          {
          if (windex > 0)
             {
