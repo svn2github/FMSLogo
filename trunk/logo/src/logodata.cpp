@@ -519,21 +519,24 @@ NODE *cons_list(int dummy, ...)
 
 NODE *make_array(int len)
    {
-   NODE *node;
-   NODE **data;
-
-   node = newnode(ARRAY);
+   NODE* node = newnode(ARRAY);
    setarrorg(node, 1);
    setarrdim(node, len);
-   data = (NODE * *) malloc((size_t) len * sizeof(NODE *));
-   if (data == NULL)
+   if (len != 0)
       {
-      err_logo(OUT_OF_MEM, NIL);
-      return UNBOUND;
+      NODE ** data = (NODE **) malloc(len * sizeof(NODE *));
+      if (data == NULL)
+         {
+         err_logo(OUT_OF_MEM, NIL);
+         return UNBOUND;
+         }
+      setarrptr(node, data);
+      while (--len >= 0)
+         {
+         *data++ = NIL;
+         }
       }
-   setarrptr(node, data);
-   while (--len >= 0) *data++ = NIL;
-   return (node);
+   return node;
    }
 
 NODE *llowercase(NODE *args)
@@ -632,24 +635,25 @@ NODE *lpprop(NODE *args)
 
 NODE *lremprop(NODE *args)
    {
-   NODE *plname, *pname, *plist, *val = NIL;
    bool caseig = false;
-
    if (compare_node(valnode__caseobj(Caseignoredp), Truex, TRUE) == 0)
+      {
       caseig = true;
-   plname = string_arg(args);
-   pname = string_arg(cdr(args));
+      }
+
+   NODE * plname = string_arg(args);
+   NODE * pname = string_arg(cdr(args));
    if (NOT_THROWING)
       {
       plname = intern(plname);
-      plist = plist__caseobj(plname);
+      NODE * plist = plist__caseobj(plname);
       if (plist != NIL)
          {
          if (compare_node(car(plist), pname, caseig) == 0)
             setplist__caseobj(plname, cddr(plist));
          else
             {
-            val = getprop(plist, pname, TRUE);
+            NODE * val = getprop(plist, pname, TRUE);
             if (val != NIL)
                setcdr(cdr(val), cddr(cddr(val)));
             }
