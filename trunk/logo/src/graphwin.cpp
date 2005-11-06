@@ -24,8 +24,6 @@
 extern COLORREF colortable[];
 extern bool bIndexMode;
 
-extern HBITMAP DIBToBitmap(HANDLE hDIB, HPALETTE hPal);
-extern HANDLE BitmapToDIB(HBITMAP hBitmap, HPALETTE hPal);
 extern int gbmBmpToGif(char *BmpName, char *GifName);
 extern int gbmGifToBmp(char *GifName, char *BmpName);
 
