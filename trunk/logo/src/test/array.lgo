@@ -1,0 +1,16 @@
+TO ARRAYTEST
+
+   MAKE "myarray (ARRAY 3 0)
+   SETITEM 2 :myarray 42
+   SETITEM 1 :myarray "hi
+   SETITEM 0 :myarray [list]
+
+   SIMPLEREPORTTEST [ITEM 0 :myarray] [list]
+   SIMPLEREPORTTEST [ITEM 1 :myarray] "hi
+   SIMPLEREPORTTEST [ITEM 2 :myarray] 42
+
+
+   REPORTTESTINFO [Creating an empty array (regression test for bug #1349374)]
+   MAKE "myarray ARRAY 0
+END
+

@@ -2,6 +2,7 @@
 ; It provides test primatives.
 ; It also loads all unit tests and executes them.
 
+LOAD "array.lgo
 LOAD "logic.lgo
 LOAD "bitmap.lgo
 LOAD "form.lgo
@@ -115,6 +116,7 @@ TO TESTALL
 
   REPORTTESTINITIALIZE
 
+  ARRAYTEST  ; from array.lgo
   LOGICTEST  ; from logic.lgo
   BITMAPTEST ; from bitmap.lgo
   FORMTEST   ; from form.lgo

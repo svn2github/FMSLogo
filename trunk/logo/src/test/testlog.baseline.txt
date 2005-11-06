@@ -1,3 +1,7 @@
+PASS: ITEM 0 :myarray returned list , as expected.
+PASS: ITEM 1 :myarray returned hi , as expected.
+PASS: ITEM 2 :myarray returned 42 , as expected.
+INFO: Creating an empty array (regression test for bug #1349374)
 PASS: (OR) returned false , as expected.
 PASS: (OR "true) returned true , as expected.
 PASS: (OR "false) returned false , as expected.
