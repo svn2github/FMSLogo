@@ -574,7 +574,7 @@ extern void init(void);
 
 /* File FILES.CPP: */
 
-extern FILE *open_file(NODE *arg, char *access);
+extern FILE *open_file(NODE *arg, const char *access);
 extern NODE *ldribble(NODE *arg);
 extern NODE *lnodribble(NODE *arg);
 extern FILE *find_file(NODE *arg, bool remove);
