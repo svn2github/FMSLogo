@@ -1,8 +1,10 @@
 PASS: (OR) returned false , as expected.
 PASS: (OR "true) returned true , as expected.
 PASS: (OR "false) returned false , as expected.
+PASS: (OR "false "false) returned false , as expected.
 PASS: (OR "true "false) returned true , as expected.
 PASS: (OR "false "true) returned true , as expected.
+PASS: (OR "true "true) returned true , as expected.
 PASS: (OR "false "FALSE "false "FALSE) returned false , as expected.
 PASS: (OR "false "FALSE "false "TRUE) returned true , as expected.
 INFO: Executing invalid instruction: ' (OR 1) '
@@ -17,9 +19,10 @@ INFO: Executing invalid instruction: ' (OR 0 "false) '
 PASS: (AND) returned true , as expected.
 PASS: (AND "true) returned true , as expected.
 PASS: (AND "false) returned false , as expected.
+PASS: (AND "false "false) returned false , as expected.
 PASS: (AND "true "false) returned false , as expected.
-PASS: (OR "false "true) returned false , as expected.
-PASS: (OR "true "true) returned true , as expected.
+PASS: (AND "false "true) returned false , as expected.
+PASS: (AND "true "true) returned true , as expected.
 PASS: (AND "TRUE "true "TRUE "false) returned false , as expected.
 PASS: (AND "TRUE "true "TRUE "true) returned true , as expected.
 INFO: Executing invalid instruction: ' (AND 1) '

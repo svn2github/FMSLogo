@@ -1,15 +1,6 @@
 TO FORMTEST
 
-  LOCAL "string
-  LOCAL "expectedstring
-
-  MAKE "string         FORM 123.1 10 10
-  MAKE "expectedstring "123.1000000000
-
-  REPORTTEST ~
-    :string = :expectedstring ~
-    (list "|FORM 123.1 10 10 returned| :string) ~
-    (list :expectedstring)
+  SIMPLEREPORTTEST [FORM 123.1 10 10] "123.1000000000
 
   ; bad input tests
   RUNBADINPUTTEST [(FORM)]

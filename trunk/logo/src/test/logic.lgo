@@ -1,48 +1,17 @@
 TO ORTEST
   LOCAL "value
 
-  MAKE "value (OR)
-  REPORTTEST ~
-    :value = "false ~
-    (list "|(OR) returned| :value) ~
-    (list "false)
+  SIMPLEREPORTTEST [(OR) ]       "false
+  SIMPLEREPORTTEST [(OR "true)]  "true
+  SIMPLEREPORTTEST [(OR "false)] "false
 
-  MAKE "value (OR "true)
-  REPORTTEST ~
-    :value = "true ~
-    (list "|(OR "true) returned| :value) ~
-    (list "true)
+  SIMPLEREPORTTEST [(OR "false "false)] "false
+  SIMPLEREPORTTEST [(OR "true  "false)] "true
+  SIMPLEREPORTTEST [(OR "false "true)]  "true
+  SIMPLEREPORTTEST [(OR "true  "true)]  "true
 
-  MAKE "value (OR "false)
-  REPORTTEST ~
-    :value = "false ~
-    (list "|(OR "false) returned| :value) ~
-    (list "false)
-
-  MAKE "value (OR "true "false)
-  REPORTTEST ~
-    :value = "true ~
-    (list "|(OR "true "false) returned| :value) ~
-    (list "true)
-
-  MAKE "value (OR "false "true)
-  REPORTTEST ~
-    :value = "true ~
-    (list "|(OR "false "true) returned| :value) ~
-    (list "true)
-
-  MAKE "value (OR "false "FALSE "false "FALSE)
-  REPORTTEST ~
-    :value = "false ~
-    (list "|(OR "false "FALSE "false "FALSE) returned| :value) ~
-    (list "false)
-
-  MAKE "value (OR "false "FALSE "false "TRUE)
-  REPORTTEST ~
-    :value = "true ~
-    (list "|(OR "false "FALSE "false "TRUE) returned| :value) ~
-    (list "TRUE)
-
+  SIMPLEREPORTTEST [(OR "false "FALSE "false "FALSE)] "false
+  SIMPLEREPORTTEST [(OR "false "FALSE "false "TRUE)]  "true
 
   RUNBADINPUTTEST [(OR 1)]
   RUNBADINPUTTEST [(OR 0)]
@@ -57,53 +26,17 @@ END
 TO ANDTEST
   LOCAL "value
 
-  MAKE "value (AND)
-  REPORTTEST ~
-    :value = "true ~
-    (list "|(AND) returned| :value) ~
-    (list "true)
+  SIMPLEREPORTTEST [(AND)]        "true
+  SIMPLEREPORTTEST [(AND "true)]  "true
+  SIMPLEREPORTTEST [(AND "false)] "false
 
-  MAKE "value (AND "true)
-  REPORTTEST ~
-    :value = "true ~
-    (list "|(AND "true) returned| :value) ~
-    (list "true)
+  SIMPLEREPORTTEST [(AND "false "false)] "false
+  SIMPLEREPORTTEST [(AND "true  "false)] "false
+  SIMPLEREPORTTEST [(AND "false "true)]  "false
+  SIMPLEREPORTTEST [(AND "true  "true)]  "true
 
-  MAKE "value (AND "false)
-  REPORTTEST ~
-    :value = "false ~
-    (list "|(AND "false) returned| :value) ~
-    (list "false)
-
-  MAKE "value (AND "true "false)
-  REPORTTEST ~
-    :value = "false ~
-    (list "|(AND "true "false) returned| :value) ~
-    (list "false)
-
-  MAKE "value (AND "false "true)
-  REPORTTEST ~
-    :value = "false ~
-    (list "|(OR "false "true) returned| :value) ~
-    (list "false)
-
-  MAKE "value (AND "true "true)
-  REPORTTEST ~
-    :value = "true ~
-    (list "|(OR "true "true) returned| :value) ~
-    (list "true)
-
-  MAKE "value (AND "TRUE "true "TRUE "false)
-  REPORTTEST ~
-    :value = "false ~
-    (list "|(AND "TRUE "true "TRUE "false) returned| :value) ~
-    (list "false)
-
-  MAKE "value (AND "TRUE "true "TRUE "true)
-  REPORTTEST ~
-    :value = "true ~
-    (list "|(AND "TRUE "true "TRUE "true) returned| :value) ~
-    (list "TRUE)
+  SIMPLEREPORTTEST [(AND "TRUE "true "TRUE "false)] "false
+  SIMPLEREPORTTEST [(AND "TRUE "true "TRUE "true)]  "true
 
   RUNBADINPUTTEST [(AND 1)]
   RUNBADINPUTTEST [(AND 0)]
