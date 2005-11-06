@@ -28,6 +28,7 @@ Part II) New features/bugs fixed:
 
   * Added for ???,
     o Improve joystick samples.
+    o Fix bug #1349374; "ARRAY 0" now works.
 
   * Added for 6.6b,
     o Fix bug #1327817; The editor now only prompts you to save your
