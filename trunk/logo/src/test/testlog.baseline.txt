@@ -81,3 +81,36 @@ PASS: The circle was drawn correctly
 PASS: (FILL "true) worked as expected
 INFO: Executing invalid instruction: ' (FILL 10) '
 INFO: Executing invalid instruction: ' (FILL ["true] ) '
+PASS: WRITER returned smoketest.txt , as expected.
+PASS: WRITEPOS returned 0 , as expected.
+PASS: WRITEPOS returned 7 , as expected.
+PASS: WRITEPOS returned 17 , as expected.
+PASS: WRITER returned , as expected.
+PASS: READER returned smoketest.txt , as expected.
+PASS: READPOS returned 0 , as expected.
+PASS: EOFP returned false , as expected.
+PASS: READLIST returned Hello , as expected.
+PASS: READPOS returned 7 , as expected.
+PASS: EOFP returned false , as expected.
+PASS: READLIST returned Good Bye , as expected.
+PASS: READPOS returned 17 , as expected.
+PASS: EOFP returned true , as expected.
+PASS: READER returned , as expected.
+PASS: READLIST returned Hello , as expected.
+PASS: READLIST returned Hello , as expected.
+PASS: READLIST returned Jello , as expected.
+PASS: ALLOPEN returned filealltest-2.txt filealltest-1.txt testlog.txt , as expected.
+PASS: READLIST returned Hello , as expected.
+PASS: READLIST returned Good Bye , as expected.
+INFO: Executing invalid instruction: ' OPENREAD :filename '
+PASS: READLIST returned Hello , as expected.
+PASS: READLIST returned Hello , as expected.
+PASS: READLIST returned And how are you today , as expected.
+PASS: READLIST returned Hello , as expected.
+PASS: READLIST returned Good Bye , as expected.
+INFO: Executing invalid instruction: ' (OPENREAD "testfile.txt 1) '
+INFO: Executing invalid instruction: ' (OPENWRITE "testfile.txt 1) '
+INFO: Executing invalid instruction: ' (OPENAPPEND "testfile.txt 1) '
+INFO: Executing invalid instruction: ' (OPENUPDATE "testfile.txt 1) '
+INFO: Executing invalid instruction: ' CLOSE "nonexistent.txt '
+INFO: Executing invalid instruction: ' (CLOSE) '
