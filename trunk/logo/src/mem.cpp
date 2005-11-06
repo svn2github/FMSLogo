@@ -129,7 +129,7 @@ void setcdr(NODE *nd, NODE *newcdr)
    nd->n_cdr = newcdr;
    }
 
-NODE *_reref(NODE *proc_var, NODE *newval)
+NODE *reref(NODE *proc_var, NODE *newval)
    {
    if (newval != NIL) increfcnt(newval);
    if (proc_var != NIL && decrefcnt(proc_var) == 0)

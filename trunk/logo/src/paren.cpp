@@ -363,7 +363,7 @@ NODE *paren_infix(NODE *left_arg, NODE **rest, int old_pri, bool inparen)
    pop(*rest);
    retval = paren_expr(rest, inparen);
    retval = paren_infix(retval, rest, pri, inparen);
-   retval = cons_list(0, infix_proc, left_arg, retval, END_OF_LIST);
+   retval = cons_list(infix_proc, left_arg, retval);
    deref(infix_proc);
    return paren_infix(retval, rest, old_pri, inparen);
    }

@@ -380,8 +380,7 @@ NODE *evaluator(NODE *list, enum labels where)
    assign(var, var_stack);
    tailcall = -1;
    val_status = 1;
-   assign(didnt_get_output,
-      cons_list(0, fun, ufun, this_line, END_OF_LIST));
+   assign(didnt_get_output, cons_list(fun, ufun, this_line));
    assign(didnt_output_name, NIL);
    newcont(accumulate_arg);
    goto eval_dispatch;                 /* evaluate the current argument       */
@@ -551,6 +550,7 @@ NODE *evaluator(NODE *list, enum labels where)
             newcont(set_args_continue);
             goto eval_sequence;
 
+
  set_args_continue:
             numrestore(vsp);
             mixrestore(formals, argl);
@@ -641,8 +641,7 @@ NODE *evaluator(NODE *list, enum labels where)
       {
       if (nameis(car(exp), Output) || nameis(car(exp), Op))
          {
-         assign(didnt_get_output,
-            cons_list(0, car(exp), ufun, this_line, END_OF_LIST));
+         assign(didnt_get_output, cons_list(car(exp), ufun, this_line));
          assign(didnt_output_name, NIL);
          if (val_status == 2 || val_status == 3)
             {

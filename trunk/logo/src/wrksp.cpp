@@ -27,9 +27,12 @@ fpos_t LinesLoadedOnEdit;
 
 NODE *make_procnode(NODE *lst, NODE *wrds, short min, short df, short max)
    {
-   return (cons_list(0, lst, wrds, make_intnode((FIXNUM) min),
-         make_intnode((FIXNUM) df), make_intnode((FIXNUM) max),
-         END_OF_LIST));
+   return cons_list(
+      lst, 
+      wrds,
+      make_intnode((FIXNUM) min),
+      make_intnode((FIXNUM) df),
+      make_intnode((FIXNUM) max));
    }
 
 NODE *get_bodywords(NODE *proc, NODE *name)
@@ -39,7 +42,7 @@ NODE *get_bodywords(NODE *proc, NODE *name)
 
    if (val != NIL) return (val);
    name = intern(name);
-   head = cons_list(0, (is_macro(name) ? Macro : To), name, END_OF_LIST);
+   head = cons_list((is_macro(name) ? Macro : To), name);
    tail = cdr(head);
    val = formals__procnode(proc);
    while (val != NIL)

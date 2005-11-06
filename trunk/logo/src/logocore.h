@@ -66,7 +66,6 @@ mode_type;
 #define NIL             ((NODE *) 0)
 #define UNBOUND         Unbound
 #define UNDEFINED       Unbound
-#define END_OF_LIST     ((NODE *) 2)
 #define HASH_LEN        1021           /* a prime number                      */
 #define SEG_SIZE        1000           /* 1 for debugging internal leaks      */
 //#define MAX_PHYS_LINE   5000
@@ -374,8 +373,6 @@ struct segment
 #define flag__caseobj(c,f) (int)((obflags__caseobj(c))->n_int & (f))
 #define flag__object(o,f) (int)((obflags__object(o))->n_int & (f))
 #define is_macro(c) (flag__caseobj(c, PROC_MACRO))
-
-#define reref(o1, o2)   _reref(o1, o2)
 
 #define ref(o)          if (o != NIL) increfcnt(o)
 #define vref(o)         ((o != NIL) ? ((increfcnt(o)) , o) : NIL)

@@ -493,29 +493,56 @@ NODE *make_static_strnode(char *strptr)
    return (strnode);
    }
 
-NODE *cons_list(int dummy, ...)
-   {
-   va_list ap;
-   NODE *nptr, *outline = NIL, *lastnode, *val;
 
-   va_start(ap, dummy);
-   while ((nptr = va_arg(ap, NODE *)) != END_OF_LIST)
-      {
-      val = cons(nptr, NIL);
-      if (outline == NIL)
-         {
-         outline = val;
-         lastnode = outline;
-         }
-      else
-         {
-         setcdr(lastnode, val);
-         lastnode = val;
-         }
-      }
-   va_end(ap);
-   return (outline);
-   }
+NODE *cons_list()
+{
+  return NIL;
+}
+
+NODE *cons_list(NODE * node1)
+{
+  return cons(node1, NIL);
+}
+
+NODE *cons_list(NODE * node1, NODE * node2)
+{
+  return cons(
+     node1, 
+     cons(node2, NIL));
+}
+
+NODE *cons_list(NODE * node1, NODE * node2, NODE * node3)
+{
+  return cons(
+     node1, 
+     cons(
+        node2, 
+        cons(node3, NIL)));
+}
+
+NODE *cons_list(NODE * node1, NODE * node2, NODE * node3, NODE * node4)
+{
+  return cons(
+     node1, 
+     cons(
+        node2, 
+        cons(
+           node3,
+           cons(node4, NIL))));
+}
+
+NODE *cons_list(NODE * node1, NODE * node2, NODE * node3, NODE * node4, NODE * node5)
+{
+  return cons(
+     node1, 
+     cons(
+        node2, 
+        cons(
+           node3,
+           cons(
+              node4,
+              cons(node5, NIL)))));
+}
 
 NODE *make_array(int len)
    {

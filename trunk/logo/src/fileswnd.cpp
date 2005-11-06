@@ -109,26 +109,3 @@ void fileload(char *temp)
    current_line = tmp_line;
    IsDirty = IsDirtySave;
    }
-
-NODE *cons_list3(NODE *node1, NODE *node2, NODE *node3)
-   {
-   NODE *nptr, *outline = NIL, *lastnode, *val;
-
-   nptr = node1;
-   val = cons(nptr, NIL);
-   outline = val;
-   lastnode = outline;
-
-   nptr = node2;
-   val = cons(nptr, NIL);
-   setcdr(lastnode, val);
-   lastnode = val;
-
-   nptr = node3;
-   val = cons(nptr, NIL);
-   setcdr(lastnode, val);
-   lastnode = val;
-
-   return outline;
-   }
-

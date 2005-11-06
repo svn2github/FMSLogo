@@ -573,13 +573,10 @@ NODE *runparse_node(NODE *nd, NODE **ndsptr)
          if (isnumb == 3 && tcnt > 1)
             {
             /* ?5 syntax */
-            NODE *qmtnode;
-
-            qmtnode = cons_list(0, Left_Paren, Query,
-               cnv_node_to_numnode
-               (make_strnode(tptr + 1, whead,
-                     tcnt - 1, wtyp, strnzcpy)),
-               END_OF_LIST);
+            NODE * qmtnode = cons_list(
+               Left_Paren,
+               Query,
+               cnv_node_to_numnode(make_strnode(tptr + 1, whead, tcnt - 1, wtyp, strnzcpy)));
             if (outline == NIL)
                {
                outline = vref(qmtnode);
