@@ -34,7 +34,7 @@ void map_oblist(void (*fcn) (NODE *))
          (*fcn) (car(nd));
    }
 
-FIXNUM hash(char *s, int len)
+FIXNUM hash(const char *s, int len)
 /* Map S to an integer in the range 0 .. HASH_LEN-1. */
 /* Method attributed to Peter Weinberger, adapted from Aho, Sethi, */
 /* and Ullman's book, Compilers: Principles, Techniques, and */
@@ -138,12 +138,15 @@ NODE *find_case(NODE *strnd, NODE *obj)
 
 NODE *intern(NODE *nd)
    {
-   NODE *obj, *casedes, *lownd;
+   NODE *obj, *casedes;
 
-   if (nodetype(nd) == CASEOBJ) return (nd);
+   if (nodetype(nd) == CASEOBJ) 
+      {
+      return nd;
+      }
+
    nd = valref(cnv_node_to_strnode(nd));
-   lownd = make_strnode(getstrptr(nd), (char *) NULL,
-      getstrlen(nd), STRING, noparitylow_strnzcpy);
+   NODE * lownd = make_strnode(getstrptr(nd), getstrlen(nd), STRING, noparitylow_strnzcpy);
    if ((obj = find_instance(lownd)) != NIL)
       {
       if ((casedes = find_case(nd, obj)) == NIL)
@@ -155,4 +158,4 @@ NODE *intern(NODE *nd)
    gcref(lownd);
    return (casedes);
    }
-
+

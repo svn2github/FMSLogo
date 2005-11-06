@@ -1331,24 +1331,22 @@ NODE *llistboxdelete(NODE *args)
 
 NODE *llistboxgetselect(NODE *args)
    {
-   dialogthing *parent;
-   char stringname[MAX_BUFFER_SIZE];
-   NODE *val;
-
    // get args
    char parentname[MAX_BUFFER_SIZE];
    cnv_strnode_string(parentname, args);
 
    // If it exists continue
+   dialogthing *parent;
    if ((parent = dialogboxes.get2(parentname, TListBox_type)) != NULL)
       {
-
       // if success on fetching string return it
-
+      char stringname[MAX_BUFFER_SIZE];
       if (parent->TLmybox->GetSelString(stringname, MAX_BUFFER_SIZE) >= 0)
          {
          // parsing it basically turns it into a list for us
-         val = parser(make_strnode(stringname, NULL, strlen(stringname), STRING, strnzcpy), FALSE);
+         NODE * val = parser(
+            make_strnode(stringname, strlen(stringname), STRING, strnzcpy), 
+            FALSE);
          return (val);
          }
       }
@@ -1555,29 +1553,23 @@ NODE *lcomboboxdelete(NODE *args)
 
 NODE *lcomboboxgettext(NODE *args)
    {
-   dialogthing *parent;
-   char parentname[MAX_BUFFER_SIZE];
-   char stringname[MAX_BUFFER_SIZE];
-   NODE *val;
-
    // get args
-
+   char parentname[MAX_BUFFER_SIZE];
    cnv_strnode_string(parentname, args);
 
    // if exists continue
-
+   dialogthing *parent;
    if ((parent = dialogboxes.get2(parentname, TComboBox_type)) != NULL)
       {
-
       // if successful getting string return it
-
+      char stringname[MAX_BUFFER_SIZE];
       if (((TComboBox *) parent->TCmybox)->GetText(stringname, MAX_BUFFER_SIZE) >= 0)
          {
-
          // parsing it turns it into a list
-
-         val = parser(make_strnode(stringname, NULL, strlen(stringname), STRING, strnzcpy), FALSE);
-         return (val);
+         NODE * val = parser(
+            make_strnode(stringname, strlen(stringname), STRING, strnzcpy),
+            FALSE);
+         return val;
          }
       }
    else
@@ -2712,16 +2704,13 @@ NODE *lmessagebox(NODE *args)
 
 NODE *lquestionbox(NODE *args)
    {
-   NODE *targ;
-   NODE *val;
-
    char banner[MAX_BUFFER_SIZE];
-   char body[MAX_BUFFER_SIZE];
-   char str[MAX_BUFFER_SIZE];
-
    cnv_strnode_string(banner, args);
+
+   char body[MAX_BUFFER_SIZE];
    cnv_strnode_string(body, args = cdr(args));
 
+   char str[MAX_BUFFER_SIZE];
    memset(str, 0, MAX_BUFFER_SIZE);
 
    TInputDialog dlg(
@@ -2737,9 +2726,9 @@ NODE *lquestionbox(NODE *args)
       err_logo(STOP_ERROR, NIL);
       }
 
-   targ = make_strnode(str, NULL, strlen(str), STRING, strnzcpy);
-   val = parser(targ, FALSE);
-   return (val);
+   NODE * targ = make_strnode(str, strlen(str), STRING, strnzcpy);
+   NODE * val = parser(targ, FALSE);
+   return val;
    }
 
 NODE *lselectbox(NODE *args)
@@ -2845,10 +2834,7 @@ NODE *lsetcursorarrow(NODE *)
 
 NODE *ldialogfileopen(NODE *args)
    {
-   NODE *arg;
-   NODE *val;
    char filename[MAX_BUFFER_SIZE];
-
    cnv_strnode_string(filename, args);
 
    TOpenSaveDialog::TData FileData;
@@ -2861,8 +2847,8 @@ NODE *ldialogfileopen(NODE *args)
    if (TFileOpenDialog(MainWindowx, FileData).Execute() == IDOK)
       {
       strcpy(filename, FileData.FileName);
-      arg = make_strnode(filename, NULL, strlen(filename), STRING, strnzcpy);
-      val = arg; // parser(arg, FALSE);
+      NODE * arg = make_strnode(filename, strlen(filename), STRING, strnzcpy);
+      NODE * val = arg; // parser(arg, FALSE);
       return val;
       }
    else
@@ -2873,24 +2859,20 @@ NODE *ldialogfileopen(NODE *args)
 
 NODE *ldialogfilesave(NODE *args)
    {
-   NODE *arg;
-   NODE *val;
    char filename[MAX_BUFFER_SIZE];
-
    cnv_strnode_string(filename, args);
 
-   TOpenSaveDialog::TData FileData;
 
    /* Get file name from user and then save the file */
-
+   TOpenSaveDialog::TData FileData;
    FileData.SetFilter("All Files (*.*)|*.*|");
    strcpy(FileData.FileName, filename);
 
    if (TFileSaveDialog(MainWindowx, FileData).Execute() == IDOK)
       {
       strcpy(filename, FileData.FileName);
-      arg = make_strnode(filename, NULL, strlen(filename), STRING, strnzcpy);
-      val = arg; // parser(arg, FALSE);
+      NODE * arg = make_strnode(filename, strlen(filename), STRING, strnzcpy);
+      NODE * val = arg; // parser(arg, FALSE);
       return val;
       }
    else

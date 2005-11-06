@@ -179,7 +179,7 @@ typedef struct logo_node
          ncons;
       struct
          {
-         char *nstring_ptr;
+         const char *nstring_ptr;
          char *nstring_head;
          int nstring_len;
          }

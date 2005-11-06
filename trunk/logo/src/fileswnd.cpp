@@ -21,7 +21,7 @@
 
 #include "allwind.h"
 
-void filesave(char *temp)
+void filesave(const char *temp)
    {
    FILE *tmp;
    NODE *arg;
@@ -37,7 +37,7 @@ void filesave(char *temp)
          MB_OK | MB_ICONQUESTION);
       }
 
-   arg = cons(make_strnode(temp, NULL, strlen(temp), STRING, strnzcpy), NIL);
+   arg = cons(make_strnode(temp, strlen(temp), STRING, strnzcpy), NIL);
 
    tmp = writestream;
    writestream = open_file(car(arg), "w+");
@@ -64,7 +64,7 @@ void filesave(char *temp)
    writestream = tmp;
    }
 
-void fileload(char *temp)
+void fileload(const char *temp)
    {
    FILE *tmp;
    NODE *tmp_line, *exec_list, *arg;
@@ -72,7 +72,7 @@ void fileload(char *temp)
    int sv_val_status = val_status;
    int save_yield_flag;
 
-   arg = make_strnode(temp, NULL, strlen(temp), STRING, strnzcpy);
+   arg = make_strnode(temp, strlen(temp), STRING, strnzcpy);
 
    bool IsDirtySave = IsDirty;
    tmp = loadstream;

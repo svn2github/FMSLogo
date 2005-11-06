@@ -207,8 +207,9 @@ void do_execution(char *SelectedText2)
       check_reserve_tank();
 
       /* turn text into a NODE and parse it */
-
-      current_line = reref(current_line, make_strnode(SelectedText2, (char *) NULL, (int) strlen(SelectedText2), this_type, strnzcpy));
+      current_line = reref(
+         current_line, 
+         make_strnode(SelectedText2, (int) strlen(SelectedText2), this_type, strnzcpy));
 
       exec_list = reref(exec_list, parser(current_line, TRUE));
 

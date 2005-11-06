@@ -21,7 +21,7 @@
 
 #include "allwind.h"
 
-typedef char * (*kludge_type) (char *, char *, int);
+typedef char * (*kludge_type) (char *, const char *, int);
 
 NODE *bfable_arg(NODE *args)
    {
@@ -50,25 +50,31 @@ NODE *list_arg(NODE *args)
 
 NODE *lbutfirst(NODE *args)
    {
-   NODE *val = UNBOUND, *arg;
+   NODE *val = UNBOUND;
 
-   arg = bfable_arg(args);
+   NODE * arg = bfable_arg(args);
    if (NOT_THROWING)
       {
       if (is_list(arg))
+         {
          val = cdr(arg);
+         }
       else
          {
          setcar(args, cnv_node_to_strnode(arg));
          arg = car(args);
          if (getstrlen(arg) > 1)
-            val = make_strnode(getstrptr(arg) + 1,
-               getstrhead(arg),
+            {
+            val = make_strnode(
+               getstrptr(arg) + 1,
                getstrlen(arg) - 1,
                nodetype(arg),
                strnzcpy);
+            }
          else
+            {
             val = Null_Word;
+            }
          }
       }
    return (val);
@@ -76,9 +82,9 @@ NODE *lbutfirst(NODE *args)
 
 NODE *lbutlast(NODE *args)
    {
-   NODE *val = UNBOUND, *lastnode, *tnode, *arg;
+   NODE *val = UNBOUND, *lastnode, *tnode;
 
-   arg = bfable_arg(args);
+   NODE * arg = bfable_arg(args);
    if (NOT_THROWING)
       {
       if (is_list(arg))
@@ -107,13 +113,17 @@ NODE *lbutlast(NODE *args)
          setcar(args, cnv_node_to_strnode(arg));
          arg = car(args);
          if (getstrlen(arg) > 1)
-            val = make_strnode(getstrptr(arg),
-               getstrhead(arg),
+            {
+            val = make_strnode(
+               getstrptr(arg),
                getstrlen(arg) - 1,
                nodetype(arg),
                strnzcpy);
+            }
          else
+            {
             val = Null_Word;
+            }
          }
       }
    return (val);
@@ -121,23 +131,25 @@ NODE *lbutlast(NODE *args)
 
 NODE *lfirst(NODE *args)
    {
-   NODE *val = UNBOUND, *arg;
+   NODE *val = UNBOUND;
 
    if (nodetype(car(args)) == ARRAY)
       {
       return make_intnode((FIXNUM) getarrorg(car(args)));
       }
-   arg = bfable_arg(args);
+
+   NODE * arg = bfable_arg(args);
    if (NOT_THROWING)
       {
       if (is_list(arg))
+         {
          val = car(arg);
+         }
       else
          {
          setcar(args, cnv_node_to_strnode(arg));
          arg = car(args);
-         val = make_strnode(getstrptr(arg), getstrhead(arg), 1,
-            nodetype(arg), strnzcpy);
+         val = make_strnode(getstrptr(arg), 1, nodetype(arg), strnzcpy);
          }
       }
    return (val);
@@ -196,9 +208,9 @@ NODE *lbfs(NODE *args)
 
 NODE *llast(NODE *args)
    {
-   NODE *val = UNBOUND, *arg;
+   NODE *val = UNBOUND;
 
-   arg = bfable_arg(args);
+   NODE * arg = bfable_arg(args);
    if (NOT_THROWING)
       {
       if (is_list(arg))
@@ -215,8 +227,11 @@ NODE *llast(NODE *args)
          {
          setcar(args, cnv_node_to_strnode(arg));
          arg = car(args);
-         val = make_strnode(getstrptr(arg) + getstrlen(arg) - 1,
-            getstrhead(arg), 1, nodetype(arg), strnzcpy);
+         val = make_strnode(
+            getstrptr(arg) + getstrlen(arg) - 1,
+            1, 
+            nodetype(arg),
+            strnzcpy);
          }
       }
    return (val);
@@ -292,15 +307,17 @@ NODE *lbackslashedp(NODE *args)
 
 NODE *lchar(NODE *args)
    {
-   NODE *val = UNBOUND, *arg;
-   char c;
+   NODE *val = UNBOUND;
 
-   arg = pos_int_arg(args);
+   NODE * arg = pos_int_arg(args);
    if (NOT_THROWING)
       {
-      c = getint(arg);
-      val = make_strnode(&c, (char *) NULL, 1,
-         (getparity(c) ? STRING : BACKSLASH_STRING), strnzcpy);
+      char c = getint(arg);
+      val = make_strnode(
+         &c, 
+         1,
+         (getparity(c) ? STRING : BACKSLASH_STRING), 
+         strnzcpy);
       }
    return (val);
    }
@@ -398,8 +415,6 @@ NODE *string_arg(NODE *args)
 NODE *lword(NODE *args)
    {
    NODE *val = NIL, *arg = NIL;
-   //    NODE *tnode = NIL;
-   //    NODE *lastnode = NIL;
    int cnt = 0;
    NODETYPES str_type = STRING;
 
@@ -417,10 +432,17 @@ NODE *lword(NODE *args)
          }
       }
    if (NOT_THROWING)
-      val = make_strnode((char *) args, (char *) NULL,
-         cnt, str_type, (kludge_type) word_strnzcpy);/* kludge                */
+      {
+      val = make_strnode(
+         (char *) args, 
+         cnt, 
+         str_type, 
+         (kludge_type) word_strnzcpy);/* kludge */
+      }
    else
+      {
       val = UNBOUND;
+      }
    return (val);
    }
 
@@ -540,9 +562,9 @@ NODE *memberp_help(NODE *args, bool notp, bool substr)
             (substr || (getstrlen(obj1) == 1)))
          {
          leng = getstrlen(obj2) - getstrlen(obj1);
-         setcar(cdr(args), make_strnode(getstrptr(obj2), getstrhead(obj2),
-               getstrlen(obj1), nodetype(obj2),
-               strnzcpy));
+         setcar(
+            cdr(args), 
+            make_strnode(getstrptr(obj2), getstrlen(obj1), nodetype(obj2), strnzcpy));
          tmp = cadr(args);
          for (i = 0; i <= leng; i++)
             {
@@ -671,8 +693,11 @@ NODE *litem(NODE *args)
             err_logo(BAD_DATA_UNREC, val);
             return UNBOUND;
             }
-         return make_strnode(getstrptr(obj) + i - 1, getstrhead(obj),
-            1, nodetype(obj), strnzcpy);
+         return make_strnode(
+            getstrptr(obj) + i - 1,
+            1, 
+            nodetype(obj), 
+            strnzcpy);
          }
       }
    return (UNBOUND);
@@ -820,7 +845,6 @@ NODE *lform(NODE *args)
 
       return make_strnode(
          result,
-         (char *) NULL,
          (int) strlen(result),
          STRING,
          strnzcpy);

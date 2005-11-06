@@ -636,7 +636,6 @@ NODE *lreadchar(NODE *)
    else
       return make_strnode(
         &c,
-        (char *) NULL,
         1,
         (getparity(c) ? STRING : BACKSLASH_STRING),
         strnzcpy);
@@ -647,7 +646,6 @@ NODE *lreadchars(NODE *args)
    unsigned int c, i;
    char *strhead, *strptr;
    NODETYPES type = STRING;
-   unsigned short *temp;
 
    c = (unsigned int) getint(pos_int_arg(args));
    if (stopping_flag == THROWING) return UNBOUND;
@@ -660,7 +658,7 @@ NODE *lreadchars(NODE *args)
       strhead = (char *) malloc((size_t) (c + sizeof(short) + 1));
       strptr = strhead + sizeof(short);
       fread(strptr, 1, (int) c, readstream);
-      temp = (unsigned short *) strhead;
+      unsigned short * temp = (unsigned short *) strhead;
       setstrrefcnt(temp, 0);
       }
    input_blocking = 0;
@@ -672,9 +670,16 @@ NODE *lreadchars(NODE *args)
       free(strhead);
       return (NIL);
       }
+
    for (i = 0; i < c; i++)
-      if (getparity(strptr[i])) type = BACKSLASH_STRING;
-   return (make_strnode(strptr, strhead, (int) c, type, strnzcpy));
+      {
+      if (getparity(strptr[i])) 
+         {
+         type = BACKSLASH_STRING;
+         }
+      }
+
+   return make_strnode_no_copy(strptr, strhead, (int) c, type);
    }
 
 NODE *leofp(NODE *)

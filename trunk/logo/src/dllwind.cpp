@@ -259,7 +259,7 @@ NODE *ldllcall(NODE *arg)
 
             if (strlen(areturn))
                {
-               targ = make_strnode(areturn, NULL, strlen(areturn), STRING, strnzcpy);
+               targ = make_strnode(areturn, strlen(areturn), STRING, strnzcpy);
                val = parser(targ, FALSE);
                return (val);
                }

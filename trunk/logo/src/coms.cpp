@@ -405,18 +405,15 @@ NODE *lbye(NODE *args)
    return (UNBOUND);
    }
 
-NODE *ltime(NODE *)
 /* LOGO time */
+NODE *ltime(NODE *)
    {
-   NODE *arg, *val = UNBOUND;
-   char *Xtim;
    time_t tvec;
-
    time(&tvec);
-   Xtim = ctime(&tvec);
+   const char * Xtim = ctime(&tvec);
 
-   arg = make_strnode(Xtim, NULL, strlen(Xtim) - 1, STRING, strnzcpy);
-   val = parser(arg, FALSE);
+   NODE * arg = make_strnode(Xtim, strlen(Xtim) - 1, STRING, strnzcpy);
+   NODE * val = parser(arg, FALSE);
    return (val);
 
    //   return(make_strnode(Xtim, NULL, strlen(Xtim), STRING, strnzcpy));
