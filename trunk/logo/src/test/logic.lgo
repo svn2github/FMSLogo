@@ -1,0 +1,60 @@
+TO ORTEST
+  LOCAL "value
+
+  MAKE "value (OR)
+  REPORTTEST ~
+    :value = "false ~
+    (list "|(OR) returned| :value) ~
+    (list "false)
+
+  MAKE "value (OR "true)
+  REPORTTEST ~
+    :value = "true ~
+    (list "|(OR "true) returned| :value) ~
+    (list "true)
+
+  MAKE "value (OR "false)
+  REPORTTEST ~
+    :value = "false ~
+    (list "|(OR "false) returned| :value) ~
+    (list "false)
+
+  MAKE "value (OR "true "false)
+  REPORTTEST ~
+    :value = "true ~
+    (list "|(OR "true "false) returned| :value) ~
+    (list "true)
+
+  MAKE "value (OR "false "true)
+  REPORTTEST ~
+    :value = "true ~
+    (list "|(OR "false "true) returned| :value) ~
+    (list "true)
+
+  MAKE "value (OR "false "FALSE "false "FALSE)
+  REPORTTEST ~
+    :value = "false ~
+    (list "|(OR "false "FALSE "false "FALSE) returned| :value) ~
+    (list "false)
+
+  MAKE "value (OR "false "FALSE "false "TRUE)
+  REPORTTEST ~
+    :value = "true ~
+    (list "|(OR "false "FALSE "false "TRUE) returned| :value) ~
+    (list "TRUE)
+
+
+  RUNBADINPUTTEST [(OR 1)]
+  RUNBADINPUTTEST [(OR 0)]
+  RUNBADINPUTTEST [(OR "truex)]
+  RUNBADINPUTTEST [(OR "falsex)]
+  RUNBADINPUTTEST [(OR "true 1)]
+  RUNBADINPUTTEST [(OR 1 "true)]
+  RUNBADINPUTTEST [(OR "false 0)]
+  RUNBADINPUTTEST [(OR 0 "false)]
+END
+
+TO LOGICTEST
+  ORTEST
+END
+
