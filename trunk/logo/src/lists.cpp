@@ -510,25 +510,31 @@ NODE *larrayp(NODE *arg)
    return torf(nodetype(car(arg)) == ARRAY);
    }
 
-NODE *memberp_help(NODE *args, bool notp, bool substr)
+static
+NODE *memberp_helper(NODE *args, bool notp, bool substr)
    {
-   NODE *obj1, *obj2;                  //, *val;
-   int leng;
-   int caseig = (compare_node(valnode__caseobj(Caseignoredp),
-      Truex, TRUE) == 0);
+   int caseig = (compare_node(valnode__caseobj(Caseignoredp), Truex, TRUE) == 0);
 
-   //   val = Falsex;
-   obj1 = car(args);
-   obj2 = cadr(args);
+   NODE * obj1 = car(args);
+   NODE * obj2 = cadr(args);
    if (is_list(obj2))
       {
-      if (substr) return Falsex;
+      if (substr) 
+         {
+         return Falsex;
+         }
+
       while (obj2 != NIL && NOT_THROWING)
          {
          if (equalp_help(obj1, car(obj2), caseig))
+            {
             return (notp ? obj2 : Truex);
+            }
          obj2 = cdr(obj2);
-         if (check_throwing) break;
+         if (check_throwing) 
+            {
+            break;
+            }
          }
       return (notp ? NIL : Falsex);
       }
@@ -538,35 +544,49 @@ NODE *memberp_help(NODE *args, bool notp, bool substr)
       NODE **data = getarrptr(obj2);
 
       if (notp)
+         {
          err_logo(BAD_DATA_UNREC, obj2);
-      if (substr) return Falsex;
+         }
+
+      if (substr)
+         {
+         return Falsex;
+         }
+
       while (--len >= 0 && NOT_THROWING)
          {
-         if (equalp_help(obj1, *data++, caseig)) return Truex;
+         if (equalp_help(obj1, *data++, caseig)) 
+            {
+            return Truex;
+            }
          }
       return Falsex;
       }
    else
       {
-      NODE *tmp;
-      int i;
+      if (aggregate(obj1))
+         {
+         return (notp ? Null_Word : Falsex);
+         }
 
-      if (aggregate(obj1)) return (notp ? Null_Word : Falsex);
       setcar(cdr(args), cnv_node_to_strnode(obj2));
       obj2 = cadr(args);
+
       setcar(args, cnv_node_to_strnode(obj1));
       obj1 = car(args);
-      tmp = NIL;
-      if (obj1 != UNBOUND && obj2 != UNBOUND &&
-            getstrlen(obj1) <= getstrlen(obj2) &&
-            (substr || (getstrlen(obj1) == 1)))
+
+      if (obj1 != UNBOUND && 
+          obj2 != UNBOUND &&
+          getstrlen(obj1) <= getstrlen(obj2) &&
+          (substr || (getstrlen(obj1) == 1)))
          {
-         leng = getstrlen(obj2) - getstrlen(obj1);
+         int leng = getstrlen(obj2) - getstrlen(obj1);
          setcar(
             cdr(args), 
             make_strnode(getstrptr(obj2), getstrlen(obj1), nodetype(obj2), strnzcpy));
-         tmp = cadr(args);
-         for (i = 0; i <= leng; i++)
+
+         NODE * tmp = cadr(args);
+         for (int i = 0; i <= leng; i++)
             {
             if (equalp_help(obj1, tmp, caseig))
                {
@@ -586,17 +606,17 @@ NODE *memberp_help(NODE *args, bool notp, bool substr)
 
 NODE *lmemberp(NODE *args)
    {
-   return (memberp_help(args, FALSE, FALSE));
+   return memberp_helper(args, false, false);
    }
 
 NODE *lsubstringp(NODE *args)
    {
-   return (memberp_help(args, FALSE, TRUE));
+   return memberp_helper(args, false, true);
    }
 
 NODE *lmember(NODE *args)
    {
-   return (memberp_help(args, TRUE, FALSE));
+   return memberp_helper(args, true, false);
    }
 
 NODE *integer_arg(NODE *args)
