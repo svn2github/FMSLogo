@@ -104,10 +104,36 @@ extern int print_stringlen;
 extern char *print_stringptr;
 
 /* init.c */
-extern NODE *Truex, *Falsex, *Left_Paren, *Right_Paren, *Null_Word, *Toplevel, *System, *Error;
-extern NODE *End, *Redefp, *Caseignoredp, *Erract, *Printdepthlimit, *Printwidthlimit, *Pause;
-extern NODE *If, *Ifelse, *To, *Macro, *Unbound, *Not_Enough_Node;
-extern NODE *Minus_Sign, *Minus_Tight, *Startup, *Query, *Output, *Op, *Stop, *Goto, *Tag;
+extern NODE *Truex;
+extern NODE *Falsex;
+extern NODE *Left_Paren;
+extern NODE *Right_Paren;
+extern NODE *Null_Word;
+extern NODE *Toplevel;
+extern NODE *System;
+extern NODE *Error;
+extern NODE *End;
+extern NODE *Redefp;
+extern NODE *Caseignoredp;
+extern NODE *Erract;
+extern NODE *Printdepthlimit;
+extern NODE *Printwidthlimit;
+extern NODE *Pause;
+extern NODE *If;
+extern NODE *Ifelse;
+extern NODE *To;
+extern NODE *Macro;
+extern NODE *Unbound;
+extern NODE *Not_Enough_Node;
+extern NODE *Minus_Sign;
+extern NODE *Minus_Tight;
+extern NODE *Startup;
+extern NODE *Query;
+extern NODE *Output;
+extern NODE *Op;
+extern NODE *Stop;
+extern NODE *Goto;
+extern NODE *Tag;
 
 /* wrksp.c */
 extern int to_pending;
