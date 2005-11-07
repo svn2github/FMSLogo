@@ -3,6 +3,7 @@
 ; It also loads all unit tests and executes them.
 
 LOAD "array.lgo
+LOAD "predicate.lgo
 LOAD "logic.lgo
 LOAD "bitmap.lgo
 LOAD "form.lgo
@@ -117,6 +118,7 @@ TO TESTALL
 
   REPORTTESTINITIALIZE
 
+  PREDICATETEST ; from predicate.lgo
   ARRAYTEST     ; from array.lgo
   LOGICTEST     ; from logic.lgo
   PROCEDURETEST ; from procedure.lgo

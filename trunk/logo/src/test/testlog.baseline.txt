@@ -1,3 +1,62 @@
+PASS: EMPTYP [] returned true , as expected.
+PASS: EMPTY? [] returned true , as expected.
+PASS: EMPTY? [1] returned false , as expected.
+PASS: EMPTY? [0] returned false , as expected.
+PASS: EMPTY? 0 returned false , as expected.
+PASS: EMPTY? " returned true , as expected.
+PASS: EMPTY? "  returned false , as expected.
+PASS: EMPTY? {} returned false , as expected.
+INFO: Executing invalid instruction: ' (EMPTY?) '
+PASS: NUMBERP 1 returned true , as expected.
+PASS: NUMBER? 1 returned true , as expected.
+PASS: NUMBER? 0 returned true , as expected.
+PASS: NUMBER? -1 returned true , as expected.
+PASS: NUMBER? 3.14 returned true , as expected.
+PASS: NUMBER? "1 returned true , as expected.
+PASS: NUMBER? "-1 returned true , as expected.
+PASS: NUMBER? "3.14 returned true , as expected.
+PASS: NUMBER? {} returned false , as expected.
+PASS: NUMBER? {2} returned false , as expected.
+PASS: NUMBER? [] returned false , as expected.
+PASS: NUMBER? [1] returned false , as expected.
+PASS: NUMBER? "one returned false , as expected.
+PASS: NUMBER? "1A returned false , as expected.
+PASS: NUMBER? " returned false , as expected.
+INFO: Executing invalid instruction: ' (NUMBER?) '
+PASS: LISTP [1 2 3] returned true , as expected.
+PASS: LIST? [1 2 3] returned true , as expected.
+PASS: LIST? [] returned true , as expected.
+PASS: LIST? "list returned false , as expected.
+PASS: LIST? "[1] returned false , as expected.
+PASS: LIST? 1 returned false , as expected.
+PASS: LIST? 3.14 returned false , as expected.
+PASS: LIST? {1} returned false , as expected.
+PASS: LIST? {} returned false , as expected.
+PASS: LIST? " returned false , as expected.
+INFO: Executing invalid instruction: ' (LIST?) '
+PASS: MEMBERP 2 [1 2 3] returned true , as expected.
+PASS: MEMBER? 2 [1 2 3] returned true , as expected.
+PASS: MEMBER? 1 [1] returned true , as expected.
+PASS: MEMBER? 1 [1 1 1] returned true , as expected.
+PASS: MEMBER? 0 [1 2 3] returned false , as expected.
+PASS: MEMBER? [2] [[1] [2] [3]] returned true , as expected.
+PASS: MEMBER? 2 [[1] [2] [3]] returned false , as expected.
+PASS: MEMBER? [2] [1 2 3] returned false , as expected.
+PASS: MEMBER? 1 [] returned false , as expected.
+PASS: MEMBER? 1 {1} returned true , as expected.
+PASS: MEMBER? 1 {1 1 1} returned true , as expected.
+PASS: MEMBER? 12 {11 12 13} returned true , as expected.
+PASS: MEMBER? 12 {} returned false , as expected.
+PASS: MEMBER? 1 123 returned true , as expected.
+PASS: MEMBER? 4 123 returned false , as expected.
+PASS: MEMBER? 23 123 returned false , as expected.
+PASS: MEMBER? 1 " returned false , as expected.
+PASS: MEMBER? [1] "123 returned false , as expected.
+PASS: MEMBER? " "hello returned false , as expected.
+FAIL: MEMBER? " ["] returned false . We expected true
+FAIL: MEMBER? " {"} returned false . We expected true
+INFO: Executing invalid instruction: ' (MEMBER?) '
+INFO: Executing invalid instruction: ' (MEMBER? 1) '
 PASS: ITEM 0 :myarray returned list , as expected.
 PASS: ITEM 1 :myarray returned hi , as expected.
 PASS: ITEM 2 :myarray returned 42 , as expected.
