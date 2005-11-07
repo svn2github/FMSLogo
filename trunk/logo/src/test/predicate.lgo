@@ -1,3 +1,54 @@
+TO .EQTEST
+  LOCALMAKE "x 1000
+  LOCALMAKE "y 1000
+
+  SIMPLEREPORTTEST [.EQ 1000 1000] "false
+  SIMPLEREPORTTEST [.EQ :x   :y  ] "false
+  SIMPLEREPORTTEST [.EQ :x   :x  ] "true
+
+  ; test singleton objects that are globally unique
+  SIMPLEREPORTTEST [.EQ "||    "||    ] "true
+  SIMPLEREPORTTEST [.EQ "false "false ] "true
+  SIMPLEREPORTTEST [.EQ "true  "true  ] "true
+  SIMPLEREPORTTEST [.EQ []     []     ] "true
+END
+
+TO EQUALPTEST
+  MAKE "CASEIGNOREDP "TRUE
+
+  LOCAL "myarray
+  SIMPLEREPORTTEST [EQUALP 1    1                      ] "true
+  SIMPLEREPORTTEST [EQUALP 0    0                      ] "true
+  SIMPLEREPORTTEST [EQUALP 3.14 3.14                   ] "true
+  SIMPLEREPORTTEST [EQUALP "hi  "hi                    ] "true
+  SIMPLEREPORTTEST [EQUAL? ["a 1 "ab]    ["a 1 "ab]    ] "true
+  SIMPLEREPORTTEST [EQUAL? [[1 2 3] [1]] [[1 2 3] [1]] ] "true
+  SIMPLEREPORTTEST [EQUAL? 0 0                         ] "true
+  SIMPLEREPORTTEST [EQUALP "||  "||                    ] "true
+  SIMPLEREPORTTEST [EQUALP "true  "TRUE                ] "true
+  SIMPLEREPORTTEST [EQUALP "false "FALSE               ] "true
+
+  MAKE "myarray {1 2 3}
+  SIMPLEREPORTTEST [EQUAL? :myarray :myarray           ] "true
+
+  MAKE "myarray {}
+  SIMPLEREPORTTEST [EQUAL? :myarray :myarray           ] "true
+
+
+  ; arrays are never equal to other arrays
+  SIMPLEREPORTTEST [EQUAL? {} {}                       ] "false
+  SIMPLEREPORTTEST [EQUAL? {1 2 3} {1 2 3}             ] "false
+
+  SIMPLEREPORTTEST [EQUALP 1     1.1                    ] "false
+  SIMPLEREPORTTEST [EQUALP 0     1                      ] "false
+  SIMPLEREPORTTEST [EQUALP "hi   "hil                   ] "false
+  SIMPLEREPORTTEST [EQUALP "hil  "hi                    ] "false
+  SIMPLEREPORTTEST [EQUALP "true "false                 ] "false
+
+  RUNBADINPUTTEST [(EQUAL?)]
+  RUNBADINPUTTEST [(EQUAL? 1)]
+END
+
 TO EMPTYPTEST
   SIMPLEREPORTTEST [EMPTYP [] ]  "true
   SIMPLEREPORTTEST [EMPTY? [] ]  "true
@@ -49,6 +100,38 @@ TO LISTPTEST
   RUNBADINPUTTEST [(LIST?)]
 END
 
+TO WORDPTEST
+  SIMPLEREPORTTEST [WORDP "hello ] "true
+  SIMPLEREPORTTEST [WORD? "hello ] "true
+  SIMPLEREPORTTEST [WORD? 123    ] "true
+  SIMPLEREPORTTEST [WORD? 3.14   ] "true
+  SIMPLEREPORTTEST [WORD? "||    ] "true
+  SIMPLEREPORTTEST [WORD? "|[1]| ] "true
+
+  SIMPLEREPORTTEST [WORD? []       ] "false
+  SIMPLEREPORTTEST [WORD? ["hello] ] "false
+  SIMPLEREPORTTEST [WORD? {}       ] "false
+  SIMPLEREPORTTEST [WORD? {"hello} ] "false
+
+  RUNBADINPUTTEST [(WORDP?)]
+END
+
+TO ARRAYPTEST
+  SIMPLEREPORTTEST [ARRAYP {1 2 3} ] "true
+  SIMPLEREPORTTEST [ARRAY? {1 2 3} ] "true
+  SIMPLEREPORTTEST [ARRAY? {}      ] "true
+
+  SIMPLEREPORTTEST [ARRAY? "word   ] "false
+  SIMPLEREPORTTEST [ARRAY? "|{}|   ] "false
+  SIMPLEREPORTTEST [ARRAY? 1       ] "false
+  SIMPLEREPORTTEST [ARRAY? 3.14    ] "false
+  SIMPLEREPORTTEST [ARRAY? [1]     ] "false
+  SIMPLEREPORTTEST [ARRAY? []      ] "false
+  SIMPLEREPORTTEST [ARRAY? "||     ] "false
+
+  RUNBADINPUTTEST [(ARRAY?)]
+END
+
 TO MEMBERPTEST
   SIMPLEREPORTTEST [MEMBERP 2 [1 2 3] ] "true
   SIMPLEREPORTTEST [MEMBER? 2 [1 2 3] ] "true
@@ -80,9 +163,37 @@ TO MEMBERPTEST
   RUNBADINPUTTEST [(MEMBER? 1)]
 END
 
+TO BEFOREPTEST 
+
+  MAKE "CASEIGNOREDP "TRUE
+
+  SIMPLEREPORTTEST [BEFOREP "ABC "ABD ] "true
+  SIMPLEREPORTTEST [BEFORE? "ABC "ABD ] "true
+  SIMPLEREPORTTEST [BEFORE? "ABD "ABC ] "false
+  SIMPLEREPORTTEST [BEFORE? "ABC "ABC ] "false
+
+  SIMPLEREPORTTEST [BEFORE? "ABC  "ABCD ] "true
+  SIMPLEREPORTTEST [BEFORE? "ABCD "ABC  ] "false
+
+  SIMPLEREPORTTEST [BEFORE? "||  "A]    "true
+  SIMPLEREPORTTEST [BEFORE? "Z   "||]   "false
+ 
+  RUNBADINPUTTEST [(BEFORE?)]
+  RUNBADINPUTTEST [(BEFORE? "ABC)]
+  RUNBADINPUTTEST [(BEFORE? "ABC [])]
+  RUNBADINPUTTEST [(BEFORE? []   "ABC)]
+END
+
 TO PREDICATETEST
+
+  .EQTEST
+  EQUALPTEST
+
   EMPTYPTEST
   NUMBERPTEST
   LISTPTEST
+  WORDPTEST  
+  ARRAYPTEST
   MEMBERPTEST
+  BEFOREPTEST
 END
