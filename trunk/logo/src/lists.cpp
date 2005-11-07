@@ -580,12 +580,19 @@ NODE *memberp_helper(NODE *args, bool notp, bool substr)
           getstrlen(obj1) <= getstrlen(obj2) &&
           (substr || (getstrlen(obj1) == 1)))
          {
+
+         // how many different places are there to compare obj1 in obj2
          int leng = getstrlen(obj2) - getstrlen(obj1);
+
+         // create a copy of obj2 with obj1's length so that we can
+         // quicky extract all potential matches of obj1 within obj2
+         // REVISIT: why modify args?  why not just keep tmp separate?
          setcar(
-            cdr(args), 
-            make_strnode(getstrptr(obj2), getstrlen(obj1), nodetype(obj2), strnzcpy));
+            cdr(args),
+            make_strnode(getstrptr(obj2), getstrlen(obj2), nodetype(obj2), strnzcpy));
 
          NODE * tmp = cadr(args);
+         setstrlen(tmp, getstrlen(obj1));
          for (int i = 0; i <= leng; i++)
             {
             if (equalp_help(obj1, tmp, caseig))
@@ -595,8 +602,13 @@ NODE *memberp_helper(NODE *args, bool notp, bool substr)
                   setstrlen(tmp, leng + getstrlen(obj1) - i);
                   return tmp;
                   }
-               else return Truex;
+               else
+                  {
+                  return Truex;
+                  }
                }
+            // Slide the potential string match down one byte.
+            // Note that the string length remains the same.
             setstrptr(tmp, getstrptr(tmp) + 1);
             }
          }
