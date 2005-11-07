@@ -707,8 +707,6 @@ WinMain(
 )
    {
    int i;
-   char *ptr;
-   HDC TempDC;
 
    // Check to see if another instance of Logo is currently running:
    HANDLE singleInstanceMutex = CreateMutex(
@@ -764,7 +762,7 @@ WinMain(
    bWidth       = false;
    bHeight      = false;
 
-   for (ptr = lpCmdLine; *ptr != '\0'; ptr++)
+   for (const char * ptr = lpCmdLine; *ptr != '\0'; ptr++)
       {
       if (*ptr == '-')
          {
@@ -860,7 +858,7 @@ WinMain(
    MAX_PHYS_LINE = GetPrivateProfileInt("LOGO", "MaxPhysLine", 8192, "LOGO.INI");
 
    /* Get video mode parameters */
-   TempDC = GetDC(0);
+   HDC TempDC = GetDC(0);
 
    RECT MaxRect;
    SystemParametersInfo(SPI_GETWORKAREA, 0, &MaxRect, 0);
