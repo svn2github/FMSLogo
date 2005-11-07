@@ -51,7 +51,7 @@ NODE *get_bodywords(NODE *proc, NODE *name)
       {
       if (is_list(car(val)))
          {
-         setcdr(tail, cons_list(cons(make_colon(caar(val)), cdar(val)));
+         setcdr(tail, cons_list(cons(make_colon(caar(val)), cdar(val))));
          }
       else if (nodetype(car(val)) == INT)
          {
