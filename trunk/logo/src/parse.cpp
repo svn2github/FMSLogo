@@ -96,7 +96,7 @@ int rd_getc(FILE *strm)
 #endif
    }
 
-void rd_print_prompt(char * /*str*/)
+void rd_print_prompt(const char * /*str*/)
    {
    /*
       int ch;
@@ -126,41 +126,53 @@ void zrd_print_prompt(char *str)
 #define zrd_print_prompt rd_print_prompt
 #endif
 
-/*disable*/
 #define into_line(chr) \
-           { \
-           if (phys_line >= p_end) \
-           { \
-           p_len += MAX_PHYS_LINE; \
-           p_pos = phys_line - p_line; \
-           p_line = (char *)realloc(p_line, p_len); \
-           p_end = &p_line[p_len-1]; \
-           phys_line = &p_line[p_pos]; \
-           } \
-           *phys_line++ = (chr); \
-           }
-/*enable*/
+   { \
+   if (phys_line >= p_end) \
+      { \
+      p_len += MAX_PHYS_LINE; \
+      p_pos = phys_line - p_line; \
+      p_line = (char *)realloc(p_line, p_len); \
+      p_end = &p_line[p_len-1]; \
+      phys_line = &p_line[p_pos]; \
+      } \
+   *phys_line++ = (chr); \
+   }
 
-char *p_line = 0, *p_end;
-int p_len = MAX_PHYS_LINE;
-
-NODE *reader(FILE *strm, char *prompt)
+NODE *reader(FILE *strm, const char *prompt)
    {
-   int c, dribbling, vbar = 0, paren = 0, bracket = 0, brace = 0, p_pos, contin = 1, insemi = 0;
-   static char ender[] = "\nEND\n";
-   char *phys_line, *lookfor = ender;
+   static char *p_line = 0;
+   static char *p_end;
+   static int   p_len = MAX_PHYS_LINE;
+
+   static const char ender[] = "\nEND\n";
+
+   int p_pos;
+
+   int paren   = 0;
+   int bracket = 0;
+   int brace   = 0;
+
+   bool vbar    = false;
+   bool contin  = true;
+   bool insemi  = false;
+
+   char *phys_line;
+   const char *lookfor = ender;
    NODETYPES this_type = STRING;
-   NODE *ret;
 
    if (!strcmp(prompt, "RW"))
       {
       /* called by readword */
       prompt = "";
-      contin = 0;
+      contin = false;
       }
+
    charmode_off();
-   dribbling = (dribblestream != NULL && strm == stdin);
-   if (p_line == 0)
+   bool dribbling = (dribblestream != NULL && strm == stdin);
+
+   // allocate p_line if it hasn't been allocated yet
+   if (p_line == NULL)
       {
       p_line = (char *) malloc(MAX_PHYS_LINE);
       if (p_line == NULL)
@@ -170,12 +182,18 @@ NODE *reader(FILE *strm, char *prompt)
          }
       p_end = &p_line[MAX_PHYS_LINE - 1];
       }
+
    phys_line = p_line;
    if (strm == stdin && *prompt)
-      {
-      if (interactive) rd_print_prompt(prompt);
+     {
+      if (interactive) 
+         {
+         rd_print_prompt(prompt);
+         }
       if (dribblestream != NULL)
+         {
          fprintf(dribblestream, "%s", prompt);
+         }
       }
    if (strm == stdin)
       {
@@ -183,6 +201,7 @@ NODE *reader(FILE *strm, char *prompt)
       erract_errtype = FATAL;
       }
 
+   int c = 0;
 #ifndef TIOCSTI
    if (!setjmp(iblk_buf))
       {
@@ -190,21 +209,41 @@ NODE *reader(FILE *strm, char *prompt)
       c = rd_getc(strm);
       while (c != EOF && (vbar || paren || bracket || brace || c != '\n'))
          {
-         if (dribbling) putc(c, dribblestream);
+         if (dribbling) 
+            {
+            putc(c, dribblestream);
+            }
          if (c == '\\' && (c = rd_getc(strm)) != EOF)
             {
-            if (dribbling) putc(c, dribblestream);
-            if (c == 'n') c = '\n'; //ggm
+            if (dribbling) 
+               {
+               putc(c, dribblestream);
+               }
+            if (c == 'n') 
+               {
+               c = '\n'; //ggm
+               }
             c = setparity(c);
             this_type = BACKSLASH_STRING;
             if (c == setparity('\n') && strm == stdin)
                {
-               if (interactive) zrd_print_prompt("\\ ");
+               if (interactive)
+                  {
+                  zrd_print_prompt("\\ ");
+                  }
+
                if (dribbling)
+                  {
                   fprintf(dribblestream, "\\ ");
+                  }
                }
             }
-         if (c != EOF) into_line(c);
+
+         if (c != EOF) 
+            {
+            into_line(c);
+            }
+
          if (*prompt && (c & 0137) == *lookfor)
             {
             lookfor++;
@@ -214,43 +253,90 @@ NODE *reader(FILE *strm, char *prompt)
                break;
                }
             }
-         else lookfor = ender;
-         if (c == '|') vbar = !vbar;
+         else 
+            {
+            lookfor = ender;
+            }
+
+         if (c == '|') 
+            {
+            vbar = !vbar;
+            }
          else if (contin && !vbar && !insemi)
             {
-            if (c == '(') paren++;
-            else if (paren && c == ')') paren--;
-            else if (c == '[') bracket++;
-            else if (bracket && c == ']') bracket--;
-            else if (c == '{') brace++;
-            else if (brace && c == '}') brace--;
-            else if (c == ';') insemi++;
+            if (c == '(') 
+               {
+               paren++;
+               }
+            else if (paren && c == ')') 
+               {
+               paren--;
+               }
+            else if (c == '[')
+               {
+               bracket++;
+               }
+            else if (bracket && c == ']')
+               {
+               bracket--;
+               }
+            else if (c == '{')
+               {
+               brace++;
+               }
+            else if (brace && c == '}')
+               {
+               brace--;
+               }
+            else if (c == ';')
+               { 
+               insemi = true;
+               }
             }
          if (/* (vbar || paren ...) && */ c == '\n')
             {
-				insemi = 0;
+            insemi = false;
             if (strm == stdin)
                {
-               if (interactive) zrd_print_prompt(vbar ? "| " : "~ ");
+               if (interactive)
+                  {
+                  zrd_print_prompt(vbar ? "| " : "~ ");
+                  }
                if (dribbling)
+                  {
                   fprintf(dribblestream, vbar ? "| " : "~ ");
+                  }
                }
             }
          while (!vbar && c == '~' && (c = rd_getc(strm)) != EOF)
             {
             while (c == ' ' || c == '\t')
+               {
                c = rd_getc(strm);
-            if (dribbling) putc(c, dribblestream);
+               }
+            if (dribbling) 
+               {
+               putc(c, dribblestream);
+               }
             into_line(c);
             if (c == '\n' && strm == stdin)
                {
-               insemi = 0;
-               if (interactive) zrd_print_prompt("~ ");
+               insemi = false;
+               if (interactive) 
+                  {
+                  zrd_print_prompt("~ ");
+                  }
                if (dribbling)
+                  {
                   fprintf(dribblestream, "~ ");
+                  }
                }
             }
-         if (c != EOF) c = rd_getc(strm);
+
+         if (c != EOF)
+            {
+            c = rd_getc(strm);
+            }
          }
 #ifndef TIOCSTI
       }
@@ -259,22 +345,30 @@ NODE *reader(FILE *strm, char *prompt)
    input_blocking = 0;
 #ifdef __ZTC__
    fix_cursor();
-   if (interactive && strm == stdin) newline_bugfix();
+   if (interactive && strm == stdin) 
+      {
+      newline_bugfix();
+      }
 #endif
+
    if (dribbling)
+      {
       putc('\n', dribblestream);
+      }
    if (c == EOF && strm == stdin)
       {
-      if (interactive) clearerr(stdin);
+      if (interactive) 
+         {
+         clearerr(stdin);
+         }
       rd_print_prompt("\n");
       }
    if (phys_line == p_line)
       {
-      //      free(p_line);
       return Null_Word; // so emptyp works
       }
-   ret = make_strnode(p_line, (int) strlen(p_line), this_type, strnzcpy);
-   //   free(p_line);
+
+   NODE * ret = make_strnode(p_line, (int) strlen(p_line), this_type, strnzcpy);
    return (ret);
    }
 
