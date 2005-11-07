@@ -404,8 +404,8 @@ extern NODE *lprint(NODE *args);
 /* File PARSE.CPP: */
 
 extern int rd_getc(FILE *strm);
-extern void rd_print_prompt(char *str);
-extern NODE *reader(FILE *strm, char *prompt);
+extern void rd_print_prompt(const char *str);
+extern NODE *reader(FILE *strm, const char *prompt);
 extern NODE *list_to_array(NODE *list);
 extern NODE *parser_iterate(char **inln, char *inlimit, char *inhead, bool semi, int endchar);
 extern NODE *parser(NODE *nd, bool semi);
