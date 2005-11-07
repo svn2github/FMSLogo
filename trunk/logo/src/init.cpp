@@ -630,7 +630,7 @@ void init()
    Minus_Sign = intern(make_static_strnode("-"));
    Minus_Tight = intern(make_static_strnode("--"));
    Query = intern(make_static_strnode("?"));
-   Null_Word = intern(make_static_strnode("\0"));
+   Null_Word = intern(make_static_strnode(""));
    To = intern(make_static_strnode("to"));
    Macro = intern(make_static_strnode(".macro"));
    Toplevel = intern(make_static_strnode("toplevel"));
