@@ -357,7 +357,7 @@ make_strnode(
 
 // Makes a string node by copying from a list of word nodes.
 NODE * 
-make_strnode_from_node(
+make_strnode_from_wordlist(
    NODE *      wordlist, 
    int         len,
    NODETYPES   typ
