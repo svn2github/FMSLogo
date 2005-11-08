@@ -469,35 +469,56 @@ typedef enum
 CNTLSTTYP;
 CNTLSTTYP contents_list_type;
 
+static
 int bck(int flag)
    {
    return (want_buried ? !flag : flag);
    }
 
+static
 void contents_map(NODE *sym)
    {
-	int flag_check = PROC_BURIED;
+   int flag_check = PROC_BURIED;
 	
-	if (want_buried) flag_check = want_buried;
+   if (want_buried) flag_check = want_buried;
 	
-	switch (contents_list_type)
+   switch (contents_list_type)
       {
-		case c_PROCS:
-			if (procnode__object(sym) == UNDEFINED ||
-				is_prim(procnode__object(sym)))
-				return;
-			if (bck(flag__object(sym, flag_check))) return;
-			break;
-		case c_VARS:
-			flag_check <<= 1;
-			if (valnode__object(sym) == UNBOUND) return;
-			if (bck(flag__object(sym, flag_check))) return;
-			break;
-		case c_PLISTS:
-			flag_check <<= 2;
-			if (plist__object(sym) == NIL) return;
-			if (bck(flag__object(sym, flag_check))) return;
-			break;
+      case c_PROCS:
+         if (procnode__object(sym) == UNDEFINED ||
+             is_prim(procnode__object(sym)))
+           {
+           return;
+           }
+         if (bck(flag__object(sym, flag_check)))
+           {
+           return;
+           }
+           break;
+
+      case c_VARS:
+         flag_check <<= 1;
+         if (valnode__object(sym) == UNBOUND) 
+            {
+            return;
+            }
+         if (bck(flag__object(sym, flag_check))) 
+            {
+            return;
+            }
+         break;
+
+      case c_PLISTS:
+         flag_check <<= 2;
+         if (plist__object(sym) == NIL) 
+            {
+            return;
+            }
+         if (bck(flag__object(sym, flag_check))) 
+            {
+            return;
+            }
+         break;
       }
 
    if (cnt_list == NIL)
@@ -512,13 +533,12 @@ void contents_map(NODE *sym)
       }
    }
 
+static
 void ms_listlist(NODE *nd)
    {
-   NODE *temp;
-
    while (nd != NIL)
       {
-      temp = newnode(CONS);
+      NODE* temp = newnode(CONS);
       car(temp) = car(nd);
       car(nd) = temp;
       increfcnt(temp);
@@ -526,6 +546,7 @@ void ms_listlist(NODE *nd)
       }
    }
 
+static
 NODE *merge(NODE *a, NODE *b)
    {
    NODE *ret, *tail;
@@ -566,6 +587,7 @@ NODE *merge(NODE *a, NODE *b)
    return ret;
    }
 
+static
 void mergepairs(NODE *nd)
    {
    NODE *temp;
@@ -581,6 +603,7 @@ void mergepairs(NODE *nd)
       }
    }
 
+static
 NODE *mergesort(NODE *nd)
    {
    NODE *ret;
