@@ -119,6 +119,17 @@ INFO: Executing invalid instruction: ' (BEFORE?) '
 INFO: Executing invalid instruction: ' (BEFORE? "ABC) '
 INFO: Executing invalid instruction: ' (BEFORE? "ABC [] ) '
 INFO: Executing invalid instruction: ' (BEFORE? [] "ABC) '
+PASS: WORD "o "k returned ok , as expected.
+PASS: WORD "4 "2 returned 42 , as expected.
+PASS: (WORD) returned  , as expected.
+PASS: (WORD "o) returned o , as expected.
+PASS: (WORD "o "k "ay) returned okay , as expected.
+PASS: (WORD " ") returned  , as expected.
+PASS: (WORD " "a ") returned a , as expected.
+INFO: Executing invalid instruction: ' WORD [] "a '
+INFO: Executing invalid instruction: ' WORD "a [] '
+INFO: Executing invalid instruction: ' WORD "a {} '
+INFO: Executing invalid instruction: ' WORD {} "a '
 PASS: ITEM 0 :myarray returned list , as expected.
 PASS: ITEM 1 :myarray returned hi , as expected.
 PASS: ITEM 2 :myarray returned 42 , as expected.

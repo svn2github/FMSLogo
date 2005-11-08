@@ -15,6 +15,7 @@ LOAD "mkdir.lgo
 LOAD "file.lgo
 LOAD "procedure.lgo
 LOAD "parse.lgo
+LOAD "word.lgo
 
 MAKE "testlog []
 
@@ -120,6 +121,7 @@ TO TESTALL
   REPORTTESTINITIALIZE
 
   PREDICATETEST ; from predicate.lgo
+  WORDTEST      ; from word.lgo
   ARRAYTEST     ; from array.lgo
   LOGICTEST     ; from logic.lgo
   PROCEDURETEST ; from procedure.lgo
