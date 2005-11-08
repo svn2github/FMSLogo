@@ -153,9 +153,9 @@ NODE *reader(FILE *strm, const char *prompt)
    int bracket = 0;
    int brace   = 0;
 
-   bool vbar    = false;
-   bool contin  = true;
-   bool insemi  = false;
+   bool vbar      = false;
+   bool contin    = true;
+   bool incomment = false;
 
    char *phys_line;
    const char *lookfor = ender;
@@ -258,11 +258,11 @@ NODE *reader(FILE *strm, const char *prompt)
             lookfor = ender;
             }
 
-         if (c == '|') 
+         if (c == '|' && !incomment) 
             {
             vbar = !vbar;
             }
-         else if (contin && !vbar && !insemi)
+         else if (contin && !vbar && !incomment)
             {
             if (c == '(') 
                {
@@ -290,12 +290,12 @@ NODE *reader(FILE *strm, const char *prompt)
                }
             else if (c == ';')
                { 
-               insemi = true;
+               incomment = true;
                }
             }
          if (/* (vbar || paren ...) && */ c == '\n')
             {
-            insemi = false;
+            incomment = false;
             if (strm == stdin)
                {
                if (interactive)
@@ -321,7 +321,7 @@ NODE *reader(FILE *strm, const char *prompt)
             into_line(c);
             if (c == '\n' && strm == stdin)
                {
-               insemi = false;
+               incomment = false;
                if (interactive) 
                   {
                   zrd_print_prompt("~ ");
