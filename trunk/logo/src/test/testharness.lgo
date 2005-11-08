@@ -14,6 +14,7 @@ LOAD "fill.lgo
 LOAD "mkdir.lgo
 LOAD "file.lgo
 LOAD "procedure.lgo
+LOAD "parse.lgo
 
 MAKE "testlog []
 
