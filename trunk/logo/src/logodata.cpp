@@ -70,18 +70,18 @@ char *strnzcpy(char *dst, const char *src, int len)
    return dst;
    }
 
-char *word_strnzcpy(char *dst, NODE *kludge, int len)   /* KLUDGE!               */
+char *word_strnzcpy(char *dst, NODE *wordlist, int len)
    {
    char *temp = dst;
 
-   while (kludge != NIL)
+   while (wordlist != NIL)
       {
-      strncpy(dst, getstrptr(car(kludge)), getstrlen(car(kludge)));
-      dst += getstrlen(car(kludge));
-      kludge = cdr(kludge);
+      strncpy(dst, getstrptr(car(wordlist)), getstrlen(car(wordlist)));
+      dst += getstrlen(car(wordlist));
+      wordlist = cdr(wordlist);
       }
    temp[len] = '\0';
-   return (temp);
+   return temp;
    }
 
 char *noparity_strnzcpy(char *dst, const char * src, int len)
@@ -316,6 +316,7 @@ int noparitylow_strncmp(const char * s1, const char * s2, int len)
    return (0);
    }
 
+
 // Makes a string node by copying a NUL-terminated string
 // into a NODE structure.
 NODE * 
@@ -330,8 +331,6 @@ make_strnode(
       {
       return Null_Word;
       }
-
-   NODE * strnode = newnode(typ);
 
    // allocate enough to hold the header, the string, and NUL.
    char * strhead = (char *) malloc(sizeof(short) + len + 1);
@@ -349,6 +348,43 @@ make_strnode(
    unsigned short *header = (unsigned short *) strhead;
    setstrrefcnt(header, 1);
 
+   NODE * strnode = newnode(typ);
+   setstrlen(strnode, len);
+   setstrptr(strnode, strptr);
+   setstrhead(strnode, strhead);
+   return strnode;
+   }
+
+// Makes a string node by copying from a list of word nodes.
+NODE * 
+make_strnode_from_node(
+   NODE *      wordlist, 
+   int         len,
+   NODETYPES   typ
+)
+   {
+   if (len == 0 && Null_Word != NIL)
+      {
+      return Null_Word;
+      }
+
+   // allocate enough to hold the header, the string, and NUL.
+   char * strhead = (char *) malloc(sizeof(short) + len + 1);
+   if (strhead == NULL)
+      {
+      err_logo(OUT_OF_MEM, NIL);
+      return UNBOUND;
+      }
+
+   // set the "string pointer" to just after the header
+   char * strptr = strhead + sizeof(short);
+   word_strnzcpy(strptr, wordlist, len);
+
+   // set the reference count to 1.
+   unsigned short *header = (unsigned short *) strhead;
+   setstrrefcnt(header, 1);
+
+   NODE * strnode = newnode(typ);
    setstrlen(strnode, len);
    setstrptr(strnode, strptr);
    setstrhead(strnode, strhead);
@@ -371,15 +407,14 @@ make_strnode_no_copy(
       return Null_Word;
       }
 
-   NODE * strnode = newnode(typ);
-   setstrlen(strnode, len);
-   setstrptr(strnode, strptr);
-   setstrhead(strnode, strhead);
-
    // increment the reference count
    unsigned short * header = (unsigned short *) strhead;
    incstrrefcnt(header);
 
+   NODE * strnode = newnode(typ);
+   setstrlen(strnode, len);
+   setstrptr(strnode, strptr);
+   setstrhead(strnode, strhead);
    return strnode;
    }
 
