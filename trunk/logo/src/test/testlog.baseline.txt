@@ -172,6 +172,11 @@ PASS: DEFINED? "nonexistent returned false , as expected.
 PASS: DEFINED? "FORWARD returned false , as expected.
 PASS: DEFINED? "SAMPLEPROC returned true , as expected.
 PASS: DEFINED? "sampleproc returned true , as expected.
+PASS: PROCEDUREP "nonexistent returned false , as expected.
+PASS: PROCEDURE? "nonexistent returned false , as expected.
+PASS: PROCEDURE? "FORWARD returned true , as expected.
+PASS: PROCEDURE? "SAMPLEPROC returned true , as expected.
+PASS: PROCEDURE? "sampleproc returned true , as expected.
 PASS: ECHO "input returned input , as expected.
 PASS: DEFINEDP "ECHO returned true , as expected.
 PASS: DEFINED? "ECHO returned true , as expected.
