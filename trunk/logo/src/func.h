@@ -344,6 +344,7 @@ extern int noparity_strncmp(const char * s1, const char * s2, int len);
 extern int noparitylow_strncmp(const char * s1, const char * s2, int len);
 extern NODE *make_strnode_no_copy(const char *strptr, char *strhead, int len, NODETYPES typ);
 extern NODE *make_strnode(const char *string, int len, NODETYPES typ, char * (*copy_routine) (char *, const char *, int));
+extern NODE *make_strnode_from_wordlist(NODE * wordlist, int len, NODETYPES typ);
 extern void make_runparse(NODE *ndi);
 extern NODE *make_quote(NODE *qnd);
 extern NODE *maybe_quote(NODE *nd);

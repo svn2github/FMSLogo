@@ -21,8 +21,6 @@
 
 #include "allwind.h"
 
-typedef char * (*kludge_type) (char *, const char *, int);
-
 NODE *bfable_arg(NODE *args)
    {
    NODE *arg = car(args);
@@ -414,36 +412,40 @@ NODE *string_arg(NODE *args)
 
 NODE *lword(NODE *args)
    {
-   NODE *val = NIL, *arg = NIL;
-   int cnt = 0;
-   NODETYPES str_type = STRING;
 
-   if (args == NIL) return Null_Word;
-   val = args;
+   if (args == NIL)
+      {
+      return Null_Word;
+      }
+
+   int length = 0;
+   NODETYPES str_type = STRING;
+   NODE * val = args;
    while (val != NIL && NOT_THROWING)
       {
-      arg = string_arg(val);
-      val = cdr(val);
+      NODE * arg = string_arg(val);
       if (NOT_THROWING)
          {
          if (backslashed(arg))
+            {
             str_type = VBAR_STRING;
-         cnt += getstrlen(arg);
+            }
+         length += getstrlen(arg);
          }
+         
+      val = cdr(val);
       }
+
    if (NOT_THROWING)
       {
-      val = make_strnode(
-         (char *) args, 
-         cnt, 
-         str_type, 
-         (kludge_type) word_strnzcpy);/* kludge */
+      val = make_strnode_from_wordlist(args, length, str_type);
       }
    else
       {
       val = UNBOUND;
       }
-   return (val);
+
+   return val;
    }
 
 NODE *lsentence(NODE *args)
