@@ -1207,9 +1207,9 @@ NODE *ledit(NODE *args)
    return UNBOUND;
    }
 
-int lendedit()
+bool endedit(void)
    {
-   int realsave = 0;
+   bool realsave = false;
 
    FILE * holdstrm = loadstream;
    NODE * tmp_line = reref(NIL, current_line);
@@ -1224,7 +1224,7 @@ int lendedit()
       {
       int sv_val_status = val_status;
 
-      realsave = 1;
+      realsave = true;
       while (!feof(loadstream) && NOT_THROWING)
          {
          fgetpos(loadstream, &LinesLoadedOnEdit);

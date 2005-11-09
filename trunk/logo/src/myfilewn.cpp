@@ -176,8 +176,8 @@ bool TMyFileWindow::Write(const char * fileName)
 
    bool success = false;
 
-   int windowTextLength = Editor->GetWindowTextLength();
-   int editBufferLength = windowTextLength + 2; // "\r\n"
+   int    windowTextLength = Editor->GetWindowTextLength();
+   size_t editBufferLength = windowTextLength + 2; // "\r\n"
    char *editBuffer = new char [editBufferLength];
    if (editBuffer != NULL)
       {
@@ -471,10 +471,10 @@ void TMyFileWindow::CMEditSetFont()
       }
    }
 
-int TMyFileWindow::EndEdit()
+bool TMyFileWindow::EndEdit()
    {
 
-   int realsave = lendedit();
+   bool realsave = endedit();
 
    // check for error
 
@@ -559,7 +559,7 @@ void TMyFileWindow::EvDestroy()
             lerase(args_list);
 
             // Since we erased we must load again, but no errors
-            lendedit();
+            endedit();
             }
 
          // free up args_list

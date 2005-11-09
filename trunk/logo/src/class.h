@@ -67,7 +67,7 @@ class TMyFileWindow : public TEditWindow
    void SetFileName(const char *fileName);
 
    bool CanClose();
-   int EndEdit();
+   bool EndEdit();
 
    void EvDestroy();
 
