@@ -8,13 +8,12 @@ extern void emptyqueue(void);
 extern void do_help(char *arg);
 extern void checkwindow(int *x, int *y, int *w, int *h);
 extern BOOL MyBeep(DWORD dwFreq, DWORD dwDuration);
-void Myoutportb(short portid, unsigned char value);
-unsigned char Myinportb(short portid);
-void Myoutport(short portid, short value);
-short Myinport(short portid);
-int Myingameport (short portid, short mask);
+extern void Myoutportb(short portid, unsigned char value);
+extern unsigned char Myinportb(short portid);
+extern void Myoutport(short portid, short value);
+extern short Myinport(short portid);
+extern int Myingameport (short portid, short mask);
 
-extern void gr_mode(void);             /*routine                              */
 extern bool check_ibm_stop(int scan);
 extern void term_init_ibm(void);
 extern void ibm_gotoxy(int x, int y);
@@ -59,8 +58,6 @@ extern NODE *lto(NODE *args);
 extern NODE *lmacro(NODE *args);
 extern NODE *lmake(NODE *args);
 extern NODE *llocal(NODE *args);
-extern void contents_map(NODE *sym);
-extern void zigzag(NODE *nd);
 extern NODE *lcontents(NODE *arg);
 extern NODE *lstepped(NODE *arg);
 extern NODE *ltraced(NODE *arg);
@@ -78,7 +75,7 @@ extern NODE *lunbury(NODE *arg);
 extern NODE *luntrace(NODE *arg);
 extern NODE *lunstep(NODE *arg);
 extern NODE *ledit(NODE *args);
-extern int lendedit(void);
+extern bool endedit(void);
 extern NODE *lthing(NODE *args);
 extern NODE *lnamep(NODE *args);
 extern NODE *lprocedurep(NODE *args);
@@ -280,11 +277,6 @@ extern void ibmto3d(const Point & ToPoint);
 extern void thepencolor(int, int, int);
 extern void thefloodcolor(int, int, int);
 extern void thescreencolor(int, int, int);
-extern struct object *bitcut(struct object *argx, struct object *argy);
-extern struct object *bitfit(struct object *argx, struct object *argy);
-extern struct object *bitpaste(void);
-extern struct object *scrollx(struct object *arg);
-extern struct object *scrolly(struct object *arg);
 
 /* File COMS.CPP: */
 
@@ -400,13 +392,10 @@ extern NODE *lprint(NODE *args);
 /* File PARSE.CPP: */
 
 extern int rd_getc(FILE *strm);
-extern void rd_print_prompt(const char *str);
 extern NODE *reader(FILE *strm, const char *prompt);
 extern NODE *list_to_array(NODE *list);
-extern NODE *parser_iterate(char **inln, char *inlimit, char *inhead, bool semi, int endchar);
 extern NODE *parser(NODE *nd, bool semi);
 extern NODE *lparse(NODE *args);
-extern NODE *runparse_node(NODE *nd, NODE **ndsptr);
 extern NODE *runparse(NODE *ndlist);
 extern NODE *lrunparse(NODE *args);
 
