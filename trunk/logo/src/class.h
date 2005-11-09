@@ -28,6 +28,14 @@ const int DEFAULT_SPLITTER_WIDTH   = 5;
 // what is this?  Some kind of border?
 const int LL = 1;
 
+typedef struct
+   {
+   int   red;
+   int   green;
+   int   blue;
+   }
+Color;
+
 
 typedef struct
    {
@@ -526,15 +534,9 @@ extern int TPrinterAreaYHigh;
 extern int TPrinterAreaPixels;
 
 extern CUTMAP *CutBmp;
-extern int dpenr;
-extern int dpeng;
-extern int dpenb;
-extern int dfldr;
-extern int dfldg;
-extern int dfldb;
-extern int dscnr;
-extern int dscng;
-extern int dscnb;
+extern Color dpen;
+extern Color dfld;
+extern Color dscn;
 extern int BitMapWidth;
 extern int BitMapHeight;
 extern int WorldWidth;

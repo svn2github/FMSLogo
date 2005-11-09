@@ -592,11 +592,10 @@ NODE *lpixel(NODE *)
    POINT dest;
    if (!WorldCoordinateToScreenCoordinate(g_Turtles[turtle_which].Position, dest))
       {
-      return
-         cons(make_intnode((FIXNUM) - 1),
-            cons(make_intnode((FIXNUM) - 1),
-               cons(make_intnode((FIXNUM) - 1),
-                  NIL)));
+      return cons_list(
+         make_intnode((FIXNUM) - 1),
+         make_intnode((FIXNUM) - 1),
+         make_intnode((FIXNUM) - 1));
       }
 
    HDC ScreenDC = GetDC(MainWindowx->ScreenWindow->HWindow);
@@ -624,14 +623,16 @@ NODE *lpixel(NODE *)
    if (bIndexMode)
       {
       int icolor = getindexcolor(the_color);
-      if (icolor >= 0) return(make_intnode(icolor));
+      if (icolor >= 0) 
+         {
+         return(make_intnode(icolor));
+         }
       }
 
-   return (
-      cons(make_intnode((FIXNUM) GetRValue(the_color)),
-      cons(make_intnode((FIXNUM) GetGValue(the_color)),
-      cons(make_intnode((FIXNUM) GetBValue(the_color)),
-      NIL))));
+   return cons_list(
+      make_intnode((FIXNUM) GetRValue(the_color)),
+      make_intnode((FIXNUM) GetGValue(the_color)),
+      make_intnode((FIXNUM) GetBValue(the_color)));
    }
 
 void logofill(bool bOld)
@@ -694,39 +695,46 @@ void logofill(bool bOld)
    ReleaseDC(MainWindowx->ScreenWindow->HWindow, ScreenDC);
    }
 
+
+static NODE* color_helper(const Color & col)
+{
+   if (bIndexMode)
+      {
+      int icolor = getindexcolor(RGB(col.red, col.green, col.blue));
+      if (icolor >= 0)
+         {
+         return make_intnode(icolor);
+         }
+      }
+
+   return cons_list(
+      make_intnode((FIXNUM) col.red),
+      make_intnode((FIXNUM) col.green),
+      make_intnode((FIXNUM) col.blue));
+}
+
 NODE *lpencolor(NODE *)
    {
    ASSERT_TURTLE_INVARIANT
 
-   if (bIndexMode)
-      {
-      int icolor = getindexcolor(RGB(dpenr, dpeng, dpenb));
-      if (icolor >= 0) return(make_intnode(icolor));
-      }
-
-   return (
-      cons(make_intnode((FIXNUM) dpenr),
-      cons(make_intnode((FIXNUM) dpeng),
-      cons(make_intnode((FIXNUM) dpenb),
-      NIL))));
+   return color_helper(dpen);
    }
 
 // function to set the pen color while updating palette, if need be
 
 void thepencolor(int r, int g, int b)
    {
-
-   dpenr = r;
-   dpeng = g;
-   dpenb = b;
+   dpen.red   = r;
+   dpen.green = g;
+   dpen.blue  = b;
 
    if (EnablePalette)
       {
-      pcolor = LoadColor((int) dpenr, (int) dpeng, (int) dpenb);
+      pcolor = LoadColor(dpen.red, dpen.green, dpen.blue);
       }
    else
       {
-      pcolor = RGB(dpenr, dpeng, dpenb);
+      pcolor = RGB(dpen.red, dpen.green, dpen.blue);
       }
 
    NormalPen.lopnStyle = PS_INSIDEFRAME;
@@ -740,18 +748,7 @@ NODE *lfloodcolor(NODE *)
    {
    ASSERT_TURTLE_INVARIANT
 
-   if (bIndexMode)
-      {
-      int icolor = getindexcolor(RGB(dfldr, dfldg, dfldb));
-      if (icolor >= 0) return(make_intnode(icolor));
-      }
-
-   return (
-      cons(make_intnode((FIXNUM) dfldr),
-      cons(make_intnode((FIXNUM) dfldg),
-      cons(make_intnode((FIXNUM) dfldb),
-      NIL
-      ))));
+   return color_helper(dfld);
    }
 
 // funtion to set the flood color while updating palette if need be
@@ -759,17 +756,17 @@ NODE *lfloodcolor(NODE *)
 void thefloodcolor(int r, int g, int b)
    {
 
-   dfldr = r;
-   dfldg = g;
-   dfldb = b;
+   dfld.red   = r;
+   dfld.green = g;
+   dfld.blue  = b;
 
    if (EnablePalette)
       {
-      fcolor = LoadColor((int) dfldr, (int) dfldg, (int) dfldb);
+      fcolor = LoadColor(dfld.red, dfld.green, dfld.blue);
       }
    else
       {
-      fcolor = RGB(dfldr, dfldg, dfldb);
+      fcolor = RGB(dfld.red, dfld.green, dfld.blue);
       }
 
    FloodBrush.lbStyle = BS_SOLID;
@@ -778,38 +775,25 @@ void thefloodcolor(int r, int g, int b)
    }
 
 // function to return screen color as a RGB list
-
 NODE *lscreencolor(NODE *)
    {
-   if (bIndexMode)
-      {
-      int icolor = getindexcolor(RGB(dscnr, dscng, dscnb));
-      if (icolor >= 0) return(make_intnode(icolor));
-      }
-
-   return (
-      cons(make_intnode((FIXNUM) dscnr),
-      cons(make_intnode((FIXNUM) dscng),
-      cons(make_intnode((FIXNUM) dscnb),
-      NIL
-      ))));
+   return color_helper(dscn);
    }
 
 // funtion to set the screen color while updating palette if need be
-
 void thescreencolor(int r, int g, int b)
    {
-   dscnr = r;
-   dscng = g;
-   dscnb = b;
+   dscn.red   = r;
+   dscn.green = g;
+   dscn.blue  = b;
 
    if (EnablePalette)
       {
-      scolor = LoadColor((int) dscnr, (int) dscng, (int) dscnb);
+      scolor = LoadColor(dscn.red, dscn.green, dscn.blue);
       }
    else
       {
-      scolor = RGB(dscnr, dscng, dscnb);
+      scolor = RGB(dscn.red, dscn.green, dscn.blue);
       }
 
    ScreenBrush.lbStyle = BS_SOLID;

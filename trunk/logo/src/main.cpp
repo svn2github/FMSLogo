@@ -102,16 +102,10 @@ int GCMAX = 8192;                      /* Garbage Collector STack Size (Logo.ini
 int MAX_PHYS_LINE = 8192;              /* Maximum Physical Line Size (Logo.ini)         */
 //int ROUNDPOS;                        /* Round returned POS                            */
 //int BUFFERTYPE;                      /* Buffered TYPE command                         */
-int dpenr;                             /* Current draw pen color red                    */
-int dpeng;                             /* Current draw pen color green                  */
-int dpenb;                             /* Current draw pen color blue                   */
-int dfldr;                             /* Current flood pen color red                   */
-int dfldg;                             /* Current flood pen color green                 */
-int dfldb;                             /* Current flood pen color blue                  */
-int dscnr;                             /* Current screen pen color red                  */
-int dscng;                             /* Current screen pen color green                */
-int dscnb;                             /* Current screen pen color blue                 */
-bool IsDirty = false;                  // Flag to signal to query user ok to quiu
+Color dpen;                            // Current pen color
+Color dfld;                            // Current flood color
+Color dscn;                            // Current screen color
+bool IsDirty = false;                  // Flag to signal to query user ok to quit
 int BitMapWidth = 1000;                /* Current bitmap size in X                      */
 int BitMapHeight = 1000;               /* Current bitmap size in Y                      */
 int WorldWidth = 1000;                 /* Current World size in X                       */
@@ -407,17 +401,17 @@ void TMyApp::InitMainWindow()
    scolor = 0x00ffffffL;
    fcolor = 0x00000000L;
 
-   dpenr = 0x00;
-   dpeng = 0x00;
-   dpenb = 0x00;
+   dpen.red   = 0x00;
+   dpen.green = 0x00;
+   dpen.blue  = 0x00;
 
-   dfldr = 0x00;
-   dfldg = 0x00;
-   dfldb = 0x00;
+   dfld.red   = 0x00;
+   dfld.green = 0x00;
+   dfld.blue  = 0x00;
 
-   dscnr = 0xff;
-   dscng = 0xff;
-   dscnb = 0xff;
+   dscn.red   = 0xff;
+   dscn.green = 0xff;
+   dscn.blue  = 0xff;
 
    // init the font structure
 

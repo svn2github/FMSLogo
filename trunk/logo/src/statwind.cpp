@@ -54,9 +54,9 @@ void update_status_pencolor(void)
    sprintf(
       text,
       "%d,%d,%d",
-      (int) dpenr,
-      (int) dpeng,
-      (int) dpenb);
+      dpen.red,
+      dpen.green,
+      dpen.blue);
 
    MainWindowx->StatusWindow->SetDlgItemText(ID_PENCOLOR, text);
    }
@@ -68,9 +68,9 @@ void update_status_floodcolor(void)
    sprintf(
       text,
       "%d,%d,%d",
-      (int) dfldr,
-      (int) dfldg,
-      (int) dfldb);
+      dfld.red,
+      dfld.green,
+      dfld.blue);
 
    MainWindowx->StatusWindow->SetDlgItemText(ID_FLOODCOLOR, text);
    }
@@ -82,9 +82,9 @@ void update_status_screencolor(void)
    sprintf(
       text,
       "%d,%d,%d",
-      (int) dscnr,
-      (int) dscng,
-      (int) dscnb);
+      dscn.red,
+      dscn.green,
+      dscn.blue);
 
    MainWindowx->StatusWindow->SetDlgItemText(ID_SCREENCOLOR, text);
    }
