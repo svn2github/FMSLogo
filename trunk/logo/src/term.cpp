@@ -172,14 +172,17 @@ NODE *lcleartext(NODE *)
    return (UNBOUND);
    }
 
+
 NODE *lcursor(NODE *)
    {
-   /*
-      return(cons(make_intnode((FIXNUM)(x_coord-x_margin)),
-      cons(make_intnode((FIXNUM)(y_coord-y_margin)), NIL)));
-    */
-   return (cons(make_intnode((FIXNUM) (0)),
-         cons(make_intnode((FIXNUM) (0)), NIL)));
+   
+   // return cons_list(
+   //    make_intnode((FIXNUM)(x_coord-x_margin)),
+   //    make_intnode((FIXNUM)(y_coord-y_margin)));
+
+   return cons_list(
+         make_intnode((FIXNUM) (0)),
+         make_intnode((FIXNUM) (0)));
    }
 
 NODE *lsetcursor(NODE *  /*args*/)
