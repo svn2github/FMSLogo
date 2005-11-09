@@ -1295,21 +1295,32 @@ NODE *lproplistp(NODE *args)
    return UNBOUND;
    }
 
+// wanted:
+//   0 = defined
+//   1 = primative
+//   2 = macro
 static
 NODE *check_proctype(NODE *args, int wanted)
    {
-   NODE *arg, *cell;
-   int isprim;
-
-   arg = name_arg(args);
+   NODE * cell;
+   NODE * arg = name_arg(args);
    if (NOT_THROWING && (cell = procnode__caseobj(intern(arg))) == UNDEFINED)
       {
       return (Falsex);
       }
-   if (wanted == 2) return torf(is_macro(intern(arg)));
-   isprim = is_prim(cell);
-   if (NOT_THROWING) return torf((isprim != 0) == wanted);
-   return (UNBOUND);
+
+   if (wanted == 2)
+      {
+      return torf(is_macro(intern(arg)));
+      }
+
+   int isprim = is_prim(cell);
+   if (NOT_THROWING)
+      {
+      return torf((isprim != 0) == wanted);
+      }
+
+   return UNBOUND;
    }
 
 NODE *lprimitivep(NODE *args)
