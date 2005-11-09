@@ -47,7 +47,7 @@ void err_print()
    stopping_flag = RUN;
    print_backslashes = TRUE;
 
-   print_help(stdout, cadr(err_mesg));
+   print_helper(stdout, cadr(err_mesg));
 
    if (err_mesg == NIL)
       {

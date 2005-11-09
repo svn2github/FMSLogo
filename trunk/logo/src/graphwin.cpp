@@ -336,14 +336,12 @@ NODE *lgifsize(NODE *args)
       DWORD dwPixelHeight = 0;
       gifload_helper(textbuf, dwPixelWidth, dwPixelHeight);
 
-      return (
-         cons(make_intnode((FIXNUM) dwPixelWidth),
-         cons(make_intnode((FIXNUM) dwPixelHeight),
-         NIL
-         )));
+      return cons_list(
+         make_intnode((FIXNUM) dwPixelWidth),
+         make_intnode((FIXNUM) dwPixelHeight));
       }
 
-   return (UNBOUND);
+   return UNBOUND;
    }
 
 NODE *lbitload(NODE *arg)
@@ -376,11 +374,9 @@ NODE *lbitloadsize(NODE *arg)
       DWORD dwPixelHeight = 0;
       MainWindowx->LoadBitmapFile(textbuf, dwPixelWidth, dwPixelHeight);
 
-      return (
-         cons(make_intnode((FIXNUM) dwPixelWidth),
-         cons(make_intnode((FIXNUM) dwPixelHeight),
-         NIL
-         )));
+      return cons_list(
+         make_intnode((FIXNUM) dwPixelWidth),
+         make_intnode((FIXNUM) dwPixelHeight));
       }
 
    return UNBOUND;
@@ -439,10 +435,9 @@ NODE *lbitsize(NODE *)
          }
       }
 
-   return (
-      cons(make_intnode((FIXNUM) temp.bmWidth),
-      cons(make_intnode((FIXNUM) temp.bmHeight),
-      NIL)));
+   return cons_list(
+      make_intnode((FIXNUM) temp.bmWidth),
+      make_intnode((FIXNUM) temp.bmHeight));
    }
 
 // Fills TurtlePoint with the location of the current
@@ -2413,36 +2408,21 @@ NODE *llabelfont(NODE *)
 
    // now return the whole thing as a list
 
-   return (
+   return
       cons(val,
-         cons(make_intnode((FIXNUM) FontRec.lfHeight),
-            cons(make_intnode((FIXNUM) FontRec.lfWidth),
-               cons(make_intnode((FIXNUM) FontRec.lfOrientation),
-                  cons(make_intnode((FIXNUM) FontRec.lfWeight),
-                     cons(make_intnode((FIXNUM) FontRec.lfItalic),
-                        cons(make_intnode((FIXNUM) FontRec.lfUnderline),
-                           cons(make_intnode((FIXNUM) FontRec.lfStrikeOut),
-                              cons(make_intnode((FIXNUM) FontRec.lfCharSet),
-                                 cons(make_intnode((FIXNUM) FontRec.lfOutPrecision),
-                                    cons(make_intnode((FIXNUM) FontRec.lfClipPrecision),
-                                       cons(make_intnode((FIXNUM) FontRec.lfQuality),
-                                          cons(make_intnode((FIXNUM) FontRec.lfPitchAndFamily),
-                                             NIL
-                                          )
-                                       )
-                                    )
-                                 )
-                              )
-                           )
-                        )
-                     )
-                  )
-               )
-            )
-         )
-      )
-   );
-
+      cons(make_intnode((FIXNUM) FontRec.lfHeight),
+      cons(make_intnode((FIXNUM) FontRec.lfWidth),
+      cons(make_intnode((FIXNUM) FontRec.lfOrientation),
+      cons(make_intnode((FIXNUM) FontRec.lfWeight),
+      cons(make_intnode((FIXNUM) FontRec.lfItalic),
+      cons(make_intnode((FIXNUM) FontRec.lfUnderline),
+      cons(make_intnode((FIXNUM) FontRec.lfStrikeOut),
+      cons(make_intnode((FIXNUM) FontRec.lfCharSet),
+      cons(make_intnode((FIXNUM) FontRec.lfOutPrecision),
+      cons(make_intnode((FIXNUM) FontRec.lfClipPrecision),
+      cons(make_intnode((FIXNUM) FontRec.lfQuality),
+      cons(make_intnode((FIXNUM) FontRec.lfPitchAndFamily),
+      NIL)))))))))))));
    }
 
 NODE *lmachine(NODE *)
@@ -2460,7 +2440,7 @@ NODE *lmachine(NODE *)
    TRect wrect;
    MainWindowx->GetWindowRect(wrect);
 
-   return (
+   return
       cons(make_intnode((FIXNUM) 1),
       cons(make_intnode((FIXNUM) 32),
       cons(make_intnode((FIXNUM) BitMapWidth),
@@ -2474,7 +2454,7 @@ NODE *lmachine(NODE *)
       cons(make_intnode((FIXNUM) ScreenHeight),
       cons(make_intnode((FIXNUM) (wrect.right - wrect.left)),
       cons(make_intnode((FIXNUM) (wrect.bottom - wrect.top)),
-      NIL))))))))))))));
+      NIL)))))))))))));
    }
 
 SIZE labelsize(const char *s)

@@ -26,6 +26,8 @@ char *print_stringptr;
 
 bool print_backslashes = false;
 
+static void real_print_node(FILE *strm, NODE *nd, int depth, int width);
+
 void update_coords(char /*ch*/)
    {
    }
@@ -44,7 +46,6 @@ void print_char(FILE *strm, char ch)
       else
          {
          putc(ch, strm);
-
          }
       }
    else
@@ -82,7 +83,7 @@ void ndprintf(FILE *strm, char *fmt, ...)
             NODE * nd = va_arg(ap, NODE *);
             if (is_list(nd))
                {
-               print_help(strm, nd);
+               print_helper(strm, nd);
                }
             else
                print_node(strm, nd);
@@ -106,9 +107,9 @@ void ndprintf(FILE *strm, char *fmt, ...)
    va_end(ap);
    }
 
-void real_print_help(FILE *strm, NODE *ndlist, int depth, int width)
+static
+void real_print_helper(FILE *strm, NODE *ndlist, int depth, int width)
    {
-   NODE *arg /* = NIL*/;
    int wid = width;
 
    while (ndlist != NIL)
@@ -117,7 +118,7 @@ void real_print_help(FILE *strm, NODE *ndlist, int depth, int width)
          {
          return;
          }
-      arg = car(ndlist);
+      NODE * arg = car(ndlist);
       ndlist = cdr(ndlist);
       if (check_throwing)
          {
@@ -137,6 +138,7 @@ void real_print_help(FILE *strm, NODE *ndlist, int depth, int width)
    }
 
 #ifdef MEM_DEBUG
+static
 char *typename(NODE *nd)
    {
    static char buf[30];
@@ -169,7 +171,7 @@ char *typename(NODE *nd)
       }
    }
 
-int debug_print = 1;
+bool debug_print = true;
 #endif
 
 // prints a node to a file stream in a way that is consistent
@@ -221,7 +223,7 @@ void real_print_node(FILE *strm, NODE *nd, int depth, int width)
    else if (ndty & NT_LIST)
       {
       print_char(strm, '[');
-      real_print_help(strm, nd, depth - 1, width);
+      real_print_helper(strm, nd, depth - 1, width);
       print_char(strm, ']');
       }
    else if (ndty == ARRAY)
@@ -231,14 +233,14 @@ void real_print_node(FILE *strm, NODE *nd, int depth, int width)
 
       if (width < 0) wid = dim;
       else wid = (dim > width ? width : dim);
-      print_char(strm, '{');           //ignore//
+      print_char(strm, '{');
       while (i < wid)
          {
          real_print_node(strm, *pp++, depth - 1, width);
          if (++i < dim) print_space(strm);
          }
       if (wid < dim) ndprintf(strm, "...");
-      print_char(strm, '}');           //ignore//
+      print_char(strm, '}');
       if (print_backslashes && (getarrorg(nd) != 1))
          {
          char org[] = "@        ";
@@ -319,6 +321,7 @@ void real_print_node(FILE *strm, NODE *nd, int depth, int width)
       }
    }
 
+static
 int find_limit(NODE *nd)
    {
    int val = -1;
@@ -330,21 +333,27 @@ int find_limit(NODE *nd)
    return (val);
    }
 
-void print_help(FILE *strm, NODE *nd)
+void print_helper(FILE *strm, NODE *nd)
    {
-   real_print_help(strm, nd, find_limit(Printdepthlimit),
+   real_print_helper(
+      strm,
+      nd,
+      find_limit(Printdepthlimit),
       find_limit(Printwidthlimit));
    }
 
 void print_node(FILE *strm, NODE *nd)
    {
-   real_print_node(strm, nd, find_limit(Printdepthlimit),
+   real_print_node(
+      strm,
+      nd,
+      find_limit(Printdepthlimit),
       find_limit(Printwidthlimit));
    }
 
 void print_nobrak(FILE *strm, NODE *nd)
    {
-   if (is_list(nd)) print_help(strm, nd);
+   if (is_list(nd)) print_helper(strm, nd);
    else print_node(strm, nd);
    }
 
@@ -355,12 +364,13 @@ void new_line(FILE *strm)
 
 NODE *lshow(NODE *args)
    {
-   print_help(writestream, args);
+   print_helper(writestream, args);
    new_line(writestream);
    return (UNBOUND);
    }
 
-void type_help(NODE *args, int sp)
+static
+void type_helper(NODE *args, bool sp)
    {
    NODE *arg /* = NIL */;
 
@@ -369,7 +379,7 @@ void type_help(NODE *args, int sp)
       arg = car(args);
       args = cdr(args);
       if (is_list(arg))
-         print_help(writestream, arg);
+         print_helper(writestream, arg);
       else
          print_node(writestream, arg);
       if (sp && (args != NIL))
@@ -381,14 +391,14 @@ void type_help(NODE *args, int sp)
 
 NODE *ltype(NODE *args)
    {
-   type_help(args, 0);
-   return (UNBOUND);
+   type_helper(args, false);
+   return UNBOUND;
    }
 
 NODE *lprint(NODE *args)
    {
-   type_help(args, 1);
+   type_helper(args, true);
    new_line(writestream);
-   return (UNBOUND);
+   return UNBOUND;
    }
 

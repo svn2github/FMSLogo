@@ -377,15 +377,11 @@ extern void update_coords(char ch);
 extern void print_char(FILE *strm, char ch);
 extern void print_space(FILE *strm);
 extern void ndprintf(FILE *strm, char *fmt, ...);
-extern void real_print_help(FILE *strm, NODE *ndlist, int depth, int width);
-extern void real_print_node(FILE *strm, NODE *nd, int depth, int width);
-extern int find_limit(NODE *nd);
-extern void print_help(FILE *strm, NODE *nd);
+extern void print_helper(FILE *strm, NODE *nd);
 extern void print_node(FILE *strm, NODE *nd);
 extern void print_nobrak(FILE *strm, NODE *nd);
 extern void new_line(FILE *strm);
 extern NODE *lshow(NODE *args);
-extern void type_help(NODE *args, int sp);
 extern NODE *ltype(NODE *args);
 extern NODE *lprint(NODE *args);
 
