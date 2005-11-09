@@ -89,6 +89,8 @@ bool refresh_p = true;
 
 #define sq(z) ((z)*(z))
 
+static void forward_helper(FLONUM d);
+
 /************************************************************/
 
 double pfmod(double x, double y)
@@ -640,64 +642,123 @@ NODE *lellipsearc(NODE *arg)
    return (UNBOUND);
    }
 
-void forward(FLONUM d)
-   {
-   draw_turtle(false);
-   if (current_mode == perspectivemode)
-      forward_helper3d(d);
-   else
-      forward_helper(d);
 
-   draw_turtle(true);
-   wanna_x = g_Turtles[turtle_which].Position.x;
-   wanna_y = g_Turtles[turtle_which].Position.y;
-   wanna_z = g_Turtles[turtle_which].Position.z;
-   out_of_bounds = false;
+static
+bool wrap_right(FLONUM d, FLONUM x1, FLONUM y1, FLONUM x2, FLONUM y2)
+   {
+   if (x2 > screen_right)
+      {
+      FLONUM yi = ((y2 - y1) / (x2 - x1)) * (screen_right - x1) + y1;
+      if (yi >= screen_bottom && yi <= screen_top)
+         {
+         line_to(screen_right, yi);
+         save_line();
+         record_next_move = TRUE;
+         g_Turtles[turtle_which].Position.x = turtle_left_max;
+         g_Turtles[turtle_which].Position.y = yi;
+         if (current_mode == wrapmode)
+            {
+            forward_helper(d * ((x2 - screen_right) / (x2 - x1)));
+            return true;
+            }
+         g_Turtles[turtle_which].Position.x = turtle_right_max;
+         err_logo(TURTLE_OUT_OF_BOUNDS, NIL);
+         }
+      }
+   return false;
    }
 
-void forward_helper3d(FLONUM d)
+static
+bool wrap_up(FLONUM d, FLONUM x1, FLONUM y1, FLONUM x2, FLONUM y2)
    {
-   VECTOR direction;
-
-   move_to_3d(g_Turtles[turtle_which].Position.x, g_Turtles[turtle_which].Position.y, g_Turtles[turtle_which].Position.z);
-
-   if (record_next_move)
+   if (y2 > screen_top)
       {
-      save_move();
-      record_next_move = FALSE;
+      FLONUM xi = ((x2 - x1) / (y2 - y1)) * (screen_top - y1) + x1;
+      if (xi >= screen_left && xi <= screen_right)
+         {
+         line_to(xi, screen_top);
+         save_line();
+         record_next_move = TRUE;
+         g_Turtles[turtle_which].Position.x = xi;
+         g_Turtles[turtle_which].Position.y = turtle_bottom_max;
+         if (current_mode == wrapmode)
+            {
+            forward_helper(d * ((y2 - screen_top) / (y2 - y1)));
+            return true;
+            }
+         g_Turtles[turtle_which].Position.y = turtle_top_max;
+         err_logo(TURTLE_OUT_OF_BOUNDS, NIL);
+         }
       }
+   return false;
+   }
 
-   direction.x = 0.0;
-   direction.y = d;
-   direction.z = 0.0;
+static
+bool wrap_left(FLONUM d, FLONUM x1, FLONUM y1, FLONUM x2, FLONUM y2)
+   {
+   if (x2 < screen_left)
+      {
+      FLONUM yi = ((y2 - y1) / (x1 - x2)) * (x1 - screen_left) + y1;
+      if (yi >= screen_bottom && yi <= screen_top)
+         {
+         line_to(screen_left, yi);
+         save_line();
+         record_next_move = TRUE;
+         g_Turtles[turtle_which].Position.x = turtle_right_max;
+         g_Turtles[turtle_which].Position.y = yi;
+         if (current_mode == wrapmode)
+            {
+            forward_helper(d * ((screen_left - x2) / (x1 - x2)));
+            return true;
+            }
+         g_Turtles[turtle_which].Position.x = turtle_left_max;
+         err_logo(TURTLE_OUT_OF_BOUNDS, NIL);
+         }
+      }
+   return false;
+   }
 
-   direction = MVyMultiply(g_Turtles[turtle_which].Matrix, direction);
-
-   g_Turtles[turtle_which].Position.x += direction.x;
-   g_Turtles[turtle_which].Position.y += direction.y;
-   g_Turtles[turtle_which].Position.z += direction.z;
-
-   ibmto3d(g_Turtles[turtle_which].Position);
-   save_line();
+static
+bool wrap_down(FLONUM d, FLONUM x1, FLONUM y1, FLONUM x2, FLONUM y2)
+   {
+   if (y2 < screen_bottom)
+      {
+      FLONUM xi = ((x2 - x1) / (y1 - y2)) * (y1 - screen_bottom) + x1;
+      if (xi >= screen_left && xi <= screen_right)
+         {
+         line_to(xi, screen_bottom);
+         save_line();
+         record_next_move = TRUE;
+         g_Turtles[turtle_which].Position.x = xi;
+         g_Turtles[turtle_which].Position.y = turtle_top_max;
+         if (current_mode == wrapmode)
+            {
+            forward_helper(d * ((screen_bottom - y2) / (y1 - y2)));
+            return true;
+            }
+         g_Turtles[turtle_which].Position.y = turtle_bottom_max;
+         err_logo(TURTLE_OUT_OF_BOUNDS, NIL);
+         }
+      }
+   return false;
    }
 
 void forward_helper(FLONUM d)
    {
-   FLONUM real_heading, dx, dy, x1, y1, x2, y2;
-   //    FLONUM intercept;
-
    if ((forward_count > 32) || !_finite(d))
+      {
       return;
+      }
 
    forward_count++;
 
-   real_heading = -g_Turtles[turtle_which].Heading + 90.0;
-   x1 = g_Turtles[turtle_which].Position.x;
-   y1 = g_Turtles[turtle_which].Position.y;
-   dx = (FLONUM) (cos((FLONUM) (real_heading * degrad)) * d * x_scale);
-   dy = (FLONUM) (sin((FLONUM) (real_heading * degrad)) * d * y_scale);
-   x2 = x1 + dx;
-   y2 = y1 + dy;
+   FLONUM real_heading = -g_Turtles[turtle_which].Heading + 90.0;
+   FLONUM x1 = g_Turtles[turtle_which].Position.x;
+   FLONUM y1 = g_Turtles[turtle_which].Position.y;
+   FLONUM dx = (FLONUM) (cos((FLONUM) (real_heading * degrad)) * d * x_scale);
+   FLONUM dy = (FLONUM) (sin((FLONUM) (real_heading * degrad)) * d * y_scale);
+   FLONUM x2 = x1 + dx;
+   FLONUM y2 = y1 + dy;
 
    move_to(x1, y1);
    if (record_next_move)
@@ -731,111 +792,47 @@ void forward_helper(FLONUM d)
       }
 
    forward_count--;
-
    }
 
-int wrap_right(FLONUM d, FLONUM x1, FLONUM y1, FLONUM x2, FLONUM y2)
+void forward_helper3d(FLONUM d)
    {
-   FLONUM yi;
+   VECTOR direction;
 
-   if (x2 > screen_right)
+   move_to_3d(g_Turtles[turtle_which].Position.x, g_Turtles[turtle_which].Position.y, g_Turtles[turtle_which].Position.z);
+
+   if (record_next_move)
       {
-      yi = ((y2 - y1) / (x2 - x1)) * (screen_right - x1) + y1;
-      if (yi >= screen_bottom && yi <= screen_top)
-         {
-         line_to(screen_right, yi);
-         save_line();
-         record_next_move = TRUE;
-         g_Turtles[turtle_which].Position.x = turtle_left_max;
-         g_Turtles[turtle_which].Position.y = yi;
-         if (current_mode == wrapmode)
-            {
-            forward_helper(d * ((x2 - screen_right) / (x2 - x1)));
-            return (1);
-            }
-         g_Turtles[turtle_which].Position.x = turtle_right_max;
-         err_logo(TURTLE_OUT_OF_BOUNDS, NIL);
-         }
+      save_move();
+      record_next_move = FALSE;
       }
-   return (0);
+
+   direction.x = 0.0;
+   direction.y = d;
+   direction.z = 0.0;
+
+   direction = MVyMultiply(g_Turtles[turtle_which].Matrix, direction);
+
+   g_Turtles[turtle_which].Position.x += direction.x;
+   g_Turtles[turtle_which].Position.y += direction.y;
+   g_Turtles[turtle_which].Position.z += direction.z;
+
+   ibmto3d(g_Turtles[turtle_which].Position);
+   save_line();
    }
 
-int wrap_up(FLONUM d, FLONUM x1, FLONUM y1, FLONUM x2, FLONUM y2)
+void forward(FLONUM d)
    {
-   FLONUM xi;
+   draw_turtle(false);
+   if (current_mode == perspectivemode)
+      forward_helper3d(d);
+   else
+      forward_helper(d);
 
-   if (y2 > screen_top)
-      {
-      xi = ((x2 - x1) / (y2 - y1)) * (screen_top - y1) + x1;
-      if (xi >= screen_left && xi <= screen_right)
-         {
-         line_to(xi, screen_top);
-         save_line();
-         record_next_move = TRUE;
-         g_Turtles[turtle_which].Position.x = xi;
-         g_Turtles[turtle_which].Position.y = turtle_bottom_max;
-         if (current_mode == wrapmode)
-            {
-            forward_helper(d * ((y2 - screen_top) / (y2 - y1)));
-            return (1);
-            }
-         g_Turtles[turtle_which].Position.y = turtle_top_max;
-         err_logo(TURTLE_OUT_OF_BOUNDS, NIL);
-         }
-      }
-   return (0);
-   }
-
-int wrap_left(FLONUM d, FLONUM x1, FLONUM y1, FLONUM x2, FLONUM y2)
-   {
-   FLONUM yi;
-
-   if (x2 < screen_left)
-      {
-      yi = ((y2 - y1) / (x1 - x2)) * (x1 - screen_left) + y1;
-      if (yi >= screen_bottom && yi <= screen_top)
-         {
-         line_to(screen_left, yi);
-         save_line();
-         record_next_move = TRUE;
-         g_Turtles[turtle_which].Position.x = turtle_right_max;
-         g_Turtles[turtle_which].Position.y = yi;
-         if (current_mode == wrapmode)
-            {
-            forward_helper(d * ((screen_left - x2) / (x1 - x2)));
-            return (1);
-            }
-         g_Turtles[turtle_which].Position.x = turtle_left_max;
-         err_logo(TURTLE_OUT_OF_BOUNDS, NIL);
-         }
-      }
-   return (0);
-   }
-
-int wrap_down(FLONUM d, FLONUM x1, FLONUM y1, FLONUM x2, FLONUM y2)
-   {
-   FLONUM xi;
-
-   if (y2 < screen_bottom)
-      {
-      xi = ((x2 - x1) / (y1 - y2)) * (y1 - screen_bottom) + x1;
-      if (xi >= screen_left && xi <= screen_right)
-         {
-         line_to(xi, screen_bottom);
-         save_line();
-         record_next_move = TRUE;
-         g_Turtles[turtle_which].Position.x = xi;
-         g_Turtles[turtle_which].Position.y = turtle_top_max;
-         if (current_mode == wrapmode)
-            {
-            forward_helper(d * ((screen_bottom - y2) / (y1 - y2)));
-            return (1);
-            }
-         g_Turtles[turtle_which].Position.y = turtle_bottom_max;
-         err_logo(TURTLE_OUT_OF_BOUNDS, NIL);
-         }
-      }
-   return (0);
+   draw_turtle(true);
+   wanna_x = g_Turtles[turtle_which].Position.x;
+   wanna_y = g_Turtles[turtle_which].Position.y;
+   wanna_z = g_Turtles[turtle_which].Position.z;
+   out_of_bounds = false;
    }
 
 NODE *lforward(NODE *arg)
@@ -900,7 +897,7 @@ NODE *lhideturtle(NODE *)
 
 NODE *lshownp(NODE *)
    {
-   return (g_Turtles[turtle_which].IsShown ? Truex : Falsex);
+   return g_Turtles[turtle_which].IsShown ? Truex : Falsex;
    }
 
 NODE *lsetheading(NODE *arg)
@@ -1046,8 +1043,6 @@ FLONUM rotation_y()
 
 FLONUM rotation_x()
    {
-   FLONUM ry;
-
    FLONUM m13 = g_Turtles[turtle_which].Matrix.e13;
    FLONUM m23 = g_Turtles[turtle_which].Matrix.e23;
    FLONUM m33 = g_Turtles[turtle_which].Matrix.e33;
@@ -1060,10 +1055,9 @@ FLONUM rotation_x()
       }
    else
       {
-      double a;
+      FLONUM ry = atan2(-m13, m33);
 
-      ry = atan2(-m13, m33);
-
+      FLONUM a;
       if (fabs(fabs(ry) - 90.0 * degrad) < epsilon)
          a = m13 / sin(-ry);
       else
@@ -1101,7 +1095,7 @@ NODE *lpitch(NODE *)
 
 NODE *vec_arg_helper(NODE *args, bool floatok)
    {
-   NODE *arg = car(args), *val1, *val2;
+   NODE *arg = car(args);
 
    while (NOT_THROWING)
       {
@@ -1110,8 +1104,8 @@ NODE *vec_arg_helper(NODE *args, bool floatok)
             cdr(arg) != NIL &&
             cddr(arg) == NIL)
          {
-         val1 = cnv_node_to_numnode(car(arg));
-         val2 = cnv_node_to_numnode(cadr(arg));
+         NODE * val1 = cnv_node_to_numnode(car(arg));
+         NODE * val2 = cnv_node_to_numnode(cadr(arg));
          if (val1 != UNBOUND && val2 != UNBOUND &&
             (
             floatok ||
@@ -1137,7 +1131,7 @@ NODE *vec_arg_helper(NODE *args, bool floatok)
 
 NODE *vec_3_arg_helper(NODE *args, bool floatok)
    {
-   NODE *arg = car(args), *val1, *val2, *val3;
+   NODE *arg = car(args);
 
    while (NOT_THROWING)
       {
@@ -1147,9 +1141,9 @@ NODE *vec_3_arg_helper(NODE *args, bool floatok)
             cddr(arg) != NIL &&
             cddr(cdr(arg)) == NIL)
          {
-         val1 = cnv_node_to_numnode(car(arg));
-         val2 = cnv_node_to_numnode(cadr(arg));
-         val3 = cnv_node_to_numnode(cadr(cdr(arg)));
+         NODE * val1 = cnv_node_to_numnode(car(arg));
+         NODE * val2 = cnv_node_to_numnode(cadr(arg));
+         NODE * val3 = cnv_node_to_numnode(cadr(cdr(arg)));
          if (
             val1 != UNBOUND &&
             val2 != UNBOUND &&
@@ -1181,7 +1175,7 @@ NODE *vec_3_arg_helper(NODE *args, bool floatok)
 
 NODE *vec_4_arg_helper(NODE *args, bool floatok)
    {
-   NODE *arg = car(args), *val1, *val2, *val3, *val4;
+   NODE *arg = car(args);
 
    while (NOT_THROWING)
       {
@@ -1192,10 +1186,10 @@ NODE *vec_4_arg_helper(NODE *args, bool floatok)
             cdr(cdr(cdr(arg))) != NIL &&
             cdr(cdr(cdr(cdr(arg)))) == NIL)
          {
-         val1 = cnv_node_to_numnode(car(arg));
-         val2 = cnv_node_to_numnode(car(cdr(arg)));
-         val3 = cnv_node_to_numnode(car(cdr(cdr(arg))));
-         val4 = cnv_node_to_numnode(car(cdr(cdr(cdr(arg)))));
+         NODE* val1 = cnv_node_to_numnode(car(arg));
+         NODE* val2 = cnv_node_to_numnode(car(cdr(arg)));
+         NODE* val3 = cnv_node_to_numnode(car(cdr(cdr(arg))));
+         NODE* val4 = cnv_node_to_numnode(car(cdr(cdr(cdr(arg)))));
          if (
                val1 != UNBOUND &&
                val2 != UNBOUND &&
@@ -1256,15 +1250,16 @@ NODE *pos_int_vector_4_arg(NODE *args)
 
 FLONUM towards_helper(FLONUM x, FLONUM y, FLONUM from_x, FLONUM from_y)
    {
-   FLONUM m, a, tx, ty;
-
-   tx = from_x / x_scale;
-   ty = from_y / y_scale;
+   FLONUM tx = from_x / x_scale;
+   FLONUM ty = from_y / y_scale;
 
    if (x != tx || y != ty)
       {
+      FLONUM m, a;
       if (x == tx)
+         {
          a = (y < ty) ? -90 : 90;
+         }
       else
          {
          m = (y - ty) / (x - tx);
@@ -1274,7 +1269,8 @@ FLONUM towards_helper(FLONUM x, FLONUM y, FLONUM from_x, FLONUM from_y)
       a = -(a - 90.0);
       return (a < 0 ? 360.0 + a : a);
       }
-   return (0.0);
+
+   return 0.0;
    }
 
 NODE *ltowards(NODE *args)
@@ -1328,10 +1324,10 @@ NODE *ltowardsxyz(NODE *args)
       // No Pitch needed
       FLONUM Rx = 0.0;
 
-      return (
-         cons(make_floatnode(Ry),
-         cons(make_floatnode(Rx),
-         cons(make_floatnode(Rz), NIL))));
+      return cons_list(
+         make_floatnode(Ry),
+         make_floatnode(Rx),
+         make_floatnode(Rz));
       }
 
    return (UNBOUND);
@@ -1339,22 +1335,24 @@ NODE *ltowardsxyz(NODE *args)
 
 NODE *lpos(NODE *)
    {
-   return (
-      cons(make_floatnode(cut_error(g_Turtles[turtle_which].Position.x / x_scale)),
-         cons(make_floatnode(cut_error(g_Turtles[turtle_which].Position.y / y_scale)), NIL)));
+   return cons_list(
+      make_floatnode(cut_error(g_Turtles[turtle_which].Position.x / x_scale)),
+      make_floatnode(cut_error(g_Turtles[turtle_which].Position.y / y_scale)));
    }
 
 NODE *lposxyz(NODE *)
    {
-   return (
-      cons(make_floatnode(cut_error(g_Turtles[turtle_which].Position.x / x_scale)),
-         cons(make_floatnode(cut_error(g_Turtles[turtle_which].Position.y / y_scale)),
-            cons(make_floatnode(cut_error(g_Turtles[turtle_which].Position.z / z_scale)), NIL))));
+   return cons_list(
+      make_floatnode(cut_error(g_Turtles[turtle_which].Position.x / x_scale)),
+      make_floatnode(cut_error(g_Turtles[turtle_which].Position.y / y_scale)),
+      make_floatnode(cut_error(g_Turtles[turtle_which].Position.z / z_scale)));
    }
 
 NODE *lscrunch(NODE *)
    {
-   return (cons(make_floatnode(x_scale), cons(make_floatnode(y_scale), NIL)));
+   return cons_list(
+      make_floatnode(x_scale),
+      make_floatnode(y_scale));
    }
 
 NODE *lhome(NODE *)
@@ -1579,9 +1577,9 @@ NODE *lsetlight(NODE *args)
 
 NODE *llight(NODE *)
    {
-   return (
-      cons(make_floatnode(ThreeD.Ambient),
-         cons(make_floatnode(ThreeD.Diffuse), NIL)));
+   return cons_list(
+      make_floatnode(ThreeD.Ambient),
+      make_floatnode(ThreeD.Diffuse));
    }
 
 NODE *lpolystart(NODE *)
@@ -1740,11 +1738,9 @@ NODE *llabelsize(NODE *arg)
       {
       SIZE size;
       size = labelsize(textbuf);
-      return (
-         cons(make_intnode((FIXNUM) size.cx),
-         cons(make_intnode((FIXNUM) size.cy),
-         NIL
-         )));
+      return cons_list(
+         make_intnode((FIXNUM) size.cx),
+         make_intnode((FIXNUM) size.cy));
       }
    return (UNBOUND);
    }
@@ -1797,8 +1793,9 @@ NODE *lpenmode(NODE *)
 
 NODE *lpensize(NODE *)
    {
-   return (cons(make_intnode((FIXNUM) pen_width),
-         cons(make_intnode((FIXNUM) pen_height), NIL)));
+   return cons_list(
+      make_intnode((FIXNUM) pen_width),
+      make_intnode((FIXNUM) pen_height));
    }
 
 NODE *lpenpattern(NODE *)
