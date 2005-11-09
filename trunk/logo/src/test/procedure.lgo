@@ -5,10 +5,15 @@ END
 
 TO PROCEDURETEST
 
+  ; test TEXT
   SIMPLEREPORTTEST ~
-     [TEXT "SAMPLEPROC] ~
-     [[a b] [PRINT :a] [SHOW :b]]
+    [TEXT "SAMPLEPROC] ~
+    [[a b] [PRINT :a] [SHOW :b]]
 
+  RUNBADINPUTTEST [(TEXT)]
+  RUNBADINPUTTEST [(TEXT "nonexistent)]
+
+  ; test FULLTEXT
   SIMPLEREPORTTEST ~
      [FULLTEXT "SAMPLEPROC] ~
      (LIST 
@@ -16,6 +21,9 @@ TO PROCEDURETEST
         "|  PRINT :a ; print| 
         "|  SHOW  :b ; show| 
         "END)
+
+   RUNBADINPUTTEST [(FULLTEXT)]
+   RUNBADINPUTTEST [(FULLTEXT "nonexistent)]
 
    ; test DEFINEDP
    SIMPLEREPORTTEST [DEFINEDP "nonexistent] "false
@@ -30,13 +38,31 @@ TO PROCEDURETEST
    SIMPLEREPORTTEST [PROCEDURE? "FORWARD]     "true
    SIMPLEREPORTTEST [PROCEDURE? "SAMPLEPROC]  "true
    SIMPLEREPORTTEST [PROCEDURE? "sampleproc]  "true
-   
+
+   ; test NAMEP
+   LOCALMAKE "namepvariable 0
+   SIMPLEREPORTTEST [NAMEP "nonexistent]   "false
+   SIMPLEREPORTTEST [NAME? "nonexistent]   "false
+   SIMPLEREPORTTEST [NAME? "FORWARD]       "false
+   SIMPLEREPORTTEST [NAME? "namepvariable] "true
+   SIMPLEREPORTTEST [NAME? "NAMEPVARIABLE] "true
+
+   ; test PRIMITIVEP
+   SIMPLEREPORTTEST [PRIMITIVEP "nonexistent]   "false
+   SIMPLEREPORTTEST [PRIMITIVE? "nonexistent]   "false
+   SIMPLEREPORTTEST [PRIMITIVE? "FORWARD]       "true
+   SIMPLEREPORTTEST [PRIMITIVE? "FD]            "true
+   SIMPLEREPORTTEST [PRIMITIVE? "namepvariable] "false
+   SIMPLEREPORTTEST [PRIMITIVE? "sampleproc]    "false
 
    ; test DEFINE
    DEFINE "ECHO [[a] [output :a] ]
    SIMPLEREPORTTEST [ECHO "input] "input
    SIMPLEREPORTTEST [DEFINEDP "ECHO] "true
    SIMPLEREPORTTEST [DEFINED? "ECHO] "true
+   RUNBADINPUTTEST [(DEFINE)]
+   RUNBADINPUTTEST [(DEFINE "function)]
+   RUNBADINPUTTEST [(DEFINE "function [])]
 
    ; Just exercise these functions
    ; we'll figure out how to test their output later
@@ -51,12 +77,5 @@ TO PROCEDURETEST
    ERASEFILE "po.dump.txt
 
    RUNBADINPUTTEST [(PO)]
-   RUNBADINPUTTEST [(TEXT)]
-   RUNBADINPUTTEST [(TEXT "nonexistent)]
-   RUNBADINPUTTEST [(FULLTEXT)]
-   RUNBADINPUTTEST [(FULLTEXT "nonexistent)]
-   RUNBADINPUTTEST [(DEFINE)]
-   RUNBADINPUTTEST [(DEFINE "function)]
-   RUNBADINPUTTEST [(DEFINE "function [])]
 END
 
