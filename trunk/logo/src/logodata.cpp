@@ -183,17 +183,20 @@ char *colon_strnzcpy(char *dst, const char * src, int len)
 char *low_strnzcpy(char *dst, const char * src, int len)
    {
    char *temp = dst;
-   int i;
 
-   for (i = 0; i < len; i++)
+   for (int i = 0; i < len; i++)
       {
       if (upper_p(*src))
+         {
          *dst++ = uncapital(*src++);
+         }
       else
+         {
          *dst++ = *src++;
+         }
       }
    *dst = '\0';
-   return (temp);
+   return temp;
    }
 
 #define capital(c)    (c - 'a' + 'A')
@@ -201,14 +204,17 @@ char *low_strnzcpy(char *dst, const char * src, int len)
 char *cap_strnzcpy(char *dst, const char * src, int len)
    {
    char *temp = dst;
-   int i;
 
-   for (i = 0; i < len; i++)
+   for (int i = 0; i < len; i++)
       {
       if (lower_p(*src))
+         {
          *dst++ = capital(*src++);
+         }
       else
+         {
          *dst++ = *src++;
+         }
       }
    *dst = '\0';
    return (temp);
@@ -236,9 +242,7 @@ char *noparitylow_strnzcpy(char *dst, const char *src, int len)
 
 int low_strncmp(const char *s1, const char * s2, int len)
    {
-   int i;
-
-   for (i = 0; i < len; i++)
+   for (int i = 0; i < len; i++)
       {
       if (*s1 != *s2)
          {
@@ -264,31 +268,26 @@ int low_strncmp(const char *s1, const char * s2, int len)
          }
       s1++, s2++;
       }
-   return (0);
+   return 0;
    }
 
 int noparity_strncmp(const char * s1, const char * s2, int len)
    {
-   int i;
-
-   for (i = 0; i < len; i++)
+   for (int i = 0; i < len; i++)
       {
       if (clearparity(*s1) != clearparity(*s2))
          return (clearparity(*s1) - clearparity(*s2));
       s1++, s2++;
       }
-   return (0);
+   return 0;
    }
 
 int noparitylow_strncmp(const char * s1, const char * s2, int len)
    {
-   int i;
-   char c1, c2;
-
-   for (i = 0; i < len; i++)
+   for (int i = 0; i < len; i++)
       {
-      c1 = clearparity(*s1);
-      c2 = clearparity(*s2);
+      char c1 = clearparity(*s1);
+      char c2 = clearparity(*s2);
       if (c1 != c2)
          {
          if (upper_p(c2))
@@ -313,7 +312,7 @@ int noparitylow_strncmp(const char * s1, const char * s2, int len)
          }
       s1++, s2++;
       }
-   return (0);
+   return 0;
    }
 
 
@@ -432,7 +431,7 @@ NODE *make_quote(NODE *qnd)
    {
    NODE *nd;
 
-   nd = cons(qnd, NIL);
+   nd = cons_list(qnd);
    settype(nd, QUOTE);
    return (nd);
    }
@@ -456,7 +455,7 @@ NODE *make_colon(NODE *cnd)
    {
    NODE *nd;
 
-   nd = cons(cnd, NIL);
+   nd = cons_list(cnd);
    settype(nd, COLON);
    return (nd);
    }
@@ -764,23 +763,27 @@ NODE *lremprop(NODE *args)
 
 NODE *copy_list(NODE *arg)
    {
-   NODE *tnode, *lastnode, *val = NIL;
+   NODE *lastnode;
+   NODE* val = NIL;
 
    while (arg != NIL)
       {
-      tnode = cons(car(arg), NIL);
-      arg = cdr(arg);
+      NODE * tnode = cons_list(car(arg));
       if (val == NIL)
          {
+         // this is the first node
          lastnode = val = tnode;
          }
       else
          {
+         // This is not the first node.
+         // link it in just after the last node.
          setcdr(lastnode, tnode);
          lastnode = tnode;
          }
+      arg = cdr(arg);
       }
-   return (val);
+   return val;
    }
 
 NODE *lplist(NODE *args)
