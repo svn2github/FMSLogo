@@ -96,6 +96,7 @@ int rd_getc(FILE *strm)
 #endif
    }
 
+static
 void rd_print_prompt(const char * /*str*/)
    {
    /*
@@ -392,6 +393,7 @@ NODE *list_to_array(NODE *list)
 #define infixs(ch)      (ch == '*' || ch == '/' || ch == '+' || ch == '-' || ch == '=' || ch == '<' || ch == '>')
 #define white_space(ch) (ch == ' ' || ch == '\t' || ch == '\n')
 
+static
 NODE *parser_iterate(const char **inln, const char *inlimit, const char *inhead,
          bool semi, int endchar)
    {
@@ -567,6 +569,7 @@ NODE *lparse(NODE *args)
    return (val);
    }
 
+static
 NODE *runparse_node(NODE *nd, NODE **ndsptr)
    {
    NODE *outline = NIL, *tnode = NIL, *lastnode = NIL, *snd;
