@@ -1,275 +1,356 @@
-PASS: .EQ 1000 1000 returned false , as expected.
-PASS: .EQ :x :y returned false , as expected.
-PASS: .EQ :x :x returned true , as expected.
-PASS: .EQ " " returned true , as expected.
-PASS: .EQ "false "false returned true , as expected.
-PASS: .EQ "true "true returned true , as expected.
-PASS: .EQ [] [] returned true , as expected.
-PASS: EQUALP 1 1 returned true , as expected.
-PASS: EQUALP 0 0 returned true , as expected.
-PASS: EQUALP 3.14 3.14 returned true , as expected.
-PASS: EQUALP "hi "hi returned true , as expected.
-PASS: EQUAL? ["a 1 "ab] ["a 1 "ab] returned true , as expected.
-PASS: EQUAL? [[1 2 3] [1]] [[1 2 3] [1]] returned true , as expected.
-PASS: EQUAL? 0 0 returned true , as expected.
-PASS: EQUALP " " returned true , as expected.
-PASS: EQUALP "true "TRUE returned true , as expected.
-PASS: EQUALP "false "FALSE returned true , as expected.
-PASS: EQUAL? :myarray :myarray returned true , as expected.
-PASS: EQUAL? :myarray :myarray returned true , as expected.
-PASS: EQUAL? {} {} returned false , as expected.
-PASS: EQUAL? {1 2 3} {1 2 3} returned false , as expected.
-PASS: EQUALP 1 1.1 returned false , as expected.
-PASS: EQUALP 0 1 returned false , as expected.
-PASS: EQUALP "hi "hil returned false , as expected.
-PASS: EQUALP "hil "hi returned false , as expected.
-PASS: EQUALP "true "false returned false , as expected.
-INFO: Executing invalid instruction: ' (EQUAL?) '
-INFO: Executing invalid instruction: ' (EQUAL? 1) '
-PASS: EMPTYP [] returned true , as expected.
-PASS: EMPTY? [] returned true , as expected.
-PASS: EMPTY? [1] returned false , as expected.
-PASS: EMPTY? [0] returned false , as expected.
-PASS: EMPTY? 0 returned false , as expected.
-PASS: EMPTY? " returned true , as expected.
-PASS: EMPTY? "  returned false , as expected.
-PASS: EMPTY? {} returned false , as expected.
-INFO: Executing invalid instruction: ' (EMPTY?) '
-PASS: NUMBERP 1 returned true , as expected.
-PASS: NUMBER? 1 returned true , as expected.
-PASS: NUMBER? 0 returned true , as expected.
-PASS: NUMBER? -1 returned true , as expected.
-PASS: NUMBER? 3.14 returned true , as expected.
-PASS: NUMBER? "1 returned true , as expected.
-PASS: NUMBER? "-1 returned true , as expected.
-PASS: NUMBER? "3.14 returned true , as expected.
-PASS: NUMBER? {} returned false , as expected.
-PASS: NUMBER? {2} returned false , as expected.
-PASS: NUMBER? [] returned false , as expected.
-PASS: NUMBER? [1] returned false , as expected.
-PASS: NUMBER? "one returned false , as expected.
-PASS: NUMBER? "1A returned false , as expected.
-PASS: NUMBER? " returned false , as expected.
-INFO: Executing invalid instruction: ' (NUMBER?) '
-PASS: LISTP [1 2 3] returned true , as expected.
-PASS: LIST? [1 2 3] returned true , as expected.
-PASS: LIST? [] returned true , as expected.
-PASS: LIST? "list returned false , as expected.
-PASS: LIST? "[1] returned false , as expected.
-PASS: LIST? 1 returned false , as expected.
-PASS: LIST? 3.14 returned false , as expected.
-PASS: LIST? {1} returned false , as expected.
-PASS: LIST? {} returned false , as expected.
-PASS: LIST? " returned false , as expected.
-INFO: Executing invalid instruction: ' (LIST?) '
-PASS: WORDP "hello returned true , as expected.
-PASS: WORD? "hello returned true , as expected.
-PASS: WORD? 123 returned true , as expected.
-PASS: WORD? 3.14 returned true , as expected.
-PASS: WORD? " returned true , as expected.
-PASS: WORD? "[1] returned true , as expected.
-PASS: WORD? [] returned false , as expected.
-PASS: WORD? ["hello] returned false , as expected.
-PASS: WORD? {} returned false , as expected.
-PASS: WORD? {"hello} returned false , as expected.
-INFO: Executing invalid instruction: ' (WORDP?) '
-PASS: ARRAYP {1 2 3} returned true , as expected.
-PASS: ARRAY? {1 2 3} returned true , as expected.
-PASS: ARRAY? {} returned true , as expected.
-PASS: ARRAY? "word returned false , as expected.
-PASS: ARRAY? "{} returned false , as expected.
-PASS: ARRAY? 1 returned false , as expected.
-PASS: ARRAY? 3.14 returned false , as expected.
-PASS: ARRAY? [1] returned false , as expected.
-PASS: ARRAY? [] returned false , as expected.
-PASS: ARRAY? " returned false , as expected.
-INFO: Executing invalid instruction: ' (ARRAY?) '
-PASS: MEMBERP 2 [1 2 3] returned true , as expected.
-PASS: MEMBER? 2 [1 2 3] returned true , as expected.
-PASS: MEMBER? 1 [1] returned true , as expected.
-PASS: MEMBER? 1 [1 1 1] returned true , as expected.
-PASS: MEMBER? 0 [1 2 3] returned false , as expected.
-PASS: MEMBER? [2] [[1] [2] [3]] returned true , as expected.
-PASS: MEMBER? 2 [[1] [2] [3]] returned false , as expected.
-PASS: MEMBER? [2] [1 2 3] returned false , as expected.
-PASS: MEMBER? 1 [] returned false , as expected.
-PASS: MEMBER? 1 {1} returned true , as expected.
-PASS: MEMBER? 1 {1 1 1} returned true , as expected.
-PASS: MEMBER? 12 {11 12 13} returned true , as expected.
-PASS: MEMBER? 12 {} returned false , as expected.
-PASS: MEMBER? 1 123 returned true , as expected.
-PASS: MEMBER? 4 123 returned false , as expected.
-PASS: MEMBER? 23 123 returned false , as expected.
-PASS: MEMBER? 1 " returned false , as expected.
-PASS: MEMBER? [1] "123 returned false , as expected.
-PASS: MEMBER? " "hello returned false , as expected.
-FAIL: MEMBER? " ["] returned false . We expected true
-FAIL: MEMBER? " {"} returned false . We expected true
-INFO: Executing invalid instruction: ' (MEMBER?) '
-INFO: Executing invalid instruction: ' (MEMBER? 1) '
-PASS: BEFOREP "ABC "ABD returned true , as expected.
-PASS: BEFORE? "ABC "ABD returned true , as expected.
-PASS: BEFORE? "ABD "ABC returned false , as expected.
-PASS: BEFORE? "ABC "ABC returned false , as expected.
-PASS: BEFORE? "ABC "ABCD returned true , as expected.
-PASS: BEFORE? "ABCD "ABC returned false , as expected.
-PASS: BEFORE? " "A returned true , as expected.
-PASS: BEFORE? "Z " returned false , as expected.
-INFO: Executing invalid instruction: ' (BEFORE?) '
-INFO: Executing invalid instruction: ' (BEFORE? "ABC) '
-INFO: Executing invalid instruction: ' (BEFORE? "ABC [] ) '
-INFO: Executing invalid instruction: ' (BEFORE? [] "ABC) '
-PASS: WORD "o "k returned ok , as expected.
-PASS: WORD "4 "2 returned 42 , as expected.
-PASS: (WORD) returned  , as expected.
-PASS: (WORD "o) returned o , as expected.
-PASS: (WORD "o "k "ay) returned okay , as expected.
-PASS: (WORD " ") returned  , as expected.
-PASS: (WORD " "a ") returned a , as expected.
-INFO: Executing invalid instruction: ' WORD [] "a '
-INFO: Executing invalid instruction: ' WORD "a [] '
-INFO: Executing invalid instruction: ' WORD "a {} '
-INFO: Executing invalid instruction: ' WORD {} "a '
-PASS: ITEM 0 :myarray returned list , as expected.
-PASS: ITEM 1 :myarray returned hi , as expected.
-PASS: ITEM 2 :myarray returned 42 , as expected.
+PASS: [.EQ 1000 1000] returned false , as expected.
+PASS: [.EQ :x :y] returned false , as expected.
+PASS: [.EQ :x :x] returned true , as expected.
+PASS: [.EQ " "] returned true , as expected.
+PASS: [.EQ "false "false] returned true , as expected.
+PASS: [.EQ "true "true] returned true , as expected.
+PASS: [.EQ [] []] returned true , as expected.
+PASS: [EQUALP 1 1] returned true , as expected.
+PASS: [EQUALP 0 0] returned true , as expected.
+PASS: [EQUALP 3.14 3.14] returned true , as expected.
+PASS: [EQUALP "hi "hi] returned true , as expected.
+PASS: [EQUAL? ["a 1 "ab] ["a 1 "ab]] returned true , as expected.
+PASS: [EQUAL? [[1 2 3] [1]] [[1 2 3] [1]]] returned true , as expected.
+PASS: [EQUAL? 0 0] returned true , as expected.
+PASS: [EQUALP " "] returned true , as expected.
+PASS: [EQUALP "true "TRUE] returned true , as expected.
+PASS: [EQUALP "false "FALSE] returned true , as expected.
+PASS: [EQUAL? :myarray :myarray] returned true , as expected.
+PASS: [EQUAL? :myarray :myarray] returned true , as expected.
+PASS: [EQUAL? {} {}] returned false , as expected.
+PASS: [EQUAL? {1 2 3} {1 2 3}] returned false , as expected.
+PASS: [EQUALP 1 1.1] returned false , as expected.
+PASS: [EQUALP 0 1] returned false , as expected.
+PASS: [EQUALP "hi "hil] returned false , as expected.
+PASS: [EQUALP "hil "hi] returned false , as expected.
+PASS: [EQUALP "true "false] returned false , as expected.
+INFO: Executing invalid instruction: [(EQUAL?)]
+INFO: Executing invalid instruction: [(EQUAL? 1)]
+PASS: [EMPTYP []] returned true , as expected.
+PASS: [EMPTY? []] returned true , as expected.
+PASS: [EMPTY? [1]] returned false , as expected.
+PASS: [EMPTY? [0]] returned false , as expected.
+PASS: [EMPTY? 0] returned false , as expected.
+PASS: [EMPTY? "] returned true , as expected.
+PASS: [EMPTY? " ] returned false , as expected.
+PASS: [EMPTY? {}] returned false , as expected.
+INFO: Executing invalid instruction: [(EMPTY?)]
+PASS: [NUMBERP 1] returned true , as expected.
+PASS: [NUMBER? 1] returned true , as expected.
+PASS: [NUMBER? 0] returned true , as expected.
+PASS: [NUMBER? -1] returned true , as expected.
+PASS: [NUMBER? 3.14] returned true , as expected.
+PASS: [NUMBER? "1] returned true , as expected.
+PASS: [NUMBER? "-1] returned true , as expected.
+PASS: [NUMBER? "3.14] returned true , as expected.
+PASS: [NUMBER? {}] returned false , as expected.
+PASS: [NUMBER? {2}] returned false , as expected.
+PASS: [NUMBER? []] returned false , as expected.
+PASS: [NUMBER? [1]] returned false , as expected.
+PASS: [NUMBER? "one] returned false , as expected.
+PASS: [NUMBER? "1A] returned false , as expected.
+PASS: [NUMBER? "] returned false , as expected.
+INFO: Executing invalid instruction: [(NUMBER?)]
+PASS: [LISTP [1 2 3]] returned true , as expected.
+PASS: [LIST? [1 2 3]] returned true , as expected.
+PASS: [LIST? []] returned true , as expected.
+PASS: [LIST? "list] returned false , as expected.
+PASS: [LIST? "[1]] returned false , as expected.
+PASS: [LIST? 1] returned false , as expected.
+PASS: [LIST? 3.14] returned false , as expected.
+PASS: [LIST? {1}] returned false , as expected.
+PASS: [LIST? {}] returned false , as expected.
+PASS: [LIST? "] returned false , as expected.
+INFO: Executing invalid instruction: [(LIST?)]
+PASS: [WORDP "hello] returned true , as expected.
+PASS: [WORD? "hello] returned true , as expected.
+PASS: [WORD? 123] returned true , as expected.
+PASS: [WORD? 3.14] returned true , as expected.
+PASS: [WORD? "] returned true , as expected.
+PASS: [WORD? "[1]] returned true , as expected.
+PASS: [WORD? []] returned false , as expected.
+PASS: [WORD? ["hello]] returned false , as expected.
+PASS: [WORD? {}] returned false , as expected.
+PASS: [WORD? {"hello}] returned false , as expected.
+INFO: Executing invalid instruction: [(WORDP?)]
+PASS: [ARRAYP {1 2 3}] returned true , as expected.
+PASS: [ARRAY? {1 2 3}] returned true , as expected.
+PASS: [ARRAY? {}] returned true , as expected.
+PASS: [ARRAY? "word] returned false , as expected.
+PASS: [ARRAY? "{}] returned false , as expected.
+PASS: [ARRAY? 1] returned false , as expected.
+PASS: [ARRAY? 3.14] returned false , as expected.
+PASS: [ARRAY? [1]] returned false , as expected.
+PASS: [ARRAY? []] returned false , as expected.
+PASS: [ARRAY? "] returned false , as expected.
+INFO: Executing invalid instruction: [(ARRAY?)]
+PASS: [MEMBERP 2 [1 2 3]] returned true , as expected.
+PASS: [MEMBER? 2 [1 2 3]] returned true , as expected.
+PASS: [MEMBER? 1 [1]] returned true , as expected.
+PASS: [MEMBER? 1 [1 1 1]] returned true , as expected.
+PASS: [MEMBER? 0 [1 2 3]] returned false , as expected.
+PASS: [MEMBER? [2] [[1] [2] [3]]] returned true , as expected.
+PASS: [MEMBER? 2 [[1] [2] [3]]] returned false , as expected.
+PASS: [MEMBER? [2] [1 2 3]] returned false , as expected.
+PASS: [MEMBER? 1 []] returned false , as expected.
+PASS: [MEMBER? 1 {1}] returned true , as expected.
+PASS: [MEMBER? 1 {1 1 1}] returned true , as expected.
+PASS: [MEMBER? 12 {11 12 13}] returned true , as expected.
+PASS: [MEMBER? 12 {}] returned false , as expected.
+PASS: [MEMBER? 1 123] returned true , as expected.
+PASS: [MEMBER? 4 123] returned false , as expected.
+PASS: [MEMBER? 23 123] returned false , as expected.
+PASS: [MEMBER? 1 "] returned false , as expected.
+PASS: [MEMBER? [1] "123] returned false , as expected.
+PASS: [MEMBER? " "hello] returned false , as expected.
+FAIL: [MEMBER? " ["]] returned false . We expected true
+FAIL: [MEMBER? " {"}] returned false . We expected true
+INFO: Executing invalid instruction: [(MEMBER?)]
+INFO: Executing invalid instruction: [(MEMBER? 1)]
+PASS: [BEFOREP "ABC "ABD] returned true , as expected.
+PASS: [BEFORE? "ABC "ABD] returned true , as expected.
+PASS: [BEFORE? "ABD "ABC] returned false , as expected.
+PASS: [BEFORE? "ABC "ABC] returned false , as expected.
+PASS: [BEFORE? "ABC "ABCD] returned true , as expected.
+PASS: [BEFORE? "ABCD "ABC] returned false , as expected.
+PASS: [BEFORE? " "A] returned true , as expected.
+PASS: [BEFORE? "Z "] returned false , as expected.
+INFO: Executing invalid instruction: [(BEFORE?)]
+INFO: Executing invalid instruction: [(BEFORE? "ABC)]
+INFO: Executing invalid instruction: [(BEFORE? "ABC [] )]
+INFO: Executing invalid instruction: [(BEFORE? [] "ABC)]
+PASS: [WORD "o "k] returned ok , as expected.
+PASS: [WORD "4 "2] returned 42 , as expected.
+PASS: [(WORD)] returned  , as expected.
+PASS: [(WORD "o)] returned o , as expected.
+PASS: [(WORD "o "k "ay)] returned okay , as expected.
+PASS: [(WORD " ")] returned  , as expected.
+PASS: [(WORD " "a ")] returned a , as expected.
+INFO: Executing invalid instruction: [WORD [] "a]
+INFO: Executing invalid instruction: [WORD "a []]
+INFO: Executing invalid instruction: [WORD "a {}]
+INFO: Executing invalid instruction: [WORD {} "a]
+PASS: [ITEM 0 :myarray] returned [list] , as expected.
+PASS: [ITEM 1 :myarray] returned hi , as expected.
+PASS: [ITEM 2 :myarray] returned 42 , as expected.
 INFO: Creating an empty array (regression test for bug #1349374)
-PASS: (OR) returned false , as expected.
-PASS: (OR "true) returned true , as expected.
-PASS: (OR "false) returned false , as expected.
-PASS: (OR "false "false) returned false , as expected.
-PASS: (OR "true "false) returned true , as expected.
-PASS: (OR "false "true) returned true , as expected.
-PASS: (OR "true "true) returned true , as expected.
-PASS: (OR "false "FALSE "false "FALSE) returned false , as expected.
-PASS: (OR "false "FALSE "false "TRUE) returned true , as expected.
-INFO: Executing invalid instruction: ' (OR 1) '
-INFO: Executing invalid instruction: ' (OR 0) '
-INFO: Executing invalid instruction: ' (OR "truex) '
-INFO: Executing invalid instruction: ' (OR "falsex) '
-INFO: Executing invalid instruction: ' (OR "true 1) '
-FAIL: Executing ' (OR "true 1) ' did not throw an error
-INFO: Executing invalid instruction: ' (OR 1 "true) '
-INFO: Executing invalid instruction: ' (OR "false 0) '
-INFO: Executing invalid instruction: ' (OR 0 "false) '
-PASS: (AND) returned true , as expected.
-PASS: (AND "true) returned true , as expected.
-PASS: (AND "false) returned false , as expected.
-PASS: (AND "false "false) returned false , as expected.
-PASS: (AND "true "false) returned false , as expected.
-PASS: (AND "false "true) returned false , as expected.
-PASS: (AND "true "true) returned true , as expected.
-PASS: (AND "TRUE "true "TRUE "false) returned false , as expected.
-PASS: (AND "TRUE "true "TRUE "true) returned true , as expected.
-INFO: Executing invalid instruction: ' (AND 1) '
-INFO: Executing invalid instruction: ' (AND 0) '
-INFO: Executing invalid instruction: ' (AND "truex) '
-INFO: Executing invalid instruction: ' (AND "falsex) '
-INFO: Executing invalid instruction: ' (AND "true 1) '
-INFO: Executing invalid instruction: ' (AND 1 "true) '
-INFO: Executing invalid instruction: ' (AND "false 0) '
-FAIL: Executing ' (AND "false 0) ' did not throw an error
-INFO: Executing invalid instruction: ' (AND 0 "false) '
-PASS: (NOT "true) returned false , as expected.
-PASS: (NOT "false) returned true , as expected.
-INFO: Executing invalid instruction: ' (NOT) '
-INFO: Executing invalid instruction: ' (NOT 0) '
-INFO: Executing invalid instruction: ' (NOT "truex) '
-INFO: Executing invalid instruction: ' (NOT "true "true) '
-PASS: TEXT "SAMPLEPROC returned [a b] [PRINT :a] [SHOW :b] , as expected.
-PASS: FULLTEXT "SAMPLEPROC returned TO SAMPLEPROC  :a  :b   PRINT :a ; print   SHOW  :b ; show END , as expected.
-PASS: DEFINEDP "nonexistent returned false , as expected.
-PASS: DEFINED? "nonexistent returned false , as expected.
-PASS: DEFINED? "FORWARD returned false , as expected.
-PASS: DEFINED? "SAMPLEPROC returned true , as expected.
-PASS: DEFINED? "sampleproc returned true , as expected.
-PASS: PROCEDUREP "nonexistent returned false , as expected.
-PASS: PROCEDURE? "nonexistent returned false , as expected.
-PASS: PROCEDURE? "FORWARD returned true , as expected.
-PASS: PROCEDURE? "SAMPLEPROC returned true , as expected.
-PASS: PROCEDURE? "sampleproc returned true , as expected.
-PASS: ECHO "input returned input , as expected.
-PASS: DEFINEDP "ECHO returned true , as expected.
-PASS: DEFINED? "ECHO returned true , as expected.
-INFO: Executing invalid instruction: ' (PO) '
-INFO: Executing invalid instruction: ' (TEXT) '
-INFO: Executing invalid instruction: ' (TEXT "nonexistent) '
-INFO: Executing invalid instruction: ' (FULLTEXT) '
-INFO: Executing invalid instruction: ' (FULLTEXT "nonexistent) '
-INFO: Executing invalid instruction: ' (DEFINE) '
-INFO: Executing invalid instruction: ' (DEFINE "function) '
-INFO: Executing invalid instruction: ' (DEFINE "function [] ) '
+PASS: [(OR)] returned false , as expected.
+PASS: [(OR "true)] returned true , as expected.
+PASS: [(OR "false)] returned false , as expected.
+PASS: [(OR "false "false)] returned false , as expected.
+PASS: [(OR "true "false)] returned true , as expected.
+PASS: [(OR "false "true)] returned true , as expected.
+PASS: [(OR "true "true)] returned true , as expected.
+PASS: [(OR "false "FALSE "false "FALSE)] returned false , as expected.
+PASS: [(OR "false "FALSE "false "TRUE)] returned true , as expected.
+INFO: Executing invalid instruction: [(OR 1)]
+INFO: Executing invalid instruction: [(OR 0)]
+INFO: Executing invalid instruction: [(OR "truex)]
+INFO: Executing invalid instruction: [(OR "falsex)]
+INFO: Executing invalid instruction: [(OR "true 1)]
+FAIL: Executing [(OR "true 1)] did not throw an error
+INFO: Executing invalid instruction: [(OR 1 "true)]
+INFO: Executing invalid instruction: [(OR "false 0)]
+INFO: Executing invalid instruction: [(OR 0 "false)]
+PASS: [(AND)] returned true , as expected.
+PASS: [(AND "true)] returned true , as expected.
+PASS: [(AND "false)] returned false , as expected.
+PASS: [(AND "false "false)] returned false , as expected.
+PASS: [(AND "true "false)] returned false , as expected.
+PASS: [(AND "false "true)] returned false , as expected.
+PASS: [(AND "true "true)] returned true , as expected.
+PASS: [(AND "TRUE "true "TRUE "false)] returned false , as expected.
+PASS: [(AND "TRUE "true "TRUE "true)] returned true , as expected.
+INFO: Executing invalid instruction: [(AND 1)]
+INFO: Executing invalid instruction: [(AND 0)]
+INFO: Executing invalid instruction: [(AND "truex)]
+INFO: Executing invalid instruction: [(AND "falsex)]
+INFO: Executing invalid instruction: [(AND "true 1)]
+INFO: Executing invalid instruction: [(AND 1 "true)]
+INFO: Executing invalid instruction: [(AND "false 0)]
+FAIL: Executing [(AND "false 0)] did not throw an error
+INFO: Executing invalid instruction: [(AND 0 "false)]
+PASS: [(NOT "true)] returned false , as expected.
+PASS: [(NOT "false)] returned true , as expected.
+INFO: Executing invalid instruction: [(NOT)]
+INFO: Executing invalid instruction: [(NOT 0)]
+INFO: Executing invalid instruction: [(NOT "truex)]
+INFO: Executing invalid instruction: [(NOT "true "true)]
+PASS: [TEXT "SAMPLEPROC] returned [[a b] [PRINT :a] [SHOW :b]] , as expected.
+PASS: [FULLTEXT "SAMPLEPROC] returned [TO SAMPLEPROC  :a  :b   PRINT :a ; print   SHOW  :b ; show END] , as expected.
+PASS: [DEFINEDP "nonexistent] returned false , as expected.
+PASS: [DEFINED? "nonexistent] returned false , as expected.
+PASS: [DEFINED? "FORWARD] returned false , as expected.
+PASS: [DEFINED? "SAMPLEPROC] returned true , as expected.
+PASS: [DEFINED? "sampleproc] returned true , as expected.
+PASS: [PROCEDUREP "nonexistent] returned false , as expected.
+PASS: [PROCEDURE? "nonexistent] returned false , as expected.
+PASS: [PROCEDURE? "FORWARD] returned true , as expected.
+PASS: [PROCEDURE? "SAMPLEPROC] returned true , as expected.
+PASS: [PROCEDURE? "sampleproc] returned true , as expected.
+PASS: [ECHO "input] returned input , as expected.
+PASS: [DEFINEDP "ECHO] returned true , as expected.
+PASS: [DEFINED? "ECHO] returned true , as expected.
+INFO: Executing invalid instruction: [(PO)]
+INFO: Executing invalid instruction: [(TEXT)]
+INFO: Executing invalid instruction: [(TEXT "nonexistent)]
+INFO: Executing invalid instruction: [(FULLTEXT)]
+INFO: Executing invalid instruction: [(FULLTEXT "nonexistent)]
+INFO: Executing invalid instruction: [(DEFINE)]
+INFO: Executing invalid instruction: [(DEFINE "function)]
+INFO: Executing invalid instruction: [(DEFINE "function [] )]
 PASS: Size is [100 100] , as expected.
 PASS: Size is [100 101] , as expected.
 PASS: Size is [101 100] , as expected.
 PASS: The bitpaste was drawn correctly
-PASS: FORM 123.1 10 10 returned 123.1000000000 , as expected.
-INFO: Executing invalid instruction: ' (FORM) '
-INFO: Executing invalid instruction: ' (FORM 123.1) '
-INFO: Executing invalid instruction: ' (FORM 123.1 10) '
-INFO: Executing invalid instruction: ' FORM "string 10 10 '
-INFO: Executing invalid instruction: ' FORM 123.1 12.3 10 '
-INFO: Executing invalid instruction: ' FORM 123.1 10 12.3 '
+PASS: [FORM 123.1 10 10] returned 123.1000000000 , as expected.
+INFO: Executing invalid instruction: [(FORM)]
+INFO: Executing invalid instruction: [(FORM 123.1)]
+INFO: Executing invalid instruction: [(FORM 123.1 10)]
+INFO: Executing invalid instruction: [FORM "string 10 10]
+INFO: Executing invalid instruction: [FORM 123.1 12.3 10]
+INFO: Executing invalid instruction: [FORM 123.1 10 12.3]
 PASS: 'FORM 123.1 10000 10' did not crash
 PASS: 'FORM 123.1 10 10000' did not crash
-INFO: Executing invalid instruction: ' FORM -1 -1 "%s%s '
+INFO: Executing invalid instruction: [FORM -1 -1 "%s%s]
 PASS: 'FORM -1 -1 "%s%s' did not crash
 FAIL: The editor window did not popup
 PASS: INPORT did not crash
-INFO: Executing invalid instruction: ' (INPORT) '
-INFO: Executing invalid instruction: ' INPORT [192] '
-INFO: Executing invalid instruction: ' INPORT -1 '
+INFO: Executing invalid instruction: [(INPORT)]
+INFO: Executing invalid instruction: [INPORT [192]]
+INFO: Executing invalid instruction: [INPORT -1]
 PASS: INPORTB did not crash
-INFO: Executing invalid instruction: ' (INPORTB) '
-INFO: Executing invalid instruction: ' INPORTB [192] '
-INFO: Executing invalid instruction: ' INPORTB -1 '
+INFO: Executing invalid instruction: [(INPORTB)]
+INFO: Executing invalid instruction: [INPORTB [192]]
+INFO: Executing invalid instruction: [INPORTB -1]
 PASS: OUTPORT did not crash
-INFO: Executing invalid instruction: ' (OUTPORT) '
-INFO: Executing invalid instruction: ' (OUTPORT 192) '
-INFO: Executing invalid instruction: ' OUTPORT [192] 0 '
-INFO: Executing invalid instruction: ' OUTPORT -1 0 '
+INFO: Executing invalid instruction: [(OUTPORT)]
+INFO: Executing invalid instruction: [(OUTPORT 192)]
+INFO: Executing invalid instruction: [OUTPORT [192] 0]
+INFO: Executing invalid instruction: [OUTPORT -1 0]
 PASS: OUTPORTB did not crash
-INFO: Executing invalid instruction: ' (OUTPORTB) '
-INFO: Executing invalid instruction: ' (OUTPORTB 192) '
-INFO: Executing invalid instruction: ' OUTPORTB [192] 0 '
-INFO: Executing invalid instruction: ' OUTPORTB -1 0 '
+INFO: Executing invalid instruction: [(OUTPORTB)]
+INFO: Executing invalid instruction: [(OUTPORTB 192)]
+INFO: Executing invalid instruction: [OUTPORTB [192] 0]
+INFO: Executing invalid instruction: [OUTPORTB -1 0]
 PASS: The font circle was drawn correctly
-INFO: Executing invalid instruction: ' (LABEL) '
-INFO: Executing invalid instruction: ' (LABEL 1 1) '
+INFO: Executing invalid instruction: [(LABEL)]
+INFO: Executing invalid instruction: [(LABEL 1 1)]
 PASS: The circle was drawn correctly
 PASS: (FILL "true) worked as expected
-INFO: Executing invalid instruction: ' (FILL 10) '
-INFO: Executing invalid instruction: ' (FILL ["true] ) '
-PASS: WRITER returned smoketest.txt , as expected.
-PASS: WRITEPOS returned 0 , as expected.
-PASS: WRITEPOS returned 7 , as expected.
-PASS: WRITEPOS returned 17 , as expected.
-PASS: WRITER returned , as expected.
-PASS: READER returned smoketest.txt , as expected.
-PASS: READPOS returned 0 , as expected.
-PASS: EOFP returned false , as expected.
-PASS: READLIST returned Hello , as expected.
-PASS: READPOS returned 7 , as expected.
-PASS: EOFP returned false , as expected.
-PASS: READLIST returned Good Bye , as expected.
-PASS: READPOS returned 17 , as expected.
-PASS: EOFP returned true , as expected.
-PASS: READER returned , as expected.
-PASS: READLIST returned Hello , as expected.
-PASS: READLIST returned Hello , as expected.
-PASS: READLIST returned Jello , as expected.
+INFO: Executing invalid instruction: [(FILL 10)]
+INFO: Executing invalid instruction: [(FILL ["true] )]
+PASS: [WRITER] returned smoketest.txt , as expected.
+PASS: [WRITEPOS] returned 0 , as expected.
+PASS: [WRITEPOS] returned 7 , as expected.
+PASS: [WRITEPOS] returned 17 , as expected.
+PASS: [WRITER] returned [] , as expected.
+PASS: [READER] returned smoketest.txt , as expected.
+PASS: [READPOS] returned 0 , as expected.
+PASS: [EOFP] returned false , as expected.
+PASS: [READLIST] returned [Hello] , as expected.
+PASS: [READPOS] returned 7 , as expected.
+PASS: [EOFP] returned false , as expected.
+PASS: [READLIST] returned [Good Bye] , as expected.
+PASS: [READPOS] returned 17 , as expected.
+PASS: [EOFP] returned true , as expected.
+PASS: [READER] returned [] , as expected.
+PASS: [READLIST] returned [Hello] , as expected.
+PASS: [READLIST] returned [Hello] , as expected.
+PASS: [READLIST] returned [Jello] , as expected.
 PASS: ALLOPEN returned filealltest-2.txt filealltest-1.txt testlog.txt , as expected.
-PASS: READLIST returned Hello , as expected.
-PASS: READLIST returned Good Bye , as expected.
-INFO: Executing invalid instruction: ' OPENREAD :filename '
-PASS: READLIST returned Hello , as expected.
-PASS: READLIST returned Hello , as expected.
-PASS: READLIST returned And how are you today , as expected.
-PASS: READLIST returned Hello , as expected.
-PASS: READLIST returned Good Bye , as expected.
-INFO: Executing invalid instruction: ' (OPENREAD "testfile.txt 1) '
-INFO: Executing invalid instruction: ' (OPENWRITE "testfile.txt 1) '
-INFO: Executing invalid instruction: ' (OPENAPPEND "testfile.txt 1) '
-INFO: Executing invalid instruction: ' (OPENUPDATE "testfile.txt 1) '
-INFO: Executing invalid instruction: ' CLOSE "nonexistent.txt '
-INFO: Executing invalid instruction: ' (CLOSE) '
+PASS: [READLIST] returned [Hello] , as expected.
+PASS: [READLIST] returned [Good Bye] , as expected.
+INFO: Executing invalid instruction: [OPENREAD :filename]
+PASS: [READLIST] returned [Hello] , as expected.
+PASS: [READLIST] returned [Hello] , as expected.
+PASS: [READLIST] returned [And how are you today] , as expected.
+PASS: [READLIST] returned [Hello] , as expected.
+PASS: [READLIST] returned [Good Bye] , as expected.
+INFO: Executing invalid instruction: [(OPENREAD "testfile.txt 1)]
+INFO: Executing invalid instruction: [(OPENWRITE "testfile.txt 1)]
+INFO: Executing invalid instruction: [(OPENAPPEND "testfile.txt 1)]
+INFO: Executing invalid instruction: [(OPENUPDATE "testfile.txt 1)]
+INFO: Executing invalid instruction: [CLOSE "nonexistent.txt]
+INFO: Executing invalid instruction: [(CLOSE)]
+PASS: [PENCOLOR] returned 0 , as expected.
+PASS: [PENCOLOR] returned 15 , as expected.
+PASS: [PENCOLOR] returned 1 , as expected.
+PASS: [PENCOLOR] returned [128 64 32] , as expected.
+PASS: [PENCOLOR] returned [255 255 255] , as expected.
+INFO: Executing invalid instruction: [SETPENCOLOR {}]
+INFO: Executing invalid instruction: [SETPENCOLOR [0]]
+INFO: Executing invalid instruction: [SETPENCOLOR [0 0]]
+INFO: Executing invalid instruction: [SETPENCOLOR [0 0 0 0]]
+PASS: [PENCOLOUR] returned 0 , as expected.
+PASS: [PENCOLOUR] returned 15 , as expected.
+PASS: [PENCOLOUR] returned 1 , as expected.
+PASS: [PENCOLOUR] returned [128 64 32] , as expected.
+PASS: [PENCOLOUR] returned [255 255 255] , as expected.
+INFO: Executing invalid instruction: [SETPENCOLOUR {}]
+INFO: Executing invalid instruction: [SETPENCOLOUR [0]]
+INFO: Executing invalid instruction: [SETPENCOLOUR [0 0]]
+INFO: Executing invalid instruction: [SETPENCOLOUR [0 0 0 0]]
+PASS: [PENCOLOR] returned 0 , as expected.
+PASS: [PENCOLOR] returned 15 , as expected.
+PASS: [PENCOLOR] returned 1 , as expected.
+PASS: [PENCOLOR] returned [128 64 32] , as expected.
+PASS: [PENCOLOR] returned [255 255 255] , as expected.
+INFO: Executing invalid instruction: [SETPC {}]
+INFO: Executing invalid instruction: [SETPC [0]]
+INFO: Executing invalid instruction: [SETPC [0 0]]
+INFO: Executing invalid instruction: [SETPC [0 0 0 0]]
+PASS: [FLOODCOLOR] returned 0 , as expected.
+PASS: [FLOODCOLOR] returned 15 , as expected.
+PASS: [FLOODCOLOR] returned 1 , as expected.
+PASS: [FLOODCOLOR] returned [128 64 32] , as expected.
+PASS: [FLOODCOLOR] returned [255 255 255] , as expected.
+INFO: Executing invalid instruction: [SETFLOODCOLOR {}]
+INFO: Executing invalid instruction: [SETFLOODCOLOR [0]]
+INFO: Executing invalid instruction: [SETFLOODCOLOR [0 0]]
+INFO: Executing invalid instruction: [SETFLOODCOLOR [0 0 0 0]]
+PASS: [FLOODCOLOUR] returned 0 , as expected.
+PASS: [FLOODCOLOUR] returned 15 , as expected.
+PASS: [FLOODCOLOUR] returned 1 , as expected.
+PASS: [FLOODCOLOUR] returned [128 64 32] , as expected.
+PASS: [FLOODCOLOUR] returned [255 255 255] , as expected.
+INFO: Executing invalid instruction: [SETFLOODCOLOUR {}]
+INFO: Executing invalid instruction: [SETFLOODCOLOUR [0]]
+INFO: Executing invalid instruction: [SETFLOODCOLOUR [0 0]]
+INFO: Executing invalid instruction: [SETFLOODCOLOUR [0 0 0 0]]
+PASS: [FLOODCOLOR] returned 0 , as expected.
+PASS: [FLOODCOLOR] returned 15 , as expected.
+PASS: [FLOODCOLOR] returned 1 , as expected.
+PASS: [FLOODCOLOR] returned [128 64 32] , as expected.
+PASS: [FLOODCOLOR] returned [255 255 255] , as expected.
+INFO: Executing invalid instruction: [SETFC {}]
+INFO: Executing invalid instruction: [SETFC [0]]
+INFO: Executing invalid instruction: [SETFC [0 0]]
+INFO: Executing invalid instruction: [SETFC [0 0 0 0]]
+PASS: [SCREENCOLOR] returned 0 , as expected.
+PASS: [SCREENCOLOR] returned 15 , as expected.
+PASS: [SCREENCOLOR] returned 1 , as expected.
+PASS: [SCREENCOLOR] returned [128 64 32] , as expected.
+PASS: [SCREENCOLOR] returned [255 255 255] , as expected.
+INFO: Executing invalid instruction: [SETSCREENCOLOR {}]
+INFO: Executing invalid instruction: [SETSCREENCOLOR [0]]
+INFO: Executing invalid instruction: [SETSCREENCOLOR [0 0]]
+INFO: Executing invalid instruction: [SETSCREENCOLOR [0 0 0 0]]
+PASS: [SCREENCOLOUR] returned 0 , as expected.
+PASS: [SCREENCOLOUR] returned 15 , as expected.
+PASS: [SCREENCOLOUR] returned 1 , as expected.
+PASS: [SCREENCOLOUR] returned [128 64 32] , as expected.
+PASS: [SCREENCOLOUR] returned [255 255 255] , as expected.
+INFO: Executing invalid instruction: [SETSCREENCOLOUR {}]
+INFO: Executing invalid instruction: [SETSCREENCOLOUR [0]]
+INFO: Executing invalid instruction: [SETSCREENCOLOUR [0 0]]
+INFO: Executing invalid instruction: [SETSCREENCOLOUR [0 0 0 0]]
+PASS: [SCREENCOLOR] returned 0 , as expected.
+PASS: [SCREENCOLOR] returned 15 , as expected.
+PASS: [SCREENCOLOR] returned 1 , as expected.
+PASS: [SCREENCOLOR] returned [128 64 32] , as expected.
+PASS: [SCREENCOLOR] returned [255 255 255] , as expected.
+INFO: Executing invalid instruction: [SETSC {}]
+INFO: Executing invalid instruction: [SETSC [0]]
+INFO: Executing invalid instruction: [SETSC [0 0]]
+INFO: Executing invalid instruction: [SETSC [0 0 0 0]]

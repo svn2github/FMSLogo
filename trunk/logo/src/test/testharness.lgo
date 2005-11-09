@@ -16,6 +16,7 @@ LOAD "file.lgo
 LOAD "procedure.lgo
 LOAD "parse.lgo
 LOAD "word.lgo
+LOAD "color.lgo
 
 MAKE "testlog []
 
@@ -68,9 +69,9 @@ END
 TO SIMPLEREPORTTEST :instruction :expectedresult
   LOCALMAKE "result RUN :instruction
   IFELSE EQUALP :result :expectedresult [
-    REPORTTESTPASSED (sentence :instruction "returned :result "|, as expected.|)
+    REPORTTESTPASSED (LIST :instruction "returned :result "|, as expected.|)
   ] [
-    REPORTTESTFAILED (sentence :instruction "returned :result "|. We expected| :expectedresult)
+    REPORTTESTFAILED (LIST :instruction "returned :result "|. We expected| :expectedresult)
   ]
 END
 
@@ -95,11 +96,11 @@ END
 
 TO RUNBADINPUTTEST :instructions
 
-  REPORTTESTINFO (SENTENCE "|Executing invalid instruction: '| :instructions "' )
+  REPORTTESTINFO (LIST "|Executing invalid instruction:| :instructions )
 
   CATCH "ERROR [ 
     IGNORE RUN :instructions 
-    REPORTTESTFAILED (SENTENCE "|Executing '| :instructions "|' did not throw an error|)
+    REPORTTESTFAILED (LIST "Executing :instructions "|did not throw an error|)
   ]
 
 END
@@ -132,6 +133,7 @@ TO TESTALL
   LABELTEST     ; from label.lgo
   FILLTEST      ; from fill.lgo
   FILETEST      ; from file.lgo
+  COLORTEST     ; from color.lgo
 ;  MKDIRTEST     ; from mkdir.lgo
 
   REPORTTESTUNINITIALIZE
