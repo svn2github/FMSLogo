@@ -143,18 +143,13 @@ NODE *lsetactivearea(NODE *arg)
    return UNBOUND;
    }
 
-NODE *lactivearea(NODE *arg)
+NODE *lactivearea(NODE *)
    {
-   // if custom return settings
-
-   return (
-      cons(make_intnode((FIXNUM) PrinterAreaXLow),
-         cons(make_intnode((FIXNUM) PrinterAreaYLow),
-            cons(make_intnode((FIXNUM) PrinterAreaXHigh),
-               cons(make_intnode((FIXNUM) PrinterAreaYHigh),
-                  NIL
-               )))));
-
+   return cons_list(
+      make_intnode((FIXNUM) PrinterAreaXLow),
+      make_intnode((FIXNUM) PrinterAreaYLow),
+      make_intnode((FIXNUM) PrinterAreaXHigh),
+      make_intnode((FIXNUM) PrinterAreaYHigh));
    }
 
 

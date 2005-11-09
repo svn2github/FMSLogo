@@ -109,14 +109,13 @@ NODE *lmousepos(NODE *)
 
    // return current mouse position
 
-   //   return(
-   //   cons(make_intnode( mouse_posx+MainWindowx->Scroller->XPos-xoffset*the_zoom),
-   //   cons(make_intnode(-(mouse_posy+MainWindowx->Scroller->YPos-yoffset*the_zoom)), NIL))
-   //   );
-   return (
-      cons(make_intnode((mouse_posx + MainWindowx->ScreenWindow->Scroller->XPos) / the_zoom - xoffset),
-         cons(make_intnode(-((mouse_posy + MainWindowx->ScreenWindow->Scroller->YPos) / the_zoom - yoffset)), NIL))
-   );
+   // return cons_list(
+   //    make_intnode(  mouse_posx+MainWindowx->Scroller->XPos-xoffset*the_zoom),
+   //    make_intnode(-(mouse_posy+MainWindowx->Scroller->YPos-yoffset*the_zoom)));
+
+   return cons_list(
+      make_intnode(  (mouse_posx + MainWindowx->ScreenWindow->Scroller->XPos) / the_zoom - xoffset),
+      make_intnode(-((mouse_posy + MainWindowx->ScreenWindow->Scroller->YPos) / the_zoom - yoffset)));
    }
 
 NODE *lkeyboardvalue(NODE *)
@@ -327,7 +326,7 @@ NODE *lportwritearray(NODE *args)
             // fill buffer with elements of the array
             for (i = 0; i < count; i++)
                {
-               item = litem(cons(make_intnode(i + getarrorg(obj)), cons(obj, NIL)));
+               item = litem(cons_list(make_intnode(i + getarrorg(obj)), obj));
                txbuffer[i] = getint(cnv_node_to_numnode(item));
                }
 
@@ -413,10 +412,10 @@ NODE *lportreadarray(NODE *args)
             for (i = 0; i < count; i++)
                {
                lsetitem(
-                  cons(make_intnode(i + getarrorg(obj)),
-                     cons(obj,
-                        cons(make_intnode(rxbuffer[i]),
-                           NIL))));
+                  cons_list(
+                     make_intnode(i + getarrorg(obj)),
+                     obj,
+                     make_intnode(rxbuffer[i])));
                }
 
             // return actual transfered
