@@ -140,7 +140,7 @@ bool TMyFileWindow::Read(const char *fileName)
       {
       char err[MAXPATH + 33];
 
-      wsprintf(err, "Unable to read file \"%s\" from disk", FileName);
+      wsprintf(err, "Unable to read file \"%s\" from disk", fileName);
       MessageBox(err, GetModule()->GetName(), MB_ICONEXCLAMATION | MB_OK);
       }
    return success;
@@ -169,7 +169,7 @@ bool TMyFileWindow::Write(const char * fileName)
       {
       char msg[MAXPATH + 33];
 
-      wsprintf(msg, "Unable to write file \"%s\" to disk", FileName);
+      wsprintf(msg, "Unable to write file \"%s\" to disk", fileName);
       MessageBox(msg, GetModule()->GetName(), MB_ICONEXCLAMATION | MB_OK);
       return false;
       }
