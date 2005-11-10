@@ -59,25 +59,33 @@ int rd_getc(FILE *strm)
              case TO_MODE:
                  {
                     if (!promptuser(buffer_input, "To Mode (Cancel to End)"))
+                       {
                        strcpy(buffer_input, "End");
+                       }
                     break;
                  }
              case LIST_MODE:
                  {
                     if (!promptuser(buffer_input, "List Mode (Cancel to Halt)"))
+                       {
                        err_logo(STOP_ERROR, NIL);
+                       }
                     break;
                  }
              case PAUSE_MODE:
                  {
                     if (!promptuser(buffer_input, "Pause Mode (Cancel to Continue)"))
+                       {
                        strcpy(buffer_input, "Continue");
+                       }
                     break;
                  }
              case NO_MODE:
                  {
                     if (!promptuser(buffer_input, "Input Mode (Cancel to Halt)"))
+                       {
                        err_logo(STOP_ERROR, NIL);
+                       }
                     break;
                  }
             }
@@ -478,14 +486,13 @@ NODE *parser_iterate(const char **inln, const char *inlimit, const char *inhead,
       /* if this is a '[', parse a new list */
       else if (ch == '[')
          {
-         tnode = cons(parser_iterate(inln, inlimit, inhead, semi, ']'), NIL);
+         tnode = cons_list(parser_iterate(inln, inlimit, inhead, semi, ']'));
          if (**inln == '\0') ch = '\0';
          }
 
       else if (ch == '{')
          {
-         tnode = cons(list_to_array
-            (parser_iterate(inln, inlimit, inhead, semi, '}')), NIL);
+         tnode = cons_list(list_to_array(parser_iterate(inln, inlimit, inhead, semi, '}')));
          if (**inln == '@')
             {
             int i = 0, sign = 1;
@@ -514,14 +521,13 @@ NODE *parser_iterate(const char **inln, const char *inlimit, const char *inhead,
          if (windex > 0)
             {
             if (broken == FALSE)
-               tnode = cons(
-                  make_strnode(wptr, windex, this_type, strnzcpy),
-                  NIL);
+               {
+               tnode = cons_list(make_strnode(wptr, windex, this_type, strnzcpy));
+               }
             else
                {
-               tnode = cons(
-                  make_strnode(wptr, windex, this_type, (semi ? mend_strnzcpy : mend_nosemi)),
-                  NIL);
+               tnode = cons_list(
+                  make_strnode(wptr, windex, this_type, (semi ? mend_strnzcpy : mend_nosemi)));
                broken = FALSE;
                }
             this_type = STRING;
@@ -559,9 +565,9 @@ NODE *parser(NODE *nd, bool semi)
 
 NODE *lparse(NODE *args)
    {
-   NODE *arg, *val = UNBOUND;
+   NODE *val = UNBOUND;
 
-   arg = string_arg(args);
+   NODE * arg = string_arg(args);
    if (NOT_THROWING)
       {
       val = parser(arg, FALSE);
@@ -572,22 +578,24 @@ NODE *lparse(NODE *args)
 static
 NODE *runparse_node(NODE *nd, NODE **ndsptr)
    {
-   NODE *outline = NIL, *tnode = NIL, *lastnode = NIL, *snd;
-   const char *wptr;
-   const char *tptr;
-   char *whead;
-   int wlen, wcnt, tcnt, isnumb;
-   NODETYPES wtyp;
-   bool monadic_minus = FALSE;
+   if (nd == Minus_Tight)
+      {
+      return cons_list(nd);
+      }
 
-   if (nd == Minus_Tight) return cons(nd, NIL);
-   snd = cnv_node_to_strnode(nd);
+   NODE * snd = cnv_node_to_strnode(nd);
    ref(snd);
-   wptr = getstrptr(snd);
-   wlen = getstrlen(snd);
-   wtyp = nodetype(snd);
-   wcnt = 0;
-   whead = getstrhead(snd);
+   const char *wptr  = getstrptr(snd);
+   int         wlen  = getstrlen(snd);
+   NODETYPES   wtyp  = nodetype(snd);
+   int         wcnt  = 0;
+   char *      whead = getstrhead(snd);
+
+   NODE *outline = NIL, *tnode = NIL, *lastnode = NIL;
+   const char *tptr;
+   int tcnt;
+   int isnumb;
+   bool monadic_minus = false;
 
    while (wcnt < wlen)
       {
@@ -604,22 +612,23 @@ NODE *runparse_node(NODE *nd, NODE **ndsptr)
          while (wcnt < wlen && !parens(*wptr))
             {
             if (wtyp == BACKSLASH_STRING && getparity(*wptr))
-               wtyp = PUNBOUND;        /* flag for "\( case                   */
+               {
+               wtyp = PUNBOUND; // flag for "\( case
+               }
             wptr++, wcnt++, tcnt++;
             }
+
+         NODE * strnode;
          if (wtyp == PUNBOUND)
             {
             wtyp = BACKSLASH_STRING;
-            tnode = cons(
-               make_quote(intern(make_strnode(tptr, tcnt, wtyp, noparity_strnzcpy))), 
-               NIL);
+            strnode = make_strnode(tptr, tcnt, wtyp, noparity_strnzcpy);
             }
          else
             {
-            tnode = cons(
-               make_quote(intern(make_strnode(tptr, tcnt, wtyp, strnzcpy))), 
-               NIL);
+            strnode = make_strnode(tptr, tcnt, wtyp, strnzcpy);
             }
+         tnode = cons_list(make_quote(intern(strnode)));
          }
       else if (*wptr == ':')
          {
@@ -630,30 +639,27 @@ NODE *runparse_node(NODE *nd, NODE **ndsptr)
             {
             wptr++, wcnt++, tcnt++;
             }
-         tnode = cons(
-            make_colon(intern(make_strnode(tptr, tcnt, wtyp, strnzcpy))), 
-            NIL);
+         tnode = cons_list(
+            make_colon(intern(make_strnode(tptr, tcnt, wtyp, strnzcpy))));
          }
       else if (wcnt == 0 && *wptr == '-' && monadic_minus == FALSE &&
             wcnt+1 < wlen && !white_space(*(wptr + 1)))
          {
          /* minus sign with space before and no space after is unary */
-         tnode = cons(make_intnode((FIXNUM) 0), NIL);
+         tnode = cons_list(make_intnode((FIXNUM) 0));
          monadic_minus = TRUE;
          }
       else if (parens(*wptr) || infixs(*wptr))
          {
          if (monadic_minus)
             {
-            tnode = cons(Minus_Tight, NIL);
+            tnode = cons_list(Minus_Tight);
             }
          else
             {
-            tnode = cons(
-               intern(make_strnode(wptr, 1, STRING, strnzcpy)), 
-               NIL);
+            tnode = cons_list(intern(make_strnode(wptr, 1, STRING, strnzcpy)));
             }
-         monadic_minus = FALSE;
+         monadic_minus = false;
          wptr++, wcnt++;
          }
       else
@@ -696,19 +702,15 @@ NODE *runparse_node(NODE *nd, NODE **ndsptr)
                setcdr(lastnode, qmtnode);
                }
             lastnode = cddr(qmtnode);
-            tnode = cons(Right_Paren, NIL);
+            tnode = cons_list(Right_Paren);
             }
          else if (isnumb < 2 && tcnt > 0)
             {
-            tnode = cons(
-               cnv_node_to_numnode(make_strnode(tptr, tcnt, wtyp, strnzcpy)),
-               NIL);
+            tnode = cons_list(cnv_node_to_numnode(make_strnode(tptr, tcnt, wtyp, strnzcpy)));
             }
          else
             {
-            tnode = cons(
-               intern(make_strnode(tptr, tcnt, wtyp, strnzcpy)),
-               NIL);
+            tnode = cons_list(intern(make_strnode(tptr, tcnt, wtyp, strnzcpy)));
             }
          }
 
@@ -742,13 +744,13 @@ NODE *runparse(NODE *ndlist)
       curnd = car(ndlist);
       ndlist = cdr(ndlist);
       if (!is_word(curnd))
-         tnode = cons(curnd, NIL);
+         tnode = cons_list(curnd);
       else
          {
          if (!numberp(curnd))
             tnode = runparse_node(curnd, &ndlist);
          else
-            tnode = cons(cnv_node_to_numnode(curnd), NIL);
+            tnode = cons_list(cnv_node_to_numnode(curnd));
          }
       if (tnode != NIL)
          {
@@ -768,18 +770,23 @@ NODE *runparse(NODE *ndlist)
 
 NODE *lrunparse(NODE *args)
    {
-   NODE *arg;
-
-   arg = car(args);
+   NODE * arg = car(args);
    while (nodetype(arg) == ARRAY && NOT_THROWING)
       {
       setcar(args, err_logo(BAD_DATA, arg));
       arg = car(args);
       }
+
    if (NOT_THROWING && !aggregate(arg))
+      {
       arg = parser(arg, TRUE);
+      }
+
    if (NOT_THROWING)
+      {
       return runparse(arg);
+      }
+
    return UNBOUND;
    }
 
