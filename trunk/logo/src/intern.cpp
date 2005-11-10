@@ -24,16 +24,6 @@
 
 NODE **hash_table;
 
-void map_oblist(void (*fcn) (NODE *))
-   {
-   int i;
-   NODE *nd;
-
-   for (i = 0; i < HASH_LEN; i++)
-      for (nd = hash_table[i]; nd != NIL; nd = cdr(nd))
-         (*fcn) (car(nd));
-   }
-
 FIXNUM hash(const char *s, int len)
 /* Map S to an integer in the range 0 .. HASH_LEN-1. */
 /* Method attributed to Peter Weinberger, adapted from Aho, Sethi, */

@@ -525,8 +525,6 @@ extern NODE *l_setfirst(NODE *args);
 extern NODE *l_setbf(NODE *args);
 
 /* File INTERN.CPP: */
-
-extern void map_oblist(void (*fcn) (NODE *));
 extern FIXNUM hash(const char *s, int len);
 extern NODE *make_case(NODE *casestrnd, NODE *obj);
 extern NODE *make_object(NODE *canonical, NODE *proc, NODE *val, NODE *plist, NODE *casestrnd);

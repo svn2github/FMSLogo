@@ -464,10 +464,12 @@ static int want_buried = 0;
 
 typedef enum
    {
-   c_PROCS, c_VARS, c_PLISTS
+   c_PROCS, 
+   c_VARS, 
+   c_PLISTS,
    }
 CNTLSTTYP;
-CNTLSTTYP contents_list_type;
+
 
 static
 int bck(int flag)
@@ -476,7 +478,11 @@ int bck(int flag)
    }
 
 static
-void contents_map(NODE *sym)
+void 
+contents_map(
+   NODE *    sym,
+   CNTLSTTYP contents_list_type
+)
    {
    int flag_check = PROC_BURIED;
 	
@@ -620,12 +626,23 @@ NODE *mergesort(NODE *nd)
    }
 
 static
-NODE *get_contents()
+NODE *
+get_contents(
+   CNTLSTTYP contents_type
+)
    {
    deref(cnt_list);
    cnt_list = NIL;
    cnt_last = NIL;
-   map_oblist(contents_map);
+
+   for (int i = 0; i < HASH_LEN; i++)
+      {
+      for (NODE * nd = hash_table[i]; nd != NIL; nd = cdr(nd))
+         {
+         contents_map(car(nd), contents_type);
+         }
+      }
+
    cnt_list = mergesort(cnt_list);
    return (cnt_list);
    }
@@ -636,15 +653,12 @@ NODE *lcontents(NODE *)
 
    want_buried = 0;
 
-   contents_list_type = c_PLISTS;
-   ret = cons_list(get_contents());
+   ret = cons_list(get_contents(c_PLISTS));
    ref(ret);
 
-   contents_list_type = c_VARS;
-   push(get_contents(), ret);
+   push(get_contents(c_VARS), ret);
 
-   contents_list_type = c_PROCS;
-   push(get_contents(), ret);
+   push(get_contents(c_PROCS), ret);
 
    deref(cnt_list);
    cnt_list = NIL;
@@ -657,15 +671,12 @@ NODE *ltraced(NODE *)
 
    want_buried = PROC_TRACED;
 
-   contents_list_type = c_PLISTS;
-   ret = cons_list(get_contents());
+   ret = cons_list(get_contents(c_PLISTS));
    ref(ret);
 
-   contents_list_type = c_VARS;
-   push(get_contents(), ret);
+   push(get_contents(c_VARS), ret);
 
-   contents_list_type = c_PROCS;
-   push(get_contents(), ret);
+   push(get_contents(c_PROCS), ret);
 	
    deref(cnt_list);
    cnt_list = NIL;
@@ -678,15 +689,12 @@ NODE *lstepped(NODE *)
 
    want_buried = PROC_STEPPED;
 
-   contents_list_type = c_PLISTS;
-   ret = cons_list(get_contents());
+   ret = cons_list(get_contents(c_PLISTS));
    ref(ret);
 
-   contents_list_type = c_VARS;
-   push(get_contents(), ret);
+   push(get_contents(c_VARS), ret);
 
-   contents_list_type = c_PROCS;
-   push(get_contents(), ret);
+   push(get_contents(c_PROCS), ret);
 
    deref(cnt_list);
    cnt_list = NIL;
@@ -699,15 +707,12 @@ NODE *lburied(NODE *)
 
    want_buried = PROC_BURIED;
 
-   contents_list_type = c_PLISTS;
-   ret = cons_list(get_contents());
+   ret = cons_list(get_contents(c_PLISTS));
    ref(ret);
 
-   contents_list_type = c_VARS;
-   push(get_contents(), ret);
+   push(get_contents(c_VARS), ret);
 
-   contents_list_type = c_PROCS;
-   push(get_contents(), ret);
+   push(get_contents(c_PROCS), ret);
 
    deref(cnt_list);
    cnt_list = NIL;
@@ -720,8 +725,7 @@ NODE *lprocedures(NODE *)
 
    want_buried = 0;
 
-   contents_list_type = c_PROCS;
-   ret = get_contents();
+   ret = get_contents(c_PROCS);
    ref(ret);
    deref(cnt_list);
    cnt_list = NIL;
@@ -734,8 +738,7 @@ NODE *lnames(NODE *)
 
    want_buried = 0;
 
-   contents_list_type = c_VARS;
-   ret = cons_list(NIL, get_contents());
+   ret = cons_list(NIL, get_contents(c_VARS));
    ref(ret);
    deref(cnt_list);
    cnt_list = NIL;
@@ -748,8 +751,7 @@ NODE *lplists(NODE *)
 
    want_buried = 0;
 
-   contents_list_type = c_PLISTS;
-   ret = cons_list(NIL, NIL, get_contents());
+   ret = cons_list(NIL, NIL, get_contents(c_PLISTS));
    ref(ret);
    deref(cnt_list);
    cnt_list = NIL;
