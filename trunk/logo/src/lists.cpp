@@ -91,7 +91,7 @@ NODE *lbutlast(NODE *args)
          val = NIL;
          while (cdr(args) != NIL)
             {
-            tnode = cons(car(args), NIL);
+            tnode = cons_list(car(args));
             if (val == NIL)
                {
                val = tnode;
@@ -161,11 +161,11 @@ NODE *lfirsts(NODE *args)
    if (car(args) == NIL) return (NIL);
    if (NOT_THROWING)
       {
-      val = cons(lfirst(arg), NIL);
+      val = cons_list(lfirst(arg));
       tail = val;
       for (argp = cdr(arg); argp != NIL; argp = cdr(argp))
          {
-         setcdr(tail, cons(lfirst(argp), NIL));
+         setcdr(tail, cons_list(lfirst(argp)));
          tail = cdr(tail);
          if (check_throwing) break;
          }
@@ -186,12 +186,12 @@ NODE *lbfs(NODE *args)
    if (car(args) == NIL) return (NIL);
    if (NOT_THROWING)
       {
-      val = cons(lbutfirst(arg), NIL);
+      val = cons_list(lbutfirst(arg));
 //      tail = vref(val); // changed to following line to fix leak, I hope.
       tail = val;
       for (argp = cdr(arg); argp != NIL; argp = cdr(argp))
          {
-         setcdr(tail, cons(lbutfirst(argp), NIL));
+         setcdr(tail, cons_list(lbutfirst(argp)));
          tail = cdr(tail);
          if (check_throwing) break;
          }
@@ -373,7 +373,7 @@ NODE *llput(NODE *args)
       val = NIL;
       while (lst != NIL)
          {
-         tnode = cons(car(lst), NIL);
+         tnode = cons_list(car(lst));
          if (val == NIL)
             {
             val = tnode;
@@ -387,9 +387,9 @@ NODE *llput(NODE *args)
          if (check_throwing) break;
          }
       if (val == NIL)
-         val = cons(arg, NIL);
+         val = cons_list(arg);
       else
-         setcdr(lastnode, cons(arg, NIL));
+         setcdr(lastnode, cons_list(arg));
       }
    return (val);
    }
@@ -466,7 +466,7 @@ NODE *lsentence(NODE *args)
          {
          while (arg != NIL && NOT_THROWING)
             {
-            tnode = cons(car(arg), NIL);
+            tnode = cons_list(car(arg));
             arg = cdr(arg);
             if (val == NIL) val = tnode;
             else setcdr(lastnode, tnode);
@@ -475,7 +475,7 @@ NODE *lsentence(NODE *args)
          }
       else
          {
-         tnode = cons(arg, NIL);
+         tnode = cons_list(arg);
          if (val == NIL) val = tnode;
          else setcdr(lastnode, tnode);
          lastnode = tnode;

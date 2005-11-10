@@ -653,7 +653,7 @@ void init()
    Stop = intern(make_static_strnode("stop"));
    Goto = intern(make_static_strnode("goto"));
    Tag = intern(make_static_strnode("Tag"));
-   the_generation = valref(cons(NIL, NIL));
-   Not_Enough_Node = valref(cons(NIL, NIL));
+   the_generation = valref(cons_list(NIL));
+   Not_Enough_Node = valref(cons_list(NIL));
    }
 

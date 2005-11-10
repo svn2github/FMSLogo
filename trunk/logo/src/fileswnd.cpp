@@ -37,25 +37,23 @@ void filesave(const char *temp)
          MB_OK | MB_ICONQUESTION);
       }
 
-   arg = cons(make_strnode(temp, strlen(temp), STRING, strnzcpy), NIL);
+   arg = cons_list(make_strnode(temp, strlen(temp), STRING, strnzcpy));
 
    tmp = writestream;
    writestream = open_file(car(arg), "w+");
    if (writestream != NULL)
       {
-
       save_yield_flag = yield_flag;
       yield_flag = 0;
       lsetcursorwait(NIL);
 
-      setcar(arg, cons(lcontents(NIL), NIL));
+      setcar(arg, cons_list(lcontents(NIL)));
       lpo(car(arg));
       fclose(writestream);
       IsDirty = false;
 
       lsetcursorarrow(NIL);
       yield_flag = save_yield_flag;
-
       }
    else
       {
