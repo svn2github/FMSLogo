@@ -231,14 +231,9 @@ NODE *lsetmargins(NODE *  /*args*/)
 
 NODE *lstandout(NODE *args)
    {
-   char textbuf[300];
-   char fmtbuf[100];
+   char textbuf[MAX_BUFFER_SIZE];
+   cnv_strnode_string(textbuf, args);
 
-   sprintf(fmtbuf, "%%p");
-   print_stringptr = textbuf;
-   print_stringlen = 300;
-   ndprintf((FILE *) NULL, fmtbuf, car(args));
-   *print_stringptr = '\0';
    return make_strnode(textbuf, (int) strlen(textbuf), STRING, strnzcpy);
    }
 
