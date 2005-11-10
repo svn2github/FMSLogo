@@ -25,7 +25,6 @@
 #define assign(to, from)    to = reref(to, from)
 
 NODE *the_generation;
-typedef NODE * (*nodeinout) (NODE *arg);
 
 /* Set the line pointer for a tree.
 */
@@ -277,7 +276,7 @@ NODE *gather_args(NODE *proc, NODE **args, bool inparen, NODE **ifnode)
       if (min < 0)
          {
          /* special form */
-         return ((nodeinout) * getprimfun(proc)) (*args);
+         return ((logofunc) *getprimfun(proc)) (*args);
          }
       /* Kludge follows to allow EDIT and CO without input without paren */
       if (getprimmin(proc) == OK_NO_ARG) min = 0;

@@ -28,8 +28,6 @@ const int DEFAULT_SPLITTER_WIDTH   = 5;
 // what is this?  Some kind of border?
 const int LL = 1;
 
-typedef NODE * (*logofunc) (NODE *);
-
 typedef struct
    {
    int   red;

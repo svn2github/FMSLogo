@@ -61,6 +61,8 @@ typedef enum
    }
 mode_type;
 
+typedef struct logo_node * (*logofunc) (struct logo_node *);
+
 #define WORDSIZE        32             /* bits per int                        */
 
 #define NIL             ((NODE *) 0)
@@ -174,7 +176,7 @@ typedef struct logo_node
          {
          struct logo_node *ncar;
          struct logo_node *ncdr;
-         struct logo_node *nobj;       /* used only for oblist                */
+         struct logo_node *nobj;    // used only for oblist
          }
          ncons;
       struct
@@ -186,11 +188,11 @@ typedef struct logo_node
          nstring;
       struct
          {
-         struct logo_node * (*nprim_fun)(struct logo_node *);
-         short npriority;
-         short nmin_args;
-         short ndef_args;
-         short nmax_args;
+         logofunc nprim_fun;
+         short    npriority;
+         short    nmin_args;
+         short    ndef_args;
+         short    nmax_args;
          }
          nprim;
       FIXNUM nint;
