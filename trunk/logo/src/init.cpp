@@ -22,8 +22,6 @@
 
 #include "allwind.h"
 
-typedef NODE * (*logofunc) (NODE *);
-
 typedef struct priminfo
    {
    char *name;
