@@ -35,7 +35,7 @@ TMyFileWindow::TMyFileWindow(
    {
    AssignMenu("IDM_FILECOMMANDS");
    Attr.AccelTable = "IDM_FILECOMMANDS";
-   FileName = AFileName ? strnewdup(AFileName) : 0;
+   FileName = AFileName ? strnewdup(AFileName) : NULL;
    }
 
 TMyFileWindow::~TMyFileWindow()
@@ -183,35 +183,57 @@ bool TMyFileWindow::Write(const char * fileName)
       {
       memset(editBuffer, 0, editBufferLength);
 
-      Editor->GetWindowText(editBuffer, windowTextLength);
-      if (windowTextLength != 0 && editBuffer[windowTextLength - 1] != '\n')
+      // We ask for editBufferLength when we only care about
+      // windowTextLength bytes as a work-around for bug #1352838.
+      // The problem is that on some installs of Windows,
+      // ::GetWindowText() may write zero bytes and if the
+      // buffer isn't big enough to hold the string and the
+      // NUL-terminator, even though the MSDN documentation says 
+      // that the outputwill just be truncated.
+      // In any event, it's easy enough to ask for a few more bytes.
+      int bytesInEditBuffer = Editor->GetWindowText(editBuffer, editBufferLength);
+      if (bytesInEditBuffer != windowTextLength) 
          {
-         editBuffer[windowTextLength + 0] = '\r';
-         editBuffer[windowTextLength + 1] = '\n';
+         // we could not get the text the window
+         char buffer[256];
+         wsprintf(
+            buffer, 
+            "Unable to write file \"%s\" to disk\nError Code=%u.", 
+            fileName, 
+            GetLastError());
+         MessageBox(buffer, GetModule()->GetName(), MB_ICONEXCLAMATION | MB_OK);
          }
       else
          {
-         editBufferLength = windowTextLength;
+         // we read the text from the window 
+         if (windowTextLength != 0 && editBuffer[windowTextLength - 1] != '\n')
+            {
+            editBuffer[windowTextLength + 0] = '\r';
+            editBuffer[windowTextLength + 1] = '\n';
+            }
+         else
+            {
+            editBufferLength = windowTextLength;
+            }
+
+         size_t bytesWritten = fwrite(
+            editBuffer,
+            sizeof(char),
+            editBufferLength,
+            file);
+         if (bytesWritten == editBufferLength)
+            {
+            success = true;
+            }
+
+         if (success)
+            {
+            Editor->ClearModify();
+            }
          }
 
-      size_t bytesWritten = fwrite(
-         editBuffer,
-         sizeof(char),
-         editBufferLength,
-         file);
-      if (bytesWritten == editBufferLength)
-         {
-         success = true;
-         }
-
-      if (success)
-         {
-         Editor->ClearModify();
-         }
-
-      delete [] editBuffer;
+         delete [] editBuffer;
       }
-
    fclose(file);
 
    return success;
