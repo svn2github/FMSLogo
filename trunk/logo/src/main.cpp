@@ -130,7 +130,7 @@ bool IsTimeToExit = false;             // Flag to signal it's time to exit
 bool IsTimeToPause = false;            // UCBLOGO? pause flag
 bool IsTimeToHalt = false;             // UCBLOGO? halt flag
 bool error_happen;                     // Flag to signal Error happened on edit reload
-int keyboard_on = 0;                   /* Flag to signal Keyboard is enabled            */
+KEYBOARDCAPTURE KeyboardCapture = KEYBOARDCAPTURE_Off; // Flag to signal Keyboard is enabled
 int keyboard_value = 0;                /* Value of Keyboard key                         */
 bool MouseCaptureIsEnabled = false;    // Flag to signal Mouse is enabled
 int mouse_posx = 0;                    /* Value of Mouse position x                     */

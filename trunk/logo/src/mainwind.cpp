@@ -469,7 +469,7 @@ void TScreenWindow::EvKeyDown(UINT, UINT, UINT)
    callthing *callevent;
 
    // if keyboard was on and up and down is enabled then continue
-   if (keyboard_on == 2)
+   if (KeyboardCapture == KEYBOARDCAPTURE_KeyDownKeyUp)
       {
 
       // if key is down skip it
@@ -509,7 +509,7 @@ void TScreenWindow::EvKeyDown(UINT, UINT, UINT)
       {
       Scroller->ScrollBy(Scroller->XLine, 0);
       }
-   else if (keyboard_on == 0 &&
+   else if (KeyboardCapture == KEYBOARDCAPTURE_Off &&
             MainWindowx->CommandWindow->EditBoxWantsKeyEvent(Msg.WParam))
       {
       // we don't handle this key.
@@ -529,12 +529,10 @@ void TScreenWindow::EvKeyUp(UINT, UINT, UINT)
    {
    TMessage Msg = __GetTMessage();
 
-   callthing *callevent;
-
-   if (keyboard_on == 2)
+   if (KeyboardCapture == KEYBOARDCAPTURE_KeyDownKeyUp)
       {
       // if keyboard was on and up and down is enabled then continue
-      callevent = new callthing;
+      callthing * callevent = new callthing;
 
       callevent->func = keyboard_keyup;
       callevent->arg1 = Msg.WParam;
@@ -554,12 +552,10 @@ void TScreenWindow::EvChar(UINT, UINT, UINT)
    {
    TMessage Msg = __GetTMessage();
 
-   callthing *callevent;
-
-   if (keyboard_on == 1)
+   if (KeyboardCapture == KEYBOARDCAPTURE_KeyDown)
       {
       // if keyboard was on and NOT up and down is enabled then continue
-      callevent = new callthing;
+      callthing * callevent = new callthing;
 
       callevent->func = keyboard_keyup;
       callevent->arg1 = Msg.WParam;

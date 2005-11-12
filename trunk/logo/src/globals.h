@@ -40,7 +40,7 @@ extern long eval_count;
 extern long vector_count;
 extern int memory_count;
 extern int status_flag;
-extern int keyboard_on;
+extern enum KEYBOARDCAPTURE KeyboardCapture;
 extern int keyboard_value;
 extern bool MouseCaptureIsEnabled;
 extern int mouse_posx;
