@@ -23,6 +23,7 @@
 
 #define MAX_PENDING_CONNECTS 4   // The backlog allowed for listen()
 
+calllist calllists;
 
 void qlist::insert(void * a)
    {
@@ -100,8 +101,65 @@ void qlist::clear()
    while (l != last);
    }
 
-calllist calllists;
 
+callthing * callthing::CreateKeyboardEvent(char * function, int key)
+   {
+   callthing * callevent = new callthing;
+   callevent->kind = EVENTTYPE_Keyboard;
+   callevent->func = function;
+   callevent->arg1 = key;
+
+   return callevent;
+   }
+
+callthing * callthing::CreateMouseEvent(char * function, int x, int y)
+   {
+   callthing * callevent = new callthing;
+   callevent->kind = EVENTTYPE_Mouse;
+   callevent->func = function;
+   callevent->arg1 = x;
+   callevent->arg2 = y;
+
+   return callevent;
+   }
+
+callthing * callthing::CreateFunctionEvent(char * function)
+   {
+   callthing * callevent = new callthing;
+   callevent->kind = EVENTTYPE_YieldFunction;
+   callevent->func = function;
+
+   return callevent;
+   }
+
+callthing * callthing::CreateNoYieldFunctionEvent(char * function)
+   {
+   callthing * callevent = new callthing;
+   callevent->kind = EVENTTYPE_NoYieldFunction;
+   callevent->func = function;
+
+   return callevent;
+   }
+
+callthing * callthing::CreateNetworkReceiveEvent(char * function, const char * packet)
+   {
+   callthing * callevent = new callthing;
+   callevent->kind = EVENTTYPE_NetworkReceive;
+   callevent->func = function;
+   callevent->networkpacket = strdup(packet);
+
+   return callevent;
+   }
+
+callthing * callthing::CreateNetworkSendEvent(char * function, const char * packet)
+   {
+   callthing * callevent = new callthing;
+   callevent->kind = EVENTTYPE_NetworkSend;
+   callevent->func = function;
+   callevent->networkpacket = strdup(packet);
+
+   return callevent;
+   }
 
 TScreenWindow::TScreenWindow(
    TWindow *AParent,
@@ -466,28 +524,16 @@ void TScreenWindow::EvKeyDown(UINT, UINT, UINT)
    {
    TMessage Msg = __GetTMessage();
 
-   callthing *callevent;
-
    // if keyboard was on and up and down is enabled then continue
    if (KeyboardCapture == KEYBOARDCAPTURE_KeyDownKeyUp)
       {
+      callthing *callevent = callthing::CreateKeyboardEvent(keyboard_keydown, Msg.WParam);
 
-      // if key is down skip it
+      calllists.insert(callevent);
+      checkqueue();
 
-//    if (!(Msg.LParam & 0x40000000L))
-         {
-         callevent = new callthing;
-
-         callevent->func = keyboard_keydown;
-         callevent->arg1 = Msg.WParam;
-         callevent->kind = EVENTTYPE_Keyboard;
-
-         calllists.insert(callevent);
-         checkqueue();
-         }
-
-         // Don't do scrolling
-         return;
+      // Don't do scrolling
+      return;
       }
 
    // scroll main window with arrow keys
@@ -532,11 +578,7 @@ void TScreenWindow::EvKeyUp(UINT, UINT, UINT)
    if (KeyboardCapture == KEYBOARDCAPTURE_KeyDownKeyUp)
       {
       // if keyboard was on and up and down is enabled then continue
-      callthing * callevent = new callthing;
-
-      callevent->func = keyboard_keyup;
-      callevent->arg1 = Msg.WParam;
-      callevent->kind = EVENTTYPE_Keyboard;
+      callthing * callevent = callthing::CreateKeyboardEvent(keyboard_keyup, Msg.WParam);
 
       calllists.insert(callevent);
       checkqueue();
@@ -555,11 +597,7 @@ void TScreenWindow::EvChar(UINT, UINT, UINT)
    if (KeyboardCapture == KEYBOARDCAPTURE_KeyDown)
       {
       // if keyboard was on and NOT up and down is enabled then continue
-      callthing * callevent = new callthing;
-
-      callevent->func = keyboard_keyup;
-      callevent->arg1 = Msg.WParam;
-      callevent->kind = EVENTTYPE_Keyboard;
+      callthing * callevent = callthing::CreateKeyboardEvent(keyboard_keyup, Msg.WParam);
 
       calllists.insert(callevent);
       checkqueue();
@@ -573,20 +611,13 @@ void TScreenWindow::EvChar(UINT, UINT, UINT)
 
 void TScreenWindow::EvLButtonDown(UINT, TPoint &point)
    {
-   callthing *callevent;
-
    SetFocus();
    SetCapture();
 
    if (MouseCaptureIsEnabled)
       {
       // if user turned on mouse the queue up event
-      callevent = new callthing;
-
-      callevent->func = mouse_lbuttondown;
-      callevent->arg1 = point.x;
-      callevent->arg2 = point.y;
-      callevent->kind = EVENTTYPE_Mouse;
+      callthing * callevent = callthing::CreateMouseEvent(mouse_lbuttondown, point.x, point.y);
 
       calllists.insert(callevent);
       checkqueue();
@@ -600,19 +631,12 @@ void TScreenWindow::EvLButtonDown(UINT, TPoint &point)
 
 void TScreenWindow::EvLButtonUp(UINT, TPoint &point)
    {
-   callthing *callevent;
-
    ReleaseCapture();
 
    if (MouseCaptureIsEnabled)
       {
       // if user turned on mouse the queue up event
-      callevent = new callthing;
-
-      callevent->func = mouse_lbuttonup;
-      callevent->arg1 = point.x;
-      callevent->arg2 = point.y;
-      callevent->kind = EVENTTYPE_Mouse;
+      callthing * callevent = callthing::CreateMouseEvent(mouse_lbuttonup, point.x, point.y);
 
       calllists.insert(callevent);
       checkqueue();
@@ -621,21 +645,13 @@ void TScreenWindow::EvLButtonUp(UINT, TPoint &point)
 
 void TScreenWindow::EvRButtonDown(UINT, TPoint &point)
    {
-   callthing *callevent;
-
    SetFocus();
    SetCapture();
 
    if (MouseCaptureIsEnabled)
       {
       // if user turned on mouse the queue up event
-
-      callevent = new callthing;
-
-      callevent->func = mouse_rbuttondown;
-      callevent->arg1 = point.x;
-      callevent->arg2 = point.y;
-      callevent->kind = EVENTTYPE_Mouse;
+      callthing * callevent = callthing::CreateMouseEvent(mouse_rbuttondown, point.x, point.y);
 
       calllists.insert(callevent);
       checkqueue();
@@ -644,40 +660,24 @@ void TScreenWindow::EvRButtonDown(UINT, TPoint &point)
 
 void TScreenWindow::EvRButtonUp(UINT, TPoint &point)
    {
-   callthing *callevent;
-
    ReleaseCapture();
 
    if (MouseCaptureIsEnabled)
       {
       // if user turned on mouse the queue up event
-      callevent = new callthing;
-
-      callevent->func = mouse_rbuttonup;
-      callevent->arg1 = point.x;
-      callevent->arg2 = point.y;
-      callevent->kind = EVENTTYPE_Mouse;
+      callthing * callevent = callthing::CreateMouseEvent(mouse_rbuttonup, point.x, point.y);
 
       calllists.insert(callevent);
       checkqueue();
       }
-
    }
 
 void TScreenWindow::EvMouseMove(UINT, TPoint &point)
    {
-   callthing *callevent;
-
-   // if user turned on mouse the queue up event
-
    if (MouseCaptureIsEnabled)
       {
-      callevent = new callthing;
-
-      callevent->func = mouse_mousemove;
-      callevent->arg1 = point.x;
-      callevent->arg2 = point.y;
-      callevent->kind = EVENTTYPE_Mouse;
+      // if user turned on mouse the queue up event
+      callthing * callevent = callthing::CreateMouseEvent(mouse_mousemove, point.x, point.y);
 
       calllists.insert(callevent);
       checkqueue();
@@ -2402,7 +2402,6 @@ LRESULT TMainFrame::OnNetworkConnectSendAck(WPARAM /* wParam */, LPARAM lParam)
    TMessage msg = __GetTMessage();
    char Buffer[MAX_PACKET_SIZE];
    int status;
-   callthing *callevent;
 
    if (WSAGETASYNCERROR(lParam) != 0)
       {
@@ -2443,7 +2442,6 @@ LRESULT TMainFrame::OnNetworkConnectSendAck(WPARAM /* wParam */, LPARAM lParam)
 
              if (status != 0)
                 {
-                char *pBuffer;
                 int i;
 
                 // last byte is not end of packet then try to find one
@@ -2479,15 +2477,9 @@ LRESULT TMainFrame::OnNetworkConnectSendAck(WPARAM /* wParam */, LPARAM lParam)
 
                   while (1)
                     {
-                    pBuffer = (char *) malloc(strlen(&Buffer[i]) + 1);
-                    strcpy(pBuffer, &Buffer[i]);
-
-                    callevent = new callthing;
-
-                    callevent->func = network_send_receive;
-                    callevent->arg1 = LOWORD(pBuffer);
-                    callevent->arg2 = HIWORD(pBuffer);
-                    callevent->kind = EVENTTYPE_NetworkSend;
+                    callthing *callevent = callthing::CreateNetworkSendEvent(
+                       network_send_receive,
+                       &Buffer[i]);
 
                     calllists.insert(callevent);
 
@@ -2519,16 +2511,9 @@ LRESULT TMainFrame::OnNetworkConnectSendAck(WPARAM /* wParam */, LPARAM lParam)
          }
 
       // we don't distinguish between all event types
-
-      callevent = new callthing;
-
-      callevent->func = network_send_send;
-      callevent->arg1 = 0;
-      callevent->arg2 = 0;
-      callevent->kind = EVENTTYPE_NoYieldFunction;
+      callthing *callevent = callthing::CreateNoYieldFunctionEvent(network_send_send);
 
       calllists.insert(callevent);
-
       PostMessage(WM_CHECKQUEUE, 0, 0);
       }
 
@@ -2607,15 +2592,9 @@ LRESULT TMainFrame::OnNetworkConnectSendFinish(WPARAM /* wParam */, LPARAM lPara
 
    if (network_send_on == 1)
       {
-      callthing *callevent = new callthing;
-
-      callevent->func = network_send_send;
-      callevent->arg1 = 0;
-      callevent->arg2 = 0;
-      callevent->kind = EVENTTYPE_NoYieldFunction;
+      callthing *callevent = callthing::CreateNoYieldFunctionEvent(network_send_send);
 
       calllists.insert(callevent);
-
       PostMessage(WM_CHECKQUEUE, 0, 0);
       }
 
@@ -2628,7 +2607,6 @@ LRESULT TMainFrame::OnNetworkListenReceiveAck(WPARAM /* wParam */, LPARAM lParam
    int acc_sin_len;           // Accept socket address length
    int status;
    char Buffer[MAX_PACKET_SIZE];
-   callthing *callevent;
 
    TMessage msg = __GetTMessage();
 
@@ -2670,7 +2648,6 @@ LRESULT TMainFrame::OnNetworkListenReceiveAck(WPARAM /* wParam */, LPARAM lParam
             // if something is there (better be) then process it
             if (status != 0)
                {
-               char *pBuffer;
                int i;
 
                // last byte is not end of packet then try to find one
@@ -2705,18 +2682,11 @@ LRESULT TMainFrame::OnNetworkListenReceiveAck(WPARAM /* wParam */, LPARAM lParam
 
                while (1)
                   {
-                  pBuffer = (char *) malloc(strlen(&Buffer[i]) + 1);
-                  strcpy(pBuffer, &Buffer[i]);
-
-                  callevent = new callthing;
-
-                  callevent->func = network_receive_receive;
-                  callevent->arg1 = LOWORD(pBuffer);
-                  callevent->arg2 = HIWORD(pBuffer);
-                  callevent->kind = EVENTTYPE_NetworkReceive;
+                  callthing *callevent = callthing::CreateNetworkReceiveEvent(
+                     network_receive_receive,
+                     &Buffer[i]);
 
                   calllists.insert(callevent);
-
                   PostMessage(WM_CHECKQUEUE, 0, 0);
 
                   i += strlen(&Buffer[i]) + 1;
@@ -2764,16 +2734,9 @@ LRESULT TMainFrame::OnNetworkListenReceiveAck(WPARAM /* wParam */, LPARAM lParam
          }
 
       // all other events just queue the event
-
-      callevent = new callthing;
-
-      callevent->func = network_receive_send;
-      callevent->arg1 = 0;
-      callevent->arg2 = 0;
-      callevent->kind = EVENTTYPE_NoYieldFunction;
+      callthing * callevent = callthing::CreateNoYieldFunctionEvent(network_receive_send);
 
       calllists.insert(callevent);
-
       PostMessage(WM_CHECKQUEUE, 0, 0);
       }
 
@@ -2850,17 +2813,10 @@ LRESULT TMainFrame::OnNetworkListenReceiveFinish(WPARAM /* wParam */, LPARAM lPa
 
    if (network_receive_on == 1)
       {
-      callthing *callevent = new callthing;
-
-      callevent->func = network_receive_send;
-      callevent->arg1 = 0;
-      callevent->arg2 = 0;
-      callevent->kind = EVENTTYPE_NoYieldFunction;
+      callthing * callevent = callthing::CreateNoYieldFunctionEvent(network_receive_send);
 
       calllists.insert(callevent);
-
       PostMessage(WM_CHECKQUEUE, 0, 0);
-      //    checkqueue();
       }
 
    return 0L;
@@ -2871,13 +2827,7 @@ LRESULT TMainFrame::MMMCINotify(WPARAM, LPARAM)
    TMessage msg = __GetTMessage();
 
    // if user fired up a callback mci event the queue it up here
-
-   callthing *callevent;
-
-   callevent = new callthing;
-
-   callevent->func = mci_callback;
-   callevent->kind = EVENTTYPE_NoYieldFunction;
+   callthing * callevent = callthing::CreateNoYieldFunctionEvent(mci_callback);
 
    calllists.insert(callevent);
 
@@ -2893,23 +2843,20 @@ void TMainFrame::EvTimer(UINT)
    // if user fired up a callback mci event the queue it up here
 
    callthing *callevent;
-
-   callevent = new callthing;
-
-   // the ID can only be 1-31 and select appropriate callback code
-
-   callevent->func = timer_callback[msg.WParam];
+   // The ID can only be 1-31.
+   // select appropriate function event type
    if (msg.WParam > 16)
       {
-      callevent->kind = EVENTTYPE_YieldFunction;
-      calllists.insert(callevent);
+      // yieldable
+      callevent = callthing::CreateFunctionEvent(timer_callback[msg.WParam]);
       }
    else
       {
-      callevent->kind = EVENTTYPE_NoYieldFunction;
-      calllists.insert(callevent);
+      // not safe to yield
+      callevent = callthing::CreateNoYieldFunctionEvent(timer_callback[msg.WParam]);
       }
 
+   calllists.insert(callevent);
    PostMessage(WM_CHECKQUEUE, 0, 0);
    }
 

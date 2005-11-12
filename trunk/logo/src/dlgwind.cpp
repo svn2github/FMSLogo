@@ -676,13 +676,9 @@ void emptyqueue()
 
 void TMyButton::EvLButtonUp(UINT /* modKeys */, TPoint & /* point */)
    {
-   callthing *callevent;
-
    DefaultProcessing();
 
-   callevent = new callthing;
-   callevent->func = callback;
-   callevent->kind = EVENTTYPE_YieldFunction;
+   callthing *callevent = callthing::CreateFunctionEvent(callback);
    calllists.insert(callevent);
    checkqueue();
    }
@@ -706,13 +702,9 @@ class TMyScrollBar : public TScrollBar
 
 void TMyScrollBar::SetPosition(int thumbpos, bool redraw)
    {
-   callthing *callevent;
-
    TScrollBar::SetPosition(thumbpos, redraw);
 
-   callevent = new callthing;
-   callevent->func = callback;
-   callevent->kind = EVENTTYPE_NoYieldFunction;
+   callthing *callevent = callthing::CreateNoYieldFunctionEvent(callback);
    calllists.insert(callevent);
    checkqueue();
    }

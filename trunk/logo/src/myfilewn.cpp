@@ -533,7 +533,7 @@ bool TMyFileWindow::EndEdit()
 void TMyFileWindow::EvDestroy()
    {
 
-   // if args_list specified no user callabled editor
+   // if args_list is specified, then there is no user callable editor
 
    if (args_list != NULL)
       {
@@ -595,11 +595,7 @@ void TMyFileWindow::EvDestroy()
    else
       {
       // else execute callback for user callable editor
-      callthing *callevent = new callthing;
-
-      callevent->func = edit_editexit;
-      callevent->kind = EVENTTYPE_YieldFunction;
-
+      callthing *callevent = callthing::CreateFunctionEvent(edit_editexit);
       calllists.insert(callevent);
       }
 

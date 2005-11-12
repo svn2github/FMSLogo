@@ -473,12 +473,28 @@ enum EVENTTYPE
    EVENTTYPE_NetworkSend,
    };
 
-struct callthing
+class callthing
    {
+private:
+   // Hide the ctor. 
+   // All events should be created with CreateEvent*().
+   callthing() {};
+
+public:
+   // structured ways to create events
+   static callthing * CreateKeyboardEvent(char * function, int key);
+   static callthing * CreateMouseEvent(char * function, int x, int y);
+   static callthing * CreateFunctionEvent(char * function);
+   static callthing * CreateNoYieldFunctionEvent(char * function);
+   static callthing * CreateNetworkReceiveEvent(char * function, const char * packet);
+   static callthing * CreateNetworkSendEvent(char * function, const char * packet);
+
+   // CONSIDER: a union would make this struct smaller
+   EVENTTYPE  kind;
    char *     func;
+   char *     networkpacket;
    int        arg1;
    int        arg2;
-   EVENTTYPE  kind;
    };
 
 struct calllist : public qlist
