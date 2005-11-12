@@ -61,9 +61,9 @@ class slink
    char *key;
    char *parent;
    int type;
-   ent e;
+   void * e;
 
-   slink (ent a, slink *n, slink *p, char *k, char *par, int t)
+   slink (void * a, slink *n, slink *p, char *k, char *par, int t)
       {
       e = a;
       next = n;
@@ -79,14 +79,14 @@ class slist
    {
    slink *last;
    public:
-   void insert(ent a, char *k, char *par, int t);
-   ent get(char *k);
-   ent get2(char *k, int t);
+   void insert(void * a, char *k, char *par, int t);
+   void * get(char *k);
+   void * get2(char *k, int t);
    char *getrootkey();
    int gettype(char *k);
    char *getparent(char *par);
    void zap(char *k);
-   ent zapall();
+   void * zapall();
    void list(char *k, int lev);
    void listall();
    void clear();
@@ -97,7 +97,7 @@ class slist
       last = NULL;
       }
 
-   slist (ent a, char *k, char *par, int t)
+   slist (void * a, char *k, char *par, int t)
       {
       last = new slink (a, NULL, NULL, k, par, t);
       last->next = last;
@@ -111,7 +111,7 @@ class slist
    }
 ;
 
-void slist::insert(ent a, char *k, char *par, int t)
+void slist::insert(void * a, char *k, char *par, int t)
    {
    if (last)
       {
@@ -126,7 +126,7 @@ void slist::insert(ent a, char *k, char *par, int t)
       }
    }
 
-ent slist::get2(char *k, int t)
+void * slist::get2(char *k, int t)
    {
    slink *f;
 
@@ -147,7 +147,7 @@ ent slist::get2(char *k, int t)
    return NULL;
    }
 
-ent slist::get(char *k)
+void * slist::get(char *k)
    {
    slink *f;
 
@@ -330,7 +330,7 @@ void slist::clear()
 
    }
 
-ent slist::zapall()
+void * slist::zapall()
    {
    slink *l = last;
 
@@ -691,7 +691,7 @@ void TMyButton::EvLButtonUp(UINT /* modKeys */, TPoint & /* point */)
    callevent = new callthing;
    callevent->func = callback;
    callevent->kind = 3;
-   calllists.insert(callevent, 3);
+   calllists.insert(callevent);
    checkqueue();
    }
 
@@ -721,7 +721,7 @@ void TMyScrollBar::SetPosition(int thumbpos, bool redraw)
    callevent = new callthing;
    callevent->func = callback;
    callevent->kind = 4;
-   calllists.insert(callevent, 4);
+   calllists.insert(callevent);
    checkqueue();
    }
 

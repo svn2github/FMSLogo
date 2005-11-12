@@ -36,6 +36,13 @@ typedef struct
    }
 Color;
 
+enum KEYBOARDCAPTURE
+   {
+   KEYBOARDCAPTURE_Off,
+   KEYBOARDCAPTURE_KeyDown,
+   KEYBOARDCAPTURE_KeyDownKeyUp,
+   };
+
 
 typedef struct
    {
@@ -410,18 +417,16 @@ class TRulerOut : public TPrintout
    }
 ;
 
-typedef void *ent;
-
 class qlink
    {
    friend class qlist;
 
    qlink *next;
    qlink *prev;
-   int type;
-   ent e;
+   int    type;
+   void * e;
 
-   qlink(ent a, qlink * n, qlink * p, int t)
+   qlink(void * a, qlink * n, qlink * p, int t)
       {
       e = a;
       next = n;
@@ -435,8 +440,8 @@ class qlist
    {
    qlink *last;
  public:
-   void insert(ent a, int t);
-   ent get();
+   void insert(void * a, int t);
+   void * get();
    void zap();
    void clear();
 
@@ -445,7 +450,7 @@ class qlist
       last = NULL;
       }
 
-   qlist(ent a, int t)
+   qlist(void * a, int t)
       {
       last = new qlink(a, NULL, NULL, t);
       last->next = last;
@@ -459,21 +464,19 @@ class qlist
    }
 ;
 
-typedef struct callthing
+struct callthing
    {
    char *func;
    int arg1;
    int arg2;
    int kind;
-   }
-_callthing
-   ;
+   };
 
-struct calllist : qlist
+struct calllist : public qlist
    {
-   void insert(callthing *a, int t)
+   void insert(callthing *a)
       {
-      qlist::insert(a, t);
+      qlist::insert(a, a->kind);
       }
    callthing *get()
       {

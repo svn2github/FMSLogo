@@ -600,7 +600,7 @@ void TMyFileWindow::EvDestroy()
       callevent->func = edit_editexit;
       callevent->kind = 3;
 
-      calllists.insert(callevent, 3);
+      calllists.insert(callevent);
       }
 
 
