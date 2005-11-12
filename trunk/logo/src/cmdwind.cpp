@@ -165,20 +165,18 @@ void TMyCommandWindow::DoListBox(UINT)
    {
    }
 
-void do_execution(char *SelectedText2)
+void do_execution(char * logocommand)
    {
    NODE *exec_list = NIL;
    NODETYPES this_type;
    int i;
-   char *c;
 
    // if something there continue
 
-   if (strlen(SelectedText2) != 0)
+   if (strlen(logocommand) != 0)
       {
 
       // if executing then it's ok to halt
-
       halt_flag++;
       if (halt_flag < 1)
         {
@@ -190,7 +188,7 @@ void do_execution(char *SelectedText2)
       this_type = STRING;
 
       // do control character processing processing
-      for (c = SelectedText2; *c != '\0'; c++)
+      for (char * c = logocommand; *c != '\0'; c++)
          {
          if (*c == '\\')
             {
@@ -209,7 +207,7 @@ void do_execution(char *SelectedText2)
       /* turn text into a NODE and parse it */
       current_line = reref(
          current_line, 
-         make_strnode(SelectedText2, (int) strlen(SelectedText2), this_type, strnzcpy));
+         make_strnode(logocommand, (int) strlen(logocommand), this_type, strnzcpy));
 
       exec_list = reref(exec_list, parser(current_line, TRUE));
 
