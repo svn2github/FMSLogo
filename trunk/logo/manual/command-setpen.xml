@@ -14,16 +14,16 @@
 <para>
 Sets the pen's position, mode, and hardware-dependent characteristics according to the information in the <parameter>characteristics</parameter> parameter.
 The characteristics parameter is a list with the following members: [PENDOWNP PENMODE PENSIZE PENCOLOR PENPAINT].
-The format of this list may change as additional pen characteristics are added in the future.
+The format of this list may change in futures version of MSWLogo, as additional pen characteristics are added.
 To guarantee portability, the input should be taken from an earlier invocation of <link linkend="command-pen">PEN</link>.
 </para>
-
 </listitem>
 </varlistentry>
+
+
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>
-CLEARSCREEN 
+<programlisting><userinput>CLEARSCREEN 
 REPEAT 4 [FORWARD 100 RIGHT 90]
 MAKE "savepen PEN
 
