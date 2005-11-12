@@ -12,6 +12,7 @@
   <!ENTITY arithmetic                SYSTEM "arithmetic.xml">
   <!ENTITY logical-operations        SYSTEM "logical-operations.xml">
   <!ENTITY graphics                  SYSTEM "graphics.xml">
+  <!ENTITY workspace-management      SYSTEM "workspace-management.xml">
 
   <!ENTITY command-.setbf       SYSTEM "command-.setbf.xml">
   <!ENTITY command-.setfirst    SYSTEM "command-.setfirst.xml">
@@ -278,6 +279,21 @@
   <!ENTITY command-setpen         SYSTEM "command-setpen.xml">
   <!ENTITY command-clearpalette   SYSTEM "command-clearpalette.xml">
 
+  <!ENTITY command-pendownp       SYSTEM "command-pendownp.xml">
+  <!ENTITY command-penmode        SYSTEM "command-penmode.xml">
+  <!ENTITY command-pencolor       SYSTEM "command-pencolor.xml">
+  <!ENTITY command-floodcolor     SYSTEM "command-floodcolor.xml">
+  <!ENTITY command-screencolor    SYSTEM "command-screencolor.xml">
+  <!ENTITY command-pensize        SYSTEM "command-pensize.xml">
+  <!ENTITY command-penpattern     SYSTEM "command-penpattern.xml">
+  <!ENTITY command-pen            SYSTEM "command-pen.xml">
+
+  <!ENTITY command-to             SYSTEM "command-to.xml">
+  <!ENTITY command-end            SYSTEM "command-end.xml">
+  <!ENTITY command-define         SYSTEM "command-define.xml">
+  <!ENTITY command-text           SYSTEM "command-text.xml">
+  <!ENTITY command-fulltext       SYSTEM "command-fulltext.xml">
+  <!ENTITY command-copydef        SYSTEM "command-copydef.xml">
 ]>
 
 <book>
@@ -316,6 +332,7 @@
   &arithmetic;
   &logical-operations;
   &graphics;
+  &workspace-management;
 
 </book>
 

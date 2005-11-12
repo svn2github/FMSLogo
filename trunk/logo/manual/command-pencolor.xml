@@ -1,0 +1,34 @@
+<section id="command-pencolor">
+    <title>PENCOLOR</title>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>PENCOLOR</command>
+<command>PENCOLOUR</command></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+Outputs pen color information.
+This is either a color index (a number from 0 - 15), or a list containing [Red Green Blue] intensities, depending on how the pen color was set.
+</para>
+
+</listitem>
+</varlistentry>
+<varlistentry><term>Example</term>
+<listitem>
+    <programlisting><userinput>SETPENCOLOR [100 200 50]
+SHOW PENCOLOR</userinput>
+[100 200 50]
+<userinput>SETPENCOLOR 2
+SHOW PENCOLOR</userinput>
+2</programlisting>
+</listitem>
+</varlistentry>
+</variablelist>
+
+</section>

@@ -1,0 +1,14 @@
+<chapter>
+   <title>Workspace Management</title>
+
+   <section>
+       <title>Procedure Definition</title>
+
+       &command-to;
+       &command-end;
+       &command-define;
+       &command-text;
+       &command-fulltext;
+       &command-copydef;
+    </section>
+</chapter>

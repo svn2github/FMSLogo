@@ -1,0 +1,33 @@
+<section id="command-pensize">
+    <title>PENSIZE</title>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>PENSIZE</command></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+Outputs the size of the pen as a two element list containing [Width Height].
+The width element is ignored by MSWLogo.
+</para>
+
+</listitem>
+</varlistentry>
+<varlistentry><term>Example</term>
+<listitem>
+    <programlisting><userinput>SETPENSIZE [10 20]
+SHOW PENSIZE</userinput>
+[20 20]
+<userinput>SETPENSIZE [1 1]
+SHOW PENSIZE</userinput>
+[1 1]</programlisting>
+</listitem>
+</varlistentry>
+</variablelist>
+
+</section>

@@ -746,4 +746,17 @@ If the pen is down, it can operate in one of three modes: PAINT (so that it draw
         &command-clearpalette;
    </section>
 
+   <section>
+       <title>Pen Queries</title>
+      
+        &command-pendownp;
+        &command-penmode;
+        &command-pencolor;
+        &command-floodcolor;
+        &command-screencolor;
+        &command-pensize;
+        &command-penpattern;
+        &command-pen;
+   </section>
+
 </chapter>
