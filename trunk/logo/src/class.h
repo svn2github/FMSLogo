@@ -462,12 +462,23 @@ class qlist
    }
 ;
 
+enum EVENTTYPE
+   {
+   EVENTTYPE_Unknown,
+   EVENTTYPE_Mouse,
+   EVENTTYPE_Keyboard,
+   EVENTTYPE_YieldFunction,
+   EVENTTYPE_NoYieldFunction,
+   EVENTTYPE_NetworkReceive,
+   EVENTTYPE_NetworkSend,
+   };
+
 struct callthing
    {
-   char *func;
-   int arg1;
-   int arg2;
-   int kind;
+   char *     func;
+   int        arg1;
+   int        arg2;
+   EVENTTYPE  kind;
    };
 
 struct calllist : public qlist

@@ -480,7 +480,7 @@ void TScreenWindow::EvKeyDown(UINT, UINT, UINT)
 
          callevent->func = keyboard_keydown;
          callevent->arg1 = Msg.WParam;
-         callevent->kind = 2;
+         callevent->kind = EVENTTYPE_Keyboard;
 
          calllists.insert(callevent);
          checkqueue();
@@ -536,7 +536,7 @@ void TScreenWindow::EvKeyUp(UINT, UINT, UINT)
 
       callevent->func = keyboard_keyup;
       callevent->arg1 = Msg.WParam;
-      callevent->kind = 2;
+      callevent->kind = EVENTTYPE_Keyboard;
 
       calllists.insert(callevent);
       checkqueue();
@@ -559,7 +559,7 @@ void TScreenWindow::EvChar(UINT, UINT, UINT)
 
       callevent->func = keyboard_keyup;
       callevent->arg1 = Msg.WParam;
-      callevent->kind = 2;
+      callevent->kind = EVENTTYPE_Keyboard;
 
       calllists.insert(callevent);
       checkqueue();
@@ -586,7 +586,7 @@ void TScreenWindow::EvLButtonDown(UINT, TPoint &point)
       callevent->func = mouse_lbuttondown;
       callevent->arg1 = point.x;
       callevent->arg2 = point.y;
-      callevent->kind = 1;
+      callevent->kind = EVENTTYPE_Mouse;
 
       calllists.insert(callevent);
       checkqueue();
@@ -612,7 +612,7 @@ void TScreenWindow::EvLButtonUp(UINT, TPoint &point)
       callevent->func = mouse_lbuttonup;
       callevent->arg1 = point.x;
       callevent->arg2 = point.y;
-      callevent->kind = 1;
+      callevent->kind = EVENTTYPE_Mouse;
 
       calllists.insert(callevent);
       checkqueue();
@@ -635,7 +635,7 @@ void TScreenWindow::EvRButtonDown(UINT, TPoint &point)
       callevent->func = mouse_rbuttondown;
       callevent->arg1 = point.x;
       callevent->arg2 = point.y;
-      callevent->kind = 1;
+      callevent->kind = EVENTTYPE_Mouse;
 
       calllists.insert(callevent);
       checkqueue();
@@ -656,7 +656,7 @@ void TScreenWindow::EvRButtonUp(UINT, TPoint &point)
       callevent->func = mouse_rbuttonup;
       callevent->arg1 = point.x;
       callevent->arg2 = point.y;
-      callevent->kind = 1;
+      callevent->kind = EVENTTYPE_Mouse;
 
       calllists.insert(callevent);
       checkqueue();
@@ -677,7 +677,7 @@ void TScreenWindow::EvMouseMove(UINT, TPoint &point)
       callevent->func = mouse_mousemove;
       callevent->arg1 = point.x;
       callevent->arg2 = point.y;
-      callevent->kind = 1;
+      callevent->kind = EVENTTYPE_Mouse;
 
       calllists.insert(callevent);
       checkqueue();
@@ -2487,12 +2487,11 @@ LRESULT TMainFrame::OnNetworkConnectSendAck(WPARAM /* wParam */, LPARAM lParam)
                     callevent->func = network_send_receive;
                     callevent->arg1 = LOWORD(pBuffer);
                     callevent->arg2 = HIWORD(pBuffer);
-                    callevent->kind = 6;
+                    callevent->kind = EVENTTYPE_NetworkSend;
 
                     calllists.insert(callevent);
 
                     PostMessage(WM_CHECKQUEUE, 0, 0);
-                    //                checkqueue();
                     i += strlen(&Buffer[i]) + 1;
                     if (i >= status) break;
                     }
@@ -2526,12 +2525,11 @@ LRESULT TMainFrame::OnNetworkConnectSendAck(WPARAM /* wParam */, LPARAM lParam)
       callevent->func = network_send_send;
       callevent->arg1 = 0;
       callevent->arg2 = 0;
-      callevent->kind = 4;
+      callevent->kind = EVENTTYPE_NoYieldFunction;
 
       calllists.insert(callevent);
 
       PostMessage(WM_CHECKQUEUE, 0, 0);
-      //    checkqueue();
       }
 
    return 0L;
@@ -2614,12 +2612,11 @@ LRESULT TMainFrame::OnNetworkConnectSendFinish(WPARAM /* wParam */, LPARAM lPara
       callevent->func = network_send_send;
       callevent->arg1 = 0;
       callevent->arg2 = 0;
-      callevent->kind = 4;
+      callevent->kind = EVENTTYPE_NoYieldFunction;
 
       calllists.insert(callevent);
 
       PostMessage(WM_CHECKQUEUE, 0, 0);
-      //    checkqueue();
       }
 
    return 0L;
@@ -2716,12 +2713,11 @@ LRESULT TMainFrame::OnNetworkListenReceiveAck(WPARAM /* wParam */, LPARAM lParam
                   callevent->func = network_receive_receive;
                   callevent->arg1 = LOWORD(pBuffer);
                   callevent->arg2 = HIWORD(pBuffer);
-                  callevent->kind = 5;
+                  callevent->kind = EVENTTYPE_NetworkReceive;
 
                   calllists.insert(callevent);
 
                   PostMessage(WM_CHECKQUEUE, 0, 0);
-                  //                checkqueue();
 
                   i += strlen(&Buffer[i]) + 1;
                   if (i >= status) break;
@@ -2774,13 +2770,11 @@ LRESULT TMainFrame::OnNetworkListenReceiveAck(WPARAM /* wParam */, LPARAM lParam
       callevent->func = network_receive_send;
       callevent->arg1 = 0;
       callevent->arg2 = 0;
-      callevent->kind = 4;
+      callevent->kind = EVENTTYPE_NoYieldFunction;
 
       calllists.insert(callevent);
 
       PostMessage(WM_CHECKQUEUE, 0, 0);
-      //                checkqueue();
-
       }
 
    return 0L;
@@ -2861,7 +2855,7 @@ LRESULT TMainFrame::OnNetworkListenReceiveFinish(WPARAM /* wParam */, LPARAM lPa
       callevent->func = network_receive_send;
       callevent->arg1 = 0;
       callevent->arg2 = 0;
-      callevent->kind = 4;
+      callevent->kind = EVENTTYPE_NoYieldFunction;
 
       calllists.insert(callevent);
 
@@ -2883,7 +2877,7 @@ LRESULT TMainFrame::MMMCINotify(WPARAM, LPARAM)
    callevent = new callthing;
 
    callevent->func = mci_callback;
-   callevent->kind = 4;
+   callevent->kind = EVENTTYPE_NoYieldFunction;
 
    calllists.insert(callevent);
 
@@ -2907,12 +2901,12 @@ void TMainFrame::EvTimer(UINT)
    callevent->func = timer_callback[msg.WParam];
    if (msg.WParam > 16)
       {
-      callevent->kind = 3;
+      callevent->kind = EVENTTYPE_YieldFunction;
       calllists.insert(callevent);
       }
    else
       {
-      callevent->kind = 4;
+      callevent->kind = EVENTTYPE_NoYieldFunction;
       calllists.insert(callevent);
       }
 

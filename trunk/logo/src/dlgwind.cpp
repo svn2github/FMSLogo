@@ -520,7 +520,7 @@ class TMyButton : public TButton
    public:
    char key[MAX_BUFFER_SIZE];
    char callback[MAX_BUFFER_SIZE];
-   //   NODE *callbackx;
+
    int critical;
    TMyButton(TWindow *AParent, int AnId, LPSTR AText, int X, int Y,
       int W, int H, BOOL IsDefault, TModule _FAR *AModule = NULL) :
@@ -553,98 +553,92 @@ NODE *leventcheck(NODE *)
 void checkqueue()
    {
    callthing *thing;
-   int save_yield_flag;
-   int sv_val_status;
 
    while (thing = calllists.get())
       {
+      int save_yield_flag;
+      int sv_val_status;
 
       sv_val_status = val_status;
 
       calllists.zap();
       switch (thing->kind)
          {
+         // mouse event must not yield while processing
+         case EVENTTYPE_Mouse:
+            {
+            save_yield_flag = yield_flag;
+            yield_flag = 0;
+            mouse_posx = thing->arg1;
+            mouse_posy = thing->arg2;
+            do_execution(thing->func);
+            yield_flag = save_yield_flag;
+            break;
+            }
 
-              // mouse event must not yield while processing
+          // keyboard event must not yield while processing
+          case EVENTTYPE_Keyboard:
+             {
+             save_yield_flag = yield_flag;
+             yield_flag = 0;
+             keyboard_value = thing->arg1;
+             do_execution(thing->func);
+             yield_flag = save_yield_flag;
+             break;
+             }
 
-          case 1:
-              {
-                 save_yield_flag = yield_flag;
-                 yield_flag = 0;
-                 mouse_posx = thing->arg1;
-                 mouse_posy = thing->arg2;
-                 do_execution(thing->func);
-                 yield_flag = save_yield_flag;
-                 break;
-              }
+          // Button, timer or other event ok to yield while processing
+          case EVENTTYPE_YieldFunction:
+             {
+             do_execution(thing->func);
+             break;
+             }
 
-              // keyboard  event must not yield while processing
+          // Scrollbar, MCI, Net, timer or other event must not yield while processing
+          case EVENTTYPE_NoYieldFunction:
+             {
+             save_yield_flag = yield_flag;
+             yield_flag = 0;
+             do_execution(thing->func);
+             yield_flag = save_yield_flag;
+             break;
+             }
 
-          case 2:
-              {
-                 save_yield_flag = yield_flag;
-                 yield_flag = 0;
-                 keyboard_value = thing->arg1;
-                 do_execution(thing->func);
-                 yield_flag = save_yield_flag;
-                 break;
-              }
+          // Network events must not yield while processing
+          case EVENTTYPE_NetworkReceive:
+             {
+             save_yield_flag = yield_flag;
+             yield_flag = 0;
+             char *pTemp = (char *) MAKELONG(thing->arg1, thing->arg2);
+             thing->arg1 = 0;
+             thing->arg2 = 0;
+             if (pTemp != NULL)
+                {
+                strcpy(network_receive_value, pTemp);
+                free(pTemp);
+                }
+             do_execution(thing->func);
+             yield_flag = save_yield_flag;
+             break;
+             }
 
-              // Button, timer or other event ok to yield while processing
-
-          case 3:
-              {
-                 do_execution(thing->func);
-                 break;
-              }
-
-              // Scrollbar, MCI, Net, timer or other event must not yield while processing
-
-          case 4:
-              {
-                 save_yield_flag = yield_flag;
-                 yield_flag = 0;
-                 do_execution(thing->func);
-                 yield_flag = save_yield_flag;
-                 break;
-              }
-
-              // Network receive event must not yield while processing
-
-          case 5:
-              {
-                 save_yield_flag = yield_flag;
-                 yield_flag = 0;
-                 char *pTemp = (char *) MAKELONG(thing->arg1, thing->arg2);
-                 thing->arg1 = 0;
-                 thing->arg2 = 0;
-                 if (pTemp != NULL)
-                    {
-                    strcpy(network_receive_value, pTemp);
-                    free(pTemp);
-                    }
-                 do_execution(thing->func);
-                 yield_flag = save_yield_flag;
-                 break;
-              }
-
-          case 6:
-              {
-                 save_yield_flag = yield_flag;
-                 yield_flag = 0;
-                 char *pTemp = (char *) MAKELONG(thing->arg1, thing->arg2);
-                 thing->arg1 = 0;
-                 thing->arg2 = 0;
-                 if (pTemp != NULL)
-                    {
-                    strcpy(network_send_value, pTemp);
-                    free(pTemp);
-                    }
-                 do_execution(thing->func);
-                 yield_flag = save_yield_flag;
-                 break;
-              }
-
+          // Network events must not yield while processing
+          case EVENTTYPE_NetworkSend:
+             {
+             save_yield_flag = yield_flag;
+             yield_flag = 0;
+             char *pTemp = (char *) MAKELONG(thing->arg1, thing->arg2);
+             thing->arg1 = 0;
+             thing->arg2 = 0;
+             if (pTemp != NULL)
+                {
+                strcpy(network_send_value, pTemp);
+                free(pTemp);
+                }
+             do_execution(thing->func);
+             yield_flag = save_yield_flag;
+             break;
+             }
          }
 
       delete thing;
@@ -664,16 +658,14 @@ void emptyqueue()
       calllists.zap();
       switch (thing->kind)
          {
-
-              // Network receive event must not yield while processing
-
-          case 5:
-              {
-                 char *pTemp = (char *) MAKELONG(thing->arg1, thing->arg2);
-                 if (pTemp != NULL) free(pTemp);
-                 break;
-              }
-
+         // TODO: move this logic into callthing's destructor
+         case EVENTTYPE_NetworkReceive:
+         case EVENTTYPE_NetworkSend:
+            {
+            char *pTemp = (char *) MAKELONG(thing->arg1, thing->arg2);
+            if (pTemp != NULL) free(pTemp);
+            break;
+            }
          }
 
       delete thing;
@@ -690,7 +682,7 @@ void TMyButton::EvLButtonUp(UINT /* modKeys */, TPoint & /* point */)
 
    callevent = new callthing;
    callevent->func = callback;
-   callevent->kind = 3;
+   callevent->kind = EVENTTYPE_YieldFunction;
    calllists.insert(callevent);
    checkqueue();
    }
@@ -720,7 +712,7 @@ void TMyScrollBar::SetPosition(int thumbpos, bool redraw)
 
    callevent = new callthing;
    callevent->func = callback;
-   callevent->kind = 4;
+   callevent->kind = EVENTTYPE_NoYieldFunction;
    calllists.insert(callevent);
    checkqueue();
    }
