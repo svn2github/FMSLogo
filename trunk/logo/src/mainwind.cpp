@@ -24,7 +24,7 @@
 #define MAX_PENDING_CONNECTS 4   // The backlog allowed for listen()
 
 
-void qlist::insert(void * a, int t)
+void qlist::insert(void * a)
    {
 
    /* class "event list queue" member to insert event */
@@ -35,7 +35,7 @@ void qlist::insert(void * a, int t)
    if (last)
       {
       ph = last->next;
-      h = new qlink(a, NULL, NULL, t);
+      h = new qlink(a, NULL, NULL);
       last->next = h;
       h->prev = last;
       h->next = ph;
@@ -44,7 +44,7 @@ void qlist::insert(void * a, int t)
       }
    else
       {
-      last = new qlink(a, NULL, NULL, t);
+      last = new qlink(a, NULL, NULL);
       last->next = last;
       last->prev = last;
       }

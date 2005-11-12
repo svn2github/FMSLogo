@@ -423,15 +423,13 @@ class qlink
 
    qlink *next;
    qlink *prev;
-   int    type;
    void * e;
 
-   qlink(void * a, qlink * n, qlink * p, int t)
+   qlink(void * a, qlink * n, qlink * p)
       {
       e = a;
       next = n;
       prev = p;
-      type = t;
       }
    }
 ;
@@ -440,7 +438,7 @@ class qlist
    {
    qlink *last;
  public:
-   void insert(void * a, int t);
+   void insert(void * a);
    void * get();
    void zap();
    void clear();
@@ -450,9 +448,9 @@ class qlist
       last = NULL;
       }
 
-   qlist(void * a, int t)
+   qlist(void * a)
       {
-      last = new qlink(a, NULL, NULL, t);
+      last = new qlink(a, NULL, NULL);
       last->next = last;
       last->prev = last;
       }
@@ -476,7 +474,7 @@ struct calllist : public qlist
    {
    void insert(callthing *a)
       {
-      qlist::insert(a, a->kind);
+      qlist::insert(a);
       }
    callthing *get()
       {
