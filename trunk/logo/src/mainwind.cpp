@@ -582,7 +582,7 @@ void TScreenWindow::EvLButtonDown(UINT, TPoint &point)
    SetFocus();
    SetCapture();
 
-   if (mouse_on == 1)
+   if (MouseCaptureIsEnabled)
       {
       // if user turned on mouse the queue up event
       callevent = new callthing;
@@ -608,7 +608,7 @@ void TScreenWindow::EvLButtonUp(UINT, TPoint &point)
 
    ReleaseCapture();
 
-   if (mouse_on == 1)
+   if (MouseCaptureIsEnabled)
       {
       // if user turned on mouse the queue up event
       callevent = new callthing;
@@ -630,7 +630,7 @@ void TScreenWindow::EvRButtonDown(UINT, TPoint &point)
    SetFocus();
    SetCapture();
 
-   if (mouse_on == 1)
+   if (MouseCaptureIsEnabled)
       {
       // if user turned on mouse the queue up event
 
@@ -652,7 +652,7 @@ void TScreenWindow::EvRButtonUp(UINT, TPoint &point)
 
    ReleaseCapture();
 
-   if (mouse_on == 1)
+   if (MouseCaptureIsEnabled)
       {
       // if user turned on mouse the queue up event
       callevent = new callthing;
@@ -674,7 +674,7 @@ void TScreenWindow::EvMouseMove(UINT, TPoint &point)
 
    // if user turned on mouse the queue up event
 
-   if (mouse_on == 1)
+   if (MouseCaptureIsEnabled)
       {
       callevent = new callthing;
 

@@ -132,7 +132,7 @@ bool IsTimeToHalt = false;             // UCBLOGO? halt flag
 bool error_happen;                     // Flag to signal Error happened on edit reload
 int keyboard_on = 0;                   /* Flag to signal Keyboard is enabled            */
 int keyboard_value = 0;                /* Value of Keyboard key                         */
-int mouse_on = 0;                      /* Flag to signal Mouse is enabled               */
+bool MouseCaptureIsEnabled = false;    // Flag to signal Mouse is enabled
 int mouse_posx = 0;                    /* Value of Mouse position x                     */
 int mouse_posy = 0;                    /* Value of Mouse position y                     */
 int memory_count = 0;                  /* Current amount of logo segments malloc'd      */

@@ -42,7 +42,7 @@ extern int memory_count;
 extern int status_flag;
 extern int keyboard_on;
 extern int keyboard_value;
-extern int mouse_on;
+extern bool MouseCaptureIsEnabled;
 extern int mouse_posx;
 extern int mouse_posy;
 extern int xoffset;

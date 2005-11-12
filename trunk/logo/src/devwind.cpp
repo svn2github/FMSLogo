@@ -6,23 +6,24 @@ static bool   ComIsOpen = false;
 
 NODE *lmouseon(NODE *args)
    {
-   char lbuttondown[MAX_BUFFER_SIZE];
-   char lbuttonup[MAX_BUFFER_SIZE];
-   char rbuttondown[MAX_BUFFER_SIZE];
-   char rbuttonup[MAX_BUFFER_SIZE];
-   char mousemove[MAX_BUFFER_SIZE];
-
    // get args
-
+   char lbuttondown[MAX_BUFFER_SIZE];
    cnv_strnode_string(lbuttondown, args);
+
+   char lbuttonup[MAX_BUFFER_SIZE];
    cnv_strnode_string(lbuttonup, args = cdr(args));
+
+   char rbuttondown[MAX_BUFFER_SIZE];
    cnv_strnode_string(rbuttondown, args = cdr(args));
+
+   char rbuttonup[MAX_BUFFER_SIZE];
    cnv_strnode_string(rbuttonup, args = cdr(args));
+
+   char mousemove[MAX_BUFFER_SIZE];
    cnv_strnode_string(mousemove, args = cdr(args));
 
    // most of mouse code is in DEFWNDPROC when this flag is on
-
-   mouse_on = 1;
+   MouseCaptureIsEnabled = true;
 
    if (mouse_lbuttondown == NULL)
       {
@@ -48,8 +49,7 @@ NODE *lmouseoff(NODE *)
    {
 
    // tell handler not to do anything with messages for mouse
-
-   mouse_on = 0;
+   MouseCaptureIsEnabled = false;
 
    return (UNBOUND);
    }
