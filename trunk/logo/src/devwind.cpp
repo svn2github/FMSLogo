@@ -73,7 +73,7 @@ NODE *lkeyboardon(NODE *args)
 
       // most keyboard processing is done in DEFWNDPROC
 
-      keyboard_on = 1;
+      KeyboardCapture = KEYBOARDCAPTURE_KeyDown;
 
       strcpy(keyboard_keyup, keyboardup);
       }
@@ -85,7 +85,7 @@ NODE *lkeyboardon(NODE *args)
 
       // most keyboard processing is done in DEFWNDPROC
 
-      keyboard_on = 2;
+      KeyboardCapture = KEYBOARDCAPTURE_KeyDownKeyUp;
 
       strcpy(keyboard_keydown, keyboarddown);
       strcpy(keyboard_keyup, keyboardup);
@@ -96,12 +96,10 @@ NODE *lkeyboardon(NODE *args)
 
 NODE *lkeyboardoff(NODE *)
    {
-
    // tell handler not to do anything with messages for keyboard
+   KeyboardCapture = KEYBOARDCAPTURE_Off;
 
-   keyboard_on = 0;
-
-   return (UNBOUND);
+   return UNBOUND;
    }
 
 NODE *lmousepos(NODE *)
