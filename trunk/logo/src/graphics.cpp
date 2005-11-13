@@ -157,6 +157,26 @@ numeric_node_to_flonum(
    return number;
    }
 
+static
+FIXNUM 
+numeric_node_to_fixnum(
+   NODE * numeric_node // TODO: const
+)
+   {
+   FIXNUM number;
+
+   if (nodetype(numeric_node) == INT)
+      {
+      number = getint(numeric_node);
+      }
+   else
+      {
+      number = (FIXNUM) getfloat(numeric_node);
+      }
+
+   return number;
+   }
+
 /************************************************************/
 
 void draw_turtles(bool erase)
@@ -1848,162 +1868,79 @@ NODE *lpenreverse(NODE *)
    }
 
 
-NODE *lsetpencolor(NODE *args)
+static
+NODE *
+setcolor_helper(
+   NODE *args,
+   void (*setcolorfunc)  (int, int, int),
+   void (*savecolorfunc) (void)
+)
    {
-   NODE *arg;
-   NODE *cnode;
-   int icolor;
-
    if (is_list(car(args)))
       {
-      arg = pos_int_vector_3_arg(args);
+      NODE * arg = pos_int_vector_3_arg(args);
 
       if (NOT_THROWING)
          {
          if (!in_erase_mode)
             {
-            thepencolor(
-               ((nodetype(     car(arg) ) == FLOAT) ? (FIXNUM) getfloat(     car(arg) ) : getint(     car(arg)) ),
-               ((nodetype(    cadr(arg) ) == FLOAT) ? (FIXNUM) getfloat(    cadr(arg) ) : getint(    cadr(arg)) ),
-               ((nodetype(cadr(cdr(arg))) == FLOAT) ? (FIXNUM) getfloat(cadr(cdr(arg))) : getint(cadr(cdr(arg)))));
+            setcolorfunc(
+               numeric_node_to_fixnum(car(arg)),
+               numeric_node_to_fixnum(cadr(arg)),
+               numeric_node_to_fixnum(cadr(cdr(arg))));
             }
-         save_color_pen();
+         savecolorfunc();
          }
 
       bIndexMode = false;
       }
    else
       {
-      cnode = numeric_arg(args);
+      NODE * cnode = numeric_arg(args);
 
       if (NOT_THROWING)
          {
-         icolor = (nodetype(cnode) == FLOAT) ? (FIXNUM) getfloat(cnode) : getint(cnode);
-         icolor = icolor % 16;
+         int icolor = numeric_node_to_fixnum(cnode) % 16;
          if (!in_erase_mode)
             {
-            thepencolor(
+            setcolorfunc(
                GetRValue(colortable[icolor]), 
                GetGValue(colortable[icolor]), 
                GetBValue(colortable[icolor]));
             }
-         save_color_pen();
+         savecolorfunc();
          }
 
       bIndexMode = true;
       }
 
    return Unbound;
+   }
+
+
+NODE *lsetpencolor(NODE *args)
+   {
+   return setcolor_helper(args, thepencolor, save_color_pen);
    }
 
 NODE *lsetfloodcolor(NODE *args)
    {
-   NODE *arg;
-   NODE *cnode;
-   int icolor;
-
-   if (is_list(car(args)))
-      {
-      arg = pos_int_vector_3_arg(args);
-
-      if (NOT_THROWING)
-         {
-         if (!in_erase_mode) 
-            {
-            thefloodcolor(
-               ((nodetype(     car(arg) ) == FLOAT) ? (FIXNUM) getfloat(     car(arg) ) : getint(     car(arg)) ),
-               ((nodetype(    cadr(arg) ) == FLOAT) ? (FIXNUM) getfloat(    cadr(arg) ) : getint(    cadr(arg)) ),
-               ((nodetype(cadr(cdr(arg))) == FLOAT) ? (FIXNUM) getfloat(cadr(cdr(arg))) : getint(cadr(cdr(arg)))));
-            }
-         save_color_flood();
-         }
-
-      bIndexMode = false;
-      }
-   else
-      {
-      cnode = numeric_arg(args);
-
-      if (NOT_THROWING)
-         {
-         icolor = (nodetype(cnode) == FLOAT) ? (FIXNUM) getfloat(cnode) : getint(cnode);
-         icolor = icolor % 16;
-         if (!in_erase_mode) 
-            {
-            thefloodcolor(
-               GetRValue(colortable[icolor]),
-               GetGValue(colortable[icolor]), 
-               GetBValue(colortable[icolor]));
-            }
-         save_color_flood();
-         }
-
-      bIndexMode = true;
-      }
-
-   return Unbound;
+   return setcolor_helper(args, thefloodcolor, save_color_flood);
    }
 
 NODE *lsetscreencolor(NODE *args)
    {
-   NODE *arg;
-   NODE *cnode;
-   int icolor;
-
-   if (is_list(car(args)))
-      {
-      arg = pos_int_vector_3_arg(args);
-
-      if (NOT_THROWING)
-         {
-         if (!in_erase_mode)
-            {
-            thescreencolor(
-               ((nodetype(     car(arg) ) == FLOAT) ? (FIXNUM) getfloat(     car(arg) ) : getint(     car(arg)) ),
-               ((nodetype(    cadr(arg) ) == FLOAT) ? (FIXNUM) getfloat(    cadr(arg) ) : getint(    cadr(arg)) ),
-               ((nodetype(cadr(cdr(arg))) == FLOAT) ? (FIXNUM) getfloat(cadr(cdr(arg))) : getint(cadr(cdr(arg)))));
-            }
-         save_color_screen();
-         }
-
-      bIndexMode = false;
-      }
-   else
-      {
-      cnode = numeric_arg(args);
-
-      if (NOT_THROWING)
-         {
-         icolor = (nodetype(cnode) == FLOAT) ? (FIXNUM) getfloat(cnode) : getint(cnode);
-         icolor = icolor % 16;
-         if (!in_erase_mode)
-            {
-            thescreencolor(
-               GetRValue(colortable[icolor]), 
-               GetGValue(colortable[icolor]), 
-               GetBValue(colortable[icolor]));
-            }
-         save_color_screen();
-         }
-
-      bIndexMode = true;
-      }
-
-   return Unbound;
+   return setcolor_helper(args, thescreencolor, save_color_screen);
    }
 
 NODE *lsetpensize(NODE *args)
    {
-   NODE *arg;
-
-   arg = pos_int_vector_arg(args);
+   NODE * arg = pos_int_vector_arg(args);
 
    if (NOT_THROWING)
       {
-      set_pen_width(
-         ((nodetype(     car(arg) ) == FLOAT) ? (FIXNUM) getfloat(     car(arg) ) : getint(     car(arg)) ));
-      set_pen_height(
-         ((nodetype(    cadr(arg) ) == FLOAT) ? (FIXNUM) getfloat(    cadr(arg) ) : getint(    cadr(arg)) ));
+      set_pen_width(numeric_node_to_fixnum(car(arg)));
+      set_pen_height(numeric_node_to_fixnum(cadr(arg)));
       save_size();
       }
    return Unbound;
@@ -2011,12 +1948,13 @@ NODE *lsetpensize(NODE *args)
 
 NODE *lsetpenpattern(NODE *args)
    {
-   NODE *arg;
 
-   arg = car(args);
+   NODE * arg = car(args);
    ref(arg);
    while ((arg == NIL || !is_list(arg)) && NOT_THROWING)
+      {
       arg = reref(arg, err_logo(BAD_DATA, arg));
+      }
 
    if (NOT_THROWING)
       {
@@ -2030,7 +1968,6 @@ NODE *lsetpenpattern(NODE *args)
 
 NODE *lsetscrunch(NODE *args)
    {
-
    NODE * xnode = numeric_arg(args);
    NODE * ynode = numeric_arg(cdr(args));
 
@@ -2040,17 +1977,6 @@ NODE *lsetscrunch(NODE *args)
       x_scale = numeric_node_to_flonum(xnode);
       y_scale = numeric_node_to_flonum(ynode);
       draw_turtle(true);
-#ifdef __ZTC__
-      {
-         FILE *fp = fopen("scrunch.dat", "w");
-         if (fp != NULL)
-            {
-            fwrite(&x_scale, sizeof(FLONUM), 1, fp);
-            fwrite(&y_scale, sizeof(FLONUM), 1, fp);
-            fclose(fp);
-            }
-      }
-#endif
       }
    return Unbound;
    }
@@ -2062,21 +1988,18 @@ NODE *lbuttonp(NODE *)
    return Falsex;
    }
 
-NODE *ltone(NODE *args)
+NODE *ltone(NODE *args) 
    {
-   NODE *p, *d;
-   FIXNUM pitch, duration;
-
-   p = numeric_arg(args);
-   d = numeric_arg(cdr(args));
+   NODE * pitchnode    = numeric_arg(args);
+   NODE * durationnode = numeric_arg(cdr(args));
 
    if (NOT_THROWING)
-      {
-      pitch = (nodetype(p) == FLOAT) ? (FIXNUM) getfloat(p) : getint(p);
-      duration = (nodetype(d) == FLOAT) ? (FIXNUM) getfloat(d) : getint(d);
+      { 
+      FIXNUM pitch    = numeric_node_to_fixnum(pitchnode);
+      FIXNUM duration = numeric_node_to_fixnum(durationnode);
       tone(pitch, duration);
       }
-
+         
    return Unbound;
    }
 
