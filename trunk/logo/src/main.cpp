@@ -1293,20 +1293,20 @@ void ibmturt(bool erase)
       }
    }
 
-void ibmfrom(NUMBER x, NUMBER y)
+void move_to(NUMBER x, NUMBER y)
    {
    g_OldPos.x = x;
    g_OldPos.y = y;
    }
 
-void ibmfrom3d(NUMBER x, NUMBER y, NUMBER z)
+void move_to_3d(NUMBER x, NUMBER y, NUMBER z)
    {
    g_OldPos.x = x;
    g_OldPos.y = y;
    g_OldPos.z = z;
    }
 
-void ibmto(NUMBER x, NUMBER y)
+void line_to(NUMBER x, NUMBER y)
    {
    if (pen_vis == 0)
       {
@@ -1340,7 +1340,7 @@ void ibmto(NUMBER x, NUMBER y)
       }
    }
 
-void ibmto3d(const Point & ToPoint)
+void line_to_3d(const Point & ToPoint)
    {
    if (pen_vis == 0)
       {

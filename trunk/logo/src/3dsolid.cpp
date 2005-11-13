@@ -1021,7 +1021,7 @@ void TThreeDSolid::DisplayPolygon(POLYGON* Poly)
 // Display the figure stored in the BSP tree
 void TThreeDSolid::View()
    {
-   clear_screen;
+   erase_screen();
 
    ScreenDC = GetDC(MainWindowx->ScreenWindow->HWindow);
 

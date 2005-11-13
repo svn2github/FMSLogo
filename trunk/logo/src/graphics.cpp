@@ -22,6 +22,16 @@
 
 #include "allwind.h"
 
+#define screen_left   (-BitMapWidth/2)
+#define screen_right  ( BitMapWidth/2)
+#define screen_bottom (-BitMapHeight/2)
+#define screen_top    ( BitMapHeight/2)
+
+#define turtle_left_max   (-BitMapWidth/2)
+#define turtle_right_max  ( BitMapWidth/2)
+#define turtle_bottom_max (-BitMapHeight/2)
+#define turtle_top_max    ( BitMapHeight/2)
+
 COLORREF colortable[16] =
    {
    0x00000000, // black
@@ -390,8 +400,6 @@ setpos_helper(
 
    FLONUM save_heading;
 
-   bool wrapping = false;
-
    if (NOT_THROWING)
       {
       if (bEraseTurtle) 
@@ -431,7 +439,7 @@ setpos_helper(
          wanna_y = g_Turtles[turtle_which].Position.y = target_y;
          wanna_z = g_Turtles[turtle_which].Position.z = target_z;
          out_of_bounds = false;
-         ibmto3d(g_Turtles[turtle_which].Position);
+         line_to_3d(g_Turtles[turtle_which].Position);
          save_line();
          }
       else
@@ -439,7 +447,7 @@ setpos_helper(
          scaled_x = target_x * x_scale;
          scaled_y = target_y * y_scale;
 
-         wrapping =
+         bool wrapping =
             scaled_x > turtle_right_max ||
             scaled_x < turtle_left_max ||
             scaled_y > turtle_top_max ||
@@ -816,7 +824,7 @@ void forward_helper3d(FLONUM d)
    g_Turtles[turtle_which].Position.y += direction.y;
    g_Turtles[turtle_which].Position.z += direction.z;
 
-   ibmto3d(g_Turtles[turtle_which].Position);
+   line_to_3d(g_Turtles[turtle_which].Position);
    save_line();
    }
 
@@ -1390,7 +1398,11 @@ void cs_helper(int centerp, int clearp)
    ThreeD.DisposeTree();
    if (status_flag) update_status_vectors();
 
-   if (clearp) clear_screen;
+   if (clearp) 
+      {
+      erase_screen();
+      }
+
    if (centerp)
       {
       turtle_max = 0;
