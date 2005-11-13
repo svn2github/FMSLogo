@@ -426,11 +426,26 @@ NODE *llocal(NODE *args)
    NODE *arg = NIL;
    NODE *vsp = var_stack;
 
-   if (tailcall == 1) return UNBOUND;
+   if (tailcall != 0) 
+     {
+     return UNBOUND;
+     }
+
+   if (args == NIL) 
+     {
+     return UNBOUND;
+     }
+
    while (is_list(car(args)) && cdr(args) != NIL && NOT_THROWING)
+      {
       setcar(args, err_logo(BAD_DATA, car(args)));
+      }
+
    if (is_list(car(args)))
+      {
       args = car(args);
+      }
+
    while (args != NIL && NOT_THROWING)
       {
       arg = car(args);
