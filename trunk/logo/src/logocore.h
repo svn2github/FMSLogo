@@ -1,5 +1,5 @@
 /*
-*      logo.h          logo header file                dvb
+*      logocore.h          logo header file                dvb
 *
 *       Copyright (C) 1989 The Regents of the University of California
 *       This Software may be copied and distributed for educational,
@@ -8,52 +8,10 @@
 *
 */
 
-#define ecma /* for European extended character set using parity bit */
-
-/* #define unix   /* This should be done automatically by gcc! */
-/* #define ultrix /* no usleep */
-
-#ifdef THINK_C
-#define mac
-#endif
-
-#ifdef __TURBOC__
+#define ecma // for European extended character set using parity bit
 #define ibm
-#endif
 
-#ifdef __ZTC__
-#define ibm
-#endif
-
-#ifdef unix
-#ifndef NOGRAPH
-#define x_window                       /* turn this off for no graphics       */
-#endif
-#endif
-
-#ifdef vax
-#define bsd
-#endif
-
-#ifdef sun
-#define bsd
-#endif
-
-/* #define SYSV */      /* turn this on for inferior AT&T brand Unix */
-
-#ifdef mips
-extern char *getenv();
-#endif
-
-#ifdef mac
-#define check_throwing (check_mac_stop() || stopping_flag == THROWING)
-#else
-#ifdef ibm
 #define check_throwing (check_ibm_stop(0) || stopping_flag == THROWING)
-#else
-#define check_throwing (stopping_flag == THROWING)
-#endif
-#endif
 
 typedef enum
    {
