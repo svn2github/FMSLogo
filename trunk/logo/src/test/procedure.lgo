@@ -79,12 +79,33 @@ TO PROCEDURETEST
    RUNBADINPUTTEST [(DEFINE "function)]
    RUNBADINPUTTEST [(DEFINE "function [])]
 
-   ; test LOCAL and LOCALMAKE
+   ; test LOCAL
    SIMPLEREPORTTEST [LOCALVARTEST "unknownlocalvar 42] 42
    SIMPLEREPORTTEST [NAME? "unknownlocalvar] "false
+
+   ; silly, but legal
+   LOCAL [10 11]
+   MAKE "10 "ten
+   MAKE "11 "eleven
+   SIMPLEREPORTTEST [:10] "ten
+   SIMPLEREPORTTEST [:11] "eleven
+
+   (LOCAL "12 "13)
+   MAKE "12 "twelve
+   MAKE "13 "eleven
+   SIMPLEREPORTTEST [:10] "ten
+   SIMPLEREPORTTEST [:11] "eleven
+
+   LOCAL []
+   RUNBADINPUTTEST [(LOCAL)]
+   RUNBADINPUTTEST [LOCAL {}]
+
+
+   ; test LOCALMAKE
    LOCALMAKE "mylocalvarname 32
    SIMPLEREPORTTEST [LOCALVARTEST "mylocalvarname 42]  42
    SIMPLEREPORTTEST [:mylocalvarname]                  32
+   RUNBADINPUTTEST [(LOCALMAKE)]
 
    ; Just exercise NAME for now.
    ; we'll figure out how to test its output later
