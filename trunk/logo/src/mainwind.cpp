@@ -2188,7 +2188,7 @@ void TMainFrame::CMSetCommanderFont()
 
 void TMainFrame::CMSetPenSize()
    {
-   TColor TheSize(pen_width, pen_width, pen_width);
+   TColor TheSize(get_pen_width(), get_pen_width(), get_pen_width());
 
    // if OK then make change
 

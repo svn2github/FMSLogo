@@ -1784,19 +1784,19 @@ NODE *lpendownp(NODE *)
 
 NODE *lpenmode(NODE *)
    {
-   return (get_node_pen_mode);
+   return get_node_pen_mode();
    }
 
 NODE *lpensize(NODE *)
    {
    return cons_list(
-      make_intnode((FIXNUM) pen_width),
-      make_intnode((FIXNUM) pen_height));
+      make_intnode((FIXNUM) get_pen_width()),
+      make_intnode((FIXNUM) get_pen_height()));
    }
 
 NODE *lpenpattern(NODE *)
    {
-   return (get_node_pen_pattern);
+   return get_node_pen_pattern();
    }
 
 NODE *lpendown(NODE *)
@@ -1816,23 +1816,23 @@ NODE *lpenup(NODE *)
 
 NODE *lpenpaint(NODE *)
    {
-   pen_down;
+   pen_down();
    save_mode();
-   return (lpendown(NIL));
+   return lpendown(NIL);
    }
 
 NODE *lpenerase(NODE *)
    {
-   pen_erase;
+   pen_erase();
    save_mode();
-   return (lpendown(NIL));
+   return lpendown(NIL);
    }
 
 NODE *lpenreverse(NODE *)
    {
-   pen_reverse;
+   pen_reverse();
    save_mode();
-   return (lpendown(NIL));
+   return lpendown(NIL);
    }
 
 
@@ -1848,10 +1848,13 @@ NODE *lsetpencolor(NODE *args)
 
       if (NOT_THROWING)
          {
-         set_pen_color(
-            ((nodetype(     car(arg) ) == FLOAT) ? (FIXNUM) getfloat(     car(arg) ) : getint(     car(arg)) ),
-            ((nodetype(    cadr(arg) ) == FLOAT) ? (FIXNUM) getfloat(    cadr(arg) ) : getint(    cadr(arg)) ),
-            ((nodetype(cadr(cdr(arg))) == FLOAT) ? (FIXNUM) getfloat(cadr(cdr(arg))) : getint(cadr(cdr(arg)))));
+         if (!in_erase_mode)
+            {
+            thepencolor(
+               ((nodetype(     car(arg) ) == FLOAT) ? (FIXNUM) getfloat(     car(arg) ) : getint(     car(arg)) ),
+               ((nodetype(    cadr(arg) ) == FLOAT) ? (FIXNUM) getfloat(    cadr(arg) ) : getint(    cadr(arg)) ),
+               ((nodetype(cadr(cdr(arg))) == FLOAT) ? (FIXNUM) getfloat(cadr(cdr(arg))) : getint(cadr(cdr(arg)))));
+            }
          save_color_pen();
          }
 
@@ -1865,7 +1868,13 @@ NODE *lsetpencolor(NODE *args)
          {
          icolor = (nodetype(cnode) == FLOAT) ? (FIXNUM) getfloat(cnode) : getint(cnode);
          icolor = icolor % 16;
-         set_pen_color(GetRValue(colortable[icolor]), GetGValue(colortable[icolor]), GetBValue(colortable[icolor]));
+         if (!in_erase_mode)
+            {
+            thepencolor(
+               GetRValue(colortable[icolor]), 
+               GetGValue(colortable[icolor]), 
+               GetBValue(colortable[icolor]));
+            }
          save_color_pen();
          }
 
@@ -1887,10 +1896,13 @@ NODE *lsetfloodcolor(NODE *args)
 
       if (NOT_THROWING)
          {
-         set_flood_color(
-            ((nodetype(     car(arg) ) == FLOAT) ? (FIXNUM) getfloat(     car(arg) ) : getint(     car(arg)) ),
-            ((nodetype(    cadr(arg) ) == FLOAT) ? (FIXNUM) getfloat(    cadr(arg) ) : getint(    cadr(arg)) ),
-            ((nodetype(cadr(cdr(arg))) == FLOAT) ? (FIXNUM) getfloat(cadr(cdr(arg))) : getint(cadr(cdr(arg)))));
+         if (!in_erase_mode) 
+            {
+            thefloodcolor(
+               ((nodetype(     car(arg) ) == FLOAT) ? (FIXNUM) getfloat(     car(arg) ) : getint(     car(arg)) ),
+               ((nodetype(    cadr(arg) ) == FLOAT) ? (FIXNUM) getfloat(    cadr(arg) ) : getint(    cadr(arg)) ),
+               ((nodetype(cadr(cdr(arg))) == FLOAT) ? (FIXNUM) getfloat(cadr(cdr(arg))) : getint(cadr(cdr(arg)))));
+            }
          save_color_flood();
          }
 
@@ -1904,7 +1916,13 @@ NODE *lsetfloodcolor(NODE *args)
          {
          icolor = (nodetype(cnode) == FLOAT) ? (FIXNUM) getfloat(cnode) : getint(cnode);
          icolor = icolor % 16;
-         set_flood_color(GetRValue(colortable[icolor]), GetGValue(colortable[icolor]), GetBValue(colortable[icolor]));
+         if (!in_erase_mode) 
+            {
+            thefloodcolor(
+               GetRValue(colortable[icolor]),
+               GetGValue(colortable[icolor]), 
+               GetBValue(colortable[icolor]));
+            }
          save_color_flood();
          }
 
@@ -1926,10 +1944,13 @@ NODE *lsetscreencolor(NODE *args)
 
       if (NOT_THROWING)
          {
-         set_screen_color(
-            ((nodetype(     car(arg) ) == FLOAT) ? (FIXNUM) getfloat(     car(arg) ) : getint(     car(arg)) ),
-            ((nodetype(    cadr(arg) ) == FLOAT) ? (FIXNUM) getfloat(    cadr(arg) ) : getint(    cadr(arg)) ),
-            ((nodetype(cadr(cdr(arg))) == FLOAT) ? (FIXNUM) getfloat(cadr(cdr(arg))) : getint(cadr(cdr(arg)))));
+         if (!in_erase_mode)
+            {
+            thescreencolor(
+               ((nodetype(     car(arg) ) == FLOAT) ? (FIXNUM) getfloat(     car(arg) ) : getint(     car(arg)) ),
+               ((nodetype(    cadr(arg) ) == FLOAT) ? (FIXNUM) getfloat(    cadr(arg) ) : getint(    cadr(arg)) ),
+               ((nodetype(cadr(cdr(arg))) == FLOAT) ? (FIXNUM) getfloat(cadr(cdr(arg))) : getint(cadr(cdr(arg)))));
+            }
          save_color_screen();
          }
 
@@ -1943,7 +1964,13 @@ NODE *lsetscreencolor(NODE *args)
          {
          icolor = (nodetype(cnode) == FLOAT) ? (FIXNUM) getfloat(cnode) : getint(cnode);
          icolor = icolor % 16;
-         set_screen_color(GetRValue(colortable[icolor]), GetGValue(colortable[icolor]), GetBValue(colortable[icolor]));
+         if (!in_erase_mode)
+            {
+            thescreencolor(
+               GetRValue(colortable[icolor]), 
+               GetGValue(colortable[icolor]), 
+               GetBValue(colortable[icolor]));
+            }
          save_color_screen();
          }
 
@@ -2166,8 +2193,8 @@ void save_size()
       if (safe_to_save())
       {
       record[record_index] = SETPENSIZE;
-    *(int *)(record + record_index + 2) = pen_width;
-    *(int *)(record + record_index + 4) = pen_height;
+      *(int *)(record + record_index + 2) = get_pen_width();
+      *(int *)(record + record_index + 4) = get_pen_height();
       record_index += 6;
       }
     */

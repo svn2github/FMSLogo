@@ -33,7 +33,8 @@
 bool in_graphics_mode = false;
 bool in_erase_mode = false;
 
-int ibm_screen_top, ibm_turtle_top_max;
+int ibm_screen_top;
+int ibm_turtle_top_max;
 int current_write_mode = COPY_PUT;
 int current_vis[TURTLES]=
       {
@@ -122,19 +123,19 @@ void save_pen(pen_info *p)
    //    p->h = getx();
    //    p->v = gety();
    p->vis = current_vis[turtle_which];
-   p->width = get_ibm_pen_width();
+   p->width = get_pen_width();
    //    p->color = getcolor();
    p->prev_color = prev_color;
    get_pen_pattern(p->pattern);
-   p->mode = get_ibm_pen_mode();
+   p->mode = get_pen_mode();
    }
 
 void restore_pen(pen_info *p)
    {
    //    moveto(p->h, p->v);
    current_vis[turtle_which] = p->vis;
-   set_ibm_pen_width(p->width);
-   set_ibm_pen_mode(p->mode);          /* must restore mode before color      */
+   set_pen_width(p->width);
+   set_pen_mode(p->mode);    // must restore mode before color
    //    setcolor(p->color);
    prev_color = p->prev_color;
    set_pen_pattern(p->pattern);
@@ -142,14 +143,14 @@ void restore_pen(pen_info *p)
 
 void plain_xor_pen()
    {
-   set_ibm_pen_width(1);
+   set_pen_width(1);
    //    setcolor(turtle_color);
    //    setwritemode(XOR_PUT);
    current_write_mode = XOR_PUT;
    in_erase_mode = FALSE;
    }
 
-void ibm_pen_down()
+void pen_down()
    {
    //    setwritemode(COPY_PUT);
    current_write_mode = COPY_PUT;
@@ -160,7 +161,7 @@ void ibm_pen_down()
       }
    }
 
-void ibm_pen_xor()
+void pen_reverse()
    {
    //    setwritemode(XOR_PUT);
    current_write_mode = XOR_PUT;
@@ -171,7 +172,7 @@ void ibm_pen_xor()
       }
    }
 
-void ibm_pen_erase()
+void pen_erase()
    {
    if (!in_erase_mode)
       {
@@ -183,7 +184,7 @@ void ibm_pen_erase()
       }
    }
 
-int get_ibm_pen_mode()
+int get_pen_mode()
    {
    if (in_erase_mode)
       return 2;
@@ -191,17 +192,17 @@ int get_ibm_pen_mode()
       return current_write_mode;
    }
 
-void set_ibm_pen_mode(int m)
+void set_pen_mode(int m)
    {
    switch (m)
       {
-       case 2: ibm_pen_erase(); break;
-       case COPY_PUT: ibm_pen_down(); break;
-       case XOR_PUT: ibm_pen_xor(); break;
+       case 2: pen_erase(); break;
+       case COPY_PUT: pen_down(); break;
+       case XOR_PUT: pen_reverse(); break;
       }
    }
 
-//int get_ibm_pen_width()
+//int get_pen_width()
 //{
 //    struct linesettingstype ls;
 //
@@ -238,7 +239,7 @@ void get_pen_pattern(char * /* pat */)
    //    getfillpattern(pat);
    }
 
-NODE *Get_node_pen_pattern()
+NODE *get_node_pen_pattern()
    {
    /*
       unsigned char pat[8];
@@ -257,7 +258,7 @@ NODE *Get_node_pen_pattern()
    return (NIL);
    }
 
-NODE *Get_node_pen_mode()
+NODE *get_node_pen_mode()
    {
    if (in_erase_mode)
       return (make_static_strnode("erase"));
@@ -271,7 +272,7 @@ void erase_screen()
    ibm_clear_screen();
    }
 
-bool Button()
+bool button()
    {
    return false;
    }

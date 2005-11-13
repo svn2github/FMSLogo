@@ -833,13 +833,17 @@ void thescreencolor(int r, int g, int b)
    MainWindowx->ScreenWindow->Invalidate(true);
    }
 
-int get_ibm_pen_width()
+int get_pen_width()
    {
    return width;
    }
 
+int get_pen_height()
+   {
+   return get_pen_width();
+   }
 
-void set_ibm_pen_width(int w)
+void set_pen_width(int w)
    {
    width = w;
 
@@ -852,6 +856,11 @@ void set_ibm_pen_width(int w)
    ErasePen.lopnStyle = PS_INSIDEFRAME;
    ErasePen.lopnWidth.x = width;
    ErasePen.lopnColor = scolor;
+   }
+
+void set_pen_height(int h)
+   {
+   set_pen_width(h);
    }
 
 NODE *lclearpalette(NODE *)

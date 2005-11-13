@@ -30,12 +30,7 @@
 #define move_to_3d(x,y,z) ibmfrom3d(x,y,z)
 #define draw_string(s)                 //outtext((char far *)s)
 #define set_pen_vis(v) current_vis[turtle_which] = v
-#define set_pen_mode(m) set_ibm_pen_mode(m)
-#define set_pen_color(r,g,b) {if (!in_erase_mode) thepencolor(r,g,b);}//ignore//
-#define set_flood_color(r,g,b) {if (!in_erase_mode) thefloodcolor(r,g,b);}//ignore//
-#define set_screen_color(r,g,b) {if (!in_erase_mode) thescreencolor(r,g,b);}//ignore//
-#define set_pen_width(w) set_ibm_pen_width(w)
-#define set_pen_height(h) set_ibm_pen_width(h)
+
 #define set_pen_x(x) ibmto((int)x, -gety())
 #define set_pen_y(y) ibmto(getx(), -(int)y)
 
@@ -55,32 +50,5 @@ typedef struct
    }
 pen_info;
 
-//#define p_info_x(p) p.h
-//#define p_info_y(p) p.v
-
-#define pen_width get_ibm_pen_width()
-#define pen_height get_ibm_pen_width()
-#define pen_color                      //getcolor()
-#define pen_mode get_ibm_pen_mode()
 #define pen_vis current_vis[turtle_which]
-#define pen_x                          //getx()
-#define pen_y                          //gety()
-#define get_node_pen_pattern Get_node_pen_pattern()
-#define get_node_pen_mode Get_node_pen_mode()
 
-#define pen_reverse ibm_pen_xor()
-#define pen_erase ibm_pen_erase()
-#define pen_down ibm_pen_down()
-
-#define button Button()
-
-/* definitions from term.c and math.c for ibmterm.c */
-extern int x_coord, y_coord, x_max, y_max, tty_charmode;
-/*
-extern char so_arr[], se_arr[];
-*/
-extern FLONUM degrad;
-
-/* definitions from ibmterm.c for graphics.c */
-extern int current_vis[], ibm_screen_top, ibm_turtle_top_max;
-extern bool in_erase_mode;

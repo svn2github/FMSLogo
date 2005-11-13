@@ -155,8 +155,11 @@ extern CTRLTYPE stopping_flag;
 extern char *logolib;
 extern FIXNUM tailcall, val_status, dont_fix_ift;
 
-/* print.c */
+/* print.cpp */
 extern bool print_backslashes;
+
+/* math.c */
+extern FLONUM degrad;
 
 /* lists.c */
 
@@ -166,8 +169,16 @@ extern bool print_backslashes;
 extern FIXNUM ift_iff_flag;
 
 /* term.c */
-extern int x_coord, y_coord, x_max, y_max;
+extern int x_coord;
+extern int y_coord;
+extern int x_max;
+extern int y_max;
 extern bool interactive;
+extern int tty_charmode;
+extern int current_vis[];
+extern int ibm_screen_top;
+extern int ibm_turtle_top_max;
+extern bool in_erase_mode;
 
 /* paren.c */
 extern NODE *the_generation;
