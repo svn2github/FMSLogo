@@ -79,7 +79,7 @@ NODE *lsound(NODE *arg)
       err_logo(STOP_ERROR, NIL);
       }
 
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lmidiopen(NODE *args)
@@ -134,7 +134,7 @@ NODE *lmidiopen(NODE *args)
       err_logo(STOP_ERROR, NIL);
       }
 
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lmidiclose(NODE *  /*args*/)
@@ -164,7 +164,7 @@ NODE *lmidiclose(NODE *  /*args*/)
       err_logo(STOP_ERROR, NIL);
       }
 
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lmidimessage(NODE *arg)
@@ -293,7 +293,7 @@ NODE *lmidimessage(NODE *arg)
       err_logo(STOP_ERROR, NIL);
       }
 
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lmci(NODE *args)
@@ -351,7 +351,7 @@ NODE *lmci(NODE *args)
          }
       }
 
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lsettimer(NODE *args)
@@ -389,7 +389,7 @@ NODE *lsettimer(NODE *args)
       MainWindowx->CommandWindow->MessageBox("Bad Timer Id", "Error");
       err_logo(STOP_ERROR, NIL);
       }
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lcleartimer(NODE *args)
@@ -408,7 +408,7 @@ NODE *lcleartimer(NODE *args)
       err_logo(STOP_ERROR, NIL);
       }
 
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lplaywave(NODE *args)
@@ -428,6 +428,5 @@ NODE *lplaywave(NODE *args)
       sndPlaySound(name, flag);
       }
 
-   return (UNBOUND);
+   return Unbound;
    }
-

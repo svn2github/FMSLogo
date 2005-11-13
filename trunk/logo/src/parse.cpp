@@ -187,7 +187,7 @@ NODE *reader(FILE *strm, const char *prompt)
       if (p_line == NULL)
          {
          err_logo(OUT_OF_MEM, NIL);
-         return UNBOUND;
+         return Unbound;
          }
       p_end = &p_line[MAX_PHYS_LINE - 1];
       }
@@ -565,7 +565,7 @@ NODE *parser(NODE *nd, bool semi)
 
 NODE *lparse(NODE *args)
    {
-   NODE *val = UNBOUND;
+   NODE *val = Unbound;
 
    NODE * arg = string_arg(args);
    if (NOT_THROWING)
@@ -787,6 +787,6 @@ NODE *lrunparse(NODE *args)
       return runparse(arg);
       }
 
-   return UNBOUND;
+   return Unbound;
    }
 

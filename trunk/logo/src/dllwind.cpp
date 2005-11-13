@@ -55,7 +55,7 @@ NODE *ldllload(NODE *arg)
       hDLLModule = 0;
       }
 
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *ldllfree(NODE *)
@@ -69,7 +69,7 @@ NODE *ldllfree(NODE *)
    FreeLibrary(hDLLModule);
    hDLLModule = 0;
 
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *ldllcall(NODE *arg)
@@ -95,7 +95,7 @@ NODE *ldllcall(NODE *arg)
       {
       MainWindowx->CommandWindow->MessageBox("DLL not loaded", "DLL Error");
       err_logo(STOP_ERROR, NIL);
-      return (UNBOUND);
+      return Unbound;
       }
 
    // get args
@@ -191,7 +191,7 @@ NODE *ldllcall(NODE *arg)
                        {
                           MainWindowx->CommandWindow->MessageBox("Invalid Argument Data Type", "DLL Error");
                           err_logo(STOP_ERROR, NIL);
-                          return (UNBOUND);
+                          return Unbound;
                        }
                   }
                }
@@ -283,6 +283,6 @@ NODE *ldllcall(NODE *arg)
       err_logo(STOP_ERROR, NIL);
       }
 
-   return (UNBOUND);
+   return Unbound;
    }
 

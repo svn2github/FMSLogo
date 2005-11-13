@@ -545,7 +545,7 @@ NODE *leventcheck(NODE *)
       DispatchMessage(&msg);
       }
 
-   return (UNBOUND);
+   return Unbound;
    }
 
 /* function that processes our own queued events */
@@ -888,7 +888,7 @@ NODE *lwindowcreate(NODE *args)
       err_logo(STOP_ERROR, NIL);
       }
 
-   return (UNBOUND);
+   return Unbound;
    }
 
 
@@ -987,7 +987,7 @@ WindowEnableHelper(
       err_logo(STOP_ERROR, NIL);
       }
 
-   return UNBOUND;
+   return Unbound;
    }
 
 
@@ -1050,7 +1050,7 @@ WindowDeleteHelper(
       err_logo(STOP_ERROR, NIL);
       }
 
-   return UNBOUND;
+   return Unbound;
    }
 
 
@@ -1081,7 +1081,7 @@ NODE *lwindowdelete(NODE *arg)
          }
       }
    
-   return UNBOUND;
+   return Unbound;
    }
 
 NODE *ldialogcreate(NODE *args)
@@ -1173,7 +1173,7 @@ NODE *ldialogcreate(NODE *args)
       err_logo(STOP_ERROR, NIL);
       }
 
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *ldialogenable(NODE *args)
@@ -1300,7 +1300,7 @@ NODE *llistboxcreate(NODE *args)
          }
       }
    
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *llistboxenable(NODE *args)
@@ -1340,7 +1340,7 @@ NODE *llistboxgetselect(NODE *args)
       err_logo(STOP_ERROR, NIL);
       }
 
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *llistboxaddstring(NODE *args)
@@ -1367,7 +1367,7 @@ NODE *llistboxaddstring(NODE *args)
       err_logo(STOP_ERROR, NIL);
       }
 
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *llistboxdeletestring(NODE *args)
@@ -1395,7 +1395,7 @@ NODE *llistboxdeletestring(NODE *args)
       err_logo(STOP_ERROR, NIL);
       }
 
-   return UNBOUND;
+   return Unbound;
    }
 
 NODE *lcomboboxcreate(NODE *args)
@@ -1522,7 +1522,7 @@ NODE *lcomboboxcreate(NODE *args)
          }
       }
 
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lcomboboxenable(NODE *args)
@@ -1562,7 +1562,7 @@ NODE *lcomboboxgettext(NODE *args)
       err_logo(STOP_ERROR, NIL);
       }
 
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lcomboboxsettext(NODE *args)
@@ -1591,7 +1591,7 @@ NODE *lcomboboxsettext(NODE *args)
       err_logo(STOP_ERROR, NIL);
       }
 
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lcomboboxaddstring(NODE *args)
@@ -1621,7 +1621,7 @@ NODE *lcomboboxaddstring(NODE *args)
       err_logo(STOP_ERROR, NIL);
       }
 
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lcomboboxdeletestring(NODE *args)
@@ -1651,7 +1651,7 @@ NODE *lcomboboxdeletestring(NODE *args)
       err_logo(STOP_ERROR, NIL);
       }
 
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lscrollbarcreate(NODE *args)
@@ -1790,7 +1790,7 @@ NODE *lscrollbarcreate(NODE *args)
          }
       }
 
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lscrollbarset(NODE *args)
@@ -1817,7 +1817,7 @@ NODE *lscrollbarset(NODE *args)
       err_logo(STOP_ERROR, NIL);
       }
 
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lscrollbarget(NODE *args)
@@ -1839,7 +1839,7 @@ NODE *lscrollbarget(NODE *args)
       err_logo(STOP_ERROR, NIL);
       }
 
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lscrollbarenable(NODE *args)
@@ -1949,7 +1949,7 @@ NODE *lstaticcreate(NODE *args)
          }
       }
    
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lstaticupdate(NODE *args)
@@ -1971,7 +1971,7 @@ NODE *lstaticupdate(NODE *args)
       err_logo(STOP_ERROR, NIL);
       }
 
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lstaticdelete(NODE *args)
@@ -2120,7 +2120,7 @@ NODE *lbuttoncreate(NODE *args)
          }
       }
       
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lbuttonupdate(NODE *args)
@@ -2142,7 +2142,7 @@ NODE *lbuttonupdate(NODE *args)
       err_logo(STOP_ERROR, NIL);
       }
 
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lbuttonenable(NODE *args)
@@ -2247,7 +2247,7 @@ NODE *lgroupboxcreate(NODE *args)
          }
       }
 
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lgroupboxdelete(NODE *args)
@@ -2385,7 +2385,7 @@ NODE *lradiobuttoncreate(NODE *args)
          }
       }
    
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lradiobuttonenable(NODE *args)
@@ -2418,7 +2418,7 @@ NODE *lradiobuttonget(NODE *args)
       err_logo(STOP_ERROR, NIL);
       }
 
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lradiobuttonset(NODE *args)
@@ -2443,7 +2443,7 @@ NODE *lradiobuttonset(NODE *args)
       err_logo(STOP_ERROR, NIL);
       }
 
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lcheckboxcreate(NODE *args)
@@ -2577,7 +2577,7 @@ NODE *lcheckboxcreate(NODE *args)
          }
       }
    
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lcheckboxenable(NODE *args)
@@ -2610,7 +2610,7 @@ NODE *lcheckboxget(NODE *args)
       err_logo(STOP_ERROR, NIL);
       }
 
-   return UNBOUND;
+   return Unbound;
    }
 
 NODE *lcheckboxset(NODE *args)
@@ -2636,7 +2636,7 @@ NODE *lcheckboxset(NODE *args)
       err_logo(STOP_ERROR, NIL);
       }
 
-   return (UNBOUND);
+   return Unbound;
    }
 
 BOOL CheckOnScreenControls()
@@ -2667,7 +2667,7 @@ NODE *ldebugwindows(NODE *arg)
       dialogboxes.listall();
       }
 
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lmessagebox(NODE *args)
@@ -2683,7 +2683,7 @@ NODE *lmessagebox(NODE *args)
       err_logo(STOP_ERROR, NIL);
       }
 
-   return UNBOUND;
+   return Unbound;
    }
 
 NODE *lquestionbox(NODE *args)
@@ -2790,14 +2790,14 @@ NODE *lyesnobox(NODE *args)
          }
       }
 
-   return UNBOUND;
+   return Unbound;
    }
 
 NODE *lsetcursorwait(NODE *)
    {
    hCursorSave =::SetCursor(hCursorWait);
 
-   return UNBOUND;
+   return Unbound;
    }
 
 NODE *lsetcursorarrow(NODE *)
@@ -2813,7 +2813,7 @@ NODE *lsetcursorarrow(NODE *)
       ::SetCursor(hCursorArrow);
       }
 
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *ldialogfileopen(NODE *args)
@@ -2876,7 +2876,7 @@ NODE *lwindowfileedit(NODE *args)
    strcpy(edit_editexit, editexit);
 
    TMainFrame::PopupEditorForFile(filename, NULL);
-   return UNBOUND;
+   return Unbound;
    }
 
 DEFINE_RESPONSE_TABLE1(TMyButton, TButton)

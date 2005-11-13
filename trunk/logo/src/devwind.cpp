@@ -42,7 +42,7 @@ NODE *lmouseon(NODE *args)
    strcpy(mouse_rbuttonup, rbuttonup);
    strcpy(mouse_mousemove, mousemove);
 
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lmouseoff(NODE *)
@@ -51,7 +51,7 @@ NODE *lmouseoff(NODE *)
    // tell handler not to do anything with messages for mouse
    MouseCaptureIsEnabled = false;
 
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lkeyboardon(NODE *args)
@@ -91,7 +91,7 @@ NODE *lkeyboardon(NODE *args)
       strcpy(keyboard_keyup, keyboardup);
       }
 
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lkeyboardoff(NODE *)
@@ -99,7 +99,7 @@ NODE *lkeyboardoff(NODE *)
    // tell handler not to do anything with messages for keyboard
    KeyboardCapture = KEYBOARDCAPTURE_Off;
 
-   return UNBOUND;
+   return Unbound;
    }
 
 NODE *lmousepos(NODE *)
@@ -143,7 +143,7 @@ NODE *lportclose(NODE *)
       CloseHandle(ComId);
       }
 
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lportopen(NODE *args)
@@ -194,7 +194,7 @@ NODE *lportopen(NODE *args)
          }
       }
 
-   return UNBOUND;
+   return Unbound;
    }
 
 NODE *lportflush(NODE */* args */)
@@ -218,7 +218,7 @@ NODE *lportflush(NODE */* args */)
          }
       }
 
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lportmode(NODE *args)
@@ -273,7 +273,7 @@ NODE *lportmode(NODE *args)
          }
       }
 
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lportwritearray(NODE *args)
@@ -510,7 +510,7 @@ NODE *loutportb(NODE *args)
 
    Myoutportb(portid, value);
 
-   return UNBOUND;
+   return Unbound;
    }
 
 NODE *linportb(NODE *args)
@@ -529,7 +529,7 @@ NODE *loutport(NODE *args)
 
    Myoutport(portid, value);
 
-   return UNBOUND;
+   return Unbound;
    }
 
 NODE *linport(NODE *args)

@@ -303,7 +303,7 @@ NODE *numeric_arg(NODE *args)
    NODE *arg = car(args);
 
    NODE * val = cnv_node_to_numnode(arg);
-   while (val == UNBOUND && NOT_THROWING)
+   while (val == Unbound && NOT_THROWING)
       {
       gcref(val);
       setcar(args, err_logo(BAD_DATA, arg));
@@ -322,7 +322,7 @@ NODE *luppitch(NODE *arg)
       FLONUM a = numeric_node_to_flonum(val);
       uppitch(a);
       }
-   return UNBOUND;
+   return Unbound;
    }
 
 NODE *ldownpitch(NODE *arg)
@@ -334,7 +334,7 @@ NODE *ldownpitch(NODE *arg)
       uppitch(-a);
       }
 
-   return UNBOUND;
+   return Unbound;
    }
 
 NODE *lrightroll(NODE *arg)
@@ -346,7 +346,7 @@ NODE *lrightroll(NODE *arg)
       rightroll(a);
       }
 
-   return UNBOUND;
+   return Unbound;
    }
 
 NODE *lleftroll(NODE *arg)
@@ -357,7 +357,7 @@ NODE *lleftroll(NODE *arg)
       FLONUM a = numeric_node_to_flonum(val);
       rightroll(-a);
       }
-   return UNBOUND;
+   return Unbound;
    }
 
 NODE *lright(NODE *arg)
@@ -369,7 +369,7 @@ NODE *lright(NODE *arg)
       right(a);
       }
 
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lleft(NODE *arg)
@@ -381,7 +381,7 @@ NODE *lleft(NODE *arg)
       right(-a);
       }
 
-   return UNBOUND;
+   return Unbound;
    }
 
 static
@@ -647,7 +647,7 @@ NODE *lellipsearc(NODE *arg)
       out_of_bounds = false;
 
       }
-   return (UNBOUND);
+   return Unbound;
    }
 
 
@@ -851,7 +851,7 @@ NODE *lforward(NODE *arg)
       FLONUM d = numeric_node_to_flonum(val);
       forward(d);
       }
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lback(NODE *arg)
@@ -862,7 +862,7 @@ NODE *lback(NODE *arg)
       FLONUM d = numeric_node_to_flonum(val);
       forward(-d);
       }
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lbitmapturtle(NODE *)
@@ -870,7 +870,7 @@ NODE *lbitmapturtle(NODE *)
    draw_turtle(false);
    g_Turtles[turtle_which].Bitmap = SRCCOPY;
    draw_turtle(true);
-   return UNBOUND;
+   return Unbound;
    }
 
 NODE *lnobitmapturtle(NODE *)
@@ -878,7 +878,7 @@ NODE *lnobitmapturtle(NODE *)
    draw_turtle(false);
    g_Turtles[turtle_which].Bitmap = 0;
    draw_turtle(true);
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lshowturtle(NODE *)
@@ -889,7 +889,7 @@ NODE *lshowturtle(NODE *)
       if (status_flag) update_status_turtlevisability();
       draw_turtle(true);
       }
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lhideturtle(NODE *)
@@ -900,7 +900,7 @@ NODE *lhideturtle(NODE *)
       g_Turtles[turtle_which].IsShown = false;
       if (status_flag) update_status_turtlevisability();
       }
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lshownp(NODE *)
@@ -932,7 +932,7 @@ NODE *lsetheading(NODE *arg)
 
       draw_turtle(true);
       }
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lsetroll(NODE *arg)
@@ -956,7 +956,7 @@ NODE *lsetroll(NODE *arg)
 
       draw_turtle(true);
       }
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lsetpitch(NODE *arg)
@@ -979,7 +979,7 @@ NODE *lsetpitch(NODE *arg)
 
       draw_turtle(true);
       }
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lsetclip(NODE *args)
@@ -1000,7 +1000,7 @@ NODE *lsetclip(NODE *args)
 
       draw_turtle(true);
       }
-   return (UNBOUND);
+   return Unbound;
    }
 
 const double epsilon=1.0e-12;
@@ -1114,7 +1114,7 @@ NODE *vec_arg_helper(NODE *args, bool floatok)
          {
          NODE * val1 = cnv_node_to_numnode(car(arg));
          NODE * val2 = cnv_node_to_numnode(cadr(arg));
-         if (val1 != UNBOUND && val2 != UNBOUND &&
+         if (val1 != Unbound && val2 != Unbound &&
             (
             floatok ||
             (
@@ -1134,7 +1134,7 @@ NODE *vec_arg_helper(NODE *args, bool floatok)
       setcar(args, err_logo(BAD_DATA, arg));
       arg = car(args);
       }
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *vec_3_arg_helper(NODE *args, bool floatok)
@@ -1153,9 +1153,9 @@ NODE *vec_3_arg_helper(NODE *args, bool floatok)
          NODE * val2 = cnv_node_to_numnode(cadr(arg));
          NODE * val3 = cnv_node_to_numnode(cadr(cdr(arg)));
          if (
-            val1 != UNBOUND &&
-            val2 != UNBOUND &&
-            val3 != UNBOUND &&
+            val1 != Unbound &&
+            val2 != Unbound &&
+            val3 != Unbound &&
             (
             floatok ||
             (
@@ -1178,7 +1178,7 @@ NODE *vec_3_arg_helper(NODE *args, bool floatok)
       setcar(args, err_logo(BAD_DATA, arg));
       arg = car(args);
       }
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *vec_4_arg_helper(NODE *args, bool floatok)
@@ -1199,10 +1199,10 @@ NODE *vec_4_arg_helper(NODE *args, bool floatok)
          NODE* val3 = cnv_node_to_numnode(car(cdr(cdr(arg))));
          NODE* val4 = cnv_node_to_numnode(car(cdr(cdr(cdr(arg)))));
          if (
-               val1 != UNBOUND &&
-               val2 != UNBOUND &&
-               val3 != UNBOUND &&
-               val4 != UNBOUND &&
+               val1 != Unbound &&
+               val2 != Unbound &&
+               val3 != Unbound &&
+               val4 != Unbound &&
                (floatok || (
                      nodetype(val1) == INT && getint(val1) >= 0 &&
                      nodetype(val2) == INT && getint(val2) >= 0 &&
@@ -1223,7 +1223,7 @@ NODE *vec_4_arg_helper(NODE *args, bool floatok)
       setcar(args, err_logo(BAD_DATA, arg));
       arg = car(args);
       }
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *vector_arg(NODE *args)
@@ -1294,7 +1294,7 @@ NODE *ltowards(NODE *args)
 
       return make_floatnode(towards_helper(x, y, g_Turtles[turtle_which].Position.x, g_Turtles[turtle_which].Position.y));
       }
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *ltowardsxyz(NODE *args)
@@ -1338,7 +1338,7 @@ NODE *ltowardsxyz(NODE *args)
          make_floatnode(Rz));
       }
 
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lpos(NODE *)
@@ -1387,7 +1387,7 @@ NODE *lhome(NODE *)
    g_Turtles[turtle_which].Matrix.e32 = 0.0;
    g_Turtles[turtle_which].Matrix.e33 = 1.0;
    draw_turtle(true);
-   return (UNBOUND);
+   return Unbound;
    }
 
 void cs_helper(int centerp, int clearp)
@@ -1447,13 +1447,13 @@ NODE *lclearscreen(NODE *)
    {
    cs_helper(TRUE, TRUE);
 //   InvalidateControls();
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lclean(NODE *)
    {
    cs_helper(FALSE, TRUE);
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lsetpos(NODE *args)
@@ -1464,7 +1464,7 @@ NODE *lsetpos(NODE *args)
       {
       setpos_helper(car(arg), cadr(arg), NIL);
       }
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lsetposxyz(NODE *args)
@@ -1475,7 +1475,7 @@ NODE *lsetposxyz(NODE *args)
       {
       setpos_helper(car(arg), cadr(arg), cadr(cdr(arg)));
       }
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lsetxy(NODE *args)
@@ -1488,7 +1488,7 @@ NODE *lsetxy(NODE *args)
       {
       setpos_helper(xnode, ynode, NIL);
       }
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lsetxyz(NODE *args)
@@ -1502,7 +1502,7 @@ NODE *lsetxyz(NODE *args)
       {
       setpos_helper(xnode, ynode, znode);
       }
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lsetx(NODE *args)
@@ -1514,7 +1514,7 @@ NODE *lsetx(NODE *args)
       {
       setpos_helper(xnode, NIL, NIL);
       }
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lsety(NODE *args)
@@ -1526,7 +1526,7 @@ NODE *lsety(NODE *args)
       {
       setpos_helper(NIL, ynode, NIL);
       }
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lsetz(NODE *args)
@@ -1538,7 +1538,7 @@ NODE *lsetz(NODE *args)
       {
       setpos_helper(NIL, NIL, znode);
       }
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lwrap(NODE *)
@@ -1547,7 +1547,7 @@ NODE *lwrap(NODE *)
    cs_helper(TRUE, FALSE);
    current_mode = wrapmode;
    draw_turtle(true);
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lfence(NODE *)
@@ -1555,7 +1555,7 @@ NODE *lfence(NODE *)
    draw_turtle(false);
    current_mode = fencemode;
    draw_turtle(true);
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lwindow(NODE *)
@@ -1564,7 +1564,7 @@ NODE *lwindow(NODE *)
    current_mode = windowmode;
    draw_turtle(true);
 
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lsetlight(NODE *args)
@@ -1584,7 +1584,7 @@ NODE *lsetlight(NODE *args)
          }
       }
 
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *llight(NODE *)
@@ -1610,14 +1610,14 @@ NODE *lpolystart(NODE *)
       bPolyFlag = true;
       }
 
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lpolyview(NODE *)
    {
    if (ThreeD.Tree) ThreeD.View();
 
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lpolyend(NODE *)
@@ -1651,7 +1651,7 @@ NODE *lpolyend(NODE *)
    ThePolygon = NULL;
    bPolyFlag = false;
 
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lperspective(NODE *)
@@ -1713,7 +1713,7 @@ NODE *lperspective(NODE *)
      }
 
    draw_turtle(true);
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lfill(NODE *arg)
@@ -1734,7 +1734,7 @@ NODE *lfill(NODE *arg)
    logofill(bOld);
    MainWindowx->ScreenWindow->Invalidate(false);
    draw_turtles(true);
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *llabelsize(NODE *arg)
@@ -1750,7 +1750,7 @@ NODE *llabelsize(NODE *arg)
          make_intnode((FIXNUM) size.cx),
          make_intnode((FIXNUM) size.cy));
       }
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *llabel(NODE *arg)
@@ -1771,22 +1771,22 @@ NODE *llabel(NODE *arg)
       record_next_move = TRUE;
       draw_turtle(true);
       }
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *ltextscreen(NODE *)
    {
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lsplitscreen(NODE *)
    {
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lfullscreen()
    {
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lpendownp(NODE *)
@@ -1815,7 +1815,7 @@ NODE *lpendown(NODE *)
    {
    pen_vis = 0;
    save_vis();
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lpenup(NODE *)
@@ -1823,7 +1823,7 @@ NODE *lpenup(NODE *)
    if (pen_vis == 0)
       pen_vis--;
    save_vis();
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lpenpaint(NODE *)
@@ -1893,7 +1893,7 @@ NODE *lsetpencolor(NODE *args)
       bIndexMode = true;
       }
 
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lsetfloodcolor(NODE *args)
@@ -1941,7 +1941,7 @@ NODE *lsetfloodcolor(NODE *args)
       bIndexMode = true;
       }
 
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lsetscreencolor(NODE *args)
@@ -1989,7 +1989,7 @@ NODE *lsetscreencolor(NODE *args)
       bIndexMode = true;
       }
 
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lsetpensize(NODE *args)
@@ -2006,7 +2006,7 @@ NODE *lsetpensize(NODE *args)
          ((nodetype(    cadr(arg) ) == FLOAT) ? (FIXNUM) getfloat(    cadr(arg) ) : getint(    cadr(arg)) ));
       save_size();
       }
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lsetpenpattern(NODE *args)
@@ -2025,7 +2025,7 @@ NODE *lsetpenpattern(NODE *args)
       }
 
    deref(arg);
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lsetscrunch(NODE *args)
@@ -2052,7 +2052,7 @@ NODE *lsetscrunch(NODE *args)
       }
 #endif
       }
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lbuttonp(NODE *)
@@ -2077,7 +2077,7 @@ NODE *ltone(NODE *args)
       tone(pitch, duration);
       }
 
-   return (UNBOUND);
+   return Unbound;
    }
 
 /************************************************************/
@@ -2246,13 +2246,13 @@ void save_string(char /* s */[])
 NODE *lrefresh()
    {
    refresh_p = TRUE;
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lnorefresh()
    {
    refresh_p = FALSE;
-   return (UNBOUND);
+   return Unbound;
    }
 
 void redraw_graphics()

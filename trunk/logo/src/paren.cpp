@@ -88,8 +88,8 @@ void make_tree_from_body(NODE *body)
             settree__tree(body, tree);
          else
             setcdr(end_ptr, tree);
-         if (generation__tree(car(body_ptr)) == UNBOUND)
-            setgeneration__tree(body, UNBOUND);
+         if (generation__tree(car(body_ptr)) == Unbound)
+            setgeneration__tree(body, Unbound);
          untreeify(car(body_ptr));
          while (cdr(tree) != NIL)
             tree = cdr(tree);
@@ -121,12 +121,12 @@ void make_tree(NODE *list)
    if (!runparsed(list)) make_runparse(list);
    tree_dk_how = FALSE;
    tree = paren_line(parsed__runparse(list));
-   if (tree != NIL && tree != UNBOUND)
+   if (tree != NIL && tree != Unbound)
       {
       settype(list, TREE);
       settree__tree(list, tree);
       if (tree_dk_how || stopping_flag == THROWING)
-         setgeneration__tree(list, UNBOUND);
+         setgeneration__tree(list, Unbound);
       }
    }
 
@@ -144,7 +144,7 @@ NODE *paren_line(NODE *line)
 
    if (line == NIL) return line;
    retval = paren_expr(&line, FALSE);
-   if (NOT_THROWING && retval != UNBOUND)
+   if (NOT_THROWING && retval != Unbound)
       {
       retval = paren_infix(retval, &line, -1, FALSE);
       retval = cons(retval, paren_line(line));
@@ -231,7 +231,7 @@ NODE *paren_expr(NODE **expr, bool inparen)
                ifnode = &first;
                }
             retval = gather_args(proc, expr, inparen, ifnode);
-            if (retval != UNBOUND)
+            if (retval != Unbound)
                {
                retval = cons(first, retval);
                }

@@ -37,7 +37,7 @@ FILE *open_file(NODE *arg, const char *access)
 
    ref(arg);
    arg = reref(arg, cnv_node_to_strnode(arg));
-   if (arg == UNBOUND) 
+   if (arg == Unbound) 
       {
       return NULL;
       }
@@ -118,7 +118,7 @@ NODE *ldribble(NODE *arg)
          }
       }
 
-   return UNBOUND;
+   return Unbound;
    }
 
 NODE *lnodribble(NODE *)
@@ -128,7 +128,7 @@ NODE *lnodribble(NODE *)
       fclose(dribblestream);
       dribblestream = NULL;
       }
-   return (UNBOUND);
+   return Unbound;
    }
 
 FILE *find_file(NODE *arg, bool remove)
@@ -197,7 +197,7 @@ open_helper(
          err_logo(FILE_ERROR, make_static_strnode("I can't open that file"));
          }
       }
-   return UNBOUND;
+   return Unbound;
    }
 
 NODE *lopenread(NODE *args)
@@ -231,9 +231,9 @@ NODE *lclose(NODE *arg)
    
    ref(arg);
    arg = reref(arg, cnv_node_to_strnode(arg));
-   if (arg == UNBOUND) 
+   if (arg == Unbound) 
       {
-      return (NULL); // why not UNBOUND?
+      return (NULL); // why not Unbound?
       }
 
    char * fnstr = (char *) malloc((size_t) getstrlen(arg) + 1);
@@ -281,7 +281,7 @@ NODE *lclose(NODE *arg)
    deref(arg);
    free(fnstr);
 
-   return UNBOUND;
+   return Unbound;
    }
 
 NODE *lsetwrite(NODE *arg)
@@ -303,7 +303,7 @@ NODE *lsetwrite(NODE *arg)
       {
       err_logo(FILE_ERROR, make_static_strnode("File not open"));
       }
-   return UNBOUND;
+   return Unbound;
    }
 
 NODE *lsetread(NODE *arg)
@@ -323,7 +323,7 @@ NODE *lsetread(NODE *arg)
       }
    else
       err_logo(FILE_ERROR, make_static_strnode("File not open"));
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lreader(NODE *)
@@ -341,12 +341,12 @@ NODE *lerasefile(NODE *arg)
    char *fnstr;
 
    arg = cnv_node_to_strnode(car(arg));
-   if (arg == UNBOUND) return (UNBOUND);
+   if (arg == Unbound) return Unbound;
    fnstr = (char *) malloc((size_t) getstrlen(arg) + 1);
    strnzcpy(fnstr, getstrptr(arg), getstrlen(arg));
    unlink(fnstr);
    free(fnstr);
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lsave(NODE *arg)
@@ -384,7 +384,7 @@ NODE *lsave(NODE *arg)
       }
 
    writestream = tmp;
-   return (UNBOUND);
+   return Unbound;
    }
 
 void runstartup(NODE *oldst)
@@ -457,7 +457,7 @@ void silent_load(NODE *arg, char *prefix)
    if (arg != NIL)
       {
       arg = cnv_node_to_strnode(arg);
-      if (arg == UNBOUND) return;
+      if (arg == Unbound) return;
 #ifdef unix
       if (prefix != NULL) strcat(load_path, "/");
 #endif
@@ -519,7 +519,7 @@ NODE *lload(NODE *arg)
          "You have not saved to disk", 
          MB_OKCANCEL | MB_ICONQUESTION) == IDCANCEL) 
          {
-         return (UNBOUND);
+         return Unbound;
          }
       }
 
@@ -555,7 +555,7 @@ NODE *lload(NODE *arg)
    deref(current_line);
    current_line = tmp_line;
    IsDirty = IsDirtySave;
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lreadlist(NODE *)
@@ -648,7 +648,7 @@ NODE *lreadchars(NODE *args)
    NODETYPES type = STRING;
 
    c = (unsigned int) getint(pos_int_arg(args));
-   if (stopping_flag == THROWING) return UNBOUND;
+   if (stopping_flag == THROWING) return Unbound;
    charmode_on();
    input_blocking++;
 #ifndef TIOCSTI
@@ -663,7 +663,7 @@ NODE *lreadchars(NODE *args)
       }
    input_blocking = 0;
 #ifndef TIOCSTI
-   if (stopping_flag == THROWING) return (UNBOUND);
+   if (stopping_flag == THROWING) return Unbound;
 #endif
    if (feof(readstream))
       {
@@ -747,7 +747,7 @@ NODE *lsetreadpos(NODE *arg)
       {
       fseek(readstream, getint(val), 0);
       }
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lwritepos(NODE *)
@@ -763,6 +763,6 @@ NODE *lsetwritepos(NODE *arg)
       {
       fseek(writestream, getint(val), 0);
       }
-   return (UNBOUND);
+   return Unbound;
    }
 

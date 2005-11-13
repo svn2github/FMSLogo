@@ -114,7 +114,7 @@ NODE *lsetactivearea(NODE *arg)
          {
          MainWindowx->CommandWindow->MessageBox("Bad argument", "Active Area");
          err_logo(STOP_ERROR, NIL);
-         return (UNBOUND);
+         return Unbound;
          }
 
       char szWinLocStr[WININISIZ];
@@ -140,7 +140,7 @@ NODE *lsetactivearea(NODE *arg)
          }
       }
 
-   return UNBOUND;
+   return Unbound;
    }
 
 NODE *lactivearea(NODE *)

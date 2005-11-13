@@ -165,7 +165,7 @@ NODE *lpushdir(NODE *arg)
       printfx("Pushed to %s\n", fname);
       }
 
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lpopdir(NODE *)
@@ -176,7 +176,7 @@ NODE *lpopdir(NODE *)
    getcwd(fname, 80);
    printfx("Popped to %s\n", fname);
 
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lmkdir(NODE *arg)
@@ -195,7 +195,7 @@ NODE *lmkdir(NODE *arg)
       printfx("Now in newly created directory %s\n", fname);
       }
 
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lrmdir(NODE *arg)
@@ -214,7 +214,7 @@ NODE *lrmdir(NODE *arg)
       printfx("Logo directory %s removed\n", fname);
       }
 
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lfiles(NODE *)

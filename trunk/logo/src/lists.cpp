@@ -25,7 +25,7 @@ NODE *bfable_arg(NODE *args)
    {
    NODE *arg = car(args);
 
-   while ((arg == NIL || arg == UNBOUND || arg == Null_Word ||
+   while ((arg == NIL || arg == Unbound || arg == Null_Word ||
             nodetype(arg) == ARRAY) && NOT_THROWING)
       {
       setcar(args, err_logo(BAD_DATA, arg));
@@ -48,7 +48,7 @@ NODE *list_arg(NODE *args)
 
 NODE *lbutfirst(NODE *args)
    {
-   NODE *val = UNBOUND;
+   NODE *val = Unbound;
 
    NODE * arg = bfable_arg(args);
    if (NOT_THROWING)
@@ -80,7 +80,7 @@ NODE *lbutfirst(NODE *args)
 
 NODE *lbutlast(NODE *args)
    {
-   NODE *val = UNBOUND, *lastnode, *tnode;
+   NODE *val = Unbound, *lastnode, *tnode;
 
    NODE * arg = bfable_arg(args);
    if (NOT_THROWING)
@@ -129,7 +129,7 @@ NODE *lbutlast(NODE *args)
 
 NODE *lfirst(NODE *args)
    {
-   NODE *val = UNBOUND;
+   NODE *val = Unbound;
 
    if (nodetype(car(args)) == ARRAY)
       {
@@ -155,7 +155,7 @@ NODE *lfirst(NODE *args)
 
 NODE *lfirsts(NODE *args)
    {
-   NODE *val = UNBOUND, *arg, *argp, *tail;
+   NODE *val = Unbound, *arg, *argp, *tail;
 
    arg = list_arg(args);
    if (car(args) == NIL) return (NIL);
@@ -172,7 +172,7 @@ NODE *lfirsts(NODE *args)
       if (stopping_flag == THROWING)
          {
          gcref(val);
-         return UNBOUND;
+         return Unbound;
          }
       }
    return (val);
@@ -180,7 +180,7 @@ NODE *lfirsts(NODE *args)
 
 NODE *lbfs(NODE *args)
    {
-   NODE *val = UNBOUND, *arg, *argp, *tail;
+   NODE *val = Unbound, *arg, *argp, *tail;
 
    arg = list_arg(args);
    if (car(args) == NIL) return (NIL);
@@ -198,7 +198,7 @@ NODE *lbfs(NODE *args)
       if (stopping_flag == THROWING)
          {
          gcref(val);
-         return UNBOUND;
+         return Unbound;
          }
       }
    return (val);
@@ -206,7 +206,7 @@ NODE *lbfs(NODE *args)
 
 NODE *llast(NODE *args)
    {
-   NODE *val = UNBOUND;
+   NODE *val = Unbound;
 
    NODE * arg = bfable_arg(args);
    if (NOT_THROWING)
@@ -250,7 +250,7 @@ NODE *char_arg(NODE *args)
    NODE *arg = car(args), *val;
 
    val = cnv_node_to_strnode(arg);
-   while ((val == UNBOUND || getstrlen(val) != 1) && NOT_THROWING)
+   while ((val == Unbound || getstrlen(val) != 1) && NOT_THROWING)
       {
       gcref(val);
       setcar(args, err_logo(BAD_DATA, arg));
@@ -264,7 +264,7 @@ NODE *char_arg(NODE *args)
 NODE *lascii(NODE *args)
    {
    FIXNUM i;
-   NODE *val = UNBOUND, *arg;
+   NODE *val = Unbound, *arg;
 
    arg = char_arg(args);
    if (NOT_THROWING)
@@ -278,7 +278,7 @@ NODE *lascii(NODE *args)
 NODE *lrawascii(NODE *args)
    {
    FIXNUM i;
-   NODE *val = UNBOUND, *arg;
+   NODE *val = Unbound, *arg;
 
    arg = char_arg(args);
    if (NOT_THROWING)
@@ -300,12 +300,12 @@ NODE *lbackslashedp(NODE *args)
       i = *getstrptr(arg);
       return torf(getparity(i));
       }
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lchar(NODE *args)
    {
-   NODE *val = UNBOUND;
+   NODE *val = Unbound;
 
    NODE * arg = pos_int_arg(args);
    if (NOT_THROWING)
@@ -359,12 +359,12 @@ NODE *lfput(NODE *args)
    if (NOT_THROWING)
       return cons(arg, lst);
    else
-      return UNBOUND;
+      return Unbound;
    }
 
 NODE *llput(NODE *args)
    {
-   NODE *lst, *arg, *val = UNBOUND, *lastnode = NIL, *tnode = NIL;
+   NODE *lst, *arg, *val = Unbound, *lastnode = NIL, *tnode = NIL;
 
    arg = car(args);
    lst = list_arg(cdr(args));
@@ -399,7 +399,7 @@ NODE *string_arg(NODE *args)
    NODE *arg = car(args), *val;
 
    val = cnv_node_to_strnode(arg);
-   while (val == UNBOUND && NOT_THROWING)
+   while (val == Unbound && NOT_THROWING)
       {
       gcref(val);
       setcar(args, err_logo(BAD_DATA, arg));
@@ -442,7 +442,7 @@ NODE *lword(NODE *args)
       }
    else
       {
-      val = UNBOUND;
+      val = Unbound;
       }
 
    return val;
@@ -484,7 +484,7 @@ NODE *lsentence(NODE *args)
    if (stopping_flag == THROWING)
       {
       gcref(val);
-      return UNBOUND;
+      return Unbound;
       }
    return (val);
    }
@@ -492,7 +492,7 @@ NODE *lsentence(NODE *args)
 NODE *lwordp(NODE *arg)
    {
    arg = car(arg);
-   return torf(arg != UNBOUND && !aggregate(arg));
+   return torf(arg != Unbound && !aggregate(arg));
    }
 
 NODE *llistp(NODE *arg)
@@ -504,7 +504,7 @@ NODE *llistp(NODE *arg)
 NODE *lnumberp(NODE *arg)
    {
    setcar(arg, cnv_node_to_numnode(car(arg)));
-   return torf(car(arg) != UNBOUND);
+   return torf(car(arg) != Unbound);
    }
 
 NODE *larrayp(NODE *arg)
@@ -577,8 +577,8 @@ NODE *memberp_helper(NODE *args, bool notp, bool substr)
       setcar(args, cnv_node_to_strnode(obj1));
       obj1 = car(args);
 
-      if (obj1 != UNBOUND && 
-          obj2 != UNBOUND &&
+      if (obj1 != Unbound && 
+          obj2 != Unbound &&
           getstrlen(obj1) <= getstrlen(obj2) &&
           (substr || (getstrlen(obj1) == 1)))
          {
@@ -659,7 +659,7 @@ NODE *integer_arg(NODE *args)
    setcar(args, val);
    if (nodetype(val) == INT) return (val);
 
-   return UNBOUND;
+   return Unbound;
    }
 
 FIXNUM int_arg(NODE *args)
@@ -690,7 +690,7 @@ NODE *litem(NODE *args)
          if (i <= 0)
             {
             err_logo(BAD_DATA_UNREC, val);
-            return UNBOUND;
+            return Unbound;
             }
          while (--i > 0)
             {
@@ -698,7 +698,7 @@ NODE *litem(NODE *args)
             if (obj == NIL)
                {
                err_logo(BAD_DATA_UNREC, val);
-               return UNBOUND;
+               return Unbound;
                }
             }
          return car(obj);
@@ -709,7 +709,7 @@ NODE *litem(NODE *args)
          if (i < 0 || i >= getarrdim(obj))
             {
             err_logo(BAD_DATA_UNREC, val);
-            return UNBOUND;
+            return Unbound;
             }
          return (getarrptr(obj))[i];
          }
@@ -718,14 +718,14 @@ NODE *litem(NODE *args)
          if (i <= 0)
             {
             err_logo(BAD_DATA_UNREC, val);
-            return UNBOUND;
+            return Unbound;
             }
          setcar(cdr(args), cnv_node_to_strnode(obj));
          obj = cadr(args);
          if (i > getstrlen(obj))
             {
             err_logo(BAD_DATA_UNREC, val);
-            return UNBOUND;
+            return Unbound;
             }
          return make_strnode(
             getstrptr(obj) + i - 1,
@@ -734,7 +734,7 @@ NODE *litem(NODE *args)
             strnzcpy);
          }
       }
-   return (UNBOUND);
+   return Unbound;
    }
 
 int circular(NODE *arr, NODE *newx)
@@ -801,7 +801,7 @@ NODE *setitem_helper(NODE *args, bool safe)
             }
          }
       }
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lsetitem(NODE *args)
@@ -830,7 +830,7 @@ NODE *larray(NODE *args)
       setarrorg(arg, o);
       return arg;
       }
-   return UNBOUND;
+   return Unbound;
    }
 
 FLONUM float_arg(NODE *args)
@@ -861,7 +861,7 @@ NODE *lform(NODE *args)
       {
       NODE * error_node = err_logo(BAD_DATA, car(width_arg));
       setcar(args, error_node);
-      return UNBOUND;
+      return Unbound;
       }
 
    int precision = (int) int_arg(cddr(args));
@@ -884,12 +884,12 @@ NODE *lform(NODE *args)
          strnzcpy);
       }
 
-   return UNBOUND;
+   return Unbound;
    }
 
 NODE *lscan(NODE */*args*/)
    {
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *l_setfirst(NODE *args)
@@ -904,7 +904,7 @@ NODE *l_setfirst(NODE *args)
       list = car(args);
       }
    setcar(list, newval);
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *l_setbf(NODE *args)
@@ -919,6 +919,6 @@ NODE *l_setbf(NODE *args)
       list = car(args);
       }
    setcdr(list, newval);
-   return (UNBOUND);
+   return Unbound;
    }
 

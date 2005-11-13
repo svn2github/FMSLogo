@@ -76,7 +76,7 @@ NODE *err_logo(ERR_TYPES error_type, NODE *error_desc)
    bool warning = false;
    bool uplevel = false;
    NODE *err_act;
-   NODE *val = UNBOUND;
+   NODE *val = Unbound;
 
    ref(error_desc);
    switch (error_type)
@@ -291,7 +291,7 @@ NODE *err_logo(ERR_TYPES error_type, NODE *error_desc)
            break;
 
        case USER_ERR:
-           if (error_desc == UNBOUND)
+           if (error_desc == Unbound)
               {
               err_mesg = reref(
                  err_mesg,
@@ -395,7 +395,7 @@ NODE *err_logo(ERR_TYPES error_type, NODE *error_desc)
    if (warning)
       {
       err_print();
-      return (UNBOUND);
+      return Unbound;
       }
 
    err_act = vref(valnode__caseobj(Erract));
@@ -413,19 +413,19 @@ NODE *err_logo(ERR_TYPES error_type, NODE *error_desc)
          val_status = sv_val_status;
          setvalnode__caseobj(Erract, err_act);
          deref(err_act);
-         if (recoverable == TRUE && val != UNBOUND)
+         if (recoverable == TRUE && val != Unbound)
             {
             return (unref(val));
             }
-         else if (recoverable == FALSE && val != UNBOUND)
+         else if (recoverable == FALSE && val != Unbound)
             {
             ndprintf(stdout, "You don't say what to do with %s\n", val);
-            val = reref(val, UNBOUND);
+            val = reref(val, Unbound);
             throw_node = reref(throw_node, Toplevel);
             }
          else
             {
-            return (UNBOUND);
+            return Unbound;
             }
          }
       else
@@ -440,7 +440,7 @@ NODE *err_logo(ERR_TYPES error_type, NODE *error_desc)
       throw_node = reref(throw_node, Error);
       }
    stopping_flag = THROWING;
-   output_node = UNBOUND;
+   output_node = Unbound;
    return (unref(val));
    }
 
@@ -463,7 +463,7 @@ void bcopy(char *from, char *to, int len)
 
 NODE *lpause(NODE*)
    {
-   NODE *elist = NIL, *val = UNBOUND, *uname = NIL;
+   NODE *elist = NIL, *val = Unbound, *uname = NIL;
    int sav_input_blocking;
    int sv_val_status;
 #ifndef TIOCSTI
@@ -516,7 +516,7 @@ NODE *lpause(NODE*)
             if (compare_node(throw_node, Pause, TRUE) == 0)
                {
                val = vref(output_node);
-               output_node = reref(output_node, UNBOUND);
+               output_node = reref(output_node, Unbound);
                stopping_flag = RUN;
                deref(elist);
 #ifndef TIOCSTI
@@ -562,7 +562,7 @@ NODE *lcontinue(NODE *args)
    if (args != NIL)
       output_node = reref(output_node, car(args));
    else
-      output_node = reref(output_node, UNBOUND);
-   return (UNBOUND);
+      output_node = reref(output_node, Unbound);
+   return Unbound;
    }
 

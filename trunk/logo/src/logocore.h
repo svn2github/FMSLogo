@@ -35,7 +35,6 @@ typedef struct logo_node * (*logofunc) (struct logo_node *);
 #define WORDSIZE        32             /* bits per int                        */
 
 #define NIL             ((NODE *) 0)
-#define UNBOUND         Unbound
 #define UNDEFINED       Unbound
 #define HASH_LEN        1021           /* a prime number                      */
 #define SEG_SIZE        1000           /* 1 for debugging internal leaks      */

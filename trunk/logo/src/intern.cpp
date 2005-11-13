@@ -75,7 +75,7 @@ NODE *make_instance(NODE *casend, NODE *lownd)
 
    /* Called only if arg isn't already in hash table */
 
-   obj = make_object(lownd, UNDEFINED, UNBOUND, NIL, casend);
+   obj = make_object(lownd, UNDEFINED, Unbound, NIL, casend);
    hashind = hash(getstrptr(lownd), getstrlen(lownd));
    push(obj, (hash_table[hashind]));
    return car(caselist__object(obj));

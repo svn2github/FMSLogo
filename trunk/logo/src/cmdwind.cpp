@@ -566,7 +566,7 @@ void TMyCommandWindow::ChooseNewFont()
 NODE *lhalt(NODE *)
    {
    MainWindowx->CommandWindow->PostMessage(WM_COMMAND, ID_HALT, ID_HALT);
-   return UNBOUND;
+   return Unbound;
    }
 
 NODE *lyield(NODE *)
@@ -577,7 +577,7 @@ NODE *lyield(NODE *)
    yield_flag = 1;
    //   MainWindowx->CommandWindow->
    //   SendDlgItemMsg(ID_YIELD, WM_SETTEXT, 0, (DWORD) "NoYield");
-   return UNBOUND;
+   return Unbound;
    }
 
 NODE *lnoyield(NODE *)
@@ -588,7 +588,7 @@ NODE *lnoyield(NODE *)
    yield_flag = 0;
    //   MainWindowx->CommandWindow->
    //   SendDlgItemMsg(ID_YIELD, WM_SETTEXT, 0, (DWORD) "Yield");
-   return UNBOUND;
+   return Unbound;
    }
 
 /* Editbox members */

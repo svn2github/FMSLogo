@@ -212,9 +212,9 @@ void real_print_node(FILE *strm, NODE *nd, int depth, int width)
       print_char(strm, '[');
       print_char(strm, ']');
       }
-   else if (nd == UNBOUND)
+   else if (nd == Unbound)
       {
-      ndprintf(strm, "UNBOUND");
+      ndprintf(strm, "Unbound");
       }
    else if ((ndty = nodetype(nd)) & NT_PRIM)
       {
@@ -366,7 +366,7 @@ NODE *lshow(NODE *args)
    {
    print_helper(writestream, args);
    new_line(writestream);
-   return (UNBOUND);
+   return Unbound;
    }
 
 static
@@ -392,13 +392,13 @@ void type_helper(NODE *args, bool sp)
 NODE *ltype(NODE *args)
    {
    type_helper(args, false);
-   return UNBOUND;
+   return Unbound;
    }
 
 NODE *lprint(NODE *args)
    {
    type_helper(args, true);
    new_line(writestream);
-   return UNBOUND;
+   return Unbound;
    }
 

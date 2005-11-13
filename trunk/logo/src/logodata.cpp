@@ -336,7 +336,7 @@ make_strnode(
    if (strhead == NULL)
       {
       err_logo(OUT_OF_MEM, NIL);
-      return UNBOUND;
+      return Unbound;
       }
 
    // set the "string pointer" to just after the header
@@ -372,7 +372,7 @@ make_strnode_from_wordlist(
    if (strhead == NULL)
       {
       err_logo(OUT_OF_MEM, NIL);
-      return UNBOUND;
+      return Unbound;
       }
 
    // set the "string pointer" to just after the header
@@ -438,7 +438,7 @@ NODE *make_quote(NODE *qnd)
 
 NODE *maybe_quote(NODE *nd)
    {
-   if (nd == UNBOUND || aggregate(nd) || numberp(nd)) return (nd);
+   if (nd == Unbound || aggregate(nd) || numberp(nd)) return (nd);
    return (make_quote(nd));
    }
 
@@ -485,7 +485,7 @@ NODE *cnv_node_to_numnode(NODE *ndi)
    if (is_number(ndi))
       return (ndi);
    ndi = cnv_node_to_strnode(ndi);
-   if (ndi == UNBOUND) return (UNBOUND);
+   if (ndi == Unbound) return Unbound;
    if (((getstrlen(ndi)) < MAX_NUMBER) && (dr = numberp(ndi)))
       {
       if (backslashed(ndi))
@@ -510,7 +510,7 @@ NODE *cnv_node_to_numnode(NODE *ndi)
    else
       {
       gcref(ndi);
-      return (UNBOUND);
+      return Unbound;
       }
    }
 
@@ -518,9 +518,9 @@ NODE *cnv_node_to_strnode(NODE *nd)
    {
    char s[MAX_NUMBER];
 
-   if (nd == UNBOUND || aggregate(nd))
+   if (nd == Unbound || aggregate(nd))
       {
-      return (UNBOUND);
+      return Unbound;
       }
    switch (nodetype(nd))
       {
@@ -633,7 +633,7 @@ NODE *make_array(int len)
       if (data == NULL)
          {
          err_logo(OUT_OF_MEM, NIL);
-         return UNBOUND;
+         return Unbound;
          }
       setarrptr(node, data);
       while (--len >= 0)
@@ -651,7 +651,7 @@ NODE *llowercase(NODE *args)
       {
       return make_strnode(getstrptr(arg), getstrlen(arg), nodetype(arg), low_strnzcpy);
       }
-   return UNBOUND;
+   return Unbound;
    }
 
 NODE *luppercase(NODE *args)
@@ -661,7 +661,7 @@ NODE *luppercase(NODE *args)
       {
       return make_strnode(getstrptr(arg), getstrlen(arg), nodetype(arg), cap_strnzcpy);
       }
-   return UNBOUND;
+   return Unbound;
    }
 
 /* property list stuff */
@@ -729,7 +729,7 @@ NODE *lpprop(NODE *args)
       else
          setplist__caseobj(plname, cons(pname, cons(newval, plist)));
       }
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lremprop(NODE *args)
@@ -758,7 +758,7 @@ NODE *lremprop(NODE *args)
             }
          }
       }
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *copy_list(NODE *arg)

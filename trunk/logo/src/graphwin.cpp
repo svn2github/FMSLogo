@@ -263,7 +263,7 @@ NODE *lgifsave(NODE *args)
       gifsave_helper(textbuf, iDelay, bAppendMode, iLoop, iTrans, iMaxColorDepth);
       }
 
-   return UNBOUND;
+   return Unbound;
    }
 
 NODE *lbitsave(NODE *args)
@@ -288,7 +288,7 @@ NODE *lbitsave(NODE *args)
       MainWindowx->DumpBitmapFile(textbuf, iMaxBitCount);
       }
 
-   return UNBOUND;
+   return Unbound;
    }
 
 void gifload_helper(char *textbuf, DWORD &dwPixelWidth, DWORD &dwPixelHeight)
@@ -320,7 +320,7 @@ NODE *lgifload(NODE *arg)
       gifload_helper(textbuf, dwPixelWidth, dwPixelHeight);
       }
 
-   return UNBOUND;
+   return Unbound;
    }
 
 NODE *lgifsize(NODE *args)
@@ -341,7 +341,7 @@ NODE *lgifsize(NODE *args)
          make_intnode((FIXNUM) dwPixelHeight));
       }
 
-   return UNBOUND;
+   return Unbound;
    }
 
 NODE *lbitload(NODE *arg)
@@ -358,7 +358,7 @@ NODE *lbitload(NODE *arg)
       MainWindowx->LoadBitmapFile(textbuf, dwPixelWidth, dwPixelHeight);
       }
 
-   return UNBOUND;
+   return Unbound;
    }
 
 NODE *lbitloadsize(NODE *arg)
@@ -379,7 +379,7 @@ NODE *lbitloadsize(NODE *arg)
          make_intnode((FIXNUM) dwPixelHeight));
       }
 
-   return UNBOUND;
+   return Unbound;
    }
 
 NODE *lbitsize(NODE *)
@@ -483,7 +483,7 @@ NODE *lsetpixel(NODE *args)
    POINT dest;
    if (!WorldCoordinateToScreenCoordinate(g_Turtles[turtle_which].Position, dest))
       {
-      return UNBOUND;
+      return Unbound;
       }
 
    // get args
@@ -559,7 +559,7 @@ NODE *lsetpixel(NODE *args)
       draw_turtle(true);
       }
 
-   return UNBOUND;
+   return Unbound;
    }
 
 static
@@ -883,7 +883,7 @@ NODE *lclearpalette(NODE *)
          }
       }
 
-   return UNBOUND;
+   return Unbound;
    }
 
 NODE *lstatus(NODE *)
@@ -896,7 +896,7 @@ NODE *lstatus(NODE *)
       MainWindowx->MyPopupStatus();
       JustDidEdit = true;
       }
-   return UNBOUND;
+   return Unbound;
    }
 
 NODE *lnostatus(NODE *)
@@ -906,7 +906,7 @@ NODE *lnostatus(NODE *)
       {
       MainWindowx->MyPopupStatusKill();
       }
-   return UNBOUND;
+   return Unbound;
    }
 
 
@@ -1020,7 +1020,7 @@ NODE *lzoom(NODE *arg)
 
    zoom_helper(temp_zoom);
 
-   return UNBOUND;
+   return Unbound;
    }
 
 
@@ -1031,7 +1031,7 @@ NODE *lbitblock(NODE *arg)
    POINT dest;
    if (!WorldCoordinateToScreenCoordinate(g_Turtles[turtle_which].Position, dest))
       {
-      return UNBOUND;
+      return Unbound;
       }
 
    // get args
@@ -1116,7 +1116,7 @@ NODE *lbitblock(NODE *arg)
 
       }
 
-   return UNBOUND;
+   return Unbound;
    }
 
 NODE *lbitmode(NODE *)
@@ -1166,7 +1166,7 @@ NODE *lsetbitmode(NODE *arg)
            }
       }
 
-   return UNBOUND;
+   return Unbound;
    }
 
 NODE *lturtlemode(NODE *)
@@ -1227,7 +1227,7 @@ NODE *lsetturtlemode(NODE *arg)
       draw_turtle(true);
       }
 
-   return UNBOUND;
+   return Unbound;
    }
 
 NODE *lbitindex(NODE *arg)
@@ -1254,7 +1254,7 @@ NODE *lsetbitindex(NODE *arg)
       err_logo(STOP_ERROR, NIL);
       }
 
-   return (UNBOUND);
+   return Unbound;
    }
 
 
@@ -1417,7 +1417,7 @@ BitCopyOrCut(NODE *arg, bool IsCut)
    POINT dest;
    if (!WorldCoordinateToScreenCoordinate(g_Turtles[turtle_which].Position, dest))
       {
-      return UNBOUND;
+      return Unbound;
       }
 
    int TempWidth = getint(pos_int_arg(arg));
@@ -1473,7 +1473,7 @@ BitCopyOrCut(NODE *arg, bool IsCut)
                "Cut failed, Possibly not enough Memory",
                "Error");
             err_logo(STOP_ERROR, NIL);
-            return UNBOUND;
+            return Unbound;
             }
 
          HDC TempMemDC = CreateCompatibleDC(ScreenDC);
@@ -1561,7 +1561,7 @@ BitCopyOrCut(NODE *arg, bool IsCut)
          }
       }
 
-   return UNBOUND;
+   return Unbound;
    }
 
 
@@ -1617,7 +1617,7 @@ NODE *lbitfit(NODE *arg)
             {
             MainWindowx->CommandWindow->MessageBox("Fit failed, Possibly not enough Memory", "Error");
             err_logo(STOP_ERROR, NIL);
-            return (UNBOUND);
+            return Unbound;
             }
 
          HDC TempMemDC = CreateCompatibleDC(ScreenDC);
@@ -1681,7 +1681,7 @@ NODE *lbitfit(NODE *arg)
             }
          }
       }
-   return UNBOUND;
+   return Unbound;
    }
 
 NODE *lbitpaste(NODE *)
@@ -1691,7 +1691,7 @@ NODE *lbitpaste(NODE *)
    POINT dest;
    if (!WorldCoordinateToScreenCoordinate(g_Turtles[turtle_which].Position, dest))
       {
-      return UNBOUND;
+      return Unbound;
       }
 
    if (NOT_THROWING)
@@ -1787,7 +1787,7 @@ NODE *lbitpaste(NODE *)
          }
       }
 
-   return UNBOUND;
+   return Unbound;
    }
 
 NODE *lbitpastetoindex(NODE *arg)
@@ -1807,7 +1807,7 @@ NODE *lbitpastetoindex(NODE *arg)
       {
       MainWindowx->CommandWindow->MessageBox("BitMap Index out of range", "Error");
       err_logo(STOP_ERROR, NIL);
-      return UNBOUND;
+      return Unbound;
       }
 
    if (!CutBmp[i].CutFlag)
@@ -1816,7 +1816,7 @@ NODE *lbitpastetoindex(NODE *arg)
          "BitMap at Index must be initialized with a bitmap",
          "Error");
       err_logo(STOP_ERROR, NIL);
-      return UNBOUND;
+      return Unbound;
       }
 
    if (NOT_THROWING)
@@ -1877,7 +1877,7 @@ NODE *lbitpastetoindex(NODE *arg)
          err_logo(STOP_ERROR, NIL);
          }
       }
-   return UNBOUND;
+   return Unbound;
    }
 
 NODE *lsetturtle(NODE *arg)
@@ -1951,7 +1951,7 @@ extern FLONUM wanna_z;
          }
       }
 
-   return UNBOUND;
+   return Unbound;
    }
 
 NODE *lturtle(NODE *)
@@ -2085,7 +2085,7 @@ NODE *lscrollx(NODE *arg)
          }
       }
 
-   return UNBOUND;
+   return Unbound;
    }
 
 NODE *lscrolly(NODE *arg)
@@ -2116,7 +2116,7 @@ NODE *lscrolly(NODE *arg)
          }
       }
 
-   return UNBOUND;
+   return Unbound;
    }
 
 NODE *lsetfocus(NODE *arg)
@@ -2146,7 +2146,7 @@ NODE *lsetfocus(NODE *arg)
 
    JustDidEdit = true;
 
-   return UNBOUND;
+   return Unbound;
    }
 
 NODE *lgetfocus(NODE *)
@@ -2191,7 +2191,7 @@ NODE *lwindowset(NODE *args)
 
    JustDidEdit = true;
 
-   return UNBOUND;
+   return Unbound;
    }
 
 void ibm_clear_screen(void)
@@ -2323,7 +2323,7 @@ NODE *lhelp(NODE *arg)
       do_help(NULL);
       }
 
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lwinhelp(NODE *arg)
@@ -2346,7 +2346,7 @@ NODE *lwinhelp(NODE *arg)
       MainWindowx->WinHelp(textbuf, HELP_INDEX, 0L);
       }
 
-   return UNBOUND;
+   return Unbound;
    }
 
 NODE *lsetlabelfont(NODE *arg)
@@ -2404,7 +2404,7 @@ NODE *lsetlabelfont(NODE *arg)
       //         }
       }
 
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *llabelfont(NODE *)

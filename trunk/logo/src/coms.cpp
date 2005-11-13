@@ -52,14 +52,14 @@ NODE *loutput(NODE *arg)
       stopping_flag = OUTPUT;
       output_node = reref(output_node, car(arg));
       }
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lstop(NODE *arg)
    {
    if (NOT_THROWING)
       stopping_flag = STOP;
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lthrow(NODE *arg)
@@ -71,7 +71,7 @@ NODE *lthrow(NODE *arg)
          if (cdr(arg) != NIL)
             err_logo(USER_ERR, cadr(arg));
          else
-            err_logo(USER_ERR, UNBOUND);
+            err_logo(USER_ERR, Unbound);
          }
       else
          {
@@ -80,10 +80,10 @@ NODE *lthrow(NODE *arg)
          if (cdr(arg) != NIL)
             output_node = reref(output_node, cadr(arg));
          else
-            output_node = reref(output_node, UNBOUND);
+            output_node = reref(output_node, Unbound);
          }
       }
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lcatch(NODE *args)
@@ -121,7 +121,7 @@ NODE *lgoto(NODE *args)
 
 NODE *ltag(NODE */* args */)
    {
-   return UNBOUND;
+   return Unbound;
    }
 
 NODE *lnot(NODE *args)
@@ -140,7 +140,7 @@ NODE *lnot(NODE *args)
          }
       }
 
-   return UNBOUND;
+   return Unbound;
    }
 
 NODE *land(NODE *args)
@@ -172,7 +172,7 @@ NODE *land(NODE *args)
       return Truex;
       }
 
-   return UNBOUND;
+   return Unbound;
    }
 
 NODE *lor(NODE *args)
@@ -204,7 +204,7 @@ NODE *lor(NODE *args)
       return Falsex;
       }
 
-   return UNBOUND;
+   return Unbound;
    }
 
 NODE *runnable_arg(NODE *args)
@@ -242,7 +242,7 @@ NODE *lif(NODE *args)  // macroized
       return NIL;
       }
 
-   return UNBOUND;
+   return Unbound;
    }
 
 NODE *lifelse(NODE *args)              /* macroized                           */
@@ -258,7 +258,7 @@ NODE *lifelse(NODE *args)              /* macroized                           */
          }
       return no;
       }
-   return UNBOUND;
+   return Unbound;
    }
 
 NODE *lrun(NODE *args)                 /* macroized                           */
@@ -269,7 +269,7 @@ NODE *lrun(NODE *args)                 /* macroized                           */
       {
       return arg;
       }
-   return UNBOUND;
+   return Unbound;
    }
 
 NODE *lrunresult(NODE *args)
@@ -303,7 +303,7 @@ NODE *pos_int_arg(NODE *args)
       }
    setcar(args, val);
    if (nodetype(val) == INT) return (val);
-   return UNBOUND;
+   return Unbound;
    }
 
 NODE *lrepeat(NODE *args)
@@ -337,13 +337,13 @@ NODE *ltest(NODE *args)
    {
    bool arg = boolean_arg(args);
 
-   if (tailcall != 0) return UNBOUND;
+   if (tailcall != 0) return Unbound;
    if (NOT_THROWING)
       {
       ift_iff_flag = arg ? 1 : 0;
       dont_fix_ift = 1;
       }
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *liftrue(NODE *args)
@@ -402,7 +402,7 @@ NODE *lbye(NODE *args)
    //    if (isatty(0) && isatty(1)) lcleartext();
    //    printf("Thank you for using Logo.\n");
    //    printf("Have a nice day.\n");
-   return (UNBOUND);
+   return Unbound;
    }
 
 /* LOGO time */
@@ -455,7 +455,7 @@ NODE *lwait(NODE *args)
 #endif
          }
       }
-   return UNBOUND;
+   return Unbound;
    }
 
 NODE *lshell(NODE *args)

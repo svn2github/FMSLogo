@@ -257,7 +257,7 @@ NODE *lnetstartup(NODE *args)
       {
       MainWindowx->CommandWindow->MessageBox("Already Started", "Network Error");
       err_logo(STOP_ERROR, NIL);
-      return (UNBOUND);
+      return Unbound;
       }
 
    if (args != NIL)
@@ -272,7 +272,7 @@ NODE *lnetstartup(NODE *args)
       {
       MainWindowx->CommandWindow->MessageBox("Cannot load WSOCK32.DLL", "Network Error");
       err_logo(STOP_ERROR, NIL);
-      return (UNBOUND);
+      return Unbound;
       }
 
    // fetch the routines
@@ -301,10 +301,10 @@ NODE *lnetstartup(NODE *args)
       {
       MainWindowx->CommandWindow->MessageBox(WSAGetLastErrorString(0), "WSAStartup()");
       err_logo(STOP_ERROR, NIL);
-      return (UNBOUND);
+      return Unbound;
       }
 
-   return (UNBOUND);
+   return Unbound;
    }
 
 // put everything back to original state
@@ -353,7 +353,7 @@ NODE *lnetshutdown(NODE *)
 
    network_dns_sync = 0;
 
-   return (UNBOUND);
+   return Unbound;
    }
 
 // enable receiving
@@ -371,7 +371,7 @@ NODE *lnetreceiveon(NODE *args)
       {
       MainWindowx->CommandWindow->MessageBox("Not Started", "Network Error");
       err_logo(STOP_ERROR, NIL);
-      return (UNBOUND);
+      return Unbound;
       }
 
    if (network_receive_on == 1)
@@ -469,7 +469,7 @@ NODE *lnetreceiveon(NODE *args)
       return (Truex);
       }
 
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lnetreceiveoff(NODE *)
@@ -489,7 +489,7 @@ NODE *lnetreceiveoff(NODE *)
       lpclosesocket(receiveSock);
       }
 
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lnetreceivereceivevalue(NODE *)
@@ -501,7 +501,7 @@ NODE *lnetreceivereceivevalue(NODE *)
 
    if (network_receive_on == 0)
       {
-      return (UNBOUND);
+      return Unbound;
       }
    else
       {
@@ -521,7 +521,7 @@ NODE *lnetsendreceivevalue(NODE *)
 
    if (network_send_on == 0)
       {
-      return (UNBOUND);
+      return Unbound;
       }
    else
       {
@@ -545,7 +545,7 @@ NODE *lnetsendon(NODE *args)
       {
       MainWindowx->CommandWindow->MessageBox("Not Started", "Network Error");
       err_logo(STOP_ERROR, NIL);
-      return (UNBOUND);
+      return Unbound;
       }
 
    if (network_send_on == 1)
@@ -642,7 +642,7 @@ NODE *lnetsendon(NODE *args)
       return (Truex);
       }
 
-   return (UNBOUND);
+   return Unbound;
 
    }
 
@@ -663,7 +663,7 @@ NODE *lnetsendoff(NODE *)
       lpclosesocket(sendSock);
       }
 
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lnetsendsendvalue(NODE *args)
@@ -706,7 +706,7 @@ NODE *lnetsendsendvalue(NODE *args)
       return (Truex);
       }
 
-   return (UNBOUND);
+   return Unbound;
 
    }
 
@@ -750,6 +750,6 @@ NODE *lnetreceivesendvalue(NODE *args)
       return (Truex);
       }
 
-   return (UNBOUND);
+   return Unbound;
    }
 

@@ -30,7 +30,7 @@ int numberp(NODE *snd)
    if (is_number(snd)) return (1);
 
    snd = cnv_node_to_strnode(snd);
-   if (snd == UNBOUND) return (0);
+   if (snd == Unbound) return (0);
 
    p = getstrptr(snd); plen = getstrlen(snd); pcnt = dl = dr = 0;
    if (plen >= MAX_NUMBER)
@@ -87,7 +87,7 @@ NODE *lrandom(NODE *arg)
       setint(val, (FIXNUM) r);
       return (val);
       }
-   else return (UNBOUND);
+   else return Unbound;
    }
 
 NODE *lrerandom(NODE *arg)
@@ -106,7 +106,7 @@ NODE *lrerandom(NODE *arg)
       srand((int) seed);
 #endif
       }
-   return (UNBOUND);
+   return Unbound;
    }
 
 jmp_buf oflo_buf;
@@ -181,7 +181,7 @@ NODE *binary(NODE *args, char fcn)
 
    //   arg = numeric_arg(args);
    args = cdr(args);
-   if (stopping_flag == THROWING) return UNBOUND;
+   if (stopping_flag == THROWING) return Unbound;
    if (nodetype(arg) == INT)
       {
       imode = TRUE;
@@ -294,7 +294,7 @@ NODE *binary(NODE *args, char fcn)
       //    arg = numeric_arg(args);
 
       args = cdr(args);
-      if (stopping_flag == THROWING) return UNBOUND;
+      if (stopping_flag == THROWING) return Unbound;
 
       if (nodetype(arg) == INT)
          {
@@ -516,7 +516,7 @@ NODE *binary(NODE *args, char fcn)
          }
       return (val);
       }
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *ladd(NODE *args)
@@ -728,7 +728,7 @@ NODE *llessp(NODE *args)
       {
       return torf(compare_numnodes(n1, n2) < 0);
       }
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lgreaterp(NODE *args)
@@ -742,7 +742,7 @@ NODE *lgreaterp(NODE *args)
       {
       return torf(compare_numnodes(n1, n2) > 0);
       }
-   return (UNBOUND);
+   return Unbound;
    }
 
 int compare_node(NODE *n1, NODE *n2, bool ignorecase)
@@ -767,7 +767,7 @@ int compare_node(NODE *n1, NODE *n2, bool ignorecase)
    if (nt1 & NT_NUMBER)
       {
       nn2 = cnv_node_to_numnode(n2);
-      if (nn2 != UNBOUND)
+      if (nn2 != Unbound)
          {
          icmp = compare_numnodes(n1, nn2);
          gcref(nn2);
@@ -778,7 +778,7 @@ int compare_node(NODE *n1, NODE *n2, bool ignorecase)
    if (nt2 & NT_NUMBER)
       {
       nn1 = cnv_node_to_numnode(n1);
-      if (nn1 != UNBOUND)
+      if (nn1 != Unbound)
          {
          icmp = compare_numnodes(nn1, n2);
          gcref(nn1);

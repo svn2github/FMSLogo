@@ -170,7 +170,7 @@ NODE *lqm(NODE *args)
    NODE *np = qm_list;
 
    if (args != NIL) argnum = getint(pos_int_arg(args));
-   if (stopping_flag == THROWING) return (UNBOUND);
+   if (stopping_flag == THROWING) return Unbound;
    i = argnum;
    while (--i > 0 && np != NIL) np = cdr(np);
    if (np == NIL)
@@ -289,15 +289,15 @@ NODE *evaluator(NODE *list, enum labels where)
    make_tree(list);
    if (!is_tree(list))
       {
-      assign(val, UNBOUND);
+      assign(val, Unbound);
       goto fetch_cont;
       }
    assign(unev, tree__tree(list));
-   assign(val, UNBOUND);
+   assign(val, Unbound);
    goto eval_sequence;
 
  end_line:
-   if (val != UNBOUND)
+   if (val != Unbound)
       {
       if (NOT_THROWING) err_logo(DK_WHAT, val);
       deref(val);
@@ -319,7 +319,7 @@ NODE *evaluator(NODE *list, enum labels where)
            goto fetch_cont;
        case COLON:                      /* variable                            */
            assign(val, valnode__colon(exp));
-           while (val == UNBOUND && NOT_THROWING)
+           while (val == Unbound && NOT_THROWING)
               assign(val, err_logo(NO_VALUE, node__colon(exp)));
            goto fetch_cont;
        case CONS:                       /* procedure application               */
@@ -393,7 +393,7 @@ NODE *evaluator(NODE *list, enum labels where)
    assign(last_call, fun);
    restore2(unev, fun);
    restore(argl);
-   while (NOT_THROWING && val == UNBOUND)
+   while (NOT_THROWING && val == Unbound)
       {
       assign(val, err_logo(DIDNT_OUTPUT, NIL));
       }
@@ -407,7 +407,7 @@ NODE *evaluator(NODE *list, enum labels where)
    mixrestore(tailcall, var);
    if (stopping_flag == THROWING)
       {
-      assign(val, UNBOUND);
+      assign(val, Unbound);
       goto fetch_cont;
       }
    assign(argl, reverse(argl));
@@ -442,7 +442,7 @@ NODE *evaluator(NODE *list, enum labels where)
       if (NOT_THROWING)
          assign(val, err_logo(DK_HOW, fun));
       else
-         assign(val, UNBOUND);
+         assign(val, Unbound);
       goto fetch_cont;
       }
    if (is_list(proc)) goto compound_apply;
@@ -450,7 +450,7 @@ NODE *evaluator(NODE *list, enum labels where)
    if (NOT_THROWING)
       assign(val, ((nodeinout) * getprimfun(proc)) (argl));
    else
-      assign(val, UNBOUND);
+      assign(val, Unbound);
 #define do_case(x) case x: goto x;
  fetch_cont:
    {
@@ -496,7 +496,7 @@ NODE *evaluator(NODE *list, enum labels where)
             }
          }
       else
-         arg = UNBOUND;
+         arg = Unbound;
       if (nodetype(parm) == CASEOBJ)
          {
          if (not_local(parm, (NODE *) vsp))
@@ -522,7 +522,7 @@ NODE *evaluator(NODE *list, enum labels where)
             setvalnode__caseobj(car(parm), argl);
             break;
             }
-         if (arg == UNBOUND)
+         if (arg == Unbound)
             {
             /* use default */
             save2(fun, var);
@@ -542,11 +542,11 @@ NODE *evaluator(NODE *list, enum labels where)
                assign(list, NIL);
             if (!is_tree(list))
                {
-               assign(val, UNBOUND);
+               assign(val, Unbound);
                goto set_args_continue;
                }
             assign(unev, tree__tree(list));
-            assign(val, UNBOUND);
+            assign(val, Unbound);
             newcont(set_args_continue);
             goto eval_sequence;
 
@@ -569,7 +569,7 @@ NODE *evaluator(NODE *list, enum labels where)
       }
    if (check_throwing)
       {
-      assign(val, UNBOUND);
+      assign(val, Unbound);
       goto fetch_cont;
       }
    vsp = 0;
@@ -580,7 +580,7 @@ NODE *evaluator(NODE *list, enum labels where)
       save(fun);
       newcont(compound_apply_continue);
       }
-   assign(val, UNBOUND);
+   assign(val, Unbound);
    assign(last_ufun, ufun);
    if (!is_list(fun)) assign(ufun, fun);
    assign(last_line, this_line);
@@ -594,15 +594,15 @@ NODE *evaluator(NODE *list, enum labels where)
       }
    assign(unev, tree__tree(list));
    if (NOT_THROWING) stopping_flag = RUN;
-   assign(output_node, UNBOUND);
+   assign(output_node, Unbound);
    if (val_status == 1) val_status = 2;
    else if (val_status == 5) val_status = 3;
    else val_status = 0;
  eval_sequence:
    /* Evaluate each expression in the sequence.  Stop as soon as
-    * val != UNBOUND.
+    * val != Unbound.
     */
-   if (!RUNNING || val != UNBOUND)
+   if (!RUNNING || val != Unbound)
       {
       goto fetch_cont;
       }
@@ -652,7 +652,7 @@ NODE *evaluator(NODE *list, enum labels where)
          else if (ufun == NIL)
             {
             err_logo(AT_TOPLEVEL, car(exp));
-            assign(val, UNBOUND);
+            assign(val, Unbound);
             goto fetch_cont;
             }
          else if (val_status < 4)
@@ -668,18 +668,18 @@ NODE *evaluator(NODE *list, enum labels where)
          if (ufun == NIL)
             {
             err_logo(AT_TOPLEVEL, car(exp));
-            assign(val, UNBOUND);
+            assign(val, Unbound);
             goto fetch_cont;
             }
          else if (val_status == 0 || val_status == 3)
             {
-            assign(val, UNBOUND);
+            assign(val, Unbound);
             goto fetch_cont;
             }
          else if (val_status < 4)
             {
             assign(didnt_output_name, fun);
-            assign(val, UNBOUND);
+            assign(val, Unbound);
             goto fetch_cont;
             }
          }
@@ -696,7 +696,7 @@ NODE *evaluator(NODE *list, enum labels where)
       if (val_status == 2 || val_status == 4)
          {
          assign(didnt_output_name, fun);
-         assign(unev, UNBOUND);
+         assign(unev, Unbound);
          goto non_tail_eval;
          }
       else
@@ -743,28 +743,28 @@ NODE *evaluator(NODE *list, enum labels where)
    restore2(unev, fun);
    if (stopping_flag == MACRO_RETURN)
       {
-      if (unev == UNBOUND) assign(unev, NIL);
+      if (unev == Unbound) assign(unev, NIL);
       if (val != NIL && is_list(val) && (car(val) == Tag))
          assign(unev, cdr(val)); /* from goto */
       else
          assign(unev, append(val, unev));
-      assign(val, UNBOUND);
+      assign(val, Unbound);
       stopping_flag = RUN;
       if (unev == NIL) goto fetch_cont;
       }
    else if (val_status < 4)
       {
-      if (STOPPING || RUNNING) assign(output_node, UNBOUND);
+      if (STOPPING || RUNNING) assign(output_node, Unbound);
       if (stopping_flag == OUTPUT || STOPPING)
          {
          stopping_flag = RUN;
          assign(val, output_node);
-         if (val != UNBOUND && val_status < 2 && NOT_THROWING)
+         if (val != Unbound && val_status < 2 && NOT_THROWING)
             {
             assign(didnt_output_name, Output);
             err_logo(DIDNT_OUTPUT, Output);
             }
-         if (val == UNBOUND && val_status == 1 && NOT_THROWING)
+         if (val == Unbound && val_status == 1 && NOT_THROWING)
             {
             assign(didnt_output_name, Stop);
             err_logo(DIDNT_OUTPUT, Output);
@@ -772,12 +772,12 @@ NODE *evaluator(NODE *list, enum labels where)
          goto fetch_cont;
          }
       }
-   if (val != UNBOUND)
+   if (val != Unbound)
       {
       err_logo((unev == NIL ? DK_WHAT_UP : DK_WHAT), val);
-      assign(val, UNBOUND);
+      assign(val, Unbound);
       }
-   if (NOT_THROWING && (unev == NIL || unev == UNBOUND))
+   if (NOT_THROWING && (unev == NIL || unev == Unbound))
       {
       if (val_status != 4) err_logo(DIDNT_OUTPUT, NIL);
       goto fetch_cont;
@@ -792,7 +792,7 @@ NODE *evaluator(NODE *list, enum labels where)
       {
       for (i = 0; i < trace_level; i++) print_space(writestream);
       print_node(writestream, fun);
-      if (val == UNBOUND)
+      if (val == Unbound)
          ndprintf(writestream, " stops\n");
       else
          {
@@ -832,7 +832,7 @@ NODE *evaluator(NODE *list, enum labels where)
       assign(list, val);
       goto begin_seq;
       }
-   assign(val, UNBOUND);
+   assign(val, Unbound);
    goto fetch_cont;
 
  runresult_continuation:
@@ -842,7 +842,7 @@ NODE *evaluator(NODE *list, enum labels where)
    goto begin_seq;
 
  runresult_followup:
-   if (val == UNBOUND)
+   if (val == Unbound)
       {
       assign(val, NIL);
       }
@@ -857,7 +857,7 @@ NODE *evaluator(NODE *list, enum labels where)
    repcount = getint(car(val));
    repcountup = 1;
  repeat_again:
-   assign(val, UNBOUND);
+   assign(val, Unbound);
    if (repcount == 0)
       {
       if (repcountuppoint) repcountup = (FIXNUM) car((NODE *) repcountuppoint);
@@ -873,7 +873,7 @@ NODE *evaluator(NODE *list, enum labels where)
    goto begin_seq;
 
  repeat_followup:
-   if (val != UNBOUND && NOT_THROWING)
+   if (val != Unbound && NOT_THROWING)
       {
       ref(val);
       err_logo(DK_WHAT, val);
@@ -885,12 +885,12 @@ NODE *evaluator(NODE *list, enum labels where)
    mixrestore(repcount, list);
    if (val_status < 4 && tailcall != 0)
       {
-      if (STOPPING || RUNNING) assign(output_node, UNBOUND);
+      if (STOPPING || RUNNING) assign(output_node, Unbound);
       if (stopping_flag == OUTPUT || STOPPING)
          {
          stopping_flag = RUN;
          assign(val, output_node);
-         if (val != UNBOUND && val_status < 2)
+         if (val != Unbound && val_status < 2)
             {
             err_logo(DK_WHAT_UP, val);
             }
@@ -909,7 +909,7 @@ NODE *evaluator(NODE *list, enum labels where)
    check_ibm_stop(1);
 #endif
    if (RUNNING) goto repeat_again;
-   assign(val, UNBOUND);
+   assign(val, Unbound);
    goto fetch_cont;
 
  catch_continuation:
@@ -919,7 +919,7 @@ NODE *evaluator(NODE *list, enum labels where)
       {
       push(Erract, var_stack);
       setobject(var_stack, valnode__caseobj(Erract));
-      setvalnode__caseobj(Erract, UNBOUND);
+      setvalnode__caseobj(Erract, Unbound);
       }
    save(catch_tag);
    save2(didnt_output_name, didnt_get_output);
@@ -934,12 +934,12 @@ NODE *evaluator(NODE *list, enum labels where)
    restore(catch_tag);
    if (val_status < 4 && tailcall != 0)
       {
-      if (STOPPING || RUNNING) assign(output_node, UNBOUND);
+      if (STOPPING || RUNNING) assign(output_node, Unbound);
       if (stopping_flag == OUTPUT || STOPPING)
          {
          stopping_flag = RUN;
          assign(val, output_node);
-         if (val != UNBOUND && val_status < 2)
+         if (val != Unbound && val_status < 2)
             {
             err_logo(DK_WHAT_UP, val);
             }
@@ -948,7 +948,7 @@ NODE *evaluator(NODE *list, enum labels where)
    if (stopping_flag == THROWING &&
          compare_node(throw_node, catch_tag, TRUE) == 0)
       {
-      throw_node = reref(throw_node, UNBOUND);
+      throw_node = reref(throw_node, Unbound);
       stopping_flag = RUN;
       assign(val, output_node);
       }
@@ -964,7 +964,7 @@ NODE *evaluator(NODE *list, enum labels where)
    if (ufun == NIL)
       {
       err_logo(AT_TOPLEVEL, Goto);
-      assign(val, UNBOUND);
+      assign(val, Unbound);
       goto fetch_cont;
       }
    proc = procnode__caseobj(ufun);
@@ -987,7 +987,7 @@ NODE *evaluator(NODE *list, enum labels where)
          }
       }
    err_logo(BAD_DATA_UNREC, val);
-   assign(val, UNBOUND);
+   assign(val, Unbound);
    goto fetch_cont;
 
  begin_apply:
@@ -996,7 +996,7 @@ NODE *evaluator(NODE *list, enum labels where)
    while (nodetype(fun) == ARRAY && NOT_THROWING)
       assign(fun, err_logo(APPLY_BAD_DATA, fun));
    assign(argl, cadr(val));
-   assign(val, UNBOUND);
+   assign(val, Unbound);
    while (!is_list(argl) && NOT_THROWING)
       assign(argl, err_logo(APPLY_BAD_DATA, argl));
    if (NOT_THROWING && fun != NIL)
@@ -1050,12 +1050,12 @@ NODE *evaluator(NODE *list, enum labels where)
             restore2(didnt_output_name, didnt_get_output);
             if (val_status < 4 && tailcall != 0)
                {
-               if (STOPPING || RUNNING) assign(output_node, UNBOUND);
+               if (STOPPING || RUNNING) assign(output_node, Unbound);
                if (stopping_flag == OUTPUT || STOPPING)
                   {
                   stopping_flag = RUN;
                   assign(val, output_node);
-                  if (val != UNBOUND && val_status < 2)
+                  if (val != Unbound && val_status < 2)
                      {
                      err_logo(DK_WHAT_UP, val);
                      }

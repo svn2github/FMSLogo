@@ -169,7 +169,7 @@ NODE *lcleartext(NODE *)
    x_coord = x_margin;
    y_coord = y_margin;
    */
-   return (UNBOUND);
+   return Unbound;
    }
 
 
@@ -210,7 +210,7 @@ NODE *lsetcursor(NODE *  /*args*/)
 #endif
       }
    */
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lsetmargins(NODE *  /*args*/)
@@ -226,7 +226,7 @@ NODE *lsetmargins(NODE *  /*args*/)
       lcleartext(NIL);
       }
     */
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lstandout(NODE *args)

@@ -88,7 +88,7 @@ NODE *name_arg(NODE *args)
 
 NODE *ltext(NODE *args)
    {
-   NODE *name, *val = UNBOUND;
+   NODE *name, *val = Unbound;
 
    name = name_arg(args);
    if (NOT_THROWING)
@@ -97,22 +97,22 @@ NODE *ltext(NODE *args)
       if (val == UNDEFINED)
          {
          err_logo(DK_HOW_UNREC, name);
-         return UNBOUND;
+         return Unbound;
          }
       else if (is_prim(val))
          {
          err_logo(IS_PRIM, name);
-         return UNBOUND;
+         return Unbound;
          }
       else
          return text__procnode(val);
       }
-   return UNBOUND;
+   return Unbound;
    }
 
 NODE *lfulltext(NODE *args)
    {
-   NODE *name, *val = UNBOUND;
+   NODE *name, *val = Unbound;
 
    name = name_arg(args);
    if (NOT_THROWING)
@@ -121,17 +121,17 @@ NODE *lfulltext(NODE *args)
       if (val == UNDEFINED)
          {
          err_logo(DK_HOW_UNREC, name);
-         return UNBOUND;
+         return Unbound;
          }
       else if (is_prim(val))
          {
          err_logo(IS_PRIM, name);
-         return UNBOUND;
+         return Unbound;
          }
       else
          return get_bodywords(val, name);
       }
-   return UNBOUND;
+   return Unbound;
    }
 
 static
@@ -151,7 +151,7 @@ NODE *define_helper(NODE *args, bool macro_flag)
          if (!redef && is_prim(val))
             {
             err_logo(IS_PRIM, name);
-            return UNBOUND;
+            return Unbound;
             }
          else if (val != UNDEFINED)
             {
@@ -234,7 +234,7 @@ NODE *define_helper(NODE *args, bool macro_flag)
          the_generation = reref(the_generation, cons_list(NIL));
          }
       }
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *ldefine(NODE *args)
@@ -263,13 +263,13 @@ NODE *to_helper(NODE *args, bool macro_flag)
    if (ufun != NIL && loadstream == stdin)
       {
       err_logo(NOT_INSIDE, NIL);
-      return (UNBOUND);
+      return Unbound;
       }
 
    if (args == NIL)
       {
       err_logo(NOT_ENOUGH, NIL);
-      return (UNBOUND);
+      return Unbound;
       }
 
    proc_name = car(args);
@@ -376,7 +376,7 @@ NODE *to_helper(NODE *args, bool macro_flag)
          }
       to_pending = 0;
       }
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lto(NODE *args)
@@ -385,7 +385,7 @@ NODE *lto(NODE *args)
    input_mode = TO_MODE;
    to_helper(args, FALSE);
    input_mode = NO_MODE;
-   return UNBOUND;
+   return Unbound;
    }
 
 NODE *lmacro(NODE *args)
@@ -394,7 +394,7 @@ NODE *lmacro(NODE *args)
    input_mode = TO_MODE;
    to_helper(args, TRUE);
    input_mode = NO_MODE;
-   return UNBOUND;
+   return Unbound;
 
    }
 
@@ -418,7 +418,7 @@ NODE *lmake(NODE *args)
          new_line(writestream);
          }
       }
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *llocal(NODE *args)
@@ -428,12 +428,12 @@ NODE *llocal(NODE *args)
 
    if (tailcall != 0) 
      {
-     return UNBOUND;
+     return Unbound;
      }
 
    if (args == NIL) 
      {
-     return UNBOUND;
+     return Unbound;
      }
 
    while (is_list(car(args)) && cdr(args) != NIL && NOT_THROWING)
@@ -463,14 +463,14 @@ NODE *llocal(NODE *args)
             push(arg, var_stack);
             setobject(var_stack, valnode__caseobj(arg));
             }
-         setvalnode__caseobj(arg, UNBOUND);
+         setvalnode__caseobj(arg, Unbound);
          tell_shadow(arg);
          args = cdr(args);
          }
       if (check_throwing) break;
       }
    var = reref(var, var_stack);        /* so eval won't undo our work         */
-   return (UNBOUND);
+   return Unbound;
    }
 
 static NODE *cnt_list = NIL;
@@ -519,7 +519,7 @@ contents_map(
 
       case c_VARS:
          flag_check <<= 1;
-         if (valnode__object(sym) == UNBOUND) 
+         if (valnode__object(sym) == Unbound) 
             {
             return;
             }
@@ -917,7 +917,7 @@ NODE *po_helper(NODE *arg, int just_titles)  /* >0 for POT, <0 for EDIT       */
       else
          tvar = maybe_quote(valnode__caseobj(intern(car(varlst))));
 
-      if (tvar == UNBOUND)
+      if (tvar == Unbound)
          {
          if (just_titles >= 0)
             {
@@ -963,7 +963,7 @@ NODE *po_helper(NODE *arg, int just_titles)  /* >0 for POT, <0 for EDIT       */
       }
 
    print_backslashes = FALSE;
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lpo(NODE *arg)
@@ -1021,7 +1021,7 @@ NODE *lerase(NODE *arg)
          err_logo(BAD_DATA_UNREC, car(varlst));
          break;
          }
-      setvalnode__caseobj(intern(car(varlst)), UNBOUND);
+      setvalnode__caseobj(intern(car(varlst)), Unbound);
       varlst = cdr(varlst);
       }
 
@@ -1035,7 +1035,7 @@ NODE *lerase(NODE *arg)
       setplist__caseobj(intern(car(plistlst)), NIL);
       plistlst = cdr(plistlst);
       }
-   return (UNBOUND);
+   return Unbound;
    }
 
 static
@@ -1082,7 +1082,7 @@ NODE *bury_helper(NODE *arg, int flag)
       plistlst = cdr(plistlst);
       if (check_throwing) break;
       }
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lbury(NODE *arg)
@@ -1144,7 +1144,7 @@ NODE *unbury_helper(NODE *arg, int flag)
       plistlst = cdr(plistlst);
       if (check_throwing) break;
       }
-   return (UNBOUND);
+   return Unbound;
    }
 
 NODE *lunbury(NODE *arg)
@@ -1174,7 +1174,7 @@ NODE *ledit(NODE *args)
          ::ShowWindow(editorWindow, SW_SHOWNORMAL);
          ::SetWindowPos(editorWindow, HWND_TOP, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
          JustDidEdit = true;
-         return UNBOUND;
+         return Unbound;
          }
       }
 
@@ -1198,7 +1198,7 @@ NODE *ledit(NODE *args)
             FILE_ERROR,
             make_static_strnode("Could not create editor file"));
          writestream = holdstrm;
-         return UNBOUND;
+         return Unbound;
          }
       }
 
@@ -1221,7 +1221,7 @@ NODE *ledit(NODE *args)
    lsetcursorarrow(NIL);
    yield_flag = save_yield_flag;
 
-   return UNBOUND;
+   return Unbound;
    }
 
 bool endedit(void)
@@ -1273,11 +1273,11 @@ bool endedit(void)
 
 NODE *lthing(NODE *args)
    {
-   NODE *val = UNBOUND, *arg;
+   NODE *val = Unbound, *arg;
 
    arg = name_arg(args);
    if (NOT_THROWING) val = valnode__caseobj(intern(arg));
-   while (val == UNBOUND && NOT_THROWING)
+   while (val == Unbound && NOT_THROWING)
       val = err_logo(NO_VALUE, car(args));
    return (val);
    }
@@ -1288,8 +1288,8 @@ NODE *lnamep(NODE *args)
 
    arg = name_arg(args);
    if (NOT_THROWING)
-      return torf(valnode__caseobj(intern(arg)) != UNBOUND);
-   return UNBOUND;
+      return torf(valnode__caseobj(intern(arg)) != Unbound);
+   return Unbound;
    }
 
 NODE *lprocedurep(NODE *args)
@@ -1299,7 +1299,7 @@ NODE *lprocedurep(NODE *args)
    arg = name_arg(args);
    if (NOT_THROWING)
       return torf(procnode__caseobj(intern(arg)) != UNDEFINED);
-   return UNBOUND;
+   return Unbound;
    }
 
 NODE *lproplistp(NODE *args)
@@ -1309,7 +1309,7 @@ NODE *lproplistp(NODE *args)
    arg = name_arg(args);
    if (NOT_THROWING)
       return torf(plist__caseobj(intern(arg)) != NIL);
-   return UNBOUND;
+   return Unbound;
    }
 
 // wanted:
@@ -1337,7 +1337,7 @@ NODE *check_proctype(NODE *args, int wanted)
       return torf((isprim != 0) == wanted);
       }
 
-   return UNBOUND;
+   return Unbound;
    }
 
 NODE *lprimitivep(NODE *args)
@@ -1402,6 +1402,6 @@ NODE *lcopydef(NODE *args)
       if (is_macro(arg2)) setflag__caseobj(arg1, PROC_MACRO);
       else clearflag__caseobj(arg1, PROC_MACRO);
       }
-   return (UNBOUND);
+   return Unbound;
    }
 
