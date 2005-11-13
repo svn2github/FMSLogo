@@ -23,19 +23,19 @@ public:
    }
 ;
 
-double Mag(VECTOR &v);
-VECTOR Add(VECTOR &v1, VECTOR &v2);
-VECTOR Subtract(VECTOR &v1, VECTOR &v2);
-VECTOR Cross(VECTOR &v1, VECTOR &v2);
-VECTOR Multiply(VECTOR &v, double num);
-VECTOR Divide(VECTOR &v, double num);
+double Mag(const VECTOR &v);
+const VECTOR Add(const VECTOR &v1, const VECTOR &v2);
+const VECTOR Subtract(const VECTOR &v1, const VECTOR &v2);
+const VECTOR Cross(const VECTOR &v1, const VECTOR &v2);
+const VECTOR Multiply(const VECTOR &v, double num);
+const VECTOR Divide(const VECTOR &v, double num);
 void Normalize(VECTOR &v);
-double Dot(VECTOR &v1, VECTOR &v2);
-VECTOR MVMultiply(MATRIX &v, VECTOR &m);
-VECTOR MVxyMultiply(MATRIX &v, VECTOR &m);
-VECTOR MVxMultiply(MATRIX &v, VECTOR &m);
-VECTOR MVyMultiply(MATRIX &v, VECTOR &m);
-VECTOR MVy1Multiply(MATRIX &v, VECTOR &m);
-VECTOR MVzMultiply(MATRIX &v, VECTOR &m);
-MATRIX MMMultiply(MATRIX &v, MATRIX &m);
+double Dot(const VECTOR &v1, const VECTOR &v2);
+const VECTOR MVMultiply(const MATRIX &m, const VECTOR &v);
+const VECTOR MVxyMultiply(const MATRIX &m, const VECTOR &v);
+const VECTOR MVxMultiply(const MATRIX &m, const VECTOR &v);
+const VECTOR MVyMultiply(const MATRIX &m, const VECTOR &v);
+const VECTOR MVy1Multiply(const MATRIX &m, const VECTOR &v);
+const VECTOR MVzMultiply(const MATRIX &m, const VECTOR &v);
+const MATRIX MMMultiply(const MATRIX &m1, const MATRIX &m2);
 

@@ -1,63 +1,63 @@
 #include "allwind.h"
 
-// Magnitude of a vector:
-double Mag(VECTOR &v)
+// Magnitude of a vector
+double Mag(const VECTOR &v)
    {
    return sqrt(v.x * v.x + v.y * v.y + v.z * v.z);
    }
 
 // Add two vectors
-VECTOR Add(VECTOR &v1, VECTOR &v2)
+const VECTOR Add(const VECTOR &v1, const VECTOR &v2)
    {
-   VECTOR res;
+   VECTOR product;
 
-   res.x = v1.x + v2.x;
-   res.y = v1.y + v2.y;
-   res.z = v1.z + v2.z;
+   product.x = v1.x + v2.x;
+   product.y = v1.y + v2.y;
+   product.z = v1.z + v2.z;
 
-   return res;
+   return product;
    }
 
 // Subtract the two vectors
-VECTOR Subtract(VECTOR &v1, VECTOR &v2)
+const VECTOR Subtract(const VECTOR &v1, const VECTOR &v2)
    {
-   VECTOR res;
+   VECTOR product;
 
-   res.x = v1.x - v2.x;
-   res.y = v1.y - v2.y;
-   res.z = v1.z - v2.z;
+   product.x = v1.x - v2.x;
+   product.y = v1.y - v2.y;
+   product.z = v1.z - v2.z;
 
-   return res;
+   return product;
    }
 
-// Cross multiply two vectors
-VECTOR Cross(VECTOR &v1, VECTOR &v2)
+// Compute the cross product of two vectors
+const VECTOR Cross(const VECTOR &v1, const VECTOR &v2)
    {
-   VECTOR res;
+   VECTOR product;
 
-   res.x = v1.y * v2.z - v2.y * v1.z;
-   res.y = v1.z * v2.x - v2.z * v1.x;
-   res.z = v1.x * v2.y - v2.x * v1.y;
+   product.x = v1.y * v2.z - v2.y * v1.z;
+   product.y = v1.z * v2.x - v2.z * v1.x;
+   product.z = v1.x * v2.y - v2.x * v1.y;
 
-   return res;
+   return product;
    }
 
 // Multiply by constant
-VECTOR Multiply(VECTOR &v, double num)
+const VECTOR Multiply(const VECTOR &v, double num)
    {
-   VECTOR res;
+   VECTOR product;
 
-   res.x = v.x * num;
-   res.y = v.y * num;
-   res.z = v.z * num;
+   product.x = v.x * num;
+   product.y = v.y * num;
+   product.z = v.z * num;
 
-   return res;
+   return product;
    }
 
 // Divide the vector with a scalar
-VECTOR Divide(VECTOR &v, double num)
+const VECTOR Divide(const VECTOR &v, double num)
    {
-   VECTOR res;
+   VECTOR product;
 
    if ((num > -0.0000000000000000000000001) && (num < 0.0000000000000000000000001))
       {
@@ -65,11 +65,11 @@ VECTOR Divide(VECTOR &v, double num)
       }
 
    const double one_over_num = 1 / num;
-   res.x = v.x * one_over_num;
-   res.y = v.y * one_over_num;
-   res.z = v.z * one_over_num;
+   product.x = v.x * one_over_num;
+   product.y = v.y * one_over_num;
+   product.z = v.z * one_over_num;
 
-   return res;
+   return product;
    }
 
 // Normalize the vector
@@ -80,105 +80,105 @@ void Normalize(VECTOR &v)
    v = Divide(v, len);
    }
 
-// Multiply by constant
-double Dot(VECTOR &v, VECTOR &w)
+// Compute the dot product
+double Dot(const VECTOR &v, const VECTOR &w)
    {
-   double res;
+   double product;
 
-   res = v.x * w.x + v.y * w.y + v.z * w.z;
+   product = v.x * w.x + v.y * w.y + v.z * w.z;
 
-   return res;
+   return product;
    }
 
-// Multiply by constant
-VECTOR MVMultiply(MATRIX &s, VECTOR &v)
+// Multiply matrix by vector
+const VECTOR MVMultiply(const MATRIX &m, const VECTOR &v)
    {
-   VECTOR res;
+   VECTOR product;
 
-   res.x = s.e11 * v.x + s.e12 * v.y + s.e13 * v.z;
-   res.y = s.e21 * v.x + s.e22 * v.y + s.e23 * v.z;
-   res.z = s.e31 * v.x + s.e32 * v.y + s.e33 * v.z;
+   product.x = m.e11 * v.x + m.e12 * v.y + m.e13 * v.z;
+   product.y = m.e21 * v.x + m.e22 * v.y + m.e23 * v.z;
+   product.z = m.e31 * v.x + m.e32 * v.y + m.e33 * v.z;
 
-   return res;
+   return product;
    }
 
-// Multiply by constant
-VECTOR MVxyMultiply(MATRIX &s, VECTOR &v)
+// Multiply matrix by vector -- assume v.z == 0.
+const VECTOR MVxyMultiply(const MATRIX &m, const VECTOR &v)
    {
-   VECTOR res;
+   VECTOR product;
 
-   res.x = s.e11 * v.x + s.e12 * v.y;
-   res.y = s.e21 * v.x + s.e22 * v.y;
-   res.z = s.e31 * v.x + s.e32 * v.y;
+   product.x = m.e11 * v.x + m.e12 * v.y;
+   product.y = m.e21 * v.x + m.e22 * v.y;
+   product.z = m.e31 * v.x + m.e32 * v.y;
 
-   return res;
+   return product;
    }
 
-// Multiply by constant
-VECTOR MVxMultiply(MATRIX &s, VECTOR &v)
+// Multiply matrix by vector -- assume v.y == 0, v.z == 0.
+const VECTOR MVxMultiply(const MATRIX &m, const VECTOR &v)
    {
-   VECTOR res;
+   VECTOR product;
 
-   res.x = s.e11 * v.x;
-   res.y = s.e21 * v.x;
-   res.z = s.e31 * v.x;
+   product.x = m.e11 * v.x;
+   product.y = m.e21 * v.x;
+   product.z = m.e31 * v.x;
 
-   return res;
+   return product;
    }
 
-// Multiply by constant
-VECTOR MVyMultiply(MATRIX &s, VECTOR &v)
+// Multiply matrix by vector -- assume v.x == 0, v.z == 0.
+const VECTOR MVyMultiply(const MATRIX &m, const VECTOR &v)
    {
-   VECTOR res;
+   VECTOR product;
 
-   res.x = s.e12 * v.y;
-   res.y = s.e22 * v.y;
-   res.z = s.e32 * v.y;
+   product.x = m.e12 * v.y;
+   product.y = m.e22 * v.y;
+   product.z = m.e32 * v.y;
 
-   return res;
+   return product;
    }
 
-// Multiply by constant
-VECTOR MVy1Multiply(MATRIX &s, VECTOR &  /*v*/)
+// Multiply matrix by [0 1 0]
+const VECTOR MVy1Multiply(const MATRIX &m, const VECTOR &  /*v*/)
    {
-   VECTOR res;
+   VECTOR product;
 
-   res.x = s.e12;
-   res.y = s.e22;
-   res.z = s.e32;
+   product.x = m.e12;
+   product.y = m.e22;
+   product.z = m.e32;
 
-   return res;
+   return product;
    }
 
-// Multiply by constant
-VECTOR MVzMultiply(MATRIX &s, VECTOR &v)
+// Multiply matrix by vector -- assume v.x == 0, v.y == 0.
+const VECTOR MVzMultiply(const MATRIX &m, const VECTOR & v)
    {
-   VECTOR res;
+   VECTOR product;
 
-   res.x = s.e13 * v.z;
-   res.y = s.e23 * v.z;
-   res.z = s.e33 * v.z;
+   product.x = m.e13 * v.z;
+   product.y = m.e23 * v.z;
+   product.z = m.e33 * v.z;
 
-   return res;
+   return product;
    }
 
-// Multiply by constant
-MATRIX MMMultiply(MATRIX &m, MATRIX &v)
+// Multiply by matrix by matrix
+const MATRIX MMMultiply(const MATRIX &m1, const MATRIX &m2)
    {
-   MATRIX s;
+   MATRIX product;
 
-   s.e11 = m.e11 * v.e11 + m.e12 * v.e21 + m.e13 * v.e31;
-   s.e12 = m.e11 * v.e12 + m.e12 * v.e22 + m.e13 * v.e32;
-   s.e13 = m.e11 * v.e13 + m.e12 * v.e23 + m.e13 * v.e33;
+   product.e11 = m1.e11 * m2.e11 + m1.e12 * m2.e21 + m1.e13 * m2.e31;
+   product.e12 = m1.e11 * m2.e12 + m1.e12 * m2.e22 + m1.e13 * m2.e32;
+   product.e13 = m1.e11 * m2.e13 + m1.e12 * m2.e23 + m1.e13 * m2.e33;
 
-   s.e21 = m.e21 * v.e11 + m.e22 * v.e21 + m.e23 * v.e31;
-   s.e22 = m.e21 * v.e12 + m.e22 * v.e22 + m.e23 * v.e32;
-   s.e23 = m.e21 * v.e13 + m.e22 * v.e23 + m.e23 * v.e33;
+   product.e21 = m1.e21 * m2.e11 + m1.e22 * m2.e21 + m1.e23 * m2.e31;
+   product.e22 = m1.e21 * m2.e12 + m1.e22 * m2.e22 + m1.e23 * m2.e32;
+   product.e23 = m1.e21 * m2.e13 + m1.e22 * m2.e23 + m1.e23 * m2.e33;
 
-   s.e31 = m.e31 * v.e11 + m.e32 * v.e21 + m.e33 * v.e31;
-   s.e32 = m.e31 * v.e12 + m.e32 * v.e22 + m.e33 * v.e32;
-   s.e33 = m.e31 * v.e13 + m.e32 * v.e23 + m.e33 * v.e33;
+   product.e31 = m1.e31 * m2.e11 + m1.e32 * m2.e21 + m1.e33 * m2.e31;
+   product.e32 = m1.e31 * m2.e12 + m1.e32 * m2.e22 + m1.e33 * m2.e32;
+   product.e33 = m1.e31 * m2.e13 + m1.e32 * m2.e23 + m1.e33 * m2.e33;
 
-   return s;
+   return product;
    }
 
