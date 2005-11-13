@@ -211,7 +211,6 @@ INFO: Executing invalid instruction: [(DEFINE "function)]
 INFO: Executing invalid instruction: [(DEFINE "function [] )]
 PASS: [LOCALVARTEST "unknownlocalvar 42] returned 42 , as expected.
 PASS: [NAME? "unknownlocalvar] returned false , as expected.
-INFO: Executing invalid instruction: [(LOCAL)]
 PASS: [:10] returned ten , as expected.
 PASS: [:11] returned eleven , as expected.
 PASS: [:10] returned ten , as expected.
@@ -298,7 +297,9 @@ INFO: Executing invalid instruction: [CLOSE "nonexistent.txt]
 INFO: Executing invalid instruction: [(CLOSE)]
 PASS: [PENCOLOR] returned 0 , as expected.
 PASS: [PENCOLOR] returned 15 , as expected.
+PASS: [PENCOLOR] returned 7 , as expected.
 PASS: [PENCOLOR] returned 1 , as expected.
+PASS: [PENCOLOR] returned [128 64 32] , as expected.
 PASS: [PENCOLOR] returned [128 64 32] , as expected.
 PASS: [PENCOLOR] returned [255 255 255] , as expected.
 INFO: Executing invalid instruction: [SETPENCOLOR {}]
@@ -307,7 +308,9 @@ INFO: Executing invalid instruction: [SETPENCOLOR [0 0]]
 INFO: Executing invalid instruction: [SETPENCOLOR [0 0 0 0]]
 PASS: [PENCOLOUR] returned 0 , as expected.
 PASS: [PENCOLOUR] returned 15 , as expected.
+PASS: [PENCOLOUR] returned 7 , as expected.
 PASS: [PENCOLOUR] returned 1 , as expected.
+PASS: [PENCOLOUR] returned [128 64 32] , as expected.
 PASS: [PENCOLOUR] returned [128 64 32] , as expected.
 PASS: [PENCOLOUR] returned [255 255 255] , as expected.
 INFO: Executing invalid instruction: [SETPENCOLOUR {}]
@@ -316,7 +319,9 @@ INFO: Executing invalid instruction: [SETPENCOLOUR [0 0]]
 INFO: Executing invalid instruction: [SETPENCOLOUR [0 0 0 0]]
 PASS: [PENCOLOR] returned 0 , as expected.
 PASS: [PENCOLOR] returned 15 , as expected.
+PASS: [PENCOLOR] returned 7 , as expected.
 PASS: [PENCOLOR] returned 1 , as expected.
+PASS: [PENCOLOR] returned [128 64 32] , as expected.
 PASS: [PENCOLOR] returned [128 64 32] , as expected.
 PASS: [PENCOLOR] returned [255 255 255] , as expected.
 INFO: Executing invalid instruction: [SETPC {}]
@@ -325,7 +330,9 @@ INFO: Executing invalid instruction: [SETPC [0 0]]
 INFO: Executing invalid instruction: [SETPC [0 0 0 0]]
 PASS: [FLOODCOLOR] returned 0 , as expected.
 PASS: [FLOODCOLOR] returned 15 , as expected.
+PASS: [FLOODCOLOR] returned 7 , as expected.
 PASS: [FLOODCOLOR] returned 1 , as expected.
+PASS: [FLOODCOLOR] returned [128 64 32] , as expected.
 PASS: [FLOODCOLOR] returned [128 64 32] , as expected.
 PASS: [FLOODCOLOR] returned [255 255 255] , as expected.
 INFO: Executing invalid instruction: [SETFLOODCOLOR {}]
@@ -334,7 +341,9 @@ INFO: Executing invalid instruction: [SETFLOODCOLOR [0 0]]
 INFO: Executing invalid instruction: [SETFLOODCOLOR [0 0 0 0]]
 PASS: [FLOODCOLOUR] returned 0 , as expected.
 PASS: [FLOODCOLOUR] returned 15 , as expected.
+PASS: [FLOODCOLOUR] returned 7 , as expected.
 PASS: [FLOODCOLOUR] returned 1 , as expected.
+PASS: [FLOODCOLOUR] returned [128 64 32] , as expected.
 PASS: [FLOODCOLOUR] returned [128 64 32] , as expected.
 PASS: [FLOODCOLOUR] returned [255 255 255] , as expected.
 INFO: Executing invalid instruction: [SETFLOODCOLOUR {}]
@@ -343,7 +352,9 @@ INFO: Executing invalid instruction: [SETFLOODCOLOUR [0 0]]
 INFO: Executing invalid instruction: [SETFLOODCOLOUR [0 0 0 0]]
 PASS: [FLOODCOLOR] returned 0 , as expected.
 PASS: [FLOODCOLOR] returned 15 , as expected.
+PASS: [FLOODCOLOR] returned 7 , as expected.
 PASS: [FLOODCOLOR] returned 1 , as expected.
+PASS: [FLOODCOLOR] returned [128 64 32] , as expected.
 PASS: [FLOODCOLOR] returned [128 64 32] , as expected.
 PASS: [FLOODCOLOR] returned [255 255 255] , as expected.
 INFO: Executing invalid instruction: [SETFC {}]
@@ -352,7 +363,9 @@ INFO: Executing invalid instruction: [SETFC [0 0]]
 INFO: Executing invalid instruction: [SETFC [0 0 0 0]]
 PASS: [SCREENCOLOR] returned 0 , as expected.
 PASS: [SCREENCOLOR] returned 15 , as expected.
+PASS: [SCREENCOLOR] returned 7 , as expected.
 PASS: [SCREENCOLOR] returned 1 , as expected.
+PASS: [SCREENCOLOR] returned [128 64 32] , as expected.
 PASS: [SCREENCOLOR] returned [128 64 32] , as expected.
 PASS: [SCREENCOLOR] returned [255 255 255] , as expected.
 INFO: Executing invalid instruction: [SETSCREENCOLOR {}]
@@ -361,7 +374,9 @@ INFO: Executing invalid instruction: [SETSCREENCOLOR [0 0]]
 INFO: Executing invalid instruction: [SETSCREENCOLOR [0 0 0 0]]
 PASS: [SCREENCOLOUR] returned 0 , as expected.
 PASS: [SCREENCOLOUR] returned 15 , as expected.
+PASS: [SCREENCOLOUR] returned 7 , as expected.
 PASS: [SCREENCOLOUR] returned 1 , as expected.
+PASS: [SCREENCOLOUR] returned [128 64 32] , as expected.
 PASS: [SCREENCOLOUR] returned [128 64 32] , as expected.
 PASS: [SCREENCOLOUR] returned [255 255 255] , as expected.
 INFO: Executing invalid instruction: [SETSCREENCOLOUR {}]
@@ -370,7 +385,9 @@ INFO: Executing invalid instruction: [SETSCREENCOLOUR [0 0]]
 INFO: Executing invalid instruction: [SETSCREENCOLOUR [0 0 0 0]]
 PASS: [SCREENCOLOR] returned 0 , as expected.
 PASS: [SCREENCOLOR] returned 15 , as expected.
+PASS: [SCREENCOLOR] returned 7 , as expected.
 PASS: [SCREENCOLOR] returned 1 , as expected.
+PASS: [SCREENCOLOR] returned [128 64 32] , as expected.
 PASS: [SCREENCOLOR] returned [128 64 32] , as expected.
 PASS: [SCREENCOLOR] returned [255 255 255] , as expected.
 INFO: Executing invalid instruction: [SETSC {}]
