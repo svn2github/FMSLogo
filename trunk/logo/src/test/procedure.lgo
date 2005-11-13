@@ -3,6 +3,21 @@ TO SAMPLEPROC  :a  :b
   SHOW  :b ; show
 END
 
+; Creates a local variable named varname (which must be a string).
+; It assigns a value to the variable,
+; then outputs the value of the variable.
+TO LOCALVARTEST :varname :value
+
+  ; create the local variable
+  LOCAL :varname
+
+  ; assign it a value
+  MAKE  :varname :value
+
+  ; return the value of :varname (evaluated twice)
+  OUTPUT RUN (WORD ": :varname)
+END
+
 TO PROCEDURETEST
 
   ; test TEXT
@@ -64,10 +79,19 @@ TO PROCEDURETEST
    RUNBADINPUTTEST [(DEFINE "function)]
    RUNBADINPUTTEST [(DEFINE "function [])]
 
-   ; Just exercise these functions
-   ; we'll figure out how to test their output later
+   ; test LOCAL and LOCALMAKE
+   SIMPLEREPORTTEST [LOCALVARTEST "unknownlocalvar 42] 42
+   SIMPLEREPORTTEST [NAME? "unknownlocalvar] "false
+   LOCALMAKE "mylocalvarname 32
+   SIMPLEREPORTTEST [LOCALVARTEST "mylocalvarname 42]  42
+   SIMPLEREPORTTEST [:mylocalvarname]                  32
+
+   ; Just exercise NAME for now.
+   ; we'll figure out how to test its output later
    IGNORE NAMES
 
+   ; Just exercise PO for now.
+   ; we'll figure out how to test its output later
    OPENWRITE "po.dump.txt
    LOCALMAKE "previouswriter WRITER
    SETWRITE "po.dump.txt

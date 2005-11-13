@@ -209,6 +209,10 @@ PASS: [DEFINED? "ECHO] returned true , as expected.
 INFO: Executing invalid instruction: [(DEFINE)]
 INFO: Executing invalid instruction: [(DEFINE "function)]
 INFO: Executing invalid instruction: [(DEFINE "function [] )]
+PASS: [LOCALVARTEST "unknownlocalvar 42] returned 42 , as expected.
+PASS: [NAME? "unknownlocalvar] returned false , as expected.
+PASS: [LOCALVARTEST "mylocalvarname 42] returned 42 , as expected.
+PASS: [:mylocalvarname] returned 32 , as expected.
 INFO: Executing invalid instruction: [(PO)]
 PASS: Size is [100 100] , as expected.
 PASS: Size is [100 101] , as expected.
