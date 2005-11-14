@@ -81,9 +81,7 @@ Turtle g_Turtles[TURTLES] =
 
 int turtle_which = 0;
 int turtle_max = 0;
-FLONUM x_scale = 1.0;
-FLONUM y_scale = 1.0;
-FLONUM z_scale = 1.0;
+VECTOR g_Scale = {1.0, 1.0, 1.0};
 FLONUM wanna_x = 0.0;
 FLONUM wanna_y = 0.0;
 FLONUM wanna_z = 0.0;
@@ -405,6 +403,32 @@ NODE *lleft(NODE *arg)
    }
 
 static
+FLONUM towards_helper(FLONUM x, FLONUM y, FLONUM from_x, FLONUM from_y)
+   {
+   FLONUM tx = from_x / g_Scale.x;
+   FLONUM ty = from_y / g_Scale.y;
+
+   if (x != tx || y != ty)
+      {
+      FLONUM m, a;
+      if (x == tx)
+         {
+         a = (y < ty) ? -90 : 90;
+         }
+      else
+         {
+         m = (y - ty) / (x - tx);
+         a = atan(m) / degrad;
+         if (x < tx) a = fmod(a + 180.0, 360.0);
+         }
+      a = -(a - 90.0);
+      return (a < 0 ? 360.0 + a : a);
+      }
+
+   return 0.0;
+   }
+
+static
 void 
 setpos_helper(
    NODE *xnode, 
@@ -464,8 +488,8 @@ setpos_helper(
          }
       else
          {
-         scaled_x = target_x * x_scale;
-         scaled_y = target_y * y_scale;
+         scaled_x = target_x * g_Scale.x;
+         scaled_y = target_y * g_Scale.y;
 
          bool wrapping =
             scaled_x > turtle_right_max ||
@@ -481,8 +505,8 @@ setpos_helper(
             {
             save_heading = g_Turtles[turtle_which].Heading;
             g_Turtles[turtle_which].Heading = towards_helper(target_x, target_y, wanna_x, wanna_y);
-            tx = wanna_x / x_scale;
-            ty = wanna_y / y_scale;
+            tx = wanna_x / g_Scale.x;
+            ty = wanna_y / g_Scale.y;
             forward_helper(sqrt(sq(target_x - tx) + sq(target_y - ty)));
             g_Turtles[turtle_which].Heading = save_heading;
             wanna_x = scaled_x;
@@ -783,8 +807,8 @@ void forward_helper(FLONUM d)
    FLONUM real_heading = -g_Turtles[turtle_which].Heading + 90.0;
    FLONUM x1 = g_Turtles[turtle_which].Position.x;
    FLONUM y1 = g_Turtles[turtle_which].Position.y;
-   FLONUM dx = (FLONUM) (cos((FLONUM) (real_heading * degrad)) * d * x_scale);
-   FLONUM dy = (FLONUM) (sin((FLONUM) (real_heading * degrad)) * d * y_scale);
+   FLONUM dx = (FLONUM) (cos((FLONUM) (real_heading * degrad)) * d * g_Scale.x);
+   FLONUM dy = (FLONUM) (sin((FLONUM) (real_heading * degrad)) * d * g_Scale.y);
    FLONUM x2 = x1 + dx;
    FLONUM y2 = y1 + dy;
 
@@ -1276,30 +1300,6 @@ NODE *pos_int_vector_4_arg(NODE *args)
    return vec_4_arg_helper(args, FALSE);
    }
 
-FLONUM towards_helper(FLONUM x, FLONUM y, FLONUM from_x, FLONUM from_y)
-   {
-   FLONUM tx = from_x / x_scale;
-   FLONUM ty = from_y / y_scale;
-
-   if (x != tx || y != ty)
-      {
-      FLONUM m, a;
-      if (x == tx)
-         {
-         a = (y < ty) ? -90 : 90;
-         }
-      else
-         {
-         m = (y - ty) / (x - tx);
-         a = atan(m) / degrad;
-         if (x < tx) a = fmod(a + 180.0, 360.0);
-         }
-      a = -(a - 90.0);
-      return (a < 0 ? 360.0 + a : a);
-      }
-
-   return 0.0;
-   }
 
 NODE *ltowards(NODE *args)
    {
@@ -1364,23 +1364,23 @@ NODE *ltowardsxyz(NODE *args)
 NODE *lpos(NODE *)
    {
    return cons_list(
-      make_floatnode(cut_error(g_Turtles[turtle_which].Position.x / x_scale)),
-      make_floatnode(cut_error(g_Turtles[turtle_which].Position.y / y_scale)));
+      make_floatnode(cut_error(g_Turtles[turtle_which].Position.x / g_Scale.x)),
+      make_floatnode(cut_error(g_Turtles[turtle_which].Position.y / g_Scale.y)));
    }
 
 NODE *lposxyz(NODE *)
    {
    return cons_list(
-      make_floatnode(cut_error(g_Turtles[turtle_which].Position.x / x_scale)),
-      make_floatnode(cut_error(g_Turtles[turtle_which].Position.y / y_scale)),
-      make_floatnode(cut_error(g_Turtles[turtle_which].Position.z / z_scale)));
+      make_floatnode(cut_error(g_Turtles[turtle_which].Position.x / g_Scale.x)),
+      make_floatnode(cut_error(g_Turtles[turtle_which].Position.y / g_Scale.y)),
+      make_floatnode(cut_error(g_Turtles[turtle_which].Position.z / g_Scale.z)));
    }
 
 NODE *lscrunch(NODE *)
    {
    return cons_list(
-      make_floatnode(x_scale),
-      make_floatnode(y_scale));
+      make_floatnode(g_Scale.x),
+      make_floatnode(g_Scale.y));
    }
 
 NODE *lhome(NODE *)
@@ -1410,7 +1410,8 @@ NODE *lhome(NODE *)
    return Unbound;
    }
 
-void cs_helper(int centerp, int clearp)
+static
+void cs_helper(bool centerp, bool clearp)
    {
    bPolyFlag = false;
    ThreeD.DisposeVertices(ThePolygon);
@@ -1974,8 +1975,8 @@ NODE *lsetscrunch(NODE *args)
    if (NOT_THROWING)
       {
       draw_turtle(false);
-      x_scale = numeric_node_to_flonum(xnode);
-      y_scale = numeric_node_to_flonum(ynode);
+      g_Scale.x = numeric_node_to_flonum(xnode);
+      g_Scale.y = numeric_node_to_flonum(ynode);
       draw_turtle(true);
       }
    return Unbound;

@@ -198,9 +198,7 @@ typedef struct _Turtle
    } Turtle;
 
 extern Turtle g_Turtles[];
-extern FLONUM x_scale;
-extern FLONUM y_scale;
-extern FLONUM z_scale;
+extern VECTOR g_Scale;     // used to scale a picture in scrunch mode.
 extern int turtle_which;
 extern int turtle_max;
 extern TThreeDSolid ThreeD;
