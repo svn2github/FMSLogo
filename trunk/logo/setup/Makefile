@@ -3,7 +3,7 @@
 MAKENSIS="C:\Program Files\NSIS\makensis.exe"
 CP=copy /Y
 RM=del
-MV=rename
+MV=move
 
 
 TARGET=fmslogo-$(FMSLOGO_VERSION).exe
