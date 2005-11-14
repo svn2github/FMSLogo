@@ -199,6 +199,7 @@ typedef struct _Turtle
 
 extern Turtle g_Turtles[];
 extern VECTOR g_Scale;     // used to scale a picture in scrunch mode.
+extern Point  g_Wanna;     // a point where the turtle wants to go
 extern int turtle_which;
 extern int turtle_max;
 extern TThreeDSolid ThreeD;

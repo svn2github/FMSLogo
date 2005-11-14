@@ -1939,13 +1939,7 @@ NODE *lsetturtle(NODE *arg)
             update_status_turtlewhich();
             }
 
-extern FLONUM wanna_x;
-extern FLONUM wanna_y;
-extern FLONUM wanna_z;
-
-         wanna_x = g_Turtles[turtle_which].Position.x;
-         wanna_y = g_Turtles[turtle_which].Position.y;
-         wanna_z = g_Turtles[turtle_which].Position.z;
+         g_Wanna = g_Turtles[turtle_which].Position;
 
          draw_turtles(true);
          }
