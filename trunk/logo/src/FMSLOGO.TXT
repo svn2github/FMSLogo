@@ -31,6 +31,8 @@ Part II) New features/bugs fixed:
     o Fix bug #1349374; "ARRAY 0" now works.
     o Fix bug #1349377; comments may not contain a single '|'.
     o Fix bug #1352838; EDALL can now save files on all Windows systems.
+    o Implement request #1349320; the status window can now be closed
+      by clicking on the "X" in its titlebar.
     o Many sweeping internal changes.  Expect regressions.
 
   * Added for 6.6b,

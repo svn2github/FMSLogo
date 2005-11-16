@@ -194,9 +194,13 @@ public: // HACK: should be protected
 class TMyStatusWindow : public TDialog
    {
  public:
-
    TMyStatusWindow(TWindow *, LPCSTR);
    ~TMyStatusWindow();
+
+ protected:
+   void EvClose();
+
+   DECLARE_RESPONSE_TABLE(TMyStatusWindow);
    }
 ;
 

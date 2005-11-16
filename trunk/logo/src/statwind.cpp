@@ -33,6 +33,36 @@ TMyStatusWindow::~TMyStatusWindow()
    {
    }
 
+void TMyStatusWindow::EvClose()
+   {
+   // we are processing the close event before
+   // the window has been closed.
+   status_flag = 0;
+
+   // Get location and size of our window on the screen so we can
+   // come back up in the same spot next time we are invoked.
+   TRect wrect;
+   GetWindowRect(wrect);
+
+   // save the current location
+   SetPrivateProfileQuadruple(
+      "LOGO",
+      "Status",
+      wrect.Left(),
+      wrect.Top(),
+      wrect.Width(),
+      wrect.Height());
+
+   // now kill the status window
+   delete MainWindowx->StatusWindow;
+   MainWindowx->StatusWindow = NULL;
+   MainWindowx->CommandWindow->SetDlgItemText(ID_STATUS, "Status");
+   }
+
+DEFINE_RESPONSE_TABLE1(TMyStatusWindow, TDialog)
+  EV_WM_CLOSE,
+END_RESPONSE_TABLE;
+
 void update_status_turtleposition(void)
    {
    char text[256];
@@ -261,4 +291,3 @@ void update_status_memory(void)
 
    MainWindowx->StatusWindow->SetDlgItemText(ID_MEMORY, text);
    }
-

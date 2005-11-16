@@ -1999,6 +1999,7 @@ void TMainFrame::MyPopupStatusKill()
 
    // now kill the status window
    delete StatusWindow;
+   StatusWindow = NULL;
    CommandWindow->SetDlgItemText(ID_STATUS, "Status");
    }
 
