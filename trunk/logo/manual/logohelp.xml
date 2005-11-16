@@ -294,6 +294,12 @@
   <!ENTITY command-text           SYSTEM "command-text.xml">
   <!ENTITY command-fulltext       SYSTEM "command-fulltext.xml">
   <!ENTITY command-copydef        SYSTEM "command-copydef.xml">
+
+  <!ENTITY command-make           SYSTEM "command-make.xml">
+  <!ENTITY command-name           SYSTEM "command-name.xml">
+  <!ENTITY command-local          SYSTEM "command-local.xml">
+  <!ENTITY command-localmake      SYSTEM "command-localmake.xml">
+  <!ENTITY command-thing          SYSTEM "command-thing.xml">
 ]>
 
 <book>

@@ -11,4 +11,14 @@
        &command-fulltext;
        &command-copydef;
     </section>
+
+   <section>
+       <title>Variable Definition</title>
+
+       &command-make;
+       &command-name;
+       &command-local;
+       &command-localmake;
+       &command-thing;
+    </section>
 </chapter>
