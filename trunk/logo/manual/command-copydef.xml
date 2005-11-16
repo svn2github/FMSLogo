@@ -33,6 +33,7 @@ MSWLogo uses <link linkend="command-make">MAKE</link> order, not <link linkend="
 <programlisting><userinput>TO WELCOME
   PRINT "Hello
 END
+
 WELCOME</userinput>
 Hello
 <userinput>COPYDEF "SAYHELLO "WELCOME
