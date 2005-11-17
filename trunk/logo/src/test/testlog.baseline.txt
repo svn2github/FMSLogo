@@ -221,6 +221,71 @@ PASS: [LOCALVARTEST "mylocalvarname 42] returned 42 , as expected.
 PASS: [:mylocalvarname] returned 32 , as expected.
 INFO: Executing invalid instruction: [(LOCALMAKE)]
 INFO: Executing invalid instruction: [(PO)]
+PASS: [GPROP "nonexistent "prop1] returned [] , as expected.
+PASS: [GPROP "testplist1 "nonexistent] returned [] , as expected.
+PASS: [GPROP "testplist1 "property1] returned 1 , as expected.
+PASS: [GPROP "testplist1 "property2] returned abc , as expected.
+PASS: [GPROP "testplist1 "property3] returned [a b c] , as expected.
+PASS: [GPROP "testplist1 "property4] returned {a b c} , as expected.
+PASS: [GPROP "testplist1 "property5] returned [] , as expected.
+PASS: [GPROP "testplist1 "property6] returned  , as expected.
+PASS: [GPROP "testplist1 "] returned empty , as expected.
+PASS: [GPROP "testplist1 "property1] returned one , as expected.
+PASS: [PLIST "nonexistent] returned [] , as expected.
+PASS: [COUNT :listcontents] returned 14 , as expected.
+PASS: [:value] returned empty , as expected.
+PASS: [:value] returned  , as expected.
+PASS: [:value] returned [] , as expected.
+PASS: [:value] returned {a b c} , as expected.
+PASS: [:value] returned [a b c] , as expected.
+PASS: [:value] returned abc , as expected.
+PASS: [:value] returned one , as expected.
+PASS: [COUNT :plistsoutput] returned 3 , as expected.
+PASS: [ITEM 1 :plistsoutput] returned [] , as expected.
+PASS: [ITEM 2 :plistsoutput] returned [] , as expected.
+PASS: [MEMBERP "testplist1 ITEM 3 :plistsoutput] returned true , as expected.
+PASS: [COUNT :plistsoutput] returned 3 , as expected.
+PASS: [ITEM 1 :plistsoutput] returned [] , as expected.
+PASS: [ITEM 2 :plistsoutput] returned [] , as expected.
+PASS: [MEMBERP "testplist1 ITEM 3 :plistsoutput] returned false , as expected.
+PASS: [GPROP "testplist1 "property1] returned [] , as expected.
+PASS: [GPROP "testplist1 "property2] returned [] , as expected.
+PASS: [GPROP "testplist1 "property3] returned [] , as expected.
+PASS: [GPROP "testplist1 "property4] returned [] , as expected.
+PASS: [GPROP "testplist1 "property5] returned [] , as expected.
+PASS: [GPROP "testplist1 "property6] returned [] , as expected.
+PASS: [GPROP "testplist1 "] returned [] , as expected.
+PASS: [PLIST "testplist1] returned [] , as expected.
+INFO: Executing invalid instruction: [(PLIST)]
+INFO: Executing invalid instruction: [(PLIST "too "many)]
+INFO: Executing invalid instruction: [PLIST [1 2 3]]
+INFO: Executing invalid instruction: [PLIST {1 2 3}]
+INFO: Executing invalid instruction: [(REMPROP)]
+INFO: Executing invalid instruction: [(REMPROP "plist)]
+INFO: Executing invalid instruction: [(REMPROP "plist "prop "toomany)]
+INFO: Executing invalid instruction: [REMPROP [1 2 3] "prop]
+INFO: Executing invalid instruction: [REMPROP {1 2 3} "prop]
+INFO: Executing invalid instruction: [REMPROP "plist [1 2 3]]
+INFO: Executing invalid instruction: [REMPROP "plist {1 2 3}]
+INFO: Executing invalid instruction: [(GPROP)]
+INFO: Executing invalid instruction: [(GPROP "plist)]
+INFO: Executing invalid instruction: [(GPROP "plist "prop "toomany)]
+INFO: Executing invalid instruction: [GPROP [1 2 3] "prop]
+INFO: Executing invalid instruction: [GPROP {1 2 3} "prop]
+INFO: Executing invalid instruction: [GPROP "plist [1 2 3]]
+INFO: Executing invalid instruction: [GPROP "plist {1 2 3}]
+INFO: Executing invalid instruction: [(PPROP)]
+INFO: Executing invalid instruction: [(PPROP "plist)]
+INFO: Executing invalid instruction: [(PPROP "plist "prop)]
+INFO: Executing invalid instruction: [(PPROP "plist "name "value "toomany)]
+INFO: Executing invalid instruction: [PPROP [1 2 3] "name "value]
+INFO: Executing invalid instruction: [PPROP {1 2 3} "name "value]
+INFO: Executing invalid instruction: [PPROP "plist [1 2 3] "value]
+INFO: Executing invalid instruction: [PPROP "plist {1 2 3} "value]
+INFO: Executing invalid instruction: [REMPROP [1 2 3] "prop]
+INFO: Executing invalid instruction: [REMPROP {1 2 3} "prop]
+INFO: Executing invalid instruction: [REMPROP "plist [1 2 3]]
+INFO: Executing invalid instruction: [REMPROP "plist {1 2 3}]
 PASS: Size is [100 100] , as expected.
 PASS: Size is [100 101] , as expected.
 PASS: Size is [101 100] , as expected.

@@ -7,6 +7,7 @@ LOAD "predicate.lgo
 LOAD "logic.lgo
 LOAD "bitmap.lgo
 LOAD "form.lgo
+LOAD "plist.lgo
 LOAD "editor.lgo
 LOAD "port.lgo
 LOAD "label.lgo
@@ -126,6 +127,7 @@ TO TESTALL
   ARRAYTEST     ; from array.lgo
   LOGICTEST     ; from logic.lgo
   PROCEDURETEST ; from procedure.lgo
+  PLISTTEST     ; from plist.lgo
   BITMAPTEST    ; from bitmap.lgo
   FORMTEST      ; from form.lgo
   EDITORTEST    ; from editor.lgo 
