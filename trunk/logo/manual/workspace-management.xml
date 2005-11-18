@@ -21,4 +21,37 @@
        &command-localmake;
        &command-thing;
     </section>
+
+
+   <section>
+       <title>Property Lists</title>
+
+<para>
+Property lists provide a way to associate words with things.
+Property lists are sometimes called "dictionaries", "associative arrays", or simply "name-value pairs".
+</para>
+
+
+<para>
+Property lists, abbreviated "plists", are always accessed by their name--you can't get at the plist directly.
+Among other things, this means you cannot pass a plist into a Logo procedure, you can only pass its name.
+</para>
+
+<para>
+You can get, set, and remove properties (name-value pairs) from a plist.
+If you try to get a property that doesn't exist, or you try to get a property from a plist that doesn't exist, you will get the empty list.
+In general, you shouldn't care if a property list exists or not.
+However, if you do care, you can use <link linkend="command-plist">PLISTS</link> to get the names of all unburied property lists.
+</para>
+
+<para>
+Names of property lists are always case-insensitive.
+Names of individual properties are case-sensitive or case-insensitive depending on the value of <link linkend="command-caseignorep">CASEIGNOREDP</link>, which is TRUE by default.
+</para>
+
+       &command-pprop;
+       &command-gprop;
+       &command-remprop;
+       &command-plist;
+    </section>
 </chapter>
