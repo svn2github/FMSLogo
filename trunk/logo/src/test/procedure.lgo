@@ -170,16 +170,81 @@ TO PROCEDURETEST
    RUNBADINPUTTEST [NAMELIST {a b}]
    RUNBADINPUTTEST [(NAMELIST "a "b)]
 
-   ; Just exercise PO for now.
+   ; Just exercise the PO routines for now.
    ; we'll figure out how to test its output later
    OPENWRITE "po.dump.txt
    LOCALMAKE "previouswriter WRITER
    SETWRITE "po.dump.txt
+
    PO CONTENTS
+   PO NAMES
+   PO PROCEDURES
+   PO BURIED
+   PO PLISTS
+   PO []
+
+   POALL
+   POPS
+   PONS
+   POPLS
+
+   PON "namepvariable
+   PON [namepvariable]
+
+   ; create some property lists for testing POPL
+   PPROP "wordtonumber "one 1
+   PPROP "wordtonumber "two 2
+   PPROP "numbertoword 1 "one
+   PPROP "numbertoword 2 "two
+   POPL "wordtonumber
+   POPL "numbertoword
+   POPL [wordtonumber numbertoword nonexistent]
+
+   ; remove the property lists
+   REMPROP "wordtonumber "one
+   REMPROP "wordtonumber "two
+   REMPROP "numbertoword 1
+   REMPROP "numbertoword 2
+   POPL "wordtonumber
+   POPL "numbertoword
+   POPL [wordtonumber numbertoword nonexistent]
+
+   POT CONTENTS
+   POT NAMES
+   POT PROCEDURES
+   POT BURIED
+   POT PLISTS
+   POT []
+
+   POTS
+
    SETWRITE :previouswriter
    CLOSE "po.dump.txt
    ERASEFILE "po.dump.txt
 
    RUNBADINPUTTEST [(PO)]
+   RUNBADINPUTTEST [(PO "pot "pots)]
+   RUNBADINPUTTEST [PO "forward]
+   RUNBADINPUTTEST [PO "nonexistent]
+   RUNBADINPUTTEST [PO [nonexistent]]
+   RUNBADINPUTTEST [PO {}]
+
+   RUNBADINPUTTEST [(POALL "toomany)]
+   RUNBADINPUTTEST [(POPS  "toomany)]
+   RUNBADINPUTTEST [(POPLS "toomany)]
+   RUNBADINPUTTEST [(POT   "toomany)]
+   RUNBADINPUTTEST [(POTS  "toomany)]
+
+   RUNBADINPUTTEST [(PON)]
+   RUNBADINPUTTEST [PON "sampleproc]
+   RUNBADINPUTTEST [(PON "too "many)]
+   RUNBADINPUTTEST [PON {a b}]
+
+   RUNBADINPUTTEST [(POT)]
+   RUNBADINPUTTEST [(POT "pot "pots)]
+   RUNBADINPUTTEST [POT "forward]
+   RUNBADINPUTTEST [POT "nonexistent]
+   RUNBADINPUTTEST [POT [nonexistent]]
+   RUNBADINPUTTEST [POT {}]
 END
 
