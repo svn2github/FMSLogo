@@ -152,6 +152,7 @@ TO PLISTTEST
    SIMPLEREPORTTEST [ PLLIST "a    ] [ [] [] [a] ]
    SIMPLEREPORTTEST [ PLLIST "||   ] (list [] [] (list "||) )
    SIMPLEREPORTTEST [ PLLIST [a b] ] [ [] [] [a b] ]
+   SIMPLEREPORTTEST [ PLLIST []    ] [ [] [] [] ]
    RUNBADINPUTTEST [(PLLIST)]
    RUNBADINPUTTEST [(PLLIST "too "many)]
    RUNBADINPUTTEST [PLLIST {a b}]
