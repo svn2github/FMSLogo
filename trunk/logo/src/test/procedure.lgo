@@ -27,6 +27,8 @@ TO PROCEDURETEST
 
   RUNBADINPUTTEST [(TEXT)]
   RUNBADINPUTTEST [(TEXT "nonexistent)]
+  RUNBADINPUTTEST [(TEXT [sampleproc])]
+  RUNBADINPUTTEST [(TEXT {sampleproc})]
 
   ; test FULLTEXT
   SIMPLEREPORTTEST ~
@@ -39,6 +41,8 @@ TO PROCEDURETEST
 
    RUNBADINPUTTEST [(FULLTEXT)]
    RUNBADINPUTTEST [(FULLTEXT "nonexistent)]
+   RUNBADINPUTTEST [(FULLTEXT [sampleproc])]
+   RUNBADINPUTTEST [(FULLTEXT {sampleproc})]
 
    ; test DEFINEDP
    SIMPLEREPORTTEST [DEFINEDP "nonexistent] "false
@@ -46,6 +50,11 @@ TO PROCEDURETEST
    SIMPLEREPORTTEST [DEFINED? "FORWARD]     "false
    SIMPLEREPORTTEST [DEFINED? "SAMPLEPROC]  "true
    SIMPLEREPORTTEST [DEFINED? "sampleproc]  "true
+   SIMPLEREPORTTEST [DEFINED? "||]          "false
+   RUNBADINPUTTEST [(DEFINED?)]
+   RUNBADINPUTTEST [(DEFINED? {a})]
+   RUNBADINPUTTEST [(DEFINED? [])]
+   RUNBADINPUTTEST [(DEFINED? "sampleproc "toomany)]
 
    ; test PROCEDUREP
    SIMPLEREPORTTEST [PROCEDUREP "nonexistent] "false
@@ -53,22 +62,51 @@ TO PROCEDURETEST
    SIMPLEREPORTTEST [PROCEDURE? "FORWARD]     "true
    SIMPLEREPORTTEST [PROCEDURE? "SAMPLEPROC]  "true
    SIMPLEREPORTTEST [PROCEDURE? "sampleproc]  "true
+   SIMPLEREPORTTEST [PROCEDURE? "||]          "false
+   RUNBADINPUTTEST [(PROCEDURE?)]
+   RUNBADINPUTTEST [(PROCEDURE? {a})]
+   RUNBADINPUTTEST [(PROCEDURE? [])]
+   RUNBADINPUTTEST [(PROCEDURE? "sampleproc "toomany)]
 
    ; test NAMEP
    LOCALMAKE "namepvariable 0
    SIMPLEREPORTTEST [NAMEP "nonexistent]   "false
    SIMPLEREPORTTEST [NAME? "nonexistent]   "false
    SIMPLEREPORTTEST [NAME? "FORWARD]       "false
+   SIMPLEREPORTTEST [NAME? "||]            "false
    SIMPLEREPORTTEST [NAME? "namepvariable] "true
    SIMPLEREPORTTEST [NAME? "NAMEPVARIABLE] "true
+   RUNBADINPUTTEST [(NAME?)]
+   RUNBADINPUTTEST [(NAME? {a})]
+   RUNBADINPUTTEST [(NAME? [])]
+   RUNBADINPUTTEST [(NAME? "namepvariable "toomany)]
 
    ; test PRIMITIVEP
    SIMPLEREPORTTEST [PRIMITIVEP "nonexistent]   "false
    SIMPLEREPORTTEST [PRIMITIVE? "nonexistent]   "false
    SIMPLEREPORTTEST [PRIMITIVE? "FORWARD]       "true
    SIMPLEREPORTTEST [PRIMITIVE? "FD]            "true
+   SIMPLEREPORTTEST [PRIMITIVE? "||]            "false
    SIMPLEREPORTTEST [PRIMITIVE? "namepvariable] "false
    SIMPLEREPORTTEST [PRIMITIVE? "sampleproc]    "false
+   RUNBADINPUTTEST [(PRIMITIVE?)]
+   RUNBADINPUTTEST [(PRIMITIVE? {a})]
+   RUNBADINPUTTEST [(PRIMITIVE? [])]
+   RUNBADINPUTTEST [(PRIMITIVE? "namepvariable "toomany)]
+
+   ; test MACROP
+   .DEFMACRO "mymacro [[a b] [print :a] [print :b]]
+   SIMPLEREPORTTEST [MACROP "mymacro]       "true
+   SIMPLEREPORTTEST [MACRO? "mymacro]       "true
+   SIMPLEREPORTTEST [MACRO? "FORWARD]       "false
+   SIMPLEREPORTTEST [MACRO? "FD]            "false
+   SIMPLEREPORTTEST [MACRO? "||]            "false
+   SIMPLEREPORTTEST [MACRO? "namepvariable] "false
+   SIMPLEREPORTTEST [MACRO? "sampleproc]    "false
+   RUNBADINPUTTEST [(MACRO?)]
+   RUNBADINPUTTEST [(MACRO? {a})]
+   RUNBADINPUTTEST [(MACRO? [])]
+   RUNBADINPUTTEST [(MACRO? "mymacro "toomany)]
 
    ; test DEFINE
    DEFINE "ECHO [[a] [output :a] ]
