@@ -1,0 +1,34 @@
+<section id="command-plists">
+    <title>PLISTS</title>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>PLISTS</command></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+Outputs a contents list, which is a list of three lists.
+The first two lists are empty, indicating that no procedure names or variable names are returned.
+The third list is a list of the names of all unburied property lists in the workspace.
+</para>
+</listitem>
+</varlistentry>
+
+
+<varlistentry><term>Example</term>
+<listitem>
+<programlisting><userinput>PPROP "PROP1 "P1 1
+SHOW PLISTS</userinput>
+[[] [] [prop1]]
+</programlisting>
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</section>

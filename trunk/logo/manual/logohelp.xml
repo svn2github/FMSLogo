@@ -311,6 +311,14 @@
   <!ENTITY command-definedp       SYSTEM "command-definedp.xml">
   <!ENTITY command-namep          SYSTEM "command-namep.xml">
   <!ENTITY command-macrop         SYSTEM "command-macrop.xml">
+
+  <!ENTITY command-contents       SYSTEM "command-contents.xml">
+  <!ENTITY command-buried         SYSTEM "command-buried.xml">
+  <!ENTITY command-procedures     SYSTEM "command-procedures.xml">
+  <!ENTITY command-names          SYSTEM "command-names.xml">
+  <!ENTITY command-plists         SYSTEM "command-plists.xml">
+  <!ENTITY command-namelist       SYSTEM "command-namelist.xml">
+  <!ENTITY command-pllist         SYSTEM "command-pllist.xml">
 ]>
 
 <book>

@@ -64,4 +64,30 @@ Names of individual properties are case-sensitive or case-insensitive depending 
        &command-namep;
        &command-macrop;
     </section>
+
+   <section>
+       <title>Workspace Queries</title>
+
+<para>
+Most workspace query procedures output a "contents list", which can be used as input to the <link linkend="workspace-inspection">Workspace Inspection</link> procedures.
+All procedures whose input is indicated as "contentslist" will accept any of the following:
+
+<itemizedlist>
+<listitem>A single word (taken as a procedure name)</listitem>
+<listitem>A list of words (taken as procedure names)</listitem>
+<listitem>A list of two lists (taken as procedure names and variable names, respectivly)</listitem>
+<listitem>A list of three lists (taken as procedure names, variable names, and property list names, respectivly)</listitem>
+</itemizedlist>
+
+</para>
+
+       &command-contents;
+       &command-buried;
+       &command-procedures;
+       &command-names;
+       &command-plists;
+       &command-namelist;
+       &command-pllist;
+    </section>
+
 </chapter>
