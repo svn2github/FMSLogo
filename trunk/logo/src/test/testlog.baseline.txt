@@ -255,6 +255,13 @@ INFO: Executing invalid instruction: [LOCAL {}]
 PASS: [LOCALVARTEST "mylocalvarname 42] returned 42 , as expected.
 PASS: [:mylocalvarname] returned 32 , as expected.
 INFO: Executing invalid instruction: [(LOCALMAKE)]
+PASS: [NAMELIST "a] returned [[] [a]] , as expected.
+PASS: [NAMELIST [a b]] returned [[] [a b]] , as expected.
+PASS: [NAMELIST "] returned [[] []] , as expected.
+INFO: Executing invalid instruction: [(NAMELIST)]
+INFO: Executing invalid instruction: [NAMELIST {a b}]
+FAIL: Executing [NAMELIST {a b}] did not throw an error
+INFO: Executing invalid instruction: [(NAMELIST "a "b)]
 INFO: Executing invalid instruction: [(PO)]
 PASS: [GPROP "nonexistent "prop1] returned [] , as expected.
 PASS: [GPROP "testplist1 "nonexistent] returned [] , as expected.

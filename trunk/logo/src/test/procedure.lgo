@@ -145,9 +145,29 @@ TO PROCEDURETEST
    SIMPLEREPORTTEST [:mylocalvarname]                  32
    RUNBADINPUTTEST [(LOCALMAKE)]
 
-   ; Just exercise NAME for now.
+   ; Just exercise CONTENTS for now.
+   ; we'll figure out how to test its output later
+   IGNORE CONTENTS
+
+   ; Just exercise NAMES for now.
    ; we'll figure out how to test its output later
    IGNORE NAMES
+
+   ; Just exercise BURIED for now.
+   ; we'll figure out how to test its output later
+   IGNORE BURIED
+
+   ; Just exercise PROCEDURES for now.
+   ; we'll figure out how to test its output later
+   IGNORE PROCEDURES
+
+   ; test NAMELIST
+   SIMPLEREPORTTEST [NAMELIST "a]     [[] [a]]
+   SIMPLEREPORTTEST [NAMELIST [a b]]  [[] [a b]]
+   SIMPLEREPORTTEST [NAMELIST "||]    (list [] (list "||))
+   RUNBADINPUTTEST [(NAMELIST)]
+   RUNBADINPUTTEST [NAMELIST {a b}]
+   RUNBADINPUTTEST [(NAMELIST "a "b)]
 
    ; Just exercise PO for now.
    ; we'll figure out how to test its output later
