@@ -148,5 +148,13 @@ TO PLISTTEST
    RUNBADINPUTTEST [REMPROP "plist  [1 2 3]]
    RUNBADINPUTTEST [REMPROP "plist  {1 2 3}]
 
+   ; test PLLIST
+   SIMPLEREPORTTEST [ PLLIST "a    ] [ [] [] [a] ]
+   SIMPLEREPORTTEST [ PLLIST "||   ] (list [] [] (list "||) )
+   SIMPLEREPORTTEST [ PLLIST [a b] ] [ [] [] [a b] ]
+   RUNBADINPUTTEST [(PLLIST)]
+   RUNBADINPUTTEST [(PLLIST "too "many)]
+   RUNBADINPUTTEST [PLLIST {a b}]
+
 END
 

@@ -328,6 +328,13 @@ INFO: Executing invalid instruction: [REMPROP [1 2 3] "prop]
 INFO: Executing invalid instruction: [REMPROP {1 2 3} "prop]
 INFO: Executing invalid instruction: [REMPROP "plist [1 2 3]]
 INFO: Executing invalid instruction: [REMPROP "plist {1 2 3}]
+PASS: [PLLIST "a] returned [[] [] [a]] , as expected.
+PASS: [PLLIST "] returned [[] [] []] , as expected.
+PASS: [PLLIST [a b]] returned [[] [] [a b]] , as expected.
+INFO: Executing invalid instruction: [(PLLIST)]
+INFO: Executing invalid instruction: [(PLLIST "too "many)]
+INFO: Executing invalid instruction: [PLLIST {a b}]
+FAIL: Executing [PLLIST {a b}] did not throw an error
 PASS: Size is [100 100] , as expected.
 PASS: Size is [100 101] , as expected.
 PASS: Size is [101 100] , as expected.
