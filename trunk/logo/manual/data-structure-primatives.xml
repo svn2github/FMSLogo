@@ -48,7 +48,7 @@
    </section>
 
    <section>
-      <title>Predicates</title>
+      <title>Data Structure Predicates</title>
 
       &command-wordp;
       &command-listp;
