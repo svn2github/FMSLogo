@@ -1,7 +1,7 @@
-<chapter>
+<chapter id="workspace-management">
    <title>Workspace Management</title>
 
-   <section>
+   <section id="procedure-definition">
        <title>Procedure Definition</title>
 
        &command-to;
@@ -12,7 +12,7 @@
        &command-copydef;
     </section>
 
-   <section>
+   <section id="variable-definition">
        <title>Variable Definition</title>
 
        &command-make;
@@ -23,7 +23,7 @@
     </section>
 
 
-   <section>
+   <section id="property-lists">
        <title>Property Lists</title>
 
 <para>
@@ -55,7 +55,7 @@ Names of individual properties are case-sensitive or case-insensitive depending 
        &command-plist;
     </section>
 
-   <section>
+   <section id="workspace-predicates">
        <title>Workspace Predicates</title>
 
        &command-procedurep;
@@ -65,7 +65,7 @@ Names of individual properties are case-sensitive or case-insensitive depending 
        &command-macrop;
     </section>
 
-   <section>
+   <section id="workspace-queries">
        <title>Workspace Queries</title>
 
 <para>
@@ -88,6 +88,24 @@ All procedures whose input is indicated as "contentslist" will accept any of the
        &command-plists;
        &command-namelist;
        &command-pllist;
+    </section>
+
+   <section id="workspace-inspection">
+       <title>Workspace Inspection</title>
+
+<para>
+The workspace inspection procedures print the definition of various workspace types to the current write stream.
+</para>
+
+       &command-po;
+       &command-poall;
+       &command-pops;
+       &command-pons;
+       &command-popls;
+       &command-pon;
+       &command-popl;
+       &command-pot;
+       &command-pots;
     </section>
 
 </chapter>

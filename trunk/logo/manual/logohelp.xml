@@ -319,9 +319,19 @@
   <!ENTITY command-plists         SYSTEM "command-plists.xml">
   <!ENTITY command-namelist       SYSTEM "command-namelist.xml">
   <!ENTITY command-pllist         SYSTEM "command-pllist.xml">
+
+  <!ENTITY command-po             SYSTEM "command-po.xml">
+  <!ENTITY command-poall          SYSTEM "command-poall.xml">
+  <!ENTITY command-pops           SYSTEM "command-pops.xml">
+  <!ENTITY command-pons           SYSTEM "command-pons.xml">
+  <!ENTITY command-popls          SYSTEM "command-popls.xml">
+  <!ENTITY command-pon            SYSTEM "command-pon.xml">
+  <!ENTITY command-popl           SYSTEM "command-popl.xml">
+  <!ENTITY command-pot            SYSTEM "command-pot.xml">
+  <!ENTITY command-pots           SYSTEM "command-pots.xml">
 ]>
 
-<book>
+<book id="MSWLogo Help">
   <info>
      <title>Logo for Windows</title>
 
