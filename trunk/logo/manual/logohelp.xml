@@ -305,6 +305,12 @@
   <!ENTITY command-gprop          SYSTEM "command-gprop.xml">
   <!ENTITY command-remprop        SYSTEM "command-remprop.xml">
   <!ENTITY command-plist          SYSTEM "command-plist.xml">
+
+  <!ENTITY command-procedurep     SYSTEM "command-procedurep.xml">
+  <!ENTITY command-primitivep     SYSTEM "command-primitivep.xml">
+  <!ENTITY command-definedp       SYSTEM "command-definedp.xml">
+  <!ENTITY command-namep          SYSTEM "command-namep.xml">
+  <!ENTITY command-macrop         SYSTEM "command-macrop.xml">
 ]>
 
 <book>

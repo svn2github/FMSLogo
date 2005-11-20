@@ -54,4 +54,14 @@ Names of individual properties are case-sensitive or case-insensitive depending 
        &command-remprop;
        &command-plist;
     </section>
+
+   <section>
+       <title>Workspace Predicates</title>
+
+       &command-procedurep;
+       &command-primitivep;
+       &command-definedp;
+       &command-namep;
+       &command-macrop;
+    </section>
 </chapter>
