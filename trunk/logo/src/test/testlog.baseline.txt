@@ -252,6 +252,12 @@ PASS: [:10] returned ten , as expected.
 PASS: [:11] returned eleven , as expected.
 INFO: Executing invalid instruction: [(LOCAL)]
 INFO: Executing invalid instruction: [LOCAL {}]
+PASS: [PROCEDURE? "erasedproc] returned true , as expected.
+PASS: [PROCEDURE? "erasedproc] returned false , as expected.
+INFO: Executing invalid instruction: [ERASEDPROC]
+INFO: Executing invalid instruction: [(ERASE)]
+INFO: Executing invalid instruction: [ERASE {}]
+INFO: Executing invalid instruction: [ERASE "forward]
 PASS: [LOCALVARTEST "mylocalvarname 42] returned 42 , as expected.
 PASS: [:mylocalvarname] returned 32 , as expected.
 INFO: Executing invalid instruction: [(LOCALMAKE)]
