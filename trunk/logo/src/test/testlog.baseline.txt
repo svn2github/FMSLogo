@@ -258,6 +258,11 @@ INFO: Executing invalid instruction: [ERASEDPROC]
 INFO: Executing invalid instruction: [(ERASE)]
 INFO: Executing invalid instruction: [ERASE {}]
 INFO: Executing invalid instruction: [ERASE "forward]
+PASS: [PROCEDURE? "sampleproc] returned true , as expected.
+INFO: Executing invalid instruction: [(ERALL 10)]
+INFO: Executing invalid instruction: [(ERALL [] )]
+INFO: Executing invalid instruction: [(ERALL {} )]
+INFO: Executing invalid instruction: [(ERALL "no)]
 PASS: [LOCALVARTEST "mylocalvarname 42] returned 42 , as expected.
 PASS: [:mylocalvarname] returned 32 , as expected.
 INFO: Executing invalid instruction: [(LOCALMAKE)]

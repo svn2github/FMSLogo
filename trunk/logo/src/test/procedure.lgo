@@ -148,6 +148,17 @@ TO PROCEDURETEST
    RUNBADINPUTTEST [ERASE {}]
    RUNBADINPUTTEST [ERASE "forward]
 
+   ; test ERALL
+   ; We can't run our tests if we erase all procedures, 
+   ; so we just test for not erasing anything and bad input.
+   MESSAGEBOX "|Manual Test| "|You will be now asked to erase all procedures.  Say No.|
+   ERALL
+   SIMPLEREPORTTEST [PROCEDURE? "sampleproc]  "true
+   RUNBADINPUTTEST [(ERALL 10)]
+   RUNBADINPUTTEST [(ERALL [])]
+   RUNBADINPUTTEST [(ERALL {})]
+   RUNBADINPUTTEST [(ERALL "no)]
+
 
    ; test LOCALMAKE
    LOCALMAKE "mylocalvarname 32
