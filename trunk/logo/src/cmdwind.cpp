@@ -25,22 +25,37 @@ TMyCommandWindow::TMyCommandWindow(
    TWindow *AParent,
    LPCSTR   ResId
 ) : TDialog(AParent, ResId),
-   TraceButton(NULL),
-   ResetButton(NULL),
-   PauseButton(NULL),
-   HaltButton(NULL),
-   StatusButton(NULL),
-   YieldButton(NULL),
-   EdallButton(NULL),
-   ExecuteButton(NULL),
-   Editbox(NULL),
-   Listbox(NULL),
+   TraceButton(new TCommanderButton(this, ID_TRACE)),
+   ResetButton(new TCommanderButton(this, ID_RESET)),
+   PauseButton(new TCommanderButton(this, ID_PAUSE)),
+   HaltButton(new TCommanderButton(this, ID_HALT)),
+   StatusButton(new TCommanderButton(this, ID_STATUS)),
+   YieldButton(new TCommanderButton(this, ID_YIELD)),
+   EdallButton(new TCommanderButton(this, ID_EDALL)),
+   ExecuteButton(new TCommanderButton(this, ID_EXECUTE)),
+   Editbox(new TMyEditboxWindow(this, ID_EDITINPUT, 0)),
+   Listbox(new TMyListboxWindow(this, ID_LISTBOX, 0)),
    Font(NULL)
    {
    }
 
 TMyCommandWindow::~TMyCommandWindow()
    {
+   delete Editbox;
+   delete Listbox;
+   delete TraceButton;
+   delete ResetButton;
+   delete PauseButton;
+   delete HaltButton;
+   delete StatusButton;
+   delete YieldButton;
+   delete EdallButton;
+   delete ExecuteButton;
+
+   if (Font)
+      {
+      DeleteObject(Font);
+      }
    }
 
 void TMyCommandWindow::SetupWindow()
@@ -52,36 +67,26 @@ void TMyCommandWindow::SetupWindow()
 
    Font = CreateFontIndirect(&lf);
 
-   Editbox = new TMyEditboxWindow(this, ID_EDITINPUT, 0);
    Editbox->Create();
    Editbox->SetWindowFont(Font, TRUE);
 
-   Listbox = new TMyListboxWindow(this, ID_LISTBOX, 0);
    Listbox->Create();
    Listbox->SetWindowFont(Font, TRUE);
 
-   TraceButton = new TCommanderButton(this, ID_TRACE);
    TraceButton->Create();
 
-   ResetButton = new TCommanderButton(this, ID_RESET);
    ResetButton->Create();
 
-   PauseButton = new TCommanderButton(this, ID_PAUSE);
    PauseButton->Create();
 
-   HaltButton = new TCommanderButton(this, ID_HALT);
    HaltButton->Create();
 
-   StatusButton = new TCommanderButton(this, ID_STATUS);
    StatusButton->Create();
 
-   YieldButton = new TCommanderButton(this, ID_YIELD);
    YieldButton->Create();
 
-   EdallButton = new TCommanderButton(this, ID_EDALL);
    EdallButton->Create();
 
-   ExecuteButton = new TCommanderButton(this, ID_EXECUTE);
    ExecuteButton->Create();
 
    RecalculateLayout();
@@ -410,18 +415,6 @@ void TMyCommandWindow::DoButtonPause(UINT)
 //   SendDlgItemMsg(ID_PAUSE, WM_SETTEXT, 0, (DWORD)YABuffer);
 //   }
 
-void TMyCommandWindow::EvKeyDown(UINT, UINT, UINT)
-   {
-   TMessage Msg = __GetTMessage();
-
-   if (EditBoxWantsKeyEvent(Msg.WParam))
-      {
-         // we don't want this key press.
-         // give it to the edit box.
-         PostKeyDownToEditBox(Msg.WParam, Msg.LParam);
-      }
-   }
-
 
 void TMyCommandWindow::DoButtonTrace(UINT)
    {
@@ -475,42 +468,6 @@ void TMyCommandWindow::EvDestroy()
          wrect.Top(),
          wrect.Width(),
          wrect.Height());
-      }
-
-   delete Editbox;
-   Editbox = NULL;
-
-   delete Listbox;
-   Listbox = NULL;
-
-   delete TraceButton;
-   TraceButton = NULL;
-
-   delete ResetButton;
-   ResetButton = NULL;
-
-   delete PauseButton;
-   PauseButton = NULL;
-
-   delete HaltButton;
-   HaltButton = NULL;
-
-   delete StatusButton;
-   StatusButton = NULL;
-
-   delete YieldButton;
-   YieldButton = NULL;
-
-   delete EdallButton;
-   EdallButton = NULL;
-
-   delete ExecuteButton;
-   ExecuteButton = NULL;
-
-   if (Font)
-      {
-      DeleteObject(Font);
-      Font = NULL;
       }
 
    TWindow::EvDestroy();
@@ -714,7 +671,6 @@ DEFINE_RESPONSE_TABLE1(TMyListboxWindow, TEdit)
 END_RESPONSE_TABLE;
 
 DEFINE_RESPONSE_TABLE1(TMyCommandWindow, TDialog)
-  EV_WM_KEYDOWN,
   EV_WM_SIZE,
   EV_WM_DESTROY,
   EV_WM_CLOSE,

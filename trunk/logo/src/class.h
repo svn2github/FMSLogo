@@ -168,8 +168,6 @@ class TMyCommandWindow : public TDialog
    void DoButtonTrace(UINT);
    void DoButtonReset(UINT);
 
-   void EvKeyDown(UINT, UINT, UINT);
-
 protected:
    class TCommanderButton * TraceButton;
    class TCommanderButton * ResetButton;
