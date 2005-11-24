@@ -296,8 +296,8 @@ int promptuser(char *str, char *pmt)
    if (MainWindowx->MyPopupInput(str, pmt) == 0)
       {
       return 0;
-      //    if (halt_flag) IsTimeToHalt = true;
-      //      MainWindowx->CommandWindow->PostMessage(WM_COMMAND, ID_HALT, ID_HALT);
+      // if (halt_flag) IsTimeToHalt = true;
+      // MainWindowx->CommandWindow->PostMessage(WM_COMMAND, ID_HALT, ID_HALT);
       }
    else
       {
