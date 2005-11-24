@@ -18,6 +18,7 @@ LOAD "procedure.lgo
 LOAD "parse.lgo
 LOAD "word.lgo
 LOAD "color.lgo
+LOAD "screen.lgo
 
 MAKE "testlog []
 
@@ -136,6 +137,7 @@ TO TESTALL
   FILLTEST      ; from fill.lgo
   FILETEST      ; from file.lgo
   COLORTEST     ; from color.lgo
+  SCREENTEST    ; from screen.lgo
 ;  MKDIRTEST     ; from mkdir.lgo
 
   REPORTTESTUNINITIALIZE
