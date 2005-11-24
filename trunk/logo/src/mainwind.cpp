@@ -753,14 +753,15 @@ TMainFrame::TMainFrame(
    TPaneSplitter * PaneSplitter
 ) : TDecoratedFrame(AParent, ATitle, PaneSplitter),
     EditWindow(NULL),
-    CommandWindow(new TMyCommandWindow(0, "DIALOGCOMMAND")),
+    CommandWindow(new TMyCommandWindow(0, "IDD_DOCKEDCOMMANDER")),
     StatusWindow(NULL),
     PrinterAreaWindow(NULL),
     FileEditWindow(NULL),
     PaneSplitterWindow(PaneSplitter),
     ScreenWindow(new TScreenWindow(0, "FMSLogo Screen")),
     IsNewFile(true),
-    IsNewBitmap(true)
+    IsNewBitmap(true),
+    IsCommanderDocked(false)
    {
    /* main window initialization */
    strcpy(BitmapName, "Logo.Bmp");
@@ -1911,6 +1912,7 @@ int TMainFrame::MyPopupInput(char *str, char *pmt)
       }
    }
 
+
 void TMainFrame::SetupWindow()
    {
    TDecoratedFrame::SetupWindow();
@@ -1918,64 +1920,151 @@ void TMainFrame::SetupWindow()
    PaneSplitterWindow->SetSplitterCushion(MIN_COMMANDER_HEIGHT);
    PaneSplitterWindow->SetSplitterWidth(DEFAULT_SPLITTER_WIDTH);
 
-   // grow the main window to hold the splitter and the commander
-   const TRect originalWindowRect = GetWindowRect();
-
-   // restore the commander window's height
-   int commanderWindowX      = 0;
-   int commanderWindowY      = 0;
-   int commanderWindowWidth  = 0;
-   int commanderWindowHeight = DEFAULT_COMMANDER_HEIGHT;
-   GetPrivateProfileQuadruple(
-      "LOGO",
-      "Commander",
-      &commanderWindowX,
-      &commanderWindowY,
-      &commanderWindowWidth,
-      &commanderWindowHeight);
-
-   // sanity-check the input
-   commanderWindowHeight = max(commanderWindowHeight, MIN_COMMANDER_HEIGHT);
-
-   const int totalHeight =
-      originalWindowRect.Height() +
-      PaneSplitterWindow->GetSplitterWidth() +
-      commanderWindowHeight;
-
-   const TRect newWindowRect(
-      originalWindowRect.Left(),
-      originalWindowRect.Top(),
-      originalWindowRect.Right(),
-      originalWindowRect.Top() + totalHeight);
-
-   SetWindowPos(
-      NULL,
-      newWindowRect,
-      SWP_NOZORDER);
-
    PaneSplitterWindow->SplitPane(
       ScreenWindow,
       0,
       psHorizontal);
+   
+   if (bFixed) 
+      {
+      // HACK: fix up the frame window's size so that the screen's
+      // size matches what the clinet passed in on the command line.
+      // There MUST be a simpler/better way, but I do not know
+      // how to set the size of the screen client area directly.
+      TRect screenWindowRect = ScreenWindow->GetWindowRect();
+      int deltax = Attr.W - screenWindowRect.Width();
+      int deltay = Attr.H - screenWindowRect.Height();
+      
+      TRect mainWindowRect;
+      mainWindowRect.SetWH(
+         0,
+         0,
+         Attr.W + deltax,
+         Attr.H + deltay);
 
-   PaneSplitterWindow->SplitPane(
-      ScreenWindow,
-      CommandWindow,
-      psHorizontal);
+      SetWindowPos(
+         NULL,
+         mainWindowRect,
+         SWP_NOZORDER | SWP_NOMOVE | SWP_NOCOPYBITS);
+      }
 
-   const int moveDistance =
-      CommandWindow->GetWindowRect().Height() -
-      commanderWindowHeight;
-
-   PaneSplitterWindow->MoveSplitter(
-      ScreenWindow,
-      moveDistance);
+   IsCommanderDocked = false;
+   DockCommanderWindow();
 
    IsOkayToUseCommanderWindow = true;
 
    // it's show time for our little friend
    draw_turtle(true);
    term_init();
+   }
+
+void TMainFrame::UndockCommanderWindow()
+   {
+   if (IsCommanderDocked) 
+      {
+      TMyCommandWindow * newCommandWindow = new TMyCommandWindow(
+         ScreenWindow, 
+         "IDD_UNDOCKEDCOMMANDER");
+      newCommandWindow->Create();
+      newCommandWindow->Duplicate(*CommandWindow);
+      newCommandWindow->ShowWindow(SW_SHOW);
+
+      // shrink the main window to hold just the screen
+      TRect screenWindowRect;
+      screenWindowRect.SetWH(
+         0,
+         0,
+         Attr.W,
+         Attr.H - CommandWindow->GetWindowRect().Height() - PaneSplitterWindow->GetSplitterWidth());
+
+      SetWindowPos(
+         NULL,
+         screenWindowRect,
+         SWP_NOZORDER | SWP_NOMOVE);
+
+      PaneSplitterWindow->RemovePane(
+         CommandWindow,
+         TShouldDelete::NoDelete);
+
+      delete CommandWindow;
+      CommandWindow = newCommandWindow;
+      CommandWindow->Editbox->SetFocus();
+      IsCommanderDocked = false;
+      }
+   }
+
+void TMainFrame::DockCommanderWindow()
+   {
+   if (!IsCommanderDocked) 
+      {
+      TMyCommandWindow * newCommandWindow = new TMyCommandWindow(
+         0, 
+         "IDD_DOCKEDCOMMANDER");
+
+      // grow the main window to hold the splitter and the commander
+      TRect originalWindowRect;
+      originalWindowRect.SetWH(
+         Attr.X,
+         Attr.Y,
+         Attr.W,
+         Attr.H);
+
+      // restore the commander window's height
+      int commanderWindowX      = 0;
+      int commanderWindowY      = 0;
+      int commanderWindowWidth  = 0;
+      int commanderWindowHeight = DEFAULT_COMMANDER_HEIGHT;
+      GetPrivateProfileQuadruple(
+         "LOGO",
+         "Commander",
+         &commanderWindowX,
+         &commanderWindowY,
+         &commanderWindowWidth,
+         &commanderWindowHeight);
+
+      // sanity-check the input
+      commanderWindowHeight = max(commanderWindowHeight, MIN_COMMANDER_HEIGHT);
+
+      const int totalHeight =
+         originalWindowRect.Height() +
+         PaneSplitterWindow->GetSplitterWidth() +
+         commanderWindowHeight;
+
+      const TRect newWindowRect(
+         originalWindowRect.Left(),
+         originalWindowRect.Top(),
+         originalWindowRect.Right(),
+         originalWindowRect.Top() + totalHeight);
+
+      SetWindowPos(
+         NULL,
+         newWindowRect,
+         SWP_NOZORDER | SWP_NOMOVE | SWP_NOCOPYBITS);
+
+      PaneSplitterWindow->SplitPane(
+         ScreenWindow,
+         newCommandWindow,
+         psHorizontal);
+
+
+      const int moveDistance =
+         newCommandWindow->GetWindowRect().Height() -
+         commanderWindowHeight;
+
+      PaneSplitterWindow->MoveSplitter(
+         ScreenWindow,
+         moveDistance);
+
+      newCommandWindow->Duplicate(*CommandWindow);
+
+      // redraw the entire screen window
+      ScreenWindow->Invalidate(true);
+
+      delete CommandWindow;
+      CommandWindow = newCommandWindow;
+      CommandWindow->Editbox->SetFocus();
+      IsCommanderDocked = true;
+      }
    }
 
 

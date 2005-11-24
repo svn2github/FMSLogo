@@ -121,6 +121,8 @@ class TMyListboxWindow : public TEdit
    TMyListboxWindow(TWindow *, int, WORD);
    ~TMyListboxWindow();
 
+   void SetCursorAtBottom();
+
  protected:
    void EvKeyDown(UINT, UINT, UINT);
    void EvLButtonDown(UINT modKeys, TPoint & point);
@@ -136,6 +138,8 @@ class TMyCommandWindow : public TDialog
 
    TMyCommandWindow(TWindow *, LPCSTR);
    ~TMyCommandWindow();
+
+   bool Duplicate(const TMyCommandWindow & Original);
 
    void PostKeyDownToEditBox(WPARAM KeyEventWParam, LPARAM KeyEventLParam);
    bool EditBoxWantsKeyEvent(WPARAM KeyEventWParam);
@@ -169,6 +173,7 @@ class TMyCommandWindow : public TDialog
    void DoButtonReset(UINT);
 
 protected:
+
    class TCommanderButton * TraceButton;
    class TCommanderButton * ResetButton;
    class TCommanderButton * PauseButton;
@@ -301,6 +306,9 @@ class TMainFrame : public TDecoratedFrame
    void MyPopupStatusKill();
    int MyPopupInput(char *str, char *pmt);
 
+   void UndockCommanderWindow();
+   void DockCommanderWindow();
+
    void CheckForFileError();
    bool LoadBitmapFile(LPCSTR, DWORD &, DWORD &);
    bool OpenDIB(FILE* File, DWORD &, DWORD &);
@@ -384,6 +392,7 @@ class TMainFrame : public TDecoratedFrame
    char BitmapName[MAXPATH];
    bool IsNewFile;
    bool IsNewBitmap;
+   bool IsCommanderDocked;
 
 
    DECLARE_RESPONSE_TABLE(TMainFrame);

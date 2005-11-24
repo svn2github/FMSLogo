@@ -162,12 +162,92 @@ TMyCommandWindow::PostKeyDownToEditBox(
       KeyEventLParam);
    }
 
+
+static
+char *
+GetTextFromWindow(
+   TWindow * Window
+)
+   {
+   // copy the text in the commander history
+   int    windowTextLength = Window->GetWindowTextLength();
+   size_t textBufferLength = windowTextLength + 1; // for NUL
+
+   char *textBuffer = new char [textBufferLength];
+   if (textBuffer != NULL)
+      {
+      memset(textBuffer, 0, textBufferLength);
+
+      Window->GetWindowText(textBuffer, textBufferLength);
+      }
+
+   return textBuffer;
+   }
+
 void TMyCommandWindow::DoEditBox(UINT)
    {
    }
 
 void TMyCommandWindow::DoListBox(UINT)
    {
+   }
+
+// Copies the state of the widgets from one commander window
+// to another.
+bool 
+TMyCommandWindow::Duplicate(
+   const TMyCommandWindow & Original
+   )
+   {
+   // copy the text of the "Step" button
+   if (stepflag)
+      {
+      YieldButton->SetWindowText("UnStep");
+      }
+   else
+      {
+      YieldButton->SetWindowText("Step");
+      }
+
+   // copy the text of the "Trace" button
+   if (traceflag)
+      {
+      TraceButton->SetWindowText("UnTrace");
+      }
+   else
+      {
+      TraceButton->SetWindowText("Trace");
+      }
+
+   // copy the text of the "Status" button
+   if (status_flag)
+      {
+      StatusButton->SetWindowText("UnStatus");
+      }
+   else
+      {
+      StatusButton->SetWindowText("Status");
+      }
+
+
+   char * buffer;
+
+   buffer = GetTextFromWindow(Original.Listbox);
+   if (buffer != NULL)
+      {
+      Listbox->SetText(buffer);
+      delete [] buffer;
+      }
+   Listbox->SetCursorAtBottom();
+
+   buffer = GetTextFromWindow(Original.Editbox);
+   if (buffer != NULL)
+      {
+      Editbox->SetText(buffer);
+      delete [] buffer;
+      }
+
+   return true;
    }
 
 void do_execution(char * logocommand)
@@ -272,9 +352,9 @@ void do_execution(char * logocommand)
 
       halt_flag--;
       if (halt_flag < 0)
-        {
-        halt_flag = 0;
-        }
+         {
+         halt_flag = 0;
+         }
       }
 
    }
@@ -318,10 +398,12 @@ void TMyCommandWindow::DoButtonExecute(UINT)
       do_execution(selectedtext);
       }
 
-   // if we just poped up editor then don't set focus to commander input
+   // calling do_execution() will delete the "this" pointer,
+   // if it executes FULLSCREEN, TEXTSCREEN, or SPLITSCREEN.
+   // Therefore, we must not touch any member variable at this point.
    if (!JustDidEdit)
       {
-      Editbox->SetFocus();
+      MainWindowx->CommandWindow->Editbox->SetFocus();
       }
    JustDidEdit = false;
    }
@@ -366,23 +448,23 @@ void TMyCommandWindow::DoButtonYield(UINT)
       if (yield_flag)
          {
          yield_flag = 0;
-         SendDlgItemMsg(ID_YIELD, WM_SETTEXT, 0, (DWORD) "Yield");
+         YieldButton->SetWindowText("Yield");
          }
       else
          {
          yield_flag = 1;
-         SendDlgItemMsg(ID_YIELD, WM_SETTEXT, 0, (DWORD) "NoYield");
+         YieldButton->SetWindowText("NoYield");
          }
    */
    if (stepflag)
       {
       stepflag = 0;
-      SetDlgItemText(ID_YIELD, "Step");
+      YieldButton->SetWindowText("Step");
       }
    else
       {
       stepflag = 1;
-      SetDlgItemText(ID_YIELD, "UnStep");
+      YieldButton->SetWindowText("UnStep");
       }
 
    Editbox->SetFocus();
@@ -403,16 +485,16 @@ void TMyCommandWindow::DoButtonPause(UINT)
 //
 //void do_pause_update(long arg)
 //   {
+//   char buffer[256];
 //   if (arg)
 //      {
-//      sprintf(YABuffer,"Pause-%d",(int)arg);
+//      sprintf(buffer, "Pause-%d", arg);
 //      }
 //   else
 //      {
-//      sprintf(YABuffer,"Pause");
+//      sprintf(buffer, "Pause");
 //      }
-//   MainWindowx->CommandWindow->
-//   SendDlgItemMsg(ID_PAUSE, WM_SETTEXT, 0, (DWORD)YABuffer);
+//   MainWindowx->CommandWindow->PauseButton->SetWindowText(buffer);
 //   }
 
 
@@ -424,12 +506,12 @@ void TMyCommandWindow::DoButtonTrace(UINT)
    if (traceflag)
       {
       traceflag = 0;
-      SetDlgItemText(ID_TRACE, "Trace");
+      TraceButton->SetWindowText("Trace");
       }
    else
       {
       traceflag = 1;
-      SetDlgItemText(ID_TRACE, "UnTrace");
+      TraceButton->SetWindowText("UnTrace");
       }
 
    Editbox->SetFocus();
@@ -532,8 +614,7 @@ NODE *lyield(NODE *)
    // set flag and update button label
 
    yield_flag = 1;
-   //   MainWindowx->CommandWindow->
-   //   SendDlgItemMsg(ID_YIELD, WM_SETTEXT, 0, (DWORD) "NoYield");
+   // MainWindowx->CommandWindow->YieldButton->SetWindowText("NoYield");
    return Unbound;
    }
 
@@ -543,8 +624,7 @@ NODE *lnoyield(NODE *)
    // clear flag and update button label
 
    yield_flag = 0;
-   //   MainWindowx->CommandWindow->
-   //   SendDlgItemMsg(ID_YIELD, WM_SETTEXT, 0, (DWORD) "Yield");
+   // MainWindowx->CommandWindow->YieldButton->SetWindowText("Yield");
    return Unbound;
    }
 
@@ -569,6 +649,10 @@ void TMyEditboxWindow::EvKeyDown(UINT, UINT, UINT)
       {
        case VK_UP:
            {
+           // advance to the bottom of the listbox
+           MainWindowx->CommandWindow->Listbox->SetCursorAtBottom();
+
+           // give focus to the listbox
            MainWindowx->CommandWindow->Listbox->SetFocus();
            break;
            }
@@ -602,7 +686,7 @@ void TMyListboxWindow::EvKeyDown(UINT, UINT, UINT)
 
    // if Down off bottom then focus to edit box
 
-   if ((Msg.WParam == VK_DOWN))
+   if (Msg.WParam == VK_DOWN)
       {
       UINT from;
       UINT to;
@@ -658,6 +742,17 @@ void TMyListboxWindow::EvLButtonDblClk(UINT /* modKeys */, TPoint & /* point */)
    GetLine(buf, MAX_BUFFER_SIZE, GetLineFromPos(-1));
    MainWindowx->CommandWindow->Editbox->SetText(buf);
    MainWindowx->CommandWindow->DoButtonExecute(0);
+   }
+
+void TMyListboxWindow::SetCursorAtBottom()
+   {
+   int endOfText = GetTextLen();
+   SetSelection(endOfText, endOfText);
+
+   int totalLines = GetNumLines();
+   Scroll(0, totalLines);
+
+   Invalidate(true);
    }
 
 DEFINE_RESPONSE_TABLE1(TMyEditboxWindow, TEdit)

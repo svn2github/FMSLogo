@@ -884,7 +884,7 @@ NODE *lwindowcreate(NODE *args)
       }
    else
       {
-      MainWindowx->MessageBox(childname, "Already exists");
+      MainWindowx->CommandWindow->MessageBox(childname, "Already exists");
       err_logo(STOP_ERROR, NIL);
       }
 
@@ -983,7 +983,7 @@ WindowEnableHelper(
       }
    else
       {
-      MainWindowx->MessageBox(childname, "Does not exist");
+      MainWindowx->CommandWindow->MessageBox(childname, "Does not exist");
       err_logo(STOP_ERROR, NIL);
       }
 
@@ -1046,7 +1046,7 @@ WindowDeleteHelper(
       }
    else
       {
-      MainWindowx->MessageBox(childname, "Does not exist");
+      MainWindowx->CommandWindow->MessageBox(childname, "Does not exist");
       err_logo(STOP_ERROR, NIL);
       }
 
@@ -1167,7 +1167,7 @@ NODE *ldialogcreate(NODE *args)
       }
    else
       {
-      MainWindowx->MessageBox(
+      MainWindowx->CommandWindow->MessageBox(
          childname,
          "Already exists");
       err_logo(STOP_ERROR, NIL);
@@ -1336,7 +1336,7 @@ NODE *llistboxgetselect(NODE *args)
       }
    else
       {
-      MainWindowx->MessageBox(parentname, "Does not exist");
+      MainWindowx->CommandWindow->MessageBox(parentname, "Does not exist");
       err_logo(STOP_ERROR, NIL);
       }
 
@@ -1363,7 +1363,7 @@ NODE *llistboxaddstring(NODE *args)
       }
    else
       {
-      MainWindowx->MessageBox(parentname, "Does not exist");
+      MainWindowx->CommandWindow->MessageBox(parentname, "Does not exist");
       err_logo(STOP_ERROR, NIL);
       }
 
@@ -1391,7 +1391,7 @@ NODE *llistboxdeletestring(NODE *args)
       }
    else
       {
-      MainWindowx->MessageBox(parentname, "Does not exist");
+      MainWindowx->CommandWindow->MessageBox(parentname, "Does not exist");
       err_logo(STOP_ERROR, NIL);
       }
 
@@ -1517,7 +1517,7 @@ NODE *lcomboboxcreate(NODE *args)
          }
       else
          {
-         MainWindowx->MessageBox(childname, "Already exists");
+         MainWindowx->CommandWindow->MessageBox(childname, "Already exists");
          err_logo(STOP_ERROR, NIL);
          }
       }
@@ -1558,7 +1558,7 @@ NODE *lcomboboxgettext(NODE *args)
       }
    else
       {
-      MainWindowx->MessageBox(parentname, "Does not exist");
+      MainWindowx->CommandWindow->MessageBox(parentname, "Does not exist");
       err_logo(STOP_ERROR, NIL);
       }
 
@@ -1587,7 +1587,7 @@ NODE *lcomboboxsettext(NODE *args)
       }
    else
       {
-      MainWindowx->MessageBox(parentname, "Does not exist");
+      MainWindowx->CommandWindow->MessageBox(parentname, "Does not exist");
       err_logo(STOP_ERROR, NIL);
       }
 
@@ -1617,7 +1617,7 @@ NODE *lcomboboxaddstring(NODE *args)
       }
    else
       {
-      MainWindowx->MessageBox(parentname, "Does not exist");
+      MainWindowx->CommandWindow->MessageBox(parentname, "Does not exist");
       err_logo(STOP_ERROR, NIL);
       }
 
@@ -1647,7 +1647,7 @@ NODE *lcomboboxdeletestring(NODE *args)
       }
    else
       {
-      MainWindowx->MessageBox(parentname, "Does not exist");
+      MainWindowx->CommandWindow->MessageBox(parentname, "Does not exist");
       err_logo(STOP_ERROR, NIL);
       }
 
@@ -1785,7 +1785,7 @@ NODE *lscrollbarcreate(NODE *args)
          }
       else
          {
-         MainWindowx->MessageBox(childname, "Already exists");
+         MainWindowx->CommandWindow->MessageBox(childname, "Already exists");
          err_logo(STOP_ERROR, NIL);
          }
       }
@@ -1813,7 +1813,7 @@ NODE *lscrollbarset(NODE *args)
       }
    else
       {
-      MainWindowx->MessageBox(parentname, "Does not exist");
+      MainWindowx->CommandWindow->MessageBox(parentname, "Does not exist");
       err_logo(STOP_ERROR, NIL);
       }
 
@@ -1835,7 +1835,7 @@ NODE *lscrollbarget(NODE *args)
       }
    else
       {
-      MainWindowx->MessageBox(parentname, "Does not exist");
+      MainWindowx->CommandWindow->MessageBox(parentname, "Does not exist");
       err_logo(STOP_ERROR, NIL);
       }
 
@@ -1938,13 +1938,13 @@ NODE *lstaticcreate(NODE *args)
 
             UpdateZoomControlFlag();
             
-            // MainWindowx->MessageBox(parentname, "Does not exist");
+            // MainWindowx->CommandWindow->MessageBox(parentname, "Does not exist");
             // err_logo(STOP_ERROR, NIL);
             }
          }
       else
          {
-         MainWindowx->MessageBox(childname, "Already exists");
+         MainWindowx->CommandWindow->MessageBox(childname, "Already exists");
          err_logo(STOP_ERROR, NIL);
          }
       }
@@ -1967,7 +1967,7 @@ NODE *lstaticupdate(NODE *args)
       }
    else
       {
-      MainWindowx->MessageBox(childname, "Does not exist");
+      MainWindowx->CommandWindow->MessageBox(childname, "Does not exist");
       err_logo(STOP_ERROR, NIL);
       }
 
@@ -2109,13 +2109,13 @@ NODE *lbuttoncreate(NODE *args)
 
             UpdateZoomControlFlag();
 
-            // MainWindowx->MessageBox(parentname, "Does not exist");
+            // MainWindowx->CommandWindow->MessageBox(parentname, "Does not exist");
             // err_logo(STOP_ERROR, NIL);
             }
          }
       else
          {
-         MainWindowx->MessageBox(childname, "Already exists");
+         MainWindowx->CommandWindow->MessageBox(childname, "Already exists");
          err_logo(STOP_ERROR, NIL);
          }
       }
@@ -2138,7 +2138,7 @@ NODE *lbuttonupdate(NODE *args)
       }
    else
       {
-      MainWindowx->MessageBox(childname, "Does not exist");
+      MainWindowx->CommandWindow->MessageBox(childname, "Does not exist");
       err_logo(STOP_ERROR, NIL);
       }
 
@@ -2236,13 +2236,13 @@ NODE *lgroupboxcreate(NODE *args)
                TGroupBox_type);
 
             UpdateZoomControlFlag();
-            // MainWindowx->MessageBox(parentname, "Does not exist");
+            // MainWindowx->CommandWindow->MessageBox(parentname, "Does not exist");
             // err_logo(STOP_ERROR, NIL);
             }
          }
       else
          {
-         MainWindowx->MessageBox(childname, "Already exists");
+         MainWindowx->CommandWindow->MessageBox(childname, "Already exists");
          err_logo(STOP_ERROR, NIL);
          }
       }
@@ -2306,7 +2306,7 @@ NODE *lradiobuttoncreate(NODE *args)
                }
             else
                {
-               MainWindowx->MessageBox(groupname, "Does not exist");
+               MainWindowx->CommandWindow->MessageBox(groupname, "Does not exist");
                err_logo(STOP_ERROR, NIL);
                }
             }
@@ -2335,7 +2335,7 @@ NODE *lradiobuttoncreate(NODE *args)
                }
             else
                {
-               MainWindowx->MessageBox(groupname, "Does not exist");
+               MainWindowx->CommandWindow->MessageBox(groupname, "Does not exist");
                err_logo(STOP_ERROR, NIL);
                }
             }
@@ -2373,14 +2373,14 @@ NODE *lradiobuttoncreate(NODE *args)
                }
             else
                {
-               MainWindowx->MessageBox(groupname, "Does not exist");
+               MainWindowx->CommandWindow->MessageBox(groupname, "Does not exist");
                err_logo(STOP_ERROR, NIL);
                }
             }
          }
       else
          {
-         MainWindowx->MessageBox(childname, "Already exists");
+         MainWindowx->CommandWindow->MessageBox(childname, "Already exists");
          err_logo(STOP_ERROR, NIL);
          }
       }
@@ -2414,7 +2414,7 @@ NODE *lradiobuttonget(NODE *args)
       }
    else
       {
-      MainWindowx->MessageBox(parentname, "Does not exist");
+      MainWindowx->CommandWindow->MessageBox(parentname, "Does not exist");
       err_logo(STOP_ERROR, NIL);
       }
 
@@ -2439,7 +2439,7 @@ NODE *lradiobuttonset(NODE *args)
       }
    else
       {
-      MainWindowx->MessageBox(parentname, "Does not exist");
+      MainWindowx->CommandWindow->MessageBox(parentname, "Does not exist");
       err_logo(STOP_ERROR, NIL);
       }
 
@@ -2498,7 +2498,7 @@ NODE *lcheckboxcreate(NODE *args)
                }
             else
                {
-               MainWindowx->MessageBox(groupname, "Does not exist");
+               MainWindowx->CommandWindow->MessageBox(groupname, "Does not exist");
                err_logo(STOP_ERROR, NIL);
                }
             }
@@ -2527,7 +2527,7 @@ NODE *lcheckboxcreate(NODE *args)
                }
             else
                {
-               MainWindowx->MessageBox(groupname, "Does not exist");
+               MainWindowx->CommandWindow->MessageBox(groupname, "Does not exist");
                err_logo(STOP_ERROR, NIL);
                }
             }
@@ -2565,14 +2565,14 @@ NODE *lcheckboxcreate(NODE *args)
                }
             else
                {
-               MainWindowx->MessageBox(groupname, "Does not exist");
+               MainWindowx->CommandWindow->MessageBox(groupname, "Does not exist");
                err_logo(STOP_ERROR, NIL);
                }
             }
          }
       else
          {
-         MainWindowx->MessageBox(childname, "Already exists");
+         MainWindowx->CommandWindow->MessageBox(childname, "Already exists");
          err_logo(STOP_ERROR, NIL);
          }
       }
@@ -2606,7 +2606,7 @@ NODE *lcheckboxget(NODE *args)
       }
    else
       {
-      MainWindowx->MessageBox(parentname, "Does not exist");
+      MainWindowx->CommandWindow->MessageBox(parentname, "Does not exist");
       err_logo(STOP_ERROR, NIL);
       }
 
@@ -2632,7 +2632,7 @@ NODE *lcheckboxset(NODE *args)
       }
    else
       {
-      MainWindowx->MessageBox(parentname, "Does not exist");
+      MainWindowx->CommandWindow->MessageBox(parentname, "Does not exist");
       err_logo(STOP_ERROR, NIL);
       }
 
@@ -2658,7 +2658,7 @@ NODE *ldebugwindows(NODE *arg)
          }
       else
          {
-         MainWindowx->MessageBox(childname, "Does not exist");
+         MainWindowx->CommandWindow->MessageBox(childname, "Does not exist");
          err_logo(STOP_ERROR, NIL);
          }
       }
@@ -2673,12 +2673,12 @@ NODE *ldebugwindows(NODE *arg)
 NODE *lmessagebox(NODE *args)
    {
    char banner[MAX_BUFFER_SIZE];
-   char body[MAX_BUFFER_SIZE];
-
    cnv_strnode_string(banner, args);
+
+   char body[MAX_BUFFER_SIZE];
    cnv_strnode_string(body, args = cdr(args));
 
-   if (MainWindowx->MessageBox(body, banner, MB_OKCANCEL) == IDCANCEL)
+   if (MainWindowx->CommandWindow->MessageBox(body, banner, MB_OKCANCEL) == IDCANCEL)
       {
       err_logo(STOP_ERROR, NIL);
       }
@@ -2768,7 +2768,7 @@ NODE *lyesnobox(NODE *args)
    cnv_strnode_string(banner, args);
    cnv_strnode_string(body, args = cdr(args));
 
-   iStatus = MainWindowx->MessageBox(
+   iStatus = MainWindowx->CommandWindow->MessageBox(
       body,
       banner,
       MB_YESNOCANCEL | MB_ICONQUESTION);

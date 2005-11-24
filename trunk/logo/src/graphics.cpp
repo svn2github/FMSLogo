@@ -1794,16 +1794,19 @@ NODE *llabel(NODE *arg)
 
 NODE *ltextscreen(NODE *)
    {
+   MainWindowx->UndockCommanderWindow();
    return Unbound;
    }
 
 NODE *lsplitscreen(NODE *)
    {
+   MainWindowx->DockCommanderWindow();
    return Unbound;
    }
 
-NODE *lfullscreen()
+NODE *lfullscreen(NODE *)
    {
+   MainWindowx->UndockCommanderWindow();
    return Unbound;
    }
 
