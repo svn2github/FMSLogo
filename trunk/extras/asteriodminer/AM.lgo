@@ -20,7 +20,7 @@ to addBonus :type
   ]
 end
 
-to buttonDraw :num :action
+to buttonDraw :num :draw
   local [ bdTurtle bdPos bdHeading bdPen ]
   make "bdTurtle turtle
   setturtle 0
@@ -35,7 +35,7 @@ to buttonDraw :num :action
 
   sbitblock round( :textLength + 13 * :textScale + 2) round( 38 * :textScale + 1 )
 
-  if :action = "draw [
+  if :draw [
     pd
     repeat 2 [
       tfd 8 fd 22 * :textScale tfd 8 rt 90
@@ -131,10 +131,9 @@ to buttonHit
   setturtle :bhTurtle
 end
 
-to buttonOn :num :action
-  setitem :num :buttonList ( list (item 1 ( item :num :buttonList )) :action (item 3 ( item :num :buttonList )) )
-  if :action = "true [ buttonDraw :num "draw ]
-  if :action = "false [ buttonDraw :num "erase ]
+to buttonOn :num :draw
+  setitem :num :buttonList ( list (item 1 ( item :num :buttonList )) :draw (item 3 ( item :num :buttonList )) )
+  buttonDraw :num :draw 
 end
 
 to clearBox
@@ -784,7 +783,7 @@ to checkScreen
   make "x item 3 machine
   make "y item 4 machine
   if (:y < 310) [
-    messagebox [Screen Problem] [The screen height needs to be at least 310. Set the Asteroid Miner shortcut accordingly. (Try "C:\\MSWLogo\\logo.exe -h 500 -w 700 -f -l AM.lgo" as the shortcut target.)]
+    messagebox [Screen Problem] [The screen height needs to be at least 310. Set the Asteroid Miner shortcut accordingly. (Try "C:\\Program Files\\FMSLogo\fmslogo.exe -H 500 -W 700 -F -L AM.lgo" as the shortcut target.)]
     bye
   ]
   if (or (:x/:y < 1.39) (:x/:y > 1.405)) [
@@ -823,7 +822,7 @@ to hitCrystalCheck
       make "crystalWorth :crystalWorth + 5
       make "shipGlow :shipFadeStart + 4
     ]
-    if and :dist2 < (:shipCrystal2 * 4) (:exploding = "true) [
+    if and :dist2 < (:shipCrystal2 * 4) :exploding [
        drawCrystal( item repcount :crystals ) "draw
     ]
   ]
