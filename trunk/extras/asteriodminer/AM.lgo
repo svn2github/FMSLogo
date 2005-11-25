@@ -1,7 +1,7 @@
 to addBonus :type
   if :type = 1 [
 
-    if or :quit = "true :reset = "true [ stop ]
+    if or :quit :reset [ stop ]
     make "timeLeft :timeLeft - 1
     make "score :score + 5
     make "textCount 1  printText
@@ -10,7 +10,7 @@ to addBonus :type
     if :timeLeft > 0 [ addBonus :type ]
   ]
   if :type = 2 [
-    if or :quit = "true :reset = "true [ stop ]
+    if or :quit :reset [ stop ]
     make "lives :lives - 1
     make "score :score + 400
     make "textCount 2  printText
@@ -78,40 +78,45 @@ to buttonHit
       make "y1 last item 3 ( item :bhNum :buttonList )
       make "y2 (last item 3 ( item :bhNum :buttonList )) + 42 * :textScale
       if( and ((first mousepos) > :x1) ((first mousepos) < :x2) ((last mousepos) > :y1) ((last mousepos) < :y2) ) [
+
         ;Menu
         if :bhNum = 1 [
           menuOn "true
           make "bhDone "true
         ]
+
         ;Menu Off
         if :bhNum = 2 [
           menuOn "false
         ]
-	  ;Play
+
+        ;Play
         if :bhNum = 3 [ commandPlay ]
 
-	  ;Instructions
+        ;Instructions
         if :bhNum = 4 [ commandInstructions ]
 
-	  ;Quit
+        ;Quit
         if :bhNum = 5 [
           make "quit "true
           make "open.quit "true
         ] 
-	  ;High Scores
+
+        ;High Scores
         if :bhNum = 6 [ commandHighScores ]
 
- 	  ;High Scores Done
+        ;High Scores Done
         if :bhNum = 7 [ commandDone ]
 
- 	  ;Instructions Done
+        ;Instructions Done
         if :bhNum = 8 [ commandDone ]
 
- 	  ;Continue
+        ;Continue
         if :bhNum = 9 [
           make "paused "false
         ]
- 	  ;Reset
+  
+        ;Reset
         if :bhNum = 10 [
           make "paused "false
           make "reset "true
@@ -502,7 +507,7 @@ to drawShip :x :y :d :action
     rt 112.5
     fd :shipSide
 
-    if ( or :leaveStep < :numLeaveSteps/3*2  :leaving = "false ) [ drawShip.light :light1Pos ]
+    if ( or :leaveStep < :numLeaveSteps/3*2  :isLeaving = "false ) [ drawShip.light :light1Pos ]
 
     ;draw back of ship, trace back over it partway, draw engine if thrusting, then trace forward again--
     ;this keeps the engine over top of all the other lines
@@ -541,7 +546,7 @@ to drawShip :x :y :d :action
     bk :scale
     fd :shipRad3 * 2
 
-    if ( or :leaveStep < :numLeaveSteps/3*2  :leaving = "false ) [ drawShip.light :light2Pos ]
+    if ( or :leaveStep < :numLeaveSteps/3*2  :isLeaving = "false ) [ drawShip.light :light2Pos ]
 
     lt 93.06
     fd 12.95 * :scale*:shipRad/:normalShipRad
@@ -712,20 +717,23 @@ end
 
 to gameLoop
   make "quit "false
-  make "reset "false
-  ( keyboardon[ processKey keyboardvalue ]
-              [ processKey keyboardvalue+200 ]
-  )
-  mouseon [ buttonHit ] [] [] [] []
-  menuOn "false
-  open.loop
-  if not( :quit = "true ) [
-    initGame
-    levelLoop
+
+  while [not :quit] [ 
+
+     make "reset "false
+
+     capturekeyboardinput
+     mouseon [ buttonHit ] [] [] [] []
+
+     menuOn "false
+     open.loop
+
+     initGame
+     levelLoop
   ]
-  if not( :quit = "true ) [ gameLoop ]
-  setturtle 1 ht pu
+
   setturtle 0 ht pu
+  setturtle 1 ht pu
   setturtle 2 ht pu
   setturtle 3 ht pu
 end
@@ -786,19 +794,6 @@ to checkScreen
 end
 
 to go
-  cs
-  windowset "Commander 2
-  windowset "Editor 2
-  setfocus[MSWLogo Screen]
-  setscreencolor[ 0 0 0 ]
-  checkScreen
-  initMain
-
-  gameLoop
-
-  keyboardoff
-  mouseoff
-  bye
 end
 
 to hitCrystalCheck
@@ -818,7 +813,7 @@ to hitCrystalCheck
       make "numCrystals :numCrystals - 1
       if :numCrystals = 0 [
         make "bonus :timeLeft * 5
-        make "leaving "true
+        make "isLeaving "true
         make "thrust "true
         timerOff
       ]
@@ -841,7 +836,7 @@ to hitRockCheck
     make "y last( item repcount :rocks )
     make "dist2 (:shipX - :x)*(:shipX - :x) + (:shipY - :y)*(:shipY - :y)
     make "shipRock2 ( :shipRad + :rockRad )*( :shipRad + :rockRad )
-    if ( and :dist2 < :shipRock2  :leaving = "false  :exploding = "false ) [
+    if ( and :dist2 < :shipRock2  :isLeaving = "false  :exploding = "false ) [
       timerOff
       drawShip :shipXInt :shipYInt :dr "erase
       ;save the point where the ship hit the rock, for the explosion bitmap
@@ -851,15 +846,20 @@ to hitRockCheck
       make "exploding "true
       make "expLen :shipRad
     ]
-    if and :dist2 < (:shipRock2 * 2) (or :exploding = "true :leaving = "true) [
+    if and :dist2 < (:shipRock2 * 2) (or :exploding = "true :isLeaving = "true) [
        drawRock( item repcount :rocks )
     ]
-    if ( and (:dist2 < :shipRock2 ) (:leaving = "true) ) [
+    if ( and (:dist2 < :shipRock2 ) (:isLeaving = "true) ) [
        make "behindRock "true 
     ]
   ]
 end
 
+to capturekeyboardinput
+  ( keyboardon [ processKey keyboardvalue "true  ]
+               [ processKey keyboardvalue "false ] )
+end
+    
 to initGame
   make "score 0
   make "level 1
@@ -867,8 +867,8 @@ to initGame
   make "gameOver "false
   wrap
 
-  setturtle 1 ht pu
   setturtle 0 ht pu
+  setturtle 1 ht pu
   setturtle 2 ht pu
   setturtle 3 ht pu
 
@@ -881,7 +881,7 @@ to initLevel
   make "timeLeft 40 + :level * 40
   make "numCrystals :level * 2 + 2
   make "numRocks :level * 2
-  make "levelOver "false
+  make "levelIsOver "false
   make "behindRock "false
   make "crystalWorth 40
   setShipSize :normalShipRad
@@ -907,7 +907,7 @@ to initLife
   make "turnLt "false
   make "thrust "false
   make "exploding "false
-  make "leaving "false
+  make "isLeaving "false
   make "expStep 0
   make "leaveStep 0
   make "textCount 1
@@ -1165,10 +1165,11 @@ to inputText.keyHit
 end
 
 to levelLoop
-  do.while [
+  while [ (and (not :quit) (not :reset) (not :gameOver)) ] [
     initLevel
 
-    ;this block pauses while the objects' positions are selected, then continues pausing until one second has gone by if it hasn't already
+    ; this block pauses while the objects' positions are selected, then 
+    ; continues pausing until one second has gone by if it hasn't already
     make "start timemilli
     ifelse :level < :maxLevel [ displayText ( list "Level  :level ) 0 ] [ displayText [Last Level] 0 ]
     initObjects
@@ -1176,7 +1177,7 @@ to levelLoop
     while [ :now - :start < 1000 ] [ make "now timemilli ]
 
     lifeLoop
-    if :levelOver = "true [
+    if :levelIsOver [
       displayText (list "Level :level "Complete!) 60
       ifelse ( :timeLeft > 0 ) [ displayText [Adding Bonus...] 0 ] [ displayText [No Bonus] 0 ]
       
@@ -1197,9 +1198,9 @@ to levelLoop
       if( :lives > 1 ) [ addBonus 2 ]
       waitStop 30
     ]
-  ][( and (:quit = "false) (:reset = "false) (:gameOver = "false) )]
+  ]
 
-  if(and :quit = "false  :reset = "false ) [
+  if(and not :quit  not :reset) [
     scoreCheck
   ]
 end
@@ -1215,14 +1216,14 @@ to lifeLoop
   timerOn
   playLoop
   timerOff
-  if( and :quit = "false  :reset="false ) [ waitStop 60 ]
+  if( and not :quit  not :reset ) [ waitStop 60 ]
   if :lives = 0 [
     make "gameOver "true
     displayText [Game Over!] 0
     make "textCount 2 printText
     waitStop 50
   ]
-  if( and (:quit = "false) (:reset = "false) (:gameOver = "false) (:levelOver = "false) )[
+  if( and (not :quit) (not :reset) (not :gameOver) (not :levelIsOver) ) [
     lifeLoop
   ]
 end
@@ -1263,7 +1264,7 @@ to menuOn :action
   buttonOn 5 :action
   buttonOn 6 :action
   make "menuOn :action
-  if and :action = "false :playing = "false [ buttonOn 1 "true ]
+  if and :action = "false  not :playing [ buttonOn 1 "true ]
 end
 
 to obk :d
@@ -1310,9 +1311,8 @@ to open
   ifelse :displayHighScores = "true [
     displayHighScores
     buttonOn 7 "true 
-    ( keyboardon[ processKey keyboardvalue ]
-                [ processKey keyboardvalue+200 ]
-    )
+    capturekeyboardinput
+
     do.while [ waitStop 10 ] [ :displayHighScores = "true ]
   ][
     repeat 8 [if not( :open.quit = "true ) [waitStop 30] ]
@@ -1321,18 +1321,16 @@ to open
   if :displayHighScores = "true [
     displayHighScores
     buttonOn 7 "true 
-    ( keyboardon[ processKey keyboardvalue ]
-                [ processKey keyboardvalue+200 ]
-    )
+    capturekeyboardinput
+
     do.while [ waitStop 10 ] [ :displayHighScores = "true ]
   ]
 
   if :displayInstructions = "true [
     displayInstructions
     buttonOn 8 "true 
-    ( keyboardon[ processKey keyboardvalue ]
-                [ processKey keyboardvalue+200 ]
-    )
+    capturekeyboardinput
+
     do.while [ waitStop 10 ] [ :displayInstructions = "true ]
   ]
 end
@@ -1531,7 +1529,7 @@ to playLoop
     make "start timemilli
 
     if( or not( :oldShipX = :shipXInt ) not( :oldShipY = :shipYInt )
-        not( :oldDr = :dr ) :exploding="true :leaving="true :erase="true :blink = 0
+        not( :oldDr = :dr ) :exploding="true :isLeaving="true :erase="true :blink = 0
       )[
       if :behindRock = "false [ drawShip :oldShipX :oldShipY :oldDr "erase ]
     ]
@@ -1539,22 +1537,22 @@ to playLoop
       make "expStep :expStep + 1
       if :expStep = :numExpSteps [ make "lives :lives - 1 ]
     ]
-    if :leaving = "true [
+    if :isLeaving = "true [
       make "leaveStep :leaveStep + 1  shrinkShip
-      if :leaveStep = :numLeaveSteps [ make "levelOver "true ]
+      if :leaveStep = :numLeaveSteps [ make "levelIsOver "true ]
     ]
-    if (and :levelOver = "false :behindRock = "false) [ drawShip :shipXInt :shipYInt :dr "draw ]
+    if (and :levelIsOver = "false :behindRock = "false) [ drawShip :shipXInt :shipYInt :dr "draw ]
     make "oldBehindRock :behindRock
     make "behindRock "false
     setpos (list :shipX :shipY)
-    if ( :leaving = "false ) [
+    if ( :isLeaving = "false ) [
       hitCrystalCheck
     ]
 
     hitRockCheck
 
     ;if the ship just emerged from behind a rock, draw it now...
-    if (and :levelOver = "false :behindRock = "false :oldBehindRock = "true) [
+    if (and :levelIsOver = "false :behindRock = "false :oldBehindRock = "true) [
       drawShip :shipXInt :shipYInt :dr "redraw
     ]
     ;...and if it just went behind one, erase it now
@@ -1597,7 +1595,7 @@ to playLoop
     make "oldShipY :shipYInt
     make "oldDr :dr
 
-    if :leaving = "true [ make :thrust "true ]
+    if :isLeaving [ make :thrust "true ]
     processCommand
     
 
@@ -1609,10 +1607,11 @@ to playLoop
     make "shipXInt round :shipX
     make "shipYInt round :shipY
 
+    ;the "50" is the animation delay
     make "now timemilli
     while [ :now - :start < 50 ] [ make "now timemilli ]
-  ][ (and (:quit="false) (:reset = "false) (:expStep < :numExpSteps) (:levelOver = "false)) ]
-    ;the "50" is the animation delay
+  ][ (and (not :quit) (not :reset) (:expStep < :numExpSteps) (not :levelIsOver)) ]
+    
 end
 
 to printText
@@ -1694,7 +1693,7 @@ to processCommand
       make "shipDeltaX :shipDeltaX + :xAccel
       make "shipDeltaY :shipDeltaY + :yAccel
  
-      if :leaving = "false [
+      if :isLeaving = "false [
         ;If the ship is at maximum speed, get rid of the extra speed, but leave the 
         ;direction alone. 
         make "speed2( (:shipDeltaX)*(:shipDeltaX) + (:shipDeltaY)*(:shipDeltaY) )
@@ -1708,39 +1707,50 @@ to processCommand
   if :pauseNow = "true [ pauseGame ]
 end
 
-to processKey :key
-;the first key of each pair is querty, the second is Dvorak
-  if :playing = "true [
-    if (or :key=76 :key=78) [make "turnRt "true]  ;l & n
-    if (or :key=276 :key=278) [make "turnRt "false]
- 
-    if (or :key=74 :key=72) [make "turnLt "true]  ;j & h
-    if (or :key=274 :key=272) [make "turnLt "false]
+to processKey :key :iskeydown
 
-    if (or :key=75 :key=84) [make "thrust "true]  ;k & t
-    if (or :key=275 :key=284) [
-      if :leaving = "false [ make "thrust "false  make "erase "true ]
+  ;the first key of each pair is querty, the second is Dvorak
+  if :playing [
+    if (or :key=ascii "L :key=ascii "N) [ make "turnRt :iskeydown ]
+    if (or :key=ascii "J :key=ascii "H) [ make "turnLt :iskeydown ]
+
+    if (or :key=ascii "K :key=ascii "T) [
+       ifelse :iskeydown [
+          make "thrust "true
+       ][
+          if not :isLeaving [ make "thrust "false  make "erase "true ]
+       ]
     ]
 
-    if( and :key=280 :paused="false )[ make "pauseNow "true ] ;p
+    if( and :key=ascii "P    not :iskeydown    not :paused ) [ 
+       make "pauseNow "true 
+    ]
 
-    if or :key=288 :key=281 [make "quit "true  make "open.quit "true]  ;x & q
+    if :iskeydown [
+       if (or :key=ascii "X :key=ascii "Q) [ 
+          make "quit      "true 
+          make "open.quit "true
+       ]
 
-    if :paused = "true [
-      if :key = 267 [ make "paused "false ] ;c
-      if :key = 282 [ make "paused "false  make "reset "true ] ;r
+      if :paused [
+         if :key = ascii "C [ make "paused "false ]
+         if :key = ascii "R [ make "paused "false  make "reset "true ]
+      ]
     ]
   ]
 
-  if :playing = "false [
-    ifelse :doneButtonOn = "false [
-      if :key = 280 [ commandPlay ] ;p
-      if :key = 273 [ commandInstructions ] ;i
-      if :key = 272 [ commandHighScores ] ;h
-      if or :key=288 :key=281 [make "quit "true  make "open.quit "true]  ;x & q
-      if :key = 277[ ifelse :menuOn = "true [menuOn "false] [menuOn "true] ] ;m
+  if (and not :playing not :iskeydown) [
+    ifelse :doneButtonOn [
+      if :key = ascii "D [ commandDone ]
     ][
-      if :key = 268 [ commandDone ] ;d
+      if :key = ascii "P [ commandPlay ]
+      if :key = ascii "I [ commandInstructions ]
+      if :key = ascii "H [ commandHighScores ]
+      if :key = ascii "M [ menuOn not :menuOn ] ; (toggle menu)
+      if or :key=ascii "X :key=ascii "Q [
+         make "quit      "true 
+         make "open.quit "true
+      ]
     ]
   ]
 end
@@ -1822,8 +1832,8 @@ to scoreCheck
          setitem (:index) (:hiNames) (:name)
          make "done "true
       ]
-    ][ and (:done = "false) (:index > 2) ]
-    if :done = "false [ 
+    ][ and (not :done) (:index > 2) ]
+    if not :done [ 
       setitem 1 (:AM_Hiscores) (:score)
       setitem 1 (:hiNames) (:name)
       make "done "true
@@ -1835,7 +1845,7 @@ to scoreCheck
     setturtle 2 ht
     make "open.quit "false
     displayHighScores
-    repeat 3 [if not( :open.quit = "true ) [waitStop 30] ]
+    repeat 3 [if not :open.quit [waitStop 30] ]
   ][
     setwrite[]
     displayText [Final Score] 0
@@ -1860,13 +1870,6 @@ to shrinkShip
   setShipSize :shipRad
 end
 
-make "startup [ stealth ]
-
-to stealth
-  bury [ [loadScores saveScores glint rtCnr ltCnr stealth] [startup] [] ]
-  go
-end
-
 to tbk :dist
   bk :dist*:textScale
 end
@@ -1889,8 +1892,8 @@ end
 to waitStop :delay
   repeat :delay [
     wait 1
-    if or :reset = "true :quit = "true [ stop ]
-    if :pauseNow = "true [ pauseGame ]
+    if or :reset :quit [ stop ]
+    if :pauseNow [ pauseGame ]
   ]
 end
 
@@ -1909,3 +1912,25 @@ to wrapCheck
     make "shipY (:shipY - :displayHeight )
   ]
 end
+
+to rungame
+  catch "error [ fullscreen ]
+  icon "Commander
+  icon "Editor
+  bury [ [loadScores saveScores glint rtCnr ltCnr stealth] [startup] [] ]
+
+  cs
+  setfocus[MSWLogo Screen]
+  setscreencolor[ 0 0 0 ]
+  checkScreen
+  initMain
+
+  gameLoop
+
+  keyboardoff
+  mouseoff
+  bye
+end
+
+make "startup [ rungame ]
+
