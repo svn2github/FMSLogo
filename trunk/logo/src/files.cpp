@@ -356,7 +356,12 @@ NODE *lsave(NODE *arg)
 
    if (::FindWindow(NULL, "Editor"))
       {
-      MainWindowx->CommandWindow->MessageBox("Did you know you have an edit session running?\n\nAny changes in this edit session are not being saved.", "Information", MB_OK | MB_ICONQUESTION);
+      MainWindowx->CommandWindow->MessageBox(
+         "Did you know you have an edit session running?\n"
+            "\n"
+            "Any changes in this edit session are not being saved.", 
+         "Information", 
+         MB_OK | MB_ICONQUESTION);
       }
 
    lprint(arg);
