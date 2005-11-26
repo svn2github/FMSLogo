@@ -382,12 +382,12 @@ void TThreeDSolid::AddToBSPTree(POLYGON* Poly, BSPNode** Root)
       LastInOutPointClass = HC_ON;
 #endif
 
-      PolyClass = HC_ON;											//	assume plane_3d and polygon coincident for starters
+      PolyClass = HC_ON;           // assume plane_3d and polygon coincident for starters
 
       Vertices = Poly->Vertices;
 
       ptA    = Vertices->Vertex;
-      sideA  = CalcSign(ptA, (*Root)->Poly);																												//	classify it relative to the plane_3d
+      sideA  = CalcSign(ptA, (*Root)->Poly);  // classify it relative to the plane_3d
 #ifdef SHARE
       shareA = Vertices->Share;
 #endif
@@ -399,7 +399,7 @@ void TThreeDSolid::AddToBSPTree(POLYGON* Poly, BSPNode** Root)
       do
          {
          ptB    = Vertices->Vertex;
-         sideB  = CalcSign(ptB, (*Root)->Poly);																												//	classify it relative to the plane_3d
+         sideB  = CalcSign(ptB, (*Root)->Poly);  // classify it relative to the plane_3d
 #ifdef SHARE
          shareB = Vertices->Share;
 #endif
@@ -407,26 +407,26 @@ void TThreeDSolid::AddToBSPTree(POLYGON* Poly, BSPNode** Root)
 #ifdef SHARE
 // This disables sharing
 //       if (shareB)
-//				{
+//          {
 //          Vertices->Share->Share = NULL;
-//				Vertices->Share = NULL;
-//				shareB = NULL;
-//				}
+//             Vertices->Share = NULL;
+//             shareB = NULL;
+//          }
 #endif
 
          if (sideB > epsilon2)  // if the current point_3d is on the positive side
-            {																																						//	begin
+            { // begin
 
 #ifdef SHARE
             ThisPointClass = HC_OUT;
 #endif
-            if (PolyClass == HC_ON)								//	if the polygon classification is on
-               PolyClass = HC_OUT;									//	classify the polygon as out
-            else if (PolyClass != HC_OUT)						//	else if the polygon classification is not out
-               PolyClass = HC_SPANNING;							//	set the polygon classification to spanning
+            if (PolyClass == HC_ON)        // if the polygon classification is on
+               PolyClass = HC_OUT;         // classify the polygon as out
+            else if (PolyClass != HC_OUT)  // else if the polygon classification is not out
+               PolyClass = HC_SPANNING;    // set the polygon classification to spanning
 
-            if (sideA < -epsilon2)									//	if the previous point_3d was on the opposite side of the plane_3d
-               {																																					//	begin
+            if (sideA < -epsilon2)         // if the previous point_3d was on the opposite side of the plane_3d
+               { // begin
                Intersect((*Root)->Poly, ptA, ptB, pt);
 
 #ifdef NOASM
@@ -482,7 +482,7 @@ void TThreeDSolid::AddToBSPTree(POLYGON* Poly, BSPNode** Root)
 #endif
                   }
                PolyClass = HC_SPANNING; // set the PolyClass appropriately
-               }																																					//	end
+               } // end
 
             AddPoint(&VerticesOut, ptB);
 
@@ -493,9 +493,9 @@ void TThreeDSolid::AddToBSPTree(POLYGON* Poly, BSPNode** Root)
                VerticesOut->Prev->Share = shareB;
                }
 #endif
-            }																																						//	end
+            } // end
          else if (sideB < -epsilon2)  // the current point_3d is on the negative side
-            {																															//	begin
+            { // begin
 
 #ifdef SHARE
             ThisPointClass = HC_IN;
@@ -506,7 +506,7 @@ void TThreeDSolid::AddToBSPTree(POLYGON* Poly, BSPNode** Root)
                PolyClass = HC_SPANNING;	 // set the polygon classification to spanning
 
             if (sideA > epsilon2) // if the previous point_3d was on the opposite side of the plane_3d
-               {																																					//	begin
+               { // begin
                Intersect((*Root)->Poly, ptA, ptB, pt);
 
 #ifdef NOASM
@@ -523,7 +523,6 @@ void TThreeDSolid::AddToBSPTree(POLYGON* Poly, BSPNode** Root)
 #ifdef SHARE
                if (shareA && shareB)
                   {
-
                   // if we are on a shared segment
 
                   if (shareB->Next == shareA)
@@ -564,7 +563,7 @@ void TThreeDSolid::AddToBSPTree(POLYGON* Poly, BSPNode** Root)
                   }
 
                PolyClass = HC_SPANNING; // set the PolyClass appropriately
-               }																																					//	end
+               } // end
 
             AddPoint(&VerticesIn, ptB);
 
@@ -574,8 +573,8 @@ void TThreeDSolid::AddToBSPTree(POLYGON* Poly, BSPNode** Root)
                VerticesIn->Prev->Share = shareB;
                }
 #endif
-            }																																						//	end
-         else																//	the current point_3d is on the plane_3d
+            } // end
+         else // the current point_3d is on the plane_3d
             {
 #ifdef SHARE
             ThisPointClass = HC_ON;
@@ -641,10 +640,10 @@ void TThreeDSolid::AddToBSPTree(POLYGON* Poly, BSPNode** Root)
                   VerticesOut->Prev->Share = shareB;
                   VerticesIn->Prev->Share = shareB;
                   // if (DeferVerticesIn)
-                  //	   {
+                  //    {
                   //    RemovePoint(DeferVerticesIn); // We don't handle queing these up
                   //    RemovePoint(DeferVerticesOut);
-                  //	   }
+                  //    }
                   DeferVerticesOut = VerticesOut->Prev;
                   DeferVerticesIn = VerticesIn->Prev;
                   }
@@ -663,8 +662,8 @@ void TThreeDSolid::AddToBSPTree(POLYGON* Poly, BSPNode** Root)
                }
             }
 
-         ptA    = ptB;													//	copy the current point_3d to the last point_3d
-         sideA  = sideB;												//	copy the current point_3d's side information...
+         ptA    = ptB;   // copy the current point_3d to the last point_3d
+         sideA  = sideB; // copy the current point_3d's side information...
 
 #ifdef SHARE
          shareA = shareB;
@@ -702,25 +701,25 @@ void TThreeDSolid::AddToBSPTree(POLYGON* Poly, BSPNode** Root)
          RemovePoint(DeferVerticesOut);
          }
 #endif
-      switch (PolyClass)												//	perform the appropriate action based on the classification
-         {																																							//	begin
-         case HC_OUT:													//	if the polygon is entirely positive
+      switch (PolyClass) // perform the appropriate action based on the classification
+         { // begin
+         case HC_OUT: // if the polygon is entirely positive
             if (VerticesIn ) DisposeFalseShares(VerticesIn);
             if (VerticesOut) DisposeFalseShares(VerticesOut);
             if (VerticesIn ) DisposeVertices(VerticesIn);
             if (VerticesOut) DisposeVertices(VerticesOut);
             AddToBSPTree(Poly, &((*Root)->Outside));
-            break;														//	end positive
+            break; // end positive
 
-         case HC_IN:														//	if the polygon is entirely negative
+         case HC_IN: // if the polygon is entirely negative
             if (VerticesIn ) DisposeFalseShares(VerticesIn);
             if (VerticesOut) DisposeFalseShares(VerticesOut);
             if (VerticesIn ) DisposeVertices(VerticesIn);
             if (VerticesOut) DisposeVertices(VerticesOut);
             AddToBSPTree(Poly, &((*Root)->Inside));
-            break;														//	end negative
+            break; // end negative
 
-         case HC_SPANNING:												//	if the polygon was plane
+         case HC_SPANNING: // if the polygon was plane
 
 //            if (iPolyCount == POLYCOUNT)
 //               {
@@ -822,16 +821,16 @@ void TThreeDSolid::AddToBSPTree(POLYGON* Poly, BSPNode** Root)
             AddToBSPTree(polyB, &(*Root)->Outside);
 
             DisposePolygon(Poly);
-            break;														//	end spanning
+            break; // end spanning
 
-         case HC_ON:														//	if the polygon was plane
+         case HC_ON: // if the polygon was plane
             if (VerticesIn ) DisposeFalseShares(VerticesIn);
             if (VerticesOut) DisposeFalseShares(VerticesOut);
             if (VerticesIn ) DisposeVertices(VerticesIn);
             if (VerticesOut) DisposeVertices(VerticesOut);
             AddToBSPTree(Poly, &((*Root)->Outside));
-            break;														//	end positive
-         }																																							//	end
+            break; // end positive
+         } // end
       }
    }
 
@@ -1005,17 +1004,17 @@ void TThreeDSolid::DisplayPolygon(POLYGON* Poly)
 // NormalPen.lopnColor = Color;
 // NormalPen.lopnWidth.x = 0;
 
-//	HPEN hPen = CreatePenIndirect(&NormalPen);
+// HPEN hPen = CreatePenIndirect(&NormalPen);
 // OldPen = (HPEN) SelectObject(MemDC, hPen);
 
-//	Polyline(MemDC, t, i);
+// Polyline(MemDC, t, i);
 
 // SelectObject(MemDC, OldPen);
 
    SelectObject(MemDC, oldBrush);
    DeleteObject(hBrush);
 
-//	DeleteObject(hPen);
+// DeleteObject(hPen);
    }
 
 // Display the figure stored in the BSP tree
