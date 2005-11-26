@@ -55,7 +55,7 @@ NODE *loutput(NODE *arg)
    return Unbound;
    }
 
-NODE *lstop(NODE *arg)
+NODE *lstop(NODE *)
    {
    if (NOT_THROWING)
       stopping_flag = STOP;
@@ -319,9 +319,9 @@ NODE *lrepeat(NODE *args)
    return (retval);
    }
 
-NODE *lrepcount(NODE *args)
+NODE *lrepcount(NODE *)
    {
-   return (make_intnode((FIXNUM) repcountup));
+   return make_intnode((FIXNUM) repcountup);
    }
 
 NODE *lforever(NODE *args)
@@ -366,36 +366,12 @@ NODE *liffalse(NODE *args)
       return (NIL);
    }
 
-#ifdef mac
-void prepare_to_exit(bool okay)
-#else
 void prepare_to_exit(bool /* okay */)
-#endif
    {
-#ifdef mac
-   void prepare_to_exit(bool okay)
-   if (okay)
-         {
-         console_options.pause_atexit = 0;
-         exit(0);
-         }
-#endif
-#ifdef ibm
    exit_program();
-   ltextscreen(NIL);
-   ibm_plain_mode();
-#endif
-#ifdef unix
-   extern int getpid();
-   char ef[30];
-
-   charmode_off();
-   sprintf(ef, "/tmp/logo%d", getpid());
-   unlink(ef);
-#endif
    }
 
-NODE *lbye(NODE *args)
+NODE *lbye(NODE *)
    {
    prepare_to_exit(TRUE);
    //    if (ufun != NIL || loadstream != stdin) exit(0);
