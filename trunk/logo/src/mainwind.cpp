@@ -1980,7 +1980,7 @@ void TMainFrame::UndockCommanderWindow()
       SetWindowPos(
          NULL,
          screenWindowRect,
-         SWP_NOZORDER | SWP_NOMOVE);
+         SWP_NOZORDER | SWP_NOMOVE | SWP_NOCOPYBITS);
 
       PaneSplitterWindow->RemovePane(
          CommandWindow,
@@ -2059,6 +2059,7 @@ void TMainFrame::DockCommanderWindow()
 
       // redraw the entire screen window
       ScreenWindow->Invalidate(true);
+      newCommandWindow->Invalidate(true);
 
       delete CommandWindow;
       CommandWindow = newCommandWindow;
