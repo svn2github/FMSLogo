@@ -33,6 +33,8 @@ Part II) New features/bugs fixed:
     o Fix bug #1352838; EDALL can now save files on all Windows systems.
     o Implement request #1349320; the status window can now be closed
       by clicking on the "X" in its titlebar.
+    o Implement request #1365734; FULLSCREEN and TEXTSCREEN now undock
+      the commander and SPLITSCREEN now redocks it.
     o Many sweeping internal changes.  Expect regressions.
 
   * Added for 6.6b,
