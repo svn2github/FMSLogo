@@ -578,6 +578,7 @@ PASS: [FILES] returned [file2.txt] , as expected.
 PASS: [DIRECTORIES] returned [dir1 .. .] , as expected.
 PASS: [FILES] returned [] , as expected.
 PASS: [DIRECTORIES] returned [.. .] , as expected.
+PASS: [MEMBERP "mytestdir DIRECTORIES] returned false , as expected.
 INFO: Executing invalid instruction: [(MKDIR)]
 INFO: Executing invalid instruction: [(MKDIR "too "many)]
 INFO: Executing invalid instruction: [(RMDIR)]

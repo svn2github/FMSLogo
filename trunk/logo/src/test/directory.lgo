@@ -43,6 +43,9 @@ TO DIRECTORYSMOKETEST
 
    CHDIR     "..
    RMDIR     "mytestdir
+
+   ; make sure it really got removed
+   SIMPLEREPORTTEST [MEMBERP "mytestdir DIRECTORIES] "false
 END
 
 TO MKDIRTEST
