@@ -204,58 +204,61 @@ NODE *lrmdir(NODE *arg)
    return Unbound;
    }
 
-NODE *lfiles(NODE *)
+static
+NODE *directory_helper(bool OnlyListDirectories)
    {
-   struct find_t ffblk;
-
    NODE *directory = NIL;
 
-   int done = _dos_findfirst("*.*", 0, &ffblk);
-   while (!done)
+   WIN32_FIND_DATA findFileData;
+
+   HANDLE searchHandle = FindFirstFile(
+      "*.*",
+      &findFileData); 
+   if (searchHandle != INVALID_HANDLE_VALUE)
       {
-      if (ffblk.attrib != FA_DIREC)
+      BOOL moreToCome = TRUE;
+      while (moreToCome)
          {
-         NODE* file = make_strnode(ffblk.name, strlen(ffblk.name), STRING, strnzcpy);
-         if (directory == NIL)
+         bool isADirectory = findFileData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY ? 
+            true : 
+            false;
+         if ((OnlyListDirectories && isADirectory) ||
+             (!OnlyListDirectories && !isADirectory))
             {
-            directory = cons_list(file);
+            // found what we're looking for
+            NODE* file = make_strnode(
+               findFileData.cFileName, 
+               strlen(findFileData.cFileName), 
+               STRING, 
+               strnzcpy);
+            if (directory == NIL)
+               {
+               directory = cons_list(file);
+               }
+            else
+               {
+               directory = cons(file,directory);
+               }
             }
-         else
-            {
-            directory = cons(file,directory);
-            }
+         
+         // iterate to the next file
+         moreToCome = FindNextFile(searchHandle, &findFileData);
          }
-      done = _dos_findnext(&ffblk);
+
+      FindClose(searchHandle);
       }
 
-   return (directory);
+   return directory;
+   }
+
+NODE *lfiles(NODE *)
+   {
+   return directory_helper(false);
    }
 
 NODE *ldirectories(NODE *)
    {
-   struct find_t ffblk;
-
-   NODE *directory = NIL;
-
-   int done = _dos_findfirst("*.*", FA_DIREC, &ffblk);
-   while (!done)
-      {
-      if (ffblk.attrib == FA_DIREC)
-         {
-         NODE* file = make_strnode(ffblk.name, strlen(ffblk.name), STRING, strnzcpy);
-         if (directory == NIL)
-            {
-            directory = cons_list(file);
-            }
-         else
-            {
-            directory = cons(file,directory);
-            }
-         }
-      done = _dos_findnext(&ffblk);
-      }
-
-   return directory;
+   return directory_helper(true);
    }
 
 void unblock_input()

@@ -35,6 +35,7 @@ Part II) New features/bugs fixed:
     o Fix bug #1366700; WAIT no longer takes 100% CPU.
     o Fix bug #1343397; MKDIR, CHDIR, and RMDIR don't crash on long
       directory names.
+    o Fix bug #1366856; DIRECTORIES and FILES no longer leak a file handle.
     o Implement request #1349320; the status window can now be closed
       by clicking on the "X" in its titlebar.
     o Implement request #1365734; FULLSCREEN and TEXTSCREEN now undock
