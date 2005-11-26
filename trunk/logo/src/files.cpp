@@ -90,12 +90,15 @@ FILE *open_file(NODE *arg, const char *access)
       tstrm = fopen(fnstr, access);
       }
 
-   if (strncmp(access, "r+", 2) == 0)
+   if (tstrm != NULL)
       {
-      // When we open in "r+", we want to read/write from the
-      // end of the file until the user seeks somewhere else.
-      // This mode is only used from OPENUPDATE.
-      fseek(tstrm, 0, SEEK_END);
+      if (strncmp(access, "r+", 2) == 0)
+         {
+         // When we open in "r+", we want to read/write from the
+         // end of the file until the user seeks somewhere else.
+         // This mode is only used from OPENUPDATE.
+         fseek(tstrm, 0, SEEK_END);
+         }
       }
 
    deref(arg);
