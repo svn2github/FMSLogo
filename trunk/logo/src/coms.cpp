@@ -420,10 +420,10 @@ NODE *ltime(NODE *)
    //   return(make_static_strnode(Xtim));
    }
 
-NODE *ltimemilli(NODE *)
 /* LOGO time */
+NODE *ltimemilli(NODE *)
    {
-   return (make_intnode((FIXNUM) GetCurrentTime()));
+   return (make_intnode((FIXNUM) GetTickCount()));
    }
 
 NODE *lwait(NODE *args)
@@ -431,28 +431,15 @@ NODE *lwait(NODE *args)
    NODE * num = pos_int_arg(args);
    if (NOT_THROWING)
       {
-      //        fflush(stdout); /* csls v. 1 p. 7 */
-#ifdef __ZTC__
-      zflush();
-#endif
-      if (getint(num) > 0)
+      // The input is in 60ths of a second.  To convert to milliseconds:  
+      //   (input / 60) * 1000 = input * 50 / 3 
+      DWORD totalTicksToWait = ((unsigned int) getint(num) * 50 / 3);
+     
+      DWORD endTime = GetTickCount() + totalTicksToWait;
+      while (GetTickCount() < endTime && !IsTimeToHalt) 
          {
-#ifdef bsd
-         unsigned int n;
-#ifdef ultrix
-         n = (unsigned int) getint(num) / 60;
-         sleep(n);
-#else
-         n = (unsigned int) getint(num) * 16667;
-         usleep(n);
-#endif
-#else
-         clock_t NumTicksToWait = (((unsigned int) getint(num) * CLK_TCK) / 60) + clock();
-         while (NumTicksToWait > clock() && !IsTimeToHalt) 
-           {
-           MyMessageScan();
-           }
-#endif
+         MyMessageScan();
+         Sleep(1);  // yeild
          }
       }
    return Unbound;
