@@ -410,7 +410,7 @@ void TMyCommandWindow::DoButtonExecute(UINT)
 
 void TMyCommandWindow::DoButtonEdall(UINT)
    {
-   do_execution("Edallbtn");
+   do_execution("EDALL");
    }
 
 void TMyCommandWindow::DoButtonStatus(UINT)
