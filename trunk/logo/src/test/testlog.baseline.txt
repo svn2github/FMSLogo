@@ -552,13 +552,37 @@ INFO: [WAIT 6] took 100 ms to execute
 PASS: [WAIT 6 ] waited for 100 ms. Anywhere between 100 ms and 120 is acceptable.
 INFO: [WAIT 10] took 170 ms to execute
 PASS: [WAIT 10 ] waited for 170 ms. Anywhere between 166.666666666667 ms and 186.666666666667 is acceptable.
-INFO: [WAIT 60] took 1001 ms to execute
-PASS: [WAIT 60 ] waited for 1001 ms. Anywhere between 1000 ms and 1020 is acceptable.
-INFO: [WAIT 100] took 1673 ms to execute
-PASS: [WAIT 100 ] waited for 1673 ms. Anywhere between 1666.66666666667 ms and 1686.66666666667 is acceptable.
+INFO: [WAIT 60] took 1002 ms to execute
+PASS: [WAIT 60 ] waited for 1002 ms. Anywhere between 1000 ms and 1020 is acceptable.
+INFO: [WAIT 100] took 1672 ms to execute
+PASS: [WAIT 100 ] waited for 1672 ms. Anywhere between 1666.66666666667 ms and 1686.66666666667 is acceptable.
 INFO: Executing invalid instruction: [(WAIT)]
 INFO: Executing invalid instruction: [(WAIT 10 10)]
 INFO: Executing invalid instruction: [WAIT -1]
 INFO: Executing invalid instruction: [WAIT "ABC]
 INFO: Executing invalid instruction: [WAIT []]
 INFO: Executing invalid instruction: [WAIT {}]
+PASS: [FILES] returned [] , as expected.
+PASS: [DIRECTORIES] returned [.. .] , as expected.
+PASS: [FILES] returned [file1.txt] , as expected.
+PASS: [DIRECTORIES] returned [.. .] , as expected.
+PASS: [FILES] returned [file2.txt file1.txt] , as expected.
+PASS: [DIRECTORIES] returned [.. .] , as expected.
+PASS: [FILES] returned [file2.txt file1.txt] , as expected.
+PASS: [DIRECTORIES] returned [dir1 .. .] , as expected.
+PASS: [FILES] returned [file2.txt file1.txt] , as expected.
+PASS: [DIRECTORIES] returned [dir2 dir1 .. .] , as expected.
+PASS: [FILES] returned [file2.txt file1.txt] , as expected.
+PASS: [DIRECTORIES] returned [dir1 .. .] , as expected.
+PASS: [FILES] returned [file2.txt] , as expected.
+PASS: [DIRECTORIES] returned [dir1 .. .] , as expected.
+PASS: [FILES] returned [] , as expected.
+PASS: [DIRECTORIES] returned [.. .] , as expected.
+INFO: Executing invalid instruction: [(MKDIR)]
+INFO: Executing invalid instruction: [(MKDIR "too "many)]
+INFO: Executing invalid instruction: [(RMDIR)]
+INFO: Executing invalid instruction: [RMDIR "too "many)]
+INFO: Executing invalid instruction: [RMDIR "doesnotexist)]
+INFO: Executing invalid instruction: [(CHDIR)]
+INFO: Executing invalid instruction: [CHDIR "too "many)]
+INFO: Executing invalid instruction: [CHDIR "doesnotexist)]
