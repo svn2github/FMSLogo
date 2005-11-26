@@ -1898,17 +1898,17 @@ int TMainFrame::PopupEditorForFile(const char *FileName, NODE *args)
    }
 
 
-int TMainFrame::MyPopupInput(char *str, char *pmt)
+bool TMainFrame::MyPopupInput(char *str, const char *prompt)
    {
    // get user input
 
-   if (TInputDialog(this, pmt, "Input:", str, MAX_BUFFER_SIZE).Execute() == IDOK)
+   if (TInputDialog(this, prompt, "Input:", str, MAX_BUFFER_SIZE).Execute() == IDOK)
       {
-      return 1;
+      return true;
       }
    else
       {
-      return 0;
+      return false;
       }
    }
 

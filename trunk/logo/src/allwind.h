@@ -71,6 +71,7 @@
 #include "ibmterm.h"
 #include "func.h"
 #include "commanderbutton.h"
+#include "commandercheckbox.h"
 #include "utils.h"
 
 #endif // _ALLWIND_H_

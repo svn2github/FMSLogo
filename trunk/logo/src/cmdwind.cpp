@@ -30,7 +30,7 @@ TMyCommandWindow::TMyCommandWindow(
    PauseButton(new TCommanderButton(this, ID_PAUSE)),
    HaltButton(new TCommanderButton(this, ID_HALT)),
    StatusButton(new TCommanderButton(this, ID_STATUS)),
-   YieldButton(new TCommanderButton(this, ID_YIELD)),
+   YieldButton(new TCommanderCheckBox(this, ID_YIELD)),
    EdallButton(new TCommanderButton(this, ID_EDALL)),
    ExecuteButton(new TCommanderButton(this, ID_EXECUTE)),
    Editbox(new TMyEditboxWindow(this, ID_EDITINPUT, 0)),
@@ -203,10 +203,12 @@ TMyCommandWindow::Duplicate(
    if (stepflag)
       {
       YieldButton->SetWindowText("UnStep");
+      YieldButton->SetCheck(BF_CHECKED);
       }
    else
       {
       YieldButton->SetWindowText("Step");
+      YieldButton->SetCheck(BF_UNCHECKED);
       }
 
    // copy the text of the "Trace" button
@@ -458,13 +460,15 @@ void TMyCommandWindow::DoButtonYield(UINT)
    */
    if (stepflag)
       {
-      stepflag = 0;
+      stepflag = false;
       YieldButton->SetWindowText("Step");
+      YieldButton->SetCheck(BF_UNCHECKED);
       }
    else
       {
-      stepflag = 1;
+      stepflag = true;
       YieldButton->SetWindowText("UnStep");
+      YieldButton->SetCheck(BF_CHECKED);
       }
 
    Editbox->SetFocus();

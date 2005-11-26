@@ -262,7 +262,7 @@ extern void putfileeditcombo(char *str);
 extern void clearcombobox(void);
 extern long LoadColor(int dpenr, int dpeng, int dpenb);
 extern void exit_program(void);
-extern int promptuser(char *str, char *pmt);
+extern bool promptuser(char *str, const char *prompt);
 extern void getcombobox(char *str);
 extern void ibmturt(bool hide);
 extern void move_to(FLONUM x, FLONUM y);

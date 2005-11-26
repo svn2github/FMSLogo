@@ -164,24 +164,24 @@ class TMyCommandWindow : public TDialog
  public: // HACK: should be protected
    void DoButtonExecute(UINT);
    void DoButtonHalt(UINT);
+   void DoButtonYield(UINT);
  protected:
    void DoButtonEdall(UINT);
    void DoButtonStatus(UINT);
-   void DoButtonYield(UINT);
    void DoButtonPause(UINT);
    void DoButtonTrace(UINT);
    void DoButtonReset(UINT);
 
 protected:
 
-   class TCommanderButton * TraceButton;
-   class TCommanderButton * ResetButton;
-   class TCommanderButton * PauseButton;
-   class TCommanderButton * HaltButton;
-   class TCommanderButton * StatusButton;
-   class TCommanderButton * YieldButton;
-   class TCommanderButton * EdallButton;
-   class TCommanderButton * ExecuteButton;
+   class TCommanderButton   * TraceButton;
+   class TCommanderButton   * ResetButton;
+   class TCommanderButton   * PauseButton;
+   class TCommanderButton   * HaltButton;
+   class TCommanderButton   * StatusButton;
+   class TCommanderCheckBox * YieldButton;
+   class TCommanderButton   * EdallButton;
+   class TCommanderButton   * ExecuteButton;
 
    HFONT Font;
    
@@ -304,7 +304,7 @@ class TMainFrame : public TDecoratedFrame
    void MyPopupEdit(const char *FileName, NODE * args);
    void MyPopupStatus();
    void MyPopupStatusKill();
-   int MyPopupInput(char *str, char *pmt);
+   bool MyPopupInput(char *str, const char *prompt);
 
    void UndockCommanderWindow();
    void DockCommanderWindow();
@@ -586,7 +586,7 @@ extern bool IsPrinterSettingCustom;
 extern bool IsTPrinterSettingCustom;
 extern bool IsOkayToUseCommanderWindow;
 extern int traceflag;
-extern int stepflag;
+extern bool stepflag;
 extern int pause_flag;
 extern int MaxWidth;
 extern int MaxHeight;

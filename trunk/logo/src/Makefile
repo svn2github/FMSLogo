@@ -70,6 +70,7 @@ Dep_fmslogodexe = \
    RELEASE\cmdwind.obj\
    RELEASE\colordlg.obj\
    RELEASE\commanderbutton.obj\
+   RELEASE\commandercheckbox.obj\
    RELEASE\coms.obj\
    RELEASE\devwind.obj\
    RELEASE\dib.obj\
@@ -126,6 +127,7 @@ RELEASE\assembly.obj+
 RELEASE\cmdwind.obj+
 RELEASE\colordlg.obj+
 RELEASE\commanderbutton.obj+
+RELEASE\commandercheckbox.obj+
 RELEASE\coms.obj+
 RELEASE\devwind.obj+
 RELEASE\dib.obj+
@@ -206,6 +208,11 @@ RELEASE\colordlg.obj :  colordlg.cpp
 RELEASE\commanderbutton.obj :  commanderbutton.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ commanderbutton.cpp
+|
+
+RELEASE\commandercheckbox.obj :  commandercheckbox.cpp
+  $(BCC32) -c @&&|
+ $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ commandercheckbox.cpp
 |
 
 RELEASE\coms.obj :  coms.cpp

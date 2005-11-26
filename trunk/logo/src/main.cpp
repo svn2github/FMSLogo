@@ -117,7 +117,7 @@ bool IsTPrinterSettingCustom = false;  /* Dynamic copy of CustomFlag            
 bool IsOkayToUseCommanderWindow = false; // Flag to signal it's OK to write to recall box
 int halt_flag = 0;                     /* Flag to signal it's OK to halt                */
 int traceflag = 0;                     /* Flag to signal trace button is active         */
-int stepflag = 0;                      /* Flag to signal trace button is active         */
+bool stepflag = false;                 // Flag to signal step button is active
 int pause_flag = 0;                    /* Flag to signal pause button is pushed         */
 int yield_flag = 1;                    /* Flag to signal yield state                    */
 int status_flag = 0;                   /* Flag to signal status box is poped up         */
@@ -290,18 +290,18 @@ void putcombobox(char *str)
       }
    }
 
-int promptuser(char *str, char *pmt)
+bool promptuser(char *str, const char *prompt)
    {
    *str = '\0';
-   if (MainWindowx->MyPopupInput(str, pmt) == 0)
+   if (MainWindowx->MyPopupInput(str, prompt))
       {
-      return 0;
-      // if (halt_flag) IsTimeToHalt = true;
-      // MainWindowx->CommandWindow->PostMessage(WM_COMMAND, ID_HALT, ID_HALT);
+      return true;
       }
    else
       {
-      return 1;
+      return false;
+      // if (halt_flag) IsTimeToHalt = true;
+      // MainWindowx->CommandWindow->PostMessage(WM_COMMAND, ID_HALT, ID_HALT);
       }
    }
 
@@ -310,7 +310,6 @@ void single_step_box(NODE *the_line)
    char textbuf[MAX_BUFFER_SIZE];
 
    // pop up single step box showing line of code
-
    print_stringptr = textbuf;
    print_stringlen = MAX_BUFFER_SIZE;
    ndprintf((FILE *) NULL, "%p", the_line);
@@ -323,8 +322,8 @@ void single_step_box(NODE *the_line)
       {
       if (stepflag)
          {
-         stepflag = 0;
-         MainWindowx->CommandWindow->SendDlgItemMsg(ID_YIELD, WM_SETTEXT, 0, (DWORD) "Step");
+         // act like someone pressed the "UnStep" button
+         MainWindowx->CommandWindow->DoButtonYield(0);
          }
       else
          {
