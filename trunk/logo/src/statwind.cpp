@@ -37,7 +37,7 @@ void TMyStatusWindow::EvClose()
    {
    // we are processing the close event before
    // the window has been closed.
-   status_flag = 0;
+   status_flag = false;
 
    // Get location and size of our window on the screen so we can
    // come back up in the same spot next time we are invoked.
@@ -56,7 +56,7 @@ void TMyStatusWindow::EvClose()
    // now kill the status window
    delete MainWindowx->StatusWindow;
    MainWindowx->StatusWindow = NULL;
-   MainWindowx->CommandWindow->SetDlgItemText(ID_STATUS, "Status");
+   MainWindowx->CommandWindow->UpdateStatusButtonState();
    }
 
 DEFINE_RESPONSE_TABLE1(TMyStatusWindow, TDialog)

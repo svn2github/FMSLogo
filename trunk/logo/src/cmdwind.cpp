@@ -192,14 +192,8 @@ void TMyCommandWindow::DoListBox(UINT)
    {
    }
 
-// Copies the state of the widgets from one commander window
-// to another.
-bool 
-TMyCommandWindow::Duplicate(
-   const TMyCommandWindow & Original
-   )
+void TMyCommandWindow::UpdateYieldButtonState()
    {
-   // copy the text of the "Step" button
    if (stepflag)
       {
       YieldButton->SetWindowText("UnStep");
@@ -210,8 +204,10 @@ TMyCommandWindow::Duplicate(
       YieldButton->SetWindowText("Step");
       YieldButton->SetCheck(BF_UNCHECKED);
       }
+   }
 
-   // copy the text of the "Trace" button
+void TMyCommandWindow::UpdateTraceButtonState()
+   {
    if (traceflag)
       {
       TraceButton->SetWindowText("UnTrace");
@@ -220,17 +216,35 @@ TMyCommandWindow::Duplicate(
       {
       TraceButton->SetWindowText("Trace");
       }
+   }
 
-   // copy the text of the "Status" button
+void TMyCommandWindow::UpdateStatusButtonState()
+   {
    if (status_flag)
       {
-      StatusButton->SetWindowText("UnStatus");
+      StatusButton->SetWindowText("NoStatus");
       }
    else
       {
       StatusButton->SetWindowText("Status");
       }
+   }
 
+// Copies the state of the widgets from one commander window
+// to another.
+bool 
+TMyCommandWindow::Duplicate(
+   const TMyCommandWindow & Original
+   )
+   {
+   // copy the text of the "Step" button
+   UpdateYieldButtonState();
+
+   // copy the text of the "Trace" button
+   UpdateTraceButtonState();
+
+   // copy the text of the "Status" button
+   UpdateStatusButtonState();
 
    char * buffer;
 
@@ -434,7 +448,6 @@ void TMyCommandWindow::DoButtonStatus(UINT)
 void TMyCommandWindow::DoButtonReset(UINT)
    {
    /* just do a clear screen and return focus */
-
    char logoInstruction[] = "CLEARSCREEN";
    putcombobox(logoInstruction);
    do_execution(logoInstruction);
@@ -442,35 +455,12 @@ void TMyCommandWindow::DoButtonReset(UINT)
    Editbox->SetFocus();
    }
 
+
 void TMyCommandWindow::DoButtonYield(UINT)
    {
    /* toggle yield state */
-
-   /*
-      if (yield_flag)
-         {
-         yield_flag = 0;
-         YieldButton->SetWindowText("Yield");
-         }
-      else
-         {
-         yield_flag = 1;
-         YieldButton->SetWindowText("NoYield");
-         }
-   */
-   if (stepflag)
-      {
-      stepflag = false;
-      YieldButton->SetWindowText("Step");
-      YieldButton->SetCheck(BF_UNCHECKED);
-      }
-   else
-      {
-      stepflag = true;
-      YieldButton->SetWindowText("UnStep");
-      YieldButton->SetCheck(BF_CHECKED);
-      }
-
+   stepflag = !stepflag;
+   UpdateYieldButtonState();
    Editbox->SetFocus();
    }
 
@@ -504,19 +494,9 @@ void TMyCommandWindow::DoButtonPause(UINT)
 
 void TMyCommandWindow::DoButtonTrace(UINT)
    {
-
    /* toggle trace state */
-
-   if (traceflag)
-      {
-      traceflag = 0;
-      TraceButton->SetWindowText("Trace");
-      }
-   else
-      {
-      traceflag = 1;
-      TraceButton->SetWindowText("UnTrace");
-      }
+   traceflag = !traceflag;
+   UpdateTraceButtonState();
 
    Editbox->SetFocus();
    }

@@ -2071,8 +2071,6 @@ void TMainFrame::DockCommanderWindow()
 
 void TMainFrame::MyPopupStatusKill()
    {
-   status_flag = 0;
-
    // Get location and size of our window on the screen so we can
    // come back up in the same spot next time we are invoked.
    TRect wrect;
@@ -2088,23 +2086,25 @@ void TMainFrame::MyPopupStatusKill()
       wrect.Height());
 
    // now kill the status window
+   status_flag = false;
+
    delete StatusWindow;
    StatusWindow = NULL;
-   CommandWindow->SetDlgItemText(ID_STATUS, "Status");
+   CommandWindow->UpdateStatusButtonState();
    }
 
 // popup status window
 void TMainFrame::MyPopupStatus()
    {
    // flag so that updates are sent
-   status_flag = 1;
+   status_flag = true;
 
    // pop it up
    StatusWindow = new TMyStatusWindow(this, "DIALOGSTATUS");
    StatusWindow->Create();
 
    // update button
-   CommandWindow->SetDlgItemText(ID_STATUS, "NoStatus");
+   CommandWindow->UpdateStatusButtonState();
 
    // build default coords
    int x = 0;

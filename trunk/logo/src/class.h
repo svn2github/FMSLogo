@@ -172,8 +172,12 @@ class TMyCommandWindow : public TDialog
    void DoButtonTrace(UINT);
    void DoButtonReset(UINT);
 
-protected:
+ public:
+   void UpdateYieldButtonState();
+   void UpdateTraceButtonState();
+   void UpdateStatusButtonState();
 
+ protected:
    class TCommanderButton   * TraceButton;
    class TCommanderButton   * ResetButton;
    class TCommanderButton   * PauseButton;
@@ -585,7 +589,6 @@ extern bool EnablePalette;
 extern bool IsPrinterSettingCustom;
 extern bool IsTPrinterSettingCustom;
 extern bool IsOkayToUseCommanderWindow;
-extern int traceflag;
 extern bool stepflag;
 extern int pause_flag;
 extern int MaxWidth;
