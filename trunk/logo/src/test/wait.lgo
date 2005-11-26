@@ -1,0 +1,41 @@
+
+TO TIMEWAIT :TimeToWait
+    LOCALMAKE "executiontime TIMECOMMAND (list "WAIT :TimeToWait)
+    
+    LOCALMAKE "MinAcceptableWaitTime :TimeToWait * 1000 / 60;
+    LOCALMAKE "MaxAcceptableWaitTime :MinAcceptableWaitTime + 20
+
+    if :MaxAcceptableWaitTime < :executiontime [
+       REPORTTESTFAILED (list 
+          "|[WAIT| :TimeToWait "|] waited for| :executiontime "|ms.|
+          "|We expected no more than| :MaxAcceptableWaitTime "ms)
+    ]
+    if :executiontime < :MinAcceptableWaitTime [
+       REPORTTESTFAILED (list 
+          "|[WAIT| :TimeToWait "|] waited for| :executiontime "|ms.|
+          "|We expected at least| :MinAcceptableWaitTime "ms.)
+    ]
+    if and (:MinAcceptableWaitTime < :executiontime + 1) (:executiontime + 1 < :MaxAcceptableWaitTime) [
+       REPORTTESTPASSED (list 
+          "|[WAIT| :TimeToWait "|] waited for| :executiontime "|ms.|
+          "|Anywhere between| :MinAcceptableWaitTime "|ms and| :MaxAcceptableWaitTime "|is acceptable.|)
+    ]
+END
+
+TO WAITTEST
+
+   TIMEWAIT 0
+   TIMEWAIT 1
+   TIMEWAIT 6
+   TIMEWAIT 10
+   TIMEWAIT 60
+   TIMEWAIT 100
+
+   RUNBADINPUTTEST [(WAIT)]
+   RUNBADINPUTTEST [(WAIT 10 10)]
+   RUNBADINPUTTEST [WAIT -1]
+   RUNBADINPUTTEST [WAIT "ABC]
+   RUNBADINPUTTEST [WAIT []]
+   RUNBADINPUTTEST [WAIT {}]
+END
+

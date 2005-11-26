@@ -3,6 +3,7 @@
 ; It also loads all unit tests and executes them.
 
 LOAD "array.lgo
+LOAD "wait.lgo
 LOAD "predicate.lgo
 LOAD "logic.lgo
 LOAD "bitmap.lgo
@@ -109,13 +110,16 @@ END
 
 ; Outputs how long it takes to execute given instructions
 TO TIMECOMMAND :instructions
-  LOCALMAKE "beforetime timemilli
 
+  LOCALMAKE "beforetime TIMEMILLI
   RUN :instructions
+  LOCALMAKE "aftertime TIMEMILLI
 
-  LOCALMAKE "aftertime timemilli
+  LOCALMAKE "deltatime :aftertime - :beforetime
 
-  OUTPUT :aftertime - :beforetime
+  REPORTTESTINFO (list :instructions "took :deltatime "|ms to execute|)
+
+  OUTPUT :deltatime
 END
 
 
@@ -138,6 +142,7 @@ TO TESTALL
   FILETEST      ; from file.lgo
   COLORTEST     ; from color.lgo
   SCREENTEST    ; from screen.lgo
+  WAITTEST      ; from wait.lgo
 ;  MKDIRTEST     ; from mkdir.lgo
 
   REPORTTESTUNINITIALIZE
