@@ -287,11 +287,15 @@ void gc(NODE *nd)
 
 NODE *lnodes(NODE *  /* args */)
    {
-   long int temp_max = mem_max, temp_nodes = mem_nodes;
+   // snapshot of total nodes when this was called
+   long int temp_max   = mem_max;
+   long int temp_nodes = mem_nodes;
 
    mem_max = mem_nodes;
-   return cons(make_intnode(temp_nodes),
-      cons(make_intnode(temp_max), NIL));
+
+   return cons_list(
+      make_intnode(temp_nodes),
+      make_intnode(temp_max));
    }
 
 void fill_reserve_tank()
