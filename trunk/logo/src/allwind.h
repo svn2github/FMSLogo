@@ -54,6 +54,7 @@
 #include <bios.h>
 #include <winsock.h>
 #include <assert.h>
+#include <errno.h>
 
 #include "logorc.h"
 #include "logox.h"
