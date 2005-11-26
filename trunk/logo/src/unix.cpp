@@ -108,16 +108,6 @@ void putcombochar(char c)
       }
    }
 
-void nputs(char *str)
-   {
-   char c;
-
-   while ((c = *str++) != 0) 
-      {
-      putcombochar(c);
-      }
-   }
-
 int printfx(const char *fmt)
    {
    mputcombobox(fmt);
@@ -127,7 +117,9 @@ int printfx(const char *fmt)
 
 int printfx(const char *fmt, const char *str)
    {
-   char buff[MAX_BUFFER_SIZE];
+   // BUG: this should use snprintf(), but it does
+   // not exist in Borland's compiler.
+   char buff[MAX_BUFFER_SIZE * 2];
    int cnt = sprintf(buff, fmt, str);
 
    mputcombobox(buff);
@@ -135,34 +127,19 @@ int printfx(const char *fmt, const char *str)
    return cnt;
    }
 
-long putcharx(long ch)
-   {
-   putcombochar((char) ch);
-
-   return ch;
-   }
-
-long putsx(const char *ch)
-   {
-   mputcombobox(ch);
-
-   return 1;
-   }
-
 NODE *lpushdir(NODE *arg)
    {
-   char fname[80];
-
+   char fname[MAX_BUFFER_SIZE + 1];
    cnv_strnode_string(fname, arg);
 
    if (chdir(fname))
       {
-      printfx("Could not Push to directory %s\n", fname);
+      printfx("Could not chdir to directory \"%s\"", fname);
       }
    else
       {
-      getcwd(fname, 80);
-      printfx("Pushed to %s\n", fname);
+      getcwd(fname, sizeof fname);
+      printfx("Changed to \"%s\"", fname);
       }
 
    return Unbound;
@@ -170,29 +147,29 @@ NODE *lpushdir(NODE *arg)
 
 NODE *lpopdir(NODE *)
    {
-   char fname[80];
-
    chdir("..");
-   getcwd(fname, 80);
-   printfx("Popped to %s\n", fname);
+
+   char fname[MAX_BUFFER_SIZE + 1];
+   getcwd(fname, sizeof fname);
+
+   printfx("Popped to \"%s\"", fname);
 
    return Unbound;
    }
 
 NODE *lmkdir(NODE *arg)
    {
-   char fname[80];
-
+   char fname[MAX_BUFFER_SIZE + 1];
    cnv_strnode_string(fname, arg);
 
    if (mkdir(fname))
       {
-      printfx("Failed to create directory %s\n", fname);
+      printfx("Failed to create directory \"%s\"", fname);
       }
    else
       {
       chdir(fname);
-      printfx("Now in newly created directory %s\n", fname);
+      printfx("Now in newly created directory \"%s\"", fname);
       }
 
    return Unbound;
@@ -200,18 +177,28 @@ NODE *lmkdir(NODE *arg)
 
 NODE *lrmdir(NODE *arg)
    {
-   char fname[80];
-
+   char fname[MAX_BUFFER_SIZE + 1];
    cnv_strnode_string(fname, arg);
 
    if (rmdir(fname))
       {
-      printfx("Failed to remove directory %s\n", fname);
-      printfx("Make sure the directory is empty before trying to remove\n");
+      printfx("Failed to remove directory \"%s\"", fname);
+      if (errno == EEXIST)
+         {
+         printfx("The directory does not exist.");
+         }
+      else if (errno == EEXIST || errno==EPERM)
+         {
+         printfx("Make sure the directory is empty before trying to remove it.");
+         }
+      else
+         {
+         printfx("%s", strerror(errno));
+         }
       }
    else
       {
-      printfx("Logo directory %s removed\n", fname);
+      printfx("Removed directory \"%s\"", fname);
       }
 
    return Unbound;
@@ -221,7 +208,7 @@ NODE *lfiles(NODE *)
    {
    struct find_t ffblk;
 
-   NODE *directory = NULL;
+   NODE *directory = NIL;
 
    int done = _dos_findfirst("*.*", 0, &ffblk);
    while (!done)
@@ -229,9 +216,9 @@ NODE *lfiles(NODE *)
       if (ffblk.attrib != FA_DIREC)
          {
          NODE* file = make_strnode(ffblk.name, strlen(ffblk.name), STRING, strnzcpy);
-         if (directory == NULL)
+         if (directory == NIL)
             {
-            directory = cons(file,NIL);
+            directory = cons_list(file);
             }
          else
             {
@@ -248,7 +235,7 @@ NODE *ldirectories(NODE *)
    {
    struct find_t ffblk;
 
-   NODE *directory = NULL;
+   NODE *directory = NIL;
 
    int done = _dos_findfirst("*.*", FA_DIREC, &ffblk);
    while (!done)
@@ -256,9 +243,9 @@ NODE *ldirectories(NODE *)
       if (ffblk.attrib == FA_DIREC)
          {
          NODE* file = make_strnode(ffblk.name, strlen(ffblk.name), STRING, strnzcpy);
-         if (directory == NULL)
+         if (directory == NIL)
             {
-            directory = cons(file,NIL);
+            directory = cons_list(file);
             }
          else
             {
@@ -268,7 +255,7 @@ NODE *ldirectories(NODE *)
       done = _dos_findnext(&ffblk);
       }
 
-   return (directory);
+   return directory;
    }
 
 void unblock_input()
