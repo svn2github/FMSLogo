@@ -575,10 +575,10 @@ INFO: [WAIT 1] took 20 ms to execute
 PASS: [WAIT 1 ] waited for 20 ms. Anywhere between 16.6666666666667 ms and 36.6666666666667 is acceptable.
 INFO: [WAIT 6] took 100 ms to execute
 PASS: [WAIT 6 ] waited for 100 ms. Anywhere between 100 ms and 120 is acceptable.
-INFO: [WAIT 10] took 170 ms to execute
-PASS: [WAIT 10 ] waited for 170 ms. Anywhere between 166.666666666667 ms and 186.666666666667 is acceptable.
-INFO: [WAIT 60] took 1002 ms to execute
-PASS: [WAIT 60 ] waited for 1002 ms. Anywhere between 1000 ms and 1020 is acceptable.
+INFO: [WAIT 10] took 171 ms to execute
+PASS: [WAIT 10 ] waited for 171 ms. Anywhere between 166.666666666667 ms and 186.666666666667 is acceptable.
+INFO: [WAIT 60] took 1001 ms to execute
+PASS: [WAIT 60 ] waited for 1001 ms. Anywhere between 1000 ms and 1020 is acceptable.
 INFO: [WAIT 100] took 1672 ms to execute
 PASS: [WAIT 100 ] waited for 1672 ms. Anywhere between 1666.66666666667 ms and 1686.66666666667 is acceptable.
 INFO: Executing invalid instruction: [(WAIT)]
@@ -612,3 +612,8 @@ INFO: Executing invalid instruction: [RMDIR "doesnotexist)]
 INFO: Executing invalid instruction: [(CHDIR)]
 INFO: Executing invalid instruction: [CHDIR "too "many)]
 INFO: Executing invalid instruction: [CHDIR "doesnotexist)]
+PASS: [LIST? NODES] returned true , as expected.
+PASS: [COUNT NODES] returned 2 , as expected.
+PASS: [NUMBER? ITEM 1 NODES] returned true , as expected.
+PASS: [NUMBER? ITEM 2 NODES] returned true , as expected.
+INFO: Executing invalid instruction: [(NODES "too-many)]

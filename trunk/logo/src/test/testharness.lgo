@@ -20,6 +20,7 @@ LOAD "parse.lgo
 LOAD "word.lgo
 LOAD "color.lgo
 LOAD "screen.lgo
+LOAD "misc.lgo
 
 MAKE "testlog []
 
@@ -144,6 +145,7 @@ TO TESTALL
   SCREENTEST    ; from screen.lgo
   WAITTEST      ; from wait.lgo
   DIRECTORYTEST ; from directory.lgo
+  MISCTEST      ; from misc.lgo
 
   REPORTTESTUNINITIALIZE
 END

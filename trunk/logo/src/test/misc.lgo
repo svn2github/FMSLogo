@@ -1,0 +1,19 @@
+; This file contains miscellaneous tests for features of FMSLogo that don't
+; naturally fall into any other category.
+;
+
+TO NODESTEST
+   LOCALMAKE "nodes NODES
+
+   ; nodes should return a list of two numbers
+   SIMPLEREPORTTEST [LIST? NODES] "true
+   SIMPLEREPORTTEST [COUNT NODES] 2
+   SIMPLEREPORTTEST [NUMBER? ITEM 1 NODES] "true
+   SIMPLEREPORTTEST [NUMBER? ITEM 2 NODES] "true
+
+   RUNBADINPUTTEST [(NODES "too-many)]
+END
+
+TO MISCTEST
+   NODESTEST
+END
