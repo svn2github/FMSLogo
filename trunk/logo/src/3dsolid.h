@@ -47,8 +47,7 @@ struct RGBCOLOR
    BYTE r, g, b;
    };
 
-//#define MAXPOLYDEPTH 666 // Actual limit 
-#define MAXPOLYDEPTH 660
+#define MAXPOLYDEPTH 660 // Actual limit 
 
 #define HC_ON       0
 #define HC_IN       1
@@ -76,11 +75,6 @@ public:
 #ifdef SHARE
    int ThisPointClass;
    int LastInOutPointClass;
-#endif
-
-#if !defined(__WIN32__)
-   long iPolyDepth;
-   BOOL bDepthExceeded;
 #endif
 
    POLYGON* polyA;
