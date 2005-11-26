@@ -226,7 +226,85 @@ TO FILEBADINPUTTEST
    RUNBADINPUTTEST [CLOSE "nonexistent.txt]
    RUNBADINPUTTEST [(CLOSE)]
 
+   RUNBADINPUTTEST [(ERASEFILE)]
+   RUNBADINPUTTEST [(ERASEFILE "too "many)]
+
+   ; try to overflow an internal buffer
+   LOCALMAKE "longfilename "||
+   REPEAT 5000 [ MAKE "longfilename word :longfilename "A ]
+   RUNBADINPUTTEST [OPENREAD   :longfilename]
+   RUNBADINPUTTEST [OPENWRITE  :longfilename]
+   RUNBADINPUTTEST [OPENAPPEND :longfilename]
+   RUNBADINPUTTEST [OPENUPDATE :longfilename]
+
+   RUNBADINPUTTEST [CLOSE     :longfilename]
+   RUNBADINPUTTEST [ERASEFILE :longfilename]
 END
+
+TO ERASEFILETEST
+
+   ; try to erase a non-existent file (should fail silently)
+   ERASEFILE "nonexistent
+
+   ; try to erase a file that doesn't exist (should fail silently)
+   OPENWRITE "mytestfile
+   ERASEFILE "mytestfile
+   SIMPLEREPORTTEST [MEMBERP "mytestfile FILES] "true
+   CLOSE     "mytestfile
+   ERASEFILE "mytestfile
+   SIMPLEREPORTTEST [MEMBERP "mytestfile FILES] "false
+
+   ; erase a device (should fail silently)
+   ERASEFILE "NUL
+
+   ; erase a directory (should fail silently)
+   MKDIR "mytestdir
+   POPDIR
+   ERASEFILE "mytestdir
+   SIMPLEREPORTTEST [MEMBERP "mytestdir DIRECTORIES] "true
+   RMDIR     "mytestdir
+
+END
+
+TO OPENOPENFILETEST
+
+   ; can't open a file that is already open for writing 
+   OPENWRITE  "mytestfile
+   RUNBADINPUTTEST [OPENREAD   "mytestfile]
+   RUNBADINPUTTEST [OPENWRITE  "mytestfile]
+   RUNBADINPUTTEST [OPENAPPEND "mytestfile]
+   RUNBADINPUTTEST [OPENUPDATE "mytestfile]
+   CLOSE     "mytestfile
+
+   ; can't open a file that is already open for reading
+   OPENREAD "mytestfile
+   RUNBADINPUTTEST [OPENREAD   "mytestfile]
+   RUNBADINPUTTEST [OPENWRITE  "mytestfile]
+   RUNBADINPUTTEST [OPENAPPEND "mytestfile]
+   RUNBADINPUTTEST [OPENUPDATE "mytestfile]
+   CLOSE     "mytestfile
+
+   ERASEFILE "mytestfile
+   SIMPLEREPORTTEST [MEMBERP "mytestfile FILES] "false
+
+END
+
+TO OPENDIRECTORYASFILETEST
+
+   ; can't open a directory as file
+   MKDIR  "testdir
+   POPDIR
+
+   RUNBADINPUTTEST [OPENREAD   "testdir]
+   RUNBADINPUTTEST [OPENWRITE  "testdir]
+   RUNBADINPUTTEST [OPENAPPEND "testdir]
+   RUNBADINPUTTEST [OPENUPDATE "testdir]
+
+   RMDIR "testdir
+   SIMPLEREPORTTEST [MEMBERP "mytestfile DIRECTORIES] "false
+END
+
+
 
 TO FILETEST
   FILESMOKETEST
@@ -240,6 +318,10 @@ TO FILETEST
   OPENUPDATETEST
 
   DRIBBLETEST
+
+  ERASEFILETEST
+  OPENOPENFILETEST
+  OPENDIRECTORYASFILETEST
 
   FILEBADINPUTTEST
 END

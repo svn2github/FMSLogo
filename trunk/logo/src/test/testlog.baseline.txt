@@ -436,12 +436,37 @@ PASS: [READLIST] returned [Hello] , as expected.
 PASS: [READLIST] returned [And how are you today] , as expected.
 PASS: [READLIST] returned [Hello] , as expected.
 PASS: [READLIST] returned [Good Bye] , as expected.
+PASS: [MEMBERP "mytestfile FILES] returned true , as expected.
+PASS: [MEMBERP "mytestfile FILES] returned false , as expected.
+PASS: [MEMBERP "mytestdir DIRECTORIES] returned true , as expected.
+INFO: Executing invalid instruction: [OPENREAD "mytestfile]
+INFO: Executing invalid instruction: [OPENWRITE "mytestfile]
+INFO: Executing invalid instruction: [OPENAPPEND "mytestfile]
+INFO: Executing invalid instruction: [OPENUPDATE "mytestfile]
+INFO: Executing invalid instruction: [OPENREAD "mytestfile]
+INFO: Executing invalid instruction: [OPENWRITE "mytestfile]
+INFO: Executing invalid instruction: [OPENAPPEND "mytestfile]
+INFO: Executing invalid instruction: [OPENUPDATE "mytestfile]
+PASS: [MEMBERP "mytestfile FILES] returned false , as expected.
+INFO: Executing invalid instruction: [OPENREAD "testdir]
+INFO: Executing invalid instruction: [OPENWRITE "testdir]
+INFO: Executing invalid instruction: [OPENAPPEND "testdir]
+INFO: Executing invalid instruction: [OPENUPDATE "testdir]
+PASS: [MEMBERP "mytestfile DIRECTORIES] returned false , as expected.
 INFO: Executing invalid instruction: [(OPENREAD "testfile.txt 1)]
 INFO: Executing invalid instruction: [(OPENWRITE "testfile.txt 1)]
 INFO: Executing invalid instruction: [(OPENAPPEND "testfile.txt 1)]
 INFO: Executing invalid instruction: [(OPENUPDATE "testfile.txt 1)]
 INFO: Executing invalid instruction: [CLOSE "nonexistent.txt]
 INFO: Executing invalid instruction: [(CLOSE)]
+INFO: Executing invalid instruction: [(ERASEFILE)]
+INFO: Executing invalid instruction: [(ERASEFILE "too "many)]
+INFO: Executing invalid instruction: [OPENREAD :longfilename]
+INFO: Executing invalid instruction: [OPENWRITE :longfilename]
+INFO: Executing invalid instruction: [OPENAPPEND :longfilename]
+INFO: Executing invalid instruction: [OPENUPDATE :longfilename]
+INFO: Executing invalid instruction: [CLOSE :longfilename]
+INFO: Executing invalid instruction: [ERASEFILE :longfilename]
 PASS: [PENCOLOR] returned 0 , as expected.
 PASS: [PENCOLOR] returned 15 , as expected.
 PASS: [PENCOLOR] returned 7 , as expected.
