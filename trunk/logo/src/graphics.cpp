@@ -1980,8 +1980,10 @@ NODE *lsetscrunch(NODE *args)
 
 NODE *lbuttonp(NODE *)
    {
-   if (button)
+   if (button())
+      {
       return Truex;
+      }
    return Falsex;
    }
 
