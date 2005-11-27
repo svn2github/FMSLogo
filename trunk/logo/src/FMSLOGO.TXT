@@ -37,10 +37,12 @@ Part II) New features/bugs fixed:
       directory names.
     o Fix bug #1366856; DIRECTORIES and FILES no longer leak a file handle.
     o Fix bug #1367217; FMSLogo no longer crashes when OPENUPDATE fails.
-    o Implement request #1349320; the status window can now be closed
-      by clicking on the "X" in its titlebar.
     o Implement request #1365734; FULLSCREEN and TEXTSCREEN now undock
       the commander and SPLITSCREEN now redocks it.
+    o Implement request #1327751; the Commander window's Status/NoStatus
+      Trace/UnTrace, and Step/UnStep buttons are now pushbutton checkboxes.
+    o Implement request #1349320; the status window can now be closed
+      by clicking on the "X" in its titlebar.
     o Many sweeping internal changes.  Expect regressions.
 
   * Added for 6.6b,
