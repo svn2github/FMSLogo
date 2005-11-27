@@ -609,13 +609,11 @@ void checkqueue()
              {
              save_yield_flag = yield_flag;
              yield_flag = 0;
-             char *pTemp = (char *) MAKELONG(thing->arg1, thing->arg2);
-             thing->arg1 = 0;
-             thing->arg2 = 0;
-             if (pTemp != NULL)
+             if (thing->networkpacket != NULL)
                 {
-                strcpy(network_receive_value, pTemp);
-                free(pTemp);
+                strcpy(network_receive_value, thing->networkpacket);
+                free(thing->networkpacket);
+                thing->networkpacket = NULL;
                 }
              do_execution(thing->func);
              yield_flag = save_yield_flag;
@@ -627,13 +625,11 @@ void checkqueue()
              {
              save_yield_flag = yield_flag;
              yield_flag = 0;
-             char *pTemp = (char *) MAKELONG(thing->arg1, thing->arg2);
-             thing->arg1 = 0;
-             thing->arg2 = 0;
-             if (pTemp != NULL)
+             if (thing->networkpacket != NULL)
                 {
-                strcpy(network_send_value, pTemp);
-                free(pTemp);
+                strcpy(network_send_value, thing->networkpacket);
+                free(thing->networkpacket);
+                thing->networkpacket = NULL;
                 }
              do_execution(thing->func);
              yield_flag = save_yield_flag;
@@ -662,8 +658,7 @@ void emptyqueue()
          case EVENTTYPE_NetworkReceive:
          case EVENTTYPE_NetworkSend:
             {
-            char *pTemp = (char *) MAKELONG(thing->arg1, thing->arg2);
-            if (pTemp != NULL) free(pTemp);
+            free(thing->networkpacket);
             break;
             }
          }
