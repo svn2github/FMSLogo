@@ -1773,13 +1773,9 @@ NODE *llabelsize(NODE *arg)
 
 NODE *llabel(NODE *arg)
    {
+   // print the node as a string
    char textbuf[MAX_BUFFER_SIZE];
-   //    short theLength;
-
-   print_stringptr = textbuf;
-   print_stringlen = MAX_BUFFER_SIZE;
-   ndprintf((FILE *) NULL, "%p", car(arg));
-   *print_stringptr = '\0';
+   cnv_strnode_string(textbuf, arg);
 
    if (NOT_THROWING)
       {
