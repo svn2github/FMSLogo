@@ -2634,7 +2634,7 @@ LRESULT TMainFrame::OnNetworkConnectSendFinish(WPARAM /* wParam */, LPARAM lPara
 
    if (phes)
       {
-      memcpy((char FAR *) &(send_dest_sin.sin_addr), phes->h_addr, phes->h_length);
+      memcpy((char *) &(send_dest_sin.sin_addr), phes->h_addr, phes->h_length);
       }
    else
       {
@@ -2740,16 +2740,25 @@ LRESULT TMainFrame::OnNetworkListenReceiveAck(WPARAM /* wParam */, LPARAM lParam
                int i;
 
                // last byte is not end of packet then try to find one
-               if (Buffer[status - 1] |= 0)
+               if (Buffer[status - 1] != '\0')
                   {
-                  for (i = status - 1; i >= 0; i--) if (Buffer[i] == 0) break;
+                  for (i = status - 1; i >= 0; i--)
+                     {
+                     if (Buffer[i] == '\0') 
+                        {
+                        break;
+                        }
+                     }
 
                   // if not found
 
                   if (i < 0)
                      {
                      // if not full wait for more
-                     if (status < MAX_PACKET_SIZE - 1) return 0L;
+                     if (status < MAX_PACKET_SIZE - 1) 
+                        {
+                        return 0L;
+                        }
 
                      // read the whole thing anyway
                      i = MAX_PACKET_SIZE - 2;
@@ -2779,7 +2788,10 @@ LRESULT TMainFrame::OnNetworkListenReceiveAck(WPARAM /* wParam */, LPARAM lParam
                   PostMessage(WM_CHECKQUEUE, 0, 0);
 
                   i += strlen(&Buffer[i]) + 1;
-                  if (i >= status) break;
+                  if (i >= status)
+                     {
+                     break;
+                     }
                   }
                }
 
@@ -2793,7 +2805,7 @@ LRESULT TMainFrame::OnNetworkListenReceiveAck(WPARAM /* wParam */, LPARAM lParam
 #ifndef USE_UDP
               acc_sin_len = sizeof(acc_sin);
 
-              if ((receiveSock = lpaccept(receiveSock, (struct sockaddr FAR *) &acc_sin, (int FAR *) &acc_sin_len)) == INVALID_SOCKET)
+              if ((receiveSock = lpaccept(receiveSock, (struct sockaddr *) &acc_sin, (int *) &acc_sin_len)) == INVALID_SOCKET)
                  {
                  MessageBox(WSAGetLastErrorString(0), "accept(receivesock)");
                  //          err_logo(STOP_ERROR,NIL);
@@ -2862,7 +2874,7 @@ LRESULT TMainFrame::OnNetworkListenReceiveFinish(WPARAM /* wParam */, LPARAM lPa
    receive_local_sin.sin_port = lphtons(receivePort);/* Convert to network ordering*/
    //   Associate an address with a socket. (bind)
 
-   if (lpbind(receiveSock, (struct sockaddr FAR *) &receive_local_sin, sizeof(receive_local_sin)) == SOCKET_ERROR)
+   if (lpbind(receiveSock, (struct sockaddr *) &receive_local_sin, sizeof(receive_local_sin)) == SOCKET_ERROR)
       {
       MessageBox(WSAGetLastErrorString(0), "bind(receivesock)");
       //    err_logo(STOP_ERROR,NIL);
