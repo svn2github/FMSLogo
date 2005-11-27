@@ -28,6 +28,7 @@ Part II) New features/bugs fixed:
 
   * Added for 6.7.0,
     o Improve joystick samples.
+    o Improve the SPRITE.LGO sample.
     o Fix bug #1349374; "ARRAY 0" now works.
     o Fix bug #1349377; comments may not contain a single '|'.
     o Fix bug #1352838; EDALL can now save files on all Windows systems.
