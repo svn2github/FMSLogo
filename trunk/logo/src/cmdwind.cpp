@@ -25,11 +25,11 @@ TMyCommandWindow::TMyCommandWindow(
    TWindow *AParent,
    LPCSTR   ResId
 ) : TDialog(AParent, ResId),
-   TraceButton(new TCommanderButton(this, ID_TRACE)),
+   TraceButton(new TCommanderCheckBox(this, ID_TRACE)),
    ResetButton(new TCommanderButton(this, ID_RESET)),
    PauseButton(new TCommanderButton(this, ID_PAUSE)),
    HaltButton(new TCommanderButton(this, ID_HALT)),
-   StatusButton(new TCommanderButton(this, ID_STATUS)),
+   StatusButton(new TCommanderCheckBox(this, ID_STATUS)),
    YieldButton(new TCommanderCheckBox(this, ID_YIELD)),
    EdallButton(new TCommanderButton(this, ID_EDALL)),
    ExecuteButton(new TCommanderButton(this, ID_EXECUTE)),
@@ -211,10 +211,12 @@ void TMyCommandWindow::UpdateTraceButtonState()
    if (traceflag)
       {
       TraceButton->SetWindowText("UnTrace");
+      TraceButton->SetCheck(BF_CHECKED);
       }
    else
       {
       TraceButton->SetWindowText("Trace");
+      TraceButton->SetCheck(BF_UNCHECKED);
       }
    }
 
@@ -223,10 +225,12 @@ void TMyCommandWindow::UpdateStatusButtonState()
    if (status_flag)
       {
       StatusButton->SetWindowText("NoStatus");
+      StatusButton->SetCheck(BF_CHECKED);
       }
    else
       {
       StatusButton->SetWindowText("Status");
+      StatusButton->SetCheck(BF_UNCHECKED);
       }
    }
 
@@ -631,20 +635,20 @@ void TMyEditboxWindow::EvKeyDown(UINT, UINT, UINT)
 
    switch (Msg.WParam)
       {
-       case VK_UP:
-           {
-           // advance to the bottom of the listbox
-           MainWindowx->CommandWindow->Listbox->SetCursorAtBottom();
+      case VK_UP:
+         {
+         // advance to the bottom of the listbox
+         MainWindowx->CommandWindow->Listbox->SetCursorAtBottom();
 
-           // give focus to the listbox
-           MainWindowx->CommandWindow->Listbox->SetFocus();
-           break;
-           }
-       case VK_F1:
-           {
-           ContextHelp(MainWindowx->CommandWindow->HWindow, this);
-           break;
-           }
+         // give focus to the listbox
+         MainWindowx->CommandWindow->Listbox->SetFocus();
+         break;
+         }
+      case VK_F1:
+         {
+         ContextHelp(MainWindowx->CommandWindow->HWindow, this);
+         break;
+         }
       }
 
    DefaultProcessing();

@@ -178,11 +178,11 @@ class TMyCommandWindow : public TDialog
    void UpdateStatusButtonState();
 
  protected:
-   class TCommanderButton   * TraceButton;
+   class TCommanderCheckBox * TraceButton;
    class TCommanderButton   * ResetButton;
    class TCommanderButton   * PauseButton;
    class TCommanderButton   * HaltButton;
-   class TCommanderButton   * StatusButton;
+   class TCommanderCheckBox * StatusButton;
    class TCommanderCheckBox * YieldButton;
    class TCommanderButton   * EdallButton;
    class TCommanderButton   * ExecuteButton;
