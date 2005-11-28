@@ -21,10 +21,10 @@
 
 #include "allwind.h"
 
-SOCKET sendSock;                       // Current Handle Send Socket
-SOCKET receiveSock;                    // Current Handle receive Socket
-SOCKET sendPort;                       // Current requested send Port
-SOCKET receivePort;                    // Current requested receive Port
+SOCKET       sendSock = INVALID_SOCKET;      // Current Handle Send Socket
+SOCKET       receiveSock = INVALID_SOCKET;   // Current Handle receive Socket
+unsigned int sendPort;                       // Current requested send Port
+unsigned int receivePort;                    // Current requested receive Port
 
 BOOL bSendConnected = FALSE;           // Flag that send socket is connected
 BOOL bSendBusy = FALSE;                // Flag that send socket is busy
@@ -318,7 +318,9 @@ NODE *lnetshutdown(NODE *)
       {
       network_receive_on = 0;
       strcpy(network_receive_value, "");
+
       lpclosesocket(receiveSock);
+      receiveSock = INVALID_SOCKET;
       }
 
    // cleanup send
@@ -327,7 +329,9 @@ NODE *lnetshutdown(NODE *)
       {
       network_send_on = 0;
       strcpy(network_send_value, "");
+
       lpclosesocket(sendSock);
+      sendSock = INVALID_SOCKET;
       }
 
    // cleanup library
@@ -341,18 +345,13 @@ NODE *lnetshutdown(NODE *)
 
    if (network_dns_sync != 1)
       {
-      if (phes != NULL)
-         {
-         free(phes); phes = NULL;
-         }
-      if (pher != NULL)
-         {
-         free(pher); pher = NULL;
-         }
+      free(phes);
+      free(pher);
       }
+   phes = NULL;
+   pher = NULL;
 
    network_dns_sync = 0;
-
    return Unbound;
    }
 
@@ -486,7 +485,9 @@ NODE *lnetreceiveoff(NODE *)
       {
       network_receive_on = 0;
       strcpy(network_receive_value, "");
+
       lpclosesocket(receiveSock);
+      receiveSock = INVALID_SOCKET;
       }
 
    return Unbound;
@@ -660,7 +661,9 @@ NODE *lnetsendoff(NODE *)
       {
       network_send_on = 0;
       strcpy(network_send_value, "");
+
       lpclosesocket(sendSock);
+      sendSock = INVALID_SOCKET;
       }
 
    return Unbound;

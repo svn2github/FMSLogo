@@ -30,14 +30,14 @@ Part II) New features/bugs fixed:
     o Improve joystick samples.
     o Improve the SPRITE.LGO sample.
     o Fix bug #1349374; "ARRAY 0" now works.
-    o Fix bug #1349377; comments may not contain a single '|'.
+    o Fix bug #1349377; comments may now contain a single '|'.
     o Fix bug #1352838; EDALL can now save files on all Windows systems.
     o Fix bug #1365943; removed EDALLBTN from Logolib.
     o Fix bug #1366700; WAIT no longer takes 100% CPU.
-    o Fix bug #1343397; MKDIR, CHDIR, and RMDIR don't crash on long
-      directory names.
+    o Fix bug #1343397; MKDIR, CHDIR, RMDIR don't crash on long directory names.
     o Fix bug #1366856; DIRECTORIES and FILES no longer leak a file handle.
     o Fix bug #1367217; FMSLogo no longer crashes when OPENUPDATE fails.
+    o Fix bug #1367352; (NETSTARTUP 1) no longer crashes FSMLogo on shutdown.
     o Implement request #1365734; FULLSCREEN and TEXTSCREEN now undock
       the commander and SPLITSCREEN now redocks it.
     o Implement request #1327751; the Commander window's Status/NoStatus

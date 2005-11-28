@@ -61,8 +61,8 @@ extern char *timer_callback[];
 
 extern SOCKET sendSock;
 extern SOCKET receiveSock;
-extern SOCKET sendPort;
-extern SOCKET receivePort;
+extern unsigned int sendPort;
+extern unsigned int receivePort;
 extern BOOL bSendConnected;
 extern BOOL bSendBusy;
 extern BOOL bReceiveConnected;
