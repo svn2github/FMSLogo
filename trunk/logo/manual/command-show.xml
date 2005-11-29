@@ -13,7 +13,7 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-Prints the input or inputs like <link linkend="command-print">PRINT</link>, except that if an input is a list it is printed inside square brackets.</para>
+Prints the input or inputs to the current write stream, just like <link linkend="command-print">PRINT</link>, except that if an input is a list it is printed inside square brackets.</para>
 </listitem>
 </varlistentry>
 
