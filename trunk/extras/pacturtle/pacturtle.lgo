@@ -1,0 +1,490 @@
+make "GameBoardTemplate {
+   XXXXXXXXXXXXXXXXX
+   X3......X......1X
+   X.XXXXX.X.XXXXX.X
+   X...X.......X...X
+   XXX.X.XXXXX.X.XXX
+   X...4.......2...X
+   X.XXXXXXXXXXXXX.X
+   X...X.......X...X
+   X.X.X.XX.XX.X.X.X
+   X.X...X...X...X.X
+   X.XXXXX.X.XXXXX.X
+   X.......X.......X
+   XXX.XXXXXXXXX.XXX
+   X...X.......X...X
+   X.X.X.XXXXX.X.X.X
+   X.X.X.......X.X.X
+   X.X.XXX.X.XXX.X.X
+   X.......X.......X
+   X.XXX.XXXXX.XXX.X
+   XP..............X
+   XXXXXXXXXXXXXXXXX
+}
+
+
+Make "IsGoingUp    "false
+Make "IsGoingRight "false
+Make "IsGoingLeft  "false
+Make "IsGoingDown  "false
+
+Make "EnemyStartX 15
+Make "EnemyStartY 20
+
+Make "EnemyWaitCounterMax 2
+
+Make "GridSize 20
+
+Make "TotalPellets          0
+Make "TotalPelletsRemaining 0
+
+to GetBoardSquare :x :y
+    output item :x (item :y :GameBoard)
+end
+
+to SetBoardSquare :x :y :value
+    setitem :x item :y :GameBoard :value
+end
+
+to BoardSquareIsWall :x :y
+   output (GetBoardSquare :x :y) = "X
+end
+
+
+to MoveToGridCenter :X :Y
+    penup
+    setxy :X * :GridSize + :GridSize / 2  :Y * :GridSize + :GridSize / 2
+    pendown
+end
+
+to DrawEnemy :Enemy
+   localmake "x item 1 :Enemy
+   localmake "y item 2 :Enemy
+
+   penup
+   setxy :X * :GridSize + :GridSize / 4  :Y * :GridSize + :GridSize / 4
+   pendown
+
+   setpencolor 0
+   repeat 4 [ fd :gridsize / 2 rt 90 ]
+end
+
+to EraseEnemy :Enemy
+   localmake "x item 1 :Enemy
+   localmake "y item 2 :Enemy
+
+   penup
+   setxy :X * :GridSize + :GridSize / 4  :Y * :GridSize + :GridSize / 4
+   pendown
+
+   setpencolor screencolor
+   repeat 4 [ fd :gridsize / 2 rt 90 ]
+end
+
+
+to ErasePlayer :X :Y
+   MoveToGridCenter :X :Y
+
+   setpencolor screencolor
+   circle :GridSize / 2 - 2
+end
+
+to DrawPlayer :X :Y
+   MoveToGridCenter :X :Y
+
+   setpencolor 0
+   circle :GridSize / 2 - 2
+end
+
+
+to DrawWall :X :Y
+   penup
+   setxy :X * :GridSize :Y * :GridSize
+   pendown
+
+   setpencolor 0
+   repeat 4 [ fd :gridsize rt 90 ]
+end
+
+to DrawPellet :X :Y
+   MoveToGridCenter :X :Y
+
+   setpencolor 0
+   setpensize [2 2]
+   fd 1
+   setpensize [1 1]
+end
+
+to ErasePellet :X :Y
+   MoveToGridCenter :X :Y
+
+   setpencolor screencolor
+   setpensize [2 2]
+   fd 1
+   setpensize [1 1]
+end
+
+
+to InitGameBoard
+   local [i j dimension.y gameboardtemplate.row boardsquare]
+
+   ; copy the game board template to the live game board
+   make "TotalPellets 0
+
+   localmake "dimension.y count :GameBoardTemplate
+
+   make "GameBoard array :dimension.y
+   for [j 1 :dimension.y ] [
+
+      make "gameboardtemplate.row item :j :GameBoardTemplate
+
+      ; add a new array for this row
+      make "row.array array count :gameboardtemplate.row
+
+      for [i 1 [count :gameboardtemplate.row] ] [
+
+          make "boardsquare item :i :gameboardtemplate.row
+
+          setitem :i :row.array :boardsquare
+
+          if :boardsquare = ". [
+             make "TotalPellets :TotalPellets + 1
+          ]
+          if :boardsquare = "P [
+             Make "PlayerStartX :i
+             Make "PlayerStartY :dimension.y - :j + 1
+
+             ; put an empty space where the player was
+             setitem :i :row.array ",
+          ]
+          if :boardsquare = "1 [
+             make "Enemy1 (list :i :dimension.y - :j + 1 "up)
+
+             ; put a pellet where the enemy was
+             make "TotalPellets :TotalPellets + 1
+             setitem :i :row.array ".
+          ]
+          if :boardsquare = "2 [
+             make "Enemy2 (list :i :dimension.y - :j + 1 "up)
+
+             ; put a pellet where the enemy was
+             make "TotalPellets :TotalPellets + 1
+             setitem :i :row.array ".
+          ]
+          if :boardsquare = "3 [
+             make "Enemy3 (list :i :dimension.y - :j + 1 "up)
+
+             ; put a pellet where the enemy was
+             make "TotalPellets :TotalPellets + 1
+             setitem :i :row.array ".
+          ]
+          if :boardsquare = "4 [
+             make "Enemy4 (list :i :dimension.y - :j + 1 "up)
+
+             ; put a pellet where the enemy was
+             make "TotalPellets :TotalPellets + 1
+             setitem :i :row.array ".
+          ]
+      ] 
+
+      ; set this row in the game board (and flip the board vertically)
+      setitem :dimension.y - :j + 1 :GameBoard :row.array
+   ]
+   make "TotalPelletsRemaining :TotalPellets
+
+end
+
+to DrawGameBoard
+   local [i j]
+
+
+   ; now draw the game board
+   for [j 1 [count :GameBoard] ] [
+      
+      make "gameboard.row item :j :GameBoard
+      for [i 1 [count :gameboard.row] ] [
+  
+          make "boardsquare item :i :gameboard.row
+          if :boardsquare = "X [
+            DrawWall :i :j
+          ]
+          if :boardsquare = ". [
+            DrawPellet :i :j
+          ]
+      ]
+   ]
+
+end
+
+to ProcessKeyEvent :Key :IsKeyDown
+
+    if :Key=ascii "I [ make "IsGoingUp    :IsKeyDown ]
+    if :Key=ascii "K [ make "IsGoingRight :IsKeyDown ]
+    if :Key=ascii "J [ make "IsGoingLeft  :IsKeyDown ]
+    if :Key=ascii "M [ make "IsGoingDown  :IsKeyDown ]
+    if :Key=ascii "Q [ make "IsDone       "true      ]
+
+end
+
+to StartKeyboardCapture
+   (keyboardon [ProcessKeyEvent keyboardvalue "true]
+               [ProcessKeyEvent keyboardvalue "false])
+end
+
+to EndKeyboardCapture
+   keyboardoff
+end
+
+to TryToMoveInDirection :X :Y :DirectionList
+
+  foreach :DirectionList [
+    if and (? = "left)  (not BoardSquareIsWall :X - 1 :Y) [ 
+       output ?
+    ]
+    if and (? = "right) (not BoardSquareIsWall :X + 1 :Y) [ 
+       output ?
+    ]
+    if and (? = "up)    (not BoardSquareIsWall :X     :Y + 1) [ 
+       output ?
+    ]
+    if and (? = "down)  (not BoardSquareIsWall :X     :Y - 1) [ 
+       output ?
+    ]
+  ]
+
+end
+
+
+
+to MoveEnemy :Enemy
+
+   localmake "PositionX item 1 :Enemy
+   localmake "PositionY item 2 :Enemy
+   localmake "Direction item 3 :Enemy
+
+   localmake "NewDirection "still
+
+   ; Choose a new direction for the enemy
+   ; The directions are chosen such that
+   ; 1) The enemy prefers to move in a straight line
+   ; 2) The enemy doubles-back as a last resort
+   ; 3) The enemy moves somewhat randomly
+
+   localmake "DirectionList [left up down right]
+
+   if :Direction = "left [
+      make "DirectionList pick [
+         [left up   down right]
+         [left down up   right]
+         [up   down left right]
+      ]
+   ]
+   if :Direction = "right [
+      make "DirectionList pick [
+         [right up    down  left]
+         [right down  up    left]
+         [down  up    right left]
+      ]
+   ]
+   if :Direction = "up [
+      make "DirectionList pick [
+         [up    left  right down]
+         [up    right left  down]
+         [right up    left  down]
+      ]
+   ]
+   if :Direction = "down [
+      make "DirectionList pick [
+         [down left  right up]
+         [down right left  up]
+         [left down  right up]
+      ]
+   ]
+
+   make "NewDirection TryToMoveInDirection :PositionX :PositionY :DirectionList
+
+
+   if :NewDirection = "left [
+      output (list :PositionX - 1  :PositionY       :NewDirection)
+   ]
+   if :NewDirection = "right [
+      output (list :PositionX + 1  :PositionY       :NewDirection)
+   ]
+   if :NewDirection = "up [
+      output (list :PositionX      :PositionY + 1   :NewDirection)
+   ]
+   if :NewDirection = "down [
+      output (list :PositionX      :PositionY - 1   :NewDirection)
+   ]
+
+   output :Enemy
+end
+
+to PlayerEnemyCollision :Enemy 
+   output and (:PlayerX = item 1 :Enemy)  (:PlayerY = item 2 :Enemy)
+end 
+
+
+; handles a single game tick
+to UpdateNextFrame
+
+   make "NewPlayerX :PlayerX
+   make "NewPlayerY :PlayerY
+
+   if :IsGoingRight [make "NewPlayerX :NewPlayerX + 1]
+   if :IsGoingLeft  [make "NewPlayerX :NewPlayerX - 1]
+
+   if or (:NewPlayerX = :PlayerX) (BoardSquareIsWall :NewPlayerX :NewPlayerY) [
+      ; left-right didn't work out.  Try the up-down 
+      make "NewPlayerX :PlayerX
+      if :IsGoingUp   [make "NewPlayerY :NewPlayerY + 1]
+      if :IsGoingDown [make "NewPlayerY :NewPlayerY - 1]
+   ]
+
+   make "currentsquare GetBoardSquare :NewPlayerX :NewPlayerY
+
+   if :currentsquare = ". [
+
+     ErasePlayer :PlayerX :PlayerY
+
+     Make "PlayerX :NewPlayerX
+     Make "PlayerY :NewPlayerY
+
+     ; eat the pellet
+     ErasePellet :PlayerX :PlayerY
+     make "TotalPelletsRemaining :TotalPelletsRemaining - 1
+     SetBoardSquare :PlayerX :PlayerY ",
+     playwave "eat-pellet.wav 1
+
+     ; if we just ate the last pellet, then do something cool
+     if :TotalPelletsRemaining = 0 [ 
+         make "IsDone "true
+
+         playwave "you-win.wav 1
+         penup
+         repeat 20 [
+            setxy -10 -10
+            setfloodcolor (list random 256 random 256 random 256)
+            fill
+
+            setxy :PlayerX * :GridSize + :GridSize / 2  :PlayerY * :GridSize + :GridSize / 2
+            setfloodcolor (list random 256 random 256 random 256)
+            fill 
+
+            wait 6
+         ]
+         pendown
+
+         stop
+     ]
+
+     ; draw the pac-turtle
+     DrawPlayer :PlayerX :PlayerY
+   ]
+
+   if :currentsquare = ", [
+
+     ErasePlayer :PlayerX :PlayerY
+
+     Make "PlayerX :NewPlayerX
+     Make "PlayerY :NewPlayerY
+     DrawPlayer :PlayerX :PlayerY
+   ]
+
+
+   if (or (PlayerEnemyCollision :Enemy1) 
+          (PlayerEnemyCollision :Enemy2)
+          (PlayerEnemyCollision :Enemy3)
+          (PlayerEnemyCollision :Enemy4)) [
+       make "IsDone "true
+       playwave "you-die.wav 0
+       stop
+   ]
+
+   ; now, move the enemy toward the player
+
+   make "EnemyWaitCounter :EnemyWaitCounter - 1
+   if :EnemyWaitCounter = 0 [ 
+      EraseEnemy :Enemy1
+      EraseEnemy :Enemy2
+      EraseEnemy :Enemy3
+      EraseEnemy :Enemy4
+
+      make "Enemy1 MoveEnemy :Enemy1
+      make "Enemy2 MoveEnemy :Enemy2
+      make "Enemy3 MoveEnemy :Enemy3
+      make "Enemy4 MoveEnemy :Enemy4
+
+      DrawEnemy  :Enemy1
+      DrawEnemy  :Enemy2
+      DrawEnemy  :Enemy3
+      DrawEnemy  :Enemy4
+
+      make "EnemyWaitCounter :EnemyWaitCounterMax
+   ]
+
+
+   if (or (PlayerEnemyCollision :Enemy1) 
+          (PlayerEnemyCollision :Enemy2)
+          (PlayerEnemyCollision :Enemy3)
+          (PlayerEnemyCollision :Enemy4)) [
+       make "IsDone "true
+       playwave "you-die.wav 0
+       stop
+   ]
+
+end
+
+to GameLoop
+
+   local [currentsquare]
+
+   make "IsDone "false
+
+   make "IsGoingUp    "false
+   make "IsGoingRight "false
+   make "IsGoingLeft  "false
+   make "IsGoingDown  "false
+
+   InitGameBoard
+
+   make "EnemyWaitCounter :EnemyWaitCounterMax
+
+   make "PlayerX :PlayerStartX
+   make "PlayerY :PlayerStartY
+
+   DrawGameBoard
+   DrawPlayer :PlayerX :PlayerY
+   DrawEnemy  :Enemy1
+   DrawEnemy  :Enemy2
+   DrawEnemy  :Enemy3
+   DrawEnemy  :Enemy4
+
+
+   StartKeyboardCapture
+
+   while [ not :IsDone ] [
+
+      UpdateNextFrame
+      wait 6 ; 10 ms
+   ]
+
+   EndKeyboardCapture
+
+end
+
+to RunGame
+  ;catch "error [ fullscreen ]
+  icon "Commander
+  icon "Editor
+
+  clearscreen
+  hideturtle
+  setfocus [MSWLogo Screen]
+
+  GameLoop
+
+end
+
+make "startup [ RunGame ]
+
