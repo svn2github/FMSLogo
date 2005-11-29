@@ -47,6 +47,7 @@ CLOSE "dummy.fil
 
 OPENUPDATE "dummy.fil
 SETREAD "dummy.fil
+SETREADPOS 0
 SHOW READLIST</userinput>
 [Hello]
 <userinput>SETWRITE "dummy.fil
