@@ -1,0 +1,62 @@
+
+TO SERVER.START :port
+  SHOW NETACCEPTON :port [print [ready to send]] [print (list "|Received:| NETCONNECTRECEIVEVALUE)]
+END
+
+TO SERVER.STOP
+  NETACCEPTOFF
+END
+
+
+TO CLIENT.ONREADYTOSEND
+  LOCALMAKE "payload [This is my payload]
+
+  make "NetConnectOnCall :NetConnectOnCall + 1
+  (print "Client.OnReadySend "call "# :NetConnectOnCall)
+
+  if :NetConnectOnCall > 2 [
+     (print "Sending: :payload)
+     LOCALMAKE "isok NETCONNECTSENDVALUE :payload 
+     (print "Send "Status: :isok)
+  ]
+
+  WAIT 100
+END
+
+TO NETWORKSMOKETEST
+
+  NETSTARTUP
+
+  SERVER.START 5960
+
+  ; connect to port 5960 on localhost
+  make "NetConnectOnCall 0
+
+  (print "Connecting)
+  localmake "isok NETCONNECTON "|david-laptop| 5960 "CLIENT.ONREADYTOSEND []
+  (print "Connect "Status: :isok)
+
+  WAIT 600 ; 10 seconds
+
+  ; close the client socket
+  NETCONNECTOFF
+
+  SERVER.STOP
+
+  NETSHUTDOWN
+END
+
+
+TO NETSHUTDOWNCRASH
+  (NETSTARTUP 1) ; must be synchronous
+  IGNORE  NETCONNECTON "localhost 9999 [] []
+  NETSHUTDOWN
+  NETSHUTDOWN ; crashes bug #1367352 
+END
+
+TO NETWORKTEST
+
+  NETWORKSMOKETEST
+
+  NETSHUTDOWNCRASH
+END

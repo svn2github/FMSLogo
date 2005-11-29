@@ -21,6 +21,7 @@ LOAD "word.lgo
 LOAD "color.lgo
 LOAD "screen.lgo
 LOAD "misc.lgo
+LOAD "network.lgo
 
 MAKE "testlog []
 
@@ -146,8 +147,11 @@ TO TESTALL
   WAITTEST      ; from wait.lgo
   DIRECTORYTEST ; from directory.lgo
   MISCTEST      ; from misc.lgo
+  NETWORKTEST   ; from network.lgo
 
   REPORTTESTUNINITIALIZE
+
+  print [The tests are now complete!]
 END
 
 ; execute all tests on startup
