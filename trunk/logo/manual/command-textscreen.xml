@@ -1,8 +1,6 @@
 <section id="command-textscreen">
     <title>TEXTSCREEN</title>
 
-<note>TEXTSCREEN is not supported in MSWLogo.</note>
-
 <variablelist>
 
 <varlistentry><term>Synopsis</term>
@@ -15,7 +13,7 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-Rearranges the size and position of windows to maximize the space available in the text window (the window used for interaction with Logo).
+Undocks the commander window from the screen window so that you can resize it to maximize the space available for text interaction.
 </para>
 
 <para>

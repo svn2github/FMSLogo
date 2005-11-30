@@ -1,8 +1,6 @@
 <section id="command-fullscreen">
     <title>FULLSCREEN</title>
 
-<note>FULLSCREEN is not supported in MSWLogo.</note>
-
 <variablelist>
 
 <varlistentry><term>Synopsis</term>
@@ -15,7 +13,8 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-Rearranges the size and position of windows to maximize the space available in the graphics window.
+Undocks the commander window from the screen window so that you can resize it to maximize the space available for graphics.
+The commander window will always be on top of the screen window, so you may find it useful to minimize the commander window after undocking it.
 </para>
 
 <para>
