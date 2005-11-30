@@ -1,0 +1,140 @@
+<section id="command-to">
+    <title>TO</title>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>(special form)
+<synopsis><command>TO</command> <parameter>procname</parameter> <parameter>:input1</parameter> <parameter>:input2</parameter> <parameter>...</parameter></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+Command that prepares Logo to accept a procedure definition.
+The procedure will be named <parameter>procname</parameter> and there must not already be a procedure by that name.
+The inputs will be called <parameter>input1</parameter>, <parameter>input2</parameter>, etc.
+Any number of inputs is allowed, including none.
+Names of procedures and inputs are case-insensitive.
+</para>
+
+<para>
+Unlike every other Logo procedure, TO takes as its inputs the actual words typed in the instruction line, as if they were all quoted, rather than the results of evaluating expressions to provide the inputs.  (That's what "special form" means.)
+</para>
+
+<para>
+MSWLogo allows procedures to have a variable numbers of inputs.
+Every procedure has a minimum, default, and maximum number of inputs.
+The maximum may be infinite.
+</para>
+
+<para>
+The minimum number of inputs is the number of required inputs, which must come first.
+A required input is indicated by the
+
+<programlisting><userinput>    :inputname</userinput></programlisting>
+
+notation.
+</para>
+
+<para>
+After all the required inputs can be zero or more optional inputs, represented by the following notation:
+
+<programlisting><userinput>    [:inputname default.value.expression]</userinput></programlisting>
+
+When the procedure is invoked, if actual inputs are not supplied for these optional inputs, the <parameter>default.value.expression</parameter>s are evaluated to set values for the corresponding input names.
+The inputs are processed from left to right, so a default value expression can be based on earlier inputs.
+For example:
+
+<programlisting><userinput>    TO PROC :inlist [:startvalue first :inlist]</userinput></programlisting>
+</para>
+
+<para>
+If the procedure is invoked with
+
+<programlisting><userinput>    PROC [a b c]</userinput></programlisting>
+
+
+then the <parameter>:inlist</parameter> parameter will have the value <code>[a b c]</code> and the <parameter>:startvalue</parameter> parameter will have the value <code>"a</code>.
+If the procedure is invoked with
+
+<programlisting><userinput>    (PROC [a b c] "x)</userinput></programlisting>
+
+then <parameter>:inlist</parameter> will have the value <code>[a b c]</code> and <parameter>:startvalue</parameter> will have the value <code>"x</code>.
+</para>
+
+
+<para>
+After all the required and optional input can come a single "rest" input, represented by the following notation:
+
+<programlisting><userinput>    [:inputname]</userinput></programlisting>
+
+This is a rest input rather than an optional input because there is no default value expression.
+There can be at most one rest input.
+When the procedure is invoked, the value of this input will be a list containing all the actual inputs provided that were not used for required or optional inputs.
+Example:
+
+<programlisting><userinput>    TO PROC :in1 [:in2 "foo] [:in3]</userinput></programlisting>
+
+If this procedure is invoked with:
+
+<programlisting><userinput>    PROC "x</userinput></programlisting>
+
+then <parameter>:in1</parameter> has the value <code>"x</code>, <parameter>:in2</parameter> has the value <parameter>"foo</parameter>, and <parameter>:in3</parameter> has the value <code>[]</code> (the empty list).
+If it's invoked with
+
+<programlisting><userinput>    (PROC "a "b "c "d)</userinput></programlisting>
+
+then <parameter>:in1</parameter> has the value <code>"a</code>, <parameter>:in2</parameter> has the value <code>"b</code>, and <parameter>:in3</parameter> has the value <code>[c d]</code>.
+</para>
+
+<para>
+The maximum number of inputs for a procedure is infinite if a "rest" input is given; otherwise, it is the number of required inputs plus the number of optional inputs.
+</para>
+
+<para>
+The default number of inputs for a procedure, which is the number of inputs that it will accept if its invocation is not enclosed in parentheses, is ordinarily equal to the minimum number.
+If you want a different default number you can indicate that by putting the desired default number as the last thing on the TO line.
+</para>
+
+<para>
+For example:
+
+<programlisting><userinput>    TO proc :in1 [:in2 "foo] [:in3] 3</userinput></programlisting>
+
+This procedure has a minimum of one input, a default of three inputs, and an infinite maximum.
+</para>
+
+
+<para>
+FMSLogo will popup a dialog if you enter a TO command into the commander's edit box.
+Whatever instructions you type into the popup become part of the definition.
+You can finish the definition by typing a line that contains only the word <link linkend="command-end">END</link> or pressing the Cancel button.
+</para>
+
+</listitem>
+</varlistentry>
+
+
+<varlistentry><term>Example</term>
+<listitem>
+<programlisting><userinput>TO echo :times :thing
+  REPEAT :times [PRINT :thing]
+END
+
+ECHO 2 "Hello</userinput>
+Hello
+Hello
+<userinput>echo 3 "Bye</userinput>
+Bye
+Bye
+Bye</programlisting>
+
+</listitem>
+</varlistentry>
+
+
+</variablelist>
+
+</section>

@@ -1,0 +1,65 @@
+TO ORTEST
+
+  SIMPLEREPORTTEST [(OR) ]       "false
+  SIMPLEREPORTTEST [(OR "true)]  "true
+  SIMPLEREPORTTEST [(OR "false)] "false
+
+  SIMPLEREPORTTEST [(OR "false "false)] "false
+  SIMPLEREPORTTEST [(OR "true  "false)] "true
+  SIMPLEREPORTTEST [(OR "false "true)]  "true
+  SIMPLEREPORTTEST [(OR "true  "true)]  "true
+
+  SIMPLEREPORTTEST [(OR "false "FALSE "false "FALSE)] "false
+  SIMPLEREPORTTEST [(OR "false "FALSE "false "TRUE)]  "true
+
+  RUNBADINPUTTEST [(OR 1)]
+  RUNBADINPUTTEST [(OR 0)]
+  RUNBADINPUTTEST [(OR "truex)]
+  RUNBADINPUTTEST [(OR "falsex)]
+  RUNBADINPUTTEST [(OR "true 1)]
+  RUNBADINPUTTEST [(OR 1 "true)]
+  RUNBADINPUTTEST [(OR "false 0)]
+  RUNBADINPUTTEST [(OR 0 "false)]
+END
+
+TO ANDTEST
+
+  SIMPLEREPORTTEST [(AND)]        "true
+  SIMPLEREPORTTEST [(AND "true)]  "true
+  SIMPLEREPORTTEST [(AND "false)] "false
+
+  SIMPLEREPORTTEST [(AND "false "false)] "false
+  SIMPLEREPORTTEST [(AND "true  "false)] "false
+  SIMPLEREPORTTEST [(AND "false "true)]  "false
+  SIMPLEREPORTTEST [(AND "true  "true)]  "true
+
+  SIMPLEREPORTTEST [(AND "TRUE "true "TRUE "false)] "false
+  SIMPLEREPORTTEST [(AND "TRUE "true "TRUE "true)]  "true
+
+  RUNBADINPUTTEST [(AND 1)]
+  RUNBADINPUTTEST [(AND 0)]
+  RUNBADINPUTTEST [(AND "truex)]
+  RUNBADINPUTTEST [(AND "falsex)]
+  RUNBADINPUTTEST [(AND "true 1)]
+  RUNBADINPUTTEST [(AND 1 "true)]
+  RUNBADINPUTTEST [(AND "false 0)]
+  RUNBADINPUTTEST [(AND 0 "false)]
+END
+
+TO NOTTEST
+
+  SIMPLEREPORTTEST [(NOT "true)]  "false
+  SIMPLEREPORTTEST [(NOT "false)] "true
+
+  RUNBADINPUTTEST [(NOT)]
+  RUNBADINPUTTEST [(NOT 0)]
+  RUNBADINPUTTEST [(NOT "truex)]
+  RUNBADINPUTTEST [(NOT "true "true)]
+END
+
+TO LOGICTEST
+  ORTEST
+  ANDTEST
+  NOTTEST
+END
+

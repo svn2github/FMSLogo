@@ -1,0 +1,35 @@
+<section id="command-sety">
+    <title>SETY</title>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>SETY</command> <parameter>ycor</parameter></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+Moves the turtle along the Y axis from its current position to a new absolute Y coordinate.
+The argument is the new Y coordinate.
+See also <link linkend="command-setx">SETX</link> and <link linkend="command-setz">SETZ</link>.
+</para>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Example</term>
+<listitem>
+    <programlisting><userinput>SETX 100
+SETY 100
+SETX 0
+SETY 0</userinput>
+</programlisting>
+
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</section>

@@ -1,0 +1,50 @@
+<section id="command-ellipse">
+    <title>ELLIPSE</title>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>ELLIPSE</command> <parameter>major</parameter> <parameter>minor</parameter></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+ELLIPSE does not move the turtle.
+It draws an ellipse based on the turtle heading, turtle position and given arguments.
+The size is based on the <parameter>minor</parameter> and <parameter>major</parameter> values.
+The <parameter>minor</parameter> parameter is the shortest distance along the ellipse to the center point.
+The <parameter>major</parameter> parameter is the longest distance along the ellipse the center point.
+The center-point of the ellipse will be the turtle's current position.
+</para>
+
+<para>
+See also <link linkend="command-ellipse2">ELLIPSE2</link>.
+</para>
+
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Example</term>
+<listitem>
+    <programlisting><userinput>; a 2D example
+ELLIPSE 100 200
+CLEARSCREEN
+ELLIPSE 50 50
+CLEARSCREEN
+ELLIPSE 50 50</userinput>
+</programlisting>
+
+    <programlisting><userinput>; a 3D example
+PERSPECTIVE
+REPEAT 72 [ELLIPSEARC 90 100 150 45 RIGHTROLL 5]</userinput>
+</programlisting>
+
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</section>

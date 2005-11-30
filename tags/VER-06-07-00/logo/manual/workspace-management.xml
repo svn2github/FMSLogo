@@ -1,0 +1,111 @@
+<chapter id="workspace-management">
+   <title>Workspace Management</title>
+
+   <section id="procedure-definition">
+       <title>Procedure Definition</title>
+
+       &command-to;
+       &command-end;
+       &command-define;
+       &command-text;
+       &command-fulltext;
+       &command-copydef;
+    </section>
+
+   <section id="variable-definition">
+       <title>Variable Definition</title>
+
+       &command-make;
+       &command-name;
+       &command-local;
+       &command-localmake;
+       &command-thing;
+    </section>
+
+
+   <section id="property-lists">
+       <title>Property Lists</title>
+
+<para>
+Property lists provide a way to associate words with things.
+Property lists are sometimes called "dictionaries", "associative arrays", or simply "name-value pairs".
+</para>
+
+
+<para>
+Property lists, abbreviated "plists", are always accessed by their name--you can't get at the plist directly.
+Among other things, this means you cannot pass a plist into a Logo procedure, you can only pass its name.
+</para>
+
+<para>
+You can get, set, and remove properties (name-value pairs) from a plist.
+If you try to get a property that doesn't exist, or you try to get a property from a plist that doesn't exist, you will get the empty list.
+In general, you shouldn't care if a property list exists or not.
+However, if you do care, you can use <link linkend="command-plist">PLISTS</link> to get the names of all unburied property lists.
+</para>
+
+<para>
+Names of property lists are always case-insensitive.
+Names of individual properties are case-sensitive or case-insensitive depending on the value of <link linkend="command-caseignorep">CASEIGNOREDP</link>, which is TRUE by default.
+</para>
+
+       &command-pprop;
+       &command-gprop;
+       &command-remprop;
+       &command-plist;
+    </section>
+
+   <section id="workspace-predicates">
+       <title>Workspace Predicates</title>
+
+       &command-procedurep;
+       &command-primitivep;
+       &command-definedp;
+       &command-namep;
+       &command-macrop;
+    </section>
+
+   <section id="workspace-queries">
+       <title>Workspace Queries</title>
+
+<para>
+Most workspace query procedures output a "contents list", which can be used as input to the <link linkend="workspace-inspection">Workspace Inspection</link> procedures.
+All procedures whose input is indicated as "contentslist" will accept any of the following:
+
+<itemizedlist>
+<listitem>A single word (taken as a procedure name)</listitem>
+<listitem>A list of words (taken as procedure names)</listitem>
+<listitem>A list of two lists (taken as procedure names and variable names, respectivly)</listitem>
+<listitem>A list of three lists (taken as procedure names, variable names, and property list names, respectivly)</listitem>
+</itemizedlist>
+
+</para>
+
+       &command-contents;
+       &command-buried;
+       &command-procedures;
+       &command-names;
+       &command-plists;
+       &command-namelist;
+       &command-pllist;
+    </section>
+
+   <section id="workspace-inspection">
+       <title>Workspace Inspection</title>
+
+<para>
+The workspace inspection procedures print the definition of various workspace types to the current write stream.
+</para>
+
+       &command-po;
+       &command-poall;
+       &command-pops;
+       &command-pons;
+       &command-popls;
+       &command-pon;
+       &command-popl;
+       &command-pot;
+       &command-pots;
+    </section>
+
+</chapter>

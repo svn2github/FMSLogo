@@ -1,0 +1,43 @@
+<section id="command-localmake">
+    <title>LOCALMAKE</title>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>LOCALMAKE</command> <parameter>varname</parameter> <parameter>value</parameter></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+LOCALMAKE declares a local variable and assigns in a variable.
+It is convenient short hand for the following code:
+<programlisting>
+<link linkend="command-local">LOCAL</link> <parameter>varname</parameter>
+<link linkend="command-make">MAKE</link> <parameter>varname</parameter> <parameter>value</parameter>
+</programlisting>
+</para>
+</listitem>
+</varlistentry>
+
+
+<varlistentry><term>Example</term>
+<listitem>
+<programlisting><userinput>TO SAYHELLO
+  LOCALMAKE "MESSAGE [Hello]
+  PRINT :MESSAGE
+END
+
+SAYHELLO</userinput>
+Hello
+
+<userinput>SHOW :MESSAGE</userinput>
+MESSAGE has no value
+</programlisting>
+</listitem>
+</varlistentry>
+
+</variablelist>
+</section>

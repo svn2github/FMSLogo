@@ -1,0 +1,59 @@
+
+TO COLORSETGETTEST :setcolorcommand :getcolorcommand
+
+   ; test that color-by-index min value
+   RUN (LIST :setcolorcommand 0)
+   SIMPLEREPORTTEST (LIST :getcolorcommand) 0
+
+   ; test that color-by-index max value
+   RUN (LIST :setcolorcommand 15)
+   SIMPLEREPORTTEST (LIST :getcolorcommand) 15
+
+   ; test float-to-int conversion for color-by-index
+   RUN (LIST :setcolorcommand 7.5090212)
+   SIMPLEREPORTTEST (LIST :getcolorcommand) 7
+
+   ; test that color-by-index is always mod 16.
+   RUN (LIST :setcolorcommand 17)
+   SIMPLEREPORTTEST (LIST :getcolorcommand) 1
+
+   RUN (LIST :setcolorcommand [128 64 32])
+   SIMPLEREPORTTEST (LIST :getcolorcommand) [128 64 32]
+
+   ; test float-to-int conversion
+   RUN (LIST :setcolorcommand [128.0 64.3 32.9])
+   SIMPLEREPORTTEST (LIST :getcolorcommand) [128 64 32]
+
+   RUN (LIST :setcolorcommand [255 255 255])
+   SIMPLEREPORTTEST (LIST :getcolorcommand) [255 255 255]
+
+   RUNBADINPUTTEST (LIST :setcolorcommand {})
+   RUNBADINPUTTEST (LIST :setcolorcommand [0])
+   RUNBADINPUTTEST (LIST :setcolorcommand [0 0])
+   RUNBADINPUTTEST (LIST :setcolorcommand [0 0 0 0])
+END
+
+TO PENCOLORTEST
+   COLORSETGETTEST "SETPENCOLOR  "PENCOLOR
+   COLORSETGETTEST "SETPENCOLOUR "PENCOLOUR
+   COLORSETGETTEST "SETPC        "PENCOLOR
+END
+
+TO FLOODCOLORTEST
+   COLORSETGETTEST "SETFLOODCOLOR  "FLOODCOLOR
+   COLORSETGETTEST "SETFLOODCOLOUR "FLOODCOLOUR
+   COLORSETGETTEST "SETFC          "FLOODCOLOR
+END
+
+TO SCREENCOLORTEST
+   COLORSETGETTEST "SETSCREENCOLOR  "SCREENCOLOR
+   COLORSETGETTEST "SETSCREENCOLOUR "SCREENCOLOUR
+   COLORSETGETTEST "SETSC           "SCREENCOLOR
+END
+
+TO COLORTEST
+   PENCOLORTEST
+   FLOODCOLORTEST
+   SCREENCOLORTEST
+END
+

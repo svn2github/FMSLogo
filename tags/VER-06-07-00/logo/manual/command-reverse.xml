@@ -1,0 +1,28 @@
+<section id="command-reverse">
+    <title>REVERSE</title>
+
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>REVERSE</command> <parameter>list</parameter></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+    <para>Outputs a list whose members are the members of the input list, in reverse order.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Example</term>
+<listitem>
+    <programlisting><userinput>SHOW REVERSE [1 2 3]</userinput>
+[3 2 1]</programlisting>
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</section>

@@ -1,0 +1,56 @@
+<section id="command-local">
+    <title>LOCAL</title>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>LOCAL</command> <parameter>varname</parameter>
+<command>LOCAL</command> <parameter>varnamelist</parameter>
+(<command>LOCAL</command> <parameter>varname1</parameter> <parameter>varname2</parameter> <parameter>...</parameter>)</synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+Creates variables that are local to the currently running procedure.
+LOCAL accepts as input one or more words, or a list of words.
+A local variable is created for each of these words, with that word as its name.
+Logo variables follow dynamic scope rules; a variable that is local to a procedure is available to any sub procedure invoked by that procedure and may shadow a global variable by the same name.
+The variables created by LOCAL have no initial value; they must be assigned a value (for example, with <link linkend="command-make">MAKE</link>) before the procedure attempts to read their value.
+</para>
+</listitem>
+</varlistentry>
+
+
+<varlistentry><term>Example</term>
+<listitem>
+<programlisting><userinput>TO FOO
+  MAKE "BAR 1
+  PRINT :BAR
+END
+
+FOO</userinput>
+1
+
+<userinput>SHOW :BAR</userinput>
+1
+
+<userinput>TO ABC
+  LOCAL "XYZ
+  MAKE "XYZ 1
+  PRINT :XYZ
+END
+
+ABC</userinput>
+1
+
+<userinput>SHOW :XYZ</userinput>
+XYZ has no value
+</programlisting>
+</listitem>
+</varlistentry>
+
+</variablelist>
+</section>

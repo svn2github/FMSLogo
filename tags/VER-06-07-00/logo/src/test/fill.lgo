@@ -1,0 +1,36 @@
+TO FILLTEST
+
+  ; setup
+  SETPENCOLOR    0
+  SETSCREENCOLOR 7
+
+  REPEAT 10 [
+    CIRCLE (10 - REPCOUNT) * 10 + 5
+    SETFLOODCOLOR REPCOUNT
+    FILL
+  ]
+  (FILL "false)
+
+  MAKE "isok YESNOBOX [Question] [Does the picture have 10 colored circles?]
+  IFELSE :isok [
+    REPORTTESTPASSED (sentence "|The circle was drawn correctly|) 
+  ] [
+    REPORTTESTFAILED (sentence "|The circle did not look right|) 
+  ]
+  
+  ; now fill the rest of the screen
+  SETPENCOLOR 11
+  (FILL "true)
+
+  MAKE "isok YESNOBOX [Question] [Is the screen solid green?]
+  IFELSE :isok [
+    REPORTTESTPASSED (sentence "|(FILL "true) worked as expected|) 
+  ] [
+    REPORTTESTFAILED (sentence "|(FILL "true) did not work as expected|) 
+  ]
+
+  RUNBADINPUTTEST [(FILL 10)]
+  RUNBADINPUTTEST [(FILL ["true])]
+
+END
+

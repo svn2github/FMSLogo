@@ -1,0 +1,88 @@
+<section id="command-label">
+    <title>LABEL</title>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>LABEL</command> <parameter>text</parameter></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+Prints <parameter>text</parameter> on the screen.
+If <parameter>text</parameter> is a list, then any sub-lists are delimited by square brackets, but the entire object is not delimited by brackets.
+You can print any logo object (numbers, lists and strings).
+Note that the handle of the string (the origin) is the top-left corner of the string.
+Another thing to be aware of is that the capabilities of the text changes depending on the device (screen or printer), the size, the turtle heading (direction) and the font.
+In other words, sometimes the text can be drawn at the turtle heading and sometimes it cannot.
+Sometimes what is on the screen will not be exactly what you print.
+</para>
+
+<para>
+The position of the text is determined by the location of the turtle.
+</para>
+<para>
+The angle of the text is determined by the heading (direction) of the turtle.
+</para>
+<para>
+The color of the text will be the value of <link linkend="command-pencolor">PENCOLOR</link>, which is set with <link linkend="command-setpencolor">SETPENCOLOR</link>.
+</para>
+<para>
+The text will use the font described by <link linkend="command-labelfont">LABELFONT</link>, which is set with <link linkend="command-setlabelfont">SETLABELFONT</link> or the <link linkend="menu-set-labelfont">Set->Label Font</link> menu item.
+</para>
+<para>
+The width and height of the text's bounding box can be determined with <link linkend="command-labelsize">LABELSIZE</link>.
+</para>
+
+<para>
+LABEL can be used in <link linkend="command-perspective">PERSPECTIVE</link> mode but the text will not be on the same plane as the turtle.
+The text will be placed wherever the turtle is on the screen and oriented according to the turtle's heading.
+</para>
+
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Example</term>
+<listitem>
+    <programlisting><userinput>; label the axes of a 3D Cartesian Coordinate System
+TO AXIS
+  SETLABELFONT [[Courier New] -19 0 0 700 0 0 0 0 3 2 1 49]
+  RIGHT 90
+
+  SETY  200
+  LABEL "+Y
+  SETY  -200
+  LABEL "-Y
+  SETY 0
+
+  SETX 200
+  LABEL "+X
+  SETX -200
+  LABEL "-X
+  SETX 0
+
+  SETZ 200
+  LABEL "+Z
+  SETZ -200
+  LABEL "-Z
+  SETZ 0
+  LEFT 90
+END
+
+PERSPECTIVE
+CLEARSCREEN
+SETTURTLE -1 ; select the eye position
+SETPOSXYZ [600 600 800]
+SETTURTLE 0
+AXIS</userinput>
+</programlisting>
+
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</section>

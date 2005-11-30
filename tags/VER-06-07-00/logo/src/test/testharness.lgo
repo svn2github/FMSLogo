@@ -1,0 +1,159 @@
+; This is the testharness.
+; It provides test primatives.
+; It also loads all unit tests and executes them.
+
+LOAD "array.lgo
+LOAD "wait.lgo
+LOAD "predicate.lgo
+LOAD "logic.lgo
+LOAD "bitmap.lgo
+LOAD "form.lgo
+LOAD "plist.lgo
+LOAD "editor.lgo
+LOAD "port.lgo
+LOAD "label.lgo
+LOAD "fill.lgo
+LOAD "directory.lgo
+LOAD "file.lgo
+LOAD "procedure.lgo
+LOAD "parse.lgo
+LOAD "word.lgo
+LOAD "color.lgo
+LOAD "screen.lgo
+LOAD "misc.lgo
+LOAD "network.lgo
+
+MAKE "testlog []
+
+TO REPORTTESTINFO :message
+
+  ; backup the current writer
+  LOCALMAKE "previouswriter WRITER
+  SETWRITE :testlog
+
+  PRINT (SENTENCE "INFO: :message)
+
+  ; restore the current writer
+  SETWRITE :previouswriter
+END
+
+TO REPORTTESTPASSED :message
+
+  ; backup the current writer
+  LOCALMAKE "previouswriter WRITER
+  SETWRITE :testlog
+
+  PRINT (SENTENCE "PASS: :message)
+
+  ; restore the current writer
+  SETWRITE :previouswriter
+END
+
+TO REPORTTESTFAILED :message
+
+  ; backup the current writer
+  LOCALMAKE "previouswriter WRITER
+  SETWRITE :testlog
+
+  LOCALMAKE "result (SENTENCE "FAIL: :message)
+  PRINT :result
+  MESSAGEBOX [Test Failed] :result
+
+  ; restore the current writer
+  SETWRITE :previouswriter
+END
+
+TO REPORTTEST :testpassed :result :expected
+  IFELSE :testpassed [
+    REPORTTESTPASSED (sentence :result "|, as expected.|)
+  ] [
+    REPORTTESTFAILED (sentence :result "|. We expected| :expected)
+  ]
+END
+
+TO SIMPLEREPORTTEST :instruction :expectedresult
+  LOCALMAKE "result RUN :instruction
+  IFELSE EQUALP :result :expectedresult [
+    REPORTTESTPASSED (LIST :instruction "returned :result "|, as expected.|)
+  ] [
+    REPORTTESTFAILED (LIST :instruction "returned :result "|. We expected| :expectedresult)
+  ]
+END
+
+
+TO REPORTTESTINITIALIZE
+
+  MAKE "testlog  "testlog.txt
+
+  ; close the test log, if it is already open
+  CATCH "ERROR [ CLOSE :testlog ]
+
+  ; open (and truncate) the test log
+  OPENWRITE :testlog
+END
+
+
+TO REPORTTESTUNINITIALIZE
+  CLOSE    :testlog
+  MAKE     :testlog []
+END
+
+
+TO RUNBADINPUTTEST :instructions
+
+  REPORTTESTINFO (LIST "|Executing invalid instruction:| :instructions )
+
+  CATCH "ERROR [ 
+    IGNORE RUN :instructions 
+    REPORTTESTFAILED (LIST "Executing :instructions "|did not throw an error|)
+  ]
+
+END
+
+; Outputs how long it takes to execute given instructions
+TO TIMECOMMAND :instructions
+
+  LOCALMAKE "beforetime TIMEMILLI
+  RUN :instructions
+  LOCALMAKE "aftertime TIMEMILLI
+
+  LOCALMAKE "deltatime :aftertime - :beforetime
+
+  REPORTTESTINFO (list :instructions "took :deltatime "|ms to execute|)
+
+  OUTPUT :deltatime
+END
+
+
+TO TESTALL
+
+  REPORTTESTINITIALIZE
+
+  PREDICATETEST ; from predicate.lgo
+  WORDTEST      ; from word.lgo
+  ARRAYTEST     ; from array.lgo
+  LOGICTEST     ; from logic.lgo
+  PROCEDURETEST ; from procedure.lgo
+  PLISTTEST     ; from plist.lgo
+  BITMAPTEST    ; from bitmap.lgo
+  FORMTEST      ; from form.lgo
+  EDITORTEST    ; from editor.lgo 
+  PORTTEST      ; from port.lgo
+  LABELTEST     ; from label.lgo
+  FILLTEST      ; from fill.lgo
+  FILETEST      ; from file.lgo
+  COLORTEST     ; from color.lgo
+  SCREENTEST    ; from screen.lgo
+  WAITTEST      ; from wait.lgo
+  DIRECTORYTEST ; from directory.lgo
+  MISCTEST      ; from misc.lgo
+  NETWORKTEST   ; from network.lgo
+
+  REPORTTESTUNINITIALIZE
+
+  print [The tests are now complete!]
+END
+
+; execute all tests on startup
+make "startup [TESTALL]
+

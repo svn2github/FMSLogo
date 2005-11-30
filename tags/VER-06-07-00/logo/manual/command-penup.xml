@@ -1,0 +1,28 @@
+<section id="command-penup">
+    <title>PENUP</title>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>PENUP</command>
+<command>PU</command></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+Sets the pen's position to UP, without changing its mode.
+</para>
+
+</listitem>
+</varlistentry>
+<varlistentry><term>Example</term>
+<listitem>
+    <programlisting><userinput>REPEAT 10 [FORWARD 10 PENUP FORWARD 10 PENDOWN]</userinput></programlisting>
+</listitem>
+</varlistentry>
+</variablelist>
+
+</section>

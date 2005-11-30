@@ -1,0 +1,38 @@
+<section id="command-shell">
+    <title>SHELL</title>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>SHELL</command> <parameter>command</parameter></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+
+<para>
+Runs an input string as a shell command.
+Outputs TRUE if the command was executed, FALSE otherwise.
+If the command is a literal list in the instruction line, and if you want a backslash character sent to the shell, you must use \\ to get the backslash through Logo's reader intact.
+</para>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Example</term>
+<listitem>
+    <programlisting><userinput>SHOW SHELL [notepad c:\\test.txt]
+</userinput>true
+</programlisting>
+
+    <programlisting><userinput>SHOW SHELL [unknown-app c:\\test.txt]
+</userinput>false
+</programlisting>
+
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</section>

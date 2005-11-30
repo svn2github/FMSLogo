@@ -1,0 +1,82 @@
+<chapter>
+   <title>Data Structure Primitives</title>
+
+   <section>
+      <title>Constructors</title>
+      &command-word;
+      &command-list;
+      &command-sentence;
+      &command-fput;
+      &command-lput;
+      &command-array;
+      &command-mdarray;
+      &command-listtoarray;
+      &command-arraytolist;
+      &command-combine;
+      &command-reverse;
+      &command-gensym;
+   </section>
+
+   <section>
+      <title>Selectors</title>
+      &command-first;
+      &command-firsts;
+      &command-last;
+      &command-butfirst;
+      &command-butfirsts;
+      &command-butlast;
+      &command-item;
+      &command-mditem;
+      &command-pick;
+      &command-remove;
+      &command-remdup;
+      &command-quoted;
+   </section>
+
+   <section>
+      <title>Mutators</title>
+
+      &command-setitem;
+      &command-mdsetitem;
+      &command-.setfirst;
+      &command-.setbf;
+      &command-.setitem;
+      &command-push;
+      &command-pop;
+      &command-queue;
+      &command-dequeue;
+   </section>
+
+   <section>
+      <title>Data Structure Predicates</title>
+
+      &command-wordp;
+      &command-listp;
+      &command-arrayp;
+      &command-emptyp;
+      &command-equalp;
+      &command-beforep;
+      &command-.eq;
+      &command-memberp;
+      &command-substringp;
+      &command-backslashedp;
+   </section>
+
+   <section>
+      <title>Queries</title>
+
+      &command-count;
+      &command-ascii;
+      &command-rawascii;
+      &command-char;
+      &command-member;
+      &command-lowercase;
+      &command-uppercase;
+      &command-standout;
+      &command-parse;
+      &command-runparse;
+      &command-time;
+      &command-timemilli;
+   </section>
+
+</chapter>

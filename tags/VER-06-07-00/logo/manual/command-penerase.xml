@@ -1,0 +1,32 @@
+<section id="command-penerase">
+    <title>PENERASE</title>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>PENERASE</command>
+<command>PE</command></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+Sets the pen's position to DOWN and mode to ERASE.
+In ERASE mode, the pen draws in the color described by <link linkend="command-screencolor">SCREENCOLOR</link>.
+Use <link linkend="command-penpaint">PENPAINT</link> to restore the pen to normal use.
+</para>
+
+</listitem>
+</varlistentry>
+<varlistentry><term>Example</term>
+<listitem>
+    <programlisting><userinput>FORWARD 100
+PENERASE
+BACK 100</userinput></programlisting>
+</listitem>
+</varlistentry>
+</variablelist>
+
+</section>

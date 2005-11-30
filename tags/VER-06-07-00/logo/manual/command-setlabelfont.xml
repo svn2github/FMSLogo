@@ -1,0 +1,113 @@
+<section id="command-setlabelfont">
+    <title>SETLABELFONT</title>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>SETLABELFONT</command> <parameter>font</parameter></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+Sets the font to be used by the <link linkend="command-label">LABEL</link> command.
+</para>
+
+<para>
+The input is a list that completely describes a font.
+The available fonts depend on your computer.
+MSWLogo has two ways to specify the font you desire.
+This command can be used for programs.
+For interactive use you can use <link linkend="menu-set-labelfont">Set - Label Font</link> from the main menu.
+The easiest way to use fonts in MSWLogo is to set the desired font using the Menu and capturing the attributes using <link linkend="command-labelfont">LABELFONT</link> command.
+</para>
+
+<para>
+The font parameter must be a list of the form: <code>[[FaceName] Height Width Orientation Weight Italic Underline StrikeOut CharSet OutPrecision ClipPrecision Quality PitchAndFamily]</code>.
+The meaning of each of the list elements is explained in the following table:
+
+<informaltable frame='all'>
+  <tgroup cols='2'>
+    <thead>
+      <row><entry>Element</entry></row>
+      <row><entry>Meaning</entry></row>
+    </thead>
+    <tbody>
+      <row>
+        <entry>FaceName</entry>
+        <entry>A word that is the font's typeface name</entry>
+      </row>
+      <row>
+        <entry>Height</entry>
+        <entry>An integer that specifies the font's height, in logical units.
+               If this value is greater than zero, it specifies the cell height of the font.
+               If it is less than zero, it specifies the character height of the font.</entry>
+      </row>
+      <row>
+        <entry>Width</entry>
+        <entry>An integer that specifies the font's width, in logical units</entry>
+      </row>
+      <row>
+        <entry>Orientation</entry>
+        <entry>An integer that specifies the font's orientation, in degrees</entry>
+      </row>
+      <row>
+        <entry>Weight</entry>
+        <entry>An integer that specifies the font's weight.
+               This member ranges from 0 to 900 in increments 100.
+               A value of 0 means use default weight.</entry>
+      </row>
+      <row>
+        <entry>Italic</entry>
+        <entry>An integer.  The font is italicied if and only if this is non-zero.</entry>
+      </row>
+      <row>
+        <entry>Underlined</entry>
+        <entry>An integer.  The font is underlined if and only if this is non-zero.</entry>
+      </row>
+      <row>
+        <entry>StrikeOut</entry>
+        <entry>An integer.  The font is rendered with a horizontal line through it if and only if this is non-zero.</entry>
+      </row>
+      <row>
+        <entry>CharSet</entry>
+        <entry>An integer that specifies the font's character set.</entry>
+      </row>
+      <row>
+        <entry>OutPrecision</entry>
+        <entry>An integer that specifies the font's output precision.</entry>
+      </row>
+      <row>
+        <entry>Quality</entry>
+        <entry>An integer that specifies the font's quality.</entry>
+      </row>
+      <row>
+        <entry>PitchAndFamily</entry>
+        <entry>An integer that specifies the font's pitch and family.</entry>
+      </row>
+    </tbody>
+  </tgroup>
+</informaltable>
+</para>
+
+<para>
+If you choose a font typeface that is not available on the system, then SETLABELFONT will list all fonts that are available.
+</para>
+
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Example</term>
+<listitem>
+    <programlisting><userinput>SETLABELFONT [[Times New Roman] -24 0 0 400 0 0 0 0 3 2 1 18] 
+LABEL "Hello</userinput>
+</programlisting>
+
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</section>

@@ -1,0 +1,20 @@
+TO EDALLTEST
+
+  WINDOWCREATE "root "edalltest "Editor 100 100 100 100 []
+  EDALL
+  WINDOWDELETE "edalltest
+
+  MAKE "isok YESNOBOX [Question] [Is the editor showing?]
+  IF NOT :isok [
+    REPORTTESTFAILED (sentence "|The editor window did not popup|) 
+    STOP
+  ]
+
+  REPORTTESTPASSED (sentence "|The editor window was displayed|) 
+  WINDOWDELETE "edalltest
+END
+
+TO EDITORTEST
+  EDALLTEST
+END
+

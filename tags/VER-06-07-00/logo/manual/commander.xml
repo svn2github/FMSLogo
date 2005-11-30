@@ -1,0 +1,95 @@
+<chapter>
+   <title>Commander</title>
+   <para>The commander is where you will spend most of your LOGO session.
+It is the means by which you instruct LOGO to do what you want.
+The most important control (box) within the commander is the INPUT BOX.
+It is located in the bottom left portion of the commander window.
+For information on the different controls (boxes) see the specific box below.</para>
+
+
+   <section>
+      <anchor id="commander-input" />
+      <title>Input Box</title>
+      <para>The input box is tied to the <link linkend="commander-history">Output/Command-Recall List</link> and to the <link linkend="commander-execute">Execute</link>.
+You can also edit the text in the input box.
+If what your typing doesn't fit, it will scroll automatically.
+Once your command is in the input box you need to execute it.
+You can do this by hitting <keycap>ENTER</keycap> or clicking on the execute button.
+Using the Up/Down arrow keys will automatically jump to (set focus to) the output/command-recall list box.
+This control also supports <link linkend="editor-context-help">Context Sensitive Help</link> and <link linkend="editor-clipboard">Editing with Clipboard</link>.</para>
+   </section>
+
+   <section>
+      <anchor id="commander-history" />
+      <title>Output/Command-Recall List Box</title>
+      <para>The output/command-recall list box will record all output including what you type into the <link linkend="commander-input">Input Box</link>.
+You can select a command for re-execution by clicking on the desired line or by using the arrow keys.
+If something went out of view, use the scroll bar.  
+Once a line is clicked on it is automatically copied to the Input Box.  
+A double-click on the mouse will automatically execute what you're pointing at.
+This control also supports <link linkend="editor-context-help">Context Sensitive Help</link> and <link linkend="editor-clipboard">Editing with Clipboard</link>.</para>
+   </section>
+
+   <section>
+      <anchor id="commander-execute" />
+      <title>Execute Button</title>
+      <para>The execute button executes what is in the <link linkend="commander-input">Input Box</link> and is also "PUSHED" when you hit <keycap>ENTER</keycap> key.</para>
+   </section>
+
+   <section>
+      <anchor id="commander-status" />
+      <title>Status Button</title>
+      <para>This button pops up a status window telling you what LOGO is up to.  
+Click it again to close the window. 
+See also the <link linkend="command-status">STATUS</link> and <link linkend="command-nostatus">NOSTATUS</link> commands.</para>
+   </section>
+
+   <section>
+      <anchor id="commander-trace" />
+      <title>Trace Button</title>
+      <para>The trace button turns on tracing for debugging your programs.
+Click again to disable tracing.
+You can turn tracing on or off even while Logo it running.
+Note that the trace button works independent of what you are tracing with the TRACE command.
+See also <link linkend="command-trace">TRACE</link> and <link linkend="command-untrace">UNTRACE</link> commands.</para>           
+   </section>
+
+
+   <section>
+      <anchor id="commander-halt" />
+      <title>Halt Button</title>
+      <para>The halt button immediately stops LOGO from processing any further.
+Logo is now waiting for a new command.
+See also the <link linkend="command-halt">HALT</link> command.</para>
+   </section>
+
+
+   <section>
+      <anchor id="commander-halt" />
+      <title>Reset Button</title>
+      <para>The reset button is like the <link linkend="command-clearscreen">CLEARSCREEN</link> command; it resets the LOGO screen.</para>
+   </section>
+
+
+   <section>
+      <anchor id="commander-step" />
+      <title>Step Button</title>
+      <para>The step button turns on single stepping for debugging your programs.
+Click again to disable single stepping.
+You can turn single stepping on or off even while Logo it running.
+Note that the step button works independent of what you are stepping with the step command.
+See also <link linkend="command-step">STEP</link> and <link linkend="command-unstep">UNSTEP</link> commands.</para>           
+   </section>
+
+
+   <section>
+      <anchor id="commander-pause" />
+      <title>Pause Button</title>
+      <para>The pause button stops LOGO so that you can examine variables, make changes or whatever.
+Once paused the pause button will show what depth you paused to.
+To continue you can issue a <link linkend="command-continue">CONTINUE</link> command or hit Cancel.
+You can also issue a <link linkend="command-pause">PAUSE</link> command within code to act as a "Break Point".
+You can think of pause and continue as sort of a Halt-n-Push and Pop-n-Continue of your state respectively.</para> 
+   </section>
+
+</chapter>

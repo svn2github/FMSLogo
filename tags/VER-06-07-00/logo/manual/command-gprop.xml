@@ -1,0 +1,46 @@
+<section id="command-gprop">
+    <title>GPROP</title>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>GPROP</command> <parameter>plistname</parameter> <parameter>propertyname</parameter></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+Outputs the value of the property named <parameter>propertyname</parameter> in the property list named <parameter>plistname</parameter>, or the empty list if there is no such property or property list.
+</para>
+<para>
+Both <parameter>plistname</parameter> and <parameter>propertyname</parameter> must be words.
+</para>
+</listitem>
+</varlistentry>
+
+
+<varlistentry><term>Example</term>
+<listitem>
+<programlisting><userinput>PPROP "plist1 "p1 1
+PPROP "plist1 "p2 2
+PPROP "plist2 "p1 10
+PPROP "plist2 "p2 20
+
+SHOW GPROP "plist1 "p1</userinput>
+1
+<userinput>SHOW GPROP "plist1 "p2</userinput>
+2
+<userinput>SHOW GPROP "plist2 "p1</userinput>
+10
+<userinput>SHOW GPROP "plist2 "p2</userinput>
+20
+</programlisting>
+</listitem>
+</varlistentry>
+
+
+</variablelist>
+
+</section>

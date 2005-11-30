@@ -1,0 +1,119 @@
+
+TO BITLOADSIZETEST :width :height :bitdepth
+  ; this is a regression test for bug #1324580
+  CLEARSCREEN
+  REPEAT 500 [ FORWARD REPCOUNT RIGHT 91 ]
+  PENUP
+  HOME
+  PENDOWN
+
+  ; save the bitmap
+  LOCALMAKE "oldactivearea ACTIVEAREA
+  SETACTIVEAREA (list 0 0 :width :height)
+  (BITSAVE "bitmap-test.bmp :bitdepth)
+
+  CLEARSCREEN
+  LOCALMAKE "bitmapsize BITLOADSIZE "bitmap-test.bmp
+  ERASEFILE "bitmap-test.bmp
+
+  REPORTTEST ~
+    (AND (ITEM 1 :bitmapsize) = :width (ITEM 2 :bitmapsize) = :height) ~
+    (list "|Size is| :bitmapsize) ~
+    (list "|[| :width :height "|]|)
+
+  ; restore the previous active area
+  SETACTIVEAREA :oldactivearea
+END
+
+
+TO PASTEINCIRCLE :imagewidth :radius
+
+  REPEAT 18 [
+    RIGHT   20
+    FORWARD :radius
+
+    ; move such that the paste will be centered
+    LOCALMAKE "x XCOR
+    LOCALMAKE "y YCOR
+    SETXY :x - :imagewidth :y - :imagewidth
+    BITPASTE 
+    SETXY :x :y
+
+    BACK    :radius
+  ]
+END
+
+
+; smoke test for BITCUT, BITCOPY, and BITPASTE
+TO BITCOPYTEST
+
+  CLEARSCREEN
+  SETBITMODE 1
+  PENDOWN
+
+  ; draw a red pattern
+  SETPENSIZE [2 2]
+  REPEAT 72 [
+    REPEAT 4 [FORWARD 100 RIGHT 90] 
+    SETPENCOLOR (LIST REPCOUNT*3 0 0)
+    RIGHT 5
+  ]
+
+  ; cut out part of the pattern to the clipboard
+  PENUP
+  SETXY -50 -50
+  SETBITINDEX 0
+  BITCUT 100 100
+
+  ; draw a green pattern
+  CLEARSCREEN
+  PENDOWN
+  SETPENSIZE [1 1]
+  REPEAT 36 [
+    REPEAT 4 [FORWARD 100 RIGHT 90] 
+    SETPENCOLOR (LIST 0 REPCOUNT*6 0)
+    RIGHT 10
+  ]
+
+  ; cut out the green pattern to index 1
+  PENUP
+  SETXY -20 -20
+  SETBITINDEX 1
+  BITCUT 40 40
+
+
+  ; erase everything
+  CLEARSCREEN
+
+  ; paste the red pattern in a circle
+  SETBITINDEX 0
+  PASTEINCIRCLE 50 150
+
+  ; paste the green pattern in a smaller circle
+  SETBITINDEX 1
+  PASTEINCIRCLE 20 50
+
+  ; copy and paste some of the image
+  SETBITINDEX 2
+  BITCOPY 200 200
+  RIGHT    90
+  FORWARD  200
+  BITPASTE
+
+  MAKE "isok YESNOBOX [Question] [Does the bitpaste look correct?]
+  IFELSE :isok [
+    REPORTTESTPASSED (sentence "|The bitpaste was drawn correctly|) 
+  ] [
+    REPORTTESTFAILED (sentence "|The bitpaste did not look right|) 
+  ]
+  
+end
+
+
+TO BITMAPTEST
+  BITLOADSIZETEST 100 100 1
+  BITLOADSIZETEST 100 101 1
+  BITLOADSIZETEST 101 100 1
+  BITCOPYTEST
+END
+

@@ -1,0 +1,40 @@
+<section id="command-polyend">
+    <title>POLYEND</title>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>POLYEND</command></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+POLYEND tells MSWLogo that you have completed the definition of a polygon that you started when you issued the command <link linkend="command-polystart">POLYSTART</link>.
+Note that the current coordinate is not added as a vertex when you issue the POLYEND command.
+But the move that you issued to get to the current coordinate will be included.
+Make sure you understand the <link linkend="polygon-restrictions">Polygon Restrictions</link>.
+</para>
+
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Example</term>
+<listitem>
+    <programlisting><userinput>TO SQUARE
+  POLYSTART
+  REPEAT 4 [FORWARD 100 RIGHT 90]
+  POLYEND
+END
+
+PERSPECTIVE
+REPEAT 72 [SQUARE ROLLRIGHT 5]
+POLYVIEW</userinput></programlisting>
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</section>

@@ -1,0 +1,51 @@
+<section id="command-ellipsearc">
+    <title>ELLIPSEARC</title>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>ELLIPSEARC</command> <parameter>angle</parameter> <parameter>major</parameter> <parameter>minor</parameter> <parameter>startangle</parameter></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+ELLIPSEARC does not move the turtle.
+It draws part of or all of an ellipse based on the turtle heading, turtle position and given arguments.
+The ellipse starts at the rear of the turtle heading and sweeps by the amount of angle starting at <parameter>startangle</parameter>.
+The size is based on the <parameter>minor</parameter> and <parameter>major</parameter> values.
+The <parameter>minor</parameter> parameter is the shortest distance along the ellipse to the center point.
+The <parameter>major</parameter> parameter is the longest distance along the ellipse the center point.
+The center-point of the ellipse will be the turtle's current position.
+</para>
+
+<para>
+See also <link linkend="command-ellipsearc2">ELLIPSEARC2</link>.
+</para>
+
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Example</term>
+<listitem>
+    <programlisting><userinput>; a 2D example
+ELLIPSEARC 360 100 200 0
+CLEARSCREEN
+ELLIPSEARC 90 50 50 0
+CLEARSCREEN
+ELLIPSEARC 90 50 50 90</userinput>
+</programlisting>
+
+    <programlisting><userinput>; a 3D example
+PERSPECTIVE
+REPEAT 72 [ELLIPSEARC 90 100 150 45 RIGHTROLL 5]</userinput>
+</programlisting>
+
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</section>

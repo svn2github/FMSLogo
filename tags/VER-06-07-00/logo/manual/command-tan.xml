@@ -1,0 +1,33 @@
+<section id="command-tan">
+    <title>TAN</title>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>TAN</command> <parameter>angle</parameter></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+Outputs the tangent of <parameter>angle</parameter>, which is taken in degrees.
+See also <link linkend="command-radtan">RADTAN</link>.
+</para>
+
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Example</term>
+<listitem>
+    <programlisting><userinput>SHOW TAN 0</userinput>
+0</programlisting>
+    <programlisting><userinput>SHOW TAN 45</userinput>
+1</programlisting>
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</section>
