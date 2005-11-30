@@ -1,5 +1,5 @@
 
-     FMSLogo Version 6.6b for Microsoft Windows 95/98/NT/2000/XP/Vista
+     FMSLogo Version 6.7.0 for Microsoft Windows 95/98/NT/2000/XP/Vista
      -----------------------------------------------------------------
 
                                 Contents
