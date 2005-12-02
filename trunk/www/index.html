@@ -14,15 +14,14 @@
        You can download FMSLogo from the <a href="http://sourceforge.net/projects/fmslogo">project portal on SourceForge</a>.
     </p>
 
-    <p>There are many Logo environments to choose from, so why choose FMSLogo?
-       <ul>
-        <li>FMSLogo has a simple GUI that encourages learning.</li>
-        <li>FMSLogo provides support for exploring diverse disciplines, including mathematics, engineering, art, music, and robotics.
-        <li>FMSLogo is smaller than most other Logo environments -- it still fits on a floppy disk.</li>
-        <li>FMSLogo runs fine on computers that are 10 years old.</li>
-        <li>FMSLogo has a strong, international user community with over a decade of classroom experience.
-       </ul>
-    </p>
+    <p>There are many Logo environments to choose from, so why choose FMSLogo?</p>
+    <ul>
+      <li>FMSLogo has a simple GUI that encourages learning.</li>
+      <li>FMSLogo provides support for exploring diverse disciplines, including mathematics, engineering, art, music, and robotics.
+      <li>FMSLogo is smaller than most other Logo environments -- it still fits on a floppy disk.</li>
+      <li>FMSLogo runs fine on computers that are 10 years old.</li>
+      <li>FMSLogo has a strong, international user community with over a decade of classroom experience.
+    </ul>
 
     <p>Because of this, FMSLogo is ideal for elementary school computer labs.
     </p>
@@ -57,6 +56,90 @@
       Today, FMSLogo has a home on SourceForge.
       It is my hope that SourceForge will serve as a focal point for future community involvement.
     </p>
+
+    <h2>Development Plan</h2>
+
+    <p>
+      There is a lot of work to do in FMSLogo.
+      The code base lay in atrophy for five years before I picked it up.
+      There is a lot of work to do in order to bring it up to date, without making any major updates in functionality.
+      Below is a rough outline of the development steps that I intend to take.
+      Of course, I will always be looking to fix bugs and make small updates that enhance the usability along the way.
+    </p>
+
+
+    <ol>
+      <li><b>Port the documentation from RTF to DocBook.</b><br>
+        This will make the manual easier to update.
+        It also gives me an opportunity to carefully read the documentation, learn what FMSLogo is capable of, and fix typos.</li>
+
+      <li><b>Write an extensive set of automated tests.</b><br>
+        Without a good test suite, I cannot confidently update FMSLogo without introducing regressions.
+        Because FMSLogo has a lot of features, writing a comprehensive set of tests is very time consuming.</li>
+
+      <li><b>Port FMSLogo to gcc and wxWindows.</b><br>
+        Currently FMSLogo is build with a defunct compiler and links to a proprietary window toolkit.
+        Porting FMSLogo to gcc and wxWindows will open up development to more people.</li>
+
+      <li><b>Use the GNU tools to find performance bottlenecks and fix memory leaks.</b><br>
+        This purpose of this step is to gain a better understanding of where FMSLogo's problems lie.</li>
+
+      <li><b>Update the language engine to the latest from UCBLogo.</b><br>
+        FMSLogo is based on UCBLogo's language engine.
+        However, while UCBLogo has made many advances, FMSLogo is still using a snapshot of UCBLogo that is at least five years old.
+        There are some major benefits to updating the langauge engine.
+        Just adding a "not equals" operator would make a FMSLogo a significantly better programming environment.</li>
+
+      <li><b>Internationalize FMSLogo.</b><br>
+        This will make it easier for third-parties to localize FMSLogo.
+        Localization is a requirement for adoption within schools systems.</li>
+
+      <li><b>Begin implementing new features.</b><br>
+        By the time I get here, FMSLogo will be roughly the same as MSWLogo and it will be ready to be extended.
+        The possibilities are limitless, but I'd like to start by adding a good sprite library, better support for 3D drawing, an interface for text to speech, a clean networking API, etc.</li>
+    </ol>
+
+
+    <h2>How You Can Help</h2>
+
+    <p>
+      There are many ways to help improve FMSLogo and they don't all require hacking on C++ code.
+    </p>
+
+    <ul>
+      <li>Of course, you can help with the programming side of things. 
+          Unfortunately, FMSLogo was written using old versions of Borland C++ and TASM, which are not available in stores anymore.
+          If you want to help on the programming side of things, you must first obtain a copy of these products.</li>
+
+      <li>I would like to bundle FMSLogo with lots of high-quality mini-applications written in FMSLogo that show off what it's capable of.
+          I would like them to be written in a way that people can study, learn from, and improve.
+          Games are ideal, since my target will always be children and young adults.
+          If you have a Logo program to donate, post a link in <a href="http://sourceforge.net/forum/forum.php?forum_id=500407">the discussion forum</a>.
+
+      <li>Improve the installer so that it can be used more easily by a limited user.
+          FMSLogo uses <a href="http://sourceforge.net/projects/nsis">NSIS</a> as its installation system.</li>
+
+      <li>If you're good with at Web development, this Web site obviously needs some help.
+          If you have some ideas on what should go here and would like to take over maintainece, let me know.</li>
+
+      <li>I need real-world feedback on where FMSLogo should be improved. 
+          If you know where FMSLogo is lacking, please <a href="http://sourceforge.net/tracker/?group_id=149686&amp;atid=775556">post a feature request</a> or 
+          post a message in <a href="http://sourceforge.net/forum/forum.php?forum_id=500407">the discussion forum</a>.
+          Try to keep your suggestions based on practical experience (instead of abstract theories).
+          Also, please explain how your suggestion would improve FMSLogo as a learning tool for children.</li>
+
+      <li>File bugs. 
+          FMSLogo is full of them and they should all be tracked.
+          If you know of a  bug, please file it in the <a href="http://sourceforge.net/tracker/?atid=775553&amp;group_id=149686&amp;func=browse">bug tracker</a>.</li>
+
+      <li>Evangelize FMSLogo.
+          MSWLogo is still far more popular than FMSLogo.
+          If it's because FMSLogo is deficient in some way, then let's file a bug and get it fixed.
+          If it's because people don't know about FMSLogo, then let's let them know.</li>
+
+      <li>Whatever else you can think of!</li>
+    </ul>
+
 
     <h2>Useful Links</h2>
     <ul>
