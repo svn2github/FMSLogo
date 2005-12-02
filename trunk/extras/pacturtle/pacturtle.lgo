@@ -34,6 +34,8 @@ Make "EnemyStartY 20
 Make "EnemyWaitCounterMax 2
 
 Make "GridSize 20
+Make "GameBoardWidth 0
+Make "GameBoardHeight 0
 
 Make "TotalPellets          0
 Make "TotalPelletsRemaining 0
@@ -51,19 +53,37 @@ to BoardSquareIsWall :x :y
 end
 
 
-to MoveToGridCenter :X :Y
+to MoveToGrid :X :Y
     penup
-    setxy :X * :GridSize + :GridSize / 2  :Y * :GridSize + :GridSize / 2
+    setxy :GridSize * (:X  - :GameBoardWidth / 2)     :GridSize * (:Y - :GameBoardHeight / 2)
     pendown
 end
+
+to MoveToGridPlusOffset :X :Y :Offset
+    penup
+    setxy :GridSize * (:X - :GameBoardWidth / 2 +  1 / :Offset)  :GridSize * (:Y - :GameBoardHeight / 2 + 1 / :Offset)
+    pendown
+end
+
+to MoveToGridCenter :X :Y
+    penup
+    MoveToGridPlusOffset :X :Y 2
+    pendown
+end
+
+to MoveToGridQuarter :X :Y
+    penup
+    MoveToGridPlusOffset :X :Y 4
+    pendown
+end
+
+
 
 to DrawEnemy :Enemy
    localmake "x item 1 :Enemy
    localmake "y item 2 :Enemy
 
-   penup
-   setxy :X * :GridSize + :GridSize / 4  :Y * :GridSize + :GridSize / 4
-   pendown
+   MoveToGridQuarter :x :y
 
    setpencolor 0
    repeat 4 [ fd :gridsize / 2 rt 90 ]
@@ -73,12 +93,10 @@ to EraseEnemy :Enemy
    localmake "x item 1 :Enemy
    localmake "y item 2 :Enemy
 
-   penup
-   setxy :X * :GridSize + :GridSize / 4  :Y * :GridSize + :GridSize / 4
-   pendown
+   MoveToGridQuarter :x :y
 
    setpencolor screencolor
-   repeat 4 [ fd :gridsize / 2 rt 90 ]
+   repeat 4 [ fd :GridSize / 2 rt 90 ]
 end
 
 
@@ -98,9 +116,7 @@ end
 
 
 to DrawWall :X :Y
-   penup
-   setxy :X * :GridSize :Y * :GridSize
-   pendown
+   MoveToGrid :X :Y
 
    setpencolor 0
    repeat 4 [ fd :gridsize rt 90 ]
@@ -126,20 +142,27 @@ end
 
 
 to InitGameBoard
-   local [i j dimension.y gameboardtemplate.row boardsquare]
+   local [i j gameboardtemplate.row boardsquare]
 
    ; copy the game board template to the live game board
-   make "TotalPellets 0
+   make "TotalPellets  0
 
-   localmake "dimension.y count :GameBoardTemplate
+   
+   make "GameBoardWidth 0
+   make "GameBoardHeight  count :GameBoardTemplate
 
-   make "GameBoard array :dimension.y
-   for [j 1 :dimension.y ] [
+   make "GameBoard array :GameBoardHeight
+   for [j 1 :GameBoardHeight ] [
 
       make "gameboardtemplate.row item :j :GameBoardTemplate
 
       ; add a new array for this row
       make "row.array array count :gameboardtemplate.row
+        
+      ; update the board width
+      if :GameBoardWidth < (count :gameboardtemplate.row) [
+          make "GameBoardWidth (count :gameboardtemplate.row)
+      ]
 
       for [i 1 [count :gameboardtemplate.row] ] [
 
@@ -152,34 +175,34 @@ to InitGameBoard
           ]
           if :boardsquare = "P [
              Make "PlayerStartX :i
-             Make "PlayerStartY :dimension.y - :j + 1
+             Make "PlayerStartY :GameBoardHeight - :j + 1
 
              ; put an empty space where the player was
              setitem :i :row.array ",
           ]
           if :boardsquare = "1 [
-             make "Enemy1 (list :i :dimension.y - :j + 1 "up)
+             make "Enemy1 (list :i :GameBoardHeight - :j + 1 "up)
 
              ; put a pellet where the enemy was
              make "TotalPellets :TotalPellets + 1
              setitem :i :row.array ".
           ]
           if :boardsquare = "2 [
-             make "Enemy2 (list :i :dimension.y - :j + 1 "up)
+             make "Enemy2 (list :i :GameBoardHeight - :j + 1 "up)
 
              ; put a pellet where the enemy was
              make "TotalPellets :TotalPellets + 1
              setitem :i :row.array ".
           ]
           if :boardsquare = "3 [
-             make "Enemy3 (list :i :dimension.y - :j + 1 "up)
+             make "Enemy3 (list :i :GameBoardHeight - :j + 1 "up)
 
              ; put a pellet where the enemy was
              make "TotalPellets :TotalPellets + 1
              setitem :i :row.array ".
           ]
           if :boardsquare = "4 [
-             make "Enemy4 (list :i :dimension.y - :j + 1 "up)
+             make "Enemy4 (list :i :GameBoardHeight - :j + 1 "up)
 
              ; put a pellet where the enemy was
              make "TotalPellets :TotalPellets + 1
@@ -188,7 +211,7 @@ to InitGameBoard
       ] 
 
       ; set this row in the game board (and flip the board vertically)
-      setitem :dimension.y - :j + 1 :GameBoard :row.array
+      setitem :GameBoardHeight - :j + 1 :GameBoard :row.array
    ]
    make "TotalPelletsRemaining :TotalPellets
 
@@ -197,12 +220,11 @@ end
 to DrawGameBoard
    local [i j]
 
-
    ; now draw the game board
-   for [j 1 [count :GameBoard] ] [
+   for [j 1 :GameBoardHeight ] [
       
       make "gameboard.row item :j :GameBoard
-      for [i 1 [count :gameboard.row] ] [
+      for [i 1 :GameBoardWidth ] [
   
           make "boardsquare item :i :gameboard.row
           if :boardsquare = "X [
@@ -361,19 +383,23 @@ to UpdateNextFrame
          make "IsDone "true
 
          playwave "you-win.wav 1
-         penup
+
          repeat 20 [
-            setxy -10 -10
+            ; move outside the game board
+            penup
+            MoveToGrid 0 0
+            pendown
             setfloodcolor (list random 256 random 256 random 256)
             fill
 
-            setxy :PlayerX * :GridSize + :GridSize / 2  :PlayerY * :GridSize + :GridSize / 2
+            ; move inside the game board
+            MoveToGridCenter :PlayerX :PlayerY
             setfloodcolor (list random 256 random 256 random 256)
             fill 
 
             wait 6
          ]
-         pendown
+
 
          stop
      ]
@@ -474,7 +500,7 @@ to GameLoop
 end
 
 to RunGame
-  ;catch "error [ fullscreen ]
+  catch "error [ fullscreen ]
   icon "Commander
   icon "Editor
 
