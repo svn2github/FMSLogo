@@ -240,7 +240,7 @@ end
 to drawChar :c :action
   make "validChar "true
   setturtle 0
-  setpensize list round( 1 * :scale ) round( 1 * :scale ) 
+  setpensize list (round :scale) (round :scale)
   seth 0
   make "cPos pos
   make "x first :cPos
@@ -377,7 +377,7 @@ to drawCrystal :pos1 :action
   if not( (last :pos1) = :offScreenY ) [
     setturtle 0
     make "points array 6
-    setpensize(list round( 1*:scale ) round( 1*:scale ) )
+    setpensize(list (round :scale) (round :scale))
     seth 0
     make "color abs(remainder first( :pos1 ) 7)
     if :action = "draw [
@@ -468,12 +468,12 @@ to drawRock :pos1
   setpos item 1 :points
   pu
 
-  setpensize(list round( 1*:scale ) round( 1*:scale ) )
+  setpensize(list (round :scale) (round :scale) )
 end
 
 to drawShip :x :y :d :action
   setturtle 0
-  setpensize(list round( 1*:scale*:shipRad/:normalShipRad) round( 1*:scale*:shipRad/:normalShipRad) )
+  setpensize(list round( :scale*:shipRad/:normalShipRad) round( :scale*:shipRad/:normalShipRad) )
 
   make "r (255 - 138) / :shipFadeStart * :shipGlow + 138
   make "g (255 - 60) / :shipFadeStart * :shipGlow + 60
@@ -487,7 +487,7 @@ to drawShip :x :y :d :action
 
   if(or :action = "draw :action = "redraw) [ setpc( list :r :g :b ) ]
   if :action = "erase [ setpc[ 0 0 0 ] ]
-  ifelse :exploding = "false [
+  ifelse not :shipIsExploding [
 
     ;draw right side of nose
     setpos list :x :y
@@ -506,7 +506,7 @@ to drawShip :x :y :d :action
     rt 112.5
     fd :shipSide
 
-    if ( or :leaveStep < :numLeaveSteps/3*2  :isLeaving = "false ) [ drawShip.light :light1Pos ]
+    if ( or :leaveStep < :numLeaveSteps/3*2  not :isLeaving) [ drawShip.light :light1Pos ]
 
     ;draw back of ship, trace back over it partway, draw engine if thrusting, then trace forward again--
     ;this keeps the engine over top of all the other lines
@@ -518,16 +518,16 @@ to drawShip :x :y :d :action
     fd :shipSide - 1.414*:scale
     bk :shipSide - 1.414*:scale
     lt 45
-    if( or :thrust = "true  :action = "erase ) [
+    if( or :isThrustOn  :action = "erase ) [
       setpensize(list round( 2*:scale*:shipRad/:normalShipRad ) round( 2*:scale*:shipRad/:normalShipRad ) )
     ]
-    if( and (:leaveStep < :numLeaveSteps/5*4) (:thrust = "true) (or :action = "draw :action = "redraw) ) [
+    if( and (:leaveStep < :numLeaveSteps/5*4) :isThrustOn (or :action = "draw :action = "redraw) ) [
       setpc[ 255 230 130 ]
     ]
     bk :shipSide + 2*:scale
 
     if(or :action = "draw :action = "redraw) [ setpc( list :r :g :b ) ]
-    setpensize(list round( 1*:scale*:shipRad/:normalShipRad) round( 1*:scale*:shipRad/:normalShipRad) )
+    setpensize(list round( :scale*:shipRad/:normalShipRad) round( :scale*:shipRad/:normalShipRad) )
 
     pu
     fd :shipSide + 2*:scale
@@ -545,7 +545,7 @@ to drawShip :x :y :d :action
     bk :scale
     fd :shipRad3 * 2
 
-    if ( or :leaveStep < :numLeaveSteps/3*2  :isLeaving = "false ) [ drawShip.light :light2Pos ]
+    if ( or :leaveStep < :numLeaveSteps/3*2  not :isLeaving) [ drawShip.light :light2Pos ]
 
     lt 93.06
     fd 12.95 * :scale*:shipRad/:normalShipRad
@@ -747,7 +747,7 @@ to glint :action
 
   if :glintStep = 20 [ drawCrystal (item :glintCrystal :crystals) "draw ]
   setturtle 3
-  setpensize(list round( 1*:scale ) round( 1*:scale ) )
+  setpensize(list (round :scale) (round :scale) )
   pu
   setpos item :glintCrystal :crystals
   seth 0
@@ -792,38 +792,39 @@ to checkScreen
   ]
 end
 
-to go
-end
-
 to hitCrystalCheck
   ;checks all the crystals, whether they are on the screen or not, to keep the speed more constant on slow computers
   repeat :maxCrystals [
-    make "x first( item repcount :crystals )
-    make "y last( item repcount :crystals )
-    make "dist2 ( :shipX - :x )*( :shipX - :x ) + ( :shipY - :y )*( :shipY - :y )
-    if and ( :dist2 < :shipCrystal2 ) (:exploding = "false) [
-      if and :glintStep < 20 :glintCrystal = repcount [
-        make "glintStep :glintStep + 1
-        glint "erase
-        make "glintStep 20
+    make "x first (item repcount :crystals)
+    make "y last  (item repcount :crystals)
+    make "dist2 (power (:shipX - :x ) 2) + (power (:shipY - :y ) 2)
+    ifelse :shipIsExploding [
+      if :dist2 < (:shipCrystal2 * 4) [
+        drawCrystal (item repcount :crystals) "draw
       ]
-      drawCrystal (item repcount :crystals) "erase
-      setitem repcount :crystals( list :offScreenX :offScreenY )
-      make "numCrystals :numCrystals - 1
-      if :numCrystals = 0 [
-        make "bonus :timeLeft * 5
-        make "isLeaving "true
-        make "thrust "true
-        timerOff
+    ][
+      if :dist2 < :shipCrystal2 [
+        if and :glintStep < 20 :glintCrystal = repcount [
+          make "glintStep :glintStep + 1
+          glint "erase
+          make "glintStep 20
+        ]
+
+        drawCrystal (item repcount :crystals) "erase
+        setitem repcount :crystals (list :offScreenX :offScreenY)
+        make "numCrystals :numCrystals - 1
+        if :numCrystals = 0 [
+          make "bonus :timeLeft * 5
+          make "isLeaving "true
+          make "isThrustOn "true
+          timerOff
+        ]
+        make "score :score + :crystalWorth
+        make "textCount 1  printText
+        make "textCount 2  printText
+        make "crystalWorth :crystalWorth + 5
+        make "shipGlow :shipFadeStart + 4
       ]
-      make "score :score + :crystalWorth
-      make "textCount 1  printText
-      make "textCount 2  printText
-      make "crystalWorth :crystalWorth + 5
-      make "shipGlow :shipFadeStart + 4
-    ]
-    if and :dist2 < (:shipCrystal2 * 4) :exploding [
-       drawCrystal( item repcount :crystals ) "draw
     ]
   ]
 end
@@ -831,25 +832,25 @@ end
 to hitRockCheck
   ;checks all the rocks, whether they are on the screen or not, to keep the speed more constant on slow computers
   repeat :numRocks [
-    make "x first( item repcount :rocks )
-    make "y last( item repcount :rocks )
-    make "dist2 (:shipX - :x)*(:shipX - :x) + (:shipY - :y)*(:shipY - :y)
-    make "shipRock2 ( :shipRad + :rockRad )*( :shipRad + :rockRad )
-    if ( and :dist2 < :shipRock2  :isLeaving = "false  :exploding = "false ) [
+    make "x first (item repcount :rocks)
+    make "y last  (item repcount :rocks)
+    make "dist2   (power (:shipX - :x) 2) + (power (:shipY - :y) 2)
+    make "shipRock2 (power (:shipRad + :rockRad) 2)
+    if (and :dist2 < :shipRock2  not :isLeaving   not :shipIsExploding) [
       timerOff
       drawShip :shipXInt :shipYInt :dr "erase
       ;save the point where the ship hit the rock, for the explosion bitmap
       ;turtle was set by drawShip
       seth towards ( item repcount :rocks ) fd :shipRad - :shipRad3
       make "expCtr (list ((first pos) - :shipRad ) ((last pos) - :shipRad ) )
-      make "exploding "true
+      make "shipIsExploding "true
       make "expLen :shipRad
     ]
-    if and :dist2 < (:shipRock2 * 2) (or :exploding = "true :isLeaving = "true) [
-       drawRock( item repcount :rocks )
+    if and :dist2 < (:shipRock2 * 2) (or :shipIsExploding :isLeaving) [
+       drawRock (item repcount :rocks)
     ]
-    if ( and (:dist2 < :shipRock2 ) (:isLeaving = "true) ) [
-       make "behindRock "true 
+    if and (:dist2 < :shipRock2) :isLeaving [
+       make "isBehindRock "true
     ]
   ]
 end
@@ -871,7 +872,7 @@ to initGame
   setturtle 2 ht pu
   setturtle 3 ht pu
 
-  setpensize(list round( 1*:scale ) round( 1*:scale ) )
+  setpensize(list (round :scale) (round :scale) )
 end
 
 to initLevel
@@ -881,7 +882,7 @@ to initLevel
   make "numCrystals :level * 2 + 2
   make "numRocks :level * 2
   make "levelIsOver "false
-  make "behindRock "false
+  make "isBehindRock "false
   make "crystalWorth 40
   setShipSize :normalShipRad
 end
@@ -904,8 +905,8 @@ to initLife
   make "shipDeltaY 0
   make "turnRt "false
   make "turnLt "false
-  make "thrust "false
-  make "exploding "false
+  make "isThrustOn "false
+  make "shipIsExploding "false
   make "isLeaving "false
   make "expStep 0
   make "leaveStep 0
@@ -1205,25 +1206,25 @@ to levelLoop
 end
 
 to lifeLoop
-  if :lives > 1 [
-    displayText [Get Ready!] 60
-  ]
-  if :lives = 1 [
-    displayText [Last Ship...Get Ready!] 60
-  ]
-  initLife
-  timerOn
-  playLoop
-  timerOff
-  if( and not :quit  not :reset ) [ waitStop 60 ]
-  if :lives = 0 [
-    make "gameOver "true
-    displayText [Game Over!] 0
-    make "textCount 2 printText
-    waitStop 50
-  ]
-  if( and (not :quit) (not :reset) (not :gameOver) (not :levelIsOver) ) [
-    lifeLoop
+
+  while [ (and  not :quit  not :reset  not :gameOver   not :levelIsOver) ] [
+    if :lives > 1 [
+      displayText [Get Ready!] 60
+    ]
+    if :lives = 1 [
+      displayText [Last Ship...Get Ready!] 60
+    ]
+    initLife
+    timerOn
+    playLoop
+    timerOff
+    if( and not :quit  not :reset ) [ waitStop 60 ]
+    if :lives = 0 [
+      make "gameOver "true
+      displayText [Game Over!] 0
+      make "textCount 2 printText
+      waitStop 50
+    ]
   ]
 end
 
@@ -1524,44 +1525,50 @@ to pauseGame
 end
 
 to playLoop
-  do.while [
+
+  while [ (and (not :quit) (not :reset) (:expStep < :numExpSteps) (not :levelIsOver)) ] [
     make "start timemilli
 
-    if( or not( :oldShipX = :shipXInt ) not( :oldShipY = :shipYInt )
-        not( :oldDr = :dr ) :exploding="true :isLeaving="true :erase="true :blink = 0
+    if( or not( :oldShipX = :shipXInt )
+           not( :oldShipY = :shipYInt )
+           not( :oldDr = :dr ) 
+           :shipIsExploding 
+           :isLeaving 
+           :erase 
+           :blink = 0
       )[
-      if :behindRock = "false [ drawShip :oldShipX :oldShipY :oldDr "erase ]
+      if not :isBehindRock [ drawShip :oldShipX :oldShipY :oldDr "erase ]
     ]
-    if :exploding = "true [
+    if :shipIsExploding [
       make "expStep :expStep + 1
       if :expStep = :numExpSteps [ make "lives :lives - 1 ]
     ]
-    if :isLeaving = "true [
+    if :isLeaving [
       make "leaveStep :leaveStep + 1  shrinkShip
       if :leaveStep = :numLeaveSteps [ make "levelIsOver "true ]
     ]
-    if (and :levelIsOver = "false :behindRock = "false) [ drawShip :shipXInt :shipYInt :dr "draw ]
-    make "oldBehindRock :behindRock
-    make "behindRock "false
+    if (and not :levelIsOver   not :isBehindRock) [ drawShip :shipXInt :shipYInt :dr "draw ]
+    make "oldIsBehindRock :isBehindRock
+    make "isBehindRock "false
     setpos (list :shipX :shipY)
-    if ( :isLeaving = "false ) [
+    if not :isLeaving [
       hitCrystalCheck
     ]
 
     hitRockCheck
 
     ;if the ship just emerged from behind a rock, draw it now...
-    if (and :levelIsOver = "false :behindRock = "false :oldBehindRock = "true) [
+    if (and not :levelIsOver   not :isBehindRock  :oldIsBehindRock) [
       drawShip :shipXInt :shipYInt :dr "redraw
     ]
     ;...and if it just went behind one, erase it now
-     if (and :behindRock = "true :oldBehindRock = "false ) [
+     if (and :isBehindRock   not :oldIsBehindRock) [
       drawShip :shipXInt :shipYInt :dr "erase
     ]
 
     if :expStep < :numExpSteps [ printText ]  ;the if keeps it from showing the taking of a life just yet
 
-    if and( :exploding = "true )( :expStep = 0 ) [
+    if and :shipIsExploding  (:expStep = 0) [
       setpos :expCtr
       setbitindex 1
       bitpaste
@@ -1594,7 +1601,7 @@ to playLoop
     make "oldShipY :shipYInt
     make "oldDr :dr
 
-    if :isLeaving [ make :thrust "true ]
+    if :isLeaving [ make :isThrustOn "true ]
     processCommand
     
 
@@ -1609,8 +1616,8 @@ to playLoop
     ;the "50" is the animation delay
     make "now timemilli
     while [ :now - :start < 50 ] [ make "now timemilli ]
-  ][ (and (not :quit) (not :reset) (:expStep < :numExpSteps) (not :levelIsOver)) ]
-    
+  ]
+
 end
 
 to printText
@@ -1679,12 +1686,12 @@ to printText
 end
 
 to processCommand
-  if :exploding = "false [
+  if not :shipIsExploding [
     if :turnLt="true [ make "dr :dr - 10 ]
     if :turnRt="true [ make "dr :dr + 10 ]
     if :dr > 360 [ make "dr :dr - 360 ]
     if :dr < 0 [ make "dr :dr + 360 ]
-    if :thrust="true [
+    if :isThrustOn [
       ;sin and cos are backwards because Logo calls 0 degrees straight up 
       make "xAccel ( sin (:dr) ) * :acceleration
       make "yAccel ( cos (:dr) ) * :acceleration
@@ -1692,7 +1699,7 @@ to processCommand
       make "shipDeltaX :shipDeltaX + :xAccel
       make "shipDeltaY :shipDeltaY + :yAccel
  
-      if :isLeaving = "false [
+      if not :isLeaving [
         ;If the ship is at maximum speed, get rid of the extra speed, but leave the 
         ;direction alone. 
         make "speed2( (:shipDeltaX)*(:shipDeltaX) + (:shipDeltaY)*(:shipDeltaY) )
@@ -1715,9 +1722,9 @@ to processKey :key :iskeydown
 
     if (or :key=ascii "K :key=ascii "T) [
        ifelse :iskeydown [
-          make "thrust "true
+          make "isThrustOn "true
        ][
-          if not :isLeaving [ make "thrust "false  make "erase "true ]
+          if not :isLeaving [ make "isThrustOn "false  make "erase "true ]
        ]
     ]
 
