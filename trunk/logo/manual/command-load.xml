@@ -1,0 +1,68 @@
+<section id="command-load">
+    <title>LOAD</title>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>LOAD</command> <parameter>filename</parameter></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+Reads instructions from the file named <parameter>filename</parameter> and executes them.
+The file can include procedure definitions with <link linkend="command-to">TO</link>, and these are accepted even if a procedure by the same name already exists.
+If the file assigns a list value to a variable named <link linkend="command-startup">STARTUP</link>, then that list is <link linkend="command-run">RUN</link> as an instruction list after the file is loaded.
+</para>
+
+<para>
+It is important to understand that the file is executed, not copied, into the workspace:
+
+<itemizedlist>
+<listitem>
+If Logo sees a TO then it will define that procedure (the code within a definition is not executed).
+</listitem>
+
+<listitem>
+If Logo sees a MAKE it will make that name.
+</listitem>
+
+<listitem>
+If Logo sees code is outside of a procedure definition it will be executed in the order seen.
+</listitem>
+</itemizedlist>
+</para>
+
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Example</term>
+<listitem>
+<programlisting><userinput>TO MYPROG1
+  PRINT "Hello1
+END
+
+TO MYPROG2
+  PRINT "Hello2
+END
+
+POTS</userinput>
+TO MYPROG1
+TO MYPROG2
+
+<userinput>SAVE "myprogs.lgo
+ERALL
+POTS
+LOAD "myprogs.lgo
+POTS</userinput>
+TO MYPROG1
+TO MYPROG2
+</programlisting>
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</section>

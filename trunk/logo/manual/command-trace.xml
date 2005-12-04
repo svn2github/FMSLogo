@@ -1,0 +1,52 @@
+<section id="command-trace">
+    <title>TRACE</title>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>TRACE</command> <parameter>contentslist</parameter></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+Marks the named items for tracing.
+A message is printed whenever a traced procedure is invoked, giving the actual input values, and whenever a traced procedure executes a <link linkend="command-stop">STOP</link> or <link linkend="command-output">OUTPUT</link> command.
+A message is printed whenever a new value is assigned to a traced variable using <link linkend="command-make">MAKE</link>.
+A message is printed whenever a new property is given to a traced property list using <link linkend="command-pprop">PPROP</link>.
+
+See also the <link linkend="command-untrace">UNTRACE</link> command and the <link linkend="commander-trace">Trace Button</link>.
+</para>
+
+<para>
+See the <link linkend="workspace-queries">Workspace Queries</link> section for an explaination of the <parameter>contentslist</parameter> parameter.
+</para>
+</listitem>
+</varlistentry>
+
+
+<varlistentry><term>Example</term>
+<listitem>
+<programlisting><userinput>TO MYPROG :a
+  PRINT :a
+END
+
+MYPROG "Hello</userinput>
+Hello
+<userinput>
+TRACE "myprog
+MYPROG "Hello</userinput>
+( MYPROG "Hello )
+Hello
+<userinput>UNTRACE "myprog
+MYPROG "Hello</userinput>
+Hello
+</programlisting>
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</section>

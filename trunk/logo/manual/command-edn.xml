@@ -1,0 +1,45 @@
+<section id="command-edn">
+    <title>EDN</title>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>EDN</command> <parameter>varname</parameter>
+<command>EDN</command> <parameter>varnamelist</parameter></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+Opens all named variables in <link linkend="editor">the Logo editor</link>.
+</para>
+
+<para>
+EDN abbreviates <code><link linkend="command-edit">EDIT</link> <link linkend="command-namelist">NAMELIST</link></code>.
+</para>
+</listitem>
+</varlistentry>
+
+
+<varlistentry><term>Example</term>
+<listitem>
+<programlisting><userinput>TO "MYPROG
+  PRINT :myvariable
+END
+
+MAKE "myvariable "Hrllo
+MYPROG1</userinput>
+Hrllo
+<userinput>EDN [myvariable]</userinput>
+<replaceable>change Hrllo to Hello and exit editor</replaceable>
+<userinput>MYPROG</userinput>
+Hello
+</programlisting>
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</section>

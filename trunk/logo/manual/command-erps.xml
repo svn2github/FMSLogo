@@ -1,0 +1,41 @@
+<section id="command-erps">
+    <title>ERPS</title>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>ERPS</command></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+Erases all unburied procedures from the workspace.  
+ERPS abbreviates <code><link linkend="command-erase">ERASE</link> <link linkend="command-procedures">PROCEDURES</link></code>.
+</para>
+</listitem>
+</varlistentry>
+
+
+<varlistentry><term>Example</term>
+<listitem>
+<programlisting><userinput>TO FOO
+END
+
+TO BAR
+END
+
+SHOW PROCEDURES</userinput>
+[bar foo]
+<userinput>ERPS
+SHOW PROCEDURES</userinput>
+[]
+</programlisting>
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</section>

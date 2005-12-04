@@ -1,0 +1,44 @@
+<section id="command-edns">
+    <title>EDNS</title>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>EDNS</command></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+Opens all unburied variables in <link linkend="editor">the Logo editor</link>.
+</para>
+
+<para>
+EDNS abbreviates <code><link linkend="command-edit">EDIT</link> <link linkend="command-names">NAMES</link></code>.
+</para>
+</listitem>
+</varlistentry>
+
+
+<varlistentry><term>Example</term>
+<listitem>
+<programlisting><userinput>TO "MYPROG
+  PRINT :myvariable
+END
+
+MAKE "myvariable "Hrllo
+MYPROG1</userinput>
+Hrllo
+<userinput>EDNS</userinput>
+<replaceable>change Hrllo to Hello and exit editor</replaceable>
+<userinput>MYPROG</userinput>
+Hello
+</programlisting>
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</section>

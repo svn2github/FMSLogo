@@ -1,0 +1,51 @@
+<section id="command-edps">
+    <title>EDPS</title>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>EDPS</command></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+Opens all unburied procedures in <link linkend="editor">the Logo editor</link>.
+</para>
+
+<para>
+EDPS abbreviates <code><link linkend="command-edit">EDIT</link> <link linkend="command-procedures">PROCEDURES</link></code>.
+</para>
+</listitem>
+</varlistentry>
+
+
+<varlistentry><term>Example</term>
+<listitem>
+<programlisting><userinput>TO "MYPROG1
+  PRINT "Hrllo
+END
+
+TO "MYPROG2
+  PRINT "Byr
+END
+
+MYPROG1</userinput>
+Hrllo
+<userinput>MYPROG2</userinput>
+Byr
+<userinput>EDPS</userinput>
+<replaceable>change Hrllo to Hello, change Byr to Bye and exit editor</replaceable>
+<userinput>MYPROG1</userinput>
+Hello
+<userinput>MYPROG2</userinput>
+Bye
+</programlisting>
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</section>

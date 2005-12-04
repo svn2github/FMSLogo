@@ -1,0 +1,44 @@
+<section id="command-untrace">
+    <title>UNTRACE</title>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>UNTRACE</command> <parameter>contentslist</parameter></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+Turns off tracing for the named items (if tracing was enabled for them).
+See also the <link linkend="command-trace">TRACE</link> command and <link linkend="commander-trace">Trace Button</link>.
+</para>
+</listitem>
+</varlistentry>
+
+
+<varlistentry><term>Example</term>
+<listitem>
+<programlisting><userinput>TO MYPROG :a
+  PRINT :a
+END
+
+MYPROG "Hello</userinput>
+Hello
+<userinput>
+TRACE "myprog
+MYPROG "Hello</userinput>
+( MYPROG "Hello )
+Hello
+<userinput>UNTRACE "myprog
+MYPROG "Hello</userinput>
+Hello
+</programlisting>
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</section>

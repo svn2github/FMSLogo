@@ -69,7 +69,7 @@ Names of individual properties are case-sensitive or case-insensitive depending 
        <title>Workspace Queries</title>
 
 <para>
-Most workspace query procedures output a "contents list", which can be used as input to the <link linkend="workspace-inspection">Workspace Inspection</link> procedures.
+Most workspace query procedures output a "contents list", which can be used as input to many <link linkend="workspace-inspection">Workspace Inspection</link> and <link linkend="workspace-control">Workspace Control</link> procedures.
 All procedures whose input is indicated as "contentslist" will accept any of the following:
 
 <itemizedlist>
@@ -106,6 +106,65 @@ The workspace inspection procedures print the definition of various workspace ty
        &command-popl;
        &command-pot;
        &command-pots;
+    </section>
+
+   <section id="workspace-control">
+       <title>Workspace Control</title>
+
+<para>
+The workspace control procedures manipulate workspace "things" (procedures, variables, and property lists).
+You can use these procedures to erase, bury, unbury, and edit other procedures.
+</para>
+
+<para>
+If a thing is erased, it is completely removed from the workspace.  It is no longer usable or callable.
+</para>
+
+<para>
+If a thing is buried, it is not included in the contents list output by <link linkend="command-contents">CONTENTS</link>, <link linkend="command-procedures">PROCEDURES</link>, <link linkend="command-names">NAMES</link>, or <link linkend="command-plists">PLISTS</link>, but is included in the list output by <link linkend="command-buried">BURIED</link>.
+By implication, buried things are not printed by <link linkend="command-poall">POALL</link> or saved by <link linkend="command-save">SAVE</link>.
+However, buried things are still usable; a buried procedure can still be called and a buried variable can still be used.
+</para>
+
+<para>
+Typically, items are buried to keep them from cluttering up the workspace.
+For example, all Logolib routines bury themselves after they are called so that they don't show up when you execute <link linkend="command-edall">EDALL</link>.
+</para>
+
+<para>
+Buried things can be completely restored to the workspace by unburing them (for example, with <link linkend="command-unbury">UNBURY</link>).
+</para>
+
+       &command-erase;
+       &command-erall;
+       &command-erps;
+       &command-erns;
+       &command-erpls;
+       &command-ern;
+       &command-erpl;
+       &command-bury;
+       &command-buryall;
+       &command-buryname;
+       &command-unbury;
+       &command-unburyall;
+       &command-unburyname;
+       &command-trace;
+       &command-untrace;
+       &command-traced;
+       &command-step;
+       &command-unstep;
+       &command-edit;
+       &command-edall;
+       &command-edps;
+       &command-edns;
+       &command-edpls;
+       &command-edn;
+       &command-edpl;
+       &command-save;
+       &command-savel;
+       &command-load;
+       &command-status;
+       &command-nostatus;
     </section>
 
 </chapter>

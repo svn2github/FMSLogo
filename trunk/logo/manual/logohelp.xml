@@ -329,6 +329,38 @@
   <!ENTITY command-popl           SYSTEM "command-popl.xml">
   <!ENTITY command-pot            SYSTEM "command-pot.xml">
   <!ENTITY command-pots           SYSTEM "command-pots.xml">
+
+  <!ENTITY command-erase          SYSTEM "command-erase.xml">
+  <!ENTITY command-erall          SYSTEM "command-erall.xml">
+  <!ENTITY command-erps           SYSTEM "command-erps.xml">
+  <!ENTITY command-erns           SYSTEM "command-erns.xml">
+  <!ENTITY command-erpls          SYSTEM "command-erpls.xml">
+  <!ENTITY command-ern            SYSTEM "command-ern.xml">
+  <!ENTITY command-erpl           SYSTEM "command-erpl.xml">
+  <!ENTITY command-bury           SYSTEM "command-bury.xml">
+  <!ENTITY command-buryall        SYSTEM "command-buryall.xml">
+  <!ENTITY command-buryname       SYSTEM "command-buryname.xml">
+  <!ENTITY command-unbury         SYSTEM "command-unbury.xml">
+  <!ENTITY command-unburyall      SYSTEM "command-unburyall.xml">
+  <!ENTITY command-unburyname     SYSTEM "command-unburyname.xml">
+  <!ENTITY command-trace          SYSTEM "command-trace.xml">
+  <!ENTITY command-untrace        SYSTEM "command-untrace.xml">
+  <!ENTITY command-traced         SYSTEM "command-traced.xml">
+  <!ENTITY command-step           SYSTEM "command-step.xml">
+  <!ENTITY command-unstep         SYSTEM "command-unstep.xml">
+  <!ENTITY command-edit           SYSTEM "command-edit.xml">
+  <!ENTITY command-edall          SYSTEM "command-edall.xml">
+  <!ENTITY command-edps           SYSTEM "command-edps.xml">
+  <!ENTITY command-edns           SYSTEM "command-edns.xml">
+  <!ENTITY command-edpls          SYSTEM "command-edpls.xml">
+  <!ENTITY command-edn            SYSTEM "command-edn.xml">
+  <!ENTITY command-edpl           SYSTEM "command-edpl.xml">
+  <!ENTITY command-save           SYSTEM "command-save.xml">
+  <!ENTITY command-savel          SYSTEM "command-savel.xml">
+  <!ENTITY command-load           SYSTEM "command-load.xml">
+  <!ENTITY command-status         SYSTEM "command-status.xml">
+  <!ENTITY command-nostatus       SYSTEM "command-nostatus.xml">
+
 ]>
 
 <book id="MSWLogo Help">

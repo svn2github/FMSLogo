@@ -1,0 +1,46 @@
+<section id="command-edit">
+    <title>EDIT</title>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>EDIT</command> <parameter>contentslist</parameter>
+<command>ED</command> <parameter>contentslist</parameter>
+(<command>EDIT</command>)
+(<command>ED</command>)</synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+Opens the definitions of the named item(s) in <link linkend="editor">the Logo editor</link>.
+</para>
+
+<para>
+See the <link linkend="workspace-queries">Workspace Queries</link> section for an explaination of the <parameter>contentslist</parameter> parameter.
+</para>
+</listitem>
+</varlistentry>
+
+
+<varlistentry><term>Example</term>
+<listitem>
+<programlisting><userinput>TO "MYPROG
+  PRINT "Hrllo
+END
+
+MYPROG</userinput>
+Hrllo
+<userinput>EDIT "MYPROG</userinput>
+<replaceable>change Hrllo to Hello and exit editor</replaceable>
+<userinput>myprog</userinput>
+Hello
+</programlisting>
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</section>

@@ -1,0 +1,40 @@
+<section id="command-traced">
+    <title>TRACED</title>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>TRACED</command></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+Outputs a contents list consisting of the list of traced items.
+See also the <link linkend="command-trace">TRACE</link> command.
+</para>
+</listitem>
+</varlistentry>
+
+
+<varlistentry><term>Example</term>
+<listitem>
+<programlisting><userinput>TO MYPROG
+  FORWARD 10
+END
+
+SHOW TRACED</userinput>
+[[] [] []]
+
+<userinput>TRACE "MYPROG
+SHOW TRACED</userinput>
+[[MYPROG] [] []]
+</programlisting>
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</section>
