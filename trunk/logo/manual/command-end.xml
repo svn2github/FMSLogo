@@ -4,8 +4,7 @@
 <variablelist>
 
 <varlistentry><term>Synopsis</term>
-<listitem>
-(special form)
+<listitem>(special form)
 <synopsis><command>END</command></synopsis>
 </listitem>
 </varlistentry>
