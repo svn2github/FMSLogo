@@ -1,19 +1,21 @@
-<section id="command-test">
-    <title>TEST</title>
+<section id="command-iftrue">
+    <title>IFTRUE</title>
 
 <variablelist>
 
 <varlistentry><term>Synopsis</term>
 <listitem>
-<synopsis><command>TEST</command> <parameter>condition</parameter></synopsis>
+<synopsis><command>IFTRUE</command> <parameter>instructionlist</parameter>
+<command>IFT</command> <parameter>instructionlist</parameter></synopsis>
 </listitem>
 </varlistentry>
 
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-TEST remembers its input <parameter>condition</parameter>, which must be TRUE or FALSE, so that it be used later by <link linkend="command-iftrue">IFTRUE</link> or <link linkend="command-iffalse">IFFALSE</link> instructions.
-The effect of TEST is local to the procedure in which it is used; any corresponding IFTRUE or IFFALSE must be in the same procedure or a subprocedure.
+Runs <parameter>instructionlist</parameter> if the most recent TEST instruction had a TRUE input.
+Does nothing, otherwise.
+The TEST must have been in the same procedure or a superprocedure.
 </para>
 
 </listitem>

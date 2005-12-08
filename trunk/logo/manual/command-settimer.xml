@@ -1,0 +1,71 @@
+<section id="command-settimer">
+    <title>SETTIMER</title>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>SETTIMER</command> <parameter>id</parameter> <parameter>delay</parameter> <parameter>callback</parameter></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+
+<para>
+Sets up a timer identified by <parameter>id</parameter> (a number from 1-31) to call the logo commands in <parameter>callback</parameter> in <parameter>delay</parameter> milliseconds of time.
+It will continue to "fire" every <parameter>delay</parameter> milliseconds until you invoke <link linkend="command-cleartimer">CLEARTIMER</link> with the same <parameter>id</parameter>.
+</para>
+
+
+<para>
+You can clear the timer at any time with CLEARTIMER.
+In particular, you can clear the timer in the <parameter>callback</parameter> instructions to create a one-shot timer event.
+You can also create a timer at any time, including in the <parameter>callback</parameter> instructions.
+Halting clears all timers.
+</para>
+
+<para>
+Timers with <parameter>id</parameter> values from 1-16 will not allow the callback code to yield.
+Timers with <parameter>id</parameter> values from 17-31 will yield.
+</para>
+
+<para>
+You must be sure that you are handling (servicing) the timer callbacks faster than they are coming in.
+If you do not, you will eventually "Stack-Overflow" and MSWLogo will shutdown.
+</para>
+
+<para>
+You must also be sure that the callback code does not generate any error dialogs.
+If it does, you may end up with a screen full of "OK" dialog boxes and eventually "Stack OverFlow".
+</para>
+
+<para>
+Because SETTIMER creates the potential for MSWLogo to shutdown, it's a good idea to save your code frequently to disk when developing code that uses it.
+</para>
+
+<para>
+You can "block" all timers from firing (interrupting) in any code, including the callback (handler), by issuing the <link linkend="command-noyield">NOYIELD</link> command.
+You can "restore" firing by issuing the <link linkend="command-yield">YIELD</link> command.
+Blocking does not drop any "timer events" (firings), they are queued up and will fire when you yield, so don't "block" too long.
+</para>
+
+<para>
+Each timer <parameter>id</parameter> can have different values for <parameter>callback</parameter>.
+</para>
+
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Example</term>
+<listitem>
+<programlisting><userinput>SETTIMER 1 200 [SETPENCOLOR (LIST RANDOM 256 RANDOM 256 RANDOM 256)]</userinput>
+<replaceable>MSWLogo returns and the timer changes the pen color randomly every 200 milliseconds.</replaceable>
+<userinput>REPEAT 72 [REPEAT 4 [FORWARD 100 RIGHT 90] RIGHT 5]
+CLEARTIMER 1</userinput>
+</programlisting>
+</listitem>
+</varlistentry>
+
+</variablelist>
+</section>

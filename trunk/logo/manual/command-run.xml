@@ -1,0 +1,32 @@
+<section id="command-run">
+    <title>RUN</title>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>RUN</command> <parameter>instructionlist</parameter></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+Runs the Logo instructions in <parameter>instructionlist</parameter>; outputs if the list contains an expression that outputs.
+</para>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Example</term>
+<listitem>
+<programlisting><userinput>MAKE "thingstodo [FIRST [1 2 3]]
+MAKE "answer RUNRESULT :thingstodo
+SHOW :answer
+[1]</userinput>
+</programlisting>
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</section>

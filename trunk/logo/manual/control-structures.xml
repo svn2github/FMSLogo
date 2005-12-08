@@ -1,0 +1,66 @@
+<chapter id="control-structures">
+   <title>Control Structures</title>
+
+<para>
+Logo has many facilities for controlling which instructions get executed next.
+Taken together, these facilities are commonly called "flow control", because they control the "flow" of execution.
+</para>
+
+<para>
+In the following descriptions, an "instruction list" input may be a list or a word.
+If it's a word, it is parsed into list form before it is run.
+Thus, <code><link linkend="command-run">RUN</link> <link linkend="command-readword">READWORD</link></code> or <code><link linkend="command-run">RUN</link> <link linkend="command-readlist">READLIST</link></code> will work.
+The former is slightly preferable because it allows for a continued line (with <code>~</code>) that includes a comment (with <code>;</code>) on the first line.
+</para>
+
+<para>
+Pay attention to the difference between an "operation" and a "command".
+An operation is a procedure that outputs a value.
+A command is a procedure that does NOT output a value.
+Most procedures are either one or the other, but some are both.
+</para>
+
+   <section id="control-commands">
+       <title>Control Commands</title>
+
+       &command-run;
+       &command-runresult;
+       &command-repeat;
+       &command-repcount;
+       &command-if;
+       &command-ifelse;
+       &command-test;
+       &command-iftrue;
+       &command-iffalse;
+       &command-true;
+       &command-false;
+       &command-stop;
+       &command-output;
+       &command-catch;
+       &command-throw;
+       &command-error;
+       &command-pause;
+       &command-continue;
+       &command-yield;
+       &command-noyield;
+       &command-eventcheck;
+       &command-setcursorwait;
+       &command-halt;
+       &command-wait;
+       &command-settimer;
+       &command-cleartimer;
+       &command-bye;
+       &command-.maybeoutput;
+       &command-ignore;
+       &command-backtick;
+       &command-for;
+       &command-forever;
+       &command-do.while;
+       &command-while;
+       &command-do.until;
+       &command-until;
+       &command-goto;
+       &command-tag;
+    </section>
+
+</chapter>

@@ -13,6 +13,7 @@
   <!ENTITY logical-operations        SYSTEM "logical-operations.xml">
   <!ENTITY graphics                  SYSTEM "graphics.xml">
   <!ENTITY workspace-management      SYSTEM "workspace-management.xml">
+  <!ENTITY control-structures        SYSTEM "control-structures.xml">
 
   <!ENTITY command-.setbf       SYSTEM "command-.setbf.xml">
   <!ENTITY command-.setfirst    SYSTEM "command-.setfirst.xml">
@@ -361,6 +362,45 @@
   <!ENTITY command-status         SYSTEM "command-status.xml">
   <!ENTITY command-nostatus       SYSTEM "command-nostatus.xml">
 
+  <!ENTITY command-run            SYSTEM "command-run.xml">
+  <!ENTITY command-runresult      SYSTEM "command-runresult.xml">
+  <!ENTITY command-repeat         SYSTEM "command-repeat.xml">
+  <!ENTITY command-repcount       SYSTEM "command-repcount.xml">
+  <!ENTITY command-if             SYSTEM "command-if.xml">
+  <!ENTITY command-ifelse         SYSTEM "command-ifelse.xml">
+  <!ENTITY command-test           SYSTEM "command-test.xml">
+  <!ENTITY command-iftrue         SYSTEM "command-iftrue.xml">
+  <!ENTITY command-iffalse        SYSTEM "command-iffalse.xml">
+  <!ENTITY command-true           SYSTEM "command-true.xml">
+  <!ENTITY command-false          SYSTEM "command-false.xml">
+  <!ENTITY command-stop           SYSTEM "command-stop.xml">
+  <!ENTITY command-output         SYSTEM "command-output.xml">
+  <!ENTITY command-catch          SYSTEM "command-catch.xml">
+  <!ENTITY command-throw          SYSTEM "command-throw.xml">
+  <!ENTITY command-error          SYSTEM "command-error.xml">
+  <!ENTITY command-pause          SYSTEM "command-pause.xml">
+  <!ENTITY command-continue       SYSTEM "command-continue.xml">
+  <!ENTITY command-yield          SYSTEM "command-yield.xml">
+  <!ENTITY command-noyield        SYSTEM "command-noyield.xml">
+  <!ENTITY command-eventcheck     SYSTEM "command-eventcheck.xml">
+  <!ENTITY command-setcursorwait  SYSTEM "command-setcursorwait.xml">
+  <!ENTITY command-halt           SYSTEM "command-halt.xml">
+  <!ENTITY command-wait           SYSTEM "command-wait.xml">
+  <!ENTITY command-settimer       SYSTEM "command-settimer.xml">
+  <!ENTITY command-cleartimer     SYSTEM "command-cleartimer.xml">
+  <!ENTITY command-bye            SYSTEM "command-bye.xml">
+  <!ENTITY command-.maybeoutput   SYSTEM "command-.maybeoutput.xml">
+  <!ENTITY command-ignore         SYSTEM "command-ignore.xml">
+  <!ENTITY command-backtick       SYSTEM "command-backtick.xml">
+  <!ENTITY command-for            SYSTEM "command-for.xml">
+  <!ENTITY command-forever        SYSTEM "command-forever.xml">
+  <!ENTITY command-do.while       SYSTEM "command-do.while.xml">
+  <!ENTITY command-while          SYSTEM "command-while.xml">
+  <!ENTITY command-do.until       SYSTEM "command-do.until.xml">
+  <!ENTITY command-until          SYSTEM "command-until.xml">
+  <!ENTITY command-goto           SYSTEM "command-goto.xml">
+  <!ENTITY command-tag            SYSTEM "command-tag.xml">
+
 ]>
 
 <book id="MSWLogo Help">
@@ -400,6 +440,7 @@
   &logical-operations;
   &graphics;
   &workspace-management;
+  &control-structures;
 
 </book>
 

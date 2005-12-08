@@ -24,7 +24,7 @@ The stopped procedure does not output a value.
 <listitem>
 <programlisting><userinput>TO MYPROG :arg
   PRINT [Before Stop]
-  IF 1=:arg [stop]
+  IF 1=:arg [STOP]
   PRINT [After Stop]
 END
 

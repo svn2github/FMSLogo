@@ -1,0 +1,23 @@
+<section id="command-noyield">
+    <title>NOYIELD</title>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>NOYIELD</command></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+NOYIELD tells Logo not to let other programs use the CPU while Logo is working.
+The default is to yield.
+See the <link linkend="command-yield">YIELD</link> command for an explaination of what "yielding" means.
+</para>
+</listitem>
+</varlistentry>
+
+</variablelist>
+</section>
