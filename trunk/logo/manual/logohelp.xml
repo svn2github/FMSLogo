@@ -401,6 +401,21 @@
   <!ENTITY command-goto           SYSTEM "command-goto.xml">
   <!ENTITY command-tag            SYSTEM "command-tag.xml">
 
+  <!ENTITY command-apply          SYSTEM "command-apply.xml">
+  <!ENTITY command-invoke         SYSTEM "command-invoke.xml">
+  <!ENTITY command-foreach        SYSTEM "command-foreach.xml">
+  <!ENTITY command-map            SYSTEM "command-map.xml">
+  <!ENTITY command-map.se         SYSTEM "command-map.se.xml">
+  <!ENTITY command-filter         SYSTEM "command-filter.xml">
+  <!ENTITY command-find           SYSTEM "command-find.xml">
+  <!ENTITY command-reduce         SYSTEM "command-reduce.xml">
+  <!ENTITY command-crossmap       SYSTEM "command-crossmap.xml">
+  <!ENTITY command-cascade        SYSTEM "command-cascade.xml">
+  <!ENTITY command-cascade.2      SYSTEM "command-cascade.2.xml">
+  <!ENTITY command-transfer       SYSTEM "command-transfer.xml">
+  <!ENTITY command-iseq           SYSTEM "command-iseq.xml">
+  <!ENTITY command-rseq           SYSTEM "command-rseq.xml">
+
 ]>
 
 <book id="MSWLogo Help">

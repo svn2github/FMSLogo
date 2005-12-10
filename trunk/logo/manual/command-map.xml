@@ -1,0 +1,46 @@
+<section id="command-map">
+    <title>MAP</title>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>MAP</command> <parameter>templatelist</parameter> <parameter>data</parameter>
+(<command>MAP</command> <parameter>templatelist</parameter> <parameter>data1</parameter> <parameter>data2</parameter> <parameter>...</parameter>)</synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+Outputs a word or list, depending on the type of the <parameter>data</parameter> input, of the same length as that <parameter>data</parameter> input.
+(If more than one data input are given, the output is of the same type as <parameter>data1</parameter>.)
+Each element of the output is the result of evaluating the <parameter>templatelist</parameter>, filling the slots with the corresponding element(s) of the <parameter>data</parameter> input(s).
+(All data inputs must be the same length.)
+In the case of a word output, the results of the template evaluation must be words, and they are concatenated with <link linkend="command-word">WORD</link>.
+</para>
+
+<para>
+In a template, the symbol <code>?REST</code> represents the portion of the data input to the right of the member currently being used as the <code>?</code> slot-filler.
+That is, if the data input is <code>[A B C D E]</code> and the template is being evaluated with <code>?</code> replaced by <code>B</code>, then <code>?REST</code> would be replaced by <code>[C D E]</code>.
+If multiple parallel slots are used, then <code>(?REST 1)</code> goes with <code>?1</code>, etc.
+</para>
+
+<para>
+In a template, the symbol <code>#</code> represents the position in the data input of the member currently being used as the <code>?</code> slot-filler.
+That is, if the data input is <code>[A B C D E]</code> and the template is being evaluated with <code>?</code> replaced by <code>B</code>, then <code>#</code> would be replaced by <code>2</code>.
+</para>
+
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Example</term>
+<listitem>
+<programlisting><userinput>SHOW (MAP "LIST [a b c] [d e f])</userinput>
+[[a d] [b e] [c f]]
+</programlisting>
+</listitem>
+</varlistentry>
+
+</variablelist>
+</section>
