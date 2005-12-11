@@ -1,0 +1,176 @@
+<section id="command-.macro">
+    <title>.MACRO</title>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>(special form)
+<synopsis><command>.MACRO</command> <parameter>procname</parameter> <parameter>:input1</parameter> <parameter>:input2</parameter> <parameter>...</parameter></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+A macro is a special kind of procedure whose output is evaluated as Logo instructions in the context of the macro's caller.
+.MACRO is like <link linkend="command-to">TO</link> except that the new procedure becomes a macro.
+</para>
+
+<para>
+Macros are useful for inventing new control structures comparable to <link linkend="command-repeat">REPEAT</link>, <link linkend="command-if">IF</link>, and so on.
+Such control structures can almost, but not quite, be duplicated by ordinary Logo procedures.
+For example, here is an ordinary procedure version of REPEAT:
+
+<programlisting>  TO MY.REPEAT :num :instructions
+    IF :num=0 [STOP]
+    RUN :instructions
+    MY.REPEAT :num-1 :instructions
+  END
+</programlisting>
+</para>
+
+<para>
+This version works fine for most purposes, for example
+
+<programlisting>  MY.REPEAT 5 [PRINT "hello]
+</programlisting>
+
+But it doesn't work if the instructions to be carried out include <link linkend="command-output">OUTPUT</link>, <link linkend="command-stop">STOP</link>, or <link linkend="command-local">LOCAL</link>.
+For example, consider this procedure:
+
+<programlisting>  TO EXAMPLE
+    PRINT [Guess my secret word.  You get three guesses.]
+    REPEAT 3 [TYPE "|?? | IF READWORD = "secret [PRINT "Right! STOP]]
+    PRINT [Sorry, the word was "secret"!]
+  END
+</programlisting>
+</para>
+
+<para>
+This procedure works as written, but if MY.REPEAT is used instead of REPEAT, it won't work because the STOP will stop MY.REPEAT instead of stopping EXAMPLE as desired.
+</para>
+
+<para>
+The solution is to make MY.REPEAT a macro.
+Instead of carrying out the computation, a macro must return a list containing Logo instructions.
+The contents of that list are evaluated as if they appeared in place of the call to the macro.
+Here's a macro version of REPEAT:
+
+<programlisting>  .MACRO MY.REPEAT :num :instructions
+    IF :num=0 [OUTPUT []]
+    OUTPUT SENTENCE :instructions (LIST "my.repeat :num-1 :instructions)
+  END
+</programlisting>
+</para>
+
+<para>
+Every macro is an operation; all macros always output something.
+Even in the base case, MY.REPEAT outputs an empty instruction list.
+</para>
+
+<para>
+To see how the MY.REPEAT macro works, let's take the example
+
+<programlisting>  MY.REPEAT 5 [PRINT "hello]
+</programlisting>
+</para>
+
+<para>
+For this example, MY.REPEAT will output the instruction list
+<programlisting>  [PRINT "hello my.repeat 4 [PRINT "hello]]
+</programlisting>
+</para>
+
+<para>
+Logo then executes these instructions in place of the original invocation of MY.REPEAT; this prints "hello" once and invokes another repetition.
+</para>
+
+
+<para>
+The technique just shown, although fairly easy to understand, is too slow because each repetition constructs an instruction list for evaluation.
+Another approach is to make MY.REPEAT a macro that works just like the non-macro version unless the instructions to be repeated includes OUTPUT or STOP:
+
+<programlisting>  .MACRO MY.REPEAT :num :instructions
+    CATCH "repeat.catchtag [OP REPEAT.DONE RUNRESULT [REPEAT1 :num :instructions]]
+    OP []
+  END
+
+  TO REPEAT1 :num :instructions
+    IF :num=0 [THROW "repeat.catchtag]
+    RUN :instructions
+    .MAYBEOUTPUT REPEAT1 :num-1 :instructions
+  END
+
+  TO REPEAT.DONE :repeat.result
+    IF EMPTYP :repeat.result [OP [STOP]]
+    OP LIST "output QUOTED FIRST :repeat.result
+  END
+</programlisting>
+</para>
+
+<para>
+If the instructions do not include STOP or OUTPUT, then REPEAT1 will reach its base case and invoke <link linkend="command-throw">THROW</link>.
+As a result, my.repeat's last instruction line will output an empty list, so the second evaluation of the macro result will do nothing.
+But if a STOP or OUTPUT happens, then REPEAT.DONE will output a STOP or OUTPUT instruction that will be re-executed in the caller's context.
+</para>
+
+<para>
+The macro-defining commands have names starting with a dot because macros are an advanced feature of Logo.
+It's easy to get in trouble by defining a macro that doesn't terminate, or by failing to construct the instruction list properly.
+</para>
+
+<para>
+Lisp users should note that Logo macros are NOT special forms.
+That is, the inputs to the macro are evaluated normally, as they would be for any other Logo procedure.
+It's only the output from the macro that's handled unusually.
+</para>
+
+<para>
+Here's how you can implement <link linkend="command-localmake">LOCALMAKE</link> with .MACRO:
+<programlisting>  .MACRO LOCALMAKE :name :value
+    OUTPUT (LIST ("local  word "" :name  "apply ""make (LIST :name :value))
+  END
+</programlisting>
+</para>
+
+<para>
+It's used this way:
+
+<programlisting>  TO TRY
+    LOCALMAKE "garply "hello
+    PRINT :garply
+  END
+</programlisting>
+</para>
+
+<para>
+LOCALMAKE outputs the list:
+
+<programlisting>  [LOCAL "garply apply "make [garply hello]]
+</programlisting>
+</para>
+
+<para>
+LOCALMAKE uses <link linkend="command-apply">APPLY</link> to avoid deciding whether the second input to <link linkend="command-make">MAKE</link> requires a quotation mark before it.
+In this case it would--<code>MAKE "GARPLY "HELLO</code>--but the quotation mark would be wrong if the value were a list.
+</para>
+
+<para>
+It's often convenient to use the <link linkend="command-backtick.xml">`</link> function to construct the instruction list:
+
+<programlisting>  .MACRO LOCALMAKE :name :value
+    OP `[LOCAL ,[WORD "" :name] APPLY "make [,[:name] ,[:value]]]
+  END
+</programlisting>
+</para>
+
+<para>
+On the other hand, ` is slow, since it's tree-recursive and written in Logo.
+</para>
+
+
+</listitem>
+</varlistentry>
+
+</variablelist>
+</section>

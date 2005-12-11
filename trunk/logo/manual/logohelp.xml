@@ -14,6 +14,7 @@
   <!ENTITY graphics                  SYSTEM "graphics.xml">
   <!ENTITY workspace-management      SYSTEM "workspace-management.xml">
   <!ENTITY control-structures        SYSTEM "control-structures.xml">
+  <!ENTITY macro-commands            SYSTEM "macro-commands.xml">
 
   <!ENTITY command-.setbf       SYSTEM "command-.setbf.xml">
   <!ENTITY command-.setfirst    SYSTEM "command-.setfirst.xml">
@@ -416,6 +417,10 @@
   <!ENTITY command-iseq           SYSTEM "command-iseq.xml">
   <!ENTITY command-rseq           SYSTEM "command-rseq.xml">
 
+  <!ENTITY command-.macro         SYSTEM "command-.macro.xml">
+  <!ENTITY command-.defmacro      SYSTEM "command-.defmacro.xml">
+  <!ENTITY command-macroexpand    SYSTEM "command-macroexpand.xml">
+
 ]>
 
 <book id="MSWLogo Help">
@@ -456,6 +461,7 @@
   &graphics;
   &workspace-management;
   &control-structures;
+  &macro-commands;
 
 </book>
 
