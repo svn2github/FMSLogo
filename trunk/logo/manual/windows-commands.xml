@@ -39,4 +39,12 @@ When controls are in the graphics window the coordinates will be in the turtle c
       &command-windowenable;
    </section>
 
+   <section id="dialog-commands">
+      <title>Dialog Commands</title>
+
+      &command-dialogcreate;
+      &command-dialogdelete;
+      &command-dialogenable;
+   </section>
+
 </chapter>

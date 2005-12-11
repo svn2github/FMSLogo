@@ -449,6 +449,9 @@
   <!ENTITY command-windowcreate    SYSTEM "command-windowcreate.xml">
   <!ENTITY command-windowdelete    SYSTEM "command-windowdelete.xml">
   <!ENTITY command-windowenable    SYSTEM "command-windowenable.xml">
+  <!ENTITY command-dialogcreate    SYSTEM "command-dialogcreate.xml">
+  <!ENTITY command-dialogdelete    SYSTEM "command-dialogdelete.xml">
+  <!ENTITY command-dialogenable    SYSTEM "command-dialogenable.xml">
 
 ]>
 
