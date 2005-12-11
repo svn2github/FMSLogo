@@ -14,7 +14,7 @@
 <para>
 Creates a window.
 A window is used as the framework to which you add other window objects or controls (sometimes called widgets).
-You can add things such as buttons, scrollbars, listboxes, etc. to the window. (see <link linkend="windows-modal-vs-modeless">Modal vs. Modeless</link>).
+You can add things such as buttons, scrollbars, listboxes, etc. to the window. (See <link linkend="windows-modal-vs-modeless">Modal vs. Modeless</link>).
 </para>
 
 <para>
