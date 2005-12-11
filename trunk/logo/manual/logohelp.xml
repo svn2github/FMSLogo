@@ -20,6 +20,7 @@
   <!ENTITY special-variables         SYSTEM "special-variables.xml">
   <!ENTITY help-commands             SYSTEM "help-commands.xml">
   <!ENTITY directory-commands        SYSTEM "directory-commands.xml">
+  <!ENTITY windows-commands          SYSTEM "windows-commands.xml">
 
   <!ENTITY command-.setbf       SYSTEM "command-.setbf.xml">
   <!ENTITY command-.setfirst    SYSTEM "command-.setfirst.xml">
@@ -445,6 +446,10 @@
   <!ENTITY command-mkdir           SYSTEM "command-mkdir.xml">
   <!ENTITY command-rmdir           SYSTEM "command-rmdir.xml">
 
+  <!ENTITY command-windowcreate    SYSTEM "command-windowcreate.xml">
+  <!ENTITY command-windowdelete    SYSTEM "command-windowdelete.xml">
+  <!ENTITY command-windowenable    SYSTEM "command-windowenable.xml">
+
 ]>
 
 <book id="MSWLogo Help">
@@ -490,6 +495,7 @@
   &special-variables;
   &help-commands;
   &directory-commands;
+  &windows-commands;
 
 </book>
 

@@ -1,0 +1,42 @@
+<chapter id="windows-commands">
+   <title>Windows Commands</title>
+
+<para>
+This chapter describes how to create Graphical User Interfaces (GUIs) in MSWLogo.
+</para>
+
+<para>
+The term "window" is very broad and includes simple windows, push buttons, dialog boxes, list boxes, combo boxes, scroll bars, buttons, static text, group boxes, checkboxes, and radio buttons.
+Using these elementary units, you can build up complex GUIs.
+Each window maintains a parent-child relationship with the windows that are placed on it.
+The way you program GUIs is modelled after how they are displayed, you create each individual sub-window and set up the parent-child relationships.
+</para>
+
+<para>
+For each "somethingCREATE" command a parent must be specified which identifies the relationship.
+When a parent of any kind is "somethingDELETEd", all its "child" Windows and controls will also be deleted.
+Every Window command inputs a "name".
+On the "somethingCREATE" commands it is there to label the "something" so that it can later be referenced.
+On most other commands it is used as a "handle" to identify the Window or control you wish to communicate with.
+And third it is also used to reference the "parent" of the Window or control that is to "own" this new "something".
+</para>
+
+<para>
+When controls are in windows the coordinates used in all the Windows functions are in Windows coordinate system (NOT the turtle coordinate system).
+That is the Y axis is upside down (positive numbers are down).
+The origin is NOT the middle of the screen, it is the upper left hand corner of the window.
+</para>
+
+<para>
+When controls are in the graphics window the coordinates will be in the turtle coordinate system.
+</para>
+
+   <section id="window-commands">
+      <title>Window Commands</title>
+
+      &command-windowcreate;
+      &command-windowdelete;
+      &command-windowenable;
+   </section>
+
+</chapter>
