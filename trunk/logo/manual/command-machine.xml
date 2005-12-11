@@ -12,11 +12,7 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-This command outputs the characteristics of the machine in a list.
-</para>
-
-<para>
-The output has the following format:
+This command outputs the characteristics of the machine in a list with the following format:
 
 <programlisting>[IsWindows Wordsize BitmapWidth BitmapHeight IsPaletteEnable WindowsVersionLoWord WindowsVersionHiWord WorkingAreaWidth WorkingAreaHeight DesktopWidth DesktopHeight WindowWidth WindowHeight]</programlisting>
 
@@ -30,8 +26,8 @@ Where the meaning of each member is given by the table below.
     <tbody>
       <row><entry>IsWindows</entry>            <entry>1, if this is MS Windows.  0, otherwise.</entry></row>
       <row><entry>Wordsize</entry>             <entry>The number of bits in a machine word.</entry></row>
-      <row><entry>BitmapWidth</entry>          <entry>The width of the drawable area on the MSWLogo Screen, in pixel.</entry></row>
-      <row><entry>BitmapHeight</entry>         <entry>The height of the drawable area on the MSWLogo Screen, in pixel.</entry></row>
+      <row><entry>BitmapWidth</entry>          <entry>The width of the drawable area on the MSWLogo Screen, in pixels.</entry></row>
+      <row><entry>BitmapHeight</entry>         <entry>The height of the drawable area on the MSWLogo Screen, in pixels.</entry></row>
       <row><entry>IsPaletteEnabled</entry>     <entry>1, if a palette is enabled, 0, otherwise.</entry></row>
       <row><entry>WindowsVersionLoWord</entry> <entry>The minor version of Windows.</entry></row>
       <row><entry>WindowsVersionHiWord</entry> <entry>The major version of Windows.</entry></row>
