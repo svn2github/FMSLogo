@@ -92,4 +92,11 @@ You can also issue a <link linkend="command-pause">PAUSE</link> command within c
 You can think of pause and continue as sort of a Halt-n-Push and Pop-n-Continue of your state respectively.</para> 
    </section>
 
+   <section>
+      <anchor id="commander-edall" />
+      <title>Edall Button</title>
+      <para>The Edall button opens the contents of the entire workspace (all unburied procedures, variables, and property lists) in <link linkend="editor">the logo editor</link>.
+This is the same as running the <link linkend="command-edall">EDALL</link> command.</para> 
+   </section>
+
 </chapter>
