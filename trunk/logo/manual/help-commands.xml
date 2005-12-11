@@ -1,0 +1,11 @@
+<chapter id="help-commands">
+   <title>Help Commands</title>
+
+<para>
+You can access MSWLogo's manual and system documention through Logo commands.
+</para>
+
+    &command-help;
+    &command-winhelp;
+
+</chapter>

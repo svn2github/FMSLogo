@@ -17,6 +17,7 @@
   <!ENTITY macro-commands            SYSTEM "macro-commands.xml">
   <!ENTITY error-processing          SYSTEM "error-processing.xml">
   <!ENTITY special-variables         SYSTEM "special-variables.xml">
+  <!ENTITY help-commands             SYSTEM "help-commands.xml">
 
   <!ENTITY command-.setbf       SYSTEM "command-.setbf.xml">
   <!ENTITY command-.setfirst    SYSTEM "command-.setfirst.xml">
@@ -431,6 +432,9 @@
   <!ENTITY command-startup         SYSTEM "command-startup.xml">
   <!ENTITY command-machine         SYSTEM "command-machine.xml">
 
+  <!ENTITY command-help            SYSTEM "command-help.xml">
+  <!ENTITY command-winhelp         SYSTEM "command-winhelp.xml">
+
 ]>
 
 <book id="MSWLogo Help">
@@ -474,6 +478,7 @@
   &macro-commands;
   &error-processing;
   &special-variables;
+  &help-commands;
 
 </book>
 
