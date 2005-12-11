@@ -17,7 +17,7 @@ When a window has focus, it is selected and all keyboard input is directed to it
 </para>
 
 <para>
-The term "caption" is not the same as the window's "name" used in the WINDOWS functions.
+The term "caption" is not the same as the window's "name" used in the <link linkend="windows-commands">Windows Commands</link> chapter.
 </para>
 
 <para>
