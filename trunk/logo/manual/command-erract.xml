@@ -1,0 +1,36 @@
+<section id="command-erract">
+    <title>ERRACT</title>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>ERRACT</command></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+An instructionlist that is run when an error is thrown.
+ERRACT typically has the value <code>[PAUSE]</code> to allow interactive debugging.
+</para>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Example</term>
+<listitem>
+
+<programlisting><userinput>FENCE
+FORWARD 1000</userinput>
+Turtle out of bounds
+
+<userinput>MAKE "ERRACT [PRINT [You really blew it]]
+FORWARD 1000</userinput>
+You really blew it
+</programlisting>
+</listitem>
+</varlistentry>
+
+</variablelist>
+</section>

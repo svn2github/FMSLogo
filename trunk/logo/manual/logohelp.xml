@@ -16,6 +16,7 @@
   <!ENTITY control-structures        SYSTEM "control-structures.xml">
   <!ENTITY macro-commands            SYSTEM "macro-commands.xml">
   <!ENTITY error-processing          SYSTEM "error-processing.xml">
+  <!ENTITY special-variables         SYSTEM "special-variables.xml">
 
   <!ENTITY command-.setbf       SYSTEM "command-.setbf.xml">
   <!ENTITY command-.setfirst    SYSTEM "command-.setfirst.xml">
@@ -422,6 +423,14 @@
   <!ENTITY command-.defmacro      SYSTEM "command-.defmacro.xml">
   <!ENTITY command-macroexpand    SYSTEM "command-macroexpand.xml">
 
+  <!ENTITY command-caseignoredp    SYSTEM "command-caseignoredp.xml">
+  <!ENTITY command-erract          SYSTEM "command-erract.xml">
+  <!ENTITY command-printdepthlimit SYSTEM "command-printdepthlimit.xml">
+  <!ENTITY command-printwidthlimit SYSTEM "command-printwidthlimit.xml">
+  <!ENTITY command-redefp          SYSTEM "command-redefp.xml">
+  <!ENTITY command-startup         SYSTEM "command-startup.xml">
+  <!ENTITY command-machine         SYSTEM "command-machine.xml">
+
 ]>
 
 <book id="MSWLogo Help">
@@ -464,6 +473,7 @@
   &control-structures;
   &macro-commands;
   &error-processing;
+  &special-variables;
 
 </book>
 

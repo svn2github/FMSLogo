@@ -1,0 +1,34 @@
+<section id="command-printdepthlimit">
+    <title>PRINTDEPTHLIMIT</title>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>PRINTDEPTHLIMIT</command></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+If a nonnegative integer, indicates the maximum depth of sublist structure that will be printed by <link linkend="command-print">PRINT</link>, etc.
+</para>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Example</term>
+<listitem>
+
+<programlisting><userinput>PRINT [[1 [2 [3 [4 [5]]]]]]</userinput>
+[1 [2 [3 [4 [5]]]]]]
+
+<userinput>MAKE "PRINTDEPTHLIMIT 4
+PRINT [[1 [2 [3 [4 [5]]]]]]</userinput>
+[1 [2 [3 [... ...]]]]
+</programlisting>
+</listitem>
+</varlistentry>
+
+</variablelist>
+</section>
