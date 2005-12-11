@@ -10,8 +10,7 @@ For more information, select the File menu command name.</para>
 
         <section>
           <title>File-New Command</title>
-          <para>This will clear (<link linkend="command-delete">DELETE</link>, <link linkend="command-purge">PURGE</link>, <link linkend="command-zap">ZAP</link>) 
-all procedures currently loaded in memory.  
+          <para>This will clear <link linkend="command-erase">ERASE</link> all procedures currently loaded in memory.
 It's like starting with a "new" session.</para>
         </section>
 
