@@ -46,7 +46,7 @@ However, if you do care, you can use <link linkend="command-plist">PLISTS</link>
 
 <para>
 Names of property lists are always case-insensitive.
-Names of individual properties are case-sensitive or case-insensitive depending on the value of <link linkend="command-caseignorep">CASEIGNOREDP</link>, which is TRUE by default.
+Names of individual properties are case-sensitive or case-insensitive depending on the value of <link linkend="command-caseignoredp">CASEIGNOREDP</link>, which is TRUE by default.
 </para>
 
        &command-pprop;

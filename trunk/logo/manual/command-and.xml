@@ -18,7 +18,7 @@ All inputs must be TRUE or FALSE.
 </para>
 
 <para>
-Comparison is case-insensitive regardless of the value of <link linkend="command-caseignorep">CASEIGNOREDP</link>.
+Comparison is case-insensitive regardless of the value of <link linkend="command-caseignoredp">CASEIGNOREDP</link>.
 That is, "true" or "True" or "TRUE" are all the same.
 </para>
 
