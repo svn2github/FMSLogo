@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
   "http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd" [
+
   <!ENTITY introduction              SYSTEM "introduction.xml">
   <!ENTITY command-line-options      SYSTEM "command-line-options.xml">
   <!ENTITY editor                    SYSTEM "editor.xml">
@@ -18,6 +19,7 @@
   <!ENTITY error-processing          SYSTEM "error-processing.xml">
   <!ENTITY special-variables         SYSTEM "special-variables.xml">
   <!ENTITY help-commands             SYSTEM "help-commands.xml">
+  <!ENTITY directory-commands        SYSTEM "directory-commands.xml">
 
   <!ENTITY command-.setbf       SYSTEM "command-.setbf.xml">
   <!ENTITY command-.setfirst    SYSTEM "command-.setfirst.xml">
@@ -435,6 +437,14 @@
   <!ENTITY command-help            SYSTEM "command-help.xml">
   <!ENTITY command-winhelp         SYSTEM "command-winhelp.xml">
 
+  <!ENTITY command-dir             SYSTEM "command-dir.xml">
+  <!ENTITY command-files           SYSTEM "command-files.xml">
+  <!ENTITY command-directories     SYSTEM "command-directories.xml">
+  <!ENTITY command-chdir           SYSTEM "command-chdir.xml">
+  <!ENTITY command-popdir          SYSTEM "command-popdir.xml">
+  <!ENTITY command-mkdir           SYSTEM "command-mkdir.xml">
+  <!ENTITY command-rmdir           SYSTEM "command-rmdir.xml">
+
 ]>
 
 <book id="MSWLogo Help">
@@ -479,6 +489,7 @@
   &error-processing;
   &special-variables;
   &help-commands;
+  &directory-commands;
 
 </book>
 
