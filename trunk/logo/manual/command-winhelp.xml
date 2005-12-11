@@ -23,7 +23,7 @@ You must enter the full keyword.
 
 <varlistentry><term>Example</term>
 <listitem>
-<programlisting><userinput>winhelp "c:\\windows\\help\\notepad.hlp ; Open winhelp file for notepad.exe
+<programlisting><userinput>WINHELP "c:\\windows\\help\\notepad.hlp ; Open winhelp file for notepad.exe
 </userinput>
 </programlisting>
 </listitem>
