@@ -74,4 +74,31 @@ The items are represented as text and displayed vertically, one per line.
       &command-listboxdeletestring;
    </section>
 
+
+   <section id="combobox-commands">
+      <title>Combobox Commands</title>
+
+<para>
+Comboboxes are a type of control that presents the user with a pre-determined choice of items
+as well as a free-form text input.
+The items are represented as text and displayed vertically, one per line.
+</para>
+
+<para>
+Comboboxes get their name by being a combination of a listbox control and an edit control.
+</para>
+
+<para>
+Comboboxes can also be used to create a pure edit control by setting the height such that the listbox is hidden.
+</para>
+
+      &command-comboboxcreate;
+      &command-comboboxdelete;
+      &command-comboboxenable;
+      &command-comboboxgettext;
+      &command-comboboxsettext;
+      &command-comboboxaddstring;
+      &command-comboboxdeletestring;
+   </section>
+
 </chapter>

@@ -460,6 +460,14 @@
   <!ENTITY command-listboxaddstring     SYSTEM "command-listboxaddstring.xml">
   <!ENTITY command-listboxdeletestring  SYSTEM "command-listboxdeletestring.xml">
 
+  <!ENTITY command-comboboxcreate        SYSTEM "command-comboboxcreate.xml">
+  <!ENTITY command-comboboxdelete        SYSTEM "command-comboboxdelete.xml">
+  <!ENTITY command-comboboxenable        SYSTEM "command-comboboxenable.xml">
+  <!ENTITY command-comboboxgettext       SYSTEM "command-comboboxgettext.xml">
+  <!ENTITY command-comboboxsettext       SYSTEM "command-comboboxsettext.xml">
+  <!ENTITY command-comboboxaddstring     SYSTEM "command-comboboxaddstring.xml">
+  <!ENTITY command-comboboxdeletestring  SYSTEM "command-comboboxdeletestring.xml">
+
 ]>
 
 <book id="MSWLogo Help">
