@@ -13,12 +13,10 @@ The way you program GUIs is modelled after how they are displayed, you create ea
 </para>
 
 <para>
-For each "somethingCREATE" command a parent must be specified which identifies the relationship.
-When a parent of any kind is "somethingDELETEd", all its "child" Windows and controls will also be deleted.
-Every Window command inputs a "name".
-On the "somethingCREATE" commands it is there to label the "something" so that it can later be referenced.
-On most other commands it is used as a "handle" to identify the Window or control you wish to communicate with.
-And third it is also used to reference the "parent" of the Window or control that is to "own" this new "something".
+Each time a window is created, you must specify the parent that "owns" the window.
+You must also specify a "name" so that the new window may be referenced by other instructions.
+Most other commands will use this name to identify the Window or control you wish to communicate with.
+When a parent window is deleted, its "child" Windows and controls are also deleted.
 </para>
 
 <para>
@@ -34,6 +32,12 @@ When controls are in the graphics window the coordinates will be in the turtle c
    <section id="window-commands">
       <title>Window Commands</title>
 
+<para>
+Windows are one of two types of basic "canvas" types.
+A window has a title bar, frames, and a grey client area upon which other window control are places.
+Unlike dialogs, windows are modeless, which means that MSWLogo will continue to run instructions while the window is displayed.
+</para>
+
       &command-windowcreate;
       &command-windowdelete;
       &command-windowenable;
@@ -42,6 +46,13 @@ When controls are in the graphics window the coordinates will be in the turtle c
    <section id="dialog-commands">
       <title>Dialog Commands</title>
 
+<para>
+Dialogs are one of two types of basic "canvas" types.
+A dialog has a title bar, frames, and a grey client area upon which other window control are places.
+Unlike windows, dialogs are modal, which means that MSWLogo won't run any instructions until the dialog is closed.
+Because of this, dialogs are used when to present the user with a question that must be answered before the program can continue.
+</para>
+
       &command-dialogcreate;
       &command-dialogdelete;
       &command-dialogenable;
@@ -49,6 +60,11 @@ When controls are in the graphics window the coordinates will be in the turtle c
 
    <section id="listbox-commands">
       <title>Listbox Commands</title>
+
+<para>
+Listboxes are a type of control that presents the user with a pre-determined choice of items.
+The items are represented as text and displayed vertically, one per line.
+</para>
 
       &command-listboxcreate;
       &command-listboxdelete;
