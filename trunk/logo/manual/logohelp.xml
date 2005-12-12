@@ -453,6 +453,13 @@
   <!ENTITY command-dialogdelete    SYSTEM "command-dialogdelete.xml">
   <!ENTITY command-dialogenable    SYSTEM "command-dialogenable.xml">
 
+  <!ENTITY command-listboxcreate        SYSTEM "command-listboxcreate.xml">
+  <!ENTITY command-listboxdelete        SYSTEM "command-listboxdelete.xml">
+  <!ENTITY command-listboxenable        SYSTEM "command-listboxenable.xml">
+  <!ENTITY command-listboxgetselect     SYSTEM "command-listboxgetselect.xml">
+  <!ENTITY command-listboxaddstring     SYSTEM "command-listboxaddstring.xml">
+  <!ENTITY command-listboxdeletestring  SYSTEM "command-listboxdeletestring.xml">
+
 ]>
 
 <book id="MSWLogo Help">

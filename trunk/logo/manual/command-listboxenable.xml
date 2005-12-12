@@ -1,0 +1,43 @@
+<section id="command-listboxenable">
+    <title>LISTBOXENABLE</title>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>LISTBOXENABLE</command> <parameter>name</parameter> <parameter>state</parameter></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+Enables or disables the listbox identified by <parameter>name</parameter>.
+If <parameter>state</parameter> equals TRUE, then the listbox is enabled.
+If <parameter>state</parameter> equals FALSE, then the listbox is disabled.
+</para>
+</listitem>
+</varlistentry>
+
+
+<varlistentry><term>Example</term>
+<listitem>
+    <programlisting><userinput>WINDOWCREATE "main "mywindow "mytitle 0 0 100 100 []
+LISTBOXCREATE "mywindow "mylist 25 25 50 50
+LISTBOXADDSTRING "mylist [TRIANGLE]
+LISTBOXADDSTRING "mylist [SQUARE]
+LISTBOXENABLE "mylist "False</userinput>
+
+<replaceable>The listbox is now disabled</replaceable>
+
+<userinput>LISTBOXENABLE "mylist "True
+LISTBOXDELETE "mylist
+WINDOWDELETE "mywindow</userinput>
+</programlisting>
+
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</section>

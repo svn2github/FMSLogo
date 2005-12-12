@@ -1,0 +1,36 @@
+<section id="command-listboxdelete">
+    <title>LISTBOXDELETE</title>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>LISTBOXDELETE</command> <parameter>name</parameter></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+Deletes (closes) the listbox whose name is <parameter>name</parameter>.
+</para>
+</listitem>
+</varlistentry>
+
+
+<varlistentry><term>Example</term>
+<listitem>
+    <programlisting><userinput>WINDOWCREATE "main "mywindow "mytitle 0 0 100 100 []
+LISTBOXCREATE "mywindow "mylist 25 25 50 50
+LISTBOXADDSTRING "mylist [TRIANGLE]
+LISTBOXADDSTRING "mylist [SQUARE]
+LISTBOXDELETE "mylist
+WINDOWDELETE "mywindow</userinput>
+</programlisting>
+
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</section>

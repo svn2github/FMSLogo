@@ -47,4 +47,15 @@ When controls are in the graphics window the coordinates will be in the turtle c
       &command-dialogenable;
    </section>
 
+   <section id="listbox-commands">
+      <title>Listbox Commands</title>
+
+      &command-listboxcreate;
+      &command-listboxdelete;
+      &command-listboxenable;
+      &command-listboxgetselect;
+      &command-listboxaddstring;
+      &command-listboxdeletestring;
+   </section>
+
 </chapter>

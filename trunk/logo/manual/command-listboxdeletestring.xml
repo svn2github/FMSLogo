@@ -1,0 +1,42 @@
+<section id="command-listboxdeletestring">
+    <title>LISTBOXDELETESTRING</title>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>LISTBOXDELETESTRING</command> <parameter>name</parameter> <parameter>index</parameter></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+Deletes the item at <parameter>index</parameter> from the listbox that is identified by <parameter>name</parameter>.
+</para>
+
+<para>
+Listbox items are zero-indexed, which means that the first item in the listbox is at index 0, the second is at index 1, etc.
+</para>
+</listitem>
+</varlistentry>
+
+
+
+<varlistentry><term>Example</term>
+<listitem>
+    <programlisting><userinput>WINDOWCREATE "main "mywindow "mytitle 0 0 100 100 []
+LISTBOXCREATE "mywindow "mylist 25 0 50 50
+LISTBOXADDSTRING "mylist [TRIANGLE]
+LISTBOXADDSTRING "mylist [SQUARE]
+LISTBOXADDSTRING "mylist [HEXAGON]
+LISTBOXDELETESTRING "mylist 1
+WINDOWDELETE "mywindow</userinput>
+</programlisting>
+
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</section>
