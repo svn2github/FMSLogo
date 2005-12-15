@@ -1,0 +1,49 @@
+<section id="command-scrollbarset">
+    <title>SCROLLBARSET</title>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>SCROLLBARSET</command> <parameter>name</parameter> <parameter>min</parameter> <parameter>max</parameter> <parameter>position</parameter></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+Set the output range and current position of the scrollbar control that is identified by <parameter>name</parameter>
+You can invoke SCROLLBARSET multiple times on the same scrollbar.
+</para>
+
+<para>
+The <parameter>min</parameter> input is the minimum value representable by the scrollbar.
+</para>
+
+<para>
+The <parameter>max</parameter> input is the maximum value representable by the scrollbar.
+</para>
+
+<para>
+The <parameter>position</parameter> input is the current value of the scrollbar.
+It must be between <parameter>min</parameter> and <parameter>max</parameter>.
+</para>
+
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Example</term>
+<listitem>
+    <programlisting><userinput>WINDOWCREATE "main "mywindow "mytitle 0 0 100 100 []
+SCROLLBARCREATE "mywindow "myscroll 25 25 50 25 [SETHEADING SCROLLBARGET "myscroll]
+SCROLLBARSET "myscroll 0 360 0
+<replaceable>Move the scrollbar and observe what happens to the turtle</replaceable>
+WINDOWDELETE "mywindow</userinput>
+</programlisting>
+
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</section>

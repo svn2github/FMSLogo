@@ -1,0 +1,39 @@
+<section id="command-scrollbarenable">
+    <title>SCROLLBARENABLE</title>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>SCROLLBARENABLE</command> <parameter>name</parameter> <parameter>state</parameter></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+Enables or disables the scrollbar identified by <parameter>name</parameter>.
+If <parameter>state</parameter> equals TRUE, then the scrollbar is enabled.
+If <parameter>state</parameter> equals FALSE, then the scrollbar is disabled.
+</para>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Example</term>
+<listitem>
+    <programlisting><userinput>WINDOWCREATE "main "mywindow "mytitle 0 0 100 100 []
+SCROLLBARCREATE "mywindow "myscroll 25 25 50 25
+SCROLLBARENABLE "myscroll "False</userinput>
+
+<replaceable>The scrollbar is now disabled</replaceable>
+
+<userinput>SCROLLBARENABLE "myscroll "True
+WINDOWDELETE "mywindow</userinput>
+</programlisting>
+
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</section>

@@ -468,6 +468,12 @@
   <!ENTITY command-comboboxaddstring     SYSTEM "command-comboboxaddstring.xml">
   <!ENTITY command-comboboxdeletestring  SYSTEM "command-comboboxdeletestring.xml">
 
+  <!ENTITY command-scrollbarcreate        SYSTEM "command-scrollbarcreate.xml">
+  <!ENTITY command-scrollbardelete        SYSTEM "command-scrollbardelete.xml">
+  <!ENTITY command-scrollbarenable        SYSTEM "command-scrollbarenable.xml">
+  <!ENTITY command-scrollbarget           SYSTEM "command-scrollbarget.xml">
+  <!ENTITY command-scrollbarset           SYSTEM "command-scrollbarset.xml">
+
 ]>
 
 <book id="MSWLogo Help">

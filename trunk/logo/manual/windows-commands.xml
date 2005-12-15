@@ -101,4 +101,25 @@ Comboboxes can also be used to create a pure edit control by setting the height 
       &command-comboboxdeletestring;
    </section>
 
+
+   <section id="scrollbar-commands">
+      <title>Scrollbar Commands</title>
+
+<para>
+Scrollbars let the user select a value by sliding a "scoller" along a bar that represents a range of possible values.
+For example, if you wanted the user to enter a number from 1 to 100, you could use a scrollbar.
+</para>
+
+<para>
+In many GUI frameworks, scrollbars are used to fit a large window into a small space by displaying only a small portion of the window and allowing the user to scroll which portion is visible.
+However, that is NOT the kind of scrollbar that MSWLogo lets you create; the scrollbars that you create with MSWLogo are often associated with a "slider" control.
+</para>
+
+      &command-scrollbarcreate;
+      &command-scrollbardelete;
+      &command-scrollbarenable;
+      &command-scrollbarset;
+      &command-scrollbarget;
+   </section>
+
 </chapter>
