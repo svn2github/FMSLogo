@@ -479,6 +479,10 @@
   <!ENTITY command-buttonenable          SYSTEM "command-buttonenable.xml">
   <!ENTITY command-buttonupdate          SYSTEM "command-buttonupdate.xml">
 
+  <!ENTITY command-staticcreate          SYSTEM "command-staticcreate.xml">
+  <!ENTITY command-staticdelete          SYSTEM "command-staticdelete.xml">
+  <!ENTITY command-staticupdate          SYSTEM "command-staticupdate.xml">
+
 ]>
 
 <book id="MSWLogo Help">

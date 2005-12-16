@@ -137,4 +137,19 @@ The only function of a button is to run an instruction list when it is pressed.
       &command-buttonupdate;
    </section>
 
+
+   <section id="static-commands">
+      <title>Static Commands</title>
+
+<para>
+Static controls are simply a way of displaying text.
+Static controls are called "static" because the user can't interact with them.
+However, you can update the text, so the term "static" is somewhat misleading.
+</para>
+
+      &command-staticcreate;
+      &command-staticdelete;
+      &command-staticupdate;
+   </section>
+
 </chapter>
