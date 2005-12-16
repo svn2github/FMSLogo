@@ -122,4 +122,19 @@ However, that is NOT the kind of scrollbar that MSWLogo lets you create; the scr
       &command-scrollbarget;
    </section>
 
+
+   <section id="button-commands">
+      <title>Button Commands</title>
+
+<para>
+Buttons let the user choose when an event happens.
+The only function of a button is to run an instruction list when it is pressed.
+</para>
+
+      &command-buttoncreate;
+      &command-buttondelete;
+      &command-buttonenable;
+      &command-buttonupdate;
+   </section>
+
 </chapter>

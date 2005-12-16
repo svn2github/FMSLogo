@@ -468,11 +468,16 @@
   <!ENTITY command-comboboxaddstring     SYSTEM "command-comboboxaddstring.xml">
   <!ENTITY command-comboboxdeletestring  SYSTEM "command-comboboxdeletestring.xml">
 
-  <!ENTITY command-scrollbarcreate        SYSTEM "command-scrollbarcreate.xml">
-  <!ENTITY command-scrollbardelete        SYSTEM "command-scrollbardelete.xml">
-  <!ENTITY command-scrollbarenable        SYSTEM "command-scrollbarenable.xml">
-  <!ENTITY command-scrollbarget           SYSTEM "command-scrollbarget.xml">
-  <!ENTITY command-scrollbarset           SYSTEM "command-scrollbarset.xml">
+  <!ENTITY command-scrollbarcreate       SYSTEM "command-scrollbarcreate.xml">
+  <!ENTITY command-scrollbardelete       SYSTEM "command-scrollbardelete.xml">
+  <!ENTITY command-scrollbarenable       SYSTEM "command-scrollbarenable.xml">
+  <!ENTITY command-scrollbarget          SYSTEM "command-scrollbarget.xml">
+  <!ENTITY command-scrollbarset          SYSTEM "command-scrollbarset.xml">
+
+  <!ENTITY command-buttoncreate          SYSTEM "command-buttoncreate.xml">
+  <!ENTITY command-buttondelete          SYSTEM "command-buttondelete.xml">
+  <!ENTITY command-buttonenable          SYSTEM "command-buttonenable.xml">
+  <!ENTITY command-buttonupdate          SYSTEM "command-buttonupdate.xml">
 
 ]>
 
