@@ -411,7 +411,7 @@ NODE *parser_iterate(const char **inln, const char *inlimit, const char *inhead,
    NODE *outline = NIL, *lastnode = NIL, *tnode = NIL;
    int windex = 0, vbar = 0;
    NODETYPES this_type = STRING;
-   bool broken = FALSE;
+   bool broken = false;
 
    do
       {
