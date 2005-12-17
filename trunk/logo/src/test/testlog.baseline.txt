@@ -368,6 +368,8 @@ INFO: Executing invalid instruction: [(PLLIST)]
 INFO: Executing invalid instruction: [(PLLIST "too "many)]
 INFO: Executing invalid instruction: [PLLIST {a b}]
 FAIL: Executing [PLLIST {a b}] did not throw an error
+INFO: executing regression test for bug #1383281
+PASS: "bug #1382181 is fixed; 'FOR [1] [[][]]' did not crash.
 PASS: Size is [100 100] , as expected.
 PASS: Size is [100 101] , as expected.
 PASS: Size is [101 100] , as expected.
@@ -573,8 +575,8 @@ INFO: [WAIT 0] took 0 ms to execute
 PASS: [WAIT 0 ] waited for 0 ms. Anywhere between 0 ms and 20 is acceptable.
 INFO: [WAIT 1] took 20 ms to execute
 PASS: [WAIT 1 ] waited for 20 ms. Anywhere between 16.6666666666667 ms and 36.6666666666667 is acceptable.
-INFO: [WAIT 6] took 100 ms to execute
-PASS: [WAIT 6 ] waited for 100 ms. Anywhere between 100 ms and 120 is acceptable.
+INFO: [WAIT 6] took 101 ms to execute
+PASS: [WAIT 6 ] waited for 101 ms. Anywhere between 100 ms and 120 is acceptable.
 INFO: [WAIT 10] took 170 ms to execute
 PASS: [WAIT 10 ] waited for 170 ms. Anywhere between 166.666666666667 ms and 186.666666666667 is acceptable.
 INFO: [WAIT 60] took 1001 ms to execute
