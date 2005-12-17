@@ -21,15 +21,15 @@
 
 #include "allwind.h"
 
-SOCKET       sendSock = INVALID_SOCKET;      // Current Handle Send Socket
+SOCKET       sendSock    = INVALID_SOCKET;   // Current Handle Send Socket
 SOCKET       receiveSock = INVALID_SOCKET;   // Current Handle receive Socket
 unsigned int sendPort;                       // Current requested send Port
 unsigned int receivePort;                    // Current requested receive Port
 
-BOOL bSendConnected = FALSE;           // Flag that send socket is connected
-BOOL bSendBusy = FALSE;                // Flag that send socket is busy
-BOOL bReceiveConnected = FALSE;        // Flag that receive socket is connected
-BOOL bReceiveBusy = FALSE;             // Flag that receive socket is busy
+bool bSendConnected    = false;        // Flag that send socket is connected
+bool bSendBusy         = false;        // Flag that send socket is busy
+bool bReceiveConnected = false;        // Flag that receive socket is connected
+bool bReceiveBusy      = false;        // Flag that receive socket is busy
 
 PHOSTENT phes = NULL;                  // Pointer to Host Entry for send
 PHOSTENT pher = NULL;                  // Pointer to Host Entry for receive
@@ -42,9 +42,10 @@ char *network_send_receive = NULL;     // Buffer for receive callback
 char *network_send_send = NULL;        // Buffer for send callback
 char *network_send_value = NULL;       // Buffer for current received data
 
-int network_send_on = 0;   // flag for send enabled (enables message processing)
-int network_receive_on = 0;// flag for receive enabled (enabled message processing)
-int network_dns_sync = 0;
+bool network_send_on    = false;    // flag for send enabled (enables message processing)
+bool network_receive_on = false;    // flag for receive enabled (enabled message processing)
+
+static int network_dns_sync = 0;
 
 // WinSock is loaded on the fly these are pointers to functions used
 
@@ -314,9 +315,9 @@ NODE *lnetshutdown(NODE *)
 
    // cleanup receive
 
-   if (network_receive_on == 1)
+   if (network_receive_on)
       {
-      network_receive_on = 0;
+      network_receive_on = false;
       strcpy(network_receive_value, "");
 
       lpclosesocket(receiveSock);
@@ -325,9 +326,9 @@ NODE *lnetshutdown(NODE *)
 
    // cleanup send
 
-   if (network_send_on == 1)
+   if (network_send_on)
       {
-      network_send_on = 0;
+      network_send_on = false;
       strcpy(network_send_value, "");
 
       lpclosesocket(sendSock);
@@ -373,11 +374,11 @@ NODE *lnetreceiveon(NODE *args)
       return Unbound;
       }
 
-   if (network_receive_on == 1)
+   if (network_receive_on)
       {
       MainWindowx->CommandWindow->MessageBox("Already On", "Network Receive Error");
       err_logo(STOP_ERROR, NIL);
-      return (Falsex);
+      return Falsex;
       }
 
    // allocate buffers
@@ -406,7 +407,7 @@ NODE *lnetreceiveon(NODE *args)
 
    if (NOT_THROWING)
       {
-      network_receive_on = 1;
+      network_receive_on = true;
 
       // copy callback (I really should keep these as true Nodes)
 
@@ -427,7 +428,7 @@ NODE *lnetreceiveon(NODE *args)
          {
          MainWindowx->CommandWindow->MessageBox(WSAGetLastErrorString(0), "socket(receivesock)");
          err_logo(STOP_ERROR, NIL);
-         return (Falsex);
+         return Falsex;
          }
 
       // get who we are
@@ -440,13 +441,13 @@ NODE *lnetreceiveon(NODE *args)
          if (pher != NULL)
             {
             MainWindowx->SendMessage(WM_NETWORK_LISTENRECEIVEFINISH, 0, 0L);
-            return (Truex);
+            return Truex;
             }
          else
             {
             MainWindowx->CommandWindow->MessageBox(WSAGetLastErrorString(0), "gethostbyname(thishost)");
             err_logo(STOP_ERROR, NIL);
-            return (Falsex);
+            return Falsex;
             }
          }
 
@@ -460,12 +461,12 @@ NODE *lnetreceiveon(NODE *args)
          {
          MainWindowx->CommandWindow->MessageBox(WSAGetLastErrorString(0), "WSAAsyncGetHostByName()");
          err_logo(STOP_ERROR, NIL);
-         return (Falsex);
+         return Falsex;
          }
 
       // wait for callback
 
-      return (Truex);
+      return Truex;
       }
 
    return Unbound;
@@ -476,12 +477,7 @@ NODE *lnetreceiveoff(NODE *)
 
    // tell handler not to do anything with messages for network receive
 
-   if (network_receive_on == 0)
-      {
-      MainWindowx->CommandWindow->MessageBox("Already Off", "Network Receive Error");
-      err_logo(STOP_ERROR, NIL);
-      }
-   else
+   if (network_receive_on)
       {
       network_receive_on = 0;
       strcpy(network_receive_value, "");
@@ -489,48 +485,39 @@ NODE *lnetreceiveoff(NODE *)
       lpclosesocket(receiveSock);
       receiveSock = INVALID_SOCKET;
       }
+   else
+      {
+      MainWindowx->CommandWindow->MessageBox("Already Off", "Network Receive Error");
+      err_logo(STOP_ERROR, NIL);
+      }
 
    return Unbound;
    }
 
 NODE *lnetreceivereceivevalue(NODE *)
    {
-   NODE *targ;
-   NODE *val;
-
    // return current network value
-
-   if (network_receive_on == 0)
+   if (network_receive_on)
       {
-      return Unbound;
-      }
-   else
-      {
-      targ = make_strnode(network_receive_value, strlen(network_receive_value), STRING, strnzcpy);
-      val = parser(targ, FALSE);
-      return (val);
+      NODE* targ = make_strnode(network_receive_value, strlen(network_receive_value), STRING, strnzcpy);
+      NODE* val = parser(targ, FALSE);
+      return val;
       }
 
+   return Unbound;
    }
 
 NODE *lnetsendreceivevalue(NODE *)
    {
-   NODE *targ;
-   NODE *val;
-
    // return current network value
-
-   if (network_send_on == 0)
+   if (network_send_on)
       {
-      return Unbound;
-      }
-   else
-      {
-      targ = make_strnode(network_send_value, strlen(network_send_value), STRING, strnzcpy);
-      val = parser(targ, FALSE);
-      return (val);
+      NODE* targ = make_strnode(network_send_value, strlen(network_send_value), STRING, strnzcpy);
+      NODE* val = parser(targ, FALSE);
+      return val;
       }
 
+   return Unbound;
    }
 
 NODE *lnetsendon(NODE *args)
@@ -549,11 +536,11 @@ NODE *lnetsendon(NODE *args)
       return Unbound;
       }
 
-   if (network_send_on == 1)
+   if (network_send_on)
       {
       MainWindowx->CommandWindow->MessageBox("Already On", "Network Send Error");
       err_logo(STOP_ERROR, NIL);
-      return (Falsex);
+      return Falsex;
       }
 
    // allocate the callback buffer
@@ -583,19 +570,16 @@ NODE *lnetsendon(NODE *args)
 
    if (NOT_THROWING)
       {
-      network_send_on = 1;
+      network_send_on = true;
 
       // copy the callback
-
       strcpy(network_send_send, networksend);
       strcpy(network_send_receive, networkreceive);
 
       // save the socket globally
-
       sendPort = isocket;
 
       // get sockets
-
 #ifdef USE_UDP
       if ((sendSock = lpsocket(AF_INET, SOCK_DGRAM, 0)) == INVALID_SOCKET)
 #else
@@ -604,7 +588,7 @@ NODE *lnetsendon(NODE *args)
          {
          MainWindowx->CommandWindow->MessageBox(WSAGetLastErrorString(0), "socket(sendsocket)");
          err_logo(STOP_ERROR, NIL);
-         return (Falsex);
+         return Falsex;
          }
 
       if (network_dns_sync == 1)
@@ -613,13 +597,13 @@ NODE *lnetsendon(NODE *args)
          if (phes != NULL)
             {
             MainWindowx->SendMessage(WM_NETWORK_CONNECTSENDFINISH, 0, 0L);
-            return (Truex);
+            return Truex;
             }
          else
             {
             MainWindowx->CommandWindow->MessageBox(WSAGetLastErrorString(0), "gethostbyname(host)");
             err_logo(STOP_ERROR, NIL);
-            return (Falsex);
+            return Falsex;
             }
          }
 
@@ -635,12 +619,12 @@ NODE *lnetsendon(NODE *args)
          {
          MainWindowx->CommandWindow->MessageBox(WSAGetLastErrorString(0), "WSAAsyncGetHostByName()");
          err_logo(STOP_ERROR, NIL);
-         return (Falsex);
+         return Falsex;
          }
 
       // wait for callback
 
-      return (Truex);
+      return Truex;
       }
 
    return Unbound;
@@ -652,18 +636,18 @@ NODE *lnetsendoff(NODE *)
 
    // tell handler not to do anything with messages for network send
 
-   if (network_send_on == 0)
+   if (network_send_on)
       {
-      MainWindowx->CommandWindow->MessageBox("Already Off", "Network Send Error");
-      err_logo(STOP_ERROR, NIL);
-      }
-   else
-      {
-      network_send_on = 0;
+      network_send_on = false;
       strcpy(network_send_value, "");
 
       lpclosesocket(sendSock);
       sendSock = INVALID_SOCKET;
+      }
+   else
+      {
+      MainWindowx->CommandWindow->MessageBox("Already Off", "Network Send Error");
+      err_logo(STOP_ERROR, NIL);
       }
 
    return Unbound;
@@ -691,22 +675,22 @@ NODE *lnetsendsendvalue(NODE *args)
                {
                MainWindowx->CommandWindow->MessageBox(WSAGetLastErrorString(0), "send(sendsock)");
                err_logo(STOP_ERROR, NIL);
-               return (Falsex);
+               return Falsex;
                }
 
             // Idle Until it's ok again.
 
-            bSendBusy = TRUE;
-            return (Falsex);
+            bSendBusy = true;
+            return Falsex;
 
             }
          }
       else
          {
-         return (Falsex);
+         return Falsex;
          }
 
-      return (Truex);
+      return Truex;
       }
 
    return Unbound;
@@ -735,22 +719,22 @@ NODE *lnetreceivesendvalue(NODE *args)
                {
                MainWindowx->CommandWindow->MessageBox(WSAGetLastErrorString(0), "send(sendsock)");
                err_logo(STOP_ERROR, NIL);
-               return (Falsex);
+               return Falsex;
                }
 
             // Idle Until it's ok again.
 
-            bReceiveBusy = TRUE;
-            return (Falsex);
+            bReceiveBusy = true;
+            return Falsex;
 
             }
          }
       else
          {
-         return (Falsex);
+         return Falsex;
          }
 
-      return (Truex);
+      return Truex;
       }
 
    return Unbound;

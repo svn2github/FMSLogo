@@ -63,10 +63,10 @@ extern SOCKET sendSock;
 extern SOCKET receiveSock;
 extern unsigned int sendPort;
 extern unsigned int receivePort;
-extern BOOL bSendConnected;
-extern BOOL bSendBusy;
-extern BOOL bReceiveConnected;
-extern BOOL bReceiveBusy;
+extern bool bSendConnected;
+extern bool bSendBusy;
+extern bool bReceiveConnected;
+extern bool bReceiveBusy;
 extern PHOSTENT phes;
 extern PHOSTENT pher;
 extern char *network_receive_receive;
@@ -75,8 +75,8 @@ extern char *network_send_receive;
 extern char *network_send_send;
 extern char *network_receive_value;
 extern char *network_send_value;
-extern int network_send_on;
-extern int network_receive_on;
+extern bool network_send_on;
+extern bool network_receive_on;
 
 /* logodata.c */
 #ifdef ecma

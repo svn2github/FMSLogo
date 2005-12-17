@@ -2502,8 +2502,7 @@ LRESULT TMainFrame::OnNetworkConnectSendAck(WPARAM /* wParam */, LPARAM lParam)
       }
 
    // queue message if send is enabled
-
-   if (network_send_on == 1)
+   if (network_send_on)
       {
 
       // update flags based on event type
@@ -2583,19 +2582,19 @@ LRESULT TMainFrame::OnNetworkConnectSendAck(WPARAM /* wParam */, LPARAM lParam)
           case FD_WRITE:
 
               // allow another frame to go out.
-              bSendBusy = FALSE;
+              bSendBusy = false;
               break;
 
           case FD_CONNECT:
 
               // flag it's ok to start firing
-              bSendConnected = TRUE;
+              bSendConnected = true;
               break;
 
           case FD_CLOSE:
 
               // done
-              bSendConnected = FALSE;
+              bSendConnected = false;
               break;
          }
 
@@ -2678,8 +2677,7 @@ LRESULT TMainFrame::OnNetworkConnectSendFinish(WPARAM /* wParam */, LPARAM lPara
 #endif
 
    // fire event that connection is made
-
-   if (network_send_on == 1)
+   if (network_send_on)
       {
       callthing *callevent = callthing::CreateNoYieldFunctionEvent(network_send_send);
 
@@ -2709,8 +2707,7 @@ LRESULT TMainFrame::OnNetworkListenReceiveAck(WPARAM /* wParam */, LPARAM lParam
       }
 
    // if receive is on process it
-
-   if (network_receive_on == 1)
+   if (network_receive_on)
       {
 
       // based on event do the right thing
@@ -2798,7 +2795,7 @@ LRESULT TMainFrame::OnNetworkListenReceiveAck(WPARAM /* wParam */, LPARAM lParam
             return 0L;
 
           case FD_ACCEPT:
-              bReceiveConnected = TRUE;
+              bReceiveConnected = true;
 
               // disabled for UDP
 
@@ -2816,15 +2813,13 @@ LRESULT TMainFrame::OnNetworkListenReceiveAck(WPARAM /* wParam */, LPARAM lParam
           case FD_CLOSE:
 
               // done
-
-              bReceiveConnected = FALSE;
+              bReceiveConnected = false;
               break;
 
           case FD_WRITE:
 
               // allow another frame to go out.
-
-              bReceiveBusy = FALSE;
+              bReceiveBusy = false;
               break;
 
           default:
@@ -2911,8 +2906,7 @@ LRESULT TMainFrame::OnNetworkListenReceiveFinish(WPARAM /* wParam */, LPARAM lPa
 #endif
 
    // queue this event
-
-   if (network_receive_on == 1)
+   if (network_receive_on)
       {
       callthing * callevent = callthing::CreateNoYieldFunctionEvent(network_receive_send);
 
