@@ -483,6 +483,8 @@
   <!ENTITY command-staticdelete          SYSTEM "command-staticdelete.xml">
   <!ENTITY command-staticupdate          SYSTEM "command-staticupdate.xml">
 
+  <!ENTITY command-groupboxcreate        SYSTEM "command-groupboxcreate.xml">
+  <!ENTITY command-groupboxdelete        SYSTEM "command-groupboxdelete.xml">
 ]>
 
 <book id="MSWLogo Help">

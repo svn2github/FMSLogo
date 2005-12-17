@@ -152,4 +152,18 @@ However, you can update the text, so the term "static" is somewhat misleading.
       &command-staticupdate;
    </section>
 
+
+   <section id="groupbox-commands">
+      <title>Group Box Commands</title>
+
+<para>
+A group box control is used to group radio button controls and checkbox controls both graphically and logically.
+Radio buttons and checkboxes must belong to a group box.
+Note that radio buttons and checkboxes which are placed in a group box still use the parent's origin NOT the group box's origin.
+</para>
+
+      &command-groupboxcreate;
+      &command-groupboxdelete;
+   </section>
+
 </chapter>
