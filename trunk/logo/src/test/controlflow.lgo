@@ -1,0 +1,12 @@
+TO BUG1383281TEST
+
+  REPORTTESTINFO [executing regression test for bug #1383281]
+  FOREACH [1] [[][]]
+  ;REPORTTESTPASSED [bug #1382181 is fixed ('FOR [1] [[][]]]' did not crash]
+
+END
+
+
+TO CONTROLFLOWTEST
+  BUG1383281TEST
+END

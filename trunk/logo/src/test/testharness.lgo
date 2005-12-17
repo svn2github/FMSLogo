@@ -22,6 +22,7 @@ LOAD "color.lgo
 LOAD "screen.lgo
 LOAD "misc.lgo
 LOAD "network.lgo
+LOAD "controlflow.lgo
 
 MAKE "testlog []
 
@@ -129,25 +130,26 @@ TO TESTALL
 
   REPORTTESTINITIALIZE
 
-  PREDICATETEST ; from predicate.lgo
-  WORDTEST      ; from word.lgo
-  ARRAYTEST     ; from array.lgo
-  LOGICTEST     ; from logic.lgo
-  PROCEDURETEST ; from procedure.lgo
-  PLISTTEST     ; from plist.lgo
-  BITMAPTEST    ; from bitmap.lgo
-  FORMTEST      ; from form.lgo
-  EDITORTEST    ; from editor.lgo 
-  PORTTEST      ; from port.lgo
-  LABELTEST     ; from label.lgo
-  FILLTEST      ; from fill.lgo
-  FILETEST      ; from file.lgo
-  COLORTEST     ; from color.lgo
-  SCREENTEST    ; from screen.lgo
-  WAITTEST      ; from wait.lgo
-  DIRECTORYTEST ; from directory.lgo
-  MISCTEST      ; from misc.lgo
-  NETWORKTEST   ; from network.lgo
+  PREDICATETEST   ; from predicate.lgo
+  WORDTEST        ; from word.lgo
+  ARRAYTEST       ; from array.lgo
+  LOGICTEST       ; from logic.lgo
+  PROCEDURETEST   ; from procedure.lgo
+  PLISTTEST       ; from plist.lgo
+  CONTROLFLOWTEST ; from controlflow.lgo
+  BITMAPTEST      ; from bitmap.lgo
+  FORMTEST        ; from form.lgo
+  EDITORTEST      ; from editor.lgo 
+  PORTTEST        ; from port.lgo
+  LABELTEST       ; from label.lgo
+  FILLTEST        ; from fill.lgo
+  FILETEST        ; from file.lgo
+  COLORTEST       ; from color.lgo
+  SCREENTEST      ; from screen.lgo
+  WAITTEST        ; from wait.lgo
+  DIRECTORYTEST   ; from directory.lgo
+  MISCTEST        ; from misc.lgo
+  NETWORKTEST     ; from network.lgo
 
   REPORTTESTUNINITIALIZE
 
