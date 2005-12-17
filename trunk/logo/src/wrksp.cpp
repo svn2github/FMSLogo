@@ -135,7 +135,7 @@ NODE *lfulltext(NODE *args)
    }
 
 static
-NODE *define_helper(NODE *args, bool macro_flag)
+NODE *define_helper(NODE *args, int macro_flag)
    {
    NODE *name, *val, *arg = NIL;
    int minimum = 0, deflt = 0, maximum = 0, old_default = -1;
