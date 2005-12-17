@@ -113,7 +113,6 @@ void make_tree(NODE *list)
    {
 
    NODE *tree = NIL;
-   NODE *paren_line(NODE *);
 
    if (list == NIL ||
          (is_tree(list) && generation__tree(list) == the_generation))
@@ -139,8 +138,6 @@ NODE *paren_line(NODE *line)
 
    NODE *retval = NIL;
    // NODE *save = line;
-   NODE *paren_expr(NODE **expr, bool inparen);
-   NODE *paren_infix(NODE *left, NODE **rest, int old_pri, bool inparen);
 
    if (line == NIL) return line;
    retval = paren_expr(&line, FALSE);
@@ -161,8 +158,6 @@ NODE *paren_expr(NODE **expr, bool inparen)
    NODE *first = NIL, *tree = NIL, *proc, *retval;
    //    NODE *save = *expr;
    NODE **ifnode = (NODE **) NIL;
-   NODE *gather_args(NODE *, NODE **, bool, NODE **);
-   NODE *paren_infix(NODE *, NODE **, int, bool);
 
    if (*expr == NIL)
       {
@@ -258,9 +253,7 @@ NODE *paren_expr(NODE **expr, bool inparen)
 */
 NODE *gather_args(NODE *proc, NODE **args, bool inparen, NODE **ifnode)
    {
-
    int min, max;
-   NODE *gather_some_args(int, int, NODE **, bool, NODE **);
 
    if (nodetype(proc) == CONS)
       {
@@ -288,11 +281,9 @@ NODE *gather_args(NODE *proc, NODE **args, bool inparen, NODE **ifnode)
 /* Make a list of the next n expressions, where n is between min and max.
 * Set args to immediately after the last expression.
 */
-NODE *gather_some_args(int min, int max, NODE **args, bool inparen,
-         NODE **ifnode)
+NODE *gather_some_args(int min, int max, NODE **args, bool inparen, NODE **ifnode)
    {
    //    int parens;
-   NODE *paren_infix(NODE *left, NODE **rest, int old_pri, bool inparen);
 
    if (*args == NIL || car(*args) == Right_Paren ||
          (nodetype(car(*args)) == CASEOBJ &&
