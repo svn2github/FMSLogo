@@ -1833,8 +1833,7 @@ void TMainFrame::MyPopupEdit(const char *FileName, NODE *args)
       // retitle without filename
       EditWindow->SetWindowText("Editor");
 
-      // if an error occured "force" a change so that we still in
-      // "dirty" state
+      // if an error occured "force" a change so that we still in "dirty" state
       if (error_happen)
          {
          error_happen = false;
