@@ -34,7 +34,6 @@ bool in_graphics_mode = false;
 bool in_erase_mode = false;
 
 int ibm_screen_top;
-int ibm_turtle_top_max;
 int current_write_mode = COPY_PUT;
 int current_vis[TURTLES]=
       {
