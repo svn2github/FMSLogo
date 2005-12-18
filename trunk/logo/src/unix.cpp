@@ -274,11 +274,7 @@ void unblock_input()
       }
    }
 
-#ifdef __ZTC__
 void logo_stop(int /*sig*/)
-#else
-void logo_stop(int /*sig*/)
-#endif
    {
    to_pending = 0;
 #ifndef unix
@@ -299,11 +295,7 @@ void logo_stop(int /*sig*/)
    unblock_input();
    }
 
-#ifdef __ZTC__
 void logo_pause(int /*sig*/)
-#else
-void logo_pause(int /*sig*/)
-#endif
    {
    to_pending = 0;
 #ifdef bsd
@@ -325,5 +317,4 @@ void logo_pause(int /*sig*/)
       }
 #endif
    }
-
 
