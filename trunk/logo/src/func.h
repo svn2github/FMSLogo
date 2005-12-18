@@ -91,14 +91,9 @@ extern NODE *lcopydef(NODE *args);
 
 extern FIXNUM g_round(FLONUM n);
 extern NODE *lscrunch(NODE *arg);
-extern double pfmod(double x, double y);
 extern FLONUM cut_error(FLONUM n);
-extern FIXNUM round(FLONUM n);
 extern void draw_turtle(bool erase);
 extern void draw_turtles(bool erase);
-extern void right(FLONUM a);
-extern void rightroll(FLONUM a);
-extern void uppitch(FLONUM a);
 extern NODE *numeric_arg(NODE *args);
 extern NODE *lright(NODE *arg);
 extern NODE *lleft(NODE *arg);
@@ -106,8 +101,6 @@ extern NODE *lrightroll(NODE *arg);
 extern NODE *lleftroll(NODE *arg);
 extern NODE *ldownpitch(NODE *arg);
 extern NODE *luppitch(NODE *arg);
-extern void forward(FLONUM d);
-extern void forward_helper3d(FLONUM d);
 extern FLONUM rotation_z();
 extern FLONUM rotation_y();
 extern FLONUM rotation_x();
@@ -219,22 +212,8 @@ extern NODE *lmousepos(NODE *args);
 extern NODE *lkeyboardvalue(NODE *args);
 extern NODE *lbuttonp(NODE *args);
 extern NODE *ltone(NODE *args);
-extern bool safe_to_save(void);
-extern void save_lm_helper(void);
-extern void save_line(void);
-extern void save_move(void);
-extern void save_vis(void);
-extern void save_mode(void);
-extern void save_color_pen(void);
-extern void save_color_screen(void);
-extern void save_color_flood(void);
-extern void save_size(void);
-extern void save_pattern(void);
-extern void save_string(char s[]);
 extern NODE *lrefresh(NODE *args);
 extern NODE *lnorefresh(NODE *args);
-extern void redraw_graphics(void);
-extern void resize_record(int dh, int dv);
 
 /* File MAIN.CPP: */
 

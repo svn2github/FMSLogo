@@ -90,20 +90,247 @@ static int record_index = 0;
 static pen_info orig_pen; // DELETEME
 static int forward_count = 0; // DELETEME
 
-bool record_next_move = false;
-bool refresh_p = true;
+static bool record_next_move = false;
+static bool refresh_p        = true;
 
 #define sq(z) ((z)*(z))
 
 static void forward_helper(FLONUM d);
 
 /************************************************************/
+/* The next block of code implements the recording of moves in
+the graphics window and the playing back of those moves.  It's
+needed on machines like the Macintosh where the contents of the
+graphics window can get erased and need to be redrawn.  On
+machines where no graphics redrawing is necessary, set the size
+of the recording buffer to 1 in logo.h. 
+*/
 
-double pfmod(double x, double y)
+static
+bool safe_to_save()
+   {
+   /*
+      return(refresh_p && record_index < (GR_SIZE - 300));
+    */
+   return true;
+   }
+
+static
+void save_lm_helper()
+   {
+   /*
+    *(int *)(record + record_index + 2) = pen_x;
+    *(int *)(record + record_index + 4) = pen_y;
+      record_index += 6;
+    */
+   }
+
+static
+void save_line()
+   {
+   if (status_flag) update_status_turtleposition();
+   /*
+      if (safe_to_save())
+      {
+      record[record_index] = LINEXY;
+      save_lm_helper();
+      }
+    */
+   }
+
+static
+void save_move()
+   {
+   if (status_flag) update_status_turtleposition();
+   /*
+      if (safe_to_save())
+      {
+      record[record_index] = MOVEXY;
+      save_lm_helper();
+      }
+    */
+   }
+
+static
+void save_vis()
+   {
+   if (status_flag) update_status_pencontact();
+   /*
+      if (safe_to_save())
+      {
+      record[record_index] = SETPENVIS;
+      record[record_index + 1] = (char)pen_vis;
+      record_index += 2;
+      }
+    */
+   }
+
+static
+void save_mode()
+   {
+   if (status_flag) update_status_penstyle();
+   /*
+      if (safe_to_save())
+      {
+      record[record_index] = SETPENMODE;
+#ifdef x_window
+      *(GC *)(record + record_index + 2) = pen_mode;
+#else
+      *(int *)(record + record_index + 2) = pen_mode;
+#endif
+      record_index += 4;
+      }
+   */
+   }
+
+static
+void save_color_pen()
+   {
+   if (status_flag) update_status_pencolor();
+   /*
+      if (safe_to_save())
+      {
+      record[record_index] = SETPENCOLOR;
+    *(long *)(record + record_index + 2) = pen_color;
+      record_index += 6;
+      }
+    */
+   }
+
+static
+void save_color_screen()
+   {
+   if (status_flag) update_status_screencolor();
+   /*
+      if (safe_to_save())
+      {
+      record[record_index] = SETPENCOLOR;
+    *(long *)(record + record_index + 2) = pen_color;
+      record_index += 6;
+      }
+    */
+   }
+
+static
+void save_color_flood()
+   {
+   if (status_flag) update_status_floodcolor();
+   /*
+      if (safe_to_save())
+      {
+      record[record_index] = SETPENCOLOR;
+    *(long *)(record + record_index + 2) = pen_color;
+      record_index += 6;
+      }
+    */
+   }
+
+static
+void save_size()
+   {
+   if (status_flag) update_status_penwidth();
+   /*
+      if (safe_to_save())
+      {
+      record[record_index] = SETPENSIZE;
+      *(int *)(record + record_index + 2) = get_pen_width();
+      *(int *)(record + record_index + 4) = get_pen_height();
+      record_index += 6;
+      }
+    */
+   }
+
+static
+void save_pattern()
+   {
+   //    if (status_flag) update_status(SETPENPATTERN);
+   /*
+      int count;
+
+      if (safe_to_save())
+      {
+      record[record_index] = SETPENPATTERN;
+      get_pen_pattern(&record[record_index + 2]);
+      record_index += 10;
+      }
+    */
+   }
+
+static
+void save_string(char /* s */[])
+   {
+   /*
+      int count;
+
+      if (safe_to_save())
+      {
+      record[record_index] = LABEL;
+      record[record_index + 2] = s[0];
+      for (count = 0; count < s[0]; count++)
+      record[record_index + 3 + count] = s[1 + count];
+      record_index += 3 + s[0] + even_p(s[0]);
+      }
+    */
+   }
+
+
+/* This is called when the graphics coordinate system has been shifted.
+It adds a constant amount to each x and y coordinate in the record. */
+static
+void resize_record(int /* dh */, int /* dv */)
+   {
+   /*
+      int r_index = 0;
+
+   //   p_info_x(orig_pen) += dh;
+   //   p_info_y(orig_pen) += dv;
+
+      while (r_index < record_index)
+      switch (record[r_index])
+      {
+      case (LINEXY) :
+    *(int *)(record + r_index + 2) += dh;
+    *(int *)(record + r_index + 4) += dv;
+      r_index += 6;
+      break;
+      case (MOVEXY) :
+    *(int *)(record + r_index + 2) += dh;
+    *(int *)(record + r_index + 4) += dv;
+      r_index += 6;
+      break;
+      case (LABEL) :
+      r_index += 3 + record[r_index + 2] + even_p(record[r_index + 2]);
+      break;
+      case (SETPENVIS) :
+      r_index += 2;
+      break;
+      case (SETPENMODE) :
+      r_index += 4;
+      break;
+      case (SETPENCOLOR) :
+      r_index += 6;
+      break;
+      case (SETPENSIZE) :
+      r_index += 6;
+      break;
+      case (SETPENPATTERN) :
+      r_index += 10;
+      break;
+      }
+    */
+   }
+
+/************************************************************/
+
+static
+double positive_fmod(double x, double y)
    {
    double temp = fmod(x, y);
 
-   if (temp < 0) return temp + y;
+   if (temp < 0)
+      {
+      return temp + y;
+      }
    return temp;
    }
 
@@ -208,6 +435,7 @@ void draw_turtle(bool erase)
 
 /************************************************************/
 
+static
 void uppitch(FLONUM a)
    {
 
@@ -223,6 +451,7 @@ void uppitch(FLONUM a)
       {
       draw_turtle(false);
 
+      a = positive_fmod(a, 360.0);
       FLONUM Cx = cos(a * degrad);
       FLONUM Sx = sin(a * degrad);
 
@@ -246,6 +475,7 @@ void uppitch(FLONUM a)
       }
    }
 
+static
 void rightroll(FLONUM a)
    {
 // if (bPolyFlag)
@@ -260,6 +490,7 @@ void rightroll(FLONUM a)
       {
       draw_turtle(false);
 
+      a = positive_fmod(a, 360.0);
       FLONUM Cy = cos(a * degrad);
       FLONUM Sy = sin(a * degrad);
 
@@ -283,11 +514,14 @@ void rightroll(FLONUM a)
       }
    }
 
-void right(FLONUM a)
+static
+void right_helper(FLONUM a)
    {
    draw_turtle(false);
+   
+   a = positive_fmod(a, 360.0);
    g_Turtles[turtle_which].Heading += a;
-   g_Turtles[turtle_which].Heading = pfmod(g_Turtles[turtle_which].Heading, 360.0);
+   g_Turtles[turtle_which].Heading = positive_fmod(g_Turtles[turtle_which].Heading, 360.0);
 
    if (current_mode == perspectivemode)
       {
@@ -382,7 +616,7 @@ NODE *lright(NODE *arg)
    if (NOT_THROWING)
       {
       FLONUM a = numeric_node_to_flonum(val);
-      right(a);
+      right_helper(a);
       }
 
    return Unbound;
@@ -394,7 +628,7 @@ NODE *lleft(NODE *arg)
    if (NOT_THROWING)
       {
       FLONUM a = numeric_node_to_flonum(val);
-      right(-a);
+      right_helper(-a);
       }
 
    return Unbound;
@@ -704,7 +938,7 @@ bool wrap_right(FLONUM d, FLONUM x1, FLONUM y1, FLONUM x2, FLONUM y2)
          {
          line_to(screen_right, yi);
          save_line();
-         record_next_move = TRUE;
+         record_next_move = true;
          g_Turtles[turtle_which].Position.x = turtle_left_max;
          g_Turtles[turtle_which].Position.y = yi;
          if (current_mode == wrapmode)
@@ -729,7 +963,7 @@ bool wrap_up(FLONUM d, FLONUM x1, FLONUM y1, FLONUM x2, FLONUM y2)
          {
          line_to(xi, screen_top);
          save_line();
-         record_next_move = TRUE;
+         record_next_move = true;
          g_Turtles[turtle_which].Position.x = xi;
          g_Turtles[turtle_which].Position.y = turtle_bottom_max;
          if (current_mode == wrapmode)
@@ -754,7 +988,7 @@ bool wrap_left(FLONUM d, FLONUM x1, FLONUM y1, FLONUM x2, FLONUM y2)
          {
          line_to(screen_left, yi);
          save_line();
-         record_next_move = TRUE;
+         record_next_move = true;
          g_Turtles[turtle_which].Position.x = turtle_right_max;
          g_Turtles[turtle_which].Position.y = yi;
          if (current_mode == wrapmode)
@@ -779,7 +1013,7 @@ bool wrap_down(FLONUM d, FLONUM x1, FLONUM y1, FLONUM x2, FLONUM y2)
          {
          line_to(xi, screen_bottom);
          save_line();
-         record_next_move = TRUE;
+         record_next_move = true;
          g_Turtles[turtle_which].Position.x = xi;
          g_Turtles[turtle_which].Position.y = turtle_top_max;
          if (current_mode == wrapmode)
@@ -815,7 +1049,7 @@ void forward_helper(FLONUM d)
    if (record_next_move)
       {
       save_move();
-      record_next_move = FALSE;
+      record_next_move = false;
       }
 
    //    if (check_throwing) return;
@@ -845,6 +1079,7 @@ void forward_helper(FLONUM d)
    forward_count--;
    }
 
+static
 void forward_helper3d(FLONUM d)
    {
    VECTOR direction;
@@ -854,7 +1089,7 @@ void forward_helper3d(FLONUM d)
    if (record_next_move)
       {
       save_move();
-      record_next_move = FALSE;
+      record_next_move = false;
       }
 
    direction.x = 0.0;
@@ -871,6 +1106,7 @@ void forward_helper3d(FLONUM d)
    save_line();
    }
 
+static
 void forward(FLONUM d)
    {
    draw_turtle(false);
@@ -957,10 +1193,10 @@ NODE *lsetheading(NODE *arg)
       draw_turtle(false);
 
       FLONUM a = numeric_node_to_flonum(val);
-      a = pfmod(a, 360.0);
+      a = positive_fmod(a, 360.0);
 
       if (current_mode == perspectivemode)
-         right(a - rotation_z());
+         right_helper(a - rotation_z());
       else
          g_Turtles[turtle_which].Heading = a;
 
@@ -984,7 +1220,7 @@ NODE *lsetroll(NODE *arg)
       draw_turtle(false);
 
       FLONUM a = numeric_node_to_flonum(val);
-      a = pfmod(a, 360.0);
+      a = positive_fmod(a, 360.0);
 
       rightroll(a - rotation_y());
 
@@ -1008,7 +1244,7 @@ NODE *lsetpitch(NODE *arg)
       draw_turtle(false);
 
       FLONUM a = numeric_node_to_flonum(val);
-      a = pfmod(a, 360.0);
+      a = positive_fmod(a, 360.0);
       uppitch(a - rotation_x());
 
       if (status_flag)
@@ -1782,7 +2018,7 @@ NODE *llabel(NODE *arg)
       draw_turtle(false);
       label(textbuf);
       save_string(textbuf);
-      record_next_move = TRUE;
+      record_next_move = true;
       draw_turtle(true);
       }
    return Unbound;
@@ -2002,168 +2238,6 @@ NODE *ltone(NODE *args)
    return Unbound;
    }
 
-/************************************************************/
-/* The rest of this file implements the recording of moves in
-the graphics window and the playing back of those moves.  It's
-needed on machines like the Macintosh where the contents of the
-graphics window can get erased and need to be redrawn.  On
-machines where no graphics redrawing is necessary, set the size
-of the recording buffer to 1 in logo.h. */
-
-bool safe_to_save()
-   {
-   /*
-      return(refresh_p && record_index < (GR_SIZE - 300));
-    */
-   return (1);
-   }
-
-void save_lm_helper()
-   {
-   /*
-    *(int *)(record + record_index + 2) = pen_x;
-    *(int *)(record + record_index + 4) = pen_y;
-      record_index += 6;
-    */
-   }
-
-void save_line()
-   {
-   if (status_flag) update_status_turtleposition();
-   /*
-      if (safe_to_save())
-      {
-      record[record_index] = LINEXY;
-      save_lm_helper();
-      }
-    */
-   }
-
-void save_move()
-   {
-   if (status_flag) update_status_turtleposition();
-   /*
-      if (safe_to_save())
-      {
-      record[record_index] = MOVEXY;
-      save_lm_helper();
-      }
-    */
-   }
-
-void save_vis()
-   {
-   if (status_flag) update_status_pencontact();
-   /*
-      if (safe_to_save())
-      {
-      record[record_index] = SETPENVIS;
-      record[record_index + 1] = (char)pen_vis;
-      record_index += 2;
-      }
-    */
-   }
-
-void save_mode()
-   {
-   if (status_flag) update_status_penstyle();
-   /*
-      if (safe_to_save())
-      {
-      record[record_index] = SETPENMODE;
-#ifdef x_window
-      *(GC *)(record + record_index + 2) = pen_mode;
-#else
-      *(int *)(record + record_index + 2) = pen_mode;
-#endif
-      record_index += 4;
-      }
-   */
-   }
-
-void save_color_pen()
-   {
-   if (status_flag) update_status_pencolor();
-   /*
-      if (safe_to_save())
-      {
-      record[record_index] = SETPENCOLOR;
-    *(long *)(record + record_index + 2) = pen_color;
-      record_index += 6;
-      }
-    */
-   }
-
-void save_color_screen()
-   {
-   if (status_flag) update_status_screencolor();
-   /*
-      if (safe_to_save())
-      {
-      record[record_index] = SETPENCOLOR;
-    *(long *)(record + record_index + 2) = pen_color;
-      record_index += 6;
-      }
-    */
-   }
-
-void save_color_flood()
-   {
-   if (status_flag) update_status_floodcolor();
-   /*
-      if (safe_to_save())
-      {
-      record[record_index] = SETPENCOLOR;
-    *(long *)(record + record_index + 2) = pen_color;
-      record_index += 6;
-      }
-    */
-   }
-
-void save_size()
-   {
-   if (status_flag) update_status_penwidth();
-   /*
-      if (safe_to_save())
-      {
-      record[record_index] = SETPENSIZE;
-      *(int *)(record + record_index + 2) = get_pen_width();
-      *(int *)(record + record_index + 4) = get_pen_height();
-      record_index += 6;
-      }
-    */
-   }
-
-void save_pattern()
-   {
-   //    if (status_flag) update_status(SETPENPATTERN);
-   /*
-      int count;
-
-      if (safe_to_save())
-      {
-      record[record_index] = SETPENPATTERN;
-      get_pen_pattern(&record[record_index + 2]);
-      record_index += 10;
-      }
-    */
-   }
-
-void save_string(char /* s */[])
-   {
-   /*
-      int count;
-
-      if (safe_to_save())
-      {
-      record[record_index] = LABEL;
-      record[record_index + 2] = s[0];
-      for (count = 0; count < s[0]; count++)
-      record[record_index + 3 + count] = s[1 + count];
-      record_index += 3 + s[0] + even_p(s[0]);
-      }
-    */
-   }
 
 NODE *lrefresh()
    {
@@ -2176,53 +2250,3 @@ NODE *lnorefresh()
    refresh_p = FALSE;
    return Unbound;
    }
-
-void redraw_graphics()
-   {
-   }
-
-/* This is called when the graphics coordinate system has been shifted.
-It adds a constant amount to each x and y coordinate in the record. */
-void resize_record(int /* dh */, int /* dv */)
-   {
-   /*
-      int r_index = 0;
-
-   //   p_info_x(orig_pen) += dh;
-   //   p_info_y(orig_pen) += dv;
-
-      while (r_index < record_index)
-      switch (record[r_index])
-      {
-      case (LINEXY) :
-    *(int *)(record + r_index + 2) += dh;
-    *(int *)(record + r_index + 4) += dv;
-      r_index += 6;
-      break;
-      case (MOVEXY) :
-    *(int *)(record + r_index + 2) += dh;
-    *(int *)(record + r_index + 4) += dv;
-      r_index += 6;
-      break;
-      case (LABEL) :
-      r_index += 3 + record[r_index + 2] + even_p(record[r_index + 2]);
-      break;
-      case (SETPENVIS) :
-      r_index += 2;
-      break;
-      case (SETPENMODE) :
-      r_index += 4;
-      break;
-      case (SETPENCOLOR) :
-      r_index += 6;
-      break;
-      case (SETPENSIZE) :
-      r_index += 6;
-      break;
-      case (SETPENPATTERN) :
-      r_index += 10;
-      break;
-      }
-    */
-   }
-
