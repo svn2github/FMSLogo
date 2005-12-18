@@ -58,10 +58,10 @@ void TThreeD::SetUp()
 
 void TThreeD::SetVolume()
    {
-   Vt =  max(xoffset, yoffset);
-   Vb = -max(xoffset, yoffset);
-   Vr =  max(xoffset, yoffset);
-   Vl = -max(xoffset, yoffset);
+   long Vt =  max(xoffset, yoffset);
+   long Vb = -max(xoffset, yoffset);
+   long Vr =  max(xoffset, yoffset);
+   long Vl = -max(xoffset, yoffset);
 
    A = (Vr - Vl) / 2.0;
    B = Vl + A;
@@ -130,7 +130,7 @@ unsigned int TThreeD::Code(const VECTOR & p) const
    }
 
 // Clip the line in 3d coordinates
-BOOL TThreeD::Clip3DSegment(VECTOR &p1, VECTOR &p2, POINT &from2d, POINT &to2d)
+bool TThreeD::Clip3DSegment(VECTOR &p1, VECTOR &p2, POINT &from2d, POINT &to2d)
    {
    double t;
    VECTOR p;
@@ -140,7 +140,7 @@ BOOL TThreeD::Clip3DSegment(VECTOR &p1, VECTOR &p2, POINT &from2d, POINT &to2d)
 
    while (c1 || c2)
       {
-      if (c1 & c2) return FALSE;
+      if (c1 & c2) return false;
 
       if (c1)
          {
@@ -266,26 +266,26 @@ BOOL TThreeD::Clip3DSegment(VECTOR &p1, VECTOR &p2, POINT &from2d, POINT &to2d)
    else
       WORLDtoPC(p2.x / p2.z, p2.y / p2.z, to2d);
 
-   return TRUE;
+   return true;
    }
 
 // Clip the line in 3d coordinates
-BOOL TThreeD::Clip3DPoint(VECTOR &p1, POINT &from2d)
+bool TThreeD::Clip3DPoint(VECTOR &p1, POINT &from2d)
    {
    unsigned int c1 = Code(p1);
 
-   if (c1) return FALSE;
+   if (c1) return false;
 
    if (p1.z == 0.0)
       WORLDtoPC(p1.x, p1.y, from2d);
    else
       WORLDtoPC(p1.x / p1.z, p1.y / p1.z, from2d);
 
-   return TRUE;
+   return true;
    }
 
 // Transform 3d line to screen coordinates
-BOOL TThreeD::TransformSegment(VECTOR &from3d, VECTOR &to3d, POINT &from2d, POINT &to2d)
+bool TThreeD::TransformSegment(VECTOR &from3d, VECTOR &to3d, POINT &from2d, POINT &to2d)
    {
    VECTOR p1;
    VECTOR p2;
@@ -302,7 +302,7 @@ BOOL TThreeD::TransformSegment(VECTOR &from3d, VECTOR &to3d, POINT &from2d, POIN
    }
 
 // Transform 3d line to screen coordinates
-BOOL TThreeD::TransformPoint(VECTOR &from3d, POINT &from2d)
+bool TThreeD::TransformPoint(VECTOR &from3d, POINT &from2d)
    {
    VECTOR p1;
 

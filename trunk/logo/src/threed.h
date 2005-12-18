@@ -4,19 +4,8 @@
 class TThreeD
    {
  public:
-   double A, B, C, D, DVal;
-   VECTOR From, At, Up, Light;
-   double Angle;
-   VECTOR A1, A2, A3;
-   long Vl, Vt, Vr, Vb;
-   VECTOR Offset;
-   double Zmin;
-   double Zmax;
-
-   VECTOR Dist;                        // the FROM->AT vector
 
    TThreeD();
-   void WORLDtoPC(double xw, double yw, POINT& pc);
    void SetAt();
    void SetUp();
    void SetClip(double angle, double _Zmin, double _Zmax);
@@ -24,13 +13,38 @@ class TThreeD
    void SetEye();
    void SetVolume();
    void SetLight();
-   BOOL TransformSegment(VECTOR & from3d, VECTOR & to3d, POINT & from2d, POINT & to2d);
-   BOOL Clip3DSegment(VECTOR & p1, VECTOR & p2, POINT & from2d, POINT & to2d);
-   BOOL TransformPoint(VECTOR & from3d, POINT & from2d);
-   BOOL Clip3DPoint(VECTOR & p1, POINT & from2d);
+   bool TransformSegment(VECTOR & from3d, VECTOR & to3d, POINT & from2d, POINT & to2d);
+   bool TransformPoint(VECTOR & from3d, POINT & from2d);
 
-private:
+ private:
+   void WORLDtoPC(double xw, double yw, POINT& pc);
+   bool Clip3DSegment(VECTOR & p1, VECTOR & p2, POINT & from2d, POINT & to2d);
+   bool Clip3DPoint(VECTOR & p1, POINT & from2d);
    unsigned int Code(const VECTOR & p) const;
+
+ public:
+   VECTOR From;
+   VECTOR At;
+   VECTOR Up;
+   VECTOR Light;
+
+   VECTOR A1;
+   VECTOR A2;
+   VECTOR A3;
+
+   double DVal;
+   VECTOR Offset;
+
+   double A;
+   double B;
+   double C;
+   double D;
+
+ private:
+
+   double Angle;
+   double Zmin;
+   double Zmax;
    }
 ;
 
