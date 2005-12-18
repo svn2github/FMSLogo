@@ -6,4 +6,4 @@ all : $(SOURCEZIP) ;
 
 $(SOURCEZIP) :
 	$(RM) **/*~
-	zip -r -9 -X $@ src manual setup 
+	zip -r -9 -X $@ src manual setup -x */.cvsignore */CVS/ */CVS/* */*/.cvsignore */*/CVS/ */*/CVS/* */*/*/CVS/ */*/*/CVS/*
