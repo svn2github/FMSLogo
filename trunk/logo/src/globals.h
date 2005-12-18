@@ -158,17 +158,17 @@ extern FIXNUM tailcall, val_status, dont_fix_ift;
 /* print.cpp */
 extern bool print_backslashes;
 
-/* math.c */
+/* math.cpp */
 extern FLONUM degrad;
 
-/* lists.c */
+/* lists.cpp */
 
-/* files.c */
+/* files.cpp */
 
-/* coms.c */
+/* coms.cpp */
 extern FIXNUM ift_iff_flag;
 
-/* term.c */
+/* term.cpp */
 extern int x_coord;
 extern int y_coord;
 extern int x_max;
@@ -176,14 +176,12 @@ extern int y_max;
 extern bool interactive;
 extern int tty_charmode;
 extern int current_vis[];
-extern int ibm_screen_top;
-extern int ibm_turtle_top_max;
 extern bool in_erase_mode;
 
-/* paren.c */
+/* paren.cpp */
 extern NODE *the_generation;
 
-/* graphics.c */
+/* graphics.cpp */
 extern mode_type   current_mode;
 extern bool        bPolyFlag;
 extern VERTEXLIST* ThePolygon;
@@ -204,15 +202,8 @@ extern int turtle_which;
 extern int turtle_max;
 extern TThreeDSolid ThreeD;
 
-#ifdef ibm
-/* ibmterm.c/ztcterm.c */
+/* ibmterm.cpp */
 extern bool in_graphics_mode;
 extern int MaxX, MaxY;
-#ifdef __ZTC__
-extern int ibm_screen_bottom, turtle_color;
-extern bool in_splitscreen;
-#else
 extern int ibm_screen_top;
-#define SIGQUIT 15
-#endif
-#endif
+const int SIGQUIT = 15;
