@@ -623,3 +623,5 @@ INFO: Executing invalid instruction: [(NODES "too-many)]
 PASS: [BUTTONP] returned false , as expected.
 PASS: [BUTTON?] returned false , as expected.
 INFO: Executing invalid instruction: [(BUTTON? "too-many)]
+INFO: executing regression test for bug #1384267
+PASS: "bug #1384267 is fixed; turning by a large number in perspective mode did not crash.
