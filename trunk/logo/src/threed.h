@@ -1,4 +1,4 @@
-// Threed: Three dimentional viewer.
+// Threed: Three dimensional viewer.
 
 // Three dimensional viewing class
 class TThreeD
@@ -17,7 +17,6 @@ class TThreeD
 
    TThreeD();
    void WORLDtoPC(double xw, double yw, POINT& pc);
-   long Code(VECTOR p);
    void SetAt();
    void SetUp();
    void SetClip(double angle, double _Zmin, double _Zmax);
@@ -29,6 +28,9 @@ class TThreeD
    BOOL Clip3DSegment(VECTOR & p1, VECTOR & p2, POINT & from2d, POINT & to2d);
    BOOL TransformPoint(VECTOR & from3d, POINT & from2d);
    BOOL Clip3DPoint(VECTOR & p1, POINT & from2d);
+
+private:
+   unsigned int Code(const VECTOR & p) const;
    }
 ;
 

@@ -107,15 +107,15 @@ void TThreeD::SetEye()
    Offset.z = -A3.x * From.x - A3.y * From.y - A3.z * From.z;
    }
 
-const long NOEDGE = 0;
-const long LEFTEDGE = 1;
-const long RIGHTEDGE = 2;
-const long BOTTOMEDGE = 4;
-const long TOPEDGE = 8;
-const long FRONTEDGE = 16;
-const long BACKEDGE = 32;
+const unsigned int NOEDGE = 0;
+const unsigned int LEFTEDGE = 1;
+const unsigned int RIGHTEDGE = 2;
+const unsigned int BOTTOMEDGE = 4;
+const unsigned int TOPEDGE = 8;
+const unsigned int FRONTEDGE = 16;
+const unsigned int BACKEDGE = 32;
 
-long TThreeD::Code(VECTOR p)
+unsigned int TThreeD::Code(const VECTOR & p) const
    {
    long c = NOEDGE;
 
@@ -134,11 +134,9 @@ BOOL TThreeD::Clip3DSegment(VECTOR &p1, VECTOR &p2, POINT &from2d, POINT &to2d)
    {
    double t;
    VECTOR p;
-   long c1;
-   long c2;
 
-   c1 = Code(p1);
-   c2 = Code(p2);
+   unsigned int c1 = Code(p1);
+   unsigned int c2 = Code(p2);
 
    while (c1 || c2)
       {
@@ -274,9 +272,7 @@ BOOL TThreeD::Clip3DSegment(VECTOR &p1, VECTOR &p2, POINT &from2d, POINT &to2d)
 // Clip the line in 3d coordinates
 BOOL TThreeD::Clip3DPoint(VECTOR &p1, POINT &from2d)
    {
-   long c1;
-
-   c1 = Code(p1);
+   unsigned int c1 = Code(p1);
 
    if (c1) return FALSE;
 
