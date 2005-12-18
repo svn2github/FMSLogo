@@ -615,19 +615,6 @@ NODE *lreadchar(NODE *)
       else
          c = (char) getc(readstream);
 
-//      if (c == 17)
-//         {
-//         /* control-q */
-//         to_pending = 0;
-//         err_logo(STOP_ERROR, NIL);
-//         }
-//      if (c == 23)
-//         {
-//         /* control-w */
-//         logo_pause(0);
-//         return (lreadchar());
-//         }
-
 #else
       c = (char) getc(readstream);
 #endif
