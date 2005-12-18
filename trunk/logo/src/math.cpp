@@ -111,60 +111,16 @@ NODE *lrerandom(NODE *arg)
 
 jmp_buf oflo_buf;
 
-#ifdef __ZTC__
 #define sig_arg 0
 void handle_oflo(int /*sig*/)
-#else
-#define sig_arg 0
-void handle_oflo(int /*sig*/)
-#endif
    {
    _fpreset();
    longjmp(oflo_buf, 1);
    }
 
-#ifdef vax
-void allow_intov()
-   {
-   long dummy;
-   register long *p = &dummy;
-
-   p[2] |= 040;             /* Turn on IV enable in saved PSW (I hate the vax)*/
-   }
-
-double infnan()
-   {
-   longjmp(oflo_buf, 1);
-   }
-#endif
-
-#ifdef sun
-int matherr(struct exception *x)
-   {
-   if (x->type == UNDERFLOW) return (1);
-   longjmp(oflo_buf, 1);
-   }
-#endif
-
-#ifdef mac
-FLONUM degrad = 0.017453292520;
-#define errchk(x)
-{
-   errno = 0; x; if (errno) err_logo(BAD_DATA_UNREC, arg);
-}
-#include <errno.h>
-#else
 FLONUM degrad = 3.141592653589793227020265931059839203954 / 180.0;
 //#define errchk(x) x
 #define errchk(x) { errno = 0; x; if (errno) err_logo(BAD_DATA_UNREC,arg); }/*ignore*/
-#endif
-
-double myfake(double a)
-	{
-   double b;
-	b = a;
-   return b;
-	}
 
 NODE *binary(NODE *args, char fcn)
    {
@@ -184,12 +140,12 @@ NODE *binary(NODE *args, char fcn)
    if (stopping_flag == THROWING) return Unbound;
    if (nodetype(arg) == INT)
       {
-      imode = TRUE;
+      imode = true;
       ival = getint(arg);
       }
    else
       {
-      imode = FALSE;
+      imode = false;
       fval = getfloat(arg);
       }
    if (args == NIL)
@@ -198,73 +154,69 @@ NODE *binary(NODE *args, char fcn)
       if (imode)
          switch (fcn)
             {
-             case '-': ival = -ival; break;
-             case '~': ival = ~ival; break;
-             case 'v':
-             case 'w':
-             case 'x':
-             case 'V':
-             case 'W':
-             case 'X':
-             case 's':
-             case 'c':
-             case 't':
-             case 'S':
-             case 'C':
-             case 'T':
-             case 'q':
-             case 'e':
-             case 'g':
-             case 'n':
-             case '/':
-                 imode = FALSE;
-                 fval = (FLONUM) ival;
-                 break;
+            case '-': ival = -ival; break;
+            case '~': ival = ~ival; break;
+            case 'v':
+            case 'w':
+            case 'x':
+            case 'V':
+            case 'W':
+            case 'X':
+            case 's':
+            case 'c':
+            case 't':
+            case 'S':
+            case 'C':
+            case 'T':
+            case 'q':
+            case 'e':
+            case 'g':
+            case 'n':
+            case '/':
+               imode = false;
+               fval = (FLONUM) ival;
+               break;
             }
-      if (imode == FALSE)
+      if (!imode)
          {
          if (!setjmp(oflo_buf))
             {
             switch (fcn)
                {
-                case '-': fval = -fval; break;
-                case '/':
-                    if (fval == 0.0)
-                       err_logo(BAD_DATA_UNREC, arg);
-                    else
-                       fval = 1 / fval;
-                    break;
-                case '~': err_logo(BAD_DATA_UNREC, arg); break;
-                case 'c': fval = cos(fval * degrad); break;
-                case 's': fval = sin(fval * degrad); break;
-                case 't': fval = tan(fval * degrad); break;
-                case 'v': fval = asin(fval) / degrad; break;
-                case 'w': fval = acos(fval) / degrad; break;
-                case 'x': fval = atan(fval) / degrad; break;
-                case 'S': fval = sin(fval); break;
-                case 'C': fval = cos(fval); break;
-                case 'T': fval = tan(fval); break;
-                case 'V': fval = asin(fval); break;
-                case 'W': fval = acos(fval); break;
-                case 'X': fval = atan(fval); break;
-                case 'q': errchk(fval = sqrt(fval)); break;
-                case 'e': errchk(fval = exp(fval)); break;
-                case 'g': errchk(fval = log10(fval)); break;
-                case 'n': errchk(fval = log(fval)); break;
-                case 'r':
-                    fval += (fval < 0 ? -0.5 : 0.5);
-                case 'i':
-#ifdef vax
-                    allow_intov();
-#else
-                    if (fval > (FLONUM) MAXINT || fval < -(FLONUM) MAXINT)
-                       handle_oflo(sig_arg);
-#endif
-                    signal(SIGFPE, handle_oflo);
-                    ival = (FIXNUM) fval;
-                    imode = TRUE;
-                    signal(SIGFPE, SIG_DFL);
-                    break;
+               case '-': fval = -fval; break;
+               case '/':
+                  if (fval == 0.0)
+                     err_logo(BAD_DATA_UNREC, arg);
+                  else
+                     fval = 1 / fval;
+                  break;
+               case '~': err_logo(BAD_DATA_UNREC, arg); break;
+               case 'c': fval = cos(fval * degrad); break;
+               case 's': fval = sin(fval * degrad); break;
+               case 't': fval = tan(fval * degrad); break;
+               case 'v': fval = asin(fval) / degrad; break;
+               case 'w': fval = acos(fval) / degrad; break;
+               case 'x': fval = atan(fval) / degrad; break;
+               case 'S': fval = sin(fval); break;
+               case 'C': fval = cos(fval); break;
+               case 'T': fval = tan(fval); break;
+               case 'V': fval = asin(fval); break;
+               case 'W': fval = acos(fval); break;
+               case 'X': fval = atan(fval); break;
+               case 'q': errchk(fval = sqrt(fval)); break;
+               case 'e': errchk(fval = exp(fval)); break;
+               case 'g': errchk(fval = log10(fval)); break;
+               case 'n': errchk(fval = log(fval)); break;
+               case 'r':
+                  fval += (fval < 0 ? -0.5 : 0.5);
+               case 'i':
+                  if (fval > (FLONUM) MAXINT || fval < -(FLONUM) MAXINT)
+                     handle_oflo(sig_arg);
+                  signal(SIGFPE, handle_oflo);
+                  ival = (FIXNUM) fval;
+                  imode = true;
+                  signal(SIGFPE, SIG_DFL);
+                  break;
                }
             }
          else
@@ -306,7 +258,7 @@ NODE *binary(NODE *args, char fcn)
          if (imode)
             {
             fval = (FLONUM) ival;
-            imode = FALSE;
+            imode = false;
             }
          farg = getfloat(arg);
          }
@@ -314,164 +266,158 @@ NODE *binary(NODE *args, char fcn)
       if (imode)
          {
          oval = ival;
-#ifdef vax
-         allow_intov();
-#endif
+
          signal(SIGFPE, handle_oflo);
          if (setjmp(oflo_buf) == 0)
             {
             switch (fcn)
                {
-#ifdef vax
-                case '+': ival += iarg; break;
-                case '-': ival -= iarg; break;
-                case '*': ival *= iarg; break;
-#else
-                case '-': iarg = -iarg;
-                case '+':
-                    if (iarg < 0)
-                       {
-                       nval = ival + iarg;
-                       if (nval >= ival)
-                          {
-                          imode = FALSE;
-                          fcn   = '+';
-                          fval  = (FLONUM) ival;
-                          farg  = (FLONUM) iarg;
-//                        handle_oflo(sig_arg);
-                          }
-                       else ival = nval;
-                       }
-                    else
-                       {
-                       nval = ival + iarg;
-                       if (nval < ival)
-                          {
-                          imode = FALSE;
-                          fcn   = '+';
-                          fval  = (FLONUM) ival;
-                          farg  = (FLONUM) iarg;
-//                        handle_oflo(sig_arg);
-                          }
-                       else ival = nval;
-                       }
-                    break;
-#endif
-                case '/':
-                   if (iarg == 0)
-                      {
-                      err_logo(BAD_DATA_UNREC, arg);
-                      }
-                   else
-                      {
-                      if (ival % iarg != 0)
-                         {
-                         imode = FALSE;
-                         fval = (FLONUM) ival;
-                         farg = (FLONUM) iarg;
-                         }
-                      else
-                         {
-                         ival /= iarg;
-                         }
-                      }
-                   break;
+               case '-': iarg = -iarg;
+               case '+':
+                  if (iarg < 0)
+                     {
+                     nval = ival + iarg;
+                     if (nval >= ival)
+                        {
+                        imode = false;
+                        fcn   = '+';
+                        fval  = (FLONUM) ival;
+                        farg  = (FLONUM) iarg;
+                        //                        handle_oflo(sig_arg);
+                        }
+                     else ival = nval;
+                     }
+                  else
+                     {
+                     nval = ival + iarg;
+                     if (nval < ival)
+                        {
+                        imode = false;
+                        fcn   = '+';
+                        fval  = (FLONUM) ival;
+                        farg  = (FLONUM) iarg;
+                        //                        handle_oflo(sig_arg);
+                        }
+                     else ival = nval;
+                     }
+                  break;
 
-                case '%':
-                   if (iarg == 0)
-                      {
-                      err_logo(BAD_DATA_UNREC, arg);
-                      }
-                   else
-                      {
-                      ival %= iarg;
-                      }
-                   break;
+               case '/':
+                  if (iarg == 0)
+                     {
+                     err_logo(BAD_DATA_UNREC, arg);
+                     }
+                  else
+                     {
+                     if (ival % iarg != 0)
+                        {
+                        imode = false;
+                        fval = (FLONUM) ival;
+                        farg = (FLONUM) iarg;
+                        }
+                     else
+                        {
+                        ival /= iarg;
+                        }
+                     }
+                  break;
 
-                case 'm':
-                   if (iarg == 0)
-                      {
-                      err_logo(BAD_DATA_UNREC, arg);
-                      }
-                   else
-                      {
-                      ival %= iarg;
-                      if ((ival < 0) != (iarg < 0))
-                         {
-                         ival += iarg;
-                         }
-                      }
-                   break;
+               case '%':
+                  if (iarg == 0)
+                     {
+                     err_logo(BAD_DATA_UNREC, arg);
+                     }
+                  else
+                     {
+                     ival %= iarg;
+                     }
+                  break;
 
-                case '&': ival &= iarg; break;
-                case '|': ival |= iarg; break;
-                case '^': ival ^= iarg; break;
-                case 'a':
-                case 'l':
-                    if (iarg < 0)
-                       {
-                       if (fcn == 'a')
-                          ival >>= -iarg;
-                       else
-                          ival = (unsigned) ival
-                          >> -iarg;
-                       }
-                    else
-                       ival <<= iarg;
-                    break;
-#ifndef vax
-                case '*':
-                    if (ival < SAFEINT && ival > -SAFEINT &&
-                          iarg < SAFEINT && iarg > -SAFEINT)
-                       {
-                       ival *= iarg;
-                       break;
-                       }
-                    wantint++;
-#endif
-                default:                /* math library */
-                    imode = FALSE;
-                    fval = (FLONUM) ival;
-                    farg = (FLONUM) iarg;
+               case 'm':
+                  if (iarg == 0)
+                     {
+                     err_logo(BAD_DATA_UNREC, arg);
+                     }
+                  else
+                     {
+                     ival %= iarg;
+                     if ((ival < 0) != (iarg < 0))
+                        {
+                        ival += iarg;
+                        }
+                     }
+                  break;
+
+               case '&': ival &= iarg; break;
+               case '|': ival |= iarg; break;
+               case '^': ival ^= iarg; break;
+               case 'a':
+               case 'l':
+                  if (iarg < 0)
+                     {
+                     if (fcn == 'a')
+                        ival >>= -iarg;
+                     else
+                        ival = (unsigned) ival
+                           >> -iarg;
+                     }
+                  else
+                     ival <<= iarg;
+                  break;
+
+               case '*':
+                  if (ival < SAFEINT && ival > -SAFEINT &&
+                      iarg < SAFEINT && iarg > -SAFEINT)
+                     {
+                     ival *= iarg;
+                     break;
+                     }
+                  wantint++;
+
+               default:                /* math library */
+                  imode = false;
+                  fval = (FLONUM) ival;
+                  farg = (FLONUM) iarg;
                }
             }
          else
             {
             /* integer overflow detected */
-            imode = FALSE;
+            imode = false;
             fval = (FLONUM) oval;
             farg = (FLONUM) iarg;
             }
          signal(SIGFPE, SIG_DFL);
          }
-      if (imode == FALSE)
+
+      if (!imode)
          {
          signal(SIGFPE, handle_oflo);
          if (setjmp(oflo_buf) == 0)
             {
             switch (fcn)
                {
-                case '+': fval += farg; break;
-                case '-': fval -= farg; break;
-                case '*':
-                    fval *= farg;
-#ifndef vax
-                    if (wantint)
-                       {
-                       wantint = 0;
-                       if (fval <= MAXINT && fval >= -MAXINT)
-                          {
-                          imode = TRUE;
-                          ival = fval;
-                          }
-                       }
-#endif
+               case '+': fval += farg; break;
+               case '-': fval -= farg; break;
+               case '*':
+                  fval *= farg;
+
+                  if (wantint)
+                     {
+                     wantint = 0;
+                     if (fval <= MAXINT && fval >= -MAXINT)
+                        {
+                        imode = true;
+                        ival = fval;
+                        }
+                     }
+
                     break;
-                case '/':
-                    if (farg == 0.0)
+               case '/':
+                  if (farg == 0.0)
                        err_logo(BAD_DATA_UNREC, arg);
-                    else
-                       fval /= farg;
+                  else
+                     fval /= farg;
                     break;
                 case 'x':
                     errchk(fval = atan2(farg, fval) / degrad);
@@ -482,11 +428,11 @@ NODE *binary(NODE *args, char fcn)
                 case 'p':
                     errchk(fval = pow(fval, farg));
                     break;
-                default:                /* logical op                          */
-                    if (nodetype(arg) == INT)
-                       err_logo(BAD_DATA_UNREC, make_floatnode(fval));
-                    else
-                       err_logo(BAD_DATA_UNREC, arg);
+               default:                /* logical op                          */
+                  if (nodetype(arg) == INT)
+                     err_logo(BAD_DATA_UNREC, make_floatnode(fval));
+                  else
+                     err_logo(BAD_DATA_UNREC, arg);
                }
             }
          else
