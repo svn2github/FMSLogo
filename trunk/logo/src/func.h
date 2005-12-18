@@ -427,11 +427,6 @@ extern void check_reserve_tank(void);
 extern int numberp(NODE *snd);
 extern NODE *lrandom(NODE *arg);
 extern NODE *lrerandom(NODE *arg);
-extern void handle_oflo(int);
-extern void allow_intov(void);
-extern double infnan(void);
-extern int matherrx(struct exception *x);
-extern NODE *binary(NODE *args, char fcn);
 extern NODE *ladd(NODE *args);
 extern NODE *lsub(NODE *args);
 extern NODE *lmul(NODE *args);
@@ -463,7 +458,6 @@ extern NODE *lexp(NODE *args);
 extern NODE *llog10(NODE *args);
 extern NODE *lln(NODE *args);
 extern NODE *lpower(NODE *args);
-extern int compare_numnodes(NODE *n1, NODE *n2);
 extern NODE *torf(bool tf);
 extern NODE *llessp(NODE *args);
 extern NODE *lgreaterp(NODE *args);
@@ -473,11 +467,8 @@ extern NODE *lequalp(NODE *args);
 extern NODE *l_eq(NODE *args);
 extern NODE *lbeforep(NODE *args);
 
-/* File MAINX.CPP: */
-
+/* File UNIX.CPP: */
 extern void unblock_input(void);
-extern void logo_stop(int);
-extern void logo_pause(int);
 
 /* File LISTS.CPP: */
 
