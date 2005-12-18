@@ -22,6 +22,9 @@
 
 #include "allwind.h"
 
+// REVISIT: this is a candidate for making const
+FLONUM degrad = 3.141592653589793227020265931059839203954 / 180.0;
+
 int numberp(NODE *snd)
    {
    int dl, dr, pcnt, plen;
@@ -112,16 +115,17 @@ NODE *lrerandom(NODE *arg)
 jmp_buf oflo_buf;
 
 #define sig_arg 0
+static
 void handle_oflo(int /*sig*/)
    {
    _fpreset();
    longjmp(oflo_buf, 1);
    }
 
-FLONUM degrad = 3.141592653589793227020265931059839203954 / 180.0;
 //#define errchk(x) x
 #define errchk(x) { errno = 0; x; if (errno) err_logo(BAD_DATA_UNREC,arg); }/*ignore*/
 
+static
 NODE *binary(NODE *args, char fcn)
    {
    NODE *arg, *val;
@@ -296,7 +300,7 @@ NODE *binary(NODE *args, char fcn)
                         fcn   = '+';
                         fval  = (FLONUM) ival;
                         farg  = (FLONUM) iarg;
-                        //                        handle_oflo(sig_arg);
+                        // handle_oflo(sig_arg);
                         }
                      else ival = nval;
                      }
@@ -428,7 +432,7 @@ NODE *binary(NODE *args, char fcn)
                 case 'p':
                     errchk(fval = pow(fval, farg));
                     break;
-               default:                /* logical op                          */
+               default:  // logical op
                   if (nodetype(arg) == INT)
                      err_logo(BAD_DATA_UNREC, make_floatnode(fval));
                   else
@@ -625,6 +629,7 @@ NODE *lpower(NODE *args)
    return (binary(args, 'p'));
    }
 
+static
 int compare_numnodes(NODE *n1, NODE *n2)
    {
    FLONUM f;
