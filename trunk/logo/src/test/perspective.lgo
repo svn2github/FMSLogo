@@ -1,0 +1,29 @@
+
+TO BUG1384267TEST
+
+   ; these statements used to crash
+
+   REPORTTESTINFO [executing regression test for bug #1384267]
+   RIGHT     10000000000000000000
+   LEFT      10000000000000000000
+   UPPITCH   10000000000000000000
+   DOWNPITCH 10000000000000000000
+   RIGHTROLL 10000000000000000000
+   LEFTROLL  10000000000000000000
+
+   REPORTTESTPASSED ["|bug #1384267 is fixed; turning by a large number in perspective mode did not crash.| ]
+END
+
+
+TO PERSPECTIVETEST
+
+   ; switch to perspective mode
+   PERSPECTIVE
+
+   BUG1384267TEST
+
+   ; go back to the default mode
+   CLEARSCREEN
+   WRAP
+END
+
