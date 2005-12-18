@@ -746,7 +746,7 @@ WinMain(
 
    TopOfStack = &i;
 
-   // parse -h height -w width as being the bitmap size
+   // parse the command-line parameters
 
    commandarg[0] = '\0';
    bPerspective = false;
@@ -812,11 +812,16 @@ WinMain(
              case 'l':
              case 'L':
                 i = 0;
+
+                // advance beyond the whitespace
                 for (; (*ptr == ' '); ptr++)
                    {
                    }
+
+                // copy the rest of the line into the commandarg buffer.
                 for (; (*ptr != '\0'); ptr++)
                    {
+                   // BUG: possible buffer overflow
                    commandarg[i++] = *ptr;
                    }
                 break;
