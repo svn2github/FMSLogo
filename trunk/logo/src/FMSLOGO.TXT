@@ -29,6 +29,7 @@ Part II) New features/bugs fixed:
   * Added for 6.7.1,
     o Fix bug #1372735; Editor can save large files on Win95.
     o Fix bug #1383281; FMSLogo doesn't crash on FOREACH command.
+    o Fix bug #1384267; Turning by a large number in 3D mode doesn't crash.
 
   * Added for 6.7.0,
     o Improve joystick samples.
