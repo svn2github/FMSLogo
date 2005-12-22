@@ -566,7 +566,6 @@ extern void reset_args(NODE *old_stack);
 extern void err_print(void);
 extern NODE *err_logo(ERR_TYPES error_type, NODE *error_desc);
 extern NODE *lerror(NODE *arg);
-extern void bcopy(char *from, char *to, int len);
 extern NODE *lpause(NODE *arg);
 extern NODE *lhalt(NODE *arg);
 extern NODE *lyield(NODE *arg);

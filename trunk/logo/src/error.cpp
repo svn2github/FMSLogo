@@ -30,14 +30,6 @@ NODE *throw_node = NIL;
 NODE *err_mesg = NIL;
 ERR_TYPES erract_errtype;
 
-#ifdef MEM_DEBUG
-int debprint(NODE *foo)
-   {
-   ndprintf(stderr, "%s\n", foo);
-   return 1;
-   }
-#endif
-
 void err_print()
    {
    CTRLTYPE save_flag = stopping_flag;
@@ -413,11 +405,11 @@ NODE *err_logo(ERR_TYPES error_type, NODE *error_desc)
          val_status = sv_val_status;
          setvalnode__caseobj(Erract, err_act);
          deref(err_act);
-         if (recoverable == TRUE && val != Unbound)
+         if (recoverable && val != Unbound)
             {
-            return (unref(val));
+            return unref(val);
             }
-         else if (recoverable == FALSE && val != Unbound)
+         else if (!recoverable && val != Unbound)
             {
             ndprintf(stdout, "You don't say what to do with %s\n", val);
             val = reref(val, Unbound);
@@ -441,7 +433,7 @@ NODE *err_logo(ERR_TYPES error_type, NODE *error_desc)
       }
    stopping_flag = THROWING;
    output_node = Unbound;
-   return (unref(val));
+   return unref(val);
    }
 
 NODE *lerror(NODE *)
@@ -453,14 +445,6 @@ NODE *lerror(NODE *)
    return (unref(val));
    }
 
-#ifndef TIOCSTI
-void bcopy(char *from, char *to, int len)
-   {
-   while (--len >= 0)
-      *to++ = *from++;
-   }
-#endif
-
 NODE *lpause(NODE*)
    {
    NODE *elist = NIL, *val = Unbound, *uname = NIL;
@@ -469,9 +453,6 @@ NODE *lpause(NODE*)
 #ifndef TIOCSTI
    jmp_buf sav_iblk;
 #endif
-#ifdef MEM_DEBUG
-   extern long int mem_allocated, mem_freed;
-#endif
 
    if (err_mesg != NIL) err_print();
    /* if (ufun != NIL) */
@@ -479,80 +460,84 @@ NODE *lpause(NODE*)
       uname = reref(uname, ufun);
       ufun = NIL;
    }
-   {
-      ndprintf(stdout, "Pausing...");
+
+   ndprintf(stdout, "Pausing...");
 #ifndef TIOCSTI
-      bcopy((char *) (&iblk_buf), (char *) (&sav_iblk), sizeof(jmp_buf));
+   sav_iblk = iblk_buf;
 #endif
-      sav_input_blocking = input_blocking;
-      input_blocking = 0;
-#ifdef mac
-      csetmode(C_ECHO, stdin);
-      fflush(stdin);
-#endif
-      sv_val_status = val_status;
-      while (RUNNING)
-         {
+   sav_input_blocking = input_blocking;
+   input_blocking = 0;
+   sv_val_status = val_status;
+   while (RUNNING)
+      {
 #ifdef MEM_DEBUG
-         printf("alloc=%d, freed=%d, used=%d\n",
-         mem_allocated, mem_freed, mem_allocated - mem_freed);
+      printf(
+         "alloc=%d, freed=%d, used=%d\n",
+         mem_allocated, 
+         mem_freed, 
+         mem_allocated - mem_freed);
 #endif
-         if (uname != NIL) print_node(stdout, uname);
-         new_line(stdout);
-         input_mode = PAUSE_MODE;
-         elist = reref(elist, reader(stdin, "? "));
-         if (NOT_THROWING) elist = reref(elist, parser(elist, TRUE));
-         else elist = reref(elist, NIL);
-         input_mode = NO_MODE;
-         MyMessageScan();
-         if (feof(stdin) /*ggm && !isatty(0)*/) lbye(NIL);
+      if (uname != NIL) print_node(stdout, uname);
+      new_line(stdout);
+      input_mode = PAUSE_MODE;
+      elist = reref(elist, reader(stdin, "? "));
+      if (NOT_THROWING) 
+         {
+         elist = reref(elist, parser(elist, TRUE));
+         }
+      else 
+         {
+         elist = reref(elist, NIL);
+         }
+      input_mode = NO_MODE;
+      MyMessageScan();
+      if (feof(stdin) /*ggm && !isatty(0)*/) lbye(NIL);
 #ifdef __ZTC__
-         if (feof(stdin)) rewind(stdin);
+      if (feof(stdin)) rewind(stdin);
 #endif
-         val_status = 5;
-         if (elist != NIL) eval_driver(elist);
-         if (stopping_flag == THROWING)
+      val_status = 5;
+      if (elist != NIL) eval_driver(elist);
+      if (stopping_flag == THROWING)
+         {
+         if (compare_node(throw_node, Pause, TRUE) == 0)
             {
-            if (compare_node(throw_node, Pause, TRUE) == 0)
-               {
-               val = vref(output_node);
-               output_node = reref(output_node, Unbound);
-               stopping_flag = RUN;
-               deref(elist);
+            val = vref(output_node);
+            output_node = reref(output_node, Unbound);
+            stopping_flag = RUN;
+            deref(elist);
 #ifndef TIOCSTI
-               bcopy((char *) (&sav_iblk),
-                  (char *) (&iblk_buf), sizeof(jmp_buf));
+            iblk_buf = sav_iblk;
 #endif
-               input_blocking = sav_input_blocking;
-               val_status = sv_val_status;
-               if (uname != NIL)
-                  {
-                  ufun = reref(ufun, uname);
-                  deref(uname);
-                  }
-               return (unref(val));
-               }
-            else if (compare_node(throw_node, Error, TRUE) == 0)
+            input_blocking = sav_input_blocking;
+            val_status = sv_val_status;
+            if (uname != NIL)
                {
-               err_print();
-               stopping_flag = RUN;
+               ufun = reref(ufun, uname);
+               deref(uname);
                }
+            return unref(val);
+            }
+         else if (compare_node(throw_node, Error, TRUE) == 0)
+            {
+            err_print();
+            stopping_flag = RUN;
             }
          }
-      deref(elist);
+      }
+   deref(elist);
 #ifndef TIOCSTI
-      bcopy((char *) (&sav_iblk), (char *) (&iblk_buf), sizeof(jmp_buf));
+   iblk_buf = sav_iblk;
 #endif
-      input_blocking = sav_input_blocking;
-      unblock_input();
-      val_status = sv_val_status;
-      if (uname != NIL)
-         {
-         ufun = reref(ufun, uname);
-         deref(uname);
-         }
-   }
-   return (unref(val));
+   input_blocking = sav_input_blocking;
+   unblock_input();
+   val_status = sv_val_status;
+   if (uname != NIL)
+      {
+      ufun = reref(ufun, uname);
+      deref(uname);
+      }
+   
+   return unref(val);
    }
 
 NODE *lcontinue(NODE *args)

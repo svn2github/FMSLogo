@@ -86,6 +86,10 @@ extern int ecma_size;
 #endif
 
 /* mem.c */
+#ifdef MEM_DEBUG
+extern long int mem_allocated;
+extern long int mem_freed;
+#endif
 
 /* parse.c */
 extern FILE *loadstream, *writestream, *readstream, *dribblestream;
