@@ -188,16 +188,16 @@ void tell_shadow(NODE *arg)
    }
 
 /* Check if a local variable is already in this frame */
-int not_local(NODE *name, NODE *sp)
+bool not_local(NODE *name, NODE *sp)
    {
    for (; sp != var; sp = cdr(sp))
       {
       if (compare_node(car(sp), name, TRUE) == 0)
          {
-         return FALSE;
+         return false;
          }
       }
-   return TRUE;
+   return true;
    }
 
 /* reverse a list destructively */
@@ -1131,4 +1131,3 @@ NODE *evaluator(NODE *list, enum labels where)
    deref(argl); deref(unev); deref(stack); deref(catch_tag); deref(exp);
    return (val);
    }
-

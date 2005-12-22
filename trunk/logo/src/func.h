@@ -555,7 +555,7 @@ extern NODE *if_eval_driver(NODE *seq);
 extern NODE *lapply(NODE *args);
 extern NODE *lqm(NODE *args);
 extern void tell_shadow(NODE *arg);
-extern int not_local(NODE *name, NODE *sp);
+extern bool not_local(NODE *name, NODE *sp);
 extern NODE *reverse(NODE *list);
 extern NODE *append(NODE *a, NODE *b);
 extern NODE *evaluator(NODE *list, enum labels where);
