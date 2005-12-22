@@ -1637,15 +1637,12 @@ NODE *lscrunch(NODE *)
 
 NODE *lhome(NODE *)
    {
-   NODE *tmp1;
-   NODE *tmp2;
-   NODE *tmp3;
+   NODE *zero;
 
    out_of_bounds = false;
-   setpos_helper(tmp1 = make_intnode((FIXNUM) 0), tmp2 = make_intnode((FIXNUM) 0), tmp3 = make_intnode((FIXNUM) 0));
-   gcref(tmp1);
-   gcref(tmp2);
-   gcref(tmp3);
+   zero = make_intnode((FIXNUM) 0);
+   setpos_helper(zero, zero, zero);
+   gcref(zero);
 
    draw_turtle(false);
    g_Turtles[turtle_which].Heading = 0.0;
