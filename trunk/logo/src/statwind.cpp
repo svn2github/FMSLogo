@@ -178,13 +178,13 @@ void update_status_penstyle(void)
 void update_status_pencontact(void)
    {
    const char * text;
-   if (pen_vis == 0)
+   if (g_Turtles[turtle_which].IsPenUp)
       {
-      text = "Down";
+      text = "Up";
       }
    else
       {
-      text = "Up";
+      text = "Down";
       }
 
    MainWindowx->StatusWindow->SetDlgItemText(ID_PENCONTACT, text);

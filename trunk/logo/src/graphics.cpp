@@ -1,5 +1,5 @@
 /*
-*      graphics.c          logo graphics module          mak
+*      graphics.cpp          logo graphics module          mak
 *
 *       Copyright (C) 1995 by the Regents of the University of California
 *       Copyright (C) 1995 by George Mills
@@ -74,9 +74,10 @@ Turtle g_Turtles[TURTLES] =
 
          0.0,
 
-         true,
-
          0,
+
+         true,
+         false,
       },
    }
 ;
@@ -161,7 +162,7 @@ void save_vis()
       if (safe_to_save())
       {
       record[record_index] = SETPENVIS;
-      record[record_index + 1] = (char)pen_vis;
+      record[record_index + 1] = (char)g_Turtles[turtle_which].PenUp;
       record_index += 2;
       }
     */
@@ -798,8 +799,7 @@ setpos_helper(
 
 NODE *lellipsearc(NODE *arg)
    {
-
-   int pen_state = pen_vis;
+   bool pen_state = g_Turtles[turtle_which].IsPenUp;
 
    // get args
    NODE * val1 = numeric_arg(arg);
@@ -834,9 +834,8 @@ NODE *lellipsearc(NODE *arg)
          }
       FLONUM delta = angle / count;
 
-
       // jump to begin of first line segment without drawing
-      pen_vis = 1;
+      g_Turtles[turtle_which].IsPenUp = true;
 
       if (current_mode == perspectivemode)
          {
@@ -865,11 +864,11 @@ NODE *lellipsearc(NODE *arg)
                tz + rp.z);
             
             // restore pen (in case saved)
-            pen_vis = pen_state;
+            g_Turtles[turtle_which].IsPenUp = pen_state;
             }
 
          // restore pen (in case saved)
-         pen_vis = pen_state;
+         g_Turtles[turtle_which].IsPenUp = pen_state;
          
          // assure we draw something and end in the exact right place */
          r.x = -sin(endangle * degrad) * radius_x;
@@ -906,11 +905,11 @@ NODE *lellipsearc(NODE *arg)
                ty + ry);
 
             // restore pen (in case saved)
-            pen_vis = pen_state;
+            g_Turtles[turtle_which].IsPenUp = pen_state;
             }
 
          // restore pen (in case saved)
-         pen_vis = pen_state;
+         g_Turtles[turtle_which].IsPenUp = pen_state;
 
          // assure we draw something and end in the exact right place */
          FLONUM x = -sin(endangle * degrad) * radius_x;
@@ -2048,7 +2047,7 @@ NODE *lfullscreen(NODE *)
 
 NODE *lpendownp(NODE *)
    {
-   return (pen_vis == 0 ? Truex : Falsex);
+   return g_Turtles[turtle_which].IsPenUp ? Falsex : Truex;
    }
 
 NODE *lpenmode(NODE *)
@@ -2070,15 +2069,14 @@ NODE *lpenpattern(NODE *)
 
 NODE *lpendown(NODE *)
    {
-   pen_vis = 0;
+   g_Turtles[turtle_which].IsPenUp = false;
    save_vis();
    return Unbound;
    }
 
 NODE *lpenup(NODE *)
    {
-   if (pen_vis == 0)
-      pen_vis--;
+   g_Turtles[turtle_which].IsPenUp = true;
    save_vis();
    return Unbound;
    }

@@ -178,7 +178,6 @@ extern int x_max;
 extern int y_max;
 extern bool interactive;
 extern int tty_charmode;
-extern int current_vis[];
 extern bool in_erase_mode;
 
 /* paren.cpp */
@@ -189,14 +188,15 @@ extern mode_type   current_mode;
 extern bool        bPolyFlag;
 extern VERTEXLIST* ThePolygon;
 
-typedef struct _Turtle
+struct Turtle
    {
    MATRIX   Matrix;
    VECTOR   Position;
    FLONUM   Heading;
-   bool     IsShown;
    long     Bitmap;
-   } Turtle;
+   bool     IsShown;
+   bool     IsPenUp;
+   };
 
 extern Turtle g_Turtles[];
 extern VECTOR g_Scale;     // used to scale a picture in scrunch mode.

@@ -1312,13 +1312,13 @@ void move_to_3d(NUMBER x, NUMBER y, NUMBER z)
 
 void line_to(NUMBER x, NUMBER y)
    {
-   if (pen_vis == 0)
+   if (turtle_which >= (TURTLES - TURTLEN)) 
       {
-      if (turtle_which >= (TURTLES - TURTLEN)) 
-         {
-         return;
-         }
+      return;
+      }
 
+   if (!g_Turtles[turtle_which].IsPenUp)
+      {
       vector_count++;
       if (status_flag) 
          {
@@ -1346,10 +1346,13 @@ void line_to(NUMBER x, NUMBER y)
 
 void line_to_3d(const Point & ToPoint)
    {
-   if (pen_vis == 0)
+   if (turtle_which >= (TURTLES - TURTLEN)) 
       {
-      if (turtle_which >= (TURTLES - TURTLEN)) return;
+      return;
+      }
 
+   if (!g_Turtles[turtle_which].IsPenUp)
+      {
       vector_count++;
       if (status_flag) 
          {

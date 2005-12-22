@@ -35,11 +35,6 @@ bool in_erase_mode = false;
 
 int ibm_screen_top;
 int current_write_mode = COPY_PUT;
-int current_vis[TURTLES]=
-      {
-      0
-      }
-;
 int turtle_color;
 int prev_color;
 void *window_image;
@@ -119,20 +114,20 @@ provide a set of functions analogous to these. */
 
 void save_pen(pen_info *p)
    {
-   //    p->h = getx();
-   //    p->v = gety();
-   p->vis = current_vis[turtle_which];
+   // p->h = getx();
+   // p->v = gety();
+   p->penup = g_Turtles[turtle_which].IsPenUp;
    p->width = get_pen_width();
-   //    p->color = getcolor();
+   // p->color = getcolor();
    p->prev_color = prev_color;
    get_pen_pattern(p->pattern);
    p->mode = get_pen_mode();
    }
 
-void restore_pen(pen_info *p)
+void restore_pen(const pen_info *p)
    {
    //    moveto(p->h, p->v);
-   current_vis[turtle_which] = p->vis;
+   g_Turtles[turtle_which].IsPenUp = p->penup;
    set_pen_width(p->width);
    set_pen_mode(p->mode);    // must restore mode before color
    //    setcolor(p->color);
@@ -210,7 +205,7 @@ void set_pen_mode(int m)
 //return (0);
 //}
 
-void set_pen_pattern(char * /* pat */)
+void set_pen_pattern(const char * /* pat */)
    {
    //    setfillpattern(pat, getcolor());
    }

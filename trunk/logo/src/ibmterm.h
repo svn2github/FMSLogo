@@ -10,9 +10,6 @@
 
 #define GR_SIZE 10000
 
-#define set_pen_vis(v) current_vis[turtle_which] = v
-#define pen_vis        current_vis[turtle_which]
-
 // pen_info is a stucture type with fields for the various
 // pen characteristics including the location, size, color,
 // mode (e.g. XOR or COPY), pattern, visibility (0 = visible)
@@ -21,12 +18,12 @@ typedef struct
    {
    // int h;
    // int v;
-   int vis;
-   int width;
-   int color;
-   int prev_color;
+   bool          penup;
+   int           width;
+   int           color;
+   int           prev_color;
    unsigned char pattern[8];
-   int mode;
+   int           mode;
    }
 pen_info;
 
