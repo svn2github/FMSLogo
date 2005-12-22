@@ -874,8 +874,8 @@ NODE *lellipsearc(NODE *arg)
             {
             /* now rotate about position */
 
-            rx = cos((th - 90.0) * degrad) * y - sin((th - 90.0) * degrad) * x;
-            ry = cos((th + 90.0) * degrad) * x + sin((th + 90.0) * degrad) * y;
+            rx =  sin(th * degrad) * y + cos(th * degrad) * x;
+            ry = -sin(th * degrad) * x + cos(th * degrad) * y;
 
             setpos_helper_2d(
                tx + rx,
@@ -912,8 +912,8 @@ NODE *lellipsearc(NODE *arg)
             {
             /* now rotate about position */
 
-            rx = cos((th - 90.0) * degrad) * y - sin((th - 90.0) * degrad) * x;
-            ry = cos((th + 90.0) * degrad) * x + sin((th + 90.0) * degrad) * y;
+            rx =  sin(th * degrad) * y + cos(th * degrad) * x;
+            ry = -sin(th * degrad) * x + cos(th * degrad) * y;
 
             setpos_helper_2d(
                tx + rx,
