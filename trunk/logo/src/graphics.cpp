@@ -816,6 +816,14 @@ NODE *lellipsearc(NODE *arg)
 
       draw_turtle(false);
 
+      if (360.0 < fabs(angle))
+         {
+         // the angle is either greater than 360 or less than -360. 
+         // To speed things up, we limit it to just 360.
+         // This also fixes a crash (floating-point exception) for large angles.
+         angle = 360.0;
+         }
+
       // save and force turtle state
       bool turtle_state = g_Turtles[turtle_which].IsShown;
       g_Turtles[turtle_which].IsShown = false;
