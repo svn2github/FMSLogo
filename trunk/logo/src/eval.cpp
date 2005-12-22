@@ -51,8 +51,6 @@
 
 #define nameis(x,y)         ((object__caseobj(x)) == (object__caseobj(y)))
 
-typedef NODE * (*nodeinout) (NODE *arg);
-
 /* These variables are all externed in globals.h */
 
 NODE
@@ -444,7 +442,7 @@ NODE *evaluator(NODE *list, enum labels where)
    if (is_list(proc)) goto compound_apply;
    /* primitive_apply */
    if (NOT_THROWING)
-      assign(val, ((nodeinout) * getprimfun(proc)) (argl));
+      assign(val, ((logofunc) * getprimfun(proc)) (argl));
    else
       assign(val, Unbound);
 #define do_case(x) case x: goto x;
