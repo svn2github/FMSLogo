@@ -1,9 +1,7 @@
+------------------------------------------------------------------
+FMSLogo Version 6.7.2 for Microsoft Windows 95/98/NT/2000/XP/Vista
+------------------------------------------------------------------
 
-     FMSLogo Version 6.7.1 for Microsoft Windows 95/98/NT/2000/XP/Vista
-     ------------------------------------------------------------------
-
-                                Contents
-                                --------
 
 Part    I) Kit Description/Location:
 Part   II) New features/bugs fixed:
@@ -17,14 +15,14 @@ Part VIII) Minimum System Requirements:
 
 Part I) Kit Description/Location (http://sourceforge.net/projects/fmslogo):
 
-  fmslogo-6.7.1.exe       (binary kit: Windows self-extracting installer)
-  fmslogo-6.7.1.zip       (binary kit: Windows ZIP archive)
-  fmslogo-src-6.7.1.zip   (source kit)
-
-For information about UCBLogo, please contact Brian Harvey
-<bh@cs.berkeley.edu> or the Logo Foundation <michaelt@media.mit.edu>.
+  fmslogo-6.7.2.exe       (binary kit: Windows self-extracting installer)
+  fmslogo-6.7.2.zip       (binary kit: Windows ZIP archive)
+  fmslogo-src-6.7.2.zip   (source kit)
 
 Part II) New features/bugs fixed:
+
+  * Added for 6.7.2,
+    o Fix bug #1386335; the commander's editbox grows with the font size.
 
   * Added for 6.7.1,
     o Fix bug #1372735; Editor can save large files on Win95.
@@ -145,6 +143,7 @@ Part III) Special Thanks:
     Kari Hoijarvi
     Clem Rutter
     Lionel Laske
+    Erich Neuwirth
 
   Special thanks to:
     George Mills <gmills@softronix.com>

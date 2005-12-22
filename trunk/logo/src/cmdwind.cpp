@@ -116,8 +116,35 @@ void TMyCommandWindow::RecalculateLayout()
    const int y_border = 4;
    const int padding  = 6;
 
-   Listbox->SetWindowPos(NULL, x_border, 0,                                       total_width - button_width * 2 - x_border - padding, total_height - button_height - padding, SWP_NOZORDER);
-   Editbox->SetWindowPos(NULL, x_border, total_height - button_height - y_border, total_width - button_width * 2 - x_border - padding, button_height,                          SWP_NOZORDER);
+   // Set the height of the editbox based on the height
+   // of the current commander font.
+   int editbox_height = button_height;
+
+   HDC edit_dc = GetDC(Editbox->HWindow);
+   if (edit_dc != NULL)
+      {
+      TEXTMETRIC metrics;
+
+      HFONT oldFont = (HFONT) SelectObject(edit_dc, Font);
+
+      BOOL isOk = GetTextMetrics(edit_dc, &metrics);
+      if (isOk)
+         {
+         // font height + some padding
+         int height_for_font = metrics.tmHeight + 6;
+         if (editbox_height < height_for_font)
+            {
+            editbox_height = height_for_font;
+            }
+         }
+
+      SelectObject(edit_dc, oldFont);
+
+      ReleaseDC(Editbox->HWindow, edit_dc);
+      }
+
+   Listbox->SetWindowPos(NULL, x_border, 0,                                       total_width - button_width * 2 - x_border - padding, total_height - editbox_height - padding, SWP_NOZORDER);
+   Editbox->SetWindowPos(NULL, x_border, total_height - editbox_height - y_border, total_width - button_width * 2 - x_border - padding, editbox_height,                         SWP_NOZORDER);
 
    HaltButton->SetWindowPos(NULL,   total_width - button_width * 2 - x_border, button_height * 0 + y_border, button_width, button_height, SWP_NOZORDER);
    TraceButton->SetWindowPos(NULL,  total_width - button_width * 1 - x_border, button_height * 0 + y_border, button_width, button_height, SWP_NOZORDER);
@@ -586,6 +613,9 @@ void TMyCommandWindow::ChooseNewFont()
          DeleteObject(Font);
          }
       Font = hFont;
+
+      RecalculateLayout();
+      Invalidate(true);
       }
    }
 
