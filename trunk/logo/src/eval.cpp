@@ -22,10 +22,6 @@
 
 #include "allwind.h"
 
-#ifndef TIOCSTI
-extern jmp_buf iblk_buf;
-#endif
-
 #define assign(to, from)    (to = reref(to, from))
 #define init(to, from)      (to = valref(from))
 
@@ -611,27 +607,25 @@ NODE *evaluator(NODE *list, enum labels where)
       assign(this_line, unparsed__line(unev));
       if (flag__caseobj(ufun, PROC_STEPPED) || stepflag)
          {
-         //         char junk[20];
-
          if (tracing || traceflag)
             {
             int i = 1;
-            while (i++ < trace_level) print_space(stdout);
+            while (i++ < trace_level) 
+               {
+               print_space(stdout);
+               }
             }
-         //         print_node(stdout, this_line);
-         //         ndprintf(stdout, " >>> ");
+         // print_node(stdout, this_line);
+         // ndprintf(stdout, " >>> ");
          input_blocking++;
-#ifndef TIOCSTI
+
          if (!setjmp(iblk_buf))
-#endif
-#ifdef __ZTC__
-            ztc_getcr();
-#else
-            //             fgets(junk, 19, stdin);
+            {
             single_step_box(this_line);
-#endif
+            }
+
          input_blocking = 0;
-         //         update_coords('\n');
+         // update_coords('\n');
          }
       }
    assign(exp, car(unev));

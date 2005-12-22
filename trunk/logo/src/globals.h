@@ -211,3 +211,7 @@ extern bool in_graphics_mode;
 extern int MaxX, MaxY;
 extern int ibm_screen_top;
 const int SIGQUIT = 15;
+
+/* unix.cpp */
+extern jmp_buf iblk_buf;
+

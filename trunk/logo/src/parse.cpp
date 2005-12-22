@@ -1,5 +1,3 @@
-#include "allwind.h"
-
 /*
 *      parse.c         logo parser module              dvb
 *
@@ -22,9 +20,7 @@
 *
 */
 
-#ifndef TIOCSTI
-extern jmp_buf iblk_buf;
-#endif
+#include "allwind.h"
 
 FILE *readstream = stdin;
 FILE *writestream = stdout;

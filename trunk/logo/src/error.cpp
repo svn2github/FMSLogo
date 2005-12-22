@@ -22,10 +22,6 @@
 
 #include "allwind.h"
 
-#ifndef TIOCSTI
-extern jmp_buf iblk_buf;
-#endif
-
 NODE *throw_node = NIL;
 NODE *err_mesg = NIL;
 ERR_TYPES erract_errtype;
@@ -450,9 +446,9 @@ NODE *lpause(NODE*)
    NODE *elist = NIL, *val = Unbound, *uname = NIL;
    int sav_input_blocking;
    int sv_val_status;
-#ifndef TIOCSTI
+
    jmp_buf sav_iblk;
-#endif
+
 
    if (err_mesg != NIL) err_print();
    /* if (ufun != NIL) */
@@ -462,9 +458,9 @@ NODE *lpause(NODE*)
    }
 
    ndprintf(stdout, "Pausing...");
-#ifndef TIOCSTI
-   sav_iblk = iblk_buf;
-#endif
+
+   memcpy(sav_iblk, iblk_buf, sizeof(sav_iblk));
+
    sav_input_blocking = input_blocking;
    input_blocking = 0;
    sv_val_status = val_status;
@@ -505,9 +501,9 @@ NODE *lpause(NODE*)
             output_node = reref(output_node, Unbound);
             stopping_flag = RUN;
             deref(elist);
-#ifndef TIOCSTI
-            iblk_buf = sav_iblk;
-#endif
+
+            memcpy(iblk_buf, sav_iblk, sizeof(sav_iblk));
+
             input_blocking = sav_input_blocking;
             val_status = sv_val_status;
             if (uname != NIL)
@@ -525,9 +521,9 @@ NODE *lpause(NODE*)
          }
       }
    deref(elist);
-#ifndef TIOCSTI
-   iblk_buf = sav_iblk;
-#endif
+
+   memcpy(iblk_buf, sav_iblk, sizeof(sav_iblk));
+
    input_blocking = sav_input_blocking;
    unblock_input();
    val_status = sv_val_status;

@@ -22,10 +22,6 @@
 
 #include "allwind.h"
 
-#ifndef TIOCSTI
-extern jmp_buf iblk_buf;
-#endif
-
 NODE *file_list = NULL;
 NODE *reader_name = NIL;
 NODE *writer_name = NIL;
@@ -600,15 +596,9 @@ NODE *lreadchar(NODE *)
 
    charmode_on();
    input_blocking++;
-#ifndef TIOCSTI
+
    if (!setjmp(iblk_buf))
-#endif
       {
-#ifdef mac
-      csetmode(C_RAW, stdin);
-      while ((c = (char) getc(readstream)) == EOF && readstream == stdin);
-      csetmode(C_ECHO, stdin);
-#else
 #ifdef ibm
       if (interactive && readstream == stdin)
          c = (char) rd_getc(stdin);
@@ -618,12 +608,11 @@ NODE *lreadchar(NODE *)
 #else
       c = (char) getc(readstream);
 #endif
-#endif
       }
    input_blocking = 0;
    if (feof(readstream))
       {
-      return (NIL);
+      return NIL;
       }
 
    if (readstream->flags & _F_BIN)
@@ -646,9 +635,8 @@ NODE *lreadchars(NODE *args)
    if (stopping_flag == THROWING) return Unbound;
    charmode_on();
    input_blocking++;
-#ifndef TIOCSTI
+
    if (!setjmp(iblk_buf))
-#endif
       {
       strhead = (char *) malloc((size_t) (c + sizeof(short) + 1));
       strptr = strhead + sizeof(short);
@@ -657,9 +645,9 @@ NODE *lreadchars(NODE *args)
       setstrrefcnt(temp, 0);
       }
    input_blocking = 0;
-#ifndef TIOCSTI
+
    if (stopping_flag == THROWING) return Unbound;
-#endif
+
    if (feof(readstream))
       {
       free(strhead);

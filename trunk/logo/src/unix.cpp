@@ -21,9 +21,7 @@
 
 #include "allwind.h"
 
-#ifndef TIOCSTI
 jmp_buf iblk_buf;
-#endif
 
 char *combo_buff = NULL;
 size_t combo_buff_size = 0;
@@ -266,10 +264,6 @@ void unblock_input()
    if (input_blocking)
       {
       input_blocking = 0;
-#ifdef TIOCSTI
-      ioctl(0, TIOCSTI, "\n");
-#else
       longjmp(iblk_buf, 1);
-#endif
       }
    }
