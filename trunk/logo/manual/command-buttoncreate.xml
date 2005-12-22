@@ -5,7 +5,7 @@
 
 <varlistentry><term>Synopsis</term>
 <listitem>
-<synopsis><command>BUTTONCREATE</command> <parameter>parent</parameter> <parameter>name</parameter> <parameter>label</parameter>  <parameter>xpos</parameter> <parameter>ypos</parameter> <parameter>width</parameter> <parameter>height</parameter> <parameter>callback</parameter></synopsis>
+<synopsis><command>BUTTONCREATE</command> <parameter>parent</parameter> <parameter>name</parameter> <parameter>label</parameter> <parameter>xpos</parameter> <parameter>ypos</parameter> <parameter>width</parameter> <parameter>height</parameter> <parameter>callback</parameter></synopsis>
 </listitem>
 </varlistentry>
 
