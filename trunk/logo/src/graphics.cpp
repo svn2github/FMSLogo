@@ -798,18 +798,10 @@ setpos_helper(
 
 NODE *lellipsearc(NODE *arg)
    {
-   FLONUM ang;
-   FLONUM rx;
-   FLONUM ry;
-   FLONUM i;
-
-   VECTOR r;
-   VECTOR rp;
 
    int pen_state = pen_vis;
 
-   /* get args */
-
+   // get args
    NODE * val1 = numeric_arg(arg);
    NODE * val2 = numeric_arg(cdr(arg));
    NODE * val3 = numeric_arg(cdr(cdr(arg)));
@@ -824,101 +816,113 @@ NODE *lellipsearc(NODE *arg)
 
       draw_turtle(false);
 
-      /* save and force turtle state */
+      // save and force turtle state
       bool turtle_state = g_Turtles[turtle_which].IsShown;
       g_Turtles[turtle_which].IsShown = false;
 
-      /* grab things before they change and use for restore */
-
+      // grab things before they change and use for restore
       FLONUM th = g_Turtles[turtle_which].Heading;
       FLONUM tx = g_Turtles[turtle_which].Position.x;
       FLONUM ty = g_Turtles[turtle_which].Position.y;
       FLONUM tz = g_Turtles[turtle_which].Position.z;
 
-      /* calculate resolution parameters */
+      // calculate resolution parameters
       FLONUM count = abs(angle * max(radius_x, radius_y) / 200.0);
-      if (count == 0.0)
+      if (count < 1.0)
          {
          count = 1.0;
          }
       FLONUM delta = angle / count;
 
-      /* draw each line segment of arc (will do wrap) */
 
-      ang = startangle;
-      for (i = 0.0; i <= count - 1.0; i = i + 1.0)
+      // jump to begin of first line segment without drawing
+      pen_vis = 1;
+
+      if (current_mode == perspectivemode)
          {
+         // 3D mode
+         VECTOR r;
+         VECTOR rp;
 
-         /* calc x y */
-         FLONUM x = -sin(ang * degrad) * radius_x;
-         FLONUM y = -cos(ang * degrad) * radius_y;
-
-         /* jump to begin of first line segment without drawing */
-         if (i == 0.0) pen_vis = 1;
-
-         /* rotate delta point according to roll around y axis */
-         if (current_mode == perspectivemode)
+         // draw each line segment of arc (will do wrap)
+         FLONUM endangle = startangle + angle;
+         for (FLONUM ang = startangle; ang < endangle; ang += delta)
             {
+            /* calc x y */
+            FLONUM x = -sin(ang * degrad) * radius_x;
+            FLONUM y = -cos(ang * degrad) * radius_y;
+
+            /* rotate delta point according to roll around y axis */
             r.x = x;
             r.y = y;
             r.z = 0.0;
-
+               
             rp = MVxyMultiply(g_Turtles[turtle_which].Matrix, r);
-
+            
             setpos_helper_3d(
                tx + rp.x,
                ty + rp.y,
                tz + rp.z);
+            
+            // restore pen (in case saved)
+            pen_vis = pen_state;
             }
-         else
-            {
-            /* now rotate about position */
 
-            rx =  sin(th * degrad) * y + cos(th * degrad) * x;
-            ry = -sin(th * degrad) * x + cos(th * degrad) * y;
+         // restore pen (in case saved)
+         pen_vis = pen_state;
+         
+         // assure we draw something and end in the exact right place */
+         r.x = -sin(endangle * degrad) * radius_x;
+         r.y = -cos(endangle * degrad) * radius_y;
+         r.z = 0.0;
+
+         rp = MVxyMultiply(g_Turtles[turtle_which].Matrix, r);
+         
+         setpos_helper_3d(
+            tx + rp.x,
+            ty + rp.y,
+            tz + rp.z);
+         }
+      else
+         {
+         // 2D mode
+         const FLONUM cos_th = cos(th * degrad);
+         const FLONUM sin_th = sin(th * degrad);
+
+         // draw each line segment of arc (will do wrap)
+         FLONUM endangle = startangle + angle;
+         for (FLONUM ang = startangle; ang < endangle; ang += delta)
+            {
+            /* calc x y */
+            FLONUM x = -sin(ang * degrad) * radius_x;
+            FLONUM y = -cos(ang * degrad) * radius_y;
+
+            /* now rotate about position */
+            FLONUM rx =  sin_th * y + cos_th * x;
+            FLONUM ry = -sin_th * x + cos_th * y;
 
             setpos_helper_2d(
                tx + rx,
                ty + ry);
+
+            // restore pen (in case saved)
+            pen_vis = pen_state;
             }
 
          // restore pen (in case saved)
          pen_vis = pen_state;
 
-         ang = ang + delta;
-         }
+         // assure we draw something and end in the exact right place */
+         FLONUM x = -sin(endangle * degrad) * radius_x;
+         FLONUM y = -cos(endangle * degrad) * radius_y;
 
-      /* assure we draw something and end in the exact right place */
+         // now rotate about position
+         FLONUM rx =  sin_th * y + cos_th * x;
+         FLONUM ry = -sin_th * x + cos_th * y;
 
-//      if (ang != angle + startangle)
-         {
-         FLONUM x = -sin((angle + startangle) * degrad) * radius_x;
-         FLONUM y = -cos((angle + startangle) * degrad) * radius_y;
-
-         if (current_mode == perspectivemode)
-            {
-            r.x = x;
-            r.y = y;
-            r.z = 0.0;
-
-            rp = MVxyMultiply(g_Turtles[turtle_which].Matrix, r);
-
-            setpos_helper_3d(
-               tx + rp.x,
-               ty + rp.y,
-               tz + rp.z);
-            }
-         else
-            {
-            /* now rotate about position */
-
-            rx =  sin(th * degrad) * y + cos(th * degrad) * x;
-            ry = -sin(th * degrad) * x + cos(th * degrad) * y;
-
-            setpos_helper_2d(
-               tx + rx,
-               ty + ry);
-            }
+         setpos_helper_2d(
+            tx + rx,
+            ty + ry);
          }
 
       /* restore state */
