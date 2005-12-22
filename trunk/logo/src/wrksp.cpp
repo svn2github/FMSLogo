@@ -40,12 +40,14 @@ static
 NODE *get_bodywords(NODE *proc, NODE *name)
    {
    NODE *val = bodywords__procnode(proc);
-   NODE *head = NIL, *tail = NIL;
 
-   if (val != NIL) return (val);
+   if (val != NIL) 
+      {
+      return val;
+      }
    name = intern(name);
-   head = cons_list((is_macro(name) ? Macro : To), name);
-   tail = cdr(head);
+   NODE * head = cons_list((is_macro(name) ? Macro : To), name);
+   NODE * tail = cdr(head);
    val = formals__procnode(proc);
    while (val != NIL)
       {
@@ -82,18 +84,18 @@ static
 NODE *name_arg(NODE *args)
    {
    while (aggregate(car(args)) && NOT_THROWING)
+      {
       setcar(args, err_logo(BAD_DATA, car(args)));
+      }
    return car(args);
    }
 
 NODE *ltext(NODE *args)
    {
-   NODE *name, *val = Unbound;
-
-   name = name_arg(args);
+   NODE* name = name_arg(args);
    if (NOT_THROWING)
       {
-      val = procnode__caseobj(intern(name));
+      NODE* val = procnode__caseobj(intern(name));
       if (val == UNDEFINED)
          {
          err_logo(DK_HOW_UNREC, name);
@@ -112,12 +114,10 @@ NODE *ltext(NODE *args)
 
 NODE *lfulltext(NODE *args)
    {
-   NODE *name, *val = Unbound;
-
-   name = name_arg(args);
+   NODE* name = name_arg(args);
    if (NOT_THROWING)
       {
-      val = procnode__caseobj(intern(name));
+      NODE* val = procnode__caseobj(intern(name));
       if (val == UNDEFINED)
          {
          err_logo(DK_HOW_UNREC, name);
@@ -137,7 +137,7 @@ NODE *lfulltext(NODE *args)
 static
 NODE *define_helper(NODE *args, int macro_flag)
    {
-   NODE *name, *val, *arg = NIL;
+   NODE *name, *val;
    int minimum = 0, deflt = 0, maximum = 0, old_default = -1;
    int redef = (compare_node(valnode__caseobj(Redefp), Truex, TRUE) == 0);
 
@@ -186,7 +186,7 @@ NODE *define_helper(NODE *args, int macro_flag)
       setcar(val, args);
       while (args != NIL)
          {
-         arg = car(args);
+         NODE* arg = car(args);
          if (arg != NIL && is_list(arg) && maximum != -1)
             {
             make_runparse(arg);
@@ -255,9 +255,17 @@ NODE *anonymous_function(NODE *text)
 static
 NODE *to_helper(NODE *args, bool macro_flag)
    {
-   NODE *arg = NIL, *tnode = NIL, *proc_name, *formals = NIL, *lastnode = NIL,
-      *body_words, *lastnode2, *body_list, *ttnode = NIL;
-   int minimum = 0, deflt = 0, maximum = 0, old_default = -1;
+   NODE *proc_name;
+   NODE *formals = NIL;
+   NODE *lastnode = NIL;
+   NODE *body_words;
+   NODE *lastnode2;
+   NODE *body_list;
+
+   int minimum = 0;
+   int deflt = 0;
+   int maximum = 0;
+   int old_default = -1;
    char ttemp[16];
 
    if (ufun != NIL && loadstream == stdin)
@@ -289,7 +297,7 @@ NODE *to_helper(NODE *args, bool macro_flag)
          }
       while (args != NIL)
          {
-         arg = car(args);
+         NODE * arg = car(args);
          args = cdr(args);
          if (nodetype(arg) == CONS && maximum != -1)
             {
@@ -324,7 +332,8 @@ NODE *to_helper(NODE *args, bool macro_flag)
             err_logo(BAD_DATA_UNREC, arg);
             break;
             }
-         tnode = cons_list(arg);
+
+         NODE *tnode = cons_list(arg);
          if (formals == NIL) formals = tnode;
          else setcdr(lastnode, tnode);
          lastnode = tnode;
@@ -341,8 +350,8 @@ NODE *to_helper(NODE *args, bool macro_flag)
       while (NOT_THROWING && to_pending && (!feof(loadstream)))
          {
          strcpy(ttemp, "> ");
-         ttnode = reader(loadstream, ttemp);
-         tnode = cons_list(ttnode);
+         NODE * ttnode = reader(loadstream, ttemp);
+         NODE * tnode = cons_list(ttnode);
          setcdr(lastnode2, tnode);
          lastnode2 = tnode;
          tnode = cons_list(parser(car(tnode), TRUE));
@@ -395,7 +404,6 @@ NODE *lmacro(NODE *args)
    to_helper(args, TRUE);
    input_mode = NO_MODE;
    return Unbound;
-
    }
 
 NODE *lmake(NODE *args)
@@ -423,7 +431,6 @@ NODE *lmake(NODE *args)
 
 NODE *llocal(NODE *args)
    {
-   NODE *arg = NIL;
    NODE *vsp = var_stack;
 
    if (tailcall != 0) 
@@ -448,16 +455,16 @@ NODE *llocal(NODE *args)
 
    while (args != NIL && NOT_THROWING)
       {
-      arg = car(args);
+      NODE * arg = car(args);
       while (!is_word(arg) && NOT_THROWING)
          {
          arg = err_logo(BAD_DATA, arg);
-         setcar(args, arg);            /* prevent crash in lapply             */
+         setcar(args, arg);            // prevent crash in lapply
          }
       if (NOT_THROWING)
          {
          arg = intern(arg);
-         setcar(args, arg);            /* local [a b] faster next time        */
+         setcar(args, arg);            // local [a b] faster next time
          if (not_local(arg, vsp))
             {
             push(arg, var_stack);
@@ -469,7 +476,7 @@ NODE *llocal(NODE *args)
          }
       if (check_throwing) break;
       }
-   var = reref(var, var_stack);        /* so eval won't undo our work         */
+   var = reref(var, var_stack);        // so eval won't undo our work
    return Unbound;
    }
 
@@ -762,15 +769,13 @@ NODE *lnames(NODE *)
 
 NODE *lplists(NODE *)
    {
-   NODE *ret;
-
    want_buried = 0;
 
-   ret = cons_list(NIL, NIL, get_contents(c_PLISTS));
+   NODE * ret = cons_list(NIL, NIL, get_contents(c_PLISTS));
    ref(ret);
    deref(cnt_list);
    cnt_list = NIL;
-   return (unref(ret));
+   return unref(ret);
    }
 
 static
@@ -781,9 +786,13 @@ NODE *one_list(NODE *nd)
    return nd;
    }
 
+// constructs three separate lists from a "contents list" arg.
 static
 void three_lists(NODE *arg, NODE **proclst, NODE **varlst, NODE **plistlst)
    {
+   // initialize all lists to the empty list
+   *plistlst = *varlst = *proclst = NIL;
+
    if (nodetype(car(arg)) == CONS)
       {
       arg = car(arg);
@@ -840,11 +849,11 @@ char *expand_slash(NODE *wd)
 static
 NODE *po_helper(NODE *arg, int just_titles)  /* >0 for POT, <0 for EDIT       */
    {
-   NODE *proclst = NIL, *varlst = NIL, *plistlst = NIL, *tvar = NIL;
-   NODE *plist;
-
    print_backslashes = TRUE;
 
+   NODE *proclst;
+   NODE *varlst;
+   NODE *plistlst;
    three_lists(arg, &proclst, &varlst, &plistlst);
 
    while (proclst != NIL)
@@ -854,8 +863,8 @@ NODE *po_helper(NODE *arg, int just_titles)  /* >0 for POT, <0 for EDIT       */
          err_logo(BAD_DATA_UNREC, car(proclst));
          break;
          }
-      else
-         tvar = procnode__caseobj(intern(car(proclst)));
+
+      NODE * tvar = procnode__caseobj(intern(car(proclst)));
 
       if (tvar == UNDEFINED)
          {
@@ -914,8 +923,8 @@ NODE *po_helper(NODE *arg, int just_titles)  /* >0 for POT, <0 for EDIT       */
          err_logo(BAD_DATA_UNREC, car(varlst));
          break;
          }
-      else
-         tvar = maybe_quote(valnode__caseobj(intern(car(varlst))));
+
+      NODE * tvar = maybe_quote(valnode__caseobj(intern(car(varlst))));
 
       if (tvar == Unbound)
          {
@@ -941,23 +950,28 @@ NODE *po_helper(NODE *arg, int just_titles)  /* >0 for POT, <0 for EDIT       */
          err_logo(BAD_DATA_UNREC, car(plistlst));
          break;
          }
-      else
+
+      NODE * plist = plist__caseobj(intern(car(plistlst)));
+      if (plist != NIL && just_titles > 0)
          {
-         plist = plist__caseobj(intern(car(plistlst)));
-         if (plist != NIL && just_titles > 0)
+         ndprintf(
+            writestream, 
+            "Plist %s = %s\n",
+            maybe_quote(car(plistlst)), plist);
+         }
+      else 
+         {
+         while (plist != NIL)
             {
-            ndprintf(writestream, "Plist %s = %s\n",
-               maybe_quote(car(plistlst)), plist);
-            }
-         else while (plist != NIL)
-            {
-            ndprintf(writestream, "Pprop %s %s %s\n",
+            ndprintf(
+               writestream, "Pprop %s %s %s\n",
                maybe_quote(car(plistlst)),
                maybe_quote(car(plist)),
                maybe_quote(cadr(plist)));
             plist = cddr(plist);
             }
          }
+
       plistlst = cdr(plistlst);
       if (check_throwing) break;
       }
@@ -968,28 +982,27 @@ NODE *po_helper(NODE *arg, int just_titles)  /* >0 for POT, <0 for EDIT       */
 
 NODE *lpo(NODE *arg)
    {
-   NODE *temp;
-
    lsetcursorwait(NIL);
 
-   temp = po_helper(arg, 0);
+   NODE * temp = po_helper(arg, 0);
 
    lsetcursorarrow(NIL);
 
-   return (temp);
+   return temp;
    }
 
 NODE *lpot(NODE *arg)
    {
-   return (po_helper(arg, 1));
+   return po_helper(arg, 1);
    }
 
 NODE *lerase(NODE *arg)
    {
-   NODE *proclst = NIL, *varlst = NIL, *plistlst = NIL;
-   NODE *nd;
    int redef = (compare_node(valnode__caseobj(Redefp), Truex, TRUE) == 0);
 
+   NODE *proclst;
+   NODE *varlst;
+   NODE *plistlst;
    three_lists(arg, &proclst, &varlst, &plistlst);
 
    if (proclst != NIL)
@@ -1004,7 +1017,7 @@ NODE *lerase(NODE *arg)
          err_logo(BAD_DATA_UNREC, car(proclst));
          break;
          }
-      nd = intern(car(proclst));
+      NODE * nd = intern(car(proclst));
       if (!redef && is_prim(procnode__caseobj(nd)))
          {
          err_logo(IS_PRIM, nd);
@@ -1039,49 +1052,37 @@ NODE *lerase(NODE *arg)
    }
 
 static
+void bury_list(NODE * list, int flag)
+   {
+   while (list != NIL && NOT_THROWING)
+      {
+      if (aggregate(car(list)))
+         {
+         err_logo(BAD_DATA_UNREC, car(list));
+         break;
+         }
+      setflag__caseobj(intern(car(list)), flag);
+      list = cdr(list);
+      if (check_throwing) break;
+      }
+   }
+
+static
 NODE *bury_helper(NODE *arg, int flag)
    {
-   NODE *proclst = NIL, *varlst = NIL, *plistlst = NIL;
-
+   NODE *proclst;
+   NODE *varlst;
+   NODE *plistlst;
    three_lists(arg, &proclst, &varlst, &plistlst);
 
-   while (proclst != NIL)
-      {
-      if (aggregate(car(proclst)))
-         {
-         err_logo(BAD_DATA_UNREC, car(proclst));
-         break;
-         }
-      setflag__caseobj(intern(car(proclst)), flag);
-      proclst = cdr(proclst);
-      if (check_throwing) break;
-      }
+   bury_list(proclst, flag);
 
    flag <<= 1;
-   while (varlst != NIL && NOT_THROWING)
-      {
-      if (aggregate(car(varlst)))
-         {
-         err_logo(BAD_DATA_UNREC, car(varlst));
-         break;
-         }
-      setflag__caseobj(intern(car(varlst)), flag);
-      varlst = cdr(varlst);
-      if (check_throwing) break;
-      }
+   bury_list(varlst, flag);
 
    flag <<= 1;
-   while (plistlst != NIL && NOT_THROWING)
-      {
-      if (aggregate(car(plistlst)))
-         {
-         err_logo(BAD_DATA_UNREC, car(plistlst));
-         break;
-         }
-      setflag__caseobj(intern(car(plistlst)), flag);
-      plistlst = cdr(plistlst);
-      if (check_throwing) break;
-      }
+   bury_list(plistlst, flag);
+
    return Unbound;
    }
 
@@ -1101,49 +1102,37 @@ NODE *lstep(NODE *arg)
    }
 
 static
+void unbury_list(NODE * list, int flag)
+   {
+   while (list != NIL && NOT_THROWING)
+      {
+      if (aggregate(car(list)))
+         {
+         err_logo(BAD_DATA_UNREC, car(list));
+         break;
+         }
+      clearflag__caseobj(intern(car(list)), flag);
+      list = cdr(list);
+      if (check_throwing) break;
+      }
+   }
+
+static
 NODE *unbury_helper(NODE *arg, int flag)
    {
-   NODE *proclst = NIL, *varlst = NIL, *plistlst = NIL;
-
+   NODE *proclst;
+   NODE *varlst;
+   NODE *plistlst;
    three_lists(arg, &proclst, &varlst, &plistlst);
 
-   while (proclst != NIL)
-      {
-      if (aggregate(car(proclst)))
-         {
-         err_logo(BAD_DATA_UNREC, car(proclst));
-         break;
-         }
-      clearflag__caseobj(intern(car(proclst)), flag);
-      proclst = cdr(proclst);
-      if (check_throwing) break;
-      }
+   unbury_list(proclst, flag);
 
    flag <<= 1;
-   while (varlst != NIL && NOT_THROWING)
-      {
-      if (aggregate(car(varlst)))
-         {
-         err_logo(BAD_DATA_UNREC, car(varlst));
-         break;
-         }
-      clearflag__caseobj(intern(car(varlst)), flag);
-      varlst = cdr(varlst);
-      if (check_throwing) break;
-      }
+   unbury_list(varlst, flag);
 
    flag <<= 1;
-   while (plistlst != NIL && NOT_THROWING)
-      {
-      if (aggregate(car(plistlst)))
-         {
-         err_logo(BAD_DATA_UNREC, car(plistlst));
-         break;
-         }
-      clearflag__caseobj(intern(car(plistlst)), flag);
-      plistlst = cdr(plistlst);
-      if (check_throwing) break;
-      }
+   unbury_list(plistlst, flag);
+
    return Unbound;
    }
 
@@ -1342,27 +1331,26 @@ NODE *check_proctype(NODE *args, int wanted)
 
 NODE *lprimitivep(NODE *args)
    {
-   return (check_proctype(args, 1));
+   return check_proctype(args, 1);
    }
 
 NODE *ldefinedp(NODE *args)
    {
-   return (check_proctype(args, 0));
+   return check_proctype(args, 0);
    }
 
 NODE *lmacrop(NODE *args)
    {
-   return (check_proctype(args, 2));
+   return check_proctype(args, 2);
    }
 
 NODE *lcopydef(NODE *args)
    {
-   NODE *arg1, *arg2;
    int old_default, new_default;
    int redef = (compare_node(valnode__caseobj(Redefp), Truex, TRUE) == 0);
 
-   arg1 = name_arg(args);
-   arg2 = name_arg(cdr(args));
+   NODE * arg1 = name_arg(args);
+   NODE * arg2 = name_arg(cdr(args));
    if (numberp(arg2)) err_logo(BAD_DATA_UNREC, arg2);
    if (numberp(arg1)) err_logo(BAD_DATA_UNREC, arg1);
    if (NOT_THROWING)
