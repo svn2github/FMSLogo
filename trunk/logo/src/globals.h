@@ -163,7 +163,6 @@ extern FIXNUM tailcall, val_status, dont_fix_ift;
 extern bool print_backslashes;
 
 /* math.cpp */
-extern FLONUM degrad;
 
 /* lists.cpp */
 

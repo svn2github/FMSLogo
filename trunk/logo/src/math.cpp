@@ -22,8 +22,7 @@
 
 #include "allwind.h"
 
-// REVISIT: this is a candidate for making const
-FLONUM degrad = 3.141592653589793227020265931059839203954 / 180.0;
+#include "const.h"
 
 int numberp(NODE *snd)
    {

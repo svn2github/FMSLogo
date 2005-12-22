@@ -22,6 +22,8 @@
 
 #include "allwind.h"
 
+#include "const.h"
+
 #define screen_left   (-BitMapWidth/2)
 #define screen_right  ( BitMapWidth/2)
 #define screen_bottom (-BitMapHeight/2)
