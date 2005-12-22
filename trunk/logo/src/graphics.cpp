@@ -1714,14 +1714,14 @@ void cs_helper(bool centerp, bool clearp)
 
 NODE *lclearscreen(NODE *)
    {
-   cs_helper(TRUE, TRUE);
+   cs_helper(true, true);
 //   InvalidateControls();
    return Unbound;
    }
 
 NODE *lclean(NODE *)
    {
-   cs_helper(FALSE, TRUE);
+   cs_helper(false, true);
    return Unbound;
    }
 
@@ -1749,10 +1749,8 @@ NODE *lsetposxyz(NODE *args)
 
 NODE *lsetxy(NODE *args)
    {
-   NODE *xnode, *ynode;
-
-   xnode = numeric_arg(args);
-   ynode = numeric_arg(cdr(args));
+   NODE * xnode = numeric_arg(args);
+   NODE * ynode = numeric_arg(cdr(args));
    if (NOT_THROWING)
       {
       setpos_helper(xnode, ynode, NIL);
@@ -1762,11 +1760,9 @@ NODE *lsetxy(NODE *args)
 
 NODE *lsetxyz(NODE *args)
    {
-   NODE *xnode, *ynode, *znode;
-
-   xnode = numeric_arg(args);
-   ynode = numeric_arg(cdr(args));
-   znode = numeric_arg(cdr(cdr(args)));
+   NODE * xnode = numeric_arg(args);
+   NODE * ynode = numeric_arg(cdr(args));
+   NODE * znode = numeric_arg(cdr(cdr(args)));
    if (NOT_THROWING)
       {
       setpos_helper(xnode, ynode, znode);
@@ -1776,9 +1772,7 @@ NODE *lsetxyz(NODE *args)
 
 NODE *lsetx(NODE *args)
    {
-   NODE *xnode;
-
-   xnode = numeric_arg(args);
+   NODE * xnode = numeric_arg(args);
    if (NOT_THROWING)
       {
       setpos_helper(xnode, NIL, NIL);
@@ -1788,9 +1782,7 @@ NODE *lsetx(NODE *args)
 
 NODE *lsety(NODE *args)
    {
-   NODE *ynode;
-
-   ynode = numeric_arg(args);
+   NODE * ynode = numeric_arg(args);
    if (NOT_THROWING)
       {
       setpos_helper(NIL, ynode, NIL);
@@ -1800,9 +1792,7 @@ NODE *lsety(NODE *args)
 
 NODE *lsetz(NODE *args)
    {
-   NODE *znode;
-
-   znode = numeric_arg(args);
+   NODE *znode = numeric_arg(args);
    if (NOT_THROWING)
       {
       setpos_helper(NIL, NIL, znode);
@@ -1813,7 +1803,7 @@ NODE *lsetz(NODE *args)
 NODE *lwrap(NODE *)
    {
    draw_turtle(false);
-   cs_helper(TRUE, FALSE);
+   cs_helper(true, false);
    current_mode = wrapmode;
    draw_turtle(true);
    return Unbound;
@@ -2013,8 +2003,7 @@ NODE *llabelsize(NODE *arg)
 
    if (NOT_THROWING)
       {
-      SIZE size;
-      size = labelsize(textbuf);
+      SIZE size = labelsize(textbuf);
       return cons_list(
          make_intnode((FIXNUM) size.cx),
          make_intnode((FIXNUM) size.cy));
