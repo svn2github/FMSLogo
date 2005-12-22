@@ -662,6 +662,94 @@ FLONUM towards_helper(FLONUM x, FLONUM y, FLONUM from_x, FLONUM from_y)
 
 static
 void 
+setpos_helper_2d(
+   FLONUM x, 
+   FLONUM y
+)
+   {
+   assert(current_mode != perspectivemode);
+
+   move_to(
+      g_Turtles[turtle_which].Position.x,
+      g_Turtles[turtle_which].Position.y);
+
+   Point target;
+   target.x = x;
+   target.y = y;
+
+   Point scaled;
+   scaled.x = target.x * g_Scale.x;
+   scaled.y = target.y * g_Scale.y;
+
+   bool wrapping =
+      scaled.x > turtle_right_max ||
+      scaled.x < turtle_left_max ||
+      scaled.y > turtle_top_max ||
+      scaled.y < turtle_bottom_max;
+
+   if ((current_mode == fencemode) && wrapping)
+      {
+      err_logo(TURTLE_OUT_OF_BOUNDS, NIL);
+      }
+   else if ((current_mode == wrapmode) && (wrapping || out_of_bounds))
+      {
+      FLONUM save_heading = g_Turtles[turtle_which].Heading;
+
+      g_Turtles[turtle_which].Heading = towards_helper(
+         target.x,
+         target.y, 
+         g_Wanna.x, 
+         g_Wanna.y);
+
+      FLONUM tx = g_Wanna.x / g_Scale.x;
+      FLONUM ty = g_Wanna.y / g_Scale.y;
+      forward_helper(sqrt(sq(target.x - tx) + sq(target.y - ty)));
+
+      g_Turtles[turtle_which].Heading = save_heading;
+      g_Wanna.x = scaled.x;
+      g_Wanna.y = scaled.y;
+      out_of_bounds = wrapping;
+      }
+   else
+      {
+      g_Wanna.x = g_Turtles[turtle_which].Position.x = scaled.x;
+      g_Wanna.y = g_Turtles[turtle_which].Position.y = scaled.y;
+      out_of_bounds = false;
+      line_to(
+         g_Turtles[turtle_which].Position.x, 
+         g_Turtles[turtle_which].Position.y);
+      save_line();
+      }
+   }
+
+static
+void 
+setpos_helper_3d(
+   FLONUM x, 
+   FLONUM y,
+   FLONUM z
+)
+   {
+   assert(current_mode == perspectivemode);
+
+   move_to_3d(
+      g_Turtles[turtle_which].Position.x,
+      g_Turtles[turtle_which].Position.y,
+      g_Turtles[turtle_which].Position.z);
+
+   Point target;
+   target.x = x;
+   target.y = y;
+   target.z = z;
+
+   g_Wanna = g_Turtles[turtle_which].Position = target;
+   out_of_bounds = false;
+   line_to_3d(g_Turtles[turtle_which].Position);
+   save_line();
+   }
+
+static
+void 
 setpos_helper(
    NODE *xnode, 
    NODE *ynode, 
@@ -677,85 +765,26 @@ setpos_helper(
          draw_turtle(false);
          }
 
-      if (current_mode == perspectivemode)
-         {
-         move_to_3d(
-            g_Turtles[turtle_which].Position.x,
-            g_Turtles[turtle_which].Position.y,
-            g_Turtles[turtle_which].Position.z);
-         }
-      else
-         {
-         move_to(
-            g_Turtles[turtle_which].Position.x,
-            g_Turtles[turtle_which].Position.y);
-         }
-
       Point target;
       target.x = (xnode == NIL) ?
-            g_Turtles[turtle_which].Position.x :
-            numeric_node_to_flonum(xnode);
+         g_Turtles[turtle_which].Position.x :
+         numeric_node_to_flonum(xnode);
 
       target.y = (ynode == NIL) ?
-            g_Turtles[turtle_which].Position.y :
-            numeric_node_to_flonum(ynode);
+         g_Turtles[turtle_which].Position.y :
+         numeric_node_to_flonum(ynode);
 
       target.z = (znode == NIL) ?
-            g_Turtles[turtle_which].Position.z :
-            numeric_node_to_flonum(znode);
+         g_Turtles[turtle_which].Position.z :
+         numeric_node_to_flonum(znode);
 
       if (current_mode == perspectivemode)
          {
-         g_Wanna = g_Turtles[turtle_which].Position = target;
-         out_of_bounds = false;
-         line_to_3d(g_Turtles[turtle_which].Position);
-         save_line();
+         setpos_helper_3d(target.x, target.y, target.z);
          }
       else
          {
-         Point scaled;
-         scaled.x = target.x * g_Scale.x;
-         scaled.y = target.y * g_Scale.y;
-
-         bool wrapping =
-            scaled.x > turtle_right_max ||
-            scaled.x < turtle_left_max ||
-            scaled.y > turtle_top_max ||
-            scaled.y < turtle_bottom_max;
-
-         if ((current_mode == fencemode) && wrapping)
-            {
-            err_logo(TURTLE_OUT_OF_BOUNDS, NIL);
-            }
-         else if ((current_mode == wrapmode) && (wrapping || out_of_bounds))
-            {
-            FLONUM save_heading = g_Turtles[turtle_which].Heading;
-
-            g_Turtles[turtle_which].Heading = towards_helper(
-               target.x,
-               target.y, 
-               g_Wanna.x, 
-               g_Wanna.y);
-
-            FLONUM tx = g_Wanna.x / g_Scale.x;
-            FLONUM ty = g_Wanna.y / g_Scale.y;
-            forward_helper(sqrt(sq(target.x - tx) + sq(target.y - ty)));
-
-            g_Turtles[turtle_which].Heading = save_heading;
-            g_Wanna.x = scaled.x;
-            g_Wanna.y = scaled.y;
-            out_of_bounds = wrapping;
-            }
-         else
-            {
-            g_Wanna.x = g_Turtles[turtle_which].Position.x = scaled.x;
-            g_Wanna.y = g_Turtles[turtle_which].Position.y = scaled.y;
-            out_of_bounds = false;
-            line_to(
-               g_Turtles[turtle_which].Position.x, 
-               g_Turtles[turtle_which].Position.y);
-            save_line();
-            }
+         setpos_helper_2d(target.x, target.y);
          }
 
       if (bEraseTurtle) 
@@ -767,10 +796,6 @@ setpos_helper(
 
 NODE *lellipsearc(NODE *arg)
    {
-   NODE *tmp1;
-   NODE *tmp2;
-   NODE *tmp3;
-
    FLONUM ang;
    FLONUM rx;
    FLONUM ry;
@@ -790,7 +815,6 @@ NODE *lellipsearc(NODE *arg)
 
    if (NOT_THROWING)
       {
-
       FLONUM angle      = numeric_node_to_flonum(val1);
       FLONUM radius_x   = numeric_node_to_flonum(val2);
       FLONUM radius_y   = numeric_node_to_flonum(val3);
@@ -839,12 +863,10 @@ NODE *lellipsearc(NODE *arg)
 
             rp = MVxyMultiply(g_Turtles[turtle_which].Matrix, r);
 
-            setpos_helper(
-               tmp1 = make_floatnode(tx + rp.x),
-               tmp2 = make_floatnode(ty + rp.y),
-               tmp3 = make_floatnode(tz + rp.z),
-               false);
-            gcref(tmp3);
+            setpos_helper_3d(
+               tx + rp.x,
+               ty + rp.y,
+               tz + rp.z);
             }
          else
             {
@@ -853,15 +875,10 @@ NODE *lellipsearc(NODE *arg)
             rx = cos((th - 90.0) * degrad) * y - sin((th - 90.0) * degrad) * x;
             ry = cos((th + 90.0) * degrad) * x + sin((th + 90.0) * degrad) * y;
 
-            setpos_helper(
-               tmp1 = make_floatnode(tx + rx),
-               tmp2 = make_floatnode(ty + ry),
-               NIL,
-               false);
+            setpos_helper_2d(
+               tx + rx,
+               ty + ry);
             }
-
-         gcref(tmp1);
-         gcref(tmp2);
 
          // restore pen (in case saved)
          pen_vis = pen_state;
@@ -884,13 +901,10 @@ NODE *lellipsearc(NODE *arg)
 
             rp = MVxyMultiply(g_Turtles[turtle_which].Matrix, r);
 
-            setpos_helper(
-               tmp1 = make_floatnode(tx + rp.x),
-               tmp2 = make_floatnode(ty + rp.y),
-               tmp3 = make_floatnode(tz + rp.z),
-               FALSE);
-
-            gcref(tmp3);
+            setpos_helper_3d(
+               tx + rp.x,
+               ty + rp.y,
+               tz + rp.z);
             }
          else
             {
@@ -899,15 +913,10 @@ NODE *lellipsearc(NODE *arg)
             rx = cos((th - 90.0) * degrad) * y - sin((th - 90.0) * degrad) * x;
             ry = cos((th + 90.0) * degrad) * x + sin((th + 90.0) * degrad) * y;
 
-            setpos_helper(
-               tmp1 = make_floatnode(tx + rx),
-               tmp2 = make_floatnode(ty + ry),
-               NIL,
-               FALSE);
+            setpos_helper_2d(
+               tx + rx,
+               ty + ry);
             }
-
-         gcref(tmp1);
-         gcref(tmp2);
          }
 
       /* restore state */
@@ -922,8 +931,8 @@ NODE *lellipsearc(NODE *arg)
       draw_turtle(true);
       g_Wanna = g_Turtles[turtle_which].Position;
       out_of_bounds = false;
-
       }
+
    return Unbound;
    }
 
