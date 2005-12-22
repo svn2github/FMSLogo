@@ -24,7 +24,7 @@ Part II) New features/bugs fixed:
   * Added for 6.7.2,
     o Fix bug #1386335; the commander's editbox grows with the font size.
     o Fix bug #1388325; ELLIPSEARC no longer crashes on large angles.
-    o Improve performance of ELLIPSEARC by 15%.
+    o Fix bug #1377856; ELLIPSEARC can now be paused/halted.
 
   * Added for 6.7.1,
     o Fix bug #1372735; Editor can save large files on Win95.
