@@ -827,10 +827,10 @@ NODE *lellipsearc(NODE *arg)
       FLONUM tz = g_Turtles[turtle_which].Position.z;
 
       // calculate resolution parameters
-      FLONUM count = abs(angle * max(radius_x, radius_y) / 200.0);
-      if (count < 1.0)
+      FIXNUM count = (int) fabs(angle * max(radius_x, radius_y) / 200.0);
+      if (count == 0)
          {
-         count = 1.0;
+         count = 1;
          }
       FLONUM delta = angle / count;
 
@@ -843,21 +843,21 @@ NODE *lellipsearc(NODE *arg)
          VECTOR r;
          VECTOR rp;
 
-         // draw each line segment of arc (will do wrap)
-         FLONUM endangle = startangle + angle;
-         for (FLONUM ang = startangle; ang < endangle; ang += delta)
+         // iterate based on count, instead of on "ang"
+         // because angle may be negative.
+         FLONUM ang = startangle;
+         for (FIXNUM i = 0; i <= count; i++)
             {
-            /* calc x y */
+            // calc x y
             FLONUM x = -sin(ang * degrad) * radius_x;
             FLONUM y = -cos(ang * degrad) * radius_y;
 
-            /* rotate delta point according to roll around y axis */
+            // rotate delta point according to roll around y axis
             r.x = x;
             r.y = y;
-            r.z = 0.0;
-               
+
             rp = MVxyMultiply(g_Turtles[turtle_which].Matrix, r);
-            
+
             setpos_helper_3d(
                tx + rp.x,
                ty + rp.y,
@@ -865,15 +865,17 @@ NODE *lellipsearc(NODE *arg)
             
             // restore pen (in case saved)
             g_Turtles[turtle_which].IsPenUp = pen_state;
+
+            ang += delta;
             }
 
          // restore pen (in case saved)
          g_Turtles[turtle_which].IsPenUp = pen_state;
          
-         // assure we draw something and end in the exact right place */
+         // assure we draw something and end in the exact right place
+         FLONUM endangle = startangle + angle;
          r.x = -sin(endangle * degrad) * radius_x;
          r.y = -cos(endangle * degrad) * radius_y;
-         r.z = 0.0;
 
          rp = MVxyMultiply(g_Turtles[turtle_which].Matrix, r);
          
@@ -889,14 +891,14 @@ NODE *lellipsearc(NODE *arg)
          const FLONUM sin_th = sin(th * degrad);
 
          // draw each line segment of arc (will do wrap)
-         FLONUM endangle = startangle + angle;
-         for (FLONUM ang = startangle; ang < endangle; ang += delta)
+         FLONUM ang = startangle;
+         for (FIXNUM i = 0; i <= count; i++)
             {
-            /* calc x y */
+            // calc x y
             FLONUM x = -sin(ang * degrad) * radius_x;
             FLONUM y = -cos(ang * degrad) * radius_y;
 
-            /* now rotate about position */
+            // now rotate about position
             FLONUM rx =  sin_th * y + cos_th * x;
             FLONUM ry = -sin_th * x + cos_th * y;
 
@@ -906,12 +908,15 @@ NODE *lellipsearc(NODE *arg)
 
             // restore pen (in case saved)
             g_Turtles[turtle_which].IsPenUp = pen_state;
+
+            ang += delta;
             }
 
          // restore pen (in case saved)
          g_Turtles[turtle_which].IsPenUp = pen_state;
 
-         // assure we draw something and end in the exact right place */
+         // assure we draw something and end in the exact right place
+         FLONUM endangle = startangle + angle;
          FLONUM x = -sin(endangle * degrad) * radius_x;
          FLONUM y = -cos(endangle * degrad) * radius_y;
 
@@ -924,7 +929,7 @@ NODE *lellipsearc(NODE *arg)
             ty + ry);
          }
 
-      /* restore state */
+      // restore state
       g_Turtles[turtle_which].IsShown = turtle_state;
 
       g_Turtles[turtle_which].Position.x = tx;
