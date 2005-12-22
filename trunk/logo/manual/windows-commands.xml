@@ -166,4 +166,19 @@ Note that radio buttons and checkboxes which are placed in a group box still use
       &command-groupboxdelete;
    </section>
 
+   <section id="checkbox-commands">
+      <title>Checkbox Commands</title>
+
+<para>
+Checkbox controls are used to ask the user yes/no questions.
+A checkbox control has two components: a checkbox and a text label that indicates what putting a check in the checkbox means.
+</para>
+
+      &command-checkboxcreate;
+      &command-checkboxdelete;
+      &command-checkboxenable;
+      &command-checkboxset;
+      &command-checkboxget;
+   </section>
+
 </chapter>

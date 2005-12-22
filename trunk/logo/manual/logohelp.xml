@@ -485,6 +485,13 @@
 
   <!ENTITY command-groupboxcreate        SYSTEM "command-groupboxcreate.xml">
   <!ENTITY command-groupboxdelete        SYSTEM "command-groupboxdelete.xml">
+
+  <!ENTITY command-checkboxcreate        SYSTEM "command-checkboxcreate.xml">
+  <!ENTITY command-checkboxdelete        SYSTEM "command-checkboxdelete.xml">
+  <!ENTITY command-checkboxenable        SYSTEM "command-checkboxenable.xml">
+  <!ENTITY command-checkboxget           SYSTEM "command-checkboxget.xml">
+  <!ENTITY command-checkboxset           SYSTEM "command-checkboxset.xml">
+
 ]>
 
 <book id="MSWLogo Help">
