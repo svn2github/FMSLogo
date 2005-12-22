@@ -2245,12 +2245,12 @@ NODE *ltone(NODE *args)
 
 NODE *lrefresh()
    {
-   refresh_p = TRUE;
+   refresh_p = true;
    return Unbound;
    }
 
 NODE *lnorefresh()
    {
-   refresh_p = FALSE;
+   refresh_p = false;
    return Unbound;
    }
