@@ -1,0 +1,17 @@
+
+TO BUG1388325TEST
+   REPORTTESTINFO [executing regression test for bug #1388325]
+   ELLIPSEARC 1e20 50 50 0
+   REPORTTESTPASSED ["|bug #1388325 is fixed; 'ELLIPSEARC 1e20 50 50 0' did not crash.| ]
+END
+
+
+TO BUG1377856TEST
+   REPORTTESTINFO [executing regression test for bug #1377856 ]
+   CIRCLE 1e50
+   REPORTTESTPASSED ["|bug # is fixed; 'CIRCLE 1e50' halted.| ]
+END
+
+TO ARCTEST
+   BUG1388325TEST
+END

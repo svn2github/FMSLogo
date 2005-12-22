@@ -434,6 +434,8 @@ PASS: [PENDOWN?] returned true , as expected.
 PASS: [PENMODE] returned reverse , as expected.
 PASS: [ITEM 2 PEN] returned reverse , as expected.
 PASS: [PENDOWN?] returned true , as expected.
+INFO: executing regression test for bug #1388325
+PASS: "bug #1388325 is fixed; 'ELLIPSEARC 1e20 50 50 0' did not crash.
 PASS: The circle was drawn correctly
 PASS: (FILL "true) worked as expected
 INFO: Executing invalid instruction: [(FILL 10)]
@@ -456,7 +458,7 @@ PASS: [READER] returned [] , as expected.
 PASS: [READLIST] returned [Hello] , as expected.
 PASS: [READLIST] returned [Hello] , as expected.
 PASS: [READLIST] returned [Jello] , as expected.
-PASS: ALLOPEN returned filealltest-2.txt filealltest-1.txt testlog.txt , as expected.
+PASS: ALLOPEN returned filealltest-2.txt filealltest-1.txt testlog.baseline.txt , as expected.
 PASS: [READLIST] returned [Hello] , as expected.
 PASS: [READLIST] returned [Good Bye] , as expected.
 INFO: Executing invalid instruction: [OPENREAD :filename]
@@ -604,8 +606,8 @@ INFO: [WAIT 1] took 20 ms to execute
 PASS: [WAIT 1 ] waited for 20 ms. Anywhere between 16.6666666666667 ms and 36.6666666666667 is acceptable.
 INFO: [WAIT 6] took 100 ms to execute
 PASS: [WAIT 6 ] waited for 100 ms. Anywhere between 100 ms and 120 is acceptable.
-INFO: [WAIT 10] took 171 ms to execute
-PASS: [WAIT 10 ] waited for 171 ms. Anywhere between 166.666666666667 ms and 186.666666666667 is acceptable.
+INFO: [WAIT 10] took 170 ms to execute
+PASS: [WAIT 10 ] waited for 170 ms. Anywhere between 166.666666666667 ms and 186.666666666667 is acceptable.
 INFO: [WAIT 60] took 1001 ms to execute
 PASS: [WAIT 60 ] waited for 1001 ms. Anywhere between 1000 ms and 1020 is acceptable.
 INFO: [WAIT 100] took 1673 ms to execute

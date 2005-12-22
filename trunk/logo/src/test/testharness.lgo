@@ -13,6 +13,7 @@ LOAD "editor.lgo
 LOAD "port.lgo
 LOAD "label.lgo
 LOAD "pen.lgo
+LOAD "arc.lgo
 LOAD "fill.lgo
 LOAD "directory.lgo
 LOAD "file.lgo
@@ -86,7 +87,7 @@ END
 
 TO REPORTTESTINITIALIZE
 
-  MAKE "testlog  "testlog.txt
+  MAKE "testlog  "testlog.baseline.txt
 
   ; close the test log, if it is already open
   CATCH "ERROR [ CLOSE :testlog ]
@@ -145,6 +146,7 @@ TO TESTALL
   PORTTEST        ; from port.lgo
   LABELTEST       ; from label.lgo
   PENTEST         ; from pen.lgo
+  ARCTEST         ; from arc.lgo
   FILLTEST        ; from fill.lgo
   FILETEST        ; from file.lgo
   COLORTEST       ; from color.lgo
