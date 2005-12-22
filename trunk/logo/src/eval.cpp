@@ -461,12 +461,9 @@ NODE *evaluator(NODE *list, enum labels where)
    }
 
  compound_apply:
-#ifdef mac
-   check_mac_stop();
-#endif
-#ifdef ibm
-   check_ibm_stop(1);
-#endif
+
+   check_stop(true);
+
    if (tracing = flag__caseobj(fun, PROC_TRACED) || traceflag)
       {
       for (i = 0; i < trace_level; i++) print_space(writestream);
@@ -896,12 +893,8 @@ NODE *evaluator(NODE *list, enum labels where)
       --repcount;
       ++repcountup;
       }
-#ifdef mac
-   check_mac_stop();
-#endif
-#ifdef ibm
-   check_ibm_stop(1);
-#endif
+   check_stop(true);
+
    if (RUNNING) goto repeat_again;
    assign(val, Unbound);
    goto fetch_cont;
@@ -949,12 +942,8 @@ NODE *evaluator(NODE *list, enum labels where)
    goto fetch_cont;
 
  goto_continuation:
-#ifdef mac
-   check_mac_stop();
-#endif
-#ifdef ibm
-   check_ibm_stop(1);
-#endif
+   check_stop(true);
+
    if (ufun == NIL)
       {
       err_logo(AT_TOPLEVEL, Goto);

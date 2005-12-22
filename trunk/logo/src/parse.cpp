@@ -86,7 +86,7 @@ int rd_getc(FILE *strm)
                  }
             }
 
-         check_ibm_stop(1);
+         check_stop(true);
          strcat(buffer_input, "\n");
          buffer_length = strlen(buffer_input);
          buffer_index = 0;

@@ -14,7 +14,7 @@ extern void Myoutport(short portid, short value);
 extern short Myinport(short portid);
 extern int Myingameport (short portid, short mask);
 
-extern bool check_ibm_stop(int scan);
+extern bool check_stop(bool scan_for_messages);
 extern void term_init_ibm(void);
 extern void ibm_gotoxy(int x, int y);
 extern void ibm_clear_text(void);

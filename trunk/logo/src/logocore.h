@@ -22,7 +22,7 @@
 #define ecma // for European extended character set using parity bit
 #define ibm
 
-#define check_throwing (check_ibm_stop(0) || stopping_flag == THROWING)
+#define check_throwing (check_stop(false) || stopping_flag == THROWING)
 
 typedef enum
    {

@@ -46,7 +46,7 @@ void *window_image;
 
 extern int *TopOfStack;
 
-bool check_ibm_stop(int scan)
+bool check_stop(bool scan_for_messages)
    {
    //   int key;
 
@@ -63,7 +63,7 @@ bool check_ibm_stop(int scan)
    //    IsTimeToPause = false;
    //    IsTimeToHalt = false;
 
-   if (scan)
+   if (scan_for_messages)
       {
       MyMessageScan();
       }
