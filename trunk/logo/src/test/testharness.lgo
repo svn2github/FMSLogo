@@ -12,6 +12,7 @@ LOAD "plist.lgo
 LOAD "editor.lgo
 LOAD "port.lgo
 LOAD "label.lgo
+LOAD "pen.lgo
 LOAD "fill.lgo
 LOAD "directory.lgo
 LOAD "file.lgo
@@ -143,6 +144,7 @@ TO TESTALL
   EDITORTEST      ; from editor.lgo 
   PORTTEST        ; from port.lgo
   LABELTEST       ; from label.lgo
+  PENTEST         ; from pen.lgo
   FILLTEST        ; from fill.lgo
   FILETEST        ; from file.lgo
   COLORTEST       ; from color.lgo
