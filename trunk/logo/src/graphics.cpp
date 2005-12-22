@@ -835,10 +835,24 @@ NODE *lellipsearc(NODE *arg)
       FLONUM tz = g_Turtles[turtle_which].Position.z;
 
       // calculate resolution parameters
-      FIXNUM count = (int) fabs(angle * max(radius_x, radius_y) / 200.0);
-      if (count == 0)
+      FLONUM flt_count = fabs(angle * max(radius_x, radius_y) / 200.0);
+      FIXNUM count;
+      if (flt_count < 1.0)
          {
+         // very small radius or angle
          count = 1;
+         }
+      else if (flt_count > (FLONUM)(MAXINT))
+         {
+         // a degenerate case - very large radius
+         // it's okay to limit the count because the arc is 
+         // too large to draw correctly, anyway.
+         count = MAXINT;
+         }
+      else
+         { 
+         // a normal radius/angle.
+         count = flt_count;
          }
       FLONUM delta = angle / count;
 
@@ -875,6 +889,12 @@ NODE *lellipsearc(NODE *arg)
             g_Turtles[turtle_which].IsPenUp = pen_state;
 
             ang += delta;
+
+            // every now and then, check for a HALT message
+            if (check_stop(true))
+               {
+               break;
+               }
             }
 
          // restore pen (in case saved)
@@ -918,6 +938,12 @@ NODE *lellipsearc(NODE *arg)
             g_Turtles[turtle_which].IsPenUp = pen_state;
 
             ang += delta;
+
+            // every now and then, check for a HALT message
+            if (check_stop(true))
+               {
+               break;
+               }
             }
 
          // restore pen (in case saved)
