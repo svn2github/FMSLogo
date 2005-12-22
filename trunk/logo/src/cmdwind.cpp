@@ -25,33 +25,22 @@ TMyCommandWindow::TMyCommandWindow(
    TWindow *AParent,
    LPCSTR   ResId
 ) : TDialog(AParent, ResId),
-   TraceButton(new TCommanderCheckBox(this, ID_TRACE)),
-   ResetButton(new TCommanderButton(this, ID_RESET)),
-   PauseButton(new TCommanderButton(this, ID_PAUSE)),
-   HaltButton(new TCommanderButton(this, ID_HALT)),
-   StatusButton(new TCommanderCheckBox(this, ID_STATUS)),
-   YieldButton(new TCommanderCheckBox(this, ID_YIELD)),
-   EdallButton(new TCommanderButton(this, ID_EDALL)),
-   ExecuteButton(new TCommanderButton(this, ID_EXECUTE)),
-   Editbox(new TMyEditboxWindow(this, ID_EDITINPUT, 0)),
-   Listbox(new TMyListboxWindow(this, ID_LISTBOX, 0)),
+   TraceButton(this, ID_TRACE),
+   ResetButton(this, ID_RESET),
+   PauseButton(this, ID_PAUSE),
+   HaltButton(this, ID_HALT),
+   StatusButton(this, ID_STATUS),
+   YieldButton(this, ID_YIELD),
+   EdallButton(this, ID_EDALL),
+   ExecuteButton(this, ID_EXECUTE),
+   Editbox(this, ID_EDITINPUT, 0),
+   Listbox(this, ID_LISTBOX, 0),
    Font(NULL)
    {
    }
 
 TMyCommandWindow::~TMyCommandWindow()
    {
-   delete Editbox;
-   delete Listbox;
-   delete TraceButton;
-   delete ResetButton;
-   delete PauseButton;
-   delete HaltButton;
-   delete StatusButton;
-   delete YieldButton;
-   delete EdallButton;
-   delete ExecuteButton;
-
    if (Font)
       {
       DeleteObject(Font);
@@ -67,27 +56,27 @@ void TMyCommandWindow::SetupWindow()
 
    Font = CreateFontIndirect(&lf);
 
-   Editbox->Create();
-   Editbox->SetWindowFont(Font, TRUE);
+   Editbox.Create();
+   Editbox.SetWindowFont(Font, TRUE);
 
-   Listbox->Create();
-   Listbox->SetWindowFont(Font, TRUE);
+   Listbox.Create();
+   Listbox.SetWindowFont(Font, TRUE);
 
-   TraceButton->Create();
+   TraceButton.Create();
 
-   ResetButton->Create();
+   ResetButton.Create();
 
-   PauseButton->Create();
+   PauseButton.Create();
 
-   HaltButton->Create();
+   HaltButton.Create();
 
-   StatusButton->Create();
+   StatusButton.Create();
 
-   YieldButton->Create();
+   YieldButton.Create();
 
-   EdallButton->Create();
+   EdallButton.Create();
 
-   ExecuteButton->Create();
+   ExecuteButton.Create();
 
    RecalculateLayout();
    }
@@ -102,7 +91,7 @@ void TMyCommandWindow::RecalculateLayout()
    {
    // scale and pos. each sub-window in commander window based on its size
    TRect buttonRect;
-   TraceButton->GetClientRect(buttonRect);
+   TraceButton.GetClientRect(buttonRect);
 
    TRect commanderRect;
    GetClientRect(commanderRect);
@@ -120,7 +109,7 @@ void TMyCommandWindow::RecalculateLayout()
    // of the current commander font.
    int editbox_height = button_height;
 
-   HDC edit_dc = GetDC(Editbox->HWindow);
+   HDC edit_dc = GetDC(Editbox.HWindow);
    if (edit_dc != NULL)
       {
       TEXTMETRIC metrics;
@@ -140,21 +129,21 @@ void TMyCommandWindow::RecalculateLayout()
 
       SelectObject(edit_dc, oldFont);
 
-      ReleaseDC(Editbox->HWindow, edit_dc);
+      ReleaseDC(Editbox.HWindow, edit_dc);
       }
 
-   Listbox->SetWindowPos(NULL, x_border, 0,                                       total_width - button_width * 2 - x_border - padding, total_height - editbox_height - padding, SWP_NOZORDER);
-   Editbox->SetWindowPos(NULL, x_border, total_height - editbox_height - y_border, total_width - button_width * 2 - x_border - padding, editbox_height,                         SWP_NOZORDER);
+   Listbox.SetWindowPos(NULL, x_border, 0,                                       total_width - button_width * 2 - x_border - padding, total_height - editbox_height - padding, SWP_NOZORDER);
+   Editbox.SetWindowPos(NULL, x_border, total_height - editbox_height - y_border, total_width - button_width * 2 - x_border - padding, editbox_height,                         SWP_NOZORDER);
 
-   HaltButton->SetWindowPos(NULL,   total_width - button_width * 2 - x_border, button_height * 0 + y_border, button_width, button_height, SWP_NOZORDER);
-   TraceButton->SetWindowPos(NULL,  total_width - button_width * 1 - x_border, button_height * 0 + y_border, button_width, button_height, SWP_NOZORDER);
-   PauseButton->SetWindowPos(NULL,  total_width - button_width * 2 - x_border, button_height * 1 + y_border, button_width, button_height, SWP_NOZORDER);
-   StatusButton->SetWindowPos(NULL, total_width - button_width * 1 - x_border, button_height * 1 + y_border, button_width, button_height, SWP_NOZORDER);
-   YieldButton->SetWindowPos(NULL,  total_width - button_width * 2 - x_border, button_height * 2 + y_border, button_width, button_height, SWP_NOZORDER);
-   ResetButton->SetWindowPos(NULL,  total_width - button_width * 1 - x_border, button_height * 2 + y_border, button_width, button_height, SWP_NOZORDER);
+   HaltButton.SetWindowPos(NULL,   total_width - button_width * 2 - x_border, button_height * 0 + y_border, button_width, button_height, SWP_NOZORDER);
+   TraceButton.SetWindowPos(NULL,  total_width - button_width * 1 - x_border, button_height * 0 + y_border, button_width, button_height, SWP_NOZORDER);
+   PauseButton.SetWindowPos(NULL,  total_width - button_width * 2 - x_border, button_height * 1 + y_border, button_width, button_height, SWP_NOZORDER);
+   StatusButton.SetWindowPos(NULL, total_width - button_width * 1 - x_border, button_height * 1 + y_border, button_width, button_height, SWP_NOZORDER);
+   YieldButton.SetWindowPos(NULL,  total_width - button_width * 2 - x_border, button_height * 2 + y_border, button_width, button_height, SWP_NOZORDER);
+   ResetButton.SetWindowPos(NULL,  total_width - button_width * 1 - x_border, button_height * 2 + y_border, button_width, button_height, SWP_NOZORDER);
 
-   ExecuteButton->SetWindowPos(NULL, total_width - button_width * 2 - x_border, total_height - button_height - y_border, button_width, button_height, SWP_NOZORDER);
-   EdallButton->SetWindowPos(NULL,   total_width - button_width * 1 - x_border, total_height - button_height - y_border, button_width, button_height, SWP_NOZORDER);
+   ExecuteButton.SetWindowPos(NULL, total_width - button_width * 2 - x_border, total_height - button_height - y_border, button_width, button_height, SWP_NOZORDER);
+   EdallButton.SetWindowPos(NULL,   total_width - button_width * 1 - x_border, total_height - button_height - y_border, button_width, button_height, SWP_NOZORDER);
    }
 
 void TMyCommandWindow::EvSize(UINT arg1, TSize & arg2)
@@ -181,9 +170,9 @@ TMyCommandWindow::PostKeyDownToEditBox(
    LPARAM KeyEventLParam
 )
    {
-   Editbox->SetFocus();
+   Editbox.SetFocus();
 
-   Editbox->PostMessage(
+   Editbox.PostMessage(
       WM_KEYDOWN,
       KeyEventWParam,
       KeyEventLParam);
@@ -193,11 +182,11 @@ TMyCommandWindow::PostKeyDownToEditBox(
 static
 char *
 GetTextFromWindow(
-   TWindow * Window
+   const TWindow & Window
 )
    {
    // copy the text in the commander history
-   int    windowTextLength = Window->GetWindowTextLength();
+   int    windowTextLength = Window.GetWindowTextLength();
    size_t textBufferLength = windowTextLength + 1; // for NUL
 
    char *textBuffer = new char [textBufferLength];
@@ -205,7 +194,7 @@ GetTextFromWindow(
       {
       memset(textBuffer, 0, textBufferLength);
 
-      Window->GetWindowText(textBuffer, textBufferLength);
+      Window.GetWindowText(textBuffer, textBufferLength);
       }
 
    return textBuffer;
@@ -223,13 +212,13 @@ void TMyCommandWindow::UpdateYieldButtonState()
    {
    if (stepflag)
       {
-      YieldButton->SetWindowText("UnStep");
-      YieldButton->SetCheck(BF_CHECKED);
+      YieldButton.SetWindowText("UnStep");
+      YieldButton.SetCheck(BF_CHECKED);
       }
    else
       {
-      YieldButton->SetWindowText("Step");
-      YieldButton->SetCheck(BF_UNCHECKED);
+      YieldButton.SetWindowText("Step");
+      YieldButton.SetCheck(BF_UNCHECKED);
       }
    }
 
@@ -237,13 +226,13 @@ void TMyCommandWindow::UpdateTraceButtonState()
    {
    if (traceflag)
       {
-      TraceButton->SetWindowText("UnTrace");
-      TraceButton->SetCheck(BF_CHECKED);
+      TraceButton.SetWindowText("UnTrace");
+      TraceButton.SetCheck(BF_CHECKED);
       }
    else
       {
-      TraceButton->SetWindowText("Trace");
-      TraceButton->SetCheck(BF_UNCHECKED);
+      TraceButton.SetWindowText("Trace");
+      TraceButton.SetCheck(BF_UNCHECKED);
       }
    }
 
@@ -251,13 +240,13 @@ void TMyCommandWindow::UpdateStatusButtonState()
    {
    if (status_flag)
       {
-      StatusButton->SetWindowText("NoStatus");
-      StatusButton->SetCheck(BF_CHECKED);
+      StatusButton.SetWindowText("NoStatus");
+      StatusButton.SetCheck(BF_CHECKED);
       }
    else
       {
-      StatusButton->SetWindowText("Status");
-      StatusButton->SetCheck(BF_UNCHECKED);
+      StatusButton.SetWindowText("Status");
+      StatusButton.SetCheck(BF_UNCHECKED);
       }
    }
 
@@ -282,15 +271,15 @@ TMyCommandWindow::Duplicate(
    buffer = GetTextFromWindow(Original.Listbox);
    if (buffer != NULL)
       {
-      Listbox->SetText(buffer);
+      Listbox.SetText(buffer);
       delete [] buffer;
       }
-   Listbox->SetCursorAtBottom();
+   Listbox.SetCursorAtBottom();
 
    buffer = GetTextFromWindow(Original.Editbox);
    if (buffer != NULL)
       {
-      Editbox->SetText(buffer);
+      Editbox.SetText(buffer);
       delete [] buffer;
       }
 
@@ -450,7 +439,7 @@ void TMyCommandWindow::DoButtonExecute(UINT)
    // Therefore, we must not touch any member variable at this point.
    if (!JustDidEdit)
       {
-      MainWindowx->CommandWindow->Editbox->SetFocus();
+      MainWindowx->CommandWindow->Editbox.SetFocus();
       }
    JustDidEdit = false;
    }
@@ -468,7 +457,7 @@ void TMyCommandWindow::DoButtonStatus(UINT)
    if (status_flag)
       {
       MainWindowx->MyPopupStatusKill();
-      Editbox->SetFocus();
+      Editbox.SetFocus();
       }
    else
       {
@@ -483,7 +472,7 @@ void TMyCommandWindow::DoButtonReset(UINT)
    putcombobox(logoInstruction);
    do_execution(logoInstruction);
 
-   Editbox->SetFocus();
+   Editbox.SetFocus();
    }
 
 
@@ -492,14 +481,14 @@ void TMyCommandWindow::DoButtonYield(UINT)
    /* toggle yield state */
    stepflag = !stepflag;
    UpdateYieldButtonState();
-   Editbox->SetFocus();
+   Editbox.SetFocus();
    }
 
 void TMyCommandWindow::DoButtonPause(UINT)
    {
 
    // if ok to halt then it's ok to pause if we get here
-   Editbox->SetFocus();
+   Editbox.SetFocus();
    if (halt_flag != 0)
       {
       IsTimeToPause = true;
@@ -529,7 +518,7 @@ void TMyCommandWindow::DoButtonTrace(UINT)
    traceflag = !traceflag;
    UpdateTraceButtonState();
 
-   Editbox->SetFocus();
+   Editbox.SetFocus();
    }
 
 void TMyCommandWindow::DoButtonHalt(UINT)
@@ -541,7 +530,7 @@ void TMyCommandWindow::DoButtonHalt(UINT)
       }
 
    /* if ok to halt and we get here then halt */
-   Editbox->SetFocus();
+   Editbox.SetFocus();
    if (halt_flag != 0)
       {
       IsTimeToHalt = true;
@@ -604,8 +593,8 @@ void TMyCommandWindow::ChooseNewFont()
       SetPrivateProfileFont("CommanderFont", lf);
 
       HFONT hFont = CreateFontIndirect(&lf);
-      Listbox->SetWindowFont(hFont, TRUE);
-      Editbox->SetWindowFont(hFont, TRUE);
+      Listbox.SetWindowFont(hFont, TRUE);
+      Editbox.SetWindowFont(hFont, TRUE);
 
       // commit to the new font
       if (Font)
@@ -668,10 +657,10 @@ void TMyEditboxWindow::EvKeyDown(UINT, UINT, UINT)
       case VK_UP:
          {
          // advance to the bottom of the listbox
-         MainWindowx->CommandWindow->Listbox->SetCursorAtBottom();
+         MainWindowx->CommandWindow->Listbox.SetCursorAtBottom();
 
          // give focus to the listbox
-         MainWindowx->CommandWindow->Listbox->SetFocus();
+         MainWindowx->CommandWindow->Listbox.SetFocus();
          break;
          }
       case VK_F1:
@@ -712,7 +701,7 @@ void TMyListboxWindow::EvKeyDown(UINT, UINT, UINT)
       GetSelection(from, to);
       if (GetTextLen() == to)
          {
-         MainWindowx->CommandWindow->Editbox->SetFocus();
+         MainWindowx->CommandWindow->Editbox.SetFocus();
          return;
          }
       }
@@ -727,7 +716,7 @@ void TMyListboxWindow::EvKeyDown(UINT, UINT, UINT)
       char buf[MAX_BUFFER_SIZE];
 
       GetLine(buf, MAX_BUFFER_SIZE, GetLineFromPos(-1));
-      MainWindowx->CommandWindow->Editbox->SetText(buf);
+      MainWindowx->CommandWindow->Editbox.SetText(buf);
       }
    else if (Msg.WParam == VK_F1)
       {
@@ -749,7 +738,7 @@ void TMyListboxWindow::EvLButtonDown(UINT /* modKeys */, TPoint & /* point */)
 
    char buf[MAX_BUFFER_SIZE];
    GetLine(buf, MAX_BUFFER_SIZE, GetLineFromPos(-1));
-   MainWindowx->CommandWindow->Editbox->SetText(buf);
+   MainWindowx->CommandWindow->Editbox.SetText(buf);
    }
 
 void TMyListboxWindow::EvLButtonDblClk(UINT /* modKeys */, TPoint & /* point */)
@@ -758,7 +747,7 @@ void TMyListboxWindow::EvLButtonDblClk(UINT /* modKeys */, TPoint & /* point */)
 
    char buf[MAX_BUFFER_SIZE];
    GetLine(buf, MAX_BUFFER_SIZE, GetLineFromPos(-1));
-   MainWindowx->CommandWindow->Editbox->SetText(buf);
+   MainWindowx->CommandWindow->Editbox.SetText(buf);
    MainWindowx->CommandWindow->DoButtonExecute(0);
    }
 

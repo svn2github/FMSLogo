@@ -234,9 +234,9 @@ long LoadColor(int dpenr, int dpeng, int dpenb)
 void clearcombobox()
    {
    /* clear the recall box */
-   MainWindowx->CommandWindow->Listbox->SetReadOnly(FALSE);
-   MainWindowx->CommandWindow->Listbox->Clear();
-   MainWindowx->CommandWindow->Listbox->SetReadOnly(TRUE);
+   MainWindowx->CommandWindow->Listbox.SetReadOnly(FALSE);
+   MainWindowx->CommandWindow->Listbox.Clear();
+   MainWindowx->CommandWindow->Listbox.SetReadOnly(TRUE);
    }
 
    
@@ -253,15 +253,15 @@ void putcombobox(char *str)
          {
          /* remember where we started */
 
-         uBefore = MainWindowx->CommandWindow->Listbox->GetTextLen();
+         uBefore = MainWindowx->CommandWindow->Listbox.GetTextLen();
 
          /* output to list box */
 
-         MainWindowx->CommandWindow->Listbox->SetSelection(uBefore, uBefore);
-         MainWindowx->CommandWindow->Listbox->Insert(str);
-         uCheck = MainWindowx->CommandWindow->Listbox->GetTextLen();
-         MainWindowx->CommandWindow->Listbox->Insert("\r\n");
-         uAfter = MainWindowx->CommandWindow->Listbox->GetTextLen();
+         MainWindowx->CommandWindow->Listbox.SetSelection(uBefore, uBefore);
+         MainWindowx->CommandWindow->Listbox.Insert(str);
+         uCheck = MainWindowx->CommandWindow->Listbox.GetTextLen();
+         MainWindowx->CommandWindow->Listbox.Insert("\r\n");
+         uAfter = MainWindowx->CommandWindow->Listbox.GetTextLen();
 
          /* if last 2 bytes inserted ok get out */
 
@@ -269,23 +269,23 @@ void putcombobox(char *str)
 
          /* strip what we inserted */
 
-         MainWindowx->CommandWindow->Listbox->SetReadOnly(FALSE);
+         MainWindowx->CommandWindow->Listbox.SetReadOnly(FALSE);
 
-         MainWindowx->CommandWindow->Listbox->SetSelection(uBefore, uAfter);
-         MainWindowx->CommandWindow->Listbox->DeleteSelection();
+         MainWindowx->CommandWindow->Listbox.SetSelection(uBefore, uAfter);
+         MainWindowx->CommandWindow->Listbox.DeleteSelection();
 
          /* strip 4k off top */
 
-         MainWindowx->CommandWindow->Listbox->SetSelection(0, 4096);
-         MainWindowx->CommandWindow->Listbox->DeleteSelection();
+         MainWindowx->CommandWindow->Listbox.SetSelection(0, 4096);
+         MainWindowx->CommandWindow->Listbox.DeleteSelection();
 
-         MainWindowx->CommandWindow->Listbox->SetReadOnly(TRUE);
+         MainWindowx->CommandWindow->Listbox.SetReadOnly(TRUE);
          }
 
       // if all else fails try this, should never get here
       clearcombobox();
-      MainWindowx->CommandWindow->Listbox->Insert(str);
-      MainWindowx->CommandWindow->Listbox->Insert("\r\n");
+      MainWindowx->CommandWindow->Listbox.Insert(str);
+      MainWindowx->CommandWindow->Listbox.Insert("\r\n");
 
       }
    }
@@ -338,8 +338,8 @@ void getcombobox(char *str)
 
    SelectedText[0] = '\0';
 
-   MainWindowx->CommandWindow->Editbox->GetText(str, MAX_BUFFER_SIZE);
-   MainWindowx->CommandWindow->Editbox->Clear();
+   MainWindowx->CommandWindow->Editbox.GetText(str, MAX_BUFFER_SIZE);
+   MainWindowx->CommandWindow->Editbox.Clear();
    }
 
 

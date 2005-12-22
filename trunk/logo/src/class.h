@@ -132,6 +132,9 @@ class TMyListboxWindow : public TEdit
    }
 ;
 
+#include "commanderbutton.h"
+#include "commandercheckbox.h"
+
 class TMyCommandWindow : public TDialog
    {
  public:
@@ -178,20 +181,20 @@ class TMyCommandWindow : public TDialog
    void UpdateStatusButtonState();
 
  protected:
-   class TCommanderCheckBox * TraceButton;
-   class TCommanderButton   * ResetButton;
-   class TCommanderButton   * PauseButton;
-   class TCommanderButton   * HaltButton;
-   class TCommanderCheckBox * StatusButton;
-   class TCommanderCheckBox * YieldButton;
-   class TCommanderButton   * EdallButton;
-   class TCommanderButton   * ExecuteButton;
+   TCommanderCheckBox TraceButton;
+   TCommanderButton   ResetButton;
+   TCommanderButton   PauseButton;
+   TCommanderButton   HaltButton;
+   TCommanderCheckBox StatusButton;
+   TCommanderCheckBox YieldButton;
+   TCommanderButton   EdallButton;
+   TCommanderButton   ExecuteButton;
 
    HFONT Font;
    
 public: // HACK: should be protected
-   class TMyEditboxWindow * Editbox;
-   class TMyListboxWindow * Listbox;
+   TMyEditboxWindow Editbox;
+   TMyListboxWindow Listbox;
 
 
    DECLARE_RESPONSE_TABLE(TMyCommandWindow);

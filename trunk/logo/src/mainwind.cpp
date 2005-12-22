@@ -1987,7 +1987,7 @@ void TMainFrame::UndockCommanderWindow()
 
       delete CommandWindow;
       CommandWindow = newCommandWindow;
-      CommandWindow->Editbox->SetFocus();
+      CommandWindow->Editbox.SetFocus();
       IsCommanderDocked = false;
       }
    }
@@ -2062,7 +2062,7 @@ void TMainFrame::DockCommanderWindow()
 
       delete CommandWindow;
       CommandWindow = newCommandWindow;
-      CommandWindow->Editbox->SetFocus();
+      CommandWindow->Editbox.SetFocus();
       IsCommanderDocked = true;
       }
    }
@@ -2163,7 +2163,7 @@ void TMainFrame::CMControlExecute()
 
       if (!CommandWindow->IsIconic())
          {
-         CommandWindow->Editbox->SetFocus();
+         CommandWindow->Editbox.SetFocus();
          }
 
       // else if an editor is available go there

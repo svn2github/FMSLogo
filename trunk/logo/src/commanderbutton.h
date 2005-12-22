@@ -32,7 +32,7 @@ class TCommanderButton : public TButton
 {
 public:
    TCommanderButton(
-      TMyCommandWindow* parent,
+      class TMyCommandWindow* parent,
       int id,
       TModule* module = 0);
 
@@ -43,7 +43,7 @@ protected:
    void EvKeyDown(UINT, UINT, UINT);
 
 private:
-   TMyCommandWindow* Parent;
+   class TMyCommandWindow* Parent;
 
 
 private:

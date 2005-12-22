@@ -548,7 +548,7 @@ void TMyFileWindow::EvDestroy()
          else
             {
             error_happen = false;
-            MainWindowx->CommandWindow->Editbox->SetFocus();
+            MainWindowx->CommandWindow->Editbox.SetFocus();
             }
          }
       else
@@ -568,7 +568,7 @@ void TMyFileWindow::EvDestroy()
          args_list = reref(args_list, NIL);
 
          unlink(TempPathName);
-         MainWindowx->CommandWindow->Editbox->SetFocus();
+         MainWindowx->CommandWindow->Editbox.SetFocus();
          }
       }
    else

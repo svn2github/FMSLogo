@@ -32,10 +32,10 @@ class TCommanderCheckBox : public TCheckBox
 {
 public:
    TCommanderCheckBox(
-      TMyCommandWindow* parent,
-      int               id,
-      TGroupBox*        group = 0,
-      TModule*          module = 0);
+      class TMyCommandWindow* parent,
+      int                     id,
+      TGroupBox*              group = 0,
+      TModule*                module = 0);
 
    ~TCommanderCheckBox();
 
@@ -44,7 +44,7 @@ protected:
    void EvKeyDown(UINT, UINT, UINT);
 
 private:
-   TMyCommandWindow* Parent;
+   class TMyCommandWindow* Parent;
 
 
 private:
