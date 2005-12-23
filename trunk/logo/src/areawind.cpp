@@ -95,8 +95,6 @@ NODE *lsetactivearea(NODE *arg)
    {
    NODE * args = vector_4_arg(arg);
 
-   // better be a list
-
    if (NOT_THROWING)
       {
       // apply all args that are given
@@ -105,10 +103,10 @@ NODE *lsetactivearea(NODE *arg)
       NODE * xhigh = car(cdr(cdr(args)));
       NODE * yhigh = car(cdr(cdr(cdr(args))));
 
-      PrinterAreaXLow  = ((nodetype(xlow)  == FLOAT) ? getfloat(xlow)  : (FLONUM) getint(xlow));
-      PrinterAreaYLow  = ((nodetype(ylow)  == FLOAT) ? getfloat(ylow)  : (FLONUM) getint(ylow));
-      PrinterAreaXHigh = ((nodetype(xhigh) == FLOAT) ? getfloat(xhigh) : (FLONUM) getint(xhigh));
-      PrinterAreaYHigh = ((nodetype(yhigh) == FLOAT) ? getfloat(yhigh) : (FLONUM) getint(yhigh));
+      PrinterAreaXLow  = numeric_node_to_fixnum(xlow);
+      PrinterAreaYLow  = numeric_node_to_fixnum(ylow);
+      PrinterAreaXHigh = numeric_node_to_fixnum(xhigh); 
+      PrinterAreaYHigh = numeric_node_to_fixnum(yhigh); 
 
       if ((PrinterAreaXLow >= PrinterAreaXHigh) || (PrinterAreaYLow >= PrinterAreaYHigh))
          {
@@ -117,15 +115,11 @@ NODE *lsetactivearea(NODE *arg)
          return Unbound;
          }
 
-      char szWinLocStr[WININISIZ];
-      sprintf(szWinLocStr, "%d", PrinterAreaXLow);
-      WritePrivateProfileString("Printer", "XLow", szWinLocStr, "LOGO.INI");
-      sprintf(szWinLocStr, "%d", PrinterAreaXHigh);
-      WritePrivateProfileString("Printer", "XHigh", szWinLocStr, "LOGO.INI");
-      sprintf(szWinLocStr, "%d", PrinterAreaYLow);
-      WritePrivateProfileString("Printer", "YLow", szWinLocStr, "LOGO.INI");
-      sprintf(szWinLocStr, "%d", PrinterAreaYHigh);
-      WritePrivateProfileString("Printer", "YHigh", szWinLocStr, "LOGO.INI");
+      SetPrivateProfileInt("Printer", "XLow",   PrinterAreaXLow);
+      SetPrivateProfileInt("Printer", "XHigh",  PrinterAreaXHigh);
+      SetPrivateProfileInt("Printer", "YLow",   PrinterAreaYLow);
+      SetPrivateProfileInt("Printer", "YHigh",  PrinterAreaYHigh);
+      SetPrivateProfileInt("Printer", "Pixels", PrinterAreaPixels);
 
       if ((PrinterAreaXLow  == -BitMapWidth  / 2) &&
           (PrinterAreaXHigh == +BitMapWidth  / 2) &&
