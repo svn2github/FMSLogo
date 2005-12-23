@@ -757,17 +757,13 @@ void
 setpos_helper(
    NODE *xnode, 
    NODE *ynode, 
-   NODE *znode, 
-   bool bEraseTurtle = true
+   NODE *znode
 )
    {
 
    if (NOT_THROWING)
       {
-      if (bEraseTurtle) 
-         { 
-         draw_turtle(false);
-         }
+      draw_turtle(false);
 
       Point target;
       target.x = (xnode == NIL) ?
@@ -791,10 +787,7 @@ setpos_helper(
          setpos_helper_2d(target.x, target.y);
          }
 
-      if (bEraseTurtle) 
-         {
-         draw_turtle(true);
-         }
+      draw_turtle(true);
       }
    }
 
