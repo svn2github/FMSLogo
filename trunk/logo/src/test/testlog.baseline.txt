@@ -370,6 +370,37 @@ INFO: Executing invalid instruction: [PLLIST {a b}]
 FAIL: Executing [PLLIST {a b}] did not throw an error
 INFO: executing regression test for bug #1383281
 PASS: "bug #1382181 is fixed; 'FOR [1] [[][]]' did not crash.
+PASS: [ACTIVEAREA] returned [-100 -100 100 100] , as expected.
+PASS: [ACTIVEAREA] returned [-500 -500 500 500] , as expected.
+PASS: [ACTIVEAREA] returned [-500 -500 500 500] , as expected.
+INFO: Executing invalid instruction: [(SETACTIVEAREA)]
+INFO: Executing invalid instruction: [(SETACTIVAREA 0)]
+INFO: Executing invalid instruction: [(SETACTIVAREA 0 0)]
+INFO: Executing invalid instruction: [(SETACTIVAREA 0 0 50)]
+INFO: Executing invalid instruction: [(SETACTIVAREA 0 0 50 50)]
+INFO: Executing invalid instruction: [(SETACTIVAREA [0] )]
+INFO: Executing invalid instruction: [(SETACTIVAREA [0 0] )]
+INFO: Executing invalid instruction: [(SETACTIVAREA [0 0 50] )]
+INFO: Executing invalid instruction: [(SETACTIVAREA [0 0 50 50 50] )]
+INFO: Executing invalid instruction: [SETACTIVAREA {0 0 50 50}]
+INFO: Executing invalid instruction: [SETACTIVAREA [zero 0 50 50]]
+INFO: Executing invalid instruction: [SETACTIVAREA [[0] 0 50 50]]
+INFO: Executing invalid instruction: [SETACTIVAREA [{0} 0 50 50]]
+INFO: Executing invalid instruction: [SETACTIVAREA [0 zero 50 50]]
+INFO: Executing invalid instruction: [SETACTIVAREA [0 [0] 50 50]]
+INFO: Executing invalid instruction: [SETACTIVAREA [0 {0} 50 50]]
+INFO: Executing invalid instruction: [SETACTIVAREA [0 0 fifty 50]]
+INFO: Executing invalid instruction: [SETACTIVAREA [0 0 [50] 50]]
+INFO: Executing invalid instruction: [SETACTIVAREA [0 0 {50} 50]]
+INFO: Executing invalid instruction: [SETACTIVAREA [0 0 50 fifty]]
+INFO: Executing invalid instruction: [SETACTIVAREA [0 0 50 [50]]]
+INFO: Executing invalid instruction: [SETACTIVAREA [0 0 50 {50}]]
+INFO: Executing invalid instruction: [SETACTIVAREA [0 0 50 {50}]]
+INFO: Executing invalid instruction: [SETACTIVAREA [0 0 -50 50]]
+INFO: Executing invalid instruction: [SETACTIVAREA [0 0 50 -50]]
+INFO: Executing invalid instruction: [SETACTIVAREA [0 0 50 -50]]
+INFO: Executing invalid instruction: [SETACTIVAREA [0 0 0 0]]
+INFO: Executing invalid instruction: [(ACTIVAREA "toomany)]
 PASS: Size is [100 100] , as expected.
 PASS: Size is [100 101] , as expected.
 PASS: Size is [101 100] , as expected.
@@ -608,10 +639,10 @@ INFO: [WAIT 6] took 100 ms to execute
 PASS: [WAIT 6 ] waited for 100 ms. Anywhere between 100 ms and 120 is acceptable.
 INFO: [WAIT 10] took 170 ms to execute
 PASS: [WAIT 10 ] waited for 170 ms. Anywhere between 166.666666666667 ms and 186.666666666667 is acceptable.
-INFO: [WAIT 60] took 1001 ms to execute
-PASS: [WAIT 60 ] waited for 1001 ms. Anywhere between 1000 ms and 1020 is acceptable.
-INFO: [WAIT 100] took 1673 ms to execute
-PASS: [WAIT 100 ] waited for 1673 ms. Anywhere between 1666.66666666667 ms and 1686.66666666667 is acceptable.
+INFO: [WAIT 60] took 1002 ms to execute
+PASS: [WAIT 60 ] waited for 1002 ms. Anywhere between 1000 ms and 1020 is acceptable.
+INFO: [WAIT 100] took 1672 ms to execute
+PASS: [WAIT 100 ] waited for 1672 ms. Anywhere between 1666.66666666667 ms and 1686.66666666667 is acceptable.
 INFO: Executing invalid instruction: [(WAIT)]
 INFO: Executing invalid instruction: [(WAIT 10 10)]
 INFO: Executing invalid instruction: [WAIT -1]
