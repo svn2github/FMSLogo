@@ -492,6 +492,11 @@
   <!ENTITY command-checkboxget           SYSTEM "command-checkboxget.xml">
   <!ENTITY command-checkboxset           SYSTEM "command-checkboxset.xml">
 
+  <!ENTITY command-radiobuttoncreate     SYSTEM "command-radiobuttoncreate.xml">
+  <!ENTITY command-radiobuttondelete     SYSTEM "command-radiobuttondelete.xml">
+  <!ENTITY command-radiobuttonenable     SYSTEM "command-radiobuttonenable.xml">
+  <!ENTITY command-radiobuttonget        SYSTEM "command-radiobuttonget.xml">
+  <!ENTITY command-radiobuttonset        SYSTEM "command-radiobuttonset.xml">
 ]>
 
 <book id="MSWLogo Help">

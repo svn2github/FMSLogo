@@ -174,11 +174,46 @@ Checkbox controls are used to ask the user yes/no questions.
 A checkbox control has two components: a checkbox and a text label that indicates what putting a check in the checkbox means.
 </para>
 
+<para>
+For multiple choice questions, use <link linkend="radiobutton-commands">radio button</link> control.
+</para>
+
       &command-checkboxcreate;
       &command-checkboxdelete;
       &command-checkboxenable;
       &command-checkboxset;
       &command-checkboxget;
+   </section>
+
+
+   <section id="radiobutton-commands">
+      <title>Radio Button Commands</title>
+
+<para>
+Radio buttons controls are used to ask the user a multiple choice question.
+Each radio button two components: a round button and a text label that indicates what pressing the button means.
+</para>
+
+<para>
+Radio buttons are grouped using a <link linkend="groupbox-commands">groupbox</link> control.
+When the user presses a radio button, it is selected and all other radio buttons in the group are unselected.
+As a result, only one item in the group may be selected at any time.
+</para>
+
+<para>
+For yes/no questions, a <link linkend="checkbox-commands">checkbox</link> control may be more intuitivie.
+</para>
+
+<para>
+The term "radio button" comes from car radios that have mechincal preset buttons.
+When you press one of these real radio buttons, it gets pushed in, the tuner changes to your selection, and all other buttons pop out.
+</para>
+
+      &command-radiobuttoncreate;
+      &command-radiobuttondelete;
+      &command-radiobuttonenable;
+      &command-radiobuttonset;
+      &command-radiobuttonget;
    </section>
 
 </chapter>
