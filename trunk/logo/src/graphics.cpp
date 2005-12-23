@@ -84,7 +84,8 @@ Turtle g_Turtles[TURTLES] =
 
 int    turtle_which = 0;
 int    turtle_max = 0;
-VECTOR g_Scale = {1.0, 1.0, 1.0};
+VECTOR g_Scale        = {1.0, 1.0, 1.0};
+VECTOR g_OneOverScale = {1.0, 1.0, 1.0};
 Point  g_Wanna = {0.0, 0.0, 0.0};
 bool   out_of_bounds = false;
 
@@ -640,8 +641,8 @@ NODE *lleft(NODE *arg)
 static
 FLONUM towards_helper(FLONUM x, FLONUM y, FLONUM from_x, FLONUM from_y)
    {
-   FLONUM tx = from_x / g_Scale.x;
-   FLONUM ty = from_y / g_Scale.y;
+   FLONUM tx = from_x * g_OneOverScale.x;
+   FLONUM ty = from_y * g_OneOverScale.y;
 
    if (x != tx || y != ty)
       {
@@ -704,8 +705,8 @@ setpos_helper_2d(
          g_Wanna.x, 
          g_Wanna.y);
 
-      FLONUM tx = g_Wanna.x / g_Scale.x;
-      FLONUM ty = g_Wanna.y / g_Scale.y;
+      FLONUM tx = g_Wanna.x * g_OneOverScale.x;
+      FLONUM ty = g_Wanna.y * g_OneOverScale.y;
       forward_helper(sqrt(sq(target.x - tx) + sq(target.y - ty)));
 
       g_Turtles[turtle_which].Heading = save_heading;
@@ -1690,16 +1691,16 @@ NODE *ltowardsxyz(NODE *args)
 NODE *lpos(NODE *)
    {
    return cons_list(
-      make_floatnode(cut_error(g_Turtles[turtle_which].Position.x / g_Scale.x)),
-      make_floatnode(cut_error(g_Turtles[turtle_which].Position.y / g_Scale.y)));
+      make_floatnode(cut_error(g_Turtles[turtle_which].Position.x * g_OneOverScale.x)),
+      make_floatnode(cut_error(g_Turtles[turtle_which].Position.y * g_OneOverScale.y)));
    }
 
 NODE *lposxyz(NODE *)
    {
    return cons_list(
-      make_floatnode(cut_error(g_Turtles[turtle_which].Position.x / g_Scale.x)),
-      make_floatnode(cut_error(g_Turtles[turtle_which].Position.y / g_Scale.y)),
-      make_floatnode(cut_error(g_Turtles[turtle_which].Position.z / g_Scale.z)));
+      make_floatnode(cut_error(g_Turtles[turtle_which].Position.x * g_OneOverScale.x)),
+      make_floatnode(cut_error(g_Turtles[turtle_which].Position.y * g_OneOverScale.y)),
+      make_floatnode(cut_error(g_Turtles[turtle_which].Position.z * g_OneOverScale.z)));
    }
 
 NODE *lscrunch(NODE *)
@@ -2290,6 +2291,26 @@ NODE *lsetscrunch(NODE *args)
       draw_turtle(false);
       g_Scale.x = numeric_node_to_flonum(xnode);
       g_Scale.y = numeric_node_to_flonum(ynode);
+
+      // computer 1/g_Scale (if possible)
+      if (g_Scale.x != 0.0)
+         {
+         g_OneOverScale.x = 1.0 / g_Scale.x;
+         }
+      else 
+         {
+         g_OneOverScale.x = FLONUM_MAX;
+         }
+
+      if (g_Scale.y != 0.0)
+         {
+         g_OneOverScale.y = 1.0 / g_Scale.y;
+         }
+      else
+         {
+         g_OneOverScale.y = FLONUM_MAX;
+         }
+
       draw_turtle(true);
       }
    return Unbound;

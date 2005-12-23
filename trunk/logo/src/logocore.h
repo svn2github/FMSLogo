@@ -127,11 +127,14 @@ ERR_TYPES;
 
 #define even_p(x) !(x & 0x1)
 
-#define FIXNUM          long
-//#define FIXNUM          __int64
-#define FLONUM          double
-#define MAXINT          0x7fffffffL
-#define SAFEINT         0x00003fff     /* safe to multiply w/o overflow       */
+typedef long    FIXNUM;
+// typedef __int64 FIXNUM  
+#define MAXINT  0x7fffffffL
+#define SAFEINT 0x00003fff   // safe to multiply w/o overflow
+
+typedef double FLONUM;
+#define FLONUM_MAX     DBL_MAX
+#define FLONUM_EPSILON DBL_EPSILON
 
 typedef struct logo_node
    {
