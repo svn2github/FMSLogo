@@ -29,7 +29,7 @@ TThreeD::TThreeD()
    //   At.x   = 0.0;  At.y   = 0.0;  At.z   = 0.0;
    //   Up.x   = 0.0;  Up.y   = 0.0;  Up.z   = 1.0;
 
-   Angle = 60.0 * degrad;
+   Angle = 60.0 * rads_per_degree;
 
    Zmin = 1000000.0;
    Zmax = -1000000.0;
@@ -52,7 +52,7 @@ void TThreeD::SetAt()
 
 void TThreeD::SetClip(double _Angle, double _Zmin, double _Zmax)
    {
-   Angle = _Angle * degrad;
+   Angle = _Angle * rads_per_degree;
 
    Zmin =  _Zmin / WorldDepth + Offset.z;
    Zmax =  _Zmax / WorldDepth + Offset.z;

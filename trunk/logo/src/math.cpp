@@ -194,12 +194,12 @@ NODE *binary(NODE *args, char fcn)
                      fval = 1 / fval;
                   break;
                case '~': err_logo(BAD_DATA_UNREC, arg); break;
-               case 'c': fval = cos(fval * degrad); break;
-               case 's': fval = sin(fval * degrad); break;
-               case 't': fval = tan(fval * degrad); break;
-               case 'v': fval = asin(fval) / degrad; break;
-               case 'w': fval = acos(fval) / degrad; break;
-               case 'x': fval = atan(fval) / degrad; break;
+               case 'c': fval = cos(fval * rads_per_degree); break;
+               case 's': fval = sin(fval * rads_per_degree); break;
+               case 't': fval = tan(fval * rads_per_degree); break;
+               case 'v': fval = asin(fval) / rads_per_degree; break;
+               case 'w': fval = acos(fval) / rads_per_degree; break;
+               case 'x': fval = atan(fval) / rads_per_degree; break;
                case 'S': fval = sin(fval); break;
                case 'C': fval = cos(fval); break;
                case 'T': fval = tan(fval); break;
@@ -423,7 +423,7 @@ NODE *binary(NODE *args, char fcn)
                      fval /= farg;
                     break;
                 case 'x':
-                    errchk(fval = atan2(farg, fval) / degrad);
+                    errchk(fval = atan2(farg, fval) / rads_per_degree);
                     break;
                 case 'X':
                     errchk(fval = atan2(farg, fval));

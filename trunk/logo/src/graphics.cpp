@@ -456,8 +456,8 @@ void uppitch(FLONUM a)
       draw_turtle(false);
 
       a = positive_fmod(a, 360.0);
-      FLONUM Cx = cos(a * degrad);
-      FLONUM Sx = sin(a * degrad);
+      FLONUM Cx = cos(a * rads_per_degree);
+      FLONUM Sx = sin(a * rads_per_degree);
 
       MATRIX pitch;
       pitch.e11 = 1.0; pitch.e12 = 0.0; pitch.e13 = 0.0;
@@ -495,8 +495,8 @@ void rightroll(FLONUM a)
       draw_turtle(false);
 
       a = positive_fmod(a, 360.0);
-      FLONUM Cy = cos(a * degrad);
-      FLONUM Sy = sin(a * degrad);
+      FLONUM Cy = cos(a * rads_per_degree);
+      FLONUM Sy = sin(a * rads_per_degree);
 
       MATRIX roll;
       roll.e11 = Cy;  roll.e12 = 0.0; roll.e13 = Sy;
@@ -529,8 +529,8 @@ void right_helper(FLONUM a)
 
    if (current_mode == perspectivemode)
       {
-      FLONUM Cz = cos(-a * degrad);
-      FLONUM Sz = sin(-a * degrad);
+      FLONUM Cz = cos(-a * rads_per_degree);
+      FLONUM Sz = sin(-a * rads_per_degree);
 
       MATRIX turn;
       turn.e11 = Cz;  turn.e12 = -Sz; turn.e13 = 0.0;
@@ -654,7 +654,7 @@ FLONUM towards_helper(FLONUM x, FLONUM y, FLONUM from_x, FLONUM from_y)
       else
          {
          m = (y - ty) / (x - tx);
-         a = atan(m) / degrad;
+         a = atan(m) / rads_per_degree;
          if (x < tx) a = fmod(a + 180.0, 360.0);
          }
       a = -(a - 90.0);
@@ -865,8 +865,8 @@ NODE *lellipsearc(NODE *arg)
          for (FIXNUM i = 0; i <= count; i++)
             {
             // calc x y
-            FLONUM x = -sin(ang * degrad) * radius_x;
-            FLONUM y = -cos(ang * degrad) * radius_y;
+            FLONUM x = -sin(ang * rads_per_degree) * radius_x;
+            FLONUM y = -cos(ang * rads_per_degree) * radius_y;
 
             // rotate delta point according to roll around y axis
             r.x = x;
@@ -896,8 +896,8 @@ NODE *lellipsearc(NODE *arg)
          
          // assure we draw something and end in the exact right place
          FLONUM endangle = startangle + angle;
-         r.x = -sin(endangle * degrad) * radius_x;
-         r.y = -cos(endangle * degrad) * radius_y;
+         r.x = -sin(endangle * rads_per_degree) * radius_x;
+         r.y = -cos(endangle * rads_per_degree) * radius_y;
 
          rp = MVxyMultiply(g_Turtles[turtle_which].Matrix, r);
          
@@ -909,16 +909,16 @@ NODE *lellipsearc(NODE *arg)
       else
          {
          // 2D mode
-         const FLONUM cos_th = cos(th * degrad);
-         const FLONUM sin_th = sin(th * degrad);
+         const FLONUM cos_th = cos(th * rads_per_degree);
+         const FLONUM sin_th = sin(th * rads_per_degree);
 
          // draw each line segment of arc (will do wrap)
          FLONUM ang = startangle;
          for (FIXNUM i = 0; i <= count; i++)
             {
             // calc x y
-            FLONUM x = -sin(ang * degrad) * radius_x;
-            FLONUM y = -cos(ang * degrad) * radius_y;
+            FLONUM x = -sin(ang * rads_per_degree) * radius_x;
+            FLONUM y = -cos(ang * rads_per_degree) * radius_y;
 
             // now rotate about position
             FLONUM rx =  sin_th * y + cos_th * x;
@@ -945,8 +945,8 @@ NODE *lellipsearc(NODE *arg)
 
          // assure we draw something and end in the exact right place
          FLONUM endangle = startangle + angle;
-         FLONUM x = -sin(endangle * degrad) * radius_x;
-         FLONUM y = -cos(endangle * degrad) * radius_y;
+         FLONUM x = -sin(endangle * rads_per_degree) * radius_x;
+         FLONUM y = -cos(endangle * rads_per_degree) * radius_y;
 
          // now rotate about position
          FLONUM rx =  sin_th * y + cos_th * x;
@@ -1087,7 +1087,7 @@ void forward_helper(FLONUM d)
    // Convert to the "real" heading (the way cos() and sin() want them).
    // Note that we should add 90 degrees, but instead we use trig identities
    // to make that unnecessary.
-   FLONUM heading_minus_ninety = g_Turtles[turtle_which].Heading * degrad;
+   FLONUM heading_minus_ninety = g_Turtles[turtle_which].Heading * rads_per_degree;
 
    FLONUM x1 = g_Turtles[turtle_which].Position.x;
    FLONUM y1 = g_Turtles[turtle_which].Position.y;
@@ -1347,11 +1347,11 @@ FLONUM rotation_z()
 
    if ((1.0 - fabs(m23)) < epsilon)
       {
-      result = atan2(m12, m11) / degrad;
+      result = atan2(m12, m11) / rads_per_degree;
       }
    else
       {
-      result = atan2(-m21, m22) / degrad;
+      result = atan2(-m21, m22) / rads_per_degree;
       }
 
    if (result < 0.0) 
@@ -1378,7 +1378,7 @@ FLONUM rotation_y()
       }
    else
       {
-      result = atan2(m13, m33) / degrad;
+      result = atan2(m13, m33) / rads_per_degree;
       }
 
    if (result < 0.0) 
@@ -1408,12 +1408,12 @@ FLONUM rotation_x()
       FLONUM ry = atan2(-m13, m33);
 
       FLONUM a;
-      if (fabs(fabs(ry) - 90.0 * degrad) < epsilon)
+      if (fabs(fabs(ry) - 90.0 * rads_per_degree) < epsilon)
          a = m13 / sin(-ry);
       else
          a = m33 / cos(ry);
 
-      result = atan2(-m23, a) / degrad;
+      result = atan2(-m23, a) / rads_per_degree;
       }
 
    if (result < 0.0)
@@ -1660,14 +1660,14 @@ NODE *ltowardsxyz(NODE *args)
       Normalize(diff);
 
       // Compute angle between Y Axis and Vector [DOT] (Rotation about Z)
-      FLONUM Rz = acos(diff.y) / degrad;
+      FLONUM Rz = acos(diff.y) / rads_per_degree;
 
       // Project point onto X-Z plane and renormalize to measure roll
       diff.y = 0.0;
       Normalize(diff);
 
       // Compute angle between X Axis and Projection [DOT] (Rotation about Y)
-      FLONUM Ry = acos(diff.x) / degrad;
+      FLONUM Ry = acos(diff.x) / rads_per_degree;
 
       // Heading was limited to 0 to 180 but we must be able to roll -180 to 180
       // if point is in positive Z hemisphere then "roll" left to it.
