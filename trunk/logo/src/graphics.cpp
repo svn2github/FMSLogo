@@ -646,18 +646,21 @@ FLONUM towards_helper(FLONUM x, FLONUM y, FLONUM from_x, FLONUM from_y)
 
    if (x != tx || y != ty)
       {
-      FLONUM m, a;
+      FLONUM a;
       if (x == tx)
          {
          a = (y < ty) ? -90 : 90;
          }
       else
          {
-         m = (y - ty) / (x - tx);
-         a = atan(m) / rads_per_degree;
-         if (x < tx) a = fmod(a + 180.0, 360.0);
+         FLONUM slope = (y - ty) / (x - tx);
+         a = atan(slope) * degrees_per_rad;
+         if (x < tx) 
+            {
+            a = fmod(a + 180.0, 360.0);
+            }
          }
-      a = -(a - 90.0);
+      a = 90.0 - a;
       return (a < 0 ? 360.0 + a : a);
       }
 
@@ -1347,11 +1350,11 @@ FLONUM rotation_z()
 
    if ((1.0 - fabs(m23)) < epsilon)
       {
-      result = atan2(m12, m11) / rads_per_degree;
+      result = atan2(m12, m11) * degrees_per_rad;
       }
    else
       {
-      result = atan2(-m21, m22) / rads_per_degree;
+      result = atan2(-m21, m22) * degrees_per_rad;
       }
 
    if (result < 0.0) 
@@ -1378,7 +1381,7 @@ FLONUM rotation_y()
       }
    else
       {
-      result = atan2(m13, m33) / rads_per_degree;
+      result = atan2(m13, m33) * degrees_per_rad;
       }
 
    if (result < 0.0) 
@@ -1413,7 +1416,7 @@ FLONUM rotation_x()
       else
          a = m33 / cos(ry);
 
-      result = atan2(-m23, a) / rads_per_degree;
+      result = atan2(-m23, a) * degrees_per_rad;
       }
 
    if (result < 0.0)
@@ -1660,14 +1663,14 @@ NODE *ltowardsxyz(NODE *args)
       Normalize(diff);
 
       // Compute angle between Y Axis and Vector [DOT] (Rotation about Z)
-      FLONUM Rz = acos(diff.y) / rads_per_degree;
+      FLONUM Rz = acos(diff.y) * degrees_per_rad;
 
       // Project point onto X-Z plane and renormalize to measure roll
       diff.y = 0.0;
       Normalize(diff);
 
       // Compute angle between X Axis and Projection [DOT] (Rotation about Y)
-      FLONUM Ry = acos(diff.x) / rads_per_degree;
+      FLONUM Ry = acos(diff.x) * degrees_per_rad;
 
       // Heading was limited to 0 to 180 but we must be able to roll -180 to 180
       // if point is in positive Z hemisphere then "roll" left to it.

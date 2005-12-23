@@ -197,9 +197,9 @@ NODE *binary(NODE *args, char fcn)
                case 'c': fval = cos(fval * rads_per_degree); break;
                case 's': fval = sin(fval * rads_per_degree); break;
                case 't': fval = tan(fval * rads_per_degree); break;
-               case 'v': fval = asin(fval) / rads_per_degree; break;
-               case 'w': fval = acos(fval) / rads_per_degree; break;
-               case 'x': fval = atan(fval) / rads_per_degree; break;
+               case 'v': fval = asin(fval) * degrees_per_rad; break;
+               case 'w': fval = acos(fval) * degrees_per_rad; break;
+               case 'x': fval = atan(fval) * degrees_per_rad; break;
                case 'S': fval = sin(fval); break;
                case 'C': fval = cos(fval); break;
                case 'T': fval = tan(fval); break;
@@ -423,7 +423,7 @@ NODE *binary(NODE *args, char fcn)
                      fval /= farg;
                     break;
                 case 'x':
-                    errchk(fval = atan2(farg, fval) / rads_per_degree);
+                    errchk(fval = atan2(farg, fval) * degrees_per_rad);
                     break;
                 case 'X':
                     errchk(fval = atan2(farg, fval));
