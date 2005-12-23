@@ -653,3 +653,12 @@ PASS: [BUTTON?] returned false , as expected.
 INFO: Executing invalid instruction: [(BUTTON? "too-many)]
 INFO: executing regression test for bug #1384267
 PASS: "bug #1384267 is fixed; turning by a large number in perspective mode did not crash.
+PASS: [SCRUNCH] returned [1 1] , as expected.
+PASS: [SCRUNCH] returned [2 0.1] , as expected.
+INFO: Executing invalid instruction: [(SETSCRUNCH)]
+INFO: Executing invalid instruction: [(SETSCRUNCH [1 1] )]
+INFO: Executing invalid instruction: [(SETSCRUNCH 1)]
+INFO: Executing invalid instruction: [(SETSCRUNCH 1 1 1)]
+INFO: Executing invalid instruction: [(SCRUNCH "toomany)]
+PASS: [SCRUNCH] returned [0 0] , as expected.
+PASS: [SCRUNCH] returned [1e+50 -1e+50] , as expected.
