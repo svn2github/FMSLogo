@@ -1907,8 +1907,9 @@ NODE *lsetturtle(NODE *arg)
                g_Turtles[i].Position.x = 0.0;
                g_Turtles[i].Position.y = 0.0;
                g_Turtles[i].Position.z = 0.0;
-               g_Turtles[i].Heading = 0.0;
-               g_Turtles[i].IsShown = true;
+               g_Turtles[i].Heading   = 0.0;
+               g_Turtles[i].IsShown   = true;
+               g_Turtles[i].IsPenUp   = false;
                g_Turtles[i].Bitmap = 0;
                g_Turtles[i].Matrix.e11 = 1.0;
                g_Turtles[i].Matrix.e12 = 0.0;
