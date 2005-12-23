@@ -30,7 +30,7 @@ The <parameter>name</parameter> input identifies the new checkbox and MUST be a 
 </para>
 
 <para>
-The <parameter>label</parameter> input is a word that will be written on the checkbox.
+The <parameter>label</parameter> input is a word that will be written next to the checkbox.
 </para>
 
 <para>
