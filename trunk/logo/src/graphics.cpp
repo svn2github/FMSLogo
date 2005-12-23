@@ -1084,11 +1084,15 @@ void forward_helper(FLONUM d)
 
    forward_count++;
 
-   FLONUM real_heading = -g_Turtles[turtle_which].Heading + 90.0;
+   // Convert to the "real" heading (the way cos() and sin() want them).
+   // Note that we should add 90 degrees, but instead we use trig identities
+   // to make that unnecessary.
+   FLONUM heading_minus_ninety = g_Turtles[turtle_which].Heading * degrad;
+
    FLONUM x1 = g_Turtles[turtle_which].Position.x;
    FLONUM y1 = g_Turtles[turtle_which].Position.y;
-   FLONUM dx = (FLONUM) (cos((FLONUM) (real_heading * degrad)) * d * g_Scale.x);
-   FLONUM dy = (FLONUM) (sin((FLONUM) (real_heading * degrad)) * d * g_Scale.y);
+   FLONUM dx = sin(heading_minus_ninety) * d * g_Scale.x;
+   FLONUM dy = cos(heading_minus_ninety) * d * g_Scale.y;
    FLONUM x2 = x1 + dx;
    FLONUM y2 = y1 + dy;
 
@@ -1110,8 +1114,8 @@ void forward_helper(FLONUM d)
             y2 <= screen_top
          ))
       {
-      g_Turtles[turtle_which].Position.x = g_Turtles[turtle_which].Position.x + dx;
-      g_Turtles[turtle_which].Position.y = g_Turtles[turtle_which].Position.y + dy;
+      g_Turtles[turtle_which].Position.x = x2;
+      g_Turtles[turtle_which].Position.y = y2;
       line_to(x2, y2);
       save_line();
       }
