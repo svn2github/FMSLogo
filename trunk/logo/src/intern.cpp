@@ -30,7 +30,7 @@ FIXNUM hash(const char *s, int len)
 /* and Ullman's book, Compilers: Principles, Techniques, and */
 /* Tools; figure 7.35. */
    {
-   unsigned FIXNUM h = 0, g;
+   unsigned long h = 0, g;
 
    while (--len >= 0)
       {
