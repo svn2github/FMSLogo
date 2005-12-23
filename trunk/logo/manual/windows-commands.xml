@@ -222,4 +222,38 @@ When you press one of these real radio buttons, it gets pushed in, the tuner cha
       &command-debugwindows;
    </section>
 
+   <section id="windows-modal-vs-modeless">
+      <title>Modal vs. Modeless Windows</title>
+
+<para>
+Windows programming supports two types of windows: Modal and Modeless.
+The modal windows (<link linkend="command-dialogcreate">DIALOGCREATE</link>) are similar to a non-windows programming model where the application is in control.
+In midstream of processing you, as the programmer, decide to prompt the user for information (that is, <link linkend="command-readlist">READLIST</link>).
+Processing is halted and other components of the application are inaccessible until the user supplies the requested information.
+For example, prompting the user for a file name to open a document is Modal.
+</para>
+
+<para>
+When an application uses a modeless window (<link linkend="command-windowcreate">WINDOWCREATE</link>), the user is in control.
+For example the commander in MSWLogo is Modeless.
+The program is generally idle and reacts when the user triggers an event (such as pushing a button).
+</para>
+
+<para>
+Modal windows should be avoided where possible because users prefer to be in control of their applications, rather than being forced to answer a question before the application will do anything else.
+</para>
+
+<para>
+MSWLogo has some pre-defined modal dialog boxes that you can use in your Logo programs.
+</para>
+
+      &command-messagebox;
+      &command-yesnobox;
+      &command-selectbox;
+      &command-questionbox;
+      &command-dialogfileopen;
+      &command-dialogfilesave;
+      &command-windowfileedit;
+   </section>
+
 </chapter>

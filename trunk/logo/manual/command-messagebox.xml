@@ -1,0 +1,43 @@
+<section id="command-messagebox">
+    <title>MESSAGEBOX</title>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>MESSAGEBOX</command> <parameter>title</parameter> <parameter>message</parameter></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+Displays a dialog box with <parameter>title</parameter> in the title bar and <parameter>message</parameter> as the message.
+The dialog has an "OK" and a "Cancel" button.
+Processing will not continue until the user clicks one of these buttons.
+The commander window is also disabled until messagebox is dismissed.
+If the user presses "OK", then processing will continue.
+If the user presses "Cancel", then processing will be halted, as if by the <link linkend="command-halt">HALT</link> command.
+</para>
+
+<para>
+Both the <parameter>title</parameter> and <parameter>message</parameter> inputs must be lists.
+The message box will be automatically sized to fit <parameter>message</parameter>.
+The message will not be word-wrapped, so if you have a long message, you may want to put in some line breaks.
+</para>
+
+</listitem>
+</varlistentry>
+
+
+<varlistentry><term>Example</term>
+<listitem>
+    <programlisting><userinput>MESSAGEBOX [This is the title] [This is the message.  Press OK.]</userinput>
+</programlisting>
+
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</section>

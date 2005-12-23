@@ -499,6 +499,14 @@
   <!ENTITY command-radiobuttonset        SYSTEM "command-radiobuttonset.xml">
 
   <!ENTITY command-debugwindows          SYSTEM "command-debugwindows.xml">
+
+  <!ENTITY command-messagebox            SYSTEM "command-messagebox.xml">
+  <!ENTITY command-yesnobox              SYSTEM "command-yesnobox.xml">
+  <!ENTITY command-selectbox             SYSTEM "command-selectbox.xml">
+  <!ENTITY command-questionbox           SYSTEM "command-questionbox.xml">
+  <!ENTITY command-dialogfileopen        SYSTEM "command-dialogfileopen.xml">
+  <!ENTITY command-dialogfilesave        SYSTEM "command-dialogfilesave.xml">
+  <!ENTITY command-windowfileedit        SYSTEM "command-windowfileedit.xml">
 ]>
 
 <book id="MSWLogo Help">
