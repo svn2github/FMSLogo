@@ -40,7 +40,7 @@ HPALETTE ThePalette;                   /* Handle for the single color palette */
 
 LPLOGPALETTE MyLogPalette;      /* Handle for the single logical color palette*/
 
-NUMBER the_zoom = 1.0;             // current zoom factor
+FLONUM the_zoom = 1.0;             // current zoom factor
 Point  g_OldPos = {0.0, 0.0, 0.0}; // global store for x,y,z "From" routine
 
 NODE *current_line = NIL;       // current line to be parsed
@@ -1297,20 +1297,20 @@ void ibmturt(bool erase)
       }
    }
 
-void move_to(NUMBER x, NUMBER y)
+void move_to(FLONUM x, FLONUM y)
    {
    g_OldPos.x = x;
    g_OldPos.y = y;
    }
 
-void move_to_3d(NUMBER x, NUMBER y, NUMBER z)
+void move_to_3d(FLONUM x, FLONUM y, FLONUM z)
    {
    g_OldPos.x = x;
    g_OldPos.y = y;
    g_OldPos.z = z;
    }
 
-void line_to(NUMBER x, NUMBER y)
+void line_to(FLONUM x, FLONUM y)
    {
    if (turtle_which >= (TURTLES - TURTLEN)) 
       {

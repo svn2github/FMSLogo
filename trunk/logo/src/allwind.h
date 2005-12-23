@@ -57,7 +57,6 @@
 #include <errno.h>
 
 #include "logorc.h"
-#include "logox.h"
 #include "logocore.h"
 #include "vector.h"
 #include "threed.h"

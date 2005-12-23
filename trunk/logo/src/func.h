@@ -586,7 +586,7 @@ extern NODE *lpoke(NODE *arg);
 
 extern NODE *lstatus(NODE *arg);
 extern NODE *lnostatus(NODE *arg);
-extern void zoom_helper(NUMBER temp_zoom);
+extern void zoom_helper(FLONUM temp_zoom);
 extern void UpdateZoomControlFlag();
 extern NODE *lzoom(NODE *arg);
 extern NODE *lmci(NODE *arg);

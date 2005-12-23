@@ -707,8 +707,8 @@ void TScreenWindow::EvSize(UINT arg1, TSize &arg2)
       Yr = 0;
       }
 
-   NUMBER XRatio;
-   NUMBER YRatio;
+   FLONUM XRatio;
+   FLONUM YRatio;
 
    if (Scroller->XRange <= 0)
       {
@@ -716,7 +716,7 @@ void TScreenWindow::EvSize(UINT arg1, TSize &arg2)
       }
    else
       {
-      XRatio = (NUMBER) Scroller->XPos / (NUMBER) Scroller->XRange;
+      XRatio = (FLONUM) Scroller->XPos / (FLONUM) Scroller->XRange;
       }
 
    if (Scroller->YRange <= 0)
@@ -725,7 +725,7 @@ void TScreenWindow::EvSize(UINT arg1, TSize &arg2)
       }
    else
       {
-      YRatio = (NUMBER) Scroller->YPos / (NUMBER) Scroller->YRange;
+      YRatio = (FLONUM) Scroller->YPos / (FLONUM) Scroller->YRange;
       }
 
    Scroller->SetRange(Xr, Yr);

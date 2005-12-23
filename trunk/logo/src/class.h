@@ -539,7 +539,7 @@ extern HPALETTE ThePalette;
 
 extern LPLOGPALETTE MyLogPalette;
 
-extern NUMBER the_zoom;
+extern FLONUM the_zoom;
 extern Point  g_OldPos;
 
 extern NODE *current_line;

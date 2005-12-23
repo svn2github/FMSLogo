@@ -935,7 +935,7 @@ void UpdateZoomControlFlag()
 // to something reasonable so that what was basically in the center of the
 // screen still is. It also readjusts the ranges on the scrollers.
 
-void zoom_helper(NUMBER temp_zoom)
+void zoom_helper(FLONUM temp_zoom)
    {
 
    if (the_zoom != temp_zoom)
@@ -954,8 +954,8 @@ void zoom_helper(NUMBER temp_zoom)
       if (Yr < 0) Yr = 0;
 
       // find out where we are (percentage of pos/range for x and y)
-      NUMBER XRatio;
-      NUMBER YRatio;
+      FLONUM XRatio;
+      FLONUM YRatio;
 
       if (MainWindowx->ScreenWindow->Scroller->XRange <= 0)
          {
@@ -963,8 +963,8 @@ void zoom_helper(NUMBER temp_zoom)
          }
       else
          {
-         XRatio = (NUMBER) MainWindowx->ScreenWindow->Scroller->XPos /
-                  (NUMBER) MainWindowx->ScreenWindow->Scroller->XRange;
+         XRatio = (FLONUM) MainWindowx->ScreenWindow->Scroller->XPos /
+                  (FLONUM) MainWindowx->ScreenWindow->Scroller->XRange;
          }
 
       if (MainWindowx->ScreenWindow->Scroller->YRange <= 0)
@@ -973,8 +973,8 @@ void zoom_helper(NUMBER temp_zoom)
          }
       else
          {
-         YRatio = (NUMBER) MainWindowx->ScreenWindow->Scroller->YPos /
-                  (NUMBER) MainWindowx->ScreenWindow->Scroller->YRange;
+         YRatio = (FLONUM) MainWindowx->ScreenWindow->Scroller->YPos /
+                  (FLONUM) MainWindowx->ScreenWindow->Scroller->YRange;
          }
 
       // set the new ranges
@@ -999,14 +999,14 @@ NODE *lzoom(NODE *arg)
    {
    ASSERT_TURTLE_INVARIANT
 
-   NUMBER temp_zoom;
+   FLONUM temp_zoom;
 
    // get arg
    NODE *val = numeric_arg(arg);
 
    if (nodetype(val) == INT)
       {
-      temp_zoom = (NUMBER) getint(val);
+      temp_zoom = (FLONUM) getint(val);
       }
    else
       {
@@ -1581,8 +1581,8 @@ NODE *lbitfit(NODE *arg)
    {
    ASSERT_TURTLE_INVARIANT
 
-   NUMBER FitWidth = getint(pos_int_arg(arg));
-   NUMBER FitHeight = getint(pos_int_arg(cdr(arg)));
+   FLONUM FitWidth = getint(pos_int_arg(arg));
+   FLONUM FitHeight = getint(pos_int_arg(cdr(arg)));
 
    if (NOT_THROWING)
       {
