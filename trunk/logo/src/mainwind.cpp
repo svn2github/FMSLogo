@@ -1686,7 +1686,6 @@ void TMainFrame::CMBitmapPrinterArea()
 
       if (TMyPrinterAreaWindow(this, "PrinterArea").Execute() == IDOK)
          {
-         char szWinLocStr[WININISIZ];
 
          if ((TPrinterAreaXLow >= TPrinterAreaXHigh) || (TPrinterAreaYLow >= TPrinterAreaYHigh))
             {
@@ -1706,16 +1705,11 @@ void TMainFrame::CMBitmapPrinterArea()
             PrinterAreaPixels      = TPrinterAreaPixels;
             IsPrinterSettingCustom = IsTPrinterSettingCustom;
 
-            sprintf(szWinLocStr, "%d", PrinterAreaXLow);
-            WritePrivateProfileString("Printer", "XLow", szWinLocStr, "LOGO.INI");
-            sprintf(szWinLocStr, "%d", PrinterAreaXHigh);
-            WritePrivateProfileString("Printer", "XHigh", szWinLocStr, "LOGO.INI");
-            sprintf(szWinLocStr, "%d", PrinterAreaYLow);
-            WritePrivateProfileString("Printer", "YLow", szWinLocStr, "LOGO.INI");
-            sprintf(szWinLocStr, "%d", PrinterAreaYHigh);
-            WritePrivateProfileString("Printer", "YHigh", szWinLocStr, "LOGO.INI");
-            sprintf(szWinLocStr, "%d", PrinterAreaPixels);
-            WritePrivateProfileString("Printer", "Pixels", szWinLocStr, "LOGO.INI");
+            SetPrivateProfileInt("Printer", "XLow",   PrinterAreaXLow);
+            SetPrivateProfileInt("Printer", "XHigh",  PrinterAreaXHigh);
+            SetPrivateProfileInt("Printer", "YLow",   PrinterAreaYLow);
+            SetPrivateProfileInt("Printer", "YHigh",  PrinterAreaYHigh);
+            SetPrivateProfileInt("Printer", "Pixels", PrinterAreaPixels);
             }
          }
       } while (!bAok);
