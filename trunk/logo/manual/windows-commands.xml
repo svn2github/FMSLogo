@@ -216,4 +216,10 @@ When you press one of these real radio buttons, it gets pushed in, the tuner cha
       &command-radiobuttonget;
    </section>
 
+   <section id="debug-commands">
+      <title>Debug Commands</title>
+
+      &command-debugwindows;
+   </section>
+
 </chapter>

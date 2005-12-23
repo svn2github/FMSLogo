@@ -497,6 +497,8 @@
   <!ENTITY command-radiobuttonenable     SYSTEM "command-radiobuttonenable.xml">
   <!ENTITY command-radiobuttonget        SYSTEM "command-radiobuttonget.xml">
   <!ENTITY command-radiobuttonset        SYSTEM "command-radiobuttonset.xml">
+
+  <!ENTITY command-debugwindows          SYSTEM "command-debugwindows.xml">
 ]>
 
 <book id="MSWLogo Help">
