@@ -1335,7 +1335,7 @@ NODE *lsetclip(NODE *args)
 
 const double epsilon=1.0e-12;
 
-/* rotations such that heading has no dependedncies */
+/* rotations such that heading has no dependencies */
 
 FLONUM rotation_z()
    {
@@ -1356,7 +1356,14 @@ FLONUM rotation_z()
       result = atan2(-m21, m22) / degrad;
       }
 
-   if (result < 0.0) return result + 360.0; else return result;
+   if (result < 0.0) 
+      {
+      return result + 360.0; 
+      }
+   else 
+      {
+      return result;
+      }
    }
 
 FLONUM rotation_y()
@@ -1376,7 +1383,14 @@ FLONUM rotation_y()
       result = atan2(m13, m33) / degrad;
       }
 
-   if (result < 0.0) return result + 360.0; else return result;
+   if (result < 0.0) 
+      {
+      return result + 360.0;
+      }
+   else 
+      {
+      return result;
+      }
    }
 
 FLONUM rotation_x()
@@ -1404,31 +1418,50 @@ FLONUM rotation_x()
       result = atan2(-m23, a) / degrad;
       }
 
-   if (result < 0.0) return result + 360.0; else return result;
+   if (result < 0.0)
+      {
+      return result + 360.0;
+      }
+   else 
+      {
+      return result;
+      }
    }
 
 NODE *lheading(NODE *)
    {
    if (current_mode == perspectivemode)
-      return (make_floatnode(rotation_z()));
+      {
+      return make_floatnode(rotation_z());
+      }
    else
-      return (make_floatnode(g_Turtles[turtle_which].Heading));
+      {
+      return make_floatnode(g_Turtles[turtle_which].Heading);
+      }
    }
 
 NODE *lroll(NODE *)
    {
    if (current_mode == perspectivemode)
-      return (make_floatnode(rotation_y()));
+      {
+      return make_floatnode(rotation_y());
+      }
    else
-      return (make_floatnode(0.0));
+      {
+      return make_floatnode(0.0);
+      }
    }
 
 NODE *lpitch(NODE *)
    {
    if (current_mode == perspectivemode)
-      return (make_floatnode(rotation_x()));
+      {
+      return make_floatnode(rotation_x());
+      }
    else
-      return (make_floatnode(0.0));
+      {
+      return make_floatnode(0.0);
+      }
    }
 
 NODE *vec_arg_helper(NODE *args, bool floatok)
@@ -1558,32 +1591,32 @@ NODE *vec_4_arg_helper(NODE *args, bool floatok)
 
 NODE *vector_arg(NODE *args)
    {
-   return vec_arg_helper(args, TRUE);
+   return vec_arg_helper(args, true);
    }
 
 NODE *vector_3_arg(NODE *args)
    {
-   return vec_3_arg_helper(args, TRUE);
+   return vec_3_arg_helper(args, true);
    }
 
 NODE *vector_4_arg(NODE *args)
    {
-   return vec_4_arg_helper(args, TRUE);
+   return vec_4_arg_helper(args, true);
    }
 
 NODE *pos_int_vector_arg(NODE *args)
    {
-   return vec_arg_helper(args, FALSE);
+   return vec_arg_helper(args, false);
    }
 
 NODE *pos_int_vector_3_arg(NODE *args)
    {
-   return vec_3_arg_helper(args, FALSE);
+   return vec_3_arg_helper(args, false);
    }
 
 NODE *pos_int_vector_4_arg(NODE *args)
    {
-   return vec_4_arg_helper(args, FALSE);
+   return vec_4_arg_helper(args, false);
    }
 
 
@@ -1598,8 +1631,15 @@ NODE *ltowards(NODE *args)
       FLONUM x = numeric_node_to_flonum(xnode);
       FLONUM y = numeric_node_to_flonum(ynode);
 
-      return make_floatnode(towards_helper(x, y, g_Turtles[turtle_which].Position.x, g_Turtles[turtle_which].Position.y));
+      FLONUM heading = towards_helper(
+            x, 
+            y, 
+            g_Turtles[turtle_which].Position.x, 
+            g_Turtles[turtle_which].Position.y);
+
+      return make_floatnode(heading);
       }
+
    return Unbound;
    }
 
@@ -1750,7 +1790,6 @@ void cs_helper(bool centerp, bool clearp)
 NODE *lclearscreen(NODE *)
    {
    cs_helper(true, true);
-//   InvalidateControls();
    return Unbound;
    }
 
@@ -1952,7 +1991,9 @@ NODE *lperspective(NODE *)
    {
    draw_turtle(false);
    current_mode = perspectivemode;
-   g_Turtles[TURTLES - 3].Position.x = 400.0;       // From
+
+   // From
+   g_Turtles[TURTLES - 3].Position.x = 400.0;
    g_Turtles[TURTLES - 3].Position.y = 400.0;
    g_Turtles[TURTLES - 3].Position.z = 600.0;
    g_Turtles[TURTLES - 3].Heading = 0.0;
@@ -1966,7 +2007,8 @@ NODE *lperspective(NODE *)
    g_Turtles[TURTLES - 3].Matrix.e32 = 0.0;
    g_Turtles[TURTLES - 3].Matrix.e33 = 1.0;
 
-   g_Turtles[TURTLES - 2].Position.x = 0.0;         // At
+   // At
+   g_Turtles[TURTLES - 2].Position.x = 0.0;
    g_Turtles[TURTLES - 2].Position.y = 0.0;
    g_Turtles[TURTLES - 2].Position.z = 0.0;
    g_Turtles[TURTLES - 2].Heading = 0.0;
@@ -1980,7 +2022,8 @@ NODE *lperspective(NODE *)
    g_Turtles[TURTLES - 2].Matrix.e32 = 0.0;
    g_Turtles[TURTLES - 2].Matrix.e33 = 1.0;
 
-   g_Turtles[TURTLES - 1].Position.x = 0.0;             // Light
+   // Light
+   g_Turtles[TURTLES - 1].Position.x = 0.0;
    g_Turtles[TURTLES - 1].Position.y = 0.0;
    g_Turtles[TURTLES - 1].Position.z = 1000.0;
    g_Turtles[TURTLES - 1].Heading = 0.0;
