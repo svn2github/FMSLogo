@@ -88,6 +88,8 @@ extern NODE *lcopydef(NODE *args);
 /* File GRAPHICS.CPP: */
 
 extern FIXNUM g_round(FLONUM n);
+extern FLONUM numeric_node_to_flonum(NODE* numeric_node);
+extern FIXNUM numeric_node_to_fixnum(NODE* numeric_node);
 extern NODE *lscrunch(NODE *arg);
 extern FLONUM cut_error(FLONUM n);
 extern void draw_turtle(bool erase);

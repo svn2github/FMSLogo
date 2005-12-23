@@ -364,8 +364,7 @@ FIXNUM g_round(FLONUM n)
    }
 
 
-static
-FLONUM 
+FLONUM
 numeric_node_to_flonum(
    NODE * numeric_node // TODO: const
 )
@@ -384,7 +383,7 @@ numeric_node_to_flonum(
    return number;
    }
 
-static
+
 FIXNUM 
 numeric_node_to_fixnum(
    NODE * numeric_node // TODO: const
