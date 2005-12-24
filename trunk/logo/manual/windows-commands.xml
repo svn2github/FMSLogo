@@ -256,4 +256,76 @@ MSWLogo has some pre-defined modal dialog boxes that you can use in your Logo pr
       &command-windowfileedit;
    </section>
 
+   <section id="windows-example">
+      <title>Example Code for Constructing a Window</title>
+
+<para>
+Below is a code listing that contructs a simple window that draws some polygons on the screen.
+Unlike a traditional program, the logic does not start and the beginning and run line-by-line until it reaches the end.
+Instead, the logic is broken into small chunks and is executed in response to "events" such as mouse clicks.
+</para>
+
+<para>
+The example can create both a modal and a modeless window.
+If it uses a modeless window, then SETUP can be called after the WINDOWCREATE returns.
+If it uses a modal window, then SETUP is called during the DIALOGCREATE because DIALOGCREATE does not return until the window is closed.
+</para>
+
+<programlisting>
+TO WIN
+  ; For modeless example use this line
+  WINDOWCREATE "root "d1 [Draw Pictures] 0 0 150 110 [] setup  ; Create main window
+
+  ; For modal example use this line
+  ; DIALOGCREATE "root "d1 [Draw Pictures] 0 0 150 110 [setup] ; Create main window
+END
+
+TO SETUP
+  STATICCREATE "d1 "st4 [Select Shape] 5 10 50 10 ; Label the List box
+
+  LISTBOXCREATE "d1 "l1 5 25 80 40 ; Create List box with 3 Items owned by d1
+  LISTBOXADDSTRING "l1 "SQUARE
+  LISTBOXADDSTRING "l1 "TRIANGLE
+  LISTBOXADDSTRING "l1 "HEXAGON
+
+  STATICCREATE "d1 "st11 [Red] 100 10 40 10 ; Label the scrollbar
+
+  SCROLLBARCREATE "d1 "s1 100 25 10 50 [MYRED] ; Create scroll bar, call MYRED when clicked
+  SCROLLBARSET "s1 1 255 125 MYRED             ; Init
+
+  BUTTONCREATE "d1 "b1 "END 5 80 40 10 [MYEND]          ; Create button to call myend
+  BUTTONCREATE "d1 "b3 "CLEAR 55 80 35 10 [CLEARSCREEN] ; Create button to clear 
+  BUTTONCREATE "d1 "b2 "DRAW 100 80 35 10 [drawthing]   ; Create button to call drawthing
+
+END
+
+; execute this routine when DRAW button pushed
+TO DRAWTHING
+  SETPENCOLOR (LIST SCROLLBARGET "s1 0 0)  ; Ask scrollbar what to setpencolor to
+
+  ; Draw appropriate shape according to the listbox
+
+  IF EQUALP [HEXAGON]  LISTBOXGETSELECT "l1 [REPEAT 6 [FORWARD 100 RIGHT 60]]
+  IF EQUALP [SQUARE]   LISTBOXGETSELECT "l1 [REPEAT 4 [FORWARD 100 RIGHT 90]]
+  IF EQUALP [TRIANGLE] LISTBOXGETSELECT "l1 [REPEAT 3 [FORWARD 100 RIGHT 120]]
+END
+
+; execute this routine when END button is pushed
+TO MYEND
+  ; For modeless example use this
+  WINDOWDELETE "d1
+
+  ; For modal example use this
+  ; DIALOGDELETE "d1
+END
+
+; execute this routine when RED scroll bar is adjusted
+TO MYRED
+  STATICUPDATE "st11 SENTENCE [Red] SCROLLBARGET "s1 ; Update static label of position
+END
+</programlisting>
+
+   </section>
+
+
 </chapter>
