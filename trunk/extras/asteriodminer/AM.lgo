@@ -493,11 +493,11 @@ to drawShip :x :y :d :action
     setpos list :x :y
     seth :d
     fd :shipRad
-    make "pos1 pos
+
     bk :shipRad
     rt 67.5
     fd :shipRad3
-    make "pos2 pos
+
     pd
     fd :shipRad3 * 2
     bk 1 * :scale
