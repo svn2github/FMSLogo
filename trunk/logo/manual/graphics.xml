@@ -175,7 +175,7 @@ Each time you enter <link linkend="command-perspective">PERSPECTIVE</link> mode 
    </section>
 
    <section>
-       <title>Turtle Motion Queries</title>
+       <title>Turtle and Window Control</title>
         &command-showturtle;
         &command-hideturtle;
         &command-clean;
@@ -200,6 +200,7 @@ Each time you enter <link linkend="command-perspective">PERSPECTIVE</link> mode 
         &command-scrollx;
         &command-scrolly;
         &command-setfocus;
+        &command-getfocus;
         &command-icon;
         &command-unicon;
         &command-windowset;
