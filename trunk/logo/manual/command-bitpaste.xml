@@ -1,0 +1,40 @@
+<section id="command-bitpaste">
+    <title>BITPASTE</title>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>BITPASTE</command></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+This command "pastes" back the image that was "cut" (<link linkend="bitcut">BITCUT</link>) into the current <parameter>index</parameter> (or to the clipboard, if <link linkend="command-bitindex">BITINDEX</link> is 0).
+MSWLogo "pastes" to the location of the turtle, with the turtle being the lower left corner.
+See also <link linkend="command-setbitindex">SETBITINDEX</link> and <link linkend="command-setbitmode">SETBITMODE</link>.
+</para>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Example</term>
+<listitem>
+
+<programlisting><userinput>SETPENSIZE [2 2]
+REPEAT 72 [REPEAT 4 [FORWARD 100 RIGHT 90] SETPENCOLOR (LIST REPCOUNT*3 0 0) RIGHT 5]
+PENUP
+SETXY -50 -50
+BITCUT 100 100
+CLEARSCREEN
+PENUP
+REPEAT 36 [FORWARD 150 BITPASTE BACK 150 RIGHT 10]</userinput>
+</programlisting>
+
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</section>

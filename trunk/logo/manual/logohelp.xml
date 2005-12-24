@@ -21,6 +21,7 @@
   <!ENTITY help-commands             SYSTEM "help-commands.xml">
   <!ENTITY directory-commands        SYSTEM "directory-commands.xml">
   <!ENTITY windows-commands          SYSTEM "windows-commands.xml">
+  <!ENTITY bitmap-commands           SYSTEM "bitmap-commands.xml">
 
   <!ENTITY command-.setbf       SYSTEM "command-.setbf.xml">
   <!ENTITY command-.setfirst    SYSTEM "command-.setfirst.xml">
@@ -507,6 +508,27 @@
   <!ENTITY command-dialogfileopen        SYSTEM "command-dialogfileopen.xml">
   <!ENTITY command-dialogfilesave        SYSTEM "command-dialogfilesave.xml">
   <!ENTITY command-windowfileedit        SYSTEM "command-windowfileedit.xml">
+
+  <!ENTITY command-bitcut                SYSTEM "command-bitcut.xml">
+  <!ENTITY command-bitcopy               SYSTEM "command-bitcopy.xml">
+  <!ENTITY command-bitpaste              SYSTEM "command-bitpaste.xml">
+  <!ENTITY command-bitpastetoindex       SYSTEM "command-bitpastetoindex.xml">
+  <!ENTITY command-bitfit                SYSTEM "command-bitfit.xml">
+  <!ENTITY command-setbitindex           SYSTEM "command-setbitindex.xml">
+  <!ENTITY command-bitindex              SYSTEM "command-bitindex.xml">
+  <!ENTITY command-setbitindex           SYSTEM "command-setbitindex.xml">
+  <!ENTITY command-bitindex              SYSTEM "command-bitindex.xml">
+  <!ENTITY command-bitmode               SYSTEM "command-bitmode.xml">
+  <!ENTITY command-bitblock              SYSTEM "command-bitblock.xml">
+  <!ENTITY command-bitload               SYSTEM "command-bitload.xml">
+  <!ENTITY command-bitsave               SYSTEM "command-bitsave.xml">
+  <!ENTITY command-bitsize               SYSTEM "command-bitsize.xml">
+  <!ENTITY command-bitloadsize           SYSTEM "command-bitloadsize.xml">
+  <!ENTITY command-gifload               SYSTEM "command-gifload.xml">
+  <!ENTITY command-gifsave               SYSTEM "command-gifsave.xml">
+  <!ENTITY command-gifsize               SYSTEM "command-gifsize.xml">
+  <!ENTITY command-setactivearea         SYSTEM "command-setactivearea.xml">
+  <!ENTITY command-activearea            SYSTEM "command-activearea.xml">
 ]>
 
 <book id="MSWLogo Help">
@@ -553,6 +575,7 @@
   &help-commands;
   &directory-commands;
   &windows-commands;
+  &bitmap-commands;
 
 </book>
 
