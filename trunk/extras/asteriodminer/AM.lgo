@@ -208,9 +208,9 @@ to displayInstructions
   setpos list 0 - ( :textLength / 2 ) ( :displayHeight/2 - 30*:textScale )
   drawText [ Instructions ] "draw
   make "ty :displayHeight/2 - 40*:textScale
-  make "tx 0-:displayWidth/2 + 102*:textScale
-  make "th 0-:displayWidth/2 + 66*:textScale  ;heading
-  make "ti 0-:displayWidth/2 + 150*:textScale  ;indent
+  make "tx -:displayWidth/2 + 102*:textScale
+  make "th -:displayWidth/2 + 66*:textScale  ;heading
+  make "ti -:displayWidth/2 + 150*:textScale  ;indent
   make "line 32*:textScale
   setpos( list :th :ty - :line*1 ) drawText [Playing the game:] "draw
   setpos( list :ti :ty - :line*2 ) drawText [Navigate your mining ship through the asteroid field and] "draw
@@ -987,7 +987,7 @@ to initMain
 ;BITMAPS
   setturtle 0
   setbitindex 1
-  make "pos1 ( list 0 0-:displayHeight/2+10*:scale )
+  make "pos1 ( list 0 -:displayHeight/2+10*:scale )
   setpos :pos1
   bitload "AM_bitmaps.bmp wait 1
   bitcut 42 42
@@ -1037,16 +1037,16 @@ to initMain
 ;BUTTONS
   make "numButtons 10
   make "buttonList array :numButtons
-  setitem 1 :buttonList ( list [Menu] "true (list 0 0-:displayHeight/2+4 ) )
-  setitem 2 :buttonList ( list [Menu Off] "false (list 0 0-:displayHeight/2+4 ) )
-  setitem 3 :buttonList ( list [Play] "false (list -90*:scale 0-:displayHeight/2+4 ) )
-  setitem 4 :buttonList ( list [Instructions] "false (list -197*:scale 0-:displayHeight/2+4 ) )
-  setitem 5 :buttonList ( list [Quit] "false (list 90*:scale 0-:displayHeight/2+4 ) )
-  setitem 6 :buttonList ( list [High Scores] "false (list 192*:scale 0-:displayHeight/2+4 ) )
-  setitem 7 :buttonList ( list [Done] "false (list 0 0-:displayHeight/2+4 ) )
-  setitem 8 :buttonList ( list [Done] "false (list 0 0-:displayHeight/2+4 ) )
-  setitem 9 :buttonList ( list [Continue] "false (list 0 0+8*:textScale ) )
-  setitem 10 :buttonList ( list [Reset] "false (list 0 0-42*:textScale ) )
+  setitem 1  :buttonList (list [Menu]         "true  (list 0 -:displayHeight/2+4 ))
+  setitem 2  :buttonList (list [Menu Off]     "false (list 0 -:displayHeight/2+4 ))
+  setitem 3  :buttonList (list [Play]         "false (list -90*:scale -:displayHeight/2+4 ))
+  setitem 4  :buttonList (list [Instructions] "false (list -197*:scale -:displayHeight/2+4 ))
+  setitem 5  :buttonList (list [Quit]         "false (list 90*:scale -:displayHeight/2+4 ))
+  setitem 6  :buttonList (list [High Scores]  "false (list 192*:scale -:displayHeight/2+4 ))
+  setitem 7  :buttonList (list [Done]         "false (list 0 -:displayHeight/2+4 ))
+  setitem 8  :buttonList (list [Done]         "false (list 0 -:displayHeight/2+4 ))
+  setitem 9  :buttonList (list [Continue]     "false (list 0 8*:textScale ))
+  setitem 10 :buttonList (list [Reset]        "false (list 0 -42*:textScale ))
 
 ;HIGH SCORE FILE CHECK
   make "filelist files
@@ -1499,7 +1499,7 @@ to pauseGame
   make "keepOff "false
   make "pauseNow "false
   setturtle 1
-  setpos list 0-57*:scale 0-43*:scale
+  setpos list -57*:scale -43*:scale
   setbitindex 20
   sbitcut round(110*:scale) round(90*:scale)
 
@@ -1518,7 +1518,7 @@ to pauseGame
   buttonOn 10 "false
 
   setturtle 1
-  setpos list 0-57*:scale 0-43*:scale
+  setpos list -57*:scale -43*:scale
   setbitindex 20
   bitpaste
   wait 10
