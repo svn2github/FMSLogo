@@ -1,4 +1,21 @@
 #! /usr/bin/perl -W
+###############################################################################
+# Searches that the manual for style violations:
+#
+# * Files of the form "command-<word>.xml" document the command <word>
+# * All uppercase words are documented commands.
+# * All commands in <link> tags have the expected linkend attribute.
+# * No abbreviations of commands are allowed.
+# * Emphasis is not given with upper-case.
+#
+# Missing checks:
+# * Spelling is correct.
+# * Examples include at least one instance of the command that they document.
+# * Only the first reference to a command in any section is hyperlinked.
+# * All instances of Logo and MSWLogo are correct.
+#
+###############################################################################
+
 
 use strict;
 use IO::File;
