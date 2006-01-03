@@ -249,10 +249,10 @@ NODE *reader(FILE *strm, const char *prompt)
             into_line(c);
             }
 
-         if (*prompt && (c & 0137) == *lookfor)
+         if (*prompt && (c & 0x5F) == *lookfor)
             {
             lookfor++;
-            if (*lookfor == 0)
+            if (*lookfor == '\0')
                {
                err_logo(DEEPEND, NIL);
                break;
@@ -374,23 +374,27 @@ NODE *reader(FILE *strm, const char *prompt)
       }
 
    NODE * ret = make_strnode(p_line, (int) strlen(p_line), this_type, strnzcpy);
-   return (ret);
+   return ret;
    }
 
 NODE *list_to_array(NODE *list)
    {
-   NODE *np = list, *result;
-   int len = 0, i;
+   int len = 0;
+   for (NODE * np = list; np; np = cdr(np)) 
+      {
+      len++;
+      }
 
-   for (; np; np = cdr(np)) len++;
-
-   result = make_array(len);
+   NODE * result = make_array(len);
    setarrorg(result, 1);
 
-   for (i = 0, np = list; np; np = cdr(np))
+   int i = 0;
+   for (NODE * np = list; np; np = cdr(np))
+      {
       (getarrptr(result))[i++] = vref(car(np));
+      }
 
-   return (result);
+   return result;
    }
 
 #define parens(ch)      (ch == '(' || ch == ')' || ch == ';')
