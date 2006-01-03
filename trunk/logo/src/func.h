@@ -451,7 +451,6 @@ extern void unblock_input(void);
 
 /* File LISTS.CPP: */
 
-extern NODE *bfable_arg(NODE *args);
 extern NODE *list_arg(NODE *args);
 extern NODE *lbutfirst(NODE *args);
 extern NODE *lbutlast(NODE *args);
@@ -461,7 +460,6 @@ extern NODE *lbfs(NODE *args);
 extern NODE *llast(NODE *args);
 extern NODE *llist(NODE *args);
 extern NODE *lemptyp(NODE *arg);
-extern NODE *char_arg(NODE *args);
 extern NODE *lascii(NODE *args);
 extern NODE *lrawascii(NODE *args);
 extern NODE *lbackslashedp(NODE *args);
@@ -476,15 +474,12 @@ extern NODE *lwordp(NODE *arg);
 extern NODE *llistp(NODE *arg);
 extern NODE *lnumberp(NODE *arg);
 extern NODE *larrayp(NODE *arg);
-extern NODE *memberp_help(NODE *args, bool notp, bool substr);
 extern NODE *lmemberp(NODE *args);
 extern NODE *lsubstringp(NODE *args);
 extern NODE *lmember(NODE *args);
 extern NODE *integer_arg(NODE *args);
 extern FIXNUM int_arg(NODE *args);
 extern NODE *litem(NODE *args);
-extern int circular(NODE *arr, NODE *newk);
-extern NODE *setitem_helper(NODE *args, bool safe);
 extern NODE *lsetitem(NODE *args);
 extern NODE *l_setitem(NODE *args);
 extern NODE *larray(NODE *args);
