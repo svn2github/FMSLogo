@@ -108,7 +108,9 @@ foreach my $filename (<command-*.xml>) {
       $propername = $1;
 
       if ($filename ne "command-" . lc $propername . ".xml" and
-          (not defined $Exceptions{$filename} or $filename ne $Exceptions{$filename}{'propername'})) {
+          (not $Exceptions{$filename} or
+           not $Exceptions{$filename}{'propername'} or
+           $propername ne $Exceptions{$filename}{'propername'})) {
         LogError($filename, $linenumber, "contains command for $propername");
       }
 
