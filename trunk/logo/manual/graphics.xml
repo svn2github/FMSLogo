@@ -528,7 +528,7 @@ Here are the new commands:
 
 <para>
 The PEN color when drawing 3D surfaces is the color of the surface.
-If you drew a BOX in 3D (6 Polygons) that all were drawn the same color, all you'd see is a FILLed octagon looking thing.
+If you drew a box in 3D (6 Polygons) that all were drawn the same color, all you'd see is a FILLed octagon looking thing.
 Color is affected by the angle of the surface between your eye (turtle -1) and the light source (turtle -3).
 </para>
 
