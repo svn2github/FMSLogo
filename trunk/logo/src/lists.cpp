@@ -21,6 +21,7 @@
 
 #include "allwind.h"
 
+static
 NODE *bfable_arg(NODE *args)
    {
    NODE *arg = car(args);
@@ -245,11 +246,11 @@ NODE *lemptyp(NODE *arg)
    return torf(car(arg) == NIL || car(arg) == Null_Word);
    }
 
+static
 NODE *char_arg(NODE *args)
    {
-   NODE *arg = car(args), *val;
-
-   val = cnv_node_to_strnode(arg);
+   NODE * arg = car(args);
+   NODE * val = cnv_node_to_strnode(arg);
    while ((val == Unbound || getstrlen(val) != 1) && NOT_THROWING)
       {
       gcref(val);
@@ -258,18 +259,17 @@ NODE *char_arg(NODE *args)
       val = cnv_node_to_strnode(arg);
       }
    setcar(args, val);
-   return (val);
+   return val;
    }
 
 NODE *lascii(NODE *args)
    {
-   FIXNUM i;
-   NODE *val = Unbound, *arg;
+   NODE * val = Unbound;
 
-   arg = char_arg(args);
+   NODE * arg = char_arg(args);
    if (NOT_THROWING)
       {
-      i = (FIXNUM) clearparity(*getstrptr(arg)) & 0377;
+      FIXNUM i = (FIXNUM) clearparity(*getstrptr(arg)) & 0xFF;
       val = make_intnode(i);
       }
    return (val);
@@ -635,12 +635,12 @@ NODE *lmember(NODE *args)
 
 NODE *integer_arg(NODE *args)
    {
-   NODE *arg = car(args), *val;
+   NODE *arg = car(args);
+
+   NODE * val = cnv_node_to_numnode(arg);
+
    FIXNUM i;
    FLONUM f;
-
-   val = cnv_node_to_numnode(arg);
-
    while ((nodetype(val) != INT) && NOT_THROWING)
       {
       if (nodetype(val) == FLOAT && fmod((f = getfloat(val)), 1.0) == 0.0 && f >= -(FLONUM) MAXINT && f < (FLONUM) MAXINT)
@@ -657,7 +657,10 @@ NODE *integer_arg(NODE *args)
       }
 
    setcar(args, val);
-   if (nodetype(val) == INT) return (val);
+   if (nodetype(val) == INT) 
+      {
+      return val;
+      }
 
    return Unbound;
    }
@@ -672,11 +675,8 @@ FIXNUM int_arg(NODE *args)
 
 NODE *litem(NODE *args)
    {
-   int i;
-   NODE *obj, *val;
-
-   val = integer_arg(args);
-   obj = cadr(args);
+   NODE * val = integer_arg(args);
+   NODE * obj = cadr(args);
    while ((obj == NIL || obj == Null_Word) && NOT_THROWING)
       {
       setcar(cdr(args), err_logo(BAD_DATA, obj));
@@ -684,7 +684,7 @@ NODE *litem(NODE *args)
       }
    if (NOT_THROWING)
       {
-      i = getint(val);
+      int i = getint(val);
       if (is_list(obj))
          {
          if (i <= 0)
@@ -737,49 +737,64 @@ NODE *litem(NODE *args)
    return Unbound;
    }
 
-int circular(NODE *arr, NODE *newx)
+static
+bool circular(NODE *arr, NODE *newx)
    {
-   if (newx == NIL) return (0);
+   if (newx == NIL) 
+      {
+      return false;
+      }
    else if (nodetype(newx) == ARRAY)
       {
       int i = getarrdim(newx);
       NODE **p = getarrptr(newx);
 
-      if (newx == arr) return (1);
+      if (newx == arr) 
+         {
+         return true;
+         }
       while (--i >= 0)
          {
-         if (circular(arr, *p++)) return (1);
+         if (circular(arr, *p++)) 
+            {
+            return true;
+            }
          }
-      return (0);
+      return false;
       }
    else if (is_list(newx))
       {
       while (newx != NIL)
          {
-         if (circular(arr, car(newx))) return (1);
+         if (circular(arr, car(newx)))
+            {
+            return true;
+            }
          newx = cdr(newx);
          }
-      return (0);
+      return false;
       }
-   else return (0);
+   else 
+      {
+      return false;
+      }
    }
 
+static
 NODE *setitem_helper(NODE *args, bool safe)
    {
-   int i;
-   NODE *obj, *val, *cont;
-
-   val = integer_arg(args);
-   obj = cadr(args);
+   NODE * val = integer_arg(args);
+   NODE * obj = cadr(args);
    while (nodetype(obj) != ARRAY && NOT_THROWING)
       {
       setcar(cdr(args), err_logo(BAD_DATA, obj));
       obj = cadr(args);
       }
-   cont = car(cddr(args));
+
+   NODE * cont = car(cddr(args));
    if (NOT_THROWING)
       {
-      i = getint(val);
+      int i = getint(val);
       if (safe)
          {
          while (circular(obj, cont) && NOT_THROWING)
@@ -806,26 +821,31 @@ NODE *setitem_helper(NODE *args, bool safe)
 
 NODE *lsetitem(NODE *args)
    {
-   return setitem_helper(args, TRUE);
+   return setitem_helper(args, true);
    }
 
 NODE *l_setitem(NODE *args)
    {
-   return setitem_helper(args, FALSE);
+   return setitem_helper(args, false);
    }
 
 NODE *larray(NODE *args)
    {
-   NODE *arg;
-   int d, o;
+   int o;
 
-   arg = pos_int_arg(args);
-   if (cdr(args) != NIL) o = int_arg(cdr(args));
-   else o = 1;
+   NODE * arg = pos_int_arg(args);
+   if (cdr(args) != NIL)
+      {
+      o = int_arg(cdr(args));
+      }
+   else 
+      {
+      o = 1;
+      }
 
    if (NOT_THROWING)
       {
-      d = getint(arg);
+      int d = getint(arg);
       arg = make_array(d);
       setarrorg(arg, o);
       return arg;
@@ -835,9 +855,8 @@ NODE *larray(NODE *args)
 
 FLONUM float_arg(NODE *args)
    {
-   NODE *arg = car(args), *val;
-
-   val = cnv_node_to_numnode(arg);
+   NODE *arg = car(args);
+   NODE *val = cnv_node_to_numnode(arg);
    while (!is_number(val) && NOT_THROWING)
       {
       gcref(val);
@@ -909,10 +928,8 @@ NODE *l_setfirst(NODE *args)
 
 NODE *l_setbf(NODE *args)
    {
-   NODE *list, *newval;
-
-   list = car(args);
-   newval = cadr(args);
+   NODE * list = car(args);
+   NODE * newval = cadr(args);
    while (NOT_THROWING && (list == NIL || !is_list(list)))
       {
       setcar(args, err_logo(BAD_DATA, list));
