@@ -13,6 +13,7 @@ $Exceptions{'command-.eq.xml'}{'allcaps'}{'WARNING'}        = 1;
 
 $Exceptions{'command-.macro.xml'}{'allcaps'}{'MY.REPEAT'}   = 1;
 $Exceptions{'command-.macro.xml'}{'allcaps'}{'REPEAT.DONE'} = 1;
+$Exceptions{'command-.macro.xml'}{'allcaps'}{'EXAMPLE'}     = 1;
 
 $Exceptions{'command-.setbf.xml'}{'allcaps'}{'WARNING'}     = 1;
 
