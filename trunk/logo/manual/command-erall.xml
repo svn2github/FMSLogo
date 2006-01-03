@@ -18,8 +18,8 @@ Erases all unburied procedures, variables, and property lists from the workspace
 
 <para>
 By default, ERALL will warn you about what you are about to do.
-ERALL inputs an optional parameter that controls if this warning should be displayed.
-If you pass in FALSE, the warning is supressed.
+ERALL has an optional input that controls if this warning should be displayed.
+If you pass in FALSE, the warning is suppressed.
 </para>
 
 <para>
