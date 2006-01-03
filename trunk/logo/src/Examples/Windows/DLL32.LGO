@@ -20,17 +20,20 @@ resizemain
 end
 
 to resizemain
-; Load the User System Kernel
-dllload "user32.dll
-; Get Handle to Main Window (Note args are in REVERSE order)
-make "hwnd dllcall [l FindWindowA s [MswLogo Screen] l 0]
-; Resize Main Window
-make "status dllcall (list "l "MoveWindow "w "1 "l "100 "l "100 "l "0 "l "0 "l :hwnd)
-dllfree
+  ; Load the User System Kernel
+  dllload "user32.dll
+
+  ; Get Handle to Main Window (Note args are in REVERSE order)
+  make "hwnd dllcall [L FindWindowA S FMSLogo L 0]
+
+  ; Resize Main Window
+  make "status dllcall (list "L "MoveWindow "W "1 "L "100 "L "100 "L "0 "L "0 "L :hwnd)
+
+  dllfree
 end
 
 to zzz
-ifelse YesNoBox [Welcome] [Choose YES to run example now, Choose NO Study it now.] [aaa] [edall]
+  ifelse YesNoBox [Welcome] [Choose YES to run example now, Choose NO Study it now.] [aaa] [edall]
 end
 
 Make "startup [zzz]
