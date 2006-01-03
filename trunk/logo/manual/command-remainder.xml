@@ -14,7 +14,7 @@
 <para>
 Outputs the remainder of dividing <parameter>dividend</parameter> by <parameter>divisor</parameter>.
 Both <parameter>dividend</parameter> and <parameter>divisor</parameter> must be integers.
-The result is an integer with the same sign as <code>dividend</code>.
+The result is an integer with the same sign as <code>dividend</code> (unlike <link linkend="command-modulo">MODULO</link>, which uses the sign of <parameter>divisor</parameter>).
 </para>
 
 <para>
