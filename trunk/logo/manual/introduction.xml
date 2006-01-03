@@ -33,7 +33,7 @@
 
       <para>It draws, lines mostly, on the screen.</para>
 
-      <para>The gap that turtle graphics fills is what traditional languages do not.  That is, it gives immediate feedback.  Immediate feedback makes it fun and easier to learn programming.  The purpose of LOGO is to teach young and old how to program.  It was modeled after a very popular and power language called LISP.  It is as powerful as any other programming language.</para>
+      <para>The gap that turtle graphics fills is what traditional languages do not.  That is, it gives immediate feedback.  Immediate feedback makes it fun and easier to learn programming.  The purpose of LOGO is to teach people (children and adults) how to program.  It is modeled after a popular and powerful language called LISP and is as powerful as any other programming language.</para>
 
     </section>
 
