@@ -1,3 +1,4 @@
+#! /usr/bin/perl -W
 
 use strict;
 use IO::File;
