@@ -14,7 +14,7 @@
 <para>Outputs TRUE if <parameter>thing1</parameter> and <parameter>thing2</parameter> are the same object, so that applying a mutator to one will change the other as well.
 Outputs FALSE otherwise, even if the inputs are equal in value.</para>
 
-<para>WARNING: Primitives whose names start with a period are DANGEROUS.
+<para>WARNING: Primitives whose names start with a period are <emphasis>dangerous</emphasis>.
 Their use by non-experts is not recommended.
 The use of mutators can lead to circular data structures, infinite loops, or Logo crashes.</para>
 </listitem>
