@@ -33,7 +33,7 @@ void err_print()
    if (err_mesg == NIL) return;
 
    stopping_flag = RUN;
-   print_backslashes = TRUE;
+   print_backslashes = true;
 
    print_helper(stdout, cadr(err_mesg));
 
@@ -54,7 +54,7 @@ void err_print()
    err_mesg = NIL;
    new_line(stdout);
 
-   print_backslashes = FALSE;
+   print_backslashes = false;
    stopping_flag = save_flag;
    }
 
