@@ -24,20 +24,30 @@
 
 #include "const.h"
 
+/* CONSIDER for SIMPLICITY:
+  Either document the return value, or return a bool type.
+*/
 int numberp(NODE *snd)
    {
-   int dl, dr, pcnt, plen;
-   const char *p;
+   int dl, dr;
 
-   if (is_number(snd)) return (1);
+   if (is_number(snd)) 
+      {
+      return 1;
+      }
 
    snd = cnv_node_to_strnode(snd);
-   if (snd == Unbound) return (0);
+   if (snd == Unbound) 
+      {
+      return 0;
+      }
 
-   p = getstrptr(snd); plen = getstrlen(snd); pcnt = dl = dr = 0;
+   const char * p = getstrptr(snd); 
+   int plen = getstrlen(snd); 
+   int pcnt = dl = dr = 0;
    if (plen >= MAX_NUMBER)
       {
-      return (0);
+      return 0;
       }
 
    if (pcnt < plen && *p == '-')
@@ -65,9 +75,9 @@ int numberp(NODE *snd)
       }
 
    if ((dl == 0 && dr == 0) || pcnt != plen)
-      return (0);
+      return 0;
    else
-      return (dr + 1);
+      return dr + 1;
    }
 
 NODE *lrandom(NODE *arg)
@@ -669,10 +679,8 @@ NODE *torf(bool tf)
 
 NODE *llessp(NODE *args)
    {
-   NODE *n1, *n2;
-
-   n1 = numeric_arg(args);
-   n2 = numeric_arg(cdr(args));
+   NODE * n1 = numeric_arg(args);
+   NODE * n2 = numeric_arg(cdr(args));
 
    if (NOT_THROWING)
       {
@@ -683,10 +691,8 @@ NODE *llessp(NODE *args)
 
 NODE *lgreaterp(NODE *args)
    {
-   NODE *n1, *n2;
-
-   n1 = numeric_arg(args);
-   n2 = numeric_arg(cdr(args));
+   NODE * n1 = numeric_arg(args);
+   NODE * n2 = numeric_arg(cdr(args));
 
    if (NOT_THROWING)
       {
@@ -695,16 +701,19 @@ NODE *lgreaterp(NODE *args)
    return Unbound;
    }
 
+/* CONSIDER for SPEED:
+   Many calls to this function are just to see if a node is "True.
+   We could write a special-case function for this.
+*/
 int compare_node(NODE *n1, NODE *n2, bool ignorecase)
    {
    NODE *a1 = NIL, *a2 = NIL, *nn1 = NIL, *nn2 = NIL;
    int icmp, cmp_len;
-   NODETYPES nt1, nt2;
 
    if (n1 == n2) return 0;
 
-   nt1 = nodetype(n1);
-   nt2 = nodetype(n2);
+   NODETYPES nt1 = nodetype(n1);
+   NODETYPES nt2 = nodetype(n2);
 
    if (!(nt1 & NT_WORD) || !(nt2 & NT_WORD)) return -9999;
 

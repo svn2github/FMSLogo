@@ -255,18 +255,13 @@ NODE *anonymous_function(NODE *text)
 static
 NODE *to_helper(NODE *args, bool macro_flag)
    {
-   NODE *proc_name;
    NODE *formals = NIL;
    NODE *lastnode = NIL;
-   NODE *body_words;
-   NODE *lastnode2;
-   NODE *body_list;
 
    int minimum = 0;
    int deflt = 0;
    int maximum = 0;
    int old_default = -1;
-   char ttemp[16];
 
    if (ufun != NIL && loadstream == stdin)
       {
@@ -280,14 +275,18 @@ NODE *to_helper(NODE *args, bool macro_flag)
       return Unbound;
       }
 
-   proc_name = car(args);
+   NODE * proc_name = car(args);
    args = cdr(args);
 
    if (nodetype(proc_name) != CASEOBJ)
+      {
       err_logo(BAD_DATA_UNREC, proc_name);
+      }
    else if ((procnode__caseobj(proc_name) != UNDEFINED && loadstream == stdin)
          || is_prim(procnode__caseobj(proc_name)))
+      {
       err_logo(ALREADY_DEFINED, proc_name);
+      }
    else
       {
       NODE *old_proc = procnode__caseobj(proc_name);
@@ -342,13 +341,14 @@ NODE *to_helper(NODE *args, bool macro_flag)
 
    if (NOT_THROWING)
       {
-      body_words = cons_list(current_line);
-      lastnode2 = body_words;
-      body_list = cons_list(formals);
+      NODE * body_words = cons_list(current_line);
+      NODE * lastnode2 = body_words;
+      NODE * body_list = cons_list(formals);
       lastnode = body_list;
       to_pending++;                    /* for int or quit signal              */
       while (NOT_THROWING && to_pending && (!feof(loadstream)))
          {
+         char ttemp[16];
          strcpy(ttemp, "> ");
          NODE * ttnode = reader(loadstream, ttemp);
          NODE * tnode = cons_list(ttnode);
@@ -849,7 +849,7 @@ char *expand_slash(NODE *wd)
 static
 NODE *po_helper(NODE *arg, int just_titles)  /* >0 for POT, <0 for EDIT       */
    {
-   print_backslashes = TRUE;
+   print_backslashes = true;
 
    NODE *proclst;
    NODE *varlst;
@@ -976,7 +976,7 @@ NODE *po_helper(NODE *arg, int just_titles)  /* >0 for POT, <0 for EDIT       */
       if (check_throwing) break;
       }
 
-   print_backslashes = FALSE;
+   print_backslashes = false;
    return Unbound;
    }
 
@@ -1262,42 +1262,49 @@ bool endedit(void)
 
 NODE *lthing(NODE *args)
    {
-   NODE *val = Unbound, *arg;
+   NODE *val = Unbound;
 
-   arg = name_arg(args);
-   if (NOT_THROWING) val = valnode__caseobj(intern(arg));
+   NODE * arg = name_arg(args);
+   if (NOT_THROWING)
+      {
+      val = valnode__caseobj(intern(arg));
+      }
+
    while (val == Unbound && NOT_THROWING)
+      {
       val = err_logo(NO_VALUE, car(args));
-   return (val);
+      }
+
+   return val;
    }
 
 NODE *lnamep(NODE *args)
    {
-   NODE *arg;
-
-   arg = name_arg(args);
+   NODE *arg = name_arg(args);
    if (NOT_THROWING)
+      {
       return torf(valnode__caseobj(intern(arg)) != Unbound);
+      }
    return Unbound;
    }
 
 NODE *lprocedurep(NODE *args)
    {
-   NODE *arg;
-
-   arg = name_arg(args);
+   NODE *arg = name_arg(args);
    if (NOT_THROWING)
+      {
       return torf(procnode__caseobj(intern(arg)) != UNDEFINED);
+      }
    return Unbound;
    }
 
 NODE *lproplistp(NODE *args)
    {
-   NODE *arg;
-
-   arg = name_arg(args);
+   NODE *arg = name_arg(args);
    if (NOT_THROWING)
+      {
       return torf(plist__caseobj(intern(arg)) != NIL);
+      }
    return Unbound;
    }
 
@@ -1312,7 +1319,7 @@ NODE *check_proctype(NODE *args, int wanted)
    NODE * arg = name_arg(args);
    if (NOT_THROWING && (cell = procnode__caseobj(intern(arg))) == UNDEFINED)
       {
-      return (Falsex);
+      return Falsex;
       }
 
    if (wanted == 2)
@@ -1346,31 +1353,41 @@ NODE *lmacrop(NODE *args)
 
 NODE *lcopydef(NODE *args)
    {
-   int old_default, new_default;
    int redef = (compare_node(valnode__caseobj(Redefp), Truex, TRUE) == 0);
 
    NODE * arg1 = name_arg(args);
    NODE * arg2 = name_arg(cdr(args));
-   if (numberp(arg2)) err_logo(BAD_DATA_UNREC, arg2);
-   if (numberp(arg1)) err_logo(BAD_DATA_UNREC, arg1);
+   if (numberp(arg2)) 
+      {
+      err_logo(BAD_DATA_UNREC, arg2);
+      }
+   if (numberp(arg1))
+      {
+      err_logo(BAD_DATA_UNREC, arg1);
+      }
+
    if (NOT_THROWING)
       {
       arg1 = intern(arg1);
       arg2 = intern(arg2);
       }
    if (NOT_THROWING && procnode__caseobj(arg2) == UNDEFINED)
+      {
       err_logo(DK_HOW, arg2);
+      }
    if (NOT_THROWING && !redef && is_prim(procnode__caseobj(arg1)))
+      {
       err_logo(IS_PRIM, arg1);
+      }
    if (NOT_THROWING)
       {
       NODE *old_proc = procnode__caseobj(arg1);
       NODE *new_proc = procnode__caseobj(arg2);
       if (old_proc != UNDEFINED)
          {
-         old_default = (is_prim(old_proc) ? getprimdflt(old_proc) :
+         int old_default = (is_prim(old_proc) ? getprimdflt(old_proc) :
                getint(dfltargs__procnode(old_proc)));
-         new_default = (is_prim(new_proc) ? getprimdflt(new_proc) :
+         int new_default = (is_prim(new_proc) ? getprimdflt(new_proc) :
                getint(dfltargs__procnode(new_proc)));
          if (old_default != new_default)
             {
@@ -1387,8 +1404,14 @@ NODE *lcopydef(NODE *args)
       //         }
       setprocnode__caseobj(arg1, new_proc);
       setflag__caseobj(arg1, PROC_BURIED);
-      if (is_macro(arg2)) setflag__caseobj(arg1, PROC_MACRO);
-      else clearflag__caseobj(arg1, PROC_MACRO);
+      if (is_macro(arg2)) 
+         {
+         setflag__caseobj(arg1, PROC_MACRO);
+         }
+      else 
+         {
+         clearflag__caseobj(arg1, PROC_MACRO);
+         }
       }
    return Unbound;
    }
