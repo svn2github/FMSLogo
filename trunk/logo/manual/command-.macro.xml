@@ -137,8 +137,8 @@ Here's how you can implement <link linkend="command-localmake">LOCALMAKE</link> 
 It's used this way:
 
 <programlisting>  TO TRY
-    LOCALMAKE "garply "hello
-    PRINT :garply
+    LOCALMAKE "myvar "hello
+    PRINT :myvar
   END
 </programlisting>
 </para>
@@ -146,13 +146,13 @@ It's used this way:
 <para>
 LOCALMAKE outputs the list:
 
-<programlisting>  [LOCAL "garply apply "make [garply hello]]
+<programlisting>  [LOCAL "myvar apply "make [myvar hello]]
 </programlisting>
 </para>
 
 <para>
 LOCALMAKE uses <link linkend="command-apply">APPLY</link> to avoid deciding whether the second input to <link linkend="command-make">MAKE</link> requires a quotation mark before it.
-In this case it would--<code>MAKE "GARPLY "HELLO</code>--but the quotation mark would be wrong if the value were a list.
+In this case it would--<code>MAKE "myvar "hello</code>--but the quotation mark would be wrong if the value were a list.
 </para>
 
 <para>
