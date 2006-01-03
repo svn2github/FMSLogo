@@ -91,8 +91,8 @@ The technique just shown, although fairly easy to understand, is too slow becaus
 Another approach is to make MY.REPEAT a macro that works just like the non-macro version unless the instructions to be repeated includes OUTPUT or STOP:
 
 <programlisting>  .MACRO MY.REPEAT :num :instructions
-    CATCH "repeat.catchtag [OP REPEAT.DONE RUNRESULT [REPEAT1 :num :instructions]]
-    OP []
+    CATCH "repeat.catchtag [OUTPUT REPEAT.DONE RUNRESULT [REPEAT1 :num :instructions]]
+    OUTPUT []
   END
 
   TO REPEAT1 :num :instructions
@@ -102,8 +102,8 @@ Another approach is to make MY.REPEAT a macro that works just like the non-macro
   END
 
   TO REPEAT.DONE :repeat.result
-    IF EMPTYP :repeat.result [OP [STOP]]
-    OP LIST "output QUOTED FIRST :repeat.result
+    IF EMPTYP :repeat.result [OUTPUT [STOP]]
+    OUTPUT LIST "output QUOTED FIRST :repeat.result
   END
 </programlisting>
 </para>
@@ -159,7 +159,7 @@ In this case it would--<code>MAKE "GARPLY "HELLO</code>--but the quotation mark 
 It's often convenient to use the <link linkend="command-`">`</link> function to construct the instruction list:
 
 <programlisting>  .MACRO LOCALMAKE :name :value
-    OP `[LOCAL ,[WORD "" :name] APPLY "make [,[:name] ,[:value]]]
+    OUTPUT `[LOCAL ,[WORD "" :name] APPLY "make [,[:name] ,[:value]]]
   END
 </programlisting>
 </para>
