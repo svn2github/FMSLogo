@@ -27,8 +27,8 @@ char special_chars[] = " \t\n(\?\?\?\?\?\?\?+~)[]-*/=<>\"\\:;|\?";
 
 #ifdef ecma
 
-#define upper_p(ch)     (isupper((ch) & 0377))
-#define lower_p(ch)     (islower((ch) & 0377))
+#define upper_p(ch)     (isupper((ch) & 0xFF))
+#define lower_p(ch)     (islower((ch) & 0xFF))
 
 char ecma_array[128];
 
@@ -36,24 +36,31 @@ int ecma_size = sizeof(special_chars);
 
 char ecma_set(int ch)
    {
-   ch &= 0377;
-   if (ch >= 128) return (ch);
-   return (ecma_array[ch]);
+   ch &= 0xFF;
+   if (ch >= 0x80) return (ch);
+   return ecma_array[ch];
    }
 
 char ecma_clear(int ch)
    {
-   ch &= 0377;
-   if (ch < ecma_begin || ch >= ecma_begin + sizeof(special_chars)) return (ch);
-   if (ch >= 007 && ch <= 015) return(ch);
-   return (special_chars[ch - ecma_begin]);
+   ch &= 0xFF;
+   if (ch < ecma_begin || ch >= ecma_begin + sizeof(special_chars)) 
+      {
+      return ch;
+      }
+   if (ch >= 0x7 && ch <= 0xD) 
+      {
+      return ch;
+      }
+
+   return special_chars[ch - ecma_begin];
    }
 
 int ecma_get(int ch)
    {
-   ch &= 0377;
+   ch &= 0xFF;
    return ((ch >= ecma_begin && ch < ecma_begin + sizeof(special_chars))
-      && (ch < 007 || ch > 015));
+      && (ch < 0x7 || ch > 0xD));
    }
 
 #else
@@ -86,19 +93,20 @@ char *word_strnzcpy(char *dst, NODE *wordlist, int len)
 
 char *noparity_strnzcpy(char *dst, const char * src, int len)
    {
-   int i;
-
-   for (i = 0; i < len; i++)
+   for (int i = 0; i < len; i++)
+      {
       dst[i] = clearparity(src[i]);
+      }
    dst[len] = '\0';
-   return (dst);
+
+   return dst;
    }
 
 char *mend_strnzcpy(char *dst, const char * src, int len)
    {
-   int i, vbar = 0;
+   bool vbar = false;
 
-   for (i = 0; i < len;)
+   for (int i = 0; i < len;)
       {
       while (*src == '|')
          {
@@ -133,9 +141,9 @@ char *mend_strnzcpy(char *dst, const char * src, int len)
 
 char *mend_nosemi(char *dst, const char * src, int len)
    {
-   int i, vbar = 0;
+   bool vbar = false;
 
-   for (i = 0; i < len;)
+   for (int i = 0; i < len;)
       {
       while (*src == '|')
          {
@@ -429,35 +437,32 @@ void make_runparse(NODE *ndi)
 
 NODE *make_quote(NODE *qnd)
    {
-   NODE *nd;
+   NODE * nd = cons_list(qnd);
 
-   nd = cons_list(qnd);
    settype(nd, QUOTE);
-   return (nd);
+   return nd;
    }
 
 NODE *maybe_quote(NODE *nd)
    {
    if (nd == Unbound || aggregate(nd) || numberp(nd)) return (nd);
-   return (make_quote(nd));
+   return make_quote(nd);
    }
 
 NODE *make_caseobj(NODE *cstrnd, NODE *obj)
    {
-   NODE *nd;
+   NODE *nd = cons(cstrnd, obj);
 
-   nd = cons(cstrnd, obj);
    settype(nd, CASEOBJ);
-   return (nd);
+   return nd;
    }
 
 NODE *make_colon(NODE *cnd)
    {
-   NODE *nd;
+   NODE *nd = cons_list(cnd);
 
-   nd = cons_list(cnd);
    settype(nd, COLON);
-   return (nd);
+   return nd;
    }
 
 NODE *make_intnode(FIXNUM i)
@@ -465,7 +470,7 @@ NODE *make_intnode(FIXNUM i)
    NODE *nd = newnode(INT);
 
    setint(nd, i);
-   return (nd);
+   return nd;
    }
 
 NODE *make_floatnode(FLONUM f)
@@ -473,7 +478,7 @@ NODE *make_floatnode(FLONUM f)
    NODE *nd = newnode(FLOAT);
 
    setfloat(nd, f);
-   return (nd);
+   return nd;
    }
 
 NODE *cnv_node_to_numnode(NODE *ndi)
@@ -682,34 +687,39 @@ NODE *getprop(NODE *plist, NODE *name, bool before)
       prev = plist;
       plist = cddr(plist);
       }
-   return (NIL);
+   return NIL;
    }
 
 NODE *lgprop(NODE *args)
    {
-   NODE *plname, *pname, *plist, *val = NIL;
+   NODE *val = NIL;
 
-   plname = string_arg(args);
-   pname = string_arg(cdr(args));
+   NODE * plname = string_arg(args);
+   NODE * pname = string_arg(cdr(args));
    if (NOT_THROWING)
       {
       plname = intern(plname);
-      plist = plist__caseobj(plname);
+
+      NODE * plist = plist__caseobj(plname);
       if (plist != NIL)
+         {
          val = getprop(plist, pname, FALSE);
+         }
       if (val != NIL)
+         {
          return cadr(val);
+         }
       }
    return NIL;
    }
 
 NODE *lpprop(NODE *args)
    {
-   NODE *plname, *pname, *newval, *plist, *val = NIL;
+   NODE *val = NIL;
 
-   plname = string_arg(args);
-   pname = string_arg(cdr(args));
-   newval = car(cddr(args));
+   NODE * plname = string_arg(args);
+   NODE * pname = string_arg(cdr(args));
+   NODE * newval = car(cddr(args));
    if (NOT_THROWING)
       {
       plname = intern(plname);
@@ -721,7 +731,8 @@ NODE *lpprop(NODE *args)
             ndprintf(writestream, " in %s\n%s", ufun, this_line);
          new_line(writestream);
          }
-      plist = plist__caseobj(plname);
+
+      NODE * plist = plist__caseobj(plname);
       if (plist != NIL)
          val = getprop(plist, pname, FALSE);
       if (val != NIL)
