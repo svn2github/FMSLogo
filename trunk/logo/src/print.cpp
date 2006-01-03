@@ -278,7 +278,7 @@ void real_print_node(FILE *strm, NODE *nd, int depth, int width)
             {
             print_char(strm, *cp++);
             }
-      else if (print_backslashes == FALSE)
+      else if (!print_backslashes)
          {
          for (i = 0; i < wid; i++)
             {
