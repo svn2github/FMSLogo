@@ -19,7 +19,7 @@ You should be familiar with using MSWLogo in 2D before jumping into 3D.
 </para>
 
 <para>
-Compare this command with <link linkend="command-wrap">WRAP</link>, <link linkend="command-window">WINDOW</link>, and <link linkend="command-perspective">FENCE</link>.
+Compare this command with <link linkend="command-wrap">WRAP</link>, <link linkend="command-window">WINDOW</link>, and <link linkend="command-fence">FENCE</link>.
 </para>
 
 
