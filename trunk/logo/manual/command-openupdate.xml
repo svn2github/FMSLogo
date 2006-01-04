@@ -16,7 +16,7 @@
 Opens the file named <parameter>filename</parameter> named for reading and writing.
 The read and write position is initially set to the end of the old file, if any.
 Each open file has only one position, for both reading and writing.
-If a file opened for update is both <link linkend="command-reader">READER</link> and <link linkend="command-reader">WRITER</link> at the same time, 
+If a file opened for update is both <link linkend="command-reader">READER</link> and <link linkend="command-writer">WRITER</link> at the same time, 
 then <link linkend="command-setreadpos">SETREADPOS</link> will also affect <link linkend="command-writepos">WRITEPOS</link> and vice versa.
 Also, if you alternate reading and writing the same file, you must SETREADPOS between a write and a read, and SETWRITEPOS between a read and a write.
 </para>
