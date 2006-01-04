@@ -24,7 +24,7 @@ From now until you select another turtle, all turtle operations will occur on th
     <programlisting><userinput>PERSPECTIVE
 CLEARSCREEN
 ; Draw a cube from the default vantage point
-REPEAT 4 [REPEAT 4 [FOWARD 100 RIGHT 90] FORWARD 100 DOWN 90]
+REPEAT 4 [REPEAT 4 [FORWARD 100 RIGHT 90] FORWARD 100 DOWN 90]
 </userinput>
 </programlisting>
 
@@ -35,7 +35,7 @@ SETTURTLE -1 ; select the "eye position" turtle
 SETXYZ 500 500 500
 SETTURTLE 0
 ; Draw a cube from a new vantage point
-REPEAT 4 [REPEAT 4 [FOWARD 100 RIGHT 90] FORWARD 100 DOWN 90]
+REPEAT 4 [REPEAT 4 [FORWARD 100 RIGHT 90] FORWARD 100 DOWN 90]
 </userinput>
 </programlisting>
 </listitem>
