@@ -12,6 +12,7 @@
 # * Spelling is correct.
 # * Examples include at least one instance of the command that they document.
 # * Only the first reference to a command in any section is hyperlinked.
+# * Commands are not hyperlinked when they occurs within their own definition.
 # * All instances of Logo and MSWLogo are correct.
 #
 ###############################################################################
@@ -38,9 +39,16 @@ $Exceptions{'command-.setfirst.xml'}{'allcaps'}{'WARNING'}  = 1;
 
 $Exceptions{'command-.setitem.xml'}{'allcaps'}{'WARNING'}   = 1;
 
+$Exceptions{'command-arrayp.xml'}{'allcaps'}{'ARRAY?'}      = 1;
+
+$Exceptions{'command-back.xml'}{'allcaps'}{'BK'}            = 1;
+
+$Exceptions{'command-backslashedp.xml'}{'allcaps'}{'BACKSLASHED?'} = 1;
+
 $Exceptions{'command-backtick.xml'}{'propername'}           = '`';
 
 $Exceptions{'command-beforep.xml'}{'allcaps'}{'ABC'}        = 1;
+$Exceptions{'command-beforep.xml'}{'allcaps'}{'BEFORE?'}    = 1;
 
 $Exceptions{'command-yield.xml'}{'allcaps'}{'CPU'}          = 1;
 
@@ -158,7 +166,7 @@ foreach my $filename (<*.xml>) {
       }
     }
 
-    while ($line =~ m![^\.\w](\.??[A-Z](\.??[A-Z])+)[\.\W]!g) {
+    while ($line =~ m![^\.\w](\.??[A-Z](\.??[A-Z?])+)[\.\W]!g) {
       my $command = $1;
 
       if (not $Commands{$command} and not $Exceptions{$filename}{allcaps}{$command}) {
