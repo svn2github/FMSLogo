@@ -14,7 +14,7 @@
 <para>
 Outputs a list, the turtle's [roll pitch heading] each in degrees.
 It is important to <link linkend="understand-your-orientation-in-3D">understand your orientation in 3D</link>.
-See also <link linkend="command-setorientation">SETORIENATION</link>.
+See also <link linkend="command-setorientation">SETORIENTATION</link>.
 </para>
 <para>
 This command is designed to run in <link linkend="command-perspective">PERSPECTIVE</link> mode.
