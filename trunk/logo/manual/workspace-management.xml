@@ -41,7 +41,7 @@ Among other things, this means you cannot pass a plist into a Logo procedure, yo
 You can get, set, and remove properties (name-value pairs) from a plist.
 If you try to get a property that doesn't exist, or you try to get a property from a plist that doesn't exist, you will get the empty list.
 In general, you shouldn't care if a property list exists or not.
-However, if you do care, you can use <link linkend="command-plist">PLISTS</link> to get the names of all unburied property lists.
+However, if you do care, you can use <link linkend="command-plists">PLISTS</link> to get the names of all unburied property lists.
 </para>
 
 <para>
