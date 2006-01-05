@@ -1,3 +1,19 @@
+PASS: [-0] returned 0 , as expected.
+PASS: [-0.0] returned 0 , as expected.
+PASS: [.00] returned 0 , as expected.
+PASS: [0e10] returned 0 , as expected.
+PASS: [0e+10] returned 0 , as expected.
+PASS: [0e-10] returned 0 , as expected.
+PASS: [1e3] returned 1000 , as expected.
+PASS: [1.234e3] returned 1234 , as expected.
+PASS: [1.234e+3] returned 1234 , as expected.
+PASS: [1.23e-1] returned 0.123 , as expected.
+PASS: [.5] returned 0.5 , as expected.
+PASS: [-.5] returned -0.5 , as expected.
+PASS: ["WORD] returned WORD , as expected.
+PASS: ["A B] returned A B , as expected.
+PASS: [DIFFICULTCOMMENTS] returned 1 , as expected.
+FAIL: [~IGNOREMEWASCALLED] returned true . We expected false
 PASS: [.EQ 1000 1000] returned false , as expected.
 PASS: [.EQ :x :y] returned false , as expected.
 PASS: [.EQ :x :x] returned true , as expected.
@@ -25,7 +41,9 @@ PASS: [EQUALP "hi "hil] returned false , as expected.
 PASS: [EQUALP "hil "hi] returned false , as expected.
 PASS: [EQUALP "true "false] returned false , as expected.
 INFO: Executing invalid instruction: [(EQUAL?)]
+PASS: Executing [(EQUAL?)] threw an error
 INFO: Executing invalid instruction: [(EQUAL? 1)]
+PASS: Executing [(EQUAL? 1)] threw an error
 PASS: [EMPTYP []] returned true , as expected.
 PASS: [EMPTY? []] returned true , as expected.
 PASS: [EMPTY? [1]] returned false , as expected.
@@ -35,6 +53,7 @@ PASS: [EMPTY? "] returned true , as expected.
 PASS: [EMPTY? " ] returned false , as expected.
 PASS: [EMPTY? {}] returned false , as expected.
 INFO: Executing invalid instruction: [(EMPTY?)]
+PASS: Executing [(EMPTY?)] threw an error
 PASS: [NUMBERP 1] returned true , as expected.
 PASS: [NUMBER? 1] returned true , as expected.
 PASS: [NUMBER? 0] returned true , as expected.
@@ -51,6 +70,7 @@ PASS: [NUMBER? "one] returned false , as expected.
 PASS: [NUMBER? "1A] returned false , as expected.
 PASS: [NUMBER? "] returned false , as expected.
 INFO: Executing invalid instruction: [(NUMBER?)]
+PASS: Executing [(NUMBER?)] threw an error
 PASS: [LISTP [1 2 3]] returned true , as expected.
 PASS: [LIST? [1 2 3]] returned true , as expected.
 PASS: [LIST? []] returned true , as expected.
@@ -62,6 +82,7 @@ PASS: [LIST? {1}] returned false , as expected.
 PASS: [LIST? {}] returned false , as expected.
 PASS: [LIST? "] returned false , as expected.
 INFO: Executing invalid instruction: [(LIST?)]
+PASS: Executing [(LIST?)] threw an error
 PASS: [WORDP "hello] returned true , as expected.
 PASS: [WORD? "hello] returned true , as expected.
 PASS: [WORD? 123] returned true , as expected.
@@ -73,6 +94,7 @@ PASS: [WORD? ["hello]] returned false , as expected.
 PASS: [WORD? {}] returned false , as expected.
 PASS: [WORD? {"hello}] returned false , as expected.
 INFO: Executing invalid instruction: [(WORDP?)]
+PASS: Executing [(WORDP?)] threw an error
 PASS: [ARRAYP {1 2 3}] returned true , as expected.
 PASS: [ARRAY? {1 2 3}] returned true , as expected.
 PASS: [ARRAY? {}] returned true , as expected.
@@ -84,6 +106,7 @@ PASS: [ARRAY? [1]] returned false , as expected.
 PASS: [ARRAY? []] returned false , as expected.
 PASS: [ARRAY? "] returned false , as expected.
 INFO: Executing invalid instruction: [(ARRAY?)]
+PASS: Executing [(ARRAY?)] threw an error
 PASS: [MEMBERP 2 [1 2 3]] returned true , as expected.
 PASS: [MEMBER? 2 [1 2 3]] returned true , as expected.
 PASS: [MEMBER? 1 [1]] returned true , as expected.
@@ -106,7 +129,9 @@ PASS: [MEMBER? " "hello] returned false , as expected.
 FAIL: [MEMBER? " ["]] returned false . We expected true
 FAIL: [MEMBER? " {"}] returned false . We expected true
 INFO: Executing invalid instruction: [(MEMBER?)]
+PASS: Executing [(MEMBER?)] threw an error
 INFO: Executing invalid instruction: [(MEMBER? 1)]
+PASS: Executing [(MEMBER? 1)] threw an error
 PASS: [BEFOREP "ABC "ABD] returned true , as expected.
 PASS: [BEFORE? "ABC "ABD] returned true , as expected.
 PASS: [BEFORE? "ABD "ABC] returned false , as expected.
@@ -116,9 +141,13 @@ PASS: [BEFORE? "ABCD "ABC] returned false , as expected.
 PASS: [BEFORE? " "A] returned true , as expected.
 PASS: [BEFORE? "Z "] returned false , as expected.
 INFO: Executing invalid instruction: [(BEFORE?)]
+PASS: Executing [(BEFORE?)] threw an error
 INFO: Executing invalid instruction: [(BEFORE? "ABC)]
+PASS: Executing [(BEFORE? "ABC)] threw an error
 INFO: Executing invalid instruction: [(BEFORE? "ABC [] )]
+PASS: Executing [(BEFORE? "ABC [] )] threw an error
 INFO: Executing invalid instruction: [(BEFORE? [] "ABC)]
+PASS: Executing [(BEFORE? [] "ABC)] threw an error
 PASS: [WORD "o "k] returned ok , as expected.
 PASS: [WORD "4 "2] returned 42 , as expected.
 PASS: [(WORD)] returned  , as expected.
@@ -127,12 +156,67 @@ PASS: [(WORD "o "k "ay)] returned okay , as expected.
 PASS: [(WORD " ")] returned  , as expected.
 PASS: [(WORD " "a ")] returned a , as expected.
 INFO: Executing invalid instruction: [WORD [] "a]
+PASS: Executing [WORD [] "a] threw an error
 INFO: Executing invalid instruction: [WORD "a []]
+PASS: Executing [WORD "a []] threw an error
 INFO: Executing invalid instruction: [WORD "a {}]
+PASS: Executing [WORD "a {}] threw an error
 INFO: Executing invalid instruction: [WORD {} "a]
-PASS: [ITEM 0 :myarray] returned [list] , as expected.
-PASS: [ITEM 1 :myarray] returned hi , as expected.
-PASS: [ITEM 2 :myarray] returned 42 , as expected.
+PASS: Executing [WORD {} "a] threw an error
+PASS: [COUNT :myarray] returned 4 , as expected.
+PASS: [ITEM 1 :myarray] returned [] , as expected.
+PASS: [ITEM 2 :myarray] returned [] , as expected.
+PASS: [ITEM 3 :myarray] returned [] , as expected.
+PASS: [ITEM 4 :myarray] returned [] , as expected.
+PASS: [ITEM 1 :myarray] returned 42 , as expected.
+PASS: [ITEM 2 :myarray] returned hi , as expected.
+PASS: [ITEM 3 :myarray] returned [list] , as expected.
+PASS: [ITEM 1 :myarray] returned 1 , as expected.
+PASS: [ITEM 2 :myarray] returned 2 , as expected.
+PASS: [ITEM 3 :myarray] returned 3 , as expected.
+PASS: [ITEM 4 :myarray] returned 4 , as expected.
+PASS: [COUNT :newarray] returned 4 , as expected.
+PASS: [ITEM 1 :newarray] returned 1 , as expected.
+PASS: [ITEM 2 :newarray] returned 2 , as expected.
+PASS: [ITEM 3 :newarray] returned 3 , as expected.
+PASS: [ITEM 4 :newarray] returned 4 , as expected.
+PASS: [COUNT :myarray] returned 3 , as expected.
+PASS: [ITEM 0 :myarray] returned [] , as expected.
+PASS: [ITEM 1 :myarray] returned [] , as expected.
+PASS: [ITEM 2 :myarray] returned [] , as expected.
+PASS: [ITEM 0 :myarray] returned 0 , as expected.
+PASS: [ITEM 1 :myarray] returned 1 , as expected.
+PASS: [ITEM 2 :myarray] returned 2 , as expected.
+PASS: [ITEM 0 :myarray] returned [0] , as expected.
+PASS: [ITEM 1 :myarray] returned [1] , as expected.
+PASS: [ITEM 2 :myarray] returned [2] , as expected.
+PASS: [COUNT :myarray] returned 3 , as expected.
+PASS: [ITEM -100 :myarray] returned 0 , as expected.
+PASS: [ITEM -99 :myarray] returned 1 , as expected.
+PASS: [ITEM -98 :myarray] returned 2 , as expected.
+PASS: [COUNT :myarray] returned 4 , as expected.
+PASS: [ITEM 2 :myarray] returned 1 , as expected.
+PASS: [ITEM 3 :myarray] returned 2 , as expected.
+PASS: [ITEM 4 :myarray] returned 3 , as expected.
+PASS: [ITEM 5 :myarray] returned 4 , as expected.
+INFO: Executing invalid instruction: [ARRAY -1]
+PASS: Executing [ARRAY -1] threw an error
+INFO: Executing invalid instruction: [ARRAY 1.23]
+PASS: Executing [ARRAY 1.23] threw an error
+INFO: Executing invalid instruction: [ARRAY "two]
+PASS: Executing [ARRAY "two] threw an error
+INFO: Executing invalid instruction: [ARRAY {}]
+PASS: Executing [ARRAY {}] threw an error
+INFO: Executing invalid instruction: [ARRAY []]
+PASS: Executing [ARRAY []] threw an error
+INFO: Executing invalid instruction: [(ARRAY 5 "origin)]
+PASS: Executing [(ARRAY 5 "origin)] threw an error
+INFO: Executing invalid instruction: [(ARRAY 5 1.23)]
+PASS: Executing [(ARRAY 5 1.23)] threw an error
+INFO: Executing invalid instruction: [(ARRAY 5 {5} )]
+PASS: Executing [(ARRAY 5 {5} )] threw an error
+INFO: Executing invalid instruction: [(ARRAY 5 [5] )]
+PASS: Executing [(ARRAY 5 [5] )] threw an error
 INFO: Creating an empty array (regression test for bug #1349374)
 PASS: [(OR)] returned false , as expected.
 PASS: [(OR "true)] returned true , as expected.
@@ -144,14 +228,21 @@ PASS: [(OR "true "true)] returned true , as expected.
 PASS: [(OR "false "FALSE "false "FALSE)] returned false , as expected.
 PASS: [(OR "false "FALSE "false "TRUE)] returned true , as expected.
 INFO: Executing invalid instruction: [(OR 1)]
+PASS: Executing [(OR 1)] threw an error
 INFO: Executing invalid instruction: [(OR 0)]
+PASS: Executing [(OR 0)] threw an error
 INFO: Executing invalid instruction: [(OR "truex)]
+PASS: Executing [(OR "truex)] threw an error
 INFO: Executing invalid instruction: [(OR "falsex)]
+PASS: Executing [(OR "falsex)] threw an error
 INFO: Executing invalid instruction: [(OR "true 1)]
 FAIL: Executing [(OR "true 1)] did not throw an error
 INFO: Executing invalid instruction: [(OR 1 "true)]
+PASS: Executing [(OR 1 "true)] threw an error
 INFO: Executing invalid instruction: [(OR "false 0)]
+PASS: Executing [(OR "false 0)] threw an error
 INFO: Executing invalid instruction: [(OR 0 "false)]
+PASS: Executing [(OR 0 "false)] threw an error
 PASS: [(AND)] returned true , as expected.
 PASS: [(AND "true)] returned true , as expected.
 PASS: [(AND "false)] returned false , as expected.
@@ -162,30 +253,1171 @@ PASS: [(AND "true "true)] returned true , as expected.
 PASS: [(AND "TRUE "true "TRUE "false)] returned false , as expected.
 PASS: [(AND "TRUE "true "TRUE "true)] returned true , as expected.
 INFO: Executing invalid instruction: [(AND 1)]
+PASS: Executing [(AND 1)] threw an error
 INFO: Executing invalid instruction: [(AND 0)]
+PASS: Executing [(AND 0)] threw an error
 INFO: Executing invalid instruction: [(AND "truex)]
+PASS: Executing [(AND "truex)] threw an error
 INFO: Executing invalid instruction: [(AND "falsex)]
+PASS: Executing [(AND "falsex)] threw an error
 INFO: Executing invalid instruction: [(AND "true 1)]
+PASS: Executing [(AND "true 1)] threw an error
 INFO: Executing invalid instruction: [(AND 1 "true)]
+PASS: Executing [(AND 1 "true)] threw an error
 INFO: Executing invalid instruction: [(AND "false 0)]
 FAIL: Executing [(AND "false 0)] did not throw an error
 INFO: Executing invalid instruction: [(AND 0 "false)]
+PASS: Executing [(AND 0 "false)] threw an error
 PASS: [(NOT "true)] returned false , as expected.
 PASS: [(NOT "false)] returned true , as expected.
 INFO: Executing invalid instruction: [(NOT)]
+PASS: Executing [(NOT)] threw an error
 INFO: Executing invalid instruction: [(NOT 0)]
+PASS: Executing [(NOT 0)] threw an error
 INFO: Executing invalid instruction: [(NOT "truex)]
+PASS: Executing [(NOT "truex)] threw an error
 INFO: Executing invalid instruction: [(NOT "true "true)]
+PASS: Executing [(NOT "true "true)] threw an error
+PASS: [0 + 0] returned 0 , as expected.
+PASS: [0 + 1] returned 1 , as expected.
+PASS: [0 + -1] returned -1 , as expected.
+PASS: [5 + 0] returned 5 , as expected.
+PASS: [5 + 1] returned 6 , as expected.
+PASS: [5 + -1] returned 4 , as expected.
+PASS: [-5 + 0] returned -5 , as expected.
+PASS: [-5 + 1] returned -4 , as expected.
+PASS: [-5 + -1] returned -6 , as expected.
+PASS: [SUM 0 0] returned 0 , as expected.
+PASS: [SUM 0 1] returned 1 , as expected.
+PASS: [SUM 0 -1] returned -1 , as expected.
+PASS: [SUM 5 0] returned 5 , as expected.
+PASS: [SUM 5 1] returned 6 , as expected.
+PASS: [SUM 5 -1] returned 4 , as expected.
+PASS: [SUM "1 "2] returned 3 , as expected.
+PASS: [SUM 1e40 2e39] returned 1.2e+40 , as expected.
+PASS: [(SUM)] returned 0 , as expected.
+PASS: [(SUM 5)] returned 5 , as expected.
+PASS: [(SUM 1 2 3 4 5)] returned 15 , as expected.
+INFO: Executing invalid instruction: [[] + 2]
+PASS: Executing [[] + 2] threw an error
+INFO: Executing invalid instruction: [[1] + 2]
+PASS: Executing [[1] + 2] threw an error
+INFO: Executing invalid instruction: [{} + 2]
+PASS: Executing [{} + 2] threw an error
+INFO: Executing invalid instruction: [{1} + 2]
+PASS: Executing [{1} + 2] threw an error
+INFO: Executing invalid instruction: ["one + 2]
+PASS: Executing ["one + 2] threw an error
+INFO: Executing invalid instruction: ["1a + 2]
+PASS: Executing ["1a + 2] threw an error
+INFO: Executing invalid instruction: [1 + []]
+PASS: Executing [1 + []] threw an error
+INFO: Executing invalid instruction: [1 + [2]]
+PASS: Executing [1 + [2]] threw an error
+INFO: Executing invalid instruction: [1 + {}]
+PASS: Executing [1 + {}] threw an error
+INFO: Executing invalid instruction: [1 + {2}]
+PASS: Executing [1 + {2}] threw an error
+INFO: Executing invalid instruction: [1 + "two]
+PASS: Executing [1 + "two] threw an error
+INFO: Executing invalid instruction: [1 + "2a]
+PASS: Executing [1 + "2a] threw an error
+INFO: Executing invalid instruction: [SUM [] 2]
+PASS: Executing [SUM [] 2] threw an error
+INFO: Executing invalid instruction: [SUM [1] 2]
+PASS: Executing [SUM [1] 2] threw an error
+INFO: Executing invalid instruction: [SUM {} 2]
+PASS: Executing [SUM {} 2] threw an error
+INFO: Executing invalid instruction: [SUM {1} 2]
+PASS: Executing [SUM {1} 2] threw an error
+INFO: Executing invalid instruction: [SUM "one 2]
+PASS: Executing [SUM "one 2] threw an error
+INFO: Executing invalid instruction: [SUM "1a 2]
+PASS: Executing [SUM "1a 2] threw an error
+INFO: Executing invalid instruction: [SUM 1 []]
+PASS: Executing [SUM 1 []] threw an error
+INFO: Executing invalid instruction: [SUM 1 [2]]
+PASS: Executing [SUM 1 [2]] threw an error
+INFO: Executing invalid instruction: [SUM 1 {}]
+PASS: Executing [SUM 1 {}] threw an error
+INFO: Executing invalid instruction: [SUM 1 {2}]
+PASS: Executing [SUM 1 {2}] threw an error
+INFO: Executing invalid instruction: [SUM 1 "two]
+PASS: Executing [SUM 1 "two] threw an error
+INFO: Executing invalid instruction: [SUM 1 "2a]
+PASS: Executing [SUM 1 "2a] threw an error
+INFO: Executing invalid instruction: [(SUM 1 2 [] )]
+PASS: Executing [(SUM 1 2 [] )] threw an error
+INFO: Executing invalid instruction: [(SUM 1 2 [3] )]
+PASS: Executing [(SUM 1 2 [3] )] threw an error
+INFO: Executing invalid instruction: [(SUM 1 2 {} )]
+PASS: Executing [(SUM 1 2 {} )] threw an error
+INFO: Executing invalid instruction: [(SUM 1 2 {3} )]
+PASS: Executing [(SUM 1 2 {3} )] threw an error
+INFO: Executing invalid instruction: [(SUM 1 2 "three)]
+PASS: Executing [(SUM 1 2 "three)] threw an error
+INFO: Executing invalid instruction: [(SUM 1 2 "3a)]
+PASS: Executing [(SUM 1 2 "3a)] threw an error
+PASS: [0 - 0] returned 0 , as expected.
+PASS: [0 - 1] returned -1 , as expected.
+PASS: [0 - -1] returned 1 , as expected.
+PASS: [5 - 0] returned 5 , as expected.
+PASS: [5 - 1] returned 4 , as expected.
+PASS: [5 - -1] returned 6 , as expected.
+PASS: [-5 - 0] returned -5 , as expected.
+PASS: [-5 - 1] returned -6 , as expected.
+PASS: [-5 - -1] returned -4 , as expected.
+PASS: [DIFFERENCE 0 0] returned 0 , as expected.
+PASS: [DIFFERENCE 0 1] returned -1 , as expected.
+PASS: [DIFFERENCE 0 -1] returned 1 , as expected.
+PASS: [DIFFERENCE 5 0] returned 5 , as expected.
+PASS: [DIFFERENCE 5 1] returned 4 , as expected.
+PASS: [DIFFERENCE 5 -1] returned 6 , as expected.
+PASS: [DIFFERENCE "3 "2] returned 1 , as expected.
+PASS: [DIFFERENCE 1.2e40 2e39] returned 1e+40 , as expected.
+INFO: Executing invalid instruction: [(DIFFERENCE)]
+PASS: Executing [(DIFFERENCE)] threw an error
+INFO: Executing invalid instruction: [(DIFFERENCE 5)]
+PASS: Executing [(DIFFERENCE 5)] threw an error
+INFO: Executing invalid instruction: [(DIFFERENCE 5 6 7)]
+PASS: Executing [(DIFFERENCE 5 6 7)] threw an error
+INFO: Executing invalid instruction: [[] - 2]
+PASS: Executing [[] - 2] threw an error
+INFO: Executing invalid instruction: [[1] - 2]
+PASS: Executing [[1] - 2] threw an error
+INFO: Executing invalid instruction: [{} - 2]
+PASS: Executing [{} - 2] threw an error
+INFO: Executing invalid instruction: [{1} - 2]
+PASS: Executing [{1} - 2] threw an error
+INFO: Executing invalid instruction: ["one - 2]
+PASS: Executing ["one - 2] threw an error
+INFO: Executing invalid instruction: ["1a - 2]
+PASS: Executing ["1a - 2] threw an error
+INFO: Executing invalid instruction: [1 - []]
+PASS: Executing [1 - []] threw an error
+INFO: Executing invalid instruction: [1 - [2]]
+PASS: Executing [1 - [2]] threw an error
+INFO: Executing invalid instruction: [1 - {}]
+PASS: Executing [1 - {}] threw an error
+INFO: Executing invalid instruction: [1 - {2}]
+PASS: Executing [1 - {2}] threw an error
+INFO: Executing invalid instruction: [1 - "two]
+PASS: Executing [1 - "two] threw an error
+INFO: Executing invalid instruction: [1 - "2a]
+PASS: Executing [1 - "2a] threw an error
+INFO: Executing invalid instruction: [DIFFERENCE [] 2]
+PASS: Executing [DIFFERENCE [] 2] threw an error
+INFO: Executing invalid instruction: [DIFFERENCE [1] 2]
+PASS: Executing [DIFFERENCE [1] 2] threw an error
+INFO: Executing invalid instruction: [DIFFERENCE {} 2]
+PASS: Executing [DIFFERENCE {} 2] threw an error
+INFO: Executing invalid instruction: [DIFFERENCE {1} 2]
+PASS: Executing [DIFFERENCE {1} 2] threw an error
+INFO: Executing invalid instruction: [DIFFERENCE "one 2]
+PASS: Executing [DIFFERENCE "one 2] threw an error
+INFO: Executing invalid instruction: [DIFFERENCE "1a 2]
+PASS: Executing [DIFFERENCE "1a 2] threw an error
+INFO: Executing invalid instruction: [DIFFERENCE 1 []]
+PASS: Executing [DIFFERENCE 1 []] threw an error
+INFO: Executing invalid instruction: [DIFFERENCE 1 [2]]
+PASS: Executing [DIFFERENCE 1 [2]] threw an error
+INFO: Executing invalid instruction: [DIFFERENCE 1 {}]
+PASS: Executing [DIFFERENCE 1 {}] threw an error
+INFO: Executing invalid instruction: [DIFFERENCE 1 {2}]
+PASS: Executing [DIFFERENCE 1 {2}] threw an error
+INFO: Executing invalid instruction: [DIFFERENCE 1 "two]
+PASS: Executing [DIFFERENCE 1 "two] threw an error
+INFO: Executing invalid instruction: [DIFFERENCE 1 "2a]
+PASS: Executing [DIFFERENCE 1 "2a] threw an error
+PASS: [-0] returned 0 , as expected.
+PASS: [MINUS 0] returned 0 , as expected.
+PASS: [MINUS 0] returned 0 , as expected.
+PASS: [MINUS 2] returned -2 , as expected.
+PASS: [MINUS -2] returned 2 , as expected.
+PASS: [MINUS -2e20] returned 2e+20 , as expected.
+INFO: Executing invalid instruction: [MINUS []]
+PASS: Executing [MINUS []] threw an error
+INFO: Executing invalid instruction: [MINUS [1]]
+PASS: Executing [MINUS [1]] threw an error
+INFO: Executing invalid instruction: [MINUS {}]
+PASS: Executing [MINUS {}] threw an error
+INFO: Executing invalid instruction: [MINUS {1}]
+PASS: Executing [MINUS {1}] threw an error
+INFO: Executing invalid instruction: [MINUS "one]
+PASS: Executing [MINUS "one] threw an error
+INFO: Executing invalid instruction: [MINUS "1a]
+PASS: Executing [MINUS "1a] threw an error
+INFO: Executing invalid instruction: [(MINUS)]
+PASS: Executing [(MINUS)] threw an error
+INFO: Executing invalid instruction: [(MINUS 1 1)]
+PASS: Executing [(MINUS 1 1)] threw an error
+PASS: [0 * 0] returned 0 , as expected.
+PASS: [0 * 1] returned 0 , as expected.
+PASS: [1 * 0] returned 0 , as expected.
+PASS: [2 * 4] returned 8 , as expected.
+PASS: [4 * 2] returned 8 , as expected.
+PASS: [-2 * 4] returned -8 , as expected.
+PASS: [2 * -4] returned -8 , as expected.
+PASS: [-2 * -4] returned 8 , as expected.
+PASS: ["2 * "4] returned 8 , as expected.
+PASS: [1e10 * 2e20] returned 2e+30 , as expected.
+PASS: [1e200 * 1e200] returned +INF , as expected.
+PASS: [1e200 * -1e200] returned -INF , as expected.
+PASS: [-1e200 * -1e200] returned +INF , as expected.
+PASS: [1e200 * 1e-200] returned 1 , as expected.
+PASS: [PRODUCT 0 0] returned 0 , as expected.
+PASS: [PRODUCT 0 1] returned 0 , as expected.
+PASS: [PRODUCT 1 0] returned 0 , as expected.
+PASS: [PRODUCT 2 4] returned 8 , as expected.
+PASS: [PRODUCT 4 2] returned 8 , as expected.
+PASS: [PRODUCT -2 4] returned -8 , as expected.
+PASS: [PRODUCT 2 -4] returned -8 , as expected.
+PASS: [PRODUCT -2 -4] returned 8 , as expected.
+PASS: [PRODUCT "2 "4] returned 8 , as expected.
+PASS: [PRODUCT 1e10 2e20] returned 2e+30 , as expected.
+PASS: [PRODUCT 1e200 1e200] returned +INF , as expected.
+PASS: [PRODUCT 1e200 -1e200] returned -INF , as expected.
+PASS: [PRODUCT -1e200 -1e200] returned +INF , as expected.
+PASS: [PRODUCT 1e200 1e-200] returned 1 , as expected.
+PASS: [(PRODUCT)] returned 1 , as expected.
+PASS: [(PRODUCT 5)] returned 5 , as expected.
+PASS: [(PRODUCT 1 2 3 4 5)] returned 120 , as expected.
+INFO: Executing invalid instruction: [[] * 2]
+PASS: Executing [[] * 2] threw an error
+INFO: Executing invalid instruction: [[1] * 2]
+PASS: Executing [[1] * 2] threw an error
+INFO: Executing invalid instruction: [{} * 2]
+PASS: Executing [{} * 2] threw an error
+INFO: Executing invalid instruction: [{1} * 2]
+PASS: Executing [{1} * 2] threw an error
+INFO: Executing invalid instruction: ["one * 2]
+PASS: Executing ["one * 2] threw an error
+INFO: Executing invalid instruction: ["1a * 2]
+PASS: Executing ["1a * 2] threw an error
+INFO: Executing invalid instruction: [1 * []]
+PASS: Executing [1 * []] threw an error
+INFO: Executing invalid instruction: [1 * [2]]
+PASS: Executing [1 * [2]] threw an error
+INFO: Executing invalid instruction: [1 * {}]
+PASS: Executing [1 * {}] threw an error
+INFO: Executing invalid instruction: [1 * {2}]
+PASS: Executing [1 * {2}] threw an error
+INFO: Executing invalid instruction: [1 * "two]
+PASS: Executing [1 * "two] threw an error
+INFO: Executing invalid instruction: [1 * "2a]
+PASS: Executing [1 * "2a] threw an error
+INFO: Executing invalid instruction: [PRODUCT [] 2]
+PASS: Executing [PRODUCT [] 2] threw an error
+INFO: Executing invalid instruction: [PRODUCT [1] 2]
+PASS: Executing [PRODUCT [1] 2] threw an error
+INFO: Executing invalid instruction: [PRODUCT {} 2]
+PASS: Executing [PRODUCT {} 2] threw an error
+INFO: Executing invalid instruction: [PRODUCT {1} 2]
+PASS: Executing [PRODUCT {1} 2] threw an error
+INFO: Executing invalid instruction: [PRODUCT "one 2]
+PASS: Executing [PRODUCT "one 2] threw an error
+INFO: Executing invalid instruction: [PRODUCT "1a 2]
+PASS: Executing [PRODUCT "1a 2] threw an error
+INFO: Executing invalid instruction: [PRODUCT 1 []]
+PASS: Executing [PRODUCT 1 []] threw an error
+INFO: Executing invalid instruction: [PRODUCT 1 [2]]
+PASS: Executing [PRODUCT 1 [2]] threw an error
+INFO: Executing invalid instruction: [PRODUCT 1 {}]
+PASS: Executing [PRODUCT 1 {}] threw an error
+INFO: Executing invalid instruction: [PRODUCT 1 {2}]
+PASS: Executing [PRODUCT 1 {2}] threw an error
+INFO: Executing invalid instruction: [PRODUCT 1 "two]
+PASS: Executing [PRODUCT 1 "two] threw an error
+INFO: Executing invalid instruction: [PRODUCT 1 "2a]
+PASS: Executing [PRODUCT 1 "2a] threw an error
+INFO: Executing invalid instruction: [(PRODUCT 1 2 [] )]
+PASS: Executing [(PRODUCT 1 2 [] )] threw an error
+INFO: Executing invalid instruction: [(PRODUCT 1 2 [3] )]
+PASS: Executing [(PRODUCT 1 2 [3] )] threw an error
+INFO: Executing invalid instruction: [(PRODUCT 1 2 {} )]
+PASS: Executing [(PRODUCT 1 2 {} )] threw an error
+INFO: Executing invalid instruction: [(PRODUCT 1 2 {3} )]
+PASS: Executing [(PRODUCT 1 2 {3} )] threw an error
+INFO: Executing invalid instruction: [(PRODUCT 1 2 "three)]
+PASS: Executing [(PRODUCT 1 2 "three)] threw an error
+INFO: Executing invalid instruction: [(PRODUCT 1 2 "3a)]
+PASS: Executing [(PRODUCT 1 2 "3a)] threw an error
+PASS: [5 / 2] returned 2.5 , as expected.
+PASS: [5 / -2] returned -2.5 , as expected.
+PASS: [-5 / 2] returned -2.5 , as expected.
+PASS: [-5 / -2] returned 2.5 , as expected.
+PASS: [4 / 2] returned 2 , as expected.
+PASS: [0 / 2] returned 0 , as expected.
+PASS: [2.2 / 2] returned 1.1 , as expected.
+FAIL: [6.6 / 2.2] returned 3 . We expected 3
+PASS: [2e40 / 2e20] returned 1e+20 , as expected.
+PASS: [QUOTIENT 5 2] returned 2.5 , as expected.
+PASS: [QUOTIENT 5 -2] returned -2.5 , as expected.
+PASS: [QUOTIENT -5 2] returned -2.5 , as expected.
+PASS: [QUOTIENT -5 -2] returned 2.5 , as expected.
+PASS: [QUOTIENT 4 2] returned 2 , as expected.
+PASS: [QUOTIENT 0 2] returned 0 , as expected.
+PASS: [QUOTIENT 2.2 2] returned 1.1 , as expected.
+FAIL: [QUOTIENT 6.6 2.2] returned 3 . We expected 3
+PASS: [QUOTIENT "5 "2] returned 2.5 , as expected.
+PASS: [QUOTIENT 2e40 2e20] returned 1e+20 , as expected.
+PASS: [(QUOTIENT 1)] returned 1 , as expected.
+PASS: [(QUOTIENT 10)] returned 0.1 , as expected.
+PASS: [(QUOTIENT 0.5)] returned 2 , as expected.
+PASS: [(QUOTIENT 1e40)] returned 1e-40 , as expected.
+INFO: Executing invalid instruction: [(QUOTIENT)]
+PASS: Executing [(QUOTIENT)] threw an error
+INFO: Executing invalid instruction: [(QUOTIENT 5 6 7)]
+PASS: Executing [(QUOTIENT 5 6 7)] threw an error
+INFO: Executing invalid instruction: [[] / 2]
+PASS: Executing [[] / 2] threw an error
+INFO: Executing invalid instruction: [[1] / 2]
+PASS: Executing [[1] / 2] threw an error
+INFO: Executing invalid instruction: [{} / 2]
+PASS: Executing [{} / 2] threw an error
+INFO: Executing invalid instruction: [{1} / 2]
+PASS: Executing [{1} / 2] threw an error
+INFO: Executing invalid instruction: ["one / 2]
+PASS: Executing ["one / 2] threw an error
+INFO: Executing invalid instruction: ["1a / 2]
+PASS: Executing ["1a / 2] threw an error
+INFO: Executing invalid instruction: [1 / 0]
+PASS: Executing [1 / 0] threw an error
+INFO: Executing invalid instruction: [1 / []]
+PASS: Executing [1 / []] threw an error
+INFO: Executing invalid instruction: [1 / [2]]
+PASS: Executing [1 / [2]] threw an error
+INFO: Executing invalid instruction: [1 / {}]
+PASS: Executing [1 / {}] threw an error
+INFO: Executing invalid instruction: [1 / {2}]
+PASS: Executing [1 / {2}] threw an error
+INFO: Executing invalid instruction: [1 / "two]
+PASS: Executing [1 / "two] threw an error
+INFO: Executing invalid instruction: [1 / "2a]
+PASS: Executing [1 / "2a] threw an error
+INFO: Executing invalid instruction: [QUOTIENT 0]
+PASS: Executing [QUOTIENT 0] threw an error
+INFO: Executing invalid instruction: [QUOTIENT []]
+PASS: Executing [QUOTIENT []] threw an error
+INFO: Executing invalid instruction: [QUOTIENT [1]]
+PASS: Executing [QUOTIENT [1]] threw an error
+INFO: Executing invalid instruction: [QUOTIENT {}]
+PASS: Executing [QUOTIENT {}] threw an error
+INFO: Executing invalid instruction: [QUOTIENT {1}]
+PASS: Executing [QUOTIENT {1}] threw an error
+INFO: Executing invalid instruction: [QUOTIENT "one]
+PASS: Executing [QUOTIENT "one] threw an error
+INFO: Executing invalid instruction: [QUOTIENT "1a]
+PASS: Executing [QUOTIENT "1a] threw an error
+INFO: Executing invalid instruction: [QUOTIENT [] 2]
+PASS: Executing [QUOTIENT [] 2] threw an error
+INFO: Executing invalid instruction: [QUOTIENT [1] 2]
+PASS: Executing [QUOTIENT [1] 2] threw an error
+INFO: Executing invalid instruction: [QUOTIENT {} 2]
+PASS: Executing [QUOTIENT {} 2] threw an error
+INFO: Executing invalid instruction: [QUOTIENT {1} 2]
+PASS: Executing [QUOTIENT {1} 2] threw an error
+INFO: Executing invalid instruction: [QUOTIENT "one 2]
+PASS: Executing [QUOTIENT "one 2] threw an error
+INFO: Executing invalid instruction: [QUOTIENT "1a 2]
+PASS: Executing [QUOTIENT "1a 2] threw an error
+INFO: Executing invalid instruction: [QUOTIENT 1 0]
+PASS: Executing [QUOTIENT 1 0] threw an error
+INFO: Executing invalid instruction: [QUOTIENT 1 []]
+PASS: Executing [QUOTIENT 1 []] threw an error
+INFO: Executing invalid instruction: [QUOTIENT 1 [2]]
+PASS: Executing [QUOTIENT 1 [2]] threw an error
+INFO: Executing invalid instruction: [QUOTIENT 1 {}]
+PASS: Executing [QUOTIENT 1 {}] threw an error
+INFO: Executing invalid instruction: [QUOTIENT 1 {2}]
+PASS: Executing [QUOTIENT 1 {2}] threw an error
+INFO: Executing invalid instruction: [QUOTIENT 1 "two]
+PASS: Executing [QUOTIENT 1 "two] threw an error
+INFO: Executing invalid instruction: [QUOTIENT 1 "2a]
+PASS: Executing [QUOTIENT 1 "2a] threw an error
+INFO: Executing invalid instruction: [QUOTIENT 0 "2a]
+PASS: Executing [QUOTIENT 0 "2a] threw an error
+PASS: [REMAINDER 5 6] returned 5 , as expected.
+PASS: [REMAINDER 6 2] returned 0 , as expected.
+PASS: [REMAINDER 0 2] returned 0 , as expected.
+PASS: [REMAINDER 5 5] returned 0 , as expected.
+PASS: [REMAINDER 6 4] returned 2 , as expected.
+PASS: [REMAINDER -6 4] returned -2 , as expected.
+PASS: [REMAINDER 6 -4] returned 2 , as expected.
+PASS: [REMAINDER -6 -4] returned -2 , as expected.
+PASS: [REMAINDER "5 "2] returned 1 , as expected.
+INFO: Executing invalid instruction: [(REMAINDER)]
+PASS: Executing [(REMAINDER)] threw an error
+INFO: Executing invalid instruction: [(REMAINDER 1)]
+PASS: Executing [(REMAINDER 1)] threw an error
+INFO: Executing invalid instruction: [(REMAINDER 5 6 7)]
+PASS: Executing [(REMAINDER 5 6 7)] threw an error
+INFO: Executing invalid instruction: [REMAINDER [] 2]
+PASS: Executing [REMAINDER [] 2] threw an error
+INFO: Executing invalid instruction: [REMAINDER [1] 2]
+PASS: Executing [REMAINDER [1] 2] threw an error
+INFO: Executing invalid instruction: [REMAINDER {} 2]
+PASS: Executing [REMAINDER {} 2] threw an error
+INFO: Executing invalid instruction: [REMAINDER {1} 2]
+PASS: Executing [REMAINDER {1} 2] threw an error
+INFO: Executing invalid instruction: [REMAINDER "one 2]
+PASS: Executing [REMAINDER "one 2] threw an error
+INFO: Executing invalid instruction: [REMAINDER "1a 2]
+PASS: Executing [REMAINDER "1a 2] threw an error
+INFO: Executing invalid instruction: [REMAINDER 1 0]
+PASS: Executing [REMAINDER 1 0] threw an error
+INFO: Executing invalid instruction: [REMAINDER 1 []]
+PASS: Executing [REMAINDER 1 []] threw an error
+INFO: Executing invalid instruction: [REMAINDER 1 [2]]
+PASS: Executing [REMAINDER 1 [2]] threw an error
+INFO: Executing invalid instruction: [REMAINDER 1 {}]
+PASS: Executing [REMAINDER 1 {}] threw an error
+INFO: Executing invalid instruction: [REMAINDER 1 {2}]
+PASS: Executing [REMAINDER 1 {2}] threw an error
+INFO: Executing invalid instruction: [REMAINDER 1 "two]
+PASS: Executing [REMAINDER 1 "two] threw an error
+INFO: Executing invalid instruction: [REMAINDER 1 "2a]
+PASS: Executing [REMAINDER 1 "2a] threw an error
+INFO: Executing invalid instruction: [REMAINDER 0 "2a]
+PASS: Executing [REMAINDER 0 "2a] threw an error
+PASS: [MODULO 5 6] returned 5 , as expected.
+PASS: [MODULO 6 2] returned 0 , as expected.
+PASS: [MODULO 0 2] returned 0 , as expected.
+PASS: [MODULO 5 5] returned 0 , as expected.
+PASS: [MODULO 6 4] returned 2 , as expected.
+PASS: [MODULO 6 -4] returned -2 , as expected.
+PASS: [MODULO -6 4] returned 2 , as expected.
+PASS: [MODULO -6 -4] returned -2 , as expected.
+PASS: [MODULO "5 "2] returned 1 , as expected.
+INFO: Executing invalid instruction: [(MODULO)]
+PASS: Executing [(MODULO)] threw an error
+INFO: Executing invalid instruction: [(MODULO 1)]
+PASS: Executing [(MODULO 1)] threw an error
+INFO: Executing invalid instruction: [(MODULO 5 6 7)]
+PASS: Executing [(MODULO 5 6 7)] threw an error
+INFO: Executing invalid instruction: [MODULO [] 2]
+PASS: Executing [MODULO [] 2] threw an error
+INFO: Executing invalid instruction: [MODULO [1] 2]
+PASS: Executing [MODULO [1] 2] threw an error
+INFO: Executing invalid instruction: [MODULO {} 2]
+PASS: Executing [MODULO {} 2] threw an error
+INFO: Executing invalid instruction: [MODULO {1} 2]
+PASS: Executing [MODULO {1} 2] threw an error
+INFO: Executing invalid instruction: [MODULO "one 2]
+PASS: Executing [MODULO "one 2] threw an error
+INFO: Executing invalid instruction: [MODULO "1a 2]
+PASS: Executing [MODULO "1a 2] threw an error
+INFO: Executing invalid instruction: [MODULO 1 0]
+PASS: Executing [MODULO 1 0] threw an error
+INFO: Executing invalid instruction: [MODULO 1 []]
+PASS: Executing [MODULO 1 []] threw an error
+INFO: Executing invalid instruction: [MODULO 1 [2]]
+PASS: Executing [MODULO 1 [2]] threw an error
+INFO: Executing invalid instruction: [MODULO 1 {}]
+PASS: Executing [MODULO 1 {}] threw an error
+INFO: Executing invalid instruction: [MODULO 1 {2}]
+PASS: Executing [MODULO 1 {2}] threw an error
+INFO: Executing invalid instruction: [MODULO 1 "two]
+PASS: Executing [MODULO 1 "two] threw an error
+INFO: Executing invalid instruction: [MODULO 1 "2a]
+PASS: Executing [MODULO 1 "2a] threw an error
+INFO: Executing invalid instruction: [MODULO 0 "2a]
+PASS: Executing [MODULO 0 "2a] threw an error
+PASS: [INT 0] returned 0 , as expected.
+PASS: [INT 8] returned 8 , as expected.
+PASS: [INT -8] returned -8 , as expected.
+PASS: [INT 8.9] returned 8 , as expected.
+PASS: [INT 8.1] returned 8 , as expected.
+PASS: [INT 8.9999999] returned 8 , as expected.
+PASS: [INT -8.9999999] returned -8 , as expected.
+PASS: [INT 2.3e40] returned 2.3e+40 , as expected.
+INFO: Executing invalid instruction: [(INT)]
+PASS: Executing [(INT)] threw an error
+INFO: Executing invalid instruction: [(INT 1 2)]
+PASS: Executing [(INT 1 2)] threw an error
+INFO: Executing invalid instruction: [INT []]
+PASS: Executing [INT []] threw an error
+INFO: Executing invalid instruction: [INT [1]]
+PASS: Executing [INT [1]] threw an error
+INFO: Executing invalid instruction: [INT {}]
+PASS: Executing [INT {}] threw an error
+INFO: Executing invalid instruction: [INT {1}]
+PASS: Executing [INT {1}] threw an error
+INFO: Executing invalid instruction: [INT "one]
+PASS: Executing [INT "one] threw an error
+INFO: Executing invalid instruction: [INT "1a]
+PASS: Executing [INT "1a] threw an error
+PASS: [ROUND 0] returned 0 , as expected.
+PASS: [ROUND 8] returned 8 , as expected.
+PASS: [ROUND -8] returned -8 , as expected.
+PASS: [ROUND 8.1] returned 8 , as expected.
+PASS: [ROUND 8.9] returned 9 , as expected.
+PASS: [ROUND 8.5] returned 9 , as expected.
+PASS: [ROUND 8.49] returned 8 , as expected.
+PASS: [ROUND -8.9] returned -9 , as expected.
+PASS: [ROUND -8.1] returned -8 , as expected.
+PASS: [ROUND 2.3e40] returned 2.3e+40 , as expected.
+INFO: Executing invalid instruction: [(ROUND)]
+PASS: Executing [(ROUND)] threw an error
+INFO: Executing invalid instruction: [(ROUND 1 2)]
+PASS: Executing [(ROUND 1 2)] threw an error
+INFO: Executing invalid instruction: [ROUND []]
+PASS: Executing [ROUND []] threw an error
+INFO: Executing invalid instruction: [ROUND [1]]
+PASS: Executing [ROUND [1]] threw an error
+INFO: Executing invalid instruction: [ROUND {}]
+PASS: Executing [ROUND {}] threw an error
+INFO: Executing invalid instruction: [ROUND {1}]
+PASS: Executing [ROUND {1}] threw an error
+INFO: Executing invalid instruction: [ROUND "one]
+PASS: Executing [ROUND "one] threw an error
+INFO: Executing invalid instruction: [ROUND "1a]
+PASS: Executing [ROUND "1a] threw an error
+PASS: [ABS 0] returned 0 , as expected.
+PASS: [ABS 8] returned 8 , as expected.
+PASS: [ABS -8] returned 8 , as expected.
+PASS: [ABS 8.1] returned 8.1 , as expected.
+PASS: [ABS -8.1] returned 8.1 , as expected.
+PASS: [ABS 2.3e40] returned 2.3e+40 , as expected.
+INFO: Executing invalid instruction: [(ABS)]
+PASS: Executing [(ABS)] threw an error
+INFO: Executing invalid instruction: [(ABS 1 2)]
+PASS: Executing [(ABS 1 2)] threw an error
+INFO: Executing invalid instruction: [ABS []]
+PASS: Executing [ABS []] threw an error
+INFO: Executing invalid instruction: [ABS [1]]
+PASS: Executing [ABS [1]] threw an error
+INFO: Executing invalid instruction: [ABS {}]
+PASS: Executing [ABS {}] threw an error
+INFO: Executing invalid instruction: [ABS {1}]
+PASS: Executing [ABS {1}] threw an error
+INFO: Executing invalid instruction: [ABS "one]
+PASS: Executing [ABS "one] threw an error
+INFO: Executing invalid instruction: [ABS "1a]
+PASS: Executing [ABS "1a] threw an error
+PASS: [SIGN 0] returned 0 , as expected.
+PASS: [SIGN 8] returned 1 , as expected.
+PASS: [SIGN -8] returned -1 , as expected.
+PASS: [SIGN 0.01] returned 1 , as expected.
+PASS: [SIGN -0.01] returned -1 , as expected.
+PASS: [SIGN 98.6] returned 1 , as expected.
+PASS: [SIGN -98.6] returned -1 , as expected.
+PASS: [SIGN 2.3e40] returned 1 , as expected.
+INFO: Executing invalid instruction: [(SIGN)]
+PASS: Executing [(SIGN)] threw an error
+INFO: Executing invalid instruction: [(SIGN 1 2)]
+PASS: Executing [(SIGN 1 2)] threw an error
+INFO: Executing invalid instruction: [SIGN []]
+PASS: Executing [SIGN []] threw an error
+INFO: Executing invalid instruction: [SIGN [1]]
+PASS: Executing [SIGN [1]] threw an error
+INFO: Executing invalid instruction: [SIGN {}]
+PASS: Executing [SIGN {}] threw an error
+INFO: Executing invalid instruction: [SIGN {1}]
+PASS: Executing [SIGN {1}] threw an error
+INFO: Executing invalid instruction: [SIGN "one]
+PASS: Executing [SIGN "one] threw an error
+INFO: Executing invalid instruction: [SIGN "1a]
+PASS: Executing [SIGN "1a] threw an error
+PASS: [SQRT 0] returned 0 , as expected.
+PASS: [SQRT 4] returned 2 , as expected.
+PASS: [SQRT 9] returned 3 , as expected.
+PASS: [SQRT 1.44] returned 1.2 , as expected.
+FAIL: [SQRT 2] returned 1.4142135623731 . We expected 1.4142135623731
+PASS: [SQRT 1e40] returned 1e+20 , as expected.
+INFO: Executing invalid instruction: [(SQRT)]
+PASS: Executing [(SQRT)] threw an error
+INFO: Executing invalid instruction: [(SQRT 1 2)]
+PASS: Executing [(SQRT 1 2)] threw an error
+INFO: Executing invalid instruction: [SQRT -1]
+PASS: Executing [SQRT -1] threw an error
+INFO: Executing invalid instruction: [SQRT []]
+PASS: Executing [SQRT []] threw an error
+INFO: Executing invalid instruction: [SQRT [1]]
+PASS: Executing [SQRT [1]] threw an error
+INFO: Executing invalid instruction: [SQRT {}]
+PASS: Executing [SQRT {}] threw an error
+INFO: Executing invalid instruction: [SQRT {1}]
+PASS: Executing [SQRT {1}] threw an error
+INFO: Executing invalid instruction: [SQRT "one]
+PASS: Executing [SQRT "one] threw an error
+INFO: Executing invalid instruction: [SQRT "1a]
+PASS: Executing [SQRT "1a] threw an error
+PASS: [POWER 1 0] returned 1 , as expected.
+PASS: [POWER -1 0] returned 1 , as expected.
+PASS: [POWER 2 0] returned 1 , as expected.
+PASS: [POWER 1.23 0] returned 1 , as expected.
+PASS: [POWER 1e40 0] returned 1 , as expected.
+PASS: [POWER 0 1] returned 0 , as expected.
+PASS: [POWER 1 1] returned 1 , as expected.
+PASS: [POWER -1 1] returned -1 , as expected.
+PASS: [POWER 2 1] returned 2 , as expected.
+PASS: [POWER 1.23 1] returned 1.23 , as expected.
+PASS: [POWER 1e40 1] returned 1e+40 , as expected.
+PASS: [POWER 0 2] returned 0 , as expected.
+PASS: [POWER 1 2] returned 1 , as expected.
+PASS: [POWER -1 2] returned 1 , as expected.
+PASS: [POWER 2 2] returned 4 , as expected.
+PASS: [POWER 1.23 2] returned 1.5129 , as expected.
+PASS: [POWER 1e40 2] returned 1e+80 , as expected.
+PASS: [POWER 0 5] returned 0 , as expected.
+PASS: [POWER 1 5] returned 1 , as expected.
+PASS: [POWER -1 5] returned -1 , as expected.
+PASS: [POWER 2 5] returned 32 , as expected.
+FAIL: [POWER 1.1 5] returned 1.61051 . We expected 1.61051
+FAIL: [POWER -1.1 5] returned -1.61051 . We expected -1.61051
+PASS: [POWER 1e2 5] returned 10000000000 , as expected.
+FAIL: [POWER 1e-2 5] returned 1e-10 . We expected 1e-10
+PASS: [POWER 1 -1] returned 1 , as expected.
+PASS: [POWER 2 -1] returned 0.5 , as expected.
+PASS: [POWER 0.5 -1] returned 2 , as expected.
+PASS: [POWER 1e40 -1] returned 1e-40 , as expected.
+PASS: [POWER -1 -1] returned -1 , as expected.
+PASS: [POWER 1 2] returned 1 , as expected.
+PASS: [POWER 2 2] returned 4 , as expected.
+PASS: [POWER 1.23 2] returned 1.5129 , as expected.
+PASS: [POWER 1e40 -1] returned 1e-40 , as expected.
+PASS: [POWER -1 -1] returned -1 , as expected.
+PASS: [POWER 0 0.5] returned 0 , as expected.
+PASS: [POWER 4 0.5] returned 2 , as expected.
+PASS: [POWER 9 0.5] returned 3 , as expected.
+PASS: [POWER 1.44 0.5] returned 1.2 , as expected.
+FAIL: [POWER 2 0.5] returned 1.4142135623731 . We expected 1.4142135623731
+PASS: [POWER 1e40 0.5] returned 1e+20 , as expected.
+INFO: Executing invalid instruction: [POWER 1e100 5]
+PASS: Executing [POWER 1e100 5] threw an error
+INFO: Executing invalid instruction: [POWER -1e100 5]
+PASS: Executing [POWER -1e100 5] threw an error
+INFO: Executing invalid instruction: [(POWER)]
+PASS: Executing [(POWER)] threw an error
+INFO: Executing invalid instruction: [(POWER 5)]
+PASS: Executing [(POWER 5)] threw an error
+INFO: Executing invalid instruction: [(POWER 5 6 7)]
+PASS: Executing [(POWER 5 6 7)] threw an error
+INFO: Executing invalid instruction: [POWER 0 -1]
+PASS: Executing [POWER 0 -1] threw an error
+INFO: Executing invalid instruction: [POWER -1 0.5]
+PASS: Executing [POWER -1 0.5] threw an error
+INFO: Executing invalid instruction: [(POWER)]
+PASS: Executing [(POWER)] threw an error
+INFO: Executing invalid instruction: [(POWER 1)]
+PASS: Executing [(POWER 1)] threw an error
+INFO: Executing invalid instruction: [(POWER 1 2 3)]
+PASS: Executing [(POWER 1 2 3)] threw an error
+INFO: Executing invalid instruction: [POWER [] 2]
+PASS: Executing [POWER [] 2] threw an error
+INFO: Executing invalid instruction: [POWER [1] 2]
+PASS: Executing [POWER [1] 2] threw an error
+INFO: Executing invalid instruction: [POWER {} 2]
+PASS: Executing [POWER {} 2] threw an error
+INFO: Executing invalid instruction: [POWER {1} 2]
+PASS: Executing [POWER {1} 2] threw an error
+INFO: Executing invalid instruction: [POWER "one 2]
+PASS: Executing [POWER "one 2] threw an error
+INFO: Executing invalid instruction: [POWER "1a 2]
+PASS: Executing [POWER "1a 2] threw an error
+INFO: Executing invalid instruction: [POWER 1 []]
+PASS: Executing [POWER 1 []] threw an error
+INFO: Executing invalid instruction: [POWER 1 [2]]
+PASS: Executing [POWER 1 [2]] threw an error
+INFO: Executing invalid instruction: [POWER 1 {}]
+PASS: Executing [POWER 1 {}] threw an error
+INFO: Executing invalid instruction: [POWER 1 {2}]
+PASS: Executing [POWER 1 {2}] threw an error
+INFO: Executing invalid instruction: [POWER 1 "two]
+PASS: Executing [POWER 1 "two] threw an error
+INFO: Executing invalid instruction: [POWER 1 "2a]
+PASS: Executing [POWER 1 "2a] threw an error
+PASS: [EXP 0] returned 1 , as expected.
+FAIL: [EXP 1] returned 2.71828182845905 . We expected 2.71828182845905
+PASS: [EXP 2] returned 7.38905609893065 , as expected.
+FAIL: [EXP -1] returned 0.367879441171442 . We expected 0.367879441171442
+INFO: Executing invalid instruction: [EXP 1e40]
+PASS: Executing [EXP 1e40] threw an error
+INFO: Executing invalid instruction: [(EXP)]
+PASS: Executing [(EXP)] threw an error
+INFO: Executing invalid instruction: [(EXP 1 2)]
+PASS: Executing [(EXP 1 2)] threw an error
+INFO: Executing invalid instruction: [EXP []]
+PASS: Executing [EXP []] threw an error
+INFO: Executing invalid instruction: [EXP [1]]
+PASS: Executing [EXP [1]] threw an error
+INFO: Executing invalid instruction: [EXP {}]
+PASS: Executing [EXP {}] threw an error
+INFO: Executing invalid instruction: [EXP {1}]
+PASS: Executing [EXP {1}] threw an error
+INFO: Executing invalid instruction: [EXP "one]
+PASS: Executing [EXP "one] threw an error
+INFO: Executing invalid instruction: [EXP "1a]
+PASS: Executing [EXP "1a] threw an error
+PASS: [LOG10 1] returned 0 , as expected.
+PASS: [LOG10 1e1] returned 1 , as expected.
+PASS: [LOG10 1e2] returned 2 , as expected.
+PASS: [LOG10 1e-2] returned -2 , as expected.
+PASS: [LOG10 1e100] returned 100 , as expected.
+FAIL: [LOG10 50] returned 1.69897000433602 . We expected 1.69897000433602
+INFO: Executing invalid instruction: [(LOG10)]
+PASS: Executing [(LOG10)] threw an error
+INFO: Executing invalid instruction: [(LOG10 1 2)]
+PASS: Executing [(LOG10 1 2)] threw an error
+INFO: Executing invalid instruction: [LOG10 0]
+PASS: Executing [LOG10 0] threw an error
+INFO: Executing invalid instruction: [LOG10 -1]
+PASS: Executing [LOG10 -1] threw an error
+INFO: Executing invalid instruction: [LOG10 []]
+PASS: Executing [LOG10 []] threw an error
+INFO: Executing invalid instruction: [LOG10 [1]]
+PASS: Executing [LOG10 [1]] threw an error
+INFO: Executing invalid instruction: [LOG10 {}]
+PASS: Executing [LOG10 {}] threw an error
+INFO: Executing invalid instruction: [LOG10 {1}]
+PASS: Executing [LOG10 {1}] threw an error
+INFO: Executing invalid instruction: [LOG10 "one]
+PASS: Executing [LOG10 "one] threw an error
+INFO: Executing invalid instruction: [LOG10 "1a]
+PASS: Executing [LOG10 "1a] threw an error
+PASS: [LN 1] returned 0 , as expected.
+FAIL: [LN 2.71828182845905] returned 1 . We expected 1
+FAIL: [LN 500] returned 6.21460809842219 . We expected 6.21460809842219
+INFO: Executing invalid instruction: [(LN)]
+PASS: Executing [(LN)] threw an error
+INFO: Executing invalid instruction: [(LN 1 2)]
+PASS: Executing [(LN 1 2)] threw an error
+INFO: Executing invalid instruction: [LN 0]
+PASS: Executing [LN 0] threw an error
+INFO: Executing invalid instruction: [LN -1]
+PASS: Executing [LN -1] threw an error
+INFO: Executing invalid instruction: [LN []]
+PASS: Executing [LN []] threw an error
+INFO: Executing invalid instruction: [LN [1]]
+PASS: Executing [LN [1]] threw an error
+INFO: Executing invalid instruction: [LN {}]
+PASS: Executing [LN {}] threw an error
+INFO: Executing invalid instruction: [LN {1}]
+PASS: Executing [LN {1}] threw an error
+INFO: Executing invalid instruction: [LN "one]
+PASS: Executing [LN "one] threw an error
+INFO: Executing invalid instruction: [LN "1a]
+PASS: Executing [LN "1a] threw an error
+PASS: [PI] returned 3.14159265358979 , as expected.
+INFO: Executing invalid instruction: [(PI 1)]
+PASS: Executing [(PI 1)] threw an error
+PASS: [TAN 0] returned 0 , as expected.
+FAIL: [TAN 45] returned 1 . We expected 1
+FAIL: [TAN -45] returned -1 . We expected -1
+FAIL: [TAN 135] returned -1 . We expected -1
+FAIL: [TAN 225] returned 1 . We expected 1
+FAIL: [TAN 180] returned -1.22514845490862e-16 . We expected 0
+FAIL: [TAN 360] returned -2.45029690981724e-16 . We expected 0
+FAIL: [TAN 3600] returned -2.45029690981724e-15 . We expected 0
+PASS: [TAN 14.5] returned 0.25861758435589 , as expected.
+INFO: Executing invalid instruction: [(TAN)]
+PASS: Executing [(TAN)] threw an error
+INFO: Executing invalid instruction: [(TAN 1 2)]
+PASS: Executing [(TAN 1 2)] threw an error
+INFO: Executing invalid instruction: [TAN 90]
+FAIL: Executing [TAN 90] did not throw an error
+INFO: Executing invalid instruction: [TAN -90]
+FAIL: Executing [TAN -90] did not throw an error
+INFO: Executing invalid instruction: [TAN 270]
+FAIL: Executing [TAN 270] did not throw an error
+INFO: Executing invalid instruction: [TAN 3690]
+FAIL: Executing [TAN 3690] did not throw an error
+INFO: Executing invalid instruction: [TAN []]
+PASS: Executing [TAN []] threw an error
+INFO: Executing invalid instruction: [TAN [1]]
+PASS: Executing [TAN [1]] threw an error
+INFO: Executing invalid instruction: [TAN {}]
+PASS: Executing [TAN {}] threw an error
+INFO: Executing invalid instruction: [TAN {1}]
+PASS: Executing [TAN {1}] threw an error
+INFO: Executing invalid instruction: [TAN "one]
+PASS: Executing [TAN "one] threw an error
+INFO: Executing invalid instruction: [TAN "1a]
+PASS: Executing [TAN "1a] threw an error
+PASS: [RADTAN ( 0 )] returned 0 , as expected.
+FAIL: [RADTAN ( 0.25 * PI)] returned 1 . We expected 1
+FAIL: [RADTAN (-0.25 * PI)] returned -1 . We expected -1
+FAIL: [RADTAN ( 0.75 * PI)] returned -1 . We expected -1
+FAIL: [RADTAN ( 1.25 * PI)] returned 1 . We expected 1
+FAIL: [RADTAN ( PI )] returned -1.22514845490862e-16 . We expected 0
+FAIL: [RADTAN ( 2 * PI )] returned -2.45029690981724e-16 . We expected 0
+FAIL: [RADTAN ( 10 * PI )] returned -1.22514845490862e-15 . We expected 0
+PASS: [RADTAN ( 14.5 )] returned -2.63406913250383 , as expected.
+INFO: Executing invalid instruction: [(RADTAN)]
+PASS: Executing [(RADTAN)] threw an error
+INFO: Executing invalid instruction: [(RADTAN 1 2)]
+PASS: Executing [(RADTAN 1 2)] threw an error
+INFO: Executing invalid instruction: [RADTAN ( 0.5 * PI)]
+FAIL: Executing [RADTAN ( 0.5 * PI)] did not throw an error
+INFO: Executing invalid instruction: [RADTAN (-0.5 * PI)]
+FAIL: Executing [RADTAN (-0.5 * PI)] did not throw an error
+INFO: Executing invalid instruction: [RADTAN ( 1.5 * PI)]
+FAIL: Executing [RADTAN ( 1.5 * PI)] did not throw an error
+INFO: Executing invalid instruction: [RADTAN ( 100 * PI)]
+FAIL: Executing [RADTAN ( 100 * PI)] did not throw an error
+INFO: Executing invalid instruction: [RADTAN []]
+PASS: Executing [RADTAN []] threw an error
+INFO: Executing invalid instruction: [RADTAN [1]]
+PASS: Executing [RADTAN [1]] threw an error
+INFO: Executing invalid instruction: [RADTAN {}]
+PASS: Executing [RADTAN {}] threw an error
+INFO: Executing invalid instruction: [RADTAN {1}]
+PASS: Executing [RADTAN {1}] threw an error
+INFO: Executing invalid instruction: [RADTAN "one]
+PASS: Executing [RADTAN "one] threw an error
+INFO: Executing invalid instruction: [RADTAN "1a]
+PASS: Executing [RADTAN "1a] threw an error
+PASS: [ARCTAN 0] returned 0 , as expected.
+PASS: [ARCTAN 1] returned 45 , as expected.
+PASS: [ARCTAN -1] returned -45 , as expected.
+PASS: [ARCTAN 14.5] returned 86.0548137709624 , as expected.
+PASS: [(ARCTAN 1 0 )] returned 0 , as expected.
+PASS: [(ARCTAN 1 1 )] returned 45 , as expected.
+PASS: [(ARCTAN 1 -1 )] returned -45 , as expected.
+PASS: [(ARCTAN -1 1 )] returned 135 , as expected.
+PASS: [(ARCTAN -1 -1 )] returned -135 , as expected.
+PASS: [(ARCTAN 1 14.5)] returned 86.0548137709624 , as expected.
+PASS: [(ARCTAN 2 0)] returned 0 , as expected.
+PASS: [(ARCTAN 2 2)] returned 45 , as expected.
+PASS: [(ARCTAN 2 -2)] returned -45 , as expected.
+PASS: [(ARCTAN 2 29)] returned 86.0548137709624 , as expected.
+PASS: [(ARCTAN 1 100)] returned 89.4270613023165 , as expected.
+INFO: Executing invalid instruction: [(ARCTAN)]
+PASS: Executing [(ARCTAN)] threw an error
+INFO: Executing invalid instruction: [(ARCTAN 1 2 3)]
+PASS: Executing [(ARCTAN 1 2 3)] threw an error
+INFO: Executing invalid instruction: [ARCTAN []]
+PASS: Executing [ARCTAN []] threw an error
+INFO: Executing invalid instruction: [ARCTAN [1]]
+PASS: Executing [ARCTAN [1]] threw an error
+INFO: Executing invalid instruction: [ARCTAN {}]
+PASS: Executing [ARCTAN {}] threw an error
+INFO: Executing invalid instruction: [ARCTAN {1}]
+PASS: Executing [ARCTAN {1}] threw an error
+INFO: Executing invalid instruction: [ARCTAN "one]
+PASS: Executing [ARCTAN "one] threw an error
+INFO: Executing invalid instruction: [ARCTAN "1a]
+PASS: Executing [ARCTAN "1a] threw an error
+INFO: Executing invalid instruction: [(ARCTAN 0 1)]
+FAIL: Executing [(ARCTAN 0 1)] did not throw an error
+INFO: Executing invalid instruction: [(ARCTAN [] 1)]
+PASS: Executing [(ARCTAN [] 1)] threw an error
+INFO: Executing invalid instruction: [(ARCTAN [1] 1)]
+PASS: Executing [(ARCTAN [1] 1)] threw an error
+INFO: Executing invalid instruction: [(ARCTAN {} 1)]
+PASS: Executing [(ARCTAN {} 1)] threw an error
+INFO: Executing invalid instruction: [(ARCTAN {1} 1)]
+PASS: Executing [(ARCTAN {1} 1)] threw an error
+INFO: Executing invalid instruction: [(ARCTAN "one 1)]
+PASS: Executing [(ARCTAN "one 1)] threw an error
+INFO: Executing invalid instruction: [(ARCTAN "1a 1)]
+PASS: Executing [(ARCTAN "1a 1)] threw an error
+INFO: Executing invalid instruction: [(ARCTAN 1 [] )]
+PASS: Executing [(ARCTAN 1 [] )] threw an error
+INFO: Executing invalid instruction: [(ARCTAN 1 [1] )]
+PASS: Executing [(ARCTAN 1 [1] )] threw an error
+INFO: Executing invalid instruction: [(ARCTAN 1 {} )]
+PASS: Executing [(ARCTAN 1 {} )] threw an error
+INFO: Executing invalid instruction: [(ARCTAN 1 {1} )]
+PASS: Executing [(ARCTAN 1 {1} )] threw an error
+INFO: Executing invalid instruction: [(ARCTAN 1 "one )]
+PASS: Executing [(ARCTAN 1 "one )] threw an error
+INFO: Executing invalid instruction: [(ARCTAN 1 "1a )]
+PASS: Executing [(ARCTAN 1 "1a )] threw an error
+PASS: [RADARCTAN 0] returned 0 , as expected.
+PASS: [RADARCTAN 1] returned 0.785398163397448 , as expected.
+PASS: [RADARCTAN -1] returned -0.785398163397448 , as expected.
+PASS: [RADARCTAN 14.5] returned 1.50193983749385 , as expected.
+PASS: [(RADARCTAN 1 0 )] returned 0 , as expected.
+PASS: [(RADARCTAN 1 1 )] returned 0.785398163397448 , as expected.
+PASS: [(RADARCTAN 1 -1 )] returned -0.785398163397448 , as expected.
+PASS: [(RADARCTAN -1 1 )] returned 2.35619449019234 , as expected.
+PASS: [(RADARCTAN -1 -1 )] returned -2.35619449019234 , as expected.
+PASS: [(RADARCTAN 1 14.5 )] returned 1.50193983749385 , as expected.
+PASS: [(RADARCTAN 2 0 )] returned 0 , as expected.
+PASS: [(RADARCTAN 2 2 )] returned 0.785398163397448 , as expected.
+PASS: [(RADARCTAN 2 -2 )] returned -0.785398163397448 , as expected.
+PASS: [(RADARCTAN 2 29 )] returned 1.50193983749385 , as expected.
+PASS: [(RADARCTAN 1 100)] returned 1.56079666010823 , as expected.
+INFO: Executing invalid instruction: [(RADARCTAN)]
+PASS: Executing [(RADARCTAN)] threw an error
+INFO: Executing invalid instruction: [(RADARCTAN 1 2 3)]
+PASS: Executing [(RADARCTAN 1 2 3)] threw an error
+INFO: Executing invalid instruction: [RADARCTAN []]
+PASS: Executing [RADARCTAN []] threw an error
+INFO: Executing invalid instruction: [RADARCTAN [1]]
+PASS: Executing [RADARCTAN [1]] threw an error
+INFO: Executing invalid instruction: [RADARCTAN {}]
+PASS: Executing [RADARCTAN {}] threw an error
+INFO: Executing invalid instruction: [RADARCTAN {1}]
+PASS: Executing [RADARCTAN {1}] threw an error
+INFO: Executing invalid instruction: [RADARCTAN "one]
+PASS: Executing [RADARCTAN "one] threw an error
+INFO: Executing invalid instruction: [RADARCTAN "1a]
+PASS: Executing [RADARCTAN "1a] threw an error
+INFO: Executing invalid instruction: [(RADARCTAN 0 1)]
+FAIL: Executing [(RADARCTAN 0 1)] did not throw an error
+INFO: Executing invalid instruction: [(RADARCTAN [] 1)]
+PASS: Executing [(RADARCTAN [] 1)] threw an error
+INFO: Executing invalid instruction: [(RADARCTAN [1] 1)]
+PASS: Executing [(RADARCTAN [1] 1)] threw an error
+INFO: Executing invalid instruction: [(RADARCTAN {} 1)]
+PASS: Executing [(RADARCTAN {} 1)] threw an error
+INFO: Executing invalid instruction: [(RADARCTAN {1} 1)]
+PASS: Executing [(RADARCTAN {1} 1)] threw an error
+INFO: Executing invalid instruction: [(RADARCTAN "one 1)]
+PASS: Executing [(RADARCTAN "one 1)] threw an error
+INFO: Executing invalid instruction: [(RADARCTAN "1a 1)]
+PASS: Executing [(RADARCTAN "1a 1)] threw an error
+INFO: Executing invalid instruction: [(RADARCTAN 1 [] )]
+PASS: Executing [(RADARCTAN 1 [] )] threw an error
+INFO: Executing invalid instruction: [(RADARCTAN 1 [1] )]
+PASS: Executing [(RADARCTAN 1 [1] )] threw an error
+INFO: Executing invalid instruction: [(RADARCTAN 1 {} )]
+PASS: Executing [(RADARCTAN 1 {} )] threw an error
+INFO: Executing invalid instruction: [(RADARCTAN 1 {1} )]
+PASS: Executing [(RADARCTAN 1 {1} )] threw an error
+INFO: Executing invalid instruction: [(RADARCTAN 1 "one )]
+PASS: Executing [(RADARCTAN 1 "one )] threw an error
+INFO: Executing invalid instruction: [(RADARCTAN 1 "1a )]
+PASS: Executing [(RADARCTAN 1 "1a )] threw an error
+PASS: [SIN 0] returned 0 , as expected.
+FAIL: [SIN 30] returned 0.5 . We expected 0.5
+FAIL: [SIN 45] returned 0.707106781186547 . We expected 0.707106781186548
+FAIL: [SIN -45] returned -0.707106781186547 . We expected -0.707106781186548
+PASS: [SIN 90] returned 1 , as expected.
+FAIL: [SIN 180] returned 1.22514845490862e-16 . We expected 0
+PASS: [SIN 270] returned -1 , as expected.
+FAIL: [SIN 360] returned -2.45029690981724e-16 . We expected 0
+FAIL: [SIN 3600] returned -2.45029690981724e-15 . We expected 0
+PASS: [SIN 3690] returned 1 , as expected.
+PASS: [SIN 14.5] returned 0.250380004054441 , as expected.
+INFO: Executing invalid instruction: [(SIN)]
+PASS: Executing [(SIN)] threw an error
+INFO: Executing invalid instruction: [(SIN 1 2)]
+PASS: Executing [(SIN 1 2)] threw an error
+INFO: Executing invalid instruction: [SIN []]
+PASS: Executing [SIN []] threw an error
+INFO: Executing invalid instruction: [SIN [1]]
+PASS: Executing [SIN [1]] threw an error
+INFO: Executing invalid instruction: [SIN {}]
+PASS: Executing [SIN {}] threw an error
+INFO: Executing invalid instruction: [SIN {1}]
+PASS: Executing [SIN {1}] threw an error
+INFO: Executing invalid instruction: [SIN "one]
+PASS: Executing [SIN "one] threw an error
+INFO: Executing invalid instruction: [SIN "1a]
+PASS: Executing [SIN "1a] threw an error
+PASS: [RADSIN 0] returned 0 , as expected.
+FAIL: [RADSIN ( 0.25 * PI)] returned 0.707106781186547 . We expected 0.707106781186548
+FAIL: [RADSIN (-0.25 * PI)] returned -0.707106781186547 . We expected -0.707106781186548
+FAIL: [RADSIN (1/6 * PI)] returned 0.5 . We expected 0.5
+PASS: [RADSIN ( 0.5 * PI)] returned 1 , as expected.
+FAIL: [RADSIN PI] returned 1.22514845490862e-16 . We expected 0
+PASS: [RADSIN (1.5 * PI)] returned -1 , as expected.
+FAIL: [RADSIN ( 2 * PI)] returned -2.45029690981724e-16 . We expected 0
+FAIL: [RADSIN ( 10 * PI)] returned -1.22514845490862e-15 . We expected 0
+PASS: [RADSIN ( 10.50 * PI)] returned 1 , as expected.
+PASS: [RADSIN 14.5] returned 0.934895055524683 , as expected.
+INFO: Executing invalid instruction: [(RADSIN)]
+PASS: Executing [(RADSIN)] threw an error
+INFO: Executing invalid instruction: [(RADSIN 1 2)]
+PASS: Executing [(RADSIN 1 2)] threw an error
+INFO: Executing invalid instruction: [RADSIN []]
+PASS: Executing [RADSIN []] threw an error
+INFO: Executing invalid instruction: [RADSIN [1]]
+PASS: Executing [RADSIN [1]] threw an error
+INFO: Executing invalid instruction: [RADSIN {}]
+PASS: Executing [RADSIN {}] threw an error
+INFO: Executing invalid instruction: [RADSIN {1}]
+PASS: Executing [RADSIN {1}] threw an error
+INFO: Executing invalid instruction: [RADSIN "one]
+PASS: Executing [RADSIN "one] threw an error
+INFO: Executing invalid instruction: [RADSIN "1a]
+PASS: Executing [RADSIN "1a] threw an error
+PASS: [ARCSIN 0] returned 0 , as expected.
+FAIL: [ARCSIN ( 0.5 * SQRT 2)] returned 45 . We expected 45
+FAIL: [ARCSIN (-0.5 * SQRT 2)] returned -45 . We expected -45
+PASS: [ARCSIN 1] returned 90 , as expected.
+PASS: [ARCSIN -1] returned -90 , as expected.
+PASS: [ARCSIN 0.5] returned 30 , as expected.
+PASS: [ARCSIN -0.5] returned -30 , as expected.
+INFO: Executing invalid instruction: [(ARCSIN)]
+PASS: Executing [(ARCSIN)] threw an error
+INFO: Executing invalid instruction: [(ARCSIN 1 2)]
+PASS: Executing [(ARCSIN 1 2)] threw an error
+INFO: Executing invalid instruction: [ARCSIN 1.1]
+FAIL: Executing [ARCSIN 1.1] did not throw an error
+INFO: Executing invalid instruction: [ARCSIN -1.1]
+FAIL: Executing [ARCSIN -1.1] did not throw an error
+INFO: Executing invalid instruction: [ARCSIN []]
+PASS: Executing [ARCSIN []] threw an error
+INFO: Executing invalid instruction: [ARCSIN [1]]
+PASS: Executing [ARCSIN [1]] threw an error
+INFO: Executing invalid instruction: [ARCSIN {}]
+PASS: Executing [ARCSIN {}] threw an error
+INFO: Executing invalid instruction: [ARCSIN {1}]
+PASS: Executing [ARCSIN {1}] threw an error
+INFO: Executing invalid instruction: [ARCSIN "one]
+PASS: Executing [ARCSIN "one] threw an error
+INFO: Executing invalid instruction: [ARCSIN "1a]
+PASS: Executing [ARCSIN "1a] threw an error
+PASS: [RADARCSIN 0] returned 0 , as expected.
+FAIL: [RADARCSIN ( 0.5 * SQRT 2)] returned 0.785398163397448 . We expected 0.785398163397448
+FAIL: [RADARCSIN (-0.5 * SQRT 2)] returned -0.785398163397448 . We expected -0.785398163397448
+PASS: [RADARCSIN 1] returned 1.5707963267949 , as expected.
+PASS: [RADARCSIN -1] returned -1.5707963267949 , as expected.
+FAIL: [RADARCSIN 0.5] returned 0.523598775598299 . We expected 0.523598775598299
+FAIL: [RADARCSIN -0.5] returned -0.523598775598299 . We expected -0.523598775598299
+INFO: Executing invalid instruction: [(RADARCSIN)]
+PASS: Executing [(RADARCSIN)] threw an error
+INFO: Executing invalid instruction: [(RADARCSIN 1 2)]
+PASS: Executing [(RADARCSIN 1 2)] threw an error
+INFO: Executing invalid instruction: [RADARCSIN 1.1]
+FAIL: Executing [RADARCSIN 1.1] did not throw an error
+INFO: Executing invalid instruction: [RADARCSIN -1.1]
+FAIL: Executing [RADARCSIN -1.1] did not throw an error
+INFO: Executing invalid instruction: [RADARCSIN []]
+PASS: Executing [RADARCSIN []] threw an error
+INFO: Executing invalid instruction: [RADARCSIN [1]]
+PASS: Executing [RADARCSIN [1]] threw an error
+INFO: Executing invalid instruction: [RADARCSIN {}]
+PASS: Executing [RADARCSIN {}] threw an error
+INFO: Executing invalid instruction: [RADARCSIN {1}]
+PASS: Executing [RADARCSIN {1}] threw an error
+INFO: Executing invalid instruction: [RADARCSIN "one]
+PASS: Executing [RADARCSIN "one] threw an error
+INFO: Executing invalid instruction: [RADARCSIN "1a]
+PASS: Executing [RADARCSIN "1a] threw an error
+PASS: [COS 0] returned 1 , as expected.
+PASS: [COS 45] returned 0.707106781186548 , as expected.
+PASS: [COS -45] returned 0.707106781186548 , as expected.
+FAIL: [COS 225] returned -0.707106781186548 . We expected -0.707106781186548
+FAIL: [COS 60] returned 0.5 . We expected 0.5
+FAIL: [COS 90] returned 6.1257422745431e-17 . We expected 0
+PASS: [COS 180] returned -1 , as expected.
+FAIL: [COS 270] returned -1.83772268236293e-16 . We expected 0
+PASS: [COS 360] returned 1 , as expected.
+PASS: [COS 3600] returned 1 , as expected.
+FAIL: [COS 3690] returned 7.84062485076342e-15 . We expected 0
+PASS: [COS 14.5] returned 0.968147640378108 , as expected.
+INFO: Executing invalid instruction: [(COS)]
+PASS: Executing [(COS)] threw an error
+INFO: Executing invalid instruction: [(COS 1 2)]
+PASS: Executing [(COS 1 2)] threw an error
+INFO: Executing invalid instruction: [COS []]
+PASS: Executing [COS []] threw an error
+INFO: Executing invalid instruction: [COS [1]]
+PASS: Executing [COS [1]] threw an error
+INFO: Executing invalid instruction: [COS {}]
+PASS: Executing [COS {}] threw an error
+INFO: Executing invalid instruction: [COS {1}]
+PASS: Executing [COS {1}] threw an error
+INFO: Executing invalid instruction: [COS "one]
+PASS: Executing [COS "one] threw an error
+INFO: Executing invalid instruction: [COS "1a]
+PASS: Executing [COS "1a] threw an error
+PASS: [RADCOS 0] returned 1 , as expected.
+PASS: [RADCOS ( 0.25 * PI)] returned 0.707106781186548 , as expected.
+PASS: [RADCOS (-0.25 * PI)] returned 0.707106781186548 , as expected.
+FAIL: [RADCOS ( 1.25 * PI)] returned -0.707106781186548 . We expected -0.707106781186548
+FAIL: [RADCOS ( 1/3 * PI)] returned 0.5 . We expected 0.5
+FAIL: [RADCOS ( 0.5 * PI)] returned 6.1257422745431e-17 . We expected 0
+PASS: [RADCOS PI] returned -1 , as expected.
+FAIL: [RADCOS 1.5 * PI] returned -1.83772268236293e-16 . We expected 0
+PASS: [RADCOS 2 * PI] returned 1 , as expected.
+PASS: [RADCOS 10 * PI] returned 1 , as expected.
+FAIL: [RADCOS 10.50 * PI] returned -4.89950961746199e-16 . We expected 0
+PASS: [RADCOS 14.5] returned -0.354924266788705 , as expected.
+INFO: Executing invalid instruction: [(RADCOS)]
+PASS: Executing [(RADCOS)] threw an error
+INFO: Executing invalid instruction: [(RADCOS 1 2)]
+PASS: Executing [(RADCOS 1 2)] threw an error
+INFO: Executing invalid instruction: [RADCOS []]
+PASS: Executing [RADCOS []] threw an error
+INFO: Executing invalid instruction: [RADCOS [1]]
+PASS: Executing [RADCOS [1]] threw an error
+INFO: Executing invalid instruction: [RADCOS {}]
+PASS: Executing [RADCOS {}] threw an error
+INFO: Executing invalid instruction: [RADCOS {1}]
+PASS: Executing [RADCOS {1}] threw an error
+INFO: Executing invalid instruction: [RADCOS "one]
+PASS: Executing [RADCOS "one] threw an error
+INFO: Executing invalid instruction: [RADCOS "1a]
+PASS: Executing [RADCOS "1a] threw an error
+PASS: [ARCCOS 1] returned 0 , as expected.
+PASS: [ARCCOS ( 0.5 * SQRT 2)] returned 45 , as expected.
+PASS: [ARCCOS (-0.5 * SQRT 2)] returned 135 , as expected.
+PASS: [ARCCOS 0.5] returned 60 , as expected.
+PASS: [ARCCOS 0] returned 90 , as expected.
+PASS: [ARCCOS -0.5] returned 120 , as expected.
+PASS: [ARCCOS -1] returned 180 , as expected.
+INFO: Executing invalid instruction: [(ARCCOS)]
+PASS: Executing [(ARCCOS)] threw an error
+INFO: Executing invalid instruction: [(ARCCOS 1 2)]
+PASS: Executing [(ARCCOS 1 2)] threw an error
+INFO: Executing invalid instruction: [ARCCOS 1.1]
+FAIL: Executing [ARCCOS 1.1] did not throw an error
+INFO: Executing invalid instruction: [ARCCOS -1.1]
+FAIL: Executing [ARCCOS -1.1] did not throw an error
+INFO: Executing invalid instruction: [ARCCOS []]
+PASS: Executing [ARCCOS []] threw an error
+INFO: Executing invalid instruction: [ARCCOS [1]]
+PASS: Executing [ARCCOS [1]] threw an error
+INFO: Executing invalid instruction: [ARCCOS {}]
+PASS: Executing [ARCCOS {}] threw an error
+INFO: Executing invalid instruction: [ARCCOS {1}]
+PASS: Executing [ARCCOS {1}] threw an error
+INFO: Executing invalid instruction: [ARCCOS "one]
+PASS: Executing [ARCCOS "one] threw an error
+INFO: Executing invalid instruction: [ARCCOS "1a]
+PASS: Executing [ARCCOS "1a] threw an error
+PASS: [RADARCCOS 1] returned 0 , as expected.
+PASS: [RADARCCOS ( 0.5 * SQRT 2)] returned 0.785398163397448 , as expected.
+PASS: [RADARCCOS (-0.5 * SQRT 2)] returned 2.35619449019234 , as expected.
+FAIL: [RADARCCOS 0.5] returned 1.0471975511966 . We expected 1.0471975511966
+PASS: [RADARCCOS 0] returned 1.5707963267949 , as expected.
+FAIL: [RADARCCOS -0.5] returned 2.0943951023932 . We expected 2.0943951023932
+PASS: [RADARCCOS -1] returned 3.14159265358979 , as expected.
+INFO: Executing invalid instruction: [(RADCOS)]
+PASS: Executing [(RADCOS)] threw an error
+INFO: Executing invalid instruction: [(RADCOS 1 2)]
+PASS: Executing [(RADCOS 1 2)] threw an error
+INFO: Executing invalid instruction: [RADARCCOS 1.1]
+FAIL: Executing [RADARCCOS 1.1] did not throw an error
+INFO: Executing invalid instruction: [RADARCCOS -1.1]
+FAIL: Executing [RADARCCOS -1.1] did not throw an error
+INFO: Executing invalid instruction: [RADARCCOS []]
+PASS: Executing [RADARCCOS []] threw an error
+INFO: Executing invalid instruction: [RADARCCOS [1]]
+PASS: Executing [RADARCCOS [1]] threw an error
+INFO: Executing invalid instruction: [RADARCCOS {}]
+PASS: Executing [RADARCCOS {}] threw an error
+INFO: Executing invalid instruction: [RADARCCOS {1}]
+PASS: Executing [RADARCCOS {1}] threw an error
+INFO: Executing invalid instruction: [RADARCCOS "one]
+PASS: Executing [RADARCCOS "one] threw an error
+INFO: Executing invalid instruction: [RADARCCOS "1a]
+PASS: Executing [RADARCCOS "1a] threw an error
 PASS: [TEXT "SAMPLEPROC] returned [[a b] [PRINT :a] [SHOW :b]] , as expected.
 INFO: Executing invalid instruction: [(TEXT)]
+PASS: Executing [(TEXT)] threw an error
 INFO: Executing invalid instruction: [(TEXT "nonexistent)]
+PASS: Executing [(TEXT "nonexistent)] threw an error
 INFO: Executing invalid instruction: [(TEXT [sampleproc] )]
+PASS: Executing [(TEXT [sampleproc] )] threw an error
 INFO: Executing invalid instruction: [(TEXT {sampleproc} )]
+PASS: Executing [(TEXT {sampleproc} )] threw an error
 PASS: [FULLTEXT "SAMPLEPROC] returned [TO SAMPLEPROC  :a  :b   PRINT :a ; print   SHOW  :b ; show END] , as expected.
 INFO: Executing invalid instruction: [(FULLTEXT)]
+PASS: Executing [(FULLTEXT)] threw an error
 INFO: Executing invalid instruction: [(FULLTEXT "nonexistent)]
+PASS: Executing [(FULLTEXT "nonexistent)] threw an error
 INFO: Executing invalid instruction: [(FULLTEXT [sampleproc] )]
+PASS: Executing [(FULLTEXT [sampleproc] )] threw an error
 INFO: Executing invalid instruction: [(FULLTEXT {sampleproc} )]
+PASS: Executing [(FULLTEXT {sampleproc} )] threw an error
 PASS: [DEFINEDP "nonexistent] returned false , as expected.
 PASS: [DEFINED? "nonexistent] returned false , as expected.
 PASS: [DEFINED? "FORWARD] returned false , as expected.
@@ -193,9 +1425,13 @@ PASS: [DEFINED? "SAMPLEPROC] returned true , as expected.
 PASS: [DEFINED? "sampleproc] returned true , as expected.
 PASS: [DEFINED? "] returned false , as expected.
 INFO: Executing invalid instruction: [(DEFINED?)]
+PASS: Executing [(DEFINED?)] threw an error
 INFO: Executing invalid instruction: [(DEFINED? {a} )]
+PASS: Executing [(DEFINED? {a} )] threw an error
 INFO: Executing invalid instruction: [(DEFINED? [] )]
+PASS: Executing [(DEFINED? [] )] threw an error
 INFO: Executing invalid instruction: [(DEFINED? "sampleproc "toomany)]
+PASS: Executing [(DEFINED? "sampleproc "toomany)] threw an error
 PASS: [PROCEDUREP "nonexistent] returned false , as expected.
 PASS: [PROCEDURE? "nonexistent] returned false , as expected.
 PASS: [PROCEDURE? "FORWARD] returned true , as expected.
@@ -203,9 +1439,13 @@ PASS: [PROCEDURE? "SAMPLEPROC] returned true , as expected.
 PASS: [PROCEDURE? "sampleproc] returned true , as expected.
 PASS: [PROCEDURE? "] returned false , as expected.
 INFO: Executing invalid instruction: [(PROCEDURE?)]
+PASS: Executing [(PROCEDURE?)] threw an error
 INFO: Executing invalid instruction: [(PROCEDURE? {a} )]
+PASS: Executing [(PROCEDURE? {a} )] threw an error
 INFO: Executing invalid instruction: [(PROCEDURE? [] )]
+PASS: Executing [(PROCEDURE? [] )] threw an error
 INFO: Executing invalid instruction: [(PROCEDURE? "sampleproc "toomany)]
+PASS: Executing [(PROCEDURE? "sampleproc "toomany)] threw an error
 PASS: [NAMEP "nonexistent] returned false , as expected.
 PASS: [NAME? "nonexistent] returned false , as expected.
 PASS: [NAME? "FORWARD] returned false , as expected.
@@ -213,9 +1453,13 @@ PASS: [NAME? "] returned false , as expected.
 PASS: [NAME? "namepvariable] returned true , as expected.
 PASS: [NAME? "NAMEPVARIABLE] returned true , as expected.
 INFO: Executing invalid instruction: [(NAME?)]
+PASS: Executing [(NAME?)] threw an error
 INFO: Executing invalid instruction: [(NAME? {a} )]
+PASS: Executing [(NAME? {a} )] threw an error
 INFO: Executing invalid instruction: [(NAME? [] )]
+PASS: Executing [(NAME? [] )] threw an error
 INFO: Executing invalid instruction: [(NAME? "namepvariable "toomany)]
+PASS: Executing [(NAME? "namepvariable "toomany)] threw an error
 PASS: [PRIMITIVEP "nonexistent] returned false , as expected.
 PASS: [PRIMITIVE? "nonexistent] returned false , as expected.
 PASS: [PRIMITIVE? "FORWARD] returned true , as expected.
@@ -224,9 +1468,13 @@ PASS: [PRIMITIVE? "] returned false , as expected.
 PASS: [PRIMITIVE? "namepvariable] returned false , as expected.
 PASS: [PRIMITIVE? "sampleproc] returned false , as expected.
 INFO: Executing invalid instruction: [(PRIMITIVE?)]
+PASS: Executing [(PRIMITIVE?)] threw an error
 INFO: Executing invalid instruction: [(PRIMITIVE? {a} )]
+PASS: Executing [(PRIMITIVE? {a} )] threw an error
 INFO: Executing invalid instruction: [(PRIMITIVE? [] )]
+PASS: Executing [(PRIMITIVE? [] )] threw an error
 INFO: Executing invalid instruction: [(PRIMITIVE? "namepvariable "toomany)]
+PASS: Executing [(PRIMITIVE? "namepvariable "toomany)] threw an error
 PASS: [MACROP "mymacro] returned true , as expected.
 PASS: [MACRO? "mymacro] returned true , as expected.
 PASS: [MACRO? "FORWARD] returned false , as expected.
@@ -235,15 +1483,22 @@ PASS: [MACRO? "] returned false , as expected.
 PASS: [MACRO? "namepvariable] returned false , as expected.
 PASS: [MACRO? "sampleproc] returned false , as expected.
 INFO: Executing invalid instruction: [(MACRO?)]
+PASS: Executing [(MACRO?)] threw an error
 INFO: Executing invalid instruction: [(MACRO? {a} )]
+PASS: Executing [(MACRO? {a} )] threw an error
 INFO: Executing invalid instruction: [(MACRO? [] )]
+PASS: Executing [(MACRO? [] )] threw an error
 INFO: Executing invalid instruction: [(MACRO? "mymacro "toomany)]
+PASS: Executing [(MACRO? "mymacro "toomany)] threw an error
 PASS: [ECHO "input] returned input , as expected.
 PASS: [DEFINEDP "ECHO] returned true , as expected.
 PASS: [DEFINED? "ECHO] returned true , as expected.
 INFO: Executing invalid instruction: [(DEFINE)]
+PASS: Executing [(DEFINE)] threw an error
 INFO: Executing invalid instruction: [(DEFINE "function)]
+PASS: Executing [(DEFINE "function)] threw an error
 INFO: Executing invalid instruction: [(DEFINE "function [] )]
+PASS: Executing [(DEFINE "function [] )] threw an error
 PASS: [LOCALVARTEST "unknownlocalvar 42] returned 42 , as expected.
 PASS: [NAME? "unknownlocalvar] returned false , as expected.
 PASS: [:10] returned ten , as expected.
@@ -251,50 +1506,84 @@ PASS: [:11] returned eleven , as expected.
 PASS: [:10] returned ten , as expected.
 PASS: [:11] returned eleven , as expected.
 INFO: Executing invalid instruction: [(LOCAL)]
+PASS: Executing [(LOCAL)] threw an error
 INFO: Executing invalid instruction: [LOCAL {}]
+PASS: Executing [LOCAL {}] threw an error
 PASS: [PROCEDURE? "erasedproc] returned true , as expected.
 PASS: [PROCEDURE? "erasedproc] returned false , as expected.
 INFO: Executing invalid instruction: [ERASEDPROC]
+PASS: Executing [ERASEDPROC] threw an error
 INFO: Executing invalid instruction: [(ERASE)]
+PASS: Executing [(ERASE)] threw an error
 INFO: Executing invalid instruction: [ERASE {}]
+PASS: Executing [ERASE {}] threw an error
 INFO: Executing invalid instruction: [ERASE "forward]
+PASS: Executing [ERASE "forward] threw an error
 PASS: [PROCEDURE? "sampleproc] returned true , as expected.
 INFO: Executing invalid instruction: [(ERALL 10)]
+PASS: Executing [(ERALL 10)] threw an error
 INFO: Executing invalid instruction: [(ERALL [] )]
+PASS: Executing [(ERALL [] )] threw an error
 INFO: Executing invalid instruction: [(ERALL {} )]
+PASS: Executing [(ERALL {} )] threw an error
 INFO: Executing invalid instruction: [(ERALL "no)]
+PASS: Executing [(ERALL "no)] threw an error
 PASS: [LOCALVARTEST "mylocalvarname 42] returned 42 , as expected.
 PASS: [:mylocalvarname] returned 32 , as expected.
 INFO: Executing invalid instruction: [(LOCALMAKE)]
+PASS: Executing [(LOCALMAKE)] threw an error
 PASS: [NAMELIST "a] returned [[] [a]] , as expected.
 PASS: [NAMELIST [a b]] returned [[] [a b]] , as expected.
 PASS: [NAMELIST "] returned [[] []] , as expected.
 PASS: [NAMELIST []] returned [[] []] , as expected.
 INFO: Executing invalid instruction: [(NAMELIST)]
+PASS: Executing [(NAMELIST)] threw an error
 INFO: Executing invalid instruction: [NAMELIST {a b}]
 FAIL: Executing [NAMELIST {a b}] did not throw an error
 INFO: Executing invalid instruction: [(NAMELIST "a "b)]
+PASS: Executing [(NAMELIST "a "b)] threw an error
 INFO: Executing invalid instruction: [(PO)]
+PASS: Executing [(PO)] threw an error
 INFO: Executing invalid instruction: [(PO "pot "pots)]
+PASS: Executing [(PO "pot "pots)] threw an error
 INFO: Executing invalid instruction: [PO "forward]
+PASS: Executing [PO "forward] threw an error
 INFO: Executing invalid instruction: [PO "nonexistent]
+PASS: Executing [PO "nonexistent] threw an error
 INFO: Executing invalid instruction: [PO [nonexistent]]
+PASS: Executing [PO [nonexistent]] threw an error
 INFO: Executing invalid instruction: [PO {}]
+PASS: Executing [PO {}] threw an error
 INFO: Executing invalid instruction: [(POALL "toomany)]
+PASS: Executing [(POALL "toomany)] threw an error
 INFO: Executing invalid instruction: [(POPS "toomany)]
+PASS: Executing [(POPS "toomany)] threw an error
 INFO: Executing invalid instruction: [(POPLS "toomany)]
+PASS: Executing [(POPLS "toomany)] threw an error
 INFO: Executing invalid instruction: [(POT "toomany)]
+PASS: Executing [(POT "toomany)] threw an error
 INFO: Executing invalid instruction: [(POTS "toomany)]
+PASS: Executing [(POTS "toomany)] threw an error
 INFO: Executing invalid instruction: [(PON)]
+PASS: Executing [(PON)] threw an error
 INFO: Executing invalid instruction: [PON "sampleproc]
+PASS: Executing [PON "sampleproc] threw an error
 INFO: Executing invalid instruction: [(PON "too "many)]
+PASS: Executing [(PON "too "many)] threw an error
 INFO: Executing invalid instruction: [PON {a b}]
+PASS: Executing [PON {a b}] threw an error
 INFO: Executing invalid instruction: [(POT)]
+PASS: Executing [(POT)] threw an error
 INFO: Executing invalid instruction: [(POT "pot "pots)]
+PASS: Executing [(POT "pot "pots)] threw an error
 INFO: Executing invalid instruction: [POT "forward]
+PASS: Executing [POT "forward] threw an error
 INFO: Executing invalid instruction: [POT "nonexistent]
+PASS: Executing [POT "nonexistent] threw an error
 INFO: Executing invalid instruction: [POT [nonexistent]]
+PASS: Executing [POT [nonexistent]] threw an error
 INFO: Executing invalid instruction: [POT {}]
+PASS: Executing [POT {}] threw an error
 PASS: [GPROP "nonexistent "prop1] returned [] , as expected.
 PASS: [GPROP "testplist1 "nonexistent] returned [] , as expected.
 PASS: [GPROP "testplist1 "property1] returned 1 , as expected.
@@ -331,41 +1620,73 @@ PASS: [GPROP "testplist1 "property6] returned [] , as expected.
 PASS: [GPROP "testplist1 "] returned [] , as expected.
 PASS: [PLIST "testplist1] returned [] , as expected.
 INFO: Executing invalid instruction: [(PLIST)]
+PASS: Executing [(PLIST)] threw an error
 INFO: Executing invalid instruction: [(PLIST "too "many)]
+PASS: Executing [(PLIST "too "many)] threw an error
 INFO: Executing invalid instruction: [PLIST [1 2 3]]
+PASS: Executing [PLIST [1 2 3]] threw an error
 INFO: Executing invalid instruction: [PLIST {1 2 3}]
+PASS: Executing [PLIST {1 2 3}] threw an error
 INFO: Executing invalid instruction: [(REMPROP)]
+PASS: Executing [(REMPROP)] threw an error
 INFO: Executing invalid instruction: [(REMPROP "plist)]
+PASS: Executing [(REMPROP "plist)] threw an error
 INFO: Executing invalid instruction: [(REMPROP "plist "prop "toomany)]
+PASS: Executing [(REMPROP "plist "prop "toomany)] threw an error
 INFO: Executing invalid instruction: [REMPROP [1 2 3] "prop]
+PASS: Executing [REMPROP [1 2 3] "prop] threw an error
 INFO: Executing invalid instruction: [REMPROP {1 2 3} "prop]
+PASS: Executing [REMPROP {1 2 3} "prop] threw an error
 INFO: Executing invalid instruction: [REMPROP "plist [1 2 3]]
+PASS: Executing [REMPROP "plist [1 2 3]] threw an error
 INFO: Executing invalid instruction: [REMPROP "plist {1 2 3}]
+PASS: Executing [REMPROP "plist {1 2 3}] threw an error
 INFO: Executing invalid instruction: [(GPROP)]
+PASS: Executing [(GPROP)] threw an error
 INFO: Executing invalid instruction: [(GPROP "plist)]
+PASS: Executing [(GPROP "plist)] threw an error
 INFO: Executing invalid instruction: [(GPROP "plist "prop "toomany)]
+PASS: Executing [(GPROP "plist "prop "toomany)] threw an error
 INFO: Executing invalid instruction: [GPROP [1 2 3] "prop]
+PASS: Executing [GPROP [1 2 3] "prop] threw an error
 INFO: Executing invalid instruction: [GPROP {1 2 3} "prop]
+PASS: Executing [GPROP {1 2 3} "prop] threw an error
 INFO: Executing invalid instruction: [GPROP "plist [1 2 3]]
+PASS: Executing [GPROP "plist [1 2 3]] threw an error
 INFO: Executing invalid instruction: [GPROP "plist {1 2 3}]
+PASS: Executing [GPROP "plist {1 2 3}] threw an error
 INFO: Executing invalid instruction: [(PPROP)]
+PASS: Executing [(PPROP)] threw an error
 INFO: Executing invalid instruction: [(PPROP "plist)]
+PASS: Executing [(PPROP "plist)] threw an error
 INFO: Executing invalid instruction: [(PPROP "plist "prop)]
+PASS: Executing [(PPROP "plist "prop)] threw an error
 INFO: Executing invalid instruction: [(PPROP "plist "name "value "toomany)]
+PASS: Executing [(PPROP "plist "name "value "toomany)] threw an error
 INFO: Executing invalid instruction: [PPROP [1 2 3] "name "value]
+PASS: Executing [PPROP [1 2 3] "name "value] threw an error
 INFO: Executing invalid instruction: [PPROP {1 2 3} "name "value]
+PASS: Executing [PPROP {1 2 3} "name "value] threw an error
 INFO: Executing invalid instruction: [PPROP "plist [1 2 3] "value]
+PASS: Executing [PPROP "plist [1 2 3] "value] threw an error
 INFO: Executing invalid instruction: [PPROP "plist {1 2 3} "value]
+PASS: Executing [PPROP "plist {1 2 3} "value] threw an error
 INFO: Executing invalid instruction: [REMPROP [1 2 3] "prop]
+PASS: Executing [REMPROP [1 2 3] "prop] threw an error
 INFO: Executing invalid instruction: [REMPROP {1 2 3} "prop]
+PASS: Executing [REMPROP {1 2 3} "prop] threw an error
 INFO: Executing invalid instruction: [REMPROP "plist [1 2 3]]
+PASS: Executing [REMPROP "plist [1 2 3]] threw an error
 INFO: Executing invalid instruction: [REMPROP "plist {1 2 3}]
+PASS: Executing [REMPROP "plist {1 2 3}] threw an error
 PASS: [PLLIST "a] returned [[] [] [a]] , as expected.
 PASS: [PLLIST "] returned [[] [] []] , as expected.
 PASS: [PLLIST [a b]] returned [[] [] [a b]] , as expected.
 PASS: [PLLIST []] returned [[] [] []] , as expected.
 INFO: Executing invalid instruction: [(PLLIST)]
+PASS: Executing [(PLLIST)] threw an error
 INFO: Executing invalid instruction: [(PLLIST "too "many)]
+PASS: Executing [(PLLIST "too "many)] threw an error
 INFO: Executing invalid instruction: [PLLIST {a b}]
 FAIL: Executing [PLLIST {a b}] did not throw an error
 INFO: executing regression test for bug #1383281
@@ -374,79 +1695,133 @@ PASS: [ACTIVEAREA] returned [-100 -100 100 100] , as expected.
 PASS: [ACTIVEAREA] returned [-500 -500 500 500] , as expected.
 PASS: [ACTIVEAREA] returned [-500 -500 500 500] , as expected.
 INFO: Executing invalid instruction: [(SETACTIVEAREA)]
+PASS: Executing [(SETACTIVEAREA)] threw an error
 INFO: Executing invalid instruction: [(SETACTIVAREA 0)]
+PASS: Executing [(SETACTIVAREA 0)] threw an error
 INFO: Executing invalid instruction: [(SETACTIVAREA 0 0)]
+PASS: Executing [(SETACTIVAREA 0 0)] threw an error
 INFO: Executing invalid instruction: [(SETACTIVAREA 0 0 50)]
+PASS: Executing [(SETACTIVAREA 0 0 50)] threw an error
 INFO: Executing invalid instruction: [(SETACTIVAREA 0 0 50 50)]
+PASS: Executing [(SETACTIVAREA 0 0 50 50)] threw an error
 INFO: Executing invalid instruction: [(SETACTIVAREA [0] )]
+PASS: Executing [(SETACTIVAREA [0] )] threw an error
 INFO: Executing invalid instruction: [(SETACTIVAREA [0 0] )]
+PASS: Executing [(SETACTIVAREA [0 0] )] threw an error
 INFO: Executing invalid instruction: [(SETACTIVAREA [0 0 50] )]
+PASS: Executing [(SETACTIVAREA [0 0 50] )] threw an error
 INFO: Executing invalid instruction: [(SETACTIVAREA [0 0 50 50 50] )]
+PASS: Executing [(SETACTIVAREA [0 0 50 50 50] )] threw an error
 INFO: Executing invalid instruction: [SETACTIVAREA {0 0 50 50}]
+PASS: Executing [SETACTIVAREA {0 0 50 50}] threw an error
 INFO: Executing invalid instruction: [SETACTIVAREA [zero 0 50 50]]
+PASS: Executing [SETACTIVAREA [zero 0 50 50]] threw an error
 INFO: Executing invalid instruction: [SETACTIVAREA [[0] 0 50 50]]
+PASS: Executing [SETACTIVAREA [[0] 0 50 50]] threw an error
 INFO: Executing invalid instruction: [SETACTIVAREA [{0} 0 50 50]]
+PASS: Executing [SETACTIVAREA [{0} 0 50 50]] threw an error
 INFO: Executing invalid instruction: [SETACTIVAREA [0 zero 50 50]]
+PASS: Executing [SETACTIVAREA [0 zero 50 50]] threw an error
 INFO: Executing invalid instruction: [SETACTIVAREA [0 [0] 50 50]]
+PASS: Executing [SETACTIVAREA [0 [0] 50 50]] threw an error
 INFO: Executing invalid instruction: [SETACTIVAREA [0 {0} 50 50]]
+PASS: Executing [SETACTIVAREA [0 {0} 50 50]] threw an error
 INFO: Executing invalid instruction: [SETACTIVAREA [0 0 fifty 50]]
+PASS: Executing [SETACTIVAREA [0 0 fifty 50]] threw an error
 INFO: Executing invalid instruction: [SETACTIVAREA [0 0 [50] 50]]
+PASS: Executing [SETACTIVAREA [0 0 [50] 50]] threw an error
 INFO: Executing invalid instruction: [SETACTIVAREA [0 0 {50} 50]]
+PASS: Executing [SETACTIVAREA [0 0 {50} 50]] threw an error
 INFO: Executing invalid instruction: [SETACTIVAREA [0 0 50 fifty]]
+PASS: Executing [SETACTIVAREA [0 0 50 fifty]] threw an error
 INFO: Executing invalid instruction: [SETACTIVAREA [0 0 50 [50]]]
+PASS: Executing [SETACTIVAREA [0 0 50 [50]]] threw an error
 INFO: Executing invalid instruction: [SETACTIVAREA [0 0 50 {50}]]
+PASS: Executing [SETACTIVAREA [0 0 50 {50}]] threw an error
 INFO: Executing invalid instruction: [SETACTIVAREA [0 0 50 {50}]]
+PASS: Executing [SETACTIVAREA [0 0 50 {50}]] threw an error
 INFO: Executing invalid instruction: [SETACTIVAREA [0 0 -50 50]]
+PASS: Executing [SETACTIVAREA [0 0 -50 50]] threw an error
 INFO: Executing invalid instruction: [SETACTIVAREA [0 0 50 -50]]
+PASS: Executing [SETACTIVAREA [0 0 50 -50]] threw an error
 INFO: Executing invalid instruction: [SETACTIVAREA [0 0 50 -50]]
+PASS: Executing [SETACTIVAREA [0 0 50 -50]] threw an error
 INFO: Executing invalid instruction: [SETACTIVAREA [0 0 0 0]]
+PASS: Executing [SETACTIVAREA [0 0 0 0]] threw an error
 INFO: Executing invalid instruction: [(ACTIVAREA "toomany)]
+PASS: Executing [(ACTIVAREA "toomany)] threw an error
 PASS: Size is [100 100] , as expected.
 PASS: Size is [100 101] , as expected.
 PASS: Size is [101 100] , as expected.
 PASS: The bitpaste was drawn correctly
 PASS: [FORM 123.1 10 10] returned 123.1000000000 , as expected.
 INFO: Executing invalid instruction: [(FORM)]
+PASS: Executing [(FORM)] threw an error
 INFO: Executing invalid instruction: [(FORM 123.1)]
+PASS: Executing [(FORM 123.1)] threw an error
 INFO: Executing invalid instruction: [(FORM 123.1 10)]
+PASS: Executing [(FORM 123.1 10)] threw an error
 INFO: Executing invalid instruction: [FORM "string 10 10]
+PASS: Executing [FORM "string 10 10] threw an error
 INFO: Executing invalid instruction: [FORM 123.1 12.3 10]
+PASS: Executing [FORM 123.1 12.3 10] threw an error
 INFO: Executing invalid instruction: [FORM 123.1 10 12.3]
+PASS: Executing [FORM 123.1 10 12.3] threw an error
 PASS: 'FORM 123.1 10000 10' did not crash
 PASS: 'FORM 123.1 10 10000' did not crash
 INFO: Executing invalid instruction: [FORM -1 -1 "%s%s]
+PASS: Executing [FORM -1 -1 "%s%s] threw an error
 PASS: 'FORM -1 -1 "%s%s' did not crash
 FAIL: The editor window did not popup
 PASS: The editor saved the values of all 10000 variables
 PASS: INPORT did not crash
 INFO: Executing invalid instruction: [(INPORT)]
+PASS: Executing [(INPORT)] threw an error
 INFO: Executing invalid instruction: [INPORT [192]]
+PASS: Executing [INPORT [192]] threw an error
 INFO: Executing invalid instruction: [INPORT -1]
+PASS: Executing [INPORT -1] threw an error
 PASS: INPORTB did not crash
 INFO: Executing invalid instruction: [(INPORTB)]
+PASS: Executing [(INPORTB)] threw an error
 INFO: Executing invalid instruction: [INPORTB [192]]
+PASS: Executing [INPORTB [192]] threw an error
 INFO: Executing invalid instruction: [INPORTB -1]
+PASS: Executing [INPORTB -1] threw an error
 PASS: OUTPORT did not crash
 INFO: Executing invalid instruction: [(OUTPORT)]
+PASS: Executing [(OUTPORT)] threw an error
 INFO: Executing invalid instruction: [(OUTPORT 192)]
+PASS: Executing [(OUTPORT 192)] threw an error
 INFO: Executing invalid instruction: [OUTPORT [192] 0]
+PASS: Executing [OUTPORT [192] 0] threw an error
 INFO: Executing invalid instruction: [OUTPORT -1 0]
+PASS: Executing [OUTPORT -1 0] threw an error
 PASS: OUTPORTB did not crash
 INFO: Executing invalid instruction: [(OUTPORTB)]
+PASS: Executing [(OUTPORTB)] threw an error
 INFO: Executing invalid instruction: [(OUTPORTB 192)]
+PASS: Executing [(OUTPORTB 192)] threw an error
 INFO: Executing invalid instruction: [OUTPORTB [192] 0]
+PASS: Executing [OUTPORTB [192] 0] threw an error
 INFO: Executing invalid instruction: [OUTPORTB -1 0]
+PASS: Executing [OUTPORTB -1 0] threw an error
 PASS: The font circle was drawn correctly
 INFO: Executing invalid instruction: [(LABEL)]
+PASS: Executing [(LABEL)] threw an error
 INFO: Executing invalid instruction: [(LABEL 1 1)]
+PASS: Executing [(LABEL 1 1)] threw an error
 PASS: [PENDOWNP] returned true , as expected.
 PASS: [PENDOWN?] returned true , as expected.
 PASS: [ITEM 1 PEN] returned pendown , as expected.
 PASS: [PENDOWN?] returned false , as expected.
 PASS: [ITEM 1 PEN] returned penup , as expected.
 INFO: Executing invalid instruction: [(PENDOWN "toomany)]
+PASS: Executing [(PENDOWN "toomany)] threw an error
 INFO: Executing invalid instruction: [(PENUP "toomany)]
+PASS: Executing [(PENUP "toomany)] threw an error
 INFO: Executing invalid instruction: [(PENDOWN? "toomany)]
+PASS: Executing [(PENDOWN? "toomany)] threw an error
 PASS: [PENMODE] returned paint , as expected.
 PASS: [ITEM 2 PEN] returned paint , as expected.
 PASS: [PENDOWN?] returned true , as expected.
@@ -470,7 +1845,9 @@ PASS: "bug #1388325 is fixed; 'ELLIPSEARC 1e20 50 50 0' did not crash.
 PASS: The circle was drawn correctly
 PASS: (FILL "true) worked as expected
 INFO: Executing invalid instruction: [(FILL 10)]
+PASS: Executing [(FILL 10)] threw an error
 INFO: Executing invalid instruction: [(FILL ["true] )]
+PASS: Executing [(FILL ["true] )] threw an error
 PASS: [WRITER] returned smoketest.txt , as expected.
 PASS: [WRITEPOS] returned 0 , as expected.
 PASS: [WRITEPOS] returned 7 , as expected.
@@ -493,6 +1870,7 @@ PASS: ALLOPEN returned filealltest-2.txt filealltest-1.txt testlog.baseline.txt 
 PASS: [READLIST] returned [Hello] , as expected.
 PASS: [READLIST] returned [Good Bye] , as expected.
 INFO: Executing invalid instruction: [OPENREAD :filename]
+PASS: Executing [OPENREAD :filename] threw an error
 PASS: [READLIST] returned [Hello] , as expected.
 PASS: [READLIST] returned [Hello] , as expected.
 PASS: [READLIST] returned [And how are you today] , as expected.
@@ -502,33 +1880,59 @@ PASS: [MEMBERP "mytestfile FILES] returned true , as expected.
 PASS: [MEMBERP "mytestfile FILES] returned false , as expected.
 PASS: [MEMBERP "mytestdir DIRECTORIES] returned true , as expected.
 INFO: Executing invalid instruction: [OPENREAD "mytestfile]
+PASS: Executing [OPENREAD "mytestfile] threw an error
 INFO: Executing invalid instruction: [OPENWRITE "mytestfile]
+PASS: Executing [OPENWRITE "mytestfile] threw an error
 INFO: Executing invalid instruction: [OPENAPPEND "mytestfile]
+PASS: Executing [OPENAPPEND "mytestfile] threw an error
 INFO: Executing invalid instruction: [OPENUPDATE "mytestfile]
+PASS: Executing [OPENUPDATE "mytestfile] threw an error
 INFO: Executing invalid instruction: [OPENREAD "mytestfile]
+PASS: Executing [OPENREAD "mytestfile] threw an error
 INFO: Executing invalid instruction: [OPENWRITE "mytestfile]
+PASS: Executing [OPENWRITE "mytestfile] threw an error
 INFO: Executing invalid instruction: [OPENAPPEND "mytestfile]
+PASS: Executing [OPENAPPEND "mytestfile] threw an error
 INFO: Executing invalid instruction: [OPENUPDATE "mytestfile]
+PASS: Executing [OPENUPDATE "mytestfile] threw an error
 PASS: [MEMBERP "mytestfile FILES] returned false , as expected.
 INFO: Executing invalid instruction: [OPENREAD "testdir]
+PASS: Executing [OPENREAD "testdir] threw an error
 INFO: Executing invalid instruction: [OPENWRITE "testdir]
+PASS: Executing [OPENWRITE "testdir] threw an error
 INFO: Executing invalid instruction: [OPENAPPEND "testdir]
+PASS: Executing [OPENAPPEND "testdir] threw an error
 INFO: Executing invalid instruction: [OPENUPDATE "testdir]
+PASS: Executing [OPENUPDATE "testdir] threw an error
 PASS: [MEMBERP "mytestfile DIRECTORIES] returned false , as expected.
 INFO: Executing invalid instruction: [(OPENREAD "testfile.txt 1)]
+PASS: Executing [(OPENREAD "testfile.txt 1)] threw an error
 INFO: Executing invalid instruction: [(OPENWRITE "testfile.txt 1)]
+PASS: Executing [(OPENWRITE "testfile.txt 1)] threw an error
 INFO: Executing invalid instruction: [(OPENAPPEND "testfile.txt 1)]
+PASS: Executing [(OPENAPPEND "testfile.txt 1)] threw an error
 INFO: Executing invalid instruction: [(OPENUPDATE "testfile.txt 1)]
+PASS: Executing [(OPENUPDATE "testfile.txt 1)] threw an error
 INFO: Executing invalid instruction: [CLOSE "nonexistent.txt]
+PASS: Executing [CLOSE "nonexistent.txt] threw an error
 INFO: Executing invalid instruction: [(CLOSE)]
+PASS: Executing [(CLOSE)] threw an error
 INFO: Executing invalid instruction: [(ERASEFILE)]
+PASS: Executing [(ERASEFILE)] threw an error
 INFO: Executing invalid instruction: [(ERASEFILE "too "many)]
+PASS: Executing [(ERASEFILE "too "many)] threw an error
 INFO: Executing invalid instruction: [OPENREAD :longfilename]
+PASS: Executing [OPENREAD :longfilename] threw an error
 INFO: Executing invalid instruction: [OPENWRITE :longfilename]
+PASS: Executing [OPENWRITE :longfilename] threw an error
 INFO: Executing invalid instruction: [OPENAPPEND :longfilename]
+PASS: Executing [OPENAPPEND :longfilename] threw an error
 INFO: Executing invalid instruction: [OPENUPDATE :longfilename]
+PASS: Executing [OPENUPDATE :longfilename] threw an error
 INFO: Executing invalid instruction: [CLOSE :longfilename]
+PASS: Executing [CLOSE :longfilename] threw an error
 INFO: Executing invalid instruction: [ERASEFILE :longfilename]
+PASS: Executing [ERASEFILE :longfilename] threw an error
 PASS: [PENCOLOR] returned 0 , as expected.
 PASS: [PENCOLOR] returned 15 , as expected.
 PASS: [PENCOLOR] returned 7 , as expected.
@@ -537,9 +1941,13 @@ PASS: [PENCOLOR] returned [128 64 32] , as expected.
 PASS: [PENCOLOR] returned [128 64 32] , as expected.
 PASS: [PENCOLOR] returned [255 255 255] , as expected.
 INFO: Executing invalid instruction: [SETPENCOLOR {}]
+PASS: Executing [SETPENCOLOR {}] threw an error
 INFO: Executing invalid instruction: [SETPENCOLOR [0]]
+PASS: Executing [SETPENCOLOR [0]] threw an error
 INFO: Executing invalid instruction: [SETPENCOLOR [0 0]]
+PASS: Executing [SETPENCOLOR [0 0]] threw an error
 INFO: Executing invalid instruction: [SETPENCOLOR [0 0 0 0]]
+PASS: Executing [SETPENCOLOR [0 0 0 0]] threw an error
 PASS: [PENCOLOUR] returned 0 , as expected.
 PASS: [PENCOLOUR] returned 15 , as expected.
 PASS: [PENCOLOUR] returned 7 , as expected.
@@ -548,9 +1956,13 @@ PASS: [PENCOLOUR] returned [128 64 32] , as expected.
 PASS: [PENCOLOUR] returned [128 64 32] , as expected.
 PASS: [PENCOLOUR] returned [255 255 255] , as expected.
 INFO: Executing invalid instruction: [SETPENCOLOUR {}]
+PASS: Executing [SETPENCOLOUR {}] threw an error
 INFO: Executing invalid instruction: [SETPENCOLOUR [0]]
+PASS: Executing [SETPENCOLOUR [0]] threw an error
 INFO: Executing invalid instruction: [SETPENCOLOUR [0 0]]
+PASS: Executing [SETPENCOLOUR [0 0]] threw an error
 INFO: Executing invalid instruction: [SETPENCOLOUR [0 0 0 0]]
+PASS: Executing [SETPENCOLOUR [0 0 0 0]] threw an error
 PASS: [PENCOLOR] returned 0 , as expected.
 PASS: [PENCOLOR] returned 15 , as expected.
 PASS: [PENCOLOR] returned 7 , as expected.
@@ -559,9 +1971,13 @@ PASS: [PENCOLOR] returned [128 64 32] , as expected.
 PASS: [PENCOLOR] returned [128 64 32] , as expected.
 PASS: [PENCOLOR] returned [255 255 255] , as expected.
 INFO: Executing invalid instruction: [SETPC {}]
+PASS: Executing [SETPC {}] threw an error
 INFO: Executing invalid instruction: [SETPC [0]]
+PASS: Executing [SETPC [0]] threw an error
 INFO: Executing invalid instruction: [SETPC [0 0]]
+PASS: Executing [SETPC [0 0]] threw an error
 INFO: Executing invalid instruction: [SETPC [0 0 0 0]]
+PASS: Executing [SETPC [0 0 0 0]] threw an error
 PASS: [FLOODCOLOR] returned 0 , as expected.
 PASS: [FLOODCOLOR] returned 15 , as expected.
 PASS: [FLOODCOLOR] returned 7 , as expected.
@@ -570,9 +1986,13 @@ PASS: [FLOODCOLOR] returned [128 64 32] , as expected.
 PASS: [FLOODCOLOR] returned [128 64 32] , as expected.
 PASS: [FLOODCOLOR] returned [255 255 255] , as expected.
 INFO: Executing invalid instruction: [SETFLOODCOLOR {}]
+PASS: Executing [SETFLOODCOLOR {}] threw an error
 INFO: Executing invalid instruction: [SETFLOODCOLOR [0]]
+PASS: Executing [SETFLOODCOLOR [0]] threw an error
 INFO: Executing invalid instruction: [SETFLOODCOLOR [0 0]]
+PASS: Executing [SETFLOODCOLOR [0 0]] threw an error
 INFO: Executing invalid instruction: [SETFLOODCOLOR [0 0 0 0]]
+PASS: Executing [SETFLOODCOLOR [0 0 0 0]] threw an error
 PASS: [FLOODCOLOUR] returned 0 , as expected.
 PASS: [FLOODCOLOUR] returned 15 , as expected.
 PASS: [FLOODCOLOUR] returned 7 , as expected.
@@ -581,9 +2001,13 @@ PASS: [FLOODCOLOUR] returned [128 64 32] , as expected.
 PASS: [FLOODCOLOUR] returned [128 64 32] , as expected.
 PASS: [FLOODCOLOUR] returned [255 255 255] , as expected.
 INFO: Executing invalid instruction: [SETFLOODCOLOUR {}]
+PASS: Executing [SETFLOODCOLOUR {}] threw an error
 INFO: Executing invalid instruction: [SETFLOODCOLOUR [0]]
+PASS: Executing [SETFLOODCOLOUR [0]] threw an error
 INFO: Executing invalid instruction: [SETFLOODCOLOUR [0 0]]
+PASS: Executing [SETFLOODCOLOUR [0 0]] threw an error
 INFO: Executing invalid instruction: [SETFLOODCOLOUR [0 0 0 0]]
+PASS: Executing [SETFLOODCOLOUR [0 0 0 0]] threw an error
 PASS: [FLOODCOLOR] returned 0 , as expected.
 PASS: [FLOODCOLOR] returned 15 , as expected.
 PASS: [FLOODCOLOR] returned 7 , as expected.
@@ -592,9 +2016,13 @@ PASS: [FLOODCOLOR] returned [128 64 32] , as expected.
 PASS: [FLOODCOLOR] returned [128 64 32] , as expected.
 PASS: [FLOODCOLOR] returned [255 255 255] , as expected.
 INFO: Executing invalid instruction: [SETFC {}]
+PASS: Executing [SETFC {}] threw an error
 INFO: Executing invalid instruction: [SETFC [0]]
+PASS: Executing [SETFC [0]] threw an error
 INFO: Executing invalid instruction: [SETFC [0 0]]
+PASS: Executing [SETFC [0 0]] threw an error
 INFO: Executing invalid instruction: [SETFC [0 0 0 0]]
+PASS: Executing [SETFC [0 0 0 0]] threw an error
 PASS: [SCREENCOLOR] returned 0 , as expected.
 PASS: [SCREENCOLOR] returned 15 , as expected.
 PASS: [SCREENCOLOR] returned 7 , as expected.
@@ -603,9 +2031,13 @@ PASS: [SCREENCOLOR] returned [128 64 32] , as expected.
 PASS: [SCREENCOLOR] returned [128 64 32] , as expected.
 PASS: [SCREENCOLOR] returned [255 255 255] , as expected.
 INFO: Executing invalid instruction: [SETSCREENCOLOR {}]
+PASS: Executing [SETSCREENCOLOR {}] threw an error
 INFO: Executing invalid instruction: [SETSCREENCOLOR [0]]
+PASS: Executing [SETSCREENCOLOR [0]] threw an error
 INFO: Executing invalid instruction: [SETSCREENCOLOR [0 0]]
+PASS: Executing [SETSCREENCOLOR [0 0]] threw an error
 INFO: Executing invalid instruction: [SETSCREENCOLOR [0 0 0 0]]
+PASS: Executing [SETSCREENCOLOR [0 0 0 0]] threw an error
 PASS: [SCREENCOLOUR] returned 0 , as expected.
 PASS: [SCREENCOLOUR] returned 15 , as expected.
 PASS: [SCREENCOLOUR] returned 7 , as expected.
@@ -614,9 +2046,13 @@ PASS: [SCREENCOLOUR] returned [128 64 32] , as expected.
 PASS: [SCREENCOLOUR] returned [128 64 32] , as expected.
 PASS: [SCREENCOLOUR] returned [255 255 255] , as expected.
 INFO: Executing invalid instruction: [SETSCREENCOLOUR {}]
+PASS: Executing [SETSCREENCOLOUR {}] threw an error
 INFO: Executing invalid instruction: [SETSCREENCOLOUR [0]]
+PASS: Executing [SETSCREENCOLOUR [0]] threw an error
 INFO: Executing invalid instruction: [SETSCREENCOLOUR [0 0]]
+PASS: Executing [SETSCREENCOLOUR [0 0]] threw an error
 INFO: Executing invalid instruction: [SETSCREENCOLOUR [0 0 0 0]]
+PASS: Executing [SETSCREENCOLOUR [0 0 0 0]] threw an error
 PASS: [SCREENCOLOR] returned 0 , as expected.
 PASS: [SCREENCOLOR] returned 15 , as expected.
 PASS: [SCREENCOLOR] returned 7 , as expected.
@@ -625,30 +2061,43 @@ PASS: [SCREENCOLOR] returned [128 64 32] , as expected.
 PASS: [SCREENCOLOR] returned [128 64 32] , as expected.
 PASS: [SCREENCOLOR] returned [255 255 255] , as expected.
 INFO: Executing invalid instruction: [SETSC {}]
+PASS: Executing [SETSC {}] threw an error
 INFO: Executing invalid instruction: [SETSC [0]]
+PASS: Executing [SETSC [0]] threw an error
 INFO: Executing invalid instruction: [SETSC [0 0]]
+PASS: Executing [SETSC [0 0]] threw an error
 INFO: Executing invalid instruction: [SETSC [0 0 0 0]]
+PASS: Executing [SETSC [0 0 0 0]] threw an error
 INFO: Executing invalid instruction: [(SPLITSCREEN 1)]
+PASS: Executing [(SPLITSCREEN 1)] threw an error
 INFO: Executing invalid instruction: [(TEXTSCREEN 1)]
+PASS: Executing [(TEXTSCREEN 1)] threw an error
 INFO: Executing invalid instruction: [(FULLSCREEN 1)]
+PASS: Executing [(FULLSCREEN 1)] threw an error
 INFO: [WAIT 0] took 0 ms to execute
 PASS: [WAIT 0 ] waited for 0 ms. Anywhere between 0 ms and 20 is acceptable.
 INFO: [WAIT 1] took 20 ms to execute
 PASS: [WAIT 1 ] waited for 20 ms. Anywhere between 16.6666666666667 ms and 36.6666666666667 is acceptable.
 INFO: [WAIT 6] took 100 ms to execute
 PASS: [WAIT 6 ] waited for 100 ms. Anywhere between 100 ms and 120 is acceptable.
-INFO: [WAIT 10] took 170 ms to execute
-PASS: [WAIT 10 ] waited for 170 ms. Anywhere between 166.666666666667 ms and 186.666666666667 is acceptable.
-INFO: [WAIT 60] took 1002 ms to execute
-PASS: [WAIT 60 ] waited for 1002 ms. Anywhere between 1000 ms and 1020 is acceptable.
-INFO: [WAIT 100] took 1672 ms to execute
-PASS: [WAIT 100 ] waited for 1672 ms. Anywhere between 1666.66666666667 ms and 1686.66666666667 is acceptable.
+INFO: [WAIT 10] took 171 ms to execute
+PASS: [WAIT 10 ] waited for 171 ms. Anywhere between 166.666666666667 ms and 186.666666666667 is acceptable.
+INFO: [WAIT 60] took 1001 ms to execute
+PASS: [WAIT 60 ] waited for 1001 ms. Anywhere between 1000 ms and 1020 is acceptable.
+INFO: [WAIT 100] took 1673 ms to execute
+PASS: [WAIT 100 ] waited for 1673 ms. Anywhere between 1666.66666666667 ms and 1686.66666666667 is acceptable.
 INFO: Executing invalid instruction: [(WAIT)]
+PASS: Executing [(WAIT)] threw an error
 INFO: Executing invalid instruction: [(WAIT 10 10)]
+PASS: Executing [(WAIT 10 10)] threw an error
 INFO: Executing invalid instruction: [WAIT -1]
+PASS: Executing [WAIT -1] threw an error
 INFO: Executing invalid instruction: [WAIT "ABC]
+PASS: Executing [WAIT "ABC] threw an error
 INFO: Executing invalid instruction: [WAIT []]
+PASS: Executing [WAIT []] threw an error
 INFO: Executing invalid instruction: [WAIT {}]
+PASS: Executing [WAIT {}] threw an error
 PASS: [FILES] returned [] , as expected.
 PASS: [DIRECTORIES] returned [.. .] , as expected.
 PASS: [FILES] returned [file1.txt] , as expected.
@@ -667,29 +2116,44 @@ PASS: [FILES] returned [] , as expected.
 PASS: [DIRECTORIES] returned [.. .] , as expected.
 PASS: [MEMBERP "mytestdir DIRECTORIES] returned false , as expected.
 INFO: Executing invalid instruction: [(MKDIR)]
+PASS: Executing [(MKDIR)] threw an error
 INFO: Executing invalid instruction: [(MKDIR "too "many)]
+PASS: Executing [(MKDIR "too "many)] threw an error
 INFO: Executing invalid instruction: [(RMDIR)]
+PASS: Executing [(RMDIR)] threw an error
 INFO: Executing invalid instruction: [RMDIR "too "many)]
+PASS: Executing [RMDIR "too "many)] threw an error
 INFO: Executing invalid instruction: [RMDIR "doesnotexist)]
+PASS: Executing [RMDIR "doesnotexist)] threw an error
 INFO: Executing invalid instruction: [(CHDIR)]
+PASS: Executing [(CHDIR)] threw an error
 INFO: Executing invalid instruction: [CHDIR "too "many)]
+PASS: Executing [CHDIR "too "many)] threw an error
 INFO: Executing invalid instruction: [CHDIR "doesnotexist)]
+PASS: Executing [CHDIR "doesnotexist)] threw an error
 PASS: [LIST? NODES] returned true , as expected.
 PASS: [COUNT NODES] returned 2 , as expected.
 PASS: [NUMBER? ITEM 1 NODES] returned true , as expected.
 PASS: [NUMBER? ITEM 2 NODES] returned true , as expected.
 INFO: Executing invalid instruction: [(NODES "too-many)]
+PASS: Executing [(NODES "too-many)] threw an error
 PASS: [BUTTONP] returned false , as expected.
 PASS: [BUTTON?] returned false , as expected.
 INFO: Executing invalid instruction: [(BUTTON? "too-many)]
+PASS: Executing [(BUTTON? "too-many)] threw an error
 INFO: executing regression test for bug #1384267
 PASS: "bug #1384267 is fixed; turning by a large number in perspective mode did not crash.
 PASS: [SCRUNCH] returned [1 1] , as expected.
 PASS: [SCRUNCH] returned [2 0.1] , as expected.
 INFO: Executing invalid instruction: [(SETSCRUNCH)]
+PASS: Executing [(SETSCRUNCH)] threw an error
 INFO: Executing invalid instruction: [(SETSCRUNCH [1 1] )]
+PASS: Executing [(SETSCRUNCH [1 1] )] threw an error
 INFO: Executing invalid instruction: [(SETSCRUNCH 1)]
+PASS: Executing [(SETSCRUNCH 1)] threw an error
 INFO: Executing invalid instruction: [(SETSCRUNCH 1 1 1)]
+PASS: Executing [(SETSCRUNCH 1 1 1)] threw an error
 INFO: Executing invalid instruction: [(SCRUNCH "toomany)]
+PASS: Executing [(SCRUNCH "toomany)] threw an error
 PASS: [SCRUNCH] returned [0 0] , as expected.
 PASS: [SCRUNCH] returned [1e+50 -1e+50] , as expected.
