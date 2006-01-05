@@ -40,10 +40,20 @@ TO LARGEEDITTEST
   MAKE "testpassed "true
   FOR (list "i 1 :totalvariables) [
     MAKE "variablename (WORD "largeedittest :i)
-    IF NOT :i = RUN (word ": :variablename) [ 
-      REPORTTESTFAILED (sentence "|The editor did not save the value of| :variablename)
+
+    IFELSE NOT NAMEP :variablename [
+      REPORTTESTFAILED (sentence "|The editor did not save the value of| :variablename "|(the variable does not exist)|
+)
       MAKE "testpassed "false
+    ][
+      IF NOT :i = RUN (word ": :variablename) [ 
+        REPORTTESTFAILED (sentence "|The editor did not save the value of| :variablename "|(the value is incorrect)|)
+        MAKE "testpassed "false
+      ]
     ]
+
+    ; error-out so we don't report the failure 9999 more times
+    IF NOT :testpassed [ STOP ]
   ]
 
   if :testpassed [
