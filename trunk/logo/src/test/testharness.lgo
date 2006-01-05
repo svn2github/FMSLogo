@@ -6,6 +6,7 @@ LOAD "array.lgo
 LOAD "wait.lgo
 LOAD "predicate.lgo
 LOAD "logic.lgo
+LOAD "math.lgo
 LOAD "activearea.lgo
 LOAD "bitmap.lgo
 LOAD "form.lgo
@@ -105,13 +106,20 @@ TO REPORTTESTUNINITIALIZE
 END
 
 
-TO RUNBADINPUTTEST :instructions
+TO RUNBADINPUTTEST :instructions        
 
   REPORTTESTINFO (LIST "|Executing invalid instruction:| :instructions )
+
+  ; clear the value of ERROR
+  IGNORE ERROR
 
   CATCH "ERROR [ 
     IGNORE RUN :instructions 
     REPORTTESTFAILED (LIST "Executing :instructions "|did not throw an error|)
+  ]
+
+  IF NOT EMPTYP ERROR [
+    REPORTTESTPASSED (LIST "Executing :instructions "|threw an error|)
   ]
 
 END
@@ -135,10 +143,12 @@ TO TESTALL
 
   REPORTTESTINITIALIZE
 
+  PARSETEST       ; from parse.lgo
   PREDICATETEST   ; from predicate.lgo
   WORDTEST        ; from word.lgo
   ARRAYTEST       ; from array.lgo
   LOGICTEST       ; from logic.lgo
+  MATHTEST        ; from math.lgo
   PROCEDURETEST   ; from procedure.lgo
   PLISTTEST       ; from plist.lgo
   CONTROLFLOWTEST ; from controlflow.lgo
