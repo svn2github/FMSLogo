@@ -45,7 +45,7 @@ This slot is filled with 1 for the first evaluation, 2 for the second, and so on
 <programlisting><userinput>SHOW CASCADE 5 [LPUT # ?] []</userinput>
 [1 2 3 4 5]
 
-<userinput>SHOW CASCADE [VOWELP FIRST ?] [BF ?] "spring</userinput>
+<userinput>SHOW CASCADE [VOWELP FIRST ?] [BUTFIRST ?] "spring</userinput>
 ing
 
 <userinput>SHOW CASCADE 5 [# * ?] 1</userinput>
@@ -67,7 +67,7 @@ END
 
 TO PIGLATIN :word
   OUTPUT (CASCADE [VOWELP FIRST ?] 
-                  [WORD BF ? FIRST ?]
+                  [WORD BUTFIRST ? FIRST ?]
                   :word 
                   [WORD ? "ay])
 END
