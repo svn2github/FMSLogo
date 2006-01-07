@@ -15,7 +15,6 @@
 # * Only the first reference to a command in any section is hyperlinked.
 # * Commands are not hyperlinked when they occurs within their own definition.
 # * All occurances of "Logo" and "MSWLogo" are correct.
-# * The "id" attribute in the command section elements is correct.
 #
 ###############################################################################
 
@@ -40,6 +39,7 @@ $AlternateSpellings{CLEARTEXT}      = ['CT'];
 $AlternateSpellings{CONTINUE}       = ['CO'];
 $AlternateSpellings{DEFINEDP}       = ['DEFINED?'];
 $AlternateSpellings{DOWNPITCH}      = ['DOWN'];
+$AlternateSpellings{EDIT}           = ['ED'];
 $AlternateSpellings{EMPTYP}         = ['EMPTY?'];
 $AlternateSpellings{EQUALP}         = ['EQUAL?'];
 $AlternateSpellings{ERASEFILE}      = ['ERF'];
@@ -66,6 +66,7 @@ $AlternateSpellings{PENPAINT}       = ['PPT'];
 $AlternateSpellings{PENREVERSE}     = ['PX'];
 $AlternateSpellings{PENUP}          = ['PU'];
 $AlternateSpellings{PRIMITIVEP}     = ['PRIMITIVE?'];
+$AlternateSpellings{PRINT}          = ['PR'];
 $AlternateSpellings{PROCEDUREP}     = ['PROCEDURE?'];
 $AlternateSpellings{READCHARS}      = ['RCS'];
 $AlternateSpellings{READCHAR}       = ['RC'];
@@ -75,9 +76,9 @@ $AlternateSpellings{RIGHTROLL}      = ['RR'];
 $AlternateSpellings{RIGHT}          = ['RT'];
 $AlternateSpellings{SCREENCOLOR}    = ['SCREENCOLOUR'];
 $AlternateSpellings{SENTENCE}       = ['SE'];
-$AlternateSpellings{SETFLOODCOLOR}  = ['SETFLOODCOLOUR', 'SETFC'];
-$AlternateSpellings{SETPENCOLOR}    = ['SETPENCOLOUR'];
-$AlternateSpellings{SETSCREENCOLOR} = ['SETSCREENCOLOUR'];
+$AlternateSpellings{SETFLOODCOLOR}  = ['SETFLOODCOLOUR',  'SETFC'];
+$AlternateSpellings{SETPENCOLOR}    = ['SETPENCOLOUR',    'SETPC'];
+$AlternateSpellings{SETSCREENCOLOR} = ['SETSCREENCOLOUR', 'SETSC'];
 $AlternateSpellings{SHOWNP}         = ['SHOWN?'];
 $AlternateSpellings{SHOWTURTLE}     = ['ST'];
 $AlternateSpellings{SPLITSCREEN}    = ['SS'];
@@ -226,6 +227,23 @@ foreach my $filename (<*.xml>) {
   foreach my $line (<$fh>) {
 
     $linenumber++;
+
+    # the first line of all commands should the <section> tag
+    if ($filename =~ m/^command-.*\.xml$/ and $linenumber == 1) {
+      if ($line =~ m/^<section id="command-(.*?)">/) {
+        my $command = $1;
+
+        if ($filename ne "command-" . lc $command . ".xml" and
+            (not $Exceptions{$filename} or
+             not $Exceptions{$filename}{'propername'} or
+             $command ne $Exceptions{$filename}{'propername'})) {
+          LogError($filename, $linenumber, "The `id' attribute of the first section is `$command'.  It should match the filename.");
+        }
+      }
+      else {
+        LogError($filename, $linenumber, "first line is not a <section id=''> start tag.");
+      }
+    }
 
     # the first listed command should match the title
     while ($line =~ m!<synopsis>\s*\(?\s*<command>(.*?)</command>!g) {
