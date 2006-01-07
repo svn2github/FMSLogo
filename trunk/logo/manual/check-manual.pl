@@ -111,7 +111,7 @@ foreach my $filename (<command-*.xml>) {
   foreach my $line (<$fh>) {
     $linenumber++;
 
-    if ($line =~ m!<synopsis>\s*\(?\s*<command>(.*?)</command>!) {
+    if ($line =~ m!<title>(.*?)</title>!) {
 
       $propername = $1;
 
@@ -122,8 +122,7 @@ foreach my $filename (<command-*.xml>) {
         LogError($filename, $linenumber, "contains command for $propername");
       }
 
-      # We found a command name so we can break out of the loop.
-      # (The first listed command is the canonical name)
+      # We found the command name so we can break out of the loop.
       last;
     }
   }
@@ -152,6 +151,18 @@ foreach my $filename (<*.xml>) {
   foreach my $line (<$fh>) {
 
     $linenumber++;
+
+    # the first listed command should match the title
+    while ($line =~ m!<synopsis>\s*\(?\s*<command>(.*?)</command>!g) {
+      my $command = $1;
+
+      if ($filename ne "command-" . lc $command . ".xml" and
+          (not $Exceptions{$filename} or
+           not $Exceptions{$filename}{'propername'} or
+           $command ne $Exceptions{$filename}{'propername'})) {
+        LogError($filename, $linenumber, "first command listed in synopsis is `$command'.  It should match the filename.");
+      }
+    }
 
     while ($line =~ m!<link linkend="(.*?)">(.*?)</link>!g) {
       my $linkend = $1;
