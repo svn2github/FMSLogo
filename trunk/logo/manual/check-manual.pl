@@ -17,9 +17,6 @@
 # * All occurances of "Logo" and "MSWLogo" are correct.
 # * The "id" attribute in the command section elements is correct.
 #
-# Miscellaneous TODO:
-# * Create a list of abbreviations and infer other exceptions from it.
-#
 ###############################################################################
 
 
@@ -30,6 +27,66 @@ $main::TotalErrors   = 0;
 $main::TotalWarnings = 0;
 
 my %Commands = ();
+
+my %AlternateSpellings = ();
+$AlternateSpellings{ARRAYP}         = ['ARRAY?'];
+$AlternateSpellings{BACKSLASHEDP}   = ['BACKSLASHED?'];
+$AlternateSpellings{BACK}           = ['BK'];
+$AlternateSpellings{BEFOREP}        = ['BEFORE?'];
+$AlternateSpellings{BUTFIRST}       = ['BF'];
+$AlternateSpellings{BUTLAST}        = ['BL'];
+$AlternateSpellings{CLEARSCREEN}    = ['CS'];
+$AlternateSpellings{CLEARTEXT}      = ['CT'];
+$AlternateSpellings{CONTINUE}       = ['CO'];
+$AlternateSpellings{DEFINEDP}       = ['DEFINED?'];
+$AlternateSpellings{DOWNPITCH}      = ['DOWN'];
+$AlternateSpellings{EMPTYP}         = ['EMPTY?'];
+$AlternateSpellings{EQUALP}         = ['EQUAL?'];
+$AlternateSpellings{ERASEFILE}      = ['ERF'];
+$AlternateSpellings{ERASE}          = ['ER'];
+$AlternateSpellings{FLOODCOLOR}     = ['FLOODCOLOUR'];
+$AlternateSpellings{FORWARD}        = ['FD'];
+$AlternateSpellings{FULLSCREEN}     = ['FS'];
+$AlternateSpellings{HIDETURTLE}     = ['HT'];
+$AlternateSpellings{IFFALSE}        = ['IFF'];
+$AlternateSpellings{IFTRUE}         = ['IFT'];
+$AlternateSpellings{LEFTROLL}       = ['LR'];
+$AlternateSpellings{LEFT}           = ['LT'];
+$AlternateSpellings{LISTP}          = ['LIST?'];
+$AlternateSpellings{MACROP}         = ['MACRO?'];
+$AlternateSpellings{MEMBERP}        = ['MEMBER?'];
+$AlternateSpellings{NAMEP}          = ['NAME?'];
+$AlternateSpellings{NUMBERP}        = ['NUMBER?'];
+$AlternateSpellings{OUTPUT}         = ['OP'];
+$AlternateSpellings{PENCOLOR}       = ['PENCOLOUR'];
+$AlternateSpellings{PENDOWNP}       = ['PENDOWN?'];
+$AlternateSpellings{PENDOWN}        = ['PD'];
+$AlternateSpellings{PENERASE}       = ['PE'];
+$AlternateSpellings{PENPAINT}       = ['PPT'];
+$AlternateSpellings{PENREVERSE}     = ['PX'];
+$AlternateSpellings{PENUP}          = ['PU'];
+$AlternateSpellings{PRIMITIVEP}     = ['PRIMITIVE?'];
+$AlternateSpellings{PROCEDUREP}     = ['PROCEDURE?'];
+$AlternateSpellings{READCHARS}      = ['RCS'];
+$AlternateSpellings{READCHAR}       = ['RC'];
+$AlternateSpellings{READLIST}       = ['RL'];
+$AlternateSpellings{READWORD}       = ['RW'];
+$AlternateSpellings{RIGHTROLL}      = ['RR'];
+$AlternateSpellings{RIGHT}          = ['RT'];
+$AlternateSpellings{SCREENCOLOR}    = ['SCREENCOLOUR'];
+$AlternateSpellings{SENTENCE}       = ['SE'];
+$AlternateSpellings{SETFLOODCOLOR}  = ['SETFLOODCOLOUR', 'SETFC'];
+$AlternateSpellings{SETPENCOLOR}    = ['SETPENCOLOUR'];
+$AlternateSpellings{SETSCREENCOLOR} = ['SETSCREENCOLOUR'];
+$AlternateSpellings{SHOWNP}         = ['SHOWN?'];
+$AlternateSpellings{SHOWTURTLE}     = ['ST'];
+$AlternateSpellings{SPLITSCREEN}    = ['SS'];
+$AlternateSpellings{SUBSTRINGP}     = ['SUBSTRING?'];
+$AlternateSpellings{TEXTSCREEN}     = ['TS'];
+$AlternateSpellings{UPPITCH}        = ['UP'];
+$AlternateSpellings{WORDP}          = ['WORD?'];
+
+my %CanonicalSpelling = ();
 
 my %Exceptions = ();
 $Exceptions{'command-.eq.xml'}{'allcaps'}{'WARNING'}        = 1;
@@ -44,26 +101,15 @@ $Exceptions{'command-.setfirst.xml'}{'allcaps'}{'WARNING'}  = 1;
 
 $Exceptions{'command-.setitem.xml'}{'allcaps'}{'WARNING'}   = 1;
 
-$Exceptions{'command-arrayp.xml'}{'allcaps'}{'ARRAY?'}      = 1;
-
-$Exceptions{'command-back.xml'}{'allcaps'}{'BK'}            = 1;
-
-$Exceptions{'command-backslashedp.xml'}{'allcaps'}{'BACKSLASHED?'} = 1;
-
 $Exceptions{'command-backtick.xml'}{'propername'}         = '`';
 
 $Exceptions{'command-beforep.xml'}{'allcaps'}{'ABC'}      = 1;
-$Exceptions{'command-beforep.xml'}{'allcaps'}{'BEFORE?'}  = 1;
 
 $Exceptions{'command-bury.xml'}{'allcaps'}{'BAR'}         = 1;
 $Exceptions{'command-bury.xml'}{'allcaps'}{'FOO'}         = 1;
 
 $Exceptions{'command-buryall.xml'}{'allcaps'}{'BAR'}      = 1;
 $Exceptions{'command-buryall.xml'}{'allcaps'}{'FOO'}      = 1;
-
-$Exceptions{'command-butfirst.xml'}{'allcaps'}{'BF'}      = 1;
-
-$Exceptions{'command-butlast.xml'}{'allcaps'}{'BL'}       = 1;
 
 $Exceptions{'command-cascade.xml'}{'allcaps'}{'VOWELP'}   = 1;
 $Exceptions{'command-cascade.xml'}{'allcaps'}{'PIGLATIN'} = 1;
@@ -113,6 +159,17 @@ sub LogWarning($$$)
 {
   print "$_[0]:$_[1] warning: $_[2]\n";
   $main::TotalWarnings++;
+}
+
+# Infer some Exceptions from the alternate spellings of words.
+foreach my $command (keys %AlternateSpellings) {
+  foreach my $alternate (@{$AlternateSpellings{$command}}) {
+    # an alternate spelling of a command is always allowed within the definition of the command
+    $Exceptions{'command-' . lc $command . '.xml'}{'allcaps'}{$alternate} = 1;
+
+    # fill in the canonical spelling
+    $CanonicalSpelling{$alternate} = $command;
+  }
 }
 
 #
@@ -199,7 +256,15 @@ foreach my $filename (<*.xml>) {
       my $command = $1;
 
       if (not $Commands{$command} and not $Exceptions{$filename}{allcaps}{$command}) {
-        LogWarning($filename, $linenumber, "use of undocumented all-caps word `$command'");
+
+        if ($CanonicalSpelling{$command}) {
+          # this is an alternate form of a command
+          LogWarning($filename, $linenumber, "use of alternate spelling `$command'.  Use `$CanonicalSpelling{$command}' instead.");
+        }
+        else {
+          # this is an unknown word
+          LogWarning($filename, $linenumber, "use of undocumented all-caps word `$command'");
+        }
       }
     }
 
