@@ -22,7 +22,7 @@ The <parameter>parent</parameter> input is the name of the window that will own 
 </para>
 
 <para>
-The <parameter>name</parameter> input identifies the new button and MUST be a unique word.
+The <parameter>name</parameter> input identifies the new button and <emphasis>must</emphasis> be a unique word.
 </para>
 
 <para>
