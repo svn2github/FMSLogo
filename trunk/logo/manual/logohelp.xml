@@ -518,6 +518,7 @@
   <!ENTITY command-bitindex              SYSTEM "command-bitindex.xml">
   <!ENTITY command-setbitindex           SYSTEM "command-setbitindex.xml">
   <!ENTITY command-bitindex              SYSTEM "command-bitindex.xml">
+  <!ENTITY command-setbitmode            SYSTEM "command-setbitmode.xml">
   <!ENTITY command-bitmode               SYSTEM "command-bitmode.xml">
   <!ENTITY command-bitblock              SYSTEM "command-bitblock.xml">
   <!ENTITY command-bitload               SYSTEM "command-bitload.xml">
