@@ -13,7 +13,7 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-Outputs the bitwise EXCLUSIVE OR of its inputs, which must be integers.
+Outputs the bitwise exclusive OR of its inputs, which must be integers.
 </para>
 </listitem>
 </varlistentry>
