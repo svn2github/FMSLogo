@@ -7,13 +7,18 @@
 # * All commands in <link> tags have the expected linkend attribute.
 # * No abbreviations of commands are allowed.
 # * Emphasis is not given with upper-case.
+# * The <title> element matches the filename.
 #
 # Missing checks:
 # * Spelling is correct.
 # * Examples include at least one instance of the command that they document.
 # * Only the first reference to a command in any section is hyperlinked.
 # * Commands are not hyperlinked when they occurs within their own definition.
-# * All instances of Logo and MSWLogo are correct.
+# * All occurances of "Logo" and "MSWLogo" are correct.
+# * The "id" attribute in the command section elements is correct.
+#
+# Miscellaneous TODO:
+# * Create a list of abbreviations and infer other exceptions from it.
 #
 ###############################################################################
 
@@ -45,12 +50,25 @@ $Exceptions{'command-back.xml'}{'allcaps'}{'BK'}            = 1;
 
 $Exceptions{'command-backslashedp.xml'}{'allcaps'}{'BACKSLASHED?'} = 1;
 
-$Exceptions{'command-backtick.xml'}{'propername'}           = '`';
+$Exceptions{'command-backtick.xml'}{'propername'}         = '`';
 
-$Exceptions{'command-beforep.xml'}{'allcaps'}{'ABC'}        = 1;
-$Exceptions{'command-beforep.xml'}{'allcaps'}{'BEFORE?'}    = 1;
+$Exceptions{'command-beforep.xml'}{'allcaps'}{'ABC'}      = 1;
+$Exceptions{'command-beforep.xml'}{'allcaps'}{'BEFORE?'}  = 1;
 
-$Exceptions{'command-yield.xml'}{'allcaps'}{'CPU'}          = 1;
+$Exceptions{'command-bury.xml'}{'allcaps'}{'BAR'}         = 1;
+$Exceptions{'command-bury.xml'}{'allcaps'}{'FOO'}         = 1;
+
+$Exceptions{'command-buryall.xml'}{'allcaps'}{'BAR'}      = 1;
+$Exceptions{'command-buryall.xml'}{'allcaps'}{'FOO'}      = 1;
+
+$Exceptions{'command-butfirst.xml'}{'allcaps'}{'BF'}      = 1;
+
+$Exceptions{'command-butlast.xml'}{'allcaps'}{'BL'}       = 1;
+
+$Exceptions{'command-cascade.xml'}{'allcaps'}{'VOWELP'}   = 1;
+$Exceptions{'command-cascade.xml'}{'allcaps'}{'PIGLATIN'} = 1;
+
+$Exceptions{'command-yield.xml'}{'allcaps'}{'CPU'}        = 1;
 
 $Exceptions{'communication.xml'}{'allcaps'}{'DLL'}        = 1;
 $Exceptions{'communication.xml'}{'allcaps'}{'PORT'}       = 1;
