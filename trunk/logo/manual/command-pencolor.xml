@@ -6,7 +6,8 @@
 <varlistentry><term>Synopsis</term>
 <listitem>
 <synopsis><command>PENCOLOR</command>
-<command>PENCOLOUR</command></synopsis>
+<command>PENCOLOUR</command>
+<command>PC</command></synopsis>
 </listitem>
 </varlistentry>
 
