@@ -25,7 +25,7 @@ If this is the first window you are creating, use <code>"root</code> as the <par
 </para>
 
 <para>
-The <parameter>name</parameter> input identifies the new window (perhaps as the parent of another future window or control) and MUST be a unique word.
+The <parameter>name</parameter> input identifies the new window (perhaps as the parent of another future window or control) and <emphasis>must</emphasis> be a unique word.
 </para>
 
 <para>

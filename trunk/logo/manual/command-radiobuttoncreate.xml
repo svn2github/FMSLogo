@@ -27,7 +27,7 @@ The <parameter>group</parameter> input is the name of the group box control to a
 </para>
 
 <para>
-The <parameter>name</parameter> input identifies the new radio button and MUST be a unique word.
+The <parameter>name</parameter> input identifies the new radio button and <emphasis>must</emphasis> be a unique word.
 </para>
 
 <para>
@@ -66,7 +66,7 @@ RADIOBUTTONCREATE "mywindow "mygroupbox "myhideturtle [Hide Turtle] 20 20 60 20
 RADIOBUTTONCREATE "mywindow "mygroupbox "myshowturtle [Show Turtle] 20 40 60 20
 RADIOBUTTONSET "myhideturtle "true
 RADIOBUTTONSET "myshowturtle "false
-BUTTONCREATE "mywindow "mybutton "GO 40 70 25 20 [CHECKONTHINGS]
+BUTTONCREATE "mywindow "mybutton "Go 40 70 25 20 [CHECKONTHINGS]
 WINDOWDELETE "mywindow
 
 ; create a radio button on the graphics window:
@@ -79,7 +79,7 @@ RADIOBUTTONCREATE "main "mygroupbox "myhideturtle [Hide Turtle] 120 120 120 40
 RADIOBUTTONCREATE "main "mygroupbox "myshowturtle [Show Turtle] 120 80 120 40
 RADIOBUTTONSET "myhideturtle "true
 RADIOBUTTONSET "myshowturtle "false
-BUTTONCREATE "main "mybutton "GO 160 20 50 50 [CHECKONTHINGS]
+BUTTONCREATE "main "mybutton "Go 160 20 50 50 [CHECKONTHINGS]
 WINDOWDELETE "main
 </userinput>
 </programlisting>

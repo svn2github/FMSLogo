@@ -26,7 +26,7 @@ END
 WINDOWCREATE "main "mywindow "mytitle 0 0 100 100 []
 GROUPBOXCREATE "mywindow "mygroupbox 10 10 80 40
 CHECKBOXCREATE "mywindow "mygroupbox "myhideturtle [Hide Turtle] 20 20 60 20
-BUTTONCREATE "mywindow "mybutton "GO 40 50 25 25 [CHECKONTHINGS]
+BUTTONCREATE "mywindow "mybutton "Go 40 50 25 25 [CHECKONTHINGS]
 WINDOWDELETE "mywindow</userinput>
 </programlisting>
 
