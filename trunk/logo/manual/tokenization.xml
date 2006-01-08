@@ -14,7 +14,7 @@ Note that quote and colon are not delimiters.</para>
 
     <para>A word consisting of a question mark followed by a number (e.g., <code>?3</code>), is parsed as if it were the sequence<programlisting>(? 3)</programlisting>
 making the number an input to the <code>?</code> procedure.
-(See <link linkend="template-based-iteration">TEMPLATE-BASED ITERATION</link>).
+(See the section on <link linkend="template-based-iteration">Template-Based Iteration</link>).
 This special treatment does not apply to words read as data, to words with a non-number following the question mark, or if the question mark is backslashed.</para>
 
     <para>A line (an instruction line or one read by <link linkend="command-readlist">READLIST</link> or <link linkend="command-readword">READWORD</link>) can be continued onto the following line if its last character is a tilde (<code>~</code>).
