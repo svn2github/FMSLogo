@@ -5,7 +5,7 @@
 
 <varlistentry><term>Synopsis</term>
 <listitem>
-<synopsis><command>NETCONNECTRECIEVEVALUE</command> <parameter>data</parameter></synopsis>
+<synopsis><command>NETCONNECTRECEIVEVALUE</command> <parameter>data</parameter></synopsis>
 </listitem>
 </varlistentry>
 
