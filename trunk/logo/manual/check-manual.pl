@@ -122,6 +122,10 @@ $Exceptions{'command-cascade.xml'}{'allcaps'}{'PIGLATIN'} = 1;
 
 $Exceptions{'command-checkboxcreate.xml'}{'allcaps'}{'CHECKONTHINGS'} = 1;
 
+$Exceptions{'command-midiopen.xml'}{'allcaps'}{'MIDI'} = 1;
+$Exceptions{'command-midiopen.xml'}{'allcaps'}{'.MID'} = 1;
+$Exceptions{'command-midiopen.xml'}{'allcaps'}{'.MDI'} = 1;
+
 $Exceptions{'command-yield.xml'}{'allcaps'}{'CPU'}        = 1;
 
 $Exceptions{'communication.xml'}{'allcaps'}{'DLL'}        = 1;
@@ -300,6 +304,10 @@ foreach my $filename (<*.xml>) {
         else {
           # this is an unknown word
           LogWarning($filename, $linenumber, "use of undocumented all-caps word `$token'");
+
+          # Add this to the list of exceptions so that we don't warn multiple
+          # times for the same word.
+          $Exceptions{$filename}{allcaps}{$token} = 1;
         }
       }
     }
