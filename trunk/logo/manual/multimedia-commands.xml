@@ -1131,4 +1131,13 @@ A song is a rhythm machine.
 
 </section>
 
+<section id="sound-commands">
+  <title>Sound Commands</title>
+
+  &command-soundon;
+  &command-soundoff;
+  &command-sound;
+
+</section>
+
 </chapter>

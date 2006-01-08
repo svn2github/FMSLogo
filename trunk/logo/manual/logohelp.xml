@@ -549,6 +549,10 @@
   <!ENTITY command-midimessage            SYSTEM "command-midimessage.xml">
 
   <!ENTITY command-playwave               SYSTEM "command-playwave.xml">
+
+  <!ENTITY command-soundon                SYSTEM "command-soundon.xml">
+  <!ENTITY command-soundoff               SYSTEM "command-soundoff.xml">
+  <!ENTITY command-sound                  SYSTEM "command-sound.xml">
 ]>
 
 <book id="MSWLogo Help">
