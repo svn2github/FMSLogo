@@ -26,7 +26,7 @@ The <parameter>group</parameter> input is the name of the group box control to a
 </para>
 
 <para>
-The <parameter>name</parameter> input identifies the new checkbox and MUST be a unique word.
+The <parameter>name</parameter> input identifies the new checkbox and <emphasis>must</emphasis> be a unique word.
 </para>
 
 <para>
@@ -62,7 +62,7 @@ END
 WINDOWCREATE "main "mywindow "mytitle 0 0 100 100 []
 GROUPBOXCREATE "mywindow "mygroupbox 10 10 80 40
 CHECKBOXCREATE "mywindow "mygroupbox "myhideturtle [Hide Turtle] 20 20 60 20
-BUTTONCREATE "mywindow "mybutton "GO 40 50 25 25 [CHECKONTHINGS]
+BUTTONCREATE "mywindow "mybutton "Go 40 50 25 25 [CHECKONTHINGS]
 WINDOWDELETE "mywindow
 
 
@@ -73,7 +73,7 @@ END
 
 GROUPBOXCREATE "main "mygroupbox 110 90 140 60
 CHECKBOXCREATE "main "mygroupbox "myhideturtle [Hide Turtle] 120 80 120 40
-BUTTONCREATE "main "mybutton "GO 160 20 50 50 [CHECKONTHINGS]
+BUTTONCREATE "main "mybutton "Go 160 20 50 50 [CHECKONTHINGS]
 WINDOWDELETE "main
 </userinput>
 </programlisting>
