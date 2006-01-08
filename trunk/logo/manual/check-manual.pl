@@ -81,6 +81,7 @@ $AlternateSpellings{RIGHT}          = ['RT'];
 $AlternateSpellings{SCREENCOLOR}    = ['SCREENCOLOUR'];
 $AlternateSpellings{SENTENCE}       = ['SE'];
 $AlternateSpellings{SETFLOODCOLOR}  = ['SETFLOODCOLOUR',  'SETFC'];
+$AlternateSpellings{SETHEADING}     = ['SETH'];
 $AlternateSpellings{SETPENCOLOR}    = ['SETPENCOLOUR',    'SETPC'];
 $AlternateSpellings{SETSCREENCOLOR} = ['SETSCREENCOLOUR', 'SETSC'];
 $AlternateSpellings{SHOWNP}         = ['SHOWN?'];
@@ -118,6 +119,8 @@ $Exceptions{'command-buryall.xml'}{'allcaps'}{'FOO'}      = 1;
 
 $Exceptions{'command-cascade.xml'}{'allcaps'}{'VOWELP'}   = 1;
 $Exceptions{'command-cascade.xml'}{'allcaps'}{'PIGLATIN'} = 1;
+
+$Exceptions{'command-checkboxcreate.xml'}{'allcaps'}{'CHECKONTHINGS'} = 1;
 
 $Exceptions{'command-yield.xml'}{'allcaps'}{'CPU'}        = 1;
 
