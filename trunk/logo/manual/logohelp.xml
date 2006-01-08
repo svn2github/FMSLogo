@@ -547,6 +547,8 @@
   <!ENTITY command-midiopen               SYSTEM "command-midiopen.xml">
   <!ENTITY command-midiclose              SYSTEM "command-midiclose.xml">
   <!ENTITY command-midimessage            SYSTEM "command-midimessage.xml">
+
+  <!ENTITY command-playwave               SYSTEM "command-playwave.xml">
 ]>
 
 <book id="MSWLogo Help">
