@@ -24,6 +24,7 @@
   <!ENTITY bitmap-commands           SYSTEM "bitmap-commands.xml">
   <!ENTITY networking-commands       SYSTEM "networking-commands.xml">
   <!ENTITY multimedia-commands       SYSTEM "multimedia-commands.xml">
+  <!ENTITY abbreviations             SYSTEM "abbreviations.xml">
 
   <!ENTITY command-.setbf       SYSTEM "command-.setbf.xml">
   <!ENTITY command-.setfirst    SYSTEM "command-.setfirst.xml">
@@ -604,6 +605,7 @@
   &bitmap-commands;
   &networking-commands;
   &multimedia-commands;
+  &abbreviations;
 
 </book>
 
