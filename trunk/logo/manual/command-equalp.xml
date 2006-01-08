@@ -14,9 +14,12 @@
 
 <varlistentry><term>Description</term>
 <listitem>
-<para>Outputs TRUE if both inputs are equal, FALSE otherwise.</para>
+<para>
+Outputs TRUE if both inputs are equal, FALSE otherwise.
+</para>
 
-<para>Two numbers are equal if they have the same numeric value.
+<para>
+Two numbers are equal if they have the same numeric value.
 Two non-numeric words are equal if they contain the same characters in the same order.
 If there is a variable named <link linkend="command-caseignoredp">CASEIGNOREDP</link> whose value is TRUE, then an upper case letter is considered the same as the corresponding lower case letter.
 (This is the case by default.)
