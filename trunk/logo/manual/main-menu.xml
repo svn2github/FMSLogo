@@ -205,38 +205,38 @@ Also see the <link linkend="command-help">HELP</link> command.</para>
           <para>This command puts you in Microsoft Windows Help for LOGO..</para>
         </section>
 
-        <section>
+        <section id="menu-help-mci">
           <title>Help-MCI</title>
           <para>This puts you into the MCI help file.  It explains the syntax of the arguments to the <link linkend="command-mci">MCI</link> command.</para>
         </section>
 
-        <section>
+        <section id="menu-help-demo">
           <title>Help-Demo Command</title>
-          <para>This runs the <link linkend="command-demo">DEMO</link> program from the Logo library.</para>
+          <para>This runs the DEMO program from the Logo library.</para>
         </section>
 
-        <section>
+        <section id="menu-help-tutorial">
           <title>Help-Tutorial Command</title>
           <para>This brings you to the <link linkend="tutorial">tutorial</link> section in the help menu.</para>
         </section>
 
-        <section>
+        <section id="menu-help-example">
           <title>Help-Examples Command</title>
           <para>This brings you to an HTML page that describes each example program that comes with MSWLogo.</para>
         </section>
 
-        <section>
+        <section id="menu-help-releasenotes">
           <title>Help-Release Notes Command</title>
           <para>This displays the release notes for this release of MSWLogo.</para>
         </section>
 
 
-        <section>
+        <section id="menu-help-aboutlogo">
           <title>Help-About Logo Command</title>
           <para>This displays the copyright and version information for MSWLogo.</para>
         </section>
 
-        <section>
+        <section id="menu-help-aboutms">
           <title>Help-About MS Command</title>
           <para>This displays information on Multiple Scelerosis.</para>
         </section>
