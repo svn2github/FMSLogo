@@ -5,7 +5,8 @@
 
 <varlistentry><term>Synopsis</term>
 <listitem>
-<synopsis><command>BUTFIRSTS</command> <parameter>list</parameter></synopsis>
+<synopsis><command>BUTFIRSTS</command> <parameter>list</parameter>
+<command>BFS</command> <parameter>list</parameter></synopsis>
 </listitem>
 </varlistentry>
 

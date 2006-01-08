@@ -34,6 +34,7 @@ $AlternateSpellings{BACKSLASHEDP}   = ['BACKSLASHED?'];
 $AlternateSpellings{BACK}           = ['BK'];
 $AlternateSpellings{BEFOREP}        = ['BEFORE?'];
 $AlternateSpellings{BUTFIRST}       = ['BF'];
+$AlternateSpellings{BUTFIRSTS}      = ['BFS'];
 $AlternateSpellings{BUTLAST}        = ['BL'];
 $AlternateSpellings{CLEARSCREEN}    = ['CS'];
 $AlternateSpellings{CLEARTEXT}      = ['CT'];
