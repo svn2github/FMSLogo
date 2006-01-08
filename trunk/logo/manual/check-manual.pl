@@ -15,6 +15,7 @@
 # * Only the first reference to a command in any section is hyperlinked.
 # * Commands are not hyperlinked when they occurs within their own definition.
 # * All occurances of "Logo" and "MSWLogo" are correct.
+# * All instances of the <parameter> tag refer to actual parameters.
 #
 ###############################################################################
 
@@ -162,6 +163,23 @@ sub LogWarning($$$)
   $main::TotalWarnings++;
 }
 
+sub FilenameToCommand($)
+{
+  my $filename = shift or die "not enough inputs";
+
+  # check there is a special-case for this filename
+  if ($Exceptions{$filename} and $Exceptions{$filename}{propername}) {
+    return  $Exceptions{$filename}{propername};
+  }
+
+  # there is no special-case, process this as normal
+  if ($filename =~ m/^command-(.*)\.xml$/) {
+    return uc $1;
+  }
+
+  return undef;
+}
+
 # Infer some Exceptions from the alternate spellings of words.
 foreach my $command (keys %AlternateSpellings) {
   foreach my $alternate (@{$AlternateSpellings{$command}}) {
@@ -173,37 +191,13 @@ foreach my $command (keys %AlternateSpellings) {
   }
 }
 
+
 #
-# Determine the proper name for all commands
+# Determine the proper name for all documented commands
 #
 foreach my $filename (<command-*.xml>) {
 
-  my $propername;
-
-  # extract the command name from the file contents
-  my $fh = new IO::File "< $filename" or die $!;
-
-  my $linenumber = 0;
-  foreach my $line (<$fh>) {
-    $linenumber++;
-
-    if ($line =~ m!<title>(.*?)</title>!) {
-
-      $propername = $1;
-
-      if ($filename ne "command-" . lc $propername . ".xml" and
-          (not $Exceptions{$filename} or
-           not $Exceptions{$filename}{'propername'} or
-           $propername ne $Exceptions{$filename}{'propername'})) {
-        LogError($filename, $linenumber, "contains command for $propername");
-      }
-
-      # We found the command name so we can break out of the loop.
-      last;
-    }
-  }
-
-  $fh->close;
+  my $propername = FilenameToCommand($filename);
 
   if (not $propername) {
     LogError($filename, 1, "could not determine command");
@@ -228,60 +222,78 @@ foreach my $filename (<*.xml>) {
 
     $linenumber++;
 
-    # the first line of all commands should the <section> tag
-    if ($filename =~ m/^command-.*\.xml$/ and $linenumber == 1) {
-      if ($line =~ m/^<section id="command-(.*?)">/) {
-        my $command = $1;
+    my $command = FilenameToCommand($filename);
+    if ($command) {
 
-        if ($filename ne "command-" . lc $command . ".xml" and
-            (not $Exceptions{$filename} or
-             not $Exceptions{$filename}{'propername'} or
-             $command ne $Exceptions{$filename}{'propername'})) {
-          LogError($filename, $linenumber, "The `id' attribute of the first section is `$command'.  It should match the filename.");
+      # this is the documentation for a command
+      my $expectedId = "command-" . lc $command;
+
+      # the first line of all commands should be a <section> tag with the proper id attribute
+      if ($linenumber == 1) {
+        if ($line =~ m/^<section id="(.*?)">/) {
+
+          my $id = $1;
+
+          if ($id ne $expectedId) {
+            LogError($filename, $linenumber, "The `id' attribute of the first section is `$id'.  It should be `$expectedId'.");
+          }
+        }
+        else {
+          LogError($filename, $linenumber, "first line is not <section id='$expectedId'>.");
         }
       }
-      else {
-        LogError($filename, $linenumber, "first line is not a <section id=''> start tag.");
+
+
+      # the second line of all commands should be a <title> element for the command.
+      if ($linenumber == 2) {
+        if ($line =~ m!<title>(.*?)</title>!) {
+
+          my $title = $1;
+
+          if ($title ne $command) {
+            LogError($filename, $linenumber, "contains command for `$title', not `$command'.");
+          }
+        }
+        else {
+          LogError($filename, $linenumber, "second line is not <title>$command</title>.");
+        }
       }
-    }
 
-    # the first listed command should match the title
-    while ($line =~ m!<synopsis>\s*\(?\s*<command>(.*?)</command>!g) {
-      my $command = $1;
+      # the first listed command in the synopsis should match the title
+      if ($line =~ m!<synopsis>\s*\(?\s*<command>(.*?)</command>!) {
+        my $synopsisCommand = $1;
 
-      if ($filename ne "command-" . lc $command . ".xml" and
-          (not $Exceptions{$filename} or
-           not $Exceptions{$filename}{'propername'} or
-           $command ne $Exceptions{$filename}{'propername'})) {
-        LogError($filename, $linenumber, "first command listed in synopsis is `$command'.  It should match the filename.");
+        if ($synopsisCommand ne $command) {
+          LogError($filename, $linenumber, "first command listed in synopsis is `$synopsisCommand'.  It should match the filename.");
+        }
       }
     }
 
     while ($line =~ m!<link linkend="(.*?)">(.*?)</link>!g) {
       my $linkend = $1;
-      my $command = $2;
+      my $text    = $2;
 
       # if the link text is all upper-case, then it is probably a command
-      if ($command eq uc $command) {
+      if ($text eq uc $text) {
 
-        if ($linkend ne "command-" . lc($command)) {
-          LogError($filename, $linenumber, "link and linkend don't match: `$command' -> `$linkend'");
+        if ($linkend ne "command-" . lc($text)) {
+          LogError($filename, $linenumber, "link and linkend don't match: `$text' -> `$linkend'");
         }
       }
     }
 
     while ($line =~ m![^\.\w](\.??[A-Z](\.??[A-Z?])+)[\.\W]!g) {
-      my $command = $1;
+      my $token = $1;
 
-      if (not $Commands{$command} and not $Exceptions{$filename}{allcaps}{$command}) {
+      if (not $Commands{$token} and not $Exceptions{$filename}{allcaps}{$token}) {
 
-        if ($CanonicalSpelling{$command}) {
+        if ($CanonicalSpelling{$token}) {
           # this is an alternate form of a command
-          LogWarning($filename, $linenumber, "use of alternate spelling `$command'.  Use `$CanonicalSpelling{$command}' instead.");
+          LogWarning($filename, $linenumber, "use of alternate spelling `$token'.  Use `$CanonicalSpelling{$token}' instead.");
         }
         else {
           # this is an unknown word
-          LogWarning($filename, $linenumber, "use of undocumented all-caps word `$command'");
+          LogWarning($filename, $linenumber, "use of undocumented all-caps word `$token'");
         }
       }
     }
