@@ -553,6 +553,8 @@
   <!ENTITY command-soundon                SYSTEM "command-soundon.xml">
   <!ENTITY command-soundoff               SYSTEM "command-soundoff.xml">
   <!ENTITY command-sound                  SYSTEM "command-sound.xml">
+
+  <!ENTITY command-mci                    SYSTEM "command-mci.xml">
 ]>
 
 <book id="MSWLogo Help">

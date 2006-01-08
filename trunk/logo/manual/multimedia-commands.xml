@@ -1140,4 +1140,11 @@ A song is a rhythm machine.
 
 </section>
 
+<section id="media-control-commands">
+  <title>Media Control Commands</title>
+
+  &command-mci;
+
+</section>
+
 </chapter>
