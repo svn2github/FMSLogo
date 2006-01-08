@@ -59,12 +59,12 @@ See also the <link linkend="command-bye">BYE</link> command.</para>
         <title>Bitmap Menu</title>
         <para>The Bitmap menu includes commands that enable you to operate on bitmap files.</para>
 
-        <section>
+        <section id="menu-bitmap-new">
           <title>Bitmap-New Command</title>
           <para>This will clear the work done on the screen and create a new environment to save things in.</para>
         </section>
 
-        <section>
+        <section id="menu-bitmap-load">
           <title>Bitmap-Load Command</title>
           <para>This allows you to read in an image you already saved in the past.
 The format of the file you save things in, is known as, a Microsoft Windows Bitmap (.BMP).
@@ -75,7 +75,7 @@ Also see the <link linkend="command-bitload">BITLOAD</link> command.</para>
           <para>See also the section on <link linkend="using-color">using color</link>.</para>
         </section>
 
-        <section>
+        <section id="menu-bitmap-save">
           <title>Bitmap-Save Command</title>
           <para>This allows you to save a PICTURE (bitmap image) of your work on the computer's disk so that the computer will not forget it.
 It also allows you to add more work to an existing piece of work.
@@ -90,12 +90,12 @@ Note that these files can be BIG and can take a while to read or write.</para>
         </section>
 
 
-        <section>
+        <section id="menu-bitmap-saveas">
           <title>Bitmap-Save As Command</title>
           <para>This is the same as Bitmap-Save Command, but prompts your for a new file name.</para>
         </section>
 
-        <section>
+        <section id="menu-bitmap-activearea">
           <title>Bitmap-Active Area Command</title>
           <para>This allows you to select the work area to be printed or saved.
 The primary purpose of this option is performance and space.
@@ -115,13 +115,13 @@ You can compensate for this by increasing your work space (and you're drawing si
         </section>
 
 
-        <section>
+        <section id="menu-bitmap-printsetup">
           <title>Bitmap-Print Setup Command</title>
           <para>This allows you to setup your printer before you print.</para>
         </section>
 
 
-        <section>
+        <section id="menu-bitmap-print">
           <title>Bitmap-Print Command</title>
           <para>This allows you to print the contents of the screen.</para>
         </section>
@@ -132,7 +132,7 @@ You can compensate for this by increasing your work space (and you're drawing si
         <title>Set Menu</title>
         <para>The Set menu allows you to change some of the characteristics of how LOGO behaves when drawing.</para>
 
-        <section>
+        <section id="menu-set-pensize">
           <title>Set-Pen Size Command</title>
           <para>This command allows you to select the pen size in which the turtle will draw.
 You can also select the pen size with the Logo command <link linkend="command-setpensize">SETPENSIZE</link> and obtain it with the Logo command <link linkend="command-pensize">PENSIZE</link>.</para>
@@ -150,7 +150,7 @@ You can also select the font with the Logo command <link linkend="command-setlab
 The chosen font will remain selected even after MSWLogo has been restarted.</para>
         </section>
 
-        <section>
+        <section id="menu-set-pencolor">
           <title>Set-Pen Color Command</title>
           <para>This command allows you to select the pen color.
 You can also select the pen color with the Logo command <link linkend="command-setpencolor">SETPENCOLOR</link> and obtain it with the Logo command <link linkend="command-pencolor">PENCOLOR</link>.</para>
@@ -158,12 +158,12 @@ You can also select the pen color with the Logo command <link linkend="command-s
 
 
         <section>
-          <title>Set-Flood Color Command</title>
+          <title id="menu-set-floodcolor">Set-Flood Color Command</title>
           <para>This command allows you to select the flood color in which the turtle will <link linkend="command-fill">FILL</link>.
 You can also select the flood color with the Logo command <link linkend="command-setfloodcolor">SETFLOODCOLOR</link> and obtain it with the Logo command <link linkend="command-floodcolor">FLOODCOLOR</link>.</para>
         </section>
 
-        <section>
+        <section id="menu-set-screencolor">
           <title>Set-Screen Color Command</title>
           <para>This command allows you to select the screen color.
 You can also select the screen color with the Logo command <link linkend="command-setscreencolor">SETSCREENCOLOR</link> and obtain it with the Logo command <link linkend="command-screencolor">SCREENCOLOR</link>.</para>
