@@ -23,6 +23,7 @@
   <!ENTITY windows-commands          SYSTEM "windows-commands.xml">
   <!ENTITY bitmap-commands           SYSTEM "bitmap-commands.xml">
   <!ENTITY networking-commands       SYSTEM "networking-commands.xml">
+  <!ENTITY multimedia-commands       SYSTEM "multimedia-commands.xml">
 
   <!ENTITY command-.setbf       SYSTEM "command-.setbf.xml">
   <!ENTITY command-.setfirst    SYSTEM "command-.setfirst.xml">
@@ -542,6 +543,10 @@
   <!ENTITY command-netconnectoff          SYSTEM "command-netconnectoff.xml">
   <!ENTITY command-netconnectsendvalue    SYSTEM "command-netconnectsendvalue.xml">
   <!ENTITY command-netconnectreceivevalue SYSTEM "command-netconnectreceivevalue.xml">
+
+  <!ENTITY command-midiopen               SYSTEM "command-midiopen.xml">
+  <!ENTITY command-midiclose              SYSTEM "command-midiclose.xml">
+  <!ENTITY command-midimessage            SYSTEM "command-midimessage.xml">
 ]>
 
 <book id="MSWLogo Help">
@@ -590,6 +595,7 @@
   &windows-commands;
   &bitmap-commands;
   &networking-commands;
+  &multimedia-commands;
 
 </book>
 
