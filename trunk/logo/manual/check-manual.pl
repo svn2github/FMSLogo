@@ -16,6 +16,7 @@
 # * Commands are not hyperlinked when they occurs within their own definition.
 # * All occurances of "Logo" and "MSWLogo" are correct.
 # * All instances of the <parameter> tag refer to actual parameters.
+# * All abbreviations are correct (and that the list is complete)
 #
 ###############################################################################
 
@@ -61,6 +62,7 @@ $AlternateSpellings{NAMEP}          = ['NAME?'];
 $AlternateSpellings{NUMBERP}        = ['NUMBER?'];
 $AlternateSpellings{OUTPUT}         = ['OP'];
 $AlternateSpellings{PENCOLOR}       = ['PENCOLOUR'];
+$AlternateSpellings{PENCOLOR}       = ['PC'];
 $AlternateSpellings{PENDOWNP}       = ['PENDOWN?'];
 $AlternateSpellings{PENDOWN}        = ['PD'];
 $AlternateSpellings{PENERASE}       = ['PE'];
