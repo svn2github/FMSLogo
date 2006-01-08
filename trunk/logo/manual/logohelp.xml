@@ -22,6 +22,7 @@
   <!ENTITY directory-commands        SYSTEM "directory-commands.xml">
   <!ENTITY windows-commands          SYSTEM "windows-commands.xml">
   <!ENTITY bitmap-commands           SYSTEM "bitmap-commands.xml">
+  <!ENTITY networking-commands       SYSTEM "networking-commands.xml">
 
   <!ENTITY command-.setbf       SYSTEM "command-.setbf.xml">
   <!ENTITY command-.setfirst    SYSTEM "command-.setfirst.xml">
@@ -530,6 +531,17 @@
   <!ENTITY command-gifsize               SYSTEM "command-gifsize.xml">
   <!ENTITY command-setactivearea         SYSTEM "command-setactivearea.xml">
   <!ENTITY command-activearea            SYSTEM "command-activearea.xml">
+
+  <!ENTITY command-netstartup             SYSTEM "command-netstartup.xml">
+  <!ENTITY command-netshutdown            SYSTEM "command-netshutdown.xml">
+  <!ENTITY command-netaccepton            SYSTEM "command-netaccepton.xml">
+  <!ENTITY command-netacceptoff           SYSTEM "command-netacceptoff.xml">
+  <!ENTITY command-netacceptreceivevalue  SYSTEM "command-netacceptreceivevalue.xml">
+  <!ENTITY command-netacceptsendvalue     SYSTEM "command-netacceptsendvalue.xml">
+  <!ENTITY command-netconnecton           SYSTEM "command-netconnecton.xml">
+  <!ENTITY command-netconnectoff          SYSTEM "command-netconnectoff.xml">
+  <!ENTITY command-netconnectsendvalue    SYSTEM "command-netconnectsendvalue.xml">
+  <!ENTITY command-netconnectreceivevalue SYSTEM "command-netconnectreceivevalue.xml">
 ]>
 
 <book id="MSWLogo Help">
@@ -577,6 +589,7 @@
   &directory-commands;
   &windows-commands;
   &bitmap-commands;
+  &networking-commands;
 
 </book>
 
