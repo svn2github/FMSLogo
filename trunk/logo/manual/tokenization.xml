@@ -67,11 +67,11 @@ The same is true of a character typed after a backslash, except that when a quot
 This distinction is important only if you are building a Logo expression out of parts, to be RUN later, and want to use parentheses.  For example,</para>
 
 
-    <programlisting>PRINT RUN (SE "\( 2 "+ 3 "\))</programlisting>
+    <programlisting>PRINT RUN (SENTENCE "\( 2 "+ 3 "\))</programlisting>
 
     <para>will print 5, but</para>
 
-    <programlisting>RUN (SE "MAKE ""|(| 2)</programlisting>
+    <programlisting>RUN (SENTENCE "MAKE ""|(| 2)</programlisting>
 
     <para>will create a variable whose name is open-parenthesis.  (Each example would fail if vertical bars and backslashes were interchanged.)</para>
 
