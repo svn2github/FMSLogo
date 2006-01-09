@@ -20,9 +20,9 @@ When a parent window is deleted, its "child" Windows and controls are also delet
 </para>
 
 <para>
-When controls are in windows the coordinates used in all the Windows functions are in Windows coordinate system (NOT the turtle coordinate system).
+When controls are in windows the coordinates used in all the Windows functions are in Windows coordinate system (<emphasis>not</emphasis> the turtle coordinate system).
 That is the Y axis is upside down (positive numbers are down).
-The origin is NOT the middle of the screen, it is the upper left hand corner of the window.
+The origin is <emphasis>not</emphasis> the middle of the screen, it is the upper left hand corner of the window.
 </para>
 
 <para>
@@ -274,43 +274,43 @@ If it uses a modal window, then SETUP is called during the DIALOGCREATE because 
 <programlisting>
 TO WIN
   ; For modeless example use this line
-  WINDOWCREATE "root "d1 [Draw Pictures] 0 0 150 110 [] setup  ; Create main window
+  WINDOWCREATE "root "d1 [Draw Pictures] 0 0 150 110 [] SETUP  ; Create main window
 
   ; For modal example use this line
-  ; DIALOGCREATE "root "d1 [Draw Pictures] 0 0 150 110 [setup] ; Create main window
+  ; DIALOGCREATE "root "d1 [Draw Pictures] 0 0 150 110 [SETUP] ; Create main window
 END
 
 TO SETUP
   STATICCREATE "d1 "st4 [Select Shape] 5 10 50 10 ; Label the List box
 
   LISTBOXCREATE "d1 "l1 5 25 80 40 ; Create List box with 3 Items owned by d1
-  LISTBOXADDSTRING "l1 "SQUARE
-  LISTBOXADDSTRING "l1 "TRIANGLE
-  LISTBOXADDSTRING "l1 "HEXAGON
+  LISTBOXADDSTRING "l1 "Square
+  LISTBOXADDSTRING "l1 "Triangle
+  LISTBOXADDSTRING "l1 "Hexagon
 
   STATICCREATE "d1 "st11 [Red] 100 10 40 10 ; Label the scrollbar
 
   SCROLLBARCREATE "d1 "s1 100 25 10 50 [MYRED] ; Create scroll bar, call MYRED when clicked
   SCROLLBARSET "s1 1 255 125 MYRED             ; Init
 
-  BUTTONCREATE "d1 "b1 "END 5 80 40 10 [MYEND]          ; Create button to call myend
-  BUTTONCREATE "d1 "b3 "CLEAR 55 80 35 10 [CLEARSCREEN] ; Create button to clear 
-  BUTTONCREATE "d1 "b2 "DRAW 100 80 35 10 [drawthing]   ; Create button to call drawthing
+  BUTTONCREATE "d1 "b1 "End   5   80 40 10 [MYEND]       ; Create button to call myend
+  BUTTONCREATE "d1 "b3 "Clear 55  80 35 10 [CLEARSCREEN] ; Create button to clear screen
+  BUTTONCREATE "d1 "b2 "Draw  100 80 35 10 [DRAWTHING]   ; Create button to call drawthing
 
 END
 
-; execute this routine when DRAW button pushed
+; Execute this routine when "Draw" button pushed
 TO DRAWTHING
   SETPENCOLOR (LIST SCROLLBARGET "s1 0 0)  ; Ask scrollbar what to setpencolor to
 
   ; Draw appropriate shape according to the listbox
 
-  IF EQUALP [HEXAGON]  LISTBOXGETSELECT "l1 [REPEAT 6 [FORWARD 100 RIGHT 60]]
-  IF EQUALP [SQUARE]   LISTBOXGETSELECT "l1 [REPEAT 4 [FORWARD 100 RIGHT 90]]
-  IF EQUALP [TRIANGLE] LISTBOXGETSELECT "l1 [REPEAT 3 [FORWARD 100 RIGHT 120]]
+  IF EQUALP [Hexagon]  LISTBOXGETSELECT "l1 [REPEAT 6 [FORWARD 100 RIGHT 60]]
+  IF EQUALP [Square]   LISTBOXGETSELECT "l1 [REPEAT 4 [FORWARD 100 RIGHT 90]]
+  IF EQUALP [Triangle] LISTBOXGETSELECT "l1 [REPEAT 3 [FORWARD 100 RIGHT 120]]
 END
 
-; execute this routine when END button is pushed
+; execute this routine when End button is pushed
 TO MYEND
   ; For modeless example use this
   WINDOWDELETE "d1
@@ -319,7 +319,7 @@ TO MYEND
   ; DIALOGDELETE "d1
 END
 
-; execute this routine when RED scroll bar is adjusted
+; execute this routine when red scroll bar is adjusted
 TO MYRED
   STATICUPDATE "st11 SENTENCE [Red] SCROLLBARGET "s1 ; Update static label of position
 END

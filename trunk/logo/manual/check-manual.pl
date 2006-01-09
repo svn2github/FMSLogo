@@ -157,7 +157,12 @@ $Exceptions{'logohelp.xml'}{'allcaps'}{'WARRANTY'}        = 1;
 $Exceptions{'logohelp.xml'}{'allcaps'}{'WITHOUT'}         = 1;
 $Exceptions{'logohelp.xml'}{'allcaps'}{'XML'}             = 1;
 
-$Exceptions{'windows-commands.xml'}{'allcaps'}{'SQUARE'}  = 1;
+$Exceptions{'windows-commands.xml'}{'allcaps'}{'GUI'}       = 1;
+$Exceptions{'windows-commands.xml'}{'allcaps'}{'SETUP'}     = 1;
+$Exceptions{'windows-commands.xml'}{'allcaps'}{'WIN'}       = 1;
+$Exceptions{'windows-commands.xml'}{'allcaps'}{'MYRED'}     = 1;
+$Exceptions{'windows-commands.xml'}{'allcaps'}{'MYEND'}     = 1;
+$Exceptions{'windows-commands.xml'}{'allcaps'}{'DRAWTHING'} = 1;
 
 
 
