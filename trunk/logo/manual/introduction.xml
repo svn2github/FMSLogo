@@ -2,8 +2,7 @@
 
    <title>Introduction</title>
 
-   <section>
-      <anchor id="tutorial"/>
+   <section id="tutorial">
       <title>Why LOGO?</title>
       <para>This introduction does not do LOGO justice but it's a start.  LOGO is a programming language, pure and simple.  There are two models that languages come in, compiled and interpreted.</para>
 

@@ -7,8 +7,7 @@ It is located in the bottom left portion of the commander window.
 For information on the different controls (boxes) see the specific box below.</para>
 
 
-   <section>
-      <anchor id="commander-input" />
+   <section id="commander-input">
       <title>Input Box</title>
       <para>The input box is tied to the <link linkend="commander-history">Output/Command-Recall List</link> and to the <link linkend="commander-execute">Execute</link>.
 You can also edit the text in the input box.
@@ -19,8 +18,7 @@ Using the Up/Down arrow keys will automatically jump to (set focus to) the outpu
 This control also supports <link linkend="editor-context-help">Context Sensitive Help</link> and <link linkend="editor-clipboard">Editing with Clipboard</link>.</para>
    </section>
 
-   <section>
-      <anchor id="commander-history" />
+   <section id="commander-history">
       <title>Output/Command-Recall List Box</title>
       <para>The output/command-recall list box will record all output including what you type into the <link linkend="commander-input">Input Box</link>.
 You can select a command for re-execution by clicking on the desired line or by using the arrow keys.
@@ -30,22 +28,19 @@ A double-click on the mouse will automatically execute what you're pointing at.
 This control also supports <link linkend="editor-context-help">Context Sensitive Help</link> and <link linkend="editor-clipboard">Editing with Clipboard</link>.</para>
    </section>
 
-   <section>
-      <anchor id="commander-execute" />
+   <section id="commander-execute">
       <title>Execute Button</title>
       <para>The execute button executes what is in the <link linkend="commander-input">Input Box</link> and is also "PUSHED" when you hit <keycap>ENTER</keycap> key.</para>
    </section>
 
-   <section>
-      <anchor id="commander-status" />
+   <section id="commander-status">
       <title>Status Button</title>
       <para>This button pops up a status window telling you what LOGO is up to.  
 Click it again to close the window. 
 See also the <link linkend="command-status">STATUS</link> and <link linkend="command-nostatus">NOSTATUS</link> commands.</para>
    </section>
 
-   <section>
-      <anchor id="commander-trace" />
+   <section id="commander-trace">
       <title>Trace Button</title>
       <para>The trace button turns on tracing for debugging your programs.
 Click again to disable tracing.
@@ -55,8 +50,7 @@ See also <link linkend="command-trace">TRACE</link> and <link linkend="command-u
    </section>
 
 
-   <section>
-      <anchor id="commander-halt" />
+   <section id="commander-halt">
       <title>Halt Button</title>
       <para>The halt button immediately stops LOGO from processing any further.
 Logo is now waiting for a new command.
@@ -64,15 +58,13 @@ See also the <link linkend="command-halt">HALT</link> command.</para>
    </section>
 
 
-   <section>
-      <anchor id="commander-reset" />
+   <section id="commander-reset">
       <title>Reset Button</title>
       <para>The reset button is like the <link linkend="command-clearscreen">CLEARSCREEN</link> command; it resets the LOGO screen.</para>
    </section>
 
 
-   <section>
-      <anchor id="commander-step" />
+   <section id="commander-step">
       <title>Step Button</title>
       <para>The step button turns on single stepping for debugging your programs.
 Click again to disable single stepping.
@@ -82,8 +74,7 @@ See also <link linkend="command-step">STEP</link> and <link linkend="command-uns
    </section>
 
 
-   <section>
-      <anchor id="commander-pause" />
+   <section id="commander-pause">
       <title>Pause Button</title>
       <para>The pause button stops LOGO so that you can examine variables, make changes or whatever.
 Once paused the pause button will show what depth you paused to.
@@ -92,8 +83,7 @@ You can also issue a <link linkend="command-pause">PAUSE</link> command within c
 You can think of pause and continue as sort of a Halt-n-Push and Pop-n-Continue of your state respectively.</para> 
    </section>
 
-   <section>
-      <anchor id="commander-edall" />
+   <section id="commander-edall">
       <title>Edall Button</title>
       <para>The Edall button opens the contents of the entire workspace (all unburied procedures, variables, and property lists) in <link linkend="editor">the logo editor</link>.
 This is the same as running the <link linkend="command-edall">EDALL</link> command.</para> 
