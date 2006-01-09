@@ -20,12 +20,12 @@ Primitive procedures will not erased unless the variable <link linkend="command-
 
 <para>
 ERASE does not throw an error if it is asked to erase a procedure, variable, or property list that is not in the workspace.
-However, ERASE does throw an error when it is asked to erase a primative when <link linkend="command-redefp">REDEFP</link>
+However, ERASE does throw an error when it is asked to erase a primitive when <link linkend="command-redefp">REDEFP</link>
 either has not been set, or is FALSE.
 </para>
 
 <para>
-See the <link linkend="workspace-queries">Workspace Queries</link> section for an explaination of the formats of <parameter>contentslist</parameter>.
+See the <link linkend="workspace-queries">Workspace Queries</link> section for an explanation of the formats of <parameter>contentslist</parameter>.
 </para>
 </listitem>
 </varlistentry>

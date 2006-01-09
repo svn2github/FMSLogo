@@ -75,8 +75,8 @@ All procedures whose input is indicated as "contentslist" will accept any of the
 <itemizedlist>
 <listitem>A single word (taken as a procedure name)</listitem>
 <listitem>A list of words (taken as procedure names)</listitem>
-<listitem>A list of two lists (taken as procedure names and variable names, respectivly)</listitem>
-<listitem>A list of three lists (taken as procedure names, variable names, and property list names, respectivly)</listitem>
+<listitem>A list of two lists (taken as procedure names and variable names, respectively)</listitem>
+<listitem>A list of three lists (taken as procedure names, variable names, and property list names, respectively)</listitem>
 </itemizedlist>
 
 </para>
@@ -132,7 +132,7 @@ For example, all Logolib routines bury themselves after they are called so that 
 </para>
 
 <para>
-Buried things can be completely restored to the workspace by unburing them (for example, with <link linkend="command-unbury">UNBURY</link>).
+Buried things can be completely restored to the workspace by unburying them (for example, with <link linkend="command-unbury">UNBURY</link>).
 </para>
 
        &command-erase;

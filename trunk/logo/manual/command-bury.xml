@@ -18,7 +18,7 @@ By implication, buried things are not printed by <link linkend="command-poall">P
 </para>
 
 <para>
-See the <link linkend="workspace-queries">Workspace Queries</link> section for an explaination of the <parameter>contentslist</parameter> parameter.
+See the <link linkend="workspace-queries">Workspace Queries</link> section for an explanation of the <parameter>contentslist</parameter> parameter.
 </para>
 </listitem>
 </varlistentry>

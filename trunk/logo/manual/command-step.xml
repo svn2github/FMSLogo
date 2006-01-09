@@ -18,7 +18,7 @@ A dialog box is displayed whenever a stepped variable name is "shadowed".  A var
 </para>
 
 <para>
-See the <link linkend="workspace-queries">Workspace Queries</link> section for an explaination of the <parameter>contentslist</parameter> parameter.
+See the <link linkend="workspace-queries">Workspace Queries</link> section for an explanation of the <parameter>contentslist</parameter> parameter.
 </para>
 
 <para>

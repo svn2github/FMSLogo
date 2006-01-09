@@ -61,7 +61,7 @@ The meaning of each of the list elements is explained in the following table:
       </row>
       <row>
         <entry>Italic</entry>
-        <entry>An integer.  The font is italicied if and only if this is non-zero.</entry>
+        <entry>An integer.  The font is italicized if and only if this is non-zero.</entry>
       </row>
       <row>
         <entry>Underlined</entry>

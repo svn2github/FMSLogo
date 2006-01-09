@@ -54,7 +54,7 @@ FORWARD will now go down in the Z axis (away from you).
 
 
 <para>
-For more information on manuvering in 3D, read the section on <link linkend="understand-your-orientation-in-3D">understanding your orientation in 3D</link>.
+For more information on maneuvering in 3D, read the section on <link linkend="understand-your-orientation-in-3D">understanding your orientation in 3D</link>.
 </para>
 
 <para>
@@ -262,7 +262,7 @@ Many commands are repeated in both columns because they are effected by being in
 
 <para>
 There are several 2D commands which will work in perspective mode but still behave in a 2D fashion.
-Their action will take place at the correct X, Y, Z coordinate, but tje orientation will be limited to a 2D plane.
+Their action will take place at the correct X, Y, Z coordinate, but the orientation will be limited to a 2D plane.
 For example, you can not draw text with <link linkend="command-label">LABEL</link> on 6 sides of cube.
 However, you can LABEL the 8 vertices of the cube by moving to each vertex using 3D maneuvers.
 Furthermore, nothing prevents you from building a "3D block letter" alphabet library made up of 3D vectors.
@@ -301,7 +301,7 @@ However you can do "fast" dynamic manipulation in two other ways.
 <para>
 One simple way is to keep your scene very simple (relative to the performance of your computer).
 You simply clear the screen and change the eye view (turtle -1) or the placement of the objects and draw again.
-Note curved objects (like those based on ellipsearc) generate many vectors.
+Note curved objects (like those based on <link linkend="command-ellipsearc">ELLIPSEARC</link>) generate many vectors.
 The other option is to record each "scene" in a bitmap and play them back at any rate you wish.
 This method is shown in the <filename>GROW.LGO</filename> example.
 It does not matter whether you're "recording" 2D scenes or 3D scenes.
