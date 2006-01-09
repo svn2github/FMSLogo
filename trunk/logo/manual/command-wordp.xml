@@ -17,23 +17,18 @@
 </varlistentry>
 
 <varlistentry><term>Example</term>
-
 <listitem>
-    <programlisting><userinput>SHOW WORDP "Hello
+<programlisting><userinput>SHOW WORDP "Hello
 </userinput>true</programlisting>
-</listitem>
 
-<listitem>
-    <programlisting><userinput>SHOW WORDP [Hello]
+<programlisting><userinput>SHOW WORDP [Hello]
+</userinput>false</programlisting>
+
+<programlisting><userinput>SHOW WORDP {Hello}
 </userinput>false</programlisting>
 </listitem>
-
-<listitem>
-    <programlisting><userinput>SHOW WORDP {Hello}
-</userinput>false</programlisting>
-</listitem>
-
 </varlistentry>
+
 </variablelist>
 
 </section>
