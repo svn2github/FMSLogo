@@ -108,7 +108,7 @@ This procedure has a minimum of one input, a default of three inputs, and an inf
 
 
 <para>
-FMSLogo will popup a dialog if you enter a TO command into the commander's edit box.
+MSWLogo will popup a dialog if you enter a TO command into the commander's edit box.
 Whatever instructions you type into the popup become part of the definition.
 You can finish the definition by typing a line that contains only the word <link linkend="command-end">END</link> or pressing the Cancel button.
 </para>
