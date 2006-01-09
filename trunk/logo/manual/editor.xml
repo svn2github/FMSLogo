@@ -7,7 +7,7 @@ But be careful of having multiple edits going that include the same definition.
 The last Editor Exited (and saved) is what takes precedence.
 Also realize if you delete procedures, property lists, or names while in the editor they will be erased (see <link linkend="command-erase">ERASE</link>(and saving) the edit session you deleted them from.</para>
 
-    <section id="editor-menu"/>
+    <section id="editor-menu">
       <title>Editor Menu</title>
 
       <section>
@@ -118,7 +118,7 @@ Using this feature is as if you typed in that selection into the commander.
 
     </section>
 
-    <section id="editor-errors"/>
+    <section id="editor-errors">
       <title>Editor Errors</title>
 
       <para>If an error occurs when Logo "loads" in your edit you will be prompted to reenter the Editor.
@@ -128,7 +128,7 @@ When this occurs make sure to check the commander window for a hint of what the 
 
     </section>
 
-    <section id="editor-clipboard" />
+    <section id="editor-clipboard">
       <title>Editing with the Clipboard</title>
       <para>Logo's Editor and many controls support the clipboard.
 The clipboard is where most Windows application store data during cut and paste operations.
@@ -145,7 +145,7 @@ This means you can turn code you entered in the commander into procedure by copy
 Or take text output you generated and paste it into another application.</para>
     </section>
 
-    <section id="editor-context-help" />
+    <section id="editor-context-help">
       <title>Context Sensitive Help</title>
       <para>Logo's <link linkend="editor">Editor</link>, <link linkend="commander-input">Input Box</link> and <link linkend="commander-history">Output/Command-Recall</link> all support context sensitive Help.
 If you select a keyword (such as FORWARD) in these places (double-click works best in the editor) you can ask Logo to look up the keyword without going through the Help Menu followed by a Search and so on.
