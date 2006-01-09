@@ -56,14 +56,14 @@ RIGHT 90</programlisting>
 
       <para>That was easy but too much typing, let's try again.</para>
 
-      <programlisting>REPEAT 4 [FD 100 RT 90]</programlisting>
+      <programlisting>REPEAT 4 [FORWARD 100 RIGHT 90]</programlisting>
 
       <para>That's it? Yes, that's the same square.  We did two things. We noticed too much redundant code in our first example, so we asked logo to repeat the same sequence 4 times.  We also used abbreviated forms of the same commands.  But we can still do better.  A square is a popular item wouldn't you say?  Wouldn't it be more useful just to say square when you wanted a square?</para>
 
       <programlisting>EDIT "square
 &lt;Editor will pop up>
 TO SQUARE
-REPEAT 4 [FD 100 RT 90]
+REPEAT 4 [FORWARD 100 RIGHT 90]
 END
 &lt;Exit Editor and save>
 
@@ -74,7 +74,7 @@ SQUARE</programlisting>
 EDIT "square
 
 TO SQUARE :length
-REPEAT 4 [FD :length RT 90]
+REPEAT 4 [FORWARD :length RIGHT 90]
 END
 
 SQUARE 100
@@ -83,15 +83,15 @@ SQUARE 200</programlisting>
       <para>Note all we did is replace 100 with a variable name called :length.  Now when we call square we must specify how big we want it.  Above we asked logo to draw one square at 100x100 and another at 200x200.  Note the ":" in front of the word length tells logo that length is a variable.  However, we can still even do better.  What's wrong now, you ask.  Well, wouldn't it be better if we could draw something other than a square like a triangle?</para>
 
       <programlisting>TO TRIANGLE :length
-REPEAT 3 [FD :length RT 120]
+REPEAT 3 [FORWARD :length RIGHT 120]
 END
 
 TO SQUARE :length
-REPEAT 4 [FD :length RT 90]
+REPEAT 4 [FORWARD :length RIGHT 90]
 END
 
 TO PENTAGON :length
-REPEAT 5 [FD :length RT 72]
+REPEAT 5 [FORWARD :length RIGHT 72]
 END
 
 TRIANGLE 100
@@ -101,7 +101,7 @@ HEXAGON 100</programlisting>
       <para>Lot of typing (programmers hate to type).  Why?  Because there are more things to break and when a change needs to be made it might have to made in many places.  Smaller is not always better but it usually helps. Let's try again.</para>
 
       <programlisting>TO POLYGON :length :sides
-REPEAT :sides [FD :length RT 360.0/:sides]
+REPEAT :sides [FORWARD :length RIGHT 360.0/:sides]
 END
 
 POLYGON 100 3
@@ -109,7 +109,7 @@ POLYGON 100 4
 POLYGON 100 5
 </programlisting>
 
-      <para>What happened to TRIANGLE, SQUARE and HEXAGON?  POLYGON now acts as every equal-sided polygon possible and with only one line of code!  We now repeat the sequence based on how many :sides the caller asked for and we turn (RT) the amount of degrees appropriate for that shape.  You may not realize it but this is PROGRAMMING.</para>
+      <para>What happened to TRIANGLE, SQUARE and HEXAGON?  POLYGON now acts as every equal-sided polygon possible and with only one line of code!  We now repeat the sequence based on how many :sides the caller asked for and we turn (RIGHT) the amount of degrees appropriate for that shape.  You may not realize it but this is <emphasis>programming</emphasis>.</para>
 
       <para>Now that we have a program, it's a good idea to save it to the disk.  The edits you've made so far are all within Logo's memory and not on the disk.  How do you save your work, easy.</para>
 
@@ -130,7 +130,7 @@ The MSWLogo online Video Tutorial (separate kit) only basics.
 Jim Muller's Great Logo Adventure Book primarily based on MSWLogo.
 Brian Harvey's MIT Press Books for more advanced programming.</para>
 
-      <para>What ever do make sure you have FUN.</para>
+      <para>What ever do make sure you have <emphasis>fun</emphasis>.</para>
 
     </section>
 </preface>
