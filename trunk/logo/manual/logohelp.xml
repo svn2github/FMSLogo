@@ -558,9 +558,9 @@
   <!ENTITY command-mci                    SYSTEM "command-mci.xml">
 ]>
 
-<book id="MSWLogo Help">
-  <info>
-     <title>Logo for Windows</title>
+<book id="mswlogo-help">
+  <title>Logo for Windows</title>
+  <bookinfo>
 
     <copyright>
       <year>1989</year>
@@ -581,7 +581,7 @@
 
     </legalnotice>
 
-  </info>
+  </bookinfo>
 
   &introduction;
   &command-line-options;
