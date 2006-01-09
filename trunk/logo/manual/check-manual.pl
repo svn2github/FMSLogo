@@ -326,3 +326,7 @@ foreach my $filename (<*.xml>) {
 
   $fh->close;
 }
+
+print "Found $main::TotalErrors errors and $main::TotalWarnings warnings\n";
+exit 1 if $main::TotalErrors != 0;
+exit 0;
