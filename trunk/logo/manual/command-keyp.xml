@@ -1,7 +1,9 @@
 <section id="command-keyp">
     <title>KEYP</title>
 
+<para>
 <note>KEYP is not supported in MSWLogo.  See <link linkend="command-keyboardon">KEYBOARDON</link>.</note>
+</para>
 
 <variablelist>
 
