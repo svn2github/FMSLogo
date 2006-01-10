@@ -20,14 +20,10 @@
 <listitem>
     <programlisting><userinput>SHOW ARRAYP "Hello
 </userinput>false</programlisting>
-</listitem>
 
-<listitem>
     <programlisting><userinput>SHOW ARRAYP [Hello]
 </userinput>false</programlisting>
-</listitem>
 
-<listitem>
     <programlisting><userinput>SHOW ARRAYP {Hello}
 </userinput>true</programlisting>
 </listitem>

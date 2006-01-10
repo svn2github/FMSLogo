@@ -21,14 +21,10 @@
 <listitem>
     <programlisting><userinput>SHOW LISTP "Hello
 </userinput>false</programlisting>
-</listitem>
 
-<listitem>
     <programlisting><userinput>SHOW LISTP [Hello]
 </userinput>true</programlisting>
-</listitem>
 
-<listitem>
     <programlisting><userinput>SHOW LISTP {Hello}
 </userinput>false</programlisting>
 </listitem>
