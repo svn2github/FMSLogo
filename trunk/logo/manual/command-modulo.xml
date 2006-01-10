@@ -14,7 +14,7 @@
 <para>
 Outputs the remainder of dividing <parameter>dividend</parameter> divided by <parameter>divisor</parameter>.
 Both <parameter>dividend</parameter> and <parameter>divisor</parameter> must be integers.
-The result is an integer with the same sign as <code>divisor</code> (unlike <link linkend="command-remainder">REMAINDER</link>, which uses the sign of <parameter>dividend</parameter>).
+The result is an integer with the same sign as <parameter>divisor</parameter> (unlike <link linkend="command-remainder">REMAINDER</link>, which uses the sign of <parameter>dividend</parameter>).
 </para>
 
 <para>
