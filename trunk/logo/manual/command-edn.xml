@@ -17,7 +17,7 @@ Opens all named variables in <link linkend="editor">the Logo editor</link>.
 </para>
 
 <para>
-EDN abbreviates <code><link linkend="command-edit">EDIT</link> <link linkend="command-namelist">NAMELIST</link></code>.
+EDN abbreviates <userinput><link linkend="command-edit">EDIT</link> <link linkend="command-namelist">NAMELIST</link></userinput>.
 </para>
 </listitem>
 </varlistentry>

@@ -13,7 +13,7 @@
 <listitem>
 <para>
 Prints all unburied definitions in the workspace to the current write stream.
-POALL abbreviates <code><link linkend="command-po">PO</link> <link linkend="command-contents">CONTENTS</link></code>.
+POALL abbreviates <userinput><link linkend="command-po">PO</link> <link linkend="command-contents">CONTENTS</link></userinput>.
 </para>
 </listitem>
 </varlistentry>

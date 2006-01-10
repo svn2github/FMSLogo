@@ -13,7 +13,7 @@
 <listitem>
 <para>
 Prints the contents of all unburied property lists in the workspace to the current write stream.
-POPLS abbreviates <code><link linkend="command-po">PO</link> <link linkend="command-plists">PLISTS</link></code>.
+POPLS abbreviates <userinput><link linkend="command-po">PO</link> <link linkend="command-plists">PLISTS</link></userinput>.
 </para>
 </listitem>
 </varlistentry>

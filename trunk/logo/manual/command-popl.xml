@@ -14,7 +14,7 @@
 <listitem>
 <para>
 Prints the contents of the named property lists(s) to the current write stream.
-POPL abbreviates <code><link linkend="command-po">PO</link> <link linkend="command-pllist">PLLIST</link></code>.
+POPL abbreviates <userinput><link linkend="command-po">PO</link> <link linkend="command-pllist">PLLIST</link></userinput>.
 </para>
 
 <para>

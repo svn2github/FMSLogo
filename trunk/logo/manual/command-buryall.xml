@@ -13,7 +13,7 @@
 <listitem>
 <para>
 Buries all procedures, variables, and property lists in the workspace.
-BURYALL abbreviates <code><link linkend="command-bury">BURY</link> <link linkend="command-contents">CONTENTS</link></code>.
+BURYALL abbreviates <userinput><link linkend="command-bury">BURY</link> <link linkend="command-contents">CONTENTS</link></userinput>.
 </para>
 </listitem>
 </varlistentry>

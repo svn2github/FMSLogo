@@ -21,14 +21,14 @@ The data inputs may be words or lists.
 </para>
 
 <para>
-In a template, the symbol <code>?REST</code> represents the portion of the data input to the right of the member currently being used as the <code>?</code> slot-filler.
-That is, if the data input is <code>[A B C D E]</code> and the template is being evaluated with <code>?</code> replaced by <code>B</code>, then <code>?REST</code> would be replaced by <code>[C D E]</code>.
-If multiple parallel slots are used, then <code>(?REST 1)</code> goes with <code>?1</code>, etc.
+In a template, the symbol <userinput>?REST</userinput> represents the portion of the data input to the right of the member currently being used as the <userinput>?</userinput> slot-filler.
+That is, if the data input is <userinput>[A B C D E]</userinput> and the template is being evaluated with <userinput>?</userinput> replaced by <userinput>B</userinput>, then <userinput>?REST</userinput> would be replaced by <userinput>[C D E]</userinput>.
+If multiple parallel slots are used, then <userinput>(?REST 1)</userinput> goes with <userinput>?1</userinput>, etc.
 </para>
 
 <para>
-In a template, the symbol <code>#</code> represents the position in the data input of the member currently being used as the <code>?</code> slot-filler.
-That is, if the data input is <code>[A B C D E]</code> and the template is being evaluated with <code>?</code> replaced by <code>B</code>, then <code>#</code> would be replaced by <code>2</code>.
+In a template, the symbol <userinput>#</userinput> represents the position in the data input of the member currently being used as the <userinput>?</userinput> slot-filler.
+That is, if the data input is <userinput>[A B C D E]</userinput> and the template is being evaluated with <userinput>?</userinput> replaced by <userinput>B</userinput>, then <userinput>#</userinput> would be replaced by <userinput>2</userinput>.
 </para>
 
 </listitem>

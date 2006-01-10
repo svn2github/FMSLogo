@@ -37,9 +37,9 @@ END
 
 MYPROG</userinput>
 Pausing...myprog
-<replaceable>Enter <code>SHOW HEADING</code> in Pause Mode dialog box and hit OK</replaceable>
+<replaceable>Enter <userinput>SHOW HEADING</userinput> in Pause Mode dialog box and hit OK</replaceable>
 180
-<replaceable>Enter <code>CONTINUE</code> in Pause Box and hit OK</replaceable>
+<replaceable>Enter <userinput>CONTINUE</userinput> in Pause Box and hit OK</replaceable>
 Done
 </programlisting>
 </listitem>

@@ -24,9 +24,9 @@ Such an error will not return to toplevel; it will remain within the original pa
 </para>
 
 <para>
-If ERRACT has no value, Logo handles the error by generating an internal <code>THROW "ERROR</code>.
-If this <link linkend="command-throw">THROW</link> is not caught by a <code>CATCH "ERROR</code> in the user program, it is eventually caught either by the toplevel instruction loop or by a pause loop, which prints the error message.
-An invocation of <code>CATCH "ERROR</code> in a user program locally unbinds ERRACT, so the effect is that whichever of ERRACT and CATCH "ERROR is more local will take precedence.
+If ERRACT has no value, Logo handles the error by generating an internal <userinput>THROW "ERROR</userinput>.
+If this <link linkend="command-throw">THROW</link> is not caught by a <userinput>CATCH "ERROR</userinput> in the user program, it is eventually caught either by the toplevel instruction loop or by a pause loop, which prints the error message.
+An invocation of <userinput>CATCH "ERROR</userinput> in a user program locally unbinds ERRACT, so the effect is that whichever of ERRACT and CATCH "ERROR is more local will take precedence.
 </para>
 
 <para>

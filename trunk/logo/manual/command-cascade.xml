@@ -33,7 +33,7 @@ Otherwise, CASCADE outputs the value produced by the last template evaluation.
 </para>
 
 <para>
-CASCADE templates may include the symbol <code>#</code> to represent the number of times the template has been evaluated.
+CASCADE templates may include the symbol <userinput>#</userinput> to represent the number of times the template has been evaluated.
 This slot is filled with 1 for the first evaluation, 2 for the second, and so on.
 </para>
 
@@ -55,7 +55,7 @@ ing
 <para>
 Several cascaded results can be computed in parallel by providing additional <parameter>template</parameter>-<parameter>startvalue</parameter> pairs as inputs to CASCADE.
 In this case, all templates (including the <parameter>endtest</parameter> template, if used) are multi-slot, with the number of slots equal to the number of pairs of inputs.
-In each round of evaluations, <code>?2</code> represents the result of evaluating the second template in the previous round.
+In each round of evaluations, <userinput>?2</userinput> represents the result of evaluating the second template in the previous round.
 If the total number of inputs (including the first <parameter>endtest</parameter> input) is odd, then the output from CASCADE is the final value of the first template.
 If the total number of inputs is even, then the last input is a template that is evaluated once, after the end test is satisfied, to determine the output from CASCADE.
 </para>

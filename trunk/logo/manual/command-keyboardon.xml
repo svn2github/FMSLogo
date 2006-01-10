@@ -26,7 +26,7 @@ You can determine the key that was pressed or released by calling <link linkend=
 
 <para>
 Note the "Screen" must have focus (NOT the commander) to catch the key events.
-You can force this by calling <code>SETFOCUS [MSWLogo Screen]</code> after you call KEYBOARDON.
+You can force this by calling <userinput>SETFOCUS [MSWLogo Screen]</userinput> after you call KEYBOARDON.
 All the "callbacks" for the keyboard are automatically run in <link linkend="command-noyield">NOYIELD</link> mode.
 </para>
 

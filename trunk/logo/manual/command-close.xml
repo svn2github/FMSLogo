@@ -17,7 +17,7 @@ All subsequent attempts to read or write to the file will fail.
 </para>
 
 <para>
-You can also close the reserved file <code>"clipboard</code> with this command.
+You can also close the reserved file <userinput>"clipboard</userinput> with this command.
 </para>
 
 </listitem>

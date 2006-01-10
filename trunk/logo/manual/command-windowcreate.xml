@@ -21,7 +21,7 @@ See <link linkend="windows-modal-vs-modeless">Modal vs. Modeless</link> for more
 
 <para>
 The <parameter>parent</parameter> input is the name of the window that will own the new window.
-If this is the first window you are creating, use <code>"root</code> as the <parameter>parent</parameter> input. 
+If this is the first window you are creating, use <userinput>"root</userinput> as the <parameter>parent</parameter> input. 
 </para>
 
 <para>

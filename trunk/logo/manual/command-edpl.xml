@@ -17,7 +17,7 @@ Opens all named property lists in <link linkend="editor">the Logo editor</link>.
 </para>
 
 <para>
-EDPL abbreviates <code><link linkend="command-edit">EDIT</link> <link linkend="command-pllist">PLLIST</link></code>.
+EDPL abbreviates <userinput><link linkend="command-edit">EDIT</link> <link linkend="command-pllist">PLLIST</link></userinput>.
 </para>
 </listitem>
 </varlistentry>

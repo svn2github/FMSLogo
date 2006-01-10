@@ -17,7 +17,7 @@
 Array elements can be selected with <link linkend="command-item">ITEM</link> and changed with <link linkend="command-setitem">SETITEM</link>.
 The first element of the array is element number 1, unless an origin input (must be an integer) is given, in which case the first element of the array has that number as its index.
 (Typically 0 is used as the origin if anything.)
-Arrays are printed by <link linkend="command-print">PRINT</link> and friends, and can be typed in, inside curly braces; indicate an origin with <code>{a b c}@0</code>.</para>
+Arrays are printed by <link linkend="command-print">PRINT</link> and friends, and can be typed in, inside curly braces; indicate an origin with <userinput>{a b c}@0</userinput>.</para>
 </listitem>
 </varlistentry>
 

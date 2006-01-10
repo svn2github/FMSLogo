@@ -13,7 +13,7 @@
 <listitem>
 <para>
 Prints the definitions of all unburied procedures in the workspace to the current write stream.
-POPS abbreviates <code><link linkend="command-po">PO</link> <link linkend="command-procedures">PROCEDURES</link></code>.
+POPS abbreviates <userinput><link linkend="command-po">PO</link> <link linkend="command-procedures">PROCEDURES</link></userinput>.
 </para>
 </listitem>
 </varlistentry>

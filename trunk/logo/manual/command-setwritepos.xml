@@ -13,7 +13,7 @@
 <listitem>
 <para>
 Sets the file pointer of the write stream file so that the next <link linkend="command-print">PRINT</link>, etc., will begin writing at the <parameter>charpos</parameter>-th character in the file, counting from 0. 
-(That is, <code>SETWRITEPOS 0</code> will start writing from the beginning of the file.)
+(That is, <userinput>SETWRITEPOS 0</userinput> will start writing from the beginning of the file.)
 This is meaningless if the write stream is [].
 </para>
 </listitem>

@@ -14,7 +14,7 @@
 <listitem>
 <para>
 Erases the variable(s) named in the input from the workspace.
-ERN abbreviates <code><link linkend="command-erase">ERASE</link> <link linkend="command-namelist">NAMELIST</link></code>.
+ERN abbreviates <userinput><link linkend="command-erase">ERASE</link> <link linkend="command-namelist">NAMELIST</link></userinput>.
 </para>
 </listitem>
 </varlistentry>

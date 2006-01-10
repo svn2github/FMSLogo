@@ -16,8 +16,8 @@ Outputs the result of applying the template to accumulate the elements of the <p
 The <parameter>template</parameter> input must be a two-slot function.
 Typically, <parameter>template</parameter> is an associative function name like "<link linkend="command-sum">SUM</link>.
 If the <parameter>datalist</parameter> input has only one constituent (member in a list or character in a word), the output is that constituent.
-Otherwise, <parameter>template</parameter> is first applied with <code>?1</code> filled with the next-to-last constituent and <code>?2</code> with the last constituent.
-Then, if there are more constituents, the template is applied with <code>?1</code> filled with the next constituent to the left and <code>?2</code> with the result from the previous evaluation.
+Otherwise, <parameter>template</parameter> is first applied with <userinput>?1</userinput> filled with the next-to-last constituent and <userinput>?2</userinput> with the last constituent.
+Then, if there are more constituents, the template is applied with <userinput>?1</userinput> filled with the next constituent to the left and <userinput>?2</userinput> with the result from the previous evaluation.
 This process continues until all constituents have been used.
 The data input may not be empty.
 </para>

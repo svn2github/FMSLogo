@@ -14,7 +14,7 @@
 <listitem>
 <para>
 Buries the variable(s) named in the input.
-BURYNAME abbreviates <code><link linkend="command-bury">BURY</link> <link linkend="command-namelist">NAMELIST</link></code>.
+BURYNAME abbreviates <userinput><link linkend="command-bury">BURY</link> <link linkend="command-namelist">NAMELIST</link></userinput>.
 </para>
 </listitem>
 </varlistentry>

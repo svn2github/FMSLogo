@@ -18,7 +18,7 @@ If the file by the given filename already exists, the write position is initiall
 </para>
 
 <para>
-<parameter>filename</parameter> can also be the reserved word <code>"clipboard</code> to write data to the clipboard just like a file.
+<parameter>filename</parameter> can also be the reserved word <userinput>"clipboard</userinput> to write data to the clipboard just like a file.
 </para>
 
 <para>

@@ -16,7 +16,7 @@ Displays a standard "Open" windows dialog box.
 It does NOT open a file; it just allows the user to select the desired file using a Graphical User Interface.
 The <parameter>filename</parameter> input is used to set the defaults of name, directory and/or extension.
 The output is the fully-specified file name that the user selected.
-If the user presses "Cancel", then DIALOGFILEOPEN outputs the empty list (<code>[]</code>).
+If the user presses "Cancel", then DIALOGFILEOPEN outputs the empty list (<userinput>[]</userinput>).
 </para>
 
 <para>

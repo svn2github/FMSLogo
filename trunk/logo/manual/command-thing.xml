@@ -22,7 +22,7 @@ The colon notation for showing variables is an abbreviation for
 
 <programlisting>  THING "</programlisting>
 
-So <code>:FOO</code> is the same as <code>THING "FOO</code>.
+So <userinput>:FOO</userinput> is the same as <userinput>THING "FOO</userinput>.
 </para>
 
 </listitem>

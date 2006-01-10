@@ -14,7 +14,7 @@
 <listitem>
 <para>
 Erases the property lists named in the input from the workspace.
-ERPL abbreviates <code><link linkend="command-erase">ERASE</link> <link linkend="command-pllist">PLLIST</link></code>.
+ERPL abbreviates <userinput><link linkend="command-erase">ERASE</link> <link linkend="command-pllist">PLLIST</link></userinput>.
 </para>
 </listitem>
 </varlistentry>

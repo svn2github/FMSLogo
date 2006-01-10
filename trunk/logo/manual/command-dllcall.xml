@@ -17,7 +17,7 @@ The function must be in the DLL that was loaded with <link linkend="command-dlll
 </para>
 
 <para>
-The <parameter>function_parameter_list</parameter> is of the form <code>[typef function type1 arg1 type2 arg2 type3 arg3 ...]</code>.
+The <parameter>function_parameter_list</parameter> is of the form <userinput>[typef function type1 arg1 type2 arg2 type3 arg3 ...]</userinput>.
 </para>
 
 <para>
@@ -34,11 +34,11 @@ The "type" parameters are interpreted according to the table:
       <row><entry>Given Type</entry> <entry>Interpreted As Type</entry></row>
     </thead>
     <tbody>
-      <row><entry><code>v</code></entry><entry>void</entry></row>
-      <row><entry><code>w</code></entry><entry>WORD</entry></row>
-      <row><entry><code>l</code></entry><entry>DWORD</entry></row>
-      <row><entry><code>f</code></entry><entry>DOUBLE</entry></row>
-      <row><entry><code>s</code></entry><entry>LPSTR</entry></row>
+      <row><entry><userinput>V</userinput></entry><entry>void</entry></row>
+      <row><entry><userinput>W</userinput></entry><entry>WORD</entry></row>
+      <row><entry><userinput>L</userinput></entry><entry>DWORD</entry></row>
+      <row><entry><userinput>F</userinput></entry><entry>DOUBLE</entry></row>
+      <row><entry><userinput>S</userinput></entry><entry>LPSTR</entry></row>
     </tbody>
   </tgroup>
 </informaltable>
@@ -52,7 +52,7 @@ It will pass in arg1 as a type1, arg2 as a type2, and so on.
 
 <para>
 <parameter>function_parameter_list</parameter> must contain at least 4 items (typef function type1 arg1) even if arg1 is not used.
-If the formal argument list is "void" then use <code>["funcname "v 0]</code>.
+If the formal argument list is "void" then use <userinput>["funcname "v 0]</userinput>.
 </para>
 
 

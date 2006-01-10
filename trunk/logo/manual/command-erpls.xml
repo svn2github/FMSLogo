@@ -13,7 +13,7 @@
 <listitem>
 <para>
 Erases all unburied property lists from the workspace.
-ERPLS abbreviates <code><link linkend="command-erase">ERASE</link> <link linkend="command-plists">PLISTS</link></code>.
+ERPLS abbreviates <userinput><link linkend="command-erase">ERASE</link> <link linkend="command-plists">PLISTS</link></userinput>.
 </para>
 </listitem>
 </varlistentry>

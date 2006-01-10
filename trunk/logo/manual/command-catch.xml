@@ -19,11 +19,11 @@ In this case, CATCH outputs if a value input is given to THROW.
 
 <para>
 The <parameter>tag</parameter> parameter must be a word.
-If <parameter>tag</parameter> is the word <link linkend="command-error">ERROR</link>, then any error condition that arises during the running of <parameter>instructionlist</parameter> has the effect of <code>THROW "ERROR</code> instead of printing an error message and returning to toplevel.
-In this case, CATCH does NOT output a value.
+If <parameter>tag</parameter> is the word <link linkend="command-error">ERROR</link>, then any error condition that arises during the running of <parameter>instructionlist</parameter> has the effect of <userinput>THROW "ERROR</userinput> instead of printing an error message and returning to toplevel.
+In this case, CATCH does <emphasis>not</emphasis> output a value.
 Also, during the running of <parameter>instructionlist</parameter>, the variable <link linkend="command-erract">ERRACT</link> is temporarily unbound.
 (If there is an error while ERRACT has a value, that value is taken as an instruction list to be run after printing the error message.
-Typically the value of ERRACT, if any, is the list <code>[<link linkend="command-pause">PAUSE</link>]</code>.)
+Typically the value of ERRACT, if any, is the list <userinput>[<link linkend="command-pause">PAUSE</link>]</userinput>.)
 </para>
 </listitem>
 </varlistentry>

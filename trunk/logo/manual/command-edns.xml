@@ -16,7 +16,7 @@ Opens all unburied variables in <link linkend="editor">the Logo editor</link>.
 </para>
 
 <para>
-EDNS abbreviates <code><link linkend="command-edit">EDIT</link> <link linkend="command-names">NAMES</link></code>.
+EDNS abbreviates <userinput><link linkend="command-edit">EDIT</link> <link linkend="command-names">NAMES</link></userinput>.
 </para>
 </listitem>
 </varlistentry>

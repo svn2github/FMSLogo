@@ -24,21 +24,21 @@ The <parameter>tag</parameter> parameter must be a word.
 </para>
 
 <para>
-<code>THROW "TOPLEVEL</code> can be used to terminate all running procedures and interactive pauses, and return to the toplevel instruction prompt.
+<userinput>THROW "TOPLEVEL</userinput> can be used to terminate all running procedures and interactive pauses, and return to the toplevel instruction prompt.
 This has the same effect as pressing <link linkend="commander-halt">the Halt button</link>.
 </para>
 
 <para>
-<code>THROW "<link linkend="command-error">ERROR</link></code> can be used to generate an error condition.
-If the error is not caught, it prints a message <code>(THROW "ERROR)</code> with the usual indication of where the error (in this case the THROW) occurred.
-If a <parameter>value</parameter> parameter and <parameter>tag</parameter> equals <code>"ERROR</code>, then <parameter>value</parameter> is used as the text of the error message instead of the standard message.
+<userinput>THROW "<link linkend="command-error">ERROR</link></userinput> can be used to generate an error condition.
+If the error is not caught, it prints a message <userinput>(THROW "ERROR)</userinput> with the usual indication of where the error (in this case the THROW) occurred.
+If a <parameter>value</parameter> parameter and <parameter>tag</parameter> equals <userinput>"ERROR</userinput>, then <parameter>value</parameter> is used as the text of the error message instead of the standard message.
 In this case, the location indicated for the error will not be the location of the THROW, but the location where the procedure containing the THROW was invoked.
 This allows user-defined procedures to generate error messages as if they were primitives.
-Note: in this case the corresponding <code>CATCH "ERROR</code>, if any, does not output, since the second input to THROW is not considered a return value.
+Note: in this case the corresponding <userinput>CATCH "ERROR</userinput>, if any, does not output, since the second input to THROW is not considered a return value.
 </para>
 
 <para>
-<code>THROW "SYSTEM</code> immediately leaves Logo, returning to the operating system (with exit code 1).
+<userinput>THROW "SYSTEM</userinput> immediately leaves Logo, returning to the operating system (with exit code 1).
 In this case, MSWLogo does not delete any temporary file written by <link linkend="command-edit">EDIT</link>.
 </para>
 

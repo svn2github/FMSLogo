@@ -14,7 +14,7 @@
 <listitem>
 <para>
 Unburies the variable(s) named in the input.
-UNBURYNAME abbreviates <code><link linkend="command-unbury">UNBURY</link> <link linkend="command-namelist">NAMELIST</link></code>.
+UNBURYNAME abbreviates <userinput><link linkend="command-unbury">UNBURY</link> <link linkend="command-namelist">NAMELIST</link></userinput>.
 </para>
 </listitem>
 </varlistentry>

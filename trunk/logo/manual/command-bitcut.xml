@@ -26,7 +26,7 @@ The bitmap is always taken horizontally and vertically, regardless of the turtle
 <para>
 BITCUT may appear to be off by 1 pixel in width and height when you use it, but it is not.
 This can be explained with an example.
-If you draw a square with <code>repeat 4 [fd 2 rt 90]</code>, then the square is 3 pixels high, not 2.
+If you draw a square with <userinput>repeat 4 [fd 2 rt 90]</userinput>, then the square is 3 pixels high, not 2.
 This is because of how Logo draws images.
 In short, logo draws an imaginary line going down the center of each pixel.
 If a pixel is intersected (hit), then it is lit up.

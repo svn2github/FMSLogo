@@ -13,7 +13,7 @@
 <listitem>
 <para>
 Prints the definitions of all unburied variables in the workspace to the current write stream.
-PONS abbreviates <code><link linkend="command-po">PO</link> <link linkend="command-names">NAMES</link></code>.
+PONS abbreviates <userinput><link linkend="command-po">PO</link> <link linkend="command-names">NAMES</link></userinput>.
 </para>
 </listitem>
 </varlistentry>

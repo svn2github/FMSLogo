@@ -56,12 +56,12 @@ If the procedure is invoked with
 <programlisting><userinput>    PROC [a b c]</userinput></programlisting>
 
 
-then the <parameter>:inlist</parameter> parameter will have the value <code>[a b c]</code> and the <parameter>:startvalue</parameter> parameter will have the value <code>"a</code>.
+then the <parameter>:inlist</parameter> parameter will have the value <userinput>[a b c]</userinput> and the <parameter>:startvalue</parameter> parameter will have the value <userinput>"a</userinput>.
 If the procedure is invoked with
 
 <programlisting><userinput>    (PROC [a b c] "x)</userinput></programlisting>
 
-then <parameter>:inlist</parameter> will have the value <code>[a b c]</code> and <parameter>:startvalue</parameter> will have the value <code>"x</code>.
+then <parameter>:inlist</parameter> will have the value <userinput>[a b c]</userinput> and <parameter>:startvalue</parameter> will have the value <userinput>"x</userinput>.
 </para>
 
 
@@ -81,12 +81,12 @@ If this procedure is invoked with:
 
 <programlisting><userinput>    PROC "x</userinput></programlisting>
 
-then <parameter>:in1</parameter> has the value <code>"x</code>, <parameter>:in2</parameter> has the value <parameter>"foo</parameter>, and <parameter>:in3</parameter> has the value <code>[]</code> (the empty list).
+then <parameter>:in1</parameter> has the value <userinput>"x</userinput>, <parameter>:in2</parameter> has the value <parameter>"foo</parameter>, and <parameter>:in3</parameter> has the value <userinput>[]</userinput> (the empty list).
 If it's invoked with
 
 <programlisting><userinput>    (PROC "a "b "c "d)</userinput></programlisting>
 
-then <parameter>:in1</parameter> has the value <code>"a</code>, <parameter>:in2</parameter> has the value <code>"b</code>, and <parameter>:in3</parameter> has the value <code>[c d]</code>.
+then <parameter>:in1</parameter> has the value <userinput>"a</userinput>, <parameter>:in2</parameter> has the value <userinput>"b</userinput>, and <parameter>:in3</parameter> has the value <userinput>[c d]</userinput>.
 </para>
 
 <para>

@@ -16,7 +16,7 @@ Opens all unburied property lists in <link linkend="editor">the Logo editor</lin
 </para>
 
 <para>
-EDPLS abbreviates <code><link linkend="command-edit">EDIT</link> <link linkend="command-plists">PLISTS</link></code>.
+EDPLS abbreviates <userinput><link linkend="command-edit">EDIT</link> <link linkend="command-plists">PLISTS</link></userinput>.
 </para>
 </listitem>
 </varlistentry>

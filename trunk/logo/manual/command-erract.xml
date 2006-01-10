@@ -13,7 +13,7 @@
 <listitem>
 <para>
 An instructionlist that is run when an error is thrown.
-ERRACT typically has the value <code>[PAUSE]</code> to allow interactive debugging.
+ERRACT typically has the value <userinput>[PAUSE]</userinput> to allow interactive debugging.
 </para>
 </listitem>
 </varlistentry>

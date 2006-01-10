@@ -13,7 +13,7 @@
 <listitem>
 <para>
 Prints the title lines of all unburied procedures in the workspace to the current write stream.
-POTS abbreviates <code><link linkend="command-pot">POT</link> <link linkend="command-procedures">PROCEDURES</link></code>.
+POTS abbreviates <userinput><link linkend="command-pot">POT</link> <link linkend="command-procedures">PROCEDURES</link></userinput>.
 </para>
 </listitem>
 </varlistentry>

@@ -13,7 +13,7 @@
 <listitem>
 <para>
 Moves the turtle to the center of the screen.
-HOME is equivalent to <code>SETPOS [0 0]</code> in 2D mode and <code>SETPOSXYZ [0 0 0]</code> in PERSPECTIVE mode.
+HOME is equivalent to <userinput>SETPOS [0 0]</userinput> in 2D mode and <userinput>SETPOSXYZ [0 0 0]</userinput> in PERSPECTIVE mode.
 </para>
 </listitem>
 </varlistentry>

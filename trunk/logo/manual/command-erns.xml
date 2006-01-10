@@ -13,7 +13,7 @@
 <listitem>
 <para>
 Erases all unburied variables from the workspace.
-ERNS abbreviates <code><link linkend="command-erase">ERASE</link> <link linkend="command-names">NAMES</link></code>.
+ERNS abbreviates <userinput><link linkend="command-erase">ERASE</link> <link linkend="command-names">NAMES</link></userinput>.
 </para>
 </listitem>
 </varlistentry>

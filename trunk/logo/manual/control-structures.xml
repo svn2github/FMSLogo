@@ -9,8 +9,8 @@ Taken together, these facilities are commonly called "flow control", because the
 <para>
 In the following descriptions, an "instruction list" input may be a list or a word.
 If it's a word, it is parsed into list form before it is run.
-Thus, <code><link linkend="command-run">RUN</link> <link linkend="command-readword">READWORD</link></code> or <code><link linkend="command-run">RUN</link> <link linkend="command-readlist">READLIST</link></code> will work.
-The former is slightly preferable because it allows for a continued line (with <code>~</code>) that includes a comment (with <code>;</code>) on the first line.
+Thus, <userinput><link linkend="command-run">RUN</link> <link linkend="command-readword">READWORD</link></userinput> or <userinput><link linkend="command-run">RUN</link> <link linkend="command-readlist">READLIST</link></userinput> will work.
+The former is slightly preferable because it allows for a continued line (with <userinput>~</userinput>) that includes a comment (with <userinput>;</userinput>) on the first line.
 </para>
 
 <para>
@@ -89,9 +89,9 @@ Example:
 </para>
 
 <para>
-In this example, <link linkend="command-map">MAP</link> evaluates the template <code>[? * ?]</code> repeatedly, with each of the members of the data list <code>[2 3 4 5]</code> substituted in turn for the question marks.
+In this example, <link linkend="command-map">MAP</link> evaluates the template <userinput>[? * ?]</userinput> repeatedly, with each of the members of the data list <userinput>[2 3 4 5]</userinput> substituted in turn for the question marks.
 The same value was used for every question mark in a given evaluation.
-Some tools allow for more than one datum to be substituted in parallel; in these cases the slots are indicated by <code>?1</code> for the first datum, <code>?2</code> for the second, and so on.
+Some tools allow for more than one datum to be substituted in parallel; in these cases the slots are indicated by <userinput>?1</userinput> for the first datum, <userinput>?2</userinput> for the second, and so on.
 </para>
 
 
@@ -104,7 +104,7 @@ Example:
 </para>
 
 <para>
-If the template wishes to compute the datum number, the form <code>(? 1)</code> is equivalent to <code>?1</code>, so <code>(? ?1)</code> means the datum whose number is given in datum number 1.
+If the template wishes to compute the datum number, the form <userinput>(? 1)</userinput> is equivalent to <userinput>?1</userinput>, so <userinput>(? ?1)</userinput> means the datum whose number is given in datum number 1.
 Some tools allow additional slot designations, as shown in the individual descriptions.
 </para>
 
@@ -118,7 +118,7 @@ Some tools allow additional slot designations, as shown in the individual descri
 The second form of template is the "named-procedure" form.
 If the template is a word rather than a list, it is taken as the name of a procedure.
 That procedure must accept a number of inputs equal to the number of parallel data slots provided by the tool; the procedure is applied to all the available data in order.
-That is, if data <code>?1</code> through <code>?3</code> are available, the template <code>"PROC</code> is equivalent to <code>[PROC ?1 ?2 ?3]</code>.
+That is, if data <userinput>?1</userinput> through <userinput>?3</userinput> are available, the template <userinput>"PROC</userinput> is equivalent to <userinput>[PROC ?1 ?2 ?3]</userinput>.
 </para>
 
 <para>

@@ -18,7 +18,7 @@
 Outputs the quotient of its inputs.
 That is, it outputs <parameter>dividend</parameter> divided by <parameter>divisor</parameter>.
 QUOTIENT outputs an integer if and only if <parameter>dividend</parameter> is a multiple of <parameter>divisor</parameter>. 
-For example, <code>QUOTIENT 5 2</code> is <code>2.5</code>, not <code>2</code>, but <code>QUOTIENT 4 2</code> is <code>2</code>, not <code>2.0</code>.
+For example, <userinput>QUOTIENT 5 2</userinput> is <userinput>2.5</userinput>, not <userinput>2</userinput>, but <userinput>QUOTIENT 4 2</userinput> is <userinput>2</userinput>, not <userinput>2.0</userinput>.
 </para>
 
 <para>

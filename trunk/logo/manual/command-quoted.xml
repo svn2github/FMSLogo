@@ -12,7 +12,7 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>If the input is a list, outputs a copy of the list.
-If the input is a word, outputs the word with a double-quote character (<code>"</code>) appened to the front.</para>
+If the input is a word, outputs the word with a double-quote character (<userinput>"</userinput>) appended to the front.</para>
 </listitem>
 </varlistentry>
 

@@ -22,7 +22,7 @@ Also, if you alternate reading and writing the same file, you must SETREADPOS be
 </para>
 
 <para>
-<parameter>filename</parameter> can also be the reserved word <code>"clipboard</code> to read/write data to the clipboard just like a file.
+<parameter>filename</parameter> can also be the reserved word <userinput>"clipboard</userinput> to read/write data to the clipboard just like a file.
 </para>
 
 <para>

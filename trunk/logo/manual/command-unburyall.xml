@@ -13,7 +13,7 @@
 <listitem>
 <para>
 Unburies all procedures, variables, and property lists in the workspace.
-UNBURYALL abbreviates <code><link linkend="command-unbury">UNBURY</link> <link linkend="command-contents">CONTENTS</link></code>.
+UNBURYALL abbreviates <userinput><link linkend="command-unbury">UNBURY</link> <link linkend="command-contents">CONTENTS</link></userinput>.
 </para>
 </listitem>
 </varlistentry>

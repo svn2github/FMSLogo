@@ -23,7 +23,7 @@ If you pass in FALSE, the warning is suppressed.
 </para>
 
 <para>
-<code>(ERALL "false)</code> is equivalent to <code><link linkend="command-erase">ERASE</link> <link linkend="command-contents">CONTENTS</link></code>.
+<userinput>(ERALL "false)</userinput> is equivalent to <userinput><link linkend="command-erase">ERASE</link> <link linkend="command-contents">CONTENTS</link></userinput>.
 </para>
 </listitem>
 </varlistentry>

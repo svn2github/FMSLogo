@@ -35,27 +35,27 @@ The meaning is given by the following table:
     </thead>
     <tbody>
       <row>
-         <entry><code>0</code></entry>
+         <entry><userinput>0</userinput></entry>
          <entry>Synchronous does not return until completed.</entry>
       </row>
       <row>
-         <entry><code>1</code></entry>
+         <entry><userinput>1</userinput></entry>
          <entry>Asynchronous returns immediately while sound is still playing.</entry>
       </row>
       <row>
-         <entry><code>2</code></entry>
+         <entry><userinput>2</userinput></entry>
          <entry>Don't use the default sound if the specified one cannot be found.</entry>
       </row>
       <row>
-         <entry><code>4</code></entry>
+         <entry><userinput>4</userinput></entry>
          <entry>In memory sound (not supported).</entry>
       </row>
       <row>
-         <entry><code>8</code></entry>
+         <entry><userinput>8</userinput></entry>
          <entry>Continue to loop the sound until another sound command is issued.</entry>
       </row>
       <row>
-         <entry><code>16</code></entry>
+         <entry><userinput>16</userinput></entry>
          <entry>Don't stop an already playing sound.</entry>
       </row>
     </tbody>

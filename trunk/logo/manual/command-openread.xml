@@ -18,7 +18,7 @@ The read position is initially at the beginning of the file.
 </para>
 
 <para>
-The <parameter>filename</parameter> can also be the reserved word <code>"clipboard</code> to read data from the clipboard just like a file.
+The <parameter>filename</parameter> can also be the reserved word <userinput>"clipboard</userinput> to read data from the clipboard just like a file.
 </para>
 
 <para>

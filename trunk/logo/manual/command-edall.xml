@@ -16,7 +16,7 @@ Opens all definitions in the workspace in <link linkend="editor">the Logo editor
 </para>
 
 <para>
-EDALL abbreviates <code><link linkend="command-edit">EDIT</link> <link linkend="command-contents">CONTENTS</link></code>.
+EDALL abbreviates <userinput><link linkend="command-edit">EDIT</link> <link linkend="command-contents">CONTENTS</link></userinput>.
 It is equivalent to pressing <link linkend="commander-edall">the Edall button</link>.
 </para>
 </listitem>

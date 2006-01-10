@@ -13,7 +13,7 @@
 <listitem>
 <para>
 Erases all unburied procedures from the workspace.  
-ERPS abbreviates <code><link linkend="command-erase">ERASE</link> <link linkend="command-procedures">PROCEDURES</link></code>.
+ERPS abbreviates <userinput><link linkend="command-erase">ERASE</link> <link linkend="command-procedures">PROCEDURES</link></userinput>.
 </para>
 </listitem>
 </varlistentry>

@@ -14,7 +14,7 @@
 <listitem>
 <para>
 Prints the definitions of the named variable(s) to the current write stream.
-PON abbreviates <code><link linkend="command-po">PO</link> <link linkend="command-namelist">NAMELIST</link></code>.
+PON abbreviates <userinput><link linkend="command-po">PO</link> <link linkend="command-namelist">NAMELIST</link></userinput>.
 </para>
 </listitem>
 </varlistentry>

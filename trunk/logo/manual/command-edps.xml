@@ -16,7 +16,7 @@ Opens all unburied procedures in <link linkend="editor">the Logo editor</link>.
 </para>
 
 <para>
-EDPS abbreviates <code><link linkend="command-edit">EDIT</link> <link linkend="command-procedures">PROCEDURES</link></code>.
+EDPS abbreviates <userinput><link linkend="command-edit">EDIT</link> <link linkend="command-procedures">PROCEDURES</link></userinput>.
 </para>
 </listitem>
 </varlistentry>
