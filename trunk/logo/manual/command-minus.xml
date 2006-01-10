@@ -21,8 +21,10 @@ There is a difference in binding strength between the two forms:
 </para>
 
 <para>
-<code>MINUS 3 + 4</code>  means  <code>-(3+4)</code>
-<code>- 3 + 4</code>      means  <code>(-3)+4</code>
+<userinput>MINUS 3 + 4</userinput> means <userinput>-(3+4)</userinput>
+</para>
+<para>
+<userinput>- 3 + 4</userinput> means <userinput>(-3)+4</userinput>
 </para>
 </listitem>
 </varlistentry>
