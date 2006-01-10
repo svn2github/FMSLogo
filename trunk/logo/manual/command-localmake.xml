@@ -12,7 +12,7 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-LOCALMAKE declares a local variable and assigns in a variable.
+LOCALMAKE declares a local variable and assigns it a variable.
 It is convenient short hand for the following code:
 <programlisting>
 <link linkend="command-local">LOCAL</link> <parameter>varname</parameter>
