@@ -5,7 +5,8 @@
 Multiple edit sessions are supported.
 But be careful of having multiple edits going that include the same definition.
 The last Editor Exited (and saved) is what takes precedence.
-Also realize if you delete procedures, property lists, or names while in the editor they will be erased (see <link linkend="command-erase">ERASE</link>(and saving) the edit session you deleted them from.</para>
+Also realize if you delete procedures, property lists or names while in the Editor they will be erased (see <link linkend="command-erase">ERASE</link>) from the environment at the time of exiting (and saving) the edit session you deleted them from.  
+</para>
 
     <section id="editor-menu">
       <title>Editor Menu</title>
@@ -130,19 +131,24 @@ When this occurs make sure to check the commander window for a hint of what the 
 
     <section id="editor-clipboard">
       <title>Editing with the Clipboard</title>
-      <para>Logo's Editor and many controls support the clipboard.
+<para>
+Logo's Editor and many controls support the clipboard.
 The clipboard is where most Windows application store data during cut and paste operations.
 This means that when you cut text from an application, such as Notepad, it can be pasted into Logo's Editor (the reverse is also true).
 Even Help supports the clipboard.
 This means you can copy examples in this document directly to the editor (see <link linkend="command-help">HELP</link> command).</para>
 
-      <para>The <link linkend="commander-input">Input Box</link> also supports the clipboard.
+<para>
+The <link linkend="commander-input">Input Box</link> also supports the clipboard.
 Only one line of text is supported between the Input Box and the clipboard.
-You can either use the context-sensitive popup menu or keyboard shortcuts for the desired actions (Cut <keycombo><keycap>CTRL</keycap>-<keycap>X</keycap></keycombo>, Copy <keycombo><keycap>CTRL</keycap>-<keycap>C</keycap></keycombo>, Paste <keycombo><keycap>CTRL</keycap>-<keycap>V</keycap></keycombo>).</para>
+You can either use the context-sensitive popup menu or keyboard shortcuts for the desired actions (Cut <keycombo><keycap>CTRL</keycap><keycap>X</keycap></keycombo>, Copy <keycombo><keycap>CTRL</keycap><keycap>C</keycap></keycombo>, Paste <keycombo><keycap>CTRL</keycap><keycap>V</keycap></keycombo>).
+</para>
       
-      <para>The <link linkend="commander-history">Output/Command-Recall</link> also supports the clipboard.
+<para>
+The <link linkend="commander-history">Output/Command-Recall</link> also supports the clipboard.
 This means you can turn code you entered in the commander into procedure by copying the Commander Output to the clipboard and pasting it into the editor.
-Or take text output you generated and paste it into another application.</para>
+Or take text output you generated and paste it into another application.
+</para>
     </section>
 
     <section id="editor-context-help">
