@@ -21,7 +21,7 @@ The default is to yield.
 <para>
 Note that the commander window itself is like another program.
 That is, if you have issued a NOYIELD, the commander will lose control.
-This means that <link linkend="commander-halt">the Halt Button</link> won't work until a YIELD is issued or Logo is idle again.
+This means that the <link linkend="commander-halt">Halt Button</link> won't work until a YIELD is issued or Logo is idle again.
 The reason that NOYIELD is available is that LOGO runs faster if it prevents other programs from using the CPU.
 </para>
 

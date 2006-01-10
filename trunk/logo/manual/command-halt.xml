@@ -13,7 +13,7 @@
 <listitem>
 <para>
 The HALT command immediately stops LOGO from processing any further commands and returns control to the commander.
-It is the same as pressing <link linkend="commander-halt">the Halt button</link>.
+It is the same as pressing the <link linkend="commander-halt">Halt button</link>.
 </para>
 </listitem>
 </varlistentry>
