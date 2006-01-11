@@ -688,6 +688,9 @@ If you want to create a polygon with a "bend" in it that leaves the plane, you c
 
 </section>
 
+<section>
+   <title>Polygon Samples</title>
+
 <para>
 An example polygon using CIRCLE.
 
@@ -719,7 +722,8 @@ POLYVIEW
 </userinput></programlisting>
 </para>
 
-   </section>
+</section> <!-- Polygon Samples -->
+</section> <!-- Polygon Restrictions -->
 
    <section>
        <title>Turtle And Window Queries</title>
