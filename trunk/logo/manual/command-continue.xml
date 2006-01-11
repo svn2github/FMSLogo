@@ -30,18 +30,24 @@ Exceptionally, the CONTINUE command can be used without its default input and wi
 
 <varlistentry><term>Example</term>
 <listitem>
+<para>
 <programlisting><userinput>TO MYPROG
   REPEAT 180 [RIGHT 2 IF 90=REPCOUNT [PAUSE]]
   PRINT "Done
 END
 
 MYPROG</userinput>
-Pausing...myprog
-<replaceable>Enter <userinput>SHOW HEADING</userinput> in Pause Mode dialog box and hit OK</replaceable>
+Pausing...MYPROG
+</programlisting>
+Enter <userinput>SHOW HEADING</userinput> in Pause Mode dialog box and hit OK.
+<programlisting>
 180
-<replaceable>Enter <userinput>CONTINUE</userinput> in Pause Box and hit OK</replaceable>
+</programlisting>
+Enter <userinput>CONTINUE</userinput> in Pause Box and hit OK.
+<programlisting>
 Done
 </programlisting>
+</para>
 </listitem>
 </varlistentry>
 
