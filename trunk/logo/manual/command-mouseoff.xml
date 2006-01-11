@@ -19,12 +19,14 @@ Disables trapping of mouse events.
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>PENUP
+<para>
+<programlisting><userinput>PENUP
 MOUSEON [SETPOS MOUSEPOS PENDOWN] [PENUP] [] [] [SETPOS MOUSEPOS]</userinput>
 </programlisting>
 Move the mouse around.  Hold down the left button to draw.
 <programlisting><userinput>MOUSEOFF</userinput>
 </programlisting>
+</para>
 </listitem>
 </varlistentry>
 
