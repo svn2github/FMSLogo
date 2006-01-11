@@ -16,12 +16,15 @@
 Fills in a region of the graphics window containing the turtle and bounded by lines that have been drawn earlier.
 It fills using the current value of <link linkend="command-floodcolor">FLOODCOLOR</link>.
 </para>
+
 <para>
 If <parameter>fillmode</parameter> is TRUE, then it will fill until the current PENCOLOR is encountered.  If it is FALSE, then it will fill while on same color.
 </para>
 
+<para>
 Fill can be used in <link linkend="command-perspective">PERSPECTIVE</link> mode as long as the area to filled is bounded and you only fill what's in plain view.
 For example if you have a cube don't draw all 6 faces, only 3 at most can be in view, so draw just those faces and fill them.
+</para>
 </listitem>
 </varlistentry>
 
