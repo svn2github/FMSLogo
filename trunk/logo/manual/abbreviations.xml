@@ -5,49 +5,49 @@
 Many commands can be called with a shortened version of their proper name.
 </para>
 
-<section id="command-+">
+<section id="command-plus">
 <title>+</title>
 <para>
 + is an abbreviation for <link linkend="command-sum">SUM</link>.
 </para>
 </section>
 
-<section id="command--">
+<section id="command-dash">
 <title>-</title>
 <para>
 - is an abbreviation for <link linkend="command-difference">DIFFERENCE</link>.
 </para>
 </section>
 
-<section id="command-/">
+<section id="command-slash">
 <title>/</title>
 <para>
 / is an abbreviation for <link linkend="command-quotient">QUOTIENT</link>.
 </para>
 </section>
 
-<section id="command-=">
+<section id="command-equal">
 <title>=</title>
 <para>
 = is an abbreviation for <link linkend="command-equalp">EQUALP</link>.
 </para>
 </section>
 
-<section id="command->">
+<section id="command-greater">
 <title>></title>
 <para>
 > is an abbreviation for <link linkend="command-greaterp">GREATERP</link>.
 </para>
 </section>
 
-<section id="command-&lt;">
+<section id="command-less">
 <title>&lt;</title>
 <para>
 &lt; is an abbreviation for <link linkend="command-lessp">LESSP</link>.
 </para>
 </section>
 
-<section id="command-*">
+<section id="command-star">
 <title>*</title>
 <para>
 * is an abbreviation for <link linkend="command-product">PRODUCT</link>.
