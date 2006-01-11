@@ -17,19 +17,27 @@ Command or operation where:
 
 <itemizedlist>
 <listitem>
+<para>
 If <parameter>condition</parameter> evaluates to TRUE, then IF runs <parameter>true.instructionlist</parameter>.
+</para>
 </listitem>
 
 <listitem>
+<para>
 If <parameter>condition</parameter> evalutes to FALSE, then IF does nothing.
+</para>
 </listitem>
 
 <listitem>
+<para>
 If given a <parameter>false.instructionlist</parameter> parameter, IF acts like <link linkend="command-ifelse">IFELSE</link>.
+</para>
 </listitem>
 
 <listitem>
+<para>
 It is an error if <parameter>condition</parameter> does not evaluate to either TRUE or FALSE.
+</para>
 </listitem>
 </itemizedlist>
 </para>

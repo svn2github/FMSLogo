@@ -27,9 +27,11 @@ INGAMEPORT outputs -1 if nothing is connected to the game port.
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>REPEAT 10000 [SHOW INGAMEPORT 1]
+<para>
+<programlisting><userinput>REPEAT 10000 [SHOW INGAMEPORT 1]
 </userinput></programlisting>
 Now move the Joystick around.
+</para>
 </listitem>
 </varlistentry>
 

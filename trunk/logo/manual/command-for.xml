@@ -19,20 +19,33 @@ FOR is a flexible tool for iteration.
 The <parameter>controllist</parameter> parameter controls how the iteration occurs.
 It must be a list containing either three or four members.
 In order, they are:
+
 <orderedlist>
+
 <listitem>
-a word, which will be used as the name of a "control variable".
+<para>
+A word, which will be used as the name of a "control variable".
 The control variable is local to the procedure.
+</para>
 </listitem>
+
 <listitem>
-a word or list that will be evaluated to determine a number, the "starting value" of the variable
+<para>
+A word or list that will be evaluated to determine a number, the "starting value" of the variable.
+</para>
 </listitem>
+
 <listitem>
-a word or list that will be evaluated to determine a number, the "limit value" of the variable
+<para>
+A word or list that will be evaluated to determine a number, the "limit value" of the variable.
+</para>
 </listitem>
+
 <listitem>
-an optional word or list that will be evaluated to determine the "step size".
+<para>
+An optional word or list that will be evaluated to determine the "step size".
 If the fourth member is missing, the step size will be 1 or -1 depending on whether the limit value is greater than or less than the starting value, respectively.
+</para>
 </listitem>
 </orderedlist>
 </para>

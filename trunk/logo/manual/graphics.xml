@@ -351,13 +351,21 @@ In 3D, (<link linkend="command-perspective">PERSPECTIVE</link>) mode things are 
 
 <itemizedlist>
   <listitem>
+    <para>
       <link linkend="command-heading">HEADING</link> is affected by <link linkend="command-left">LEFT</link>, <link linkend="command-right">RIGHT</link>, and <link linkend="command-setheading">SETHEADING</link>.
+    </para>
   </listitem>
+
   <listitem>
+    <para>
       <link linkend="command-roll">ROLL</link> is affected by <link linkend="command-leftroll">LEFTROLL</link>, <link linkend="command-rightroll">RIGHTROLL</link>, and <link linkend="command-setroll">SETROLL</link>.
+    </para>
   </listitem>
+
   <listitem>
+    <para>
       <link linkend="command-pitch">PITCH</link> is affected by <link linkend="command-uppitch">UPPITCH</link>, <link linkend="command-downpitch">DOWNPITCH</link>, and <link linkend="command-setpitch">SETPITCH</link>.
+    </para>
   </listitem>
 </itemizedlist>
 </para>
@@ -553,18 +561,14 @@ This is an expected artifact of the algorithm I chose.
        <title>Polygon Restrictions</title>
 
 <para>
-Polygons in MSWLogo have three restrictions:
+Polygons in MSWLogo have three easy-to-satisfy restrictions:
 
 <orderedlist>
-  <listitem>A polygon's first 3 vertices must form a triangle.</listitem>
-  <listitem>A polygon must be convex.</listitem>
-  <listitem>A polygon must be planar.</listitem>
+  <listitem><para>A polygon's first 3 vertices must form a triangle.</para></listitem>
+  <listitem><para>A polygon must be convex.</para></listitem>
+  <listitem><para>A polygon must be planar.</para></listitem>
 </orderedlist>
 
-</para>
-
-<para>
-The restriction are easy to satisfy in Logo.
 </para>
 
 <section>
