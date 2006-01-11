@@ -24,7 +24,7 @@ MSWLogo supports three commands that allow you to create and play MIDI (Musical 
 <para>
 This table defines some messages that are legal for <link linkend="command-midimessage">MIDIMESSAGE</link>.
 
-     <informaltable frame='all'>
+<informaltable frame='all'>
   <tgroup cols='4'>
     <thead>
       <row>
@@ -54,189 +54,162 @@ This table defines some messages that are legal for <link linkend="command-midim
         <entry>0-127 Pressure</entry>
       </row>
 
-
       <row>
         <entry>Control Change</entry>
         <entry>176 + Channel</entry>
         <entry>0 Undefined</entry>
         <entry>0-127 MSB</entry>
       </row>
-
       <row>
         <entry>Control Change</entry>
         <entry>176 + Channel</entry>
         <entry>1 Modulation Wheel</entry>
         <entry>0-127 MSB</entry>
       </row>
-
       <row>
         <entry>Control Change</entry>
         <entry>176 + Channel</entry>
         <entry>2 Breath Controller</entry>
         <entry>0-127 MSB</entry>
       </row>
-
       <row>
         <entry>Control Change</entry>
         <entry>176 + Channel</entry>
         <entry>3 After Touch</entry>
         <entry>0-127 MSB</entry>
       </row>
-
       <row>
         <entry>Control Change</entry>
         <entry>176 + Channel</entry>
         <entry>4 Foot Controller</entry>
         <entry>0-127 MSB</entry>
       </row>
-
       <row>
         <entry>Control Change</entry>
         <entry>176 + Channel</entry>
         <entry>5 Portamento Time</entry>
         <entry>0-127 MSB</entry>
       </row>
-
       <row>
         <entry>Control Change</entry>
         <entry>176 + Channel</entry>
         <entry>6 Data Entry</entry>
         <entry>0-127 MSB</entry>
       </row>
-
       <row>
         <entry>Control Change</entry>
         <entry>176 + Channel</entry>
         <entry>7 Main Volume</entry>
         <entry>0-127 MSB</entry>
       </row>
-
       <row>
         <entry>Control Change</entry>
         <entry>176 + Channel</entry>
         <entry>8-31 Undefined</entry>
         <entry>0-127 MSB</entry>
       </row>
-
       <row>
         <entry>Control Change</entry>
         <entry>176 + Channel</entry>
         <entry>32-63 LSB of 0-31</entry>
         <entry>0-127 MSB</entry>
       </row>
-
       <row>
         <entry>Control Change</entry>
         <entry>176 + Channel</entry>
         <entry>64 Damper Pedal</entry>
         <entry>0:OFF 127:ON</entry>
       </row>
-
       <row>
         <entry>Control Change</entry>
         <entry>176 + Channel</entry>
         <entry>65 Portamento</entry>
         <entry>0:OFF 127:ON</entry>
       </row>
-
       <row>
         <entry>Control Change</entry>
         <entry>176 + Channel</entry>
         <entry>66 Sostenuto</entry>
         <entry>0:OFF 127:ON</entry>
       </row>
-
       <row>
         <entry>Control Change</entry>
         <entry>176 + Channel</entry>
         <entry>67 Soft Pedal</entry>
         <entry>0:OFF 127:ON</entry>
       </row>
-
       <row>
         <entry>Control Change</entry>
         <entry>176 + Channel</entry>
         <entry>68-92 Undefined</entry>
         <entry>0:OFF 127:ON</entry>
       </row>
-
       <row>
         <entry>Control Change</entry>
         <entry>176 + Channel</entry>
         <entry>93 Chorus</entry>
         <entry>0:OFF 127:ON</entry>
       </row>
-
       <row>
         <entry>Control Change</entry>
         <entry>176 + Channel</entry>
         <entry>94 Celeste</entry>
         <entry>0:OFF 127:ON</entry>
       </row>
-
       <row>
         <entry>Control Change</entry>
         <entry>176 + Channel</entry>
         <entry>95 Phaser</entry>
         <entry>0:OFF 127:ON</entry>
       </row>
-
       <row>
         <entry>Control Change</entry>
         <entry>176 + Channel</entry>
         <entry>96 Data Entry + 1</entry>
         <entry>0:OFF 127:ON</entry>
       </row>
-
       <row>
         <entry>Control Change</entry>
         <entry>176 + Channel</entry>
         <entry>97 Data Entry - 1</entry>
         <entry>0:OFF 127:ON</entry>
       </row>
-
       <row>
         <entry>Control Change</entry>
         <entry>176 + Channel</entry>
         <entry>98-121 Undefined</entry>
         <entry>0:OFF 127:ON</entry>
       </row>
-
       <row>
         <entry>Control Change</entry>
         <entry>176 + Channel</entry>
         <entry>122 Local Control</entry>
         <entry>0-127</entry>
       </row>
-
       <row>
         <entry>Control Change</entry>
         <entry>176 + Channel</entry>
         <entry>123 All Notes Off</entry>
         <entry>0</entry>
       </row>
-
       <row>
         <entry>Control Change</entry>
         <entry>176 + Channel</entry>
         <entry>124 Omni Mode off</entry>
         <entry>0-15</entry>
       </row>
-
       <row>
         <entry>Control Change</entry>
         <entry>176 + Channel</entry>
         <entry>125 Omni Mode on</entry>
         <entry>0</entry>
       </row>
-
       <row>
         <entry>Control Change</entry>
         <entry>176 + Channel</entry>
         <entry>126 Mono on/Poly off</entry>
         <entry>0</entry>
       </row>
-
       <row>
         <entry>Control Change</entry>
         <entry>176 + Channel</entry>
@@ -280,7 +253,6 @@ This table defines some messages that are legal for <link linkend="command-midim
         <entry>0-127 LSB</entry>
         <entry>0-127 MSB</entry>
       </row>
-    </tbody>
       <row>
         <entry>Song Select</entry>
         <entry>243</entry>
@@ -359,6 +331,7 @@ This table defines some messages that are legal for <link linkend="command-midim
         <entry>Not used</entry>
         <entry>Not used</entry>
       </row>
+    </tbody>
   </tgroup>
 </informaltable>
 
