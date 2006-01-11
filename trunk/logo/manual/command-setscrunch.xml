@@ -1,8 +1,6 @@
 <section id="command-setscrunch">
     <title>SETSCRUNCH</title>
 
-<note>This command is not needed to correct display problems, but is available for folks who like to deliberately misadjust the aspect ratio.</note>
-
 <variablelist>
 
 <varlistentry><term>Synopsis</term>
@@ -13,6 +11,9 @@
 
 <varlistentry><term>Description</term>
 <listitem>
+
+<note><para>This command is not needed to correct display problems, but is available for folks who like to deliberately misadjust the aspect ratio.</para></note>
+
 <para>
 Adjusts the aspect ratio and scaling of the graphics display.
 After this command is used, all further turtle motion will be adjusted by multiplying the horizontal and vertical extent of the motion by the two numbers given as inputs.

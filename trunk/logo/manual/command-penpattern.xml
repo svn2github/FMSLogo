@@ -1,8 +1,6 @@
 <section id="command-penpattern">
     <title>PENPATTERN</title>
 
-<note>PENPATTERN is not supported in MSWLogo.</note>
-
 <variablelist>
 
 <varlistentry><term>Synopsis</term>
@@ -13,6 +11,9 @@
 
 <varlistentry><term>Description</term>
 <listitem>
+
+<note><para>PENPATTERN is not supported in MSWLogo.</para></note>
+
 <para>
 Outputs hardware-specific pen information.
 </para>

@@ -21,9 +21,9 @@ An output value of 0 means that the write position is at the beginning of the st
 <varlistentry><term>Example</term>
 <listitem>
 
-<note>The output is stored in a list and displayed when the writer is returned to screen ([]).</note>
+<note><para>The output is stored in a list and displayed when the writer is returned to screen ([]).</para></note>
 
-    <programlisting><userinput>OPENWRITE "dummy.fil
+<programlisting><userinput>OPENWRITE "dummy.fil
 SETWRITE "dummy.fil
 MAKE "history []
 MAKE "history LPUT WRITEPOS :history

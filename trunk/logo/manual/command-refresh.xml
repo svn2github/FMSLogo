@@ -1,8 +1,6 @@
 <section id="command-refresh">
     <title>REFRESH</title>
 
-<note>REFRESH is not supported (or needed) in MSWLogo.</note>
-
 <variablelist>
 
 <varlistentry><term>Synopsis</term>
@@ -13,6 +11,9 @@
 
 <varlistentry><term>Description</term>
 <listitem>
+
+<note><para>REFRESH is not supported (or needed) in MSWLogo.</para></note>
+
 <para>
 Tells Logo to remember the turtle's motions so that they can be reconstructed in case the graphics window is overlaid.
 The effectiveness of this command may depend on the machine used.

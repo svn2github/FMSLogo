@@ -1,8 +1,6 @@
 <section id="command-setmargins">
     <title>SETMARGINS</title>
 
-<note>SETMARGINS is not supported in MSWLogo.</note>
-
 <variablelist>
 
 <varlistentry><term>Synopsis</term>
@@ -13,6 +11,9 @@
 
 <varlistentry><term>Description</term>
 <listitem>
+
+<note><para>SETMARGINS is not supported in MSWLogo.</para></note>
+
 <para>
 Command where the input must be a list of two numbers, as for <link linkend="command-setcursor">SETCURSOR</link>.
 The effect is to clear the screen and then arrange for all further printing to be shifted down and to the right according to the indicated margins.

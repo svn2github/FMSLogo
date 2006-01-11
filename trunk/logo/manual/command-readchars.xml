@@ -12,7 +12,10 @@
 
 <varlistentry><term>Description</term>
 <listitem>
-<note>This is not yet supported in MSWLogo when reader is [] (keyboard).  See <link linkend="command-keyboardon">KEYBOARDON</link></note>
+
+
+<note><para>This is not yet supported in MSWLogo when reader is [] (keyboard).  See <link linkend="command-keyboardon">KEYBOARDON</link></para></note>
+
 
 <para>
 Reads <parameter>number</parameter> characters from the read stream and outputs those characters as a word.

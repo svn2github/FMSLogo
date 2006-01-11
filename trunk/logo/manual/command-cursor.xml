@@ -1,8 +1,6 @@
 <section id="command-cursor">
     <title>CURSOR</title>
 
-<note>CURSOR is not supported in MSWLogo.</note>
-
 <variablelist>
 
 <varlistentry><term>Synopsis</term>
@@ -13,6 +11,8 @@
 
 <varlistentry><term>Description</term>
 <listitem>
+
+<note><para>CURSOR is not supported in MSWLogo.</para></note>
 
 <para>
 Outputs a list containing the current x and y coordinates of the screen cursor.

@@ -1,8 +1,6 @@
 <section id="command-setpenpattern">
     <title>SETPENPATTERN</title>
 
-<note>SETPENPATTERN is not supported in MSWLogo.</note>
-
 <variablelist>
 
 <varlistentry><term>Synopsis</term>
@@ -13,6 +11,9 @@
 
 <varlistentry><term>Description</term>
 <listitem>
+
+<note><para>SETPENPATTERN is not supported in MSWLogo.</para></note>
+
 <para>
 Set hardware-dependent pen characteristics.
 SETPENPATTERN is not guaranteed to be compatible between implementations on different machines.

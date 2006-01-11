@@ -1,10 +1,6 @@
 <section id="command-keyp">
     <title>KEYP</title>
 
-<para>
-<note>KEYP is not supported in MSWLogo.  See <link linkend="command-keyboardon">KEYBOARDON</link>.</note>
-</para>
-
 <variablelist>
 
 <varlistentry><term>Synopsis</term>
@@ -15,6 +11,9 @@
 
 <varlistentry><term>Description</term>
 <listitem>
+
+
+<note><para>KEYP is not supported in MSWLogo.  See <link linkend="command-keyboardon">KEYBOARDON</link>.</para></note>
 
 <para>
 A predicate that outputs TRUE if there are characters waiting to be read from the read stream.
