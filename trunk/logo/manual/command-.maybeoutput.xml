@@ -4,7 +4,7 @@
 <variablelist>
 
 <varlistentry><term>Synopsis</term>
-<listitem>(special form)
+<listitem><para>(special form)</para>
 <synopsis><command>.MAYBEOUTPUT</command> <parameter>value</parameter></synopsis>
 </listitem>
 </varlistentry>

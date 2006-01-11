@@ -4,7 +4,7 @@
 <variablelist>
 
 <varlistentry><term>Synopsis</term>
-<listitem>(special form)
+<listitem><para>(special form)</para>
 <synopsis><command>TO</command> <parameter>procname</parameter> <parameter>:input1</parameter> <parameter>:input2</parameter> <parameter>...</parameter></synopsis>
 </listitem>
 </varlistentry>
