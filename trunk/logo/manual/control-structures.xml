@@ -73,6 +73,11 @@ This is a generalization of an instruction list or an expression list in which "
 Three different forms of template can be used: explicit-slot templates, named-procedure templates, and named-slot templates.
 </para>
 
+<para>
+These iteration tools are extended versions of the ones in Appendix B of the book Computer Science Logo Style, Volume 3: Advanced Topics by Brian Harvey [MIT Press, 1987].
+The extensions are primarily to allow for variable numbers of inputs.
+</para>
+
      <section>
          <title>Explicit-Slot Templates</title>
 
@@ -157,11 +162,6 @@ Example:
 </para>
 
        </section>
-
-<para>
-These iteration tools are extended versions of the ones in Appendix B of the book Computer Science Logo Style, Volume 3: Advanced Topics by Brian Harvey [MIT Press, 1987].
-The extensions are primarily to allow for variable numbers of inputs.
-</para>
 
        &command-apply;
        &command-invoke;
