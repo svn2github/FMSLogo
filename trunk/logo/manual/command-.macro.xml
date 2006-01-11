@@ -4,7 +4,7 @@
 <variablelist>
 
 <varlistentry><term>Synopsis</term>
-<listitem>(special form)
+<listitem><para>(special form)</para>
 <synopsis><command>.MACRO</command> <parameter>procname</parameter> <parameter>:input1</parameter> <parameter>:input2</parameter> <parameter>...</parameter></synopsis>
 </listitem>
 </varlistentry>
@@ -156,7 +156,7 @@ In this case it would--<userinput>MAKE "myvar "hello</userinput>--but the quotat
 </para>
 
 <para>
-It's often convenient to use the <link linkend="command-`">`</link> function to construct the instruction list:
+It's often convenient to use the <link linkend="command-backtick">`</link> function to construct the instruction list:
 
 <programlisting>  .MACRO LOCALMAKE :name :value
     OUTPUT `[LOCAL ,[WORD "" :name] APPLY "make [,[:name] ,[:value]]]
