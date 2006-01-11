@@ -120,7 +120,7 @@ It's easy to get in trouble by defining a macro that doesn't terminate, or by fa
 </para>
 
 <para>
-Lisp users should note that Logo macros are NOT special forms.
+Lisp users should note that Logo macros are <emphasis>not</emphasis> special forms.
 That is, the inputs to the macro are evaluated normally, as they would be for any other Logo procedure.
 It's only the output from the macro that's handled unusually.
 </para>
