@@ -156,16 +156,17 @@ $Exceptions{'logohelp.xml'}{'allcaps'}{'WARRANTY'}        = 1;
 $Exceptions{'logohelp.xml'}{'allcaps'}{'WITHOUT'}         = 1;
 $Exceptions{'logohelp.xml'}{'allcaps'}{'XML'}             = 1;
 
-$Exceptions{'networking-commands.xml'}{'allcaps'}{'TCP'}       = 1;
-$Exceptions{'networking-commands.xml'}{'allcaps'}{'IP'}        = 1;
 $Exceptions{'networking-commands.xml'}{'allcaps'}{'DNS'}       = 1;
-$Exceptions{'networking-commands.xml'}{'allcaps'}{'PING'}      = 1;
+$Exceptions{'networking-commands.xml'}{'allcaps'}{'FTP'}       = 1;
 $Exceptions{'networking-commands.xml'}{'allcaps'}{'HOSTS'}     = 1;
 $Exceptions{'networking-commands.xml'}{'allcaps'}{'HOSTS.SAM'} = 1;
-$Exceptions{'networking-commands.xml'}{'allcaps'}{'TELNET'}    = 1;
-$Exceptions{'networking-commands.xml'}{'allcaps'}{'FTP'}       = 1;
+$Exceptions{'networking-commands.xml'}{'allcaps'}{'IP'}        = 1;
+$Exceptions{'networking-commands.xml'}{'allcaps'}{'PING'}      = 1;
 $Exceptions{'networking-commands.xml'}{'allcaps'}{'POPMAIL'}   = 1;
+$Exceptions{'networking-commands.xml'}{'allcaps'}{'PPP'}       = 1;
 $Exceptions{'networking-commands.xml'}{'allcaps'}{'SERVICES'}  = 1;
+$Exceptions{'networking-commands.xml'}{'allcaps'}{'TCP'}       = 1;
+$Exceptions{'networking-commands.xml'}{'allcaps'}{'TELNET'}    = 1;
 
 $Exceptions{'windows-commands.xml'}{'allcaps'}{'GUI'}       = 1;
 $Exceptions{'windows-commands.xml'}{'allcaps'}{'SETUP'}     = 1;
