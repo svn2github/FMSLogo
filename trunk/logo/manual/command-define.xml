@@ -18,7 +18,7 @@ The <parameter>text</parameter> input must be a list whose members are lists.
 The first member is a list of inputs; it looks like a <link linkend="command-to">TO</link> line without the word TO, without the procedure name, and without the colons before input names.
 In other words, the members of this first sublist are words for the names of required inputs and lists for the names of optional or rest inputs.
 The remaining sublists of the <parameter>text</parameter> input make up the body of the procedure, with one sublist for each instruction line of the body.
-(There is no <link command="command-end">END</link> line in the <parameter>definition</parameter>.)
+(There is no <link linkend="command-end">END</link> line in the <parameter>definition</parameter>.)
 </para>
 
 <para>

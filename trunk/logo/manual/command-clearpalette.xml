@@ -14,7 +14,7 @@
 <para>
 This command clears the color palette.
 The color palette is filled by using the <link linkend="command-setpencolor">SETPENCOLOR</link>, <link linkend="command-setscreencolor">SETSCREENCOLOR</link>, and <link linkend="command-setfloodcolor">SETFLOODCOLOR</link> commands.
-The palette is only supported when Windows is in 256 color mode (see <link command="using-color">Using Color</link>).
+The palette is only supported when Windows is in 256 color mode (see <link linkend="using-color">Using Color</link>).
 Once you run out of colors Windows will choose the closest match.
 For example, the instruction
 
