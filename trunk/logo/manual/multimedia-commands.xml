@@ -118,67 +118,67 @@ This table defines some messages that are legal for <link linkend="command-midim
         <entry>Control Change</entry>
         <entry>176 + Channel</entry>
         <entry>64 Damper Pedal</entry>
-        <entry>0:OFF 127:ON</entry>
+        <entry>0:off 127:on</entry>
       </row>
       <row>
         <entry>Control Change</entry>
         <entry>176 + Channel</entry>
         <entry>65 Portamento</entry>
-        <entry>0:OFF 127:ON</entry>
+        <entry>0:off 127:on</entry>
       </row>
       <row>
         <entry>Control Change</entry>
         <entry>176 + Channel</entry>
         <entry>66 Sostenuto</entry>
-        <entry>0:OFF 127:ON</entry>
+        <entry>0:off 127:on</entry>
       </row>
       <row>
         <entry>Control Change</entry>
         <entry>176 + Channel</entry>
         <entry>67 Soft Pedal</entry>
-        <entry>0:OFF 127:ON</entry>
+        <entry>0:off 127:on</entry>
       </row>
       <row>
         <entry>Control Change</entry>
         <entry>176 + Channel</entry>
         <entry>68-92 Undefined</entry>
-        <entry>0:OFF 127:ON</entry>
+        <entry>0:off 127:on</entry>
       </row>
       <row>
         <entry>Control Change</entry>
         <entry>176 + Channel</entry>
         <entry>93 Chorus</entry>
-        <entry>0:OFF 127:ON</entry>
+        <entry>0:off 127:on</entry>
       </row>
       <row>
         <entry>Control Change</entry>
         <entry>176 + Channel</entry>
         <entry>94 Celeste</entry>
-        <entry>0:OFF 127:ON</entry>
+        <entry>0:off 127:on</entry>
       </row>
       <row>
         <entry>Control Change</entry>
         <entry>176 + Channel</entry>
         <entry>95 Phaser</entry>
-        <entry>0:OFF 127:ON</entry>
+        <entry>0:off 127:on</entry>
       </row>
       <row>
         <entry>Control Change</entry>
         <entry>176 + Channel</entry>
         <entry>96 Data Entry + 1</entry>
-        <entry>0:OFF 127:ON</entry>
+        <entry>0:off 127:on</entry>
       </row>
       <row>
         <entry>Control Change</entry>
         <entry>176 + Channel</entry>
         <entry>97 Data Entry - 1</entry>
-        <entry>0:OFF 127:ON</entry>
+        <entry>0:off 127:on</entry>
       </row>
       <row>
         <entry>Control Change</entry>
         <entry>176 + Channel</entry>
         <entry>98-121 Undefined</entry>
-        <entry>0:OFF 127:ON</entry>
+        <entry>0:off 127:on</entry>
       </row>
       <row>
         <entry>Control Change</entry>
