@@ -3,7 +3,7 @@
   "http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd" [
 
   <!ENTITY introduction              SYSTEM "introduction.xml">
-  <!ENTITY command-line-options      SYSTEM "command-line-options.xml">
+  <!ENTITY commandline-options       SYSTEM "commandline-options.xml">
   <!ENTITY editor                    SYSTEM "editor.xml">
   <!ENTITY commander                 SYSTEM "commander.xml">
   <!ENTITY main-menu                 SYSTEM "main-menu.xml">
@@ -584,7 +584,7 @@
   </bookinfo>
 
   &introduction;
-  &command-line-options;
+  &commandline-options;
   &editor;
   &commander;
   &main-menu;
