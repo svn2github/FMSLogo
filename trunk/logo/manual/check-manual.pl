@@ -168,6 +168,12 @@ $Exceptions{'networking-commands.xml'}{'allcaps'}{'SERVICES'}  = 1;
 $Exceptions{'networking-commands.xml'}{'allcaps'}{'TCP'}       = 1;
 $Exceptions{'networking-commands.xml'}{'allcaps'}{'TELNET'}    = 1;
 
+$Exceptions{'main-menu.xml'}{'allcaps'}{'MS'}   = 1;
+$Exceptions{'main-menu.xml'}{'allcaps'}{'HTML'} = 1;
+$Exceptions{'main-menu.xml'}{'allcaps'}{'BMP'}  = 1;
+$Exceptions{'main-menu.xml'}{'allcaps'}{'GIF'}  = 1;
+$Exceptions{'main-menu.xml'}{'allcaps'}{'DEMO'} = 1;
+
 $Exceptions{'multimedia-commands.xml'}{'allcaps'}{'CD'}   = 1;
 $Exceptions{'multimedia-commands.xml'}{'allcaps'}{'FX'}   = 1;
 $Exceptions{'multimedia-commands.xml'}{'allcaps'}{'LSB'}  = 1;
