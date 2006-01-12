@@ -168,6 +168,12 @@ $Exceptions{'networking-commands.xml'}{'allcaps'}{'SERVICES'}  = 1;
 $Exceptions{'networking-commands.xml'}{'allcaps'}{'TCP'}       = 1;
 $Exceptions{'networking-commands.xml'}{'allcaps'}{'TELNET'}    = 1;
 
+$Exceptions{'multimedia-commands.xml'}{'allcaps'}{'CD'}   = 1;
+$Exceptions{'multimedia-commands.xml'}{'allcaps'}{'FX'}   = 1;
+$Exceptions{'multimedia-commands.xml'}{'allcaps'}{'LSB'}  = 1;
+$Exceptions{'multimedia-commands.xml'}{'allcaps'}{'MIDI'} = 1;
+$Exceptions{'multimedia-commands.xml'}{'allcaps'}{'MSB'}  = 1;
+
 $Exceptions{'windows-commands.xml'}{'allcaps'}{'GUI'}       = 1;
 $Exceptions{'windows-commands.xml'}{'allcaps'}{'SETUP'}     = 1;
 $Exceptions{'windows-commands.xml'}{'allcaps'}{'WIN'}       = 1;
