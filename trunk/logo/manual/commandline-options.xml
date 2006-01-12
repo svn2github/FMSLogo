@@ -7,7 +7,7 @@ Just add these switches after the LOGO32.EXE.
 </para>
 
 
-<section id="command-line-w">
+<section id="commandline-w">
 <title>-W</title>
 
 <synopsis>-W <replaceable>width</replaceable></synopsis>
@@ -23,7 +23,7 @@ The default is 1000.
 </section>
 
 
-<section id="command-line-h">
+<section id="commandline-h">
 <title>-H</title>
 
 <synopsis>-H <replaceable>height</replaceable></synopsis>
@@ -40,7 +40,7 @@ The default is 1000.
 
 
 
-<section id="command-line-f">
+<section id="commandline-f">
 <title>-F</title>
 
 <synopsis>-F</synopsis>
@@ -48,7 +48,7 @@ The default is 1000.
 <para>
 This tells MSWLogo to not use scrollbars ("f" is for fixed window).
 The default is with scroll bars.
-If you use this option without using <link linkend="command-line-h">-H</link> or <link linkend="command-line-w">-W</link> it will automatically calculate a workspace to fit your full screen exactly and the turtle will always be in view.
+If you use this option without using <link linkend="commandline-h">-H</link> or <link linkend="commandline-w">-W</link> it will automatically calculate a workspace to fit your full screen exactly and the turtle will always be in view.
 </para>
 
 <para>Example:</para>
@@ -58,7 +58,7 @@ If you use this option without using <link linkend="command-line-h">-H</link> or
 
 
 
-<section id="command-line-p">
+<section id="commandline-p">
 <title>-P</title>
 
 <synopsis>-P</synopsis>
@@ -72,7 +72,7 @@ This enables <link linkend="command-perspective">PERSPECTIVE</link> mode to be t
 </section>
 
 
-<section id="command-line-e">
+<section id="commandline-e">
 <title>-E</title>
 
 <synopsis>-E</synopsis>
@@ -109,7 +109,7 @@ If procedures are lost or unexpected changes then you should not be using expert
 <synopsis>LOGO32.EXE -E</synopsis>
 </section>
 
-<section id="command-line-l">
+<section id="commandline-l">
 <title>-L</title>
 
 <synopsis>-L <replaceable>file1</replaceable> <replaceable>[file2]</replaceable></synopsis>
