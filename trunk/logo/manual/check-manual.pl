@@ -212,14 +212,29 @@ sub FilenameToCommand($)
   return undef;
 }
 
+sub CommandToId($)
+{
+  my $command = shift or die "not enough inputs";
+
+  if ($command eq '`') {
+    return 'command-backtick';
+  }
+
+  return 'command-' . lc $command;
+}
+
 # Infer some Exceptions from the alternate spellings of words.
 foreach my $command (keys %AlternateSpellings) {
   foreach my $alternate (@{$AlternateSpellings{$command}}) {
     # an alternate spelling of a command is always allowed within the definition of the command
     $Exceptions{'command-' . lc $command . '.xml'}{'allcaps'}{$alternate} = 1;
 
+    # all alternate spellings are permissible in 'abbreviations.xml'
+    $Exceptions{'abbreviations.xml'}{'allcaps'}{$alternate} = 1;
+
     # fill in the canonical spelling
     $CanonicalSpelling{$alternate} = $command;
+
   }
 }
 
@@ -258,7 +273,7 @@ foreach my $filename (<*.xml>) {
     if ($command) {
 
       # this is the documentation for a command
-      my $expectedId = "command-" . lc $command;
+      my $expectedId = CommandToId($command);
 
       # the first line of all commands should be a <section> tag with the proper id attribute
       if ($linenumber == 1) {
@@ -306,9 +321,10 @@ foreach my $filename (<*.xml>) {
       my $text    = $2;
 
       # if the link text is all upper-case, then it is probably a command
-      if ($text eq uc $text) {
+      if ($text =~ m/^[\.\?\-A-Z]+$/) {
 
-        if ($linkend ne "command-" . lc($text)) {
+        if ($linkend ne CommandToId($text) and
+            $linkend ne 'commandline' . lc $text) {
           LogError($filename, $linenumber, "link and linkend don't match: `$text' -> `$linkend'");
         }
       }
