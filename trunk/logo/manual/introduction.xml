@@ -3,8 +3,8 @@
    <title>Introduction</title>
 
    <section id="tutorial">
-      <title>Why LOGO?</title>
-      <para>This introduction does not do LOGO justice but it's a start.  LOGO is a programming language, pure and simple.  There are two models that languages come in, compiled and interpreted.</para>
+      <title>Why Logo?</title>
+      <para>This introduction does not do Logo justice but it's a start.Logo is a programming language, pure and simple.  There are two models that languages come in, compiled and interpreted.</para>
 
       <para>What is a compiled language?</para>
 
@@ -14,11 +14,11 @@
 
       <para>An interpreted language does not get compiled; instead, as each line is read by the interpreter it executes it.  This is a slow process to execute (on the fly) like this, but has the advantage of not requiring a complete compile for each change.  It's ideal in a learning environment.</para>
 
-      <para>So have guessed what type of language LOGO is yet?</para>
+      <para>So have guessed what type of language Logo is yet?</para>
 
-      <para>Right, it's an interpreted language; at least this LOGO is anyway.</para>
+      <para>Right, it's an interpreted language; at least this Logo is anyway.</para>
 
-      <para>LOGO also has another unique feature not offered in many other languages (none that I know of).  That is, what's called "Turtle Graphics".</para>
+      <para>Logo also has another unique feature not offered in many other languages (none that I know of).  That is, what's called "Turtle Graphics".</para>
 
       <para>What are turtle graphics?</para>
 
@@ -26,20 +26,20 @@
 
       <para>Why do they call it a turtle?</para>
 
-      <para>The first version of LOGO used an electronic robot that resembled a turtle.  In the case of a video screen (like this LOGO) it's simply a cursor (or pointer) of where the turtle is.</para>
+      <para>The first version of Logo used an electronic robot that resembled a turtle.  In the case of a video screen (like this Logo) it's simply a cursor (or pointer) of where the turtle is.</para>
 
       <para>What does the turtle do?</para>
 
       <para>It draws, lines mostly, on the screen.</para>
 
-      <para>The gap that turtle graphics fills is what traditional languages do not.  That is, it gives immediate feedback.  Immediate feedback makes it fun and easier to learn programming.  The purpose of LOGO is to teach people (children and adults) how to program.  It is modeled after a popular and powerful language called LISP and is as powerful as any other programming language.</para>
+      <para>The gap that turtle graphics fills is what traditional languages do not.  That is, it gives immediate feedback.  Immediate feedback makes it fun and easier to learn programming.  The purpose of Logo is to teach people (children and adults) how to program.  It is modeled after a popular and powerful language called LISP and is as powerful as any other programming language.</para>
 
     </section>
 
     <section>
       <title>Where to Start</title>
 
-      <para>Novices can start in LOGO without having to program at all by just learning how to command the turtle.  Learning turtle graphics will teach the user about geometry (and they won't even know it).  It's amazing how soon you can introduce the concept of programming once they grasp the turtle concept.  Lets look at some simple examples:</para>
+      <para>Novices can start in Logo without having to program at all by just learning how to command the turtle.  Learning turtle graphics will teach the user about geometry (and they won't even know it).  It's amazing how soon you can introduce the concept of programming once they grasp the turtle concept.  Lets look at some simple examples:</para>
 
 
       <para>Draw a square using the turtle</para>
@@ -62,7 +62,7 @@ RIGHT 90</programlisting>
       <programlisting>EDIT "square
 &lt;Editor will pop up>
 TO SQUARE
-REPEAT 4 [FORWARD 100 RIGHT 90]
+  REPEAT 4 [FORWARD 100 RIGHT 90]
 END
 &lt;Exit Editor and save>
 
@@ -70,10 +70,10 @@ SQUARE</programlisting>
 
       <para>What's the TO and END for?  It's to define a procedure (a small program) for the square.  The TO can be thought of as "to do something", the END terminates the TO.  Once square was "defined" we then called it twice.  That's all you need to get a square now, just type square.  There is a problem, however.  It only draws squares of 100 by 100.  Wouldn't it be better to draw any size square?  It sure would and it's easy.</para>
       <programlisting>
-EDIT "square
+EDIT "SQUARE
 
 TO SQUARE :length
-REPEAT 4 [FORWARD :length RIGHT 90]
+  REPEAT 4 [FORWARD :length RIGHT 90]
 END
 
 SQUARE 100
@@ -82,25 +82,25 @@ SQUARE 200</programlisting>
       <para>Note all we did is replace 100 with a variable name called :length.  Now when we call square we must specify how big we want it.  Above we asked logo to draw one square at 100x100 and another at 200x200.  Note the ":" in front of the word length tells logo that length is a variable.  However, we can still even do better.  What's wrong now, you ask.  Well, wouldn't it be better if we could draw something other than a square like a triangle?</para>
 
       <programlisting>TO TRIANGLE :length
-REPEAT 3 [FORWARD :length RIGHT 120]
+  REPEAT 3 [FORWARD :length RIGHT 120]
 END
 
 TO SQUARE :length
-REPEAT 4 [FORWARD :length RIGHT 90]
+  REPEAT 4 [FORWARD :length RIGHT 90]
 END
 
 TO PENTAGON :length
-REPEAT 5 [FORWARD :length RIGHT 72]
+  REPEAT 5 [FORWARD :length RIGHT 72]
 END
 
 TRIANGLE 100
 SQUARE 100
-HEXAGON 100</programlisting>
+PENTAGON 100</programlisting>
 
       <para>Lot of typing (programmers hate to type).  Why?  Because there are more things to break and when a change needs to be made it might have to made in many places.  Smaller is not always better but it usually helps. Let's try again.</para>
 
       <programlisting>TO POLYGON :length :sides
-REPEAT :sides [FORWARD :length RIGHT 360.0/:sides]
+  REPEAT :sides [FORWARD :length RIGHT 360/:sides]
 END
 
 POLYGON 100 3
@@ -108,7 +108,7 @@ POLYGON 100 4
 POLYGON 100 5
 </programlisting>
 
-      <para>What happened to TRIANGLE, SQUARE and HEXAGON?  POLYGON now acts as every equal-sided polygon possible and with only one line of code!  We now repeat the sequence based on how many :sides the caller asked for and we turn (RIGHT) the amount of degrees appropriate for that shape.  You may not realize it but this is <emphasis>programming</emphasis>.</para>
+      <para>What happened to TRIANGLE, SQUARE and PENTAGON?  POLYGON now acts as every equal-sided polygon possible and with only one line of code!  We now repeat the sequence based on how many :sides the caller asked for and we turn (RIGHT) the amount of degrees appropriate for that shape.  You may not realize it but this is <emphasis>programming</emphasis>.</para>
 
       <para>Now that we have a program, it's a good idea to save it to the disk.  The edits you've made so far are all within Logo's memory and not on the disk.  How do you save your work, easy.</para>
 
@@ -120,11 +120,11 @@ BYE
 
       <programlisting>LOAD "SHAPES.LGO</programlisting>
 
-      <para>I could go on for ever, yes for ever, even to the point of writing LOGO within LOGO.  This should get you started.  Where can I learn more?</para>
+      <para>I could go on for ever, yes for ever, even to the point of writing Logo within Logo.  This should get you started.  Where can I learn more?</para>
 
 
       <para>Almost every command in this help file has a simple example of using it.
-Check out the examples (see Help Menu).
+Check out the examples (see the Help Menu).
 The MSWLogo online Video Tutorial (separate kit) only basics.
 Jim Muller's Great Logo Adventure Book primarily based on MSWLogo.
 Brian Harvey's MIT Press Books for more advanced programming.</para>
