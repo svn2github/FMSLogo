@@ -139,6 +139,15 @@ $Exceptions{'error-processing.xml'}{'allcaps'}{'THROWTAG'} = 1;
 $Exceptions{'error-processing.xml'}{'allcaps'}{'VALUE'}    = 1;
 $Exceptions{'error-processing.xml'}{'allcaps'}{'VAR'}      = 1;
 
+$Exceptions{'introduction.xml'}{'allcaps'}{'LISP'}        = 1;
+$Exceptions{'introduction.xml'}{'allcaps'}{'MIT'}         = 1;
+$Exceptions{'introduction.xml'}{'allcaps'}{'PENTAGON'}    = 1;
+$Exceptions{'introduction.xml'}{'allcaps'}{'PENTAGON?'}   = 1;
+$Exceptions{'introduction.xml'}{'allcaps'}{'POLYGON'}     = 1;
+$Exceptions{'introduction.xml'}{'allcaps'}{'SHAPES.LGO'}  = 1;
+$Exceptions{'introduction.xml'}{'allcaps'}{'SQUARE'}      = 1;
+$Exceptions{'introduction.xml'}{'allcaps'}{'TRIANGLE'}    = 1;
+
 $Exceptions{'logohelp.xml'}{'allcaps'}{'DOCTYPE'}         = 1;
 $Exceptions{'logohelp.xml'}{'allcaps'}{'DTD'}             = 1;
 $Exceptions{'logohelp.xml'}{'allcaps'}{'EN'}              = 1;
