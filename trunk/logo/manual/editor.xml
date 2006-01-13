@@ -4,30 +4,43 @@
     <para>When you exit the editor, Logo loads the revised definitions and modifies the workspace accordingly.
 Multiple edit sessions are supported.
 But be careful of having multiple edits going that include the same definition.
-The last Editor Exited (and saved) is what takes precedence.
-Also realize if you delete procedures, property lists or names while in the Editor they will be erased (see <link linkend="command-erase">ERASE</link>) from the environment at the time of exiting (and saving) the edit session you deleted them from.  
+The final editor that is exited (and saved) is what takes precedence.
+Also realize if you delete procedures, property lists or names while in the editor they will be erased (see <link linkend="command-erase">ERASE</link>) from the environment at the time of exiting (and saving) the edit session you deleted them from.  
 </para>
 
     <section id="editor-menu">
       <title>Editor Menu</title>
 
       <section>
-        <title>Editor File Menu</title>
+        <title>File Menu</title>
 
         <section>
-          <title>Editor File Print Command</title>
+          <title>File - Save and Exit</title>
+          <para>Exits the editor and prompts you whether to save the work to the Logo workspace.  
+When you exit the editor, MSWLogo loads the revised definitions and modifies the workspace accordingly.  
+Multiple edit sessions are supported, but be careful not to have multiple edits that include the same definition.  
+The final editor that is exited (and saved) is what takes precedence.  
+Also realize if you delete procedures, property lists or names while in the editor they will be erased (see <link linkend="command-erase">ERASE</link>) from the environment at the time of exiting (and saving) the edit session you deleted them from.  
+See also <link linkend="editor-errors">Edit Errors</link>.
+</para>
+        </section>
+
+        <section>
+          <title>File - Save to Workspace</title>
+          <para>Saves the contents of the editor to the Logo workspace.  
+This is only available in <link linkend="commandline-e">expert mode</link>.
+</para>
+        </section>
+
+        <section>
+          <title>File - Print...</title>
           <para>Prints the contents of the editor.</para>
         </section>
 
         <section>
-          <title>Editor File Exit Command</title>
-          <para>Exits the editor and prompts you whether to save the work to the Logo workspace.  
-When you exit the editor, Logo loads the revised definitions and modifies the workspace accordingly.  
-Multiple edit sessions are supported, but be careful not to have multiple edits that include the same definition.  
-The final editor that is exited (and saved) is what takes precedence.  
-Also realize if you delete procedures, property lists or names while in the Editor they will be erased (see <link linkend="command-erase">ERASE</link>) from the environment at the time of exiting (and saving) the edit session you deleted them from.  
-See also <link linkend="editor-errors">Edit Errors</link>.
-</para>
+          <title>File - Exit</title>
+          <para>Exits the editor without saving the contents of the workspace.
+Select this option if you want to discard your changes.</para>
         </section>
 
       </section>
@@ -36,35 +49,55 @@ See also <link linkend="editor-errors">Edit Errors</link>.
         <title>Edit Menu</title>
 
         <section>
-          <title>Edit-Undo Command</title>
+          <title>Edit - Undo</title>
           <para>Undoes the previous editor operation.</para>
         </section>
 
         <section>
-          <title>Edit-Cut Command</title>
+          <title>Edit - Cut</title>
           <para>Copies the selected text to the clipboard and deletes it.  See also <link linkend="editor-clipboard">Editing with the Clipboard</link>.</para>
         </section>
 
         <section>
-          <title>Edit-Copy Command</title>
+          <title>Edit - Copy</title>
           <para>Copies the selected text to the clipboard.  See also <link linkend="editor-clipboard">Editing with the Clipboard</link>.</para>
         </section>
 
         <section>
-          <title>Edit-Paste Command</title>
+          <title>Edit - Paste</title>
           <para>Pastes the text in the clipboard to the cursor position.
 If text is selected it will be replaced with the pasted text.
-See also <link linkend="editor-clipboard">Editing With Clipboard</link>.</para>
+See also <link linkend="editor-clipboard">Editing with the Clipboard</link>.</para>
         </section>
 
         <section>
-          <title>Edit-Delete Command</title>
+          <title>Edit - Delete</title>
           <para>Deletes the selected text.</para>
         </section>
 
         <section>
-          <title>Edit-Clear All Command</title>
+          <title>Edit - Clear All</title>
           <para>Deletes all text in the editor.</para>
+        </section>
+
+      </section>
+
+      <section>
+        <title>Search Menu</title>
+
+        <section>
+          <title>Search - Find</title>
+          <para>Displays a dialog box that allows you to search for text within the editor.</para>
+        </section>
+
+        <section>
+          <title>Search - Replace</title>
+          <para>Displays a dialog box that allows you to search for text within the editor and replace it with other text.</para>
+        </section>
+
+        <section>
+          <title>Search - Next</title>
+          <para>Repeats the previous Search - Find operation.</para>
         </section>
 
       </section>
@@ -74,7 +107,7 @@ See also <link linkend="editor-clipboard">Editing With Clipboard</link>.</para>
         <title>Set Menu</title>
 
         <section>
-          <title>Set-Font Command</title>
+          <title>Set - Font</title>
           <para>You can change the editor's font by going to the Font Menu of the editor and selecting the desired font.
 The new font affects the entire Editor not just selected Text.
 The chosen font will remain selected even after MSWLogo has been restarted.</para>
@@ -86,7 +119,7 @@ The chosen font will remain selected even after MSWLogo has been restarted.</par
         <title>Test Menu</title>
 
         <section>
-          <title>Test! Command</title>
+          <title>Test!</title>
           <para>You can test your code by selecting a section of code and clicking on Test! in the menu.
 This will take each line and send it to the commander for execution.
 Keep in mind that if you select code that has variables or other context that they must be defined in the selection or already defined in the workspace.
@@ -101,17 +134,17 @@ Using this feature is as if you typed in that selection into the commander.
         <title>Help Menu</title>
 
         <section>
-          <title>Help-Index Command</title>
+          <title>Help - Index</title>
           <para>Brings you to the help on MSWLogo.  See also <link linkend="editor-context-help">Context Sensitive Help</link>.</para>
         </section>
 
         <section>
-          <title>Help-Editor Command</title>
+          <title>Help - Editor Command</title>
           <para>Brings you to the help on MSWLogo's editor.  See also <link linkend="editor-context-help">Context Sensitive Help</link>.</para>
         </section>
 
         <section>
-          <title>Help-Topic Search Command</title>
+          <title>Help - Topic Search</title>
           <para>Searches for the topic selected by the mouse in the online help.  See also <link linkend="editor-context-help">Context Sensitive Help</link>.</para>
         </section>
 
