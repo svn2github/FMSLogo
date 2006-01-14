@@ -86,7 +86,7 @@ In addition to the 1024 turtles that you can create, there are also 3 special tu
       <row>
         <entry>-2</entry>
         <entry>Her position represents where your eye is looking when viewing a 3D scene (defaults to [0 0 0]).
-               Her orientation represents which direction is UP on the screen (defaults to [0 0 0], the position Y axis is UP).
+               Her orientation represents which direction is "up" on the screen (defaults to [0 0 0], the position Y axis is up).
                Changing this turtle's position does not have any effect on the screen until something new is drawn.
         </entry>
       </row>
@@ -102,7 +102,7 @@ In addition to the 1024 turtles that you can create, there are also 3 special tu
 </para>
 
 <para>
-Note that you cannot look in the same direction as UP.
+Note that you cannot look in the same direction as "up".
 For example, if turtle -2 is in her default position and orientation and you set turtle -1 to somewhere along the position Y axis, say [0 1000 0], you won't be able to see anything.
 </para>
 
@@ -271,7 +271,7 @@ Running in 256 color mode is slower and takes more memory and may not be possibl
 </para>
 
 <para>
-Running in 256 color does give much more pleasant colors and even allows manipulation of 256 color .BMP files.
+Running in 256 color does give much more pleasant colors and even allows manipulation of 256 color bitmap files.
 </para>
 
 <para>
@@ -736,8 +736,8 @@ POLYVIEW
       
 <para>
 The turtle carries a pen that can draw pictures.
-At any time the pen can be UP (in which case moving the turtle does not change what's on the graphics screen) or DOWN (in which case the turtle leaves a trace).
-If the pen is down, it can operate in one of three modes: PAINT (so that it draws lines when the turtle moves), ERASE (so that it erases any lines that might have been drawn on or through that path earlier), or REVERSE (so that it inverts the color of each point along the turtle's path).
+At any time the pen can be "up" (in which case moving the turtle does not change what's on the graphics screen) or "down" (in which case the turtle leaves a trace).
+If the pen is down, it can operate in one of three modes: "paint" (so that it draws lines when the turtle moves), "erase" (so that it erases any lines that might have been drawn on or through that path earlier), or "reverse" (so that it inverts the color of each point along the turtle's path).
 </para>
 
         &command-pendown;
