@@ -13,8 +13,8 @@ Make "Score           0
 
 
 Make "GridSize        8
-Make "GameBoardWidth  20
-Make "GameBoardHeight 20
+Make "GameBoardWidth  40
+Make "GameBoardHeight 40
 
 to GetBoardSquare :x :y
     output item :x (item :y :GameBoard)
@@ -102,8 +102,8 @@ to InitGameBoard
    local [row boardsquare]
 
    ; copy the game board template to the live game board
-   make "GameBoardWidth  20
-   make "GameBoardHeight 20
+   make "GameBoardWidth  40
+   make "GameBoardHeight 40
 
    make "GameBoard array :GameBoardHeight
    for [j 1 :GameBoardHeight ] [
@@ -361,8 +361,8 @@ to GameLoop
 end
 
 to RunGame
-  ; catch "error [ fullscreen ]
-  ; icon "Commander
+  catch "error [ fullscreen ]
+  icon "Commander
   icon "Editor
 
   clearscreen
@@ -370,6 +370,9 @@ to RunGame
   setfocus [MSWLogo Screen]
 
   GameLoop
+
+  catch "error [ splitscreen ]
+  unicon "Commander
 
 end
 
