@@ -131,6 +131,12 @@ $Exceptions{'communication.xml'}{'allcaps'}{'DLL'}        = 1;
 $Exceptions{'communication.xml'}{'allcaps'}{'PORT'}       = 1;
 $Exceptions{'communication.xml'}{'allcaps'}{'RS'}         = 1;
 
+$Exceptions{'control-structures.xml'}{'allcaps'}{'DOTPRODUCT'}     = 1;
+$Exceptions{'control-structures.xml'}{'allcaps'}{'MATRIXMULTIPLY'} = 1;
+$Exceptions{'control-structures.xml'}{'allcaps'}{'MIT'}            = 1;
+$Exceptions{'control-structures.xml'}{'allcaps'}{'PROC'}           = 1;
+$Exceptions{'control-structures.xml'}{'allcaps'}{'TRANSPOSE'}      = 1;
+
 $Exceptions{'editor.xml'}{'allcaps'}{'CTRL'}              = 1;
 
 $Exceptions{'error-processing.xml'}{'allcaps'}{'DATUM'}    = 1;
@@ -345,7 +351,7 @@ foreach my $filename (<*.xml>) {
       }
     }
 
-    while ($line =~ m![^\.\w](\.??[A-Z](\.??[A-Z?])+)[\.\W]!g) {
+    while ($line =~ m!(?<=[^\.\w])(\.??[A-Z](\.??[A-Z?])+)(?=[\.\W])!g) {
       my $token = $1;
 
       if (not $Commands{$token} and not $Exceptions{$filename}{allcaps}{$token}) {
