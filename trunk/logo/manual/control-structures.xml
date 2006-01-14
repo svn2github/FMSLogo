@@ -132,8 +132,8 @@ Example:
 <userinput>  SHOW (MAP "word [a b c] [d e f])</userinput>
   [ad be cf]
 
-  TO DOTPROD :a :b  ; vector dot product
-    OP APPLY "sum (MAP "product :a :b)
+  TO DOTPRODUCT :a :b  ; vector dot product
+    OUTPUT APPLY "sum (MAP "product :a :b)
   END
 </programlisting>
 </para>
@@ -155,8 +155,8 @@ This form is needed when one iteration tool is used within the template list of 
 <para>
 Example:
 <programlisting>
-<userinput>  TO MATMUL :m1 :m2 [:tm2 TRANSPOSE :m2]  ; multiply two matrices
-    OUTPUT MAP [[row] MAP [[col] DOTPROD :row :col] :tm2] :m1
+<userinput>  TO MATRIXMULTIPLY :m1 :m2 [:tm2 TRANSPOSE :m2]
+    OUTPUT MAP [[row] MAP [[col] DOTPRODUCT :row :col] :tm2] :m1
   END</userinput>
 </programlisting>
 </para>
