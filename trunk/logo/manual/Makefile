@@ -3,9 +3,9 @@ HHP_STYLESHEET=/usr/share/sgml/docbook/xsl-stylesheets-1.68.1-1/htmlhelp/profile
 ROOTFILE   =logohelp.xml
 SOURCEFILES=$(wildcard *.xml)
 
-all : logohelp.hhp ;
+all : htmlhelp.hhp ;
 
-logohelp.hhp : $(SOURCEFILES)
+htmlhelp.hhp : $(SOURCEFILES)
 	xsltproc --nonet $(HHP_STYLESHEET) $(ROOTFILE)
 
 
