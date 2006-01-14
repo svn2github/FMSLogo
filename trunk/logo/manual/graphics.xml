@@ -13,7 +13,7 @@ Headings (angles) are measured in degrees clockwise from the positive Y axis.
 (This differs from the common mathematical convention of measuring angles counterclockwise from the positive X axis.)
 The turtle is represented as an isosceles triangle; the actual turtle position is at the midpoint of the base (the long side).
 
-<!-- NOT IMPLEMENTED
+<!-- not implemented
 However, the turtle is drawn one step behind its actual position, so that the display of the base of the turtle's triangle does not obscure a line drawn perpendicular to it (as would happen after drawing a square).
 -->
 </para>
