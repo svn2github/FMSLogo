@@ -642,9 +642,8 @@ to GameLoop
 end
 
 to RunGame
-  ; catch "error [ fullscreen ]
-  ; icon "Commander
-  make "ERRACT [PAUSE]
+  catch "error [ fullscreen ]
+  icon "Commander
   icon "Editor
 
   clearscreen
@@ -652,6 +651,9 @@ to RunGame
   setfocus [MSWLogo Screen]
 
   GameLoop
+
+  unicon "Commander
+  catch "error [ splitscreen ]
 
 end
 
