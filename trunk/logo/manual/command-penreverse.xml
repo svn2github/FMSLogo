@@ -13,8 +13,8 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-Sets the pen's position to DOWN and mode to REVERSE.
-In REVERSE mode, the pen draws in a color that is the bitwise negation of whatever pixel is under the pen.
+Sets the pen's position to "down" and the pen's mode to "reverse".
+In reverse mode, the pen draws in a color that is the bitwise negation of whatever pixel is under the pen.
 Use <link linkend="command-penpaint">PENPAINT</link> to restore the pen to normal use.
 </para>
 

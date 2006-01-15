@@ -13,8 +13,8 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-Sets the pen's position to DOWN and mode to ERASE.
-In ERASE mode, the pen draws in the color described by <link linkend="command-screencolor">SCREENCOLOR</link>.
+Sets the pen's position to "down" and the pen's mode to "erase".
+In erase mode, the pen draws in the color described by <link linkend="command-screencolor">SCREENCOLOR</link>.
 Use <link linkend="command-penpaint">PENPAINT</link> to restore the pen to normal use.
 </para>
 

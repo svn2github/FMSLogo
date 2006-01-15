@@ -13,8 +13,8 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-Sets the pen's position to DOWN and mode to PAINT.
-In PENPAINT mode, the pen draws in the color described by <link linkend="command-pencolor">PENCOLOR</link>.
+Sets the pen's position to "down" and the pen's mode to "paint".
+In paint mode, the pen draws in the color described by <link linkend="command-pencolor">PENCOLOR</link>.
 This is the default mode.
 </para>
 

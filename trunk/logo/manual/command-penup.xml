@@ -13,7 +13,7 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-Sets the pen's position to UP, without changing its mode.
+Sets the pen's position to "up", without changing its mode.
 </para>
 
 </listitem>

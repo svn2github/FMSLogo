@@ -12,7 +12,7 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-Outputs one of the words PAINT, ERASE, or REVERSE according to the current pen mode.
+Outputs one of the words "paint", "erase", or "reverse" according to the current pen mode.
 </para>
 
 </listitem>
