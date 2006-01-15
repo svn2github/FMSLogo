@@ -45,12 +45,12 @@ Once the few empty color slots in the palette are used, Windows will have someth
 </para>
  
 <para>
-Note also that loading in .BMP files (with <link linkend="command-bitload">BITLOAD</link>) use up colors in the palette.
+Note also that loading in bitmap files (with <link linkend="command-bitload">BITLOAD</link>) use up colors in the palette.
 Again, this can be cleared using CLEARPALETTE.
 </para>
 
 <para>
-Clearing the screen does NOT clear the palette, but it is a good time to do so.
+Clearing the screen does <emphasis>not</emphasis> clear the palette, but it is a good time to do so.
 </para>
 
 </listitem>
