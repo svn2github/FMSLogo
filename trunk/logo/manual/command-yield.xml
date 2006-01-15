@@ -13,16 +13,16 @@
 <listitem>
 
 <para>
-YIELD tells Logo to let other programs use the CPU while LOGO is working.
-<link linkend="command-noyield">NOYIELD</link> tells LOGO not to let other programs use the CPU while Logo is working.
+YIELD tells MSWLogo to let other programs use the CPU while it is working.
+<link linkend="command-noyield">NOYIELD</link> tells MSWLogo not to let other programs use the CPU while it is working.
 The default is to yield.
 </para>
 
 <para>
 Note that the commander window itself is like another program.
 That is, if you have issued a NOYIELD, the commander will lose control.
-This means that the <link linkend="commander-halt">Halt Button</link> won't work until a YIELD is issued or Logo is idle again.
-The reason that NOYIELD is available is that LOGO runs faster if it prevents other programs from using the CPU.
+This means that the <link linkend="commander-halt">Halt Button</link> won't work until a YIELD is issued or MSWLogo is idle again.
+The reason that NOYIELD is available is that MSWLogo runs faster if it prevents other programs from using the CPU.
 </para>
 
 <para>
