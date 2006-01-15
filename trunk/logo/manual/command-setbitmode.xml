@@ -23,15 +23,15 @@ The meaning of each value is given by the following table:
       <row><entry>Mode</entry> <entry>Meaning</entry></row>
     </thead>
     <tbody>
-      <row><entry>1</entry> <entry>Take COPY of Memory then COPY to Screen.</entry></row>
-      <row><entry>2</entry> <entry>Take COPY of Memory OR with COPY of Screen then COPY to Screen.</entry></row>
-      <row><entry>3</entry> <entry>Take COPY of Memory AND with COPY of Screen then COPY to Screen</entry></row>
-      <row><entry>4</entry> <entry>Take COPY of Memory XOR with COPY of Screen then COPY to Screen</entry></row>
-      <row><entry>5</entry> <entry>Take COPY of Memory AND with INVERT of Screen then COPY to Screen</entry></row>
-      <row><entry>6</entry> <entry>Take INVERT of Memory then COPY to Screen</entry></row>
-      <row><entry>7</entry> <entry>Take COPY of Memory OR with COPY of Screen then INVERT to Screen</entry></row>
-      <row><entry>8</entry> <entry>Take INVERT of Memory OR with COPY of Screen then COPY to Screen</entry></row>
-      <row><entry>9</entry> <entry>Take INVERT of Screen then COPY to Screen</entry></row>
+      <row><entry>1</entry> <entry>Take copy of memory then copy to screen.</entry></row>
+      <row><entry>2</entry> <entry>Take copy of memory OR with copy of screen then copy to screen.</entry></row>
+      <row><entry>3</entry> <entry>Take copy of memory AND with copy of screen then copy to screen</entry></row>
+      <row><entry>4</entry> <entry>Take copy of memory XOR with copy of screen then copy to screen</entry></row>
+      <row><entry>5</entry> <entry>Take copy of memory AND with invert of screen then copy to screen</entry></row>
+      <row><entry>6</entry> <entry>Take invert of memory then copy to screen</entry></row>
+      <row><entry>7</entry> <entry>Take copy of memory OR with copy of screen then invert to screen</entry></row>
+      <row><entry>8</entry> <entry>Take invert of memory OR with copy of screen then copy to screen</entry></row>
+      <row><entry>9</entry> <entry>Take invert of screen then copy to screen</entry></row>
     </tbody>
   </tgroup>
 </informaltable>
@@ -73,7 +73,7 @@ BITCOPY 101 101
 SETSCREENCOLOR [255 255 0]
 CLEARSCREEN
 
-; Set paste mode to COPY
+; Set paste mode to copy
 SETBITMODE 1
 BITPASTE
 
