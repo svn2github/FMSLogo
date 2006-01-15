@@ -13,12 +13,12 @@
 <listitem>
 <para>
 Sets the state of the radio button that is identified by <parameter>name</parameter> to <parameter>state</parameter>.
-<parameter>state</parameter> must be either True (pressed) or False (unpressed).
+<parameter>state</parameter> must be either TRUE (pressed) or FALSE (unpressed).
 </para>
 
 <para>
-Even though the user can only set one radio button in a group to True at any given time, RADIOBUTTONSET can violate this constraint.
-If you use this command to set a radio button to True, you should also set all the other radio buttons within the group box to False.
+Even though the user can only set one radio button in a group to TRUE at any given time, RADIOBUTTONSET can violate this constraint.
+If you use this command to set a radio button to TRUE, you should also set all the other radio buttons within the group box to FALSE.
 </para>
 </listitem>
 </varlistentry>
@@ -35,7 +35,7 @@ RADIOBUTTONCREATE "mywindow "mygroupbox "myhideturtle [Hide Turtle] 20 20 60 20
 RADIOBUTTONCREATE "mywindow "mygroupbox "myshowturtle [Show Turtle] 20 40 60 20
 RADIOBUTTONSET "myhideturtle "true
 RADIOBUTTONSET "myshowturtle "false
-BUTTONCREATE "mywindow "mybutton "GO 40 70 25 20 [CHECKONTHINGS]
+BUTTONCREATE "mywindow "mybutton "Go 40 70 25 20 [CHECKONTHINGS]
 WINDOWDELETE "mywindow</userinput>
 </programlisting>
 

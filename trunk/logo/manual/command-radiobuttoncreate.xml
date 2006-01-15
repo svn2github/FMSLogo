@@ -13,8 +13,8 @@
 <listitem>
 <para>
 Creates a radio button control.
-A radio button control is used to give the user a selection of a two state (True or False) item.
-But along with this the user will be restricted to only have one radio button set True within a group box at any given time.
+A radio button control is used to give the user a selection of a two state (TRUE or FALSE) item.
+But along with this the user will be restricted to only have one radio button set TRUE within a group box at any given time.
 A radio button must also be associated with a groupbox control (see <link linkend="command-groupboxcreate">GROUPBOXCREATE</link>).
 </para>
 
