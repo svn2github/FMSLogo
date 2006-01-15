@@ -96,9 +96,10 @@ my %CanonicalSpelling = ();
 my %Exceptions = ();
 $Exceptions{'command-.eq.xml'}{'allcaps'}{'WARNING'}        = 1;
 
+$Exceptions{'command-.macro.xml'}{'allcaps'}{'EXAMPLE'}     = 1;
 $Exceptions{'command-.macro.xml'}{'allcaps'}{'MY.REPEAT'}   = 1;
 $Exceptions{'command-.macro.xml'}{'allcaps'}{'REPEAT.DONE'} = 1;
-$Exceptions{'command-.macro.xml'}{'allcaps'}{'EXAMPLE'}     = 1;
+$Exceptions{'command-.macro.xml'}{'allcaps'}{'TRY'}         = 1;
 
 $Exceptions{'command-.setbf.xml'}{'allcaps'}{'WARNING'}     = 1;
 
@@ -110,20 +111,266 @@ $Exceptions{'command-backtick.xml'}{'propername'}         = '`';
 
 $Exceptions{'command-beforep.xml'}{'allcaps'}{'ABC'}      = 1;
 
+$Exceptions{'command-bitsave.xml'}{'allcaps'}{'BMP'}      = 1;
+
 $Exceptions{'command-bury.xml'}{'allcaps'}{'BAR'}         = 1;
 $Exceptions{'command-bury.xml'}{'allcaps'}{'FOO'}         = 1;
 
 $Exceptions{'command-buryall.xml'}{'allcaps'}{'BAR'}      = 1;
 $Exceptions{'command-buryall.xml'}{'allcaps'}{'FOO'}      = 1;
 
-$Exceptions{'command-cascade.xml'}{'allcaps'}{'VOWELP'}   = 1;
-$Exceptions{'command-cascade.xml'}{'allcaps'}{'PIGLATIN'} = 1;
+$Exceptions{'command-cascade.2.xml'}{'allcaps'}{'FIBONACCI'} = 1;
+
+$Exceptions{'command-cascade.xml'}{'allcaps'}{'FIBONACCI'} = 1;
+$Exceptions{'command-cascade.xml'}{'allcaps'}{'VOWELP'}    = 1;
+$Exceptions{'command-cascade.xml'}{'allcaps'}{'PIGLATIN'}  = 1;
+
+$Exceptions{'command-chdir.xml'}{'allcaps'}{'DOS'} = 1;
 
 $Exceptions{'command-checkboxcreate.xml'}{'allcaps'}{'CHECKONTHINGS'} = 1;
 
-$Exceptions{'command-midiopen.xml'}{'allcaps'}{'MIDI'} = 1;
-$Exceptions{'command-midiopen.xml'}{'allcaps'}{'.MID'} = 1;
-$Exceptions{'command-midiopen.xml'}{'allcaps'}{'.MDI'} = 1;
+$Exceptions{'command-checkboxget.xml'}{'allcaps'}{'CHECKONTHINGS'} = 1;
+
+$Exceptions{'command-comboboxaddstring.xml'}{'allcaps'}{'DODRAW'} = 1;
+
+$Exceptions{'command-comboboxgettext.xml'}{'allcaps'}{'DODRAW'} = 1;
+
+$Exceptions{'command-continue.xml'}{'allcaps'}{'MYPROGRAM'} = 1;
+$Exceptions{'command-continue.xml'}{'allcaps'}{'OK'}        = 1;
+
+$Exceptions{'command-copydef.xml'}{'allcaps'}{'SAYHELLO'} = 1;
+$Exceptions{'command-copydef.xml'}{'allcaps'}{'WELCOME'}  = 1;
+
+$Exceptions{'command-crossmap.xml'}{'allcaps'}{'CSLS'} = 1;
+
+$Exceptions{'command-dialogcreate.xml'}{'allcaps'}{'MYSETUP'} = 1;
+$Exceptions{'command-dialogcreate.xml'}{'allcaps'}{'OK'}      = 1;
+
+$Exceptions{'command-dialogdelete.xml'}{'allcaps'}{'MYSETUP'} = 1;
+$Exceptions{'command-dialogdelete.xml'}{'allcaps'}{'OK'}      = 1;
+
+$Exceptions{'command-dialogenable.xml'}{'allcaps'}{'MYSETUP'} = 1;
+$Exceptions{'command-dialogenable.xml'}{'allcaps'}{'OK'}      = 1;
+
+$Exceptions{'command-dir.xml'}{'allcaps'}{'LOGO.HLP'}    = 1;
+$Exceptions{'command-dir.xml'}{'allcaps'}{'LICENSE.TXT'} = 1;
+$Exceptions{'command-dir.xml'}{'allcaps'}{'FMSLOGO.TXT'} = 1;
+
+$Exceptions{'command-dllcall.xml'}{'allcaps'}{'DLL'}    = 1;
+$Exceptions{'command-dllcall.xml'}{'allcaps'}{'DOUBLE'} = 1;
+$Exceptions{'command-dllcall.xml'}{'allcaps'}{'DWORD'}  = 1;
+$Exceptions{'command-dllcall.xml'}{'allcaps'}{'LPSTR'}  = 1;
+$Exceptions{'command-dllcall.xml'}{'allcaps'}{'TCHAR'}  = 1;
+
+$Exceptions{'command-dllfree.xml'}{'allcaps'}{'DLL'}  = 1;
+
+$Exceptions{'command-dllload.xml'}{'allcaps'}{'DLL'}  = 1;
+
+$Exceptions{'command-edall.xml'}{'allcaps'}{'MYPROGRAM'}  = 1;
+
+$Exceptions{'command-edit.xml'}{'allcaps'}{'MYPROGRAM'}  = 1;
+
+$Exceptions{'command-edn.xml'}{'allcaps'}{'MYPROGRAM'}  = 1;
+
+$Exceptions{'command-edns.xml'}{'allcaps'}{'MYPROGRAM'}  = 1;
+
+$Exceptions{'command-erall.xml'}{'allcaps'}{'BAR'} = 1;
+$Exceptions{'command-erall.xml'}{'allcaps'}{'FOO'} = 1;
+
+$Exceptions{'command-erase.xml'}{'allcaps'}{'FOO'} = 1;
+
+$Exceptions{'command-erps.xml'}{'allcaps'}{'BAR'}  = 1;
+$Exceptions{'command-erps.xml'}{'allcaps'}{'FOO'}  = 1;
+
+$Exceptions{'command-error.xml'}{'allcaps'}{'MYPROGRAM'}   = 1;
+
+$Exceptions{'command-files.xml'}{'allcaps'}{'LOGO.HLP'}    = 1;
+$Exceptions{'command-files.xml'}{'allcaps'}{'LICENSE.TXT'} = 1;
+$Exceptions{'command-files.xml'}{'allcaps'}{'FMSLOGO.TXT'} = 1;
+
+$Exceptions{'command-fill.xml'}{'allcaps'}{'SQUARE'}  = 1;
+
+$Exceptions{'command-filter.xml'}{'allcaps'}{'?REST'}  = 1;
+$Exceptions{'command-filter.xml'}{'allcaps'}{'VOWELP'} = 1;
+
+$Exceptions{'command-find.xml'}{'allcaps'}{'?REST'}  = 1;
+$Exceptions{'command-find.xml'}{'allcaps'}{'MYFIND'} = 1;
+
+$Exceptions{'command-foreach.xml'}{'allcaps'}{'?REST'} = 1;
+
+$Exceptions{'command-fulltext.xml'}{'allcaps'}{'ABC'} = 1;
+
+$Exceptions{'command-gifload.xml'}{'allcaps'}{'GIF'} = 1;
+
+$Exceptions{'command-gifsave.xml'}{'allcaps'}{'GIF'} = 1;
+
+$Exceptions{'command-gifsize.xml'}{'allcaps'}{'GIF'} = 1;
+
+$Exceptions{'command-goto.xml'}{'allcaps'}{'STATES'} = 1;
+
+$Exceptions{'command-groupboxcreate.xml'}{'allcaps'}{'CHECKONTHINGS'} = 1;
+
+$Exceptions{'command-icon.xml'}{'allcaps'}{'HIDEANDSHOW'}  = 1;
+
+$Exceptions{'command-if.xml'}{'allcaps'}{'MAX'}  = 1;
+
+$Exceptions{'command-ifelse.xml'}{'allcaps'}{'MAX'}  = 1;
+
+$Exceptions{'command-iffalse.xml'}{'allcaps'}{'MYTEST'}  = 1;
+
+$Exceptions{'command-iftrue.xml'}{'allcaps'}{'MYTEST'}  = 1;
+
+$Exceptions{'command-ignore.xml'}{'allcaps'}{'MYPROGRAM'}  = 1;
+
+$Exceptions{'command-keyp.xml'}{'allcaps'}{'CBREAK'}  = 1;
+$Exceptions{'command-keyp.xml'}{'allcaps'}{'UNIX'}    = 1;
+
+$Exceptions{'command-label.xml'}{'allcaps'}{'AXIS'}   = 1;
+
+$Exceptions{'command-labelsize.xml'}{'allcaps'}{'CENTERLABEL'}   = 1;
+$Exceptions{'command-labelsize.xml'}{'allcaps'}{'VERTICALLABEL'} = 1;
+
+$Exceptions{'command-listboxaddstring.xml'}{'allcaps'}{'DODRAW'} = 1;
+
+$Exceptions{'command-listboxgetselect.xml'}{'allcaps'}{'DODRAW'} = 1;
+
+$Exceptions{'command-local.xml'}{'allcaps'}{'ABC'} = 1;
+$Exceptions{'command-local.xml'}{'allcaps'}{'FOO'} = 1;
+
+$Exceptions{'command-localmake.xml'}{'allcaps'}{'SAYHELLO'} = 1;
+
+$Exceptions{'command-map.xml'}{'allcaps'}{'?REST'}     = 1;
+
+$Exceptions{'command-map.se.xml'}{'allcaps'}{'?REST'}  = 1;
+
+$Exceptions{'command-mci.xml'}{'allcaps'}{'CD'}        = 1;
+$Exceptions{'command-mci.xml'}{'allcaps'}{'SOUNDIT'}   = 1;
+
+$Exceptions{'command-messagebox.xml'}{'allcaps'}{'OK'}    = 1;
+
+$Exceptions{'command-midiclose.xml'}{'allcaps'}{'MIDI'}   = 1;
+
+$Exceptions{'command-midimessage.xml'}{'allcaps'}{'MIDI'} = 1;
+
+$Exceptions{'command-midiopen.xml'}{'allcaps'}{'MIDI'}   = 1;
+$Exceptions{'command-midiopen.xml'}{'allcaps'}{'MAPPER'} = 1;
+$Exceptions{'command-midiopen.xml'}{'allcaps'}{'.MID'}   = 1;
+$Exceptions{'command-midiopen.xml'}{'allcaps'}{'.MDI'}   = 1;
+
+$Exceptions{'command-namelist.xml'}{'allcaps'}{'BAR'} = 1;
+$Exceptions{'command-namelist.xml'}{'allcaps'}{'FOO'} = 1;
+
+$Exceptions{'command-names.xml'}{'allcaps'}{'BAR'} = 1;
+$Exceptions{'command-names.xml'}{'allcaps'}{'FOO'} = 1;
+
+$Exceptions{'command-netconnecton.xml'}{'allcaps'}{'DNS'}   = 1;
+$Exceptions{'command-netconnecton.xml'}{'allcaps'}{'HOSTS'} = 1;
+$Exceptions{'command-netconnecton.xml'}{'allcaps'}{'IP'}    = 1;
+$Exceptions{'command-netconnecton.xml'}{'allcaps'}{'TCP'}   = 1;
+
+$Exceptions{'command-netstartup.xml'}{'allcaps'}{'DNS'}  = 1;
+
+$Exceptions{'command-noyield.xml'}{'allcaps'}{'CPU'}     = 1;
+
+$Exceptions{'command-openappend.xml'}{'allcaps'}{'LF'}   = 1;
+$Exceptions{'command-openappend.xml'}{'allcaps'}{'CRLF'} = 1;
+
+$Exceptions{'command-openread.xml'}{'allcaps'}{'CRLF'} = 1;
+$Exceptions{'command-openread.xml'}{'allcaps'}{'LF'}   = 1;
+
+$Exceptions{'command-openupdate.xml'}{'allcaps'}{'CRLF'} = 1;
+$Exceptions{'command-openupdate.xml'}{'allcaps'}{'LF'}   = 1;
+
+$Exceptions{'command-openwrite.xml'}{'allcaps'}{'CRLF'} = 1;
+$Exceptions{'command-openwrite.xml'}{'allcaps'}{'LF'}   = 1;
+
+$Exceptions{'command-output.xml'}{'allcaps'}{'MYPROGRAM'} = 1;
+
+$Exceptions{'command-pause.xml'}{'allcaps'}{'MYPROGRAM'} = 1;
+$Exceptions{'command-pause.xml'}{'allcaps'}{'OK'} = 1;
+
+$Exceptions{'command-perspective.xml'}{'allcaps'}{'GROW.LGO'} = 1;
+
+$Exceptions{'command-playwave.xml'}{'allcaps'}{'WAVE'} = 1;
+
+$Exceptions{'command-pllist.xml'}{'allcaps'}{'BAR'} = 1;
+$Exceptions{'command-pllist.xml'}{'allcaps'}{'FOO'} = 1;
+
+$Exceptions{'command-portmode.xml'}{'allcaps'}{'COM'}    = 1;
+$Exceptions{'command-portmode.xml'}{'allcaps'}{'DATA'}   = 1;
+$Exceptions{'command-portmode.xml'}{'allcaps'}{'DOS'}    = 1;
+$Exceptions{'command-portmode.xml'}{'allcaps'}{'MODE'}   = 1;
+$Exceptions{'command-portmode.xml'}{'allcaps'}{'PARITY'} = 1;
+$Exceptions{'command-portmode.xml'}{'allcaps'}{'SPEED'}  = 1;
+
+$Exceptions{'command-polyend.xml'}{'allcaps'}{'SQUARE'} = 1;
+
+$Exceptions{'command-polystart.xml'}{'allcaps'}{'SQUARE'} = 1;
+
+$Exceptions{'command-polyview.xml'}{'allcaps'}{'SQUARE'} = 1;
+
+$Exceptions{'command-primitivep.xml'}{'allcaps'}{'FWD'} = 1;
+
+$Exceptions{'command-procedurep.xml'}{'allcaps'}{'BAR'} = 1;
+
+$Exceptions{'command-procedures.xml'}{'allcaps'}{'BAR'} = 1;
+$Exceptions{'command-procedures.xml'}{'allcaps'}{'FOO'} = 1;
+
+$Exceptions{'command-questionbox.xml'}{'allcaps'}{'OK'} = 1;
+
+$Exceptions{'command-radiobuttoncreate.xml'}{'allcaps'}{'CHECKONTHINGS'} = 1;
+
+$Exceptions{'command-radiobuttonget.xml'}{'allcaps'}{'CHECKONTHINGS'} = 1;
+
+$Exceptions{'command-radiobuttonset.xml'}{'allcaps'}{'CHECKONTHINGS'} = 1;
+
+$Exceptions{'command-reduce.xml'}{'allcaps'}{'MAX'} = 1;
+
+$Exceptions{'command-selectbox.xml'}{'allcaps'}{'OK'} = 1;
+
+$Exceptions{'command-setlight.xml'}{'allcaps'}{'SQUARE'} = 1;
+
+$Exceptions{'command-setmargins.xml'}{'allcaps'}{'TV'} = 1;
+
+$Exceptions{'command-settimer.xml'}{'allcaps'}{'OK'} = 1;
+
+$Exceptions{'command-sound.xml'}{'allcaps'}{'PC'} = 1;
+
+$Exceptions{'command-soundoff.xml'}{'allcaps'}{'NT'} = 1;
+$Exceptions{'command-soundoff.xml'}{'allcaps'}{'XP'} = 1;
+
+$Exceptions{'command-soundon.xml'}{'allcaps'}{'NT'} = 1;
+$Exceptions{'command-soundon.xml'}{'allcaps'}{'PC'} = 1;
+$Exceptions{'command-soundon.xml'}{'allcaps'}{'XP'} = 1;
+
+$Exceptions{'command-startup.xml'}{'allcaps'}{'MYPROGRAM'} = 1;
+
+$Exceptions{'command-step.xml'}{'allcaps'}{'MYPROGRAM'} = 1;
+$Exceptions{'command-step.xml'}{'allcaps'}{'OK'}        = 1;
+
+$Exceptions{'command-stepped.xml'}{'allcaps'}{'MYFORWARD'} = 1;
+
+$Exceptions{'command-stop.xml'}{'allcaps'}{'MYPROGRAM'} = 1;
+
+$Exceptions{'command-tag.xml'}{'allcaps'}{'STATES'} = 1;
+
+$Exceptions{'command-test.xml'}{'allcaps'}{'MYTEST'} = 1;
+
+$Exceptions{'command-thing.xml'}{'allcaps'}{'FOO'} = 1;
+
+$Exceptions{'command-throw.xml'}{'allcaps'}{'SYSTEM'}   = 1;
+$Exceptions{'command-throw.xml'}{'allcaps'}{'TOPLEVEL'} = 1;
+
+$Exceptions{'command-to.xml'}{'allcaps'}{'PROC'} = 1;
+
+$Exceptions{'command-trace.xml'}{'allcaps'}{'MYPRINT'} = 1;
+
+$Exceptions{'command-traced.xml'}{'allcaps'}{'MYFORWARD'} = 1;
+
+$Exceptions{'command-transfer.xml'}{'allcaps'}{'?IN'}  = 1;
+$Exceptions{'command-transfer.xml'}{'allcaps'}{'?OUT'} = 1;
+
+$Exceptions{'command-unicon.xml'}{'allcaps'}{'HIDEANDSHOW'} = 1;
 
 $Exceptions{'command-unstep.xml'}{'allcaps'}{'MYPROGRAM'} = 1;
 $Exceptions{'command-unstep.xml'}{'allcaps'}{'OK'}        = 1;
@@ -366,7 +613,7 @@ foreach my $filename (<*.xml>) {
       }
     }
 
-    while ($line =~ m!(?<=[^\.\w])(\.??[A-Z](\.??[A-Z?])+)(?=[\.\W])!g) {
+    while ($line =~ m!(?<=[^\.\w])([\.?]?[A-Z](\.??[A-Z?])+)(?=[\.\W])!g) {
       my $token = $1;
 
       if (not $Commands{$token} and not $Exceptions{$filename}{allcaps}{$token}) {
