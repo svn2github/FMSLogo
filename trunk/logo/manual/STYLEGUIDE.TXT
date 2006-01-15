@@ -9,7 +9,7 @@ Minimize the use of multiple terms with the same meaning.
 * Item (for element of an array, list, or word).
 * Member (for element of a list or character in a word).
 * Run (not execute).
-* Operation (defunct?
+* Operation (is this term defunct?)
 * Command (routine that doesn't return anything.  Should this be procedure?)
 * Operation (routine with outputs).
 * Instruction (routine and specified inputs).
@@ -24,5 +24,7 @@ Sample code conforms to the following style:
 
 Text should follow these guidelines:
 * The first instance (and only the first instance) of a command in a section should be enclosed in <link> tags.
+* Commands are referred to as "the XXX command" or just "XXX".
+* In general, the text in a link should be the same as the title to which it links.  For example, GUI elements should  be linked like "the <link>Edall Button</link>", not "<link>the Edall Button</link>".
 * All commands in text are given in UPPERCASE and are never abbreviated.
 * Text should be emphasized with the <emphasize> tag, not by using UPPERCASE.
