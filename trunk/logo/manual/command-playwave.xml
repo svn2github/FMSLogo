@@ -17,7 +17,7 @@ Plays a wave file.
 </para>
 
 <para>
-The <parameter>wavefile</parameter> input must be a filename of a .WAV file.
+The <parameter>wavefile</parameter> input must be a filename of a WAVE file.
 It may either be a word or a list of words.
 </para>
 
