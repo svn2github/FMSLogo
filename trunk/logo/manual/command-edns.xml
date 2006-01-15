@@ -12,7 +12,7 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-Opens all unburied variables in <link linkend="editor">the Logo editor</link>.
+Opens all unburied variables in the <link linkend="editor">editor</link>.
 </para>
 
 <para>
@@ -24,16 +24,16 @@ EDNS abbreviates <userinput><link linkend="command-edit">EDIT</link> <link linke
 
 <varlistentry><term>Example</term>
 <listitem>
-<programlisting><userinput>TO "MYPROG
+<programlisting><userinput>TO "MYPROGRAM
   PRINT :myvariable
 END
 
 MAKE "myvariable "Hrllo
-MYPROG1</userinput>
+MYPROGRAM</userinput>
 Hrllo
 <userinput>EDNS</userinput>
 <replaceable>change Hrllo to Hello and exit editor</replaceable>
-<userinput>MYPROG</userinput>
+<userinput>MYPROGRAM</userinput>
 Hello
 </programlisting>
 </listitem>

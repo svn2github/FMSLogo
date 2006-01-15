@@ -12,12 +12,12 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-Opens all definitions in the workspace in <link linkend="editor">the Logo editor</link>.
+Opens all definitions in the workspace in the <link linkend="editor">editor</link>.
 </para>
 
 <para>
 EDALL abbreviates <userinput><link linkend="command-edit">EDIT</link> <link linkend="command-contents">CONTENTS</link></userinput>.
-It is equivalent to pressing <link linkend="commander-edall">the Edall button</link>.
+It is equivalent to pressing the <link linkend="commander-edall">Edall button</link>.
 </para>
 </listitem>
 </varlistentry>
@@ -25,16 +25,16 @@ It is equivalent to pressing <link linkend="commander-edall">the Edall button</l
 
 <varlistentry><term>Example</term>
 <listitem>
-<programlisting><userinput>TO "MYPROG
+<programlisting><userinput>TO "MYPROGRAM
   PRINT :myvariable
 END
 
 MAKE "myvariable "Hrllo
-MYPROG</userinput>
+MYPROGRAM</userinput>
 Hrllo
 <userinput>EDALL</userinput>
 <replaceable>change Hrllo to Hello and exit editor</replaceable>
-<userinput>myprog</userinput>
+<userinput>MYPROGRAM</userinput>
 Hello
 </programlisting>
 </listitem>
