@@ -23,14 +23,14 @@ Adds <parameter>item</parameter> to the listbox that is identified by <parameter
 <listitem>
     <programlisting><userinput>TO DODRAW
   CLEARSCREEN
-  IF EQUALP [TRIANGLE] LISTBOXGETSELECT "mylist [REPEAT 3 [FORWARD 100 RIGHT 120]]
-  IF EQUALP [SQUARE]   LISTBOXGETSELECT "mylist [REPEAT 4 [FORWARD 100 RIGHT 90]]
+  IF EQUALP [Triangle] LISTBOXGETSELECT "mylist [REPEAT 3 [FORWARD 100 RIGHT 120]]
+  IF EQUALP [Square]   LISTBOXGETSELECT "mylist [REPEAT 4 [FORWARD 100 RIGHT 90]]
 END
 
 WINDOWCREATE "main "mywindow "mytitle 0 0 100 100 []
 LISTBOXCREATE "mywindow "mylist 25 0 50 50
-LISTBOXADDSTRING "mylist [TRIANGLE]
-LISTBOXADDSTRING "mylist [SQUARE]
+LISTBOXADDSTRING "mylist [Triangle]
+LISTBOXADDSTRING "mylist [Square]
 BUTTONCREATE "mywindow "mydraw "Draw 25 50 50 25 [DODRAW]
 
 <replaceable>Select an item from the listbox and then click the Draw button.</replaceable>
