@@ -20,15 +20,15 @@ This is useful when an expression is evaluated for a side effect and its actual 
 
 <varlistentry><term>Example</term>
 <listitem>
-<programlisting><userinput>TO MYPROG :ARG
+<programlisting><userinput>TO MYPROGRAM :arg
   PRINT :arg
   OUTPUT COUNT :arg
 END
 
-MYPROG "Hello</userinput>
+MYPROGRAM "Hello</userinput>
 Hello
 I don't know what to do with 5
-<userinput>IGNORE MYPROG "Hello</userinput>
+<userinput>IGNORE MYPROGRAM "Hello</userinput>
 Hello
 </programlisting>
 </listitem>
