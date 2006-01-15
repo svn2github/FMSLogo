@@ -13,7 +13,7 @@
 <listitem>
 <para>
 LOCALMAKE declares a local variable and assigns it a variable.
-It is convenient short hand for the following code:
+It is convenient shorthand for the following code:
 <programlisting>
 <link linkend="command-local">LOCAL</link> <parameter>varname</parameter>
 <link linkend="command-make">MAKE</link> <parameter>varname</parameter> <parameter>value</parameter>
@@ -26,15 +26,15 @@ It is convenient short hand for the following code:
 <varlistentry><term>Example</term>
 <listitem>
 <programlisting><userinput>TO SAYHELLO
-  LOCALMAKE "MESSAGE [Hello]
-  PRINT :MESSAGE
+  LOCALMAKE "message [Hello]
+  PRINT :message
 END
 
 SAYHELLO</userinput>
 Hello
 
-<userinput>SHOW :MESSAGE</userinput>
-MESSAGE has no value
+<userinput>SHOW :message</userinput>
+message has no value
 </programlisting>
 </listitem>
 </varlistentry>

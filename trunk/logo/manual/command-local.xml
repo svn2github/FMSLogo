@@ -27,27 +27,27 @@ The variables created by LOCAL have no initial value; they must be assigned a va
 <varlistentry><term>Example</term>
 <listitem>
 <programlisting><userinput>TO FOO
-  MAKE "BAR 1
-  PRINT :BAR
+  MAKE "bar 1
+  PRINT :bar
 END
 
 FOO</userinput>
 1
 
-<userinput>SHOW :BAR</userinput>
+<userinput>SHOW :bar</userinput>
 1
 
 <userinput>TO ABC
-  LOCAL "XYZ
-  MAKE "XYZ 1
-  PRINT :XYZ
+  LOCAL "xyz
+  MAKE "xyz 1
+  PRINT :xyz
 END
 
 ABC</userinput>
 1
 
-<userinput>SHOW :XYZ</userinput>
-XYZ has no value
+<userinput>SHOW :xyz</userinput>
+xyz has no value
 </programlisting>
 </listitem>
 </varlistentry>
