@@ -18,7 +18,8 @@ It fills using the current value of <link linkend="command-floodcolor">FLOODCOLO
 </para>
 
 <para>
-If <parameter>fillmode</parameter> is TRUE, then it will fill until the current PENCOLOR is encountered.  If it is FALSE, then it will fill while on same color.
+If <parameter>fillmode</parameter> is TRUE, then it will fill until the current PENCOLOR is encountered.
+If it is FALSE, then it will fill while on same color.
 </para>
 
 <para>
