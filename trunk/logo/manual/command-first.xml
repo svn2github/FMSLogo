@@ -13,7 +13,7 @@
 <listitem>
     <para>If <parameter>thing</parameter> is a word, outputs the first character of the word.
 If <parameter>thing</parameter> is a list, outputs the first member of the list.
-If <parameter>thing</parameter> is an array, outputs the origin of the array (that is, the INDEX OF the first element of the array).
+If <parameter>thing</parameter> is an array, outputs the origin of the array (that is, the index of the first element of the array).
 </para>
 </listitem>
 </varlistentry>
