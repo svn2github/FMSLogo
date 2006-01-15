@@ -24,13 +24,13 @@ If <parameter>state</parameter> equals FALSE, then the listbox is disabled.
 <listitem>
     <programlisting><userinput>WINDOWCREATE "main "mywindow "mytitle 0 0 100 100 []
 LISTBOXCREATE "mywindow "mylist 25 25 50 50
-LISTBOXADDSTRING "mylist [TRIANGLE]
-LISTBOXADDSTRING "mylist [SQUARE]
-LISTBOXENABLE "mylist "False</userinput>
+LISTBOXADDSTRING "mylist [Triangle]
+LISTBOXADDSTRING "mylist [Square]
+LISTBOXENABLE "mylist "FALSE</userinput>
 
 <replaceable>The listbox is now disabled</replaceable>
 
-<userinput>LISTBOXENABLE "mylist "True
+<userinput>LISTBOXENABLE "mylist "TRUE
 LISTBOXDELETE "mylist
 WINDOWDELETE "mywindow</userinput>
 </programlisting>
