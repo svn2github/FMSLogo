@@ -23,7 +23,7 @@ If you sprinkle a few EVENTCHECK instructions around, then the user will not loo
 
 <para>
 This command can be used as an alternative to placing YIELD and NOYIELD commands around computationally intensive loops.
-You can wrap the whole procedure in a NOYIELD/YIELD pair then you can place EVENTCHECK's appropriately in your loops.
+You can wrap the whole procedure in a NOYIELD/YIELD pair then you can call EVENTCHECK in strategic locations in your loops.
 </para>
 
 </listitem>
@@ -37,7 +37,7 @@ Note that while it is drawing you cannot HALT it, because mouse callbacks do not
 
 <userinput>MOUSEON [REPEAT 72 [REPEAT 4 [FORWARD 100 RIGHT 90] RIGHT 5 EVENTCHECK]] [] [] [] []</userinput>
 <replaceable>Click the mouse in MSWLogo Screen.
-Note that while it is drawing you CAN now HALT</replaceable>
+Note that while it is drawing you can now HALT</replaceable>
 </programlisting>
 
 </listitem>
