@@ -22,8 +22,8 @@ Deletes (closes) the listbox whose name is <parameter>name</parameter>.
 <listitem>
     <programlisting><userinput>WINDOWCREATE "main "mywindow "mytitle 0 0 100 100 []
 LISTBOXCREATE "mywindow "mylist 25 25 50 50
-LISTBOXADDSTRING "mylist [TRIANGLE]
-LISTBOXADDSTRING "mylist [SQUARE]
+LISTBOXADDSTRING "mylist [Triangle]
+LISTBOXADDSTRING "mylist [Square]
 LISTBOXDELETE "mylist
 WINDOWDELETE "mywindow</userinput>
 </programlisting>
