@@ -13,7 +13,7 @@
 <listitem>
 <para>
 Turns off tracing for the named items (if tracing was enabled for them).
-See also the <link linkend="command-trace">TRACE</link> command and <link linkend="commander-trace">Trace Button</link>.
+See also the <link linkend="command-trace">TRACE</link> command and the <link linkend="commander-trace">Trace Button</link>.
 </para>
 </listitem>
 </varlistentry>
@@ -21,19 +21,19 @@ See also the <link linkend="command-trace">TRACE</link> command and <link linken
 
 <varlistentry><term>Example</term>
 <listitem>
-<programlisting><userinput>TO MYPROG :a
+<programlisting><userinput>TO MYPRINT :a
   PRINT :a
 END
 
-MYPROG "Hello</userinput>
+MYPRINT "Hello</userinput>
 Hello
 <userinput>
-TRACE "myprog
-MYPROG "Hello</userinput>
-( MYPROG "Hello )
+TRACE "MYPRINT
+MYPRINT "Hello</userinput>
+( MYPRINT "Hello )
 Hello
-<userinput>UNTRACE "myprog
-MYPROG "Hello</userinput>
+<userinput>UNTRACE "MYPRINT
+MYPRINT "Hello</userinput>
 Hello
 </programlisting>
 </listitem>
