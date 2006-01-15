@@ -24,7 +24,7 @@ Where the meaning of each member is given by the table below.
       <row><entry>Member</entry> <entry>Meaning</entry></row>
     </thead>
     <tbody>
-      <row><entry>IsWindows</entry>            <entry>1, if this is MS Windows.  0, otherwise.</entry></row>
+      <row><entry>IsWindows</entry>            <entry>1, if this is Microsoft Windows.  0, otherwise.</entry></row>
       <row><entry>Wordsize</entry>             <entry>The number of bits in a machine word.</entry></row>
       <row><entry>BitmapWidth</entry>          <entry>The width of the drawable area on the MSWLogo Screen, in pixels.</entry></row>
       <row><entry>BitmapHeight</entry>         <entry>The height of the drawable area on the MSWLogo Screen, in pixels.</entry></row>
