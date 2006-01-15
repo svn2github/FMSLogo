@@ -26,14 +26,14 @@ See also the list of <link linkend="error-codes">error codes</link>.
 
 <varlistentry><term>Example</term>
 <listitem>
-<programlisting><userinput>TO MYPROG
+<programlisting><userinput>TO MYPROGRAM
   FORWARD 1000
 END
 
 FENCE
-CATCH "ERROR [MYPROG]
+CATCH "ERROR [MYPROGRAM]
 SHOW ERROR</userinput>
-[3 [turtle out of bounds] MYPROG [FORWARD 1000]]
+[3 [turtle out of bounds] MYPROGRAM [FORWARD 1000]]
 <userinput>SHOW ERROR</userinput>
 []
 </programlisting>
