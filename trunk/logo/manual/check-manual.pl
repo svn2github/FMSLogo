@@ -125,7 +125,9 @@ $Exceptions{'command-midiopen.xml'}{'allcaps'}{'MIDI'} = 1;
 $Exceptions{'command-midiopen.xml'}{'allcaps'}{'.MID'} = 1;
 $Exceptions{'command-midiopen.xml'}{'allcaps'}{'.MDI'} = 1;
 
-$Exceptions{'command-yield.xml'}{'allcaps'}{'CPU'}        = 1;
+$Exceptions{'command-yield.xml'}{'allcaps'}{'CPU'}     = 1;
+
+$Exceptions{'commander.xml'}{'allcaps'}{'ENTER'}       = 1;
 
 $Exceptions{'communication.xml'}{'allcaps'}{'DLL'}        = 1;
 $Exceptions{'communication.xml'}{'allcaps'}{'PORT'}       = 1;
@@ -154,6 +156,7 @@ $Exceptions{'introduction.xml'}{'allcaps'}{'SHAPES.LGO'}  = 1;
 $Exceptions{'introduction.xml'}{'allcaps'}{'SQUARE'}      = 1;
 $Exceptions{'introduction.xml'}{'allcaps'}{'TRIANGLE'}    = 1;
 
+$Exceptions{'logohelp.xml'}{'allcaps'}{'ANY'}             = 1;
 $Exceptions{'logohelp.xml'}{'allcaps'}{'DOCTYPE'}         = 1;
 $Exceptions{'logohelp.xml'}{'allcaps'}{'DTD'}             = 1;
 $Exceptions{'logohelp.xml'}{'allcaps'}{'EN'}              = 1;
@@ -165,6 +168,7 @@ $Exceptions{'logohelp.xml'}{'allcaps'}{'MERCHANTABILITY'} = 1;
 $Exceptions{'logohelp.xml'}{'allcaps'}{'OASIS'}           = 1;
 $Exceptions{'logohelp.xml'}{'allcaps'}{'PARTICULAR'}      = 1;
 $Exceptions{'logohelp.xml'}{'allcaps'}{'PUBLIC'}          = 1;
+$Exceptions{'logohelp.xml'}{'allcaps'}{'PURPOSE'}         = 1;
 $Exceptions{'logohelp.xml'}{'allcaps'}{'SYSTEM'}          = 1;
 $Exceptions{'logohelp.xml'}{'allcaps'}{'USA'}             = 1;
 $Exceptions{'logohelp.xml'}{'allcaps'}{'WARRANTY'}        = 1;
