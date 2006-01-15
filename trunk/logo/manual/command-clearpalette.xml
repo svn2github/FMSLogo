@@ -45,7 +45,7 @@ Once the few empty color slots in the palette are used, Windows will have someth
 </para>
  
 <para>
-Note also that loading in bitmap files (with <link linkend="command-bitload">BITLOAD</link>) use up colors in the palette.
+Note also that loading bitmap files with <link linkend="command-bitload">BITLOAD</link> uses up colors in the palette.
 Again, this can be cleared using CLEARPALETTE.
 </para>
 
