@@ -14,7 +14,7 @@
 <para>
 TAG marks a point in a procedure to which a <link linkend="command-goto">GOTO</link> instruction with the same <parameter>tag</parameter> input can jump.
 TAG may only be used only inside a procedure.
-The <parameter>tag</parameter> parameter must be a WORD.
+The <parameter>tag</parameter> input must be a word.
 </para>
 </listitem>
 </varlistentry>
