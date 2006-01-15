@@ -26,7 +26,8 @@ Otherwise it outputs, FALSE.
 </para>
 
 <para>
-The <parameter>machinename</parameter> input is a TCP/IP host name from DNS or a HOSTS file.  It can be a list or a word.
+The <parameter>machinename</parameter> input is a TCP/IP host name from DNS or a <filename>HOSTS</filename> file.
+It can be a list or a word.
 </para>
 
 <para>
@@ -51,7 +52,7 @@ It is called whenever data is received and is ready to be read.
 
 <varlistentry><term>Example</term>
 <listitem>
-<programlisting><userinput>; This example assumes remotemachinename is listening on socket 5124)
+<programlisting><userinput>; This example assumes remotemachinename is listening on socket 5124
 NETSTARTUP ; Start up the network
 SHOW NETCONNECTON "remotemachinename 5124 [PRINT [ready to send again]] [PRINT [I have something]]</userinput>
 true
