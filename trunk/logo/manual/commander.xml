@@ -1,21 +1,21 @@
-<chapter>
+<chapter id="commander">
    <title>Commander</title>
-   <para>The commander is where you will spend most of your LOGO session.
-It is the means by which you instruct LOGO to do what you want.
-The most important control (box) within the commander is the INPUT BOX.
+   <para>The commander is where you will spend most of your MSWLogo session.
+It is the means by which you instruct MSWLogo to do what you want.
+The most important control (box) within the commander is the Input Box.
 It is located in the bottom left portion of the commander window.
-For information on the different controls (boxes) see the specific box below.</para>
+For information on the different controls, see the specific box below.</para>
 
 
    <section id="commander-input">
       <title>Input Box</title>
-      <para>The input box is tied to the <link linkend="commander-history">Output/Command-Recall List</link> and to the <link linkend="commander-execute">Execute</link>.
+      <para>The input box is tied to the <link linkend="commander-history">Output/Command-Recall List</link> and to the <link linkend="commander-execute">Execute</link> button.
 You can also edit the text in the input box.
 If what your typing doesn't fit, it will scroll automatically.
 Once your command is in the input box you need to execute it.
 You can do this by hitting <keycap>ENTER</keycap> or clicking on the execute button.
 Using the Up/Down arrow keys will automatically jump to (set focus to) the output/command-recall list box.
-This control also supports <link linkend="editor-context-help">Context Sensitive Help</link> and <link linkend="editor-clipboard">Editing with Clipboard</link>.</para>
+This control also supports <link linkend="editor-context-help">Context Sensitive Help</link> and <link linkend="editor-clipboard">Editing with the Clipboard</link>.</para>
    </section>
 
    <section id="commander-history">
@@ -25,17 +25,17 @@ You can select a command for re-execution by clicking on the desired line or by 
 If something went out of view, use the scroll bar.  
 Once a line is clicked on it is automatically copied to the Input Box.  
 A double-click on the mouse will automatically execute what you're pointing at.
-This control also supports <link linkend="editor-context-help">Context Sensitive Help</link> and <link linkend="editor-clipboard">Editing with Clipboard</link>.</para>
+This control also supports <link linkend="editor-context-help">Context Sensitive Help</link> and <link linkend="editor-clipboard">Editing with the Clipboard</link>.</para>
    </section>
 
    <section id="commander-execute">
       <title>Execute Button</title>
-      <para>The execute button executes what is in the <link linkend="commander-input">Input Box</link> and is also "PUSHED" when you hit <keycap>ENTER</keycap> key.</para>
+      <para>The execute button executes what is in the <link linkend="commander-input">Input Box</link> and is also "pushed" when you hit the <keycap>ENTER</keycap> key.</para>
    </section>
 
    <section id="commander-status">
       <title>Status Button</title>
-      <para>This button pops up a status window telling you what LOGO is up to.  
+      <para>This button pops up a status window telling you what MSWLogo is up to.  
 Click it again to close the window. 
 See also the <link linkend="command-status">STATUS</link> and <link linkend="command-nostatus">NOSTATUS</link> commands.</para>
    </section>
@@ -44,7 +44,7 @@ See also the <link linkend="command-status">STATUS</link> and <link linkend="com
       <title>Trace Button</title>
       <para>The trace button turns on tracing for debugging your programs.
 Click again to disable tracing.
-You can turn tracing on or off even while Logo it running.
+You can turn tracing on or off even while MSWLogo it running.
 Note that the trace button works independent of what you are tracing with the TRACE command.
 See also <link linkend="command-trace">TRACE</link> and <link linkend="command-untrace">UNTRACE</link> commands.</para>           
    </section>
@@ -52,15 +52,15 @@ See also <link linkend="command-trace">TRACE</link> and <link linkend="command-u
 
    <section id="commander-halt">
       <title>Halt Button</title>
-      <para>The halt button immediately stops LOGO from processing any further.
-Logo is now waiting for a new command.
+      <para>The halt button immediately stops MSWLogo from processing any further.
+After pressing it, MSWLogo will be waiting for a new command.
 See also the <link linkend="command-halt">HALT</link> command.</para>
    </section>
 
 
    <section id="commander-reset">
       <title>Reset Button</title>
-      <para>The reset button is like the <link linkend="command-clearscreen">CLEARSCREEN</link> command; it resets the LOGO screen.</para>
+      <para>The reset button is like the <link linkend="command-clearscreen">CLEARSCREEN</link> command; it resets the MSWLogo screen.</para>
    </section>
 
 
@@ -68,15 +68,15 @@ See also the <link linkend="command-halt">HALT</link> command.</para>
       <title>Step Button</title>
       <para>The step button turns on single stepping for debugging your programs.
 Click again to disable single stepping.
-You can turn single stepping on or off even while Logo it running.
-Note that the step button works independent of what you are stepping with the step command.
+You can turn single stepping on or off even while MSWLogo is running.
+Note that the step button works independent of what you are stepping with the STEP command.
 See also <link linkend="command-step">STEP</link> and <link linkend="command-unstep">UNSTEP</link> commands.</para>           
    </section>
 
 
    <section id="commander-pause">
       <title>Pause Button</title>
-      <para>The pause button stops LOGO so that you can examine variables, make changes or whatever.
+      <para>The pause button stops MSWLogo so that you can examine variables, make changes or whatever.
 Once paused the pause button will show what depth you paused to.
 To continue you can issue a <link linkend="command-continue">CONTINUE</link> command or hit Cancel.
 You can also issue a <link linkend="command-pause">PAUSE</link> command within code to act as a "Break Point".
