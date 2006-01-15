@@ -12,7 +12,7 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-Opens the <link linkend="editor">logo editor</link> on the file with the given <parameter>filename</parameter>.
+Opens the <link linkend="editor">editor</link> on the file with the given <parameter>filename</parameter>.
 When the contents of the file is saved, it will be saved to the file, not the workspace.
 The <parameter>callback</parameter> instruction list is run when the user closes the editor.
 </para>
@@ -21,7 +21,7 @@ The <parameter>callback</parameter> instruction list is run when the user closes
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>WINDOWFILEEDIT "WINDOWFILEEDIT DIALOGFILEOPEN "|c:\Program Files\FMSLogo\Logolib\DEMO| [Print "Done]</userinput>
+    <programlisting><userinput>WINDOWFILEEDIT DIALOGFILEOPEN "|c:\\Program Files\\FMSLogo\\Logolib\\DEMO| [PRINT "Done]</userinput>
 </programlisting>
 
 </listitem>
