@@ -125,6 +125,10 @@ $Exceptions{'command-midiopen.xml'}{'allcaps'}{'MIDI'} = 1;
 $Exceptions{'command-midiopen.xml'}{'allcaps'}{'.MID'} = 1;
 $Exceptions{'command-midiopen.xml'}{'allcaps'}{'.MDI'} = 1;
 
+$Exceptions{'command-untrace.xml'}{'allcaps'}{'MYPRINT'} = 1;
+
+$Exceptions{'command-uppercase.xml'}{'allcaps'}{'HELLO'} = 1;
+
 $Exceptions{'command-windowfileedit.xml'}{'allcaps'}{'DEMO'} = 1;
 
 $Exceptions{'command-windowset.xml'}{'allcaps'}{'MAXIMIZE'} = 1;
