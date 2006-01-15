@@ -29,7 +29,7 @@ This has the same effect as pressing <link linkend="commander-halt">the Halt but
 </para>
 
 <para>
-<userinput>THROW "<link linkend="command-error">ERROR</link></userinput> can be used to generate an error condition.
+<userinput>THROW "ERROR</userinput> can be used to generate an error condition.
 If the error is not caught, it prints a message <userinput>(THROW "ERROR)</userinput> with the usual indication of where the error (in this case the THROW) occurred.
 If a <parameter>value</parameter> parameter and <parameter>tag</parameter> equals <userinput>"ERROR</userinput>, then <parameter>value</parameter> is used as the text of the error message instead of the standard message.
 In this case, the location indicated for the error will not be the location of the THROW, but the location where the procedure containing the THROW was invoked.
@@ -38,7 +38,7 @@ Note: in this case the corresponding <userinput>CATCH "ERROR</userinput>, if any
 </para>
 
 <para>
-<userinput>THROW "SYSTEM</userinput> immediately leaves Logo, returning to the operating system (with exit code 1).
+<userinput>THROW "SYSTEM</userinput> immediately leaves MSWLogo, returning to the operating system (with exit code 1).
 In this case, MSWLogo does not delete any temporary file written by <link linkend="command-edit">EDIT</link>.
 </para>
 
@@ -47,18 +47,18 @@ In this case, MSWLogo does not delete any temporary file written by <link linken
 
 <varlistentry><term>Example</term>
 <listitem>
-<programlisting><userinput>TO MYPROG2
+<programlisting><userinput>TO MYPROGRAM2
   PRINT [Before throw]
   (THROW "tag1 [We need to get back])
   PRINT [We never get here because we THROW back]
 END
 
-TO MYPROG1
-  SHOW CATCH "tag1 [MYPROG2]
+TO MYPROGRAM1
+  SHOW CATCH "tag1 [MYPROGRAM2]
   PRINT [I'm back]
 END
 
-MYPROG1</userinput>
+MYPROGRAM1</userinput>
 Before throw
 [We need to get back]
 I'm back
