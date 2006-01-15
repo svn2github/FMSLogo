@@ -12,7 +12,7 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-The HALT command immediately stops LOGO from processing any further commands and returns control to the commander.
+The HALT command immediately stops MSWLogo from processing any further commands and returns control to the commander.
 It is the same as pressing the <link linkend="commander-halt">Halt button</link>.
 </para>
 </listitem>
