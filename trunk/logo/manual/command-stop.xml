@@ -22,16 +22,16 @@ The stopped procedure does not output a value.
 
 <varlistentry><term>Example</term>
 <listitem>
-<programlisting><userinput>TO MYPROG :arg
+<programlisting><userinput>TO MYPROGRAM :arg
   PRINT [Before Stop]
   IF 1=:arg [STOP]
   PRINT [After Stop]
 END
 
-MYPROG 1</userinput>
+MYPROGRAM 1</userinput>
 Before Stop
 
-<userinput>MYPROG 2</userinput>
+<userinput>MYPROGRAM 2</userinput>
 Before Stop
 After Stop
 </programlisting>

@@ -30,13 +30,13 @@ This allows the user to check values of local variables at the time of the error
 <varlistentry><term>Example</term>
 <listitem>
 <para>
-<programlisting><userinput>TO MYPROG
+<programlisting><userinput>TO MYPROGRAM
   REPEAT 180 [RIGHT 2 IF 90=REPCOUNT [PAUSE]]
   PRINT "Done
 END
 
-MYPROG</userinput>
-Pausing...MYPROG
+MYPROGRAM</userinput>
+Pausing...MYPROGRAM
 </programlisting>
 Enter <userinput>SHOW HEADING</userinput> in Pause Mode dialog box and hit OK.
 <programlisting>

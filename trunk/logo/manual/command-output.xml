@@ -25,11 +25,11 @@ The <parameter>value</parameter> parameter may be any logo thing (word, list, ar
 
 <varlistentry><term>Example</term>
 <listitem>
-<programlisting><userinput>TO MYPROG 
+<programlisting><userinput>TO MYPROGRAM
   OUTPUT [This is the output]
 END
 
-SHOW MYPROG</userinput>
+SHOW MYPROGRAM</userinput>
 [This is the output]
 </programlisting>
 </listitem>
