@@ -15,11 +15,11 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-Opens the definitions of the named item(s) in <link linkend="editor">the Logo editor</link>.
+Opens the definitions of the named item(s) in the <link linkend="editor">editor</link>.
 </para>
 
 <para>
-See the <link linkend="workspace-queries">Workspace Queries</link> section for an explanation of the <parameter>contentslist</parameter> parameter.
+See the <link linkend="workspace-queries">Workspace Queries</link> section for an explanation of the <parameter>contentslist</parameter> input.
 </para>
 </listitem>
 </varlistentry>
@@ -27,15 +27,15 @@ See the <link linkend="workspace-queries">Workspace Queries</link> section for a
 
 <varlistentry><term>Example</term>
 <listitem>
-<programlisting><userinput>TO "MYPROG
+<programlisting><userinput>TO "MYPROGRAM
   PRINT "Hrllo
 END
 
-MYPROG</userinput>
+MYPROGRAM</userinput>
 Hrllo
-<userinput>EDIT "MYPROG</userinput>
+<userinput>EDIT "MYPROGRAM</userinput>
 <replaceable>change Hrllo to Hello and exit editor</replaceable>
-<userinput>myprog</userinput>
+<userinput>MYPROGRAM</userinput>
 Hello
 </programlisting>
 </listitem>
