@@ -30,18 +30,18 @@ Typically the value of ERRACT, if any, is the list <userinput>[<link linkend="co
 
 <varlistentry><term>Example</term>
 <listitem>
-<programlisting><userinput>TO MYPROG2
+<programlisting><userinput>TO MYPROGRAM2
   PRINT [Before throw]
   THROW "tag1
   PRINT [We never get here because we THROW back]
 END
 
-TO MYPROG1
-  CATCH "tag1 [myprog2]
+TO MYPROGRAM1
+  CATCH "tag1 [MYPROGRAM2]
   PRINT [I'm back]
 END
 
-MYPROG1</userinput>
+MYPROGRAM1</userinput>
 Before throw
 I'm back
 </programlisting>

@@ -37,25 +37,25 @@ END
 
 <varlistentry><term>Example</term>
 <listitem>
-<programlisting><userinput>TO MYPROG1
+<programlisting><userinput>TO MYPROGRAM1
   PRINT "Hello1
 END
 
-TO MYPROG2
+TO MYPROGRAM2
   PRINT "Hello2
 END
 
 POTS</userinput>
-TO MYPROG1
-TO MYPROG2
+TO MYPROGRAM1
+TO MYPROGRAM2
 
-<userinput>SAVE "myprogs.lgo
+<userinput>SAVE "myprograms.lgo
 ERALL
 POTS
-LOAD "myprogs.lgo
+LOAD "myprograms.lgo
 POTS</userinput>
-TO MYPROG1
-TO MYPROG2
+TO MYPROGRAM1
+TO MYPROGRAM2
 </programlisting>
 </listitem>
 </varlistentry>

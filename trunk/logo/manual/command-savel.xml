@@ -24,24 +24,24 @@ SAVEL stands for "save list".
 
 <varlistentry><term>Example</term>
 <listitem>
-<programlisting><userinput>TO MYPROG1
+<programlisting><userinput>TO MYPROGRAM1
   PRINT "Hello1
 END
 
-TO MYPROG2
+TO MYPROGRAM2
   PRINT "Hello2
 END
 
 POTS</userinput>
-TO MYPROG1
-TO MYPROG2
+TO MYPROGRAM1
+TO MYPROGRAM2
 
-<userinput>SAVEL [[MYPROG1] [] []] "myprogs.lgo
+<userinput>SAVEL [[MYPROGRAM1] [] []] "myprogram.lgo
 ERALL
 POTS
-LOAD "myprogs.lgo
+LOAD "myprogram.lgo
 POTS</userinput>
-TO MYPROG1
+TO MYPROGRAM1
 </programlisting>
 </listitem>
 </varlistentry>
