@@ -21,21 +21,28 @@ From now until you select another turtle, all turtle operations will occur on th
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>PERSPECTIVE
+    <programlisting><userinput>; 2D Example
+REPEAT 8 [SETTURTLE REPCOUNT-1 FORWARD 10*REPCOUNT]
+</userinput>
+</programlisting>
+
+    <programlisting><userinput>; 3D Example
+PERSPECTIVE
 CLEARSCREEN
 ; Draw a cube from the default vantage point
-REPEAT 4 [REPEAT 4 [FORWARD 100 RIGHT 90] FORWARD 100 DOWN 90]
+REPEAT 4 [REPEAT 4 [FORWARD 100 RIGHT 90] FORWARD 100 DOWNPITCH 90]
 </userinput>
 </programlisting>
 
 <programlisting>
-<userinput>PERSPECTIVE
+<userinput>; 3D Example with moving eye
+PERSPECTIVE
 CLEARSCREEN
 SETTURTLE -1 ; select the "eye position" turtle
 SETXYZ 500 500 500
 SETTURTLE 0
 ; Draw a cube from a new vantage point
-REPEAT 4 [REPEAT 4 [FORWARD 100 RIGHT 90] FORWARD 100 DOWN 90]
+REPEAT 4 [REPEAT 4 [FORWARD 100 RIGHT 90] FORWARD 100 DOWNPITCH 90]
 </userinput>
 </programlisting>
 </listitem>
