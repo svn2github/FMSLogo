@@ -45,6 +45,7 @@ Most procedures are either one or the other, but some are both.
        &command-noyield;
        &command-eventcheck;
        &command-setcursorwait;
+       &command-setcursornowait;
        &command-halt;
        &command-wait;
        &command-settimer;

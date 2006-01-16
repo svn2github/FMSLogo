@@ -1,0 +1,44 @@
+<section id="command-setcursornowait">
+    <title>SETCURSORNOWAIT</title>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>SETCURSORNOWAIT</command></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+SETCURSORNOWAIT changes the cursor to the familiar arrow shape.
+This should be just before a call to <link linkend="command-yield">YEILD</link>.
+</para>
+
+<para>
+Once MSWLogo is set to yield, the appropriate (non-hourglass) cursor will be used on the next event involving the cursor (like moving the mouse), regardless of if you call SETNOCURSORWAIT.
+However, calling SETCURSORNOWAIT will show the arrow cursor without waiting for the next event.
+</para>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Example</term>
+<listitem>
+<programlisting><userinput>REPEAT 100 [
+  NOYIELD
+  SETCURSORWAIT
+  REPEAT 100 [
+    <replaceable>; (work to be done)</replaceable>
+  ]
+  SETCURSORNOWAIT
+  YIELD
+]</userinput>
+</programlisting>
+
+</listitem>
+</varlistentry>
+
+
+</variablelist>
+</section>
