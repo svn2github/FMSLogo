@@ -27,21 +27,22 @@ See the <link linkend="workspace-queries">Workspace Queries</link> section for a
 </varlistentry>
 
 
+
 <varlistentry><term>Example</term>
 <listitem>
-<programlisting><userinput>TO MYPROG :a
+<programlisting><userinput>TO MYPRINT :a
   PRINT :a
 END
 
-MYPROG "Hello</userinput>
+MYPRINT "Hello</userinput>
 Hello
 <userinput>
-TRACE "myprog
-MYPROG "Hello</userinput>
-( MYPROG "Hello )
+TRACE "MYPRINT
+MYPRINT "Hello</userinput>
+( MYPRINT "Hello )
 Hello
-<userinput>UNTRACE "myprog
-MYPROG "Hello</userinput>
+<userinput>UNTRACE "MYPRINT
+MYPRINT "Hello</userinput>
 Hello
 </programlisting>
 </listitem>
