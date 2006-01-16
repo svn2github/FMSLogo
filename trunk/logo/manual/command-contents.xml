@@ -21,12 +21,12 @@ This list includes all unburied named items in the workspace.
 
 <varlistentry><term>Example</term>
 <listitem>
-<programlisting><userinput>TO PROC1
+<programlisting><userinput>TO MYPROGRAM
 END
-MAKE "NAME1 1
-PPROP "PROP1 "P1 1
+MAKE "name 1
+PPROP "properties "property 1
 SHOW CONTENTS</userinput>
-[[PROC1] [NAME1] [PROP1]]
+[[MYPROGRAM] [name] [properties]]
 </programlisting>
 </listitem>
 </varlistentry>

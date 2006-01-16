@@ -22,9 +22,9 @@ The third list is a list of the names of all unburied property lists in the work
 
 <varlistentry><term>Example</term>
 <listitem>
-<programlisting><userinput>PPROP "PROP1 "P1 1
+<programlisting><userinput>PPROP "properties "property 1
 SHOW PLISTS</userinput>
-[[] [] [prop1]]
+[[] [] [properties]]
 </programlisting>
 </listitem>
 </varlistentry>
