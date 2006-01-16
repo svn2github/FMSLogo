@@ -99,6 +99,7 @@ $Exceptions{'command-.eq.xml'}{'allcaps'}{'WARNING'}        = 1;
 $Exceptions{'command-.macro.xml'}{'allcaps'}{'EXAMPLE'}     = 1;
 $Exceptions{'command-.macro.xml'}{'allcaps'}{'MY.REPEAT'}   = 1;
 $Exceptions{'command-.macro.xml'}{'allcaps'}{'REPEAT.DONE'} = 1;
+$Exceptions{'command-.macro.xml'}{'allcaps'}{'REPEAT1'}     = 1;
 $Exceptions{'command-.macro.xml'}{'allcaps'}{'TRY'}         = 1;
 
 $Exceptions{'command-.setbf.xml'}{'allcaps'}{'WARNING'}     = 1;
@@ -119,6 +120,9 @@ $Exceptions{'command-bury.xml'}{'allcaps'}{'FOO'}         = 1;
 $Exceptions{'command-buryall.xml'}{'allcaps'}{'BAR'}      = 1;
 $Exceptions{'command-buryall.xml'}{'allcaps'}{'FOO'}      = 1;
 
+$Exceptions{'command-catch.xml'}{'allcaps'}{'MYPROGRAM1'} = 1;
+$Exceptions{'command-catch.xml'}{'allcaps'}{'MYPROGRAM2'} = 1;
+
 $Exceptions{'command-cascade.2.xml'}{'allcaps'}{'FIBONACCI'} = 1;
 
 $Exceptions{'command-cascade.xml'}{'allcaps'}{'FIBONACCI'} = 1;
@@ -134,6 +138,8 @@ $Exceptions{'command-checkboxget.xml'}{'allcaps'}{'CHECKONTHINGS'} = 1;
 $Exceptions{'command-comboboxaddstring.xml'}{'allcaps'}{'DODRAW'} = 1;
 
 $Exceptions{'command-comboboxgettext.xml'}{'allcaps'}{'DODRAW'} = 1;
+
+$Exceptions{'command-contents.xml'}{'allcaps'}{'MYPROGRAM'} = 1;
 
 $Exceptions{'command-continue.xml'}{'allcaps'}{'MYPROGRAM'} = 1;
 $Exceptions{'command-continue.xml'}{'allcaps'}{'OK'}        = 1;
@@ -174,6 +180,9 @@ $Exceptions{'command-edn.xml'}{'allcaps'}{'MYPROGRAM'}  = 1;
 
 $Exceptions{'command-edns.xml'}{'allcaps'}{'MYPROGRAM'}  = 1;
 
+$Exceptions{'command-edps.xml'}{'allcaps'}{'MYPROGRAM1'}  = 1;
+$Exceptions{'command-edps.xml'}{'allcaps'}{'MYPROGRAM2'}  = 1;
+
 $Exceptions{'command-erall.xml'}{'allcaps'}{'BAR'} = 1;
 $Exceptions{'command-erall.xml'}{'allcaps'}{'FOO'} = 1;
 
@@ -199,6 +208,9 @@ $Exceptions{'command-find.xml'}{'allcaps'}{'MYFIND'} = 1;
 $Exceptions{'command-foreach.xml'}{'allcaps'}{'?REST'} = 1;
 
 $Exceptions{'command-fulltext.xml'}{'allcaps'}{'ABC'} = 1;
+
+$Exceptions{'command-gensym.xml'}{'allcaps'}{'G1'} = 1;
+$Exceptions{'command-gensym.xml'}{'allcaps'}{'G2'} = 1;
 
 $Exceptions{'command-gifload.xml'}{'allcaps'}{'GIF'} = 1;
 
@@ -233,6 +245,9 @@ $Exceptions{'command-labelsize.xml'}{'allcaps'}{'VERTICALLABEL'} = 1;
 $Exceptions{'command-listboxaddstring.xml'}{'allcaps'}{'DODRAW'} = 1;
 
 $Exceptions{'command-listboxgetselect.xml'}{'allcaps'}{'DODRAW'} = 1;
+
+$Exceptions{'command-load.xml'}{'allcaps'}{'MYPROGRAM1'} = 1;
+$Exceptions{'command-load.xml'}{'allcaps'}{'MYPROGRAM2'} = 1;
 
 $Exceptions{'command-local.xml'}{'allcaps'}{'ABC'} = 1;
 $Exceptions{'command-local.xml'}{'allcaps'}{'FOO'} = 1;
@@ -296,6 +311,11 @@ $Exceptions{'command-playwave.xml'}{'allcaps'}{'WAVE'} = 1;
 $Exceptions{'command-pllist.xml'}{'allcaps'}{'BAR'} = 1;
 $Exceptions{'command-pllist.xml'}{'allcaps'}{'FOO'} = 1;
 
+$Exceptions{'command-portopen.xml'}{'allcaps'}{'COM1'}   = 1;
+$Exceptions{'command-portopen.xml'}{'allcaps'}{'COM4'}   = 1;
+$Exceptions{'command-portopen.xml'}{'allcaps'}{'LPT1'}   = 1;
+$Exceptions{'command-portopen.xml'}{'allcaps'}{'LPT3'}   = 1;
+
 $Exceptions{'command-portmode.xml'}{'allcaps'}{'COM'}    = 1;
 $Exceptions{'command-portmode.xml'}{'allcaps'}{'DATA'}   = 1;
 $Exceptions{'command-portmode.xml'}{'allcaps'}{'DOS'}    = 1;
@@ -326,7 +346,15 @@ $Exceptions{'command-radiobuttonset.xml'}{'allcaps'}{'CHECKONTHINGS'} = 1;
 
 $Exceptions{'command-reduce.xml'}{'allcaps'}{'MAX'} = 1;
 
+$Exceptions{'command-save.xml'}{'allcaps'}{'MYPROGRAM1'} = 1;
+$Exceptions{'command-save.xml'}{'allcaps'}{'MYPROGRAM2'} = 1;
+
+$Exceptions{'command-savel.xml'}{'allcaps'}{'MYPROGRAM1'} = 1;
+$Exceptions{'command-savel.xml'}{'allcaps'}{'MYPROGRAM2'} = 1;
+
 $Exceptions{'command-selectbox.xml'}{'allcaps'}{'OK'} = 1;
+
+$Exceptions{'command-setbitmode.xml'}{'allcaps'}{'XOR'} = 1;
 
 $Exceptions{'command-setlight.xml'}{'allcaps'}{'SQUARE'} = 1;
 
@@ -358,8 +386,10 @@ $Exceptions{'command-test.xml'}{'allcaps'}{'MYTEST'} = 1;
 
 $Exceptions{'command-thing.xml'}{'allcaps'}{'FOO'} = 1;
 
-$Exceptions{'command-throw.xml'}{'allcaps'}{'SYSTEM'}   = 1;
-$Exceptions{'command-throw.xml'}{'allcaps'}{'TOPLEVEL'} = 1;
+$Exceptions{'command-throw.xml'}{'allcaps'}{'MYPROGRAM1'}  = 1;
+$Exceptions{'command-throw.xml'}{'allcaps'}{'MYPROGRAM2'}  = 1;
+$Exceptions{'command-throw.xml'}{'allcaps'}{'SYSTEM'}      = 1;
+$Exceptions{'command-throw.xml'}{'allcaps'}{'TOPLEVEL'}    = 1;
 
 $Exceptions{'command-to.xml'}{'allcaps'}{'PROC'} = 1;
 
@@ -387,6 +417,8 @@ $Exceptions{'command-yield.xml'}{'allcaps'}{'CPU'}     = 1;
 
 $Exceptions{'commander.xml'}{'allcaps'}{'ENTER'}       = 1;
 
+$Exceptions{'commandline-options.xml'}{'allcaps'}{'LOGOEXE'} = 1; # entity
+
 $Exceptions{'communication.xml'}{'allcaps'}{'DLL'}        = 1;
 $Exceptions{'communication.xml'}{'allcaps'}{'PORT'}       = 1;
 $Exceptions{'communication.xml'}{'allcaps'}{'RS'}         = 1;
@@ -397,7 +429,8 @@ $Exceptions{'control-structures.xml'}{'allcaps'}{'MIT'}            = 1;
 $Exceptions{'control-structures.xml'}{'allcaps'}{'PROC'}           = 1;
 $Exceptions{'control-structures.xml'}{'allcaps'}{'TRANSPOSE'}      = 1;
 
-$Exceptions{'editor.xml'}{'allcaps'}{'CTRL'}              = 1;
+$Exceptions{'editor.xml'}{'allcaps'}{'CTRL'}   = 1;
+$Exceptions{'editor.xml'}{'allcaps'}{'F1'}     = 1;
 
 $Exceptions{'error-processing.xml'}{'allcaps'}{'DATUM'}    = 1;
 $Exceptions{'error-processing.xml'}{'allcaps'}{'PROC'}     = 1;
@@ -421,6 +454,7 @@ $Exceptions{'logohelp.xml'}{'allcaps'}{'EN'}              = 1;
 $Exceptions{'logohelp.xml'}{'allcaps'}{'ENTITY'}          = 1;
 $Exceptions{'logohelp.xml'}{'allcaps'}{'FITNESS'}         = 1;
 $Exceptions{'logohelp.xml'}{'allcaps'}{'GNU'}             = 1;
+$Exceptions{'logohelp.xml'}{'allcaps'}{'LOGOEXE'}         = 1; # entity
 $Exceptions{'logohelp.xml'}{'allcaps'}{'MA'}              = 1;
 $Exceptions{'logohelp.xml'}{'allcaps'}{'MERCHANTABILITY'} = 1;
 $Exceptions{'logohelp.xml'}{'allcaps'}{'OASIS'}           = 1;
@@ -429,6 +463,7 @@ $Exceptions{'logohelp.xml'}{'allcaps'}{'PUBLIC'}          = 1;
 $Exceptions{'logohelp.xml'}{'allcaps'}{'PURPOSE'}         = 1;
 $Exceptions{'logohelp.xml'}{'allcaps'}{'SYSTEM'}          = 1;
 $Exceptions{'logohelp.xml'}{'allcaps'}{'USA'}             = 1;
+$Exceptions{'logohelp.xml'}{'allcaps'}{'V4.2'}            = 1;
 $Exceptions{'logohelp.xml'}{'allcaps'}{'WARRANTY'}        = 1;
 $Exceptions{'logohelp.xml'}{'allcaps'}{'WITHOUT'}         = 1;
 $Exceptions{'logohelp.xml'}{'allcaps'}{'XML'}             = 1;
@@ -613,7 +648,7 @@ foreach my $filename (<*.xml>) {
       }
     }
 
-    while ($line =~ m!(?<=[^\.\w])([\.?]?[A-Z](\.??[A-Z?])+)(?=[\.\W])!g) {
+    while ($line =~ m!(?<=[^\.\w])([\.?]?[A-Z](\.??[A-Z0-9?])+)(?=[\.\W])!g) {
       my $token = $1;
 
       if (not $Commands{$token} and not $Exceptions{$filename}{allcaps}{$token}) {
