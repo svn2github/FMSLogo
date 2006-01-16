@@ -12,7 +12,7 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-Opens all unburied procedures in <link linkend="editor">the Logo editor</link>.
+Opens all unburied procedures in the <link linkend="editor">editor</link>.
 </para>
 
 <para>
@@ -24,23 +24,23 @@ EDPS abbreviates <userinput><link linkend="command-edit">EDIT</link> <link linke
 
 <varlistentry><term>Example</term>
 <listitem>
-<programlisting><userinput>TO "MYPROG1
+<programlisting><userinput>TO "MYPROGRAM1
   PRINT "Hrllo
 END
 
-TO "MYPROG2
+TO "MYPROGRAM2
   PRINT "Byr
 END
 
-MYPROG1</userinput>
+MYPROGRAM1</userinput>
 Hrllo
-<userinput>MYPROG2</userinput>
+<userinput>MYPROGRAM2</userinput>
 Byr
 <userinput>EDPS</userinput>
 <replaceable>change Hrllo to Hello, change Byr to Bye and exit editor</replaceable>
-<userinput>MYPROG1</userinput>
+<userinput>MYPROGRAM1</userinput>
 Hello
-<userinput>MYPROG2</userinput>
+<userinput>MYPROGRAM2</userinput>
 Bye
 </programlisting>
 </listitem>
