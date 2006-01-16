@@ -3,7 +3,7 @@
 
 <para>
 Command line options can be set as properties of your shortcut to MSWLogo.
-Just add these switches after the LOGO32.EXE.
+Just add these switches after the &LOGOEXE;.
 </para>
 
 
@@ -19,7 +19,7 @@ The default is 1000.
 </para>
 
 <para>Example:</para>
-<synopsis>LOGO32.EXE -W 2000 -H 2000</synopsis>
+<synopsis>&LOGOEXE; -W 2000 -H 2000</synopsis>
 </section>
 
 
@@ -35,7 +35,7 @@ The default is 1000.
 </para>
 
 <para>Example:</para>
-<synopsis>LOGO32.EXE -W 2000 -H 2000</synopsis>
+<synopsis>&LOGOEXE; -W 2000 -H 2000</synopsis>
 </section>
 
 
@@ -52,8 +52,8 @@ If you use this option without using <link linkend="commandline-h">-H</link> or 
 </para>
 
 <para>Example:</para>
-<synopsis>LOGO32.EXE -F</synopsis>
-<synopsis>LOGO32.EXE -F -W 400 -H 200</synopsis>
+<synopsis>&LOGOEXE; -F</synopsis>
+<synopsis>&LOGOEXE; -F -W 400 -H 200</synopsis>
 </section>
 
 
@@ -68,7 +68,7 @@ This enables <link linkend="command-perspective">PERSPECTIVE</link> mode to be t
 </para>
 
 <para>Example:</para>
-<synopsis>LOGO32.EXE -P</synopsis>
+<synopsis>&LOGOEXE; -P</synopsis>
 </section>
 
 
@@ -106,7 +106,7 @@ If procedures are lost or unexpected changes then you should not be using expert
 </para>
 
 <para>Example:</para>
-<synopsis>LOGO32.EXE -E</synopsis>
+<synopsis>&LOGOEXE; -E</synopsis>
 </section>
 
 <section id="commandline-l">
@@ -123,7 +123,7 @@ Note, the "-L" switch must follow any other switches.
 </para>
 
 <para>Example:</para>
-<synopsis>LOGO32.EXE -L myprog.lgo</synopsis>
+<synopsis>&LOGOEXE; -L myprog.lgo</synopsis>
 </section>
 
 
