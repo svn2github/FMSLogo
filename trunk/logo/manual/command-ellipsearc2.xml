@@ -19,7 +19,7 @@ The <parameter>minor</parameter> parameter is the shortest distance from the ell
 The <parameter>major</parameter> is the longest distance from the ellipse the center point.
 </para>
 <para>
-Unlike <link linkend="command-ellipsearc">ELLIPSEARC</link>, ELLIPSARC2 moves the turtle.
+Unlike <link linkend="command-ellipsearc">ELLIPSEARC</link>, ELLIPSEARC2 moves the turtle.
 </para>
 </listitem>
 </varlistentry>
