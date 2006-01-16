@@ -12,7 +12,7 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-If assigned a list value in a file that is loaded by <link linkend="command-load">LOAD</link>, that value is run as an instructionlist after the loading.
+If assigned a list value in a file that is loaded by <link linkend="command-load">LOAD</link>, that value is run as an instruction list after the loading.
 </para>
 </listitem>
 </varlistentry>
@@ -20,16 +20,16 @@ If assigned a list value in a file that is loaded by <link linkend="command-load
 <varlistentry><term>Example</term>
 <listitem>
 
-<programlisting><userinput>TO MYPROG
+<programlisting><userinput>TO MYPROGRAM
   PRINT "Hello
 END
 
-MAKE "STARTUP [MYPROG]
-SAVE "myprog.lgo</userinput>
+MAKE "STARTUP [MYPROGRAM]
+SAVE "myprogram.lgo</userinput>
 myprog.lgo
 
 <userinput>ERALL
-LOAD "myprog.lgo</userinput>
+LOAD "myprogram.lgo</userinput>
 Hello
 </programlisting>
 </listitem>
