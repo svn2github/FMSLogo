@@ -21,16 +21,16 @@ See also the <link linkend="command-trace">TRACE</link> command.
 
 <varlistentry><term>Example</term>
 <listitem>
-<programlisting><userinput>TO MYPROG
+<programlisting><userinput>TO MYFORWARD
   FORWARD 10
 END
 
 SHOW TRACED</userinput>
 [[] [] []]
 
-<userinput>TRACE "MYPROG
+<userinput>TRACE "MYFORWARD
 SHOW TRACED</userinput>
-[[MYPROG] [] []]
+[[MYFORWARD] [] []]
 </programlisting>
 </listitem>
 </varlistentry>

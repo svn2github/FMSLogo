@@ -21,15 +21,15 @@ See also the <link linkend="command-step">STEP</link> command.
 
 <varlistentry><term>Example</term>
 <listitem>
-<programlisting><userinput>TO MYPROG
+<programlisting><userinput>TO MYFORWARD
   FORWARD 10
 END
 
 SHOW STEPPED</userinput>
 [[] [] []]
-<userinput>STEP "MYPROG
+<userinput>STEP "MYFORWARD
 SHOW STEPPED</userinput>
-[[MYPROG] [] []]
+[[MYFORWARD] [] []]
 </programlisting>
 </listitem>
 </varlistentry>
