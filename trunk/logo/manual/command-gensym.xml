@@ -11,9 +11,11 @@
 
 <varlistentry><term>Description</term>
 <listitem>
-   <para>Outputs a unique word each time it is invoked. 
+<para>
+Outputs a unique word each time it is invoked. 
 The words are of the form G1, G2, etc.
-This is typically used to dynamically generate variable names.</para>
+This is typically used to dynamically generate variable names.
+</para>
 </listitem>
 </varlistentry>
 
