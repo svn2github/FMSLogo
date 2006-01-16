@@ -39,7 +39,7 @@ But keep in mind POLYVIEW is an expensive operation and will slow down the progr
 END
 
 PERSPECTIVE
-REPEAT 72 [SQUARE ROLLRIGHT 5]
+REPEAT 72 [SQUARE RIGHTROLL 5]
 POLYVIEW</userinput></programlisting>
 </listitem>
 </varlistentry>
