@@ -28,21 +28,20 @@ You can step all procedures and variables with the <link linkend="commander-step
 </listitem>
 </varlistentry>
 
-
 <varlistentry><term>Example</term>
 <listitem>
-<programlisting><userinput>TO MYPROG
-  FD 10
-  RT 90
-  FD 20
-  LT 90
+<programlisting><userinput>TO MYPROGRAM
+  FORWARD 10
+  RIGHT   90
+  FORWARD 20
+  LEFT    90
 END
 
-MYPROG
-STEP "MYPROG</userinput>
-<replaceable>Each line of MYPROG will be displayed and will wait for OK to continue to next line.</replaceable>
-<userinput>unstep "myprog
-myprog</userinput>
+MYPROGRAM
+STEP "MYPROGRAM</userinput>
+<replaceable>Each line of MYPROGRAM will be displayed and will wait for OK to continue to next line.</replaceable>
+<userinput>UNSTEP "MYPROGRAM
+MYPROGRAM</userinput>
 </programlisting>
 </listitem>
 </varlistentry>
