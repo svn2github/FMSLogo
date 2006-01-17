@@ -17,7 +17,7 @@ The turtle will end in the same position where it started.
 </para>
 
 <para>
-See also <link linkend="command-circle2">CIRCLE2</link>.
+See also <link linkend="command-circle">CIRCLE</link>.
 </para>
 
 </listitem>
