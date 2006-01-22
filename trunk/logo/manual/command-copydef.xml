@@ -22,8 +22,8 @@ This is why it's buried.)
 </para>
 
 <para>
-Note: dialects of Logo differ as to the order of inputs to COPYDEF.
-MSWLogo uses <link linkend="command-make">MAKE</link> order, not <link linkend="command-name">NAME</link> order.
+Note: dialects of &GENERICNAME; differ as to the order of inputs to COPYDEF.
+&PRODUCTNAME; uses <link linkend="command-make">MAKE</link> order, not <link linkend="command-name">NAME</link> order.
 </para>
 </listitem>
 </varlistentry>

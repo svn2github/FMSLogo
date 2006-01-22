@@ -20,7 +20,7 @@ If <parameter>state</parameter> equals FALSE, then the window is disabled.
 
 <para>
 Be careful when using DIALOGENABLE to disable a dialog.
-Because DIALOGCREATE doesn't return until the dialog closes, if you disable the dialog box, they user may not be able to close the dialog, which means MSWLogo may get stuck waiting forever.
+Because DIALOGCREATE doesn't return until the dialog closes, if you disable the dialog box, they user may not be able to close the dialog, which means &PRODUCTNAME; may get stuck waiting forever.
 </para>
 
 </listitem>
@@ -35,7 +35,7 @@ Because DIALOGCREATE doesn't return until the dialog closes, if you disable the 
 END
 
 DIALOGCREATE "main "mydialog "mytitle 0 0 100 100 [MYSETUP]</userinput>
-<replaceable>Clicking the "Disable" button will make MSWLogo lock up</replaceable>
+<replaceable>Clicking the "Disable" button will make &PRODUCTNAME; lock up</replaceable>
 </programlisting>
 </listitem>
 </varlistentry>

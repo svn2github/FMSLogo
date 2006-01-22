@@ -13,7 +13,7 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-Command that inputs Logo expression (<parameter>macrocall</parameter>) that invokes a macro and outputs the Logo expression into which the macro would translate the input expression.
+Command that inputs &GENERICNAME; expression (<parameter>macrocall</parameter>) that invokes a macro and outputs the &GENERICNAME; expression into which the macro would translate the input expression.
 </para>
 
 <para>

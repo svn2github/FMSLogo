@@ -16,7 +16,7 @@
 <para>
 Runs an input string as a shell command.
 Outputs TRUE if the command was executed, FALSE otherwise.
-If the command is a literal list in the instruction line, and if you want a backslash character sent to the shell, you must use \\ to get the backslash through Logo's reader intact.
+If the command is a literal list in the instruction line, and if you want a backslash character sent to the shell, you must use \\ to get the backslash through &GENERICNAME;'s reader intact.
 </para>
 </listitem>
 </varlistentry>

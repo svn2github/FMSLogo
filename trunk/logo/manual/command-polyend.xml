@@ -13,7 +13,7 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-POLYEND tells MSWLogo that you have completed the definition of a polygon that you started when you issued the command <link linkend="command-polystart">POLYSTART</link>.
+POLYEND tells &PRODUCTNAME; that you have completed the definition of a polygon that you started when you issued the command <link linkend="command-polystart">POLYSTART</link>.
 Note that the current coordinate is not added as a vertex when you issue the POLYEND command.
 But the move that you issued to get to the current coordinate will be included.
 Make sure you understand the <link linkend="polygon-restrictions">Polygon Restrictions</link>.

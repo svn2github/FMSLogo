@@ -13,7 +13,7 @@
 <varlistentry><term>Description</term>
 <listitem>
 
-<note><para>SETCURSOR is not supported in MSWLogo.</para></note>
+<note><para>SETCURSOR is not supported in &PRODUCTNAME;.</para></note>
 
 <para>
 Moves the screen cursor to an x,y coordinate given by an input vector (a list of two numbers).

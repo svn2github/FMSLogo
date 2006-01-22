@@ -14,7 +14,7 @@
 <listitem>
 
 
-<note><para>KEYP is not supported in MSWLogo.  See <link linkend="command-keyboardon">KEYBOARDON</link>.</para></note>
+<note><para>KEYP is not supported in &PRODUCTNAME;.  See <link linkend="command-keyboardon">KEYBOARDON</link>.</para></note>
 
 <para>
 A predicate that outputs TRUE if there are characters waiting to be read from the read stream.

@@ -13,7 +13,9 @@
 
 <varlistentry><term>Description</term>
 <listitem>
-<para>Outputs a list whose members are its inputs, which can be any Logo object (word, list, or array).</para>
+<para>
+Outputs a list whose members are its inputs, which can be any &GENERICNAME; thing (word, list, or array).
+</para>
 </listitem>
 </varlistentry>
 

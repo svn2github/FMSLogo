@@ -13,7 +13,7 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-Outputs TRUE if <parameter>character</parameter> was originally entered into Logo with a backslash (<userinput>\</userinput>) before it or between vertical bars (<userinput>|</userinput>) to prevent its usual semantic meaning.  Outputs FALSE, otherwise.
+Outputs TRUE if <parameter>character</parameter> was originally entered with a backslash (<userinput>\</userinput>) before it or between vertical bars (<userinput>|</userinput>) to prevent its usual semantic meaning.  Outputs FALSE, otherwise.
 </para>
 
 <para>That is, it outputs TRUE if only if <parameter>character</parameter> is a backslashed space, tab, newline, or one of <userinput>()[]+-*/=&lt;>":;\~?</userinput>.</para>

@@ -34,7 +34,7 @@ Property lists are sometimes called "dictionaries", "associative arrays", or sim
 
 <para>
 Property lists, abbreviated "plists", are always accessed by their name--you can't get at the plist directly.
-Among other things, this means you cannot pass a plist into a Logo procedure, you can only pass its name.
+Among other things, this means you cannot pass a plist into a &GENERICNAME; procedure, you can only pass its name.
 </para>
 
 <para>

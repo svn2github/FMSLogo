@@ -1,10 +1,10 @@
 <chapter id="main-menu">
    <title>Main Menu</title>
-   <para>The main menu is where you do high-level tasks in MSWLogo, such as loading a Logo program, loading an image, setting up a printer, or even reading this help file.</para>
+   <para>The main menu is where you do high-level tasks in &PRODUCTNAME;, such as loading a &GENERICNAME; program, loading an image, setting up a printer, or even reading this help file.</para>
 
       <section id="menu-file">
         <title>File Menu</title>
-        <para>The File menu includes options that enable you to operate on logo procedure files.
+        <para>The File menu includes options that enable you to operate on &GENERICNAME; procedure files.
 Note that, as a side effect, any selection in this menu that has a directory in its dialog box will effectively change the current working directory to that directory.</para>
 
         <section id="menu-file-new">
@@ -47,7 +47,7 @@ See also the <link linkend="command-erase">ERASE</link> command.</para>
 
         <section id="menu-file-exit">
           <title>File - Exit...</title>
-          <para>This is how you exits MSWLogo.
+          <para>This is how you exits &PRODUCTNAME;.
 See also the <link linkend="command-bye">BYE</link> command.</para>
         </section>
 
@@ -76,7 +76,7 @@ Also see the <link linkend="command-bitload">BITLOAD</link> command.</para>
           <title>Bitmap - Save...</title>
           <para>This saves the picture that you're working so that you can use it with other applications or continue to work on it later.
 You can save pictures as either a Microsoft Windows Bitmap (BMP) or a Graphical Interlace Format (GIF).
-Remember, if your image was generated with a Logo program you really don't need to save it as an image unless you want to use the image in another application such as Microsoft Paint or as a wallpaper.
+Remember, if your image was generated with a &GENERICNAME; program you really don't need to save it as an image unless you want to use the image in another application such as Microsoft Paint or as a wallpaper.
 Also see the <link linkend="command-bitsave">BITSAVE</link> command.</para>
 
           <para>See also the <link linkend="command-setactivearea">SETACTIVEAREA</link> command.</para>
@@ -108,58 +108,58 @@ You no longer need to wait for the software to build a full image.
 It takes less time and less memory to print and disk space to save a partial image.
 As a side effect you can adjust where your image ends up on the page by selecting different extents.
 You may at anytime click on reset to put the extents back to the full image.
-MSWLogo will remember what you set them to even after you exit.</para>
+&PRODUCTNAME; will remember what you set them to even after you exit.</para>
 
           <para>This menu option also allows you to set how many "turtle steps" are mapped to an inch on your printout.
 The default is 125 turtle steps per inch of paper.
-Since MSWLogo's workspace defaults to 1000x1000 turtle steps, that equates to about 8x8 inches (1000/125x1000/125).
+Since &PRODUCTNAME;'s workspace defaults to 1000x1000 turtle steps, that equates to about 8x8 inches (1000/125x1000/125).
 You may increase this number to take advantage of higher resolution printers but your image will become smaller.
 You can compensate for this by increasing your work space (and your drawing size).</para>
 
-          <para>You can also set the active area with the Logo command <link linkend="command-setactivearea">SETACTIVEAREA</link> and get it with the Logo command <link linkend="command-activearea">ACTIVEAREA</link>.</para>
+          <para>You can also set the active area with the &GENERICNAME; command <link linkend="command-setactivearea">SETACTIVEAREA</link> and get it with the &GENERICNAME; command <link linkend="command-activearea">ACTIVEAREA</link>.</para>
         </section>
 
       </section>
 
       <section id="menu-set">
         <title>Set Menu</title>
-        <para>The Set menu allows you to change some of the characteristics of how MSWLogo behaves when drawing.</para>
+        <para>The Set menu allows you to change some of the characteristics of how &PRODUCTNAME; behaves when drawing.</para>
 
         <section id="menu-set-pensize">
           <title>Set - Pen Size...</title>
           <para>This allows you to set the pen size with which the turtle draws.
-You can also set the pen size with the Logo command <link linkend="command-setpensize">SETPENSIZE</link> and get it with the Logo command <link linkend="command-pensize">PENSIZE</link>.</para>
+You can also set the pen size with the &GENERICNAME; command <link linkend="command-setpensize">SETPENSIZE</link> and get it with the &GENERICNAME; command <link linkend="command-pensize">PENSIZE</link>.</para>
         </section>
 
         <section id="menu-set-labelfont">
           <title>Set - Label Font...</title>
           <para>This allows you to set the font with which the <link linkend="command-label">LABEL</link> command will write.
-You can also set the font with the Logo command <link linkend="command-setlabelfont">SETLABELFONT</link> and get it with the Logo command <link linkend="command-labelfont">LABELFONT</link>.</para>
+You can also set the font with the &GENERICNAME; command <link linkend="command-setlabelfont">SETLABELFONT</link> and get it with the &GENERICNAME; command <link linkend="command-labelfont">LABELFONT</link>.</para>
         </section>
 
         <section id="menu-set-commanderfont">
           <title>Set - Commander Font...</title>
           <para>This allows you to choose the Commander's font.
-The chosen font will remain selected even after MSWLogo has been restarted.</para>
+The chosen font will remain selected even after &PRODUCTNAME; has been restarted.</para>
         </section>
 
         <section id="menu-set-pencolor">
           <title>Set - Pen Color...</title>
           <para>This allows you to set the pen color.
-You can also set the pen color with the Logo command <link linkend="command-setpencolor">SETPENCOLOR</link> and get it with the Logo command <link linkend="command-pencolor">PENCOLOR</link>.</para>
+You can also set the pen color with the &GENERICNAME; command <link linkend="command-setpencolor">SETPENCOLOR</link> and get it with the &GENERICNAME; command <link linkend="command-pencolor">PENCOLOR</link>.</para>
         </section>
 
 
         <section id="menu-set-floodcolor">
           <title>Set - Flood Color...</title>
           <para>This allows you to set the flood color in which the turtle will <link linkend="command-fill">FILL</link>.
-You can also set the flood color with the Logo command <link linkend="command-setfloodcolor">SETFLOODCOLOR</link> and get it with the Logo command <link linkend="command-floodcolor">FLOODCOLOR</link>.</para>
+You can also set the flood color with the &GENERICNAME; command <link linkend="command-setfloodcolor">SETFLOODCOLOR</link> and get it with the &GENERICNAME; command <link linkend="command-floodcolor">FLOODCOLOR</link>.</para>
         </section>
 
         <section id="menu-set-screencolor">
           <title>Set - Screen Color...</title>
           <para>This allows you to set the screen color.
-You can also set the screen color with the Logo command <link linkend="command-setscreencolor">SETSCREENCOLOR</link> and get it with the Logo command <link linkend="command-screencolor">SCREENCOLOR</link>.</para>
+You can also set the screen color with the &GENERICNAME; command <link linkend="command-setscreencolor">SETSCREENCOLOR</link> and get it with the &GENERICNAME; command <link linkend="command-screencolor">SCREENCOLOR</link>.</para>
         </section>
 
       </section>
@@ -168,7 +168,7 @@ You can also set the screen color with the Logo command <link linkend="command-s
       <section id="menu-zoom">
         <title>Zoom Menu</title>
         <para>The Zoom menu allows you set the zoom factor.
-You can also set the zoom factor with the Logo command <link linkend="command-zoom">ZOOM</link>.</para>
+You can also set the zoom factor with the &GENERICNAME; command <link linkend="command-zoom">ZOOM</link>.</para>
 
         <section id="menu-zoom-in">
           <title>Zoom - In</title>
@@ -189,13 +189,13 @@ You can also set the zoom factor with the Logo command <link linkend="command-zo
 
       <section id="menu-help">
         <title>Help Menu</title>
-        <para>The Help menu allows you to learn more about MSWLogo.
+        <para>The Help menu allows you to learn more about &PRODUCTNAME;.
 For more information, select the Help menu command name.
 Also see the <link linkend="command-help">HELP</link> command.</para>
 
         <section id="menu-help-index">
           <title>Help - Index</title>
-          <para>This displays the Microsoft Windows Help for MSWLogo.</para>
+          <para>This displays the Microsoft Windows Help for &PRODUCTNAME;.</para>
         </section>
 
         <section id="menu-help-mci">
@@ -215,23 +215,23 @@ Also see the <link linkend="command-help">HELP</link> command.</para>
 
         <section id="menu-help-demo">
           <title>Help - Demo</title>
-          <para>This runs the DEMO program from the Logo library.</para>
+          <para>This runs the DEMO program from the &GENERICNAME; library.</para>
         </section>
 
         <section id="menu-help-example">
           <title>Help - Examples</title>
-          <para>This brings you to an HTML page that describes each example program that comes with MSWLogo.</para>
+          <para>This brings you to an HTML page that describes each example program that comes with &PRODUCTNAME;.</para>
         </section>
 
         <section id="menu-help-releasenotes">
           <title>Help - Release Notes</title>
-          <para>This displays the release notes for this version of MSWLogo.</para>
+          <para>This displays the release notes for this version of &PRODUCTNAME;.</para>
         </section>
 
 
-        <section id="menu-help-aboutlogo">
-          <title>Help - About Logo</title>
-          <para>This displays the copyright and version information for MSWLogo.</para>
+        <section id="menu-help-aboutfmslogo">
+          <title>Help - About &PRODUCTNAME;</title>
+          <para>This displays the copyright and version information for &PRODUCTNAME;.</para>
         </section>
 
         <section id="menu-help-aboutms">

@@ -13,7 +13,7 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-POLYVIEW asks MSWLogo to erase the screen and view all polygons defined with <link linkend="command-polystart">POLYSTART</link> and <link linkend="command-polyend">POLYEND</link> as shaded polygons.
+POLYVIEW asks &PRODUCTNAME; to erase the screen and view all polygons defined with <link linkend="command-polystart">POLYSTART</link> and <link linkend="command-polyend">POLYEND</link> as shaded polygons.
 Only shaded polygons will be shown.
 Polygons will be illuminated according to the position of the light source using <userinput>SETTURTLE -3</userinput> and lighting parameters using with <link linkend="command-setlight">SETLIGHT</link>.
 Make sure you understand the <link linkend="polygon-restrictions">Polygon Restrictions</link>.

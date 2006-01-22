@@ -25,9 +25,9 @@ See also <link linkend="command-setfocus">SETFOCUS</link>.
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>SETFOCUS [MSWLogo Screen]
+    <programlisting><userinput>SETFOCUS [&PRODUCTNAME;]
 SHOW GETFOCUS</userinput>
-MSWLogo Screen
+&PRODUCTNAME;
 </programlisting>
 </listitem>
 </varlistentry>

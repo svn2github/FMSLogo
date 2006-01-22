@@ -14,14 +14,14 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-Turns on networking in MSWLogo.
+Turns on networking in &PRODUCTNAME;.
 This must be called before any other network commands will work.
 </para>
 
 <para>
-If the <parameter>synchornous_dns</parameter> input is not given, MSWLogo will use asynchronous DNS.
+If the <parameter>synchornous_dns</parameter> input is not given, &PRODUCTNAME; will use asynchronous DNS.
 You may optionally call NETSTARTUP with the <parameter>synchronous_dns</parameter> input as 0 (asynchronous) or 1 (synchronous).
-Asynchronous DNS is safer to use (less likely to cause MSWLogo to hang during a network name lookup).
+Asynchronous DNS is safer to use (less likely to cause &PRODUCTNAME; to hang during a network name lookup).
 But some WinSock stacks have problems with it (for example, Trumpet WinSock).
 If you get "Host not Found" errors and you're confident that DNS is working (e.g. ping host works) then try setting this flag to 1.
 </para>

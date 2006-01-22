@@ -22,12 +22,12 @@ You can determine the key that was pressed or released by calling <link linkend=
 </para>
 
 <para>
-<parameter>keydown</parameter> or <parameter>keyup</parameter> may either be a word that is the name of a Logo procedure to call, or a list of commands.
+<parameter>keydown</parameter> or <parameter>keyup</parameter> may either be a word that is the name of a procedure to call, or a list of commands.
 </para>
 
 <para>
 Note the "Screen" must have focus (NOT the commander) to catch the key events.
-You can force this by calling <userinput>SETFOCUS [MSWLogo Screen]</userinput> after you call KEYBOARDON.
+You can force this by calling <userinput>SETFOCUS [&PRODUCTNAME;]</userinput> after you call KEYBOARDON.
 All the "callbacks" for the keyboard are automatically run in <link linkend="command-noyield">NOYIELD</link> mode.
 </para>
 
@@ -37,11 +37,13 @@ All the "callbacks" for the keyboard are automatically run in <link linkend="com
 <varlistentry><term>Example</term>
 <listitem>
     <programlisting><userinput>KEYBOARDON [PRINT CHAR KEYBOARDVALUE]
-SETFOCUS [MSWLogo Screen]
+FULLSCREEN
+SETFOCUS [&PRODUCTNAME;]
 a</userinput>
 a
 <userinput>b</userinput>
 b
+SPILTSCREEN
 KEYBOARDOFF
 </programlisting>
 </listitem>

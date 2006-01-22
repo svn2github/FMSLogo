@@ -13,7 +13,7 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-Runs the Logo instructions in <parameter>instructionlist</parameter>; outputs if the list contains an expression that outputs.
+Runs the instructions in <parameter>instructionlist</parameter>; outputs if the list contains an expression that outputs.
 </para>
 </listitem>
 </varlistentry>

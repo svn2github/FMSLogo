@@ -2,7 +2,7 @@
    <title>Help Commands</title>
 
 <para>
-You can access MSWLogo's manual and system documention through Logo commands.
+You can access &PRODUCTNAME;'s manual and system documention through &GENERICNAME; commands.
 </para>
 
     &command-help;

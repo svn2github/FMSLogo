@@ -13,13 +13,13 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-A macro is a special kind of procedure whose output is evaluated as Logo instructions in the context of the macro's caller.
+A macro is a special kind of procedure whose output is evaluated as instructions in the context of the macro's caller.
 .MACRO is like <link linkend="command-to">TO</link> except that the new procedure becomes a macro.
 </para>
 
 <para>
 Macros are useful for inventing new control structures comparable to <link linkend="command-repeat">REPEAT</link>, <link linkend="command-if">IF</link>, and so on.
-Such control structures can almost, but not quite, be duplicated by ordinary Logo procedures.
+Such control structures can almost, but not quite, be duplicated by ordinary procedures.
 For example, here is an ordinary procedure version of REPEAT:
 
 <programlisting>  TO MY.REPEAT :num :instructions
@@ -53,7 +53,7 @@ This procedure works as written, but if MY.REPEAT is used instead of REPEAT, it 
 
 <para>
 The solution is to make MY.REPEAT a macro.
-Instead of carrying out the computation, a macro must return a list containing Logo instructions.
+Instead of carrying out the computation, a macro must return a list containing instructions.
 The contents of that list are evaluated as if they appeared in place of the call to the macro.
 Here's a macro version of REPEAT:
 
@@ -83,7 +83,7 @@ For this example, MY.REPEAT will output the instruction list
 </para>
 
 <para>
-Logo then executes these instructions in place of the original invocation of MY.REPEAT; this prints "hello" once and invokes another repetition.
+&PRODUCTNAME; then executes these instructions in place of the original invocation of MY.REPEAT; this prints "hello" once and invokes another repetition.
 </para>
 
 
@@ -116,13 +116,13 @@ But if a STOP or OUTPUT happens, then REPEAT.DONE will output a STOP or OUTPUT i
 </para>
 
 <para>
-The macro-defining commands have names starting with a dot because macros are an advanced feature of Logo.
+The macro-defining commands have names starting with a dot because macros are an advanced feature of &GENERICNAME;.
 It's easy to get in trouble by defining a macro that doesn't terminate, or by failing to construct the instruction list properly.
 </para>
 
 <para>
-Lisp users should note that Logo macros are <emphasis>not</emphasis> special forms.
-That is, the inputs to the macro are evaluated normally, as they would be for any other Logo procedure.
+LISP users should note that &GENERICNAME; macros are <emphasis>not</emphasis> special forms.
+That is, the inputs to the macro are evaluated normally, as they would be for any other procedure.
 It's only the output from the macro that's handled unusually.
 </para>
 
@@ -166,7 +166,7 @@ It's often convenient to use the <link linkend="command-backtick">`</link> funct
 </para>
 
 <para>
-On the other hand, ` is slow, since it's tree-recursive and written in Logo.
+On the other hand, ` is slow, since it's tree-recursive and written in &GENERICNAME;.
 </para>
 
 

@@ -2,7 +2,7 @@
    <title>Graphics</title>
 
 <para>
-MSWLogo provides both traditional and extended Logo turtle graphics.
+&PRODUCTNAME; provides both traditional and extended &GENERICNAME; turtle graphics.
 Multiple turtles are supported but dynamic turtles and collision detection are not supported.
 </para>
 
@@ -19,11 +19,11 @@ However, the turtle is drawn one step behind its actual position, so that the di
 </para>
 
 <para>
-MSWLogo begins with a white background and black pen.
+&PRODUCTNAME; begins with a white background and black pen.
 </para>
 
 <para>
-MSWLogo supports color-by-index and true color.
+&PRODUCTNAME; supports color-by-index and true color.
 When using color-by-index, the index to color mapping is given in the following table.
 
 <informaltable frame='all'>
@@ -58,7 +58,7 @@ When using color-by-index, the index to color mapping is given in the following 
        <title>Multiple Turtles</title>
       
 <para>
-MSWLogo supports up to 1024 different turtles.
+&PRODUCTNAME; supports up to 1024 different turtles.
 Each turtle maintains its own heading (orientation in 3D), position, and pen control, but not pencolor.
 Each turtle can be represented as a <link linkend="command-bitmapturtle">BITMAPTURTLE</link>.
 Note that turtles start at index 0, which is the default turtle.
@@ -210,7 +210,7 @@ Each time you enter <link linkend="command-perspective">PERSPECTIVE</link> mode 
        <title>Using Color</title>
 
 <para>
-Several commands (<link linkend="command-setpencolor">SETPENCOLOR</link>, <link linkend="command-setfloodcolor">SETFLOODCOLOR</link>, <link linkend="command-setscreencolor">SETSCREENCOLOR</link>) exist in Logo to specify red, green, and blue intensities of color.
+Several commands (<link linkend="command-setpencolor">SETPENCOLOR</link>, <link linkend="command-setfloodcolor">SETFLOODCOLOR</link>, <link linkend="command-setscreencolor">SETSCREENCOLOR</link>) exist in &GENERICNAME; to specify red, green, and blue intensities of color.
 Each input represents how much red, green, and blue you want in the color.
 Each input has a range of 0-255.
 By mixing different amounts of colors you can create 16.7 million different colors.
@@ -232,18 +232,18 @@ If the <link linkend="command-setpensize">SETPENSIZE</link> is too narrow (if it
 Windows does not mix (dither) colors on Fonts either.
 If your hardware can support a 256 Windows Driver you should look into loading the appropriate Driver.
 The Documentation with your Graphics card explains the capabilities and how to load new Drivers.
-MSWLogo is fun in any mode but it's even more fun in 256 color mode.
+&PRODUCTNAME; is fun in any mode but it's even more fun in 256 color mode.
 You can load 256 color bitmaps and do some incredible things with them.
 </para>
 
 
 <para>
-Example of setting some common pen colors:
+Example of instructions that set some common pen colors:
 
 <informaltable frame='all'>
   <tgroup cols='2'>
     <thead>
-      <row><entry>Logo Command</entry> <entry>Color</entry></row>
+      <row><entry>Instruction</entry> <entry>Color</entry></row>
     </thead>
     <tbody>
       <row><entry>SETPENCOLOR [000 000 000]</entry><entry>black</entry></row>
@@ -275,9 +275,9 @@ Running in 256 color does give much more pleasant colors and even allows manipul
 </para>
 
 <para>
-For the purposes of compatibility with other logo implementations and simplicity for younger logo programmers MSWLogo will also support single index colors.
-If you set any color with an 16 color index, MSWLogo will output all colors as a 16 color index.
-If you set any color with an [red green blue] color vector, MSWLogo will output all colors as [red green blue] color vectors.
+For compatibility with other &GENERICNAME; implementations and simplicity for young programmers, &PRODUCTNAME; also supports single index colors.
+If you set any color with an 16 color index, &PRODUCTNAME; will output all colors as a 16 color index.
+If you set any color with an [red green blue] color vector, &PRODUCTNAME; will output all colors as [red green blue] color vectors.
 </para>
 
 
@@ -299,7 +299,7 @@ show pencolor</userinput>
 </variablelist>
 
 <para>
-MSWLogo supports color-by-index and true color.
+&PRODUCTNAME; supports color-by-index and true color.
 When using color-by-index, the index to color mapping is given in the following table.
 
 <informaltable frame='all'>
@@ -397,7 +397,7 @@ But it is correct, think about the maneuvers I made and where the turtle should 
 </para>
 
 <para>
-But don't worry, MSWLogo makes it easy, you just need to understand some basic rules so that you don't get lost in 3D space.
+But don't worry, &PRODUCTNAME; makes it easy, you just need to understand some basic rules so that you don't get lost in 3D space.
 The turtle controls ROLL, PITCH, and HEADING do affect one another but in a certain way which is important.
 The most important is that a change in HEADING (with RIGHT, LEFT or SETHEADING) will not effect your ROLL or PITCH.
 This is what allows you to use a lot of your existing 2D code in 3D.
@@ -502,17 +502,17 @@ Then decide where you want to go next.
        <title>Drawing 3D Solids</title>
 
 <para>
-3D Solids in MSWLogo uses all the standard 3D commands and a few additional commands to help MSWLogo understand what you're drawing.
+3D Solids in &PRODUCTNAME; uses all the standard 3D commands and a few additional commands to help &PRODUCTNAME; understand what you're drawing.
 In order to do hidden line removal or hidden surface removal, you must define surfaces, not just vectors.
 Surfaces are simply filled polygons.
-You just need to tell MSWLogo when you're starting a surface and when you're done.
-If you used only vectors to draw a box, MSWLogo would not know if it's a 6-sided closed box (solid cube) or a 4-sided box with an open top and bottom.
+You just need to tell &PRODUCTNAME; when you're starting a surface and when you're done.
+If you used only vectors to draw a box, &PRODUCTNAME; would not know if it's a 6-sided closed box (solid cube) or a 4-sided box with an open top and bottom.
 Vectors alone are ambiguous with respect to surfaces.
 </para>
 
 <para>
-Logo programmers are used to dealing with filled polygons, you do it all the time so it should not be a strange new concept.
-But MSWLogo in 3D mode will take care of the correct filling of that polygon with respect to the color you should see based on your eye view, light source, obstructions, and the color of the surface.
+&GENERICNAME; programmers are used to dealing with filled polygons, you do it all the time so it should not be a strange new concept.
+But &PRODUCTNAME; in 3D mode will take care of the correct filling of that polygon with respect to the color you should see based on your eye view, light source, obstructions, and the color of the surface.
 </para>
 
 <para>
@@ -541,7 +541,7 @@ Color is affected by the angle of the surface between your eye (turtle -1) and t
 </para>
 
 <para>
-The 3D lighting model in MSWLogo uses some modern techniques, but is primarily designed for performance.
+The 3D lighting model in &PRODUCTNAME; uses some modern techniques, but is primarily designed for performance.
 It will not do shadows, reflections, etc.
 You may see pixel errors sometimes.
 This is an expected artifact of the algorithm I chose.
@@ -561,7 +561,7 @@ This is an expected artifact of the algorithm I chose.
        <title>Polygon Restrictions</title>
 
 <para>
-Polygons in MSWLogo have three easy-to-satisfy restrictions:
+Polygons in &PRODUCTNAME; have three easy-to-satisfy restrictions:
 
 <orderedlist>
   <listitem><para>A polygon's first 3 vertices must form a triangle.</para></listitem>

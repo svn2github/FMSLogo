@@ -31,7 +31,7 @@ See also <link linkend="command-mkdir">MKDIR</link>.
 Now in newly created directory "junk"
 
 <userinput>POPDIR</userinput>
-Changed to "C:\Program Files\FMSLogo"
+Changed to "C:\Program Files\&PRODUCTNAME;"
 
 <userinput>RMDIR "junk</userinput>
 Removed directory "junk"

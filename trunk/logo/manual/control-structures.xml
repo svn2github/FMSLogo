@@ -2,7 +2,7 @@
    <title>Control Structures</title>
 
 <para>
-Logo has many facilities for controlling which instructions get executed next.
+&GENERICNAME; has many facilities for controlling which instructions get executed next.
 Taken together, these facilities are commonly called "flow control", because they control the "flow" of execution.
 </para>
 

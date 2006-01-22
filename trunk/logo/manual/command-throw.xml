@@ -39,8 +39,8 @@ Note: in this case the corresponding <userinput>CATCH "ERROR</userinput>, if any
 </para>
 
 <para>
-<userinput>THROW "SYSTEM</userinput> immediately leaves MSWLogo, returning to the operating system (with exit code 1).
-In this case, MSWLogo does not delete any temporary file written by <link linkend="command-edit">EDIT</link>.
+<userinput>THROW "SYSTEM</userinput> immediately leaves &PRODUCTNAME;, returning to the operating system (with exit code 1).
+In this case, &PRODUCTNAME; does not delete any temporary file written by <link linkend="command-edit">EDIT</link>.
 </para>
 
 </listitem>

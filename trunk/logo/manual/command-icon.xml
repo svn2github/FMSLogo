@@ -32,9 +32,9 @@ See also <link linkend="command-unicon">UNICON</link>.
 <varlistentry><term>Example</term>
 <listitem>
     <programlisting><userinput>TO HIDEANDSHOW
-  ICON "FMSLogo
+  ICON "&PRODUCTNAME;
   WAIT 120
-  UNICON "FMSLogo
+  UNICON "&PRODUCTNAME;
 END
 
 HIDEANDSHOW</userinput>

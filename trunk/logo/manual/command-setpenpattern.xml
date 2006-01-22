@@ -13,7 +13,7 @@
 <varlistentry><term>Description</term>
 <listitem>
 
-<note><para>SETPENPATTERN is not supported in MSWLogo.</para></note>
+<note><para>SETPENPATTERN is not supported in &PRODUCTNAME;.</para></note>
 
 <para>
 Set hardware-dependent pen characteristics.

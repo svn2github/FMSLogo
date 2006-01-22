@@ -13,7 +13,7 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-Command that prepares Logo to accept a procedure definition.
+Command that prepares &GENERICNAME; to accept a procedure definition.
 The procedure will be named <parameter>procname</parameter> and there must not already be a procedure by that name.
 The inputs will be called <parameter>input1</parameter>, <parameter>input2</parameter>, etc.
 Any number of inputs is allowed, including none.
@@ -21,11 +21,11 @@ Names of procedures and inputs are case-insensitive.
 </para>
 
 <para>
-Unlike every other Logo procedure, TO takes as its inputs the actual words typed in the instruction line, as if they were all quoted, rather than the results of evaluating expressions to provide the inputs.  (That's what "special form" means.)
+Unlike every other &GENERICNAME; procedure, TO takes as its inputs the actual words typed in the instruction line, as if they were all quoted, rather than the results of evaluating expressions to provide the inputs.  (That's what "special form" means.)
 </para>
 
 <para>
-MSWLogo allows procedures to have a variable numbers of inputs.
+&PRODUCTNAME; allows procedures to have a variable numbers of inputs.
 Every procedure has a minimum, default, and maximum number of inputs.
 The maximum may be infinite.
 </para>
@@ -109,7 +109,7 @@ This procedure has a minimum of one input, a default of three inputs, and an inf
 
 
 <para>
-MSWLogo will popup a dialog if you enter a TO command into the commander's edit box.
+&PRODUCTNAME; will popup a dialog if you enter a TO command into the commander's edit box.
 Whatever instructions you type into the popup become part of the definition.
 You can finish the definition by typing a line that contains only the word <link linkend="command-end">END</link> or pressing the Cancel button.
 </para>

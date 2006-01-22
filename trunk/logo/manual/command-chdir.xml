@@ -27,10 +27,10 @@ See also <link linkend="command-popdir">POPDIR</link> and <link linkend="command
 <varlistentry><term>Example</term>
 <listitem>
 <programlisting><userinput>CHDIR "Examples</userinput>
-Changed to "C:\Program Files\FMSLogo\Examples"
+Changed to "C:\Program Files\&PRODUCTNAME;\Examples"
 
 <userinput>POPDIR</userinput>
-Changed to "C:\Program Files\FMSLogo"
+Changed to "C:\Program Files\&PRODUCTNAME;"
 </programlisting>
 </listitem>
 </varlistentry>

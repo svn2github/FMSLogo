@@ -37,10 +37,10 @@ The <parameter>socket</parameter> input is an integer that is used to identify w
 
 <para>
 The <parameter>sendready</parameter> input is an instruction list (a list of instructions or a procedure name) to run when data is ready to send again.
-The first time <parameter>sendready</parameter> is run is when MSWLogo successfully issued the connection.
-The second time <parameter>sendready</parameter> is run is when MSWLogo actually connects to the remote machine.
-The third time <parameter>sendready</parameter> is run is when MSWLogo is ready to send on the connection.
-After that, <parameter>sendready</parameter> is run when MSWLogo is ready to send an earlier call to NETCONNECTSENDVALUE failed.
+The first time <parameter>sendready</parameter> is run is when &PRODUCTNAME; successfully issued the connection.
+The second time <parameter>sendready</parameter> is run is when &PRODUCTNAME; actually connects to the remote machine.
+The third time <parameter>sendready</parameter> is run is when &PRODUCTNAME; is ready to send on the connection.
+After that, <parameter>sendready</parameter> is run when &PRODUCTNAME; is ready to send an earlier call to NETCONNECTSENDVALUE failed.
 </para>
 
 <para>

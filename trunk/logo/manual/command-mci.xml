@@ -15,12 +15,12 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-The MCI command lets you write Logo procedures to manipulate multimedia devices.
+The MCI command lets you write &GENERICNAME; procedures to manipulate multimedia devices.
 With it, you can link sounds to the steps of drawing a picture.
 You can narrate your own slide show.
 You can even ask your user questions in your own voice.
 The MCI interface is very powerful.
-It opens the door to letting Logo control any multimedia device.
+It opens the door to letting &GENERICNAME; control any multimedia device.
 This includes sound cards, CD players, video movies, and more.
 </para>
 

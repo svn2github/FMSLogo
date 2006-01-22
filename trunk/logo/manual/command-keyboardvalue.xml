@@ -23,12 +23,14 @@ Output the ASCII value of the last key that was either pushed or released.
 <varlistentry><term>Example</term>
 <listitem>
     <programlisting><userinput>KEYBOARDON [PRINT CHAR KEYBOARDVALUE]
-SETFOCUS [MSWLogo Screen]
+FULLSCREEN
+SETFOCUS [&PRODUCTNAME;]
 a</userinput>
 a
 <userinput>b</userinput>
 b
 KEYBOARDOFF
+SPLITSCREEN
 </programlisting>
 </listitem>
 </varlistentry>

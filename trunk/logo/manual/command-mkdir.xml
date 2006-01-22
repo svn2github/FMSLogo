@@ -27,7 +27,7 @@ You can go back into the parent directory with <link linkend="command-popdir">PO
 Now in newly created directory "junk"
 
 <userinput>POPDIR</userinput>
-Changed to "C:\Program Files\FMSLogo"
+Changed to "C:\Program Files\&PRODUCTNAME;"
 </programlisting>
 </listitem>
 </varlistentry>

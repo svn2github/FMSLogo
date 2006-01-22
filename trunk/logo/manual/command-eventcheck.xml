@@ -33,11 +33,11 @@ You can wrap the whole procedure in a NOYIELD/YIELD pair then you can call EVENT
 <varlistentry><term>Example</term>
 <listitem>
 <programlisting><userinput>MOUSEON [REPEAT 72 [REPEAT 4 [FORWARD 100 RIGHT 90] RIGHT 5]] [] [] [] []</userinput>
-<replaceable>Click the mouse in MSWLogo Screen.
+<replaceable>Click the mouse in &PRODUCTNAME; Screen.
 Note that while it is drawing you cannot HALT it, because mouse callbacks do not yield.</replaceable>
 
 <userinput>MOUSEON [REPEAT 72 [REPEAT 4 [FORWARD 100 RIGHT 90] RIGHT 5 EVENTCHECK]] [] [] [] []</userinput>
-<replaceable>Click the mouse in MSWLogo Screen.
+<replaceable>Click the mouse in &PRODUCTNAME; Screen.
 Note that while it is drawing you can now HALT</replaceable>
 </programlisting>
 

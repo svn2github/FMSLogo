@@ -13,9 +13,9 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-This command copies part of the image and put it into Logo's memory (or the clipboard, if <link linkend="command-bitindex">BITINDEX</link> is 0).
+This command copies part of the image and stores it in memory (or the clipboard, if <link linkend="command-bitindex">BITINDEX</link> is 0).
 Anytime later, you can use <link linkend="command-bitpaste">BITPASTE</link> to "paste" it into the image.
-MSWLogo will copy starting at the turtle's position with a width of the first input and a height of the second input.
+&PRODUCTNAME; will copy starting at the turtle's position with a width of the first input and a height of the second input.
 See also <link linkend="command-setbitindex">SETBITINDEX</link>.
 </para>
 

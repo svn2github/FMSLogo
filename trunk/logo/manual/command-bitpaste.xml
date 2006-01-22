@@ -14,7 +14,7 @@
 <listitem>
 <para>
 This command "pastes" back the image that was "cut" (<link linkend="command-bitcut">BITCUT</link>) into the current <parameter>index</parameter> (or to the clipboard, if <link linkend="command-bitindex">BITINDEX</link> is 0).
-MSWLogo "pastes" to the location of the turtle, with the turtle being the lower left corner.
+&PRODUCTNAME; "pastes" to the location of the turtle, with the turtle being the lower left corner.
 See also <link linkend="command-setbitindex">SETBITINDEX</link> and <link linkend="command-setbitmode">SETBITMODE</link>.
 </para>
 </listitem>

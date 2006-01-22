@@ -3,7 +3,7 @@
 <indexterm><primary>command line options</primary></indexterm>
 
 <para>
-Command line options can be set as properties of your shortcut to MSWLogo.
+Command line options can be set as properties of your shortcut to &PRODUCTNAME;.
 Just add these switches after the &LOGOEXE;.
 </para>
 
@@ -47,7 +47,7 @@ The default is 1000.
 <synopsis>-F</synopsis>
 
 <para>
-This tells MSWLogo to not use scrollbars ("f" is for fixed window).
+This tells &PRODUCTNAME; to not use scrollbars ("F" is for fixed window).
 The default is with scroll bars.
 If you use this option without using <link linkend="commandline-h">-H</link> or <link linkend="commandline-w">-W</link> it will automatically calculate a workspace to fit your full screen exactly and the turtle will always be in view.
 </para>
@@ -95,14 +95,14 @@ In other words, SETPOS POS has no side effect (will not round) in "Expert" mode.
 </para>
 
 <para>
-MSWLogo will allow Multiple Edit Sessions.
-Multiple edit sessions can lead to unexpected behavior if you don't understand how MSWLogo manages the workspace.
+&PRODUCTNAME; will allow multiple edit sessions.
+Multiple edit sessions can lead to unexpected behavior if you don't understand how &PRODUCTNAME; manages the workspace.
 If procedures are lost or have unexpected changes then you should not be using expert mode.
 </para>
 
 <para>
-MSWLogo will allow saves directly to the Workspace.
-Saving directly to workspace can lead to unexpected behavior if you don't understand how MSWLogo manages the workspace.
+&PRODUCTNAME; will allow saves directly to the workspace.
+Saving directly to workspace can lead to unexpected behavior if you don't understand how &PRODUCTNAME; manages the workspace.
 If procedures are lost or unexpected changes then you should not be using expert mode.
 </para>
 
@@ -116,10 +116,10 @@ If procedures are lost or unexpected changes then you should not be using expert
 <synopsis>-L <replaceable>file1</replaceable> <replaceable>[file2]</replaceable></synopsis>
 
 <para>
-MSWLogo allows you to <link linkend="command-load">LOAD</link> one or more filenames on the command line when starting MSWLogo.
+&PRODUCTNAME; allows you to <link linkend="command-load">LOAD</link> one or more filenames on the command line when starting &PRODUCTNAME;.
 These files will be loaded before the interpreter starts reading commands from the commander.
-If you load a file that executes some program that includes a <link linkend="command-bye">BYE</link> command, MSWLogo will run that program and exit.
-You can therefore write standalone programs in Logo and run them as new shortcuts.
+If you load a file that executes some program that includes a <link linkend="command-bye">BYE</link> command, &PRODUCTNAME; will run that program and exit.
+You can therefore write standalone programs in &PRODUCTNAME; and run them as new shortcuts.
 Note, the "-L" switch must follow any other switches.
 </para>
 
@@ -129,19 +129,19 @@ Note, the "-L" switch must follow any other switches.
 
 
 <section id="invoking-and-exiting-fmslogo">
-<title>Invoking and Exiting MSWLogo</title>
+<title>Invoking and Exiting &PRODUCTNAME;</title>
 
 <para>
-To start MSWLogo, just click on the MSWLogo icon.
-To leave Logo, enter the command <link linkend="command-bye">BYE</link> or <link linkend="menu-file-exit">File-Exit</link>.
+To start &PRODUCTNAME;, just click on the &PRODUCTNAME; icon.
+To exit &PRODUCTNAME;, enter the command <link linkend="command-bye">BYE</link> or <link linkend="menu-file-exit">File-Exit</link>.
 </para>
 
 <para>
-If you invoke a procedure that has not been defined, Logo first looks for a file in the current directory named <filename>proc.lgo</filename> where "proc" is the procedure name in lower case letters.
-If such a file exists, Logo loads that file.
-If the missing procedure is still undefined, or if there is no such file, Logo then looks in the library directory for a file named proc (no ".lgo") and, if it exists, loads it.
-If neither file contains a definition for the procedure, then Logo signals an error.
-Several procedures that are primitive in most versions of Logo are included in the default library, so if you use a different library you may want to include some or all of the default library in it.
+If you invoke a procedure that has not been defined, &PRODUCTNAME; first looks for a file in the current directory named <filename>proc.lgo</filename> where "proc" is the procedure name in lower case letters.
+If such a file exists, &PRODUCTNAME; loads that file.
+If the missing procedure is still undefined, or if there is no such file, &PRODUCTNAME; then looks in the library directory for a file named proc (no ".lgo") and, if it exists, loads it.
+If neither file contains a definition for the procedure, then &PRODUCTNAME; signals an error.
+Several procedures that are primitive in most versions of &PRODUCTNAME; are included in the default library, so if you use a different library you may want to include some or all of the default library in it.
 </para>
 </section>
 

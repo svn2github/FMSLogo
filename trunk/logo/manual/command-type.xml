@@ -15,7 +15,7 @@
 <listitem>
 <para>
 Prints the input or inputs like <link linkend="command-print">PRINT</link>, except that no newline character is printed at the end and multiple inputs are not separated by spaces.
-Printing to the terminal is ordinarily "line buffered"; that is, the characters you print using TYPE will not appear on the screen until either a newline character is printed (for example, by PRINT or <link linkend="command-show">SHOW</link>) or Logo tries to read from the keyboard (at the request of your program).
+Printing to the terminal is ordinarily "line buffered"; that is, the characters you print using TYPE will not appear on the screen until either a newline character is printed (for example, by PRINT or <link linkend="command-show">SHOW</link>) or &GENERICNAME; tries to read from the keyboard (at the request of your program).
 This buffering makes the program much faster than it would be if each character appeared immediately, and in most cases the effect is not disconcerting.
 </para>
 </listitem>

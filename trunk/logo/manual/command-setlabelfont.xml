@@ -19,10 +19,10 @@ Sets the font to be used by the <link linkend="command-label">LABEL</link> comma
 <para>
 The input is a list that completely describes a font.
 The available fonts depend on your computer.
-MSWLogo has two ways to specify the font you desire.
+&PRODUCTNAME; has two ways to specify the font you desire.
 This command can be used for programs.
 For interactive use you can use <link linkend="menu-set-labelfont">Set - Label Font</link> from the main menu.
-The easiest way to use fonts in MSWLogo is to set the desired font using the Menu and capturing the attributes using <link linkend="command-labelfont">LABELFONT</link> command.
+The easiest way to use fonts in &PRODUCTNAME; is to set the desired font using the Menu and capturing the attributes using <link linkend="command-labelfont">LABELFONT</link> command.
 </para>
 
 <para>

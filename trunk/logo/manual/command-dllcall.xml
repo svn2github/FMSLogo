@@ -64,7 +64,8 @@ This function can handle a wide variety of functions but certainly not all.
 </para>
 
 <para>
-DLLCALL allow you to get outside of MSWLogo.  You can write your own DLL with a compatible call interface to call more complex interfaces.
+DLLCALL allow you to get outside of &PRODUCTNAME;.
+You can write your own DLL with a compatible call interface to call more complex interfaces.
 </para>
 
 </listitem>

@@ -13,9 +13,9 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-This command "cuts" out part of the image and put it into Logo's memory (or the clipboard, if <link linkend="command-bitindex">BITINDEX</link> is 0).
+This command "cuts" out part of the image and stores it in memory (or the clipboard, if <link linkend="command-bitindex">BITINDEX</link> is 0).
 Anytime later, you can use <link linkend="command-bitpaste">BITPASTE</link> to "paste" it back into the image.
-MSWLogo will cut starting at the turtle's position with a width of the first input and a height of the second input.
+&PRODUCTNAME; will cut starting at the turtle's position with a width of the first input and a height of the second input.
 See also <link linkend="command-setbitindex">SETBITINDEX</link>.
 </para>
 
@@ -28,11 +28,11 @@ The bitmap is always taken horizontally and vertically, regardless of the turtle
 BITCUT may appear to be off by 1 pixel in width and height when you use it, but it is not.
 This can be explained with an example.
 If you draw a square with <userinput>repeat 4 [fd 2 rt 90]</userinput>, then the square is 3 pixels high, not 2.
-This is because of how Logo draws images.
-In short, logo draws an imaginary line going down the center of each pixel.
+This is because of how &PRODUCTNAME; draws images.
+In short, &PRODUCTNAME; draws an imaginary line going down the center of each pixel.
 If a pixel is intersected (hit), then it is lit up.
 The distance from the center of the pixels representing the top of the square to the center of the pixels on the bottom of the square is 2 pixels.
-However, because logo can't turn on half a pixel, it turns on the entire pixel, which adds a half pixel to each side of the square, making the square 3x3 pixels in size.
+However, because &PRODUCTNAME; can't turn on half a pixel, it turns on the entire pixel, which adds a half pixel to each side of the square, making the square 3x3 pixels in size.
 Bitmaps sizes are not taken from "center pixel to center pixel" like lines, they are whole pixel to whole pixel (inclusive).
 </para>
 

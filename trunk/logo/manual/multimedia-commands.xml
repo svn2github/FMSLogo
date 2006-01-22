@@ -2,14 +2,14 @@
    <title>Multimedia Commands</title>
 
 <para>
-The Multimedia commands in MSWLogo means that you, as a logo programmer, can manipulate Multimedia devices such as CD players, sound cards, and more.
+The multimedia commands in &PRODUCTNAME; manipulate multimedia devices such as CD players, sound cards, and MIDI devices.
 </para>
 
 <section id="midi-commands">
   <title>MIDI Commands</title>
 
 <para>
-MSWLogo supports three commands that allow you to create and play MIDI (Musical Instrument Digital Interface) music.
+&PRODUCTNAME; supports three commands that allow you to create and play MIDI (Musical Instrument Digital Interface) music.
 </para>
 
    &command-midiopen;

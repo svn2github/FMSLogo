@@ -18,7 +18,7 @@ The output is a list with the following members: [PENDOWNP PENMODE PENSIZE PENCO
 </para>
 
 <para>
-The format of this list may change in future version of MSWLogo, as additional pen characteristics are added.
+The format of this list may change in future version of &PRODUCTNAME;, as additional pen characteristics are added.
 </para>
 
 </listitem>

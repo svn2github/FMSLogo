@@ -20,8 +20,8 @@ Its purpose is to allow multiple images to be stored in memory ready for quick p
 
 <para>
 The index of 0 is the default and also has the behavior of using the clipboard as the cut buffer.
-That is if you "cut" an image in an application like Microsoft Paint, then you can paste it directly in MSWLogo.
-The reverse is also true, if "cut" an image in MSWLogo it is available applications like Microsoft Paint.
+That is if you "cut" an image in an application like Microsoft Paint, then you can paste it directly in &PRODUCTNAME;.
+The reverse is also true, if "cut" an image in &PRODUCTNAME; it is available applications like Microsoft Paint.
 </para>
 
 <para>

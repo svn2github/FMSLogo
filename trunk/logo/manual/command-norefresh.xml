@@ -13,10 +13,10 @@
 <varlistentry><term>Description</term>
 <listitem>
 
-<note><para>NOREFRESH is not supported (or needed) in MSWLogo.</para></note>
+<note><para>NOREFRESH is not supported (or needed) in &PRODUCTNAME;.</para></note>
 
 <para>
-Tells Logo not to remember the turtle's motions.
+Tells &GENERICNAME; not to remember the turtle's motions.
 This will make drawing faster, but prevents recovery if the window is overlaid.
 </para>
 </listitem>

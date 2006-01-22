@@ -22,7 +22,7 @@ The <parameter>callback</parameter> instruction list is run when the user closes
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>WINDOWFILEEDIT DIALOGFILEOPEN "|c:\\Program Files\\FMSLogo\\Logolib\\DEMO| [PRINT "Done]</userinput>
+    <programlisting><userinput>WINDOWFILEEDIT DIALOGFILEOPEN "|c:\\Program Files\\&PRODUCTNAME;\\Logolib\\DEMO| [PRINT "Done]</userinput>
 </programlisting>
 
 </listitem>

@@ -18,7 +18,7 @@
 Creates variables that are local to the currently running procedure.
 LOCAL accepts as input one or more words, or a list of words.
 A local variable is created for each of these words, with that word as its name.
-Logo variables follow dynamic scope rules; a variable that is local to a procedure is available to any sub procedure invoked by that procedure and may shadow a global variable by the same name.
+&GENERICNAME; variables follow dynamic scope rules; a variable that is local to a procedure is available to any sub procedure invoked by that procedure and may shadow a global variable by the same name.
 The variables created by LOCAL have no initial value; they must be assigned a value (for example, with <link linkend="command-make">MAKE</link>) before the procedure attempts to read their value.
 </para>
 </listitem>

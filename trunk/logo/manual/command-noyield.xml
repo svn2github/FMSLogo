@@ -13,7 +13,7 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-NOYIELD tells Logo not to let other programs use the CPU while Logo is working.
+NOYIELD tells &PRODUCTNAME; not to let other programs use the CPU while &PRODUCTNAME; is working.
 The default is to yield.
 See the <link linkend="command-yield">YIELD</link> command for an explaination of what "yielding" means.
 </para>

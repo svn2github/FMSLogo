@@ -30,7 +30,7 @@ See also <link linkend="command-getfocus">GETFOCUS</link>.
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>SETFOCUS [MSWLogo Screen]</userinput>
+    <programlisting><userinput>SETFOCUS [&PRODUCTNAME;]</userinput>
 </programlisting>
 
 </listitem>

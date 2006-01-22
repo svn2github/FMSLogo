@@ -31,7 +31,7 @@ The dialog box will NOT automatically sized to fit <parameter>question</paramete
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>SHOW YESNOBOX [Question] [Do you like logo?]</userinput>
+    <programlisting><userinput>SHOW YESNOBOX [Question] [Do you like &PRODUCTNAME;?]</userinput>
 true
 </programlisting>
 

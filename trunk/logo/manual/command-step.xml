@@ -14,7 +14,7 @@
 <listitem>
 <para>
 Marks the items in the contents list for stepping.
-Whenever a stepped procedure is invoked, each instruction line in the procedure body is displayed in a dialog box before being executed and MSWLogo waits for the user to press the OK button before continuing.
+Whenever a stepped procedure is invoked, each instruction line in the procedure body is displayed in a dialog box before being executed and &PRODUCTNAME; waits for the user to press the OK button before continuing.
 A dialog box is displayed whenever a stepped variable name is "shadowed".  A variable is shadowed when a variable of the same name is created with the <link linkend="command-local">LOCAL</link> command or when a procedure is invoked that inputs a parameter with the same name.
 </para>
 

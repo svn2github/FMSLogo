@@ -17,7 +17,7 @@
 Maps the current turtle (See <link linkend="command-setturtle">SETTURTLE</link>) to the corresponding bitmap buffer (See <link linkend="command-bitcut">BITCUT</link>).
 Since bitmap buffer 0 is mapped to the clipboard, turtle 0 (if mapped to a bitmap with this command) will be mapped to the clipboard.
 That is, if you select turtle 0 and issue BITMAPTURTLE then the turtle will be whatever is in the clipboard and will be updated if the clipboard changes.
-Note the clipboard must have a bitmap in it (or MSWLogo will complain).
+Note the clipboard must have a bitmap in it (or &PRODUCTNAME; will complain).
 </para>
 
 <para>

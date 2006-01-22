@@ -15,7 +15,7 @@
 <listitem>
 <para>
 Outputs TRUE if the input is the name of a user-defined procedure or a library procedure.
-However, MSWLogo does not know about library procedures until they have been called.
+However, &PRODUCTNAME; does not know about library procedures until they have been called.
 </para>
 
 <para>

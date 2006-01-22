@@ -2,7 +2,9 @@
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
   "http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd" [
 
-  <!ENTITY LOGOEXE  "fmslogo.exe">
+  <!ENTITY LOGOEXE      "fmslogo.exe">
+  <!ENTITY PRODUCTNAME  "FMSLogo">
+  <!ENTITY GENERICNAME  "Logo">
 
   <!ENTITY introduction              SYSTEM "introduction.xml">
   <!ENTITY commandline-options       SYSTEM "commandline-options.xml">
@@ -561,8 +563,8 @@
   <!ENTITY command-mci                    SYSTEM "command-mci.xml">
 ]>
 
-<book id="mswlogo-help">
-  <title>Logo for Windows</title>
+<book id="fmslogo">
+  <title>&PRODUCTNAME;</title>
   <bookinfo>
 
     <copyright>

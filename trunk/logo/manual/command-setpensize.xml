@@ -15,7 +15,7 @@
 <para>
 Set the pen's thickness.
 The <parameter>size</parameter> parameter is a list with two members, width and height.
-MSWLogo only uses the width member, but this may change.
+&PRODUCTNAME; only uses the width member, but this may change.
 It it recommended that you set the width and height to the same value.
 </para>
 

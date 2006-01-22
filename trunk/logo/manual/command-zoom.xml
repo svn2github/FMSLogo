@@ -13,7 +13,7 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-This command allows MSWLogo to control the scale of the "Screen" window.
+This command allows &PRODUCTNAME; to control the scale of the "Screen" window.
 The argument is the amount to zoom (scale) by.
 A number greater than 1.0 makes things bigger (for example, 2.0 makes it 2 times bigger), a number smaller than 1.0 makes things smaller (0.5 makes it half as big).
 If an existing image is on the screen when you zoom it will be stretched or squeezed according to the zoom.
@@ -21,7 +21,7 @@ The resulting image may look a little jagged, but if you "draw" while zoomed thi
 </para>
 
 <para>
-Even though things may appear jagged MSWLogo remembers everything as if zoom was normal (1.0) and only prints in normal.
+Even though things may appear jagged &PRODUCTNAME; remembers everything as if zoom was normal (1.0) and only prints in normal.
 Once you return to zoom of 1.0 your image will not be stretched or squeezed to fit again.
 In other words, in a zoom of 1.0 lines never get jagged even if you drew them at zoom 0.5 or 2.0.
 </para>

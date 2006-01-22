@@ -14,7 +14,7 @@
 <listitem>
 <para>
 Sets the mode (speed, parity, data bits, and stop bits) of the open COM port.
-The port characteristics (such as speed and flow control) cannot be set through MSWLogo.
+The port characteristics (such as speed and flow control) cannot be set through &PRODUCTNAME;.
 </para>
 
 <para>The <parameter>modestring</parameter> must be of the form <userinput>"COM<replaceable>n</replaceable>:<replaceable>SPEED</replaceable>,<replaceable>PARITY</replaceable>,<replaceable>DATA</replaceable>,<replaceable>STOP</replaceable></userinput>.

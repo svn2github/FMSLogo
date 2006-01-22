@@ -34,7 +34,7 @@ The question will not be word-wrapped, so if you have a long question, you may w
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>SHOW YESNOBOX [Question] [Do you like logo?]</userinput>
+    <programlisting><userinput>SHOW YESNOBOX [Question] [Do you like &PRODUCTNAME;?]</userinput>
 true
 </programlisting>
 

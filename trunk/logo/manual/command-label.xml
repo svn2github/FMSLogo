@@ -15,7 +15,7 @@
 <para>
 Prints <parameter>text</parameter> on the screen.
 If <parameter>text</parameter> is a list, then any sub-lists are delimited by square brackets, but the entire object is not delimited by brackets.
-You can print any logo object (numbers, lists and strings).
+You can print any &GENERICNAME; thing (numbers, lists, strings, etc.).
 Note that the handle of the string (the origin) is the top-left corner of the string.
 Another thing to be aware of is that the capabilities of the text changes depending on the device (screen or printer), the size, the turtle heading (direction) and the font.
 In other words, sometimes the text can be drawn at the turtle heading and sometimes it cannot.

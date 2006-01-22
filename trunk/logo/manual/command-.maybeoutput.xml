@@ -19,7 +19,7 @@ This is intended for use in control structure definitions, for cases in which yo
 
 <para>
 .MAYBEOUTPUT is an alternative to <link linkend="command-runresult">RUNRESULT</link>.
-It's fast and easy to use, at the cost of being an exception to Logo's evaluation rules.
+It's fast and easy to use, at the cost of being an exception to &PRODUCTNAME;'s evaluation rules.
 (Ordinarily, it should be an error if the expression that's supposed to provide an input to something doesn't have a value.)
 </para>
 

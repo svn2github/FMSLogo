@@ -27,8 +27,8 @@ Where the meaning of each member is given by the table below.
     <tbody>
       <row><entry>IsWindows</entry>            <entry>1, if this is Microsoft Windows.  0, otherwise.</entry></row>
       <row><entry>Wordsize</entry>             <entry>The number of bits in a machine word.</entry></row>
-      <row><entry>BitmapWidth</entry>          <entry>The width of the drawable area on the MSWLogo Screen, in pixels.</entry></row>
-      <row><entry>BitmapHeight</entry>         <entry>The height of the drawable area on the MSWLogo Screen, in pixels.</entry></row>
+      <row><entry>BitmapWidth</entry>          <entry>The width of the drawable area on the &PRODUCTNAME; Screen, in pixels.</entry></row>
+      <row><entry>BitmapHeight</entry>         <entry>The height of the drawable area on the &PRODUCTNAME; Screen, in pixels.</entry></row>
       <row><entry>IsPaletteEnabled</entry>     <entry>1, if a palette is enabled, 0, otherwise.</entry></row>
       <row><entry>WindowsVersionLoWord</entry> <entry>The minor version of Windows.</entry></row>
       <row><entry>WindowsVersionHiWord</entry> <entry>The major version of Windows.</entry></row>
@@ -36,8 +36,8 @@ Where the meaning of each member is given by the table below.
       <row><entry>WorkingAreaHeight</entry>    <entry>The height of the part of the desktop that is not obscured by the taskbar, in pixels.</entry></row>
       <row><entry>DesktopWidth</entry>         <entry>The width of the whole desktop, in pixels.</entry></row>
       <row><entry>DesktopHeight</entry>        <entry>The height of the whole desktop, in pixels.</entry></row>
-      <row><entry>WindowWidth</entry>          <entry>The width of the MSWLogo screen window, in pixels.</entry></row>
-      <row><entry>WindowHeight</entry>         <entry>The height of the MSWLogo screen window, in pixels.</entry></row>
+      <row><entry>WindowWidth</entry>          <entry>The width of the &PRODUCTNAME; screen window, in pixels.</entry></row>
+      <row><entry>WindowHeight</entry>         <entry>The height of the &PRODUCTNAME; screen window, in pixels.</entry></row>
     </tbody>
   </tgroup>
 </informaltable>

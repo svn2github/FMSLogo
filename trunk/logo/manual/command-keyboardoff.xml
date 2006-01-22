@@ -23,11 +23,13 @@ Disables trapping of keyboard events.
 <varlistentry><term>Example</term>
 <listitem>
     <programlisting><userinput>KEYBOARDON [PRINT CHAR KEYBOARDVALUE]
-SETFOCUS [MSWLogo Screen]
+FULLSCREEN
+SETFOCUS [&PRODUCTNAME;]
 a</userinput>
 a
 <userinput>b</userinput>
 b
+SPLITSCREEN
 KEYBOARDOFF
 </programlisting>
 </listitem>

@@ -20,7 +20,7 @@ Plays a sequence of tones on the PC speaker.
 <para>
 The <parameter>soundlist</parameter> input must be a list of pairs.
 Each pair specifies a frequency (in hertz) and duration (clock ticks).
-MSWLogo cannot yield to other applications while a sound vector is being played.
+&PRODUCTNAME; cannot yield to other applications while a sound vector is being played.
 The larger the frequency the higher the pitch.
 The larger the duration the longer the sound will play for.
 The sound will only come out the PC speaker.

@@ -14,7 +14,7 @@
 <listitem>
 <para>
 Outputs the size of the pen as a two element list containing [Width Height].
-The width element is ignored by MSWLogo.
+The width element is ignored by &PRODUCTNAME;.
 </para>
 
 </listitem>

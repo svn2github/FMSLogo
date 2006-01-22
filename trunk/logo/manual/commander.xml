@@ -1,7 +1,7 @@
 <chapter id="commander">
    <title>Commander</title>
-   <para>The commander is where you will spend most of your MSWLogo session.
-It is the means by which you instruct MSWLogo to do what you want.
+   <para>The commander is where you will spend most of your &PRODUCTNAME; session.
+It is the means by which you instruct &PRODUCTNAME; to do what you want.
 The most important control (box) within the commander is the Input Box.
 It is located in the bottom left portion of the commander window.
 For information on the different controls, see the specific box below.</para>
@@ -35,7 +35,7 @@ This control also supports <link linkend="editor-context-help">Context Sensitive
 
    <section id="commander-status">
       <title>Status Button</title>
-      <para>This button pops up a status window telling you what MSWLogo is up to.  
+      <para>This button pops up a status window telling you what &PRODUCTNAME; is up to.  
 Click it again to close the window. 
 See also the <link linkend="command-status">STATUS</link> and <link linkend="command-nostatus">NOSTATUS</link> commands.</para>
    </section>
@@ -44,7 +44,7 @@ See also the <link linkend="command-status">STATUS</link> and <link linkend="com
       <title>Trace Button</title>
       <para>The trace button turns on tracing for debugging your programs.
 Click again to disable tracing.
-You can turn tracing on or off even while MSWLogo it running.
+You can turn tracing on or off even while &PRODUCTNAME; it running.
 Note that the trace button works independent of what you are tracing with the TRACE command.
 See also <link linkend="command-trace">TRACE</link> and <link linkend="command-untrace">UNTRACE</link> commands.</para>           
    </section>
@@ -52,15 +52,15 @@ See also <link linkend="command-trace">TRACE</link> and <link linkend="command-u
 
    <section id="commander-halt">
       <title>Halt Button</title>
-      <para>The halt button immediately stops MSWLogo from processing any further.
-After pressing it, MSWLogo will be waiting for a new command.
+      <para>The halt button immediately stops &PRODUCTNAME; from processing any further.
+After pressing it, &PRODUCTNAME; will be waiting for a new command.
 See also the <link linkend="command-halt">HALT</link> command.</para>
    </section>
 
 
    <section id="commander-reset">
       <title>Reset Button</title>
-      <para>The reset button is like the <link linkend="command-clearscreen">CLEARSCREEN</link> command; it resets the MSWLogo screen.</para>
+      <para>The reset button is like the <link linkend="command-clearscreen">CLEARSCREEN</link> command; it resets the &PRODUCTNAME; screen.</para>
    </section>
 
 
@@ -68,7 +68,7 @@ See also the <link linkend="command-halt">HALT</link> command.</para>
       <title>Step Button</title>
       <para>The step button turns on single stepping for debugging your programs.
 Click again to disable single stepping.
-You can turn single stepping on or off even while MSWLogo is running.
+You can turn single stepping on or off even while &PRODUCTNAME; is running.
 Note that the step button works independent of what you are stepping with the STEP command.
 See also <link linkend="command-step">STEP</link> and <link linkend="command-unstep">UNSTEP</link> commands.</para>           
    </section>
@@ -76,7 +76,7 @@ See also <link linkend="command-step">STEP</link> and <link linkend="command-uns
 
    <section id="commander-pause">
       <title>Pause Button</title>
-      <para>The pause button stops MSWLogo so that you can examine variables, make changes or whatever.
+      <para>The pause button stops &PRODUCTNAME; so that you can examine variables, make changes or whatever.
 Once paused the pause button will show what depth you paused to.
 To continue you can issue a <link linkend="command-continue">CONTINUE</link> command or hit Cancel.
 You can also issue a <link linkend="command-pause">PAUSE</link> command within code to act as a "Break Point".
@@ -85,7 +85,7 @@ You can think of pause and continue as sort of a Halt-n-Push and Pop-n-Continue 
 
    <section id="commander-edall">
       <title>Edall Button</title>
-      <para>The Edall button opens the contents of the entire workspace (all unburied procedures, variables, and property lists) in <link linkend="editor">the logo editor</link>.
+      <para>The Edall button opens the contents of the entire workspace (all unburied procedures, variables, and property lists) in the <link linkend="editor">Editor</link>.
 This is the same as running the <link linkend="command-edall">EDALL</link> command.</para> 
    </section>
 

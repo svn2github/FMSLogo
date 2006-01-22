@@ -14,8 +14,8 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-Outputs TRUE if the input is the name of a primitive (one that is built into MSWLogo), outputs FALSE otherwise.
-Note that many of MSWLogo's procedures are library procedures, not primitives.
+Outputs TRUE if the input is the name of a primitive (one that is built into &PRODUCTNAME;), outputs FALSE otherwise.
+Note that many of &PRODUCTNAME;'s procedures are library procedures, not primitives.
 </para>
 
 <para>

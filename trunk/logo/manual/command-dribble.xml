@@ -15,7 +15,7 @@
 <para>
 Command that creates a new file whose name is the input, like <link linkend="command-openwrite">OPENWRITE</link>, and begins recording in that file everything that is read from the keyboard.
 This writing is in addition to the writing to <link linkend="command-writer">WRITER</link>.
-The intent is to create a transcript of a Logo session, including things like prompt characters and interactions.
+The intent is to create a transcript of a &GENERICNAME; session, including things like prompt characters and interactions.
 </para>
 
 </listitem>

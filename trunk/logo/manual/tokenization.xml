@@ -23,7 +23,7 @@ This special treatment does not apply to words read as data, to words with a non
 
 
     <para>A semicolon begins a comment in an instruction line.
-Logo ignores characters from the semicolon to the end of the line.
+&GENERICNAME; ignores characters from the semicolon to the end of the line.
 A tilde (<userinput>~</userinput>) as the last character still indicates a continuation line, but not a continuation of the comment.</para>
 
     <para>Example:</para>
@@ -34,16 +34,16 @@ abcdef</programlisting>
 
 
     <para>Semicolon has no special meaning in data lines read by <link linkend="command-readlist">READLIST</link> or <link linkend="command-readword">READWORD</link>, but such a line can later be reparsed using <link linkend="command-runparse">RUNPARSE</link> and then comments will be recognized.
-If a tilde is typed at the terminal for line continuation, Logo will issue a tilde as a prompt character for the continuation line.</para>
+If a tilde is typed at the terminal for line continuation, &GENERICNAME; will issue a tilde as a prompt character for the continuation line.</para>
 
     <para>To include an otherwise delimiting character (including semicolon or tilde) in a word, precede it with backslash (<userinput>\</userinput>).
 If the last character of a line is a backslash, then the newline character following the backslash will be part of the last word on the line, and the line continues onto the following line.
 To include a backslash in a word, use <userinput>\\</userinput>.
-If the combination backslash-newline is entered at the terminal, Logo will issue a backslash as a prompt character for the continuation line.
+If the combination backslash-newline is entered at the terminal, &GENERICNAME; will issue a backslash as a prompt character for the continuation line.
 All of this applies to data lines read with <link linkend="command-readlist">READLIST</link> or <link linkend="command-readword">READWORD</link> as well as to instruction lines.</para>
 
-    <para>In MSWLogo there is no "prompt character" nor is the carriage return passed from the input control box of the commander.
-However, MSWLogo does add the linefeed control character which will translate to a carriage return.</para>
+    <para>In &PRODUCTNAME; there is no "prompt character" nor is the carriage return passed from the input control box of the commander.
+However, &PRODUCTNAME; does add the linefeed control character which will translate to a carriage return.</para>
 
     <para>Example:</para>
 
@@ -65,7 +65,7 @@ Within vertical bars, backslash may still be used; the only characters that must
 
     <para>Characters entered between vertical bars are forever special, even if the word or list containing them is later reparsed with <link linkend="command-parse">PARSE</link> or <link linkend="command-runparse">RUNPARSE</link>.
 The same is true of a character typed after a backslash, except that when a quoted word containing a backslashed character is runparsed, the backslashed character loses its special quality and acts thereafter as if typed normally.
-This distinction is important only if you are building a Logo expression out of parts, to be RUN later, and want to use parentheses.  For example,</para>
+This distinction is important only if you are building a &GENERICNAME; expression out of parts, to be RUN later, and want to use parentheses.  For example,</para>
 
 
     <programlisting>PRINT RUN (SENTENCE "\( 2 "+ 3 "\))</programlisting>

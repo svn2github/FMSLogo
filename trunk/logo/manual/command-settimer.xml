@@ -14,7 +14,7 @@
 <listitem>
 
 <para>
-Sets up a timer identified by <parameter>id</parameter> (a number from 1-31) to call the logo commands in <parameter>callback</parameter> in <parameter>delay</parameter> milliseconds of time.
+Sets up a timer identified by <parameter>id</parameter> (a number from 1-31) to call the instructions in <parameter>callback</parameter> in <parameter>delay</parameter> milliseconds of time.
 It will continue to "fire" every <parameter>delay</parameter> milliseconds until you invoke <link linkend="command-cleartimer">CLEARTIMER</link> with the same <parameter>id</parameter>.
 </para>
 
@@ -33,7 +33,7 @@ Timers with <parameter>id</parameter> values from 17-31 will yield.
 
 <para>
 You must be sure that you are handling (servicing) the timer callbacks faster than they are coming in.
-If you do not, you will eventually "Stack-Overflow" and MSWLogo will shutdown.
+If you do not, you will eventually "Stack-Overflow" and &PRODUCTNAME; will shutdown.
 </para>
 
 <para>
@@ -42,7 +42,7 @@ If it does, you may end up with a screen full of "OK" dialog boxes and eventuall
 </para>
 
 <para>
-Because SETTIMER creates the potential for MSWLogo to shutdown, it's a good idea to save your code frequently to disk when developing code that uses it.
+Because SETTIMER creates the potential for &PRODUCTNAME; to shutdown, it's a good idea to save your code frequently to disk when developing code that uses it.
 </para>
 
 <para>
@@ -61,7 +61,7 @@ Each timer <parameter>id</parameter> can have different values for <parameter>ca
 <varlistentry><term>Example</term>
 <listitem>
 <programlisting><userinput>SETTIMER 1 200 [SETPENCOLOR (LIST RANDOM 256 RANDOM 256 RANDOM 256)]</userinput>
-<replaceable>MSWLogo returns and the timer changes the pen color randomly every 200 milliseconds.</replaceable>
+<replaceable>&PRODUCTNAME; returns and the timer changes the pen color randomly every 200 milliseconds.</replaceable>
 <userinput>REPEAT 72 [REPEAT 4 [FORWARD 100 RIGHT 90] RIGHT 5]
 CLEARTIMER 1</userinput>
 </programlisting>

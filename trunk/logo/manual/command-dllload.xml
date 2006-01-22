@@ -13,7 +13,7 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-Load the DLL (Dynamic Linked Library) called <parameter>dllfilename</parameter> into MSWLogo.
+Load the DLL (Dynamic Linked Library) called <parameter>dllfilename</parameter> into &PRODUCTNAME;.
 Once loaded you can call functions with <link linkend="command-dllcall">DLLCALL</link>.
 When you have finished, or need to use another DLL you can unload the DLL with <link linkend="command-dllfree">DLLFREE</link>.
 </para>

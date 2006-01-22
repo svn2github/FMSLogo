@@ -16,7 +16,7 @@
 Tells the turtle to enter "perspetive" mode.
 Perspective mode adds a third dimension (Z axis) for the turtle to live in.
 Perspective is a term to describe how we will view a 3 dimensional world on a 2 dimensional surface.
-You should be familiar with using MSWLogo in 2D before jumping into 3D.
+You should be familiar with using &PRODUCTNAME; in 2D before jumping into 3D.
 </para>
 
 <para>
@@ -35,7 +35,7 @@ You move the turtle just like you fly an airplane.
 Airplanes have 3 controls to move them through 3D space.
 They have elevators on the tail (pitch), a rudder on the fin (yaw) and ailerons on the wings (roll).
 In 2D, you only have a rudder (right/left) also known as "yaw" and you only move around on one geometric plane.
-MSWLogo offers the additional controls, ailerons (RIGHTROLL and LEFTROLL) and elevators (UPPITCH and DOWNPITCH) to maneuver 3D space.
+&PRODUCTNAME; offers the additional controls, ailerons (RIGHTROLL and LEFTROLL) and elevators (UPPITCH and DOWNPITCH) to maneuver 3D space.
 In 3D space, you can move around in an infinite number of geometric planes at any orientation.
 Once you set the pitch and roll to select the desired geometric plane you can use familiar 2D commands (FORWARD, BACK, LEFT, RIGHT) to traverse it.
 </para>
@@ -288,7 +288,7 @@ The following commands retain their 2D feel, even in perspective mode.
 Perspective mode does not do hidden line removal.
 Hidden line removal requires objects be composed of polygons.
 Perspective mode does not allow you to dynamically move the eye view.
-This is because MSWLogo does not store your object (your vectors) in 3D, it stores them in a 2D bitmap.
+This is because &PRODUCTNAME; does not store your object (your vectors) in 3D, it stores them in a 2D bitmap.
 However you can do "fast" dynamic manipulation in two other ways.
 </para>
 

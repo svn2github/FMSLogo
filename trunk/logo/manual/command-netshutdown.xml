@@ -13,8 +13,8 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-Turns off networking in MSWLogo.
-No network command in MSWLogo will work until you call <link linkend="command-netstartup">NETSTARTUP</link> again.
+Turns off networking in &PRODUCTNAME;.
+No network command in &PRODUCTNAME; will work until you call <link linkend="command-netstartup">NETSTARTUP</link> again.
 </para>
 </listitem>
 </varlistentry>

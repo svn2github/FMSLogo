@@ -2,7 +2,7 @@
    <title>Windows Commands</title>
 
 <para>
-This chapter describes how to create Graphical User Interfaces (GUIs) in MSWLogo.
+This chapter describes how to create Graphical User Interfaces (GUIs) in &PRODUCTNAME;.
 </para>
 
 <para>
@@ -35,7 +35,7 @@ When controls are in the graphics window the coordinates will be in the turtle c
 <para>
 Windows are one of two types of basic "canvas" types.
 A window has a title bar, frames, and a grey client area upon which other window control are places.
-Unlike dialogs, windows are modeless, which means that MSWLogo will continue to run instructions while the window is displayed.
+Unlike dialogs, windows are modeless, which means that &PRODUCTNAME; will continue to run instructions while the window is displayed.
 </para>
 
       &command-windowcreate;
@@ -49,7 +49,7 @@ Unlike dialogs, windows are modeless, which means that MSWLogo will continue to 
 <para>
 Dialogs are one of two types of basic "canvas" types.
 A dialog has a title bar, frames, and a grey client area upon which other window control are places.
-Unlike windows, dialogs are modal, which means that MSWLogo won't run any instructions until the dialog is closed.
+Unlike windows, dialogs are modal, which means that &PRODUCTNAME; won't run any instructions until the dialog is closed.
 Because of this, dialogs are used when to present the user with a question that must be answered before the program can continue.
 </para>
 
@@ -112,7 +112,7 @@ For example, if you wanted the user to enter a number from 1 to 100, you could u
 
 <para>
 In many GUI frameworks, scrollbars are used to fit a large window into a small space by displaying only a small portion of the window and allowing the user to scroll which portion is visible.
-However, that is NOT the kind of scrollbar that MSWLogo lets you create; the scrollbars that you create with MSWLogo are often associated with a "slider" control.
+However, that is NOT the kind of scrollbar that &PRODUCTNAME; lets you create; the scrollbars that you create with &PRODUCTNAME; are often associated with a "slider" control.
 </para>
 
       &command-scrollbarcreate;
@@ -235,7 +235,7 @@ For example, prompting the user for a file name to open a document is Modal.
 
 <para>
 When an application uses a modeless window (<link linkend="command-windowcreate">WINDOWCREATE</link>), the user is in control.
-For example the commander in MSWLogo is Modeless.
+For example the commander in &PRODUCTNAME; is modeless.
 The program is generally idle and reacts when the user triggers an event (such as pushing a button).
 </para>
 
@@ -244,7 +244,7 @@ Modal windows should be avoided where possible because users prefer to be in con
 </para>
 
 <para>
-MSWLogo has some pre-defined modal dialog boxes that you can use in your Logo programs.
+&PRODUCTNAME; has some pre-defined modal dialog boxes that you can use in your &GENERICNAME; programs.
 </para>
 
       &command-messagebox;

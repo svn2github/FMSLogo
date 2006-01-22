@@ -13,7 +13,7 @@
 <varlistentry><term>Description</term>
 <listitem>
 
-<note><para>STANDOUT is not yet supported in MSWLogo.</para></note>
+<note><para>STANDOUT is not yet supported in &PRODUCTNAME;.</para></note>
 
 <para>
 Outputs a word that, when printed, will appear like the input but displayed in standout mode (boldface, reverse video, or whatever your terminal does for standout).

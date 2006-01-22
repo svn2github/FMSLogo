@@ -16,9 +16,9 @@
 Enables you to accept a connection over the network on the <parameter>socket</parameter>.
 To obtain the data received call <link linkend="command-netacceptreceivevalue">NETACCEPTRECEIVEVALUE</link> in your <parameter>receiveready</parameter> code.
 To turn off accept call <link linkend="command-netacceptoff">NETACCEPTOFF</link>.
-When data are available, MSWLogo will run the <parameter>receiveready</parameter> instruction list.
+When data are available, &PRODUCTNAME; will run the <parameter>receiveready</parameter> instruction list.
 When you actually send data with <link linkend="command-netacceptsendvalue">NETACCEPTSENDVALUE</link> it might return false (meaning that it's not ready to send).
-If this happens you must wait until MSWLogo runs the <parameter>sendready</parameter> instruction list before trying to send the data again.
+If this happens you must wait until &PRODUCTNAME; runs the <parameter>sendready</parameter> instruction list before trying to send the data again.
 Note you cannot just send data from the <parameter>sendready</parameter> callback, it won't be run unless the previous send was blocked.
 </para>
 
@@ -34,15 +34,15 @@ This is used as the local port.
 
 <para>
 The <parameter>sendready</parameter> input is an instruction list (a list of instructions or a procedure name) to run when data is ready to send again.
-The first time <parameter>sendready</parameter> is run is when MSWLogo successfully issued an accept.
-The second time <parameter>sendready</parameter> is run is when MSWLogo accepts a connection.
-The third time <parameter>sendready</parameter> is run is when MSWLogo is ready to send data.
-After that, <parameter>sendready</parameter> is run when MSWLogo is ready to send after an earlier call to NETACCEPTSENDVALUE failed.
+The first time <parameter>sendready</parameter> is run is when &PRODUCTNAME; successfully issued an accept.
+The second time <parameter>sendready</parameter> is run is when &PRODUCTNAME; accepts a connection.
+The third time <parameter>sendready</parameter> is run is when &PRODUCTNAME; is ready to send data.
+After that, <parameter>sendready</parameter> is run when &PRODUCTNAME; is ready to send after an earlier call to NETACCEPTSENDVALUE failed.
 </para>
 
 <para>
 The <parameter>receiveready</parameter> input is an instruction list (a list of instructions or a procedure name) to execute when data are available.
-MSWLogo runs it whenever data is received and is ready to be read.
+&PRODUCTNAME; runs it whenever data is received and is ready to be read.
 </para>
 
 </listitem>

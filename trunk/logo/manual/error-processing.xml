@@ -2,8 +2,8 @@
    <title>Error Processing</title>
 
 <para>
-If an error occurs, Logo takes the following steps.
-First, if there is an available variable named <link linkend="command-erract">ERRACT</link>, Logo takes its value as an instructionlist and runs the instructions.
+If an error occurs, &GENERICNAME; takes the following steps.
+First, if there is an available variable named <link linkend="command-erract">ERRACT</link>, &GENERICNAME; takes its value as an instructionlist and runs the instructions.
 The operation <link linkend="command-error">ERROR</link> may be used within the instructions (once) to examine the error condition.
 If the instructionlist invokes <link linkend="command-pause">PAUSE</link>, the error message is printed before the pause happens.
 Certain errors are "recoverable"; for one of those errors, if the instructionlist outputs a value, that value is used in place of the expression that caused the error.
@@ -24,7 +24,7 @@ Such an error will not return to toplevel; it will remain within the original pa
 </para>
 
 <para>
-If ERRACT has no value, Logo handles the error by generating an internal <userinput>THROW "ERROR</userinput>.
+If ERRACT has no value, &GENERICNAME; handles the error by generating an internal <userinput>THROW "ERROR</userinput>.
 If this <link linkend="command-throw">THROW</link> is not caught by a <userinput>CATCH "ERROR</userinput> in the user program, it is eventually caught either by the toplevel instruction loop or by a pause loop, which prints the error message.
 An invocation of <userinput>CATCH "ERROR</userinput> in a user program locally unbinds ERRACT, so the effect is that whichever of ERRACT and CATCH "ERROR is more local will take precedence.
 </para>
@@ -40,7 +40,7 @@ If a floating point overflow occurs during an arithmetic operation, or a two-inp
 Here are the numeric codes that appear as the first element of the list output by ERROR when an error is caught, with the corresponding messages.
 Some messages may have two different codes depending on whether the error is recoverable (that is, a substitute value can be provided through the ERRACT mechanism) in the specific context.
 Some messages are warnings rather than errors; these will not be caught.
-The first two are so bad that Logo exits immediately.
+The first two are so bad that &GENERICNAME; exits immediately.
 
 <informaltable frame='all'>
   <tgroup cols='2'>
