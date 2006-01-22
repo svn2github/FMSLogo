@@ -22,7 +22,7 @@ The input itself may be empty, in which case the output is also empty.
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>SHOW BUTFIRSTS [[1 2 3] [a b c]
+    <programlisting><userinput>SHOW BUTFIRSTS [[1 2 3] [a b c]]
 </userinput>[[2 3] [c d]]</programlisting>
 </listitem>
 </varlistentry>
