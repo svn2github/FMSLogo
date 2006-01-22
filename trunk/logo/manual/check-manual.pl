@@ -624,6 +624,21 @@ foreach my $filename (<*.xml>) {
         }
       }
 
+      # the third line of all commands should be an <indexterm> element for the command.
+      if ($linenumber == 3) {
+        if ($line =~ m!<indexterm><primary>(.*?)</primary></indexterm>!) {
+
+          my $indexterm = $1;
+
+          if ($indexterm ne $command) {
+            LogError($filename, $linenumber, "contains indexterm for `$indexterm', not `$command'.");
+          }
+        }
+        else {
+          LogError($filename, $linenumber, "third line is not <indexterm><primary>$command</primary></indexterm>.");
+        }
+      }
+
       # the first listed command in the synopsis should match the title
       if ($line =~ m!<synopsis>\s*\(?\s*<command>(.*?)</command>!) {
         my $synopsisCommand = $1;
