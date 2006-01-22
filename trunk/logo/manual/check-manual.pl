@@ -191,6 +191,8 @@ $Exceptions{'command-edns.xml'}{'allcaps'}{'MYPROGRAM'}  = 1;
 $Exceptions{'command-edps.xml'}{'allcaps'}{'MYPROGRAM1'}  = 1;
 $Exceptions{'command-edps.xml'}{'allcaps'}{'MYPROGRAM2'}  = 1;
 
+$Exceptions{'command-end.xml'}{'allcaps'}{'ECHO'}  = 1;
+
 $Exceptions{'command-erall.xml'}{'allcaps'}{'BAR'} = 1;
 $Exceptions{'command-erall.xml'}{'allcaps'}{'FOO'} = 1;
 

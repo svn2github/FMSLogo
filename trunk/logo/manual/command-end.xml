@@ -22,14 +22,14 @@ It just delimits the end of a procedure that is defined with <link linkend="comm
 
 <varlistentry><term>Example</term>
 <listitem>
-<programlisting><userinput>TO echo :times :thing
+<programlisting><userinput>TO ECHO :times :thing
   REPEAT :times [PRINT :thing]
 END
 
 ECHO 2 "Hello</userinput>
 Hello
 Hello
-<userinput>echo 3 "Bye</userinput>
+<userinput>ECHO 3 "Bye</userinput>
 Bye
 Bye
 Bye</programlisting>
