@@ -21,7 +21,7 @@
     <programlisting><userinput>SHOW REMOVE "b [a b c b]
 </userinput>[a c]</programlisting>
 
-    <programlisting><userinput>SHOW REMOVE "e" "Hello
+    <programlisting><userinput>SHOW REMOVE "e "Hello
 </userinput>Hllo</programlisting>
 </listitem>
 </varlistentry>
