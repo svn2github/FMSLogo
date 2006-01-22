@@ -79,7 +79,7 @@ These iteration tools are extended versions of the ones in Appendix B of the boo
 The extensions are primarily to allow for variable numbers of inputs.
 </para>
 
-     <section>
+     <section id="explict-slot-templates">
          <title>Explicit-Slot Templates</title>
 
 <para>
@@ -117,7 +117,7 @@ Some tools allow additional slot designations, as shown in the individual descri
      </section>
 
 
-     <section>
+     <section id="named-procedure-templates">
          <title>Named-Procedure Templates</title>
 
 <para>
@@ -142,7 +142,7 @@ Example:
        </section>
 
 
-     <section>
+     <section id="named-slot-templates">
          <title>Named-Slot Templates</title>
 
 <para>

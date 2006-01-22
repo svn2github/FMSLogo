@@ -1,5 +1,6 @@
-<chapter>
+<chapter id="commandline-options">
 <title>Command Line Options</title>
+<indexterm><primary>command line options</primary></indexterm>
 
 <para>
 Command line options can be set as properties of your shortcut to MSWLogo.
@@ -127,7 +128,7 @@ Note, the "-L" switch must follow any other switches.
 </section>
 
 
-<section>
+<section id="invoking-and-exiting-fmslogo">
 <title>Invoking and Exiting MSWLogo</title>
 
 <para>

@@ -1,5 +1,6 @@
 <chapter id="editor">
     <title>Editor</title>
+    <indexterm><primary>Editor</primary></indexterm>
 
     <para>When you exit the editor, Logo loads the revised definitions and modifies the workspace accordingly.
 Multiple edit sessions are supported.
@@ -11,10 +12,10 @@ Also realize if you delete procedures, property lists or names while in the edit
     <section id="editor-menu">
       <title>Editor Menu</title>
 
-      <section>
+      <section id="editor-menu-file">
         <title>File Menu</title>
 
-        <section>
+        <section id="editor-menu-file-saveandexit">
           <title>File - Save and Exit</title>
           <para>Exits the editor and prompts you whether to save the work to the Logo workspace.  
 When you exit the editor, MSWLogo loads the revised definitions and modifies the workspace accordingly.  
@@ -25,19 +26,19 @@ See also <link linkend="editor-errors">Edit Errors</link>.
 </para>
         </section>
 
-        <section>
+        <section id="editor-menu-file-savetoworkspace">
           <title>File - Save to Workspace</title>
           <para>Saves the contents of the editor to the Logo workspace.  
 This is only available in <link linkend="commandline-e">expert mode</link>.
 </para>
         </section>
 
-        <section>
+        <section id="editor-menu-file-print">
           <title>File - Print...</title>
           <para>Prints the contents of the editor.</para>
         </section>
 
-        <section>
+        <section id="editor-menu-file-exit">
           <title>File - Exit</title>
           <para>Exits the editor without saving the contents of the workspace.
 Select this option if you want to discard your changes.</para>
@@ -45,57 +46,57 @@ Select this option if you want to discard your changes.</para>
 
       </section>
 
-      <section>
+        <section id="editor-menu-edit">
         <title>Edit Menu</title>
 
-        <section>
+        <section id="editor-menu-edit-undo">
           <title>Edit - Undo</title>
           <para>Undoes the previous editor operation.</para>
         </section>
 
-        <section>
+        <section id="editor-menu-edit-cut">
           <title>Edit - Cut</title>
           <para>Copies the selected text to the clipboard and deletes it.  See also <link linkend="editor-clipboard">Editing with the Clipboard</link>.</para>
         </section>
 
-        <section>
+        <section id="editor-menu-edit-copy">
           <title>Edit - Copy</title>
           <para>Copies the selected text to the clipboard.  See also <link linkend="editor-clipboard">Editing with the Clipboard</link>.</para>
         </section>
 
-        <section>
+        <section id="editor-menu-edit-paste">
           <title>Edit - Paste</title>
           <para>Pastes the text in the clipboard to the cursor position.
 If text is selected it will be replaced with the pasted text.
 See also <link linkend="editor-clipboard">Editing with the Clipboard</link>.</para>
         </section>
 
-        <section>
+        <section id="editor-menu-edit-delete">
           <title>Edit - Delete</title>
           <para>Deletes the selected text.</para>
         </section>
 
-        <section>
+        <section id="editor-menu-edit-clearall">
           <title>Edit - Clear All</title>
           <para>Deletes all text in the editor.</para>
         </section>
 
       </section>
 
-      <section>
+      <section id="editor-menu-search">
         <title>Search Menu</title>
 
-        <section>
+        <section id="editor-menu-search-find">
           <title>Search - Find</title>
           <para>Displays a dialog box that allows you to search for text within the editor.</para>
         </section>
 
-        <section>
+        <section id="editor-menu-search-replace">
           <title>Search - Replace</title>
           <para>Displays a dialog box that allows you to search for text within the editor and replace it with other text.</para>
         </section>
 
-        <section>
+        <section id="editor-menu-search-next">
           <title>Search - Next</title>
           <para>Repeats the previous Search - Find operation.</para>
         </section>
@@ -103,10 +104,10 @@ See also <link linkend="editor-clipboard">Editing with the Clipboard</link>.</pa
       </section>
 
 
-      <section>
+      <section id="editor-menu-set">
         <title>Set Menu</title>
 
-        <section>
+        <section id="editor-menu-set-font">
           <title>Set - Font</title>
           <para>You can change the editor's font by going to the Font Menu of the editor and selecting the desired font.
 The new font affects the entire Editor not just selected Text.
@@ -115,10 +116,10 @@ The chosen font will remain selected even after MSWLogo has been restarted.</par
 
       </section>
 
-      <section>
+      <section id="editor-menu-test">
         <title>Test Menu</title>
 
-        <section>
+        <section id="editor-menu-testbang">
           <title>Test!</title>
           <para>You can test your code by selecting a section of code and clicking on Test! in the menu.
 This will take each line and send it to the commander for execution.
@@ -130,20 +131,20 @@ Using this feature is as if you typed in that selection into the commander.
       </section>
 
 
-      <section>
+      <section id="editor-menu-help">
         <title>Help Menu</title>
 
-        <section>
+        <section id="editor-menu-help-index">
           <title>Help - Index</title>
           <para>Brings you to the help on MSWLogo.  See also <link linkend="editor-context-help">Context Sensitive Help</link>.</para>
         </section>
 
-        <section>
-          <title>Help - Editor Command</title>
+        <section id="editor-menu-help-editor">
+          <title>Help - Editor</title>
           <para>Brings you to the help on MSWLogo's editor.  See also <link linkend="editor-context-help">Context Sensitive Help</link>.</para>
         </section>
 
-        <section>
+        <section id="editor-menu-help-topicsearch">
           <title>Help - Topic Search</title>
           <para>Searches for the topic selected by the mouse in the online help.  See also <link linkend="editor-context-help">Context Sensitive Help</link>.</para>
         </section>

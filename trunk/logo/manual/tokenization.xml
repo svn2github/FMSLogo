@@ -1,5 +1,6 @@
-<chapter>
+<chapter id="tokenization">
    <title>Tokenization</title>
+   <indexterm><primary>tokenization</primary></indexterm>
 
    <para>Names of procedures, variables, and property lists are case-insensitive.
 So are the special words <link linkend="command-end">END</link>, <link linkend="command-true">TRUE</link>, and <link linkend="command-false">FALSE</link>.

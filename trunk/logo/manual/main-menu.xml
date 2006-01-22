@@ -7,38 +7,38 @@
         <para>The File menu includes options that enable you to operate on logo procedure files.
 Note that, as a side effect, any selection in this menu that has a directory in its dialog box will effectively change the current working directory to that directory.</para>
 
-        <section>
+        <section id="menu-file-new">
           <title>File - New</title>
           <para>This will <link linkend="command-erase">ERASE</link> all procedures currently loaded in memory.
 It's like starting with a "new" session.</para>
         </section>
 
-        <section>
+        <section id="menu-file-open">
           <title>File - Open...</title>
           <para>This loads procedures from disk into memory so that they can be executed or edited.
 See also the <link linkend="command-load">LOAD</link> command.</para>
         </section>
 
 
-        <section>
+        <section id="menu-file-save">
           <title>File - Save</title>
           <para>This saves everything that is loaded in memory onto the disk.
 See also the <link linkend="command-save">SAVE</link> command.</para>
         </section>
 
-        <section>
+        <section id="menu-file-saveas">
           <title>File - Save As...</title>
           <para>This is the same as the File - Save command, except that it prompts you for a file name.</para>
         </section>
 
-        <section>
+        <section id="menu-file-edit">
           <title>File - Edit...</title>
           <para>This is how you edit procedures that have already been loaded (or developed) in memory.
 You will be prompted with all existing procedures (currently loaded within memory) and you can also enter a new one.
 See also the <link linkend="command-edit">EDIT</link> command.</para>
         </section>
 
-        <section>
+        <section id="menu-file-erase">
           <title>File - Erase...</title>
           <para>This is how you erase procedures that have already been loaded (or developed) in memory.
 You will be prompted with all existing procedures (currently loaded within memory). 
@@ -137,7 +137,7 @@ You can also set the pen size with the Logo command <link linkend="command-setpe
 You can also set the font with the Logo command <link linkend="command-setlabelfont">SETLABELFONT</link> and get it with the Logo command <link linkend="command-labelfont">LABELFONT</link>.</para>
         </section>
 
-        <section>
+        <section id="menu-set-commanderfont">
           <title>Set - Commander Font...</title>
           <para>This allows you to choose the Commander's font.
 The chosen font will remain selected even after MSWLogo has been restarted.</para>
@@ -170,17 +170,17 @@ You can also set the screen color with the Logo command <link linkend="command-s
         <para>The Zoom menu allows you set the zoom factor.
 You can also set the zoom factor with the Logo command <link linkend="command-zoom">ZOOM</link>.</para>
 
-        <section>
+        <section id="menu-zoom-in">
           <title>Zoom - In</title>
           <para>This menu option doubles the current zoom factor.</para>
         </section>
 
-        <section>
+        <section id="menu-zoom-out">
           <title>Zoom - Out</title>
           <para>This menu option halves the current zoom factor.</para>
         </section>
 
-        <section>
+        <section id="menu-zoom-normal">
           <title>Zoom - Normal</title>
           <para>This menu option restores the zoom factor to 1.0 (no zooming).</para>
         </section>
@@ -193,7 +193,7 @@ You can also set the zoom factor with the Logo command <link linkend="command-zo
 For more information, select the Help menu command name.
 Also see the <link linkend="command-help">HELP</link> command.</para>
 
-        <section>
+        <section id="menu-help-index">
           <title>Help - Index</title>
           <para>This displays the Microsoft Windows Help for MSWLogo.</para>
         </section>

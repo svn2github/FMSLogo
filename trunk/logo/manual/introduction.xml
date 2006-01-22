@@ -36,7 +36,7 @@
 
     </section>
 
-    <section>
+    <section id="where-to-start">
       <title>Where to Start</title>
 
       <para>Novices can start in Logo without having to program at all by just learning how to command the turtle.  Learning turtle graphics will teach the user about geometry (and they won't even know it).  It's amazing how soon you can introduce the concept of programming once they grasp the turtle concept.  Lets look at some simple examples:</para>

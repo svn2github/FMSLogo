@@ -1,8 +1,8 @@
-<chapter>
-   <title>Data Structure Primitives</title>
+<chapter id="data-structure-commands">
+   <title>Data Structure Commands</title>
 
-   <section>
-      <title>Constructors</title>
+   <section id="data-structure-constructors">
+      <title>Data Structure Constructors</title>
       &command-word;
       &command-list;
       &command-sentence;
@@ -17,8 +17,8 @@
       &command-gensym;
    </section>
 
-   <section>
-      <title>Selectors</title>
+   <section id="data-structure-selectors">
+      <title>Data Structure Selectors</title>
       &command-first;
       &command-firsts;
       &command-last;
@@ -33,8 +33,8 @@
       &command-quoted;
    </section>
 
-   <section>
-      <title>Mutators</title>
+   <section id="data-structure-mutators">
+      <title>Data Structure Mutators</title>
 
       &command-setitem;
       &command-mdsetitem;
@@ -47,7 +47,7 @@
       &command-dequeue;
    </section>
 
-   <section>
+   <section id="data-structure-predicates">
       <title>Data Structure Predicates</title>
 
       &command-wordp;
@@ -62,8 +62,8 @@
       &command-backslashedp;
    </section>
 
-   <section>
-      <title>Queries</title>
+   <section id="queries">
+      <title>Data Structure Queries</title>
 
       &command-count;
       &command-ascii;

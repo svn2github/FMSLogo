@@ -1,7 +1,7 @@
-<chapter>
+<chapter id="arithmetic">
    <title>Arithmetic</title>
 
-   <section>
+   <section id="numeric-operations">
       <title>Numeric Operations</title>
 
       &command-sum;
@@ -35,14 +35,14 @@
       &command-radarccos;
    </section>
 
-   <section>
+   <section id="arithmetic-predicates">
       <title>Arithmetic Predicates</title>
 
       &command-lessp;
       &command-greaterp;
    </section>
 
-   <section>
+   <section id="random-numbers">
       <title>Random Numbers</title>
 
       &command-random;
@@ -50,14 +50,14 @@
    </section>
 
 
-   <section>
+   <section id="print-formating">
       <title>Print Formatting</title>
 
       &command-form;
    </section>
 
 
-   <section>
+   <section id="bitwise-operations">
       <title>Bitwise Operations</title>
 
       &command-bitand;

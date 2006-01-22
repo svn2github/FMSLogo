@@ -1,7 +1,7 @@
-<chapter>
+<chapter id="communication">
    <title>Communication</title>
 
-   <section>
+   <section id="transmitters">
       <title>Transmitters</title>
 
 <para>
@@ -24,7 +24,7 @@ This limit applies not only to the top-level printed object but to any substruct
 
 
 
-   <section>
+   <section id="receivers">
       <title>Receivers</title>
 
       &command-readlist;
@@ -34,7 +34,7 @@ This limit applies not only to the top-level printed object but to any substruct
       &command-shell;
    </section>
 
-   <section>
+   <section id="file-access">
       <title>File Access</title>
 
       &command-openread;
@@ -58,7 +58,7 @@ This limit applies not only to the top-level printed object but to any substruct
       &command-eofp;
    </section>
 
-   <section>
+   <section id="hardware-communications">
       <title>Hardware Communications</title>
 
 <para>
@@ -81,7 +81,7 @@ All commands that start with INPORT or OUTPORT are for "hardware" port communica
       &command-ingameport;
    </section>
 
-   <section>
+   <section id="dll-communications">
       <title>DLL Communications</title>
 
       &command-dllload;
@@ -89,7 +89,7 @@ All commands that start with INPORT or OUTPORT are for "hardware" port communica
       &command-dllfree;
    </section>
 
-   <section>
+   <section id="keyboard-and-mouse-access">
       <title>Keyboard and Mouse Access</title>
 
       &command-keyp;
