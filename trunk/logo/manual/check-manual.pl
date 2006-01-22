@@ -7,7 +7,11 @@
 # * All commands in <link> tags have the expected linkend attribute.
 # * No abbreviations of commands are allowed.
 # * Emphasis is not given with upper-case.
-# * The <title> element matches the filename.
+# * All commands have a <title> element that matches the command.
+# * All commands have an <indexterm> element that matches the command.
+# * All <book> elements have an id attribute.
+# * All <chapter> elements have an id attribute.
+# * All <section> elements have an id attribute.
 #
 # Missing checks:
 # * Spelling is correct.
@@ -681,6 +685,21 @@ foreach my $filename (<*.xml>) {
           $Exceptions{$filename}{allcaps}{$token} = 1;
         }
       }
+    }
+
+    # Find <book> elements with no id attribute
+    while ($line =~ m!<book>!g) {
+      LogWarning($filename, $linenumber, "<book> element does not have id attribute");
+    }
+
+    # Find <chapter> elements with no id attribute
+    while ($line =~ m!<chapter>!g) {
+      LogWarning($filename, $linenumber, "<chapter> element does not have id attribute");
+    }
+
+    # Find <section> elements with no id attribute
+    while ($line =~ m!<section>!g) {
+      LogWarning($filename, $linenumber, "<section> element does not have id attribute");
     }
 
     if (0) {
