@@ -10,15 +10,16 @@
 # * All commands have a <title> element that matches the command.
 # * All commands have an <indexterm> element that matches the command.
 # * All <book> elements have an id attribute.
+# * All <preface> elements have an id attribute.
 # * All <chapter> elements have an id attribute.
 # * All <section> elements have an id attribute.
+# * All occurances of "Logo" and "MSWLogo" are correct.
 #
 # Missing checks:
 # * Spelling is correct.
 # * Examples include at least one instance of the command that they document.
 # * Only the first reference to a command in any section is hyperlinked.
 # * Commands are not hyperlinked when they occurs within their own definition.
-# * All occurances of "Logo" and "MSWLogo" are correct.
 # * All instances of the <parameter> tag refer to actual parameters.
 # * All abbreviations are correct (and that the list is complete)
 #
@@ -165,6 +166,9 @@ $Exceptions{'command-dialogenable.xml'}{'allcaps'}{'OK'}      = 1;
 $Exceptions{'command-dir.xml'}{'allcaps'}{'LOGO.HLP'}    = 1;
 $Exceptions{'command-dir.xml'}{'allcaps'}{'LICENSE.TXT'} = 1;
 $Exceptions{'command-dir.xml'}{'allcaps'}{'FMSLOGO.TXT'} = 1;
+$Exceptions{'command-dir.xml'}{'logo'}                   = 1;
+
+$Exceptions{'command-directories.xml'}{'logo'}           = 1;
 
 $Exceptions{'command-dllcall.xml'}{'allcaps'}{'DLL'}    = 1;
 $Exceptions{'command-dllcall.xml'}{'allcaps'}{'DOUBLE'} = 1;
@@ -200,6 +204,7 @@ $Exceptions{'command-error.xml'}{'allcaps'}{'MYPROGRAM'}   = 1;
 $Exceptions{'command-files.xml'}{'allcaps'}{'LOGO.HLP'}    = 1;
 $Exceptions{'command-files.xml'}{'allcaps'}{'LICENSE.TXT'} = 1;
 $Exceptions{'command-files.xml'}{'allcaps'}{'FMSLOGO.TXT'} = 1;
+$Exceptions{'command-files.xml'}{'logo'}                   = 1;
 
 $Exceptions{'command-fill.xml'}{'allcaps'}{'SQUARE'}  = 1;
 
@@ -414,6 +419,7 @@ $Exceptions{'command-untrace.xml'}{'allcaps'}{'MYPRINT'} = 1;
 $Exceptions{'command-uppercase.xml'}{'allcaps'}{'HELLO'} = 1;
 
 $Exceptions{'command-windowfileedit.xml'}{'allcaps'}{'DEMO'} = 1;
+$Exceptions{'command-windowfileedit.xml'}{'logo'}            = 1;
 
 $Exceptions{'command-windowset.xml'}{'allcaps'}{'MAXIMIZE'} = 1;
 
@@ -421,7 +427,7 @@ $Exceptions{'command-yield.xml'}{'allcaps'}{'CPU'}     = 1;
 
 $Exceptions{'commander.xml'}{'allcaps'}{'ENTER'}       = 1;
 
-$Exceptions{'commandline-options.xml'}{'allcaps'}{'LOGOEXE'} = 1; # entity
+$Exceptions{'commandline-options.xml'}{'logo'}         = 1;
 
 $Exceptions{'communication.xml'}{'allcaps'}{'DLL'}        = 1;
 $Exceptions{'communication.xml'}{'allcaps'}{'PORT'}       = 1;
@@ -432,6 +438,7 @@ $Exceptions{'control-structures.xml'}{'allcaps'}{'MATRIXMULTIPLY'} = 1;
 $Exceptions{'control-structures.xml'}{'allcaps'}{'MIT'}            = 1;
 $Exceptions{'control-structures.xml'}{'allcaps'}{'PROC'}           = 1;
 $Exceptions{'control-structures.xml'}{'allcaps'}{'TRANSPOSE'}      = 1;
+$Exceptions{'command-windowfileedit.xml'}{'logo'}                  = 1;
 
 $Exceptions{'editor.xml'}{'allcaps'}{'CTRL'}   = 1;
 $Exceptions{'editor.xml'}{'allcaps'}{'F1'}     = 1;
@@ -442,14 +449,17 @@ $Exceptions{'error-processing.xml'}{'allcaps'}{'THROWTAG'} = 1;
 $Exceptions{'error-processing.xml'}{'allcaps'}{'VALUE'}    = 1;
 $Exceptions{'error-processing.xml'}{'allcaps'}{'VAR'}      = 1;
 
+$Exceptions{'introduction.xml'}{'allcaps'}{'FD'}          = 1;
 $Exceptions{'introduction.xml'}{'allcaps'}{'LISP'}        = 1;
 $Exceptions{'introduction.xml'}{'allcaps'}{'MIT'}         = 1;
 $Exceptions{'introduction.xml'}{'allcaps'}{'PENTAGON'}    = 1;
 $Exceptions{'introduction.xml'}{'allcaps'}{'PENTAGON?'}   = 1;
 $Exceptions{'introduction.xml'}{'allcaps'}{'POLYGON'}     = 1;
+$Exceptions{'introduction.xml'}{'allcaps'}{'RT'}          = 1;
 $Exceptions{'introduction.xml'}{'allcaps'}{'SHAPES.LGO'}  = 1;
 $Exceptions{'introduction.xml'}{'allcaps'}{'SQUARE'}      = 1;
 $Exceptions{'introduction.xml'}{'allcaps'}{'TRIANGLE'}    = 1;
+$Exceptions{'introduction.xml'}{'logo'}                   = 1;
 
 $Exceptions{'logohelp.xml'}{'allcaps'}{'ANY'}             = 1;
 $Exceptions{'logohelp.xml'}{'allcaps'}{'DOCTYPE'}         = 1;
@@ -458,11 +468,12 @@ $Exceptions{'logohelp.xml'}{'allcaps'}{'EN'}              = 1;
 $Exceptions{'logohelp.xml'}{'allcaps'}{'ENTITY'}          = 1;
 $Exceptions{'logohelp.xml'}{'allcaps'}{'FITNESS'}         = 1;
 $Exceptions{'logohelp.xml'}{'allcaps'}{'GNU'}             = 1;
-$Exceptions{'logohelp.xml'}{'allcaps'}{'LOGOEXE'}         = 1; # entity
+$Exceptions{'logohelp.xml'}{'allcaps'}{'LOGOEXE'}         = 1;
 $Exceptions{'logohelp.xml'}{'allcaps'}{'MA'}              = 1;
 $Exceptions{'logohelp.xml'}{'allcaps'}{'MERCHANTABILITY'} = 1;
 $Exceptions{'logohelp.xml'}{'allcaps'}{'OASIS'}           = 1;
 $Exceptions{'logohelp.xml'}{'allcaps'}{'PARTICULAR'}      = 1;
+$Exceptions{'logohelp.xml'}{'allcaps'}{'PRODUCTNAME'}     = 1;
 $Exceptions{'logohelp.xml'}{'allcaps'}{'PUBLIC'}          = 1;
 $Exceptions{'logohelp.xml'}{'allcaps'}{'PURPOSE'}         = 1;
 $Exceptions{'logohelp.xml'}{'allcaps'}{'SYSTEM'}          = 1;
@@ -471,6 +482,7 @@ $Exceptions{'logohelp.xml'}{'allcaps'}{'V4.2'}            = 1;
 $Exceptions{'logohelp.xml'}{'allcaps'}{'WARRANTY'}        = 1;
 $Exceptions{'logohelp.xml'}{'allcaps'}{'WITHOUT'}         = 1;
 $Exceptions{'logohelp.xml'}{'allcaps'}{'XML'}             = 1;
+$Exceptions{'logohelp.xml'}{'logo'}                       = 1;
 
 $Exceptions{'networking-commands.xml'}{'allcaps'}{'DNS'}       = 1;
 $Exceptions{'networking-commands.xml'}{'allcaps'}{'FTP'}       = 1;
@@ -489,6 +501,7 @@ $Exceptions{'main-menu.xml'}{'allcaps'}{'HTML'} = 1;
 $Exceptions{'main-menu.xml'}{'allcaps'}{'BMP'}  = 1;
 $Exceptions{'main-menu.xml'}{'allcaps'}{'GIF'}  = 1;
 $Exceptions{'main-menu.xml'}{'allcaps'}{'DEMO'} = 1;
+$Exceptions{'main-menu.xml'}{'logo'}            = 1;
 
 $Exceptions{'multimedia-commands.xml'}{'allcaps'}{'CD'}   = 1;
 $Exceptions{'multimedia-commands.xml'}{'allcaps'}{'FX'}   = 1;
@@ -667,8 +680,17 @@ foreach my $filename (<*.xml>) {
       }
     }
 
-    while ($line =~ m!(?<=[^\.\w])([\.?]?[A-Z](\.??[A-Z0-9?])+)(?=[\.\W])!g) {
-      my $token = $1;
+    while ($line =~ m!
+                      ([^\.\w?])                        # preceeded by non-word
+                      ([\.?]?[A-Z](?:\.??[A-Z0-9?])+)   # logo token
+                      ([^\.\w?])                        # followed by non-word
+                      !gx) {
+      my $token = $2;
+
+      if ($1 eq '&' and $3 eq ';') {
+        # this is an XML element, which is always safe to ignore.
+        next;
+      }
 
       if (not $Commands{$token} and not $Exceptions{$filename}{allcaps}{$token}) {
 
@@ -692,6 +714,11 @@ foreach my $filename (<*.xml>) {
       LogWarning($filename, $linenumber, "<book> element does not have id attribute");
     }
 
+    # Find <preface> elements with no id attribute
+    while ($line =~ m!<preface>!g) {
+      LogWarning($filename, $linenumber, "<preface> element does not have id attribute");
+    }
+
     # Find <chapter> elements with no id attribute
     while ($line =~ m!<chapter>!g) {
       LogWarning($filename, $linenumber, "<chapter> element does not have id attribute");
@@ -702,14 +729,12 @@ foreach my $filename (<*.xml>) {
       LogWarning($filename, $linenumber, "<section> element does not have id attribute");
     }
 
-    if (0) {
-      # Find non-standard uses of the word Logo
-      while ($line =~ m!\b(\w*logo\w*)\b!gi) {
-        my $logo = $1;
+    # Find non-standard uses of the word Logo
+    while ($line =~ m!\b(\w*logo\w*)\b!gi) {
+      my $logo = $1;
 
-        if ($logo ne 'MSWLogo' and not $Exceptions{$filename}{logo}) {
-          LogWarning($filename, $linenumber, "non-standard usage of term `$logo'");
-        }
+      if ($logo ne 'LOGOEXE' and not $Exceptions{$filename}{logo}) {
+        LogWarning($filename, $linenumber, "non-standard usage of term `$logo'");
       }
     }
   }
