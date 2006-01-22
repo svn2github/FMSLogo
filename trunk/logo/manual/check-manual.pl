@@ -438,7 +438,7 @@ $Exceptions{'control-structures.xml'}{'allcaps'}{'MATRIXMULTIPLY'} = 1;
 $Exceptions{'control-structures.xml'}{'allcaps'}{'MIT'}            = 1;
 $Exceptions{'control-structures.xml'}{'allcaps'}{'PROC'}           = 1;
 $Exceptions{'control-structures.xml'}{'allcaps'}{'TRANSPOSE'}      = 1;
-$Exceptions{'command-windowfileedit.xml'}{'logo'}                  = 1;
+$Exceptions{'control-structures.xml'}{'logo'}                      = 1;
 
 $Exceptions{'editor.xml'}{'allcaps'}{'CTRL'}   = 1;
 $Exceptions{'editor.xml'}{'allcaps'}{'F1'}     = 1;
@@ -515,6 +515,8 @@ $Exceptions{'windows-commands.xml'}{'allcaps'}{'WIN'}       = 1;
 $Exceptions{'windows-commands.xml'}{'allcaps'}{'MYRED'}     = 1;
 $Exceptions{'windows-commands.xml'}{'allcaps'}{'MYEND'}     = 1;
 $Exceptions{'windows-commands.xml'}{'allcaps'}{'DRAWTHING'} = 1;
+
+$Exceptions{'workspace-management.xml'}{'logo'}             = 1;
 
 
 
