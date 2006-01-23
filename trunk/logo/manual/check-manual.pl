@@ -685,9 +685,9 @@ foreach my $filename (<*.xml>) {
     }
 
     while ($line =~ m!
-                      ([^\.\w?])                        # preceeded by non-word
+                      (^|[^\.\w?])                      # preceeded by non-word
                       ([\.?]?[A-Z](?:\.??[A-Z0-9?])+)   # logo token
-                      ([^\.\w?])                        # followed by non-word
+                      ([^\.\w?]|$)                      # followed by non-word
                       !gx) {
       my $token = $2;
 
