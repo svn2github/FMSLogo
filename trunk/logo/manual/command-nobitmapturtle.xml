@@ -25,7 +25,7 @@ It is the opposite of <link linkend="command-bitmapturtle">BITMAPTURTLE</link>.
 LABEL "+ 
 BITCUT 20 20
 BITMAPTURTLE
-FD 100
+FORWARD 100
 NOBITMAPTURTLE
 </userinput>
 </programlisting>

@@ -32,7 +32,7 @@ Both <link linkend="command-nobitmapturtle">NOBITMAPTURTLE</link> and <link link
 LABEL "+ 
 BITCUT 20 20
 BITMAPTURTLE
-FD 100
+FORWARD 100
 </userinput>
 </programlisting>
 </listitem>
