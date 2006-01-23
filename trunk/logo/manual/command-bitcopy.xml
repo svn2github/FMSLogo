@@ -20,7 +20,7 @@ See also <link linkend="command-setbitindex">SETBITINDEX</link>.
 </para>
 
 <para>
-The <parameter>width</parameter> and <parameter>height</parameter> inputs are measured in pixels and specifiy the amount of the image that is copied.
+The <parameter>width</parameter> and <parameter>height</parameter> inputs are measured in pixels and specify the amount of the image that is copied.
 The bitmap is always taken horizontally and vertically, regardless of the turtle's heading.
 </para>
 </listitem>

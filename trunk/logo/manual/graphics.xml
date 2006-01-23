@@ -59,7 +59,7 @@ When using color-by-index, the index to color mapping is given in the following 
       
 <para>
 &PRODUCTNAME; supports up to 1024 different turtles.
-Each turtle maintains its own heading (orientation in 3D), position, and pen control, but not pencolor.
+Each turtle maintains its own heading (orientation in 3D), position, and pen control, but not pen color.
 Each turtle can be represented as a <link linkend="command-bitmapturtle">BITMAPTURTLE</link>.
 Note that turtles start at index 0, which is the default turtle.
 Because there is a limit of 1024 turtles, the highest turtle index is 1023.
@@ -524,7 +524,7 @@ Here are the new commands:
       <row><entry>Command</entry> <entry>Description</entry></row>
     </thead>
     <tbody>
-      <row><entry>POLYSTART</entry>     <entry>Start a new polygon (a surface of pencolor)</entry></row>
+      <row><entry>POLYSTART</entry>     <entry>Start a new polygon (a surface of PENCOLOR)</entry></row>
       <row><entry>POLYEND</entry>       <entry>End the definition of the polygon and display it.</entry></row>
       <row><entry>POLYVIEW</entry>      <entry>Shade and view all polygons that have been defined.</entry></row>
       <row><entry>SETTURTLE -3</entry>  <entry>Use this turtle to position light source.</entry></row>

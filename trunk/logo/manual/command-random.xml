@@ -16,7 +16,7 @@
 Outputs a uniform random nonnegative integer less than its input, which must be an integer.
 </para>
 <para>
-For example, if the input is 10, then RANDOM will output any of these integers with equal probablity: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9.
+For example, if the input is 10, then RANDOM will output any of these integers with equal probability: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9.
 </para>
 </listitem>
 </varlistentry>

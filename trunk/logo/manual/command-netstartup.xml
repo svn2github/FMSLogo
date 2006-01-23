@@ -7,7 +7,7 @@
 <varlistentry><term>Synopsis</term>
 <listitem>
 <synopsis><command>NETSTARTUP</command>
-(<command>NETSTARTUP</command> <parameter>synchonous_dns</parameter>)</synopsis>
+(<command>NETSTARTUP</command> <parameter>synchronous_dns</parameter>)</synopsis>
 </listitem>
 </varlistentry>
 
@@ -19,7 +19,7 @@ This must be called before any other network commands will work.
 </para>
 
 <para>
-If the <parameter>synchornous_dns</parameter> input is not given, &PRODUCTNAME; will use asynchronous DNS.
+If the <parameter>synchronous_dns</parameter> input is not given, &PRODUCTNAME; will use asynchronous DNS.
 You may optionally call NETSTARTUP with the <parameter>synchronous_dns</parameter> input as 0 (asynchronous) or 1 (synchronous).
 Asynchronous DNS is safer to use (less likely to cause &PRODUCTNAME; to hang during a network name lookup).
 But some WinSock stacks have problems with it (for example, Trumpet WinSock).

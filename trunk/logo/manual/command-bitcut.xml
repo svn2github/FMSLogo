@@ -20,14 +20,14 @@ See also <link linkend="command-setbitindex">SETBITINDEX</link>.
 </para>
 
 <para>
-The <parameter>width</parameter> and <parameter>height</parameter> inputs are measured in pixels and specifiy the amount of the image to cut.
+The <parameter>width</parameter> and <parameter>height</parameter> inputs are measured in pixels and specify the amount of the image to cut.
 The bitmap is always taken horizontally and vertically, regardless of the turtle's heading.
 </para>
 
 <para>
 BITCUT may appear to be off by 1 pixel in width and height when you use it, but it is not.
 This can be explained with an example.
-If you draw a square with <userinput>repeat 4 [fd 2 rt 90]</userinput>, then the square is 3 pixels high, not 2.
+If you draw a square with <userinput>REPEAT 4 [FORWARD 2 RIGHT 90]</userinput>, then the square is 3 pixels high, not 2.
 This is because of how &PRODUCTNAME; draws images.
 In short, &PRODUCTNAME; draws an imaginary line going down the center of each pixel.
 If a pixel is intersected (hit), then it is lit up.

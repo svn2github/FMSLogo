@@ -23,7 +23,7 @@ See also <link linkend="command-activearea">ACTIVEAREA</link>.
 </para>
 
 <para>
-You can acheive the same effect by using <link linkend="menu-bitmap-activearea">Bitmap - Active Area</link> from the menu.
+You can achieve the same effect by using <link linkend="menu-bitmap-activearea">Bitmap - Active Area</link> from the menu.
 </para>
 
 </listitem>
@@ -35,7 +35,7 @@ You can acheive the same effect by using <link linkend="menu-bitmap-activearea">
 <programlisting><userinput>BITBLOCK 100 100
 SETACTIVEAREA [0 0 50 50]
 BITSAVE "myfile.bmp
-CLEARSCREN
+CLEARSCREEN
 BITLOAD "myfile.bmp</userinput>
 
 <replaceable>See how only part of the image that was within the active area was restored.</replaceable>

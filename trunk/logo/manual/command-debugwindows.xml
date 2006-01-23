@@ -19,7 +19,7 @@ For each window that is printed, both the window type and name are printed.
 </para>
 
 <para>
-If a <parameter>name</parameter> input is given, then DEBUGWINDOWS prints the heirarchy of the window that is identified by <parameter>name</parameter>.
+If a <parameter>name</parameter> input is given, then DEBUGWINDOWS prints the hierarchy of the window that is identified by <parameter>name</parameter>.
 If no <parameter>name</parameter> input is given, all windows and controls are printed.
 </para>
 </listitem>

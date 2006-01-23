@@ -22,7 +22,7 @@ The <parameter>conditionlist</parameter> parameter must contain an expression th
 The fact that the <parameter>conditionlist</parameter> parameter is a list may be misleading, because it should contain exactly one expression.
 It is only a list because the contents of a list are not evaluated by default.
 Instead, they must be explicitly evaluated with <link linkend="command-run">RUN</link>.
-This allows &GENERICNAME; to re-evalute <parameter>conditionlist</parameter> after each iteration, rather than only evaluating it once.
+This allows &GENERICNAME; to reevaluate <parameter>conditionlist</parameter> after each iteration, rather than only evaluating it once.
 </para>
 </listitem>
 </varlistentry>

@@ -9,7 +9,7 @@ This chapter describes how to create Graphical User Interfaces (GUIs) in &PRODUC
 The term "window" is very broad and includes simple windows, push buttons, dialog boxes, list boxes, combo boxes, scroll bars, buttons, static text, group boxes, checkboxes, and radio buttons.
 Using these elementary units, you can build up complex GUIs.
 Each window maintains a parent-child relationship with the windows that are placed on it.
-The way you program GUIs is modelled after how they are displayed, you create each individual sub-window and set up the parent-child relationships.
+The way you program GUIs is modeled after how they are displayed, you create each individual sub-window and set up the parent-child relationships.
 </para>
 
 <para>
@@ -62,7 +62,7 @@ Because of this, dialogs are used when to present the user with a question that 
       <title>Listbox Commands</title>
 
 <para>
-Listboxes are a type of control that presents the user with a pre-determined choice of items.
+Listboxes are a type of control that presents the user with a predetermined choice of items.
 The items are represented as text and displayed vertically, one per line.
 </para>
 
@@ -79,7 +79,7 @@ The items are represented as text and displayed vertically, one per line.
       <title>Combobox Commands</title>
 
 <para>
-Comboboxes are a type of control that presents the user with a pre-determined choice of items
+Comboboxes are a type of control that presents the user with a predetermined choice of items
 as well as a free-form text input.
 The items are represented as text and displayed vertically, one per line.
 </para>
@@ -201,11 +201,11 @@ As a result, only one item in the group may be selected at any time.
 </para>
 
 <para>
-For yes/no questions, a <link linkend="checkbox-commands">checkbox</link> control may be more intuitivie.
+For yes/no questions, a <link linkend="checkbox-commands">checkbox</link> control may be more intuitive.
 </para>
 
 <para>
-The term "radio button" comes from car radios that have mechincal preset buttons.
+The term "radio button" comes from car radios that have mechanical preset buttons.
 When you press one of these real radio buttons, it gets pushed in, the tuner changes to your selection, and all other buttons pop out.
 </para>
 
@@ -244,7 +244,7 @@ Modal windows should be avoided where possible because users prefer to be in con
 </para>
 
 <para>
-&PRODUCTNAME; has some pre-defined modal dialog boxes that you can use in your &GENERICNAME; programs.
+&PRODUCTNAME; has some predefined modal dialog boxes that you can use in your &GENERICNAME; programs.
 </para>
 
       &command-messagebox;
@@ -260,7 +260,7 @@ Modal windows should be avoided where possible because users prefer to be in con
       <title>Example Code for Constructing a Window</title>
 
 <para>
-Below is a code listing that contructs a simple window that draws some polygons on the screen.
+Below is a code listing that constructs a simple window that draws some polygons on the screen.
 Unlike a traditional program, the logic does not start and the beginning and run line-by-line until it reaches the end.
 Instead, the logic is broken into small chunks and is executed in response to "events" such as mouse clicks.
 </para>

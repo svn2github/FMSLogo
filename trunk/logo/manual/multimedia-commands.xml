@@ -465,7 +465,7 @@ This table defines the mapping between instrument numbers and instruments.
       <row>
         <entry>21</entry>
         <entry>Organ</entry>
-        <entry>Accordian</entry>
+        <entry>Accordion</entry>
       </row>
       <row>
         <entry>22</entry>
@@ -475,7 +475,7 @@ This table defines the mapping between instrument numbers and instruments.
       <row>
         <entry>23</entry>
         <entry>Organ</entry>
-        <entry>Tango Accordian</entry>
+        <entry>Tango Accordion</entry>
       </row>
       <row>
         <entry>24</entry>
@@ -770,12 +770,12 @@ This table defines the mapping between instrument numbers and instruments.
       <row>
         <entry>82</entry>
         <entry>Synth Lead</entry>
-        <entry>Lead 3 (caliope lead)</entry>
+        <entry>Lead 3 (calliope lead)</entry>
       </row>
       <row>
         <entry>83</entry>
         <entry>Synth Lead</entry>
-        <entry>Lead 4 (chiff lead)</entry>
+        <entry>Lead 4 (chiffer lead)</entry>
       </row>
       <row>
         <entry>84</entry>
