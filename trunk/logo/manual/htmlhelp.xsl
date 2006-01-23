@@ -12,6 +12,7 @@
   <xsl:param name="generate.toc">
 book      toc,title,figure,table,example,equation
 chapter   toc
+preface   toc
 section   toc
   </xsl:param>
 
