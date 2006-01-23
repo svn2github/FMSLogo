@@ -102,6 +102,7 @@ my %Exceptions = ();
 $Exceptions{'command-.eq.xml'}{'allcaps'}{'WARNING'}        = 1;
 
 $Exceptions{'command-.macro.xml'}{'allcaps'}{'EXAMPLE'}     = 1;
+$Exceptions{'command-.macro.xml'}{'allcaps'}{'LISP'}        = 1;
 $Exceptions{'command-.macro.xml'}{'allcaps'}{'MY.REPEAT'}   = 1;
 $Exceptions{'command-.macro.xml'}{'allcaps'}{'REPEAT.DONE'} = 1;
 $Exceptions{'command-.macro.xml'}{'allcaps'}{'REPEAT1'}     = 1;
@@ -327,6 +328,10 @@ $Exceptions{'command-portopen.xml'}{'allcaps'}{'COM4'}   = 1;
 $Exceptions{'command-portopen.xml'}{'allcaps'}{'LPT1'}   = 1;
 $Exceptions{'command-portopen.xml'}{'allcaps'}{'LPT3'}   = 1;
 
+$Exceptions{'command-portreadchar.xml'}{'allcaps'}{'OK'}  = 1;
+
+$Exceptions{'command-portwritechar.xml'}{'allcaps'}{'OK'} = 1;
+
 $Exceptions{'command-portmode.xml'}{'allcaps'}{'COM'}    = 1;
 $Exceptions{'command-portmode.xml'}{'allcaps'}{'DATA'}   = 1;
 $Exceptions{'command-portmode.xml'}{'allcaps'}{'DOS'}    = 1;
@@ -402,6 +407,7 @@ $Exceptions{'command-throw.xml'}{'allcaps'}{'MYPROGRAM2'}  = 1;
 $Exceptions{'command-throw.xml'}{'allcaps'}{'SYSTEM'}      = 1;
 $Exceptions{'command-throw.xml'}{'allcaps'}{'TOPLEVEL'}    = 1;
 
+$Exceptions{'command-to.xml'}{'allcaps'}{'ECHO'} = 1;
 $Exceptions{'command-to.xml'}{'allcaps'}{'PROC'} = 1;
 
 $Exceptions{'command-trace.xml'}{'allcaps'}{'MYPRINT'} = 1;
