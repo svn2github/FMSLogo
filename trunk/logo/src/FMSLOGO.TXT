@@ -145,7 +145,6 @@ Part III) Special Thanks:
     Kari Hoijarvi
     Clem Rutter
     Lionel Laske
-    Erich Neuwirth
     Relja Medic
 
   Special thanks to:
