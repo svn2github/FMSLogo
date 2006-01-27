@@ -23,8 +23,8 @@
 
 CUTMAP *CutBmp;              /* Pointer to Bit Cut memory array malloc on init*/
 
-//HANDLE HashHandle = 0;           /* Handle to Hashtable                 */
-//HANDLE StackHandle = 0;          /* Handle to Gargebage Collector Stack */
+//HANDLE HashHandle = 0;           // Handle to Hashtable
+//HANDLE StackHandle = 0;          // Handle to Garbage Collector Stack
 bool bExpert;                      // Expert mode
 bool bFixed;                       // Fixed mode
 bool bWidth;                       // Width mode
