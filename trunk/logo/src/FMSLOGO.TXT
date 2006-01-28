@@ -26,6 +26,7 @@ Part II) New features/bugs fixed:
     o Fix bug #1386335; the commander's editbox grows with the font size.
     o Fix bug #1388325; ELLIPSEARC no longer crashes on large angles.
     o Fix bug #1377856; ELLIPSEARC can now be paused/halted.
+    o Mitigate bug #1397519; numbers within DBL_EPSILON of each other are equal.
 
   * Added for 6.7.1,
     o Fix bug #1372735; Editor can save large files on Win95.

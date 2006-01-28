@@ -867,7 +867,7 @@ PASS: [POWER 2 5] returned 32 , as expected.
 FAIL: [POWER 1.1 5] returned 1.61051 . We expected 1.61051
 FAIL: [POWER -1.1 5] returned -1.61051 . We expected -1.61051
 PASS: [POWER 1e2 5] returned 10000000000 , as expected.
-FAIL: [POWER 1e-2 5] returned 1e-10 . We expected 1e-10
+PASS: [POWER 1e-2 5] returned 1e-10 , as expected.
 PASS: [POWER 1 -1] returned 1 , as expected.
 PASS: [POWER 2 -1] returned 0.5 , as expected.
 PASS: [POWER 0.5 -1] returned 2 , as expected.
@@ -1003,11 +1003,11 @@ PASS: [PI] returned 3.14159265358979 , as expected.
 INFO: Executing invalid instruction: [(PI 1)]
 PASS: Executing [(PI 1)] threw an error
 PASS: [TAN 0] returned 0 , as expected.
-FAIL: [TAN 45] returned 1 . We expected 1
-FAIL: [TAN -45] returned -1 . We expected -1
+PASS: [TAN 45] returned 1 , as expected.
+PASS: [TAN -45] returned -1 , as expected.
 FAIL: [TAN 135] returned -1 . We expected -1
 FAIL: [TAN 225] returned 1 . We expected 1
-FAIL: [TAN 180] returned -1.22514845490862e-16 . We expected 0
+PASS: [TAN 180] returned -1.22514845490862e-16 , as expected.
 FAIL: [TAN 360] returned -2.45029690981724e-16 . We expected 0
 FAIL: [TAN 3600] returned -2.45029690981724e-15 . We expected 0
 PASS: [TAN 14.5] returned 0.25861758435589 , as expected.
@@ -1036,11 +1036,11 @@ PASS: Executing [TAN "one] threw an error
 INFO: Executing invalid instruction: [TAN "1a]
 PASS: Executing [TAN "1a] threw an error
 PASS: [RADTAN ( 0 )] returned 0 , as expected.
-FAIL: [RADTAN ( 0.25 * PI)] returned 1 . We expected 1
-FAIL: [RADTAN (-0.25 * PI)] returned -1 . We expected -1
+PASS: [RADTAN ( 0.25 * PI)] returned 1 , as expected.
+PASS: [RADTAN (-0.25 * PI)] returned -1 , as expected.
 FAIL: [RADTAN ( 0.75 * PI)] returned -1 . We expected -1
 FAIL: [RADTAN ( 1.25 * PI)] returned 1 . We expected 1
-FAIL: [RADTAN ( PI )] returned -1.22514845490862e-16 . We expected 0
+PASS: [RADTAN ( PI )] returned -1.22514845490862e-16 , as expected.
 FAIL: [RADTAN ( 2 * PI )] returned -2.45029690981724e-16 . We expected 0
 FAIL: [RADTAN ( 10 * PI )] returned -1.22514845490862e-15 . We expected 0
 PASS: [RADTAN ( 14.5 )] returned -2.63406913250383 , as expected.
@@ -1183,11 +1183,11 @@ PASS: Executing [(RADARCTAN 1 "one )] threw an error
 INFO: Executing invalid instruction: [(RADARCTAN 1 "1a )]
 PASS: Executing [(RADARCTAN 1 "1a )] threw an error
 PASS: [SIN 0] returned 0 , as expected.
-FAIL: [SIN 30] returned 0.5 . We expected 0.5
-FAIL: [SIN 45] returned 0.707106781186547 . We expected 0.707106781186548
-FAIL: [SIN -45] returned -0.707106781186547 . We expected -0.707106781186548
+PASS: [SIN 30] returned 0.5 , as expected.
+PASS: [SIN 45] returned 0.707106781186547 , as expected.
+PASS: [SIN -45] returned -0.707106781186547 , as expected.
 PASS: [SIN 90] returned 1 , as expected.
-FAIL: [SIN 180] returned 1.22514845490862e-16 . We expected 0
+PASS: [SIN 180] returned 1.22514845490862e-16 , as expected.
 PASS: [SIN 270] returned -1 , as expected.
 FAIL: [SIN 360] returned -2.45029690981724e-16 . We expected 0
 FAIL: [SIN 3600] returned -2.45029690981724e-15 . We expected 0
@@ -1210,11 +1210,11 @@ PASS: Executing [SIN "one] threw an error
 INFO: Executing invalid instruction: [SIN "1a]
 PASS: Executing [SIN "1a] threw an error
 PASS: [RADSIN 0] returned 0 , as expected.
-FAIL: [RADSIN ( 0.25 * PI)] returned 0.707106781186547 . We expected 0.707106781186548
-FAIL: [RADSIN (-0.25 * PI)] returned -0.707106781186547 . We expected -0.707106781186548
-FAIL: [RADSIN (1/6 * PI)] returned 0.5 . We expected 0.5
+PASS: [RADSIN ( 0.25 * PI)] returned 0.707106781186547 , as expected.
+PASS: [RADSIN (-0.25 * PI)] returned -0.707106781186547 , as expected.
+PASS: [RADSIN (1/6 * PI)] returned 0.5 , as expected.
 PASS: [RADSIN ( 0.5 * PI)] returned 1 , as expected.
-FAIL: [RADSIN PI] returned 1.22514845490862e-16 . We expected 0
+PASS: [RADSIN PI] returned 1.22514845490862e-16 , as expected.
 PASS: [RADSIN (1.5 * PI)] returned -1 , as expected.
 FAIL: [RADSIN ( 2 * PI)] returned -2.45029690981724e-16 . We expected 0
 FAIL: [RADSIN ( 10 * PI)] returned -1.22514845490862e-15 . We expected 0
@@ -1264,12 +1264,12 @@ PASS: Executing [ARCSIN "one] threw an error
 INFO: Executing invalid instruction: [ARCSIN "1a]
 PASS: Executing [ARCSIN "1a] threw an error
 PASS: [RADARCSIN 0] returned 0 , as expected.
-FAIL: [RADARCSIN ( 0.5 * SQRT 2)] returned 0.785398163397448 . We expected 0.785398163397448
-FAIL: [RADARCSIN (-0.5 * SQRT 2)] returned -0.785398163397448 . We expected -0.785398163397448
+PASS: [RADARCSIN ( 0.5 * SQRT 2)] returned 0.785398163397448 , as expected.
+PASS: [RADARCSIN (-0.5 * SQRT 2)] returned -0.785398163397448 , as expected.
 PASS: [RADARCSIN 1] returned 1.5707963267949 , as expected.
 PASS: [RADARCSIN -1] returned -1.5707963267949 , as expected.
-FAIL: [RADARCSIN 0.5] returned 0.523598775598299 . We expected 0.523598775598299
-FAIL: [RADARCSIN -0.5] returned -0.523598775598299 . We expected -0.523598775598299
+PASS: [RADARCSIN 0.5] returned 0.523598775598299 , as expected.
+PASS: [RADARCSIN -0.5] returned -0.523598775598299 , as expected.
 INFO: Executing invalid instruction: [(RADARCSIN)]
 PASS: Executing [(RADARCSIN)] threw an error
 INFO: Executing invalid instruction: [(RADARCSIN 1 2)]
@@ -1293,11 +1293,11 @@ PASS: Executing [RADARCSIN "1a] threw an error
 PASS: [COS 0] returned 1 , as expected.
 PASS: [COS 45] returned 0.707106781186548 , as expected.
 PASS: [COS -45] returned 0.707106781186548 , as expected.
-FAIL: [COS 225] returned -0.707106781186548 . We expected -0.707106781186548
-FAIL: [COS 60] returned 0.5 . We expected 0.5
-FAIL: [COS 90] returned 6.1257422745431e-17 . We expected 0
+PASS: [COS 225] returned -0.707106781186548 , as expected.
+PASS: [COS 60] returned 0.5 , as expected.
+PASS: [COS 90] returned 6.1257422745431e-17 , as expected.
 PASS: [COS 180] returned -1 , as expected.
-FAIL: [COS 270] returned -1.83772268236293e-16 . We expected 0
+PASS: [COS 270] returned -1.83772268236293e-16 , as expected.
 PASS: [COS 360] returned 1 , as expected.
 PASS: [COS 3600] returned 1 , as expected.
 FAIL: [COS 3690] returned 7.84062485076342e-15 . We expected 0
@@ -1321,11 +1321,11 @@ PASS: Executing [COS "1a] threw an error
 PASS: [RADCOS 0] returned 1 , as expected.
 PASS: [RADCOS ( 0.25 * PI)] returned 0.707106781186548 , as expected.
 PASS: [RADCOS (-0.25 * PI)] returned 0.707106781186548 , as expected.
-FAIL: [RADCOS ( 1.25 * PI)] returned -0.707106781186548 . We expected -0.707106781186548
-FAIL: [RADCOS ( 1/3 * PI)] returned 0.5 . We expected 0.5
-FAIL: [RADCOS ( 0.5 * PI)] returned 6.1257422745431e-17 . We expected 0
+PASS: [RADCOS ( 1.25 * PI)] returned -0.707106781186548 , as expected.
+PASS: [RADCOS ( 1/3 * PI)] returned 0.5 , as expected.
+PASS: [RADCOS ( 0.5 * PI)] returned 6.1257422745431e-17 , as expected.
 PASS: [RADCOS PI] returned -1 , as expected.
-FAIL: [RADCOS 1.5 * PI] returned -1.83772268236293e-16 . We expected 0
+PASS: [RADCOS 1.5 * PI] returned -1.83772268236293e-16 , as expected.
 PASS: [RADCOS 2 * PI] returned 1 , as expected.
 PASS: [RADCOS 10 * PI] returned 1 , as expected.
 FAIL: [RADCOS 10.50 * PI] returned -4.89950961746199e-16 . We expected 0
@@ -2084,8 +2084,8 @@ INFO: [WAIT 10] took 171 ms to execute
 PASS: [WAIT 10 ] waited for 171 ms. Anywhere between 166.666666666667 ms and 186.666666666667 is acceptable.
 INFO: [WAIT 60] took 1001 ms to execute
 PASS: [WAIT 60 ] waited for 1001 ms. Anywhere between 1000 ms and 1020 is acceptable.
-INFO: [WAIT 100] took 1673 ms to execute
-PASS: [WAIT 100 ] waited for 1673 ms. Anywhere between 1666.66666666667 ms and 1686.66666666667 is acceptable.
+INFO: [WAIT 100] took 1672 ms to execute
+PASS: [WAIT 100 ] waited for 1672 ms. Anywhere between 1666.66666666667 ms and 1686.66666666667 is acceptable.
 INFO: Executing invalid instruction: [(WAIT)]
 PASS: Executing [(WAIT)] threw an error
 INFO: Executing invalid instruction: [(WAIT 10 10)]

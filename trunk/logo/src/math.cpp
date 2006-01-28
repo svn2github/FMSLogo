@@ -639,33 +639,47 @@ NODE *lpower(NODE *args)
    }
 
 static
+int compare_flonums(FLONUM n1, FLONUM n2)
+   {
+   if (fabs(n1 - n2) < DBL_EPSILON)
+      {
+      // floats are equal (or close enough to be considered equal)
+      return 0;
+      }
+   else if (n1 < n2)
+      {
+      return -1;
+      }
+   else
+      {
+      return 1;
+      }
+   }
+
+
+static
 int compare_numnodes(NODE *n1, NODE *n2)
    {
    if (nodetype(n1) == INT)
       {
       if (nodetype(n2) == INT)
          {
-         // REVISIT: why not just return i?
-         FIXNUM i = getint(n1) - getint(n2);
-         return (i == 0L ? 0 : (i > 0L ? 1 : -1));
+         return getint(n1) - getint(n2);
          }
       else
          {
-         FLONUM f = (FLONUM) getint(n1) - getfloat(n2);
-         return (f == 0.0 ? 0 : (f > 0.0 ? 1 : -1));
+         return compare_flonums(getint(n1), getfloat(n2));
          }
       }
    else
       {
       if (nodetype(n2) == INT)
          {
-         FLONUM f = getfloat(n1) - (FLONUM) getint(n2);
-         return (f == 0.0 ? 0 : (f > 0.0 ? 1 : -1));
+         return compare_flonums(getfloat(n1), getint(n2));
          }
       else
          {
-         FLONUM f = getfloat(n1) - getfloat(n2);
-         return (f == 0.0 ? 0 : (f > 0.0 ? 1 : -1));
+         return compare_flonums(getfloat(n1), getfloat(n2));
          }
       }
    }
