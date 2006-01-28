@@ -1,17 +1,25 @@
+TO FILLTIMEREVENT
+  REPEAT 10 [
+    CIRCLE (10 - REPCOUNT) * 10 + 5
+    SETFLOODCOLOR REPCOUNT
+    FILL
+    WAIT 30 ; half-second
+  ]
+  (FILL "false)
+
+  CLEARTIMER 1
+END
+
 TO FILLTEST
 
   ; setup
   SETPENCOLOR    0
   SETSCREENCOLOR 7
 
-  REPEAT 10 [
-    CIRCLE (10 - REPCOUNT) * 10 + 5
-    SETFLOODCOLOR REPCOUNT
-    FILL
-  ]
-  (FILL "false)
+  SETTIMER 1 0 "FILLTIMEREVENT
+  WAIT 10 * 30 + 60 ; wait for the timer event to finish
 
-  MAKE "isok YESNOBOX [Question] [Does the picture have 10 colored circles?]
+  MAKE "isok YESNOBOX [Question] [Did the picture fill in one circle at a time (10 in all)?]
   IFELSE :isok [
     REPORTTESTPASSED (sentence "|The circle was drawn correctly|) 
   ] [
