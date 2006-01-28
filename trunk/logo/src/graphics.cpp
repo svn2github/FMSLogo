@@ -2070,6 +2070,7 @@ NODE *lfill(NODE *arg)
 
    logofill(bOld);
    MainWindowx->ScreenWindow->Invalidate(false);
+   MainWindowx->ScreenWindow->UpdateWindow();
    draw_turtles(true);
    return Unbound;
    }

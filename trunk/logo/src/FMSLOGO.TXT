@@ -22,6 +22,7 @@ Part I) Kit Description/Location (http://sourceforge.net/projects/fmslogo):
 Part II) New features/bugs fixed:
 
   * Added for 6.7.2,
+    o Fix bug #1416044; FILL now works when run in a callback.
     o Fix bug #1386335; the commander's editbox grows with the font size.
     o Fix bug #1388325; ELLIPSEARC no longer crashes on large angles.
     o Fix bug #1377856; ELLIPSEARC can now be paused/halted.
