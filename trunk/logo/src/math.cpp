@@ -641,19 +641,17 @@ NODE *lpower(NODE *args)
 static
 int compare_numnodes(NODE *n1, NODE *n2)
    {
-   FLONUM f;
-   FIXNUM i;
-
    if (nodetype(n1) == INT)
       {
       if (nodetype(n2) == INT)
          {
-         i = getint(n1) - getint(n2);
+         // REVISIT: why not just return i?
+         FIXNUM i = getint(n1) - getint(n2);
          return (i == 0L ? 0 : (i > 0L ? 1 : -1));
          }
       else
          {
-         f = (FLONUM) getint(n1) - getfloat(n2);
+         FLONUM f = (FLONUM) getint(n1) - getfloat(n2);
          return (f == 0.0 ? 0 : (f > 0.0 ? 1 : -1));
          }
       }
@@ -661,12 +659,12 @@ int compare_numnodes(NODE *n1, NODE *n2)
       {
       if (nodetype(n2) == INT)
          {
-         f = getfloat(n1) - (FLONUM) getint(n2);
+         FLONUM f = getfloat(n1) - (FLONUM) getint(n2);
          return (f == 0.0 ? 0 : (f > 0.0 ? 1 : -1));
          }
       else
          {
-         f = getfloat(n1) - getfloat(n2);
+         FLONUM f = getfloat(n1) - getfloat(n2);
          return (f == 0.0 ? 0 : (f > 0.0 ? 1 : -1));
          }
       }
@@ -707,25 +705,37 @@ NODE *lgreaterp(NODE *args)
 */
 int compare_node(NODE *n1, NODE *n2, bool ignorecase)
    {
-   NODE *a1 = NIL, *a2 = NIL, *nn1 = NIL, *nn2 = NIL;
-   int icmp, cmp_len;
+   int icmp;
 
-   if (n1 == n2) return 0;
+   if (n1 == n2)
+      {
+      return 0; // equal
+      }
 
    NODETYPES nt1 = nodetype(n1);
    NODETYPES nt2 = nodetype(n2);
 
-   if (!(nt1 & NT_WORD) || !(nt2 & NT_WORD)) return -9999;
+   if (!(nt1 & NT_WORD) || !(nt2 & NT_WORD)) 
+      {
+      return -9999;
+      }
 
-   if (nt1 == CASEOBJ && nt2 == CASEOBJ && ignorecase &&
-         (object__caseobj(n1) == object__caseobj(n2))) return 0;
+   if (nt1 == CASEOBJ && 
+       nt2 == CASEOBJ && 
+       ignorecase &&
+       (object__caseobj(n1) == object__caseobj(n2)))
+      {
+      return 0;
+      }
 
    if ((nt1 & NT_NUMBER) && (nt2 & NT_NUMBER))
+      {
       return compare_numnodes(n1, n2);
+      }
 
    if (nt1 & NT_NUMBER)
       {
-      nn2 = cnv_node_to_numnode(n2);
+      NODE * nn2 = cnv_node_to_numnode(n2);
       if (nn2 != Unbound)
          {
          icmp = compare_numnodes(n1, nn2);
@@ -736,7 +746,7 @@ int compare_node(NODE *n1, NODE *n2, bool ignorecase)
 
    if (nt2 & NT_NUMBER)
       {
-      nn1 = cnv_node_to_numnode(n1);
+      NODE * nn1 = cnv_node_to_numnode(n1);
       if (nn1 != Unbound)
          {
          icmp = compare_numnodes(nn1, n2);
@@ -745,78 +755,126 @@ int compare_node(NODE *n1, NODE *n2, bool ignorecase)
          }
       }
 
-   a1 = cnv_node_to_strnode(n1);
-   a2 = cnv_node_to_strnode(n2);
+   NODE * a1 = cnv_node_to_strnode(n1);
+   NODE * a2 = cnv_node_to_strnode(n2);
    nt1 = nodetype(a1);
    nt2 = nodetype(a2);
    if (nt1 == STRING && nt2 == STRING)
       {
       if ((getstrlen(a1) == getstrlen(a2)) &&
-            (getstrptr(a1) == getstrptr(a2)))
+          (getstrptr(a1) == getstrptr(a2)))
+         {
          icmp = 0;
+         }
       else
          {
-         cmp_len = (getstrlen(a1) > getstrlen(a2)) ?
+         int cmp_len = (getstrlen(a1) > getstrlen(a2)) ?
             getstrlen(a2) : getstrlen(a1);
 
          if (ignorecase)
+            {
             icmp = low_strncmp(getstrptr(a1), getstrptr(a2), cmp_len);
+            }
          else
+            {
             icmp = strncmp(getstrptr(a1), getstrptr(a2), cmp_len);
+            }
+
          if ((getstrlen(a1) != getstrlen(a2)) && icmp == 0)
+            {
             icmp = getstrlen(a1) - getstrlen(a2);
+            }
          }
       }
    else if (nt1 & NT_BACKSL || nt2 & NT_BACKSL)
       {
       if ((getstrlen(a1) == getstrlen(a2)) &&
-            (getstrptr(a1) == getstrptr(a2)))
+          (getstrptr(a1) == getstrptr(a2)))
+         {
          icmp = 0;
+         }
       else
          {
-         cmp_len = (getstrlen(a1) > getstrlen(a2)) ?
+         int cmp_len = (getstrlen(a1) > getstrlen(a2)) ?
             getstrlen(a2) : getstrlen(a1);
 
          if (ignorecase)
+            {
             icmp = noparitylow_strncmp(getstrptr(a1), getstrptr(a2), cmp_len);
+            }
          else
+            {
             icmp = noparity_strncmp(getstrptr(a1), getstrptr(a2), cmp_len);
+            }
+
          if ((getstrlen(a1) != getstrlen(a2)) && icmp == 0)
+            {
             icmp = getstrlen(a1) - getstrlen(a2);
+            }
          }
       }
-   else err_logo(FATAL, NIL);
+   else 
+      {
+      err_logo(FATAL, NIL);
+      }
 
-   if (a1 != n1) gcref(a1);
-   if (a2 != n2) gcref(a2);
-   return (icmp);
+   if (a1 != n1) 
+      {
+      gcref(a1);
+      }
+
+   if (a2 != n2) 
+      {
+      gcref(a2);
+      }
+
+   return icmp;
    }
 
-bool equalp_help(NODE *arg1, NODE *arg2, bool ingc)
+bool equalp_help(NODE *arg1, NODE *arg2, bool ignorecase)
    {
    if (is_list(arg1))
       {
-      if (!is_list(arg2)) return FALSE;
+      if (!is_list(arg2)) 
+         {
+         return false;
+         }
+
       while (arg1 != NIL && arg2 != NIL)
          {
-         if (!equalp_help(car(arg1), car(arg2), ingc))
-            return FALSE;
+         if (!equalp_help(car(arg1), car(arg2), ignorecase))
+            {
+            return false;
+            }
          arg1 = cdr(arg1);
          arg2 = cdr(arg2);
-         if (check_throwing) break;
+         if (check_throwing)
+            {
+            break;
+            }
          }
-      return (arg1 == NIL && arg2 == NIL);
+      return arg1 == NIL && arg2 == NIL;
       }
    else if (is_list(arg2))
-      return FALSE;
+      {
+      return false;
+      }
    else if (nodetype(arg1) == ARRAY)
       {
-      if (nodetype(arg2) != ARRAY) return FALSE;
-      return (arg1 == arg2);
+      if (nodetype(arg2) != ARRAY)
+         {
+         return false;
+         }
+      return arg1 == arg2;
       }
    else if (nodetype(arg2) == ARRAY)
-      return FALSE;
-   else return (!compare_node(arg1, arg2, ingc));
+      {
+      return false;
+      }
+   else 
+      {
+      return 0 == compare_node(arg1, arg2, ignorecase);
+      }
    }
 
 NODE *lequalp(NODE *args)
