@@ -1,5 +1,8 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
-  <xsl:import href="/usr/share/sgml/docbook/xsl-stylesheets-1.68.1-1/htmlhelp/profile-htmlhelp.xsl"/>
+  <xsl:import href="/usr/share/sgml/docbook/xsl-stylesheets/htmlhelp/profile-htmlhelp.xsl"/>
+
+  <xsl:param name="htmlhelp.only" select="0"/>
+
   <xsl:param name="htmlhelp.chm" select="'logohelp.chm'"/>
 
   <xsl:param name="toc.section.depth"    select="5"/>
@@ -16,4 +19,5 @@ preface   toc
 section   toc
   </xsl:param>
 
+  <xsl:param name="htmlhelp.hhc.folders.instead.books" select="1"/>
 </xsl:stylesheet>
