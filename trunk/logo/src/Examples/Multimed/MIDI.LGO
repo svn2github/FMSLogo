@@ -2,18 +2,17 @@ to aaa
 ;
 ; Function:
 ;
-; This routine will simulate a MIDI keyboard
+;   This routine will simulate a MIDI keyboard
 ;
 ; To run:
 ;
-; load "midi.lgo
-; Call MIDI (or let it auto-execute)
+;   load "midi.lgo
+;   Call midi (or let it auto-execute)
 ;
 ; System requirements:
 ;
-; You must have Windows 3.1 (or 3.0 with Multi-Media Extentions)
-; You must have the correct driver loaded in Windows for your sound card.
-; You must have a sound card.
+;   You must have the correct driver loaded in Windows for your sound card.
+;   You must have a sound card.
 ;
 ; Example:
 ;
@@ -23,13 +22,13 @@ end
 to chan
 make "chan 17-scrollbarget "sc3
 staticupdate "st3 (list "Channel :chan)
-setfocus [MswLogo Screen]
+setfocus [FMSLogo Screen]
 end
 
 to changespeed
 make "recordspeed 60-scrollbarget "sspeed
 staticupdate "stspeed (list "Speed 60-:recordspeed)
-setfocus [MswLogo Screen]
+setfocus [FMSLogo Screen]
 end
 
 to dohelp
@@ -46,7 +45,7 @@ Octave moves your keyboard up or down an octave\
 Volume sets the volume\
 Channel selects the channel (MIDI MAPPER is being used)\
 ]
-setfocus [MswLogo Screen]
+setfocus [FMSLogo Screen]
 end
 
 to drawkey :arg
@@ -57,6 +56,7 @@ end
 
 to drawkeys
 cs
+ht
 pu
 setxy -200 0
 pd
@@ -93,7 +93,7 @@ make "inst listboxgetselect "foo
 staticupdate "st4 fput "Instrument :inst
 midimessage (list 192+:chan first :inst 0)
 midimessage (list 192+:chan first :inst 0)
-setfocus [MswLogo Screen]
+setfocus [FMSLogo Screen]
 end
 
 to keydown
@@ -327,7 +327,7 @@ to octa
 make "octa 12-scrollbarget "sc4
 staticupdate "st5 (list "Octave "C :octa-3)
 make "octa ((:octa*12)-12)
-setfocus [MswLogo Screen]
+setfocus [FMSLogo Screen]
 end
 
 to recordmessage :arg
@@ -341,7 +341,7 @@ if equalp :recordcount 0 [messagebox "Error [Nothing recorded] stop]
 staticupdate "record2 [Recorder is Playing]
 repeat :recordcount [midimessage item repcount :recordnotes wait :recordspeed]
 staticupdate "record2 [Recorder is Stopped]
-setfocus [MswLogo Screen]
+setfocus [FMSLogo Screen]
 end
 
 to recordstart
@@ -349,20 +349,20 @@ if :recording [messagebox "Error [Already started] stop]
 make "recording "true
 make "recordcount 0
 staticupdate "record2 [Recorder is Recording]
-setfocus [MswLogo Screen]
+setfocus [FMSLogo Screen]
 end
 
 to recordstop
 if not :recording [messagebox "Error [Already stopped] stop]
 make "recording "false
 staticupdate "record2 [Recorder is Stopped]
-setfocus [MswLogo Screen]
+setfocus [FMSLogo Screen]
 end
 
 to velo
 make "velo 128-scrollbarget "sc2
 staticupdate "st2 (list "Velocity :velo)
-setfocus [MswLogo Screen]
+setfocus [FMSLogo Screen]
 end
 
 to volu
@@ -370,7 +370,7 @@ local "volu
 make "volu 128-scrollbarget "sc1
 staticupdate "st1 (list "Volume :volu)
 midimessage (list 176+:chan 7 :volu)
-setfocus [MswLogo Screen]
+setfocus [FMSLogo Screen]
 end
 
 to zzz
