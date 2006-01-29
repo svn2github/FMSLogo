@@ -60,11 +60,11 @@ to aaa
 ; controls to manipulate them through 3D space. Elevators on the tail,
 ; a rudder on the fin and ailerons on the wings.
 ;
-; MSWLogo has always had a rudder (Right/Left) also know as Yaw, you've
-; been flying already on just 1 geometric plane. But now we add the
-; other 2 controls ailerons (RightRoll/LeftRoll) and elevators
-; (Uppitch/Downpitch). Now you have an infinite number of planes
-; (geometric ones, that is) to fly on and each can be at any orientation.
+; Logo has always had a rudder (Right/Left) also know as Yaw.  
+; This lets you fly on just 1 geometric plane. 
+; FMSLogo adds the other 2 controls: ailerons (RightRoll/LeftRoll) and 
+; elevators (Uppitch/Downpitch). Now you have an infinite number of 
+; geometric planes to fly on and each can be at any orientation.
 ; Once your on the desired plane you can use 2D commands to
 ; traverse it.
 ;
@@ -73,8 +73,8 @@ to aaa
 ; go into the screen (away from you) or out of the screen (closer
 ; to you). How, just like an airplane flies.
 ;
-; When an airplane Rolls to the right it does not change it's
-; trajectory does it, neither does MSWLogo. But if your
+; When an airplane Rolls to the right it does not change its
+; trajectory does it, neither does FMSLogo. But if your
 ; rolled 90 degrees to the right and take a right turn guess
 ; what will happen. You'll go down real fast, straight down.
 ; Think of a real turtle on the floor. Now roll it on to its
