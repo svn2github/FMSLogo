@@ -5,7 +5,7 @@ to aaa
 ; for drawing a LINE, RECTANGLE or ELLIPSE.
 ;
 ; Start this example up and let a five-year-old get introduced
-; to MSWLogo !!!.
+; to FMSLogo.
 ;
 ; Example:
 ;
@@ -18,13 +18,13 @@ paint
 ;
 ; There is NOTHING complex in this program (not a speck of trig,
 ; if you think that's good). Look at one routine at a time.
-; To look up a built in function while in MSWLogo's editor,
+; To look up a built in function while in FMSLogo's editor,
 ; in online help, just select the primitive with the mouse and
 ; hit <F1>.
 ;
 ; You may also think some code is a weird way of doing things.
 ; This because I coded it much like how a Windows programmer "Thinks".
-; Windows programmers think in eectangles, they think in positive
+; Windows programmers think in rectangles, they think in positive
 ; Y down, they think Event Driven (also know as User driven). The whole
 ; program runs like a "State Machine". The code is doing absolutely
 ; NOTHING until the USER changes its state by clicking or moving the
@@ -39,25 +39,9 @@ paint
 ; A PENWIDTH tool
 ; A TURTLEHEADING tool
 ; Add a Print Button
-; A FLOWER tool (Multiple Ellipses) [better be a blazing fast machine]
+; A FLOWER tool (Multiple Ellipses)
 ; Store the shapes in a list and allow the user to UNDO.
 ; Allow the user to Select a shape and Move it or Delete it.
-;
-; I promised myself that MSWLogo would not be yet another
-; "Paint Program". A Paint program is a classic example used
-; when learning how to program Graphical User Interfaces.
-; However, I have no problem with "writing" a Paint program
-; in MSWLogo. It proves to me that it's stable and complete
-; for GUI development. The recent "Bring you to the Error Fix"
-; in the Editor really makes it much easier to use.
-; 
-; In years past if I wrote such a program in MSWLogo, I'd
-; always stumble into something I really did not like. Doing
-; this example is the 1st time this did not happen me.
-; I'm not saying there are no more problems to tackle in
-; MSWLogo.
-;
-; Enjoy
 ;
 end
 
