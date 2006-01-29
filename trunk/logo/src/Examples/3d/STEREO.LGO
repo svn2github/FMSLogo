@@ -1,7 +1,7 @@
 to aaa
 ;
-; This is a MSWLogo 3D example of "Stereo Vision".
-; It is the same as Shuttle.LGO but 2 Images are drawn
+; This is a FMSLogo 3D example of "Stereo Vision".
+; It is the same as SHUTTLE.LGO but 2 Images are drawn
 ; with slightly different "view points" (a CYAN image
 ; for the right eye and RED image for the left eye).
 ;

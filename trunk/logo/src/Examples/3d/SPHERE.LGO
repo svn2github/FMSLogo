@@ -17,7 +17,7 @@ to aaa
    ; The reason is the top and bottom of each slice the polygon
    ; is a triangle but we still shot 4 dots to produce it. That means
    ; 2 dots hit the same target (this is when we are shooting at the poles
-   ; of the sphere). MswLogo automatically eliminates sequential
+   ; of the sphere). FMSLogo automatically eliminates sequential
    ; duplicate vertices.
    ;
    perspective
