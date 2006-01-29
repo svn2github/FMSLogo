@@ -1,11 +1,11 @@
 to aaa
 ;
-; This is a MSWLogo 3D example where I have written a simple ".3DV"
+; This is a FMSLogo 3D example where I have written a simple ".3DV"
 ; file viewer. 3DV is a simple public domain format for 3D Vectors.
 ;
 ; Do not confuse how this "Shuttle" database was built.
-;   The vectors were not built with MSWLogo (although they could be).
-; Do not confuse how you "normally" build 3D objects in MSWLogo.
+;   The vectors were not built with FMSLogo (although they could be).
+; Do not confuse how you "normally" build 3D objects in FMSLogo.
 ;   You normally build 3D object just like you always built them
 ;   in 2D, by moving the turtle around.
 ; 
