@@ -1,12 +1,13 @@
 to aaa
 ;
-; This uses cursor addressing (not avail in MswLogo) could be reworked though
+; This uses cursor addressing (not available in FMSLogo)
+; This could be reworked though.
 ;
 end
 
 TO ALPHABET :STRING
 IF EMPTYP :STRING [STOP]
-IF NAMEP THING FIRST :STRING [LIGHT THING FIRST :STRING]
+IF NAMEP THING FIRST :STRING [HIGHLIGHT THING FIRST :STRING]
 ALPHABET BF :STRING
 END
 
@@ -20,7 +21,7 @@ IF NAMEP WORD "BOUND :TO [BEEP STOP]
 IF NAMEP THING :FROM [DARK THING :FROM]
 MAKE :FROM :TO
 FIXHIST :FROM
-IF NAMEP :TO [LIGHT :TO]
+IF NAMEP :TO [HIGHLIGHT :TO]
 SHOWCLEAR :TEXT
 END
 
@@ -160,7 +161,7 @@ MAKE "TEXTSTACK BF :TEXTSTACK
 REDISPLAY "TRUE
 END
 
-TO LIGHT :LETTER
+TO HIGHLIGHT :LETTER
 SETCURSOR LIST 6+(ASCII :LETTER)-(ASCII "A) 6
 INVTYPE :LETTER
 MAKE WORD "BOUND :LETTER "TRUE
@@ -208,7 +209,7 @@ TO QBIND :FROM :TO
 IF NAMEP THING :FROM [STOP]
 MAKE :FROM :TO
 FIXHIST :FROM
-LIGHT :TO
+HIGHLIGHT :TO
 END
 
 TO REDISPLAY :FLAG
@@ -324,7 +325,7 @@ MAKE "CGRAM4 [JW BTN XNSGSYP EJKE GFEBBCG, DTYJBN FBCCSKSG, RYU FBCCSKSG ~
    KNRUJYK PB PES XBJYP BW PBNPTNS.]
 
 to zzz
-ifelse YesNoBox [Welcome] [Choose YES to run example now, Choose NO Study it now.] [edall] [edall]
+ifelse YesNoBox [Welcome] [Choose YES to run example now, Choose NO Study it now.] [aaa] [edall]
 end
 
 Make "startup [zzz]
