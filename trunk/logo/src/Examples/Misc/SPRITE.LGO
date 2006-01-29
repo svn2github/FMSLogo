@@ -1,6 +1,6 @@
 to aaa
 
-; This example demonstrates how to use sprintes in MSWLogo to do
+; This example demonstrates how to use sprites in FMSLogo to do
 ; simple animation.  There are two "big ideas" here, using a
 ; back-buffer to create flicker free animation and using
 ; bit copy modes to remove the bounding box when copying a sprite
