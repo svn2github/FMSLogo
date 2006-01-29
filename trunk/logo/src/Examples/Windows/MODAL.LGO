@@ -2,7 +2,7 @@ to aaa
 ;
 ; Function:
 ;
-; This function is shows all the controls available to MswLogo.
+; This function is shows all the controls available to FMSLogo.
 ; It runs in "MODAL" mode. That is, the parent window and the caller
 ; cannot proceed until this window is closed.
 ;

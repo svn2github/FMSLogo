@@ -2,7 +2,7 @@ to aaa
 ;
 ; Function:
 ;
-; This function basically shows all the controls available in MswLogo.
+; This function basically shows all the controls available in FMSLogo.
 ; It runs in "Modeless Mode". Meaning you can do other things while it
 ; is up.
 ;

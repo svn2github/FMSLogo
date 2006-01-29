@@ -53,7 +53,7 @@ visual
 ; words are legal).
 ;
 ; Some day I hope to finish this and perhaps add hooks (or rewrite in C)
-; to MswLogo so that REAL buttons can be dragged FAST. 
+; to FMSLogo so that REAL buttons can be dragged FAST. 
 ;
 end
 
