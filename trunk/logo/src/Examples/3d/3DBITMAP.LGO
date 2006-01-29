@@ -6,8 +6,8 @@ to aaa
 ; It works by "scanning" the 2D Image pixel by pixel and
 ; places that pixel in 3D space.
 ;
-; It assumes you have a common bitmap c:\windows\forest.bmp
-; If it's not there change it to what ever you like.
+; It assumes you have a common bitmap c:windowsforest.bmp
+; If it's not there change it to whatever you like.
 ; But don't make it much bigger than say 200x200 pixels.
 ;
 ; Experiment:
@@ -18,8 +18,8 @@ to aaa
 ; now that is a straight line in NextLine3D by the
 ; command FD 1.
 ;
-; But remember MSWLogo does not do hidden surface/line
-; removal. Don't go all the way around. Or if you do draw
+; But remember FMSLogo does not do hidden surface/line removal. 
+; Don't go all the way around. Or if you do draw
 ; the side facing you last (go around the back then then
 ; front).
 ;

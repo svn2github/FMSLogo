@@ -2,7 +2,7 @@ to aaa
 ;
 ; Original 2D Checkerboard done by Yehuda Katz <yehuka@beitberl.beitberl.ac.il>
 ;
-; The original code had to be converted to MSWLogo's RGB color system
+; The original code had to be converted to FMSLogo's RGB color system
 ;
 ; Also modified it such that it did not matter what your start heading
 ; was which made it more flexible in 2D or 3D.
