@@ -21,7 +21,9 @@
 # * Only the first reference to a command in any section is hyperlinked.
 # * Commands are not hyperlinked when they occurs within their own definition.
 # * All instances of the <parameter> tag refer to actual parameters.
-# * All abbreviations are correct (and that the list is complete)
+# * All abbreviations are correct (and that the list is complete).
+# * Ensure program listings are 75 columns or less.
+# * Banned words/phrases are not used (for example "i.e").
 #
 ###############################################################################
 

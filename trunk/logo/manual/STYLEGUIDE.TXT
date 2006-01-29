@@ -21,6 +21,7 @@ Sample code conforms to the following style:
 * Command names are given in UPPERCASE.
 * Variables are given in lowercase.
 * Command names are never abbrevated (FORWARD, not FD).
+* Must not exceed 75 columns (for formatting in a PDF)
 
 Text should follow these guidelines:
 * The first instance (and only the first instance) of a command in a section should be enclosed in <link> tags.
@@ -28,3 +29,4 @@ Text should follow these guidelines:
 * In general, the text in a link should be the same as the title to which it links.  For example, GUI elements should  be linked like "the <link>Edall Button</link>", not "<link>the Edall Button</link>".
 * All commands in text are given in UPPERCASE and are never abbreviated.
 * Text should be emphasized with the <emphasize> tag, not by using UPPERCASE.
+* Never use Latin abbrevations (for example, "i.e." and "e.g.").
