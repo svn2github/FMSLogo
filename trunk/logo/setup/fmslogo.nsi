@@ -42,9 +42,12 @@ Function uninstall
 
   Delete $INSTDIR\logo.hlp
   Delete $INSTDIR\logo.gid
+  Delete $INSTDIR\logo.fts
+  Delete $INSTDIR\logohelp.chm
 
   Delete $INSTDIR\mcistrwh.hlp
   Delete $INSTDIR\mcistrwh.gid
+  Delete $INSTDIR\mcistrwh.fts
 
   Delete $INSTDIR\fmslogo.txt
   Delete $INSTDIR\license.txt
@@ -120,7 +123,7 @@ Section "FMSLogo"
   
   ; Put file there
   File "..\src\fmslogo.exe"
-  File "..\src\logo.hlp"
+  File "..\src\logohelp.chm"
   File "..\src\Mcistrwh.hlp"
   File "..\src\fmslogo.txt"
   File "..\src\license.txt"
@@ -179,11 +182,11 @@ uninstall:
   ; Remove files and uninstaller
   Delete $INSTDIR\fmslogo.exe
 
-  Delete $INSTDIR\logo.hlp
-  Delete $INSTDIR\logo.gid
+  Delete $INSTDIR\logohelp.chm
 
   Delete $INSTDIR\mcistrwh.hlp
   Delete $INSTDIR\mcistrwh.gid
+  Delete $INSTDIR\mcistrwh.fts
 
   Delete $INSTDIR\fmslogo.txt
   Delete $INSTDIR\license.txt
