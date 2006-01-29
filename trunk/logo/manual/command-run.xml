@@ -18,12 +18,12 @@ Runs the instructions in <parameter>instructionlist</parameter>; outputs if the 
 </listitem>
 </varlistentry>
 
+
 <varlistentry><term>Example</term>
 <listitem>
-<programlisting><userinput>MAKE "thingstodo [FIRST [1 2 3]]
-MAKE "answer RUNRESULT :thingstodo
-SHOW :answer
-[1]</userinput>
+<programlisting><userinput>MAKE "thingstodo [PRINT "Hello]
+RUN :thingstodo</userinput>
+Hello
 </programlisting>
 </listitem>
 </varlistentry>
