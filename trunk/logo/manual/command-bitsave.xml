@@ -43,7 +43,7 @@ Note that these files can be <emphasis>big</emphasis> and may take a long time t
 
 <varlistentry><term>Example</term>
 <listitem>
-<programlisting><userinput>REPEAT 72 [REPEAT 4 [FORWARD 100 RIGHT 90] RIGHT 5]
+<programlisting><userinput>REPEAT 72 [CIRCLE2 100 RIGHT 5]
 BITSAVE "myfile.bmp
 CLEARSCREEN
 BITLOAD "myfile.bmp</userinput>

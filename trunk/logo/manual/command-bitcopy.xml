@@ -30,7 +30,7 @@ The bitmap is always taken horizontally and vertically, regardless of the turtle
 <listitem>
 
 <programlisting><userinput>SETPENSIZE [2 2]
-REPEAT 72 [REPEAT 4 [FORWARD 100 RIGHT 90] SETPENCOLOR (LIST REPCOUNT*3 0 0) RIGHT 5]
+REPEAT 72 [CIRCLE2 100 SETPENCOLOR (LIST REPCOUNT*3 0 0) RIGHT 5]
 PENUP
 SETXY -50 -50
 BITCOPY 100 100
