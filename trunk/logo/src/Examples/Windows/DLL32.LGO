@@ -2,20 +2,16 @@ to aaa
 ;
 ; Function:
 ;
-; Uses Windows system DLL to change main window size.
+;    Uses Windows system DLL to change main window size.
 ;
 ; To run:
 ;
-; load "dll32.lgo
-; Call RESIZEMAIN
+;    load "dll32.lgo
+;    Call RESIZEMAIN
 ;
 ; Example:
 ;
 resizemain
-;
-; System Requirements:
-;
-; This assumes 32bit version of MswLogo
 ;
 end
 
