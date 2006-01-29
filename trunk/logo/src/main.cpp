@@ -573,7 +573,7 @@ void TMyApp::InitMainWindow()
 
    MakeHelpPathName(LibPathName, "logolib\\");
    logolib = LibPathName;
-   MakeHelpPathName(szHelpFileName, "logo.hlp");
+   MakeHelpPathName(szHelpFileName, "logohelp.chm");
 
    DWORD tempPathLength;
    char  tempPath[MAX_PATH];

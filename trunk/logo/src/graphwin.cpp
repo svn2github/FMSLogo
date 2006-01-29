@@ -20,6 +20,7 @@
 */
 
 #include "allwind.h"
+#include "htmlhelp.h"
 
 extern COLORREF colortable[];
 extern bool bIndexMode;
@@ -31,6 +32,9 @@ int iDelay;
 int bAppendMode;
 int iLoop;
 int iTrans;
+
+HTMLHELPFUNC g_HtmlHelpFunc;
+HMODULE      g_HtmlHelpLib;
 
 static int CutIndex = 0; // Pointer into CutBmp initially "ClipBoard"
 
@@ -2287,17 +2291,98 @@ setfont(
    ReleaseDC(::GetFocus(), hdc);
    }
 
-void do_help(char *arg)
+bool
+HtmlHelpInitialize(
+   void
+)
    {
-   // if arg NULL then jump to index else try to lookup key
-   if (arg == NULL)
+   if (g_HtmlHelpFunc != NULL)
       {
-      MainWindowx->WinHelp(szHelpFileName, HELP_INDEX, 0L);
+      // The HTML Help subsystem has already been initialized
+      return true;
       }
-   else
+
+   // Load the ActiveX control
+   g_HtmlHelpLib = ::LoadLibrary("hhctrl.ocx");
+   if (g_HtmlHelpLib == NULL) 
       {
-      MainWindowx->WinHelp(szHelpFileName, HELP_PARTIALKEY, (DWORD) arg);
+      ::MessageBox(
+         GetDesktopWindow(), 
+         "Online help is unavailable because hhctrl.ocx could not be loaded.", 
+         "Error", 
+         MB_OK);
+      return false;
       }
+
+   // Get the HtmlHelpA() function pointer
+   g_HtmlHelpFunc = (HTMLHELPFUNC) ::GetProcAddress(
+      g_HtmlHelpLib, 
+      ATOM_HTMLHELP_API_ANSI);
+   if (g_HtmlHelpFunc == NULL)
+      {
+      ::MessageBox(
+         GetDesktopWindow(),
+         "Online help is unavailable because hhctrl.ocx does not contain ATOM_HTMLHELP_API_ANSI.",
+         "Error", 
+         MB_OK);
+
+      HtmlHelpUninitialize();
+      return false;
+      }
+
+   // success
+   return true;
+   }
+
+void
+HtmlHelpUninitialize(
+   void
+)
+   {
+   if (g_HtmlHelpFunc != NULL)
+      {
+      g_HtmlHelpFunc(NULL, NULL, HH_CLOSE_ALL, 0);
+      g_HtmlHelpFunc = NULL;
+      }
+
+   if (g_HtmlHelpLib != NULL)
+      {
+      ::FreeLibrary(g_HtmlHelpLib);
+      g_HtmlHelpLib = NULL;
+      }
+   }
+
+
+
+// if arg is NULL then we jump to index
+void do_help(const char *arg)
+   {
+   if (!HtmlHelpInitialize())
+      {
+      return;
+      }
+
+   g_HtmlHelpFunc(
+      GetDesktopWindow(), 
+      szHelpFileName,
+      HH_DISPLAY_TOPIC,
+      NULL);
+
+   HH_AKLINK aklink = {0};
+   aklink.cbStruct     = sizeof aklink;
+   aklink.fReserved    = FALSE;
+   aklink.pszKeywords  = arg;
+   aklink.pszUrl       = NULL;
+   aklink.pszMsgText   = NULL;
+   aklink.pszMsgTitle  = NULL;
+   aklink.pszWindow    = "Main";
+   aklink.fIndexOnFail = TRUE;
+
+   g_HtmlHelpFunc(
+      GetDesktopWindow(), 
+      szHelpFileName,
+      HH_KEYWORD_LOOKUP, 
+      (DWORD) &aklink);
    JustDidEdit = true;
    }
 

@@ -5,7 +5,7 @@
 extern void single_step_box(NODE *the_line);
 extern void checkqueue(void);
 extern void emptyqueue(void);
-extern void do_help(char *arg);
+extern void do_help(const char *arg);
 extern void checkwindow(int *x, int *y, int *w, int *h);
 extern BOOL MyBeep(DWORD dwFreq, DWORD dwDuration);
 extern void Myoutportb(short portid, unsigned char value);
@@ -214,6 +214,10 @@ extern NODE *lbuttonp(NODE *args);
 extern NODE *ltone(NODE *args);
 extern NODE *lrefresh(NODE *args);
 extern NODE *lnorefresh(NODE *args);
+
+/* File GRAPHWIN.CPP: */
+bool HtmlHelpInitialize();
+void HtmlHelpUninitialize();
 
 /* File MAIN.CPP: */
 

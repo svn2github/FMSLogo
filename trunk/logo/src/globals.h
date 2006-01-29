@@ -214,6 +214,11 @@ extern int turtle_which;
 extern int turtle_max;
 extern TThreeDSolid ThreeD;
 
+// graphwin.cpp
+typedef HWND WINAPI (*HTMLHELPFUNC)(HWND, LPCSTR, UINT, DWORD);
+extern HTMLHELPFUNC g_HtmlHelpFunc;
+extern HMODULE      g_HtmlHelpLib;
+
 /* ibmterm.cpp */
 extern bool in_graphics_mode;
 extern int MaxX, MaxY;

@@ -833,8 +833,18 @@ TMainFrame::~TMainFrame()
       }
    free(CutBmp);
 
-   if (hCursorWait) DestroyCursor(hCursorWait);
-   if (hCursorArrow) DestroyCursor(hCursorArrow);
+   if (hCursorWait)
+      {
+      DestroyCursor(hCursorWait);
+      }
+
+   if (hCursorArrow)
+      {
+      DestroyCursor(hCursorArrow);
+      }
+
+   // release the HTML Help subsystem
+   HtmlHelpUninitialize();
    }
 
 
@@ -2361,7 +2371,7 @@ void TMainFrame::CMSetScreenColor()
 
 void TMainFrame::CMHelp()
    {
-   WinHelp(szHelpFileName, HELP_FINDER, 0L);
+   do_help(NULL);
    }
 
 void TMainFrame::CMHelpMCI()
