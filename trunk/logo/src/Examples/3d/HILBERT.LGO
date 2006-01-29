@@ -1,12 +1,12 @@
 to aaa
 ;
-; Hilbert Cube Filling Curve using MSWLogo 3D
+; Hilbert Cube Filling Curve using FMSLogo 3D
 ;
-; Just as 2D Hilbert space filling curves map eleganly to 2D Logo
+; Just as 2D Hilbert space filling curves map elegantly to 2D Logo
 ; 3D Hilbert volume filling curves map just as elegantly in 3D Logo
 ;
 ; The string language used to describe these curves maps directly
-; to MSWLogo 3D Primitives.
+; to FMSLogo 3D Primitives.
 ;
 ; Compare with mathamatica solution done at:
 ;
@@ -25,7 +25,7 @@ setpc [255 0 0]
 ; We want good lighting now
 ask -3 [setxyz 0 455 834]
 
-; Position HilbertCube such that it's center ends up at origin
+; Position HilbertCube such that its center ends up at origin
 pu
 setxyz -50 -50 50
 pd
@@ -200,10 +200,9 @@ to X
 HilbertCube :siz :lev-1
 end
 
-Make "size 4
-
 to zzz
 ifelse YesNoBox [Welcome] [Choose YES to run example now, Choose NO Study it now.] [aaa] [edall]
 end
 
+Make "size 4
 Make "startup [zzz]
