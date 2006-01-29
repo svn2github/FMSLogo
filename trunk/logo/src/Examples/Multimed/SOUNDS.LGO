@@ -2,12 +2,12 @@ to aaa
 ;
 ; Function:
 ;
-; This routine will play a couple Windows supplied WAVE files.
+;   This routine will play a couple Windows supplied WAVE files.
 ;
 ; To run:
 ;
-; load "sounds.lgo
-; Call SOUNDS
+;   load "sounds.lgo
+;   Call SOUNDS
 ;
 ; Example:
 ;
@@ -15,9 +15,8 @@ sounds
 ;
 ; System requirements:
 ;
-; You must have Windows 3.1 (or 3.0 with Multi-Media Extentions)
-; You must have the correct driver loaded in Windows for your sound card.
-; You must have a sound card.
+;   You must have the correct driver loaded in Windows for your sound card.
+;   You must have a sound card.
 ;
 end
 
@@ -26,11 +25,10 @@ print mci [open c:/windows/media/chimes.wav type waveaudio alias wa]
 print mci [open c:/windows/media/ding.wav type waveaudio alias w2] 
 mci [seek wa to start] 
 mci [play wa wait] 
-repeat 2~
-  [~
-  mci [seek w2 to start]~
-  mci [play w2 wait]~
-  ]
+repeat 2 [
+  mci [seek w2 to start]
+  mci [play w2 wait]
+]
 mci [close w2] 
 mci [seek wa to start] 
 (mci [play wa notify] [mci [close wa]]) 
