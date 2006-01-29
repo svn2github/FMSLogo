@@ -26,7 +26,7 @@ The <parameter>tag</parameter> parameter must be a word.
 
 <para>
 <userinput>THROW "TOPLEVEL</userinput> can be used to terminate all running procedures and interactive pauses, and return to the toplevel instruction prompt.
-This has the same effect as pressing <link linkend="commander-halt">the Halt button</link>.
+This has the same effect as pressing the <link linkend="commander-halt">Halt Button</link>.
 </para>
 
 <para>
