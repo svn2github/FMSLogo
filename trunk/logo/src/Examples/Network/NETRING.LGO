@@ -33,7 +33,7 @@ to aaa
 ;
 ; System requirements:
 ;
-; You must have a WinSock capable machine and know your machine name.
+; You must have a network adapter and know your machine name.
 ;
 end
 
@@ -94,11 +94,11 @@ to ringtest
 ; show 3600 vectors in the status window. Don't run the status window during the
 ; test or it will bog the network down
 
-; This is a VERY difficult test for MswLogo
+; This is a VERY difficult test for FMSLogo
 ; A less harsh test could of waited until the command make the loop
 ; before sending the next command.
 
-; MswLogo is Sending, Drawing, Queueing, Dequeueing etc. all at the same time
+; FMSLogo is Sending, Drawing, Queueing, Dequeueing etc. all at the same time
 
 sendcommand [cs] repeat 3600 [sendcommand [fd 1 rt 1]]
 ; A much easier test for slow networks
