@@ -13,7 +13,7 @@
 # * All <preface> elements have an id attribute.
 # * All <chapter> elements have an id attribute.
 # * All <section> elements have an id attribute.
-# * All occurances of "Logo" and "MSWLogo" are correct.
+# * All occurances of "Logo" and "FMSLogo" are correct.
 #
 # Missing checks:
 # * Spelling is correct.

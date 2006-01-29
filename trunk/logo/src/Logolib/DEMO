@@ -38,7 +38,7 @@ end
 
 to demo
 demo.00
-if not yesnobox [Demo] [Welcome to MSWLogo Demonstration (more?)] [stop]
+if not yesnobox [Demo] [Welcome to FMSLogo Demonstration (more?)] [stop]
 demo.01
 if not yesnobox [Demo] [Up to 1024 independent turtles (more?)] [stop]
 demo.02
@@ -48,29 +48,29 @@ if not yesnobox [Demo] [Each turtle can be mapped to a bitmap (more?)] [stop]
 demo.04
 if not yesnobox [Demo] [The numbers you see are bitmaps, they could be anything (more?)] [stop]
 demo.05
-if not yesnobox [Demo] [MSWLogo can do Fonts, at any angle and any color (more?)] [stop]
+if not yesnobox [Demo] [FMSLogo can do Fonts, at any angle and any color (more?)] [stop]
 demo.06
-if not yesnobox [Demo] [MSWLogo can do Flood Fills (more?)] [stop]
+if not yesnobox [Demo] [FMSLogo can do Flood Fills (more?)] [stop]
 demo.07
-if not yesnobox [Demo] [MSWLogo can use the full range of colors (more?)] [stop]
+if not yesnobox [Demo] [FMSLogo can use the full range of colors (more?)] [stop]
 demo.08
-if not yesnobox [Demo] [MSWLogo can cut Bitmaps (more?)] [stop]
+if not yesnobox [Demo] [FMSLogo can cut Bitmaps (more?)] [stop]
 demo.09
-if not yesnobox [Demo] [MSWLogo can paste Bitmaps (more?)] [stop]
+if not yesnobox [Demo] [FMSLogo can paste Bitmaps (more?)] [stop]
 demo.10
-if not yesnobox [Demo] [MSWLogo can even control what you normally control (more?)] [stop]
+if not yesnobox [Demo] [FMSLogo can even control what you normally control (more?)] [stop]
 demo.11
-if not yesnobox [Demo] [You can find out what MSWLogo is up to at any time (more?)] [stop]
+if not yesnobox [Demo] [You can find out what FMSLogo is up to at any time (more?)] [stop]
 demo.12
 if not yesnobox [Demo] [This image will be pasted onto a Neutral background 9 ways (more?)] [stop]
 demo.13
-if not yesnobox [Demo] [MSWLogo can solve complex problems with your help (more?)] [stop]
+if not yesnobox [Demo] [FMSLogo can solve complex problems with your help (more?)] [stop]
 demo.14
-if not yesnobox [Demo] [MSWLogo can make all the sounds you like (more?)] [stop]
+if not yesnobox [Demo] [FMSLogo can make all the sounds you like (more?)] [stop]
 demo.15
-if not yesnobox [Demo] [MSWLogo can even do more than one thing at a time.  Note that the tone you will hear is a timer executing code while the picture is being drawn (more?)] [stop]
+if not yesnobox [Demo] [FMSLogo can even do more than one thing at a time.  Note that the tone you will hear is a timer executing code while the picture is being drawn (more?)] [stop]
 demo.16
-if not yesnobox [Demo] [MSWLogo can even work in 3 dimensions (more?)] [stop]
+if not yesnobox [Demo] [FMSLogo can even work in 3 dimensions (more?)] [stop]
 demo.17
 if not yesnobox [Demo] [You can change your vantage point by moving a special turtle (more?)] [stop]
 demo.18
@@ -78,7 +78,7 @@ if not yesnobox [Demo] [Everything you've learned in 2D applies in 3D [see 3DSTE
 demo.19
 if not yesnobox [Demo] [You can view your objects as 3D solids (more?)] [stop]
 demo.20
-if not yesnobox [Demo] [MSWLogo can even write Windows programs (more?)] [stop]
+if not yesnobox [Demo] [FMSLogo can even write Windows programs (more?)] [stop]
 demo.21
 messagebox [Demo] [End of Demonstration and the start of your imagination.]
 end
