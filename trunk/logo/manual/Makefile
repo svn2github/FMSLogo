@@ -7,6 +7,9 @@ all : htmlhelp.hhp ;
 htmlhelp.hhp : $(SOURCEFILES)  $(HHP_STYLESHEET)
 	xsltproc --nonet $(HHP_STYLESHEET) $(ROOTFILE)
 
+logohelp.ps : $(SOURCEFILES)
+	docbook2ps $(ROOTFILE)
+
 logohelp.pdf : $(SOURCEFILES)
 	docbook2pdf $(ROOTFILE)
 
