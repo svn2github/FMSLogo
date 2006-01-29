@@ -1,9 +1,10 @@
 <preface id="preface">
-
    <title>Introduction</title>
+   <indexterm><primary>Introduction</primary></indexterm>
 
    <section id="tutorial">
       <title>Why &GENERICNAME;?</title>  
+      <indexterm><primary>Why &GENERICNAME;?</primary></indexterm>
 
 <para>
 This introduction does not do &GENERICNAME; justice but it's a start.
@@ -79,6 +80,7 @@ It is modeled after a popular and powerful language called LISP and is as powerf
 
     <section id="where-to-start">
       <title>Where to Start</title>
+      <indexterm><primary>Where to Start</primary></indexterm>
 
 <para>
 Novices can start in &GENERICNAME; without having to program at all by just learning how to command the turtle.
