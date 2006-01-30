@@ -412,6 +412,8 @@ $Exceptions{'command-throw.xml'}{'allcaps'}{'TOPLEVEL'}    = 1;
 $Exceptions{'command-to.xml'}{'allcaps'}{'ECHO'} = 1;
 $Exceptions{'command-to.xml'}{'allcaps'}{'PROC'} = 1;
 
+$Exceptions{'command-tone.xml'}{'allcaps'}{'PC'} = 1;
+
 $Exceptions{'command-trace.xml'}{'allcaps'}{'MYPRINT'} = 1;
 
 $Exceptions{'command-traced.xml'}{'allcaps'}{'MYFORWARD'} = 1;

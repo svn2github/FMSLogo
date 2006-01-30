@@ -1109,6 +1109,7 @@ A song is a rhythm machine.
 
   &command-soundon;
   &command-soundoff;
+  &command-tone;
   &command-sound;
 
 </section>
