@@ -32,26 +32,6 @@ Timers with <parameter>id</parameter> values from 17-31 will yield.
 </para>
 
 <para>
-You must be sure that you are handling (servicing) the timer callbacks faster than they are coming in.
-If you do not, you will eventually "Stack-Overflow" and &PRODUCTNAME; will shutdown.
-</para>
-
-<para>
-You must also be sure that the callback code does not generate any error dialogs.
-If it does, you may end up with a screen full of "OK" dialog boxes and eventually "Stack OverFlow".
-</para>
-
-<para>
-Because SETTIMER creates the potential for &PRODUCTNAME; to shutdown, it's a good idea to save your code frequently to disk when developing code that uses it.
-</para>
-
-<para>
-You can "block" all timers from firing (interrupting) in any code, including the callback (handler), by issuing the <link linkend="command-noyield">NOYIELD</link> command.
-You can "restore" firing by issuing the <link linkend="command-yield">YIELD</link> command.
-Blocking does not drop any "timer events" (firings), they are queued up and will fire when you yield, so don't "block" too long.
-</para>
-
-<para>
 Each timer <parameter>id</parameter> can have different values for <parameter>callback</parameter>.
 </para>
 
