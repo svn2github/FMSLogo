@@ -182,8 +182,6 @@ logo32.def
 RELEASE\logorc.res
 
 |
-logo.hlp :  help\logo.hpj help\logo.rtf help\logo.cnt
-  $(CompileHLP)   C:\logo-cvs\logo\src\help\logo.hpj
 
 RELEASE\3dsolid.obj :  3dsolid.cpp
   $(BCC32) -c @&&|
