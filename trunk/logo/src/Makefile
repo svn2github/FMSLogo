@@ -18,13 +18,6 @@ ILINK32 = Ilink32
 TLIB    = TLib
 BRC32   = Brc32
 TASM32  = Tasm32
-#
-# IDE macros
-#
-#
-# External tools
-#
-CompileHLP = hc31.exe  # IDE Command Line: $NOSWAP $CAP MSG(HC312MSG) $EDNAME
 
 
 #
@@ -40,16 +33,6 @@ LinkerInheritOptsAt_fmslogodexe = -x
 LinkerOptsAt_fmslogodexe = $(LinkerLocalOptsAtW32_fmslogodexe)
 ResOptsAt_fmslogodexe = $(ResLocalOptsAtW32_fmslogodexe)
 BOptsAt_fmslogodexe = $(BLocalOptsAtW32_fmslogodexe)
-CompLocalOptsAtW16_helpblogodhlp = 
-LinkerLocalOptsAtW16_helpblogodhlp = 
-ResLocalOptsAtW16_helpblogodhlp = 
-BLocalOptsAtW16_helpblogodhlp = 
-CompOptsAt_helpblogodhlp = $(CompOptsAt_fmslogodexe) $(CompLocalOptsAtW16_helpblogodhlp)
-CompInheritOptsAt_helpblogodhlp = -I"C:\Program Files\Help Workshop\include" -IC:\BC5\INCLUDE -DSTRICT;_OWLPCH;NDEBUG;
-LinkerInheritOptsAt_helpblogodhlp = -x
-LinkerOptsAt_helpblogodhlp = $(LinkerOptsAt_fmslogodexe) $(LinkerLocalOptsAtW16_helpblogodhlp)
-ResOptsAt_helpblogodhlp = $(ResOptsAt_fmslogodexe) $(ResLocalOptsAtW16_helpblogodhlp)
-BOptsAt_helpblogodhlp = $(BOptsAt_fmslogodexe) $(BLocalOptsAtW16_helpblogodhlp)
 
 #
 # Dependency List
@@ -64,7 +47,6 @@ version.h : ..\version.mk
   generate-version.bat $(FMSLOGO_VERSION)
 
 Dep_fmslogodexe = \
-   logo.hlp\
    RELEASE\3dsolid.obj\
    RELEASE\assembly.obj\
    RELEASE\cmdwind.obj\
