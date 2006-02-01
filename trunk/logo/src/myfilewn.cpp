@@ -164,7 +164,7 @@ bool TMyFileWindow::Write(const char * fileName)
          }
       }
 
-   FILE* file = fopen(fileName, "w");
+   FILE* file = fopen(fileName, "wb");
    if (file == NULL) 
       {
       char msg[MAXPATH + 33];
@@ -280,7 +280,6 @@ void TMyFileWindow::CMHelpEdit()
 void TMyFileWindow::CMHelp()
    {
    MainWindowx->CMHelp();
-   //   WinHelp(szHelpFileName,HELP_INDEX,0L);
    }
 
 void TMyFileWindow::CMHelpEditTopic()
