@@ -62,7 +62,7 @@ The mode parameter must be an integer.  The following table details acceptable v
 
       <row>
         <entry>6</entry>
-        <entry>Minimizes the specified window and activates the next top-level window in the Z order</entry>
+        <entry>Minimizes the specified window and activates the next top-level window in the Z order.</entry>
       </row>
 
       <row>
