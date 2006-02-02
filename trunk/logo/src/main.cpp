@@ -701,45 +701,9 @@ WinMain(
    {
    int i;
 
-   // Check to see if another instance of Logo is currently running:
-   HANDLE singleInstanceMutex = CreateMutex(
-      NULL,  // default security attributes
-      FALSE, // no initial owner
-      "LogoForWindowsMutex");
-
-   if (GetLastError() == ERROR_ALREADY_EXISTS)
-      {
-      // A copy of Logo is already running.
-      // Find that window and make it visible.
-      HWND runningInstance = FindWindow(NULL, "FMSLogo");
-      if (runningInstance != NULL)
-         {
-         // bring running instance to the the foreground
-         ::SetForegroundWindow(runningInstance);
-         if (::IsIconic(runningInstance))
-            {
-            // the running instance is minimized, so restore it
-            ::ShowWindow(runningInstance, SW_RESTORE);
-            }
-
-         CloseHandle(singleInstanceMutex);
-         return 1;
-         }
-
-      // We can't find the window, so we'll start up another instance.
-      // The feature of not running two instances is supposed to make
-      // things simpler.  If the other copy of Logo failed to exit
-      // cleanly, or if some other application created the mutex,
-      // it would more confusing if this Logo didn't start up.
-      }
-
-
-
-   /* open sound and get arg list */
    memset(&g_OsVersionInformation, 0, sizeof g_OsVersionInformation);
    g_OsVersionInformation.dwOSVersionInfoSize = sizeof g_OsVersionInformation;
    GetVersionEx(&g_OsVersionInformation);
-
 
    _control87( EM_OVERFLOW, EM_OVERFLOW );
    _control87( EM_UNDERFLOW, EM_UNDERFLOW );
@@ -747,7 +711,6 @@ WinMain(
    TopOfStack = &i;
 
    // parse the command-line parameters
-
    commandarg[0] = '\0';
    bPerspective = false;
    bExpert      = false;
@@ -830,6 +793,49 @@ WinMain(
                 MessageBox(GetFocus(), lpCmdLine, "Invalid Command Line", MB_OK);
                 break;
             }
+         }
+      }
+
+   // Check to see if another instance of Logo is currently running
+   HANDLE singleInstanceMutex = CreateMutex(
+      NULL,  // default security attributes
+      FALSE, // no initial owner
+      "LogoForWindowsMutex");
+   if (GetLastError() == ERROR_ALREADY_EXISTS)
+      {
+      // A copy of Logo is already running.
+      if (commandarg[0] == '\0')
+         {
+         // No logo scripts were specified on the command-line.
+         // We should re-use the exiting window, since this was probably
+         // just an accidently not create a new instance of logo.
+         // Find that running copy of Logo and make it visible.
+         HWND runningInstance = FindWindow(NULL, "FMSLogo");
+         if (runningInstance != NULL)
+            {
+            // bring running instance to the the foreground
+            ::SetForegroundWindow(runningInstance);
+            if (::IsIconic(runningInstance))
+               {
+               // the running instance is minimized, so restore it
+               ::ShowWindow(runningInstance, SW_RESTORE);
+               }
+               
+            CloseHandle(singleInstanceMutex);
+            return 1;
+            }
+            
+         // We can't find the window, so we'll start up another instance.
+         // The feature of not running two instances is supposed to make
+         // things simpler.  If the other copy of Logo failed to exit
+         // cleanly, or if some other application created the mutex,
+         // it would more confusing if this Logo didn't start up.
+         }
+      else
+         {
+         // a Logo script was specified on the command-line.
+         // This means that we should open up a new instance
+         // of Logo, even if one is already running.
          }
       }
 
