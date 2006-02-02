@@ -99,7 +99,7 @@ FILE *open_file(NODE *arg, const char *access)
 
    deref(arg);
    free(fnstr);
-   return (tstrm);
+   return tstrm;
    }
 
 NODE *ldribble(NODE *arg)
@@ -130,29 +130,32 @@ NODE *lnodribble(NODE *)
    return Unbound;
    }
 
+static
 FILE *find_file(NODE *arg, bool remove)
    {
-   NODE *t, *prev = NIL;
+   NODE *prev = NIL;
    FILE *fp = NULL;
 
-   t = file_list;
-   while (t != NIL)
+   for (NODE * t = file_list; t != NIL; t = cdr(t))
       {
-      if (compare_node(arg, car(t), FALSE) == 0)
+      if (compare_node(arg, car(t), false) == 0)
          {
          fp = (FILE *) t->n_obj;
          if (remove)
             {
             t->n_obj = NIL;
             if (prev == NIL)
+               {
                file_list = reref(file_list, cdr(t));
+               }
             else
+               {
                setcdr(prev, cdr(t));
+               }
             }
          break;
          }
       prev = t;
-      t = cdr(t);
       }
    return fp;
    }
@@ -182,7 +185,7 @@ open_helper(
 
       FILE* tmp;
       Arguments = car(Arguments);
-      if (find_file(Arguments, FALSE) != NULL)
+      if (find_file(Arguments, false) != NULL)
          {
          err_logo(FILE_ERROR, make_static_strnode("File already open"));
          }
@@ -239,7 +242,7 @@ NODE *lclose(NODE *arg)
    strnzcpy(fnstr, getstrptr(arg), getstrlen(arg));
 
    FILE *tmp;
-   if ((tmp = find_file(arg, TRUE)) == NULL)
+   if ((tmp = find_file(arg, true)) == NULL)
       {
       err_logo(FILE_ERROR, make_static_strnode("File not open"));
       }
@@ -293,7 +296,7 @@ NODE *lsetwrite(NODE *arg)
       deref(writer_name);
       writer_name = NIL;
       }
-   else if ((tmp = find_file(car(arg), FALSE)) != NULL)
+   else if ((tmp = find_file(car(arg), false)) != NULL)
       {
       writestream = tmp;
       writer_name = reref(writer_name, car(arg));
@@ -315,13 +318,15 @@ NODE *lsetread(NODE *arg)
       deref(reader_name);
       reader_name = NIL;
       }
-   else if ((tmp = find_file(car(arg), FALSE)) != NULL)
+   else if ((tmp = find_file(car(arg), false)) != NULL)
       {
       readstream = tmp;
       reader_name = reref(reader_name, car(arg));
       }
    else
+      {
       err_logo(FILE_ERROR, make_static_strnode("File not open"));
+      }
    return Unbound;
    }
 
@@ -337,11 +342,13 @@ NODE *lwriter(NODE *)
 
 NODE *lerasefile(NODE *arg)
    {
-   char *fnstr;
-
    arg = cnv_node_to_strnode(car(arg));
-   if (arg == Unbound) return Unbound;
-   fnstr = (char *) malloc((size_t) getstrlen(arg) + 1);
+   if (arg == Unbound) 
+      {
+      return Unbound;
+      }
+
+   char * fnstr = (char *) malloc((size_t) getstrlen(arg) + 1);
    strnzcpy(fnstr, getstrptr(arg), getstrlen(arg));
    unlink(fnstr);
    free(fnstr);
@@ -350,9 +357,6 @@ NODE *lerasefile(NODE *arg)
 
 NODE *lsave(NODE *arg)
    {
-   FILE *tmp;
-   int save_yield_flag;
-
    if (::FindWindow(NULL, "Editor"))
       {
       MainWindowx->CommandWindow->MessageBox(
@@ -365,12 +369,11 @@ NODE *lsave(NODE *arg)
 
    lprint(arg);
 
-   tmp = writestream;
+   FILE * tmp = writestream;
    writestream = open_file(car(arg), "w+");
    if (writestream != NULL)
       {
-
-      save_yield_flag = yield_flag;
+      int save_yield_flag = yield_flag;
       yield_flag = 0;
       lsetcursorwait(NIL);
 
@@ -393,99 +396,122 @@ NODE *lsave(NODE *arg)
 
 void runstartup(NODE *oldst)
    {
-   NODE *st;
-
-   st = valnode__caseobj(Startup);
+   NODE* st = valnode__caseobj(Startup);
    if (st != oldst && st != NIL && is_list(st))
       {
       val_status = 0;
       halt_flag++;
-      if (halt_flag < 1) halt_flag = 1;
-      eval_driver(st);
+      if (halt_flag < 1) 
          {
-         /* process special conditions */
+         halt_flag = 1;
+         }
 
-         for (int i = 0; i < 1; i++)
+      eval_driver(st);
+
+      /* process special conditions */
+      for (int i = 0; i < 1; i++)
+         {
+         if (stopping_flag == THROWING)
             {
-            if (stopping_flag == THROWING)
+            if (compare_node(throw_node, Error, true) == 0)
                {
-               if (compare_node(throw_node, Error, TRUE) == 0)
-                  {
-                  err_print();
-                  }
-               else if (compare_node(throw_node, System, TRUE) == 0)
-                  {
-                  break;
-                  }
-               else if (compare_node(throw_node, Toplevel, TRUE) != 0)
-                  {
-                  err_logo(NO_CATCH_TAG, throw_node);
-                  err_print();
-                  }
-               stopping_flag = RUN;
+               err_print();
                }
+            else if (compare_node(throw_node, System, true) == 0)
+               {
+               break;
+               }
+            else if (compare_node(throw_node, Toplevel, true) != 0)
+               {
+               err_logo(NO_CATCH_TAG, throw_node);
+               err_print();
+               }
+            stopping_flag = RUN;
+            }
 
-            if (stopping_flag == STOP || stopping_flag == OUTPUT)
-               {
-               print_node(
-                  stdout,
-                  make_static_strnode(
-                     "You must be in a procedure to use OUTPUT or STOP.\n"));
-               stopping_flag = RUN;
-               }
+         if (stopping_flag == STOP || stopping_flag == OUTPUT)
+            {
+            print_node(
+               stdout,
+               make_static_strnode(
+                  "You must be in a procedure to use OUTPUT or STOP.\n"));
+            stopping_flag = RUN;
             }
          }
-         halt_flag--;
+
+      halt_flag--;
       }
    }
 
-void silent_load(NODE *arg, char *prefix)
+// CONSIDER for MAINTAINABILITY: 
+// Refactor the common parts of silent_load() and lload() into a helper.
+void silent_load(NODE *arg, const char *prefix)
    {
-   FILE *tmp_stream;
-   NODE *tmp_line, *exec_list;
-   char load_path[200];
-   NODE *st = valnode__caseobj(Startup);
-   int sv_val_status = val_status;
-   int save_yield_flag;
 
    /* This procedure is called three ways:
-    *    silent_load(NIL,*argv)  loads *argv
-    *    silent_load(proc,logolib)     loads logolib/proc
-    *    silent_load(proc,NULL)  loads proc.lg
-    * The "/" or ".lg" is supplied by this procedure as needed.
+    *    silent_load(NIL,*argv)    loads *argv
+    *    silent_load(proc,logolib) loads logolib/proc
+    *    silent_load(proc,NULL)    loads proc.lgo
+    * The "/" or ".lgo" is supplied by this procedure as needed.
     */
+   if (prefix == NULL && arg == NIL) 
+      {
+      return;
+      }
 
-   bool IsDirtySave = IsDirty;
-   if (prefix == NULL && arg == NIL) return;
+   NODE *st = valnode__caseobj(Startup);
+
+   int  sv_val_status = val_status;
+   bool isDirtySave = IsDirty;
+
+   char load_path[200];
    strcpy(load_path, (prefix == NULL ? "" : prefix));
+
    if (arg != NIL)
       {
       arg = cnv_node_to_strnode(arg);
-      if (arg == Unbound) return;
+      if (arg == Unbound) 
+         {
+         return;
+         }
+
 #ifdef unix
-      if (prefix != NULL) strcat(load_path, "/");
+      if (prefix != NULL)
+         {
+         strcat(load_path, "/");
+         }
 #endif
-      noparitylow_strnzcpy(load_path + (int) strlen(load_path),
-         getstrptr(arg), getstrlen(arg));
-      if (prefix == NULL) strcat(load_path, ".lgo");
+      noparitylow_strnzcpy(
+         load_path + (int) strlen(load_path),
+         getstrptr(arg), 
+         getstrlen(arg));
+
+      if (prefix == NULL) 
+         {
+         strcat(load_path, ".lgo");
+         }
       gcref(arg);
       }
-   tmp_stream = loadstream;
-   tmp_line = vref(current_line);
+
+   FILE * tmp_stream = loadstream;
+   NODE * tmp_line = vref(current_line);
    loadstream = fopen(load_path, "r");
    if (loadstream != NULL)
       {
-
-      save_yield_flag = yield_flag;
+      int save_yield_flag = yield_flag;
       yield_flag = 0; // Why?
       lsetcursorwait(NIL);
 
       while (!feof(loadstream) && NOT_THROWING)
          {
          current_line = reref(current_line, reader(loadstream, ""));
-         exec_list = parser(current_line, TRUE);
+
+         NODE * exec_list = parser(current_line, true);
          val_status = 0;
-         if (exec_list != NIL) eval_driver(exec_list);
+         if (exec_list != NIL) 
+            {
+            eval_driver(exec_list);
+            }
          }
 
       lsetcursorarrow(NIL);
@@ -500,20 +526,15 @@ void silent_load(NODE *arg, char *prefix)
       {
       ndprintf(stdout, "File not found: %t\n", prefix);
       }
+
    loadstream = tmp_stream;
    deref(current_line);
    current_line = tmp_line;
-   IsDirty = IsDirtySave;
+   IsDirty = isDirtySave;
    }
 
 NODE *lload(NODE *arg)
    {
-   FILE *tmp;
-   NODE *tmp_line, *exec_list;
-   NODE *st = valnode__caseobj(Startup);
-   int sv_val_status = val_status;
-   int save_yield_flag;
-
    if (IsDirty)
       {
       if (MainWindowx->CommandWindow->MessageBox(
@@ -527,23 +548,28 @@ NODE *lload(NODE *arg)
          }
       }
 
-   bool IsDirtySave = IsDirty;
-   tmp = loadstream;
-   tmp_line = vref(current_line);
+   NODE *st = valnode__caseobj(Startup);
+   int sv_val_status = val_status;
+
+   bool isDirtySave = IsDirty;
+   FILE * tmp = loadstream;
+   NODE * tmp_line = vref(current_line);
    loadstream = open_file(car(arg), "r");
    if (loadstream != NULL)
       {
-
-      save_yield_flag = yield_flag;
+      int save_yield_flag = yield_flag;
       yield_flag = 0;
       lsetcursorwait(NIL);
 
       while (!feof(loadstream) && NOT_THROWING)
          {
          current_line = reref(current_line, reader(loadstream, ""));
-         exec_list = parser(current_line, TRUE);
+         NODE * exec_list = parser(current_line, true);
          val_status = 0;
-         if (exec_list != NIL) eval_driver(exec_list);
+         if (exec_list != NIL)
+            {
+            eval_driver(exec_list);
+            }
          }
       fclose(loadstream);
 
@@ -554,40 +580,39 @@ NODE *lload(NODE *arg)
       val_status = sv_val_status;
       }
    else
+      {
       err_logo(FILE_ERROR, make_static_strnode("Could not open file"));
+      }
+
    loadstream = tmp;
    deref(current_line);
    current_line = tmp_line;
-   IsDirty = IsDirtySave;
+   IsDirty = isDirtySave;
    return Unbound;
    }
 
 NODE *lreadlist(NODE *)
    {
-   NODE *val;
-
    input_mode = LIST_MODE;
-   val = parser(reader(readstream, ""), FALSE);
+   NODE * val = parser(reader(readstream, ""), false);
    input_mode = NO_MODE;
    if (feof(readstream))
       {
       gcref(val);
-      return (Null_Word);
+      return Null_Word;
       }
-   return (val);
+   return val;
    }
 
 NODE *lreadword(NODE *)
    {
-   NODE *val;
-
-   val = reader(readstream, "RW");     /* fake prompt flags no auto-continue  */
+   NODE * val = reader(readstream, "RW");  // fake prompt flags no auto-continue
    if (feof(readstream))
       {
       gcref(val);
-      return (NIL);
+      return NIL;
       }
-   return (val);
+   return val;
    }
 
 NODE *lreadchar(NODE *)
@@ -616,22 +641,25 @@ NODE *lreadchar(NODE *)
       }
 
    if (readstream->flags & _F_BIN)
-      return (make_intnode(((unsigned char) c)));
+      {
+      return make_intnode(((unsigned char) c));
+      }
    else
+      {
       return make_strnode(
         &c,
         1,
         (getparity(c) ? STRING : BACKSLASH_STRING),
         strnzcpy);
+      }
    }
 
 NODE *lreadchars(NODE *args)
    {
-   unsigned int c, i;
    char *strhead, *strptr;
    NODETYPES type = STRING;
 
-   c = (unsigned int) getint(pos_int_arg(args));
+   unsigned int c = (unsigned int) getint(pos_int_arg(args));
    if (stopping_flag == THROWING) return Unbound;
    charmode_on();
    input_blocking++;
@@ -646,15 +674,18 @@ NODE *lreadchars(NODE *args)
       }
    input_blocking = 0;
 
-   if (stopping_flag == THROWING) return Unbound;
+   if (stopping_flag == THROWING) 
+      {
+      return Unbound;
+      }
 
    if (feof(readstream))
       {
       free(strhead);
-      return (NIL);
+      return NIL;
       }
 
-   for (i = 0; i < c; i++)
+   for (unsigned int i = 0; i < c; i++)
       {
       if (getparity(strptr[i])) 
          {
@@ -669,14 +700,17 @@ NODE *leofp(NODE *)
    {
    ungetc(getc(readstream), readstream);
    if (feof(readstream))
-      return (Truex);
+      {
+      return Truex;
+      }
    else
-      return (Falsex);
+      {
+      return Falsex;
+      }
    }
 
 NODE *lkeyp(NODE *)
    {
-   //    long nc;
 #ifdef mac
    int c;
 #endif
@@ -710,16 +744,13 @@ NODE *lkeyp(NODE *)
          return (Falsex);
 #endif
       }
-   ungetc(getc(readstream), readstream);
-   if (feof(readstream))
-      return (Truex);
-   else
-      return (Falsex);
+
+   return leofp(NIL);
    }
 
 NODE *lreadpos(NODE *)
    {
-   return (make_intnode(ftell(readstream)));
+   return make_intnode(ftell(readstream));
    }
 
 NODE *lsetreadpos(NODE *arg)
@@ -735,7 +766,7 @@ NODE *lsetreadpos(NODE *arg)
 
 NODE *lwritepos(NODE *)
    {
-   return (make_intnode(ftell(writestream)));
+   return make_intnode(ftell(writestream));
    }
 
 NODE *lsetwritepos(NODE *arg)
