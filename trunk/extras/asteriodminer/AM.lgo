@@ -136,6 +136,24 @@ to buttonOn :num :draw
   buttonDraw :num :draw 
 end
 
+to capturekeyboardinput
+  ( keyboardon [ processKey keyboardvalue "true  ]
+               [ processKey keyboardvalue "false ] )
+end
+
+to checkScreen
+  make "x item 3 machine
+  make "y item 4 machine
+  if (:y < 310) [
+    messagebox [Screen Problem] [The screen height needs to be at least 310. Set the Asteroid Miner shortcut accordingly. (Try "C:\\Program Files\\FMSLogofmslogo.exe -H 500 -W 700 -F -L AM.lgo" as the shortcut target.)]
+    bye
+  ]
+  if (or (:x/:y < 1.39) (:x/:y > 1.405)) [
+    messagebox [Screen Problem] [The screen width needs to be 1.4 times the height. Set the Asteroid Miner shortcut accordingly. If the Logo screen fills the desktop, the height or width may be too large, in which case Logo is ignoring it.]
+    bye
+  ]
+end
+
 to clearBox
   setturtle 1
   setpos( list (:displayWidth/2 - :displayWidth)+1 (:displayHeight/2 - :displayHeight)+1 )
@@ -143,22 +161,14 @@ to clearBox
   bitblock :displayWidth+1 :displayHeight+1
 end
 
-to commandPlay
-  mouseoff
-  make "playing "true
-  menuOn "false
-  make "open.quit "true
-end
-
-to commandInstructions
-  keyboardoff
-  make "menuState :menuOn
-  make "doneButtonOn "true
-  make "displayInstructions "true
-  make "open.quit "true
-  menuOn "false
-  buttonOn 1 "false
-  make "bhDone "true
+to commandDone
+  make "displayHighScores "false
+  make "open.quit "false
+  make "displayInstructions "false
+  buttonOn 8 "false
+  buttonOn 7 "false
+  make "menuOn :menuState
+  make "doneButtonOn "false
 end
 
 to commandHighScores
@@ -172,14 +182,22 @@ to commandHighScores
   make "bhDone "true
 end
 
-to commandDone
-  make "displayHighScores "false
-  make "open.quit "false
-  make "displayInstructions "false
-  buttonOn 8 "false
-  buttonOn 7 "false
-  make "menuOn :menuState
-  make "doneButtonOn "false
+to commandInstructions
+  keyboardoff
+  make "menuState :menuOn
+  make "doneButtonOn "true
+  make "displayInstructions "true
+  make "open.quit "true
+  menuOn "false
+  buttonOn 1 "false
+  make "bhDone "true
+end
+
+to commandPlay
+  mouseoff
+  make "playing "true
+  menuOn "false
+  make "open.quit "true
 end
 
 to displayHighScores
@@ -779,19 +797,6 @@ to glint :action
   pu
 end
 
-to checkScreen
-  make "x item 3 machine
-  make "y item 4 machine
-  if (:y < 310) [
-    messagebox [Screen Problem] [The screen height needs to be at least 310. Set the Asteroid Miner shortcut accordingly. (Try "C:\\Program Files\\FMSLogo\fmslogo.exe -H 500 -W 700 -F -L AM.lgo" as the shortcut target.)]
-    bye
-  ]
-  if (or (:x/:y < 1.39) (:x/:y > 1.405)) [
-    messagebox [Screen Problem] [The screen width needs to be 1.4 times the height. Set the Asteroid Miner shortcut accordingly. If the Logo screen fills the desktop, the height or width may be too large, in which case Logo is ignoring it.]
-    bye
-  ]
-end
-
 to hitCrystalCheck
   ;checks all the crystals, whether they are on the screen or not, to keep the speed more constant on slow computers
   repeat :maxCrystals [
@@ -855,11 +860,6 @@ to hitRockCheck
   ]
 end
 
-to capturekeyboardinput
-  ( keyboardon [ processKey keyboardvalue "true  ]
-               [ processKey keyboardvalue "false ] )
-end
-    
 to initGame
   make "score 0
   make "level 1
@@ -1765,6 +1765,24 @@ to rtCnr
   rt 45 tfd 1.4 rt 45
 end
 
+to rungame
+  catch "error [ fullscreen ]
+  icon "Commander
+  icon "Editor
+
+  cs
+  setfocus[MSWLogo Screen]
+  setscreencolor[ 0 0 0 ]
+  checkScreen
+  initMain
+
+  gameLoop
+
+  keyboardoff
+  mouseoff
+  bye
+end
+
 to saveScores
   openwrite "AM_Hiscores
   setwrite "AM_Hiscores
@@ -1917,25 +1935,6 @@ to wrapCheck
   if :shipY > (:displayHeight / 2 ) [
     make "shipY (:shipY - :displayHeight )
   ]
-end
-
-to rungame
-  catch "error [ fullscreen ]
-  icon "Commander
-  icon "Editor
-  bury [ [loadScores saveScores glint rtCnr ltCnr stealth] [startup] [] ]
-
-  cs
-  setfocus[MSWLogo Screen]
-  setscreencolor[ 0 0 0 ]
-  checkScreen
-  initMain
-
-  gameLoop
-
-  keyboardoff
-  mouseoff
-  bye
 end
 
 make "startup [ rungame ]
