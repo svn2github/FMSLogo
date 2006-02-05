@@ -1840,6 +1840,20 @@ PASS: [PENDOWN?] returned true , as expected.
 PASS: [PENMODE] returned reverse , as expected.
 PASS: [ITEM 2 PEN] returned reverse , as expected.
 PASS: [PENDOWN?] returned true , as expected.
+INFO: Executing invalid instruction: [(ARC)]
+PASS: Executing [(ARC)] threw an error
+INFO: Executing invalid instruction: [(ARC 10)]
+PASS: Executing [(ARC 10)] threw an error
+INFO: Executing invalid instruction: [(ARC 10 10 10)]
+PASS: Executing [(ARC 10 10 10)] threw an error
+INFO: Executing invalid instruction: [ARC [10] 10]
+PASS: Executing [ARC [10] 10] threw an error
+INFO: Executing invalid instruction: [ARC {10} 10]
+PASS: Executing [ARC {10} 10] threw an error
+INFO: Executing invalid instruction: [ARC 10 [10]]
+PASS: Executing [ARC 10 [10]] threw an error
+INFO: Executing invalid instruction: [ARC 10 {10}]
+PASS: Executing [ARC 10 {10}] threw an error
 INFO: executing regression test for bug #1388325
 PASS: "bug #1388325 is fixed; 'ELLIPSEARC 1e20 50 50 0' did not crash.
 PASS: The circle was drawn correctly
@@ -2078,14 +2092,14 @@ INFO: [WAIT 0] took 0 ms to execute
 PASS: [WAIT 0 ] waited for 0 ms. Anywhere between 0 ms and 20 is acceptable.
 INFO: [WAIT 1] took 20 ms to execute
 PASS: [WAIT 1 ] waited for 20 ms. Anywhere between 16.6666666666667 ms and 36.6666666666667 is acceptable.
-INFO: [WAIT 6] took 100 ms to execute
-PASS: [WAIT 6 ] waited for 100 ms. Anywhere between 100 ms and 120 is acceptable.
+INFO: [WAIT 6] took 101 ms to execute
+PASS: [WAIT 6 ] waited for 101 ms. Anywhere between 100 ms and 120 is acceptable.
 INFO: [WAIT 10] took 170 ms to execute
 PASS: [WAIT 10 ] waited for 170 ms. Anywhere between 166.666666666667 ms and 186.666666666667 is acceptable.
-INFO: [WAIT 60] took 1002 ms to execute
-PASS: [WAIT 60 ] waited for 1002 ms. Anywhere between 1000 ms and 1020 is acceptable.
-INFO: [WAIT 100] took 1672 ms to execute
-PASS: [WAIT 100 ] waited for 1672 ms. Anywhere between 1666.66666666667 ms and 1686.66666666667 is acceptable.
+INFO: [WAIT 60] took 1001 ms to execute
+PASS: [WAIT 60 ] waited for 1001 ms. Anywhere between 1000 ms and 1020 is acceptable.
+INFO: [WAIT 100] took 1673 ms to execute
+PASS: [WAIT 100 ] waited for 1673 ms. Anywhere between 1666.66666666667 ms and 1686.66666666667 is acceptable.
 INFO: Executing invalid instruction: [(WAIT)]
 PASS: Executing [(WAIT)] threw an error
 INFO: Executing invalid instruction: [(WAIT 10 10)]
