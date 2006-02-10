@@ -4,8 +4,6 @@ SOURCEFILES    = $(wildcard *.xml)
 
 HHC = "C:\Program Files\Help Workshop\hhc.exe"
 
-all : htmlhelp.hhp ;
-
 htmlhelp.hhp : $(SOURCEFILES)  $(HHP_STYLESHEET)
 	xsltproc --nonet $(HHP_STYLESHEET) $(ROOTFILE)
 
@@ -24,4 +22,6 @@ logohelp.rtf : $(SOURCEFILES)
 
 clean :
 	$(RM) logohelp.rtf logohelp.pdf logohelp.dvi *.html *.hhp *.hhc *.chm *~
+
+all : htmlhelp.hhp logohelp.ps logohelp.pdf logohelp.rtf
 
