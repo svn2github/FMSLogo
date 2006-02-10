@@ -13,9 +13,9 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
+Draws a circle based on the turtle's position and the <parameter>radius</parameter> input.
+The center-point of the circle is the turtle's current position.
 CIRCLE does not move the turtle.
-It draws a circle based on the turtles position and the given radius.
-The center-point of the circle will be the turtle's current position.
 </para>
 
 <para>

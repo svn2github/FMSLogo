@@ -13,8 +13,8 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-Moves the turtle along a circle of the given radius.
-The turtle will end in the same position where it started.
+Moves the turtle clockwise along a circle of the given radius.
+The turtle ends in the same position in which it starts.
 </para>
 
 <para>

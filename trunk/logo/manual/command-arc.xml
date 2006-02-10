@@ -13,15 +13,20 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
+Draws an arc (part of a circle) based on the turtle heading, turtle position, and inputs.
+The center-point of the arc is the turtle's current position.
 ARC does not move the turtle.
-It draws an arc (part of a circle) based on the turtle heading, turtle position and given arguments.
-The arc starts at the rear of the turtle heading and sweeps by the amount of <parameter>angle</parameter>.
-The size is based on the <parameter>radius</parameter> parameter.
-The center-point of the arc will be the turtle's current position.
+The arc sweeps an amount given by the <parameter>angle</parameter> input.
+The size (curvature) of the arc is based on the <parameter>radius</parameter> input.
 </para>
 
 <para>
-If the radius is 360, then ARC will draw an entire circle.
+If <parameter>radius</parameter> is positive, then the arc starts <parameter>radius</parameter> turtle steps behind the turtle.
+If <parameter>radius</parameter> is negative, then the arc starts <parameter>radius</parameter> turtle steps in front of the turtle.
+In both cases, the arc sweeps an angle equal to the <parameter>angle</parameter> input.
+If <parameter>angle</parameter> is positive, then the arc is drawn in a clockwise direction.
+If <parameter>angle</parameter> is negative, then the arc is drawn in a counter-clockwise direction.
+If <parameter>angle</parameter> is 360 or greater (or -360 or less), then ARC draws a circle.
 </para>
 
 <para>

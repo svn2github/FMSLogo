@@ -6,20 +6,33 @@
 
 <varlistentry><term>Synopsis</term>
 <listitem>
-<synopsis><command>ELLIPSEARC</command> <parameter>angle</parameter> <parameter>major</parameter> <parameter>minor</parameter> <parameter>startangle</parameter></synopsis>
+<synopsis><command>ELLIPSEARC</command> <parameter>angle</parameter> <parameter>crosswise.semiaxis</parameter> <parameter>inline.semiaxis</parameter> <parameter>startangle</parameter></synopsis>
 </listitem>
 </varlistentry>
 
 <varlistentry><term>Description</term>
 <listitem>
 <para>
+Draws part of (or all of) an ellipse based on the turtle heading, turtle position and given inputs.
 ELLIPSEARC does not move the turtle.
-It draws part of or all of an ellipse based on the turtle heading, turtle position and given arguments.
-The ellipse starts at the rear of the turtle heading and sweeps by the amount of angle starting at <parameter>startangle</parameter>.
-The size is based on the <parameter>minor</parameter> and <parameter>major</parameter> values.
-The <parameter>minor</parameter> parameter is the shortest distance along the ellipse to the center point.
-The <parameter>major</parameter> parameter is the longest distance along the ellipse the center point.
-The center-point of the ellipse will be the turtle's current position.
+The center-point of the elliptic arc is the turtle's current position.
+The elliptic arc starts at a location given by <parameter>startangle</parameter> and sweeps an angle equal to <parameter>angle</parameter> in the clockwise direction.
+The size and shape of the elliptic arc is determined by the <parameter>crosswise.semiaxis</parameter> and <parameter>inline.semiaxis</parameter> inputs.
+The <parameter>crosswise.semiaxis</parameter> input is the distance from the turtle to the ellipse in the direction perpendicular turtle's current heading.
+The <parameter>inline.semiaxis</parameter> input is the distance from the turtle to the ellipse in the direction which the turtle is currently heading.
+</para>
+
+
+<para>
+The <parameter>startangle</parameter> input is relative to the turtle's current heading.
+A <parameter>startangle</parameter> of 0 indicates that the elliptic arc should start <parameter>inline.semiaxis</parameter> turtle steps directly behind the turtle.
+The <parameter>startangle</parameter> is measured in a clockwise direction, so a value of 90 indicates that the elliptic arc should start to the turtle's left.
+The start position will always be on the same ellipse, regardless of <parameter>startangle</parameter>.
+For example, a <parameter>startangle</parameter> of 90 will start <parameter>crosswise.semiaxis</parameter> turtle steps to the turtle's left.
+</para>
+
+<para>
+Normally the elliptic arc is draw clockwise, but if the <parameter>angle</parameter> input is negative, then the elliptic arc is draw counter-clockwise.
 </para>
 
 <para>

@@ -14,12 +14,13 @@
 <listitem>
 <para>
 Moves the turtle along an arc (part of a circle).
-The arc sweeps by the amount of <parameter>angle</parameter>.
-The size of the arc is based on the <parameter>radius</parameter> parameter.
+The arc sweeps an amount given by the <parameter>angle</parameter> input.
+The size (curvature) of the arc is based on the <parameter>radius</parameter> input.
 </para>
 
 <para>
-If the radius is 360, then ARC2 will draw an entire circle.
+If <parameter>angle</parameter> is positive, then the turtle moves forward in a clockwise direction.
+If <parameter>angle</parameter> is negative, then the turtle moves backward in a counter-clockwise direction.
 </para>
 
 <para>
