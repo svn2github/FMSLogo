@@ -1,7 +1,6 @@
 // Check user does not do Down,Up, RR, LR
 // Check user turns between vertices
 // Check number of points
-// Check
 
 
 // 3DSOLID.CPP: Displays a solid representation of a three-dimensional
@@ -51,9 +50,7 @@ void TThreeDSolid::DisposeTree()
 // Sets up the dimensions of the window and various default values
 void TThreeDSolid::AddPolygon(VERTEXLIST* Vertices, COLORREF ColorNdx)
    {
-   POLYGON *t;
-
-   t = new POLYGON;
+   POLYGON *t = new POLYGON;
    t->Vertices = Vertices;
    t->ColorNdx = ColorNdx;
 
@@ -63,7 +60,10 @@ void TThreeDSolid::AddPolygon(VERTEXLIST* Vertices, COLORREF ColorNdx)
 
    AddToBSPTree(t, &Tree/*, NULL*/);
    iPolyCount++;
-   if (status_flag) update_status_vectors();
+   if (status_flag) 
+      {
+      update_status_vectors();
+      }
    }
 
 // Precompute the d term in the plane equation for each polygon.
@@ -80,9 +80,8 @@ void TThreeDSolid::CalcPlaneEq(POLYGON *Poly)
 // Calculate the normals of the POLYGONs
 void TThreeDSolid::CalcPolyNormal(POLYGON *Poly)
    {
-   VECTOR dl, d2;
-   dl = Subtract(Poly->Vertices->Vertex, Poly->Vertices->Next->Vertex);
-   d2 = Subtract(Poly->Vertices->Vertex, Poly->Vertices->Next->Next->Vertex);
+   VECTOR dl = Subtract(Poly->Vertices->Vertex, Poly->Vertices->Next->Vertex);
+   VECTOR d2 = Subtract(Poly->Vertices->Vertex, Poly->Vertices->Next->Next->Vertex);
    Poly->Normal = Cross(dl, d2);
    Normalize(Poly->Normal);
    }
@@ -90,9 +89,7 @@ void TThreeDSolid::CalcPolyNormal(POLYGON *Poly)
 // precompute the centrolds of all the POLYGONs
 void TThreeDSolid::PrecomputeCentroid(POLYGON *Poly)
    {
-   VERTEXLIST* Vertices;
-
-   Vertices = Poly->Vertices;
+   VERTEXLIST* vertices = Poly->Vertices;
 
    Poly->Centroid.x = 0;
    Poly->Centroid.y = 0;
@@ -102,12 +99,12 @@ void TThreeDSolid::PrecomputeCentroid(POLYGON *Poly)
 
    do
       {
-      Poly->Centroid.x += Vertices->Vertex.x;
-      Poly->Centroid.y += Vertices->Vertex.y;
-      Poly->Centroid.z += Vertices->Vertex.z;
-      Vertices = Vertices->Next;
+      Poly->Centroid.x += vertices->Vertex.x;
+      Poly->Centroid.y += vertices->Vertex.y;
+      Poly->Centroid.z += vertices->Vertex.z;
+      vertices = vertices->Next;
       d += 1.0;
-      } while (Vertices != Poly->Vertices);
+      } while (vertices != Poly->Vertices);
 
    Poly->Centroid.x /= d;
    Poly->Centroid.y /= d;
@@ -130,7 +127,10 @@ void TThreeDSolid::DisposeBSP(BSPNode* tree)
 BSPNode* TThreeDSolid::MakeBSPNode(POLYGON* Poly)
    {
    BSPNode *node = new BSPNode;
-   if (!node) return node;
+   if (!node)
+      {
+      return node;
+      }
    node->Poly = Poly;    // Point to the POLYGON's data
    node->Outside = 0;
    node->Inside = 0;
@@ -203,10 +203,7 @@ void TThreeDSolid::Intersect(
 
 void TThreeDSolid::AddPoint(VERTEXLIST** v, Point &pt)
    {
-   VERTEXLIST* vp;
-   VERTEXLIST* vn;
-
-   vn = new VERTEXLIST;
+   VERTEXLIST * vn = new VERTEXLIST;
 
    vn->Vertex = pt;
 #ifdef SHARE
@@ -218,7 +215,7 @@ void TThreeDSolid::AddPoint(VERTEXLIST** v, Point &pt)
 
    if (*v)
       {
-      vp = (*v)->Prev;
+      VERTEXLIST* vp = (*v)->Prev;
       (*v)->Prev = vn;
       vp->Next = vn;
       vn->Next = *v;
@@ -234,17 +231,14 @@ void TThreeDSolid::AddPoint(VERTEXLIST** v, Point &pt)
 
 void TThreeDSolid::RemovePoint(VERTEXLIST* v)
    {
-   VERTEXLIST* vp;
-   VERTEXLIST* vn;
-
-   vp = v->Prev;
-   vn = v->Next;
+   VERTEXLIST * vp = v->Prev;
+   VERTEXLIST * vn = v->Next;
 //   if (vp == v)
-//		{
+//      {
 ////      vn = v->Next;
 //      printfx("Trouble");
-//		return;
-//		}
+//      return;
+//      }
    delete v;
    vp->Next = vn;
    vn->Prev = vp;
@@ -256,26 +250,26 @@ void TThreeDSolid::AddPoint(VERTEXLIST** v, Point &pt)
    VERTEXLIST* vn;
 
    if (*v)
-		{
+      {
       vn = *v;
 
-		while (vn->Next) vn = vn->Next;
+      while (vn->Next) vn = vn->Next;
       vn->Next = new VERTEXLIST;
-		vn = vn->Next;
-		}
-	else
-		{
+      vn = vn->Next;
+      }
+   else
+      {
       *v = new VERTEXLIST;
 
       vn = *v;
-		}
+      }
 
    vn->Vertex = pt;
    vn->Next = NULL;
 #ifdef SHARE
-	vn->Share = NULL;
+   vn->Share = NULL;
 #endif
-	vn->Hack = 0;
+   vn->Hack = 0;
    }
 */
 
@@ -333,12 +327,12 @@ void TThreeDSolid::DisposeFalseShares(VERTEXLIST* list)
 //         sprintf(buff, "ShareX = %ld", (unsigned long) (curr->Share));
 //         printfx(buff);
          if (curr->Share->Share == NULL)
-    			{
-//          char buff[64];
-//		   	sprintf(buff, "ShareY = %ld", (unsigned long) (curr->Share));
-//			   printfx(buff);
-   			RemovePoint(curr->Share);
-	   		}
+            {
+//            char buff[64];
+//            sprintf(buff, "ShareY = %ld", (unsigned long) (curr->Share));
+//            printfx(buff);
+            RemovePoint(curr->Share);
+            }
          }
 #endif
       curr = curr->Next;
@@ -837,20 +831,14 @@ void TThreeDSolid::AddToBSPTree(POLYGON* Poly, BSPNode** Root)
 // Convert world coordinates to display coordinates
 BOOL TThreeDSolid::WorldToDisplay(double x, double y, double z, POINT& disp)
    {
-   double xc;
-   double yc;
-   double zc;
-   double xm;
-   double ym;
-
-   xc = (x * A1.x + A1.y * y + A1.z * z + Offset.x) * DVal;
-   yc = (x * A2.x + A2.y * y + A2.z * z + Offset.y) * DVal;
-   zc = (x * A3.x + A3.y * y + A3.z * z + Offset.z);
+   double xc = (x * A1.x + A1.y * y + A1.z * z + Offset.x) * DVal;
+   double yc = (x * A2.x + A2.y * y + A2.z * z + Offset.y) * DVal;
+   double zc = (x * A3.x + A3.y * y + A3.z * z + Offset.z);
 
    if (zc == 0.0) return FALSE;
 
-   xm = xc /  zc;
-   ym = yc / -zc;
+   double xm = xc /  zc;
+   double ym = yc / -zc;
 
    if (xm >  1.0) return FALSE;
    else if (xm < -1.0) return FALSE;
@@ -872,11 +860,9 @@ BOOL TThreeDSolid::WorldToDisplay(double x, double y, double z, POINT& disp)
 // desired color of the polygon.
 COLORREF TThreeDSolid::ComputeColor(Point& p, VECTOR& normal, COLORREF colorNdx)
    {
-   VECTOR l;
-   double lDotN;
-   l = Subtract(Light, p);  // Find vector from light to point p
+   VECTOR l = Subtract(Light, p);  // Find vector from light to point p
    Normalize(l);
-   lDotN = Dot(l, normal);
+   double lDotN = Dot(l, normal);
    // Calculate diffuse lighting contribution to object's color
    if (lDotN <= 0) lDotN *= -Diffuse * NUM_SHADES;
    else lDotN *= Diffuse * NUM_SHADES;
@@ -897,18 +883,14 @@ POINT t[MAXVERT];   // Screen coordinates of POLYGON to display
 // Display the POLYGON
 void TThreeDSolid::DisplayPolygon(POLYGON* Poly)
    {
-   int i;
-   VERTEXLIST* Vertices;
-   HBRUSH hBrush;
-
    // PrecomputeCentroid(Poly);
 
-   COLORREF Color = ComputeColor(Poly->Centroid, Poly->Normal, Poly->ColorNdx);
+   COLORREF color = ComputeColor(Poly->Centroid, Poly->Normal, Poly->ColorNdx);
 
    if (EnablePalette)
       {
       WORD palPrevNumEntries = MyLogPalette->palNumEntries;
-      Color = LoadColor(GetRValue(Color), GetGValue(Color), GetBValue(Color));
+      color = LoadColor(GetRValue(color), GetGValue(color), GetBValue(color));
 
       if (palPrevNumEntries != MyLogPalette->palNumEntries)
          {
@@ -918,41 +900,47 @@ void TThreeDSolid::DisplayPolygon(POLYGON* Poly)
          }
       }
 
-   Vertices = Poly->Vertices;
+   VERTEXLIST * vertices = Poly->Vertices;
 
-   i = 0;
+   int i = 0;
    do
       {
-      if (!WorldToDisplay(Vertices->Vertex.x, Vertices->Vertex.y, Vertices->Vertex.z, t[i]))
+      if (!WorldToDisplay(vertices->Vertex.x, vertices->Vertex.y, vertices->Vertex.z, t[i]))
          {
          i = 0;
          break;
          }
-      if ((i < (MAXVERT-1)) && ((i == 0) || (t[i-1].x != t[i].x) || (t[i-1].y != t[i].y))) i++;
-      Vertices = Vertices->Next;
-      } while (Vertices != Poly->Vertices);
+      if ((i < (MAXVERT-1)) && ((i == 0) || (t[i-1].x != t[i].x) || (t[i-1].y != t[i].y))) 
+         {
+         i++;
+         }
+      vertices = vertices->Next;
+      } while (vertices != Poly->Vertices);
 
-//	t[i].x = t[0].x;
+// t[i].x = t[0].x;
 // t[i].y = t[0].y;    // Close off the POLYGON
 
 #ifdef NOASMX
-   hBrush = CreateSolidBrush(rand());
+   HBRUSH hBrush = CreateSolidBrush(rand());
 #else
-   hBrush = CreateSolidBrush(Color);
+   HBRUSH hBrush = CreateSolidBrush(color);
 #endif
    HBRUSH oldBrush = (HBRUSH) SelectObject(MemDC, hBrush);
 
 //if (Poly->ColorNdx != 0x000000FF)
-   if (i > 2) Polygon(MemDC, t, i);    // Display the POLYGON
+   if (i > 2)
+      {
+      Polygon(MemDC, t, i);    // Display the POLYGON
+      }
 
 #ifdef NOASMX
-   Vertices = Poly->Vertices;
+   vertices = Poly->Vertices;
 
    do
       {
-      if (Vertices->Hack == 1)
+      if (vertices->Hack == 1)
          {
-         WorldToDisplay(Vertices->Vertex.x, Vertices->Vertex.y, Vertices->Vertex.z, t[0]);
+         WorldToDisplay(vertices->Vertex.x, vertices->Vertex.y, vertices->Vertex.z, t[0]);
          t[0].x = t[0].x - 4 + (rand() % 9);
          t[0].y = t[0].y - 4 + (rand() % 9);
          SetPixel(MemDC, t[0].x  , t[0].y  , 0x0000FF00);
@@ -961,9 +949,9 @@ void TThreeDSolid::DisplayPolygon(POLYGON* Poly)
          SetPixel(MemDC, t[0].x  , t[0].y-1, 0x0000FF00);
          SetPixel(MemDC, t[0].x-1, t[0].y  , 0x0000FF00);
          }
-      else if (Vertices->Hack == 2)
+      else if (vertices->Hack == 2)
          {
-         WorldToDisplay(Vertices->Vertex.x, Vertices->Vertex.y, Vertices->Vertex.z, t[0]);
+         WorldToDisplay(vertices->Vertex.x, vertices->Vertex.y, vertices->Vertex.z, t[0]);
          t[0].x = t[0].x - 4 + (rand() % 9);
          t[0].y = t[0].y - 4 + (rand() % 9);
          SetPixel(MemDC, t[0].x  , t[0].y  , 0x000000FF);
@@ -975,9 +963,9 @@ void TThreeDSolid::DisplayPolygon(POLYGON* Poly)
             SetPixel(MemDC, t[0].x-i, t[0].y  , 0x000000FF);
             }
          }
-      else if (Vertices->Share)
+      else if (vertices->Share)
          {
-         WorldToDisplay(Vertices->Vertex.x, Vertices->Vertex.y, Vertices->Vertex.z, t[0]);
+         WorldToDisplay(vertices->Vertex.x, vertices->Vertex.y, vertices->Vertex.z, t[0]);
          t[0].x = t[0].x - 4 + (rand() % 9);
          t[0].y = t[0].y - 4 + (rand() % 9);
          SetPixel(MemDC, t[0].x  , t[0].y  , 0x00FF0000);
@@ -988,7 +976,7 @@ void TThreeDSolid::DisplayPolygon(POLYGON* Poly)
          }
       else
          {
-         WorldToDisplay(Vertices->Vertex.x, Vertices->Vertex.y, Vertices->Vertex.z, t[0]);
+         WorldToDisplay(vertices->Vertex.x, vertices->Vertex.y, vertices->Vertex.z, t[0]);
          t[0].x = t[0].x - 4 + (rand() % 9);
          t[0].y = t[0].y - 4 + (rand() % 9);
          SetPixel(MemDC, t[0].x  , t[0].y  , 0x00FFFFFF);
@@ -997,11 +985,11 @@ void TThreeDSolid::DisplayPolygon(POLYGON* Poly)
          SetPixel(MemDC, t[0].x  , t[0].y-1, 0x00FFFFFF);
          SetPixel(MemDC, t[0].x-1, t[0].y  , 0x00FFFFFF);
          }
-      Vertices = Vertices->Next;
-      } while (Vertices != Poly->Vertices);
+      vertices = Vertices->Next;
+      } while (vertices != Poly->Vertices);
 #endif
 
-// NormalPen.lopnColor = Color;
+// NormalPen.lopnColor = color;
 // NormalPen.lopnWidth.x = 0;
 
 // HPEN hPen = CreatePenIndirect(&NormalPen);
