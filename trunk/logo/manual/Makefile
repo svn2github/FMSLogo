@@ -25,3 +25,7 @@ clean :
 
 all : htmlhelp.hhp logohelp.ps logohelp.pdf logohelp.rtf
 
+
+test :
+	perl -W check-manual.pl
+
