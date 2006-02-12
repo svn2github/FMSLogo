@@ -18,86 +18,9 @@ to aaa
 ; methods that have not yet been invented or conceived.
 end
 
-make "GameBoardTemplate {
-   XXXXXXXXXXXXXXXXX
-   X3......X......1X
-   X.XXXXX.X.XXXXX.X
-   X...X.......X...X
-   XXX.X.XXXXX.X.XXX
-   X...4.......2...X
-   X.XXXXXXXXXXXXX.X
-   X...X.......X...X
-   X.X.X.XX.XX.X.X.X
-   X.X...X...X...X.X
-   X.XXXXX.X.XXXXX.X
-   X.......X.......X
-   XXX.XXXXXXXXX.XXX
-   X...X.......X...X
-   X.X.X.XXXXX.X.X.X
-   X.X.X.......X.X.X
-   X.X.XXX.X.XXX.X.X
-   X.......X.......X
-   X.XXX.XXXXX.XXX.X
-   XP..............X
-   XXXXXXXXXXXXXXXXX
-}
-
-
-Make "IsGoingUp    "false
-Make "IsGoingRight "false
-Make "IsGoingLeft  "false
-Make "IsGoingDown  "false
-
-Make "EnemyStartX 15
-Make "EnemyStartY 20
-
-Make "EnemyWaitCounterMax 2
-
-Make "GridSize 20
-Make "GameBoardWidth 0
-Make "GameBoardHeight 0
-
-Make "TotalPellets          0
-Make "TotalPelletsRemaining 0
-
-to GetBoardSquare :x :y
-    output item :x (item :y :GameBoard)
-end
-
-to SetBoardSquare :x :y :value
-    setitem :x item :y :GameBoard :value
-end
-
 to BoardSquareIsWall :x :y
    output (GetBoardSquare :x :y) = "X
 end
-
-
-to MoveToGrid :X :Y
-    penup
-    setxy :GridSize * (:X  - :GameBoardWidth / 2)     :GridSize * (:Y - :GameBoardHeight / 2)
-    pendown
-end
-
-to MoveToGridPlusOffset :X :Y :Offset
-    penup
-    setxy :GridSize * (:X - :GameBoardWidth / 2 +  1 / :Offset)  :GridSize * (:Y - :GameBoardHeight / 2 + 1 / :Offset)
-    pendown
-end
-
-to MoveToGridCenter :X :Y
-    penup
-    MoveToGridPlusOffset :X :Y 2
-    pendown
-end
-
-to MoveToGridQuarter :X :Y
-    penup
-    MoveToGridPlusOffset :X :Y 4
-    pendown
-end
-
-
 
 to DrawEnemy :Enemy
    localmake "x item 1 :Enemy
@@ -107,6 +30,54 @@ to DrawEnemy :Enemy
 
    setpencolor 0
    repeat 4 [ fd :gridsize / 2 rt 90 ]
+end
+
+to DrawGameBoard
+   local [i j]
+
+   ; now draw the game board
+   for [j 1 :GameBoardHeight ] [
+      
+      make "gameboard.row item :j :GameBoard
+      for [i 1 :GameBoardWidth ] [
+  
+          make "boardsquare item :i :gameboard.row
+          if :boardsquare = "X [
+            DrawWall :i :j
+          ]
+          if :boardsquare = ". [
+            DrawPellet :i :j
+          ]
+      ]
+   ]
+
+end
+
+to DrawPellet :X :Y
+   MoveToGridCenter :X :Y
+
+   setpencolor 0
+   setpensize [2 2]
+   fd 1
+   setpensize [1 1]
+end
+
+to DrawPlayer :X :Y
+   MoveToGridCenter :X :Y
+
+   setpencolor 0
+   circle :GridSize / 2 - 2
+end
+
+to DrawWall :X :Y
+   MoveToGrid :X :Y
+
+   setpencolor 0
+   repeat 4 [ fd :gridsize rt 90 ]
+end
+
+to EndKeyboardCapture
+   keyboardoff
 end
 
 to EraseEnemy :Enemy
@@ -119,38 +90,6 @@ to EraseEnemy :Enemy
    repeat 4 [ fd :GridSize / 2 rt 90 ]
 end
 
-
-to ErasePlayer :X :Y
-   MoveToGridCenter :X :Y
-
-   setpencolor screencolor
-   circle :GridSize / 2 - 2
-end
-
-to DrawPlayer :X :Y
-   MoveToGridCenter :X :Y
-
-   setpencolor 0
-   circle :GridSize / 2 - 2
-end
-
-
-to DrawWall :X :Y
-   MoveToGrid :X :Y
-
-   setpencolor 0
-   repeat 4 [ fd :gridsize rt 90 ]
-end
-
-to DrawPellet :X :Y
-   MoveToGridCenter :X :Y
-
-   setpencolor 0
-   setpensize [2 2]
-   fd 1
-   setpensize [1 1]
-end
-
 to ErasePellet :X :Y
    MoveToGridCenter :X :Y
 
@@ -160,6 +99,54 @@ to ErasePellet :X :Y
    setpensize [1 1]
 end
 
+to ErasePlayer :X :Y
+   MoveToGridCenter :X :Y
+
+   setpencolor screencolor
+   circle :GridSize / 2 - 2
+end
+
+to GameLoop
+
+   local [currentsquare]
+
+   make "IsDone "false
+
+   make "IsGoingUp    "false
+   make "IsGoingRight "false
+   make "IsGoingLeft  "false
+   make "IsGoingDown  "false
+
+   InitGameBoard
+
+   make "EnemyWaitCounter :EnemyWaitCounterMax
+
+   make "PlayerX :PlayerStartX
+   make "PlayerY :PlayerStartY
+
+   DrawGameBoard
+   DrawPlayer :PlayerX :PlayerY
+   DrawEnemy  :Enemy1
+   DrawEnemy  :Enemy2
+   DrawEnemy  :Enemy3
+   DrawEnemy  :Enemy4
+
+
+   StartKeyboardCapture
+
+   while [ not :IsDone ] [
+
+      UpdateNextFrame
+      wait 6 ; 10 ms
+   ]
+
+   EndKeyboardCapture
+
+end
+
+to GetBoardSquare :x :y
+    output item :x (item :y :GameBoard)
+end
 
 to InitGameBoard
    local [i j gameboardtemplate.row boardsquare]
@@ -237,66 +224,48 @@ to InitGameBoard
 
 end
 
-to DrawGameBoard
-   local [i j]
+to InitializeGameData
+   make "GameBoardTemplate {
+      XXXXXXXXXXXXXXXXX
+      X3......X......1X
+      X.XXXXX.X.XXXXX.X
+      X...X.......X...X
+      XXX.X.XXXXX.X.XXX
+      X...4.......2...X
+      X.XXXXXXXXXXXXX.X
+      X...X.......X...X
+      X.X.X.XX.XX.X.X.X
+      X.X...X...X...X.X
+      X.XXXXX.X.XXXXX.X
+      X.......X.......X
+      XXX.XXXXXXXXX.XXX
+      X...X.......X...X
+      X.X.X.XXXXX.X.X.X
+      X.X.X.......X.X.X
+      X.X.XXX.X.XXX.X.X
+      X.......X.......X
+      X.XXX.XXXXX.XXX.X
+      XP..............X
+      XXXXXXXXXXXXXXXXX
+   }
+ 
+   Make "IsGoingUp    "false
+   Make "IsGoingRight "false
+   Make "IsGoingLeft  "false
+   Make "IsGoingDown  "false
 
-   ; now draw the game board
-   for [j 1 :GameBoardHeight ] [
-      
-      make "gameboard.row item :j :GameBoard
-      for [i 1 :GameBoardWidth ] [
-  
-          make "boardsquare item :i :gameboard.row
-          if :boardsquare = "X [
-            DrawWall :i :j
-          ]
-          if :boardsquare = ". [
-            DrawPellet :i :j
-          ]
-      ]
-   ]
+   Make "EnemyStartX 15
+   Make "EnemyStartY 20
 
+   Make "EnemyWaitCounterMax 2
+
+   Make "GridSize 20
+   Make "GameBoardWidth 0
+   Make "GameBoardHeight 0
+
+   Make "TotalPellets          0
+   Make "TotalPelletsRemaining 0
 end
-
-to ProcessKeyEvent :Key :IsKeyDown
-
-    if :Key=ascii "I [ make "IsGoingUp    :IsKeyDown ]
-    if :Key=ascii "K [ make "IsGoingRight :IsKeyDown ]
-    if :Key=ascii "J [ make "IsGoingLeft  :IsKeyDown ]
-    if :Key=ascii "M [ make "IsGoingDown  :IsKeyDown ]
-    if :Key=ascii "Q [ make "IsDone       "true      ]
-
-end
-
-to StartKeyboardCapture
-   (keyboardon [ProcessKeyEvent keyboardvalue "true]
-               [ProcessKeyEvent keyboardvalue "false])
-end
-
-to EndKeyboardCapture
-   keyboardoff
-end
-
-to TryToMoveInDirection :X :Y :DirectionList
-
-  foreach :DirectionList [
-    if and (? = "left)  (not BoardSquareIsWall :X - 1 :Y) [ 
-       output ?
-    ]
-    if and (? = "right) (not BoardSquareIsWall :X + 1 :Y) [ 
-       output ?
-    ]
-    if and (? = "up)    (not BoardSquareIsWall :X     :Y + 1) [ 
-       output ?
-    ]
-    if and (? = "down)  (not BoardSquareIsWall :X     :Y - 1) [ 
-       output ?
-    ]
-  ]
-
-end
-
-
 
 to MoveEnemy :Enemy
 
@@ -362,12 +331,91 @@ to MoveEnemy :Enemy
    output :Enemy
 end
 
+to MoveToGrid :X :Y
+    penup
+    setxy :GridSize * (:X  - :GameBoardWidth / 2)     :GridSize * (:Y - :GameBoardHeight / 2)
+    pendown
+end
+
+to MoveToGridCenter :X :Y
+    penup
+    MoveToGridPlusOffset :X :Y 2
+    pendown
+end
+
+to MoveToGridPlusOffset :X :Y :Offset
+    penup
+    setxy :GridSize * (:X - :GameBoardWidth / 2 +  1 / :Offset)  :GridSize * (:Y - :GameBoardHeight / 2 + 1 / :Offset)
+    pendown
+end
+
+to MoveToGridQuarter :X :Y
+    penup
+    MoveToGridPlusOffset :X :Y 4
+    pendown
+end
+
 to PlayerEnemyCollision :Enemy 
    output and (:PlayerX = item 1 :Enemy)  (:PlayerY = item 2 :Enemy)
 end 
 
+to ProcessKeyEvent :Key :IsKeyDown
 
-; handles a single game tick
+    if :Key=ascii "I [ make "IsGoingUp    :IsKeyDown ]
+    if :Key=ascii "K [ make "IsGoingRight :IsKeyDown ]
+    if :Key=ascii "J [ make "IsGoingLeft  :IsKeyDown ]
+    if :Key=ascii "M [ make "IsGoingDown  :IsKeyDown ]
+    if :Key=ascii "Q [ make "IsDone       "true      ]
+
+end
+
+to RunGame
+
+  InitializeGameData
+
+  catch "error [ fullscreen ]
+  icon "Commander
+  icon "Editor
+
+  clearscreen
+  hideturtle
+  setfocus [MSWLogo Screen]
+
+  GameLoop
+
+  catch "error [ splitscreen ]
+  unicon "Commander
+
+end
+
+to SetBoardSquare :x :y :value
+    setitem :x item :y :GameBoard :value
+end
+
+to StartKeyboardCapture
+   (keyboardon [ProcessKeyEvent keyboardvalue "true]
+               [ProcessKeyEvent keyboardvalue "false])
+end
+
+to TryToMoveInDirection :X :Y :DirectionList
+
+  foreach :DirectionList [
+    if and (? = "left)  (not BoardSquareIsWall :X - 1 :Y) [ 
+       output ?
+    ]
+    if and (? = "right) (not BoardSquareIsWall :X + 1 :Y) [ 
+       output ?
+    ]
+    if and (? = "up)    (not BoardSquareIsWall :X     :Y + 1) [ 
+       output ?
+    ]
+    if and (? = "down)  (not BoardSquareIsWall :X     :Y - 1) [ 
+       output ?
+    ]
+  ]
+
+end
+
 to UpdateNextFrame
 
    make "NewPlayerX :PlayerX
@@ -481,56 +529,4 @@ to UpdateNextFrame
 
 end
 
-to GameLoop
-
-   local [currentsquare]
-
-   make "IsDone "false
-
-   make "IsGoingUp    "false
-   make "IsGoingRight "false
-   make "IsGoingLeft  "false
-   make "IsGoingDown  "false
-
-   InitGameBoard
-
-   make "EnemyWaitCounter :EnemyWaitCounterMax
-
-   make "PlayerX :PlayerStartX
-   make "PlayerY :PlayerStartY
-
-   DrawGameBoard
-   DrawPlayer :PlayerX :PlayerY
-   DrawEnemy  :Enemy1
-   DrawEnemy  :Enemy2
-   DrawEnemy  :Enemy3
-   DrawEnemy  :Enemy4
-
-
-   StartKeyboardCapture
-
-   while [ not :IsDone ] [
-
-      UpdateNextFrame
-      wait 6 ; 10 ms
-   ]
-
-   EndKeyboardCapture
-
-end
-
-to RunGame
-  catch "error [ fullscreen ]
-  icon "Commander
-  icon "Editor
-
-  clearscreen
-  hideturtle
-  setfocus [MSWLogo Screen]
-
-  GameLoop
-
-end
-
-make "startup [ RunGame ]
-
+Make "startup [RunGame]
