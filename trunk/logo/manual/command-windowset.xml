@@ -94,8 +94,8 @@ The mode parameter must be an integer.  The following table details acceptable v
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>TO MAXIMIZE
-WINDOWSET "&PRODUCTNAME; 0
+<programlisting><userinput>TO MAXIMIZE
+  WINDOWSET "&PRODUCTNAME; 0
   LABEL [Back in 2 seconds]
   WAIT 120
   WINDOWSET "&PRODUCTNAME; 1
