@@ -28,6 +28,8 @@ Part II) New features/bugs fixed:
     o Fix bug #1388325; ELLIPSEARC no longer crashes on large angles.
     o Fix bug #1377856; ELLIPSEARC can now be paused/halted.
     o Fix bug #1395734; the editor is no longer double-spaced on error.
+    o Fix bug #1429970; WINDOWSET now throws error on bad input.
+    o Fix bug #1429960; ICON can minimize the commander when its docked.
     o Fix bug #1327284; the documentation is now distributed as a .CHM.
     o Fix bug #1399926; SETCURSORNOWAIT is now documented.
     o Fix bug #1399929; TONE is now documented.
