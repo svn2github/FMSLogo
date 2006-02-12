@@ -30,6 +30,7 @@ LOAD "controlflow.lgo
 LOAD "perspective.lgo
 LOAD "scrunch.lgo
 LOAD "help.lgo
+LOAD "window.lgo
 
 MAKE "testlog []
 
@@ -172,6 +173,7 @@ TO TESTALL
   PERSPECTIVETEST ; from perspective.lgo
   SCRUNCHTEST     ; from scrunch.lgo
   HELPTEST        ; from help.lgo
+  WINDOWTEST      ; from window.lgo
 
   REPORTTESTUNINITIALIZE
 

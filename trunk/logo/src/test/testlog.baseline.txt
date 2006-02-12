@@ -2092,8 +2092,8 @@ INFO: [WAIT 0] took 0 ms to execute
 PASS: [WAIT 0 ] waited for 0 ms. Anywhere between 0 ms and 20 is acceptable.
 INFO: [WAIT 1] took 20 ms to execute
 PASS: [WAIT 1 ] waited for 20 ms. Anywhere between 16.6666666666667 ms and 36.6666666666667 is acceptable.
-INFO: [WAIT 6] took 101 ms to execute
-PASS: [WAIT 6 ] waited for 101 ms. Anywhere between 100 ms and 120 is acceptable.
+INFO: [WAIT 6] took 100 ms to execute
+PASS: [WAIT 6 ] waited for 100 ms. Anywhere between 100 ms and 120 is acceptable.
 INFO: [WAIT 10] took 170 ms to execute
 PASS: [WAIT 10 ] waited for 170 ms. Anywhere between 166.666666666667 ms and 186.666666666667 is acceptable.
 INFO: [WAIT 60] took 1001 ms to execute
@@ -2176,3 +2176,18 @@ PASS: "HELP TO" opened the documentation for TO
 PASS: "(HELP)" opened the manual to the table of contents
 INFO: Executing invalid instruction: [(HELP "TOO "MANY)]
 PASS: Executing [(HELP "TOO "MANY)] threw an error
+PASS: ICON "Commander minimized the commander when it was docked
+INFO: Executing invalid instruction: [(WINDOWSET)]
+PASS: Executing [(WINDOWSET)] threw an error
+INFO: Executing invalid instruction: [(WINDOWSET "FMSLogo)]
+PASS: Executing [(WINDOWSET "FMSLogo)] threw an error
+INFO: Executing invalid instruction: [(WINDOWSET "FMSLogo 0 "toomany)]
+PASS: Executing [(WINDOWSET "FMSLogo 0 "toomany)] threw an error
+INFO: Executing invalid instruction: [WINDOWSET "FMSLogo [1]]
+PASS: Executing [WINDOWSET "FMSLogo [1]] threw an error
+INFO: Executing invalid instruction: [WINDOWSET "FMSLogo {1}]
+PASS: Executing [WINDOWSET "FMSLogo {1}] threw an error
+INFO: Executing invalid instruction: [WINDOWSET "FMSLogo "one]
+PASS: Executing [WINDOWSET "FMSLogo "one] threw an error
+INFO: Executing invalid instruction: [WINDOWSET "FMSLogo -1]
+PASS: Executing [WINDOWSET "FMSLogo -1] threw an error
