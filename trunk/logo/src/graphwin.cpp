@@ -1177,7 +1177,7 @@ NODE *lturtlemode(NODE *)
    {
    ASSERT_TURTLE_INVARIANT
 
-   int temp;
+   FIXNUM temp;
 
    // return the logo "code" for the bit mode
 
@@ -1198,7 +1198,7 @@ NODE *lturtlemode(NODE *)
           temp=0;
       }
 
-   return (make_intnode((FIXNUM) temp));
+   return make_intnode(temp);
    }
 
 NODE *lsetturtlemode(NODE *arg)
@@ -2174,21 +2174,31 @@ NODE *lgetfocus(NODE *)
 
 NODE *lwindowset(NODE *args)
    {
-   char textbuf[MAX_BUFFER_SIZE];
-   cnv_strnode_string(textbuf, args);
+   char caption[MAX_BUFFER_SIZE];
+   cnv_strnode_string(caption, args);
 
-   int value = getint(pos_int_arg(cdr(args)));
+   int mode = getint(pos_int_arg(cdr(args)));
 
-   // get handle to Window with arg as Caption
-   HWND EditH = FindWindow(NULL, textbuf);
-
-   // if it exists set its state it.
-   if (EditH != NULL)
+   if (NOT_THROWING)
       {
-      ShowWindow(EditH, value);
-      }
+      // For backward compatibility with MSWLogo, we must undock
+      // the commander into its own window so that window operations
+      // on it have the expected effect.
+      if (0 == stricmp(caption, "commander"))
+         {
+         MainWindowx->UndockCommanderWindow();
+         }
 
-   JustDidEdit = true;
+      // get handle to Window with arg as Caption
+      HWND window = FindWindow(NULL, caption);
+
+      // if it exists set its state it.
+      if (window != NULL)
+         {
+         ShowWindow(window, mode);
+         JustDidEdit = true;
+         }
+      }
 
    return Unbound;
    }
