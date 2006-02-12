@@ -192,14 +192,15 @@ long LoadColor(int dpenr, int dpeng, int dpenb)
    {
 
    /* convert to color and find nearest match */
-   long color = PALETTERGB(dpenr, dpeng, dpenb);
+   COLORREF color = PALETTERGB(dpenr, dpeng, dpenb);
    int Index = GetNearestPaletteIndex(ThePalette, color);
 
    /* if not exact and room for more then allocate it */
    if ((PALETTERGB(
                MyLogPalette->palPalEntry[Index].peRed,
                MyLogPalette->palPalEntry[Index].peGreen,
-               MyLogPalette->palPalEntry[Index].peBlue) != color) && (MyLogPalette->palNumEntries < (MaxColors - 1)))
+               MyLogPalette->palPalEntry[Index].peBlue) != color) && 
+       (MyLogPalette->palNumEntries < (MaxColors - 1)))
       {
 
       /* Why do check again? */
@@ -667,12 +668,11 @@ void TMyApp::EvSysColorChange()
 
 void MyMessageScan()
    {
-   MSG msg;
-
    /* depending on yield flag check for messages */
 
    if (yield_flag)
       {
+      MSG msg;
       while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
          {
          TranslateMessage(&msg);
@@ -815,10 +815,11 @@ WinMain(
             {
             // bring running instance to the the foreground
             ::SetForegroundWindow(runningInstance);
-            if (::IsIconic(runningInstance))
+            if ( ::IsIconic(runningInstance) ||
+                !::IsWindowVisible(runningInstance))
                {
-               // the running instance is minimized, so restore it
-               ::ShowWindow(runningInstance, SW_RESTORE);
+               // the running instance is not visible, so restore it
+               ::ShowWindow(runningInstance, SW_SHOWDEFAULT);
                }
                
             CloseHandle(singleInstanceMutex);
