@@ -14,11 +14,12 @@
 <listitem>
 <para>
 Sets the "mode" (for example, hidden, visible, etc.) for a window whose title matches <parameter>caption</parameter>.
-This command is designed for experts, you may loose control of &PRODUCTNAME; if you are not careful, save your work frequently.
+This command is designed for experts, you may lose control of &PRODUCTNAME; if you are not careful, so save your work frequently.
 </para>
 
 <para>
-The mode parameter must be an integer.  The following table details acceptable values and their meaning.
+The <parameter>mode</parameter> input must be an integer.
+The following table details acceptable values and their meanings.
 
 <informaltable frame='all'>
   <tgroup cols='2'>
