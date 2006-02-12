@@ -95,14 +95,17 @@ The following table details acceptable values and their meanings.
 
 <varlistentry><term>Example</term>
 <listitem>
-<programlisting><userinput>TO MAXIMIZE
-  WINDOWSET "&PRODUCTNAME; 0
+<programlisting><userinput>TO HIDEANDRESTORE
+  CLEARSCREEN
+  RIGHT 90
   LABEL [Back in 2 seconds]
   WAIT 120
-  WINDOWSET "&PRODUCTNAME; 1
+  WINDOWSET "&PRODUCTNAME; 0 ; hide
+  WAIT 120
+  WINDOWSET "&PRODUCTNAME; 1 ; restore
 END
 
-MAXIMIZE</userinput>
+HIDEANDRESTORE</userinput>
 </programlisting>
 </listitem>
 </varlistentry>
