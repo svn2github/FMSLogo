@@ -243,7 +243,7 @@ extern void MyMessageScan(void);
 extern void putcombobox(char *str);
 extern void putfileeditcombo(char *str);
 extern void clearcombobox(void);
-extern long LoadColor(int dpenr, int dpeng, int dpenb);
+extern COLORREF LoadColor(int dpenr, int dpeng, int dpenb);
 extern void exit_program(void);
 extern bool promptuser(char *str, const char *prompt);
 extern void getcombobox(char *str);

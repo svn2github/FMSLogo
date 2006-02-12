@@ -601,9 +601,9 @@ extern int BaseUnitsx;
 extern int BaseUnitsy;
 extern int current_write_mode;
 
-extern long scolor;
-extern long fcolor;
-extern long pcolor;
+extern COLORREF scolor;
+extern COLORREF fcolor;
+extern COLORREF pcolor;
 extern long width;
 extern long zoom_flag;
 extern long MaxColors;

@@ -23,8 +23,6 @@
 extern int yield_flag;
 extern int GCMAX;
 extern int MAX_PHYS_LINE;
-// extern int ROUNDPOS;
-// extern int BUFFERTYPE;
 extern bool bExpert;
 extern bool bFixed;
 extern bool bWidth;

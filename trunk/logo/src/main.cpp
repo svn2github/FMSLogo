@@ -21,7 +21,7 @@
 
 #include "allwind.h"
 
-CUTMAP *CutBmp;              /* Pointer to Bit Cut memory array malloc on init*/
+CUTMAP *CutBmp;              // Pointer to Bit Cut memory array malloc on init
 
 //HANDLE HashHandle = 0;           // Handle to Hashtable
 //HANDLE StackHandle = 0;          // Handle to Garbage Collector Stack
@@ -75,15 +75,15 @@ HPALETTE OldPalette;
 LOGFONT FontRec;
 LOGFONT EditFontRec;
 
-LOGPEN NormalPen;                      /* Handle to "Normal" logical Pen      */
-LOGPEN ErasePen;                       /* Handle to "Erase" logical Pen       */
+LOGPEN NormalPen;                      // Handle to "Normal" logical Pen
+LOGPEN ErasePen;                       // Handle to "Erase" logical Pen
 
-LOGBRUSH FloodBrush;                   /* Handle to the "floodfill" brush     */
-LOGBRUSH ScreenBrush;               /* Handle to the "screen" background brush*/
+LOGBRUSH FloodBrush;                   // Handle to the "floodfill" brush
+LOGBRUSH ScreenBrush;                  // Handle to the "screen" background brush
 
-RECT FullRect;                         /* Ready rectangle of Full bitmap      */
+RECT FullRect;                         // Ready rectangle of Full bitmap
 
-TMainFrame *MainWindowx;               /* Pointer to the Main window          */
+TMainFrame *MainWindowx;               // Pointer to the Main window
 
 /* Active area dimensions (real and temp) */
 
@@ -98,22 +98,20 @@ int TPrinterAreaYLow;
 int TPrinterAreaYHigh;
 int TPrinterAreaPixels;
 
-int GCMAX = 8192;                      /* Garbage Collector STack Size (Logo.ini)       */
-int MAX_PHYS_LINE = 8192;              /* Maximum Physical Line Size (Logo.ini)         */
-//int ROUNDPOS;                        /* Round returned POS                            */
-//int BUFFERTYPE;                      /* Buffered TYPE command                         */
+int GCMAX = 8192;                      // Garbage Collector Stack Size (Logo.ini)
+int MAX_PHYS_LINE = 8192;              // Maximum Physical Line Size (Logo.ini)
 Color dpen;                            // Current pen color
 Color dfld;                            // Current flood color
 Color dscn;                            // Current screen color
 bool IsDirty = false;                  // Flag to signal to query user ok to quit
-int BitMapWidth = 1000;                /* Current bitmap size in X                      */
-int BitMapHeight = 1000;               /* Current bitmap size in Y                      */
-int WorldWidth = 1000;                 /* Current World size in X                       */
-int WorldHeight = 1000;                /* Current World size in Y                       */
-int WorldDepth = 1000;                 /* Current World size in Z                       */
+int BitMapWidth = 1000;                // Current bitmap size in X
+int BitMapHeight = 1000;               // Current bitmap size in Y
+int WorldWidth = 1000;                 // Current World size in X
+int WorldHeight = 1000;                // Current World size in Y
+int WorldDepth = 1000;                 // Current World size in Z
 bool EnablePalette;                    // Flag to signal 256 color mode with palette
-bool IsPrinterSettingCustom = false;   /* Flag to signal Active area is active          */
-bool IsTPrinterSettingCustom = false;  /* Dynamic copy of CustomFlag                    */
+bool IsPrinterSettingCustom = false;   // Flag to signal Active area is active
+bool IsTPrinterSettingCustom = false;  // Dynamic copy of CustomFlag
 bool IsOkayToUseCommanderWindow = false; // Flag to signal it's OK to write to recall box
 int halt_flag = 0;                     // Flag to signal it's OK to halt
 bool traceflag = false;                // Flag to signal trace button is active
@@ -131,24 +129,24 @@ bool IsTimeToPause = false;            // UCBLOGO? pause flag
 bool IsTimeToHalt = false;             // UCBLOGO? halt flag
 bool error_happen;                     // Flag to signal Error happened on edit reload
 KEYBOARDCAPTURE KeyboardCapture = KEYBOARDCAPTURE_Off; // Flag to signal Keyboard is enabled
-int keyboard_value = 0;                /* Value of Keyboard key                         */
+int keyboard_value = 0;                // Value of Keyboard key
 bool MouseCaptureIsEnabled = false;    // Flag to signal Mouse is enabled
-int mouse_posx = 0;                    /* Value of Mouse position x                     */
-int mouse_posy = 0;                    /* Value of Mouse position y                     */
-int memory_count = 0;                  /* Current amount of logo segments malloc'd      */
-int BaseUnitsx = 0;                    /* X Units Windows uses to for units in dialog   */
-int BaseUnitsy = 0;                    /* Y Units Windows uses to for units in dialog   */
+int mouse_posx = 0;                    // Value of Mouse position x
+int mouse_posy = 0;                    // Value of Mouse position y
+int memory_count = 0;                  // Current amount of logo segments malloc'd
+int BaseUnitsx = 0;                    // X Units Windows uses to for units in dialog
+int BaseUnitsy = 0;                    // Y Units Windows uses to for units in dialog
 
-long eval_count = 0;                   /* current count of "evaluations" calls          */
-long vector_count = 0;                 /* current count of vectors drawn                */
-long scolor = 1;                       /* screen color                                  */
-long fcolor = 1;                       /* flood color                                   */
-long pcolor = 1;                       /* pen color                                     */
-long width = 1;                        /* pen width                                     */
-long zoom_flag = 0;                    /* flag to signal in zoomed state                */
-long MaxColors = 0;                    /* The maximum # of colors available             */
+long eval_count = 0;                   // current count of "evaluations" calls
+long vector_count = 0;                 // current count of vectors drawn
+COLORREF scolor = 1;                   // screen color
+COLORREF fcolor = 1;                   // flood color
+COLORREF pcolor = 1;                   // pen color
+long width = 1;                        // pen width
+long zoom_flag = 0;                    // flag to signal in zoomed state
+long MaxColors = 0;                    // The maximum # of colors available
 
-LINEX TurtlePoints[TURTLES][4];        /* used to store 3 vertices of turtle            */
+LINEX TurtlePoints[TURTLES][4];        // used to store 3 vertices of turtle
 
 TThreeDSolid ThreeD;
 
@@ -188,7 +186,7 @@ void cnv_strnode_string(char *textbuf, NODE *arg)
    }
 
 /* adds color to palette */
-long LoadColor(int dpenr, int dpeng, int dpenb)
+COLORREF LoadColor(int dpenr, int dpeng, int dpenb)
    {
 
    /* convert to color and find nearest match */

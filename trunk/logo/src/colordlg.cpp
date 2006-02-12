@@ -40,7 +40,7 @@ void TColorControl::EvPaint()
    if (EnablePalette)
       {
       int oldentries = MyLogPalette->palNumEntries;
-      long lColor = LoadColor(GetRValue(Color), GetGValue(Color), GetBValue(Color));
+      COLORREF lColor = LoadColor(GetRValue(Color), GetGValue(Color), GetBValue(Color));
       OldPalette = SelectPalette(dc, ThePalette, FALSE);
       RealizePalette(dc);
 
