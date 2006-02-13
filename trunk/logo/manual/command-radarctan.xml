@@ -14,8 +14,16 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-With one input, outputs the arctangent angle of <parameter>num</parameter>, in radians.
-With two inputs, outputs the arctangent angle of <parameter>y</parameter> / <parameter>x</parameter>, in radians.
+With one input, outputs the inverse tangent angle of <parameter>num</parameter>.
+The output is given in radians in the range [-PI/2,PI/2].
+</para>
+
+<para>
+With two inputs, outputs the inverse tangent angle of <parameter>y</parameter> / <parameter>x</parameter>.
+The output is given in radians in the range [-PI,PI].
+</para>
+
+<para>
 See also <link linkend="command-arctan">ARCTAN</link>.
 </para>
 
@@ -24,7 +32,7 @@ See also <link linkend="command-arctan">ARCTAN</link>.
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>SHOW (RADARCTAN 1) = PI/4</userinput>
+<programlisting><userinput>SHOW (RADARCTAN 1) = PI/4</userinput>
 true</programlisting>
 </listitem>
 </varlistentry>

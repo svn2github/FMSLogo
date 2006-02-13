@@ -12,8 +12,14 @@
 
 <varlistentry><term>Description</term>
 <listitem>
+
 <para>
-Outputs the arcsine angle, in degrees, of its input.
+Outputs the inverse sine of its input.
+The output is given in degrees in the range [-90, 90].
+<parameter>num</parameter> must be in the range [-1, 1].
+</para>
+
+<para>
 See also <link linkend="command-radarcsin">RADARCSIN</link>.
 </para>
 
@@ -22,9 +28,9 @@ See also <link linkend="command-radarcsin">RADARCSIN</link>.
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>SHOW ARCSIN 0.5</userinput>
+<programlisting><userinput>SHOW ARCSIN 0.5</userinput>
 30</programlisting>
-    <programlisting><userinput>SHOW ARCSIN SIN 45</userinput>
+<programlisting><userinput>SHOW ARCSIN SIN 45</userinput>
 45</programlisting>
 </listitem>
 </varlistentry>

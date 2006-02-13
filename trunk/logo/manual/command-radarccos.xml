@@ -12,17 +12,22 @@
 
 <varlistentry><term>Description</term>
 <listitem>
+
 <para>
-Outputs the arccosine angle, in radians, of its input.
-See also <link linkend="command-arccos">ARCCOS</link>.
+Outputs the inverse cosine of its input.
+The output is given in radians in the range [0, PI].
+<parameter>num</parameter> must be in the range [-1, 1].
 </para>
 
+<para>
+See also <link linkend="command-arcsin">ARCCOS</link>.
+</para>
 </listitem>
 </varlistentry>
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>SHOW (RADARCCOS (SQRT 2)/2) = PI/4</userinput>
+<programlisting><userinput>SHOW (RADARCCOS (SQRT 2)/2) = PI/4</userinput>
 true</programlisting>
 </listitem>
 </varlistentry>

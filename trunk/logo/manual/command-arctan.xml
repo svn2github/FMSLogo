@@ -14,8 +14,16 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-With one input, outputs the arctangent angle of <parameter>num</parameter>, in degrees.
-With two inputs, outputs the arctangent angle of <parameter>y</parameter> / <parameter>x</parameter>, in degrees.
+With one input, outputs the inverse tangent angle of <parameter>num</parameter>.
+The output is given in degrees in the range [-90,90].
+</para>
+
+<para>
+With two inputs, outputs the inverse tangent angle of <parameter>y</parameter> / <parameter>x</parameter>.
+The output is given in degrees in the range [-180,180].
+</para>
+
+<para>
 See also <link linkend="command-radarctan">RADARCTAN</link>.
 </para>
 
@@ -24,7 +32,7 @@ See also <link linkend="command-radarctan">RADARCTAN</link>.
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>SHOW ARCTAN 1</userinput>
+<programlisting><userinput>SHOW ARCTAN 1</userinput>
 45</programlisting>
 </listitem>
 </varlistentry>

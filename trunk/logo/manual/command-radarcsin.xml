@@ -12,8 +12,14 @@
 
 <varlistentry><term>Description</term>
 <listitem>
+
 <para>
-Outputs the arcsine angle, in radians, of its input.
+Outputs the inverse sine of its input.
+The output is given in radians in the range [-PI/2, PI/2].
+<parameter>num</parameter> must be in the range [-1, 1].
+</para>
+
+<para>
 See also <link linkend="command-arcsin">ARCSIN</link>.
 </para>
 

@@ -33,6 +33,7 @@ Part II) New features/bugs fixed:
     o Fix bug #1327284; the documentation is now distributed as a .CHM.
     o Fix bug #1399926; SETCURSORNOWAIT is now documented.
     o Fix bug #1399929; TONE is now documented.
+    o Fix bug #1397524; the domain/range of the inverse trig functions is documented.
     o Fix bug #1392433; the documentation for EDALL is clearer.
     o Fix bug #1327785; the manual and example code no longer refer to MSWLogo.
     o Fix bug #1406412; the documentation for SETTIMER is updated for Win95.

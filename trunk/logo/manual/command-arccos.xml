@@ -12,9 +12,15 @@
 
 <varlistentry><term>Description</term>
 <listitem>
+
 <para>
-Outputs the arccosine angle, in degrees, of its input.
-See also <link linkend="command-radarccos">RADARCCOS</link>.
+Outputs the inverse cosine of its input.
+The output is given in degrees in the range [0, 180].
+<parameter>num</parameter> must be in the range [-1, 1].
+</para>
+
+<para>
+See also <link linkend="command-radarcsin">RADARCCOS</link>.
 </para>
 
 </listitem>
@@ -22,9 +28,9 @@ See also <link linkend="command-radarccos">RADARCCOS</link>.
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>SHOW ARCCOS 0.5</userinput>
+<programlisting><userinput>SHOW ARCCOS 0.5</userinput>
 60</programlisting>
-    <programlisting><userinput>SHOW ARCCOS COS 45</userinput>
+<programlisting><userinput>SHOW ARCCOS COS 45</userinput>
 45</programlisting>
 </listitem>
 </varlistentry>
