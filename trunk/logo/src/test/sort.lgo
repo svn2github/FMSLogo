@@ -1,0 +1,50 @@
+TO SORTBYLEGS :a :b
+  OUTPUT (LESSP (ITEM 2 :a) (ITEM 2 :b))
+END
+
+TO SORTBYNAME :a :b
+  OUTPUT (BEFOREP (ITEM 1 :a) (ITEM 1 :b))
+END
+
+
+TO SORTREGRESSIONTEST
+
+  SIMPLEREPORTTEST [SORT [] ]     []
+  SIMPLEREPORTTEST [SORT [1]]     [1]
+  SIMPLEREPORTTEST [SORT [1 2 3]] [1 2 3]
+  SIMPLEREPORTTEST [SORT [3 2 1]] [1 2 3]
+
+  SIMPLEREPORTTEST [SORT [1 2 3 1 2 3 1 2 3]] [1 1 1 2 2 2 3 3 3]
+
+  SIMPLEREPORTTEST [(SORT [1 2 3 1 2 3 1 2 3] "greaterp)] [3 3 3 2 2 2 1 1 1]
+
+  ; make a database of records {name #legs #eyes}
+  LOCALMAKE "cat    {"cat    4 2}
+  LOCALMAKE "spider {"spider 8 8}
+  LOCALMAKE "human  {"human  2 2}
+  LOCALMAKE "database (list :cat :spider :human)
+  SIMPLEREPORTTEST [(SORT :database "SORTBYNAME)] (list :cat   :human :spider)
+  SIMPLEREPORTTEST [(SORT :database "SORTBYLEGS)] (list :human :cat   :spider)
+
+END
+
+TO SORTBADINPUTTEST
+
+  RUNBADINPUTTEST [(SORT)]
+  RUNBADINPUTTEST [(SORT "hello  )]
+  RUNBADINPUTTEST [(SORT {3 2 1} )]
+  RUNBADINPUTTEST [(SORT [[1][2]])]
+  RUNBADINPUTTEST [(SORT [3 2 1] "FMSLogo)]
+  RUNBADINPUTTEST [(SORT [3 2 1] [1])]
+  RUNBADINPUTTEST [(SORT [3 2 1] {1})]
+  RUNBADINPUTTEST [(SORT [3 2 1] "clearscreen)]
+  RUNBADINPUTTEST [(SORT [3 2 1] "lessp "toomany)]
+
+END
+
+TO SORTTEST
+
+  SORTREGRESSIONTEST
+
+  SORTBADINPUTTEST
+END

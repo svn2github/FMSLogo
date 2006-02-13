@@ -2191,3 +2191,29 @@ INFO: Executing invalid instruction: [WINDOWSET "FMSLogo "one]
 PASS: Executing [WINDOWSET "FMSLogo "one] threw an error
 INFO: Executing invalid instruction: [WINDOWSET "FMSLogo -1]
 PASS: Executing [WINDOWSET "FMSLogo -1] threw an error
+PASS: [SORT []] returned [] , as expected.
+PASS: [SORT [1]] returned [1] , as expected.
+PASS: [SORT [1 2 3]] returned [1 2 3] , as expected.
+PASS: [SORT [3 2 1]] returned [1 2 3] , as expected.
+PASS: [SORT [1 2 3 1 2 3 1 2 3]] returned [1 1 1 2 2 2 3 3 3] , as expected.
+PASS: [(SORT [1 2 3 1 2 3 1 2 3] "greaterp)] returned [3 3 3 2 2 2 1 1 1] , as expected.
+PASS: [(SORT :database "SORTBYNAME)] returned [{"cat 4 2} {"human 2 2} {"spider 8 8}] , as expected.
+PASS: [(SORT :database "SORTBYLEGS)] returned [{"human 2 2} {"cat 4 2} {"spider 8 8}] , as expected.
+INFO: Executing invalid instruction: [(SORT)]
+PASS: Executing [(SORT)] threw an error
+INFO: Executing invalid instruction: [(SORT "hello )]
+PASS: Executing [(SORT "hello )] threw an error
+INFO: Executing invalid instruction: [(SORT {3 2 1} )]
+FAIL: Executing [(SORT {3 2 1} )] did not throw an error
+INFO: Executing invalid instruction: [(SORT [[1] [2]] )]
+PASS: Executing [(SORT [[1] [2]] )] threw an error
+INFO: Executing invalid instruction: [(SORT [3 2 1] "FMSLogo)]
+PASS: Executing [(SORT [3 2 1] "FMSLogo)] threw an error
+INFO: Executing invalid instruction: [(SORT [3 2 1] [1] )]
+PASS: Executing [(SORT [3 2 1] [1] )] threw an error
+INFO: Executing invalid instruction: [(SORT [3 2 1] {1} )]
+PASS: Executing [(SORT [3 2 1] {1} )] threw an error
+INFO: Executing invalid instruction: [(SORT [3 2 1] "clearscreen)]
+PASS: Executing [(SORT [3 2 1] "clearscreen)] threw an error
+INFO: Executing invalid instruction: [(SORT [3 2 1] "lessp "toomany)]
+PASS: Executing [(SORT [3 2 1] "lessp "toomany)] threw an error
