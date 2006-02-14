@@ -1,6 +1,7 @@
 ; This is the testharness.
-; It provides test primatives.
-; It also loads all unit tests and executes them.
+; It loads all unit tests and executes them.
+
+LOAD "testlib.lgo
 
 LOAD "array.lgo
 LOAD "wait.lgo
@@ -32,115 +33,6 @@ LOAD "scrunch.lgo
 LOAD "help.lgo
 LOAD "window.lgo
 LOAD "sort.lgo
-
-MAKE "testlog []
-
-TO REPORTTESTINFO :message
-
-  ; backup the current writer
-  LOCALMAKE "previouswriter WRITER
-  SETWRITE :testlog
-
-  PRINT (SENTENCE "INFO: :message)
-
-  ; restore the current writer
-  SETWRITE :previouswriter
-END
-
-TO REPORTTESTPASSED :message
-
-  ; backup the current writer
-  LOCALMAKE "previouswriter WRITER
-  SETWRITE :testlog
-
-  PRINT (SENTENCE "PASS: :message)
-
-  ; restore the current writer
-  SETWRITE :previouswriter
-END
-
-TO REPORTTESTFAILED :message
-
-  ; backup the current writer
-  LOCALMAKE "previouswriter WRITER
-  SETWRITE :testlog
-
-  LOCALMAKE "result (SENTENCE "FAIL: :message)
-  PRINT :result
-  MESSAGEBOX [Test Failed] :result
-
-  ; restore the current writer
-  SETWRITE :previouswriter
-END
-
-TO REPORTTEST :testpassed :result :expected
-  IFELSE :testpassed [
-    REPORTTESTPASSED (sentence :result "|, as expected.|)
-  ] [
-    REPORTTESTFAILED (sentence :result "|. We expected| :expected)
-  ]
-END
-
-TO SIMPLEREPORTTEST :instruction :expectedresult
-  LOCALMAKE "result RUN :instruction
-  IFELSE EQUALP :result :expectedresult [
-    REPORTTESTPASSED (LIST :instruction "returned :result "|, as expected.|)
-  ] [
-    REPORTTESTFAILED (LIST :instruction "returned :result "|. We expected| :expectedresult)
-  ]
-END
-
-
-TO REPORTTESTINITIALIZE
-
-  MAKE "testlog  "testlog.baseline.txt
-
-  ; close the test log, if it is already open
-  CATCH "ERROR [ CLOSE :testlog ]
-
-  ; open (and truncate) the test log
-  OPENWRITE :testlog
-END
-
-
-TO REPORTTESTUNINITIALIZE
-  CLOSE    :testlog
-  MAKE     :testlog []
-END
-
-
-TO RUNBADINPUTTEST :instructions        
-
-  REPORTTESTINFO (LIST "|Executing invalid instruction:| :instructions )
-
-  ; clear the value of ERROR
-  IGNORE ERROR
-
-  CATCH "ERROR [ 
-    IGNORE RUN :instructions 
-    REPORTTESTFAILED (LIST "Executing :instructions "|did not throw an error|)
-  ]
-
-  IF NOT EMPTYP ERROR [
-    REPORTTESTPASSED (LIST "Executing :instructions "|threw an error|)
-  ]
-
-END
-
-; Outputs how long it takes to execute given instructions
-TO TIMECOMMAND :instructions
-
-  LOCALMAKE "beforetime TIMEMILLI
-  RUN :instructions
-  LOCALMAKE "aftertime TIMEMILLI
-
-  LOCALMAKE "deltatime :aftertime - :beforetime
-
-  REPORTTESTINFO (list :instructions "took :deltatime "|ms to execute|)
-
-  OUTPUT :deltatime
-END
-
 
 TO TESTALL
 
