@@ -100,7 +100,6 @@ extern long int mem_freed;
 /* parse.c */
 extern FILE *loadstream, *writestream, *readstream, *dribblestream;
 extern int input_blocking;
-extern NODE *current_line;
 extern int input_mode;
 
 /* math.c */
