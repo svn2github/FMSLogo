@@ -26,14 +26,35 @@ TO SORTREGRESSIONTEST
   SIMPLEREPORTTEST [(SORT :database "SORTBYNAME)] (list :cat   :human :spider)
   SIMPLEREPORTTEST [(SORT :database "SORTBYLEGS)] (list :human :cat   :spider)
 
+
+  ; sort a word
+  SIMPLEREPORTTEST [SORT "hello]     "ehllo
+  SIMPLEREPORTTEST [SORT "FMSLogo]   "FgLMooS
+  SIMPLEREPORTTEST [SORT "FgLMooS]   "FgLMooS
+  SIMPLEREPORTTEST [SORT "Z]         "Z
+  SIMPLEREPORTTEST [SORT "||]        "||
+
+  ; sort an array
+  localmake "sortedarray SORT {3 2 1 1 2 3 3 2 1}
+  SIMPLEREPORTTEST [ARRAY? :sortedarray] "true
+  SIMPLEREPORTTEST [COUNT  :sortedarray] 9
+  SIMPLEREPORTTEST [ITEM 1 :sortedarray] 1
+  SIMPLEREPORTTEST [ITEM 2 :sortedarray] 1
+  SIMPLEREPORTTEST [ITEM 3 :sortedarray] 1
+  SIMPLEREPORTTEST [ITEM 4 :sortedarray] 2
+  SIMPLEREPORTTEST [ITEM 5 :sortedarray] 2
+  SIMPLEREPORTTEST [ITEM 6 :sortedarray] 2
+  SIMPLEREPORTTEST [ITEM 7 :sortedarray] 3
+  SIMPLEREPORTTEST [ITEM 8 :sortedarray] 3
+  SIMPLEREPORTTEST [ITEM 9 :sortedarray] 3
+
 END
 
 TO SORTBADINPUTTEST
 
   RUNBADINPUTTEST [(SORT)]
-  RUNBADINPUTTEST [(SORT "hello  )]
-  RUNBADINPUTTEST [(SORT {3 2 1} )]
   RUNBADINPUTTEST [(SORT [[1][2]])]
+  RUNBADINPUTTEST [(SORT {[1][2]})]
   RUNBADINPUTTEST [(SORT [3 2 1] "FMSLogo)]
   RUNBADINPUTTEST [(SORT [3 2 1] [1])]
   RUNBADINPUTTEST [(SORT [3 2 1] {1})]
