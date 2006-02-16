@@ -542,8 +542,6 @@ extern LPLOGPALETTE MyLogPalette;
 extern FLONUM the_zoom;
 extern Point  g_OldPos;
 
-extern NODE *current_line;
-
 extern char LibPathName[];
 extern char TempPathName[];
 extern char TempBmpName[];
