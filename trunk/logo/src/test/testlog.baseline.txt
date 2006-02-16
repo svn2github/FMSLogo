@@ -2199,14 +2199,28 @@ PASS: [SORT [1 2 3 1 2 3 1 2 3]] returned [1 1 1 2 2 2 3 3 3] , as expected.
 PASS: [(SORT [1 2 3 1 2 3 1 2 3] "greaterp)] returned [3 3 3 2 2 2 1 1 1] , as expected.
 PASS: [(SORT :database "SORTBYNAME)] returned [{"cat 4 2} {"human 2 2} {"spider 8 8}] , as expected.
 PASS: [(SORT :database "SORTBYLEGS)] returned [{"human 2 2} {"cat 4 2} {"spider 8 8}] , as expected.
+PASS: [SORT "hello] returned ehllo , as expected.
+PASS: [SORT "FMSLogo] returned FgLMooS , as expected.
+PASS: [SORT "FgLMooS] returned FgLMooS , as expected.
+PASS: [SORT "Z] returned Z , as expected.
+PASS: [SORT "] returned  , as expected.
+PASS: [ARRAY? :sortedarray] returned true , as expected.
+PASS: [COUNT :sortedarray] returned 9 , as expected.
+PASS: [ITEM 1 :sortedarray] returned 1 , as expected.
+PASS: [ITEM 2 :sortedarray] returned 1 , as expected.
+PASS: [ITEM 3 :sortedarray] returned 1 , as expected.
+PASS: [ITEM 4 :sortedarray] returned 2 , as expected.
+PASS: [ITEM 5 :sortedarray] returned 2 , as expected.
+PASS: [ITEM 6 :sortedarray] returned 2 , as expected.
+PASS: [ITEM 7 :sortedarray] returned 3 , as expected.
+PASS: [ITEM 8 :sortedarray] returned 3 , as expected.
+PASS: [ITEM 9 :sortedarray] returned 3 , as expected.
 INFO: Executing invalid instruction: [(SORT)]
 PASS: Executing [(SORT)] threw an error
-INFO: Executing invalid instruction: [(SORT "hello )]
-PASS: Executing [(SORT "hello )] threw an error
-INFO: Executing invalid instruction: [(SORT {3 2 1} )]
-FAIL: Executing [(SORT {3 2 1} )] did not throw an error
 INFO: Executing invalid instruction: [(SORT [[1] [2]] )]
 PASS: Executing [(SORT [[1] [2]] )] threw an error
+INFO: Executing invalid instruction: [(SORT {[1] [2]} )]
+PASS: Executing [(SORT {[1] [2]} )] threw an error
 INFO: Executing invalid instruction: [(SORT [3 2 1] "FMSLogo)]
 PASS: Executing [(SORT [3 2 1] "FMSLogo)] threw an error
 INFO: Executing invalid instruction: [(SORT [3 2 1] [1] )]
