@@ -445,7 +445,7 @@ void runstartup(NODE *oldst)
 
 // CONSIDER for MAINTAINABILITY:
 // CONSIDER for SIZE:
-// Refactor the common parts of silent_load() and lload() fileload() into a helper.
+// Refactor the common parts of silent_load(), lload(), and fileload() into a helper.
 void silent_load(NODE *arg, const char *prefix)
    {
 
