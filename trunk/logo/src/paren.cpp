@@ -206,12 +206,18 @@ NODE *paren_expr(NODE **expr, bool inparen)
       else
          {
          /* it must be a procedure */
-         if (procnode__caseobj(first) == UNDEFINED && NOT_THROWING &&
-               first != Null_Word)
-            silent_load(first, NULL);  /* try ./<first>.lg                    */
-         if (procnode__caseobj(first) == UNDEFINED && NOT_THROWING &&
-               first != Null_Word)
-            silent_load(first, logolib);/* try <logolib>/<first>              */
+         if (procnode__caseobj(first) == UNDEFINED && 
+             NOT_THROWING &&
+             first != Null_Word)
+            {
+            silent_load(first, NULL);  // try ./<first>.lgo
+            }
+         if (procnode__caseobj(first) == UNDEFINED && 
+             NOT_THROWING &&
+             first != Null_Word)
+            {
+            silent_load(first, logolib); // try <logolib>/<first>
+            }
          proc = procnode__caseobj(first);
          if (proc == UNDEFINED && NOT_THROWING)
             {
