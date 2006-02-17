@@ -418,15 +418,15 @@ NODE *evaluator(NODE *list, enum labels where)
       proc = UNDEFINED;
       }
    else
-	   {
-   	proc = procnode__caseobj(fun);
+      {
+      proc = procnode__caseobj(fun);
       if (is_macro(fun))
          {
          num2save(val_status, tailcall);
          val_status = 1;
          newcont(macro_return);
          }
-   	}
+      }
    if (proc == UNDEFINED)
       {
       if (ufun != NIL)
