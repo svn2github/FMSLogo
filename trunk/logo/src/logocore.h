@@ -19,6 +19,8 @@
  *
  */
 
+extern void gc(struct logo_node* o);
+
 #define ecma // for European extended character set using parity bit
 #define ibm
 
@@ -347,12 +349,47 @@ struct segment
 #define flag__object(o,f) (int)((obflags__object(o))->n_int & (f))
 #define is_macro(c) (flag__caseobj(c, PROC_MACRO))
 
-#define ref(o)          if (o != NIL) increfcnt(o)
-#define vref(o)         ((o != NIL) ? ((increfcnt(o)) , o) : NIL)
-#define deref(o)        if (o != NIL && decrefcnt(o) == 0) \
-           gc(o)
-#define gcref(o)        if (o != NIL && getrefcnt(o) == 0) \
-           gc(o)
+inline
+void
+ref(logo_node * o)
+   {
+   if (o != NIL)
+      {
+      increfcnt(o);
+      }
+   }
+
+inline
+logo_node*
+vref(logo_node * o)
+   {
+   if (o != NIL)
+      {
+      increfcnt(o);
+      }
+   return o;
+   }
+
+
+inline 
+void
+deref(logo_node * o)
+   {
+   if (o != NIL && decrefcnt(o) == 0)
+      {
+      gc(o);
+      }
+   }
+
+inline 
+void
+gcref(logo_node * o)
+   {
+   if (o != NIL && getrefcnt(o) == 0)
+      {
+      gc(o);
+      }
+   }
 
 #define push(obj, stack)    spush(obj, &stack)
 #define pop(stack)          spop(&stack)
