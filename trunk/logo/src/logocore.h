@@ -435,7 +435,6 @@ enum labels
 #define PAUSE_MODE 3
 
 #define ScreenSz 0.70                  /* Default,proportion of screen size   */
-#define RADCVT 0.01745329251994        /* Convert to radians                  */
 #define WININISIZ 40
 /* displayed in FontDemo */
 #define MaxBitCuts 1024                /* Max number of bitmaps               */

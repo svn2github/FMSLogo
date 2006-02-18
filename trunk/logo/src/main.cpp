@@ -20,6 +20,7 @@
 */
 
 #include "allwind.h"
+#include "const.h"
 
 CUTMAP *CutBmp;              // Pointer to Bit Cut memory array malloc on init
 
@@ -1189,8 +1190,8 @@ void ibmturt(bool erase)
          // 2D mode
          for (int j = 0; j < 3; j++)
             {
-            FLONUM Cz = cos(-g_Turtles[turtle_which].Heading * RADCVT);
-            FLONUM Sz = sin(-g_Turtles[turtle_which].Heading * RADCVT);
+            FLONUM Cz = cos(-g_Turtles[turtle_which].Heading * rads_per_degree);
+            FLONUM Sz = sin(-g_Turtles[turtle_which].Heading * rads_per_degree);
 
             FLONUM rx = Cz * turtle_vertices[j].from.x - Sz * turtle_vertices[j].from.y;
             FLONUM ry = Sz * turtle_vertices[j].from.x + Cz * turtle_vertices[j].from.y;
