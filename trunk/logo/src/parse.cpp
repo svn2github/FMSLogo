@@ -730,32 +730,51 @@ NODE *runparse_node(NODE *nd, NODE **ndsptr)
 
 NODE *runparse(NODE *ndlist)
    {
-   NODE *curnd = NIL, *outline = NIL, *tnode = NIL, *lastnode = NIL;
-
    if (nodetype(ndlist) == RUN_PARSE)
+      {
       return parsed__runparse(ndlist);
+      }
    if (!is_list(ndlist))
       {
       err_logo(BAD_DATA_UNREC, ndlist);
-      return (NIL);
+      return NIL;
       }
+
+   NODE *outline = NIL;
+   NODE *lastnode = NIL;
+
    while (ndlist != NIL)
       {
-      curnd = car(ndlist);
+      NODE *tnode;
+
+      NODE * curnd = car(ndlist);
       ndlist = cdr(ndlist);
       if (!is_word(curnd))
+         {
          tnode = cons_list(curnd);
+         }
       else
          {
          if (!numberp(curnd))
+            {
             tnode = runparse_node(curnd, &ndlist);
+            }
          else
+            {
             tnode = cons_list(cnv_node_to_numnode(curnd));
+            }
          }
+
       if (tnode != NIL)
          {
-         if (outline == NIL) outline = vref(tnode);
-         else setcdr(lastnode, tnode);
+         if (outline == NIL) 
+            {
+            outline = vref(tnode);
+            }
+         else
+            {
+            setcdr(lastnode, tnode);
+            }
          lastnode = tnode;
          while (cdr(lastnode) != NIL)
             {
@@ -765,7 +784,8 @@ NODE *runparse(NODE *ndlist)
          }
       if (check_throwing) break;
       }
-   return (unref(outline));
+
+   return unref(outline);
    }
 
 NODE *lrunparse(NODE *args)

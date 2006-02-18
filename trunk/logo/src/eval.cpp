@@ -97,7 +97,10 @@ void spop(NODE **stack)
       }
    else
       {
-      if (temp != NIL) increfcnt(temp);
+      if (temp != NIL) 
+         {
+         increfcnt(temp);
+         }
       }
    *stack = temp;
    }
@@ -160,16 +163,28 @@ NODE *lapply(NODE *args)
 /* The logo word ? <question-mark>. */
 NODE *lqm(NODE *args)
    {
-   FIXNUM argnum = 1, i;
+   FIXNUM argnum = 1;
    NODE *np = qm_list;
 
-   if (args != NIL) argnum = getint(pos_int_arg(args));
-   if (stopping_flag == THROWING) return Unbound;
-   i = argnum;
-   while (--i > 0 && np != NIL) np = cdr(np);
+   if (args != NIL) 
+      {
+      argnum = getint(pos_int_arg(args));
+      }
+   if (stopping_flag == THROWING) 
+      {
+      return Unbound;
+      }
+
+   FIXNUM i = argnum;
+   while (--i > 0 && np != NIL) 
+      {
+      np = cdr(np);
+      }
    if (np == NIL)
-      return (err_logo(BAD_DATA_UNREC, make_intnode(argnum)));
-   return (car(np));
+      {
+      return err_logo(BAD_DATA_UNREC, make_intnode(argnum));
+      }
+   return car(np);
    }
 
 /* The rest of the functions are local to this file. */
@@ -214,15 +229,20 @@ NODE *reverse(NODE *list)
 NODE *append(NODE *a, NODE *b)
    {
    //    NODE *result;
-
-   if (a == NIL) return b;
+   if (a == NIL) 
+      {
+      return b;
+      }
    return cons(car(a), append(cdr(a), b));
    }
 
 /* nondestructive flatten */
 NODE *flatten(NODE *a)
    {
-   if (a == NIL) return NIL;
+   if (a == NIL) 
+      {
+      return NIL;
+      }
    return append(car(a), flatten(cdr(a)));
    }
 
@@ -231,7 +251,9 @@ NODE *flatten(NODE *a)
 void reset_args(NODE *old_stack)
    {
    for (; var_stack != old_stack; pop(var_stack))
+      {
       setvalnode__caseobj(car(var_stack), getobject(var_stack));
+      }
    }
 
 /* An explicit control evaluator, taken almost directly from SICP, section
@@ -293,7 +315,10 @@ NODE *evaluator(NODE *list, enum labels where)
  end_line:
    if (val != Unbound)
       {
-      if (NOT_THROWING) err_logo(DK_WHAT, val);
+      if (NOT_THROWING) 
+         {
+         err_logo(DK_WHAT, val);
+         }
       deref(val);
       }
    val = NIL;
@@ -311,11 +336,15 @@ NODE *evaluator(NODE *list, enum labels where)
        case QUOTE:                      /* quoted literal                      */
            assign(val, node__quote(exp));
            goto fetch_cont;
+
        case COLON:                      /* variable                            */
            assign(val, valnode__colon(exp));
            while (val == Unbound && NOT_THROWING)
+              {
               assign(val, err_logo(NO_VALUE, node__colon(exp)));
+              }
            goto fetch_cont;
+
        case CONS:                       /* procedure application               */
            if (tailcall == 1 && is_macro(car(exp)) &&
                  is_list(procnode__caseobj(car(exp))))
@@ -328,17 +357,25 @@ NODE *evaluator(NODE *list, enum labels where)
               }
            assign(fun, car(exp));
            if (cdr(exp) != NIL)
+              {
               goto ev_application;
+              }
            else
+              {
               goto ev_no_args;
+              }
+
        case ARRAY:                      /* array must be copied                */
            {
               NODE **p, **q;
               assign(val, make_array(getarrdim(exp)));
               setarrorg(val, getarrorg(exp));
               for (p = getarrptr(exp), q = getarrptr(val), i = 0;
-                    i < getarrdim(exp); i++, p++)
+                   i < getarrdim(exp); 
+                   i++, p++)
+                 {
                  *q++ = vref(*p);
+                 }
            }
            goto fetch_cont;
        default:
@@ -359,12 +396,17 @@ NODE *evaluator(NODE *list, enum labels where)
    num2save(val_status, ift_iff_flag);
    save2(didnt_get_output, didnt_output_name);
  eval_arg_loop:
-   if (unev == NIL) goto eval_args_done;
+   if (unev == NIL) 
+      {
+      goto eval_args_done;
+      }
    assign(exp, car(unev));
    if (exp == Not_Enough_Node)
       {
       if (NOT_THROWING)
+         {
          err_logo(NOT_ENOUGH, NIL);
+         }
       goto eval_args_done;
       }
    save(argl);
@@ -408,7 +450,10 @@ NODE *evaluator(NODE *list, enum labels where)
    /* --------------------- APPLY ---------------------------- */
  apply_dispatch:
    eval_count++;
-   if (status_flag) update_status_evals();
+   if (status_flag)
+      {
+      update_status_evals();
+      }
 
    /* Load in the procedure's definition and decide whether it's a compound
     * procedure or a primitive procedure.
@@ -427,24 +472,40 @@ NODE *evaluator(NODE *list, enum labels where)
          newcont(macro_return);
          }
       }
+
    if (proc == UNDEFINED)
       {
       if (ufun != NIL)
          {
          untreeify_proc(ufun);
          }
+
       if (NOT_THROWING)
+         {
          assign(val, err_logo(DK_HOW, fun));
+         }
       else
+         {
          assign(val, Unbound);
+         }
       goto fetch_cont;
       }
-   if (is_list(proc)) goto compound_apply;
+
+   if (is_list(proc)) 
+      {
+      goto compound_apply;
+      }
+
    /* primitive_apply */
    if (NOT_THROWING)
+      {
       assign(val, ((logofunc) * getprimfun(proc)) (argl));
+      }
    else
+      {
       assign(val, Unbound);
+      }
+
 #define do_case(x) case x: goto x;
  fetch_cont:
    {
@@ -453,8 +514,8 @@ NODE *evaluator(NODE *list, enum labels where)
       numpop(&stack);
       switch (x)
          {
-              do_list(do_case)
-                 default : abort();
+         do_list(do_case)
+            default : abort();
          }
    }
 
@@ -464,7 +525,10 @@ NODE *evaluator(NODE *list, enum labels where)
 
    if (tracing = flag__caseobj(fun, PROC_TRACED) || traceflag)
       {
-      for (i = 0; i < trace_level; i++) print_space(writestream);
+      for (i = 0; i < trace_level; i++) 
+         {
+         print_space(writestream);
+         }
       trace_level++;
       ndprintf(writestream, "( %s ", fun);
       }
@@ -476,7 +540,10 @@ NODE *evaluator(NODE *list, enum labels where)
          formals = (FIXNUM) cdr((NODE *) formals))
       {
       parm = car((NODE *) formals);
-      if (nodetype(parm) == INT) break;/* default # args                      */
+      if (nodetype(parm) == INT) 
+         {
+         break;/* default # args                      */
+         }
       if (argl != NIL)
          {
          arg = car(argl);
@@ -487,7 +554,10 @@ NODE *evaluator(NODE *list, enum labels where)
             }
          }
       else
+         {
          arg = Unbound;
+         }
+
       if (nodetype(parm) == CASEOBJ)
          {
          if (not_local(parm, (NODE *) vsp))
@@ -528,9 +598,13 @@ NODE *evaluator(NODE *list, enum labels where)
             numsave(vsp);
             assign(list, cdr(parm));
             if (NOT_THROWING)
+               {
                make_tree(list);
+               }
             else
+               {
                assign(list, NIL);
+               }
             if (!is_tree(list))
                {
                assign(val, Unbound);
@@ -556,7 +630,10 @@ NODE *evaluator(NODE *list, enum labels where)
             }
          setvalnode__caseobj(car(parm), arg);
          }
-      if (argl != NIL) pop(argl);
+      if (argl != NIL) 
+         {
+         pop(argl);
+         }
       }
    if (check_throwing)
       {
@@ -566,14 +643,20 @@ NODE *evaluator(NODE *list, enum labels where)
    vsp = 0;
    if (tracing = (!is_list(fun) && flag__caseobj(fun, PROC_TRACED)) || traceflag)
       {
-      if (NOT_THROWING) print_char(writestream, ')');
+      if (NOT_THROWING) 
+         {
+         print_char(writestream, ')');
+         }
       new_line(writestream);
       save(fun);
       newcont(compound_apply_continue);
       }
    assign(val, Unbound);
    assign(last_ufun, ufun);
-   if (!is_list(fun)) assign(ufun, fun);
+   if (!is_list(fun)) 
+      {
+      assign(ufun, fun);
+      }
    assign(last_line, this_line);
    assign(this_line, NIL);
    proc = (is_list(fun) ? anonymous_function(fun) : procnode__caseobj(fun));
@@ -583,12 +666,27 @@ NODE *evaluator(NODE *list, enum labels where)
       {
       goto fetch_cont;
       }
+
    assign(unev, tree__tree(list));
-   if (NOT_THROWING) stopping_flag = RUN;
+   if (NOT_THROWING)
+      {
+      stopping_flag = RUN;
+      }
    assign(output_node, Unbound);
-   if (val_status == 1) val_status = 2;
-   else if (val_status == 5) val_status = 3;
-   else val_status = 0;
+
+   if (val_status == 1) 
+      {
+      val_status = 2;
+      }
+   else if (val_status == 5) 
+      {
+      val_status = 3;
+      }
+   else 
+      {
+      val_status = 0;
+      }
+
  eval_sequence:
    /* Evaluate each expression in the sequence.  Stop as soon as
     * val != Unbound.
@@ -626,7 +724,8 @@ NODE *evaluator(NODE *list, enum labels where)
    assign(exp, car(unev));
    pop(unev);
    if (exp != NIL &&
-         is_list(exp) && (is_tailform(procnode__caseobj(car(exp)))))
+       is_list(exp) && 
+       (is_tailform(procnode__caseobj(car(exp)))))
       {
       if (nameis(car(exp), Output) || nameis(car(exp), Op))
          {
@@ -694,7 +793,8 @@ NODE *evaluator(NODE *list, enum labels where)
          }
       }
    if (car(unev) != NIL &&
-         is_list(car(unev)) && nameis(car(car(unev)), Stop))
+       is_list(car(unev)) && 
+       nameis(car(car(unev)), Stop))
       {
       if ((val_status == 0 || val_status == 3) && ufun != NIL)
          {
@@ -728,22 +828,37 @@ NODE *evaluator(NODE *list, enum labels where)
       dont_fix_ift = 0;
       }
    else
+      {
       num2restore(ift_iff_flag, val_status);
+      }
    restore2(unev, fun);
    if (stopping_flag == MACRO_RETURN)
       {
-      if (unev == Unbound) assign(unev, NIL);
+      if (unev == Unbound) 
+         {
+         assign(unev, NIL);
+         }
       if (val != NIL && is_list(val) && (car(val) == Tag))
+         {
          assign(unev, cdr(val)); /* from goto */
+         }
       else
+         {
          assign(unev, append(val, unev));
+         }
       assign(val, Unbound);
       stopping_flag = RUN;
-      if (unev == NIL) goto fetch_cont;
+      if (unev == NIL)
+         {         
+         goto fetch_cont;
+         }
       }
    else if (val_status < 4)
       {
-      if (STOPPING || RUNNING) assign(output_node, Unbound);
+      if (STOPPING || RUNNING)
+         {
+         assign(output_node, Unbound);
+         }
       if (stopping_flag == OUTPUT || STOPPING)
          {
          stopping_flag = RUN;
@@ -768,7 +883,10 @@ NODE *evaluator(NODE *list, enum labels where)
       }
    if (NOT_THROWING && (unev == NIL || unev == Unbound))
       {
-      if (val_status != 4) err_logo(DIDNT_OUTPUT, NIL);
+      if (val_status != 4) 
+         {
+         err_logo(DIDNT_OUTPUT, NIL);
+         }
       goto fetch_cont;
       }
    goto eval_sequence;
@@ -779,10 +897,15 @@ NODE *evaluator(NODE *list, enum labels where)
    --trace_level;
    if (NOT_THROWING)
       {
-      for (i = 0; i < trace_level; i++) print_space(writestream);
+      for (i = 0; i < trace_level; i++) 
+         {
+         print_space(writestream);
+         }
       print_node(writestream, fun);
       if (val == Unbound)
+         {
          ndprintf(writestream, " stops\n");
+         }
       else
          {
          ref(val);
@@ -814,8 +937,14 @@ NODE *evaluator(NODE *list, enum labels where)
          {
          make_tree(val);
          stopping_flag = MACRO_RETURN;
-         if (!is_tree(val)) assign(val, NIL);
-         else assign(val, tree__tree(val));
+         if (!is_tree(val)) 
+            {
+            assign(val, NIL);
+            }
+         else 
+            {
+            assign(val, tree__tree(val));
+            }
          goto fetch_cont;
          }
       assign(list, val);
@@ -849,7 +978,10 @@ NODE *evaluator(NODE *list, enum labels where)
    assign(val, Unbound);
    if (repcount == 0)
       {
-      if (repcountuppoint) repcountup = (FIXNUM) car((NODE *) repcountuppoint);
+      if (repcountuppoint) 
+         {
+         repcountup = (FIXNUM) car((NODE *) repcountuppoint);
+         }
       goto fetch_cont;
       }
    mixsave(repcount, list);
@@ -874,7 +1006,10 @@ NODE *evaluator(NODE *list, enum labels where)
    mixrestore(repcount, list);
    if (val_status < 4 && tailcall != 0)
       {
-      if (STOPPING || RUNNING) assign(output_node, Unbound);
+      if (STOPPING || RUNNING) 
+         {
+         assign(output_node, Unbound);
+         }
       if (stopping_flag == OUTPUT || STOPPING)
          {
          stopping_flag = RUN;
@@ -886,7 +1021,7 @@ NODE *evaluator(NODE *list, enum labels where)
          goto fetch_cont;
          }
       }
-   if (repcount > 0)                   /* negative means forever              */
+   if (repcount > 0) // negative means forever
       {
       --repcount;
       ++repcountup;
@@ -919,7 +1054,10 @@ NODE *evaluator(NODE *list, enum labels where)
    restore(catch_tag);
    if (val_status < 4 && tailcall != 0)
       {
-      if (STOPPING || RUNNING) assign(output_node, Unbound);
+      if (STOPPING || RUNNING) 
+         {
+         assign(output_node, Unbound);
+         }
       if (stopping_flag == OUTPUT || STOPPING)
          {
          stopping_flag = RUN;
@@ -954,7 +1092,9 @@ NODE *evaluator(NODE *list, enum labels where)
    while (unev != NIL)
       {
       if (nodetype(unev) == LINE)
+         {
          assign(this_line, unparsed__line(unev));
+         }
       assign(exp, car(unev));
       pop(unev);
       if (is_list(exp) &&
@@ -975,11 +1115,15 @@ NODE *evaluator(NODE *list, enum labels where)
    /* This is for lapply. */
    assign(fun, car(val));
    while (nodetype(fun) == ARRAY && NOT_THROWING)
+      {
       assign(fun, err_logo(APPLY_BAD_DATA, fun));
+      }
    assign(argl, cadr(val));
    assign(val, Unbound);
    while (!is_list(argl) && NOT_THROWING)
+      {
       assign(argl, err_logo(APPLY_BAD_DATA, argl));
+      }
    if (NOT_THROWING && fun != NIL)
       {
       if (is_list(fun))
@@ -1004,7 +1148,9 @@ NODE *evaluator(NODE *list, enum labels where)
                   formals && argl && NOT_THROWING;
                   formals = (FIXNUM) cdr((NODE *) formals),
                   assign(argl, cdr(argl)))
+               {
                setvalnode__caseobj(car((NODE *) formals), car(argl));
+               }
             assign(val, cdr(fun));
             goto macro_reval;
             }
@@ -1031,7 +1177,10 @@ NODE *evaluator(NODE *list, enum labels where)
             restore2(didnt_output_name, didnt_get_output);
             if (val_status < 4 && tailcall != 0)
                {
-               if (STOPPING || RUNNING) assign(output_node, Unbound);
+               if (STOPPING || RUNNING) 
+                  {
+                  assign(output_node, Unbound);
+                  }
                if (stopping_flag == OUTPUT || STOPPING)
                   {
                   stopping_flag = RUN;
@@ -1053,12 +1202,18 @@ NODE *evaluator(NODE *list, enum labels where)
          int min, max, n;
          NODE *arg;
          assign(fun, intern(fun));
-         if (procnode__caseobj(fun) == UNDEFINED && NOT_THROWING &&
-               fun != Null_Word)
-            silent_load(fun, NULL);    /* try ./<fun>.lg                      */
-         if (procnode__caseobj(fun) == UNDEFINED && NOT_THROWING &&
-               fun != Null_Word)
-            silent_load(fun, logolib); /* try <logolib>/<fun>                 */
+         if (procnode__caseobj(fun) == UNDEFINED && 
+             NOT_THROWING &&
+             fun != Null_Word)
+            {
+            silent_load(fun, NULL);  // try ./<fun>.lg
+            }
+         if (procnode__caseobj(fun) == UNDEFINED && 
+             NOT_THROWING &&
+             fun != Null_Word)
+            {
+            silent_load(fun, logolib); // try <logolib>/<fun>
+            }
          proc = procnode__caseobj(fun);
          while (proc == UNDEFINED && NOT_THROWING)
             {
@@ -1076,7 +1231,7 @@ NODE *evaluator(NODE *list, enum labels where)
                if (getprimdflt(proc) < 0)
                   {
                   /* special form */
-                  err_logo(DK_HOW_UNREC, fun);/* can't apply                  */
+                  err_logo(DK_HOW_UNREC, fun); // can't apply
                   goto fetch_cont;
                   }
                else
@@ -1109,6 +1264,10 @@ NODE *evaluator(NODE *list, enum labels where)
    restore2(fun, ufun);
    reset_args(var);
    restore2(var, this_line);
-   deref(argl); deref(unev); deref(stack); deref(catch_tag); deref(exp);
+   deref(argl); 
+   deref(unev); 
+   deref(stack); 
+   deref(catch_tag); 
+   deref(exp);
    return (val);
    }

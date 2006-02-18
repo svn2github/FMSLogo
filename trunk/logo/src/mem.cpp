@@ -131,10 +131,19 @@ void setcdr(NODE *nd, NODE *newcdr)
 
 NODE *reref(NODE *proc_var, NODE *newval)
    {
-   if (newval != NIL) increfcnt(newval);
+   // reference newval
+   if (newval != NIL) 
+      {
+      increfcnt(newval);
+      }
+
+   // dereference proc_var
    if (proc_var != NIL && decrefcnt(proc_var) == 0)
+      {
       gc(proc_var);
-   return (newval);
+      }
+
+   return newval;
    }
 
 NODE *unref(NODE *ret_var)
