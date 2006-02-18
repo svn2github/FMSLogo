@@ -435,8 +435,6 @@ enum labels
 #define PAUSE_MODE 3
 
 #define ScreenSz 0.70                  /* Default,proportion of screen size   */
-#define WININISIZ 40
-/* displayed in FontDemo */
 #define MaxBitCuts 1024                /* Max number of bitmaps               */
 #define MAX_TIMERS 32
 

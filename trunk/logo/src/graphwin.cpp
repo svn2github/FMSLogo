@@ -2048,7 +2048,7 @@ void turtlepaste(int TurtleToPaste)
       else
          {
          g_Turtles[TurtleToPaste].Bitmap = 0;
-         char szWinLocStr[WININISIZ];
+         char szWinLocStr[255];
          sprintf(szWinLocStr, "Turtle %d has no picture, will Halt", TurtleToPaste);
          MainWindowx->CommandWindow->MessageBox(szWinLocStr, "Error");
          err_logo(STOP_ERROR, NIL);
