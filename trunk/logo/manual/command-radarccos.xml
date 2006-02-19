@@ -20,7 +20,7 @@ The output is given in radians in the range [0, PI].
 </para>
 
 <para>
-See also <link linkend="command-arcsin">ARCCOS</link>.
+See also <link linkend="command-arccos">ARCCOS</link>.
 </para>
 </listitem>
 </varlistentry>

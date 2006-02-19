@@ -20,7 +20,7 @@ The output is given in degrees in the range [0, 180].
 </para>
 
 <para>
-See also <link linkend="command-radarcsin">RADARCCOS</link>.
+See also <link linkend="command-radarccos">RADARCCOS</link>.
 </para>
 
 </listitem>
