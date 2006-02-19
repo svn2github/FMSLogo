@@ -25,7 +25,8 @@ This command is designed to run in <link linkend="command-perspective">PERSPECTI
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>SETORIENTATION [180 45 90]
+    <programlisting><userinput>PERSPECTIVE
+SETORIENTATION [180 45 90]
 SHOW ORIENTATION</userinput>
 [180 45 90]
 </programlisting>
