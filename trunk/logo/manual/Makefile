@@ -9,7 +9,7 @@ htmlhelp.hhp : $(SOURCEFILES)  $(HHP_STYLESHEET)
 
 logohelp.chm : htmlhelp.hhp
 	-$(HHC) htmlhelp.hhp
-	copy /Y logohelp.chm ..\src
+	cp      logohelp.chm ..\src
 
 logohelp.ps : $(SOURCEFILES)
 	docbook2ps $(ROOTFILE)
