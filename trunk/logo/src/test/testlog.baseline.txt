@@ -2157,6 +2157,118 @@ INFO: Executing invalid instruction: [(BUTTON? "too-many)]
 PASS: Executing [(BUTTON? "too-many)] threw an error
 INFO: executing regression test for bug #1384267
 PASS: "bug #1384267 is fixed; turning by a large number in perspective mode did not crash.
+INFO: Calling SETORIENTATION [0 0 0]
+PASS: [LIST? ORIENTATION] returned true , as expected.
+PASS: [COUNT ORIENTATION] returned 3 , as expected.
+PASS: [ROLL] returned 360 , as expected.
+PASS: [PITCH] returned 7.96408449770327e-15 , as expected.
+PASS: [HEADING] returned 2.82269614129004e-14 , as expected.
+PASS: [ANGLEISCLOSEENOUGH 360 0] returned true , as expected.
+PASS: [ANGLEISCLOSEENOUGH 7.96408449770327e-15 0] returned true , as expected.
+PASS: [ANGLEISCLOSEENOUGH 2.82269614129004e-14 0] returned true , as expected.
+INFO: Calling SETORIENTATION [1 2 3]
+PASS: [LIST? ORIENTATION] returned true , as expected.
+PASS: [COUNT ORIENTATION] returned 3 , as expected.
+PASS: [ROLL] returned 0.999999999999996 , as expected.
+PASS: [PITCH] returned 2.00000000000002 , as expected.
+PASS: [HEADING] returned 3.00000000000002 , as expected.
+PASS: [ANGLEISCLOSEENOUGH 0.999999999999996 1] returned true , as expected.
+PASS: [ANGLEISCLOSEENOUGH 2.00000000000002 2] returned true , as expected.
+PASS: [ANGLEISCLOSEENOUGH 3.00000000000002 3] returned true , as expected.
+INFO: Calling SETORIENTATION [105 0 0]
+PASS: [LIST? ORIENTATION] returned true , as expected.
+PASS: [COUNT ORIENTATION] returned 3 , as expected.
+PASS: [ROLL] returned 105 , as expected.
+PASS: [PITCH] returned 360 , as expected.
+PASS: [HEADING] returned 1.72069218871002e-14 , as expected.
+PASS: [ANGLEISCLOSEENOUGH 105 105] returned true , as expected.
+PASS: [ANGLEISCLOSEENOUGH 360 0] returned true , as expected.
+PASS: [ANGLEISCLOSEENOUGH 1.72069218871002e-14 0] returned true , as expected.
+INFO: Calling SETORIENTATION [0 105 0]
+PASS: [LIST? ORIENTATION] returned true , as expected.
+PASS: [COUNT ORIENTATION] returned 3 , as expected.
+PASS: [ROLL] returned 180 , as expected.
+PASS: [PITCH] returned 75 , as expected.
+PASS: [HEADING] returned 180 , as expected.
+PASS: [ANGLEISCLOSEENOUGH 180 180] returned true , as expected.
+PASS: [ANGLEISCLOSEENOUGH 75 75] returned true , as expected.
+PASS: [ANGLEISCLOSEENOUGH 180 180] returned true , as expected.
+INFO: Calling SETORIENTATION [0 0 105]
+PASS: [LIST? ORIENTATION] returned true , as expected.
+PASS: [COUNT ORIENTATION] returned 3 , as expected.
+PASS: [ROLL] returned 3.4756256724196e-15 , as expected.
+PASS: [PITCH] returned 2.14187609039661e-14 , as expected.
+PASS: [HEADING] returned 105 , as expected.
+PASS: [ANGLEISCLOSEENOUGH 3.4756256724196e-15 0] returned true , as expected.
+PASS: [ANGLEISCLOSEENOUGH 2.14187609039661e-14 0] returned true , as expected.
+PASS: [ANGLEISCLOSEENOUGH 105 105] returned true , as expected.
+INFO: Calling SETORIENTATION [0 -90 0]
+PASS: [LIST? ORIENTATION] returned true , as expected.
+PASS: [COUNT ORIENTATION] returned 3 , as expected.
+PASS: [ROLL] returned 0 , as expected.
+PASS: [PITCH] returned 270 , as expected.
+PASS: [HEADING] returned 2.2705421565593e-14 , as expected.
+PASS: [ANGLEISCLOSEENOUGH 0 0] returned true , as expected.
+PASS: [ANGLEISCLOSEENOUGH 270 270] returned true , as expected.
+PASS: [ANGLEISCLOSEENOUGH 2.2705421565593e-14 0] returned true , as expected.
+INFO: Calling SETORIENTATION [0 -105 0]
+PASS: [LIST? ORIENTATION] returned true , as expected.
+PASS: [COUNT ORIENTATION] returned 3 , as expected.
+PASS: [ROLL] returned 180 , as expected.
+PASS: [PITCH] returned 285 , as expected.
+PASS: [HEADING] returned 180 , as expected.
+PASS: [ANGLEISCLOSEENOUGH 180 180] returned true , as expected.
+PASS: [ANGLEISCLOSEENOUGH 285 285] returned true , as expected.
+PASS: [ANGLEISCLOSEENOUGH 180 180] returned true , as expected.
+INFO: Calling SETORIENTATION [0 465 0]
+PASS: [LIST? ORIENTATION] returned true , as expected.
+PASS: [COUNT ORIENTATION] returned 3 , as expected.
+PASS: [ROLL] returned 180 , as expected.
+PASS: [PITCH] returned 75 , as expected.
+PASS: [HEADING] returned 180 , as expected.
+PASS: [ANGLEISCLOSEENOUGH 180 180] returned true , as expected.
+PASS: [ANGLEISCLOSEENOUGH 75 75] returned true , as expected.
+PASS: [ANGLEISCLOSEENOUGH 180 180] returned true , as expected.
+INFO: Calling SETORIENTATION [360 360 360]
+PASS: [LIST? ORIENTATION] returned true , as expected.
+PASS: [COUNT ORIENTATION] returned 3 , as expected.
+PASS: [ROLL] returned 0 , as expected.
+PASS: [PITCH] returned 2.52204091131525e-14 , as expected.
+PASS: [HEADING] returned 360 , as expected.
+PASS: [ANGLEISCLOSEENOUGH 0 0] returned true , as expected.
+PASS: [ANGLEISCLOSEENOUGH 2.52204091131525e-14 0] returned true , as expected.
+PASS: [ANGLEISCLOSEENOUGH 360 0] returned true , as expected.
+INFO: Calling SETORIENTATION [-360 -360 -360]
+PASS: [LIST? ORIENTATION] returned true , as expected.
+PASS: [COUNT ORIENTATION] returned 3 , as expected.
+PASS: [ROLL] returned 360 , as expected.
+PASS: [PITCH] returned 360 , as expected.
+PASS: [HEADING] returned 2.55372484780294e-14 , as expected.
+PASS: [ANGLEISCLOSEENOUGH 360 0] returned true , as expected.
+PASS: [ANGLEISCLOSEENOUGH 360 0] returned true , as expected.
+PASS: [ANGLEISCLOSEENOUGH 2.55372484780294e-14 0] returned true , as expected.
+INFO: Executing invalid instruction: [(SETORIENTATION)]
+PASS: Executing [(SETORIENTATION)] threw an error
+INFO: Executing invalid instruction: [(SETORIENTATION 0)]
+PASS: Executing [(SETORIENTATION 0)] threw an error
+INFO: Executing invalid instruction: [(SETORIENTATION 0 0)]
+PASS: Executing [(SETORIENTATION 0 0)] threw an error
+INFO: Executing invalid instruction: [(SETORIENTATION 0 0 0)]
+PASS: Executing [(SETORIENTATION 0 0 0)] threw an error
+INFO: Executing invalid instruction: [(SETORIENTATION [0] )]
+PASS: Executing [(SETORIENTATION [0] )] threw an error
+INFO: Executing invalid instruction: [(SETORIENTATION [0 0] )]
+PASS: Executing [(SETORIENTATION [0 0] )] threw an error
+INFO: Executing invalid instruction: [(SETORIENTATION [a b c] )]
+PASS: Executing [(SETORIENTATION [a b c] )] threw an error
+INFO: Executing invalid instruction: [(SETORIENTATION [0 0 0 0] )]
+PASS: Executing [(SETORIENTATION [0 0 0 0] )] threw an error
+INFO: Executing invalid instruction: [(SETORIENTATION {0 0 0} )]
+PASS: Executing [(SETORIENTATION {0 0 0} )] threw an error
+INFO: Executing invalid instruction: [(SETORIENTATION [0 0 0] "toomany)]
+PASS: Executing [(SETORIENTATION [0 0 0] "toomany)] threw an error
+INFO: Executing invalid instruction: [(ORIENTATION "toomany)]
+PASS: Executing [(ORIENTATION "toomany)] threw an error
 PASS: [SCRUNCH] returned [1 1] , as expected.
 PASS: [SCRUNCH] returned [2 0.1] , as expected.
 INFO: Executing invalid instruction: [(SETSCRUNCH)]

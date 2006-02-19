@@ -29,6 +29,7 @@ LOAD "misc.lgo
 LOAD "network.lgo
 LOAD "controlflow.lgo
 LOAD "perspective.lgo
+LOAD "3dtest.lgo
 LOAD "scrunch.lgo
 LOAD "help.lgo
 LOAD "window.lgo
@@ -64,6 +65,7 @@ TO TESTALL
   MISCTEST        ; from misc.lgo
   NETWORKTEST     ; from network.lgo
   PERSPECTIVETEST ; from perspective.lgo
+  ORIENTATIONTEST ; from 3dtest.lgo
   SCRUNCHTEST     ; from scrunch.lgo
   HELPTEST        ; from help.lgo
   WINDOWTEST      ; from window.lgo
