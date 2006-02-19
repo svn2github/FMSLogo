@@ -1,10 +1,10 @@
-to setorientation :yxz
+to setorientation :rph
 lt heading
 down pitch
 lr roll
-setroll item 1 :yxz
-setpitch item 2 :yxz
-setheading item 3 :yxz
+setroll  item 1 :rph
+setpitch item 2 :rph
+rt       item 3 :rph
 end
 
 bury "setorientation
