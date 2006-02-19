@@ -171,7 +171,7 @@ char *typename(NODE *nd)
       }
    }
 
-bool debug_print = true;
+const bool debug_print = true;
 #endif
 
 // prints a node to a file stream in a way that is consistent
