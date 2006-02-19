@@ -331,7 +331,7 @@ double positive_fmod(double x, double y)
    {
    double temp = fmod(x, y);
 
-   if (temp < 0)
+   if (temp < 0.0)
       {
       return temp + y;
       }
@@ -660,7 +660,7 @@ FLONUM towards_helper(FLONUM x, FLONUM y, FLONUM from_x, FLONUM from_y)
             }
          }
       a = 90.0 - a;
-      return (a < 0 ? 360.0 + a : a);
+      return a < 0 ? 360.0 + a : a;
       }
 
    return 0.0;
@@ -1249,9 +1249,13 @@ NODE *lsetheading(NODE *arg)
       a = positive_fmod(a, 360.0);
 
       if (current_mode == perspectivemode)
+         {
          right_helper(a - rotation_z());
+         }
       else
+         {
          g_Turtles[turtle_which].Heading = a;
+         }
 
       if (status_flag)
          {
@@ -1273,9 +1277,9 @@ NODE *lsetroll(NODE *arg)
       draw_turtle(false);
 
       FLONUM a = numeric_node_to_flonum(val);
+      a -= rotation_y();
       a = positive_fmod(a, 360.0);
-
-      rightroll(a - rotation_y());
+      rightroll(a);
 
       if (status_flag)
          {
@@ -1297,8 +1301,9 @@ NODE *lsetpitch(NODE *arg)
       draw_turtle(false);
 
       FLONUM a = numeric_node_to_flonum(val);
+      a -= rotation_x();
       a = positive_fmod(a, 360.0);
-      uppitch(a - rotation_x());
+      uppitch(a);
 
       if (status_flag)
          {
@@ -1333,7 +1338,31 @@ NODE *lsetclip(NODE *args)
    return Unbound;
    }
 
-const double epsilon=1.0e-12;
+static
+FLONUM
+normalize_angle(
+   FLONUM  Angle
+)
+   {
+   double angle = fmod(Angle, 360.0);
+
+   if (fabs(angle) < FLONUM_EPSILON) 
+      {
+      return 0.0; 
+      }
+   else if (fabs(angle - 360.0) < FLONUM_EPSILON) 
+      {
+      return 0.0; 
+      }
+   else if (angle < 0.0) 
+      {
+      return angle + 360.0; 
+      }
+   else 
+      {
+      return angle;
+      }
+   }
 
 /* rotations such that heading has no dependencies */
 
@@ -1347,7 +1376,7 @@ FLONUM rotation_z()
 
    FLONUM result;
 
-   if ((1.0 - fabs(m23)) < epsilon)
+   if ((1.0 - fabs(m23)) < FLONUM_EPSILON)
       {
       result = atan2(m12, m11) * degrees_per_rad;
       }
@@ -1356,14 +1385,7 @@ FLONUM rotation_z()
       result = atan2(-m21, m22) * degrees_per_rad;
       }
 
-   if (result < 0.0) 
-      {
-      return result + 360.0; 
-      }
-   else 
-      {
-      return result;
-      }
+   return normalize_angle(result);
    }
 
 FLONUM rotation_y()
@@ -1374,7 +1396,7 @@ FLONUM rotation_y()
 
    FLONUM result;
 
-   if ((1.0 - fabs(m23)) < epsilon)
+   if ((1.0 - fabs(m23)) < FLONUM_EPSILON)
       {
       return 0.0;
       }
@@ -1383,14 +1405,7 @@ FLONUM rotation_y()
       result = atan2(m13, m33) * degrees_per_rad;
       }
 
-   if (result < 0.0) 
-      {
-      return result + 360.0;
-      }
-   else 
-      {
-      return result;
-      }
+   return normalize_angle(result);
    }
 
 FLONUM rotation_x()
@@ -1401,7 +1416,7 @@ FLONUM rotation_x()
 
    FLONUM result;
 
-   if ((1.0 - fabs(m23)) < epsilon)
+   if ((1.0 - fabs(m23)) < FLONUM_EPSILON)
       {
       return (m23 < 0.0) ? 90.0 : 270.0;
       }
@@ -1410,22 +1425,19 @@ FLONUM rotation_x()
       FLONUM ry = atan2(-m13, m33);
 
       FLONUM a;
-      if (fabs(fabs(ry) - 90.0 * rads_per_degree) < epsilon)
+      if (fabs(fabs(ry) - 90.0 * rads_per_degree) < FLONUM_EPSILON)
+         {
          a = m13 / sin(-ry);
+         }
       else
+         {
          a = m33 / cos(ry);
+         }
 
       result = atan2(-m23, a) * degrees_per_rad;
       }
 
-   if (result < 0.0)
-      {
-      return result + 360.0;
-      }
-   else 
-      {
-      return result;
-      }
+   return normalize_angle(result);
    }
 
 NODE *lheading(NODE *)
