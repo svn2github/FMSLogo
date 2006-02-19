@@ -60,6 +60,7 @@
   <!ENTITY command-remdup       SYSTEM "command-remdup.xml">
   <!ENTITY command-remove       SYSTEM "command-remove.xml">
   <!ENTITY command-reverse      SYSTEM "command-reverse.xml">
+  <!ENTITY command-sort         SYSTEM "command-sort.xml">
   <!ENTITY command-sentence     SYSTEM "command-sentence.xml">
   <!ENTITY command-setitem      SYSTEM "command-setitem.xml">
   <!ENTITY command-word         SYSTEM "command-word.xml">
