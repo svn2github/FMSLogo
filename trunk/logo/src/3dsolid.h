@@ -1,7 +1,6 @@
 #ifndef _3DSOLID_H_
 #define _3DSOLID_H_
 
-extern const double epsilon;
 #define NUM_SHADES 255
 #define SHARE
 

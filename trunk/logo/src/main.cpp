@@ -945,9 +945,9 @@ transline3d(
    if (bPolyFlag)
       {
       if (!ThePolygon ||
-          (fabs(ThePolygon->Vertex.x - to3d.x) > epsilon) ||
-          (fabs(ThePolygon->Vertex.y - to3d.y) > epsilon) ||
-          (fabs(ThePolygon->Vertex.z - to3d.z) > epsilon))
+          (fabs(ThePolygon->Vertex.x - to3d.x) > FLONUM_EPSILON) ||
+          (fabs(ThePolygon->Vertex.y - to3d.y) > FLONUM_EPSILON) ||
+          (fabs(ThePolygon->Vertex.z - to3d.z) > FLONUM_EPSILON))
          {
          ThreeD.AddPoint(&ThePolygon, to3d);
          }
