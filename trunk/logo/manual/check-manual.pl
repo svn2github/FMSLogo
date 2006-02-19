@@ -433,7 +433,7 @@ $Exceptions{'command-uppercase.xml'}{'allcaps'}{'HELLO'} = 1;
 $Exceptions{'command-windowfileedit.xml'}{'allcaps'}{'DEMO'} = 1;
 $Exceptions{'command-windowfileedit.xml'}{'logo'}            = 1;
 
-$Exceptions{'command-windowset.xml'}{'allcaps'}{'MAXIMIZE'} = 1;
+$Exceptions{'command-windowset.xml'}{'allcaps'}{'HIDEANDRESTORE'} = 1;
 
 $Exceptions{'command-yield.xml'}{'allcaps'}{'CPU'}     = 1;
 
