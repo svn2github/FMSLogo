@@ -82,24 +82,24 @@ int numberp(NODE *snd)
 
 NODE *lrandom(NODE *arg)
    {
-   NODE *val;
-   long r;
-
-   val = pos_int_arg(arg);
+   NODE *val = pos_int_arg(arg);
    if (NOT_THROWING)
       {
+      long r;
 #ifdef bsd
       r = (getint(val) == 0 ? 0 : random() % getint(val));
 #else
-      //      r = (getint(val) == 0 ? 0 : rand() % getint(val));
+      // r = (getint(val) == 0 ? 0 : rand() % getint(val));
       r = (((long) rand()) << 15) | rand();
       r = (getint(val) == 0 ? 0 : r % getint(val));
 #endif
-      val = newnode(INT);
-      setint(val, (FIXNUM) r);
-      return (val);
+      val = make_intnode((FIXNUM) r);
+      return val;
       }
-   else return Unbound;
+   else 
+      {
+      return Unbound;
+      }
    }
 
 NODE *lrerandom(NODE *arg)
@@ -144,14 +144,18 @@ NODE *binary(NODE *args, char fcn)
    int wantint = 0;
 
    if (fcn == '%' || fcn == 'm')
+      {
       arg = integer_arg(args);
+      }
    else
+      {
       arg = numeric_arg(args);
+      }
 
-   //   arg = numeric_arg(args);
+   // arg = numeric_arg(args);
    args = cdr(args);
    if (stopping_flag == THROWING) return Unbound;
-   if (nodetype(arg) == INT)
+   if (nodetype(arg) == INTEGER)
       {
       imode = true;
       ival = getint(arg);
@@ -199,9 +203,13 @@ NODE *binary(NODE *args, char fcn)
                case '-': fval = -fval; break;
                case '/':
                   if (fval == 0.0)
+                     {
                      err_logo(BAD_DATA_UNREC, arg);
+                     }
                   else
+                     {
                      fval = 1 / fval;
+                     }
                   break;
                case '~': err_logo(BAD_DATA_UNREC, arg); break;
                case 'c': fval = cos(fval * rads_per_degree); break;
@@ -224,7 +232,9 @@ NODE *binary(NODE *args, char fcn)
                   fval += (fval < 0 ? -0.5 : 0.5);
                case 'i':
                   if (fval > (FLONUM) MAXINT || fval < -(FLONUM) MAXINT)
+                     {
                      handle_oflo(sig_arg);
+                     }
                   signal(SIGFPE, handle_oflo);
                   ival = (FIXNUM) fval;
                   imode = true;
@@ -238,9 +248,13 @@ NODE *binary(NODE *args, char fcn)
             if (fcn == 'r' || fcn == 'i')
                {
                if (fval < 0.0)
+                  {
                   fval = ceil(fval);
+                  }
                else
+                  {
                   fval = floor(fval);
+                  }
                }
             else
                err_logo(BAD_DATA_UNREC, arg);
@@ -252,19 +266,32 @@ NODE *binary(NODE *args, char fcn)
    while (args != NIL && NOT_THROWING)
       {
       if (fcn == '%' || fcn == 'm')
+         {
          arg = integer_arg(args);
+         }
       else
+         {
          arg = numeric_arg(args);
+         }
 
-      //    arg = numeric_arg(args);
+      // arg = numeric_arg(args);
 
       args = cdr(args);
-      if (stopping_flag == THROWING) return Unbound;
-
-      if (nodetype(arg) == INT)
+      if (stopping_flag == THROWING) 
          {
-         if (imode) iarg = getint(arg);
-         else farg = (FLONUM) getint(arg);
+         return Unbound;
+         }
+
+      if (nodetype(arg) == INTEGER)
+         {
+         if (imode)
+            {
+            iarg = getint(arg);
+            }
+         else 
+            {
+            farg = (FLONUM) getint(arg);
+            }
          }
       else
          {
@@ -296,9 +323,12 @@ NODE *binary(NODE *args, char fcn)
                         fcn   = '+';
                         fval  = (FLONUM) ival;
                         farg  = (FLONUM) iarg;
-                        //                        handle_oflo(sig_arg);
+                        // handle_oflo(sig_arg);
                         }
-                     else ival = nval;
+                     else
+                        {
+                        ival = nval;
+                        }
                      }
                   else
                      {
@@ -311,7 +341,10 @@ NODE *binary(NODE *args, char fcn)
                         farg  = (FLONUM) iarg;
                         // handle_oflo(sig_arg);
                         }
-                     else ival = nval;
+                     else 
+                        {
+                        ival = nval;
+                        }
                      }
                   break;
 
@@ -369,13 +402,18 @@ NODE *binary(NODE *args, char fcn)
                   if (iarg < 0)
                      {
                      if (fcn == 'a')
+                        {
                         ival >>= -iarg;
+                        }
                      else
-                        ival = (unsigned) ival
-                           >> -iarg;
+                        {
+                        ival = (unsigned) ival >> -iarg;
+                        }
                      }
                   else
+                     {
                      ival <<= iarg;
+                     }
                   break;
 
                case '*':
@@ -428,9 +466,13 @@ NODE *binary(NODE *args, char fcn)
                     break;
                case '/':
                   if (farg == 0.0)
-                       err_logo(BAD_DATA_UNREC, arg);
+                     {
+                     err_logo(BAD_DATA_UNREC, arg);
+                     }
                   else
+                     {
                      fval /= farg;
+                     }
                     break;
                 case 'x':
                     errchk(fval = atan2(farg, fval) * degrees_per_rad);
@@ -442,10 +484,14 @@ NODE *binary(NODE *args, char fcn)
                     errchk(fval = pow(fval, farg));
                     break;
                default:  // logical op
-                  if (nodetype(arg) == INT)
+                  if (nodetype(arg) == INTEGER)
+                     {
                      err_logo(BAD_DATA_UNREC, make_floatnode(fval));
+                     }
                   else
+                     {
                      err_logo(BAD_DATA_UNREC, arg);
+                     }
                }
             }
          else
@@ -462,16 +508,19 @@ NODE *binary(NODE *args, char fcn)
       {
       if (imode)
          {
-         val = newnode(INT);
-         setint(val, ival);
+         val = make_intnode(ival);
          }
       else
          {
-         val = newnode(FLOAT);
+         val = newnode(FLOATINGPOINT);
          if (_isnan(fval))
+            {
             setfloat(val, 0.0);
+            }
          else
+            {
             setfloat(val, fval);
+            }
          }
       return (val);
       }
@@ -480,112 +529,127 @@ NODE *binary(NODE *args, char fcn)
 
 NODE *ladd(NODE *args)
    {
-   if (args == NIL) return make_intnode(0);
-   return (binary(args, '+'));
+   if (args == NIL) 
+      {
+      return make_intnode(0);
+      }
+   return binary(args, '+');
    }
 
 NODE *lsub(NODE *args)
    {
-   return (binary(args, '-'));
+   return binary(args, '-');
    }
 
 NODE *lmul(NODE *args)
    {
-   if (args == NIL) return make_intnode(1);
-   return (binary(args, '*'));
+   if (args == NIL) 
+      {
+      return make_intnode(1);
+      }
+   return binary(args, '*');
    }
 
 NODE *ldivide(NODE *args)
    {
-   return (binary(args, '/'));
+   return binary(args, '/');
    }
 
 NODE *lremainder(NODE *args)
    {
-   return (binary(args, '%'));
+   return binary(args, '%');
    }
 
 NODE *lmodulo(NODE *args)
    {
-   return (binary(args, 'm'));
+   return binary(args, 'm');
    }
 
 NODE *lbitand(NODE *args)
    {
-   if (args == NIL) return make_intnode(-1);
-   return (binary(args, '&'));
+   if (args == NIL) 
+      {
+      return make_intnode(-1);
+      }
+   return binary(args, '&');
    }
 
 NODE *lbitor(NODE *args)
    {
-   if (args == NIL) return make_intnode(0);
-   return (binary(args, '|'));
+   if (args == NIL) 
+      {
+      return make_intnode(0);
+      }
+   return binary(args, '|');
    }
 
 NODE *lbitxor(NODE *args)
    {
-   if (args == NIL) return make_intnode(0);
-   return (binary(args, '^'));
+   if (args == NIL) 
+      {
+      return make_intnode(0);
+      }
+   return binary(args, '^');
    }
 
 NODE *lashift(NODE *args)
    {
-   return (binary(args, 'a'));
+   return binary(args, 'a');
    }
 
 NODE *llshift(NODE *args)
    {
-   return (binary(args, 'l'));
+   return binary(args, 'l');
    }
 
 NODE *lbitnot(NODE *args)
    {
-   return (binary(args, '~'));
+   return binary(args, '~');
    }
 
 NODE *lsin(NODE *args)
    {
-   return (binary(args, 's'));
+   return binary(args, 's');
    }
 
 NODE *lcos(NODE *args)
    {
-   return (binary(args, 'c'));
+   return binary(args, 'c');
    }
 
 NODE *ltan(NODE *args)
    {
-   return (binary(args, 't'));
+   return binary(args, 't');
    }
 
 NODE *lasin(NODE *args)
    {
-   return (binary(args, 'v'));
+   return binary(args, 'v');
    }
 
 NODE *lacos(NODE *args)
    {
-   return (binary(args, 'w'));
+   return binary(args, 'w');
    }
 
 NODE *latan(NODE *args)
    {
-   return (binary(args, 'x'));
+   return binary(args, 'x');
    }
 
 NODE *lradsin(NODE *args)
    {
-   return (binary(args, 'S'));
+   return binary(args, 'S');
    }
 
 NODE *lradcos(NODE *args)
    {
-   return (binary(args, 'C'));
+   return binary(args, 'C');
    }
 
 NODE *lradtan(NODE *args)
    {
-   return (binary(args, 'T'));
+   return binary(args, 'T');
    }
 
 NODE *lradasin(NODE *args)
@@ -595,47 +659,47 @@ NODE *lradasin(NODE *args)
 
 NODE *lradacos(NODE *args)
    {
-   return (binary(args, 'W'));
+   return binary(args, 'W');
    }
 
 NODE *lradatan(NODE *args)
    {
-   return (binary(args, 'X'));
+   return binary(args, 'X');
    }
 
 NODE *lsqrt(NODE *args)
    {
-   return (binary(args, 'q'));
+   return binary(args, 'q');
    }
 
 NODE *linteg(NODE *args)
    {
-   return (binary(args, 'i'));
+   return binary(args, 'i');
    }
 
 NODE *lround(NODE *args)
    {
-   return (binary(args, 'r'));
+   return binary(args, 'r');
    }
 
 NODE *lexp(NODE *args)
    {
-   return (binary(args, 'e'));
+   return binary(args, 'e');
    }
 
 NODE *llog10(NODE *args)
    {
-   return (binary(args, 'g'));
+   return binary(args, 'g');
    }
 
 NODE *lln(NODE *args)
    {
-   return (binary(args, 'n'));
+   return binary(args, 'n');
    }
 
 NODE *lpower(NODE *args)
    {
-   return (binary(args, 'p'));
+   return binary(args, 'p');
    }
 
 static
@@ -660,9 +724,9 @@ int compare_flonums(FLONUM n1, FLONUM n2)
 static
 int compare_numnodes(NODE *n1, NODE *n2)
    {
-   if (nodetype(n1) == INT)
+   if (nodetype(n1) == INTEGER)
       {
-      if (nodetype(n2) == INT)
+      if (nodetype(n2) == INTEGER)
          {
          return getint(n1) - getint(n2);
          }
@@ -673,7 +737,7 @@ int compare_numnodes(NODE *n1, NODE *n2)
       }
    else
       {
-      if (nodetype(n2) == INT)
+      if (nodetype(n2) == INTEGER)
          {
          return compare_flonums(getfloat(n1), getint(n2));
          }
@@ -893,18 +957,20 @@ bool equalp_help(NODE *arg1, NODE *arg2, bool ignorecase)
 
 NODE *lequalp(NODE *args)
    {
-   NODE *arg1, *arg2;
+   NODE * arg1 = car(args);
+   NODE * arg2 = cadr(args);
+
    bool val;
-
-   arg1 = car(args);
-   arg2 = cadr(args);
-
    if (compare_node(valnode__caseobj(Caseignoredp), Truex, TRUE) == 0)
+      {
       val = equalp_help(arg1, arg2, TRUE);
+      }
    else
+      {
       val = equalp_help(arg1, arg2, FALSE);
+      }
 
-   return (torf(val));
+   return torf(val);
    }
 
 NODE *l_eq(NODE *args)
@@ -914,17 +980,19 @@ NODE *l_eq(NODE *args)
 
 NODE *lbeforep(NODE *args)
    {
-   NODE *arg1, *arg2;
+   NODE * arg1 = string_arg(args);
+   NODE * arg2 = string_arg(cdr(args));
+
    int val;
-
-   arg1 = string_arg(args);
-   arg2 = string_arg(cdr(args));
-
    if (compare_node(valnode__caseobj(Caseignoredp), Truex, TRUE) == 0)
+      {
       val = compare_node(arg1, arg2, TRUE);
+      }
    else
+      {
       val = compare_node(arg1, arg2, FALSE);
+      }
 
-   return (val < 0 ? Truex : Falsex);
+   return torf(val < 0);
    }
 

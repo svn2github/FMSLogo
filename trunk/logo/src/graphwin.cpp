@@ -163,16 +163,16 @@ GetRGBorIndexColor(
          if (EnablePalette)
             {
             color = LoadColor(
-                ((nodetype(     car(arg) ) == FLOAT) ? (FIXNUM) getfloat(     car(arg) ) : getint(     car(arg)) ),
-                ((nodetype(    cadr(arg) ) == FLOAT) ? (FIXNUM) getfloat(    cadr(arg) ) : getint(    cadr(arg)) ),
-                ((nodetype(cadr(cdr(arg))) == FLOAT) ? (FIXNUM) getfloat(cadr(cdr(arg))) : getint(cadr(cdr(arg)))));
+                ((nodetype(     car(arg) ) == FLOATINGPOINT) ? (FIXNUM) getfloat(     car(arg) ) : getint(     car(arg)) ),
+                ((nodetype(    cadr(arg) ) == FLOATINGPOINT) ? (FIXNUM) getfloat(    cadr(arg) ) : getint(    cadr(arg)) ),
+                ((nodetype(cadr(cdr(arg))) == FLOATINGPOINT) ? (FIXNUM) getfloat(cadr(cdr(arg))) : getint(cadr(cdr(arg)))));
             }
          else
             {
             color = RGB(
-               ((nodetype(     car(arg) ) == FLOAT) ? (FIXNUM) getfloat(     car(arg) ) : getint(     car(arg)) ),
-               ((nodetype(    cadr(arg) ) == FLOAT) ? (FIXNUM) getfloat(    cadr(arg) ) : getint(    cadr(arg)) ),
-               ((nodetype(cadr(cdr(arg))) == FLOAT) ? (FIXNUM) getfloat(cadr(cdr(arg))) : getint(cadr(cdr(arg)))));
+               ((nodetype(     car(arg) ) == FLOATINGPOINT) ? (FIXNUM) getfloat(     car(arg) ) : getint(     car(arg)) ),
+               ((nodetype(    cadr(arg) ) == FLOATINGPOINT) ? (FIXNUM) getfloat(    cadr(arg) ) : getint(    cadr(arg)) ),
+               ((nodetype(cadr(cdr(arg))) == FLOATINGPOINT) ? (FIXNUM) getfloat(cadr(cdr(arg))) : getint(cadr(cdr(arg)))));
             }
          }
 
@@ -184,9 +184,7 @@ GetRGBorIndexColor(
 
       if (NOT_THROWING)
          {
-         int icolor = (nodetype(cnode) == FLOAT) ?
-            (FIXNUM) getfloat(cnode) :
-            getint(cnode);
+         FIXNUM icolor = numeric_node_to_fixnum(cnode);
 
          icolor = icolor % 16;
          if (EnablePalette)
@@ -1003,19 +1001,10 @@ NODE *lzoom(NODE *arg)
    {
    ASSERT_TURTLE_INVARIANT
 
-   FLONUM temp_zoom;
-
    // get arg
    NODE *val = numeric_arg(arg);
 
-   if (nodetype(val) == INT)
-      {
-      temp_zoom = (FLONUM) getint(val);
-      }
-   else
-      {
-      temp_zoom = getfloat(val);
-      }
+   FLONUM temp_zoom = numeric_node_to_flonum(val);
 
    if (temp_zoom <= 0.0)
       {

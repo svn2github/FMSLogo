@@ -540,9 +540,9 @@ NODE *evaluator(NODE *list, enum labels where)
          formals = (FIXNUM) cdr((NODE *) formals))
       {
       parm = car((NODE *) formals);
-      if (nodetype(parm) == INT) 
+      if (nodetype(parm) == INTEGER) 
          {
-         break;/* default # args                      */
+         break; // default # args
          }
       if (argl != NIL)
          {

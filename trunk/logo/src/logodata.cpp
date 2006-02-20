@@ -334,6 +334,8 @@ make_strnode(
    char *    (*copy_routine) (char *, const char *, int)
 )
    {
+   assert(string != NULL);
+
    if (len == 0 && Null_Word != NIL)
       {
       return Null_Word;
@@ -467,7 +469,7 @@ NODE *make_colon(NODE *cnd)
 
 NODE *make_intnode(FIXNUM i)
    {
-   NODE *nd = newnode(INT);
+   NODE *nd = newnode(INTEGER);
 
    setint(nd, i);
    return nd;
@@ -475,7 +477,7 @@ NODE *make_intnode(FIXNUM i)
 
 NODE *make_floatnode(FLONUM f)
    {
-   NODE *nd = newnode(FLOAT);
+   NODE *nd = newnode(FLOATINGPOINT);
 
    setfloat(nd, f);
    return nd;
@@ -483,34 +485,52 @@ NODE *make_floatnode(FLONUM f)
 
 NODE *cnv_node_to_numnode(NODE *ndi)
    {
-   NODE *val;
-   int dr;
-   char s2[MAX_NUMBER], *s = s2;
-
    if (is_number(ndi))
-      return (ndi);
+      {
+      return ndi;
+      }
+
    ndi = cnv_node_to_strnode(ndi);
-   if (ndi == Unbound) return Unbound;
+   if (ndi == Unbound) 
+      {
+      return Unbound;
+      }
+
+   int dr;
    if (((getstrlen(ndi)) < MAX_NUMBER) && (dr = numberp(ndi)))
       {
+      char s2[MAX_NUMBER];
+      char *s = s2;
+
       if (backslashed(ndi))
+         {
          noparity_strnzcpy(s, getstrptr(ndi), getstrlen(ndi));
+         }
       else
+         {
          strnzcpy(s, getstrptr(ndi), getstrlen(ndi));
-      if (*s == '+') ++s;
-      if (s2[getstrlen(ndi) - 1] == '.') s2[getstrlen(ndi) - 1] = 0;
+         }
+
+      if (*s == '+') 
+         {
+         ++s;
+         }
+      if (s2[getstrlen(ndi) - 1] == '.') 
+         {
+         s2[getstrlen(ndi) - 1] = '\0';
+         }
+
+      NODE *val;
       if (/*TRUE || */ dr - 1 || getstrlen(ndi) > 9)
          {
-         val = newnode(FLOAT);
-         setfloat(val, atof(s));
+         val = make_floatnode(atof(s));
          }
       else
          {
-         val = newnode(INT);
-         setint(val, atol(s));
+         val = make_intnode(atol(s));
          }
       gcref(ndi);
-      return (val);
+      return val;
       }
    else
       {
@@ -553,17 +573,18 @@ NODE *cnv_node_to_strnode(NODE *nd)
            unref(nd);
            return nd;
 
-       case INT:
+       case INTEGER:
            sprintf(s, "%ld", getint(nd));
            return make_strnode(s, (int) strlen(s), STRING, strnzcpy);
 
-       case FLOAT:
+       case FLOATINGPOINT:
            sprintf(s, "%0.15g", getfloat(nd));
            return make_strnode(s, (int) strlen(s), STRING, strnzcpy);
       }
 
    /*NOTREACHED*/
-   return (NIL);
+   assert(0);
+   return NIL;
    }
 
 NODE *make_static_strnode(const char *strptr)

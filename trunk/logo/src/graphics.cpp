@@ -371,7 +371,7 @@ numeric_node_to_flonum(
    {
    FLONUM number;
 
-   if (nodetype(numeric_node) == INT)
+   if (nodetype(numeric_node) == INTEGER)
       {
       number = (FLONUM) getint(numeric_node);
       }
@@ -391,7 +391,7 @@ numeric_node_to_fixnum(
    {
    FIXNUM number;
 
-   if (nodetype(numeric_node) == INT)
+   if (nodetype(numeric_node) == INTEGER)
       {
       number = getint(numeric_node);
       }
@@ -1493,8 +1493,8 @@ NODE *vec_arg_helper(NODE *args, bool floatok)
             (
             floatok ||
             (
-            (nodetype(val1) == INT && getint(val1) >= 0 || nodetype(val1) == FLOAT && getfloat(val1) >= 0.0)&&
-            (nodetype(val2) == INT && getint(val2) >= 0 || nodetype(val2) == FLOAT && getfloat(val2) >= 0.0)
+            (nodetype(val1) == INTEGER && getint(val1) >= 0 || nodetype(val1) == FLOATINGPOINT && getfloat(val1) >= 0.0)&&
+            (nodetype(val2) == INTEGER && getint(val2) >= 0 || nodetype(val2) == FLOATINGPOINT && getfloat(val2) >= 0.0)
             )
             )
             )
@@ -1534,9 +1534,9 @@ NODE *vec_3_arg_helper(NODE *args, bool floatok)
             (
             floatok ||
             (
-            (nodetype(val1) == INT && getint(val1) >= 0 || nodetype(val1) == FLOAT && getfloat(val1) >= 0.0)&&
-            (nodetype(val2) == INT && getint(val2) >= 0 || nodetype(val2) == FLOAT && getfloat(val2) >= 0.0)&&
-            (nodetype(val3) == INT && getint(val3) >= 0 || nodetype(val3) == FLOAT && getfloat(val3) >= 0.0)
+            (nodetype(val1) == INTEGER && getint(val1) >= 0 || nodetype(val1) == FLOATINGPOINT && getfloat(val1) >= 0.0)&&
+            (nodetype(val2) == INTEGER && getint(val2) >= 0 || nodetype(val2) == FLOATINGPOINT && getfloat(val2) >= 0.0)&&
+            (nodetype(val3) == INTEGER && getint(val3) >= 0 || nodetype(val3) == FLOATINGPOINT && getfloat(val3) >= 0.0)
             )
             )
             )
@@ -1579,10 +1579,10 @@ NODE *vec_4_arg_helper(NODE *args, bool floatok)
                val3 != Unbound &&
                val4 != Unbound &&
                (floatok || (
-                     nodetype(val1) == INT && getint(val1) >= 0 &&
-                     nodetype(val2) == INT && getint(val2) >= 0 &&
-                     nodetype(val3) == INT && getint(val3) >= 0 &&
-                     nodetype(val4) == INT && getint(val4) >= 0)))
+                     nodetype(val1) == INTEGER && getint(val1) >= 0 &&
+                     nodetype(val2) == INTEGER && getint(val2) >= 0 &&
+                     nodetype(val3) == INTEGER && getint(val3) >= 0 &&
+                     nodetype(val4) == INTEGER && getint(val4) >= 0)))
             {
             setcar(arg, val1);
             setcar(cdr(arg), val2);

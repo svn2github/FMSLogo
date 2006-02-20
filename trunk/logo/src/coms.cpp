@@ -277,20 +277,21 @@ NODE *lrunresult(NODE *args)
    return make_cont(runresult_continuation, lrun(args));
    }
 
+// returns an integer node if args can be interpreted as a postive integer.
+// otherwise sets an error in args and returns Unbound.
 NODE *pos_int_arg(NODE *args)
    {
    NODE *arg = car(args);
-   FIXNUM i;
-   FLONUM f;
 
    NODE * val = cnv_node_to_numnode(arg);
-   while ((nodetype(val) != INT || getint(val) < 0) && NOT_THROWING)
+   while ((nodetype(val) != INTEGER || getint(val) < 0) && NOT_THROWING)
       {
-      if (nodetype(val) == FLOAT &&
-            fmod((f = getfloat(val)), 1.0) == 0.0 &&
-            f >= 0.0 && f < (FLONUM) MAXINT)
+      FLONUM f;
+      if (nodetype(val) == FLOATINGPOINT &&
+          fmod((f = getfloat(val)), 1.0) == 0.0 &&
+          f >= 0.0 && f < (FLONUM) MAXINT)
          {
-         i = f;
+         FIXNUM i = f;
 
          gcref(val);
          val = make_intnode(i);
@@ -302,7 +303,10 @@ NODE *pos_int_arg(NODE *args)
       val = cnv_node_to_numnode(arg);
       }
    setcar(args, val);
-   if (nodetype(val) == INT) return (val);
+   if (nodetype(val) == INTEGER)
+      {
+      return val;
+      }
    return Unbound;
    }
 

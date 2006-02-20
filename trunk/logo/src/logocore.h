@@ -51,64 +51,65 @@ typedef struct logo_node * (*logofunc) (struct logo_node *);
 #define TURTLEN         3 // number of special turtles
 #define TURTLES         1024+TURTLEN
 
-typedef short NODETYPES;
+typedef unsigned short NODETYPES;
 
 /* Note that some of these values are used twice; they must be
 * distinguishable by the other bits used with them. */
 
-#define NT_TREE        (NODETYPES)0100000
-#define NT_EMPTY        (NODETYPES)040000
-#define NT_AGGR         (NODETYPES)020000
-#define NT_LIST         (NODETYPES)010000
-#define NT_RUNP         (NODETYPES)004000
-#define NT_ARRAY        (NODETYPES)002000
-#define NT_WORD         (NODETYPES)001000
-#define NT_NUMBER       (NODETYPES)000400
-#define NT_FLOAT        (NODETYPES)000200
-#define NT_CONT         (NODETYPES)000200
-#define NT_PRIM         (NODETYPES)000100
-#define NT_INFIX        (NODETYPES)000040
-#define NT_LINE         (NODETYPES)000040
-#define NT_VBAR         (NODETYPES)000040
-#define NT_STRING       (NODETYPES)000020
-#define NT_BACKSL       (NODETYPES)000010
-#define NT_PUNCT        (NODETYPES)000004
-#define NT_TAILFORM     (NODETYPES)000004
-#define NT_COLON        (NODETYPES)000002
-#define NT_MACRO        (NODETYPES)000002
-#define NT_CASEOBJ      (NODETYPES)000001
+const NODETYPES NT_TREE     = 0x8000;
+const NODETYPES NT_EMPTY    = 0x4000;
+const NODETYPES NT_AGGR     = 0x2000;
+const NODETYPES NT_LIST     = 0x1000;
+const NODETYPES NT_RUNP     = 0x0800;
+const NODETYPES NT_ARRAY    = 0x0400;
+const NODETYPES NT_WORD     = 0x0200;
+const NODETYPES NT_NUMBER   = 0x0100;
+const NODETYPES NT_FLOAT    = 0x0080;
+const NODETYPES NT_CONT     = 0x0080;
+const NODETYPES NT_PRIM     = 0x0040;
+const NODETYPES NT_INFIX    = 0x0020;
+const NODETYPES NT_LINE     = 0x0020;
+const NODETYPES NT_VBAR     = 0x0020;
+const NODETYPES NT_STRING   = 0x0010;
+const NODETYPES NT_BACKSL   = 0x0008;
+const NODETYPES NT_PUNCT    = 0x0004;
+const NODETYPES NT_TAILFORM = 0x0004;
+const NODETYPES NT_COLON    = 0x0002;
+const NODETYPES NT_MACRO    = 0x0002;
+const NODETYPES NT_CASEOBJ  = 0x0001;
 
-#define PNIL            (NODETYPES)(NT_EMPTY|NT_AGGR|NT_LIST)
-#define PUNBOUND        (NODETYPES)0
-#define CONS            (NODETYPES)(NT_AGGR|NT_LIST)
-#define STRING          (NODETYPES)(NT_WORD|NT_STRING)
-#define INT             (NODETYPES)(NT_WORD|NT_NUMBER)
-#define FLOAT           (NODETYPES)(NT_WORD|NT_NUMBER|NT_FLOAT)
-#define PRIM            (NODETYPES)(NT_PRIM)
-#define MACRO           (NODETYPES)(NT_PRIM|NT_MACRO)
-#define TAILFORM        (NODETYPES)(NT_PRIM|NT_TAILFORM)
-#define CASEOBJ         (NODETYPES)(NT_WORD|NT_CASEOBJ)
-#define INFIX           (NODETYPES)(NT_PRIM|NT_INFIX)
-#define TREE            (NODETYPES)(NT_AGGR|NT_LIST|NT_TREE)
-#define RUN_PARSE       (NODETYPES)(NT_AGGR|NT_LIST|NT_RUNP)
-#define QUOTE           (NODETYPES)(NT_WORD|NT_PUNCT)
-#define COLON           (NODETYPES)(NT_WORD|NT_PUNCT|NT_COLON)
-#define BACKSLASH_STRING (NODETYPES)(NT_WORD|NT_STRING|NT_BACKSL)
-#define VBAR_STRING     (NODETYPES)(NT_WORD|NT_STRING|NT_BACKSL|NT_VBAR)
-#define ARRAY           (NODETYPES)(NT_AGGR|NT_ARRAY)
-#define LINE            (NODETYPES)(NT_LINE|NT_LIST|NT_AGGR)
-#define CONT            (NODETYPES)(NT_CONT|NT_LIST)
-#define aggregate(nd)   (nodetype(nd) & NT_AGGR)
-#define is_cont(nd)     (nodetype(nd) == CONT)
-#define is_list(nd)     (nodetype(nd) & NT_LIST)
-#define is_tree(nd)     (nodetype(nd) & NT_TREE)
-#define is_string(nd)   (nodetype(nd) & NT_STRING)
-#define is_number(nd)   (nodetype(nd) & NT_NUMBER)
-#define is_prim(nd)     (nodetype(nd) & NT_PRIM)
-#define is_word(nd)     (nodetype(nd) & NT_WORD)
-#define runparsed(nd)   (nodetype(nd) & NT_RUNP)
-#define backslashed(nd) (nodetype(nd) & NT_BACKSL)
-#define is_tailform(nd) (nodetype(nd) == TAILFORM)
+const NODETYPES PNIL             = NT_EMPTY|NT_AGGR|NT_LIST;
+const NODETYPES PUNBOUND         = 0;
+const NODETYPES CONS             = NT_AGGR|NT_LIST;
+const NODETYPES STRING           = NT_WORD|NT_STRING;
+const NODETYPES INTEGER          = NT_WORD|NT_NUMBER;
+const NODETYPES FLOATINGPOINT    = NT_WORD|NT_NUMBER|NT_FLOAT;
+const NODETYPES PRIM             = NT_PRIM;
+const NODETYPES MACRO            = NT_PRIM|NT_MACRO;
+const NODETYPES TAILFORM         = NT_PRIM|NT_TAILFORM;
+const NODETYPES CASEOBJ          = NT_WORD|NT_CASEOBJ;
+const NODETYPES INFIX            = NT_PRIM|NT_INFIX;
+const NODETYPES TREE             = NT_AGGR|NT_LIST|NT_TREE;
+const NODETYPES RUN_PARSE        = NT_AGGR|NT_LIST|NT_RUNP;
+const NODETYPES QUOTE            = NT_WORD|NT_PUNCT;
+const NODETYPES COLON            = NT_WORD|NT_PUNCT|NT_COLON;
+const NODETYPES BACKSLASH_STRING = NT_WORD|NT_STRING|NT_BACKSL;
+const NODETYPES VBAR_STRING      = NT_WORD|NT_STRING|NT_BACKSL|NT_VBAR;
+const NODETYPES ARRAY            = NT_AGGR|NT_ARRAY;
+const NODETYPES LINE             = NT_LINE|NT_LIST|NT_AGGR;
+const NODETYPES CONT             = NT_CONT|NT_LIST;
+
+#define aggregate(nd)   ((nodetype(nd) & NT_AGGR))
+#define is_cont(nd)     ((nodetype(nd) == CONT))
+#define is_list(nd)     ((nodetype(nd) & NT_LIST))
+#define is_tree(nd)     ((nodetype(nd) & NT_TREE))
+#define is_string(nd)   ((nodetype(nd) & NT_STRING))
+#define is_number(nd)   ((nodetype(nd) & NT_NUMBER))
+#define is_prim(nd)     ((nodetype(nd) & NT_PRIM))
+#define is_word(nd)     ((nodetype(nd) & NT_WORD))
+#define runparsed(nd)   ((nodetype(nd) & NT_RUNP))
+#define backslashed(nd) ((nodetype(nd) & NT_BACKSL))
+#define is_tailform(nd) ((nodetype(nd) == TAILFORM))
 
 typedef enum
    {

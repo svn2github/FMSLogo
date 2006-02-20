@@ -139,7 +139,7 @@ void real_print_helper(FILE *strm, NODE *ndlist, int depth, int width)
 
 #ifdef MEM_DEBUG
 static
-char *typename(NODE *nd)
+const char *typename(const NODE *nd)
    {
    static char buf[30];
    switch (nodetype(nd))
@@ -148,8 +148,8 @@ char *typename(NODE *nd)
        case PUNBOUND: return "PUNBOUND";
        case CONS: return "CONS";
        case STRING: return "STRING";
-       case INT: return "INT";
-       case FLOAT: return "FLOAT";
+       case INTEGER: return "INTEGER";
+       case FLOATINGPOINT: return "FLOATINGPOINT";
        case PRIM: return "PRIM";
        case MACRO: return "MACRO";
        case TAILFORM: return "TAILFORM";
@@ -166,7 +166,7 @@ char *typename(NODE *nd)
        case CONT: return "CONT";
        case NTFREE: return "FREED_OBJECT";
        default:
-           sprintf(buf, "UNKNOWN_0%o", nodetype(nd));
+           sprintf(buf, "UNKNOWN_0x%X", nodetype(nd));
            return buf;
       }
    }
@@ -324,13 +324,20 @@ void real_print_node(FILE *strm, NODE *nd, int depth, int width)
 static
 int find_limit(NODE *nd)
    {
-   int val = -1;
+   if (nd == NIL) 
+      {
+      return -1;
+      }
 
-   if (nd == NIL) return (-1);
    nd = cnv_node_to_numnode(valnode__caseobj(nd));
-   if (nodetype(nd) == INT) val = getint(nd);
+
+   int val = -1;
+   if (nodetype(nd) == INTEGER) 
+      {
+      val = getint(nd);
+      }
    gcref(nd);
-   return (val);
+   return val;
    }
 
 void print_helper(FILE *strm, NODE *nd)

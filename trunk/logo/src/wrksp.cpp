@@ -55,7 +55,7 @@ NODE *get_bodywords(NODE *proc, NODE *name)
          {
          setcdr(tail, cons_list(cons(make_colon(caar(val)), cdar(val))));
          }
-      else if (nodetype(car(val)) == INT)
+      else if (nodetype(car(val)) == INTEGER)
          {
          setcdr(tail, cons_list(car(val)));
          }
@@ -196,7 +196,7 @@ NODE *define_helper(NODE *args, int macro_flag)
             if (cdr(arg) == NIL)
                maximum = -1;
             }
-         else if (nodetype(arg) == INT &&
+         else if (nodetype(arg) == INTEGER &&
                getint(arg) <= (unsigned) maximum &&
                getint(arg) >= minimum)
             {
@@ -320,7 +320,7 @@ NODE *to_helper(NODE *args, bool macro_flag)
             maximum++;
             deflt++;
             }
-         else if (nodetype(arg) == INT &&
+         else if (nodetype(arg) == INTEGER &&
                getint(arg) <= (unsigned) maximum &&
                getint(arg) >= minimum)
             {

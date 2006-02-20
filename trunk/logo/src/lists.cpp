@@ -633,19 +633,23 @@ NODE *lmember(NODE *args)
    return memberp_helper(args, true, false);
    }
 
+// returns an integer node if args can be interpreted as an integer.
+// otherwise sets an error in args and returns Unbound.
 NODE *integer_arg(NODE *args)
    {
    NODE *arg = car(args);
 
    NODE * val = cnv_node_to_numnode(arg);
 
-   FIXNUM i;
-   FLONUM f;
-   while ((nodetype(val) != INT) && NOT_THROWING)
+   while ((nodetype(val) != INTEGER) && NOT_THROWING)
       {
-      if (nodetype(val) == FLOAT && fmod((f = getfloat(val)), 1.0) == 0.0 && f >= -(FLONUM) MAXINT && f < (FLONUM) MAXINT)
+      FLONUM f;
+      if (nodetype(val) == FLOATINGPOINT && 
+          fmod((f = getfloat(val)), 1.0) == 0.0 && 
+          f >= -(FLONUM) MAXINT && 
+          f < (FLONUM) MAXINT)
          {
-         i = f;
+         FIXNUM i = f;
          gcref(val);
          val = make_intnode(i);
          break;
@@ -657,7 +661,7 @@ NODE *integer_arg(NODE *args)
       }
 
    setcar(args, val);
-   if (nodetype(val) == INT) 
+   if (nodetype(val) == INTEGER) 
       {
       return val;
       }
@@ -669,7 +673,10 @@ FIXNUM int_arg(NODE *args)
    {
    NODE *arg = integer_arg(args);
 
-   if (NOT_THROWING) return getint(arg);
+   if (NOT_THROWING) 
+      {
+      return getint(arg);
+      }
    return 0;
    }
 
@@ -865,8 +872,14 @@ FLONUM float_arg(NODE *args)
       val = cnv_node_to_numnode(arg);
       }
    setcar(args, val);
-   if (nodetype(val) == FLOAT) return getfloat(val);
-   if (nodetype(val) == INT) return (FLONUM) getint(val);
+   if (nodetype(val) == FLOATINGPOINT) 
+      {
+      return getfloat(val);
+      }
+   if (nodetype(val) == INTEGER)
+      {
+      return (FLONUM) getint(val);
+      }
    return 0.0;
    }
 
