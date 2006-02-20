@@ -1,0 +1,27 @@
+<section id="command-norefresh">
+    <title>NOREFRESH</title>
+<indexterm><primary>NOREFRESH</primary></indexterm>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>NOREFRESH</command></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+
+<note><para>NOREFRESH is not supported (or needed) in &PRODUCTNAME;.</para></note>
+
+<para>
+Tells &GENERICNAME; not to remember the turtle's motions.
+This will make drawing faster, but prevents recovery if the window is overlaid.
+</para>
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</section>

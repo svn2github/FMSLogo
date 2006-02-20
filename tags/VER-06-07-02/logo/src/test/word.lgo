@@ -1,0 +1,17 @@
+TO WORDTEST
+
+  SIMPLEREPORTTEST [ WORD "o "k         ] "ok
+  SIMPLEREPORTTEST [ WORD "4 "2         ] 42
+  SIMPLEREPORTTEST [ (WORD)             ] "||
+  SIMPLEREPORTTEST [ (WORD "o)          ] "o
+  SIMPLEREPORTTEST [ (WORD "o "k "ay)   ] "okay
+  SIMPLEREPORTTEST [ (WORD "|| "||)     ] "||
+  SIMPLEREPORTTEST [ (WORD "|| "a  "||) ] "a
+
+  RUNBADINPUTTEST [WORD [] "a]
+  RUNBADINPUTTEST [WORD "a []]
+  RUNBADINPUTTEST [WORD "a {}]
+  RUNBADINPUTTEST [WORD {} "a]
+
+END
+

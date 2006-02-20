@@ -1,0 +1,328 @@
+; This tests the basic functionality of the following functions
+; OPENWRITE, SETWRITE, WRITER, WRITEPOS, READER, READPOS, and EOFP
+
+TO FILESMOKETEST
+
+   LOCALMAKE "filename "smoketest.txt
+
+   ; erase the file, just in case
+   ERASEFILE :filename
+
+   ;
+   ; Write some simple data to a test file
+   ;
+   OPENWRITE :filename
+   SETWRITE  :filename
+   SIMPLEREPORTTEST [WRITER] :filename
+   SIMPLEREPORTTEST [WRITEPOS] 0
+   PRINT "Hello
+   SIMPLEREPORTTEST [WRITEPOS] 7
+   PRINT [Good Bye]
+   SIMPLEREPORTTEST [WRITEPOS] 17
+
+   SETWRITE []
+   SIMPLEREPORTTEST [WRITER] []
+   CLOSE :filename
+
+   ;
+   ; Now, read the file
+   ;
+   OPENREAD :filename
+   SETREAD  :filename
+   SIMPLEREPORTTEST [READER] :filename
+
+   SIMPLEREPORTTEST [READPOS] 0
+   SIMPLEREPORTTEST [EOFP] "false
+
+   SIMPLEREPORTTEST [READLIST] [Hello]
+   SIMPLEREPORTTEST [READPOS] 7
+   SIMPLEREPORTTEST [EOFP] "false
+
+   SIMPLEREPORTTEST [READLIST] [Good Bye]
+   SIMPLEREPORTTEST [READPOS] 17
+   SIMPLEREPORTTEST [EOFP] "true
+
+   SETREAD []
+   SIMPLEREPORTTEST [READER] []
+
+   CLOSE :filename
+
+   ERASEFILE :filename
+END
+
+
+TO SETREADPOSTEST
+
+   LOCALMAKE "filename "setreadpostest.txt
+ 
+   OPENWRITE :filename
+   SETWRITE  :filename
+   PRINT "Hello
+   PRINT [Good Bye]
+   SETWRITE []
+   CLOSE :filename
+
+   OPENREAD :filename
+   SETREAD :filename
+   SIMPLEREPORTTEST [READLIST] [Hello]
+
+   SETREADPOS 0
+
+   SIMPLEREPORTTEST [READLIST] [Hello]
+   SETREAD []
+   CLOSE :filename
+
+   ERASEFILE :filename
+END
+
+TO SETWRITEPOSTEST
+
+   LOCALMAKE "filename "setwritepostest.txt
+ 
+   OPENWRITE :filename
+   SETWRITE  :filename
+   PRINT "Hello
+   SETWRITEPOS 0
+   TYPE "J
+   SETWRITE []
+   CLOSE :filename
+
+   OPENREAD :filename
+   SETREAD :filename
+   SIMPLEREPORTTEST [READLIST] [Jello]
+   SETREAD []
+   CLOSE :filename
+
+   ERASEFILE :filename
+END
+
+
+TO ALLOPENTEST
+   LOCALMAKE "filename1 "filealltest-1.txt
+   LOCALMAKE "filename2 "filealltest-2.txt
+
+   OPENWRITE :filename1
+   OPENWRITE :filename2
+
+   ; make sure that ALLOPEN returns both open files
+   LOCALMAKE "allopenfilenames ALLOPEN
+
+   LOCALMAKE "filename1found "false
+   LOCALMAKE "filename2found "false
+   FOREACH :allopenfilenames [ 
+      if ? = :filename1 [MAKE "filename1found "true]
+      if ? = :filename2 [MAKE "filename2found "true]
+   ]
+
+   REPORTTEST ~
+      AND :filename1found :filename2found ~
+      (sentence "|ALLOPEN returned| :allopenfilenames) ~
+      (sentence "|a list that contains both| :filename1 "and :filename2)
+
+   CLOSE     :filename1
+   ERASEFILE :filename1
+
+   CLOSE     :filename2
+   ERASEFILE :filename2
+END
+
+TO OPENAPPENDTEST
+
+   LOCALMAKE "filename "openappendtest.txt
+ 
+   ; delete the file, in case it exists
+   ERASEFILE :filename
+ 
+   OPENWRITE :filename
+   SETWRITE  :filename
+   PRINT "Hello
+   SETWRITE []
+   CLOSE :filename
+ 
+   OPENAPPEND :filename
+   SETWRITE  :filename
+   PRINT [Good Bye]
+   SETWRITE []
+   CLOSE :filename
+
+   OPENREAD :filename
+   SETREAD :filename
+   SIMPLEREPORTTEST [READLIST] [Hello]
+   SIMPLEREPORTTEST [READLIST] [Good Bye]
+   SETREAD []
+   CLOSE :filename
+
+   ERASEFILE :filename
+
+   ; shouldn't be able to open a file that was erased
+   RUNBADINPUTTEST [OPENREAD :filename]
+END
+
+
+TO OPENUPDATETEST
+
+   LOCALMAKE "filename "openupdatetest.txt
+
+   ; delete the file, in case it exists
+   ERASEFILE :filename
+ 
+   OPENWRITE :filename
+   SETWRITE  :filename
+   PRINT "Hello
+   PRINT [Good Bye]
+   SETWRITE []
+   CLOSE :filename
+ 
+   OPENUPDATE :filename
+   SETREAD :filename
+   SETREADPOS 0
+   SIMPLEREPORTTEST [READLIST] [Hello]
+   SETWRITE :filename
+   SETWRITEPOS 7
+   PRINT [And how are you today]
+   SETWRITE []
+   SETREAD :filename
+
+   SETREADPOS 0
+   SIMPLEREPORTTEST [READLIST] [Hello]
+   SIMPLEREPORTTEST [READLIST] [And how are you today]
+
+   CLOSE :filename
+
+   ERASEFILE :filename
+END
+
+TO DRIBBLETEST
+
+   LOCALMAKE "filename "dribbletest.txt
+ 
+   ; ask the user to dribble some commands
+   DRIBBLE :filename
+   PRINT "Hello
+   PRINT [Good Bye]
+   
+   ; TODO: have the user type something at the keyboard
+   NODRIBBLE
+
+   ; validate the dribble file
+   OPENREAD :filename
+   SETREAD  :filename
+   SIMPLEREPORTTEST [READLIST] [Hello]
+   SIMPLEREPORTTEST [READLIST] [Good Bye]
+   SETREAD []
+   CLOSE :filename
+
+   ERASEFILE :filename
+END
+
+TO FILEBADINPUTTEST
+
+   ; bad value for "binary parameter"
+   RUNBADINPUTTEST [(OPENREAD   "testfile.txt 1)]
+   RUNBADINPUTTEST [(OPENWRITE  "testfile.txt 1)]
+   RUNBADINPUTTEST [(OPENAPPEND "testfile.txt 1)]
+   RUNBADINPUTTEST [(OPENUPDATE "testfile.txt 1)]
+
+   RUNBADINPUTTEST [CLOSE "nonexistent.txt]
+   RUNBADINPUTTEST [(CLOSE)]
+
+   RUNBADINPUTTEST [(ERASEFILE)]
+   RUNBADINPUTTEST [(ERASEFILE "too "many)]
+
+   ; try to overflow an internal buffer
+   LOCALMAKE "longfilename "||
+   REPEAT 5000 [ MAKE "longfilename word :longfilename "A ]
+   RUNBADINPUTTEST [OPENREAD   :longfilename]
+   RUNBADINPUTTEST [OPENWRITE  :longfilename]
+   RUNBADINPUTTEST [OPENAPPEND :longfilename]
+   RUNBADINPUTTEST [OPENUPDATE :longfilename]
+
+   RUNBADINPUTTEST [CLOSE     :longfilename]
+   RUNBADINPUTTEST [ERASEFILE :longfilename]
+END
+
+TO ERASEFILETEST
+
+   ; try to erase a non-existent file (should fail silently)
+   ERASEFILE "nonexistent
+
+   ; try to erase a file that doesn't exist (should fail silently)
+   OPENWRITE "mytestfile
+   ERASEFILE "mytestfile
+   SIMPLEREPORTTEST [MEMBERP "mytestfile FILES] "true
+   CLOSE     "mytestfile
+   ERASEFILE "mytestfile
+   SIMPLEREPORTTEST [MEMBERP "mytestfile FILES] "false
+
+   ; erase a device (should fail silently)
+   ERASEFILE "NUL
+
+   ; erase a directory (should fail silently)
+   MKDIR "mytestdir
+   POPDIR
+   ERASEFILE "mytestdir
+   SIMPLEREPORTTEST [MEMBERP "mytestdir DIRECTORIES] "true
+   RMDIR     "mytestdir
+
+END
+
+TO OPENOPENFILETEST
+
+   ; can't open a file that is already open for writing 
+   OPENWRITE  "mytestfile
+   RUNBADINPUTTEST [OPENREAD   "mytestfile]
+   RUNBADINPUTTEST [OPENWRITE  "mytestfile]
+   RUNBADINPUTTEST [OPENAPPEND "mytestfile]
+   RUNBADINPUTTEST [OPENUPDATE "mytestfile]
+   CLOSE     "mytestfile
+
+   ; can't open a file that is already open for reading
+   OPENREAD "mytestfile
+   RUNBADINPUTTEST [OPENREAD   "mytestfile]
+   RUNBADINPUTTEST [OPENWRITE  "mytestfile]
+   RUNBADINPUTTEST [OPENAPPEND "mytestfile]
+   RUNBADINPUTTEST [OPENUPDATE "mytestfile]
+   CLOSE     "mytestfile
+
+   ERASEFILE "mytestfile
+   SIMPLEREPORTTEST [MEMBERP "mytestfile FILES] "false
+
+END
+
+TO OPENDIRECTORYASFILETEST
+
+   ; can't open a directory as file
+   MKDIR  "testdir
+   POPDIR
+
+   RUNBADINPUTTEST [OPENREAD   "testdir]
+   RUNBADINPUTTEST [OPENWRITE  "testdir]
+   RUNBADINPUTTEST [OPENAPPEND "testdir]
+   RUNBADINPUTTEST [OPENUPDATE "testdir]
+
+   RMDIR "testdir
+   SIMPLEREPORTTEST [MEMBERP "mytestfile DIRECTORIES] "false
+END
+
+
+
+TO FILETEST
+  FILESMOKETEST
+
+  SETREADPOSTEST
+  SETWRITEPOSTEST
+
+  ALLOPENTEST
+
+  OPENAPPENDTEST
+  OPENUPDATETEST
+
+  DRIBBLETEST
+
+  ERASEFILETEST
+  OPENOPENFILETEST
+  OPENDIRECTORYASFILETEST
+
+  FILEBADINPUTTEST
+END
+

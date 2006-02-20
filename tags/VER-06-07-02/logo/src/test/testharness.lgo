@@ -1,0 +1,81 @@
+; This is the testharness.
+; It loads all unit tests and executes them.
+
+LOAD "testlib.lgo
+
+LOAD "array.lgo
+LOAD "wait.lgo
+LOAD "predicate.lgo
+LOAD "logic.lgo
+LOAD "math.lgo
+LOAD "activearea.lgo
+LOAD "bitmap.lgo
+LOAD "form.lgo
+LOAD "plist.lgo
+LOAD "editor.lgo
+LOAD "port.lgo
+LOAD "label.lgo
+LOAD "pen.lgo
+LOAD "arc.lgo
+LOAD "fill.lgo
+LOAD "directory.lgo
+LOAD "file.lgo
+LOAD "procedure.lgo
+LOAD "parse.lgo
+LOAD "word.lgo
+LOAD "color.lgo
+LOAD "screen.lgo
+LOAD "misc.lgo
+LOAD "network.lgo
+LOAD "controlflow.lgo
+LOAD "perspective.lgo
+LOAD "3dtest.lgo
+LOAD "scrunch.lgo
+LOAD "help.lgo
+LOAD "window.lgo
+LOAD "sort.lgo
+
+TO TESTALL
+
+  REPORTTESTINITIALIZE
+
+  PARSETEST       ; from parse.lgo
+  PREDICATETEST   ; from predicate.lgo
+  WORDTEST        ; from word.lgo
+  ARRAYTEST       ; from array.lgo
+  LOGICTEST       ; from logic.lgo
+  MATHTEST        ; from math.lgo
+  PROCEDURETEST   ; from procedure.lgo
+  PLISTTEST       ; from plist.lgo
+  CONTROLFLOWTEST ; from controlflow.lgo
+  ACTIVEAREATEST  ; from activearea.lgo
+  BITMAPTEST      ; from bitmap.lgo
+  FORMTEST        ; from form.lgo
+  EDITORTEST      ; from editor.lgo 
+  PORTTEST        ; from port.lgo
+  LABELTEST       ; from label.lgo
+  PENTEST         ; from pen.lgo
+  ARCTEST         ; from arc.lgo
+  FILLTEST        ; from fill.lgo
+  FILETEST        ; from file.lgo
+  COLORTEST       ; from color.lgo
+  SCREENTEST      ; from screen.lgo
+  WAITTEST        ; from wait.lgo
+  DIRECTORYTEST   ; from directory.lgo
+  MISCTEST        ; from misc.lgo
+  NETWORKTEST     ; from network.lgo
+  PERSPECTIVETEST ; from perspective.lgo
+  ORIENTATIONTEST ; from 3dtest.lgo
+  SCRUNCHTEST     ; from scrunch.lgo
+  HELPTEST        ; from help.lgo
+  WINDOWTEST      ; from window.lgo
+  SORTTEST        ; from sort.lgo
+
+  REPORTTESTUNINITIALIZE
+
+  print [The tests are now complete!]
+END
+
+; execute all tests on startup
+make "startup [TESTALL]
+

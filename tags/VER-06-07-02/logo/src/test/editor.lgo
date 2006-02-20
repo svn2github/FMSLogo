@@ -1,0 +1,72 @@
+TO EDALLTEST
+
+  WINDOWCREATE "root "edalltest "Editor 100 100 100 100 []
+  EDALL
+  WINDOWDELETE "edalltest
+
+  MAKE "isok YESNOBOX [Question] [Is the editor showing?]
+  IF NOT :isok [
+    REPORTTESTFAILED (sentence "|The editor window did not popup|) 
+    STOP
+  ]
+
+  REPORTTESTPASSED (sentence "|The editor window was displayed|) 
+  WINDOWDELETE "edalltest
+END
+
+
+TO LARGEEDITTEST
+  ; Opens a large amount of data in the editor.
+  ; This is a regression test for bug #1372735.
+
+  LOCAL [variables variablename testpassed totalvariables]
+
+  MAKE "totalvariables 10000
+
+  ; create lots of variables
+  LOCALMAKE "variables []
+  FOR (list "i :totalvariables 1) [
+    MAKE "variablename (WORD "largeedittest :i)
+    MAKE :variablename :i
+    PUSH "variables :variablename
+  ]
+
+  ; open the variables in the editor and erase them
+  EDIT NAMELIST :variables
+  ERASE NAMELIST :variables
+  MESSAGEBOX [Notice] (list "|The editor should now be displaying| :totalvariables "|variables.  Add a newline, save the contents of the editor to the workspace, then press OK.|)
+
+  ; verify that the variable were written to the workspace
+  MAKE "testpassed "true
+  FOR (list "i 1 :totalvariables) [
+    MAKE "variablename (WORD "largeedittest :i)
+
+    IFELSE NOT NAMEP :variablename [
+      REPORTTESTFAILED (sentence "|The editor did not save the value of| :variablename "|(the variable does not exist)|
+)
+      MAKE "testpassed "false
+    ][
+      IF NOT :i = RUN (word ": :variablename) [ 
+        REPORTTESTFAILED (sentence "|The editor did not save the value of| :variablename "|(the value is incorrect)|)
+        MAKE "testpassed "false
+      ]
+    ]
+
+    ; error-out so we don't report the failure 9999 more times
+    IF NOT :testpassed [ STOP ]
+  ]
+
+  if :testpassed [
+    REPORTTESTPASSED (sentence "|The editor saved the values of all| :totalvariables "variables)
+  ]
+
+  ; remove these variables
+  ERASE NAMELIST :variables
+
+END
+
+TO EDITORTEST
+  EDALLTEST
+  LARGEEDITTEST
+END
+

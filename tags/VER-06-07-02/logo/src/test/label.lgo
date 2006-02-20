@@ -1,0 +1,36 @@
+TO LABELCIRCLETEST
+
+  CLEARSCREEN
+
+  HIDETURTLE
+  PENUP
+  REPEAT 360 / 15 [
+    FORWARD 175 
+    SETPENCOLOR (LIST 0 REPCOUNT*8 0) 
+    SETTEXTFONT (LIST [Arial] 10 + REPCOUNT * 2 0 0 400 0 0 0)
+    LABEL (LIST REPCOUNT)
+    BACK 175
+    RIGHT 15
+  ]
+  PENDOWN
+  SHOWTURTLE
+
+  MAKE "isok YESNOBOX [Question] [Does the font circle look correct?]
+  IFELSE :isok [
+    REPORTTESTPASSED (sentence "|The font circle was drawn correctly|) 
+  ] [
+    REPORTTESTFAILED (sentence "|The font circle did not look right|) 
+  ]
+
+END
+
+TO LABELBADINPUTTEST
+  RUNBADINPUTTEST [(LABEL)]
+  RUNBADINPUTTEST [(LABEL 1 1)]
+END
+
+TO LABELTEST
+  LABELCIRCLETEST
+  LABELBADINPUTTEST
+END
+

@@ -1,0 +1,68 @@
+
+MAKE "~IGNOREMEWASCALLED "false 
+
+TO ~IGNOREME
+   MAKE "~IGNOREMEWASCALLED "true 
+END
+
+TO ~IGNOREMEWASCALLED
+   OUTPUT :~IGNOREMEWASCALLED
+END
+
+
+;
+; The next function contains some comments that
+; have given the tokenizer some difficulty.
+;
+; comments in the main scope should be ignored
+;
+TO DIFFICULTCOMMENTS ; comments here should be legal
+
+  ; a single vertical bar in a comment |
+
+  ; other special characters ?[]!+
+
+  ; regression test: tildes should be ignored ~ignoreme
+
+  OUTPUT ; a comment that continues~
+  1 
+END ; comments here should be legal
+
+
+TO PARSEFUNCTEST
+   SIMPLEREPORTTEST [DIFFICULTCOMMENTS]  1
+   SIMPLEREPORTTEST [~IGNOREMEWASCALLED] "false
+END
+
+TO PARSENUMBERTEST
+
+   SIMPLEREPORTTEST [-0]     0
+   SIMPLEREPORTTEST [-0.0]   0
+   SIMPLEREPORTTEST [.00]    0
+   SIMPLEREPORTTEST [0e10]   0
+   SIMPLEREPORTTEST [0e+10]  0
+   SIMPLEREPORTTEST [0e-10]  0
+
+   SIMPLEREPORTTEST [1e3]      1000
+   SIMPLEREPORTTEST [1.234e3]  1234
+   SIMPLEREPORTTEST [1.234e+3] 1234
+   SIMPLEREPORTTEST [1.23e-1]  0.123
+
+   SIMPLEREPORTTEST [.5]        0.5
+   SIMPLEREPORTTEST [-.5]      -0.5
+
+END
+
+
+TO PARSEWORDTEST
+
+   SIMPLEREPORTTEST ["WORD]   "word
+   SIMPLEREPORTTEST ["|A B|]  "A\ B
+END
+
+
+TO PARSETEST
+   PARSENUMBERTEST
+   PARSEWORDTEST
+   PARSEFUNCTEST
+END

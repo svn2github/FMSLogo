@@ -1,0 +1,40 @@
+<section id="command-stepped">
+    <title>STEPPED</title>
+<indexterm><primary>STEPPED</primary></indexterm>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>STEPPED</command></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+Outputs a contents list consisting of a the list of stepped procedures followed by two empty lists.
+See also the <link linkend="command-step">STEP</link> command.
+</para>
+</listitem>
+</varlistentry>
+
+
+<varlistentry><term>Example</term>
+<listitem>
+<programlisting><userinput>TO MYFORWARD
+  FORWARD 10
+END
+
+SHOW STEPPED</userinput>
+[[] [] []]
+<userinput>STEP "MYFORWARD
+SHOW STEPPED</userinput>
+[[MYFORWARD] [] []]
+</programlisting>
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</section>
