@@ -193,7 +193,9 @@ NODE *lqm(NODE *args)
 void tell_shadow(NODE *arg)
    {
    if (flag__caseobj(arg, VAL_STEPPED))
+      {
       err_logo(SHADOW_WARN, arg);
+      }
    }
 
 /* Check if a local variable is already in this frame */
