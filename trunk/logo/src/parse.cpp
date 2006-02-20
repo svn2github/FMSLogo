@@ -94,9 +94,9 @@ int rd_getc(FILE *strm)
       c = buffer_input[buffer_index++];
       }
 #ifdef ecma
-   return(ecma_clear(c));
+   return ecma_clear(c);
 #else
-   return(c);
+   return c;
 #endif
    }
 
@@ -104,7 +104,7 @@ static
 void rd_print_prompt(const char * /*str*/)
    {
    /*
-      int ch;
+   int ch;
 
 #ifdef ibm
 #ifdef __ZTC__
@@ -402,12 +402,18 @@ NODE *list_to_array(NODE *list)
 #define white_space(ch) (ch == ' ' || ch == '\t' || ch == '\n')
 
 static
-NODE *parser_iterate(const char **inln, const char *inlimit, const char *inhead,
-         bool semi, int endchar)
+NODE *
+parser_iterate(
+   const char **inln,
+   const char *inlimit,
+   const char *inhead,
+   bool semi, 
+   int endchar
+   )
    {
    char ch;
    const char *wptr = NULL;
-   static char terminate = '\0';       /* KLUDGE                              */
+   static char terminate = '\0'; // KLUDGE
    NODE *outline = NIL, *lastnode = NIL, *tnode = NIL;
    int windex = 0, vbar = 0;
    NODETYPES this_type = STRING;
@@ -417,8 +423,14 @@ NODE *parser_iterate(const char **inln, const char *inlimit, const char *inhead,
       {
       /* get the current character and increase pointer */
       ch = **inln;
-      if (!vbar && windex == 0) wptr = *inln;
-      if (++ (*inln) >= inlimit) *inln = &terminate;
+      if (!vbar && windex == 0) 
+         {
+         wptr = *inln;
+         }
+      if (++ (*inln) >= inlimit) 
+         {
+         *inln = &terminate;
+         }
 
       /* skip through comments and line continuations */
       while (!vbar && ((semi && ch == ';') ||
@@ -426,9 +438,15 @@ NODE *parser_iterate(const char **inln, const char *inlimit, const char *inhead,
          {
          while (ch == '~' && **inln == '\n')
             {
-            if (++ (*inln) >= inlimit) *inln = &terminate;
+            if (++ (*inln) >= inlimit) 
+               {
+               *inln = &terminate;
+               }
             ch = **inln;
-            if (windex == 0) wptr = *inln;
+            if (windex == 0) 
+               {
+               wptr = *inln;
+               }
             else
                {
                if (**inln == ']' || **inln == '[' ||
@@ -439,63 +457,92 @@ NODE *parser_iterate(const char **inln, const char *inlimit, const char *inhead,
                   }
                else
                   {
-                  broken = TRUE;
+                  broken = true;
                   }
                }
-            if (++ (*inln) >= inlimit) *inln = &terminate;
+            if (++ (*inln) >= inlimit) 
+               {
+               *inln = &terminate;
+               }
             }
 
          if (semi && ch == ';')
             {
-            if (**inln != 012 && **inln != 015)
+            if (**inln != '\n' && **inln != '\r')
                do
                   {
                   ch = **inln;
-                  if (windex == 0) wptr = *inln;
-                  else broken = TRUE;
-                  if (++ (*inln) >= inlimit) *inln = &terminate;
+                  if (windex == 0) 
+                     {
+                     wptr = *inln;
+                     }
+                  else 
+                     {
+                     broken = true;
+                     }
+
+                  if (++ (*inln) >= inlimit) 
+                     {
+                     *inln = &terminate;
+                     }
                   }
-               while (ch != '\0' && ch != '~' && **inln != 012 && **inln != 015);
+               while (ch != '\0' && ch != '~' && **inln != '\n' && **inln != '\r');
             //          while (ch != '\0' && ch != '~' && **inln != '\n');
             if (ch != '\0' && ch != '~') ch = '\n';
             }
          }
 
       /* flag that this word will be of BACKSLASH_STRING type */
-      if (getparity(ch)) this_type = BACKSLASH_STRING;
+      if (getparity(ch)) 
+         {
+         this_type = BACKSLASH_STRING;
+         }
 
       if (ch == '|')
          {
          vbar = !vbar;
          this_type = VBAR_STRING;
-         broken = TRUE;                /* so we'll copy the chars             */
+         broken = true;   // so we'll copy the chars
          }
 
       else if (vbar || (!white_space(ch) && ch != ']' &&
                ch != '{' && ch != '}' &&
                ch != '[' && ch != '\0'))
-         windex++;
-
-      if (vbar) continue;
-
-      else if (ch == endchar) break;
-
-      else if (ch == ']') err_logo(UNEXPECTED_BRACKET, NIL);
-      else if (ch == '}') err_logo(UNEXPECTED_BRACE, NIL);
-
-      /* if this is a '[', parse a new list */
-      else if (ch == '[')
          {
-         tnode = cons_list(parser_iterate(inln, inlimit, inhead, semi, ']'));
-         if (**inln == '\0') ch = '\0';
+         windex++;
          }
 
+      if (vbar) 
+         {
+         continue;
+         }
+      else if (ch == endchar) 
+         {
+         break;
+         }
+      else if (ch == ']') 
+         {
+         err_logo(UNEXPECTED_BRACKET, NIL);
+         }
+      else if (ch == '}') 
+         {
+         err_logo(UNEXPECTED_BRACE, NIL);
+         }
+      else if (ch == '[')
+         {
+         // this is a '[', parse a new list 
+         tnode = cons_list(parser_iterate(inln, inlimit, inhead, semi, ']'));
+         if (**inln == '\0') 
+            {
+            ch = '\0';
+            }
+         }
       else if (ch == '{')
          {
          tnode = cons_list(list_to_array(parser_iterate(inln, inlimit, inhead, semi, '}')));
          if (**inln == '@')
             {
-            int i = 0, sign = 1;
+            int sign = 1;
 
             (*inln) ++;
             if (**inln == '-')
@@ -503,6 +550,8 @@ NODE *parser_iterate(const char **inln, const char *inlimit, const char *inhead,
                sign = -1;
                (*inln) ++;
                }
+
+            int i = 0;
             while ((ch = **inln) >= '0' && ch <= '9')
                {
                i = (i * 10) + ch - '0';
@@ -510,17 +559,19 @@ NODE *parser_iterate(const char **inln, const char *inlimit, const char *inhead,
                }
             setarrorg(car(tnode), sign * i);
             }
-         if (**inln == '\0') ch = '\0';
+         if (**inln == '\0') 
+            {
+            ch = '\0';
+            }
          }
-
-      /* if this character or the next one will terminate string, make the word */
       else if (white_space(ch) || ch == '\0' ||
             **inln == ']' || **inln == '[' ||
             **inln == '{' || **inln == '}')
          {
+         // this character or the next one will terminate string, make the word 
          if (windex > 0)
             {
-            if (broken == FALSE)
+            if (!broken)
                {
                tnode = cons_list(make_strnode(wptr, windex, this_type, strnzcpy));
                }
@@ -528,24 +579,30 @@ NODE *parser_iterate(const char **inln, const char *inlimit, const char *inhead,
                {
                tnode = cons_list(
                   make_strnode(wptr, windex, this_type, (semi ? mend_strnzcpy : mend_nosemi)));
-               broken = FALSE;
+               broken = false;
                }
             this_type = STRING;
             windex = 0;
             }
          }
 
-      /* put the word onto the end of the return list */
+      // put the word onto the end of the return list
       if (tnode != NIL)
          {
-         if (outline == NIL) outline = vref(tnode);
-         else setcdr(lastnode, tnode);
+         if (outline == NIL) 
+            {
+            outline = vref(tnode);
+            }
+         else 
+            {
+            setcdr(lastnode, tnode);
+            }
          lastnode = tnode;
          tnode = NIL;
          }
       }
    while (ch);
-   return (unref(outline));
+   return unref(outline);
    }
 
 NODE *parser(NODE *nd, bool semi)
@@ -673,7 +730,7 @@ NODE *runparse_node(NODE *nd, NODE **ndsptr)
          isnumb = 4;
          if (*wptr == '?')
             {
-            isnumb = 3;                /* turn ?5 to (? 5)                    */
+            isnumb = 3;                // turn ?5 to (? 5)
             wptr++, wcnt++, tcnt++;
             }
          while (wcnt < wlen && !parens(*wptr) &&
