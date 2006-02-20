@@ -111,7 +111,7 @@ const NODETYPES CONT             = NT_CONT|NT_LIST;
 #define backslashed(nd) ((nodetype(nd) & NT_BACKSL))
 #define is_tailform(nd) ((nodetype(nd) == TAILFORM))
 
-typedef enum
+enum ERR_TYPES
    {
    FATAL, OUT_OF_MEM, STACK_OVERFLOW, TURTLE_OUT_OF_BOUNDS,
    BAD_DATA_UNREC, DIDNT_OUTPUT, NOT_ENOUGH, BAD_DATA, TOO_MUCH,
@@ -122,8 +122,7 @@ typedef enum
    UNEXPECTED_BRACE, BAD_GRAPH_INIT, ERR_MACRO,
    DK_WHAT_UP, AT_TOPLEVEL, APPLY_BAD_DATA, DEEPEND,
    OUT_OF_MEM_UNREC
-   }
-ERR_TYPES;
+   };
 
 #define FALSE   0
 #define TRUE    1
@@ -216,13 +215,19 @@ NODE;
 #define incstrrefcnt(sh)        ((*sh)++)
 #define decstrrefcnt(sh)        (--(*sh))
 
-#define n_int                   nunion.nint
-#define getint(node)            ((node)->n_int)
-#define setint(node,num)        ((node)->n_int = (num))
+inline FIXNUM 
+getint(const NODE * nd) 
+   {
+   assert(nodetype(nd) == INTEGER);
+   return nd->nunion.nint;
+   }
 
-#define n_float                 nunion.nfloat
-#define getfloat(node)          ((node)->n_float)
-#define setfloat(node,num)      ((node)->n_float = (num))
+inline FLONUM
+getfloat(const NODE * nd) 
+   {
+   assert(nodetype(nd) == FLOATINGPOINT);
+   return nd->nunion.nfloat;
+   }
 
 #define n_pfun                  nunion.nprim.nprim_fun
 #define n_ppri                  nunion.nprim.npriority
@@ -344,10 +349,10 @@ struct segment
 #define PLIST_STEPPED   0400
 #define PROC_MACRO      01000
 
-#define setflag__caseobj(c,f) ((obflags__caseobj(c))->n_int |= (f))
-#define clearflag__caseobj(c,f) ((obflags__caseobj(c))->n_int &= ~(f))
-#define flag__caseobj(c,f) (int)((obflags__caseobj(c))->n_int & (f))
-#define flag__object(o,f) (int)((obflags__object(o))->n_int & (f))
+#define setflag__caseobj(c,f) ((obflags__caseobj(c))->nunion.nint |= (f))
+#define clearflag__caseobj(c,f) ((obflags__caseobj(c))->nunion.nint &= ~(f))
+#define flag__caseobj(c,f) (int)((obflags__caseobj(c))->nunion.nint & (f))
+#define flag__object(o,f) (int)((obflags__object(o))->nunion.nint & (f))
 #define is_macro(c) (flag__caseobj(c, PROC_MACRO))
 
 inline

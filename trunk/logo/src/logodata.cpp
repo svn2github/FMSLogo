@@ -471,7 +471,7 @@ NODE *make_intnode(FIXNUM i)
    {
    NODE *nd = newnode(INTEGER);
 
-   setint(nd, i);
+   nd->nunion.nint = i;
    return nd;
    }
 
@@ -479,7 +479,7 @@ NODE *make_floatnode(FLONUM f)
    {
    NODE *nd = newnode(FLOATINGPOINT);
 
-   setfloat(nd, f);
+   nd->nunion.nfloat = f;
    return nd;
    }
 

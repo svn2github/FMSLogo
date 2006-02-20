@@ -512,17 +512,16 @@ NODE *binary(NODE *args, char fcn)
          }
       else
          {
-         val = newnode(FLOATINGPOINT);
          if (_isnan(fval))
             {
-            setfloat(val, 0.0);
+            val = make_floatnode(0.0);
             }
          else
             {
-            setfloat(val, fval);
+            val = make_floatnode(fval);
             }
          }
-      return (val);
+      return val;
       }
    return Unbound;
    }
