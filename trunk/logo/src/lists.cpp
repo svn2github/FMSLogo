@@ -909,11 +909,7 @@ NODE *lform(NODE *args)
 
       sprintf(result, "%*.*f", width, precision, number);
 
-      return make_strnode(
-         result,
-         (int) strlen(result),
-         STRING,
-         strnzcpy);
+      return make_strnode(result);
       }
 
    return Unbound;

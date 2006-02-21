@@ -128,8 +128,6 @@ NODE *find_case(NODE *strnd, NODE *obj)
 
 NODE *intern(NODE *nd)
    {
-   NODE *obj, *casedes;
-
    if (nodetype(nd) == CASEOBJ) 
       {
       return nd;
@@ -137,15 +135,22 @@ NODE *intern(NODE *nd)
 
    nd = valref(cnv_node_to_strnode(nd));
    NODE * lownd = make_strnode(getstrptr(nd), getstrlen(nd), STRING, noparitylow_strnzcpy);
+
+   NODE * obj;
+   NODE * casedes;
    if ((obj = find_instance(lownd)) != NIL)
       {
       if ((casedes = find_case(nd, obj)) == NIL)
+         {
          casedes = make_case(nd, obj);
+         }
       }
    else
+      {
       casedes = make_instance(nd, lownd);
+      }
    deref(nd);
    gcref(lownd);
-   return (casedes);
+   return casedes;
    }
 

@@ -1323,10 +1323,8 @@ NODE *llistboxgetselect(NODE *args)
       if (parent->TLmybox->GetSelString(stringname, MAX_BUFFER_SIZE) >= 0)
          {
          // parsing it basically turns it into a list for us
-         NODE * val = parser(
-            make_strnode(stringname, strlen(stringname), STRING, strnzcpy), 
-            FALSE);
-         return (val);
+         NODE * val = parser(make_strnode(stringname), false);
+         return val;
          }
       }
    else
@@ -1545,9 +1543,7 @@ NODE *lcomboboxgettext(NODE *args)
       if (((TComboBox *) parent->TCmybox)->GetText(stringname, MAX_BUFFER_SIZE) >= 0)
          {
          // parsing it turns it into a list
-         NODE * val = parser(
-            make_strnode(stringname, strlen(stringname), STRING, strnzcpy),
-            FALSE);
+         NODE * val = parser(make_strnode(stringname), false);
          return val;
          }
       }
@@ -2705,8 +2701,8 @@ NODE *lquestionbox(NODE *args)
       err_logo(STOP_ERROR, NIL);
       }
 
-   NODE * targ = make_strnode(str, strlen(str), STRING, strnzcpy);
-   NODE * val = parser(targ, FALSE);
+   NODE * targ = make_strnode(str);
+   NODE * val = parser(targ, false);
    return val;
    }
 
@@ -2826,8 +2822,8 @@ NODE *ldialogfileopen(NODE *args)
    if (TFileOpenDialog(MainWindowx, FileData).Execute() == IDOK)
       {
       strcpy(filename, FileData.FileName);
-      NODE * arg = make_strnode(filename, strlen(filename), STRING, strnzcpy);
-      NODE * val = arg; // parser(arg, FALSE);
+      NODE * arg = make_strnode(filename);
+      NODE * val = arg; // parser(arg, false);
       return val;
       }
    else

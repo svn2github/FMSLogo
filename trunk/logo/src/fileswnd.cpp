@@ -37,7 +37,7 @@ void filesave(const char *temp)
          MB_OK | MB_ICONQUESTION);
       }
 
-   arg = cons_list(make_strnode(temp, strlen(temp), STRING, strnzcpy));
+   arg = cons_list(make_strnode(temp));
 
    tmp = writestream;
    writestream = open_file(car(arg), "w+");
@@ -64,17 +64,15 @@ void filesave(const char *temp)
 
 void fileload(const char *temp)
    {
-   FILE *tmp;
-   NODE *tmp_line, *exec_list, *arg;
    NODE *st = valnode__caseobj(Startup);
    int sv_val_status = val_status;
    int save_yield_flag;
 
-   arg = make_strnode(temp, strlen(temp), STRING, strnzcpy);
+   NODE * arg = make_strnode(temp);
 
-   bool IsDirtySave = IsDirty;
-   tmp = loadstream;
-   tmp_line = vref(current_line);
+   bool   IsDirtySave = IsDirty;
+   FILE * tmp         = loadstream;
+   NODE * tmp_line    = vref(current_line);
    loadstream = open_file(arg, "r");
    if (loadstream != NULL)
       {
@@ -86,9 +84,12 @@ void fileload(const char *temp)
       while (!feof(loadstream) && NOT_THROWING)
          {
          current_line = reref(current_line, reader(loadstream, ""));
-         exec_list = parser(current_line, TRUE);
+         NODE * exec_list = parser(current_line, true);
          val_status = 0;
-         if (exec_list != NIL) eval_driver(exec_list);
+         if (exec_list != NIL) 
+            {
+            eval_driver(exec_list);
+            }
          }
       fclose(loadstream);
 

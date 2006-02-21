@@ -499,8 +499,8 @@ NODE *lnetreceivereceivevalue(NODE *)
    // return current network value
    if (network_receive_on)
       {
-      NODE* targ = make_strnode(network_receive_value, strlen(network_receive_value), STRING, strnzcpy);
-      NODE* val = parser(targ, FALSE);
+      NODE* targ = make_strnode(network_receive_value);
+      NODE* val = parser(targ, false);
       return val;
       }
 
@@ -512,8 +512,8 @@ NODE *lnetsendreceivevalue(NODE *)
    // return current network value
    if (network_send_on)
       {
-      NODE* targ = make_strnode(network_send_value, strlen(network_send_value), STRING, strnzcpy);
-      NODE* val = parser(targ, FALSE);
+      NODE* targ = make_strnode(network_send_value);
+      NODE* val = parser(targ, false);
       return val;
       }
 
@@ -522,13 +522,7 @@ NODE *lnetsendreceivevalue(NODE *)
 
 NODE *lnetsendon(NODE *args)
    {
-   char networksend[MAX_BUFFER_SIZE];
-   char networkreceive[MAX_BUFFER_SIZE];
-   char networkaddress[MAX_BUFFER_SIZE];
-   int isocket;
-
    // sanity check first
-
    if (hWinSockDLL == NULL)
       {
       MainWindowx->CommandWindow->MessageBox("Not Started", "Network Error");
@@ -562,10 +556,15 @@ NODE *lnetsendon(NODE *args)
       }
 
    // get args (remotemachinename, socket, callback)
-
+   char networkaddress[MAX_BUFFER_SIZE];
    cnv_strnode_string(networkaddress, args);
-   isocket = getint(pos_int_arg(cdr(args)));
+
+   int isocket = getint(pos_int_arg(cdr(args)));
+
+   char networksend[MAX_BUFFER_SIZE];
    cnv_strnode_string(networksend, cdr(cdr(args)));
+
+   char networkreceive[MAX_BUFFER_SIZE];
    cnv_strnode_string(networkreceive, cdr(cdr(cdr(args))));
 
    if (NOT_THROWING)
@@ -623,7 +622,6 @@ NODE *lnetsendon(NODE *args)
          }
 
       // wait for callback
-
       return Truex;
       }
 

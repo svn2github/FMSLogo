@@ -1745,8 +1745,7 @@ void TMainFrame::CMFileEdit()
       else
          {
          // else find what user selected
-         arg = cons_list(
-            make_strnode(SelectedText, strlen(SelectedText), STRING, strnzcpy));
+         arg = cons_list(make_strnode(SelectedText));
          }
 
       // if something edit it
@@ -1779,12 +1778,10 @@ void TMainFrame::CMFileErase()
       else
          {
          // else find what user selected
-         arg = cons_list(
-            make_strnode(SelectedText, strlen(SelectedText), STRING, strnzcpy));
+         arg = cons_list(make_strnode(SelectedText));
          }
 
       // if something erase it
-
       if (arg != NIL)
          {
          lerase(arg);

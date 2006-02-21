@@ -84,22 +84,10 @@ NODE *lsound(NODE *arg)
 
 NODE *lmidiopen(NODE *args)
    {
-   UINT id;
-   UINT MidiError;
-
-   MIDIOUTCAPS moc;
-
-   NODE *targ;
-   NODE *val;
-
-   char MidiErrorBuffer[MAX_BUFFER_SIZE];
-
-   /* if not open open it */
-
+   // if not open open it
    if (!hMidiOut)
       {
-
-      id = MIDIMAPPER;
+      UINT id = MIDIMAPPER;
 
       if (args != NIL)
          {
@@ -111,21 +99,25 @@ NODE *lmidiopen(NODE *args)
             }
          }
 
-      MidiError = midiOutGetDevCaps(id, &moc, sizeof(moc));
-
-      if (!MidiError) MidiError = midiOutOpen(&hMidiOut, id, NULL, 0L, 0L);
+      MIDIOUTCAPS moc;
+      UINT MidiError = midiOutGetDevCaps(id, &moc, sizeof(moc));
+      if (!MidiError) 
+         {
+         MidiError = midiOutOpen(&hMidiOut, id, NULL, 0L, 0L);
+         }
 
       if (MidiError)
          {
+         char MidiErrorBuffer[MAX_BUFFER_SIZE];
          midiOutGetErrorText(MidiError, MidiErrorBuffer, MAX_BUFFER_SIZE);
          MainWindowx->CommandWindow->MessageBox(MidiErrorBuffer, "Midi Error");
          err_logo(STOP_ERROR, NIL);
          }
       else
          {
-         targ = make_strnode(moc.szPname, strlen(moc.szPname), STRING, strnzcpy);
-         val = parser(targ, FALSE);
-         return (val);
+         NODE * targ = make_strnode(moc.szPname);
+         NODE * val = parser(targ, false);
+         return val;
          }
       }
    else
@@ -139,20 +131,16 @@ NODE *lmidiopen(NODE *args)
 
 NODE *lmidiclose(NODE *  /*args*/)
    {
-   UINT MidiError;
-   char MidiErrorBuffer[MAX_BUFFER_SIZE];
-
-   /* if open close it */
-
+   // if open close it 
    if (hMidiOut)
       {
 
-      MidiError = midiOutClose(hMidiOut);
-
+      UINT MidiError = midiOutClose(hMidiOut);
       hMidiOut = 0;
 
       if (MidiError)
          {
+         char MidiErrorBuffer[MAX_BUFFER_SIZE];
          midiOutGetErrorText(MidiError, MidiErrorBuffer, MAX_BUFFER_SIZE);
          MainWindowx->CommandWindow->MessageBox(MidiErrorBuffer, "Midi Error");
          err_logo(STOP_ERROR, NIL);
@@ -298,56 +286,44 @@ NODE *lmidimessage(NODE *arg)
 
 NODE *lmci(NODE *args)
    {
-   NODE *targ;
-   NODE *val;
-
-   DWORD MciError;
-
+   // get mci command string 
    char textbuf[MAX_BUFFER_SIZE];
-   char MciReturnBuffer[MAX_BUFFER_SIZE];
-   char MciErrorBuffer[MAX_BUFFER_SIZE];
-   char callback[MAX_BUFFER_SIZE];
-
-   /* get mci command string */
-
    cnv_strnode_string(textbuf, args);
 
-   /* check for optional callback routine */
-
+   // check for optional callback routine 
+   char callback[MAX_BUFFER_SIZE];
    if (cdr(args) != NIL)
       {
       cnv_strnode_string(callback, cdr(args));
       strcpy(mci_callback, callback);
       }
 
+   char MciReturnBuffer[MAX_BUFFER_SIZE];
    MciReturnBuffer[0] = '\0';
 
-   /* send out command */
-
-   MciError = mciSendString(
+   // send out command 
+   DWORD MciError = mciSendString(
       textbuf,
       MciReturnBuffer,
       MAX_BUFFER_SIZE,
       MainWindowx->HWindow);
 
-   /* if error let user know else continue */
-
    if (MciError)
       {
+      // let user know about the error
+      char MciErrorBuffer[MAX_BUFFER_SIZE];
       mciGetErrorString(MciError, MciErrorBuffer, MAX_BUFFER_SIZE);
       MainWindowx->CommandWindow->MessageBox(MciErrorBuffer, "MCI Error");
       err_logo(STOP_ERROR, NIL);
       }
    else
       {
-
-      /* if something was returned then return it to user */
-
+      // if something was returned then return it to user 
       if (strlen(MciReturnBuffer))
          {
-         targ = make_strnode(MciReturnBuffer, strlen(MciReturnBuffer), STRING, strnzcpy);
-         val = parser(targ, FALSE);
-         return (val);
+         NODE * targ = make_strnode(MciReturnBuffer);
+         NODE * val = parser(targ, false);
+         return val;
          }
       }
 

@@ -324,6 +324,7 @@ int noparitylow_strncmp(const char * s1, const char * s2, int len)
    }
 
 
+
 // Makes a string node by copying a NUL-terminated string
 // into a NODE structure.
 NODE * 
@@ -363,6 +364,18 @@ make_strnode(
    setstrhead(strnode, strhead);
    return strnode;
    }
+
+// Makes a STRING node by copying a NUL-terminated string
+// into a NODE structure.  
+// It uses strnzcpy as its copy routine.
+NODE * 
+make_strnode(
+   const char *string
+)
+   {
+   return make_strnode(string, strlen(string), STRING, strnzcpy);
+   }
+
 
 // Makes a string node by copying from a list of word nodes.
 NODE * 
@@ -575,11 +588,11 @@ NODE *cnv_node_to_strnode(NODE *nd)
 
        case INTEGER:
            sprintf(s, "%ld", getint(nd));
-           return make_strnode(s, (int) strlen(s), STRING, strnzcpy);
+           return make_strnode(s);
 
        case FLOATINGPOINT:
            sprintf(s, "%0.15g", getfloat(nd));
-           return make_strnode(s, (int) strlen(s), STRING, strnzcpy);
+           return make_strnode(s);
       }
 
    /*NOTREACHED*/

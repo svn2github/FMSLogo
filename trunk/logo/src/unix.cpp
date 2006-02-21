@@ -224,11 +224,7 @@ NODE *directory_helper(bool OnlyListDirectories)
              (!OnlyListDirectories && !isADirectory))
             {
             // found what we're looking for
-            NODE* file = make_strnode(
-               findFileData.cFileName, 
-               strlen(findFileData.cFileName), 
-               STRING, 
-               strnzcpy);
+            NODE* file = make_strnode(findFileData.cFileName);
             if (directory == NIL)
                {
                directory = cons_list(file);

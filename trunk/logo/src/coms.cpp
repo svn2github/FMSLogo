@@ -393,11 +393,8 @@ NODE *ltime(NODE *)
    const char * Xtim = ctime(&tvec);
 
    NODE * arg = make_strnode(Xtim, strlen(Xtim) - 1, STRING, strnzcpy);
-   NODE * val = parser(arg, FALSE);
-   return (val);
-
-   //   return(make_strnode(Xtim, NULL, strlen(Xtim), STRING, strnzcpy));
-   //   return(make_static_strnode(Xtim));
+   NODE * val = parser(arg, false);
+   return val;
    }
 
 /* LOGO time */

@@ -2156,8 +2156,8 @@ NODE *lgetfocus(NODE *)
    JustDidEdit = true;
 
    // Return caption as a list
-   NODE * arg = make_strnode(textbuf, strlen(textbuf), STRING, strnzcpy);
-   NODE * val = arg; // parser(arg, FALSE);
+   NODE * arg = make_strnode(textbuf);
+   NODE * val = arg; // parser(arg, false);
    return val;
    }
 
@@ -2491,8 +2491,8 @@ NODE *llabelfont(NODE *)
    ASSERT_TURTLE_INVARIANT
 
    // put the Font name in a list
-   NODE *targ = make_strnode(FontRec.lfFaceName, strlen(FontRec.lfFaceName), STRING, strnzcpy);
-   NODE *val = parser(targ, FALSE);
+   NODE *targ = make_strnode(FontRec.lfFaceName);
+   NODE *val = parser(targ, false);
 
    // now return the whole thing as a list
 

@@ -132,7 +132,10 @@ NODE *ldllcall(NODE *arg)
          arg = cdr(arg);
 
          theFunc = GetProcAddress(hDLLModule, fname);
-         if (!theFunc) theFunc = GetProcAddress(hDLLModule, (char *) atol(fname));
+         if (!theFunc) 
+            {
+            theFunc = GetProcAddress(hDLLModule, (char *) atol(fname));
+            }
 
          if (theFunc)
             {
@@ -255,13 +258,16 @@ NODE *ldllcall(NODE *arg)
                     }
                }
 
-            for (j = 0; j < i; j++) free(values[j]);
+            for (j = 0; j < i; j++) 
+               {
+               free(values[j]);
+               }
 
             if (strlen(areturn))
                {
-               targ = make_strnode(areturn, strlen(areturn), STRING, strnzcpy);
-               val = parser(targ, FALSE);
-               return (val);
+               targ = make_strnode(areturn);
+               val = parser(targ, false);
+               return val;
                }
 
             }

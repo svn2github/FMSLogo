@@ -234,6 +234,6 @@ NODE *lstandout(NODE *args)
    char textbuf[MAX_BUFFER_SIZE];
    cnv_strnode_string(textbuf, args);
 
-   return make_strnode(textbuf, (int) strlen(textbuf), STRING, strnzcpy);
+   return make_strnode(textbuf);
    }
 
