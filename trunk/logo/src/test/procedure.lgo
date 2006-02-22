@@ -1,3 +1,5 @@
+LOAD "testlib.lgo
+
 TO SAMPLEPROC  :a  :b
   PRINT :a ; print
   SHOW  :b ; show

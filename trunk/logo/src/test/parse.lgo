@@ -1,3 +1,5 @@
+LOAD "testlib.lgo
+
 
 MAKE "~IGNOREMEWASCALLED "false 
 

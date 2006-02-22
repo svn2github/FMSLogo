@@ -1,3 +1,5 @@
+LOAD "testlib.lgo
+
 TO SUMTEST
 
    ; test addition

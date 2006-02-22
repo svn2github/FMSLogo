@@ -1,3 +1,4 @@
+LOAD "testlib.lgo
 
 TO TIMEWAIT :TimeToWait
     LOCALMAKE "executiontime TIMECOMMAND (list "WAIT :TimeToWait)

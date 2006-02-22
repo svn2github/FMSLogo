@@ -1,3 +1,5 @@
+LOAD "testlib.lgo
+
 TO WORDTEST
 
   SIMPLEREPORTTEST [ WORD "o "k         ] "ok

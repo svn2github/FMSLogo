@@ -1,3 +1,5 @@
+LOAD "testlib.lgo
+
 TO EDALLTEST
 
   WINDOWCREATE "root "edalltest "Editor 100 100 100 100 []

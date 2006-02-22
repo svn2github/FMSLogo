@@ -1,3 +1,6 @@
+LOAD "testlib.lgo
+
+
 TO SCREENTEST
 
   REPEAT 10 [ 

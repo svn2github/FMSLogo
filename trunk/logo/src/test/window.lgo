@@ -1,3 +1,5 @@
+LOAD "testlib.lgo
+
 TO BUG1429960TEST
   ; For backward-compatibility with MSWLogo programs, ICON "Commander
   ; should always minimize the commander, even when the commander is docked.

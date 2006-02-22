@@ -1,3 +1,5 @@
+LOAD "testlib.lgo
+
 TO FILLTIMEREVENT
   REPEAT 10 [
     CIRCLE (10 - REPCOUNT) * 10 + 5

@@ -16,7 +16,7 @@ LOAD "editor.lgo
 LOAD "port.lgo
 LOAD "label.lgo
 LOAD "pen.lgo
-LOAD "arc.lgo
+LOAD "curves.lgo
 LOAD "fill.lgo
 LOAD "directory.lgo
 LOAD "file.lgo
@@ -55,7 +55,7 @@ TO TESTALL
   PORTTEST        ; from port.lgo
   LABELTEST       ; from label.lgo
   PENTEST         ; from pen.lgo
-  ARCTEST         ; from arc.lgo
+  ARCTEST         ; from curves.lgo
   FILLTEST        ; from fill.lgo
   FILETEST        ; from file.lgo
   COLORTEST       ; from color.lgo

@@ -1,3 +1,4 @@
+LOAD "testlib.lgo
 
 TO SERVER.START :port
   SHOW NETACCEPTON :port [print [ready to send]] [print (list "|Received:| NETCONNECTRECEIVEVALUE)]

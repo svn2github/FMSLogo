@@ -1,3 +1,5 @@
+LOAD "testlib.lgo
+
 TO ARRAYORIGINTEST
 
    LOCALMAKE "myarray (ARRAY 3 0)

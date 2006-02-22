@@ -1,5 +1,4 @@
-; This tests the basic functionality of the following functions
-; OPENWRITE, SETWRITE, WRITER, WRITEPOS, READER, READPOS, and EOFP
+LOAD "testlib.lgo
 
 TO FILESMOKETEST
 
@@ -305,8 +304,11 @@ TO OPENDIRECTORYASFILETEST
 END
 
 
-
 TO FILETEST
+
+  ; This tests the basic functionality of the following functions
+  ; OPENWRITE, SETWRITE, WRITER, WRITEPOS, READER, READPOS, and EOFP
+
   FILESMOKETEST
 
   SETREADPOSTEST

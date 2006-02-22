@@ -1,3 +1,5 @@
+LOAD "testlib.lgo
+
 ; This file contains miscellaneous tests for features of FMSLogo that don't
 ; naturally fall into any other category.
 ;

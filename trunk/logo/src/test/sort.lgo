@@ -1,3 +1,5 @@
+LOAD "testlib.lgo
+
 TO SORTBYLEGS :a :b
   OUTPUT (LESSP (ITEM 2 :a) (ITEM 2 :b))
 END

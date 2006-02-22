@@ -1,3 +1,5 @@
+LOAD "testlib.lgo
+
 TO .EQTEST
   LOCALMAKE "x 1000
   LOCALMAKE "y 1000

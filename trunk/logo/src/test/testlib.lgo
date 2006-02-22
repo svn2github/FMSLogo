@@ -105,5 +105,8 @@ TO TIMECOMMAND :instructions
   OUTPUT :deltatime
 END
 
-MAKE "testlog []
+; protect against loading the file twice
+if not name? "testlog [
+  MAKE "testlog []
+]
 
