@@ -47,7 +47,6 @@ NODE *lmouseon(NODE *args)
 
 NODE *lmouseoff(NODE *)
    {
-
    // tell handler not to do anything with messages for mouse
    MouseCaptureIsEnabled = false;
 
@@ -56,9 +55,6 @@ NODE *lmouseoff(NODE *)
 
 NODE *lkeyboardon(NODE *args)
    {
-   char keyboarddown[MAX_BUFFER_SIZE];
-   char keyboardup[MAX_BUFFER_SIZE];
-
    if (keyboard_keyup == NULL)
       {
       keyboard_keyup = (char *) malloc(MAX_BUFFER_SIZE);
@@ -66,25 +62,25 @@ NODE *lkeyboardon(NODE *args)
       }
 
    // get args
-
    if (cdr(args) == NIL)
       {
+      char keyboardup[MAX_BUFFER_SIZE];
       cnv_strnode_string(keyboardup, args);
 
       // most keyboard processing is done in DEFWNDPROC
-
       KeyboardCapture = KEYBOARDCAPTURE_KeyDown;
 
       strcpy(keyboard_keyup, keyboardup);
       }
    else
       {
-
+      char keyboarddown[MAX_BUFFER_SIZE];
       cnv_strnode_string(keyboarddown, args);
+
+      char keyboardup[MAX_BUFFER_SIZE];
       cnv_strnode_string(keyboardup, cdr(args));
 
       // most keyboard processing is done in DEFWNDPROC
-
       KeyboardCapture = KEYBOARDCAPTURE_KeyDownKeyUp;
 
       strcpy(keyboard_keydown, keyboarddown);
@@ -118,15 +114,21 @@ NODE *lmousepos(NODE *)
 
 NODE *lkeyboardvalue(NODE *)
    {
-
    // return current keyboard value
-
-   return (make_intnode(keyboard_value));
+   return make_intnode(keyboard_value);
    }
 
+static
 int min(int a, int b)
    {
-   if (a < b) return (a); else return (b);
+   if (a < b)
+      {
+      return a; 
+      }
+   else 
+      {
+      return b;
+      }
    }
 
 NODE *lportclose(NODE *)
@@ -148,13 +150,10 @@ NODE *lportclose(NODE *)
 
 NODE *lportopen(NODE *args)
    {
-
    char comport[MAX_BUFFER_SIZE];
-
    cnv_strnode_string(comport, args);
 
    // if port open output error else open it
-
    if (ComIsOpen)
       {
       MainWindowx->CommandWindow->MessageBox("PORT already open", "Error");
@@ -162,7 +161,6 @@ NODE *lportopen(NODE *args)
       }
    else
       {
-
       ComId = CreateFile(comport, GENERIC_READ | GENERIC_WRITE, 0, NULL, OPEN_EXISTING, 0, NULL);
 
       SetupComm(ComId, 4096, 4096);
@@ -199,9 +197,6 @@ NODE *lportopen(NODE *args)
 
 NODE *lportflush(NODE */* args */)
    {
-
-   int err;
-
    if (!ComIsOpen)
       {
       MainWindowx->CommandWindow->MessageBox("PORT not open", "Error");
@@ -209,8 +204,7 @@ NODE *lportflush(NODE */* args */)
       }
    else
       {
-      err = FlushFileBuffers(ComId);
-
+      int err = FlushFileBuffers(ComId);
       if (err == 0)
          {
          MainWindowx->CommandWindow->MessageBox("Could not flush PORT", "Error");
@@ -223,17 +217,10 @@ NODE *lportflush(NODE */* args */)
 
 NODE *lportmode(NODE *args)
    {
-
    char commode[MAX_BUFFER_SIZE];
-
-   DCB dcb;
-
-   int err;
-
    cnv_strnode_string(commode, args);
 
    // if closed output error else set mode
-
    if (!ComIsOpen)
       {
       MainWindowx->CommandWindow->MessageBox("PORT not open", "Error");
@@ -242,9 +229,10 @@ NODE *lportmode(NODE *args)
    else
       {
       // build dcb, if no error continue
+      DCB dcb;
       memset(&dcb, 0, sizeof(DCB));
       dcb.DCBlength = sizeof(DCB);
-      err = BuildCommDCB(commode, &dcb);
+      int err = BuildCommDCB(commode, &dcb);
 
       if (err == 0)
          {
@@ -264,7 +252,6 @@ NODE *lportmode(NODE *args)
          dcbold.StopBits = dcb.StopBits;
 
          err = SetCommState(ComId, &dcbold);
-
          if (err == 0)
             {
             MainWindowx->CommandWindow->MessageBox("Could not set PORT", "Error");
@@ -278,23 +265,8 @@ NODE *lportmode(NODE *args)
 
 NODE *lportwritearray(NODE *args)
    {
-
-   char txbuffer[MAX_BUFFER_SIZE];
-
-   int i;
-
-   DWORD count;
-   DWORD actual;
-   DWORD Error;
-
-   int status;
-
-   NODE *obj;
-   NODE *val;
-   NODE *item;
-
-   val = pos_int_arg(args);
-   obj = cadr(args);
+   NODE * val = pos_int_arg(args);
+   NODE * obj = cadr(args);
 
    while ((obj == NIL || obj == Null_Word) && NOT_THROWING)
       {
@@ -308,7 +280,6 @@ NODE *lportwritearray(NODE *args)
          {
 
          // if closed the error, else continue
-
          if (!ComIsOpen)
             {
             MainWindowx->CommandWindow->MessageBox("PORT not open", "Error");
@@ -316,21 +287,23 @@ NODE *lportwritearray(NODE *args)
             }
          else
             {
-
             // get min of max array and the array
-
-            count = min(min(getint(val), getarrdim(obj)), sizeof(txbuffer));
+            char txbuffer[MAX_BUFFER_SIZE];
+            DWORD count = min(min(getint(val), getarrdim(obj)), sizeof(txbuffer));
 
             // fill buffer with elements of the array
-            for (i = 0; i < count; i++)
+            for (int i = 0; i < count; i++)
                {
-               item = litem(cons_list(make_intnode(i + getarrorg(obj)), obj));
+               NODE * item = litem(cons_list(make_intnode(i + getarrorg(obj)), obj));
                txbuffer[i] = getint(cnv_node_to_numnode(item));
                }
 
             // now write buffer
+            DWORD Error;
             ClearCommError(ComId, &Error, NULL);
-            status = WriteFile(ComId, txbuffer, count, &actual, NULL);
+
+            DWORD actual;
+            int status = WriteFile(ComId, txbuffer, count, &actual, NULL);
 
             // if problem GetComError will Put up Message box
             if (status == 0)
@@ -339,8 +312,7 @@ NODE *lportwritearray(NODE *args)
                }
 
             // return byte count sent
-
-            return (make_intnode(status));
+            return make_intnode(status);
             }
          }
       else
@@ -350,27 +322,13 @@ NODE *lportwritearray(NODE *args)
          }
       }
 
-   return (make_intnode(0));
+   return make_intnode(0);
    }
 
 NODE *lportreadarray(NODE *args)
    {
-
-   char rxbuffer[MAX_BUFFER_SIZE];
-
-   int count;
-   int i;
-
-   DWORD Error;
-   DWORD actual;
-
-   NODE *val;
-   NODE *obj;
-
-   COMSTAT Stat;
-
-   val = pos_int_arg(args);
-   obj = cadr(args);
+   NODE * val = pos_int_arg(args);
+   NODE * obj = cadr(args);
 
    while ((obj == NIL || obj == Null_Word) && NOT_THROWING)
       {
@@ -393,21 +351,28 @@ NODE *lportreadarray(NODE *args)
          else
             {
             // don't overflow buffer
-            count = min(min(getarrdim(obj), getint(val)), sizeof(rxbuffer));
+            char rxbuffer[MAX_BUFFER_SIZE];
+            int count = min(min(getarrdim(obj), getint(val)), sizeof(rxbuffer));
 
             // Clear any errors
+            DWORD Error;
+            COMSTAT Stat;
             ClearCommError(ComId, &Error, &Stat);
 
-            // do the read (let if fail if nothing is there, it should not hang)
-            ReadFile(ComId, rxbuffer, count, &actual, (LPDWORD) NULL);
+            // do the read (let it fail if nothing is there, it should not hang)
+            DWORD actual;
+            ReadFile(ComId, rxbuffer, count, &actual, NULL);
 
             // if nothing there then return 0 count
-            if (actual == 0) return (make_intnode(0));
+            if (actual == 0) 
+               {
+               return make_intnode(0);
+               }
 
             count = actual;
 
             // now fill in the array
-            for (i = 0; i < count; i++)
+            for (int i = 0; i < count; i++)
                {
                lsetitem(
                   cons_list(
@@ -417,7 +382,7 @@ NODE *lportreadarray(NODE *args)
                }
 
             // return actual transfered
-            return (make_intnode(count));
+            return make_intnode(count);
             }
          }
       }
@@ -427,13 +392,8 @@ NODE *lportreadarray(NODE *args)
 
 NODE *lportwritechar(NODE *args)
    {
-
-   char txchar[1];
-
-   DWORD Error;
-   DWORD status;
-
    // get arg
+   char txchar[1];
    txchar[0] = getint(pos_int_arg(args));
 
    // if not open output error, else continue
@@ -446,35 +406,29 @@ NODE *lportwritechar(NODE *args)
    else
       {
       // write the 1 byte
-      if (!WriteFile(ComId, txchar, 1, &status, NULL)) status = -1;
+      DWORD status;
+      if (!WriteFile(ComId, txchar, 1, &status, NULL))
+         {
+         status = -1;
+         }
 
       // if problem GetComError will Put up Message box
-
       if (status != 1)
          {
+         DWORD Error;
          ClearCommError(ComId, &Error, NULL);
          }
 
       // return byte count sent
-      return (make_intnode(status));
+      return make_intnode(status);
       }
 
-   return (make_intnode(0));
+   return make_intnode(0);
    }
 
 NODE *lportreadchar(NODE *)
    {
-
-   DWORD Error;
-   DWORD actual;
-
-   char rxchar[64];
-
-   COMSTAT Stat;
-   memset(&Stat, 0, sizeof(Stat));
-
    // if closed output error, else continue
-
    if (!ComIsOpen)
       {
       MainWindowx->CommandWindow->MessageBox("PORT not open", "Error");
@@ -483,23 +437,26 @@ NODE *lportreadchar(NODE *)
    else
       {
       // Clear Comm Error in case last operation failed otherwise we won't get anything
+      DWORD Error;
       ClearCommError(ComId, &Error, NULL);
 
       // ReadFile will return immediately even if there is nothing to read
+      char rxchar[64];
+      DWORD actual;
       ReadFile(ComId, rxchar, 1, &actual, NULL);
 
       // if something was read then return it else return -1
       if (actual == 1)
          {
-         return (make_intnode(rxchar[0]));
+         return make_intnode(rxchar[0]);
          }
       else
          {
-         return (make_intnode(-1));
+         return make_intnode(-1);
          }
       }
 
-   return (make_intnode(-1));
+   return make_intnode(-1);
    }
 
 NODE *loutportb(NODE *args)
@@ -547,9 +504,13 @@ NODE *lingameport(NODE *args)
    int mask = getint(pos_int_arg(args));
 
    if (cdr(args) == NIL)
+      {
       portid = 0x201;
+      }
    else
+      {
       portid = getint(pos_int_arg(cdr(args)));
+      }
 
    int value = Myingameport(portid, mask);
 
