@@ -20,14 +20,9 @@
 *
 */
 
-/**********************************************************************
-*
-*
-**********************************************************************/
-
 #include "allwind.h"
 
-static HINSTANCE hDLLModule = 0;
+static HINSTANCE hDLLModule = NULL;
 
 extern "C" void PASCAL pushw(WORD);
 extern "C" void PASCAL pushl(DWORD);
@@ -36,23 +31,20 @@ extern "C" void PASCAL pushs(LPCSTR);
 
 NODE *ldllload(NODE *arg)
    {
-   char dllname[MAX_BUFFER_SIZE];
-
    if (hDLLModule)
       {
       MainWindowx->CommandWindow->MessageBox("DLL already loaded", "DLL Error");
       err_logo(STOP_ERROR, NIL);
       }
 
+   char dllname[MAX_BUFFER_SIZE];
    cnv_strnode_string(dllname, arg);
 
    hDLLModule = LoadLibrary(dllname);
-
-   if (!hDLLModule)
+   if (hDLLModule == NULL)
       {
       MainWindowx->CommandWindow->MessageBox("DLL load failed", "DLL Error");
       err_logo(STOP_ERROR, NIL);
-      hDLLModule = 0;
       }
 
    return Unbound;
@@ -60,14 +52,16 @@ NODE *ldllload(NODE *arg)
 
 NODE *ldllfree(NODE *)
    {
-   if (!hDLLModule)
+   if (hDLLModule == NULL)
       {
       MainWindowx->CommandWindow->MessageBox("DLL not loaded", "DLL Error");
       err_logo(STOP_ERROR, NIL);
       }
-
-   FreeLibrary(hDLLModule);
-   hDLLModule = 0;
+   else
+      {
+      FreeLibrary(hDLLModule);
+      hDLLModule = 0;
+      }
 
    return Unbound;
    }
@@ -91,7 +85,7 @@ NODE *ldllcall(NODE *arg)
 
    FARPROC theFunc;
 
-   if (!hDLLModule)
+   if (hDLLModule == NULL)
       {
       MainWindowx->CommandWindow->MessageBox("DLL not loaded", "DLL Error");
       err_logo(STOP_ERROR, NIL);
