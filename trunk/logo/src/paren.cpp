@@ -25,23 +25,29 @@
 #define assign(to, from)    to = reref(to, from)
 
 NODE *the_generation;
+bool tree_dk_how;
 
-/* Set the line pointer for a tree.
-*/
+static NODE *gather_args(NODE *proc, NODE **args, bool inparen, NODE **ifnode);
+static NODE *paren_infix(NODE *left_arg, NODE **rest, int old_pri, bool inparen);
+
+// Set the line pointer for a tree.
+static
 void make_line(NODE *tree, NODE *line)
    {
-   /*    setobject(tree, line); BH */
+   // setobject(tree, line); //BH
    setobject(tree, NIL);
    tree->n_obj = line;
    settype(tree, LINE);
    }
 
+static
 void untreeify(NODE *node)
    {
    settreepair__tree(node, NIL);
    settype(node, CONS);
    }
 
+static
 void untreeify_line(NODE *line)
    {
    if (line != NIL && is_list(line))
@@ -56,9 +62,8 @@ void untreeify_proc(NODE *procname)
    {
 
    NODE *body = bodylist__procnode(procnode__caseobj(procname));
-   NODE *body_ptr;
 
-   for (body_ptr = body; body_ptr != NIL; body_ptr = cdr(body_ptr))
+   for (NODE * body_ptr = body; body_ptr != NIL; body_ptr = cdr(body_ptr))
       {
       untreeify_line(car(body_ptr));
       }
@@ -69,15 +74,16 @@ void untreeify_proc(NODE *procname)
 */
 void make_tree_from_body(NODE *body)
    {
-
-   NODE *body_ptr, *end_ptr = NIL, *tree = NIL;
-
    if (body == NIL ||
          (is_tree(body) && generation__tree(body) == the_generation))
-      return;
-   for (body_ptr = body; body_ptr != NIL; body_ptr = cdr(body_ptr))
       {
-      tree = car(body_ptr);
+      return;
+      }
+
+   NODE *end_ptr = NIL;
+   for (NODE * body_ptr = body; body_ptr != NIL; body_ptr = cdr(body_ptr))
+      {
+      NODE * tree = car(body_ptr);
       assign(this_line, tree);
       make_tree(tree);
       if (is_tree(tree))
@@ -85,14 +91,22 @@ void make_tree_from_body(NODE *body)
          tree = tree__tree(tree);
          make_line(tree, car(body_ptr));
          if (end_ptr == NIL)
+            {
             settree__tree(body, tree);
+            }
          else
+            {
             setcdr(end_ptr, tree);
+            }
          if (generation__tree(car(body_ptr)) == Unbound)
+            {
             setgeneration__tree(body, Unbound);
+            }
          untreeify(car(body_ptr));
          while (cdr(tree) != NIL)
+            {
             tree = cdr(tree);
+            }
          end_ptr = tree;
          }
       else
@@ -105,66 +119,28 @@ void make_tree_from_body(NODE *body)
    settype(body, TREE);
    }
 
-bool tree_dk_how;
 
-/* Treeify a list of tokens (runparsed or not).
-*/
-void make_tree(NODE *list)
-   {
-
-   NODE *tree = NIL;
-
-   if (list == NIL ||
-         (is_tree(list) && generation__tree(list) == the_generation))
-      return;
-   if (!runparsed(list)) make_runparse(list);
-   tree_dk_how = FALSE;
-   tree = paren_line(parsed__runparse(list));
-   if (tree != NIL && tree != Unbound)
-      {
-      settype(list, TREE);
-      settree__tree(list, tree);
-      if (tree_dk_how || stopping_flag == THROWING)
-         setgeneration__tree(list, Unbound);
-      }
-   }
-
-
-/* Fully parenthesize a complete line, i.e. transform it from a flat list
-* to a tree.
-*/
-NODE *paren_line(NODE *line)
-   {
-
-   NODE *retval = NIL;
-   // NODE *save = line;
-
-   if (line == NIL) return line;
-   retval = paren_expr(&line, FALSE);
-   if (NOT_THROWING && retval != Unbound)
-      {
-      retval = paren_infix(retval, &line, -1, FALSE);
-      retval = cons(retval, paren_line(line));
-      }
-   return retval;
-   }
-
-/* Parenthesize an expression.  Set expr to the node after the first full
-* expression.
-*/
+// Parenthesize an expression. 
+// Set expr to the node after the first full expression.
+static
 NODE *paren_expr(NODE **expr, bool inparen)
    {
 
-   NODE *first = NIL, *tree = NIL, *proc, *retval;
-   //    NODE *save = *expr;
-   NODE **ifnode = (NODE **) NIL;
-
    if (*expr == NIL)
       {
-      if (inparen) err_logo(PAREN_MISMATCH, NIL);
+      if (inparen) 
+         {
+         err_logo(PAREN_MISMATCH, NIL);
+         }
       return *expr;
       }
-   first = valref(car(*expr));
+
+   NODE *tree = NIL;
+   NODE *proc;
+   NODE *retval;
+   NODE **ifnode = (NODE **) NIL;
+
+   NODE * first = valref(car(*expr));
    pop(*expr);
    if (nodetype(first) == CASEOBJ && !numberp(first))
       {
@@ -174,34 +150,49 @@ NODE *paren_expr(NODE **expr, bool inparen)
          tree = paren_expr(expr, TRUE);
          tree = paren_infix(tree, expr, -1, TRUE);
          if (*expr == NIL)
+            {
             err_logo(PAREN_MISMATCH, NIL);
+            }
          else if (car(*expr) != Right_Paren)
             {
-            int parens;
-
-            err_logo(TOO_MUCH, NIL);   /* throw the rest away                 */
-            for (parens = 0; *expr; pop(*expr))
+            // throw the rest away
+            err_logo(TOO_MUCH, NIL);
+            for (int parens = 0; *expr; pop(*expr))
+               {
                if (car(*expr) == Left_Paren)
+                  {
                   parens++;
+                  }
                else if (car(*expr) == Right_Paren)
-                  if (parens-- == 0) break;
+                  {
+                  if (parens-- == 0) 
+                     {
+                     break;
+                     }
+                  }
+               }
             }
          else
+            {
             pop(*expr);
+            }
          retval = tree;
          }
       else if (first == Right_Paren)
          {
          deref(first);
          err_logo(UNEXPECTED_PAREN, NIL);
-         if (inparen) push(first, *expr);
+         if (inparen) 
+            {
+            push(first, *expr);
+            }
          retval = NIL;
          }
       else if (first == Minus_Sign)
          {
          deref(first);
          push(Minus_Tight, *expr);
-         retval = paren_infix(make_intnode((FIXNUM) 0), expr, -1, inparen);
+         retval = paren_infix(make_intnode(0), expr, -1, inparen);
          }
       else
          {
@@ -226,9 +217,9 @@ NODE *paren_expr(NODE **expr, bool inparen)
             }
          else
             {
-            /* Kludge follows to turn IF to IFELSE sometimes. */
             if (first == If)
                {
+               // Kludge: turn IF to IFELSE sometimes.
                ifnode = &first;
                }
             retval = gather_args(proc, expr, inparen, ifnode);
@@ -254,9 +245,79 @@ NODE *paren_expr(NODE **expr, bool inparen)
    return retval;
    }
 
-/* Gather the correct number of arguments to proc into a list.  Set args to
-* immediately after the last arg.
-*/
+// Fully parenthesize a complete line.
+// i.e. transform it from a flat list to a tree.
+static
+NODE *paren_line(NODE *line)
+   {
+   if (line == NIL) 
+      {
+      return line;
+      }
+
+   NODE * retval = paren_expr(&line, FALSE);
+   if (NOT_THROWING && retval != Unbound)
+      {
+      retval = paren_infix(retval, &line, -1, FALSE);
+      retval = cons(retval, paren_line(line));
+      }
+   return retval;
+   }
+
+
+// Make a list of the next n expressions, where n is between min and max.
+// Set args to immediately after the last expression.
+NODE *gather_some_args(int min, int max, NODE **args, bool inparen, NODE **ifnode)
+   {
+   if (*args == NIL || car(*args) == Right_Paren ||
+       (nodetype(car(*args)) == CASEOBJ &&
+        nodetype(procnode__caseobj(car(*args))) == INFIX))
+      {
+      if (min > 0)
+         {
+         return cons(Not_Enough_Node, NIL);
+         }
+      }
+   else if (max == 0)
+      {
+      if (ifnode != (NODE **) NIL && is_list(car(*args)))
+         {
+         /* if -> ifelse kludge */
+         NODE *retval;
+         err_logo(IF_WARNING, NIL);
+         assign(*ifnode, Ifelse);
+         retval = paren_expr(args, FALSE);
+         retval = paren_infix(retval, args, -1, inparen);
+         return cons(
+            retval, 
+            gather_some_args(min, max, args, inparen, NULL));
+         }
+      }
+   else
+      {
+      if (max < 0) 
+         { 
+         // negative max means unlimited 
+         max = 0;
+         }
+
+      if (car(*args) != Right_Paren &&
+            (nodetype(car(*args)) != CASEOBJ ||
+               nodetype(procnode__caseobj(car(*args))) != INFIX))
+         {
+         NODE *retval = paren_expr(args, FALSE);
+         retval = paren_infix(retval, args, -1, inparen);
+         return cons(
+            retval, 
+            gather_some_args(min - 1, max - 1, args, inparen, ifnode));
+         }
+      }
+   return NIL;
+   }
+
+// Gather the correct number of arguments to proc into a list.
+// Set args to immediately after the last arg.
+static
 NODE *gather_args(NODE *proc, NODE **args, bool inparen, NODE **ifnode)
    {
    int min, max;
@@ -277,69 +338,66 @@ NODE *gather_args(NODE *proc, NODE **args, bool inparen, NODE **ifnode)
          /* special form */
          return ((logofunc) *getprimfun(proc)) (*args);
          }
-      /* Kludge follows to allow EDIT and CO without input without paren */
-      if (getprimmin(proc) == OK_NO_ARG) min = 0;
+
+      if (getprimmin(proc) == OK_NO_ARG) 
+         {
+         // Kludge: allow EDIT and CO without input without paren 
+         min = 0;
+         }
+
       max = (inparen ? getprimmax(proc) : getprimdflt(proc));
       }
+      
    return gather_some_args(min, max, args, inparen, ifnode);
    }
 
-/* Make a list of the next n expressions, where n is between min and max.
-* Set args to immediately after the last expression.
-*/
-NODE *gather_some_args(int min, int max, NODE **args, bool inparen, NODE **ifnode)
+// Treeify a list of tokens (runparsed or not).
+void make_tree(NODE *list)
    {
-   //    int parens;
 
-   if (*args == NIL || car(*args) == Right_Paren ||
-         (nodetype(car(*args)) == CASEOBJ &&
-           nodetype(procnode__caseobj(car(*args))) == INFIX))
+   if (list == NIL ||
+       (is_tree(list) && generation__tree(list) == the_generation))
       {
-      if (min > 0) return cons(Not_Enough_Node, NIL);
+      return;
       }
-   else if (max == 0)
+
+   if (!runparsed(list)) 
       {
-      if (ifnode != (NODE **) NIL && is_list(car(*args)))
+      make_runparse(list);
+      }
+
+   tree_dk_how = false;
+   NODE * tree = paren_line(parsed__runparse(list));
+   if (tree != NIL && tree != Unbound)
+      {
+      settype(list, TREE);
+      settree__tree(list, tree);
+      if (tree_dk_how || stopping_flag == THROWING)
          {
-         /* if -> ifelse kludge */
-         NODE *retval;
-         err_logo(IF_WARNING, NIL);
-         assign(*ifnode, Ifelse);
-         retval = paren_expr(args, FALSE);
-         retval = paren_infix(retval, args, -1, inparen);
-         return cons(retval, gather_some_args(min, max, args,
-               inparen, (NODE **) NIL));
+         setgeneration__tree(list, Unbound);
          }
       }
-   else
-      {
-      if (max < 0) max = 0;            /* negative max means unlimited        */
-      if (car(*args) != Right_Paren &&
-            (nodetype(car(*args)) != CASEOBJ ||
-               nodetype(procnode__caseobj(car(*args))) != INFIX))
-         {
-         NODE *retval = paren_expr(args, FALSE);
-         retval = paren_infix(retval, args, -1, inparen);
-         return cons(retval, gather_some_args(min - 1, max - 1, args,
-               inparen, ifnode));
-         }
-      }
-   return NIL;
    }
+
 
 /* Calculate the priority of a procedure.
 */
 int priority(NODE *proc_obj)
    {
+   if (proc_obj == Minus_Tight)
+      {
+      return PREFIX_PRIORITY + 4;
+      }
 
    NODE *proc;
-
-   if (proc_obj == Minus_Tight) return PREFIX_PRIORITY + 4;
    if (nodetype(proc_obj) != CASEOBJ ||
-         (proc = procnode__caseobj(proc_obj)) == UNDEFINED ||
-         nodetype(proc) != INFIX)
+       (proc = procnode__caseobj(proc_obj)) == UNDEFINED ||
+       nodetype(proc) != INFIX)
+      {
       return 0;
-   return (is_prim(proc) ? getprimpri(proc) : PREFIX_PRIORITY);
+      }
+
+   return is_prim(proc) ? getprimpri(proc) : PREFIX_PRIORITY;
    }
 
 /* Parenthesize an infix expression.  left_arg is the expression on the left
@@ -347,19 +405,23 @@ int priority(NODE *proc_obj)
 * infix procedure, if it's there.  Set rest to after the right end of the
 * infix expression.
 */
+static 
 NODE *paren_infix(NODE *left_arg, NODE **rest, int old_pri, bool inparen)
    {
 
-   NODE *infix_proc, *retval;
+   NODE *infix_proc;
    int pri;
-
    if (*rest == NIL || !(pri = priority(infix_proc = car(*rest))) || pri <= old_pri)
+      {
       return left_arg;
+      }
    ref(infix_proc);
    pop(*rest);
-   retval = paren_expr(rest, inparen);
+
+   NODE * retval = paren_expr(rest, inparen);
    retval = paren_infix(retval, rest, pri, inparen);
    retval = cons_list(infix_proc, left_arg, retval);
    deref(infix_proc);
+
    return paren_infix(retval, rest, old_pri, inparen);
    }

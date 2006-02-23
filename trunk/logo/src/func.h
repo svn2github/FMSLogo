@@ -374,23 +374,13 @@ extern NODE *lparse(NODE *args);
 extern NODE *runparse(NODE *ndlist);
 extern NODE *lrunparse(NODE *args);
 
-/* File PAREN.CPP: */
-
-extern void make_line(NODE *tree, NODE *line);
-extern void untreeify(NODE *node);
-extern void untreeify_line(NODE *line);
+// File paren.cpp 
 extern void untreeify_proc(NODE *procname);
 extern void make_tree_from_body(NODE *body);
 extern void make_tree(NODE *list);
-extern NODE *paren_line(NODE *line);
-extern NODE *paren_expr(NODE **expr, bool inparen);
-extern NODE *gather_args(NODE *proc, NODE **args, bool inparen, NODE **ifnode);
-extern NODE *gather_some_args(int min, int max, NODE **args, bool inparen, NODE **ifnode);
 extern int priority(NODE *proc_obj);
-extern NODE *paren_infix(NODE *left_arg, NODE **rest, int old_pri, bool inparen);
 
-/* File MEM.CPP: */
-
+// File mem.cpp
 extern NODETYPES nodetype(NODE *nd);
 extern void setobject(NODE *nd, NODE *newobj);
 extern void setcar(NODE *nd, NODE *newcar);
