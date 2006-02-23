@@ -47,9 +47,11 @@ static int current_allocated_id;
 
 void record_alloced_pointer(NODE *nd)
    {
-   int i;
-   if (nd == NIL) return;
-   for (i = 0; i < MAX_RECORD_ALLOC; i++)
+   if (nd == NIL) 
+      {
+      return;
+      }
+   for (int i = 0; i < MAX_RECORD_ALLOC; i++)
       {
       if (!allocated[i])
          {
@@ -62,9 +64,12 @@ void record_alloced_pointer(NODE *nd)
 
 void record_freed_pointer(NODE *nd)
    {
-   int i;
-   if (nd == NIL) return;
-   for (i = 0; i < MAX_RECORD_ALLOC; i++)
+   if (nd == NIL) 
+      {
+      return;
+      }
+
+   for (int i = 0; i < MAX_RECORD_ALLOC; i++)
       {
       if (allocated[i] == nd)
          {
@@ -81,8 +86,7 @@ void clear_alloced_records(NODE *nd)
 
 void print_alloced_pointers(void)
    {
-   int i;
-   for (i = 0; i < MAX_RECORD_ALLOC; i++)
+   for (int i = 0; i < MAX_RECORD_ALLOC; i++)
       {
       if (allocated[i])
          {
@@ -95,17 +99,28 @@ void print_alloced_pointers(void)
 
 NODETYPES nodetype(NODE *nd)
    {
-   if (nd == NIL) return (PNIL);
-   return ((NODETYPES) nd->node_type);
+   if (nd == NIL) 
+      {
+      return PNIL;
+      }
+
+   return nd->node_type;
    }
 
 void setobject(NODE *nd, NODE *newobj)
    {
    NODE *oldobj = getobject(nd);
 
-   if (newobj != NIL) increfcnt(newobj);
+   if (newobj != NIL) 
+      {
+      increfcnt(newobj);
+      }
+
    if (oldobj != NIL && decrefcnt(oldobj) == 0)
+      {
       gc(oldobj);
+      }
+
    nd->n_obj = newobj;
    }
 
@@ -113,9 +128,15 @@ void setcar(NODE *nd, NODE *newcar)
    {
    NODE *oldcar = car(nd);
 
-   if (newcar != NIL) increfcnt(newcar);
+   if (newcar != NIL) 
+      {
+      increfcnt(newcar);
+      }
+
    if (oldcar != NIL && decrefcnt(oldcar) == 0)
+      {
       gc(oldcar);
+      }
    nd->n_car = newcar;
    }
 
@@ -123,9 +144,15 @@ void setcdr(NODE *nd, NODE *newcdr)
    {
    NODE *oldcdr = cdr(nd);
 
-   if (newcdr != NIL) increfcnt(newcdr);
+   if (newcdr != NIL) 
+      {
+      increfcnt(newcdr);
+      }
+
    if (oldcdr != NIL && decrefcnt(oldcdr) == 0)
+      {
       gc(oldcdr);
+      }
    nd->n_cdr = newcdr;
    }
 
@@ -148,25 +175,25 @@ NODE *reref(NODE *proc_var, NODE *newval)
 
 NODE *unref(NODE *ret_var)
    {
-   if (ret_var != NIL) decrefcnt(ret_var);
-   return (ret_var);
+   if (ret_var != NIL) 
+      {
+      decrefcnt(ret_var);
+      }
+   return ret_var;
    }
 
 void addseg()
    {
-   int p;
-   struct segment *newseg;
-
    // remove for debugging leaks
    memory_count++;
    if (status_flag) update_status_memory();
 
-   if ((newseg = (struct segment *) malloc((size_t) sizeof(struct segment)))
-         != NULL)
+   struct segment *newseg;
+   if ((newseg = (struct segment *) malloc(sizeof(*newseg))) != NULL)
       {
       newseg->next = segment_list;
       segment_list = newseg;
-      for (p = 0; p < SEG_SIZE; p++)
+      for (int p = 0; p < SEG_SIZE; p++)
          {
          newseg->nodes[p].n_cdr = free_list;
 #ifdef MEM_DEBUG
@@ -192,7 +219,9 @@ NODE *newnode(NODETYPES type)
          {
          err_logo(OUT_OF_MEM, NIL);
          if ((newnd = free_list) == NIL)
+            {
             err_logo(OUT_OF_MEM_UNREC, NIL);
+            }
          }
       }
    free_list = cdr(newnd);
@@ -205,8 +234,11 @@ NODE *newnode(NODETYPES type)
    mem_allocated++;
 #endif
    mem_nodes++;
-   if (mem_nodes > mem_max) mem_max = mem_nodes;
-   return (newnd);
+   if (mem_nodes > mem_max) 
+      {
+      mem_max = mem_nodes;
+      }
+   return newnd;
    }
 
 NODE *cons(NODE *x, NODE *y)
@@ -215,24 +247,30 @@ NODE *cons(NODE *x, NODE *y)
 
    setcar(val, x);
    setcdr(val, y);
-   return (val);
+   return val;
    }
 
 void gc(NODE *nd)
    {
-   NODE *tcar, *tcdr, *tobj;
-   int i;
-   NODE **pp;
-   unsigned short *temp;
-
    for (;;)
       {
+      NODE *tcar;
+      NODE *tcdr;
+      NODE *tobj;
+
+      int i;
+      NODE **pp;
+      unsigned short *temp;
+
       switch (nodetype(nd))
          {
           case PUNBOUND:
-              setrefcnt(nd, 10000);      /* save some time                      */
+              setrefcnt(nd, 10000);  // save some time
           case PNIL:
-              if (gctop == gcstack) return;
+              if (gctop == gcstack) 
+                 {
+                 return;
+                 }
               nd = *--gctop;
               continue;
           case LINE:
@@ -256,7 +294,7 @@ void gc(NODE *nd)
                  tobj = *pp++;
                  deref(tobj);
                  }
-              free((char *) getarrptr(nd));
+              free(getarrptr(nd));
               tcar = tcdr = tobj = NIL;
               break;
           case STRING:
@@ -265,7 +303,10 @@ void gc(NODE *nd)
               if (getstrhead(nd) != NULL)
                  {
                  temp = (unsigned short *) getstrhead(nd);
-                 if (decstrrefcnt(temp) == 0) free(getstrhead(nd));
+                 if (decstrrefcnt(temp) == 0) 
+                    {
+                    free(getstrhead(nd));
+                    }
                  }
           default:
               tcar = tcdr = tobj = NIL;
@@ -281,15 +322,34 @@ void gc(NODE *nd)
 #endif
       mem_nodes--;
       if (tcdr != NIL && decrefcnt(tcdr) == 0)
+         {
          if (gctop < &gcstack[GCMAX])
+            {
             *gctop++ = tcdr;
+            }
+         }
+
       if (tcar != NIL && decrefcnt(tcar) == 0)
+         {
          if (gctop < &gcstack[GCMAX])
+            {
             *gctop++ = tcar;
+            }
+         }
+
       if (tobj != NIL && decrefcnt(tobj) == 0)
+         {
          if (gctop < &gcstack[GCMAX])
+            {
             *gctop++ = tobj;
-      if (gctop == gcstack) return;
+            }
+         }
+
+      if (gctop == gcstack) 
+         {
+         return;
+         }
+
       nd = *--gctop;
       }
    }
@@ -326,6 +386,8 @@ void use_reserve_tank()
 
 void check_reserve_tank()
    {
-   if (reserve_tank == NIL) fill_reserve_tank();
+   if (reserve_tank == NIL) 
+      {
+      fill_reserve_tank();
+      }
    }
-
