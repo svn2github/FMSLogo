@@ -455,7 +455,7 @@ void silent_load(NODE *arg, const char *prefix)
     *    silent_load(proc,NULL)    loads proc.lgo
     * The "/" or ".lgo" is supplied by this procedure as needed.
     */
-   if (prefix == NULL && arg == NIL) 
+   if (prefix == NULL && arg == NIL)
       {
       return;
       }
@@ -464,39 +464,67 @@ void silent_load(NODE *arg, const char *prefix)
 
    int  sv_val_status = val_status;
    bool isDirtySave = IsDirty;
+   
+   // construct the filename
+   char   filename[MAX_PATH];
+   char * filenamePtr   = filename;
+   char * filenameLimit = filename + MAX_PATH - 1;  // leave room for NUL
 
-   char load_path[200];
-   strcpy(load_path, (prefix == NULL ? "" : prefix));
+   *filenamePtr = '\0';
+   if (prefix != NULL)
+      {
+      size_t prefixLength = strlen(prefix);
+      if (filenameLimit <= filenamePtr + prefixLength)
+         {
+         // prefix is too long
+         return;
+         }
+
+      // copy the prefix to the filename
+      memcpy(filenamePtr, prefix, prefixLength);
+      filenamePtr += prefixLength;
+      }
 
    if (arg != NIL)
       {
       arg = cnv_node_to_strnode(arg);
-      if (arg == Unbound) 
+      if (arg == Unbound)
          {
          return;
          }
 
-#ifdef unix
-      if (prefix != NULL)
-         {
-         strcat(load_path, "/");
-         }
-#endif
-      noparitylow_strnzcpy(
-         load_path + (int) strlen(load_path),
-         getstrptr(arg), 
-         getstrlen(arg));
+      const char * argString       = getstrptr(arg);
+      int          argStringLength = getstrlen(arg);
 
-      if (prefix == NULL) 
+      if (filenameLimit <= filenamePtr + argStringLength)
          {
-         strcat(load_path, ".lgo");
+         // prefix is too long
+         return;
+         }
+      noparitylow_strnzcpy(filenamePtr, argString, argStringLength);
+      filenamePtr += argStringLength;
+
+      if (prefix == NULL)
+         {
+         const size_t EXTENSION_LENGTH = sizeof(".lgo") - 1;
+         // this is not coming from Logolib, so append a ".lgo"
+         if (filenameLimit <= filenamePtr + EXTENSION_LENGTH)
+            {
+            // prefix is too long
+            return;
+            }
+         memcpy(filenamePtr, ".lgo", EXTENSION_LENGTH);
+         filenamePtr += EXTENSION_LENGTH;
          }
       gcref(arg);
       }
 
+   // NUL-terminate filename
+   *filenamePtr = '\0';
+
    FILE * tmp_stream = loadstream;
    NODE * tmp_line = vref(current_line);
-   loadstream = fopen(load_path, "r");
+   loadstream = fopen(filename, "r");
    if (loadstream != NULL)
       {
       int save_yield_flag = yield_flag;
@@ -536,19 +564,6 @@ void silent_load(NODE *arg, const char *prefix)
 
 NODE *lload(NODE *arg)
    {
-   if (IsDirty)
-      {
-      if (MainWindowx->CommandWindow->MessageBox(
-         "The file being loaded may over write your changes.\n"
-            "\n"
-            "Continue Loading?", 
-         "You have not saved to disk", 
-         MB_OKCANCEL | MB_ICONQUESTION) == IDCANCEL) 
-         {
-         return Unbound;
-         }
-      }
-
    NODE *st = valnode__caseobj(Startup);
    int sv_val_status = val_status;
 
