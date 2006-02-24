@@ -1,7 +1,6 @@
 ------------------------------------------------------------------
-FMSLogo Version 6.7.2 for Microsoft Windows 95/98/NT/2000/XP/Vista
+FMSLogo Version 6.8.0 for Microsoft Windows 95/98/NT/2000/XP/Vista
 ------------------------------------------------------------------
-
 
 Part    I) Kit Description/Location:
 Part   II) New features/bugs fixed:
@@ -15,11 +14,15 @@ Part VIII) Minimum System Requirements:
 
 Part I) Kit Description/Location (http://sourceforge.net/projects/fmslogo):
 
-  fmslogo-6.7.2.exe       (binary kit: Windows self-extracting installer)
-  fmslogo-6.7.2.zip       (binary kit: Windows ZIP archive)
-  fmslogo-src-6.7.2.zip   (source kit)
+  fmslogo-6.8.0.exe       (binary kit: Windows self-extracting installer)
+  fmslogo-6.8.0.zip       (binary kit: Windows ZIP archive)
+  fmslogo-src-6.8.0.zip   (source kit)
 
 Part II) New features/bugs fixed:
+
+  * Added for 6.8.0,
+    o Fix bug #1434420; running a long command no longer crashes.
+    o Mitigate bug #1392437; LOAD no longer warns that it can overwrite changes.
 
   * Added for 6.7.2,
     o Fix bug #1372489; double-clicking .lgo file starts new FMSLogo process.
@@ -214,13 +217,13 @@ Part VII) Sources:
  
   Source code is available.  It's your legal right!  (See LICENSE.TXT).
 
-  The FMSLogo sources are written using:
+  The FMSLogo sources were written/compiled with:
 
     Borland C++ 5.02 for windows (for .EXE)
     Borland Turbo 32bit Assembler (for .EXE)
-    OpenOffice.org or MS Word 97 (for online help and DOC's)
+    DocBook, xsltproc, and Microsoft Help Workshop (for online help)
     Nullsoft Scriptable Install System (NSIS) (for the installer)
 
 Part VIII) Minimum System Requirements:
 
-   Pentium class processor with Minimum of 16 MB RAM running Windows 95.
+   Pentium class processor with minimum of 16 MB RAM running Windows 95.
