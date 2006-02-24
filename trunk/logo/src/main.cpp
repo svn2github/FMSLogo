@@ -183,6 +183,7 @@ void cnv_strnode_string(char *textbuf, NODE *arg)
    print_stringptr = textbuf;
    print_stringlen = MAX_BUFFER_SIZE;
    ndprintf((FILE *) NULL, "%p", car(arg));
+   assert(print_stringptr - textbuf < MAX_BUFFER_SIZE); // buffer overrun
    *print_stringptr = '\0';
    }
 
