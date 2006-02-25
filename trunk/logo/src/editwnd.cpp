@@ -24,12 +24,12 @@
 TRichEditWithPopup::TRichEditWithPopup(
    TWindow* parent,
    int id,
-   const char far* text,
+   const char * text,
    int x,
    int y,
    int w,
    int h,
-   const char far* fileName,
+   const char * fileName,
    TModule* module
 ) : TRichEdit(parent, id, text, x, y, w, h, fileName, module)
    {
