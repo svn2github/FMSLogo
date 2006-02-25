@@ -23,6 +23,7 @@ Part II) New features/bugs fixed:
   * Added for 6.8.0,
     o Fix bug #1434420; running a long command no longer crashes.
     o Fix bug #1438438; DLLLOAD properly handles bad input.
+    o Fix bug #1397560; floating point overflow no longer crashes.
     o Mitigate bug #1392437; LOAD no longer warns that it can overwrite changes.
 
   * Added for 6.7.2,
