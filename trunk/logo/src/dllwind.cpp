@@ -36,15 +36,17 @@ NODE *ldllload(NODE *arg)
       MainWindowx->CommandWindow->MessageBox("DLL already loaded", "DLL Error");
       err_logo(STOP_ERROR, NIL);
       }
-
-   char dllname[MAX_BUFFER_SIZE];
-   cnv_strnode_string(dllname, arg);
-
-   hDLLModule = LoadLibrary(dllname);
-   if (hDLLModule == NULL)
+   else
       {
-      MainWindowx->CommandWindow->MessageBox("DLL load failed", "DLL Error");
-      err_logo(STOP_ERROR, NIL);
+      char dllname[MAX_BUFFER_SIZE];
+      cnv_strnode_string(dllname, arg);
+
+      hDLLModule = LoadLibrary(dllname);
+      if (hDLLModule == NULL)
+         {
+         MainWindowx->CommandWindow->MessageBox("DLL load failed", "DLL Error");
+         err_logo(STOP_ERROR, NIL);
+         }
       }
 
    return Unbound;
