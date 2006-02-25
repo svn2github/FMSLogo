@@ -32,10 +32,10 @@ TO DLLCALLTEST
   RUNBADINPUTTEST [(DLLCALL [L GetTickCount] "toomany)]
 
   ; invalid inputs
-  RUNBADINPUTTEST [DLLLOAD {}]
+  RUNBADINPUTTEST [DLLCALL {0}]
 
   ; missing the function type
-  RUNBADINPUTTEST [DLLLOAD []]
+  RUNBADINPUTTEST [DLLCALL [0]]
 
   ; missing the function name
   RUNBADINPUTTEST [DLLCALL [L]]
@@ -55,14 +55,10 @@ TO DLLCALLTEST
   ; unknown parameter type
   RUNBADINPUTTEST [DLLCALL [L GetTickCount E Unknown]]
 
-  ; wrong number of inputs (DLLCALL crashes on this)
-  RUNBADINPUTTEST [DLLCALL [L GetTickCount L 0]]
+  ; wrong number of inputs (DLLCALL may crash on this)
+  ; RUNBADINPUTTEST [DLLCALL [L GetTickCount L 0]]
 
   DLLFREE
-
-  RUNBADINPUTTEST [DLLLOAD 12345]
-  RUNBADINPUTTEST [DLLLOAD "nonexistent.dll]
-  RUNBADINPUTTEST [DLLLOAD "c:\\]
 
 END
 
@@ -72,8 +68,8 @@ TO DLLLOADTEST
   RUNBADINPUTTEST [(DLLLOAD)]
 
   ; invalid filenames
-  RUNBADINPUTTEST [DLLLOAD {}]
-  RUNBADINPUTTEST [DLLLOAD []]
+  RUNBADINPUTTEST [DLLLOAD {0}]
+  RUNBADINPUTTEST [DLLLOAD [0]]
   RUNBADINPUTTEST [DLLLOAD 12345]
   RUNBADINPUTTEST [DLLLOAD "nonexistent.dll]
   RUNBADINPUTTEST [DLLLOAD "c:\\]
@@ -81,11 +77,18 @@ TO DLLLOADTEST
   ; DLLLOAD a very long filename name
   localmake "longdllname ".dll
   repeat 5000 [ make "longdllname word "A :longdllname ]
+  make "longdllname word "|"| :longdllname
   RUNBADINPUTTEST (list "DLLLOAD :longdllname)
 
   ; load a DLL when one is already loaded
-  DLLLOAD "user32.dll
+  DLLLOAD "kernel32.dll
   RUNBADINPUTTEST [DLLLOAD "user32.dll]
+  DLLFREE
+
+  ; Regression test for bug #1438438 
+  ; Call DLLLOAD with invalid input while a DLL is loaded.
+  DLLLOAD "kernel32.dll
+  RUNBADINPUTTEST [DLLLOAD {0}]
   DLLFREE
 
 END
@@ -109,3 +112,4 @@ TO DLLTEST
    DLLCALLTEST
    DLLFREETEST
 END
+
