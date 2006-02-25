@@ -34,12 +34,15 @@ LOAD "scrunch.lgo
 LOAD "help.lgo
 LOAD "window.lgo
 LOAD "sort.lgo
+LOAD "run.lgo
+LOAD "dll.lgo
 
 TO TESTALL
 
   REPORTTESTINITIALIZE
 
   PARSETEST       ; from parse.lgo
+  RUNTEST         ; from run.lgo
   PREDICATETEST   ; from predicate.lgo
   WORDTEST        ; from word.lgo
   ARRAYTEST       ; from array.lgo
@@ -69,6 +72,7 @@ TO TESTALL
   SCRUNCHTEST     ; from scrunch.lgo
   HELPTEST        ; from help.lgo
   WINDOWTEST      ; from window.lgo
+  DLLTEST         ; from dll.lgo
   SORTTEST        ; from sort.lgo
 
   REPORTTESTUNINITIALIZE
