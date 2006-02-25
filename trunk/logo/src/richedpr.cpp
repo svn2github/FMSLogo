@@ -4,7 +4,7 @@
 // ObjectWindows
 // Copyright (c) 1995, 1997 by Borland International, All Rights Reserved
 //
-//$Revision: 1.1.1.1 $
+//$Revision: 1.2 $
 //
 // Implementation of support classes for Print/PrintPreview of TRichEdits
 //----------------------------------------------------------------------------
@@ -45,9 +45,10 @@ const int PageIndexDelta = 5;
 //
 // Constructs a Printout object which represent a RICHEDIT's document
 //
-TRichEditPrintout::TRichEditPrintout(TPrinter& printer, 
-                                     TRichEdit& richEdit,
-                                     const char far *title)
+TRichEditPrintout::TRichEditPrintout(
+   TPrinter& printer, 
+   TRichEdit& richEdit,
+   const char *title)
 : 
  TPrintout(title),
  Printer(printer),
@@ -363,12 +364,13 @@ TRichEditPagePreview::Paint(TDC& dc, bool, TRect& /*clip*/)
 //
 // Constructor of a RichEdit Preview Frame
 //
-TRichEditPreviewFrame::TRichEditPreviewFrame(TWindow* parentWindow, 
-                                             TPrinter& printer, 
-                                             TPrintout& printout, 
-                                             TRichEdit& richEdit, 
-                                             const char far* title, 
-                                             TLayoutWindow* client)
+TRichEditPreviewFrame::TRichEditPreviewFrame(
+   TWindow* parentWindow, 
+   TPrinter& printer, 
+   TPrintout& printout, 
+   TRichEdit& richEdit, 
+   const char * title, 
+   TLayoutWindow* client)
 :
   TPreviewWin(parentWindow, printer, printout, richEdit, title, client)
 {

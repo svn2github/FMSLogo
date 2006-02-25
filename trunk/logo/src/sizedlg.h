@@ -17,7 +17,7 @@ class TSizeControl : public TControl
    private:
    TColor Size;
 
-   char far* GetClassName()
+   char * GetClassName()
       {
       return "SizeControl";
       }
