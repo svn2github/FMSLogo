@@ -29,8 +29,6 @@
 */
 int numberp(NODE *snd)
    {
-   int dl, dr;
-
    if (is_number(snd)) 
       {
       return 1;
@@ -44,23 +42,31 @@ int numberp(NODE *snd)
 
    const char * p = getstrptr(snd); 
    int plen = getstrlen(snd); 
-   int pcnt = dl = dr = 0;
    if (plen >= MAX_NUMBER)
       {
       return 0;
       }
 
+   int dl   = 0;
+   int dr   = 0;
+   int pcnt = 0;
    if (pcnt < plen && *p == '-')
+      {
       p++, pcnt++;
+      }
 
    while (pcnt < plen && isdigit(*p))
+      {
       p++, pcnt++, dl++;
+      }
 
    if (pcnt < plen && *p == '.')
       {
       p++, pcnt++;
       while (pcnt < plen && isdigit(*p))
+         {
          p++, pcnt++, dr++;
+         }
       }
 
    if (pcnt < plen && (dl || dr) && (*p == 'E' || *p == 'e'))
@@ -68,16 +74,24 @@ int numberp(NODE *snd)
       p++, pcnt++;
 
       if (pcnt < plen && *p == '+' || *p == '-')
+         {
          p++, pcnt++;
+         }
 
       while (pcnt < plen && isdigit(*p))
+         {
          p++, pcnt++, dr++;
+         }
       }
 
    if ((dl == 0 && dr == 0) || pcnt != plen)
+      {
       return 0;
+      }
    else
+      {
       return dr + 1;
+      }
    }
 
 NODE *lrandom(NODE *arg)
@@ -121,7 +135,7 @@ NODE *lrerandom(NODE *arg)
    return Unbound;
    }
 
-jmp_buf oflo_buf;
+static jmp_buf oflo_buf;
 
 #define sig_arg 0
 static
@@ -138,11 +152,6 @@ static
 NODE *binary(NODE *args, char fcn)
    {
    NODE *arg, *val;
-   bool imode;
-   FIXNUM iarg, ival, oval, nval;
-   FLONUM farg, fval;
-   int wantint = 0;
-
    if (fcn == '%' || fcn == 'm')
       {
       arg = integer_arg(args);
@@ -154,7 +163,14 @@ NODE *binary(NODE *args, char fcn)
 
    // arg = numeric_arg(args);
    args = cdr(args);
-   if (stopping_flag == THROWING) return Unbound;
+   if (stopping_flag == THROWING) 
+      {
+      return Unbound;
+      }
+
+   bool imode;
+   FIXNUM ival;
+   FLONUM fval;
    if (nodetype(arg) == INTEGER)
       {
       imode = true;
@@ -165,6 +181,7 @@ NODE *binary(NODE *args, char fcn)
       imode = false;
       fval = getfloat(arg);
       }
+
    if (args == NIL)
       {
       /* one argument supplied */
@@ -194,6 +211,7 @@ NODE *binary(NODE *args, char fcn)
                fval = (FLONUM) ival;
                break;
             }
+
       if (!imode)
          {
          if (!setjmp(oflo_buf))
@@ -235,6 +253,7 @@ NODE *binary(NODE *args, char fcn)
                      {
                      handle_oflo(sig_arg);
                      }
+
                   signal(SIGFPE, handle_oflo);
                   ival = (FIXNUM) fval;
                   imode = true;
@@ -257,12 +276,17 @@ NODE *binary(NODE *args, char fcn)
                   }
                }
             else
+               {
                err_logo(BAD_DATA_UNREC, arg);
+               }
             }
          }
       /* end float case */
       }
    /* end monadic */
+
+
+   bool wantint = false;
    while (args != NIL && NOT_THROWING)
       {
       if (fcn == '%' || fcn == 'm')
@@ -282,6 +306,8 @@ NODE *binary(NODE *args, char fcn)
          return Unbound;
          }
 
+      FIXNUM iarg;
+      FLONUM farg;
       if (nodetype(arg) == INTEGER)
          {
          if (imode)
@@ -305,7 +331,7 @@ NODE *binary(NODE *args, char fcn)
 
       if (imode)
          {
-         oval = ival;
+         FIXNUM oval = ival;
 
          signal(SIGFPE, handle_oflo);
          if (setjmp(oflo_buf) == 0)
@@ -316,7 +342,7 @@ NODE *binary(NODE *args, char fcn)
                case '+':
                   if (iarg < 0)
                      {
-                     nval = ival + iarg;
+                     FIXNUM nval = ival + iarg;
                      if (nval >= ival)
                         {
                         imode = false;
@@ -332,7 +358,7 @@ NODE *binary(NODE *args, char fcn)
                      }
                   else
                      {
-                     nval = ival + iarg;
+                     FIXNUM nval = ival + iarg;
                      if (nval < ival)
                         {
                         imode = false;
@@ -423,7 +449,7 @@ NODE *binary(NODE *args, char fcn)
                      ival *= iarg;
                      break;
                      }
-                  wantint++;
+                  wantint = true;
 
                default:                /* math library */
                   imode = false;
@@ -455,7 +481,7 @@ NODE *binary(NODE *args, char fcn)
 
                   if (wantint)
                      {
-                     wantint = 0;
+                     wantint = false;
                      if (fval <= MAXINT && fval >= -MAXINT)
                         {
                         imode = true;
