@@ -141,7 +141,7 @@ static jmp_buf oflo_buf;
 static
 void handle_oflo(int /*sig*/)
    {
-   _fpreset();
+   // _fpreset();  // commented out for bug #1397560 
    longjmp(oflo_buf, 1);
    }
 
