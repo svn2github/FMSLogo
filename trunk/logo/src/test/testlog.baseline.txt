@@ -300,6 +300,7 @@ PASS: [SUM 1e40 2e39] returned 1.2e+40 , as expected.
 PASS: [(SUM)] returned 0 , as expected.
 PASS: [(SUM 5)] returned 5 , as expected.
 PASS: [(SUM 1 2 3 4 5)] returned 15 , as expected.
+PASS: [(SUM 1 2.5 3 4.5 5)] returned 16 , as expected.
 INFO: Executing invalid instruction: [[] + 2]
 PASS: Executing [[] + 2] threw an error
 INFO: Executing invalid instruction: [[1] + 2]
@@ -484,6 +485,9 @@ PASS: [PRODUCT 1e200 1e-200] returned 1 , as expected.
 PASS: [(PRODUCT)] returned 1 , as expected.
 PASS: [(PRODUCT 5)] returned 5 , as expected.
 PASS: [(PRODUCT 1 2 3 4 5)] returned 120 , as expected.
+PASS: [(PRODUCT 1 2 3 4 5 0.5)] returned 60 , as expected.
+PASS: [(PRODUCT 1.10 1 2 3 4 5)] returned 132 , as expected.
+FAIL: [(PRODUCT 1.01 1 2 3 4 5)] returned 121.2 . We expected 121.2
 INFO: Executing invalid instruction: [[] * 2]
 PASS: Executing [[] * 2] threw an error
 INFO: Executing invalid instruction: [[1] * 2]
@@ -1402,6 +1406,10 @@ INFO: Executing invalid instruction: [RADARCCOS "one]
 PASS: Executing [RADARCCOS "one] threw an error
 INFO: Executing invalid instruction: [RADARCCOS "1a]
 PASS: Executing [RADARCCOS "1a] threw an error
+PASS: [PRODUCT 1e200 2e200] returned +INF , as expected.
+PASS: [ROUND 2.3e40] returned 2.3e+40 , as expected.
+PASS: [PRODUCT 1e200 2e200] returned +INF , as expected.
+PASS: Bug #1397560 is fixed. Multiple floating point exceptions do not crash.
 PASS: [TEXT "SAMPLEPROC] returned [[a b] [PRINT :a] [SHOW :b]] , as expected.
 INFO: Executing invalid instruction: [(TEXT)]
 PASS: Executing [(TEXT)] threw an error
