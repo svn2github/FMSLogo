@@ -335,8 +335,6 @@ make_strnode(
    char *    (*copy_routine) (char *, const char *, int)
 )
    {
-   assert(string != NULL);
-
    if (len == 0 && Null_Word != NIL)
       {
       return Null_Word;
@@ -431,6 +429,8 @@ make_strnode_no_copy(
 
    // increment the reference count
    unsigned short * header = (unsigned short *) strhead;
+   assert(header != NULL);        // string is in static memory
+   assert(*header != USHRT_MAX); // ref count would overflow
    incstrrefcnt(header);
 
    NODE * strnode = newnode(typ);
@@ -554,45 +554,46 @@ NODE *cnv_node_to_numnode(NODE *ndi)
 
 NODE *cnv_node_to_strnode(NODE *nd)
    {
-   char s[MAX_NUMBER];
-
    if (nd == Unbound || aggregate(nd))
       {
       return Unbound;
       }
+
+   char s[MAX_NUMBER];
    switch (nodetype(nd))
       {
-       case STRING:
-       case BACKSLASH_STRING:
-       case VBAR_STRING:
-           return (nd);
+      case STRING:
+      case BACKSLASH_STRING:
+      case VBAR_STRING:
+         // the node is already a string
+         return nd;
 
-       case CASEOBJ:
-           return strnode__caseobj(nd);
+      case CASEOBJ:
+         return strnode__caseobj(nd);
 
-       case QUOTE:
-           nd = valref(cnv_node_to_strnode(node__quote(nd)));
-           nd = reref(
-              nd, 
-              make_strnode(getstrptr(nd), getstrlen(nd) + 1, nodetype(nd), quote_strnzcpy));
-           unref(nd);
-           return nd;
+      case QUOTE:
+         nd = vref(cnv_node_to_strnode(node__quote(nd)));
+         nd = reref(
+            nd, 
+            make_strnode(getstrptr(nd), getstrlen(nd) + 1, nodetype(nd), quote_strnzcpy));
+         unref(nd);
+         return nd;
+         
+      case COLON:
+         nd = vref(cnv_node_to_strnode(node__colon(nd)));
+         nd = reref(
+             nd, 
+             make_strnode(getstrptr(nd), getstrlen(nd) + 1, nodetype(nd), colon_strnzcpy));
+         unref(nd);
+         return nd;
 
-       case COLON:
-           nd = valref(cnv_node_to_strnode(node__colon(nd)));
-           nd = reref(
-              nd, 
-              make_strnode(getstrptr(nd), getstrlen(nd) + 1, nodetype(nd), colon_strnzcpy));
-           unref(nd);
-           return nd;
+      case INTEGER:
+         sprintf(s, "%ld", getint(nd));
+         return make_strnode(s);
 
-       case INTEGER:
-           sprintf(s, "%ld", getint(nd));
-           return make_strnode(s);
-
-       case FLOATINGPOINT:
-           sprintf(s, "%0.15g", getfloat(nd));
-           return make_strnode(s);
+      case FLOATINGPOINT:
+         sprintf(s, "%0.15g", getfloat(nd));
+         return make_strnode(s);
       }
 
    /*NOTREACHED*/
