@@ -562,26 +562,24 @@ void init()
       }
 #endif
 
-   NODE *proc = NIL;
-   NODE* pname = NIL;
-   NODE* cnd = NIL;
    for (int i = 0; prims[i].name != NULL; i++)
       {
+      NODE *proc;
       if (prims[i].priority == MACRO_PRIORITY)
          {
-         proc = reref(proc, newnode(MACRO));
+         proc = vref(newnode(MACRO));
          }
       else if (prims[i].priority == TAIL_PRIORITY)
          {
-         proc = reref(proc, newnode(TAILFORM));
+         proc = vref(newnode(TAILFORM));
          }
       else if ((prims[i].priority & ~4) == PREFIX_PRIORITY)
          {
-         proc = reref(proc, newnode(PRIM));/* incl. -- */
+         proc = vref(newnode(PRIM));/* incl. -- */
          }
       else
          {
-         proc = reref(proc, newnode(INFIX));
+         proc = vref(newnode(INFIX));
          }
 
       if (prims[i].priority < PREFIX_PRIORITY)
@@ -598,18 +596,19 @@ void init()
       setprimmax(proc, prims[i].maxargs);
       setprimmin(proc, prims[i].minargs);
 
-      pname = reref(pname, make_static_strnode(prims[i].name));
-      cnd = reref(cnd, make_instance(pname, pname));
-      setprocnode__caseobj(cnd, proc);
+      NODE * pname  = vref(make_static_strnode(prims[i].name));
+      NODE * casend = vref(make_instance(pname, pname));
+      setprocnode__caseobj(casend, proc);
 
       if (nodetype(proc) == MACRO)
          {
-         setflag__caseobj(cnd, PROC_MACRO);
+         setflag__caseobj(casend, PROC_MACRO);
          }
+
+      deref(proc);
+      deref(casend);
+      deref(pname);
       }
-   deref(proc);
-   deref(cnd);
-   deref(pname);
 
    Truex = intern(make_static_strnode("true"));
    Falsex = intern(make_static_strnode("false"));
