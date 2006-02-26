@@ -1837,6 +1837,49 @@ INFO: Executing invalid instruction: [(LABEL)]
 PASS: Executing [(LABEL)] threw an error
 INFO: Executing invalid instruction: [(LABEL 1 1)]
 PASS: Executing [(LABEL 1 1)] threw an error
+INFO: Executing invalid instruction: [SETLABELFONT "Courier]
+PASS: Executing [SETLABELFONT "Courier] threw an error
+INFO: Executing invalid instruction: [SETLABELFONT 1.1]
+PASS: Executing [SETLABELFONT 1.1] threw an error
+INFO: Executing invalid instruction: [SETLABELFONT {0}]
+PASS: Executing [SETLABELFONT {0}] threw an error
+INFO: Executing invalid instruction: [SETLABELFONT [0]]
+PASS: Executing [SETLABELFONT [0]] threw an error
+INFO: Executing invalid instruction: [SETLABELFONT []]
+PASS: Executing [SETLABELFONT []] threw an error
+INFO: Executing invalid instruction: [SETLABELFONT [[]]]
+PASS: Executing [SETLABELFONT [[]]] threw an error
+INFO: Executing invalid instruction: [SETLABELFONT [[Arial] bad 0 0 400 0 0 0 0 0 0 0 0]]
+PASS: Executing [SETLABELFONT [[Arial] Unbound 0 0 400 0 0 0 0 0 0 0 0]] threw an error
+INFO: Executing invalid instruction: [SETLABELFONT [[Arial] 24 bad 0 400 0 0 0 0 0 0 0 0]]
+PASS: Executing [SETLABELFONT [[Arial] 24 Unbound 0 400 0 0 0 0 0 0 0 0]] threw an error
+INFO: Executing invalid instruction: [SETLABELFONT [[Arial] 24 0 bad 400 0 0 0 0 0 0 0 0]]
+PASS: Executing [SETLABELFONT [[Arial] 24 0 Unbound 400 0 0 0 0 0 0 0 0]] threw an error
+INFO: Executing invalid instruction: [SETLABELFONT [[Arial] 24 0 0 bad 0 0 0 0 0 0 0 0]]
+PASS: Executing [SETLABELFONT [[Arial] 24 0 0 Unbound 0 0 0 0 0 0 0 0]] threw an error
+INFO: Executing invalid instruction: [SETLABELFONT [[Arial] 24 0 0 400 bad 0 0 0 0 0 0 0]]
+PASS: Executing [SETLABELFONT [[Arial] 24 0 0 400 Unbound 0 0 0 0 0 0 0]] threw an error
+INFO: Executing invalid instruction: [SETLABELFONT [[Arial] 24 0 0 400 0 bad 0 0 0 0 0 0]]
+PASS: Executing [SETLABELFONT [[Arial] 24 0 0 400 0 Unbound 0 0 0 0 0 0]] threw an error
+INFO: Executing invalid instruction: [SETLABELFONT [[Arial] 24 0 0 400 0 0 bad 0 0 0 0 0]]
+PASS: Executing [SETLABELFONT [[Arial] 24 0 0 400 0 0 Unbound 0 0 0 0 0]] threw an error
+INFO: Executing invalid instruction: [SETLABELFONT [[Arial] 24 0 0 400 0 0 0 bad 0 0 0 0]]
+PASS: Executing [SETLABELFONT [[Arial] 24 0 0 400 0 0 0 Unbound 0 0 0 0]] threw an error
+INFO: Executing invalid instruction: [SETLABELFONT [[Arial] 24 0 0 400 0 0 0 0 bad 0 0 0]]
+PASS: Executing [SETLABELFONT [[Arial] 24 0 0 400 0 0 0 0 Unbound 0 0 0]] threw an error
+INFO: Executing invalid instruction: [SETLABELFONT [[Arial] 24 0 0 400 0 0 0 0 0 bad 0 0]]
+PASS: Executing [SETLABELFONT [[Arial] 24 0 0 400 0 0 0 0 0 Unbound 0 0]] threw an error
+INFO: Executing invalid instruction: [SETLABELFONT [[Arial] 24 0 0 400 0 0 0 0 0 0 bad 0]]
+PASS: Executing [SETLABELFONT [[Arial] 24 0 0 400 0 0 0 0 0 0 Unbound 0]] threw an error
+INFO: Executing invalid instruction: [SETLABELFONT [[Arial] 24 0 0 400 0 0 0 0 0 0 0 bad]]
+PASS: Executing [SETLABELFONT [[Arial] 24 0 0 400 0 0 0 0 0 0 0 Unbound]] threw an error
+INFO: Executing invalid instruction: [(SETLABELFONT)]
+PASS: Executing [(SETLABELFONT)] threw an error
+INFO: Executing invalid instruction: [(SETLABELFONT [[Arial]] "toomany)]
+PASS: Executing [(SETLABELFONT [[Arial]] "toomany)] threw an error
+INFO: Testing that SETLABELFONT doesn't modify its input list on error
+INFO: Now comparing the original instruction to the one that was used
+FAIL: [[SETLABELFONT [[Arial] 24 0 0 400 0 0 bad 0 0 0 0 0]] = [SETLABELFONT [[Arial] 24 0 0 400 0 0 Unbound 0 0 0 0 0]]] returned false . We expected true
 PASS: [PENDOWNP] returned true , as expected.
 PASS: [PENDOWN?] returned true , as expected.
 PASS: [ITEM 1 PEN] returned pendown , as expected.

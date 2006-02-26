@@ -31,8 +31,68 @@ TO LABELBADINPUTTEST
   RUNBADINPUTTEST [(LABEL 1 1)]
 END
 
+TO SETLABELFONTTEST
+
+  ; setting with an unknown font is defined to 
+  ; enumerate all known fonts
+  SETLABELFONT [unknown]
+
+  SETLABELFONT [System]
+  CLEARSCREEN
+  RIGHT 90
+  LABEL [This is the system font]
+  ; TODO verify the font is correct
+
+
+  SETLABELFONT [[Arial] 24 0 0 400 0 0 0 0 0 0 0 0]
+  CLEARSCREEN
+  RIGHT 90
+  LABEL [This is Arial]
+  ; TODO verify the font is correct
+
+
+  ;
+  ; TODO: verify that each of the font components gets set as expected
+  ; 
+
+  ; bad input tests
+  RUNBADINPUTTEST [SETLABELFONT "Courier]
+  RUNBADINPUTTEST [SETLABELFONT 1.1]
+  RUNBADINPUTTEST [SETLABELFONT {0}]
+  RUNBADINPUTTEST [SETLABELFONT [0]]
+  RUNBADINPUTTEST [SETLABELFONT []]  ; bug #1438909 
+  RUNBADINPUTTEST [SETLABELFONT [[]]]   
+  RUNBADINPUTTEST [SETLABELFONT [[Arial] bad   0   0 400   0   0   0   0   0   0   0   0]]
+  RUNBADINPUTTEST [SETLABELFONT [[Arial]  24 bad   0 400   0   0   0   0   0   0   0   0]]
+  RUNBADINPUTTEST [SETLABELFONT [[Arial]  24   0 bad 400   0   0   0   0   0   0   0   0]]
+  RUNBADINPUTTEST [SETLABELFONT [[Arial]  24   0   0 bad   0   0   0   0   0   0   0   0]]
+  RUNBADINPUTTEST [SETLABELFONT [[Arial]  24   0   0 400 bad   0   0   0   0   0   0   0]]
+  RUNBADINPUTTEST [SETLABELFONT [[Arial]  24   0   0 400   0 bad   0   0   0   0   0   0]]
+  RUNBADINPUTTEST [SETLABELFONT [[Arial]  24   0   0 400   0   0 bad   0   0   0   0   0]]
+  RUNBADINPUTTEST [SETLABELFONT [[Arial]  24   0   0 400   0   0   0 bad   0   0   0   0]]
+  RUNBADINPUTTEST [SETLABELFONT [[Arial]  24   0   0 400   0   0   0   0 bad   0   0   0]]
+  RUNBADINPUTTEST [SETLABELFONT [[Arial]  24   0   0 400   0   0   0   0   0 bad   0   0]]
+  RUNBADINPUTTEST [SETLABELFONT [[Arial]  24   0   0 400   0   0   0   0   0   0 bad   0]]
+  RUNBADINPUTTEST [SETLABELFONT [[Arial]  24   0   0 400   0   0   0   0   0   0   0 bad]]
+
+  RUNBADINPUTTEST [(SETLABELFONT)]
+  RUNBADINPUTTEST [(SETLABELFONT [[Arial]] "toomany)]
+
+
+  REPORTTESTINFO [Testing that SETLABELFONT doesn't modify its input list on error]
+  localmake "original [SETLABELFONT [[Arial] 24 0 0 400 0 0 bad 0 0 0 0 0]]
+  localmake "used     [SETLABELFONT [[Arial] 24 0 0 400 0 0 bad 0 0 0 0 0]]
+  CATCH "ERROR :used
+  IGNORE ERROR
+  REPORTTESTINFO [Now comparing the original instruction to the one that was used]
+  SIMPLEREPORTTEST (LIST :original "= :used) "true
+
+END
+
 TO LABELTEST
   LABELCIRCLETEST
   LABELBADINPUTTEST
+
+  SETLABELFONTTEST
 END
 
