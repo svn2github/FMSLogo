@@ -79,9 +79,9 @@ void record_freed_pointer(NODE *nd)
       }
    }
 
-void clear_alloced_records(NODE *nd)
+void clear_alloced_records(void)
    {
-   bzero(allocated, sizeof(allocated));
+   memset(allocated, 0x00, sizeof(allocated));
    }
 
 void print_alloced_pointers(void)
@@ -97,7 +97,7 @@ void print_alloced_pointers(void)
    }
 #endif
 
-NODETYPES nodetype(NODE *nd)
+NODETYPES nodetype(const NODE *nd)
    {
    if (nd == NIL) 
       {
@@ -197,7 +197,7 @@ void addseg()
          {
          newseg->nodes[p].n_cdr = free_list;
 #ifdef MEM_DEBUG
-         settype(&(newseg->nodes[p]), NTFREE);
+         settype(&(newseg->nodes[p]), NT_FREE);
 #endif
          free_list = &newseg->nodes[p];
          }
@@ -260,7 +260,6 @@ void gc(NODE *nd)
 
       int i;
       NODE **pp;
-      unsigned short *temp;
 
       switch (nodetype(nd))
          {
@@ -302,7 +301,12 @@ void gc(NODE *nd)
           case VBAR_STRING:
               if (getstrhead(nd) != NULL)
                  {
-                 temp = (unsigned short *) getstrhead(nd);
+                 // The string was allocated on the heap 
+                 // (it's not a string literal).
+                 // Decrement the reference count and free it, if necessary.
+                 unsigned short *temp = (unsigned short *) getstrhead(nd);
+
+                 assert(*temp != 0); // BUG: the string was already freed
                  if (decstrrefcnt(temp) == 0) 
                     {
                     free(getstrhead(nd));
@@ -312,7 +316,7 @@ void gc(NODE *nd)
               tcar = tcdr = tobj = NIL;
          }
 #ifdef MEM_DEBUG
-      settype(nd, NTFREE);
+      settype(nd, NT_FREE);
 #endif
       nd->n_cdr = free_list;
       free_list = nd;

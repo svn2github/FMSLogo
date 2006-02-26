@@ -139,7 +139,7 @@ void real_print_helper(FILE *strm, NODE *ndlist, int depth, int width)
 
 #ifdef MEM_DEBUG
 static
-const char *typename(const NODE *nd)
+const char *debug_typename(const NODE *nd)
    {
    static char buf[30];
    switch (nodetype(nd))
@@ -164,7 +164,7 @@ const char *typename(const NODE *nd)
        case ARRAY: return "ARRAY";
        case LINE: return "LINE";
        case CONT: return "CONT";
-       case NTFREE: return "FREED_OBJECT";
+       case NT_FREE: return "FREED_OBJECT";
        default:
            sprintf(buf, "UNKNOWN_0x%X", nodetype(nd));
            return buf;
@@ -202,7 +202,7 @@ void real_print_node(FILE *strm, NODE *nd, int depth, int width)
             "  %s: %d: 0x%lX\n"
             "  }\n"
             "\n",
-         typename(nd), 
+         debug_typename(nd), 
          getrefcnt(nd), 
          nd);
       }
