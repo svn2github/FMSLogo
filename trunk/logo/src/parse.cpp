@@ -406,9 +406,8 @@ NODE *
 parser_iterate(
    const char **inln,
    const char *inlimit,
-   const char *inhead,
-   bool semi, 
-   int endchar
+   bool        semi, 
+   int         endchar
    )
    {
    char ch;
@@ -531,7 +530,7 @@ parser_iterate(
       else if (ch == '[')
          {
          // this is a '[', parse a new list 
-         tnode = cons_list(parser_iterate(inln, inlimit, inhead, semi, ']'));
+         tnode = cons_list(parser_iterate(inln, inlimit, semi, ']'));
          if (**inln == '\0') 
             {
             ch = '\0';
@@ -539,7 +538,7 @@ parser_iterate(
          }
       else if (ch == '{')
          {
-         tnode = cons_list(list_to_array(parser_iterate(inln, inlimit, inhead, semi, '}')));
+         tnode = cons_list(list_to_array(parser_iterate(inln, inlimit, semi, '}')));
          if (**inln == '@')
             {
             int sign = 1;
@@ -616,8 +615,8 @@ NODE *parser(NODE *nd, bool semi)
    const char * lnsav = getstrptr(rtn);
    rtn = reref(
       rtn,
-      parser_iterate(&lnsav, lnsav + slen, getstrhead(rtn), semi, -1));
-   return (unref(rtn));
+      parser_iterate(&lnsav, lnsav + slen, semi, -1));
+   return unref(rtn);
    }
 
 NODE *lparse(NODE *args)
