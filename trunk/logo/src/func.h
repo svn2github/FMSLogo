@@ -380,7 +380,7 @@ extern void make_tree(NODE *list);
 extern int priority(NODE *proc_obj);
 
 // File mem.cpp
-extern NODETYPES nodetype(NODE *nd);
+extern NODETYPES nodetype(const NODE *nd);
 extern void setobject(NODE *nd, NODE *newobj);
 extern void setcar(NODE *nd, NODE *newcar);
 extern void setcdr(NODE *nd, NODE *newcdr);
@@ -484,13 +484,8 @@ extern NODE *l_setfirst(NODE *args);
 extern NODE *l_setbf(NODE *args);
 
 /* File INTERN.CPP: */
-extern FIXNUM hash(const char *s, int len);
 extern NODE *make_case(NODE *casestrnd, NODE *obj);
-extern NODE *make_object(NODE *canonical, NODE *proc, NODE *val, NODE *plist, NODE *casestrnd);
 extern NODE *make_instance(NODE *casend, NODE *lownd);
-extern NODE *find_instance(NODE *lownd);
-extern int case_compare(NODE *nd1, NODE *nd2);
-extern NODE *find_case(NODE *strnd, NODE *obj);
 extern NODE *intern(NODE *nd);
 
 /* File INIT.CPP: */
