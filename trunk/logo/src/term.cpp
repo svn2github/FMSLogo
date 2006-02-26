@@ -44,145 +44,38 @@ struct sgttyb tty_cooked, tty_cbreak;
 #endif
 
 bool interactive;
-int tty_charmode;
-
-static char *termcap_ptr;
-
-void termcap_putter(char /*ch*/)
-   {
-   /*
-    *termcap_ptr++ = ch;
-    */
-   }
-
-#ifdef unix
-void termcap_getter(char *cap, char *buf)
-   {
-   char temp[40];
-   char *temp_ptr = temp;
-
-   termcap_ptr = buf;
-   tgetstr(cap, &temp_ptr);
-   tputs(temp, 1, termcap_putter);
-   }
-#endif
 
 void term_init()
    {
-   //    int term_sg;
-   interactive = true;  //isatty(0);
+   interactive = true;
    ift_iff_flag = -1;
    term_init_ibm();
-   /*
-#ifdef mac
-   term_init_mac();
-   return;
-#else
-#ifdef ibm
-   term_init_ibm();
-#else
-   if (interactive)
-      {
-#ifdef SYSV
-      ioctl(0,TCGETA,(char *)(&tty_cooked));
-      tty_cbreak = tty_cooked;
-      tty_cbreak.c_cc[VMIN] = '\01';
-      tty_cbreak.c_cc[VTIME] = '\0';
-      tty_cbreak.c_lflag &= ~ECHO;
-#else
-      ioctl(0,TIOCGETP,(char *)(&tty_cooked));
-      tty_cbreak = tty_cooked;
-      tty_cbreak.sg_flags |= CBREAK;
-      tty_cbreak.sg_flags &= ~ECHO;
-#endif
-      }
-   tty_charmode = 0;
-   tgetent(bp, getenv("TERM"));
-   x_max = tgetnum("co");
-   y_max = tgetnum("li");
-   term_sg = tgetnum("sg");
-
-   x_coord = y_coord = 0;
-   termcap_getter("cm", cm_arr);
-   termcap_getter("cl", cl_arr);
-
-   if (term_sg <= 0)
-      {
-      termcap_getter("so", so_arr);
-      termcap_getter("se", se_arr);
-      }
-   else / * don't mess with stupid standout modes * /
-   so_arr[0] = se_arr[0] = '\0';
-#endif
-#endif
-   */
    }
 
+// TODO: remove
 void charmode_on()
    {
-#ifdef unix
-   if ((readstream == stdin) && interactive && !tty_charmode)
-      {
-#ifdef SYSV
-      ioctl(0, TCSETA, (char *) (&tty_cbreak));
-#else
-      ioctl(0, TIOCSETP, (char *) (&tty_cbreak));
-#endif
-      tty_charmode++;
-      }
-#endif
    }
 
+// TODO: remove
 void charmode_off()
    {
-   /*
-#ifdef unix
-   if (tty_charmode)
-      {
-#ifdef SYSV
-      ioctl(0,TCSETA,(char *)(&tty_cooked));
-#else
-      ioctl(0,TIOCSETP,(char *)(&tty_cooked));
-#endif
-      tty_charmode = 0;
-      }
-#endif
-   */
    }
 
 NODE *lcleartext(NODE *)
    {
    ibm_clear_text();
-   /*
-#ifdef mac
-   cgotoxy(x_margin + 1, y_margin + 1, stdout);
-   ccleos(stdout);
-#else
-#ifdef ibm
-   ibm_clear_text();
-   ibm_gotoxy(x_margin, y_margin);
-#else
-   printf("%s", cl_arr);
-   printf("%s", tgoto(cm_arr, x_margin, y_margin));
-#endif
-#endif
-   x_coord = x_margin;
-   y_coord = y_margin;
-   */
    return Unbound;
    }
 
 
 NODE *lcursor(NODE *)
    {
-   
    // return cons_list(
    //    make_intnode((FIXNUM)(x_coord-x_margin)),
    //    make_intnode((FIXNUM)(y_coord-y_margin)));
 
-   return cons_list(
-         make_intnode((FIXNUM) (0)),
-         make_intnode((FIXNUM) (0)));
+   return cons_list(make_intnode(0), make_intnode(0));
    }
 
 NODE *lsetcursor(NODE *  /*args*/)

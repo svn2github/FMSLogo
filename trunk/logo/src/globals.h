@@ -182,7 +182,6 @@ extern int y_coord;
 extern int x_max;
 extern int y_max;
 extern bool interactive;
-extern int tty_charmode;
 extern bool in_erase_mode;
 
 /* paren.cpp */

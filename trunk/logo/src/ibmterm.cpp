@@ -28,8 +28,6 @@
 
 /************************************************************/
 
-//extern unsigned _stklen = 8000; /* 5000 for debugging, 65000 for real */
-
 bool in_graphics_mode = false;
 bool in_erase_mode = false;
 
@@ -37,26 +35,25 @@ int ibm_screen_top;
 int current_write_mode = COPY_PUT;
 int turtle_color;
 int prev_color;
-void *window_image;
 
 extern int *TopOfStack;
 
 bool check_stop(bool scan_for_messages)
    {
-   //   int key;
+   // int key;
 
    //#define MAXREALSTACK 0x00080000
 
-   //   if ((TopOfStack - &key) > MAXREALSTACK)
-   //      {
-   //      err_logo(STACK_OVERFLOW, NIL);
-   //      return(1);
-   //      }
+   // if ((TopOfStack - &key) > MAXREALSTACK)
+   //    {
+   //    err_logo(STACK_OVERFLOW, NIL);
+   //    return 1;
+   //    }
 
-   //    long base, top;
+   // long base, top;
 
-   //    IsTimeToPause = false;
-   //    IsTimeToHalt = false;
+   // IsTimeToPause = false;
+   // IsTimeToHalt = false;
 
    if (scan_for_messages)
       {
@@ -83,14 +80,9 @@ bool check_stop(bool scan_for_messages)
 
 void term_init_ibm()
    {
-   tty_charmode = 0;
    x_max = 80;
    y_max = 24;
    x_coord = y_coord = 0;
-   /*
-      so_arr[0] = '\1'; so_arr[1] = '\0';
-      se_arr[0] = '\2'; se_arr[1] = '\0';
-    */
    }
 
 void ibm_gotoxy(int x, int y)
@@ -105,7 +97,7 @@ void ibm_clear_text()
 
 void ibm_plain_mode()
    {
-   //    textattr(oldattr); /* white on black */
+   // textattr(oldattr); /* white on black */
    }
 
 /************************************************************/
@@ -126,11 +118,11 @@ void save_pen(pen_info *p)
 
 void restore_pen(const pen_info *p)
    {
-   //    moveto(p->h, p->v);
+   // moveto(p->h, p->v);
    g_Turtles[turtle_which].IsPenUp = p->penup;
    set_pen_width(p->width);
    set_pen_mode(p->mode);    // must restore mode before color
-   //    setcolor(p->color);
+   // setcolor(p->color);
    prev_color = p->prev_color;
    set_pen_pattern(p->pattern);
    }
@@ -138,30 +130,30 @@ void restore_pen(const pen_info *p)
 void plain_xor_pen()
    {
    set_pen_width(1);
-   //    setcolor(turtle_color);
-   //    setwritemode(XOR_PUT);
+   // setcolor(turtle_color);
+   // setwritemode(XOR_PUT);
    current_write_mode = XOR_PUT;
    in_erase_mode = FALSE;
    }
 
 void pen_down()
    {
-   //    setwritemode(COPY_PUT);
+   // setwritemode(COPY_PUT);
    current_write_mode = COPY_PUT;
    if (in_erase_mode)
       {
-      //        setcolor(prev_color);
+      // setcolor(prev_color);
       in_erase_mode = FALSE;
       }
    }
 
 void pen_reverse()
    {
-   //    setwritemode(XOR_PUT);
+   // setwritemode(XOR_PUT);
    current_write_mode = XOR_PUT;
    if (in_erase_mode)
       {
-      //        setcolor(prev_color);
+      // setcolor(prev_color);
       in_erase_mode = FALSE;
       }
    }
@@ -249,16 +241,22 @@ NODE *get_node_pen_pattern()
       cons(make_intnode((FIXNUM)(pat[7])),
       NIL)))))))));
     */
-   return (NIL);
+   return NIL;
    }
 
 NODE *get_node_pen_mode()
    {
    if (in_erase_mode)
-      return (make_static_strnode("erase"));
+      {
+      return make_static_strnode("erase");
+      }
+
    if (current_write_mode == XOR_PUT)
-      return (make_static_strnode("reverse"));
-   return (make_static_strnode("paint"));
+      {
+      return make_static_strnode("reverse");
+      }
+
+   return make_static_strnode("paint");
    }
 
 void erase_screen()
