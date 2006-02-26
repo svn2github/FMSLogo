@@ -205,16 +205,16 @@ void set_pen_pattern(const char * /* pat */)
 void set_list_pen_pattern(NODE *arg)
    {
    unsigned char pat[8];
-   NODE *cur_num, *temp;
-   int count;
 
-   cur_num = arg;
-   for (count = 0; count <= 7; count++)
+   NODE * cur_num = arg;
+   for (int count = 0; count < 8; count++)
       {
-      temp = cnv_node_to_numnode(car(cur_num));
+      NODE * temp = cnv_node_to_numnode(car(cur_num));
       pat[count] = (char) getint(temp);
       if (cdr(cur_num) != NIL)
+         {
          cur_num = cdr(cur_num);
+         }
       gcref(temp);
       }
    //    setfillpattern(pat, getcolor());
