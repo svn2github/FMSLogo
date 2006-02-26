@@ -1517,16 +1517,16 @@ PASS: [:10] returned ten , as expected.
 PASS: [:11] returned eleven , as expected.
 INFO: Executing invalid instruction: [(LOCAL)]
 PASS: Executing [(LOCAL)] threw an error
-INFO: Executing invalid instruction: [LOCAL {}]
-PASS: Executing [LOCAL {}] threw an error
+INFO: Executing invalid instruction: [LOCAL {a}]
+PASS: Executing [LOCAL {a}] threw an error
 PASS: [PROCEDURE? "erasedproc] returned true , as expected.
 PASS: [PROCEDURE? "erasedproc] returned false , as expected.
 INFO: Executing invalid instruction: [ERASEDPROC]
 PASS: Executing [ERASEDPROC] threw an error
 INFO: Executing invalid instruction: [(ERASE)]
 PASS: Executing [(ERASE)] threw an error
-INFO: Executing invalid instruction: [ERASE {}]
-PASS: Executing [ERASE {}] threw an error
+INFO: Executing invalid instruction: [ERASE {a}]
+PASS: Executing [ERASE {a}] threw an error
 INFO: Executing invalid instruction: [ERASE "forward]
 PASS: Executing [ERASE "forward] threw an error
 PASS: [PROCEDURE? "sampleproc] returned true , as expected.
@@ -1534,8 +1534,8 @@ INFO: Executing invalid instruction: [(ERALL 10)]
 PASS: Executing [(ERALL 10)] threw an error
 INFO: Executing invalid instruction: [(ERALL [] )]
 PASS: Executing [(ERALL [] )] threw an error
-INFO: Executing invalid instruction: [(ERALL {} )]
-PASS: Executing [(ERALL {} )] threw an error
+INFO: Executing invalid instruction: [(ERALL {a} )]
+PASS: Executing [(ERALL {a} )] threw an error
 INFO: Executing invalid instruction: [(ERALL "no)]
 PASS: Executing [(ERALL "no)] threw an error
 PASS: [LOCALVARTEST "mylocalvarname 42] returned 42 , as expected.
@@ -1562,8 +1562,8 @@ INFO: Executing invalid instruction: [PO "nonexistent]
 PASS: Executing [PO "nonexistent] threw an error
 INFO: Executing invalid instruction: [PO [nonexistent]]
 PASS: Executing [PO [nonexistent]] threw an error
-INFO: Executing invalid instruction: [PO {}]
-PASS: Executing [PO {}] threw an error
+INFO: Executing invalid instruction: [PO {a}]
+PASS: Executing [PO {a}] threw an error
 INFO: Executing invalid instruction: [(POALL "toomany)]
 PASS: Executing [(POALL "toomany)] threw an error
 INFO: Executing invalid instruction: [(POPS "toomany)]
@@ -1592,8 +1592,8 @@ INFO: Executing invalid instruction: [POT "nonexistent]
 PASS: Executing [POT "nonexistent] threw an error
 INFO: Executing invalid instruction: [POT [nonexistent]]
 PASS: Executing [POT [nonexistent]] threw an error
-INFO: Executing invalid instruction: [POT {}]
-PASS: Executing [POT {}] threw an error
+INFO: Executing invalid instruction: [POT {a}]
+PASS: Executing [POT {a}] threw an error
 PASS: [GPROP "nonexistent "prop1] returned [] , as expected.
 PASS: [GPROP "testplist1 "nonexistent] returned [] , as expected.
 PASS: [GPROP "testplist1 "property1] returned 1 , as expected.
