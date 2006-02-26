@@ -646,7 +646,6 @@ NODE *runparse_node(NODE *nd, NODE **ndsptr)
    int         wlen  = getstrlen(snd);
    NODETYPES   wtyp  = nodetype(snd);
    int         wcnt  = 0;
-   char *      whead = getstrhead(snd);
 
    NODE *outline = NIL, *tnode = NIL, *lastnode = NIL;
    const char *tptr;
