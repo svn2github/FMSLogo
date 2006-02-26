@@ -374,21 +374,33 @@ vref(logo_node * o)
 
 inline 
 void
-deref(logo_node * o)
+deref(logo_node * object)
    {
-   if (o != NIL && decrefcnt(o) == 0)
+   if (object == NIL)
       {
-      gc(o);
+      return;
+      }
+
+   assert(getrefcnt(object) != 0); // memleak
+
+   if (decrefcnt(object) == 0)
+      {
+      gc(object);
       }
    }
 
 inline 
 void
-gcref(logo_node * o)
+gcref(logo_node * object)
    {
-   if (o != NIL && getrefcnt(o) == 0)
+   if (object == NIL)
       {
-      gc(o);
+      return;
+      }
+
+   if (getrefcnt(object) == 0)
+      {
+      gc(object);
       }
    }
 
