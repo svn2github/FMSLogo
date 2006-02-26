@@ -21,6 +21,13 @@
 
 #include "allwind.h"
 
+// a segment is a pool of nodes that is allocated in a single malloc.
+struct segment
+   {
+   struct segment * next;
+   struct logo_node nodes[SEG_SIZE];
+   };
+
 NODE **gcstack;
 NODE **gctop;
 
@@ -29,8 +36,8 @@ long int mem_allocated = 0;
 long int mem_freed = 0;
 #endif
 
-static NODE           *free_list    = NIL;    // global ptr to free node list
-static struct segment *segment_list = NULL;   // global ptr to segment list
+static NODE    *free_list    = NIL;    // global ptr to free node list
+static segment *segment_list = NULL;   // global ptr to segment list
 
 static long int mem_nodes = 0;
 static long int mem_max = 0;
@@ -189,7 +196,7 @@ void addseg()
    if (status_flag) update_status_memory();
 
    struct segment *newseg;
-   if ((newseg = (struct segment *) malloc(sizeof(*newseg))) != NULL)
+   if ((newseg = (segment *) malloc(sizeof(*newseg))) != NULL)
       {
       newseg->next = segment_list;
       segment_list = newseg;
@@ -393,5 +400,15 @@ void check_reserve_tank()
    if (reserve_tank == NIL) 
       {
       fill_reserve_tank();
+      }
+   }
+
+void free_segment_list()
+   {
+   while (segment_list != NULL)
+      {
+      segment *next_segment = segment_list->next;
+      free(segment_list);
+      segment_list = next_segment;
       }
    }
