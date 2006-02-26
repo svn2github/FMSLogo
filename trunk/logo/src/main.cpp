@@ -898,12 +898,39 @@ WinMain(
    hCursorArrow = LoadCursor(NULL, IDC_ARROW);
 
    // go for it
-
    MyApp.Run();
 
+   // cleanup all subsystems
    lnetshutdown(NIL);
 
+   free(gcstack);
+   free(hash_table);
+
+   /* Note Bitmap index 0 belongs to Clipboard */
+   for (int i = 1; i < MaxBitCuts; i++)
+      {
+      if (CutBmp[i].CutFlag)
+         {
+         DeleteObject(CutBmp[i].CutMemoryBitMap);
+         }
+      }
+   free(CutBmp);
+
+   if (hCursorWait)
+      {
+      DestroyCursor(hCursorWait);
+      }
+
+   if (hCursorArrow)
+      {
+      DestroyCursor(hCursorArrow);
+      }
+
+   // release the HTML Help subsystem
+   HtmlHelpUninitialize();
+
    CloseHandle(singleInstanceMutex);
+
    return MyApp.Status;
    }
 
