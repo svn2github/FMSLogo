@@ -884,16 +884,12 @@ WinMain(
       }
 
    // alloc and init the bitmap cut array
-   CutBmp = (CUTMAP *) malloc(sizeof(CUTMAP) * MaxBitCuts);
-
-   memset(CutBmp, 0, sizeof(CUTMAP) * MaxBitCuts);
+   CutBmp = (CUTMAP *) calloc(sizeof(CUTMAP), MaxBitCuts);
 
    // init logo kernel
-
    init();
 
-   /* get an hourglass cursor */
-
+   // get an hourglass cursor
    hCursorWait = LoadCursor(NULL, IDC_WAIT);
    hCursorArrow = LoadCursor(NULL, IDC_ARROW);
 
@@ -903,8 +899,17 @@ WinMain(
    // cleanup all subsystems
    lnetshutdown(NIL);
 
-   free(gcstack);
-   free(hash_table);
+   if (hCursorWait)
+      {
+      DestroyCursor(hCursorWait);
+      }
+
+   if (hCursorArrow)
+      {
+      DestroyCursor(hCursorArrow);
+      }
+
+   uninit();
 
    /* Note Bitmap index 0 belongs to Clipboard */
    for (int i = 1; i < MaxBitCuts; i++)
@@ -916,15 +921,10 @@ WinMain(
       }
    free(CutBmp);
 
-   if (hCursorWait)
-      {
-      DestroyCursor(hCursorWait);
-      }
+   free(gcstack);
 
-   if (hCursorArrow)
-      {
-      DestroyCursor(hCursorArrow);
-      }
+   free(hash_table);
+
 
    // release the HTML Help subsystem
    HtmlHelpUninitialize();
