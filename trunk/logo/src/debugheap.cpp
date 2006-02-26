@@ -26,9 +26,11 @@
 
 struct memory_header_t
 {
-   size_t  blocksize;
+   size_t                    blocksize;
+   long                      id;
+   struct memory_header_t *  prev;
+   struct memory_header_t *  next;
 };
-
 
 // get a pointer to the header
 static
@@ -53,6 +55,55 @@ debug_header_to_userptr(
    return reinterpret_cast<unsigned char *>(header + 1);
    }
 
+static struct memory_header_t g_allocated_blocks;
+static long nextid = 0;
+
+static
+void 
+debug_report_leaks(void)
+   {
+   if (g_allocated_blocks.next != &g_allocated_blocks)
+      {
+      // the list is not empty
+      fprintf(stderr, "Memory Leaks detected!\n");
+
+      // dump each memory block
+      for (struct memory_header_t * current_block = g_allocated_blocks.next; 
+           current_block != &g_allocated_blocks;
+           current_block = current_block->next)
+         {
+         fprintf(
+            stderr,
+            "(id=%lu) %u bytes at 0x%X\n", 
+            current_block->id,
+            current_block->blocksize,
+            debug_header_to_userptr(current_block));
+         }
+      }
+   }
+
+static
+void
+initialize_memory_tracking(
+   void
+)
+   {
+   static bool is_initialized = false;
+   if (!is_initialized)
+      {
+      // make the list circular
+      g_allocated_blocks.next = &g_allocated_blocks;
+      g_allocated_blocks.prev = &g_allocated_blocks;
+
+      g_allocated_blocks.blocksize = 0;
+
+      atexit(debug_report_leaks);
+
+      is_initialized = true;
+      }
+   }
+
+
 void * debug_malloc(size_t blocksize)
    {
    void * realptr = malloc(sizeof(memory_header_t) + blocksize);
@@ -64,6 +115,16 @@ void * debug_malloc(size_t blocksize)
    // cast the data to the block header
    memory_header_t * header = static_cast<memory_header_t*>(realptr);
    header->blocksize = blocksize;
+
+   header->id = nextid++;
+
+   // link the new block into the head of the list
+   initialize_memory_tracking();
+   header->next = g_allocated_blocks.next;
+   header->prev = &g_allocated_blocks;
+
+   g_allocated_blocks.next->prev = header;
+   g_allocated_blocks.next       = header;
 
    // get a pointer to the user's memory
    unsigned char * ptr = debug_header_to_userptr(header);
@@ -83,9 +144,13 @@ void debug_free(void * userptr)
       }
 
    memory_header_t * header = debug_userptr_to_header(userptr);
-   
+
+   // unlink this block from the list
+   header->next->prev = header->prev;
+   header->prev->next = header->next;
+
    // fill the memory with a recognizable bit pattern
-   memset(header, 0xCC, header->blocksize);
+   memset(header, 0xCC, header->blocksize + sizeof(*header));
    free(header);
    }
 
