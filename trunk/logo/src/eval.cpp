@@ -23,7 +23,6 @@
 #include "allwind.h"
 
 #define assign(to, from)    (to = reref(to, from))
-#define init(to, from)      (to = valref(from))
 
 #define save(register)      push(register, stack)
 #define restore(register)   (assign(register, car(stack)), pop(stack))
