@@ -68,16 +68,77 @@ debug_report_leaks(void)
       fprintf(stderr, "Memory Leaks detected!\n");
 
       // dump each memory block
+      long total_blocks_leaked = 0;
+      long total_bytes_leaked  = 0;
       for (struct memory_header_t * current_block = g_allocated_blocks.next; 
            current_block != &g_allocated_blocks;
            current_block = current_block->next)
          {
+         total_bytes_leaked += current_block->blocksize;
+         total_blocks_leaked++;
+         }
+
+      fprintf(
+         stderr, 
+         "Leaked %lu bytes in %lu blocks\n",
+         total_bytes_leaked,
+         total_blocks_leaked);
+
+      // dump each memory block
+      for (struct memory_header_t * current_block = g_allocated_blocks.next; 
+           current_block != &g_allocated_blocks;
+           current_block = current_block->next)
+         {
+         void * userptr      = debug_header_to_userptr(current_block);
+         unsigned char * ptr = static_cast<unsigned char*>(userptr);
+
          fprintf(
             stderr,
-            "(id=%lu) %u bytes at 0x%X\n", 
+            "(id=%8lu) %8u bytes at 0x%X: <", 
             current_block->id,
             current_block->blocksize,
-            debug_header_to_userptr(current_block));
+            ptr);
+
+         // dump some bytes (at most eight) of the allocation to help
+         // the user figure out what is being leaked.
+         const int MAX_BYTES_TO_DUMP = 8;
+         int dumpbytes = current_block->blocksize;
+         if (dumpbytes > MAX_BYTES_TO_DUMP)
+            {
+            dumpbytes = MAX_BYTES_TO_DUMP;
+            }
+
+         // dump the first eight bytes as an ASCII string
+         for (int i = 0; i < dumpbytes; i++)
+            {
+            if (isprint(ptr[i]))
+               {
+               fprintf(stderr, "%c", ptr[i]);
+               }
+            else
+               {
+               fprintf(stderr, " ");
+               }
+            }
+         for (int i = dumpbytes; i < MAX_BYTES_TO_DUMP; i++)
+            {
+            fprintf(stderr, " ");
+            }
+
+         fprintf(stderr, "> ");
+
+         // dump the first eight bytes as binary octets
+         for (int i = 0; i < dumpbytes; i++)
+            {
+            char nibbletohex[] = "0123456789ABCDEF";
+            fprintf(
+               stderr, 
+               "%c%c ", 
+               nibbletohex[0xF & (ptr[i] >> 4)],
+               nibbletohex[0xF & (ptr[i] >> 0)]);
+            }
+
+         fprintf(stderr, "\n");
          }
       }
    }
