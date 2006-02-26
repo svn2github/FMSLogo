@@ -140,7 +140,7 @@ NODE *paren_expr(NODE **expr, bool inparen)
    NODE *retval;
    NODE **ifnode = (NODE **) NIL;
 
-   NODE * first = valref(car(*expr));
+   NODE * first = vref(car(*expr));
    pop(*expr);
    if (nodetype(first) == CASEOBJ && !numberp(first))
       {
