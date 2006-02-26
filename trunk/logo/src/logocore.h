@@ -98,6 +98,7 @@ const NODETYPES VBAR_STRING      = NT_WORD|NT_STRING|NT_BACKSL|NT_VBAR;
 const NODETYPES ARRAY            = NT_AGGR|NT_ARRAY;
 const NODETYPES LINE             = NT_LINE|NT_LIST|NT_AGGR;
 const NODETYPES CONT             = NT_CONT|NT_LIST;
+const NODETYPES NT_FREE          = 0xFFFF;
 
 #define aggregate(nd)   ((nodetype(nd) & NT_AGGR))
 #define is_cont(nd)     ((nodetype(nd) == CONT))
@@ -218,14 +219,16 @@ NODE;
 inline FIXNUM 
 getint(const NODE * nd) 
    {
-   assert(nodetype(nd) == INTEGER);
+   assert(nd != NULL);
+   assert(nd->node_type == INTEGER);
    return nd->nunion.nint;
    }
 
 inline FLONUM
 getfloat(const NODE * nd) 
    {
-   assert(nodetype(nd) == FLOATINGPOINT);
+   assert(nd != NULL);
+   assert(nd->node_type == FLOATINGPOINT);
    return nd->nunion.nfloat;
    }
 
