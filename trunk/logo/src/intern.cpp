@@ -24,6 +24,7 @@
 
 NODE **hash_table;
 
+static
 FIXNUM hash(const char *s, int len)
 /* Map S to an integer in the range 0 .. HASH_LEN-1. */
 /* Method attributed to Peter Weinberger, adapted from Aho, Sethi, */
@@ -46,23 +47,28 @@ FIXNUM hash(const char *s, int len)
 
 NODE *make_case(NODE *casestrnd, NODE *obj)
    {
-   NODE *new_caseobj, *clistptr;
-
-   clistptr = caselistptr__object(obj);
-   new_caseobj = make_caseobj(casestrnd, obj);
+   NODE * clistptr = caselistptr__object(obj);
+   NODE * new_caseobj = make_caseobj(casestrnd, obj);
    setcdr(clistptr, cons(new_caseobj, cdr(clistptr)));
-   return (new_caseobj);
+   return new_caseobj;
    }
 
-NODE *make_object(NODE *canonical, NODE *proc, NODE *val,
-         NODE *plist, NODE *casestrnd)
+static
+NODE *
+make_object(
+   NODE *canonical, 
+   NODE *proc, 
+   NODE *val,
+   NODE *plist,
+   NODE *casestrnd
+)
    {
    NODE * temp = cons_list(
       canonical, 
       proc, 
       val, 
       plist, 
-      make_intnode((FIXNUM) 0));
+      make_intnode(0));
 
    make_case(casestrnd, temp);
    return temp;
@@ -70,60 +76,74 @@ NODE *make_object(NODE *canonical, NODE *proc, NODE *val,
 
 NODE *make_instance(NODE *casend, NODE *lownd)
    {
-   NODE *obj;
-   FIXNUM hashind;
-
    /* Called only if arg isn't already in hash table */
-
-   obj = make_object(lownd, UNDEFINED, Unbound, NIL, casend);
-   hashind = hash(getstrptr(lownd), getstrlen(lownd));
+   NODE * obj = make_object(lownd, UNDEFINED, Unbound, NIL, casend);
+   FIXNUM hashind = hash(getstrptr(lownd), getstrlen(lownd));
    push(obj, (hash_table[hashind]));
    return car(caselist__object(obj));
    }
 
+static
 NODE *find_instance(NODE *lownd)
    {
-   NODE *hash_entry, *thisobj;
-   int cmpresult;
-
-   hash_entry = hash_table[hash(getstrptr(lownd), getstrlen(lownd))];
-
+   NODE * hash_entry = hash_table[hash(getstrptr(lownd), getstrlen(lownd))];
    while (hash_entry != NIL)
       {
-      thisobj = car(hash_entry);
-      cmpresult = compare_node(lownd, canonical__object(thisobj), FALSE);
+      NODE * thisobj = car(hash_entry);
+      int cmpresult = compare_node(lownd, canonical__object(thisobj), FALSE);
       if (cmpresult == 0)
-         break;
+         {
+         // found it
+         return thisobj;
+         }
       else
+         {
          hash_entry = cdr(hash_entry);
+         }
       }
-   if (hash_entry == NIL) return (NIL);
-   else return (thisobj);
+
+   return NIL;
    }
 
+static
 int case_compare(NODE *nd1, NODE *nd2)
    {
    if (backslashed(nd1) && backslashed(nd2))
       {
-      if (getstrlen(nd1) != getstrlen(nd2)) return (1);
-      return (strncmp(getstrptr(nd1), getstrptr(nd2),
-            getstrlen(nd1)));
+      if (getstrlen(nd1) != getstrlen(nd2)) 
+         {
+         return 1;
+         }
+
+      return strncmp(getstrptr(nd1), getstrptr(nd2), getstrlen(nd1));
       }
+
    if (backslashed(nd1) || backslashed(nd2))
-      return (1);
-   return (compare_node(nd1, nd2, FALSE));
+      {
+      return 1;
+      }
+
+   return compare_node(nd1, nd2, FALSE);
    }
 
+static
 NODE *find_case(NODE *strnd, NODE *obj)
    {
-   NODE *clist;
-
-   clist = caselist__object(obj);
+   NODE * clist = caselist__object(obj);
    while (clist != NIL &&
-         case_compare(strnd, strnode__caseobj(car(clist))))
+          case_compare(strnd, strnode__caseobj(car(clist))))
+      {
       clist = cdr(clist);
-   if (clist == NIL) return (NIL);
-   else return (car(clist));
+      }
+
+   if (clist == NIL) 
+      {
+      return NIL;
+      }
+   else 
+      {
+      return car(clist);
+      }
    }
 
 NODE *intern(NODE *nd)
@@ -133,7 +153,7 @@ NODE *intern(NODE *nd)
       return nd;
       }
 
-   nd = valref(cnv_node_to_strnode(nd));
+   nd = vref(cnv_node_to_strnode(nd));
    NODE * lownd = make_strnode(getstrptr(nd), getstrlen(nd), STRING, noparitylow_strnzcpy);
 
    NODE * obj;
