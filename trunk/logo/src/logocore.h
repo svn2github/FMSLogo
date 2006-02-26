@@ -278,13 +278,6 @@ typedef enum
    }
 CTRLTYPE;
 
-struct segment
-   {
-   struct segment *next;
-   struct logo_node nodes[SEG_SIZE];
-   }
-;
-
 #define NOT_THROWING            (stopping_flag != THROWING)
 #define RUNNING                 (stopping_flag == RUN)
 #define STOPPING                (stopping_flag == STOP)
@@ -319,7 +312,6 @@ struct segment
 #define bodywords__procnode(p)  cadr(p)
 #define setbodywords__procnode(p,v) setcar(cdr(p),v)
 
-#define unparsed__runparse(rn)  rn
 #define parsed__runparse(rn)    getobject(rn)
 #define node__quote(q)          car(q)
 #define node__colon(c)          car(c)
