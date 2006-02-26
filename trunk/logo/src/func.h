@@ -240,8 +240,7 @@ extern void update_status_turtleroll(void);
 extern void update_status_turtlewhich(void);
 
 extern void MyMessageScan(void);
-extern void putcombobox(char *str);
-extern void putfileeditcombo(char *str);
+extern void putcombobox(const char *str);
 extern void clearcombobox(void);
 extern COLORREF LoadColor(int dpenr, int dpeng, int dpenb);
 extern void exit_program(void);

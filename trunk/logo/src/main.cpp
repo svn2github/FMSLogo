@@ -169,15 +169,6 @@ static const LINE3D turtle_vertices[4] =
    }
 ;
 
-void putfileeditcombo(char *str)
-   {
-   MainWindowx->FileEditWindow->SendDlgItemMsg(
-      ID_FILEEDITCOMBO,
-      CB_ADDSTRING,
-      0,
-      (LONG) str);
-   }
-
 void cnv_strnode_string(char *textbuf, NODE *arg)
    {
    print_stringptr = textbuf;
@@ -241,42 +232,36 @@ void clearcombobox()
    }
 
    
-void putcombobox(char *str)
+void putcombobox(const char *str)
    {
    /* only if OK to write to recall box do we do it */
    if (IsOkayToUseCommanderWindow)
       {
-      UINT uBefore;
-      UINT uAfter;
-      UINT uCheck;
-
       for (int i=0;i<16;i++)
          {
          /* remember where we started */
-
-         uBefore = MainWindowx->CommandWindow->Listbox.GetTextLen();
+         UINT uBefore = MainWindowx->CommandWindow->Listbox.GetTextLen();
 
          /* output to list box */
-
          MainWindowx->CommandWindow->Listbox.SetSelection(uBefore, uBefore);
          MainWindowx->CommandWindow->Listbox.Insert(str);
-         uCheck = MainWindowx->CommandWindow->Listbox.GetTextLen();
+         UINT uCheck = MainWindowx->CommandWindow->Listbox.GetTextLen();
          MainWindowx->CommandWindow->Listbox.Insert("\r\n");
-         uAfter = MainWindowx->CommandWindow->Listbox.GetTextLen();
+         UINT uAfter = MainWindowx->CommandWindow->Listbox.GetTextLen();
 
          /* if last 2 bytes inserted ok get out */
-
-         if (uCheck+2 == uAfter) return;
+         if (uCheck+2 == uAfter) 
+            {
+            return;
+            }
 
          /* strip what we inserted */
-
          MainWindowx->CommandWindow->Listbox.SetReadOnly(FALSE);
 
          MainWindowx->CommandWindow->Listbox.SetSelection(uBefore, uAfter);
          MainWindowx->CommandWindow->Listbox.DeleteSelection();
 
          /* strip 4k off top */
-
          MainWindowx->CommandWindow->Listbox.SetSelection(0, 4096);
          MainWindowx->CommandWindow->Listbox.DeleteSelection();
 
@@ -287,7 +272,6 @@ void putcombobox(char *str)
       clearcombobox();
       MainWindowx->CommandWindow->Listbox.Insert(str);
       MainWindowx->CommandWindow->Listbox.Insert("\r\n");
-
       }
    }
 
@@ -336,7 +320,6 @@ void single_step_box(NODE *the_line)
 void getcombobox(char *str)
    {
    // get it and clear it
-
    SelectedText[0] = '\0';
 
    MainWindowx->CommandWindow->Editbox.GetText(str, MAX_BUFFER_SIZE);
