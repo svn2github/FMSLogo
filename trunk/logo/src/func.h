@@ -394,6 +394,7 @@ extern NODE *lnodes(NODE *args);
 extern void fill_reserve_tank(void);
 extern void use_reserve_tank(void);
 extern void check_reserve_tank(void);
+extern void free_segment_list(void);
 
 /* File MATH.CPP: */
 
@@ -484,14 +485,12 @@ extern NODE *l_setfirst(NODE *args);
 extern NODE *l_setbf(NODE *args);
 
 /* File INTERN.CPP: */
-extern NODE *make_case(NODE *casestrnd, NODE *obj);
 extern NODE *make_instance(NODE *casend, NODE *lownd);
 extern NODE *intern(NODE *nd);
 
 /* File INIT.CPP: */
-
-extern NODE *valref(NODE *p);
 extern void init(void);
+extern void uninit(void);
 
 /* File FILES.CPP: */
 

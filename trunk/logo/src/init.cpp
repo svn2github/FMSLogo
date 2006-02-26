@@ -540,16 +540,8 @@ const PRIMTYPE prims[] =
    }
 ;
 
-NODE *valref(NODE *p)
-   {
-   ref(p);
-   return p;
-   }
-
 void init()
    {
-   int i;
-
    fill_reserve_tank();
    Unbound = newnode(PUNBOUND);
 
@@ -560,11 +552,11 @@ void init()
    //    srand((int)12345);
 #endif
 #ifdef ecma
-   for (i = 0; i < 128; i++)
+   for (int i = 0; i < 128; i++)
       {
       ecma_array[i] = i;
       }
-   for (i = 0; i < ecma_size; i++)
+   for (int i = 0; i < ecma_size; i++)
       {
       ecma_array[special_chars[i]] = ecma_begin+i;
       }
@@ -573,7 +565,7 @@ void init()
    NODE *proc = NIL;
    NODE* pname = NIL;
    NODE* cnd = NIL;
-   for (i = 0; prims[i].name != NULL; i++)
+   for (int i = 0; prims[i].name != NULL; i++)
       {
       if (prims[i].priority == MACRO_PRIORITY)
          {
@@ -649,7 +641,12 @@ void init()
    Stop = intern(make_static_strnode("stop"));
    Goto = intern(make_static_strnode("goto"));
    Tag = intern(make_static_strnode("Tag"));
-   the_generation = valref(cons_list(NIL));
-   Not_Enough_Node = valref(cons_list(NIL));
+   the_generation = vref(cons_list(NIL));
+   Not_Enough_Node = vref(cons_list(NIL));
    }
 
+void uninit()
+   {
+   // free all outstanding nodes
+   free_segment_list();
+   }
