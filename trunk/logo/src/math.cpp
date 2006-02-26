@@ -135,6 +135,7 @@ NODE *lrerandom(NODE *arg)
    return Unbound;
    }
 
+
 static jmp_buf oflo_buf;
 
 #define sig_arg 0
@@ -143,6 +144,19 @@ void handle_oflo(int /*sig*/)
    {
    // _fpreset();  // commented out for bug #1397560 
    longjmp(oflo_buf, 1);
+   }
+
+// Override the default Borland math error handling, which
+// displays a dialog box whenever a trig function is given
+// bad input.  This is not Logo-like--it should throw a Logo
+// error instead of halting the program.
+// By doing a long jump, the calling code will handle it
+// equivalent to how they handle floating point exceptions,
+// which is exactly what we want.
+int _RTLENTRY _matherr (struct exception *e)
+   {
+   longjmp(oflo_buf, 1);
+   return 1;
    }
 
 //#define errchk(x) x

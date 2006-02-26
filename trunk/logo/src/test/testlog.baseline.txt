@@ -1254,9 +1254,9 @@ PASS: Executing [(ARCSIN)] threw an error
 INFO: Executing invalid instruction: [(ARCSIN 1 2)]
 PASS: Executing [(ARCSIN 1 2)] threw an error
 INFO: Executing invalid instruction: [ARCSIN 1.1]
-FAIL: Executing [ARCSIN 1.1] did not throw an error
+PASS: Executing [ARCSIN 1.1] threw an error
 INFO: Executing invalid instruction: [ARCSIN -1.1]
-FAIL: Executing [ARCSIN -1.1] did not throw an error
+PASS: Executing [ARCSIN -1.1] threw an error
 INFO: Executing invalid instruction: [ARCSIN []]
 PASS: Executing [ARCSIN []] threw an error
 INFO: Executing invalid instruction: [ARCSIN [1]]
@@ -1281,9 +1281,9 @@ PASS: Executing [(RADARCSIN)] threw an error
 INFO: Executing invalid instruction: [(RADARCSIN 1 2)]
 PASS: Executing [(RADARCSIN 1 2)] threw an error
 INFO: Executing invalid instruction: [RADARCSIN 1.1]
-FAIL: Executing [RADARCSIN 1.1] did not throw an error
+PASS: Executing [RADARCSIN 1.1] threw an error
 INFO: Executing invalid instruction: [RADARCSIN -1.1]
-FAIL: Executing [RADARCSIN -1.1] did not throw an error
+PASS: Executing [RADARCSIN -1.1] threw an error
 INFO: Executing invalid instruction: [RADARCSIN []]
 PASS: Executing [RADARCSIN []] threw an error
 INFO: Executing invalid instruction: [RADARCSIN [1]]
@@ -1364,9 +1364,9 @@ PASS: Executing [(ARCCOS)] threw an error
 INFO: Executing invalid instruction: [(ARCCOS 1 2)]
 PASS: Executing [(ARCCOS 1 2)] threw an error
 INFO: Executing invalid instruction: [ARCCOS 1.1]
-FAIL: Executing [ARCCOS 1.1] did not throw an error
+PASS: Executing [ARCCOS 1.1] threw an error
 INFO: Executing invalid instruction: [ARCCOS -1.1]
-FAIL: Executing [ARCCOS -1.1] did not throw an error
+PASS: Executing [ARCCOS -1.1] threw an error
 INFO: Executing invalid instruction: [ARCCOS []]
 PASS: Executing [ARCCOS []] threw an error
 INFO: Executing invalid instruction: [ARCCOS [1]]
@@ -1391,9 +1391,9 @@ PASS: Executing [(RADCOS)] threw an error
 INFO: Executing invalid instruction: [(RADCOS 1 2)]
 PASS: Executing [(RADCOS 1 2)] threw an error
 INFO: Executing invalid instruction: [RADARCCOS 1.1]
-FAIL: Executing [RADARCCOS 1.1] did not throw an error
+PASS: Executing [RADARCCOS 1.1] threw an error
 INFO: Executing invalid instruction: [RADARCCOS -1.1]
-FAIL: Executing [RADARCCOS -1.1] did not throw an error
+PASS: Executing [RADARCCOS -1.1] threw an error
 INFO: Executing invalid instruction: [RADARCCOS []]
 PASS: Executing [RADARCCOS []] threw an error
 INFO: Executing invalid instruction: [RADARCCOS [1]]
@@ -2186,30 +2186,30 @@ PASS: "bug #1384267 is fixed; turning by a large number in perspective mode did 
 INFO: Calling SETORIENTATION [0 0 0]
 PASS: [LIST? ORIENTATION] returned true , as expected.
 PASS: [COUNT ORIENTATION] returned 3 , as expected.
-PASS: [ROLL] returned 360 , as expected.
-PASS: [PITCH] returned 7.96408449770327e-15 , as expected.
-PASS: [HEADING] returned 2.82269614129004e-14 , as expected.
+PASS: [ROLL] returned 6.09243946063544e-15 , as expected.
+PASS: [PITCH] returned 360 , as expected.
+PASS: [HEADING] returned 360 , as expected.
+PASS: [ANGLEISCLOSEENOUGH 6.09243946063544e-15 0] returned true , as expected.
 PASS: [ANGLEISCLOSEENOUGH 360 0] returned true , as expected.
-PASS: [ANGLEISCLOSEENOUGH 7.96408449770327e-15 0] returned true , as expected.
-PASS: [ANGLEISCLOSEENOUGH 2.82269614129004e-14 0] returned true , as expected.
+PASS: [ANGLEISCLOSEENOUGH 360 0] returned true , as expected.
 INFO: Calling SETORIENTATION [1 2 3]
 PASS: [LIST? ORIENTATION] returned true , as expected.
 PASS: [COUNT ORIENTATION] returned 3 , as expected.
-PASS: [ROLL] returned 0.999999999999996 , as expected.
-PASS: [PITCH] returned 2.00000000000002 , as expected.
-PASS: [HEADING] returned 3.00000000000002 , as expected.
-PASS: [ANGLEISCLOSEENOUGH 0.999999999999996 1] returned true , as expected.
-PASS: [ANGLEISCLOSEENOUGH 2.00000000000002 2] returned true , as expected.
-PASS: [ANGLEISCLOSEENOUGH 3.00000000000002 3] returned true , as expected.
+PASS: [ROLL] returned 0.999999999999999 , as expected.
+PASS: [PITCH] returned 1.99999999999999 , as expected.
+PASS: [HEADING] returned 3.00000000000004 , as expected.
+PASS: [ANGLEISCLOSEENOUGH 0.999999999999999 1] returned true , as expected.
+PASS: [ANGLEISCLOSEENOUGH 1.99999999999999 2] returned true , as expected.
+PASS: [ANGLEISCLOSEENOUGH 3.00000000000004 3] returned true , as expected.
 INFO: Calling SETORIENTATION [105 0 0]
 PASS: [LIST? ORIENTATION] returned true , as expected.
 PASS: [COUNT ORIENTATION] returned 3 , as expected.
 PASS: [ROLL] returned 105 , as expected.
-PASS: [PITCH] returned 360 , as expected.
-PASS: [HEADING] returned 1.72069218871002e-14 , as expected.
+PASS: [PITCH] returned 2.71584790059938e-15 , as expected.
+PASS: [HEADING] returned 3.50208555906615e-14 , as expected.
 PASS: [ANGLEISCLOSEENOUGH 105 105] returned true , as expected.
-PASS: [ANGLEISCLOSEENOUGH 360 0] returned true , as expected.
-PASS: [ANGLEISCLOSEENOUGH 1.72069218871002e-14 0] returned true , as expected.
+PASS: [ANGLEISCLOSEENOUGH 2.71584790059938e-15 0] returned true , as expected.
+PASS: [ANGLEISCLOSEENOUGH 3.50208555906615e-14 0] returned true , as expected.
 INFO: Calling SETORIENTATION [0 105 0]
 PASS: [LIST? ORIENTATION] returned true , as expected.
 PASS: [COUNT ORIENTATION] returned 3 , as expected.
@@ -2222,21 +2222,21 @@ PASS: [ANGLEISCLOSEENOUGH 180 180] returned true , as expected.
 INFO: Calling SETORIENTATION [0 0 105]
 PASS: [LIST? ORIENTATION] returned true , as expected.
 PASS: [COUNT ORIENTATION] returned 3 , as expected.
-PASS: [ROLL] returned 3.4756256724196e-15 , as expected.
-PASS: [PITCH] returned 2.14187609039661e-14 , as expected.
+PASS: [ROLL] returned 360 , as expected.
+PASS: [PITCH] returned 1.42707015394939e-15 , as expected.
 PASS: [HEADING] returned 105 , as expected.
-PASS: [ANGLEISCLOSEENOUGH 3.4756256724196e-15 0] returned true , as expected.
-PASS: [ANGLEISCLOSEENOUGH 2.14187609039661e-14 0] returned true , as expected.
+PASS: [ANGLEISCLOSEENOUGH 360 0] returned true , as expected.
+PASS: [ANGLEISCLOSEENOUGH 1.42707015394939e-15 0] returned true , as expected.
 PASS: [ANGLEISCLOSEENOUGH 105 105] returned true , as expected.
 INFO: Calling SETORIENTATION [0 -90 0]
 PASS: [LIST? ORIENTATION] returned true , as expected.
 PASS: [COUNT ORIENTATION] returned 3 , as expected.
 PASS: [ROLL] returned 0 , as expected.
 PASS: [PITCH] returned 270 , as expected.
-PASS: [HEADING] returned 2.2705421565593e-14 , as expected.
+PASS: [HEADING] returned 360 , as expected.
 PASS: [ANGLEISCLOSEENOUGH 0 0] returned true , as expected.
 PASS: [ANGLEISCLOSEENOUGH 270 270] returned true , as expected.
-PASS: [ANGLEISCLOSEENOUGH 2.2705421565593e-14 0] returned true , as expected.
+PASS: [ANGLEISCLOSEENOUGH 360 0] returned true , as expected.
 INFO: Calling SETORIENTATION [0 -105 0]
 PASS: [LIST? ORIENTATION] returned true , as expected.
 PASS: [COUNT ORIENTATION] returned 3 , as expected.
@@ -2258,21 +2258,21 @@ PASS: [ANGLEISCLOSEENOUGH 180 180] returned true , as expected.
 INFO: Calling SETORIENTATION [360 360 360]
 PASS: [LIST? ORIENTATION] returned true , as expected.
 PASS: [COUNT ORIENTATION] returned 3 , as expected.
-PASS: [ROLL] returned 0 , as expected.
-PASS: [PITCH] returned 2.52204091131525e-14 , as expected.
+PASS: [ROLL] returned 4.97272270021786e-15 , as expected.
+PASS: [PITCH] returned 1.29138760801751e-14 , as expected.
 PASS: [HEADING] returned 360 , as expected.
-PASS: [ANGLEISCLOSEENOUGH 0 0] returned true , as expected.
-PASS: [ANGLEISCLOSEENOUGH 2.52204091131525e-14 0] returned true , as expected.
+PASS: [ANGLEISCLOSEENOUGH 4.97272270021786e-15 0] returned true , as expected.
+PASS: [ANGLEISCLOSEENOUGH 1.29138760801751e-14 0] returned true , as expected.
 PASS: [ANGLEISCLOSEENOUGH 360 0] returned true , as expected.
 INFO: Calling SETORIENTATION [-360 -360 -360]
 PASS: [LIST? ORIENTATION] returned true , as expected.
 PASS: [COUNT ORIENTATION] returned 3 , as expected.
 PASS: [ROLL] returned 360 , as expected.
 PASS: [PITCH] returned 360 , as expected.
-PASS: [HEADING] returned 2.55372484780294e-14 , as expected.
+PASS: [HEADING] returned 3.03308687270797e-16 , as expected.
 PASS: [ANGLEISCLOSEENOUGH 360 0] returned true , as expected.
 PASS: [ANGLEISCLOSEENOUGH 360 0] returned true , as expected.
-PASS: [ANGLEISCLOSEENOUGH 2.55372484780294e-14 0] returned true , as expected.
+PASS: [ANGLEISCLOSEENOUGH 3.03308687270797e-16 0] returned true , as expected.
 INFO: Executing invalid instruction: [(SETORIENTATION)]
 PASS: Executing [(SETORIENTATION)] threw an error
 INFO: Executing invalid instruction: [(SETORIENTATION 0)]
