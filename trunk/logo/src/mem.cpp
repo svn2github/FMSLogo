@@ -52,7 +52,7 @@ static int allocated_id[MAX_RECORD_ALLOC];
 static int current_allocated_id;
 
 
-void record_alloced_pointer(NODE *nd)
+void record_alloced_pointer(const NODE *nd)
    {
    if (nd == NIL) 
       {
@@ -69,7 +69,7 @@ void record_alloced_pointer(NODE *nd)
       }
    }
 
-void record_freed_pointer(NODE *nd)
+void record_freed_pointer(const NODE *nd)
    {
    if (nd == NIL) 
       {
@@ -117,16 +117,9 @@ NODETYPES nodetype(const NODE *nd)
 void setobject(NODE *nd, NODE *newobj)
    {
    NODE *oldobj = getobject(nd);
-
-   if (newobj != NIL) 
-      {
-      increfcnt(newobj);
-      }
-
-   if (oldobj != NIL && decrefcnt(oldobj) == 0)
-      {
-      gc(oldobj);
-      }
+   
+   ref(newobj);
+   deref(oldobj);
 
    nd->n_obj = newobj;
    }
@@ -135,15 +128,9 @@ void setcar(NODE *nd, NODE *newcar)
    {
    NODE *oldcar = car(nd);
 
-   if (newcar != NIL) 
-      {
-      increfcnt(newcar);
-      }
+   ref(newcar);
+   deref(oldcar);
 
-   if (oldcar != NIL && decrefcnt(oldcar) == 0)
-      {
-      gc(oldcar);
-      }
    nd->n_car = newcar;
    }
 
@@ -151,31 +138,19 @@ void setcdr(NODE *nd, NODE *newcdr)
    {
    NODE *oldcdr = cdr(nd);
 
-   if (newcdr != NIL) 
-      {
-      increfcnt(newcdr);
-      }
+   ref(newcdr);
+   deref(oldcdr);
 
-   if (oldcdr != NIL && decrefcnt(oldcdr) == 0)
-      {
-      gc(oldcdr);
-      }
    nd->n_cdr = newcdr;
    }
 
-NODE *reref(NODE *proc_var, NODE *newval)
+NODE *reref(NODE *oldval, NODE *newval)
    {
    // reference newval
-   if (newval != NIL) 
-      {
-      increfcnt(newval);
-      }
+   ref(newval);
 
    // dereference proc_var
-   if (proc_var != NIL && decrefcnt(proc_var) == 0)
-      {
-      gc(proc_var);
-      }
+   deref(oldval);
 
    return newval;
    }
@@ -322,7 +297,10 @@ void gc(NODE *nd)
           default:
               tcar = tcdr = tobj = NIL;
          }
+
+      // "free" this node by adding it to the free list
 #ifdef MEM_DEBUG
+      memset(nd, 0xAB, sizeof(*nd));
       settype(nd, NT_FREE);
 #endif
       nd->n_cdr = free_list;
