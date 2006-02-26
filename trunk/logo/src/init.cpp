@@ -51,7 +51,8 @@ NODE *If;
 NODE *Ifelse;
 NODE *To;
 NODE *Macro;
-NODE *Unbound;
+NODE *Unbound;         // a special node that means nothing (or void) was returned
+                       // This is different from NIL, which is the empty list.
 NODE *Not_Enough_Node;
 NODE *Minus_Sign;
 NODE *Minus_Tight;
