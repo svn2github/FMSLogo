@@ -165,6 +165,40 @@ INFO: Executing invalid instruction: [WORD "a {}]
 PASS: Executing [WORD "a {}] threw an error
 INFO: Executing invalid instruction: [WORD {} "a]
 PASS: Executing [WORD {} "a] threw an error
+PASS: [ASCII "a] returned 97 , as expected.
+PASS: [ASCII "A] returned 65 , as expected.
+PASS: [ASCII 1] returned 49 , as expected.
+PASS: [ASCII "(] returned 40 , as expected.
+INFO: Executing invalid instruction: [(ASCII)]
+PASS: Executing [(ASCII)] threw an error
+INFO: Executing invalid instruction: [(ASCII "a "b)]
+PASS: Executing [(ASCII "a "b)] threw an error
+INFO: Executing invalid instruction: [ASCII [a]]
+PASS: Executing [ASCII [a]] threw an error
+INFO: Executing invalid instruction: [ASCII {a}]
+PASS: Executing [ASCII {a}] threw an error
+INFO: Executing invalid instruction: [ASCII "ab]
+PASS: Executing [ASCII "ab] threw an error
+INFO: Executing invalid instruction: [ASCII 1.2]
+PASS: Executing [ASCII 1.2] threw an error
+PASS: [RAWASCII "a] returned 97 , as expected.
+PASS: [RAWASCII "A] returned 65 , as expected.
+PASS: [RAWASCII 1] returned 49 , as expected.
+PASS: [RAWASCII CHAR 0] returned 0 , as expected.
+PASS: [RAWASCII CHAR 5] returned 5 , as expected.
+PASS: [RAWASCII CHAR 192] returned 192 , as expected.
+INFO: Executing invalid instruction: [(RAWASCII)]
+PASS: Executing [(RAWASCII)] threw an error
+INFO: Executing invalid instruction: [(RAWASCII "a "b)]
+PASS: Executing [(RAWASCII "a "b)] threw an error
+INFO: Executing invalid instruction: [RAWASCII [a]]
+PASS: Executing [RAWASCII [a]] threw an error
+INFO: Executing invalid instruction: [RAWASCII {a}]
+PASS: Executing [RAWASCII {a}] threw an error
+INFO: Executing invalid instruction: [RAWASCII "ab]
+PASS: Executing [RAWASCII "ab] threw an error
+INFO: Executing invalid instruction: [RAWASCII 1.2]
+PASS: Executing [RAWASCII 1.2] threw an error
 PASS: [COUNT :myarray] returned 4 , as expected.
 PASS: [ITEM 1 :myarray] returned [] , as expected.
 PASS: [ITEM 2 :myarray] returned [] , as expected.
@@ -2242,8 +2276,8 @@ PASS: [ROLL] returned 0.999999999999999 , as expected.
 PASS: [PITCH] returned 1.99999999999999 , as expected.
 PASS: [HEADING] returned 3.00000000000004 , as expected.
 PASS: [ANGLEISCLOSEENOUGH 0.999999999999999 1] returned true , as expected.
-PASS: [ANGLEISCLOSEENOUGH 1.99999999999999 2] returned true , as expected.
-PASS: [ANGLEISCLOSEENOUGH 3.00000000000004 3] returned true , as expected.
+PASS: [ANGLEISCLOSEENOUGH 2 2] returned true , as expected.
+PASS: [ANGLEISCLOSEENOUGH 3.00000000000001 3] returned true , as expected.
 INFO: Calling SETORIENTATION [105 0 0]
 PASS: [LIST? ORIENTATION] returned true , as expected.
 PASS: [COUNT ORIENTATION] returned 3 , as expected.
