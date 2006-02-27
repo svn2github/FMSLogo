@@ -37,7 +37,10 @@ int ecma_size = sizeof(special_chars);
 char ecma_set(int ch)
    {
    ch &= 0xFF;
-   if (ch >= 0x80) return (ch);
+   if (ch >= 0x80)
+      {
+      return ch;
+      }
    return ecma_array[ch];
    }
 
@@ -705,14 +708,11 @@ NODE *luppercase(NODE *args)
    }
 
 /* property list stuff */
-
 NODE *getprop(NODE *plist, NODE *name, bool before)
    {
-   NODE *prev = NIL;
-   bool caseig = false;
+   bool caseig = compare_node(valnode__caseobj(Caseignoredp), Truex, true) == 0;
 
-   if (compare_node(valnode__caseobj(Caseignoredp), Truex, TRUE) == 0)
-      caseig = TRUE;
+   NODE *prev = NIL;
    while (plist != NIL)
       {
       if (compare_node(name, car(plist), caseig) == 0)
@@ -760,31 +760,39 @@ NODE *lpprop(NODE *args)
       plname = intern(plname);
       if (flag__caseobj(plname, PLIST_TRACED))
          {
-         ndprintf(writestream, "Pprop %s %s %s", maybe_quote(plname),
-            maybe_quote(pname), maybe_quote(newval));
+         ndprintf(
+            writestream, 
+            "Pprop %s %s %s", 
+            maybe_quote(plname),
+            maybe_quote(pname), 
+            maybe_quote(newval));
          if (ufun != NIL)
+            {
             ndprintf(writestream, " in %s\n%s", ufun, this_line);
+            }
          new_line(writestream);
          }
 
       NODE * plist = plist__caseobj(plname);
       if (plist != NIL)
+         {
          val = getprop(plist, pname, FALSE);
+         }
       if (val != NIL)
+         {
          setcar(cdr(val), newval);
+         }
       else
+         {
          setplist__caseobj(plname, cons(pname, cons(newval, plist)));
+         }
       }
    return Unbound;
    }
 
 NODE *lremprop(NODE *args)
    {
-   bool caseig = false;
-   if (compare_node(valnode__caseobj(Caseignoredp), Truex, TRUE) == 0)
-      {
-      caseig = true;
-      }
+   bool caseig = compare_node(valnode__caseobj(Caseignoredp), Truex, true) == 0;
 
    NODE * plname = string_arg(args);
    NODE * pname = string_arg(cdr(args));
@@ -795,12 +803,16 @@ NODE *lremprop(NODE *args)
       if (plist != NIL)
          {
          if (compare_node(car(plist), pname, caseig) == 0)
+            {
             setplist__caseobj(plname, cddr(plist));
+            }
          else
             {
-            NODE * val = getprop(plist, pname, TRUE);
+            NODE * val = getprop(plist, pname, true);
             if (val != NIL)
+               {
                setcdr(cdr(val), cddr(cddr(val)));
+               }
             }
          }
       }
@@ -834,16 +846,18 @@ NODE *copy_list(NODE *arg)
 
 NODE *lplist(NODE *args)
    {
-   NODE *plname, *plist, *val = NIL;
+   NODE *val = NIL;
 
-   plname = string_arg(args);
+   NODE * plname = string_arg(args);
    if (NOT_THROWING)
       {
       plname = intern(plname);
-      plist = plist__caseobj(plname);
+      NODE * plist = plist__caseobj(plname);
       if (plist != NIL)
+         {
          val = copy_list(plist);
+         }
       }
-   return (val);
+   return val;
    }
 
