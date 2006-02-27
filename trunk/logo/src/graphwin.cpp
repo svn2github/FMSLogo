@@ -2433,54 +2433,79 @@ NODE *lsetlabelfont(NODE *arg)
    ASSERT_TURTLE_INVARIANT
 
    NODE *args = list_arg(arg);
-   if (car(args) == NIL)
-      {
-      return NIL;
-      }
-
    if (NOT_THROWING)
       {
+      if (args == NIL)
+         {
+         // no font name was given.
+         setfont("");
+         return Unbound;
+         }
+
       char textbuf[MAX_BUFFER_SIZE];
       cnv_strnode_string(textbuf, args);
 
       // Get the FontRec filled with a match to textbuf
       setfont(textbuf);
 
-      // now fill in the rest of the fields if given
-
+      // now fill in the rest of the (optional) fields if given
       if (cdr(args) != NIL)
+         {
          FontRec.lfHeight = int_arg(args = cdr(args));
+         }
       if (cdr(args) != NIL)
+         {
          FontRec.lfWidth = getint(pos_int_arg(args = cdr(args)));
+         }
       if (cdr(args) != NIL)
+         {
          FontRec.lfOrientation = getint(pos_int_arg(args = cdr(args)));
+         }
       if (cdr(args) != NIL)
+         {
          FontRec.lfWeight = getint(pos_int_arg(args = cdr(args)));
+         }
       if (cdr(args) != NIL)
+         {
          FontRec.lfItalic = getint(pos_int_arg(args = cdr(args)));
+         }
       if (cdr(args) != NIL)
+         {
          FontRec.lfUnderline = getint(pos_int_arg(args = cdr(args)));
+         }
       if (cdr(args) != NIL)
+         {
          FontRec.lfStrikeOut = getint(pos_int_arg(args = cdr(args)));
+         }
       if (cdr(args) != NIL)
+         {
          FontRec.lfCharSet = getint(pos_int_arg(args = cdr(args)));
+         }
       if (cdr(args) != NIL)
+         {
          FontRec.lfOutPrecision = getint(pos_int_arg(args = cdr(args)));
+         }
       if (cdr(args) != NIL)
+         {
          FontRec.lfClipPrecision = getint(pos_int_arg(args = cdr(args)));
+         }
       if (cdr(args) != NIL)
+         {
          FontRec.lfQuality = getint(pos_int_arg(args = cdr(args)));
+         }
       if (cdr(args) != NIL)
+         {
          FontRec.lfPitchAndFamily = getint(pos_int_arg(args = cdr(args)));
+         }
 
       // update status window
 
-      //      if (status_flag)
-      //         {
-      //         update_status_fontwieght();
-      //         update_status_fontsize();
-      //         update_status_fontname();
-      //         }
+      // if (status_flag)
+      //   {
+      //   update_status_fontwieght();
+      //   update_status_fontsize();
+      //   update_status_fontname();
+      //   }
       }
 
    return Unbound;
