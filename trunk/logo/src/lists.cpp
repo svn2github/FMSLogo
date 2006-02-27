@@ -76,7 +76,7 @@ NODE *lbutfirst(NODE *args)
             }
          }
       }
-   return (val);
+   return val;
    }
 
 NODE *lbutlast(NODE *args)
@@ -104,7 +104,10 @@ NODE *lbutlast(NODE *args)
                lastnode = tnode;
                }
             args = cdr(args);
-            if (check_throwing) break;
+            if (check_throwing) 
+               {
+               break;
+               }
             }
          }
       else
@@ -125,7 +128,7 @@ NODE *lbutlast(NODE *args)
             }
          }
       }
-   return (val);
+   return val;
    }
 
 NODE *lfirst(NODE *args)
@@ -151,24 +154,30 @@ NODE *lfirst(NODE *args)
          val = make_strnode(getstrptr(arg), 1, nodetype(arg), strnzcpy);
          }
       }
-   return (val);
+   return val;
    }
 
 NODE *lfirsts(NODE *args)
    {
-   NODE *val = Unbound, *arg, *argp, *tail;
+   NODE *val = Unbound;
 
-   arg = list_arg(args);
-   if (car(args) == NIL) return (NIL);
+   NODE * arg = list_arg(args);
+   if (car(args) == NIL)
+      {
+      return NIL;
+      }
    if (NOT_THROWING)
       {
       val = cons_list(lfirst(arg));
-      tail = val;
-      for (argp = cdr(arg); argp != NIL; argp = cdr(argp))
+      NODE * tail = val;
+      for (NODE * argp = cdr(arg); argp != NIL; argp = cdr(argp))
          {
          setcdr(tail, cons_list(lfirst(argp)));
          tail = cdr(tail);
-         if (check_throwing) break;
+         if (check_throwing)
+            {
+            break;
+            }
          }
       if (stopping_flag == THROWING)
          {
@@ -176,25 +185,30 @@ NODE *lfirsts(NODE *args)
          return Unbound;
          }
       }
-   return (val);
+   return val;
    }
 
 NODE *lbfs(NODE *args)
    {
-   NODE *val = Unbound, *arg, *argp, *tail;
+   NODE *val = Unbound;
 
-   arg = list_arg(args);
-   if (car(args) == NIL) return (NIL);
+   NODE * arg = list_arg(args);
+   if (car(args) == NIL) 
+      {
+      return NIL;
+      }
    if (NOT_THROWING)
       {
       val = cons_list(lbutfirst(arg));
-//      tail = vref(val); // changed to following line to fix leak, I hope.
-      tail = val;
-      for (argp = cdr(arg); argp != NIL; argp = cdr(argp))
+      NODE * tail = val;
+      for (NODE * argp = cdr(arg); argp != NIL; argp = cdr(argp))
          {
          setcdr(tail, cons_list(lbutfirst(argp)));
          tail = cdr(tail);
-         if (check_throwing) break;
+         if (check_throwing) 
+            {
+            break;
+            }
          }
       if (stopping_flag == THROWING)
          {
@@ -202,7 +216,7 @@ NODE *lbfs(NODE *args)
          return Unbound;
          }
       }
-   return (val);
+   return val;
    }
 
 NODE *llast(NODE *args)
@@ -218,7 +232,10 @@ NODE *llast(NODE *args)
          while (cdr(args) != NIL)
             {
             args = cdr(args);
-            if (check_throwing) break;
+            if (check_throwing) 
+               {
+               break;
+               }
             }
          val = car(args);
          }
@@ -233,12 +250,12 @@ NODE *llast(NODE *args)
             strnzcpy);
          }
       }
-   return (val);
+   return val;
    }
 
 NODE *llist(NODE *args)
    {
-   return (args);
+   return args;
    }
 
 NODE *lemptyp(NODE *arg)
@@ -272,32 +289,29 @@ NODE *lascii(NODE *args)
       FIXNUM i = (FIXNUM) clearparity(*getstrptr(arg)) & 0xFF;
       val = make_intnode(i);
       }
-   return (val);
+   return val;
    }
 
 NODE *lrawascii(NODE *args)
    {
-   FIXNUM i;
-   NODE *val = Unbound, *arg;
+   NODE *val = Unbound;
 
-   arg = char_arg(args);
+   NODE * arg = char_arg(args);
    if (NOT_THROWING)
       {
-      i = (FIXNUM) (*getstrptr(arg));
+      // must be cast to unsigned or this can return a negative number
+      unsigned int i = *reinterpret_cast<const unsigned char*>(getstrptr(arg));
       val = make_intnode(i);
       }
-   return (val);
+   return val;
    }
 
 NODE *lbackslashedp(NODE *args)
    {
-   char i;
-   NODE *arg;
-
-   arg = char_arg(args);
+   NODE * arg = char_arg(args);
    if (NOT_THROWING)
       {
-      i = *getstrptr(arg);
+      char i = *getstrptr(arg);
       return torf(getparity(i));
       }
    return Unbound;
@@ -317,15 +331,14 @@ NODE *lchar(NODE *args)
          (getparity(c) ? STRING : BACKSLASH_STRING), 
          strnzcpy);
       }
-   return (val);
+   return val;
    }
 
 NODE *lcount(NODE *args)
    {
    int cnt = 0;
-   NODE *arg;
 
-   arg = car(args);
+   NODE* arg = car(args);
    if (arg != NIL && arg != Null_Word)
       {
       if (is_list(arg))
@@ -334,7 +347,10 @@ NODE *lcount(NODE *args)
          for (; args != NIL; cnt++)
             {
             args = cdr(args);
-            if (check_throwing) break;
+            if (check_throwing) 
+               {
+               break;
+               }
             }
          }
       else if (nodetype(arg) == ARRAY)
@@ -347,33 +363,36 @@ NODE *lcount(NODE *args)
          cnt = getstrlen(car(args));
          }
       }
-   return (make_intnode((FIXNUM) cnt));
+   return make_intnode((FIXNUM) cnt);
    }
 
 NODE *lfput(NODE *args)
    {
-   NODE *lst, *arg;
-
-   arg = car(args);
-   lst = list_arg(cdr(args));
+   NODE * arg = car(args);
+   NODE * lst = list_arg(cdr(args));
    if (NOT_THROWING)
+      {
       return cons(arg, lst);
+      }
    else
+      {
       return Unbound;
+      }
    }
 
 NODE *llput(NODE *args)
    {
-   NODE *lst, *arg, *val = Unbound, *lastnode = NIL, *tnode = NIL;
+   NODE *val = Unbound;
+   NODE *lastnode = NIL;
 
-   arg = car(args);
-   lst = list_arg(cdr(args));
+   NODE * arg = car(args);
+   NODE * lst = list_arg(cdr(args));
    if (NOT_THROWING)
       {
       val = NIL;
       while (lst != NIL)
          {
-         tnode = cons_list(car(lst));
+         NODE * tnode = cons_list(car(lst));
          if (val == NIL)
             {
             val = tnode;
@@ -384,21 +403,29 @@ NODE *llput(NODE *args)
             }
          lastnode = tnode;
          lst = cdr(lst);
-         if (check_throwing) break;
+         if (check_throwing) 
+            {
+            break;
+            }
          }
       if (val == NIL)
+         {
          val = cons_list(arg);
+         }
       else
+         {
          setcdr(lastnode, cons_list(arg));
+         }
       }
-   return (val);
+
+   return val;
    }
 
 NODE *string_arg(NODE *args)
    {
-   NODE *arg = car(args), *val;
+   NODE *arg = car(args);
 
-   val = cnv_node_to_strnode(arg);
+   NODE * val = cnv_node_to_strnode(arg);
    while (val == Unbound && NOT_THROWING)
       {
       gcref(val);
@@ -407,7 +434,7 @@ NODE *string_arg(NODE *args)
       val = cnv_node_to_strnode(arg);
       }
    setcar(args, val);
-   return (val);
+   return val;
    }
 
 NODE *lword(NODE *args)
@@ -461,23 +488,38 @@ NODE *lsentence(NODE *args)
          arg = car(args);
          }
       args = cdr(args);
-      if (stopping_flag == THROWING) break;
+      if (stopping_flag == THROWING) 
+         {
+         break;
+         }
       if (is_list(arg))
          {
          while (arg != NIL && NOT_THROWING)
             {
             tnode = cons_list(car(arg));
             arg = cdr(arg);
-            if (val == NIL) val = tnode;
-            else setcdr(lastnode, tnode);
+            if (val == NIL) 
+               {
+               val = tnode;
+               }
+            else 
+               {
+               setcdr(lastnode, tnode);
+               }
             lastnode = tnode;
             }
          }
       else
          {
          tnode = cons_list(arg);
-         if (val == NIL) val = tnode;
-         else setcdr(lastnode, tnode);
+         if (val == NIL) 
+            {
+            val = tnode;
+            }
+         else 
+            {
+            setcdr(lastnode, tnode);
+            }
          lastnode = tnode;
          }
       }
@@ -486,7 +528,7 @@ NODE *lsentence(NODE *args)
       gcref(val);
       return Unbound;
       }
-   return (val);
+   return val;
    }
 
 NODE *lwordp(NODE *arg)
@@ -515,7 +557,7 @@ NODE *larrayp(NODE *arg)
 static
 NODE *memberp_helper(NODE *args, bool notp, bool substr)
    {
-   int caseig = (compare_node(valnode__caseobj(Caseignoredp), Truex, TRUE) == 0);
+   bool caseig = (compare_node(valnode__caseobj(Caseignoredp), Truex, TRUE) == 0);
 
    NODE * obj1 = car(args);
    NODE * obj2 = cadr(args);
@@ -922,10 +964,8 @@ NODE *lscan(NODE */*args*/)
 
 NODE *l_setfirst(NODE *args)
    {
-   NODE *list, *newval;
-
-   list = car(args);
-   newval = cadr(args);
+   NODE * list = car(args);
+   NODE * newval = cadr(args);
    while (NOT_THROWING && (list == NIL || !is_list(list)))
       {
       setcar(args, err_logo(BAD_DATA, list));
