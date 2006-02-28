@@ -34,15 +34,18 @@
 //   canonical        - The canonical representation of the node.
 //                      This is an all lower-case form of it.
 //                      This is what is printed if you SHOW the node.
-//   proc             - ???
+//   proc             - For objects that are procedures, this is the
+//                      node that represents the procedure definition.
 //   val              - ???
-//   plist            - The object's property list.
-//                      This is always NIL.
-//                      DC: Is this a vestige from LISP?
+//   plist            - A list of properties.
+//                      This is used for property lists.
 //   case list        - A list of "case objects" for this node.
 //                      This list always begins with int:0.
-//                      DC: what is a "case object"?
 //
+// A "case object" is a cons cell
+//   car - a case-sensitive string representation of the object.
+//   cdr - a reference to the object (see above).
+// DC: what are case objects for?
 NODE **hash_table;
 
 
