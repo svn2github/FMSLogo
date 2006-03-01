@@ -487,6 +487,7 @@ extern NODE *l_setbf(NODE *args);
 /* File INTERN.CPP: */
 extern NODE *make_instance(NODE *casend, NODE *lownd);
 extern NODE *intern(NODE *nd);
+extern void release_all_objects();
 
 /* File INIT.CPP: */
 extern void init(void);

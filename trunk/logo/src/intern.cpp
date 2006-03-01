@@ -36,7 +36,8 @@
 //                      This is what is printed if you SHOW the node.
 //   proc             - For objects that are procedures, this is the
 //                      node that represents the procedure definition.
-//   val              - ???
+//   val              - For objects that represent variables,
+//                      the value of the variable.
 //   plist            - A list of properties.
 //                      This is used for property lists.
 //   case list        - A list of "case objects" for this node.
@@ -256,3 +257,24 @@ NODE *intern(NODE *nd)
    return casedes;
    }
 
+
+void release_all_objects()
+   {
+   for (int i = 0; i < HASH_LEN; i++)
+      {
+      while (hash_table[i] != NIL)
+         {
+         NODE * hash_entry = hash_table[i];
+         NODE * object = car(hash_entry);
+
+         // overwrite the "canonical" node with NIL to 
+         // force garbage collection
+         setcar(object, NIL);
+
+         // overwrite the "object" node with NIL to 
+         // force garbage collection.
+         setcar(hash_entry, NIL);
+         hash_table[i] = cdr(hash_entry);
+         }
+      }
+   }

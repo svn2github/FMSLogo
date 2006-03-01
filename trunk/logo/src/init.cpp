@@ -647,6 +647,9 @@ void init()
 
 void uninit()
    {
+   // free the objects
+   release_all_objects();
+
    // free all outstanding nodes
    free_segment_list();
    }
