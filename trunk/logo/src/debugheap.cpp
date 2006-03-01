@@ -56,7 +56,9 @@ debug_header_to_userptr(
    }
 
 static struct memory_header_t g_allocated_blocks;
-static long nextid = 0;
+static long g_nextid         = 1;
+static long g_break_alloc_id = 0;
+
 
 static
 void 
@@ -158,6 +160,12 @@ initialize_memory_tracking(
 
       g_allocated_blocks.blocksize = 0;
 
+      const char * break_alloc_id = getenv("BREAKALLOC");
+      if (break_alloc_id != NULL)
+         {
+         g_break_alloc_id = atoi(break_alloc_id);
+         }
+
       atexit(debug_report_leaks);
 
       is_initialized = true;
@@ -173,11 +181,17 @@ void * debug_malloc(size_t blocksize)
       return NULL;
       }
 
+   if (g_break_alloc_id == g_nextid)
+      {
+      // the user has requested that we break on this allocation
+      DebugBreak();
+      }
+
    // cast the data to the block header
    memory_header_t * header = static_cast<memory_header_t*>(realptr);
    header->blocksize = blocksize;
 
-   header->id = nextid++;
+   header->id = g_nextid++;
 
    // link the new block into the head of the list
    initialize_memory_tracking();
