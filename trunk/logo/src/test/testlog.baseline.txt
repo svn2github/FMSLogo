@@ -1583,7 +1583,7 @@ PASS: [NAMELIST []] returned [[] []] , as expected.
 INFO: Executing invalid instruction: [(NAMELIST)]
 PASS: Executing [(NAMELIST)] threw an error
 INFO: Executing invalid instruction: [NAMELIST {a b}]
-FAIL: Executing [NAMELIST {a b}] did not throw an error
+PASS: Executing [NAMELIST {a b}] threw an error
 INFO: Executing invalid instruction: [(NAMELIST "a "b)]
 PASS: Executing [(NAMELIST "a "b)] threw an error
 INFO: Executing invalid instruction: [(PO)]
@@ -1732,7 +1732,7 @@ PASS: Executing [(PLLIST)] threw an error
 INFO: Executing invalid instruction: [(PLLIST "too "many)]
 PASS: Executing [(PLLIST "too "many)] threw an error
 INFO: Executing invalid instruction: [PLLIST {a b}]
-FAIL: Executing [PLLIST {a b}] did not throw an error
+PASS: Executing [PLLIST {a b}] threw an error
 INFO: executing regression test for bug #1383281
 PASS: "bug #1382181 is fixed; 'FOR [1] [[][]]' did not crash.
 PASS: [ACTIVEAREA] returned [-100 -100 100 100] , as expected.
