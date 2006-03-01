@@ -29,6 +29,7 @@ Part II) New features/bugs fixed:
     o Fix bug #1395742; Singularity errors don't display dialog boxes.
     o Fix bug #1438909; SETLABELFONT [] no longer crashes.
     o Fix bug #1327784; RAWASCII CHAR 192 = 192, not -64.
+    o Fix bug #1361906; PLLIST {a} throws a bad input error.
     o Mitigate bug #1392437; LOAD no longer warns that it can overwrite changes.
 
   * Added for 6.7.2,

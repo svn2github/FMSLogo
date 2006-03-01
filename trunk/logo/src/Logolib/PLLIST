@@ -1,4 +1,5 @@
 to pllist :names
+if array? :names [(throw "error (se [pllist doesn't like] :names [as input]))]
 if wordp :names [output (list [] [] (list :names))]
 output (list [] [] :names)
 end
