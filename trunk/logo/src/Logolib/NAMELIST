@@ -1,4 +1,5 @@
 to namelist :names
+if array? :names [(throw "error (list "namelist "doesn't "like :names "as "input)))]
 if wordp :names [output list [] (list :names)]
 output list [] :names
 end
