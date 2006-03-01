@@ -8,7 +8,8 @@ Build the Release Files
 1.a) On laptop, Update FMSLOGO.TXT
 1.b) On laptop, Update version.mk
 1.c) On laptop, Rebuild fmslogo.exe
-1.d) Do a "cvs up -APd" and tag the tree VER-X-Y-Z
+1.d) On laptop, run tstrp32 fmslogo.exe to reduce the size
+1.e) Do a "cvs up -APd" and tag the tree VER-X-Y-Z
 
 
 2) Build the Documentation
