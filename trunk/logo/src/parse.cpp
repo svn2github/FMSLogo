@@ -616,13 +616,14 @@ parser_iterate(
 NODE *parser(NODE *nd, bool semi)
    {
    NODE * string_node = cnv_node_to_strnode(nd);
+   ref(string_node);
 
    int          slen  = getstrlen(string_node);
    const char * lnsav = getstrptr(string_node);
    NODE * rtn = parser_iterate(&lnsav, lnsav + slen, semi, -1);
 
    gcref(nd);
-   gcref(string_node);
+   deref(string_node);
    return rtn;
    }
 
