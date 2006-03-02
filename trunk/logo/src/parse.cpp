@@ -33,6 +33,10 @@ static int buffer_length = 0;
 static int buffer_index = 0;
 static char buffer_input[MAX_BUFFER_SIZE];
 
+static char *p_line = 0;
+static char *p_end;
+static int   p_len = MAX_PHYS_LINE;
+
 int rd_getc(FILE *strm)
    {
    int c;
@@ -146,9 +150,6 @@ void zrd_print_prompt(char *str)
 
 NODE *reader(FILE *strm, const char *prompt)
    {
-   static char *p_line = 0;
-   static char *p_end;
-   static int   p_len = MAX_PHYS_LINE;
 
    static const char ender[] = "\nEND\n";
 
@@ -410,14 +411,18 @@ parser_iterate(
    int         endchar
    )
    {
-   char ch;
    const char *wptr = NULL;
    static char terminate = '\0'; // KLUDGE
-   NODE *outline = NIL, *lastnode = NIL, *tnode = NIL;
-   int windex = 0, vbar = 0;
+   int windex = 0;
    NODETYPES this_type = STRING;
-   bool broken = false;
 
+   bool broken = false;
+   bool vbar   = false;
+
+   NODE *return_list = NIL;  // the parsed list to return
+   NODE *lastnode = NIL;     // last node in return_list
+
+   char ch;
    do
       {
       /* get the current character and increase pointer */
@@ -511,6 +516,8 @@ parser_iterate(
          windex++;
          }
 
+      NODE *tnode = NIL;
+
       if (vbar) 
          {
          continue;
@@ -588,20 +595,22 @@ parser_iterate(
       // put the word onto the end of the return list
       if (tnode != NIL)
          {
-         if (outline == NIL) 
+         if (return_list == NIL) 
             {
-            outline = vref(tnode);
+            // this is first node in the return list
+            return_list = vref(tnode);
             }
          else 
             {
+            // add tnode to the end of the list
             setcdr(lastnode, tnode);
             }
          lastnode = tnode;
-         tnode = NIL;
+         tnode = NIL; // unnecessary
          }
       }
    while (ch);
-   return unref(outline);
+   return unref(return_list);
    }
 
 NODE *parser(NODE *nd, bool semi)
@@ -865,3 +874,11 @@ NODE *lrunparse(NODE *args)
    return Unbound;
    }
 
+
+void uninitialize_parser()
+   {
+   free(p_line);
+   p_line = NULL;
+   p_end  = NULL;
+   p_len  = 0;
+   }

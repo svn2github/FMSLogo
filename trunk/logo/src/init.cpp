@@ -652,4 +652,7 @@ void uninit()
 
    // free all outstanding nodes
    free_segment_list();
+
+   // free the parser
+   uninitialize_parser();
    }

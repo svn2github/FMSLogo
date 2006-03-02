@@ -372,6 +372,7 @@ extern NODE *parser(NODE *nd, bool semi);
 extern NODE *lparse(NODE *args);
 extern NODE *runparse(NODE *ndlist);
 extern NODE *lrunparse(NODE *args);
+extern void uninitialize_parser(void);
 
 // File paren.cpp 
 extern void untreeify_proc(NODE *procname);
