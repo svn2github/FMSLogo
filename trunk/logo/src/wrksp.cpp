@@ -256,7 +256,6 @@ static
 NODE *to_helper(NODE *args, bool macro_flag)
    {
    NODE *formals = NIL;
-   NODE *lastnode = NIL;
 
    int minimum = 0;
    int deflt = 0;
@@ -294,6 +293,8 @@ NODE *to_helper(NODE *args, bool macro_flag)
          {
          old_default = getint(dfltargs__procnode(old_proc));
          }
+
+      NODE *formals_lastnode = NIL;
       while (args != NIL)
          {
          NODE * arg = car(args);
@@ -332,26 +333,34 @@ NODE *to_helper(NODE *args, bool macro_flag)
             break;
             }
 
+         // append arg to the end of the "formals" list
          NODE *tnode = cons_list(arg);
-         if (formals == NIL) formals = tnode;
-         else setcdr(lastnode, tnode);
-         lastnode = tnode;
+         if (formals == NIL) 
+            {
+            formals = tnode;
+            }
+         else
+            { 
+            setcdr(formals_lastnode, tnode);
+            }
+         formals_lastnode = tnode;
          }
       }
 
    if (NOT_THROWING)
       {
-      NODE * body_words = cons_list(current_line);
-      NODE * lastnode2 = body_words;
-      NODE * body_list = cons_list(formals);
-      lastnode = body_list;
+      NODE * body_words          = cons_list(current_line);
+      NODE * body_words_lastnode = body_words;
+
+      NODE * body_list          = cons_list(formals);
+      NODE * body_list_lastnode = body_list;
       to_pending++;      // for int or quit signal
       while (NOT_THROWING && to_pending && (!feof(loadstream)))
          {
          NODE * ttnode = reader(loadstream, "> ");
          NODE * tnode = cons_list(ttnode);
-         setcdr(lastnode2, tnode);
-         lastnode2 = tnode;
+         setcdr(body_words_lastnode, tnode);
+         body_words_lastnode = tnode;
 
          tnode = cons_list(parser(car(tnode), true));
          if (car(tnode) != NIL && compare_node(caar(tnode), End, true) == 0)
@@ -361,8 +370,8 @@ NODE *to_helper(NODE *args, bool macro_flag)
             }
          else if (car(tnode) != NIL)
             {
-            setcdr(lastnode, tnode);
-            lastnode = tnode;
+            setcdr(body_list_lastnode, tnode);
+            body_list_lastnode = tnode;
             }
          }
 
