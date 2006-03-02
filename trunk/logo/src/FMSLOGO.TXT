@@ -31,6 +31,7 @@ Part II) New features/bugs fixed:
     o Fix bug #1327784; RAWASCII CHAR 192 = 192, not -64.
     o Fix bug #1361906; PLLIST {a} throws a bad input error.
     o Mitigate bug #1392437; LOAD no longer warns that it can overwrite changes.
+    o Fix memory leaks.
 
   * Added for 6.7.2,
     o Fix bug #1372489; double-clicking .lgo file starts new FMSLogo process.
