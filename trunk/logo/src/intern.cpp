@@ -275,6 +275,10 @@ void release_all_objects()
          // force garbage collection
          setcdr(caselistptr__object(object), NIL);
 
+         // overwrite the "proc node" with NIL to 
+         // force garbage collection
+         setprocnode__object(object, NIL);
+
          // overwrite the "object" node with NIL to 
          // force garbage collection.
          setcar(hash_entry, NIL);
