@@ -23,8 +23,8 @@
 
 jmp_buf iblk_buf;
 
-char *combo_buff = NULL;
-size_t combo_buff_size = 0;
+static char * combo_buff      = NULL;
+static size_t combo_buff_size = 0;
 
 static
 void
@@ -104,6 +104,16 @@ void putcombochar(char c)
       combo_buff[i] = c;
       combo_buff[i + 1] = '\0';
       }
+   }
+
+
+void flushcombobox()
+   {
+   // resize combo_buff to be large enough to one byte
+   prepare_combo_buff("x");
+
+   putcombobox(combo_buff);
+   combo_buff[0] = '\0';
    }
 
 int printfx(const char *fmt)

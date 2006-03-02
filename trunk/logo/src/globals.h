@@ -27,8 +27,6 @@ extern bool bExpert;
 extern bool bFixed;
 extern bool bWidth;
 extern bool bHeight;
-extern char *combo_buff;
-extern char *p_line;
 extern NODE **hash_table;
 extern NODE **gcstack;
 extern NODE **gctop;

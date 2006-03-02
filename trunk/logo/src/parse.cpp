@@ -49,45 +49,37 @@ int rd_getc(FILE *strm)
       {
       if (buffer_index + 1 > buffer_length)
          {
-         if (combo_buff)
-            {
-            if (strlen(combo_buff)) putcombochar('\n');
-            }
+         flushcombobox();
 
          switch (input_mode)
             {
-             case TO_MODE:
-                 {
-                    if (!promptuser(buffer_input, "To Mode (Cancel to End)"))
-                       {
-                       strcpy(buffer_input, "End");
-                       }
-                    break;
-                 }
-             case LIST_MODE:
-                 {
-                    if (!promptuser(buffer_input, "List Mode (Cancel to Halt)"))
-                       {
-                       err_logo(STOP_ERROR, NIL);
-                       }
-                    break;
-                 }
-             case PAUSE_MODE:
-                 {
-                    if (!promptuser(buffer_input, "Pause Mode (Cancel to Continue)"))
-                       {
-                       strcpy(buffer_input, "Continue");
-                       }
-                    break;
-                 }
+            case TO_MODE:
+               if (!promptuser(buffer_input, "To Mode (Cancel to End)"))
+                  {
+                  strcpy(buffer_input, "End");
+                  }
+               break;
+
+            case LIST_MODE:
+               if (!promptuser(buffer_input, "List Mode (Cancel to Halt)"))
+                  {
+                  err_logo(STOP_ERROR, NIL);
+                  }
+               break;
+
+            case PAUSE_MODE:
+               if (!promptuser(buffer_input, "Pause Mode (Cancel to Continue)"))
+                  {
+                  strcpy(buffer_input, "Continue");
+                  }
+               break;
+
              case NO_MODE:
-                 {
-                    if (!promptuser(buffer_input, "Input Mode (Cancel to Halt)"))
-                       {
-                       err_logo(STOP_ERROR, NIL);
-                       }
-                    break;
-                 }
+                if (!promptuser(buffer_input, "Input Mode (Cancel to Halt)"))
+                   {
+                   err_logo(STOP_ERROR, NIL);
+                   }
+                break;
             }
 
          check_stop(true);

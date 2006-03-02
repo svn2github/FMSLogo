@@ -215,9 +215,6 @@ extern NODE *ltone(NODE *args);
 extern NODE *lrefresh(NODE *args);
 extern NODE *lnorefresh(NODE *args);
 
-/* File GRAPHWIN.CPP: */
-bool HtmlHelpInitialize();
-void HtmlHelpUninitialize();
 
 /* File MAIN.CPP: */
 
@@ -442,8 +439,6 @@ extern NODE *lequalp(NODE *args);
 extern NODE *l_eq(NODE *args);
 extern NODE *lbeforep(NODE *args);
 
-/* File UNIX.CPP: */
-extern void unblock_input(void);
 
 /* File LISTS.CPP: */
 
@@ -556,9 +551,11 @@ extern NODE *lyield(NODE *arg);
 extern NODE *lnoyield(NODE *arg);
 extern NODE *lcontinue(NODE *args);
 
-/* File UNIX.CPP: */
+// unix.cpp
 extern int printfx(const char *fmt);
 extern int printfx(const char *fmt, const char *str);
+extern void unblock_input(void);
+extern void flushcombobox(void);
 extern void putcombochar(char c);
 extern NODE *lpushdir(NODE *arg);
 extern NODE *lpopdir(NODE *arg);
@@ -567,9 +564,9 @@ extern NODE *lrmdir(NODE *arg);
 extern NODE *ldirectories(NODE *arg);
 extern NODE *lfiles(NODE *arg);
 
-extern NODE *lpeek(NODE *arg);
-extern NODE *lpoke(NODE *arg);
-
+// graphwin.cpp
+bool HtmlHelpInitialize();
+void HtmlHelpUninitialize();
 extern NODE *lstatus(NODE *arg);
 extern NODE *lnostatus(NODE *arg);
 extern void zoom_helper(FLONUM temp_zoom);
