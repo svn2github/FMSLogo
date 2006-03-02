@@ -577,16 +577,18 @@ parser_iterate(
          // this character or the next one will terminate string, make the word 
          if (windex > 0)
             {
+            NODE * string_node;
             if (!broken)
                {
-               tnode = cons_list(make_strnode(wptr, windex, this_type, strnzcpy));
+               string_node = make_strnode(wptr, windex, this_type, strnzcpy);
                }
             else
                {
-               tnode = cons_list(
-                  make_strnode(wptr, windex, this_type, (semi ? mend_strnzcpy : mend_nosemi)));
+               string_node = make_strnode(wptr, windex, this_type, (semi ? mend_strnzcpy : mend_nosemi));
                broken = false;
                }
+
+            tnode = cons_list(string_node);
             this_type = STRING;
             windex = 0;
             }
