@@ -345,18 +345,18 @@ NODE *to_helper(NODE *args, bool macro_flag)
       NODE * lastnode2 = body_words;
       NODE * body_list = cons_list(formals);
       lastnode = body_list;
-      to_pending++;                    /* for int or quit signal              */
+      to_pending++;      // for int or quit signal
       while (NOT_THROWING && to_pending && (!feof(loadstream)))
          {
-         char ttemp[16];
-         strcpy(ttemp, "> ");
-         NODE * ttnode = reader(loadstream, ttemp);
+         NODE * ttnode = reader(loadstream, "> ");
          NODE * tnode = cons_list(ttnode);
          setcdr(lastnode2, tnode);
          lastnode2 = tnode;
-         tnode = cons_list(parser(car(tnode), TRUE));
-         if (car(tnode) != NIL && compare_node(caar(tnode), End, TRUE) == 0)
+
+         tnode = cons_list(parser(car(tnode), true));
+         if (car(tnode) != NIL && compare_node(caar(tnode), End, true) == 0)
             {
+            gcref(tnode);
             break;
             }
          else if (car(tnode) != NIL)
@@ -365,15 +365,21 @@ NODE *to_helper(NODE *args, bool macro_flag)
             lastnode = tnode;
             }
          }
+
       if (to_pending && NOT_THROWING)
          {
-         setprocnode__caseobj(proc_name,
-            make_procnode(body_list, body_words, minimum,
-               deflt, maximum));
+         setprocnode__caseobj(
+            proc_name,
+            make_procnode(body_list, body_words, minimum, deflt, maximum));
          if (macro_flag)
+            {
             setflag__caseobj(proc_name, PROC_MACRO);
+            }
          else
+            {
             clearflag__caseobj(proc_name, PROC_MACRO);
+            }
+
          if (deflt != old_default && old_default >= 0)
             {
             the_generation = reref(the_generation, cons_list(NIL));
