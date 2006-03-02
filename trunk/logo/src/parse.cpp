@@ -615,17 +615,15 @@ parser_iterate(
 
 NODE *parser(NODE *nd, bool semi)
    {
+   NODE * string_node = cnv_node_to_strnode(nd);
 
-   NODE * rtn = cnv_node_to_strnode(nd);
-   ref(rtn);
+   int          slen  = getstrlen(string_node);
+   const char * lnsav = getstrptr(string_node);
+   NODE * rtn = parser_iterate(&lnsav, lnsav + slen, semi, -1);
+
    gcref(nd);
-
-   int slen = getstrlen(rtn);
-   const char * lnsav = getstrptr(rtn);
-   rtn = reref(
-      rtn,
-      parser_iterate(&lnsav, lnsav + slen, semi, -1));
-   return unref(rtn);
+   gcref(string_node);
+   return rtn;
    }
 
 NODE *lparse(NODE *args)
@@ -635,9 +633,9 @@ NODE *lparse(NODE *args)
    NODE * arg = string_arg(args);
    if (NOT_THROWING)
       {
-      val = parser(arg, FALSE);
+      val = parser(arg, false);
       }
-   return (val);
+   return val;
    }
 
 static
