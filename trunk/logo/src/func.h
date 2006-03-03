@@ -563,6 +563,7 @@ extern NODE *lmkdir(NODE *arg);
 extern NODE *lrmdir(NODE *arg);
 extern NODE *ldirectories(NODE *arg);
 extern NODE *lfiles(NODE *arg);
+extern void uninitialize_combobox(void);
 
 // graphwin.cpp
 bool HtmlHelpInitialize();

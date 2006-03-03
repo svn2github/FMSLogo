@@ -655,4 +655,7 @@ void uninit()
 
    // free the parser
    uninitialize_parser();
+
+   // free the internal buffer for the combobox
+   uninitialize_combobox();
    }

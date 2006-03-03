@@ -273,3 +273,11 @@ void unblock_input()
       longjmp(iblk_buf, 1);
       }
    }
+
+void uninitialize_combobox()
+   {
+   free(combo_buff);
+   combo_buff = NULL;
+
+   combo_buff_size = 0;
+   }
