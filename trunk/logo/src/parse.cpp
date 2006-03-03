@@ -370,6 +370,7 @@ NODE *reader(FILE *strm, const char *prompt)
    return ret;
    }
 
+static
 NODE *list_to_array(NODE *list)
    {
    int len = 0;
@@ -411,8 +412,8 @@ parser_iterate(
    bool broken = false;
    bool vbar   = false;
 
-   NODE *return_list = NIL;  // the parsed list to return
-   NODE *lastnode = NIL;     // last node in return_list
+   NODE *return_list          = NIL;
+   NODE *return_list_lastnode = NIL;
 
    char ch;
    do
@@ -537,9 +538,13 @@ parser_iterate(
          }
       else if (ch == '{')
          {
-         tnode = cons_list(list_to_array(parser_iterate(inln, inlimit, semi, '}')));
+         NODE * array_as_list = parser_iterate(inln, inlimit, semi, '}');
+         tnode = cons_list(list_to_array(array_as_list));
+         gcref(array_as_list);
          if (**inln == '@')
             {
+            // parse the origin as a number
+            // CONSIDER for MAINTAINABILITY: use strtol() here
             int sign = 1;
 
             (*inln) ++;
@@ -597,10 +602,9 @@ parser_iterate(
          else 
             {
             // add tnode to the end of the list
-            setcdr(lastnode, tnode);
+            setcdr(return_list_lastnode, tnode);
             }
-         lastnode = tnode;
-         tnode = NIL; // unnecessary
+         return_list_lastnode = tnode;
          }
       }
    while (ch);
