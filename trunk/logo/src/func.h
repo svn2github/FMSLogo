@@ -364,7 +364,6 @@ extern NODE *lprint(NODE *args);
 
 extern int rd_getc(FILE *strm);
 extern NODE *reader(FILE *strm, const char *prompt);
-extern NODE *list_to_array(NODE *list);
 extern NODE *parser(NODE *nd, bool semi);
 extern NODE *lparse(NODE *args);
 extern NODE *runparse(NODE *ndlist);
