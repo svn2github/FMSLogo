@@ -245,57 +245,62 @@ void gc(NODE *nd)
 
       switch (nodetype(nd))
          {
-          case PUNBOUND:
-              setrefcnt(nd, 10000);  // save some time
-          case PNIL:
-              if (gctop == gcstack) 
-                 {
-                 return;
-                 }
-              nd = *--gctop;
-              continue;
-          case LINE:
-              nd->n_obj = NIL;
-          case CONS:
-          case CASEOBJ:
-          case RUN_PARSE:
-          case QUOTE:
-          case COLON:
-          case TREE:
-          case CONT:
-              tcdr = cdr(nd);
-              tcar = car(nd);
-              tobj = getobject(nd);
-              break;
-          case ARRAY:
-              pp = getarrptr(nd);
-              i = getarrdim(nd);
-              while (--i >= 0)
-                 {
-                 tobj = *pp++;
-                 deref(tobj);
-                 }
-              free(getarrptr(nd));
-              tcar = tcdr = tobj = NIL;
-              break;
-          case STRING:
-          case BACKSLASH_STRING:
-          case VBAR_STRING:
-              if (getstrhead(nd) != NULL)
-                 {
-                 // The string was allocated on the heap 
-                 // (it's not a string literal).
-                 // Decrement the reference count and free it, if necessary.
-                 unsigned short *temp = (unsigned short *) getstrhead(nd);
+         case PUNBOUND:
+            setrefcnt(nd, 10000);  // save some time
+         case PNIL:
+            if (gctop == gcstack) 
+               {
+               // no more nodes to garbage collect
+               return;
+               }
+            // get ready to garbage collect the next node
+            nd = *--gctop;
+            continue;
 
-                 assert(*temp != 0); // BUG: the string was already freed
-                 if (decstrrefcnt(temp) == 0) 
-                    {
-                    free(getstrhead(nd));
-                    }
-                 }
-          default:
-              tcar = tcdr = tobj = NIL;
+         case LINE:
+            nd->n_obj = NIL;
+         case CONS:
+         case CASEOBJ:
+         case RUN_PARSE:
+         case QUOTE:
+         case COLON:
+         case TREE:
+         case CONT:
+            tcdr = cdr(nd);
+            tcar = car(nd);
+            tobj = getobject(nd);
+            break;
+
+         case ARRAY:
+            pp = getarrptr(nd);
+            i = getarrdim(nd);
+            while (--i >= 0)
+               {
+               tobj = *pp++;
+               deref(tobj);
+               }
+            free(getarrptr(nd));
+            tcar = tcdr = tobj = NIL;
+            break;
+
+         case STRING:
+         case BACKSLASH_STRING:
+         case VBAR_STRING:
+            if (getstrhead(nd) != NULL)
+               {
+               // The string was allocated on the heap 
+               // (it's not a string literal).
+               // Decrement the reference count and free it, if necessary.
+               unsigned short *temp = (unsigned short *) getstrhead(nd);
+
+               assert(*temp != 0); // BUG: the string was already freed
+               if (decstrrefcnt(temp) == 0) 
+                  {
+                  free(getstrhead(nd));
+                  }
+               }
+         default:
+            tcar = tcdr = tobj = NIL;
          }
 
       // "free" this node by adding it to the free list
@@ -312,6 +317,8 @@ void gc(NODE *nd)
       mem_nodes--;
       if (tcdr != NIL && decrefcnt(tcdr) == 0)
          {
+         // push tcdr onto the stack of nodes to
+         // be garbage collected.
          if (gctop < &gcstack[GCMAX])
             {
             *gctop++ = tcdr;
@@ -320,6 +327,8 @@ void gc(NODE *nd)
 
       if (tcar != NIL && decrefcnt(tcar) == 0)
          {
+         // push tcar onto the stack of nodes to
+         // be garbage collected.
          if (gctop < &gcstack[GCMAX])
             {
             *gctop++ = tcar;
@@ -328,6 +337,8 @@ void gc(NODE *nd)
 
       if (tobj != NIL && decrefcnt(tobj) == 0)
          {
+         // push tobj onto the garbage-collection stack
+         // to be garbage collected in due time
          if (gctop < &gcstack[GCMAX])
             {
             *gctop++ = tobj;
@@ -336,9 +347,11 @@ void gc(NODE *nd)
 
       if (gctop == gcstack) 
          {
+         // no more nodes to garbage collect
          return;
          }
 
+      // garbage-collect whatever node is at the top of the stack
       nd = *--gctop;
       }
    }
