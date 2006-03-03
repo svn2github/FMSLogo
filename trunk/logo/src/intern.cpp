@@ -189,6 +189,8 @@ int case_compare(NODE *nd1, NODE *nd2)
 
 // Finds the NODE* from obj's case list that matches strnd 
 // with a case-sensitive comparsion.
+//
+// The return value is not referenced.
 static
 NODE *find_case(NODE *strnd, NODE *obj)
    {
