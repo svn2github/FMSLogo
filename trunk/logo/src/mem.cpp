@@ -31,11 +31,6 @@ struct segment
 NODE **gcstack;
 NODE **gctop;
 
-#ifdef MEM_DEBUG
-long int mem_allocated = 0;
-long int mem_freed = 0;
-#endif
-
 static NODE    *free_list    = NIL;    // global ptr to free node list
 static segment *segment_list = NULL;   // global ptr to segment list
 
@@ -43,66 +38,6 @@ static long int mem_nodes = 0;
 static long int mem_max = 0;
 
 static NODE *reserve_tank;
-
-#ifdef MEM_DEBUG
-#define MAX_RECORD_ALLOC 10000
-
-static NODE *allocated[MAX_RECORD_ALLOC];
-static int allocated_id[MAX_RECORD_ALLOC];
-static int current_allocated_id;
-
-
-void record_alloced_pointer(const NODE *nd)
-   {
-   if (nd == NIL) 
-      {
-      return;
-      }
-   for (int i = 0; i < MAX_RECORD_ALLOC; i++)
-      {
-      if (!allocated[i])
-         {
-         allocated[i] = nd;
-         allocated_id[i] = ++current_allocated_id;
-         break;
-         }
-      }
-   }
-
-void record_freed_pointer(const NODE *nd)
-   {
-   if (nd == NIL) 
-      {
-      return;
-      }
-
-   for (int i = 0; i < MAX_RECORD_ALLOC; i++)
-      {
-      if (allocated[i] == nd)
-         {
-         allocated[i] = 0;
-         break;
-         }
-      }
-   }
-
-void clear_alloced_records(void)
-   {
-   memset(allocated, 0x00, sizeof(allocated));
-   }
-
-void print_alloced_pointers(void)
-   {
-   for (int i = 0; i < MAX_RECORD_ALLOC; i++)
-      {
-      if (allocated[i])
-         {
-         fprintf(stderr, "%d: ", allocated_id[i]);
-         ndprintf(stderr, "%s\n", allocated[i]);
-         }
-      }
-   }
-#endif
 
 NODETYPES nodetype(const NODE *nd)
    {
@@ -164,9 +99,23 @@ NODE *unref(NODE *ret_var)
    return ret_var;
    }
 
+static
 void addseg()
    {
-   // remove for debugging leaks
+#ifdef MEM_DEBUG
+   // allocate the nodes one at a time
+   NODE* new_node = (NODE*) malloc(sizeof(*new_node));
+   if (new_node != NULL)
+      {
+      memcpy(&new_node->magic, "NODE", 4);
+      settype(new_node, NT_FREE);
+      new_node->n_cdr = free_list;
+      free_list = new_node;
+      }
+#else
+
+   // Allocate a large block of nodes at one time
+   // and link them into the free_list.
    memory_count++;
    if (status_flag) update_status_memory();
 
@@ -178,12 +127,10 @@ void addseg()
       for (int p = 0; p < SEG_SIZE; p++)
          {
          newseg->nodes[p].n_cdr = free_list;
-#ifdef MEM_DEBUG
-         settype(&(newseg->nodes[p]), NT_FREE);
-#endif
          free_list = &newseg->nodes[p];
          }
       }
+#endif
    }
 
 NODE *newnode(NODETYPES type)
@@ -206,15 +153,12 @@ NODE *newnode(NODETYPES type)
             }
          }
       }
-   free_list = cdr(newnd);
+   free_list = newnd->n_cdr;
    settype(newnd, type);
    setrefcnt(newnd, 0);
    newnd->n_car = NIL;
    newnd->n_cdr = NIL;
    newnd->n_obj = NIL;
-#ifdef MEM_DEBUG
-   mem_allocated++;
-#endif
    mem_nodes++;
    if (mem_nodes > mem_max) 
       {
@@ -303,17 +247,15 @@ void gc(NODE *nd)
             tcar = tcdr = tobj = NIL;
          }
 
-      // "free" this node by adding it to the free list
 #ifdef MEM_DEBUG
-      memset(nd, 0xAB, sizeof(*nd));
-      settype(nd, NT_FREE);
-#endif
+      // The easiest way to debug leaks is to just free the node.
+      free(nd);
+#else
+      // "free" this node by adding it to the free list
       nd->n_cdr = free_list;
       free_list = nd;
-#ifdef MEM_DEBUG
-      record_freed_pointer(nd);
-      mem_freed++;
 #endif
+
       mem_nodes--;
       if (tcdr != NIL && decrefcnt(tcdr) == 0)
          {
@@ -403,3 +345,4 @@ void free_segment_list()
       segment_list = next_segment;
       }
    }
+

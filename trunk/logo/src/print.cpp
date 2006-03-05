@@ -26,8 +26,6 @@ char *print_stringptr;
 
 bool print_backslashes = false;
 
-static void real_print_node(FILE *strm, NODE *nd, int depth, int width);
-
 void update_coords(char /*ch*/)
    {
    }
@@ -137,42 +135,6 @@ void real_print_helper(FILE *strm, NODE *ndlist, int depth, int width)
       }
    }
 
-#ifdef MEM_DEBUG
-static
-const char *debug_typename(const NODE *nd)
-   {
-   static char buf[30];
-   switch (nodetype(nd))
-      {
-       case PNIL: return "PNIL";
-       case PUNBOUND: return "PUNBOUND";
-       case CONS: return "CONS";
-       case STRING: return "STRING";
-       case INTEGER: return "INTEGER";
-       case FLOATINGPOINT: return "FLOATINGPOINT";
-       case PRIM: return "PRIM";
-       case MACRO: return "MACRO";
-       case TAILFORM: return "TAILFORM";
-       case CASEOBJ: return "CASEOBJ";
-       case INFIX: return "INFIX";
-       case TREE: return "TREE";
-       case RUN_PARSE: return "RUN_PARSE";
-       case QUOTE: return "QUOTE";
-       case COLON: return "COLON";
-       case BACKSLASH_STRING: return "BACKSLASH_STRING";
-       case VBAR_STRING: return "VBAR_STRING";
-       case ARRAY: return "ARRAY";
-       case LINE: return "LINE";
-       case CONT: return "CONT";
-       case NT_FREE: return "FREED_OBJECT";
-       default:
-           sprintf(buf, "UNKNOWN_0x%X", nodetype(nd));
-           return buf;
-      }
-   }
-
-const bool debug_print = true;
-#endif
 
 // prints a node to a file stream in a way that is consistent
 // with how FMSLogo parses nodes.
@@ -192,21 +154,6 @@ void real_print_node(FILE *strm, NODE *nd, int depth, int width)
       ndprintf(strm, "...");
       return;
       }
-#ifdef MEM_DEBUG
-   if (debug_print && nd != NIL)
-      {
-      fprintf(
-         stderr,
-         "\n"
-            "  {\n"
-            "  %s: %d: 0x%lX\n"
-            "  }\n"
-            "\n",
-         debug_typename(nd), 
-         getrefcnt(nd), 
-         nd);
-      }
-#endif
    if (nd == NIL)
       {
       print_char(strm, '[');

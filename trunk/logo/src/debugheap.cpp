@@ -60,12 +60,48 @@ static long g_nextid         = 1;
 static long g_break_alloc_id = 0;
 
 
+const char *debug_typename_to_string(const NODE *nd)
+   {
+   static char buf[30];
+   switch (nodetype(nd))
+      {
+       case PNIL: return "PNIL";
+       case PUNBOUND: return "PUNBOUND";
+       case CONS: return "CONS";
+       case STRING: return "STRING";
+       case INTEGER: return "INTEGER";
+       case FLOATINGPOINT: return "FLOATINGPOINT";
+       case PRIM: return "PRIM";
+       case MACRO: return "MACRO";
+       case TAILFORM: return "TAILFORM";
+       case CASEOBJ: return "CASEOBJ";
+       case INFIX: return "INFIX";
+       case TREE: return "TREE";
+       case RUN_PARSE: return "RUN_PARSE";
+       case QUOTE: return "QUOTE";
+       case COLON: return "COLON";
+       case BACKSLASH_STRING: return "BACKSLASH_STRING";
+       case VBAR_STRING: return "VBAR_STRING";
+       case ARRAY: return "ARRAY";
+       case LINE: return "LINE";
+       case CONT: return "CONT";
+       case NT_FREE: return "FREED_OBJECT";
+       default:
+           sprintf(buf, "UNKNOWN_0x%X", nodetype(nd));
+           return buf;
+      }
+   }
+
 static
 void 
 debug_report_leaks(void)
    {
    if (g_allocated_blocks.next != &g_allocated_blocks)
       {
+      // clear these flags so that real_print_node doesn't crash
+      IsTimeToHalt = false;
+      IsTimeToPause = false;
+
       // the list is not empty
       fprintf(stderr, "Memory Leaks detected!\n");
 
@@ -141,6 +177,37 @@ debug_report_leaks(void)
             }
 
          fprintf(stderr, "\n");
+         }
+      }
+
+   fprintf(stderr, "\n");
+   fprintf(stderr, "Dumping leaked NODEs\n");
+   for (struct memory_header_t * current_block = g_allocated_blocks.next; 
+        current_block != &g_allocated_blocks;
+        current_block = current_block->next)
+      {
+      void * userptr = debug_header_to_userptr(current_block);
+
+      if (current_block->blocksize == sizeof(NODE) &&
+          0 == memcmp(userptr, "NODE", 4))
+         {
+         NODE * current_node = static_cast<NODE*>(userptr);
+
+         fprintf(
+            stderr,
+            "(id=%8lu) at 0x%X %s ref=%d:\n  ",
+            current_block->id,
+            current_node,
+            debug_typename_to_string(current_node),
+            getrefcnt(current_node));
+
+         real_print_node(
+            stderr,
+            static_cast<NODE*>(userptr),
+            -1,
+            -1);
+
+         fprintf(stderr, "\n\n");
          }
       }
    }
