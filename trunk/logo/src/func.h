@@ -330,7 +330,6 @@ extern NODE *getprop(NODE *plist, NODE *name, bool before);
 extern NODE *lgprop(NODE *args);
 extern NODE *lpprop(NODE *args);
 extern NODE *lremprop(NODE *args);
-extern NODE *copy_list(NODE *arg);
 extern NODE *lplist(NODE *args);
 
 /* File TERM.CPP: */

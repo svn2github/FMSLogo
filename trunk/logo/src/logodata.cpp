@@ -817,6 +817,7 @@ NODE *lremprop(NODE *args)
    return Unbound;
    }
 
+static
 NODE *copy_list(NODE *arg)
    {
    NODE *lastnode;
