@@ -70,8 +70,7 @@ void untreeify_proc(NODE *procname)
    untreeify(body);
    }
 
-/* Treeify a body by appending the trees of the lines.
-*/
+// Treeify a body by appending the trees of the lines.
 void make_tree_from_body(NODE *body)
    {
    if (body == NIL ||
@@ -252,7 +251,7 @@ NODE *paren_line(NODE *line)
    {
    if (line == NIL) 
       {
-      return line;
+      return NIL;
       }
 
    NODE * retval = paren_expr(&line, FALSE);
@@ -275,7 +274,7 @@ NODE *gather_some_args(int min, int max, NODE **args, bool inparen, NODE **ifnod
       {
       if (min > 0)
          {
-         return cons(Not_Enough_Node, NIL);
+         return cons_list(Not_Enough_Node);
          }
       }
    else if (max == 0)
@@ -352,29 +351,31 @@ NODE *gather_args(NODE *proc, NODE **args, bool inparen, NODE **ifnode)
    }
 
 // Treeify a list of tokens (runparsed or not).
-void make_tree(NODE *list)
+void make_tree(NODE *newtree)
    {
 
-   if (list == NIL ||
-       (is_tree(list) && generation__tree(list) == the_generation))
+   if (newtree == NIL ||
+       (is_tree(newtree) && generation__tree(newtree) == the_generation))
       {
+      // already a tree
       return;
       }
 
-   if (!runparsed(list)) 
+   // make sure the tree-to-be is runparsed
+   if (!runparsed(newtree)) 
       {
-      make_runparse(list);
+      make_runparse(newtree);
       }
 
    tree_dk_how = false;
-   NODE * tree = paren_line(parsed__runparse(list));
-   if (tree != NIL && tree != Unbound)
+   NODE * childtree = paren_line(parsed__runparse(newtree));
+   if (childtree != NIL && childtree != Unbound)
       {
-      settype(list, TREE);
-      settree__tree(list, tree);
+      settype(newtree, TREE);
+      settree__tree(newtree, childtree);
       if (tree_dk_how || stopping_flag == THROWING)
          {
-         setgeneration__tree(list, Unbound);
+         setgeneration__tree(newtree, Unbound);
          }
       }
    }
