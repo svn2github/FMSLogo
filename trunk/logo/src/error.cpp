@@ -466,13 +466,6 @@ NODE *lpause(NODE*)
    sv_val_status = val_status;
    while (RUNNING)
       {
-#ifdef MEM_DEBUG
-      printf(
-         "alloc=%d, freed=%d, used=%d\n",
-         mem_allocated, 
-         mem_freed, 
-         mem_allocated - mem_freed);
-#endif
       if (uname != NIL) print_node(stdout, uname);
       new_line(stdout);
       input_mode = PAUSE_MODE;
