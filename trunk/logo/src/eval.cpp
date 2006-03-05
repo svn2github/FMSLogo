@@ -24,24 +24,25 @@
 
 #define assign(to, from)    (to = reref(to, from))
 
+// save/restore a NODE
 #define save(register)      push(register, stack)
 #define restore(register)   (assign(register, car(stack)), pop(stack))
 
+// save/restore two NODEs
 #define save2(reg1,reg2)    (push(reg1,stack),setobject(stack,reg2))
 #define restore2(reg1,reg2) (assign(reg2,getobject(stack)), \
            assign(reg1,car(stack)), pop(stack))
 
-/* saving and restoring FIXNUMs rather than NODEs */
-
+// save/restore a FIXNUM
 #define numsave(register)   numpush(register, &stack)
 #define numrestore(register) (register=(FIXNUM)car(stack), numpop(&stack))
 
+// save/restore two FIXNUMs
 #define num2save(reg1,reg2) (numpush(reg1,&stack),stack->n_obj=(NODE *)reg2)
 #define num2restore(reg1,reg2) (reg2=(FIXNUM)getobject(stack), \
            reg1=(FIXNUM)car(stack), numpop(&stack))
 
-/* save and restore a FIXNUM (reg1) and a NODE (reg2) */
-
+// save/restore a FIXNUM (reg1) and a NODE (reg2)
 #define mixsave(reg1,reg2)  (numpush(reg1,&stack),setobject(stack,reg2))
 #define mixrestore(reg1,reg2) deref(reg2); reg2=getobject(stack); \
            reg1=(FIXNUM)car(stack); numpop(&stack)
@@ -275,9 +276,9 @@ NODE *evaluator(NODE *list, enum labels where)
    NODE *arg = NIL;          // the current actual
 
    // registers that don't get reference counted, so we pretend they're ints
-   FIXNUM vsp     = 0;             // temp ptr into var_stack
-   FIXNUM cont    = 0;             // where to go next
-   FIXNUM formals = (FIXNUM) NIL;  // list of formal parameters
+   NODE * vsp     = NIL;  // temp ptr into var_stack
+   FIXNUM cont    = 0;    // where to go next (an enum label)
+   NODE * formals = NIL;  // list of formal parameters
 
    int i;
    //    int nargs;
@@ -534,12 +535,12 @@ NODE *evaluator(NODE *list, enum labels where)
       }
    /* Bind the actuals to the formals */
  lambda_apply:
-   vsp = (FIXNUM) var_stack;           /* remember where we came in           */
-   for (formals = (FIXNUM) formals__procnode(proc);
-         formals != (FIXNUM) NIL;
-         formals = (FIXNUM) cdr((NODE *) formals))
+   vsp = var_stack;           // remember where we came in
+   for (formals = formals__procnode(proc);
+        formals != NIL;
+        formals = cdr(formals))
       {
-      parm = car((NODE *) formals);
+      parm = car(formals);
       if (nodetype(parm) == INTEGER) 
          {
          break; // default # args
@@ -560,7 +561,7 @@ NODE *evaluator(NODE *list, enum labels where)
 
       if (nodetype(parm) == CASEOBJ)
          {
-         if (not_local(parm, (NODE *) vsp))
+         if (not_local(parm, vsp))
             {
             push(parm, var_stack);
             setobject(var_stack, valnode__caseobj(parm));
@@ -571,7 +572,7 @@ NODE *evaluator(NODE *list, enum labels where)
       else if (nodetype(parm) == CONS)
          {
          /* parm is optional or rest */
-         if (not_local(car(parm), (NODE *) vsp))
+         if (not_local(car(parm), vsp))
             {
             push(car(parm), var_stack);
             setobject(var_stack, valnode__caseobj(car(parm)));
@@ -594,8 +595,8 @@ NODE *evaluator(NODE *list, enum labels where)
             assign(var, var_stack);
             tailcall = -1;
             val_status = 1;
-            mixsave(formals, argl);
-            numsave(vsp);
+            save2(formals, argl);
+            save(vsp);
             assign(list, cdr(parm));
             if (NOT_THROWING)
                {
@@ -617,9 +618,9 @@ NODE *evaluator(NODE *list, enum labels where)
 
 
  set_args_continue:
-            numrestore(vsp);
-            mixrestore(formals, argl);
-            parm = car((NODE *) formals);
+            restore(vsp);
+            restore2(formals, argl);
+            parm = car(formals);
             reset_args(var);
             num2restore(ift_iff_flag, val_status);
             restore2(didnt_output_name, didnt_get_output);
@@ -640,7 +641,7 @@ NODE *evaluator(NODE *list, enum labels where)
       assign(val, Unbound);
       goto fetch_cont;
       }
-   vsp = 0;
+   vsp = NIL;
    if (tracing = (!is_list(fun) && flag__caseobj(fun, PROC_TRACED)) || traceflag)
       {
       if (NOT_THROWING) 
@@ -1139,17 +1140,16 @@ NODE *evaluator(NODE *list, enum labels where)
                goto lambda_apply;
                }
             /* lambda form */
-            formals = (FIXNUM) car(fun);
+            formals = car(fun);
             numsave(tailcall);
             tailcall = 0;
-            llocal((NODE *) formals);  /* bind the formals locally            */
+            llocal(formals);  /* bind the formals locally            */
             numrestore(tailcall);
             for (;
-                  formals && argl && NOT_THROWING;
-                  formals = (FIXNUM) cdr((NODE *) formals),
-                  assign(argl, cdr(argl)))
+                 formals != NIL && argl && NOT_THROWING;
+                 formals = cdr(formals), assign(argl, cdr(argl)))
                {
-               setvalnode__caseobj(car((NODE *) formals), car(argl));
+               setvalnode__caseobj(car(formals), car(argl));
                }
             assign(val, cdr(fun));
             goto macro_reval;
