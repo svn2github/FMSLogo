@@ -313,19 +313,18 @@ NODE *lnodes(NODE *  /* args */)
 
 void fill_reserve_tank()
    {
-   NODE *p = NIL;
-   int i = 50;
-
-   while (--i >= 0)
+   // grow the reserve tank by 50 nodes
+   for (int i = 0; i < 50; i++)
       {
-      p = reref(p, cons(NIL, p));
+      reserve_tank = cons(NIL, reserve_tank);
       }
-   reserve_tank = p;
    }
 
 void use_reserve_tank()
    {
-   reserve_tank = reref(reserve_tank, NIL);
+   // release all nodes in the reserve tank
+   gcref(reserve_tank);
+   reserve_tank = NIL;
    }
 
 void check_reserve_tank()
