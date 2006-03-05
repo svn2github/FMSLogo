@@ -264,27 +264,37 @@ void release_all_objects()
    {
    for (int i = 0; i < HASH_LEN; i++)
       {
-      while (hash_table[i] != NIL)
+      for (NODE * hash_entry = hash_table[i];
+           hash_entry != NIL;
+           hash_entry = cdr(hash_entry))
          {
-         NODE * hash_entry = hash_table[i];
          NODE * object = car(hash_entry);
 
          // overwrite the "canonical" node with NIL to 
          // force garbage collection
          setcar(object, NIL);
 
-         // overwrite the "case-list" with NIL to 
-         // force garbage collection
-         setcdr(caselistptr__object(object), NIL);
-
          // overwrite the "proc node" with NIL to 
          // force garbage collection
          setprocnode__object(object, NIL);
 
+         // overwrite the "value" with NIL to 
+         // force garbage collection
+         setvalnode__object(object, NIL);
+
+         // overwrite the "propery list" with NIL to
+         // force garbage collection
+         setplist__object(object, NIL);
+
+         // overwrite the "case-list" with NIL to
+         // force garbage collection
+         setcdr(caselistptr__object(object), NIL);
+
          // overwrite the "object" node with NIL to 
          // force garbage collection.
          setcar(hash_entry, NIL);
-         hash_table[i] = cdr(hash_entry);
          }
+      deref(hash_table[i]);
+      hash_table[i] = NIL;
       }
    }
