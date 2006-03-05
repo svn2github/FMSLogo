@@ -537,7 +537,7 @@ contents_map(
            {
            return;
            }
-           break;
+         break;
 
       case c_VARS:
          flag_check <<= 1;
