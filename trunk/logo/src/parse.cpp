@@ -760,7 +760,7 @@ NODE *runparse_node(NODE *nd, NODE **ndsptr)
                cnv_node_to_numnode(make_strnode(tptr + 1, tcnt - 1, wtyp, strnzcpy)));
             if (return_list == NIL)
                {
-               return_list = vref(qmtnode);
+               return_list = qmtnode;
                }
             else
                {
@@ -783,7 +783,7 @@ NODE *runparse_node(NODE *nd, NODE **ndsptr)
       tnode = cons_list(tnode);
       if (return_list == NIL)
          {
-         return_list = vref(tnode);
+         return_list = tnode;
          }
       else 
          {
@@ -792,7 +792,7 @@ NODE *runparse_node(NODE *nd, NODE **ndsptr)
       return_list_lastnode = tnode;
       }
    deref(snd);
-   return unref(return_list);
+   return return_list;
    }
 
 NODE *runparse(NODE *ndlist)
@@ -834,14 +834,17 @@ NODE *runparse(NODE *ndlist)
 
       if (tnode != NIL)
          {
+         // append tnode to the end of return_list
          if (return_list == NIL) 
             {
-            return_list = vref(tnode);
+            return_list = tnode;
             }
          else
             {
             setcdr(return_list_lastnode, tnode);
             }
+
+         // advance return_list_lastnode to the new last node
          return_list_lastnode = tnode;
          while (cdr(return_list_lastnode) != NIL)
             {
@@ -852,7 +855,7 @@ NODE *runparse(NODE *ndlist)
       if (check_throwing) break;
       }
 
-   return unref(return_list);
+   return return_list;
    }
 
 NODE *lrunparse(NODE *args)
