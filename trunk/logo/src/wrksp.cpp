@@ -576,15 +576,15 @@ contents_map(
       }
    }
 
+// Modify a list such that each element in the list
+// is inserted into its own, one-element list.
 static
 void ms_listlist(NODE *nd)
    {
    while (nd != NIL)
       {
-      NODE* temp = newnode(CONS);
-      car(temp) = car(nd);
-      car(nd) = temp;
-      increfcnt(temp);
+      NODE* temp = cons_list(car(nd));
+      setcar(nd, temp);
       nd = cdr(nd);
       }
    }
@@ -613,19 +613,25 @@ NODE *merge(NODE *a, NODE *b)
       {
       if (compare_node(car(a), car(b), FALSE) < 0)
          {
-         cdr(tail) = a;
+         tail->n_cdr = a;
          a = cdr(a);
          }
       else
          {
-         cdr(tail) = b;
+         tail->n_cdr = b;
          b = cdr(b);
          }
       tail = cdr(tail);
       }
 
-   if (b == NIL) cdr(tail) = a;
-   else cdr(tail) = b;
+   if (b == NIL) 
+      {
+      tail->n_cdr = a;
+      }
+   else
+      {
+      tail->n_cdr = b;
+      }
 
    return ret;
    }
@@ -637,10 +643,10 @@ void mergepairs(NODE *nd)
 
    while (nd != NIL && cdr(nd) != NIL)
       {
-      car(nd) = merge(car(nd), cadr(nd));
+      nd->n_car = merge(car(nd), cadr(nd));
       temp = cdr(nd);
-      cdr(nd) = cddr(nd);
-      car(temp) = cdr(temp) = NIL;
+      nd->n_cdr = cddr(nd);
+      temp->n_car = temp->n_cdr = NIL;
       gc(temp);
       nd = cdr(nd);
       }
@@ -651,15 +657,25 @@ NODE *mergesort(NODE *nd)
    {
    NODE *ret;
 
-   if (nd == NIL) return (NIL);
-   if (cdr(nd) == NIL) return (nd);
+   if (nd == NIL)
+      {
+      return NIL;
+      }
+
+   if (cdr(nd) == NIL) 
+      {
+      return nd;
+      }
+
    ms_listlist(nd);
    while (cdr(nd) != NIL)
+      {
       mergepairs(nd);
+      }
    ret = car(nd);
-   car(nd) = NIL;
+   nd->n_car = NIL;
    gc(nd);
-   return (ret);
+   return ret;
    }
 
 static
