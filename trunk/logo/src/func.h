@@ -347,7 +347,7 @@ extern NODE *lsetmargins(NODE *args);
 extern NODE *lstandout(NODE *args);
 
 /* File PRINT.CPP: */
-
+extern void real_print_node(FILE *strm, NODE *nd, int depth, int width);
 extern void update_coords(char ch);
 extern void print_char(FILE *strm, char ch);
 extern void print_space(FILE *strm);
@@ -383,7 +383,6 @@ extern void setcar(NODE *nd, NODE *newcar);
 extern void setcdr(NODE *nd, NODE *newcdr);
 extern NODE *reref(NODE *proc_var, NODE *newval);
 extern NODE *unref(NODE *ret_var);
-extern void addseg(void);
 extern NODE *newnode(NODETYPES type);
 extern NODE *cons(NODE *x, NODE *y);
 extern void gc(NODE *nd);
@@ -538,6 +537,7 @@ extern NODE *reverse(NODE *list);
 extern NODE *append(NODE *a, NODE *b);
 extern NODE *evaluator(NODE *list, enum labels where);
 extern void reset_args(NODE *old_stack);
+extern void uninitialize_eval(void);
 
 /* File ERROR.CPP: */
 
