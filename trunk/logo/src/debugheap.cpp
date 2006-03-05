@@ -364,3 +364,12 @@ char * debug_strdup(const char * string)
    return static_cast<char *>(newstring);
    }
 
+void * operator new (size_t size)
+   {
+   return debug_malloc(size);
+   }
+
+void operator delete (void * block)
+   {
+   debug_free(block);
+   }
