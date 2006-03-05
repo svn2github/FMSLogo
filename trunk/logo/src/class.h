@@ -594,7 +594,7 @@ extern bool stepflag;
 extern int pause_flag;
 extern int MaxWidth;
 extern int MaxHeight;
-extern bool JustDidEdit;
+extern bool GiveFocusToEditbox;
 extern int BaseUnitsx;
 extern int BaseUnitsy;
 extern int current_write_mode;

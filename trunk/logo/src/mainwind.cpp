@@ -846,7 +846,7 @@ bool TMainFrame::CanClose()
       {
       ::ShowWindow(editH, SW_SHOWNORMAL);
       ::SetWindowPos(editH, HWND_TOP, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
-      JustDidEdit = true;
+      GiveFocusToEditbox = false;
 
       if (MessageBox(
             "Changes in this edit session may be lost.\n"
@@ -1788,13 +1788,6 @@ void TMainFrame::MyPopupEdit(const char *FileName, NODE *args)
 
    /* now set them */
    EditWindow->Attr.Style = WS_VISIBLE | WS_POPUPWINDOW | WS_CAPTION | WS_THICKFRAME | WS_MINIMIZEBOX | WS_MAXIMIZEBOX;
-
-   /* flag for how to handle focus */
-   if (args != NULL)
-      {
-      JustDidEdit = true;
-      }
-
    EditWindow->Editor->Attr.Style |= ES_NOHIDESEL;
 
    // let user edit
@@ -1820,6 +1813,8 @@ void TMainFrame::MyPopupEdit(const char *FileName, NODE *args)
          EditWindow->Editor->SetSelection(LinesLoadedOnEdit, LinesLoadedOnEdit);
          }
       }
+
+   GiveFocusToEditbox = false;
    }
 
    

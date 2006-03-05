@@ -397,8 +397,9 @@ void do_execution(char * logocommand)
 
 void TMyCommandWindow::DoButtonExecute(UINT)
    {
-   char selectedtext[MAX_BUFFER_SIZE];
+   GiveFocusToEditbox = true;
 
+   char selectedtext[MAX_BUFFER_SIZE];
    selectedtext[0] = '\0';
 
    // get what's in the edit box
@@ -437,11 +438,10 @@ void TMyCommandWindow::DoButtonExecute(UINT)
    // calling do_execution() will delete the "this" pointer,
    // if it executes FULLSCREEN, TEXTSCREEN, or SPLITSCREEN.
    // Therefore, we must not touch any member variable at this point.
-   if (!JustDidEdit)
+   if (GiveFocusToEditbox)
       {
       MainWindowx->CommandWindow->Editbox.SetFocus();
       }
-   JustDidEdit = false;
    }
 
 void TMyCommandWindow::DoButtonEdall(UINT)

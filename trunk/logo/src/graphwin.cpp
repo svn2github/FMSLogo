@@ -896,7 +896,6 @@ NODE *lstatus(NODE *)
    if (!status_flag)
       {
       MainWindowx->MyPopupStatus();
-      JustDidEdit = true;
       }
    return Unbound;
    }
@@ -2114,7 +2113,8 @@ NODE *lsetfocus(NODE *arg)
    char textbuf[MAX_BUFFER_SIZE];
    cnv_strnode_string(textbuf, arg);
 
-   if (0 == stricmp("MSWLogo Screen", textbuf) ||
+   if (0 == stricmp("FMSLogo", textbuf) ||
+       0 == stricmp("MSWLogo Screen", textbuf) ||
        0 == stricmp("FMSLogo Screen", textbuf))
       {
       // special-case: set the focus on the screen
@@ -2132,7 +2132,7 @@ NODE *lsetfocus(NODE *arg)
          }
       }
 
-   JustDidEdit = true;
+   GiveFocusToEditbox = false;
 
    return Unbound;
    }
@@ -2153,7 +2153,7 @@ NODE *lgetfocus(NODE *)
       ::GetWindowText(TempH, textbuf, MAX_BUFFER_SIZE);
       }
 
-   JustDidEdit = true;
+   GiveFocusToEditbox = false;
 
    // Return caption as a list
    NODE * arg = make_strnode(textbuf);
@@ -2185,7 +2185,7 @@ NODE *lwindowset(NODE *args)
       if (window != NULL)
          {
          ShowWindow(window, mode);
-         JustDidEdit = true;
+         GiveFocusToEditbox = false;
          }
       }
 
@@ -2382,7 +2382,6 @@ void do_help(const char *arg)
       szHelpFileName,
       HH_KEYWORD_LOOKUP, 
       (DWORD) &aklink);
-   JustDidEdit = true;
    }
 
 NODE *lhelp(NODE *arg)
