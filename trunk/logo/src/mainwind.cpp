@@ -812,6 +812,7 @@ TMainFrame::~TMainFrame()
    DeleteObject(MemoryBitMap);
    delete CommandWindow;
 
+   delete ScreenWindow;
 
    /* if palette clean it too */
    if (EnablePalette)
