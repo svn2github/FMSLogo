@@ -50,21 +50,21 @@
 
 #define nameis(x,y)         ((object__caseobj(x)) == (object__caseobj(y)))
 
-/* These variables are all externed in globals.h */
-
-NODE
-*fun = NIL,                            /* current function name               */
-*ufun = NIL,                           /* current user-defined function name  */
-*last_ufun = NIL,                      /* the function that called this one   */
-*this_line = NIL,                      /* the current instruction line        */
-*last_line = NIL,                      /* the line that called this one       */
-*var_stack = NIL,                 /* the stack of variables and their bindings*/
-*var = NIL,                            /* frame pointer into var_stack        */
-*last_call = NIL,                      /* the last proc called                */
-*didnt_output_name = NIL,              /* the name of the proc that didn't OP */
-*didnt_get_output = NIL,            /* the name of the proc that wanted the OP*/
-*output_node = NIL;                    /* the output of the current function  */
-FIXNUM repcountup;                     /* up count for repeat                 */
+//
+// These variables are all externed in globals.h
+//
+NODE *fun = NIL;                 // current function name
+NODE *ufun = NIL;                // current user-defined function name
+NODE *last_ufun = NIL;           // the function that called this one
+NODE *this_line = NIL;           // the current instruction line
+NODE *last_line = NIL;           // the line that called this one
+NODE *var_stack = NIL;           // the stack of variables and their bindings
+NODE *var = NIL;                 // frame pointer into var_stack
+NODE *last_call = NIL;           // the last proc called
+NODE *didnt_output_name = NIL;   // the name of the proc that didn't OP
+NODE *didnt_get_output = NIL;    // the name of the proc that wanted the OP
+NODE *output_node = NIL;         // the output of the current function
+FIXNUM repcountup;               // up count for repeat
 
 
 CTRLTYPE stopping_flag = RUN;
@@ -263,22 +263,21 @@ void reset_args(NODE *old_stack)
 */
 NODE *evaluator(NODE *list, enum labels where)
    {
+   // registers
+   NODE *exp = NIL;          // the current expression
+   NODE *val = NIL;          // the value of the last expression
+   NODE *proc = NIL;         // the procedure definition
+   NODE *argl = NIL;         // evaluated argument list
+   NODE *unev = NIL;         // list of unevaluated expressions
+   NODE *stack = NIL;        // register stack
+   NODE *parm = NIL;         // the current formal
+   NODE *catch_tag = NIL;
+   NODE *arg = NIL;          // the current actual
 
-   /* registers */
-   NODE *exp = NIL,                    /* the current expression              */
-   *val = NIL,                         /* the value of the last expression    */
-   *proc = NIL,                        /* the procedure definition            */
-   *argl = NIL,                        /* evaluated argument list             */
-   *unev = NIL,                        /* list of unevaluated expressions     */
-   *stack = NIL,                       /* register stack                      */
-   *parm = NIL,                        /* the current formal                  */
-   *catch_tag = NIL,
-   *arg = NIL;                         /* the current actual                  */
-
-   /* registers that don't get reference counted, so we pretend they're ints */
-   FIXNUM vsp = 0,                     /* temp ptr into var_stack             */
-      cont = 0,                           /* where to go next                    */
-      formals = (FIXNUM) NIL;             /* list of formal parameters           */
+   // registers that don't get reference counted, so we pretend they're ints
+   FIXNUM vsp     = 0;             // temp ptr into var_stack
+   FIXNUM cont    = 0;             // where to go next
+   FIXNUM formals = (FIXNUM) NIL;  // list of formal parameters
 
    int i;
    //    int nargs;
@@ -1270,5 +1269,15 @@ NODE *evaluator(NODE *list, enum labels where)
    deref(stack); 
    deref(catch_tag); 
    deref(exp);
-   return (val);
+   return val;
+   }
+
+
+void uninitialize_eval()
+   {
+   deref(last_call);
+   last_call = NIL;
+
+   deref(last_line);
+   last_line = NIL;
    }
