@@ -199,16 +199,21 @@ NODE;
 #define getobject(node)         ((node)->n_obj)
 
 inline
+bool
+is_freed(const logo_node * node)
+   {
+   return node->node_type == 0xCCCCCCCC || node->node_type == NT_FREE;
+   }
+
+inline
 NODE*
 car(const NODE * node)
    {
    assert(node != NULL);
-   assert(
-      node->node_type != 0xCCCCCCCC &&
-      node->node_type != NT_FREE    &&
-      node->node_type != STRING     && 
-      node->node_type != INTEGER    && 
-      node->node_type != FLOATINGPOINT);
+   assert(!is_freed(node));
+   assert(node->node_type != STRING);
+   assert(node->node_type != INTEGER);
+   assert(node->node_type != FLOATINGPOINT);
    return node->n_car;
    }
 
@@ -217,12 +222,10 @@ NODE*
 cdr(const NODE * node)
    {
    assert(node != NULL);
-   assert(
-      node->node_type != 0xCCCCCCCC &&
-      node->node_type != NT_FREE    &&
-      node->node_type != STRING     && 
-      node->node_type != INTEGER    && 
-      node->node_type != FLOATINGPOINT);
+   assert(!is_freed(node));
+   assert(node->node_type != STRING);
+   assert(node->node_type != INTEGER);
+   assert(node->node_type != FLOATINGPOINT);
    return node->n_cdr;
    }
 
@@ -391,23 +394,25 @@ parsed__runparse(
 
 inline
 void
-ref(logo_node * o)
+ref(logo_node * object)
    {
-   if (o != NIL)
+   if (object != NIL)
       {
-      increfcnt(o);
+      assert(!is_freed(object));
+      increfcnt(object);
       }
    }
 
 inline
 logo_node*
-vref(logo_node * o)
+vref(logo_node * object)
    {
-   if (o != NIL)
+   if (object != NIL)
       {
-      increfcnt(o);
+      assert(!is_freed(object));
+      increfcnt(object);
       }
-   return o;
+   return object;
    }
 
 
@@ -420,6 +425,7 @@ deref(logo_node * object)
       return;
       }
 
+   assert(!is_freed(object));
    assert(getrefcnt(object) != 0); // memleak
 
    if (decrefcnt(object) == 0)
@@ -436,6 +442,8 @@ gcref(logo_node * object)
       {
       return;
       }
+
+   assert(!is_freed(object));
 
    if (getrefcnt(object) == 0)
       {
