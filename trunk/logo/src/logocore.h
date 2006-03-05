@@ -141,6 +141,9 @@ typedef double FLONUM;
 
 typedef struct logo_node
    {
+#ifdef MEM_DEBUG
+   int       magic; // set to 'NODE'
+#endif
    NODETYPES node_type;
    /*   char gc_flags;  */
    long ref_count;
@@ -194,8 +197,35 @@ NODE;
 #define n_cdr                   nunion.ncons.ncdr
 #define n_obj                   nunion.ncons.nobj
 #define getobject(node)         ((node)->n_obj)
-#define car(node)               ((node)->n_car)
-#define cdr(node)               ((node)->n_cdr)
+
+inline
+NODE*
+car(const NODE * node)
+   {
+   assert(node != NULL);
+   assert(
+      node->node_type != 0xCCCCCCCC &&
+      node->node_type != NT_FREE    &&
+      node->node_type != STRING     && 
+      node->node_type != INTEGER    && 
+      node->node_type != FLOATINGPOINT);
+   return node->n_car;
+   }
+
+inline
+NODE*
+cdr(const NODE * node)
+   {
+   assert(node != NULL);
+   assert(
+      node->node_type != 0xCCCCCCCC &&
+      node->node_type != NT_FREE    &&
+      node->node_type != STRING     && 
+      node->node_type != INTEGER    && 
+      node->node_type != FLOATINGPOINT);
+   return node->n_cdr;
+   }
+
 #define caar(node)              ((node)->n_car->n_car)
 #define cadr(node)              ((node)->n_cdr->n_car)
 #define cdar(node)              ((node)->n_car->n_cdr)
@@ -312,7 +342,16 @@ CTRLTYPE;
 #define bodywords__procnode(p)  cadr(p)
 #define setbodywords__procnode(p,v) setcar(cdr(p),v)
 
-#define parsed__runparse(rn)    getobject(rn)
+inline
+logo_node*
+parsed__runparse(
+   const logo_node * runparsed_node
+)
+   {
+   assert(runparsed_node->node_type == RUN_PARSE);
+   return getobject(runparsed_node);
+   }
+
 #define node__quote(q)          car(q)
 #define node__colon(c)          car(c)
 #define valnode__colon(c)       valnode__caseobj(node__colon(c))
