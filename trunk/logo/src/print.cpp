@@ -199,12 +199,12 @@ void real_print_node(FILE *strm, NODE *nd, int depth, int width)
    else if (ndty == QUOTE)
       {
       print_char(strm, '\"');
-      print_node(strm, car(nd));
+      real_print_node(strm, car(nd), width - 1, depth);
       }
    else if (ndty == COLON)
       {
       print_char(strm, ':');
-      print_node(strm, car(nd));
+      real_print_node(strm, car(nd), width - 1, depth);
       }
    else
       {
