@@ -202,7 +202,7 @@ inline
 bool
 is_freed(const logo_node * node)
    {
-   return node->node_type == 0xCCCCCCCC || node->node_type == NT_FREE;
+   return node->node_type == 0xCCCC || node->node_type == NT_FREE;
    }
 
 inline
