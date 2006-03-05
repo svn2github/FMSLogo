@@ -48,8 +48,9 @@ NODE *get_bodywords(NODE *proc, NODE *name)
    name = intern(name);
    NODE * head = cons_list((is_macro(name) ? Macro : To), name);
    NODE * tail = cdr(head);
-   val = formals__procnode(proc);
-   while (val != NIL)
+   for (val = formals__procnode(proc);
+        val != NIL;
+        val = cdr(val))
       {
       if (is_list(car(val)))
          {
@@ -64,16 +65,15 @@ NODE *get_bodywords(NODE *proc, NODE *name)
          setcdr(tail, cons_list(make_colon(car(val))));
          }
       tail = cdr(tail);
-      val = cdr(val);
       }
    head = cons_list(head);
    tail = head;
-   val = bodylist__procnode(proc);
-   while (val != NIL)
+   for (val = bodylist__procnode(proc);
+        val != NIL;
+        val = cdr(val))
       {
       setcdr(tail, cons_list(runparse(car(val))));
       tail = cdr(tail);
-      val = cdr(val);
       }
    setcdr(tail, cons_list(cons_list(End)));
    setbodywords__procnode(proc, head);
