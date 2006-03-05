@@ -694,7 +694,7 @@ NODE *runparse_node(NODE *nd, NODE **ndsptr)
             {
             strnode = make_strnode(tptr, tcnt, wtyp, strnzcpy);
             }
-         tnode = cons_list(make_quote(intern(strnode)));
+         tnode = make_quote(intern(strnode));
          }
       else if (*wptr == ':')
          {
@@ -705,25 +705,24 @@ NODE *runparse_node(NODE *nd, NODE **ndsptr)
             {
             wptr++, wcnt++, tcnt++;
             }
-         tnode = cons_list(
-            make_colon(intern(make_strnode(tptr, tcnt, wtyp, strnzcpy))));
+         tnode = make_colon(intern(make_strnode(tptr, tcnt, wtyp, strnzcpy)));
          }
       else if (wcnt == 0 && *wptr == '-' && monadic_minus == FALSE &&
             wcnt+1 < wlen && !white_space(*(wptr + 1)))
          {
          /* minus sign with space before and no space after is unary */
-         tnode = cons_list(make_intnode((FIXNUM) 0));
+         tnode = make_intnode(0);
          monadic_minus = TRUE;
          }
       else if (parens(*wptr) || infixs(*wptr))
          {
          if (monadic_minus)
             {
-            tnode = cons_list(Minus_Tight);
+            tnode = Minus_Tight;
             }
          else
             {
-            tnode = cons_list(intern(make_strnode(wptr, 1, STRING, strnzcpy)));
+            tnode = intern(make_strnode(wptr, 1, STRING, strnzcpy));
             }
          monadic_minus = false;
          wptr++, wcnt++;
@@ -768,18 +767,20 @@ NODE *runparse_node(NODE *nd, NODE **ndsptr)
                setcdr(return_list_lastnode, qmtnode);
                }
             return_list_lastnode = cddr(qmtnode);
-            tnode = cons_list(Right_Paren);
+            tnode = Right_Paren;
             }
          else if (isnumb < 2 && tcnt > 0)
             {
-            tnode = cons_list(cnv_node_to_numnode(make_strnode(tptr, tcnt, wtyp, strnzcpy)));
+            tnode = cnv_node_to_numnode(make_strnode(tptr, tcnt, wtyp, strnzcpy));
             }
          else
             {
-            tnode = cons_list(intern(make_strnode(tptr, tcnt, wtyp, strnzcpy)));
+            tnode = intern(make_strnode(tptr, tcnt, wtyp, strnzcpy));
             }
          }
 
+      // append tnode to the end of return_list
+      tnode = cons_list(tnode);
       if (return_list == NIL)
          {
          return_list = vref(tnode);
@@ -791,7 +792,7 @@ NODE *runparse_node(NODE *nd, NODE **ndsptr)
       return_list_lastnode = tnode;
       }
    deref(snd);
-   return (unref(return_list));
+   return unref(return_list);
    }
 
 NODE *runparse(NODE *ndlist)
