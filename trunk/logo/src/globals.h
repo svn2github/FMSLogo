@@ -28,8 +28,6 @@ extern bool bFixed;
 extern bool bWidth;
 extern bool bHeight;
 extern NODE **hash_table;
-extern NODE **gcstack;
-extern NODE **gctop;
 extern NODE *current_line;
 extern NODE *exec_list;
 extern char TempPathName[];
@@ -89,11 +87,9 @@ extern char special_chars[];
 extern int ecma_size;
 #endif
 
-/* mem.c */
-#ifdef MEM_DEBUG
-extern long int mem_allocated;
-extern long int mem_freed;
-#endif
+/* mem.cpp */
+extern NODE **gcstack;
+extern NODE **gctop;
 
 /* parse.c */
 extern FILE *loadstream, *writestream, *readstream, *dribblestream;
@@ -156,11 +152,22 @@ extern ERR_TYPES erract_errtype;
 //extern FIXNUM global_repcount_index;
 extern FIXNUM repcountup;
 
-extern NODE *fun, *ufun, *last_ufun, *this_line, *last_line, *didnt_get_output;
-extern NODE *var, *var_stack, *output_node, *last_call, *didnt_output_name;
+extern NODE *fun;
+extern NODE *ufun;
+extern NODE *last_ufun;
+extern NODE *this_line;
+extern NODE *last_line;
+extern NODE *didnt_get_output;
+extern NODE *var;
+extern NODE *var_stack;
+extern NODE *output_node;
+extern NODE *last_call;
+extern NODE *didnt_output_name;
 extern CTRLTYPE stopping_flag;
 extern char *logolib;
-extern FIXNUM tailcall, val_status, dont_fix_ift;
+extern FIXNUM tailcall;
+extern FIXNUM val_status;
+extern FIXNUM dont_fix_ift;
 
 /* print.cpp */
 extern bool print_backslashes;
@@ -215,7 +222,8 @@ extern HMODULE      g_HtmlHelpLib;
 
 /* ibmterm.cpp */
 extern bool in_graphics_mode;
-extern int MaxX, MaxY;
+extern int MaxX;
+extern int MaxY;
 extern int ibm_screen_top;
 const int SIGQUIT = 15;
 
