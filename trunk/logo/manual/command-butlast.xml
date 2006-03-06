@@ -13,8 +13,14 @@
 
 <varlistentry><term>Description</term>
 <listitem>
-<para>If the input is a word, outputs a word containing all but the last character of the input.
-If the input is a list, outputs a list containing all but the last member of the input.</para>
+<para>
+If the input is a word, BUTLAST outputs a word containing all but the last character of the input.
+If the input is a list, BUTLAST outputs a list containing all but the last member of the input.
+</para>
+
+<para>
+BUTLAST throws a bad input error if given the empty list, the empty string, or an array.
+</para>
 </listitem>
 </varlistentry>
 

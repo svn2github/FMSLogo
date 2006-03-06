@@ -14,8 +14,14 @@
 
 <varlistentry><term>Description</term>
 <listitem>
-<para>If <parameter>thing</parameter> is a word, outputs a word containing all but the first character of the input.
-If <parameter>thing</parameter> is a list, outputs a list containing all but the first member of the input.</para>
+<para>
+If <parameter>thing</parameter> is a word, outputs a word containing all but the first character of the input.
+If <parameter>thing</parameter> is a list, outputs a list containing all but the first member of the input.
+</para>
+
+<para>
+BUTFIRST throws a bad input error if given the empty list, the empty string, or an array.
+</para>
 </listitem>
 </varlistentry>
 
