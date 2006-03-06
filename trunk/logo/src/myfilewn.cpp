@@ -294,8 +294,12 @@ void TMyFileWindow::CMTest()
    UINT start;
    UINT end;
    Editor->GetSelection(start, end);
-   char * theText = new char[abs(end - start) + 1];
+
+   size_t theTextLength = abs(end - start);
+   char * theText = new char[theTextLength + 1];
    Editor->GetSubText(theText, start, end);
+   theText[theTextLength] = '\0';
+   
    char * ptr = theText;
 
    // strip comments
@@ -306,8 +310,15 @@ void TMyFileWindow::CMTest()
 
       if (ptr2 != NULL)
          {
+         // overwrite the comment character with a space
          *ptr2 = ' ';
-         while ((*ptr2 != '\n') && (*ptr2 != '\r') && (*ptr2 != '~') && (*ptr2 != '\n'))
+
+         // put whitespace over everything until the end-of-string
+         // the end-of-line, or a comment continuer
+         while (*ptr2 != '\0' &&
+                *ptr2 != '\n' &&
+                *ptr2 != '\r' &&
+                *ptr2 != '~')
             {
             *ptr2++ = ' ';
             }
