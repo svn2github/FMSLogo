@@ -45,6 +45,7 @@ NODE *get_bodywords(NODE *proc, NODE *name)
       {
       return val;
       }
+
    name = intern(name);
    NODE * head = cons_list((is_macro(name) ? Macro : To), name);
    NODE * tail = cdr(head);
@@ -66,6 +67,8 @@ NODE *get_bodywords(NODE *proc, NODE *name)
          }
       tail = cdr(tail);
       }
+
+
    head = cons_list(head);
    tail = head;
    for (val = bodylist__procnode(proc);
@@ -129,7 +132,9 @@ NODE *lfulltext(NODE *args)
          return Unbound;
          }
       else
+         {
          return get_bodywords(val, name);
+         }
       }
    return Unbound;
    }
@@ -194,7 +199,9 @@ NODE *define_helper(NODE *args, int macro_flag)
             setcar(args, arg);
             maximum++;
             if (cdr(arg) == NIL)
+               {
                maximum = -1;
+               }
             }
          else if (nodetype(arg) == INTEGER &&
                getint(arg) <= (unsigned) maximum &&
@@ -214,7 +221,10 @@ NODE *define_helper(NODE *args, int macro_flag)
             break;
             }
          args = cdr(args);
-         if (check_throwing) break;
+         if (check_throwing) 
+            {
+            break;
+            }
          }
       }
    if (macro_flag < 0)
@@ -223,12 +233,17 @@ NODE *define_helper(NODE *args, int macro_flag)
       }
    else if (NOT_THROWING)
       {
-      setprocnode__caseobj(name,
+      setprocnode__caseobj(
+         name,
          make_procnode(val, NIL, minimum, deflt, maximum));
       if (macro_flag)
+         {
          setflag__caseobj(name, PROC_MACRO);
+         }
       else
+         {
          clearflag__caseobj(name, PROC_MACRO);
+         }
       if (deflt != old_default && old_default >= 0)
          {
          the_generation = reref(the_generation, cons_list(NIL));
@@ -489,7 +504,10 @@ NODE *llocal(NODE *args)
          tell_shadow(arg);
          args = cdr(args);
          }
-      if (check_throwing) break;
+      if (check_throwing) 
+         {
+         break;
+         }
       }
    var = reref(var, var_stack);        // so eval won't undo our work
    return Unbound;
@@ -853,27 +871,46 @@ void three_lists(NODE *arg, NODE **proclst, NODE **varlst, NODE **plistlst)
    }
 
 static
-char *expand_slash(NODE *wd)
+char *expand_slash(const NODE *wd)
    {
-   char *result;
-   const char *cp;
-   char *cp2;
-   int i, len = getstrlen(wd), j;
+   // figure out how many characters we need to expand
+   int len = getstrlen(wd);
+   int i = 0;
+   int j = len;
+   for (const char * cp = getstrptr(wd); 
+        --j >= 0;
+        )
+      {
+      if (getparity(*cp++)) 
+         {
+         i++;
+         }
+      }
 
-   for (cp = getstrptr(wd), i = 0, j = len; --j >= 0;)
-      if (getparity(*cp++)) i++;
-   result = (char *) malloc(len + i + 1);
+   // allocate space for the expanded string
+   char * result = (char *) malloc(len + i + 1);
    if (result == NULL)
       {
       err_logo(OUT_OF_MEM, NIL);
-      return 0;
+      return NULL;
       }
-   for (cp = getstrptr(wd), cp2 = result, j = len; --j >= 0;)
+
+   // copy the string to result and add backslashes as we go
+   char *cp2 = result;
+   j = len;
+   for (const char * cp = getstrptr(wd); 
+        --j >= 0;
+        )
       {
-      if (getparity(*cp)) *cp2++ = '\\';
+      if (getparity(*cp))
+         {
+         // backslash this character
+         *cp2++ = '\\';
+         }
       *cp2++ = clearparity(*cp++);
       }
    *cp2 = '\0';
+
    return result;
    }
 
