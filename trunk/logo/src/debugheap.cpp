@@ -32,6 +32,11 @@ struct memory_header_t
    struct memory_header_t *  next;
 };
 
+static struct memory_header_t g_allocated_blocks;
+static long g_nextid         = 1;
+static long g_break_alloc_id = 0;
+
+
 // get a pointer to the header
 static
 memory_header_t *
@@ -54,11 +59,6 @@ debug_header_to_userptr(
    {
    return reinterpret_cast<unsigned char *>(header + 1);
    }
-
-static struct memory_header_t g_allocated_blocks;
-static long g_nextid         = 1;
-static long g_break_alloc_id = 0;
-
 
 const char *debug_typename_to_string(const NODE *nd)
    {
