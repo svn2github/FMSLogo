@@ -62,18 +62,19 @@ bool TMyFileEditWindow::CanClose()
 void TMyFileEditWindow::SetupWindow()
    {
    // get procedures
-   NODE * proclst = lprocedures(NIL);
+   NODE * proclist = lprocedures(NIL);
 
-   // pop them into the list box
-   while (proclst != NIL)
+   // put the name of each procedure into the list box
+   for (NODE* proclist_node = proclist;
+        proclist_node != NIL;
+        proclist_node = cdr(proclist_node))
       {
       char tempbuff[MAX_BUFFER_SIZE];
-      cnv_strnode_string(tempbuff, proclst);
+      cnv_strnode_string(tempbuff, proclist_node);
       SendDlgItemMsg(ID_FILEEDITCOMBO, CB_ADDSTRING, 0, (LONG) tempbuff);
-      proclst = cdr(proclst);
       }
 
-   // REVISIT: does this leak proclst?
+   gcref(proclist);
    }
 
 DEFINE_RESPONSE_TABLE1(TMyFileEditWindow, TDialog)
