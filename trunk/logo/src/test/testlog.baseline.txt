@@ -199,6 +199,36 @@ INFO: Executing invalid instruction: [RAWASCII "ab]
 PASS: Executing [RAWASCII "ab] threw an error
 INFO: Executing invalid instruction: [RAWASCII 1.2]
 PASS: Executing [RAWASCII 1.2] threw an error
+PASS: [BF [1 2 3]] returned [2 3] , as expected.
+PASS: [BUTFIRST [1 2 3]] returned [2 3] , as expected.
+PASS: [BUTFIRST [1]] returned [] , as expected.
+PASS: [BUTFIRST "hello] returned ello , as expected.
+PASS: [BUTFIRST "h] returned  , as expected.
+INFO: Executing invalid instruction: [(BUTFIRST)]
+PASS: Executing [(BUTFIRST)] threw an error
+INFO: Executing invalid instruction: [(BUTFIRST "word "toomany)]
+PASS: Executing [(BUTFIRST "word "toomany)] threw an error
+INFO: Executing invalid instruction: [BUTFIRST []]
+PASS: Executing [BUTFIRST []] threw an error
+INFO: Executing invalid instruction: [BUTFIRST "]
+PASS: Executing [BUTFIRST "] threw an error
+INFO: Executing invalid instruction: [BUTFIRST {1}]
+PASS: Executing [BUTFIRST {1}] threw an error
+PASS: [BL [1 2 3]] returned [1 2] , as expected.
+PASS: [BUTLAST [1 2 3]] returned [1 2] , as expected.
+PASS: [BUTLAST [1]] returned [] , as expected.
+PASS: [BUTLAST "hello] returned hell , as expected.
+PASS: [BUTLAST "h] returned  , as expected.
+INFO: Executing invalid instruction: [(BUTLAST)]
+PASS: Executing [(BUTLAST)] threw an error
+INFO: Executing invalid instruction: [(BUTLAST "word "toomany)]
+PASS: Executing [(BUTLAST "word "toomany)] threw an error
+INFO: Executing invalid instruction: [BUTLAST []]
+PASS: Executing [BUTLAST []] threw an error
+INFO: Executing invalid instruction: [BUTLAST "]
+PASS: Executing [BUTLAST "] threw an error
+INFO: Executing invalid instruction: [BUTLAST {1}]
+PASS: Executing [BUTLAST {1}] threw an error
 PASS: [COUNT :myarray] returned 4 , as expected.
 PASS: [ITEM 1 :myarray] returned [] , as expected.
 PASS: [ITEM 2 :myarray] returned [] , as expected.
@@ -235,6 +265,11 @@ PASS: [ITEM 2 :myarray] returned 1 , as expected.
 PASS: [ITEM 3 :myarray] returned 2 , as expected.
 PASS: [ITEM 4 :myarray] returned 3 , as expected.
 PASS: [ITEM 5 :myarray] returned 4 , as expected.
+PASS: [COUNT :myarray] returned 4 , as expected.
+PASS: [ITEM -2 :myarray] returned 1 , as expected.
+PASS: [ITEM -1 :myarray] returned 2 , as expected.
+PASS: [ITEM 0 :myarray] returned 3 , as expected.
+PASS: [ITEM 1 :myarray] returned 4 , as expected.
 INFO: Executing invalid instruction: [ARRAY -1]
 PASS: Executing [ARRAY -1] threw an error
 INFO: Executing invalid instruction: [ARRAY 1.23]
@@ -254,6 +289,24 @@ PASS: Executing [(ARRAY 5 {5} )] threw an error
 INFO: Executing invalid instruction: [(ARRAY 5 [5] )]
 PASS: Executing [(ARRAY 5 [5] )] threw an error
 INFO: Creating an empty array (regression test for bug #1349374)
+INFO: Executing invalid instruction: [(SETITEM)]
+PASS: Executing [(SETITEM)] threw an error
+INFO: Executing invalid instruction: [(SETITEM 1)]
+PASS: Executing [(SETITEM 1)] threw an error
+INFO: Executing invalid instruction: [(SETITEM 1 {1 2 3} )]
+PASS: Executing [(SETITEM 1 {1 2 3} )] threw an error
+INFO: Executing invalid instruction: [(SETITEM 1 {1 2 3} "value "toomany)]
+PASS: Executing [(SETITEM 1 {1 2 3} "value "toomany)] threw an error
+INFO: Executing invalid instruction: [SETITEM "one {1 2 3} "value]
+PASS: Executing [SETITEM "one {1 2 3} "value] threw an error
+INFO: Executing invalid instruction: [SETITEM 1 [1 2 3] "value]
+PASS: Executing [SETITEM 1 [1 2 3] "value] threw an error
+INFO: Executing invalid instruction: [SETITEM 1 "string "value]
+PASS: Executing [SETITEM 1 "string "value] threw an error
+INFO: Executing invalid instruction: [SETITEM 5 {1} "value]
+PASS: Executing [SETITEM 5 {1} "value] threw an error
+INFO: Executing invalid instruction: [SETITEM 1 :myarray :myarray]
+PASS: Executing [SETITEM 1 :myarray :myarray] threw an error
 PASS: [(OR)] returned false , as expected.
 PASS: [(OR "true)] returned true , as expected.
 PASS: [(OR "false)] returned false , as expected.
