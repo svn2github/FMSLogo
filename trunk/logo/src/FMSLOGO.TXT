@@ -32,6 +32,7 @@ Part II) New features/bugs fixed:
     o Fix bug #1438909; SETLABELFONT [] no longer crashes.
     o Fix bug #1327784; RAWASCII CHAR 192 = 192, not -64.
     o Fix bug #1361906; PLLIST {a} throws a bad input error.
+    o Fix bug #1444960; Example for WHILE is now correct.
     o Mitigate bug #1392437; LOAD no longer warns that it can overwrite changes.
     o Fix memory leaks.
 
