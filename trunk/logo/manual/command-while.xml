@@ -30,7 +30,7 @@ This allows &GENERICNAME; to reevaluate <parameter>conditionlist</parameter> aft
 <varlistentry><term>Example</term>
 <listitem>
 <programlisting><userinput>MAKE "i 0
-WHILE [MAKE "I :i+1 PRINT :i] [:i&lt;3]</userinput>
+WHILE [:i&lt;3] [MAKE "i :i+1 PRINT :i]</userinput>
 1
 2
 3
