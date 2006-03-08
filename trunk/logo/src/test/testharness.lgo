@@ -5,6 +5,7 @@ LOAD "testlib.lgo
 
 LOAD "butfirst.lgo
 LOAD "butlast.lgo
+LOAD "last.lgo
 LOAD "array.lgo
 LOAD "wait.lgo
 LOAD "predicate.lgo
@@ -49,6 +50,7 @@ TO TESTALL
   WORDTEST        ; from word.lgo
   BUTFIRSTTEST    ; from butfirst.lgo
   BUTLASTTEST     ; from butlast.lgo
+  LASTTEST        ; from last.lgo
   ARRAYTEST       ; from array.lgo
   LOGICTEST       ; from logic.lgo
   MATHTEST        ; from math.lgo

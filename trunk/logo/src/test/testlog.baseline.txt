@@ -229,6 +229,21 @@ INFO: Executing invalid instruction: [BUTLAST "]
 PASS: Executing [BUTLAST "] threw an error
 INFO: Executing invalid instruction: [BUTLAST {1}]
 PASS: Executing [BUTLAST {1}] threw an error
+PASS: [LAST [1 2 3]] returned 3 , as expected.
+PASS: [LAST [1 2]] returned 2 , as expected.
+PASS: [LAST [1]] returned 1 , as expected.
+PASS: [LAST "hello] returned o , as expected.
+PASS: [LAST "h] returned h , as expected.
+INFO: Executing invalid instruction: [(LAST)]
+PASS: Executing [(LAST)] threw an error
+INFO: Executing invalid instruction: [(LAST "word "toomany)]
+PASS: Executing [(LAST "word "toomany)] threw an error
+INFO: Executing invalid instruction: [LAST []]
+PASS: Executing [LAST []] threw an error
+INFO: Executing invalid instruction: [LAST "]
+PASS: Executing [LAST "] threw an error
+INFO: Executing invalid instruction: [LAST {1}]
+PASS: Executing [LAST {1}] threw an error
 PASS: [COUNT :myarray] returned 4 , as expected.
 PASS: [ITEM 1 :myarray] returned [] , as expected.
 PASS: [ITEM 2 :myarray] returned [] , as expected.
