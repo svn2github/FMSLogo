@@ -20,7 +20,7 @@ If two or more members of the input are equal, the rightmost of those members is
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>SHOW REMDUP "b [a b c c b]
+    <programlisting><userinput>SHOW REMDUP [a b c c b]
 </userinput>[a b c]</programlisting>
 
     <programlisting><userinput>SHOW REMDUP "Hello
