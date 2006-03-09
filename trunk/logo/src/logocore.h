@@ -196,7 +196,6 @@ NODE;
 #define n_car                   nunion.ncons.ncar
 #define n_cdr                   nunion.ncons.ncdr
 #define n_obj                   nunion.ncons.nobj
-#define getobject(node)         ((node)->n_obj)
 
 inline
 bool
@@ -214,6 +213,7 @@ car(const NODE * node)
    assert(node->node_type != STRING);
    assert(node->node_type != INTEGER);
    assert(node->node_type != FLOATINGPOINT);
+
    return node->n_car;
    }
 
@@ -226,13 +226,27 @@ cdr(const NODE * node)
    assert(node->node_type != STRING);
    assert(node->node_type != INTEGER);
    assert(node->node_type != FLOATINGPOINT);
+
    return node->n_cdr;
    }
 
-#define caar(node)              ((node)->n_car->n_car)
-#define cadr(node)              ((node)->n_cdr->n_car)
-#define cdar(node)              ((node)->n_car->n_cdr)
-#define cddr(node)              ((node)->n_cdr->n_cdr)
+inline
+NODE*
+getobject(const NODE * node)
+   {
+   assert(node != NULL);
+   assert(!is_freed(node));
+   assert(node->node_type != STRING);
+   assert(node->node_type != INTEGER);
+   assert(node->node_type != FLOATINGPOINT);
+
+   return node->n_obj;
+   }
+
+#define caar(node)              car(car(node))
+#define cadr(node)              car(cdr(node))
+#define cdar(node)              cdr(car(node))
+#define cddr(node)              cdr(cdr(node))
 
 #define n_str                   nunion.nstring.nstring_ptr
 #define n_len                   nunion.nstring.nstring_len
