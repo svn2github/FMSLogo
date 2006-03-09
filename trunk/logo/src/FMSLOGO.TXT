@@ -21,6 +21,7 @@ Part I) Kit Description/Location (http://sourceforge.net/projects/fmslogo):
 Part II) New features/bugs fixed:
 
   * Added for 6.8.0,
+    o Fix bug #1432651; Filenames that match a library procs no longer crash.
     o Fix bug #1443736; SETFOCUS [FMSLogo] gives focus to the screen window.
     o Fix bug #1443600; using Test! in editor no longer crashes.
     o Fix bug #1434420; running a long command no longer crashes.

@@ -202,7 +202,6 @@ void gc(NODE *nd)
             continue;
 
          case LINE:
-            nd->n_obj = NIL;
          case CONS:
          case CASEOBJ:
          case RUN_PARSE:

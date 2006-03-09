@@ -34,9 +34,9 @@ static NODE *paren_infix(NODE *left_arg, NODE **rest, int old_pri, bool inparen)
 static
 void make_line(NODE *tree, NODE *line)
    {
-   // setobject(tree, line); //BH
-   setobject(tree, NIL);
-   tree->n_obj = line;
+   setobject(tree, line); //BH
+   //setobject(tree, NIL);
+   //tree->n_obj = line;
    settype(tree, LINE);
    }
 
