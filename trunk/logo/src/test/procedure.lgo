@@ -20,6 +20,18 @@ TO LOCALVARTEST :varname :value
   OUTPUT RUN (WORD ": :varname)
 END
 
+TO BUG1438863TEST
+   ; bug #1438863 is that if you erase a procedure while in the middle
+   ; of calling it and you have a call to a non-primitive afterwards,
+   ; then FMSLogo crashes.
+   erase [BUG1438863TEST]
+
+   ; catch the "I don't know how to BUG1438863TEST.NONEXISTINGPROC" error
+   CATCH "ERROR [BUG1438863TEST.NONEXISTINGPROC]
+
+   REPORTTESTPASSED ["|Bug #1438863 is fixed; erasing a procedure in the middle of running it does not crash|]
+END
+
 TO PROCEDURETEST
 
   ; test TEXT
@@ -269,5 +281,7 @@ TO PROCEDURETEST
    RUNBADINPUTTEST [POT "nonexistent]
    RUNBADINPUTTEST [POT [nonexistent]]
    RUNBADINPUTTEST [POT {a}]
+
+   BUG1438863TEST
 END
 

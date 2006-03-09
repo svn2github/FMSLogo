@@ -1696,6 +1696,7 @@ INFO: Executing invalid instruction: [POT [nonexistent]]
 PASS: Executing [POT [nonexistent]] threw an error
 INFO: Executing invalid instruction: [POT {a}]
 PASS: Executing [POT {a}] threw an error
+PASS: "Bug #1438863 is fixed; erasing a procedure in the middle of running it does not crash
 PASS: [GPROP "nonexistent "prop1] returned [] , as expected.
 PASS: [GPROP "testplist1 "nonexistent] returned [] , as expected.
 PASS: [GPROP "testplist1 "property1] returned 1 , as expected.
