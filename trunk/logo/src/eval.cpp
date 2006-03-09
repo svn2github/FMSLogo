@@ -356,7 +356,11 @@ NODE *evaluator(NODE *list, enum labels where)
               assign(unev, NIL);
               goto non_tail_eval;
               }
+
+           // the first element in the list is the function
            assign(fun, car(exp));
+
+           // the rest of the elements are the function's inputs
            if (cdr(exp) != NIL)
               {
               goto ev_application;
