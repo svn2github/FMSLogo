@@ -34,9 +34,7 @@ static NODE *paren_infix(NODE *left_arg, NODE **rest, int old_pri, bool inparen)
 static
 void make_line(NODE *tree, NODE *line)
    {
-   setobject(tree, line); //BH
-   //setobject(tree, NIL);
-   //tree->n_obj = line;
+   setobject(tree, line);
    settype(tree, LINE);
    }
 
@@ -60,13 +58,23 @@ void untreeify_line(NODE *line)
 
 void untreeify_proc(NODE *procname)
    {
+   NODE *procnode = procnode__caseobj(procname);
+   if (procnode == Unbound)
+      {
+      // the procedure got erased while we were processing it
+      return;
+      }
 
-   NODE *body = bodylist__procnode(procnode__caseobj(procname));
+   // get the list of S-expressions that make up this procedure
+   NODE *body = bodylist__procnode(procnode);
 
+   // untreeify each S-expression within the body
    for (NODE * body_ptr = body; body_ptr != NIL; body_ptr = cdr(body_ptr))
       {
       untreeify_line(car(body_ptr));
       }
+
+   // untreeify the body
    untreeify(body);
    }
 
@@ -134,7 +142,6 @@ NODE *paren_expr(NODE **expr, bool inparen)
       return *expr;
       }
 
-   NODE *tree = NIL;
    NODE *proc;
    NODE *retval;
    NODE **ifnode = (NODE **) NIL;
@@ -146,8 +153,8 @@ NODE *paren_expr(NODE **expr, bool inparen)
       if (first == Left_Paren)
          {
          deref(first);
-         tree = paren_expr(expr, TRUE);
-         tree = paren_infix(tree, expr, -1, TRUE);
+         NODE * tree = paren_expr(expr, true);
+         tree = paren_infix(tree, expr, -1, true);
          if (*expr == NIL)
             {
             err_logo(PAREN_MISMATCH, NIL);
