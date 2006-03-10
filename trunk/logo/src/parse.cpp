@@ -1,5 +1,5 @@
 /*
-*      parse.c         logo parser module              dvb
+*      parse.cpp       logo parser module              dvb
 *
 *       Copyright (C) 1995 by the Regents of the University of California
 *       Copyright (C) 1995 by George Mills
