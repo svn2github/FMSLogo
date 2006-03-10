@@ -142,14 +142,11 @@ extern NODE *Tag;
 extern int to_pending;
 extern fpos_t LinesLoadedOnEdit;
 
-/* error.c */
+// error.cpp
 extern NODE *throw_node;
-extern NODE *err_mesg;
 extern ERR_TYPES erract_errtype;
 
-/* eval.c */
-//extern FIXNUM global_repcount[];
-//extern FIXNUM global_repcount_index;
+// eval.cpp
 extern FIXNUM repcountup;
 
 extern NODE *fun;
