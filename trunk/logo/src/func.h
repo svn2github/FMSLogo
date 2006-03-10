@@ -519,8 +519,7 @@ extern NODE *lsetreadpos(NODE *arg);
 extern NODE *lwritepos(NODE *arg);
 extern NODE *lsetwritepos(NODE *arg);
 
-/* File EVAL.CPP: */
-
+// File eval.cpp
 extern NODE *err_eval_driver(NODE *seq);
 extern void spop(NODE **stack);
 extern void spush(NODE *obj, NODE **stack);
@@ -532,10 +531,6 @@ extern NODE *lapply(NODE *args);
 extern NODE *lqm(NODE *args);
 extern void tell_shadow(NODE *arg);
 extern bool not_local(NODE *name, NODE *sp);
-extern NODE *reverse(NODE *list);
-extern NODE *append(NODE *a, NODE *b);
-extern NODE *evaluator(NODE *list, enum labels where);
-extern void reset_args(NODE *old_stack);
 extern void uninitialize_eval(void);
 
 /* File ERROR.CPP: */
