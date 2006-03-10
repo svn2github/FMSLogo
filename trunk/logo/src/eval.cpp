@@ -136,24 +136,6 @@ void numpush(FIXNUM obj, NODE **stack)
    *stack = temp;
    }
 
-/* forward declaration */
-NODE *evaluator(NODE *list, enum labels where);
-
-/* Evaluate a line of input. */
-void eval_driver(NODE *line)
-   {
-   evaluator(line, begin_line);
-   }
-
-/* Evaluate a sequence of expressions until we get a value to return.
-* (Called from erract.)
-*/
-NODE *err_eval_driver(NODE *seq)
-   {
-   val_status = 5;
-   return evaluator(seq, begin_seq);
-   }
-
 /* The logo word APPLY. */
 NODE *lapply(NODE *args)
    {
@@ -187,9 +169,7 @@ NODE *lqm(NODE *args)
    return car(np);
    }
 
-/* The rest of the functions are local to this file. */
-
-/* Warn the user if a local variable shadows a global one. */
+// Warn the user if a local variable shadows a global one.
 void tell_shadow(NODE *arg)
    {
    if (flag__caseobj(arg, VAL_STEPPED))
@@ -198,7 +178,7 @@ void tell_shadow(NODE *arg)
       }
    }
 
-/* Check if a local variable is already in this frame */
+// Check if a local variable is already in this frame 
 bool not_local(NODE *name, NODE *sp)
    {
    for (; sp != var; sp = cdr(sp))
@@ -211,7 +191,8 @@ bool not_local(NODE *name, NODE *sp)
    return true;
    }
 
-/* reverse a list destructively */
+// reverse a list destructively
+static
 NODE *reverse(NODE *list)
    {
    NODE *ret = NIL, *temp;
@@ -227,10 +208,10 @@ NODE *reverse(NODE *list)
    return unref(ret);
    }
 
-/* nondestructive append */
+// nondestructive append
+static
 NODE *append(NODE *a, NODE *b)
    {
-   //    NODE *result;
    if (a == NIL) 
       {
       return b;
@@ -238,7 +219,8 @@ NODE *append(NODE *a, NODE *b)
    return cons(car(a), append(cdr(a), b));
    }
 
-/* nondestructive flatten */
+// nondestructive flatten 
+static
 NODE *flatten(NODE *a)
    {
    if (a == NIL) 
@@ -248,8 +230,8 @@ NODE *flatten(NODE *a)
    return append(car(a), flatten(cdr(a)));
    }
 
-/* Reset the var stack to the previous place holder.
-*/
+// Reset the var stack to the previous place holder.
+static
 void reset_args(NODE *old_stack)
    {
    for (; var_stack != old_stack; pop(var_stack))
@@ -258,10 +240,10 @@ void reset_args(NODE *old_stack)
       }
    }
 
-/* An explicit control evaluator, taken almost directly from SICP, section
-* 5.2.  list is a flat list of expressions to evaluate.  where is a label to
-* begin at.  Return value depends on where.
-*/
+// An explicit control evaluator, taken almost directly from SICP, section
+// 5.2.  list is a flat list of expressions to evaluate.  where is a label to
+// begin at.  Return value depends on where.
+static
 NODE *evaluator(NODE *list, enum labels where)
    {
    // registers
@@ -1274,6 +1256,20 @@ NODE *evaluator(NODE *list, enum labels where)
    deref(catch_tag); 
    deref(exp);
    return val;
+   }
+
+// Evaluate a line of input.
+void eval_driver(NODE *line)
+   {
+   evaluator(line, begin_line);
+   }
+
+// Evaluate a sequence of expressions until we get a value to return.
+// (Called from erract.)
+NODE *err_eval_driver(NODE *seq)
+   {
+   val_status = 5;
+   return evaluator(seq, begin_seq);
    }
 
 
