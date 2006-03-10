@@ -112,17 +112,47 @@ const NODETYPES NT_FREE          = 0xFFFF;
 #define backslashed(nd) ((nodetype(nd) & NT_BACKSL))
 #define is_tailform(nd) ((nodetype(nd) == TAILFORM))
 
+
+// IMPORTANT: Logo programs depend on the value of these
+// enumerates types, so any new values must be added to the
+// end of the list.
 enum ERR_TYPES
    {
-   FATAL, OUT_OF_MEM, STACK_OVERFLOW, TURTLE_OUT_OF_BOUNDS,
-   BAD_DATA_UNREC, DIDNT_OUTPUT, NOT_ENOUGH, BAD_DATA, TOO_MUCH,
-   DK_WHAT, PAREN_MISMATCH, NO_VALUE, UNEXPECTED_PAREN, DK_HOW,
-   NO_CATCH_TAG, ALREADY_DEFINED, STOP_ERROR, ALREADY_DRIBBLING,
-   FILE_ERROR, IF_WARNING, SHADOW_WARN, USER_ERR, IS_PRIM,
-   NOT_INSIDE, DK_HOW_UNREC, NO_TEST, UNEXPECTED_BRACKET,
-   UNEXPECTED_BRACE, BAD_GRAPH_INIT, ERR_MACRO,
-   DK_WHAT_UP, AT_TOPLEVEL, APPLY_BAD_DATA, DEEPEND,
-   OUT_OF_MEM_UNREC
+   FATAL, 
+   OUT_OF_MEM, 
+   STACK_OVERFLOW, 
+   TURTLE_OUT_OF_BOUNDS,
+   BAD_DATA_UNREC, 
+   DIDNT_OUTPUT, 
+   NOT_ENOUGH, 
+   BAD_DATA, 
+   TOO_MUCH,
+   DK_WHAT, 
+   PAREN_MISMATCH, 
+   NO_VALUE, 
+   UNEXPECTED_PAREN, 
+   DK_HOW,
+   NO_CATCH_TAG, 
+   ALREADY_DEFINED, 
+   STOP_ERROR, 
+   ALREADY_DRIBBLING,
+   FILE_ERROR, 
+   IF_WARNING, 
+   SHADOW_WARN, 
+   USER_ERR, 
+   IS_PRIM,
+   NOT_INSIDE, 
+   DK_HOW_UNREC, 
+   NO_TEST, 
+   UNEXPECTED_BRACKET,
+   UNEXPECTED_BRACE, 
+   BAD_GRAPH_INIT, 
+   ERR_MACRO,
+   DK_WHAT_UP, 
+   AT_TOPLEVEL, 
+   APPLY_BAD_DATA, 
+   DEEPEND,
+   OUT_OF_MEM_UNREC,
    };
 
 #define FALSE   0
@@ -508,7 +538,7 @@ enum labels
 #define LIST_MODE  2
 #define PAUSE_MODE 3
 
-#define ScreenSz 0.70                  /* Default,proportion of screen size   */
-#define MaxBitCuts 1024                /* Max number of bitmaps               */
+#define ScreenSz 0.70      // Default proportion of screen size
+#define MaxBitCuts 1024    // Max number of bitmaps
 #define MAX_TIMERS 32
 
