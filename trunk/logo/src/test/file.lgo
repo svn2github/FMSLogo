@@ -224,9 +224,10 @@ TO FILEBADINPUTTEST
 
    RUNBADINPUTTEST [CLOSE "nonexistent.txt]
    RUNBADINPUTTEST [(CLOSE)]
+   RUNTOOMANYINPUTSTEST [(CLOSE "testfile.txt "many)]
 
    RUNBADINPUTTEST [(ERASEFILE)]
-   RUNBADINPUTTEST [(ERASEFILE "too "many)]
+   RUNTOOMANYINPUTSTEST [(ERASEFILE "too "many)]
 
    ; try to overflow an internal buffer
    LOCALMAKE "longfilename "||

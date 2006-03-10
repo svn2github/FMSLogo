@@ -76,7 +76,7 @@ TO SETLABELFONTTEST
   RUNBADINPUTTEST [SETLABELFONT [[Arial]  24   0   0 400   0   0   0   0   0   0   0 bad]]
 
   RUNBADINPUTTEST [(SETLABELFONT)]
-  RUNBADINPUTTEST [(SETLABELFONT [[Arial]] "toomany)]
+  RUNTOOMANYINPUTSTEST [(SETLABELFONT [[Arial]] "toomany)]
 
 
   REPORTTESTINFO [Testing that SETLABELFONT doesn't modify its input list on error]

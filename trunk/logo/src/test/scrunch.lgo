@@ -16,7 +16,7 @@ TO SCRUNCHTEST
    RUNBADINPUTTEST [(SETSCRUNCH 1)     ]
    RUNBADINPUTTEST [(SETSCRUNCH 1 1 1) ]
 
-   RUNBADINPUTTEST [(SCRUNCH "toomany) ]
+   RUNTOOMANYINPUTSTEST [(SCRUNCH "toomany)]
 
    ; try to flush out some divide by zero bugs
    SETSCRUNCH 0 0

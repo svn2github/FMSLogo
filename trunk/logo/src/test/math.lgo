@@ -110,7 +110,7 @@ TO DIFFERENCETEST
    ; bad input of inputs
    RUNBADINPUTTEST [(DIFFERENCE)]
    RUNBADINPUTTEST [(DIFFERENCE 5)]
-   RUNBADINPUTTEST [(DIFFERENCE 5 6 7)]
+   RUNTOOMANYINPUTSTEST [(DIFFERENCE 5 6 7)]
 
    ; first input is bad
    RUNBADINPUTTEST [[]   - 2 ]
@@ -260,7 +260,7 @@ TO MINUSTEST
 
    ; wrong number of inputs
    RUNBADINPUTTEST [(MINUS)]
-   RUNBADINPUTTEST [(MINUS 1 1)]
+   RUNTOOMANYINPUTSTEST [(MINUS 1 1)]
 
 END
 
@@ -305,7 +305,7 @@ TO QUOTIENTTEST
 
    ; bad input of inputs
    RUNBADINPUTTEST [(QUOTIENT)]
-   RUNBADINPUTTEST [(QUOTIENT 5 6 7)]
+   RUNTOOMANYINPUTSTEST [(QUOTIENT 5 6 7)]
 
    ; first input is bad
    RUNBADINPUTTEST [[]   / 2 ]
@@ -378,7 +378,7 @@ TO REMAINDERTEST
    ; bad input of inputs
    RUNBADINPUTTEST [(REMAINDER)]
    RUNBADINPUTTEST [(REMAINDER 1)]
-   RUNBADINPUTTEST [(REMAINDER 5 6 7)]
+   RUNTOOMANYINPUTSTEST [(REMAINDER 5 6 7)]
 
    ; first input is bad
    RUNBADINPUTTEST [REMAINDER []   2    ]
@@ -424,7 +424,7 @@ TO MODULOTEST
    ; bad input of inputs
    RUNBADINPUTTEST [(MODULO)]
    RUNBADINPUTTEST [(MODULO 1)]
-   RUNBADINPUTTEST [(MODULO 5 6 7)]
+   RUNTOOMANYINPUTSTEST [(MODULO 5 6 7)]
 
    ; first input is bad
    RUNBADINPUTTEST [MODULO []   2    ]
@@ -466,7 +466,7 @@ TO INTTEST
 
    ; bad input of inputs
    RUNBADINPUTTEST [(INT)]
-   RUNBADINPUTTEST [(INT 1 2)]
+   RUNTOOMANYINPUTSTEST [(INT 1 2)]
 
    ; input is bad
    RUNBADINPUTTEST [INT []   ]
@@ -499,7 +499,7 @@ TO ROUNDTEST
 
    ; bad input of inputs
    RUNBADINPUTTEST [(ROUND)]
-   RUNBADINPUTTEST [(ROUND 1 2)]
+   RUNTOOMANYINPUTSTEST [(ROUND 1 2)]
 
    ; input is bad
    RUNBADINPUTTEST [ROUND []   ]
@@ -528,7 +528,7 @@ TO ABSTEST
 
    ; bad input of inputs
    RUNBADINPUTTEST [(ABS)]
-   RUNBADINPUTTEST [(ABS 1 2)]
+   RUNTOOMANYINPUTSTEST [(ABS 1 2)]
 
    ; input is bad
    RUNBADINPUTTEST [ABS []   ]
@@ -559,7 +559,7 @@ TO SIGNTEST
 
    ; bad input of inputs
    RUNBADINPUTTEST [(SIGN)]
-   RUNBADINPUTTEST [(SIGN 1 2)]
+   RUNTOOMANYINPUTSTEST [(SIGN 1 2)]
 
    ; input is bad
    RUNBADINPUTTEST [SIGN []   ]
@@ -590,7 +590,7 @@ TO SQRTTEST
 
    ; bad input of inputs
    RUNBADINPUTTEST [(SQRT)]
-   RUNBADINPUTTEST [(SQRT 1 2)]
+   RUNTOOMANYINPUTSTEST [(SQRT 1 2)]
 
    ; input is bad
    RUNBADINPUTTEST [SQRT -1   ]
@@ -678,7 +678,7 @@ TO POWERTEST
    ; different number of inputs
    RUNBADINPUTTEST [(POWER)]
    RUNBADINPUTTEST [(POWER 5)]
-   RUNBADINPUTTEST [(POWER 5 6 7)]
+   RUNTOOMANYINPUTSTEST [(POWER 5 6 7)]
 
    ; math errors
    RUNBADINPUTTEST [POWER 0   -1  ]
@@ -725,7 +725,7 @@ TO EXPTEST
 
    ; different number of inputs
    RUNBADINPUTTEST [(EXP)]
-   RUNBADINPUTTEST [(EXP 1 2)]
+   RUNTOOMANYINPUTSTEST [(EXP 1 2)]
 
    ; input is bad
    RUNBADINPUTTEST [EXP []   ]
@@ -753,7 +753,7 @@ TO LOG10TEST
 
    ; different number of inputs
    RUNBADINPUTTEST [(LOG10)]
-   RUNBADINPUTTEST [(LOG10 1 2)]
+   RUNTOOMANYINPUTSTEST [(LOG10 1 2)]
 
    ; domain errors
    RUNBADINPUTTEST [LOG10 0  ]
@@ -782,7 +782,7 @@ TO LNTEST
 
    ; different number of inputs
    RUNBADINPUTTEST [(LN)]
-   RUNBADINPUTTEST [(LN 1 2)]
+   RUNTOOMANYINPUTSTEST [(LN 1 2)]
 
    ; domain errors
    RUNBADINPUTTEST [LN 0  ]
@@ -827,7 +827,7 @@ TO TANTEST
 
    ; different number of inputs
    RUNBADINPUTTEST [(TAN)]
-   RUNBADINPUTTEST [(TAN 1 2)]
+   RUNTOOMANYINPUTSTEST [(TAN 1 2)]
 
    ; domain errors
    RUNBADINPUTTEST [TAN 90   ]
@@ -865,7 +865,7 @@ TO RADTANTEST
 
    ; different number of inputs
    RUNBADINPUTTEST [(RADTAN)]
-   RUNBADINPUTTEST [(RADTAN 1 2)]
+   RUNTOOMANYINPUTSTEST [(RADTAN 1 2)]
 
    ; domain errors
    RUNBADINPUTTEST [RADTAN ( 0.5 * PI) ]
@@ -912,7 +912,7 @@ TO ARCTANTEST
 
    ; different number of inputs
    RUNBADINPUTTEST [(ARCTAN)]
-   RUNBADINPUTTEST [(ARCTAN 1 2 3)]
+   RUNTOOMANYINPUTSTEST [(ARCTAN 1 2 3)]
 
    ; first and only input is bad
    RUNBADINPUTTEST [ARCTAN []   ]
@@ -972,7 +972,7 @@ TO RADARCTANTEST
 
    ; different number of inputs
    RUNBADINPUTTEST [(RADARCTAN)]
-   RUNBADINPUTTEST [(RADARCTAN 1 2 3)]
+   RUNTOOMANYINPUTSTEST [(RADARCTAN 1 2 3)]
 
    ; first and only input is bad
    RUNBADINPUTTEST [RADARCTAN []   ]
@@ -1023,7 +1023,7 @@ TO SINTEST
 
    ; different number of inputs
    RUNBADINPUTTEST [(SIN)]
-   RUNBADINPUTTEST [(SIN 1 2)]
+   RUNTOOMANYINPUTSTEST [(SIN 1 2)]
 
    ; input is bad
    RUNBADINPUTTEST [SIN []   ]
@@ -1056,7 +1056,7 @@ TO RADSINTEST
 
    ; different number of inputs
    RUNBADINPUTTEST [(RADSIN)]
-   RUNBADINPUTTEST [(RADSIN 1 2)]
+   RUNTOOMANYINPUTSTEST [(RADSIN 1 2)]
 
    ; input is bad
    RUNBADINPUTTEST [RADSIN []   ]
@@ -1085,7 +1085,7 @@ TO ARCSINTEST
 
    ; different number of inputs
    RUNBADINPUTTEST [(ARCSIN)]
-   RUNBADINPUTTEST [(ARCSIN 1 2)]
+   RUNTOOMANYINPUTSTEST [(ARCSIN 1 2)]
 
    ; domain errors
    RUNBADINPUTTEST [ARCSIN  1.1 ]
@@ -1118,7 +1118,7 @@ TO RADARCSINTEST
 
    ; different number of inputs
    RUNBADINPUTTEST [(RADARCSIN)]
-   RUNBADINPUTTEST [(RADARCSIN 1 2)]
+   RUNTOOMANYINPUTSTEST [(RADARCSIN 1 2)]
 
    ; domain errors
    RUNBADINPUTTEST [RADARCSIN  1.1 ]
@@ -1190,7 +1190,7 @@ TO RADCOSTEST
 
    ; different number of inputs
    RUNBADINPUTTEST [(RADCOS)]
-   RUNBADINPUTTEST [(RADCOS 1 2)]
+   RUNTOOMANYINPUTSTEST [(RADCOS 1 2)]
 
    ; input is bad
    RUNBADINPUTTEST [RADCOS []   ]
@@ -1220,7 +1220,7 @@ TO ARCCOSTEST
 
    ; different number of inputs
    RUNBADINPUTTEST [(ARCCOS)]
-   RUNBADINPUTTEST [(ARCCOS 1 2)]
+   RUNTOOMANYINPUTSTEST [(ARCCOS 1 2)]
 
    ; domain errors
    RUNBADINPUTTEST [ARCCOS  1.1 ]
@@ -1254,7 +1254,7 @@ TO RADARCCOSTEST
 
    ; different number of inputs
    RUNBADINPUTTEST [(RADCOS)]
-   RUNBADINPUTTEST [(RADCOS 1 2)]
+   RUNTOOMANYINPUTSTEST [(RADCOS 1 2)]
 
    ; domain errors
    RUNBADINPUTTEST [RADARCCOS  1.1 ]

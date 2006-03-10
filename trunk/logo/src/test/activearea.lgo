@@ -51,7 +51,7 @@ TO ACTIVEAREATEST
    RUNBADINPUTTEST [SETACTIVAREA [0     0     50    -50]]
    RUNBADINPUTTEST [SETACTIVAREA [0     0     0      0]]
 
-   RUNBADINPUTTEST [(ACTIVAREA  "toomany)]
+   RUNTOOMANYINPUTSTEST [(ACTIVAREA  "toomany)]
 
    ; undo side-effects
    SETACTIVEAREA :oldactivearea

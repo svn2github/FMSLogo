@@ -16,6 +16,13 @@ PASS: [DIFFICULTCOMMENTS] returned 1 , as expected.
 FAIL: [~IGNOREMEWASCALLED] returned true . We expected false
 INFO: Executing invalid instruction: [AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA]
 PASS: Executing [AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA] threw an error
+INFO: Executing invalid instruction: [(RUN)]
+PASS: Executing [(RUN)] threw an error
+INFO: Executing invalid instruction: [RUN {"FD 100}]
+PASS: Executing [RUN {"FD 100}] threw an error
+INFO: Executing invalid instruction: [(RUN [FD 100] "toomany)]
+INFO: Executing [(RUN [FD 100] "toomany)] set error code to 8 , as expected
+INFO: Executing [(RUN [FD 100] "toomany)] set error string to [too much inside ()'s]
 PASS: [.EQ 1000 1000] returned false , as expected.
 PASS: [.EQ :x :y] returned false , as expected.
 PASS: [.EQ :x :x] returned true , as expected.
@@ -23,6 +30,13 @@ PASS: [.EQ " "] returned true , as expected.
 PASS: [.EQ "false "false] returned true , as expected.
 PASS: [.EQ "true "true] returned true , as expected.
 PASS: [.EQ [] []] returned true , as expected.
+INFO: Executing invalid instruction: [(.EQ)]
+PASS: Executing [(.EQ)] threw an error
+INFO: Executing invalid instruction: [(.EQ 1)]
+PASS: Executing [(.EQ 1)] threw an error
+INFO: Executing invalid instruction: [(.EQ 1 1 "toomany)]
+INFO: Executing [(.EQ 1 1 "toomany)] set error code to 8 , as expected
+INFO: Executing [(.EQ 1 1 "toomany)] set error string to [too much inside ()'s]
 PASS: [EQUALP 1 1] returned true , as expected.
 PASS: [EQUALP 0 0] returned true , as expected.
 PASS: [EQUALP 3.14 3.14] returned true , as expected.
@@ -46,6 +60,9 @@ INFO: Executing invalid instruction: [(EQUAL?)]
 PASS: Executing [(EQUAL?)] threw an error
 INFO: Executing invalid instruction: [(EQUAL? 1)]
 PASS: Executing [(EQUAL? 1)] threw an error
+INFO: Executing invalid instruction: [(EQUAL? 1 1 "toomany)]
+INFO: Executing [(EQUAL? 1 1 "toomany)] set error code to 8 , as expected
+INFO: Executing [(EQUAL? 1 1 "toomany)] set error string to [too much inside ()'s]
 PASS: [EMPTYP []] returned true , as expected.
 PASS: [EMPTY? []] returned true , as expected.
 PASS: [EMPTY? [1]] returned false , as expected.
@@ -56,6 +73,9 @@ PASS: [EMPTY? " ] returned false , as expected.
 PASS: [EMPTY? {}] returned false , as expected.
 INFO: Executing invalid instruction: [(EMPTY?)]
 PASS: Executing [(EMPTY?)] threw an error
+INFO: Executing invalid instruction: [(EMPTY? [] "toomany)]
+INFO: Executing [(EMPTY? [] "toomany)] set error code to 8 , as expected
+INFO: Executing [(EMPTY? [] "toomany)] set error string to [too much inside ()'s]
 PASS: [NUMBERP 1] returned true , as expected.
 PASS: [NUMBER? 1] returned true , as expected.
 PASS: [NUMBER? 0] returned true , as expected.
@@ -73,6 +93,9 @@ PASS: [NUMBER? "1A] returned false , as expected.
 PASS: [NUMBER? "] returned false , as expected.
 INFO: Executing invalid instruction: [(NUMBER?)]
 PASS: Executing [(NUMBER?)] threw an error
+INFO: Executing invalid instruction: [(NUMBER? 1 "toomany)]
+INFO: Executing [(NUMBER? 1 "toomany)] set error code to 8 , as expected
+INFO: Executing [(NUMBER? 1 "toomany)] set error string to [too much inside ()'s]
 PASS: [LISTP [1 2 3]] returned true , as expected.
 PASS: [LIST? [1 2 3]] returned true , as expected.
 PASS: [LIST? []] returned true , as expected.
@@ -85,6 +108,9 @@ PASS: [LIST? {}] returned false , as expected.
 PASS: [LIST? "] returned false , as expected.
 INFO: Executing invalid instruction: [(LIST?)]
 PASS: Executing [(LIST?)] threw an error
+INFO: Executing invalid instruction: [(LIST? [] "toomany)]
+INFO: Executing [(LIST? [] "toomany)] set error code to 8 , as expected
+INFO: Executing [(LIST? [] "toomany)] set error string to [too much inside ()'s]
 PASS: [WORDP "hello] returned true , as expected.
 PASS: [WORD? "hello] returned true , as expected.
 PASS: [WORD? 123] returned true , as expected.
@@ -95,8 +121,11 @@ PASS: [WORD? []] returned false , as expected.
 PASS: [WORD? ["hello]] returned false , as expected.
 PASS: [WORD? {}] returned false , as expected.
 PASS: [WORD? {"hello}] returned false , as expected.
-INFO: Executing invalid instruction: [(WORDP?)]
-PASS: Executing [(WORDP?)] threw an error
+INFO: Executing invalid instruction: [(WORD?)]
+PASS: Executing [(WORD?)] threw an error
+INFO: Executing invalid instruction: [(WORD? [] "toomany)]
+INFO: Executing [(WORD? [] "toomany)] set error code to 8 , as expected
+INFO: Executing [(WORD? [] "toomany)] set error string to [too much inside ()'s]
 PASS: [ARRAYP {1 2 3}] returned true , as expected.
 PASS: [ARRAY? {1 2 3}] returned true , as expected.
 PASS: [ARRAY? {}] returned true , as expected.
@@ -109,6 +138,9 @@ PASS: [ARRAY? []] returned false , as expected.
 PASS: [ARRAY? "] returned false , as expected.
 INFO: Executing invalid instruction: [(ARRAY?)]
 PASS: Executing [(ARRAY?)] threw an error
+INFO: Executing invalid instruction: [(ARRAY? {1} "toomany)]
+INFO: Executing [(ARRAY? {1} "toomany)] set error code to 8 , as expected
+INFO: Executing [(ARRAY? {1} "toomany)] set error string to [too much inside ()'s]
 PASS: [MEMBERP 2 [1 2 3]] returned true , as expected.
 PASS: [MEMBER? 2 [1 2 3]] returned true , as expected.
 PASS: [MEMBER? 1 [1]] returned true , as expected.
@@ -134,6 +166,9 @@ INFO: Executing invalid instruction: [(MEMBER?)]
 PASS: Executing [(MEMBER?)] threw an error
 INFO: Executing invalid instruction: [(MEMBER? 1)]
 PASS: Executing [(MEMBER? 1)] threw an error
+INFO: Executing invalid instruction: [(MEMBER? 2 [1 2 3] "toomany)]
+INFO: Executing [(MEMBER? 2 [1 2 3] "toomany)] set error code to 8 , as expected
+INFO: Executing [(MEMBER? 2 [1 2 3] "toomany)] set error string to [too much inside ()'s]
 PASS: [BEFOREP "ABC "ABD] returned true , as expected.
 PASS: [BEFORE? "ABC "ABD] returned true , as expected.
 PASS: [BEFORE? "ABD "ABC] returned false , as expected.
@@ -150,6 +185,9 @@ INFO: Executing invalid instruction: [(BEFORE? "ABC [] )]
 PASS: Executing [(BEFORE? "ABC [] )] threw an error
 INFO: Executing invalid instruction: [(BEFORE? [] "ABC)]
 PASS: Executing [(BEFORE? [] "ABC)] threw an error
+INFO: Executing invalid instruction: [(BEFORE? "ABC "ABC "toomany)]
+INFO: Executing [(BEFORE? "ABC "ABC "toomany)] set error code to 8 , as expected
+INFO: Executing [(BEFORE? "ABC "ABC "toomany)] set error string to [too much inside ()'s]
 PASS: [WORD "o "k] returned ok , as expected.
 PASS: [WORD "4 "2] returned 42 , as expected.
 PASS: [(WORD)] returned  , as expected.
@@ -172,7 +210,8 @@ PASS: [ASCII "(] returned 40 , as expected.
 INFO: Executing invalid instruction: [(ASCII)]
 PASS: Executing [(ASCII)] threw an error
 INFO: Executing invalid instruction: [(ASCII "a "b)]
-PASS: Executing [(ASCII "a "b)] threw an error
+INFO: Executing [(ASCII "a "b)] set error code to 8 , as expected
+INFO: Executing [(ASCII "a "b)] set error string to [too much inside ()'s]
 INFO: Executing invalid instruction: [ASCII [a]]
 PASS: Executing [ASCII [a]] threw an error
 INFO: Executing invalid instruction: [ASCII {a}]
@@ -190,7 +229,8 @@ PASS: [RAWASCII CHAR 192] returned 192 , as expected.
 INFO: Executing invalid instruction: [(RAWASCII)]
 PASS: Executing [(RAWASCII)] threw an error
 INFO: Executing invalid instruction: [(RAWASCII "a "b)]
-PASS: Executing [(RAWASCII "a "b)] threw an error
+INFO: Executing [(RAWASCII "a "b)] set error code to 8 , as expected
+INFO: Executing [(RAWASCII "a "b)] set error string to [too much inside ()'s]
 INFO: Executing invalid instruction: [RAWASCII [a]]
 PASS: Executing [RAWASCII [a]] threw an error
 INFO: Executing invalid instruction: [RAWASCII {a}]
@@ -207,7 +247,8 @@ PASS: [BUTFIRST "h] returned  , as expected.
 INFO: Executing invalid instruction: [(BUTFIRST)]
 PASS: Executing [(BUTFIRST)] threw an error
 INFO: Executing invalid instruction: [(BUTFIRST "word "toomany)]
-PASS: Executing [(BUTFIRST "word "toomany)] threw an error
+INFO: Executing [(BUTFIRST "word "toomany)] set error code to 8 , as expected
+INFO: Executing [(BUTFIRST "word "toomany)] set error string to [too much inside ()'s]
 INFO: Executing invalid instruction: [BUTFIRST []]
 PASS: Executing [BUTFIRST []] threw an error
 INFO: Executing invalid instruction: [BUTFIRST "]
@@ -222,7 +263,8 @@ PASS: [BUTLAST "h] returned  , as expected.
 INFO: Executing invalid instruction: [(BUTLAST)]
 PASS: Executing [(BUTLAST)] threw an error
 INFO: Executing invalid instruction: [(BUTLAST "word "toomany)]
-PASS: Executing [(BUTLAST "word "toomany)] threw an error
+INFO: Executing [(BUTLAST "word "toomany)] set error code to 8 , as expected
+INFO: Executing [(BUTLAST "word "toomany)] set error string to [too much inside ()'s]
 INFO: Executing invalid instruction: [BUTLAST []]
 PASS: Executing [BUTLAST []] threw an error
 INFO: Executing invalid instruction: [BUTLAST "]
@@ -237,7 +279,8 @@ PASS: [LAST "h] returned h , as expected.
 INFO: Executing invalid instruction: [(LAST)]
 PASS: Executing [(LAST)] threw an error
 INFO: Executing invalid instruction: [(LAST "word "toomany)]
-PASS: Executing [(LAST "word "toomany)] threw an error
+INFO: Executing [(LAST "word "toomany)] set error code to 8 , as expected
+INFO: Executing [(LAST "word "toomany)] set error string to [too much inside ()'s]
 INFO: Executing invalid instruction: [LAST []]
 PASS: Executing [LAST []] threw an error
 INFO: Executing invalid instruction: [LAST "]
@@ -311,7 +354,8 @@ PASS: Executing [(SETITEM 1)] threw an error
 INFO: Executing invalid instruction: [(SETITEM 1 {1 2 3} )]
 PASS: Executing [(SETITEM 1 {1 2 3} )] threw an error
 INFO: Executing invalid instruction: [(SETITEM 1 {1 2 3} "value "toomany)]
-PASS: Executing [(SETITEM 1 {1 2 3} "value "toomany)] threw an error
+INFO: Executing [(SETITEM 1 {1 2 3} "value "toomany)] set error code to 8 , as expected
+INFO: Executing [(SETITEM 1 {1 2 3} "value "toomany)] set error string to [too much inside ()'s]
 INFO: Executing invalid instruction: [SETITEM "one {1 2 3} "value]
 PASS: Executing [SETITEM "one {1 2 3} "value] threw an error
 INFO: Executing invalid instruction: [SETITEM 1 [1 2 3] "value]
@@ -381,7 +425,8 @@ PASS: Executing [(NOT 0)] threw an error
 INFO: Executing invalid instruction: [(NOT "truex)]
 PASS: Executing [(NOT "truex)] threw an error
 INFO: Executing invalid instruction: [(NOT "true "true)]
-PASS: Executing [(NOT "true "true)] threw an error
+INFO: Executing [(NOT "true "true)] set error code to 8 , as expected
+INFO: Executing [(NOT "true "true)] set error string to [too much inside ()'s]
 PASS: [0 + 0] returned 0 , as expected.
 PASS: [0 + 1] returned 1 , as expected.
 PASS: [0 + -1] returned -1 , as expected.
@@ -485,7 +530,8 @@ PASS: Executing [(DIFFERENCE)] threw an error
 INFO: Executing invalid instruction: [(DIFFERENCE 5)]
 PASS: Executing [(DIFFERENCE 5)] threw an error
 INFO: Executing invalid instruction: [(DIFFERENCE 5 6 7)]
-PASS: Executing [(DIFFERENCE 5 6 7)] threw an error
+INFO: Executing [(DIFFERENCE 5 6 7)] set error code to 8 , as expected
+INFO: Executing [(DIFFERENCE 5 6 7)] set error string to [too much inside ()'s]
 INFO: Executing invalid instruction: [[] - 2]
 PASS: Executing [[] - 2] threw an error
 INFO: Executing invalid instruction: [[1] - 2]
@@ -555,7 +601,8 @@ PASS: Executing [MINUS "1a] threw an error
 INFO: Executing invalid instruction: [(MINUS)]
 PASS: Executing [(MINUS)] threw an error
 INFO: Executing invalid instruction: [(MINUS 1 1)]
-PASS: Executing [(MINUS 1 1)] threw an error
+INFO: Executing [(MINUS 1 1)] set error code to 8 , as expected
+INFO: Executing [(MINUS 1 1)] set error string to [too much inside ()'s]
 PASS: [0 * 0] returned 0 , as expected.
 PASS: [0 * 1] returned 0 , as expected.
 PASS: [1 * 0] returned 0 , as expected.
@@ -676,7 +723,8 @@ PASS: [(QUOTIENT 1e40)] returned 1e-40 , as expected.
 INFO: Executing invalid instruction: [(QUOTIENT)]
 PASS: Executing [(QUOTIENT)] threw an error
 INFO: Executing invalid instruction: [(QUOTIENT 5 6 7)]
-PASS: Executing [(QUOTIENT 5 6 7)] threw an error
+INFO: Executing [(QUOTIENT 5 6 7)] set error code to 8 , as expected
+INFO: Executing [(QUOTIENT 5 6 7)] set error string to [too much inside ()'s]
 INFO: Executing invalid instruction: [[] / 2]
 PASS: Executing [[] / 2] threw an error
 INFO: Executing invalid instruction: [[1] / 2]
@@ -759,7 +807,8 @@ PASS: Executing [(REMAINDER)] threw an error
 INFO: Executing invalid instruction: [(REMAINDER 1)]
 PASS: Executing [(REMAINDER 1)] threw an error
 INFO: Executing invalid instruction: [(REMAINDER 5 6 7)]
-PASS: Executing [(REMAINDER 5 6 7)] threw an error
+INFO: Executing [(REMAINDER 5 6 7)] set error code to 8 , as expected
+INFO: Executing [(REMAINDER 5 6 7)] set error string to [too much inside ()'s]
 INFO: Executing invalid instruction: [REMAINDER [] 2]
 PASS: Executing [REMAINDER [] 2] threw an error
 INFO: Executing invalid instruction: [REMAINDER [1] 2]
@@ -802,7 +851,8 @@ PASS: Executing [(MODULO)] threw an error
 INFO: Executing invalid instruction: [(MODULO 1)]
 PASS: Executing [(MODULO 1)] threw an error
 INFO: Executing invalid instruction: [(MODULO 5 6 7)]
-PASS: Executing [(MODULO 5 6 7)] threw an error
+INFO: Executing [(MODULO 5 6 7)] set error code to 8 , as expected
+INFO: Executing [(MODULO 5 6 7)] set error string to [too much inside ()'s]
 INFO: Executing invalid instruction: [MODULO [] 2]
 PASS: Executing [MODULO [] 2] threw an error
 INFO: Executing invalid instruction: [MODULO [1] 2]
@@ -842,7 +892,8 @@ PASS: [INT 2.3e40] returned 2.3e+40 , as expected.
 INFO: Executing invalid instruction: [(INT)]
 PASS: Executing [(INT)] threw an error
 INFO: Executing invalid instruction: [(INT 1 2)]
-PASS: Executing [(INT 1 2)] threw an error
+INFO: Executing [(INT 1 2)] set error code to 8 , as expected
+INFO: Executing [(INT 1 2)] set error string to [too much inside ()'s]
 INFO: Executing invalid instruction: [INT []]
 PASS: Executing [INT []] threw an error
 INFO: Executing invalid instruction: [INT [1]]
@@ -868,7 +919,8 @@ PASS: [ROUND 2.3e40] returned 2.3e+40 , as expected.
 INFO: Executing invalid instruction: [(ROUND)]
 PASS: Executing [(ROUND)] threw an error
 INFO: Executing invalid instruction: [(ROUND 1 2)]
-PASS: Executing [(ROUND 1 2)] threw an error
+INFO: Executing [(ROUND 1 2)] set error code to 8 , as expected
+INFO: Executing [(ROUND 1 2)] set error string to [too much inside ()'s]
 INFO: Executing invalid instruction: [ROUND []]
 PASS: Executing [ROUND []] threw an error
 INFO: Executing invalid instruction: [ROUND [1]]
@@ -890,7 +942,8 @@ PASS: [ABS 2.3e40] returned 2.3e+40 , as expected.
 INFO: Executing invalid instruction: [(ABS)]
 PASS: Executing [(ABS)] threw an error
 INFO: Executing invalid instruction: [(ABS 1 2)]
-PASS: Executing [(ABS 1 2)] threw an error
+INFO: Executing [(ABS 1 2)] set error code to 8 , as expected
+INFO: Executing [(ABS 1 2)] set error string to [too much inside ()'s]
 INFO: Executing invalid instruction: [ABS []]
 PASS: Executing [ABS []] threw an error
 INFO: Executing invalid instruction: [ABS [1]]
@@ -914,7 +967,8 @@ PASS: [SIGN 2.3e40] returned 1 , as expected.
 INFO: Executing invalid instruction: [(SIGN)]
 PASS: Executing [(SIGN)] threw an error
 INFO: Executing invalid instruction: [(SIGN 1 2)]
-PASS: Executing [(SIGN 1 2)] threw an error
+INFO: Executing [(SIGN 1 2)] set error code to 8 , as expected
+INFO: Executing [(SIGN 1 2)] set error string to [too much inside ()'s]
 INFO: Executing invalid instruction: [SIGN []]
 PASS: Executing [SIGN []] threw an error
 INFO: Executing invalid instruction: [SIGN [1]]
@@ -936,7 +990,8 @@ PASS: [SQRT 1e40] returned 1e+20 , as expected.
 INFO: Executing invalid instruction: [(SQRT)]
 PASS: Executing [(SQRT)] threw an error
 INFO: Executing invalid instruction: [(SQRT 1 2)]
-PASS: Executing [(SQRT 1 2)] threw an error
+INFO: Executing [(SQRT 1 2)] set error code to 8 , as expected
+INFO: Executing [(SQRT 1 2)] set error string to [too much inside ()'s]
 INFO: Executing invalid instruction: [SQRT -1]
 PASS: Executing [SQRT -1] threw an error
 INFO: Executing invalid instruction: [SQRT []]
@@ -1001,7 +1056,8 @@ PASS: Executing [(POWER)] threw an error
 INFO: Executing invalid instruction: [(POWER 5)]
 PASS: Executing [(POWER 5)] threw an error
 INFO: Executing invalid instruction: [(POWER 5 6 7)]
-PASS: Executing [(POWER 5 6 7)] threw an error
+INFO: Executing [(POWER 5 6 7)] set error code to 8 , as expected
+INFO: Executing [(POWER 5 6 7)] set error string to [too much inside ()'s]
 INFO: Executing invalid instruction: [POWER 0 -1]
 PASS: Executing [POWER 0 -1] threw an error
 INFO: Executing invalid instruction: [POWER -1 0.5]
@@ -1045,7 +1101,8 @@ PASS: Executing [EXP 1e40] threw an error
 INFO: Executing invalid instruction: [(EXP)]
 PASS: Executing [(EXP)] threw an error
 INFO: Executing invalid instruction: [(EXP 1 2)]
-PASS: Executing [(EXP 1 2)] threw an error
+INFO: Executing [(EXP 1 2)] set error code to 8 , as expected
+INFO: Executing [(EXP 1 2)] set error string to [too much inside ()'s]
 INFO: Executing invalid instruction: [EXP []]
 PASS: Executing [EXP []] threw an error
 INFO: Executing invalid instruction: [EXP [1]]
@@ -1067,7 +1124,8 @@ FAIL: [LOG10 50] returned 1.69897000433602 . We expected 1.69897000433602
 INFO: Executing invalid instruction: [(LOG10)]
 PASS: Executing [(LOG10)] threw an error
 INFO: Executing invalid instruction: [(LOG10 1 2)]
-PASS: Executing [(LOG10 1 2)] threw an error
+INFO: Executing [(LOG10 1 2)] set error code to 8 , as expected
+INFO: Executing [(LOG10 1 2)] set error string to [too much inside ()'s]
 INFO: Executing invalid instruction: [LOG10 0]
 PASS: Executing [LOG10 0] threw an error
 INFO: Executing invalid instruction: [LOG10 -1]
@@ -1090,7 +1148,8 @@ FAIL: [LN 500] returned 6.21460809842219 . We expected 6.21460809842219
 INFO: Executing invalid instruction: [(LN)]
 PASS: Executing [(LN)] threw an error
 INFO: Executing invalid instruction: [(LN 1 2)]
-PASS: Executing [(LN 1 2)] threw an error
+INFO: Executing [(LN 1 2)] set error code to 8 , as expected
+INFO: Executing [(LN 1 2)] set error string to [too much inside ()'s]
 INFO: Executing invalid instruction: [LN 0]
 PASS: Executing [LN 0] threw an error
 INFO: Executing invalid instruction: [LN -1]
@@ -1122,7 +1181,8 @@ PASS: [TAN 14.5] returned 0.25861758435589 , as expected.
 INFO: Executing invalid instruction: [(TAN)]
 PASS: Executing [(TAN)] threw an error
 INFO: Executing invalid instruction: [(TAN 1 2)]
-PASS: Executing [(TAN 1 2)] threw an error
+INFO: Executing [(TAN 1 2)] set error code to 8 , as expected
+INFO: Executing [(TAN 1 2)] set error string to [too much inside ()'s]
 INFO: Executing invalid instruction: [TAN 90]
 FAIL: Executing [TAN 90] did not throw an error
 INFO: Executing invalid instruction: [TAN -90]
@@ -1155,7 +1215,8 @@ PASS: [RADTAN ( 14.5 )] returned -2.63406913250383 , as expected.
 INFO: Executing invalid instruction: [(RADTAN)]
 PASS: Executing [(RADTAN)] threw an error
 INFO: Executing invalid instruction: [(RADTAN 1 2)]
-PASS: Executing [(RADTAN 1 2)] threw an error
+INFO: Executing [(RADTAN 1 2)] set error code to 8 , as expected
+INFO: Executing [(RADTAN 1 2)] set error string to [too much inside ()'s]
 INFO: Executing invalid instruction: [RADTAN ( 0.5 * PI)]
 FAIL: Executing [RADTAN ( 0.5 * PI)] did not throw an error
 INFO: Executing invalid instruction: [RADTAN (-0.5 * PI)]
@@ -1194,7 +1255,8 @@ PASS: [(ARCTAN 1 100)] returned 89.4270613023165 , as expected.
 INFO: Executing invalid instruction: [(ARCTAN)]
 PASS: Executing [(ARCTAN)] threw an error
 INFO: Executing invalid instruction: [(ARCTAN 1 2 3)]
-PASS: Executing [(ARCTAN 1 2 3)] threw an error
+INFO: Executing [(ARCTAN 1 2 3)] set error code to 8 , as expected
+INFO: Executing [(ARCTAN 1 2 3)] set error string to [too much inside ()'s]
 INFO: Executing invalid instruction: [ARCTAN []]
 PASS: Executing [ARCTAN []] threw an error
 INFO: Executing invalid instruction: [ARCTAN [1]]
@@ -1251,7 +1313,8 @@ PASS: [(RADARCTAN 1 100)] returned 1.56079666010823 , as expected.
 INFO: Executing invalid instruction: [(RADARCTAN)]
 PASS: Executing [(RADARCTAN)] threw an error
 INFO: Executing invalid instruction: [(RADARCTAN 1 2 3)]
-PASS: Executing [(RADARCTAN 1 2 3)] threw an error
+INFO: Executing [(RADARCTAN 1 2 3)] set error code to 8 , as expected
+INFO: Executing [(RADARCTAN 1 2 3)] set error string to [too much inside ()'s]
 INFO: Executing invalid instruction: [RADARCTAN []]
 PASS: Executing [RADARCTAN []] threw an error
 INFO: Executing invalid instruction: [RADARCTAN [1]]
@@ -1304,7 +1367,8 @@ PASS: [SIN 14.5] returned 0.250380004054441 , as expected.
 INFO: Executing invalid instruction: [(SIN)]
 PASS: Executing [(SIN)] threw an error
 INFO: Executing invalid instruction: [(SIN 1 2)]
-PASS: Executing [(SIN 1 2)] threw an error
+INFO: Executing [(SIN 1 2)] set error code to 8 , as expected
+INFO: Executing [(SIN 1 2)] set error string to [too much inside ()'s]
 INFO: Executing invalid instruction: [SIN []]
 PASS: Executing [SIN []] threw an error
 INFO: Executing invalid instruction: [SIN [1]]
@@ -1331,7 +1395,8 @@ PASS: [RADSIN 14.5] returned 0.934895055524683 , as expected.
 INFO: Executing invalid instruction: [(RADSIN)]
 PASS: Executing [(RADSIN)] threw an error
 INFO: Executing invalid instruction: [(RADSIN 1 2)]
-PASS: Executing [(RADSIN 1 2)] threw an error
+INFO: Executing [(RADSIN 1 2)] set error code to 8 , as expected
+INFO: Executing [(RADSIN 1 2)] set error string to [too much inside ()'s]
 INFO: Executing invalid instruction: [RADSIN []]
 PASS: Executing [RADSIN []] threw an error
 INFO: Executing invalid instruction: [RADSIN [1]]
@@ -1354,7 +1419,8 @@ PASS: [ARCSIN -0.5] returned -30 , as expected.
 INFO: Executing invalid instruction: [(ARCSIN)]
 PASS: Executing [(ARCSIN)] threw an error
 INFO: Executing invalid instruction: [(ARCSIN 1 2)]
-PASS: Executing [(ARCSIN 1 2)] threw an error
+INFO: Executing [(ARCSIN 1 2)] set error code to 8 , as expected
+INFO: Executing [(ARCSIN 1 2)] set error string to [too much inside ()'s]
 INFO: Executing invalid instruction: [ARCSIN 1.1]
 PASS: Executing [ARCSIN 1.1] threw an error
 INFO: Executing invalid instruction: [ARCSIN -1.1]
@@ -1381,7 +1447,8 @@ PASS: [RADARCSIN -0.5] returned -0.523598775598299 , as expected.
 INFO: Executing invalid instruction: [(RADARCSIN)]
 PASS: Executing [(RADARCSIN)] threw an error
 INFO: Executing invalid instruction: [(RADARCSIN 1 2)]
-PASS: Executing [(RADARCSIN 1 2)] threw an error
+INFO: Executing [(RADARCSIN 1 2)] set error code to 8 , as expected
+INFO: Executing [(RADARCSIN 1 2)] set error string to [too much inside ()'s]
 INFO: Executing invalid instruction: [RADARCSIN 1.1]
 PASS: Executing [RADARCSIN 1.1] threw an error
 INFO: Executing invalid instruction: [RADARCSIN -1.1]
@@ -1441,7 +1508,8 @@ PASS: [RADCOS 14.5] returned -0.354924266788705 , as expected.
 INFO: Executing invalid instruction: [(RADCOS)]
 PASS: Executing [(RADCOS)] threw an error
 INFO: Executing invalid instruction: [(RADCOS 1 2)]
-PASS: Executing [(RADCOS 1 2)] threw an error
+INFO: Executing [(RADCOS 1 2)] set error code to 8 , as expected
+INFO: Executing [(RADCOS 1 2)] set error string to [too much inside ()'s]
 INFO: Executing invalid instruction: [RADCOS []]
 PASS: Executing [RADCOS []] threw an error
 INFO: Executing invalid instruction: [RADCOS [1]]
@@ -1464,7 +1532,8 @@ PASS: [ARCCOS -1] returned 180 , as expected.
 INFO: Executing invalid instruction: [(ARCCOS)]
 PASS: Executing [(ARCCOS)] threw an error
 INFO: Executing invalid instruction: [(ARCCOS 1 2)]
-PASS: Executing [(ARCCOS 1 2)] threw an error
+INFO: Executing [(ARCCOS 1 2)] set error code to 8 , as expected
+INFO: Executing [(ARCCOS 1 2)] set error string to [too much inside ()'s]
 INFO: Executing invalid instruction: [ARCCOS 1.1]
 PASS: Executing [ARCCOS 1.1] threw an error
 INFO: Executing invalid instruction: [ARCCOS -1.1]
@@ -1491,7 +1560,8 @@ PASS: [RADARCCOS -1] returned 3.14159265358979 , as expected.
 INFO: Executing invalid instruction: [(RADCOS)]
 PASS: Executing [(RADCOS)] threw an error
 INFO: Executing invalid instruction: [(RADCOS 1 2)]
-PASS: Executing [(RADCOS 1 2)] threw an error
+INFO: Executing [(RADCOS 1 2)] set error code to 8 , as expected
+INFO: Executing [(RADCOS 1 2)] set error string to [too much inside ()'s]
 INFO: Executing invalid instruction: [RADARCCOS 1.1]
 PASS: Executing [RADARCCOS 1.1] threw an error
 INFO: Executing invalid instruction: [RADARCCOS -1.1]
@@ -1543,7 +1613,8 @@ PASS: Executing [(DEFINED? {a} )] threw an error
 INFO: Executing invalid instruction: [(DEFINED? [] )]
 PASS: Executing [(DEFINED? [] )] threw an error
 INFO: Executing invalid instruction: [(DEFINED? "sampleproc "toomany)]
-PASS: Executing [(DEFINED? "sampleproc "toomany)] threw an error
+INFO: Executing [(DEFINED? "sampleproc "toomany)] set error code to 8 , as expected
+INFO: Executing [(DEFINED? "sampleproc "toomany)] set error string to [too much inside ()'s]
 PASS: [PROCEDUREP "nonexistent] returned false , as expected.
 PASS: [PROCEDURE? "nonexistent] returned false , as expected.
 PASS: [PROCEDURE? "FORWARD] returned true , as expected.
@@ -1557,7 +1628,8 @@ PASS: Executing [(PROCEDURE? {a} )] threw an error
 INFO: Executing invalid instruction: [(PROCEDURE? [] )]
 PASS: Executing [(PROCEDURE? [] )] threw an error
 INFO: Executing invalid instruction: [(PROCEDURE? "sampleproc "toomany)]
-PASS: Executing [(PROCEDURE? "sampleproc "toomany)] threw an error
+INFO: Executing [(PROCEDURE? "sampleproc "toomany)] set error code to 8 , as expected
+INFO: Executing [(PROCEDURE? "sampleproc "toomany)] set error string to [too much inside ()'s]
 PASS: [NAMEP "nonexistent] returned false , as expected.
 PASS: [NAME? "nonexistent] returned false , as expected.
 PASS: [NAME? "FORWARD] returned false , as expected.
@@ -1571,7 +1643,8 @@ PASS: Executing [(NAME? {a} )] threw an error
 INFO: Executing invalid instruction: [(NAME? [] )]
 PASS: Executing [(NAME? [] )] threw an error
 INFO: Executing invalid instruction: [(NAME? "namepvariable "toomany)]
-PASS: Executing [(NAME? "namepvariable "toomany)] threw an error
+INFO: Executing [(NAME? "namepvariable "toomany)] set error code to 8 , as expected
+INFO: Executing [(NAME? "namepvariable "toomany)] set error string to [too much inside ()'s]
 PASS: [PRIMITIVEP "nonexistent] returned false , as expected.
 PASS: [PRIMITIVE? "nonexistent] returned false , as expected.
 PASS: [PRIMITIVE? "FORWARD] returned true , as expected.
@@ -1586,7 +1659,8 @@ PASS: Executing [(PRIMITIVE? {a} )] threw an error
 INFO: Executing invalid instruction: [(PRIMITIVE? [] )]
 PASS: Executing [(PRIMITIVE? [] )] threw an error
 INFO: Executing invalid instruction: [(PRIMITIVE? "namepvariable "toomany)]
-PASS: Executing [(PRIMITIVE? "namepvariable "toomany)] threw an error
+INFO: Executing [(PRIMITIVE? "namepvariable "toomany)] set error code to 8 , as expected
+INFO: Executing [(PRIMITIVE? "namepvariable "toomany)] set error string to [too much inside ()'s]
 PASS: [MACROP "mymacro] returned true , as expected.
 PASS: [MACRO? "mymacro] returned true , as expected.
 PASS: [MACRO? "FORWARD] returned false , as expected.
@@ -1601,7 +1675,8 @@ PASS: Executing [(MACRO? {a} )] threw an error
 INFO: Executing invalid instruction: [(MACRO? [] )]
 PASS: Executing [(MACRO? [] )] threw an error
 INFO: Executing invalid instruction: [(MACRO? "mymacro "toomany)]
-PASS: Executing [(MACRO? "mymacro "toomany)] threw an error
+INFO: Executing [(MACRO? "mymacro "toomany)] set error code to 8 , as expected
+INFO: Executing [(MACRO? "mymacro "toomany)] set error string to [too much inside ()'s]
 PASS: [ECHO "input] returned input , as expected.
 PASS: [DEFINEDP "ECHO] returned true , as expected.
 PASS: [DEFINED? "ECHO] returned true , as expected.
@@ -1611,6 +1686,9 @@ INFO: Executing invalid instruction: [(DEFINE "function)]
 PASS: Executing [(DEFINE "function)] threw an error
 INFO: Executing invalid instruction: [(DEFINE "function [] )]
 PASS: Executing [(DEFINE "function [] )] threw an error
+INFO: Executing invalid instruction: [(DEFINE "function [[a] [output :a]] "toomany)]
+INFO: Executing [(DEFINE "function [[a] [output :a]] "toomany)] set error code to 8 , as expected
+INFO: Executing [(DEFINE "function [[a] [output :a]] "toomany)] set error string to [too much inside ()'s]
 PASS: [LOCALVARTEST "unknownlocalvar 42] returned 42 , as expected.
 PASS: [NAME? "unknownlocalvar] returned false , as expected.
 PASS: [:10] returned ten , as expected.
@@ -1631,6 +1709,9 @@ INFO: Executing invalid instruction: [ERASE {a}]
 PASS: Executing [ERASE {a}] threw an error
 INFO: Executing invalid instruction: [ERASE "forward]
 PASS: Executing [ERASE "forward] threw an error
+INFO: Executing invalid instruction: [(ERASE "erasedproc "erasedproc)]
+INFO: Executing [(ERASE "erasedproc "erasedproc)] set error code to 8 , as expected
+INFO: Executing [(ERASE "erasedproc "erasedproc)] set error string to [too much inside ()'s]
 PASS: [PROCEDURE? "sampleproc] returned true , as expected.
 INFO: Executing invalid instruction: [(ERALL 10)]
 PASS: Executing [(ERALL 10)] threw an error
@@ -1640,10 +1721,25 @@ INFO: Executing invalid instruction: [(ERALL {a} )]
 PASS: Executing [(ERALL {a} )] threw an error
 INFO: Executing invalid instruction: [(ERALL "no)]
 PASS: Executing [(ERALL "no)] threw an error
+INFO: Executing invalid instruction: [(ERALL "false "toomany)]
+INFO: Executing [(ERALL "false "toomany)] set error code to 8 , as expected
+INFO: Executing [(ERALL "false "toomany)] set error string to [too much inside ()'s]
 PASS: [LOCALVARTEST "mylocalvarname 42] returned 42 , as expected.
 PASS: [:mylocalvarname] returned 32 , as expected.
 INFO: Executing invalid instruction: [(LOCALMAKE)]
 PASS: Executing [(LOCALMAKE)] threw an error
+INFO: Executing invalid instruction: [(CONTENTS "toomany)]
+INFO: Executing [(CONTENTS "toomany)] set error code to 8 , as expected
+INFO: Executing [(CONTENTS "toomany)] set error string to [too much inside ()'s]
+INFO: Executing invalid instruction: [(NAMES "toomany)]
+INFO: Executing [(NAMES "toomany)] set error code to 8 , as expected
+INFO: Executing [(NAMES "toomany)] set error string to [too much inside ()'s]
+INFO: Executing invalid instruction: [(BURIED "toomany)]
+INFO: Executing [(BURIED "toomany)] set error code to 8 , as expected
+INFO: Executing [(BURIED "toomany)] set error string to [too much inside ()'s]
+INFO: Executing invalid instruction: [(PROCEDURES "toomany)]
+INFO: Executing [(PROCEDURES "toomany)] set error code to 8 , as expected
+INFO: Executing [(PROCEDURES "toomany)] set error string to [too much inside ()'s]
 PASS: [NAMELIST "a] returned [[] [a]] , as expected.
 PASS: [NAMELIST [a b]] returned [[] [a b]] , as expected.
 PASS: [NAMELIST "] returned [[] []] , as expected.
@@ -1653,11 +1749,17 @@ PASS: Executing [(NAMELIST)] threw an error
 INFO: Executing invalid instruction: [NAMELIST {a b}]
 PASS: Executing [NAMELIST {a b}] threw an error
 INFO: Executing invalid instruction: [(NAMELIST "a "b)]
-PASS: Executing [(NAMELIST "a "b)] threw an error
+INFO: Executing [(NAMELIST "a "b)] set error code to 8 , as expected
+INFO: Executing [(NAMELIST "a "b)] set error string to [too much inside ()'s]
+INFO: Executing invalid instruction: [(POPL)]
+PASS: Executing [(POPL)] threw an error
+INFO: Executing invalid instruction: [(POPL "numbertoword "toomany)]
+PASS: Executing [(POPL "numbertoword "toomany)] threw an error
 INFO: Executing invalid instruction: [(PO)]
 PASS: Executing [(PO)] threw an error
 INFO: Executing invalid instruction: [(PO "pot "pots)]
-PASS: Executing [(PO "pot "pots)] threw an error
+INFO: Executing [(PO "pot "pots)] set error code to 8 , as expected
+INFO: Executing [(PO "pot "pots)] set error string to [too much inside ()'s]
 INFO: Executing invalid instruction: [PO "forward]
 PASS: Executing [PO "forward] threw an error
 INFO: Executing invalid instruction: [PO "nonexistent]
@@ -1667,27 +1769,31 @@ PASS: Executing [PO [nonexistent]] threw an error
 INFO: Executing invalid instruction: [PO {a}]
 PASS: Executing [PO {a}] threw an error
 INFO: Executing invalid instruction: [(POALL "toomany)]
-PASS: Executing [(POALL "toomany)] threw an error
+INFO: Executing [(POALL "toomany)] set error code to 8 , as expected
+INFO: Executing [(POALL "toomany)] set error string to [too much inside ()'s]
 INFO: Executing invalid instruction: [(POPS "toomany)]
-PASS: Executing [(POPS "toomany)] threw an error
+INFO: Executing [(POPS "toomany)] set error code to 8 , as expected
+INFO: Executing [(POPS "toomany)] set error string to [too much inside ()'s]
 INFO: Executing invalid instruction: [(POPLS "toomany)]
-PASS: Executing [(POPLS "toomany)] threw an error
-INFO: Executing invalid instruction: [(POT "toomany)]
-PASS: Executing [(POT "toomany)] threw an error
+INFO: Executing [(POPLS "toomany)] set error code to 8 , as expected
+INFO: Executing [(POPLS "toomany)] set error string to [too much inside ()'s]
 INFO: Executing invalid instruction: [(POTS "toomany)]
-PASS: Executing [(POTS "toomany)] threw an error
+INFO: Executing [(POTS "toomany)] set error code to 8 , as expected
+INFO: Executing [(POTS "toomany)] set error string to [too much inside ()'s]
 INFO: Executing invalid instruction: [(PON)]
 PASS: Executing [(PON)] threw an error
 INFO: Executing invalid instruction: [PON "sampleproc]
 PASS: Executing [PON "sampleproc] threw an error
 INFO: Executing invalid instruction: [(PON "too "many)]
-PASS: Executing [(PON "too "many)] threw an error
+INFO: Executing [(PON "too "many)] set error code to 8 , as expected
+INFO: Executing [(PON "too "many)] set error string to [too much inside ()'s]
 INFO: Executing invalid instruction: [PON {a b}]
 PASS: Executing [PON {a b}] threw an error
 INFO: Executing invalid instruction: [(POT)]
 PASS: Executing [(POT)] threw an error
 INFO: Executing invalid instruction: [(POT "pot "pots)]
-PASS: Executing [(POT "pot "pots)] threw an error
+INFO: Executing [(POT "pot "pots)] set error code to 8 , as expected
+INFO: Executing [(POT "pot "pots)] set error string to [too much inside ()'s]
 INFO: Executing invalid instruction: [POT "forward]
 PASS: Executing [POT "forward] threw an error
 INFO: Executing invalid instruction: [POT "nonexistent]
@@ -1745,7 +1851,8 @@ PASS: Executing [(REMPROP)] threw an error
 INFO: Executing invalid instruction: [(REMPROP "plist)]
 PASS: Executing [(REMPROP "plist)] threw an error
 INFO: Executing invalid instruction: [(REMPROP "plist "prop "toomany)]
-PASS: Executing [(REMPROP "plist "prop "toomany)] threw an error
+INFO: Executing [(REMPROP "plist "prop "toomany)] set error code to 8 , as expected
+INFO: Executing [(REMPROP "plist "prop "toomany)] set error string to [too much inside ()'s]
 INFO: Executing invalid instruction: [REMPROP [1 2 3] "prop]
 PASS: Executing [REMPROP [1 2 3] "prop] threw an error
 INFO: Executing invalid instruction: [REMPROP {1 2 3} "prop]
@@ -1759,7 +1866,8 @@ PASS: Executing [(GPROP)] threw an error
 INFO: Executing invalid instruction: [(GPROP "plist)]
 PASS: Executing [(GPROP "plist)] threw an error
 INFO: Executing invalid instruction: [(GPROP "plist "prop "toomany)]
-PASS: Executing [(GPROP "plist "prop "toomany)] threw an error
+INFO: Executing [(GPROP "plist "prop "toomany)] set error code to 8 , as expected
+INFO: Executing [(GPROP "plist "prop "toomany)] set error string to [too much inside ()'s]
 INFO: Executing invalid instruction: [GPROP [1 2 3] "prop]
 PASS: Executing [GPROP [1 2 3] "prop] threw an error
 INFO: Executing invalid instruction: [GPROP {1 2 3} "prop]
@@ -1862,7 +1970,8 @@ PASS: Executing [SETACTIVAREA [0 0 50 -50]] threw an error
 INFO: Executing invalid instruction: [SETACTIVAREA [0 0 0 0]]
 PASS: Executing [SETACTIVAREA [0 0 0 0]] threw an error
 INFO: Executing invalid instruction: [(ACTIVAREA "toomany)]
-PASS: Executing [(ACTIVAREA "toomany)] threw an error
+INFO: Executing [(ACTIVAREA "toomany)] set error code to 8 , as expected
+INFO: Executing [(ACTIVAREA "toomany)] set error string to [too much inside ()'s]
 PASS: Size is [100 100] , as expected.
 PASS: Size is [100 101] , as expected.
 PASS: Size is [101 100] , as expected.
@@ -1880,6 +1989,9 @@ INFO: Executing invalid instruction: [FORM 123.1 12.3 10]
 PASS: Executing [FORM 123.1 12.3 10] threw an error
 INFO: Executing invalid instruction: [FORM 123.1 10 12.3]
 PASS: Executing [FORM 123.1 10 12.3] threw an error
+INFO: Executing invalid instruction: [(FORM 123.1 10 10 10)]
+INFO: Executing [(FORM 123.1 10 10 10)] set error code to 8 , as expected
+INFO: Executing [(FORM 123.1 10 10 10)] set error string to [too much inside ()'s]
 PASS: 'FORM 123.1 10000 10' did not crash
 PASS: 'FORM 123.1 10 10000' did not crash
 INFO: Executing invalid instruction: [FORM -1 -1 "%s%s]
@@ -1898,6 +2010,9 @@ INFO: Executing invalid instruction: [INPORT {}]
 PASS: Executing [INPORT {}] threw an error
 INFO: Executing invalid instruction: [INPORT "hello]
 PASS: Executing [INPORT "hello] threw an error
+INFO: Executing invalid instruction: [(INPORT "198 "toomany)]
+INFO: Executing [(INPORT "198 "toomany)] set error code to 8 , as expected
+INFO: Executing [(INPORT "198 "toomany)] set error string to [too much inside ()'s]
 PASS: INPORTB did not crash
 INFO: Executing invalid instruction: [(INPORTB)]
 PASS: Executing [(INPORTB)] threw an error
@@ -1909,6 +2024,9 @@ INFO: Executing invalid instruction: [INPORTB {}]
 PASS: Executing [INPORTB {}] threw an error
 INFO: Executing invalid instruction: [INPORTB "hello]
 PASS: Executing [INPORTB "hello] threw an error
+INFO: Executing invalid instruction: [(INPORTB "198 "toomany)]
+INFO: Executing [(INPORTB "198 "toomany)] set error code to 8 , as expected
+INFO: Executing [(INPORTB "198 "toomany)] set error string to [too much inside ()'s]
 PASS: OUTPORT did not crash
 INFO: Executing invalid instruction: [(OUTPORT)]
 PASS: Executing [(OUTPORT)] threw an error
@@ -1922,6 +2040,9 @@ INFO: Executing invalid instruction: [OUTPORT {} 0]
 PASS: Executing [OUTPORT {} 0] threw an error
 INFO: Executing invalid instruction: [OUTPORT "hello 0]
 PASS: Executing [OUTPORT "hello 0] threw an error
+INFO: Executing invalid instruction: [(OUTPORT 198 0 "toomany)]
+INFO: Executing [(OUTPORT 198 0 "toomany)] set error code to 8 , as expected
+INFO: Executing [(OUTPORT 198 0 "toomany)] set error string to [too much inside ()'s]
 PASS: OUTPORTB did not crash
 INFO: Executing invalid instruction: [(OUTPORTB)]
 PASS: Executing [(OUTPORTB)] threw an error
@@ -1935,6 +2056,9 @@ INFO: Executing invalid instruction: [OUTPORTB {} 0]
 PASS: Executing [OUTPORTB {} 0] threw an error
 INFO: Executing invalid instruction: [OUTPORTB "hello 0]
 PASS: Executing [OUTPORTB "hello 0] threw an error
+INFO: Executing invalid instruction: [(OUTPORTB 198 0 "toomany)]
+INFO: Executing [(OUTPORTB 198 0 "toomany)] set error code to 8 , as expected
+INFO: Executing [(OUTPORTB 198 0 "toomany)] set error string to [too much inside ()'s]
 PASS: The font circle was drawn correctly
 INFO: Executing invalid instruction: [(LABEL)]
 PASS: Executing [(LABEL)] threw an error
@@ -1979,7 +2103,8 @@ PASS: Executing [SETLABELFONT [[Arial] 24 0 0 400 0 0 0 0 0 0 0 Unbound]] threw 
 INFO: Executing invalid instruction: [(SETLABELFONT)]
 PASS: Executing [(SETLABELFONT)] threw an error
 INFO: Executing invalid instruction: [(SETLABELFONT [[Arial]] "toomany)]
-PASS: Executing [(SETLABELFONT [[Arial]] "toomany)] threw an error
+INFO: Executing [(SETLABELFONT [[Arial]] "toomany)] set error code to 8 , as expected
+INFO: Executing [(SETLABELFONT [[Arial]] "toomany)] set error string to [too much inside ()'s]
 INFO: Testing that SETLABELFONT doesn't modify its input list on error
 INFO: Now comparing the original instruction to the one that was used
 FAIL: [[SETLABELFONT [[Arial] 24 0 0 400 0 0 bad 0 0 0 0 0]] = [SETLABELFONT [[Arial] 24 0 0 400 0 0 Unbound 0 0 0 0 0]]] returned false . We expected true
@@ -1989,11 +2114,14 @@ PASS: [ITEM 1 PEN] returned pendown , as expected.
 PASS: [PENDOWN?] returned false , as expected.
 PASS: [ITEM 1 PEN] returned penup , as expected.
 INFO: Executing invalid instruction: [(PENDOWN "toomany)]
-PASS: Executing [(PENDOWN "toomany)] threw an error
+INFO: Executing [(PENDOWN "toomany)] set error code to 8 , as expected
+INFO: Executing [(PENDOWN "toomany)] set error string to [too much inside ()'s]
 INFO: Executing invalid instruction: [(PENUP "toomany)]
-PASS: Executing [(PENUP "toomany)] threw an error
+INFO: Executing [(PENUP "toomany)] set error code to 8 , as expected
+INFO: Executing [(PENUP "toomany)] set error string to [too much inside ()'s]
 INFO: Executing invalid instruction: [(PENDOWN? "toomany)]
-PASS: Executing [(PENDOWN? "toomany)] threw an error
+INFO: Executing [(PENDOWN? "toomany)] set error code to 8 , as expected
+INFO: Executing [(PENDOWN? "toomany)] set error string to [too much inside ()'s]
 PASS: [PENMODE] returned paint , as expected.
 PASS: [ITEM 2 PEN] returned paint , as expected.
 PASS: [PENDOWN?] returned true , as expected.
@@ -2017,7 +2145,8 @@ PASS: Executing [(ARC)] threw an error
 INFO: Executing invalid instruction: [(ARC 10)]
 PASS: Executing [(ARC 10)] threw an error
 INFO: Executing invalid instruction: [(ARC 10 10 10)]
-PASS: Executing [(ARC 10 10 10)] threw an error
+INFO: Executing [(ARC 10 10 10)] set error code to 8 , as expected
+INFO: Executing [(ARC 10 10 10)] set error string to [too much inside ()'s]
 INFO: Executing invalid instruction: [ARC [10] 10]
 PASS: Executing [ARC [10] 10] threw an error
 INFO: Executing invalid instruction: [ARC {10} 10]
@@ -2034,6 +2163,9 @@ INFO: Executing invalid instruction: [(FILL 10)]
 PASS: Executing [(FILL 10)] threw an error
 INFO: Executing invalid instruction: [(FILL ["true] )]
 PASS: Executing [(FILL ["true] )] threw an error
+INFO: Executing invalid instruction: [(FILL "true "toomany)]
+INFO: Executing [(FILL "true "toomany)] set error code to 8 , as expected
+INFO: Executing [(FILL "true "toomany)] set error string to [too much inside ()'s]
 PASS: [WRITER] returned smoketest.txt , as expected.
 PASS: [WRITEPOS] returned 0 , as expected.
 PASS: [WRITEPOS] returned 7 , as expected.
@@ -2103,10 +2235,14 @@ INFO: Executing invalid instruction: [CLOSE "nonexistent.txt]
 PASS: Executing [CLOSE "nonexistent.txt] threw an error
 INFO: Executing invalid instruction: [(CLOSE)]
 PASS: Executing [(CLOSE)] threw an error
+INFO: Executing invalid instruction: [(CLOSE "testfile.txt "many)]
+INFO: Executing [(CLOSE "testfile.txt "many)] set error code to 8 , as expected
+INFO: Executing [(CLOSE "testfile.txt "many)] set error string to [too much inside ()'s]
 INFO: Executing invalid instruction: [(ERASEFILE)]
 PASS: Executing [(ERASEFILE)] threw an error
 INFO: Executing invalid instruction: [(ERASEFILE "too "many)]
-PASS: Executing [(ERASEFILE "too "many)] threw an error
+INFO: Executing [(ERASEFILE "too "many)] set error code to 8 , as expected
+INFO: Executing [(ERASEFILE "too "many)] set error string to [too much inside ()'s]
 INFO: Executing invalid instruction: [OPENREAD :longfilename]
 PASS: Executing [OPENREAD :longfilename] threw an error
 INFO: Executing invalid instruction: [OPENWRITE :longfilename]
@@ -2134,6 +2270,9 @@ INFO: Executing invalid instruction: [SETPENCOLOR [0 0]]
 PASS: Executing [SETPENCOLOR [0 0]] threw an error
 INFO: Executing invalid instruction: [SETPENCOLOR [0 0 0 0]]
 PASS: Executing [SETPENCOLOR [0 0 0 0]] threw an error
+INFO: Executing invalid instruction: [( SETPENCOLOR 0 0 )]
+INFO: Executing [( SETPENCOLOR 0 0 )] set error code to 8 , as expected
+INFO: Executing [( SETPENCOLOR 0 0 )] set error string to [too much inside ()'s]
 PASS: [PENCOLOUR] returned 0 , as expected.
 PASS: [PENCOLOUR] returned 15 , as expected.
 PASS: [PENCOLOUR] returned 7 , as expected.
@@ -2149,6 +2288,9 @@ INFO: Executing invalid instruction: [SETPENCOLOUR [0 0]]
 PASS: Executing [SETPENCOLOUR [0 0]] threw an error
 INFO: Executing invalid instruction: [SETPENCOLOUR [0 0 0 0]]
 PASS: Executing [SETPENCOLOUR [0 0 0 0]] threw an error
+INFO: Executing invalid instruction: [( SETPENCOLOUR 0 0 )]
+INFO: Executing [( SETPENCOLOUR 0 0 )] set error code to 8 , as expected
+INFO: Executing [( SETPENCOLOUR 0 0 )] set error string to [too much inside ()'s]
 PASS: [PENCOLOR] returned 0 , as expected.
 PASS: [PENCOLOR] returned 15 , as expected.
 PASS: [PENCOLOR] returned 7 , as expected.
@@ -2164,6 +2306,9 @@ INFO: Executing invalid instruction: [SETPC [0 0]]
 PASS: Executing [SETPC [0 0]] threw an error
 INFO: Executing invalid instruction: [SETPC [0 0 0 0]]
 PASS: Executing [SETPC [0 0 0 0]] threw an error
+INFO: Executing invalid instruction: [( SETPC 0 0 )]
+INFO: Executing [( SETPC 0 0 )] set error code to 8 , as expected
+INFO: Executing [( SETPC 0 0 )] set error string to [too much inside ()'s]
 PASS: [FLOODCOLOR] returned 0 , as expected.
 PASS: [FLOODCOLOR] returned 15 , as expected.
 PASS: [FLOODCOLOR] returned 7 , as expected.
@@ -2179,6 +2324,9 @@ INFO: Executing invalid instruction: [SETFLOODCOLOR [0 0]]
 PASS: Executing [SETFLOODCOLOR [0 0]] threw an error
 INFO: Executing invalid instruction: [SETFLOODCOLOR [0 0 0 0]]
 PASS: Executing [SETFLOODCOLOR [0 0 0 0]] threw an error
+INFO: Executing invalid instruction: [( SETFLOODCOLOR 0 0 )]
+INFO: Executing [( SETFLOODCOLOR 0 0 )] set error code to 8 , as expected
+INFO: Executing [( SETFLOODCOLOR 0 0 )] set error string to [too much inside ()'s]
 PASS: [FLOODCOLOUR] returned 0 , as expected.
 PASS: [FLOODCOLOUR] returned 15 , as expected.
 PASS: [FLOODCOLOUR] returned 7 , as expected.
@@ -2194,6 +2342,9 @@ INFO: Executing invalid instruction: [SETFLOODCOLOUR [0 0]]
 PASS: Executing [SETFLOODCOLOUR [0 0]] threw an error
 INFO: Executing invalid instruction: [SETFLOODCOLOUR [0 0 0 0]]
 PASS: Executing [SETFLOODCOLOUR [0 0 0 0]] threw an error
+INFO: Executing invalid instruction: [( SETFLOODCOLOUR 0 0 )]
+INFO: Executing [( SETFLOODCOLOUR 0 0 )] set error code to 8 , as expected
+INFO: Executing [( SETFLOODCOLOUR 0 0 )] set error string to [too much inside ()'s]
 PASS: [FLOODCOLOR] returned 0 , as expected.
 PASS: [FLOODCOLOR] returned 15 , as expected.
 PASS: [FLOODCOLOR] returned 7 , as expected.
@@ -2209,6 +2360,9 @@ INFO: Executing invalid instruction: [SETFC [0 0]]
 PASS: Executing [SETFC [0 0]] threw an error
 INFO: Executing invalid instruction: [SETFC [0 0 0 0]]
 PASS: Executing [SETFC [0 0 0 0]] threw an error
+INFO: Executing invalid instruction: [( SETFC 0 0 )]
+INFO: Executing [( SETFC 0 0 )] set error code to 8 , as expected
+INFO: Executing [( SETFC 0 0 )] set error string to [too much inside ()'s]
 PASS: [SCREENCOLOR] returned 0 , as expected.
 PASS: [SCREENCOLOR] returned 15 , as expected.
 PASS: [SCREENCOLOR] returned 7 , as expected.
@@ -2224,6 +2378,9 @@ INFO: Executing invalid instruction: [SETSCREENCOLOR [0 0]]
 PASS: Executing [SETSCREENCOLOR [0 0]] threw an error
 INFO: Executing invalid instruction: [SETSCREENCOLOR [0 0 0 0]]
 PASS: Executing [SETSCREENCOLOR [0 0 0 0]] threw an error
+INFO: Executing invalid instruction: [( SETSCREENCOLOR 0 0 )]
+INFO: Executing [( SETSCREENCOLOR 0 0 )] set error code to 8 , as expected
+INFO: Executing [( SETSCREENCOLOR 0 0 )] set error string to [too much inside ()'s]
 PASS: [SCREENCOLOUR] returned 0 , as expected.
 PASS: [SCREENCOLOUR] returned 15 , as expected.
 PASS: [SCREENCOLOUR] returned 7 , as expected.
@@ -2239,6 +2396,9 @@ INFO: Executing invalid instruction: [SETSCREENCOLOUR [0 0]]
 PASS: Executing [SETSCREENCOLOUR [0 0]] threw an error
 INFO: Executing invalid instruction: [SETSCREENCOLOUR [0 0 0 0]]
 PASS: Executing [SETSCREENCOLOUR [0 0 0 0]] threw an error
+INFO: Executing invalid instruction: [( SETSCREENCOLOUR 0 0 )]
+INFO: Executing [( SETSCREENCOLOUR 0 0 )] set error code to 8 , as expected
+INFO: Executing [( SETSCREENCOLOUR 0 0 )] set error string to [too much inside ()'s]
 PASS: [SCREENCOLOR] returned 0 , as expected.
 PASS: [SCREENCOLOR] returned 15 , as expected.
 PASS: [SCREENCOLOR] returned 7 , as expected.
@@ -2254,12 +2414,18 @@ INFO: Executing invalid instruction: [SETSC [0 0]]
 PASS: Executing [SETSC [0 0]] threw an error
 INFO: Executing invalid instruction: [SETSC [0 0 0 0]]
 PASS: Executing [SETSC [0 0 0 0]] threw an error
+INFO: Executing invalid instruction: [( SETSC 0 0 )]
+INFO: Executing [( SETSC 0 0 )] set error code to 8 , as expected
+INFO: Executing [( SETSC 0 0 )] set error string to [too much inside ()'s]
 INFO: Executing invalid instruction: [(SPLITSCREEN 1)]
-PASS: Executing [(SPLITSCREEN 1)] threw an error
+INFO: Executing [(SPLITSCREEN 1)] set error code to 8 , as expected
+INFO: Executing [(SPLITSCREEN 1)] set error string to [too much inside ()'s]
 INFO: Executing invalid instruction: [(TEXTSCREEN 1)]
-PASS: Executing [(TEXTSCREEN 1)] threw an error
+INFO: Executing [(TEXTSCREEN 1)] set error code to 8 , as expected
+INFO: Executing [(TEXTSCREEN 1)] set error string to [too much inside ()'s]
 INFO: Executing invalid instruction: [(FULLSCREEN 1)]
-PASS: Executing [(FULLSCREEN 1)] threw an error
+INFO: Executing [(FULLSCREEN 1)] set error code to 8 , as expected
+INFO: Executing [(FULLSCREEN 1)] set error string to [too much inside ()'s]
 INFO: [WAIT 0] took 0 ms to execute
 PASS: [WAIT 0 ] waited for 0 ms. Anywhere between 0 ms and 20 is acceptable.
 INFO: [WAIT 1] took 20 ms to execute
@@ -2268,14 +2434,15 @@ INFO: [WAIT 6] took 100 ms to execute
 PASS: [WAIT 6 ] waited for 100 ms. Anywhere between 100 ms and 120 is acceptable.
 INFO: [WAIT 10] took 170 ms to execute
 PASS: [WAIT 10 ] waited for 170 ms. Anywhere between 166.666666666667 ms and 186.666666666667 is acceptable.
-INFO: [WAIT 60] took 1001 ms to execute
-PASS: [WAIT 60 ] waited for 1001 ms. Anywhere between 1000 ms and 1020 is acceptable.
-INFO: [WAIT 100] took 1673 ms to execute
-PASS: [WAIT 100 ] waited for 1673 ms. Anywhere between 1666.66666666667 ms and 1686.66666666667 is acceptable.
+INFO: [WAIT 60] took 1002 ms to execute
+PASS: [WAIT 60 ] waited for 1002 ms. Anywhere between 1000 ms and 1020 is acceptable.
+INFO: [WAIT 100] took 1672 ms to execute
+PASS: [WAIT 100 ] waited for 1672 ms. Anywhere between 1666.66666666667 ms and 1686.66666666667 is acceptable.
 INFO: Executing invalid instruction: [(WAIT)]
 PASS: Executing [(WAIT)] threw an error
 INFO: Executing invalid instruction: [(WAIT 10 10)]
-PASS: Executing [(WAIT 10 10)] threw an error
+INFO: Executing [(WAIT 10 10)] set error code to 8 , as expected
+INFO: Executing [(WAIT 10 10)] set error string to [too much inside ()'s]
 INFO: Executing invalid instruction: [WAIT -1]
 PASS: Executing [WAIT -1] threw an error
 INFO: Executing invalid instruction: [WAIT "ABC]
@@ -2304,31 +2471,39 @@ PASS: [MEMBERP "mytestdir DIRECTORIES] returned false , as expected.
 INFO: Executing invalid instruction: [(MKDIR)]
 PASS: Executing [(MKDIR)] threw an error
 INFO: Executing invalid instruction: [(MKDIR "too "many)]
-PASS: Executing [(MKDIR "too "many)] threw an error
+INFO: Executing [(MKDIR "too "many)] set error code to 8 , as expected
+INFO: Executing [(MKDIR "too "many)] set error string to [too much inside ()'s]
 INFO: Executing invalid instruction: [(RMDIR)]
 PASS: Executing [(RMDIR)] threw an error
-INFO: Executing invalid instruction: [RMDIR "too "many)]
-PASS: Executing [RMDIR "too "many)] threw an error
-INFO: Executing invalid instruction: [RMDIR "doesnotexist)]
-PASS: Executing [RMDIR "doesnotexist)] threw an error
+INFO: Executing invalid instruction: [(RMDIR "too "many)]
+INFO: Executing [(RMDIR "too "many)] set error code to 8 , as expected
+INFO: Executing [(RMDIR "too "many)] set error string to [too much inside ()'s]
+INFO: Executing invalid instruction: [(RMDIR "doesnotexist)]
+PASS: Executing [(RMDIR "doesnotexist)] threw an error
 INFO: Executing invalid instruction: [(CHDIR)]
 PASS: Executing [(CHDIR)] threw an error
-INFO: Executing invalid instruction: [CHDIR "too "many)]
-PASS: Executing [CHDIR "too "many)] threw an error
-INFO: Executing invalid instruction: [CHDIR "doesnotexist)]
-PASS: Executing [CHDIR "doesnotexist)] threw an error
+INFO: Executing invalid instruction: [(CHDIR "too "many)]
+INFO: Executing [(CHDIR "too "many)] set error code to 8 , as expected
+INFO: Executing [(CHDIR "too "many)] set error string to [too much inside ()'s]
+INFO: Executing invalid instruction: [(CHDIR "doesnotexist)]
+PASS: Executing [(CHDIR "doesnotexist)] threw an error
 PASS: [LIST? NODES] returned true , as expected.
 PASS: [COUNT NODES] returned 2 , as expected.
 PASS: [NUMBER? ITEM 1 NODES] returned true , as expected.
 PASS: [NUMBER? ITEM 2 NODES] returned true , as expected.
 INFO: Executing invalid instruction: [(NODES "too-many)]
-PASS: Executing [(NODES "too-many)] threw an error
+INFO: Executing [(NODES "too-many)] set error code to 8 , as expected
+INFO: Executing [(NODES "too-many)] set error string to [too much inside ()'s]
 PASS: [BUTTONP] returned false , as expected.
 PASS: [BUTTON?] returned false , as expected.
 INFO: Executing invalid instruction: [(BUTTON? "too-many)]
-PASS: Executing [(BUTTON? "too-many)] threw an error
+INFO: Executing [(BUTTON? "too-many)] set error code to 8 , as expected
+INFO: Executing [(BUTTON? "too-many)] set error string to [too much inside ()'s]
 INFO: executing regression test for bug #1384267
 PASS: "bug #1384267 is fixed; turning by a large number in perspective mode did not crash.
+INFO: Executing invalid instruction: [(PERSPECTIVE "toomany)]
+INFO: Executing [(PERSPECTIVE "toomany)] set error code to 8 , as expected
+INFO: Executing [(PERSPECTIVE "toomany)] set error string to [too much inside ()'s]
 INFO: Calling SETORIENTATION [0 0 0]
 PASS: [LIST? ORIENTATION] returned true , as expected.
 PASS: [COUNT ORIENTATION] returned 3 , as expected.
@@ -2438,9 +2613,11 @@ PASS: Executing [(SETORIENTATION [0 0 0 0] )] threw an error
 INFO: Executing invalid instruction: [(SETORIENTATION {0 0 0} )]
 PASS: Executing [(SETORIENTATION {0 0 0} )] threw an error
 INFO: Executing invalid instruction: [(SETORIENTATION [0 0 0] "toomany)]
-PASS: Executing [(SETORIENTATION [0 0 0] "toomany)] threw an error
+INFO: Executing [(SETORIENTATION [0 0 0] "toomany)] set error code to 8 , as expected
+INFO: Executing [(SETORIENTATION [0 0 0] "toomany)] set error string to [too much inside ()'s]
 INFO: Executing invalid instruction: [(ORIENTATION "toomany)]
-PASS: Executing [(ORIENTATION "toomany)] threw an error
+INFO: Executing [(ORIENTATION "toomany)] set error code to 8 , as expected
+INFO: Executing [(ORIENTATION "toomany)] set error string to [too much inside ()'s]
 PASS: [SCRUNCH] returned [1 1] , as expected.
 PASS: [SCRUNCH] returned [2 0.1] , as expected.
 INFO: Executing invalid instruction: [(SETSCRUNCH)]
@@ -2452,21 +2629,24 @@ PASS: Executing [(SETSCRUNCH 1)] threw an error
 INFO: Executing invalid instruction: [(SETSCRUNCH 1 1 1)]
 PASS: Executing [(SETSCRUNCH 1 1 1)] threw an error
 INFO: Executing invalid instruction: [(SCRUNCH "toomany)]
-PASS: Executing [(SCRUNCH "toomany)] threw an error
+INFO: Executing [(SCRUNCH "toomany)] set error code to 8 , as expected
+INFO: Executing [(SCRUNCH "toomany)] set error string to [too much inside ()'s]
 PASS: [SCRUNCH] returned [0 0] , as expected.
 PASS: [SCRUNCH] returned [1e+50 -1e+50] , as expected.
 PASS: "HELP [wor]" opened the index to WORD
 PASS: "HELP TO" opened the documentation for TO
 PASS: "(HELP)" opened the manual to the table of contents
 INFO: Executing invalid instruction: [(HELP "TOO "MANY)]
-PASS: Executing [(HELP "TOO "MANY)] threw an error
+INFO: Executing [(HELP "TOO "MANY)] set error code to 8 , as expected
+INFO: Executing [(HELP "TOO "MANY)] set error string to [too much inside ()'s]
 PASS: ICON "Commander minimized the commander when it was docked
 INFO: Executing invalid instruction: [(WINDOWSET)]
 PASS: Executing [(WINDOWSET)] threw an error
 INFO: Executing invalid instruction: [(WINDOWSET "FMSLogo)]
 PASS: Executing [(WINDOWSET "FMSLogo)] threw an error
 INFO: Executing invalid instruction: [(WINDOWSET "FMSLogo 0 "toomany)]
-PASS: Executing [(WINDOWSET "FMSLogo 0 "toomany)] threw an error
+INFO: Executing [(WINDOWSET "FMSLogo 0 "toomany)] set error code to 8 , as expected
+INFO: Executing [(WINDOWSET "FMSLogo 0 "toomany)] set error string to [too much inside ()'s]
 INFO: Executing invalid instruction: [WINDOWSET "FMSLogo [1]]
 PASS: Executing [WINDOWSET "FMSLogo [1]] threw an error
 INFO: Executing invalid instruction: [WINDOWSET "FMSLogo {1}]
@@ -2477,6 +2657,9 @@ INFO: Executing invalid instruction: [WINDOWSET "FMSLogo -1]
 PASS: Executing [WINDOWSET "FMSLogo -1] threw an error
 INFO: Executing invalid instruction: [(DLLLOAD)]
 PASS: Executing [(DLLLOAD)] threw an error
+INFO: Executing invalid instruction: [(DLLLOAD "kernel32 "user32)]
+INFO: Executing [(DLLLOAD "kernel32 "user32)] set error code to 8 , as expected
+INFO: Executing [(DLLLOAD "kernel32 "user32)] set error string to [too much inside ()'s]
 INFO: Executing invalid instruction: [DLLLOAD {0}]
 PASS: Executing [DLLLOAD {0}] threw an error
 INFO: Executing invalid instruction: [DLLLOAD [0]]
@@ -2498,7 +2681,8 @@ PASS: Executing [DLLCALL [L FindWindowA S FMSLogo L 0]] threw an error
 INFO: Executing invalid instruction: [(DLLCALL)]
 PASS: Executing [(DLLCALL)] threw an error
 INFO: Executing invalid instruction: [(DLLCALL [L GetTickCount] "toomany)]
-PASS: Executing [(DLLCALL [L GetTickCount] "toomany)] threw an error
+INFO: Executing [(DLLCALL [L GetTickCount] "toomany)] set error code to 8 , as expected
+INFO: Executing [(DLLCALL [L GetTickCount] "toomany)] set error string to [too much inside ()'s]
 INFO: Executing invalid instruction: [DLLCALL {0}]
 PASS: Executing [DLLCALL {0}] threw an error
 INFO: Executing invalid instruction: [DLLCALL [0]]
@@ -2518,7 +2702,8 @@ PASS: Executing [DLLCALL [L GetTickCount E Unknown]] threw an error
 INFO: Executing invalid instruction: [DLLFREE]
 PASS: Executing [DLLFREE] threw an error
 INFO: Executing invalid instruction: [(DLLFREE 0)]
-PASS: Executing [(DLLFREE 0)] threw an error
+INFO: Executing [(DLLFREE 0)] set error code to 8 , as expected
+INFO: Executing [(DLLFREE 0)] set error string to [too much inside ()'s]
 PASS: [SORT []] returned [] , as expected.
 PASS: [SORT [1]] returned [1] , as expected.
 PASS: [SORT [1 2 3]] returned [1 2 3] , as expected.
@@ -2558,4 +2743,5 @@ PASS: Executing [(SORT [3 2 1] {1} )] threw an error
 INFO: Executing invalid instruction: [(SORT [3 2 1] "clearscreen)]
 PASS: Executing [(SORT [3 2 1] "clearscreen)] threw an error
 INFO: Executing invalid instruction: [(SORT [3 2 1] "lessp "toomany)]
-PASS: Executing [(SORT [3 2 1] "lessp "toomany)] threw an error
+INFO: Executing [(SORT [3 2 1] "lessp "toomany)] set error code to 8 , as expected
+INFO: Executing [(SORT [3 2 1] "lessp "toomany)] set error string to [too much inside ()'s]

@@ -29,7 +29,7 @@ TO DLLCALLTEST
 
   ; invalid calls
   RUNBADINPUTTEST [(DLLCALL)]
-  RUNBADINPUTTEST [(DLLCALL [L GetTickCount] "toomany)]
+  RUNTOOMANYINPUTSTEST [(DLLCALL [L GetTickCount] "toomany)]
 
   ; invalid inputs
   RUNBADINPUTTEST [DLLCALL {0}]
@@ -65,7 +65,9 @@ END
 
 TO DLLLOADTEST
 
+  ; wrong number of inputs
   RUNBADINPUTTEST [(DLLLOAD)]
+  RUNTOOMANYINPUTSTEST [(DLLLOAD "kernel32 "user32)]
 
   ; invalid filenames
   RUNBADINPUTTEST [DLLLOAD {0}]
@@ -99,7 +101,7 @@ TO DLLFREETEST
   RUNBADINPUTTEST [DLLFREE]
 
   ; wrong number of inputs
-  RUNBADINPUTTEST [(DLLFREE 0)]
+  RUNTOOMANYINPUTSTEST [(DLLFREE 0)]
 
 END
 

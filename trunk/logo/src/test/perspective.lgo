@@ -26,5 +26,9 @@ TO PERSPECTIVETEST
    ; go back to the default mode
    CLEARSCREEN
    WRAP
+
+
+   ; bad input tests (shouldn't change modes)
+   RUNTOOMANYINPUTSTEST [(PERSPECTIVE "toomany)]
 END
 

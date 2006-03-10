@@ -8,4 +8,8 @@ TO RUNTEST
   repeat 5000 [ make "longword word "A :longword ]
   RUNBADINPUTTEST (list :longword)
 
+  RUNBADINPUTTEST      [(RUN)]
+  RUNBADINPUTTEST      [RUN {"FD 100}]
+  RUNTOOMANYINPUTSTEST [(RUN [FD 100] "toomany)]
+
 END

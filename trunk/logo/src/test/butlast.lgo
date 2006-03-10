@@ -10,7 +10,7 @@ TO BUTLASTTEST
 
    ; bad number of inputs
    RUNBADINPUTTEST [(BUTLAST)]
-   RUNBADINPUTTEST [(BUTLAST "word "toomany)]
+   RUNTOOMANYINPUTSTEST [(BUTLAST "word "toomany)]
 
    ; bad inputs
    RUNBADINPUTTEST [BUTLAST []  ]

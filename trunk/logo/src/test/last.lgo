@@ -10,7 +10,7 @@ TO LASTTEST
 
    ; bad number of inputs
    RUNBADINPUTTEST [(LAST)]
-   RUNBADINPUTTEST [(LAST "word "toomany)]
+   RUNTOOMANYINPUTSTEST [(LAST "word "toomany)]
 
    ; bad inputs
    RUNBADINPUTTEST [LAST []  ]
