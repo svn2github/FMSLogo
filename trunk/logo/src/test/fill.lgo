@@ -39,8 +39,8 @@ TO FILLTEST
     REPORTTESTFAILED (sentence "|(FILL "true) did not work as expected|) 
   ]
 
-  RUNBADINPUTTEST [(FILL 10)]
-  RUNBADINPUTTEST [(FILL ["true])]
+  RUNBADINPUTTEST      [(FILL 10)]
+  RUNBADINPUTTEST      [(FILL ["true])]
   RUNTOOMANYINPUTSTEST [(FILL "true "toomany)]
 
 END
