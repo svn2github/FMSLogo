@@ -1917,61 +1917,61 @@ PASS: [ACTIVEAREA] returned [-500 -500 500 500] , as expected.
 PASS: [ACTIVEAREA] returned [-500 -500 500 500] , as expected.
 INFO: Executing invalid instruction: [(SETACTIVEAREA)]
 PASS: Executing [(SETACTIVEAREA)] threw an error
-INFO: Executing invalid instruction: [(SETACTIVAREA 0)]
-PASS: Executing [(SETACTIVAREA 0)] threw an error
-INFO: Executing invalid instruction: [(SETACTIVAREA 0 0)]
-PASS: Executing [(SETACTIVAREA 0 0)] threw an error
-INFO: Executing invalid instruction: [(SETACTIVAREA 0 0 50)]
-PASS: Executing [(SETACTIVAREA 0 0 50)] threw an error
-INFO: Executing invalid instruction: [(SETACTIVAREA 0 0 50 50)]
-PASS: Executing [(SETACTIVAREA 0 0 50 50)] threw an error
-INFO: Executing invalid instruction: [(SETACTIVAREA [0] )]
-PASS: Executing [(SETACTIVAREA [0] )] threw an error
-INFO: Executing invalid instruction: [(SETACTIVAREA [0 0] )]
-PASS: Executing [(SETACTIVAREA [0 0] )] threw an error
-INFO: Executing invalid instruction: [(SETACTIVAREA [0 0 50] )]
-PASS: Executing [(SETACTIVAREA [0 0 50] )] threw an error
-INFO: Executing invalid instruction: [(SETACTIVAREA [0 0 50 50 50] )]
-PASS: Executing [(SETACTIVAREA [0 0 50 50 50] )] threw an error
-INFO: Executing invalid instruction: [SETACTIVAREA {0 0 50 50}]
-PASS: Executing [SETACTIVAREA {0 0 50 50}] threw an error
-INFO: Executing invalid instruction: [SETACTIVAREA [zero 0 50 50]]
-PASS: Executing [SETACTIVAREA [zero 0 50 50]] threw an error
-INFO: Executing invalid instruction: [SETACTIVAREA [[0] 0 50 50]]
-PASS: Executing [SETACTIVAREA [[0] 0 50 50]] threw an error
-INFO: Executing invalid instruction: [SETACTIVAREA [{0} 0 50 50]]
-PASS: Executing [SETACTIVAREA [{0} 0 50 50]] threw an error
-INFO: Executing invalid instruction: [SETACTIVAREA [0 zero 50 50]]
-PASS: Executing [SETACTIVAREA [0 zero 50 50]] threw an error
-INFO: Executing invalid instruction: [SETACTIVAREA [0 [0] 50 50]]
-PASS: Executing [SETACTIVAREA [0 [0] 50 50]] threw an error
-INFO: Executing invalid instruction: [SETACTIVAREA [0 {0} 50 50]]
-PASS: Executing [SETACTIVAREA [0 {0} 50 50]] threw an error
-INFO: Executing invalid instruction: [SETACTIVAREA [0 0 fifty 50]]
-PASS: Executing [SETACTIVAREA [0 0 fifty 50]] threw an error
-INFO: Executing invalid instruction: [SETACTIVAREA [0 0 [50] 50]]
-PASS: Executing [SETACTIVAREA [0 0 [50] 50]] threw an error
-INFO: Executing invalid instruction: [SETACTIVAREA [0 0 {50} 50]]
-PASS: Executing [SETACTIVAREA [0 0 {50} 50]] threw an error
-INFO: Executing invalid instruction: [SETACTIVAREA [0 0 50 fifty]]
-PASS: Executing [SETACTIVAREA [0 0 50 fifty]] threw an error
-INFO: Executing invalid instruction: [SETACTIVAREA [0 0 50 [50]]]
-PASS: Executing [SETACTIVAREA [0 0 50 [50]]] threw an error
-INFO: Executing invalid instruction: [SETACTIVAREA [0 0 50 {50}]]
-PASS: Executing [SETACTIVAREA [0 0 50 {50}]] threw an error
-INFO: Executing invalid instruction: [SETACTIVAREA [0 0 50 {50}]]
-PASS: Executing [SETACTIVAREA [0 0 50 {50}]] threw an error
-INFO: Executing invalid instruction: [SETACTIVAREA [0 0 -50 50]]
-PASS: Executing [SETACTIVAREA [0 0 -50 50]] threw an error
-INFO: Executing invalid instruction: [SETACTIVAREA [0 0 50 -50]]
-PASS: Executing [SETACTIVAREA [0 0 50 -50]] threw an error
-INFO: Executing invalid instruction: [SETACTIVAREA [0 0 50 -50]]
-PASS: Executing [SETACTIVAREA [0 0 50 -50]] threw an error
-INFO: Executing invalid instruction: [SETACTIVAREA [0 0 0 0]]
-PASS: Executing [SETACTIVAREA [0 0 0 0]] threw an error
-INFO: Executing invalid instruction: [(ACTIVAREA "toomany)]
-INFO: Executing [(ACTIVAREA "toomany)] set error code to 8 , as expected
-INFO: Executing [(ACTIVAREA "toomany)] set error string to [too much inside ()'s]
+INFO: Executing invalid instruction: [(SETACTIVEAREA 0)]
+PASS: Executing [(SETACTIVEAREA 0)] threw an error
+INFO: Executing invalid instruction: [(SETACTIVEAREA 0 0)]
+PASS: Executing [(SETACTIVEAREA 0 0)] threw an error
+INFO: Executing invalid instruction: [(SETACTIVEAREA 0 0 50)]
+PASS: Executing [(SETACTIVEAREA 0 0 50)] threw an error
+INFO: Executing invalid instruction: [(SETACTIVEAREA 0 0 50 50)]
+PASS: Executing [(SETACTIVEAREA 0 0 50 50)] threw an error
+INFO: Executing invalid instruction: [(SETACTIVEAREA [0] )]
+PASS: Executing [(SETACTIVEAREA [0] )] threw an error
+INFO: Executing invalid instruction: [(SETACTIVEAREA [0 0] )]
+PASS: Executing [(SETACTIVEAREA [0 0] )] threw an error
+INFO: Executing invalid instruction: [(SETACTIVEAREA [0 0 50] )]
+PASS: Executing [(SETACTIVEAREA [0 0 50] )] threw an error
+INFO: Executing invalid instruction: [(SETACTIVEAREA [0 0 50 50 50] )]
+PASS: Executing [(SETACTIVEAREA [0 0 50 50 50] )] threw an error
+INFO: Executing invalid instruction: [SETACTIVEAREA {0 0 50 50}]
+PASS: Executing [SETACTIVEAREA {0 0 50 50}] threw an error
+INFO: Executing invalid instruction: [SETACTIVEAREA [zero 0 50 50]]
+PASS: Executing [SETACTIVEAREA [zero 0 50 50]] threw an error
+INFO: Executing invalid instruction: [SETACTIVEAREA [[0] 0 50 50]]
+PASS: Executing [SETACTIVEAREA [[0] 0 50 50]] threw an error
+INFO: Executing invalid instruction: [SETACTIVEAREA [{0} 0 50 50]]
+PASS: Executing [SETACTIVEAREA [{0} 0 50 50]] threw an error
+INFO: Executing invalid instruction: [SETACTIVEAREA [0 zero 50 50]]
+PASS: Executing [SETACTIVEAREA [0 zero 50 50]] threw an error
+INFO: Executing invalid instruction: [SETACTIVEAREA [0 [0] 50 50]]
+PASS: Executing [SETACTIVEAREA [0 [0] 50 50]] threw an error
+INFO: Executing invalid instruction: [SETACTIVEAREA [0 {0} 50 50]]
+PASS: Executing [SETACTIVEAREA [0 {0} 50 50]] threw an error
+INFO: Executing invalid instruction: [SETACTIVEAREA [0 0 fifty 50]]
+PASS: Executing [SETACTIVEAREA [0 0 fifty 50]] threw an error
+INFO: Executing invalid instruction: [SETACTIVEAREA [0 0 [50] 50]]
+PASS: Executing [SETACTIVEAREA [0 0 [50] 50]] threw an error
+INFO: Executing invalid instruction: [SETACTIVEAREA [0 0 {50} 50]]
+PASS: Executing [SETACTIVEAREA [0 0 {50} 50]] threw an error
+INFO: Executing invalid instruction: [SETACTIVEAREA [0 0 50 fifty]]
+PASS: Executing [SETACTIVEAREA [0 0 50 fifty]] threw an error
+INFO: Executing invalid instruction: [SETACTIVEAREA [0 0 50 [50]]]
+PASS: Executing [SETACTIVEAREA [0 0 50 [50]]] threw an error
+INFO: Executing invalid instruction: [SETACTIVEAREA [0 0 50 {50}]]
+PASS: Executing [SETACTIVEAREA [0 0 50 {50}]] threw an error
+INFO: Executing invalid instruction: [SETACTIVEAREA [0 0 50 {50}]]
+PASS: Executing [SETACTIVEAREA [0 0 50 {50}]] threw an error
+INFO: Executing invalid instruction: [SETACTIVEAREA [0 0 -50 50]]
+PASS: Executing [SETACTIVEAREA [0 0 -50 50]] threw an error
+INFO: Executing invalid instruction: [SETACTIVEAREA [0 0 50 -50]]
+PASS: Executing [SETACTIVEAREA [0 0 50 -50]] threw an error
+INFO: Executing invalid instruction: [SETACTIVEAREA [0 0 50 -50]]
+PASS: Executing [SETACTIVEAREA [0 0 50 -50]] threw an error
+INFO: Executing invalid instruction: [SETACTIVEAREA [0 0 0 0]]
+PASS: Executing [SETACTIVEAREA [0 0 0 0]] threw an error
+INFO: Executing invalid instruction: [(ACTIVEAREA "toomany)]
+INFO: Executing [(ACTIVEAREA "toomany)] set error code to 8 , as expected
+INFO: Executing [(ACTIVEAREA "toomany)] set error string to [too much inside ()'s]
 PASS: Size is [100 100] , as expected.
 PASS: Size is [100 101] , as expected.
 PASS: Size is [101 100] , as expected.
