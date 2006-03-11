@@ -7,7 +7,6 @@
 <varlistentry><term>Synopsis</term>
 <listitem>
 <synopsis><command>QUOTIENT</command> <parameter>dividend</parameter> <parameter>divisor</parameter>
-(<command>QUOTIENT</command> <parameter>dividend</parameter> <parameter>divisor</parameter>)
 (<command>QUOTIENT</command> <parameter>divisor</parameter>)
 <parameter>dividend</parameter> <command>/</command> <parameter>divisor</parameter></synopsis>
 </listitem>
