@@ -52,8 +52,8 @@ END
 TO MKDIRTEST
 
   ; bad input tests
-  RUNBADINPUTTEST [(MKDIR)]
-  RUNTOOMANYINPUTSTEST [(MKDIR "too "many)]
+  RUNNOTENOUGHINPUTSTEST [(MKDIR)]
+  RUNTOOMANYINPUTSTEST   [(MKDIR "too "many)]
 
   ; MKDIR a very long directory name (regression test for bug #1343397)
   localmake "longdirname "||
@@ -65,9 +65,9 @@ END
 TO RMDIRTEST
 
   ; bad input tests
-  RUNBADINPUTTEST [(RMDIR)]
-  RUNTOOMANYINPUTSTEST [(RMDIR "too "many)]
-  RUNBADINPUTTEST [(RMDIR "doesnotexist)]
+  RUNNOTENOUGHINPUTSTEST [(RMDIR)]
+  RUNTOOMANYINPUTSTEST   [(RMDIR "too "many)]
+  RUNBADINPUTTEST        [(RMDIR "doesnotexist)]
 
   ; RMDIR a very long directory name (regression test for bug #1343397)
   localmake "longdirname "||
@@ -79,9 +79,9 @@ END
 TO CHDIRTEST
 
   ; bad input tests
-  RUNBADINPUTTEST [(CHDIR)]
-  RUNTOOMANYINPUTSTEST [(CHDIR "too "many)]
-  RUNBADINPUTTEST [(CHDIR "doesnotexist)]
+  RUNNOTENOUGHINPUTSTEST [(CHDIR)]
+  RUNTOOMANYINPUTSTEST   [(CHDIR "too "many)]
+  RUNBADINPUTTEST        [(CHDIR "doesnotexist)]
 
   ; CHDIR a very long directory name (regression test for bug #1343397)
   localmake "longdirname "||

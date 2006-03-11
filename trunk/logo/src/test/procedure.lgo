@@ -39,10 +39,11 @@ TO PROCEDURETEST
     [TEXT "SAMPLEPROC] ~
     [[a b] [PRINT :a] [SHOW :b]]
 
-  RUNBADINPUTTEST [(TEXT)]
-  RUNBADINPUTTEST [(TEXT "nonexistent)]
-  RUNBADINPUTTEST [(TEXT [sampleproc])]
-  RUNBADINPUTTEST [(TEXT {sampleproc})]
+  RUNNOTENOUGHINPUTSTEST [(TEXT)]
+  RUNBADINPUTTEST        [(TEXT "nonexistent)]
+  RUNBADINPUTTEST        [(TEXT [sampleproc])]
+  RUNBADINPUTTEST        [(TEXT {sampleproc})]
+  RUNTOOMANYINPUTSTEST   [(TEXT "sampleproc  "toomany)]
 
   ; test FULLTEXT
   SIMPLEREPORTTEST ~
@@ -53,10 +54,11 @@ TO PROCEDURETEST
         "|  SHOW  :b ; show| 
         "END)
 
-   RUNBADINPUTTEST [(FULLTEXT)]
-   RUNBADINPUTTEST [(FULLTEXT "nonexistent)]
-   RUNBADINPUTTEST [(FULLTEXT [sampleproc])]
-   RUNBADINPUTTEST [(FULLTEXT {sampleproc})]
+   RUNNOTENOUGHINPUTSTEST [(FULLTEXT)]
+   RUNBADINPUTTEST        [(FULLTEXT "nonexistent)]
+   RUNBADINPUTTEST        [(FULLTEXT [sampleproc])]
+   RUNBADINPUTTEST        [(FULLTEXT {sampleproc})]
+   RUNTOOMANYINPUTSTEST   [(FULLTEXT "sampleproc  "toomany)]
 
    ; test DEFINEDP
    SIMPLEREPORTTEST [DEFINEDP "nonexistent] "false
@@ -65,10 +67,10 @@ TO PROCEDURETEST
    SIMPLEREPORTTEST [DEFINED? "SAMPLEPROC]  "true
    SIMPLEREPORTTEST [DEFINED? "sampleproc]  "true
    SIMPLEREPORTTEST [DEFINED? "||]          "false
-   RUNBADINPUTTEST [(DEFINED?)]
-   RUNBADINPUTTEST [(DEFINED? {a})]
-   RUNBADINPUTTEST [(DEFINED? [])]
-   RUNTOOMANYINPUTSTEST [(DEFINED? "sampleproc "toomany)]
+   RUNNOTENOUGHINPUTSTEST [(DEFINED?)]
+   RUNBADINPUTTEST        [(DEFINED? {a})]
+   RUNBADINPUTTEST        [(DEFINED? [])]
+   RUNTOOMANYINPUTSTEST   [(DEFINED? "sampleproc "toomany)]
 
    ; test PROCEDUREP
    SIMPLEREPORTTEST [PROCEDUREP "nonexistent] "false
@@ -77,10 +79,10 @@ TO PROCEDURETEST
    SIMPLEREPORTTEST [PROCEDURE? "SAMPLEPROC]  "true
    SIMPLEREPORTTEST [PROCEDURE? "sampleproc]  "true
    SIMPLEREPORTTEST [PROCEDURE? "||]          "false
-   RUNBADINPUTTEST [(PROCEDURE?)]
-   RUNBADINPUTTEST [(PROCEDURE? {a})]
-   RUNBADINPUTTEST [(PROCEDURE? [])]
-   RUNTOOMANYINPUTSTEST [(PROCEDURE? "sampleproc "toomany)]
+   RUNNOTENOUGHINPUTSTEST [(PROCEDURE?)]
+   RUNBADINPUTTEST        [(PROCEDURE? {a})]
+   RUNBADINPUTTEST        [(PROCEDURE? [])]
+   RUNTOOMANYINPUTSTEST   [(PROCEDURE? "sampleproc "toomany)]
 
    ; test NAMEP
    LOCALMAKE "namepvariable 0
@@ -90,10 +92,10 @@ TO PROCEDURETEST
    SIMPLEREPORTTEST [NAME? "||]            "false
    SIMPLEREPORTTEST [NAME? "namepvariable] "true
    SIMPLEREPORTTEST [NAME? "NAMEPVARIABLE] "true
-   RUNBADINPUTTEST [(NAME?)]
-   RUNBADINPUTTEST [(NAME? {a})]
-   RUNBADINPUTTEST [(NAME? [])]
-   RUNTOOMANYINPUTSTEST [(NAME? "namepvariable "toomany)]
+   RUNNOTENOUGHINPUTSTEST [(NAME?)]
+   RUNBADINPUTTEST        [(NAME? {a})]
+   RUNBADINPUTTEST        [(NAME? [])]
+   RUNTOOMANYINPUTSTEST   [(NAME? "namepvariable "toomany)]
 
    ; test PRIMITIVEP
    SIMPLEREPORTTEST [PRIMITIVEP "nonexistent]   "false
@@ -103,10 +105,10 @@ TO PROCEDURETEST
    SIMPLEREPORTTEST [PRIMITIVE? "||]            "false
    SIMPLEREPORTTEST [PRIMITIVE? "namepvariable] "false
    SIMPLEREPORTTEST [PRIMITIVE? "sampleproc]    "false
-   RUNBADINPUTTEST [(PRIMITIVE?)]
-   RUNBADINPUTTEST [(PRIMITIVE? {a})]
-   RUNBADINPUTTEST [(PRIMITIVE? [])]
-   RUNTOOMANYINPUTSTEST [(PRIMITIVE? "namepvariable "toomany)]
+   RUNNOTENOUGHINPUTSTEST [(PRIMITIVE?)]
+   RUNBADINPUTTEST        [(PRIMITIVE? {a})]
+   RUNBADINPUTTEST        [(PRIMITIVE? [])]
+   RUNTOOMANYINPUTSTEST   [(PRIMITIVE? "namepvariable "toomany)]
 
    ; test MACROP
    .DEFMACRO "mymacro [[a b] [print :a] [print :b]]
@@ -117,20 +119,20 @@ TO PROCEDURETEST
    SIMPLEREPORTTEST [MACRO? "||]            "false
    SIMPLEREPORTTEST [MACRO? "namepvariable] "false
    SIMPLEREPORTTEST [MACRO? "sampleproc]    "false
-   RUNBADINPUTTEST [(MACRO?)]
-   RUNBADINPUTTEST [(MACRO? {a})]
-   RUNBADINPUTTEST [(MACRO? [])]
-   RUNTOOMANYINPUTSTEST [(MACRO? "mymacro "toomany)]
+   RUNNOTENOUGHINPUTSTEST [(MACRO?)]
+   RUNBADINPUTTEST        [(MACRO? {a})]
+   RUNBADINPUTTEST        [(MACRO? [])]
+   RUNTOOMANYINPUTSTEST   [(MACRO? "mymacro "toomany)]
 
    ; test DEFINE
    DEFINE "ECHO [[a] [output :a] ]
    SIMPLEREPORTTEST [ECHO "input] "input
    SIMPLEREPORTTEST [DEFINEDP "ECHO] "true
    SIMPLEREPORTTEST [DEFINED? "ECHO] "true
-   RUNBADINPUTTEST [(DEFINE)]
-   RUNBADINPUTTEST [(DEFINE "function)]
-   RUNBADINPUTTEST [(DEFINE "function [])]
-   RUNTOOMANYINPUTSTEST [(DEFINE "function [[a] [output :a] ] "toomany)]
+   RUNNOTENOUGHINPUTSTEST [(DEFINE)]
+   RUNBADINPUTTEST        [(DEFINE "function)]
+   RUNBADINPUTTEST        [(DEFINE "function [])]
+   RUNTOOMANYINPUTSTEST   [(DEFINE "function [[a] [output :a] ] "toomany)]
 
    ; test LOCAL
    SIMPLEREPORTTEST [LOCALVARTEST "unknownlocalvar 42] 42
@@ -181,7 +183,7 @@ TO PROCEDURETEST
    LOCALMAKE "mylocalvarname 32
    SIMPLEREPORTTEST [LOCALVARTEST "mylocalvarname 42]  42
    SIMPLEREPORTTEST [:mylocalvarname]                  32
-   RUNBADINPUTTEST [(LOCALMAKE)]
+   RUNNOTENOUGHINPUTSTEST [(LOCALMAKE)]
 
    ; Just exercise CONTENTS for now.
    ; we'll figure out how to test its output later
@@ -208,9 +210,9 @@ TO PROCEDURETEST
    SIMPLEREPORTTEST [NAMELIST [a b]]  [[] [a b]]
    SIMPLEREPORTTEST [NAMELIST "||]    (list [] (list "||))
    SIMPLEREPORTTEST [NAMELIST []]     [[] []]
-   RUNBADINPUTTEST [(NAMELIST)]
-   RUNBADINPUTTEST [NAMELIST {a b}]
-   RUNTOOMANYINPUTSTEST [(NAMELIST "a "b)]
+   RUNNOTENOUGHINPUTSTEST [(NAMELIST)]
+   RUNBADINPUTTEST        [NAMELIST {a b}]
+   RUNTOOMANYINPUTSTEST   [(NAMELIST "a "b)]
 
    ; Just exercise the PO routines for now.
    ; we'll figure out how to test its output later
@@ -267,8 +269,8 @@ TO PROCEDURETEST
    CLOSE "po.dump.txt
    ERASEFILE "po.dump.txt
 
-   RUNBADINPUTTEST [(PO)]
-   RUNTOOMANYINPUTSTEST [(PO "pot "pots)]
+   RUNNOTENOUGHINPUTSTEST [(PO)]
+   RUNTOOMANYINPUTSTEST   [(PO "pot "pots)]
    RUNBADINPUTTEST [PO "forward]
    RUNBADINPUTTEST [PO "nonexistent]
    RUNBADINPUTTEST [PO [nonexistent]]
@@ -279,17 +281,17 @@ TO PROCEDURETEST
    RUNTOOMANYINPUTSTEST [(POPLS "toomany)]
    RUNTOOMANYINPUTSTEST [(POTS  "toomany)]
 
-   RUNBADINPUTTEST [(PON)]
-   RUNBADINPUTTEST [PON "sampleproc]
-   RUNTOOMANYINPUTSTEST [(PON "too "many)]
-   RUNBADINPUTTEST [PON {a b}]
+   RUNNOTENOUGHINPUTSTEST [(PON)]
+   RUNBADINPUTTEST        [PON "sampleproc]
+   RUNTOOMANYINPUTSTEST   [(PON "too "many)]
+   RUNBADINPUTTEST        [PON {a b}]
 
-   RUNBADINPUTTEST [(POT)]
-   RUNTOOMANYINPUTSTEST [(POT "pot "pots)]
-   RUNBADINPUTTEST [POT "forward]
-   RUNBADINPUTTEST [POT "nonexistent]
-   RUNBADINPUTTEST [POT [nonexistent]]
-   RUNBADINPUTTEST [POT {a}]
+   RUNNOTENOUGHINPUTSTEST [(POT)]
+   RUNTOOMANYINPUTSTEST   [(POT "pot "pots)]
+   RUNBADINPUTTEST        [POT "forward]
+   RUNBADINPUTTEST        [POT "nonexistent]
+   RUNBADINPUTTEST        [POT [nonexistent]]
+   RUNBADINPUTTEST        [POT {a}]
 
    BUG1438863TEST
 END

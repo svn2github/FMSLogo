@@ -9,8 +9,8 @@ TO LASTTEST
    SIMPLEREPORTTEST [LAST "h      ] "h
 
    ; bad number of inputs
-   RUNBADINPUTTEST [(LAST)]
-   RUNTOOMANYINPUTSTEST [(LAST "word "toomany)]
+   RUNNOTENOUGHINPUTSTEST [(LAST)]
+   RUNTOOMANYINPUTSTEST   [(LAST "word "toomany)]
 
    ; bad inputs
    RUNBADINPUTTEST [LAST []  ]

@@ -123,8 +123,12 @@ TO RUNEXPECTERRORTEST :instructions :expectederror
 END
 
 
-TO RUNTOOMANYINPUTSTEST :instructions        
+TO RUNTOOMANYINPUTSTEST :instructions
   RUNEXPECTERRORTEST :instructions 8
+END
+
+TO RUNNOTENOUGHINPUTSTEST :instructions
+  RUNEXPECTERRORTEST :instructions 6
 END
 
 

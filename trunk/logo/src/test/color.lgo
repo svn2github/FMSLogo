@@ -32,7 +32,8 @@ TO COLORSETGETTEST :setcolorcommand :getcolorcommand
    RUNBADINPUTTEST (LIST :setcolorcommand [0])
    RUNBADINPUTTEST (LIST :setcolorcommand [0 0])
    RUNBADINPUTTEST (LIST :setcolorcommand [0 0 0 0])
-   RUNTOOMANYINPUTSTEST (LIST "\( :setcolorcommand 0 0 "\) )
+   RUNNOTENOUGHINPUTSTEST (LIST "\( :setcolorcommand "\)     )
+   RUNTOOMANYINPUTSTEST   (LIST "\( :setcolorcommand 0 0 "\) )
 END
 
 TO PENCOLORTEST

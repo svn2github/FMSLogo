@@ -214,31 +214,48 @@ TO DRIBBLETEST
    ERASEFILE :filename
 END
 
+
 TO FILEBADINPUTTEST
+
+   ; a long file name used to overflow an internal buffer
+   LOCALMAKE "longfilename "||
+   REPEAT 5000 [ MAKE "longfilename word :longfilename "A ]
 
    ; bad value for "binary parameter"
    RUNBADINPUTTEST [(OPENREAD   "testfile.txt 1)]
    RUNBADINPUTTEST [(OPENWRITE  "testfile.txt 1)]
    RUNBADINPUTTEST [(OPENAPPEND "testfile.txt 1)]
    RUNBADINPUTTEST [(OPENUPDATE "testfile.txt 1)]
+   
+   ; not enough inputs
+   RUNNOTENOUGHINPUTSTEST [(OPENREAD)]
+   RUNNOTENOUGHINPUTSTEST [(OPENWRITE)]
+   RUNNOTENOUGHINPUTSTEST [(OPENAPPEND)]
+   RUNNOTENOUGHINPUTSTEST [(OPENUPDATE)]
 
-   RUNBADINPUTTEST [CLOSE "nonexistent.txt]
-   RUNBADINPUTTEST [(CLOSE)]
-   RUNTOOMANYINPUTSTEST [(CLOSE "testfile.txt "many)]
-
-   RUNBADINPUTTEST [(ERASEFILE)]
-   RUNTOOMANYINPUTSTEST [(ERASEFILE "too "many)]
+   ; too many inputs
+   RUNTOOMANYINPUTSTEST [(OPENREAD   "testfile.txt "true "toomany)]
+   RUNTOOMANYINPUTSTEST [(OPENWRITE  "testfile.txt "true "toomany)]
+   RUNTOOMANYINPUTSTEST [(OPENAPPEND "testfile.txt "true "toomany)]
+   RUNTOOMANYINPUTSTEST [(OPENUPDATE "testfile.txt "true "toomany)]
 
    ; try to overflow an internal buffer
-   LOCALMAKE "longfilename "||
-   REPEAT 5000 [ MAKE "longfilename word :longfilename "A ]
    RUNBADINPUTTEST [OPENREAD   :longfilename]
    RUNBADINPUTTEST [OPENWRITE  :longfilename]
    RUNBADINPUTTEST [OPENAPPEND :longfilename]
    RUNBADINPUTTEST [OPENUPDATE :longfilename]
 
-   RUNBADINPUTTEST [CLOSE     :longfilename]
-   RUNBADINPUTTEST [ERASEFILE :longfilename]
+   ; test CLOSE
+   RUNBADINPUTTEST        [CLOSE :longfilename]
+   RUNBADINPUTTEST        [CLOSE "nonexistent.txt]
+   RUNNOTENOUGHINPUTSTEST [(CLOSE)]
+   RUNTOOMANYINPUTSTEST   [(CLOSE "testfile.txt "many)]
+
+   ; test ERASEFILE
+   RUNBADINPUTTEST        [ERASEFILE :longfilename]
+   RUNNOTENOUGHINPUTSTEST [(ERASEFILE)]
+   RUNTOOMANYINPUTSTEST   [(ERASEFILE "too "many)]
+
 END
 
 TO ERASEFILETEST

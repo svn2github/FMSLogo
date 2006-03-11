@@ -9,8 +9,8 @@ TO BUTLASTTEST
    SIMPLEREPORTTEST [BUTLAST "h      ] "||
 
    ; bad number of inputs
-   RUNBADINPUTTEST [(BUTLAST)]
-   RUNTOOMANYINPUTSTEST [(BUTLAST "word "toomany)]
+   RUNNOTENOUGHINPUTSTEST [(BUTLAST)]
+   RUNTOOMANYINPUTSTEST   [(BUTLAST "word "toomany)]
 
    ; bad inputs
    RUNBADINPUTTEST [BUTLAST []  ]
