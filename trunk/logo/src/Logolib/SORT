@@ -19,12 +19,12 @@ make "ll []
 make "le []
 make "lg []
 make "p pick :l
-for [i 1 [count :l] 1] [ ~
-  make "ip run ifelse word? :p [(list :cmp word "\" item :i :l word "\" :p)] [(list :cmp item :i :l :p)] ~
-  make "pi run ifelse word? :p [(list :cmp word "\" :p word "\" item :i :l)] [(list :cmp :p item :i :l)] ~
-  if :ip [make "ll lput item :i :l :ll] ~
-  if and not :ip not :pi [make "le lput item :i :l :le] ~
-  if :pi [make "lg lput item :i :l :lg] ~
+for [i 1 [count :l] 1] [
+  make "ip apply :cmp (list (item :i :l) :p)
+  make "pi apply :cmp (list :p (item :i :l))
+  if :ip [make "ll lput item :i :l :ll]
+  if and not :ip not :pi [make "le lput item :i :l :le]
+  if :pi [make "lg lput item :i :l :lg]
 ]
 op (se sort.stable :ll :cmp :le sort.stable :lg :cmp)
 end
