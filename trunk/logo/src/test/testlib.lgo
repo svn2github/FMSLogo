@@ -83,11 +83,22 @@ TO RUNBADINPUTTEST :instructions
   CATCH "ERROR [ 
     IGNORE RUN :instructions 
     REPORTTESTFAILED (LIST "Executing :instructions "|did not throw an error|)
+    STOP
   ]
 
-  IF NOT EMPTYP ERROR [
-    REPORTTESTPASSED (LIST "Executing :instructions "|threw an error|)
+  LOCALMAKE "lasterror ERROR
+  IF EMPTYP :lasterror [
+    REPORTTESTFAILED (LIST "Executing :instructions "|did not change ERROR.|)
+    STOP
   ]
+
+  IF NOT EQUALP (COUNT :lasterror) 4 [
+    REPORTTESTFAILED (LIST "|ERROR did not return a list of four values.|)
+    STOP
+  ]
+
+  REPORTTESTINFO (LIST "Executing :instructions "|set error code to|   (ITEM 1 :lasterror) )
+  REPORTTESTINFO (LIST "Executing :instructions "|set error string to| (ITEM 2 :lasterror) )
 
 END
 
