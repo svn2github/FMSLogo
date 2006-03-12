@@ -5,11 +5,80 @@ TO BUG1383281TEST
 
   REPORTTESTINFO [executing regression test for bug #1383281]
   FOREACH [1] [[][]]
-  REPORTTESTPASSED ["|bug #1382181 is fixed; 'FOR [1] [[][]]' did not crash.| ]
+  REPORTTESTPASSED [Bug #1382181 is fixed. 'FOR [1] [[][]]' did not crash.]
 
 END
 
+TO BUG1448155TEST
+
+  IF "TRUE [IGNORE "TRUE] [IGNORE "FALSE]
+  REPORTTESTPASSED [Bug #1448155 is fixed.  'IF' used the IF->IFELSE mapping.]
+
+END
+
+TO OUTPUT.373
+  OUTPUT 373
+END
+
+TO IFTEST
+
+  ; smoke test
+  if "true [
+    REPORTTESTPASSED ["|if "true ran the "true branch, as expected|]
+  ]
+
+  if "false [
+    REPORTTESTFAILED ["|if "false ran the "true branch|]
+  ]
+
+
+  ; test that "if" can become "ifelse"
+  if "false [
+    REPORTTESTFAILED [if "false ran the "true branch when it should have run the "false branch]
+  ] [
+    REPORTTESTPASSED [if "false ran the "false branch, as expected]
+  ]
+
+  if "true [
+    REPORTTESTPASSED [if "true ran the "true branch, as expected]
+  ] [
+    REPORTTESTFAILED [if "true ran the "false branch when it should have run the "true branch]
+  ]
+
+  ; no-ops are allowed
+  if "true []
+  if "true [] []
+
+  ; single command instructions are allow in words
+  LOCALMAKE "myvar if "true "OUTPUT.373
+  if EQUAL? :myvar 373 [
+    REPORTTESTPASSED [IF could be used as an r-val, as expected.]
+  ] [
+    REPORTTESTFAILED [IF could NOT be used as an r-val.]
+  ]
+  
+
+  ; bad inputs
+  RUNBADINPUTTEST [if 1    []]
+  RUNBADINPUTTEST [if 0    []]
+  RUNBADINPUTTEST [if "yes []]
+  RUNBADINPUTTEST [if "no  []]
+  RUNBADINPUTTEST [if [1]  []]
+  RUNBADINPUTTEST [if {1}  []]
+  RUNBADINPUTTEST [if "true {1}]
+
+  ; wrong number of inputs
+  RUNNOTENOUGHINPUTSTEST [(if)]
+  RUNNOTENOUGHINPUTSTEST [(if "true)]
+  RUNNOTENOUGHINPUTSTEST [(if "false)]
+  RUNTOOMANYINPUTSTEST   [(if "true [] [] "toomany)]
+
+END
 
 TO CONTROLFLOWTEST
+
+  IFTEST
+
   BUG1383281TEST
+  ;BUG1448155TEST
 END
