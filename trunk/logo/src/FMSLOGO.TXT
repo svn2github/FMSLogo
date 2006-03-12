@@ -181,6 +181,7 @@ Part III) Special Thanks:
     Clem Rutter
     Lionel Laske
     Relja Medic
+    Daniel Ajoy
 
   Special thanks to:
     George Mills <gmills@softronix.com>
