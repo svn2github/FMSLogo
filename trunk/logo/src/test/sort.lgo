@@ -20,10 +20,15 @@ TO SORTTEST.THREEINPUTPROC :a :b :c
   OUTPUT "true
 END
 
+TO SORTTEST.ONEINPUTBYDEFAULT :a [:b 0]
+   OUTPUT LESSP :a :b
+END
+
 TO SORTTEST.NONPREDICATE :a :b
   ; A function that takes two inputs but isn't a predicate.
   OUTPUT 1
 END
+
 
 TO SORTREGRESSIONTEST
 
@@ -39,6 +44,8 @@ TO SORTREGRESSIONTEST
   SIMPLEREPORTTEST [SORT [1 2 3 1 2 3 1 2 3]] [1 1 1 2 2 2 3 3 3]
 
   SIMPLEREPORTTEST [(SORT [1 2 3 1 2 3 1 2 3] "greaterp)] [3 3 3 2 2 2 1 1 1]
+
+  SIMPLEREPORTTEST [(SORT [3 2 1] "SORTTEST.ONEINPUTBYDEFAULT)] [1 2 3]
 
   ; make a database of records {name #legs #eyes}
   LOCALMAKE "cat    {"cat    4 2}
