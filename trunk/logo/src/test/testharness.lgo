@@ -39,6 +39,7 @@ LOAD "window.lgo
 LOAD "sort.lgo
 LOAD "run.lgo
 LOAD "dll.lgo
+LOAD "error.lgo
 
 TO TESTALL
 
@@ -46,6 +47,7 @@ TO TESTALL
 
   PARSETEST       ; from parse.lgo
   RUNTEST         ; from run.lgo
+  ERRORTEST       ; from error.lgo
   PREDICATETEST   ; from predicate.lgo
   WORDTEST        ; from word.lgo
   BUTFIRSTTEST    ; from butfirst.lgo
