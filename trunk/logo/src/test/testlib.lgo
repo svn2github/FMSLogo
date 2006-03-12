@@ -81,7 +81,7 @@ TO RUNBADINPUTTEST :instructions
   IGNORE ERROR
 
   CATCH "ERROR [ 
-    IGNORE RUN :instructions 
+    IGNORE RUNRESULT :instructions 
     REPORTTESTFAILED (LIST "Executing :instructions "|did not throw an error|)
     STOP
   ]
@@ -110,7 +110,7 @@ TO RUNEXPECTERRORTEST :instructions :expectederror
   IGNORE ERROR
 
   CATCH "ERROR [ 
-    IGNORE RUN :instructions 
+    IGNORE RUNRESULT :instructions 
     REPORTTESTFAILED (LIST "Executing :instructions "|did not throw an error.|)
   ]
 
@@ -126,7 +126,7 @@ TO RUNEXPECTERRORTEST :instructions :expectederror
   ]
 
   IF NOT EQUALP (ITEM 1 :lasterror) :expectederror [
-    REPORTTESTFAILED (LIST "|ITEM 1 ERROR did not return| :expectederror)
+    REPORTTESTFAILED (LIST "|ITEM 1 ERROR returned | (ITEM 1 :lasterror) "|, we expected| :expectederror)
     STOP
   ]
   REPORTTESTINFO (LIST "Executing :instructions "|set error code to| (ITEM 1 :lasterror) "|, as expected|)
@@ -147,7 +147,7 @@ END
 TO TIMECOMMAND :instructions
 
   LOCALMAKE "beforetime TIMEMILLI
-  RUN :instructions
+  IGNORE RUNRESULT :instructions
   LOCALMAKE "aftertime TIMEMILLI
 
   LOCALMAKE "deltatime :aftertime - :beforetime
