@@ -8,6 +8,22 @@ TO SORTBYNAME :a :b
   OUTPUT (BEFOREP (ITEM 1 :a) (ITEM 1 :b))
 END
 
+TO SORTTEST.ONEINPUTPROC :a
+  ; A predicate that takes one input.
+  ; This is bad input for SORT
+  OUTPUT "true
+END
+
+TO SORTTEST.THREEINPUTPROC :a :b :c
+  ; A predicate that takes one input.
+  ; This is bad input for SORT
+  OUTPUT "true
+END
+
+TO SORTTEST.NONPREDICATE :a :b
+  ; A function that takes two inputs but isn't a predicate.
+  OUTPUT 1
+END
 
 TO SORTREGRESSIONTEST
 
@@ -15,6 +31,10 @@ TO SORTREGRESSIONTEST
   SIMPLEREPORTTEST [SORT [1]]     [1]
   SIMPLEREPORTTEST [SORT [1 2 3]] [1 2 3]
   SIMPLEREPORTTEST [SORT [3 2 1]] [1 2 3]
+
+  SIMPLEREPORTTEST [(SORT [c   b   a  ] "beforep)] [a b c]
+  SIMPLEREPORTTEST [(SORT ["c  "b "a  ] "beforep)] ["a "b "c]
+  SIMPLEREPORTTEST [(SORT [efg abc hij] "beforep)] [abc efg hij]
 
   SIMPLEREPORTTEST [SORT [1 2 3 1 2 3 1 2 3]] [1 1 1 2 2 2 3 3 3]
 
@@ -60,7 +80,9 @@ TO SORTBADINPUTTEST
   RUNBADINPUTTEST        [(SORT [3 2 1] "FMSLogo)]
   RUNBADINPUTTEST        [(SORT [3 2 1] [1])]
   RUNBADINPUTTEST        [(SORT [3 2 1] {1})]
-  RUNBADINPUTTEST        [(SORT [3 2 1] "clearscreen)]
+  RUNTOOMANYINPUTSTEST   [(SORT [3 2 1] "SORTTEST.ONEINPUTPROC)]
+  RUNNOTENOUGHINPUTSTEST [(SORT [3 2 1] "SORTTEST.THREEINPUTPROC)]
+  RUNBADINPUTTEST        [(SORT [3 2 1] "SORTTEST.NONPREDICATE)]
   RUNTOOMANYINPUTSTEST   [(SORT [3 2 1] "lessp "toomany)]
 
 END
