@@ -4,6 +4,11 @@ TO DIRECTORYSMOKETEST
 
    MKDIR "mytestdir
 
+   ; make the same directory
+   POPDIR
+   MKDIR "mytestdir
+   CHDIR "mytestdir
+
    ; the directory should be empty
    SIMPLEREPORTTEST [FILES]       []
    SIMPLEREPORTTEST [DIRECTORIES] [.. .]
@@ -64,10 +69,11 @@ END
 
 TO RMDIRTEST
 
+  RMDIR "doesnotexist
+
   ; bad input tests
   RUNNOTENOUGHINPUTSTEST [(RMDIR)]
   RUNTOOMANYINPUTSTEST   [(RMDIR "too "many)]
-  RUNBADINPUTTEST        [(RMDIR "doesnotexist)]
 
   ; RMDIR a very long directory name (regression test for bug #1343397)
   localmake "longdirname "||
@@ -78,10 +84,11 @@ END
 
 TO CHDIRTEST
 
+  CHDIR "doesnotexist
+
   ; bad input tests
   RUNNOTENOUGHINPUTSTEST [(CHDIR)]
   RUNTOOMANYINPUTSTEST   [(CHDIR "too "many)]
-  RUNBADINPUTTEST        [(CHDIR "doesnotexist)]
 
   ; CHDIR a very long directory name (regression test for bug #1343397)
   localmake "longdirname "||
