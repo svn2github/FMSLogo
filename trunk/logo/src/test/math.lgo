@@ -610,7 +610,6 @@ TO POWERTEST
    ; test exponentiation
 
    ; x^0 == 1
-   ; SIMPLEREPORTTEST [POWER 0    0 ] 1 ; bug #1395741 
    SIMPLEREPORTTEST [POWER 1    0 ] 1
    SIMPLEREPORTTEST [POWER -1   0 ] 1
    SIMPLEREPORTTEST [POWER 2    0 ] 1
@@ -675,10 +674,13 @@ TO POWERTEST
    RUNBADINPUTTEST [POWER 1e100  5]
    RUNBADINPUTTEST [POWER -1e100 5]
 
-   ; different number of inputs
-   RUNBADINPUTTEST [(POWER)]
-   RUNBADINPUTTEST [(POWER 5)]
-   RUNTOOMANYINPUTSTEST [(POWER 5 6 7)]
+   ; From: http://mathworld.wolfram.com/Zero.html
+   ;
+   ; 0^0 itself is undefined. The lack of a well-defined meaning 
+   ; for this quantity follows from the mutually contradictory 
+   ; facts that x^0 is always 1, so 0^0 should equal 1, but 0^a 
+   ; is always 0, so 0^0 should equal 0.
+   RUNBADINPUTTEST [POWER 0 0 ]
 
    ; math errors
    RUNBADINPUTTEST [POWER 0   -1  ]
@@ -904,6 +906,9 @@ TO ARCTANTEST
    SIMPLEREPORTTEST [(ARCTAN 2  -2)] -45
    SIMPLEREPORTTEST [(ARCTAN 2  29)]  86.054813770962436821376817156226
 
+   ; This is well-defined (it's not a divide by zero)
+   SIMPLEREPORTTEST [(ARCTAN  0  1)]  90
+
    SIMPLEREPORTTEST [(ARCTAN 1 100)]  (ARCTAN 100)
 
    ;
@@ -923,7 +928,6 @@ TO ARCTANTEST
    RUNBADINPUTTEST [ARCTAN "1a  ]
 
    ; first of two inputs is bad
-   RUNBADINPUTTEST [(ARCTAN 0     1)] ; divide by zero
    RUNBADINPUTTEST [(ARCTAN []    1)]
    RUNBADINPUTTEST [(ARCTAN [1]   1)]
    RUNBADINPUTTEST [(ARCTAN {}    1)]
@@ -963,6 +967,9 @@ TO RADARCTANTEST
    SIMPLEREPORTTEST [(RADARCTAN  2  -2   )] -0.25 * PI
    SIMPLEREPORTTEST [(RADARCTAN  2   29  )] 1.5019398374938520197571649905681
 
+   ; This is well-defined (it's not a divide by zero)
+   SIMPLEREPORTTEST [(RADARCTAN  0   1   )]  0.50 * PI
+
    SIMPLEREPORTTEST [(RADARCTAN 1 100)]     (RADARCTAN 100)
 
 
@@ -983,7 +990,6 @@ TO RADARCTANTEST
    RUNBADINPUTTEST [RADARCTAN "1a  ]
 
    ; first of two inputs is bad
-   RUNBADINPUTTEST [(RADARCTAN 0     1)] ; divide by zero
    RUNBADINPUTTEST [(RADARCTAN []    1)]
    RUNBADINPUTTEST [(RADARCTAN [1]   1)]
    RUNBADINPUTTEST [(RADARCTAN {}    1)]
