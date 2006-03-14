@@ -55,13 +55,17 @@ TO SETLABELFONTTEST
   ; TODO: verify that each of the font components gets set as expected
   ; 
 
+
+  ; these result in a font-not-found behavior
+  SETLABELFONT [0]
+  SETLABELFONT []   ; bug #1438909 
+  SETLABELFONT [[]]
+  SETLABELFONT [[unknownfont]]
+
   ; bad input tests
   RUNBADINPUTTEST [SETLABELFONT "Courier]
   RUNBADINPUTTEST [SETLABELFONT 1.1]
   RUNBADINPUTTEST [SETLABELFONT {0}]
-  RUNBADINPUTTEST [SETLABELFONT [0]]
-  RUNBADINPUTTEST [SETLABELFONT []]  ; bug #1438909 
-  RUNBADINPUTTEST [SETLABELFONT [[]]]   
   RUNBADINPUTTEST [SETLABELFONT [[Arial] bad   0   0 400   0   0   0   0   0   0   0   0]]
   RUNBADINPUTTEST [SETLABELFONT [[Arial]  24 bad   0 400   0   0   0   0   0   0   0   0]]
   RUNBADINPUTTEST [SETLABELFONT [[Arial]  24   0 bad 400   0   0   0   0   0   0   0   0]]
