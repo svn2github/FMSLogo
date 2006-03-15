@@ -26,6 +26,75 @@ INFO: Executing [RUN {"FD 100}] set error string to [RUN doesn't like {"FD 100} 
 INFO: Executing invalid instruction: [(RUN [FD 100] "toomany)]
 INFO: Executing [(RUN [FD 100] "toomany)] set error code to 8 , as expected
 INFO: Executing [(RUN [FD 100] "toomany)] set error string to [too much inside ()'s]
+INFO: Executing invalid instruction: [FORWARD 1e10]
+INFO: Executing [FORWARD 1e10] set error code to 3 , as expected
+INFO: Executing [FORWARD 1e10] set error string to [turtle out of bounds]
+INFO: Executing invalid instruction: [1 / 0]
+INFO: Executing [1 / 0] set error code to 4 , as expected
+INFO: Executing [1 / 0] set error string to [/ doesn't like 0 as input]
+INFO: Executing invalid instruction: [IGNORE NO.INPUT.NO.OUTPUT]
+INFO: Executing [IGNORE NO.INPUT.NO.OUTPUT] set error code to 5 , as expected
+INFO: Executing [IGNORE NO.INPUT.NO.OUTPUT] set error string to [NO.INPUT.NO.OUTPUT didn't output to IGNORE]
+INFO: Executing invalid instruction: [(ONE.INPUT.NO.OUTPUT)]
+INFO: Executing [(ONE.INPUT.NO.OUTPUT)] set error code to 6 , as expected
+INFO: Executing [(ONE.INPUT.NO.OUTPUT)] set error string to [not enough inputs to ONE.INPUT.NO.OUTPUT]
+INFO: Executing invalid instruction: [FORWARD "tensteps]
+INFO: Executing [FORWARD "tensteps] set error code to 7 , as expected
+INFO: Executing [FORWARD "tensteps] set error string to [FORWARD doesn't like tensteps as input]
+INFO: Executing invalid instruction: [(NO.INPUT.NO.OUTPUT "toomany)]
+INFO: Executing [(NO.INPUT.NO.OUTPUT "toomany)] set error code to 8 , as expected
+INFO: Executing [(NO.INPUT.NO.OUTPUT "toomany)] set error string to [too much inside ()'s]
+INFO: Executing invalid instruction: [I.DONT.KNOW.WHAT.TO.DO.WITH.VALUE]
+INFO: Executing [I.DONT.KNOW.WHAT.TO.DO.WITH.VALUE] set error code to 9 , as expected
+INFO: Executing [I.DONT.KNOW.WHAT.TO.DO.WITH.VALUE] set error string to [You don't say what to do with 1]
+INFO: Executing invalid instruction: [(ONE.INPUT.NO.OUTPUT]
+INFO: Executing [(ONE.INPUT.NO.OUTPUT] set error code to 10 , as expected
+INFO: Executing [(ONE.INPUT.NO.OUTPUT] set error string to [too many ('s]
+INFO: Executing invalid instruction: [ONE.INPUT.NO.OUTPUT :novalue]
+INFO: Executing [ONE.INPUT.NO.OUTPUT :novalue] set error code to 11 , as expected
+INFO: Executing [ONE.INPUT.NO.OUTPUT :novalue] set error string to [novalue has no value]
+INFO: Executing invalid instruction: [)]
+INFO: Executing [)] set error code to 12 , as expected
+INFO: Executing [)] set error string to [unexpected ')']
+INFO: Executing invalid instruction: [UNKNOWN.PROC]
+INFO: Executing [UNKNOWN.PROC] set error code to 13 , as expected
+INFO: Executing [UNKNOWN.PROC] set error string to [I don't know how to UNKNOWN.PROC]
+INFO: Executing invalid instruction: [MY.PROC.TO.STEP]
+INFO: Executing [MY.PROC.TO.STEP] set error code to 16 , as expected
+INFO: Executing [MY.PROC.TO.STEP] set error string to [Stopping...]
+INFO: Executing invalid instruction: [DRIBBLE "DELETEME.TXT]
+INFO: Executing [DRIBBLE "DELETEME.TXT] set error code to 17 , as expected
+INFO: Executing [DRIBBLE "DELETEME.TXT] set error string to [Already dribbling]
+INFO: Executing invalid instruction: [OPENREAD "DELETEME.TXT]
+INFO: Executing [OPENREAD "DELETEME.TXT] set error code to 18 , as expected
+INFO: Executing [OPENREAD "DELETEME.TXT] set error string to [File system error: I can't open that file]
+INFO: Executing invalid instruction: [THROW "ERROR]
+INFO: Executing [THROW "ERROR] set error code to 21 , as expected
+INFO: Executing [THROW "ERROR] set error string to [Throw "Error]
+INFO: Executing invalid instruction: [DEFINE "forward [[]]]
+INFO: Executing [DEFINE "forward [[]]] set error code to 22 , as expected
+INFO: Executing [DEFINE "forward [[]]] set error string to [forward is a primitive]
+INFO: Executing invalid instruction: [TEXT "NO.SUCH.PROCEDURE.IS.DEFINED]
+INFO: Executing [TEXT "NO.SUCH.PROCEDURE.IS.DEFINED] set error code to 24 , as expected
+INFO: Executing [TEXT "NO.SUCH.PROCEDURE.IS.DEFINED] set error string to [I don't know how to NO.SUCH.PROCEDURE.IS.DEFINED]
+INFO: Executing invalid instruction: [IFTRUE "x]
+INFO: Executing [IFTRUE "x] set error code to 25 , as expected
+INFO: Executing [IFTRUE "x] set error string to [IFTRUE without TEST]
+INFO: Executing invalid instruction: [PARSE "]]
+INFO: Executing [PARSE "]] set error code to 26 , as expected
+INFO: Executing [PARSE "]] set error string to [unexpected ']']
+INFO: Executing invalid instruction: [RUN "}]
+INFO: Executing [RUN "}] set error code to 27 , as expected
+INFO: Executing [RUN "}] set error string to [unexpected '}']
+INFO: Executing invalid instruction: [MACRO.RETURN.UNBOUND.INSTEAD.OF.LIST]
+INFO: Executing [MACRO.RETURN.UNBOUND.INSTEAD.OF.LIST] set error code to 29 , as expected
+INFO: Executing [MACRO.RETURN.UNBOUND.INSTEAD.OF.LIST] set error string to [Macro returned Unbound instead of a list]
+INFO: Executing invalid instruction: [APPLY "ONE.INPUT.NO.OUTPUT 1]
+INFO: Executing [APPLY "ONE.INPUT.NO.OUTPUT 1] set error code to 32 , as expected
+INFO: Executing [APPLY "ONE.INPUT.NO.OUTPUT 1] set error string to [APPLY doesn't like 1 as input]
+INFO: Executing invalid instruction: [LOAD "endinmultilineinstruction.lgo]
+INFO: Executing [LOAD "endinmultilineinstruction.lgo] set error code to 33 , as expected
+INFO: Executing [LOAD "endinmultilineinstruction.lgo] set error string to [END inside multi-line instruction.]
 PASS: [.EQ 1000 1000] returned false , as expected.
 PASS: [.EQ :x :y] returned false , as expected.
 PASS: [.EQ :x :x] returned true , as expected.
@@ -1327,15 +1396,9 @@ INFO: Executing [POWER 1e100 5] set error string to [POWER doesn't like 5 as inp
 INFO: Executing invalid instruction: [POWER -1e100 5]
 INFO: Executing [POWER -1e100 5] set error code to 4
 INFO: Executing [POWER -1e100 5] set error string to [POWER doesn't like 5 as input]
-INFO: Executing invalid instruction: [(POWER)]
-INFO: Executing [(POWER)] set error code to 6
-INFO: Executing [(POWER)] set error string to [not enough inputs to POWER]
-INFO: Executing invalid instruction: [(POWER 5)]
-INFO: Executing [(POWER 5)] set error code to 6
-INFO: Executing [(POWER 5)] set error string to [not enough inputs to POWER]
-INFO: Executing invalid instruction: [(POWER 5 6 7)]
-INFO: Executing [(POWER 5 6 7)] set error code to 8 , as expected
-INFO: Executing [(POWER 5 6 7)] set error string to [too much inside ()'s]
+INFO: Executing invalid instruction: [POWER 0 0]
+INFO: Executing [POWER 0 0] set error code to 4
+INFO: Executing [POWER 0 0] set error string to [POWER doesn't like 0 as input]
 INFO: Executing invalid instruction: [POWER 0 -1]
 INFO: Executing [POWER 0 -1] set error code to 4
 INFO: Executing [POWER 0 -1] set error string to [POWER doesn't like -1 as input]
@@ -1587,6 +1650,7 @@ PASS: [(ARCTAN 2 0)] returned 0 , as expected.
 PASS: [(ARCTAN 2 2)] returned 45 , as expected.
 PASS: [(ARCTAN 2 -2)] returned -45 , as expected.
 PASS: [(ARCTAN 2 29)] returned 86.0548137709624 , as expected.
+PASS: [(ARCTAN 0 1)] returned 90 , as expected.
 PASS: [(ARCTAN 1 100)] returned 89.4270613023165 , as expected.
 INFO: Executing invalid instruction: [(ARCTAN)]
 INFO: Executing [(ARCTAN)] set error code to 6 , as expected
@@ -1612,8 +1676,6 @@ INFO: Executing [ARCTAN "one] set error string to [ARCTAN doesn't like one as in
 INFO: Executing invalid instruction: [ARCTAN "1a]
 INFO: Executing [ARCTAN "1a] set error code to 7
 INFO: Executing [ARCTAN "1a] set error string to [ARCTAN doesn't like 1a as input]
-INFO: Executing invalid instruction: [(ARCTAN 0 1)]
-FAIL: Executing [(ARCTAN 0 1)] did not throw an error
 INFO: Executing invalid instruction: [(ARCTAN [] 1)]
 INFO: Executing [(ARCTAN [] 1)] set error code to 7
 INFO: Executing [(ARCTAN [] 1)] set error string to [ARCTAN doesn't like [] as input]
@@ -1664,6 +1726,7 @@ PASS: [(RADARCTAN 2 0 )] returned 0 , as expected.
 PASS: [(RADARCTAN 2 2 )] returned 0.785398163397448 , as expected.
 PASS: [(RADARCTAN 2 -2 )] returned -0.785398163397448 , as expected.
 PASS: [(RADARCTAN 2 29 )] returned 1.50193983749385 , as expected.
+PASS: [(RADARCTAN 0 1 )] returned 1.5707963267949 , as expected.
 PASS: [(RADARCTAN 1 100)] returned 1.56079666010823 , as expected.
 INFO: Executing invalid instruction: [(RADARCTAN)]
 INFO: Executing [(RADARCTAN)] set error code to 6 , as expected
@@ -1689,8 +1752,6 @@ INFO: Executing [RADARCTAN "one] set error string to [RADARCTAN doesn't like one
 INFO: Executing invalid instruction: [RADARCTAN "1a]
 INFO: Executing [RADARCTAN "1a] set error code to 7
 INFO: Executing [RADARCTAN "1a] set error string to [RADARCTAN doesn't like 1a as input]
-INFO: Executing invalid instruction: [(RADARCTAN 0 1)]
-FAIL: Executing [(RADARCTAN 0 1)] did not throw an error
 INFO: Executing invalid instruction: [(RADARCTAN [] 1)]
 INFO: Executing [(RADARCTAN [] 1)] set error code to 7
 INFO: Executing [(RADARCTAN [] 1)] set error string to [RADARCTAN doesn't like [] as input]
@@ -2167,18 +2228,17 @@ PASS: [:11] returned eleven , as expected.
 PASS: [:10] returned ten , as expected.
 PASS: [:11] returned eleven , as expected.
 INFO: Executing invalid instruction: [(LOCAL)]
-INFO: Executing [(LOCAL)] set error code to 6
+INFO: Executing [(LOCAL)] set error code to 6 , as expected
 INFO: Executing [(LOCAL)] set error string to [not enough inputs to LOCAL]
 INFO: Executing invalid instruction: [LOCAL {a}]
-INFO: Executing [LOCAL {a}] set error code to 5
-INFO: Executing [LOCAL {a}] set error string to [LOCAL didn't output to IGNORE]
+FAIL: Executing [LOCAL {a}] did not throw an error
 PASS: [PROCEDURE? "erasedproc] returned true , as expected.
 PASS: [PROCEDURE? "erasedproc] returned false , as expected.
 INFO: Executing invalid instruction: [ERASEDPROC]
 INFO: Executing [ERASEDPROC] set error code to 13
 INFO: Executing [ERASEDPROC] set error string to [I don't know how to ERASEDPROC]
 INFO: Executing invalid instruction: [(ERASE)]
-INFO: Executing [(ERASE)] set error code to 6
+INFO: Executing [(ERASE)] set error code to 6 , as expected
 INFO: Executing [(ERASE)] set error string to [not enough inputs to ERASE]
 INFO: Executing invalid instruction: [ERASE {a}]
 INFO: Executing [ERASE {a}] set error code to 4
@@ -2236,10 +2296,10 @@ INFO: Executing invalid instruction: [(NAMELIST "a "b)]
 INFO: Executing [(NAMELIST "a "b)] set error code to 8 , as expected
 INFO: Executing [(NAMELIST "a "b)] set error string to [too much inside ()'s]
 INFO: Executing invalid instruction: [(POPL)]
-INFO: Executing [(POPL)] set error code to 6
+INFO: Executing [(POPL)] set error code to 6 , as expected
 INFO: Executing [(POPL)] set error string to [not enough inputs to POPL]
 INFO: Executing invalid instruction: [(POPL "numbertoword "toomany)]
-INFO: Executing [(POPL "numbertoword "toomany)] set error code to 8
+INFO: Executing [(POPL "numbertoword "toomany)] set error code to 8 , as expected
 INFO: Executing [(POPL "numbertoword "toomany)] set error string to [too much inside ()'s]
 INFO: Executing invalid instruction: [(PO)]
 INFO: Executing [(PO)] set error code to 6 , as expected
@@ -2428,8 +2488,45 @@ INFO: Executing [(PLLIST "too "many)] set error string to [too much inside ()'s]
 INFO: Executing invalid instruction: [PLLIST {a b}]
 INFO: Executing [PLLIST {a b}] set error code to 21
 INFO: Executing [PLLIST {a b}] set error string to [pllist doesn't like {a b} as input]
+PASS: "if "true ran the "true branch, as expected
+PASS: if "false ran the "false branch, as expected
+PASS: if "true ran the "true branch, as expected
+PASS: IF could be used as an r-val, as expected.
+INFO: Executing invalid instruction: [if 1 []]
+INFO: Executing [if 1 []] set error code to 7
+INFO: Executing [if 1 []] set error string to [if doesn't like 1 as input]
+INFO: Executing invalid instruction: [if 0 []]
+INFO: Executing [if 0 []] set error code to 7
+INFO: Executing [if 0 []] set error string to [if doesn't like 0 as input]
+INFO: Executing invalid instruction: [if "yes []]
+INFO: Executing [if "yes []] set error code to 7
+INFO: Executing [if "yes []] set error string to [if doesn't like yes as input]
+INFO: Executing invalid instruction: [if "no []]
+INFO: Executing [if "no []] set error code to 7
+INFO: Executing [if "no []] set error string to [if doesn't like no as input]
+INFO: Executing invalid instruction: [if [1] []]
+INFO: Executing [if [1] []] set error code to 7
+INFO: Executing [if [1] []] set error string to [if doesn't like [1] as input]
+INFO: Executing invalid instruction: [if {1} []]
+INFO: Executing [if {1} []] set error code to 7
+INFO: Executing [if {1} []] set error string to [if doesn't like {1} as input]
+INFO: Executing invalid instruction: [if "true {1}]
+INFO: Executing [if "true {1}] set error code to 7
+INFO: Executing [if "true {1}] set error string to [if doesn't like {1} as input]
+INFO: Executing invalid instruction: [(if)]
+INFO: Executing [(if)] set error code to 6 , as expected
+INFO: Executing [(if)] set error string to [not enough inputs to if]
+INFO: Executing invalid instruction: [(if "true)]
+INFO: Executing [(if "true)] set error code to 6 , as expected
+INFO: Executing [(if "true)] set error string to [not enough inputs to if]
+INFO: Executing invalid instruction: [(if "false)]
+INFO: Executing [(if "false)] set error code to 6 , as expected
+INFO: Executing [(if "false)] set error string to [not enough inputs to if]
+INFO: Executing invalid instruction: [(if "true [] [] "toomany)]
+INFO: Executing [(if "true [] [] "toomany)] set error code to 8 , as expected
+INFO: Executing [(if "true [] [] "toomany)] set error string to [too much inside ()'s]
 INFO: executing regression test for bug #1383281
-PASS: "bug #1382181 is fixed; 'FOR [1] [[][]]' did not crash.
+PASS: Bug #1382181 is fixed. 'FOR [1] [[] []] ' did not crash.
 PASS: [ACTIVEAREA] returned [-100 -100 100 100] , as expected.
 PASS: [ACTIVEAREA] returned [-500 -500 500 500] , as expected.
 PASS: [ACTIVEAREA] returned [-500 -500 500 500] , as expected.
@@ -2649,15 +2746,6 @@ INFO: Executing [SETLABELFONT 1.1] set error string to [SETLABELFONT doesn't lik
 INFO: Executing invalid instruction: [SETLABELFONT {0}]
 INFO: Executing [SETLABELFONT {0}] set error code to 7
 INFO: Executing [SETLABELFONT {0}] set error string to [SETLABELFONT doesn't like {0} as input]
-INFO: Executing invalid instruction: [SETLABELFONT [0]]
-INFO: Executing [SETLABELFONT [0]] set error code to 5
-INFO: Executing [SETLABELFONT [0]] set error string to [SETLABELFONT didn't output to IGNORE]
-INFO: Executing invalid instruction: [SETLABELFONT []]
-INFO: Executing [SETLABELFONT []] set error code to 5
-INFO: Executing [SETLABELFONT []] set error string to [SETLABELFONT didn't output to IGNORE]
-INFO: Executing invalid instruction: [SETLABELFONT [[]]]
-INFO: Executing [SETLABELFONT [[]]] set error code to 5
-INFO: Executing [SETLABELFONT [[]]] set error string to [SETLABELFONT didn't output to IGNORE]
 INFO: Executing invalid instruction: [SETLABELFONT [[Arial] bad 0 0 400 0 0 0 0 0 0 0 0]]
 INFO: Executing [SETLABELFONT [[Arial] Unbound 0 0 400 0 0 0 0 0 0 0 0]] set error code to 7
 INFO: Executing [SETLABELFONT [[Arial] Unbound 0 0 400 0 0 0 0 0 0 0 0]] set error string to [SETLABELFONT doesn't like bad as input]
@@ -2899,9 +2987,6 @@ INFO: Executing [(CLOSE)] set error string to [not enough inputs to CLOSE]
 INFO: Executing invalid instruction: [(CLOSE "testfile.txt "many)]
 INFO: Executing [(CLOSE "testfile.txt "many)] set error code to 8 , as expected
 INFO: Executing [(CLOSE "testfile.txt "many)] set error string to [too much inside ()'s]
-INFO: Executing invalid instruction: [ERASEFILE :longfilename]
-INFO: Executing [ERASEFILE :longfilename] set error code to 5
-INFO: Executing [ERASEFILE :longfilename] set error string to [ERASEFILE didn't output to IGNORE]
 INFO: Executing invalid instruction: [(ERASEFILE)]
 INFO: Executing [(ERASEFILE)] set error code to 6 , as expected
 INFO: Executing [(ERASEFILE)] set error string to [not enough inputs to ERASEFILE]
@@ -3201,18 +3286,12 @@ INFO: Executing [(RMDIR)] set error string to [not enough inputs to RMDIR]
 INFO: Executing invalid instruction: [(RMDIR "too "many)]
 INFO: Executing [(RMDIR "too "many)] set error code to 8 , as expected
 INFO: Executing [(RMDIR "too "many)] set error string to [too much inside ()'s]
-INFO: Executing invalid instruction: [(RMDIR "doesnotexist)]
-INFO: Executing [(RMDIR "doesnotexist)] set error code to 5
-INFO: Executing [(RMDIR "doesnotexist)] set error string to [RMDIR didn't output to IGNORE]
 INFO: Executing invalid instruction: [(CHDIR)]
 INFO: Executing [(CHDIR)] set error code to 6 , as expected
 INFO: Executing [(CHDIR)] set error string to [not enough inputs to CHDIR]
 INFO: Executing invalid instruction: [(CHDIR "too "many)]
 INFO: Executing [(CHDIR "too "many)] set error code to 8 , as expected
 INFO: Executing [(CHDIR "too "many)] set error string to [too much inside ()'s]
-INFO: Executing invalid instruction: [(CHDIR "doesnotexist)]
-INFO: Executing [(CHDIR "doesnotexist)] set error code to 5
-INFO: Executing [(CHDIR "doesnotexist)] set error string to [CHDIR didn't output to IGNORE]
 PASS: [LIST? NODES] returned true , as expected.
 PASS: [COUNT NODES] returned 2 , as expected.
 PASS: [NUMBER? ITEM 1 NODES] returned true , as expected.
@@ -3342,11 +3421,9 @@ INFO: Executing invalid instruction: [(SETORIENTATION [a b c] )]
 INFO: Executing [(SETORIENTATION [a b c] )] set error code to 7
 INFO: Executing [(SETORIENTATION [a b c] )] set error string to [setroll doesn't like a as input]
 INFO: Executing invalid instruction: [(SETORIENTATION [0 0 0 0] )]
-INFO: Executing [(SETORIENTATION [0 0 0 0] )] set error code to 5
-INFO: Executing [(SETORIENTATION [0 0 0 0] )] set error string to [SETORIENTATION didn't output to IGNORE]
+FAIL: Executing [(SETORIENTATION [0 0 0 0] )] did not throw an error
 INFO: Executing invalid instruction: [(SETORIENTATION {0 0 0} )]
-INFO: Executing [(SETORIENTATION {0 0 0} )] set error code to 5
-INFO: Executing [(SETORIENTATION {0 0 0} )] set error string to [SETORIENTATION didn't output to IGNORE]
+FAIL: Executing [(SETORIENTATION {0 0 0} )] did not throw an error
 INFO: Executing invalid instruction: [(SETORIENTATION [0 0 0] "toomany)]
 INFO: Executing [(SETORIENTATION [0 0 0] "toomany)] set error code to 8 , as expected
 INFO: Executing [(SETORIENTATION [0 0 0] "toomany)] set error string to [too much inside ()'s]
@@ -3491,8 +3568,12 @@ PASS: [SORT []] returned [] , as expected.
 PASS: [SORT [1]] returned [1] , as expected.
 PASS: [SORT [1 2 3]] returned [1 2 3] , as expected.
 PASS: [SORT [3 2 1]] returned [1 2 3] , as expected.
+PASS: [(SORT [c b a] "beforep)] returned [a b c] , as expected.
+PASS: [(SORT ["c "b "a] "beforep)] returned ["a "b "c] , as expected.
+PASS: [(SORT [efg abc hij] "beforep)] returned [abc efg hij] , as expected.
 PASS: [SORT [1 2 3 1 2 3 1 2 3]] returned [1 1 1 2 2 2 3 3 3] , as expected.
 PASS: [(SORT [1 2 3 1 2 3 1 2 3] "greaterp)] returned [3 3 3 2 2 2 1 1 1] , as expected.
+PASS: [(SORT [3 2 1] "SORTTEST.ONEINPUTBYDEFAULT)] returned [1 2 3] , as expected.
 PASS: [(SORT :database "SORTBYNAME)] returned [{"cat 4 2} {"human 2 2} {"spider 8 8}] , as expected.
 PASS: [(SORT :database "SORTBYLEGS)] returned [{"human 2 2} {"cat 4 2} {"spider 8 8}] , as expected.
 PASS: [SORT "hello] returned ehllo , as expected.
@@ -3521,17 +3602,23 @@ INFO: Executing invalid instruction: [(SORT {[1] [2]} )]
 INFO: Executing [(SORT {[1] [2]} )] set error code to 7
 INFO: Executing [(SORT {[1] [2]} )] set error string to [less? doesn't like [1] as input]
 INFO: Executing invalid instruction: [(SORT [3 2 1] "FMSLogo)]
-INFO: Executing [(SORT [3 2 1] "FMSLogo)] set error code to 13
+INFO: Executing [(SORT [3 2 1] "FMSLogo)] set error code to 24
 INFO: Executing [(SORT [3 2 1] "FMSLogo)] set error string to [I don't know how to FMSLogo]
 INFO: Executing invalid instruction: [(SORT [3 2 1] [1] )]
-INFO: Executing [(SORT [3 2 1] [1] )] set error code to 9
-INFO: Executing [(SORT [3 2 1] [1] )] set error string to [You don't say what to do with [1]]
+INFO: Executing [(SORT [3 2 1] [1] )] set error code to 7
+INFO: Executing [(SORT [3 2 1] [1] )] set error string to [if doesn't like 1 as input]
 INFO: Executing invalid instruction: [(SORT [3 2 1] {1} )]
-INFO: Executing [(SORT [3 2 1] {1} )] set error code to 9
-INFO: Executing [(SORT [3 2 1] {1} )] set error string to [You don't say what to do with {1}]
-INFO: Executing invalid instruction: [(SORT [3 2 1] "clearscreen)]
-INFO: Executing [(SORT [3 2 1] "clearscreen)] set error code to 9
-INFO: Executing [(SORT [3 2 1] "clearscreen)] set error string to [You don't say what to do with 3]
+INFO: Executing [(SORT [3 2 1] {1} )] set error code to 32
+INFO: Executing [(SORT [3 2 1] {1} )] set error string to [APPLY doesn't like {1} as input]
+INFO: Executing invalid instruction: [(SORT [3 2 1] "SORTTEST.ONEINPUTPROC)]
+INFO: Executing [(SORT [3 2 1] "SORTTEST.ONEINPUTPROC)] set error code to 8 , as expected
+INFO: Executing [(SORT [3 2 1] "SORTTEST.ONEINPUTPROC)] set error string to [too much inside ()'s]
+INFO: Executing invalid instruction: [(SORT [3 2 1] "SORTTEST.THREEINPUTPROC)]
+INFO: Executing [(SORT [3 2 1] "SORTTEST.THREEINPUTPROC)] set error code to 6 , as expected
+INFO: Executing [(SORT [3 2 1] "SORTTEST.THREEINPUTPROC)] set error string to [not enough inputs to SORTTEST.THREEINPUTPROC]
+INFO: Executing invalid instruction: [(SORT [3 2 1] "SORTTEST.NONPREDICATE)]
+INFO: Executing [(SORT [3 2 1] "SORTTEST.NONPREDICATE)] set error code to 7
+INFO: Executing [(SORT [3 2 1] "SORTTEST.NONPREDICATE)] set error string to [if doesn't like 1 as input]
 INFO: Executing invalid instruction: [(SORT [3 2 1] "lessp "toomany)]
 INFO: Executing [(SORT [3 2 1] "lessp "toomany)] set error code to 8 , as expected
 INFO: Executing [(SORT [3 2 1] "lessp "toomany)] set error string to [too much inside ()'s]
