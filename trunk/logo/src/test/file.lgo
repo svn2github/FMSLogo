@@ -252,7 +252,6 @@ TO FILEBADINPUTTEST
    RUNTOOMANYINPUTSTEST   [(CLOSE "testfile.txt "many)]
 
    ; test ERASEFILE
-   RUNBADINPUTTEST        [ERASEFILE :longfilename]
    RUNNOTENOUGHINPUTSTEST [(ERASEFILE)]
    RUNTOOMANYINPUTSTEST   [(ERASEFILE "too "many)]
 
@@ -281,6 +280,10 @@ TO ERASEFILETEST
    SIMPLEREPORTTEST [MEMBERP "mytestdir DIRECTORIES] "true
    RMDIR     "mytestdir
 
+   ; erase a long file name to overflow an internal buffer
+   LOCALMAKE "longfilename "||
+   REPEAT 5000 [ MAKE "longfilename word :longfilename "A ]
+   ERASEFILE :longfilename
 END
 
 TO OPENOPENFILETEST
