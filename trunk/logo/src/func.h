@@ -346,7 +346,7 @@ extern NODE *lsetmargins(NODE *args);
 extern NODE *lstandout(NODE *args);
 
 /* File PRINT.CPP: */
-extern void real_print_node(FILE *strm, NODE *nd, int depth, int width);
+extern void real_print_node(FILE *strm, const NODE *nd, int depth, int width);
 extern void update_coords(char ch);
 extern void print_char(FILE *strm, char ch);
 extern void print_space(FILE *strm);

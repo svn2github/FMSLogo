@@ -38,7 +38,9 @@ void print_char(FILE *strm, char ch)
          {
          putcombochar(ch);
          if (dribblestream != NULL)
+            {
             putc(ch, dribblestream);
+            }
          update_coords(ch);
          }
       else
@@ -50,7 +52,9 @@ void print_char(FILE *strm, char ch)
       {
       /* printing to string */
       if (--print_stringlen > 0)
+         {
          *print_stringptr++ = ch;
+         }
       }
    }
 
@@ -84,7 +88,9 @@ void ndprintf(FILE *strm, char *fmt, ...)
                print_helper(strm, nd);
                }
             else
+               {
                print_node(strm, nd);
+               }
             }
          else if (ch == 't') // text
             {
@@ -100,13 +106,16 @@ void ndprintf(FILE *strm, char *fmt, ...)
             print_char(strm, ch);
             }
          }
-      else print_char(strm, ch);
+      else 
+         {
+         print_char(strm, ch);
+         }
       }
    va_end(ap);
    }
 
 static
-void real_print_helper(FILE *strm, NODE *ndlist, int depth, int width)
+void real_print_helper(FILE *strm, const NODE *ndlist, int depth, int width)
    {
    int wid = width;
 
@@ -143,18 +152,15 @@ void real_print_helper(FILE *strm, NODE *ndlist, int depth, int width)
 //   nd - the node to print.
 //   depth - how "deep" to go (how many elements of a list)
 //   width - how many bytes to print at most ???
-void real_print_node(FILE *strm, NODE *nd, int depth, int width)
+void real_print_node(FILE *strm, const NODE *nd, int depth, int width)
    {
-   int i;
-   const char *cp;
    NODETYPES ndty;
 
    if (depth == 0)
       {
       ndprintf(strm, "...");
-      return;
       }
-   if (nd == NIL)
+   else if (nd == NIL)
       {
       print_char(strm, '[');
       print_char(strm, ']');
@@ -175,19 +181,39 @@ void real_print_node(FILE *strm, NODE *nd, int depth, int width)
       }
    else if (ndty == ARRAY)
       {
-      int i = 0, dim = getarrdim(nd), wid;
-      NODE **pp = getarrptr(nd);
+      int dim = getarrdim(nd);
 
-      if (width < 0) wid = dim;
-      else wid = (dim > width ? width : dim);
+      // figure out how many items to print
+      int wid;
+      if (width < 0) 
+         {
+         wid = dim;
+         }
+      else 
+         {
+         wid = (dim > width ? width : dim);
+         }
+
       print_char(strm, '{');
+
+      // print each item in the array
+      NODE **pp = getarrptr(nd);
+      int i = 0;
       while (i < wid)
          {
          real_print_node(strm, *pp++, depth - 1, width);
-         if (++i < dim) print_space(strm);
+         if (++i < dim) 
+            {
+            print_space(strm);
+            }
          }
-      if (wid < dim) ndprintf(strm, "...");
+      if (wid < dim) 
+         {
+         ndprintf(strm, "...");
+         }
       print_char(strm, '}');
+
+      // print the origin
       if (print_backslashes && (getarrorg(nd) != 1))
          {
          char org[] = "@        ";
@@ -206,41 +232,86 @@ void real_print_node(FILE *strm, NODE *nd, int depth, int width)
       print_char(strm, ':');
       real_print_node(strm, car(nd), width - 1, depth);
       }
+   else if (ndty == FLOATINGPOINT)
+      {
+      char buffer[MAX_NUMBER];
+      sprintf(buffer, "%0.15g", getfloat(nd));
+
+      // REVISIT: is it okay to ignore the width parameter?
+      for (const char *cp = buffer; *cp != '\0'; cp++)
+         {
+         print_char(strm, *cp);
+         }
+      }
+   else if (ndty == INTEGER)
+      {
+      char buffer[MAX_NUMBER];
+      sprintf(buffer, "%ld", getint(nd));
+
+      // REVISIT: is it okay to ignore the width parameter?
+      for (const char *cp = buffer; *cp != '\0'; cp++)
+         {
+         print_char(strm, *cp);
+         }
+      }
+   else if (ndty == CASEOBJ)
+      {
+      real_print_node(strm, strnode__caseobj(nd), depth, width);
+      }
    else
       {
-      int wid, dots = 0;
+      assert(is_string(nd));
 
-      nd = cnv_node_to_strnode(nd);
-      cp = getstrptr(nd);
-      if (width < 0) wid = getstrlen(nd);
+      // figure out how many charaters to print
+      int wid;
+      if (width < 0) 
+         {
+         wid = getstrlen(nd);
+         }
       else
          {
          wid = (width < 10 ? 10 : width);
          wid = (wid < getstrlen(nd) ? wid : getstrlen(nd));
          }
-      if (wid < getstrlen(nd)) dots++;
 
+      // should we print some elipses at the end?
+      bool dots = false;
+      if (wid < getstrlen(nd)) 
+         {
+         dots = true;
+         }
+
+      // print wid characters of nd
+      const char *cp = getstrptr(nd);
       if (!backslashed(nd))
-         for (i = 0; i < wid; i++)
+         {
+         for (int i = 0; i < wid; i++)
             {
             print_char(strm, *cp++);
             }
+         }
       else if (!print_backslashes)
          {
-         for (i = 0; i < wid; i++)
+         for (int i = 0; i < wid; i++)
             {
             print_char(strm, clearparity(*cp++));
             }
          }
       else
          {
+         // determine if the word was in vbars
+         int i;
          for (i = 0; i < wid; i++)
             {
-            if (getparity(cp[i])) break;
+            if (getparity(cp[i])) 
+               {
+               break;
+               }
             }
+
          if (i < wid)
             {
-            /* word was in vbars */
+            // word was in vbars
             if (strchr("\":", *cp))
                {
                print_char(strm, *cp++);
@@ -253,18 +324,24 @@ void real_print_node(FILE *strm, NODE *nd, int depth, int width)
                }
             print_char(strm, '|');
             }
-         else for (i = 0; i < wid; i++)
+         else 
             {
-            if (strchr(special_chars, (int) * cp))
+            // word was not in vbars
+            for (i = 0; i < wid; i++)
                {
-               print_char(strm, '\\');
+               if (strchr(special_chars, (int) * cp))
+                  {
+                  print_char(strm, '\\');
+                  }
+               print_char(strm, *cp++);
                }
-            print_char(strm, *cp++);
             }
          }
-      ;
-      if (dots) ndprintf(strm, "...");
-      gcref(nd);
+
+      if (dots) 
+         {
+         ndprintf(strm, "...");
+         }
       }
    }
 
@@ -307,8 +384,14 @@ void print_node(FILE *strm, NODE *nd)
 
 void print_nobrak(FILE *strm, NODE *nd)
    {
-   if (is_list(nd)) print_helper(strm, nd);
-   else print_node(strm, nd);
+   if (is_list(nd))
+      {
+      print_helper(strm, nd);
+      }
+   else 
+      {
+      print_node(strm, nd);
+      }
    }
 
 void new_line(FILE *strm)
