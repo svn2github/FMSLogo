@@ -287,13 +287,34 @@ void debug_free(void * userptr)
 
    memory_header_t * header = debug_userptr_to_header(userptr);
 
-   // unlink this block from the list
-   header->next->prev = header->prev;
-   header->prev->next = header->next;
+   // before doing anything destructive, make sure this block is on our list
+   bool userptr_is_allocated = false;
+   for (struct memory_header_t * current_block = g_allocated_blocks.next; 
+        current_block != &g_allocated_blocks;
+        current_block = current_block->next)
+      {
+      if (header == current_block)
+         {
+         userptr_is_allocated = true;
+         break;
+         }
+      }
 
-   // fill the memory with a recognizable bit pattern
-   memset(header, 0xCC, header->blocksize + sizeof(*header));
-   free(header);
+   if (userptr_is_allocated)
+      {
+      // unlink this block from the list
+      header->next->prev = header->prev;
+      header->prev->next = header->next;
+
+      // fill the memory with a recognizable bit pattern
+      memset(header, 0xCC, header->blocksize + sizeof(*header));
+      free(header);
+      }
+   else
+      {
+      // calling free in invalid memory
+      DebugBreak();
+      }
    }
 
 void * debug_calloc(size_t arraylength, size_t elementsize)
