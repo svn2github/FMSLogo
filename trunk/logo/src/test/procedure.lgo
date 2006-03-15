@@ -152,8 +152,8 @@ TO PROCEDURETEST
    SIMPLEREPORTTEST [:11] "eleven
 
    LOCAL []
-   RUNBADINPUTTEST [(LOCAL)]
-   RUNBADINPUTTEST [LOCAL {a}]
+   RUNNOTENOUGHINPUTSTEST [(LOCAL)]
+   RUNBADINPUTTEST        [LOCAL {a}] ; bug #1355761 
 
    ; test ERASE
    DEFINE "ERASEDPROC [[] [] ]
@@ -161,10 +161,10 @@ TO PROCEDURETEST
    ERASE "ERASEDPROC
    SIMPLEREPORTTEST [PROCEDURE? "erasedproc] "false
    RUNBADINPUTTEST [ERASEDPROC]
-   RUNBADINPUTTEST [(ERASE)]
-   RUNBADINPUTTEST [ERASE {a}]
-   RUNBADINPUTTEST [ERASE "forward]
-   RUNTOOMANYINPUTSTEST [(ERASE "erasedproc "erasedproc)]
+   RUNNOTENOUGHINPUTSTEST [(ERASE)]
+   RUNBADINPUTTEST        [ERASE {a}]
+   RUNBADINPUTTEST        [ERASE "forward]
+   RUNTOOMANYINPUTSTEST   [(ERASE "erasedproc "erasedproc)]
 
    ; test ERALL
    ; We can't run our tests if we erase all procedures, 
@@ -253,8 +253,8 @@ TO PROCEDURETEST
    POPL "numbertoword
    POPL [wordtonumber numbertoword nonexistent]
 
-   RUNBADINPUTTEST [(POPL)]
-   RUNBADINPUTTEST [(POPL "numbertoword "toomany)]
+   RUNNOTENOUGHINPUTSTEST [(POPL)]
+   RUNTOOMANYINPUTSTEST   [(POPL "numbertoword "toomany)]
 
    POT CONTENTS
    POT NAMES
