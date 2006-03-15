@@ -297,7 +297,7 @@ inline FIXNUM
 getint(const NODE * nd) 
    {
    assert(nd != NULL);
-   assert(nd->node_type == INTEGER);
+   //assert(nd->node_type == INTEGER);
    return nd->nunion.nint;
    }
 
@@ -305,7 +305,7 @@ inline FLONUM
 getfloat(const NODE * nd) 
    {
    assert(nd != NULL);
-   assert(nd->node_type == FLOATINGPOINT);
+   //assert(nd->node_type == FLOATINGPOINT);
    return nd->nunion.nfloat;
    }
 
