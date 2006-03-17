@@ -135,10 +135,9 @@ gifsave_helper(
    lsetcursorwait(NIL);
    if (gbmBmpToGif(TempBmpName, textbuf) != 0)
       {
-      MainWindowx->MessageBox(
-         "Problem Generating GIF, check memory and diskspace",
-         "Error");
-      err_logo(STOP_ERROR, NIL);
+      ShowMessageAndStop(
+         "Error", 
+         "Problem Generating GIF, check memory and diskspace");
       }
    lsetcursorarrow(NIL);
    unlink(TempBmpName);
@@ -298,10 +297,9 @@ void gifload_helper(char *textbuf, DWORD &dwPixelWidth, DWORD &dwPixelHeight)
    lsetcursorwait(NIL);
    if (gbmGifToBmp(textbuf, TempBmpName) != 0)
       {
-      MainWindowx->CommandWindow->MessageBox(
-         "Problem Reading GIF, check memory and diskspace",
-         "Error");
-      err_logo(STOP_ERROR, NIL);
+      ShowMessageAndStop(
+         "Error", 
+         "Problem Reading GIF, check memory and diskspace");
       }
    lsetcursorarrow(NIL);
    MainWindowx->LoadBitmapFile(TempBmpName, dwPixelWidth, dwPixelHeight);
@@ -1139,7 +1137,6 @@ NODE *lsetbitmode(NODE *arg)
    ASSERT_TURTLE_INVARIANT
 
    // convert from logo "code" to Windows constants
-
    switch (int_arg(arg))
       {
        case 1: bitmode = SRCCOPY; break;
@@ -1152,10 +1149,7 @@ NODE *lsetbitmode(NODE *arg)
        case 8: bitmode = MERGEPAINT; break;
        case 9: bitmode = DSTINVERT; break;
        default:
-           {
-              MainWindowx->CommandWindow->MessageBox("Illegal Bitmode", "Error");
-              err_logo(STOP_ERROR, NIL);
-           }
+          ShowMessageAndStop("Error", "Illegal Bitmode");
       }
 
    return Unbound;
@@ -1200,20 +1194,17 @@ NODE *lsetturtlemode(NODE *arg)
 
       switch (int_arg(arg))
          {
-          case 1: g_Turtles[turtle_which].Bitmap = SRCCOPY; break;
-          case 2: g_Turtles[turtle_which].Bitmap = SRCPAINT; break;
-          case 3: g_Turtles[turtle_which].Bitmap = SRCAND; break;
-          case 4: g_Turtles[turtle_which].Bitmap = SRCINVERT; break;
-          case 5: g_Turtles[turtle_which].Bitmap = SRCERASE; break;
-          case 6: g_Turtles[turtle_which].Bitmap = NOTSRCCOPY; break;
-          case 7: g_Turtles[turtle_which].Bitmap = NOTSRCERASE; break;
-          case 8: g_Turtles[turtle_which].Bitmap = MERGEPAINT; break;
-          case 9: g_Turtles[turtle_which].Bitmap = DSTINVERT; break;
-          default:
-              {
-                 MainWindowx->CommandWindow->MessageBox("Illegal Bitmode", "Error");
-                 err_logo(STOP_ERROR, NIL);
-              }
+         case 1: g_Turtles[turtle_which].Bitmap = SRCCOPY; break;
+         case 2: g_Turtles[turtle_which].Bitmap = SRCPAINT; break;
+         case 3: g_Turtles[turtle_which].Bitmap = SRCAND; break;
+         case 4: g_Turtles[turtle_which].Bitmap = SRCINVERT; break;
+         case 5: g_Turtles[turtle_which].Bitmap = SRCERASE; break;
+         case 6: g_Turtles[turtle_which].Bitmap = NOTSRCCOPY; break;
+         case 7: g_Turtles[turtle_which].Bitmap = NOTSRCERASE; break;
+         case 8: g_Turtles[turtle_which].Bitmap = MERGEPAINT; break;
+         case 9: g_Turtles[turtle_which].Bitmap = DSTINVERT; break;
+         default:
+            ShowMessageAndStop("Error", "Illegal Bitmode");
          }
 
       draw_turtle(true);
@@ -1242,8 +1233,7 @@ NODE *lsetbitindex(NODE *arg)
       }
    else
       {
-      MainWindowx->CommandWindow->MessageBox("BitMap Index out of range", "Error");
-      err_logo(STOP_ERROR, NIL);
+      ShowMessageAndStop("Error", "BitMap Index out of range");
       }
 
    return Unbound;
@@ -1461,10 +1451,9 @@ BitCopyOrCut(NODE *arg, bool IsCut)
 
          if (!CutBmp[CutIndex].CutMemoryBitMap)
             {
-            MainWindowx->CommandWindow->MessageBox(
-               "Cut failed, Possibly not enough Memory",
-               "Error");
-            err_logo(STOP_ERROR, NIL);
+            ShowMessageAndStop(
+               "Error", 
+               "Cut failed, Possibly not enough Memory");
             return Unbound;
             }
 
@@ -1607,8 +1596,9 @@ NODE *lbitfit(NODE *arg)
          HBITMAP TempMemoryBitMap = CreateCompatibleBitmap(ScreenDC, (int) FitWidth, (int) FitHeight);
          if (!TempMemoryBitMap)
             {
-            MainWindowx->CommandWindow->MessageBox("Fit failed, Possibly not enough Memory", "Error");
-            err_logo(STOP_ERROR, NIL);
+            ShowMessageAndStop(
+               "Error", 
+               "Fit failed, Possibly not enough Memory");
             return Unbound;
             }
 
@@ -1774,8 +1764,7 @@ NODE *lbitpaste(NODE *)
          }
       else
          {
-         MainWindowx->CommandWindow->MessageBox("Nothing to Paste", "Error");
-         err_logo(STOP_ERROR, NIL);
+         ShowMessageAndStop("Error", "Nothing to Paste");
          }
       }
 
@@ -1793,21 +1782,19 @@ NODE *lbitpastetoindex(NODE *arg)
 
    if (i < MaxBitCuts)
       {
-      //      CutIndex = i;
+      // CutIndex = i;
       }
    else
       {
-      MainWindowx->CommandWindow->MessageBox("BitMap Index out of range", "Error");
-      err_logo(STOP_ERROR, NIL);
+      ShowMessageAndStop("Error", "BitMap Index out of range");
       return Unbound;
       }
 
    if (!CutBmp[i].CutFlag)
       {
-      MainWindowx->CommandWindow->MessageBox(
-         "BitMap at Index must be initialized with a bitmap",
-         "Error");
-      err_logo(STOP_ERROR, NIL);
+      ShowMessageAndStop(
+         "Error", 
+         "BitMap at Index must be initialized with a bitmap");
       return Unbound;
       }
 
@@ -1865,8 +1852,7 @@ NODE *lbitpastetoindex(NODE *arg)
          }
       else
          {
-         MainWindowx->CommandWindow->MessageBox("Nothing to Paste", "Error");
-         err_logo(STOP_ERROR, NIL);
+         ShowMessageAndStop("Error", "Nothing to Paste");
          }
       }
    return Unbound;
@@ -1884,12 +1870,10 @@ NODE *lsetturtle(NODE *arg)
       int temp = getint(val);
       if ((temp >= (TURTLES - TURTLEN)) || (temp < -TURTLEN))
          {
-         MainWindowx->CommandWindow->MessageBox("Bad Turtle Id", "Error");
-         err_logo(STOP_ERROR, NIL);
+         ShowMessageAndStop("Error", "Bad Turtle Id");
          }
       else
          {
-
          turtle_which = temp;
 
          if (turtle_which > turtle_max)
@@ -1946,15 +1930,19 @@ NODE *lturtle(NODE *)
    ASSERT_TURTLE_INVARIANT
 
    if (turtle_which >= TURTLES - TURTLEN)
-      return (make_intnode(-(turtle_which - (TURTLES - (TURTLEN+1)))));
+      {
+      return make_intnode(-(turtle_which - (TURTLES - (TURTLEN+1))));
+      }
    else
-      return (make_intnode(turtle_which));
+      {
+      return make_intnode(turtle_which);
+      }
    }
 
 NODE *lturtles(NODE *)
    {
    ASSERT_TURTLE_INVARIANT
-   return (make_intnode(turtle_max));
+   return make_intnode(turtle_max);
    }
 
 void turtlepaste(int TurtleToPaste)
@@ -2036,10 +2024,9 @@ void turtlepaste(int TurtleToPaste)
       else
          {
          g_Turtles[TurtleToPaste].Bitmap = 0;
-         char szWinLocStr[255];
-         sprintf(szWinLocStr, "Turtle %d has no picture, will Halt", TurtleToPaste);
-         MainWindowx->CommandWindow->MessageBox(szWinLocStr, "Error");
-         err_logo(STOP_ERROR, NIL);
+         char errorMessage[255];
+         sprintf(errorMessage, "Turtle %d has no picture, will Halt", TurtleToPaste);
+         ShowMessageAndStop("Error", errorMessage);
          }
       }
    }

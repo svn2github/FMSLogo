@@ -33,8 +33,7 @@ NODE *ldllload(NODE *arg)
    {
    if (hDLLModule)
       {
-      MainWindowx->CommandWindow->MessageBox("DLL already loaded", "DLL Error");
-      err_logo(STOP_ERROR, NIL);
+      ShowMessageAndStop("DLL Error", "DLL already loaded");
       }
    else
       {
@@ -44,8 +43,7 @@ NODE *ldllload(NODE *arg)
       hDLLModule = LoadLibrary(dllname);
       if (hDLLModule == NULL)
          {
-         MainWindowx->CommandWindow->MessageBox("DLL load failed", "DLL Error");
-         err_logo(STOP_ERROR, NIL);
+         ShowMessageAndStop("DLL Error", "DLL load failed");
          }
       }
 
@@ -56,8 +54,7 @@ NODE *ldllfree(NODE *)
    {
    if (hDLLModule == NULL)
       {
-      MainWindowx->CommandWindow->MessageBox("DLL not loaded", "DLL Error");
-      err_logo(STOP_ERROR, NIL);
+      ShowMessageAndStop("DLL Error", "DLL not loaded");
       }
    else
       {
@@ -70,64 +67,53 @@ NODE *ldllfree(NODE *)
 
 NODE *ldllcall(NODE *arg)
    {
-   char fkind[MAX_BUFFER_SIZE];
-   char fname[MAX_BUFFER_SIZE];
-   char akind[MAX_BUFFER_SIZE];
-   char avalue[MAX_BUFFER_SIZE];
-   char areturn[MAX_BUFFER_SIZE];
-   char *values[1024];
-
-   int i;
-   int j;
-   int odd;
-
-   NODE *args;
-   NODE *targ;
-   NODE *val;
-
-   FARPROC theFunc;
-
    if (hDLLModule == NULL)
       {
-      MainWindowx->CommandWindow->MessageBox("DLL not loaded", "DLL Error");
-      err_logo(STOP_ERROR, NIL);
+      ShowMessageAndStop("DLL Error", "DLL not loaded");
       return Unbound;
       }
 
    // get args
+   NODE * args = car(arg);
 
-   args = car(arg);
-
-   /* must be a list that contains something */
-
+   // must be a list that contains something
    if (is_list(args) && (args != NIL))
       {
 
-      /* count items in list and check that they are pairs */
-
+      // count items in list and check that they are pairs
+      bool odd = false;
       arg = args;
-      odd = 0;
-
       while (arg != NIL)
          {
-         if (arg != NIL) arg = cdr(arg);
-         if (arg != NIL) arg = cdr(arg); else odd = 1;
+         if (arg != NIL) 
+            {
+            arg = cdr(arg);
+            }
+
+         if (arg != NIL)
+            {
+            arg = cdr(arg);
+            }
+         else 
+            {
+            odd = true;
+            }
          }
 
-      /* if we have pairs continue */
-
+      // if we have pairs continue
       if (!odd)
          {
-
          arg = args;
-         i = 0;
 
+         char fkind[MAX_BUFFER_SIZE];
          cnv_strnode_string(fkind, arg);
          arg = cdr(arg);
+
+         char fname[MAX_BUFFER_SIZE];
          cnv_strnode_string(fname, arg);
          arg = cdr(arg);
 
-         theFunc = GetProcAddress(hDLLModule, fname);
+         FARPROC theFunc = GetProcAddress(hDLLModule, fname);
          if (!theFunc) 
             {
             theFunc = GetProcAddress(hDLLModule, (char *) atol(fname));
@@ -135,154 +121,150 @@ NODE *ldllcall(NODE *arg)
 
          if (theFunc)
             {
+            char *values[1024];  // strings we must free
 
             /* fill queue with type/data pairs */
-
+            int i = 0;
             while (arg != NIL)
                {
+               char akind[MAX_BUFFER_SIZE];
                cnv_strnode_string(akind, arg);
                arg = cdr(arg);
+
+               char avalue[MAX_BUFFER_SIZE];
                cnv_strnode_string(avalue, arg);
+
                arg = cdr(arg);
 
                switch (akind[0])
                   {
-                   case 'w':
-                   case 'W':
-                       {
-                          WORD w = (WORD) atoi(avalue);
-                          pushw(w);
-                          break;
-                       }
+                  case 'w':
+                  case 'W':
+                     {
+                     WORD w = (WORD) atoi(avalue);
+                     pushw(w);
+                     break;
+                     }
 
-                   case 'l':
-                   case 'L':
-                       {
-                          DWORD dw = (DWORD) atol(avalue);
-                          pushl(dw);
-                          break;
-                       }
+                  case 'l':
+                  case 'L':
+                     {
+                     DWORD dw = (DWORD) atol(avalue);
+                     pushl(dw);
+                     break;
+                     }
 
-                   case 'f':
-                   case 'F':
-                       {
-                          double df = atof(avalue);
-                          pushf(df);
-                          break;
-                       }
+                  case 'f':
+                  case 'F':
+                     {
+                     double df = atof(avalue);
+                     pushf(df);
+                     break;
+                     }
 
-                   case 's':
-                   case 'S':
-                       {
-                          values[i] = strdup(avalue);
-                          pushs((LPCSTR) values[i]);
-                          i++;
-                          break;
-                       }
+                  case 's':
+                  case 'S':
+                     {
+                     values[i] = strdup(avalue);
+                     pushs((LPCSTR) values[i]);
+                     i++;
+                     break;
+                     }
 
-                   case 'v':
-                   case 'V':
-                       {
-                       }
-                       break;
+                  case 'v':
+                  case 'V':
+                     {
+                     }
+                     break;
 
-                   default:
-                       {
-                          MainWindowx->CommandWindow->MessageBox("Invalid Argument Data Type", "DLL Error");
-                          err_logo(STOP_ERROR, NIL);
-                          return Unbound;
-                       }
+                  default:
+                     {
+                     ShowMessageAndStop("DLL Error", "Invalid Argument Data Type");
+                     return Unbound;
+                     }
                   }
                }
 
+            char areturn[MAX_BUFFER_SIZE];
             switch (fkind[0])
                {
-                case 'w':
-                case 'W':
-                    {
-                       WORD w;
-                       w = (*(WORD(WINAPI *)()) theFunc)();
-                       sprintf(areturn, "%d", w);
-                       break;
-                    }
+               case 'w':
+               case 'W':
+                  {
+                  WORD w = (*(WORD(WINAPI *)()) theFunc)();
+                  sprintf(areturn, "%d", w);
+                  break;
+                  }
 
-                case 'l':
-                case 'L':
-                    {
-                       DWORD dw;
-                       dw = (*(DWORD(WINAPI *)()) theFunc)();
-                       sprintf(areturn, "%ld", dw);
-                       break;
-                    }
+               case 'l':
+               case 'L':
+                  {
+                  DWORD dw = (*(DWORD(WINAPI *)()) theFunc)();
+                  sprintf(areturn, "%ld", dw);
+                  break;
+                  }
 
-                case 'f':
-                case 'F':
-                    {
-                       double dw;
-                       dw = (*(double (WINAPI *)()) theFunc)();
-                       sprintf(areturn, "%f", dw);
-                       break;
-                    }
+               case 'f':
+               case 'F':
+                  {
+                  double dw = (*(double (WINAPI *)()) theFunc)();
+                  sprintf(areturn, "%f", dw);
+                  break;
+                  }
 
-                case 's':
-                case 'S':
-                    {
-                       LPSTR lp;
-                       lp = (*(LPSTR(WINAPI *)()) theFunc)();
-                       strncpy(areturn, lp, MAX_BUFFER_SIZE);
-                       /* free global string mem.
-                        *  this should not be like this because lp[]
-                        *  can be bigger than resp[] but for now...
-                        */
-                       GlobalFreePtr(lp);
-                       break;
-                    }
+               case 's':
+               case 'S':
+                  {
+                  LPSTR lp = (*(LPSTR(WINAPI *)()) theFunc)();
+                  strncpy(areturn, lp, MAX_BUFFER_SIZE);
+                  // free global string mem.
+                  // this should not be like this because lp[]
+                  // can be bigger than resp[] but for now...
+                  GlobalFreePtr(lp);
+                  break;
+                  }
 
-                case 'v':
-                case 'V':
-                    {
-                       (*(void (WINAPI *)()) theFunc)();
-                       areturn[0] = 0;
-                       break;
-                    }
-
-                default:
-                    {
-                       MainWindowx->CommandWindow->MessageBox("Invalid Return Data Type", "DLL Error");
-                       err_logo(STOP_ERROR, NIL);
-                       break;
-                    }
+               case 'v':
+               case 'V':
+                  {
+                  (*(void (WINAPI *)()) theFunc)();
+                  areturn[0] = 0;
+                  break;
+                  }
+                  
+               default:
+                  {
+                  ShowMessageAndStop("DLL Error", "Invalid Return Data Type");
+                  break;
+                  }
                }
 
-            for (j = 0; j < i; j++) 
+            for (int j = 0; j < i; j++) 
                {
                free(values[j]);
                }
 
             if (strlen(areturn))
                {
-               targ = make_strnode(areturn);
-               val = parser(targ, false);
+               NODE * targ = make_strnode(areturn);
+               NODE * val = parser(targ, false);
                return val;
                }
 
             }
          else
             {
-            MainWindowx->CommandWindow->MessageBox("Function not Found", "DLL Error");
-            err_logo(STOP_ERROR, NIL);
+            ShowMessageAndStop("DLL Error", "Function not Found");
             }
          }
       else
          {
-         MainWindowx->CommandWindow->MessageBox("Not Type/Data paired", "DLL Error");
-         err_logo(STOP_ERROR, NIL);
+         ShowMessageAndStop("DLL Error", "Not Type/Data paired");
          }
       }
    else
       {
-      MainWindowx->CommandWindow->MessageBox("Bad argument", "DLL Error");
-      err_logo(STOP_ERROR, NIL);
+      ShowMessageAndStop("DLL Error", "Bad argument");
       }
 
    return Unbound;

@@ -236,6 +236,7 @@ extern void update_status_turtlepitch(void);
 extern void update_status_turtleroll(void);
 extern void update_status_turtlewhich(void);
 
+extern void ShowMessageAndStop(const char * Title, const char * Message);
 extern void MyMessageScan(void);
 extern void putcombobox(const char *str);
 extern void clearcombobox(void);

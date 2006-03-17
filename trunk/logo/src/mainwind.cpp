@@ -27,16 +27,11 @@ calllist calllists;
 
 void qlist::insert(void * a)
    {
-
-   /* class "event list queue" member to insert event */
-
-   qlink *h;
-   qlink *ph;
-
+   // class "event list queue" member to insert event
    if (last)
       {
-      ph = last->next;
-      h = new qlink(a, NULL, NULL);
+      qlink * ph = last->next;
+      qlink * h = new qlink(a, NULL, NULL);
       last->next = h;
       h->prev = last;
       h->next = ph;
@@ -53,24 +48,24 @@ void qlist::insert(void * a)
 
 void * qlist::get(void)
    {
+   // class "event list queue" member to get event
+   if (last == NULL)
+      {
+      return NULL;
+      }
 
-   /* class "event list queue" member to get event */
-
-   if (last == NULL) return NULL;
-
-   return (last->next->e);
+   return last->next->e;
    }
 
 void qlist::zap(void)
    {
+   // class "event list queue" member to zap all events
+   if (last == NULL) 
+      {
+      return;
+      }
 
-   /* class "event list queue" member to zap all events */
-
-   qlink *p;
-
-   if (last == NULL) return;
-
-   p = last->next;
+   qlink * p = last->next;
 
    if (last == p)
       {
@@ -83,14 +78,16 @@ void qlist::zap(void)
       }
 
    delete p;
-
    }
 
 void qlist::clear()
    {
    qlink *l = last;
 
-   if (l == NULL) return;
+   if (l == NULL) 
+      {
+      return;
+      }
 
    do
       {
@@ -1000,8 +997,7 @@ bool TMainFrame::WriteDIB(FILE* File, int MaxBitCount)
 
       if (!AreaMemoryBitMap)
          {
-         MessageBox("Write failed, Possibly no Memory", "Error");
-         err_logo(STOP_ERROR, NIL);
+         ShowMessageAndStop("Error", "Write failed, Possibly no Memory");
          }
 
       HDC     memoryDC     = CreateCompatibleDC(screen);
@@ -1094,8 +1090,7 @@ bool TMainFrame::DumpBitmapFile(LPCSTR Filename, int MaxBitCount)
       // do it and if error then let user know 
       if (!WriteDIB(file, MaxBitCount))
          {
-         MessageBox("Could not Write .BMP", "Error");
-         err_logo(STOP_ERROR, NIL);
+         ShowMessageAndStop("Error", "Could not Write .BMP");
          }
 
       // Restore the arrow cursor
@@ -1106,8 +1101,7 @@ bool TMainFrame::DumpBitmapFile(LPCSTR Filename, int MaxBitCount)
    else
       {
       // else file never opened
-      MessageBox("Could not Open .BMP", "Error");
-      err_logo(STOP_ERROR, NIL);
+      ShowMessageAndStop("Error", "Could not Open .BMP");
       }
 
    return true;
@@ -1365,8 +1359,7 @@ bool TMainFrame::LoadBitmapFile(LPCSTR Filename, DWORD &dwPixelWidth, DWORD &dwP
       }
    else
       {
-      MessageBox(errorMessage, "Error", MB_OK);
-      err_logo(STOP_ERROR, NIL);
+      ShowMessageAndStop("Error", errorMessage);
       retval = false;
       }
 
@@ -2467,7 +2460,7 @@ LRESULT TMainFrame::OnNetworkConnectSendAck(WPARAM /* wParam */, LPARAM lParam)
       MessageBox(
          WSAGetLastErrorString(WSAGETASYNCERROR(lParam)),
          "WSAAsyncGetHostByNameCallBack()");
-      //    err_logo(STOP_ERROR,NIL);
+      // err_logo(STOP_ERROR,NIL);
       return 0L;
       }
 
@@ -2479,93 +2472,102 @@ LRESULT TMainFrame::OnNetworkConnectSendAck(WPARAM /* wParam */, LPARAM lParam)
 
       switch (WSAGETSELECTEVENT(lParam))
          {
-          case FD_READ:
-             memset(Buffer, 0, MAX_PACKET_SIZE);
+         case FD_READ:
+            memset(Buffer, 0, MAX_PACKET_SIZE);
 
-             // get a copy first for examination
-             if ((status = lprecv(sendSock, Buffer, MAX_PACKET_SIZE - 1, MSG_PEEK)) == SOCKET_ERROR)
-                {
-                // int iErrorCode;
+            // get a copy first for examination
+            if ((status = lprecv(sendSock, Buffer, MAX_PACKET_SIZE - 1, MSG_PEEK)) == SOCKET_ERROR)
+               {
+               // int iErrorCode;
 
-                // if block wait til we get called again
+               // if block wait til we get called again
+               if ((/* iErrorCode = */ lpWSAGetLastError()) == WSAEWOULDBLOCK) 
+                  {
+                  return 0L;
+                  }
 
-                if ((/* iErrorCode = */ lpWSAGetLastError()) == WSAEWOULDBLOCK) return 0L;
+               MessageBox(WSAGetLastErrorString(0), "recv(sendsock)");
+               // err_logo(STOP_ERROR,NIL);
+               return 0L;
+               }
 
-                MessageBox(WSAGetLastErrorString(0), "recv(sendsock)");
-                //             err_logo(STOP_ERROR,NIL);
-                return 0L;
-                }
+            // if something is there (better be) then process it
 
-                 // if something is there (better be) then process it
+            if (status != 0)
+               {
+               int i;
+               
+               // last byte is not end of packet then try to find one
+               if (Buffer[status - 1] |= 0)
+                  {
+                  // find last end of packet
+                  for (i = status - 1; i >= 0; i--) 
+                     {
+                     if (Buffer[i] == '\0') 
+                        {
+                        break;
+                        }
+                     }
 
-             if (status != 0)
-                {
-                int i;
+                  // if not found
+                  if (i < 0)
+                     {
+                     // if not full wait for more
+                     if (status < MAX_PACKET_SIZE - 1) 
+                        {
+                        return 0L;
+                        }
 
-                // last byte is not end of packet then try to find one
-                if (Buffer[status - 1] |= 0)
-                   {
-                   // find last end of packet
+                     // read the whole thing anyway
+                     i = MAX_PACKET_SIZE - 2;
+                     }
 
-                   for (i = status - 1; i >= 0; i--) if (Buffer[i] == 0) break;
+                  // read for real up to a last packet boundary
+                  memset(Buffer, 0, MAX_PACKET_SIZE);
+                  status = lprecv(sendSock, Buffer, i + 1, 0);
+                  }
+               else
+                  {
+                  // read the whole thng for real
+                  memset(Buffer, 0, MAX_PACKET_SIZE);
+                  status = lprecv(sendSock, Buffer, MAX_PACKET_SIZE - 1, 0);
+                  }
 
-                   // if not found
-                   if (i < 0)
-                      {
-                      // if not full wait for more
-                      if (status < MAX_PACKET_SIZE - 1) return 0L;
+               // now queue up a separate message for each packet
+               i = 0;
+               while (1)
+                  {
+                  callthing *callevent = callthing::CreateNetworkSendEvent(
+                     network_send_receive,
+                     &Buffer[i]);
 
-                      // read the whole thing anyway
-                      i = MAX_PACKET_SIZE - 2;
-                      }
+                  calllists.insert(callevent);
 
-                    // read for real up to a last packet boundary
-                    memset(Buffer, 0, MAX_PACKET_SIZE);
-                    status = lprecv(sendSock, Buffer, i + 1, 0);
-                    }
-                 else
-                    {
-                    // read the whole thng for real
-                    memset(Buffer, 0, MAX_PACKET_SIZE);
-                    status = lprecv(sendSock, Buffer, MAX_PACKET_SIZE - 1, 0);
-                    }
+                  PostMessage(WM_CHECKQUEUE, 0, 0);
+                  i += strlen(&Buffer[i]) + 1;
+                  if (i >= status)
+                     {
+                     break;
+                     }
+                  }
+               }
 
-                  i = 0;
-                  // now queue up a separate message for each packet
+            return 0L;
 
-                  while (1)
-                    {
-                    callthing *callevent = callthing::CreateNetworkSendEvent(
-                       network_send_receive,
-                       &Buffer[i]);
+         case FD_WRITE:
+            // allow another frame to go out.
+            bSendBusy = false;
+            break;
 
-                    calllists.insert(callevent);
+         case FD_CONNECT:
+            // flag it's ok to start firing
+            bSendConnected = true;
+            break;
 
-                    PostMessage(WM_CHECKQUEUE, 0, 0);
-                    i += strlen(&Buffer[i]) + 1;
-                    if (i >= status) break;
-                    }
-                 }
-
-              return 0L;
-
-          case FD_WRITE:
-
-              // allow another frame to go out.
-              bSendBusy = false;
-              break;
-
-          case FD_CONNECT:
-
-              // flag it's ok to start firing
-              bSendConnected = true;
-              break;
-
-          case FD_CLOSE:
-
-              // done
-              bSendConnected = false;
-              break;
+         case FD_CLOSE:
+            // done
+            bSendConnected = false;
+            break;
          }
 
       // we don't distinguish between all event types
@@ -2590,12 +2592,11 @@ LRESULT TMainFrame::OnNetworkConnectSendFinish(WPARAM /* wParam */, LPARAM lPara
       MessageBox(
          WSAGetLastErrorString(WSAGETASYNCERROR(lParam)),
          "WSAAsyncGetHostByNameCallBack()");
-      //    err_logo(STOP_ERROR,NIL);
+      // err_logo(STOP_ERROR,NIL);
       return 0L;
       }
 
    // always start clean
-
    memset(&send_dest_sin, 0, sizeof(SOCKADDR_IN));
 
    // what else is there
@@ -2603,14 +2604,14 @@ LRESULT TMainFrame::OnNetworkConnectSendFinish(WPARAM /* wParam */, LPARAM lPara
 
    if (phes)
       {
-      memcpy((char *) &(send_dest_sin.sin_addr), phes->h_addr, phes->h_length);
+      memcpy(&(send_dest_sin.sin_addr), phes->h_addr, phes->h_length);
       }
    else
       {
       MessageBox(
          "Unexpected Error, Network may be shutdown",
          "Network Error");
-      //    err_logo(STOP_ERROR,NIL);
+      // err_logo(STOP_ERROR,NIL);
       return 0L;
       }
 
@@ -2625,7 +2626,7 @@ LRESULT TMainFrame::OnNetworkConnectSendFinish(WPARAM /* wParam */, LPARAM lPara
          FD_CONNECT | FD_WRITE | FD_READ | FD_CLOSE) == SOCKET_ERROR)
       {
       MessageBox(WSAGetLastErrorString(0), "WSAAsyncSelect(sendSock) FD_CONNECT");
-      //    err_logo(STOP_ERROR,NIL);
+      // err_logo(STOP_ERROR,NIL);
       }
 
    // lets try now
@@ -2636,7 +2637,7 @@ LRESULT TMainFrame::OnNetworkConnectSendFinish(WPARAM /* wParam */, LPARAM lPara
       if ((/* iErrorCode = */ lpWSAGetLastError()) != WSAEWOULDBLOCK)
          {
          MessageBox(WSAGetLastErrorString(0), "connect(sendsock)");
-         //       err_logo(STOP_ERROR,NIL);
+         // err_logo(STOP_ERROR,NIL);
          return 0L;
          }
       }
@@ -2672,7 +2673,7 @@ LRESULT TMainFrame::OnNetworkListenReceiveAck(WPARAM /* wParam */, LPARAM lParam
       MessageBox(
          WSAGetLastErrorString(WSAGETASYNCERROR(lParam)),
          "WSAAsyncGetHostByNameCallBack()");
-      //    err_logo(STOP_ERROR,NIL);
+      // err_logo(STOP_ERROR,NIL);
       return 0L;
       }
 
@@ -2697,7 +2698,7 @@ LRESULT TMainFrame::OnNetworkListenReceiveAck(WPARAM /* wParam */, LPARAM lParam
                MessageBox(
                   WSAGetLastErrorString(0),
                   "recv(receivesock)");
-               //             err_logo(STOP_ERROR,NIL);
+               // err_logo(STOP_ERROR,NIL);
                return 0L;
                }
 
@@ -2775,7 +2776,7 @@ LRESULT TMainFrame::OnNetworkListenReceiveAck(WPARAM /* wParam */, LPARAM lParam
               if ((receiveSock = lpaccept(receiveSock, (struct sockaddr *) &acc_sin, (int *) &acc_sin_len)) == INVALID_SOCKET)
                  {
                  MessageBox(WSAGetLastErrorString(0), "accept(receivesock)");
-                 //          err_logo(STOP_ERROR,NIL);
+                 // err_logo(STOP_ERROR,NIL);
                  }
 #endif
               break;
@@ -2794,7 +2795,7 @@ LRESULT TMainFrame::OnNetworkListenReceiveAck(WPARAM /* wParam */, LPARAM lParam
 
           default:
               MessageBox("Unexpected Message", "Status");
-              //       err_logo(STOP_ERROR,NIL);
+              // err_logo(STOP_ERROR,NIL);
               break;
 
          }
@@ -2820,29 +2821,26 @@ LRESULT TMainFrame::OnNetworkListenReceiveFinish(WPARAM /* wParam */, LPARAM lPa
       MessageBox(
          WSAGetLastErrorString(WSAGETASYNCERROR(lParam)),
          "WSAAsyncGetHostByNameCallBack()");
-      //    err_logo(STOP_ERROR,NIL);
+      // err_logo(STOP_ERROR,NIL);
       return 0L;
       }
 
    // always start clean
-
    memset(&receive_local_sin, 0, sizeof(SOCKADDR_IN));
 
    // what else is there
-
    receive_local_sin.sin_family = AF_INET;
 
    memcpy(&(receive_local_sin.sin_addr), pher->h_addr, pher->h_length);
 
    // set ports
-
    receive_local_sin.sin_port = lphtons(receivePort);/* Convert to network ordering*/
-   //   Associate an address with a socket. (bind)
 
+   // Associate an address with a socket. (bind)
    if (lpbind(receiveSock, (struct sockaddr *) &receive_local_sin, sizeof(receive_local_sin)) == SOCKET_ERROR)
       {
       MessageBox(WSAGetLastErrorString(0), "bind(receivesock)");
-      //    err_logo(STOP_ERROR,NIL);
+      // err_logo(STOP_ERROR,NIL);
       return 0L;
       }
 
@@ -2852,13 +2850,12 @@ LRESULT TMainFrame::OnNetworkListenReceiveFinish(WPARAM /* wParam */, LPARAM lPa
    if (lplisten(receiveSock, MAX_PENDING_CONNECTS) == SOCKET_ERROR)
       {
       MessageBox(WSAGetLastErrorString(0), "listen(receivesock)");
-      //    err_logo(STOP_ERROR,NIL);
+      // err_logo(STOP_ERROR,NIL);
       return 0L;
       }
 #endif
 
    // watch for when connect happens
-
    if (lpWSAAsyncSelect(
          receiveSock,
          MainWindowx->HWindow,
@@ -2866,7 +2863,7 @@ LRESULT TMainFrame::OnNetworkListenReceiveFinish(WPARAM /* wParam */, LPARAM lPa
          FD_ACCEPT | FD_READ | FD_WRITE | FD_CLOSE) == SOCKET_ERROR)
       {
       MessageBox(WSAGetLastErrorString(0), "WSAAsyncSelect(receivesock) FD_ACCEPT");
-      //    err_logo(STOP_ERROR,NIL);
+      // err_logo(STOP_ERROR,NIL);
       }
 
    // fake an FD_ACCEPT for UDP, this automatically happens on TCP

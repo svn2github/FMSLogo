@@ -68,7 +68,7 @@ LPWSACLEANUP lpWSACleanup;
 LPWSASETLASTERROR lpWSASetLastError;
 LPWSAASYNCGETHOSTBYNAME lpWSAAsyncGetHostByName;
 
-HMODULE hWinSockDLL = NULL;
+static HMODULE hWinSockDLL = NULL;
 
 // converts winsock errorcode to string
 
@@ -256,8 +256,7 @@ NODE *lnetstartup(NODE *args)
 
    if (hWinSockDLL != NULL)
       {
-      MainWindowx->CommandWindow->MessageBox("Already Started", "Network Error");
-      err_logo(STOP_ERROR, NIL);
+      ShowMessageAndStop("Network Error", "Already Started");
       return Unbound;
       }
 
@@ -271,8 +270,7 @@ NODE *lnetstartup(NODE *args)
 
    if (hWinSockDLL == NULL)
       {
-      MainWindowx->CommandWindow->MessageBox("Cannot load WSOCK32.DLL", "Network Error");
-      err_logo(STOP_ERROR, NIL);
+      ShowMessageAndStop("Network Error", "Cannot load WSOCK32.DLL");
       return Unbound;
       }
 
@@ -300,8 +298,7 @@ NODE *lnetstartup(NODE *args)
 
    if (lpWSAStartup(/*MAKEWORD(1,1)*/ 0x0101, &WSAData) != 0)
       {
-      MainWindowx->CommandWindow->MessageBox(WSAGetLastErrorString(0), "WSAStartup()");
-      err_logo(STOP_ERROR, NIL);
+      ShowMessageAndStop("WSAStartup()", WSAGetLastErrorString(0));
       return Unbound;
       }
 
@@ -314,7 +311,6 @@ NODE *lnetshutdown(NODE *)
    {
 
    // cleanup receive
-
    if (network_receive_on)
       {
       network_receive_on = false;
@@ -325,7 +321,6 @@ NODE *lnetshutdown(NODE *)
       }
 
    // cleanup send
-
    if (network_send_on)
       {
       network_send_on = false;
@@ -336,7 +331,6 @@ NODE *lnetshutdown(NODE *)
       }
 
    // cleanup library
-
    if (hWinSockDLL != NULL)
       {
       lpWSACleanup();
@@ -360,29 +354,22 @@ NODE *lnetshutdown(NODE *)
 
 NODE *lnetreceiveon(NODE *args)
    {
-   char networkreceive[MAX_BUFFER_SIZE];
-   char networksend[MAX_BUFFER_SIZE];
-   int isocket;
    char szThisHost[80];
 
    // check sanity
-
    if (hWinSockDLL == NULL)
       {
-      MainWindowx->CommandWindow->MessageBox("Not Started", "Network Error");
-      err_logo(STOP_ERROR, NIL);
+      ShowMessageAndStop("Network Error", "Not Started");
       return Unbound;
       }
 
    if (network_receive_on)
       {
-      MainWindowx->CommandWindow->MessageBox("Already On", "Network Receive Error");
-      err_logo(STOP_ERROR, NIL);
+      ShowMessageAndStop("Network Receive Error", "Already On");
       return Falsex;
       }
 
    // allocate buffers
-
    if (network_receive_receive == NULL)
       {
       network_receive_receive = (char *) malloc(MAX_BUFFER_SIZE);
@@ -400,9 +387,12 @@ NODE *lnetreceiveon(NODE *args)
       }
 
    // get args (socket and callback)
+   int isocket = getint(pos_int_arg(args));
 
-   isocket = getint(pos_int_arg(args));
+   char networksend[MAX_BUFFER_SIZE];
    cnv_strnode_string(networksend, cdr(args));
+
+   char networkreceive[MAX_BUFFER_SIZE];
    cnv_strnode_string(networkreceive, cdr(cdr(args)));
 
    if (NOT_THROWING)
@@ -410,12 +400,10 @@ NODE *lnetreceiveon(NODE *args)
       network_receive_on = true;
 
       // copy callback (I really should keep these as true Nodes)
-
       strcpy(network_receive_receive, networkreceive);
       strcpy(network_receive_send, networksend);
 
       // save socket globally
-
       receivePort = isocket;
 
       // open the socket
@@ -426,8 +414,7 @@ NODE *lnetreceiveon(NODE *args)
       if ((receiveSock = lpsocket(AF_INET, SOCK_STREAM, 0)) == INVALID_SOCKET)
 #endif
          {
-         MainWindowx->CommandWindow->MessageBox(WSAGetLastErrorString(0), "socket(receivesock)");
-         err_logo(STOP_ERROR, NIL);
+         ShowMessageAndStop("socket(receivesock)", WSAGetLastErrorString(0));
          return Falsex;
          }
 
@@ -445,8 +432,7 @@ NODE *lnetreceiveon(NODE *args)
             }
          else
             {
-            MainWindowx->CommandWindow->MessageBox(WSAGetLastErrorString(0), "gethostbyname(thishost)");
-            err_logo(STOP_ERROR, NIL);
+            ShowMessageAndStop("gethostbyname(thishost)", WSAGetLastErrorString(0));
             return Falsex;
             }
          }
@@ -459,8 +445,7 @@ NODE *lnetreceiveon(NODE *args)
 
       if (!lpWSAAsyncGetHostByName(MainWindowx->HWindow, WM_NETWORK_LISTENRECEIVEFINISH, szThisHost, (LPSTR) pher, MAXGETHOSTSTRUCT))
          {
-         MainWindowx->CommandWindow->MessageBox(WSAGetLastErrorString(0), "WSAAsyncGetHostByName()");
-         err_logo(STOP_ERROR, NIL);
+         ShowMessageAndStop("WSAAsyncGetHostByName()", WSAGetLastErrorString(0));
          return Falsex;
          }
 
@@ -474,9 +459,7 @@ NODE *lnetreceiveon(NODE *args)
 
 NODE *lnetreceiveoff(NODE *)
    {
-
    // tell handler not to do anything with messages for network receive
-
    if (network_receive_on)
       {
       network_receive_on = 0;
@@ -487,8 +470,7 @@ NODE *lnetreceiveoff(NODE *)
       }
    else
       {
-      MainWindowx->CommandWindow->MessageBox("Already Off", "Network Receive Error");
-      err_logo(STOP_ERROR, NIL);
+      ShowMessageAndStop("Network Receive Error", "Already Off");
       }
 
    return Unbound;
@@ -525,15 +507,13 @@ NODE *lnetsendon(NODE *args)
    // sanity check first
    if (hWinSockDLL == NULL)
       {
-      MainWindowx->CommandWindow->MessageBox("Not Started", "Network Error");
-      err_logo(STOP_ERROR, NIL);
+      ShowMessageAndStop("Network Error", "Not Started");
       return Unbound;
       }
 
    if (network_send_on)
       {
-      MainWindowx->CommandWindow->MessageBox("Already On", "Network Send Error");
-      err_logo(STOP_ERROR, NIL);
+      ShowMessageAndStop("Network Send Error", "Already On");
       return Falsex;
       }
 
@@ -585,8 +565,7 @@ NODE *lnetsendon(NODE *args)
       if ((sendSock = lpsocket(AF_INET, SOCK_STREAM, 0)) == INVALID_SOCKET)
 #endif
          {
-         MainWindowx->CommandWindow->MessageBox(WSAGetLastErrorString(0), "socket(sendsocket)");
-         err_logo(STOP_ERROR, NIL);
+         ShowMessageAndStop("socket(sendsocket)", WSAGetLastErrorString(0));
          return Falsex;
          }
 
@@ -600,8 +579,7 @@ NODE *lnetsendon(NODE *args)
             }
          else
             {
-            MainWindowx->CommandWindow->MessageBox(WSAGetLastErrorString(0), "gethostbyname(host)");
-            err_logo(STOP_ERROR, NIL);
+            ShowMessageAndStop("gethostbyname(host)", WSAGetLastErrorString(0));
             return Falsex;
             }
          }
@@ -616,8 +594,7 @@ NODE *lnetsendon(NODE *args)
 
       if (!lpWSAAsyncGetHostByName(MainWindowx->HWindow, WM_NETWORK_CONNECTSENDFINISH, networkaddress, (LPSTR) phes, MAXGETHOSTSTRUCT))
          {
-         MainWindowx->CommandWindow->MessageBox(WSAGetLastErrorString(0), "WSAAsyncGetHostByName()");
-         err_logo(STOP_ERROR, NIL);
+         ShowMessageAndStop("WSAAsyncGetHostByName()", WSAGetLastErrorString(0));
          return Falsex;
          }
 
@@ -644,8 +621,7 @@ NODE *lnetsendoff(NODE *)
       }
    else
       {
-      MainWindowx->CommandWindow->MessageBox("Already Off", "Network Send Error");
-      err_logo(STOP_ERROR, NIL);
+      ShowMessageAndStop("Network Send Error", "Already Off");
       }
 
    return Unbound;
@@ -653,10 +629,8 @@ NODE *lnetsendoff(NODE *)
 
 NODE *lnetsendsendvalue(NODE *args)
    {
-   char Data[MAX_BUFFER_SIZE];
-
    // get args (data)
-
+   char Data[MAX_BUFFER_SIZE];
    cnv_strnode_string(Data, args);
 
    if (NOT_THROWING)
@@ -665,22 +639,18 @@ NODE *lnetsendsendvalue(NODE *args)
          {
 
          // send the data
-
          if ((lpsend(sendSock, Data, strlen(Data) + 1, 0)) == SOCKET_ERROR)
             {
 
             if (lpWSAGetLastError() != WSAEWOULDBLOCK)
                {
-               MainWindowx->CommandWindow->MessageBox(WSAGetLastErrorString(0), "send(sendsock)");
-               err_logo(STOP_ERROR, NIL);
+               ShowMessageAndStop("send(sendsock)", WSAGetLastErrorString(0));
                return Falsex;
                }
 
             // Idle Until it's ok again.
-
             bSendBusy = true;
             return Falsex;
-
             }
          }
       else
@@ -697,34 +667,27 @@ NODE *lnetsendsendvalue(NODE *args)
 
 NODE *lnetreceivesendvalue(NODE *args)
    {
-   char Data[MAX_BUFFER_SIZE];
-
    // get args (data)
-
+   char Data[MAX_BUFFER_SIZE];
    cnv_strnode_string(Data, args);
 
    if (NOT_THROWING)
       {
       if (bReceiveConnected && !bReceiveBusy)
          {
-
          // send the data
-
          if ((lpsend(receiveSock, Data, strlen(Data) + 1, 0)) == SOCKET_ERROR)
             {
 
             if (lpWSAGetLastError() != WSAEWOULDBLOCK)
                {
-               MainWindowx->CommandWindow->MessageBox(WSAGetLastErrorString(0), "send(sendsock)");
-               err_logo(STOP_ERROR, NIL);
+               ShowMessageAndStop("send(sendsock)", WSAGetLastErrorString(0));
                return Falsex;
                }
 
             // Idle Until it's ok again.
-
             bReceiveBusy = true;
             return Falsex;
-
             }
          }
       else

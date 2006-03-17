@@ -878,9 +878,8 @@ NODE *lwindowcreate(NODE *args)
       MyMessageScan();
       }
    else
-      {
-      MainWindowx->CommandWindow->MessageBox(childname, "Already exists");
-      err_logo(STOP_ERROR, NIL);
+      {     
+      ShowMessageAndStop("Already exists", childname);
       }
 
    return Unbound;
@@ -978,8 +977,7 @@ WindowEnableHelper(
       }
    else
       {
-      MainWindowx->CommandWindow->MessageBox(childname, "Does not exist");
-      err_logo(STOP_ERROR, NIL);
+      ShowMessageAndStop("Does not exist", childname);
       }
 
    return Unbound;
@@ -1041,8 +1039,7 @@ WindowDeleteHelper(
       }
    else
       {
-      MainWindowx->CommandWindow->MessageBox(childname, "Does not exist");
-      err_logo(STOP_ERROR, NIL);
+      ShowMessageAndStop("Does not exist", childname);
       }
 
    return Unbound;
@@ -1081,29 +1078,30 @@ NODE *lwindowdelete(NODE *arg)
 
 NODE *ldialogcreate(NODE *args)
    {
-   dialogthing *child;
-   dialogthing *parent;
-   int x;
-   int y;
-   int w;
-   int h;
-   char parentname[MAX_BUFFER_SIZE];
-   char childname[MAX_BUFFER_SIZE];
-   char titlename[MAX_BUFFER_SIZE];
-   char callback[MAX_BUFFER_SIZE];
-   char *ptr;
-
    // get args
-
+   char parentname[MAX_BUFFER_SIZE];
    cnv_strnode_string(parentname, args);
+
+   char childname[MAX_BUFFER_SIZE];
    cnv_strnode_string(childname, args = cdr(args));
+
+   char titlename[MAX_BUFFER_SIZE];
    cnv_strnode_string(titlename, args = cdr(args));
-   x =            int_arg(args = cdr(args)) ;
-   y =            int_arg(args = cdr(args)) ;
-   w = getint(pos_int_arg(args = cdr(args)));
-   h = getint(pos_int_arg(args = cdr(args)));
-   if (cdr(args) != NIL) cnv_strnode_string(callback, cdr(args));
-   else callback[0] = '\0';
+
+   int x =            int_arg(args = cdr(args)) ;
+   int y =            int_arg(args = cdr(args)) ;
+   int w = getint(pos_int_arg(args = cdr(args)));
+   int h = getint(pos_int_arg(args = cdr(args)));
+
+   char callback[MAX_BUFFER_SIZE];
+   if (cdr(args) != NIL)
+      {
+      cnv_strnode_string(callback, cdr(args));
+      }
+   else
+      {
+      callback[0] = '\0';
+      }
 
    // convert to "DIALOG" units. This is the key to getting consistent
    // results in all graphics MODEs.
@@ -1117,13 +1115,12 @@ NODE *ldialogcreate(NODE *args)
 
    if (dialogboxes.get(childname) == NULL)
       {
-
       // make one
-
-      child = new dialogthing;
+      dialogthing * child = new dialogthing;
 
       // if parent of corect type exists use it
-
+      char *ptr;
+      dialogthing *parent;
       if ((parent = dialogboxes.get2(parentname, TWindow_type)) != NULL)
          {
          child->TDmybox = new TMxDialog(parent->TWmybox, "DIALOGSTUB");
@@ -1140,12 +1137,10 @@ NODE *ldialogcreate(NODE *args)
 
       // Modal windows have to have a callback to set them up
       // since it will not return until closed
-
       strcpy(child->TDmybox->callback, callback);
       strcpy(child->TDmybox->caption, titlename);
 
       // Most attributes are set in DIALOGSTUB
-
       child->TDmybox->x = x;
       child->TDmybox->y = y;
       child->TDmybox->w = w;
@@ -1157,15 +1152,11 @@ NODE *ldialogcreate(NODE *args)
       // Note will not return until the Window closes
       // But the LOGO program still has some control through
       // the callback which is done through OWLs "SetupWindow".
-
       child->TDmybox->Execute();
       }
    else
       {
-      MainWindowx->CommandWindow->MessageBox(
-         childname,
-         "Already exists");
-      err_logo(STOP_ERROR, NIL);
+      ShowMessageAndStop("Already exists", childname);
       }
 
    return Unbound;
@@ -1183,23 +1174,17 @@ NODE *ldialogdelete(NODE *args)
 
 NODE *llistboxcreate(NODE *args)
    {
-   dialogthing *child;
-   dialogthing *parent;
-   int x;
-   int y;
-   int w;
-   int h;
-   char parentname[MAX_BUFFER_SIZE];
-   char childname[MAX_BUFFER_SIZE];
-
    // get args
-
+   char parentname[MAX_BUFFER_SIZE];
    cnv_strnode_string(parentname, args);
+
+   char childname[MAX_BUFFER_SIZE];
    cnv_strnode_string(childname, args = cdr(args));
-   x = int_arg(args = cdr(args));
-   y = int_arg(args = cdr(args));
-   w = int_arg(args = cdr(args));
-   h = int_arg(cdr(args));
+
+   int x = int_arg(args = cdr(args));
+   int y = int_arg(args = cdr(args));
+   int w = int_arg(args = cdr(args));
+   int h = int_arg(cdr(args));
 
    if (NOT_THROWING)
       {
@@ -1208,18 +1193,17 @@ NODE *llistboxcreate(NODE *args)
       if (dialogboxes.get(childname) == NULL)
          {
          // If modeless parent then continue
-         
+         dialogthing *parent;
          if ((parent = dialogboxes.get2(parentname, TWindow_type)) != NULL)
             {
             
             // convert to "DIALOG" units.
-            
             x = (x * BaseUnitsx) / 4;
             y = (y * BaseUnitsy) / 8;
             w = (w * BaseUnitsx) / 4;
             h = (h * BaseUnitsy) / 8;
             
-            child = new dialogthing;
+            dialogthing * child = new dialogthing;
             
             child->TLmybox = new TMyListBox(parent->TWmybox, MYLISTBOX_ID, x, y, w, h);
             child->TLmybox->Attr.Style ^= LBS_SORT;
@@ -1238,13 +1222,12 @@ NODE *llistboxcreate(NODE *args)
             {
             
             // convert to "DIALOG" units.
-            
             x = (x * BaseUnitsx) / 4;
             y = (y * BaseUnitsy) / 8;
             w = (w * BaseUnitsx) / 4;
             h = (h * BaseUnitsy) / 8;
 
-            child = new dialogthing;
+            dialogthing * child = new dialogthing;
             
             child->TLmybox = new TMyListBox(parent->TDmybox, MYLISTBOX_ID, x, y, w, h);
             
@@ -1260,7 +1243,7 @@ NODE *llistboxcreate(NODE *args)
          else
             {
             
-            child = new dialogthing;
+            dialogthing * child = new dialogthing;
             
             child->TLmybox = new TMyListBox(
                MainWindowx->ScreenWindow,
@@ -1284,14 +1267,12 @@ NODE *llistboxcreate(NODE *args)
                TListBox_type);
 
             UpdateZoomControlFlag();
-            //       MainWindowx->CommandWindow->MessageBox(parentname, "Does not exist");
-            //       err_logo(STOP_ERROR, NIL);
+            // ShowMessageAndStop("Does not exist", parentname);
             }
          }
       else
          {
-         MainWindowx->CommandWindow->MessageBox(childname, "Already exists");
-         err_logo(STOP_ERROR, NIL);
+         ShowMessageAndStop("Already exists", childname);
          }
       }
    
@@ -1329,8 +1310,7 @@ NODE *llistboxgetselect(NODE *args)
       }
    else
       {
-      MainWindowx->CommandWindow->MessageBox(parentname, "Does not exist");
-      err_logo(STOP_ERROR, NIL);
+      ShowMessageAndStop("Does not exist", parentname);
       }
 
    return Unbound;
@@ -1356,8 +1336,7 @@ NODE *llistboxaddstring(NODE *args)
       }
    else
       {
-      MainWindowx->CommandWindow->MessageBox(parentname, "Does not exist");
-      err_logo(STOP_ERROR, NIL);
+      ShowMessageAndStop("Does not exist", parentname);
       }
 
    return Unbound;
@@ -1365,17 +1344,14 @@ NODE *llistboxaddstring(NODE *args)
 
 NODE *llistboxdeletestring(NODE *args)
    {
-   dialogthing *parent;
-   int index;
-   char parentname[MAX_BUFFER_SIZE];
-
    // get args
-
+   char parentname[MAX_BUFFER_SIZE];
    cnv_strnode_string(parentname, args);
-   index = getint(pos_int_arg(cdr(args)));
+
+   int index = getint(pos_int_arg(cdr(args)));
 
    // if exists continue
-
+   dialogthing *parent;
    if ((parent = dialogboxes.get2(parentname, TListBox_type)) != NULL)
       {
       // kill entry based on index
@@ -1384,8 +1360,7 @@ NODE *llistboxdeletestring(NODE *args)
       }
    else
       {
-      MainWindowx->CommandWindow->MessageBox(parentname, "Does not exist");
-      err_logo(STOP_ERROR, NIL);
+      ShowMessageAndStop("Does not exist", parentname);
       }
 
    return Unbound;
@@ -1393,23 +1368,18 @@ NODE *llistboxdeletestring(NODE *args)
 
 NODE *lcomboboxcreate(NODE *args)
    {
-   dialogthing *child;
-   dialogthing *parent;
-   int x;
-   int y;
-   int w;
-   int h;
-   char parentname[MAX_BUFFER_SIZE];
-   char childname[MAX_BUFFER_SIZE];
 
    // get args
-
+   char parentname[MAX_BUFFER_SIZE];
    cnv_strnode_string(parentname, args);
+
+   char childname[MAX_BUFFER_SIZE];
    cnv_strnode_string(childname, args = cdr(args));
-   x = int_arg(args = cdr(args));
-   y = int_arg(args = cdr(args));
-   w = int_arg(args = cdr(args));
-   h = int_arg(cdr(args));
+
+   int x = int_arg(args = cdr(args));
+   int y = int_arg(args = cdr(args));
+   int w = int_arg(args = cdr(args));
+   int h = int_arg(cdr(args));
 
    if (NOT_THROWING)
       {
@@ -1418,6 +1388,7 @@ NODE *lcomboboxcreate(NODE *args)
       if (dialogboxes.get(childname) == NULL)
          {
          // if modeless window enter here
+         dialogthing *parent;
 
          if ((parent = dialogboxes.get2(parentname, TWindow_type)) != NULL)
             {
@@ -1428,18 +1399,15 @@ NODE *lcomboboxcreate(NODE *args)
             h = (h * BaseUnitsy) / 8;
             
             // create thingy
-            
-            child = new dialogthing;
+            dialogthing * child = new dialogthing;
             
             child->TCmybox = new TMxComboBox(parent->TWmybox, MYCOMBOBOX_ID, x, y, w, h, CBS_SIMPLE, 0);
 
             // set attributes
-            
             child->TCmybox->Attr.Style |= CBS_DISABLENOSCROLL;
             child->TLmybox->Attr.Style ^= CBS_SORT;
             
             // Display the control
-            
             child->TCmybox->Create();
             
             MyMessageScan();
@@ -1449,18 +1417,16 @@ NODE *lcomboboxcreate(NODE *args)
             }
          
          // if modal window enter here (same as above except names change)
-
          else if ((parent = dialogboxes.get2(parentname, TDialog_type)) != NULL)
             {
             
             // convert to "DIALOG" units
-            
             x = (x * BaseUnitsx) / 4;
             y = (y * BaseUnitsy) / 8;
             w = (w * BaseUnitsx) / 4;
             h = (h * BaseUnitsy) / 8;
             
-            child = new dialogthing;
+            dialogthing * child = new dialogthing;
             
             child->TCmybox = new TMxComboBox(parent->TDmybox, MYCOMBOBOX_ID, x, y, w, h, CBS_SIMPLE, 0);
             
@@ -1476,7 +1442,7 @@ NODE *lcomboboxcreate(NODE *args)
             }
          else
             {
-            child = new dialogthing;
+            dialogthing * child = new dialogthing;
             
             child->TCmybox = new TMxComboBox(
                MainWindowx->ScreenWindow,
@@ -1504,14 +1470,12 @@ NODE *lcomboboxcreate(NODE *args)
 
             UpdateZoomControlFlag();
 
-            // MainWindowx->CommandWindow->MessageBox(parentname, "Does not exist");
-            // err_logo(STOP_ERROR, NIL);
+            // ShowMessageAndStop("Does not exist", parentname);
             }
          }
       else
          {
-         MainWindowx->CommandWindow->MessageBox(childname, "Already exists");
-         err_logo(STOP_ERROR, NIL);
+         ShowMessageAndStop("Already exists", childname);
          }
       }
 
@@ -1549,8 +1513,7 @@ NODE *lcomboboxgettext(NODE *args)
       }
    else
       {
-      MainWindowx->CommandWindow->MessageBox(parentname, "Does not exist");
-      err_logo(STOP_ERROR, NIL);
+      ShowMessageAndStop("Does not exist", parentname);
       }
 
    return Unbound;
@@ -1558,28 +1521,23 @@ NODE *lcomboboxgettext(NODE *args)
 
 NODE *lcomboboxsettext(NODE *args)
    {
-   dialogthing *parent;
-   char parentname[MAX_BUFFER_SIZE];
-   char stringname[MAX_BUFFER_SIZE];
-
    // get args
-
+   char parentname[MAX_BUFFER_SIZE];
    cnv_strnode_string(parentname, args);
+
+   char stringname[MAX_BUFFER_SIZE];
    cnv_strnode_string(stringname, cdr(args));
 
    // if exists continue
-
+   dialogthing *parent;
    if ((parent = dialogboxes.get2(parentname, TComboBox_type)) != NULL)
       {
-
       // set the editcontrol portion to the user specified text
-
       ((TComboBox *) parent->TCmybox)->SetText(stringname);
       }
    else
       {
-      MainWindowx->CommandWindow->MessageBox(parentname, "Does not exist");
-      err_logo(STOP_ERROR, NIL);
+      ShowMessageAndStop("Does not exist", parentname);
       }
 
    return Unbound;
@@ -1587,29 +1545,24 @@ NODE *lcomboboxsettext(NODE *args)
 
 NODE *lcomboboxaddstring(NODE *args)
    {
-   dialogthing *parent;
-   char parentname[MAX_BUFFER_SIZE];
-   char stringname[MAX_BUFFER_SIZE];
-
    // get args
-
+   char parentname[MAX_BUFFER_SIZE];
    cnv_strnode_string(parentname, args);
+
+   char stringname[MAX_BUFFER_SIZE];
    cnv_strnode_string(stringname, cdr(args));
 
    // if exists continue
-
+   dialogthing *parent;
    if ((parent = dialogboxes.get2(parentname, TComboBox_type)) != NULL)
       {
-
       // add string and reset selection
-
       ((TComboBox *) parent->TCmybox)->AddString(stringname);
       ((TComboBox *) parent->TCmybox)->SetSelIndex(0);
       }
    else
       {
-      MainWindowx->CommandWindow->MessageBox(parentname, "Does not exist");
-      err_logo(STOP_ERROR, NIL);
+      ShowMessageAndStop("Does not exist", parentname);
       }
 
    return Unbound;
@@ -1617,29 +1570,23 @@ NODE *lcomboboxaddstring(NODE *args)
 
 NODE *lcomboboxdeletestring(NODE *args)
    {
-   dialogthing *parent;
-   int index;
-   char parentname[MAX_BUFFER_SIZE];
-
    // get args
-
+   char parentname[MAX_BUFFER_SIZE];
    cnv_strnode_string(parentname, args);
-   index = getint(pos_int_arg(cdr(args)));
+
+   int index = getint(pos_int_arg(cdr(args)));
 
    // if exists continue
-
+   dialogthing *parent;
    if ((parent = dialogboxes.get2(parentname, TComboBox_type)) != NULL)
       {
-
       // kill entrt and reset Index
-
       ((TComboBox *) parent->TCmybox)->DeleteString(index);
       ((TComboBox *) parent->TCmybox)->SetSelIndex(0);
       }
    else
       {
-      MainWindowx->CommandWindow->MessageBox(parentname, "Does not exist");
-      err_logo(STOP_ERROR, NIL);
+      ShowMessageAndStop("Does not exist", parentname);
       }
 
    return Unbound;
@@ -1647,9 +1594,6 @@ NODE *lcomboboxdeletestring(NODE *args)
 
 NODE *lscrollbarcreate(NODE *args)
    {
-   dialogthing *child;
-   dialogthing *parent;
-
    char parentname[MAX_BUFFER_SIZE];
    cnv_strnode_string(parentname, args);
 
@@ -1669,6 +1613,7 @@ NODE *lscrollbarcreate(NODE *args)
       if (dialogboxes.get(childname) == NULL)
          {
          
+         dialogthing *parent;
          if ((parent = dialogboxes.get2(parentname, TWindow_type)) != NULL)
             {
             
@@ -1677,7 +1622,7 @@ NODE *lscrollbarcreate(NODE *args)
             w = (w * BaseUnitsx) / 4;
             h = (h * BaseUnitsy) / 8;
 
-            child = new dialogthing;
+            dialogthing * child = new dialogthing;
             
             if (w > h)
                {
@@ -1706,7 +1651,7 @@ NODE *lscrollbarcreate(NODE *args)
             w = (w * BaseUnitsx) / 4;
             h = (h * BaseUnitsy) / 8;
             
-            child = new dialogthing;
+            dialogthing * child = new dialogthing;
             
             if (w > h)
                {
@@ -1729,7 +1674,7 @@ NODE *lscrollbarcreate(NODE *args)
             }
          else
             {
-            child = new dialogthing;
+            dialogthing * child = new dialogthing;
             
             if (w > h)
                {
@@ -1770,14 +1715,12 @@ NODE *lscrollbarcreate(NODE *args)
 
             UpdateZoomControlFlag();
 
-            // MainWindowx->CommandWindow->MessageBox(parentname, "Does not exist");
-            // err_logo(STOP_ERROR, NIL);
+            // ShowMessageAndStop("Does not exist", parentname);
             }
          }
       else
          {
-         MainWindowx->CommandWindow->MessageBox(childname, "Already exists");
-         err_logo(STOP_ERROR, NIL);
+         ShowMessageAndStop("Already exists", childname);
          }
       }
 
@@ -1786,17 +1729,15 @@ NODE *lscrollbarcreate(NODE *args)
 
 NODE *lscrollbarset(NODE *args)
    {
-   dialogthing *parent;
+
    char parentname[MAX_BUFFER_SIZE];
-   int lo;
-   int hi;
-   int pos;
-
    cnv_strnode_string(parentname, args);
-   lo = getint(pos_int_arg(args = cdr(args)));
-   hi = getint(pos_int_arg(args = cdr(args)));
-   pos = getint(pos_int_arg(cdr(args)));
 
+   int lo = getint(pos_int_arg(args = cdr(args)));
+   int hi = getint(pos_int_arg(args = cdr(args)));
+   int pos = getint(pos_int_arg(cdr(args)));
+
+   dialogthing *parent;
    if ((parent = dialogboxes.get2(parentname, TScrollBar_type)) != NULL)
       {
       ((TScrollBar *) parent->TSCmybox)->SetRange(lo, hi);
@@ -1804,8 +1745,7 @@ NODE *lscrollbarset(NODE *args)
       }
    else
       {
-      MainWindowx->CommandWindow->MessageBox(parentname, "Does not exist");
-      err_logo(STOP_ERROR, NIL);
+      ShowMessageAndStop("Does not exist", parentname);
       }
 
    return Unbound;
@@ -1813,21 +1753,18 @@ NODE *lscrollbarset(NODE *args)
 
 NODE *lscrollbarget(NODE *args)
    {
-   dialogthing *parent;
    char parentname[MAX_BUFFER_SIZE];
-   int pos;
-
    cnv_strnode_string(parentname, args);
 
+   dialogthing *parent;
    if ((parent = dialogboxes.get2(parentname, TScrollBar_type)) != NULL)
       {
-      pos = ((TScrollBar *) parent->TSCmybox)->GetPosition();
-      return (make_intnode(pos));
+      int pos = ((TScrollBar *) parent->TSCmybox)->GetPosition();
+      return make_intnode(pos);
       }
    else
       {
-      MainWindowx->CommandWindow->MessageBox(parentname, "Does not exist");
-      err_logo(STOP_ERROR, NIL);
+      ShowMessageAndStop("Does not exist", parentname);
       }
 
    return Unbound;
@@ -1845,9 +1782,6 @@ NODE *lscrollbardelete(NODE *args)
 
 NODE *lstaticcreate(NODE *args)
    {
-   dialogthing *child;
-   dialogthing *parent;
-
    char parentname[MAX_BUFFER_SIZE];
    cnv_strnode_string(parentname, args);
 
@@ -1866,6 +1800,7 @@ NODE *lstaticcreate(NODE *args)
       {
       if (dialogboxes.get(childname) == NULL)
          {
+         dialogthing *parent;
          if ((parent = dialogboxes.get2(parentname, TWindow_type)) != NULL)
             {
             x = (x * BaseUnitsx) / 4;
@@ -1873,7 +1808,7 @@ NODE *lstaticcreate(NODE *args)
             w = (w * BaseUnitsx) / 4;
             h = (h * BaseUnitsy) / 8;
             
-            child = new dialogthing;
+            dialogthing * child = new dialogthing;
 
             child->TSmybox = new TMyStatic(parent->TWmybox, MYSTATIC_ID, titlename, x, y, w, h, 0);
             
@@ -1891,7 +1826,7 @@ NODE *lstaticcreate(NODE *args)
             w = (w * BaseUnitsx) / 4;
             h = (h * BaseUnitsy) / 8;
             
-            child = new dialogthing;
+            dialogthing * child = new dialogthing;
 
             child->TSmybox = new TMyStatic(parent->TDmybox, MYSTATIC_ID, titlename, x, y, w, h, 0);
             
@@ -1904,7 +1839,7 @@ NODE *lstaticcreate(NODE *args)
             }
          else
             {
-            child = new dialogthing;
+            dialogthing * child = new dialogthing;
             
             child->TSmybox = new TMyStatic(
                MainWindowx->ScreenWindow,
@@ -1929,14 +1864,12 @@ NODE *lstaticcreate(NODE *args)
 
             UpdateZoomControlFlag();
             
-            // MainWindowx->CommandWindow->MessageBox(parentname, "Does not exist");
-            // err_logo(STOP_ERROR, NIL);
+            // ShowMessageAndStop("Does not exist", parentname);
             }
          }
       else
          {
-         MainWindowx->CommandWindow->MessageBox(childname, "Already exists");
-         err_logo(STOP_ERROR, NIL);
+         ShowMessageAndStop("Already exists", childname);
          }
       }
    
@@ -1945,21 +1878,20 @@ NODE *lstaticcreate(NODE *args)
 
 NODE *lstaticupdate(NODE *args)
    {
-   dialogthing *temp;
    char childname[MAX_BUFFER_SIZE];
-   char titlename[MAX_BUFFER_SIZE];
-
    cnv_strnode_string(childname, args);
+
+   char titlename[MAX_BUFFER_SIZE];
    cnv_strnode_string(titlename, cdr(args));
 
+   dialogthing *temp;
    if ((temp = dialogboxes.get2(childname, TStatic_type)) != NULL)
       {
       temp->TSmybox->SetText(titlename);
       }
    else
       {
-      MainWindowx->CommandWindow->MessageBox(childname, "Does not exist");
-      err_logo(STOP_ERROR, NIL);
+      ShowMessageAndStop("Does not exist", childname);
       }
 
    return Unbound;
@@ -1972,9 +1904,6 @@ NODE *lstaticdelete(NODE *args)
 
 NODE *lbuttoncreate(NODE *args)
    {
-   dialogthing *child;
-   dialogthing *parent;
-
    char parentname[MAX_BUFFER_SIZE];
    cnv_strnode_string(parentname, args);
 
@@ -2003,7 +1932,7 @@ NODE *lbuttoncreate(NODE *args)
       {
       if (dialogboxes.get(childname) == NULL)
          {
-
+         dialogthing *parent;
          if ((parent = dialogboxes.get2(parentname, TWindow_type)) != NULL)
             {
             x = (x * BaseUnitsx) / 4;
@@ -2011,7 +1940,7 @@ NODE *lbuttoncreate(NODE *args)
             w = (w * BaseUnitsx) / 4;
             h = (h * BaseUnitsy) / 8;
 
-            child = new dialogthing;
+            dialogthing * child = new dialogthing;
 
             child->TBmybox = new TMyButton(
                parent->TWmybox,
@@ -2044,7 +1973,7 @@ NODE *lbuttoncreate(NODE *args)
             w = (w * BaseUnitsx) / 4;
             h = (h * BaseUnitsy) / 8;
 
-            child = new dialogthing;
+            dialogthing * child = new dialogthing;
 
             child->TBmybox = new TMyButton(
                parent->TDmybox,
@@ -2072,7 +2001,7 @@ NODE *lbuttoncreate(NODE *args)
             }
          else
             {
-            child = new dialogthing;
+            dialogthing * child = new dialogthing;
 
             child->TBmybox = new TMyButton(
                MainWindowx->ScreenWindow,
@@ -2100,14 +2029,12 @@ NODE *lbuttoncreate(NODE *args)
 
             UpdateZoomControlFlag();
 
-            // MainWindowx->CommandWindow->MessageBox(parentname, "Does not exist");
-            // err_logo(STOP_ERROR, NIL);
+            // ShowMessageAndStop("Does not exist", parentname);
             }
          }
       else
          {
-         MainWindowx->CommandWindow->MessageBox(childname, "Already exists");
-         err_logo(STOP_ERROR, NIL);
+         ShowMessageAndStop("Already exists", childname);
          }
       }
       
@@ -2116,21 +2043,20 @@ NODE *lbuttoncreate(NODE *args)
 
 NODE *lbuttonupdate(NODE *args)
    {
-   dialogthing *temp;
    char childname[MAX_BUFFER_SIZE];
-   char titlename[MAX_BUFFER_SIZE];
-
    cnv_strnode_string(childname, args);
+
+   char titlename[MAX_BUFFER_SIZE];
    cnv_strnode_string(titlename, cdr(args));
 
+   dialogthing *temp;
    if ((temp = dialogboxes.get2(childname, TButton_type)) != NULL)
       {
       temp->TBmybox->SetWindowText(titlename);
       }
    else
       {
-      MainWindowx->CommandWindow->MessageBox(childname, "Does not exist");
-      err_logo(STOP_ERROR, NIL);
+      ShowMessageAndStop("Does not exist", childname);
       }
 
    return Unbound;
@@ -2148,9 +2074,6 @@ NODE *lbuttondelete(NODE *args)
 
 NODE *lgroupboxcreate(NODE *args)
    {
-   dialogthing *child;
-   dialogthing *parent;
-
    char parentname[MAX_BUFFER_SIZE];
    cnv_strnode_string(parentname, args);
 
@@ -2166,6 +2089,7 @@ NODE *lgroupboxcreate(NODE *args)
       {
       if (dialogboxes.get(childname) == NULL)
          {
+         dialogthing *parent;
          if ((parent = dialogboxes.get2(parentname, TWindow_type)) != NULL)
             {
             x = (x * BaseUnitsx) / 4;
@@ -2173,7 +2097,7 @@ NODE *lgroupboxcreate(NODE *args)
             w = (w * BaseUnitsx) / 4;
             h = (h * BaseUnitsy) / 8;
 
-            child = new dialogthing;
+            dialogthing * child = new dialogthing;
 
             child->TGmybox = new TMyGroupBox(parent->TWmybox, MYGROUPBOX_ID, NULL, x, y, w, h);
 
@@ -2191,7 +2115,7 @@ NODE *lgroupboxcreate(NODE *args)
             w = (w * BaseUnitsx) / 4;
             h = (h * BaseUnitsy) / 8;
 
-            child = new dialogthing;
+            dialogthing * child = new dialogthing;
 
             child->TGmybox = new TMyGroupBox(parent->TDmybox, MYGROUPBOX_ID, NULL, x, y, w, h);
             
@@ -2204,7 +2128,7 @@ NODE *lgroupboxcreate(NODE *args)
             }
          else
             {
-            child = new dialogthing;
+            dialogthing * child = new dialogthing;
             
             child->TGmybox = new TMyGroupBox(
                MainWindowx->ScreenWindow,
@@ -2227,14 +2151,13 @@ NODE *lgroupboxcreate(NODE *args)
                TGroupBox_type);
 
             UpdateZoomControlFlag();
-            // MainWindowx->CommandWindow->MessageBox(parentname, "Does not exist");
-            // err_logo(STOP_ERROR, NIL);
+
+            // ShowMessageAndStop("Does not exist", parentname);
             }
          }
       else
          {
-         MainWindowx->CommandWindow->MessageBox(childname, "Already exists");
-         err_logo(STOP_ERROR, NIL);
+         ShowMessageAndStop("Already exists", childname);
          }
       }
 
@@ -2248,10 +2171,6 @@ NODE *lgroupboxdelete(NODE *args)
 
 NODE *lradiobuttoncreate(NODE *args)
    {
-   dialogthing *child;
-   dialogthing *parent;
-   dialogthing *group;
-
    char parentname[MAX_BUFFER_SIZE];
    cnv_strnode_string(parentname, args);
 
@@ -2272,21 +2191,31 @@ NODE *lradiobuttoncreate(NODE *args)
       {
       if (dialogboxes.get(childname) == NULL)
          {
+         dialogthing *parent;
          if ((parent = dialogboxes.get2(parentname, TWindow_type)) != NULL)
             {
             x = (x * BaseUnitsx) / 4;
             y = (y * BaseUnitsy) / 8;
             w = (w * BaseUnitsx) / 4;
             h = (h * BaseUnitsy) / 8;
-            
+
+            dialogthing *group;
             if ((group = dialogboxes.get2(groupname, TGroupBox_type)) != NULL)
                {
-               child = new dialogthing;
+               dialogthing * child = new dialogthing;
                
-               child->TRmybox = new TMyRadioButton(parent->TWmybox, MYRADIOBUTTON_ID, titlename, x, y, w, h, group->TGmybox);
+               child->TRmybox = new TMyRadioButton(
+                  parent->TWmybox, 
+                  MYRADIOBUTTON_ID, 
+                  titlename, 
+                  x, 
+                  y, 
+                  w, 
+                  h, 
+                  group->TGmybox);
                
-               //         strcpy(child->TRmybox->callback,callback);
-               //         child->TRmybox->critical = 0;
+               // strcpy(child->TRmybox->callback,callback);
+               // child->TRmybox->critical = 0;
                
                child->TRmybox->Create();
                
@@ -2297,8 +2226,7 @@ NODE *lradiobuttoncreate(NODE *args)
                }
             else
                {
-               MainWindowx->CommandWindow->MessageBox(groupname, "Does not exist");
-               err_logo(STOP_ERROR, NIL);
+               ShowMessageAndStop("Does not exist", groupname);
                }
             }
          else if ((parent = dialogboxes.get2(parentname, TDialog_type)) != NULL)
@@ -2308,14 +2236,23 @@ NODE *lradiobuttoncreate(NODE *args)
             w = (w * BaseUnitsx) / 4;
             h = (h * BaseUnitsy) / 8;
             
+            dialogthing *group;
             if ((group = dialogboxes.get2(groupname, TGroupBox_type)) != NULL)
                {
-               child = new dialogthing;
+               dialogthing * child = new dialogthing;
                
-               child->TRmybox = new TMyRadioButton(parent->TDmybox, MYRADIOBUTTON_ID, titlename, x, y, w, h, group->TGmybox);
+               child->TRmybox = new TMyRadioButton(
+                  parent->TDmybox, 
+                  MYRADIOBUTTON_ID, 
+                  titlename, 
+                  x, 
+                  y,
+                  w, 
+                  h, 
+                  group->TGmybox);
                
-               //         strcpy(child->TRmybox->callback,callback);
-               //         child->TRmybox->critical = 0;
+               // strcpy(child->TRmybox->callback,callback);
+               // child->TRmybox->critical = 0;
                
                child->TRmybox->Create();
                
@@ -2326,15 +2263,15 @@ NODE *lradiobuttoncreate(NODE *args)
                }
             else
                {
-               MainWindowx->CommandWindow->MessageBox(groupname, "Does not exist");
-               err_logo(STOP_ERROR, NIL);
+               ShowMessageAndStop("Does not exist", groupname);
                }
             }
          else
             {
+            dialogthing *group;
             if ((group = dialogboxes.get2(groupname, TGroupBox_type)) != NULL)
                {
-               child = new dialogthing;
+               dialogthing * child = new dialogthing;
                
                child->TRmybox = new TMyRadioButton(
                   MainWindowx->ScreenWindow,
@@ -2346,8 +2283,8 @@ NODE *lradiobuttoncreate(NODE *args)
                   h,
                   group->TGmybox);
 
-               //         strcpy(child->TRmybox->callback,callback);
-               //         child->TRmybox->critical = 0;
+               // strcpy(child->TRmybox->callback,callback);
+               // child->TRmybox->critical = 0;
 
                child->TRmybox->Create();
 
@@ -2364,15 +2301,13 @@ NODE *lradiobuttoncreate(NODE *args)
                }
             else
                {
-               MainWindowx->CommandWindow->MessageBox(groupname, "Does not exist");
-               err_logo(STOP_ERROR, NIL);
+               ShowMessageAndStop("Does not exist", groupname);
                }
             }
          }
       else
          {
-         MainWindowx->CommandWindow->MessageBox(childname, "Already exists");
-         err_logo(STOP_ERROR, NIL);
+         ShowMessageAndStop("Already exists", childname);
          }
       }
    
@@ -2391,22 +2326,24 @@ NODE *lradiobuttondelete(NODE *args)
 
 NODE *lradiobuttonget(NODE *args)
    {
-   dialogthing *parent;
    char parentname[MAX_BUFFER_SIZE];
-
    cnv_strnode_string(parentname, args);
 
+   dialogthing *parent;
    if ((parent = dialogboxes.get2(parentname, TRadioButton_type)) != NULL)
       {
       if (BF_CHECKED == parent->TRmybox->GetCheck())
-         return (Truex);
+         {
+         return Truex;
+         }
       else
-         return (Falsex);
+         {
+         return Falsex;
+         }
       }
    else
       {
-      MainWindowx->CommandWindow->MessageBox(parentname, "Does not exist");
-      err_logo(STOP_ERROR, NIL);
+      ShowMessageAndStop("Does not exist", parentname);
       }
 
    return Unbound;
@@ -2414,24 +2351,26 @@ NODE *lradiobuttonget(NODE *args)
 
 NODE *lradiobuttonset(NODE *args)
    {
-   dialogthing *parent;
-
    char parentname[MAX_BUFFER_SIZE];
    cnv_strnode_string(parentname, args);
 
    bool pos = boolean_arg(args = cdr(args));
 
+   dialogthing *parent;
    if ((parent = dialogboxes.get2(parentname, TRadioButton_type)) != NULL)
       {
       if (pos)
+         {
          ((TCheckBox *) parent->TRmybox)->Check();
+         }
       else
+         {
          ((TCheckBox *) parent->TRmybox)->Uncheck();
+         }
       }
    else
       {
-      MainWindowx->CommandWindow->MessageBox(parentname, "Does not exist");
-      err_logo(STOP_ERROR, NIL);
+      ShowMessageAndStop("Does not exist", parentname);
       }
 
    return Unbound;
@@ -2439,10 +2378,6 @@ NODE *lradiobuttonset(NODE *args)
 
 NODE *lcheckboxcreate(NODE *args)
    {
-   dialogthing *child;
-   dialogthing *parent;
-   dialogthing *group;
-
    char parentname[MAX_BUFFER_SIZE];
    cnv_strnode_string(parentname, args);
 
@@ -2464,6 +2399,7 @@ NODE *lcheckboxcreate(NODE *args)
       {
       if (dialogboxes.get(childname) == NULL)
          {
+         dialogthing *parent;
          if ((parent = dialogboxes.get2(parentname, TWindow_type)) != NULL)
             {
             x = (x * BaseUnitsx) / 4;
@@ -2471,14 +2407,23 @@ NODE *lcheckboxcreate(NODE *args)
             w = (w * BaseUnitsx) / 4;
             h = (h * BaseUnitsy) / 8;
             
+            dialogthing *group;
             if ((group = dialogboxes.get2(groupname, TGroupBox_type)) != NULL)
                {
-               child = new dialogthing;
+               dialogthing * child = new dialogthing;
                
-               child->TCBmybox = new TMyCheckBox(parent->TWmybox, MYCHECKBOX_ID, titlename, x, y, w, h, group->TGmybox);
+               child->TCBmybox = new TMyCheckBox(
+                  parent->TWmybox, 
+                  MYCHECKBOX_ID, 
+                  titlename, 
+                  x, 
+                  y, 
+                  w, 
+                  h, 
+                  group->TGmybox);
                
-               //         strcpy(child->TCBmybox->callback,callback);
-               //         child->TCBmybox->critical = 0;
+               // strcpy(child->TCBmybox->callback,callback);
+               // child->TCBmybox->critical = 0;
                
                child->TCBmybox->Create();
                
@@ -2489,8 +2434,7 @@ NODE *lcheckboxcreate(NODE *args)
                }
             else
                {
-               MainWindowx->CommandWindow->MessageBox(groupname, "Does not exist");
-               err_logo(STOP_ERROR, NIL);
+               ShowMessageAndStop("Does not exist", groupname);
                }
             }
          else if ((parent = dialogboxes.get2(parentname, TDialog_type)) != NULL)
@@ -2500,14 +2444,23 @@ NODE *lcheckboxcreate(NODE *args)
             w = (w * BaseUnitsx) / 4;
             h = (h * BaseUnitsy) / 8;
             
+            dialogthing *group;
             if ((group = dialogboxes.get2(groupname, TGroupBox_type)) != NULL)
                {
-               child = new dialogthing;
+               dialogthing * child = new dialogthing;
                
-               child->TCBmybox = new TMyCheckBox(parent->TDmybox, MYCHECKBOX_ID, titlename, x, y, w, h, group->TGmybox);
+               child->TCBmybox = new TMyCheckBox(
+                  parent->TDmybox, 
+                  MYCHECKBOX_ID, 
+                  titlename, 
+                  x, 
+                  y, 
+                  w, 
+                  h, 
+                  group->TGmybox);
                
-               //         strcpy(child->TCBmybox->callback,callback);
-               //         child->TCBmybox->critical = 0;
+               // strcpy(child->TCBmybox->callback,callback);
+               // child->TCBmybox->critical = 0;
                
                child->TCBmybox->Create();
                
@@ -2518,15 +2471,15 @@ NODE *lcheckboxcreate(NODE *args)
                }
             else
                {
-               MainWindowx->CommandWindow->MessageBox(groupname, "Does not exist");
-               err_logo(STOP_ERROR, NIL);
+               ShowMessageAndStop("Does not exist", groupname);
                }
             }
          else
             {
+            dialogthing *group;
             if ((group = dialogboxes.get2(groupname, TGroupBox_type)) != NULL)
                {
-               child = new dialogthing;
+               dialogthing * child = new dialogthing;
 
                child->TCBmybox = new TMyCheckBox(
                   MainWindowx->ScreenWindow,
@@ -2538,8 +2491,8 @@ NODE *lcheckboxcreate(NODE *args)
                   h,
                   group->TGmybox);
                
-               //         strcpy(child->TCBmybox->callback,callback);
-               //         child->TCBmybox->critical = 0;
+               // strcpy(child->TCBmybox->callback,callback);
+               // child->TCBmybox->critical = 0;
                
                child->TCBmybox->Create();
                
@@ -2556,15 +2509,13 @@ NODE *lcheckboxcreate(NODE *args)
                }
             else
                {
-               MainWindowx->CommandWindow->MessageBox(groupname, "Does not exist");
-               err_logo(STOP_ERROR, NIL);
+               ShowMessageAndStop("Does not exist", groupname);
                }
             }
          }
       else
          {
-         MainWindowx->CommandWindow->MessageBox(childname, "Already exists");
-         err_logo(STOP_ERROR, NIL);
+         ShowMessageAndStop("Already exists", childname);
          }
       }
    
@@ -2583,22 +2534,24 @@ NODE *lcheckboxdelete(NODE *args)
 
 NODE *lcheckboxget(NODE *args)
    {
-   dialogthing *parent;
    char parentname[MAX_BUFFER_SIZE];
-
    cnv_strnode_string(parentname, args);
 
+   dialogthing *parent;
    if ((parent = dialogboxes.get2(parentname, TCheckBox_type)) != NULL)
       {
       if (BF_CHECKED == parent->TCBmybox->GetCheck())
+         {
          return Truex;
+         }
       else
+         {
          return Falsex;
+         }
       }
    else
       {
-      MainWindowx->CommandWindow->MessageBox(parentname, "Does not exist");
-      err_logo(STOP_ERROR, NIL);
+      ShowMessageAndStop("Does not exist", parentname);
       }
 
    return Unbound;
@@ -2606,25 +2559,27 @@ NODE *lcheckboxget(NODE *args)
 
 NODE *lcheckboxset(NODE *args)
    {
-   dialogthing *parent;
    char parentname[MAX_BUFFER_SIZE];
-   int pos;
-
    cnv_strnode_string(parentname, args);
-//   pos = getint(pos_int_arg(args = cdr(args)));
-   pos = boolean_arg(args = cdr(args));
 
+   // int pos = getint(pos_int_arg(args = cdr(args)));
+   int pos = boolean_arg(args = cdr(args));
+
+   dialogthing *parent;
    if ((parent = dialogboxes.get2(parentname, TCheckBox_type)) != NULL)
       {
       if (pos)
+         {
          parent->TCBmybox->Check();
+         }
       else
+         {
          parent->TCBmybox->Uncheck();
+         }
       }
    else
       {
-      MainWindowx->CommandWindow->MessageBox(parentname, "Does not exist");
-      err_logo(STOP_ERROR, NIL);
+      ShowMessageAndStop("Does not exist", parentname);
       }
 
    return Unbound;
@@ -2637,10 +2592,9 @@ BOOL CheckOnScreenControls()
 
 NODE *ldebugwindows(NODE *arg)
    {
-   char childname[MAX_BUFFER_SIZE];
-
    if (arg != NIL)
       {
+      char childname[MAX_BUFFER_SIZE];
       cnv_strnode_string(childname, arg);
       
       if (dialogboxes.get(childname) != NULL)
@@ -2649,8 +2603,7 @@ NODE *ldebugwindows(NODE *arg)
          }
       else
          {
-         MainWindowx->CommandWindow->MessageBox(childname, "Does not exist");
-         err_logo(STOP_ERROR, NIL);
+         ShowMessageAndStop("Does not exist", childname);
          }
       }
    else
@@ -2708,11 +2661,7 @@ NODE *lquestionbox(NODE *args)
 
 NODE *lselectbox(NODE *args)
    {
-   int iStatus;
-
    char banner[MAX_BUFFER_SIZE];
-   char textbuf[MAX_BUFFER_SIZE];
-
    cnv_strnode_string(banner, args);
 
    TPickListDialog dlg(
@@ -2730,36 +2679,37 @@ NODE *lselectbox(NODE *args)
       {
       while (args != NIL)
          {
+         char textbuf[MAX_BUFFER_SIZE];
          cnv_strnode_string(textbuf, args);
+
          dlg.AddString(textbuf);
 
          args = cdr(args);
          }
       }
 
-   iStatus = dlg.Execute();
+   int iStatus = dlg.Execute();
 
    if (iStatus >= 0)
       {
-      return (make_intnode(iStatus + 1));
+      return make_intnode(iStatus + 1);
       }
    else
       {
       err_logo(STOP_ERROR, NIL);
-      return (make_intnode(0));
+      return make_intnode(0);
       }
    }
 
 NODE *lyesnobox(NODE *args)
    {
    char banner[MAX_BUFFER_SIZE];
-   char body[MAX_BUFFER_SIZE];
-   int iStatus;
-
    cnv_strnode_string(banner, args);
+
+   char body[MAX_BUFFER_SIZE];
    cnv_strnode_string(body, args = cdr(args));
 
-   iStatus = MainWindowx->CommandWindow->MessageBox(
+   int iStatus = MainWindowx->CommandWindow->MessageBox(
       body,
       banner,
       MB_YESNOCANCEL | MB_ICONQUESTION);
@@ -2786,7 +2736,7 @@ NODE *lyesnobox(NODE *args)
 
 NODE *lsetcursorwait(NODE *)
    {
-   hCursorSave =::SetCursor(hCursorWait);
+   hCursorSave = ::SetCursor(hCursorWait);
 
    return Unbound;
    }
@@ -2837,8 +2787,7 @@ NODE *ldialogfilesave(NODE *args)
    char filename[MAX_BUFFER_SIZE];
    cnv_strnode_string(filename, args);
 
-
-   /* Get file name from user and then save the file */
+   // Get file name from user and then save the file
    TOpenSaveDialog::TData FileData;
    FileData.SetFilter("All Files (*.*)|*.*|");
    strcpy(FileData.FileName, filename);
@@ -2859,9 +2808,9 @@ NODE *ldialogfilesave(NODE *args)
 NODE *lwindowfileedit(NODE *args)
    {
    char filename[MAX_BUFFER_SIZE];
-   char editexit[MAX_BUFFER_SIZE];
-
    cnv_strnode_string(filename, args);
+
+   char editexit[MAX_BUFFER_SIZE];
    cnv_strnode_string(editexit, args = cdr(args));
 
    strcpy(edit_editexit, editexit);

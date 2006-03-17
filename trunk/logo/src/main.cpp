@@ -664,8 +664,25 @@ void MyMessageScan()
       }
    }
 
-// Print page (or pages)
+// Shows a message box and sets the logo error.
+// This helper was created because these two operations appear next
+// to each other very often, not because coupling the operations is 
+// good design.
+void 
+ShowMessageAndStop(
+   const char * Title,
+   const char * Message
+   )
+   {
+   if (MainWindowx->CommandWindow != NULL)
+      {
+      MainWindowx->CommandWindow->MessageBox(Message, Title);
+      }
+   err_logo(STOP_ERROR, NIL);
+   }
 
+
+// Print page (or pages)
 void TRulerOut::PrintPage(int /* page */, TRect & /* rect */, UINT /* flags */)
    {
    MainWindowx->ScreenWindow->Printit(*DC);

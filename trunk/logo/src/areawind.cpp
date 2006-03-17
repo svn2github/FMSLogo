@@ -110,8 +110,7 @@ NODE *lsetactivearea(NODE *arg)
 
       if ((PrinterAreaXLow >= PrinterAreaXHigh) || (PrinterAreaYLow >= PrinterAreaYHigh))
          {
-         MainWindowx->CommandWindow->MessageBox("Bad argument", "Active Area");
-         err_logo(STOP_ERROR, NIL);
+         ShowMessageAndStop("Active Area", "Bad argument");
          return Unbound;
          }
 

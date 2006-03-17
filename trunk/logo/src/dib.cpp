@@ -266,14 +266,9 @@ HBITMAP DIBToBitmap(HANDLE hDIB, HPALETTE hPal)
 
    if (!hBitmap)
       {
-      MainWindowx->MessageBox(
-         "Not Enough Memory",
-         "Error",
-         MB_OK | MB_ICONEXCLAMATION);
-
-      err_logo(STOP_ERROR, NIL);
+      ShowMessageAndStop("Error", "Not Enough Memory");
       }
-   //      DIBError (ERR_CREATEDDB);
+   // DIBError (ERR_CREATEDDB);
 
    if (hOldPal) SelectPalette(hDC, hOldPal, FALSE);
 

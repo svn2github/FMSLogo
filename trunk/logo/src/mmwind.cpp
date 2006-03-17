@@ -21,7 +21,7 @@
 
 #include "allwind.h"
 
-HMIDIOUT hMidiOut = 0;
+static HMIDIOUT hMidiOut = 0;
 
 NODE *lsound(NODE *arg)
    {
@@ -34,12 +34,23 @@ NODE *lsound(NODE *arg)
 
       /* count items in list and check that they are pairs */
       arg = args;
-      int odd = 0;
+      bool odd = false;
 
       while (arg != NIL)
          {
-         if (arg != NIL) arg = cdr(arg);
-         if (arg != NIL) arg = cdr(arg); else odd = 1;
+         if (arg != NIL) 
+            {
+            arg = cdr(arg);
+            }
+
+         if (arg != NIL) 
+            {
+            arg = cdr(arg);
+            }
+         else 
+            {
+            odd = true;
+            }
          }
 
       /* if sound creation ok and we have pairs continue */
@@ -69,14 +80,12 @@ NODE *lsound(NODE *arg)
          }
       else
          {
-         MainWindowx->CommandWindow->MessageBox("Not paired", "Sound Error");
-         err_logo(STOP_ERROR, NIL);
+         ShowMessageAndStop("Sound Error", "Not paired");
          }
       }
    else
       {
-      MainWindowx->CommandWindow->MessageBox("Bad argument", "Sound Error");
-      err_logo(STOP_ERROR, NIL);
+      ShowMessageAndStop("Sound Error", "Bad argument");
       }
 
    return Unbound;
@@ -94,8 +103,7 @@ NODE *lmidiopen(NODE *args)
          id = int_arg(args);
          if (id > midiOutGetNumDevs())
             {
-            MainWindowx->CommandWindow->MessageBox("Invalid Midi device", "Midi Error");
-            err_logo(STOP_ERROR, NIL);
+            ShowMessageAndStop("Midi Error", "Invalid Midi device");
             }
          }
 
@@ -110,8 +118,7 @@ NODE *lmidiopen(NODE *args)
          {
          char MidiErrorBuffer[MAX_BUFFER_SIZE];
          midiOutGetErrorText(MidiError, MidiErrorBuffer, MAX_BUFFER_SIZE);
-         MainWindowx->CommandWindow->MessageBox(MidiErrorBuffer, "Midi Error");
-         err_logo(STOP_ERROR, NIL);
+         ShowMessageAndStop("Midi Error", MidiErrorBuffer);
          }
       else
          {
@@ -122,8 +129,7 @@ NODE *lmidiopen(NODE *args)
       }
    else
       {
-      MainWindowx->CommandWindow->MessageBox("Already Open", "Midi Error");
-      err_logo(STOP_ERROR, NIL);
+      ShowMessageAndStop("Midi Error", "Already Open");
       }
 
    return Unbound;
@@ -134,7 +140,6 @@ NODE *lmidiclose(NODE *  /*args*/)
    // if open close it 
    if (hMidiOut)
       {
-
       UINT MidiError = midiOutClose(hMidiOut);
       hMidiOut = 0;
 
@@ -142,14 +147,12 @@ NODE *lmidiclose(NODE *  /*args*/)
          {
          char MidiErrorBuffer[MAX_BUFFER_SIZE];
          midiOutGetErrorText(MidiError, MidiErrorBuffer, MAX_BUFFER_SIZE);
-         MainWindowx->CommandWindow->MessageBox(MidiErrorBuffer, "Midi Error");
-         err_logo(STOP_ERROR, NIL);
+         ShowMessageAndStop("Midi Error", MidiErrorBuffer);
          }
       }
    else
       {
-      MainWindowx->CommandWindow->MessageBox("Already closed", "Midi Error");
-      err_logo(STOP_ERROR, NIL);
+      ShowMessageAndStop("Midi Error", "Already closed");
       }
 
    return Unbound;
@@ -157,13 +160,6 @@ NODE *lmidiclose(NODE *  /*args*/)
 
 NODE *lmidimessage(NODE *arg)
    {
-   NODE *args;
-   UINT MidiError;
-   char MidiErrorBuffer[MAX_BUFFER_SIZE];
-
-   int i;
-   int j;
-
    union
       {
       long mylong;
@@ -171,30 +167,21 @@ NODE *lmidimessage(NODE *arg)
       }
    bytetolong;
 
-   MIDIHDR *MidiOutHdr;
-   BYTE *MidiOutData;
-
-   HANDLE DataHandle;
-   HANDLE HdrHandle;
-
    /* if midi open continue */
-
    if (hMidiOut)
       {
-      args = car(arg);
+      NODE * args = car(arg);
 
       /* if a list with something in it continue */
-
       if (is_list(args) && (args != NIL))
          {
+         UINT MidiError;
 
          /* if not system exclusive then use shortmsg else use longmsg */
-
          if (int_arg(args) != 0xF0)
             {
 
             /* pack 3 bytes at a time and send them as short messages */
-
             arg = args;
 
             while (arg != NIL)
@@ -213,8 +200,7 @@ NODE *lmidimessage(NODE *arg)
             {
 
             /* count elements in list so we can allocate buffer */
-
-            i = 0;
+            int i = 0;
             arg = args;
 
             while (arg != NIL)
@@ -224,18 +210,17 @@ NODE *lmidimessage(NODE *arg)
                }
 
             /* allocate structure buffer */
+            // REVISIT: why not use malloc()?
+            HANDLE    HdrHandle = (HANDLE) GlobalAlloc(GMEM_MOVEABLE | GMEM_SHARE | GMEM_ZEROINIT, sizeof(MIDIHDR));
+            MIDIHDR * MidiOutHdr = (MIDIHDR *) GlobalLock((HGLOBAL) HdrHandle);
 
-            HdrHandle = (HANDLE) GlobalAlloc(GMEM_MOVEABLE | GMEM_SHARE | GMEM_ZEROINIT, sizeof(MIDIHDR));
-            MidiOutHdr = (MIDIHDR *) GlobalLock((HGLOBAL) HdrHandle);
-
-            DataHandle = (HANDLE) GlobalAlloc(GMEM_MOVEABLE | GMEM_SHARE | GMEM_ZEROINIT, i);
-            MidiOutData = (BYTE *) GlobalLock((HGLOBAL) DataHandle);
+            HANDLE DataHandle = (HANDLE) GlobalAlloc(GMEM_MOVEABLE | GMEM_SHARE | GMEM_ZEROINIT, i);
+            BYTE * MidiOutData = (BYTE *) GlobalLock((HGLOBAL) DataHandle);
 
             /* pack the buffer array and set size */
-
             arg = args;
 
-            for (j = 0; j < i; j++)
+            for (int j = 0; j < i; j++)
                {
                MidiOutData[j] = int_arg(arg);
                arg = cdr(arg);
@@ -261,24 +246,21 @@ NODE *lmidimessage(NODE *arg)
             }
 
          /* if midi error let 'em know */
-
          if (MidiError)
             {
+            char MidiErrorBuffer[MAX_BUFFER_SIZE];
             midiOutGetErrorText(MidiError, MidiErrorBuffer, MAX_BUFFER_SIZE);
-            MainWindowx->CommandWindow->MessageBox(MidiErrorBuffer, "Midi Error");
-            err_logo(STOP_ERROR, NIL);
+            ShowMessageAndStop("Midi Error", MidiErrorBuffer);
             }
          }
       else
          {
-         MainWindowx->CommandWindow->MessageBox("Bad argument", "Midi Error");
-         err_logo(STOP_ERROR, NIL);
+         ShowMessageAndStop("Midi Error", "Bad argument");
          }
       }
    else
       {
-      MainWindowx->CommandWindow->MessageBox("Not Open", "Midi Error");
-      err_logo(STOP_ERROR, NIL);
+      ShowMessageAndStop("Midi Error", "Not Open");
       }
 
    return Unbound;
@@ -313,8 +295,7 @@ NODE *lmci(NODE *args)
       // let user know about the error
       char MciErrorBuffer[MAX_BUFFER_SIZE];
       mciGetErrorString(MciError, MciErrorBuffer, MAX_BUFFER_SIZE);
-      MainWindowx->CommandWindow->MessageBox(MciErrorBuffer, "MCI Error");
-      err_logo(STOP_ERROR, NIL);
+      ShowMessageAndStop("MCI Error", MciErrorBuffer);
       }
    else
       {
@@ -332,56 +313,48 @@ NODE *lmci(NODE *args)
 
 NODE *lsettimer(NODE *args)
    {
-   char callback[MAX_BUFFER_SIZE];
-   WORD delay;
-   int id;
 
    // get id and if valid continue
-
-   id = int_arg(args);
+   int id = int_arg(args);
 
    if ((id > 0) && (id < 32))
       {
+      // get delay
+      WORD delay = int_arg(args = cdr(args));
 
-      // get delay callback
-
-      delay = int_arg(args = cdr(args));
-
+      // get callback
+      char callback[MAX_BUFFER_SIZE];
       cnv_strnode_string(callback, args = cdr(args));
 
-      if (timer_callback[id] == NULL) timer_callback[id] = (char *) malloc(MAX_BUFFER_SIZE);
+      if (timer_callback[id] == NULL) 
+         {
+         timer_callback[id] = (char *) malloc(MAX_BUFFER_SIZE);
+         }
       strcpy(timer_callback[id], callback);
 
       // if not set sucessfully error
 
       if (!::SetTimer(MainWindowx->HWindow, id, delay, NULL))
          {
-         MainWindowx->CommandWindow->MessageBox("Too Many Timers", "Error");
-         err_logo(STOP_ERROR, NIL);
+         ShowMessageAndStop("Error", "Too Many Timers");
          }
       }
    else
       {
-      MainWindowx->CommandWindow->MessageBox("Bad Timer Id", "Error");
-      err_logo(STOP_ERROR, NIL);
+      ShowMessageAndStop("Error", "Bad Timer Id");
       }
    return Unbound;
    }
 
 NODE *lcleartimer(NODE *args)
    {
-   int id;
-
    // get args
-
-   id = int_arg(args);
+   int id = int_arg(args);
 
    // if timer was not set let user know
-
    if (!::KillTimer(MainWindowx->HWindow, id))
       {
-      MainWindowx->CommandWindow->MessageBox("Timer not found", "Error");
-      err_logo(STOP_ERROR, NIL);
+      ShowMessageAndStop("Error", "Timer not found");
       }
 
    return Unbound;
@@ -390,10 +363,9 @@ NODE *lcleartimer(NODE *args)
 NODE *lplaywave(NODE *args)
    {
    char name[MAX_BUFFER_SIZE];
-   int flag;
-
    cnv_strnode_string(name, args);
-   flag = getint(pos_int_arg(args = cdr(args)));
+
+   int flag = getint(pos_int_arg(args = cdr(args)));
 
    if (strlen(name) == 0)
       {

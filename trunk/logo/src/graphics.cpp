@@ -447,8 +447,7 @@ void uppitch(FLONUM a)
 //    bPolyFlag = false;
 //    ThreeD.DisposeVertices(ThePolygon);
 //    ThePolygon = NULL;
-//    MainWindowx->CommandWindow->MessageBox("You cannot change pitch while defining a planar polygon", "Pitch Error");
-//    err_logo(STOP_ERROR, NIL);
+//    ShowMessageAndStop("Pitch Error", "You cannot change pitch while defining a planar polygon");
 //    }
 // else
       {
@@ -486,8 +485,7 @@ void rightroll(FLONUM a)
 //   bPolyFlag = false;
 //   ThreeD.DisposeVertices(ThePolygon);
 //   ThePolygon = NULL;
-//   MainWindowx->CommandWindow->MessageBox("You cannot change roll while defining a planar polygon", "Roll Error");
-//   err_logo(STOP_ERROR, NIL);
+//   ShowMessageAndStop("Roll Error", "You cannot change roll while defining a planar polygon");
 //   }
 // else
       {
@@ -1947,8 +1945,7 @@ NODE *lpolystart(NODE *)
       bPolyFlag = false;
       ThreeD.DisposeVertices(ThePolygon);
       ThePolygon = NULL;
-      MainWindowx->CommandWindow->MessageBox("You already have a Polygon started", "PolyStart Error");
-      err_logo(STOP_ERROR, NIL);
+      ShowMessageAndStop("PolyStart Error", "You already have a Polygon started");
       }
    else
       {
@@ -1960,7 +1957,10 @@ NODE *lpolystart(NODE *)
 
 NODE *lpolyview(NODE *)
    {
-   if (ThreeD.Tree) ThreeD.View();
+   if (ThreeD.Tree) 
+      {
+      ThreeD.View();
+      }
 
    return Unbound;
    }
@@ -1978,19 +1978,17 @@ NODE *lpolyend(NODE *)
          {
          ThreeD.DisposeVertices(ThePolygon);
          ThePolygon = NULL;
-         MainWindowx->CommandWindow->MessageBox(
-            "You must have at least 3 vectors to define a polygon",
-            "PolyEnd Error");
-         err_logo(STOP_ERROR, NIL);
+         ShowMessageAndStop(
+            "PolyEnd Error", 
+            "You must have at least 3 vectors to define a polygon");
          }
       }
    else
       {
       ThreeD.DisposeVertices(ThePolygon);
-      MainWindowx->CommandWindow->MessageBox(
-         "You have not started a Polygon",
-         "PolyEnd Error");
-      err_logo(STOP_ERROR, NIL);
+      ShowMessageAndStop(
+         "PolyEnd Error", 
+         "You have not started a Polygon");
       }
 
    ThePolygon = NULL;

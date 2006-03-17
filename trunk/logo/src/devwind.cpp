@@ -136,8 +136,7 @@ NODE *lportclose(NODE *)
    // if port closed output error else close it
    if (!ComIsOpen)
       {
-      MainWindowx->CommandWindow->MessageBox("Could not CLOSE port", "Error");
-      err_logo(STOP_ERROR, NIL);
+      ShowMessageAndStop("Error", "Could not CLOSE port");
       }
    else
       {
@@ -156,8 +155,7 @@ NODE *lportopen(NODE *args)
    // if port open output error else open it
    if (ComIsOpen)
       {
-      MainWindowx->CommandWindow->MessageBox("PORT already open", "Error");
-      err_logo(STOP_ERROR, NIL);
+      ShowMessageAndStop("Error", "PORT already open");
       }
    else
       {
@@ -183,8 +181,7 @@ NODE *lportopen(NODE *args)
 
       if (ComId < 0)
          {
-         MainWindowx->CommandWindow->MessageBox("Could not open PORT", "Error");
-         err_logo(STOP_ERROR, NIL);
+         ShowMessageAndStop("Error", "Could not open PORT");
          }
       else
          {
@@ -199,16 +196,14 @@ NODE *lportflush(NODE */* args */)
    {
    if (!ComIsOpen)
       {
-      MainWindowx->CommandWindow->MessageBox("PORT not open", "Error");
-      err_logo(STOP_ERROR, NIL);
+      ShowMessageAndStop("Error", "PORT not open");
       }
    else
       {
       int err = FlushFileBuffers(ComId);
       if (err == 0)
          {
-         MainWindowx->CommandWindow->MessageBox("Could not flush PORT", "Error");
-         err_logo(STOP_ERROR, NIL);
+         ShowMessageAndStop("Error", "Could not flush PORT");
          }
       }
 
@@ -223,8 +218,7 @@ NODE *lportmode(NODE *args)
    // if closed output error else set mode
    if (!ComIsOpen)
       {
-      MainWindowx->CommandWindow->MessageBox("PORT not open", "Error");
-      err_logo(STOP_ERROR, NIL);
+      ShowMessageAndStop("Error", "PORT not open");
       }
    else
       {
@@ -236,8 +230,7 @@ NODE *lportmode(NODE *args)
 
       if (err == 0)
          {
-         MainWindowx->CommandWindow->MessageBox("Could not build dcb on PORT", "Error");
-         err_logo(STOP_ERROR, NIL);
+         ShowMessageAndStop("Error", "Could not build dcb on PORT");
          }
       else
          {
@@ -254,8 +247,7 @@ NODE *lportmode(NODE *args)
          err = SetCommState(ComId, &dcbold);
          if (err == 0)
             {
-            MainWindowx->CommandWindow->MessageBox("Could not set PORT", "Error");
-            err_logo(STOP_ERROR, NIL);
+            ShowMessageAndStop("Error", "Could not set PORT");
             }
          }
       }
@@ -282,8 +274,7 @@ NODE *lportwritearray(NODE *args)
          // if closed the error, else continue
          if (!ComIsOpen)
             {
-            MainWindowx->CommandWindow->MessageBox("PORT not open", "Error");
-            err_logo(STOP_ERROR, NIL);
+            ShowMessageAndStop("Error", "PORT not open");
             }
          else
             {
@@ -317,8 +308,7 @@ NODE *lportwritearray(NODE *args)
          }
       else
          {
-         MainWindowx->CommandWindow->MessageBox("First arg must be an array", "Error");
-         err_logo(STOP_ERROR, NIL);
+         ShowMessageAndStop("Error", "First arg must be an array");
          }
       }
 
@@ -345,8 +335,7 @@ NODE *lportreadarray(NODE *args)
 
          if (!ComIsOpen)
             {
-            MainWindowx->CommandWindow->MessageBox("PORT not open", "Error");
-            err_logo(STOP_ERROR, NIL);
+            ShowMessageAndStop("Error", "PORT not open");
             }
          else
             {
@@ -400,8 +389,7 @@ NODE *lportwritechar(NODE *args)
 
    if (!ComIsOpen)
       {
-      MainWindowx->CommandWindow->MessageBox("PORT not open", "Error");
-      err_logo(STOP_ERROR, NIL);
+      ShowMessageAndStop("Error", "PORT not open");
       }
    else
       {
@@ -431,8 +419,7 @@ NODE *lportreadchar(NODE *)
    // if closed output error, else continue
    if (!ComIsOpen)
       {
-      MainWindowx->CommandWindow->MessageBox("PORT not open", "Error");
-      err_logo(STOP_ERROR, NIL);
+      ShowMessageAndStop("Error", "PORT not open");
       }
    else
       {
