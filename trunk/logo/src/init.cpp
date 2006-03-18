@@ -74,7 +74,7 @@ const PRIMTYPE prims[] =
       { ".defmacro", 2, 2, 2, PREFIX_PRIORITY, ldefmacro },
       { ".eq", 2, 2, 2, PREFIX_PRIORITY, l_eq },
       { ".macro", -1, -1, -1, PREFIX_PRIORITY, lmacro },
-      { ".maybeoutput", 1, 1, 1, TAIL_PRIORITY, loutput },
+      { ".maybeoutput", 1, 1, 1, MAYBE_PRIORITY, loutput },
       { ".setbf", 2, 2, 2, PREFIX_PRIORITY, l_setbf },
       { ".setfirst", 2, 2, 2, PREFIX_PRIORITY, l_setfirst },
       { ".setitem", 3, 3, 3, PREFIX_PRIORITY, l_setitem },
@@ -310,7 +310,7 @@ const PRIMTYPE prims[] =
       { "noyield", 0, 0, 0, PREFIX_PRIORITY, lnoyield },
       { "numberp", 1, 1, 1, PREFIX_PRIORITY, lnumberp },
       { "number?", 1, 1, 1, PREFIX_PRIORITY, lnumberp },
-      { "op", 1, 1, 1, TAIL_PRIORITY, loutput },
+      { "op", 1, 1, 1, OUTPUT_PRIORITY, loutput },
       { "openappend", 1, 1, 2, PREFIX_PRIORITY, lopenappend },
       { "openread", 1, 1, 2, PREFIX_PRIORITY, lopenread },
       { "openupdate", 1, 1, 2, PREFIX_PRIORITY, lopenupdate },
@@ -318,7 +318,7 @@ const PRIMTYPE prims[] =
       { "or", 0, 2, -1, PREFIX_PRIORITY, lor },
       { "outport", 2, 2, 2, PREFIX_PRIORITY, loutport },
       { "outportb", 2, 2, 2, PREFIX_PRIORITY, loutportb },
-      { "output", 1, 1, 1, TAIL_PRIORITY, loutput },
+      { "output", 1, 1, 1, OUTPUT_PRIORITY, loutput },
       { "parse", 1, 1, 1, PREFIX_PRIORITY, lparse },
       { "pause", 0, 0, 0, PREFIX_PRIORITY, lpause },
       { "pc", 0, 0, 0, PREFIX_PRIORITY, lpencolor },
@@ -490,7 +490,7 @@ const PRIMTYPE prims[] =
       { "status", 0, 0, 0, PREFIX_PRIORITY, lstatus },
       { "step", 1, 1, 1, PREFIX_PRIORITY, lstep },
       { "stepped", 0, 0, 0, PREFIX_PRIORITY, lstepped },
-      { "stop", 0, 0, 0, TAIL_PRIORITY, lstop },
+      { "stop", 0, 0, 0, STOP_PRIORITY, lstop },
       { "substringp", 2, 2, 2, PREFIX_PRIORITY, lsubstringp },
       { "substring?", 2, 2, 2, PREFIX_PRIORITY, lsubstringp },
       { "sum", 0, 2, -1, PREFIX_PRIORITY, ladd },
@@ -570,11 +570,11 @@ void init()
          {
          proc = vref(newnode(MACRO));
          }
-      else if (prims[i].priority == TAIL_PRIORITY)
+      else if (prims[i].priority <= TAIL_PRIORITY)
          {
          proc = vref(newnode(TAILFORM));
          }
-      else if ((prims[i].priority & ~4) == PREFIX_PRIORITY)
+      else if ((prims[i].priority & ~4) == (PREFIX_PRIORITY & ~4))
          {
          proc = vref(newnode(PRIM));/* incl. -- */
          }
@@ -583,15 +583,7 @@ void init()
          proc = vref(newnode(INFIX));
          }
 
-      if (prims[i].priority < PREFIX_PRIORITY)
-         {
-         setprimpri(proc, PREFIX_PRIORITY);
-         }
-      else
-         {
-         setprimpri(proc, prims[i].priority);
-         }
-
+      setprimpri(proc, prims[i].priority);
       setprimfun(proc, prims[i].prim);
       setprimdflt(proc, prims[i].defargs);
       setprimmax(proc, prims[i].maxargs);
@@ -647,8 +639,47 @@ void init()
 
 void uninit()
    {
+   deref(Not_Enough_Node);
+   deref(the_generation);
+   deref(Tag);
+   deref(Goto);
+   deref(Stop);
+   deref(Op);
+   deref(Output);
+   deref(Startup);
+   deref(Pause);
+   deref(Printwidthlimit);
+   deref(Printdepthlimit);
+   deref(Erract);
+   deref(Caseignoredp);
+   deref(Redefp);
+   deref(Ifelse);
+   deref(If);
+   deref(End);
+   deref(Error);
+   deref(System);
+   deref(Toplevel);
+   deref(Macro);
+   deref(To);
+   deref(Null_Word);
+   deref(Query);
+   deref(Minus_Tight);
+   deref(Minus_Sign);
+   deref(Right_Paren);
+   deref(Left_Paren);
+   deref(Falsex);
+   deref(Truex);
+
+   // free() instead of deref() because Unbound is referenced too many times
+   //free(Unbound);
+
+   uninitialize_eval();
+
    // free the objects
    release_all_objects();
+
+   // free our reserve tank of nodes
+   use_reserve_tank();
 
    // free all outstanding nodes
    free_segment_list();

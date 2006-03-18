@@ -45,9 +45,14 @@ typedef struct logo_node * (*logofunc) (struct logo_node *);
 #define MAX_NUMBER      50             /* max number of digits in a float     */
 #define MAX_BUFFER_SIZE 256
 #define MAX_PACKET_SIZE 1024
-#define PREFIX_PRIORITY 2
-#define MACRO_PRIORITY  1
-#define TAIL_PRIORITY   0
+
+#define STOP_PRIORITY	0
+#define OUTPUT_PRIORITY	1
+#define MAYBE_PRIORITY	2
+#define TAIL_PRIORITY	2	/* largest tailcall priority */
+#define MACRO_PRIORITY	3
+#define PREFIX_PRIORITY 4
+
 #define TURTLEN         3 // number of special turtles
 #define TURTLES         1024+TURTLEN
 

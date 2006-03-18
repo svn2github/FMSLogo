@@ -712,9 +712,13 @@ NODE *evaluator(NODE *list, enum labels where)
    pop(unev);
    if (exp != NIL &&
        is_list(exp) && 
-       (is_tailform(procnode__caseobj(car(exp)))))
+       is_tailform(procnode__caseobj(car(exp))))
       {
-      if (nameis(car(exp), Output) || nameis(car(exp), Op))
+      // Get the priority of the primitive to get the "true identify".
+      // This will compare correctly, even if the procedure is a copydef
+      // of another procedure.
+      short expression_priority = getprimpri(procnode__caseobj(car(exp)));
+      if (expression_priority == OUTPUT_PRIORITY)
          {
          assign(didnt_get_output, cons_list(car(exp), ufun, this_line));
          assign(didnt_output_name, NIL);
@@ -738,7 +742,7 @@ NODE *evaluator(NODE *list, enum labels where)
             goto non_tail_eval;        /* compute value then give error       */
             }
          }
-      else if (nameis(car(exp), Stop))
+      else if (expression_priority == STOP_PRIORITY)
          {
          if (ufun == NIL)
             {
@@ -768,6 +772,7 @@ NODE *evaluator(NODE *list, enum labels where)
       }
    if (unev == NIL)
       {
+      // falling off tail of sequence
       if (val_status == 2 || val_status == 4)
          {
          assign(didnt_output_name, fun);
@@ -781,8 +786,10 @@ NODE *evaluator(NODE *list, enum labels where)
       }
    if (car(unev) != NIL &&
        is_list(car(unev)) && 
-       nameis(car(car(unev)), Stop))
+       is_tailform(procnode__caseobj(car(car(unev)))) &&
+       getprimpri(procnode__caseobj(car(car(unev)))) == STOP_PRIORITY)
       {
+      // next is STOP
       if ((val_status == 0 || val_status == 3) && ufun != NIL)
          {
          goto tail_eval_dispatch;
