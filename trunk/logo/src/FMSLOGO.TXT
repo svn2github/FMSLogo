@@ -183,13 +183,14 @@ Part III) Special Thanks:
     Lionel Laske
     Relja Medic
     Daniel Ajoy
+    Narayanan Chitoor
 
   Special thanks to:
-    George Mills <gmills@softronix.com>
-    Brian Harvey <bh@cs.berkeley.edu>
+    George Mills
+    Brian Harvey
     Jim Muller
-    Erich Neuwirth <neuwirth@smc.univie.ac.at>
-    Yehuda Katz <yehuka@softhome.net>
+    Erich Neuwirth
+    Yehuda Katz
 
 Part IV) Standard features:
 
