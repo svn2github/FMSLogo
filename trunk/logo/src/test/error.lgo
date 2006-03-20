@@ -100,21 +100,44 @@ TO ERRORTEST
 
    ;CATCH "PAUSE [CONTINUE]
 
-   ;; tests that can only be done at the top level
+   ;; tests that can't be automated within this framework because
+   ;; they halt processing.
    ;;
    ;; error 14: can't find catch tag for "unknowntag 
    ; CATCH "ERROR [THROW "unknowntag]
    ;
-   ;; error 15: X is already defined
-   ; DEFINE "X [[]]
-   ; TO X
-   ;
-   ;; error 31: Can only use STOP inside a procedure
-   ; STOP
-   ;
-   ;; error 31: Can only use OUTPUT inside a procedure
-   ; OUTPUT
-   ;
-   ;; double error (erract loop)
-   ; CATCH "dontcatch [THROW PRINT "double-error]
+   ;; error 15: TO can't redefine a procedure
+   ; DEFINE "ERRORTEST.ALREADYDEFINEDPROCEDURE [[]]
+   ; CATCH "ERROR [TO ERRORTEST.ALREADYDEFINEDPROCEDURE]
 END
+
+;;
+;; The following tests can only be run at the top-level
+;;
+TO ERRORTEST.CHECKERROR :explaination :expectederror
+  LOCALMAKE "lasterror ERROR
+  IF EMPTYP :lasterror [
+    MESSAGEBOX [Test Failed] (LIST :explaination "|did not change ERROR|)
+    SHOW [Failing test]
+    THROW "error
+  ]
+  IF NOT EQUALP (ITEM 1 :lasterror) :expectederror [
+    MESSAGEBOX [Test Failed] (LIST "|ITEM 1 ERROR returned | (ITEM 1 :lasterror) "|, we expected| :expectederror)
+    SHOW [Failing test]
+    THROW "error
+  ]
+  SHOW (LIST :explaination "|set error code to|   (ITEM 1 :lasterror) )
+  SHOW (LIST :explaination "|set error string to| (ITEM 2 :lasterror) )
+END
+
+;; error 31: Can only use STOP inside a procedure
+IGNORE ERROR
+SHOW [Executing STOP at the toplevel]
+CATCH "ERROR [STOP]
+ERRORTEST.CHECKERROR "|Executing STOP at the toplevel| 31
+
+;; error 31: Can only use OUTPUT inside a procedure
+IGNORE ERROR
+SHOW [Executing OUTPUT at the toplevel]
+CATCH "ERROR [OUTPUT 123]
+ERRORTEST.CHECKERROR "|Executing OUTPUT at the toplevel| 31
