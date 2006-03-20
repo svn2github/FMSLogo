@@ -2362,6 +2362,67 @@ INFO: Executing invalid instruction: [POT {a}]
 INFO: Executing [POT {a}] set error code to 4
 INFO: Executing [POT {a}] set error string to [POT doesn't like {a} as input]
 PASS: "Bug #1438863 is fixed; erasing a procedure in the middle of running it does not crash
+PASS: [SUMCOPY 1 2] returned 3 , as expected.
+PASS: [(SUMCOPY 1 2 3)] returned 6 , as expected.
+PASS: [(SUMCOPY)] returned 0 , as expected.
+INFO: Executing invalid instruction: [SUMCOPY 1 "ten]
+INFO: Executing [SUMCOPY 1 "ten] set error code to 7
+INFO: Executing [SUMCOPY 1 "ten] set error string to [SUMCOPY doesn't like ten as input]
+INFO: Executing invalid instruction: [SUMCOPY "ten 1]
+INFO: Executing [SUMCOPY "ten 1] set error code to 7
+INFO: Executing [SUMCOPY "ten 1] set error string to [SUMCOPY doesn't like ten as input]
+PASS: [1 MYPLUS 2] returned 3 , as expected.
+PASS: [1 MYPLUS 2 MYPLUS 3] returned 6 , as expected.
+INFO: Executing invalid instruction: [1 MYPLUS "ten]
+INFO: Executing [1 MYPLUS "ten] set error code to 7
+INFO: Executing [1 MYPLUS "ten] set error string to [MYPLUS doesn't like ten as input]
+INFO: Executing invalid instruction: ["ten MYPLUS 1]
+INFO: Executing ["ten MYPLUS 1] set error code to 7
+INFO: Executing ["ten MYPLUS 1] set error string to [MYPLUS doesn't like ten as input]
+INFO: Executing invalid instruction: [(MYPLUS)]
+INFO: Executing [(MYPLUS)] set error code to 6 , as expected
+INFO: Executing [(MYPLUS)] set error string to [not enough inputs to MYPLUS]
+PASS: [MYADDCOPY 1 2] returned 3 , as expected.
+PASS: [COPYDEFTOTEST] returned 373 , as expected.
+INFO: Executing invalid instruction: [(COPYDEF)]
+INFO: Executing [(COPYDEF)] set error code to 6 , as expected
+INFO: Executing [(COPYDEF)] set error string to [not enough inputs to COPYDEF]
+INFO: Executing invalid instruction: [(COPYDEF "MYLIST)]
+INFO: Executing [(COPYDEF "MYLIST)] set error code to 6 , as expected
+INFO: Executing [(COPYDEF "MYLIST)] set error string to [not enough inputs to COPYDEF]
+INFO: Executing invalid instruction: [(COPYDEF "MYLIST "LIST "TOOMANY)]
+INFO: Executing [(COPYDEF "MYLIST "LIST "TOOMANY)] set error code to 8 , as expected
+INFO: Executing [(COPYDEF "MYLIST "LIST "TOOMANY)] set error string to [too much inside ()'s]
+INFO: Executing invalid instruction: [(COPYDEF "SUM "PRODUCT)]
+INFO: Executing [(COPYDEF "SUM "PRODUCT)] set error code to 22 , as expected
+INFO: Executing [(COPYDEF "SUM "PRODUCT)] set error string to [SUM is a primitive]
+INFO: Executing invalid instruction: [(COPYDEF "XXXCOPY "DOESNOTEXIT)]
+INFO: Executing [(COPYDEF "XXXCOPY "DOESNOTEXIT)] set error code to 13 , as expected
+INFO: Executing [(COPYDEF "XXXCOPY "DOESNOTEXIT)] set error string to [I don't know how to DOESNOTEXIT]
+INFO: Executing invalid instruction: [(COPYDEF [1] "SUM)]
+INFO: Executing [(COPYDEF [1] "SUM)] set error code to 7
+INFO: Executing [(COPYDEF [1] "SUM)] set error string to [COPYDEF doesn't like [1] as input]
+INFO: Executing invalid instruction: [(COPYDEF {1} "SUM)]
+INFO: Executing [(COPYDEF {1} "SUM)] set error code to 7
+INFO: Executing [(COPYDEF {1} "SUM)] set error string to [COPYDEF doesn't like {1} as input]
+INFO: Executing invalid instruction: [(COPYDEF 1 "SUM)]
+INFO: Executing [(COPYDEF 1 "SUM)] set error code to 4
+INFO: Executing [(COPYDEF 1 "SUM)] set error string to [COPYDEF doesn't like 1 as input]
+INFO: Executing invalid instruction: [(COPYDEF "NEWCOPY [1] )]
+INFO: Executing [(COPYDEF "NEWCOPY [1] )] set error code to 7
+INFO: Executing [(COPYDEF "NEWCOPY [1] )] set error string to [COPYDEF doesn't like [1] as input]
+INFO: Executing invalid instruction: [(COPYDEF "NEWCOPY {1} )]
+INFO: Executing [(COPYDEF "NEWCOPY {1} )] set error code to 7
+INFO: Executing [(COPYDEF "NEWCOPY {1} )] set error string to [COPYDEF doesn't like {1} as input]
+INFO: Executing invalid instruction: [(COPYDEF "NEWCOPY 1 )]
+INFO: Executing [(COPYDEF "NEWCOPY 1 )] set error code to 4
+INFO: Executing [(COPYDEF "NEWCOPY 1 )] set error string to [COPYDEF doesn't like 1 as input]
+INFO: Executing invalid instruction: [(NEWCOPY)]
+INFO: Executing [(NEWCOPY)] set error code to 13 , as expected
+INFO: Executing [(NEWCOPY)] set error string to [I don't know how to NEWCOPY]
+INFO: Executing invalid instruction: [(COPYDEF "SUMCOPY "SUM)]
+INFO: Executing [(COPYDEF "SUMCOPY "SUM)] set error code to 22 , as expected
+INFO: Executing [(COPYDEF "SUMCOPY "SUM)] set error string to [SUMCOPY is a primitive]
 PASS: [GPROP "nonexistent "prop1] returned [] , as expected.
 PASS: [GPROP "testplist1 "nonexistent] returned [] , as expected.
 PASS: [GPROP "testplist1 "property1] returned 1 , as expected.

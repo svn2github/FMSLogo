@@ -40,6 +40,7 @@ LOAD "sort.lgo
 LOAD "run.lgo
 LOAD "dll.lgo
 LOAD "error.lgo
+LOAD "copydef.lgo
 
 TO TESTALL
 
@@ -57,6 +58,7 @@ TO TESTALL
   LOGICTEST       ; from logic.lgo
   MATHTEST        ; from math.lgo
   PROCEDURETEST   ; from procedure.lgo
+  COPYDEFTEST     ; from copydef.lgo
   PLISTTEST       ; from plist.lgo
   CONTROLFLOWTEST ; from controlflow.lgo
   ACTIVEAREATEST  ; from activearea.lgo
