@@ -133,7 +133,6 @@ extern NODE *Minus_Tight;
 extern NODE *Startup;
 extern NODE *Query;
 extern NODE *Output;
-extern NODE *Op;
 extern NODE *Stop;
 extern NODE *Goto;
 extern NODE *Tag;

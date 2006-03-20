@@ -59,7 +59,6 @@ NODE *Minus_Tight;
 NODE *Startup;
 NODE *Query;
 NODE *Output;
-NODE *Op;
 NODE *Stop;
 NODE *Goto;
 NODE *Tag;
@@ -629,7 +628,6 @@ void init()
    Pause = intern(make_static_strnode("pause"));
    Startup = intern(make_static_strnode("startup"));
    Output = intern(make_static_strnode("output"));
-   Op = intern(make_static_strnode("op"));
    Stop = intern(make_static_strnode("stop"));
    Goto = intern(make_static_strnode("goto"));
    Tag = intern(make_static_strnode("Tag"));
@@ -644,7 +642,6 @@ void uninit()
    deref(Tag);
    deref(Goto);
    deref(Stop);
-   deref(Op);
    deref(Output);
    deref(Startup);
    deref(Pause);
