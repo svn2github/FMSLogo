@@ -35,17 +35,17 @@ When using color-by-index, the index to color mapping is given in the following 
       <row><entry>0</entry><entry>black</entry></row>
       <row><entry>1</entry><entry>blue</entry></row>
       <row><entry>2</entry><entry>green</entry></row>
-      <row><entry>3</entry><entry>cyan</entry></row>
+      <row><entry>3</entry><entry>cyan (aqua)</entry></row>
       <row><entry>4</entry><entry>red</entry></row>
-      <row><entry>5</entry><entry>magenta</entry></row>
+      <row><entry>5</entry><entry>magenta (fuchsia)</entry></row>
       <row><entry>6</entry><entry>yellow</entry></row>
       <row><entry>7</entry><entry>white</entry></row>
       <row><entry>8</entry><entry>brown</entry></row>
       <row><entry>9</entry><entry>tan</entry></row>
-      <row><entry>10</entry><entry>forest</entry></row>
-      <row><entry>11</entry><entry>aqua</entry></row>
+      <row><entry>10</entry><entry>olive</entry></row>
+      <row><entry>11</entry><entry>sky blue</entry></row>
       <row><entry>12</entry><entry>salmon</entry></row>
-      <row><entry>13</entry><entry>purple</entry></row>
+      <row><entry>13</entry><entry>medium purple</entry></row>
       <row><entry>14</entry><entry>orange</entry></row>
       <row><entry>15</entry><entry>gray</entry></row>
     </tbody>
@@ -213,7 +213,7 @@ Each time you enter <link linkend="command-perspective">PERSPECTIVE</link> mode 
 Several commands (<link linkend="command-setpencolor">SETPENCOLOR</link>, <link linkend="command-setfloodcolor">SETFLOODCOLOR</link>, <link linkend="command-setscreencolor">SETSCREENCOLOR</link>) exist in &GENERICNAME; to specify red, green, and blue intensities of color.
 Each input represents how much red, green, and blue you want in the color.
 Each input has a range of 0-255.
-By mixing different amounts of colors you can create 16.7 million different colors.
+You can create 16.7 million different colors by mixing different amounts of red, green, and blue.
 </para>
 
 <para>
@@ -289,8 +289,8 @@ If you set any color with an [red green blue] color vector, &PRODUCTNAME; will o
 <userinput>SETPENCOLOR 5
 SHOW PENCOLOR</userinput>
 5
-<userinput>setpencolor [255 0 0]
-show pencolor</userinput>
+<userinput>SETPENCOLOR [255 0 0]
+SHOW PENCOLOR</userinput>
 [255 0 0]
 </programlisting>
 </listitem>
@@ -303,27 +303,27 @@ show pencolor</userinput>
 When using color-by-index, the index to color mapping is given in the following table.
 
 <informaltable frame='all'>
-  <tgroup cols='2'>
+  <tgroup cols='3'>
     <thead>
-      <row><entry>Index</entry> <entry>Color Vector</entry></row>
+      <row> <entry>Index</entry> <entry>Color Vector</entry> <entry>Color</entry>           </row>
     </thead>
     <tbody>
-      <row><entry>0</entry><entry>[  0   0   0]</entry></row>
-      <row><entry>1</entry><entry>[  0   0 255]</entry></row>
-      <row><entry>2</entry><entry>[  0 255   0]</entry></row>
-      <row><entry>3</entry><entry>[  0 255 255]</entry></row>
-      <row><entry>4</entry><entry>[255   0   0]</entry></row>
-      <row><entry>5</entry><entry>[255   0 255]</entry></row>
-      <row><entry>6</entry><entry>[255 255   0]</entry></row>
-      <row><entry>7</entry><entry>[255 255 255]</entry></row>
-      <row><entry>8</entry><entry>[155  96  59]</entry></row>
-      <row><entry>9</entry><entry>[197 136  18]</entry></row>
-      <row><entry>10</entry><entry>[100 162  64]</entry></row>
-      <row><entry>11</entry><entry>[120 187 187]</entry></row>
-      <row><entry>12</entry><entry>[255 149 119]</entry></row>
-      <row><entry>13</entry><entry>[144 113 208]</entry></row>
-      <row><entry>14</entry><entry>[255 163   0]</entry></row>
-      <row><entry>15</entry><entry>[183 183 183]</entry></row>
+      <row> <entry>0</entry>  <entry>[0 0 0]</entry>       <entry>Black</entry>             </row>
+      <row> <entry>1</entry>  <entry>[0 0 255]</entry>     <entry>Blue</entry>              </row>
+      <row> <entry>2</entry>  <entry>[0 255 0]</entry>     <entry>Green</entry>             </row>
+      <row> <entry>3</entry>  <entry>[0 255 255]</entry>   <entry>Cyan (Aqua)</entry>       </row>
+      <row> <entry>4</entry>  <entry>[255 0 0]</entry>     <entry>Red</entry>               </row>
+      <row> <entry>5</entry>  <entry>[255 0 255]</entry>   <entry>Magenta (Fuchsia)</entry> </row>
+      <row> <entry>6</entry>  <entry>[255 255 0]</entry>   <entry>Yellow</entry>            </row>
+      <row> <entry>7</entry>  <entry>[255 255 255]</entry> <entry>White</entry>             </row>
+      <row> <entry>8</entry>  <entry>[155 96 59]</entry>   <entry>Brown</entry>             </row>
+      <row> <entry>9</entry>  <entry>[197 136 18]</entry>  <entry>Tan</entry>               </row>
+      <row> <entry>10</entry> <entry>[100 162 64]</entry>  <entry>Olive</entry>             </row>
+      <row> <entry>11</entry> <entry>[120 187 187]</entry> <entry>Sky Blue</entry>          </row>
+      <row> <entry>12</entry> <entry>[255 149 119]</entry> <entry>Salmon</entry>            </row>
+      <row> <entry>13</entry> <entry>[144 113 208]</entry> <entry>Medium Purple</entry>     </row>
+      <row> <entry>14</entry> <entry>[255 163 0]</entry>   <entry>Orange</entry>            </row>
+      <row> <entry>15</entry> <entry>[183 183 183]</entry> <entry>Gray</entry>              </row>
     </tbody>
   </tgroup>
 </informaltable>
