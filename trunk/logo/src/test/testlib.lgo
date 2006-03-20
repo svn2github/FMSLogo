@@ -142,6 +142,15 @@ TO RUNNOTENOUGHINPUTSTEST :instructions
   RUNEXPECTERRORTEST :instructions 6
 END
 
+TO RUNIDONTKNOWHOWTOTEST :instructions
+  RUNEXPECTERRORTEST :instructions 13
+END
+
+TO RUNISAPRIMITIVETEST :instructions
+  RUNEXPECTERRORTEST :instructions 22
+END
+
+
 
 ; Outputs how long it takes to execute given instructions
 TO TIMECOMMAND :instructions
