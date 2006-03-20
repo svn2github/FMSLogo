@@ -22,6 +22,7 @@ Part II) New features/bugs fixed:
 
   * Added for 6.8.0,
     o Fix bug #1448142; A COPYDEF of STOP no longer crashes when run.
+    o Fix bug #1450152; SETORIENTATION now throws an error on bad input.
     o Fix bug #1432651; Filenames that match a library procs no longer crash.
     o Fix bug #1438863; Erasing a procedure while running it no longer crashes.
     o Fix bug #1443736; SETFOCUS [FMSLogo] gives focus to the screen window.

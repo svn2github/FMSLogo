@@ -3456,16 +3456,15 @@ PASS: [LIST? ORIENTATION] returned true , as expected.
 PASS: [COUNT ORIENTATION] returned 3 , as expected.
 PASS: [ROLL] returned 360 , as expected.
 PASS: [PITCH] returned 360 , as expected.
-PASS: [HEADING] returned 360 , as expected.
-PASS: [ANGLEISCLOSEENOUGH 360 0] returned true , as expected.
+PASS: [HEADING] returned 6.34190050419077e-15 , as expected.
 PASS: [ANGLEISCLOSEENOUGH 360 0] returned true , as expected.
 PASS: [ANGLEISCLOSEENOUGH 360 0] returned true , as expected.
 INFO: Executing invalid instruction: [(SETORIENTATION)]
 INFO: Executing [(SETORIENTATION)] set error code to 6 , as expected
 INFO: Executing [(SETORIENTATION)] set error string to [not enough inputs to SETORIENTATION]
 INFO: Executing invalid instruction: [(SETORIENTATION 0)]
-INFO: Executing [(SETORIENTATION 0)] set error code to 4
-INFO: Executing [(SETORIENTATION 0)] set error string to [item doesn't like 2 as input]
+INFO: Executing [(SETORIENTATION 0)] set error code to 21
+INFO: Executing [(SETORIENTATION 0)] set error string to [setorientation doesn't like 0 as input]
 INFO: Executing invalid instruction: [(SETORIENTATION 0 0)]
 INFO: Executing [(SETORIENTATION 0 0)] set error code to 8 , as expected
 INFO: Executing [(SETORIENTATION 0 0)] set error string to [too much inside ()'s]
@@ -3473,18 +3472,20 @@ INFO: Executing invalid instruction: [(SETORIENTATION 0 0 0)]
 INFO: Executing [(SETORIENTATION 0 0 0)] set error code to 8 , as expected
 INFO: Executing [(SETORIENTATION 0 0 0)] set error string to [too much inside ()'s]
 INFO: Executing invalid instruction: [(SETORIENTATION [0] )]
-INFO: Executing [(SETORIENTATION [0] )] set error code to 4
-INFO: Executing [(SETORIENTATION [0] )] set error string to [item doesn't like 2 as input]
+INFO: Executing [(SETORIENTATION [0] )] set error code to 21
+INFO: Executing [(SETORIENTATION [0] )] set error string to [setorientation doesn't like [0] as input]
 INFO: Executing invalid instruction: [(SETORIENTATION [0 0] )]
-INFO: Executing [(SETORIENTATION [0 0] )] set error code to 4
-INFO: Executing [(SETORIENTATION [0 0] )] set error string to [item doesn't like 3 as input]
+INFO: Executing [(SETORIENTATION [0 0] )] set error code to 21
+INFO: Executing [(SETORIENTATION [0 0] )] set error string to [setorientation doesn't like [0 0] as input]
 INFO: Executing invalid instruction: [(SETORIENTATION [a b c] )]
 INFO: Executing [(SETORIENTATION [a b c] )] set error code to 7
 INFO: Executing [(SETORIENTATION [a b c] )] set error string to [setroll doesn't like a as input]
 INFO: Executing invalid instruction: [(SETORIENTATION [0 0 0 0] )]
-FAIL: Executing [(SETORIENTATION [0 0 0 0] )] did not throw an error
+INFO: Executing [(SETORIENTATION [0 0 0 0] )] set error code to 21
+INFO: Executing [(SETORIENTATION [0 0 0 0] )] set error string to [setorientation doesn't like [0 0 0 0] as input]
 INFO: Executing invalid instruction: [(SETORIENTATION {0 0 0} )]
-FAIL: Executing [(SETORIENTATION {0 0 0} )] did not throw an error
+INFO: Executing [(SETORIENTATION {0 0 0} )] set error code to 21
+INFO: Executing [(SETORIENTATION {0 0 0} )] set error string to [setorientation doesn't like {0 0 0} as input]
 INFO: Executing invalid instruction: [(SETORIENTATION [0 0 0] "toomany)]
 INFO: Executing [(SETORIENTATION [0 0 0] "toomany)] set error code to 8 , as expected
 INFO: Executing [(SETORIENTATION [0 0 0] "toomany)] set error string to [too much inside ()'s]
