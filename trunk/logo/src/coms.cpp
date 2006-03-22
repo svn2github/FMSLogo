@@ -145,66 +145,58 @@ NODE *lnot(NODE *args)
 
 NODE *land(NODE *args)
    {
-   if (args == NIL) 
+   // if there are no false inputs, then the entire expression is true
+   NODE * rval = Truex;
+   
+   for (NODE* current_arg = args;
+        current_arg != NIL;
+        current_arg = cdr(current_arg))
       {
-      return Truex;
-      }
+      bool arg = boolean_arg(current_arg);
+      if (stopping_flag == THROWING)
+         {
+         return Unbound;
+         }
 
-   while (NOT_THROWING)
-      {
-      bool arg = boolean_arg(args);
       if (!arg)
          {
-         // found a false argument, so entire expression is false
-         return Falsex;
-         }
+         // found a false input, so entire expression is false
+         rval = Falsex;
 
-      args = cdr(args);
-      if (args == NIL) 
-         {
-         break;
+         // Don't break because we want to validate 
+         // the rest of the inputs.
          }
       }
 
-   if (NOT_THROWING) 
-      {
-      // there were no false arguments, so entire expression is true
-      return Truex;
-      }
-
-   return Unbound;
+   return rval;
    }
 
 NODE *lor(NODE *args)
    {
-   if (args == NIL)
+   // if there are no true inputs, then the entire expression is false
+   NODE * rval = Falsex;
+   
+   for (NODE* current_arg = args;
+        current_arg != NIL;
+        current_arg = cdr(current_arg))
       {
-      return Falsex;
-      }
+      bool arg = boolean_arg(current_arg);
+      if (stopping_flag == THROWING)
+         {
+         return Unbound;
+         }
 
-   while (NOT_THROWING)
-      {
-      bool arg = boolean_arg(args);
       if (arg)
          {
-         // found a true argument, so entire expression is true
-         return Truex;
-         }
+         // found a true input, so entire expression is true
+         rval = Truex;
 
-      args = cdr(args);
-      if (args == NIL) 
-         {
-         break;
+         // Don't break because we want to validate 
+         // the rest of the inputs.
          }
       }
 
-   if (NOT_THROWING) 
-      {
-      // there were no true arguments, so entire expression is false
-      return Falsex;
-      }
-
-   return Unbound;
+   return rval;
    }
 
 NODE *runnable_arg(NODE *args)
