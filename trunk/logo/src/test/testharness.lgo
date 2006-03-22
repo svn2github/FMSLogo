@@ -41,6 +41,7 @@ LOAD "run.lgo
 LOAD "dll.lgo
 LOAD "error.lgo
 LOAD "copydef.lgo
+LOAD "iseq.lgo
 
 TO TESTALL
 
@@ -84,6 +85,7 @@ TO TESTALL
   WINDOWTEST      ; from window.lgo
   DLLTEST         ; from dll.lgo
   SORTTEST        ; from sort.lgo
+  ISEQTEST        ; from iseq.lgo
 
   REPORTTESTUNINITIALIZE
 
