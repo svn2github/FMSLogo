@@ -42,12 +42,14 @@ LOAD "dll.lgo
 LOAD "error.lgo
 LOAD "copydef.lgo
 LOAD "iseq.lgo
+LOAD "load.lgo
 
 TO TESTALL
 
   REPORTTESTINITIALIZE
 
   PARSETEST       ; from parse.lgo
+  LOADTEST        ; from load.lgo
   RUNTEST         ; from run.lgo
   ERRORTEST       ; from error.lgo
   PREDICATETEST   ; from predicate.lgo
