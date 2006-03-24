@@ -667,6 +667,8 @@ void uninit()
    deref(Falsex);
    deref(Truex);
 
+   deref(throw_node);
+
    // free() instead of deref() because Unbound is referenced too many times
    //free(Unbound);
 
