@@ -139,13 +139,14 @@ NODE *paren_expr(NODE **expr, bool inparen)
          {
          err_logo(PAREN_MISMATCH, NIL);
          }
-      return *expr;
+      return NIL;
       }
 
    NODE *proc;
    NODE *retval;
    NODE **ifnode = (NODE **) NIL;
 
+   // REVISIT: do we really need to ref and deref first?
    NODE * first = vref(car(*expr));
    pop(*expr);
    if (nodetype(first) == CASEOBJ && !numberp(first))
@@ -173,6 +174,7 @@ NODE *paren_expr(NODE **expr, bool inparen)
                   {
                   if (parens-- == 0) 
                      {
+                     pop(*expr);
                      break;
                      }
                   }
@@ -267,6 +269,13 @@ NODE *paren_line(NODE *line)
       retval = paren_infix(retval, &line, -1, FALSE);
       retval = cons(retval, paren_line(line));
       }
+   else
+      {
+      // clean up whatever hasn't been consumed.
+      // (for example, if a syntax error was detected).
+      deref(line);
+      }
+
    return retval;
    }
 

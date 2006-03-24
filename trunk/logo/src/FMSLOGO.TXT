@@ -21,6 +21,7 @@ Part I) Kit Description/Location (http://sourceforge.net/projects/fmslogo):
 Part II) New features/bugs fixed:
 
   * Added for 6.8.0,
+    o Fix bug #1453675; (FD 10 10) no longer leaks memory.
     o Fix bug #1448142; A COPYDEF of STOP no longer crashes when run.
     o Fix bug #1450152; SETORIENTATION now throws an error on bad input.
     o Fix bug #1432651; Filenames that match a library procs no longer crash.
@@ -40,9 +41,9 @@ Part II) New features/bugs fixed:
     o Fix bug #1448097; SORT handles predicates that have one input by default.
     o Fix bug #1446430; Error codes are now documented correctly.
     o Fix bug #1349264; AND and OR now validate all inputs.
-    o Mitigate bug #1392437; LOAD no longer warns that it can overwrite changes.
-    o Fix memory leaks.
-    o Fix minor typos in documentation.
+    o Fix bug #1392437; LOAD no longer warns that it can overwrite changes.
+    o Fix numerous memory leaks.
+    o Fix minor typos and omissions in documentation.
 
   * Added for 6.7.2,
     o Fix bug #1372489; double-clicking .lgo file starts new FMSLogo process.
