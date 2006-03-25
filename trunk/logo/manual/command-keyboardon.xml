@@ -31,6 +31,18 @@ You can force this by calling <userinput>SETFOCUS [&PRODUCTNAME;]</userinput> af
 All the "callbacks" for the keyboard are automatically run in <link linkend="command-noyield">NOYIELD</link> mode.
 </para>
 
+<para>
+For historical reasons, the set of keys that are captured when KEYBOARDON has one input is different from the set of keys that are captured when it has two inputs.
+When only a <parameter>keydown</parameter> input is given, the keys are trapped as ASCII characters, not as strict keydown events.
+This means that lowercase <keycap>a</keycap> has a different value than uppercase <keycap>A</keycap>, even though the same key is pressed.
+Because of this, a program that only looks for <userinput>ASCII "a</userinput> won't work when <keycap>Caps Lock</keycap> is on.
+This also means that when only one input is given to KEYBOARDON, it ignores keys that don't have an ASCII representation.
+This includes ignoring the arrow keys, the function keys, and most of the numeric keypad.
+In contrast, when KEYBOARDON has two inputs, it captures nearly all key events, including the arrow keys, the function keys, and the numeric keypad.
+Furthermore, each unique key press generates a separate callback.
+So uppercase <keycap>A</keycap> might generate the following keyboard events: a <keycap>Shift</keycap> keydown event, followed by an <keycap>A</keycap> keydown event, followed by an <keycap>A</keycap> keyup event, followed by a <keycap>Shift</keycap> keyup event.
+</para>
+
 </listitem>
 </varlistentry>
 
