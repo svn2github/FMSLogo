@@ -544,6 +544,7 @@ extern NODE *lhalt(NODE *arg);
 extern NODE *lyield(NODE *arg);
 extern NODE *lnoyield(NODE *arg);
 extern NODE *lcontinue(NODE *args);
+extern void uninitialize_error(void);
 
 // unix.cpp
 extern int printfx(const char *fmt);

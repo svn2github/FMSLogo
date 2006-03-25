@@ -549,3 +549,12 @@ NODE *lcontinue(NODE *args)
    return Unbound;
    }
 
+
+void uninitialize_error()
+   {
+   deref(throw_node);
+   throw_node = NIL;
+
+   deref(err_mesg);
+   err_mesg = NIL;
+   }
