@@ -155,12 +155,22 @@ ERRORTEST.CHECKERROR "|OUTPUT at the toplevel| 31 (LIST "|Can only use| "OUTPUT 
 
 ;; bug #1457755
 ; (commented out because it fails and failing halts automation)
-;IGNORE ERROR
-;CATCH "ERROR [TO 1]
+IGNORE ERROR
+CATCH "ERROR [TO 1]
 ;ERRORTEST.CHECKERROR "|TO 1| 6 (LIST "TO "|doesn't like| 1 "|as input|)
 
-;; bug #1457745 
+IGNORE ERROR
+CATCH "ERROR [TO [1]]
 ; (commented out because it fails and failing halts automation)
-;IGNORE ERROR
-;CATCH "ERROR [TO]
+;ERRORTEST.CHECKERROR "|TO 1| 4 (LIST "TO "|doesn't like| 1 "|as input|)
+
+IGNORE ERROR
+CATCH "ERROR [TO {1}]
+; (commented out because it fails and failing halts automation)
+;ERRORTEST.CHECKERROR "|TO 1| 4 (LIST "TO "|doesn't like| 1 "|as input|)
+
+;; bug #1457745 
+IGNORE ERROR
+CATCH "ERROR [TO]
+; (commented out because it fails and failing halts automation)
 ;ERRORTEST.CHECKERROR "|TO with no inputs| 6 (LIST "|not enough inputs to| "TO)
