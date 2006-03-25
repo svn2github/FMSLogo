@@ -56,7 +56,7 @@ TO ERRORTEST
    RUNEXPECTERRORTEST [UNKNOWN.PROC]                         13
 
    ; error 14: is an uncaught exception, which can't be caught
-   ; error 15: is a proc already defined error, which can't be tested in a procedure
+   ; error 15: can only be tested at the top level
 
    STEP "MY.PROC.TO.STEP
    RUNEXPECTERRORTEST [MY.PROC.TO.STEP]                      16
@@ -114,30 +114,53 @@ END
 ;;
 ;; The following tests can only be run at the top-level
 ;;
-TO ERRORTEST.CHECKERROR :explaination :expectederror
+TO ERRORTEST.CHECKERROR :explaination :expectederrorcode :expectederrormessage
+
+  PRINT (SENTENCE "Executing :explaination)
+
   LOCALMAKE "lasterror ERROR
   IF EMPTYP :lasterror [
     MESSAGEBOX [Test Failed] (LIST :explaination "|did not change ERROR|)
-    SHOW [Failing test]
+    PRINT [Failing test]
     THROW "error
   ]
-  IF NOT EQUALP (ITEM 1 :lasterror) :expectederror [
-    MESSAGEBOX [Test Failed] (LIST "|ITEM 1 ERROR returned | (ITEM 1 :lasterror) "|, we expected| :expectederror)
-    SHOW [Failing test]
+  IF NOT EQUALP (ITEM 1 :lasterror) :expectederrorcode [
+    MESSAGEBOX [Test Failed] (LIST "|ITEM 1 ERROR returned | (ITEM 1 :lasterror) "|, we expected| :expectederrorcode)
+    PRINT [Failing test]
     THROW "error
   ]
-  SHOW (LIST :explaination "|set error code to|   (ITEM 1 :lasterror) )
-  SHOW (LIST :explaination "|set error string to| (ITEM 2 :lasterror) )
+  IF NOT EQUALP (ITEM 2 :lasterror) :expectederrormessage [
+    MESSAGEBOX [Test Failed] (LIST "|ITEM 2 ERROR returned | (ITEM 2 :lasterror) "|, we expected| :expectederrormessage)
+    PRINT [Failing test]
+    THROW "error
+  ]
+  PRINT (LIST :explaination "|set error code to|   (ITEM 1 :lasterror) )
+  PRINT (LIST :explaination "|set error string to| (ITEM 2 :lasterror) )
 END
+
+;; error 15: Try to define a primitive with TO
+IGNORE ERROR
+CATCH "ERROR [TO FORWARD]
+ERRORTEST.CHECKERROR "|TO FORWARD at the toplevel| 15 (LIST "FORWARD "|is already defined|)
 
 ;; error 31: Can only use STOP inside a procedure
 IGNORE ERROR
-SHOW [Executing STOP at the toplevel]
 CATCH "ERROR [STOP]
-ERRORTEST.CHECKERROR "|Executing STOP at the toplevel| 31
+ERRORTEST.CHECKERROR "|STOP at the toplevel| 31 (LIST "|Can only use| "STOP "|inside a procedure|)
 
 ;; error 31: Can only use OUTPUT inside a procedure
 IGNORE ERROR
-SHOW [Executing OUTPUT at the toplevel]
 CATCH "ERROR [OUTPUT 123]
-ERRORTEST.CHECKERROR "|Executing OUTPUT at the toplevel| 31
+ERRORTEST.CHECKERROR "|OUTPUT at the toplevel| 31 (LIST "|Can only use| "OUTPUT "|inside a procedure|)
+
+;; bug #1457755
+; (commented out because it fails and failing halts automation)
+;IGNORE ERROR
+;CATCH "ERROR [TO 1]
+;ERRORTEST.CHECKERROR "|TO 1| 6 (LIST "TO "|doesn't like| 1 "|as input|)
+
+;; bug #1457745 
+; (commented out because it fails and failing halts automation)
+;IGNORE ERROR
+;CATCH "ERROR [TO]
+;ERRORTEST.CHECKERROR "|TO with no inputs| 6 (LIST "|not enough inputs to| "TO)
