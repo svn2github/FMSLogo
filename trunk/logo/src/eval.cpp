@@ -1287,4 +1287,10 @@ void uninitialize_eval()
 
    deref(last_line);
    last_line = NIL;
+
+   deref(didnt_output_name);
+   didnt_output_name = NIL;
+
+   deref(didnt_get_output);
+   didnt_get_output = NIL;
    }
