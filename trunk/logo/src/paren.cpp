@@ -381,6 +381,9 @@ void make_tree(NODE *newtree)
    if (!runparsed(newtree)) 
       {
       make_runparse(newtree);
+
+      // must reference parsed_node because paren_line() derefs it
+      ref(parsed__runparse(newtree));
       }
 
    tree_dk_how = false;

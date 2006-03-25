@@ -446,7 +446,6 @@ make_strnode_no_copy(
 void make_runparse(NODE *ndi)
    {
    NODE * rp_list = runparse(ndi);
-   ref(rp_list);                  /* I don't understand why this is necessary.*/
    setobject(ndi, rp_list);
    settype(ndi, RUN_PARSE);
    }
