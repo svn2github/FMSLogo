@@ -325,9 +325,13 @@ NODE *to_helper(NODE *args, bool macro_flag)
                break;
                }
             else
+               {
                setcar(arg, node__colon(car(arg)));
+               }
             if (cdr(arg) == NIL)
+               {
                maximum = -1;
+               }
             }
          else if (nodetype(arg) == COLON && maximum == minimum)
             {
@@ -373,20 +377,33 @@ NODE *to_helper(NODE *args, bool macro_flag)
       while (NOT_THROWING && to_pending && (!feof(loadstream)))
          {
          NODE * ttnode = reader(loadstream, "> ");
+
+         // append ttnode to body_words
          NODE * tnode = cons_list(ttnode);
          setcdr(body_words_lastnode, tnode);
          body_words_lastnode = tnode;
 
-         tnode = cons_list(parser(car(tnode), true));
-         if (car(tnode) != NIL && compare_node(caar(tnode), End, true) == 0)
+         NODE * next_line = parser(car(body_words_lastnode), true);
+         if (next_line != NIL && 
+             compare_node(car(next_line), End, true) == 0)
             {
-            gcref(tnode);
+            // This line only contains "End", which denotes 
+            // the end of this procedure.
+            // Stop reading lines.
+            gcref(next_line);
             break;
             }
-         else if (car(tnode) != NIL)
+         else if (next_line != NIL)
             {
-            setcdr(body_list_lastnode, tnode);
-            body_list_lastnode = tnode;
+            // append next_line to body_list
+            NODE * next_line_list = cons_list(next_line);
+            setcdr(body_list_lastnode, next_line_list);
+            body_list_lastnode = next_line_list;
+            }
+         else
+            {
+            // the line is empty--ignore it
+            gcref(next_line);
             }
          }
 
