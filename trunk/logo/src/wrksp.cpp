@@ -309,6 +309,9 @@ NODE *to_helper(NODE *args, bool macro_flag)
          old_default = getint(dfltargs__procnode(old_proc));
          }
 
+      //
+      // read the formal parameters
+      //
       NODE *formals_lastnode = NIL;
       while (args != NIL)
          {
@@ -316,25 +319,30 @@ NODE *to_helper(NODE *args, bool macro_flag)
          args = cdr(args);
          if (nodetype(arg) == CONS && maximum != -1)
             {
+            // this is either an input with a default value or a "rest" input
             make_runparse(arg);
             arg = parsed__runparse(arg);
             maximum++;
             if (nodetype(car(arg)) != COLON)
                {
+               // input names must begin with a colon
                err_logo(BAD_DATA_UNREC, arg);
                break;
                }
             else
                {
+               // this is an input with a defaut value
                setcar(arg, node__colon(car(arg)));
                }
             if (cdr(arg) == NIL)
                {
+               // this is a "rest" input
                maximum = -1;
                }
             }
          else if (nodetype(arg) == COLON && maximum == minimum)
             {
+            // this is a regular input
             arg = node__colon(arg);
             minimum++;
             maximum++;
@@ -344,10 +352,12 @@ NODE *to_helper(NODE *args, bool macro_flag)
                getint(arg) <= (unsigned) maximum &&
                getint(arg) >= minimum)
             {
+            // this is a number that specifies the number of default inputs
             deflt = getint(arg);
             }
          else
             {
+            // unknown input type
             err_logo(BAD_DATA_UNREC, arg);
             break;
             }
@@ -366,6 +376,9 @@ NODE *to_helper(NODE *args, bool macro_flag)
          }
       }
 
+   //
+   // read the procedure body
+   //
    if (NOT_THROWING)
       {
       NODE * body_words          = cons_list(current_line);
@@ -407,6 +420,10 @@ NODE *to_helper(NODE *args, bool macro_flag)
             }
          }
 
+
+      //
+      // package the procedure definition into the case object
+      //
       if (to_pending && NOT_THROWING)
          {
          setprocnode__caseobj(
