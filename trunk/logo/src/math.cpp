@@ -34,22 +34,33 @@ int numberp(NODE *snd)
       return 1;
       }
 
-   snd = cnv_node_to_strnode(snd);
-   if (snd == Unbound) 
+   NODE * stringnode = cnv_node_to_strnode(snd);
+   if (stringnode == Unbound) 
       {
       return 0;
       }
 
-   const char * p = getstrptr(snd); 
-   int plen = getstrlen(snd); 
+   // HACK: only ref() and deref() stringnode if is not snd.  
+   // This hack is necessary because cnv_node_to_strnode is so hard to use.
+   // Really, cnv_node_to_strnode() should be simplified.
+   if (stringnode != snd)
+      {
+      ref(stringnode);
+      }
+   const char * p = getstrptr(stringnode);
+   int plen = getstrlen(stringnode);
    if (plen >= MAX_NUMBER)
       {
+      if (stringnode != snd)
+         {
+         deref(stringnode);
+         }
       return 0;
       }
 
-   int dl   = 0;
-   int dr   = 0;
-   int pcnt = 0;
+   int dl   = 0; // index of the end of the number before the decimal point
+   int dr   = 0; // index to the end of the number after the decimal point
+   int pcnt = 0; // index of the "current" character
    if (pcnt < plen && *p == '-')
       {
       p++, pcnt++;
@@ -84,14 +95,21 @@ int numberp(NODE *snd)
          }
       }
 
+   int rval;
    if ((dl == 0 && dr == 0) || pcnt != plen)
       {
-      return 0;
+      rval = 0;
       }
    else
       {
-      return dr + 1;
+      rval = dr + 1;
       }
+
+   if (stringnode != snd)
+      {
+      deref(stringnode);
+      }
+   return rval;
    }
 
 NODE *lrandom(NODE *arg)
