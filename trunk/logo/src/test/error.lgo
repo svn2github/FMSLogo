@@ -36,6 +36,11 @@ END
 
 TO ERRORTEST
 
+   ; Catch an error without explicitly calling ERROR.
+   ; This is a regression test for a memory leak.
+   CATCH "ERROR [1 / 0]
+   CATCH "ERROR [1 / 0]
+
    ; error 0 is fatal and can't be caught
    ; error 1 is a fatal out of memory error and can't be caught
    ; error 2 is a stack overflow error that is now never thrown
