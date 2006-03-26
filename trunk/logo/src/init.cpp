@@ -639,40 +639,11 @@ void uninit()
    {
    deref(Not_Enough_Node);
    deref(the_generation);
-   deref(Tag);
-   deref(Goto);
-   deref(Stop);
-   deref(Output);
-   deref(Startup);
-   deref(Pause);
-   deref(Printwidthlimit);
-   deref(Printdepthlimit);
-   deref(Erract);
-   deref(Caseignoredp);
-   deref(Redefp);
-   deref(Ifelse);
-   deref(If);
-   deref(End);
-   deref(Error);
-   deref(System);
-   deref(Toplevel);
-   deref(Macro);
-   deref(To);
-   deref(Null_Word);
-   deref(Query);
-   deref(Minus_Tight);
-   deref(Minus_Sign);
-   deref(Right_Paren);
-   deref(Left_Paren);
-   deref(Falsex);
-   deref(Truex);
 
    // free the nodes associated with error handling
    uninitialize_error();
 
-   // free() instead of deref() because Unbound is referenced too many times
-   //free(Unbound);
-
+   // free the state associated with the evaluator
    uninitialize_eval();
 
    // free the objects
