@@ -1282,6 +1282,7 @@ NODE *err_eval_driver(NODE *seq)
 
 void uninitialize_eval()
    {
+   // CONSIDER: should any of these be deref'd in evaluator()?
    deref(last_call);
    last_call = NIL;
 
@@ -1293,4 +1294,7 @@ void uninitialize_eval()
 
    deref(didnt_get_output);
    didnt_get_output = NIL;
+
+   deref(last_ufun);
+   last_ufun = NIL;
    }
