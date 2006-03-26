@@ -18,22 +18,6 @@ to aaa
 ; methods that have not yet been invented or conceived.
 end
 
-Make "SnakeColor [0 255 0]
-Make "SnakeX     0
-Make "SnakeY     0
-Make "IsAlive    "false
-
-Make "Direction     "right
-Make "NextDirection "right
-Make "SnakeBody       []
-Make "MaxSnakeLength  10
-
-Make "Score           0
-
-
-Make "GridSize        8
-Make "GameBoardWidth  40
-Make "GameBoardHeight 40
 
 to GetBoardSquare :x :y
     output item :x (item :y :GameBoard)
@@ -94,7 +78,7 @@ end
 
 to PlaceApple
    ; places an apple randomly in an open space.
-   local [applex appley appleisplaced]
+   local [applex appley appleisplaced foundopenspace]
 
    ; randomly select places on the game board 
    ; until we find an open one
@@ -222,7 +206,7 @@ to Move
    SetBoardSquare :SnakeX :SnakeY "S
 
    if :MaxSnakeLength < count :SnakeBody [
-      make "tail dequeue "SnakeBody
+      localmake "tail dequeue "SnakeBody
       EraseGrid (item 1 :tail) (item 2 :tail)
  
       ; mark the space as empty
@@ -352,22 +336,32 @@ end
 
 to GameLoop
 
-   make "IsDone "false
+   local     "GameBoard
+   localmake "GridSize        8
+   localmake "GameBoardWidth  40
+   localmake "GameBoardHeight 40
 
    InitGameBoard
-   Make "IsAlive         "true
-   Make "SnakeBody       []
-   Make "MaxSnakeLength  10
-   Make "SnakeX          10
-   Make "SnakeY          10
-   Make "Score           0
-   Make "TotalApples     0
+
+   localmake "IsAlive         "true
+   localmake "SnakeBody       []
+   localmake "SnakeColor      [0 255 0]
+   localmake "MaxSnakeLength  10
+   localmake "SnakeX          10
+   localmake "SnakeY          10
+   localmake "Score           0
+   localmake "TotalApples     0
+
+   localmake "Direction     "right
+   localmake "NextDirection "right
+
 
    DrawHead
    DrawGameBoard
 
    StartKeyboardCapture
 
+   localmake "IsDone "false
    while [ not :IsDone ] [
 
       UpdateNextFrame
@@ -380,6 +374,7 @@ to GameLoop
 end
 
 to RunGame
+
   catch "error [ fullscreen ]
   icon "Commander
   icon "Editor
