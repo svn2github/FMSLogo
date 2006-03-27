@@ -1018,31 +1018,43 @@ NODE *po_helper(NODE *arg, int just_titles)  /* >0 for POT, <0 for EDIT       */
       if (check_throwing) break;
       }
 
-   while (varlst != NIL && NOT_THROWING)
+   for (NODE * current_varlist_node = varlst;
+        current_varlist_node != NIL;
+        current_varlist_node = cdr(current_varlist_node))
       {
-      if (aggregate(car(varlst)))
+      if (check_throwing) 
          {
-         err_logo(BAD_DATA_UNREC, car(varlst));
          break;
          }
 
-      NODE * tvar = maybe_quote(valnode__caseobj(intern(car(varlst))));
+      NODE * current_variable = car(current_varlist_node);
+      if (aggregate(current_variable))
+         {
+         err_logo(BAD_DATA_UNREC, current_variable);
+         break;
+         }
 
-      if (tvar == Unbound)
+      NODE * quoted_value = maybe_quote(valnode__caseobj(intern(current_variable)));
+      if (quoted_value == Unbound)
          {
          if (just_titles >= 0)
             {
-            err_logo(NO_VALUE, car(varlst));
+            err_logo(NO_VALUE, current_variable);
             break;
             }
          }
       else
          {
-         ndprintf(writestream, "Make %s %s\n",
-            make_quote(car(varlst)), tvar);
+         NODE * quoted_variable_name = make_quote(current_variable);
+
+         ndprintf(
+            writestream, 
+            "Make %s %s\n",
+            quoted_variable_name,
+            quoted_value);
+
+         gcref(quoted_variable_name);
          }
-      varlst = cdr(varlst);
-      if (check_throwing) break;
       }
 
    while (plistlst != NIL && NOT_THROWING)
