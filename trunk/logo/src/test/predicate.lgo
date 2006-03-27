@@ -167,9 +167,12 @@ TO MEMBERPTEST
   SIMPLEREPORTTEST [MEMBER? 1   "||  ] "false
   SIMPLEREPORTTEST [MEMBER? [1] "123 ] "false
 
-  SIMPLEREPORTTEST [MEMBER? "|| "hello ] "false
-  SIMPLEREPORTTEST [MEMBER? "|| ["||]  ] "true
-  SIMPLEREPORTTEST [MEMBER? "|| {"||}  ] "true
+  SIMPLEREPORTTEST [MEMBER? "|| "hello     ] "false
+  SIMPLEREPORTTEST [MEMBER? "|| (LIST "||) ] "true
+
+  LOCALMAKE "arrayofemptystring ARRAY 1
+  SETITEM 1 :arrayofemptystring "||
+  SIMPLEREPORTTEST [MEMBER? "|| :arrayofemptystring ] "true
 
   RUNNOTENOUGHINPUTSTEST [(MEMBER?)]
   RUNNOTENOUGHINPUTSTEST [(MEMBER? 1)]
