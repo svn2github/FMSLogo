@@ -179,3 +179,9 @@ IGNORE ERROR
 CATCH "ERROR [TO]
 ; (commented out because it fails and failing halts automation)
 ;ERRORTEST.CHECKERROR "|TO with no inputs| 6 (LIST "|not enough inputs to| "TO)
+
+;; bug #???????  TO leaks formal parameters when one of them is bad
+IGNORE ERROR
+CATCH "ERROR [TO MYPROC :A :B C]
+; (commented out because it fails and failing halts automation)
+;ERRORTEST.CHECKERROR "|TO with no inputs| 6 (LIST "|not enough inputs to| "TO)
