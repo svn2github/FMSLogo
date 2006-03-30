@@ -33,7 +33,7 @@ to DrawEnemy :Enemy
 end
 
 to DrawGameBoard
-   local [i j]
+   local [i j gameboard.row boardsquare]
 
    ; now draw the game board
    for [j 1 :GameBoardHeight ] [
@@ -108,21 +108,22 @@ end
 
 to GameLoop
 
-   local [currentsquare]
+   localmake "IsGoingUp    "false
+   localmake "IsGoingRight "false
+   localmake "IsGoingLeft  "false
+   localmake "IsGoingDown  "false
 
-   make "IsDone "false
-
-   make "IsGoingUp    "false
-   make "IsGoingRight "false
-   make "IsGoingLeft  "false
-   make "IsGoingDown  "false
-
+   local [GameBoard GameBoardWidth GameBoardHeight]
+   local [PlayerStartX PlayerStartY]
+   local [Enemy1 Enemy2 Enemy3 Enemy4]
+   local [TotalPellets TotalPelletsRemaining]
    InitGameBoard
 
-   make "EnemyWaitCounter :EnemyWaitCounterMax
+   localmake "EnemyWaitCounterMax 2
+   localmake "EnemyWaitCounter    :EnemyWaitCounterMax
 
-   make "PlayerX :PlayerStartX
-   make "PlayerY :PlayerStartY
+   localmake "PlayerX :PlayerStartX
+   localmake "PlayerY :PlayerStartY
 
    DrawGameBoard
    DrawPlayer :PlayerX :PlayerY
@@ -134,6 +135,7 @@ to GameLoop
 
    StartKeyboardCapture
 
+   localmake "IsDone "false
    while [ not :IsDone ] [
 
       UpdateNextFrame
@@ -149,7 +151,7 @@ to GetBoardSquare :x :y
 end
 
 to InitGameBoard
-   local [i j gameboardtemplate.row boardsquare]
+   local [i j gameboardtemplate.row row.array boardsquare]
 
    ; copy the game board template to the live game board
    make "TotalPellets  0
@@ -225,6 +227,7 @@ to InitGameBoard
 end
 
 to InitializeGameData
+
    make "GameBoardTemplate {
       XXXXXXXXXXXXXXXXX
       X3......X......1X
@@ -248,23 +251,8 @@ to InitializeGameData
       XP..............X
       XXXXXXXXXXXXXXXXX
    }
- 
-   Make "IsGoingUp    "false
-   Make "IsGoingRight "false
-   Make "IsGoingLeft  "false
-   Make "IsGoingDown  "false
 
-   Make "EnemyStartX 15
-   Make "EnemyStartY 20
-
-   Make "EnemyWaitCounterMax 2
-
-   Make "GridSize 20
-   Make "GameBoardWidth 0
-   Make "GameBoardHeight 0
-
-   Make "TotalPellets          0
-   Make "TotalPelletsRemaining 0
+   make "GridSize 20
 end
 
 to MoveEnemy :Enemy
@@ -371,6 +359,7 @@ end
 
 to RunGame
 
+  local [GameBoardTemplate GridSize ]
   InitializeGameData
 
   catch "error [ fullscreen ]
@@ -383,8 +372,8 @@ to RunGame
 
   GameLoop
 
-  catch "error [ splitscreen ]
   unicon "Commander
+  catch "error [ splitscreen ]
 
 end
 
@@ -418,8 +407,8 @@ end
 
 to UpdateNextFrame
 
-   make "NewPlayerX :PlayerX
-   make "NewPlayerY :PlayerY
+   localmake "NewPlayerX :PlayerX
+   localmake "NewPlayerY :PlayerY
 
    if :IsGoingRight [make "NewPlayerX :NewPlayerX + 1]
    if :IsGoingLeft  [make "NewPlayerX :NewPlayerX - 1]
@@ -431,7 +420,7 @@ to UpdateNextFrame
       if :IsGoingDown [make "NewPlayerY :NewPlayerY - 1]
    ]
 
-   make "currentsquare GetBoardSquare :NewPlayerX :NewPlayerY
+   localmake "currentsquare GetBoardSquare :NewPlayerX :NewPlayerY
 
    if :currentsquare = ". [
 
