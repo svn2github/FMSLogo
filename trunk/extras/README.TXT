@@ -26,12 +26,17 @@ Genre:       board game
 Description: A board game that is similar to Parcheesi.
              Race four pawns around a board and back to home.
 
+Directory:   midipiano
+Author:      Hensley Bass
+Genre:       application
+Description: A MIDI keyboard that lets you interact with world of music.
+
 Directory:   pacturtle
 Author:      David Costanzo
 Genre:       arcade game
 Description: Move a circle around a grid consuming dots.
              Avoid the moving squares!
-             This is implementation leaves a lot of room for improvement.
+             This is Pac-Man clone leaves a lot of room for improvement.
 
 Directory:   snake
 Author:      David Costanzo
