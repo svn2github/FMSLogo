@@ -1,0 +1,1030 @@
+to aaa
+;--------------- Ludo v0.9 
+;--------------- Developped by Hensley Bass
+;--------------- Email: hbass@intnet.mu	
+;--------------- Url: http://pages.intnet.mu/jhbpage
+
+; The author disclaims all copyrights associated with this code 
+; (hereafter referred to as the "Work").
+;
+; The author makes this dedication for the benefit of the public at 
+; large and to the detriment of the author's heirs and successors. The 
+; author intends this dedication to be an overt act of relinquishment in
+; perpetuity of all present and future rights under copyright law,
+; whether vested or contingent, in the Work. The author understands that
+; such relinquishment of all rights includes the relinquishment of all
+; rights to enforce (by lawsuit or otherwise) those copyrights in the
+; Work.
+;
+; The author recognizes that, once placed in the public domain, the
+; Work may be freely reproduced, distributed, transmitted, used,
+; modified, built upon, or otherwise exploited by anyone for any
+; purpose, commercial or non-commercial, and in any way, including by
+; methods that have not yet been invented or conceived.
+
+
+ ht
+ make "playing 0  
+ startnew
+end
+
+to about
+ ;------------- Procedure that displays the credits
+ make "msg1 [Ludo was brought to you by Hensley Bass]
+ make "msg2 [Email: hbass@intnet.mu]
+ make "msg3 [Url: http://pages.intnet.mu/jhbpage]
+ make "msg (sentence :msg1 char 13 :msg2 char 13 :msg3)
+ messagebox [Ludo] :msg 
+end
+
+to board :x
+;------------------ Procedure to draw the board game
+
+;------------------ Setting the 4 different colours
+ make "arraycolour (array 4 1)
+ setitem 1 :arraycolour [255 0 0]
+ setitem 2 :arraycolour [255 255 0]
+ setitem 3 :arraycolour [0 0 255 ]
+ setitem 4 :arraycolour [0 255 0]
+
+
+pu
+;----------- Drawing the outer squares and shade
+make "startx -90
+make "starty -40
+
+setxy (:startx - 8) * :x (:starty - 12) * :x
+ppt setpc [20 20 20 ] repeat 4 [ fd 170 * :x rt 90] pu rt 45 fd 5 * :x setfc [20 20 20] fill bk 5 * :x lt 45
+setxy (:startx - 10) * :x (:starty - 10) * :x
+
+ppt setpc [0 0 0 ] repeat 4 [ fd 170 * :x rt 90] pu rt 45 fd 5 * :x setfc [255 255 255] fill bk 5 * :x lt 45
+setxy :startx  * :x :starty  * :x
+
+setpc [ 0 0 0]
+ppt
+;----------- Drawing the circuit
+repeat 4 [make "fillcolour repcount
+
+	pu fd 90 * :x rt 90 ppt
+	repeat 3 [
+		repeat 6 [
+			ppt repeat 4 [ fd 10 * :x rt 90] fd 10 * :x 
+			]
+		bk 10 * :x * 6 rt 90 fd 10 * :x lt 90
+		]
+
+	pu lt 90 fd 15 * :x rt 90 fd 5 * :x repeat 6  [
+							setfc item (modulo (:fillcolour ) 4)+1  :arraycolour  
+							fill 
+
+							ppt circle 4 * :x setfc [0 255 255] 
+							fill
+							 pu
+							fd 10 * :x] bk 65 * :x lt 90 bk 15 * :x rt 90 	
+	pu lt 90 fd 25 * :x rt 90 fd 15 * :x 
+	setfc item (modulo (:fillcolour ) 4)+1  :arraycolour 
+	fill 
+	bk 15 * :x lt 90 bk 25 * :x rt 90 
+	pu lt 90 fd 90 * :x rt 90 ppt
+	]
+
+;---------------- Drawing the starting squares
+repeat 4 [ make "fillcolour repcount
+		repeat 4 [ 
+				pu fd 12 * :x rt 90 fd 12 * :x lt 90 ppt
+				circle 8 * :x 
+				pu rt 90 bk 12 * :x lt 90 bk 12 * :x ppt
+				
+				fd 50 * :x rt 90 
+			] 
+		pu rt 45 fd 2 * :x setfc item :fillcolour :arraycolour fill bk 2 * :x lt 45  fd 150 * :x rt 90 ppt
+		
+		]
+
+;--------------------- drawing the home bases
+
+pu fd 60 * :x rt 90 fd 60 * :x repeat 2 [lt 45 ppt fd  sqrt ( power (30 * :x) 2 ) * 2 rt 135 fd 30 * :x  rt 180]
+pu lt 90 fd 25 * :x rt 90 fd 15 * :x rt 45 repeat 4 [setfc item repcount :arraycolour fill fd 10 * :x rt 90]
+end
+
+to draw1 :x
+ ;---------------- Dice output 1
+ pu
+ setxy 120 * :x -25 * :x
+ seth 0
+ setbitindex 19
+ bitcut 30 * :x 30 *:x
+ ppt repeat 4 [ fd 30 * :x rt 90] pu
+ rt 90 fd 15 * :x lt 90 fd 15 * :x
+ setfc item :currentplayer :arraycolour
+
+ fill
+ ppt circle 4 * :x
+ setfc [0 255 255]
+ fill
+
+End
+
+to draw2 :x
+ ;---------------- Dice output 2
+ pu
+ setxy 120 * :x -25  * :x
+
+ seth 0
+ setbitindex 19
+
+ bitcut 30 * :x 30 *:x
+
+ ppt repeat 4 [ fd 30 * :x rt 90] pu
+
+ pu rt 90 fd 7.5 * :x lt 90 fd 7.5 * :x
+ setfc item :currentplayer :arraycolour
+ fill
+ ppt circle 4 * :x
+ setfc [0 255 255]
+ fill
+ pu rt 45  fd (sqrt (15 * 15 + 15 * 15 )) * :x 
+ ppt circle 4 * :x
+ setfc [0 255 255]
+ fill
+
+End
+
+to draw3 :x
+ ;---------------- Dice output 3
+ pu
+ setxy 120 * :x -25  * :x
+ seth 0
+ setbitindex 19 
+
+ bitcut 30 * :x 30 *:x
+
+ ppt repeat 4 [ fd 30 * :x rt 90] pu
+
+ repeat 3 [
+	pu rt 90 fd 7.5 * :x lt 90 fd 7.5 * :x
+ 	setfc item :currentplayer :arraycolour
+	 fill
+	 ppt circle 4 * :x
+	 setfc [0 255 255]
+	 fill
+ 	]
+
+
+End
+
+to draw4 :x
+ ;---------------- Dice output 4
+ pu
+ setxy 120 * :x -25 * :x
+ seth 0
+ setbitindex 19
+
+ bitcut 30 * :x 30 *:x
+
+ ppt repeat 4 [ fd 30 * :x rt 90] pu
+ pu rt 90 fd 7.5 * :x lt 90 fd 7.5 * :x
+ setfc item :currentplayer :arraycolour
+ fill
+ repeat 4 [
+	ppt circle 4 * :x pu
+	setfc [0 255 255]
+	fill
+	fd 15 * :x rt 90
+	]
+
+End
+
+to draw5 :x
+ ;---------------- Dice output 5
+
+ pu
+ setxy 120 * :x -25  * :x
+ seth 0
+ setbitindex 19
+
+ bitcut 30 * :x 30 *:x
+
+ ppt repeat 4 [ fd 30 * :x rt 90] pu
+
+ repeat 3 [
+	pu rt 90 fd 7.5 * :x lt 90 fd 7.5 * :x
+ 	setfc item :currentplayer :arraycolour
+	fill
+	ppt circle 4 * :x
+	setfc [0 255 255]
+	fill
+	]
+ pu rt 180 fd 15 * :x 
+ ppt circle 4 * :x
+ setfc [0 255 255]
+ fill
+ pu rt 135 fd 22.5 * :x 
+ ppt circle 4 * :x
+ setfc [0 255 255]
+ fill
+
+End
+
+to draw6 :x
+ ;---------------- Dice output 1
+
+ pu
+ setxy 120 * :x -25  * :x
+ seth 0
+ setbitindex 19
+ bitcut 30 * :x 30 *:x
+ ppt repeat 4 [ fd 30 * :x rt 90] pu
+ pu rt 90 fd 7.5 * :x lt 90 fd 7.5 * :x
+ setfc item :currentplayer :arraycolour
+ fill
+ repeat 2 [
+	repeat 3 [
+		ppt circle 4 * :x pu
+		setfc [0 255 255]
+		fill
+		fd 7.5 * :x 
+		]
+	rt 90 fd 15 * :x rt 90 fd 7.5 * :x
+	]
+
+
+End
+
+to gamestatus
+;------------------ Showing the game status
+ setlabelfont [[Times New Roman] -12 0 0 400 0 0 0 0 3 2 1 18]
+
+ pu
+ setxy 120 * :x 40 * :x
+ bitcut 33 * :x 73 * :x
+ seth 0
+ ppt
+ repeat 2 [ fd 60 * :x rt 90 fd 30 * :x rt 90]
+ fd 60 * :x
+ repeat 2 [ fd 10 * :x rt 90 fd 30 * :x rt 90]
+ pu setxy 125 * :x 108 * :x ppt
+ setfc [0 255 255]
+ fill
+ seth 90
+ label "Finished
+ seth 0
+ pu
+ setxy 126 * :x 93 * :x
+ repeat 4 [ 
+	ppt circle 4 * :x 
+      setfc item repcount :arraycolour
+      fill
+	pu
+	bk 15 * :x
+	]
+ setxy 136 * :x 92 * :x + (last labelsize "0) / 2
+ repeat 4 [ 
+	seth 90
+	label item repcount :arrayfinished
+	seth 0
+	bk 15 * :x ]
+ make "winner 0
+ repeat 4 [ if (item repcount :arrayfinished) = 4 [make "winner repcount]]
+ if :winner > 0 [ make "playing 0 mouseoff buttonenable "broll "False winningbox :winner]
+
+
+end
+
+to getmousemove
+;	pu
+      if :randomroll = 0 [stop]
+	;------------------ Checking wheter a counter in his starting postion has been selected 
+	make "counter 0
+	for [i 1 16 1] [
+		make "x1 (first item :i  :arraypos) 
+		make "x2 (first mousepos) / :x
+		make "xdiff :x1 - :x2
+		make "xdiff abs :xdiff
+		make "y1 (last item :i  :arraypos) 
+		make "y2 (last mousepos) / :x
+		make "ydiff :y1 - :y2
+		make "ydiff abs :ydiff
+		make "arg (int (:i - 1) / 4) + 1
+
+
+		if (and (:xdiff < 5) (:ydiff < 5)) [if (mditem (se :i 1) :arraycurrentpos) = 0 [make "counter :i]]
+		]
+	;------------------ Checking wheter a counter on track has been selected 
+	make "argcm (remainder :counter   4) if :argcm = 0 [ make "argcm 4]
+
+	if :counter = 0 [
+		for [i 1 16 1] [
+			make "localcellstepsmoved mditem (se :i 1) :arraycurrentpos  		
+			if (:localcellstepsmoved > 0) [
+				;------------------ Getting the location of the piece to move
+				make "arg (int (:i - 1) / 4) + 1
+				make "localcellontrack mditem (se :localcellstepsmoved :arg ) :colourtrack		
+
+				make "x1 (first mditem (se :localcellontrack 1) :arraycell)	
+
+				make "x2 (first mousepos) / :x
+				make "x2  int :x2 
+				make "x2 :x2   - (modulo :x2 10)
+				make "x2 :x2  * :x
+				make "xdiff :x1 - :x2
+				make "xdiff abs :xdiff
+				make "y1 (last mditem (se :localcellontrack 1) :arraycell)
+				make "y2 (last mousepos) / :x
+				make "y2 int :y2 
+				make "y2 :y2 - (modulo :y2 10)
+				make "y2 :y2 * :x
+				make "arg (int (:i - 1) / 4) + 1
+				make "argcm (remainder :i   4) if :argcm = 0 [ make "argcm 4]
+
+				make "ydiff :y1 - :y2
+				make "ydiff abs :ydiff
+				;show (se :xdiff :ydiff [x1: ] :x1 [x2: ] :x2 [y1: ] :y1 [y2: ] :y2 :counter)
+				;show (se :localcellontrack :i)
+				if (and (:xdiff = 0) (:ydiff = 0) (:counter =0) (((int (:i - 1) / 4) + 1) = :currentplayer)) [if (mditem (se :i 1) :arraycurrentpos) < 57 [make "counter :i]]
+				;show (se :localcellontrack :i)
+				]
+		]
+
+		]
+
+	make "argcm (remainder :counter   4) if :argcm = 0 [ make "argcm 4]
+
+	if :counter > 0 [
+		if (int (:counter - 1) / 4) + 1 = :currentplayer [
+			;show (se [found] [counter: ] :counter [position: ] mditem (se :counter 1) :arraycurrentpos [dice: ] :randomroll )
+			;---------------- Checking whether counter is on track
+			if (mditem (se :counter 1) :arraycurrentpos) > 0 [movepiece :counter :randomroll ]
+
+
+			;---------------- Checking whether counter is still in starting position
+
+			if (mditem (se :counter 1) :arraycurrentpos) = 0 [
+						;show (se :argcm (item :argcm :canmove))
+						if (and ((item :argcm :canmove) = -1  )(:randomroll = 6)) [putontrack :counter getwhoplays] buttonenable "broll "true]
+		]
+	]
+
+	
+end
+
+to getwhoplays
+;------------------ Procedure which determines which is the next player to play
+ ifelse :randomroll = 6 [
+			 make "randomroll 0
+			 message [roll again]
+			] [
+			 make "randomroll 0
+			 make "currentplayer :currentplayer + 1
+			 if :currentplayer > 4 [ make "currentplayer 1]
+			 player :currentplayer 
+			 message [click the roll button]
+
+			]
+ pu
+ setxy 120 * :x -25 * :x
+ seth 0
+ setbitindex 19
+ bitcut 32 * :x 32 *:x
+ 
+ buttonenable "broll "True
+
+
+
+end
+
+to gotocell :tcell :flag
+
+ make "z se :tcell 1
+ setxy first  mditem :z :arraycell last mditem :z :arraycell 
+ 
+end
+
+to ludo :y
+   make "x :y
+   make "currentplayer 0
+   make "playing 0
+   Make "randomroll 0
+
+   board :x
+ 
+ 
+ 
+  ;------------------------ Drawing the window   
+  windowcreate "main "windowludo "Ludo 0 0 50 150 []
+ 
+  buttoncreate "windowludo "bexit "Exit 10 10 30 15 [windowdelete "windowludo cs mouseoff make "playing 0]
+  buttoncreate "windowludo "babout "About 10 25 30 15 [about]
+  buttoncreate "windowludo "bsetup "Setup 10 40 30 15 [ ]
+  buttoncreate "windowludo "bnew "New 10  55 30 15 [startnew]
+  buttoncreate "windowludo "broll "Roll 10  115 30 15 [rolldice :x]
+  
+
+ ;------------------ Setting the location for the different cells
+  setcelllocation
+
+ ;------------------ Setting the 16 different counters/pieces configuration
+  setpieces
+ ;------------------ Drawing the board
+ 
+ ;------------------ Start of temporary codes (labelling the cells)
+  repeat 76 [
+  	make "z se repcount 1
+  	setxy first  mditem :z :arraycell last mditem :z :arraycell 
+        seth 0 fd 10 * :x seth 90 
+	;label repcount
+	]
+ seth 0
+;------------------ End of temporary codes
+ make "arrayfinished (array 4 1)
+ repeat 4 [ setitem repcount :arrayfinished 0]
+ gamestatus
+;------------------ Getting mouse movement
+mouseon [getmousemove]  [] [] [] []
+
+end
+
+to message :msg
+ setlabelfont [[Times New Roman] -12 0 0 900 0 0 0 0 3 2 1 18]
+
+
+ pu setxy 100 * :x -35  * :x ppt
+ seth 90
+ setbitindex 20
+ bitcut 100 * :x 10 * :x
+ pu setxy ((135 * :x) - ((first labelsize :msg) / 2)) -35 * :x + (last labelsize :msg)  ppt
+
+ label :msg
+ seth 0
+ pu
+end
+
+to movepiece :pieceid :noofsteps
+  ;show [tmp]
+  yield
+  make "moveallowed "True
+  ;------------------ Getting the location of the piece to move
+  make "cellstepsmoved mditem (se :pieceid 1) :arraycurrentpos  
+  ;------------------ Getting the location of the piece to move
+  make "arg1 (int (:pieceid - 1) / 4) + 1
+  make "argcm (remainder :pieceid   4) if :argcm = 0 [ make "argcm 4]
+  if (item :argcm :canmove) = 0 [message [counter blocked] stop]
+  make "cellontrack mditem (se :cellstepsmoved  :arg1 ) :colourtrack
+
+  if (57 - (:cellstepsmoved + :noofsteps)) < 0  [make "moveallowed "False]
+
+  ;show (se [piece ] :pieceid [no of steps moved: ] :cellstepsmoved [Cell on track: ] :cellontrack [move allowed: ] :moveallowed )
+
+  ifelse :moveallowed [~
+	gotocell :cellontrack  0
+
+	setbitindex :pieceid 
+  	bitpaste
+	make "waitingtime 10
+	repeat :noofsteps [ 
+		
+		make "tmp 		:cellstepsmoved + repcount
+		make "cellontrack mditem (se :cellstepsmoved + repcount :arg1 ) :colourtrack
+		
+		gotocell :cellontrack  0
+		playwave "pop.wav 1
+		setbitindex :pieceid 	
+		seth 0
+		bitcopy 10 * :x 10 * :x 
+		fd 5 * :x rt 90 fd 5 * :x lt 90
+		ppt circle 4 * :x  pu 
+
+		setfc item :arg1 :arraycolour
+	
+		fill
+		wait :waitingtime
+ 
+		gotocell :cellontrack  0
+		bitpaste
+			
+		]	
+	gotocell :cellontrack 0
+	bitcopy 10 * :x 10 * :x ;
+	fd 5 * :x rt 90 fd 5 * :x lt 90
+	setbitindex :pieceid 	
+	ppt circle 4 * :x  pu fill
+      mdsetitem (se :pieceid 1) :arraycurrentpos :cellstepsmoved + :noofsteps
+	;------------------------ Checking whether any counters should be knocked off
+	for [i 1 16 1] [
+		make "koarg2 mditem (se :i 1) :arraycurrentpos
+		make "koarg3 (int (:i - 1) / 4) + 1
+		make "koarg4 (remainder :i 4) if :koarg4 = 0 [make "koarg4 4]
+		if :koarg2 > 0 [
+			if (mditem (se :koarg2  :koarg3 ) :colourtrack) = :cellontrack  [
+				ifelse :arg1 = :koarg3 [
+						;------- Same counter on cell, create a block
+						;show [match]
+						][
+						;------- Opponent's counter found. Knock it off
+						setbitindex :i 
+						bitpastetoindex :pieceid 0 0
+						playwave "whizz.wav 1
+						putcounterinstartposition :koarg3 :koarg4
+						]
+			
+				;show (se [counter: ] :i [position: ] mditem (se :koarg2  :koarg3 ) :colourtrack)
+				]
+
+ 			]
+	]
+	setitem :currentplayer :arrayattempt 0
+      if (mditem (se :pieceid 1) :arraycurrentpos) = 57 [updatestatus :currentplayer ]
+      if :winner = 0 [
+		getwhoplays 
+		buttonenable "broll "true
+		]
+
+	]		[messagebox [Ludo v0.9] [Cannot move that counter] stop]
+
+
+
+
+
+
+
+
+
+			
+			
+
+end
+
+to player :player
+;-------------------- This procedure indicates the current player 
+ pu 
+ setxy 110 * :x 15 * :x
+ ppt
+ seth 0
+ repeat 2 [ fd 18 * :x rt 90 fd 50 * :x rt 90 ]
+
+ pu 
+ setxy 120 * :x 25 * :x
+ seth 0
+ ppt
+ circle 5 * :x
+ setfc item :player :arraycolour
+ fill
+ make "currentplayer :player
+ seth 90
+ setlabelfont [[Times New Roman] -12 0 0 400 0 0 0 0 3 2 1 18]
+ pu setxy 130 * :x 25 * :x + (last labelsize [who plays]) / 2 ppt
+
+ label [who plays]
+
+end
+
+to putcounterinstartposition :pcounter :prepcount
+ make "z (se ((:pcounter - 1) * 4) + :prepcount 1)
+ ;show (se [pcounter:] :pcounter [z: ]  :z :prepcount)
+ ;----------- Setting counter location to position zero
+ mdsetitem :z :arraycurrentpos 0	
+ make "z ((:pcounter - 1) * 4) + :prepcount
+ setxy (first item :z  :arraypos) * :x (last item :z :arraypos) * :x
+ seth 0
+ ;--------------- Copying image into memory
+ setbitindex ((:pcounter - 1) * 4) + :prepcount 
+
+ bitcopy 10 * :x 10 * :x
+ setpensize [2 2]
+ ppt circle 4 * :x pu
+ setpensize [1 1]
+ setfc item :pcounter :arraycolour
+ fill
+
+ 			
+end
+
+to putontrack :counter 
+ ;---------------- Ressetting no of attempts a dice can be rolled to zero
+ setitem :currentplayer :arrayattempt 0
+
+;----------- Setting counter location to position 1
+ mdsetitem (se :counter 1) :arraycurrentpos 1 
+
+ setxy ((first item :counter :arraypos) - 5) * :x  ((last item :counter :arraypos) - 5) * :x
+ setbitindex 18
+ bitcut 10 * :x 10 * :x
+ make "arg1 (int (:counter - 1) / 4) + 1
+ make "cellontrack mditem (se 1  :arg1 ) :colourtrack
+
+ gotocell :cellontrack  0
+ playwave "boing.wav 1
+
+ setbitindex :counter  seth 0
+ bitcopy 10 * :x 10 * :x 
+ fd 5 * :x rt 90 fd 5 * :x lt 90
+ ppt circle 4 * :x  pu 
+ setfc item :arg1 :arraycolour
+ fill
+
+ ;------------------------ Checking whether there are other counters on currentcell 
+ make "pieceid :counter
+
+
+	for [i 1 16 1] [
+		make "koarg2 mditem (se :i 1) :arraycurrentpos
+		make "koarg3 (int (:i - 1) / 4) + 1
+		make "koarg4 (remainder :i 4) if :koarg4 = 0 [make "koarg4 4]
+		if :koarg2 > 0 [
+			if (mditem (se :koarg2  :koarg3 ) :colourtrack) = :cellontrack  [
+				ifelse :arg1 = :koarg3 [
+						;------- Same counter on cell, create a block
+						;show [match]
+						][
+						;------- Opponent's counter found. Knock it off
+						setbitindex :i 
+						bitpastetoindex :pieceid 0 0
+						putcounterinstartposition :koarg3 :koarg4
+						playwave "whizz.wav 1
+						
+						]
+			
+				;show (se [counter: ] :i [position: ] mditem (se :koarg2  :koarg3 ) :colourtrack)
+				]
+
+			]
+
+		]
+
+end
+
+to rolldice :x
+;------------------ This procedure monitors the roll of the dice
+ message []
+ buttonenable "broll "False
+ setbitindex 17
+ ;---------- Rolling the dice 10 times
+ repeat 10 [ make "randomroll (random 6) +1 make "dice (word "draw :randomroll char(32) :x) run :dice wait 2]
+ pu
+ ;--------- Checking whether the playes has any counter that can move
+ make "rcount 0
+ make "canmove (array 4 1)
+ repeat 4 [ setitem repcount :canmove -1]
+ make "Stillatbay 0
+ repeat 4 [ ~
+	make "rz mditem (se ((:currentplayer - 1) * 4) + repcount 1) :arraycurrentpos
+	;-------- Counting the number of counters that can't play according to the output of the dice
+	if  (and (:randomroll < 6) (:rz = 0)) [
+		 setitem repcount  :canmove 0	
+		]
+	;-------- Dice = 6. Player can't get out. Another counter of smae colour on starting blcok
+
+	if  (and (:randomroll = 6) (:rz = 0) ) [
+		make "c2 repcount
+		repeat 4[
+			if (mditem (se ((:currentplayer - 1) * 4) + repcount 1) :arraycurrentpos) = 1 [
+				 setitem :c2  :canmove 0	
+				]
+			]
+		]
+	;----------------- Dice output + player position > 57
+
+	if  ((mditem (se ((:currentplayer - 1) * 4) + repcount 1) :arraycurrentpos) + :randomroll) > 57  [
+		 setitem repcount  :canmove 0	
+		]
+
+	;----------------- Dice output will put player on a friendly cell
+	make "c2 repcount
+	repeat 4[
+            make "zr (mditem (se ((:currentplayer - 1) * 4) + repcount 1) :arraycurrentpos)
+		if (and ((:rz + :randomroll) = (:zr)) (:zr < 57) (:rz >0)) [
+			 setitem :c2  :canmove 0	
+			]
+		]
+
+	]
+
+	repeat 4 [if (item repcount :canmove) = 0 [make "rcount :rcount + 1]]
+     ;show (se [rcount] :rcount)
+	;------------------- If curentplayer has no counter which can move
+	if (and (:rcount = 4) (:randomroll < 6)) [ 
+		ifelse (item :currentplayer :arrayattempt) > 1 [
+			setitem :currentplayer :arrayattempt (item :currentplayer :arrayattempt) - 1
+			
+			buttonenable "broll "True
+			message [roll again]
+
+			][message [You can't play] wait 100 getwhoplays]
+		;show :rcount
+		]
+	
+
+	;------------------- If curentplayer has no counter which can move and player has drawn a 6
+
+	if (and (:rcount = 4) (:randomroll = 6) (:Stillatbay  = 0)) [ message [Roll again] wait 100 getwhoplays]
+
+
+
+end
+
+to setcelllocation
+;-------------------------- Storing the coordinate position of the counters in their starting house
+ make "arraypos (array 16 1)
+ setitem 1 :arraypos [-78 -28]
+ setitem 2 :arraypos [-78 -2]
+ setitem 3 :arraypos [-52 -2]
+ setitem 4 :arraypos [-52 -28]
+ setitem 5 :arraypos [-78 98]
+ setitem 6 :arraypos [-78 72]
+ setitem 7 :arraypos [-52 72]
+ setitem 8 :arraypos [-52 98]
+ setitem 9 :arraypos [22 72]
+ setitem 10 :arraypos [22 98]
+ setitem 11 :arraypos [48 98]
+ setitem 12 :arraypos [48 72]
+
+ setitem 13 :arraypos [22 -28]
+ setitem 14 :arraypos [22 -2]
+ setitem 15 :arraypos [48 -2]
+ setitem 16 :arraypos [48 -28]
+
+
+;------------------ Setting the coordinates location for the different cells
+ make "arraycell (mdarray [76 1] 1)
+ ;-------------- Storing cells  1 to 6 into the memory
+ 
+ repeat 6 [ ~
+      make "xpos (:startx * :x) + (60 * :x) ~
+      make "ypos :starty * :x + (repcount - 1) * 10 * :x ~
+	make "z se repcount 1 ~
+      mdsetitem :z :arraycell se :xpos :ypos ~
+	]
+ ;-------------- Storing cells 7 to 12 into the memory
+
+ repeat 6 [ ~
+      make "xpos (:startx * :x) + (60 * :x) - (repcount * 10 * :x)~
+      make "ypos :starty * :x +  * 60 * :x ~
+	make "z se repcount + 6 1 ~
+      mdsetitem :z :arraycell se :xpos :ypos ~
+	]
+ ;-------------- Storing cell 13 into the memory
+      make "xpos (:startx * :x) 
+      make "ypos :starty * :x + 70 * :x
+	make "z se 13 1 ~
+      mdsetitem :z :arraycell se :xpos :ypos ~
+
+ ;-------------- Storing cells  14 to  19 into the memory
+ repeat 6 [ ~
+      make "xpos (:startx * :x) + (-10 * :x) + (repcount * 10 * :x)~
+      make "ypos :starty * :x +  * 80 * :x ~
+	make "z se repcount + 13 1 ~
+      mdsetitem :z :arraycell se :xpos :ypos ~
+	]
+
+ ;-------------- Storing cells  20 to 25  into the memory
+ repeat 6 [ ~
+      make "xpos (:startx * :x) + (60 * :x) ~
+      make "ypos :starty * :x + (90 * :x) + (repcount - 1) * 10 * :x ~
+	make "z se repcount + 19 1 ~
+      mdsetitem :z :arraycell se :xpos :ypos ~
+	]
+
+ ;-------------- Storing cells  26 to   into the memory
+      make "xpos (:startx * :x) + (70 * :x)
+      make "ypos :starty * :x + (140 * :x) 
+	make "z se 26 1 ~
+      mdsetitem :z :arraycell se :xpos :ypos ~
+
+ ;-------------- Storing cells 27  to 32  into the memory
+ repeat 6 [ ~
+      make "xpos (:startx * :x) + (80 * :x) ~
+      make "ypos :starty * :x + (140 * :x) - (repcount - 1) * 10 * :x ~
+	make "z se repcount + 26 1 ~
+      mdsetitem :z :arraycell se :xpos :ypos ~
+	]
+
+
+ ;-------------- Storing cells  33 to 38  into the memory
+ repeat 6 [ ~
+      make "xpos (:startx * :x) + (80 * :x) + (repcount * 10 * :x)~
+      make "ypos :starty * :x +  * 80 * :x ~
+	make "z se repcount + 32 1 ~
+      mdsetitem :z :arraycell se :xpos :ypos ~
+	]
+ ;-------------- Storing cells 39 into the memory
+
+      make "xpos (:startx * :x) + 140 * :x
+      make "ypos :starty * :x +  * 70 * :x 
+	make "z se 39 1 ~
+      mdsetitem :z :arraycell se :xpos :ypos ~
+
+
+ ;-------------- Storing cells  40 to 45  into the memory
+
+ repeat 6 [ ~
+      make "xpos (:startx * :x) + (150 * :x) - (repcount * 10 * :x)~
+      make "ypos :starty * :x +  * 60 * :x ~
+	make "z se repcount + 39 1 ~
+      mdsetitem :z :arraycell se :xpos :ypos ~
+	]
+
+ ;-------------- Storing cells 46  to 51  into the memory
+repeat 6 [ ~
+      make "xpos (:startx * :x) + (80 * :x) ~
+      make "ypos :starty * :x + (50 * :x) - (repcount - 1) * 10 * :x ~
+	make "z se repcount + 45 1 ~
+      mdsetitem :z :arraycell se :xpos :ypos ~
+	]
+
+
+ ;-------------- Storing cells  52   into the memory
+
+      make "xpos (:startx * :x) + (70 * :x)
+      make "ypos :starty * :x 
+	make "z se 52 1 ~
+      mdsetitem :z :arraycell se :xpos :ypos ~
+
+
+ ;-------------- Storing cells  53 to 58  into the memory
+	
+ repeat 6 [ ~
+      make "xpos (:startx * :x) + (70 * :x) ~
+      make "ypos :starty * :x + (repcount ) * 10 * :x ~
+	make "z se repcount + 52 1 ~
+      mdsetitem :z :arraycell se :xpos :ypos ~
+	]
+ ;-------------- Storing cells  59 to 64  into the memory
+repeat 6 [ ~
+      make "xpos (:startx * :x) +  (repcount * 10 * :x)~
+      make "ypos :starty * :x +  * 70 * :x ~
+	make "z se repcount + 58 1 ~
+      mdsetitem :z :arraycell se :xpos :ypos ~
+	]
+ ;-------------- Storing cells 65  to 70  into the memory
+ repeat 6 [ ~
+      make "xpos (:startx * :x) + (70 * :x) ~
+      make "ypos :starty * :x + (130 * :x) - (repcount - 1) * 10 * :x ~
+	make "z se repcount + 64 1 ~
+      mdsetitem :z :arraycell se :xpos :ypos ~
+	]
+
+ ;-------------- Storing cells 71  to 76  into the memory
+ repeat 6 [ ~
+      make "xpos (:startx * :x) + (140 * :x) - (repcount * 10 * :x)~
+      make "ypos :starty * :x +  * 70 * :x ~
+	make "z se repcount + 70 1 ~
+      mdsetitem :z :arraycell se :xpos :ypos ~
+	]
+
+
+end
+
+to setpieces
+
+
+;----------------------------- Storing the starting cell of each colour counter
+ make "startpos [2 15 28 41 ]
+
+
+;------------------ Setting the track for each colour piece
+ make "colourtrack (mdarray [57 4] 1)
+ repeat 4 [ 
+	make "counter repcount
+	make "tmp (item repcount :startpos) - 1
+	repeat 51 [ mdsetitem (se repcount :counter) :colourtrack remainder (:tmp + repcount) 52 
+	if (remainder (:tmp + repcount) 52) = 0 [mdsetitem (se repcount :counter) :colourtrack 52]
+	]
+]
+ make "tmp 52
+ repeat 4 [ 
+ 	make "counter repcount
+	repeat 6 [ 	make "tmp :tmp + 1
+			mdsetitem (se repcount + 51 :counter) :colourtrack :tmp
+		 ]
+]
+
+
+ make "arraycurrentpos (mdarray [16 1] 1)
+ ;----------- (1) Stores the current position of the counter/piece
+ repeat 4 [
+	make "counter repcount
+	
+
+	repeat 4 [
+		putcounterinstartposition :counter repcount
+		]
+	]
+
+
+end
+
+to startnew
+ make "stopcontinue "True
+ if :playing = -1 [make "stopcontinue yesnobox [Ludo v0.9] [Game not finished. Do you want ot start a new game?]]
+ if :stopcontinue = "True [
+             windowdelete "windowludo cs
+             ludo 2
+
+		 make "rand (random 4) +1 
+		 player :rand
+		 make "playing -1
+		 buttonenable "broll "True
+		 make "arrayattempt (array 4 1)
+		 repeat 4 [ setitem repcount :arrayattempt 3 ]
+
+		]
+
+end
+
+to updatestatus :uplayer
+ make "newvalue ((item :uplayer :arrayfinished) + 1)
+ setitem :uplayer :arrayfinished :newvalue
+ gamestatus
+
+end
+
+to winningbox :winner
+  pu
+  seth 0
+
+  setxy -45 * :x -20 * :x
+  setbitindex 22
+  bitcopy 105 * :x 105 * :x
+  setbitindex 23
+  bitcut 100 * :x 100 * :x
+
+  ppt
+  repeat 4 [ fd 100 * :x rt 90]
+  pu  
+  setxy -30 * :x 60 * :x
+  ppt
+  circle 8 * :x
+  setfc item :winner :arraycolour
+  fill
+  pu
+  seth 90
+  setlabelfont [[Times New Roman] -24 0 0 400 0 0 0 0 3 2 1 18]
+  setxy -0 * :x 60 * :x + (last labelsize "Wins) / 2
+  Label "Wins  
+  seth 0
+  pu
+
+  board .4
+  mouseon [  setxy -45 * :x -20 * :x setbitindex 22 bitpaste ]  [] [] [] []
+  playwave "yeah.wav 1
+  
+
+end
+
+Make "arg 4
+Make "arg1 2
+Make "arg2 5
+Make "arg3 4
+Make "argcm 2
+Make "arrayattempt {3 3 3 3}
+Make "arraycell {{[-60 -80]} {[-60 -60]} {[-60 -40]} {[-60 -20]} {[-60 0]} {[-60 20]} {[-80 40]} {[-100 40]} {[-120 40]} {[-140 40]} {[-160 40]} {[-180 40]} {[-180 60]} {[-180 80]} {[-160 80]} {[-140 80]} {[-120 80]} {[-100 80]} {[-80 80]} {[-60 100]} {[-60 120]} {[-60 140]} {[-60 160]} {[-60 180]} {[-60 200]} {[-40 200]} {[-20 200]} {[-20 180]} {[-20 160]} {[-20 140]} {[-20 120]} {[-20 100]} {[0 80]} {[20 80]} {[40 80]} {[60 80]} {[80 80]} {[100 80]} {[100 60]} {[100 40]} {[80 40]} {[60 40]} {[40 40]} {[20 40]} {[0 40]} {[-20 20]} {[-20 0]} {[-20 -20]} {[-20 -40]} {[-20 -60]} {[-20 -80]} {[-40 -80]} {[-40 -60]} {[-40 -40]} {[-40 -20]} {[-40 0]} {[-40 20]} {[-40 40]} {[-160 60]} {[-140 60]} {[-120 60]} {[-100 60]} {[-80 60]} {[-60 60]} {[-40 180]} {[-40 160]} {[-40 140]} {[-40 120]} {[-40 100]} {[-40 80]} {[80 60]} {[60 60]} {[40 60]} {[20 60]} {[0 60]} {[-20 60]}}
+Make "arraycolour {[255 0 0] [255 255 0] [0 0 255] [0 255 0]}
+Make "arraycurrentpos {{0} {0} {0} {0} {0} {0} {0} {0} {0} {0} {0} {0} {0} {0} {0} {0}}
+Make "arrayfinished {0 0 0 0}
+Make "arraypos {[-78 -28] [-78 -2] [-52 -2] [-52 -28] [-78 98] [-78 72] [-52 72] [-52 98] [22 72] [22 98] [48 98] [48 72] [22 -28] [22 -2] [48 -2] [48 -28]}
+Make "c2 4
+Make "canmove {0 -1 0 0}
+Make "cellontrack 16
+Make "cellstepsmoved 1
+Make "colourtrack {{2 15 28 41} {3 16 29 42} {4 17 30 43} {5 18 31 44} {6 19 32 45} {7 20 33 46} {8 21 34 47} {9 22 35 48} {10 23 36 49} {11 24 37 50} {12 25 38 51} {13 26 39 52} {14 27 40 1} {15 28 41 2} {16 29 42 3} {17 30 43 4} {18 31 44 5} {19 32 45 6} {20 33 46 7} {21 34 47 8} {22 35 48 9} {23 36 49 10} {24 37 50 11} {25 38 51 12} {26 39 52 13} {27 40 1 14} {28 41 2 15} {29 42 3 16} {30 43 4 17} {31 44 5 18} {32 45 6 19} {33 46 7 20} {34 47 8 21} {35 48 9 22} {36 49 10 23} {37 50 11 24} {38 51 12 25} {39 52 13 26} {40 1 14 27} {41 2 15 28} {42 3 16 29} {43 4 17 30} {44 5 18 31} {45 6 19 32} {46 7 20 33} {47 8 21 34} {48 9 22 35} {49 10 23 36} {50 11 24 37} {51 12 25 38} {52 13 26 39} {53 59 65 71} {54 60 66 72} {55 61 67 73} {56 62 68 74} {57 63 69 75} {58 64 70 76}}
+Make "counter 4
+Make "currentplayer 1
+Make "dice "draw4\ 2
+Make "fillcolour 4
+Make "koarg2 0
+Make "koarg3 4
+Make "koarg4 4
+Make "localcellontrack 16
+Make "localcellstepsmoved 0
+Make "moveallowed "True
+Make "msg [Ludo was brought to you by Hensley Bass Email: hbass@intnet.mu Url: http://pages.intnet.mu/jhbpage]
+Make "msg1 [Ludo was brought to you by Hensley Bass]
+Make "msg2 [Email: hbass@intnet.mu]
+Make "msg3 [Url: http://pages.intnet.mu/jhbpage]
+Make "newvalue 4
+Make "pieceid 6
+Make "playing 0
+Make "rand 1
+Make "randomroll 0
+Make "rcount 3
+Make "rz 0
+Make "startpos [2 15 28 41]
+Make "startup [aaa]
+Make "startx -90
+Make "starty -40
+Make "stillatbay 0
+Make "stopcontinue "True
+Make "tmp 76
+Make "waitingtime 10
+Make "winner 0
+Make "x 2
+Make "x1 -140
+Make "x2 -160
+Make "xdiff 20
+Make "xpos -20
+Make "y1 80
+Make "y2 80
+Make "ydiff 0
+Make "ypos 60
+Make "z [76 1]
+Make "zr 0

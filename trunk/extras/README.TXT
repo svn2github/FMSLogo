@@ -20,12 +20,18 @@ Description: Four "light cycles" race around in a room and try not to
              run into wall, each other, or the trail left by the cycles.
              The winner is the one who doesn't run into anything.
 
+Directory:   ludo
+Author:      Hensley Bass
+Genre:       board game
+Description: A board game that is similar to Parcheesi.
+             Race four pawns around a board and back to home.
+
 Directory:   pacturtle
 Author:      David Costanzo
 Genre:       arcade game
 Description: Move a circle around a grid consuming dots.
              Avoid the moving squares!
-             This is implementation has a lots of ways it can be improved.
+             This is implementation leaves a lot of room for improvement.
 
 Directory:   snake
 Author:      David Costanzo
