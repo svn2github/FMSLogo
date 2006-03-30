@@ -18,225 +18,39 @@ to aaa
 ; methods that have not yet been invented or conceived.
 end
 
-make "GameBoardTemplate {
-   XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-   X....................................................................X
-   X....................................................................X
-   X....................................................................X
-   X....................................................................X
-   X....................................................................X
-   X...........1............................................4...........X
-   X....................................................................X
-   X....................................................................X
-   X....................................................................X
-   X.................................X..................................X
-   X.................................X..................................X
-   X.................................X..................................X
-   X.................................X..................................X
-   X.................................X..................................X
-   X.................................X..................................X
-   X.................................X..................................X
-   X.................................X..................................X
-   X.................................X..................................X
-   X....................XXXXXXXXXXXXXXXXXXXXXXXXXXX.....................X
-   X.................................X..................................X
-   X.................................X..................................X
-   X.................................X..................................X
-   X.................................X..................................X
-   X.................................X..................................X
-   X.................................X..................................X
-   X.................................X..................................X
-   X.................................X..................................X
-   X.................................X..................................X
-   X....................................................................X
-   X....................................................................X
-   X....................................................................X
-   X....................................................................X
-   X...........3............................................2...........X
-   X....................................................................X
-   X....................................................................X
-   X....................................................................X
-   X....................................................................X
-   X....................................................................X
-   XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-}
-
-
-; Index, Name, X, Y, Direction, Next Direction, Color, IsHuman, IsAlive
-Make "Player1 {1 "Red    0 0 "right "right [255 0     0] "false "false}
-Make "Player2 {2 "Green  0 0 "right "right [0   255   0] "false "false}
-Make "Player3 {3 "Blue   0 0 "right "right [0   0   255] "false "false}
-Make "Player4 {4 "Brown  0 0 "right "right [128 128   0] "false "false}
-
-
-to Player.Index :Player
-  output item 1 :Player
-end
-
-to Player.HeadIndex :Player
-  output (item 1 :Player) + 4
-end
-
-to Player.Name :Player
-  output (item 2 :Player)
-end
-
-to Player.X :Player
-  output item 3 :Player
-end
-
-to Player.SetX :Player :X
-  setitem 3 :Player :X
-end
-
-
-to Player.Y :Player
-  output item 4 :Player
-end
-
-to Player.SetY :Player :Y
-  setitem 4 :Player :Y
-end
-
-
-to Player.Direction :Player
-  output item 5 :Player
-end
-
-to Player.SetDirection :Player :Direction
-  setitem 5 :Player :Direction
-end
-
-
-to Player.NextDirection :Player
-  output item 6 :Player
-end
-
-to Player.SetNextDirection :Player :Direction
-  setitem 6 :Player :Direction
-end
-
-
-to Player.Color :Player
-  output item 7 :Player
-end
-
-to Player.SetColor :Player :Color
-  setitem 7 :Player :Color
-end
-
-
-to Player.IsHuman :Player
-  output item 8 :Player
-end
-
-to Player.SetIsHuman :Player :IsHuman
-  setitem 8 :Player :IsHuman
-end
-
-
-to Player.IsAlive :Player
-  output item 9 :Player
-end
-
-to Player.SetIsAlive :Player :IsAlive
-  setitem 9 :Player :IsAlive
-end
-
-
-
-Make "GridSize        8
-Make "GameBoardWidth  0
-Make "GameBoardHeight 0
-
-to GetBoardSquare :x :y
-    output item :x (item :y :GameBoard)
-end
-
-to SetBoardSquare :x :y :value
-    setitem :x (item :y :GameBoard) :value
-end
-
 to BoardSquareIsBlocked :x :y
    localmake "square GetBoardSquare :x :y
 
    output (or (:square = "X) (numberp :square) )
 end
 
+to DrawGameBoard
+   local [gameboard.row boardsquare]
 
-to MoveToGrid.LowerLeft :X :Y
-    penup
-    setxy :GridSize * (:X  - :GameBoardWidth / 2)            :GridSize * (:Y - :GameBoardHeight / 2)
-    pendown
-end
-
-to MoveToGrid.LowerRight :X :Y
-    penup
-    setxy :GridSize * (:X + 1 - :GameBoardWidth / 2) - 1    :GridSize * (:Y - :GameBoardHeight / 2)
-    pendown
-end
-
-to MoveToGrid.UpperLeft :X :Y
-    penup
-    setxy :GridSize * (:X - :GameBoardWidth / 2)            :GridSize * (:Y + 1 - :GameBoardHeight / 2) - 1
-    pendown
-end
-
-to Player.MarkPosition :Player
-   if Player.IsAlive :Player [
-      if (GetBoardSquare (Player.X :Player) (Player.Y :Player)) = (Player.HeadIndex :Player) [
-         SetBoardSquare (Player.X :Player) (Player.Y :Player) (Player.Index :Player)
+   ; now draw the game board
+   for [j 1 :GameBoardHeight ] [
+      
+      make "gameboard.row item :j :GameBoard
+      for [i 1 :GameBoardWidth ] [
+  
+          make "boardsquare item :i :gameboard.row
+          if :boardsquare = "X [
+            DrawWall :i :j
+          ]
       ]
    ]
+
 end
 
-to Player.MarkHeadPosition :Player
-   ; the head can only move into an open position
-   if Player.IsAlive :Player [
-      if (GetBoardSquare (Player.X :Player) (Player.Y :Player)) = ". [
-         SetBoardSquare (Player.X :Player) (Player.Y :Player) (Player.HeadIndex :Player)
-      ]
-   ]
+to DrawWall :X :Y
+   MoveToGrid.LowerLeft :X :Y
+
+   setfloodcolor 0
+   bitblock :GridSize :GridSize
 end
 
-to Player.DrawBody :Player
-
-   if Player.IsAlive :Player [
-          
-      MoveToGrid.LowerLeft (Player.X :Player) (Player.Y :Player)
-
-      setfloodcolor Player.Color :Player
-      bitblock :GridSize :GridSize
-   ]
-end
-
-to Player.DrawHead :Player
-   
-   if Player.IsAlive :Player [
-
-      setpencolor Player.Color :Player
-
-      if (Player.Direction :Player) = "right [
-          MoveToGrid.LowerLeft (Player.X :Player) (Player.Y :Player)
-          setheading 0
-          repeat 3 [ forward :GridSize - 1 right 120 ]
-      ]
-      if (Player.Direction :Player) = "left [
-          MoveToGrid.LowerRight (Player.X :Player) (Player.Y :Player)
-          setheading 0
-          repeat 3 [ forward :GridSize - 1 left 120 ]
-      ]
-      if (Player.Direction :Player) = "up [
-          MoveToGrid.LowerLeft (Player.X :Player) (Player.Y :Player)
-          setheading 90
-          repeat 3 [ forward :GridSize - 1 left 120 ]
-      ]
-      if (Player.Direction :Player) = "down [
-          MoveToGrid.UpperLeft (Player.X :Player) (Player.Y :Player)
-          setheading 90
-          repeat 3 [ forward :GridSize - 1 right 120 ]
-      ]
-   ]
+to EndKeyboardCapture
+   keyboardoff
 end
 
 to EraseGrid :X :Y
@@ -246,18 +60,113 @@ to EraseGrid :X :Y
    bitblock :GridSize :GridSize
 end
 
+to GameLoop
 
+   local [GameBoardTemplate GameBoard GameBoardWidth GameBoardHeight]
+   local [Player1 Player2 Player3 Player4]
+   localmake "GridSize 8
 
-to DrawWall :X :Y
-   MoveToGrid.LowerLeft :X :Y
+   InitGameBoard
 
-   setfloodcolor 0
-   bitblock :GridSize :GridSize
+   Player.MarkHeadPosition :Player1
+   Player.MarkHeadPosition :Player2
+   Player.MarkHeadPosition :Player3
+   Player.MarkHeadPosition :Player4
+
+   Player.DrawHead :Player1
+   Player.DrawHead :Player2
+   Player.DrawHead :Player3
+   Player.DrawHead :Player4
+
+   Player.MarkPosition :Player1
+   Player.MarkPosition :Player2
+   Player.MarkPosition :Player3
+   Player.MarkPosition :Player4
+
+   DrawGameBoard
+
+   StartKeyboardCapture
+
+   localmake "IsDone "false
+   while [ not :IsDone ] [
+
+      UpdateNextFrame
+      wait 9 ; 15 ms
+   ]
+
+   if Player.IsAlive :Player1 [ (print Player.Name :Player1 "Wins) ]
+   if Player.IsAlive :Player2 [ (print Player.Name :Player2 "Wins) ]
+   if Player.IsAlive :Player3 [ (print Player.Name :Player3 "Wins) ]
+   if Player.IsAlive :Player4 [ (print Player.Name :Player4 "Wins) ]
+
+   if (and (not Player.IsAlive :Player1)
+           (not Player.IsAlive :Player2)
+           (not Player.IsAlive :Player3)
+           (not Player.IsAlive :Player4)) [
+       print [No one wins]
+   ]
+
+   EndKeyboardCapture
+
 end
 
+to GetBoardSquare :x :y
+    output item :x (item :y :GameBoard)
+end
 
 to InitGameBoard
    local [gameboardtemplate.row row.array boardsquare]
+
+   make "GameBoardTemplate {
+      XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+      X....................................................................X
+      X....................................................................X
+      X....................................................................X
+      X....................................................................X
+      X....................................................................X
+      X...........1............................................4...........X
+      X....................................................................X
+      X....................................................................X
+      X....................................................................X
+      X.................................X..................................X
+      X.................................X..................................X
+      X.................................X..................................X
+      X.................................X..................................X
+      X.................................X..................................X
+      X.................................X..................................X
+      X.................................X..................................X
+      X.................................X..................................X
+      X.................................X..................................X
+      X....................XXXXXXXXXXXXXXXXXXXXXXXXXXX.....................X
+      X.................................X..................................X
+      X.................................X..................................X
+      X.................................X..................................X
+      X.................................X..................................X
+      X.................................X..................................X
+      X.................................X..................................X
+      X.................................X..................................X
+      X.................................X..................................X
+      X.................................X..................................X
+      X....................................................................X
+      X....................................................................X
+      X....................................................................X
+      X....................................................................X
+      X...........3............................................2...........X
+      X....................................................................X
+      X....................................................................X
+      X....................................................................X
+      X....................................................................X
+      X....................................................................X
+      XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+   }
+
+
+   ; Index, Name, X, Y, Direction, Next Direction, Color, IsHuman, IsAlive
+   make "Player1 {1 Red    0 0 right right [255 0     0] false false}
+   make "Player2 {2 Green  0 0 right right [0   255   0] false false}
+   make "Player3 {3 Blue   0 0 right right [0   0   255] false false}
+   make "Player4 {4 Brown  0 0 right right [128 128   0] false false}
+
 
    ; copy the game board template to the live game board
    make "GameBoardWidth 0
@@ -318,117 +227,71 @@ to InitGameBoard
 
 end
 
-to DrawGameBoard
+to MoveToGrid.LowerLeft :X :Y
+    penup
+    setxy :GridSize * (:X  - :GameBoardWidth / 2)            :GridSize * (:Y - :GameBoardHeight / 2)
+    pendown
+end
+
+to MoveToGrid.LowerRight :X :Y
+    penup
+    setxy :GridSize * (:X + 1 - :GameBoardWidth / 2) - 1    :GridSize * (:Y - :GameBoardHeight / 2)
+    pendown
+end
+
+to MoveToGrid.UpperLeft :X :Y
+    penup
+    setxy :GridSize * (:X - :GameBoardWidth / 2)            :GridSize * (:Y + 1 - :GameBoardHeight / 2) - 1
+    pendown
+end
+
+to Player.CheckIfDead :Player
+
    local [gameboard.row boardsquare]
 
-   ; now draw the game board
-   for [j 1 :GameBoardHeight ] [
-      
-      make "gameboard.row item :j :GameBoard
-      for [i 1 :GameBoardWidth ] [
-  
-          make "boardsquare item :i :gameboard.row
-          if :boardsquare = "X [
-            DrawWall :i :j
-          ]
+   ; already dead
+   if not (Player.IsAlive :Player) [
+       stop
+   ]
+   
+   ; if the sqaure is blocked by something other than this player's head
+   if (and (BoardSquareIsBlocked (Player.X :Player) (Player.Y :Player))
+           (not (GetBoardSquare (Player.X :Player) (Player.Y :Player)) = (Player.HeadIndex :Player))) [
+
+      ; just died
+      Player.SetIsAlive :Player "false
+
+      ; remove the player's trail from the board
+      for [j 1 :GameBoardHeight ] [
+
+         make "gameboard.row item :j :GameBoard
+         for [i 1 :GameBoardWidth ] [
+
+            make "boardsquare item :i :gameboard.row
+
+            if (or (:boardsquare = (Player.Index     :Player))
+                   (:boardsquare = (Player.HeadIndex :Player))) [
+               ; this is the dead player's trail.
+               ; remove it by setting it to an empty space
+               setitem :i :gameboard.row ".
+               EraseGrid :i :j
+            ]
+         ]
       ]
    ]
 
 end
 
-
-to Player.UpKey :Player
-   ; responds to an "up" direction press
-   Player.SetIsHuman :Player "true  
-
-   ; disallow doubling-back on oneself
-   if not (Player.Direction :Player) = "down [
-      Player.SetNextDirection :Player "up   
-   ]
+to Player.Collision :PlayerA :PlayerB
+   output (and (Player.X :PlayerA) = (Player.X :PlayerB) 
+               (Player.Y :PlayerA) = (Player.Y :PlayerB)
+               (Player.IsAlive :PlayerA)
+               (Player.IsAlive :PlayerB))
 end
 
-to Player.LeftKey :Player
-   ; responds to a "left" direction press
-   Player.SetIsHuman :Player "true  
-
-   ; disallow doubling-back on oneself
-   if not (Player.Direction :Player) = "right [
-      Player.SetNextDirection :Player "left
-   ]
+to Player.Color :Player
+  output item 7 :Player
 end
-
-
-to Player.RightKey :Player
-   ; responds to a "right" direction press
-   Player.SetIsHuman :Player "true  
-
-   ; disallow doubling-back on oneself
-   if not (Player.Direction :Player) = "left [
-      Player.SetNextDirection :Player "right
-   ]
-end
-
-
-to Player.DownKey :Player
-   ; responds to a "down" direction press
-   Player.SetIsHuman :Player "true  
-
-   ; disallow doubling-back on oneself
-   if not (Player.Direction :Player) = "up [
-      Player.SetNextDirection :Player "down
-   ]
-end
-
-
-to ProcessKeyEvent :Key
-
-    if :Key=ascii "w [ Player.UpKey    :Player1 ]
-    if :Key=ascii "a [ Player.LeftKey  :Player1 ]
-    if :Key=ascii "s [ Player.RightKey :Player1 ] 
-    if :Key=ascii "z [ Player.DownKey  :Player1 ]
-
-    if :Key=ascii "i [ Player.UpKey    :Player2 ]
-    if :Key=ascii "j [ Player.LeftKey  :Player2 ]
-    if :Key=ascii "k [ Player.RightKey :Player2 ]
-    if :Key=ascii "m [ Player.DownKey  :Player2 ]
-
-    ;if :Key=ascii "q [ make "IsDone "true ]
-
-end
-
-to StartKeyboardCapture
-   keyboardon [ProcessKeyEvent keyboardvalue]
-end
-
-to EndKeyboardCapture
-   keyboardoff
-end
-
-
-to TryLeft :Player
-   if not BoardSquareIsBlocked (Player.X :Player) - 1 (Player.Y :Player) [
-      Player.SetDirection :Player "left
-   ]
-end
-
-to TryDown :Player
-   if not BoardSquareIsBlocked (Player.X :Player) (Player.Y :Player) - 1 [
-      Player.SetDirection :Player "down
-   ]
-end
-
-to TryUp :Player
-   if not BoardSquareIsBlocked (Player.X :Player) (Player.Y :Player) + 1 [
-     Player.SetDirection :Player "up
-   ]
-end
-
-to TryRight :Player
-   if not BoardSquareIsBlocked (Player.X :Player) + 1 (Player.Y :Player) [
-     Player.SetDirection :Player "right
-   ]
-end
-
 
 to Player.ComputerControl :Player
 
@@ -489,6 +352,103 @@ to Player.ComputerControl :Player
 
 end
 
+to Player.Direction :Player
+  output item 5 :Player
+end
+
+to Player.DownKey :Player
+   ; responds to a "down" direction press
+   Player.SetIsHuman :Player "true  
+
+   ; disallow doubling-back on oneself
+   if not (Player.Direction :Player) = "up [
+      Player.SetNextDirection :Player "down
+   ]
+end
+
+to Player.DrawBody :Player
+
+   if Player.IsAlive :Player [
+          
+      MoveToGrid.LowerLeft (Player.X :Player) (Player.Y :Player)
+
+      setfloodcolor Player.Color :Player
+      bitblock :GridSize :GridSize
+   ]
+end
+
+to Player.DrawHead :Player
+   
+   if Player.IsAlive :Player [
+
+      setpencolor Player.Color :Player
+
+      if (Player.Direction :Player) = "right [
+          MoveToGrid.LowerLeft (Player.X :Player) (Player.Y :Player)
+          setheading 0
+          repeat 3 [ forward :GridSize - 1 right 120 ]
+      ]
+      if (Player.Direction :Player) = "left [
+          MoveToGrid.LowerRight (Player.X :Player) (Player.Y :Player)
+          setheading 0
+          repeat 3 [ forward :GridSize - 1 left 120 ]
+      ]
+      if (Player.Direction :Player) = "up [
+          MoveToGrid.LowerLeft (Player.X :Player) (Player.Y :Player)
+          setheading 90
+          repeat 3 [ forward :GridSize - 1 left 120 ]
+      ]
+      if (Player.Direction :Player) = "down [
+          MoveToGrid.UpperLeft (Player.X :Player) (Player.Y :Player)
+          setheading 90
+          repeat 3 [ forward :GridSize - 1 right 120 ]
+      ]
+   ]
+end
+
+to Player.HeadIndex :Player
+  output (item 1 :Player) + 4
+end
+
+to Player.Index :Player
+  output item 1 :Player
+end
+
+to Player.IsAlive :Player
+  output item 9 :Player
+end
+
+to Player.IsHuman :Player
+  output item 8 :Player
+end
+
+to Player.LeftKey :Player
+   ; responds to a "left" direction press
+   Player.SetIsHuman :Player "true  
+
+   ; disallow doubling-back on oneself
+   if not (Player.Direction :Player) = "right [
+      Player.SetNextDirection :Player "left
+   ]
+end
+
+to Player.MarkHeadPosition :Player
+   ; the head can only move into an open position
+   if Player.IsAlive :Player [
+      if (GetBoardSquare (Player.X :Player) (Player.Y :Player)) = ". [
+         SetBoardSquare (Player.X :Player) (Player.Y :Player) (Player.HeadIndex :Player)
+      ]
+   ]
+end
+
+to Player.MarkPosition :Player
+   if Player.IsAlive :Player [
+      if (GetBoardSquare (Player.X :Player) (Player.Y :Player)) = (Player.HeadIndex :Player) [
+         SetBoardSquare (Player.X :Player) (Player.Y :Player) (Player.Index :Player)
+      ]
+   ]
+end
+
 to Player.Move :Player
 
    if (Player.Direction :Player) = "left [
@@ -506,46 +466,68 @@ to Player.Move :Player
 
 end
 
-to Player.Collision :PlayerA :PlayerB
-   output (and (Player.X :PlayerA) = (Player.X :PlayerB) 
-               (Player.Y :PlayerA) = (Player.Y :PlayerB)
-               (Player.IsAlive :PlayerA)
-               (Player.IsAlive :PlayerB))
+to Player.Name :Player
+  output (item 2 :Player)
 end
 
-to Player.CheckIfDead :Player
+to Player.NextDirection :Player
+  output item 6 :Player
+end
 
-   ; already dead
-   if not (Player.IsAlive :Player) [
-       stop
+to Player.RightKey :Player
+   ; responds to a "right" direction press
+   Player.SetIsHuman :Player "true  
+
+   ; disallow doubling-back on oneself
+   if not (Player.Direction :Player) = "left [
+      Player.SetNextDirection :Player "right
    ]
-   
-   ; if the sqaure is blocked by something other than this player's head
-   if (and (BoardSquareIsBlocked (Player.X :Player) (Player.Y :Player))
-           (not (GetBoardSquare (Player.X :Player) (Player.Y :Player)) = (Player.HeadIndex :Player))) [
+end
 
-      ; just died
-      Player.SetIsAlive :Player "false
+to Player.SetColor :Player :Color
+  setitem 7 :Player :Color
+end
 
-      ; remove the player's trail from the board
-      for [j 1 :GameBoardHeight ] [
-      
-         make "gameboard.row item :j :GameBoard
-         for [i 1 :GameBoardWidth ] [
+to Player.SetDirection :Player :Direction
+  setitem 5 :Player :Direction
+end
 
-            make "boardsquare item :i :gameboard.row
+to Player.SetIsAlive :Player :IsAlive
+  setitem 9 :Player :IsAlive
+end
 
-            if (or (:boardsquare = (Player.Index     :Player))
-                   (:boardsquare = (Player.HeadIndex :Player))) [
-               ; this is the dead player's trail.
-               ; remove it by setting it to an empty space
-               setitem :i :gameboard.row ".
-               EraseGrid :i :j
-            ]
-         ]
-      ]
+to Player.SetIsHuman :Player :IsHuman
+  setitem 8 :Player :IsHuman
+end
+
+to Player.SetNextDirection :Player :Direction
+  setitem 6 :Player :Direction
+end
+
+to Player.SetX :Player :X
+  setitem 3 :Player :X
+end
+
+to Player.SetY :Player :Y
+  setitem 4 :Player :Y
+end
+
+to Player.UpKey :Player
+   ; responds to an "up" direction press
+   Player.SetIsHuman :Player "true  
+
+   ; disallow doubling-back on oneself
+   if not (Player.Direction :Player) = "down [
+      Player.SetNextDirection :Player "up   
    ]
+end
 
+to Player.X :Player
+  output item 3 :Player
+end
+
+to Player.Y :Player
+  output item 4 :Player
 end
 
 to PrintGameBoard
@@ -557,7 +539,70 @@ to PrintGameBoard
 
 end
 
-; handles a single game tick
+to ProcessKeyEvent :Key
+
+    if :Key=ascii "w [ Player.UpKey    :Player1 ]
+    if :Key=ascii "a [ Player.LeftKey  :Player1 ]
+    if :Key=ascii "s [ Player.RightKey :Player1 ] 
+    if :Key=ascii "z [ Player.DownKey  :Player1 ]
+
+    if :Key=ascii "i [ Player.UpKey    :Player2 ]
+    if :Key=ascii "j [ Player.LeftKey  :Player2 ]
+    if :Key=ascii "k [ Player.RightKey :Player2 ]
+    if :Key=ascii "m [ Player.DownKey  :Player2 ]
+
+    ;if :Key=ascii "q [ make "IsDone "true ]
+
+end
+
+to RunGame
+  catch "error [ fullscreen ]
+  icon "Commander
+  icon "Editor
+
+  clearscreen
+  hideturtle
+  setfocus [MSWLogo Screen]
+
+  GameLoop
+
+  unicon "Commander
+  catch "error [ splitscreen ]
+
+end
+
+to SetBoardSquare :x :y :value
+    setitem :x (item :y :GameBoard) :value
+end
+
+to StartKeyboardCapture
+   keyboardon [ProcessKeyEvent keyboardvalue]
+end
+
+to TryDown :Player
+   if not BoardSquareIsBlocked (Player.X :Player) (Player.Y :Player) - 1 [
+      Player.SetDirection :Player "down
+   ]
+end
+
+to TryLeft :Player
+   if not BoardSquareIsBlocked (Player.X :Player) - 1 (Player.Y :Player) [
+      Player.SetDirection :Player "left
+   ]
+end
+
+to TryRight :Player
+   if not BoardSquareIsBlocked (Player.X :Player) + 1 (Player.Y :Player) [
+     Player.SetDirection :Player "right
+   ]
+end
+
+to TryUp :Player
+   if not BoardSquareIsBlocked (Player.X :Player) (Player.Y :Player) + 1 [
+     Player.SetDirection :Player "up
+   ]
+end
+
 to UpdateNextFrame
 
    ; control non-human players
@@ -614,68 +659,4 @@ to UpdateNextFrame
 
 end
 
-to GameLoop
-
-   make "IsDone "false
-
-   InitGameBoard
-
-   Player.MarkHeadPosition :Player1
-   Player.MarkHeadPosition :Player2
-   Player.MarkHeadPosition :Player3
-   Player.MarkHeadPosition :Player4
-
-   Player.DrawHead :Player1
-   Player.DrawHead :Player2
-   Player.DrawHead :Player3
-   Player.DrawHead :Player4
-
-   Player.MarkPosition :Player1
-   Player.MarkPosition :Player2
-   Player.MarkPosition :Player3
-   Player.MarkPosition :Player4
-
-   DrawGameBoard
-
-   StartKeyboardCapture
-
-   while [ not :IsDone ] [
-
-      UpdateNextFrame
-      wait 9 ; 15 ms
-   ]
-
-   if Player.IsAlive :Player1 [ (print Player.Name :Player1 "Wins) ]
-   if Player.IsAlive :Player2 [ (print Player.Name :Player2 "Wins) ]
-   if Player.IsAlive :Player3 [ (print Player.Name :Player3 "Wins) ]
-   if Player.IsAlive :Player4 [ (print Player.Name :Player4 "Wins) ]
-
-   if (and (not Player.IsAlive :Player1)
-           (not Player.IsAlive :Player2)
-           (not Player.IsAlive :Player3)
-           (not Player.IsAlive :Player4)) [
-       print [No one wins]
-   ]
-
-   EndKeyboardCapture
-
-end
-
-to RunGame
-  catch "error [ fullscreen ]
-  icon "Commander
-  icon "Editor
-
-  clearscreen
-  hideturtle
-  setfocus [MSWLogo Screen]
-
-  GameLoop
-
-  unicon "Commander
-  catch "error [ splitscreen ]
-
-end
-
-make "startup [ RunGame ]
-
+Make "startup [RunGame]
