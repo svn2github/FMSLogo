@@ -757,12 +757,24 @@ NODE *lpprop(NODE *args)
       plname = intern(plname);
       if (flag__caseobj(plname, PLIST_TRACED))
          {
+         // This property list is being traced.
+         // Trace the pprop to the write stream.
+         NODE * propertylist  = vref(maybe_quote(plname));
+         NODE * propertyname  = vref(maybe_quote(pname));
+         NODE * propertyvalue = vref(maybe_quote(newval));
+
          ndprintf(
             writestream, 
             "Pprop %s %s %s", 
-            maybe_quote(plname),
-            maybe_quote(pname), 
-            maybe_quote(newval));
+            propertylist,
+            propertyname,
+            propertyvalue);
+
+         deref(propertylist);
+         deref(propertyname);
+         deref(propertyvalue);
+            
+         // trace the name of the function where the pprop was run.
          if (ufun != NIL)
             {
             ndprintf(writestream, " in %s\n%s", ufun, this_line);
