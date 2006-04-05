@@ -75,9 +75,18 @@ TO IFTEST
 
 END
 
+TO #TEST
+  ; regression test for bug #1448159 
+  SIMPLEREPORTTEST [#] -1
+  
+  ; bad input test
+  RUNTOOMANYINPUTSTEST [(# "toomany)]
+END
+
 TO CONTROLFLOWTEST
 
   IFTEST
+  #TEST
 
   BUG1383281TEST
   BUG1448155TEST
