@@ -15,11 +15,21 @@
 <para>
 Marks the items in the contents list for stepping.
 Whenever a stepped procedure is invoked, each instruction line in the procedure body is displayed in a dialog box before being executed and &PRODUCTNAME; waits for the user to press the OK button before continuing.
-A dialog box is displayed whenever a stepped variable name is "shadowed".  A variable is shadowed when a variable of the same name is created with the <link linkend="command-local">LOCAL</link> command or when a procedure is invoked that inputs a parameter with the same name.
+A dialog box is displayed whenever a stepped variable name is "shadowed".
+A variable is shadowed when a variable of the same name is created with the <link linkend="command-local">LOCAL</link> command or when a procedure is invoked that inputs a parameter with the same name.
 </para>
 
 <para>
-See the <link linkend="workspace-queries">Workspace Queries</link> section for an explanation of the <parameter>contentslist</parameter> parameter.
+STEP has no effect on property lists.
+</para>
+
+<para>
+STEP does not throw an error if it is asked to step a procedure or variable that is not in the workspace, but doing so has no effect.
+STEP also does not throw an error if asked to step a primitive, but this also has no effect.
+</para>
+
+<para>
+See the <link linkend="workspace-queries">Workspace Queries</link> section for an explanation of the <parameter>contentslist</parameter> input.
 </para>
 
 <para>

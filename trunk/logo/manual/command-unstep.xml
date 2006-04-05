@@ -14,11 +14,17 @@
 <listitem>
 <para>
 Turns off stepping for the items in a contents list.
+</para>
+
+<para>
+UNSTEP does not throw an error if it is asked to unstep a procedure or variable is not stepped, but doing so has no effect.
+</para>
+
+<para>
 See also the <link linkend="command-step">STEP</link> command and the <link linkend="commander-step">Step Button</link>.
 </para>
 </listitem>
 </varlistentry>
-
 
 <varlistentry><term>Example</term>
 <listitem>

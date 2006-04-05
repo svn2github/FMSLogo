@@ -16,7 +16,7 @@
 <para>
 Erases the procedures, variables, and property lists named in <parameter>contentslist</parameter>.
 Once erased, the named things cannot be called or referenced.
-Primitive procedures will not erased unless the variable <link linkend="command-redefp">REDEFP</link> has the value TRUE.
+Primitive procedures are not erased unless the variable <link linkend="command-redefp">REDEFP</link> has the value TRUE.
 </para>
 
 <para>
