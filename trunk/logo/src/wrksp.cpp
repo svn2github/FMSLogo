@@ -481,8 +481,21 @@ NODE *lmake(NODE *args)
       setvalnode__caseobj(what, cadr(args));
       if (flag__caseobj(what, VAL_TRACED))
          {
-         NODE *tvar = maybe_quote(cadr(args));
-         ndprintf(writestream, "Make %s %s", make_quote(what), tvar);
+         // This variable is traced.
+         // Trace the assignment to the write stream.
+         NODE *new_value            = vref(maybe_quote(cadr(args)));
+         NODE *quoted_variable_name = vref(make_quote(what));
+
+         ndprintf(
+            writestream, 
+            "Make %s %s", 
+            quoted_variable_name, 
+            new_value);
+
+         deref(quoted_variable_name);
+         deref(new_value);
+
+         // trace the name of the procedure where the assignment happened.
          if (ufun != NIL)
             {
             ndprintf(writestream, " in %s\n%s", ufun, this_line);
@@ -752,6 +765,25 @@ get_contents(
    return (cnt_list);
    }
 
+static
+NODE *get_contents_list(int filter)
+   {
+   want_buried = filter;
+
+   NODE *ret = NIL;
+
+   ret = cons(get_contents(c_PLISTS), ret);
+
+   ret = cons(get_contents(c_VARS), ret);
+
+   ret = cons(get_contents(c_PROCS), ret);
+	
+   deref(cnt_list);
+   cnt_list = NIL;
+
+   return ret;
+   }
+
 NODE *lcontents(NODE *)
    {
    NODE *ret;
@@ -772,82 +804,39 @@ NODE *lcontents(NODE *)
 
 NODE *ltraced(NODE *)
    {
-   NODE *ret;
-
-   want_buried = PROC_TRACED;
-
-   ret = cons_list(get_contents(c_PLISTS));
-   ref(ret);
-
-   push(get_contents(c_VARS), ret);
-
-   push(get_contents(c_PROCS), ret);
-	
-   deref(cnt_list);
-   cnt_list = NIL;
-   return(ret);
+   return get_contents_list(PROC_TRACED);
    }
 
 NODE *lstepped(NODE *)
    {
-   NODE *ret;
-
-   want_buried = PROC_STEPPED;
-
-   ret = cons_list(get_contents(c_PLISTS));
-   ref(ret);
-
-   push(get_contents(c_VARS), ret);
-
-   push(get_contents(c_PROCS), ret);
-
-   deref(cnt_list);
-   cnt_list = NIL;
-   return(ret);
+   return get_contents_list(PROC_STEPPED);
    }
 
 NODE *lburied(NODE *)
    {
-   NODE *ret;
-
-   want_buried = PROC_BURIED;
-
-   ret = cons_list(get_contents(c_PLISTS));
-   ref(ret);
-
-   push(get_contents(c_VARS), ret);
-
-   push(get_contents(c_PROCS), ret);
-
-   deref(cnt_list);
-   cnt_list = NIL;
-   return (unref(ret));
+   return get_contents_list(PROC_BURIED);
    }
 
 NODE *lprocedures(NODE *)
    {
-   NODE *ret;
-
    want_buried = 0;
 
-   ret = get_contents(c_PROCS);
+   NODE * ret = get_contents(c_PROCS);
    ref(ret);
    deref(cnt_list);
    cnt_list = NIL;
-   return (unref(ret));
+   return unref(ret);
    }
 
 NODE *lnames(NODE *)
    {
-   NODE *ret;
-
    want_buried = 0;
 
-   ret = cons_list(NIL, get_contents(c_VARS));
+   NODE * ret = cons_list(NIL, get_contents(c_VARS));
    ref(ret);
    deref(cnt_list);
    cnt_list = NIL;
-   return (unref(ret));
+   return unref(ret);
    }
 
 NODE *lplists(NODE *)
@@ -865,7 +854,9 @@ static
 NODE *one_list(NODE *nd)
    {
    if (!is_list(nd))
+      {
       return cons_list(nd);
+      }
    return nd;
    }
 
@@ -878,15 +869,19 @@ void three_lists(NODE *arg, NODE **proclst, NODE **varlst, NODE **plistlst)
 
    if (nodetype(car(arg)) == CONS)
       {
+      // The input is a list of something.
+      // Advance to the first item in the list.
       arg = car(arg);
       }
 
    if (!is_list(car(arg)))
       {
+      // the contents list is a list of procedure names
       *proclst = arg;
       }
    else
       {
+      // the contents list is a list of lists
       *proclst = car(arg);
       if (cdr(arg) != NIL)
          {
@@ -989,28 +984,40 @@ NODE *po_helper(NODE *arg, int just_titles)  /* >0 for POT, <0 for EDIT       */
          {
          tvar = get_bodywords(tvar, car(proclst));
          if (just_titles > 0)
-            print_nobrak(writestream, car(tvar));
-         else while (tvar != NIL)
             {
-            if (is_list(car(tvar)))
-               print_nobrak(writestream, car(tvar));
-            else
+            print_nobrak(writestream, car(tvar));
+            }
+         else 
+            {
+            while (tvar != NIL)
                {
-               char *str = expand_slash(car(tvar));
-               if (writestream == stdout)
+               if (is_list(car(tvar)))
                   {
-                  printfx(str);
-                  if (dribblestream != NULL)
-                     fprintf(dribblestream, "%s\n", str);
+                  print_nobrak(writestream, car(tvar));
                   }
                else
                   {
-                  fprintf(writestream, "%s", str);
+                  char *str = expand_slash(car(tvar));
+                  if (writestream == stdout)
+                     {
+                     printfx(str);
+                     if (dribblestream != NULL)
+                        {
+                        fprintf(dribblestream, "%s\n", str);
+                        }
+                     }
+                  else
+                     {
+                     fprintf(writestream, "%s", str);
+                     }
+                  free(str);
                   }
-               free(str);
+               if (writestream != stdout) 
+                  {
+                  new_line(writestream);
+                  }
+               tvar = cdr(tvar);
                }
-            if (writestream != stdout) new_line(writestream);
-            tvar = cdr(tvar);
             }
          new_line(writestream);
          }
@@ -1055,6 +1062,7 @@ NODE *po_helper(NODE *arg, int just_titles)  /* >0 for POT, <0 for EDIT       */
 
          gcref(quoted_variable_name);
          }
+      gcref(quoted_value);
       }
 
    while (plistlst != NIL && NOT_THROWING)
@@ -1065,26 +1073,38 @@ NODE *po_helper(NODE *arg, int just_titles)  /* >0 for POT, <0 for EDIT       */
          break;
          }
 
-      NODE * plist = plist__caseobj(intern(car(plistlst)));
+      NODE * plist_name        = car(plistlst);
+      NODE * quoted_plist_name = maybe_quote(plist_name);
+
+      NODE * plist = plist__caseobj(intern(plist_name));
       if (plist != NIL && just_titles > 0)
          {
          ndprintf(
             writestream, 
             "Plist %s = %s\n",
-            maybe_quote(car(plistlst)), plist);
+            quoted_plist_name, 
+            plist);
          }
       else 
          {
          while (plist != NIL)
             {
+            NODE * quoted_property_name  = maybe_quote(car(plist));
+            NODE * quoted_property_value = maybe_quote(cadr(plist));
+
             ndprintf(
-               writestream, "Pprop %s %s %s\n",
-               maybe_quote(car(plistlst)),
-               maybe_quote(car(plist)),
-               maybe_quote(cadr(plist)));
+               writestream, 
+               "Pprop %s %s %s\n",
+               quoted_plist_name,
+               quoted_property_name,
+               quoted_property_value);
+
+            gcref(quoted_property_name);
+            gcref(quoted_property_value);
             plist = cddr(plist);
             }
          }
+      gcref(quoted_plist_name);
 
       plistlst = cdr(plistlst);
       if (check_throwing) break;
@@ -1165,8 +1185,11 @@ NODE *lerase(NODE *arg)
    return Unbound;
    }
 
+// Sets or clears a flag on each interned object in the list.
+// The flag must be one of PROC_BURIED, PROC_STEPPED, or PROC_TRACED.
+// If setflag is true, the flag is set.  Otherwise the flag is cleared.
 static
-void bury_list(NODE * list, int flag)
+void bury_or_unbury_list(NODE * list, int flag, bool setflag)
    {
    while (list != NIL && NOT_THROWING)
       {
@@ -1175,94 +1198,73 @@ void bury_list(NODE * list, int flag)
          err_logo(BAD_DATA_UNREC, car(list));
          break;
          }
-      setflag__caseobj(intern(car(list)), flag);
+
+      // set or clear the flag, depending on setflag
+      NODE * caseobject = intern(car(list));
+      if (setflag)
+         {
+         setflag__caseobj(caseobject, flag);
+         }
+      else
+         {
+         clearflag__caseobj(caseobject, flag);
+         }
+
       list = cdr(list);
       if (check_throwing) break;
       }
    }
 
 static
-NODE *bury_helper(NODE *arg, int flag)
+NODE *bury_helper(NODE *arg, int flag, bool setflag)
    {
    NODE *proclst;
    NODE *varlst;
    NODE *plistlst;
    three_lists(arg, &proclst, &varlst, &plistlst);
 
-   bury_list(proclst, flag);
+   bury_or_unbury_list(proclst, flag, setflag);
 
    flag <<= 1;
-   bury_list(varlst, flag);
+   bury_or_unbury_list(varlst, flag, setflag);
 
    flag <<= 1;
-   bury_list(plistlst, flag);
+   bury_or_unbury_list(plistlst, flag, setflag);
 
+   gcref(proclst);
+   gcref(varlst);
+   gcref(plistlst);
    return Unbound;
    }
 
 NODE *lbury(NODE *arg)
    {
-   return bury_helper(arg, PROC_BURIED);
+   return bury_helper(arg, PROC_BURIED, true);
    }
 
 NODE *ltrace(NODE *arg)
    {
-   return bury_helper(arg, PROC_TRACED);
+   return bury_helper(arg, PROC_TRACED, true);
    }
 
 NODE *lstep(NODE *arg)
    {
-   return bury_helper(arg, PROC_STEPPED);
-   }
-
-static
-void unbury_list(NODE * list, int flag)
-   {
-   while (list != NIL && NOT_THROWING)
-      {
-      if (aggregate(car(list)))
-         {
-         err_logo(BAD_DATA_UNREC, car(list));
-         break;
-         }
-      clearflag__caseobj(intern(car(list)), flag);
-      list = cdr(list);
-      if (check_throwing) break;
-      }
-   }
-
-static
-NODE *unbury_helper(NODE *arg, int flag)
-   {
-   NODE *proclst;
-   NODE *varlst;
-   NODE *plistlst;
-   three_lists(arg, &proclst, &varlst, &plistlst);
-
-   unbury_list(proclst, flag);
-
-   flag <<= 1;
-   unbury_list(varlst, flag);
-
-   flag <<= 1;
-   unbury_list(plistlst, flag);
-
-   return Unbound;
+   return bury_helper(arg, PROC_STEPPED, true);
    }
 
 NODE *lunbury(NODE *arg)
    {
-   return unbury_helper(arg, PROC_BURIED);
+   return bury_helper(arg, PROC_BURIED, false);
    }
 
 NODE *luntrace(NODE *arg)
    {
-   return unbury_helper(arg, PROC_TRACED);
+   return bury_helper(arg, PROC_TRACED, false);
    }
 
 NODE *lunstep(NODE *arg)
    {
-   return unbury_helper(arg, PROC_STEPPED);
+   return bury_helper(arg, PROC_STEPPED, false);
    }
 
 NODE *ledit(NODE *args)
@@ -1428,8 +1430,9 @@ NODE *lproplistp(NODE *args)
 static
 NODE *check_proctype(NODE *args, int wanted)
    {
-   NODE * cell;
    NODE * arg = name_arg(args);
+
+   NODE * cell;
    if (NOT_THROWING && (cell = procnode__caseobj(intern(arg))) == UNDEFINED)
       {
       return Falsex;
