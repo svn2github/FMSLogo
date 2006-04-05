@@ -5,7 +5,7 @@ TO BUG1383281TEST
 
   REPORTTESTINFO [executing regression test for bug #1383281]
   FOREACH [1] [[][]]
-  REPORTTESTPASSED [Bug #1382181 is fixed. 'FOR [1] [[][]]' did not crash.]
+  REPORTTESTPASSED [Bug #1382181 is fixed. 'FOREACH [1] [[][]]' did not crash.]
 
 END
 
@@ -80,5 +80,5 @@ TO CONTROLFLOWTEST
   IFTEST
 
   BUG1383281TEST
-  ;BUG1448155TEST
+  BUG1448155TEST
 END
