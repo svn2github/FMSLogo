@@ -18,6 +18,10 @@ If <parameter>from</parameter> is less than <parameter>to</parameter>, then RSEQ
 </para>
 
 <para>
+The name RSEQ is short for "Rational number SEQuenece".
+</para>
+
+<para>
 See also <link linkend="command-iseq">ISEQ</link>.
 </para>
 </listitem>
