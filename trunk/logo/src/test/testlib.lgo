@@ -63,12 +63,26 @@ END
 TO SIMPLEREPORTTEST :instruction :expectedresult
   LOCAL "result
 
-  MAKE "result RUN :instruction
-  IFELSE EQUALP :result :expectedresult [
-    REPORTTESTPASSED (LIST :instruction "returned :result "|, as expected.|)
-  ] [
-    REPORTTESTFAILED (LIST :instruction "returned :result "|. We expected| :expectedresult)
+  ; clear the last error
+  IGNORE ERROR
+
+  ; run the instruction inside a CATCH so 
+  ; that throwing an error just fails 
+  ; (instead of halt the tests)
+  CATCH "ERROR [MAKE "result RUN :instruction]
+
+  LOCALMAKE "lasterror ERROR
+  IF NOT EMPTY? :lasterror [
+    REPORTTESTFAILED (LIST :instruction "|threw error.  code=| (ITEM 1 :lasterror) ". (ITEM 2 :lasterror)) 
+    STOP
   ]
+
+  IF NOT EQUAL? :result :expectedresult [
+    REPORTTESTFAILED (LIST :instruction "returned :result "|. We expected| :expectedresult)
+    STOP
+  ]
+
+  REPORTTESTPASSED (LIST :instruction "returned :result "|, as expected.|)
 END
 
 
