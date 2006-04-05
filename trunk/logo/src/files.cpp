@@ -28,9 +28,6 @@ NODE *writer_name = NIL;
 
 FILE *open_file(NODE *arg, const char *access)
    {
-   char *fnstr;
-   FILE *tstrm;
-
    ref(arg);
    arg = reref(arg, cnv_node_to_strnode(arg));
    if (arg == Unbound) 
@@ -38,9 +35,10 @@ FILE *open_file(NODE *arg, const char *access)
       return NULL;
       }
 
-   fnstr = (char *) malloc((size_t) getstrlen(arg) + 1);
+   char * fnstr = (char *) malloc((size_t) getstrlen(arg) + 1);
    strnzcpy(fnstr, getstrptr(arg), getstrlen(arg));
 
+   FILE *tstrm;
    if (stricmp(fnstr, "clipboard") == 0)
       {
       if (stricmp(access, "r") == 0)
@@ -224,7 +222,7 @@ NODE *lopenupdate(NODE *args)
 
 NODE *lallopen(NODE *)
    {
-   return (file_list);
+   return file_list;
    }
 
 NODE *lclose(NODE *arg)
@@ -796,3 +794,20 @@ NODE *lsetwritepos(NODE *arg)
    return Unbound;
    }
 
+NODE *lcloseall(NODE *)
+   {
+   // close all open file pointers
+   for (NODE * current_file = file_list;
+        current_file != NIL;
+        current_file = cdr(current_file))
+      {
+      FILE * fp = reinterpret_cast<FILE *>(current_file->n_obj);
+      fclose(fp);
+
+      current_file->n_obj = NIL;
+      }
+
+   // empty the file list
+   deref(file_list);
+   file_list;
+   }

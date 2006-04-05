@@ -913,9 +913,6 @@ WinMain(
    // go for it
    MyApp.Run();
 
-   // cleanup all subsystems
-   lnetshutdown(NIL);
-
    if (hCursorWait)
       {
       DestroyCursor(hCursorWait);
@@ -926,6 +923,7 @@ WinMain(
       DestroyCursor(hCursorArrow);
       }
 
+   // cleanup all subsystems
    uninit();
 
    /* Note Bitmap index 0 belongs to Clipboard */

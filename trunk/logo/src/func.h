@@ -519,23 +519,22 @@ extern NODE *lreadpos(NODE *arg);
 extern NODE *lsetreadpos(NODE *arg);
 extern NODE *lwritepos(NODE *arg);
 extern NODE *lsetwritepos(NODE *arg);
+extern NODE *lcloseall(NODE * arg);
 
-// File eval.cpp
+// file eval.cpp
 extern NODE *err_eval_driver(NODE *seq);
 extern void spop(NODE **stack);
 extern void spush(NODE *obj, NODE **stack);
 extern void numpop(NODE **stack);
 extern void numpush(FIXNUM obj, NODE **stack);
 extern void eval_driver(NODE *line);
-extern NODE *if_eval_driver(NODE *seq);
 extern NODE *lapply(NODE *args);
 extern NODE *lqm(NODE *args);
 extern void tell_shadow(NODE *arg);
 extern bool not_local(NODE *name, NODE *sp);
 extern void uninitialize_eval(void);
 
-/* File ERROR.CPP: */
-
+// file error.cpp
 extern void err_print(void);
 extern NODE *err_logo(ERR_TYPES error_type, NODE *error_desc);
 extern NODE *lerror(NODE *arg);
