@@ -22,6 +22,7 @@ Part II) New features/bugs fixed:
 
   * Added for 6.8.0,
     o Fix bug #1453675; (FD 10 10) no longer leaks memory.
+    o Fix bug #1448155; Using IF in place of an IFELSE now acts like IFELSE.
     o Fix bug #1448142; A COPYDEF of STOP no longer crashes when run.
     o Fix bug #1450152; SETORIENTATION now throws an error on bad input.
     o Fix bug #1432651; Filenames that match a library procs no longer crash.

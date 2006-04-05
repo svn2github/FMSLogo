@@ -1,5 +1,5 @@
 /*
-*      paren.c              logo parenthesizing module          dko
+*      paren.cpp            logo parenthesizing module          dko
 *
 *       Copyright (C) 1995 by the Regents of the University of California
 *       Copyright (C) 1995 by George Mills
@@ -225,7 +225,7 @@ NODE *paren_expr(NODE **expr, bool inparen)
             }
          else
             {
-            if (first == If)
+            if (compare_node(first, If, true) == 0)
                {
                // Kludge: turn IF to IFELSE sometimes.
                ifnode = &first;
