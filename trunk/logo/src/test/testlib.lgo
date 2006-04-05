@@ -45,8 +45,25 @@ TO REPORTTEST :testpassed :result :expected
   ]
 END
 
+TO TRACEINSTRUCTION :instruction
+
+  ; backup the current writer
+  LOCALMAKE "previouswriter WRITER
+  SETWRITE :testlog
+
+  PRINT (SENTENCE "CALL: :instruction)
+
+  ; restore the current writer
+  SETWRITE :previouswriter
+
+  ; run the instructions
+  IGNORE RUNRESULT :instruction
+END
+
 TO SIMPLEREPORTTEST :instruction :expectedresult
-  LOCALMAKE "result RUN :instruction
+  LOCAL "result
+
+  MAKE "result RUN :instruction
   IFELSE EQUALP :result :expectedresult [
     REPORTTESTPASSED (LIST :instruction "returned :result "|, as expected.|)
   ] [
@@ -142,6 +159,10 @@ TO RUNTOOMANYINPUTSTEST :instructions
   RUNEXPECTERRORTEST :instructions 8
 END
 
+TO RUNHASNOVALUETEST :instructions
+  RUNEXPECTERRORTEST :instructions 11
+END
+
 TO RUNIDONTKNOWHOWTOTEST :instructions
   RUNEXPECTERRORTEST :instructions 13
 END
@@ -155,9 +176,8 @@ TO RUNISAPRIMITIVETEST :instructions
 END
 
 
-
-; Outputs how long it takes to execute given instructions
 TO TIMECOMMAND :instructions
+  ; Outputs how long it takes to execute given instructions
 
   LOCALMAKE "beforetime TIMEMILLI
   IGNORE RUNRESULT :instructions

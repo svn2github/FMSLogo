@@ -23,6 +23,7 @@ LOAD "curves.lgo
 LOAD "fill.lgo
 LOAD "directory.lgo
 LOAD "file.lgo
+LOAD "macro.lgo
 LOAD "procedure.lgo
 LOAD "parse.lgo
 LOAD "word.lgo
@@ -43,6 +44,10 @@ LOAD "error.lgo
 LOAD "copydef.lgo
 LOAD "iseq.lgo
 LOAD "load.lgo
+LOAD "trace.lgo
+LOAD "step.lgo
+LOAD "bury.lgo
+LOAD "erase.lgo
 
 TO TESTALL
 
@@ -61,6 +66,7 @@ TO TESTALL
   LOGICTEST       ; from logic.lgo
   MATHTEST        ; from math.lgo
   PROCEDURETEST   ; from procedure.lgo
+  MACROTEST       ; from macro.lgo
   COPYDEFTEST     ; from copydef.lgo
   PLISTTEST       ; from plist.lgo
   CONTROLFLOWTEST ; from controlflow.lgo
@@ -88,6 +94,10 @@ TO TESTALL
   DLLTEST         ; from dll.lgo
   SORTTEST        ; from sort.lgo
   ISEQTEST        ; from iseq.lgo
+  TRACETEST       ; from trace.lgo
+  STEPTEST        ; from step.lgo
+  BURYTEST        ; from bury.lgo
+  ERASETEST       ; from erase.lgo
 
   REPORTTESTUNINITIALIZE
 

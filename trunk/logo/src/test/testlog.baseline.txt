@@ -251,8 +251,8 @@ PASS: [MEMBER? 23 123] returned false , as expected.
 PASS: [MEMBER? 1 "] returned false , as expected.
 PASS: [MEMBER? [1] "123] returned false , as expected.
 PASS: [MEMBER? " "hello] returned false , as expected.
-FAIL: [MEMBER? " ["]] returned false . We expected true
-FAIL: [MEMBER? " {"}] returned false . We expected true
+PASS: [MEMBER? " (LIST ")] returned true , as expected.
+PASS: [MEMBER? " :arrayofemptystring] returned true , as expected.
 INFO: Executing invalid instruction: [(MEMBER?)]
 INFO: Executing [(MEMBER?)] set error code to 6 , as expected
 INFO: Executing [(MEMBER?)] set error string to [not enough inputs to MEMBER?]
@@ -2244,39 +2244,6 @@ INFO: Executing [(LOCAL)] set error code to 6 , as expected
 INFO: Executing [(LOCAL)] set error string to [not enough inputs to LOCAL]
 INFO: Executing invalid instruction: [LOCAL {a}]
 FAIL: Executing [LOCAL {a}] did not throw an error
-PASS: [PROCEDURE? "erasedproc] returned true , as expected.
-PASS: [PROCEDURE? "erasedproc] returned false , as expected.
-INFO: Executing invalid instruction: [ERASEDPROC]
-INFO: Executing [ERASEDPROC] set error code to 13
-INFO: Executing [ERASEDPROC] set error string to [I don't know how to ERASEDPROC]
-INFO: Executing invalid instruction: [(ERASE)]
-INFO: Executing [(ERASE)] set error code to 6 , as expected
-INFO: Executing [(ERASE)] set error string to [not enough inputs to ERASE]
-INFO: Executing invalid instruction: [ERASE {a}]
-INFO: Executing [ERASE {a}] set error code to 4
-INFO: Executing [ERASE {a}] set error string to [ERASE doesn't like {a} as input]
-INFO: Executing invalid instruction: [ERASE "forward]
-INFO: Executing [ERASE "forward] set error code to 22
-INFO: Executing [ERASE "forward] set error string to [forward is a primitive]
-INFO: Executing invalid instruction: [(ERASE "erasedproc "erasedproc)]
-INFO: Executing [(ERASE "erasedproc "erasedproc)] set error code to 8 , as expected
-INFO: Executing [(ERASE "erasedproc "erasedproc)] set error string to [too much inside ()'s]
-PASS: [PROCEDURE? "sampleproc] returned true , as expected.
-INFO: Executing invalid instruction: [(ERALL 10)]
-INFO: Executing [(ERALL 10)] set error code to 7
-INFO: Executing [(ERALL 10)] set error string to [if doesn't like 10 as input]
-INFO: Executing invalid instruction: [(ERALL [] )]
-INFO: Executing [(ERALL [] )] set error code to 7
-INFO: Executing [(ERALL [] )] set error string to [if doesn't like [] as input]
-INFO: Executing invalid instruction: [(ERALL {a} )]
-INFO: Executing [(ERALL {a} )] set error code to 7
-INFO: Executing [(ERALL {a} )] set error string to [if doesn't like {a} as input]
-INFO: Executing invalid instruction: [(ERALL "no)]
-INFO: Executing [(ERALL "no)] set error code to 7
-INFO: Executing [(ERALL "no)] set error string to [if doesn't like no as input]
-INFO: Executing invalid instruction: [(ERALL "false "toomany)]
-INFO: Executing [(ERALL "false "toomany)] set error code to 8 , as expected
-INFO: Executing [(ERALL "false "toomany)] set error string to [too much inside ()'s]
 PASS: [LOCALVARTEST "mylocalvarname 42] returned 42 , as expected.
 PASS: [:mylocalvarname] returned 32 , as expected.
 INFO: Executing invalid instruction: [(LOCALMAKE)]
@@ -2285,15 +2252,18 @@ INFO: Executing [(LOCALMAKE)] set error string to [not enough inputs to LOCALMAK
 INFO: Executing invalid instruction: [(CONTENTS "toomany)]
 INFO: Executing [(CONTENTS "toomany)] set error code to 8 , as expected
 INFO: Executing [(CONTENTS "toomany)] set error string to [too much inside ()'s]
-INFO: Executing invalid instruction: [(NAMES "toomany)]
-INFO: Executing [(NAMES "toomany)] set error code to 8 , as expected
-INFO: Executing [(NAMES "toomany)] set error string to [too much inside ()'s]
-INFO: Executing invalid instruction: [(BURIED "toomany)]
-INFO: Executing [(BURIED "toomany)] set error code to 8 , as expected
-INFO: Executing [(BURIED "toomany)] set error string to [too much inside ()'s]
+PASS: [PROCEDURES] returned [.eqtest abstest activeareatest allopentest andtest angleiscloseenough arcbadinputtest arccostest arcsintest arcsmoketest arctantest arctest arraybadinputtest arrayorigintest arrayptest arraysmoketest arraytest asciitest beforeptest bitcopytest bitloadsizetest bitmaptest bug1349374test bug1377856test bug1383281test bug1384267test bug1388325test bug1397560test bug1429960test bug1438863test bug1448155test bug1458661test burytest burytest.badinput burytest.buriedprocedure burytest.buryall burytest.procedure burytest.propertylist burytest.variable butfirsttest butlasttest buttonptest chdirtest client.onreadytosend colorsetgettest colortest controlflowtest copydefmaybeoutputtest copydefoptest copydefoutputtest copydefstoptest copydeftest copydeftotest costest differencetest difficultcomments directorysmoketest directorytest dllcalltest dllfreetest dllloadtest dllsmoketest dlltest doorientationtest dribbletest echo edalltest editortest emptyptest equalptest erasefiletest erasetest erasetest.badinput erasetest.eraseall erasetest.eraseprocedure erasetest.erasepropertylist erasetest.erasevariable erasetest.ern erasetest.erpl error.30.test errortest errortest.checkerror exptest filebadinputtest filesmoketest filetest filltest filltimerevent floodcolortest formtest helptest i.dont.know.what.to.do.with.value iftest inporttest inttest iseqtest labelbadinputtest labelcircletest labeltest largeedittest lasttest listptest lntest loadtest localvartest log10test logictest macro.return.unbound.instead.of.list macrotest macrotest.outputnothing mathtest memberptest minustest misctest mkdirtest modulotest my.proc.to.step myadd mymacro netshutdowncrash networksmoketest networktest no.input.no.output nodestest nottest numberptest one.input.no.output openappendtest opendirectoryasfiletest openopenfiletest openupdatetest orientationtest ortest outporttest output.373 parsefunctest parsenumbertest parsetest parsewordtest pasteincircle pencolortest penmodetest pentest penupdowntest perspectivetest pitest plisttest porttest powertest predicatetest procedure.shadows.myshadowedvar procedure.with.to.inside.it procedureinworkingdirectory proceduretest producttest quotienttest radarccostest radarcsintest radarctantest radcostest radsintest radtantest rawasciitest remaindertest reporttest reporttestfailed reporttestinfo reporttestinitialize reporttestpassed reporttestuninitialize rmdirtest roundtest runbadinputtest runexpecterrortest runfilesystemerrortest runhasnovaluetest runidontknowhowtotest runisaprimitivetest runnotenoughinputstest runtest runtoomanyinputstest sampleproc screencolortest screentest scrunchtest server.start server.stop setitemtest setlabelfonttest setrandomorientation setreadpostest setwritepostest signtest simplereporttest sintest sortbadinputtest sortbylegs sortbyname sortregressiontest sorttest sorttest.nonpredicate sorttest.oneinputbydefault sorttest.oneinputproc sorttest.threeinputproc sqrttest steptest steptest.badinput steptest.procedure steptest.propertylist steptest.shadowvariable steptest.stepall steptest.steppedprocedure steptest.variable sumtest tantest testall timecommand timewait traceinstruction tracetest tracetest.badinput tracetest.function tracetest.procedure tracetest.propertylist tracetest.traceall tracetest.tracedfunction tracetest.tracedprocedure tracetest.variable waittest windowsettest windowtest wordproctest wordptest wordtest ~ignoreme ~ignoremewascalled] , as expected.
 INFO: Executing invalid instruction: [(PROCEDURES "toomany)]
 INFO: Executing [(PROCEDURES "toomany)] set error code to 8 , as expected
 INFO: Executing [(PROCEDURES "toomany)] set error string to [too much inside ()'s]
+PASS: [NAMES] returned [[] [10 11 12 13 expectedresult instruction mylocalvarname namepvariable startup testlog ~ignoremewascalled]] , as expected.
+INFO: Executing invalid instruction: [(NAMES "toomany)]
+INFO: Executing [(NAMES "toomany)] set error code to 8 , as expected
+INFO: Executing [(NAMES "toomany)] set error string to [too much inside ()'s]
+PASS: [PLISTS] returned [[] [] []] , as expected.
+INFO: Executing invalid instruction: [(PLISTS "toomany)]
+INFO: Executing [(PLISTS "toomany)] set error code to 8 , as expected
+INFO: Executing [(PLISTS "toomany)] set error string to [too much inside ()'s]
 PASS: [NAMELIST "a] returned [[] [a]] , as expected.
 PASS: [NAMELIST [a b]] returned [[] [a b]] , as expected.
 PASS: [NAMELIST "] returned [[] []] , as expected.
@@ -2599,7 +2569,8 @@ INFO: Executing invalid instruction: [(if "true [] [] "toomany)]
 INFO: Executing [(if "true [] [] "toomany)] set error code to 8 , as expected
 INFO: Executing [(if "true [] [] "toomany)] set error string to [too much inside ()'s]
 INFO: executing regression test for bug #1383281
-PASS: Bug #1382181 is fixed. 'FOR [1] [[] []] ' did not crash.
+PASS: Bug #1382181 is fixed. 'FOREACH [1] [[] []] ' did not crash.
+PASS: Bug #1448155 is fixed. 'IF' used the IF->IFELSE mapping.
 PASS: [ACTIVEAREA] returned [-100 -100 100 100] , as expected.
 PASS: [ACTIVEAREA] returned [-500 -500 500 500] , as expected.
 PASS: [ACTIVEAREA] returned [-500 -500 500 500] , as expected.
@@ -3731,3 +3702,390 @@ INFO: Executing [ISEQ 0 [10]] set error string to [> doesn't like [10] as input]
 INFO: Executing invalid instruction: [ISEQ 0 {10}]
 INFO: Executing [ISEQ 0 {10}] set error code to 7
 INFO: Executing [ISEQ 0 {10}] set error string to [> doesn't like {10} as input]
+PASS: [MEMBERP "TRACETEST.TRACEDPROCEDURE (ITEM 1 TRACED)] returned false , as expected.
+CALL: TRACE "TRACETEST.TRACEDPROCEDURE
+PASS: [MEMBERP "TRACETEST.TRACEDPROCEDURE (ITEM 1 TRACED)] returned true , as expected.
+CALL: TRACETEST.TRACEDPROCEDURE
+CALL: UNTRACE "TRACETEST.TRACEDPROCEDURE
+PASS: [MEMBERP "TRACETEST.TRACEDPROCEDURE (ITEM 1 TRACED)] returned false , as expected.
+CALL: TRACETEST.TRACEDPROCEDURE
+PASS: [MEMBERP "TRACETEST.TRACEDFUNCTION (ITEM 1 TRACED)] returned false , as expected.
+CALL: TRACE "TRACETEST.TRACEDFUNCTION
+PASS: [MEMBERP "TRACETEST.TRACEDFUNCTION (ITEM 1 TRACED)] returned true , as expected.
+CALL: TRACETEST.TRACEDFUNCTION
+CALL: UNTRACE "TRACETEST.TRACEDFUNCTION
+PASS: [MEMBERP "TRACETEST.TRACEDFUNCTION (ITEM 1 TRACED)] returned false , as expected.
+CALL: TRACETEST.TRACEDFUNCTION
+PASS: [MEMBERP "TRACETEST.TRACEDVARIABLE (ITEM 2 TRACED)] returned false , as expected.
+CALL: TRACE NAMELIST "TRACETEST.TRACEDVARIABLE
+PASS: [MEMBERP "TRACETEST.TRACEDVARIABLE (ITEM 2 TRACED)] returned true , as expected.
+CALL: MAKE "TRACETEST.TRACEDVARIABLE 123
+CALL: MAKE "TRACETEST.TRACEDVARIABLE "123
+CALL: MAKE "TRACETEST.TRACEDVARIABLE "value
+CALL: MAKE "TRACETEST.TRACEDVARIABLE [1 2 3]
+CALL: MAKE "TRACETEST.TRACEDVARIABLE {1 2 3}
+CALL: UNTRACE NAMELIST "TRACETEST.TRACEDVARIABLE
+PASS: [MEMBERP "TRACETEST.TRACEDVARIABLE (ITEM 2 TRACED)] returned false , as expected.
+CALL: MAKE "TRACETEST.TRACEDVARIABLE 321
+CALL: PPROP "TRACETEST.TRACEDPLIST "SOMEPROPERTY 0
+PASS: [MEMBERP "TRACETEST.TRACEDPLIST (ITEM 3 TRACED)] returned false , as expected.
+CALL: TRACE PLLIST "TRACETEST.TRACEDPLIST
+PASS: [MEMBERP "TRACETEST.TRACEDPLIST (ITEM 3 TRACED)] returned true , as expected.
+CALL: PPROP "TRACETEST.TRACEDPLIST "PROPERTY1 123
+CALL: PPROP "TRACETEST.TRACEDPLIST "PROPERTY2 "123
+CALL: PPROP "TRACETEST.TRACEDPLIST "PROPERTY3 "value
+CALL: PPROP "TRACETEST.TRACEDPLIST "PROPERTY4 [1 2 3]
+CALL: PPROP "TRACETEST.TRACEDPLIST "PROPERTY5 {1 2 3}
+CALL: UNTRACE PLLIST "TRACETEST.TRACEDPLIST
+PASS: [MEMBERP "TRACETEST.TRACEDPLIST (ITEM 3 TRACED)] returned false , as expected.
+CALL: PPROP "TRACETEST.TRACEDPLIST "PROPERTY6 123
+CALL: PPROP "TRACETEST.TRACEDPLIST "PROPERTY7 "123
+CALL: PPROP "TRACETEST.TRACEDPLIST "PROPERTY8 "value
+CALL: PPROP "TRACETEST.TRACEDPLIST "PROPERTY9 [1 2 3]
+CALL: PPROP "TRACETEST.TRACEDPLIST "PROPERTY0 {1 2 3}
+CALL: MAKE "TRACETEST.TRACEDPLIST 4321
+INFO: Calling TRACE CONTENTS
+PASS: [TRACED] returned [[.eqtest abstest activeareatest allopentest andtest angleiscloseenough arcbadinputtest arccostest arcsintest arcsmoketest arctantest arctest arraybadinputtest arrayorigintest arrayptest arraysmoketest arraytest asciitest beforeptest bitcopytest bitloadsizetest bitmaptest bug1349374test bug1377856test bug1383281test bug1384267test bug1388325test bug1397560test bug1429960test bug1448155test bug1458661test burytest burytest.badinput burytest.buriedprocedure burytest.buryall burytest.procedure burytest.propertylist burytest.variable butfirsttest butlasttest buttonptest chdirtest client.onreadytosend colorsetgettest colortest controlflowtest copydefmaybeoutputtest copydefoptest copydefoutputtest copydefstoptest copydeftest copydeftotest costest differencetest difficultcomments directorysmoketest directorytest dllcalltest dllfreetest dllloadtest dllsmoketest dlltest doorientationtest dribbletest echo edalltest editortest emptyptest equalptest erasefiletest erasetest erasetest.badinput erasetest.eraseall erasetest.eraseprocedure erasetest.erasepropertylist erasetest.erasevariable erasetest.ern erasetest.erpl error.30.test errortest errortest.checkerror exptest filebadinputtest filesmoketest filetest filltest filltimerevent floodcolortest formtest helptest i.dont.know.what.to.do.with.value iftest inporttest inttest iseqtest labelbadinputtest labelcircletest labeltest largeedittest lasttest listptest lntest loadtest localvartest log10test logictest macro.return.unbound.instead.of.list macrotest macrotest.outputnothing mathtest memberptest minustest misctest mkdirtest modulotest my.proc.to.step myadd mymacro netshutdowncrash networksmoketest networktest no.input.no.output nodestest nottest numberptest one.input.no.output openappendtest opendirectoryasfiletest openopenfiletest openupdatetest orientationtest ortest outporttest output.373 parsefunctest parsenumbertest parsetest parsewordtest pasteincircle pencolortest penmodetest pentest penupdowntest perspectivetest pitest plisttest porttest powertest predicatetest procedure.shadows.myshadowedvar procedure.with.to.inside.it procedureinworkingdirectory proceduretest producttest quotienttest radarccostest radarcsintest radarctantest radcostest radsintest radtantest rawasciitest remaindertest reporttest reporttestfailed reporttestinfo reporttestinitialize reporttestpassed reporttestuninitialize rmdirtest roundtest runbadinputtest runexpecterrortest runfilesystemerrortest runhasnovaluetest runidontknowhowtotest runisaprimitivetest runnotenoughinputstest runtest runtoomanyinputstest sampleproc screencolortest screentest scrunchtest server.start server.stop setitemtest setlabelfonttest setrandomorientation setreadpostest setwritepostest signtest simplereporttest sintest sortbadinputtest sortbylegs sortbyname sortregressiontest sorttest sorttest.nonpredicate sorttest.oneinputbydefault sorttest.oneinputproc sorttest.threeinputproc sqrttest steptest steptest.badinput steptest.procedure steptest.propertylist steptest.shadowvariable steptest.stepall steptest.steppedprocedure steptest.variable sumtest tantest testall timecommand timewait traceinstruction tracetest tracetest.badinput tracetest.function tracetest.procedure tracetest.propertylist tracetest.traceall tracetest.tracedfunction tracetest.tracedprocedure tracetest.variable waittest windowsettest windowtest wordproctest wordptest wordtest ~ignoreme ~ignoremewascalled] [isok netconnectoncall startup string testlog tracetest.tracedplist ~ignoremewascalled] [tracetest.tracedplist]] , as expected.
+CALL: UNTRACE CONTENTS
+PASS: [TRACED] returned [[] [] []] , as expected.
+INFO: Executing invalid instruction: [(TRACED "toomany)]
+INFO: Executing [(TRACED "toomany)] set error code to 8 , as expected
+INFO: Executing [(TRACED "toomany)] set error string to [too much inside ()'s]
+CALL: (TRACE [[nonexistent] [nonexistent] [nonexistent]] )
+INFO: Executing invalid instruction: [(TRACE)]
+INFO: Executing [(TRACE)] set error code to 6 , as expected
+INFO: Executing [(TRACE)] set error string to [not enough inputs to TRACE]
+INFO: Executing invalid instruction: [(TRACE "name "toomany)]
+INFO: Executing [(TRACE "name "toomany)] set error code to 8 , as expected
+INFO: Executing [(TRACE "name "toomany)] set error string to [too much inside ()'s]
+INFO: Executing invalid instruction: [(TRACE {name} )]
+INFO: Executing [(TRACE {name} )] set error code to 4
+INFO: Executing [(TRACE {name} )] set error string to [TRACE doesn't like {name} as input]
+INFO: Executing invalid instruction: [(TRACE [[a] [b] {c}] )]
+INFO: Executing [(TRACE [[a] [b] {c}] )] set error code to 4
+INFO: Executing [(TRACE [[a] [b] {c}] )] set error string to [TRACE doesn't like {c} as input]
+INFO: Executing invalid instruction: [(TRACE [a b {c}] )]
+INFO: Executing [(TRACE [a b {c}] )] set error code to 4
+INFO: Executing [(TRACE [a b {c}] )] set error string to [TRACE doesn't like {c} as input]
+INFO: Executing invalid instruction: [(TRACE [[a b {c}]] )]
+INFO: Executing [(TRACE [[a b {c}]] )] set error code to 4
+INFO: Executing [(TRACE [[a b {c}]] )] set error string to [TRACE doesn't like {c} as input]
+INFO: Executing invalid instruction: [(TRACE [[a] [b] [c] [d]] )]
+FAIL: Executing [(TRACE [[a] [b] [c] [d]] )] did not throw an error
+INFO: Executing invalid instruction: [(TRACE [[[a]]] )]
+INFO: Executing [(TRACE [[[a]]] )] set error code to 4
+INFO: Executing [(TRACE [[[a]]] )] set error string to [TRACE doesn't like [a] as input]
+CALL: (UNTRACE [[nonexistent] [nonexistent] [nonexistent]] )
+INFO: Executing invalid instruction: [(UNTRACE)]
+INFO: Executing [(UNTRACE)] set error code to 6 , as expected
+INFO: Executing [(UNTRACE)] set error string to [not enough inputs to UNTRACE]
+INFO: Executing invalid instruction: [(UNTRACE "name "toomany)]
+INFO: Executing [(UNTRACE "name "toomany)] set error code to 8 , as expected
+INFO: Executing [(UNTRACE "name "toomany)] set error string to [too much inside ()'s]
+INFO: Executing invalid instruction: [(UNTRACE {name} )]
+INFO: Executing [(UNTRACE {name} )] set error code to 4
+INFO: Executing [(UNTRACE {name} )] set error string to [UNTRACE doesn't like {name} as input]
+INFO: Executing invalid instruction: [(UNTRACE [[a] [b] {c}] )]
+INFO: Executing [(UNTRACE [[a] [b] {c}] )] set error code to 4
+INFO: Executing [(UNTRACE [[a] [b] {c}] )] set error string to [UNTRACE doesn't like {c} as input]
+INFO: Executing invalid instruction: [(UNTRACE [a b {c}] )]
+INFO: Executing [(UNTRACE [a b {c}] )] set error code to 4
+INFO: Executing [(UNTRACE [a b {c}] )] set error string to [UNTRACE doesn't like {c} as input]
+INFO: Executing invalid instruction: [(UNTRACE [[a b {c}]] )]
+INFO: Executing [(UNTRACE [[a b {c}]] )] set error code to 4
+INFO: Executing [(UNTRACE [[a b {c}]] )] set error string to [UNTRACE doesn't like {c} as input]
+INFO: Executing invalid instruction: [(UNTRACE [[a] [b] [c] [d]] )]
+FAIL: Executing [(UNTRACE [[a] [b] [c] [d]] )] did not throw an error
+INFO: Executing invalid instruction: [(UNTRACE [[[a]]] )]
+INFO: Executing [(UNTRACE [[[a]]] )] set error code to 4
+INFO: Executing [(UNTRACE [[[a]]] )] set error string to [UNTRACE doesn't like [a] as input]
+PASS: [MEMBERP "STEPTEST.STEPPEDPROCEDURE (ITEM 1 STEPPED)] returned false , as expected.
+CALL: STEP "STEPTEST.STEPPEDPROCEDURE
+PASS: [MEMBERP "STEPTEST.STEPPEDPROCEDURE (ITEM 1 STEPPED)] returned true , as expected.
+CALL: STEPTEST.STEPPEDPROCEDURE
+CALL: UNSTEP "STEPTEST.STEPPEDPROCEDURE
+PASS: [MEMBERP "STEPTEST.STEPPEDPROCEDURE (ITEM 1 STEPPED)] returned false , as expected.
+CALL: STEPTEST.STEPPEDPROCEDURE
+PASS: [MEMBERP "STEPTEST.STEPPEDVARIABLE (ITEM 2 STEPPED)] returned false , as expected.
+CALL: STEP NAMELIST "STEPTEST.STEPPEDVARIABLE
+PASS: [MEMBERP "STEPTEST.STEPPEDVARIABLE (ITEM 2 STEPPED)] returned true , as expected.
+CALL: STEPTEST.SHADOWVARIABLE
+CALL: UNSTEP NAMELIST "STEPTEST.STEPPEDVARIABLE
+PASS: [MEMBERP "STEPTEST.STEPPEDVARIABLE (ITEM 2 STEPPED)] returned false , as expected.
+CALL: STEPTEST.SHADOWVARIABLE
+CALL: PPROP "STEPTEST.STEPPEDPLIST "SOMEPROPERTY 0
+PASS: [MEMBERP "STEPTEST.STEPPEDPLIST (ITEM 3 STEPPED)] returned false , as expected.
+CALL: STEP PLLIST "STEPTEST.STEPPEDPLIST
+PASS: [MEMBERP "STEPTEST.STEPPEDPLIST (ITEM 3 STEPPED)] returned true , as expected.
+CALL: PPROP "STEPTEST.STEPPEDPLIST "PROPERTY1 123
+CALL: PPROP "STEPTEST.STEPPEDPLIST "PROPERTY2 "123
+CALL: PPROP "STEPTEST.STEPPEDPLIST "PROPERTY3 "value
+CALL: PPROP "STEPTEST.STEPPEDPLIST "PROPERTY4 [1 2 3]
+CALL: PPROP "STEPTEST.STEPPEDPLIST "PROPERTY5 {1 2 3}
+CALL: UNSTEP PLLIST "STEPTEST.STEPPEDPLIST
+PASS: [MEMBERP "STEPTEST.STEPPEDPLIST (ITEM 3 STEPPED)] returned false , as expected.
+INFO: Calling STEP CONTENTS
+INFO: Called UNSTEP CONTENTS
+PASS: [STEPPED] returned [[] [] []] , as expected.
+INFO: Executing invalid instruction: [(STEPPED "toomany)]
+INFO: Executing [(STEPPED "toomany)] set error code to 8 , as expected
+INFO: Executing [(STEPPED "toomany)] set error string to [too much inside ()'s]
+CALL: (STEP [[nonexistent] [nonexistent] [nonexistent]] )
+INFO: Executing invalid instruction: [(STEP)]
+INFO: Executing [(STEP)] set error code to 6 , as expected
+INFO: Executing [(STEP)] set error string to [not enough inputs to STEP]
+INFO: Executing invalid instruction: [(STEP "name "toomany)]
+INFO: Executing [(STEP "name "toomany)] set error code to 8 , as expected
+INFO: Executing [(STEP "name "toomany)] set error string to [too much inside ()'s]
+INFO: Executing invalid instruction: [(STEP {name} )]
+INFO: Executing [(STEP {name} )] set error code to 4
+INFO: Executing [(STEP {name} )] set error string to [STEP doesn't like {name} as input]
+INFO: Executing invalid instruction: [(STEP [[a] [b] {c}] )]
+INFO: Executing [(STEP [[a] [b] {c}] )] set error code to 4
+INFO: Executing [(STEP [[a] [b] {c}] )] set error string to [STEP doesn't like {c} as input]
+INFO: Executing invalid instruction: [(STEP [a b {c}] )]
+INFO: Executing [(STEP [a b {c}] )] set error code to 4
+INFO: Executing [(STEP [a b {c}] )] set error string to [STEP doesn't like {c} as input]
+INFO: Executing invalid instruction: [(STEP [[a b {c}]] )]
+INFO: Executing [(STEP [[a b {c}]] )] set error code to 4
+INFO: Executing [(STEP [[a b {c}]] )] set error string to [STEP doesn't like {c} as input]
+INFO: Executing invalid instruction: [(STEP [[a] [b] [c] [d]] )]
+FAIL: Executing [(STEP [[a] [b] [c] [d]] )] did not throw an error
+INFO: Executing invalid instruction: [(STEP [[[a]]] )]
+INFO: Executing [(STEP [[[a]]] )] set error code to 4
+INFO: Executing [(STEP [[[a]]] )] set error string to [STEP doesn't like [a] as input]
+CALL: (UNSTEP [[nonexistent] [nonexistent] [nonexistent]] )
+INFO: Executing invalid instruction: [(UNSTEP)]
+INFO: Executing [(UNSTEP)] set error code to 6 , as expected
+INFO: Executing [(UNSTEP)] set error string to [not enough inputs to UNSTEP]
+INFO: Executing invalid instruction: [(UNSTEP "name "toomany)]
+INFO: Executing [(UNSTEP "name "toomany)] set error code to 8 , as expected
+INFO: Executing [(UNSTEP "name "toomany)] set error string to [too much inside ()'s]
+INFO: Executing invalid instruction: [(UNSTEP {name} )]
+INFO: Executing [(UNSTEP {name} )] set error code to 4
+INFO: Executing [(UNSTEP {name} )] set error string to [UNSTEP doesn't like {name} as input]
+INFO: Executing invalid instruction: [(UNSTEP [[] [] {}] )]
+INFO: Executing [(UNSTEP [[] [] {}] )] set error code to 4
+INFO: Executing [(UNSTEP [[] [] {}] )] set error string to [UNSTEP doesn't like {} as input]
+INFO: Executing invalid instruction: [(UNSTEP [word word {array}] )]
+INFO: Executing [(UNSTEP [word word {array}] )] set error code to 4
+INFO: Executing [(UNSTEP [word word {array}] )] set error string to [UNSTEP doesn't like {array} as input]
+INFO: Executing invalid instruction: [(UNSTEP [[] [] [] []] )]
+FAIL: Executing [(UNSTEP [[] [] [] []] )] did not throw an error
+INFO: Executing invalid instruction: [(UNSTEP [[a] [b] {c}] )]
+INFO: Executing [(UNSTEP [[a] [b] {c}] )] set error code to 4
+INFO: Executing [(UNSTEP [[a] [b] {c}] )] set error string to [UNSTEP doesn't like {c} as input]
+INFO: Executing invalid instruction: [(UNSTEP [a b {c}] )]
+INFO: Executing [(UNSTEP [a b {c}] )] set error code to 4
+INFO: Executing [(UNSTEP [a b {c}] )] set error string to [UNSTEP doesn't like {c} as input]
+INFO: Executing invalid instruction: [(UNSTEP [[a b {c}]] )]
+INFO: Executing [(UNSTEP [[a b {c}]] )] set error code to 4
+INFO: Executing [(UNSTEP [[a b {c}]] )] set error string to [UNSTEP doesn't like {c} as input]
+INFO: Executing invalid instruction: [(UNSTEP [[a] [b] [c] [d]] )]
+FAIL: Executing [(UNSTEP [[a] [b] [c] [d]] )] did not throw an error
+INFO: Executing invalid instruction: [(UNSTEP [[[a]]] )]
+INFO: Executing [(UNSTEP [[[a]]] )] set error code to 4
+INFO: Executing [(UNSTEP [[[a]]] )] set error string to [UNSTEP doesn't like [a] as input]
+PASS: [MEMBERP "BURYTEST.BURIEDPROCEDURE (ITEM 1 BURIED)] returned false , as expected.
+PASS: [MEMBERP "BURYTEST.BURIEDPROCEDURE PROCEDURES] returned true , as expected.
+CALL: BURY "BURYTEST.BURIEDPROCEDURE
+PASS: [MEMBERP "BURYTEST.BURIEDPROCEDURE (ITEM 1 BURIED)] returned true , as expected.
+PASS: [MEMBERP "BURYTEST.BURIEDPROCEDURE PROCEDURES] returned false , as expected.
+CALL: BURYTEST.BURIEDPROCEDURE
+CALL: UNBURY "BURYTEST.BURIEDPROCEDURE
+PASS: [MEMBERP "BURYTEST.BURIEDPROCEDURE (ITEM 1 BURIED)] returned false , as expected.
+PASS: [MEMBERP "BURYTEST.BURIEDPROCEDURE PROCEDURES] returned true , as expected.
+PASS: [MEMBERP "BURYTEST.BURIEDVARIABLE (ITEM 2 BURIED)] returned false , as expected.
+PASS: [MEMBERP "BURYTEST.BURIEDVARIABLE (ITEM 2 NAMES)] returned true , as expected.
+CALL: BURY NAMELIST "BURYTEST.BURIEDVARIABLE
+PASS: [MEMBERP "BURYTEST.BURIEDVARIABLE (ITEM 2 BURIED)] returned true , as expected.
+PASS: [MEMBERP "BURYTEST.BURIEDVARIABLE (ITEM 2 NAMES)] returned false , as expected.
+PASS: [:BURYTEST.BURIEDVARIABLE = 123] returned true , as expected.
+CALL: UNBURY NAMELIST "BURYTEST.BURIEDVARIABLE
+PASS: [MEMBERP "BURYTEST.BURIEDVARIABLE (ITEM 2 BURIED)] returned false , as expected.
+PASS: [MEMBERP "BURYTEST.BURIEDVARIABLE (ITEM 2 NAMES)] returned true , as expected.
+CALL: PPROP "BURYTEST.BURIEDPLIST "SOMEPROPERTY 123
+PASS: [MEMBERP "BURYTEST.BURIEDPLIST (ITEM 3 BURIED)] returned false , as expected.
+PASS: [MEMBERP "BURYTEST.BURIEDPLIST (ITEM 3 PLISTS)] returned true , as expected.
+CALL: BURY PLLIST "BURYTEST.BURIEDPLIST
+PASS: [MEMBERP "BURYTEST.BURIEDPLIST (ITEM 3 BURIED)] returned true , as expected.
+PASS: [MEMBERP "BURYTEST.BURIEDPLIST (ITEM 3 PLISTS)] returned false , as expected.
+PASS: [GPROP "BURYTEST.BURIEDPLIST "SOMEPROPERTY] returned 123 , as expected.
+CALL: UNBURY PLLIST "BURYTEST.BURIEDPLIST
+PASS: [MEMBERP "BURYTEST.BURIEDPLIST (ITEM 3 BURIED)] returned false , as expected.
+PASS: [MEMBERP "BURYTEST.BURIEDPLIST (ITEM 3 PLISTS)] returned true , as expected.
+INFO: Executing invalid instruction: [(BURIED "toomany)]
+INFO: Executing [(BURIED "toomany)] set error code to 8 , as expected
+INFO: Executing [(BURIED "toomany)] set error string to [too much inside ()'s]
+CALL: (BURY [[nonexistent] [nonexistent] [nonexistent]] )
+INFO: Executing invalid instruction: [(BURY)]
+INFO: Executing [(BURY)] set error code to 6 , as expected
+INFO: Executing [(BURY)] set error string to [not enough inputs to BURY]
+INFO: Executing invalid instruction: [(BURY "name "toomany)]
+INFO: Executing [(BURY "name "toomany)] set error code to 8 , as expected
+INFO: Executing [(BURY "name "toomany)] set error string to [too much inside ()'s]
+INFO: Executing invalid instruction: [(BURY {name} )]
+INFO: Executing [(BURY {name} )] set error code to 4
+INFO: Executing [(BURY {name} )] set error string to [BURY doesn't like {name} as input]
+INFO: Executing invalid instruction: [(BURY [[a] [b] {c}] )]
+INFO: Executing [(BURY [[a] [b] {c}] )] set error code to 4
+INFO: Executing [(BURY [[a] [b] {c}] )] set error string to [BURY doesn't like {c} as input]
+INFO: Executing invalid instruction: [(BURY [a b {c}] )]
+INFO: Executing [(BURY [a b {c}] )] set error code to 4
+INFO: Executing [(BURY [a b {c}] )] set error string to [BURY doesn't like {c} as input]
+INFO: Executing invalid instruction: [(BURY [[a b {c}]] )]
+INFO: Executing [(BURY [[a b {c}]] )] set error code to 4
+INFO: Executing [(BURY [[a b {c}]] )] set error string to [BURY doesn't like {c} as input]
+INFO: Executing invalid instruction: [(BURY [[a] [b] [c] [d]] )]
+FAIL: Executing [(BURY [[a] [b] [c] [d]] )] did not throw an error
+INFO: Executing invalid instruction: [(BURY [[[a]]] )]
+INFO: Executing [(BURY [[[a]]] )] set error code to 4
+INFO: Executing [(BURY [[[a]]] )] set error string to [BURY doesn't like [a] as input]
+CALL: (UNBURY [[nonexistent] [nonexistent] [nonexistent]] )
+INFO: Executing invalid instruction: [(UNBURY)]
+INFO: Executing [(UNBURY)] set error code to 6 , as expected
+INFO: Executing [(UNBURY)] set error string to [not enough inputs to UNBURY]
+INFO: Executing invalid instruction: [(UNBURY "name "toomany)]
+INFO: Executing [(UNBURY "name "toomany)] set error code to 8 , as expected
+INFO: Executing [(UNBURY "name "toomany)] set error string to [too much inside ()'s]
+INFO: Executing invalid instruction: [(UNBURY {name} )]
+INFO: Executing [(UNBURY {name} )] set error code to 4
+INFO: Executing [(UNBURY {name} )] set error string to [UNBURY doesn't like {name} as input]
+INFO: Executing invalid instruction: [(UNBURY [[a] [b] {c}] )]
+INFO: Executing [(UNBURY [[a] [b] {c}] )] set error code to 4
+INFO: Executing [(UNBURY [[a] [b] {c}] )] set error string to [UNBURY doesn't like {c} as input]
+INFO: Executing invalid instruction: [(UNBURY [a b {c}] )]
+INFO: Executing [(UNBURY [a b {c}] )] set error code to 4
+INFO: Executing [(UNBURY [a b {c}] )] set error string to [UNBURY doesn't like {c} as input]
+INFO: Executing invalid instruction: [(UNBURY [[a b {c}]] )]
+INFO: Executing [(UNBURY [[a b {c}]] )] set error code to 4
+INFO: Executing [(UNBURY [[a b {c}]] )] set error string to [UNBURY doesn't like {c} as input]
+INFO: Executing invalid instruction: [(UNBURY [[a] [b] [c] [d]] )]
+FAIL: Executing [(UNBURY [[a] [b] [c] [d]] )] did not throw an error
+INFO: Executing invalid instruction: [(UNBURY [[[a]]] )]
+INFO: Executing [(UNBURY [[[a]]] )] set error code to 4
+INFO: Executing [(UNBURY [[[a]]] )] set error string to [UNBURY doesn't like [a] as input]
+INFO: Executing invalid instruction: [(BURYALL "toomany)]
+INFO: Executing [(BURYALL "toomany)] set error code to 8 , as expected
+INFO: Executing [(BURYALL "toomany)] set error string to [too much inside ()'s]
+INFO: Executing invalid instruction: [(UNBURYALL "toomany)]
+INFO: Executing [(UNBURYALL "toomany)] set error code to 8 , as expected
+INFO: Executing [(UNBURYALL "toomany)] set error string to [too much inside ()'s]
+CALL: BURYALL
+PASS: [BURIED] returned [[# .eqtest ?rest ` abs abstest activeareatest allopentest andtest angleiscloseenough arc arcbadinputtest arccostest arcsintest arcsmoketest arctantest arctest arraybadinputtest arrayorigintest arrayptest arraysmoketest arraytest arraytolist asciitest beforeptest bitcopytest bitloadsizetest bitmaptest bug1349374test bug1377856test bug1383281test bug1384267test bug1388325test bug1397560test bug1429960test bug1448155test bug1458661test buryall burytest burytest.badinput burytest.buriedprocedure burytest.buryall burytest.procedure burytest.propertylist burytest.variable butfirsttest butlasttest buttonptest cascade cascade.eval cascade.setup cascade1 chdirtest circle client.onreadytosend colorsetgettest colortest combine controlflowtest copydefmaybeoutputtest copydefoptest copydefoutputtest copydefstoptest copydeftest copydeftotest costest differencetest difficultcomments dir directorysmoketest directorytest dllcalltest dllfreetest dllloadtest dllsmoketest dlltest doorientationtest dribbletest echo edall edalltest editortest emptyptest equalptest erasefiletest erasetest erasetest.badinput erasetest.eraseall erasetest.eraseprocedure erasetest.erasepropertylist erasetest.erasevariable erasetest.ern erasetest.erpl error.30.test errortest errortest.checkerror exptest filebadinputtest filesmoketest filetest filltest filltimerevent floodcolortest for for.done foreach foreach.done foreach1 forloop formtest forstep helptest i.dont.know.what.to.do.with.value icon iftest ignore inporttest inttest iseq iseq1 iseqtest labelbadinputtest labelcircletest labeltest largeedittest lasttest listptest listtoarray listtoarray1 listtoword lntest loadtest localmake localvartest log10test logictest macro.return.unbound.instead.of.list macrotest macrotest.outputnothing map map1 mathtest memberptest minustest misctest mkdirtest modulotest my.proc.to.step myadd myaddcopy mymacro namelist netshutdowncrash networksmoketest networktest no.input.no.output nodestest nottest numberptest one.input.no.output openappendtest opendirectoryasfiletest openopenfiletest openupdatetest orientation orientationtest ortest outporttest output.373 parsefunctest parsenumbertest parsetest parsewordtest pasteincircle pen pencolortest penmodetest pentest penupdowntest perspectivetest pi pick pitest plisttest pllist poall pon pons pop popl popls pops porttest pots powertest predicatetest procedure.shadows.myshadowedvar procedure.with.to.inside.it procedureinworkingdirectory proceduretest producttest push quotienttest radarccostest radarcsintest radarctantest radcostest radsintest radtantest rawasciitest remaindertest reporttest reporttestfailed reporttestinfo reporttestinitialize reporttestpassed reporttestuninitialize rmdirtest roundtest runbadinputtest runexpecterrortest runfilesystemerrortest runhasnovaluetest runidontknowhowtotest runisaprimitivetest runnotenoughinputstest runtest runtoomanyinputstest sampleproc screencolortest screentest scrunchtest server.start server.stop setitemtest setlabelfonttest setorientation setrandomorientation setreadpostest settextfont setwritepostest sign signtest simplereporttest sintest sort sort.stable sortbadinputtest sortbylegs sortbyname sortregressiontest sorttest sorttest.nonpredicate sorttest.oneinputbydefault sorttest.oneinputproc sorttest.threeinputproc sqrttest steptest steptest.badinput steptest.procedure steptest.propertylist steptest.shadowvariable steptest.stepall steptest.steppedprocedure steptest.variable sumtest tantest testall timecommand timewait traceinstruction tracetest tracetest.badinput tracetest.function tracetest.procedure tracetest.propertylist tracetest.traceall tracetest.tracedfunction tracetest.tracedprocedure tracetest.variable unburyall unicon waittest windowsettest windowtest wordproctest wordptest wordtest wordtolist xcor ycor ~ignoreme ~ignoremewascalled] [caseignoredp instruction isok netconnectoncall realcontents savedburied startup string testlog tracetest.tracedplist ~ignoremewascalled] [burytest.buriedplist steptest.steppedplist tracetest.tracedplist]] , as expected.
+PASS: CONTENTS returned [[] [] []] , as expected.
+INFO: Called UNBURYALL
+PASS: [BURIED] returned [[] [] []] , as expected.
+CALL: ERASETEST.ERASEDPROCEDURE
+PASS: [PROCEDURE? "ERASETEST.ERASEDPROCEDURE] returned true , as expected.
+PASS: [MEMBER? "ERASETEST.ERASEDPROCEDURE (ITEM 1 CONTENTS)] returned true , as expected.
+CALL: ERASE "ERASETEST.ERASEDPROCEDURE
+INFO: Executing invalid instruction: [ERASETEST.ERASEDPROCEDUE]
+INFO: Executing [ERASETEST.ERASEDPROCEDUE] set error code to 13 , as expected
+INFO: Executing [ERASETEST.ERASEDPROCEDUE] set error string to [I don't know how to ERASETEST.ERASEDPROCEDUE]
+PASS: [PROCEDURE? "ERASETEST.ERASEDPROCEDURE] returned false , as expected.
+PASS: [MEMBER? "ERASETEST.ERASEDPROCEDURE (ITEM 1 CONTENTS)] returned false , as expected.
+PASS: [MEMBERP "ERASETEST.VARIABLE (ITEM 2 NAMES)] returned true , as expected.
+CALL: ERASE NAMELIST "ERASETEST.BURIEDVARIABLE
+PASS: [MEMBERP "ERASETEST.BURIEDVARIABLE (ITEM 2 NAMES)] returned false , as expected.
+INFO: Executing invalid instruction: [:ERASETEST.BURIEDVARIABLE = 123]
+INFO: Executing [:ERASETEST.BURIEDVARIABLE = 123] set error code to 11 , as expected
+INFO: Executing [:ERASETEST.BURIEDVARIABLE = 123] set error string to [ERASETEST.BURIEDVARIABLE has no value]
+CALL: PPROP "ERASETEST.ERASEDPLIST "SOMEPROPERTY 123
+PASS: [GPROP "ERASETEST.ERASEDPLIST "SOMEPROPERTY] returned 123 , as expected.
+PASS: [MEMBERP "ERASETEST.ERASEDPLIST (ITEM 3 PLISTS)] returned true , as expected.
+CALL: ERASE PLLIST "ERASETEST.ERASEDPLIST
+PASS: [GPROP "ERASETEST.ERASEDPLIST "SOMEPROPERTY] returned [] , as expected.
+PASS: [MEMBERP "ERASETEST.ERASEDPLIST (ITEM 3 PLISTS)] returned false , as expected.
+PASS: [MEMBERP "ERASETEST.VARIABLE1 (ITEM 2 NAMES)] returned true , as expected.
+PASS: [MEMBERP "ERASETEST.VARIABLE2 (ITEM 2 NAMES)] returned true , as expected.
+CALL: ERN [ERASETEST.VARIABLE1 ERASETEST.VARIABLE2]
+PASS: [MEMBERP "ERASETEST.VARIABLE1 (ITEM 2 NAMES)] returned false , as expected.
+PASS: [MEMBERP "ERASETEST.VARIABLE2 (ITEM 2 NAMES)] returned false , as expected.
+INFO: Executing invalid instruction: [:ERASETEST.VARIABLE1 = 123]
+INFO: Executing [:ERASETEST.VARIABLE1 = 123] set error code to 11 , as expected
+INFO: Executing [:ERASETEST.VARIABLE1 = 123] set error string to [ERASETEST.VARIABLE1 has no value]
+INFO: Executing invalid instruction: [:ERASETEST.VARIABLE2 = 321]
+INFO: Executing [:ERASETEST.VARIABLE2 = 321] set error code to 11 , as expected
+INFO: Executing [:ERASETEST.VARIABLE2 = 321] set error string to [ERASETEST.VARIABLE2 has no value]
+CALL: PPROP "ERASETEST.ERASEDPLIST1 "SOMEPROPERTY 123
+CALL: PPROP "ERASETEST.ERASEDPLIST2 "SOMEPROPERTY 321
+PASS: [GPROP "ERASETEST.ERASEDPLIST1 "SOMEPROPERTY] returned 123 , as expected.
+PASS: [MEMBERP "ERASETEST.ERASEDPLIST1 (ITEM 3 PLISTS)] returned true , as expected.
+PASS: [GPROP "ERASETEST.ERASEDPLIST2 "SOMEPROPERTY] returned 321 , as expected.
+PASS: [MEMBERP "ERASETEST.ERASEDPLIST2 (ITEM 3 PLISTS)] returned true , as expected.
+CALL: ERPL [ERASETEST.ERASEDPLIST1 ERASETEST.ERASEDPLIST2]
+PASS: [GPROP "ERASETEST.ERASEDPLIST1 "SOMEPROPERTY] returned [] , as expected.
+PASS: [MEMBERP "ERASETEST.ERASEDPLIST1 (ITEM 3 PLISTS)] returned false , as expected.
+PASS: [GPROP "ERASETEST.ERASEDPLIST2 "SOMEPROPERTY] returned [] , as expected.
+PASS: [MEMBERP "ERASETEST.ERASEDPLIST2 (ITEM 3 PLISTS)] returned false , as expected.
+CALL: (ERASE [[nonexistent] [nonexistent] [nonexistent]] )
+INFO: Executing invalid instruction: [(ERASE)]
+INFO: Executing [(ERASE)] set error code to 6 , as expected
+INFO: Executing [(ERASE)] set error string to [not enough inputs to ERASE]
+INFO: Executing invalid instruction: [(ERASE "name "toomany)]
+INFO: Executing [(ERASE "name "toomany)] set error code to 8 , as expected
+INFO: Executing [(ERASE "name "toomany)] set error string to [too much inside ()'s]
+INFO: Executing invalid instruction: [(ERASE {name} )]
+INFO: Executing [(ERASE {name} )] set error code to 4
+INFO: Executing [(ERASE {name} )] set error string to [ERASE doesn't like {name} as input]
+INFO: Executing invalid instruction: [(ERASE [[a] [b] {c}] )]
+INFO: Executing [(ERASE [[a] [b] {c}] )] set error code to 4
+INFO: Executing [(ERASE [[a] [b] {c}] )] set error string to [ERASE doesn't like {c} as input]
+INFO: Executing invalid instruction: [(ERASE [a b {c}] )]
+INFO: Executing [(ERASE [a b {c}] )] set error code to 4
+INFO: Executing [(ERASE [a b {c}] )] set error string to [ERASE doesn't like {c} as input]
+INFO: Executing invalid instruction: [(ERASE [[a b {c}]] )]
+INFO: Executing [(ERASE [[a b {c}]] )] set error code to 4
+INFO: Executing [(ERASE [[a b {c}]] )] set error string to [ERASE doesn't like {c} as input]
+INFO: Executing invalid instruction: [(ERASE [[a] [b] [c] [d]] )]
+FAIL: Executing [(ERASE [[a] [b] [c] [d]] )] did not throw an error
+INFO: Executing invalid instruction: [(ERASE [[[a]]] )]
+INFO: Executing [(ERASE [[[a]]] )] set error code to 4
+INFO: Executing [(ERASE [[[a]]] )] set error string to [ERASE doesn't like [a] as input]
+INFO: Executing invalid instruction: [ERASE "FORWARD]
+INFO: Executing [ERASE "FORWARD] set error code to 22 , as expected
+INFO: Executing [ERASE "FORWARD] set error string to [FORWARD is a primitive]
+INFO: Executing invalid instruction: [(ERALL 10)]
+INFO: Executing [(ERALL 10)] set error code to 7
+INFO: Executing [(ERALL 10)] set error string to [if doesn't like 10 as input]
+INFO: Executing invalid instruction: [(ERALL [] )]
+INFO: Executing [(ERALL [] )] set error code to 7
+INFO: Executing [(ERALL [] )] set error string to [if doesn't like [] as input]
+INFO: Executing invalid instruction: [(ERALL {a} )]
+INFO: Executing [(ERALL {a} )] set error code to 7
+INFO: Executing [(ERALL {a} )] set error string to [if doesn't like {a} as input]
+INFO: Executing invalid instruction: [(ERALL "no)]
+INFO: Executing [(ERALL "no)] set error code to 7
+INFO: Executing [(ERALL "no)] set error string to [if doesn't like no as input]
+INFO: Executing invalid instruction: [(ERALL "false "toomany)]
+INFO: Executing [(ERALL "false "toomany)] set error code to 8 , as expected
+INFO: Executing [(ERALL "false "toomany)] set error string to [too much inside ()'s]
+INFO: Executing invalid instruction: [(ERPS "toomany)]
+INFO: Executing [(ERPS "toomany)] set error code to 8 , as expected
+INFO: Executing [(ERPS "toomany)] set error string to [too much inside ()'s]
+INFO: Executing invalid instruction: [(ERNS "toomany)]
+INFO: Executing [(ERNS "toomany)] set error code to 8 , as expected
+INFO: Executing [(ERNS "toomany)] set error string to [too much inside ()'s]
+INFO: Executing invalid instruction: [(ERPLS "toomany)]
+INFO: Executing [(ERPLS "toomany)] set error code to 8 , as expected
+INFO: Executing [(ERPLS "toomany)] set error string to [too much inside ()'s]
+INFO: Executing invalid instruction: [(ERN)]
+INFO: Executing [(ERN)] set error code to 6 , as expected
+INFO: Executing [(ERN)] set error string to [not enough inputs to ERN]
+INFO: Executing invalid instruction: [(ERN "a "toomany)]
+INFO: Executing [(ERN "a "toomany)] set error code to 8 , as expected
+INFO: Executing [(ERN "a "toomany)] set error string to [too much inside ()'s]
+INFO: Executing invalid instruction: [(ERN {a} )]
+INFO: Executing [(ERN {a} )] set error code to 21
+INFO: Executing [(ERN {a} )] set error string to [namelist doesn't like {a} as input]
+INFO: Executing invalid instruction: [(ERPL)]
+INFO: Executing [(ERPL)] set error code to 6 , as expected
+INFO: Executing [(ERPL)] set error string to [not enough inputs to ERPL]
+INFO: Executing invalid instruction: [(ERPL "a "toomany)]
+INFO: Executing [(ERPL "a "toomany)] set error code to 8 , as expected
+INFO: Executing [(ERPL "a "toomany)] set error string to [too much inside ()'s]
+INFO: Executing invalid instruction: [(ERPL {a} )]
+INFO: Executing [(ERPL {a} )] set error code to 21
+INFO: Executing [(ERPL {a} )] set error string to [pllist doesn't like {a} as input]
+PASS: [PROCEDURE? "ERASETEST.ERASEALL] returned true , as expected.

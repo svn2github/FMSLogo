@@ -155,29 +155,6 @@ TO PROCEDURETEST
    RUNNOTENOUGHINPUTSTEST [(LOCAL)]
    RUNBADINPUTTEST        [LOCAL {a}] ; bug #1355761 
 
-   ; test ERASE
-   DEFINE "ERASEDPROC [[] [] ]
-   SIMPLEREPORTTEST [PROCEDURE? "erasedproc] "true
-   ERASE "ERASEDPROC
-   SIMPLEREPORTTEST [PROCEDURE? "erasedproc] "false
-   RUNBADINPUTTEST [ERASEDPROC]
-   RUNNOTENOUGHINPUTSTEST [(ERASE)]
-   RUNBADINPUTTEST        [ERASE {a}]
-   RUNBADINPUTTEST        [ERASE "forward]
-   RUNTOOMANYINPUTSTEST   [(ERASE "erasedproc "erasedproc)]
-
-   ; test ERALL
-   ; We can't run our tests if we erase all procedures, 
-   ; so we just test for not erasing anything and bad input.
-   MESSAGEBOX "|Manual Test| "|You will be now asked to erase all procedures.  Say No.|
-   ERALL
-   SIMPLEREPORTTEST [PROCEDURE? "sampleproc]  "true
-   RUNBADINPUTTEST [(ERALL 10)]
-   RUNBADINPUTTEST [(ERALL [])]
-   RUNBADINPUTTEST [(ERALL {a})]
-   RUNBADINPUTTEST [(ERALL "no)]
-   RUNTOOMANYINPUTSTEST [(ERALL "false "toomany)]
-
 
    ; test LOCALMAKE
    LOCALMAKE "mylocalvarname 32
@@ -190,20 +167,19 @@ TO PROCEDURETEST
    IGNORE CONTENTS
    RUNTOOMANYINPUTSTEST [(CONTENTS "toomany)]
 
-   ; Just exercise NAMES for now.
-   ; we'll figure out how to test its output later
-   IGNORE NAMES
+   ; test PROCEDURES
+   SIMPLEREPORTTEST [PROCEDURES] ITEM 1 CONTENTS
+   RUNTOOMANYINPUTSTEST [(PROCEDURES "toomany)]
+
+   ; test NAMES
+   LOCALMAKE "instruction    [] ; create some variables so that CONTENTS
+   LOCALMAKE "expectedresult [] ; will match NAMES inside SIMPLEREPORTTEST
+   SIMPLEREPORTTEST [NAMES] (LIST [] ITEM 2 CONTENTS)
    RUNTOOMANYINPUTSTEST [(NAMES "toomany)]
 
-   ; Just exercise BURIED for now.
-   ; we'll figure out how to test its output later
-   IGNORE BURIED
-   RUNTOOMANYINPUTSTEST [(BURIED "toomany)]
-
-   ; Just exercise PROCEDURES for now.
-   ; we'll figure out how to test its output later
-   IGNORE PROCEDURES
-   RUNTOOMANYINPUTSTEST [(PROCEDURES "toomany)]
+   ; test PLISTS
+   SIMPLEREPORTTEST [PLISTS] (LIST [] [] ITEM 3 CONTENTS)
+   RUNTOOMANYINPUTSTEST [(PLISTS "toomany)]
 
    ; test NAMELIST
    SIMPLEREPORTTEST [NAMELIST "a]     [[] [a]]
