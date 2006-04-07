@@ -385,8 +385,8 @@ to RunGame
 
   GameLoop
 
-  catch "error [ splitscreen ]
   unicon "Commander
+  catch "error [ splitscreen ]
 
 end
 
