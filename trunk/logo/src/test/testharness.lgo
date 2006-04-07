@@ -7,6 +7,7 @@ LOAD "butfirst.lgo
 LOAD "butlast.lgo
 LOAD "last.lgo
 LOAD "array.lgo
+LOAD "queue.lgo
 LOAD "wait.lgo
 LOAD "predicate.lgo
 LOAD "logic.lgo
@@ -63,6 +64,7 @@ TO TESTALL
   BUTLASTTEST     ; from butlast.lgo
   LASTTEST        ; from last.lgo
   ARRAYTEST       ; from array.lgo
+  QUEUETEST       ; from queue.lgo
   LOGICTEST       ; from logic.lgo
   MATHTEST        ; from math.lgo
   PROCEDURETEST   ; from procedure.lgo
