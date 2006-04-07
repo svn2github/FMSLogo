@@ -160,7 +160,44 @@ TMyCommandWindow::EditBoxWantsKeyEvent(
    WPARAM KeyEventWParam
 )
    {
-   return isprint(KeyEventWParam) || KeyEventWParam == VK_SPACE;
+   // OEM keys are not defined in Borland 5.0.2's header files
+   const WPARAM VK_OEM_1   = 186;
+   const WPARAM VK_OEM_102 = 226;
+
+   // we want the space bar
+   if (KeyEventWParam == VK_SPACE)
+      {
+      return true;
+      }
+
+   // we want alphanumeric keys
+   if ('0' <= KeyEventWParam && KeyEventWParam <= 'Z')
+      {
+      return true;
+      }
+
+   // we want the printing characters from the numpad
+   if (VK_NUMPAD0 <= KeyEventWParam && KeyEventWParam <= VK_DIVIDE)
+      {
+      return true;
+      }
+
+   // we want the "OEM" keys, which are usually punctiation and international characters
+   if (VK_OEM_1 <= KeyEventWParam && KeyEventWParam <= VK_OEM_102)
+      {
+      return true;
+      }
+
+   // there are a few navigational keys that we also want.
+   if (KeyEventWParam == VK_HOME || 
+       KeyEventWParam == VK_END  || 
+       KeyEventWParam == VK_RIGHT)
+      {
+      return true;
+      }
+
+   // reject everything else
+   return false;
    }
 
 
