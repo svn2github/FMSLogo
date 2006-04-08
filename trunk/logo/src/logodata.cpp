@@ -21,6 +21,7 @@
 */
 
 #include "allwind.h"
+#include "version.h"
 
 //char special_chars[] = " \t\n()[]+-*/=<>\"\\~:;|?";
 char special_chars[] = " \t\n(\?\?\?\?\?\?\?+~)[]-*/=<>\"\\:;|\?";
@@ -871,3 +872,15 @@ NODE *lplist(NODE *args)
    return val;
    }
 
+
+NODE * llogoversion(NODE * args)
+   {
+   NODE * application_name    = make_static_strnode("FMSLogo");
+   NODE * application_version = make_static_strnode(FMSLOGO_VERSION);
+   NODE * os_name             = make_static_strnode("Windows");
+
+   return cons_list(
+      application_name,
+      application_version,
+      os_name);
+   }

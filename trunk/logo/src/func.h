@@ -286,8 +286,7 @@ extern NODE *ltime(NODE *args);
 extern NODE *ltimemilli(NODE *args);
 extern NODE *lshell(NODE *args);
 
-/* File LOGODATA.CPP: */
-
+// logodata.cpp
 extern char ecma_set(int ch);
 extern char ecma_clear(int ch);
 extern int ecma_get(int ch);
@@ -332,6 +331,7 @@ extern NODE *lgprop(NODE *args);
 extern NODE *lpprop(NODE *args);
 extern NODE *lremprop(NODE *args);
 extern NODE *lplist(NODE *args);
+extern NODE *llogoversion(NODE *args);
 
 /* File TERM.CPP: */
 

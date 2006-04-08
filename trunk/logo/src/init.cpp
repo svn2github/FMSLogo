@@ -264,6 +264,7 @@ const PRIMTYPE prims[] =
       { "load", 1, 1, 1, PREFIX_PRIORITY, lload },
       { "local", 1, 1, -1, PREFIX_PRIORITY, llocal },
       { "log10", 1, 1, 1, PREFIX_PRIORITY, llog10 },
+      { "logoversion", 0, 0, 0, PREFIX_PRIORITY, llogoversion },
       { "lowercase", 1, 1, 1, PREFIX_PRIORITY, llowercase },
       { "lput", 2, 2, 2, PREFIX_PRIORITY, llput },
       { "lr", 1, 1, 1, PREFIX_PRIORITY, lleftroll },
