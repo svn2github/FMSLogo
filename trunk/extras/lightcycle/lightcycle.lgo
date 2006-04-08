@@ -541,17 +541,17 @@ end
 
 to ProcessKeyEvent :Key
 
-    if :Key=ascii "w [ Player.UpKey    :Player1 ]
-    if :Key=ascii "a [ Player.LeftKey  :Player1 ]
-    if :Key=ascii "s [ Player.RightKey :Player1 ] 
-    if :Key=ascii "z [ Player.DownKey  :Player1 ]
+    if :Key=ascii "W [ Player.UpKey    :Player1 ]
+    if :Key=ascii "A [ Player.LeftKey  :Player1 ]
+    if :Key=ascii "S [ Player.RightKey :Player1 ] 
+    if :Key=ascii "Z [ Player.DownKey  :Player1 ]
 
-    if :Key=ascii "i [ Player.UpKey    :Player2 ]
-    if :Key=ascii "j [ Player.LeftKey  :Player2 ]
-    if :Key=ascii "k [ Player.RightKey :Player2 ]
-    if :Key=ascii "m [ Player.DownKey  :Player2 ]
+    if :Key=ascii "I [ Player.UpKey    :Player2 ]
+    if :Key=ascii "J [ Player.LeftKey  :Player2 ]
+    if :Key=ascii "K [ Player.RightKey :Player2 ]
+    if :Key=ascii "M [ Player.DownKey  :Player2 ]
 
-    ;if :Key=ascii "q [ make "IsDone "true ]
+    ;if :Key=ascii "Q [ make "IsDone "true ]
 
 end
 
@@ -576,7 +576,7 @@ to SetBoardSquare :x :y :value
 end
 
 to StartKeyboardCapture
-   keyboardon [ProcessKeyEvent keyboardvalue]
+   (keyboardon [ProcessKeyEvent keyboardvalue] [ignore keyboardvalue])
 end
 
 to TryDown :Player

@@ -181,16 +181,16 @@ end
 
 to ProcessKeyEvent :Key
 
-    if :Key=ascii "i [ UpKey    ]
-    if :Key=ascii "j [ LeftKey  ] 
-    if :Key=ascii "k [ RightKey ]
-    if :Key=ascii "m [ DownKey  ]
+    if :Key=ascii "I [ UpKey    ]
+    if :Key=ascii "J [ LeftKey  ] 
+    if :Key=ascii "K [ RightKey ]
+    if :Key=ascii "M [ DownKey  ]
 
-    if :Key=ascii "q [ make "IsDone "true ]
+    if :Key=ascii "Q [ make "IsDone "true ]
 end
 
 to StartKeyboardCapture
-   keyboardon [ProcessKeyEvent keyboardvalue]
+   (keyboardon [ProcessKeyEvent keyboardvalue] [ignore keyboardvalue])
 end
 
 to EndKeyboardCapture
