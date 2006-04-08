@@ -13,6 +13,17 @@ Author:      Dan Gerhards
 Genre:       arcade game
 Description: Pilot a ship in space to collect gems and avoid asteriods.
 
+Directory:   boink
+Author:      Nick Rozanski 
+Genre:       arcade game
+Description: A silly game where you try to send a bouncing ball into a 
+             drain by deflecting it with diagonal barriers.
+
+Directory:   domino
+Author:      Hensley Bass
+Genre:       tile game
+Description: A rendition of the classic game Dominos.
+
 Directory:   lightcycle
 Author:      David Costanzo
 Genre:       arcade game
