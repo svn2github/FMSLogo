@@ -49,6 +49,7 @@ LOAD "trace.lgo
 LOAD "step.lgo
 LOAD "bury.lgo
 LOAD "erase.lgo
+LOAD "logoversion.lgo
 
 TO TESTALL
 
@@ -100,6 +101,7 @@ TO TESTALL
   STEPTEST        ; from step.lgo
   BURYTEST        ; from bury.lgo
   ERASETEST       ; from erase.lgo
+  LOGOVERSIONTEST ; from logoversion.lgo
 
   REPORTTESTUNINITIALIZE
 
