@@ -1,8 +1,11 @@
+include ../version.mk
+
 HHP_STYLESHEET = htmlhelp.xsl 
 ROOTFILE       = logohelp.xml
-SOURCEFILES    = $(wildcard *.xml)
+SOURCEFILES    = $(wildcard *.xml) logoversion.xml
 
 HHC = "C:\Program Files\Help Workshop\hhc.exe"
+
 
 htmlhelp.hhp : $(SOURCEFILES)  $(HHP_STYLESHEET)
 	xsltproc --nonet $(HHP_STYLESHEET) $(ROOTFILE)
@@ -19,6 +22,10 @@ logohelp.pdf : $(SOURCEFILES)
 
 logohelp.rtf : $(SOURCEFILES)
 	docbook2rtf $(ROOTFILE)
+
+# generate an XML file that contains the version
+logoversion.xml : ../version.mk
+	echo -n $(FMSLOGO_VERSION) > $@
 
 clean :
 	$(RM) logohelp.rtf logohelp.pdf logohelp.dvi *.html *.hhp *.hhc *.chm *~

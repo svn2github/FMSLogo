@@ -13,6 +13,5 @@ Initially, no variables exist except <link linkend="command-caseignoredp">CASEIG
     &command-printwidthlimit;
     &command-redefp;
     &command-startup;
-    &command-machine;
 
 </chapter>

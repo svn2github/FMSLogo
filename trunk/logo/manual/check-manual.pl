@@ -268,6 +268,8 @@ $Exceptions{'command-local.xml'}{'allcaps'}{'FOO'} = 1;
 
 $Exceptions{'command-localmake.xml'}{'allcaps'}{'SAYHELLO'} = 1;
 
+$Exceptions{'command-logoversion.xml'}{'logo'} = 1;
+
 $Exceptions{'command-map.xml'}{'allcaps'}{'?REST'}     = 1;
 
 $Exceptions{'command-map.se.xml'}{'allcaps'}{'?REST'}  = 1;
@@ -460,6 +462,8 @@ $Exceptions{'error-processing.xml'}{'allcaps'}{'PROC'}     = 1;
 $Exceptions{'error-processing.xml'}{'allcaps'}{'THROWTAG'} = 1;
 $Exceptions{'error-processing.xml'}{'allcaps'}{'VALUE'}    = 1;
 $Exceptions{'error-processing.xml'}{'allcaps'}{'VAR'}      = 1;
+
+$Exceptions{'environment-commands.xml'}{'logo'} = 1;
 
 $Exceptions{'introduction.xml'}{'allcaps'}{'FD'}          = 1;
 $Exceptions{'introduction.xml'}{'allcaps'}{'LISP'}        = 1;

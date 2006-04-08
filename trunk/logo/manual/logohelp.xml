@@ -6,6 +6,8 @@
   <!ENTITY PRODUCTNAME  "FMSLogo">
   <!ENTITY GENERICNAME  "Logo">
 
+  <!ENTITY PRODUCTVERSION            SYSTEM "logoversion.xml">
+
   <!ENTITY introduction              SYSTEM "introduction.xml">
   <!ENTITY commandline-options       SYSTEM "commandline-options.xml">
   <!ENTITY editor                    SYSTEM "editor.xml">
@@ -23,6 +25,7 @@
   <!ENTITY error-processing          SYSTEM "error-processing.xml">
   <!ENTITY special-variables         SYSTEM "special-variables.xml">
   <!ENTITY help-commands             SYSTEM "help-commands.xml">
+  <!ENTITY environment-commands      SYSTEM "environment-commands.xml">
   <!ENTITY directory-commands        SYSTEM "directory-commands.xml">
   <!ENTITY windows-commands          SYSTEM "windows-commands.xml">
   <!ENTITY bitmap-commands           SYSTEM "bitmap-commands.xml">
@@ -97,7 +100,6 @@
   <!ENTITY command-readword     SYSTEM "command-readword.xml">
   <!ENTITY command-readchar     SYSTEM "command-readchar.xml">
   <!ENTITY command-readchars    SYSTEM "command-readchars.xml">
-  <!ENTITY command-shell        SYSTEM "command-shell.xml">
 
   <!ENTITY command-openread     SYSTEM "command-openread.xml">
   <!ENTITY command-openwrite    SYSTEM "command-openwrite.xml">
@@ -443,6 +445,9 @@
   <!ENTITY command-printwidthlimit SYSTEM "command-printwidthlimit.xml">
   <!ENTITY command-redefp          SYSTEM "command-redefp.xml">
   <!ENTITY command-startup         SYSTEM "command-startup.xml">
+
+  <!ENTITY command-shell           SYSTEM "command-shell.xml">
+  <!ENTITY command-logoversion     SYSTEM "command-logoversion.xml">
   <!ENTITY command-machine         SYSTEM "command-machine.xml">
 
   <!ENTITY command-help            SYSTEM "command-help.xml">
@@ -566,7 +571,7 @@
 ]>
 
 <book id="fmslogo">
-  <title>&PRODUCTNAME;</title>
+  <title>&PRODUCTNAME; &PRODUCTVERSION;</title>
   <bookinfo>
 
     <copyright>
@@ -607,6 +612,7 @@
   &error-processing;
   &special-variables;
   &help-commands;
+  &environment-commands;
   &directory-commands;
   &windows-commands;
   &bitmap-commands;
