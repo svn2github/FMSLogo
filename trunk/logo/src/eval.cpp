@@ -447,11 +447,11 @@ NODE *evaluator(NODE *list, enum labels where)
     */
    if (fun == NULL) // If fun is NULL then assume proc is undefined (output with no arg)
       {
-      proc = UNDEFINED;
+      assign(proc, UNDEFINED);
       }
    else
       {
-      proc = procnode__caseobj(fun);
+      assign(proc, procnode__caseobj(fun));
       if (is_macro(fun))
          {
          num2save(val_status, tailcall);
@@ -646,8 +646,8 @@ NODE *evaluator(NODE *list, enum labels where)
       }
    assign(last_line, this_line);
    assign(this_line, NIL);
-   proc = (is_list(fun) ? anonymous_function(fun) : procnode__caseobj(fun));
-   assign(list, bodylist__procnode(proc));/* get the body ...                 */
+   assign(proc, (is_list(fun) ? anonymous_function(fun) : procnode__caseobj(fun)));
+   assign(list, bodylist__procnode(proc));// get the body ...
    make_tree_from_body(list);
    if (!is_tree(list))
       {
@@ -1080,7 +1080,7 @@ NODE *evaluator(NODE *list, enum labels where)
       assign(val, Unbound);
       goto fetch_cont;
       }
-   proc = procnode__caseobj(ufun);
+   assign(proc, procnode__caseobj(ufun));
    assign(list, bodylist__procnode(proc));
    assign(unev, tree__tree(list));
    while (unev != NIL)
@@ -1128,7 +1128,7 @@ NODE *evaluator(NODE *list, enum labels where)
             if (is_list(cadr(fun)))
                {
                /* procedure text form */
-               proc = anonymous_function(fun);
+               assign(proc, anonymous_function(fun));
                tracing = 0;
                goto lambda_apply;
                }
@@ -1207,7 +1207,7 @@ NODE *evaluator(NODE *list, enum labels where)
             {
             silent_load(fun, logolib); // try <logolib>/<fun>
             }
-         proc = procnode__caseobj(fun);
+         assign(proc, procnode__caseobj(fun));
          while (proc == UNDEFINED && NOT_THROWING)
             {
             assign(val, err_logo(DK_HOW_UNREC, fun));
@@ -1262,6 +1262,7 @@ NODE *evaluator(NODE *list, enum labels where)
    deref(stack); 
    deref(catch_tag); 
    deref(exp);
+   deref(proc);
    return val;
    }
 
