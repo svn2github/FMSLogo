@@ -1,20 +1,9 @@
-!include ..\version.mk
-
 MAKENSIS="C:\Program Files\NSIS\makensis.exe"
-CP=copy /Y
-RM=del
-MV=move
 
+all : fmslogo.exe
 
-TARGET=fmslogo-$(FMSLOGO_VERSION).exe
-
-all : $(TARGET)
-
-
-$(TARGET) : fmslogo.nsi
-	$(MAKENSIS) $?
-	$(MV) fmslogo.exe $@
+fmslogo.exe : fmslogo.nsi ../version.mk ../src/fmslogo.exe ../manual/logohelp.chm
+	$(MAKENSIS) $<
 
 clean :
-	$(RM) fmslogo.exe
-	$(RM) $(TARGET)
+	rm fmslogo.exe
