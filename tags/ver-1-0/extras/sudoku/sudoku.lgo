@@ -1,0 +1,112 @@
+to aaa
+;Copyright © 2005-2006 Relja Medic
+;
+;This program is free software; you can redistribute it and/or modify 
+;it under the terms of the GNU General Public License as published by 
+;the Free Software Foundation; either version 2 of the License, or 
+;(at your option) any later version.
+;
+;This program is distributed in the hope that it will be useful,
+;but WITHOUT ANY WARRANTY; without even the implied warranty of 
+;MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
+;GNU General Public License for more details.
+;
+;You should have received a copy of the GNU General Public License 
+;along with this program; if not, write to the Free Software 
+;Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+;
+; Program version 0.2
+end
+
+to get :p :r :c
+(local "i "j "l "x "y)
+make "y 1+int((:r-1)/3)
+make "x 1+int((:c-1)/3)
+make "l [1 2 3 4 5 6 7 8 9]
+for [i 1 9] [make "l remove item :c item :i :p :l]
+for [i 1 9] [make "l remove item :i item :r :p :l]
+for [i [1+(:x-1)*3] [:x*3]] [~
+  for [j [1+(:y-1)*3] [:y*3]] [make "l remove item :i item :j :p :l]]
+op :l
+end
+
+to mouse :d :pos
+pu
+ifelse :what="h [setpos list -2*:d+:d/4 :d*10] [setpos list -2*:d+:d/4 :d*:what]
+pd label :what
+make "what ifelse :pos=10 ["h] [:pos]
+pu setpos list -2*:d+:d/4 :d*:pos pd setpc 1 label :what setpc 0
+end
+
+to put :d :pos :w
+if (and not :w="0 (and not (first :pos)>-:d not (first :pos)<-2*:d) (and not (last :pos)<0 not (last :pos)>10*:d)) [mouse :d 1+int (last :pos)/:d]
+if (or (first :pos)<0 not (first :pos)<9*:d (last :pos)<0 not (last :pos)<9*:d) [stop]
+(local "r "c)
+make "r 1+int ((9*:d-last :pos)/:d)
+make "c 1+int ((first :pos)/:d)
+pu setxy (:c-1)*:d+:d/4 9*:d-(:r-1)*:d pd
+if (item :c item :r :p)=0 [
+  ifelse :w="h
+    [setpencolor 7 label (item :c item :r :q) setpencolor 1 label item :c item :r :sol make "p set :p :r :c item :c item :r :sol make "q set :q :r :c item :c item :r :sol setpencolor 0]
+    [setpencolor 7 label (item :c item :r :q) setpencolor 15 if not :w=0 [label :w] make "q set :q :r :c :w setpencolor 0]]
+if :q=:sol [pr [You solved it!] mouseoff start stop]
+if (find [not (find [?="0] ?)=[]] :q)=[] [pr [Not correct!]]
+end
+
+to set :p :r :c :w
+(local "i "sl "sr)
+make "sr "
+make "sl []
+for [i 1 9] [ifelse :i=:c [make "sr word :sr :w] [make "sr word :sr item :i item :r :p]]
+for [i 1 9] [ifelse :i=:r [make "sl lput :sr :sl] [make "sl lput item :i :p :sl]]
+op :sl
+end
+
+to solver :p
+(local "i "j "k "l)
+for [i 1 9] [~
+  for [j 1 9] [if (item :j item :i :p)="0 [make "l get :p :i :j ~
+    for [k 1 [count :l] 1] [solver set :p :i :j item :k :l] stop]]]
+make "sol lput :p :sol
+end
+
+to start [:w pick :examples]
+(local "i "t)
+make "p :w
+make "q :w
+make "sol []
+ct cs ht
+pr [Select a number.]
+pr [Click and put a number.]
+pr [Right click to remove a number.]
+pr [Use "h" for a hint.]
+pr [Solving... Please wait! (around 3 seconds on 3GHz)]
+noyield
+make "t timemilli
+solver :w
+(pr [Solved in] (timemilli-:t)/1000 [seconds.])
+yield
+if (count :sol)>1 [pr [ERROR! Sudoku has more than one solution!] wait 180 start stop]
+if (count :sol)=0 [pr [ERROR! Sudoku has no solutions!] wait 180 start stop]
+make "sol first :sol
+setlabelfont [[Arial] 30 0 0 900 0 0 0 0 0 0 0 0]
+table 30 rt 90
+for [i 1 9] [for [j 1 9] [if not (item :j item :i :p)=0 [pu setxy (:j-1)*30+30/4 9*30-(:i-1)*30 pd label item :j item :i :p]]]
+mouseon [(put 30 mousepos :what)] [] [] [(put 30 mousepos 0)] []
+end
+
+to table :d
+repeat 9[repeat 9[repeat 4[fd :d rt 90] rt 90 fd :d lt 90] lt 90 fd 9*:d rt 90 fd :d] bk 9*:d
+setpensize [3 3]
+repeat 3[repeat 3[repeat 4[fd 3*:d rt 90] rt 90 fd 3*:d lt 90] lt 90 fd 9*:d rt 90 fd 3*:d] bk 9*:d
+setpensize [1 1]
+pu lt 90 fd :d*2 rt 90 pd
+repeat 9[repeat 4[fd :d rt 90] fd :d rt 90 fd :d/4 label repcount bk :d/4 lt 90]
+repeat 4[fd :d rt 90] fd :d rt 90 fd :d/4 setpencolor 1 label "h setpencolor 0 bk :d/4 lt 90
+make "what "h
+bk :d*10
+end
+
+bury [[] [p q sol what] []]
+Make "examples [[000950400 090004001 500800302 000509203 302401908 905308000 407003009 100600070 006095000] [008790002 002003608 750082003 000000004 215407986 300000000 500260041 104300200 900048500]]
+Make "startup [scrolly -135 start]
