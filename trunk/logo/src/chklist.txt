@@ -16,8 +16,8 @@ Build the Release Files
 2.b) Copy resulting fmslogo-X-Y-Z.zip to \\dcostanz\dcostanz\logo
 
 3) Build the source code archive
-3.a) On laptop, cd c:\logo-cvs\logo-src-release and do a "cvs up -APd"
-3.b) On laptop, do "gmake sourcezip"
+3.a) cd to logo-cvs\logo-src-release and do a "cvs up -APd"
+3.b) do "gmake sourcezip"
 3.c) Copy resulting fmslogo-src-X-Y-Z.zip to \\dcostanz\dcostanz\logo
 
 
