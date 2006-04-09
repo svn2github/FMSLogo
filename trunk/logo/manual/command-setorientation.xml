@@ -24,7 +24,8 @@ SETORIENTATION is designed to run in <link linkend="command-perspective">PERSPEC
 
 <para>
 You can get your orientation with <link linkend="command-orientation">ORIENTATION</link>.
-Keep in mind that ORIENTATION may not output the exact same values that you set, but it will output an <emphasis>equivalent</emphasis> orienation.  For example, if you run <userinput>SETORIENTATION [0 105 0]</userinput>, then ORIENTATION may output <userinput>[180 75 180]</userinput>.
+Keep in mind that ORIENTATION may not output the exact same values that you set, but it will output an <emphasis>equivalent</emphasis> orientation.
+For example, if you run <userinput>SETORIENTATION [0 105 0]</userinput>, then ORIENTATION may output <userinput>[180 75 180]</userinput>.
 </para>
 
 </listitem>
