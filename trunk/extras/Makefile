@@ -1,4 +1,4 @@
-EXTRAS_VERSION=0.9
+EXTRAS_VERSION=1.0
 
 SOURCEZIP=fmslogo-extras-$(EXTRAS_VERSION).zip
 
@@ -17,6 +17,6 @@ TOINCLUDE= \
   sudoku        \
 
 $(SOURCEZIP) :
-	/usr/bin/find -name '*~' | xargs rm
+	-/usr/bin/find -name '*~' | xargs rm
 	cd .. && zip -r -9 -X $(SOURCEZIP) $(addprefix extras/,$(TOINCLUDE)) -x */.cvsignore */CVS/ */CVS/* */*/.cvsignore */*/CVS/ */*/CVS/* */*/*/CVS/
 	mv ../$(SOURCEZIP) .
