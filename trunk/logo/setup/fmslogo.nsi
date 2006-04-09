@@ -123,7 +123,7 @@ Section "FMSLogo"
   
   ; Put file there
   File "..\src\fmslogo.exe"
-  File "..\src\logohelp.chm"
+  File "..\manual\logohelp.chm"
   File "..\src\Mcistrwh.hlp"
   File "..\src\fmslogo.txt"
   File "..\src\license.txt"
