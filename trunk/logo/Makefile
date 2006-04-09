@@ -49,5 +49,7 @@ $(BINARYZIP) : setup/fmslogo.exe manual/logohelp.chm
 # make the source release
 $(SOURCEZIP) :
 	touch deleteme~
-	/usr/bin/find -name '*~' | xargs rm
+	rm $(shell /usr/bin/find -name '*~')
+	touch deleteme.obj
+	rm $(shell /usr/bin/find -name '*.obj')
 	zip -r -9 -X $@ Makefile version.mk src manual setup -x $(ZIPEXCLUDE)
