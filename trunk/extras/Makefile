@@ -17,6 +17,6 @@ TOINCLUDE= \
   sudoku        \
 
 $(SOURCEZIP) :
-	$(RM) **/*~
+	/usr/bin/find -name '*~' | xargs rm
 	cd .. && zip -r -9 -X $(SOURCEZIP) $(addprefix extras/,$(TOINCLUDE)) -x */.cvsignore */CVS/ */CVS/* */*/.cvsignore */*/CVS/ */*/CVS/* */*/*/CVS/
 	mv ../$(SOURCEZIP) .
