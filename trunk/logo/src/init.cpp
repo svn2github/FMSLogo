@@ -146,6 +146,7 @@ const PRIMTYPE prims[] =
       { "cleartext", 0, 0, 0, PREFIX_PRIORITY, lcleartext },
       { "cleartimer", 1, 1, 1, PREFIX_PRIORITY, lcleartimer },
       { "close", 1, 1, 1, PREFIX_PRIORITY, lclose },
+      { "closeall", 0, 0, 0, PREFIX_PRIORITY, lcloseall },
       { "co", OK_NO_ARG, 1, 1, PREFIX_PRIORITY, lcontinue },
       { "comboboxaddstring", 2, 2, 2, PREFIX_PRIORITY, lcomboboxaddstring },
       { "comboboxcreate", 6, 6, 6, PREFIX_PRIORITY, lcomboboxcreate },
