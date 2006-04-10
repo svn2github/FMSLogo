@@ -461,7 +461,7 @@ NODE *make_quote(NODE *qnd)
 
 NODE *maybe_quote(NODE *nd)
    {
-   if (nd == Unbound || aggregate(nd) || numberp(nd)) return (nd);
+   if (nd == Unbound || is_aggregate(nd) || numberp(nd)) return (nd);
    return make_quote(nd);
    }
 
@@ -555,7 +555,7 @@ NODE *cnv_node_to_numnode(NODE *ndi)
 
 NODE *cnv_node_to_strnode(NODE *nd)
    {
-   if (nd == Unbound || aggregate(nd))
+   if (nd == Unbound || is_aggregate(nd))
       {
       return Unbound;
       }

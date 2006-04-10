@@ -105,17 +105,17 @@ const NODETYPES LINE             = NT_LINE|NT_LIST|NT_AGGR;
 const NODETYPES CONT             = NT_CONT|NT_LIST;
 const NODETYPES NT_FREE          = 0xFFFF;
 
-#define aggregate(nd)   ((nodetype(nd) & NT_AGGR))
-#define is_cont(nd)     ((nodetype(nd) == CONT))
-#define is_list(nd)     ((nodetype(nd) & NT_LIST))
-#define is_tree(nd)     ((nodetype(nd) & NT_TREE))
-#define is_string(nd)   ((nodetype(nd) & NT_STRING))
-#define is_number(nd)   ((nodetype(nd) & NT_NUMBER))
-#define is_prim(nd)     ((nodetype(nd) & NT_PRIM))
-#define is_word(nd)     ((nodetype(nd) & NT_WORD))
-#define runparsed(nd)   ((nodetype(nd) & NT_RUNP))
-#define backslashed(nd) ((nodetype(nd) & NT_BACKSL))
-#define is_tailform(nd) ((nodetype(nd) == TAILFORM))
+#define is_aggregate(nd) ((nodetype(nd) & NT_AGGR))
+#define is_cont(nd)      ((nodetype(nd) == CONT))
+#define is_list(nd)      ((nodetype(nd) & NT_LIST))
+#define is_tree(nd)      ((nodetype(nd) & NT_TREE))
+#define is_string(nd)    ((nodetype(nd) & NT_STRING))
+#define is_number(nd)    ((nodetype(nd) & NT_NUMBER))
+#define is_prim(nd)      ((nodetype(nd) & NT_PRIM))
+#define is_word(nd)      ((nodetype(nd) & NT_WORD))
+#define runparsed(nd)    ((nodetype(nd) & NT_RUNP))
+#define backslashed(nd)  ((nodetype(nd) & NT_BACKSL))
+#define is_tailform(nd)  ((nodetype(nd) == TAILFORM))
 
 
 // IMPORTANT: Logo programs depend on the value of these

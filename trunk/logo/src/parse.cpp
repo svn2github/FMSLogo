@@ -867,7 +867,7 @@ NODE *lrunparse(NODE *args)
       arg = car(args);
       }
 
-   if (NOT_THROWING && !aggregate(arg))
+   if (NOT_THROWING && !is_aggregate(arg))
       {
       arg = parser(arg, TRUE);
       }

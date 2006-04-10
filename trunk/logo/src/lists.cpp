@@ -534,7 +534,7 @@ NODE *lsentence(NODE *args)
 NODE *lwordp(NODE *arg)
    {
    arg = car(arg);
-   return torf(arg != Unbound && !aggregate(arg));
+   return torf(arg != Unbound && !is_aggregate(arg));
    }
 
 NODE *llistp(NODE *arg)
@@ -608,7 +608,7 @@ NODE *memberp_helper(NODE *args, bool notp, bool substr)
       }
    else
       {
-      if (aggregate(obj1))
+      if (is_aggregate(obj1))
          {
          return (notp ? Null_Word : Falsex);
          }

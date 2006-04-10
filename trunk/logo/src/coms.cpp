@@ -203,7 +203,7 @@ NODE *runnable_arg(NODE *args)
    {
    NODE *arg = car(args);
 
-   if (!aggregate(arg))
+   if (!is_aggregate(arg))
       {
       setcar(args, parser(arg, TRUE));
       arg = car(args);

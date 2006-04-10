@@ -86,7 +86,7 @@ NODE *get_bodywords(NODE *proc, NODE *name)
 static
 NODE *name_arg(NODE *args)
    {
-   while (aggregate(car(args)) && NOT_THROWING)
+   while (is_aggregate(car(args)) && NOT_THROWING)
       {
       setcar(args, err_logo(BAD_DATA, car(args)));
       }
@@ -955,7 +955,7 @@ NODE *po_helper(NODE *arg, int just_titles)  /* >0 for POT, <0 for EDIT       */
 
    while (proclst != NIL)
       {
-      if (aggregate(car(proclst)))
+      if (is_aggregate(car(proclst)))
          {
          err_logo(BAD_DATA_UNREC, car(proclst));
          break;
@@ -1035,7 +1035,7 @@ NODE *po_helper(NODE *arg, int just_titles)  /* >0 for POT, <0 for EDIT       */
          }
 
       NODE * current_variable = car(current_varlist_node);
-      if (aggregate(current_variable))
+      if (is_aggregate(current_variable))
          {
          err_logo(BAD_DATA_UNREC, current_variable);
          break;
@@ -1067,7 +1067,7 @@ NODE *po_helper(NODE *arg, int just_titles)  /* >0 for POT, <0 for EDIT       */
 
    while (plistlst != NIL && NOT_THROWING)
       {
-      if (aggregate(car(plistlst)))
+      if (is_aggregate(car(plistlst)))
          {
          err_logo(BAD_DATA_UNREC, car(plistlst));
          break;
@@ -1146,7 +1146,7 @@ NODE *lerase(NODE *arg)
 
    while (proclst != NIL)
       {
-      if (aggregate(car(proclst)))
+      if (is_aggregate(car(proclst)))
          {
          err_logo(BAD_DATA_UNREC, car(proclst));
          break;
@@ -1163,7 +1163,7 @@ NODE *lerase(NODE *arg)
 
    while (varlst != NIL && NOT_THROWING)
       {
-      if (aggregate(car(varlst)))
+      if (is_aggregate(car(varlst)))
          {
          err_logo(BAD_DATA_UNREC, car(varlst));
          break;
@@ -1174,7 +1174,7 @@ NODE *lerase(NODE *arg)
 
    while (plistlst != NIL && NOT_THROWING)
       {
-      if (aggregate(car(plistlst)))
+      if (is_aggregate(car(plistlst)))
          {
          err_logo(BAD_DATA_UNREC, car(plistlst));
          break;
@@ -1197,7 +1197,7 @@ void bury_or_unbury_list(NODE * list, int flag, bool setflag)
    {
    while (list != NIL && NOT_THROWING)
       {
-      if (aggregate(car(list)))
+      if (is_aggregate(car(list)))
          {
          err_logo(BAD_DATA_UNREC, car(list));
          break;
