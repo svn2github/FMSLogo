@@ -15,7 +15,7 @@ all : sourcezip binaryzip binaryexe;
 
 # make the executable
 src/fmslogo.exe : src/*.cpp src/*.h version.mk
-	$(MAKE) -C src -f makefile-gmake.mk all
+	$(MAKE) -C src all
 
 # make the documentation
 manual/logohelp.chm : manual/*.xml version.mk
@@ -52,6 +52,6 @@ $(SOURCEZIP) :
 	zip -r -9 -X $@ Makefile version.mk src manual setup -x $(ZIPEXCLUDE)
 
 clean :
-	-$(MAKE) -C src    -f makefile-gmake.mk $@
+	-$(MAKE) -C src    $@
 	-$(MAKE) -C manual $@
 	-$(MAKE) -C setup  $@
