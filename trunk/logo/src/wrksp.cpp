@@ -1,5 +1,5 @@
 /*
-*      wrksp.c         logo workspace management module                dvb
+*      wrksp.cpp       logo workspace management module                dvb
 *
 *       Copyright (C) 1995 by the Regents of the University of California
 *       Copyright (C) 1995 by George Mills
@@ -1111,23 +1111,26 @@ NODE *po_helper(NODE *arg, int just_titles)  /* >0 for POT, <0 for EDIT       */
       }
 
    print_backslashes = false;
+
+   gcref(proclst);
+   gcref(varlst);
+   gcref(plistlst);
    return Unbound;
    }
 
 NODE *lpo(NODE *arg)
    {
    lsetcursorwait(NIL);
-
-   NODE * temp = po_helper(arg, 0);
-
+   po_helper(arg, 0);
    lsetcursorarrow(NIL);
 
-   return temp;
+   return Unbound;
    }
 
 NODE *lpot(NODE *arg)
    {
-   return po_helper(arg, 1);
+   po_helper(arg, 1);
+   return Unbound;
    }
 
 NODE *lerase(NODE *arg)
