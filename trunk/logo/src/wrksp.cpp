@@ -22,7 +22,7 @@
 
 #include "allwind.h"
 
-int to_pending = 0;
+bool to_pending = false;
 fpos_t LinesLoadedOnEdit;
 
 static
@@ -143,8 +143,11 @@ static
 NODE *define_helper(NODE *args, int macro_flag)
    {
    NODE *name, *val;
-   int minimum = 0, deflt = 0, maximum = 0, old_default = -1;
-   int redef = (compare_node(valnode__caseobj(Redefp), Truex, TRUE) == 0);
+   int minimum = 0;
+   int deflt = 0;
+   int maximum = 0;
+   int old_default = -1;
+   bool redef = (compare_node(valnode__caseobj(Redefp), Truex, true) == 0);
 
    if (macro_flag >= 0)
       {
@@ -386,7 +389,7 @@ NODE *to_helper(NODE *args, bool macro_flag)
 
       NODE * body_list          = cons_list(formals);
       NODE * body_list_lastnode = body_list;
-      to_pending++;      // for int or quit signal
+      to_pending = true;      // for int or quit signal
       while (NOT_THROWING && to_pending && (!feof(loadstream)))
          {
          NODE * ttnode = reader(loadstream, "> ");
@@ -447,7 +450,7 @@ NODE *to_helper(NODE *args, bool macro_flag)
             ndprintf(stdout, "%s defined\n", proc_name);
             }
          }
-      to_pending = 0;
+      to_pending = false;
       }
    return Unbound;
    }
@@ -1135,7 +1138,7 @@ NODE *lpot(NODE *arg)
 
 NODE *lerase(NODE *arg)
    {
-   int redef = (compare_node(valnode__caseobj(Redefp), Truex, TRUE) == 0);
+   bool redef = (compare_node(valnode__caseobj(Redefp), Truex, true) == 0);
 
    NODE *proclst;
    NODE *varlst;
@@ -1476,7 +1479,7 @@ NODE *lmacrop(NODE *args)
 
 NODE *lcopydef(NODE *args)
    {
-   int redef = (compare_node(valnode__caseobj(Redefp), Truex, TRUE) == 0);
+   bool redef = (compare_node(valnode__caseobj(Redefp), Truex, true) == 0);
 
    NODE * arg1 = name_arg(args);
    NODE * arg2 = name_arg(cdr(args));

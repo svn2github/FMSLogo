@@ -137,8 +137,8 @@ extern NODE *Stop;
 extern NODE *Goto;
 extern NODE *Tag;
 
-/* wrksp.c */
-extern int to_pending;
+// wrksp.cpp
+extern bool   to_pending;
 extern fpos_t LinesLoadedOnEdit;
 
 // error.cpp

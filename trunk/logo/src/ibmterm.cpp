@@ -71,7 +71,7 @@ bool check_stop(bool scan_for_messages)
    if (IsTimeToPause)
       {
       IsTimeToPause = false;
-      to_pending = 0;
+      to_pending = false;
       lpause(NIL);
       }
 
