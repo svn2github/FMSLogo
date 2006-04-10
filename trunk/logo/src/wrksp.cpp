@@ -1182,6 +1182,10 @@ NODE *lerase(NODE *arg)
       setplist__caseobj(intern(car(plistlst)), NIL);
       plistlst = cdr(plistlst);
       }
+
+   gcref(proclst);
+   gcref(varlst);
+   gcref(plistlst);
    return Unbound;
    }
 
