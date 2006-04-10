@@ -809,5 +809,7 @@ NODE *lcloseall(NODE *)
 
    // empty the file list
    deref(file_list);
-   file_list;
+   file_list = NIL;
+
+   return Unbound;
    }
