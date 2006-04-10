@@ -1,10 +1,17 @@
 # A wrapper for the real Makefile, which uses Borland's "make"
 # This wrapper helps integrate the Makefile into an otherwise
 # GNU-based build system
+.PHONY : fmslogod.exe fmslogo.exe
 
-all :
+all : fmslogo.exe ;
+debug : fmslogod.exe ;
+
+fmslogo.exe :
 	make -fMakefile-borland-release.mk
 	tdstrp32 fmslogo.exe
+
+fmslogod.exe :
+	make -fMakefile-borland-debug.mk
 
 clean :
 	$(RM) $(shell /usr/bin/find release -name '*.obj')
