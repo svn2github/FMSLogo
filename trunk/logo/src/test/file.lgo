@@ -100,29 +100,47 @@ TO FILETEST.ALLOPEN
    LOCALMAKE "filename1 "filealltest-1.txt
    LOCALMAKE "filename2 "filealltest-2.txt
 
-   OPENWRITE :filename1
-   OPENWRITE :filename2
+   TRACEINSTRUCTION [OPENWRITE :filename1]
+   TRACEINSTRUCTION [OPENWRITE :filename2]
 
    ; make sure that ALLOPEN returns both open files
-   LOCALMAKE "allopenfilenames ALLOPEN
+   SIMPLEREPORTTEST [ MEMBERP :filename1 ALLOPEN ] "TRUE
+   SIMPLEREPORTTEST [ MEMBERP :filename2 ALLOPEN ] "TRUE
 
-   LOCALMAKE "filename1found "false
-   LOCALMAKE "filename2found "false
-   FOREACH :allopenfilenames [ 
-      if ? = :filename1 [MAKE "filename1found "true]
-      if ? = :filename2 [MAKE "filename2found "true]
-   ]
+   TRACEINSTRUCTION [CLOSE :filename1]
+   TRACEINSTRUCTION [CLOSE :filename2]
 
-   REPORTTEST ~
-      AND :filename1found :filename2found ~
-      (sentence "|ALLOPEN returned| :allopenfilenames) ~
-      (sentence "|a list that contains both| :filename1 "and :filename2)
+   ; make sure that ALLOPEN returns neither file
+   SIMPLEREPORTTEST [ MEMBERP :filename1 ALLOPEN ] "FALSE
+   SIMPLEREPORTTEST [ MEMBERP :filename2 ALLOPEN ] "FALSE
 
-   CLOSE     :filename1
+   ; cleanup
    ERASEFILE :filename1
-
-   CLOSE     :filename2
    ERASEFILE :filename2
+END
+
+TO FILETEST.CLOSEALL
+   ; This can't be integrated into the test harness because it
+   ; would close the file to which the test results are written.
+
+   LOCALMAKE "filename1 "filealltest-1.txt
+   LOCALMAKE "filename2 "filealltest-2.txt
+
+   TRACEINSTRUCTION [OPENWRITE :filename1]
+   TRACEINSTRUCTION [OPENWRITE :filename2]
+
+   ; make sure that ALLOPEN returns both open files
+   SIMPLEREPORTTEST [ MEMBERP :filename1 ALLOPEN ] "TRUE
+   SIMPLEREPORTTEST [ MEMBERP :filename2 ALLOPEN ] "TRUE
+
+   TRACEINSTRUCTION [CLOSEALL]
+
+   ; make sure that ALLOPEN returns neither file
+   SIMPLEREPORTTEST [ MEMBERP :filename1 ALLOPEN ] "FALSE
+   SIMPLEREPORTTEST [ MEMBERP :filename2 ALLOPEN ] "FALSE
+
+   ERASEFILE :filename2
+   ERASEFILE :filename1
 END
 
 TO FILETEST.OPENAPPEND
@@ -254,6 +272,12 @@ TO FILETEST.BADINPUT
    ; test ERASEFILE
    RUNNOTENOUGHINPUTSTEST [(ERASEFILE)]
    RUNTOOMANYINPUTSTEST   [(ERASEFILE "too "many)]
+
+   ; test CLOSEALL
+   RUNTOOMANYINPUTSTEST   [(CLOSEALL "toomany)]
+
+   ; test ALLOPEN
+   RUNTOOMANYINPUTSTEST   [(ALLOPEN "toomany)]
 
 END
 
