@@ -41,17 +41,14 @@ $(BINARYZIP) : setup/fmslogo.exe manual/logohelp.chm
 	cp --recursive src/Logolib  $(BINARYBASENAME)
 	cp --recursive src/Examples $(BINARYBASENAME)
 	chmod --recursive a+rx $(BINARYBASENAME)
-	touch $(BINARYBASENAME)/deleteme~
-	/usr/bin/find $(BINARYBASENAME) -name '*~' | xargs rm
+	$(RM) $(shell /usr/bin/find $(BINARYBASENAME) -name '*~')
 	zip -r -9 -X $@ $(BINARYBASENAME) -x $(ZIPEXCLUDE)
 	rm -rf $(BINARYBASENAME)
 
 # make the source release
 $(SOURCEZIP) :
-	touch deleteme~
-	rm $(shell /usr/bin/find -name '*~')
-	touch deleteme.obj
-	rm $(shell /usr/bin/find -name '*.obj')
+	$(RM) $(shell /usr/bin/find -name '*~')
+	$(RM) $(shell /usr/bin/find -name '*.obj')
 	zip -r -9 -X $@ Makefile version.mk src manual setup -x $(ZIPEXCLUDE)
 
 clean :

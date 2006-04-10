@@ -6,4 +6,4 @@ fmslogo.exe : fmslogo.nsi ../version.mk ../src/fmslogo.exe ../manual/logohelp.ch
 	$(MAKENSIS) $<
 
 clean :
-	rm fmslogo.exe
+	$(RM) fmslogo.exe
