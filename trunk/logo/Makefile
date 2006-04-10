@@ -53,3 +53,8 @@ $(SOURCEZIP) :
 	touch deleteme.obj
 	rm $(shell /usr/bin/find -name '*.obj')
 	zip -r -9 -X $@ Makefile version.mk src manual setup -x $(ZIPEXCLUDE)
+
+clean :
+	-$(MAKE) -C src    -f makefile-gmake.mk $@
+	-$(MAKE) -C manual $@
+	-$(MAKE) -C setup  $@
