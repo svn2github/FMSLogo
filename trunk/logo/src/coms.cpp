@@ -69,18 +69,26 @@ NODE *lthrow(NODE *arg)
       if (compare_node(car(arg), Error, TRUE) == 0)
          {
          if (cdr(arg) != NIL)
+            {
             err_logo(USER_ERR, cadr(arg));
+            }
          else
+            {
             err_logo(USER_ERR, Unbound);
+            }
          }
       else
          {
          stopping_flag = THROWING;
          throw_node = reref(throw_node, car(arg));
          if (cdr(arg) != NIL)
+            {
             output_node = reref(output_node, cadr(arg));
+            }
          else
+            {
             output_node = reref(output_node, Unbound);
+            }
          }
       }
    return Unbound;
@@ -213,7 +221,7 @@ NODE *runnable_arg(NODE *args)
       setcar(args, err_logo(BAD_DATA, arg));
       arg = car(args);
       }
-   return (arg);
+   return arg;
    }
 
 NODE *lif(NODE *args)  // macroized
@@ -237,7 +245,7 @@ NODE *lif(NODE *args)  // macroized
    return Unbound;
    }
 
-NODE *lifelse(NODE *args)              /* macroized                           */
+NODE *lifelse(NODE *args)              // macroized
    {
    bool pred = boolean_arg(args);
    NODE* yes = runnable_arg(cdr(args));
@@ -253,7 +261,7 @@ NODE *lifelse(NODE *args)              /* macroized                           */
    return Unbound;
    }
 
-NODE *lrun(NODE *args)                 /* macroized                           */
+NODE *lrun(NODE *args)                 // macroized
    {
    NODE *arg = runnable_arg(args);
 
@@ -304,15 +312,15 @@ NODE *pos_int_arg(NODE *args)
 
 NODE *lrepeat(NODE *args)
    {
-   NODE *cnt, *torpt, *retval = NIL;
+   NODE * cnt = pos_int_arg(args);
+   NODE * torpt = lrun(cdr(args));
 
-   cnt = pos_int_arg(args);
-   torpt = lrun(cdr(args));
+   NODE *retval = NIL;
    if (NOT_THROWING)
       {
       retval = make_cont(repeat_continuation, cons(cnt, torpt));
       }
-   return (retval);
+   return retval;
    }
 
 NODE *lrepcount(NODE *)
@@ -325,7 +333,9 @@ NODE *lforever(NODE *args)
    NODE *torpt = lrun(args);
 
    if (NOT_THROWING)
+      {
       return make_cont(repeat_continuation, cons(make_intnode(-1), torpt));
+      }
    return NIL;
    }
 
@@ -333,7 +343,11 @@ NODE *ltest(NODE *args)
    {
    bool arg = boolean_arg(args);
 
-   if (tailcall != 0) return Unbound;
+   if (tailcall != 0)
+      {
+      return Unbound;
+      }
+
    if (NOT_THROWING)
       {
       ift_iff_flag = arg ? 1 : 0;
@@ -345,21 +359,33 @@ NODE *ltest(NODE *args)
 NODE *liftrue(NODE *args)
    {
    if (ift_iff_flag < 0)
-      return (err_logo(NO_TEST, NIL));
+      {
+      return err_logo(NO_TEST, NIL);
+      }
    else if (ift_iff_flag > 0)
-      return (lrun(args));
+      {
+      return lrun(args);
+      }
    else
-      return (NIL);
+      {
+      return NIL;
+      }
    }
 
 NODE *liffalse(NODE *args)
    {
    if (ift_iff_flag < 0)
-      return (err_logo(NO_TEST, NIL));
+      {
+      return err_logo(NO_TEST, NIL);
+      }
    else if (ift_iff_flag == 0)
-      return (lrun(args));
+      {
+      return lrun(args);
+      }
    else
-      return (NIL);
+      {
+      return NIL;
+      }
    }
 
 void prepare_to_exit(bool /* okay */)
@@ -392,7 +418,7 @@ NODE *ltime(NODE *)
 /* LOGO time */
 NODE *ltimemilli(NODE *)
    {
-   return (make_intnode((FIXNUM) GetTickCount()));
+   return make_intnode((FIXNUM) GetTickCount());
    }
 
 NODE *lwait(NODE *args)
@@ -408,7 +434,7 @@ NODE *lwait(NODE *args)
       while (GetTickCount() < endTime && !IsTimeToHalt) 
          {
          MyMessageScan();
-         Sleep(1);  // yeild
+         Sleep(1);  // yield
          }
       }
    return Unbound;
@@ -420,7 +446,11 @@ NODE *lshell(NODE *args)
    cnv_strnode_string(textbuf, args);
 
    if (WinExec(textbuf, SW_SHOW) > 31)
+      {
       return Truex;
+      }
    else
+      {
       return Falsex;
+      }
    }
