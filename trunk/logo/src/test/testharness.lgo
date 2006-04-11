@@ -50,6 +50,7 @@ LOAD "step.lgo
 LOAD "bury.lgo
 LOAD "erase.lgo
 LOAD "logoversion.lgo
+LOAD "apply.lgo
 
 TO TESTALL
 
@@ -67,6 +68,7 @@ TO TESTALL
   ARRAYTEST       ; from array.lgo
   QUEUETEST       ; from queue.lgo
   LOGICTEST       ; from logic.lgo
+  APPLYTEST       ; from apply.lgo
   MATHTEST        ; from math.lgo
   PROCEDURETEST   ; from procedure.lgo
   MACROTEST       ; from macro.lgo
