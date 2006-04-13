@@ -49,6 +49,7 @@ Part II) New features/bugs fixed:
     o Fix numerous memory leaks.
     o Fix minor typos and omissions in documentation.
     o Implement request #1466722; Add the LOGOVERSION command.
+    o Make CLOSEALL a primitive.
 
   * Added for 6.7.2,
     o Fix bug #1372489; double-clicking .lgo file starts new FMSLogo process.
