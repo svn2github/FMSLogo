@@ -7,6 +7,39 @@ Command line options can be set as properties of your shortcut to &PRODUCTNAME;.
 Just add these switches after the &LOGOEXE;.
 </para>
 
+<para>
+You can add any command line option to the &PRODUCTNAME; program icon so that when you double click on it, &PRODUCTNAME; will start with the selected option.
+For example, if you want to start &PRODUCTNAME; in "<link linkend="commandline-e">expert</link>" mode:
+
+
+<orderedlist>
+<listitem>
+<para>
+Right-click on the FMSLogo program icon.
+</para>
+</listitem>
+
+<listitem>
+<para>
+Click the Shortcut tab in the Properties dialog.
+</para>
+</listitem>
+
+<listitem>
+<para>
+In the Target field, add the command -E so the line looks like this <userinput>"C:\Program Files\FMSLogo\fmslogo.exe" -E</userinput>.
+</para>
+</listitem>
+
+<listitem>
+<para>
+Click the OK button.
+</para>
+</listitem>
+</orderedlist>
+
+The next time you double click the program icon, &PRODUCTNAME; will start in expert mode.
+</para>
 
 <section id="commandline-w">
 <title>-W</title>

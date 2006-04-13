@@ -48,7 +48,7 @@ What is turtle graphics?
 </para>
 
 <para>
-Turtle graphics is a simple and powerful set of commands to manipulate a turtle.
+Turtle graphics is a simple and powerful set of commands used to manipulate a screen object called a turtle.
 </para>
 
 <para>
@@ -57,6 +57,7 @@ Why do they call it a "turtle"?
 
 <para>
 The first version of &GENERICNAME; used an electronic robot that resembled a turtle.
+The robot drew lines on a big piece of paper that was laid on the floor.
 In the case of a video screen (like this &GENERICNAME;) it's simply a cursor (or pointer) of where the turtle is.
 </para>
 
@@ -202,7 +203,7 @@ You may not realize it but this is <emphasis>programming</emphasis>.
 
 <para>
 Now that we have a program, it's a good idea to save it to a file.
-The edits you've made so far are all within &GENERICNAME;'s memory and not on the disk.
+The edits you've made so far are all in &GENERICNAME;'s memory and not on the disk.
 How do you save your work?
 It's easy.
 </para>
@@ -212,7 +213,8 @@ BYE
 </programlisting>
 
 <para>
-If you ever want to use these definitions again you'll have to reload them.  How do you reload you work from disk?
+If you ever want to use these definitions again you'll have to reload them.
+How do you reload you work from disk?
 </para>
 
 <programlisting>LOAD "SHAPES.LGO</programlisting>
