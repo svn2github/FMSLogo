@@ -154,8 +154,6 @@ extern NODE *last_ufun;
 extern NODE *this_line;
 extern NODE *last_line;
 extern NODE *didnt_get_output;
-extern NODE *var;
-extern NODE *var_stack;
 extern NODE *output_node;
 extern NODE *last_call;
 extern NODE *didnt_output_name;

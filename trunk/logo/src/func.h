@@ -1,5 +1,4 @@
-/* File IBMTERM.CPP: */
-
+// File ibmterm.cpp
 #include "3dsolid.h"
 
 extern void single_step_box(NODE *the_line);
@@ -47,8 +46,7 @@ extern bool button(void);
 extern void tone(FIXNUM pitch, FIXNUM duration);
 extern void check_scroll(void);
 
-/* File WRKSP.CPP: */
-
+// File wrksp.cpp
 extern NODE *ltext(NODE *args);
 extern NODE *lfulltext(NODE *args);
 extern NODE *ldefine(NODE *args);
@@ -57,7 +55,6 @@ extern NODE *anonymous_function(NODE *text);
 extern NODE *lto(NODE *args);
 extern NODE *lmacro(NODE *args);
 extern NODE *lmake(NODE *args);
-extern NODE *llocal(NODE *args);
 extern NODE *lcontents(NODE *arg);
 extern NODE *lstepped(NODE *arg);
 extern NODE *ltraced(NODE *arg);
@@ -85,8 +82,7 @@ extern NODE *ldefinedp(NODE *args);
 extern NODE *lmacrop(NODE *args);
 extern NODE *lcopydef(NODE *args);
 
-/* File GRAPHICS.CPP: */
-
+// File graphics.cpp
 extern FIXNUM g_round(FLONUM n);
 extern FLONUM numeric_node_to_flonum(NODE* numeric_node);
 extern FIXNUM numeric_node_to_fixnum(NODE* numeric_node);
@@ -216,8 +212,7 @@ extern NODE *lrefresh(NODE *args);
 extern NODE *lnorefresh(NODE *args);
 
 
-/* File MAIN.CPP: */
-
+// File main.cpp
 extern void update_status_all(BOOL bUpdate);
 extern void update_status_memory(void);
 extern void update_status_evals(void);
@@ -253,8 +248,7 @@ extern void thepencolor(int, int, int);
 extern void thefloodcolor(int, int, int);
 extern void thescreencolor(int, int, int);
 
-/* File COMS.CPP: */
-
+// File coms.cpp
 extern void prepare_to_exit(bool okay);
 extern NODE *make_cont(enum labels cont, NODE *val);
 extern NODE *loutput(NODE *arg);
@@ -333,8 +327,7 @@ extern NODE *lremprop(NODE *args);
 extern NODE *lplist(NODE *args);
 extern NODE *llogoversion(NODE *args);
 
-/* File TERM.CPP: */
-
+// File term.cpp
 extern void termcap_putter(char ch);
 extern void termcap_getter(char *cap, char *buf);
 extern void term_init(void);
@@ -346,7 +339,7 @@ extern NODE *lsetcursor(NODE *args);
 extern NODE *lsetmargins(NODE *args);
 extern NODE *lstandout(NODE *args);
 
-/* File PRINT.CPP: */
+// File print.cpp
 extern void real_print_node(FILE *strm, const NODE *nd, int depth, int width);
 extern void update_coords(char ch);
 extern void print_char(FILE *strm, char ch);
@@ -360,8 +353,7 @@ extern NODE *lshow(NODE *args);
 extern NODE *ltype(NODE *args);
 extern NODE *lprint(NODE *args);
 
-/* File PARSE.CPP: */
-
+// File parse.cpp
 extern int rd_getc(FILE *strm);
 extern NODE *reader(FILE *strm, const char *prompt);
 extern NODE *parser(NODE *nd, bool semi);
@@ -392,8 +384,7 @@ extern void use_reserve_tank(void);
 extern void check_reserve_tank(void);
 extern void free_segment_list(void);
 
-/* File MATH.CPP: */
-
+// file math.cpp
 extern int numberp(NODE *snd);
 extern NODE *lrandom(NODE *arg);
 extern NODE *lrerandom(NODE *arg);
@@ -438,8 +429,7 @@ extern NODE *l_eq(NODE *args);
 extern NODE *lbeforep(NODE *args);
 
 
-/* File LISTS.CPP: */
-
+// file lists.cpp
 extern NODE *list_arg(NODE *args);
 extern NODE *lbutfirst(NODE *args);
 extern NODE *lbutlast(NODE *args);
@@ -478,17 +468,16 @@ extern NODE *lscan(NODE *args);
 extern NODE *l_setfirst(NODE *args);
 extern NODE *l_setbf(NODE *args);
 
-/* File INTERN.CPP: */
+// file intern.cpp
 extern NODE *make_instance(NODE *casend, NODE *lownd);
 extern NODE *intern(NODE *nd);
 extern void release_all_objects();
 
-/* File INIT.CPP: */
+// file init.cpp
 extern void init(void);
 extern void uninit(void);
 
-/* File FILES.CPP: */
-
+// File files.cpp
 extern FILE *open_file(NODE *arg, const char *access);
 extern NODE *ldribble(NODE *arg);
 extern NODE *lnodribble(NODE *arg);
@@ -528,6 +517,7 @@ extern void spush(NODE *obj, NODE **stack);
 extern void eval_driver(NODE *line);
 extern NODE *lapply(NODE *args);
 extern NODE *lqm(NODE *args);
+extern NODE *llocal(NODE *args);
 extern void tell_shadow(NODE *arg);
 extern bool not_local(NODE *name, NODE *sp);
 extern void uninitialize_eval(void);

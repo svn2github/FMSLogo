@@ -522,60 +522,6 @@ NODE *lmake(NODE *args)
    return Unbound;
    }
 
-NODE *llocal(NODE *args)
-   {
-   NODE *vsp = var_stack;
-
-   if (tailcall != 0) 
-     {
-     return Unbound;
-     }
-
-   if (args == NIL) 
-     {
-     return Unbound;
-     }
-
-   while (is_list(car(args)) && cdr(args) != NIL && NOT_THROWING)
-      {
-      setcar(args, err_logo(BAD_DATA, car(args)));
-      }
-
-   if (is_list(car(args)))
-      {
-      args = car(args);
-      }
-
-   while (args != NIL && NOT_THROWING)
-      {
-      NODE * arg = car(args);
-      while (!is_word(arg) && NOT_THROWING)
-         {
-         arg = err_logo(BAD_DATA, arg);
-         setcar(args, arg);            // prevent crash in lapply
-         }
-      if (NOT_THROWING)
-         {
-         arg = intern(arg);
-         setcar(args, arg);            // local [a b] faster next time
-         if (not_local(arg, vsp))
-            {
-            push(arg, var_stack);
-            setobject(var_stack, valnode__caseobj(arg));
-            }
-         setvalnode__caseobj(arg, Unbound);
-         tell_shadow(arg);
-         args = cdr(args);
-         }
-      if (check_throwing) 
-         {
-         break;
-         }
-      }
-   var = reref(var, var_stack);        // so eval won't undo our work
-   return Unbound;
-   }
-
 static NODE *cnt_list = NIL;
 static NODE *cnt_last = NIL;
 static int want_buried = 0;

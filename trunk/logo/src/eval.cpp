@@ -51,38 +51,35 @@
 
 #define nameis(x,y)         ((object__caseobj(x)) == (object__caseobj(y)))
 
-//
-// These variables are all externed in globals.h
-//
 NODE *fun = NIL;                 // current function name
 NODE *ufun = NIL;                // current user-defined function name
 NODE *last_ufun = NIL;           // the function that called this one
 NODE *this_line = NIL;           // the current instruction line
 NODE *last_line = NIL;           // the line that called this one
-NODE *var_stack = NIL;           // the stack of variables and their bindings
-NODE *var = NIL;                 // frame pointer into var_stack
 NODE *last_call = NIL;           // the last proc called
 NODE *didnt_output_name = NIL;   // the name of the proc that didn't OP
 NODE *didnt_get_output = NIL;    // the name of the proc that wanted the OP
 NODE *output_node = NIL;         // the output of the current function
 FIXNUM repcountup;               // up count for repeat
 
-
 CTRLTYPE stopping_flag = RUN;
 char *logolib;
-FIXNUM tailcall;                      /* 0 in sequence, 1 for tail, -1 for arg*/
-FIXNUM val_status;                    /* 0 means no value allowed (body of cmd),
-1 means value required (arg),
-2 means OUTPUT ok (body of oper),
-3 means val or no val ok (fn inside catch),
-4 means no value in macro (repeat),
-5 means value maybe ok in macro (catch)
-*/
+FIXNUM tailcall;    // 0 in sequence, 1 for tail, -1 for arg
+
+FIXNUM val_status;  // 0 means no value allowed (body of cmd),
+                    // 1 means value required (arg),
+                    // 2 means OUTPUT ok (body of oper),
+                    // 3 means val or no val ok (fn inside catch),
+                    // 4 means no value in macro (repeat),
+                    // 5 means value maybe ok in macro (catch)
+
 FIXNUM dont_fix_ift = 0;
 
-/* These variables are local to this file. */
-static NODE *qm_list = NIL;            /* question mark list                  */
-static int trace_level = 0;            /* indentation level when tracing      */
+static NODE *qm_list = NIL;      // question mark list
+static int trace_level = 0;      // indentation level when tracing
+
+static NODE *var       = NIL;    // frame pointer into var_stack
+static NODE *var_stack = NIL;    // the stack of variables and their bindings
 
 void spop(NODE **stack)
    {
@@ -167,6 +164,61 @@ NODE *lqm(NODE *args)
       return err_logo(BAD_DATA_UNREC, make_intnode(argnum));
       }
    return car(np);
+   }
+
+
+NODE *llocal(NODE *args)
+   {
+   NODE *vsp = var_stack;
+
+   if (tailcall != 0) 
+     {
+     return Unbound;
+     }
+
+   if (args == NIL) 
+     {
+     return Unbound;
+     }
+
+   while (is_list(car(args)) && cdr(args) != NIL && NOT_THROWING)
+      {
+      setcar(args, err_logo(BAD_DATA, car(args)));
+      }
+
+   if (is_list(car(args)))
+      {
+      args = car(args);
+      }
+
+   while (args != NIL && NOT_THROWING)
+      {
+      NODE * arg = car(args);
+      while (!is_word(arg) && NOT_THROWING)
+         {
+         arg = err_logo(BAD_DATA, arg);
+         setcar(args, arg);            // prevent crash in lapply
+         }
+      if (NOT_THROWING)
+         {
+         arg = intern(arg);
+         setcar(args, arg);            // local [a b] faster next time
+         if (not_local(arg, vsp))
+            {
+            push(arg, var_stack);
+            setobject(var_stack, valnode__caseobj(arg));
+            }
+         setvalnode__caseobj(arg, Unbound);
+         tell_shadow(arg);
+         args = cdr(args);
+         }
+      if (check_throwing) 
+         {
+         break;
+         }
+      }
+   var = reref(var, var_stack);        // so eval won't undo our work
+   return Unbound;
    }
 
 // Warn the user if a local variable shadows a global one.
