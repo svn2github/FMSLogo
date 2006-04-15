@@ -802,20 +802,7 @@ NODE *get_contents_list(int filter)
 
 NODE *lcontents(NODE *)
    {
-   NODE *ret;
-
-   want_buried = 0;
-
-   ret = cons_list(get_contents(c_PLISTS));
-   ref(ret);
-
-   push(get_contents(c_VARS), ret);
-
-   push(get_contents(c_PROCS), ret);
-
-   deref(cnt_list);
-   cnt_list = NIL;
-   return (unref(ret));
+   return get_contents_list(0);
    }
 
 NODE *ltraced(NODE *)
