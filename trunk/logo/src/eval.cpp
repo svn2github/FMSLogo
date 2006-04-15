@@ -587,7 +587,10 @@ NODE *evaluator(NODE *list, enum labels where)
          arg = car(argl);
          if (tracing || traceflag)
             {
-            print_node(writestream, maybe_quote(arg));
+            NODE * quoted_arg = vref(maybe_quote(arg));
+            print_node(writestream, quoted_arg);
+            deref(quoted_arg);
+
             print_space(writestream);
             }
          }
@@ -953,9 +956,9 @@ NODE *evaluator(NODE *list, enum labels where)
          }
       else
          {
-         ref(val);
-         ndprintf(writestream, " outputs %s\n", maybe_quote(val));
-         deref(val);
+         NODE * quoted_val = vref(maybe_quote(val));
+         ndprintf(writestream, " outputs %s\n", quoted_val);
+         deref(quoted_val);
          }
       }
    goto fetch_cont;
