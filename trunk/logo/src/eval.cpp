@@ -587,6 +587,7 @@ NODE *evaluator(NODE *list, enum labels where)
          arg = car(argl);
          if (tracing || traceflag)
             {
+            // trace the input
             NODE * quoted_arg = vref(maybe_quote(arg));
             print_node(writestream, quoted_arg);
             deref(quoted_arg);
@@ -952,10 +953,12 @@ NODE *evaluator(NODE *list, enum labels where)
       print_node(writestream, fun);
       if (val == Unbound)
          {
+         // trace that the procedure stopped (without outputting anything)
          ndprintf(writestream, " stops\n");
          }
       else
          {
+         // trace the output
          NODE * quoted_val = vref(maybe_quote(val));
          ndprintf(writestream, " outputs %s\n", quoted_val);
          deref(quoted_val);
