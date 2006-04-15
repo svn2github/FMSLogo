@@ -632,6 +632,42 @@ INFO: Executing [(NOT "truex)] set error string to [NOT doesn't like truex as in
 INFO: Executing invalid instruction: [(NOT "true "true)]
 INFO: Executing [(NOT "true "true)] set error code to 8 , as expected
 INFO: Executing [(NOT "true "true)] set error string to [too much inside ()'s]
+PASS: [APPLY "SUM [123]] returned 123 , as expected.
+PASS: [APPLY "SUM [100 20 3]] returned 123 , as expected.
+PASS: [APPLY "APPLYTEST.NONPRIMITIVE [120 3]] returned 123 , as expected.
+CALL: APPLY "APPLYTEST.NOOUTPUT []
+PASS: [APPLY [1] []] returned 1 , as expected.
+PASS: [APPLY "APPLY [SUM [100 20 3]]] returned 123 , as expected.
+INFO: Executing invalid instruction: [(APPLY "SUM)]
+INFO: Executing [(APPLY "SUM)] set error code to 6 , as expected
+INFO: Executing [(APPLY "SUM)] set error string to [not enough inputs to APPLY]
+INFO: Executing invalid instruction: [(APPLY "SUM [1 2 3] "toomany)]
+INFO: Executing [(APPLY "SUM [1 2 3] "toomany)] set error code to 8 , as expected
+INFO: Executing [(APPLY "SUM [1 2 3] "toomany)] set error string to [too much inside ()'s]
+INFO: Executing invalid instruction: [APPLY "NONEXISTENT [1 2 3]]
+INFO: Executing [APPLY "NONEXISTENT [1 2 3]] set error code to 24 , as expected
+INFO: Executing [APPLY "NONEXISTENT [1 2 3]] set error string to [I don't know how to NONEXISTENT]
+INFO: Executing invalid instruction: [APPLY "TO []]
+INFO: Executing [APPLY "TO []] set error code to 24 , as expected
+INFO: Executing [APPLY "TO []] set error string to [I don't know how to TO]
+INFO: Executing invalid instruction: [APPLY 1 []]
+INFO: Executing [APPLY 1 []] set error code to 24 , as expected
+INFO: Executing [APPLY 1 []] set error string to [I don't know how to 1]
+INFO: Executing invalid instruction: [APPLY {1 2 3} [1 2 3]]
+INFO: Executing [APPLY {1 2 3} [1 2 3]] set error code to 32
+INFO: Executing [APPLY {1 2 3} [1 2 3]] set error string to [APPLY doesn't like {1 2 3} as input]
+INFO: Executing invalid instruction: [APPLY [1 2 3] [1 2 3]]
+INFO: Executing [APPLY [1 2 3] [1 2 3]] set error code to 9
+INFO: Executing [APPLY [1 2 3] [1 2 3]] set error string to [You don't say what to do with 1]
+INFO: Executing invalid instruction: [APPLY "SUM {1 2 3}]
+INFO: Executing [APPLY "SUM {1 2 3}] set error code to 32
+INFO: Executing [APPLY "SUM {1 2 3}] set error string to [APPLY doesn't like {1 2 3} as input]
+INFO: Executing invalid instruction: [APPLY "APPLYTEST.NONPRIMITIVE [1]]
+INFO: Executing [APPLY "APPLYTEST.NONPRIMITIVE [1]] set error code to 6 , as expected
+INFO: Executing [APPLY "APPLYTEST.NONPRIMITIVE [1]] set error string to [not enough inputs to APPLYTEST.NONPRIMITIVE]
+INFO: Executing invalid instruction: [APPLY "APPLYTEST.NONPRIMITIVE [1 2 3]]
+INFO: Executing [APPLY "APPLYTEST.NONPRIMITIVE [1 2 3]] set error code to 8 , as expected
+INFO: Executing [APPLY "APPLYTEST.NONPRIMITIVE [1 2 3]] set error string to [too much inside ()'s]
 PASS: [0 + 0] returned 0 , as expected.
 PASS: [0 + 1] returned 1 , as expected.
 PASS: [0 + -1] returned -1 , as expected.
@@ -2298,7 +2334,7 @@ INFO: Executing [(LOCALMAKE)] set error string to [not enough inputs to LOCALMAK
 INFO: Executing invalid instruction: [(CONTENTS "toomany)]
 INFO: Executing [(CONTENTS "toomany)] set error code to 8 , as expected
 INFO: Executing [(CONTENTS "toomany)] set error string to [too much inside ()'s]
-PASS: [PROCEDURES] returned [#test .eqtest abstest activeareatest allopentest andtest angleiscloseenough arcbadinputtest arccostest arcsintest arcsmoketest arctantest arctest arraybadinputtest arrayorigintest arrayptest arraysmoketest arraytest asciitest beforeptest bitcopytest bitloadsizetest bitmaptest bug1349374test bug1377856test bug1383281test bug1384267test bug1388325test bug1397560test bug1429960test bug1438863test bug1448155test bug1458661test burytest burytest.badinput burytest.buriedprocedure burytest.buryall burytest.procedure burytest.propertylist burytest.variable butfirsttest butlasttest buttonptest chdirtest client.onreadytosend colorsetgettest colortest controlflowtest copydefmaybeoutputtest copydefoptest copydefoutputtest copydefstoptest copydeftest copydeftotest costest differencetest difficultcomments directorysmoketest directorytest dllcalltest dllfreetest dllloadtest dllsmoketest dlltest doorientationtest dribbletest echo edalltest editortest emptyptest equalptest erasefiletest erasetest erasetest.badinput erasetest.eraseall erasetest.eraseprocedure erasetest.erasepropertylist erasetest.erasevariable erasetest.ern erasetest.erpl error.30.test errortest errortest.checkerror exptest filebadinputtest filesmoketest filetest filltest filltimerevent floodcolortest formtest helptest i.dont.know.what.to.do.with.value iftest inporttest inttest iseqtest labelbadinputtest labelcircletest labeltest largeedittest lasttest listptest lntest loadtest localvartest log10test logictest logoversiontest logoversiontest.badinput logoversiontest.smoketest macro.return.unbound.instead.of.list macrotest macrotest.outputnothing mathtest memberptest minustest misctest mkdirtest modulotest my.proc.to.step myadd mymacro netshutdowncrash networksmoketest networktest no.input.no.output nodestest nottest numberptest one.input.no.output openappendtest opendirectoryasfiletest openopenfiletest openupdatetest orientationtest ortest outporttest output.373 parsefunctest parsenumbertest parsetest parsewordtest pasteincircle pencolortest penmodetest pentest penupdowntest perspectivetest pitest plisttest porttest powertest predicatetest procedure.shadows.myshadowedvar procedure.with.to.inside.it procedureinworkingdirectory proceduretest producttest queuetest queuetest.badinput queuetest.circulartest queuetest.smoketest quotienttest radarccostest radarcsintest radarctantest radcostest radsintest radtantest rawasciitest remaindertest reporttest reporttestfailed reporttestinfo reporttestinitialize reporttestpassed reporttestuninitialize rmdirtest roundtest runbadinputtest runexpecterrortest runfilesystemerrortest runhasnovaluetest runidontknowhowtotest runisaprimitivetest runnotenoughinputstest runtest runtoomanyinputstest sampleproc screencolortest screentest scrunchtest server.start server.stop setitemtest setlabelfonttest setrandomorientation setreadpostest setwritepostest signtest simplereporttest sintest sortbadinputtest sortbylegs sortbyname sortregressiontest sorttest sorttest.nonpredicate sorttest.oneinputbydefault sorttest.oneinputproc sorttest.threeinputproc sqrttest steptest steptest.badinput steptest.procedure steptest.propertylist steptest.shadowvariable steptest.stepall steptest.steppedprocedure steptest.variable sumtest tantest testall timecommand timewait traceinstruction tracetest tracetest.badinput tracetest.function tracetest.procedure tracetest.propertylist tracetest.traceall tracetest.tracedfunction tracetest.tracedprocedure tracetest.variable waittest windowsettest windowtest wordproctest wordptest wordtest ~ignoreme ~ignoremewascalled] , as expected.
+PASS: [PROCEDURES] returned [#test .eqtest abstest activeareatest andtest angleiscloseenough applytest applytest.badinput applytest.nonprimitive applytest.nooutput applytest.smoketest arcbadinputtest arccostest arcsintest arcsmoketest arctantest arctest arraybadinputtest arrayorigintest arrayptest arraysmoketest arraytest asciitest beforeptest bitcopytest bitloadsizetest bitmaptest bug1349374test bug1377856test bug1383281test bug1384267test bug1388325test bug1397560test bug1429960test bug1438863test bug1448155test bug1458661test burytest burytest.badinput burytest.buriedprocedure burytest.buryall burytest.procedure burytest.propertylist burytest.variable butfirsttest butlasttest buttonptest chdirtest client.onreadytosend colorsetgettest colortest controlflowtest copydefmaybeoutputtest copydefoptest copydefoutputtest copydefstoptest copydeftest copydeftotest costest differencetest difficultcomments directorysmoketest directorytest dllcalltest dllfreetest dllloadtest dllsmoketest dlltest doorientationtest echo edalltest editortest emptyptest equalptest erasetest erasetest.badinput erasetest.eraseall erasetest.eraseprocedure erasetest.erasepropertylist erasetest.erasevariable erasetest.ern erasetest.erpl error.30.test errortest errortest.checkerror exptest filetest filetest.allopen filetest.badinput filetest.closeall filetest.dribble filetest.erasefile filetest.openappend filetest.opendirectoryasfile filetest.openopenfile filetest.openupdate filetest.setreadpos filetest.setwritepos filetest.smoketest filltest filltimerevent floodcolortest formtest helptest i.dont.know.what.to.do.with.value iftest inporttest inttest iseqtest labelbadinputtest labelcircletest labeltest largeedittest lasttest listptest lntest loadtest localvartest log10test logictest logoversiontest logoversiontest.badinput logoversiontest.smoketest macro.return.unbound.instead.of.list macrotest macrotest.outputnothing mathtest memberptest minustest misctest mkdirtest modulotest my.proc.to.step myadd mymacro netshutdowncrash networksmoketest networktest no.input.no.output nodestest nottest numberptest one.input.no.output orientationtest ortest outporttest output.373 parsefunctest parsenumbertest parsetest parsewordtest pasteincircle pencolortest penmodetest pentest penupdowntest perspectivetest pitest plisttest porttest powertest predicatetest procedure.shadows.myshadowedvar procedure.with.to.inside.it procedureinworkingdirectory proceduretest producttest queuetest queuetest.badinput queuetest.circulartest queuetest.smoketest quotienttest radarccostest radarcsintest radarctantest radcostest radsintest radtantest rawasciitest remaindertest reporttest reporttestfailed reporttestinfo reporttestinitialize reporttestpassed reporttestuninitialize rmdirtest roundtest runbadinputtest runexpecterrortest runfilesystemerrortest runhasnovaluetest runidontknowhowtotest runisaprimitivetest runnonrecoverableidontknowhowtotest runnotenoughinputstest runtest runtoomanyinputstest sampleproc screencolortest screentest scrunchtest server.start server.stop setitemtest setlabelfonttest setrandomorientation signtest simplereporttest sintest sortbadinputtest sortbylegs sortbyname sortregressiontest sorttest sorttest.nonpredicate sorttest.oneinputbydefault sorttest.oneinputproc sorttest.threeinputproc sqrttest steptest steptest.badinput steptest.procedure steptest.propertylist steptest.shadowvariable steptest.stepall steptest.steppedprocedure steptest.variable sumtest tantest testall timecommand timewait traceinstruction tracetest tracetest.badinput tracetest.function tracetest.procedure tracetest.propertylist tracetest.traceall tracetest.tracedfunction tracetest.tracedprocedure tracetest.variable waittest windowsettest windowtest wordproctest wordptest wordtest ~ignoreme ~ignoremewascalled] , as expected.
 INFO: Executing invalid instruction: [(PROCEDURES "toomany)]
 INFO: Executing [(PROCEDURES "toomany)] set error code to 8 , as expected
 INFO: Executing [(PROCEDURES "toomany)] set error string to [too much inside ()'s]
@@ -2323,6 +2359,18 @@ INFO: Executing [NAMELIST {a b}] set error string to [namelist doesn't like {a b
 INFO: Executing invalid instruction: [(NAMELIST "a "b)]
 INFO: Executing [(NAMELIST "a "b)] set error code to 8 , as expected
 INFO: Executing [(NAMELIST "a "b)] set error string to [too much inside ()'s]
+CALL: PO CONTENTS
+CALL: PO NAMES
+CALL: PO PROCEDURES
+CALL: PO BURIED
+CALL: PO PLISTS
+CALL: PO []
+CALL: POALL
+CALL: POPS
+CALL: PONS
+CALL: POPLS
+CALL: PON "namepvariable
+CALL: PON [namepvariable]
 INFO: Executing invalid instruction: [(POPL)]
 INFO: Executing [(POPL)] set error code to 6 , as expected
 INFO: Executing [(POPL)] set error string to [not enough inputs to POPL]
@@ -2332,21 +2380,35 @@ INFO: Executing [(POPL "numbertoword "toomany)] set error string to [too much in
 INFO: Executing invalid instruction: [(PO)]
 INFO: Executing [(PO)] set error code to 6 , as expected
 INFO: Executing [(PO)] set error string to [not enough inputs to PO]
-INFO: Executing invalid instruction: [(PO "pot "pots)]
-INFO: Executing [(PO "pot "pots)] set error code to 8 , as expected
-INFO: Executing [(PO "pot "pots)] set error string to [too much inside ()'s]
-INFO: Executing invalid instruction: [PO "forward]
-INFO: Executing [PO "forward] set error code to 22
-INFO: Executing [PO "forward] set error string to [forward is a primitive]
-INFO: Executing invalid instruction: [PO "nonexistent]
-INFO: Executing [PO "nonexistent] set error code to 24
-INFO: Executing [PO "nonexistent] set error string to [I don't know how to nonexistent]
-INFO: Executing invalid instruction: [PO [nonexistent]]
-INFO: Executing [PO [nonexistent]] set error code to 24
-INFO: Executing [PO [nonexistent]] set error string to [I don't know how to nonexistent]
-INFO: Executing invalid instruction: [PO {a}]
-INFO: Executing [PO {a}] set error code to 4
-INFO: Executing [PO {a}] set error string to [PO doesn't like {a} as input]
+INFO: Executing invalid instruction: [(PO [[] [] []] "toomany)]
+INFO: Executing [(PO [[] [] []] "toomany)] set error code to 8 , as expected
+INFO: Executing [(PO [[] [] []] "toomany)] set error string to [too much inside ()'s]
+INFO: Executing invalid instruction: [PO [[forward] [] []]]
+INFO: Executing [PO [[forward] [] []]] set error code to 22 , as expected
+INFO: Executing [PO [[forward] [] []]] set error string to [forward is a primitive]
+INFO: Executing invalid instruction: [PO [[nonexistent] [] []]]
+INFO: Executing [PO [[nonexistent] [] []]] set error code to 24 , as expected
+INFO: Executing [PO [[nonexistent] [] []]] set error string to [I don't know how to nonexistent]
+INFO: Executing invalid instruction: [PO [[] [nonexistent] []]]
+INFO: Executing [PO [[] [nonexistent] []]] set error code to 11 , as expected
+INFO: Executing [PO [[] [nonexistent] []]] set error string to [nonexistent has no value]
+INFO: Executing invalid instruction: [PO {PROCEDURETEST}]
+INFO: Executing [PO {PROCEDURETEST}] set error code to 4
+INFO: Executing [PO {PROCEDURETEST}] set error string to [PO doesn't like {PROCEDURETEST} as input]
+INFO: Executing invalid instruction: [PO [[PROCEDURETEST] [namepvariable] {c}]]
+INFO: Executing [PO [[PROCEDURETEST] [namepvariable] {c}]] set error code to 4
+INFO: Executing [PO [[PROCEDURETEST] [namepvariable] {c}]] set error string to [PO doesn't like {c} as input]
+INFO: Executing invalid instruction: [PO [PROCEDURETEST SAMPLEPROC {c}]]
+INFO: Executing [PO [PROCEDURETEST SAMPLEPROC {c}]] set error code to 4
+INFO: Executing [PO [PROCEDURETEST SAMPLEPROC {c}]] set error string to [PO doesn't like {c} as input]
+INFO: Executing invalid instruction: [PO [[PROCEDURETEST SAMPLEPROC {c}]]]
+INFO: Executing [PO [[PROCEDURETEST SAMPLEPROC {c}]]] set error code to 4
+INFO: Executing [PO [[PROCEDURETEST SAMPLEPROC {c}]]] set error string to [PO doesn't like {c} as input]
+INFO: Executing invalid instruction: [PO [[PROCEDURETEST] [namepvariable] [c] [d]]]
+FAIL: Executing [PO [[PROCEDURETEST] [namepvariable] [c] [d]]] did not throw an error
+INFO: Executing invalid instruction: [PO [[[PROCEDURETEST]]]]
+INFO: Executing [PO [[[PROCEDURETEST]]]] set error code to 4
+INFO: Executing [PO [[[PROCEDURETEST]]]] set error string to [PO doesn't like [PROCEDURETEST] as input]
 INFO: Executing invalid instruction: [(POALL "toomany)]
 INFO: Executing [(POALL "toomany)] set error code to 8 , as expected
 INFO: Executing [(POALL "toomany)] set error string to [too much inside ()'s]
@@ -2969,7 +3031,14 @@ PASS: [READER] returned [] , as expected.
 PASS: [READLIST] returned [Hello] , as expected.
 PASS: [READLIST] returned [Hello] , as expected.
 PASS: [READLIST] returned [Jello] , as expected.
-PASS: ALLOPEN returned filealltest-2.txt filealltest-1.txt testlog.baseline.txt , as expected.
+CALL: OPENWRITE :filename1
+CALL: OPENWRITE :filename2
+PASS: [MEMBERP :filename1 ALLOPEN] returned true , as expected.
+PASS: [MEMBERP :filename2 ALLOPEN] returned true , as expected.
+CALL: CLOSE :filename1
+CALL: CLOSE :filename2
+PASS: [MEMBERP :filename1 ALLOPEN] returned false , as expected.
+PASS: [MEMBERP :filename2 ALLOPEN] returned false , as expected.
 PASS: [READLIST] returned [Hello] , as expected.
 PASS: [READLIST] returned [Good Bye] , as expected.
 INFO: Executing invalid instruction: [OPENREAD :filename]
@@ -3087,6 +3156,12 @@ INFO: Executing [(ERASEFILE)] set error string to [not enough inputs to ERASEFIL
 INFO: Executing invalid instruction: [(ERASEFILE "too "many)]
 INFO: Executing [(ERASEFILE "too "many)] set error code to 8 , as expected
 INFO: Executing [(ERASEFILE "too "many)] set error string to [too much inside ()'s]
+INFO: Executing invalid instruction: [(CLOSEALL "toomany)]
+INFO: Executing [(CLOSEALL "toomany)] set error code to 8 , as expected
+INFO: Executing [(CLOSEALL "toomany)] set error string to [too much inside ()'s]
+INFO: Executing invalid instruction: [(ALLOPEN "toomany)]
+INFO: Executing [(ALLOPEN "toomany)] set error code to 8 , as expected
+INFO: Executing [(ALLOPEN "toomany)] set error string to [too much inside ()'s]
 PASS: [PENCOLOR] returned 0 , as expected.
 PASS: [PENCOLOR] returned 15 , as expected.
 PASS: [PENCOLOR] returned 7 , as expected.
@@ -3762,10 +3837,13 @@ CALL: TRACETEST.TRACEDPROCEDURE
 PASS: [MEMBERP "TRACETEST.TRACEDFUNCTION (ITEM 1 TRACED)] returned false , as expected.
 CALL: TRACE "TRACETEST.TRACEDFUNCTION
 PASS: [MEMBERP "TRACETEST.TRACEDFUNCTION (ITEM 1 TRACED)] returned true , as expected.
-CALL: TRACETEST.TRACEDFUNCTION
+PASS: [TRACETEST.TRACEDFUNCTION 123] returned 123 , as expected.
+PASS: [TRACETEST.TRACEDFUNCTION "outputthis] returned outputthis , as expected.
+PASS: [TRACETEST.TRACEDFUNCTION [1 2 3]] returned [1 2 3] , as expected.
+CALL: TRACETEST.TRACEDFUNCTION {1 2 3}
 CALL: UNTRACE "TRACETEST.TRACEDFUNCTION
 PASS: [MEMBERP "TRACETEST.TRACEDFUNCTION (ITEM 1 TRACED)] returned false , as expected.
-CALL: TRACETEST.TRACEDFUNCTION
+PASS: [TRACETEST.TRACEDFUNCTION 123] returned 123 , as expected.
 PASS: [MEMBERP "TRACETEST.TRACEDVARIABLE (ITEM 2 TRACED)] returned false , as expected.
 CALL: TRACE NAMELIST "TRACETEST.TRACEDVARIABLE
 PASS: [MEMBERP "TRACETEST.TRACEDVARIABLE (ITEM 2 TRACED)] returned true , as expected.
@@ -3795,7 +3873,7 @@ CALL: PPROP "TRACETEST.TRACEDPLIST "PROPERTY9 [1 2 3]
 CALL: PPROP "TRACETEST.TRACEDPLIST "PROPERTY0 {1 2 3}
 CALL: MAKE "TRACETEST.TRACEDPLIST 4321
 INFO: Calling TRACE CONTENTS
-PASS: [TRACED] returned [[#test .eqtest abstest activeareatest allopentest andtest angleiscloseenough arcbadinputtest arccostest arcsintest arcsmoketest arctantest arctest arraybadinputtest arrayorigintest arrayptest arraysmoketest arraytest asciitest beforeptest bitcopytest bitloadsizetest bitmaptest bug1349374test bug1377856test bug1383281test bug1384267test bug1388325test bug1397560test bug1429960test bug1448155test bug1458661test burytest burytest.badinput burytest.buriedprocedure burytest.buryall burytest.procedure burytest.propertylist burytest.variable butfirsttest butlasttest buttonptest chdirtest client.onreadytosend colorsetgettest colortest controlflowtest copydefmaybeoutputtest copydefoptest copydefoutputtest copydefstoptest copydeftest copydeftotest costest differencetest difficultcomments directorysmoketest directorytest dllcalltest dllfreetest dllloadtest dllsmoketest dlltest doorientationtest dribbletest echo edalltest editortest emptyptest equalptest erasefiletest erasetest erasetest.badinput erasetest.eraseall erasetest.eraseprocedure erasetest.erasepropertylist erasetest.erasevariable erasetest.ern erasetest.erpl error.30.test errortest errortest.checkerror exptest filebadinputtest filesmoketest filetest filltest filltimerevent floodcolortest formtest helptest i.dont.know.what.to.do.with.value iftest inporttest inttest iseqtest labelbadinputtest labelcircletest labeltest largeedittest lasttest listptest lntest loadtest localvartest log10test logictest logoversiontest logoversiontest.badinput logoversiontest.smoketest macro.return.unbound.instead.of.list macrotest macrotest.outputnothing mathtest memberptest minustest misctest mkdirtest modulotest my.proc.to.step myadd mymacro netshutdowncrash networksmoketest networktest no.input.no.output nodestest nottest numberptest one.input.no.output openappendtest opendirectoryasfiletest openopenfiletest openupdatetest orientationtest ortest outporttest output.373 parsefunctest parsenumbertest parsetest parsewordtest pasteincircle pencolortest penmodetest pentest penupdowntest perspectivetest pitest plisttest porttest powertest predicatetest procedure.shadows.myshadowedvar procedure.with.to.inside.it procedureinworkingdirectory proceduretest producttest queuetest queuetest.badinput queuetest.circulartest queuetest.smoketest quotienttest radarccostest radarcsintest radarctantest radcostest radsintest radtantest rawasciitest remaindertest reporttest reporttestfailed reporttestinfo reporttestinitialize reporttestpassed reporttestuninitialize rmdirtest roundtest runbadinputtest runexpecterrortest runfilesystemerrortest runhasnovaluetest runidontknowhowtotest runisaprimitivetest runnotenoughinputstest runtest runtoomanyinputstest sampleproc screencolortest screentest scrunchtest server.start server.stop setitemtest setlabelfonttest setrandomorientation setreadpostest setwritepostest signtest simplereporttest sintest sortbadinputtest sortbylegs sortbyname sortregressiontest sorttest sorttest.nonpredicate sorttest.oneinputbydefault sorttest.oneinputproc sorttest.threeinputproc sqrttest steptest steptest.badinput steptest.procedure steptest.propertylist steptest.shadowvariable steptest.stepall steptest.steppedprocedure steptest.variable sumtest tantest testall timecommand timewait traceinstruction tracetest tracetest.badinput tracetest.function tracetest.procedure tracetest.propertylist tracetest.traceall tracetest.tracedfunction tracetest.tracedprocedure tracetest.variable waittest windowsettest windowtest wordproctest wordptest wordtest ~ignoreme ~ignoremewascalled] [isok netconnectoncall startup string testlog tracetest.tracedplist ~ignoremewascalled] [tracetest.tracedplist]] , as expected.
+PASS: [TRACED] returned [[#test .eqtest abstest activeareatest andtest angleiscloseenough applytest applytest.badinput applytest.nonprimitive applytest.nooutput applytest.smoketest arcbadinputtest arccostest arcsintest arcsmoketest arctantest arctest arraybadinputtest arrayorigintest arrayptest arraysmoketest arraytest asciitest beforeptest bitcopytest bitloadsizetest bitmaptest bug1349374test bug1377856test bug1383281test bug1384267test bug1388325test bug1397560test bug1429960test bug1448155test bug1458661test burytest burytest.badinput burytest.buriedprocedure burytest.buryall burytest.procedure burytest.propertylist burytest.variable butfirsttest butlasttest buttonptest chdirtest client.onreadytosend colorsetgettest colortest controlflowtest copydefmaybeoutputtest copydefoptest copydefoutputtest copydefstoptest copydeftest copydeftotest costest differencetest difficultcomments directorysmoketest directorytest dllcalltest dllfreetest dllloadtest dllsmoketest dlltest doorientationtest echo edalltest editortest emptyptest equalptest erasetest erasetest.badinput erasetest.eraseall erasetest.eraseprocedure erasetest.erasepropertylist erasetest.erasevariable erasetest.ern erasetest.erpl error.30.test errortest errortest.checkerror exptest filetest filetest.allopen filetest.badinput filetest.closeall filetest.dribble filetest.erasefile filetest.openappend filetest.opendirectoryasfile filetest.openopenfile filetest.openupdate filetest.setreadpos filetest.setwritepos filetest.smoketest filltest filltimerevent floodcolortest formtest helptest i.dont.know.what.to.do.with.value iftest inporttest inttest iseqtest labelbadinputtest labelcircletest labeltest largeedittest lasttest listptest lntest loadtest localvartest log10test logictest logoversiontest logoversiontest.badinput logoversiontest.smoketest macro.return.unbound.instead.of.list macrotest macrotest.outputnothing mathtest memberptest minustest misctest mkdirtest modulotest my.proc.to.step myadd mymacro netshutdowncrash networksmoketest networktest no.input.no.output nodestest nottest numberptest one.input.no.output orientationtest ortest outporttest output.373 parsefunctest parsenumbertest parsetest parsewordtest pasteincircle pencolortest penmodetest pentest penupdowntest perspectivetest pitest plisttest porttest powertest predicatetest procedure.shadows.myshadowedvar procedure.with.to.inside.it procedureinworkingdirectory proceduretest producttest queuetest queuetest.badinput queuetest.circulartest queuetest.smoketest quotienttest radarccostest radarcsintest radarctantest radcostest radsintest radtantest rawasciitest remaindertest reporttest reporttestfailed reporttestinfo reporttestinitialize reporttestpassed reporttestuninitialize rmdirtest roundtest runbadinputtest runexpecterrortest runfilesystemerrortest runhasnovaluetest runidontknowhowtotest runisaprimitivetest runnonrecoverableidontknowhowtotest runnotenoughinputstest runtest runtoomanyinputstest sampleproc screencolortest screentest scrunchtest server.start server.stop setitemtest setlabelfonttest setrandomorientation signtest simplereporttest sintest sortbadinputtest sortbylegs sortbyname sortregressiontest sorttest sorttest.nonpredicate sorttest.oneinputbydefault sorttest.oneinputproc sorttest.threeinputproc sqrttest steptest steptest.badinput steptest.procedure steptest.propertylist steptest.shadowvariable steptest.stepall steptest.steppedprocedure steptest.variable sumtest tantest testall timecommand timewait traceinstruction tracetest tracetest.badinput tracetest.function tracetest.procedure tracetest.propertylist tracetest.traceall tracetest.tracedfunction tracetest.tracedprocedure tracetest.variable waittest windowsettest windowtest wordproctest wordptest wordtest ~ignoreme ~ignoremewascalled] [isok netconnectoncall startup string testlog tracetest.tracedplist ~ignoremewascalled] [tracetest.tracedplist]] , as expected.
 CALL: UNTRACE CONTENTS
 PASS: [TRACED] returned [[] [] []] , as expected.
 INFO: Executing invalid instruction: [(TRACED "toomany)]
@@ -4022,7 +4100,7 @@ INFO: Executing invalid instruction: [(UNBURYALL "toomany)]
 INFO: Executing [(UNBURYALL "toomany)] set error code to 8 , as expected
 INFO: Executing [(UNBURYALL "toomany)] set error string to [too much inside ()'s]
 CALL: BURYALL
-PASS: [BURIED] returned [[# #test .eqtest ?rest ` abs abstest activeareatest allopentest andtest angleiscloseenough arc arcbadinputtest arccostest arcsintest arcsmoketest arctantest arctest arraybadinputtest arrayorigintest arrayptest arraysmoketest arraytest arraytolist asciitest beforeptest bitcopytest bitloadsizetest bitmaptest bug1349374test bug1377856test bug1383281test bug1384267test bug1388325test bug1397560test bug1429960test bug1448155test bug1458661test buryall burytest burytest.badinput burytest.buriedprocedure burytest.buryall burytest.procedure burytest.propertylist burytest.variable butfirsttest butlasttest buttonptest cascade cascade.eval cascade.setup cascade1 chdirtest circle client.onreadytosend colorsetgettest colortest combine controlflowtest copydefmaybeoutputtest copydefoptest copydefoutputtest copydefstoptest copydeftest copydeftotest costest dequeue differencetest difficultcomments dir directorysmoketest directorytest dllcalltest dllfreetest dllloadtest dllsmoketest dlltest doorientationtest dribbletest echo edall edalltest editortest emptyptest equalptest erasefiletest erasetest erasetest.badinput erasetest.eraseall erasetest.eraseprocedure erasetest.erasepropertylist erasetest.erasevariable erasetest.ern erasetest.erpl error.30.test errortest errortest.checkerror exptest filebadinputtest filesmoketest filetest filltest filltimerevent floodcolortest for for.done foreach foreach.done foreach1 forloop formtest forstep helptest i.dont.know.what.to.do.with.value icon iftest ignore inporttest inttest iseq iseq1 iseqtest labelbadinputtest labelcircletest labeltest largeedittest lasttest listptest listtoarray listtoarray1 listtoword lntest loadtest localmake localvartest log10test logictest logoversiontest logoversiontest.badinput logoversiontest.smoketest macro.return.unbound.instead.of.list macrotest macrotest.outputnothing map map1 mathtest memberptest minustest misctest mkdirtest modulotest my.proc.to.step myadd myaddcopy mymacro namelist netshutdowncrash networksmoketest networktest no.input.no.output nodestest nottest numberptest one.input.no.output openappendtest opendirectoryasfiletest openopenfiletest openupdatetest orientation orientationtest ortest outporttest output.373 parsefunctest parsenumbertest parsetest parsewordtest pasteincircle pen pencolortest penmodetest pentest penupdowntest perspectivetest pi pick pitest plisttest pllist poall pon pons pop popl popls pops porttest pots powertest predicatetest procedure.shadows.myshadowedvar procedure.with.to.inside.it procedureinworkingdirectory proceduretest producttest push queue queuetest queuetest.badinput queuetest.circulartest queuetest.smoketest quotienttest radarccostest radarcsintest radarctantest radcostest radsintest radtantest rawasciitest remaindertest reporttest reporttestfailed reporttestinfo reporttestinitialize reporttestpassed reporttestuninitialize rmdirtest roundtest runbadinputtest runexpecterrortest runfilesystemerrortest runhasnovaluetest runidontknowhowtotest runisaprimitivetest runnotenoughinputstest runtest runtoomanyinputstest sampleproc screencolortest screentest scrunchtest server.start server.stop setitemtest setlabelfonttest setorientation setrandomorientation setreadpostest settextfont setwritepostest sign signtest simplereporttest sintest sort sort.stable sortbadinputtest sortbylegs sortbyname sortregressiontest sorttest sorttest.nonpredicate sorttest.oneinputbydefault sorttest.oneinputproc sorttest.threeinputproc sqrttest steptest steptest.badinput steptest.procedure steptest.propertylist steptest.shadowvariable steptest.stepall steptest.steppedprocedure steptest.variable sumtest tantest testall timecommand timewait traceinstruction tracetest tracetest.badinput tracetest.function tracetest.procedure tracetest.propertylist tracetest.traceall tracetest.tracedfunction tracetest.tracedprocedure tracetest.variable unburyall unicon waittest windowsettest windowtest wordproctest wordptest wordtest wordtolist xcor ycor ~ignoreme ~ignoremewascalled] [caseignoredp instruction isok netconnectoncall realcontents savedburied startup string testlog tracetest.tracedplist ~ignoremewascalled] [burytest.buriedplist steptest.steppedplist tracetest.tracedplist]] , as expected.
+PASS: [BURIED] returned [[# #test .eqtest ?rest ` abs abstest activeareatest andtest angleiscloseenough applytest applytest.badinput applytest.nonprimitive applytest.nooutput applytest.smoketest arc arcbadinputtest arccostest arcsintest arcsmoketest arctantest arctest arraybadinputtest arrayorigintest arrayptest arraysmoketest arraytest arraytolist asciitest beforeptest bitcopytest bitloadsizetest bitmaptest bug1349374test bug1377856test bug1383281test bug1384267test bug1388325test bug1397560test bug1429960test bug1448155test bug1458661test buryall burytest burytest.badinput burytest.buriedprocedure burytest.buryall burytest.procedure burytest.propertylist burytest.variable butfirsttest butlasttest buttonptest cascade cascade.eval cascade.setup cascade1 chdirtest circle client.onreadytosend colorsetgettest colortest combine controlflowtest copydefmaybeoutputtest copydefoptest copydefoutputtest copydefstoptest copydeftest copydeftotest costest dequeue differencetest difficultcomments dir directorysmoketest directorytest dllcalltest dllfreetest dllloadtest dllsmoketest dlltest doorientationtest echo edall edalltest editortest emptyptest equalptest erasetest erasetest.badinput erasetest.eraseall erasetest.eraseprocedure erasetest.erasepropertylist erasetest.erasevariable erasetest.ern erasetest.erpl error.30.test errortest errortest.checkerror exptest filetest filetest.allopen filetest.badinput filetest.closeall filetest.dribble filetest.erasefile filetest.openappend filetest.opendirectoryasfile filetest.openopenfile filetest.openupdate filetest.setreadpos filetest.setwritepos filetest.smoketest filltest filltimerevent floodcolortest for for.done foreach foreach.done foreach1 forloop formtest forstep helptest i.dont.know.what.to.do.with.value icon iftest ignore inporttest inttest iseq iseq1 iseqtest labelbadinputtest labelcircletest labeltest largeedittest lasttest listptest listtoarray listtoarray1 listtoword lntest loadtest localmake localvartest log10test logictest logoversiontest logoversiontest.badinput logoversiontest.smoketest macro.return.unbound.instead.of.list macrotest macrotest.outputnothing map map1 mathtest memberptest minustest misctest mkdirtest modulotest my.proc.to.step myadd myaddcopy mymacro namelist netshutdowncrash networksmoketest networktest no.input.no.output nodestest nottest numberptest one.input.no.output orientation orientationtest ortest outporttest output.373 parsefunctest parsenumbertest parsetest parsewordtest pasteincircle pen pencolortest penmodetest pentest penupdowntest perspectivetest pi pick pitest plisttest pllist poall pon pons pop popl popls pops porttest pots powertest predicatetest procedure.shadows.myshadowedvar procedure.with.to.inside.it procedureinworkingdirectory proceduretest producttest push queue queuetest queuetest.badinput queuetest.circulartest queuetest.smoketest quotienttest radarccostest radarcsintest radarctantest radcostest radsintest radtantest rawasciitest remaindertest reporttest reporttestfailed reporttestinfo reporttestinitialize reporttestpassed reporttestuninitialize rmdirtest roundtest runbadinputtest runexpecterrortest runfilesystemerrortest runhasnovaluetest runidontknowhowtotest runisaprimitivetest runnonrecoverableidontknowhowtotest runnotenoughinputstest runtest runtoomanyinputstest sampleproc screencolortest screentest scrunchtest server.start server.stop setitemtest setlabelfonttest setorientation setrandomorientation settextfont sign signtest simplereporttest sintest sort sort.stable sortbadinputtest sortbylegs sortbyname sortregressiontest sorttest sorttest.nonpredicate sorttest.oneinputbydefault sorttest.oneinputproc sorttest.threeinputproc sqrttest steptest steptest.badinput steptest.procedure steptest.propertylist steptest.shadowvariable steptest.stepall steptest.steppedprocedure steptest.variable sumtest tantest testall timecommand timewait traceinstruction tracetest tracetest.badinput tracetest.function tracetest.procedure tracetest.propertylist tracetest.traceall tracetest.tracedfunction tracetest.tracedprocedure tracetest.variable unburyall unicon waittest windowsettest windowtest wordproctest wordptest wordtest wordtolist xcor ycor ~ignoreme ~ignoremewascalled] [caseignoredp instruction isok netconnectoncall realcontents savedburied startup string testlog tracetest.tracedplist ~ignoremewascalled] [burytest.buriedplist steptest.steppedplist tracetest.tracedplist]] , as expected.
 PASS: CONTENTS returned [[] [] []] , as expected.
 INFO: Called UNBURYALL
 PASS: [BURIED] returned [[] [] []] , as expected.
