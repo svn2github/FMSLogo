@@ -84,8 +84,6 @@ FIXNUM dont_fix_ift = 0;
 static NODE *qm_list = NIL;            /* question mark list                  */
 static int trace_level = 0;            /* indentation level when tracing      */
 
-/* These first few functions are externed in globals.h */
-
 void spop(NODE **stack)
    {
    NODE *temp = (*stack)->n_cdr;
@@ -115,6 +113,7 @@ void spush(NODE *obj, NODE **stack)
    *stack = temp;
    }
 
+static
 void numpop(NODE **stack)
    {
    NODE *temp = (*stack)->n_cdr;
@@ -126,6 +125,7 @@ void numpop(NODE **stack)
    *stack = temp;
    }
 
+static
 void numpush(FIXNUM obj, NODE **stack)
    {
    NODE *temp = newnode(CONS);

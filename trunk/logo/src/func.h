@@ -525,8 +525,6 @@ extern NODE *lcloseall(NODE * arg);
 extern NODE *err_eval_driver(NODE *seq);
 extern void spop(NODE **stack);
 extern void spush(NODE *obj, NODE **stack);
-extern void numpop(NODE **stack);
-extern void numpush(FIXNUM obj, NODE **stack);
 extern void eval_driver(NODE *line);
 extern NODE *lapply(NODE *args);
 extern NODE *lqm(NODE *args);
