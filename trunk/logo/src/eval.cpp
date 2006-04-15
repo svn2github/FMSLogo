@@ -169,7 +169,7 @@ NODE *lqm(NODE *args)
 
 NODE *llocal(NODE *args)
    {
-   NODE *vsp = var_stack;
+   NODE *var_stack_position = var_stack;
 
    if (tailcall != 0) 
      {
@@ -203,7 +203,7 @@ NODE *llocal(NODE *args)
          {
          arg = intern(arg);
          setcar(args, arg);            // local [a b] faster next time
-         if (not_local(arg, vsp))
+         if (not_local(arg, var_stack_position))
             {
             push(arg, var_stack);
             setobject(var_stack, valnode__caseobj(arg));
@@ -309,17 +309,16 @@ NODE *evaluator(NODE *list, enum labels where)
    NODE *catch_tag = NIL;
    NODE *arg = NIL;          // the current actual
 
-   // registers that don't get reference counted, so we pretend they're ints
-   NODE * vsp     = NIL;  // temp ptr into var_stack
-   FIXNUM cont    = 0;    // where to go next (an enum label)
-   NODE * formals = NIL;  // list of formal parameters
+   // registers that don't get reference counted
+   NODE * var_stack_position = NIL;  // temp ptr into var_stack
+   FIXNUM cont    = 0;               // where to go next (an enum label)
+   NODE * formals = NIL;             // list of formal parameters
 
    int i;
-   //    int nargs;
-   bool tracing;                  /* are we tracing the current procedure?*/
-   FIXNUM oldtailcall;                /* in case of reentrant use of evaluator*/
-   FIXNUM repcount;                    /* count for repeat                    */
-   FIXNUM repcountuppoint = 0;         /* up count for repeat                 */
+   bool tracing;                 // are we tracing the current procedure?
+   FIXNUM oldtailcall;           // in case of reentrant use of evaluator
+   FIXNUM repcount;              // count for repeat
+   FIXNUM repcountuppoint = 0;   // up count for repeat
    FIXNUM old_ift_iff;
 
    oldtailcall = tailcall;
@@ -573,7 +572,7 @@ NODE *evaluator(NODE *list, enum labels where)
       }
    /* Bind the actuals to the formals */
  lambda_apply:
-   vsp = var_stack;           // remember where we came in
+   var_stack_position = var_stack; // remember where we came in
    for (formals = formals__procnode(proc);
         formals != NIL;
         formals = cdr(formals))
@@ -599,7 +598,7 @@ NODE *evaluator(NODE *list, enum labels where)
 
       if (nodetype(parm) == CASEOBJ)
          {
-         if (not_local(parm, vsp))
+         if (not_local(parm, var_stack_position))
             {
             push(parm, var_stack);
             setobject(var_stack, valnode__caseobj(parm));
@@ -610,7 +609,7 @@ NODE *evaluator(NODE *list, enum labels where)
       else if (nodetype(parm) == CONS)
          {
          /* parm is optional or rest */
-         if (not_local(car(parm), vsp))
+         if (not_local(car(parm), var_stack_position))
             {
             push(car(parm), var_stack);
             setobject(var_stack, valnode__caseobj(car(parm)));
@@ -634,7 +633,7 @@ NODE *evaluator(NODE *list, enum labels where)
             tailcall = -1;
             val_status = 1;
             save2(formals, argl);
-            save(vsp);
+            save(var_stack_position);
             assign(list, cdr(parm));
             if (NOT_THROWING)
                {
@@ -656,7 +655,7 @@ NODE *evaluator(NODE *list, enum labels where)
 
 
  set_args_continue:
-            restore(vsp);
+            restore(var_stack_position);
             restore2(formals, argl);
             parm = car(formals);
             reset_args(var);
@@ -679,7 +678,7 @@ NODE *evaluator(NODE *list, enum labels where)
       assign(val, Unbound);
       goto fetch_cont;
       }
-   vsp = NIL;
+   var_stack_position = NIL;
    if (tracing = (!is_list(fun) && flag__caseobj(fun, PROC_TRACED)) || traceflag)
       {
       if (NOT_THROWING) 
@@ -1181,7 +1180,7 @@ NODE *evaluator(NODE *list, enum labels where)
                {
                /* procedure text form */
                assign(proc, anonymous_function(fun));
-               tracing = 0;
+               tracing = false;
                goto lambda_apply;
                }
             /* lambda form */
