@@ -347,7 +347,7 @@ STRINGTABLE
  CM_EDITREPLACE, "Searches for text and replaces it with other text"
  CM_EDITFINDNEXT, "Repeats the previous Find or Replace command"
  CM_EDITSETFONT, "Sets the font for the EDALL window"
- CM_TEST, "Checks the syntax"
+ CM_TEST, "Runs the selected Logo instructions"
  CM_HELPEDIT, "Displays help on using the editor"
  CM_HELPEDIT_TOPIC, "Displays help for Logo"
  CM_FILESAVEANDEXIT, "Saves and exits the current EDALL session"
