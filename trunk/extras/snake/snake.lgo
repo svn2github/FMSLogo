@@ -25,6 +25,7 @@ to BoardSquareIsBlocked :x :y
 end
 
 to CheckIfDead
+   local [i j boardsquare]
 
    ; if the square is blocked by something other than this player's head
    if BoardSquareIsBlocked :SnakeX :SnakeY [
@@ -35,10 +36,12 @@ to CheckIfDead
       stop
 
       ; remove the player's trail from the board
-      for [j 1 :GameBoardHeight ] [
+      repeat :GameBoardHeight [
+         make "j repcount
       
          make "gameboard.row item :j :GameBoard
-         for [i 1 :GameBoardWidth ] [
+         repeat :GameBoardWidth [
+            make "i repcount
 
             make "boardsquare item :i :gameboard.row
 
@@ -73,21 +76,23 @@ to DrawBody
 end
 
 to DrawGameBoard
-   local [gameboard.row boardsquare]
+   local [i j gameboard.row boardsquare]
 
    ; now draw the game board
-   for [j 1 :GameBoardHeight ] [
+   repeat :GameBoardHeight [
+      make "j repcount
       
       make "gameboard.row item :j :GameBoard
-      for [i 1 :GameBoardWidth ] [
+      repeat :GameBoardWidth [
+         make "i repcount
   
-          make "boardsquare item :i :gameboard.row
-          if :boardsquare = "X [
-            DrawWall :i :j
-          ]
-          if :boardsquare = "A [
-            DrawApple :i :j
-          ]
+         make "boardsquare item :i :gameboard.row
+         if :boardsquare = "X [
+           DrawWall :i :j
+         ]
+         if :boardsquare = "A [
+           DrawApple :i :j
+         ]
       ]
    ]
 
@@ -182,32 +187,34 @@ to GetBoardSquare :x :y
 end
 
 to InitGameBoard
-   local [row boardsquare]
+   local [row boardsquare i j]
 
    ; copy the game board template to the live game board
    make "GameBoardWidth  40
    make "GameBoardHeight 40
 
    make "GameBoard array :GameBoardHeight
-   for [j 1 :GameBoardHeight ] [
+   repeat :GameBoardHeight [
+      make "j repcount
 
       ; add a new array for this row
       make "row array :GameBoardWidth
 
-      for [i 1 :GameBoardWidth] [
+      repeat :GameBoardWidth [
+         make "i repcount
 
-          ; the game board starts off as an empty space
-          make "boardsquare ".
+         ; the game board starts off as an empty space
+         make "boardsquare ".
 
-          ; put a border around the game board
-          if (or (:j = 1) 
-                 (:j = :GameBoardHeight)
-                 (:i = 1)
-                 (:i = :GameBoardWidth)) [
-             make "boardsquare "X
-          ]
+         ; put a border around the game board
+         if (or (:j = 1) 
+                (:j = :GameBoardHeight)
+                (:i = 1)
+                (:i = :GameBoardWidth)) [
+            make "boardsquare "X
+         ]
 
-          setitem :i :row :boardsquare
+         setitem :i :row :boardsquare
       ] 
 
       ; set this row in the game board
@@ -315,8 +322,8 @@ end
 to PrintGameBoard
    ; prints the game board to the commander console
 
-   for [j :GameBoardHeight 1 ] [
-      print item :j :GameBoard
+   repeat :GameBoardHeight [
+      print item repcount :GameBoard
    ]
 
 end
