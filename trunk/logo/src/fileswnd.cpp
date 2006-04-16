@@ -23,10 +23,6 @@
 
 void filesave(const char *temp)
    {
-   FILE *tmp;
-   NODE *arg;
-   int save_yield_flag;
-
    if (::FindWindow(NULL, "Editor"))
       {
       MainWindowx->CommandWindow->MessageBox(
@@ -37,13 +33,13 @@ void filesave(const char *temp)
          MB_OK | MB_ICONQUESTION);
       }
 
-   arg = cons_list(make_strnode(temp));
+   CSmartNode arg(cons_list(make_strnode(temp)));
 
-   tmp = writestream;
+   FILE * tmp = writestream;
    writestream = open_file(car(arg), "w+");
    if (writestream != NULL)
       {
-      save_yield_flag = yield_flag;
+      int save_yield_flag = yield_flag;
       yield_flag = 0;
       lsetcursorwait(NIL);
 
