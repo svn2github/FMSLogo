@@ -54,11 +54,6 @@ to CheckIfDead
 
 end
 
-to DownKey
-   ; disallow doubling-back on oneself
-   if not :Direction = "up [ make "NextDirection "down ]
-end
-
 to DrawApple :X :Y
    MoveToGrid.LowerLeft :X :Y
 
@@ -221,9 +216,24 @@ to InitGameBoard
 
 end
 
-to LeftKey
+to KeyDown
+   ; disallow doubling-back on oneself
+   if not :Direction = "up [ make "NextDirection "down ]
+end
+
+to KeyLeft
    ; disallow doubling-back on oneself
    if not :Direction = "right [ make "NextDirection "left ]
+end
+
+to KeyRight
+   ; disallow doubling-back on oneself
+   if not :Direction = "left [ make "NextDirection "right ]
+end
+
+to KeyUp
+   ; disallow doubling-back on oneself
+   if not :Direction = "down [ make "NextDirection "up ]
 end
 
 to Move
@@ -313,17 +323,12 @@ end
 
 to ProcessKeyEvent :Key
 
-    if :Key=ascii "I [ UpKey    ]
-    if :Key=ascii "J [ LeftKey  ] 
-    if :Key=ascii "K [ RightKey ]
-    if :Key=ascii "M [ DownKey  ]
+    if :Key=ascii "I [ KeyUp    ]
+    if :Key=ascii "J [ KeyLeft  ] 
+    if :Key=ascii "K [ KeyRight ]
+    if :Key=ascii "M [ KeyDown  ]
 
     if :Key=ascii "Q [ make "IsDone "true ]
-end
-
-to RightKey
-   ; disallow doubling-back on oneself
-   if not :Direction = "left [ make "NextDirection "right ]
 end
 
 to RunGame
@@ -373,11 +378,6 @@ to UpdateNextFrame
      make "IsDone "true
    ]
 
-end
-
-to UpKey
-   ; disallow doubling-back on oneself
-   if not :Direction = "down [ make "NextDirection "up ]
 end
 
 Make "startup [RunGame]
