@@ -62,13 +62,12 @@ void filesave(const char *Filename)
    deref(filename_node);
    }
 
-void fileload(const char *temp)
+void fileload(const char *Filename)
    {
    NODE *st = valnode__caseobj(Startup);
    int sv_val_status = val_status;
-   int save_yield_flag;
 
-   NODE * arg = make_strnode(temp);
+   NODE * arg = make_strnode(Filename);
 
    bool   IsDirtySave = IsDirty;
    FILE * tmp         = loadstream;
@@ -76,8 +75,7 @@ void fileload(const char *temp)
    loadstream = open_file(arg, "r");
    if (loadstream != NULL)
       {
-
-      save_yield_flag = yield_flag;
+      int save_yield_flag = yield_flag;
       yield_flag = 0;
       lsetcursorwait(NIL);
 
