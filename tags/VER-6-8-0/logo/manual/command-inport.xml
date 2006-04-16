@@ -1,0 +1,36 @@
+<section id="command-inport">
+    <title>INPORT</title>
+<indexterm><primary>INPORT</primary></indexterm>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>INPORT</command> <parameter>portid</parameter></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+Reads 2 bytes (16 bits) from the port specified by <parameter>portid</parameter> and output the data as an integer.
+The <parameter>portid</parameter> parameter specifies a "Hardware" port.
+Do not confuse this command with <link linkend="command-portopen">PORTOPEN</link> and <link linkend="command-portreadchar">PORTREADCHAR</link> which are for communications through the serial and parallel ports.
+See also <link linkend="command-inportb">INPORTB</link> and <link linkend="command-outport">OUTPORT</link>.
+</para>
+
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Example</term>
+<listitem>
+    <programlisting><userinput>SHOW INPORT 198
+</userinput>
+25730
+</programlisting>
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</section>

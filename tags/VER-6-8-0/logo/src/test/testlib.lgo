@@ -1,0 +1,215 @@
+
+TO REPORTTESTINFO :message
+
+  ; backup the current writer
+  LOCALMAKE "previouswriter WRITER
+  SETWRITE :testlog
+
+  PRINT (SENTENCE "INFO: :message)
+
+  ; restore the current writer
+  SETWRITE :previouswriter
+END
+
+TO REPORTTESTPASSED :message
+
+  ; backup the current writer
+  LOCALMAKE "previouswriter WRITER
+  SETWRITE :testlog
+
+  PRINT (SENTENCE "PASS: :message)
+
+  ; restore the current writer
+  SETWRITE :previouswriter
+END
+
+TO REPORTTESTFAILED :message
+
+  ; backup the current writer
+  LOCALMAKE "previouswriter WRITER
+  SETWRITE :testlog
+
+  LOCALMAKE "result (SENTENCE "FAIL: :message)
+  PRINT :result
+  MESSAGEBOX [Test Failed] :result
+
+  ; restore the current writer
+  SETWRITE :previouswriter
+END
+
+TO REPORTTEST :testpassed :result :expected
+  IFELSE :testpassed [
+    REPORTTESTPASSED (sentence :result "|, as expected.|)
+  ] [
+    REPORTTESTFAILED (sentence :result "|. We expected| :expected)
+  ]
+END
+
+TO TRACEINSTRUCTION :instruction
+
+  ; backup the current writer
+  LOCALMAKE "previouswriter WRITER
+  SETWRITE :testlog
+
+  PRINT (SENTENCE "CALL: :instruction)
+
+  ; restore the current writer
+  SETWRITE :previouswriter
+
+  ; run the instructions
+  IGNORE RUNRESULT :instruction
+END
+
+TO SIMPLEREPORTTEST :instruction :expectedresult
+  LOCAL "result
+
+  ; clear the last error
+  IGNORE ERROR
+
+  ; run the instruction inside a CATCH so 
+  ; that throwing an error just fails 
+  ; (instead of halt the tests)
+  CATCH "ERROR [MAKE "result RUN :instruction]
+
+  LOCALMAKE "lasterror ERROR
+  IF NOT EMPTY? :lasterror [
+    REPORTTESTFAILED (LIST :instruction "|threw error.  code=| (ITEM 1 :lasterror) ". (ITEM 2 :lasterror)) 
+    STOP
+  ]
+
+  IF NOT EQUAL? :result :expectedresult [
+    REPORTTESTFAILED (LIST :instruction "returned :result "|. We expected| :expectedresult)
+    STOP
+  ]
+
+  REPORTTESTPASSED (LIST :instruction "returned :result "|, as expected.|)
+END
+
+
+TO REPORTTESTINITIALIZE
+
+  MAKE "testlog  "testlog.baseline.txt
+
+  ; close the test log, if it is already open
+  CATCH "ERROR [ CLOSE :testlog ]
+
+  ; open (and truncate) the test log
+  OPENWRITE :testlog
+END
+
+
+TO REPORTTESTUNINITIALIZE
+  CLOSE    :testlog
+  MAKE     :testlog []
+END
+
+
+TO RUNBADINPUTTEST :instructions
+
+  REPORTTESTINFO (LIST "|Executing invalid instruction:| :instructions )
+
+  ; clear the value of ERROR
+  IGNORE ERROR
+
+  CATCH "ERROR [ 
+    IGNORE RUNRESULT :instructions 
+    REPORTTESTFAILED (LIST "Executing :instructions "|did not throw an error|)
+    STOP
+  ]
+
+  LOCALMAKE "lasterror ERROR
+  IF EMPTYP :lasterror [
+    REPORTTESTFAILED (LIST "Executing :instructions "|did not change ERROR.|)
+    STOP
+  ]
+
+  IF NOT EQUALP (COUNT :lasterror) 4 [
+    REPORTTESTFAILED (LIST "|ERROR did not return a list of four values.|)
+    STOP
+  ]
+
+  REPORTTESTINFO (LIST "Executing :instructions "|set error code to|   (ITEM 1 :lasterror) )
+  REPORTTESTINFO (LIST "Executing :instructions "|set error string to| (ITEM 2 :lasterror) )
+
+END
+
+TO RUNEXPECTERRORTEST :instructions :expectederror
+
+  REPORTTESTINFO (LIST "|Executing invalid instruction:| :instructions)
+
+  ; clear the value of ERROR
+  IGNORE ERROR
+
+  CATCH "ERROR [ 
+    IGNORE RUNRESULT :instructions 
+    REPORTTESTFAILED (LIST "Executing :instructions "|did not throw an error.|)
+  ]
+
+  LOCALMAKE "lasterror ERROR
+  IF EMPTYP :lasterror [
+    REPORTTESTFAILED (LIST "Executing :instructions "|did not change ERROR.|)
+    STOP
+  ]
+
+  IF NOT EQUALP (COUNT :lasterror) 4 [
+    REPORTTESTFAILED (LIST "|ERROR did not return a list of four values.|)
+    STOP
+  ]
+
+  IF NOT EQUALP (ITEM 1 :lasterror) :expectederror [
+    REPORTTESTFAILED (LIST "|ITEM 1 ERROR returned | (ITEM 1 :lasterror) "|, we expected| :expectederror)
+    STOP
+  ]
+  REPORTTESTINFO (LIST "Executing :instructions "|set error code to| (ITEM 1 :lasterror) "|, as expected|)
+  REPORTTESTINFO (LIST "Executing :instructions "|set error string to| (ITEM 2 :lasterror) )
+END
+
+
+TO RUNNOTENOUGHINPUTSTEST :instructions
+  RUNEXPECTERRORTEST :instructions 6
+END
+
+TO RUNTOOMANYINPUTSTEST :instructions
+  RUNEXPECTERRORTEST :instructions 8
+END
+
+TO RUNHASNOVALUETEST :instructions
+  RUNEXPECTERRORTEST :instructions 11
+END
+
+TO RUNIDONTKNOWHOWTOTEST :instructions
+  RUNEXPECTERRORTEST :instructions 13
+END
+
+TO RUNNONRECOVERABLEIDONTKNOWHOWTOTEST :instructions
+  RUNEXPECTERRORTEST :instructions 24
+END
+
+TO RUNFILESYSTEMERRORTEST :instructions
+  RUNEXPECTERRORTEST :instructions 18
+END
+
+TO RUNISAPRIMITIVETEST :instructions
+  RUNEXPECTERRORTEST :instructions 22
+END
+
+
+TO TIMECOMMAND :instructions
+  ; Outputs how long it takes to execute given instructions
+
+  LOCALMAKE "beforetime TIMEMILLI
+  IGNORE RUNRESULT :instructions
+  LOCALMAKE "aftertime TIMEMILLI
+
+  LOCALMAKE "deltatime :aftertime - :beforetime
+
+  REPORTTESTINFO (list :instructions "took :deltatime "|ms to execute|)
+
+  OUTPUT :deltatime
+END
+
+; protect against loading the file twice
+if not name? "testlog [
+  MAKE "testlog []
+]
+

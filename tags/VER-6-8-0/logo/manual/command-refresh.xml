@@ -1,0 +1,27 @@
+<section id="command-refresh">
+    <title>REFRESH</title>
+<indexterm><primary>REFRESH</primary></indexterm>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>REFRESH</command></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+
+<note><para>REFRESH is not supported (or needed) in &PRODUCTNAME;.</para></note>
+
+<para>
+Tells &GENERICNAME; to remember the turtle's motions so that they can be reconstructed in case the graphics window is overlaid.
+The effectiveness of this command may depend on the machine used.
+</para>
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</section>

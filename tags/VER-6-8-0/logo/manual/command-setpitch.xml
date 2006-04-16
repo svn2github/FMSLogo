@@ -1,0 +1,40 @@
+<section id="command-setpitch">
+    <title>SETPITCH</title>
+<indexterm><primary>SETPITCH</primary></indexterm>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>SETPITCH</command> <parameter>angle</parameter></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+Pitches the turtle to a new absolute pitch.
+The argument is a angle, the pitch in degrees which is positive from the negative Z-Axis to the position Y-Axis rotating about the X-Axis.
+It is important to <link linkend="understand-your-orientation-in-3D">understand your orientation in 3D</link>.
+See also <link linkend="command-pitch">PITCH</link>.
+</para>
+<para>
+This command is designed to run in <link linkend="command-perspective">PERSPECTIVE</link> mode.
+</para>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Example</term>
+<listitem>
+    <programlisting><userinput>PERSPECTIVE
+SETPITCH 45
+SHOW PITCH</userinput>
+45
+</programlisting>
+
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</section>

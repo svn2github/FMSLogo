@@ -1,0 +1,151 @@
+LOAD "testlib.lgo
+
+TO STEPTEST.STEPPEDPROCEDURE
+   SHOW [This is line one of STEPTEST.STEPPEDPROCEDURE]
+   SHOW [This is line two of STEPTEST.STEPPEDPROCEDURE]
+END
+
+TO STEPTEST.SHADOWVARIABLE
+   LOCAL [STEPTEST.STEPPEDVARIABLE]
+END
+
+
+TO STEPTEST.PROCEDURE
+
+   ; make sure the procedure is not already traced
+   SIMPLEREPORTTEST [MEMBERP "STEPTEST.STEPPEDPROCEDURE (ITEM 1 STEPPED) ] "FALSE
+
+   ; step the procedure
+   TRACEINSTRUCTION [STEP "STEPTEST.STEPPEDPROCEDURE]
+
+   ; make sure the procedure is stepped
+   SIMPLEREPORTTEST [MEMBERP "STEPTEST.STEPPEDPROCEDURE (ITEM 1 STEPPED) ] "TRUE
+
+   ; call it (it should be single stepped step)
+   TRACEINSTRUCTION [STEPTEST.STEPPEDPROCEDURE]
+
+   ; unstep the procedure
+   TRACEINSTRUCTION [UNSTEP "STEPTEST.STEPPEDPROCEDURE]
+
+   ; make sure the procedure is not stepped anymore
+   SIMPLEREPORTTEST [MEMBERP "STEPTEST.STEPPEDPROCEDURE (ITEM 1 STEPPED) ] "FALSE
+
+   ; call it (it should no longer trace the output)
+   TRACEINSTRUCTION [STEPTEST.STEPPEDPROCEDURE]
+
+END
+
+
+TO STEPTEST.VARIABLE
+
+   LOCALMAKE "STEPTEST.STEPPEDVARIABLE 0
+
+   ; make sure the variable is not already stepped
+   SIMPLEREPORTTEST [MEMBERP "STEPTEST.STEPPEDVARIABLE (ITEM 2 STEPPED) ] "FALSE
+
+   ; step the variable
+   TRACEINSTRUCTION [STEP NAMELIST "STEPTEST.STEPPEDVARIABLE]
+
+   ; make sure the variable is stepped
+   SIMPLEREPORTTEST [MEMBERP "STEPTEST.STEPPEDVARIABLE (ITEM 2 STEPPED) ] "TRUE
+
+   ; shadow the variable (this should display a dialog box)
+   TRACEINSTRUCTION [STEPTEST.SHADOWVARIABLE]
+
+   ; unstep the variable
+   TRACEINSTRUCTION [UNSTEP NAMELIST "STEPTEST.STEPPEDVARIABLE]
+
+   ; make sure the variable is not stepped anymore
+   SIMPLEREPORTTEST [MEMBERP "STEPTEST.STEPPEDVARIABLE (ITEM 2 STEPPED) ] "FALSE
+
+   ; shadowing the variable should have no effect now
+   TRACEINSTRUCTION [STEPTEST.SHADOWVARIABLE]
+
+END
+
+TO STEPTEST.PROPERTYLIST
+
+   ; create the propery list
+   TRACEINSTRUCTION [PPROP "STEPTEST.STEPPEDPLIST "SOMEPROPERTY 0 ]
+
+   ; make sure the propery list is not already stepped
+   SIMPLEREPORTTEST [MEMBERP "STEPTEST.STEPPEDPLIST (ITEM 3 STEPPED) ] "FALSE
+
+   ; step the propery list
+   TRACEINSTRUCTION [STEP PLLIST "STEPTEST.STEPPEDPLIST]
+
+   ; make sure the propery list is stepped
+   SIMPLEREPORTTEST [MEMBERP "STEPTEST.STEPPEDPLIST (ITEM 3 STEPPED) ] "TRUE
+
+   ; put some properties in the propery list
+   ; this shouldn't do anything (stepping a property list has no effect)
+   TRACEINSTRUCTION [PPROP "STEPTEST.STEPPEDPLIST "PROPERTY1 123     ]
+   TRACEINSTRUCTION [PPROP "STEPTEST.STEPPEDPLIST "PROPERTY2 "123    ]
+   TRACEINSTRUCTION [PPROP "STEPTEST.STEPPEDPLIST "PROPERTY3 "value  ]
+   TRACEINSTRUCTION [PPROP "STEPTEST.STEPPEDPLIST "PROPERTY4 [1 2 3] ]
+   TRACEINSTRUCTION [PPROP "STEPTEST.STEPPEDPLIST "PROPERTY5 {1 2 3} ]
+
+   ; unstep the propery list
+   TRACEINSTRUCTION [UNSTEP PLLIST "STEPTEST.STEPPEDPLIST]
+
+   ; make sure the propery list is not traced anymore
+   SIMPLEREPORTTEST [MEMBERP "STEPTEST.STEPPEDPLIST (ITEM 3 STEPPED) ] "FALSE
+
+END
+
+TO STEPTEST.STEPALL
+ 
+   ; step everything
+   ; To make running this test easier, this test tried not to do too
+   ; much while every procedure is stepped.
+   REPORTTESTINFO [Calling STEP CONTENTS]
+   STEP CONTENTS
+
+   IF NOT EQUAL? STEPPED CONTENTS [
+      REPORTTESTFAILED [STEPPED did not return the entire contents list]
+   ]
+
+   ; step nothing
+   UNSTEP CONTENTS
+   REPORTTESTINFO [Called UNSTEP CONTENTS]
+
+   SIMPLEREPORTTEST [STEPPED] [[][][]]
+END
+
+TO STEPTEST.BADINPUT
+
+   RUNTOOMANYINPUTSTEST [(STEPPED "toomany)]
+
+   TRACEINSTRUCTION       [(STEP [[nonexistent] [nonexistent] [nonexistent]])]
+   RUNNOTENOUGHINPUTSTEST [(STEP)]
+   RUNTOOMANYINPUTSTEST   [(STEP "name "toomany)]
+   RUNBADINPUTTEST        [(STEP {name})]
+   RUNBADINPUTTEST        [(STEP [[a][b]{c}])]
+   RUNBADINPUTTEST        [(STEP [a b {c}])]
+   RUNBADINPUTTEST        [(STEP [[a b {c}]])]
+   RUNBADINPUTTEST        [(STEP [[a][b][c][d]])]
+   RUNBADINPUTTEST        [(STEP [[[a]]])]
+
+   TRACEINSTRUCTION       [(UNSTEP [[nonexistent] [nonexistent] [nonexistent]])]
+   RUNNOTENOUGHINPUTSTEST [(UNSTEP)]
+   RUNTOOMANYINPUTSTEST   [(UNSTEP "name "toomany)]
+   RUNBADINPUTTEST        [(UNSTEP {name})]
+   RUNBADINPUTTEST        [(UNSTEP [[][]{}])]
+   RUNBADINPUTTEST        [(UNSTEP [word word {array}])]
+   RUNBADINPUTTEST        [(UNSTEP [[][][][]])]
+   RUNBADINPUTTEST        [(UNSTEP [[a][b]{c}])]
+   RUNBADINPUTTEST        [(UNSTEP [a b {c}])]
+   RUNBADINPUTTEST        [(UNSTEP [[a b {c}]])]
+   RUNBADINPUTTEST        [(UNSTEP [[a][b][c][d]])]
+   RUNBADINPUTTEST        [(UNSTEP [[[a]]])]
+END
+
+TO STEPTEST
+
+   STEPTEST.PROCEDURE
+   STEPTEST.VARIABLE
+   STEPTEST.PROPERTYLIST
+   STEPTEST.STEPALL
+   STEPTEST.BADINPUT
+
+END

@@ -1,0 +1,34 @@
+<section id="command-pendownp">
+    <title>PENDOWNP</title>
+<indexterm><primary>PENDOWNP</primary></indexterm>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>PENDOWNP</command>
+<command>PENDOWN?</command></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+Outputs TRUE if the pen is down, FALSE if it's up.
+</para>
+
+</listitem>
+</varlistentry>
+<varlistentry><term>Example</term>
+<listitem>
+    <programlisting><userinput>PENUP
+SHOW PENDOWNP</userinput>
+false
+<userinput>PENDOWN
+SHOW PENDOWNP</userinput>
+true</programlisting>
+</listitem>
+</varlistentry>
+</variablelist>
+
+</section>

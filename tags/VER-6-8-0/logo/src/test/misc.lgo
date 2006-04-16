@@ -1,0 +1,29 @@
+LOAD "testlib.lgo
+
+; This file contains miscellaneous tests for features of FMSLogo that don't
+; naturally fall into any other category.
+;
+
+TO NODESTEST
+   LOCALMAKE "nodes NODES
+
+   ; nodes should return a list of two numbers
+   SIMPLEREPORTTEST [LIST? NODES] "true
+   SIMPLEREPORTTEST [COUNT NODES] 2
+   SIMPLEREPORTTEST [NUMBER? ITEM 1 NODES] "true
+   SIMPLEREPORTTEST [NUMBER? ITEM 2 NODES] "true
+
+   RUNTOOMANYINPUTSTEST [(NODES "too-many)]
+END
+
+TO BUTTONPTEST
+   SIMPLEREPORTTEST [BUTTONP] "false
+   SIMPLEREPORTTEST [BUTTON?] "false
+
+   RUNTOOMANYINPUTSTEST  [(BUTTON? "too-many)]
+END
+
+TO MISCTEST
+   NODESTEST
+   BUTTONPTEST
+END

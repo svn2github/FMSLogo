@@ -1,0 +1,34 @@
+<section id="command-false">
+    <title>FALSE</title>
+<indexterm><primary>FALSE</primary></indexterm>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem><para>(special form)</para>
+<synopsis><command>FALSE</command> <parameter>instructionlist</parameter></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+This is a special word to indicate a negative condition.
+FALSE is a reserved value, not a procedure nor a variable.
+</para>
+
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Example</term>
+<listitem>
+<programlisting><userinput>SHOW 1=0</userinput>
+false
+<userinput>IFELSE "false [PRINT [We cannot get here]] [PRINT [False is always false]]</userinput>
+False is always false
+</programlisting>
+</listitem>
+</varlistentry>
+
+</variablelist>
+</section>

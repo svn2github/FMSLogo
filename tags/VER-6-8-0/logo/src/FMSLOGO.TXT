@@ -1,0 +1,261 @@
+------------------------------------------------------------------
+FMSLogo Version 6.8.0 for Microsoft Windows 95/98/NT/2000/XP/Vista
+------------------------------------------------------------------
+
+Part    I) Kit Description/Location:
+Part   II) New features/bugs fixed:
+Part  III) Special Thanks:
+Part   IV) Standard features:
+Part    V) Recommended usage:
+Part   VI) Reporting bugs:
+Part  VII) Sources:
+Part VIII) Minimum System Requirements:
+
+
+Part I) Kit Description/Location (http://sourceforge.net/projects/fmslogo):
+
+  fmslogo-6.8.0.exe       (binary kit: Windows self-extracting installer)
+  fmslogo-6.8.0.zip       (binary kit: Windows ZIP archive)
+  fmslogo-src-6.8.0.zip   (source kit)
+
+Part II) New features/bugs fixed:
+
+  * Added for 6.8.0,
+    o Fix bug #1465992; PgUp and PgDn now work in the commander history box.
+    o Fix bug #1453675; (FD 10 10) no longer leaks memory.
+    o Fix bug #1448159; Running # outside of a template outputs REPCOUNT.
+    o Fix bug #1448155; Using IF in place of an IFELSE now acts like IFELSE.
+    o Fix bug #1448142; A COPYDEF of STOP no longer crashes when run.
+    o Fix bug #1450152; SETORIENTATION now throws an error on bad input.
+    o Fix bug #1432651; Filenames that match a library procs no longer crash.
+    o Fix bug #1438863; Erasing a procedure while running it no longer crashes.
+    o Fix bug #1443736; SETFOCUS [FMSLogo] gives focus to the screen window.
+    o Fix bug #1443600; using Test! in editor no longer crashes.
+    o Fix bug #1434420; running a long command no longer crashes.
+    o Fix bug #1438438; DLLLOAD properly handles bad input.
+    o Fix bug #1397560; floating point overflow no longer crashes.
+    o Fix bug #1397549; math functions now throw errors for domain errors.
+    o Fix bug #1395743; domain errors don't display dialog boxes.
+    o Fix bug #1395742; Singularity errors don't display dialog boxes.
+    o Fix bug #1438909; SETLABELFONT [] no longer crashes.
+    o Fix bug #1327784; RAWASCII CHAR 192 = 192, not -64.
+    o Fix bug #1361906; PLLIST {a} throws a bad input error.
+    o Fix bug #1444960; Example for WHILE is now correct.
+    o Fix bug #1448097; SORT handles predicates that have one input by default.
+    o Fix bug #1446430; Error codes are now documented correctly.
+    o Fix bug #1349264; AND and OR now validate all inputs.
+    o Fix bug #1392437; LOAD no longer warns that it can overwrite changes.
+    o Fix bug #1389151; MODAL and MODELESS samples look better.
+    o Fix numerous memory leaks.
+    o Fix minor typos and omissions in documentation.
+    o Implement request #1466722; Add the LOGOVERSION command.
+    o Implement request #1367379; Files are saved with lower-case extension.
+    o Make CLOSEALL a primitive.
+    o CTRL+D now does File - Save and Exit in the editor.
+
+  * Added for 6.7.2,
+    o Fix bug #1372489; double-clicking .lgo file starts new FMSLogo process.
+    o Fix bug #1416044; FILL now works when run in a callback.
+    o Fix bug #1386335; the commander's editbox grows with the font size.
+    o Fix bug #1388325; ELLIPSEARC no longer crashes on large angles.
+    o Fix bug #1377856; ELLIPSEARC can now be paused/halted.
+    o Fix bug #1395734; the editor is no longer double-spaced on error.
+    o Fix bug #1429970; WINDOWSET now throws error on bad input.
+    o Fix bug #1429960; ICON can minimize the commander when it's docked.
+    o Fix bug #1429938; SETORIENTATION now works correctly.
+    o Fix bug #1327284; the documentation is now distributed as a .CHM.
+    o Fix bug #1399926; SETCURSORNOWAIT is now documented.
+    o Fix bug #1399929; TONE is now documented.
+    o Fix bug #1397524; the domain/range of inverse trig functions are documented.
+    o Fix bug #1392433; the documentation for EDALL is clearer.
+    o Fix bug #1327785; the manual and example code no longer refer to MSWLogo.
+    o Fix bug #1406412; the documentation for SETTIMER is updated for Win95.
+    o Fix bug #1417187; the documentation for ARC and friends is clearer.
+    o Mitigate bug #1397519; numbers within DBL_EPSILON of each other are equal.
+    o Add SORT to Logolib
+
+  * Added for 6.7.1,
+    o Fix bug #1372735; Editor can save large files on Win95.
+    o Fix bug #1383281; FMSLogo doesn't crash on FOREACH command.
+    o Fix bug #1384267; Turning by a large number in 3D mode doesn't crash.
+
+  * Added for 6.7.0,
+    o Improve joystick samples.
+    o Improve the SPRITE.LGO sample.
+    o Fix typos and inaccuracies in the logo.hlp file.
+    o Fix bug #1349374; "ARRAY 0" now works.
+    o Fix bug #1349377; comments may now contain a single '|'.
+    o Fix bug #1352838; EDALL can now save files on all Windows systems.
+    o Fix bug #1365943; removed EDALLBTN from Logolib.
+    o Fix bug #1366700; WAIT no longer takes 100% CPU.
+    o Fix bug #1343397; MKDIR, CHDIR, RMDIR don't crash on long directory names.
+    o Fix bug #1366856; DIRECTORIES and FILES no longer leak a file handle.
+    o Fix bug #1367217; FMSLogo no longer crashes when OPENUPDATE fails.
+    o Fix bug #1367352; (NETSTARTUP 1) no longer crashes FSMLogo on shutdown.
+    o Implement request #1365734; FULLSCREEN and TEXTSCREEN now undock
+      the commander and SPLITSCREEN now redocks it.
+    o Implement request #1327751; the Commander window's Status/NoStatus
+      Trace/UnTrace, and Step/UnStep buttons are now pushbutton checkboxes.
+    o Implement request #1349320; the status window can now be closed
+      by clicking on the "X" in its titlebar.
+    o Many sweeping internal changes.  Expect regressions.
+
+  * Added for 6.6b,
+    o Fix bug #1327817; The editor now only prompts you to save your
+      changes if you actually changed something.
+    o Fix bug #1327706; FORM no longer supports the "debugging aid"
+      of passing the parameters to printf when the width is negative.
+    o Implement feature request #1327732; FMSLogo now implements
+      ELLIPSEARC2 as a more consistent name for ELLIPSA2.
+    o Fix bug #1327719; FMSLogo now uses the registered applicaton
+      for reading the release notes.
+    o Fix bug #1330752; FMSLogo no longer appends garbage bytes to 
+      saved files.
+    o Add a "Topic Search" item to the editor's context menu.
+    o Fix INGAMEPORT to work on Windows XP (instead of crash).
+    o Fix bug #1327707; INPORT no longer crashes on Win XP.
+    o Fix file corruption in mcistrwh.hlp (was corrupted in 6.6).
+    o Add CTRL+F and CTRL+H accelerators to editor.
+    o Fix bug #1335260; INGAMEPORT now works under XP.
+      (INPORT 513) and (INPORTB 513) also work in limited capacity.
+
+  * Added for 6.6a,
+    o Fix bug #1324580; BITLOADSIZE works correctly again.
+    o Mitigate bug #1327300; FMSLogo now verifies %TMP% on startup
+      and warns the user of problems.
+
+  * Added for 6.6,
+    o Rename application to FMSLogo for trademark reasons.
+
+  * Added for 6.5h,
+    o Fix a regression where SETFOCUS didn't honor "MSWLogo Screen".
+    o Rework the way SETLABELFONT works to try to fix a crash on Vista.
+
+  * Added for 6.5g,
+    o Separate the screen from the commander with a splitter,
+      instead of having separate windows.
+    o Get TONE command working.
+    o Convert "Examples" index to HTML.
+    o Installer Updates
+      * Add Start Menu shortcuts for Logo examples.
+      * Add file association for .LGO files.
+    o Many internal changes.
+
+  * Added for 6.5f,
+    o Do not start multiple instances of Logo
+    o Fix editor font-changing bug on Windows 95.
+    o Many internal changes.
+
+  * Added for 6.5e,
+    o Send all key presses to the commander's edit control.
+      * NEW BUG: key presses on buttons currently beep on Win 9x.
+    o Pasting to the EDALL window now only pastes plain text.
+    o Add the DOS keyboard shortcuts (for example, SHIFT+INS for paste)
+    o Many internal changes.
+
+  * Added for 6.5d,
+    o Make "Set - Label" Font write Logo command into history.
+    o Add a pop-up menu to editor window.
+    o Disable commands in menu that are not applicable.
+
+  * Added for 6.5c,
+    o Use standard keyboard shortcuts (for example, CTRL+V for paste)
+    o Make GUI elements write Logo command into history
+    o Fix tab order in some dialog boxes
+
+  * Added for 6.5b, 
+    o Fix MSWLogo using too much CPU when idle.
+
+  * Added for 6.5a, 
+    o Remove OLE server since it broke command line
+
+  * Added for 6.5
+    o Add installation system for Windows XP.
+    o Drop support for all systems older than Win95
+    o Switch to pentium processor only for higher speed.
+    o Fix missing resources for some Borland OWL Exceptions.
+    o Fix crash when closing some network connections.
+    o Fix crash when moving turtle past the max floating point number.
+    o Add proplistp and proplist?.
+    o Fix bug with argument to OUTPUT missing causing a crash.
+    o Enabled MSWLogo to be an OLE Server (Experimental no docs).
+    o Fixed command line version of SETLABELFONT not always
+      finding all fonts.
+
+Part III) Special Thanks:
+
+  I wish to extend my sincerest thanks to everyone who has used, supported,
+  critisized, praised, filed a bug on, or otherwise contributed to
+  either FMSLogo or MSWLogo.
+
+  Thanks to:
+    Michael Malin
+    Kari Hoijarvi
+    Clem Rutter
+    Lionel Laske
+    Relja Medic
+    Daniel Ajoy
+    Narayanan Chitoor
+    Jason Gervich
+
+  Special thanks to:
+    George Mills
+    Brian Harvey
+    Jim Muller
+    Erich Neuwirth
+    Yehuda Katz
+
+Part IV) Standard features:
+
+  * Supports Window 95/98/ME/NT/2000/XP.
+  * Supports TCP/IP WinSock Networking.
+  * Supports Text in all available fonts and sizes.
+  * Supports 1024 independent Turtles.
+  * Supports Bitmapped Turtles.
+  * Supports Cut, Paste and stretching bitmaps.
+  * Supports Clipboard Text and Bitmaps.
+  * Supports MIDI devices.
+  * Supports Direct I/O for Controlling External hardware.
+  * Supports Serial and Parallel Port communications.
+  * Supports Zooming.
+  * Supports Tail recursion (optimizes most recursive functions).
+  * Supports User error handling.
+  * Supports "Standard" Logo parsing.
+  * Supports Floodfill.
+  * Supports Save and restore images in .BMP format files.
+  * Supports 1, 4, 8, 16, 24 bits per pixels colors.
+  * Supports standard Windows Hypertext Help.
+  * Supports standard Windows Printing.
+  * Supports separate library and work area.
+  * Supports construction of Windows Dialog Boxes.
+  * Supports Event Driven programming (Mouse, Keyboard, Timer).
+  * Supports MultiMedia Devices (.WAV sound files, CD-ROM control etc.)
+  * Supports Event Timers allowing multiprocessing.
+  * Supports 3D Perspective drawing (Wireframe and Solids).
+  * Supports Animated GIF generation.
+
+Part V) Recommended usage:
+
+  * Ages 6 and up
+     o Beginner     - Forward 100, Right 90
+     o Intermediate - Explore mathematics, art, music, robotics, language, and more.
+     o Expert       - Develop games
+
+Part VI) Reporting bugs:
+
+  Report bugs at http://sourceforge.net/projects/fmslogo/
+
+Part VII) Sources:
+ 
+  Source code is available.  It's your legal right!  (See LICENSE.TXT).
+
+  The FMSLogo sources were written/compiled with:
+
+    Borland C++ 5.02 for windows (for .EXE)
+    Borland Turbo 32bit Assembler (for .EXE)
+    DocBook, xsltproc, and Microsoft Help Workshop (for online help)
+    Nullsoft Scriptable Install System (NSIS) (for the installer)
+
+Part VIII) Minimum System Requirements:
+
+   Pentium class processor with minimum of 16 MB RAM running Windows 95.

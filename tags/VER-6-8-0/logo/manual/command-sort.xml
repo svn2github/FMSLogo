@@ -1,0 +1,53 @@
+<section id="command-sort">
+    <title>SORT</title>
+<indexterm><primary>SORT</primary></indexterm>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>SORT</command> <parameter>sequence</parameter></synopsis>
+<synopsis>(<command>SORT</command> <parameter>sequence</parameter> <parameter>predicate</parameter>)</synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+
+<para>
+Sorts a sequence (list, array, or word) in ascending order, or according to a given predicate.
+The output is a new sequence of the same type as <parameter>sequence</parameter> that contains the same items ordered such that there are no two successive items, a and b, where <userinput>(<parameter>predicate</parameter> a b)</userinput> is FALSE and <userinput>(<parameter>predicate</parameter> b a)</userinput> is TRUE.
+</para>
+
+<para>
+The <parameter>predicate</parameter> input must be a procedure that inputs two values and outputs either TRUE or FALSE.
+</para>
+
+<para>
+If the <parameter>sequence</parameter> input is a list and no <parameter>predicate</parameter> input is given, then the output is a list that is sorted by <link linkend="command-lessp">LESSP</link>.
+</para>
+
+<para>
+If the <parameter>sequence</parameter> input is an array and no <parameter>predicate</parameter> input is given, then the output is a new array that is sorted by <link linkend="command-lessp">LESSP</link>.
+</para>
+
+<para>
+If the <parameter>sequence</parameter> input is a word and no <parameter>predicate</parameter> input is given, then the output is a word that is sorted by <link linkend="command-beforep">BEFOREP</link>.
+</para>
+
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Example</term>
+<listitem>
+<programlisting><userinput>SORT [3 1 2]</userinput>
+[1 2 3]
+
+<userinput>(SORT [3 1 2] "GREATERP)</userinput>
+[3 2 1]
+</programlisting>
+</listitem>
+</varlistentry>
+
+</variablelist>
+</section>
