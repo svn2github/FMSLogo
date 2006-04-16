@@ -210,6 +210,7 @@ extern NODE *lbuttonp(NODE *args);
 extern NODE *ltone(NODE *args);
 extern NODE *lrefresh(NODE *args);
 extern NODE *lnorefresh(NODE *args);
+extern void keyboard_uninit(void);
 
 
 // File main.cpp

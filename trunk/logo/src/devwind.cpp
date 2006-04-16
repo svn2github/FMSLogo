@@ -98,6 +98,15 @@ NODE *lkeyboardoff(NODE *)
    return Unbound;
    }
 
+void keyboard_uninit()
+   {
+   free(keyboard_keyup);
+   keyboard_keyup = NULL;
+   
+   free(keyboard_keydown);
+   keyboard_keydown = NULL;
+   }
+
 NODE *lmousepos(NODE *)
    {
 

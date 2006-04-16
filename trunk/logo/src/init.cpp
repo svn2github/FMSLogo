@@ -668,4 +668,7 @@ void uninit()
 
    // free the internal buffer for the combobox
    uninitialize_combobox();
+   
+   // free the memory associated with keyboard capture
+   keyboard_uninit();
    }
