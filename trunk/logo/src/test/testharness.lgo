@@ -51,6 +51,7 @@ LOAD "bury.lgo
 LOAD "erase.lgo
 LOAD "logoversion.lgo
 LOAD "apply.lgo
+LOAD "quoted.lgo
 
 TO TESTALL
 
@@ -104,6 +105,7 @@ TO TESTALL
   BURYTEST        ; from bury.lgo
   ERASETEST       ; from erase.lgo
   LOGOVERSIONTEST ; from logoversion.lgo
+  QUOTEDTEST      ; from quoted.lgo
 
   REPORTTESTUNINITIALIZE
 
