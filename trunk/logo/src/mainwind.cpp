@@ -1510,9 +1510,11 @@ void TMainFrame::CMFileNew()
    IsNewFile = true;
    IsDirty = false;
 
-   NODE * arg = lcontents(NIL);
+   NODE * workspace_contents = vref(lcontents(NIL));
 
-   lerase(arg);
+   lerase(workspace_contents);
+
+   deref(workspace_contents);
    }
 
 
