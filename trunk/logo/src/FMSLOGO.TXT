@@ -49,6 +49,7 @@ Part II) New features/bugs fixed:
     o Fix numerous memory leaks.
     o Fix minor typos and omissions in documentation.
     o Implement request #1466722; Add the LOGOVERSION command.
+    o Implement request #1367379; Files are saved with lower-case extension.
     o Make CLOSEALL a primitive.
     o CTRL+D now does File - Save and Exit in the editor.
 
