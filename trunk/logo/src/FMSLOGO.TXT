@@ -34,7 +34,7 @@ Part II) New features/bugs fixed:
     o Fix bug #1434420; running a long command no longer crashes.
     o Fix bug #1438438; DLLLOAD properly handles bad input.
     o Fix bug #1397560; floating point overflow no longer crashes.
-    o Fix bug #1397549; math functions now throw error for domain errors.
+    o Fix bug #1397549; math functions now throw errors for domain errors.
     o Fix bug #1395743; domain errors don't display dialog boxes.
     o Fix bug #1395742; Singularity errors don't display dialog boxes.
     o Fix bug #1438909; SETLABELFONT [] no longer crashes.
@@ -50,6 +50,7 @@ Part II) New features/bugs fixed:
     o Fix minor typos and omissions in documentation.
     o Implement request #1466722; Add the LOGOVERSION command.
     o Make CLOSEALL a primitive.
+    o CTRL+D now does File - Save and Exit in the editor.
 
   * Added for 6.7.2,
     o Fix bug #1372489; double-clicking .lgo file starts new FMSLogo process.
