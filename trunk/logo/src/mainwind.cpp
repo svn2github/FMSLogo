@@ -362,8 +362,6 @@ void TScreenWindow::Printit(TDC &PrintDC)
    // work in some situations. This is just the "Paint" of printing.
    // See the print module for all the other stuff.
 
-   long Status;
-
    // do we even have a chance?
    if ((GetDeviceCaps(PrintDC, RASTERCAPS) & RC_STRETCHDIB) == 0)
       {
@@ -454,6 +452,8 @@ void TScreenWindow::Printit(TDC &PrintDC)
    if (ScanLines != 0)
       {
       // if "active area" just print that 
+      long Status;
+
       if (IsPrinterSettingCustom)
          {
          Status = StretchDIBits(
@@ -761,8 +761,8 @@ TMainFrame::TMainFrame(
     IsCommanderDocked(false)
    {
    /* main window initialization */
-   strcpy(BitmapName, "Logo.Bmp");
-   strcpy(FileName, "Logo.Lgo");
+   strcpy(BitmapName, "logo.bmp");
+   strcpy(FileName, "logo.lgo");
 
    AssignMenu("IDM_COMMANDS");
 
@@ -1090,7 +1090,7 @@ bool TMainFrame::DumpBitmapFile(LPCSTR Filename, int MaxBitCount)
       // do it and if error then let user know 
       if (!WriteDIB(file, MaxBitCount))
          {
-         ShowMessageAndStop("Error", "Could not Write .BMP");
+         ShowMessageAndStop("Error", "Could not write .bmp");
          }
 
       // Restore the arrow cursor
@@ -1101,7 +1101,7 @@ bool TMainFrame::DumpBitmapFile(LPCSTR Filename, int MaxBitCount)
    else
       {
       // else file never opened
-      ShowMessageAndStop("Error", "Could not Open .BMP");
+      ShowMessageAndStop("Error", "Could not open .bmp");
       }
 
    return true;
@@ -1411,8 +1411,8 @@ void TMainFrame::CMBitmapOpen()
 
    TOpenSaveDialog::TData FileData;
    FileData.Flags = OFN_FILEMUSTEXIST | OFN_HIDEREADONLY | OFN_EXPLORER;
-   FileData.SetFilter("Bitmap Files (*.BMP)|*.BMP|GIF Files (*.GIF)|*.GIF|All Files (*.*)|*.*|");
-   strcpy(FileData.FileName, "*.BMP");
+   FileData.SetFilter("Bitmap Files (*.bmp)|*.bmp|GIF Files (*.gif)|*.gif|All Files (*.*)|*.*|");
+   strcpy(FileData.FileName, "*.bmp");
    FileData.DefExt = "bmp";
 
    /* if user found a file then try to load it  */
@@ -1459,7 +1459,7 @@ void TMainFrame::SaveBitmapAs()
    /* Get file name from user and then save the file */
 
    FileData.Flags = OFN_OVERWRITEPROMPT | OFN_HIDEREADONLY | OFN_EXPLORER;
-   FileData.SetFilter("Bitmap Files (*.BMP)|*.BMP|GIF Files (*.GIF)|*.GIF|All Files (*.*)|*.*|");
+   FileData.SetFilter("Bitmap Files (*.bmp)|*.bmp|GIF Files (*.gif)|*.gif|All Files (*.*)|*.*|");
    strcpy(FileData.FileName, BitmapName);
    FileData.DefExt = "bmp";
 
@@ -1479,19 +1479,20 @@ void TMainFrame::CMBitmapSaveAs()
 void TMainFrame::SaveBitmap()
    {
    char ext[_MAX_EXT];
-   _splitpath( BitmapName, NULL, NULL, NULL, ext );
+   _splitpath(BitmapName, NULL, NULL, NULL, ext);
    if (stricmp(ext, ".GIF") == 0)
+      {
       gifsave_helper(BitmapName, -1, 0, -1, -1, 8);
+      }
    else
+      {
       DumpBitmapFile(BitmapName, 32);
+      }
    }
 
 void TMainFrame::CMFileNew()
    {
-   NODE *arg;
-
    // if doing new and dirty give user a chance to abort the new
-
    if (IsDirty)
       {
       if (MainWindowx->CommandWindow->MessageBox(
@@ -1506,11 +1507,10 @@ void TMainFrame::CMFileNew()
       }
 
    // else start with a clean plate
-
    IsNewFile = true;
    IsDirty = false;
 
-   arg = lcontents(NIL);
+   NODE * arg = lcontents(NIL);
 
    lerase(arg);
    }
@@ -1568,8 +1568,8 @@ void TMainFrame::CMFileOpen()
 
    TOpenSaveDialog::TData FileData;
    FileData.Flags = OFN_FILEMUSTEXIST | OFN_HIDEREADONLY | OFN_EXPLORER;
-   FileData.SetFilter("Logo Files (*.LGO)|*.LGO|All Files (*.*)|*.*|");
-   strcpy(FileData.FileName, "*.LGO");
+   FileData.SetFilter("Logo Files (*.lgo)|*.lgo|All Files (*.*)|*.*|");
+   strcpy(FileData.FileName, "*.lgo");
    FileData.DefExt = "lgo";
 
    /* if user found a file then try to load it  */
@@ -1578,7 +1578,10 @@ void TMainFrame::CMFileOpen()
       {
       IsNewFile = false;
       halt_flag++;
-      if (halt_flag < 1) halt_flag = 1;
+      if (halt_flag < 1) 
+         {
+         halt_flag = 1;
+         }
       strcpy(FileName, FileData.FileName);
       fileload(FileName);
 
@@ -1618,7 +1621,7 @@ void TMainFrame::SaveFileAs()
    /* Get file name from user and then save the file */
    TOpenSaveDialog::TData FileData;
    FileData.Flags = OFN_OVERWRITEPROMPT | OFN_HIDEREADONLY | OFN_EXPLORER;
-   FileData.SetFilter("Logo Files (*.LGO)|*.LGO|All Files (*.*)|*.*|");
+   FileData.SetFilter("Logo Files (*.lgo)|*.lgo|All Files (*.*)|*.*|");
    strcpy(FileData.FileName, FileName);
    FileData.DefExt = "lgo";
 
@@ -1759,11 +1762,12 @@ void TMainFrame::CMFileErase()
 
 void TMainFrame::MyPopupEdit(const char *FileName, NODE *args)
    {
-   /* if called with NULL filename then prompt user */
-   // BUG: This is never deleted!
+   // if called with NULL filename then prompt user
+
+   // NOTE: EditWindow is deleted when "this" is deleted.
    EditWindow = new TMyFileWindow(this, "Editor", FileName, args);
 
-   /* Do win.ini stuff. Build default coords */
+   // Do win.ini stuff. Build default coords
    int x = (int) (MaxWidth * 0.25);
    int y = (int) (MaxHeight * 0.25);
    int w = (int) (MaxWidth * 0.75);
