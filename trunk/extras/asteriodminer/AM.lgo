@@ -457,7 +457,7 @@ to drawRock :pos1
     setitem repcount*2 :points pos
   ]
   ;replace "random" points in the symetrical rock with nearby points to make it more
-  ;irrigular
+  ;irregular
   repeat 5 [
     ;select the point to mess with (must be between two points that are on the edge). Uses
     ;an expression based on the rock's screen position instead of a random number so that
