@@ -12,18 +12,23 @@
 
 <varlistentry><term>Description</term>
 <listitem>
-<para>If the input is a list, outputs a copy of the list.
-If the input is a word, outputs the word with a double-quote character (<userinput>"</userinput>) appended to the front.</para>
+<para>
+If the input is a word, QUOTED outputs the word with a double-quote character (<userinput>"</userinput>) appended to the front.
+Otherwise, QUOTED outputs whatever the input is.
+</para>
 </listitem>
 </varlistentry>
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>SHOW "Hello
+<programlisting><userinput>SHOW "Hello
 </userinput>Hello</programlisting>
 
-    <programlisting><userinput>SHOW QUOTED "Hello
+<programlisting><userinput>SHOW QUOTED "Hello
 </userinput>"Hello</programlisting>
+
+<programlisting><userinput>SHOW QUOTED [1 2 3]
+</userinput>[1 2 3]</programlisting>
 </listitem>
 </varlistentry>
 
