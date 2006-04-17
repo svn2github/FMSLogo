@@ -211,6 +211,7 @@ extern NODE *ltone(NODE *args);
 extern NODE *lrefresh(NODE *args);
 extern NODE *lnorefresh(NODE *args);
 extern void keyboard_uninit(void);
+extern void mouse_uninit(void);
 
 
 // File main.cpp

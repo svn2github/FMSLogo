@@ -53,6 +53,24 @@ NODE *lmouseoff(NODE *)
    return Unbound;
    }
 
+void mouse_uninit()
+   {
+   free(mouse_lbuttondown);
+   mouse_lbuttondown = NULL;
+   
+   free(mouse_lbuttonup);
+   mouse_lbuttonup = NULL;
+   
+   free(mouse_rbuttondown);
+   mouse_rbuttondown = NULL;
+   
+   free(mouse_rbuttonup);
+   mouse_rbuttonup = NULL;
+   
+   free(mouse_mousemove);
+   mouse_mousemove = NULL;
+   }
+
 NODE *lkeyboardon(NODE *args)
    {
    if (keyboard_keyup == NULL)

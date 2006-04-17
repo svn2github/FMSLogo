@@ -671,4 +671,7 @@ void uninit()
    
    // free the memory associated with keyboard capture
    keyboard_uninit();
+
+   // free the memory associated with mouse capture
+   mouse_uninit();
    }
