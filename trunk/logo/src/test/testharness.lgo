@@ -8,6 +8,7 @@ LOAD "butlast.lgo
 LOAD "last.lgo
 LOAD "array.lgo
 LOAD "queue.lgo
+LOAD "stack.lgo
 LOAD "wait.lgo
 LOAD "predicate.lgo
 LOAD "logic.lgo
@@ -68,6 +69,7 @@ TO TESTALL
   LASTTEST        ; from last.lgo
   ARRAYTEST       ; from array.lgo
   QUEUETEST       ; from queue.lgo
+  STACKTEST       ; from stack.lgo
   LOGICTEST       ; from logic.lgo
   APPLYTEST       ; from apply.lgo
   MATHTEST        ; from math.lgo
