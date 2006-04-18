@@ -47,31 +47,9 @@ bool network_receive_on = false;    // flag for receive enabled (enabled message
 
 static int network_dns_sync = 0;
 
-// WinSock is loaded on the fly these are pointers to functions used
-
-LPWSAASYNCSELECT lpWSAAsyncSelect;
-LPCONNECT lpconnect;
-LPRECV lprecv;
-LPWSAGETLASTERROR lpWSAGetLastError;
-LPACCEPT lpaccept;
-LPHTONS lphtons;
-LPBIND lpbind;
-LPLISTEN lplisten;
-LPCLOSESOCKET lpclosesocket;
-LPSEND lpsend;
-LPSHUTDOWN lpshutdown;
-LPSOCKET lpsocket;
-LPGETHOSTNAME lpgethostname;
-LPGETHOSTBYNAME lpgethostbyname;
-LPWSASTARTUP lpWSAStartup;
-LPWSACLEANUP lpWSACleanup;
-LPWSASETLASTERROR lpWSASetLastError;
-LPWSAASYNCGETHOSTBYNAME lpWSAAsyncGetHostByName;
-
-static HMODULE hWinSockDLL = NULL;
+static bool network_is_started = false;
 
 // converts winsock errorcode to string
-
 LPCSTR WSAGetLastErrorString(int error_arg)
    {
    int error;
@@ -82,167 +60,167 @@ LPCSTR WSAGetLastErrorString(int error_arg)
       }
    else
       {
-      error = lpWSAGetLastError();
+      error = WSAGetLastError();
       }
 
    switch (error)
       {
-       case WSAENAMETOOLONG:
-           return "Name too long";
+      case WSAENAMETOOLONG:
+         return "Name too long";
+         
+      case WSANOTINITIALISED:
+         return "Not initialized";
 
-       case WSANOTINITIALISED:
-           return "Not initialized";
+      case WSASYSNOTREADY:
+         return "System not ready";
 
-       case WSASYSNOTREADY:
-           return "System not ready";
+      case WSAVERNOTSUPPORTED:
+         return "Version is not supported";
 
-       case WSAVERNOTSUPPORTED:
-           return "Version is not supported";
+      case WSAESHUTDOWN:
+         return "Can't send after socket shutdown";
 
-       case WSAESHUTDOWN:
-           return "Can't send after socket shutdown";
+      case WSAEINTR:
+         return "Interrupted system call";
 
-       case WSAEINTR:
-           return "Interrupted system call";
+      case WSAHOST_NOT_FOUND:
+         return "Authoritative Answer: Host not found";
 
-       case WSAHOST_NOT_FOUND:
-           return "Authoritative Answer: Host not found";
+      case WSATRY_AGAIN:
+         return "Non-Authoritative: Host not found, See NETSTARTUP";
 
-       case WSATRY_AGAIN:
-           return "Non-Authoritative: Host not found, See NETSTARTUP";
+      case WSANO_RECOVERY:
+         return "Non-recoverable error";
 
-       case WSANO_RECOVERY:
-           return "Non-recoverable error";
+      case WSANO_DATA:
+         return "No data record available";
 
-       case WSANO_DATA:
-           return "No data record available";
+      case WSAEBADF:
+         return "Bad file number";
+           
+      case WSAEWOULDBLOCK:
+         return "Operation would block";
 
-       case WSAEBADF:
-           return "Bad file number";
+      case WSAEINPROGRESS:
+         return "Operation now in progress";
 
-       case WSAEWOULDBLOCK:
-           return "Operation would block";
+      case WSAEALREADY:
+         return "Operation already in progress";
 
-       case WSAEINPROGRESS:
-           return "Operation now in progress";
+      case WSAEFAULT:
+         return "Bad address";
 
-       case WSAEALREADY:
-           return "Operation already in progress";
+      case WSAEDESTADDRREQ:
+         return "Destination address required";
 
-       case WSAEFAULT:
-           return "Bad address";
+      case WSAEMSGSIZE:
+         return "Message too long";
 
-       case WSAEDESTADDRREQ:
-           return "Destination address required";
+      case WSAEPFNOSUPPORT:
+         return "Protocol family not supported";
+           
+      case WSAENOTEMPTY:
+         return "Directory not empty";
 
-       case WSAEMSGSIZE:
-           return "Message too long";
+      case WSAEPROCLIM:
+         return "EPROCLIM returned";
 
-       case WSAEPFNOSUPPORT:
-           return "Protocol family not supported";
+      case WSAEUSERS:
+         return "EUSERS returned";
 
-       case WSAENOTEMPTY:
-           return "Directory not empty";
+      case WSAEDQUOT:
+         return "Disk quota exceeded";
 
-       case WSAEPROCLIM:
-           return "EPROCLIM returned";
+      case WSAESTALE:
+         return "ESTALE returned";
 
-       case WSAEUSERS:
-           return "EUSERS returned";
+      case WSAEINVAL:
+         return "Invalid argument";
 
-       case WSAEDQUOT:
-           return "Disk quota exceeded";
+      case WSAEMFILE:
+         return "Too many open files";
 
-       case WSAESTALE:
-           return "ESTALE returned";
+      case WSAEACCES:
+         return "Access denied";
+         
+      case WSAELOOP:
+         return "Too many levels of symbolic links";
 
-       case WSAEINVAL:
-           return "Invalid argument";
+      case WSAEREMOTE:
+         return "The object is remote";
 
-       case WSAEMFILE:
-           return "Too many open files";
+      case WSAENOTSOCK:
+         return "Socket operation on non-socket";
 
-       case WSAEACCES:
-           return "Access denied";
+      case WSAEADDRNOTAVAIL:
+         return "Can't assign requested address";
 
-       case WSAELOOP:
-           return "Too many levels of symbolic links";
+      case WSAEADDRINUSE:
+         return "Address already in use";
 
-       case WSAEREMOTE:
-           return "The object is remote";
+      case WSAEAFNOSUPPORT:
+         return "Address family not supported by protocol family";
 
-       case WSAENOTSOCK:
-           return "Socket operation on non-socket";
+      case WSAESOCKTNOSUPPORT:
+         return "Socket type not supported";
+         
+      case WSAEPROTONOSUPPORT:
+         return "Protocol not supported";
 
-       case WSAEADDRNOTAVAIL:
-           return "Can't assign requested address";
+      case WSAENOBUFS:
+         return "No buffer space is supported";
 
-       case WSAEADDRINUSE:
-           return "Address already in use";
+      case WSAETIMEDOUT:
+         return "Connection timed out";
 
-       case WSAEAFNOSUPPORT:
-           return "Address family not supported by protocol family";
+      case WSAEISCONN:
+         return "Socket is already connected";
 
-       case WSAESOCKTNOSUPPORT:
-           return "Socket type not supported";
+      case WSAENOTCONN:
+         return "Socket is not connected";
 
-       case WSAEPROTONOSUPPORT:
-           return "Protocol not supported";
+      case WSAENOPROTOOPT:
+         return "Bad protocol option";
 
-       case WSAENOBUFS:
-           return "No buffer space is supported";
+      case WSAECONNRESET:
+         return "Connection reset by peer";
 
-       case WSAETIMEDOUT:
-           return "Connection timed out";
+      case WSAECONNABORTED:
+         return "Software caused connection abort";
 
-       case WSAEISCONN:
-           return "Socket is already connected";
+      case WSAENETDOWN:
+         return "Network is down";
 
-       case WSAENOTCONN:
-           return "Socket is not connected";
+      case WSAENETRESET:
+         return "Network was reset";
 
-       case WSAENOPROTOOPT:
-           return "Bad protocol option";
+      case WSAECONNREFUSED:
+         return "Connection refused";
 
-       case WSAECONNRESET:
-           return "Connection reset by peer";
-
-       case WSAECONNABORTED:
-           return "Software caused connection abort";
-
-       case WSAENETDOWN:
-           return "Network is down";
-
-       case WSAENETRESET:
-           return "Network was reset";
-
-       case WSAECONNREFUSED:
-           return "Connection refused";
-
-       case WSAEHOSTDOWN:
-           return "Host is down";
-
+      case WSAEHOSTDOWN:
+         return "Host is down";
+         
        case WSAEHOSTUNREACH:
-           return "Host is unreachable";
+          return "Host is unreachable";
+          
+      case WSAEPROTOTYPE:
+         return "Protocol is wrong type for socket";
+         
+      case WSAEOPNOTSUPP:
+         return "Operation not supported on socket";
 
-       case WSAEPROTOTYPE:
-           return "Protocol is wrong type for socket";
+      case WSAENETUNREACH:
+         return "ICMP network unreachable";
 
-       case WSAEOPNOTSUPP:
-           return "Operation not supported on socket";
+      case WSAETOOMANYREFS:
+          return "Too many references";
 
-       case WSAENETUNREACH:
-           return "ICMP network unreachable";
-
-       case WSAETOOMANYREFS:
-           return "Too many references";
-
-       default:
-           {
-              static char Buffer[32];
-              sprintf(Buffer, "Unknown %d", error);
-              return Buffer;
-           }
+      default:
+         {
+         static char Buffer[32];
+         sprintf(Buffer, "Unknown %d", error);
+         return Buffer;
+         }
       }
    }
 
@@ -250,11 +228,8 @@ LPCSTR WSAGetLastErrorString(int error_arg)
 
 NODE *lnetstartup(NODE *args)
    {
-   WSADATA WSAData;
-
    // check if already started
-
-   if (hWinSockDLL != NULL)
+   if (network_is_started)
       {
       ShowMessageAndStop("Network Error", "Already Started");
       return Unbound;
@@ -265,43 +240,15 @@ NODE *lnetstartup(NODE *args)
       network_dns_sync = int_arg(args);
       }
 
-   // load appropriate library
-   hWinSockDLL = LoadLibrary("WSOCK32.DLL");
-
-   if (hWinSockDLL == NULL)
-      {
-      ShowMessageAndStop("Network Error", "Cannot load WSOCK32.DLL");
-      return Unbound;
-      }
-
-   // fetch the routines
-
-   lpaccept = (LPACCEPT) GetProcAddress(hWinSockDLL, (LPSTR) "accept");
-   lpbind = (LPBIND) GetProcAddress(hWinSockDLL, (LPSTR) "bind");
-   lpclosesocket = (LPCLOSESOCKET) GetProcAddress(hWinSockDLL, (LPSTR) "closesocket");
-   lpconnect = (LPCONNECT) GetProcAddress(hWinSockDLL, (LPSTR) "connect");
-   lphtons = (LPHTONS) GetProcAddress(hWinSockDLL, (LPSTR) "htons");
-   lplisten = (LPLISTEN) GetProcAddress(hWinSockDLL, (LPSTR) "listen");
-   lprecv = (LPRECV) GetProcAddress(hWinSockDLL, (LPSTR) "recv");
-   lpsend = (LPSEND) GetProcAddress(hWinSockDLL, (LPSTR) "send");
-   lpshutdown = (LPSHUTDOWN) GetProcAddress(hWinSockDLL, (LPSTR) "shutdown");
-   lpsocket = (LPSOCKET) GetProcAddress(hWinSockDLL, (LPSTR) "socket");
-   lpgethostname = (LPGETHOSTNAME) GetProcAddress(hWinSockDLL, (LPSTR) "gethostname");
-   lpWSAStartup = (LPWSASTARTUP) GetProcAddress(hWinSockDLL, (LPSTR) "WSAStartup");
-   lpWSACleanup = (LPWSACLEANUP) GetProcAddress(hWinSockDLL, (LPSTR) "WSACleanup");
-   lpWSAGetLastError = (LPWSAGETLASTERROR) GetProcAddress(hWinSockDLL, (LPSTR) "WSAGetLastError");
-   lpWSAAsyncGetHostByName = (LPWSAASYNCGETHOSTBYNAME) GetProcAddress(hWinSockDLL, (LPSTR) "WSAAsyncGetHostByName");
-   lpgethostbyname = (LPGETHOSTBYNAME) GetProcAddress(hWinSockDLL, (LPSTR) "gethostbyname");
-   lpWSAAsyncSelect = (LPWSAASYNCSELECT) GetProcAddress(hWinSockDLL, (LPSTR) "WSAAsyncSelect");
-
    // tell winsock to wakeup
-
-   if (lpWSAStartup(/*MAKEWORD(1,1)*/ 0x0101, &WSAData) != 0)
+   WSADATA WSAData;
+   if (WSAStartup(/*MAKEWORD(1,1)*/ 0x0101, &WSAData) != 0)
       {
       ShowMessageAndStop("WSAStartup()", WSAGetLastErrorString(0));
       return Unbound;
       }
 
+   network_is_started = true;
    return Unbound;
    }
 
@@ -316,7 +263,7 @@ NODE *lnetshutdown(NODE *)
       network_receive_on = false;
       strcpy(network_receive_value, "");
 
-      lpclosesocket(receiveSock);
+      closesocket(receiveSock);
       receiveSock = INVALID_SOCKET;
       }
 
@@ -326,17 +273,34 @@ NODE *lnetshutdown(NODE *)
       network_send_on = false;
       strcpy(network_send_value, "");
 
-      lpclosesocket(sendSock);
+      closesocket(sendSock);
       sendSock = INVALID_SOCKET;
       }
 
    // cleanup library
-   if (hWinSockDLL != NULL)
+   if (network_is_started) 
       {
-      lpWSACleanup();
-      FreeLibrary(hWinSockDLL);
-      hWinSockDLL = NULL;
+      WSACleanup();
+      network_is_started = false;
       }
+
+   free(network_receive_receive);
+   network_receive_receive = NULL;
+
+   free(network_receive_send);
+   network_receive_send = NULL;
+
+   free(network_receive_value);
+   network_receive_value = NULL;
+
+   free(network_send_receive);
+   network_send_receive = NULL;
+
+   free(network_send_send);
+   network_send_send = NULL;
+
+   free(network_send_value);
+   network_send_value = NULL;
 
    if (network_dns_sync != 1)
       {
@@ -354,10 +318,8 @@ NODE *lnetshutdown(NODE *)
 
 NODE *lnetreceiveon(NODE *args)
    {
-   char szThisHost[80];
-
    // check sanity
-   if (hWinSockDLL == NULL)
+   if (!network_is_started)
       {
       ShowMessageAndStop("Network Error", "Not Started");
       return Unbound;
@@ -409,9 +371,9 @@ NODE *lnetreceiveon(NODE *args)
       // open the socket
 
 #ifdef USE_UDP
-      if ((receiveSock = lpsocket(AF_INET, SOCK_DGRAM, 0)) == INVALID_SOCKET)
+      if ((receiveSock = socket(AF_INET, SOCK_DGRAM, 0)) == INVALID_SOCKET)
 #else
-      if ((receiveSock = lpsocket(AF_INET, SOCK_STREAM, 0)) == INVALID_SOCKET)
+      if ((receiveSock = socket(AF_INET, SOCK_STREAM, 0)) == INVALID_SOCKET)
 #endif
          {
          ShowMessageAndStop("socket(receivesock)", WSAGetLastErrorString(0));
@@ -419,12 +381,12 @@ NODE *lnetreceiveon(NODE *args)
          }
 
       // get who we are
-
-      lpgethostname(szThisHost, sizeof(szThisHost));
+      char szThisHost[80];
+      gethostname(szThisHost, sizeof(szThisHost));
 
       if (network_dns_sync == 1)
          {
-         pher = lpgethostbyname(szThisHost);
+         pher = gethostbyname(szThisHost);
          if (pher != NULL)
             {
             MainWindowx->SendMessage(WM_NETWORK_LISTENRECEIVEFINISH, 0, 0L);
@@ -443,7 +405,7 @@ NODE *lnetreceiveon(NODE *args)
          memset(pher, 0, MAXGETHOSTSTRUCT);
          }
 
-      if (!lpWSAAsyncGetHostByName(MainWindowx->HWindow, WM_NETWORK_LISTENRECEIVEFINISH, szThisHost, (LPSTR) pher, MAXGETHOSTSTRUCT))
+      if (!WSAAsyncGetHostByName(MainWindowx->HWindow, WM_NETWORK_LISTENRECEIVEFINISH, szThisHost, (LPSTR) pher, MAXGETHOSTSTRUCT))
          {
          ShowMessageAndStop("WSAAsyncGetHostByName()", WSAGetLastErrorString(0));
          return Falsex;
@@ -465,7 +427,7 @@ NODE *lnetreceiveoff(NODE *)
       network_receive_on = 0;
       strcpy(network_receive_value, "");
 
-      lpclosesocket(receiveSock);
+      closesocket(receiveSock);
       receiveSock = INVALID_SOCKET;
       }
    else
@@ -505,7 +467,7 @@ NODE *lnetsendreceivevalue(NODE *)
 NODE *lnetsendon(NODE *args)
    {
    // sanity check first
-   if (hWinSockDLL == NULL)
+   if (!network_is_started)
       {
       ShowMessageAndStop("Network Error", "Not Started");
       return Unbound;
@@ -560,9 +522,9 @@ NODE *lnetsendon(NODE *args)
 
       // get sockets
 #ifdef USE_UDP
-      if ((sendSock = lpsocket(AF_INET, SOCK_DGRAM, 0)) == INVALID_SOCKET)
+      if ((sendSock = socket(AF_INET, SOCK_DGRAM, 0)) == INVALID_SOCKET)
 #else
-      if ((sendSock = lpsocket(AF_INET, SOCK_STREAM, 0)) == INVALID_SOCKET)
+      if ((sendSock = socket(AF_INET, SOCK_STREAM, 0)) == INVALID_SOCKET)
 #endif
          {
          ShowMessageAndStop("socket(sendsocket)", WSAGetLastErrorString(0));
@@ -571,7 +533,7 @@ NODE *lnetsendon(NODE *args)
 
       if (network_dns_sync == 1)
          {
-         phes = lpgethostbyname(networkaddress);
+         phes = gethostbyname(networkaddress);
          if (phes != NULL)
             {
             MainWindowx->SendMessage(WM_NETWORK_CONNECTSENDFINISH, 0, 0L);
@@ -592,7 +554,7 @@ NODE *lnetsendon(NODE *args)
 
       // get address of remote machine
 
-      if (!lpWSAAsyncGetHostByName(MainWindowx->HWindow, WM_NETWORK_CONNECTSENDFINISH, networkaddress, (LPSTR) phes, MAXGETHOSTSTRUCT))
+      if (!WSAAsyncGetHostByName(MainWindowx->HWindow, WM_NETWORK_CONNECTSENDFINISH, networkaddress, (LPSTR) phes, MAXGETHOSTSTRUCT))
          {
          ShowMessageAndStop("WSAAsyncGetHostByName()", WSAGetLastErrorString(0));
          return Falsex;
@@ -616,7 +578,7 @@ NODE *lnetsendoff(NODE *)
       network_send_on = false;
       strcpy(network_send_value, "");
 
-      lpclosesocket(sendSock);
+      closesocket(sendSock);
       sendSock = INVALID_SOCKET;
       }
    else
@@ -639,10 +601,10 @@ NODE *lnetsendsendvalue(NODE *args)
          {
 
          // send the data
-         if ((lpsend(sendSock, Data, strlen(Data) + 1, 0)) == SOCKET_ERROR)
+         if ((send(sendSock, Data, strlen(Data) + 1, 0)) == SOCKET_ERROR)
             {
 
-            if (lpWSAGetLastError() != WSAEWOULDBLOCK)
+            if (WSAGetLastError() != WSAEWOULDBLOCK)
                {
                ShowMessageAndStop("send(sendsock)", WSAGetLastErrorString(0));
                return Falsex;
@@ -676,10 +638,9 @@ NODE *lnetreceivesendvalue(NODE *args)
       if (bReceiveConnected && !bReceiveBusy)
          {
          // send the data
-         if ((lpsend(receiveSock, Data, strlen(Data) + 1, 0)) == SOCKET_ERROR)
+         if ((send(receiveSock, Data, strlen(Data) + 1, 0)) == SOCKET_ERROR)
             {
-
-            if (lpWSAGetLastError() != WSAEWOULDBLOCK)
+            if (WSAGetLastError() != WSAEWOULDBLOCK)
                {
                ShowMessageAndStop("send(sendsock)", WSAGetLastErrorString(0));
                return Falsex;

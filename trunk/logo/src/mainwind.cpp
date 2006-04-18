@@ -2482,12 +2482,10 @@ LRESULT TMainFrame::OnNetworkConnectSendAck(WPARAM /* wParam */, LPARAM lParam)
             memset(Buffer, 0, MAX_PACKET_SIZE);
 
             // get a copy first for examination
-            if ((status = lprecv(sendSock, Buffer, MAX_PACKET_SIZE - 1, MSG_PEEK)) == SOCKET_ERROR)
+            if ((status = recv(sendSock, Buffer, MAX_PACKET_SIZE - 1, MSG_PEEK)) == SOCKET_ERROR)
                {
-               // int iErrorCode;
-
                // if block wait til we get called again
-               if ((/* iErrorCode = */ lpWSAGetLastError()) == WSAEWOULDBLOCK) 
+               if (WSAGetLastError() == WSAEWOULDBLOCK) 
                   {
                   return 0L;
                   }
@@ -2530,13 +2528,13 @@ LRESULT TMainFrame::OnNetworkConnectSendAck(WPARAM /* wParam */, LPARAM lParam)
 
                   // read for real up to a last packet boundary
                   memset(Buffer, 0, MAX_PACKET_SIZE);
-                  status = lprecv(sendSock, Buffer, i + 1, 0);
+                  status = recv(sendSock, Buffer, i + 1, 0);
                   }
                else
                   {
                   // read the whole thng for real
                   memset(Buffer, 0, MAX_PACKET_SIZE);
-                  status = lprecv(sendSock, Buffer, MAX_PACKET_SIZE - 1, 0);
+                  status = recv(sendSock, Buffer, MAX_PACKET_SIZE - 1, 0);
                   }
 
                // now queue up a separate message for each packet
@@ -2622,25 +2620,23 @@ LRESULT TMainFrame::OnNetworkConnectSendFinish(WPARAM /* wParam */, LPARAM lPara
       }
 
    // set ports
-   send_dest_sin.sin_port = lphtons(sendPort);/* Convert to network ordering  */
+   send_dest_sin.sin_port = htons(sendPort); // Convert to network ordering
 
    // watch for connect
-   if (lpWSAAsyncSelect(
-         sendSock,
-         MainWindowx->HWindow,
-         WM_NETWORK_CONNECTSENDACK,
-         FD_CONNECT | FD_WRITE | FD_READ | FD_CLOSE) == SOCKET_ERROR)
+   if (WSAAsyncSelect(
+          sendSock,
+          MainWindowx->HWindow,
+          WM_NETWORK_CONNECTSENDACK,
+          FD_CONNECT | FD_WRITE | FD_READ | FD_CLOSE) == SOCKET_ERROR)
       {
       MessageBox(WSAGetLastErrorString(0), "WSAAsyncSelect(sendSock) FD_CONNECT");
       // err_logo(STOP_ERROR,NIL);
       }
 
    // lets try now
-   if (lpconnect(sendSock, (PSOCKADDR) & send_dest_sin, sizeof(send_dest_sin)) == SOCKET_ERROR)
+   if (connect(sendSock, (PSOCKADDR) & send_dest_sin, sizeof(send_dest_sin)) == SOCKET_ERROR)
       {
-      // int iErrorCode;
-
-      if ((/* iErrorCode = */ lpWSAGetLastError()) != WSAEWOULDBLOCK)
+      if (WSAGetLastError() != WSAEWOULDBLOCK)
          {
          MessageBox(WSAGetLastErrorString(0), "connect(sendsock)");
          // err_logo(STOP_ERROR,NIL);
@@ -2694,12 +2690,13 @@ LRESULT TMainFrame::OnNetworkListenReceiveAck(WPARAM /* wParam */, LPARAM lParam
             memset(Buffer, 0, MAX_PACKET_SIZE);
 
             // get a copy first for examination
-            if ((status = lprecv(receiveSock, Buffer, MAX_PACKET_SIZE - 1, MSG_PEEK)) == SOCKET_ERROR)
+            if ((status = recv(receiveSock, Buffer, MAX_PACKET_SIZE - 1, MSG_PEEK)) == SOCKET_ERROR)
                {
-               // int iErrorCode;
-
                // if block wait til we get called again
-               if ((/* iErrorCode = */ lpWSAGetLastError()) == WSAEWOULDBLOCK) return 0L;
+               if (WSAGetLastError() == WSAEWOULDBLOCK) 
+                  {
+                  return 0L;
+                  }
 
                MessageBox(
                   WSAGetLastErrorString(0),
@@ -2740,13 +2737,13 @@ LRESULT TMainFrame::OnNetworkListenReceiveAck(WPARAM /* wParam */, LPARAM lParam
 
                   // read for real up to a last packet boundary
                   memset(Buffer, 0, MAX_PACKET_SIZE);
-                  status = lprecv(receiveSock, Buffer, i + 1, 0);
+                  status = recv(receiveSock, Buffer, i + 1, 0);
                   }
                else
                   {
                   // read the whole thng for real
                   memset(Buffer, 0, MAX_PACKET_SIZE);
-                  status = lprecv(receiveSock, Buffer, MAX_PACKET_SIZE - 1, 0);
+                  status = recv(receiveSock, Buffer, MAX_PACKET_SIZE - 1, 0);
                   }
 
                i = 0;
@@ -2779,7 +2776,7 @@ LRESULT TMainFrame::OnNetworkListenReceiveAck(WPARAM /* wParam */, LPARAM lParam
 #ifndef USE_UDP
               acc_sin_len = sizeof(acc_sin);
 
-              if ((receiveSock = lpaccept(receiveSock, (struct sockaddr *) &acc_sin, (int *) &acc_sin_len)) == INVALID_SOCKET)
+              if ((receiveSock = accept(receiveSock, (struct sockaddr *) &acc_sin, (int *) &acc_sin_len)) == INVALID_SOCKET)
                  {
                  MessageBox(WSAGetLastErrorString(0), "accept(receivesock)");
                  // err_logo(STOP_ERROR,NIL);
@@ -2840,10 +2837,10 @@ LRESULT TMainFrame::OnNetworkListenReceiveFinish(WPARAM /* wParam */, LPARAM lPa
    memcpy(&(receive_local_sin.sin_addr), pher->h_addr, pher->h_length);
 
    // set ports
-   receive_local_sin.sin_port = lphtons(receivePort);/* Convert to network ordering*/
+   receive_local_sin.sin_port = htons(receivePort); // Convert to network ordering
 
    // Associate an address with a socket. (bind)
-   if (lpbind(receiveSock, (struct sockaddr *) &receive_local_sin, sizeof(receive_local_sin)) == SOCKET_ERROR)
+   if (bind(receiveSock, (struct sockaddr *) &receive_local_sin, sizeof(receive_local_sin)) == SOCKET_ERROR)
       {
       MessageBox(WSAGetLastErrorString(0), "bind(receivesock)");
       // err_logo(STOP_ERROR,NIL);
@@ -2853,7 +2850,7 @@ LRESULT TMainFrame::OnNetworkListenReceiveFinish(WPARAM /* wParam */, LPARAM lPa
    // listen for connect
 
 #ifndef USE_UDP
-   if (lplisten(receiveSock, MAX_PENDING_CONNECTS) == SOCKET_ERROR)
+   if (listen(receiveSock, MAX_PENDING_CONNECTS) == SOCKET_ERROR)
       {
       MessageBox(WSAGetLastErrorString(0), "listen(receivesock)");
       // err_logo(STOP_ERROR,NIL);
@@ -2862,11 +2859,11 @@ LRESULT TMainFrame::OnNetworkListenReceiveFinish(WPARAM /* wParam */, LPARAM lPa
 #endif
 
    // watch for when connect happens
-   if (lpWSAAsyncSelect(
-         receiveSock,
-         MainWindowx->HWindow,
-         WM_NETWORK_LISTENRECEIVEACK,
-         FD_ACCEPT | FD_READ | FD_WRITE | FD_CLOSE) == SOCKET_ERROR)
+   if (WSAAsyncSelect(
+          receiveSock,
+          MainWindowx->HWindow,
+          WM_NETWORK_LISTENRECEIVEACK,
+          FD_ACCEPT | FD_READ | FD_WRITE | FD_CLOSE) == SOCKET_ERROR)
       {
       MessageBox(WSAGetLastErrorString(0), "WSAAsyncSelect(receivesock) FD_ACCEPT");
       // err_logo(STOP_ERROR,NIL);
