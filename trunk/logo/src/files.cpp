@@ -406,36 +406,8 @@ void runstartup(NODE *oldst)
 
       eval_driver(st);
 
-      /* process special conditions */
-      for (int i = 0; i < 1; i++)
-         {
-         if (stopping_flag == THROWING)
-            {
-            if (compare_node(throw_node, Error, true) == 0)
-               {
-               err_print();
-               }
-            else if (compare_node(throw_node, System, true) == 0)
-               {
-               break;
-               }
-            else if (compare_node(throw_node, Toplevel, true) != 0)
-               {
-               err_logo(NO_CATCH_TAG, throw_node);
-               err_print();
-               }
-            stopping_flag = RUN;
-            }
-
-         if (stopping_flag == STOP || stopping_flag == OUTPUT)
-            {
-            print_node(
-               stdout,
-               make_static_strnode(
-                  "You must be in a procedure to use OUTPUT or STOP.\n"));
-            stopping_flag = RUN;
-            }
-         }
+      // process special conditions
+      process_special_conditions();
 
       halt_flag--;
       }

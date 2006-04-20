@@ -316,7 +316,6 @@ class TMainFrame : public TDecoratedFrame
    void UndockCommanderWindow();
    void DockCommanderWindow();
 
-   void CheckForFileError();
    bool LoadBitmapFile(LPCSTR, DWORD &, DWORD &);
    bool OpenDIB(FILE* File, DWORD &, DWORD &);
    bool DumpBitmapFile(LPCSTR Filename, int MaxBitCount);

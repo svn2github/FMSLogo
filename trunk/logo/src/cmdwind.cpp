@@ -323,14 +323,49 @@ TMyCommandWindow::Duplicate(
    return true;
    }
 
+bool process_special_conditions()
+   {
+   bool error_happened = false;
+
+   if (stopping_flag == THROWING)
+      {
+      if (compare_node(throw_node, Error, true) == 0)
+         {
+         err_print();
+         error_happened = true;
+         }
+      else if (compare_node(throw_node, System, true) == 0)
+         {
+         PostQuitMessage(1); // set the exit code to 1
+         prepare_to_exit(true);
+         }
+      else if (compare_node(throw_node, Toplevel, true) != 0)
+         {
+         err_logo(NO_CATCH_TAG, throw_node);
+         err_print();
+         error_happened = true;
+         }
+
+      stopping_flag = RUN;
+      }
+
+   if (stopping_flag == STOP || stopping_flag == OUTPUT)
+      {
+      print_node(
+         stdout,
+         make_static_strnode(
+            "You must be in a procedure to use OUTPUT or STOP.\n"));
+      stopping_flag = RUN;
+      }
+
+
+   return error_happened;
+   }
+
+
 void do_execution(char * logocommand)
    {
-   NODE *exec_list = NIL;
-   NODETYPES this_type;
-   int i;
-
    // if something there continue
-
    if (strlen(logocommand) != 0)
       {
 
@@ -342,8 +377,7 @@ void do_execution(char * logocommand)
         }
 
       // this code emulates the TTY model used in UCBLOGO main loop
-
-      this_type = STRING;
+      NODETYPES this_type = STRING;
 
       // do control character processing processing
       for (char * c = logocommand; *c != '\0'; c++)
@@ -362,74 +396,39 @@ void do_execution(char * logocommand)
 
       check_reserve_tank();
 
-      /* turn text into a NODE and parse it */
+      // turn text into a NODE and parse it
       current_line = reref(
          current_line, 
          make_strnode(logocommand, (int) strlen(logocommand), this_type, strnzcpy));
 
-      exec_list = reref(exec_list, parser(current_line, TRUE));
+      NODE * exec_list = vref(parser(current_line, TRUE));
 
-      /* now process it */
-
+      // now process it
       val_status = 0;
       if (exec_list != NIL)
          {
          eval_driver(exec_list);
          }
 
-      // process special conditions
+      process_special_conditions();
 
-      for (i = 0; i < 1; i++)
-         {
-         if (stopping_flag == THROWING)
-            {
-            if (compare_node(throw_node, Error, TRUE) == 0)
-               {
-               err_print();
-               }
-            else if (compare_node(throw_node, System, TRUE) == 0)
-               {
-               break;
-               }
-            else if (compare_node(throw_node, Toplevel, TRUE) != 0)
-               {
-               err_logo(NO_CATCH_TAG, throw_node);
-               err_print();
-               }
-            stopping_flag = RUN;
-            }
-
-         if (stopping_flag == STOP || stopping_flag == OUTPUT)
-            {
-            print_node(
-                stdout,
-                make_static_strnode(
-                  "You must be in a procedure to use OUTPUT or STOP.\n"));
-            stopping_flag = RUN;
-            }
-         }
-
-      /* deallocate the line */
-
+      // deallocate the line
       current_line = reref(current_line, NIL);
 
-      /* this is a hack to force garbage collector to properly clean up */
-
+      // this is a hack to force garbage collector to properly clean up
       if (exec_list != NIL)
          {
          settype(exec_list, CONS);
-         exec_list = reref(exec_list, NIL);
+         deref(exec_list);
          }
 
-      /* not ok to halt now */
-
+      // not ok to halt now
       halt_flag--;
       if (halt_flag < 0)
          {
          halt_flag = 0;
          }
       }
-
    }
 
 void TMyCommandWindow::DoButtonExecute(UINT)

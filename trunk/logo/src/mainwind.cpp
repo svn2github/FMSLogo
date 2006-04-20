@@ -1518,39 +1518,6 @@ void TMainFrame::CMFileNew()
    }
 
 
-void
-TMainFrame::CheckForFileError()
-   {
-
-   if (stopping_flag == THROWING)
-      {
-      if (compare_node(throw_node, Error, TRUE) == 0)
-         {
-         err_print();
-         }
-      else if (compare_node(throw_node, System, TRUE) == 0)
-         {
-         return;
-         }
-      else if (compare_node(throw_node, Toplevel, TRUE) != 0)
-         {
-         err_logo(NO_CATCH_TAG, throw_node);
-         err_print();
-         }
-      stopping_flag = RUN;
-      }
-
-   if (stopping_flag == STOP || stopping_flag == OUTPUT)
-      {
-      print_node(
-         stdout,
-         make_static_strnode(
-            "You must be in a procedure to use OUTPUT or STOP.\n"));
-      stopping_flag = RUN;
-      }
-   }
-
-
 void TMainFrame::CMFileOpen()
    {
    if (IsDirty)
@@ -1588,7 +1555,7 @@ void TMainFrame::CMFileOpen()
       fileload(FileName);
 
       // handle any error that may have occured
-      CheckForFileError();
+      process_special_conditions();
 
       halt_flag--;
       if (halt_flag < 0)
@@ -1645,7 +1612,7 @@ void TMainFrame::SaveFile()
    filesave(FileName);
 
    // handle any error that may have occured
-   CheckForFileError();
+   process_special_conditions();
    }
 
 void TMainFrame::CMBitmapPrinterArea()

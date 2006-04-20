@@ -173,6 +173,7 @@ extern NODE *lbitload(NODE *arg);
 extern NODE *lbitloadsize(NODE *arg);
 extern NODE *lbitsize(NODE *arg);
 extern void cnv_strnode_string(char *textbuf, NODE *arg);
+extern bool process_special_conditions(void);
 extern void do_execution(char *string);
 extern NODE *lsettimer(NODE *arg);
 extern NODE *lcleartimer(NODE *arg);

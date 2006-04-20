@@ -488,33 +488,7 @@ bool TMyFileWindow::EndEdit()
    bool realsave = endedit();
 
    // check for error
-
-   for (int i = 0; i < 1; i++)
-      {
-      if (stopping_flag == THROWING)
-         {
-         if (compare_node(throw_node, Error, TRUE) == 0)
-            {
-            err_print();
-            error_happen = true;
-            }
-         else if (compare_node(throw_node, System, TRUE) == 0) break;
-         else if (compare_node(throw_node, Toplevel, TRUE) != 0)
-            {
-            err_logo(NO_CATCH_TAG, throw_node);
-            err_print();
-            error_happen = true;
-            }
-         stopping_flag = RUN;
-         }
-      if (stopping_flag == STOP || stopping_flag == OUTPUT)
-         {
-         print_node(
-            stdout,
-            make_static_strnode("You must be in a procedure to use OUTPUT or STOP.\n"));
-         stopping_flag = RUN;
-         }
-      }
+   error_happen = process_special_conditions();
 
    return realsave;
    }
