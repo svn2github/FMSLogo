@@ -21,6 +21,7 @@ Part I) Kit Description/Location (http://sourceforge.net/projects/fmslogo):
 Part II) New features/bugs fixed:
 
   * Added for ???,
+    o Fix bug #1472599; BYE immediately exits FMSLogo.
     o Fix bug #1372723; THROW "SYSTEM now exits FMSLogo.
 
   * Added for 6.8.0,
