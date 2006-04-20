@@ -537,7 +537,10 @@ NODE *evaluator(NODE *list, enum labels where)
    /* primitive_apply */
    if (NOT_THROWING)
       {
-      assign(val, ((logofunc) * getprimfun(proc)) (argl));
+      if (!IsTimeToExit)
+         {
+         assign(val, ((logofunc) * getprimfun(proc)) (argl));
+         }
       }
    else
       {
