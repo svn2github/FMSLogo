@@ -13,7 +13,7 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-Exits &PRODUCTNAME; and returns to the operating system.
+BYE exits &PRODUCTNAME;.
 </para>
 </listitem>
 </varlistentry>
