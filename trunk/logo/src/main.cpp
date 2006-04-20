@@ -881,8 +881,6 @@ WinMain(
    BaseUnitsx = LOWORD(GetDialogBaseUnits());
    BaseUnitsy = HIWORD(GetDialogBaseUnits());
 
-   TMyApp MyApp("FMSLogo", hInstance, hPrevInstance, lpCmdLine, nCmdShow);
-
    srand(time(NULL));
 
    // alloc and init hash table
@@ -910,8 +908,13 @@ WinMain(
    hCursorWait = LoadCursor(NULL, IDC_WAIT);
    hCursorArrow = LoadCursor(NULL, IDC_ARROW);
 
-   // go for it
-   MyApp.Run();
+   int exitCode;
+      {
+      // go for it
+      TMyApp myApp("FMSLogo", hInstance, hPrevInstance, lpCmdLine, nCmdShow);
+      myApp.Run();
+      exitCode = myApp.Status;
+      }
 
    if (hCursorWait)
       {
@@ -946,7 +949,7 @@ WinMain(
 
    CloseHandle(singleInstanceMutex);
 
-   return MyApp.Status;
+   return exitCode;
    }
 
 static
