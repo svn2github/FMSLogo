@@ -54,8 +54,8 @@ Part II) New features/bugs fixed:
     o Fix minor typos and omissions in documentation.
     o Implement request #1466722; Add the LOGOVERSION command.
     o Implement request #1367379; Files are saved with lower-case extension.
+    o Implement request #1473481; CTRL+D does File - Save and Exit in editor.
     o Make CLOSEALL a primitive.
-    o CTRL+D now does File - Save and Exit in the editor.
 
   * Added for 6.7.2,
     o Fix bug #1372489; double-clicking .lgo file starts new FMSLogo process.
