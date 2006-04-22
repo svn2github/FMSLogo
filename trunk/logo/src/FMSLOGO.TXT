@@ -23,6 +23,10 @@ Part II) New features/bugs fixed:
   * Added for ???,
     o Fix bug #1472599; BYE immediately exits FMSLogo.
     o Fix bug #1372723; THROW "SYSTEM now exits FMSLogo.
+    o Fix bug #1474490; FMSLogo installs for all users when installed by 
+      an administrator or power user.
+    o Mitigate bug #1327718; FMSLogo suggests an install location in the
+      home directory when installed by a limited user.
 
   * Added for 6.8.0,
     o Fix bug #1465992; PgUp and PgDn now work in the commander history box.

@@ -73,6 +73,35 @@ FunctionEnd
 
 
 Function .onInit
+
+  ; assume regular user until we know they are a power user
+  SetShellVarContext current
+  StrLen $2 "$PROFILE\FMSLogo"
+  StrCpy $INSTDIR "$PROFILE\FMSLogo" $2 0
+
+  ClearErrors
+  UserInfo::GetName
+  IfErrors SetupUser.Win9x
+  Pop $0
+  UserInfo::GetAccountType
+  Pop $1
+
+  StrCmp $1 "Admin" SetupUser.AllUsers +1
+  StrCmp $1 "Power" SetupUser.AllUsers +1
+  goto SetupUser.CurrentUser
+
+SetupUser.Win9x:
+SetupUser.AllUsers:
+  SetShellVarContext all
+  StrLen $2       "$PROGRAMFILES\FMSLogo"
+  StrCpy $INSTDIR "$PROGRAMFILES\FMSLogo" $2 0
+  goto SetupUser.Done
+
+SetupUser.CurrentUser:
+  ; nothing to do because this is the default
+
+SetupUser.Done:
+
   ;
   ; Abort if another instance of the installer is running
   ; 
@@ -82,13 +111,22 @@ Function .onInit
     MessageBox MB_OK|MB_ICONEXCLAMATION "Either the installer or FMSLogo is currently running.$\nThis installation cannot continue."
     Abort
 
-
 checkifinstalled:
 
   ;
   ; If FMSLogo is already installed, either uninstall it or abort. 
   ;
+  StrCmp $INSTDIR "$PROGRAMFILES\FMSLogo" GetPreviousInstall.AllUsers GetPreviousInstall.CurrentUser
+
+GetPreviousInstall.AllUsers:
   ReadRegStr $0 HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\FMSLogo" "UninstallString"
+  goto GetPreviousInstall.Done
+
+GetPreviousInstall.CurrentUser:
+  ReadRegStr $0 HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\FMSLogo" "UninstallString"
+  goto GetPreviousInstall.Done
+
+GetPreviousInstall.Done:
 
   ; remove quotes from $uninstallExe
   StrLen $1 $0
@@ -117,11 +155,15 @@ FunctionEnd
 Section "FMSLogo"
 
   SectionIn RO
-  
+
+  ;
   ; Set output path to the installation directory.
+  ;
   SetOutPath $INSTDIR
   
+  ;
   ; Put file there
+  ;
   File "..\src\fmslogo.exe"
   File "..\manual\logohelp.chm"
   File "..\src\Mcistrwh.hlp"
@@ -130,23 +172,58 @@ Section "FMSLogo"
   File /r /x CVS "..\src\logolib"
   File /r /x CVS "..\src\examples"
 
+  ;
+  ; Write the uninstall keys for Windows
+  ;
+  StrCmp $INSTDIR "$PROGRAMFILES\FMSLogo" Uninstaller.AllUsers Uninstaller.CurrentUser
+
+Uninstaller.AllUsers:
   ; Write the installation path into the registry
   WriteRegStr HKLM "Software\FMSLogo" "Install_Dir" "$INSTDIR"
-  
-  ; Write the uninstall keys for Windows
+
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\FMSLogo" "DisplayName" "FMSLogo"
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\FMSLogo" "UninstallString" '"$INSTDIR\uninstall.exe"'
   WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\FMSLogo" "NoModify" 1
   WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\FMSLogo" "NoRepair" 1
+  goto Uninstaller.Done
+
+Uninstaller.CurrentUser:
+  ; Write the installation path into the registry
+  WriteRegStr HKCU "Software\FMSLogo" "Install_Dir" "$INSTDIR"
+
+  WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\FMSLogo" "DisplayName" "FMSLogo"
+  WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\FMSLogo" "UninstallString" '"$INSTDIR\uninstall.exe"'
+  WriteRegDWORD HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\FMSLogo" "NoModify" 1
+  WriteRegDWORD HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\FMSLogo" "NoRepair" 1
+  goto Uninstaller.Done
+
+Uninstaller.Done:
   WriteUninstaller "uninstall.exe"
 
+
+  ;
   ; create a file association for .lgo
-  WriteRegStr HKCR ".lgo" "" "Logo program"
-  WriteRegStr HKCR "Logo program"                    "" "Logo program"
+  ;
+  StrCmp $INSTDIR "$PROGRAMFILES\FMSLogo" FileAssociation.AllUsers FileAssociation.CurrentUser
+
+FileAssociation.AllUsers:
+  WriteRegStr HKCR ".lgo" ""             "Logo program"
+  WriteRegStr HKCR ".lgo" "Logo program" "Logo program"
   WriteRegStr HKCR "Logo program\shell"              "" "open"
   WriteRegStr HKCR "Logo program\DefaultIcon"        "" "$INSTDIR\fmslogo.exe,0"
   WriteRegStr HKCR "Logo program\shell\open\command" "" '$INSTDIR\fmslogo.exe -L%1'
- 
+  goto FileAssociation.Done
+
+FileAssociation.CurrentUser:
+  WriteRegStr HKCU "software\classes\.lgo"      ""             "Logo program"
+  WriteRegStr HKCU "software\classes\.lgo"      "Logo program" "Logo program"
+  WriteRegStr HKCU "software\classes\Logo program\shell"              "" "open"
+  WriteRegStr HKCU "software\classes\Logo program\DefaultIcon"        "" '$INSTDIR\fmslogo.exe,0'
+  WriteRegStr HKCU "software\classes\Logo program\shell\open\command" "" '$INSTDIR\fmslogo.exe -L%1'
+  goto FileAssociation.Done
+
+FileAssociation.Done:
+
 SectionEnd
 
 
@@ -175,8 +252,37 @@ Section "Uninstall"
     Abort
 
 uninstall:
+  ; assume regular user until we know they are a power user
+  SetShellVarContext current
+  StrLen $2 "$PROFILE\FMSLogo"
+  StrCpy $INSTDIR "$PROFILE\FMSLogo" $2 0
+
+  ClearErrors
+  UserInfo::GetName
+  IfErrors SetupUser.Win9x
+  Pop $0
+  UserInfo::GetAccountType
+  Pop $1
+
+  StrCmp $1 "Admin" SetupUser.AllUsers +1
+  StrCmp $1 "Power" SetupUser.AllUsers +1
+  goto SetupUser.CurrentUser
+
+SetupUser.Win9x:
+SetupUser.AllUsers:
+  SetShellVarContext all
+  StrLen $2       "$PROGRAMFILES\FMSLogo"
+  StrCpy $INSTDIR "$PROGRAMFILES\FMSLogo" $2 0
+
+  goto SetupUser.Done
+
+SetupUser.CurrentUser:
+  ; nothing to do because this is the default
+
+SetupUser.Done:
 
   ; Remove registry keys
+  DeleteRegKey HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\FMSLogo"
   DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\FMSLogo"
 
   ; Remove files and uninstaller
