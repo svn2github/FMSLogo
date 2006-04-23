@@ -359,7 +359,6 @@ bool TMyApp::IdleAction(long idleCount)
       }
 
    // if command arg loaded then execute
-
    if (commandarg[0] != '\0')
       {
       silent_load(NIL, commandarg);
@@ -553,8 +552,7 @@ void TMyApp::InitMainWindow()
 
    ModulehInstance = HInstance;
 
-   /* init paths to library and help files based on locaation of .EXE */
-
+   // init paths to library and help files based on location of .EXE
    MakeHelpPathName(LibPathName, "logolib\\");
    logolib = LibPathName;
    MakeHelpPathName(szHelpFileName, "logohelp.chm");
