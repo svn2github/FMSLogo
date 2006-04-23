@@ -21,6 +21,7 @@ Part I) Kit Description/Location (http://sourceforge.net/projects/fmslogo):
 Part II) New features/bugs fixed:
 
   * Added for ???,
+    o Fix bug #1474902; WINDOWFILEEDIT no longer crashes on long filenames.
     o Fix bug #1472599; BYE immediately exits FMSLogo.
     o Fix bug #1372723; THROW "SYSTEM now exits FMSLogo.
     o Fix bug #1474855; UI doesn't add newlines to the commander 

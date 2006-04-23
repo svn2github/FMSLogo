@@ -399,9 +399,13 @@ void TMyFileWindow::SetFileName(const char *fileName)
       }
    else
       {
-      char newCaption[81];
+      char newCaption[256];
 
-      wsprintf(newCaption, "%s - %s", Title, p);
+      newCaption[0] = '\0';
+      strncat(newCaption, Title, sizeof(newCaption) - strlen(newCaption));
+      strncat(newCaption, " - ", sizeof(newCaption) - strlen(newCaption));
+      strncat(newCaption, p,     sizeof(newCaption) - strlen(newCaption));
+
       SetWindowText(newCaption);
       }
    }
