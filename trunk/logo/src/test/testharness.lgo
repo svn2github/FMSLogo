@@ -54,62 +54,64 @@ LOAD "logoversion.lgo
 LOAD "apply.lgo
 LOAD "quoted.lgo
 LOAD "mouse.lgo
+LOAD "windowfileedit.lgo
 
 TO TESTALL
 
   REPORTTESTINITIALIZE
 
-  PARSETEST       ; from parse.lgo
-  LOADTEST        ; from load.lgo
-  RUNTEST         ; from run.lgo
-  ERRORTEST       ; from error.lgo
-  PREDICATETEST   ; from predicate.lgo
-  WORDTEST        ; from word.lgo
-  BUTFIRSTTEST    ; from butfirst.lgo
-  BUTLASTTEST     ; from butlast.lgo
-  LASTTEST        ; from last.lgo
-  ARRAYTEST       ; from array.lgo
-  QUEUETEST       ; from queue.lgo
-  STACKTEST       ; from stack.lgo
-  LOGICTEST       ; from logic.lgo
-  APPLYTEST       ; from apply.lgo
-  MATHTEST        ; from math.lgo
-  PROCEDURETEST   ; from procedure.lgo
-  MACROTEST       ; from macro.lgo
-  COPYDEFTEST     ; from copydef.lgo
-  PLISTTEST       ; from plist.lgo
-  CONTROLFLOWTEST ; from controlflow.lgo
-  ACTIVEAREATEST  ; from activearea.lgo
-  BITMAPTEST      ; from bitmap.lgo
-  FORMTEST        ; from form.lgo
-  EDITORTEST      ; from editor.lgo 
-  PORTTEST        ; from port.lgo
-  LABELTEST       ; from label.lgo
-  PENTEST         ; from pen.lgo
-  ARCTEST         ; from curves.lgo
-  FILLTEST        ; from fill.lgo
-  FILETEST        ; from file.lgo
-  COLORTEST       ; from color.lgo
-  SCREENTEST      ; from screen.lgo
-  WAITTEST        ; from wait.lgo
-  DIRECTORYTEST   ; from directory.lgo
-  MISCTEST        ; from misc.lgo
-  NETWORKTEST     ; from network.lgo
-  PERSPECTIVETEST ; from perspective.lgo
-  ORIENTATIONTEST ; from orientation.lgo
-  SCRUNCHTEST     ; from scrunch.lgo
-  HELPTEST        ; from help.lgo
-  WINDOWTEST      ; from window.lgo
-  DLLTEST         ; from dll.lgo
-  SORTTEST        ; from sort.lgo
-  ISEQTEST        ; from iseq.lgo
-  TRACETEST       ; from trace.lgo
-  STEPTEST        ; from step.lgo
-  BURYTEST        ; from bury.lgo
-  ERASETEST       ; from erase.lgo
-  LOGOVERSIONTEST ; from logoversion.lgo
-  QUOTEDTEST      ; from quoted.lgo
-  MOUSETEST       ; from mouse.lgo
+  PARSETEST          ; from parse.lgo
+  LOADTEST           ; from load.lgo
+  RUNTEST            ; from run.lgo
+  ERRORTEST          ; from error.lgo
+  PREDICATETEST      ; from predicate.lgo
+  WORDTEST           ; from word.lgo
+  BUTFIRSTTEST       ; from butfirst.lgo
+  BUTLASTTEST        ; from butlast.lgo
+  LASTTEST           ; from last.lgo
+  ARRAYTEST          ; from array.lgo
+  QUEUETEST          ; from queue.lgo
+  STACKTEST          ; from stack.lgo
+  LOGICTEST          ; from logic.lgo
+  APPLYTEST          ; from apply.lgo
+  MATHTEST           ; from math.lgo
+  PROCEDURETEST      ; from procedure.lgo
+  MACROTEST          ; from macro.lgo
+  COPYDEFTEST        ; from copydef.lgo
+  PLISTTEST          ; from plist.lgo
+  CONTROLFLOWTEST    ; from controlflow.lgo
+  ACTIVEAREATEST     ; from activearea.lgo
+  BITMAPTEST         ; from bitmap.lgo
+  FORMTEST           ; from form.lgo
+  EDITORTEST         ; from editor.lgo 
+  WINDOWFILEEDITTEST ; from windowfileedit
+  PORTTEST           ; from port.lgo
+  LABELTEST          ; from label.lgo
+  PENTEST            ; from pen.lgo
+  ARCTEST            ; from curves.lgo
+  FILLTEST           ; from fill.lgo
+  FILETEST           ; from file.lgo
+  COLORTEST          ; from color.lgo
+  SCREENTEST         ; from screen.lgo
+  WAITTEST           ; from wait.lgo
+  DIRECTORYTEST      ; from directory.lgo
+  MISCTEST           ; from misc.lgo
+  NETWORKTEST        ; from network.lgo
+  PERSPECTIVETEST    ; from perspective.lgo
+  ORIENTATIONTEST    ; from orientation.lgo
+  SCRUNCHTEST        ; from scrunch.lgo
+  HELPTEST           ; from help.lgo
+  WINDOWTEST         ; from window.lgo
+  DLLTEST            ; from dll.lgo
+  SORTTEST           ; from sort.lgo
+  ISEQTEST           ; from iseq.lgo
+  TRACETEST          ; from trace.lgo
+  STEPTEST           ; from step.lgo
+  BURYTEST           ; from bury.lgo
+  ERASETEST          ; from erase.lgo
+  LOGOVERSIONTEST    ; from logoversion.lgo
+  QUOTEDTEST         ; from quoted.lgo
+  MOUSETEST          ; from mouse.lgo
 
   REPORTTESTUNINITIALIZE
 
