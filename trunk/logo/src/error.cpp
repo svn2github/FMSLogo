@@ -472,7 +472,7 @@ NODE *lpause(NODE*)
       {
       if (uname != NIL) print_node(stdout, uname);
       new_line(stdout);
-      input_mode = PAUSE_MODE;
+      input_mode = INPUTMODE_Pause;
       elist = reref(elist, reader(stdin, "? "));
       if (NOT_THROWING) 
          {
@@ -482,7 +482,7 @@ NODE *lpause(NODE*)
          {
          elist = reref(elist, NIL);
          }
-      input_mode = NO_MODE;
+      input_mode = INPUTMODE_None;
       MyMessageScan();
       if (feof(stdin) /*ggm && !isatty(0)*/) lbye(NIL);
 #ifdef __ZTC__

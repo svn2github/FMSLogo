@@ -94,7 +94,7 @@ extern NODE **gctop;
 /* parse.c */
 extern FILE *loadstream, *writestream, *readstream, *dribblestream;
 extern int input_blocking;
-extern int input_mode;
+extern enum INPUTMODE input_mode;
 
 /* math.c */
 

@@ -27,7 +27,7 @@ FILE *writestream = stdout;
 FILE *loadstream = stdin;
 FILE *dribblestream = NULL;
 int input_blocking = 0;
-int input_mode = 0;
+enum INPUTMODE input_mode = INPUTMODE_None;
 
 static int buffer_length = 0;
 static int buffer_index = 0;
@@ -51,28 +51,28 @@ int rd_getc(FILE *strm)
          {
          switch (input_mode)
             {
-            case TO_MODE:
+            case INPUTMODE_To:
                if (!promptuser(buffer_input, "To Mode (Cancel to End)"))
                   {
                   strcpy(buffer_input, "End");
                   }
                break;
 
-            case LIST_MODE:
+            case INPUTMODE_List:
                if (!promptuser(buffer_input, "List Mode (Cancel to Halt)"))
                   {
                   err_logo(STOP_ERROR, NIL);
                   }
                break;
 
-            case PAUSE_MODE:
+            case INPUTMODE_Pause:
                if (!promptuser(buffer_input, "Pause Mode (Cancel to Continue)"))
                   {
                   strcpy(buffer_input, "Continue");
                   }
                break;
 
-             case NO_MODE:
+             case INPUTMODE_None:
                 if (!promptuser(buffer_input, "Input Mode (Cancel to Halt)"))
                    {
                    err_logo(STOP_ERROR, NIL);

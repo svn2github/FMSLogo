@@ -579,9 +579,9 @@ NODE *lload(NODE *arg)
 
 NODE *lreadlist(NODE *)
    {
-   input_mode = LIST_MODE;
+   input_mode = INPUTMODE_List;
    NODE * val = parser(reader(readstream, ""), false);
-   input_mode = NO_MODE;
+   input_mode = INPUTMODE_None;
    if (feof(readstream))
       {
       gcref(val);

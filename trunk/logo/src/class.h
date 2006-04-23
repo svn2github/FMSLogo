@@ -43,6 +43,14 @@ enum KEYBOARDCAPTURE
    KEYBOARDCAPTURE_KeyDownKeyUp,
    };
 
+enum INPUTMODE
+   {
+   INPUTMODE_None,
+   INPUTMODE_To,
+   INPUTMODE_List,
+   INPUTMODE_Pause,
+   };
+
 
 typedef struct
    {

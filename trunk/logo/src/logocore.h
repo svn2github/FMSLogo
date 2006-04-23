@@ -538,11 +538,6 @@ enum labels
 
 #define XOR_PUT 199
 
-#define NO_MODE    0
-#define TO_MODE    1
-#define LIST_MODE  2
-#define PAUSE_MODE 3
-
 #define ScreenSz 0.70      // Default proportion of screen size
 #define MaxBitCuts 1024    // Max number of bitmaps
 #define MAX_TIMERS 32

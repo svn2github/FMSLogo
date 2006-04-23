@@ -271,15 +271,8 @@ NODE *anonymous_function(NODE *text)
    }
 
 static
-NODE *to_helper(NODE *args, bool macro_flag)
+NODE *to_helper(NODE *args, bool is_macro)
    {
-   NODE *formals = NIL;
-
-   int minimum = 0;
-   int deflt = 0;
-   int maximum = 0;
-   int old_default = -1;
-
    if (ufun != NIL && loadstream == stdin)
       {
       err_logo(NOT_INSIDE, NIL);
@@ -292,8 +285,16 @@ NODE *to_helper(NODE *args, bool macro_flag)
       return Unbound;
       }
 
+   input_mode = INPUTMODE_To;
+
+   NODE *formals = NIL;
+
+   int minimum = 0;
+   int deflt = 0;
+   int maximum = 0;
+   int old_default = -1;
+
    NODE * proc_name = car(args);
-   args = cdr(args);
 
    if (nodetype(proc_name) != CASEOBJ)
       {
@@ -316,6 +317,7 @@ NODE *to_helper(NODE *args, bool macro_flag)
       // read the formal parameters
       //
       NODE *formals_lastnode = NIL;
+      args = cdr(args);
       while (args != NIL)
          {
          NODE * arg = car(args);
@@ -433,7 +435,7 @@ NODE *to_helper(NODE *args, bool macro_flag)
          setprocnode__caseobj(
             proc_name,
             make_procnode(body_list, body_words, minimum, deflt, maximum));
-         if (macro_flag)
+         if (is_macro)
             {
             setflag__caseobj(proc_name, PROC_MACRO);
             }
@@ -465,24 +467,21 @@ NODE *to_helper(NODE *args, bool macro_flag)
       gcref(formals);
       }
 
+   input_mode = INPUTMODE_None;
    return Unbound;
    }
 
 NODE *lto(NODE *args)
    {
    IsDirty = true;
-   input_mode = TO_MODE;
-   to_helper(args, FALSE);
-   input_mode = NO_MODE;
+   to_helper(args, false);
    return Unbound;
    }
 
 NODE *lmacro(NODE *args)
    {
    IsDirty = true;
-   input_mode = TO_MODE;
-   to_helper(args, TRUE);
-   input_mode = NO_MODE;
+   to_helper(args, true);
    return Unbound;
    }
 
