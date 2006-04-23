@@ -22,8 +22,10 @@ TO WINDOWFILEEDITTEST.LONGFILENAME
   REPEAT 100 [ MAKE "longfilename word :longfilename "A ]
   OPENWRITE :longfilename
  
-  TRACEINSTRUCTION [ WINDOWFILEEDIT :longfilename [print "done] ]
-  REPORTTESTPASSED [ WINDOWFILEEDIT did not crash on a long filename ]
+  TRACEINSTRUCTION [ 
+    WINDOWFILEEDIT :longfilename 
+    [REPORTTESTPASSED [WINDOWFILEEDIT did not crash on a long filename]] 
+  ]
 
   ERASEFILE :longfilename
 END
