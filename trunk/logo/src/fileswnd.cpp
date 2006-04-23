@@ -33,10 +33,8 @@ void filesave(const char *Filename)
          MB_OK | MB_ICONQUESTION);
       }
 
-   NODE* filename_node = vref(make_strnode(Filename));
-
    FILE * tmp = writestream;
-   writestream = open_file(filename_node, "w+");
+   writestream = fopen(Filename, "w+");
    if (writestream != NULL)
       {
       int save_yield_flag = yield_flag;
@@ -58,8 +56,6 @@ void filesave(const char *Filename)
       err_logo(FILE_ERROR, make_static_strnode("Could not open file"));
       }
    writestream = tmp;
-
-   deref(filename_node);
    }
 
 bool fileload(const char *Filename)
