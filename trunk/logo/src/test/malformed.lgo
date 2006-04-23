@@ -1,0 +1,4 @@
+TO MALFORMED.PROCEDURE
+  PRINT "{Hello{a{b
+  PRINT "{Hello{
+END
