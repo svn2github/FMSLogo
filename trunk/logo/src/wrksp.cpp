@@ -839,9 +839,17 @@ void three_lists(NODE *arg, NODE **proclst, NODE **varlst, NODE **plistlst)
          if (cddr(arg) != NIL)
             {
             *plistlst = one_list(car(cddr(arg)));
+            
+            if (cdr(cddr(arg)) != NIL)
+               {
+               // this was a list of more than three lists
+               err_logo(BAD_DATA_UNREC, arg);
+               *plistlst = *varlst = *proclst = NIL;
+               }
             }
          }
       }
+
    if (!is_list(*proclst) || !is_list(*varlst) || !is_list(*plistlst))
       {
       err_logo(BAD_DATA_UNREC, arg);
@@ -1180,13 +1188,16 @@ NODE *bury_helper(NODE *arg, int flag, bool setflag)
    NODE *plistlst;
    three_lists(arg, &proclst, &varlst, &plistlst);
 
-   bury_or_unbury_list(proclst, flag, setflag);
+   if (NOT_THROWING)
+      {
+      bury_or_unbury_list(proclst, flag, setflag);
 
-   flag <<= 1;
-   bury_or_unbury_list(varlst, flag, setflag);
+      flag <<= 1;
+      bury_or_unbury_list(varlst, flag, setflag);
 
-   flag <<= 1;
-   bury_or_unbury_list(plistlst, flag, setflag);
+      flag <<= 1;
+      bury_or_unbury_list(plistlst, flag, setflag);
+      }
 
    gcref(proclst);
    gcref(varlst);
