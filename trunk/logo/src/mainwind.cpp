@@ -1726,12 +1726,11 @@ void TMainFrame::CMFileErase()
       }
    }
 
-void TMainFrame::MyPopupEdit(const char *FileName, NODE *args)
-   {
-   // if called with NULL filename then prompt user
 
+void TMainFrame::CreateEditWindow(const char *FileName, NODE *args, bool check_for_errors)
+   {
    // NOTE: EditWindow is deleted when "this" is deleted.
-   EditWindow = new TMyFileWindow(this, "Editor", FileName, args);
+   EditWindow = new TMyFileWindow(this, "Editor", FileName, args, check_for_errors);
 
    // Do win.ini stuff. Build default coords
    int x = (int) (MaxWidth * 0.25);
@@ -1760,11 +1759,19 @@ void TMainFrame::MyPopupEdit(const char *FileName, NODE *args)
    EditWindow->SetWindowPos(0, x, y, w + 1, h, SWP_NOZORDER);
    EditWindow->SetWindowPos(0, x, y, w, h, SWP_NOZORDER);
 
-   if (args != NULL)
+   if (args != NULL || check_for_errors)
       {
       // retitle without filename
       EditWindow->SetWindowText("Editor");
+      }
+   }
 
+void TMainFrame::MyPopupEdit(const char *FileName, NODE *args, bool check_for_errors)
+   {
+   CreateEditWindow(FileName, args, check_for_errors);
+
+   if (args != NULL || check_for_errors)
+      {
       // if an error occured "force" a change so that we still in "dirty" state
       if (error_happen)
          {
@@ -1778,6 +1785,32 @@ void TMainFrame::MyPopupEdit(const char *FileName, NODE *args)
       }
 
    GiveFocusToEditbox = false;
+   }
+
+void TMainFrame::MyPopupEditToError(const char *FileName)
+   {
+   // copy the input file to the editor's temporary file
+   FILE * srcfile = fopen(FileName, "r");
+   if (srcfile != NULL)
+      {
+      FILE * dstfile = fopen(TempPathName, "w");
+      if (dstfile != NULL)
+         {
+         int ch;
+         while ((ch = fgetc(srcfile)) != EOF)
+            {
+            fputc(ch, dstfile);
+            }
+         fclose(dstfile);
+         }
+      fclose(srcfile);
+      }
+
+   CreateEditWindow(FileName, NIL, true);
+
+   // exit the editor to force it to notice the error.
+   error_happen = false;
+   EditWindow->CMExit();
    }
 
    
@@ -1826,7 +1859,7 @@ int TMainFrame::PopupEditorForFile(const char *FileName, NODE *args)
       CreateTemplateLogoFileForEditor(FileName, args);
       }
 
-   MainWindowx->MyPopupEdit(FileName, args);
+   MainWindowx->MyPopupEdit(FileName, args, false);
    return 0;
    }
 

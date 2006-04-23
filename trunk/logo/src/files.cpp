@@ -485,7 +485,17 @@ void silent_load(NODE *arg, const char *prefix)
    *filenamePtr = '\0';
 
    bool isOk = fileload(filename);
-   if (!isOk)
+   if (isOk)
+      {
+      if (stopping_flag == THROWING)
+         {
+         // There was an error parsing this file.
+         // Open it in the editor so that it can be debugged.
+         stopping_flag = RUN;
+         MainWindowx->MyPopupEditToError(filename);
+         }
+      }
+   else 
       {
       if (arg == NIL)
          {

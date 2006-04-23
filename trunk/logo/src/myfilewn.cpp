@@ -27,11 +27,13 @@ TMyFileWindow::TMyFileWindow(
    TWindow *AParent,
    LPCSTR   ATitle,
    LPCSTR   AFileName,
-   NODE *   args
+   NODE *   args,
+   bool     check_for_errors
 ) : TEditWindow(AParent, ATitle),
     hEdtFont(NULL),
     args_list(args),
-    FileName(NULL)
+    FileName(NULL),
+    check_for_errors(check_for_errors)
    {
    AssignMenu("IDM_FILECOMMANDS");
    Attr.AccelTable = "IDM_FILECOMMANDS";
@@ -488,7 +490,6 @@ void TMyFileWindow::CMEditSetFont()
 
 bool TMyFileWindow::EndEdit()
    {
-
    bool realsave = endedit();
 
    // check for error
@@ -499,10 +500,7 @@ bool TMyFileWindow::EndEdit()
 
 void TMyFileWindow::EvDestroy()
    {
-
-   // if args_list is specified, then there is no user callable editor
-
-   if (args_list != NULL)
+   if (args_list != NIL || check_for_errors)
       {
       error_happen = false;
 
@@ -520,18 +518,10 @@ void TMyFileWindow::EvDestroy()
                "Your Edit has FAILED to load",
                MB_OKCANCEL | MB_ICONQUESTION) == IDOK)
             {
-            if (TMainFrame::PopupEditorForFile(TempPathName, args_list))
-               {
-               MainWindowx->CommandWindow->MessageBox(
-                  "Cannot restart editor",
-                  "Fatal",
-                  MB_OK | MB_ICONQUESTION);
-               }
-            else
-               {
-               unlink(TempPathName);
-               IsDirty = true;
-               }
+            // open up another editor
+            MainWindowx->MyPopupEdit(TempPathName, args_list, check_for_errors);
+            unlink(TempPathName);
+            IsDirty = true;
             }
          else
             {
@@ -541,19 +531,21 @@ void TMyFileWindow::EvDestroy()
          }
       else
          {
-         // check for quit before erasing
-
-         if (realsave)
+         // no errors happened
+         if (args_list != NIL)
             {
-            lerase(args_list);
+            // check for quit before erasing
+            if (realsave)
+               {
+               lerase(args_list);
 
-            // Since we erased we must load again, but no errors
-            endedit();
+               // Since we erased we must load again, but no errors
+               endedit();
+               }
+
+            // free up args_list
+            args_list = reref(args_list, NIL);
             }
-
-         // free up args_list
-
-         args_list = reref(args_list, NIL);
 
          unlink(TempPathName);
          MainWindowx->CommandWindow->Editbox.SetFocus();
