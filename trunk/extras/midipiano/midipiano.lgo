@@ -27,7 +27,7 @@ to about
  messagebox [Midi player] :msg 
 end
 
-to closeall
+to shutdown
  Make "file []
  midiclose 
  windowdelete "mywindow 
@@ -62,10 +62,10 @@ to drawpiano :count
  repeat :count - 1 [ 
    make "counter :counter + 1 
    seth 0 
-   if (and (or :counter < 3 :counter > 3)  (or :counter < 7 :counter > 7) )    [
+   if (and (or :counter < 3 :counter > 3)  (or :counter < 7 :counter > 7) ) [
      drawsharpnote 
    ]
-   if (:counter > 7)     [
+   if (:counter > 7) [
      make "counter 1 
    ]
   pu rt 90 fd 20 
@@ -74,25 +74,25 @@ to drawpiano :count
  make "notekey :keylist1
 
  repeat :count [ 
-		 setxy -117 + :x1+(repcount * 20)  :y1
-		 seth 90
-		 label uppercase first :notekey 
-		 seth 0
-	       make "notekey butfirst :notekey 
-		
-		]
+   setxy -117 + :x1+(repcount * 20)  :y1
+   seth 90
+   label uppercase first :notekey 
+   seth 0
+   make "notekey butfirst :notekey 
+	
+ ]
 
  make "notekey :keylist2
  make "sharp count :keylist2
  repeat :sharp [ 
-		 
-		 setxy -107 + :x1 + (repcount * 20)  :y1 + 120
-             seth 90
-		 label uppercase first :notekey 
-		 seth 0
-	       make "notekey butfirst :notekey 
+
+    setxy -107 + :x1 + (repcount * 20)  :y1 + 120
+    seth 90
+    label uppercase first :notekey 
+    seth 0
+    make "notekey butfirst :notekey
 		
-		]
+  ]
 
 
 end
@@ -110,14 +110,14 @@ to editor
 
  comboboxcreate "dialogedit "editcombo 10 15 80 50
  repeat :recordcount [comboboxaddstring "editcombo item repcount :recordnotes]
- buttoncreate "dialogedit [dbplaynote] [Play current] 10 100 80 15 [ ~
-						
-						MIDIMESSAGE comboboxgettext "editcombo ~
-]
- buttoncreate "dialogedit [dbset] [set text] 10 80 80 15 [ ~
-						;comboboxsettext "editcombo [3] ~
-						show numberp comboboxgettext "editcombo 
-						]
+ buttoncreate "dialogedit [dbplaynote] [Play current] 10 100 80 15 [				
+  MIDIMESSAGE comboboxgettext "editcombo ~
+ ]
+
+ buttoncreate "dialogedit [dbset] [set text] 10 80 80 15 [
+    ;comboboxsettext "editcombo [3]
+    show numberp comboboxgettext "editcombo 
+ ]
  buttoncreate "dialogedit [dbclose] [close] 10 120 80 15 [  setfocus [MswLogo Screen]  dialogdelete "dialogedit]
 End
 
@@ -144,14 +144,13 @@ to keydown
 
  if (KeyBoardValue = 16) [Make "playsharpnote -1 make "timeinactive timemilli ]
  IF MEMBERP :noteplayed :keylist [
-  make "y count :keylist
-  make "tmplist :keylist
-  for [x 1 :y 1]
-   [
+   make "y count :keylist
+   make "tmplist :keylist
+   for [x 1 :y 1] [
 
      if ((first :tmplist) = :noteplayed) [make "z :x]
-	 if :noteplayed = first :tmplist [ifelse :oldnote = :noteplayed [][if (item :z :myarray)=-10 [playtune :z :noteplayed ]]]
-       make "tmplist butfirst :tmplist
+     if :noteplayed = first :tmplist [ifelse :oldnote = :noteplayed [][if (item :z :myarray)=-10 [playtune :z :noteplayed ]]]
+     make "tmplist butfirst :tmplist
    ]
 ]
 end
@@ -334,7 +333,7 @@ to mode2
  make "keylist2 "sd_ghj_23_567
 
 
-  setfocus [MswLogo Screen]
+ setfocus [MswLogo Screen]
  drawpiano 15
 
 end
@@ -344,7 +343,6 @@ to octa
  setfocus [MswLogo Screen]
  staticupdate "st6 se [Octave C ] 8 - scrollbarget "scocta
  
-
 end
 
 to piano
@@ -372,7 +370,7 @@ to piano
 
 
  buttoncreate "mywindow [b1] [Select] 10 58 130 15 [inst]
- buttoncreate "mywindow [b2] [Close] 145 58 165 15 [closeall]
+ buttoncreate "mywindow [b2] [Close] 145 58 165 15 [shutdown]
  buttoncreate "mywindow [bload] [Load] 150 38 30 15 [recordload]
  buttoncreate "mywindow [bedit] [Edit] 185 38 30 15 [dialogcreate "mywindow "dialogedit [editor] 0 0 100 195 [editor] ]
  buttoncreate "mywindow [bsave] [Save] 220 38 30 15 [recordsave]
@@ -413,13 +411,13 @@ make "recordcount 0
   make "recordnotes array 1000
   make "recordspeed array 1000
 
-while [not eofp] [ ~
-			make "recordcount :recordcount + 1 ~
-                  make "rw readlist
-			setitem :recordcount :recordnotes :rw ~
-			make "rs readword
-		      setitem :recordcount :recordspeed :rs ~
-			]
+while [not eofp] [
+  make "recordcount :recordcount + 1
+  make "rw readlist
+  setitem :recordcount :recordnotes :rw
+  make "rs readword
+  setitem :recordcount :recordspeed :rs
+]
 
 setread []
 close :file
@@ -438,11 +436,11 @@ end
 
 to recordplay
 if :recording [messagebox [Electronic Piano] [Still recording] setfocus [MswLogo Screen] stop]
-ifelse :recordcount > 0 [~
-				repeat :recordcount - 1 [~
-				midimessage item repcount :recordnotes ~
-				wait int (item repcount+1 :recordspeed)/1000 *60] ~
-				][messagebox [Electronic Piano] [nothing to play]]
+ifelse :recordcount > 0 [
+  repeat :recordcount - 1 [
+  midimessage item repcount :recordnotes
+  wait int (item repcount+1 :recordspeed)/1000 *60]
+  ][messagebox [Electronic Piano] [nothing to play]]
   setfocus [MswLogo Screen]
 
 end
@@ -451,10 +449,10 @@ to recordsave
 make "file dialogfilesave "*.jhb
 openwrite :file 
 setwrite :file 
-repeat :recordcount [ ~
-	
-				pr item repcount :recordnotes ~
-				pr item repcount :recordspeed ]
+repeat :recordcount [
+   pr item repcount :recordnotes ~
+   pr item repcount :recordspeed 
+]
 setwrite []
 close :file 
 end
@@ -468,7 +466,6 @@ to recordstart
   make "recordspeed array 1000
   make "recordcount 0
   setfocus [MswLogo Screen]
- 
 
 end
 
