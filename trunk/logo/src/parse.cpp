@@ -49,8 +49,6 @@ int rd_getc(FILE *strm)
       {
       if (buffer_index + 1 > buffer_length)
          {
-         flushcombobox();
-
          switch (input_mode)
             {
             case TO_MODE:
