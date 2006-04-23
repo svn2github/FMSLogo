@@ -302,8 +302,6 @@ NODE *err_logo(ERR_TYPES error_type, NODE *error_desc)
          exit(1);
       }
 
-
-   deref(error_desc);
    deref(didnt_output_name);
    didnt_output_name = NIL;
    if (uplevel && ufun != NIL)
@@ -326,6 +324,7 @@ NODE *err_logo(ERR_TYPES error_type, NODE *error_desc)
       }
    vref(err_mesg);
 
+   deref(error_desc);
 
    if (warning)
       {
