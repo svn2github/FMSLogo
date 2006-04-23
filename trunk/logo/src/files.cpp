@@ -375,8 +375,10 @@ NODE *lsave(NODE *arg)
       yield_flag = 0;
       lsetcursorwait(NIL);
 
-      setcar(arg, cons(lcontents(NIL), NIL));
-      lpo(car(arg));
+      NODE * entire_workspace = vref(cons_list(lcontents(NIL)));
+      lpo(entire_workspace);
+      deref(entire_workspace);
+
       fclose(writestream);
       IsDirty = false;
 
