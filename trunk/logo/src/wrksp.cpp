@@ -452,6 +452,10 @@ NODE *to_helper(NODE *args, bool is_macro)
             {
             ndprintf(stdout, "%s defined\n", proc_name);
             }
+
+         // Set the "dirty" flag so that closing FMSLogo will
+         // prompt the user that they have unsaved changes.
+         IsDirty = true;
          }
       else
          {
@@ -473,14 +477,12 @@ NODE *to_helper(NODE *args, bool is_macro)
 
 NODE *lto(NODE *args)
    {
-   IsDirty = true;
    to_helper(args, false);
    return Unbound;
    }
 
 NODE *lmacro(NODE *args)
    {
-   IsDirty = true;
    to_helper(args, true);
    return Unbound;
    }
