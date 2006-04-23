@@ -62,20 +62,24 @@ void filesave(const char *Filename)
    deref(filename_node);
    }
 
-void fileload(const char *Filename)
+bool fileload(const char *Filename)
    {
-   NODE *st = valnode__caseobj(Startup);
-   int sv_val_status = val_status;
+   bool isOk;
 
-   NODE * arg = make_strnode(Filename);
-
-   bool   IsDirtySave = IsDirty;
-   FILE * tmp         = loadstream;
-   NODE * tmp_line    = vref(current_line);
-   loadstream = open_file(arg, "r");
-   if (loadstream != NULL)
+   FILE * filestream = fopen(Filename, "r");
+   if (filestream != NULL)
       {
-      int save_yield_flag = yield_flag;
+      // save all global state that may be modified
+      NODE *st = valnode__caseobj(Startup);
+
+      int    savedValStatus   = val_status;
+      bool   savedIsDirty     = IsDirty;
+      FILE * savedLoadStream  = loadstream;
+      NODE * savedCurrentLine = vref(current_line);
+      int    savedYieldFlag   = yield_flag;
+
+      loadstream = filestream;
+
       yield_flag = 0;
       lsetcursorwait(NIL);
 
@@ -92,17 +96,23 @@ void fileload(const char *Filename)
       fclose(loadstream);
 
       lsetcursorarrow(NIL);
-      yield_flag = save_yield_flag;
+      yield_flag = savedYieldFlag;
 
       runstartup(st);
-      val_status = sv_val_status;
+
+      // restore the global state
+      val_status = savedValStatus;
+      loadstream = savedLoadStream;
+      IsDirty    = savedIsDirty;
+      deref(current_line);
+      current_line = savedCurrentLine;
+
+      isOk = true;
       }
    else
       {
-      err_logo(FILE_ERROR, make_static_strnode("Could not open file"));
+      isOk = false;
       }
-   loadstream = tmp;
-   deref(current_line);
-   current_line = tmp_line;
-   IsDirty = IsDirtySave;
+
+   return isOk;
    }

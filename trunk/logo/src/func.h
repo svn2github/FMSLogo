@@ -500,7 +500,7 @@ extern NODE *lsave(NODE *arg);
 extern void runstartup(NODE *oldst);
 extern void silent_load(NODE *arg, const char *prefix);
 extern NODE *lload(NODE *arg);
-extern void fileload(const char *arg);
+extern bool fileload(const char *Filename);
 extern NODE *lreadlist(NODE *arg);
 extern NODE *lreadword(NODE *arg);
 extern NODE *lreadchar(NODE *arg);

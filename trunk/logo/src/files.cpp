@@ -413,9 +413,6 @@ void runstartup(NODE *oldst)
       }
    }
 
-// CONSIDER for MAINTAINABILITY:
-// CONSIDER for SIZE:
-// Refactor the common parts of silent_load(), lload(), and fileload() into a helper.
 void silent_load(NODE *arg, const char *prefix)
    {
 
@@ -430,11 +427,6 @@ void silent_load(NODE *arg, const char *prefix)
       return;
       }
 
-   NODE *st = valnode__caseobj(Startup);
-
-   int  sv_val_status = val_status;
-   bool isDirtySave = IsDirty;
-   
    // construct the filename
    char   filename[MAX_PATH];
    char * filenamePtr   = filename;
@@ -492,46 +484,21 @@ void silent_load(NODE *arg, const char *prefix)
    // NUL-terminate filename
    *filenamePtr = '\0';
 
-   FILE * tmp_stream = loadstream;
-   NODE * tmp_line = vref(current_line);
-   loadstream = fopen(filename, "r");
-   if (loadstream != NULL)
+   bool isOk = fileload(filename);
+   if (!isOk)
       {
-      int save_yield_flag = yield_flag;
-      yield_flag = 0; // Why?
-      lsetcursorwait(NIL);
-
-      while (!feof(loadstream) && NOT_THROWING)
+      if (arg == NIL)
          {
-         current_line = reref(current_line, reader(loadstream, ""));
-
-         NODE * exec_list = parser(current_line, true);
-         val_status = 0;
-         if (exec_list != NIL) 
-            {
-            eval_driver(exec_list);
-            }
+         // we're loading argv (not from Logolib or current directory)
+         // so we should display an error
+         ndprintf(stdout, "Unable to open file: %t\n", prefix);
          }
-
-      lsetcursorarrow(NIL);
-      yield_flag = save_yield_flag;
-
-      fclose(loadstream);
-
-      runstartup(st);
-      val_status = sv_val_status;
       }
-   else if (arg == NIL)
-      {
-      ndprintf(stdout, "File not found: %t\n", prefix);
-      }
-
-   loadstream = tmp_stream;
-   deref(current_line);
-   current_line = tmp_line;
-   IsDirty = isDirtySave;
    }
 
+// CONSIDER for MAINTAINABILITY:
+// CONSIDER for SIZE:
+// Refactor the common parts of lload() and fileload() into a helper.
 NODE *lload(NODE *arg)
    {
    NODE *st = valnode__caseobj(Startup);

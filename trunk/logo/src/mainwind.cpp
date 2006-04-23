@@ -1447,17 +1447,14 @@ void TMainFrame::CMBitmapSave()
 
 void TMainFrame::SaveBitmapAs()
    {
-   TOpenSaveDialog::TData FileData;
-
-   /* if new then nulify File name */
-
+   // if new then nulify File name
    if (IsNewBitmap)
       {
       BitmapName[0] = '\0';
       }
 
-   /* Get file name from user and then save the file */
-
+   // Get file name from user and then save the file
+   TOpenSaveDialog::TData FileData;
    FileData.Flags = OFN_OVERWRITEPROMPT | OFN_HIDEREADONLY | OFN_EXPLORER;
    FileData.SetFilter("Bitmap Files (*.bmp)|*.bmp|GIF Files (*.gif)|*.gif|All Files (*.*)|*.*|");
    strcpy(FileData.FileName, BitmapName);
@@ -1533,16 +1530,14 @@ void TMainFrame::CMFileOpen()
          }
       }
 
-   /* if user found a file the try to load it  */
-
+   // if user found a file the try to load it
    TOpenSaveDialog::TData FileData;
    FileData.Flags = OFN_FILEMUSTEXIST | OFN_HIDEREADONLY | OFN_EXPLORER;
    FileData.SetFilter("Logo Files (*.lgo)|*.lgo|All Files (*.*)|*.*|");
    strcpy(FileData.FileName, "*.lgo");
    FileData.DefExt = "lgo";
 
-   /* if user found a file then try to load it  */
-
+   // if user found a file then try to load it
    if (TFileOpenDialog(this, FileData).Execute() == IDOK)
       {
       IsNewFile = false;
@@ -1552,7 +1547,11 @@ void TMainFrame::CMFileOpen()
          halt_flag = 1;
          }
       strcpy(FileName, FileData.FileName);
-      fileload(FileName);
+      bool isOk = fileload(FileName);
+      if (!isOk) 
+         {
+         err_logo(FILE_ERROR, make_static_strnode("Could not open file"));
+         }
 
       // handle any error that may have occured
       process_special_conditions();
@@ -1580,14 +1579,13 @@ void TMainFrame::CMFileSave()
 
 void TMainFrame::SaveFileAs()
    {
-   /* if new the nulify File name */
-
+   // if new the nulify File name
    if (IsNewFile)
       {
       FileName[0] = '\0';
       }
 
-   /* Get file name from user and then save the file */
+   // Get file name from user and then save the file
    TOpenSaveDialog::TData FileData;
    FileData.Flags = OFN_OVERWRITEPROMPT | OFN_HIDEREADONLY | OFN_EXPLORER;
    FileData.SetFilter("Logo Files (*.lgo)|*.lgo|All Files (*.*)|*.*|");
@@ -1619,8 +1617,7 @@ void TMainFrame::CMBitmapPrinterArea()
    {
    bool bAok;
 
-   /* copy real to dynamic */
-
+   // copy real to dynamic
    TPrinterAreaXLow        = PrinterAreaXLow;
    TPrinterAreaXHigh       = PrinterAreaXHigh;
    TPrinterAreaYLow        = PrinterAreaYLow;
