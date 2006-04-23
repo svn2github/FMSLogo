@@ -21,13 +21,17 @@ TO WINDOWFILEEDITTEST.LONGFILENAME
   LOCALMAKE "longfilename "||
   REPEAT 100 [ MAKE "longfilename word :longfilename "A ]
   OPENWRITE :longfilename
- 
+  CLOSE     :longfilename
+
   TRACEINSTRUCTION [ 
-    WINDOWFILEEDIT :longfilename 
-    [REPORTTESTPASSED [WINDOWFILEEDIT did not crash on a long filename]] 
+    WINDOWFILEEDIT :longfilename (LIST
+       "REPORTTESTPASSED [WINDOWFILEEDIT did not crash on a long filename] 
+       "ERASEFILE QUOTED :longfilename
+    )
   ]
 
-  ERASEFILE :longfilename
+  ; wait for the editor to be closed
+  MESSAGEBOX [Notice] (list "|The editor should now be shown.  Save the contents of the editor, then press OK.|)
 END
 
 
