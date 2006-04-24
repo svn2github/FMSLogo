@@ -1,0 +1,16 @@
+FMSLogo Extras 1.1
+o asteriodminer
+ * removed personal high score list
+o midipiano
+ * renamed CLOSEALL to SHUTDOWN to make it compatible with FMSLogo 6.8.0
+
+FMSLogo Extras 1.0
+o asteriodminer
+o boink
+o domino
+o lightcycle
+o ludo
+o midipiano
+o pacturtle
+o snake
+o sudoku
