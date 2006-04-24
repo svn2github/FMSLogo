@@ -57,7 +57,14 @@ TO TRACEINSTRUCTION :instruction
   SETWRITE :previouswriter
 
   ; run the instructions
-  IGNORE RUNRESULT :instruction
+  CATCH "ERROR [IGNORE RUNRESULT :instruction]
+
+  ; make sure that the instruction didn't throw an error
+  LOCALMAKE "lasterror ERROR
+  IF NOT EMPTY? :lasterror [
+    REPORTTESTFAILED (LIST :instruction "|threw error.  code=| (ITEM 1 :lasterror) ". (ITEM 2 :lasterror)) 
+    STOP
+  ]
 END
 
 TO SIMPLEREPORTTEST :instruction :expectedresult
