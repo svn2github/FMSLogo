@@ -55,6 +55,8 @@ LOAD "apply.lgo
 LOAD "quoted.lgo
 LOAD "mouse.lgo
 LOAD "windowfileedit.lgo
+LOAD "midi.lgo
+LOAD "sound.lgo
 
 TO TESTALL
 
@@ -112,6 +114,8 @@ TO TESTALL
   LOGOVERSIONTEST    ; from logoversion.lgo
   QUOTEDTEST         ; from quoted.lgo
   MOUSETEST          ; from mouse.lgo
+  MIDITEST           ; from midi.lgo
+  SOUNDTEST          ; from sound.lgo
 
   REPORTTESTUNINITIALIZE
 
