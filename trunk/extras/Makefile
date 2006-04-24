@@ -1,4 +1,4 @@
-EXTRAS_VERSION=1.0
+EXTRAS_VERSION=1.1
 
 SOURCEZIP=fmslogo-extras-$(EXTRAS_VERSION).zip
 
@@ -23,3 +23,4 @@ $(SOURCEZIP) :
 	/usr/bin/find -name 'AM_Hiscores' | xargs $(RM)
 	cd .. && zip -r -9 -X $(SOURCEZIP) $(addprefix extras/,$(TOINCLUDE)) -x */.cvsignore */CVS/ */CVS/* */*/.cvsignore */*/CVS/ */*/CVS/* */*/*/CVS/
 	mv ../$(SOURCEZIP) .
+
