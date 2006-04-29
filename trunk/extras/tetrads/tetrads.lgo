@@ -177,19 +177,29 @@ to ClearBlock
 end
 
 
-to ProcessKeyEvent :Key
+to ProcessKeyEvent :Key :IsKeyDown
 
-    if :Key=37 [ make "nextaction "moveleft    ]
-    if :Key=38 [ make "nextaction "rotateright ]
-    if :Key=39 [ make "nextaction "moveright   ]
-    if :Key=40 [ make "nextaction "rotateleft  ]
-    if :Key=32 [ make "nextaction "movedown    ]
+    ifelse :IsKeyDown [
+       if :Key=37 [ make "move    "left  ]
+       if :Key=39 [ make "move    "right ]
+
+       if and :Key=40  not :rotate="ignoreleft  [ make "rotate  "left  ]
+       if and :Key=38  not :rotate="ignoreright [ make "rotate  "right ]
+    ][
+       if and :Key=37 :move="left    [ make "move "none ]
+       if and :Key=39 :move="right   [ make "move "none ]
+
+       if and :Key=40 (or :rotate="left  :rotate="ignoreleft)  [ make "rotate "none ]
+       if and :Key=38 (or :rotate="right :rotate="ignoreright) [ make "rotate "none ]
+    ]
+
+    if :Key=32 [ make "DropFaster :IsKeyDown ]
 
     if :Key=ascii "Q [ make "IsDone "true ]
 end
 
 to KeyboardCaptureStart
-   (keyboardon [ProcessKeyEvent keyboardvalue] [])
+   (keyboardon [ProcessKeyEvent keyboardvalue "true] [ProcessKeyEvent keyboardvalue "false])
 end
 
 to KeyboardCaptureEnd
@@ -577,24 +587,26 @@ to UpdateNextFrame
 
     localmake "newshape ShapeCopy :CurrentShape
 
-    if :nextaction = "rotateleft  [ 
+    if :rotate = "left  [ 
        ShapeRotateLeft :newshape 
+       make "rotate "ignoreleft
     ]
 
-    if :nextaction = "rotateright [ 
-       ShapeRotateRight :newshape 
+    if :rotate = "right [ 
+       ShapeRotateRight :newshape
+       make "rotate "ignoreright
     ]
 
-    if :nextaction = "moveright   [ 
+    if :move = "right [ 
        ShapeMoveRight   :newshape
     ]
 
-    if :nextaction = "moveleft    [ 
+    if :move = "left  [ 
        ShapeMoveLeft    :newshape 
     ]
 
     make "framesuntildrop :framesuntildrop - 1
-    if or (:nextaction = "movedown) (0 = :framesuntildrop) [
+    if or :DropFaster (0 = :framesuntildrop) [
 
       ; the shape falls down one unit
       if not ShapeMoveDown :newshape [
@@ -604,7 +616,13 @@ to UpdateNextFrame
 
          RemoveFullLines
 
+         ; make a new shape
          make "currentshape ShapeCreate
+         ShapeDraw :currentshape
+         if not ShapeIsOkayToMove (ShapeType :currentshape) (ShapeX :currentshape) (ShapeY :currentshape) (ShapeRotation :currentshape) [
+            ; we can't play this shape
+            make "IsDone "true
+         ]
          stop
       ]
 
@@ -629,7 +647,6 @@ to UpdateNextFrame
 
     ShapeMark :newshape
 
-    make "nextaction "wait
 end
 
 to GameLoop
@@ -644,7 +661,9 @@ to GameLoop
 
    localmake "totalframesuntildrop 20
 
-   localmake "nextaction      "wait
+   localmake "DropFaster      "false
+   localmake "rotate          "none
+   localmake "move            "none
    localmake "currentshape    ShapeCreate
    localmake "framesuntildrop :totalframesuntildrop
 
@@ -654,7 +673,7 @@ to GameLoop
    while [ not :IsDone ] [
 
       UpdateNextFrame
-      wait 1 
+      wait 3
    ]
 
    KeyboardCaptureEnd
