@@ -171,6 +171,11 @@ to DrawBlock :ColorVector
 
 end
 
+to ClearBlock
+   setfloodcolor [255 255 255]
+   bitblock :GridSize :GridSize
+end
+
 
 to ProcessKeyEvent :Key
 
@@ -358,8 +363,7 @@ to ShapeErase :Shape
        if NOT EQUAL? 0 :shapesquare [
          penup
          setxy :GridSize * ((ShapeX :Shape) + :x - 1)  :GridSize * ((ShapeY :Shape) - :y)
-         setfloodcolor [255 255 255]
-         bitblock :GridSize :GridSize
+         ClearBlock
        ]
     ]
   ]
@@ -472,7 +476,50 @@ to RowColorForClearing :y
    ]
 end
 
+to RowIsMarkedForClearing? :y
+   localmake "row item :y :GameBoard
+   output equal? "C item 1 :row 
+end
+
+to CopyRowToRow :dst.y :src.y 
+   localmake "dstrow item :dst.y :GameBoard
+   localmake "srcrow item :src.y :GameBoard
+
+   repeat count :srcrow [
+      setitem repcount :dstrow (item repcount :srcrow)
+   ]
+end
+
+to ClearRow :y
+   local [row currentrow nextrow toprow]
+   make "row item :y :GameBoard
+
+   ; clear the rows
+   make "currentrow  :y
+   make "nextrow     :currentrow + 1
+   while [:nextrow < :GameBoardHeight] [
+
+      ; copy each item in the next row to the current row
+      CopyRowToRow :currentrow :nextrow 
+
+      make "currentrow :nextrow
+      make "nextrow    :currentrow + 1
+   ]
+
+   ; clear the top-most row
+   make "toprow item :currentrow :GameBoard
+   repeat count :nextrow [
+      setitem repcount :toprow ".
+   ]
+
+end
+
+
 to RemoveFullLines
+
+   local [rowtocopyfrom y mustremoverow]
+
+   make "mustremoverow "false
 
    ; figure out which rows should be cleared
    repeat count :GameBoard [
@@ -481,32 +528,46 @@ to RemoveFullLines
       if IsRowFull :y [ 
          RowMarkForClearing  :y
          RowColorForClearing :y
+         make "mustremoverow "true
       ]
    ]
 
+   if :mustremoverow [
 
-   wait 10
+     wait 10
 
-   repeat count :GameBoard [
-      make "y repcount - 1
-      make "row item :y :GameBoard
+     ; clear the rows
+     repeat count :GameBoard [
+        make "y repcount - 1
+  
+        while [RowIsMarkedForClearing? :y] [
+           ClearRow :y
+        ]
+     ]
 
-      if equal? "C item 1 :row [
-         RowMarkForClearing  :y
-         RowColorForClearing :y
-      ]
-   ]
+     ; redraw the board
+     local [shapeindex rotationtemplate color]
+     repeat count :GameBoard [
+        make "y repcount - 1
 
-   ; clear the rows
-   repeat count :GameBoard [
-      make "row item repcount - 1 :GameBoard
+        penup
+        sety :GridSize * :y
+        make "row item :y :GameBoard
+        repeat count :row [
+           setx :GridSize * (repcount - 1) 
 
-      if equal? "C item 1 :row [
+           ifelse equal? ". (item repcount :row) [
+             ClearBlock
+           ] [
+             make "shapeindex (item repcount :row) - 1 ; HACK: -1
+             make "rotationtemplate item :shapeindex :GameShapes
+             make "color            item ((count :rotationtemplate) - 1) :rotationtemplate
+             DrawBlock :color
+           ]
+        ]
+    ]
+  ]
 
-      ]
-   ]
-   
-   
 end
 
 
