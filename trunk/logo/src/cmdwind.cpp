@@ -351,10 +351,13 @@ bool process_special_conditions()
 
    if (stopping_flag == STOP || stopping_flag == OUTPUT)
       {
-      print_node(
-         stdout,
-         make_static_strnode(
-            "You must be in a procedure to use OUTPUT or STOP.\n"));
+      // This is probably a bug, not a user error.
+      // We shouldn't be able to get here without throwing
+      // an AT_TOPLEVEL error, which would result in a 
+      // stopping_flag of THROWING.
+      ndprintf(
+         stdout, 
+         "You must be in a procedure to use OUTPUT or STOP.\n");
       stopping_flag = RUN;
       }
 
@@ -401,15 +404,21 @@ void do_execution(char * logocommand)
       // This is important because do_execution() can be called to process
       // event handlers while evaluator() is running.
       // See bug #1479111 for details.
+      int      saved_val_status    = val_status;
       CTRLTYPE saved_stopping_flag = stopping_flag;
+      NODE *   saved_output_node   = vref(output_node);
+      NODE *   saved_current_line  = current_line;
+
       stopping_flag = RUN;
 
       // turn text into a NODE and parse it
-      current_line = reref(
-         current_line, 
-         make_strnode(logocommand, (int) strlen(logocommand), this_type, strnzcpy));
+      current_line = vref(make_strnode(
+         logocommand, 
+         (int) strlen(logocommand), 
+         this_type, 
+         strnzcpy));
 
-      NODE * exec_list = vref(parser(current_line, TRUE));
+      NODE * exec_list = vref(parser(current_line, true));
 
       // now process it
       val_status = 0;
@@ -422,9 +431,14 @@ void do_execution(char * logocommand)
 
       // restore the stopping flag
       stopping_flag = saved_stopping_flag;
+      val_status    = saved_val_status;
+
+      deref(output_node);
+      output_node = saved_output_node;
 
       // deallocate the line
-      current_line = reref(current_line, NIL);
+      deref(current_line);
+      current_line = saved_current_line;
 
       // this is a hack to force garbage collector to properly clean up
       if (exec_list != NIL)
