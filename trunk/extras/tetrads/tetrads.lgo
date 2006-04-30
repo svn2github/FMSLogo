@@ -406,6 +406,16 @@ to ShapeClear :Shape
 
 end
 
+to ShapeRedraw :OldShape :NewShape
+
+  ; TODO: figure out exactly which squares must be cleared
+  ; and which squares must be drawn to eliminate the flicker
+  ; seen when a square is erased and redrawn in the same color.
+  ShapeErase :OldShape
+  ShapeDraw  :NewShape
+
+end
+
 to ShapeMark :Shape
 
   local [x y shaperow shapesquare shapetemplate rotationtemplate boardrow]
@@ -611,8 +621,7 @@ to UpdateNextFrame
       ; the shape falls down one unit
       if not ShapeMoveDown :newshape [
 
-         ShapeErase  :currentshape
-         ShapeDraw   :newshape
+         ShapeRedraw :currentshape :newshape
 
          ; the shape has come to a final resting place
          ShapeMark :newshape
@@ -640,8 +649,7 @@ to UpdateNextFrame
            (not equal? (ShapeY :currentshape)        (ShapeY :newshape))
            (not equal? (ShapeRotation :currentshape) (ShapeRotation :newshape))) [
 
-       ShapeErase  :currentshape
-       ShapeDraw   :newshape
+       ShapeRedraw :currentshape :newshape
 
        repeat count :currentshape [
           setitem repcount :currentshape item repcount :newshape
