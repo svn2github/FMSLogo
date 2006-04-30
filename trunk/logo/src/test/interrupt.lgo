@@ -7,15 +7,20 @@
 ;
 
 to handler
+   if not equal? :myvalue 1 [ 
+      print [Test Failed!] 
+   ]
 end
 
-to mystop 
-  repeat 1 [ repeat 1 [stop] ]
+to myoutput
+   repeat 1 [ if :myvalue=repcount [ output "true ] ]
+   output "false
 end
 
 to runtest
 
-   make "isdone "false
+   localmake "isdone "false
+   localmake "myvalue 1
 
    print [move the mouse around inside the screen window]
    print [press 'q' to quit]
@@ -24,10 +29,16 @@ to runtest
    mouseon   [handler] [handler] [handler] [handler] [handler]
    setfocus  "FMSLogo
   
-   while [not :isdone] [ mystop ]
+   while [not :isdone] [ 
+     if not equal? myoutput "true [ 
+        print [Test Failed!]
+     ]
+   ]
 
    mouseoff
    keyboardoff
+
+   bye
 end
 
 make "startup [runtest]
