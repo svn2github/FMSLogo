@@ -213,7 +213,7 @@ to ShapeCreate
    make "newshape array 5
 
    ; shape
-   setitem 1 :newshape  RANDOM 7
+   setitem 1 :newshape RANDOM 7
 
    ; color
    make "shapedata item (ShapeType :newshape) :gameshapes
@@ -611,8 +611,11 @@ to UpdateNextFrame
       ; the shape falls down one unit
       if not ShapeMoveDown :newshape [
 
+         ShapeErase  :currentshape
+         ShapeDraw   :newshape
+
          ; the shape has come to a final resting place
-         ShapeMark :currentshape
+         ShapeMark :newshape
 
          RemoveFullLines
 
