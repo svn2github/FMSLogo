@@ -396,6 +396,14 @@ void do_execution(char * logocommand)
 
       check_reserve_tank();
 
+      // Set the stopping_flag to RUN so that we don't print any spurious 
+      // warnings about using OUTPUT or STOP while not in a procedure.
+      // This is important because do_execution() can be called to process
+      // event handlers while evaluator() is running.
+      // See bug #1479111 for details.
+      CTRLTYPE saved_stopping_flag = stopping_flag;
+      stopping_flag = RUN;
+
       // turn text into a NODE and parse it
       current_line = reref(
          current_line, 
@@ -411,6 +419,9 @@ void do_execution(char * logocommand)
          }
 
       process_special_conditions();
+
+      // restore the stopping flag
+      stopping_flag = saved_stopping_flag;
 
       // deallocate the line
       current_line = reref(current_line, NIL);

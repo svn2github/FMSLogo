@@ -21,6 +21,9 @@ Part I) Kit Description/Location (http://sourceforge.net/projects/fmslogo):
 Part II) New features/bugs fixed:
 
   * Added for ???,
+    o Fix bug #1479111; FMSLogo no longer prints spurious warnings about 
+      using STOP or OUTPUT when not in a procedure after processing event 
+      callbacks.
     o Fix bug #1474902; WINDOWFILEEDIT no longer crashes on long filenames.
     o Fix bug #1472599; BYE immediately exits FMSLogo.
     o Fix bug #1372723; THROW "SYSTEM now exits FMSLogo.
