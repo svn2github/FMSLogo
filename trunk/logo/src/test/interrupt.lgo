@@ -1,0 +1,33 @@
+; This program is a manual regression test for bug #1479111, which is that
+; FMSLogo sometimes prints out:
+;
+;    You must be in a procedure to use OUTPUT or STOP.
+;
+; While playing tetrads.
+;
+
+to handler
+end
+
+to mystop 
+  repeat 1 [ repeat 1 [stop] ]
+end
+
+to runtest
+
+   make "isdone "false
+
+   print [move the mouse around inside the screen window]
+   print [press 'q' to quit]
+
+   keyboardon [if keyboardvalue=ascii "q [make "isdone "true]]
+   mouseon   [handler] [handler] [handler] [handler] [handler]
+   setfocus  "FMSLogo
+  
+   while [not :isdone] [ mystop ]
+
+   mouseoff
+   keyboardoff
+end
+
+make "startup [runtest]
