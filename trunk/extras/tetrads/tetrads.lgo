@@ -355,29 +355,37 @@ to ShapeRotateRight :Shape
   ]
 end
 
+
+to ShapeEraseRowSquare :Shape :ShapeRow :x :y
+
+   localmake "shapesquare item :x :shaperow
+
+   if NOT EQUAL? 0 :shapesquare [
+     penup
+     setxy :GridSize * ((ShapeX :Shape) + :x - 1)  :GridSize * ((ShapeY :Shape) - :y)
+     ClearBlock
+   ]
+end
+
+to ShapeEraseRow :Shape :RotationTemplate :y
+
+  localmake "shaperow item :y :RotationTemplate
+
+  repeat count :shaperow [
+    ShapeEraseRowSquare :Shape :shaperow repcount :y
+  ]
+end
+
+
 to ShapeErase :Shape
 
-  local [x y shaperow shapesquare shapetemplate rotationtemplate]
-
-  make "shapetemplate    item (ShapeType     :Shape) :gameshapes
-  make "rotationtemplate item (ShapeRotation :Shape) :shapetemplate
+  localmake "shapetemplate    item (ShapeType     :Shape) :gameshapes
+  localmake "rotationtemplate item (ShapeRotation :Shape) :shapetemplate
 
   repeat count :rotationtemplate [ 
-    make "y repcount - 1
-    make "shaperow item :y :rotationtemplate
-
-    repeat count :shaperow [  
-       make "x repcount
-       make "shapesquare item :x :shaperow
-
-       if NOT EQUAL? 0 :shapesquare [
-         penup
-         setxy :GridSize * ((ShapeX :Shape) + :x - 1)  :GridSize * ((ShapeY :Shape) - :y)
-         ClearBlock
-       ]
-    ]
+    ShapeEraseRow :Shape :RotationTemplate repcount - 1
   ]
-   
+
 end
 
 to ShapeClear :Shape
@@ -406,13 +414,100 @@ to ShapeClear :Shape
 
 end
 
+to Max :a :b
+  if :a < :b [output :b]
+  output :a
+end
+
+to Min :a :b
+  if :a < :b [output :a]
+  output :b
+end
+
 to ShapeRedraw :OldShape :NewShape
 
   ; TODO: figure out exactly which squares must be cleared
   ; and which squares must be drawn to eliminate the flicker
   ; seen when a square is erased and redrawn in the same color.
-  ShapeErase :OldShape
-  ShapeDraw  :NewShape
+
+  make "old.shapetemplate    item (ShapeType     :OldShape) :gameshapes
+  make "old.rotationtemplate item (ShapeRotation :OldShape) :old.shapetemplate
+
+  make "new.shapetemplate    item (ShapeType     :NewShape) :gameshapes
+  make "new.rotationtemplate item (ShapeRotation :NewShape) :new.shapetemplate
+
+  make "ymax Max ShapeY :OldShape ShapeY :NewShape
+  make "ymin (Min (ShapeY :OldShape) - ((count :old.rotationtemplate) - 1)
+                  (ShapeY :NewShape) - ((count :new.rotationtemplate) - 1))
+
+  make "xmax (Max (ShapeX :OldShape) + (count item 0 :old.rotationtemplate) - 1
+                  (ShapeX :NewShape) + (count item 0 :new.rotationtemplate) - 1)
+  make "xmin Min ShapeX :OldShape ShapeX :NewShape
+ 
+
+  ; Iterate over possible locations on the board.
+  ; For each iteration point, figure out the location in 
+  ; OldShape's rotation template can compare them.
+
+  make "board.y :ymin
+  while [:board.y < :ymax + 1] [
+
+      make "old.y  (ShapeY :OldShape) - :board.y 
+      make "new.y  (ShapeY :NewShape) - :board.y
+
+      ifelse or (:old.y < 0) (count :old.rotationtemplate) - 1 < :old.y [
+
+          ; this row isn't covered by the old template
+          ; so we can just draw the new shape's row
+          ShapeDrawRow :NewShape :new.rotationtemplate :new.y
+
+      ][ ifelse or (:new.y < 0) (count :new.rotationtemplate) - 1 < :new.y [
+
+          ; this row isn't covered by the new template
+          ; so we can just draw erase thie old row
+          ShapeEraseRow :OldShape :old.rotationtemplate :old.y
+      ][
+          ; this row is covered by both templates
+
+          make "old.shaperow item :old.y :old.rotationtemplate
+          make "new.shaperow item :new.y :new.rotationtemplate
+
+          make "board.x :xmin
+          while [:board.x < :xmax + 1] [
+
+              make "old.x  :board.x - (ShapeX :OldShape) + 1
+              make "new.x  :board.x - (ShapeX :NewShape) + 1
+
+              ifelse or (:old.x < 1) (count :old.shaperow) < :old.x [
+
+                  ; this square isn't covered by the old template
+                  ; so we can just draw the new shape's sqaure
+                  ShapeDrawRowSquare :NewShape :new.shaperow :new.x :new.y
+
+              ][ ifelse or (:new.x < 1) (count :new.shaperow) < :new.x [
+
+                  ; this square isn't covered by the new template
+                  ; so we can just draw erase the old shape's square
+                  ShapeEraseRowSquare :OldShape :old.shaperow :old.x :old.y
+              ][
+                  make "old.shapesquare item :old.x :old.shaperow
+                  make "new.shapesquare item :new.x :new.shaperow
+
+                  ; this square is covered by both the old and new templates.
+                  ; To miminize flicker we only erase the old square if it's
+                  ; not part of the new one.
+                  if NOT EQUAL? :old.shapesquare :new.shapesquare [
+                     ShapeEraseRowSquare :OldShape :old.shaperow :old.x :old.y
+                     ShapeDrawRowSquare  :NewShape :new.shaperow :new.x :new.y
+                  ]
+              ]]
+
+             make "board.x :board.x + 1
+          ]
+      ]]
+
+      make "board.y :board.y + 1
+  ]
 
 end
 
@@ -443,27 +538,34 @@ to ShapeMark :Shape
 
 end
 
-to ShapeDraw :Shape
+to ShapeDrawRowSquare :Shape :ShapeRow :x :y
 
-  local [x y shaperow shapesquare shapetemplate rotationtemplate]
+   localmake "shapesquare item :x :shaperow
 
-  make "shapetemplate    item (ShapeType     :Shape) :gameshapes
-  make "rotationtemplate item (ShapeRotation :Shape) :shapetemplate
+   if NOT EQUAL? 0 :shapesquare [
+     penup
+     setxy :GridSize * ((ShapeX :Shape) + :x - 1)  :GridSize * ((ShapeY :Shape) - :y)
+     DrawBlock ShapeColor :Shape
+   ]
+end
 
-  repeat count :rotationtemplate [ 
-    make "y repcount - 1
-    make "shaperow item :y :rotationtemplate
+to ShapeDrawRow :Shape :RotationTemplate :y
+  
+    localmake "shaperow item :y :RotationTemplate
 
     repeat count :shaperow [  
-       make "x repcount
-       make "shapesquare item :x :shaperow
-
-       if NOT EQUAL? 0 :shapesquare [
-         penup
-         setxy :GridSize * ((ShapeX :Shape) + :x - 1)  :GridSize * ((ShapeY :Shape) - :y)
-         DrawBlock ShapeColor :Shape
-       ]
+       ShapeDrawRowSquare :Shape :shaperow repcount :y
     ]
+end
+
+
+to ShapeDraw :Shape
+
+  localmake "shapetemplate    item (ShapeType     :Shape) :gameshapes
+  localmake "rotationtemplate item (ShapeRotation :Shape) :shapetemplate
+
+  repeat count :rotationtemplate [ 
+    ShapeDrawRow :Shape :RotationTemplate repcount - 1
   ]
 
 end
