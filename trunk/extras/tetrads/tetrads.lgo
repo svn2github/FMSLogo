@@ -355,14 +355,18 @@ to ShapeRotateRight :Shape
   ]
 end
 
+to MoveTo :X :Y
+   penup
+   setxy :GridSize * :X  :GridSize * :Y
+end
+
 
 to ShapeEraseRowSquare :Shape :ShapeRow :x :y
 
    localmake "shapesquare item :x :shaperow
 
    if NOT EQUAL? 0 :shapesquare [
-     penup
-     setxy :GridSize * ((ShapeX :Shape) + :x - 1)  :GridSize * ((ShapeY :Shape) - :y)
+     MoveTo ((ShapeX :Shape) + :x - 1)  ((ShapeY :Shape) - :y)
      ClearBlock
    ]
 end
@@ -543,8 +547,7 @@ to ShapeDrawRowSquare :Shape :ShapeRow :x :y
    localmake "shapesquare item :x :shaperow
 
    if NOT EQUAL? 0 :shapesquare [
-     penup
-     setxy :GridSize * ((ShapeX :Shape) + :x - 1)  :GridSize * ((ShapeY :Shape) - :y)
+     MoveTo ((ShapeX :Shape) + :x - 1)  ((ShapeY :Shape) - :y)
      DrawBlock ShapeColor :Shape
    ]
 end
@@ -593,7 +596,7 @@ to RowColorForClearing :y
    sety :GridSize * :y
 
    repeat count :row [
-      setx :GridSize * (repcount - 1)
+      MoveTo (repcount - 1) :y
       DrawBlock [128 0 128]        
    ]
 end
@@ -672,11 +675,10 @@ to RemoveFullLines
      repeat count :GameBoard [
         make "y repcount - 1
 
-        penup
-        sety :GridSize * :y
         make "row item :y :GameBoard
         repeat count :row [
-           setx :GridSize * (repcount - 1) 
+
+           MoveTo (repcount - 1) :y
 
            ifelse equal? ". (item repcount :row) [
              ClearBlock
