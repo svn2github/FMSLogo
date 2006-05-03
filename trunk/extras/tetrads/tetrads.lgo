@@ -744,9 +744,10 @@ to UpdateNextFrame
       ; the shape falls down one unit
       if not ShapeMoveDown :newshape [
 
+         ; the shape has come to a final resting place
+
          ShapeRedraw :currentshape :newshape
 
-         ; the shape has come to a final resting place
          ShapeMark :newshape
 
          RemoveFullLines
@@ -758,12 +759,26 @@ to UpdateNextFrame
             ; we can't play this shape
             make "IsDone "true
          ]
+
+         make "TotalShapesDropped :TotalShapesDropped + 1
+
+         ; increase the level of difficulty every 20 shapes
+         if EQUAL? 0 MODULO :TotalShapesDropped 20 [
+             if :TotalFramesUntilDrop > 1 [
+                make "TotalFramesUntilDrop :TotalFramesUntilDrop - 1
+             ]
+         ]
+
+         ; reset the timeout counter
+         make "framesuntildrop :TotalFramesUntilDrop
+
          stop
       ]
 
       ; the shape moved down one unit
+
       ; reset the timeout counter
-      make "framesuntildrop :totalframesuntildrop
+      make "framesuntildrop :TotalFramesUntilDrop
     ]
 
     ; if the shape moved, erase it from the old position and
@@ -794,13 +809,14 @@ to GameLoop
    MoveTo 0 0
    bitblock :GameBoardWidth * :GridSize  :GameBoardHeight * :GridSize
 
-   localmake "totalframesuntildrop 20
+   localmake "TotalFramesUntilDrop 20
+   localmake "TotalShapesDropped   0
 
    localmake "DropFaster      "false
    localmake "rotate          "none
    localmake "move            "none
    localmake "currentshape    ShapeCreate
-   localmake "framesuntildrop :totalframesuntildrop
+   localmake "framesuntildrop :TotalFramesUntilDrop
 
    KeyboardCaptureStart
 
