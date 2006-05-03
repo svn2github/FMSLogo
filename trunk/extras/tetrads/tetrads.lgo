@@ -100,7 +100,7 @@ to InitGameData
   }@0
 
 
-  make "GameBoardHeight 30
+  make "GameBoardHeight 25
   make "GameBoardWidth  10
 
   ; fill in the game board with empty space
@@ -357,7 +357,7 @@ end
 
 to MoveTo :X :Y
    penup
-   setxy :GridSize * :X  :GridSize * :Y
+   setxy :GridSize * (:X - :GameBoardWidth / 2)  :GridSize * (:Y - :GameBoardHeight / 2)
 end
 
 
@@ -768,10 +768,11 @@ to GameLoop
    local [gameshapes gridsize]
    InitGameData
 
-
    setscreencolor [0 0 0]
    clearscreen
+
    setfloodcolor  [255 255 255]
+   MoveTo 0 0
    bitblock :GameBoardWidth * :GridSize  :GameBoardHeight * :GridSize
 
    localmake "totalframesuntildrop 20
