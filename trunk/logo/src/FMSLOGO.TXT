@@ -1,6 +1,6 @@
-------------------------------------------------------------------
-FMSLogo Version 6.8.0 for Microsoft Windows 95/98/NT/2000/XP/Vista
-------------------------------------------------------------------
+----------------------------------------------------------------------
+FMSLogo Version 6.9.0 for Microsoft Windows 95/98/ME/NT/2000/XP/Vista
+----------------------------------------------------------------------
 
 Part    I) Kit Description/Location:
 Part   II) New features/bugs fixed:
@@ -14,13 +14,13 @@ Part VIII) Minimum System Requirements:
 
 Part I) Kit Description/Location (http://sourceforge.net/projects/fmslogo):
 
-  fmslogo-6.8.0.exe       (binary kit: Windows self-extracting installer)
-  fmslogo-6.8.0.zip       (binary kit: Windows ZIP archive)
-  fmslogo-src-6.8.0.zip   (source kit)
+  fmslogo-6.9.0.exe       (binary kit: Windows self-extracting installer)
+  fmslogo-6.9.0.zip       (binary kit: Windows ZIP archive)
+  fmslogo-src-6.9.0.zip   (source kit)
 
 Part II) New features/bugs fixed:
 
-  * Added for ???,
+  * Added for 6.9.0,
     o Fix bug #1479111; FMSLogo no longer prints spurious warnings about 
       using STOP or OUTPUT when not in a procedure after processing event 
       callbacks.
