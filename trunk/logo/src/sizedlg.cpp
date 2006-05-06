@@ -193,4 +193,4 @@ void TSizeDialog::UpdateBars(TColor size)
    SizeBar->SetRange(1, 32);
    SizeBar->SetPosition(size.Red());
    }
-
+
