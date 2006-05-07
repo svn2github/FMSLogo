@@ -441,7 +441,8 @@ $Exceptions{'command-yield.xml'}{'allcaps'}{'CPU'}     = 1;
 
 $Exceptions{'commander.xml'}{'allcaps'}{'ENTER'}       = 1;
 
-$Exceptions{'commandline-options.xml'}{'logo'}         = 1;
+$Exceptions{'commandline-options.xml'}{'allcaps'}{'OK'}   = 1;
+$Exceptions{'commandline-options.xml'}{'logo'}            = 1;
 
 $Exceptions{'communication.xml'}{'allcaps'}{'DLL'}        = 1;
 $Exceptions{'communication.xml'}{'allcaps'}{'PORT'}       = 1;
