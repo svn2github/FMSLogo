@@ -7,6 +7,7 @@
 <varlistentry><term>Synopsis</term>
 <listitem>
 <synopsis><command>GREATERP</command> <parameter>num1</parameter> <parameter>num2</parameter>
+<command>GREATER?</command> <parameter>num1</parameter> <parameter>num2</parameter>
 <parameter>num1</parameter> <command>&gt;</command> <parameter>num2</parameter></synopsis>
 </listitem>
 </varlistentry>
@@ -22,14 +23,17 @@ Outputs FALSE, otherwise.
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>SHOW 1 &gt; 2</userinput>
+<programlisting><userinput>SHOW 1 &gt; 2</userinput>
 false
 </programlisting>
-    <programlisting><userinput>SHOW 2 &gt; 1</userinput>
+<programlisting><userinput>SHOW 2 &gt; 1</userinput>
 true
 </programlisting>
-    <programlisting><userinput>SHOW 2 &gt; 2</userinput>
+<programlisting><userinput>SHOW 2 &gt; 2</userinput>
 false
+</programlisting>
+<programlisting><userinput>SHOW GREATERP 2 1</userinput>
+true
 </programlisting>
 </listitem>
 </varlistentry>
