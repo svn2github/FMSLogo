@@ -838,7 +838,7 @@ bool TMainFrame::CanClose()
    {
    HWND editH = ::FindWindow(NULL, "Editor");
 
-   // if editor is running could loose changes
+   // if editor is running we could lose unsaved changes
    if (editH)
       {
       ::ShowWindow(editH, SW_SHOWNORMAL);
@@ -892,18 +892,37 @@ bool TMainFrame::CanClose()
    // if dirty warn user and give chance to abort shutdown
    if (IsDirty)
       {
-      if (MessageBox(
-            "You will lose any changes if you don't save your workspace to disk.\n"
-               "\n"
-               "Do you really want to exit FMSLogo?",
-            "You have not saved to disk",
-            MB_OKCANCEL | MB_ICONQUESTION) != IDOK)
+      TSaveBeforeExitDialog saveChangesDialog(this);
+
+      saveChangesDialog.Execute();
+      int exitCode = saveChangesDialog.GetExitCode();
+      if (exitCode == IDCANCEL)
          {
+         // don't exit FMSLogo
          return false;
+         }
+      else if (exitCode == IDYES)
+         {
+         // save and then exit
+
+         // HACK: Set TimeToExit and TimeToHalt to false
+         // so that writing the file to disk doesn't abort.
+         // This is hack because the code should not modify
+         // global variables--there should be a way to tell 
+         // CMFileSave to ignore errors.
+         bool savedIsTimeToExit = IsTimeToExit;
+         bool savedIsTimeToHalt = IsTimeToHalt;
+
+         IsTimeToExit = false;
+         IsTimeToHalt = false;
+         CMFileSave();
+
+         IsTimeToExit = savedIsTimeToExit;
+         IsTimeToHalt = savedIsTimeToHalt;
          }
       }
 
-      // if we made it here we are OK
+      // if we made it here we are OK to exit
       return true;
    }
 

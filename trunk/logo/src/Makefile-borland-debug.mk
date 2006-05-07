@@ -91,6 +91,7 @@ Dep_fmslogoddexe = \
    DEBUG\parse.obj\
    DEBUG\print.obj\
    DEBUG\richedpr.obj\
+   DEBUG\savebeforeexitdialog.obj\
    DEBUG\sizedlg.obj\
    DEBUG\statwind.obj\
    DEBUG\term.obj\
@@ -147,6 +148,7 @@ DEBUG\paren.obj+
 DEBUG\parse.obj+
 DEBUG\print.obj+
 DEBUG\richedpr.obj+
+DEBUG\savebeforeexitdialog.obj+
 DEBUG\sizedlg.obj+
 DEBUG\statwind.obj+
 DEBUG\term.obj+
@@ -406,6 +408,11 @@ DEBUG\print.obj :  print.cpp
 DEBUG\richedpr.obj :  richedpr.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ richedpr.cpp
+|
+
+DEBUG\savebeforeexitdialog.obj :  savebeforeexitdialog.cpp
+  $(BCC32) -c @&&|
+ $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ savebeforeexitdialog.cpp
 |
 
 DEBUG\sizedlg.obj :  sizedlg.cpp

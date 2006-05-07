@@ -365,3 +365,16 @@ STRINGTABLE
 {
  IDS_CANNOTFIND, "Cannot find %s"
 }
+
+IDD_SAVEBEFOREEXIT DIALOG 32, 1, 213, 71
+STYLE DS_MODALFRAME | DS_3DLOOK | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "FMSLogo"
+FONT 8, "MS Sans Serif"
+{
+ CONTROL "Save and Exit", IDYES, "button", BS_PUSHBUTTON | BS_CENTER | WS_CHILD | WS_VISIBLE | WS_TABSTOP, 8, 52, 62, 14
+ CONTROL "Don't Save", IDNO, "BUTTON", BS_PUSHBUTTON | BS_CENTER | WS_CHILD | WS_VISIBLE | WS_TABSTOP, 76, 52, 62, 14
+ CONTROL "Cancel", IDCANCEL, "BUTTON", BS_PUSHBUTTON | BS_CENTER | WS_CHILD | WS_VISIBLE | WS_TABSTOP, 144, 52, 62, 14
+ CONTROL "There are unsaved changes in the workspace.  If you exit without saving, these changes will be lost.  ", -1, "static", SS_LEFT | WS_CHILD | WS_VISIBLE, 12, 8, 192, 24
+ CONTROL "Would you like to save your changes before exiting?", -1, "static", SS_LEFT | WS_CHILD | WS_VISIBLE, 12, 32, 176, 16
+}
+

@@ -91,6 +91,7 @@ Dep_fmslogodexe = \
    RELEASE\parse.obj\
    RELEASE\print.obj\
    RELEASE\richedpr.obj\
+   RELEASE\savebeforeexitdialog.obj\
    RELEASE\sizedlg.obj\
    RELEASE\statwind.obj\
    RELEASE\term.obj\
@@ -146,6 +147,7 @@ RELEASE\paren.obj+
 RELEASE\parse.obj+
 RELEASE\print.obj+
 RELEASE\richedpr.obj+
+RELEASE\savebeforeexitdialog.obj+
 RELEASE\sizedlg.obj+
 RELEASE\statwind.obj+
 RELEASE\term.obj+
@@ -405,6 +407,11 @@ RELEASE\print.obj :  print.cpp
 RELEASE\richedpr.obj :  richedpr.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ richedpr.cpp
+|
+
+RELEASE\savebeforeexitdialog.obj :  savebeforeexitdialog.cpp
+  $(BCC32) -c @&&|
+ $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ savebeforeexitdialog.cpp
 |
 
 RELEASE\sizedlg.obj :  sizedlg.cpp

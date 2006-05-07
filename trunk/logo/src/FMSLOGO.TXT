@@ -39,6 +39,8 @@ Part II) New features/bugs fixed:
       flag if they successfully define a new procedure/macro.
     o Mitigate bug #1327718; installer suggests a location in the home 
       directory when run by a limited user.
+    o Implement request #1480371; The save-before-exit dialog now follows
+      Windows convention to prevent accidental data loss.
 
   * Added for 6.8.0,
     o Fix bug #1465992; PgUp and PgDn now work in the commander history box.
@@ -217,6 +219,7 @@ Part III) Special Thanks:
     Daniel Ajoy
     Narayanan Chitoor
     Jason Gervich
+    Andy Owen
 
   Special thanks to:
     George Mills
