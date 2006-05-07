@@ -6,7 +6,7 @@
 
 <varlistentry><term>Synopsis</term>
 <listitem><para>(special form)</para>
-<synopsis><command>TRUE</command> <parameter>instructionlist</parameter></synopsis>
+<synopsis><command>TRUE</command></synopsis>
 </listitem>
 </varlistentry>
 
@@ -23,10 +23,10 @@ TRUE is a reserved value, not a procedure nor a variable.
 <varlistentry><term>Example</term>
 <listitem>
 <programlisting><userinput>SHOW 1=1</userinput>
-true
-<userinput>IF "TRUE [PRINT [True is always true]]</userinput>
-True is always true
-</programlisting>
+true</programlisting>
+
+<programlisting><userinput>IF "TRUE [PRINT [TRUE is always true]]</userinput>
+TRUE is always true</programlisting>
 </listitem>
 </varlistentry>
 
