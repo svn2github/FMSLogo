@@ -6,7 +6,7 @@
 
 <varlistentry><term>Synopsis</term>
 <listitem><para>(special form)</para>
-<synopsis><command>FALSE</command> <parameter>instructionlist</parameter></synopsis>
+<synopsis><command>FALSE</command></synopsis>
 </listitem>
 </varlistentry>
 
@@ -24,8 +24,10 @@ FALSE is a reserved value, not a procedure nor a variable.
 <listitem>
 <programlisting><userinput>SHOW 1=0</userinput>
 false
-<userinput>IFELSE "false [PRINT [We cannot get here]] [PRINT [False is always false]]</userinput>
-False is always false
+</programlisting>
+
+<programlisting><userinput>IFELSE "FALSE [PRINT [We cannot get here]] [PRINT [FALSE is always false]]</userinput>
+FALSE is always false
 </programlisting>
 </listitem>
 </varlistentry>
