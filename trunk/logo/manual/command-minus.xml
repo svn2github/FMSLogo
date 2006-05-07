@@ -32,7 +32,10 @@ There is a difference in binding strength between the two forms:
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>SHOW 2 - -3</userinput>
+<programlisting><userinput>SHOW 2 - -3</userinput>
+5
+</programlisting>
+<programlisting><userinput>SHOW 2 - MINUS 3</userinput>
 5
 </programlisting>
 </listitem>
