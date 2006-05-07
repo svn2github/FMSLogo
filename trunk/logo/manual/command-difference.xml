@@ -24,7 +24,10 @@ The minus sign (-) means infix difference in ambiguous contexts (when preceded b
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>SHOW 3 - 2</userinput>
+<programlisting><userinput>SHOW 3 - 2</userinput>
+1</programlisting>
+
+<programlisting><userinput>SHOW DIFFERENCE 3 2</userinput>
 1</programlisting>
 </listitem>
 </varlistentry>
