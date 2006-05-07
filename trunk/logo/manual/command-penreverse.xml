@@ -23,8 +23,10 @@ Use <link linkend="command-penpaint">PENPAINT</link> to restore the pen to norma
 </varlistentry>
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>FORWARD 100
-PENERASE
+<programlisting><userinput>SETPENCOLOR [255 0 0]
+PENPAINT
+FORWARD 100
+PENREVERSE
 BACK 100</userinput></programlisting>
 </listitem>
 </varlistentry>
