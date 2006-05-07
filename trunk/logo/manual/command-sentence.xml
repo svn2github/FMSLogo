@@ -22,8 +22,8 @@ Outputs the members of its inputs, if those inputs are lists.</para>
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>SHOW (SE "A "Sentence "is "simply "a "list "of "words)</userinput>
-[A Sentence is simply a list of words]</programlisting>
+    <programlisting><userinput>SHOW (SENTENCE "A "sentence "is "simply "a "list "of "words)</userinput>
+[A sentence is simply a list of words]</programlisting>
 </listitem>
 </varlistentry>
 
