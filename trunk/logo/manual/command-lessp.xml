@@ -7,6 +7,7 @@
 <varlistentry><term>Synopsis</term>
 <listitem>
 <synopsis><command>LESSP</command> <parameter>num1</parameter> <parameter>num2</parameter>
+<command>LESS?</command> <parameter>num1</parameter> <parameter>num2</parameter>
 <parameter>num1</parameter> <command>&lt;</command> <parameter>num2</parameter></synopsis>
 </listitem>
 </varlistentry>
@@ -22,14 +23,17 @@ Outputs FALSE, otherwise.
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>SHOW 1 &lt; 2</userinput>
+<programlisting><userinput>SHOW 1 &lt; 2</userinput>
 true
 </programlisting>
-    <programlisting><userinput>SHOW 2 &lt; 1</userinput>
+<programlisting><userinput>SHOW 2 &lt; 1</userinput>
 false
 </programlisting>
-    <programlisting><userinput>SHOW 2 &lt; 2</userinput>
+<programlisting><userinput>SHOW 2 &lt; 2</userinput>
 false
+</programlisting>
+<programlisting><userinput>SHOW LESSP 1 2</userinput>
+true
 </programlisting>
 </listitem>
 </varlistentry>
