@@ -16,17 +16,18 @@
 <listitem>
 <para>
 Outputs pen color information.
-This is either a color index (a number from 0 - 15), or a list containing [Red Green Blue] intensities, depending on how the pen color was set.
+This is either a color index (a number from 0 - 15), or a list containing [red green blue] intensities, depending on how the pen color was set.
 </para>
 
 </listitem>
 </varlistentry>
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>SETPENCOLOR [100 200 50]
+<programlisting><userinput>SETPENCOLOR [100 200 50]
 SHOW PENCOLOR</userinput>
-[100 200 50]
-<userinput>SETPENCOLOR 2
+[100 200 50]</programlisting>
+
+<programlisting><userinput>SETPENCOLOR 2
 SHOW PENCOLOR</userinput>
 2</programlisting>
 </listitem>

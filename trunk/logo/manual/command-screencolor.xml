@@ -15,17 +15,19 @@
 <listitem>
 <para>
 Outputs screen color information.
-This is either a color index (a number from 0 - 15), or a list containing [Red Green Blue] intensities, depending on how the screen color was set.
+This is either a color index (a number from 0 - 15), or a list containing [red green blue] intensities, depending on how the screen color was set.
 </para>
 
 </listitem>
 </varlistentry>
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>SETSCREENCOLOR [100 200 50]
+<programlisting><userinput>SETSCREENCOLOR [100 200 50]
 SHOW SCREENCOLOR</userinput>
 [100 200 50]
-<userinput>SETSCREENCOLOR 2
+</programlisting>
+
+<programlisting><userinput>SETSCREENCOLOR 2
 SHOW SCREENCOLOR</userinput>
 2</programlisting>
 </listitem>
