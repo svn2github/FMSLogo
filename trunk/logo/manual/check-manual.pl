@@ -57,11 +57,13 @@ $AlternateSpellings{ERASE}          = ['ER'];
 $AlternateSpellings{FLOODCOLOR}     = ['FLOODCOLOUR'];
 $AlternateSpellings{FORWARD}        = ['FD'];
 $AlternateSpellings{FULLSCREEN}     = ['FS'];
+$AlternateSpellings{GREATERP}       = ['GREATER?'];
 $AlternateSpellings{HIDETURTLE}     = ['HT'];
 $AlternateSpellings{IFFALSE}        = ['IFF'];
 $AlternateSpellings{IFTRUE}         = ['IFT'];
 $AlternateSpellings{LEFTROLL}       = ['LR'];
 $AlternateSpellings{LEFT}           = ['LT'];
+$AlternateSpellings{LESSP}          = ['LESS?'];
 $AlternateSpellings{LISTP}          = ['LIST?'];
 $AlternateSpellings{MACROP}         = ['MACRO?'];
 $AlternateSpellings{MEMBERP}        = ['MEMBER?'];
@@ -618,12 +620,15 @@ foreach my $filename (<*.xml>) {
 
   my $fh = new IO::File "< $filename" or die $!;
 
+  my $command = FilenameToCommand($filename);
+
+  my $exampleIsStarted       = 0;
+  my $exampleContainsCommand = 0;
+
   my $linenumber = 0;
   foreach my $line (<$fh>) {
 
     $linenumber++;
-
-    my $command = FilenameToCommand($filename);
     if ($command) {
 
       # this is the documentation for a command
@@ -681,6 +686,16 @@ foreach my $filename (<*.xml>) {
 
         if ($synopsisCommand ne $command) {
           LogError($filename, $linenumber, "first command listed in synopsis is `$synopsisCommand'.  It should match the filename.");
+        }
+      }
+
+      # the "Example" section for every command must contain that command
+      if ($line =~ m!<term>Example</term>!) {
+        $exampleIsStarted = 1;
+      }
+      if ($exampleIsStarted) {
+        if ($line =~ m/\Q$command\E/) {
+          $exampleContainsCommand = 1;
         }
       }
     }
@@ -756,6 +771,11 @@ foreach my $filename (<*.xml>) {
         LogWarning($filename, $linenumber, "non-standard usage of term `$logo'");
       }
     }
+
+  }
+
+  if ($command and $exampleIsStarted and not $exampleContainsCommand) {
+    LogWarning($filename, 0, "Example section does not reference $command");
   }
 
   $fh->close;
