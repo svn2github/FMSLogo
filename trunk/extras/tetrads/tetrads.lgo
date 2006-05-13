@@ -661,9 +661,9 @@ end
 
 to RemoveFullLines
 
-   local [rowtocopyfrom y mustremoverow]
+   local [rowtocopyfrom y totalrowscleared]
 
-   make "mustremoverow "false
+   make "totalrowscleared 0
 
    ; figure out which rows should be cleared
    repeat count :GameBoard [
@@ -672,11 +672,16 @@ to RemoveFullLines
       if IsRowFull :y [ 
          RowMarkForClearing  :y
          RowColorForClearing :y
-         make "mustremoverow "true
+         make "totalrowscleared :totalrowscleared + 1
       ]
    ]
 
-   if :mustremoverow [
+   if :totalrowscleared > 0 [
+
+     if :totalrowscleared = 1 [ AddToScore 20  ]
+     if :totalrowscleared = 2 [ AddToScore 40  ]
+     if :totalrowscleared = 3 [ AddToScore 80  ]
+     if :totalrowscleared = 4 [ AddToScore 160 ]
 
      wait 10
 
@@ -746,6 +751,8 @@ to UpdateNextFrame
 
          ; the shape has come to a final resting place
 
+         AddToScore 1 ; one point for every shape placed
+
          ShapeRedraw :currentshape :newshape
 
          ShapeMark :newshape
@@ -762,8 +769,8 @@ to UpdateNextFrame
 
          make "TotalShapesDropped :TotalShapesDropped + 1
 
-         ; increase the level of difficulty every 20 shapes
-         if EQUAL? 0 MODULO :TotalShapesDropped 20 [
+         ; increase the level of difficulty every 15 shapes
+         if EQUAL? 0 MODULO :TotalShapesDropped 15 [
              if :TotalFramesUntilDrop > 1 [
                 make "TotalFramesUntilDrop :TotalFramesUntilDrop - 1
              ]
@@ -798,6 +805,23 @@ to UpdateNextFrame
 
 end
 
+to DrawScore :NewScore
+   MoveTo :GameBoardWidth + 9 :GameBoardHeight - 8
+   setfloodcolor screencolor
+   bitblock 200 40
+
+   MoveTo :GameBoardWidth + 9 :GameBoardHeight - 5
+   setpencolor [255 255 255]
+   setheading 90
+   label :NewScore
+end
+
+to AddToScore :Points
+   make "Score :Score + :Points
+   DrawScore :Score
+end
+
+
 to GameLoop
    local [gameshapes gridsize]
    InitGameData
@@ -818,13 +842,23 @@ to GameLoop
    localmake "currentshape    ShapeCreate
    localmake "framesuntildrop :TotalFramesUntilDrop
 
+   MoveTo :GameBoardWidth + 2 :GameBoardHeight - 5
+   setpencolor [255 255 255]
+   setheading 90
+   Label [Score:]
+
+   localmake "Score 0
+   DrawScore :Score
+
    KeyboardCaptureStart
+
+   ShapeDraw :currentshape
 
    localmake "IsDone "false
    while [ not :IsDone ] [
 
       UpdateNextFrame
-      wait 3
+      wait 4
    ]
 
    KeyboardCaptureEnd
