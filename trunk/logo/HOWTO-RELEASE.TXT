@@ -6,10 +6,11 @@ Build the Release Files
 1) Build the Binary Installer Package
 1.a) Update FMSLOGO.TXT
 1.b) Update version.mk
-1.c) gmake binaryexe 
-     This builds fmslogo.exe, the documentation, and the installer
-1.d) Copy resulting fmslogo-X-Y-Z.exe to \\dcostanz\dcostanz\logo
-1.e) Checkin all changes, "cvs up -APd", and tag the tree VER-X-Y-Z
+1.c) gmake clean (to force a complete rebuild)
+1.d) gmake binaryexe 
+     (This builds fmslogo.exe, the documentation, and the installer)
+1.e) Copy resulting fmslogo-X-Y-Z.exe to \\dcostanz\dcostanz\logo
+1.f) Checkin all changes, "cvs up -APd", and tag the tree VER-X-Y-Z
 
 2) Build the Binary ZIP Package
 2.a) gmake binaryzip
