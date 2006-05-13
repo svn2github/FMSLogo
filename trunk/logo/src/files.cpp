@@ -400,18 +400,15 @@ void runstartup(NODE *oldst)
    if (st != oldst && st != NIL && is_list(st))
       {
       val_status = 0;
-      halt_flag++;
-      if (halt_flag < 1) 
-         {
-         halt_flag = 1;
-         }
+
+      start_execution();
 
       eval_driver(st);
 
       // process special conditions
       process_special_conditions();
 
-      halt_flag--;
+      stop_execution();
       }
    }
 

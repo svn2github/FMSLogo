@@ -34,7 +34,6 @@ extern char TempPathName[];
 extern bool IsTimeToExit;
 extern bool IsTimeToPause;
 extern bool IsTimeToHalt;
-extern int halt_flag;
 extern bool traceflag;
 extern bool IsDirty;
 extern bool error_happen;

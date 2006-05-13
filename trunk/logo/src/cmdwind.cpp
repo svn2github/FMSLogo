@@ -21,6 +21,8 @@
 
 #include "allwind.h"
 
+static int halt_flag = 0; // Flag to signal it's OK to halt
+
 TMyCommandWindow::TMyCommandWindow(
    TWindow *AParent,
    LPCSTR   ResId
@@ -365,19 +367,42 @@ bool process_special_conditions()
    return error_happened;
    }
 
+void start_execution()
+   {
+   // if executing then it's ok to halt
+   assert(0 <= halt_flag);
+
+   halt_flag++;
+   if (halt_flag < 1)
+      {
+      halt_flag = 1;
+      }
+   }
+
+void stop_execution()
+   {
+   // not ok to halt now
+   assert(1 <= halt_flag);
+
+   halt_flag--;
+   if (halt_flag < 0)
+      {
+      halt_flag = 0;
+      }
+   }
+
+bool is_executing()
+   {
+   assert(0 <= halt_flag);
+   return halt_flag != 0;
+   }
 
 void do_execution(char * logocommand)
    {
    // if something there continue
    if (strlen(logocommand) != 0)
       {
-
-      // if executing then it's ok to halt
-      halt_flag++;
-      if (halt_flag < 1)
-        {
-        halt_flag = 1;
-        }
+      start_execution();
 
       // this code emulates the TTY model used in UCBLOGO main loop
       NODETYPES this_type = STRING;
@@ -447,12 +472,7 @@ void do_execution(char * logocommand)
          deref(exec_list);
          }
 
-      // not ok to halt now
-      halt_flag--;
-      if (halt_flag < 0)
-         {
-         halt_flag = 0;
-         }
+      stop_execution();
       }
    }
 
@@ -550,7 +570,7 @@ void TMyCommandWindow::DoButtonPause(UINT)
 
    // if ok to halt then it's ok to pause if we get here
    Editbox.SetFocus();
-   if (halt_flag != 0)
+   if (is_executing())
       {
       IsTimeToPause = true;
       }
@@ -592,7 +612,7 @@ void TMyCommandWindow::DoButtonHalt(UINT)
 
    /* if ok to halt and we get here then halt */
    Editbox.SetFocus();
-   if (halt_flag != 0)
+   if (is_executing())
       {
       IsTimeToHalt = true;
       }

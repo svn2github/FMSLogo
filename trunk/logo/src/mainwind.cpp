@@ -858,7 +858,7 @@ bool TMainFrame::CanClose()
 
    // if not halted warn user and give chance to abort shutdown
 
-   if (halt_flag != 0)
+   if (is_executing())
       {
       // if we already tried warn user of doom
       if (IsTimeToHalt)
@@ -929,7 +929,7 @@ bool TMainFrame::CanClose()
 void TMainFrame::CMExit()
    {
    // here on FILE-EXIT main window (screen)
-   if (halt_flag != 0)
+   if (is_executing())
       {
       IsTimeToHalt = true;
       }
@@ -1560,11 +1560,9 @@ void TMainFrame::CMFileOpen()
    if (TFileOpenDialog(this, FileData).Execute() == IDOK)
       {
       IsNewFile = false;
-      halt_flag++;
-      if (halt_flag < 1) 
-         {
-         halt_flag = 1;
-         }
+
+      start_execution();
+
       strcpy(FileName, FileData.FileName);
       bool isOk = fileload(FileName);
       if (!isOk) 
@@ -1575,11 +1573,7 @@ void TMainFrame::CMFileOpen()
       // handle any error that may have occured
       process_special_conditions();
 
-      halt_flag--;
-      if (halt_flag < 0)
-         {
-         halt_flag = 0;
-         }
+      stop_execution();
       }
    }
 

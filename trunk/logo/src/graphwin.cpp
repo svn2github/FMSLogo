@@ -2690,7 +2690,7 @@ void label(const char *s)
 
 void exit_program(void)
    {
-   if (halt_flag != 0)
+   if (is_executing())
       {
       IsTimeToHalt = true;
       }

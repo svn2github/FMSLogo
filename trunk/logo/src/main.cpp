@@ -114,7 +114,6 @@ bool EnablePalette;                    // Flag to signal 256 color mode with pal
 bool IsPrinterSettingCustom = false;   // Flag to signal Active area is active
 bool IsTPrinterSettingCustom = false;  // Dynamic copy of CustomFlag
 bool IsOkayToUseCommanderWindow = false; // Flag to signal it's OK to write to recall box
-int halt_flag = 0;                     // Flag to signal it's OK to halt
 bool traceflag = false;                // Flag to signal trace button is active
 bool stepflag = false;                 // Flag to signal step button is active
 int pause_flag = 0;                    // Flag to signal pause button is pushed
@@ -285,7 +284,7 @@ bool promptuser(char *str, const char *prompt)
    else
       {
       return false;
-      // if (halt_flag) IsTimeToHalt = true;
+      // if (!is_executing()) IsTimeToHalt = true;
       // MainWindowx->CommandWindow->PostMessage(WM_COMMAND, ID_HALT, ID_HALT);
       }
    }
