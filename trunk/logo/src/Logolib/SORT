@@ -1,39 +1,24 @@
-to listtoword :l
-(local "i "w)
-make "w "
-for [i 1 [count :l] 1] [make "w word :w item :i :l]
-op :w
-end
-
 to sort :l [:cmp ifelse word? :l ["before?] ["less?]]
 if list? :l [op sort.stable :l :cmp]
 if array? :l [op listtoarray sort.stable arraytolist :l :cmp]
-if word? :l [op listtoword sort.stable wordtolist :l :cmp]
+if word? :l [op apply "word sort.stable transfer [] [lput ?in ?out] :l :cmp]
 op :l
 end
 
 to sort.stable :l :cmp
 if (count :l)<2 [op :l]
-(local "ll "le "lg "p "i "ip "pi)
-make "ll []
-make "le []
-make "lg []
-make "p pick :l
-for [i 1 [count :l] 1] [
-  make "ip apply :cmp (list (item :i :l) :p)
-  make "pi apply :cmp (list :p (item :i :l))
-  if :ip [make "ll lput item :i :l :ll]
-  if and not :ip not :pi [make "le lput item :i :l :le]
-  if :pi [make "lg lput item :i :l :lg]
+localmake "ll []
+localmake "le []
+localmake "lg []
+localmake "p pick :l
+foreach :l [
+  localmake "ip apply :cmp (list ? :p)
+  localmake "pi apply :cmp (list :p ?)
+  if :ip [make "ll lput ? :ll]
+  if and not :ip not :pi [make "le lput ? :le]
+  if :pi [make "lg lput ? :lg]
 ]
 op (se sort.stable :ll :cmp :le sort.stable :lg :cmp)
 end
 
-to wordtolist :w
-(local "i "l)
-make "l []
-for [i 1 [count :w] 1] [make "l lput item :i :w :l]
-op :l
-end
-
-bury [[listtoword wordtolist sort sort.stable] [] []]
+bury [sort sort.stable]
