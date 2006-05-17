@@ -354,24 +354,40 @@ to ShapeMoveDown :Shape
 
 end
 
+to ShapeTryRotationTranslation :Shape :DeltaX :NewRotation
+  if ShapeIsOkayToMove (ShapeType :Shape) ((ShapeX :Shape) + :DeltaX) (ShapeY :Shape) :NewRotation [
+     ; we can rotate right
+     setitem 3 :Shape :newrotation
+     setitem 4 :Shape (ShapeX :Shape) + :DeltaX
+     output "true
+  ]
+  output "false
+end
+
 to ShapeRotateLeft :Shape
 
   localmake "totalrotations (count item (ShapeType :Shape) :gameshapes) - 1
   localmake "newrotation modulo ((ShapeRotation :Shape) - 1) :totalrotations
-  if ShapeIsOkayToMove (ShapeType :Shape) (ShapeX :Shape) (ShapeY :Shape) :newrotation [
-     ; we can rotate left
-     setitem 3 :Shape :newrotation
-  ]
+
+  if ShapeTryRotationTranslation :Shape  0 :newrotation [ stop ]
+  if ShapeTryRotationTranslation :Shape  1 :newrotation [ stop ]
+  if ShapeTryRotationTranslation :Shape -1 :newrotation [ stop ]
+  if ShapeTryRotationTranslation :Shape  2 :newrotation [ stop ]
+  if ShapeTryRotationTranslation :Shape -2 :newrotation [ stop ]
+
 end
 
 to ShapeRotateRight :Shape
 
   localmake "totalrotations (count item (ShapeType :Shape) :gameshapes) - 1
   localmake "newrotation modulo ((ShapeRotation :Shape) + 1) :totalrotations
-  if ShapeIsOkayToMove (ShapeType :Shape) (ShapeX :Shape) (ShapeY :Shape) :newrotation [
-     ; we can rotate right
-     setitem 3 :Shape :newrotation
-  ]
+
+  if ShapeTryRotationTranslation :Shape  0 :newrotation [ stop ]
+  if ShapeTryRotationTranslation :Shape  1 :newrotation [ stop ]
+  if ShapeTryRotationTranslation :Shape -1 :newrotation [ stop ]
+  if ShapeTryRotationTranslation :Shape  2 :newrotation [ stop ]
+  if ShapeTryRotationTranslation :Shape -2 :newrotation [ stop ]
+
 end
 
 to MoveTo :X :Y
