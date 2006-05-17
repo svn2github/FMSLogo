@@ -1,3 +1,11 @@
+FMSLogo Extras 1.2
+o lightcycle
+ * always redock the commander when the game is halted
+o pacturtle
+ * always redock the commander when the game is halted
+o snake
+ * always redock the commander when the game is halted
+
 FMSLogo Extras 1.1
 o asteriodminer
  * removed personal high score list

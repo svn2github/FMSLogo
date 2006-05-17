@@ -348,7 +348,9 @@ to RunGame
   hideturtle
   setfocus [MSWLogo Screen]
 
-  GameLoop
+  ; catch errors so we can dock the commander window
+  ; if the user halts logo by trying to close it.
+  catch "error [ GameLoop ]
 
   unicon "Commander
   catch "error [ splitscreen ]
