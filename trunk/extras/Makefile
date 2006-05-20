@@ -1,4 +1,4 @@
-EXTRAS_VERSION=1.1
+EXTRAS_VERSION=1.2
 
 SOURCEZIP=fmslogo-extras-$(EXTRAS_VERSION).zip
 
@@ -16,6 +16,7 @@ TOINCLUDE= \
   pacturtle     \
   snake         \
   sudoku        \
+  tetrads       \
 
 $(SOURCEZIP) :
 	/usr/bin/find -name '*~'    | xargs $(RM)

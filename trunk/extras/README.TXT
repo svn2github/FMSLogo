@@ -61,3 +61,8 @@ Genre:       puzzle game
 Description: Add numerals 1-9 on a 9x9 grid such that no number appears twice
              in any row, column, or 3x3 box.
 
+Directory:   tetrads
+Author:      David Costanzo
+Genre:       puzzle game
+Description: A remake of the classic game Tetris.
+             Assemble falling tetronimos into horizontal row of 10 squares.
