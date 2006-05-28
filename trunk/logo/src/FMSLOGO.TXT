@@ -21,6 +21,8 @@ Part I) Kit Description/Location (http://sourceforge.net/projects/fmslogo):
 Part II) New features/bugs fixed:
 
   * Added for 6.9.0,
+    o Fix bug #1496581; Pressing F1 while selecting a long word in the 
+      commander window no longer crashes.
     o Fix bug #1479111; FMSLogo no longer prints spurious warnings about 
       using STOP or OUTPUT when not in a procedure after processing event 
       callbacks.

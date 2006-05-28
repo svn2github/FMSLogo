@@ -635,7 +635,7 @@ extern long MaxColors;
 extern LINEX TurtlePoints[][4];
 
 extern void MakeHelpPathName(char *szFileName, LPCSTR);
-extern void ContextHelp(HWND hWindow, TEdit *Editor);
+extern void ContextHelp(TEdit *Editor);
 
 extern OSVERSIONINFO g_OsVersionInformation;
 

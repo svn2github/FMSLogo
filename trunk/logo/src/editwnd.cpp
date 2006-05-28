@@ -98,49 +98,7 @@ void TRichEditWithPopup::CmPasteAsText()
 // formatting of rich text.
 void TRichEditWithPopup::CmHelpEditTopic()
    {
-   bool didHelp = false;
-
-   // get the keyword selected
-   UINT start;
-   UINT end;
-   GetSelection(start, end);
-   if (start < end && end < start + 80)
-      {
-      char buffer[100] = {0}; // NUL-terminate
-
-      GetSubText(buffer, start, end);
-      
-      char * selection = buffer;
-
-      // remove leading whitespace
-      while (isspace(selection[0]))
-         {
-         selection++;
-         }
-
-      // strip off everything after the first word
-      char * ptr = selection;
-      while (*ptr != '\0' && !isspace(*ptr))
-         {
-         ptr++;
-         }
-
-      // if there was some non-space selected,
-      if (ptr != selection)
-         {
-         // truncate the selection after the first word
-         *ptr = '\0';
-
-         // and look it up in the online help
-         do_help(selection);
-         didHelp = true;
-         }
-      }
-
-   if (!didHelp)
-      {
-      do_help(NULL);
-      }
+   ContextHelp(this);
    }
 
 

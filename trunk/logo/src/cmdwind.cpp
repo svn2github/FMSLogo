@@ -740,7 +740,7 @@ void TMyEditboxWindow::EvKeyDown(UINT, UINT, UINT)
          }
       case VK_F1:
          {
-         ContextHelp(MainWindowx->CommandWindow->HWindow, this);
+         ContextHelp(this);
          break;
          }
       }
@@ -870,7 +870,7 @@ void TMyListboxWindow::EvKeyDown(UINT, UINT, UINT)
       }
    else if (Msg.WParam == VK_F1)
       {
-      ContextHelp(MainWindowx->CommandWindow->HWindow, this);
+      ContextHelp(this);
       }
    else if (MainWindowx->CommandWindow->EditBoxWantsKeyEvent(Msg.WParam))
       {

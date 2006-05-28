@@ -1435,38 +1435,48 @@ void MakeHelpPathName(char *OutBuffer, const char * TheFileName)
    }
 
 
-void ContextHelp(HWND /* hWindow */, TEdit *Editor)
+void ContextHelp(TEdit *Editor)
    {
-   UINT start;
-   UINT end;
+   bool didHelp = false;
 
    // get the keyword selected
-
+   UINT start;
+   UINT end;
    Editor->GetSelection(start, end);
-   if (start != end)
+   if (start < end && end < start + 80)
       {
-      char theText[80];
-      Editor->GetSubText(theText, start, end);
+      char buffer[100] = {0}; // NUL-terminate
 
-      // clean up line before passing to help
+      Editor->GetSubText(buffer, start, end);
+      
+      char * selection = buffer;
 
-      int i = strlen(theText) - 1;
-      while ((theText[i] == ' ') && (i > 0))
+      // remove leading whitespace
+      while (isspace(selection[0]))
          {
-         theText[i--] = '\0';
+         selection++;
          }
 
-      i = 0;
-      while ((theText[i] == ' ') && (i < 80))
+      // strip off everything after the first word
+      char * ptr = selection;
+      while (*ptr != '\0' && !isspace(*ptr))
          {
-         i++;
+         ptr++;
          }
 
-      char *ptr = theText + i;
+      // if there was some non-space selected,
+      if (ptr != selection)
+         {
+         // truncate the selection after the first word
+         *ptr = '\0';
 
-      do_help(ptr);
+         // and look it up in the online help
+         do_help(selection);
+         didHelp = true;
+         }
       }
-   else
+
+   if (!didHelp)
       {
       do_help(NULL);
       }
