@@ -134,18 +134,19 @@ void TMyCommandWindow::RecalculateLayout()
       ReleaseDC(Editbox.HWindow, edit_dc);
       }
 
-   Listbox.SetWindowPos(NULL, x_border, 0,                                       total_width - button_width * 2 - x_border - padding, total_height - editbox_height - padding, SWP_NOZORDER);
-   Editbox.SetWindowPos(NULL, x_border, total_height - editbox_height - y_border, total_width - button_width * 2 - x_border - padding, editbox_height,                         SWP_NOZORDER);
+   EdallButton.SetWindowPos(NULL,   total_width - button_width * 1 - x_border, total_height - button_height - y_border, button_width, button_height, 0);
+   ExecuteButton.SetWindowPos(NULL, total_width - button_width * 2 - x_border, total_height - button_height - y_border, button_width, button_height, 0);
 
-   HaltButton.SetWindowPos(NULL,   total_width - button_width * 2 - x_border, button_height * 0 + y_border, button_width, button_height, SWP_NOZORDER);
-   TraceButton.SetWindowPos(NULL,  total_width - button_width * 1 - x_border, button_height * 0 + y_border, button_width, button_height, SWP_NOZORDER);
-   PauseButton.SetWindowPos(NULL,  total_width - button_width * 2 - x_border, button_height * 1 + y_border, button_width, button_height, SWP_NOZORDER);
-   StatusButton.SetWindowPos(NULL, total_width - button_width * 1 - x_border, button_height * 1 + y_border, button_width, button_height, SWP_NOZORDER);
-   YieldButton.SetWindowPos(NULL,  total_width - button_width * 2 - x_border, button_height * 2 + y_border, button_width, button_height, SWP_NOZORDER);
-   ResetButton.SetWindowPos(NULL,  total_width - button_width * 1 - x_border, button_height * 2 + y_border, button_width, button_height, SWP_NOZORDER);
+   ResetButton.SetWindowPos(NULL,  total_width - button_width * 1 - x_border, button_height * 2 + y_border, button_width, button_height, 0);
+   YieldButton.SetWindowPos(NULL,  total_width - button_width * 2 - x_border, button_height * 2 + y_border, button_width, button_height, 0);
+   StatusButton.SetWindowPos(NULL, total_width - button_width * 1 - x_border, button_height * 1 + y_border, button_width, button_height, 0);
+   PauseButton.SetWindowPos(NULL,  total_width - button_width * 2 - x_border, button_height * 1 + y_border, button_width, button_height, 0);
+   TraceButton.SetWindowPos(NULL,  total_width - button_width * 1 - x_border, button_height * 0 + y_border, button_width, button_height, 0);
+   HaltButton.SetWindowPos(NULL,   total_width - button_width * 2 - x_border, button_height * 0 + y_border, button_width, button_height, 0);
 
-   ExecuteButton.SetWindowPos(NULL, total_width - button_width * 2 - x_border, total_height - button_height - y_border, button_width, button_height, SWP_NOZORDER);
-   EdallButton.SetWindowPos(NULL,   total_width - button_width * 1 - x_border, total_height - button_height - y_border, button_width, button_height, SWP_NOZORDER);
+   Editbox.SetWindowPos(NULL, x_border, total_height - editbox_height - y_border, total_width - button_width * 2 - x_border - padding, editbox_height,                          0);
+   Listbox.SetWindowPos(NULL, x_border, 0,                                        total_width - button_width * 2 - x_border - padding, total_height - editbox_height - padding, 0);
+
    }
 
 void TMyCommandWindow::EvSize(UINT arg1, TSize & arg2)
@@ -886,6 +887,10 @@ void TMyListboxWindow::EvKeyDown(UINT, UINT, UINT)
       // special-case the few commands that we want to process
       DefaultProcessing();
       CopyCurrentLineToEditBox();
+      }
+   else
+      {
+      DefaultProcessing();
       }
    }
 
