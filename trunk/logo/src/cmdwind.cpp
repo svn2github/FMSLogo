@@ -934,11 +934,18 @@ void TMyListboxWindow::CmDisableCommand(TCommandEnabler& commandHandler)
 
 void TMyListboxWindow::SetCursorAtBottom()
    {
+   // scroll to the bottom
+   int top;
+   int bottom;
+   GetScrollRange(SB_VERT, top, bottom);
+   SetScrollPos(SB_VERT, bottom);
+
+   // set the selection to the end of the text.
    int endOfText = GetTextLen();
    SetSelection(endOfText, endOfText);
 
-   int totalLines = GetNumLines();
-   Scroll(0, totalLines);
+   // copy the bottom line to the edit box
+   CopyCurrentLineToEditBox();
 
    Invalidate(true);
    }
