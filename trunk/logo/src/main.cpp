@@ -224,10 +224,11 @@ COLORREF LoadColor(int dpenr, int dpeng, int dpenb)
 
 void clearcombobox()
    {
-   /* clear the recall box */
-   MainWindowx->CommandWindow->Listbox.SetReadOnly(FALSE);
+   // clear the recall box
    MainWindowx->CommandWindow->Listbox.Clear();
-   MainWindowx->CommandWindow->Listbox.SetReadOnly(TRUE);
+
+   // scroll it to the top
+   MainWindowx->CommandWindow->Listbox.SetCursorAtBottom();
    }
 
    
