@@ -33,10 +33,11 @@ Part II) New features/bugs fixed:
       parameter, FMSLogo displays the error and opens it in the editor.
     o Fix bug #1474490; FMSLogo installs for all users when installed by 
       an administrator or power user.
-    o Fix bug #1462927; BURY (and similar procedures) throw an error when given 
+    o Fix bug #1462927; BURY (and similar procedures) throws an error when given 
       a contents lists that contains more than three sublists.
     o Fix bug #1454188; TO/.MACRO now only set the "dirty workspace" 
       flag if they successfully define a new procedure/macro.
+    o Fix bug #1395736; CTRL+A now works in the commander.
     o Mitigate bug #1327718; installer suggests a location in the home 
       directory when run by a limited user.
     o Implement request #1480371; The save-before-exit dialog now follows

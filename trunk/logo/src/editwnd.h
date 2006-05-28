@@ -61,6 +61,7 @@ class TEditWindow : public TFrameWindow
    //
    void  EvSize(UINT sizeType, TSize &);
    void  EvSetFocus(HWND lostFocus);
+   void  CmSelectAll();
 
    //
    // menu command handlers

@@ -119,6 +119,7 @@ class TMyEditboxWindow : public TEdit
 
  protected:
    void EvKeyDown(UINT, UINT, UINT);
+   void CmSelectAll();
 
    DECLARE_RESPONSE_TABLE(TMyEditboxWindow);
    }
@@ -367,6 +368,7 @@ class TMainFrame : public TDecoratedFrame
    void CMFileEdit();
    void CMFileErase();
    void CMExit();
+   void CmSelectAll();
 
    void CMBitmapNew();
    void CMBitmapOpen();

@@ -200,10 +200,16 @@ void TEditWindow::CmFilePrint()
    MainWindowx->Printer.Print(this, printout, true);
    }
 
+void TEditWindow::CmSelectAll()
+   {
+   // delegate to the Editor window
+   Editor->SendMessage(WM_COMMAND, CM_EDITSELECTALL, 0);
+   }
 
 DEFINE_RESPONSE_TABLE1(TEditWindow, TFrameWindow)
   EV_WM_SIZE,
   EV_WM_SETFOCUS,
   EV_COMMAND(CM_FILEPRINT, CmFilePrint),
+  EV_COMMAND(CM_EDITSELECTALL, CmSelectAll),
 END_RESPONSE_TABLE;
 

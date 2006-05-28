@@ -715,6 +715,12 @@ TMyEditboxWindow::~TMyEditboxWindow()
    {
    }
 
+void TMyEditboxWindow::CmSelectAll()
+   {
+   int endOfText = GetTextLen();
+   SetSelection(0, endOfText);
+   }
+
 void TMyEditboxWindow::EvKeyDown(UINT, UINT, UINT)
    {
    TMessage Msg = __GetTMessage();
@@ -952,6 +958,7 @@ void TMyListboxWindow::SetCursorAtBottom()
 
 DEFINE_RESPONSE_TABLE1(TMyEditboxWindow, TEdit)
    EV_WM_KEYDOWN,
+   EV_COMMAND(CM_EDITSELECTALL, CmSelectAll),
 END_RESPONSE_TABLE;
 
 DEFINE_RESPONSE_TABLE1(TMyListboxWindow, TRichEditWithPopup)

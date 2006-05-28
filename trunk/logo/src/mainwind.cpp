@@ -2965,6 +2965,17 @@ void checkwindow(int *x, int *y, int *w, int *h)
    if ((*y + *h) > (MaxHeight + MinY)) *y = *y - (*y + *h - (MaxHeight + MinY));
    }
 
+
+void TMainFrame::CmSelectAll()
+   {
+   // delegate the window event to whichever window has focus
+   HWND activeWindow = GetFocus();
+   if (activeWindow != HWindow)
+      {
+      ::SendMessage(activeWindow, WM_COMMAND, CM_EDITSELECTALL, 0);
+      }
+   }
+
 DEFINE_RESPONSE_TABLE1(TMainFrame, TDecoratedFrame)
   EV_WM_DESTROY,
   EV_WM_TIMER,
@@ -2975,6 +2986,7 @@ DEFINE_RESPONSE_TABLE1(TMainFrame, TDecoratedFrame)
   EV_COMMAND(CM_FILESAVEAS, CMFileSaveAs),
   EV_COMMAND(CM_FILEEDIT, CMFileEdit),
   EV_COMMAND(CM_FILEERASE, CMFileErase),
+  EV_COMMAND(CM_EDITSELECTALL, CmSelectAll),
   EV_COMMAND(CM_EXIT, CMExit),
   EV_COMMAND(CM_BITMAPNEW, CMBitmapNew),
   EV_COMMAND(CM_BITMAPOPEN, CMBitmapOpen),

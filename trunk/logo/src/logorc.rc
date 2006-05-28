@@ -298,6 +298,7 @@ FONT 8, "MS Sans Serif"
 LOGOACC ACCELERATORS
 BEGIN
   VK_TAB, CM_CONTROLEXECUTE, VIRTKEY, NOINVERT, CONTROL
+  "A",    CM_EDITSELECTALL,  VIRTKEY, CONTROL
 END
 
 
@@ -341,6 +342,7 @@ STRINGTABLE
  CM_EDITCUT, "Removes the selected text and puts it on the clipboard"
  CM_EDITCOPY, "Copies the selected text to the clipboard"
  CM_EDITPASTE, "Inserts the text from the clipboard at the current position"
+ CM_EDITSELECTALL, "Selects all text"
  CM_EDITFIND, "Searches for text"
  CM_EDITREPLACE, "Searches for text and replaces it with other text"
  CM_EDITFINDNEXT, "Repeats the previous Find or Replace command"
