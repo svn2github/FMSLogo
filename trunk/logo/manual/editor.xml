@@ -81,6 +81,11 @@ See also <link linkend="editor-clipboard">Editing with the Clipboard</link>.</pa
           <para>Deletes all text in the editor.</para>
         </section>
 
+        <section id="editor-menu-edit-selectall">
+          <title>Edit - Select All</title>
+          <para>Selects all text in the editor.</para>
+        </section>
+
       </section>
 
       <section id="editor-menu-search">
