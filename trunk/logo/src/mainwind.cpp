@@ -1964,6 +1964,12 @@ void TMainFrame::UndockCommanderWindow()
       PaneSplitterWindow->RemovePane(
          CommandWindow,
          TShouldDelete::NoDelete);
+         
+      // HACK: Reset the window title because the commander's
+      // history box appends a "-" (it thinks it's tied
+      // to a file and I can't figure out how to tell it
+      // that it's not.
+      SetWindowText(GetApplication()->GetName());
 
       delete CommandWindow;
       CommandWindow = newCommandWindow;
@@ -2039,6 +2045,12 @@ void TMainFrame::DockCommanderWindow()
       // redraw the entire screen window
       ScreenWindow->Invalidate(true);
       newCommandWindow->Invalidate(true);
+
+      // HACK: Reset the window title because the commander's
+      // history box appends a "-" (it thinks it's tied
+      // to a file and I can't figure out how to tell it
+      // that it's not.
+      SetWindowText(GetApplication()->GetName());
 
       delete CommandWindow;
       CommandWindow = newCommandWindow;

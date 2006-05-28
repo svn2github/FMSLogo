@@ -41,6 +41,8 @@ Part II) New features/bugs fixed:
       directory when run by a limited user.
     o Implement request #1480371; The save-before-exit dialog now follows
       Windows convention to prevent accidental data loss.
+    o Implement request #1434420; Removed the build-in limit of 4096 chars
+      on the commander history box.
     o Minor updates to the manual.
 
   * Added for 6.8.0,

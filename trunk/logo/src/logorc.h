@@ -126,7 +126,8 @@
 #define CM_EDITSETFONT          CMD_BASE + 33
 #define CM_FILESAVETOWORKSPACE  CMD_BASE + 34
 #define CM_FILESAVEANDEXIT      CMD_BASE + 35
-#define CM_EDALLEXIT		CMD_BASE + 36
+#define CM_EDALLEXIT	        CMD_BASE + 36
+#define CM_EDITSELECTALL        CMD_BASE + 37
 
 #define WM_MYSCROLLBARCALLBACK         WM_USER + 0
 #define WM_CHECKQUEUE                  WM_USER + 1

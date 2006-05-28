@@ -124,20 +124,36 @@ class TMyEditboxWindow : public TEdit
    }
 ;
 
-class TMyListboxWindow : public TEdit
+class TMyListboxWindow : public TRichEditWithPopup
    {
  public:
-   TMyListboxWindow(TWindow *, int, WORD);
+   TMyListboxWindow(TWindow *, int);
    ~TMyListboxWindow();
 
    void SetCursorAtBottom();
 
  protected:
+   void EvChar(uint key, uint repeatCount, uint flags);
+   bool CanClose();
+   void SetupWindow();
    void EvKeyDown(UINT, UINT, UINT);
+   void EvKeyUp(UINT, UINT, UINT);
    void EvLButtonDown(UINT modKeys, TPoint & point);
    void EvLButtonDblClk(UINT modKeys, TPoint & point);
+   void EvMouseMove(uint modKeys, TPoint& point);
+
+   void CmDisableCommand(TCommandEnabler& commandHandler);
 
    DECLARE_RESPONSE_TABLE(TMyListboxWindow);
+
+ private:
+   void CopyCurrentLineToEditBox();
+
+   bool IsControlKeyDown();
+
+   bool m_IsControlKeyDown;
+   bool m_IsLeftControlKeyDown;
+   bool m_IsRightControlKeyDown;
    }
 ;
 
@@ -171,8 +187,6 @@ class TMyCommandWindow : public TDialog
    void EvSize(UINT, TSize &);
  protected:
 
-   void DoListBox(UINT);
-   void DoEditBox(UINT);
  public: // HACK: should be protected
    void DoButtonExecute(UINT);
    void DoButtonHalt(UINT);

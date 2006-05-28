@@ -34,9 +34,14 @@ public:
    void  CmHelpEditTopic(); // CM_HELPEDIT_TOPIC
 
 protected:
+   TRichEditWithPopup(TWindow* parent, int id);
 
-   void  EvRButtonUp(UINT, TPoint &);
-   void  CmPasteAsText();   // CM_PASTE
+   // CM_EDITSELECTALL
+   void CmSelectAll();       
+   void CmSelectAllEnable(TCommandEnabler& commandHandler);
+
+   void EvRButtonUp(UINT, TPoint &);
+   void CmPasteAsText();   // CM_PASTE
 
    TPopupMenu PopupMenu;
 

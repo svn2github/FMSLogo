@@ -36,7 +36,7 @@ TMyCommandWindow::TMyCommandWindow(
    EdallButton(this, ID_EDALL),
    ExecuteButton(this, ID_EXECUTE),
    Editbox(this, ID_EDITINPUT, 0),
-   Listbox(this, ID_LISTBOX, 0),
+   Listbox(this, ID_LISTBOX),
    Font(NULL)
    {
    }
@@ -237,14 +237,6 @@ GetTextFromWindow(
       }
 
    return textBuffer;
-   }
-
-void TMyCommandWindow::DoEditBox(UINT)
-   {
-   }
-
-void TMyCommandWindow::DoListBox(UINT)
-   {
    }
 
 void TMyCommandWindow::UpdateYieldButtonState()
@@ -698,9 +690,7 @@ NODE *lhalt(NODE *)
 
 NODE *lyield(NODE *)
    {
-
    // set flag and update button label
-
    yield_flag = 1;
    // MainWindowx->CommandWindow->YieldButton->SetWindowText("NoYield");
    return Unbound;
@@ -708,9 +698,7 @@ NODE *lyield(NODE *)
 
 NODE *lnoyield(NODE *)
    {
-
    // clear flag and update button label
-
    yield_flag = 0;
    // MainWindowx->CommandWindow->YieldButton->SetWindowText("Yield");
    return Unbound;
@@ -758,14 +746,67 @@ void TMyEditboxWindow::EvKeyDown(UINT, UINT, UINT)
 
 TMyListboxWindow::TMyListboxWindow(
    TWindow *AParent,
-   int      AId,
-   WORD     Alen
-) : TEdit(AParent, AId, Alen)
+   int      AId
+   ) : TRichEditWithPopup(AParent, AId),
+   m_IsControlKeyDown(false),
+   m_IsLeftControlKeyDown(false),
+   m_IsRightControlKeyDown(false)
    {
+   PopupMenu.AppendMenu(MF_STRING, CM_EDITCOPY,      "Copy");
+   PopupMenu.AppendMenu(MF_STRING, CM_EDITSELECTALL, "Select All");
+   PopupMenu.AppendMenu(MF_SEPARATOR, 0, NULL);
+   PopupMenu.AppendMenu(MF_STRING, CM_HELPEDIT_TOPIC, "Topic Search");
+   }
+
+bool TMyListboxWindow::CanClose()
+   {
+   // always return true because this is not tied to a file
+   return true;
+   }
+
+void TMyListboxWindow::SetupWindow()
+   {
+   TRichEditWithPopup::SetupWindow();
+
+   SetBkgndColor(TColor::SysMenu);
+   }
+
+void TMyListboxWindow::EvMouseMove(uint modKeys, TPoint& point)
+   {
+   DefaultProcessing();
+
+   // The TRichEdit clas doesn't set the cursor to anything when 
+   // it's in the docked commander window, so we must set it to 
+   // the arrow cursor.
+   //
+   // Note that the I-Bar is inappropriate because you can't type into it.
+   ::SetCursor(hCursorArrow);
    }
 
 TMyListboxWindow::~TMyListboxWindow()
    {
+   }
+
+void TMyListboxWindow::CopyCurrentLineToEditBox()
+   {
+      char buf[MAX_BUFFER_SIZE];
+
+      GetLine(buf, MAX_BUFFER_SIZE, GetLineFromPos(-1));
+
+      // remove trailing whitespace
+      for (char * stringend = buf + strlen(buf) - 1;
+           buf <= stringend && isspace(*stringend);
+           stringend--)
+         {
+         *stringend = '\0';
+         }
+
+      MainWindowx->CommandWindow->Editbox.SetText(buf);
+   }
+
+void TMyListboxWindow::EvChar(uint key, uint repeatCount, uint flags)
+   {
+   // ignore this (it was already processed in EvKeyDown)
    }
 
 void TMyListboxWindow::EvKeyDown(UINT, UINT, UINT)
@@ -787,17 +828,39 @@ void TMyListboxWindow::EvKeyDown(UINT, UINT, UINT)
          }
       }
 
-   DefaultProcessing();
-
-   if (Msg.WParam == VK_UP   ||
-       Msg.WParam == VK_DOWN ||
-       Msg.WParam == VK_LEFT ||
-       Msg.WParam == VK_UP)
+   // track when a control key is pressed down
+   if (Msg.WParam == VK_CONTROL)
       {
-      char buf[MAX_BUFFER_SIZE];
+      m_IsControlKeyDown = true;
+      }
+   else if (Msg.WParam == VK_LCONTROL)
+      {
+      m_IsLeftControlKeyDown = true;
+      }
+   else if (Msg.WParam == VK_RCONTROL)
+      {
+      m_IsRightControlKeyDown = true;
+      }
 
-      GetLine(buf, MAX_BUFFER_SIZE, GetLineFromPos(-1));
-      MainWindowx->CommandWindow->Editbox.SetText(buf);
+   if (Msg.WParam == VK_RETURN)
+      {
+      DefaultProcessing();
+      }
+   else if (IsControlKeyDown() && 
+       (Msg.WParam == VK_HOME || Msg.WParam == VK_END))
+      {
+      // CTRL+HOME scrolls to the top
+      // CTRL+END scrolls to the bottom
+      DefaultProcessing();
+      CopyCurrentLineToEditBox();
+      }
+   else if (Msg.WParam == VK_UP   ||
+            Msg.WParam == VK_DOWN ||
+            Msg.WParam == VK_LEFT)
+      {
+      // up&down keys move up and down
+      DefaultProcessing();
+      CopyCurrentLineToEditBox();
       }
    else if (Msg.WParam == VK_F1)
       {
@@ -811,26 +874,63 @@ void TMyListboxWindow::EvKeyDown(UINT, UINT, UINT)
             Msg.WParam,
             Msg.LParam);
       }
+   else if (Msg.WParam == VK_NEXT  ||
+            Msg.WParam == VK_PRIOR)
+      {
+      // special-case the few commands that we want to process
+      DefaultProcessing();
+      CopyCurrentLineToEditBox();
+      }
+   }
+
+bool TMyListboxWindow::IsControlKeyDown()
+   {
+   return m_IsControlKeyDown || m_IsLeftControlKeyDown || m_IsRightControlKeyDown;
+   }
+
+void TMyListboxWindow::EvKeyUp(UINT, UINT, UINT)
+   {
+   TMessage Msg = __GetTMessage();
+
+   // track when a control key is released
+   if (Msg.WParam == VK_CONTROL)
+      {
+      m_IsControlKeyDown = false;
+      }
+   else if (Msg.WParam == VK_LCONTROL)
+      {
+      m_IsLeftControlKeyDown = false;
+      }
+   else if (Msg.WParam == VK_RCONTROL)
+      {
+      m_IsRightControlKeyDown = false;
+      }
+
+   DefaultProcessing();
    }
 
 void TMyListboxWindow::EvLButtonDown(UINT /* modKeys */, TPoint & /* point */)
    {
    DefaultProcessing();
 
-   char buf[MAX_BUFFER_SIZE];
-   GetLine(buf, MAX_BUFFER_SIZE, GetLineFromPos(-1));
-   MainWindowx->CommandWindow->Editbox.SetText(buf);
+   CopyCurrentLineToEditBox();
    }
 
 void TMyListboxWindow::EvLButtonDblClk(UINT /* modKeys */, TPoint & /* point */)
    {
    DefaultProcessing();
 
-   char buf[MAX_BUFFER_SIZE];
-   GetLine(buf, MAX_BUFFER_SIZE, GetLineFromPos(-1));
-   MainWindowx->CommandWindow->Editbox.SetText(buf);
+   CopyCurrentLineToEditBox();
    MainWindowx->CommandWindow->DoButtonExecute(0);
    }
+
+void TMyListboxWindow::CmDisableCommand(TCommandEnabler& commandHandler)
+   {
+   // disables this command.
+   // used to disable paste/undo/cut operations.
+   commandHandler.Enable(false);
+   }
+
 
 void TMyListboxWindow::SetCursorAtBottom()
    {
@@ -844,30 +944,36 @@ void TMyListboxWindow::SetCursorAtBottom()
    }
 
 DEFINE_RESPONSE_TABLE1(TMyEditboxWindow, TEdit)
-  EV_WM_KEYDOWN,
+   EV_WM_KEYDOWN,
 END_RESPONSE_TABLE;
 
-DEFINE_RESPONSE_TABLE1(TMyListboxWindow, TEdit)
-  EV_WM_KEYDOWN,
-  EV_WM_LBUTTONDOWN,
-  EV_WM_LBUTTONDBLCLK,
+DEFINE_RESPONSE_TABLE1(TMyListboxWindow, TRichEditWithPopup)
+   EV_WM_CHAR,
+   EV_WM_KEYDOWN,
+   EV_WM_KEYUP,
+   EV_WM_LBUTTONDOWN,
+   EV_WM_LBUTTONDBLCLK,
+   EV_WM_MOUSEMOVE,
+   EV_COMMAND(CM_EDITPASTE, CmEditPaste),
+   EV_COMMAND_ENABLE(CM_EDITPASTE,  CmDisableCommand),
+   EV_COMMAND_ENABLE(CM_EDITCUT,    CmDisableCommand),
+   EV_COMMAND_ENABLE(CM_EDITUNDO,   CmDisableCommand),
+   EV_COMMAND_ENABLE(CM_EDITDELETE, CmDisableCommand),
 END_RESPONSE_TABLE;
 
 DEFINE_RESPONSE_TABLE1(TMyCommandWindow, TDialog)
-  EV_WM_SIZE,
-  EV_WM_DESTROY,
-  EV_WM_CLOSE,
-  EV_CHILD_NOTIFY_ALL_CODES(ID_LISTBOX, DoListBox),
-  EV_CHILD_NOTIFY_ALL_CODES(ID_EDITINPUT, DoEditBox),
-  EV_CHILD_NOTIFY_ALL_CODES(ID_EXECUTE, DoButtonExecute),
-  EV_CHILD_NOTIFY_ALL_CODES(ID_EDALL, DoButtonEdall),
-  EV_CHILD_NOTIFY_ALL_CODES(ID_HALT, DoButtonHalt),
-  EV_CHILD_NOTIFY_ALL_CODES(ID_STATUS, DoButtonStatus),
-  EV_CHILD_NOTIFY_ALL_CODES(ID_YIELD, DoButtonYield),
-  EV_CHILD_NOTIFY_ALL_CODES(ID_PAUSE, DoButtonPause),
-  EV_CHILD_NOTIFY_ALL_CODES(ID_TRACE, DoButtonTrace),
-  EV_CHILD_NOTIFY_ALL_CODES(ID_RESET, DoButtonReset),
-  EV_COMMAND(IDCANCEL, CmCancel),
-  EV_COMMAND(IDOK, CmOk),
+   EV_WM_SIZE,
+   EV_WM_DESTROY,
+   EV_WM_CLOSE,
+   EV_CHILD_NOTIFY_ALL_CODES(ID_EXECUTE, DoButtonExecute),
+   EV_CHILD_NOTIFY_ALL_CODES(ID_EDALL,   DoButtonEdall),
+   EV_CHILD_NOTIFY_ALL_CODES(ID_HALT,    DoButtonHalt),
+   EV_CHILD_NOTIFY_ALL_CODES(ID_STATUS,  DoButtonStatus),
+   EV_CHILD_NOTIFY_ALL_CODES(ID_YIELD,   DoButtonYield),
+   EV_CHILD_NOTIFY_ALL_CODES(ID_PAUSE,   DoButtonPause),
+   EV_CHILD_NOTIFY_ALL_CODES(ID_TRACE,   DoButtonTrace),
+   EV_CHILD_NOTIFY_ALL_CODES(ID_RESET,   DoButtonReset),
+   EV_COMMAND(IDCANCEL, CmCancel),
+   EV_COMMAND(IDOK, CmOk),
 END_RESPONSE_TABLE;
 

@@ -39,14 +39,35 @@ TRichEditWithPopup::TRichEditWithPopup(
    PopupMenu.AppendMenu(MF_STRING, CM_EDITCOPY,   "Copy");
    PopupMenu.AppendMenu(MF_STRING, CM_EDITPASTE,  "Paste");
    PopupMenu.AppendMenu(MF_STRING, CM_EDITDELETE, "Delete");
+   PopupMenu.AppendMenu(MF_STRING, CM_EDITSELECTALL, "Select All");
    PopupMenu.AppendMenu(MF_SEPARATOR, 0, NULL);
    PopupMenu.AppendMenu(MF_STRING, CM_HELPEDIT_TOPIC, "Topic Search");
+   }
+
+// protected constructor does not supply a menu
+TRichEditWithPopup::TRichEditWithPopup(
+   TWindow* parent,
+   int      id
+) : TRichEdit(parent, id, NULL, 0, 0, 0, 0)
+   {
    }
 
 TRichEditWithPopup::~TRichEditWithPopup()
    {
    }
 
+void TRichEditWithPopup::CmSelectAll()
+   {
+   int endOfText = GetTextLen();
+   SetSelection(0, endOfText);
+   }
+
+void TRichEditWithPopup::CmSelectAllEnable(TCommandEnabler& commandHandler)
+   {
+   UINT textLength = GetTextLen();
+   bool isNotEmpty = textLength != 0;
+   commandHandler.Enable(isNotEmpty);
+   }
 
 void TRichEditWithPopup::EvRButtonUp(UINT, TPoint & point)
    {
@@ -124,9 +145,11 @@ void TRichEditWithPopup::CmHelpEditTopic()
 
 
 DEFINE_RESPONSE_TABLE1(TRichEditWithPopup, TRichEdit)
-  EV_WM_RBUTTONUP,
-  EV_COMMAND(CM_EDITPASTE,      CmPasteAsText),
-  EV_COMMAND(CM_HELPEDIT_TOPIC, CmHelpEditTopic),
+   EV_WM_RBUTTONUP,
+   EV_COMMAND(CM_EDITPASTE,            CmPasteAsText),
+   EV_COMMAND(CM_EDITSELECTALL,        CmSelectAll),
+   EV_COMMAND(CM_HELPEDIT_TOPIC,       CmHelpEditTopic),
+   EV_COMMAND_ENABLE(CM_EDITSELECTALL, CmSelectAllEnable),
 END_RESPONSE_TABLE;
 
 
