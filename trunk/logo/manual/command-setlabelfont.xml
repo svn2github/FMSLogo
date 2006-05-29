@@ -32,8 +32,10 @@ The meaning of each of the list elements is explained in the following table:
 <informaltable frame='all'>
   <tgroup cols='2'>
     <thead>
-      <row><entry>Element</entry></row>
-      <row><entry>Meaning</entry></row>
+      <row>
+        <entry>Element</entry>
+        <entry>Meaning</entry>
+      </row>
     </thead>
     <tbody>
       <row>
