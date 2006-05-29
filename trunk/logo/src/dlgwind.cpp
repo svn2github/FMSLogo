@@ -72,8 +72,8 @@ class slink
       parent = par;
       type = t;
       }
-   }
-;
+   };
+
 
 class slist
    {
@@ -108,8 +108,8 @@ class slist
       {
       clear();
       }
-   }
-;
+
+   };
 
 void slist::insert(void * a, char *k, char *par, int t)
    {
@@ -453,19 +453,19 @@ class TMxWindow : public TDialog
    TMxWindow(TWindow *AParent, const char * AText) : TDialog(AParent, AText)
       {
       }
-   ;
+
+   protected:
    void SetupWindow();
    void CmCancel()
       {
       }
-   ;
+
    void CmOk()
       {
       }
-   ;
+
    DECLARE_RESPONSE_TABLE(TMxWindow);
-   }
-;
+   };
 
 void TMxWindow::SetupWindow()
    {
@@ -491,20 +491,21 @@ class TMxDialog : public TDialog
    TMxDialog(TWindow *AParent, const char * AText) 
       : TDialog(AParent, AText)
       {
-      };
+      }
 
+   protected:
    void SetupWindow();
    void CmCancel()
       {
-      };
+      }
 
    void CmOk()
       {
-      };
+      }
 
    DECLARE_RESPONSE_TABLE(TMxDialog);
-   }
-;
+   };
+
 
 void TMxDialog::SetupWindow()
    {
@@ -525,9 +526,7 @@ class TMyListBox : public TListBox
       TListBox(AParent, AnId, X, Y, W, H)
       {
       }
-   ;
-   }
-;
+   };
 
 class TMxComboBox : public TComboBox
    {
@@ -540,14 +539,11 @@ class TMxComboBox : public TComboBox
       int Y,
       int W, 
       int H, 
-      DWORD AStyle, 
-      WORD ATextLen
-      ) : TComboBox(AParent, AnId, X, Y, W, H, AStyle, ATextLen)
+      DWORD AStyle
+      ) : TComboBox(AParent, AnId, X, Y, W, H, AStyle, 0)
       {
-      }
-   ;
-   }
-;
+      };
+   };
 
 class TMyStatic : public TStatic
    {
@@ -557,17 +553,15 @@ class TMyStatic : public TStatic
    TMyStatic(
       TWindow *AParent,
       int AnId, 
-      LPCSTR AText, 
+      const char * AText, 
       int X, 
       int Y,
       int W, 
       int H
       ) : TStatic(AParent, AnId, AText, X, Y, W, H)
       {
-      }
-   ;
-   }
-;
+      };
+   };
 
 class TMyButton : public TButton
    {
@@ -575,7 +569,6 @@ class TMyButton : public TButton
    char key[MAX_BUFFER_SIZE];
    char callback[MAX_BUFFER_SIZE];
 
-   int critical;
    TMyButton(
       TWindow *AParent, 
       int AnId, 
@@ -743,7 +736,6 @@ class TMyScrollBar : public TScrollBar
    public:
    char key[MAX_BUFFER_SIZE];
    char callback[MAX_BUFFER_SIZE];
-   int critical;
 
    TMyScrollBar(
       TWindow *AParent, 
@@ -755,12 +747,10 @@ class TMyScrollBar : public TScrollBar
       BOOL IsHScrollBar
       ) : TScrollBar(AParent, AnId, X, Y, W, H, IsHScrollBar)
       {
-      }
-   ;
+      };
 
    void SetPosition(int, bool redraw = true);
-   }
-;
+   };
 
 void TMyScrollBar::SetPosition(int thumbpos, bool redraw)
    {
@@ -785,16 +775,13 @@ class TMyGroupBox : public TGroupBox
       int H
       ) : TGroupBox(AParent, AnId, AText, X, Y, W, H)
       {
-      }
-   ;
-   }
-;
+      };
+   };
 
 class TMyRadioButton : public TRadioButton
    {
    public:
    char key[MAX_BUFFER_SIZE];
-   int critical;
    char callback[MAX_BUFFER_SIZE];
 
    TMyRadioButton(
@@ -808,16 +795,13 @@ class TMyRadioButton : public TRadioButton
       TGroupBox *AGroup
       ) : TRadioButton(AParent, AnId, ATitle, X, Y, W, H, AGroup)
       {
-      }
-   ;
-   }
-;
+      };
+   };
 
 class TMyCheckBox : public TCheckBox
    {
    public:
    char key[MAX_BUFFER_SIZE];
-   int critical;
    char callback[MAX_BUFFER_SIZE];
 
    TMyCheckBox(
@@ -1489,7 +1473,7 @@ NODE *lcomboboxcreate(NODE *args)
             // create thingy
             dialogthing * child = new dialogthing;
             
-            child->TCmybox = new TMxComboBox(parent->TWmybox, MYCOMBOBOX_ID, x, y, w, h, CBS_SIMPLE, 0);
+            child->TCmybox = new TMxComboBox(parent->TWmybox, MYCOMBOBOX_ID, x, y, w, h, CBS_SIMPLE);
 
             // set attributes
             child->TCmybox->Attr.Style |= CBS_DISABLENOSCROLL;
@@ -1516,7 +1500,7 @@ NODE *lcomboboxcreate(NODE *args)
             
             dialogthing * child = new dialogthing;
             
-            child->TCmybox = new TMxComboBox(parent->TDmybox, MYCOMBOBOX_ID, x, y, w, h, CBS_SIMPLE, 0);
+            child->TCmybox = new TMxComboBox(parent->TDmybox, MYCOMBOBOX_ID, x, y, w, h, CBS_SIMPLE);
             
             child->TCmybox->Attr.Style |= CBS_DISABLENOSCROLL;
             child->TCmybox->Attr.Style ^= CBS_SORT;
@@ -1539,8 +1523,7 @@ NODE *lcomboboxcreate(NODE *args)
                -y - MainWindowx->ScreenWindow->Scroller->YPos+yoffset,
                w,
                h,
-               CBS_SIMPLE,
-               0);
+               CBS_SIMPLE);
 
             child->TCmybox->Attr.Style |= CBS_DISABLENOSCROLL;
             child->TCmybox->Attr.Style ^= CBS_SORT;
@@ -1722,7 +1705,6 @@ NODE *lscrollbarcreate(NODE *args)
                }
             
             strcpy(child->TSCmybox->callback, callback);
-            child->TSCmybox->critical = 0;
             
             child->TSCmybox->Create();
             
@@ -1751,7 +1733,6 @@ NODE *lscrollbarcreate(NODE *args)
                }
             
             strcpy(child->TSCmybox->callback, callback);
-            child->TSCmybox->critical = 0;
             
             child->TSCmybox->Create();
             
@@ -1788,7 +1769,6 @@ NODE *lscrollbarcreate(NODE *args)
                }
             
             strcpy(child->TSCmybox->callback, callback);
-            child->TSCmybox->critical = 0;
             
             child->TSCmybox->Create();
             
@@ -2038,7 +2018,6 @@ NODE *lbuttoncreate(NODE *args)
                h);
 
             strcpy(child->TBmybox->callback, callback);
-            child->TBmybox->critical = 0;
 
             child->TBmybox->Create();
 
@@ -2070,7 +2049,6 @@ NODE *lbuttoncreate(NODE *args)
                h);
 
             strcpy(child->TBmybox->callback, callback);
-            child->TBmybox->critical = 0;
 
             child->TBmybox->Create();
 
@@ -2097,7 +2075,6 @@ NODE *lbuttoncreate(NODE *args)
                h);
 
             strcpy(child->TBmybox->callback, callback);
-            child->TBmybox->critical = 0;
 
             child->TBmybox->Create();
 
@@ -2298,7 +2275,6 @@ NODE *lradiobuttoncreate(NODE *args)
                   group->TGmybox);
                
                // strcpy(child->TRmybox->callback,callback);
-               // child->TRmybox->critical = 0;
                
                child->TRmybox->Create();
                
@@ -2335,7 +2311,6 @@ NODE *lradiobuttoncreate(NODE *args)
                   group->TGmybox);
                
                // strcpy(child->TRmybox->callback,callback);
-               // child->TRmybox->critical = 0;
                
                child->TRmybox->Create();
                
@@ -2367,7 +2342,6 @@ NODE *lradiobuttoncreate(NODE *args)
                   group->TGmybox);
 
                // strcpy(child->TRmybox->callback,callback);
-               // child->TRmybox->critical = 0;
 
                child->TRmybox->Create();
 
@@ -2506,7 +2480,6 @@ NODE *lcheckboxcreate(NODE *args)
                   group->TGmybox);
                
                // strcpy(child->TCBmybox->callback,callback);
-               // child->TCBmybox->critical = 0;
                
                child->TCBmybox->Create();
                
@@ -2543,7 +2516,6 @@ NODE *lcheckboxcreate(NODE *args)
                   group->TGmybox);
                
                // strcpy(child->TCBmybox->callback,callback);
-               // child->TCBmybox->critical = 0;
                
                child->TCBmybox->Create();
                
@@ -2575,7 +2547,6 @@ NODE *lcheckboxcreate(NODE *args)
                   group->TGmybox);
                
                // strcpy(child->TCBmybox->callback,callback);
-               // child->TCBmybox->critical = 0;
                
                child->TCBmybox->Create();
                
