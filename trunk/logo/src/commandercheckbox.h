@@ -34,8 +34,7 @@ public:
    TCommanderCheckBox(
       class TMyCommandWindow* parent,
       int                     id,
-      TGroupBox*              group = 0,
-      TModule*                module = 0);
+      TGroupBox*              group = 0);
 
    ~TCommanderCheckBox();
 

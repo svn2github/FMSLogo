@@ -21,9 +21,8 @@
 
 TCommanderButton::TCommanderButton(
    TMyCommandWindow* parent,
-   int               id,
-   TModule*          module
-) : TButton(parent, id, module),
+   int               id
+) : TButton(parent, id),
     Parent(parent)
    {
    }

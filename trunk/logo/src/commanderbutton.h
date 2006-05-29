@@ -33,8 +33,8 @@ class TCommanderButton : public TButton
 public:
    TCommanderButton(
       class TMyCommandWindow* parent,
-      int id,
-      TModule* module = 0);
+      int id
+      );
 
    ~TCommanderButton();
 

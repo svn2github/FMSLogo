@@ -29,9 +29,8 @@ TRichEditWithPopup::TRichEditWithPopup(
    int y,
    int w,
    int h,
-   const char * fileName,
-   TModule* module
-) : TRichEdit(parent, id, text, x, y, w, h, fileName, module)
+   const char * fileName
+) : TRichEdit(parent, id, text, x, y, w, h, fileName)
    {
    PopupMenu.AppendMenu(MF_STRING, CM_EDITUNDO,   "Undo");
    PopupMenu.AppendMenu(MF_SEPARATOR, 0, NULL);
@@ -120,11 +119,10 @@ END_RESPONSE_TABLE;
 //
 TEditWindow::TEditWindow(
    TWindow *    parent,
-   const char *	title,
-   TModule *    module
-) : TFrameWindow(parent, title, 0, false, module)
+   const char *	title
+) : TFrameWindow(parent, title, 0, false)
    {
-   Editor = new TRichEditWithPopup(this, ID_EDITOR, 0, 0, 0, 0, 0, 0, module);
+   Editor = new TRichEditWithPopup(this, ID_EDITOR, 0, 0, 0, 0, 0, 0);
    Editor->Attr.ExStyle |= WS_EX_RIGHTSCROLLBAR;
    Editor->Attr.Style |= ES_NOHIDESEL | ES_AUTOHSCROLL | ES_AUTOVSCROLL;
    }

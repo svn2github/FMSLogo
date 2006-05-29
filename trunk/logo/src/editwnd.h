@@ -26,8 +26,8 @@ public:
       int y,
       int w,
       int h,
-      const char * fileName = 0,
-      TModule* module = 0);
+      const char * fileName = 0
+      );
 
    ~TRichEditWithPopup();
 
@@ -53,7 +53,7 @@ class TEditWindow : public TFrameWindow
  public:
    TRichEditWithPopup *Editor;
 
-   TEditWindow(TWindow * parent, const char * title, TModule * module = 0);
+   TEditWindow(TWindow * parent, const char * title);
 
  protected:
    //

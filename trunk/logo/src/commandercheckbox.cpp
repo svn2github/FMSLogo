@@ -22,9 +22,8 @@
 TCommanderCheckBox::TCommanderCheckBox(
    TMyCommandWindow* parent,
    int               id,
-   TGroupBox*        group,
-   TModule*          module
-   ) : TCheckBox(parent, id, group, module),
+   TGroupBox*        group
+   ) : TCheckBox(parent, id, group),
        Parent(parent)
    {
    }
