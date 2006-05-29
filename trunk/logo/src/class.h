@@ -98,7 +98,8 @@ class TMyFileWindow : public TEditWindow
    void CMHelpEdit();
    void CMHelpEditTopic();
 
-   virtual void SetupWindow();
+ protected:
+   void SetupWindow();
 
    DECLARE_RESPONSE_TABLE(TMyFileWindow);
 
@@ -142,6 +143,7 @@ class TMyListboxWindow : public TRichEditWithPopup
    void EvLButtonDown(UINT modKeys, TPoint & point);
    void EvLButtonDblClk(UINT modKeys, TPoint & point);
    void EvMouseMove(uint modKeys, TPoint& point);
+   void EvKillFocus(THandle hWndGetFocus);
 
    void CmDisableCommand(TCommandEnabler& commandHandler);
 

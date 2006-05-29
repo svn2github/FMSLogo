@@ -778,6 +778,22 @@ void TMyListboxWindow::SetupWindow()
    SetBkgndColor(TColor::SysMenu);
    }
 
+TMyListboxWindow::~TMyListboxWindow()
+   {
+   }
+
+void TMyListboxWindow::EvKillFocus(THandle hWndGetFocus /* may be 0 */)
+   {
+   // unselect whatever is selected when we lose focus
+   UINT begin;
+   UINT end;
+   GetSelection(begin, end);
+   SetSelection(begin, begin);
+
+   DefaultProcessing();
+   }
+
+
 void TMyListboxWindow::EvMouseMove(uint modKeys, TPoint& point)
    {
    DefaultProcessing();
@@ -788,10 +804,6 @@ void TMyListboxWindow::EvMouseMove(uint modKeys, TPoint& point)
    //
    // Note that the I-Bar is inappropriate because you can't type into it.
    ::SetCursor(hCursorArrow);
-   }
-
-TMyListboxWindow::~TMyListboxWindow()
-   {
    }
 
 void TMyListboxWindow::CopyCurrentLineToEditBox()
@@ -967,6 +979,7 @@ DEFINE_RESPONSE_TABLE1(TMyEditboxWindow, TEdit)
 END_RESPONSE_TABLE;
 
 DEFINE_RESPONSE_TABLE1(TMyListboxWindow, TRichEditWithPopup)
+   EV_WM_KILLFOCUS,
    EV_WM_CHAR,
    EV_WM_KEYDOWN,
    EV_WM_KEYUP,
