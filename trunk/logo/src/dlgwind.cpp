@@ -37,17 +37,17 @@ static HICON hCursorSave = 0; // handle for saved cursor
 
 static const char *Windowname[] =
    {
-       "?",
-       "Window",
-       "Static",
-       "ListBox",
-       "ComboBox",
-       "Button",
-       "ScrollBar",
-       "GroupBox",
-       "RadioButton",
+      "?",
+      "Window",
+      "Static",
+      "ListBox",
+      "ComboBox",
+      "Button",
+      "ScrollBar",
+      "GroupBox",
+      "RadioButton",
        "CheckButton",
-       "Dialog",
+      "Dialog",
    };
 
 /* class structure for storing information about users windows */
@@ -80,14 +80,14 @@ class slist
    slink *last;
    public:
    void insert(void * a, char *k, char *par, int t);
-   void * get(char *k);
-   void * get2(char *k, int t);
+   void * get(const char *k);
+   void * get2(const char *k, int t);
    char *getrootkey();
-   int gettype(char *k);
-   char *getparent(char *par);
-   void zap(char *k);
+   int gettype(const char *k);
+   char *getparent(const char *par);
+   void zap(const char *k);
    void * zapall();
-   void list(char *k, int lev);
+   void list(const char *k, int lev);
    void listall();
    void clear();
    BOOL OnScreenControlsExist();
@@ -126,19 +126,27 @@ void slist::insert(void * a, char *k, char *par, int t)
       }
    }
 
-void * slist::get2(char *k, int t)
+void * slist::get2(const char *k, int t)
    {
-   slink *f;
+   if (last == NULL) 
+      {
+      return NULL;
+      }
 
-   if (last == NULL) return NULL;
-
-   f = last;
+   slink * f = last;
 
    do
       {
       if (strcmp(f->key, k) == 0)
          {
-         if (f->type == t) return (f->e); else return (NULL);
+         if (f->type == t) 
+            {
+            return f->e; 
+            }
+         else 
+            {
+            return NULL;
+            }
          }
       f = f->next;
       }
@@ -147,19 +155,20 @@ void * slist::get2(char *k, int t)
    return NULL;
    }
 
-void * slist::get(char *k)
+void * slist::get(const char *k)
    {
-   slink *f;
+   if (last == NULL) 
+      {
+      return NULL;
+      }
 
-   if (last == NULL) return NULL;
-
-   f = last;
+   slink * f = last;
 
    do
       {
       if (strcmp(f->key, k) == 0)
          {
-         return (f->e);
+         return f->e;
          }
       f = f->next;
       }
@@ -168,13 +177,14 @@ void * slist::get(char *k)
    return NULL;
    }
 
-int slist::gettype(char *k)
+int slist::gettype(const char *k)
    {
-   slink *f;
+   if (last == NULL) 
+      {
+      return NULL;
+      }
 
-   if (last == NULL) return NULL;
-
-   f = last;
+   slink * f = last;
 
    do
       {
@@ -189,19 +199,20 @@ int slist::gettype(char *k)
    return NULL;
    }
 
-char *slist::getparent(char *k)
+char *slist::getparent(const char *k)
    {
-   slink *f;
+   if (last == NULL) 
+      {
+      return NULL;
+      }
 
-   if (last == NULL) return NULL;
-
-   f = last;
+   slink * f = last;
 
    do
       {
       if (strcmp(f->parent, k) == 0)
          {
-         return (f->key);
+         return f->key;
          }
       f = f->next;
       }
@@ -210,16 +221,16 @@ char *slist::getparent(char *k)
    return NULL;
    }
 
-void slist::zap(char *k)
+void slist::zap(const char *k)
    {
-   slink *f;
-   slink *p;
-   char *t;
 
-   if (last == NULL) return;
+   if (last == NULL) 
+      {
+      return;
+      }
 
-   f = last;
-   p = NULL;
+   slink * f = last;
+   slink * p = NULL;
 
    do
       {
@@ -233,7 +244,7 @@ void slist::zap(char *k)
    while (f != last);
 
    // delete any children first
-
+   char *t;
    while ((t = getparent(k)) != NULL)
       {
       zap(t);
@@ -249,7 +260,10 @@ void slist::zap(char *k)
          }
       else
          {
-         if (p == last) last = p->prev;
+         if (p == last) 
+            {
+            last = p->prev;
+            }
 
          p->prev->next = p->next;
          f->prev = p->prev;
@@ -257,22 +271,17 @@ void slist::zap(char *k)
 
       delete p;
       }
-
    }
 
-void slist::list(char *k, int level)
+void slist::list(const char *k, int level)
    {
-   slink *f;
-   slink *ff;
-   slink *p;
-   char temp[128];
-   char indent[128];
-   int i;
+   if (last == NULL) 
+      {
+      return;
+      }
 
-   if (last == NULL) return;
-
-   f = last;
-   p = NULL;
+   slink * f = last;
+   slink * p = NULL;
 
    do
       {
@@ -285,24 +294,30 @@ void slist::list(char *k, int level)
       }
    while (f != last);
 
+
    if (p != NULL)
       {
+      char indent[128];
 
       indent[0] = '\0';
-      for (i = 0; i < level; i++) strcat(indent, " ");
+      for (int i = 0; i < level; i++) 
+         {
+         strcat(indent, " ");
+         }
 
       if (level == 0)
          {
+         char temp[128];
          sprintf(temp, "%s %s", Windowname[p->type], p->key);
          putcombobox(temp);
          }
 
-      ff = last;
-
+      slink *ff = last;
       do
          {
          if (strcmp(ff->parent, k) == 0)
             {
+            char temp[128];
             sprintf(temp, "  %s%s %s", indent, Windowname[ff->type], ff->key);
             putcombobox(temp);
             list(ff->key, level + 1);
@@ -310,7 +325,6 @@ void slist::list(char *k, int level)
          ff = ff->next;
          }
       while (ff != last);
-
       }
    }
 
@@ -318,7 +332,10 @@ void slist::clear()
    {
    slink *l = last;
 
-   if (l == NULL) return;
+   if (l == NULL) 
+      {
+      return;
+      }
 
    do
       {
@@ -334,13 +351,16 @@ void * slist::zapall()
    {
    slink *l = last;
 
-   if (l == NULL) return NULL;
+   if (l == NULL) 
+      {
+      return NULL;
+      }
 
    do
       {
       if (l->parent == (char *)MainWindowx->ScreenWindow)
          {
-         return(l->e);
+         return l->e;
          }
       l = l->next;
       }
@@ -353,13 +373,16 @@ char *slist::getrootkey()
    {
    slink *l = last;
 
-   if (l == NULL) return NULL;
+   if (l == NULL) 
+      {
+      return NULL;
+      }
 
    do
       {
       if (l->parent == (char *)MainWindowx->ScreenWindow)
          {
-         return(l->key);
+         return l->key;
          }
       l = l->next;
       }
@@ -372,7 +395,10 @@ void slist::listall()
    {
    slink *l = last;
 
-   if (l == NULL) return;
+   if (l == NULL) 
+      {
+      return;
+      }
 
    do
       {
@@ -389,14 +415,19 @@ BOOL slist::OnScreenControlsExist()
    {
    slink *l = last;
 
-   if (l == NULL) return FALSE;
+   if (l == NULL) 
+      {
+      return FALSE;
+      }
 
    do
       {
       if (l->parent == (char *)MainWindowx->ScreenWindow)
          {
          if ((l->type != TWindow_type) && (l->type != TDialog_type))
-         return TRUE;
+            {
+            return TRUE;
+            }
          }
       l = l->next;
       }
@@ -414,8 +445,12 @@ class TMxWindow : public TDialog
    char key[MAX_BUFFER_SIZE];
    char caption[MAX_BUFFER_SIZE];
    char callback[MAX_BUFFER_SIZE];
-   int x, y, h, w;
-   TMxWindow(TWindow *AParent, LPSTR AText) : TDialog(AParent, AText)
+   int x;
+   int y;
+   int h;
+   int w;
+
+   TMxWindow(TWindow *AParent, const char * AText) : TDialog(AParent, AText)
       {
       }
    ;
@@ -448,20 +483,25 @@ class TMxDialog : public TDialog
    char key[MAX_BUFFER_SIZE];
    char callback[MAX_BUFFER_SIZE];
    char caption[MAX_BUFFER_SIZE];
-   int x, y, h, w;
-   TMxDialog(TWindow *AParent, LPSTR AText) : TDialog(AParent, AText)
+   int x;
+   int y;
+   int h;
+   int w;
+
+   TMxDialog(TWindow *AParent, const char * AText) 
+      : TDialog(AParent, AText)
       {
-      }
-   ;
+      };
+
    void SetupWindow();
    void CmCancel()
       {
-      }
-   ;
+      };
+
    void CmOk()
       {
-      }
-   ;
+      };
+
    DECLARE_RESPONSE_TABLE(TMxDialog);
    }
 ;
@@ -480,9 +520,9 @@ class TMyListBox : public TListBox
    {
    public:
    char key[MAX_BUFFER_SIZE];
-   TMyListBox(TWindow *AParent, int AnId, int X, int Y,
-      int W, int H, TModule _FAR *AModule = NULL) :
-   TListBox(AParent, AnId, X, Y, W, H, AModule)
+
+   TMyListBox(TWindow *AParent, int AnId, int X, int Y, int W, int H) :
+      TListBox(AParent, AnId, X, Y, W, H)
       {
       }
    ;
@@ -493,9 +533,16 @@ class TMxComboBox : public TComboBox
    {
    public:
    char key[MAX_BUFFER_SIZE];
-   TMxComboBox(TWindow *AParent, int AnId, int X, int Y,
-      int W, int H, DWORD AStyle, WORD ATextLen, TModule _FAR *AModule = NULL) :
-   TComboBox(AParent, AnId, X, Y, W, H, AStyle, ATextLen, AModule)
+   TMxComboBox(
+      TWindow *AParent, 
+      int AnId, 
+      int X, 
+      int Y,
+      int W, 
+      int H, 
+      DWORD AStyle, 
+      WORD ATextLen
+      ) : TComboBox(AParent, AnId, X, Y, W, H, AStyle, ATextLen)
       {
       }
    ;
@@ -506,9 +553,16 @@ class TMyStatic : public TStatic
    {
    public:
    char key[MAX_BUFFER_SIZE];
-   TMyStatic(TWindow *AParent, int AnId, LPSTR AText, int X, int Y,
-      int W, int H, WORD ATextLen, TModule _FAR *AModule = NULL) :
-   TStatic(AParent, AnId, AText, X, Y, W, H, ATextLen, AModule)
+
+   TMyStatic(
+      TWindow *AParent,
+      int AnId, 
+      LPCSTR AText, 
+      int X, 
+      int Y,
+      int W, 
+      int H
+      ) : TStatic(AParent, AnId, AText, X, Y, W, H)
       {
       }
    ;
@@ -522,9 +576,15 @@ class TMyButton : public TButton
    char callback[MAX_BUFFER_SIZE];
 
    int critical;
-   TMyButton(TWindow *AParent, int AnId, LPSTR AText, int X, int Y,
-      int W, int H, BOOL IsDefault, TModule _FAR *AModule = NULL) :
-   TButton(AParent, AnId, AText, X, Y, W, H, IsDefault, AModule)
+   TMyButton(
+      TWindow *AParent, 
+      int AnId, 
+      const char * AText, 
+      int X, 
+      int Y,
+      int W, 
+      int H
+      ) : TButton(AParent, AnId, AText, X, Y, W, H)
       {
       }
    ;
@@ -684,9 +744,16 @@ class TMyScrollBar : public TScrollBar
    char key[MAX_BUFFER_SIZE];
    char callback[MAX_BUFFER_SIZE];
    int critical;
-   TMyScrollBar(TWindow *AParent, int AnId, int X, int Y,
-      int W, int H, BOOL IsHScrollBar, TModule _FAR *AModule = NULL) :
-   TScrollBar(AParent, AnId, X, Y, W, H, IsHScrollBar, AModule)
+
+   TMyScrollBar(
+      TWindow *AParent, 
+      int AnId, 
+      int X, 
+      int Y,
+      int W, 
+      int H, 
+      BOOL IsHScrollBar
+      ) : TScrollBar(AParent, AnId, X, Y, W, H, IsHScrollBar)
       {
       }
    ;
@@ -708,9 +775,15 @@ class TMyGroupBox : public TGroupBox
    {
    public:
    char key[MAX_BUFFER_SIZE];
-   TMyGroupBox(TWindow *AParent, int AnId, LPSTR AText, int X, int Y,
-      int W, int H, TModule _FAR *AModule = NULL) :
-   TGroupBox(AParent, AnId, AText, X, Y, W, H, AModule)
+   TMyGroupBox(
+      TWindow *AParent, 
+      int AnId, 
+      const char * AText, 
+      int X, 
+      int Y,
+      int W, 
+      int H
+      ) : TGroupBox(AParent, AnId, AText, X, Y, W, H)
       {
       }
    ;
@@ -723,9 +796,17 @@ class TMyRadioButton : public TRadioButton
    char key[MAX_BUFFER_SIZE];
    int critical;
    char callback[MAX_BUFFER_SIZE];
-   TMyRadioButton(TWindow *AParent, int AnId, LPSTR ATitle, int X, int Y,
-      int W, int H, TGroupBox _FAR *AGroup, TModule _FAR *AModule = NULL) :
-   TRadioButton(AParent, AnId, ATitle, X, Y, W, H, AGroup, AModule)
+
+   TMyRadioButton(
+      TWindow *AParent, 
+      int AnId, 
+      const char * ATitle, 
+      int X, 
+      int Y,
+      int W, 
+      int H, 
+      TGroupBox *AGroup
+      ) : TRadioButton(AParent, AnId, ATitle, X, Y, W, H, AGroup)
       {
       }
    ;
@@ -738,14 +819,21 @@ class TMyCheckBox : public TCheckBox
    char key[MAX_BUFFER_SIZE];
    int critical;
    char callback[MAX_BUFFER_SIZE];
-   TMyCheckBox(TWindow *AParent, int AnId, LPSTR ATitle, int X, int Y,
-      int W, int H, TGroupBox _FAR *AGroup, TModule _FAR *AModule = NULL) :
-   TCheckBox(AParent, AnId, ATitle, X, Y, W, H, AGroup, AModule)
+
+   TMyCheckBox(
+      TWindow *AParent, 
+      int AnId, 
+      const char * ATitle, 
+      int X, 
+      int Y,
+      int W, 
+      int H, 
+      TGroupBox *AGroup
+      ) : TCheckBox(AParent, AnId, ATitle, X, Y, W, H, AGroup)
       {
-      }
-   ;
-   }
-;
+      };
+
+   };
 
 struct dialogthing
    {
@@ -770,11 +858,11 @@ struct dialoglist : slist
       {
       slist::insert(a, k, par, t);
       }
-   dialogthing *get(char *k)
+   dialogthing *get(const char *k)
       {
       return (dialogthing *) slist::get(k);
       }
-   dialogthing *get2(char *k, int t)
+   dialogthing *get2(const char *k, int t)
       {
       return (dialogthing *) slist::get2(k, t);
       }
@@ -797,29 +885,30 @@ dialoglist dialogboxes;
 
 NODE *lwindowcreate(NODE *args)
    {
-   dialogthing *child;
-   dialogthing *parent;
-   int x;
-   int y;
-   int w;
-   int h;
-   char parentname[MAX_BUFFER_SIZE];
-   char childname[MAX_BUFFER_SIZE];
-   char titlename[MAX_BUFFER_SIZE];
-   char callback[MAX_BUFFER_SIZE];
-   char *ptr;
-
    /* get all the args */
-
+   char parentname[MAX_BUFFER_SIZE];
    cnv_strnode_string(parentname, args);
+
+   char childname[MAX_BUFFER_SIZE];
    cnv_strnode_string(childname, args = cdr(args));
+
+   char titlename[MAX_BUFFER_SIZE];
    cnv_strnode_string(titlename, args = cdr(args));
-   x =            int_arg(args = cdr(args)) ;
-   y =            int_arg(args = cdr(args)) ;
-   w = getint(pos_int_arg(args = cdr(args)));
-   h = getint(pos_int_arg(args = cdr(args)));
-   if (cdr(args) != NIL) cnv_strnode_string(callback, cdr(args));
-   else callback[0] = '\0';
+
+   int x =            int_arg(args = cdr(args)) ;
+   int y =            int_arg(args = cdr(args)) ;
+   int w = getint(pos_int_arg(args = cdr(args)));
+   int h = getint(pos_int_arg(args = cdr(args)));
+
+   char callback[MAX_BUFFER_SIZE];
+   if (cdr(args) != NIL) 
+      {
+      cnv_strnode_string(callback, cdr(args));
+      }
+   else 
+      {
+      callback[0] = '\0';
+      }
 
 
    // convert them to "DIALOG" units this is the key to making
@@ -834,11 +923,11 @@ NODE *lwindowcreate(NODE *args)
 
    if (dialogboxes.get(childname) == NULL)
       {
-
-      child = new dialogthing;
+      dialogthing *child = new dialogthing;
 
       // if parent exists use it else use main window
-
+      dialogthing *parent;
+      char *ptr;
       if ((parent = dialogboxes.get2(parentname, TWindow_type)) != NULL)
          {
          child->TWmybox = new TMxWindow(
@@ -889,13 +978,12 @@ NODE *lwindowcreate(NODE *args)
 void windowdelete_helper()
    {
    char *tempkey;
-   int temptype;
-   dialogthing *temp;
-
    while (tempkey = dialogboxes.getrootkey())
       {
+      int temptype;
       if (temptype = dialogboxes.gettype(tempkey))
          {
+         dialogthing *temp;
          if (temp = dialogboxes.get(tempkey))
             {
             switch (temptype)
@@ -1729,7 +1817,6 @@ NODE *lscrollbarcreate(NODE *args)
 
 NODE *lscrollbarset(NODE *args)
    {
-
    char parentname[MAX_BUFFER_SIZE];
    cnv_strnode_string(parentname, args);
 
@@ -1810,7 +1897,7 @@ NODE *lstaticcreate(NODE *args)
             
             dialogthing * child = new dialogthing;
 
-            child->TSmybox = new TMyStatic(parent->TWmybox, MYSTATIC_ID, titlename, x, y, w, h, 0);
+            child->TSmybox = new TMyStatic(parent->TWmybox, MYSTATIC_ID, titlename, x, y, w, h);
             
             child->TSmybox->Create();
             
@@ -1828,7 +1915,7 @@ NODE *lstaticcreate(NODE *args)
             
             dialogthing * child = new dialogthing;
 
-            child->TSmybox = new TMyStatic(parent->TDmybox, MYSTATIC_ID, titlename, x, y, w, h, 0);
+            child->TSmybox = new TMyStatic(parent->TDmybox, MYSTATIC_ID, titlename, x, y, w, h);
             
             child->TSmybox->Create();
 
@@ -1848,8 +1935,7 @@ NODE *lstaticcreate(NODE *args)
                +x - MainWindowx->ScreenWindow->Scroller->XPos+xoffset,
                -y - MainWindowx->ScreenWindow->Scroller->YPos+yoffset,
                w,
-               h,
-               0);
+               h);
             
             child->TSmybox->Create();
             
@@ -1949,8 +2035,7 @@ NODE *lbuttoncreate(NODE *args)
                x,
                y,
                w,
-               h,
-               0);
+               h);
 
             strcpy(child->TBmybox->callback, callback);
             child->TBmybox->critical = 0;
@@ -1982,8 +2067,7 @@ NODE *lbuttoncreate(NODE *args)
                x,
                y,
                w,
-               h,
-               0);
+               h);
 
             strcpy(child->TBmybox->callback, callback);
             child->TBmybox->critical = 0;
@@ -2010,8 +2094,7 @@ NODE *lbuttoncreate(NODE *args)
                +x - MainWindowx->ScreenWindow->Scroller->XPos+xoffset,
                -y - MainWindowx->ScreenWindow->Scroller->YPos+yoffset,
                w,
-               h,
-               0);
+               h);
 
             strcpy(child->TBmybox->callback, callback);
             child->TBmybox->critical = 0;
