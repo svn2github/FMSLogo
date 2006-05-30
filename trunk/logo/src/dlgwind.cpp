@@ -46,12 +46,12 @@ static const char *Windowname[] =
       "ScrollBar",
       "GroupBox",
       "RadioButton",
-       "CheckButton",
+      "CheckButton",
       "Dialog",
    };
 
-/* class structure for storing information about users windows */
-
+// class structure for storing information about users windows 
+// The implementation is a circular double-linked list
 class slink
    {
    friend class slist;
@@ -84,9 +84,8 @@ class slist
    void * get2(const char *k, int t);
    char *getrootkey();
    int gettype(const char *k);
-   char *getparent(const char *par);
+   const char *getparent(const char *par);
    void zap(const char *k);
-   void * zapall();
    void list(const char *k, int lev);
    void listall();
    void clear();
@@ -111,21 +110,29 @@ class slist
 
    };
 
+// inserts an element into the list.
+// a   is data
+// k   is element's key
+// par is element's parent's key
+// t   is element's type
 void slist::insert(void * a, char *k, char *par, int t)
    {
-   if (last)
+   if (last != NULL)
       {
+      // the list was not empty
       last->next = new slink (a, last->next, last, k, par, t);
       last->next->next->prev = last->next;
       }
    else
       {
+      // the list was empty.
       last = new slink (a, NULL, NULL, k, par, t);
       last->next = last;
       last->prev = last;
       }
    }
 
+// returns the element whose key is k and whose type is t
 void * slist::get2(const char *k, int t)
    {
    if (last == NULL) 
@@ -155,6 +162,7 @@ void * slist::get2(const char *k, int t)
    return NULL;
    }
 
+// returns the element whose key is k
 void * slist::get(const char *k)
    {
    if (last == NULL) 
@@ -177,11 +185,13 @@ void * slist::get(const char *k)
    return NULL;
    }
 
+// returns the type of the element whose key is k
+// returns 0 if the element could be found
 int slist::gettype(const char *k)
    {
    if (last == NULL) 
       {
-      return NULL;
+      return 0;
       }
 
    slink * f = last;
@@ -190,16 +200,18 @@ int slist::gettype(const char *k)
       {
       if (strcmp(f->key, k) == 0)
          {
-         return (f->type);
+         return f->type;
          }
       f = f->next;
       }
    while (f != last);
 
-   return NULL;
+   return 0;
    }
 
-char *slist::getparent(const char *k)
+// returns the key of the first link whose parent is "k"
+// In the words, returns the first child of "k"
+const char *slist::getparent(const char *k)
    {
    if (last == NULL) 
       {
@@ -221,6 +233,7 @@ char *slist::getparent(const char *k)
    return NULL;
    }
 
+// deletes the link whose key is "k" and any children of that link.
 void slist::zap(const char *k)
    {
 
@@ -232,6 +245,7 @@ void slist::zap(const char *k)
    slink * f = last;
    slink * p = NULL;
 
+   // find the link whose key is "k"
    do
       {
       if (strcmp(f->key, k) == 0)
@@ -244,12 +258,13 @@ void slist::zap(const char *k)
    while (f != last);
 
    // delete any children first
-   char *t;
+   const char *t;
    while ((t = getparent(k)) != NULL)
       {
       zap(t);
       }
 
+   // remove the link from the list
    if (p != NULL)
       {
       f = p->next;
@@ -273,6 +288,7 @@ void slist::zap(const char *k)
       }
    }
 
+// prints the heirarchy of all children of the node whose "k".
 void slist::list(const char *k, int level)
    {
    if (last == NULL) 
@@ -328,6 +344,7 @@ void slist::list(const char *k, int level)
       }
    }
 
+// deletes all elements in the list
 void slist::clear()
    {
    slink *l = last;
@@ -347,28 +364,8 @@ void slist::clear()
 
    }
 
-void * slist::zapall()
-   {
-   slink *l = last;
-
-   if (l == NULL) 
-      {
-      return NULL;
-      }
-
-   do
-      {
-      if (l->parent == (char *)MainWindowx->ScreenWindow)
-         {
-         return l->e;
-         }
-      l = l->next;
-      }
-   while (l != last);
-
-   return NULL;
-   }
-
+// returns the key of the first element whose parent is the root window.
+// returns NULL, if no element's parent is the root window.
 char *slist::getrootkey()
    {
    slink *l = last;
@@ -391,6 +388,7 @@ char *slist::getrootkey()
    return NULL;
    }
 
+// prints the heirarchy of all windows starting at the screen window
 void slist::listall()
    {
    slink *l = last;
@@ -836,7 +834,8 @@ struct dialogthing
       };
    };
 
-struct dialoglist : slist
+// type-safe wrapper for dialoglist
+struct dialoglist : public slist
    {
    void insert(dialogthing *a, char *k, char *par, int t)
       {
@@ -844,24 +843,16 @@ struct dialoglist : slist
       }
    dialogthing *get(const char *k)
       {
-      return (dialogthing *) slist::get(k);
+      return static_cast<dialogthing *>(slist::get(k));
       }
    dialogthing *get2(const char *k, int t)
       {
-      return (dialogthing *) slist::get2(k, t);
-      }
-   dialogthing *zapall()
-      {
-      return (dialogthing *) slist::zapall();
+      return static_cast<dialogthing *>(slist::get2(k, t));
       }
    dialoglist()
       {
       }
-   dialoglist(dialogthing *a, char *k, char *par, int t) : slist (a, k, par, t)
-      {
-      }
-   }
-;
+   };
 
 dialoglist dialogboxes;
 
