@@ -51,408 +51,6 @@ static const char *Windowname[] =
    };
 
 
-struct dialogthing
-   {
-   friend class dialoglist;
-
-private:
-   struct dialogthing *next;
-   struct dialogthing *prev;
-
-public:
-   char key[MAX_BUFFER_SIZE];
-   char *parent;
-
-   int type;
-
-   union
-      {
-      class TMxWindow      * TWmybox;
-      class TMyStatic      * TSmybox;
-      class TMyListBox     * TLmybox;
-      class TMxComboBox    * TCmybox;
-      class TMyButton      * TBmybox;
-      class TMyScrollBar   * TSCmybox;
-      class TMyGroupBox    * TGmybox;
-      class TMyRadioButton * TRmybox;
-      class TMyCheckBox    * TCBmybox;
-      class TMxDialog      * TDmybox;
-      };
-
-      dialogthing(int t, const char * name)
-         : next(NULL),
-           prev(NULL),
-           parent(NULL),
-           type(t),
-           TWmybox(NULL)
-      {
-      strcpy(key, name);
-      }
-   };
-
-// class structure for storing information about users windows 
-// The implementation is a circular double-linked list
-
-class dialoglist
-   {
-   dialogthing * last;
-
-   public:
-   void insert(dialogthing * a);
-   dialogthing * get(const char *k);
-   dialogthing * get2(const char *k, int t);
-   char *getrootkey();
-   int gettype(const char *k);
-   const char *getfirstchild(const char *par);
-   void zap(const char *k);
-   void list(const char *k, int lev);
-   void listall();
-   void clear();
-   bool OnScreenControlsExist();
-
-   dialoglist()
-      {
-      last = NULL;
-      }
-
-   ~dialoglist()
-      {
-      clear();
-      }
-
-   };
-
-
-// inserts an element into the list.
-void dialoglist::insert(dialogthing * newnode)
-   {
-   if (last != NULL)
-      {
-      // the list was not empty.
-      // insert the new node just after "last"
-      newnode->next = last->next;
-      newnode->prev = last;
-
-      last->next->prev = newnode;
-      last->next       = newnode;
-
-      last = newnode;
-      }
-   else
-      {
-      // the list was empty.
-      // make the newnode the "last" node.
-      last = newnode;
-      last->next = last;
-      last->prev = last;
-      }
-   }
-
-// returns the element whose key is k and whose type is t
-dialogthing * dialoglist::get2(const char *k, int t)
-   {
-   if (last == NULL) 
-      {
-      return NULL;
-      }
-
-   dialogthing * f = last;
-
-   do
-      {
-      if (strcmp(f->key, k) == 0)
-         {
-         if (f->type == t) 
-            {
-            return f;
-            }
-         else 
-            {
-            return NULL;
-            }
-         }
-      f = f->next;
-      }
-   while (f != last);
-
-   return NULL;
-   }
-
-// returns the element whose key is k
-dialogthing * dialoglist::get(const char *k)
-   {
-   if (last == NULL) 
-      {
-      return NULL;
-      }
-
-   dialogthing * f = last;
-
-   do
-      {
-      if (strcmp(f->key, k) == 0)
-         {
-         return f;
-         }
-      f = f->next;
-      }
-   while (f != last);
-
-   return NULL;
-   }
-
-// returns the type of the element whose key is k
-// returns 0 if the element could be found
-int dialoglist::gettype(const char *k)
-   {
-   if (last == NULL) 
-      {
-      return 0;
-      }
-
-   dialogthing * f = last;
-
-   do
-      {
-      if (strcmp(f->key, k) == 0)
-         {
-         return f->type;
-         }
-      f = f->next;
-      }
-   while (f != last);
-
-   return 0;
-   }
-
-// returns the key of the first link whose parent is "k"
-// In the words, returns the first child of "k"
-const char *dialoglist::getfirstchild(const char *k)
-   {
-   if (last == NULL) 
-      {
-      return NULL;
-      }
-
-   dialogthing * f = last;
-
-   do
-      {
-      if (strcmp(f->parent, k) == 0)
-         {
-         return f->key;
-         }
-      f = f->next;
-      }
-   while (f != last);
-
-   return NULL;
-   }
-
-// deletes the link whose key is "k" and any children of that link.
-void dialoglist::zap(const char *k)
-   {
-
-   if (last == NULL) 
-      {
-      return;
-      }
-
-   dialogthing * f = last;
-   dialogthing * p = NULL;
-
-   // find the link whose key is "k"
-   do
-      {
-      if (strcmp(f->key, k) == 0)
-         {
-         p = f;
-         break;
-         }
-      f = f->next;
-      }
-   while (f != last);
-
-   // delete any children first
-   const char *t;
-   while ((t = getfirstchild(k)) != NULL)
-      {
-      zap(t);
-      }
-
-   // remove the link from the list
-   if (p != NULL)
-      {
-      f = p->next;
-
-      if (f == p)
-         {
-         // this was the only element in the list
-         last = NULL;
-         }
-      else
-         {
-         if (p == last) 
-            {
-            last = p->prev;
-            }
-
-         p->prev->next = p->next;
-         f->prev = p->prev;
-         }
-
-      delete p;
-      }
-   }
-
-// prints the heirarchy of all children of the node whose "k".
-void dialoglist::list(const char *k, int level)
-   {
-   if (last == NULL) 
-      {
-      return;
-      }
-
-   dialogthing * f = last;
-   dialogthing * p = NULL;
-
-   do
-      {
-      if (strcmp(f->key, k) == 0)
-         {
-         p = f;
-         break;
-         }
-      f = f->next;
-      }
-   while (f != last);
-
-
-   if (p != NULL)
-      {
-      char indent[128];
-
-      indent[0] = '\0';
-      for (int i = 0; i < level; i++) 
-         {
-         strcat(indent, " ");
-         }
-
-      if (level == 0)
-         {
-         char temp[128];
-         sprintf(temp, "%s %s", Windowname[p->type], p->key);
-         putcombobox(temp);
-         }
-
-      dialogthing *ff = last;
-      do
-         {
-         if (strcmp(ff->parent, k) == 0)
-            {
-            char temp[128];
-            sprintf(temp, "  %s%s %s", indent, Windowname[ff->type], ff->key);
-            putcombobox(temp);
-            list(ff->key, level + 1);
-            }
-         ff = ff->next;
-         }
-      while (ff != last);
-      }
-   }
-
-// deletes all elements in the list
-void dialoglist::clear()
-   {
-   dialogthing *l = last;
-
-   if (l == NULL) 
-      {
-      return;
-      }
-
-   do
-      {
-      dialogthing *ll = l;
-      l = l->next;
-      delete ll;
-      }
-   while (l != last);
-
-   }
-
-// returns the key of the first element whose parent is the root window.
-// returns NULL, if no element's parent is the root window.
-char *dialoglist::getrootkey()
-   {
-   dialogthing *l = last;
-
-   if (l == NULL) 
-      {
-      return NULL;
-      }
-
-   do
-      {
-      if (l->parent == (char *)MainWindowx->ScreenWindow)
-         {
-         return l->key;
-         }
-      l = l->next;
-      }
-   while (l != last);
-
-   return NULL;
-   }
-
-// prints the heirarchy of all windows starting at the screen window
-void dialoglist::listall()
-   {
-   dialogthing *l = last;
-
-   if (l == NULL) 
-      {
-      return;
-      }
-
-   do
-      {
-      if (l->parent == (char *)MainWindowx->ScreenWindow)
-         {
-         list(l->key, 0);
-         }
-      l = l->next;
-      }
-   while (l != last);
-   }
-
-bool dialoglist::OnScreenControlsExist()
-   {
-   dialogthing *l = last;
-
-   if (l == NULL) 
-      {
-      return false;
-      }
-
-   do
-      {
-      if (l->parent == (char *)MainWindowx->ScreenWindow)
-         {
-         if ((l->type != TWindow_type) && (l->type != TDialog_type))
-            {
-            return true;
-            }
-         }
-      l = l->next;
-      }
-   while (l != last);
-
-   return false;
-   }
-
-dialoglist dialogboxes;
-
 // class structures for the controls we support, for the most part they
 // are the same as the original with just a key and callback string added
 
@@ -823,9 +421,408 @@ class TMyCheckBox : public TCheckBox
       ) : TCheckBox(AParent, AnId, ATitle, X, Y, W, H, AGroup)
       {
       };
+   };
+
+
+// class structure for storing information about user windows.
+// The implementation is an in-place circular doubly-linked list.
+struct dialogthing
+   {
+   friend class dialoglist;
+
+private:
+   struct dialogthing *next;
+   struct dialogthing *prev;
+
+public:
+   char key[MAX_BUFFER_SIZE];
+   char *parent;
+
+   int type;
+
+   union
+      {
+      class TMxWindow      * TWmybox;
+      class TMyStatic      * TSmybox;
+      class TMyListBox     * TLmybox;
+      class TMxComboBox    * TCmybox;
+      class TMyButton      * TBmybox;
+      class TMyScrollBar   * TSCmybox;
+      class TMyGroupBox    * TGmybox;
+      class TMyRadioButton * TRmybox;
+      class TMyCheckBox    * TCBmybox;
+      class TMxDialog      * TDmybox;
+      };
+
+   dialogthing(int t, const char * name)
+     : next(NULL),
+       prev(NULL),
+       parent(NULL),
+       type(t),
+       TWmybox(NULL)
+      {
+      strcpy(key, name);
+      }
+
+   TWindow * GetWindow();
+   };
+
+TWindow * dialogthing::GetWindow()
+   {
+   switch (type)
+      {
+      case TWindow_type:      return TWmybox;
+      case TStatic_type:      return TSmybox;
+      case TListBox_type:     return TLmybox;
+      case TComboBox_type:    return TCmybox;
+      case TButton_type:      return TBmybox;
+      case TScrollBar_type:   return TSCmybox;
+      case TGroupBox_type:    return TGmybox;
+      case TRadioButton_type: return TRmybox;
+      case TCheckBox_type:    return TCBmybox;
+      case TDialog_type:      return TDmybox;
+      }
+
+   assert(!"can't happen");
+   return NULL;
+   }
+
+
+class dialoglist
+   {
+   dialogthing * last;
+
+   public:
+   void insert(dialogthing * a);
+   dialogthing * get(const char *k);
+   dialogthing * get2(const char *k, int t);
+   char *getrootkey();
+   const char *getfirstchild(const char *par);
+   void zap(const char *k);
+   void list(const char *k, int lev);
+   void listall();
+   void clear();
+   bool OnScreenControlsExist();
+
+   dialoglist()
+      {
+      last = NULL;
+      }
+
+   ~dialoglist()
+      {
+      clear();
+      }
 
    };
 
+
+// inserts an element into the list.
+void dialoglist::insert(dialogthing * newnode)
+   {
+   if (last != NULL)
+      {
+      // the list was not empty.
+      // insert the new node just after "last"
+      newnode->next = last->next;
+      newnode->prev = last;
+
+      last->next->prev = newnode;
+      last->next       = newnode;
+
+      last = newnode;
+      }
+   else
+      {
+      // the list was empty.
+      // make the newnode the "last" node.
+      last = newnode;
+      last->next = last;
+      last->prev = last;
+      }
+   }
+
+// returns the element whose key is k and whose type is t
+dialogthing * dialoglist::get2(const char *k, int t)
+   {
+   if (last == NULL) 
+      {
+      return NULL;
+      }
+
+   dialogthing * f = last;
+
+   do
+      {
+      if (strcmp(f->key, k) == 0)
+         {
+         if (f->type == t) 
+            {
+            return f;
+            }
+         else 
+            {
+            // the window is not of type t.
+            return NULL;
+            }
+         }
+      f = f->next;
+      }
+   while (f != last);
+
+   return NULL;
+   }
+
+// returns the element whose key is k
+dialogthing * dialoglist::get(const char *k)
+   {
+   if (last == NULL) 
+      {
+      return NULL;
+      }
+
+   dialogthing * f = last;
+
+   do
+      {
+      if (strcmp(f->key, k) == 0)
+         {
+         return f;
+         }
+      f = f->next;
+      }
+   while (f != last);
+
+   return NULL;
+   }
+
+// returns the key of the first link whose parent is "k"
+// In the words, returns the first child of "k"
+const char *dialoglist::getfirstchild(const char *k)
+   {
+   if (last == NULL) 
+      {
+      return NULL;
+      }
+
+   dialogthing * f = last;
+
+   do
+      {
+      if (strcmp(f->parent, k) == 0)
+         {
+         return f->key;
+         }
+      f = f->next;
+      }
+   while (f != last);
+
+   return NULL;
+   }
+
+// deletes the link whose key is "k" and any children of that link.
+void dialoglist::zap(const char *k)
+   {
+
+   if (last == NULL) 
+      {
+      return;
+      }
+
+   dialogthing * f = last;
+   dialogthing * p = NULL;
+
+   // find the link whose key is "k"
+   do
+      {
+      if (strcmp(f->key, k) == 0)
+         {
+         p = f;
+         break;
+         }
+      f = f->next;
+      }
+   while (f != last);
+
+   // delete any children first
+   const char *t;
+   while ((t = getfirstchild(k)) != NULL)
+      {
+      zap(t);
+      }
+
+   // remove the link from the list
+   if (p != NULL)
+      {
+      f = p->next;
+
+      if (f == p)
+         {
+         // this was the only element in the list
+         last = NULL;
+         }
+      else
+         {
+         if (p == last) 
+            {
+            last = p->prev;
+            }
+
+         p->prev->next = p->next;
+         f->prev = p->prev;
+         }
+
+      delete p;
+      }
+   }
+
+// prints the heirarchy of all children of the node whose "k".
+void dialoglist::list(const char *k, int level)
+   {
+   if (last == NULL) 
+      {
+      return;
+      }
+
+   dialogthing * f = last;
+   dialogthing * p = NULL;
+
+   do
+      {
+      if (strcmp(f->key, k) == 0)
+         {
+         p = f;
+         break;
+         }
+      f = f->next;
+      }
+   while (f != last);
+
+
+   if (p != NULL)
+      {
+      char indent[128];
+
+      indent[0] = '\0';
+      for (int i = 0; i < level; i++) 
+         {
+         strcat(indent, " ");
+         }
+
+      if (level == 0)
+         {
+         char temp[128];
+         sprintf(temp, "%s %s", Windowname[p->type], p->key);
+         putcombobox(temp);
+         }
+
+      dialogthing *ff = last;
+      do
+         {
+         if (strcmp(ff->parent, k) == 0)
+            {
+            char temp[128];
+            sprintf(temp, "  %s%s %s", indent, Windowname[ff->type], ff->key);
+            putcombobox(temp);
+            list(ff->key, level + 1);
+            }
+         ff = ff->next;
+         }
+      while (ff != last);
+      }
+   }
+
+// deletes all elements in the list
+void dialoglist::clear()
+   {
+   dialogthing *l = last;
+
+   if (l == NULL) 
+      {
+      return;
+      }
+
+   do
+      {
+      dialogthing *ll = l;
+      l = l->next;
+      delete ll;
+      }
+   while (l != last);
+
+   }
+
+// returns the key of the first element whose parent is the root window.
+// returns NULL, if no element's parent is the root window.
+char *dialoglist::getrootkey()
+   {
+   dialogthing *l = last;
+
+   if (l == NULL) 
+      {
+      return NULL;
+      }
+
+   do
+      {
+      if (l->parent == (char *)MainWindowx->ScreenWindow)
+         {
+         return l->key;
+         }
+      l = l->next;
+      }
+   while (l != last);
+
+   return NULL;
+   }
+
+// prints the heirarchy of all windows starting at the screen window
+void dialoglist::listall()
+   {
+   dialogthing *l = last;
+
+   if (l == NULL) 
+      {
+      return;
+      }
+
+   do
+      {
+      if (l->parent == (char *)MainWindowx->ScreenWindow)
+         {
+         list(l->key, 0);
+         }
+      l = l->next;
+      }
+   while (l != last);
+   }
+
+bool dialoglist::OnScreenControlsExist()
+   {
+   dialogthing *l = last;
+
+   if (l == NULL) 
+      {
+      return false;
+      }
+
+   do
+      {
+      if (l->parent == (char *)MainWindowx->ScreenWindow)
+         {
+         if ((l->type != TWindow_type) && (l->type != TDialog_type))
+            {
+            return true;
+            }
+         }
+      l = l->next;
+      }
+   while (l != last);
+
+   return false;
+   }
+
+dialoglist dialogboxes;
 
 /* User function to create a modeless window */
 
@@ -922,32 +919,11 @@ void windowdelete_helper()
    char *tempkey;
    while (tempkey = dialogboxes.getrootkey())
       {
-      int temptype;
-      if (temptype = dialogboxes.gettype(tempkey))
+      dialogthing *temp = dialogboxes.get(tempkey);
+      if (temp != NULL)
          {
-         dialogthing *temp;
-         if (temp = dialogboxes.get(tempkey))
-            {
-            switch (temptype)
-               {
-               case TWindow_type:      temp->TWmybox->CloseWindow(); break;
-               case TStatic_type:      temp->TSmybox->CloseWindow(); break;
-               case TListBox_type:     temp->TLmybox->CloseWindow(); break;
-               case TComboBox_type:    temp->TCmybox->CloseWindow(); break;
-               case TButton_type:      temp->TBmybox->CloseWindow(); break;
-               case TScrollBar_type:   temp->TSCmybox->CloseWindow(); break;
-               case TGroupBox_type:    temp->TGmybox->CloseWindow(); break;
-               case TRadioButton_type: temp->TRmybox->CloseWindow(); break;
-               case TCheckBox_type:    temp->TCBmybox->CloseWindow(); break;
-               case TDialog_type:      temp->TDmybox->CloseWindow(); break;
-               }
-
-            dialogboxes.zap(tempkey);
-            }
-         else
-            {
-            break;
-            }
+         temp->GetWindow()->CloseWindow();
+         dialogboxes.zap(tempkey);
          }
       else
          {
@@ -965,45 +941,13 @@ WindowEnableHelper(
    {
    char childname[MAX_BUFFER_SIZE];
    cnv_strnode_string(childname, args);
+
    bool bEnable = boolean_arg(cdr(args));
 
-   dialogthing *temp;
-   if ((temp = dialogboxes.get2(childname, WindowType)) != NULL)
+   dialogthing *window = dialogboxes.get2(childname, WindowType);
+   if (window != NULL)
       {
-      switch (WindowType)
-         {
-         case TWindow_type:
-            temp->TWmybox->EnableWindow(bEnable);
-            break;
-
-         case TDialog_type:
-            temp->TDmybox->EnableWindow(bEnable);
-            break;
-
-         case TListBox_type:
-            temp->TLmybox->EnableWindow(bEnable);
-            break;
-
-         case TComboBox_type:
-            temp->TCmybox->EnableWindow(bEnable);
-            break;
-
-         case TScrollBar_type:
-            temp->TSCmybox->EnableWindow(bEnable);
-            break;
-
-         case TButton_type:
-            temp->TBmybox->EnableWindow(bEnable);
-            break;
-
-         case TRadioButton_type:
-            temp->TRmybox->EnableWindow(bEnable);
-            break;
-
-         case TCheckBox_type:
-            temp->TCBmybox->EnableWindow(bEnable);
-            break;
-         }
+      window->GetWindow()->EnableWindow(bEnable);
       }
    else
       {
@@ -1026,51 +970,10 @@ WindowDeleteHelper(
    cnv_strnode_string(windowkey, args);
 
    // if it exists kill it
-   dialogthing *window;
-   if ((window = dialogboxes.get2(windowkey, WindowType)) != NULL)
+   dialogthing *window = dialogboxes.get2(windowkey, WindowType);
+   if (window != NULL)
       {
-      switch (WindowType)
-         {
-         case TWindow_type:
-            window->TWmybox->CloseWindow();
-            break;
-
-         case TStatic_type:
-            window->TSmybox->CloseWindow();
-            break;
-
-         case TListBox_type:
-            window->TLmybox->CloseWindow();
-            break;
-
-         case TComboBox_type:
-            window->TCmybox->CloseWindow();
-            break;
-
-         case TButton_type:
-            window->TBmybox->CloseWindow();
-            break;
-
-         case TScrollBar_type:
-            window->TSCmybox->CloseWindow();
-            break;
-
-         case TGroupBox_type:
-            window->TGmybox->CloseWindow();
-            break;
-
-         case TRadioButton_type:
-            window->TRmybox->CloseWindow();
-            break;
-
-         case TCheckBox_type:
-            window->TCBmybox->CloseWindow();
-            break;
-
-         case TDialog_type:
-            window->TDmybox->CloseWindow();
-            break;
-         }
+      window->GetWindow()->CloseWindow();
 
       dialogboxes.zap(windowkey);
       UpdateZoomControlFlag();
@@ -1368,8 +1271,8 @@ NODE *llistboxdeletestring(NODE *args)
    int index = getint(pos_int_arg(cdr(args)));
 
    // if exists continue
-   dialogthing *parent;
-   if ((parent = dialogboxes.get2(parentname, TListBox_type)) != NULL)
+   dialogthing *parent = dialogboxes.get2(parentname, TListBox_type);
+   if (parent != NULL)
       {
       // kill entry based on index
       parent->TLmybox->DeleteString(index);
@@ -1385,7 +1288,6 @@ NODE *llistboxdeletestring(NODE *args)
 
 NODE *lcomboboxcreate(NODE *args)
    {
-
    // get args
    char parentname[MAX_BUFFER_SIZE];
    cnv_strnode_string(parentname, args);
@@ -1407,8 +1309,8 @@ NODE *lcomboboxcreate(NODE *args)
 
          bool updateZoomControl = false;
          
-         dialogthing *parent;
-         if ((parent = dialogboxes.get2(parentname, TWindow_type)) != NULL)
+         dialogthing *parent = dialogboxes.get2(parentname, TWindow_type);
+         if (parent != NULL)
             {
             // if modeless window enter here
 
@@ -1488,8 +1390,8 @@ NODE *lcomboboxgettext(NODE *args)
    cnv_strnode_string(parentname, args);
 
    // if exists continue
-   dialogthing *parent;
-   if ((parent = dialogboxes.get2(parentname, TComboBox_type)) != NULL)
+   dialogthing *parent = dialogboxes.get2(parentname, TComboBox_type);
+   if (parent != NULL)
       {
       // if successful getting string return it
       char stringname[MAX_BUFFER_SIZE];
@@ -1518,8 +1420,8 @@ NODE *lcomboboxsettext(NODE *args)
    cnv_strnode_string(stringname, cdr(args));
 
    // if exists continue
-   dialogthing *parent;
-   if ((parent = dialogboxes.get2(parentname, TComboBox_type)) != NULL)
+   dialogthing *parent = dialogboxes.get2(parentname, TComboBox_type);
+   if (parent != NULL)
       {
       // set the editcontrol portion to the user specified text
       ((TComboBox *) parent->TCmybox)->SetText(stringname);
@@ -1542,8 +1444,8 @@ NODE *lcomboboxaddstring(NODE *args)
    cnv_strnode_string(stringname, cdr(args));
 
    // if exists continue
-   dialogthing *parent;
-   if ((parent = dialogboxes.get2(parentname, TComboBox_type)) != NULL)
+   dialogthing *parent = dialogboxes.get2(parentname, TComboBox_type);
+   if (parent != NULL)
       {
       // add string and reset selection
       ((TComboBox *) parent->TCmybox)->AddString(stringname);
@@ -1566,10 +1468,10 @@ NODE *lcomboboxdeletestring(NODE *args)
    int index = getint(pos_int_arg(cdr(args)));
 
    // if exists continue
-   dialogthing *parent;
-   if ((parent = dialogboxes.get2(parentname, TComboBox_type)) != NULL)
+   dialogthing *parent = dialogboxes.get2(parentname, TComboBox_type);
+   if (parent != NULL)
       {
-      // kill entrt and reset Index
+      // kill entry and reset index
       ((TComboBox *) parent->TCmybox)->DeleteString(index);
       ((TComboBox *) parent->TCmybox)->SetSelIndex(0);
       }
