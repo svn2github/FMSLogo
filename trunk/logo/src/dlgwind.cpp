@@ -84,7 +84,7 @@ class slist
    void * get2(const char *k, int t);
    char *getrootkey();
    int gettype(const char *k);
-   const char *getparent(const char *par);
+   const char *getfirstchild(const char *par);
    void zap(const char *k);
    void list(const char *k, int lev);
    void listall();
@@ -211,7 +211,7 @@ int slist::gettype(const char *k)
 
 // returns the key of the first link whose parent is "k"
 // In the words, returns the first child of "k"
-const char *slist::getparent(const char *k)
+const char *slist::getfirstchild(const char *k)
    {
    if (last == NULL) 
       {
@@ -259,7 +259,7 @@ void slist::zap(const char *k)
 
    // delete any children first
    const char *t;
-   while ((t = getparent(k)) != NULL)
+   while ((t = getfirstchild(k)) != NULL)
       {
       zap(t);
       }
