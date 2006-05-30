@@ -792,20 +792,18 @@ class TMyGroupBox : public TGroupBox
 class TMyRadioButton : public TRadioButton
    {
    public:
-   char callback[MAX_BUFFER_SIZE];
 
    TMyRadioButton(
-      TWindow *AParent, 
-      int AnId, 
-      const char * ATitle, 
+      TWindow * Parent, 
+      const char * Title, 
       int X, 
       int Y,
       int W, 
       int H, 
-      TGroupBox *AGroup
-      ) : TRadioButton(AParent, AnId, ATitle, X, Y, W, H, AGroup)
+      TGroupBox *Group
+      ) : TRadioButton(Parent, MYRADIOBUTTON_ID, Title, X, Y, W, H, Group)
       {
-      };
+      }
    };
 
 class TMyCheckBox : public TCheckBox
@@ -2139,6 +2137,8 @@ NODE *lradiobuttoncreate(NODE *args)
             {
             dialogthing * child = new dialogthing(TRadioButton_type, childname);
 
+            bool updateZoomControl = false;
+
             dialogthing *parent;
             if ((parent = dialogboxes.get2(parentname, TWindow_type)) != NULL)
                {
@@ -2151,19 +2151,12 @@ NODE *lradiobuttoncreate(NODE *args)
 
                child->TRmybox = new TMyRadioButton(
                   parent->TWmybox, 
-                  MYRADIOBUTTON_ID, 
                   titlename, 
                   x, 
                   y, 
                   w, 
                   h, 
                   group->TGmybox);
-               
-               child->TRmybox->Create();
-               
-               MyMessageScan();
-               
-               dialogboxes.insert(child);
                }
             else if ((parent = dialogboxes.get2(parentname, TDialog_type)) != NULL)
                {
@@ -2176,27 +2169,19 @@ NODE *lradiobuttoncreate(NODE *args)
             
                child->TRmybox = new TMyRadioButton(
                   parent->TDmybox, 
-                  MYRADIOBUTTON_ID, 
                   titlename, 
                   x, 
                   y,
                   w, 
-                  h, 
+                  h,
                   group->TGmybox);
-               
-               child->TRmybox->Create();
-               
-               MyMessageScan();
-               
-               dialogboxes.insert(child);
                }
             else
                {
                child->parent = (char *) MainWindowx->ScreenWindow;
-               
+
                child->TRmybox = new TMyRadioButton(
                   MainWindowx->ScreenWindow,
-                  MYRADIOBUTTON_ID,
                   titlename,
                   +x - MainWindowx->ScreenWindow->Scroller->XPos+xoffset,
                   -y - MainWindowx->ScreenWindow->Scroller->YPos+yoffset,
@@ -2204,12 +2189,17 @@ NODE *lradiobuttoncreate(NODE *args)
                   h,
                   group->TGmybox);
                
-               child->TRmybox->Create();
-               
-               MyMessageScan();
+               updateZoomControl = true;
+               }
 
-               dialogboxes.insert(child);
+            child->TRmybox->Create();
                
+            MyMessageScan();
+
+            dialogboxes.insert(child);
+
+            if (updateZoomControl)
+               {
                UpdateZoomControlFlag();
                }
             }
