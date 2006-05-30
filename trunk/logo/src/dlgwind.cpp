@@ -133,7 +133,8 @@ void dialoglist::insert(dialogthing * newnode)
       newnode->next = last->next;
       newnode->prev = last;
 
-      last->next = newnode;
+      last->next->prev = newnode;
+      last->next       = newnode;
 
       last = newnode;
       }
