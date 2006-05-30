@@ -535,9 +535,11 @@ class TMyListBox : public TListBox
    {
    public:
 
-   TMyListBox(TWindow *AParent, int AnId, int X, int Y, int W, int H) :
-      TListBox(AParent, AnId, X, Y, W, H)
+   TMyListBox(TWindow *Parent, int X, int Y, int W, int H) :
+      TListBox(Parent, MYLISTBOX_ID, X, Y, W, H)
       {
+      // disable automatic sorting
+      Attr.Style ^= LBS_SORT;
       }
    };
 
@@ -1230,10 +1232,13 @@ NODE *llistboxcreate(NODE *args)
          {
          dialogthing * child = new dialogthing(TListBox_type, childname);
 
-         // If modeless parent then continue
+         bool updateZoomControl = false;
+
          dialogthing *parent;
          if ((parent = dialogboxes.get2(parentname, TWindow_type)) != NULL)
             {
+            // If modeless parent then continue
+
             // convert to "DIALOG" units.
             x = (x * BaseUnitsx) / 4;
             y = (y * BaseUnitsy) / 8;
@@ -1241,20 +1246,13 @@ NODE *llistboxcreate(NODE *args)
             h = (h * BaseUnitsy) / 8;
             
             child->parent = parent->key;
-            
-            child->TLmybox = new TMyListBox(parent->TWmybox, MYLISTBOX_ID, x, y, w, h);
-            child->TLmybox->Attr.Style ^= LBS_SORT;
-            
-            child->TLmybox->Create();
-            
-            MyMessageScan();
-            
-            dialogboxes.insert(child);
+
+            child->TLmybox = new TMyListBox(parent->TWmybox, x, y, w, h);
             }
-         
-         // else if modal window continue
          else if ((parent = dialogboxes.get2(parentname, TDialog_type)) != NULL)
             {
+            // else if modal window continue
+
             // convert to "DIALOG" units.
             x = (x * BaseUnitsx) / 4;
             y = (y * BaseUnitsy) / 8;
@@ -1263,15 +1261,7 @@ NODE *llistboxcreate(NODE *args)
 
             child->parent = parent->key;
 
-            child->TLmybox = new TMyListBox(parent->TDmybox, MYLISTBOX_ID, x, y, w, h);
-            
-            child->TLmybox->Attr.Style ^= LBS_SORT;
-            
-            child->TLmybox->Create();
-            
-            MyMessageScan();
-            
-            dialogboxes.insert(child);
+            child->TLmybox = new TMyListBox(parent->TDmybox, x, y, w, h);
             }
          else
             {
@@ -1280,20 +1270,20 @@ NODE *llistboxcreate(NODE *args)
 
             child->TLmybox = new TMyListBox(
                MainWindowx->ScreenWindow,
-               MYLISTBOX_ID,
                +x - MainWindowx->ScreenWindow->Scroller->XPos+xoffset,
                -y - MainWindowx->ScreenWindow->Scroller->YPos+yoffset,
                w,
                h);
+            }
 
-            child->TLmybox->Attr.Style ^= LBS_SORT;
+         child->TLmybox->Create();
+            
+         MyMessageScan();
+            
+         dialogboxes.insert(child);
 
-            child->TLmybox->Create();
-
-            MyMessageScan();
-
-            dialogboxes.insert(child);
-
+         if (updateZoomControl)
+            {
             UpdateZoomControlFlag();
             }
          }
