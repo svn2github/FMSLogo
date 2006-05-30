@@ -1157,7 +1157,7 @@ NODE *ldialogcreate(NODE *args)
    if (dialogboxes.get(childname) == NULL)
       {
       // make one
-      dialogthing * child = new dialogthing(TWindow_type, childname);
+      dialogthing * child = new dialogthing(TDialog_type, childname);
 
       // if parent of corect type exists use it
       dialogthing *parent;
