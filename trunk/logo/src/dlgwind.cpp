@@ -547,16 +547,17 @@ class TMxComboBox : public TComboBox
    {
    public:
    TMxComboBox(
-      TWindow *AParent, 
-      int AnId, 
+      TWindow *Parent, 
       int X, 
       int Y,
       int W, 
-      int H, 
-      DWORD AStyle
-      ) : TComboBox(AParent, AnId, X, Y, W, H, AStyle, 0)
+      int H
+      ) : TComboBox(Parent, MYCOMBOBOX_ID, X, Y, W, H, CBS_SIMPLE, 0)
       {
-      };
+      // set attributes
+      Attr.Style |= CBS_DISABLENOSCROLL;
+      Attr.Style ^= CBS_SORT;
+      }
    };
 
 class TMyStatic : public TStatic
@@ -1403,14 +1404,15 @@ NODE *lcomboboxcreate(NODE *args)
       // if unique continue
       if (dialogboxes.get(childname) == NULL)
          {
-
          dialogthing * child = new dialogthing(TComboBox_type, childname);
 
-         // if modeless window enter here
+         bool updateZoomControl = false;
+         
          dialogthing *parent;
-
          if ((parent = dialogboxes.get2(parentname, TWindow_type)) != NULL)
             {
+            // if modeless window enter here
+
             // convert to "DIALOG" units
             x = (x * BaseUnitsx) / 4;
             y = (y * BaseUnitsy) / 8;
@@ -1419,23 +1421,11 @@ NODE *lcomboboxcreate(NODE *args)
 
             child->parent = parent->key;
 
-            child->TCmybox = new TMxComboBox(parent->TWmybox, MYCOMBOBOX_ID, x, y, w, h, CBS_SIMPLE);
-
-            // set attributes
-            child->TCmybox->Attr.Style |= CBS_DISABLENOSCROLL;
-            child->TLmybox->Attr.Style ^= CBS_SORT;
-            
-            // Display the control
-            child->TCmybox->Create();
-            
-            MyMessageScan();
-            
-            dialogboxes.insert(child);
+            child->TCmybox = new TMxComboBox(parent->TWmybox, x, y, w, h);
             }
-         
-         // if modal window enter here (same as above except names change)
          else if ((parent = dialogboxes.get2(parentname, TDialog_type)) != NULL)
             {
+            // if modal window enter here (same as above except names change)
             
             // convert to "DIALOG" units
             x = (x * BaseUnitsx) / 4;
@@ -1445,16 +1435,7 @@ NODE *lcomboboxcreate(NODE *args)
             
             child->parent = parent->key;
 
-            child->TCmybox = new TMxComboBox(parent->TDmybox, MYCOMBOBOX_ID, x, y, w, h, CBS_SIMPLE);
-            
-            child->TCmybox->Attr.Style |= CBS_DISABLENOSCROLL;
-            child->TCmybox->Attr.Style ^= CBS_SORT;
-            
-            child->TCmybox->Create();
-            
-            MyMessageScan();
-            
-            dialogboxes.insert(child);
+            child->TCmybox = new TMxComboBox(parent->TDmybox, x, y, w, h);
             }
          else
             {
@@ -1463,22 +1444,22 @@ NODE *lcomboboxcreate(NODE *args)
 
             child->TCmybox = new TMxComboBox(
                MainWindowx->ScreenWindow,
-               MYCOMBOBOX_ID,
                +x - MainWindowx->ScreenWindow->Scroller->XPos+xoffset,
                -y - MainWindowx->ScreenWindow->Scroller->YPos+yoffset,
                w,
-               h,
-               CBS_SIMPLE);
+               h);
 
-            child->TCmybox->Attr.Style |= CBS_DISABLENOSCROLL;
-            child->TCmybox->Attr.Style ^= CBS_SORT;
+            updateZoomControl = true;
+            }
 
-            child->TCmybox->Create();
+         child->TCmybox->Create();
 
-            MyMessageScan();
+         MyMessageScan();
 
-            dialogboxes.insert(child);
+         dialogboxes.insert(child);
 
+         if (updateZoomControl)
+            {
             UpdateZoomControlFlag();
             }
          }
