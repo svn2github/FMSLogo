@@ -348,16 +348,15 @@ class TMyScrollBar : public TScrollBar
    char callback[MAX_BUFFER_SIZE];
 
    TMyScrollBar(
-      TWindow *AParent, 
-      int AnId, 
-      int X, 
-      int Y,
-      int W, 
-      int H, 
-      BOOL IsHScrollBar
-      ) : TScrollBar(AParent, AnId, X, Y, W, H, IsHScrollBar)
+      TWindow *Parent, 
+      int      X, 
+      int      Y,
+      int      W, 
+      int      H, 
+      bool     IsHScrollBar
+      ) : TScrollBar(Parent, MYSCROLLBAR_ID, X, Y, W, H, IsHScrollBar)
       {
-      };
+      }
 
    void SetPosition(int, bool redraw = true);
    };
@@ -1505,6 +1504,8 @@ NODE *lscrollbarcreate(NODE *args)
          {
          dialogthing * child = new dialogthing(TScrollBar_type, childname);
          
+         bool updateZoomControl = false;
+
          dialogthing *parent;
          if ((parent = dialogboxes.get2(parentname, TWindow_type)) != NULL)
             {
@@ -1518,20 +1519,12 @@ NODE *lscrollbarcreate(NODE *args)
 
             if (w > h)
                {
-               child->TSCmybox = new TMyScrollBar(parent->TWmybox, MYSCROLLBAR_ID, x, y, w, 0, TRUE);
+               child->TSCmybox = new TMyScrollBar(parent->TWmybox, x, y, w, 0, true);
                }
             else
                {
-               child->TSCmybox = new TMyScrollBar(parent->TWmybox, MYSCROLLBAR_ID, x, y, 0, h, FALSE);
+               child->TSCmybox = new TMyScrollBar(parent->TWmybox, x, y, 0, h, false);
                }
-            
-            strcpy(child->TSCmybox->callback, callback);
-            
-            child->TSCmybox->Create();
-            
-            MyMessageScan();
-            
-            dialogboxes.insert(child);
             }
          else if ((parent = dialogboxes.get2(parentname, TDialog_type)) != NULL)
             {
@@ -1545,20 +1538,12 @@ NODE *lscrollbarcreate(NODE *args)
             
             if (w > h)
                {
-               child->TSCmybox = new TMyScrollBar(parent->TDmybox, MYSCROLLBAR_ID, x, y, w, 0, TRUE);
+               child->TSCmybox = new TMyScrollBar(parent->TDmybox, x, y, w, 0, true);
                }
             else
                {
-               child->TSCmybox = new TMyScrollBar(parent->TDmybox, MYSCROLLBAR_ID, x, y, 0, h, FALSE);
+               child->TSCmybox = new TMyScrollBar(parent->TDmybox, x, y, 0, h, false);
                }
-            
-            strcpy(child->TSCmybox->callback, callback);
-            
-            child->TSCmybox->Create();
-            
-            MyMessageScan();
-            
-            dialogboxes.insert(child);
             }
          else
             {
@@ -1568,24 +1553,25 @@ NODE *lscrollbarcreate(NODE *args)
                {
                child->TSCmybox = new TMyScrollBar(
                   MainWindowx->ScreenWindow,
-                  MYSCROLLBAR_ID,
                   +x - MainWindowx->ScreenWindow->Scroller->XPos+xoffset,
                   -y - MainWindowx->ScreenWindow->Scroller->YPos+yoffset,
                   w,
                   0,
-                  TRUE);
+                  true);
                }
             else
                {
                child->TSCmybox = new TMyScrollBar(
                   MainWindowx->ScreenWindow,
-                  MYSCROLLBAR_ID,
                   +x - MainWindowx->ScreenWindow->Scroller->XPos+xoffset,
                   -y - MainWindowx->ScreenWindow->Scroller->YPos+yoffset,
                   0,
                   h,
-                  FALSE);
+                  false);
                }
+
+            updateZoomControl = true;
+            }
 
             strcpy(child->TSCmybox->callback, callback);
             
@@ -1595,8 +1581,10 @@ NODE *lscrollbarcreate(NODE *args)
             
             dialogboxes.insert(child);
 
-            UpdateZoomControlFlag();
-            }
+            if (updateZoomControl)
+               {
+               UpdateZoomControlFlag();
+               }
          }
       else
          {
