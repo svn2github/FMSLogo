@@ -2154,11 +2154,11 @@ NODE *lradiobuttonset(NODE *args)
       {
       if (pos)
          {
-         ((TCheckBox *) parent->TRmybox)->Check();
+         parent->TRmybox->Check();
          }
       else
          {
-         ((TCheckBox *) parent->TRmybox)->Uncheck();
+         parent->TRmybox->Uncheck();
          }
       }
    else
