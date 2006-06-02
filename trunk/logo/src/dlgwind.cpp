@@ -402,7 +402,7 @@ public:
 
    union
       {
-      class TMxDialog      * TWmybox;
+      class TMxDialog      * TDmybox;
       class TMyStatic      * TSmybox;
       class TMyListBox     * TLmybox;
       class TMxComboBox    * TCmybox;
@@ -411,7 +411,6 @@ public:
       class TMyGroupBox    * TGmybox;
       class TMyRadioButton * TRmybox;
       class TMyCheckBox    * TCBmybox;
-      class TMxDialog      * TDmybox;
       };
 
    dialogthing(int t, const char * name)
@@ -419,7 +418,7 @@ public:
        prev(NULL),
        parent(NULL),
        type(t),
-       TWmybox(NULL)
+       TDmybox(NULL)
       {
       strcpy(key, name);
       }
@@ -431,7 +430,7 @@ TWindow * dialogthing::GetWindow()
    {
    switch (type)
       {
-      case TWindow_type:      return TWmybox;
+      case TWindow_type:      return TDmybox;
       case TStatic_type:      return TSmybox;
       case TListBox_type:     return TLmybox;
       case TComboBox_type:    return TCmybox;
@@ -455,7 +454,8 @@ class dialoglist
    public:
    void insert(dialogthing * a);
    dialogthing * get(const char *k);
-   dialogthing * get2(const char *k, int t);
+   dialogthing * get(const char *k, int t);
+   dialogthing * get(const char *k, int type1, int type2);
    char *getrootkey();
    const char *getfirstchild(const char *par);
    void zap(const char *k);
@@ -503,7 +503,7 @@ void dialoglist::insert(dialogthing * newnode)
    }
 
 // returns the element whose key is k and whose type is t
-dialogthing * dialoglist::get2(const char *k, int t)
+dialogthing * dialoglist::get(const char *k, int t)
    {
    if (last == NULL) 
       {
@@ -523,6 +523,37 @@ dialogthing * dialoglist::get2(const char *k, int t)
          else 
             {
             // the window is not of type t.
+            return NULL;
+            }
+         }
+      f = f->next;
+      }
+   while (f != last);
+
+   return NULL;
+   }
+
+// returns the element whose key is k and whose type is either type1 or type2
+dialogthing * dialoglist::get(const char *k, int type1, int type2)
+   {
+   if (last == NULL) 
+      {
+      return NULL;
+      }
+
+   dialogthing * f = last;
+
+   do
+      {
+      if (strcmp(f->key, k) == 0)
+         {
+         if (f->type == type1 || f->type == type2)
+            {
+            return f;
+            }
+         else 
+            {
+            // the window is not of type type1 or type2
             return NULL;
             }
          }
@@ -829,33 +860,33 @@ NODE *lwindowcreate(NODE *args)
       dialogthing *child = new dialogthing(TWindow_type, childname);
 
       // if parent exists use it else use main window
-      dialogthing *parent = dialogboxes.get2(parentname, TWindow_type);
+      dialogthing *parent = dialogboxes.get(parentname, TWindow_type);
       if (parent != NULL)
          {
-         child->TWmybox = new TMxDialog(parent->TWmybox);
-         child->parent = (char *)parent->TWmybox;
+         child->TDmybox = new TMxDialog(parent->TDmybox);
+         child->parent = (char *)parent->TDmybox;
          }
       else
          {
-         child->TWmybox = new TMxDialog(MainWindowx->ScreenWindow);
+         child->TDmybox = new TMxDialog(MainWindowx->ScreenWindow);
          child->parent = (char *)MainWindowx->ScreenWindow;
          }
 
       // Modeless windows can have to have a callback to set them up
       // since it will return
-      strcpy(child->TWmybox->callback, callback);
-      strcpy(child->TWmybox->caption, titlename);
+      strcpy(child->TDmybox->callback, callback);
+      strcpy(child->TDmybox->caption, titlename);
 
       // Most attributes are set in DIALOGSTUB
-      child->TWmybox->x = x;
-      child->TWmybox->y = y;
-      child->TWmybox->w = w;
-      child->TWmybox->h = h;
+      child->TDmybox->x = x;
+      child->TDmybox->y = y;
+      child->TDmybox->w = w;
+      child->TDmybox->h = h;
 
       dialogboxes.insert(child);
 
-      child->TWmybox->Create();
-      child->TWmybox->ShowWindow(SW_SHOW);
+      child->TDmybox->Create();
+      child->TDmybox->ShowWindow(SW_SHOW);
 
       // Make sure the window is up before we try to add controls?
 
@@ -882,7 +913,7 @@ WindowEnableHelper(
 
    bool bEnable = boolean_arg(cdr(args));
 
-   dialogthing *window = dialogboxes.get2(childname, WindowType);
+   dialogthing *window = dialogboxes.get(childname, WindowType);
    if (window != NULL)
       {
       window->GetWindow()->EnableWindow(bEnable);
@@ -908,12 +939,12 @@ WindowDeleteHelper(
    cnv_strnode_string(windowkey, args);
 
    // if it exists kill it
-   dialogthing *window = dialogboxes.get2(windowkey, WindowType);
+   dialogthing *window = dialogboxes.get(windowkey, WindowType);
    if (window != NULL)
       {
       window->GetWindow()->CloseWindow();
-
       dialogboxes.zap(windowkey);
+
       UpdateZoomControlFlag();
       }
    else
@@ -937,13 +968,12 @@ NODE *lwindowdelete(NODE *arg)
 
    if (NOT_THROWING)
       {
-      dialogthing *window = dialogboxes.get2(windowname, TWindow_type);
+      dialogthing *window = dialogboxes.get(windowname, TWindow_type);
       if (window != NULL)
          {
          // The exact name and type exists matches.
          // kill this window and all of its children.
-         window->TWmybox->CloseWindow();
-
+         window->TDmybox->CloseWindow();
          dialogboxes.zap(windowname);
          }
       else
@@ -1013,11 +1043,11 @@ NODE *ldialogcreate(NODE *args)
       dialogthing * child = new dialogthing(TDialog_type, childname);
 
       // if parent of corect type exists use it
-      dialogthing *parent = dialogboxes.get2(parentname, TWindow_type);
+      dialogthing *parent = dialogboxes.get(parentname, TWindow_type);
       if (parent != NULL)
          {
-         child->TDmybox = new TMxDialog(parent->TWmybox);
-         child->parent = (char *)parent->TWmybox;
+         child->TDmybox = new TMxDialog(parent->TDmybox);
+         child->parent = (char *)parent->TDmybox;
          }
       else
          {
@@ -1084,10 +1114,8 @@ NODE *llistboxcreate(NODE *args)
          {
          dialogthing * child = new dialogthing(TListBox_type, childname);
 
-         bool updateZoomControl = false;
-
-         dialogthing *parent;
-         if ((parent = dialogboxes.get2(parentname, TWindow_type)) != NULL)
+         dialogthing *parent = dialogboxes.get(parentname, TWindow_type, TDialog_type);
+         if (parent != NULL)
             {
             // If modeless parent then continue
 
@@ -1097,20 +1125,6 @@ NODE *llistboxcreate(NODE *args)
             w = (w * BaseUnitsx) / 4;
             h = (h * BaseUnitsy) / 8;
             
-            child->parent = parent->key;
-
-            child->TLmybox = new TMyListBox(parent->TWmybox, x, y, w, h);
-            }
-         else if ((parent = dialogboxes.get2(parentname, TDialog_type)) != NULL)
-            {
-            // else if modal window continue
-
-            // convert to "DIALOG" units.
-            x = (x * BaseUnitsx) / 4;
-            y = (y * BaseUnitsy) / 8;
-            w = (w * BaseUnitsx) / 4;
-            h = (h * BaseUnitsy) / 8;
-
             child->parent = parent->key;
 
             child->TLmybox = new TMyListBox(parent->TDmybox, x, y, w, h);
@@ -1134,7 +1148,7 @@ NODE *llistboxcreate(NODE *args)
             
          dialogboxes.insert(child);
 
-         if (updateZoomControl)
+         if (parent == NULL)
             {
             UpdateZoomControlFlag();
             }
@@ -1166,7 +1180,7 @@ NODE *llistboxgetselect(NODE *args)
 
    // If it exists continue
    dialogthing *parent;
-   if ((parent = dialogboxes.get2(parentname, TListBox_type)) != NULL)
+   if ((parent = dialogboxes.get(parentname, TListBox_type)) != NULL)
       {
       // if success on fetching string return it
       char stringname[MAX_BUFFER_SIZE];
@@ -1196,7 +1210,7 @@ NODE *llistboxaddstring(NODE *args)
    cnv_strnode_string(stringname, cdr(args));
 
    // if exists continue
-   dialogthing *parent = dialogboxes.get2(parentname, TListBox_type);
+   dialogthing *parent = dialogboxes.get(parentname, TListBox_type);
    if (parent != NULL)
       {
       // add entry and reset Index for consistency
@@ -1220,7 +1234,7 @@ NODE *llistboxdeletestring(NODE *args)
    int index = getint(pos_int_arg(cdr(args)));
 
    // if exists continue
-   dialogthing *parent = dialogboxes.get2(parentname, TListBox_type);
+   dialogthing *parent = dialogboxes.get(parentname, TListBox_type);
    if (parent != NULL)
       {
       // kill entry based on index
@@ -1256,33 +1270,15 @@ NODE *lcomboboxcreate(NODE *args)
          {
          dialogthing * child = new dialogthing(TComboBox_type, childname);
 
-         bool updateZoomControl = false;
-         
-         dialogthing *parent = dialogboxes.get2(parentname, TWindow_type);
+         dialogthing *parent = dialogboxes.get(parentname, TWindow_type, TDialog_type);
          if (parent != NULL)
             {
-            // if modeless window enter here
-
             // convert to "DIALOG" units
             x = (x * BaseUnitsx) / 4;
             y = (y * BaseUnitsy) / 8;
             w = (w * BaseUnitsx) / 4;
             h = (h * BaseUnitsy) / 8;
 
-            child->parent = parent->key;
-
-            child->TCmybox = new TMxComboBox(parent->TWmybox, x, y, w, h);
-            }
-         else if ((parent = dialogboxes.get2(parentname, TDialog_type)) != NULL)
-            {
-            // if modal window enter here (same as above except names change)
-            
-            // convert to "DIALOG" units
-            x = (x * BaseUnitsx) / 4;
-            y = (y * BaseUnitsy) / 8;
-            w = (w * BaseUnitsx) / 4;
-            h = (h * BaseUnitsy) / 8;
-            
             child->parent = parent->key;
 
             child->TCmybox = new TMxComboBox(parent->TDmybox, x, y, w, h);
@@ -1298,8 +1294,6 @@ NODE *lcomboboxcreate(NODE *args)
                -y - MainWindowx->ScreenWindow->Scroller->YPos+yoffset,
                w,
                h);
-
-            updateZoomControl = true;
             }
 
          child->TCmybox->Create();
@@ -1308,7 +1302,7 @@ NODE *lcomboboxcreate(NODE *args)
 
          dialogboxes.insert(child);
 
-         if (updateZoomControl)
+         if (parent == NULL)
             {
             UpdateZoomControlFlag();
             }
@@ -1339,7 +1333,7 @@ NODE *lcomboboxgettext(NODE *args)
    cnv_strnode_string(parentname, args);
 
    // if exists continue
-   dialogthing *parent = dialogboxes.get2(parentname, TComboBox_type);
+   dialogthing *parent = dialogboxes.get(parentname, TComboBox_type);
    if (parent != NULL)
       {
       // if successful getting string return it
@@ -1369,7 +1363,7 @@ NODE *lcomboboxsettext(NODE *args)
    cnv_strnode_string(stringname, cdr(args));
 
    // if exists continue
-   dialogthing *parent = dialogboxes.get2(parentname, TComboBox_type);
+   dialogthing *parent = dialogboxes.get(parentname, TComboBox_type);
    if (parent != NULL)
       {
       // set the editcontrol portion to the user specified text
@@ -1393,7 +1387,7 @@ NODE *lcomboboxaddstring(NODE *args)
    cnv_strnode_string(stringname, cdr(args));
 
    // if exists continue
-   dialogthing *parent = dialogboxes.get2(parentname, TComboBox_type);
+   dialogthing *parent = dialogboxes.get(parentname, TComboBox_type);
    if (parent != NULL)
       {
       // add string and reset selection
@@ -1417,7 +1411,7 @@ NODE *lcomboboxdeletestring(NODE *args)
    int index = getint(pos_int_arg(cdr(args)));
 
    // if exists continue
-   dialogthing *parent = dialogboxes.get2(parentname, TComboBox_type);
+   dialogthing *parent = dialogboxes.get(parentname, TComboBox_type);
    if (parent != NULL)
       {
       // kill entry and reset index
@@ -1454,12 +1448,9 @@ NODE *lscrollbarcreate(NODE *args)
          {
          dialogthing * child = new dialogthing(TScrollBar_type, childname);
          
-         bool updateZoomControl = false;
-
-         dialogthing *parent;
-         if ((parent = dialogboxes.get2(parentname, TWindow_type)) != NULL)
+         dialogthing *parent = dialogboxes.get(parentname, TWindow_type, TDialog_type);
+         if (parent != NULL)
             {
-            
             x = (x * BaseUnitsx) / 4;
             y = (y * BaseUnitsy) / 8;
             w = (w * BaseUnitsx) / 4;
@@ -1467,25 +1458,6 @@ NODE *lscrollbarcreate(NODE *args)
 
             child->parent = parent->key;
 
-            if (w > h)
-               {
-               child->TSCmybox = new TMyScrollBar(parent->TWmybox, x, y, w, 0, true);
-               }
-            else
-               {
-               child->TSCmybox = new TMyScrollBar(parent->TWmybox, x, y, 0, h, false);
-               }
-            }
-         else if ((parent = dialogboxes.get2(parentname, TDialog_type)) != NULL)
-            {
-            
-            x = (x * BaseUnitsx) / 4;
-            y = (y * BaseUnitsy) / 8;
-            w = (w * BaseUnitsx) / 4;
-            h = (h * BaseUnitsy) / 8;
-            
-            child->parent = parent->key;
-            
             if (w > h)
                {
                child->TSCmybox = new TMyScrollBar(parent->TDmybox, x, y, w, 0, true);
@@ -1519,8 +1491,6 @@ NODE *lscrollbarcreate(NODE *args)
                   h,
                   false);
                }
-
-            updateZoomControl = true;
             }
 
             strcpy(child->TSCmybox->callback, callback);
@@ -1531,7 +1501,7 @@ NODE *lscrollbarcreate(NODE *args)
             
             dialogboxes.insert(child);
 
-            if (updateZoomControl)
+            if (parent == NULL)
                {
                UpdateZoomControlFlag();
                }
@@ -1554,7 +1524,7 @@ NODE *lscrollbarset(NODE *args)
    int hi = getint(pos_int_arg(args = cdr(args)));
    int pos = getint(pos_int_arg(cdr(args)));
 
-   dialogthing *parent = dialogboxes.get2(parentname, TScrollBar_type);
+   dialogthing *parent = dialogboxes.get(parentname, TScrollBar_type);
    if (parent != NULL)
       {
       parent->TSCmybox->SetRange(lo, hi);
@@ -1573,7 +1543,7 @@ NODE *lscrollbarget(NODE *args)
    char parentname[MAX_BUFFER_SIZE];
    cnv_strnode_string(parentname, args);
 
-   dialogthing *parent = dialogboxes.get2(parentname, TScrollBar_type);
+   dialogthing *parent = dialogboxes.get(parentname, TScrollBar_type);
    if (parent != NULL)
       {
       int pos = parent->TSCmybox->GetPosition();
@@ -1619,27 +1589,14 @@ NODE *lstaticcreate(NODE *args)
          {
          dialogthing * child = new dialogthing(TStatic_type, childname);
 
-         bool updateZoomControl = false;
-
-         dialogthing *parent;
-         if ((parent = dialogboxes.get2(parentname, TWindow_type)) != NULL)
+         dialogthing *parent = dialogboxes.get(parentname, TWindow_type, TDialog_type);
+         if (parent != NULL)
             {
             x = (x * BaseUnitsx) / 4;
             y = (y * BaseUnitsy) / 8;
             w = (w * BaseUnitsx) / 4;
             h = (h * BaseUnitsy) / 8;
 
-            child->parent = parent->key;
-
-            child->TSmybox = new TMyStatic(parent->TWmybox, titlename, x, y, w, h);
-            }
-         else if ((parent = dialogboxes.get2(parentname, TDialog_type)) != NULL)
-            {
-            x = (x * BaseUnitsx) / 4;
-            y = (y * BaseUnitsy) / 8;
-            w = (w * BaseUnitsx) / 4;
-            h = (h * BaseUnitsy) / 8;
-            
             child->parent = parent->key;
 
             child->TSmybox = new TMyStatic(parent->TDmybox, titlename, x, y, w, h);
@@ -1655,8 +1612,6 @@ NODE *lstaticcreate(NODE *args)
                -y - MainWindowx->ScreenWindow->Scroller->YPos+yoffset,
                w,
                h);
-            
-            updateZoomControl = true;
             }
 
          child->TSmybox->Create();
@@ -1665,7 +1620,7 @@ NODE *lstaticcreate(NODE *args)
             
          dialogboxes.insert(child);
 
-         if (updateZoomControl)
+         if (parent == NULL)
             {
             UpdateZoomControlFlag();
             }
@@ -1687,7 +1642,7 @@ NODE *lstaticupdate(NODE *args)
    char titlename[MAX_BUFFER_SIZE];
    cnv_strnode_string(titlename, cdr(args));
 
-   dialogthing *temp = dialogboxes.get2(childname, TStatic_type);
+   dialogthing *temp = dialogboxes.get(childname, TStatic_type);
    if (temp != NULL)
       {
       temp->TSmybox->SetText(titlename);
@@ -1737,34 +1692,8 @@ NODE *lbuttoncreate(NODE *args)
          {
          dialogthing * child = new dialogthing(TButton_type, childname);
 
-         dialogthing *parent;
-         if ((parent = dialogboxes.get2(parentname, TWindow_type)) != NULL)
-            {
-            x = (x * BaseUnitsx) / 4;
-            y = (y * BaseUnitsy) / 8;
-            w = (w * BaseUnitsx) / 4;
-            h = (h * BaseUnitsy) / 8;
-
-            child->parent = parent->key;
-
-            child->TBmybox = new TMyButton(
-               parent->TWmybox,
-               MYBUTTON_ID,
-               titlename,
-               x,
-               y,
-               w,
-               h);
-
-            strcpy(child->TBmybox->callback, callback);
-
-            child->TBmybox->Create();
-
-            MyMessageScan();
-
-            dialogboxes.insert(child);
-            }
-         else if ((parent = dialogboxes.get2(parentname, TDialog_type)) != NULL)
+         dialogthing *parent = dialogboxes.get(parentname, TWindow_type, TDialog_type);
+         if (parent != NULL)
             {
             x = (x * BaseUnitsx) / 4;
             y = (y * BaseUnitsy) / 8;
@@ -1832,7 +1761,7 @@ NODE *lbuttonupdate(NODE *args)
    cnv_strnode_string(titlename, cdr(args));
 
    dialogthing *temp;
-   if ((temp = dialogboxes.get2(childname, TButton_type)) != NULL)
+   if ((temp = dialogboxes.get(childname, TButton_type)) != NULL)
       {
       temp->TBmybox->SetWindowText(titlename);
       }
@@ -1873,21 +1802,8 @@ NODE *lgroupboxcreate(NODE *args)
          {
          dialogthing * child = new dialogthing(TGroupBox_type, childname);
 
-         bool updateZoomControl = false;
-
-         dialogthing *parent;
-         if ((parent = dialogboxes.get2(parentname, TWindow_type)) != NULL)
-            {
-            x = (x * BaseUnitsx) / 4;
-            y = (y * BaseUnitsy) / 8;
-            w = (w * BaseUnitsx) / 4;
-            h = (h * BaseUnitsy) / 8;
-
-            child->parent = parent->key;
-
-            child->TGmybox = new TMyGroupBox(parent->TWmybox, x, y, w, h);
-            }
-         else if ((parent = dialogboxes.get2(parentname, TDialog_type)) != NULL)
+         dialogthing *parent = dialogboxes.get(parentname, TWindow_type, TDialog_type);
+         if (parent != NULL)
             {
             x = (x * BaseUnitsx) / 4;
             y = (y * BaseUnitsy) / 8;
@@ -1908,8 +1824,6 @@ NODE *lgroupboxcreate(NODE *args)
                -y - MainWindowx->ScreenWindow->Scroller->YPos+yoffset,
                w,
                h);
-            
-            updateZoomControl = true;
             }
 
          child->TGmybox->Create();
@@ -1918,7 +1832,7 @@ NODE *lgroupboxcreate(NODE *args)
 
          dialogboxes.insert(child);
 
-         if (updateZoomControl)
+         if (parent == NULL)
             {
             UpdateZoomControlFlag();
             }
@@ -1957,17 +1871,15 @@ NODE *lradiobuttoncreate(NODE *args)
 
    if (NOT_THROWING)
       {
-      dialogthing *group = dialogboxes.get2(groupname, TGroupBox_type);
+      dialogthing *group = dialogboxes.get(groupname, TGroupBox_type);
       if (group != NULL)
          {
          if (dialogboxes.get(childname) == NULL)
             {
             dialogthing * child = new dialogthing(TRadioButton_type, childname);
 
-            bool updateZoomControl = false;
-
-            dialogthing *parent;
-            if ((parent = dialogboxes.get2(parentname, TWindow_type)) != NULL)
+            dialogthing *parent = dialogboxes.get(parentname, TWindow_type, TDialog_type);
+            if (parent != NULL)
                {
                x = (x * BaseUnitsx) / 4;
                y = (y * BaseUnitsy) / 8;
@@ -1977,30 +1889,12 @@ NODE *lradiobuttoncreate(NODE *args)
                child->parent = parent->key;
 
                child->TRmybox = new TMyRadioButton(
-                  parent->TWmybox, 
+                  parent->TDmybox, 
                   titlename, 
                   x, 
                   y, 
                   w, 
                   h, 
-                  group->TGmybox);
-               }
-            else if ((parent = dialogboxes.get2(parentname, TDialog_type)) != NULL)
-               {
-               x = (x * BaseUnitsx) / 4;
-               y = (y * BaseUnitsy) / 8;
-               w = (w * BaseUnitsx) / 4;
-               h = (h * BaseUnitsy) / 8;
-
-               child->parent = parent->key;
-            
-               child->TRmybox = new TMyRadioButton(
-                  parent->TDmybox, 
-                  titlename, 
-                  x, 
-                  y,
-                  w, 
-                  h,
                   group->TGmybox);
                }
             else
@@ -2015,8 +1909,6 @@ NODE *lradiobuttoncreate(NODE *args)
                   w,
                   h,
                   group->TGmybox);
-               
-               updateZoomControl = true;
                }
 
             child->TRmybox->Create();
@@ -2025,7 +1917,7 @@ NODE *lradiobuttoncreate(NODE *args)
 
             dialogboxes.insert(child);
 
-            if (updateZoomControl)
+            if (parent == NULL)
                {
                UpdateZoomControlFlag();
                }
@@ -2059,7 +1951,7 @@ NODE *lradiobuttonget(NODE *args)
    char parentname[MAX_BUFFER_SIZE];
    cnv_strnode_string(parentname, args);
 
-   dialogthing *parent = dialogboxes.get2(parentname, TRadioButton_type);
+   dialogthing *parent = dialogboxes.get(parentname, TRadioButton_type);
    if (parent != NULL)
       {
       if (BF_CHECKED == parent->TRmybox->GetCheck())
@@ -2086,7 +1978,7 @@ NODE *lradiobuttonset(NODE *args)
 
    bool pos = boolean_arg(args = cdr(args));
 
-   dialogthing *parent = dialogboxes.get2(parentname, TRadioButton_type);
+   dialogthing *parent = dialogboxes.get(parentname, TRadioButton_type);
    if (parent != NULL)
       {
       if (pos)
@@ -2127,7 +2019,7 @@ NODE *lcheckboxcreate(NODE *args)
 
    if (NOT_THROWING)
       {
-      dialogthing *group = dialogboxes.get2(groupname, TGroupBox_type);
+      dialogthing *group = dialogboxes.get(groupname, TGroupBox_type);
       if (group != NULL)
          {
 
@@ -2135,28 +2027,8 @@ NODE *lcheckboxcreate(NODE *args)
             {
             dialogthing * child = new dialogthing(TCheckBox_type, childname);
 
-            bool updateZoomControl = false;
-
-            dialogthing *parent;
-            if ((parent = dialogboxes.get2(parentname, TWindow_type)) != NULL)
-               {
-               x = (x * BaseUnitsx) / 4;
-               y = (y * BaseUnitsy) / 8;
-               w = (w * BaseUnitsx) / 4;
-               h = (h * BaseUnitsy) / 8;
-
-               child->parent = parent->key;
-               
-               child->TCBmybox = new TMyCheckBox(
-                  parent->TWmybox, 
-                  titlename, 
-                  x, 
-                  y, 
-                  w, 
-                  h, 
-                  group->TGmybox);
-               }
-            else if ((parent = dialogboxes.get2(parentname, TDialog_type)) != NULL)
+            dialogthing *parent = dialogboxes.get(parentname, TWindow_type, TDialog_type);
+            if (parent != NULL)
                {
                x = (x * BaseUnitsx) / 4;
                y = (y * BaseUnitsy) / 8;
@@ -2186,8 +2058,6 @@ NODE *lcheckboxcreate(NODE *args)
                   w,
                   h,
                   group->TGmybox);
-               
-               updateZoomControl = true;
                }
 
                child->TCBmybox->Create();
@@ -2196,7 +2066,7 @@ NODE *lcheckboxcreate(NODE *args)
                
                dialogboxes.insert(child);
 
-               if (updateZoomControl)
+               if (parent == NULL)
                   {
                   UpdateZoomControlFlag();
                   }
@@ -2230,7 +2100,7 @@ NODE *lcheckboxget(NODE *args)
    char parentname[MAX_BUFFER_SIZE];
    cnv_strnode_string(parentname, args);
 
-   dialogthing *parent = dialogboxes.get2(parentname, TCheckBox_type);
+   dialogthing *parent = dialogboxes.get(parentname, TCheckBox_type);
    if (parent != NULL)
       {
       if (BF_CHECKED == parent->TCBmybox->GetCheck())
@@ -2258,7 +2128,7 @@ NODE *lcheckboxset(NODE *args)
    // int pos = getint(pos_int_arg(args = cdr(args)));
    int pos = boolean_arg(args = cdr(args));
 
-   dialogthing *parent = dialogboxes.get2(parentname, TCheckBox_type);
+   dialogthing *parent = dialogboxes.get(parentname, TCheckBox_type);
    if (parent != NULL)
       {
       if (pos)
