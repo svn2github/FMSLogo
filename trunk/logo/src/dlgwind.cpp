@@ -374,14 +374,12 @@ class TMyGroupBox : public TGroupBox
    {
    public:
    TMyGroupBox(
-      TWindow *AParent, 
-      int AnId, 
-      const char * AText, 
-      int X, 
-      int Y,
-      int W, 
-      int H
-      ) : TGroupBox(AParent, AnId, AText, X, Y, W, H)
+      TWindow * Parent, 
+      int       X, 
+      int       Y,
+      int       W, 
+      int       H
+      ) : TGroupBox(Parent, MYGROUPBOX_ID, NULL, X, Y, W, H)
       {
       };
    };
@@ -1926,6 +1924,8 @@ NODE *lgroupboxcreate(NODE *args)
          {
          dialogthing * child = new dialogthing(TGroupBox_type, childname);
 
+         bool updateZoomControl = false;
+
          dialogthing *parent;
          if ((parent = dialogboxes.get2(parentname, TWindow_type)) != NULL)
             {
@@ -1936,13 +1936,7 @@ NODE *lgroupboxcreate(NODE *args)
 
             child->parent = parent->key;
 
-            child->TGmybox = new TMyGroupBox(parent->TWmybox, MYGROUPBOX_ID, NULL, x, y, w, h);
-
-            child->TGmybox->Create();
-
-            MyMessageScan();
-
-            dialogboxes.insert(child);
+            child->TGmybox = new TMyGroupBox(parent->TWmybox, x, y, w, h);
             }
          else if ((parent = dialogboxes.get2(parentname, TDialog_type)) != NULL)
             {
@@ -1953,13 +1947,7 @@ NODE *lgroupboxcreate(NODE *args)
 
             child->parent = parent->key;
 
-            child->TGmybox = new TMyGroupBox(parent->TDmybox, MYGROUPBOX_ID, NULL, x, y, w, h);
-
-            child->TGmybox->Create();
-            
-            MyMessageScan();
-            
-            dialogboxes.insert(child);
+            child->TGmybox = new TMyGroupBox(parent->TDmybox, x, y, w, h);
             }
          else
             {
@@ -1967,19 +1955,22 @@ NODE *lgroupboxcreate(NODE *args)
             
             child->TGmybox = new TMyGroupBox(
                MainWindowx->ScreenWindow,
-               MYGROUPBOX_ID,
-               NULL,
                +x - MainWindowx->ScreenWindow->Scroller->XPos+xoffset,
                -y - MainWindowx->ScreenWindow->Scroller->YPos+yoffset,
                w,
                h);
             
-            child->TGmybox->Create();
-            
-            MyMessageScan();
-            
-            dialogboxes.insert(child);
+            updateZoomControl = true;
+            }
 
+         child->TGmybox->Create();
+
+         MyMessageScan();
+
+         dialogboxes.insert(child);
+
+         if (updateZoomControl)
+            {
             UpdateZoomControlFlag();
             }
          }
