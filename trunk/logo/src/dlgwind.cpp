@@ -130,14 +130,13 @@ class TMyStatic : public TStatic
    {
    public:
    TMyStatic(
-      TWindow *AParent,
-      int AnId, 
-      const char * AText, 
-      int X, 
-      int Y,
-      int W, 
-      int H
-      ) : TStatic(AParent, AnId, AText, X, Y, W, H)
+      TWindow    * Parent,
+      const char * Text, 
+      int          X, 
+      int          Y,
+      int          W, 
+      int          H
+      ) : TStatic(Parent, MYSTATIC_ID, Text, X, Y, W, H)
       {
       };
    };
@@ -1620,6 +1619,8 @@ NODE *lstaticcreate(NODE *args)
          {
          dialogthing * child = new dialogthing(TStatic_type, childname);
 
+         bool updateZoomControl = false;
+
          dialogthing *parent;
          if ((parent = dialogboxes.get2(parentname, TWindow_type)) != NULL)
             {
@@ -1630,13 +1631,7 @@ NODE *lstaticcreate(NODE *args)
 
             child->parent = parent->key;
 
-            child->TSmybox = new TMyStatic(parent->TWmybox, MYSTATIC_ID, titlename, x, y, w, h);
-            
-            child->TSmybox->Create();
-            
-            MyMessageScan();
-            
-            dialogboxes.insert(child);
+            child->TSmybox = new TMyStatic(parent->TWmybox, titlename, x, y, w, h);
             }
          else if ((parent = dialogboxes.get2(parentname, TDialog_type)) != NULL)
             {
@@ -1647,13 +1642,7 @@ NODE *lstaticcreate(NODE *args)
             
             child->parent = parent->key;
 
-            child->TSmybox = new TMyStatic(parent->TDmybox, MYSTATIC_ID, titlename, x, y, w, h);
-            
-            child->TSmybox->Create();
-
-            MyMessageScan();
-            
-            dialogboxes.insert(child);
+            child->TSmybox = new TMyStatic(parent->TDmybox, titlename, x, y, w, h);
             }
          else
             {
@@ -1661,19 +1650,23 @@ NODE *lstaticcreate(NODE *args)
             
             child->TSmybox = new TMyStatic(
                MainWindowx->ScreenWindow,
-               MYSTATIC_ID,
                titlename,
                +x - MainWindowx->ScreenWindow->Scroller->XPos+xoffset,
                -y - MainWindowx->ScreenWindow->Scroller->YPos+yoffset,
                w,
                h);
             
-            child->TSmybox->Create();
-            
-            MyMessageScan();
-            
-            dialogboxes.insert(child);
+            updateZoomControl = true;
+            }
 
+         child->TSmybox->Create();
+            
+         MyMessageScan();
+            
+         dialogboxes.insert(child);
+
+         if (updateZoomControl)
+            {
             UpdateZoomControlFlag();
             }
          }
