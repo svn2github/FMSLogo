@@ -406,20 +406,17 @@ class TMyRadioButton : public TRadioButton
 class TMyCheckBox : public TCheckBox
    {
    public:
-   char callback[MAX_BUFFER_SIZE];
-
    TMyCheckBox(
-      TWindow *AParent, 
-      int AnId, 
-      const char * ATitle, 
+      TWindow *Parent, 
+      const char * Title, 
       int X, 
       int Y,
       int W, 
       int H, 
-      TGroupBox *AGroup
-      ) : TCheckBox(AParent, AnId, ATitle, X, Y, W, H, AGroup)
+      TGroupBox *Group
+      ) : TCheckBox(Parent, MYCHECKBOX_ID, Title, X, Y, W, H, Group)
       {
-      };
+      }
    };
 
 
@@ -2198,6 +2195,8 @@ NODE *lcheckboxcreate(NODE *args)
             {
             dialogthing * child = new dialogthing(TCheckBox_type, childname);
 
+            bool updateZoomControl = false;
+
             dialogthing *parent;
             if ((parent = dialogboxes.get2(parentname, TWindow_type)) != NULL)
                {
@@ -2210,19 +2209,12 @@ NODE *lcheckboxcreate(NODE *args)
                
                child->TCBmybox = new TMyCheckBox(
                   parent->TWmybox, 
-                  MYCHECKBOX_ID, 
                   titlename, 
                   x, 
                   y, 
                   w, 
                   h, 
                   group->TGmybox);
-               
-               child->TCBmybox->Create();
-               
-               MyMessageScan();
-               
-               dialogboxes.insert(child);
                }
             else if ((parent = dialogboxes.get2(parentname, TDialog_type)) != NULL)
                {
@@ -2235,19 +2227,12 @@ NODE *lcheckboxcreate(NODE *args)
                
                child->TCBmybox = new TMyCheckBox(
                   parent->TDmybox, 
-                  MYCHECKBOX_ID, 
                   titlename, 
                   x, 
                   y, 
                   w, 
                   h, 
                   group->TGmybox);
-               
-               child->TCBmybox->Create();
-               
-               MyMessageScan();
-               
-               dialogboxes.insert(child);
                }
             else
                {
@@ -2255,7 +2240,6 @@ NODE *lcheckboxcreate(NODE *args)
 
                child->TCBmybox = new TMyCheckBox(
                   MainWindowx->ScreenWindow,
-                  MYCHECKBOX_ID,
                   titlename,
                   +x - MainWindowx->ScreenWindow->Scroller->XPos+xoffset,
                   -y - MainWindowx->ScreenWindow->Scroller->YPos+yoffset,
@@ -2263,14 +2247,19 @@ NODE *lcheckboxcreate(NODE *args)
                   h,
                   group->TGmybox);
                
+               updateZoomControl = true;
+               }
+
                child->TCBmybox->Create();
                
                MyMessageScan();
                
                dialogboxes.insert(child);
 
-               UpdateZoomControlFlag();
-               }
+               if (updateZoomControl)
+                  {
+                  UpdateZoomControlFlag();
+                  }
             }
          else
             {
