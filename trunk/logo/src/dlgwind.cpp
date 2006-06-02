@@ -52,44 +52,7 @@ static const char *Windowname[] =
 
 
 // class structures for the controls we support, for the most part they
-// are the same as the original with just a key and callback string added
-
-class TMxWindow : public TDialog
-   {
-   public:
-   char caption[MAX_BUFFER_SIZE];
-   char callback[MAX_BUFFER_SIZE];
-   int x;
-   int y;
-   int h;
-   int w;
-
-   TMxWindow(TWindow *AParent, const char * AText) : TDialog(AParent, AText)
-      {
-      }
-
-   protected:
-   void SetupWindow();
-   void CmCancel()
-      {
-      }
-
-   void CmOk()
-      {
-      }
-
-   DECLARE_RESPONSE_TABLE(TMxWindow);
-   };
-
-void TMxWindow::SetupWindow()
-   {
-   ::SetWindowPos(HWindow, NULL, x, y, w, h, 0);
-   SetCaption(caption);
-
-   do_execution(callback);
-
-   TDialog::SetupWindow();
-   }
+// are the same as the original with just a callback string added
 
 class TMxDialog : public TDialog
    {
@@ -101,19 +64,23 @@ class TMxDialog : public TDialog
    int h;
    int w;
 
-   TMxDialog(TWindow *AParent, const char * AText) 
-      : TDialog(AParent, AText)
+   TMxDialog(
+      TWindow * Parent
+      ) : TDialog(Parent, "DIALOGSTUB")
       {
       }
 
    protected:
    void SetupWindow();
+
    void CmCancel()
       {
+      // no cancel
       }
 
    void CmOk()
       {
+      // no close
       }
 
    DECLARE_RESPONSE_TABLE(TMxDialog);
@@ -436,7 +403,7 @@ public:
 
    union
       {
-      class TMxWindow      * TWmybox;
+      class TMxDialog      * TWmybox;
       class TMyStatic      * TSmybox;
       class TMyListBox     * TLmybox;
       class TMxComboBox    * TCmybox;
@@ -863,19 +830,15 @@ NODE *lwindowcreate(NODE *args)
       dialogthing *child = new dialogthing(TWindow_type, childname);
 
       // if parent exists use it else use main window
-      dialogthing *parent;
-      if ((parent = dialogboxes.get2(parentname, TWindow_type)) != NULL)
+      dialogthing *parent = dialogboxes.get2(parentname, TWindow_type);
+      if (parent != NULL)
          {
-         child->TWmybox = new TMxWindow(
-            parent->TWmybox,
-            "DIALOGSTUB");
+         child->TWmybox = new TMxDialog(parent->TWmybox);
          child->parent = (char *)parent->TWmybox;
          }
       else
          {
-         child->TWmybox = new TMxWindow(
-            MainWindowx->ScreenWindow,
-            "DIALOGSTUB");
+         child->TWmybox = new TMxDialog(MainWindowx->ScreenWindow);
          child->parent = (char *)MainWindowx->ScreenWindow;
          }
 
@@ -907,24 +870,6 @@ NODE *lwindowcreate(NODE *args)
    return Unbound;
    }
 
-
-void windowdelete_helper()
-   {
-   char *tempkey;
-   while (tempkey = dialogboxes.getrootkey())
-      {
-      dialogthing *temp = dialogboxes.get(tempkey);
-      if (temp != NULL)
-         {
-         temp->GetWindow()->CloseWindow();
-         dialogboxes.zap(tempkey);
-         }
-      else
-         {
-         break;
-         }
-      }
-   }
 
 static
 NODE *
@@ -1006,7 +951,20 @@ NODE *lwindowdelete(NODE *arg)
          {
          // No window exists that matches this name and type.
          // Close all windows.
-         windowdelete_helper();
+         char *tempkey;
+         while (tempkey = dialogboxes.getrootkey())
+            {
+            dialogthing *temp = dialogboxes.get(tempkey);
+            if (temp != NULL)
+               {
+               temp->GetWindow()->CloseWindow();
+               dialogboxes.zap(tempkey);
+               }
+            else
+               {
+               break;
+               }
+            }
          }
       }
    
@@ -1059,15 +1017,13 @@ NODE *ldialogcreate(NODE *args)
       dialogthing *parent = dialogboxes.get2(parentname, TWindow_type);
       if (parent != NULL)
          {
-         child->TDmybox = new TMxDialog(parent->TWmybox, "DIALOGSTUB");
+         child->TDmybox = new TMxDialog(parent->TWmybox);
          child->parent = (char *)parent->TWmybox;
          }
       else
          {
          // else use main window
-         child->TDmybox = new TMxDialog(
-            MainWindowx->ScreenWindow,
-            "DIALOGSTUB");
+         child->TDmybox = new TMxDialog(MainWindowx->ScreenWindow);
          child->parent = (char *)MainWindowx->ScreenWindow;
          }
 
@@ -2565,11 +2521,6 @@ NODE *lwindowfileedit(NODE *args)
 
 DEFINE_RESPONSE_TABLE1(TMyButton, TButton)
   EV_WM_LBUTTONUP,
-END_RESPONSE_TABLE;
-
-DEFINE_RESPONSE_TABLE1(TMxWindow, TDialog)
-  EV_COMMAND(IDCANCEL, CmCancel),
-  EV_COMMAND(IDOK, CmOk),
 END_RESPONSE_TABLE;
 
 DEFINE_RESPONSE_TABLE1(TMxDialog, TDialog)
