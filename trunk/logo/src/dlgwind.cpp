@@ -993,8 +993,8 @@ NODE *lwindowdelete(NODE *arg)
 
    if (NOT_THROWING)
       {
-      dialogthing *window;
-      if ((window = dialogboxes.get2(windowname, TWindow_type)) != NULL)
+      dialogthing *window = dialogboxes.get2(windowname, TWindow_type);
+      if (window != NULL)
          {
          // The exact name and type exists matches.
          // kill this window and all of its children.
@@ -1056,8 +1056,8 @@ NODE *ldialogcreate(NODE *args)
       dialogthing * child = new dialogthing(TDialog_type, childname);
 
       // if parent of corect type exists use it
-      dialogthing *parent;
-      if ((parent = dialogboxes.get2(parentname, TWindow_type)) != NULL)
+      dialogthing *parent = dialogboxes.get2(parentname, TWindow_type);
+      if (parent != NULL)
          {
          child->TDmybox = new TMxDialog(parent->TWmybox, "DIALOGSTUB");
          child->parent = (char *)parent->TWmybox;
@@ -1241,8 +1241,8 @@ NODE *llistboxaddstring(NODE *args)
    cnv_strnode_string(stringname, cdr(args));
 
    // if exists continue
-   dialogthing *parent;
-   if ((parent = dialogboxes.get2(parentname, TListBox_type)) != NULL)
+   dialogthing *parent = dialogboxes.get2(parentname, TListBox_type);
+   if (parent != NULL)
       {
       // add entry and reset Index for consistency
       parent->TLmybox->AddString(stringname);
@@ -1599,11 +1599,11 @@ NODE *lscrollbarset(NODE *args)
    int hi = getint(pos_int_arg(args = cdr(args)));
    int pos = getint(pos_int_arg(cdr(args)));
 
-   dialogthing *parent;
-   if ((parent = dialogboxes.get2(parentname, TScrollBar_type)) != NULL)
+   dialogthing *parent = dialogboxes.get2(parentname, TScrollBar_type);
+   if (parent != NULL)
       {
-      ((TScrollBar *) parent->TSCmybox)->SetRange(lo, hi);
-      ((TScrollBar *) parent->TSCmybox)->SetPosition(pos);
+      parent->TSCmybox->SetRange(lo, hi);
+      parent->TSCmybox->SetPosition(pos);
       }
    else
       {
@@ -1618,10 +1618,10 @@ NODE *lscrollbarget(NODE *args)
    char parentname[MAX_BUFFER_SIZE];
    cnv_strnode_string(parentname, args);
 
-   dialogthing *parent;
-   if ((parent = dialogboxes.get2(parentname, TScrollBar_type)) != NULL)
+   dialogthing *parent = dialogboxes.get2(parentname, TScrollBar_type);
+   if (parent != NULL)
       {
-      int pos = ((TScrollBar *) parent->TSCmybox)->GetPosition();
+      int pos = parent->TSCmybox->GetPosition();
       return make_intnode(pos);
       }
    else
@@ -1738,8 +1738,8 @@ NODE *lstaticupdate(NODE *args)
    char titlename[MAX_BUFFER_SIZE];
    cnv_strnode_string(titlename, cdr(args));
 
-   dialogthing *temp;
-   if ((temp = dialogboxes.get2(childname, TStatic_type)) != NULL)
+   dialogthing *temp = dialogboxes.get2(childname, TStatic_type);
+   if (temp != NULL)
       {
       temp->TSmybox->SetText(titlename);
       }
@@ -2008,8 +2008,8 @@ NODE *lradiobuttoncreate(NODE *args)
 
    if (NOT_THROWING)
       {
-      dialogthing *group;
-      if ((group = dialogboxes.get2(groupname, TGroupBox_type)) != NULL)
+      dialogthing *group = dialogboxes.get2(groupname, TGroupBox_type);
+      if (group != NULL)
          {
          if (dialogboxes.get(childname) == NULL)
             {
@@ -2110,8 +2110,8 @@ NODE *lradiobuttonget(NODE *args)
    char parentname[MAX_BUFFER_SIZE];
    cnv_strnode_string(parentname, args);
 
-   dialogthing *parent;
-   if ((parent = dialogboxes.get2(parentname, TRadioButton_type)) != NULL)
+   dialogthing *parent = dialogboxes.get2(parentname, TRadioButton_type);
+   if (parent != NULL)
       {
       if (BF_CHECKED == parent->TRmybox->GetCheck())
          {
@@ -2137,8 +2137,8 @@ NODE *lradiobuttonset(NODE *args)
 
    bool pos = boolean_arg(args = cdr(args));
 
-   dialogthing *parent;
-   if ((parent = dialogboxes.get2(parentname, TRadioButton_type)) != NULL)
+   dialogthing *parent = dialogboxes.get2(parentname, TRadioButton_type);
+   if (parent != NULL)
       {
       if (pos)
          {
@@ -2178,8 +2178,8 @@ NODE *lcheckboxcreate(NODE *args)
 
    if (NOT_THROWING)
       {
-      dialogthing *group;
-      if ((group = dialogboxes.get2(groupname, TGroupBox_type)) != NULL)
+      dialogthing *group = dialogboxes.get2(groupname, TGroupBox_type);
+      if (group != NULL)
          {
 
          if (dialogboxes.get(childname) == NULL)
@@ -2281,8 +2281,8 @@ NODE *lcheckboxget(NODE *args)
    char parentname[MAX_BUFFER_SIZE];
    cnv_strnode_string(parentname, args);
 
-   dialogthing *parent;
-   if ((parent = dialogboxes.get2(parentname, TCheckBox_type)) != NULL)
+   dialogthing *parent = dialogboxes.get2(parentname, TCheckBox_type);
+   if (parent != NULL)
       {
       if (BF_CHECKED == parent->TCBmybox->GetCheck())
          {
@@ -2309,8 +2309,8 @@ NODE *lcheckboxset(NODE *args)
    // int pos = getint(pos_int_arg(args = cdr(args)));
    int pos = boolean_arg(args = cdr(args));
 
-   dialogthing *parent;
-   if ((parent = dialogboxes.get2(parentname, TCheckBox_type)) != NULL)
+   dialogthing *parent = dialogboxes.get2(parentname, TCheckBox_type);
+   if (parent != NULL)
       {
       if (pos)
          {
