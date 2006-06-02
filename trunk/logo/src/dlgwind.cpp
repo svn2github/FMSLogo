@@ -1994,7 +1994,7 @@ NODE *lgroupboxcreate(NODE *args)
 
 NODE *lgroupboxdelete(NODE *args)
    {
-   return WindowEnableHelper(args, TGroupBox_type);
+   return WindowDeleteHelper(args, TGroupBox_type);
    }
 
 NODE *lradiobuttoncreate(NODE *args)
