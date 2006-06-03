@@ -19,6 +19,7 @@ LOAD "form.lgo
 LOAD "plist.lgo
 LOAD "editor.lgo
 LOAD "port.lgo
+LOAD "fontfacenames.lgo
 LOAD "label.lgo
 LOAD "pen.lgo
 LOAD "curves.lgo
@@ -88,6 +89,7 @@ TO TESTALL
   EDITORTEST         ; from editor.lgo 
   WINDOWFILEEDITTEST ; from windowfileedit
   PORTTEST           ; from port.lgo
+  FONTFACENAMESTEST  ; from fontfacenames.lgo
   LABELTEST          ; from label.lgo
   PENTEST            ; from pen.lgo
   ARCTEST            ; from curves.lgo
