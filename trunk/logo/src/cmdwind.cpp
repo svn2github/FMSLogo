@@ -873,6 +873,11 @@ void TMyListboxWindow::EvKeyDown(UINT, UINT, UINT)
       DefaultProcessing();
       CopyCurrentLineToEditBox();
       }
+   else if (IsControlKeyDown() && Msg.WParam == 'C')
+      {
+      // CTRL+C should copy
+      DefaultProcessing();
+      }
    else if (Msg.WParam == VK_UP   ||
             Msg.WParam == VK_DOWN ||
             Msg.WParam == VK_LEFT)
