@@ -258,6 +258,7 @@
   <!ENTITY command-fill           SYSTEM "command-fill.xml">
   <!ENTITY command-label          SYSTEM "command-label.xml">
   <!ENTITY command-setpixel       SYSTEM "command-setpixel.xml">
+  <!ENTITY command-fontfacenames  SYSTEM "command-fontfacenames.xml">
   <!ENTITY command-setlabelfont   SYSTEM "command-setlabelfont.xml">
   <!ENTITY command-labelfont      SYSTEM "command-labelfont.xml">
   <!ENTITY command-labelsize      SYSTEM "command-labelsize.xml">

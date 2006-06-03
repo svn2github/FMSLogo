@@ -204,6 +204,7 @@ const PRIMTYPE prims[] =
       { "firsts", 1, 1, 1, PREFIX_PRIORITY, lfirsts },
       { "floodcolor", 0, 0, 0, PREFIX_PRIORITY, lfloodcolor },
       { "floodcolour", 0, 0, 0, PREFIX_PRIORITY, lfloodcolor },
+      { "fontfacenames", 0, 0, 0, PREFIX_PRIORITY, lfontfacenames },
       { "forever", 1, 1, 1, MACRO_PRIORITY, lforever },
       { "form", 3, 3, 3, PREFIX_PRIORITY, lform },
       { "forward", 1, 1, 1, PREFIX_PRIORITY, lforward },

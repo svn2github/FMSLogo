@@ -40,7 +40,7 @@ The meaning of each of the list elements is explained in the following table:
     <tbody>
       <row>
         <entry>FaceName</entry>
-        <entry>A word that is the font's typeface name</entry>
+        <entry>A word (or list of words) that is the font's typeface name</entry>
       </row>
       <row>
         <entry>Height</entry>
@@ -97,6 +97,10 @@ The meaning of each of the list elements is explained in the following table:
 
 <para>
 If you choose a font typeface that is not available on the system, then SETLABELFONT will list all fonts that are available.
+</para>
+
+<para>
+See also <link linkend="command-fontfacenames">FONTFACENAMES</link>.
 </para>
 
 </listitem>

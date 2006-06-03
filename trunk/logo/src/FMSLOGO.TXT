@@ -43,6 +43,8 @@ Part II) New features/bugs fixed:
     o Fix bug #1395736; CTRL+A now works in the commander.
     o Mitigate bug #1327718; installer suggests a location in the home 
       directory when run by a limited user.
+    o Implement request #1499893; Add FONTFACENAMES, a primitive for getting
+      the names of all available font typefaces.
     o Implement request #1480371; The save-before-exit dialog now follows
       Windows convention to prevent accidental data loss.
     o Implement request #1434420; Removed the build-in limit of 4096 chars

@@ -187,6 +187,7 @@ Each time you enter <link linkend="command-perspective">PERSPECTIVE</link> mode 
         &command-fill;
         &command-label;
         &command-setpixel;
+        &command-fontfacenames;
         &command-setlabelfont;
         &command-labelfont;
         &command-labelsize;
