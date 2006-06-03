@@ -502,8 +502,8 @@ void dialoglist::insert(dialogthing * newnode)
       }
    }
 
-// returns the element whose key is k and whose type is t
-dialogthing * dialoglist::get(const char *k, int t)
+// returns the element whose key is "key"
+dialogthing * dialoglist::get(const char *key)
    {
    if (last == NULL) 
       {
@@ -514,75 +514,47 @@ dialogthing * dialoglist::get(const char *k, int t)
 
    do
       {
-      if (strcmp(f->key, k) == 0)
-         {
-         if (f->type == t) 
-            {
-            return f;
-            }
-         else 
-            {
-            // the window is not of type t.
-            return NULL;
-            }
-         }
-      f = f->next;
-      }
-   while (f != last);
-
-   return NULL;
-   }
-
-// returns the element whose key is k and whose type is either type1 or type2
-dialogthing * dialoglist::get(const char *k, int type1, int type2)
-   {
-   if (last == NULL) 
-      {
-      return NULL;
-      }
-
-   dialogthing * f = last;
-
-   do
-      {
-      if (strcmp(f->key, k) == 0)
-         {
-         if (f->type == type1 || f->type == type2)
-            {
-            return f;
-            }
-         else 
-            {
-            // the window is not of type type1 or type2
-            return NULL;
-            }
-         }
-      f = f->next;
-      }
-   while (f != last);
-
-   return NULL;
-   }
-
-// returns the element whose key is k
-dialogthing * dialoglist::get(const char *k)
-   {
-   if (last == NULL) 
-      {
-      return NULL;
-      }
-
-   dialogthing * f = last;
-
-   do
-      {
-      if (strcmp(f->key, k) == 0)
+      if (strcmp(f->key, key) == 0)
          {
          return f;
          }
       f = f->next;
       }
    while (f != last);
+
+   return NULL;
+   }
+
+// returns the element whose key is k and whose type is t
+dialogthing * dialoglist::get(const char *key, int type)
+   {
+   dialogthing * item = get(key);
+   if (item != NULL)
+      {
+      // the window exists
+      if (item->type == type) 
+         {
+         // the window has the correct type
+         return item;
+         }
+      }
+
+   return NULL;
+   }
+
+// returns the element whose key is "key" and whose type is either type1 or type2
+dialogthing * dialoglist::get(const char *key, int type1, int type2)
+   {
+   dialogthing * item = get(key);
+   if (item != NULL)
+      {
+      // the window exists
+      if (item->type == type1 || item->type == type2) 
+         {
+         // the window exists and has the correct type
+         return item;
+         }
+      }
 
    return NULL;
    }
@@ -620,20 +592,8 @@ void dialoglist::zap(const char *k)
       return;
       }
 
-   dialogthing * f = last;
-   dialogthing * p = NULL;
-
    // find the link whose key is "k"
-   do
-      {
-      if (strcmp(f->key, k) == 0)
-         {
-         p = f;
-         break;
-         }
-      f = f->next;
-      }
-   while (f != last);
+   dialogthing * p = get(k);
 
    // delete any children first
    const char *t;
@@ -645,7 +605,7 @@ void dialoglist::zap(const char *k)
    // remove the link from the list
    if (p != NULL)
       {
-      f = p->next;
+      dialogthing * f = p->next;
 
       if (f == p)
          {
@@ -670,26 +630,7 @@ void dialoglist::zap(const char *k)
 // prints the heirarchy of all children of the node whose "k".
 void dialoglist::list(const char *k, int level)
    {
-   if (last == NULL) 
-      {
-      return;
-      }
-
-   dialogthing * f = last;
-   dialogthing * p = NULL;
-
-   do
-      {
-      if (strcmp(f->key, k) == 0)
-         {
-         p = f;
-         break;
-         }
-      f = f->next;
-      }
-   while (f != last);
-
-
+   dialogthing * p = get(k);
    if (p != NULL)
       {
       char indent[128];
