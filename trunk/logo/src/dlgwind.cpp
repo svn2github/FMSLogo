@@ -147,21 +147,19 @@ class TMyButton : public TButton
    char callback[MAX_BUFFER_SIZE];
 
    TMyButton(
-      TWindow *AParent, 
-      int AnId, 
-      const char * AText, 
+      TWindow *Parent, 
+      const char * Text, 
       int X, 
       int Y,
       int W, 
       int H
-      ) : TButton(AParent, AnId, AText, X, Y, W, H)
+      ) : TButton(Parent, MYBUTTON_ID, Text, X, Y, W, H)
       {
       }
-   ;
+
    void EvLButtonUp(UINT modKeys, TPoint &point);
    DECLARE_RESPONSE_TABLE(TMyButton);
-   }
-;
+   };
 
 NODE *leventcheck(NODE *)
    {
@@ -1645,20 +1643,11 @@ NODE *lbuttoncreate(NODE *args)
 
             child->TBmybox = new TMyButton(
                parent->TDmybox,
-               MYBUTTON_ID,
                titlename,
                x,
                y,
                w,
                h);
-
-            strcpy(child->TBmybox->callback, callback);
-
-            child->TBmybox->Create();
-
-            MyMessageScan();
-
-            dialogboxes.insert(child);
             }
          else
             {
@@ -1666,21 +1655,23 @@ NODE *lbuttoncreate(NODE *args)
 
             child->TBmybox = new TMyButton(
                MainWindowx->ScreenWindow,
-               MYBUTTON_ID,
                titlename,
                +x - MainWindowx->ScreenWindow->Scroller->XPos+xoffset,
                -y - MainWindowx->ScreenWindow->Scroller->YPos+yoffset,
                w,
                h);
+            }
 
-            strcpy(child->TBmybox->callback, callback);
+         strcpy(child->TBmybox->callback, callback);
 
-            child->TBmybox->Create();
+         child->TBmybox->Create();
 
-            MyMessageScan();
+         MyMessageScan();
 
-            dialogboxes.insert(child);
+         dialogboxes.insert(child);
 
+         if (parent == NULL)
+            {
             UpdateZoomControlFlag();
             }
          }
