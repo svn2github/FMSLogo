@@ -794,56 +794,58 @@ NODE *lwindowcreate(NODE *args)
       }
 
 
-   // convert them to "DIALOG" units this is the key to making
-   // all Graphics Modes work correctly.
-
-   x = (x * BaseUnitsx) / 4;
-   y = (y * BaseUnitsy) / 8;
-   w = (w * BaseUnitsx) / 4;
-   h = (h * BaseUnitsy) / 8;
-
-   // if not already exist continue
-
-   if (dialogboxes.get(childname) == NULL)
+   if (NOT_THROWING)
       {
-      dialogthing *child = new dialogthing(TWindow_type, childname);
+      // convert them to "DIALOG" units this is the key to making
+      // all Graphics Modes work correctly.
 
-      // if parent exists use it else use main window
-      dialogthing *parent = dialogboxes.get(parentname, TWindow_type);
-      if (parent != NULL)
+      x = (x * BaseUnitsx) / 4;
+      y = (y * BaseUnitsy) / 8;
+      w = (w * BaseUnitsx) / 4;
+      h = (h * BaseUnitsy) / 8;
+
+      // if not already exist continue
+
+      if (dialogboxes.get(childname) == NULL)
          {
-         child->TDmybox = new TMxDialog(parent->TDmybox);
-         child->parent = (char *)parent->TDmybox;
+         dialogthing *child = new dialogthing(TWindow_type, childname);
+
+         // if parent exists use it else use main window
+         dialogthing *parent = dialogboxes.get(parentname, TWindow_type);
+         if (parent != NULL)
+            {
+            child->TDmybox = new TMxDialog(parent->TDmybox);
+            child->parent = (char *)parent->TDmybox;
+            }
+         else
+            {
+            child->TDmybox = new TMxDialog(MainWindowx->ScreenWindow);
+            child->parent = (char *)MainWindowx->ScreenWindow;
+            }
+
+         // Modeless windows can have to have a callback to set them up
+         // since it will return
+         strcpy(child->TDmybox->callback, callback);
+         strcpy(child->TDmybox->caption, titlename);
+
+         // Most attributes are set in DIALOGSTUB
+         child->TDmybox->x = x;
+         child->TDmybox->y = y;
+         child->TDmybox->w = w;
+         child->TDmybox->h = h;
+
+         dialogboxes.insert(child);
+
+         child->TDmybox->Create();
+         child->TDmybox->ShowWindow(SW_SHOW);
+
+         // Make sure the window is up before we try to add controls
+         MyMessageScan();
          }
       else
-         {
-         child->TDmybox = new TMxDialog(MainWindowx->ScreenWindow);
-         child->parent = (char *)MainWindowx->ScreenWindow;
+         {     
+         ShowMessageAndStop("Already exists", childname);
          }
-
-      // Modeless windows can have to have a callback to set them up
-      // since it will return
-      strcpy(child->TDmybox->callback, callback);
-      strcpy(child->TDmybox->caption, titlename);
-
-      // Most attributes are set in DIALOGSTUB
-      child->TDmybox->x = x;
-      child->TDmybox->y = y;
-      child->TDmybox->w = w;
-      child->TDmybox->h = h;
-
-      dialogboxes.insert(child);
-
-      child->TDmybox->Create();
-      child->TDmybox->ShowWindow(SW_SHOW);
-
-      // Make sure the window is up before we try to add controls?
-
-      MyMessageScan();
-      }
-   else
-      {     
-      ShowMessageAndStop("Already exists", childname);
       }
 
    return Unbound;
@@ -979,56 +981,60 @@ NODE *ldialogcreate(NODE *args)
       callback[0] = '\0';
       }
 
-   // convert to "DIALOG" units. This is the key to getting consistent
-   // results in all graphics MODEs.
 
-   x = (x * BaseUnitsx) / 4;
-   y = (y * BaseUnitsy) / 8;
-   w = (w * BaseUnitsx) / 4;
-   h = (h * BaseUnitsy) / 8;
-
-   // if it does not exist continue
-
-   if (dialogboxes.get(childname) == NULL)
+   if (NOT_THROWING)
       {
-      // make one
-      dialogthing * child = new dialogthing(TDialog_type, childname);
+      // convert to "DIALOG" units. This is the key to getting consistent
+      // results in all graphics MODEs.
 
-      // if parent of corect type exists use it
-      dialogthing *parent = dialogboxes.get(parentname, TWindow_type);
-      if (parent != NULL)
+      x = (x * BaseUnitsx) / 4;
+      y = (y * BaseUnitsy) / 8;
+      w = (w * BaseUnitsx) / 4;
+      h = (h * BaseUnitsy) / 8;
+
+      // if it does not exist continue
+
+      if (dialogboxes.get(childname) == NULL)
          {
-         child->TDmybox = new TMxDialog(parent->TDmybox);
-         child->parent = (char *)parent->TDmybox;
+         // make one
+         dialogthing * child = new dialogthing(TDialog_type, childname);
+
+         // if parent of corect type exists use it
+         dialogthing *parent = dialogboxes.get(parentname, TWindow_type);
+         if (parent != NULL)
+            {
+            child->TDmybox = new TMxDialog(parent->TDmybox);
+            child->parent = (char *)parent->TDmybox;
+            }
+         else
+            {
+            // else use main window
+            child->TDmybox = new TMxDialog(MainWindowx->ScreenWindow);
+            child->parent = (char *)MainWindowx->ScreenWindow;
+            }
+
+         // Modal windows have to have a callback to set them up
+         // since it will not return until closed
+         strcpy(child->TDmybox->callback, callback);
+         strcpy(child->TDmybox->caption, titlename);
+
+         // Most attributes are set in DIALOGSTUB
+         child->TDmybox->x = x;
+         child->TDmybox->y = y;
+         child->TDmybox->w = w;
+         child->TDmybox->h = h;
+
+         dialogboxes.insert(child);
+
+         // Note will not return until the Window closes
+         // But the LOGO program still has some control through
+         // the callback which is done through OWLs "SetupWindow".
+         child->TDmybox->Execute();
          }
       else
          {
-         // else use main window
-         child->TDmybox = new TMxDialog(MainWindowx->ScreenWindow);
-         child->parent = (char *)MainWindowx->ScreenWindow;
+         ShowMessageAndStop("Already exists", childname);
          }
-
-      // Modal windows have to have a callback to set them up
-      // since it will not return until closed
-      strcpy(child->TDmybox->callback, callback);
-      strcpy(child->TDmybox->caption, titlename);
-
-      // Most attributes are set in DIALOGSTUB
-      child->TDmybox->x = x;
-      child->TDmybox->y = y;
-      child->TDmybox->w = w;
-      child->TDmybox->h = h;
-
-      dialogboxes.insert(child);
-
-      // Note will not return until the Window closes
-      // But the LOGO program still has some control through
-      // the callback which is done through OWLs "SetupWindow".
-      child->TDmybox->Execute();
-      }
-   else
-      {
-      ShowMessageAndStop("Already exists", childname);
       }
 
    return Unbound;
@@ -1809,6 +1815,7 @@ NODE *lradiobuttoncreate(NODE *args)
 
    char titlename[MAX_BUFFER_SIZE];
    cnv_strnode_string(titlename, args = cdr(args));
+
    int x = int_arg(args = cdr(args));
    int y = int_arg(args = cdr(args));
    int w = int_arg(args = cdr(args));
