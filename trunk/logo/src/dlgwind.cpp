@@ -862,14 +862,17 @@ WindowEnableHelper(
 
    bool bEnable = boolean_arg(cdr(args));
 
-   dialogthing *window = dialogboxes.get(childname, WindowType);
-   if (window != NULL)
+   if (NOT_THROWING)
       {
-      window->GetWindow()->EnableWindow(bEnable);
-      }
-   else
-      {
-      ShowMessageAndStop("Does not exist", childname);
+      dialogthing *window = dialogboxes.get(childname, WindowType);
+      if (window != NULL)
+         {
+         window->GetWindow()->EnableWindow(bEnable);
+         }
+      else
+         {
+         ShowMessageAndStop("Does not exist", childname);
+         }
       }
 
    return Unbound;

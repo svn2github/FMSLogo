@@ -21,6 +21,8 @@ Part I) Kit Description/Location (http://sourceforge.net/projects/fmslogo):
 Part II) New features/bugs fixed:
 
   * Added for 6.9.0,
+    o Fix bug #1500306; BUTTONENABLE, RADIOBUTTONENABLE, CHECKBOXENABLE, etc.
+      no longer enable the widget no side effects on bad input.
     o Fix bug #1499279; GROUPBOXDELETE no longer crashes.
     o Fix bug #1496581; Pressing F1 while selecting a long word in the 
       commander window no longer crashes.
