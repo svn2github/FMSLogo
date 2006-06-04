@@ -56,7 +56,7 @@ static const char *Windowname[] =
 
 class TMxDialog : public TDialog
    {
-   public:
+public:
    char callback[MAX_BUFFER_SIZE];
    char caption[MAX_BUFFER_SIZE];
    int x;
@@ -70,7 +70,7 @@ class TMxDialog : public TDialog
       {
       }
 
-   protected:
+protected:
    void SetupWindow();
 
    void CmCancel()
@@ -97,9 +97,15 @@ void TMxDialog::SetupWindow()
    TDialog::SetupWindow();
    }
 
+DEFINE_RESPONSE_TABLE1(TMxDialog, TDialog)
+   EV_COMMAND(IDCANCEL, CmCancel),
+   EV_COMMAND(IDOK, CmOk),
+END_RESPONSE_TABLE;
+
+
 class TMyListBox : public TListBox
    {
-   public:
+public:
 
    TMyListBox(TWindow *Parent, int X, int Y, int W, int H) :
       TListBox(Parent, MYLISTBOX_ID, X, Y, W, H)
@@ -111,7 +117,7 @@ class TMyListBox : public TListBox
 
 class TMxComboBox : public TComboBox
    {
-   public:
+public:
    TMxComboBox(
       TWindow *Parent, 
       int X, 
@@ -128,7 +134,7 @@ class TMxComboBox : public TComboBox
 
 class TMyStatic : public TStatic
    {
-   public:
+public:
    TMyStatic(
       TWindow    * Parent,
       const char * Text, 
@@ -138,12 +144,12 @@ class TMyStatic : public TStatic
       int          H
       ) : TStatic(Parent, MYSTATIC_ID, Text, X, Y, W, H)
       {
-      };
+      }
    };
 
 class TMyButton : public TButton
    {
-   public:
+public:
    char callback[MAX_BUFFER_SIZE];
 
    TMyButton(
@@ -161,139 +167,10 @@ class TMyButton : public TButton
    DECLARE_RESPONSE_TABLE(TMyButton);
    };
 
-NODE *leventcheck(NODE *)
-   {
-   MSG msg;
+DEFINE_RESPONSE_TABLE1(TMyButton, TButton)
+   EV_WM_LBUTTONUP,
+END_RESPONSE_TABLE;
 
-   //   checkqueue();
-
-   while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
-      {
-      TranslateMessage(&msg);
-      DispatchMessage(&msg);
-      }
-
-   return Unbound;
-   }
-
-/* function that processes our own queued events */
-
-void checkqueue()
-   {
-   callthing *thing;
-
-   while (thing = calllists.get())
-      {
-      int save_yield_flag;
-      int sv_val_status;
-
-      sv_val_status = val_status;
-
-      calllists.zap();
-      switch (thing->kind)
-         {
-         // mouse event must not yield while processing
-         case EVENTTYPE_Mouse:
-            {
-            save_yield_flag = yield_flag;
-            yield_flag = 0;
-            mouse_posx = thing->arg1;
-            mouse_posy = thing->arg2;
-            do_execution(thing->func);
-            yield_flag = save_yield_flag;
-            break;
-            }
-
-          // keyboard event must not yield while processing
-          case EVENTTYPE_Keyboard:
-             {
-             save_yield_flag = yield_flag;
-             yield_flag = 0;
-             keyboard_value = thing->arg1;
-             do_execution(thing->func);
-             yield_flag = save_yield_flag;
-             break;
-             }
-
-          // Button, timer or other event ok to yield while processing
-          case EVENTTYPE_YieldFunction:
-             {
-             do_execution(thing->func);
-             break;
-             }
-
-          // Scrollbar, MCI, Net, timer or other event must not yield while processing
-          case EVENTTYPE_NoYieldFunction:
-             {
-             save_yield_flag = yield_flag;
-             yield_flag = 0;
-             do_execution(thing->func);
-             yield_flag = save_yield_flag;
-             break;
-             }
-
-          // Network events must not yield while processing
-          case EVENTTYPE_NetworkReceive:
-             {
-             save_yield_flag = yield_flag;
-             yield_flag = 0;
-             if (thing->networkpacket != NULL)
-                {
-                strcpy(network_receive_value, thing->networkpacket);
-                free(thing->networkpacket);
-                thing->networkpacket = NULL;
-                }
-             do_execution(thing->func);
-             yield_flag = save_yield_flag;
-             break;
-             }
-
-          // Network events must not yield while processing
-          case EVENTTYPE_NetworkSend:
-             {
-             save_yield_flag = yield_flag;
-             yield_flag = 0;
-             if (thing->networkpacket != NULL)
-                {
-                strcpy(network_send_value, thing->networkpacket);
-                free(thing->networkpacket);
-                thing->networkpacket = NULL;
-                }
-             do_execution(thing->func);
-             yield_flag = save_yield_flag;
-             break;
-             }
-         }
-
-      delete thing;
-
-      val_status = sv_val_status;
-      }
-   }
-
-/* function to dump the queue */
-
-void emptyqueue()
-   {
-   callthing *thing;
-
-   while (thing = calllists.get())
-      {
-      calllists.zap();
-      switch (thing->kind)
-         {
-         // TODO: move this logic into callthing's destructor
-         case EVENTTYPE_NetworkReceive:
-         case EVENTTYPE_NetworkSend:
-            {
-            free(thing->networkpacket);
-            break;
-            }
-         }
-
-      delete thing;
-      }
-   }
 
 /* if the button gets clicked we end up here and queue the event */
 
@@ -753,6 +630,139 @@ bool dialoglist::OnScreenControlsExist()
    }
 
 dialoglist dialogboxes;
+
+
+NODE *leventcheck(NODE *)
+   {
+   // checkqueue();
+
+   MSG msg;
+   while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+      {
+      TranslateMessage(&msg);
+      DispatchMessage(&msg);
+      }
+
+   return Unbound;
+   }
+
+// function that processes our own queued events 
+void checkqueue()
+   {
+   callthing *thing;
+
+   while (thing = calllists.get())
+      {
+      int save_yield_flag;
+      int sv_val_status;
+
+      sv_val_status = val_status;
+
+      calllists.zap();
+      switch (thing->kind)
+         {
+         // mouse event must not yield while processing
+         case EVENTTYPE_Mouse:
+            {
+            save_yield_flag = yield_flag;
+            yield_flag = 0;
+            mouse_posx = thing->arg1;
+            mouse_posy = thing->arg2;
+            do_execution(thing->func);
+            yield_flag = save_yield_flag;
+            break;
+            }
+
+          // keyboard event must not yield while processing
+          case EVENTTYPE_Keyboard:
+             {
+             save_yield_flag = yield_flag;
+             yield_flag = 0;
+             keyboard_value = thing->arg1;
+             do_execution(thing->func);
+             yield_flag = save_yield_flag;
+             break;
+             }
+
+          // Button, timer or other event ok to yield while processing
+          case EVENTTYPE_YieldFunction:
+             {
+             do_execution(thing->func);
+             break;
+             }
+
+          // Scrollbar, MCI, Net, timer or other event must not yield while processing
+          case EVENTTYPE_NoYieldFunction:
+             {
+             save_yield_flag = yield_flag;
+             yield_flag = 0;
+             do_execution(thing->func);
+             yield_flag = save_yield_flag;
+             break;
+             }
+
+          // Network events must not yield while processing
+          case EVENTTYPE_NetworkReceive:
+             {
+             save_yield_flag = yield_flag;
+             yield_flag = 0;
+             if (thing->networkpacket != NULL)
+                {
+                strcpy(network_receive_value, thing->networkpacket);
+                free(thing->networkpacket);
+                thing->networkpacket = NULL;
+                }
+             do_execution(thing->func);
+             yield_flag = save_yield_flag;
+             break;
+             }
+
+          // Network events must not yield while processing
+          case EVENTTYPE_NetworkSend:
+             {
+             save_yield_flag = yield_flag;
+             yield_flag = 0;
+             if (thing->networkpacket != NULL)
+                {
+                strcpy(network_send_value, thing->networkpacket);
+                free(thing->networkpacket);
+                thing->networkpacket = NULL;
+                }
+             do_execution(thing->func);
+             yield_flag = save_yield_flag;
+             break;
+             }
+         }
+
+      delete thing;
+
+      val_status = sv_val_status;
+      }
+   }
+
+/* function to dump the queue */
+
+void emptyqueue()
+   {
+   callthing *thing;
+
+   while (thing = calllists.get())
+      {
+      calllists.zap();
+      switch (thing->kind)
+         {
+         // TODO: move this logic into callthing's destructor
+         case EVENTTYPE_NetworkReceive:
+         case EVENTTYPE_NetworkSend:
+            {
+            free(thing->networkpacket);
+            break;
+            }
+         }
+
+      delete thing;
+      }
+   }
 
 /* User function to create a modeless window */
 
@@ -2313,13 +2323,4 @@ NODE *lwindowfileedit(NODE *args)
    TMainFrame::PopupEditorForFile(filename, NULL);
    return Unbound;
    }
-
-DEFINE_RESPONSE_TABLE1(TMyButton, TButton)
-  EV_WM_LBUTTONUP,
-END_RESPONSE_TABLE;
-
-DEFINE_RESPONSE_TABLE1(TMxDialog, TDialog)
-  EV_COMMAND(IDCANCEL, CmCancel),
-  EV_COMMAND(IDOK, CmOk),
-END_RESPONSE_TABLE;
 
