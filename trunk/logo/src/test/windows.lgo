@@ -599,6 +599,27 @@ TO WINDOWSTEST.RADIOBUTTON.BADINPUT
 
 END
 
+TO WINDOWSTEST.RADIOBUTTON.DELETEGROUPBOX
+
+  TRACEINSTRUCTION [ WINDOWCREATE "main "windowstest.radiobutton "mytitle 0 0 100 100 [] ]
+  TRACEINSTRUCTION [ GROUPBOXCREATE     "windowstest.radiobutton "groupbox 10 5 80 60    ]
+  TRACEINSTRUCTION [ RADIOBUTTONCREATE  "windowstest.radiobutton "groupbox "radio [Radio] 20 15 60 20 ]
+
+  ; delete the group to which the radio buttons belong
+  TRACEINSTRUCTION [ GROUPBOXDELETE "groupbox ]
+
+  ; manipulate the radio buttons
+  TRACEINSTRUCTION [ RADIOBUTTONSET "radio "false ]
+  SIMPLEREPORTTEST [ RADIOBUTTONGET "radio ] "false
+
+  TRACEINSTRUCTION [ RADIOBUTTONENABLE "radio "false ]
+  TRACEINSTRUCTION [ RADIOBUTTONENABLE "radio "true  ]
+
+  ; cleanup
+  TRACEINSTRUCTION [ RADIOBUTTONDELETE "radio ]
+  TRACEINSTRUCTION [ WINDOWDELETE "windowstest.radiobutton ]
+END
+
 
 TO WINDOWSTEST.CHECKBOX
 
@@ -715,6 +736,29 @@ TO WINDOWSTEST.CHECKBOX.BADINPUT
   TRACEINSTRUCTION [ staticdelete   "notacheckbox ]
 
 END
+
+
+TO WINDOWSTEST.CHECKBOX.DELETEGROUPBOX
+
+  TRACEINSTRUCTION [ WINDOWCREATE "main "windowstest.checkbox "mytitle 0 0 100 100 []                ]
+  TRACEINSTRUCTION [ GROUPBOXCREATE "windowstest.checkbox "groupbox 10 5 80 60                       ]
+  TRACEINSTRUCTION [ CHECKBOXCREATE "windowstest.checkbox "groupbox "checkbox [Checkbox] 20 15 60 20 ]
+
+  ; delete the group to which the checkbox controls belong
+  TRACEINSTRUCTION [ GROUPBOXDELETE "groupbox ]
+
+  ; manipulate the checkbox buttons
+  TRACEINSTRUCTION [ CHECKBOXSET "checkbox "false ]
+  SIMPLEREPORTTEST [ CHECKBOXGET "checkbox ] "false
+
+  TRACEINSTRUCTION [ CHECKBOXENABLE "checkbox "false ]
+  TRACEINSTRUCTION [ CHECKBOXENABLE "checkbox "true  ]
+
+  ; cleanup
+  TRACEINSTRUCTION [ CHECKBOXDELETE "checkbox ]
+  TRACEINSTRUCTION [ WINDOWDELETE "windowstest.checkbox ]
+END
+
 
 TO WINDOWSTEST.SCROLLBAR
 
@@ -1019,9 +1063,11 @@ TO WINDOWSTEST
 
    WINDOWSTEST.RADIOBUTTON
    WINDOWSTEST.RADIOBUTTON.BADINPUT
+   WINDOWSTEST.RADIOBUTTON.DELETEGROUPBOX
 
    WINDOWSTEST.CHECKBOX
    WINDOWSTEST.CHECKBOX.BADINPUT
+   WINDOWSTEST.CHECKBOX.DELETEGROUPBOX
 
    WINDOWSTEST.SCROLLBAR
    WINDOWSTEST.SCROLLBAR.BADINPUT
