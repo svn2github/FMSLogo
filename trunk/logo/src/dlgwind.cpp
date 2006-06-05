@@ -50,6 +50,69 @@ static const char *Windowname[] =
       "Dialog",
    };
 
+class TClientRectangle
+   {
+public:
+   TClientRectangle();
+
+   void InitializeFromInput(NODE * & Args);
+
+   int GetX() const {return x;}
+   int GetY() const {return y;}
+   int GetWidth() const {return width;}
+   int GetHeight() const {return height;}
+
+   void ConvertToDialogCoordinates();
+   void ConvertToScreenCoordinates();
+
+private:
+   int x;
+   int y;
+   int width;
+   int height;
+   };
+
+TClientRectangle::TClientRectangle() : 
+   x(0),
+   y(0),
+   width(0), 
+   height(0)
+   {
+   }
+
+void TClientRectangle::InitializeFromInput(NODE * & Args)
+   {
+   NODE * nextinput = Args;
+
+   x = int_arg(nextinput);
+   nextinput = cdr(nextinput);
+
+   y = int_arg(nextinput);
+   nextinput = cdr(nextinput);
+
+   width = getint(pos_int_arg(nextinput));
+   nextinput = cdr(nextinput);
+
+   height = getint(pos_int_arg(nextinput));
+   nextinput = cdr(nextinput);
+   
+   Args = nextinput;
+   }
+
+void TClientRectangle::ConvertToDialogCoordinates()
+   {
+   x = (x * BaseUnitsx) / 4;
+   y = (y * BaseUnitsy) / 8;
+
+   width  = (width  * BaseUnitsx) / 4;
+   height = (height * BaseUnitsy) / 8;
+   }
+
+void TClientRectangle::ConvertToScreenCoordinates()
+   {
+   x =  x - MainWindowx->ScreenWindow->Scroller->XPos + xoffset;
+   y = -y - MainWindowx->ScreenWindow->Scroller->YPos + yoffset;
+   }
 
 // class structures for the controls we support, for the most part they
 // are the same as the original with just a callback string added
@@ -59,10 +122,8 @@ class TMxDialog : public TDialog
 public:
    char callback[MAX_BUFFER_SIZE];
    char caption[MAX_BUFFER_SIZE];
-   int x;
-   int y;
-   int h;
-   int w;
+
+   TClientRectangle clientrect;
 
    TMxDialog(
       TWindow * Parent
@@ -89,7 +150,14 @@ protected:
 
 void TMxDialog::SetupWindow()
    {
-   SetWindowPos(NULL, x, y, w, h, 0);
+   SetWindowPos(
+      NULL, 
+      clientrect.GetX(), 
+      clientrect.GetY(),
+      clientrect.GetWidth(), 
+      clientrect.GetHeight(), 
+      0);
+
    SetCaption(caption);
 
    do_execution(callback);
@@ -107,8 +175,16 @@ class TMyListBox : public TListBox
    {
 public:
 
-   TMyListBox(TWindow *Parent, int X, int Y, int W, int H) :
-      TListBox(Parent, MYLISTBOX_ID, X, Y, W, H)
+   TMyListBox(
+      TWindow                * Parent, 
+      const TClientRectangle & ClientRect
+      ) : TListBox(
+         Parent, 
+         MYLISTBOX_ID, 
+         ClientRect.GetX(), 
+         ClientRect.GetY(), 
+         ClientRect.GetWidth(), 
+         ClientRect.GetHeight())
       {
       // disable automatic sorting
       Attr.Style ^= LBS_SORT;
@@ -119,12 +195,17 @@ class TMxComboBox : public TComboBox
    {
 public:
    TMxComboBox(
-      TWindow *Parent, 
-      int X, 
-      int Y,
-      int W, 
-      int H
-      ) : TComboBox(Parent, MYCOMBOBOX_ID, X, Y, W, H, CBS_SIMPLE, 0)
+      TWindow                * Parent, 
+      const TClientRectangle & ClientRect
+      ) : TComboBox(
+         Parent, 
+         MYCOMBOBOX_ID, 
+         ClientRect.GetX(), 
+         ClientRect.GetY(), 
+         ClientRect.GetWidth(), 
+         ClientRect.GetHeight(),
+         CBS_SIMPLE, 
+         0)
       {
       // set attributes
       Attr.Style |= CBS_DISABLENOSCROLL;
@@ -136,13 +217,17 @@ class TMyStatic : public TStatic
    {
 public:
    TMyStatic(
-      TWindow    * Parent,
-      const char * Text, 
-      int          X, 
-      int          Y,
-      int          W, 
-      int          H
-      ) : TStatic(Parent, MYSTATIC_ID, Text, X, Y, W, H)
+      TWindow                * Parent,
+      const char             * Text, 
+      const TClientRectangle & ClientRect
+      ) : TStatic(
+         Parent, 
+         MYSTATIC_ID, 
+         Text, 
+         ClientRect.GetX(), 
+         ClientRect.GetY(), 
+         ClientRect.GetWidth(), 
+         ClientRect.GetHeight())
       {
       }
    };
@@ -153,13 +238,17 @@ public:
    char callback[MAX_BUFFER_SIZE];
 
    TMyButton(
-      TWindow *Parent, 
-      const char * Text, 
-      int X, 
-      int Y,
-      int W, 
-      int H
-      ) : TButton(Parent, MYBUTTON_ID, Text, X, Y, W, H)
+      TWindow                * Parent, 
+      const char             * Text, 
+      const TClientRectangle & ClientRect
+      ) : TButton(
+         Parent, 
+         MYBUTTON_ID, 
+         Text, 
+         ClientRect.GetX(), 
+         ClientRect.GetY(), 
+         ClientRect.GetWidth(), 
+         ClientRect.GetHeight())
       {
       }
 
@@ -172,8 +261,7 @@ DEFINE_RESPONSE_TABLE1(TMyButton, TButton)
 END_RESPONSE_TABLE;
 
 
-/* if the button gets clicked we end up here and queue the event */
-
+// if the button gets clicked we end up here and queue the event 
 void TMyButton::EvLButtonUp(UINT /* modKeys */, TPoint & /* point */)
    {
    DefaultProcessing();
@@ -189,13 +277,17 @@ class TMyScrollBar : public TScrollBar
    char callback[MAX_BUFFER_SIZE];
 
    TMyScrollBar(
-      TWindow *Parent, 
-      int      X, 
-      int      Y,
-      int      W, 
-      int      H, 
-      bool     IsHScrollBar
-      ) : TScrollBar(Parent, MYSCROLLBAR_ID, X, Y, W, H, IsHScrollBar)
+      TWindow                * Parent, 
+      const TClientRectangle & ClientRect,
+      bool                     IsHScrollBar
+      ) : TScrollBar(
+         Parent, 
+         MYSCROLLBAR_ID,
+         ClientRect.GetX(),
+         ClientRect.GetY(),
+         IsHScrollBar  ? ClientRect.GetWidth()  : 0,
+         !IsHScrollBar ? ClientRect.GetHeight() : 0,
+         IsHScrollBar)
       {
       }
 
@@ -215,14 +307,18 @@ class TMyGroupBox : public TGroupBox
    {
    public:
    TMyGroupBox(
-      TWindow * Parent, 
-      int       X, 
-      int       Y,
-      int       W, 
-      int       H
-      ) : TGroupBox(Parent, MYGROUPBOX_ID, NULL, X, Y, W, H)
+      TWindow                * Parent, 
+      const TClientRectangle & ClientRect
+      ) : TGroupBox(
+         Parent, 
+         MYGROUPBOX_ID, 
+         NULL, 
+         ClientRect.GetX(), 
+         ClientRect.GetY(), 
+         ClientRect.GetWidth(), 
+         ClientRect.GetHeight())
       {
-      };
+      }
    };
 
 class TMyRadioButton : public TRadioButton
@@ -230,14 +326,19 @@ class TMyRadioButton : public TRadioButton
    public:
 
    TMyRadioButton(
-      TWindow * Parent, 
-      const char * Title, 
-      int X, 
-      int Y,
-      int W, 
-      int H, 
-      TGroupBox *Group
-      ) : TRadioButton(Parent, MYRADIOBUTTON_ID, Title, X, Y, W, H, Group)
+      TWindow                * Parent, 
+      const char             * Title, 
+      const TClientRectangle & ClientRect,
+      TGroupBox              * Group
+      ) : TRadioButton(
+         Parent, 
+         MYRADIOBUTTON_ID, 
+         Title, 
+         ClientRect.GetX(), 
+         ClientRect.GetY(), 
+         ClientRect.GetWidth(), 
+         ClientRect.GetHeight(),
+         Group)
       {
       }
    };
@@ -246,14 +347,19 @@ class TMyCheckBox : public TCheckBox
    {
    public:
    TMyCheckBox(
-      TWindow *Parent, 
-      const char * Title, 
-      int X, 
-      int Y,
-      int W, 
-      int H, 
-      TGroupBox *Group
-      ) : TCheckBox(Parent, MYCHECKBOX_ID, Title, X, Y, W, H, Group)
+      TWindow                * Parent, 
+      const char             * Title, 
+      const TClientRectangle & ClientRect,
+      TGroupBox              * Group
+      ) : TCheckBox(
+         Parent, 
+         MYCHECKBOX_ID, 
+         Title,
+         ClientRect.GetX(), 
+         ClientRect.GetY(), 
+         ClientRect.GetWidth(), 
+         ClientRect.GetHeight(),
+         Group)
       {
       }
    };
@@ -771,22 +877,23 @@ NODE *lwindowcreate(NODE *args)
    /* get all the args */
    char parentname[MAX_BUFFER_SIZE];
    cnv_strnode_string(parentname, args);
+   args = cdr(args);
 
    char childname[MAX_BUFFER_SIZE];
-   cnv_strnode_string(childname, args = cdr(args));
+   cnv_strnode_string(childname, args);
+   args = cdr(args);
 
    char titlename[MAX_BUFFER_SIZE];
-   cnv_strnode_string(titlename, args = cdr(args));
+   cnv_strnode_string(titlename, args);
+   args = cdr(args);
 
-   int x =            int_arg(args = cdr(args)) ;
-   int y =            int_arg(args = cdr(args)) ;
-   int w = getint(pos_int_arg(args = cdr(args)));
-   int h = getint(pos_int_arg(args = cdr(args)));
+   TClientRectangle clientrect;
+   clientrect.InitializeFromInput(args);
 
    char callback[MAX_BUFFER_SIZE];
-   if (cdr(args) != NIL) 
+   if (args != NIL) 
       {
-      cnv_strnode_string(callback, cdr(args));
+      cnv_strnode_string(callback, args);
       }
    else 
       {
@@ -796,16 +903,12 @@ NODE *lwindowcreate(NODE *args)
 
    if (NOT_THROWING)
       {
-      // convert them to "DIALOG" units this is the key to making
-      // all Graphics Modes work correctly.
+      // convert them to "DIALOG" units.
+      // this is the key to making all Graphics Modes work correctly.
 
-      x = (x * BaseUnitsx) / 4;
-      y = (y * BaseUnitsy) / 8;
-      w = (w * BaseUnitsx) / 4;
-      h = (h * BaseUnitsy) / 8;
+      clientrect.ConvertToDialogCoordinates();
 
       // if not already exist continue
-
       if (dialogboxes.get(childname) == NULL)
          {
          dialogthing *child = new dialogthing(TWindow_type, childname);
@@ -829,10 +932,7 @@ NODE *lwindowcreate(NODE *args)
          strcpy(child->TDmybox->caption, titlename);
 
          // Most attributes are set in DIALOGSTUB
-         child->TDmybox->x = x;
-         child->TDmybox->y = y;
-         child->TDmybox->w = w;
-         child->TDmybox->h = h;
+         child->TDmybox->clientrect = clientrect;
 
          dialogboxes.insert(child);
 
@@ -959,24 +1059,25 @@ NODE *ldialogcreate(NODE *args)
    // get args
    char parentname[MAX_BUFFER_SIZE];
    cnv_strnode_string(parentname, args);
+   args = cdr(args);
 
    char childname[MAX_BUFFER_SIZE];
-   cnv_strnode_string(childname, args = cdr(args));
+   cnv_strnode_string(childname, args);
+   args = cdr(args);
 
    char titlename[MAX_BUFFER_SIZE];
-   cnv_strnode_string(titlename, args = cdr(args));
+   cnv_strnode_string(titlename, args);
+   args = cdr(args);
 
-   int x =            int_arg(args = cdr(args)) ;
-   int y =            int_arg(args = cdr(args)) ;
-   int w = getint(pos_int_arg(args = cdr(args)));
-   int h = getint(pos_int_arg(args = cdr(args)));
+   TClientRectangle clientrect;
+   clientrect.InitializeFromInput(args);
 
    char callback[MAX_BUFFER_SIZE];
-   if (cdr(args) != NIL)
+   if (args != NIL) 
       {
-      cnv_strnode_string(callback, cdr(args));
+      cnv_strnode_string(callback, args);
       }
-   else
+   else 
       {
       callback[0] = '\0';
       }
@@ -984,16 +1085,11 @@ NODE *ldialogcreate(NODE *args)
 
    if (NOT_THROWING)
       {
-      // convert to "DIALOG" units. This is the key to getting consistent
-      // results in all graphics MODEs.
-
-      x = (x * BaseUnitsx) / 4;
-      y = (y * BaseUnitsy) / 8;
-      w = (w * BaseUnitsx) / 4;
-      h = (h * BaseUnitsy) / 8;
+      // convert to "DIALOG" units. 
+      // This is the key to getting consistent results in all graphics MODEs.
+      clientrect.ConvertToDialogCoordinates();
 
       // if it does not exist continue
-
       if (dialogboxes.get(childname) == NULL)
          {
          // make one
@@ -1019,10 +1115,7 @@ NODE *ldialogcreate(NODE *args)
          strcpy(child->TDmybox->caption, titlename);
 
          // Most attributes are set in DIALOGSTUB
-         child->TDmybox->x = x;
-         child->TDmybox->y = y;
-         child->TDmybox->w = w;
-         child->TDmybox->h = h;
+         child->TDmybox->clientrect = clientrect;
 
          dialogboxes.insert(child);
 
@@ -1055,14 +1148,14 @@ NODE *llistboxcreate(NODE *args)
    // get args
    char parentname[MAX_BUFFER_SIZE];
    cnv_strnode_string(parentname, args);
+   args = cdr(args);
 
    char childname[MAX_BUFFER_SIZE];
-   cnv_strnode_string(childname, args = cdr(args));
+   cnv_strnode_string(childname, args);
+   args = cdr(args);
 
-   int x = int_arg(args = cdr(args));
-   int y = int_arg(args = cdr(args));
-   int w = int_arg(args = cdr(args));
-   int h = int_arg(cdr(args));
+   TClientRectangle clientrect;
+   clientrect.InitializeFromInput(args);
 
    if (NOT_THROWING)
       {
@@ -1075,29 +1168,21 @@ NODE *llistboxcreate(NODE *args)
          dialogthing *parent = dialogboxes.get(parentname, TWindow_type, TDialog_type);
          if (parent != NULL)
             {
-            // If modeless parent then continue
-
-            // convert to "DIALOG" units.
-            x = (x * BaseUnitsx) / 4;
-            y = (y * BaseUnitsy) / 8;
-            w = (w * BaseUnitsx) / 4;
-            h = (h * BaseUnitsy) / 8;
+            // The parent is a user-created window
+            clientrect.ConvertToDialogCoordinates();
             
             child->parent = parent->key;
 
-            child->TLmybox = new TMyListBox(parent->TDmybox, x, y, w, h);
+            child->TLmybox = new TMyListBox(parent->TDmybox, clientrect);
             }
          else
             {
             // else the parent does not exist -- put the control on the screen
+            clientrect.ConvertToScreenCoordinates();
+
             child->parent = (char *)MainWindowx->ScreenWindow;
 
-            child->TLmybox = new TMyListBox(
-               MainWindowx->ScreenWindow,
-               +x - MainWindowx->ScreenWindow->Scroller->XPos+xoffset,
-               -y - MainWindowx->ScreenWindow->Scroller->YPos+yoffset,
-               w,
-               h);
+            child->TLmybox = new TMyListBox(MainWindowx->ScreenWindow, clientrect);
             }
 
          child->TLmybox->Create();
@@ -1212,14 +1297,14 @@ NODE *lcomboboxcreate(NODE *args)
    // get args
    char parentname[MAX_BUFFER_SIZE];
    cnv_strnode_string(parentname, args);
+   args = cdr(args);
 
    char childname[MAX_BUFFER_SIZE];
-   cnv_strnode_string(childname, args = cdr(args));
+   cnv_strnode_string(childname, args);
+   args = cdr(args);
 
-   int x = int_arg(args = cdr(args));
-   int y = int_arg(args = cdr(args));
-   int w = int_arg(args = cdr(args));
-   int h = int_arg(cdr(args));
+   TClientRectangle clientrect;
+   clientrect.InitializeFromInput(args);
 
    if (NOT_THROWING)
       {
@@ -1232,26 +1317,22 @@ NODE *lcomboboxcreate(NODE *args)
          if (parent != NULL)
             {
             // convert to "DIALOG" units
-            x = (x * BaseUnitsx) / 4;
-            y = (y * BaseUnitsy) / 8;
-            w = (w * BaseUnitsx) / 4;
-            h = (h * BaseUnitsy) / 8;
+            clientrect.ConvertToDialogCoordinates();
 
             child->parent = parent->key;
 
-            child->TCmybox = new TMxComboBox(parent->TDmybox, x, y, w, h);
+            child->TCmybox = new TMxComboBox(parent->TDmybox, clientrect);
             }
          else
             {
             // else the parent does not exist -- put the control on the screen
+            clientrect.ConvertToScreenCoordinates();
+
             child->parent = (char *) MainWindowx->ScreenWindow;
 
             child->TCmybox = new TMxComboBox(
                MainWindowx->ScreenWindow,
-               +x - MainWindowx->ScreenWindow->Scroller->XPos+xoffset,
-               -y - MainWindowx->ScreenWindow->Scroller->YPos+yoffset,
-               w,
-               h);
+               clientrect);
             }
 
          child->TCmybox->Create();
@@ -1388,81 +1469,61 @@ NODE *lscrollbarcreate(NODE *args)
    {
    char parentname[MAX_BUFFER_SIZE];
    cnv_strnode_string(parentname, args);
+   args = cdr(args);
 
    char childname[MAX_BUFFER_SIZE];
-   cnv_strnode_string(childname, args = cdr(args));
+   cnv_strnode_string(childname, args);
+   args = cdr(args);
 
-   int x = int_arg(args = cdr(args));
-   int y = int_arg(args = cdr(args));
-   int w = int_arg(args = cdr(args));
-   int h = int_arg(args = cdr(args));
+   TClientRectangle clientrect;
+   clientrect.InitializeFromInput(args);
 
    char callback[MAX_BUFFER_SIZE];
-   cnv_strnode_string(callback, cdr(args));
-
+   cnv_strnode_string(callback, args);
    if (NOT_THROWING)
       {
       if (dialogboxes.get(childname) == NULL)
          {
          dialogthing * child = new dialogthing(TScrollBar_type, childname);
          
+         const bool isHorizontalScrollbar = clientrect.GetWidth() > clientrect.GetHeight();
+
          dialogthing *parent = dialogboxes.get(parentname, TWindow_type, TDialog_type);
          if (parent != NULL)
             {
-            x = (x * BaseUnitsx) / 4;
-            y = (y * BaseUnitsy) / 8;
-            w = (w * BaseUnitsx) / 4;
-            h = (h * BaseUnitsy) / 8;
+            clientrect.ConvertToDialogCoordinates();
 
             child->parent = parent->key;
 
-            if (w > h)
-               {
-               child->TSCmybox = new TMyScrollBar(parent->TDmybox, x, y, w, 0, true);
-               }
-            else
-               {
-               child->TSCmybox = new TMyScrollBar(parent->TDmybox, x, y, 0, h, false);
-               }
+            child->TSCmybox = new TMyScrollBar(
+               parent->TDmybox, 
+               clientrect,
+               isHorizontalScrollbar);
             }
          else
             {
+            clientrect.ConvertToScreenCoordinates();
+
             child->parent = (char*) MainWindowx->ScreenWindow;
-            
-            if (w > h)
-               {
-               child->TSCmybox = new TMyScrollBar(
-                  MainWindowx->ScreenWindow,
-                  +x - MainWindowx->ScreenWindow->Scroller->XPos+xoffset,
-                  -y - MainWindowx->ScreenWindow->Scroller->YPos+yoffset,
-                  w,
-                  0,
-                  true);
-               }
-            else
-               {
-               child->TSCmybox = new TMyScrollBar(
-                  MainWindowx->ScreenWindow,
-                  +x - MainWindowx->ScreenWindow->Scroller->XPos+xoffset,
-                  -y - MainWindowx->ScreenWindow->Scroller->YPos+yoffset,
-                  0,
-                  h,
-                  false);
-               }
+
+            child->TSCmybox = new TMyScrollBar(
+               MainWindowx->ScreenWindow,
+               clientrect,
+               isHorizontalScrollbar);
             }
 
-            strcpy(child->TSCmybox->callback, callback);
+         strcpy(child->TSCmybox->callback, callback);
             
-            child->TSCmybox->Create();
+         child->TSCmybox->Create();
             
-            MyMessageScan();
+         MyMessageScan();
             
-            dialogboxes.insert(child);
+         dialogboxes.insert(child);
 
-            if (parent == NULL)
-               {
-               UpdateZoomControlFlag();
-               }
+         if (parent == NULL)
+            {
+            UpdateZoomControlFlag();
+            }
          }
       else
          {
@@ -1529,17 +1590,18 @@ NODE *lstaticcreate(NODE *args)
    {
    char parentname[MAX_BUFFER_SIZE];
    cnv_strnode_string(parentname, args);
+   args = cdr(args);
 
    char childname[MAX_BUFFER_SIZE];
-   cnv_strnode_string(childname, args = cdr(args));
+   cnv_strnode_string(childname, args);
+   args = cdr(args);
 
    char titlename[MAX_BUFFER_SIZE];
-   cnv_strnode_string(titlename, args = cdr(args));
+   cnv_strnode_string(titlename, args);
+   args = cdr(args);
 
-   int x = int_arg(args = cdr(args));
-   int y = int_arg(args = cdr(args));
-   int w = int_arg(args = cdr(args));
-   int h = int_arg(cdr(args));
+   TClientRectangle clientrect;
+   clientrect.InitializeFromInput(args);
 
    if (NOT_THROWING)
       {
@@ -1550,26 +1612,25 @@ NODE *lstaticcreate(NODE *args)
          dialogthing *parent = dialogboxes.get(parentname, TWindow_type, TDialog_type);
          if (parent != NULL)
             {
-            x = (x * BaseUnitsx) / 4;
-            y = (y * BaseUnitsy) / 8;
-            w = (w * BaseUnitsx) / 4;
-            h = (h * BaseUnitsy) / 8;
+            clientrect.ConvertToDialogCoordinates();
 
             child->parent = parent->key;
 
-            child->TSmybox = new TMyStatic(parent->TDmybox, titlename, x, y, w, h);
+            child->TSmybox = new TMyStatic(
+               parent->TDmybox, 
+               titlename, 
+               clientrect);
             }
          else
             {
+            clientrect.ConvertToScreenCoordinates();
+
             child->parent = (char *) MainWindowx->ScreenWindow;
             
             child->TSmybox = new TMyStatic(
                MainWindowx->ScreenWindow,
                titlename,
-               +x - MainWindowx->ScreenWindow->Scroller->XPos+xoffset,
-               -y - MainWindowx->ScreenWindow->Scroller->YPos+yoffset,
-               w,
-               h);
+               clientrect);
             }
 
          child->TSmybox->Create();
@@ -1622,22 +1683,23 @@ NODE *lbuttoncreate(NODE *args)
    {
    char parentname[MAX_BUFFER_SIZE];
    cnv_strnode_string(parentname, args);
+   args = cdr(args);
 
    char childname[MAX_BUFFER_SIZE];
-   cnv_strnode_string(childname, args = cdr(args));
+   cnv_strnode_string(childname, args);
+   args = cdr(args);
 
    char titlename[MAX_BUFFER_SIZE];
-   cnv_strnode_string(titlename, args = cdr(args));
+   cnv_strnode_string(titlename, args);
+   args = cdr(args);
 
-   int x = int_arg(args = cdr(args));
-   int y = int_arg(args = cdr(args));
-   int w = int_arg(args = cdr(args));
-   int h = int_arg(args = cdr(args));
+   TClientRectangle clientrect;
+   clientrect.InitializeFromInput(args);
 
    char callback[MAX_BUFFER_SIZE];
-   if (cdr(args) != NIL)
+   if (args != NIL)
       {
-      cnv_strnode_string(callback, cdr(args));
+      cnv_strnode_string(callback, args);
       }
    else
       {
@@ -1653,32 +1715,25 @@ NODE *lbuttoncreate(NODE *args)
          dialogthing *parent = dialogboxes.get(parentname, TWindow_type, TDialog_type);
          if (parent != NULL)
             {
-            x = (x * BaseUnitsx) / 4;
-            y = (y * BaseUnitsy) / 8;
-            w = (w * BaseUnitsx) / 4;
-            h = (h * BaseUnitsy) / 8;
+            clientrect.ConvertToDialogCoordinates();
 
             child->parent = parent->key;
 
             child->TBmybox = new TMyButton(
                parent->TDmybox,
                titlename,
-               x,
-               y,
-               w,
-               h);
+               clientrect);
             }
          else
             {
+            clientrect.ConvertToScreenCoordinates();
+
             child->parent = (char *) MainWindowx->ScreenWindow;
 
             child->TBmybox = new TMyButton(
                MainWindowx->ScreenWindow,
                titlename,
-               +x - MainWindowx->ScreenWindow->Scroller->XPos+xoffset,
-               -y - MainWindowx->ScreenWindow->Scroller->YPos+yoffset,
-               w,
-               h);
+               clientrect);
             }
 
          strcpy(child->TBmybox->callback, callback);
@@ -1711,8 +1766,8 @@ NODE *lbuttonupdate(NODE *args)
    char titlename[MAX_BUFFER_SIZE];
    cnv_strnode_string(titlename, cdr(args));
 
-   dialogthing *temp;
-   if ((temp = dialogboxes.get(childname, TButton_type)) != NULL)
+   dialogthing *temp = dialogboxes.get(childname, TButton_type);
+   if (temp != NULL)
       {
       temp->TBmybox->SetWindowText(titlename);
       }
@@ -1738,14 +1793,14 @@ NODE *lgroupboxcreate(NODE *args)
    {
    char parentname[MAX_BUFFER_SIZE];
    cnv_strnode_string(parentname, args);
+   args = cdr(args);
 
    char childname[MAX_BUFFER_SIZE];
-   cnv_strnode_string(childname, args = cdr(args));
+   cnv_strnode_string(childname, args);
+   args = cdr(args);
 
-   int x = int_arg(args = cdr(args));
-   int y = int_arg(args = cdr(args));
-   int w = int_arg(args = cdr(args));
-   int h = int_arg(cdr(args));
+   TClientRectangle clientrect;
+   clientrect.InitializeFromInput(args);
 
    if (NOT_THROWING)
       {
@@ -1756,25 +1811,23 @@ NODE *lgroupboxcreate(NODE *args)
          dialogthing *parent = dialogboxes.get(parentname, TWindow_type, TDialog_type);
          if (parent != NULL)
             {
-            x = (x * BaseUnitsx) / 4;
-            y = (y * BaseUnitsy) / 8;
-            w = (w * BaseUnitsx) / 4;
-            h = (h * BaseUnitsy) / 8;
+            clientrect.ConvertToDialogCoordinates();
 
             child->parent = parent->key;
 
-            child->TGmybox = new TMyGroupBox(parent->TDmybox, x, y, w, h);
+            child->TGmybox = new TMyGroupBox(
+               parent->TDmybox, 
+               clientrect);
             }
          else
             {
+            clientrect.ConvertToScreenCoordinates();
+
             child->parent = (char *) MainWindowx->ScreenWindow;
             
             child->TGmybox = new TMyGroupBox(
-               MainWindowx->ScreenWindow,
-               +x - MainWindowx->ScreenWindow->Scroller->XPos+xoffset,
-               -y - MainWindowx->ScreenWindow->Scroller->YPos+yoffset,
-               w,
-               h);
+               MainWindowx->ScreenWindow, 
+               clientrect);
             }
 
          child->TGmybox->Create();
@@ -1806,20 +1859,22 @@ NODE *lradiobuttoncreate(NODE *args)
    {
    char parentname[MAX_BUFFER_SIZE];
    cnv_strnode_string(parentname, args);
+   args = cdr(args);
 
    char groupname[MAX_BUFFER_SIZE];
-   cnv_strnode_string(groupname, args = cdr(args));
+   cnv_strnode_string(groupname, args);
+   args = cdr(args);
 
    char childname[MAX_BUFFER_SIZE];
-   cnv_strnode_string(childname, args = cdr(args));
+   cnv_strnode_string(childname, args);
+   args = cdr(args);
 
    char titlename[MAX_BUFFER_SIZE];
-   cnv_strnode_string(titlename, args = cdr(args));
+   cnv_strnode_string(titlename, args);
+   args = cdr(args);
 
-   int x = int_arg(args = cdr(args));
-   int y = int_arg(args = cdr(args));
-   int w = int_arg(args = cdr(args));
-   int h = int_arg(args = cdr(args));
+   TClientRectangle clientrect;
+   clientrect.InitializeFromInput(args);
 
    if (NOT_THROWING)
       {
@@ -1833,33 +1888,26 @@ NODE *lradiobuttoncreate(NODE *args)
             dialogthing *parent = dialogboxes.get(parentname, TWindow_type, TDialog_type);
             if (parent != NULL)
                {
-               x = (x * BaseUnitsx) / 4;
-               y = (y * BaseUnitsy) / 8;
-               w = (w * BaseUnitsx) / 4;
-               h = (h * BaseUnitsy) / 8;
+               clientrect.ConvertToDialogCoordinates();
 
                child->parent = parent->key;
 
                child->TRmybox = new TMyRadioButton(
                   parent->TDmybox, 
                   titlename, 
-                  x, 
-                  y, 
-                  w, 
-                  h, 
+                  clientrect,
                   group->TGmybox);
                }
             else
                {
+               clientrect.ConvertToScreenCoordinates();
+
                child->parent = (char *) MainWindowx->ScreenWindow;
 
                child->TRmybox = new TMyRadioButton(
                   MainWindowx->ScreenWindow,
                   titlename,
-                  +x - MainWindowx->ScreenWindow->Scroller->XPos+xoffset,
-                  -y - MainWindowx->ScreenWindow->Scroller->YPos+yoffset,
-                  w,
-                  h,
+                  clientrect,
                   group->TGmybox);
                }
 
@@ -1954,20 +2002,22 @@ NODE *lcheckboxcreate(NODE *args)
    {
    char parentname[MAX_BUFFER_SIZE];
    cnv_strnode_string(parentname, args);
+   args = cdr(args);
 
    char groupname[MAX_BUFFER_SIZE];
-   cnv_strnode_string(groupname, args = cdr(args));
+   cnv_strnode_string(groupname, args);
+   args = cdr(args);
 
    char childname[MAX_BUFFER_SIZE];
-   cnv_strnode_string(childname, args = cdr(args));
+   cnv_strnode_string(childname, args);
+   args = cdr(args);
 
    char titlename[MAX_BUFFER_SIZE];
-   cnv_strnode_string(titlename, args = cdr(args));
+   cnv_strnode_string(titlename, args);
+   args = cdr(args);
 
-   int x = int_arg(args = cdr(args));
-   int y = int_arg(args = cdr(args));
-   int w = int_arg(args = cdr(args));
-   int h = int_arg(args = cdr(args));
+   TClientRectangle clientrect;
+   clientrect.InitializeFromInput(args);
 
    if (NOT_THROWING)
       {
@@ -1982,33 +2032,26 @@ NODE *lcheckboxcreate(NODE *args)
             dialogthing *parent = dialogboxes.get(parentname, TWindow_type, TDialog_type);
             if (parent != NULL)
                {
-               x = (x * BaseUnitsx) / 4;
-               y = (y * BaseUnitsy) / 8;
-               w = (w * BaseUnitsx) / 4;
-               h = (h * BaseUnitsy) / 8;
+               clientrect.ConvertToDialogCoordinates();
             
                child->parent = parent->key;
                
                child->TCBmybox = new TMyCheckBox(
                   parent->TDmybox, 
                   titlename, 
-                  x, 
-                  y, 
-                  w, 
-                  h, 
+                  clientrect,
                   group->TGmybox);
                }
             else
                {
+               clientrect.ConvertToScreenCoordinates();
+
                child->parent = (char *) MainWindowx->ScreenWindow;
 
                child->TCBmybox = new TMyCheckBox(
                   MainWindowx->ScreenWindow,
                   titlename,
-                  +x - MainWindowx->ScreenWindow->Scroller->XPos+xoffset,
-                  -y - MainWindowx->ScreenWindow->Scroller->YPos+yoffset,
-                  w,
-                  h,
+                  clientrect,
                   group->TGmybox);
                }
 
@@ -2188,8 +2231,7 @@ NODE *lselectbox(NODE *args)
 
    args = car(cdr(args));
 
-   /* must be a list that contains something */
-
+   // must be a list that contains something
    if (is_list(args) && (args != NIL))
       {
       while (args != NIL)
@@ -2282,8 +2324,7 @@ NODE *ldialogfileopen(NODE *args)
    FileData.SetFilter("All Files (*.*)|*.*|");
    strcpy(FileData.FileName, filename);
 
-   /* if user found a file then try to load it  */
-
+   // if user found a file then try to load it
    if (TFileOpenDialog(MainWindowx, FileData).Execute() == IDOK)
       {
       strcpy(filename, FileData.FileName);
