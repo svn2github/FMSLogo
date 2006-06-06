@@ -299,7 +299,7 @@ TO WINDOWSTEST.LISTBOX
 
   TRACEINSTRUCTION [ WINDOWCREATE "main "windowstest.listbox "mytitle 0 0 100 100 []      ]
 
-  LISTBOXCREATE "windowstest.listbox "testlist 5 5 90 90
+  TRACEINSTRUCTION [ LISTBOXCREATE "windowstest.listbox "testlist 5 5 90 90               ]
 
   ; add, get, and remove a string
   TRACEINSTRUCTION [ LISTBOXADDSTRING    "testlist "firststring ]
@@ -420,6 +420,149 @@ TO WINDOWSTEST.LISTBOX.BADINPUT
   ; cleanup
   TRACEINSTRUCTION [ listboxdelete "goodlistbox ]
   TRACEINSTRUCTION [ staticdelete  "notalistbox ]
+
+END
+
+
+TO WINDOWSTEST.COMBOBOX
+
+  TRACEINSTRUCTION [ WINDOWCREATE "main "windowstest.combobox "mytitle 0 0 100 100 [] ]
+
+  TRACEINSTRUCTION [ COMBOBOXCREATE "windowstest.combobox "combobox 5 5 90 90         ]
+
+  ; add, get, and remove a string
+  SIMPLEREPORTTEST [ COMBOBOXGETTEXT      "combobox ] []
+  TRACEINSTRUCTION [ COMBOBOXADDSTRING    "combobox  "firststring ]
+  SIMPLEREPORTTEST [ COMBOBOXGETTEXT      "combobox ] [firststring]
+  TRACEINSTRUCTION [ COMBOBOXDELETESTRING "combobox 0 ]
+  SIMPLEREPORTTEST [ COMBOBOXGETTEXT      "combobox ] []
+
+  ; deleteing a non-existing item is okay
+  TRACEINSTRUCTION [ COMBOBOXDELETESTRING "combobox 100 ]
+
+  ; add a different string and get it
+  TRACEINSTRUCTION [ COMBOBOXADDSTRING "combobox   [secondstring] ]
+  SIMPLEREPORTTEST [ COMBOBOXGETTEXT   "combobox ] [secondstring]
+
+  ; set and get the text in the edit control portion
+  TRACEINSTRUCTION [ COMBOBOXSETTEXT   "combobox   "text ]
+  SIMPLEREPORTTEST [ COMBOBOXGETTEXT   "combobox ] [text]
+
+  ; make sure we can add a lot of items
+  REPEAT 100 [
+    COMBOBOXADDSTRING "combobox REPCOUNT
+  ]
+
+  TRACEINSTRUCTION [ COMBOBOXENABLE "combobox "false ]
+  TRACEINSTRUCTION [ COMBOBOXENABLE "combobox "true  ]
+
+  TRACEINSTRUCTION [ COMBOBOXDELETE "combobox                 ]
+  TRACEINSTRUCTION [ WINDOWDELETE  "windowstest.combocombobox ]
+
+END
+
+TO WINDOWSTEST.COMBOBOX.BADINPUT
+
+  ;
+  ; bad input for COMBOBOXCREATE
+  ;
+  RUNNOTENOUGHINPUTSTEST [(comboboxcreate "main "name 0 0 120)]
+  RUNTOOMANYINPUTSTEST   [(comboboxcreate "main "name 0 0 120 400 "toomany)]
+
+  RUNBADINPUTTEST  [comboboxcreate "main "name10 [0]  0  120  400  ]
+  RUNBADINPUTTEST  [comboboxcreate "main "name20 {0}  0  120  400  ]
+  RUNBADINPUTTEST  [comboboxcreate "main "name25 10.5 0  120  400  ]
+  RUNBADINPUTTEST  [comboboxcreate "main "name30 0  [0]  120  400  ]
+  RUNBADINPUTTEST  [comboboxcreate "main "name40 0  {0}  120  400  ]
+  RUNBADINPUTTEST  [comboboxcreate "main "name45 0  10.5 120  400  ]
+  RUNBADINPUTTEST  [comboboxcreate "main "name50 0   0  [120] 400  ]
+  RUNBADINPUTTEST  [comboboxcreate "main "name60 0   0  {120} 400  ]
+  RUNBADINPUTTEST  [comboboxcreate "main "name70 0   0  -120  400  ]
+  RUNBADINPUTTEST  [comboboxcreate "main "name75 0   0   10.5 400  ]
+  RUNBADINPUTTEST  [comboboxcreate "main "name80 0   0   120 [400] ]
+  RUNBADINPUTTEST  [comboboxcreate "main "name90 0   0   120 {400} ]
+  RUNBADINPUTTEST  [comboboxcreate "main "name00 0   0   120 -400  ]
+  RUNBADINPUTTEST  [comboboxcreate "main "name05 0   0   120  10.5 ]
+
+  ; already exists
+  TRACEINSTRUCTION [ comboboxcreate "main "goodcombobox 0 0 100 100 ]
+  RUNBADINPUTTEST  [ comboboxcreate "main "goodcombobox 0 0 100 100 ]
+
+  ; create something that is not a combobox for bad input tests
+  TRACEINSTRUCTION [ staticcreate  "main "notacombobox [text] 0 100 100 100 ]
+
+  ;
+  ; bad input for COMBOBOXENABLE
+  ;
+  RUNNOTENOUGHINPUTSTEST [ (comboboxenable "goodcombobox) ]
+  RUNTOOMANYINPUTSTEST   [ (comboboxenable "goodcombobox "true "toomany) ]
+
+  RUNBADINPUTTEST  [ comboboxenable "doesnotexist "true  ]
+  RUNBADINPUTTEST  [ comboboxenable "notacombobox  "true  ]
+  RUNBADINPUTTEST  [ comboboxenable "goodcombobox  1      ]
+  RUNBADINPUTTEST  [ comboboxenable "goodcombobox  [true] ]
+  RUNBADINPUTTEST  [ comboboxenable "goodcombobox  {true} ]
+
+
+  ;
+  ; bad input for COMBOBOXADDSTRING
+  ;
+  RUNNOTENOUGHINPUTSTEST [ (comboboxaddstring) ]
+  RUNTOOMANYINPUTSTEST   [ (comboboxaddstring "goodcombobox "item "toomany) ]
+
+  RUNBADINPUTTEST [ comboboxaddstring "nonexistent "item ]
+  RUNBADINPUTTEST [ comboboxaddstring "notacombobox "item ]
+
+
+  ;
+  ; bad input for COMBOBOXDELETESTRING
+  ;
+  RUNNOTENOUGHINPUTSTEST [ (comboboxdeletestring "goodcombobox) ]
+  RUNTOOMANYINPUTSTEST   [ (comboboxdeletestring "goodcombobox 0 "toomany) ]
+
+  RUNBADINPUTTEST [ comboboxdeletestring "doesnotexist 0 ]
+  RUNBADINPUTTEST [ comboboxdeletestring "notacombobox  0 ]
+
+  RUNBADINPUTTEST [ comboboxdeletestring "goodcombobox  -1    ]
+  RUNBADINPUTTEST [ comboboxdeletestring "goodcombobox  10.5  ]
+  RUNBADINPUTTEST [ comboboxdeletestring "goodcombobox  [0]   ]
+  RUNBADINPUTTEST [ comboboxdeletestring "goodcombobox  {0}   ]
+  RUNBADINPUTTEST [ comboboxdeletestring "goodcombobox  "zero ]
+
+  ;
+  ; bad input for COMBOBOXGETTEXT
+  ;
+  RUNNOTENOUGHINPUTSTEST [ (comboboxgettext) ]
+  RUNTOOMANYINPUTSTEST   [ (comboboxgettext "goodcombobox "toomany) ]
+
+  RUNBADINPUTTEST   [ ignore comboboxgettext "doesnotexist ]
+  RUNBADINPUTTEST   [ ignore comboboxgettext "notacombobox ]
+
+
+  ;
+  ; bad input for COMBOBOXSETTEXT
+  ;
+  RUNNOTENOUGHINPUTSTEST [ (comboboxsettext "goodcombobox) ]
+  RUNTOOMANYINPUTSTEST   [ (comboboxsettext "goodcombobox "text "toomany) ]
+
+  RUNBADINPUTTEST   [ comboboxsettext "doesnotexist "text ]
+  RUNBADINPUTTEST   [ comboboxsettext "notacombobox "text ]
+ 
+
+  ;
+  ; bad input for COMBOBOXDELETE
+  ;
+
+  ; COMBOBOXDELETE on a widget that is not a combobox control
+  RUNNOTENOUGHINPUTSTEST [ (comboboxdelete) ]
+  RUNTOOMANYINPUTSTEST   [ (comboboxdelete "goodcombobox "toomany) ]
+
+  RUNBADINPUTTEST  [ comboboxdelete "notacombobox ]
+  RUNBADINPUTTEST  [ comboboxdelete "doesnotexist ]
+
+  ; cleanup
+  TRACEINSTRUCTION [ comboboxdelete "goodcombobox ]
+  TRACEINSTRUCTION [ staticdelete   "notacombobox ]
 
 END
 
@@ -1057,6 +1200,9 @@ TO WINDOWSTEST
 
    WINDOWSTEST.LISTBOX
    WINDOWSTEST.LISTBOX.BADINPUT
+
+   WINDOWSTEST.COMBOBOX
+   WINDOWSTEST.COMBOBOX.BADINPUT
 
    WINDOWSTEST.GROUPBOX
    WINDOWSTEST.GROUPBOX.BADINPUT
