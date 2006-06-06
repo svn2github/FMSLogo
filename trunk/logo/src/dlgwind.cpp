@@ -1377,7 +1377,7 @@ NODE *lcomboboxgettext(NODE *args)
       {
       // if successful getting string return it
       char stringname[MAX_BUFFER_SIZE];
-      if (((TComboBox *) parent->TCmybox)->GetText(stringname, MAX_BUFFER_SIZE) >= 0)
+      if (parent->TCmybox->GetText(stringname, MAX_BUFFER_SIZE) >= 0)
          {
          // parsing it turns it into a list
          NODE * val = parser(make_strnode(stringname), false);
@@ -1406,7 +1406,7 @@ NODE *lcomboboxsettext(NODE *args)
    if (parent != NULL)
       {
       // set the editcontrol portion to the user specified text
-      ((TComboBox *) parent->TCmybox)->SetText(stringname);
+      parent->TCmybox->SetText(stringname);
       }
    else
       {
@@ -1430,8 +1430,8 @@ NODE *lcomboboxaddstring(NODE *args)
    if (parent != NULL)
       {
       // add string and reset selection
-      ((TComboBox *) parent->TCmybox)->AddString(stringname);
-      ((TComboBox *) parent->TCmybox)->SetSelIndex(0);
+      parent->TCmybox->AddString(stringname);
+      parent->TCmybox->SetSelIndex(0);
       }
    else
       {
@@ -1454,8 +1454,8 @@ NODE *lcomboboxdeletestring(NODE *args)
    if (parent != NULL)
       {
       // kill entry and reset index
-      ((TComboBox *) parent->TCmybox)->DeleteString(index);
-      ((TComboBox *) parent->TCmybox)->SetSelIndex(0);
+      parent->TCmybox->DeleteString(index);
+      parent->TCmybox->SetSelIndex(0);
       }
    else
       {
