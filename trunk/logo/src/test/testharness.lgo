@@ -55,6 +55,7 @@ LOAD "logoversion.lgo
 LOAD "apply.lgo
 LOAD "quoted.lgo
 LOAD "mouse.lgo
+LOAD "windows.lgo
 LOAD "windowfileedit.lgo
 LOAD "midi.lgo
 LOAD "sound.lgo
@@ -87,7 +88,7 @@ TO TESTALL
   BITMAPTEST         ; from bitmap.lgo
   FORMTEST           ; from form.lgo
   EDITORTEST         ; from editor.lgo 
-  WINDOWFILEEDITTEST ; from windowfileedit
+  WINDOWFILEEDITTEST ; from windowfileedit.lgo
   PORTTEST           ; from port.lgo
   FONTFACENAMESTEST  ; from fontfacenames.lgo
   LABELTEST          ; from label.lgo
@@ -115,6 +116,7 @@ TO TESTALL
   ERASETEST          ; from erase.lgo
   LOGOVERSIONTEST    ; from logoversion.lgo
   QUOTEDTEST         ; from quoted.lgo
+  WINDOWSTEST        ; from windows.lgo
   MOUSETEST          ; from mouse.lgo
   MIDITEST           ; from midi.lgo
   SOUNDTEST          ; from sound.lgo

@@ -2380,7 +2380,7 @@ INFO: Executing [(LOCALMAKE)] set error string to [not enough inputs to LOCALMAK
 INFO: Executing invalid instruction: [(CONTENTS "toomany)]
 INFO: Executing [(CONTENTS "toomany)] set error code to 8 , as expected
 INFO: Executing [(CONTENTS "toomany)] set error string to [too much inside ()'s]
-PASS: [PROCEDURES] returned [#test .eqtest abstest activeareatest andtest angleiscloseenough applytest applytest.badinput applytest.nonprimitive applytest.nooutput applytest.smoketest arcbadinputtest arccostest arcsintest arcsmoketest arctantest arctest arraybadinputtest arrayorigintest arrayptest arraysmoketest arraytest asciitest beforeptest bitcopytest bitloadsizetest bitmaptest bug1349374test bug1377856test bug1383281test bug1384267test bug1388325test bug1397560test bug1429960test bug1438863test bug1448155test bug1458661test burytest burytest.badinput burytest.buriedprocedure burytest.buryall burytest.procedure burytest.propertylist burytest.variable butfirsttest butlasttest buttonptest chdirtest client.onreadytosend colorsetgettest colortest controlflowtest copydefmaybeoutputtest copydefoptest copydefoutputtest copydefstoptest copydeftest copydeftotest costest differencetest difficultcomments directorysmoketest directorytest dllcalltest dllfreetest dllloadtest dllsmoketest dlltest doorientationtest echo edalltest editortest emptyptest equalptest erasetest erasetest.badinput erasetest.eraseall erasetest.eraseprocedure erasetest.erasepropertylist erasetest.erasevariable erasetest.ern erasetest.erpl error.30.test errortest errortest.checkerror exptest filetest filetest.allopen filetest.badinput filetest.closeall filetest.dribble filetest.erasefile filetest.openappend filetest.opendirectoryasfile filetest.openopenfile filetest.openupdate filetest.setreadpos filetest.setwritepos filetest.smoketest filltest filltimerevent floodcolortest fontfacenamestest fontfacenamestest.badinput fontfacenamestest.manualtest fontfacenamestest.smoketest formtest helptest i.dont.know.what.to.do.with.value iftest inporttest inttest iseqtest labelbadinputtest labelcircletest labeltest largeedittest lasttest listptest lntest loadtest localvartest log10test logictest logoversiontest logoversiontest.badinput logoversiontest.smoketest macro.return.unbound.instead.of.list macrotest macrotest.outputnothing mathtest memberptest miditest miditest.badinput miditest.devicezero miditest.longformat miditest.playtune miditest.smoketest minustest misctest mkdirtest modulotest mousetest mousetest.badinput mousetest.simpletest my.proc.to.step myadd mymacro netshutdowncrash networksmoketest networktest no.input.no.output nodestest nottest numberptest one.input.no.output orientationtest ortest outporttest output.373 parsefunctest parsenumbertest parsetest parsewordtest pasteincircle pencolortest penmodetest pentest penupdowntest perspectivetest pitest plisttest porttest powertest predicatetest procedure.shadows.myshadowedvar procedure.with.to.inside.it procedureinworkingdirectory proceduretest producttest queuetest queuetest.badinput queuetest.circulartest queuetest.smoketest quotedtest quotedtest.badinput quotedtest.smoketest quotienttest radarccostest radarcsintest radarctantest radcostest radsintest radtantest rawasciitest remaindertest reporttest reporttestfailed reporttestinfo reporttestinitialize reporttestpassed reporttestuninitialize rmdirtest roundtest runbadinputtest runexpecterrortest runfilesystemerrortest runhasnovaluetest runidontknowhowtotest runisaprimitivetest runnonrecoverableidontknowhowtotest runnotenoughinputstest runtest runtoomanyinputstest sampleproc screencolortest screentest scrunchtest server.start server.stop setitemtest setlabelfonttest setrandomorientation signtest simplereporttest sintest sortbadinputtest sortbylegs sortbyname sortregressiontest sorttest sorttest.nonpredicate sorttest.oneinputbydefault sorttest.oneinputproc sorttest.threeinputproc soundtest soundtest.badinput soundtest.frequency.a4 soundtest.frequency.b4 soundtest.frequency.c4 soundtest.frequency.c5 soundtest.frequency.d4 soundtest.frequency.d5 soundtest.frequency.e4 soundtest.frequency.f4 soundtest.frequency.g4 soundtest.sound soundtest.tone sqrttest stacktest stacktest.badinput stacktest.circulartest stacktest.smoketest steptest steptest.badinput steptest.procedure steptest.propertylist steptest.shadowvariable steptest.stepall steptest.steppedprocedure steptest.variable sumtest tantest testall timecommand timewait traceinstruction tracetest tracetest.badinput tracetest.function tracetest.procedure tracetest.propertylist tracetest.traceall tracetest.tracedfunction tracetest.tracedprocedure tracetest.variable waittest windowfileedittest windowfileedittest.bug1330752 windowfileedittest.longfilename windowsettest windowtest wordproctest wordptest wordtest ~ignoreme ~ignoremewascalled] , as expected.
+PASS: [PROCEDURES] returned [#test .eqtest abstest activeareatest andtest angleiscloseenough applytest applytest.badinput applytest.nonprimitive applytest.nooutput applytest.smoketest arcbadinputtest arccostest arcsintest arcsmoketest arctantest arctest arraybadinputtest arrayorigintest arrayptest arraysmoketest arraytest asciitest beforeptest bitcopytest bitloadsizetest bitmaptest bug1349374test bug1377856test bug1383281test bug1384267test bug1388325test bug1397560test bug1429960test bug1438863test bug1448155test bug1458661test burytest burytest.badinput burytest.buriedprocedure burytest.buryall burytest.procedure burytest.propertylist burytest.variable butfirsttest butlasttest buttonptest chdirtest client.onreadytosend colorsetgettest colortest controlflowtest copydefmaybeoutputtest copydefoptest copydefoutputtest copydefstoptest copydeftest copydeftotest costest differencetest difficultcomments directorysmoketest directorytest dllcalltest dllfreetest dllloadtest dllsmoketest dlltest doorientationtest echo edalltest editortest emptyptest equalptest erasetest erasetest.badinput erasetest.eraseall erasetest.eraseprocedure erasetest.erasepropertylist erasetest.erasevariable erasetest.ern erasetest.erpl error.30.test errortest errortest.checkerror exptest filetest filetest.allopen filetest.badinput filetest.closeall filetest.dribble filetest.erasefile filetest.openappend filetest.opendirectoryasfile filetest.openopenfile filetest.openupdate filetest.setreadpos filetest.setwritepos filetest.smoketest filltest filltimerevent floodcolortest fontfacenamestest fontfacenamestest.badinput fontfacenamestest.manualtest fontfacenamestest.smoketest formtest helptest i.dont.know.what.to.do.with.value iftest inporttest inttest iseqtest labelbadinputtest labelcircletest labeltest largeedittest lasttest listptest lntest loadtest localvartest log10test logictest logoversiontest logoversiontest.badinput logoversiontest.smoketest macro.return.unbound.instead.of.list macrotest macrotest.outputnothing mathtest memberptest miditest miditest.badinput miditest.devicezero miditest.longformat miditest.playtune miditest.smoketest minustest misctest mkdirtest modulotest mousetest mousetest.badinput mousetest.simpletest my.proc.to.step myadd mymacro netshutdowncrash networksmoketest networktest no.input.no.output nodestest nottest numberptest one.input.no.output orientationtest ortest outporttest output.373 parsefunctest parsenumbertest parsetest parsewordtest pasteincircle pencolortest penmodetest pentest penupdowntest perspectivetest pitest plisttest porttest powertest predicatetest procedure.shadows.myshadowedvar procedure.with.to.inside.it procedureinworkingdirectory proceduretest producttest queuetest queuetest.badinput queuetest.circulartest queuetest.smoketest quotedtest quotedtest.badinput quotedtest.smoketest quotienttest radarccostest radarcsintest radarctantest radcostest radsintest radtantest rawasciitest remaindertest reporttest reporttestfailed reporttestinfo reporttestinitialize reporttestpassed reporttestuninitialize rmdirtest roundtest runbadinputtest runexpecterrortest runfilesystemerrortest runhasnovaluetest runidontknowhowtotest runisaprimitivetest runnonrecoverableidontknowhowtotest runnotenoughinputstest runtest runtoomanyinputstest sampleproc screencolortest screentest scrunchtest server.start server.stop setitemtest setlabelfonttest setrandomorientation signtest simplereporttest sintest sortbadinputtest sortbylegs sortbyname sortregressiontest sorttest sorttest.nonpredicate sorttest.oneinputbydefault sorttest.oneinputproc sorttest.threeinputproc soundtest soundtest.badinput soundtest.frequency.a4 soundtest.frequency.b4 soundtest.frequency.c4 soundtest.frequency.c5 soundtest.frequency.d4 soundtest.frequency.d5 soundtest.frequency.e4 soundtest.frequency.f4 soundtest.frequency.g4 soundtest.sound soundtest.tone sqrttest stacktest stacktest.badinput stacktest.circulartest stacktest.smoketest steptest steptest.badinput steptest.procedure steptest.propertylist steptest.shadowvariable steptest.stepall steptest.steppedprocedure steptest.variable sumtest tantest testall timecommand timewait traceinstruction tracetest tracetest.badinput tracetest.function tracetest.procedure tracetest.propertylist tracetest.traceall tracetest.tracedfunction tracetest.tracedprocedure tracetest.variable waittest windowfileedittest windowfileedittest.bug1330752 windowfileedittest.longfilename windowsettest windowstest windowstest.button windowstest.button.badinput windowstest.checkbox windowstest.checkbox.badinput windowstest.checkbox.deletegroupbox windowstest.combobox windowstest.combobox.badinput windowstest.debugwindows windowstest.debugwindows.badinput windowstest.debugwindows.stress windowstest.dialog.badinput windowstest.dialog.badinput.fromcallback windowstest.dialog.smoketest windowstest.groupbox windowstest.groupbox.badinput windowstest.listbox windowstest.listbox.badinput windowstest.mainwindow.smoketest windowstest.radiobutton windowstest.radiobutton.badinput windowstest.radiobutton.deletegroupbox windowstest.regressiontest windowstest.scrollbar windowstest.scrollbar.badinput windowstest.setup windowstest.static windowstest.static.badinput windowstest.window.badinput windowstest.window.smoketest windowtest wordproctest wordptest wordtest ~ignoreme ~ignoremewascalled] , as expected.
 INFO: Executing invalid instruction: [(PROCEDURES "toomany)]
 INFO: Executing [(PROCEDURES "toomany)] set error code to 8 , as expected
 INFO: Executing [(PROCEDURES "toomany)] set error string to [too much inside ()'s]
@@ -3926,7 +3926,7 @@ CALL: PPROP "TRACETEST.TRACEDPLIST "PROPERTY9 [1 2 3]
 CALL: PPROP "TRACETEST.TRACEDPLIST "PROPERTY0 {1 2 3}
 CALL: MAKE "TRACETEST.TRACEDPLIST 4321
 INFO: Calling TRACE CONTENTS
-PASS: [TRACED] returned [[#test .eqtest abstest activeareatest andtest angleiscloseenough applytest applytest.badinput applytest.nonprimitive applytest.nooutput applytest.smoketest arcbadinputtest arccostest arcsintest arcsmoketest arctantest arctest arraybadinputtest arrayorigintest arrayptest arraysmoketest arraytest asciitest beforeptest bitcopytest bitloadsizetest bitmaptest bug1349374test bug1377856test bug1383281test bug1384267test bug1388325test bug1397560test bug1429960test bug1448155test bug1458661test burytest burytest.badinput burytest.buriedprocedure burytest.buryall burytest.procedure burytest.propertylist burytest.variable butfirsttest butlasttest buttonptest chdirtest client.onreadytosend colorsetgettest colortest controlflowtest copydefmaybeoutputtest copydefoptest copydefoutputtest copydefstoptest copydeftest copydeftotest costest differencetest difficultcomments directorysmoketest directorytest dllcalltest dllfreetest dllloadtest dllsmoketest dlltest doorientationtest echo edalltest editortest emptyptest equalptest erasetest erasetest.badinput erasetest.eraseall erasetest.eraseprocedure erasetest.erasepropertylist erasetest.erasevariable erasetest.ern erasetest.erpl error.30.test errortest errortest.checkerror exptest filetest filetest.allopen filetest.badinput filetest.closeall filetest.dribble filetest.erasefile filetest.openappend filetest.opendirectoryasfile filetest.openopenfile filetest.openupdate filetest.setreadpos filetest.setwritepos filetest.smoketest filltest filltimerevent floodcolortest fontfacenamestest fontfacenamestest.badinput fontfacenamestest.manualtest fontfacenamestest.smoketest formtest helptest i.dont.know.what.to.do.with.value iftest inporttest inttest iseqtest labelbadinputtest labelcircletest labeltest largeedittest lasttest listptest lntest loadtest localvartest log10test logictest logoversiontest logoversiontest.badinput logoversiontest.smoketest macro.return.unbound.instead.of.list macrotest macrotest.outputnothing mathtest memberptest miditest miditest.badinput miditest.devicezero miditest.longformat miditest.playtune miditest.smoketest minustest misctest mkdirtest modulotest mousetest mousetest.badinput mousetest.simpletest my.proc.to.step myadd mymacro netshutdowncrash networksmoketest networktest no.input.no.output nodestest nottest numberptest one.input.no.output orientationtest ortest outporttest output.373 parsefunctest parsenumbertest parsetest parsewordtest pasteincircle pencolortest penmodetest pentest penupdowntest perspectivetest pitest plisttest porttest powertest predicatetest procedure.shadows.myshadowedvar procedure.with.to.inside.it procedureinworkingdirectory proceduretest producttest queuetest queuetest.badinput queuetest.circulartest queuetest.smoketest quotedtest quotedtest.badinput quotedtest.smoketest quotienttest radarccostest radarcsintest radarctantest radcostest radsintest radtantest rawasciitest remaindertest reporttest reporttestfailed reporttestinfo reporttestinitialize reporttestpassed reporttestuninitialize rmdirtest roundtest runbadinputtest runexpecterrortest runfilesystemerrortest runhasnovaluetest runidontknowhowtotest runisaprimitivetest runnonrecoverableidontknowhowtotest runnotenoughinputstest runtest runtoomanyinputstest sampleproc screencolortest screentest scrunchtest server.start server.stop setitemtest setlabelfonttest setrandomorientation signtest simplereporttest sintest sortbadinputtest sortbylegs sortbyname sortregressiontest sorttest sorttest.nonpredicate sorttest.oneinputbydefault sorttest.oneinputproc sorttest.threeinputproc soundtest soundtest.badinput soundtest.frequency.a4 soundtest.frequency.b4 soundtest.frequency.c4 soundtest.frequency.c5 soundtest.frequency.d4 soundtest.frequency.d5 soundtest.frequency.e4 soundtest.frequency.f4 soundtest.frequency.g4 soundtest.sound soundtest.tone sqrttest stacktest stacktest.badinput stacktest.circulartest stacktest.smoketest steptest steptest.badinput steptest.procedure steptest.propertylist steptest.shadowvariable steptest.stepall steptest.steppedprocedure steptest.variable sumtest tantest testall timecommand timewait traceinstruction tracetest tracetest.badinput tracetest.function tracetest.procedure tracetest.propertylist tracetest.traceall tracetest.tracedfunction tracetest.tracedprocedure tracetest.variable waittest windowfileedittest windowfileedittest.bug1330752 windowfileedittest.longfilename windowsettest windowtest wordproctest wordptest wordtest ~ignoreme ~ignoremewascalled] [isok netconnectoncall startup string testlog tracetest.tracedplist ~ignoremewascalled] [tracetest.tracedplist]] , as expected.
+PASS: [TRACED] returned [[#test .eqtest abstest activeareatest andtest angleiscloseenough applytest applytest.badinput applytest.nonprimitive applytest.nooutput applytest.smoketest arcbadinputtest arccostest arcsintest arcsmoketest arctantest arctest arraybadinputtest arrayorigintest arrayptest arraysmoketest arraytest asciitest beforeptest bitcopytest bitloadsizetest bitmaptest bug1349374test bug1377856test bug1383281test bug1384267test bug1388325test bug1397560test bug1429960test bug1448155test bug1458661test burytest burytest.badinput burytest.buriedprocedure burytest.buryall burytest.procedure burytest.propertylist burytest.variable butfirsttest butlasttest buttonptest chdirtest client.onreadytosend colorsetgettest colortest controlflowtest copydefmaybeoutputtest copydefoptest copydefoutputtest copydefstoptest copydeftest copydeftotest costest differencetest difficultcomments directorysmoketest directorytest dllcalltest dllfreetest dllloadtest dllsmoketest dlltest doorientationtest echo edalltest editortest emptyptest equalptest erasetest erasetest.badinput erasetest.eraseall erasetest.eraseprocedure erasetest.erasepropertylist erasetest.erasevariable erasetest.ern erasetest.erpl error.30.test errortest errortest.checkerror exptest filetest filetest.allopen filetest.badinput filetest.closeall filetest.dribble filetest.erasefile filetest.openappend filetest.opendirectoryasfile filetest.openopenfile filetest.openupdate filetest.setreadpos filetest.setwritepos filetest.smoketest filltest filltimerevent floodcolortest fontfacenamestest fontfacenamestest.badinput fontfacenamestest.manualtest fontfacenamestest.smoketest formtest helptest i.dont.know.what.to.do.with.value iftest inporttest inttest iseqtest labelbadinputtest labelcircletest labeltest largeedittest lasttest listptest lntest loadtest localvartest log10test logictest logoversiontest logoversiontest.badinput logoversiontest.smoketest macro.return.unbound.instead.of.list macrotest macrotest.outputnothing mathtest memberptest miditest miditest.badinput miditest.devicezero miditest.longformat miditest.playtune miditest.smoketest minustest misctest mkdirtest modulotest mousetest mousetest.badinput mousetest.simpletest my.proc.to.step myadd mymacro netshutdowncrash networksmoketest networktest no.input.no.output nodestest nottest numberptest one.input.no.output orientationtest ortest outporttest output.373 parsefunctest parsenumbertest parsetest parsewordtest pasteincircle pencolortest penmodetest pentest penupdowntest perspectivetest pitest plisttest porttest powertest predicatetest procedure.shadows.myshadowedvar procedure.with.to.inside.it procedureinworkingdirectory proceduretest producttest queuetest queuetest.badinput queuetest.circulartest queuetest.smoketest quotedtest quotedtest.badinput quotedtest.smoketest quotienttest radarccostest radarcsintest radarctantest radcostest radsintest radtantest rawasciitest remaindertest reporttest reporttestfailed reporttestinfo reporttestinitialize reporttestpassed reporttestuninitialize rmdirtest roundtest runbadinputtest runexpecterrortest runfilesystemerrortest runhasnovaluetest runidontknowhowtotest runisaprimitivetest runnonrecoverableidontknowhowtotest runnotenoughinputstest runtest runtoomanyinputstest sampleproc screencolortest screentest scrunchtest server.start server.stop setitemtest setlabelfonttest setrandomorientation signtest simplereporttest sintest sortbadinputtest sortbylegs sortbyname sortregressiontest sorttest sorttest.nonpredicate sorttest.oneinputbydefault sorttest.oneinputproc sorttest.threeinputproc soundtest soundtest.badinput soundtest.frequency.a4 soundtest.frequency.b4 soundtest.frequency.c4 soundtest.frequency.c5 soundtest.frequency.d4 soundtest.frequency.d5 soundtest.frequency.e4 soundtest.frequency.f4 soundtest.frequency.g4 soundtest.sound soundtest.tone sqrttest stacktest stacktest.badinput stacktest.circulartest stacktest.smoketest steptest steptest.badinput steptest.procedure steptest.propertylist steptest.shadowvariable steptest.stepall steptest.steppedprocedure steptest.variable sumtest tantest testall timecommand timewait traceinstruction tracetest tracetest.badinput tracetest.function tracetest.procedure tracetest.propertylist tracetest.traceall tracetest.tracedfunction tracetest.tracedprocedure tracetest.variable waittest windowfileedittest windowfileedittest.bug1330752 windowfileedittest.longfilename windowsettest windowstest windowstest.button windowstest.button.badinput windowstest.checkbox windowstest.checkbox.badinput windowstest.checkbox.deletegroupbox windowstest.combobox windowstest.combobox.badinput windowstest.debugwindows windowstest.debugwindows.badinput windowstest.debugwindows.stress windowstest.dialog.badinput windowstest.dialog.badinput.fromcallback windowstest.dialog.smoketest windowstest.groupbox windowstest.groupbox.badinput windowstest.listbox windowstest.listbox.badinput windowstest.mainwindow.smoketest windowstest.radiobutton windowstest.radiobutton.badinput windowstest.radiobutton.deletegroupbox windowstest.regressiontest windowstest.scrollbar windowstest.scrollbar.badinput windowstest.setup windowstest.static windowstest.static.badinput windowstest.window.badinput windowstest.window.smoketest windowtest wordproctest wordptest wordtest ~ignoreme ~ignoremewascalled] [isok netconnectoncall startup string testlog tracetest.tracedplist ~ignoremewascalled] [tracetest.tracedplist]] , as expected.
 CALL: UNTRACE CONTENTS
 PASS: [TRACED] returned [[] [] []] , as expected.
 INFO: Executing invalid instruction: [(TRACED "toomany)]
@@ -4160,7 +4160,7 @@ INFO: Executing invalid instruction: [(UNBURYALL "toomany)]
 INFO: Executing [(UNBURYALL "toomany)] set error code to 8 , as expected
 INFO: Executing [(UNBURYALL "toomany)] set error string to [too much inside ()'s]
 CALL: BURYALL
-PASS: [BURIED] returned [[# #test .eqtest ?in ?out ?rest ` abs abstest activeareatest andtest angleiscloseenough applytest applytest.badinput applytest.nonprimitive applytest.nooutput applytest.smoketest arc arcbadinputtest arccostest arcsintest arcsmoketest arctantest arctest arraybadinputtest arrayorigintest arrayptest arraysmoketest arraytest arraytolist asciitest beforeptest bitcopytest bitloadsizetest bitmaptest bug1349374test bug1377856test bug1383281test bug1384267test bug1388325test bug1397560test bug1429960test bug1448155test bug1458661test buryall burytest burytest.badinput burytest.buriedprocedure burytest.buryall burytest.procedure burytest.propertylist burytest.variable butfirsttest butlasttest buttonptest cascade cascade.2 cascade.eval cascade.setup cascade1 chdirtest circle client.onreadytosend colorsetgettest colortest combine controlflowtest copydefmaybeoutputtest copydefoptest copydefoutputtest copydefstoptest copydeftest copydeftotest costest dequeue differencetest difficultcomments dir directorysmoketest directorytest dllcalltest dllfreetest dllloadtest dllsmoketest dlltest doorientationtest echo edall edalltest editortest emptyptest equalptest erasetest erasetest.badinput erasetest.eraseall erasetest.eraseprocedure erasetest.erasepropertylist erasetest.erasevariable erasetest.ern erasetest.erpl error.30.test errortest errortest.checkerror exptest filetest filetest.allopen filetest.badinput filetest.closeall filetest.dribble filetest.erasefile filetest.openappend filetest.opendirectoryasfile filetest.openopenfile filetest.openupdate filetest.setreadpos filetest.setwritepos filetest.smoketest filltest filltimerevent floodcolortest fontfacenamestest fontfacenamestest.badinput fontfacenamestest.manualtest fontfacenamestest.smoketest for for.done foreach foreach.done foreach1 forloop formtest forstep helptest i.dont.know.what.to.do.with.value icon iftest ignore inporttest inttest iseq iseq1 iseqtest labelbadinputtest labelcircletest labeltest largeedittest lasttest listptest listtoarray listtoarray1 lntest loadtest localmake localvartest log10test logictest logoversiontest logoversiontest.badinput logoversiontest.smoketest macro.return.unbound.instead.of.list macrotest macrotest.outputnothing map map1 mathtest memberptest miditest miditest.badinput miditest.devicezero miditest.longformat miditest.playtune miditest.smoketest minustest misctest mkdirtest modulotest mousetest mousetest.badinput mousetest.simpletest my.proc.to.step myadd myaddcopy mymacro namelist netshutdowncrash networksmoketest networktest no.input.no.output nodestest nottest numberptest one.input.no.output orientation orientationtest ortest outporttest output.373 parsefunctest parsenumbertest parsetest parsewordtest pasteincircle pen pencolortest penmodetest pentest penupdowntest perspectivetest pi pick pitest plisttest pllist poall pon pons pop popl popls pops porttest pots powertest predicatetest procedure.shadows.myshadowedvar procedure.with.to.inside.it procedureinworkingdirectory proceduretest producttest push queue queuetest queuetest.badinput queuetest.circulartest queuetest.smoketest quoted quotedtest quotedtest.badinput quotedtest.smoketest quotienttest radarccostest radarcsintest radarctantest radcostest radsintest radtantest rawasciitest remaindertest reporttest reporttestfailed reporttestinfo reporttestinitialize reporttestpassed reporttestuninitialize rmdirtest roundtest runbadinputtest runexpecterrortest runfilesystemerrortest runhasnovaluetest runidontknowhowtotest runisaprimitivetest runnonrecoverableidontknowhowtotest runnotenoughinputstest runtest runtoomanyinputstest sampleproc screencolortest screentest scrunchtest server.start server.stop setitemtest setlabelfonttest setorientation setrandomorientation settextfont sign signtest simplereporttest sintest sort sort.stable sortbadinputtest sortbylegs sortbyname sortregressiontest sorttest sorttest.nonpredicate sorttest.oneinputbydefault sorttest.oneinputproc sorttest.threeinputproc soundtest soundtest.badinput soundtest.frequency.a4 soundtest.frequency.b4 soundtest.frequency.c4 soundtest.frequency.c5 soundtest.frequency.d4 soundtest.frequency.d5 soundtest.frequency.e4 soundtest.frequency.f4 soundtest.frequency.g4 soundtest.sound soundtest.tone sqrttest stacktest stacktest.badinput stacktest.circulartest stacktest.smoketest steptest steptest.badinput steptest.procedure steptest.propertylist steptest.shadowvariable steptest.stepall steptest.steppedprocedure steptest.variable sumtest tantest testall timecommand timewait traceinstruction tracetest tracetest.badinput tracetest.function tracetest.procedure tracetest.propertylist tracetest.traceall tracetest.tracedfunction tracetest.tracedprocedure tracetest.variable transfer unburyall unicon waittest windowfileedittest windowfileedittest.bug1330752 windowfileedittest.longfilename windowsettest windowtest wordproctest wordptest wordtest xcor ycor ~ignoreme ~ignoremewascalled] [caseignoredp instruction isok netconnectoncall realcontents savedburied startup string testlog tracetest.tracedplist ~ignoremewascalled] [burytest.buriedplist steptest.steppedplist tracetest.tracedplist]] , as expected.
+PASS: [BURIED] returned [[# #test .eqtest ?in ?out ?rest ` abs abstest activeareatest andtest angleiscloseenough applytest applytest.badinput applytest.nonprimitive applytest.nooutput applytest.smoketest arc arcbadinputtest arccostest arcsintest arcsmoketest arctantest arctest arraybadinputtest arrayorigintest arrayptest arraysmoketest arraytest arraytolist asciitest beforeptest bitcopytest bitloadsizetest bitmaptest bug1349374test bug1377856test bug1383281test bug1384267test bug1388325test bug1397560test bug1429960test bug1448155test bug1458661test buryall burytest burytest.badinput burytest.buriedprocedure burytest.buryall burytest.procedure burytest.propertylist burytest.variable butfirsttest butlasttest buttonptest cascade cascade.2 cascade.eval cascade.setup cascade1 chdirtest circle client.onreadytosend colorsetgettest colortest combine controlflowtest copydefmaybeoutputtest copydefoptest copydefoutputtest copydefstoptest copydeftest copydeftotest costest dequeue differencetest difficultcomments dir directorysmoketest directorytest dllcalltest dllfreetest dllloadtest dllsmoketest dlltest doorientationtest echo edall edalltest editortest emptyptest equalptest erasetest erasetest.badinput erasetest.eraseall erasetest.eraseprocedure erasetest.erasepropertylist erasetest.erasevariable erasetest.ern erasetest.erpl error.30.test errortest errortest.checkerror exptest filetest filetest.allopen filetest.badinput filetest.closeall filetest.dribble filetest.erasefile filetest.openappend filetest.opendirectoryasfile filetest.openopenfile filetest.openupdate filetest.setreadpos filetest.setwritepos filetest.smoketest filltest filltimerevent floodcolortest fontfacenamestest fontfacenamestest.badinput fontfacenamestest.manualtest fontfacenamestest.smoketest for for.done foreach foreach.done foreach1 forloop formtest forstep helptest i.dont.know.what.to.do.with.value icon iftest ignore inporttest inttest iseq iseq1 iseqtest labelbadinputtest labelcircletest labeltest largeedittest lasttest listptest listtoarray listtoarray1 lntest loadtest localmake localvartest log10test logictest logoversiontest logoversiontest.badinput logoversiontest.smoketest macro.return.unbound.instead.of.list macrotest macrotest.outputnothing map map1 mathtest memberptest miditest miditest.badinput miditest.devicezero miditest.longformat miditest.playtune miditest.smoketest minustest misctest mkdirtest modulotest mousetest mousetest.badinput mousetest.simpletest my.proc.to.step myadd myaddcopy mymacro namelist netshutdowncrash networksmoketest networktest no.input.no.output nodestest nottest numberptest one.input.no.output orientation orientationtest ortest outporttest output.373 parsefunctest parsenumbertest parsetest parsewordtest pasteincircle pen pencolortest penmodetest pentest penupdowntest perspectivetest pi pick pitest plisttest pllist poall pon pons pop popl popls pops porttest pots powertest predicatetest procedure.shadows.myshadowedvar procedure.with.to.inside.it procedureinworkingdirectory proceduretest producttest push queue queuetest queuetest.badinput queuetest.circulartest queuetest.smoketest quoted quotedtest quotedtest.badinput quotedtest.smoketest quotienttest radarccostest radarcsintest radarctantest radcostest radsintest radtantest rawasciitest remaindertest reporttest reporttestfailed reporttestinfo reporttestinitialize reporttestpassed reporttestuninitialize rmdirtest roundtest runbadinputtest runexpecterrortest runfilesystemerrortest runhasnovaluetest runidontknowhowtotest runisaprimitivetest runnonrecoverableidontknowhowtotest runnotenoughinputstest runtest runtoomanyinputstest sampleproc screencolortest screentest scrunchtest server.start server.stop setitemtest setlabelfonttest setorientation setrandomorientation settextfont sign signtest simplereporttest sintest sort sort.stable sortbadinputtest sortbylegs sortbyname sortregressiontest sorttest sorttest.nonpredicate sorttest.oneinputbydefault sorttest.oneinputproc sorttest.threeinputproc soundtest soundtest.badinput soundtest.frequency.a4 soundtest.frequency.b4 soundtest.frequency.c4 soundtest.frequency.c5 soundtest.frequency.d4 soundtest.frequency.d5 soundtest.frequency.e4 soundtest.frequency.f4 soundtest.frequency.g4 soundtest.sound soundtest.tone sqrttest stacktest stacktest.badinput stacktest.circulartest stacktest.smoketest steptest steptest.badinput steptest.procedure steptest.propertylist steptest.shadowvariable steptest.stepall steptest.steppedprocedure steptest.variable sumtest tantest testall timecommand timewait traceinstruction tracetest tracetest.badinput tracetest.function tracetest.procedure tracetest.propertylist tracetest.traceall tracetest.tracedfunction tracetest.tracedprocedure tracetest.variable transfer unburyall unicon waittest windowfileedittest windowfileedittest.bug1330752 windowfileedittest.longfilename windowsettest windowstest windowstest.button windowstest.button.badinput windowstest.checkbox windowstest.checkbox.badinput windowstest.checkbox.deletegroupbox windowstest.combobox windowstest.combobox.badinput windowstest.debugwindows windowstest.debugwindows.badinput windowstest.debugwindows.stress windowstest.dialog.badinput windowstest.dialog.badinput.fromcallback windowstest.dialog.smoketest windowstest.groupbox windowstest.groupbox.badinput windowstest.listbox windowstest.listbox.badinput windowstest.mainwindow.smoketest windowstest.radiobutton windowstest.radiobutton.badinput windowstest.radiobutton.deletegroupbox windowstest.regressiontest windowstest.scrollbar windowstest.scrollbar.badinput windowstest.setup windowstest.static windowstest.static.badinput windowstest.window.badinput windowstest.window.smoketest windowtest wordproctest wordptest wordtest xcor ycor ~ignoreme ~ignoremewascalled] [caseignoredp instruction isok netconnectoncall realcontents savedburied startup string testlog tracetest.tracedplist ~ignoremewascalled] [burytest.buriedplist steptest.steppedplist tracetest.tracedplist]] , as expected.
 PASS: CONTENTS returned [[] [] []] , as expected.
 INFO: Called UNBURYALL
 PASS: [BURIED] returned [[] [] []] , as expected.
@@ -4298,6 +4298,1326 @@ INFO: Executing [(QUOTED)] set error string to [not enough inputs to QUOTED]
 INFO: Executing invalid instruction: [(QUOTED "Hello "toomany)]
 INFO: Executing [(QUOTED "Hello "toomany)] set error code to 8 , as expected
 INFO: Executing [(QUOTED "Hello "toomany)] set error string to [too much inside ()'s]
+INFO: Executing invalid instruction: [(windowcreate "main "name [caption] 0 0 120 400)]
+INFO: Executing [(windowcreate "main "name [caption] 0 0 120 400)] set error code to 6 , as expected
+INFO: Executing [(windowcreate "main "name [caption] 0 0 120 400)] set error string to [not enough inputs to windowcreate]
+INFO: Executing invalid instruction: [(windowcreate "main "name [caption] 0 0 120 400 [] "toomany)]
+INFO: Executing [(windowcreate "main "name [caption] 0 0 120 400 [] "toomany)] set error code to 8 , as expected
+INFO: Executing [(windowcreate "main "name [caption] 0 0 120 400 [] "toomany)] set error string to [too much inside ()'s]
+INFO: Executing invalid instruction: [windowcreate "main "name10 [caption] [0] 0 120 400 []]
+INFO: Executing [windowcreate "main "name10 [caption] [0] 0 120 400 []] set error code to 7
+INFO: Executing [windowcreate "main "name10 [caption] [0] 0 120 400 []] set error string to [windowcreate doesn't like [0] as input]
+INFO: Executing invalid instruction: [windowcreate "main "name20 [caption] {0} 0 120 400 []]
+INFO: Executing [windowcreate "main "name20 [caption] {0} 0 120 400 []] set error code to 7
+INFO: Executing [windowcreate "main "name20 [caption] {0} 0 120 400 []] set error string to [windowcreate doesn't like {0} as input]
+INFO: Executing invalid instruction: [windowcreate "main "name25 [caption] 10.5 0 120 400 []]
+INFO: Executing [windowcreate "main "name25 [caption] 10.5 0 120 400 []] set error code to 7
+INFO: Executing [windowcreate "main "name25 [caption] 10.5 0 120 400 []] set error string to [windowcreate doesn't like 10.5 as input]
+INFO: Executing invalid instruction: [windowcreate "main "name30 [caption] 0 [0] 120 400 []]
+INFO: Executing [windowcreate "main "name30 [caption] 0 [0] 120 400 []] set error code to 7
+INFO: Executing [windowcreate "main "name30 [caption] 0 [0] 120 400 []] set error string to [windowcreate doesn't like [0] as input]
+INFO: Executing invalid instruction: [windowcreate "main "name40 [caption] 0 {0} 120 400 []]
+INFO: Executing [windowcreate "main "name40 [caption] 0 {0} 120 400 []] set error code to 7
+INFO: Executing [windowcreate "main "name40 [caption] 0 {0} 120 400 []] set error string to [windowcreate doesn't like {0} as input]
+INFO: Executing invalid instruction: [windowcreate "main "name45 [caption] 0 10.5 120 400 []]
+INFO: Executing [windowcreate "main "name45 [caption] 0 10.5 120 400 []] set error code to 7
+INFO: Executing [windowcreate "main "name45 [caption] 0 10.5 120 400 []] set error string to [windowcreate doesn't like 10.5 as input]
+INFO: Executing invalid instruction: [windowcreate "main "name50 [caption] 0 0 [120] 400 []]
+INFO: Executing [windowcreate "main "name50 [caption] 0 0 [120] 400 []] set error code to 7
+INFO: Executing [windowcreate "main "name50 [caption] 0 0 [120] 400 []] set error string to [windowcreate doesn't like [120] as input]
+INFO: Executing invalid instruction: [windowcreate "main "name60 [caption] 0 0 {120} 400 []]
+INFO: Executing [windowcreate "main "name60 [caption] 0 0 {120} 400 []] set error code to 7
+INFO: Executing [windowcreate "main "name60 [caption] 0 0 {120} 400 []] set error string to [windowcreate doesn't like {120} as input]
+INFO: Executing invalid instruction: [windowcreate "main "name70 [caption] 0 0 -120 400 []]
+INFO: Executing [windowcreate "main "name70 [caption] 0 0 -120 400 []] set error code to 7
+INFO: Executing [windowcreate "main "name70 [caption] 0 0 -120 400 []] set error string to [windowcreate doesn't like -120 as input]
+INFO: Executing invalid instruction: [windowcreate "main "name75 [caption] 0 0 10.5 400 []]
+INFO: Executing [windowcreate "main "name75 [caption] 0 0 10.5 400 []] set error code to 7
+INFO: Executing [windowcreate "main "name75 [caption] 0 0 10.5 400 []] set error string to [windowcreate doesn't like 10.5 as input]
+INFO: Executing invalid instruction: [windowcreate "main "name80 [caption] 0 0 120 [400] []]
+INFO: Executing [windowcreate "main "name80 [caption] 0 0 120 [400] []] set error code to 7
+INFO: Executing [windowcreate "main "name80 [caption] 0 0 120 [400] []] set error string to [windowcreate doesn't like [400] as input]
+INFO: Executing invalid instruction: [windowcreate "main "name90 [caption] 0 0 120 {400} []]
+INFO: Executing [windowcreate "main "name90 [caption] 0 0 120 {400} []] set error code to 7
+INFO: Executing [windowcreate "main "name90 [caption] 0 0 120 {400} []] set error string to [windowcreate doesn't like {400} as input]
+INFO: Executing invalid instruction: [windowcreate "main "name00 [caption] 0 0 120 -400 []]
+INFO: Executing [windowcreate "main "name00 [caption] 0 0 120 -400 []] set error code to 7
+INFO: Executing [windowcreate "main "name00 [caption] 0 0 120 -400 []] set error string to [windowcreate doesn't like -400 as input]
+INFO: Executing invalid instruction: [windowcreate "main "name05 [caption] 0 0 120 10.5 []]
+INFO: Executing [windowcreate "main "name05 [caption] 0 0 120 10.5 []] set error code to 7
+INFO: Executing [windowcreate "main "name05 [caption] 0 0 120 10.5 []] set error string to [windowcreate doesn't like 10.5 as input]
+CALL: windowcreate "main "goodwindow [caption] 0 0 100 100 []
+INFO: Executing invalid instruction: [windowcreate "main "goodwindow [newcaption] 0 0 100 100 []]
+INFO: Executing [windowcreate "main "goodwindow [newcaption] 0 0 100 100 []] set error code to 16
+INFO: Executing [windowcreate "main "goodwindow [newcaption] 0 0 100 100 []] set error string to [Stopping...]
+INFO: Executing invalid instruction: [(windowenable "goodwindow)]
+INFO: Executing [(windowenable "goodwindow)] set error code to 6 , as expected
+INFO: Executing [(windowenable "goodwindow)] set error string to [not enough inputs to windowenable]
+INFO: Executing invalid instruction: [(windowenable "goodwindow "true "toomany)]
+INFO: Executing [(windowenable "goodwindow "true "toomany)] set error code to 8 , as expected
+INFO: Executing [(windowenable "goodwindow "true "toomany)] set error string to [too much inside ()'s]
+INFO: Executing invalid instruction: [windowenable "nonexistent "true]
+INFO: Executing [windowenable "nonexistent "true] set error code to 16
+INFO: Executing [windowenable "nonexistent "true] set error string to [Stopping...]
+INFO: Executing invalid instruction: [windowenable "goodwindow 1]
+INFO: Executing [windowenable "goodwindow 1] set error code to 7
+INFO: Executing [windowenable "goodwindow 1] set error string to [windowenable doesn't like 1 as input]
+INFO: Executing invalid instruction: [windowenable "goodwindow [true]]
+INFO: Executing [windowenable "goodwindow [true]] set error code to 7
+INFO: Executing [windowenable "goodwindow [true]] set error string to [windowenable doesn't like [true] as input]
+INFO: Executing invalid instruction: [windowenable "goodwindow {true}]
+INFO: Executing [windowenable "goodwindow {true}] set error code to 7
+INFO: Executing [windowenable "goodwindow {true}] set error string to [windowenable doesn't like {true} as input]
+INFO: Executing invalid instruction: [(windowdelete)]
+INFO: Executing [(windowdelete)] set error code to 6 , as expected
+INFO: Executing [(windowdelete)] set error string to [not enough inputs to windowdelete]
+INFO: Executing invalid instruction: [(windowdelete "goodwindow "toomany)]
+INFO: Executing [(windowdelete "goodwindow "toomany)] set error code to 8 , as expected
+INFO: Executing [(windowdelete "goodwindow "toomany)] set error string to [too much inside ()'s]
+INFO: Executing invalid instruction: [(dialogcreate "main "name [caption] 0 0 120 400)]
+INFO: Executing [(dialogcreate "main "name [caption] 0 0 120 400)] set error code to 6 , as expected
+INFO: Executing [(dialogcreate "main "name [caption] 0 0 120 400)] set error string to [not enough inputs to dialogcreate]
+INFO: Executing invalid instruction: [(dialogcreate "main "name [caption] 0 0 120 400 [] "toomany)]
+INFO: Executing [(dialogcreate "main "name [caption] 0 0 120 400 [] "toomany)] set error code to 8 , as expected
+INFO: Executing [(dialogcreate "main "name [caption] 0 0 120 400 [] "toomany)] set error string to [too much inside ()'s]
+INFO: Executing invalid instruction: [dialogcreate "main "name10 [caption] [0] 0 120 400 []]
+INFO: Executing [dialogcreate "main "name10 [caption] [0] 0 120 400 []] set error code to 7
+INFO: Executing [dialogcreate "main "name10 [caption] [0] 0 120 400 []] set error string to [dialogcreate doesn't like [0] as input]
+INFO: Executing invalid instruction: [dialogcreate "main "name20 [caption] {0} 0 120 400 []]
+INFO: Executing [dialogcreate "main "name20 [caption] {0} 0 120 400 []] set error code to 7
+INFO: Executing [dialogcreate "main "name20 [caption] {0} 0 120 400 []] set error string to [dialogcreate doesn't like {0} as input]
+INFO: Executing invalid instruction: [dialogcreate "main "name25 [caption] 10.5 0 120 400 []]
+INFO: Executing [dialogcreate "main "name25 [caption] 10.5 0 120 400 []] set error code to 7
+INFO: Executing [dialogcreate "main "name25 [caption] 10.5 0 120 400 []] set error string to [dialogcreate doesn't like 10.5 as input]
+INFO: Executing invalid instruction: [dialogcreate "main "name30 [caption] 0 [0] 120 400 []]
+INFO: Executing [dialogcreate "main "name30 [caption] 0 [0] 120 400 []] set error code to 7
+INFO: Executing [dialogcreate "main "name30 [caption] 0 [0] 120 400 []] set error string to [dialogcreate doesn't like [0] as input]
+INFO: Executing invalid instruction: [dialogcreate "main "name40 [caption] 0 {0} 120 400 []]
+INFO: Executing [dialogcreate "main "name40 [caption] 0 {0} 120 400 []] set error code to 7
+INFO: Executing [dialogcreate "main "name40 [caption] 0 {0} 120 400 []] set error string to [dialogcreate doesn't like {0} as input]
+INFO: Executing invalid instruction: [dialogcreate "main "name45 [caption] 0 10.5 120 400 []]
+INFO: Executing [dialogcreate "main "name45 [caption] 0 10.5 120 400 []] set error code to 7
+INFO: Executing [dialogcreate "main "name45 [caption] 0 10.5 120 400 []] set error string to [dialogcreate doesn't like 10.5 as input]
+INFO: Executing invalid instruction: [dialogcreate "main "name50 [caption] 0 0 [120] 400 []]
+INFO: Executing [dialogcreate "main "name50 [caption] 0 0 [120] 400 []] set error code to 7
+INFO: Executing [dialogcreate "main "name50 [caption] 0 0 [120] 400 []] set error string to [dialogcreate doesn't like [120] as input]
+INFO: Executing invalid instruction: [dialogcreate "main "name60 [caption] 0 0 {120} 400 []]
+INFO: Executing [dialogcreate "main "name60 [caption] 0 0 {120} 400 []] set error code to 7
+INFO: Executing [dialogcreate "main "name60 [caption] 0 0 {120} 400 []] set error string to [dialogcreate doesn't like {120} as input]
+INFO: Executing invalid instruction: [dialogcreate "main "name70 [caption] 0 0 -120 400 []]
+INFO: Executing [dialogcreate "main "name70 [caption] 0 0 -120 400 []] set error code to 7
+INFO: Executing [dialogcreate "main "name70 [caption] 0 0 -120 400 []] set error string to [dialogcreate doesn't like -120 as input]
+INFO: Executing invalid instruction: [dialogcreate "main "name75 [caption] 0 0 10.5 400 []]
+INFO: Executing [dialogcreate "main "name75 [caption] 0 0 10.5 400 []] set error code to 7
+INFO: Executing [dialogcreate "main "name75 [caption] 0 0 10.5 400 []] set error string to [dialogcreate doesn't like 10.5 as input]
+INFO: Executing invalid instruction: [dialogcreate "main "name80 [caption] 0 0 120 [400] []]
+INFO: Executing [dialogcreate "main "name80 [caption] 0 0 120 [400] []] set error code to 7
+INFO: Executing [dialogcreate "main "name80 [caption] 0 0 120 [400] []] set error string to [dialogcreate doesn't like [400] as input]
+INFO: Executing invalid instruction: [dialogcreate "main "name90 [caption] 0 0 120 {400} []]
+INFO: Executing [dialogcreate "main "name90 [caption] 0 0 120 {400} []] set error code to 7
+INFO: Executing [dialogcreate "main "name90 [caption] 0 0 120 {400} []] set error string to [dialogcreate doesn't like {400} as input]
+INFO: Executing invalid instruction: [dialogcreate "main "name00 [caption] 0 0 120 -400 []]
+INFO: Executing [dialogcreate "main "name00 [caption] 0 0 120 -400 []] set error code to 7
+INFO: Executing [dialogcreate "main "name00 [caption] 0 0 120 -400 []] set error string to [dialogcreate doesn't like -400 as input]
+INFO: Executing invalid instruction: [dialogcreate "main "name05 [caption] 0 0 120 400.5 []]
+INFO: Executing [dialogcreate "main "name05 [caption] 0 0 120 400.5 []] set error code to 7
+INFO: Executing [dialogcreate "main "name05 [caption] 0 0 120 400.5 []] set error string to [dialogcreate doesn't like 400.5 as input]
+CALL: dialogcreate "main "gooddialog [caption] 0 0 100 100 [WINDOWSTEST.DIALOG.BADINPUT.FROMCALLBACK]
+CALL: listboxcreate "main "notadialog 0 100 100 100
+INFO: Executing invalid instruction: [dialogcreate "main "gooddialog [newcaption] 0 0 100 100 []]
+INFO: Executing [dialogcreate "main "gooddialog [newcaption] 0 0 100 100 []] set error code to 16
+INFO: Executing [dialogcreate "main "gooddialog [newcaption] 0 0 100 100 []] set error string to [Stopping...]
+INFO: Executing invalid instruction: [(dialogenable "gooddialog)]
+INFO: Executing [(dialogenable "gooddialog)] set error code to 6 , as expected
+INFO: Executing [(dialogenable "gooddialog)] set error string to [not enough inputs to dialogenable]
+INFO: Executing invalid instruction: [(dialogenable "gooddialog "true "toomany)]
+INFO: Executing [(dialogenable "gooddialog "true "toomany)] set error code to 8 , as expected
+INFO: Executing [(dialogenable "gooddialog "true "toomany)] set error string to [too much inside ()'s]
+INFO: Executing invalid instruction: [dialogenable "nonexistent "true]
+INFO: Executing [dialogenable "nonexistent "true] set error code to 16
+INFO: Executing [dialogenable "nonexistent "true] set error string to [Stopping...]
+INFO: Executing invalid instruction: [dialogenable "notadialog "true]
+INFO: Executing [dialogenable "notadialog "true] set error code to 16
+INFO: Executing [dialogenable "notadialog "true] set error string to [Stopping...]
+INFO: Executing invalid instruction: [dialogenable "gooddialog 1]
+INFO: Executing [dialogenable "gooddialog 1] set error code to 7
+INFO: Executing [dialogenable "gooddialog 1] set error string to [dialogenable doesn't like 1 as input]
+INFO: Executing invalid instruction: [dialogenable "gooddialog [true]]
+INFO: Executing [dialogenable "gooddialog [true]] set error code to 7
+INFO: Executing [dialogenable "gooddialog [true]] set error string to [dialogenable doesn't like [true] as input]
+INFO: Executing invalid instruction: [dialogenable "gooddialog {true}]
+INFO: Executing [dialogenable "gooddialog {true}] set error code to 7
+INFO: Executing [dialogenable "gooddialog {true}] set error string to [dialogenable doesn't like {true} as input]
+INFO: Executing invalid instruction: [(dialogdelete)]
+INFO: Executing [(dialogdelete)] set error code to 6 , as expected
+INFO: Executing [(dialogdelete)] set error string to [not enough inputs to dialogdelete]
+INFO: Executing invalid instruction: [(dialogdelete "gooddialog "toomany)]
+INFO: Executing [(dialogdelete "gooddialog "toomany)] set error code to 8 , as expected
+INFO: Executing [(dialogdelete "gooddialog "toomany)] set error string to [too much inside ()'s]
+INFO: Executing invalid instruction: [dialogdelete "nonexistent]
+INFO: Executing [dialogdelete "nonexistent] set error code to 16
+INFO: Executing [dialogdelete "nonexistent] set error string to [Stopping...]
+INFO: Executing invalid instruction: [dialogdelete "notadialog]
+INFO: Executing [dialogdelete "notadialog] set error code to 16
+INFO: Executing [dialogdelete "notadialog] set error string to [Stopping...]
+CALL: dialogdelete "gooddialog
+CALL: listboxdelete "notadialog
+CALL: WINDOWCREATE "main "windowstest.static "mytitle 0 0 100 100 []
+CALL: STATICCREATE "windowstest.static "static [Initial Value] 0 0 100 20
+CALL: STATICCREATE "static "static2 [Initial Value] 0 0 100 20
+CALL: STATICUPDATE "static [New Value]
+CALL: STATICDELETE "static
+CALL: STATICDELETE "static2
+CALL: WINDOWDELETE "windowtest.static
+INFO: Executing invalid instruction: [(staticcreate "main "name [caption] 0 0 120)]
+INFO: Executing [(staticcreate "main "name [caption] 0 0 120)] set error code to 6 , as expected
+INFO: Executing [(staticcreate "main "name [caption] 0 0 120)] set error string to [not enough inputs to staticcreate]
+INFO: Executing invalid instruction: [(staticcreate "main "name [caption] 0 0 120 400 "toomany)]
+INFO: Executing [(staticcreate "main "name [caption] 0 0 120 400 "toomany)] set error code to 8 , as expected
+INFO: Executing [(staticcreate "main "name [caption] 0 0 120 400 "toomany)] set error string to [too much inside ()'s]
+INFO: Executing invalid instruction: [staticcreate "main "name10 [caption] [0] 0 120 400]
+INFO: Executing [staticcreate "main "name10 [caption] [0] 0 120 400] set error code to 7
+INFO: Executing [staticcreate "main "name10 [caption] [0] 0 120 400] set error string to [staticcreate doesn't like [0] as input]
+INFO: Executing invalid instruction: [staticcreate "main "name20 [caption] {0} 0 120 400]
+INFO: Executing [staticcreate "main "name20 [caption] {0} 0 120 400] set error code to 7
+INFO: Executing [staticcreate "main "name20 [caption] {0} 0 120 400] set error string to [staticcreate doesn't like {0} as input]
+INFO: Executing invalid instruction: [staticcreate "main "name25 [caption] 10.5 0 120 400]
+INFO: Executing [staticcreate "main "name25 [caption] 10.5 0 120 400] set error code to 7
+INFO: Executing [staticcreate "main "name25 [caption] 10.5 0 120 400] set error string to [staticcreate doesn't like 10.5 as input]
+INFO: Executing invalid instruction: [staticcreate "main "name30 [caption] 0 [0] 120 400]
+INFO: Executing [staticcreate "main "name30 [caption] 0 [0] 120 400] set error code to 7
+INFO: Executing [staticcreate "main "name30 [caption] 0 [0] 120 400] set error string to [staticcreate doesn't like [0] as input]
+INFO: Executing invalid instruction: [staticcreate "main "name40 [caption] 0 {0} 120 400]
+INFO: Executing [staticcreate "main "name40 [caption] 0 {0} 120 400] set error code to 7
+INFO: Executing [staticcreate "main "name40 [caption] 0 {0} 120 400] set error string to [staticcreate doesn't like {0} as input]
+INFO: Executing invalid instruction: [staticcreate "main "name45 [caption] 0 10.5 120 400]
+INFO: Executing [staticcreate "main "name45 [caption] 0 10.5 120 400] set error code to 7
+INFO: Executing [staticcreate "main "name45 [caption] 0 10.5 120 400] set error string to [staticcreate doesn't like 10.5 as input]
+INFO: Executing invalid instruction: [staticcreate "main "name50 [caption] 0 0 [120] 400]
+INFO: Executing [staticcreate "main "name50 [caption] 0 0 [120] 400] set error code to 7
+INFO: Executing [staticcreate "main "name50 [caption] 0 0 [120] 400] set error string to [staticcreate doesn't like [120] as input]
+INFO: Executing invalid instruction: [staticcreate "main "name60 [caption] 0 0 {120} 400]
+INFO: Executing [staticcreate "main "name60 [caption] 0 0 {120} 400] set error code to 7
+INFO: Executing [staticcreate "main "name60 [caption] 0 0 {120} 400] set error string to [staticcreate doesn't like {120} as input]
+INFO: Executing invalid instruction: [staticcreate "main "name70 [caption] 0 0 -120 400]
+INFO: Executing [staticcreate "main "name70 [caption] 0 0 -120 400] set error code to 7
+INFO: Executing [staticcreate "main "name70 [caption] 0 0 -120 400] set error string to [staticcreate doesn't like -120 as input]
+INFO: Executing invalid instruction: [staticcreate "main "name75 [caption] 0 0 10.5 400]
+INFO: Executing [staticcreate "main "name75 [caption] 0 0 10.5 400] set error code to 7
+INFO: Executing [staticcreate "main "name75 [caption] 0 0 10.5 400] set error string to [staticcreate doesn't like 10.5 as input]
+INFO: Executing invalid instruction: [staticcreate "main "name80 [caption] 0 0 120 [400]]
+INFO: Executing [staticcreate "main "name80 [caption] 0 0 120 [400]] set error code to 7
+INFO: Executing [staticcreate "main "name80 [caption] 0 0 120 [400]] set error string to [staticcreate doesn't like [400] as input]
+INFO: Executing invalid instruction: [staticcreate "main "name90 [caption] 0 0 120 {400}]
+INFO: Executing [staticcreate "main "name90 [caption] 0 0 120 {400}] set error code to 7
+INFO: Executing [staticcreate "main "name90 [caption] 0 0 120 {400}] set error string to [staticcreate doesn't like {400} as input]
+INFO: Executing invalid instruction: [staticcreate "main "name00 [caption] 0 0 120 -400]
+INFO: Executing [staticcreate "main "name00 [caption] 0 0 120 -400] set error code to 7
+INFO: Executing [staticcreate "main "name00 [caption] 0 0 120 -400] set error string to [staticcreate doesn't like -400 as input]
+INFO: Executing invalid instruction: [staticcreate "main "name05 [caption] 0 0 120 10.5]
+INFO: Executing [staticcreate "main "name05 [caption] 0 0 120 10.5] set error code to 7
+INFO: Executing [staticcreate "main "name05 [caption] 0 0 120 10.5] set error string to [staticcreate doesn't like 10.5 as input]
+CALL: staticcreate "main "goodstatic [newcaption] 0 0 100 100
+INFO: Executing invalid instruction: [staticcreate "main "goodstatic [newcaption] 0 0 100 100]
+INFO: Executing [staticcreate "main "goodstatic [newcaption] 0 0 100 100] set error code to 16
+INFO: Executing [staticcreate "main "goodstatic [newcaption] 0 0 100 100] set error string to [Stopping...]
+CALL: listboxcreate "main "notastatic 0 100 100 100
+INFO: Executing invalid instruction: [(staticupdate "goodstatic)]
+INFO: Executing [(staticupdate "goodstatic)] set error code to 6 , as expected
+INFO: Executing [(staticupdate "goodstatic)] set error string to [not enough inputs to staticupdate]
+INFO: Executing invalid instruction: [(staticupdate "goodstatic "newtext "toomany)]
+INFO: Executing [(staticupdate "goodstatic "newtext "toomany)] set error code to 8 , as expected
+INFO: Executing [(staticupdate "goodstatic "newtext "toomany)] set error string to [too much inside ()'s]
+INFO: Executing invalid instruction: [staticupdate "nonexistent "newtext]
+INFO: Executing [staticupdate "nonexistent "newtext] set error code to 16
+INFO: Executing [staticupdate "nonexistent "newtext] set error string to [Stopping...]
+INFO: Executing invalid instruction: [staticupdate "notastatic "newtext]
+INFO: Executing [staticupdate "notastatic "newtext] set error code to 16
+INFO: Executing [staticupdate "notastatic "newtext] set error string to [Stopping...]
+INFO: Executing invalid instruction: [(staticdelete)]
+INFO: Executing [(staticdelete)] set error code to 6 , as expected
+INFO: Executing [(staticdelete)] set error string to [not enough inputs to staticdelete]
+INFO: Executing invalid instruction: [(staticdelete "goodstatic "toomany)]
+INFO: Executing [(staticdelete "goodstatic "toomany)] set error code to 8 , as expected
+INFO: Executing [(staticdelete "goodstatic "toomany)] set error string to [too much inside ()'s]
+INFO: Executing invalid instruction: [staticdelete "nonexistent]
+INFO: Executing [staticdelete "nonexistent] set error code to 16
+INFO: Executing [staticdelete "nonexistent] set error string to [Stopping...]
+INFO: Executing invalid instruction: [staticdelete "notastatic]
+INFO: Executing [staticdelete "notastatic] set error code to 16
+INFO: Executing [staticdelete "notastatic] set error string to [Stopping...]
+CALL: staticdelete "goodstatic
+CALL: listboxdelete "notastatic
+CALL: WINDOWCREATE "main "windowstest.listbox "mytitle 0 0 100 100 []
+CALL: LISTBOXCREATE "windowstest.listbox "testlist 5 5 90 90
+CALL: LISTBOXADDSTRING "testlist "firststring
+PASS: [LISTBOXGETSELECT "testlist] returned [firststring] , as expected.
+CALL: LISTBOXDELETESTRING "testlist 0
+CALL: LISTBOXDELETESTRING "testlist 100
+CALL: LISTBOXADDSTRING "testlist [secondstring]
+PASS: [LISTBOXGETSELECT "testlist] returned [secondstring] , as expected.
+CALL: LISTBOXENABLE "testlist "false
+CALL: LISTBOXENABLE "testlist "true
+INFO: Executing invalid instruction: [(listboxcreate "main "name 0 0 120)]
+INFO: Executing [(listboxcreate "main "name 0 0 120)] set error code to 6 , as expected
+INFO: Executing [(listboxcreate "main "name 0 0 120)] set error string to [not enough inputs to listboxcreate]
+INFO: Executing invalid instruction: [(listboxcreate "main "name 0 0 120 400 "toomany)]
+INFO: Executing [(listboxcreate "main "name 0 0 120 400 "toomany)] set error code to 8 , as expected
+INFO: Executing [(listboxcreate "main "name 0 0 120 400 "toomany)] set error string to [too much inside ()'s]
+INFO: Executing invalid instruction: [listboxcreate "main "name10 [0] 0 120 400]
+INFO: Executing [listboxcreate "main "name10 [0] 0 120 400] set error code to 7
+INFO: Executing [listboxcreate "main "name10 [0] 0 120 400] set error string to [listboxcreate doesn't like [0] as input]
+INFO: Executing invalid instruction: [listboxcreate "main "name20 {0} 0 120 400]
+INFO: Executing [listboxcreate "main "name20 {0} 0 120 400] set error code to 7
+INFO: Executing [listboxcreate "main "name20 {0} 0 120 400] set error string to [listboxcreate doesn't like {0} as input]
+INFO: Executing invalid instruction: [listboxcreate "main "name25 10.5 0 120 400]
+INFO: Executing [listboxcreate "main "name25 10.5 0 120 400] set error code to 7
+INFO: Executing [listboxcreate "main "name25 10.5 0 120 400] set error string to [listboxcreate doesn't like 10.5 as input]
+INFO: Executing invalid instruction: [listboxcreate "main "name30 0 [0] 120 400]
+INFO: Executing [listboxcreate "main "name30 0 [0] 120 400] set error code to 7
+INFO: Executing [listboxcreate "main "name30 0 [0] 120 400] set error string to [listboxcreate doesn't like [0] as input]
+INFO: Executing invalid instruction: [listboxcreate "main "name40 0 {0} 120 400]
+INFO: Executing [listboxcreate "main "name40 0 {0} 120 400] set error code to 7
+INFO: Executing [listboxcreate "main "name40 0 {0} 120 400] set error string to [listboxcreate doesn't like {0} as input]
+INFO: Executing invalid instruction: [listboxcreate "main "name45 0 10.5 120 400]
+INFO: Executing [listboxcreate "main "name45 0 10.5 120 400] set error code to 7
+INFO: Executing [listboxcreate "main "name45 0 10.5 120 400] set error string to [listboxcreate doesn't like 10.5 as input]
+INFO: Executing invalid instruction: [listboxcreate "main "name50 0 0 [120] 400]
+INFO: Executing [listboxcreate "main "name50 0 0 [120] 400] set error code to 7
+INFO: Executing [listboxcreate "main "name50 0 0 [120] 400] set error string to [listboxcreate doesn't like [120] as input]
+INFO: Executing invalid instruction: [listboxcreate "main "name60 0 0 {120} 400]
+INFO: Executing [listboxcreate "main "name60 0 0 {120} 400] set error code to 7
+INFO: Executing [listboxcreate "main "name60 0 0 {120} 400] set error string to [listboxcreate doesn't like {120} as input]
+INFO: Executing invalid instruction: [listboxcreate "main "name70 0 0 -120 400]
+INFO: Executing [listboxcreate "main "name70 0 0 -120 400] set error code to 7
+INFO: Executing [listboxcreate "main "name70 0 0 -120 400] set error string to [listboxcreate doesn't like -120 as input]
+INFO: Executing invalid instruction: [listboxcreate "main "name75 0 0 10.5 400]
+INFO: Executing [listboxcreate "main "name75 0 0 10.5 400] set error code to 7
+INFO: Executing [listboxcreate "main "name75 0 0 10.5 400] set error string to [listboxcreate doesn't like 10.5 as input]
+INFO: Executing invalid instruction: [listboxcreate "main "name80 0 0 120 [400]]
+INFO: Executing [listboxcreate "main "name80 0 0 120 [400]] set error code to 7
+INFO: Executing [listboxcreate "main "name80 0 0 120 [400]] set error string to [listboxcreate doesn't like [400] as input]
+INFO: Executing invalid instruction: [listboxcreate "main "name90 0 0 120 {400}]
+INFO: Executing [listboxcreate "main "name90 0 0 120 {400}] set error code to 7
+INFO: Executing [listboxcreate "main "name90 0 0 120 {400}] set error string to [listboxcreate doesn't like {400} as input]
+INFO: Executing invalid instruction: [listboxcreate "main "name00 0 0 120 -400]
+INFO: Executing [listboxcreate "main "name00 0 0 120 -400] set error code to 7
+INFO: Executing [listboxcreate "main "name00 0 0 120 -400] set error string to [listboxcreate doesn't like -400 as input]
+INFO: Executing invalid instruction: [listboxcreate "main "name05 0 0 120 10.5]
+INFO: Executing [listboxcreate "main "name05 0 0 120 10.5] set error code to 7
+INFO: Executing [listboxcreate "main "name05 0 0 120 10.5] set error string to [listboxcreate doesn't like 10.5 as input]
+CALL: listboxcreate "main "goodlistbox 0 0 100 100
+INFO: Executing invalid instruction: [listboxcreate "main "goodlistbox 0 0 100 100]
+INFO: Executing [listboxcreate "main "goodlistbox 0 0 100 100] set error code to 16
+INFO: Executing [listboxcreate "main "goodlistbox 0 0 100 100] set error string to [Stopping...]
+CALL: staticcreate "main "notalistbox [text] 0 100 100 100
+INFO: Executing invalid instruction: [(listboxenable "goodlistbox)]
+INFO: Executing [(listboxenable "goodlistbox)] set error code to 6 , as expected
+INFO: Executing [(listboxenable "goodlistbox)] set error string to [not enough inputs to listboxenable]
+INFO: Executing invalid instruction: [(listboxenable "goodlistbox "true "toomany)]
+INFO: Executing [(listboxenable "goodlistbox "true "toomany)] set error code to 8 , as expected
+INFO: Executing [(listboxenable "goodlistbox "true "toomany)] set error string to [too much inside ()'s]
+INFO: Executing invalid instruction: [listboxenable "doesnotexist "true]
+INFO: Executing [listboxenable "doesnotexist "true] set error code to 16
+INFO: Executing [listboxenable "doesnotexist "true] set error string to [Stopping...]
+INFO: Executing invalid instruction: [listboxenable "notalistbox "true]
+INFO: Executing [listboxenable "notalistbox "true] set error code to 16
+INFO: Executing [listboxenable "notalistbox "true] set error string to [Stopping...]
+INFO: Executing invalid instruction: [listboxenable "goodlistbox 1]
+INFO: Executing [listboxenable "goodlistbox 1] set error code to 7
+INFO: Executing [listboxenable "goodlistbox 1] set error string to [listboxenable doesn't like 1 as input]
+INFO: Executing invalid instruction: [listboxenable "goodlistbox [true]]
+INFO: Executing [listboxenable "goodlistbox [true]] set error code to 7
+INFO: Executing [listboxenable "goodlistbox [true]] set error string to [listboxenable doesn't like [true] as input]
+INFO: Executing invalid instruction: [listboxenable "goodlistbox {true}]
+INFO: Executing [listboxenable "goodlistbox {true}] set error code to 7
+INFO: Executing [listboxenable "goodlistbox {true}] set error string to [listboxenable doesn't like {true} as input]
+INFO: Executing invalid instruction: [(listboxaddstring)]
+INFO: Executing [(listboxaddstring)] set error code to 6 , as expected
+INFO: Executing [(listboxaddstring)] set error string to [not enough inputs to listboxaddstring]
+INFO: Executing invalid instruction: [(listboxaddstring "goodlistbox "item "toomany)]
+INFO: Executing [(listboxaddstring "goodlistbox "item "toomany)] set error code to 8 , as expected
+INFO: Executing [(listboxaddstring "goodlistbox "item "toomany)] set error string to [too much inside ()'s]
+INFO: Executing invalid instruction: [listboxaddstring "nonexistent "item]
+INFO: Executing [listboxaddstring "nonexistent "item] set error code to 16
+INFO: Executing [listboxaddstring "nonexistent "item] set error string to [Stopping...]
+INFO: Executing invalid instruction: [listboxaddstring "notalistbox "item]
+INFO: Executing [listboxaddstring "notalistbox "item] set error code to 16
+INFO: Executing [listboxaddstring "notalistbox "item] set error string to [Stopping...]
+INFO: Executing invalid instruction: [(listboxdeletestring "goodlistbox)]
+INFO: Executing [(listboxdeletestring "goodlistbox)] set error code to 6 , as expected
+INFO: Executing [(listboxdeletestring "goodlistbox)] set error string to [not enough inputs to listboxdeletestring]
+INFO: Executing invalid instruction: [(listboxdeletestring "goodlistbox 0 "toomany)]
+INFO: Executing [(listboxdeletestring "goodlistbox 0 "toomany)] set error code to 8 , as expected
+INFO: Executing [(listboxdeletestring "goodlistbox 0 "toomany)] set error string to [too much inside ()'s]
+INFO: Executing invalid instruction: [listboxdeletestring "doesnotexist 0]
+INFO: Executing [listboxdeletestring "doesnotexist 0] set error code to 16
+INFO: Executing [listboxdeletestring "doesnotexist 0] set error string to [Stopping...]
+INFO: Executing invalid instruction: [listboxdeletestring "notalistbox 0]
+INFO: Executing [listboxdeletestring "notalistbox 0] set error code to 16
+INFO: Executing [listboxdeletestring "notalistbox 0] set error string to [Stopping...]
+INFO: Executing invalid instruction: [listboxdeletestring "goodlistbox -1]
+INFO: Executing [listboxdeletestring "goodlistbox -1] set error code to 7
+INFO: Executing [listboxdeletestring "goodlistbox -1] set error string to [listboxdeletestring doesn't like -1 as input]
+INFO: Executing invalid instruction: [listboxdeletestring "goodlistbox 10.5]
+INFO: Executing [listboxdeletestring "goodlistbox 10.5] set error code to 7
+INFO: Executing [listboxdeletestring "goodlistbox 10.5] set error string to [listboxdeletestring doesn't like 10.5 as input]
+INFO: Executing invalid instruction: [listboxdeletestring "goodlistbox [0]]
+INFO: Executing [listboxdeletestring "goodlistbox [0]] set error code to 7
+INFO: Executing [listboxdeletestring "goodlistbox [0]] set error string to [listboxdeletestring doesn't like [0] as input]
+INFO: Executing invalid instruction: [listboxdeletestring "goodlistbox {0}]
+INFO: Executing [listboxdeletestring "goodlistbox {0}] set error code to 7
+INFO: Executing [listboxdeletestring "goodlistbox {0}] set error string to [listboxdeletestring doesn't like {0} as input]
+INFO: Executing invalid instruction: [listboxdeletestring "goodlistbox "zero]
+INFO: Executing [listboxdeletestring "goodlistbox "zero] set error code to 7
+INFO: Executing [listboxdeletestring "goodlistbox "zero] set error string to [listboxdeletestring doesn't like zero as input]
+INFO: Executing invalid instruction: [(listboxgetselect)]
+INFO: Executing [(listboxgetselect)] set error code to 6 , as expected
+INFO: Executing [(listboxgetselect)] set error string to [not enough inputs to listboxgetselect]
+INFO: Executing invalid instruction: [(listboxgetselect "goodlistbox "toomany)]
+INFO: Executing [(listboxgetselect "goodlistbox "toomany)] set error code to 8 , as expected
+INFO: Executing [(listboxgetselect "goodlistbox "toomany)] set error string to [too much inside ()'s]
+INFO: Executing invalid instruction: [ignore listboxgetselect "doesnotexist]
+INFO: Executing [ignore listboxgetselect "doesnotexist] set error code to 16
+INFO: Executing [ignore listboxgetselect "doesnotexist] set error string to [Stopping...]
+INFO: Executing invalid instruction: [ignore listboxgetselect "notalistbox]
+INFO: Executing [ignore listboxgetselect "notalistbox] set error code to 16
+INFO: Executing [ignore listboxgetselect "notalistbox] set error string to [Stopping...]
+INFO: Executing invalid instruction: [(listboxdelete)]
+INFO: Executing [(listboxdelete)] set error code to 6 , as expected
+INFO: Executing [(listboxdelete)] set error string to [not enough inputs to listboxdelete]
+INFO: Executing invalid instruction: [(listboxdelete "goodlistbox "toomany)]
+INFO: Executing [(listboxdelete "goodlistbox "toomany)] set error code to 8 , as expected
+INFO: Executing [(listboxdelete "goodlistbox "toomany)] set error string to [too much inside ()'s]
+INFO: Executing invalid instruction: [listboxdelete "notalistbox]
+INFO: Executing [listboxdelete "notalistbox] set error code to 16
+INFO: Executing [listboxdelete "notalistbox] set error string to [Stopping...]
+INFO: Executing invalid instruction: [listboxdelete "doesnotexist]
+INFO: Executing [listboxdelete "doesnotexist] set error code to 16
+INFO: Executing [listboxdelete "doesnotexist] set error string to [Stopping...]
+CALL: listboxdelete "goodlistbox
+CALL: staticdelete "notalistbox
+CALL: WINDOWCREATE "main "windowstest.combobox "mytitle 0 0 100 100 []
+CALL: COMBOBOXCREATE "windowstest.combobox "combobox 5 5 90 90
+PASS: [COMBOBOXGETTEXT "combobox] returned [] , as expected.
+CALL: COMBOBOXADDSTRING "combobox "firststring
+PASS: [COMBOBOXGETTEXT "combobox] returned [firststring] , as expected.
+CALL: COMBOBOXDELETESTRING "combobox 0
+PASS: [COMBOBOXGETTEXT "combobox] returned [] , as expected.
+CALL: COMBOBOXDELETESTRING "combobox 100
+CALL: COMBOBOXADDSTRING "combobox [secondstring]
+PASS: [COMBOBOXGETTEXT "combobox] returned [secondstring] , as expected.
+CALL: COMBOBOXSETTEXT "combobox "text
+PASS: [COMBOBOXGETTEXT "combobox] returned [text] , as expected.
+CALL: COMBOBOXENABLE "combobox "false
+CALL: COMBOBOXENABLE "combobox "true
+CALL: COMBOBOXDELETE "combobox
+CALL: WINDOWDELETE "windowstest.combocombobox
+INFO: Executing invalid instruction: [(comboboxcreate "main "name 0 0 120)]
+INFO: Executing [(comboboxcreate "main "name 0 0 120)] set error code to 6 , as expected
+INFO: Executing [(comboboxcreate "main "name 0 0 120)] set error string to [not enough inputs to comboboxcreate]
+INFO: Executing invalid instruction: [(comboboxcreate "main "name 0 0 120 400 "toomany)]
+INFO: Executing [(comboboxcreate "main "name 0 0 120 400 "toomany)] set error code to 8 , as expected
+INFO: Executing [(comboboxcreate "main "name 0 0 120 400 "toomany)] set error string to [too much inside ()'s]
+INFO: Executing invalid instruction: [comboboxcreate "main "name10 [0] 0 120 400]
+INFO: Executing [comboboxcreate "main "name10 [0] 0 120 400] set error code to 7
+INFO: Executing [comboboxcreate "main "name10 [0] 0 120 400] set error string to [comboboxcreate doesn't like [0] as input]
+INFO: Executing invalid instruction: [comboboxcreate "main "name20 {0} 0 120 400]
+INFO: Executing [comboboxcreate "main "name20 {0} 0 120 400] set error code to 7
+INFO: Executing [comboboxcreate "main "name20 {0} 0 120 400] set error string to [comboboxcreate doesn't like {0} as input]
+INFO: Executing invalid instruction: [comboboxcreate "main "name25 10.5 0 120 400]
+INFO: Executing [comboboxcreate "main "name25 10.5 0 120 400] set error code to 7
+INFO: Executing [comboboxcreate "main "name25 10.5 0 120 400] set error string to [comboboxcreate doesn't like 10.5 as input]
+INFO: Executing invalid instruction: [comboboxcreate "main "name30 0 [0] 120 400]
+INFO: Executing [comboboxcreate "main "name30 0 [0] 120 400] set error code to 7
+INFO: Executing [comboboxcreate "main "name30 0 [0] 120 400] set error string to [comboboxcreate doesn't like [0] as input]
+INFO: Executing invalid instruction: [comboboxcreate "main "name40 0 {0} 120 400]
+INFO: Executing [comboboxcreate "main "name40 0 {0} 120 400] set error code to 7
+INFO: Executing [comboboxcreate "main "name40 0 {0} 120 400] set error string to [comboboxcreate doesn't like {0} as input]
+INFO: Executing invalid instruction: [comboboxcreate "main "name45 0 10.5 120 400]
+INFO: Executing [comboboxcreate "main "name45 0 10.5 120 400] set error code to 7
+INFO: Executing [comboboxcreate "main "name45 0 10.5 120 400] set error string to [comboboxcreate doesn't like 10.5 as input]
+INFO: Executing invalid instruction: [comboboxcreate "main "name50 0 0 [120] 400]
+INFO: Executing [comboboxcreate "main "name50 0 0 [120] 400] set error code to 7
+INFO: Executing [comboboxcreate "main "name50 0 0 [120] 400] set error string to [comboboxcreate doesn't like [120] as input]
+INFO: Executing invalid instruction: [comboboxcreate "main "name60 0 0 {120} 400]
+INFO: Executing [comboboxcreate "main "name60 0 0 {120} 400] set error code to 7
+INFO: Executing [comboboxcreate "main "name60 0 0 {120} 400] set error string to [comboboxcreate doesn't like {120} as input]
+INFO: Executing invalid instruction: [comboboxcreate "main "name70 0 0 -120 400]
+INFO: Executing [comboboxcreate "main "name70 0 0 -120 400] set error code to 7
+INFO: Executing [comboboxcreate "main "name70 0 0 -120 400] set error string to [comboboxcreate doesn't like -120 as input]
+INFO: Executing invalid instruction: [comboboxcreate "main "name75 0 0 10.5 400]
+INFO: Executing [comboboxcreate "main "name75 0 0 10.5 400] set error code to 7
+INFO: Executing [comboboxcreate "main "name75 0 0 10.5 400] set error string to [comboboxcreate doesn't like 10.5 as input]
+INFO: Executing invalid instruction: [comboboxcreate "main "name80 0 0 120 [400]]
+INFO: Executing [comboboxcreate "main "name80 0 0 120 [400]] set error code to 7
+INFO: Executing [comboboxcreate "main "name80 0 0 120 [400]] set error string to [comboboxcreate doesn't like [400] as input]
+INFO: Executing invalid instruction: [comboboxcreate "main "name90 0 0 120 {400}]
+INFO: Executing [comboboxcreate "main "name90 0 0 120 {400}] set error code to 7
+INFO: Executing [comboboxcreate "main "name90 0 0 120 {400}] set error string to [comboboxcreate doesn't like {400} as input]
+INFO: Executing invalid instruction: [comboboxcreate "main "name00 0 0 120 -400]
+INFO: Executing [comboboxcreate "main "name00 0 0 120 -400] set error code to 7
+INFO: Executing [comboboxcreate "main "name00 0 0 120 -400] set error string to [comboboxcreate doesn't like -400 as input]
+INFO: Executing invalid instruction: [comboboxcreate "main "name05 0 0 120 10.5]
+INFO: Executing [comboboxcreate "main "name05 0 0 120 10.5] set error code to 7
+INFO: Executing [comboboxcreate "main "name05 0 0 120 10.5] set error string to [comboboxcreate doesn't like 10.5 as input]
+CALL: comboboxcreate "main "goodcombobox 0 0 100 100
+INFO: Executing invalid instruction: [comboboxcreate "main "goodcombobox 0 0 100 100]
+INFO: Executing [comboboxcreate "main "goodcombobox 0 0 100 100] set error code to 16
+INFO: Executing [comboboxcreate "main "goodcombobox 0 0 100 100] set error string to [Stopping...]
+CALL: staticcreate "main "notacombobox [text] 0 100 100 100
+INFO: Executing invalid instruction: [(comboboxenable "goodcombobox)]
+INFO: Executing [(comboboxenable "goodcombobox)] set error code to 6 , as expected
+INFO: Executing [(comboboxenable "goodcombobox)] set error string to [not enough inputs to comboboxenable]
+INFO: Executing invalid instruction: [(comboboxenable "goodcombobox "true "toomany)]
+INFO: Executing [(comboboxenable "goodcombobox "true "toomany)] set error code to 8 , as expected
+INFO: Executing [(comboboxenable "goodcombobox "true "toomany)] set error string to [too much inside ()'s]
+INFO: Executing invalid instruction: [comboboxenable "doesnotexist "true]
+INFO: Executing [comboboxenable "doesnotexist "true] set error code to 16
+INFO: Executing [comboboxenable "doesnotexist "true] set error string to [Stopping...]
+INFO: Executing invalid instruction: [comboboxenable "notacombobox "true]
+INFO: Executing [comboboxenable "notacombobox "true] set error code to 16
+INFO: Executing [comboboxenable "notacombobox "true] set error string to [Stopping...]
+INFO: Executing invalid instruction: [comboboxenable "goodcombobox 1]
+INFO: Executing [comboboxenable "goodcombobox 1] set error code to 7
+INFO: Executing [comboboxenable "goodcombobox 1] set error string to [comboboxenable doesn't like 1 as input]
+INFO: Executing invalid instruction: [comboboxenable "goodcombobox [true]]
+INFO: Executing [comboboxenable "goodcombobox [true]] set error code to 7
+INFO: Executing [comboboxenable "goodcombobox [true]] set error string to [comboboxenable doesn't like [true] as input]
+INFO: Executing invalid instruction: [comboboxenable "goodcombobox {true}]
+INFO: Executing [comboboxenable "goodcombobox {true}] set error code to 7
+INFO: Executing [comboboxenable "goodcombobox {true}] set error string to [comboboxenable doesn't like {true} as input]
+INFO: Executing invalid instruction: [(comboboxaddstring)]
+INFO: Executing [(comboboxaddstring)] set error code to 6 , as expected
+INFO: Executing [(comboboxaddstring)] set error string to [not enough inputs to comboboxaddstring]
+INFO: Executing invalid instruction: [(comboboxaddstring "goodcombobox "item "toomany)]
+INFO: Executing [(comboboxaddstring "goodcombobox "item "toomany)] set error code to 8 , as expected
+INFO: Executing [(comboboxaddstring "goodcombobox "item "toomany)] set error string to [too much inside ()'s]
+INFO: Executing invalid instruction: [comboboxaddstring "nonexistent "item]
+INFO: Executing [comboboxaddstring "nonexistent "item] set error code to 16
+INFO: Executing [comboboxaddstring "nonexistent "item] set error string to [Stopping...]
+INFO: Executing invalid instruction: [comboboxaddstring "notacombobox "item]
+INFO: Executing [comboboxaddstring "notacombobox "item] set error code to 16
+INFO: Executing [comboboxaddstring "notacombobox "item] set error string to [Stopping...]
+INFO: Executing invalid instruction: [(comboboxdeletestring "goodcombobox)]
+INFO: Executing [(comboboxdeletestring "goodcombobox)] set error code to 6 , as expected
+INFO: Executing [(comboboxdeletestring "goodcombobox)] set error string to [not enough inputs to comboboxdeletestring]
+INFO: Executing invalid instruction: [(comboboxdeletestring "goodcombobox 0 "toomany)]
+INFO: Executing [(comboboxdeletestring "goodcombobox 0 "toomany)] set error code to 8 , as expected
+INFO: Executing [(comboboxdeletestring "goodcombobox 0 "toomany)] set error string to [too much inside ()'s]
+INFO: Executing invalid instruction: [comboboxdeletestring "doesnotexist 0]
+INFO: Executing [comboboxdeletestring "doesnotexist 0] set error code to 16
+INFO: Executing [comboboxdeletestring "doesnotexist 0] set error string to [Stopping...]
+INFO: Executing invalid instruction: [comboboxdeletestring "notacombobox 0]
+INFO: Executing [comboboxdeletestring "notacombobox 0] set error code to 16
+INFO: Executing [comboboxdeletestring "notacombobox 0] set error string to [Stopping...]
+INFO: Executing invalid instruction: [comboboxdeletestring "goodcombobox -1]
+INFO: Executing [comboboxdeletestring "goodcombobox -1] set error code to 7
+INFO: Executing [comboboxdeletestring "goodcombobox -1] set error string to [comboboxdeletestring doesn't like -1 as input]
+INFO: Executing invalid instruction: [comboboxdeletestring "goodcombobox 10.5]
+INFO: Executing [comboboxdeletestring "goodcombobox 10.5] set error code to 7
+INFO: Executing [comboboxdeletestring "goodcombobox 10.5] set error string to [comboboxdeletestring doesn't like 10.5 as input]
+INFO: Executing invalid instruction: [comboboxdeletestring "goodcombobox [0]]
+INFO: Executing [comboboxdeletestring "goodcombobox [0]] set error code to 7
+INFO: Executing [comboboxdeletestring "goodcombobox [0]] set error string to [comboboxdeletestring doesn't like [0] as input]
+INFO: Executing invalid instruction: [comboboxdeletestring "goodcombobox {0}]
+INFO: Executing [comboboxdeletestring "goodcombobox {0}] set error code to 7
+INFO: Executing [comboboxdeletestring "goodcombobox {0}] set error string to [comboboxdeletestring doesn't like {0} as input]
+INFO: Executing invalid instruction: [comboboxdeletestring "goodcombobox "zero]
+INFO: Executing [comboboxdeletestring "goodcombobox "zero] set error code to 7
+INFO: Executing [comboboxdeletestring "goodcombobox "zero] set error string to [comboboxdeletestring doesn't like zero as input]
+INFO: Executing invalid instruction: [(comboboxgettext)]
+INFO: Executing [(comboboxgettext)] set error code to 6 , as expected
+INFO: Executing [(comboboxgettext)] set error string to [not enough inputs to comboboxgettext]
+INFO: Executing invalid instruction: [(comboboxgettext "goodcombobox "toomany)]
+INFO: Executing [(comboboxgettext "goodcombobox "toomany)] set error code to 8 , as expected
+INFO: Executing [(comboboxgettext "goodcombobox "toomany)] set error string to [too much inside ()'s]
+INFO: Executing invalid instruction: [ignore comboboxgettext "doesnotexist]
+INFO: Executing [ignore comboboxgettext "doesnotexist] set error code to 16
+INFO: Executing [ignore comboboxgettext "doesnotexist] set error string to [Stopping...]
+INFO: Executing invalid instruction: [ignore comboboxgettext "notacombobox]
+INFO: Executing [ignore comboboxgettext "notacombobox] set error code to 16
+INFO: Executing [ignore comboboxgettext "notacombobox] set error string to [Stopping...]
+INFO: Executing invalid instruction: [(comboboxsettext "goodcombobox)]
+INFO: Executing [(comboboxsettext "goodcombobox)] set error code to 6 , as expected
+INFO: Executing [(comboboxsettext "goodcombobox)] set error string to [not enough inputs to comboboxsettext]
+INFO: Executing invalid instruction: [(comboboxsettext "goodcombobox "text "toomany)]
+INFO: Executing [(comboboxsettext "goodcombobox "text "toomany)] set error code to 8 , as expected
+INFO: Executing [(comboboxsettext "goodcombobox "text "toomany)] set error string to [too much inside ()'s]
+INFO: Executing invalid instruction: [comboboxsettext "doesnotexist "text]
+INFO: Executing [comboboxsettext "doesnotexist "text] set error code to 16
+INFO: Executing [comboboxsettext "doesnotexist "text] set error string to [Stopping...]
+INFO: Executing invalid instruction: [comboboxsettext "notacombobox "text]
+INFO: Executing [comboboxsettext "notacombobox "text] set error code to 16
+INFO: Executing [comboboxsettext "notacombobox "text] set error string to [Stopping...]
+INFO: Executing invalid instruction: [(comboboxdelete)]
+INFO: Executing [(comboboxdelete)] set error code to 6 , as expected
+INFO: Executing [(comboboxdelete)] set error string to [not enough inputs to comboboxdelete]
+INFO: Executing invalid instruction: [(comboboxdelete "goodcombobox "toomany)]
+INFO: Executing [(comboboxdelete "goodcombobox "toomany)] set error code to 8 , as expected
+INFO: Executing [(comboboxdelete "goodcombobox "toomany)] set error string to [too much inside ()'s]
+INFO: Executing invalid instruction: [comboboxdelete "notacombobox]
+INFO: Executing [comboboxdelete "notacombobox] set error code to 16
+INFO: Executing [comboboxdelete "notacombobox] set error string to [Stopping...]
+INFO: Executing invalid instruction: [comboboxdelete "doesnotexist]
+INFO: Executing [comboboxdelete "doesnotexist] set error code to 16
+INFO: Executing [comboboxdelete "doesnotexist] set error string to [Stopping...]
+CALL: comboboxdelete "goodcombobox
+CALL: staticdelete "notacombobox
+INFO: Executing invalid instruction: [(groupboxcreate "main "name 0 0 120)]
+INFO: Executing [(groupboxcreate "main "name 0 0 120)] set error code to 6 , as expected
+INFO: Executing [(groupboxcreate "main "name 0 0 120)] set error string to [not enough inputs to groupboxcreate]
+INFO: Executing invalid instruction: [(groupboxcreate "main "name 0 0 120 400 "toomany)]
+INFO: Executing [(groupboxcreate "main "name 0 0 120 400 "toomany)] set error code to 8 , as expected
+INFO: Executing [(groupboxcreate "main "name 0 0 120 400 "toomany)] set error string to [too much inside ()'s]
+INFO: Executing invalid instruction: [groupboxcreate "main "name10 [0] 0 120 400]
+INFO: Executing [groupboxcreate "main "name10 [0] 0 120 400] set error code to 7
+INFO: Executing [groupboxcreate "main "name10 [0] 0 120 400] set error string to [groupboxcreate doesn't like [0] as input]
+INFO: Executing invalid instruction: [groupboxcreate "main "name20 {0} 0 120 400]
+INFO: Executing [groupboxcreate "main "name20 {0} 0 120 400] set error code to 7
+INFO: Executing [groupboxcreate "main "name20 {0} 0 120 400] set error string to [groupboxcreate doesn't like {0} as input]
+INFO: Executing invalid instruction: [groupboxcreate "main "name25 10.5 0 120 400]
+INFO: Executing [groupboxcreate "main "name25 10.5 0 120 400] set error code to 7
+INFO: Executing [groupboxcreate "main "name25 10.5 0 120 400] set error string to [groupboxcreate doesn't like 10.5 as input]
+INFO: Executing invalid instruction: [groupboxcreate "main "name30 0 [0] 120 400]
+INFO: Executing [groupboxcreate "main "name30 0 [0] 120 400] set error code to 7
+INFO: Executing [groupboxcreate "main "name30 0 [0] 120 400] set error string to [groupboxcreate doesn't like [0] as input]
+INFO: Executing invalid instruction: [groupboxcreate "main "name40 0 {0} 120 400]
+INFO: Executing [groupboxcreate "main "name40 0 {0} 120 400] set error code to 7
+INFO: Executing [groupboxcreate "main "name40 0 {0} 120 400] set error string to [groupboxcreate doesn't like {0} as input]
+INFO: Executing invalid instruction: [groupboxcreate "main "name45 0 10.5 120 400]
+INFO: Executing [groupboxcreate "main "name45 0 10.5 120 400] set error code to 7
+INFO: Executing [groupboxcreate "main "name45 0 10.5 120 400] set error string to [groupboxcreate doesn't like 10.5 as input]
+INFO: Executing invalid instruction: [groupboxcreate "main "name50 0 0 [120] 400]
+INFO: Executing [groupboxcreate "main "name50 0 0 [120] 400] set error code to 7
+INFO: Executing [groupboxcreate "main "name50 0 0 [120] 400] set error string to [groupboxcreate doesn't like [120] as input]
+INFO: Executing invalid instruction: [groupboxcreate "main "name60 0 0 {120} 400]
+INFO: Executing [groupboxcreate "main "name60 0 0 {120} 400] set error code to 7
+INFO: Executing [groupboxcreate "main "name60 0 0 {120} 400] set error string to [groupboxcreate doesn't like {120} as input]
+INFO: Executing invalid instruction: [groupboxcreate "main "name70 0 0 -120 400]
+INFO: Executing [groupboxcreate "main "name70 0 0 -120 400] set error code to 7
+INFO: Executing [groupboxcreate "main "name70 0 0 -120 400] set error string to [groupboxcreate doesn't like -120 as input]
+INFO: Executing invalid instruction: [groupboxcreate "main "name75 0 0 10.5 400]
+INFO: Executing [groupboxcreate "main "name75 0 0 10.5 400] set error code to 7
+INFO: Executing [groupboxcreate "main "name75 0 0 10.5 400] set error string to [groupboxcreate doesn't like 10.5 as input]
+INFO: Executing invalid instruction: [groupboxcreate "main "name80 0 0 120 [400]]
+INFO: Executing [groupboxcreate "main "name80 0 0 120 [400]] set error code to 7
+INFO: Executing [groupboxcreate "main "name80 0 0 120 [400]] set error string to [groupboxcreate doesn't like [400] as input]
+INFO: Executing invalid instruction: [groupboxcreate "main "name90 0 0 120 {400}]
+INFO: Executing [groupboxcreate "main "name90 0 0 120 {400}] set error code to 7
+INFO: Executing [groupboxcreate "main "name90 0 0 120 {400}] set error string to [groupboxcreate doesn't like {400} as input]
+INFO: Executing invalid instruction: [groupboxcreate "main "name00 0 0 120 -400]
+INFO: Executing [groupboxcreate "main "name00 0 0 120 -400] set error code to 7
+INFO: Executing [groupboxcreate "main "name00 0 0 120 -400] set error string to [groupboxcreate doesn't like -400 as input]
+INFO: Executing invalid instruction: [groupboxcreate "main "name05 0 0 120 10.5]
+INFO: Executing [groupboxcreate "main "name05 0 0 120 10.5] set error code to 7
+INFO: Executing [groupboxcreate "main "name05 0 0 120 10.5] set error string to [groupboxcreate doesn't like 10.5 as input]
+CALL: groupboxcreate "main "goodgroupbox 0 0 100 100
+INFO: Executing invalid instruction: [groupboxcreate "main "goodgroupbox 0 0 100 100]
+INFO: Executing [groupboxcreate "main "goodgroupbox 0 0 100 100] set error code to 16
+INFO: Executing [groupboxcreate "main "goodgroupbox 0 0 100 100] set error string to [Stopping...]
+CALL: listboxcreate "main "notagroupbox 0 100 100 100
+INFO: Executing invalid instruction: [(groupboxdelete)]
+INFO: Executing [(groupboxdelete)] set error code to 6 , as expected
+INFO: Executing [(groupboxdelete)] set error string to [not enough inputs to groupboxdelete]
+INFO: Executing invalid instruction: [(groupboxdelete "groupbox "toomany)]
+INFO: Executing [(groupboxdelete "groupbox "toomany)] set error code to 8 , as expected
+INFO: Executing [(groupboxdelete "groupbox "toomany)] set error string to [too much inside ()'s]
+INFO: Executing invalid instruction: [groupboxdelete "notagroupbox]
+INFO: Executing [groupboxdelete "notagroupbox] set error code to 16
+INFO: Executing [groupboxdelete "notagroupbox] set error string to [Stopping...]
+INFO: Executing invalid instruction: [groupboxdelete "doesnotexist]
+INFO: Executing [groupboxdelete "doesnotexist] set error code to 16
+INFO: Executing [groupboxdelete "doesnotexist] set error string to [Stopping...]
+CALL: listboxdelete "notagroupbox
+CALL: groupboxdelete "goodgroupbox
+PASS: [RADIOBUTTONGET "radio1] returned true , as expected.
+PASS: [RADIOBUTTONGET "radio2] returned false , as expected.
+CALL: RADIOBUTTONSET "radio1 "false
+PASS: [RADIOBUTTONGET "radio1] returned false , as expected.
+CALL: RADIOBUTTONSET "radio2 "true
+PASS: [RADIOBUTTONGET "radio2] returned true , as expected.
+CALL: RADIOBUTTONENABLE "radio1 "false
+CALL: RADIOBUTTONENABLE "radio1 "true
+CALL: RADIOBUTTONDELETE "radio1
+CALL: RADIOBUTTONDELETE "radio2
+CALL: GROUPBOXCREATE "main "groupbox 10 5 80 60
+INFO: Executing invalid instruction: [(radiobuttoncreate "main "groupbox "name "label 0 0 10)]
+INFO: Executing [(radiobuttoncreate "main "groupbox "name "label 0 0 10)] set error code to 6 , as expected
+INFO: Executing [(radiobuttoncreate "main "groupbox "name "label 0 0 10)] set error string to [not enough inputs to radiobuttoncreate]
+INFO: Executing invalid instruction: [(radiobuttoncreate "main "groupbox "name "label 0 0 10 80 "toomany)]
+INFO: Executing [(radiobuttoncreate "main "groupbox "name "label 0 0 10 80 "toomany)] set error code to 8 , as expected
+INFO: Executing [(radiobuttoncreate "main "groupbox "name "label 0 0 10 80 "toomany)] set error string to [too much inside ()'s]
+INFO: Executing invalid instruction: [radiobuttoncreate "main "notfound "name01 "label [10] 10 80 20]
+INFO: Executing [radiobuttoncreate "main "notfound "name01 "label [10] 10 80 20] set error code to 7
+INFO: Executing [radiobuttoncreate "main "notfound "name01 "label [10] 10 80 20] set error string to [radiobuttoncreate doesn't like [10] as input]
+INFO: Executing invalid instruction: [radiobuttoncreate "main "groupbox "name10 "label [10] 10 80 20]
+INFO: Executing [radiobuttoncreate "main "groupbox "name10 "label [10] 10 80 20] set error code to 7
+INFO: Executing [radiobuttoncreate "main "groupbox "name10 "label [10] 10 80 20] set error string to [radiobuttoncreate doesn't like [10] as input]
+INFO: Executing invalid instruction: [radiobuttoncreate "main "groupbox "name20 "label {10} 10 80 20]
+INFO: Executing [radiobuttoncreate "main "groupbox "name20 "label {10} 10 80 20] set error code to 7
+INFO: Executing [radiobuttoncreate "main "groupbox "name20 "label {10} 10 80 20] set error string to [radiobuttoncreate doesn't like {10} as input]
+INFO: Executing invalid instruction: [radiobuttoncreate "main "groupbox "name25 "label 10.5 10 80 20]
+INFO: Executing [radiobuttoncreate "main "groupbox "name25 "label 10.5 10 80 20] set error code to 7
+INFO: Executing [radiobuttoncreate "main "groupbox "name25 "label 10.5 10 80 20] set error string to [radiobuttoncreate doesn't like 10.5 as input]
+INFO: Executing invalid instruction: [radiobuttoncreate "main "groupbox "name30 "label 10 [10] 80 20]
+INFO: Executing [radiobuttoncreate "main "groupbox "name30 "label 10 [10] 80 20] set error code to 7
+INFO: Executing [radiobuttoncreate "main "groupbox "name30 "label 10 [10] 80 20] set error string to [radiobuttoncreate doesn't like [10] as input]
+INFO: Executing invalid instruction: [radiobuttoncreate "main "groupbox "name40 "label 10 {10} 80 20]
+INFO: Executing [radiobuttoncreate "main "groupbox "name40 "label 10 {10} 80 20] set error code to 7
+INFO: Executing [radiobuttoncreate "main "groupbox "name40 "label 10 {10} 80 20] set error string to [radiobuttoncreate doesn't like {10} as input]
+INFO: Executing invalid instruction: [radiobuttoncreate "main "groupbox "name45 "label 10 10.5 80 20]
+INFO: Executing [radiobuttoncreate "main "groupbox "name45 "label 10 10.5 80 20] set error code to 7
+INFO: Executing [radiobuttoncreate "main "groupbox "name45 "label 10 10.5 80 20] set error string to [radiobuttoncreate doesn't like 10.5 as input]
+INFO: Executing invalid instruction: [radiobuttoncreate "main "groupbox "name50 "label 10 10 [80] 20]
+INFO: Executing [radiobuttoncreate "main "groupbox "name50 "label 10 10 [80] 20] set error code to 7
+INFO: Executing [radiobuttoncreate "main "groupbox "name50 "label 10 10 [80] 20] set error string to [radiobuttoncreate doesn't like [80] as input]
+INFO: Executing invalid instruction: [radiobuttoncreate "main "groupbox "name60 "label 10 10 {80} 20]
+INFO: Executing [radiobuttoncreate "main "groupbox "name60 "label 10 10 {80} 20] set error code to 7
+INFO: Executing [radiobuttoncreate "main "groupbox "name60 "label 10 10 {80} 20] set error string to [radiobuttoncreate doesn't like {80} as input]
+INFO: Executing invalid instruction: [radiobuttoncreate "main "groupbox "name70 "label 10 10 -80 20]
+INFO: Executing [radiobuttoncreate "main "groupbox "name70 "label 10 10 -80 20] set error code to 7
+INFO: Executing [radiobuttoncreate "main "groupbox "name70 "label 10 10 -80 20] set error string to [radiobuttoncreate doesn't like -80 as input]
+INFO: Executing invalid instruction: [radiobuttoncreate "main "groupbox "name75 "label 10 10 8.5 20]
+INFO: Executing [radiobuttoncreate "main "groupbox "name75 "label 10 10 8.5 20] set error code to 7
+INFO: Executing [radiobuttoncreate "main "groupbox "name75 "label 10 10 8.5 20] set error string to [radiobuttoncreate doesn't like 8.5 as input]
+INFO: Executing invalid instruction: [radiobuttoncreate "main "groupbox "name80 "label 10 10 80 [20]]
+INFO: Executing [radiobuttoncreate "main "groupbox "name80 "label 10 10 80 [20]] set error code to 7
+INFO: Executing [radiobuttoncreate "main "groupbox "name80 "label 10 10 80 [20]] set error string to [radiobuttoncreate doesn't like [20] as input]
+INFO: Executing invalid instruction: [radiobuttoncreate "main "groupbox "name90 "label 10 10 80 {20}]
+INFO: Executing [radiobuttoncreate "main "groupbox "name90 "label 10 10 80 {20}] set error code to 7
+INFO: Executing [radiobuttoncreate "main "groupbox "name90 "label 10 10 80 {20}] set error string to [radiobuttoncreate doesn't like {20} as input]
+INFO: Executing invalid instruction: [radiobuttoncreate "main "groupbox "name00 "label 10 10 80 -20]
+INFO: Executing [radiobuttoncreate "main "groupbox "name00 "label 10 10 80 -20] set error code to 7
+INFO: Executing [radiobuttoncreate "main "groupbox "name00 "label 10 10 80 -20] set error string to [radiobuttoncreate doesn't like -20 as input]
+INFO: Executing invalid instruction: [radiobuttoncreate "main "groupbox "name05 "label 10 10 80 20.5]
+INFO: Executing [radiobuttoncreate "main "groupbox "name05 "label 10 10 80 20.5] set error code to 7
+INFO: Executing [radiobuttoncreate "main "groupbox "name05 "label 10 10 80 20.5] set error string to [radiobuttoncreate doesn't like 20.5 as input]
+CALL: radiobuttoncreate "main "groupbox "goodradiobutton "label 10 10 80 20
+INFO: Executing invalid instruction: [radiobuttoncreate "main "groupbox "goodradiobutton "label 10 10 80 20]
+INFO: Executing [radiobuttoncreate "main "groupbox "goodradiobutton "label 10 10 80 20] set error code to 16
+INFO: Executing [radiobuttoncreate "main "groupbox "goodradiobutton "label 10 10 80 20] set error string to [Stopping...]
+CALL: staticcreate "main "notaradiobutton [text] 0 100 100 100
+INFO: Executing invalid instruction: [(radiobuttonenable "goodradiobutton)]
+INFO: Executing [(radiobuttonenable "goodradiobutton)] set error code to 6 , as expected
+INFO: Executing [(radiobuttonenable "goodradiobutton)] set error string to [not enough inputs to radiobuttonenable]
+INFO: Executing invalid instruction: [(radiobuttonenable "goodradiobutton "true "toomany)]
+INFO: Executing [(radiobuttonenable "goodradiobutton "true "toomany)] set error code to 8 , as expected
+INFO: Executing [(radiobuttonenable "goodradiobutton "true "toomany)] set error string to [too much inside ()'s]
+INFO: Executing invalid instruction: [radiobuttonenable "doesnotexist "true]
+INFO: Executing [radiobuttonenable "doesnotexist "true] set error code to 16
+INFO: Executing [radiobuttonenable "doesnotexist "true] set error string to [Stopping...]
+INFO: Executing invalid instruction: [radiobuttonenable "notaradiobutton "true]
+INFO: Executing [radiobuttonenable "notaradiobutton "true] set error code to 16
+INFO: Executing [radiobuttonenable "notaradiobutton "true] set error string to [Stopping...]
+INFO: Executing invalid instruction: [radiobuttonenable "goodradiobutton 1]
+INFO: Executing [radiobuttonenable "goodradiobutton 1] set error code to 7
+INFO: Executing [radiobuttonenable "goodradiobutton 1] set error string to [radiobuttonenable doesn't like 1 as input]
+INFO: Executing invalid instruction: [radiobuttonenable "goodradiobutton [true]]
+INFO: Executing [radiobuttonenable "goodradiobutton [true]] set error code to 7
+INFO: Executing [radiobuttonenable "goodradiobutton [true]] set error string to [radiobuttonenable doesn't like [true] as input]
+INFO: Executing invalid instruction: [radiobuttonenable "goodradiobutton {true}]
+INFO: Executing [radiobuttonenable "goodradiobutton {true}] set error code to 7
+INFO: Executing [radiobuttonenable "goodradiobutton {true}] set error string to [radiobuttonenable doesn't like {true} as input]
+INFO: Executing invalid instruction: [(radiobuttonget)]
+INFO: Executing [(radiobuttonget)] set error code to 6 , as expected
+INFO: Executing [(radiobuttonget)] set error string to [not enough inputs to radiobuttonget]
+INFO: Executing invalid instruction: [(radiobuttonget "goodradiobutton "toomany)]
+INFO: Executing [(radiobuttonget "goodradiobutton "toomany)] set error code to 8 , as expected
+INFO: Executing [(radiobuttonget "goodradiobutton "toomany)] set error string to [too much inside ()'s]
+INFO: Executing invalid instruction: [radiobuttonget "doesnotexist "item]
+INFO: Executing [radiobuttonget "doesnotexist "item] set error code to 16
+INFO: Executing [radiobuttonget "doesnotexist "item] set error string to [Stopping...]
+INFO: Executing invalid instruction: [radiobuttonget "notaradiobutton "item]
+INFO: Executing [radiobuttonget "notaradiobutton "item] set error code to 16
+INFO: Executing [radiobuttonget "notaradiobutton "item] set error string to [Stopping...]
+INFO: Executing invalid instruction: [(radiobuttonset "goodradiobutton)]
+INFO: Executing [(radiobuttonset "goodradiobutton)] set error code to 6 , as expected
+INFO: Executing [(radiobuttonset "goodradiobutton)] set error string to [not enough inputs to radiobuttonset]
+INFO: Executing invalid instruction: [(radiobuttonset "goodradiobutton "true "toomany)]
+INFO: Executing [(radiobuttonset "goodradiobutton "true "toomany)] set error code to 8 , as expected
+INFO: Executing [(radiobuttonset "goodradiobutton "true "toomany)] set error string to [too much inside ()'s]
+INFO: Executing invalid instruction: [radiobuttonset "doesnotexist "true]
+INFO: Executing [radiobuttonset "doesnotexist "true] set error code to 16
+INFO: Executing [radiobuttonset "doesnotexist "true] set error string to [Stopping...]
+INFO: Executing invalid instruction: [radiobuttonset "notaradiobutton "true]
+INFO: Executing [radiobuttonset "notaradiobutton "true] set error code to 16
+INFO: Executing [radiobuttonset "notaradiobutton "true] set error string to [Stopping...]
+INFO: Executing invalid instruction: [radiobuttonset "goodradiobutton 1]
+INFO: Executing [radiobuttonset "goodradiobutton 1] set error code to 7
+INFO: Executing [radiobuttonset "goodradiobutton 1] set error string to [radiobuttonset doesn't like 1 as input]
+INFO: Executing invalid instruction: [radiobuttonset "goodradiobutton [true]]
+INFO: Executing [radiobuttonset "goodradiobutton [true]] set error code to 7
+INFO: Executing [radiobuttonset "goodradiobutton [true]] set error string to [radiobuttonset doesn't like [true] as input]
+INFO: Executing invalid instruction: [radiobuttonset "goodradiobutton {true}]
+INFO: Executing [radiobuttonset "goodradiobutton {true}] set error code to 7
+INFO: Executing [radiobuttonset "goodradiobutton {true}] set error string to [radiobuttonset doesn't like {true} as input]
+INFO: Executing invalid instruction: [(radiobuttondelete)]
+INFO: Executing [(radiobuttondelete)] set error code to 6 , as expected
+INFO: Executing [(radiobuttondelete)] set error string to [not enough inputs to radiobuttondelete]
+INFO: Executing invalid instruction: [(radiobuttondelete "goodradiobutton "toomany)]
+INFO: Executing [(radiobuttondelete "goodradiobutton "toomany)] set error code to 8 , as expected
+INFO: Executing [(radiobuttondelete "goodradiobutton "toomany)] set error string to [too much inside ()'s]
+INFO: Executing invalid instruction: [radiobuttondelete "notaradiobutton]
+INFO: Executing [radiobuttondelete "notaradiobutton] set error code to 16
+INFO: Executing [radiobuttondelete "notaradiobutton] set error string to [Stopping...]
+INFO: Executing invalid instruction: [radiobuttondelete "doesnotexist]
+INFO: Executing [radiobuttondelete "doesnotexist] set error code to 16
+INFO: Executing [radiobuttondelete "doesnotexist] set error string to [Stopping...]
+CALL: radiobuttondelete "goodradiobutton
+CALL: groupboxdelete "groupbox
+CALL: staticdelete "notaradiobutton
+CALL: WINDOWCREATE "main "windowstest.radiobutton "mytitle 0 0 100 100 []
+CALL: GROUPBOXCREATE "windowstest.radiobutton "groupbox 10 5 80 60
+CALL: RADIOBUTTONCREATE "windowstest.radiobutton "groupbox "radio [Radio] 20 15 60 20
+CALL: GROUPBOXDELETE "groupbox
+CALL: RADIOBUTTONSET "radio "false
+PASS: [RADIOBUTTONGET "radio] returned false , as expected.
+CALL: RADIOBUTTONENABLE "radio "false
+CALL: RADIOBUTTONENABLE "radio "true
+CALL: RADIOBUTTONDELETE "radio
+CALL: WINDOWDELETE "windowstest.radiobutton
+CALL: CHECKBOXSET "checkbox1 "true
+CALL: CHECKBOXSET "checkbox2 "false
+PASS: [CHECKBOXGET "checkbox1] returned true , as expected.
+PASS: [CHECKBOXGET "checkbox2] returned false , as expected.
+CALL: CHECKBOXSET "checkbox1 "false
+PASS: [CHECKBOXGET "checkbox1] returned false , as expected.
+PASS: [CHECKBOXGET "checkbox2] returned false , as expected.
+CALL: CHECKBOXENABLE "checkbox1 "false
+CALL: CHECKBOXENABLE "checkbox1 "true
+CALL: CHECKBOXDELETE "checkbox1
+CALL: CHECKBOXDELETE "checkbox2
+CALL: GROUPBOXCREATE "main "groupbox 10 5 80 60
+INFO: Executing invalid instruction: [(checkboxcreate "main "groupbox "name "label 0 0 10)]
+INFO: Executing [(checkboxcreate "main "groupbox "name "label 0 0 10)] set error code to 6 , as expected
+INFO: Executing [(checkboxcreate "main "groupbox "name "label 0 0 10)] set error string to [not enough inputs to checkboxcreate]
+INFO: Executing invalid instruction: [(checkboxcreate "main "groupbox "name "label 0 0 10 80 "toomany)]
+INFO: Executing [(checkboxcreate "main "groupbox "name "label 0 0 10 80 "toomany)] set error code to 8 , as expected
+INFO: Executing [(checkboxcreate "main "groupbox "name "label 0 0 10 80 "toomany)] set error string to [too much inside ()'s]
+INFO: Executing invalid instruction: [checkboxcreate "main "notfound "name01 "label [10] 10 80 20]
+INFO: Executing [checkboxcreate "main "notfound "name01 "label [10] 10 80 20] set error code to 7
+INFO: Executing [checkboxcreate "main "notfound "name01 "label [10] 10 80 20] set error string to [checkboxcreate doesn't like [10] as input]
+INFO: Executing invalid instruction: [checkboxcreate "main "groupbox "name10 "label [10] 10 80 20]
+INFO: Executing [checkboxcreate "main "groupbox "name10 "label [10] 10 80 20] set error code to 7
+INFO: Executing [checkboxcreate "main "groupbox "name10 "label [10] 10 80 20] set error string to [checkboxcreate doesn't like [10] as input]
+INFO: Executing invalid instruction: [checkboxcreate "main "groupbox "name20 "label {10} 10 80 20]
+INFO: Executing [checkboxcreate "main "groupbox "name20 "label {10} 10 80 20] set error code to 7
+INFO: Executing [checkboxcreate "main "groupbox "name20 "label {10} 10 80 20] set error string to [checkboxcreate doesn't like {10} as input]
+INFO: Executing invalid instruction: [checkboxcreate "main "groupbox "name25 "label 10.5 10 80 20]
+INFO: Executing [checkboxcreate "main "groupbox "name25 "label 10.5 10 80 20] set error code to 7
+INFO: Executing [checkboxcreate "main "groupbox "name25 "label 10.5 10 80 20] set error string to [checkboxcreate doesn't like 10.5 as input]
+INFO: Executing invalid instruction: [checkboxcreate "main "groupbox "name30 "label 10 [10] 80 20]
+INFO: Executing [checkboxcreate "main "groupbox "name30 "label 10 [10] 80 20] set error code to 7
+INFO: Executing [checkboxcreate "main "groupbox "name30 "label 10 [10] 80 20] set error string to [checkboxcreate doesn't like [10] as input]
+INFO: Executing invalid instruction: [checkboxcreate "main "groupbox "name40 "label 10 {10} 80 20]
+INFO: Executing [checkboxcreate "main "groupbox "name40 "label 10 {10} 80 20] set error code to 7
+INFO: Executing [checkboxcreate "main "groupbox "name40 "label 10 {10} 80 20] set error string to [checkboxcreate doesn't like {10} as input]
+INFO: Executing invalid instruction: [checkboxcreate "main "groupbox "name45 "label 10 10.5 80 20]
+INFO: Executing [checkboxcreate "main "groupbox "name45 "label 10 10.5 80 20] set error code to 7
+INFO: Executing [checkboxcreate "main "groupbox "name45 "label 10 10.5 80 20] set error string to [checkboxcreate doesn't like 10.5 as input]
+INFO: Executing invalid instruction: [checkboxcreate "main "groupbox "name50 "label 10 10 [80] 20]
+INFO: Executing [checkboxcreate "main "groupbox "name50 "label 10 10 [80] 20] set error code to 7
+INFO: Executing [checkboxcreate "main "groupbox "name50 "label 10 10 [80] 20] set error string to [checkboxcreate doesn't like [80] as input]
+INFO: Executing invalid instruction: [checkboxcreate "main "groupbox "name60 "label 10 10 {80} 20]
+INFO: Executing [checkboxcreate "main "groupbox "name60 "label 10 10 {80} 20] set error code to 7
+INFO: Executing [checkboxcreate "main "groupbox "name60 "label 10 10 {80} 20] set error string to [checkboxcreate doesn't like {80} as input]
+INFO: Executing invalid instruction: [checkboxcreate "main "groupbox "name70 "label 10 10 -80 20]
+INFO: Executing [checkboxcreate "main "groupbox "name70 "label 10 10 -80 20] set error code to 7
+INFO: Executing [checkboxcreate "main "groupbox "name70 "label 10 10 -80 20] set error string to [checkboxcreate doesn't like -80 as input]
+INFO: Executing invalid instruction: [checkboxcreate "main "groupbox "name75 "label 10 10 8.5 20]
+INFO: Executing [checkboxcreate "main "groupbox "name75 "label 10 10 8.5 20] set error code to 7
+INFO: Executing [checkboxcreate "main "groupbox "name75 "label 10 10 8.5 20] set error string to [checkboxcreate doesn't like 8.5 as input]
+INFO: Executing invalid instruction: [checkboxcreate "main "groupbox "name80 "label 10 10 80 [20]]
+INFO: Executing [checkboxcreate "main "groupbox "name80 "label 10 10 80 [20]] set error code to 7
+INFO: Executing [checkboxcreate "main "groupbox "name80 "label 10 10 80 [20]] set error string to [checkboxcreate doesn't like [20] as input]
+INFO: Executing invalid instruction: [checkboxcreate "main "groupbox "name90 "label 10 10 80 {20}]
+INFO: Executing [checkboxcreate "main "groupbox "name90 "label 10 10 80 {20}] set error code to 7
+INFO: Executing [checkboxcreate "main "groupbox "name90 "label 10 10 80 {20}] set error string to [checkboxcreate doesn't like {20} as input]
+INFO: Executing invalid instruction: [checkboxcreate "main "groupbox "name00 "label 10 10 80 -20]
+INFO: Executing [checkboxcreate "main "groupbox "name00 "label 10 10 80 -20] set error code to 7
+INFO: Executing [checkboxcreate "main "groupbox "name00 "label 10 10 80 -20] set error string to [checkboxcreate doesn't like -20 as input]
+INFO: Executing invalid instruction: [checkboxcreate "main "groupbox "name05 "label 10 10 80 20.5]
+INFO: Executing [checkboxcreate "main "groupbox "name05 "label 10 10 80 20.5] set error code to 7
+INFO: Executing [checkboxcreate "main "groupbox "name05 "label 10 10 80 20.5] set error string to [checkboxcreate doesn't like 20.5 as input]
+CALL: checkboxcreate "main "groupbox "goodcheckbox "label 10 10 80 20
+INFO: Executing invalid instruction: [checkboxcreate "main "groupbox "goodcheckbox "label 10 10 80 20]
+INFO: Executing [checkboxcreate "main "groupbox "goodcheckbox "label 10 10 80 20] set error code to 16
+INFO: Executing [checkboxcreate "main "groupbox "goodcheckbox "label 10 10 80 20] set error string to [Stopping...]
+CALL: staticcreate "main "notacheckbox [text] 0 100 100 100
+INFO: Executing invalid instruction: [(checkboxenable "goodcheckbox)]
+INFO: Executing [(checkboxenable "goodcheckbox)] set error code to 6 , as expected
+INFO: Executing [(checkboxenable "goodcheckbox)] set error string to [not enough inputs to checkboxenable]
+INFO: Executing invalid instruction: [(checkboxenable "goodcheckbox "true "toomany)]
+INFO: Executing [(checkboxenable "goodcheckbox "true "toomany)] set error code to 8 , as expected
+INFO: Executing [(checkboxenable "goodcheckbox "true "toomany)] set error string to [too much inside ()'s]
+INFO: Executing invalid instruction: [checkboxenable "doesnotexist "true]
+INFO: Executing [checkboxenable "doesnotexist "true] set error code to 16
+INFO: Executing [checkboxenable "doesnotexist "true] set error string to [Stopping...]
+INFO: Executing invalid instruction: [checkboxenable "notacheckbox "true]
+INFO: Executing [checkboxenable "notacheckbox "true] set error code to 16
+INFO: Executing [checkboxenable "notacheckbox "true] set error string to [Stopping...]
+INFO: Executing invalid instruction: [checkboxenable "goodcheckbox 1]
+INFO: Executing [checkboxenable "goodcheckbox 1] set error code to 7
+INFO: Executing [checkboxenable "goodcheckbox 1] set error string to [checkboxenable doesn't like 1 as input]
+INFO: Executing invalid instruction: [checkboxenable "goodcheckbox [true]]
+INFO: Executing [checkboxenable "goodcheckbox [true]] set error code to 7
+INFO: Executing [checkboxenable "goodcheckbox [true]] set error string to [checkboxenable doesn't like [true] as input]
+INFO: Executing invalid instruction: [checkboxenable "goodcheckbox {true}]
+INFO: Executing [checkboxenable "goodcheckbox {true}] set error code to 7
+INFO: Executing [checkboxenable "goodcheckbox {true}] set error string to [checkboxenable doesn't like {true} as input]
+INFO: Executing invalid instruction: [(checkboxget)]
+INFO: Executing [(checkboxget)] set error code to 6 , as expected
+INFO: Executing [(checkboxget)] set error string to [not enough inputs to checkboxget]
+INFO: Executing invalid instruction: [(checkboxget "goodcheckbox "toomany)]
+INFO: Executing [(checkboxget "goodcheckbox "toomany)] set error code to 8 , as expected
+INFO: Executing [(checkboxget "goodcheckbox "toomany)] set error string to [too much inside ()'s]
+INFO: Executing invalid instruction: [checkboxget "doesnotexist "item]
+INFO: Executing [checkboxget "doesnotexist "item] set error code to 16
+INFO: Executing [checkboxget "doesnotexist "item] set error string to [Stopping...]
+INFO: Executing invalid instruction: [checkboxget "notacheckbox "item]
+INFO: Executing [checkboxget "notacheckbox "item] set error code to 16
+INFO: Executing [checkboxget "notacheckbox "item] set error string to [Stopping...]
+INFO: Executing invalid instruction: [(checkboxset "goodcheckbox)]
+INFO: Executing [(checkboxset "goodcheckbox)] set error code to 6 , as expected
+INFO: Executing [(checkboxset "goodcheckbox)] set error string to [not enough inputs to checkboxset]
+INFO: Executing invalid instruction: [(checkboxset "goodcheckbox "true "toomany)]
+INFO: Executing [(checkboxset "goodcheckbox "true "toomany)] set error code to 8 , as expected
+INFO: Executing [(checkboxset "goodcheckbox "true "toomany)] set error string to [too much inside ()'s]
+INFO: Executing invalid instruction: [checkboxset "doesnotexist "true]
+INFO: Executing [checkboxset "doesnotexist "true] set error code to 16
+INFO: Executing [checkboxset "doesnotexist "true] set error string to [Stopping...]
+INFO: Executing invalid instruction: [checkboxset "notacheckbox "true]
+INFO: Executing [checkboxset "notacheckbox "true] set error code to 16
+INFO: Executing [checkboxset "notacheckbox "true] set error string to [Stopping...]
+INFO: Executing invalid instruction: [checkboxset "goodcheckbox 1]
+INFO: Executing [checkboxset "goodcheckbox 1] set error code to 7
+INFO: Executing [checkboxset "goodcheckbox 1] set error string to [checkboxset doesn't like 1 as input]
+INFO: Executing invalid instruction: [checkboxset "goodcheckbox [true]]
+INFO: Executing [checkboxset "goodcheckbox [true]] set error code to 7
+INFO: Executing [checkboxset "goodcheckbox [true]] set error string to [checkboxset doesn't like [true] as input]
+INFO: Executing invalid instruction: [checkboxset "goodcheckbox {true}]
+INFO: Executing [checkboxset "goodcheckbox {true}] set error code to 7
+INFO: Executing [checkboxset "goodcheckbox {true}] set error string to [checkboxset doesn't like {true} as input]
+INFO: Executing invalid instruction: [(checkboxdelete)]
+INFO: Executing [(checkboxdelete)] set error code to 6 , as expected
+INFO: Executing [(checkboxdelete)] set error string to [not enough inputs to checkboxdelete]
+INFO: Executing invalid instruction: [(checkboxdelete "goodcheckbox "toomany)]
+INFO: Executing [(checkboxdelete "goodcheckbox "toomany)] set error code to 8 , as expected
+INFO: Executing [(checkboxdelete "goodcheckbox "toomany)] set error string to [too much inside ()'s]
+INFO: Executing invalid instruction: [checkboxdelete "notacheckbox]
+INFO: Executing [checkboxdelete "notacheckbox] set error code to 16
+INFO: Executing [checkboxdelete "notacheckbox] set error string to [Stopping...]
+INFO: Executing invalid instruction: [checkboxdelete "doesnotexist]
+INFO: Executing [checkboxdelete "doesnotexist] set error code to 16
+INFO: Executing [checkboxdelete "doesnotexist] set error string to [Stopping...]
+CALL: checkboxdelete "goodcheckbox
+CALL: groupboxdelete "groupbox
+CALL: staticdelete "notacheckbox
+CALL: WINDOWCREATE "main "windowstest.checkbox "mytitle 0 0 100 100 []
+CALL: GROUPBOXCREATE "windowstest.checkbox "groupbox 10 5 80 60
+CALL: CHECKBOXCREATE "windowstest.checkbox "groupbox "checkbox [Checkbox] 20 15 60 20
+CALL: GROUPBOXDELETE "groupbox
+CALL: CHECKBOXSET "checkbox "false
+PASS: [CHECKBOXGET "checkbox] returned false , as expected.
+CALL: CHECKBOXENABLE "checkbox "false
+CALL: CHECKBOXENABLE "checkbox "true
+CALL: CHECKBOXDELETE "checkbox
+CALL: WINDOWDELETE "windowstest.checkbox
+CALL: WINDOWCREATE "main "windowstest.scrollbar "mytitle 0 0 100 100 []
+CALL: SCROLLBARCREATE "windowstest.scrollbar "horizontal 0 90 100 20 []
+CALL: SCROLLBARCREATE "windowstest.scrollbar "vertical 90 0 20 100 []
+CALL: SCROLLBARSET "horizontal 0 100 27
+PASS: [SCROLLBARGET "horizontal] returned 27 , as expected.
+CALL: SCROLLBARSET "horizontal 0 100 91
+PASS: [SCROLLBARGET "horizontal] returned 91 , as expected.
+CALL: SCROLLBARSET "horizontal -10 10 0
+FAIL: [SCROLLBARSET "horizontal -10 10 0] threw error.  code= 7 . [SCROLLBARSET doesn't like -10 as input]
+FAIL: [SCROLLBARGET "horizontal] returned 0 . We expected 10
+CALL: SCROLLBARSET "horizontal -20 -10 -10
+FAIL: [SCROLLBARSET "horizontal -20 -10 -10] threw error.  code= 7 . [SCROLLBARSET doesn't like -20 as input]
+FAIL: [SCROLLBARGET "horizontal] returned 0 . We expected -10
+CALL: SCROLLBARSET "vertical 50 60 55
+PASS: [SCROLLBARGET "vertical] returned 55 , as expected.
+FAIL: [SCROLLBARGET "horizontal] returned 0 . We expected 91
+CALL: SCROLLBARENABLE "horizontal "false
+CALL: SCROLLBARENABLE "horizontal "false
+CALL: SCROLLBARENABLE "horizontal "true
+CALL: SCROLLBARDELETE "horizontal
+CALL: SCROLLBARDELETE "vertical
+CALL: WINDOWDELETE "windowstest.scrollbar
+INFO: Executing invalid instruction: [(scrollbarcreate "main "name 0 0 100 10)]
+INFO: Executing [(scrollbarcreate "main "name 0 0 100 10)] set error code to 6 , as expected
+INFO: Executing [(scrollbarcreate "main "name 0 0 100 10)] set error string to [not enough inputs to scrollbarcreate]
+INFO: Executing invalid instruction: [(scrollbarcreate "main "name 0 0 100 10 [] "toomany)]
+INFO: Executing [(scrollbarcreate "main "name 0 0 100 10 [] "toomany)] set error code to 8 , as expected
+INFO: Executing [(scrollbarcreate "main "name 0 0 100 10 [] "toomany)] set error string to [too much inside ()'s]
+INFO: Executing invalid instruction: [scrollbarcreate "main "name10 [0] 0 120 10 []]
+INFO: Executing [scrollbarcreate "main "name10 [0] 0 120 10 []] set error code to 7
+INFO: Executing [scrollbarcreate "main "name10 [0] 0 120 10 []] set error string to [scrollbarcreate doesn't like [0] as input]
+INFO: Executing invalid instruction: [scrollbarcreate "main "name20 {0} 0 120 10 []]
+INFO: Executing [scrollbarcreate "main "name20 {0} 0 120 10 []] set error code to 7
+INFO: Executing [scrollbarcreate "main "name20 {0} 0 120 10 []] set error string to [scrollbarcreate doesn't like {0} as input]
+INFO: Executing invalid instruction: [scrollbarcreate "main "name25 10.5 0 120 10 []]
+INFO: Executing [scrollbarcreate "main "name25 10.5 0 120 10 []] set error code to 7
+INFO: Executing [scrollbarcreate "main "name25 10.5 0 120 10 []] set error string to [scrollbarcreate doesn't like 10.5 as input]
+INFO: Executing invalid instruction: [scrollbarcreate "main "name30 0 [0] 120 10 []]
+INFO: Executing [scrollbarcreate "main "name30 0 [0] 120 10 []] set error code to 7
+INFO: Executing [scrollbarcreate "main "name30 0 [0] 120 10 []] set error string to [scrollbarcreate doesn't like [0] as input]
+INFO: Executing invalid instruction: [scrollbarcreate "main "name40 0 {0} 120 10 []]
+INFO: Executing [scrollbarcreate "main "name40 0 {0} 120 10 []] set error code to 7
+INFO: Executing [scrollbarcreate "main "name40 0 {0} 120 10 []] set error string to [scrollbarcreate doesn't like {0} as input]
+INFO: Executing invalid instruction: [scrollbarcreate "main "name45 0 10.5 120 10 []]
+INFO: Executing [scrollbarcreate "main "name45 0 10.5 120 10 []] set error code to 7
+INFO: Executing [scrollbarcreate "main "name45 0 10.5 120 10 []] set error string to [scrollbarcreate doesn't like 10.5 as input]
+INFO: Executing invalid instruction: [scrollbarcreate "main "name50 0 0 [120] 10 []]
+INFO: Executing [scrollbarcreate "main "name50 0 0 [120] 10 []] set error code to 7
+INFO: Executing [scrollbarcreate "main "name50 0 0 [120] 10 []] set error string to [scrollbarcreate doesn't like [120] as input]
+INFO: Executing invalid instruction: [scrollbarcreate "main "name60 0 0 {120} 10 []]
+INFO: Executing [scrollbarcreate "main "name60 0 0 {120} 10 []] set error code to 7
+INFO: Executing [scrollbarcreate "main "name60 0 0 {120} 10 []] set error string to [scrollbarcreate doesn't like {120} as input]
+INFO: Executing invalid instruction: [scrollbarcreate "main "name70 0 0 -120 10 []]
+INFO: Executing [scrollbarcreate "main "name70 0 0 -120 10 []] set error code to 7
+INFO: Executing [scrollbarcreate "main "name70 0 0 -120 10 []] set error string to [scrollbarcreate doesn't like -120 as input]
+INFO: Executing invalid instruction: [scrollbarcreate "main "name75 0 0 10.5 10 []]
+INFO: Executing [scrollbarcreate "main "name75 0 0 10.5 10 []] set error code to 7
+INFO: Executing [scrollbarcreate "main "name75 0 0 10.5 10 []] set error string to [scrollbarcreate doesn't like 10.5 as input]
+INFO: Executing invalid instruction: [scrollbarcreate "main "name80 0 0 120 [10] []]
+INFO: Executing [scrollbarcreate "main "name80 0 0 120 [10] []] set error code to 7
+INFO: Executing [scrollbarcreate "main "name80 0 0 120 [10] []] set error string to [scrollbarcreate doesn't like [10] as input]
+INFO: Executing invalid instruction: [scrollbarcreate "main "name90 0 0 120 {10} []]
+INFO: Executing [scrollbarcreate "main "name90 0 0 120 {10} []] set error code to 7
+INFO: Executing [scrollbarcreate "main "name90 0 0 120 {10} []] set error string to [scrollbarcreate doesn't like {10} as input]
+INFO: Executing invalid instruction: [scrollbarcreate "main "name00 0 0 120 -10 []]
+INFO: Executing [scrollbarcreate "main "name00 0 0 120 -10 []] set error code to 7
+INFO: Executing [scrollbarcreate "main "name00 0 0 120 -10 []] set error string to [scrollbarcreate doesn't like -10 as input]
+INFO: Executing invalid instruction: [scrollbarcreate "main "name05 0 0 120 10.5 []]
+INFO: Executing [scrollbarcreate "main "name05 0 0 120 10.5 []] set error code to 7
+INFO: Executing [scrollbarcreate "main "name05 0 0 120 10.5 []] set error string to [scrollbarcreate doesn't like 10.5 as input]
+CALL: scrollbarcreate "main "goodscrollbar 0 0 100 10 []
+INFO: Executing invalid instruction: [scrollbarcreate "main "goodscrollbar 0 0 100 10 []]
+INFO: Executing [scrollbarcreate "main "goodscrollbar 0 0 100 10 []] set error code to 16
+INFO: Executing [scrollbarcreate "main "goodscrollbar 0 0 100 10 []] set error string to [Stopping...]
+CALL: staticcreate "main "notascrollbar [text] 0 100 100 100
+INFO: Executing invalid instruction: [(scrollbarenable "goodscrollbar)]
+INFO: Executing [(scrollbarenable "goodscrollbar)] set error code to 6 , as expected
+INFO: Executing [(scrollbarenable "goodscrollbar)] set error string to [not enough inputs to scrollbarenable]
+INFO: Executing invalid instruction: [(scrollbarenable "goodscrollbar "true "toomany)]
+INFO: Executing [(scrollbarenable "goodscrollbar "true "toomany)] set error code to 8 , as expected
+INFO: Executing [(scrollbarenable "goodscrollbar "true "toomany)] set error string to [too much inside ()'s]
+INFO: Executing invalid instruction: [scrollbarenable "doesnotexist "true]
+INFO: Executing [scrollbarenable "doesnotexist "true] set error code to 16
+INFO: Executing [scrollbarenable "doesnotexist "true] set error string to [Stopping...]
+INFO: Executing invalid instruction: [scrollbarenable "notascrollbar "true]
+INFO: Executing [scrollbarenable "notascrollbar "true] set error code to 16
+INFO: Executing [scrollbarenable "notascrollbar "true] set error string to [Stopping...]
+INFO: Executing invalid instruction: [scrollbarenable "goodscrollbar 1]
+INFO: Executing [scrollbarenable "goodscrollbar 1] set error code to 7
+INFO: Executing [scrollbarenable "goodscrollbar 1] set error string to [scrollbarenable doesn't like 1 as input]
+INFO: Executing invalid instruction: [scrollbarenable "goodscrollbar [true]]
+INFO: Executing [scrollbarenable "goodscrollbar [true]] set error code to 7
+INFO: Executing [scrollbarenable "goodscrollbar [true]] set error string to [scrollbarenable doesn't like [true] as input]
+INFO: Executing invalid instruction: [scrollbarenable "goodscrollbar {true}]
+INFO: Executing [scrollbarenable "goodscrollbar {true}] set error code to 7
+INFO: Executing [scrollbarenable "goodscrollbar {true}] set error string to [scrollbarenable doesn't like {true} as input]
+INFO: Executing invalid instruction: [(scrollbarget)]
+INFO: Executing [(scrollbarget)] set error code to 6 , as expected
+INFO: Executing [(scrollbarget)] set error string to [not enough inputs to scrollbarget]
+INFO: Executing invalid instruction: [(scrollbarget "goodscrollbar "toomany)]
+INFO: Executing [(scrollbarget "goodscrollbar "toomany)] set error code to 8 , as expected
+INFO: Executing [(scrollbarget "goodscrollbar "toomany)] set error string to [too much inside ()'s]
+INFO: Executing invalid instruction: [ignore scrollbarget "nonexistent]
+INFO: Executing [ignore scrollbarget "nonexistent] set error code to 16
+INFO: Executing [ignore scrollbarget "nonexistent] set error string to [Stopping...]
+INFO: Executing invalid instruction: [ignore scrollbarget "notascrollbar]
+INFO: Executing [ignore scrollbarget "notascrollbar] set error code to 16
+INFO: Executing [ignore scrollbarget "notascrollbar] set error string to [Stopping...]
+INFO: Executing invalid instruction: [(scrollbarset "goodscrollbar 0 100)]
+INFO: Executing [(scrollbarset "goodscrollbar 0 100)] set error code to 6 , as expected
+INFO: Executing [(scrollbarset "goodscrollbar 0 100)] set error string to [not enough inputs to scrollbarset]
+INFO: Executing invalid instruction: [(scrollbarset "goodscrollbar 0 100 50 "toomany)]
+INFO: Executing [(scrollbarset "goodscrollbar 0 100 50 "toomany)] set error code to 8 , as expected
+INFO: Executing [(scrollbarset "goodscrollbar 0 100 50 "toomany)] set error string to [too much inside ()'s]
+INFO: Executing invalid instruction: [scrollbarset "doesnotexist 0 100 50]
+INFO: Executing [scrollbarset "doesnotexist 0 100 50] set error code to 16
+INFO: Executing [scrollbarset "doesnotexist 0 100 50] set error string to [Stopping...]
+INFO: Executing invalid instruction: [scrollbarset "notascrollbar 0 100 50]
+INFO: Executing [scrollbarset "notascrollbar 0 100 50] set error code to 16
+INFO: Executing [scrollbarset "notascrollbar 0 100 50] set error string to [Stopping...]
+INFO: Executing invalid instruction: [scrollbarset "goodscrollbar [0] 10 5]
+INFO: Executing [scrollbarset "goodscrollbar [0] 10 5] set error code to 7
+INFO: Executing [scrollbarset "goodscrollbar [0] 10 5] set error string to [scrollbarset doesn't like [0] as input]
+INFO: Executing invalid instruction: [scrollbarset "goodscrollbar {0} 10 5]
+INFO: Executing [scrollbarset "goodscrollbar {0} 10 5] set error code to 7
+INFO: Executing [scrollbarset "goodscrollbar {0} 10 5] set error string to [scrollbarset doesn't like {0} as input]
+INFO: Executing invalid instruction: [scrollbarset "goodscrollbar 0.5 10 5]
+INFO: Executing [scrollbarset "goodscrollbar 0.5 10 5] set error code to 7
+INFO: Executing [scrollbarset "goodscrollbar 0.5 10 5] set error string to [scrollbarset doesn't like 0.5 as input]
+INFO: Executing invalid instruction: [scrollbarset "goodscrollbar "zero 10 5]
+INFO: Executing [scrollbarset "goodscrollbar "zero 10 5] set error code to 7
+INFO: Executing [scrollbarset "goodscrollbar "zero 10 5] set error string to [scrollbarset doesn't like zero as input]
+INFO: Executing invalid instruction: [scrollbarset "goodscrollbar 0 [10] 5]
+INFO: Executing [scrollbarset "goodscrollbar 0 [10] 5] set error code to 7
+INFO: Executing [scrollbarset "goodscrollbar 0 [10] 5] set error string to [scrollbarset doesn't like [10] as input]
+INFO: Executing invalid instruction: [scrollbarset "goodscrollbar 0 {10} 5]
+INFO: Executing [scrollbarset "goodscrollbar 0 {10} 5] set error code to 7
+INFO: Executing [scrollbarset "goodscrollbar 0 {10} 5] set error string to [scrollbarset doesn't like {10} as input]
+INFO: Executing invalid instruction: [scrollbarset "goodscrollbar 0 10.5 5]
+INFO: Executing [scrollbarset "goodscrollbar 0 10.5 5] set error code to 7
+INFO: Executing [scrollbarset "goodscrollbar 0 10.5 5] set error string to [scrollbarset doesn't like 10.5 as input]
+INFO: Executing invalid instruction: [scrollbarset "goodscrollbar 0 "ten [5]]
+INFO: Executing [scrollbarset "goodscrollbar 0 "ten [5]] set error code to 7
+INFO: Executing [scrollbarset "goodscrollbar 0 "ten [5]] set error string to [scrollbarset doesn't like ten as input]
+INFO: Executing invalid instruction: [scrollbarset "goodscrollbar 0 10 {5}]
+INFO: Executing [scrollbarset "goodscrollbar 0 10 {5}] set error code to 7
+INFO: Executing [scrollbarset "goodscrollbar 0 10 {5}] set error string to [scrollbarset doesn't like {5} as input]
+INFO: Executing invalid instruction: [scrollbarset "goodscrollbar 0 10 5.5]
+INFO: Executing [scrollbarset "goodscrollbar 0 10 5.5] set error code to 7
+INFO: Executing [scrollbarset "goodscrollbar 0 10 5.5] set error string to [scrollbarset doesn't like 5.5 as input]
+INFO: Executing invalid instruction: [scrollbarset "goodscrollbar 0 10 "five]
+INFO: Executing [scrollbarset "goodscrollbar 0 10 "five] set error code to 7
+INFO: Executing [scrollbarset "goodscrollbar 0 10 "five] set error string to [scrollbarset doesn't like five as input]
+INFO: Executing invalid instruction: [scrollbarset "goodscrollbar 10 0 5]
+FAIL: Executing [scrollbarset "goodscrollbar 10 0 5] did not throw an error
+INFO: Executing invalid instruction: [(scrollbardelete)]
+INFO: Executing [(scrollbardelete)] set error code to 6 , as expected
+INFO: Executing [(scrollbardelete)] set error string to [not enough inputs to scrollbardelete]
+INFO: Executing invalid instruction: [(scrollbardelete "goodscrollbar "toomany)]
+INFO: Executing [(scrollbardelete "goodscrollbar "toomany)] set error code to 8 , as expected
+INFO: Executing [(scrollbardelete "goodscrollbar "toomany)] set error string to [too much inside ()'s]
+INFO: Executing invalid instruction: [scrollbardelete "notascrollbar]
+INFO: Executing [scrollbardelete "notascrollbar] set error code to 16
+INFO: Executing [scrollbardelete "notascrollbar] set error string to [Stopping...]
+INFO: Executing invalid instruction: [scrollbardelete "doesnotexist]
+INFO: Executing [scrollbardelete "doesnotexist] set error code to 16
+INFO: Executing [scrollbardelete "doesnotexist] set error string to [Stopping...]
+CALL: staticdelete "notascrollbar
+CALL: scrollbardelete "goodscrollbar
+CALL: WINDOWCREATE "main "windowstest.button "mytitle 0 0 100 100 []
+CALL: BUTTONCREATE "windowstest.button "button [initial text] 10 40 20 80 []
+CALL: BUTTONUPDATE "button [new text]
+CALL: BUTTONENABLE "button "false
+CALL: BUTTONENABLE "button "false
+CALL: BUTTONENABLE "button "true
+CALL: BUTTONDELETE "button
+CALL: WINDOWDELETE "windowstest.button
+INFO: Executing invalid instruction: [(buttoncreate "main "name "label 0 0 100 10)]
+INFO: Executing [(buttoncreate "main "name "label 0 0 100 10)] set error code to 6 , as expected
+INFO: Executing [(buttoncreate "main "name "label 0 0 100 10)] set error string to [not enough inputs to buttoncreate]
+INFO: Executing invalid instruction: [(buttoncreate "main "name "label 0 0 100 10 [] "toomany)]
+INFO: Executing [(buttoncreate "main "name "label 0 0 100 10 [] "toomany)] set error code to 8 , as expected
+INFO: Executing [(buttoncreate "main "name "label 0 0 100 10 [] "toomany)] set error string to [too much inside ()'s]
+INFO: Executing invalid instruction: [buttoncreate "main "name10 "label [0] 0 120 10 []]
+INFO: Executing [buttoncreate "main "name10 "label [0] 0 120 10 []] set error code to 7
+INFO: Executing [buttoncreate "main "name10 "label [0] 0 120 10 []] set error string to [buttoncreate doesn't like [0] as input]
+INFO: Executing invalid instruction: [buttoncreate "main "name20 "label {0} 0 120 10 []]
+INFO: Executing [buttoncreate "main "name20 "label {0} 0 120 10 []] set error code to 7
+INFO: Executing [buttoncreate "main "name20 "label {0} 0 120 10 []] set error string to [buttoncreate doesn't like {0} as input]
+INFO: Executing invalid instruction: [buttoncreate "main "name25 "label 10.5 0 120 10 []]
+INFO: Executing [buttoncreate "main "name25 "label 10.5 0 120 10 []] set error code to 7
+INFO: Executing [buttoncreate "main "name25 "label 10.5 0 120 10 []] set error string to [buttoncreate doesn't like 10.5 as input]
+INFO: Executing invalid instruction: [buttoncreate "main "name30 "label 0 [0] 120 10 []]
+INFO: Executing [buttoncreate "main "name30 "label 0 [0] 120 10 []] set error code to 7
+INFO: Executing [buttoncreate "main "name30 "label 0 [0] 120 10 []] set error string to [buttoncreate doesn't like [0] as input]
+INFO: Executing invalid instruction: [buttoncreate "main "name40 "label 0 {0} 120 10 []]
+INFO: Executing [buttoncreate "main "name40 "label 0 {0} 120 10 []] set error code to 7
+INFO: Executing [buttoncreate "main "name40 "label 0 {0} 120 10 []] set error string to [buttoncreate doesn't like {0} as input]
+INFO: Executing invalid instruction: [buttoncreate "main "name45 "label 0 10.5 120 10 []]
+INFO: Executing [buttoncreate "main "name45 "label 0 10.5 120 10 []] set error code to 7
+INFO: Executing [buttoncreate "main "name45 "label 0 10.5 120 10 []] set error string to [buttoncreate doesn't like 10.5 as input]
+INFO: Executing invalid instruction: [buttoncreate "main "name50 "label 0 0 [120] 10 []]
+INFO: Executing [buttoncreate "main "name50 "label 0 0 [120] 10 []] set error code to 7
+INFO: Executing [buttoncreate "main "name50 "label 0 0 [120] 10 []] set error string to [buttoncreate doesn't like [120] as input]
+INFO: Executing invalid instruction: [buttoncreate "main "name60 "label 0 0 {120} 10 []]
+INFO: Executing [buttoncreate "main "name60 "label 0 0 {120} 10 []] set error code to 7
+INFO: Executing [buttoncreate "main "name60 "label 0 0 {120} 10 []] set error string to [buttoncreate doesn't like {120} as input]
+INFO: Executing invalid instruction: [buttoncreate "main "name70 "label 0 0 -120 10 []]
+INFO: Executing [buttoncreate "main "name70 "label 0 0 -120 10 []] set error code to 7
+INFO: Executing [buttoncreate "main "name70 "label 0 0 -120 10 []] set error string to [buttoncreate doesn't like -120 as input]
+INFO: Executing invalid instruction: [buttoncreate "main "name75 "label 0 0 10.5 10 []]
+INFO: Executing [buttoncreate "main "name75 "label 0 0 10.5 10 []] set error code to 7
+INFO: Executing [buttoncreate "main "name75 "label 0 0 10.5 10 []] set error string to [buttoncreate doesn't like 10.5 as input]
+INFO: Executing invalid instruction: [buttoncreate "main "name80 "label 0 0 120 [10] []]
+INFO: Executing [buttoncreate "main "name80 "label 0 0 120 [10] []] set error code to 7
+INFO: Executing [buttoncreate "main "name80 "label 0 0 120 [10] []] set error string to [buttoncreate doesn't like [10] as input]
+INFO: Executing invalid instruction: [buttoncreate "main "name90 "label 0 0 120 {10} []]
+INFO: Executing [buttoncreate "main "name90 "label 0 0 120 {10} []] set error code to 7
+INFO: Executing [buttoncreate "main "name90 "label 0 0 120 {10} []] set error string to [buttoncreate doesn't like {10} as input]
+INFO: Executing invalid instruction: [buttoncreate "main "name00 "label 0 0 120 -10 []]
+INFO: Executing [buttoncreate "main "name00 "label 0 0 120 -10 []] set error code to 7
+INFO: Executing [buttoncreate "main "name00 "label 0 0 120 -10 []] set error string to [buttoncreate doesn't like -10 as input]
+INFO: Executing invalid instruction: [buttoncreate "main "name05 "label 0 0 120 10.5 []]
+INFO: Executing [buttoncreate "main "name05 "label 0 0 120 10.5 []] set error code to 7
+INFO: Executing [buttoncreate "main "name05 "label 0 0 120 10.5 []] set error string to [buttoncreate doesn't like 10.5 as input]
+CALL: buttoncreate "main "goodbutton "label 0 0 100 10 []
+INFO: Executing invalid instruction: [buttoncreate "main "goodbutton "label 0 0 100 10 []]
+INFO: Executing [buttoncreate "main "goodbutton "label 0 0 100 10 []] set error code to 16
+INFO: Executing [buttoncreate "main "goodbutton "label 0 0 100 10 []] set error string to [Stopping...]
+CALL: staticcreate "main "notabutton [text] 0 100 100 100
+INFO: Executing invalid instruction: [(buttonenable "goodbutton)]
+INFO: Executing [(buttonenable "goodbutton)] set error code to 6 , as expected
+INFO: Executing [(buttonenable "goodbutton)] set error string to [not enough inputs to buttonenable]
+INFO: Executing invalid instruction: [(buttonenable "goodbutton "true "toomany)]
+INFO: Executing [(buttonenable "goodbutton "true "toomany)] set error code to 8 , as expected
+INFO: Executing [(buttonenable "goodbutton "true "toomany)] set error string to [too much inside ()'s]
+INFO: Executing invalid instruction: [buttonenable "doesnotexist "true]
+INFO: Executing [buttonenable "doesnotexist "true] set error code to 16
+INFO: Executing [buttonenable "doesnotexist "true] set error string to [Stopping...]
+INFO: Executing invalid instruction: [buttonenable "notabutton "true]
+INFO: Executing [buttonenable "notabutton "true] set error code to 16
+INFO: Executing [buttonenable "notabutton "true] set error string to [Stopping...]
+INFO: Executing invalid instruction: [buttonenable "goodbutton 1]
+INFO: Executing [buttonenable "goodbutton 1] set error code to 7
+INFO: Executing [buttonenable "goodbutton 1] set error string to [buttonenable doesn't like 1 as input]
+INFO: Executing invalid instruction: [buttonenable "goodbutton [true]]
+INFO: Executing [buttonenable "goodbutton [true]] set error code to 7
+INFO: Executing [buttonenable "goodbutton [true]] set error string to [buttonenable doesn't like [true] as input]
+INFO: Executing invalid instruction: [buttonenable "goodbutton {true}]
+INFO: Executing [buttonenable "goodbutton {true}] set error code to 7
+INFO: Executing [buttonenable "goodbutton {true}] set error string to [buttonenable doesn't like {true} as input]
+INFO: Executing invalid instruction: [(buttonupdate "goodbutton)]
+INFO: Executing [(buttonupdate "goodbutton)] set error code to 6 , as expected
+INFO: Executing [(buttonupdate "goodbutton)] set error string to [not enough inputs to buttonupdate]
+INFO: Executing invalid instruction: [(buttonupdate "goodbutton "newlabel "toomany)]
+INFO: Executing [(buttonupdate "goodbutton "newlabel "toomany)] set error code to 8 , as expected
+INFO: Executing [(buttonupdate "goodbutton "newlabel "toomany)] set error string to [too much inside ()'s]
+INFO: Executing invalid instruction: [buttonupdate "nonexistent "newlabel]
+INFO: Executing [buttonupdate "nonexistent "newlabel] set error code to 16
+INFO: Executing [buttonupdate "nonexistent "newlabel] set error string to [Stopping...]
+INFO: Executing invalid instruction: [buttonupdate "notabutton "newlabel]
+INFO: Executing [buttonupdate "notabutton "newlabel] set error code to 16
+INFO: Executing [buttonupdate "notabutton "newlabel] set error string to [Stopping...]
+INFO: Executing invalid instruction: [(buttondelete)]
+INFO: Executing [(buttondelete)] set error code to 6 , as expected
+INFO: Executing [(buttondelete)] set error string to [not enough inputs to buttondelete]
+INFO: Executing invalid instruction: [(buttondelete "goodbutton "toomany)]
+INFO: Executing [(buttondelete "goodbutton "toomany)] set error code to 8 , as expected
+INFO: Executing [(buttondelete "goodbutton "toomany)] set error string to [too much inside ()'s]
+INFO: Executing invalid instruction: [buttondelete "notabutton]
+INFO: Executing [buttondelete "notabutton] set error code to 16
+INFO: Executing [buttondelete "notabutton] set error string to [Stopping...]
+INFO: Executing invalid instruction: [buttondelete "doesnotexist]
+INFO: Executing [buttondelete "doesnotexist] set error code to 16
+INFO: Executing [buttondelete "doesnotexist] set error string to [Stopping...]
+CALL: staticdelete "notabutton
+CALL: buttondelete "goodbutton
+CALL: windowdelete "all
+CALL: debugwindows
+CALL: windowcreate "root "testwindow [window smoke test] 0 0 120 400 []
+CALL: windowstest.setup "testwindow
+CALL: debugwindows
+CALL: windowdelete "testwindow
+CALL: windowcreate "root :parentname "caption 0 0 100 200 []
+CALL: staticcreate :parentname (word "s :parentname) "text 10 10 80 20
+CALL: groupboxcreate :parentname (word "g :parentname) 10 30 80 40
+CALL: radiobuttoncreate :parentname (word "g :parentname) (word "r :parentname) [Radio] 20 40 60 20
+CALL: windowcreate "root :parentname "caption 0 0 100 200 []
+CALL: staticcreate :parentname (word "s :parentname) "text 10 10 80 20
+CALL: groupboxcreate :parentname (word "g :parentname) 10 30 80 40
+CALL: radiobuttoncreate :parentname (word "g :parentname) (word "r :parentname) [Radio] 20 40 60 20
+CALL: windowcreate "root :parentname "caption 0 0 100 200 []
+CALL: staticcreate :parentname (word "s :parentname) "text 10 10 80 20
+CALL: groupboxcreate :parentname (word "g :parentname) 10 30 80 40
+CALL: radiobuttoncreate :parentname (word "g :parentname) (word "r :parentname) [Radio] 20 40 60 20
+CALL: windowcreate "root :parentname "caption 0 0 100 200 []
+CALL: staticcreate :parentname (word "s :parentname) "text 10 10 80 20
+CALL: groupboxcreate :parentname (word "g :parentname) 10 30 80 40
+CALL: radiobuttoncreate :parentname (word "g :parentname) (word "r :parentname) [Radio] 20 40 60 20
+CALL: windowcreate "root :parentname "caption 0 0 100 200 []
+CALL: staticcreate :parentname (word "s :parentname) "text 10 10 80 20
+CALL: groupboxcreate :parentname (word "g :parentname) 10 30 80 40
+CALL: radiobuttoncreate :parentname (word "g :parentname) (word "r :parentname) [Radio] 20 40 60 20
+CALL: windowcreate "root :parentname "caption 0 0 100 200 []
+CALL: staticcreate :parentname (word "s :parentname) "text 10 10 80 20
+CALL: groupboxcreate :parentname (word "g :parentname) 10 30 80 40
+CALL: radiobuttoncreate :parentname (word "g :parentname) (word "r :parentname) [Radio] 20 40 60 20
+CALL: windowcreate "root :parentname "caption 0 0 100 200 []
+CALL: staticcreate :parentname (word "s :parentname) "text 10 10 80 20
+CALL: groupboxcreate :parentname (word "g :parentname) 10 30 80 40
+CALL: radiobuttoncreate :parentname (word "g :parentname) (word "r :parentname) [Radio] 20 40 60 20
+CALL: windowcreate "root :parentname "caption 0 0 100 200 []
+CALL: staticcreate :parentname (word "s :parentname) "text 10 10 80 20
+CALL: groupboxcreate :parentname (word "g :parentname) 10 30 80 40
+CALL: radiobuttoncreate :parentname (word "g :parentname) (word "r :parentname) [Radio] 20 40 60 20
+CALL: windowcreate "root :parentname "caption 0 0 100 200 []
+CALL: staticcreate :parentname (word "s :parentname) "text 10 10 80 20
+CALL: groupboxcreate :parentname (word "g :parentname) 10 30 80 40
+CALL: radiobuttoncreate :parentname (word "g :parentname) (word "r :parentname) [Radio] 20 40 60 20
+CALL: windowcreate "root :parentname "caption 0 0 100 200 []
+CALL: staticcreate :parentname (word "s :parentname) "text 10 10 80 20
+CALL: groupboxcreate :parentname (word "g :parentname) 10 30 80 40
+CALL: radiobuttoncreate :parentname (word "g :parentname) (word "r :parentname) [Radio] 20 40 60 20
+CALL: windowcreate "root :parentname "caption 0 0 100 200 []
+CALL: staticcreate :parentname (word "s :parentname) "text 10 10 80 20
+CALL: groupboxcreate :parentname (word "g :parentname) 10 30 80 40
+CALL: radiobuttoncreate :parentname (word "g :parentname) (word "r :parentname) [Radio] 20 40 60 20
+CALL: windowcreate "root :parentname "caption 0 0 100 200 []
+CALL: staticcreate :parentname (word "s :parentname) "text 10 10 80 20
+CALL: groupboxcreate :parentname (word "g :parentname) 10 30 80 40
+CALL: radiobuttoncreate :parentname (word "g :parentname) (word "r :parentname) [Radio] 20 40 60 20
+CALL: windowcreate "root :parentname "caption 0 0 100 200 []
+CALL: staticcreate :parentname (word "s :parentname) "text 10 10 80 20
+CALL: groupboxcreate :parentname (word "g :parentname) 10 30 80 40
+CALL: radiobuttoncreate :parentname (word "g :parentname) (word "r :parentname) [Radio] 20 40 60 20
+CALL: windowcreate "root :parentname "caption 0 0 100 200 []
+CALL: staticcreate :parentname (word "s :parentname) "text 10 10 80 20
+CALL: groupboxcreate :parentname (word "g :parentname) 10 30 80 40
+CALL: radiobuttoncreate :parentname (word "g :parentname) (word "r :parentname) [Radio] 20 40 60 20
+CALL: windowcreate "root :parentname "caption 0 0 100 200 []
+CALL: staticcreate :parentname (word "s :parentname) "text 10 10 80 20
+CALL: groupboxcreate :parentname (word "g :parentname) 10 30 80 40
+CALL: radiobuttoncreate :parentname (word "g :parentname) (word "r :parentname) [Radio] 20 40 60 20
+CALL: windowcreate "root :parentname "caption 0 0 100 200 []
+CALL: staticcreate :parentname (word "s :parentname) "text 10 10 80 20
+CALL: groupboxcreate :parentname (word "g :parentname) 10 30 80 40
+CALL: radiobuttoncreate :parentname (word "g :parentname) (word "r :parentname) [Radio] 20 40 60 20
+CALL: windowcreate "root :parentname "caption 0 0 100 200 []
+CALL: staticcreate :parentname (word "s :parentname) "text 10 10 80 20
+CALL: groupboxcreate :parentname (word "g :parentname) 10 30 80 40
+CALL: radiobuttoncreate :parentname (word "g :parentname) (word "r :parentname) [Radio] 20 40 60 20
+CALL: windowcreate "root :parentname "caption 0 0 100 200 []
+CALL: staticcreate :parentname (word "s :parentname) "text 10 10 80 20
+CALL: groupboxcreate :parentname (word "g :parentname) 10 30 80 40
+CALL: radiobuttoncreate :parentname (word "g :parentname) (word "r :parentname) [Radio] 20 40 60 20
+CALL: windowcreate "root :parentname "caption 0 0 100 200 []
+CALL: staticcreate :parentname (word "s :parentname) "text 10 10 80 20
+CALL: groupboxcreate :parentname (word "g :parentname) 10 30 80 40
+CALL: radiobuttoncreate :parentname (word "g :parentname) (word "r :parentname) [Radio] 20 40 60 20
+CALL: windowcreate "root :parentname "caption 0 0 100 200 []
+CALL: staticcreate :parentname (word "s :parentname) "text 10 10 80 20
+CALL: groupboxcreate :parentname (word "g :parentname) 10 30 80 40
+CALL: radiobuttoncreate :parentname (word "g :parentname) (word "r :parentname) [Radio] 20 40 60 20
+CALL: debugwindows
+CALL: (debugwindows word 15 :longname)
+CALL: WINDOWDELETE (word repcount :longname)
+CALL: WINDOWDELETE (word repcount :longname)
+CALL: WINDOWDELETE (word repcount :longname)
+CALL: WINDOWDELETE (word repcount :longname)
+CALL: WINDOWDELETE (word repcount :longname)
+CALL: WINDOWDELETE (word repcount :longname)
+CALL: WINDOWDELETE (word repcount :longname)
+CALL: WINDOWDELETE (word repcount :longname)
+CALL: WINDOWDELETE (word repcount :longname)
+CALL: WINDOWDELETE (word repcount :longname)
+CALL: WINDOWDELETE (word repcount :longname)
+CALL: WINDOWDELETE (word repcount :longname)
+CALL: WINDOWDELETE (word repcount :longname)
+CALL: WINDOWDELETE (word repcount :longname)
+CALL: WINDOWDELETE (word repcount :longname)
+CALL: WINDOWDELETE (word repcount :longname)
+CALL: WINDOWDELETE (word repcount :longname)
+CALL: WINDOWDELETE (word repcount :longname)
+CALL: WINDOWDELETE (word repcount :longname)
+CALL: WINDOWDELETE (word repcount :longname)
+CALL: WINDOWCREATE "root "window "caption 0 0 120 400 []
+INFO: Executing invalid instruction: [(DEBUGWINDOWS "window "toomany)]
+INFO: Executing [(DEBUGWINDOWS "window "toomany)] set error code to 8 , as expected
+INFO: Executing [(DEBUGWINDOWS "window "toomany)] set error string to [too much inside ()'s]
+INFO: Executing invalid instruction: [(DEBUGWINDOWS "doesnotexist)]
+INFO: Executing [(DEBUGWINDOWS "doesnotexist)] set error code to 16
+INFO: Executing [(DEBUGWINDOWS "doesnotexist)] set error string to [Stopping...]
+CALL: WINDOWDELETE "window
+PASS: The regression test for an inconsistent dialogthing list did not crash.
 CALL: MOUSEOFF
 CALL: MOUSEON [] [] [] [] []
 CALL: MOUSEON " " " " "
