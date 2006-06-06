@@ -35,20 +35,6 @@
 
 static HICON hCursorSave = 0; // handle for saved cursor
 
-static const char *Windowname[] =
-   {
-      "?",
-      "Window",
-      "Static",
-      "ListBox",
-      "ComboBox",
-      "Button",
-      "ScrollBar",
-      "GroupBox",
-      "RadioButton",
-      "CheckButton",
-      "Dialog",
-   };
 
 class TClientRectangle
    {
@@ -614,17 +600,26 @@ void dialoglist::list(const char *k, int level)
    dialogthing * p = get(k);
    if (p != NULL)
       {
-      char indent[128];
-
-      indent[0] = '\0';
-      for (int i = 0; i < level; i++) 
+      static const char *Windowname[] =
          {
-         strcat(indent, " ");
-         }
+            "?",
+            "Window",
+            "Static",
+            "ListBox",
+            "ComboBox",
+            "Button",
+            "ScrollBar",
+            "GroupBox",
+            "RadioButton",
+            "CheckButton",
+            "Dialog",
+         };
+
+      const size_t MAX_WINDOWNAME_LENGTH = sizeof("radiobutton");
 
       if (level == 0)
          {
-         char temp[128];
+         char temp[MAX_WINDOWNAME_LENGTH + 1 + MAX_BUFFER_SIZE + 1];
          sprintf(temp, "%s %s", Windowname[p->type], p->key);
          putcombobox(temp);
          }
@@ -634,8 +629,8 @@ void dialoglist::list(const char *k, int level)
          {
          if (strcmp(ff->parent, k) == 0)
             {
-            char temp[128];
-            sprintf(temp, "  %s%s %s", indent, Windowname[ff->type], ff->key);
+            char temp[2 + 1 + MAX_WINDOWNAME_LENGTH + 1 + MAX_BUFFER_SIZE + 1];
+            sprintf(temp, "  %*s%s %s", level, "", Windowname[ff->type], ff->key);
             putcombobox(temp);
             list(ff->key, level + 1);
             }

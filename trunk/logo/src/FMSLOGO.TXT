@@ -22,7 +22,8 @@ Part II) New features/bugs fixed:
 
   * Added for 6.9.0,
     o Fix bug #1500620; STATICCREATE, LISTBOXCREATE, BUTTONCREATE, etc.
-      now throw bad input error when given negative width/height.
+      now throw a bad input error when given negative width/height.
+    o Fix bug #1500320; DEBUGWINDOWS no longer crashes on long window names.
     o Fix bug #1500306; BUTTONENABLE, RADIOBUTTONENABLE, CHECKBOXENABLE, etc.
       no longer enable the widget when given bad input.
     o Fix bug #1500304; WINDOWCREATE, DIALOGCREATE no longer create a window 
