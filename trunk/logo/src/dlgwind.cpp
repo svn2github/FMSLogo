@@ -426,7 +426,7 @@ class dialoglist
    dialogthing * get(const char *k);
    dialogthing * get(const char *k, WINDOWTYPE type);
    dialogthing * get(const char *k, WINDOWTYPE type1, WINDOWTYPE type2);
-   char *getrootkey();
+   const char *getrootkey();
    const char *getfirstchild(const char *par);
    void zap(const char *k);
    void list(const char *k, int lev);
@@ -665,7 +665,7 @@ void dialoglist::clear()
 
 // returns the key of the first element whose parent is the root window.
 // returns NULL, if no element's parent is the root window.
-char *dialoglist::getrootkey()
+const char *dialoglist::getrootkey()
    {
    dialogthing *l = last;
 
@@ -1032,7 +1032,7 @@ NODE *lwindowdelete(NODE *arg)
          {
          // No window exists that matches this name and type.
          // Close all windows.
-         char *tempkey;
+         const char *tempkey;
          while (tempkey = dialogboxes.getrootkey())
             {
             dialogthing *temp = dialogboxes.get(tempkey);
@@ -1048,7 +1048,7 @@ NODE *lwindowdelete(NODE *arg)
             }
          }
       }
-   
+
    return Unbound;
    }
 
