@@ -627,7 +627,6 @@ extern NODE *ldialogdelete(NODE *arg);
 extern NODE *lwindowcreate(NODE *args);
 extern NODE *lwindowenable(NODE *args);
 extern NODE *lwindowdelete(NODE *arg);
-extern void windowdelete_helper();
 extern NODE *lbuttoncreate(NODE *args);
 extern NODE *lbuttonupdate(NODE *args);
 extern NODE *lbuttonenable(NODE *args);
