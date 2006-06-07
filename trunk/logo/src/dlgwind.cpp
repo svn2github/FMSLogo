@@ -611,7 +611,7 @@ void dialoglist::list(const char *k, int level)
             "ScrollBar",
             "GroupBox",
             "RadioButton",
-            "CheckButton",
+            "CheckBox",
             "Dialog",
          };
 
