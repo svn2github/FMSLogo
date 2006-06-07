@@ -21,17 +21,20 @@
 
 #include "allwind.h"
 
-#define TWindow_type 1
-#define TStatic_type 2
-#define TListBox_type 3
-#define TComboBox_type 4
-#define TButton_type 5
-#define TScrollBar_type 6
-#define TGroupBox_type 7
-#define TRadioButton_type 8
-#define TCheckBox_type 9
-#define TDialog_type 10
-
+enum WINDOWTYPE 
+   {
+      WINDOWTYPE_None,
+      WINDOWTYPE_Window,
+      WINDOWTYPE_Static,
+      WINDOWTYPE_ListBox,
+      WINDOWTYPE_ComboBox,
+      WINDOWTYPE_Button,
+      WINDOWTYPE_ScrollBar,
+      WINDOWTYPE_GroupBox,
+      WINDOWTYPE_RadioButton,
+      WINDOWTYPE_CheckBox,
+      WINDOWTYPE_Dialog,
+   };
 
 static HICON hCursorSave = 0; // handle for saved cursor
 
@@ -365,7 +368,7 @@ public:
    char key[MAX_BUFFER_SIZE];
    char *parent;
 
-   int type;
+   WINDOWTYPE type;
 
    union
       {
@@ -380,7 +383,7 @@ public:
       class TMyCheckBox    * TCBmybox;
       };
 
-   dialogthing(int t, const char * name)
+   dialogthing(WINDOWTYPE t, const char * name)
      : next(NULL),
        prev(NULL),
        parent(NULL),
@@ -397,16 +400,16 @@ TWindow * dialogthing::GetWindow()
    {
    switch (type)
       {
-      case TWindow_type:      return TDmybox;
-      case TStatic_type:      return TSmybox;
-      case TListBox_type:     return TLmybox;
-      case TComboBox_type:    return TCmybox;
-      case TButton_type:      return TBmybox;
-      case TScrollBar_type:   return TSCmybox;
-      case TGroupBox_type:    return TGmybox;
-      case TRadioButton_type: return TRmybox;
-      case TCheckBox_type:    return TCBmybox;
-      case TDialog_type:      return TDmybox;
+      case WINDOWTYPE_Window:      return TDmybox;
+      case WINDOWTYPE_Static:      return TSmybox;
+      case WINDOWTYPE_ListBox:     return TLmybox;
+      case WINDOWTYPE_ComboBox:    return TCmybox;
+      case WINDOWTYPE_Button:      return TBmybox;
+      case WINDOWTYPE_ScrollBar:   return TSCmybox;
+      case WINDOWTYPE_GroupBox:    return TGmybox;
+      case WINDOWTYPE_RadioButton: return TRmybox;
+      case WINDOWTYPE_CheckBox:    return TCBmybox;
+      case WINDOWTYPE_Dialog:      return TDmybox;
       }
 
    assert(!"can't happen");
@@ -421,8 +424,8 @@ class dialoglist
    public:
    void insert(dialogthing * a);
    dialogthing * get(const char *k);
-   dialogthing * get(const char *k, int t);
-   dialogthing * get(const char *k, int type1, int type2);
+   dialogthing * get(const char *k, WINDOWTYPE type);
+   dialogthing * get(const char *k, WINDOWTYPE type1, WINDOWTYPE type2);
    char *getrootkey();
    const char *getfirstchild(const char *par);
    void zap(const char *k);
@@ -493,7 +496,7 @@ dialogthing * dialoglist::get(const char *key)
    }
 
 // returns the element whose key is k and whose type is t
-dialogthing * dialoglist::get(const char *key, int type)
+dialogthing * dialoglist::get(const char *key, WINDOWTYPE type)
    {
    dialogthing * item = get(key);
    if (item != NULL)
@@ -510,7 +513,7 @@ dialogthing * dialoglist::get(const char *key, int type)
    }
 
 // returns the element whose key is "key" and whose type is either type1 or type2
-dialogthing * dialoglist::get(const char *key, int type1, int type2)
+dialogthing * dialoglist::get(const char *key, WINDOWTYPE type1, WINDOWTYPE type2)
    {
    dialogthing * item = get(key);
    if (item != NULL)
@@ -620,7 +623,7 @@ void dialoglist::list(const char *k, int level)
       if (level == 0)
          {
          char temp[MAX_WINDOWNAME_LENGTH + 1 + MAX_BUFFER_SIZE + 1];
-         sprintf(temp, "%s %s", Windowname[p->type], p->key);
+         sprintf(temp, "%s %s", Windowname[(int)p->type], p->key);
          putcombobox(temp);
          }
 
@@ -630,7 +633,7 @@ void dialoglist::list(const char *k, int level)
          if (strcmp(ff->parent, k) == 0)
             {
             char temp[2 + 1 + MAX_WINDOWNAME_LENGTH + 1 + MAX_BUFFER_SIZE + 1];
-            sprintf(temp, "  %*s%s %s", level, "", Windowname[ff->type], ff->key);
+            sprintf(temp, "  %*s%s %s", level, "", Windowname[(int)ff->type], ff->key);
             putcombobox(temp);
             list(ff->key, level + 1);
             }
@@ -718,7 +721,7 @@ bool dialoglist::OnScreenControlsExist()
       {
       if (l->parent == (char *)MainWindowx->ScreenWindow)
          {
-         if ((l->type != TWindow_type) && (l->type != TDialog_type))
+         if ((l->type != WINDOWTYPE_Window) && (l->type != WINDOWTYPE_Dialog))
             {
             return true;
             }
@@ -906,10 +909,10 @@ NODE *lwindowcreate(NODE *args)
       // if not already exist continue
       if (dialogboxes.get(childname) == NULL)
          {
-         dialogthing *child = new dialogthing(TWindow_type, childname);
+         dialogthing *child = new dialogthing(WINDOWTYPE_Window, childname);
 
          // if parent exists use it else use main window
-         dialogthing *parent = dialogboxes.get(parentname, TWindow_type);
+         dialogthing *parent = dialogboxes.get(parentname, WINDOWTYPE_Window);
          if (parent != NULL)
             {
             child->TDmybox = new TMxDialog(parent->TDmybox);
@@ -950,8 +953,8 @@ NODE *lwindowcreate(NODE *args)
 static
 NODE *
 WindowEnableHelper(
-   NODE *args,
-   int   WindowType
+   NODE       * args,
+   WINDOWTYPE   WindowType
 )
    {
    char childname[MAX_BUFFER_SIZE];
@@ -979,8 +982,8 @@ WindowEnableHelper(
 static
 NODE *
 WindowDeleteHelper(
-   NODE *args,
-   int   WindowType
+   NODE       * args,
+   WINDOWTYPE   WindowType
 )
    {
    // get args
@@ -1007,7 +1010,7 @@ WindowDeleteHelper(
 
 NODE *lwindowenable(NODE *args)
    {
-   return WindowEnableHelper(args, TWindow_type);
+   return WindowEnableHelper(args, WINDOWTYPE_Window);
    }
 
 NODE *lwindowdelete(NODE *arg)
@@ -1017,7 +1020,7 @@ NODE *lwindowdelete(NODE *arg)
 
    if (NOT_THROWING)
       {
-      dialogthing *window = dialogboxes.get(windowname, TWindow_type);
+      dialogthing *window = dialogboxes.get(windowname, WINDOWTYPE_Window);
       if (window != NULL)
          {
          // The exact name and type exists matches.
@@ -1088,10 +1091,10 @@ NODE *ldialogcreate(NODE *args)
       if (dialogboxes.get(childname) == NULL)
          {
          // make one
-         dialogthing * child = new dialogthing(TDialog_type, childname);
+         dialogthing * child = new dialogthing(WINDOWTYPE_Dialog, childname);
 
          // if parent of corect type exists use it
-         dialogthing *parent = dialogboxes.get(parentname, TWindow_type);
+         dialogthing *parent = dialogboxes.get(parentname, WINDOWTYPE_Window);
          if (parent != NULL)
             {
             child->TDmybox = new TMxDialog(parent->TDmybox);
@@ -1130,12 +1133,12 @@ NODE *ldialogcreate(NODE *args)
 
 NODE *ldialogenable(NODE *args)
    {
-   return WindowEnableHelper(args, TDialog_type);
+   return WindowEnableHelper(args, WINDOWTYPE_Dialog);
    }
    
 NODE *ldialogdelete(NODE *args)
    {
-   return WindowDeleteHelper(args, TDialog_type);
+   return WindowDeleteHelper(args, WINDOWTYPE_Dialog);
    }
 
 NODE *llistboxcreate(NODE *args)
@@ -1158,9 +1161,9 @@ NODE *llistboxcreate(NODE *args)
 
       if (dialogboxes.get(childname) == NULL)
          {
-         dialogthing * child = new dialogthing(TListBox_type, childname);
+         dialogthing * child = new dialogthing(WINDOWTYPE_ListBox, childname);
 
-         dialogthing *parent = dialogboxes.get(parentname, TWindow_type, TDialog_type);
+         dialogthing *parent = dialogboxes.get(parentname, WINDOWTYPE_Window, WINDOWTYPE_Dialog);
          if (parent != NULL)
             {
             // The parent is a user-created window
@@ -1202,12 +1205,12 @@ NODE *llistboxcreate(NODE *args)
 
 NODE *llistboxenable(NODE *args)
    {
-   return WindowEnableHelper(args, TListBox_type);
+   return WindowEnableHelper(args, WINDOWTYPE_ListBox);
    }
 
 NODE *llistboxdelete(NODE *args)
    {
-   return WindowDeleteHelper(args, TListBox_type);
+   return WindowDeleteHelper(args, WINDOWTYPE_ListBox);
    }
 
 NODE *llistboxgetselect(NODE *args)
@@ -1218,7 +1221,7 @@ NODE *llistboxgetselect(NODE *args)
 
    // If it exists continue
    dialogthing *parent;
-   if ((parent = dialogboxes.get(parentname, TListBox_type)) != NULL)
+   if ((parent = dialogboxes.get(parentname, WINDOWTYPE_ListBox)) != NULL)
       {
       // if success on fetching string return it
       char stringname[MAX_BUFFER_SIZE];
@@ -1248,7 +1251,7 @@ NODE *llistboxaddstring(NODE *args)
    cnv_strnode_string(stringname, cdr(args));
 
    // if exists continue
-   dialogthing *parent = dialogboxes.get(parentname, TListBox_type);
+   dialogthing *parent = dialogboxes.get(parentname, WINDOWTYPE_ListBox);
    if (parent != NULL)
       {
       // add entry and reset Index for consistency
@@ -1272,7 +1275,7 @@ NODE *llistboxdeletestring(NODE *args)
    int index = getint(pos_int_arg(cdr(args)));
 
    // if exists continue
-   dialogthing *parent = dialogboxes.get(parentname, TListBox_type);
+   dialogthing *parent = dialogboxes.get(parentname, WINDOWTYPE_ListBox);
    if (parent != NULL)
       {
       // kill entry based on index
@@ -1306,9 +1309,9 @@ NODE *lcomboboxcreate(NODE *args)
       // if unique continue
       if (dialogboxes.get(childname) == NULL)
          {
-         dialogthing * child = new dialogthing(TComboBox_type, childname);
+         dialogthing * child = new dialogthing(WINDOWTYPE_ComboBox, childname);
 
-         dialogthing *parent = dialogboxes.get(parentname, TWindow_type, TDialog_type);
+         dialogthing *parent = dialogboxes.get(parentname, WINDOWTYPE_Window, WINDOWTYPE_Dialog);
          if (parent != NULL)
             {
             // convert to "DIALOG" units
@@ -1352,12 +1355,12 @@ NODE *lcomboboxcreate(NODE *args)
 
 NODE *lcomboboxenable(NODE *args)
    {
-   return WindowEnableHelper(args, TComboBox_type);
+   return WindowEnableHelper(args, WINDOWTYPE_ComboBox);
    }
 
 NODE *lcomboboxdelete(NODE *args)
    {
-   return WindowDeleteHelper(args, TComboBox_type);
+   return WindowDeleteHelper(args, WINDOWTYPE_ComboBox);
    }
 
 NODE *lcomboboxgettext(NODE *args)
@@ -1367,7 +1370,7 @@ NODE *lcomboboxgettext(NODE *args)
    cnv_strnode_string(parentname, args);
 
    // if exists continue
-   dialogthing *parent = dialogboxes.get(parentname, TComboBox_type);
+   dialogthing *parent = dialogboxes.get(parentname, WINDOWTYPE_ComboBox);
    if (parent != NULL)
       {
       // if successful getting string return it
@@ -1397,7 +1400,7 @@ NODE *lcomboboxsettext(NODE *args)
    cnv_strnode_string(stringname, cdr(args));
 
    // if exists continue
-   dialogthing *parent = dialogboxes.get(parentname, TComboBox_type);
+   dialogthing *parent = dialogboxes.get(parentname, WINDOWTYPE_ComboBox);
    if (parent != NULL)
       {
       // set the editcontrol portion to the user specified text
@@ -1421,7 +1424,7 @@ NODE *lcomboboxaddstring(NODE *args)
    cnv_strnode_string(stringname, cdr(args));
 
    // if exists continue
-   dialogthing *parent = dialogboxes.get(parentname, TComboBox_type);
+   dialogthing *parent = dialogboxes.get(parentname, WINDOWTYPE_ComboBox);
    if (parent != NULL)
       {
       // add string and reset selection
@@ -1445,7 +1448,7 @@ NODE *lcomboboxdeletestring(NODE *args)
    int index = getint(pos_int_arg(cdr(args)));
 
    // if exists continue
-   dialogthing *parent = dialogboxes.get(parentname, TComboBox_type);
+   dialogthing *parent = dialogboxes.get(parentname, WINDOWTYPE_ComboBox);
    if (parent != NULL)
       {
       // kill entry and reset index
@@ -1479,11 +1482,11 @@ NODE *lscrollbarcreate(NODE *args)
       {
       if (dialogboxes.get(childname) == NULL)
          {
-         dialogthing * child = new dialogthing(TScrollBar_type, childname);
+         dialogthing * child = new dialogthing(WINDOWTYPE_ScrollBar, childname);
          
          const bool isHorizontalScrollbar = clientrect.GetWidth() > clientrect.GetHeight();
 
-         dialogthing *parent = dialogboxes.get(parentname, TWindow_type, TDialog_type);
+         dialogthing *parent = dialogboxes.get(parentname, WINDOWTYPE_Window, WINDOWTYPE_Dialog);
          if (parent != NULL)
             {
             clientrect.ConvertToDialogCoordinates();
@@ -1538,7 +1541,7 @@ NODE *lscrollbarset(NODE *args)
    int hi = getint(pos_int_arg(args = cdr(args)));
    int pos = getint(pos_int_arg(cdr(args)));
 
-   dialogthing *parent = dialogboxes.get(parentname, TScrollBar_type);
+   dialogthing *parent = dialogboxes.get(parentname, WINDOWTYPE_ScrollBar);
    if (parent != NULL)
       {
       parent->TSCmybox->SetRange(lo, hi);
@@ -1557,7 +1560,7 @@ NODE *lscrollbarget(NODE *args)
    char parentname[MAX_BUFFER_SIZE];
    cnv_strnode_string(parentname, args);
 
-   dialogthing *parent = dialogboxes.get(parentname, TScrollBar_type);
+   dialogthing *parent = dialogboxes.get(parentname, WINDOWTYPE_ScrollBar);
    if (parent != NULL)
       {
       int pos = parent->TSCmybox->GetPosition();
@@ -1573,12 +1576,12 @@ NODE *lscrollbarget(NODE *args)
 
 NODE *lscrollbarenable(NODE *args)
    {
-   return WindowEnableHelper(args, TScrollBar_type);
+   return WindowEnableHelper(args, WINDOWTYPE_ScrollBar);
    }
 
 NODE *lscrollbardelete(NODE *args)
    {
-   return WindowDeleteHelper(args, TScrollBar_type);
+   return WindowDeleteHelper(args, WINDOWTYPE_ScrollBar);
    }
 
 NODE *lstaticcreate(NODE *args)
@@ -1602,9 +1605,9 @@ NODE *lstaticcreate(NODE *args)
       {
       if (dialogboxes.get(childname) == NULL)
          {
-         dialogthing * child = new dialogthing(TStatic_type, childname);
+         dialogthing * child = new dialogthing(WINDOWTYPE_Static, childname);
 
-         dialogthing *parent = dialogboxes.get(parentname, TWindow_type, TDialog_type);
+         dialogthing *parent = dialogboxes.get(parentname, WINDOWTYPE_Window, WINDOWTYPE_Dialog);
          if (parent != NULL)
             {
             clientrect.ConvertToDialogCoordinates();
@@ -1656,7 +1659,7 @@ NODE *lstaticupdate(NODE *args)
    char titlename[MAX_BUFFER_SIZE];
    cnv_strnode_string(titlename, cdr(args));
 
-   dialogthing *temp = dialogboxes.get(childname, TStatic_type);
+   dialogthing *temp = dialogboxes.get(childname, WINDOWTYPE_Static);
    if (temp != NULL)
       {
       temp->TSmybox->SetText(titlename);
@@ -1671,7 +1674,7 @@ NODE *lstaticupdate(NODE *args)
 
 NODE *lstaticdelete(NODE *args)
    {
-   return WindowDeleteHelper(args, TStatic_type);
+   return WindowDeleteHelper(args, WINDOWTYPE_Static);
    }
 
 NODE *lbuttoncreate(NODE *args)
@@ -1705,9 +1708,9 @@ NODE *lbuttoncreate(NODE *args)
       {
       if (dialogboxes.get(childname) == NULL)
          {
-         dialogthing * child = new dialogthing(TButton_type, childname);
+         dialogthing * child = new dialogthing(WINDOWTYPE_Button, childname);
 
-         dialogthing *parent = dialogboxes.get(parentname, TWindow_type, TDialog_type);
+         dialogthing *parent = dialogboxes.get(parentname, WINDOWTYPE_Window, WINDOWTYPE_Dialog);
          if (parent != NULL)
             {
             clientrect.ConvertToDialogCoordinates();
@@ -1761,7 +1764,7 @@ NODE *lbuttonupdate(NODE *args)
    char titlename[MAX_BUFFER_SIZE];
    cnv_strnode_string(titlename, cdr(args));
 
-   dialogthing *temp = dialogboxes.get(childname, TButton_type);
+   dialogthing *temp = dialogboxes.get(childname, WINDOWTYPE_Button);
    if (temp != NULL)
       {
       temp->TBmybox->SetWindowText(titlename);
@@ -1776,12 +1779,12 @@ NODE *lbuttonupdate(NODE *args)
 
 NODE *lbuttonenable(NODE *args)
    {
-   return WindowEnableHelper(args, TButton_type);
+   return WindowEnableHelper(args, WINDOWTYPE_Button);
    }
 
 NODE *lbuttondelete(NODE *args)
    {
-   return WindowDeleteHelper(args, TButton_type);
+   return WindowDeleteHelper(args, WINDOWTYPE_Button);
    }
 
 NODE *lgroupboxcreate(NODE *args)
@@ -1801,9 +1804,9 @@ NODE *lgroupboxcreate(NODE *args)
       {
       if (dialogboxes.get(childname) == NULL)
          {
-         dialogthing * child = new dialogthing(TGroupBox_type, childname);
+         dialogthing * child = new dialogthing(WINDOWTYPE_GroupBox, childname);
 
-         dialogthing *parent = dialogboxes.get(parentname, TWindow_type, TDialog_type);
+         dialogthing *parent = dialogboxes.get(parentname, WINDOWTYPE_Window, WINDOWTYPE_Dialog);
          if (parent != NULL)
             {
             clientrect.ConvertToDialogCoordinates();
@@ -1847,7 +1850,7 @@ NODE *lgroupboxcreate(NODE *args)
 
 NODE *lgroupboxdelete(NODE *args)
    {
-   return WindowDeleteHelper(args, TGroupBox_type);
+   return WindowDeleteHelper(args, WINDOWTYPE_GroupBox);
    }
 
 NODE *lradiobuttoncreate(NODE *args)
@@ -1873,14 +1876,14 @@ NODE *lradiobuttoncreate(NODE *args)
 
    if (NOT_THROWING)
       {
-      dialogthing *group = dialogboxes.get(groupname, TGroupBox_type);
+      dialogthing *group = dialogboxes.get(groupname, WINDOWTYPE_GroupBox);
       if (group != NULL)
          {
          if (dialogboxes.get(childname) == NULL)
             {
-            dialogthing * child = new dialogthing(TRadioButton_type, childname);
+            dialogthing * child = new dialogthing(WINDOWTYPE_RadioButton, childname);
 
-            dialogthing *parent = dialogboxes.get(parentname, TWindow_type, TDialog_type);
+            dialogthing *parent = dialogboxes.get(parentname, WINDOWTYPE_Window, WINDOWTYPE_Dialog);
             if (parent != NULL)
                {
                clientrect.ConvertToDialogCoordinates();
@@ -1933,12 +1936,12 @@ NODE *lradiobuttoncreate(NODE *args)
 
 NODE *lradiobuttonenable(NODE *args)
    {
-   return WindowEnableHelper(args, TRadioButton_type);
+   return WindowEnableHelper(args, WINDOWTYPE_RadioButton);
    }
 
 NODE *lradiobuttondelete(NODE *args)
    {
-   return WindowDeleteHelper(args, TRadioButton_type);
+   return WindowDeleteHelper(args, WINDOWTYPE_RadioButton);
    }
 
 NODE *lradiobuttonget(NODE *args)
@@ -1946,7 +1949,7 @@ NODE *lradiobuttonget(NODE *args)
    char parentname[MAX_BUFFER_SIZE];
    cnv_strnode_string(parentname, args);
 
-   dialogthing *parent = dialogboxes.get(parentname, TRadioButton_type);
+   dialogthing *parent = dialogboxes.get(parentname, WINDOWTYPE_RadioButton);
    if (parent != NULL)
       {
       if (BF_CHECKED == parent->TRmybox->GetCheck())
@@ -1973,7 +1976,7 @@ NODE *lradiobuttonset(NODE *args)
 
    bool pos = boolean_arg(args = cdr(args));
 
-   dialogthing *parent = dialogboxes.get(parentname, TRadioButton_type);
+   dialogthing *parent = dialogboxes.get(parentname, WINDOWTYPE_RadioButton);
    if (parent != NULL)
       {
       if (pos)
@@ -2016,15 +2019,15 @@ NODE *lcheckboxcreate(NODE *args)
 
    if (NOT_THROWING)
       {
-      dialogthing *group = dialogboxes.get(groupname, TGroupBox_type);
+      dialogthing *group = dialogboxes.get(groupname, WINDOWTYPE_GroupBox);
       if (group != NULL)
          {
 
          if (dialogboxes.get(childname) == NULL)
             {
-            dialogthing * child = new dialogthing(TCheckBox_type, childname);
+            dialogthing * child = new dialogthing(WINDOWTYPE_CheckBox, childname);
 
-            dialogthing *parent = dialogboxes.get(parentname, TWindow_type, TDialog_type);
+            dialogthing *parent = dialogboxes.get(parentname, WINDOWTYPE_Window, WINDOWTYPE_Dialog);
             if (parent != NULL)
                {
                clientrect.ConvertToDialogCoordinates();
@@ -2077,12 +2080,12 @@ NODE *lcheckboxcreate(NODE *args)
 
 NODE *lcheckboxenable(NODE *args)
    {
-   return WindowEnableHelper(args, TCheckBox_type);
+   return WindowEnableHelper(args, WINDOWTYPE_CheckBox);
    }
 
 NODE *lcheckboxdelete(NODE *args)
    {
-   return WindowDeleteHelper(args, TCheckBox_type);
+   return WindowDeleteHelper(args, WINDOWTYPE_CheckBox);
    }
 
 NODE *lcheckboxget(NODE *args)
@@ -2090,7 +2093,7 @@ NODE *lcheckboxget(NODE *args)
    char parentname[MAX_BUFFER_SIZE];
    cnv_strnode_string(parentname, args);
 
-   dialogthing *parent = dialogboxes.get(parentname, TCheckBox_type);
+   dialogthing *parent = dialogboxes.get(parentname, WINDOWTYPE_CheckBox);
    if (parent != NULL)
       {
       if (BF_CHECKED == parent->TCBmybox->GetCheck())
@@ -2115,10 +2118,9 @@ NODE *lcheckboxset(NODE *args)
    char parentname[MAX_BUFFER_SIZE];
    cnv_strnode_string(parentname, args);
 
-   // int pos = getint(pos_int_arg(args = cdr(args)));
    int pos = boolean_arg(args = cdr(args));
 
-   dialogthing *parent = dialogboxes.get(parentname, TCheckBox_type);
+   dialogthing *parent = dialogboxes.get(parentname, WINDOWTYPE_CheckBox);
    if (parent != NULL)
       {
       if (pos)
