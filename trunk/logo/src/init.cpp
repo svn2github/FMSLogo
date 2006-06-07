@@ -655,6 +655,9 @@ void uninit()
    // free the state associated with the evaluator
    uninitialize_eval();
 
+   // free the state associated with the windowing subsystem
+   uninitialize_windows();
+
    // free the objects
    release_all_objects();
 

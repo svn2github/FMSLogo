@@ -667,5 +667,6 @@ extern NODE *lcheckboxget(NODE *arg);
 extern NODE *ldialogfileopen(NODE *arg);
 extern NODE *ldialogfilesave(NODE *arg);
 extern NODE *lwindowfileedit(NODE *arg);
+extern void uninitialize_windows();
 
 extern LPCSTR WSAGetLastErrorString(int);

@@ -661,6 +661,7 @@ void dialoglist::clear()
       }
    while (l != last);
 
+   last = NULL;
    }
 
 // returns the key of the first element whose parent is the root window.
@@ -2372,3 +2373,7 @@ NODE *lwindowfileedit(NODE *args)
    return Unbound;
    }
 
+void uninitialize_windows()
+   {
+   dialogboxes.clear();
+   }
