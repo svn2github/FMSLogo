@@ -2140,7 +2140,7 @@ NODE *lcheckboxset(NODE *args)
    return Unbound;
    }
 
-BOOL CheckOnScreenControls()
+bool CheckOnScreenControls()
    {
    return dialogboxes.OnScreenControlsExist();
    }

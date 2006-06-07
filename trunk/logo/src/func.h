@@ -609,7 +609,7 @@ extern NODE *lnetsendreceivevalue(NODE *arg);
 extern NODE *lnetstartup(NODE *args);
 extern NODE *lnetshutdown(NODE *arg);
 
-extern BOOL CheckOnScreenControls();
+extern bool CheckOnScreenControls();
 extern NODE *ldebugwindows(NODE *args);
 extern NODE *lmouseon(NODE *args);
 extern NODE *lmouseoff(NODE *arg);
