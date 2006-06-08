@@ -882,8 +882,8 @@ end
 
 to RunGame
 
-  ;catch "error [ fullscreen ]
-  ;icon "Commander
+  catch "error [ fullscreen ]
+  icon "Commander
   icon "Editor
 
   hideturtle
