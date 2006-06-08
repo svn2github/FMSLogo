@@ -24,6 +24,8 @@ Part II) New features/bugs fixed:
     o Fix bug #1500620; STATICCREATE, LISTBOXCREATE, BUTTONCREATE, etc.
       now throw a bad input error when given negative width/height.
     o Fix bug #1500320; DEBUGWINDOWS no longer crashes on long window names.
+    o Fix bug #1500217; LISTBOXGETSELECT now outputs [] when nothing 
+      is selected (instead of outputting nothing).
     o Fix bug #1500306; BUTTONENABLE, RADIOBUTTONENABLE, CHECKBOXENABLE, etc.
       no longer enable the widget when given bad input.
     o Fix bug #1500304; WINDOWCREATE, DIALOGCREATE no longer create a window 

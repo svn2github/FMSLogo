@@ -1232,6 +1232,11 @@ NODE *llistboxgetselect(NODE *args)
          NODE * val = parser(make_strnode(stringname), false);
          return val;
          }
+      else
+         {
+         // nothing is selected
+         return NIL;
+         }
       }
    else
       {
