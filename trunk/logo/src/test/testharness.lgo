@@ -59,6 +59,7 @@ LOAD "windows.lgo
 LOAD "windowfileedit.lgo
 LOAD "midi.lgo
 LOAD "sound.lgo
+LOAD "yesnobox.lgo
 
 TO TESTALL
 
@@ -116,6 +117,7 @@ TO TESTALL
   ERASETEST          ; from erase.lgo
   LOGOVERSIONTEST    ; from logoversion.lgo
   QUOTEDTEST         ; from quoted.lgo
+  YESNOBOXTEST       ; from yesnobox.lgo
   WINDOWSTEST        ; from windows.lgo
   MOUSETEST          ; from mouse.lgo
   MIDITEST           ; from midi.lgo
