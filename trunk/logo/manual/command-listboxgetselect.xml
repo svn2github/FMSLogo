@@ -14,6 +14,8 @@
 <listitem>
 <para>
 Outputs the selected item within the listbox that is identified by <parameter>name</parameter>.
+The output takes the form of a list that encloses the text of the currently selected row.
+If nothing is selected, then LISTBOXGETSELECT outputs the empty list.
 </para>
 </listitem>
 </varlistentry>
@@ -34,6 +36,7 @@ LISTBOXADDSTRING "mylist [Square]
 BUTTONCREATE "mywindow "mydraw "Draw 25 50 50 25 [DODRAW]
 
 <replaceable>Select an item from the listbox and then click the Draw button.</replaceable>
+
 WINDOWDELETE "mywindow
 </userinput>
 </programlisting>
