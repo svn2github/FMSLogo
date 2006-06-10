@@ -21,6 +21,8 @@ Part I) Kit Description/Location (http://sourceforge.net/projects/fmslogo):
 Part II) New features/bugs fixed:
 
   * Added for 6.9.0,
+    o Fix bug #1503822; SCROLLBARSET no longer has side-effects when given 
+      bad input.
     o Fix bug #1500620; STATICCREATE, LISTBOXCREATE, BUTTONCREATE, etc.
       now throw a bad input error when given negative width/height.
     o Fix bug #1500320; DEBUGWINDOWS no longer crashes on long window names.
@@ -41,12 +43,13 @@ Part II) New features/bugs fixed:
     o Fix bug #1372723; THROW "SYSTEM now exits FMSLogo.
     o Fix bug #1474855; UI doesn't add newlines to the commander 
       history when prompting for user input.
-    o Fix bug #1349368; When a malformed program loaded with the -L command-line 
-      parameter, FMSLogo displays the error and opens it in the editor.
+    o Fix bug #1349368; When a malformed program loaded with the -L 
+      command-line parameter, FMSLogo displays the error and opens it in the 
+      editor.
     o Fix bug #1474490; FMSLogo installs for all users when installed by 
       an administrator or power user.
-    o Fix bug #1462927; BURY (and similar procedures) throws an error when given 
-      a contents lists that contains more than three sublists.
+    o Fix bug #1462927; BURY (and similar procedures) throws an error when 
+      given a contents lists that contains more than three sublists.
     o Fix bug #1454188; TO/.MACRO now only set the "dirty workspace" 
       flag if they successfully define a new procedure/macro.
     o Fix bug #1395736; CTRL+A now works in the commander.

@@ -1547,15 +1547,18 @@ NODE *lscrollbarset(NODE *args)
    int hi = getint(pos_int_arg(args = cdr(args)));
    int pos = getint(pos_int_arg(cdr(args)));
 
-   dialogthing *parent = dialogboxes.get(parentname, WINDOWTYPE_ScrollBar);
-   if (parent != NULL)
+   if (NOT_THROWING)
       {
-      parent->TSCmybox->SetRange(lo, hi);
-      parent->TSCmybox->SetPosition(pos);
-      }
-   else
-      {
-      ShowMessageAndStop("Does not exist", parentname);
+      dialogthing *parent = dialogboxes.get(parentname, WINDOWTYPE_ScrollBar);
+      if (parent != NULL)
+         {
+         parent->TSCmybox->SetRange(lo, hi);
+         parent->TSCmybox->SetPosition(pos);
+         }
+      else
+         {
+         ShowMessageAndStop("Does not exist", parentname);
+         }
       }
 
    return Unbound;
