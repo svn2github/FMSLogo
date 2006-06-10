@@ -390,6 +390,10 @@ TO WINDOWSTEST.LISTBOX.BADINPUT
   RUNNOTENOUGHINPUTSTEST [ (listboxdeletestring "goodlistbox) ]
   RUNTOOMANYINPUTSTEST   [ (listboxdeletestring "goodlistbox 0 "toomany) ]
 
+  ; Add a string to make sure we don't delete it.
+  ; (regression test for bug #1503862)
+  TRACEINSTRUCTION [ listboxaddstring   "goodlistbox [selection] ]
+
   RUNBADINPUTTEST [ listboxdeletestring "doesnotexist 0 ]
   RUNBADINPUTTEST [ listboxdeletestring "notalistbox  0 ]
 
@@ -398,6 +402,9 @@ TO WINDOWSTEST.LISTBOX.BADINPUT
   RUNBADINPUTTEST [ listboxdeletestring "goodlistbox  [0]   ]
   RUNBADINPUTTEST [ listboxdeletestring "goodlistbox  {0}   ]
   RUNBADINPUTTEST [ listboxdeletestring "goodlistbox  "zero ]
+
+  ; verify that nothing was deleted
+  SIMPLEREPORTTEST [ listboxgetselect "goodlistbox ] [selection]
 
   ;
   ; bad input for LISTBOXGETSELECT
@@ -1021,7 +1028,7 @@ TO WINDOWSTEST.SCROLLBAR.BADINPUT
   RUNBADINPUTTEST [ scrollbarset "goodscrollbar   0   10  5.5   ]
   RUNBADINPUTTEST [ scrollbarset "goodscrollbar   0   10  "five ]
 
-  RUNBADINPUTTEST [ scrollbarset "goodscrollbar   10   0  5   ]
+  RUNBADINPUTTEST [ scrollbarset "goodscrollbar   10   0   5    ]
 
   ; verify that the scrollbar position did not change
   SIMPLEREPORTTEST [ scrollbarget "goodscrollbar ] 110
