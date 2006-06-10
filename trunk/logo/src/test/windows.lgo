@@ -301,6 +301,10 @@ TO WINDOWSTEST.LISTBOX
 
   TRACEINSTRUCTION [ LISTBOXCREATE "windowstest.listbox "testlist 5 5 90 90               ]
 
+  ; get a string when none is select.
+  SIMPLEREPORTTEST [ LISTBOXGETSELECT "testlist ] []
+
+
   ; add, get, and remove a string
   TRACEINSTRUCTION [ LISTBOXADDSTRING    "testlist "firststring ]
   SIMPLEREPORTTEST [ LISTBOXGETSELECT    "testlist ] [firststring]
@@ -994,11 +998,16 @@ TO WINDOWSTEST.SCROLLBAR.BADINPUT
   ;
   ; bad input for SCROLLBARSET
   ;
+
   RUNNOTENOUGHINPUTSTEST [ (scrollbarset "goodscrollbar 0 100) ]
   RUNTOOMANYINPUTSTEST   [ (scrollbarset "goodscrollbar 0 100 50 "toomany) ]
 
   RUNBADINPUTTEST [ scrollbarset "doesnotexist  0 100 50 ]
   RUNBADINPUTTEST [ scrollbarset "notascrollbar 0 100 50 ]
+  
+  ; change the position so that we can detect if any of the bad input 
+  ; tests altered the position
+  TRACEINSTRUCTION [ scrollbarset "goodscrollbar 110 111 110 ]
 
   RUNBADINPUTTEST [ scrollbarset "goodscrollbar  [0]  10   5    ]
   RUNBADINPUTTEST [ scrollbarset "goodscrollbar  {0}  10   5    ]
@@ -1013,6 +1022,9 @@ TO WINDOWSTEST.SCROLLBAR.BADINPUT
   RUNBADINPUTTEST [ scrollbarset "goodscrollbar   0   10  "five ]
 
   RUNBADINPUTTEST [ scrollbarset "goodscrollbar   10   0  5   ]
+
+  ; verify that the scrollbar position did not change
+  SIMPLEREPORTTEST [ scrollbarget "goodscrollbar ] 110
 
 
 
