@@ -724,6 +724,11 @@ TO WINDOWSTEST.RADIOBUTTON.BADINPUT
   ;
   ; bad input for RADIOBUTTONSET
   ;
+
+  ; Set the radio button to false so we can detect side-effects
+  ; if RADIOBUTTONSET has side-effects on bad input.
+  TRACEINSTRUCTION [ radiobuttonset "goodradiobutton "false ]
+
   RUNNOTENOUGHINPUTSTEST [ (radiobuttonset "goodradiobutton) ]
   RUNTOOMANYINPUTSTEST   [ (radiobuttonset "goodradiobutton "true "toomany) ]
 
@@ -733,6 +738,9 @@ TO WINDOWSTEST.RADIOBUTTON.BADINPUT
   RUNBADINPUTTEST [ radiobuttonset "goodradiobutton  1      ]
   RUNBADINPUTTEST [ radiobuttonset "goodradiobutton  [true] ]
   RUNBADINPUTTEST [ radiobuttonset "goodradiobutton  {true} ]
+
+  ; The radio button should still be unchecked
+  SIMPLEREPORTTEST [ radiobuttonget "goodradiobutton ] "false
 
 
   ;
