@@ -21,6 +21,10 @@ Part I) Kit Description/Location (http://sourceforge.net/projects/fmslogo):
 Part II) New features/bugs fixed:
 
   * Added for 6.9.0,
+    o Fix bug #1504189: CHECBOXSET, RADIOBUTTONSET no longer check the button
+      when given bad input.
+    o Fix bug #1503862: LISTBOXDELETESTRING no longer deletes 0th string when
+      given bad input.
     o Fix bug #1503822; SCROLLBARSET no longer has side-effects when given 
       bad input.
     o Fix bug #1500620; STATICCREATE, LISTBOXCREATE, BUTTONCREATE, etc.

@@ -991,18 +991,21 @@ WindowDeleteHelper(
    char windowkey[MAX_BUFFER_SIZE];
    cnv_strnode_string(windowkey, args);
 
-   // if it exists kill it
-   dialogthing *window = dialogboxes.get(windowkey, WindowType);
-   if (window != NULL)
+   if (NOT_THROWING)
       {
-      window->GetWindow()->CloseWindow();
-      dialogboxes.zap(windowkey);
+      // if it exists kill it
+      dialogthing *window = dialogboxes.get(windowkey, WindowType);
+      if (window != NULL)
+         {
+         window->GetWindow()->CloseWindow();
+         dialogboxes.zap(windowkey);
 
-      UpdateZoomControlFlag();
-      }
-   else
-      {
-      ShowMessageAndStop("Does not exist", windowkey);
+         UpdateZoomControlFlag();
+         }
+      else
+         {
+         ShowMessageAndStop("Does not exist", windowkey);
+         }
       }
 
    return Unbound;
@@ -1220,27 +1223,30 @@ NODE *llistboxgetselect(NODE *args)
    char parentname[MAX_BUFFER_SIZE];
    cnv_strnode_string(parentname, args);
 
-   // If it exists continue
-   dialogthing *parent;
-   if ((parent = dialogboxes.get(parentname, WINDOWTYPE_ListBox)) != NULL)
+   if (NOT_THROWING)
       {
-      // if success on fetching string return it
-      char stringname[MAX_BUFFER_SIZE];
-      if (parent->TLmybox->GetSelString(stringname, MAX_BUFFER_SIZE) >= 0)
+      // If it exists continue
+      dialogthing *parent;
+      if ((parent = dialogboxes.get(parentname, WINDOWTYPE_ListBox)) != NULL)
          {
-         // parsing it basically turns it into a list for us
-         NODE * val = parser(make_strnode(stringname), false);
-         return val;
+         // if success on fetching string return it
+         char stringname[MAX_BUFFER_SIZE];
+         if (parent->TLmybox->GetSelString(stringname, MAX_BUFFER_SIZE) >= 0)
+            {
+            // parsing it basically turns it into a list for us
+            NODE * val = parser(make_strnode(stringname), false);
+            return val;
+            }
+         else
+            {
+            // nothing is selected
+            return NIL;
+            }
          }
       else
          {
-         // nothing is selected
-         return NIL;
+         ShowMessageAndStop("Does not exist", parentname);
          }
-      }
-   else
-      {
-      ShowMessageAndStop("Does not exist", parentname);
       }
 
    return Unbound;
@@ -1248,7 +1254,6 @@ NODE *llistboxgetselect(NODE *args)
 
 NODE *llistboxaddstring(NODE *args)
    {
-
    // get args
    char parentname[MAX_BUFFER_SIZE];
    cnv_strnode_string(parentname, args);
@@ -1256,17 +1261,20 @@ NODE *llistboxaddstring(NODE *args)
    char stringname[MAX_BUFFER_SIZE];
    cnv_strnode_string(stringname, cdr(args));
 
-   // if exists continue
-   dialogthing *parent = dialogboxes.get(parentname, WINDOWTYPE_ListBox);
-   if (parent != NULL)
+   if (NOT_THROWING)
       {
-      // add entry and reset Index for consistency
-      parent->TLmybox->AddString(stringname);
-      parent->TLmybox->SetSelIndex(0);
-      }
-   else
-      {
-      ShowMessageAndStop("Does not exist", parentname);
+      // if exists continue
+      dialogthing *parent = dialogboxes.get(parentname, WINDOWTYPE_ListBox);
+      if (parent != NULL)
+         {
+         // add entry and reset Index for consistency
+         parent->TLmybox->AddString(stringname);
+         parent->TLmybox->SetSelIndex(0);
+         }
+      else
+         {
+         ShowMessageAndStop("Does not exist", parentname);
+         }
       }
 
    return Unbound;
@@ -1275,22 +1283,25 @@ NODE *llistboxaddstring(NODE *args)
 NODE *llistboxdeletestring(NODE *args)
    {
    // get args
-   char parentname[MAX_BUFFER_SIZE];
-   cnv_strnode_string(parentname, args);
+   char listboxname[MAX_BUFFER_SIZE];
+   cnv_strnode_string(listboxname, args);
 
    int index = getint(pos_int_arg(cdr(args)));
 
-   // if exists continue
-   dialogthing *parent = dialogboxes.get(parentname, WINDOWTYPE_ListBox);
-   if (parent != NULL)
+   if (NOT_THROWING)
       {
-      // kill entry based on index
-      parent->TLmybox->DeleteString(index);
-      parent->TLmybox->SetSelIndex(0);
-      }
-   else
-      {
-      ShowMessageAndStop("Does not exist", parentname);
+      // if exists continue
+      dialogthing *listbox = dialogboxes.get(listboxname, WINDOWTYPE_ListBox);
+      if (listbox != NULL)
+         {
+         // kill entry based on index
+         listbox->TLmybox->DeleteString(index);
+         listbox->TLmybox->SetSelIndex(0);
+         }
+      else
+         {
+         ShowMessageAndStop("Does not exist", listboxname);
+         }
       }
 
    return Unbound;
@@ -1569,15 +1580,18 @@ NODE *lscrollbarget(NODE *args)
    char parentname[MAX_BUFFER_SIZE];
    cnv_strnode_string(parentname, args);
 
-   dialogthing *parent = dialogboxes.get(parentname, WINDOWTYPE_ScrollBar);
-   if (parent != NULL)
+   if (NOT_THROWING)
       {
-      int pos = parent->TSCmybox->GetPosition();
-      return make_intnode(pos);
-      }
-   else
-      {
-      ShowMessageAndStop("Does not exist", parentname);
+      dialogthing *parent = dialogboxes.get(parentname, WINDOWTYPE_ScrollBar);
+      if (parent != NULL)
+         {
+         int pos = parent->TSCmybox->GetPosition();
+         return make_intnode(pos);
+         }
+      else
+         {
+         ShowMessageAndStop("Does not exist", parentname);
+         }
       }
 
    return Unbound;
@@ -1773,14 +1787,17 @@ NODE *lbuttonupdate(NODE *args)
    char titlename[MAX_BUFFER_SIZE];
    cnv_strnode_string(titlename, cdr(args));
 
-   dialogthing *temp = dialogboxes.get(childname, WINDOWTYPE_Button);
-   if (temp != NULL)
+   if (NOT_THROWING)
       {
-      temp->TBmybox->SetWindowText(titlename);
-      }
-   else
-      {
-      ShowMessageAndStop("Does not exist", childname);
+      dialogthing *temp = dialogboxes.get(childname, WINDOWTYPE_Button);
+      if (temp != NULL)
+         {
+         temp->TBmybox->SetWindowText(titlename);
+         }
+      else
+         {
+         ShowMessageAndStop("Does not exist", childname);
+         }
       }
 
    return Unbound;
@@ -1958,21 +1975,24 @@ NODE *lradiobuttonget(NODE *args)
    char parentname[MAX_BUFFER_SIZE];
    cnv_strnode_string(parentname, args);
 
-   dialogthing *parent = dialogboxes.get(parentname, WINDOWTYPE_RadioButton);
-   if (parent != NULL)
+   if (NOT_THROWING)
       {
-      if (BF_CHECKED == parent->TRmybox->GetCheck())
+      dialogthing *parent = dialogboxes.get(parentname, WINDOWTYPE_RadioButton);
+      if (parent != NULL)
          {
-         return Truex;
+         if (BF_CHECKED == parent->TRmybox->GetCheck())
+            {
+            return Truex;
+            }
+         else
+            {
+            return Falsex;
+            }
          }
       else
          {
-         return Falsex;
+         ShowMessageAndStop("Does not exist", parentname);
          }
-      }
-   else
-      {
-      ShowMessageAndStop("Does not exist", parentname);
       }
 
    return Unbound;
@@ -1985,21 +2005,24 @@ NODE *lradiobuttonset(NODE *args)
 
    bool pos = boolean_arg(args = cdr(args));
 
-   dialogthing *parent = dialogboxes.get(parentname, WINDOWTYPE_RadioButton);
-   if (parent != NULL)
+   if (NOT_THROWING)
       {
-      if (pos)
+      dialogthing *parent = dialogboxes.get(parentname, WINDOWTYPE_RadioButton);
+      if (parent != NULL)
          {
-         parent->TRmybox->Check();
+         if (pos)
+            {
+            parent->TRmybox->Check();
+            }
+         else
+            {
+         parent->TRmybox->Uncheck();
+            }
          }
       else
          {
-         parent->TRmybox->Uncheck();
+         ShowMessageAndStop("Does not exist", parentname);
          }
-      }
-   else
-      {
-      ShowMessageAndStop("Does not exist", parentname);
       }
 
    return Unbound;
@@ -2102,21 +2125,24 @@ NODE *lcheckboxget(NODE *args)
    char parentname[MAX_BUFFER_SIZE];
    cnv_strnode_string(parentname, args);
 
-   dialogthing *parent = dialogboxes.get(parentname, WINDOWTYPE_CheckBox);
-   if (parent != NULL)
+   if (NOT_THROWING)
       {
-      if (BF_CHECKED == parent->TCBmybox->GetCheck())
+      dialogthing *parent = dialogboxes.get(parentname, WINDOWTYPE_CheckBox);
+      if (parent != NULL)
          {
-         return Truex;
+         if (BF_CHECKED == parent->TCBmybox->GetCheck())
+            {
+            return Truex;
+            }
+         else
+            {
+            return Falsex;
+            }
          }
       else
          {
-         return Falsex;
+         ShowMessageAndStop("Does not exist", parentname);
          }
-      }
-   else
-      {
-      ShowMessageAndStop("Does not exist", parentname);
       }
 
    return Unbound;
@@ -2129,21 +2155,24 @@ NODE *lcheckboxset(NODE *args)
 
    int pos = boolean_arg(args = cdr(args));
 
-   dialogthing *parent = dialogboxes.get(parentname, WINDOWTYPE_CheckBox);
-   if (parent != NULL)
+   if (NOT_THROWING)
       {
-      if (pos)
+      dialogthing *parent = dialogboxes.get(parentname, WINDOWTYPE_CheckBox);
+      if (parent != NULL)
          {
-         parent->TCBmybox->Check();
+         if (pos)
+            {
+            parent->TCBmybox->Check();
+            }
+         else
+            {
+            parent->TCBmybox->Uncheck();
+            }
          }
       else
          {
-         parent->TCBmybox->Uncheck();
+         ShowMessageAndStop("Does not exist", parentname);
          }
-      }
-   else
-      {
-      ShowMessageAndStop("Does not exist", parentname);
       }
 
    return Unbound;
@@ -2186,9 +2215,12 @@ NODE *lmessagebox(NODE *args)
    char body[MAX_BUFFER_SIZE];
    cnv_strnode_string(body, args = cdr(args));
 
-   if (MainWindowx->CommandWindow->MessageBox(body, banner, MB_OKCANCEL) == IDCANCEL)
+   if (NOT_THROWING)
       {
-      err_logo(STOP_ERROR, NIL);
+      if (MainWindowx->CommandWindow->MessageBox(body, banner, MB_OKCANCEL) == IDCANCEL)
+         {
+         err_logo(STOP_ERROR, NIL);
+         }
       }
 
    return Unbound;
@@ -2202,25 +2234,30 @@ NODE *lquestionbox(NODE *args)
    char body[MAX_BUFFER_SIZE];
    cnv_strnode_string(body, args = cdr(args));
 
-   char str[MAX_BUFFER_SIZE];
-   memset(str, 0, MAX_BUFFER_SIZE);
-
-   TInputDialog dlg(
-      MainWindowx->ScreenWindow,
-      banner,
-      body,
-      str,
-      MAX_BUFFER_SIZE);
-
-   if (dlg.Execute() == IDCANCEL)
+   if (NOT_THROWING)
       {
+      char str[MAX_BUFFER_SIZE];
       memset(str, 0, MAX_BUFFER_SIZE);
-      err_logo(STOP_ERROR, NIL);
+
+      TInputDialog dlg(
+         MainWindowx->ScreenWindow,
+         banner,
+         body,
+         str,
+         MAX_BUFFER_SIZE);
+
+      if (dlg.Execute() == IDCANCEL)
+         {
+         memset(str, 0, MAX_BUFFER_SIZE);
+         err_logo(STOP_ERROR, NIL);
       }
 
-   NODE * targ = make_strnode(str);
-   NODE * val = parser(targ, false);
-   return val;
+      NODE * targ = make_strnode(str);
+      NODE * val = parser(targ, false);
+      return val;
+      }
+
+   return Unbound;
    }
 
 NODE *lselectbox(NODE *args)
@@ -2272,25 +2309,28 @@ NODE *lyesnobox(NODE *args)
    char body[MAX_BUFFER_SIZE];
    cnv_strnode_string(body, args = cdr(args));
 
-   int iStatus = MainWindowx->CommandWindow->MessageBox(
-      body,
-      banner,
-      MB_YESNOCANCEL | MB_ICONQUESTION);
-
-   switch (iStatus)
+   if (NOT_THROWING)
       {
-      case IDYES:
+      int iStatus = MainWindowx->CommandWindow->MessageBox(
+         body,
+         banner,
+         MB_YESNOCANCEL | MB_ICONQUESTION);
+
+      switch (iStatus)
          {
-         return Truex;
-         }
-      case IDNO:
-         {
-         return Falsex;
-         }
-      case IDCANCEL:
-         {
-         err_logo(STOP_ERROR, NIL);
-         return Falsex;
+         case IDYES:
+            {
+            return Truex;
+            }
+         case IDNO:
+            {
+            return Falsex;
+            }
+         case IDCANCEL:
+            {
+            err_logo(STOP_ERROR, NIL);
+            return Falsex;
+            }
          }
       }
 
