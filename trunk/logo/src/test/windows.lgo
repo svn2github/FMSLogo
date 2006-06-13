@@ -725,8 +725,9 @@ TO WINDOWSTEST.RADIOBUTTON.BADINPUT
   ; bad input for RADIOBUTTONSET
   ;
 
-  ; Set the radio button to false so we can detect side-effects
-  ; if RADIOBUTTONSET has side-effects on bad input.
+  ; Set the radio button to false so we can detect if RADIOBUTTONSET 
+  ; has side-effects on bad input.
+  ; (This is a regression test for bug #1504189)
   TRACEINSTRUCTION [ radiobuttonset "goodradiobutton "false ]
 
   RUNNOTENOUGHINPUTSTEST [ (radiobuttonset "goodradiobutton) ]
@@ -873,12 +874,20 @@ TO WINDOWSTEST.CHECKBOX.BADINPUT
   RUNNOTENOUGHINPUTSTEST [ (checkboxset "goodcheckbox) ]
   RUNTOOMANYINPUTSTEST   [ (checkboxset "goodcheckbox "true "toomany) ]
 
+  ; Set the checkbox to false so we can detect if CHECKBOXSET 
+  ; has side-effects on bad input.
+  ; (This is a regression test for bug #1504189)
+  TRACEINSTRUCTION [ checkboxset "goodcheckbox "false ]
+
   RUNBADINPUTTEST [ checkboxset "doesnotexist  "true ]
   RUNBADINPUTTEST [ checkboxset "notacheckbox  "true ]
 
   RUNBADINPUTTEST [ checkboxset "goodcheckbox  1      ]
   RUNBADINPUTTEST [ checkboxset "goodcheckbox  [true] ]
   RUNBADINPUTTEST [ checkboxset "goodcheckbox  {true} ]
+
+  ; The checkbox should still be unchecked
+  SIMPLEREPORTTEST [ checkboxget "goodcheckbox ] "false
 
 
   ;
