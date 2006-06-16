@@ -276,11 +276,19 @@ class TMyScrollBar : public TScrollBar
          ClientRect.GetY(),
          IsHScrollBar  ? ClientRect.GetWidth()  : 0,
          !IsHScrollBar ? ClientRect.GetHeight() : 0,
-         IsHScrollBar)
+         IsHScrollBar),
+        rangeoffset(0)
       {
       }
 
+   int  Get();
+   void Set(int low, int high, int position);
+
+   protected:
    void SetPosition(int, bool redraw = true);
+
+   private:
+   int  rangeoffset;
    };
 
 void TMyScrollBar::SetPosition(int thumbpos, bool redraw)
@@ -290,6 +298,33 @@ void TMyScrollBar::SetPosition(int thumbpos, bool redraw)
    callthing *callevent = callthing::CreateNoYieldFunctionEvent(callback);
    calllists.insert(callevent);
    checkqueue();
+   }
+
+void TMyScrollBar::Set(int low, int high, int position)
+   {
+   if (low < 0)
+      {
+      // if the low value is negative, then shift the 
+      // range so that we keep it positive.
+      // The OWL class cannot handle a negative low position.
+      rangeoffset = low;
+
+      low       = 0;
+      high     -= rangeoffset;
+      position -= rangeoffset;
+      }
+   else
+      {
+      rangeoffset = 0;
+      }
+
+   SetRange(low, high);
+   SetPosition(position);
+   }
+
+int TMyScrollBar::Get()
+   {
+   return GetPosition() + rangeoffset;
    }
 
 class TMyGroupBox : public TGroupBox
@@ -1553,18 +1588,22 @@ NODE *lscrollbarset(NODE *args)
    {
    char parentname[MAX_BUFFER_SIZE];
    cnv_strnode_string(parentname, args);
+   args = cdr(args);
 
-   int lo = getint(pos_int_arg(args = cdr(args)));
-   int hi = getint(pos_int_arg(args = cdr(args)));
-   int pos = getint(pos_int_arg(cdr(args)));
+   int lo  = int_arg(args);
+   args = cdr(args);
+
+   int hi  = int_arg(args);
+   args = cdr(args);
+
+   int pos = int_arg(args);
 
    if (NOT_THROWING)
       {
       dialogthing *parent = dialogboxes.get(parentname, WINDOWTYPE_ScrollBar);
       if (parent != NULL)
          {
-         parent->TSCmybox->SetRange(lo, hi);
-         parent->TSCmybox->SetPosition(pos);
+         parent->TSCmybox->Set(lo, hi, pos);
          }
       else
          {
@@ -1585,7 +1624,7 @@ NODE *lscrollbarget(NODE *args)
       dialogthing *parent = dialogboxes.get(parentname, WINDOWTYPE_ScrollBar);
       if (parent != NULL)
          {
-         int pos = parent->TSCmybox->GetPosition();
+         int pos = parent->TSCmybox->Get();
          return make_intnode(pos);
          }
       else

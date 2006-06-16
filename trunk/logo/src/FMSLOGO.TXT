@@ -25,6 +25,7 @@ Part II) New features/bugs fixed:
       when given bad input.
     o Fix bug #1503862: LISTBOXDELETESTRING no longer deletes 0th string when
       given bad input.
+    o Fix bug #1500670; SCROLLBARSET now allows negative inputs.
     o Fix bug #1503822; SCROLLBARSET no longer has side-effects when given 
       bad input.
     o Fix bug #1500620; STATICCREATE, LISTBOXCREATE, BUTTONCREATE, etc.
