@@ -937,6 +937,9 @@ TO WINDOWSTEST.SCROLLBAR
   TRACEINSTRUCTION [ SCROLLBARCREATE "windowstest.scrollbar "horizontal 0  90 100 20  [] ]
   TRACEINSTRUCTION [ SCROLLBARCREATE "windowstest.scrollbar "vertical   90 0  20  100 [] ]
 
+  ; the default position of the scrollbar is 0
+  SIMPLEREPORTTEST [ SCROLLBARGET "horizontal ] 0
+
   ; Change the position of the horizontal scrollbar
   TRACEINSTRUCTION [ SCROLLBARSET "horizontal  0  100 27 ]
   SIMPLEREPORTTEST [ SCROLLBARGET "horizontal ] 27
