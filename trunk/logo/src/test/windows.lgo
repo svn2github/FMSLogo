@@ -944,17 +944,17 @@ TO WINDOWSTEST.SCROLLBAR
   TRACEINSTRUCTION [ SCROLLBARSET "horizontal  0  100 91 ]
   SIMPLEREPORTTEST [ SCROLLBARGET "horizontal ] 91
 
-  TRACEINSTRUCTION [ SCROLLBARSET "horizontal -10  10  0   ]
-  SIMPLEREPORTTEST [ SCROLLBARGET "horizontal ] 10 
+  TRACEINSTRUCTION [ SCROLLBARSET "horizontal -10  10  -10 ]
+  SIMPLEREPORTTEST [ SCROLLBARGET "horizontal ] -10 
 
-  TRACEINSTRUCTION [ SCROLLBARSET "horizontal -20 -10  -10 ]
-  SIMPLEREPORTTEST [ SCROLLBARGET "horizontal ] -10
+  TRACEINSTRUCTION [ SCROLLBARSET "horizontal -20 -10 -15 ]
+  SIMPLEREPORTTEST [ SCROLLBARGET "horizontal ] -15
 
   ; verify that the horizontal scrollbar's position doesn't 
   ; change when the vertical position changes
   TRACEINSTRUCTION [ SCROLLBARSET "vertical 50 60 55 ]
   SIMPLEREPORTTEST [ SCROLLBARGET "vertical ] 55
-  SIMPLEREPORTTEST [ SCROLLBARGET "horizontal ] 91
+  SIMPLEREPORTTEST [ SCROLLBARGET "horizontal ] -15
 
   ; test enabling/disabling the scrollbar
   TRACEINSTRUCTION [ SCROLLBARENABLE "horizontal  "false ]
