@@ -6,8 +6,8 @@
 
 <varlistentry><term>Synopsis</term>
 <listitem>
-<synopsis><command>SORT</command> <parameter>sequence</parameter></synopsis>
-<synopsis>(<command>SORT</command> <parameter>sequence</parameter> <parameter>predicate</parameter>)</synopsis>
+<synopsis><command>SORT</command> <parameter>sequence</parameter>
+(<command>SORT</command> <parameter>sequence</parameter> <parameter>predicate</parameter>)</synopsis>
 </listitem>
 </varlistentry>
 
