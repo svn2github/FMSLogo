@@ -1594,6 +1594,12 @@ NODE *lscrollbarset(NODE *args)
    args = cdr(args);
 
    int hi  = int_arg(args);
+   if (hi < lo)
+      {
+      // the low value must be less than the high value
+      NODE * node = err_logo(BAD_DATA, car(args));
+      gcref(node);
+      }
    args = cdr(args);
 
    int pos = int_arg(args);
