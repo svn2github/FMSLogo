@@ -14,12 +14,13 @@
 <listitem>
 <para>
 Creates a scrollbar control.
-Scrollbars let the user select a value by sliding a "scoller" along a bar that represents a range of possible values.
-The position of the scrollbar is often linked to a "static" control that informs the user of its setting, but this is not required.
+Scrollbar controls let the user select a value by sliding a "scroller" along a bar that represents a range of possible values.
+The position of the scrollbar is often linked to a static control that displays the scrollbar's current position, but this is not required.
 </para>
 
 <para>
-Before a scrollbar can be used, you must set the range and initial value using <link linkend="command-scrollbarset">SCROLLBARSET</link>.
+When a scrollbar is first created, it has a range from 0 to 100 and an initial position of 0.
+You can change the range and position with <link linkend="command-scrollbarset">SCROLLBARSET</link>.
 </para>
 
 <para>
@@ -53,8 +54,8 @@ The <parameter>height</parameter> input is the height of the new scrollbar, in p
 </para>
 
 <para>
-The <parameter>callback</parameter> input is an instruction list that is run whenever the user adjusts the position of the scollbar.
-One common use for the <parameter>callback</parameter> input is to inform the user of what the value has been selected.
+The <parameter>callback</parameter> input is an instruction list that is run whenever the position of the scrollbar changes.
+One common use for the <parameter>callback</parameter> input is to inform the user of what value has been selected.
 </para>
 </listitem>
 </varlistentry>
