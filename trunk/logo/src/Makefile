@@ -19,6 +19,7 @@ clean :
 	$(RM) $(shell /usr/bin/find release -name '*.res')
 	$(RM) $(shell /usr/bin/find -name '*.bak')
 	$(RM) $(shell /usr/bin/find -name '*~')
+	$(RM) $(wildcard fmslogo*.exe)
 	$(RM) $(wildcard fmslogo*.ils)
 	$(RM) $(wildcard fmslogo*.ilc)
 	$(RM) $(wildcard fmslogo*.ild)
