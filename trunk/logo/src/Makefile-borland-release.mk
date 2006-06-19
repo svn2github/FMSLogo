@@ -312,7 +312,7 @@ RELEASE\lists.obj :  lists.cpp
  $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ lists.cpp
 |
 
-RELEASE\logodata.obj :  logodata.cpp
+RELEASE\logodata.obj :  logodata.cpp version.h
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ logodata.cpp
 |

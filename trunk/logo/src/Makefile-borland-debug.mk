@@ -45,6 +45,9 @@ Dep_logo32d = \
 logo32d : BccW32.cfg $(Dep_logo32d)
   echo MakeNode
 
+version.h : ..\version.mk
+  generate-version.bat $(FMSLOGO_VERSION)
+
 Dep_fmslogoddexe = \
    DEBUG\3dsolid.obj\
    DEBUG\areawind.obj\
@@ -317,12 +320,12 @@ DEBUG\lists.obj :  lists.cpp
  $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ lists.cpp
 |
 
-DEBUG\logodata.obj :  logodata.cpp
+DEBUG\logodata.obj :  logodata.cpp version.h
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ logodata.cpp
 |
 
-DEBUG\logorc.res :  logorc.rc
+DEBUG\logorc.res :  logorc.rc version.h
   $(BRC32) -R @&&|
  $(IDE_ResFLAGS32) $(ROptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe)  -FO$@ logorc.rc
 |
