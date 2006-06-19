@@ -27,7 +27,14 @@ logoversion.xml : ../version.mk
 	echo -n $(FMSLOGO_VERSION) > $@
 
 clean :
-	$(RM) logohelp.rtf logohelp.pdf logohelp.dvi *.html *.hhp *.hhc *.chm *~
+	$(RM) logohelp.rtf 
+	$(RM) logohelp.pdf 
+	$(RM) logohelp.dvi
+	$(RM) $(wildcard *.html)
+	$(RM) $(wildcard *.hhp) 
+	$(RM) $(wildcard *.hhc)
+	$(RM) $(wildcard *.chm) 
+	$(RM) $(wildcard *~)
 
 all : htmlhelp.hhp logohelp.ps logohelp.pdf logohelp.rtf
 

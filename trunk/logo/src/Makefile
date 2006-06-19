@@ -14,17 +14,18 @@ fmslogod.exe :
 	make -fMakefile-borland-debug.mk
 
 clean :
+	$(RM) version.h
 	$(RM) $(shell /usr/bin/find release -name '*.obj')
 	$(RM) $(shell /usr/bin/find release -name '*.res')
 	$(RM) $(shell /usr/bin/find -name '*.bak')
 	$(RM) $(shell /usr/bin/find -name '*~')
-	$(RM) fmslogo*.ils
-	$(RM) fmslogo*.ilc
-	$(RM) fmslogo*.ild
-	$(RM) fmslogo*.ilf
-	$(RM) fmslogo*.tds
-	$(RM) logo32*.mrt
-	$(RM) logo32*.mbt
-	$(RM) logo*.csm
-	$(RM) *.fts
-	$(RM) *.gid
+	$(RM) $(wildcard fmslogo*.ils)
+	$(RM) $(wildcard fmslogo*.ilc)
+	$(RM) $(wildcard fmslogo*.ild)
+	$(RM) $(wildcard fmslogo*.ilf)
+	$(RM) $(wildcard fmslogo*.tds)
+	$(RM) $(wildcard logo32*.mrt)
+	$(RM) $(wildcard logo32*.mbt)
+	$(RM) $(wildcard logo*.csm)
+	$(RM) $(wildcard *.fts)
+	$(RM) $(wildcard *.gid)
