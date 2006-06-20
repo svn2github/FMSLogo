@@ -24,7 +24,7 @@ logohelp.rtf : $(SOURCEFILES)
 
 # generate an XML file that contains the version
 logoversion.xml : ../version.mk
-	echo -n $(FMSLOGO_VERSION) > $@
+	echo $(FMSLOGO_VERSION) > $@
 
 clean :
 	$(RM) logohelp.rtf 
