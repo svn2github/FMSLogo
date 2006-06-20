@@ -1,0 +1,44 @@
+<section id="command-circle">
+    <title>CIRCLE</title>
+<indexterm><primary>CIRCLE</primary></indexterm>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>CIRCLE</command> <parameter>radius</parameter></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+Draws a circle based on the turtle's position and the <parameter>radius</parameter> input.
+The center-point of the circle is the turtle's current position.
+CIRCLE does not move the turtle.
+</para>
+
+<para>
+See also <link linkend="command-circle2">CIRCLE2</link>.
+</para>
+
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Example</term>
+<listitem>
+    <programlisting><userinput>; a 2D example
+CIRCLE 100</userinput>
+</programlisting>
+
+    <programlisting><userinput>; a 3D example
+PERSPECTIVE
+REPEAT 36 [CIRCLE 100 RIGHTROLL 5]</userinput>
+</programlisting>
+
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</section>

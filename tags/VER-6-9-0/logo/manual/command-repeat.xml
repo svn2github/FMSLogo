@@ -1,0 +1,34 @@
+<section id="command-repeat">
+    <title>REPEAT</title>
+<indexterm><primary>REPEAT</primary></indexterm>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>REPEAT</command> <parameter>count</parameter> <parameter>instructionlist</parameter></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+Runs the instructions in <parameter>instructionlist</parameter> repeatedly, <parameter>count</parameter> times.
+See also <link linkend="command-repcount">REPCOUNT</link>.
+</para>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Example</term>
+<listitem>
+<programlisting><userinput>REPEAT 3 [PRINT (LIST "This "is "iteration REPCOUNT)]</userinput>
+This is iteration 1
+This is iteration 2
+This is iteration 3
+</programlisting>
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</section>

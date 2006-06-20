@@ -1,0 +1,37 @@
+<section id="command-setheading">
+    <title>SETHEADING</title>
+<indexterm><primary>SETHEADING</primary></indexterm>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>SETHEADING</command> <parameter>angle</parameter>
+<command>SETH</command> <parameter>angle</parameter></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+Turns the turtle to a new absolute heading.
+The argument is an angle, the heading in degrees clockwise from the positive Y-axis.
+See also <link linkend="command-heading">HEADING</link>.
+If you are in <link linkend="command-perspective">PERSPECTIVE</link> mode then, the heading in degrees which is positive from the positive X-Axis to the positive Y-Axis rotating about the Z-Axis.
+</para>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Example</term>
+<listitem>
+    <programlisting><userinput>SETHEADING 45
+SHOW HEADING</userinput>
+45
+</programlisting>
+
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</section>

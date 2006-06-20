@@ -1,0 +1,123 @@
+LOAD "testlib.lgo
+
+TO SORTTEST.SORTBYLEGS :a :b
+  OUTPUT (LESSP (ITEM 2 :a) (ITEM 2 :b))
+END
+
+TO SORTTEST.SORTBYNAME :a :b
+  OUTPUT (BEFOREP (ITEM 1 :a) (ITEM 1 :b))
+END
+
+TO SORTTEST.ONEINPUTPROC :a
+  ; A predicate that takes one input.
+  ; This is bad input for SORT
+  OUTPUT "true
+END
+
+TO SORTTEST.THREEINPUTPROC :a :b :c
+  ; A predicate that takes one input.
+  ; This is bad input for SORT
+  OUTPUT "true
+END
+
+TO SORTTEST.ONEINPUTBYDEFAULT :a [:b 0]
+   OUTPUT LESSP :a :b
+END
+
+TO SORTTEST.NONPREDICATE :a :b
+  ; A function that takes two inputs but isn't a predicate.
+  OUTPUT 1
+END
+
+TO SORTTEST.AFTER? :a :b
+  ; a custom sort routine for sorting words
+  OUTPUT NOT BEFORE? :a :b
+END
+
+TO SORTTEST.REGRESSION
+
+  ;
+  ; smoke test for SORT
+  ;
+  SIMPLEREPORTTEST [SORT [] ]     []
+  SIMPLEREPORTTEST [SORT [1]]     [1]
+  SIMPLEREPORTTEST [SORT [1 2 3]] [1 2 3]
+  SIMPLEREPORTTEST [SORT [3 2 1]] [1 2 3]
+
+  SIMPLEREPORTTEST [(SORT [c   b   a  ] "beforep) ]  [a b c]
+  SIMPLEREPORTTEST [(SORT ["c  "b "a  ] "beforep) ]  ["a "b "c]
+  SIMPLEREPORTTEST [(SORT [efg abc hij] "beforep) ]  [abc efg hij]
+
+  SIMPLEREPORTTEST [SORT [1 2 3 1 2 3 1 2 3]] [1 1 1 2 2 2 3 3 3]
+
+  SIMPLEREPORTTEST [(SORT [1 2 3 1 2 3 1 2 3] "greaterp) ] [3 3 3 2 2 2 1 1 1]
+
+  SIMPLEREPORTTEST [(SORT [3 2 1] "SORTTEST.ONEINPUTBYDEFAULT)] [1 2 3]
+
+  ;
+  ; make a database of records {name #legs #eyes}
+  ; and sort the records with different sort routines
+  ;
+  LOCALMAKE "cat    {"cat    4 2}
+  LOCALMAKE "spider {"spider 8 8}
+  LOCALMAKE "human  {"human  2 2}
+  LOCALMAKE "database (list :cat :spider :human)
+
+  SIMPLEREPORTTEST [(SORT :database "SORTTEST.SORTBYNAME)] (list :cat :human :spider)
+  SIMPLEREPORTTEST [(SORT :database "SORTTEST.SORTBYLEGS)] (list :human :cat :spider)
+
+
+  ;
+  ; sort a word
+  ;
+  SIMPLEREPORTTEST [SORT "hello]     "ehllo
+  SIMPLEREPORTTEST [SORT "FMSLogo]   "FgLMooS
+  SIMPLEREPORTTEST [SORT "FgLMooS]   "FgLMooS
+  SIMPLEREPORTTEST [SORT "Z]         "Z
+  SIMPLEREPORTTEST [SORT "||]        "||
+
+  ; Goes into infinite loop (bug #1508400)
+  ;SIMPLEREPORTTEST [(SORT "hello "SORTTEST.AFTER?)] "ollhe
+
+  ;
+  ; sort an array
+  ;
+  local [sortedarray]
+  TRACEINSTRUCTION [make "sortedarray SORT {3 2 1 1 2 3 3 2 1}]
+  SIMPLEREPORTTEST [ARRAY? :sortedarray] "true
+  SIMPLEREPORTTEST [COUNT  :sortedarray] 9
+  SIMPLEREPORTTEST [ITEM 1 :sortedarray] 1
+  SIMPLEREPORTTEST [ITEM 2 :sortedarray] 1
+  SIMPLEREPORTTEST [ITEM 3 :sortedarray] 1
+  SIMPLEREPORTTEST [ITEM 4 :sortedarray] 2
+  SIMPLEREPORTTEST [ITEM 5 :sortedarray] 2
+  SIMPLEREPORTTEST [ITEM 6 :sortedarray] 2
+  SIMPLEREPORTTEST [ITEM 7 :sortedarray] 3
+  SIMPLEREPORTTEST [ITEM 8 :sortedarray] 3
+  SIMPLEREPORTTEST [ITEM 9 :sortedarray] 3
+
+END
+
+TO SORTTEST.BADINPUT
+
+  RUNNOTENOUGHINPUTSTEST [(SORT)]
+
+  RUNBADINPUTTEST        [(SORT [[1][2]])]
+  RUNBADINPUTTEST        [(SORT {[1][2]})]
+  RUNBADINPUTTEST        [(SORT [3 2 1] "FMSLogo)]
+  RUNBADINPUTTEST        [(SORT [3 2 1] [1])]
+  RUNBADINPUTTEST        [(SORT [3 2 1] {1})]
+  RUNTOOMANYINPUTSTEST   [(SORT [3 2 1] "SORTTEST.ONEINPUTPROC)]
+  RUNNOTENOUGHINPUTSTEST [(SORT [3 2 1] "SORTTEST.THREEINPUTPROC)]
+  RUNBADINPUTTEST        [(SORT [3 2 1] "SORTTEST.NONPREDICATE)]
+
+  RUNTOOMANYINPUTSTEST   [(SORT [3 2 1] "lessp "toomany)]
+
+END
+
+TO SORTTEST
+
+  SORTTEST.REGRESSION
+  SORTTEST.BADINPUT
+
+END

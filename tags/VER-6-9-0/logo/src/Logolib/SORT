@@ -1,0 +1,24 @@
+to sort :l [:cmp ifelse word? :l ["before?] ["less?]]
+if list? :l [op sort.stable :l :cmp]
+if array? :l [op listtoarray sort.stable arraytolist :l :cmp]
+if word? :l [op apply "word sort.stable transfer [] [lput ?in ?out] :l :cmp]
+op :l
+end
+
+to sort.stable :l :cmp
+if (count :l)<2 [op :l]
+localmake "ll []
+localmake "le []
+localmake "lg []
+localmake "p pick :l
+foreach :l [
+  localmake "ip apply :cmp (list ? :p)
+  localmake "pi apply :cmp (list :p ?)
+  if :ip [make "ll lput ? :ll]
+  if and not :ip not :pi [make "le lput ? :le]
+  if :pi [make "lg lput ? :lg]
+]
+op (se sort.stable :ll :cmp :le sort.stable :lg :cmp)
+end
+
+bury [sort sort.stable]

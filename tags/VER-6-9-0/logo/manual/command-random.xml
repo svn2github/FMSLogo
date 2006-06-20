@@ -1,0 +1,38 @@
+<section id="command-random">
+    <title>RANDOM</title>
+<indexterm><primary>RANDOM</primary></indexterm>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>RANDOM</command> <parameter>range</parameter></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+Outputs a uniform random nonnegative integer less than its input, which must be an integer.
+</para>
+<para>
+For example, if the input is 10, then RANDOM will output any of these integers with equal probability: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9.
+</para>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Example</term>
+<listitem>
+    <programlisting><userinput>REPEAT 5 [SHOW RANDOM 10]</userinput>
+6
+8
+3
+0
+9
+</programlisting>
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</section>
