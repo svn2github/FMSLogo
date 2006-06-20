@@ -1,16 +1,18 @@
 FMSLogo Extras 1.2
+o tetrads
+  * new game, requires FMSLogo 6.9.0
 o lightcycle
- * always redock the commander when the game is halted
+  * always redock the commander when the game is halted
 o pacturtle
- * always redock the commander when the game is halted
+  * always redock the commander when the game is halted
 o snake
- * always redock the commander when the game is halted
+  * always redock the commander when the game is halted
 
 FMSLogo Extras 1.1
 o asteriodminer
- * removed personal high score list
+  * removed personal high score list
 o midipiano
- * renamed CLOSEALL to SHUTDOWN to make it compatible with FMSLogo 6.8.0
+  * renamed CLOSEALL to SHUTDOWN to make it compatible with FMSLogo 6.8.0
 
 FMSLogo Extras 1.0
 o asteriodminer
