@@ -147,8 +147,8 @@ TO RUNBADINPUTTEST :instructions
     STOP
   ]
 
-  REPORTTESTINFO (LIST "Executing :instructions "|set error code to|   (ITEM 1 :lasterror) )
-  REPORTTESTINFO (LIST "Executing :instructions "|set error string to| (ITEM 2 :lasterror) )
+  REPORTTESTPASSED (LIST "Executing :instructions "|set error code to|   (ITEM 1 :lasterror) )
+  REPORTTESTINFO   (LIST "Executing :instructions "|set error string to| (ITEM 2 :lasterror) )
 
 END
 BURY [RUNBADINPUTTEST]
@@ -180,8 +180,8 @@ TO RUNEXPECTERRORTEST :instructions :expectederror
     REPORTTESTFAILED (LIST "|ITEM 1 ERROR returned | (ITEM 1 :lasterror) "|, we expected| :expectederror)
     STOP
   ]
-  REPORTTESTINFO (LIST "Executing :instructions "|set error code to| (ITEM 1 :lasterror) "|, as expected|)
-  REPORTTESTINFO (LIST "Executing :instructions "|set error string to| (ITEM 2 :lasterror) )
+  REPORTTESTPASSED (LIST "Executing :instructions "|set error code to|   (ITEM 1 :lasterror) "|, as expected|)
+  REPORTTESTINFO   (LIST "Executing :instructions "|set error string to| (ITEM 2 :lasterror) )
 END
 BURY [RUNEXPECTERRORTEST]
 
