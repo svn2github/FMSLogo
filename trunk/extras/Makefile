@@ -19,9 +19,9 @@ TOINCLUDE= \
   tetrads       \
 
 $(SOURCEZIP) :
-	/usr/bin/find -name '*~'    | xargs $(RM)
-	/usr/bin/find -name '*.bak' | xargs $(RM)
-	/usr/bin/find -name 'AM_Hiscores' | xargs $(RM)
+	$(RM) $(shell /usr/bin/find release -name '*~')
+	$(RM) $(shell /usr/bin/find release -name '*.bak')
+	$(RM) $(shell /usr/bin/find release -name AM_Hiscores)
 	cd .. && zip -r -9 -X $(SOURCEZIP) $(addprefix extras/,$(TOINCLUDE)) -x */.cvsignore */CVS/ */CVS/* */*/.cvsignore */*/CVS/ */*/CVS/* */*/*/CVS/
 	mv ../$(SOURCEZIP) .
 
