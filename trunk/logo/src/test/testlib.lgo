@@ -10,6 +10,8 @@ TO REPORTTESTINFO :message
   ; restore the current writer
   SETWRITE :previouswriter
 END
+BURY [REPORTTESTINFO]
+
 
 TO REPORTTESTPASSED :message
 
@@ -22,6 +24,8 @@ TO REPORTTESTPASSED :message
   ; restore the current writer
   SETWRITE :previouswriter
 END
+BURY [REPORTTESTPASSED]
+
 
 TO REPORTTESTFAILED :message
 
@@ -36,6 +40,8 @@ TO REPORTTESTFAILED :message
   ; restore the current writer
   SETWRITE :previouswriter
 END
+BURY [REPORTTESTFAILED]
+
 
 TO REPORTTEST :testpassed :result :expected
   IFELSE :testpassed [
@@ -44,6 +50,8 @@ TO REPORTTEST :testpassed :result :expected
     REPORTTESTFAILED (sentence :result "|. We expected| :expected)
   ]
 END
+BURY [REPORTTEST]
+
 
 TO TRACEINSTRUCTION :instruction
 
@@ -66,6 +74,7 @@ TO TRACEINSTRUCTION :instruction
     STOP
   ]
 END
+BURY [TRACEINSTRUCTION]
 
 TO SIMPLEREPORTTEST :instruction :expectedresult
   LOCAL "result
@@ -91,6 +100,7 @@ TO SIMPLEREPORTTEST :instruction :expectedresult
 
   REPORTTESTPASSED (LIST :instruction "returned :result "|, as expected.|)
 END
+BURY [SIMPLEREPORTTEST]
 
 
 TO REPORTTESTINITIALIZE
@@ -103,12 +113,14 @@ TO REPORTTESTINITIALIZE
   ; open (and truncate) the test log
   OPENWRITE :testlog
 END
+BURY [REPORTTESTINITIALIZE]
 
 
 TO REPORTTESTUNINITIALIZE
   CLOSE    :testlog
   MAKE     :testlog []
 END
+BURY [REPORTTESTUNINITIALIZE]
 
 
 TO RUNBADINPUTTEST :instructions
@@ -139,6 +151,7 @@ TO RUNBADINPUTTEST :instructions
   REPORTTESTINFO (LIST "Executing :instructions "|set error string to| (ITEM 2 :lasterror) )
 
 END
+BURY [RUNBADINPUTTEST]
 
 TO RUNEXPECTERRORTEST :instructions :expectederror
 
@@ -170,35 +183,43 @@ TO RUNEXPECTERRORTEST :instructions :expectederror
   REPORTTESTINFO (LIST "Executing :instructions "|set error code to| (ITEM 1 :lasterror) "|, as expected|)
   REPORTTESTINFO (LIST "Executing :instructions "|set error string to| (ITEM 2 :lasterror) )
 END
+BURY [RUNEXPECTERRORTEST]
 
 
 TO RUNNOTENOUGHINPUTSTEST :instructions
   RUNEXPECTERRORTEST :instructions 6
 END
+BURY [RUNNOTENOUGHINPUTSTEST]
 
 TO RUNTOOMANYINPUTSTEST :instructions
   RUNEXPECTERRORTEST :instructions 8
 END
+BURY [RUNTOOMANYINPUTSTEST]
 
 TO RUNHASNOVALUETEST :instructions
   RUNEXPECTERRORTEST :instructions 11
 END
+BURY [RUNHASNOVALUETEST]
 
 TO RUNIDONTKNOWHOWTOTEST :instructions
   RUNEXPECTERRORTEST :instructions 13
 END
+BURY [RUNIDONTKNOWHOWTOTEST]
 
 TO RUNNONRECOVERABLEIDONTKNOWHOWTOTEST :instructions
   RUNEXPECTERRORTEST :instructions 24
 END
+BURY [RUNNONRECOVERABLEIDONTKNOWHOWTOTEST]
 
 TO RUNFILESYSTEMERRORTEST :instructions
   RUNEXPECTERRORTEST :instructions 18
 END
+BURY [RUNFILESYSTEMERRORTEST]
 
 TO RUNISAPRIMITIVETEST :instructions
   RUNEXPECTERRORTEST :instructions 22
 END
+BURY [RUNISAPRIMITIVETEST]
 
 
 TO TIMECOMMAND :instructions
@@ -214,6 +235,7 @@ TO TIMECOMMAND :instructions
 
   OUTPUT :deltatime
 END
+BURY [TIMECOMMAND]
 
 ; protect against loading the file twice
 if not name? "testlog [
