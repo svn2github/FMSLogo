@@ -1,0 +1,907 @@
+to aaa
+; The author disclaims all copyrights associated with this code (hereafter
+; referred to as the "Work").
+;
+; The author makes this dedication for the benefit of the public at large
+; and to the detriment of the author's heirs and successors. The author
+; intends this dedication to be an overt act of relinquishment in
+; perpetuity of all present and future rights under copyright law,
+; whether vested or contingent, in the Work. The author understands that
+; such relinquishment of all rights includes the relinquishment of all
+; rights to enforce (by lawsuit or otherwise) those copyrights in the
+; Work.
+;
+; The author recognizes that, once placed in the public domain, the
+; Work may be freely reproduced, distributed, transmitted, used,
+; modified, built upon, or otherwise exploited by anyone for any
+; purpose, commercial or non-commercial, and in any way, including by
+; methods that have not yet been invented or conceived.
+end
+
+
+to InitGameData
+  make "gameshapes {
+    {
+      {{1 1}
+       {1 1}}@0
+
+      [255 0 0]
+    }@0
+
+    {
+      {{2 2 2}
+       {0 0 2}}@0
+      
+      {{0 2}
+       {0 2}
+       {2 2}}@0
+      
+      {{2 0 0}
+       {2 2 2}}@0
+      
+      {{2 2}
+       {2 0}
+       {2 0}}@0
+
+      [0 255 0]
+    }@0
+
+    {
+      {{3 3 3}
+       {3 0 0}}@0
+      
+      {{3 3}
+       {0 3}
+       {0 3}}@0
+      
+      {{0 0 3}
+       {3 3 3}}@0
+      
+      {{3 0}
+       {3 0}
+       {3 3}}@0
+
+      [0 0 255]
+    }@0
+
+    {
+      {{4 4 0}
+       {0 4 4}}@0
+      
+      {{0 4}
+       {4 4}
+       {4 0}}@0
+
+      [255 255 0]
+    }@0
+
+    {
+      {{0 5 5}
+       {5 5 0}}@0
+      
+      {{5 0}
+       {5 5}
+       {0 5}}@0
+      
+      [255 0 255]
+    }@0
+
+    {
+      {{0 6 0}
+       {6 6 6}}@0
+      
+      {{0 6 0}
+       {0 6 6}
+       {0 6 0}}@0
+      
+      {{0 0 0}
+       {6 6 6}
+       {0 6 0}}@0
+      
+      {{0 6}
+       {6 6}
+       {0 6}}@0
+
+      [0 255 255]
+    }@0
+
+    {
+      {{0 0 0 0}
+       {7 7 7 7}}@0
+      
+      {{0 7}
+       {0 7}
+       {0 7}
+       {0 7}}@0
+
+      [128 128 128]
+    }@0
+  }@0
+
+
+  make "GameBoardHeight 25
+  make "GameBoardWidth  10
+
+  ; fill in the game board with empty space
+  local "gamerow
+  make "GameBoard (array :GameBoardHeight 0)
+  repeat :GameBoardHeight [
+     make "gamerow array :GameBoardWidth
+
+     repeat :GameBoardWidth [
+         setitem repcount :gamerow ".
+     ]
+
+     setitem repcount - 1 :GameBoard :gamerow
+  ]
+
+  make "GridSize 10
+end
+
+
+to DrawBlock :ColorVector
+
+  make "left   xcor
+  make "bottom ycor
+
+  localmake "DarkColor (list 
+    (item 1 :ColorVector) * 0.75
+    (item 2 :ColorVector) * 0.75
+    (item 3 :ColorVector) * 0.75)
+
+  localmake "VeryDarkColor (list 
+    (item 1 :ColorVector) * 0.50
+    (item 2 :ColorVector) * 0.50
+    (item 3 :ColorVector) * 0.50)
+
+  localmake "LightColor (list 
+    (item 1 :ColorVector) * 1.75
+    (item 2 :ColorVector) * 1.75
+    (item 3 :ColorVector) * 1.75)
+
+  ; draw the bulk of the block
+  setfloodcolor :ColorVector
+  bitblock :GridSize :GridSize
+
+  ; draw the light border on the top and left of the block
+  pendown
+  setpencolor :LightColor
+  sety  :bottom + :GridSize - 1
+  setx  :left   + :GridSize - 1
+
+  ; draw the dark border on the lower-left of the block
+  setpencolor :VeryDarkColor
+  penup
+  setxy :left :bottom
+  pendown
+  setx  :left   + :GridSize - 1
+  sety  :bottom + :GridSize - 1
+
+  ; draw the border on the lower-left of the block
+  setpencolor :DarkColor
+  penup
+  setxy :left + 1 :bottom + 1
+  pendown
+  setx  :left   + :GridSize - 2
+  sety  :bottom + :GridSize - 2
+
+  penup
+  setxy  :left :bottom
+
+end
+
+to ClearBlock
+   setfloodcolor [255 255 255]
+   bitblock :GridSize :GridSize
+end
+
+
+to ProcessKeyEvent :Key :IsKeyDown
+
+    ifelse :IsKeyDown [
+       if :Key=37 [ make "move    "left  ]
+       if :Key=39 [ make "move    "right ]
+
+       if and :Key=40  not :rotate="ignoreleft  [ make "rotate  "left  ]
+       if and :Key=38  not :rotate="ignoreright [ make "rotate  "right ]
+    ][
+       if and :Key=37 :move="left    [ make "move "none ]
+       if and :Key=39 :move="right   [ make "move "none ]
+
+       if and :Key=40 (or :rotate="left  :rotate="ignoreleft)  [ make "rotate "none ]
+       if and :Key=38 (or :rotate="right :rotate="ignoreright) [ make "rotate "none ]
+    ]
+
+    if :Key=32 [ make "DropFaster :IsKeyDown ]
+
+    if :Key=ascii "Q [ make "IsDone "true ]
+end
+
+to KeyboardCaptureStart
+   (keyboardon [ProcessKeyEvent keyboardvalue "true] [ProcessKeyEvent keyboardvalue "false])
+end
+
+to KeyboardCaptureEnd
+   keyboardoff
+end
+
+to ShapeCreate
+
+   local [newshape shapedata]
+
+   make "newshape array 5
+
+   ; shape
+   setitem 1 :newshape RANDOM 7
+
+   ; color
+   make "shapedata item (ShapeType :newshape) :gameshapes
+   setitem 2 :newshape  item (count :shapedata) - 1 :shapedata
+
+   ; rotation
+   setitem 3 :newshape  0
+
+   ; X
+   setitem 4 :newshape  :GameBoardWidth / 2
+
+   ; Y
+   setitem 5 :newshape  :GameBoardHeight - 1
+
+   output :newshape
+end
+
+to ShapeCopy :Shape
+
+   localmake "newshape array 5
+
+   ; copy over all values
+   repeat count :Shape [
+      setitem repcount :newshape item repcount :Shape
+   ]
+
+   output :newshape
+end
+
+to ShapeType :Shape
+   output item 1 :Shape
+end
+
+to ShapeColor :Shape
+   output item 2 :Shape
+end
+
+to ShapeRotation :Shape
+   output item 3 :Shape
+end
+
+
+to ShapeX :Shape
+   output item 4 :Shape
+end
+
+to ShapeY :Shape
+   output item 5 :Shape
+end
+
+
+to ShapeIsOkayToMove :ShapeIndex :ProposedX :ProposedY :ProposedRotation
+
+  ; Determines if the shape is okay to move into
+  ; the given X, Y, and Rotation on the :GameBoard.
+  ; Outputs "true is so, "false otherwise
+
+  local [x y shaperow shapesquare shapetemplate rotationtemplate]
+
+  make "shapetemplate    item :ShapeIndex       :gameshapes
+  make "rotationtemplate item :ProposedRotation :shapetemplate
+
+  repeat count :rotationtemplate [ 
+    make "y repcount - 1
+    make "shaperow item :y :rotationtemplate
+
+    repeat count :shaperow [  
+       make "x repcount
+       make "shapesquare item :x :shaperow
+
+       if NOT EQUAL? 0 :shapesquare [
+
+         ; stop if we would hit the right of the board
+         if :ProposedX + :x > :GameBoardWidth [output "false]
+
+         ; stop if we would hit the left of the board
+         if :ProposedX + :x < 1 [output "false]
+
+         ; stop if we would hit the bottom of the board
+         if :ProposedY - :y < 0 [output "false]
+
+         ; stop if we hit a filled-in square on the board
+         make "boardrow item :ProposedY - :y :GameBoard 
+         if NOT EQUAL? ". item :ProposedX + :x :boardrow [output "false]
+       ]
+    ]
+  ]
+
+  output "true
+end
+
+to ShapeMoveRight :Shape
+
+  if ShapeIsOkayToMove (ShapeType :Shape) ((ShapeX :Shape) + 1) (ShapeY :Shape) (ShapeRotation :Shape) [
+     ; we can move right
+     setitem 4 :Shape (ShapeX :Shape) + 1
+  ]
+
+end
+
+to ShapeMoveLeft :Shape
+
+  if ShapeIsOkayToMove (ShapeType :Shape) ((ShapeX :Shape) - 1) (ShapeY :Shape) (ShapeRotation :Shape) [
+     ; we can move left
+     setitem 4 :Shape (ShapeX :Shape) - 1
+  ]
+
+end
+
+to ShapeMoveDown :Shape
+
+  if ShapeIsOkayToMove (ShapeType :Shape) (ShapeX :Shape) ((ShapeY :Shape) - 1) (ShapeRotation :Shape) [
+     ; we can move down
+     setitem 5 :Shape (ShapeY :Shape) - 1
+     output "true
+  ]
+
+  output "false
+
+end
+
+to ShapeTryRotationTranslation :Shape :DeltaX :NewRotation
+  if ShapeIsOkayToMove (ShapeType :Shape) ((ShapeX :Shape) + :DeltaX) (ShapeY :Shape) :NewRotation [
+     ; we can rotate right
+     setitem 3 :Shape :newrotation
+     setitem 4 :Shape (ShapeX :Shape) + :DeltaX
+     output "true
+  ]
+  output "false
+end
+
+to ShapeRotateLeft :Shape
+
+  localmake "totalrotations (count item (ShapeType :Shape) :gameshapes) - 1
+  localmake "newrotation modulo ((ShapeRotation :Shape) - 1) :totalrotations
+
+  if ShapeTryRotationTranslation :Shape  0 :newrotation [ stop ]
+  if ShapeTryRotationTranslation :Shape  1 :newrotation [ stop ]
+  if ShapeTryRotationTranslation :Shape -1 :newrotation [ stop ]
+  if ShapeTryRotationTranslation :Shape  2 :newrotation [ stop ]
+  if ShapeTryRotationTranslation :Shape -2 :newrotation [ stop ]
+
+end
+
+to ShapeRotateRight :Shape
+
+  localmake "totalrotations (count item (ShapeType :Shape) :gameshapes) - 1
+  localmake "newrotation modulo ((ShapeRotation :Shape) + 1) :totalrotations
+
+  if ShapeTryRotationTranslation :Shape  0 :newrotation [ stop ]
+  if ShapeTryRotationTranslation :Shape  1 :newrotation [ stop ]
+  if ShapeTryRotationTranslation :Shape -1 :newrotation [ stop ]
+  if ShapeTryRotationTranslation :Shape  2 :newrotation [ stop ]
+  if ShapeTryRotationTranslation :Shape -2 :newrotation [ stop ]
+
+end
+
+to MoveTo :X :Y
+   penup
+   setxy :GridSize * (:X - :GameBoardWidth / 2)  :GridSize * (:Y - :GameBoardHeight / 2)
+end
+
+
+to ShapeEraseRowSquare :Shape :ShapeRow :x :y
+
+   localmake "shapesquare item :x :shaperow
+
+   if NOT EQUAL? 0 :shapesquare [
+     MoveTo ((ShapeX :Shape) + :x - 1)  ((ShapeY :Shape) - :y)
+     ClearBlock
+   ]
+end
+
+to ShapeEraseRow :Shape :RotationTemplate :y
+
+  localmake "shaperow item :y :RotationTemplate
+
+  repeat count :shaperow [
+    ShapeEraseRowSquare :Shape :shaperow repcount :y
+  ]
+end
+
+
+to ShapeErase :Shape
+
+  localmake "shapetemplate    item (ShapeType     :Shape) :gameshapes
+  localmake "rotationtemplate item (ShapeRotation :Shape) :shapetemplate
+
+  repeat count :rotationtemplate [ 
+    ShapeEraseRow :Shape :RotationTemplate repcount - 1
+  ]
+
+end
+
+to ShapeClear :Shape
+
+  local [x y shaperow shapesquare shapetemplate rotationtemplate boardrow]
+
+  make "shapetemplate    item (ShapeType     :Shape) :gameshapes
+  make "rotationtemplate item (ShapeRotation :Shape) :shapetemplate
+
+  repeat count :rotationtemplate [ 
+    make "y repcount - 1
+    make "shaperow item :y :rotationtemplate
+
+    if (ShapeY :Shape) - :y < 0 [stop]
+    make "boardrow item (ShapeY :Shape) - :y :GameBoard 
+
+    repeat count :shaperow [  
+       make "x repcount
+       make "shapesquare item :x :shaperow
+
+       if NOT EQUAL? 0 :shapesquare [
+         setitem (ShapeX :Shape) + :x :boardrow ".
+       ]
+    ]
+  ]
+
+end
+
+to Max :a :b
+  if :a < :b [output :b]
+  output :a
+end
+
+to Min :a :b
+  if :a < :b [output :a]
+  output :b
+end
+
+to ShapeRedraw :OldShape :NewShape
+
+  ; TODO: figure out exactly which squares must be cleared
+  ; and which squares must be drawn to eliminate the flicker
+  ; seen when a square is erased and redrawn in the same color.
+
+  make "old.shapetemplate    item (ShapeType     :OldShape) :gameshapes
+  make "old.rotationtemplate item (ShapeRotation :OldShape) :old.shapetemplate
+
+  make "new.shapetemplate    item (ShapeType     :NewShape) :gameshapes
+  make "new.rotationtemplate item (ShapeRotation :NewShape) :new.shapetemplate
+
+  make "ymax Max ShapeY :OldShape ShapeY :NewShape
+  make "ymin (Min (ShapeY :OldShape) - ((count :old.rotationtemplate) - 1)
+                  (ShapeY :NewShape) - ((count :new.rotationtemplate) - 1))
+
+  make "xmax (Max (ShapeX :OldShape) + (count item 0 :old.rotationtemplate) - 1
+                  (ShapeX :NewShape) + (count item 0 :new.rotationtemplate) - 1)
+  make "xmin Min ShapeX :OldShape ShapeX :NewShape
+ 
+
+  ; Iterate over possible locations on the board.
+  ; For each iteration point, figure out the location in 
+  ; OldShape's rotation template can compare them.
+
+  make "board.y :ymin
+  while [:board.y < :ymax + 1] [
+
+      make "old.y  (ShapeY :OldShape) - :board.y 
+      make "new.y  (ShapeY :NewShape) - :board.y
+
+      ifelse or (:old.y < 0) (count :old.rotationtemplate) - 1 < :old.y [
+
+          ; this row isn't covered by the old template
+          ; so we can just draw the new shape's row
+          ShapeDrawRow :NewShape :new.rotationtemplate :new.y
+
+      ][ ifelse or (:new.y < 0) (count :new.rotationtemplate) - 1 < :new.y [
+
+          ; this row isn't covered by the new template
+          ; so we can just draw erase thie old row
+          ShapeEraseRow :OldShape :old.rotationtemplate :old.y
+      ][
+          ; this row is covered by both templates
+
+          make "old.shaperow item :old.y :old.rotationtemplate
+          make "new.shaperow item :new.y :new.rotationtemplate
+
+          make "board.x :xmin
+          while [:board.x < :xmax + 1] [
+
+              make "old.x  :board.x - (ShapeX :OldShape) + 1
+              make "new.x  :board.x - (ShapeX :NewShape) + 1
+
+              ifelse or (:old.x < 1) (count :old.shaperow) < :old.x [
+
+                  ; this square isn't covered by the old template
+                  ; so we can just draw the new shape's sqaure
+                  ShapeDrawRowSquare :NewShape :new.shaperow :new.x :new.y
+
+              ][ ifelse or (:new.x < 1) (count :new.shaperow) < :new.x [
+
+                  ; this square isn't covered by the new template
+                  ; so we can just draw erase the old shape's square
+                  ShapeEraseRowSquare :OldShape :old.shaperow :old.x :old.y
+              ][
+                  make "old.shapesquare item :old.x :old.shaperow
+                  make "new.shapesquare item :new.x :new.shaperow
+
+                  ; this square is covered by both the old and new templates.
+                  ; To miminize flicker we only erase the old square if it's
+                  ; not part of the new one.
+                  if NOT EQUAL? :old.shapesquare :new.shapesquare [
+                     ShapeEraseRowSquare :OldShape :old.shaperow :old.x :old.y
+                     ShapeDrawRowSquare  :NewShape :new.shaperow :new.x :new.y
+                  ]
+              ]]
+
+             make "board.x :board.x + 1
+          ]
+      ]]
+
+      make "board.y :board.y + 1
+  ]
+
+end
+
+to ShapeMark :Shape
+
+  local [x y shaperow shapesquare shapetemplate rotationtemplate boardrow]
+
+  make "shapetemplate    item (ShapeType     :Shape) :gameshapes
+  make "rotationtemplate item (ShapeRotation :Shape) :shapetemplate
+
+  repeat count :rotationtemplate [ 
+    make "y repcount - 1
+    make "shaperow item :y :rotationtemplate
+
+    if (ShapeY :Shape) + :y > :GameBoardHeight [stop]
+    if (ShapeY :Shape) - :y < 0                [stop]
+    make "boardrow item (ShapeY :Shape) - :y :GameBoard 
+
+    repeat count :shaperow [  
+       make "x repcount
+       make "shapesquare item :x :shaperow
+
+       if NOT EQUAL? 0 :shapesquare [
+         setitem (ShapeX :Shape) + :x :boardrow :shapesquare
+       ]
+    ]
+  ]
+
+end
+
+to ShapeDrawRowSquare :Shape :ShapeRow :x :y
+
+   localmake "shapesquare item :x :shaperow
+
+   if NOT EQUAL? 0 :shapesquare [
+     MoveTo ((ShapeX :Shape) + :x - 1)  ((ShapeY :Shape) - :y)
+     DrawBlock ShapeColor :Shape
+   ]
+end
+
+to ShapeDrawRow :Shape :RotationTemplate :y
+  
+    localmake "shaperow item :y :RotationTemplate
+
+    repeat count :shaperow [  
+       ShapeDrawRowSquare :Shape :shaperow repcount :y
+    ]
+end
+
+
+to ShapeDraw :Shape
+
+  localmake "shapetemplate    item (ShapeType     :Shape) :gameshapes
+  localmake "rotationtemplate item (ShapeRotation :Shape) :shapetemplate
+
+  repeat count :rotationtemplate [ 
+    ShapeDrawRow :Shape :RotationTemplate repcount - 1
+  ]
+
+end
+
+
+to IsRowFull :y
+
+   make "row item :y :GameBoard
+
+   repeat count :row [
+      if equal? ". item repcount :row [ output "false  ]
+   ]
+   output "true
+
+end
+
+to RowMarkForClearing :y
+   localmake "row item :y :GameBoard
+   repeat count :row [ setitem repcount :row "C ]
+end
+
+to RowColorForClearing :y
+
+   penup
+   sety :GridSize * :y
+
+   repeat count :row [
+      MoveTo (repcount - 1) :y
+      DrawBlock [128 0 128]        
+   ]
+end
+
+to RowIsMarkedForClearing? :y
+   localmake "row item :y :GameBoard
+   output equal? "C item 1 :row 
+end
+
+to CopyRowToRow :dst.y :src.y 
+   localmake "dstrow item :dst.y :GameBoard
+   localmake "srcrow item :src.y :GameBoard
+
+   repeat count :srcrow [
+      setitem repcount :dstrow (item repcount :srcrow)
+   ]
+end
+
+to ClearRow :y
+   local [row currentrow nextrow toprow]
+   make "row item :y :GameBoard
+
+   ; clear the rows
+   make "currentrow  :y
+   make "nextrow     :currentrow + 1
+   while [:nextrow < :GameBoardHeight] [
+
+      ; copy each item in the next row to the current row
+      CopyRowToRow :currentrow :nextrow 
+
+      make "currentrow :nextrow
+      make "nextrow    :currentrow + 1
+   ]
+
+   ; clear the top-most row
+   make "toprow item :currentrow :GameBoard
+   repeat count :nextrow [
+      setitem repcount :toprow ".
+   ]
+
+end
+
+
+to RemoveFullLines
+
+   local [rowtocopyfrom y totalrowscleared]
+
+   make "totalrowscleared 0
+
+   ; figure out which rows should be cleared
+   repeat count :GameBoard [
+      make "y repcount - 1
+
+      if IsRowFull :y [ 
+         RowMarkForClearing  :y
+         RowColorForClearing :y
+         make "totalrowscleared :totalrowscleared + 1
+      ]
+   ]
+
+   if :totalrowscleared > 0 [
+
+     if :totalrowscleared = 1 [ AddToScore 20  ]
+     if :totalrowscleared = 2 [ AddToScore 40  ]
+     if :totalrowscleared = 3 [ AddToScore 80  ]
+     if :totalrowscleared = 4 [ AddToScore 160 ]
+
+     wait 10
+
+     ; clear the rows
+     repeat count :GameBoard [
+        make "y repcount - 1
+  
+        while [RowIsMarkedForClearing? :y] [
+           ClearRow :y
+        ]
+     ]
+
+     ; redraw the board
+     local [shapeindex rotationtemplate color]
+     repeat count :GameBoard [
+        make "y repcount - 1
+
+        make "row item :y :GameBoard
+        repeat count :row [
+
+           MoveTo (repcount - 1) :y
+
+           ifelse equal? ". (item repcount :row) [
+             ClearBlock
+           ] [
+             make "shapeindex (item repcount :row) - 1 ; HACK: -1
+             make "rotationtemplate item :shapeindex :GameShapes
+             make "color            item ((count :rotationtemplate) - 1) :rotationtemplate
+             DrawBlock :color
+           ]
+        ]
+    ]
+  ]
+
+end
+
+
+to UpdateNextFrame
+
+    ShapeClear :CurrentShape
+
+    localmake "newshape ShapeCopy :CurrentShape
+
+    if :rotate = "left  [ 
+       ShapeRotateLeft :newshape 
+       make "rotate "ignoreleft
+    ]
+
+    if :rotate = "right [ 
+       ShapeRotateRight :newshape
+       make "rotate "ignoreright
+    ]
+
+    if :move = "right [ 
+       ShapeMoveRight   :newshape
+    ]
+
+    if :move = "left  [ 
+       ShapeMoveLeft    :newshape 
+    ]
+
+    make "framesuntildrop :framesuntildrop - 1
+    if or :DropFaster (0 = :framesuntildrop) [
+
+      ; the shape falls down one unit
+      if not ShapeMoveDown :newshape [
+
+         ; the shape has come to a final resting place
+
+         AddToScore 1 ; one point for every shape placed
+
+         ShapeRedraw :currentshape :newshape
+
+         ShapeMark :newshape
+
+         RemoveFullLines
+
+         ; make a new shape
+         make "currentshape ShapeCreate
+         ShapeDraw :currentshape
+         if not ShapeIsOkayToMove (ShapeType :currentshape) (ShapeX :currentshape) (ShapeY :currentshape) (ShapeRotation :currentshape) [
+            ; we can't play this shape
+            make "IsDone "true
+         ]
+
+         make "TotalShapesDropped :TotalShapesDropped + 1
+
+         ; increase the level of difficulty every 15 shapes
+         if EQUAL? 0 MODULO :TotalShapesDropped 15 [
+             if :TotalFramesUntilDrop > 1 [
+                make "TotalFramesUntilDrop :TotalFramesUntilDrop - 1
+             ]
+         ]
+
+         ; reset the timeout counter
+         make "framesuntildrop :TotalFramesUntilDrop
+
+         stop
+      ]
+
+      ; the shape moved down one unit
+
+      ; reset the timeout counter
+      make "framesuntildrop :TotalFramesUntilDrop
+    ]
+
+    ; if the shape moved, erase it from the old position and
+    ; draw it in the new position
+    if (or (not equal? (ShapeX :currentshape)        (ShapeX :newshape))
+           (not equal? (ShapeY :currentshape)        (ShapeY :newshape))
+           (not equal? (ShapeRotation :currentshape) (ShapeRotation :newshape))) [
+
+       ShapeRedraw :currentshape :newshape
+
+       repeat count :currentshape [
+          setitem repcount :currentshape item repcount :newshape
+       ]
+    ]
+
+    ShapeMark :newshape
+
+end
+
+to DrawScore :NewScore
+   MoveTo :GameBoardWidth + 9 :GameBoardHeight - 8
+   setfloodcolor screencolor
+   bitblock 200 40
+
+   MoveTo :GameBoardWidth + 9 :GameBoardHeight - 5
+   setpencolor [255 255 255]
+   setheading 90
+   label :NewScore
+end
+
+to AddToScore :Points
+   make "Score :Score + :Points
+   DrawScore :Score
+end
+
+
+to GameLoop
+   local [gameshapes gridsize]
+   InitGameData
+
+   setscreencolor [0 0 0]
+   clearscreen
+
+   setfloodcolor  [255 255 255]
+   MoveTo 0 0
+   bitblock :GameBoardWidth * :GridSize  :GameBoardHeight * :GridSize
+
+   localmake "TotalFramesUntilDrop 20
+   localmake "TotalShapesDropped   0
+
+   localmake "DropFaster      "false
+   localmake "rotate          "none
+   localmake "move            "none
+   localmake "currentshape    ShapeCreate
+   localmake "framesuntildrop :TotalFramesUntilDrop
+
+   MoveTo :GameBoardWidth + 2 :GameBoardHeight - 5
+   setpencolor [255 255 255]
+   setheading 90
+   Label [Score:]
+
+   localmake "Score 0
+   DrawScore :Score
+
+   KeyboardCaptureStart
+
+   ShapeDraw :currentshape
+
+   localmake "IsDone "false
+   while [ not :IsDone ] [
+
+      UpdateNextFrame
+      wait 4
+   ]
+
+   KeyboardCaptureEnd
+end
+
+to RunGame
+
+  catch "error [ fullscreen ]
+  icon "Commander
+  icon "Editor
+
+  hideturtle
+  setfocus [MSWLogo Screen]
+
+  ; catch errors so we can dock the commander window
+  ; if the user halts logo by trying to close it.
+  catch "error [ GameLoop ]
+
+  unicon "Commander
+  catch "error [ splitscreen ]
+
+end
+
+to DumpBoard
+   repeat count :GameBoard [
+      print item (count :GameBoard) - repcount :GameBoard
+   ]
+end
+
+make "startup [RunGame]
