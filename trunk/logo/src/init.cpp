@@ -253,7 +253,7 @@ const PRIMTYPE prims[] =
       { "lessp", 2, 2, 2, PREFIX_PRIORITY, llessp },
       { "less?", 2, 2, 2, PREFIX_PRIORITY, llessp },
       { "light", 0, 0, 0, PREFIX_PRIORITY, llight },
-      { "list", 1, 2, -1, PREFIX_PRIORITY, llist },
+      { "list", 0, 2, -1, PREFIX_PRIORITY, llist },
       { "listboxaddstring", 2, 2, 2, PREFIX_PRIORITY, llistboxaddstring },
       { "listboxcreate", 6, 6, 6, PREFIX_PRIORITY, llistboxcreate },
       { "listboxenable", 2, 2, 2, PREFIX_PRIORITY, llistboxenable },

@@ -20,6 +20,9 @@ Part I) Kit Description/Location (http://sourceforge.net/projects/fmslogo):
 
 Part II) New features/bugs fixed:
 
+  * Added for 6.10.0
+    o Fix bug #1511966; LIST now returns the empty list when given no inputs.
+
   * Added for 6.9.0,
     o Fix bug #1504189: CHECBOXSET, RADIOBUTTONSET no longer check the button
       when given bad input.
