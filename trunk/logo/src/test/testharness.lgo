@@ -3,7 +3,9 @@
 
 LOAD "testlib.lgo
 
+LOAD "list.lgo
 LOAD "butfirst.lgo
+LOAD "butfirsts.lgo
 LOAD "butlast.lgo
 LOAD "last.lgo
 LOAD "array.lgo
@@ -69,9 +71,11 @@ TO TESTALL
   LOADTEST           ; from load.lgo
   RUNTEST            ; from run.lgo
   ERRORTEST          ; from error.lgo
+  LISTTEST           ; from list.lgo
   PREDICATETEST      ; from predicate.lgo
   WORDTEST           ; from word.lgo
   BUTFIRSTTEST       ; from butfirst.lgo
+  BUTFIRSTSTEST      ; from butfirsts.lgo
   BUTLASTTEST        ; from butlast.lgo
   LASTTEST           ; from last.lgo
   ARRAYTEST          ; from array.lgo
