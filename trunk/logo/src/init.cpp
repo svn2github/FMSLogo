@@ -678,4 +678,7 @@ void uninit()
 
    // free the memory associated with mouse capture
    mouse_uninit();
+
+   // free the state associated with the timer events
+   uninitialize_timers();
    }

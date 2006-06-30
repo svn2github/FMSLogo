@@ -178,8 +178,6 @@ extern void do_execution(char *string);
 extern void start_execution(void);
 extern void stop_execution(void);
 extern bool is_executing(void);
-extern NODE *lsettimer(NODE *arg);
-extern NODE *lcleartimer(NODE *arg);
 extern NODE *lbitsave(NODE *arg);
 extern NODE *lgifsave(NODE *arg);
 extern NODE *lgifload(NODE *arg);
@@ -560,6 +558,9 @@ extern NODE *lmidiclose(NODE *arg);
 extern NODE *lmidimessage(NODE *arg);
 extern NODE *lsound(NODE *arg);
 extern NODE *lplaywave(NODE *args);
+extern NODE *lsettimer(NODE *arg);
+extern NODE *lcleartimer(NODE *arg);
+extern void  uninitialize_timers(void);
 
 // dllwind.cpp
 extern NODE *ldllload(NODE *arg);

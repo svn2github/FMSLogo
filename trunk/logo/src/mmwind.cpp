@@ -317,7 +317,7 @@ NODE *lsettimer(NODE *args)
    // get id and if valid continue
    int id = int_arg(args);
 
-   if ((id > 0) && (id < 32))
+   if ((id > 0) && (id < MAX_TIMERS))
       {
       // get delay
       WORD delay = int_arg(args = cdr(args));
@@ -358,6 +358,15 @@ NODE *lcleartimer(NODE *args)
       }
 
    return Unbound;
+   }
+
+void uninitialize_timers()
+   {
+   for (int id = 0; id < MAX_TIMERS; id++)
+      {
+      free(timer_callback[id]);
+      timer_callback[id] = NULL;
+      }
    }
 
 NODE *lplaywave(NODE *args)
