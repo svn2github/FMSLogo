@@ -553,6 +553,19 @@ extern NODE *ldirectories(NODE *arg);
 extern NODE *lfiles(NODE *arg);
 extern void uninitialize_combobox(void);
 
+// mmwind.cpp
+extern NODE *lmci(NODE *arg);
+extern NODE *lmidiopen(NODE *arg);
+extern NODE *lmidiclose(NODE *arg);
+extern NODE *lmidimessage(NODE *arg);
+extern NODE *lsound(NODE *arg);
+extern NODE *lplaywave(NODE *args);
+
+// dllwind.cpp
+extern NODE *ldllload(NODE *arg);
+extern NODE *ldllcall(NODE *arg);
+extern NODE *ldllfree(NODE *arg);
+
 // graphwin.cpp
 bool HtmlHelpInitialize();
 void HtmlHelpUninitialize();
@@ -561,15 +574,6 @@ extern NODE *lnostatus(NODE *arg);
 extern void zoom_helper(FLONUM temp_zoom);
 extern void UpdateZoomControlFlag();
 extern NODE *lzoom(NODE *arg);
-extern NODE *lmci(NODE *arg);
-extern NODE *lmidiopen(NODE *arg);
-extern NODE *lmidiclose(NODE *arg);
-extern NODE *lmidimessage(NODE *arg);
-extern NODE *lsound(NODE *arg);
-extern NODE *ldllload(NODE *arg);
-extern NODE *ldllcall(NODE *arg);
-extern NODE *ldllfree(NODE *arg);
-extern NODE *lplaywave(NODE *args);
 extern NODE *lwinhelp(NODE *arg);
 extern NODE *lhelp(NODE *arg);
 //extern NODE *lsettextsize(NODE *arg);
@@ -609,6 +613,7 @@ extern NODE *lnetsendreceivevalue(NODE *arg);
 extern NODE *lnetstartup(NODE *args);
 extern NODE *lnetshutdown(NODE *arg);
 
+// dlgwind.cpp
 extern bool CheckOnScreenControls();
 extern NODE *ldebugwindows(NODE *args);
 extern NODE *lmouseon(NODE *args);
