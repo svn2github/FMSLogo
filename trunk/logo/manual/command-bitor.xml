@@ -15,6 +15,7 @@
 <listitem>
 <para>
 Outputs the bitwise OR of its inputs, which must be integers.
+If no inputs are given, then BITOR outputs a value with no bits set.
 </para>
 </listitem>
 </varlistentry>
