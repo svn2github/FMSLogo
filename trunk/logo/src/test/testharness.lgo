@@ -11,10 +11,12 @@ LOAD "last.lgo
 LOAD "array.lgo
 LOAD "queue.lgo
 LOAD "stack.lgo
+LOAD "repcount.lgo
 LOAD "wait.lgo
 LOAD "predicate.lgo
 LOAD "logic.lgo
 LOAD "math.lgo
+LOAD "bitwise.lgo
 LOAD "activearea.lgo
 LOAD "bitmap.lgo
 LOAD "form.lgo
@@ -83,7 +85,9 @@ TO TESTALL
   STACKTEST          ; from stack.lgo
   LOGICTEST          ; from logic.lgo
   APPLYTEST          ; from apply.lgo
+  REPCOUNTTEST       ; from repcount.lgo
   MATHTEST           ; from math.lgo
+  BITWISETEST        ; from bitwise.lgo
   PROCEDURETEST      ; from procedure.lgo
   MACROTEST          ; from macro.lgo
   COPYDEFTEST        ; from copydef.lgo
