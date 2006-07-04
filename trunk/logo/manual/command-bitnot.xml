@@ -13,7 +13,7 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-Outputs the bitwise negation of its inputs, which must be an integer.
+Outputs the bitwise negation of its input, which must be an integer.
 </para>
 </listitem>
 </varlistentry>
