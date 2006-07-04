@@ -96,6 +96,11 @@ TO SORTTEST.REGRESSION
   SIMPLEREPORTTEST [ITEM 8 :sortedarray] 3
   SIMPLEREPORTTEST [ITEM 9 :sortedarray] 3
 
+  ;
+  ; sort a long list in reverse order
+  ;
+  SIMPLEREPORTTEST [SORT ISEQ 100 1] ISEQ 1 100
+
 END
 
 TO SORTTEST.BADINPUT
