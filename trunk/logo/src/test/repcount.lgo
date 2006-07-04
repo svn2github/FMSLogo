@@ -1,0 +1,75 @@
+LOAD "testlib.lgo
+
+TO REPCOUNTTEST.TIMERCALLBACK
+
+  ; test that REPEAT repeats the expected number of times
+  LOCALMAKE "word "||
+  REPEAT 1000 [ MAKE "word WORD :word "A ]
+  SIMPLEREPORTTEST [COUNT :word] 1000
+
+  ; test that REPCOUNT is as expected in each iteration
+  LOCALMAKE "callbackrepcount 1
+  REPEAT 1000 [
+    IF NOT EQUAL? :callbackrepcount REPCOUNT [
+      REPORTTESTFAILED (LIST "|REPEAT in main loop changed REPCOUNT in timer event: callbackrepcount=| :callbackrepcount "repcount= REPCOUNT)
+      CLEARTIMER 1
+      STOP
+    ]
+    make "callbackrepcount :callbackrepcount + 1
+  ]
+
+  ; cleanup
+  CLEARTIMER 1
+  REPORTTESTPASSED [REPEAT in main loop did not change REPCOUNT in timer event]
+END
+
+TO REPCOUNTTEST.TIMERTEST
+
+  ; start a timer event that also has a REPEAT instruction
+  SETTIMER 1 0 [REPCOUNTTEST.TIMERCALLBACK]
+
+  LOCALMAKE "mainrepcount 1
+  REPEAT 2500 [
+    IF NOT EQUAL? :mainrepcount REPCOUNT [
+      REPORTTESTFAILED (LIST "|REPEAT in timer event changed REPCOUNT in main loop: mainrepcount=| :mainrepcount "repcount= REPCOUNT)
+      STOP
+    ]
+    MAKE "mainrepcount :mainrepcount + 1
+  ]
+  REPORTTESTPASSED [REPEAT in main loop did not change REPCOUNT in timer event]
+
+
+END
+
+
+TO REPCOUNTTEST.SMOKETEST
+
+  SIMPLEREPORTTEST [REPCOUNT] -1
+
+  ; make sure the value of REPCOUNT is as expected
+  LOCALMAKE "expectedrepcount 1
+  REPEAT 100 [
+    IF NOT EQUAL? :expectedrepcount REPCOUNT [
+      SIMPLEREPORTTEST [REPCOUNT] :expectedrepcount
+    ]
+    MAKE "expectedrepcount :expectedrepcount + 1
+  ]
+
+  SIMPLEREPORTTEST [REPCOUNT] -1
+
+END
+
+TO REPCOUNTTEST.BADINPUT
+
+  RUNTOOMANYINPUTSTEST [(REPCOUNT "toomany)]
+
+END
+
+
+TO REPCOUNTTEST
+
+  REPCOUNTTEST.SMOKETEST
+  REPCOUNTTEST.TIMERTEST
+  REPCOUNTTEST.BADINPUT
+
+END
