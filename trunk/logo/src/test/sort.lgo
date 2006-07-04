@@ -77,7 +77,7 @@ TO SORTTEST.REGRESSION
   SIMPLEREPORTTEST [SORT "||]        "||
 
   ; Goes into infinite loop (bug #1508400)
-  ;SIMPLEREPORTTEST [(SORT "hello "SORTTEST.AFTER?)] "ollhe
+  SIMPLEREPORTTEST [(SORT "hello "SORTTEST.AFTER?)] "ollhe
 
   ;
   ; sort an array
@@ -115,9 +115,26 @@ TO SORTTEST.BADINPUT
 
 END
 
+TO SORTTEST.PERFORMANCE
+
+  REPORTTESTINFO [Sorting a sequence that is in random order]
+  localmake "randomsequence map [random 1000] iseq 1 100000
+  ignore timecommand [sort :randomsequence]
+
+  REPORTTESTINFO [Sorting a sequence that is already sorted]
+  localmake "orderedsequence iseq 1 100000
+  ignore timecommand [sort :orderedsequence]
+
+  REPORTTESTINFO [Sorting a sequence that is in reverse order]
+  localmake "reversesequence iseq 100000 1
+  ignore timecommand [sort :reversesequence]
+END
+
 TO SORTTEST
 
   SORTTEST.REGRESSION
   SORTTEST.BADINPUT
+
+  ;SORTTEST.PERFORMANCE
 
 END
