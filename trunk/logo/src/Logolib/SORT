@@ -3,35 +3,39 @@ to sort.listtoword :list
 end
 
 to sort.wordtolist :word
-  (local "list)
+  local "list
   make "list []
-  repeat count :word [make "list fput item (count :word) - repcount + 1 :word :list]
+  repeat count :word [
+    make "list fput item (count :word) - repcount + 1 :word :list
+  ]
   op :list
 end
 
-to sort.merge :l1 :l2 :cmp
-  if empty? :l1 [op :l2]
-  if empty? :l2 [op :l1]
-  if apply :cmp (list first :l1 first :l2) [op fput first :l1 sort.merge butfirst :l1 :l2 :cmp]
-  op fput first :l2 sort.merge :l1 butfirst :l2 :cmp
+to sort.merge :sort.list1 :sort.list2 :sort.cmp
+  if empty? :sort.list1 [op :sort.list2]
+  if empty? :sort.list2 [op :sort.list1]
+  if apply :sort.cmp (list first :sort.list1 first :sort.list2) [
+     op fput first :sort.list1 sort.merge butfirst :sort.list1 :sort.list2 :sort.cmp
+  ]
+  op fput first :sort.list2 sort.merge :sort.list1 butfirst :sort.list2 :sort.cmp
 end
 
-to sort.mergepairwise :ll :cmp
-  if empty? :ll          [op :ll] 
-  if empty? butfirst :ll [op :ll]
-  op fput (sort.merge first :ll first butfirst :ll :cmp) (sort.mergepairwise butfirst butfirst :ll :cmp)
+to sort.mergepairwise :sort.listoflists :sort.cmp
+  if empty? :sort.listoflists          [op :sort.listoflists] 
+  if empty? butfirst :sort.listoflists [op :sort.listoflists]
+  op fput (sort.merge first :sort.listoflists first butfirst :sort.listoflists :sort.cmp) (sort.mergepairwise butfirst butfirst :sort.listoflists :sort.cmp)
 end
 
-to sort.mergesort :l :cmp
-  if empty? :l [ op :l ]
-  op first cascade [empty? butfirst ?] [sort.mergepairwise ? :cmp] map [(list ?)] :l
+to sort.mergesort :sort.list :sort.cmp
+  if empty? :sort.list [ op :sort.list ]
+  op first cascade [empty? butfirst ?] [sort.mergepairwise ? :sort.cmp] map [(list ?)] :sort.list
 end
 
-to sort :seq [:cmp ifelse word? :seq ["before?] ["less?]]
-  if list?  :seq [op                  sort.mergesort                 :seq :cmp]
-  if array? :seq [op listtoarray      sort.mergesort arraytolist     :seq :cmp]
-  if word?  :seq [op sort.listtoword  sort.mergesort sort.wordtolist :seq :cmp]
-  op :seq
+to sort :sort.seq [:sort.cmp ifelse word? :sort.seq ["before?] ["less?]]
+  if list?  :sort.seq [op                  sort.mergesort                 :sort.seq :sort.cmp]
+  if array? :sort.seq [op listtoarray      sort.mergesort arraytolist     :sort.seq :sort.cmp]
+  if word?  :sort.seq [op sort.listtoword  sort.mergesort sort.wordtolist :sort.seq :sort.cmp]
+  op :sort.seq
 end
 
 bury [sort sort.mergesort sort.mergepairwise sort.merge sort.listtoword sort.wordtolist]
