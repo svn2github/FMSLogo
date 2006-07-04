@@ -1,24 +1,37 @@
-to sort :l [:cmp ifelse word? :l ["before?] ["less?]]
-if list? :l [op sort.stable :l :cmp]
-if array? :l [op listtoarray sort.stable arraytolist :l :cmp]
-if word? :l [op apply "word sort.stable transfer [] [lput ?in ?out] :l :cmp]
-op :l
+to sort.listtoword :list
+  op apply "word :list
 end
 
-to sort.stable :l :cmp
-if (count :l)<2 [op :l]
-localmake "ll []
-localmake "le []
-localmake "lg []
-localmake "p pick :l
-foreach :l [
-  localmake "ip apply :cmp (list ? :p)
-  localmake "pi apply :cmp (list :p ?)
-  if :ip [make "ll lput ? :ll]
-  if and not :ip not :pi [make "le lput ? :le]
-  if :pi [make "lg lput ? :lg]
-]
-op (se sort.stable :ll :cmp :le sort.stable :lg :cmp)
+to sort.wordtolist :word
+  (local "list)
+  make "list []
+  repeat count :word [make "list fput item (count :word) - repcount + 1 :word :list]
+  op :list
 end
 
-bury [sort sort.stable]
+to sort.merge :l1 :l2 :cmp
+  if empty? :l1 [op :l2]
+  if empty? :l2 [op :l1]
+  if apply :cmp (list first :l1 first :l2) [op fput first :l1 sort.merge butfirst :l1 :l2 :cmp]
+  op fput first :l2 sort.merge :l1 butfirst :l2 :cmp
+end
+
+to sort.mergepairwise :ll :cmp
+  if empty? :ll          [op :ll] 
+  if empty? butfirst :ll [op :ll]
+  op fput (sort.merge first :ll first butfirst :ll :cmp) (sort.mergepairwise butfirst butfirst :ll :cmp)
+end
+
+to sort.mergesort :l :cmp
+  if empty? :l [ op :l ]
+  op first cascade [empty? butfirst ?] [sort.mergepairwise ? :cmp] map [(list ?)] :l
+end
+
+to sort :seq [:cmp ifelse word? :seq ["before?] ["less?]]
+  if list?  :seq [op                  sort.mergesort                 :seq :cmp]
+  if array? :seq [op listtoarray      sort.mergesort arraytolist     :seq :cmp]
+  if word?  :seq [op sort.listtoword  sort.mergesort sort.wordtolist :seq :cmp]
+  op :seq
+end
+
+bury [sort sort.mergesort sort.mergepairwise sort.merge sort.listtoword sort.wordtolist]
