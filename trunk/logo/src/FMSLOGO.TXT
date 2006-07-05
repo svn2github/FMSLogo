@@ -25,9 +25,12 @@ Part II) New features/bugs fixed:
       integers as valid input (for example, 1.0 is treated as 1).
     o Fix bug #1516689: BITAND, BITOR, BITXOR now validate input when there is
       only one input.
+    o Fix bug #1516688: REPEAT loops in event callbacks no longer interfere 
+      with REPEAT loops in main evaluator.
     o Fix bug #1511966; LIST now returns the empty list when given no inputs.
     o Fix bug #1508400; SORT no longer goes into infinite loop when given 
       NOT LESS? as a predicate.
+    o Fix bug #1471059: value of REPCOUNT is now -1 outside of REPEAT loop.
     o Implement request #1492605; SORT is now faster and the design fits
       better with Logo's LISP heritage.
     o Minor updates to the manual.
