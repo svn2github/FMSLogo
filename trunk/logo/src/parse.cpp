@@ -797,12 +797,28 @@ NODE *runparse(NODE *ndlist)
    {
    if (nodetype(ndlist) == RUN_PARSE)
       {
+      // already run-parsed
       return parsed__runparse(ndlist);
       }
+
    if (!is_list(ndlist))
       {
       err_logo(BAD_DATA_UNREC, ndlist);
       return NIL;
+      }
+
+   if (ndlist != NIL)
+      {
+      NODE * curnd = car(ndlist);
+      if (is_word(curnd)             && 
+          getstrlen(curnd) >= 2      &&
+          getstrptr(curnd) != NULL   && 
+          getstrptr(curnd)[0] == '#' && 
+          getstrptr(curnd)[1] == '!')
+         {
+         // shell-script #! treated as comment line
+         return NIL;
+         }
       }
 
    NODE *return_list          = NIL;
