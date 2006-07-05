@@ -636,6 +636,8 @@ void init()
    Tag = intern(make_static_strnode("Tag"));
    the_generation = vref(cons_list(NIL));
    Not_Enough_Node = vref(cons_list(NIL));
+
+   repcountup = -1;
    }
 
 void uninit()

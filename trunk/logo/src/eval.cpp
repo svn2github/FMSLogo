@@ -1026,23 +1026,22 @@ NODE *evaluator(NODE *list, enum labels where)
 
  repeat_continuation:
    assign(list, cdr(val));
+   num2save(repcount,repcountup);
    repcount = getint(car(val));
-   repcountup = 1;
+   repcountup = 0;
  repeat_again:
    assign(val, Unbound);
    if (repcount == 0)
       {
-      if (repcountuppoint) 
-         {
-         repcountup = (FIXNUM) car((NODE *) repcountuppoint);
-         }
+ repeat_done:
+      num2restore(repcount,repcountup);
       goto fetch_cont;
       }
-   mixsave(repcount, list);
-   numsave(repcountuppoint);
-   numsave(repcountup);
-   repcountuppoint = (FIXNUM) stack;
-   num2save(val_status, tailcall);
+   repcountup++;
+   save2(list,var);
+   var = reref(var, var_stack);
+   num2save(repcount,repcountup);
+   num2save(val_status,tailcall);
    val_status = 4;
    newcont(repeat_followup);
    goto begin_seq;
@@ -1055,9 +1054,8 @@ NODE *evaluator(NODE *list, enum labels where)
       unref(val);
       }
    num2restore(val_status, tailcall);
-   numrestore(repcountup);
-   numrestore(repcountuppoint);
-   mixrestore(repcount, list);
+   num2restore(repcount, repcountup);
+   restore2(list,var);
    if (val_status < 4 && tailcall != 0)
       {
       if (STOPPING || RUNNING) 
@@ -1068,23 +1066,18 @@ NODE *evaluator(NODE *list, enum labels where)
          {
          stopping_flag = RUN;
          assign(val, output_node);
-         if (val != Unbound && val_status < 2)
-            {
-            err_logo(DK_WHAT_UP, val);
-            }
-         goto fetch_cont;
+         goto repeat_done;
          }
       }
    if (repcount > 0) // negative means forever
       {
       --repcount;
-      ++repcountup;
       }
    check_stop(true);
 
    if (RUNNING) goto repeat_again;
    assign(val, Unbound);
-   goto fetch_cont;
+   goto repeat_done;
 
  catch_continuation:
    assign(list, cdr(val));
