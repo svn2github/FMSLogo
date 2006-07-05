@@ -142,7 +142,9 @@ NODE *lfulltext(NODE *args)
 static
 NODE *define_helper(NODE *args, int macro_flag)
    {
-   NODE *name, *val;
+   /* macro_flag is -1 for anonymous function */
+   NODE *name;
+   NODE *val;
    int minimum = 0;
    int deflt = 0;
    int maximum = 0;
