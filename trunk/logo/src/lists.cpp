@@ -675,8 +675,9 @@ NODE *lmember(NODE *args)
    return memberp_helper(args, true, false);
    }
 
-// returns an integer node if args can be interpreted as an integer.
-// otherwise sets an error in args and returns Unbound.
+// If the first element in args can be interpreted as an integer
+// then it is changed into an integer node and returned.
+// Otherwise it is set to whatever ERRACT returns.
 NODE *integer_arg(NODE *args)
    {
    NODE *arg = car(args);
