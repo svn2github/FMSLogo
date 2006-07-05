@@ -44,6 +44,7 @@ END
 
 TO REPCOUNTTEST.SMOKETEST
 
+  ; REPCOUNT outside of a REPEAT is always -1
   SIMPLEREPORTTEST [REPCOUNT] -1
 
   ; make sure the value of REPCOUNT is as expected
@@ -55,7 +56,14 @@ TO REPCOUNTTEST.SMOKETEST
     MAKE "expectedrepcount :expectedrepcount + 1
   ]
 
+  ; REPCOUNT outside of a REPEAT is always -1
   SIMPLEREPORTTEST [REPCOUNT] -1
+
+  ; nested REPEAT should keep REPCOUNT straight
+  LOCAL "list
+  TRACEINSTRUCTION [ MAKE "list [] ]
+  TRACEINSTRUCTION [ REPEAT 2 [ MAKE "list LPUT REPCOUNT :list REPEAT 3 [ MAKE "list LPUT REPCOUNT :list ] ] ]
+  SIMPLEREPORTTEST [ :list ] [1 1 2 3 2 1 2 3]
 
 END
 
