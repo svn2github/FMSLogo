@@ -549,6 +549,9 @@ void right_helper(FLONUM a)
    draw_turtle(true);
    }
 
+// If the first element in args can be interpreted as a number
+// then it is changed into an numeric node and returned.
+// Otherwise it is set to whatever ERRACT returns.
 NODE *numeric_arg(NODE *args)
    {
    NODE *arg = car(args);
