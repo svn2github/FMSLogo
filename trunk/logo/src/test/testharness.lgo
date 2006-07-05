@@ -65,6 +65,7 @@ LOAD "windowfileedit.lgo
 LOAD "midi.lgo
 LOAD "sound.lgo
 LOAD "yesnobox.lgo
+LOAD "shellscript.lgo
 
 TO TESTALL
 
