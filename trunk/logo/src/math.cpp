@@ -1,5 +1,5 @@
 /*
-*      math.c          logo math functions module              dvb
+*      math.cpp          logo math functions module              dvb
 *
 *       Copyright (C) 1995 by the Regents of the University of California
 *       Copyright (C) 1995 by George Mills
@@ -24,9 +24,41 @@
 
 #include "const.h"
 
-/* CONSIDER for SIMPLICITY:
-  Either document the return value, or return a bool type.
-*/
+const char MATHFUNC_Sum        = '+';
+const char MATHFUNC_Difference = '-';
+const char MATHFUNC_Product    = '*';
+const char MATHFUNC_Quotient   = '/';
+const char MATHFUNC_Remainder  = '%';
+const char MATHFUNC_Modulo     = 'm';
+const char MATHFUNC_BitAnd     = '&';
+const char MATHFUNC_BitOr      = '|';
+const char MATHFUNC_BitXor     = '^';
+const char MATHFUNC_BitAShift  = 'a';
+const char MATHFUNC_BitLShift  = 'l';
+const char MATHFUNC_BitNot     = '~';
+const char MATHFUNC_Sin        = 's';
+const char MATHFUNC_Cos        = 'c';
+const char MATHFUNC_Tan        = 't';
+const char MATHFUNC_ArcSin     = 'v';
+const char MATHFUNC_ArcCos     = 'w';
+const char MATHFUNC_ArcTan     = 'x';
+const char MATHFUNC_RadSin     = 'S';
+const char MATHFUNC_RadCos     = 'C';
+const char MATHFUNC_RadTan     = 'T';
+const char MATHFUNC_RadArcSin  = 'V';
+const char MATHFUNC_RadArcCos  = 'W';
+const char MATHFUNC_RadArcTan  = 'X';
+const char MATHFUNC_SquareRoot = 'q';
+const char MATHFUNC_Integer    = 'i';
+const char MATHFUNC_Round      = 'r';
+const char MATHFUNC_Exp        = 'e';
+const char MATHFUNC_Log10      = 'g';
+const char MATHFUNC_Ln         = 'n';
+const char MATHFUNC_Power      = 'p';
+
+// returns 0  if snd is not a number
+// returns 1  if snd is an integer
+// returns >1 if snd is a floating point value
 int numberp(NODE *snd)
    {
    if (is_number(snd)) 
@@ -187,13 +219,13 @@ NODE * get_arg_for_function(NODE * args, char fcn)
 
    switch (fcn)
       {
-      case '%':
-      case 'm':
-      case '&':
-      case '|':
-      case '^':
-      case 'a':
-      case 'l':
+      case MATHFUNC_Remainder:
+      case MATHFUNC_Modulo:
+      case MATHFUNC_BitAnd:
+      case MATHFUNC_BitOr:
+      case MATHFUNC_BitXor:
+      case MATHFUNC_BitAShift:
+      case MATHFUNC_BitLShift:
          // changes 1.0 to 1.
          arg = integer_arg(args);
          break;
@@ -238,25 +270,31 @@ NODE *binary(NODE *args, char fcn)
          {
          switch (fcn)
             {
-            case '-': ival = -ival; break;
-            case '~': ival = ~ival; break;
-            case 'v':
-            case 'w':
-            case 'x':
-            case 'V':
-            case 'W':
-            case 'X':
-            case 's':
-            case 'c':
-            case 't':
-            case 'S':
-            case 'C':
-            case 'T':
-            case 'q':
-            case 'e':
-            case 'g':
-            case 'n':
-            case '/':
+            case MATHFUNC_Difference: 
+               ival = -ival; 
+               break;
+
+            case MATHFUNC_BitNot: 
+               ival = ~ival; 
+               break;
+
+            case MATHFUNC_ArcSin:
+            case MATHFUNC_ArcCos:
+            case MATHFUNC_ArcTan:
+            case MATHFUNC_RadArcSin:
+            case MATHFUNC_RadArcCos:
+            case MATHFUNC_RadArcTan:
+            case MATHFUNC_Sin:
+            case MATHFUNC_Cos:
+            case MATHFUNC_Tan:
+            case MATHFUNC_RadSin:
+            case MATHFUNC_RadCos:
+            case MATHFUNC_RadTan:
+            case MATHFUNC_SquareRoot:
+            case MATHFUNC_Exp:
+            case MATHFUNC_Log10:
+            case MATHFUNC_Ln:
+            case MATHFUNC_Quotient:
                imode = false;
                fval = (FLONUM) ival;
                break;
@@ -269,8 +307,11 @@ NODE *binary(NODE *args, char fcn)
             {
             switch (fcn)
                {
-               case '-': fval = -fval; break;
-               case '/':
+               case MATHFUNC_Difference: 
+                  fval = -fval; 
+                  break;
+
+               case MATHFUNC_Quotient:
                   if (fval == 0.0)
                      {
                      err_logo(BAD_DATA_UNREC, arg);
@@ -280,26 +321,79 @@ NODE *binary(NODE *args, char fcn)
                      fval = 1 / fval;
                      }
                   break;
-               case '~': err_logo(BAD_DATA_UNREC, arg); break;
-               case 'c': fval = cos(fval * rads_per_degree); break;
-               case 's': fval = sin(fval * rads_per_degree); break;
-               case 't': fval = tan(fval * rads_per_degree); break;
-               case 'v': fval = asin(fval) * degrees_per_rad; break;
-               case 'w': fval = acos(fval) * degrees_per_rad; break;
-               case 'x': fval = atan(fval) * degrees_per_rad; break;
-               case 'S': fval = sin(fval); break;
-               case 'C': fval = cos(fval); break;
-               case 'T': fval = tan(fval); break;
-               case 'V': fval = asin(fval); break;
-               case 'W': fval = acos(fval); break;
-               case 'X': fval = atan(fval); break;
-               case 'q': errchk(fval = sqrt(fval)); break;
-               case 'e': errchk(fval = exp(fval)); break;
-               case 'g': errchk(fval = log10(fval)); break;
-               case 'n': errchk(fval = log(fval)); break;
-               case 'r':
+
+               case MATHFUNC_BitNot: 
+                  err_logo(BAD_DATA_UNREC, arg); 
+                  break;
+
+               case MATHFUNC_Cos: 
+                  fval = cos(fval * rads_per_degree); 
+                  break;
+
+               case MATHFUNC_Sin: 
+                  fval = sin(fval * rads_per_degree); 
+                  break;
+
+               case MATHFUNC_Tan: 
+                  fval = tan(fval * rads_per_degree); 
+                  break;
+
+               case MATHFUNC_ArcSin: 
+                  fval = asin(fval) * degrees_per_rad; 
+                  break;
+
+               case MATHFUNC_ArcCos: 
+                  fval = acos(fval) * degrees_per_rad; 
+                  break;
+
+               case MATHFUNC_ArcTan: 
+                  fval = atan(fval) * degrees_per_rad; 
+                  break;
+
+               case MATHFUNC_RadSin: 
+                  fval = sin(fval); 
+                  break;
+
+               case MATHFUNC_RadCos: 
+                  fval = cos(fval); 
+                  break;
+
+               case MATHFUNC_RadTan: 
+                  fval = tan(fval); 
+                  break;
+
+               case MATHFUNC_RadArcSin: 
+                  fval = asin(fval); 
+                  break;
+
+               case MATHFUNC_RadArcCos: 
+                  fval = acos(fval); 
+                  break;
+
+               case MATHFUNC_RadArcTan: 
+                  fval = atan(fval); 
+                  break;
+
+               case MATHFUNC_SquareRoot: 
+                  errchk(fval = sqrt(fval)); 
+                  break;
+
+               case MATHFUNC_Exp: 
+                  errchk(fval = exp(fval)); 
+                  break;
+
+               case MATHFUNC_Log10: 
+                  errchk(fval = log10(fval)); 
+                  break;
+
+               case MATHFUNC_Ln: 
+                  errchk(fval = log(fval));
+                  break;
+
+               case MATHFUNC_Round:
                   fval += (fval < 0 ? -0.5 : 0.5);
-               case 'i':
+                  // FALLTHROUGH
+               case MATHFUNC_Integer:
                   if (fval > (FLONUM) MAXINT || fval < -(FLONUM) MAXINT)
                      {
                      handle_oflo(sig_arg);
@@ -321,7 +415,7 @@ NODE *binary(NODE *args, char fcn)
          else
             {
             /* overflow */
-            if (fcn == 'r' || fcn == 'i')
+            if (fcn == MATHFUNC_Round || fcn == MATHFUNC_Integer)
                {
                if (fval < 0.0)
                   {
@@ -386,15 +480,17 @@ NODE *binary(NODE *args, char fcn)
                {
                switch (fcn)
                   {
-                  case '-': iarg = -iarg;
-                  case '+':
+                  case MATHFUNC_Difference: 
+                     iarg = -iarg;
+                     // FALLTHROUGH
+                  case MATHFUNC_Sum:
                      if (iarg < 0)
                         {
                         FIXNUM nval = ival + iarg;
                         if (nval >= ival)
                            {
                            imode = false;
-                           fcn   = '+';
+                           fcn   = MATHFUNC_Sum;
                            fval  = (FLONUM) ival;
                            farg  = (FLONUM) iarg;
                            // handle_oflo(sig_arg);
@@ -410,7 +506,7 @@ NODE *binary(NODE *args, char fcn)
                         if (nval < ival)
                            {
                            imode = false;
-                           fcn   = '+';
+                           fcn   = MATHFUNC_Sum;
                            fval  = (FLONUM) ival;
                            farg  = (FLONUM) iarg;
                            // handle_oflo(sig_arg);
@@ -422,7 +518,7 @@ NODE *binary(NODE *args, char fcn)
                         }
                      break;
 
-                  case '/':
+                  case MATHFUNC_Quotient:
                      if (iarg == 0)
                         {
                         err_logo(BAD_DATA_UNREC, arg);
@@ -442,7 +538,7 @@ NODE *binary(NODE *args, char fcn)
                         }
                      break;
 
-                  case '%':
+                  case MATHFUNC_Remainder:
                      if (iarg == 0)
                         {
                         err_logo(BAD_DATA_UNREC, arg);
@@ -453,7 +549,7 @@ NODE *binary(NODE *args, char fcn)
                         }
                      break;
 
-                  case 'm':
+                  case MATHFUNC_Modulo:
                      if (iarg == 0)
                         {
                         err_logo(BAD_DATA_UNREC, arg);
@@ -468,23 +564,23 @@ NODE *binary(NODE *args, char fcn)
                         }
                      break;
 
-                  case '&': 
+                  case MATHFUNC_BitAnd: 
                      ival &= iarg; 
                      break;
 
-                  case '|':
+                  case MATHFUNC_BitOr:
                      ival |= iarg; 
                      break;
 
-                  case '^': 
+                  case MATHFUNC_BitXor: 
                      ival ^= iarg; 
                      break;
 
-                  case 'a':
-                  case 'l':
+                  case MATHFUNC_BitAShift:
+                  case MATHFUNC_BitLShift:
                      if (iarg < 0)
                         {
-                        if (fcn == 'a')
+                        if (fcn == MATHFUNC_BitAShift)
                            {
                            ival >>= -iarg;
                            }
@@ -499,7 +595,7 @@ NODE *binary(NODE *args, char fcn)
                         }
                      break;
 
-                  case '*':
+                  case MATHFUNC_Product:
                      if (ival < SAFEINT && ival > -SAFEINT &&
                          iarg < SAFEINT && iarg > -SAFEINT)
                         {
@@ -531,9 +627,15 @@ NODE *binary(NODE *args, char fcn)
                {
                switch (fcn)
                   {
-                  case '+': fval += farg; break;
-                  case '-': fval -= farg; break;
-                  case '*':
+                  case MATHFUNC_Sum: 
+                     fval += farg; 
+                     break;
+
+                  case MATHFUNC_Difference: 
+                     fval -= farg; 
+                     break;
+
+                  case MATHFUNC_Product:
                      fval *= farg;
 
                      if (wantint)
@@ -547,7 +649,7 @@ NODE *binary(NODE *args, char fcn)
                         }
                      break;
 
-                  case '/':
+                  case MATHFUNC_Quotient:
                      if (farg == 0.0)
                         {
                         err_logo(BAD_DATA_UNREC, arg);
@@ -558,15 +660,15 @@ NODE *binary(NODE *args, char fcn)
                         }
                      break;
 
-                  case 'x':
+                  case MATHFUNC_ArcTan:
                      errchk(fval = atan2(farg, fval) * degrees_per_rad);
                      break;
 
-                  case 'X':
+                  case MATHFUNC_RadArcTan:
                      errchk(fval = atan2(farg, fval));
                      break;
 
-                  case 'p':
+                  case MATHFUNC_Power:
                      errchk(fval = pow(fval, farg));
                      break;
 
@@ -624,12 +726,12 @@ NODE *ladd(NODE *args)
       {
       return make_intnode(0);
       }
-   return binary(args, '+');
+   return binary(args, MATHFUNC_Sum);
    }
 
 NODE *lsub(NODE *args)
    {
-   return binary(args, '-');
+   return binary(args, MATHFUNC_Difference);
    }
 
 NODE *lmul(NODE *args)
@@ -638,22 +740,22 @@ NODE *lmul(NODE *args)
       {
       return make_intnode(1);
       }
-   return binary(args, '*');
+   return binary(args, MATHFUNC_Product);
    }
 
 NODE *ldivide(NODE *args)
    {
-   return binary(args, '/');
+   return binary(args, MATHFUNC_Quotient);
    }
 
 NODE *lremainder(NODE *args)
    {
-   return binary(args, '%');
+   return binary(args, MATHFUNC_Remainder);
    }
 
 NODE *lmodulo(NODE *args)
    {
-   return binary(args, 'm');
+   return binary(args, MATHFUNC_Modulo);
    }
 
 NODE *lbitand(NODE *args)
@@ -662,7 +764,7 @@ NODE *lbitand(NODE *args)
       {
       return make_intnode(-1);
       }
-   return binary(args, '&');
+   return binary(args, MATHFUNC_BitAnd);
    }
 
 NODE *lbitor(NODE *args)
@@ -671,7 +773,7 @@ NODE *lbitor(NODE *args)
       {
       return make_intnode(0);
       }
-   return binary(args, '|');
+   return binary(args, MATHFUNC_BitOr);
    }
 
 NODE *lbitxor(NODE *args)
@@ -680,117 +782,117 @@ NODE *lbitxor(NODE *args)
       {
       return make_intnode(0);
       }
-   return binary(args, '^');
+   return binary(args, MATHFUNC_BitXor);
    }
 
 NODE *lashift(NODE *args)
    {
-   return binary(args, 'a');
+   return binary(args, MATHFUNC_BitAShift);
    }
 
 NODE *llshift(NODE *args)
    {
-   return binary(args, 'l');
+   return binary(args, MATHFUNC_BitLShift);
    }
 
 NODE *lbitnot(NODE *args)
    {
-   return binary(args, '~');
+   return binary(args, MATHFUNC_BitNot);
    }
 
 NODE *lsin(NODE *args)
    {
-   return binary(args, 's');
+   return binary(args, MATHFUNC_Sin);
    }
 
 NODE *lcos(NODE *args)
    {
-   return binary(args, 'c');
+   return binary(args, MATHFUNC_Cos);
    }
 
 NODE *ltan(NODE *args)
    {
-   return binary(args, 't');
+   return binary(args, MATHFUNC_Tan);
    }
 
 NODE *lasin(NODE *args)
    {
-   return binary(args, 'v');
+   return binary(args, MATHFUNC_ArcSin);
    }
 
 NODE *lacos(NODE *args)
    {
-   return binary(args, 'w');
+   return binary(args, MATHFUNC_ArcCos);
    }
 
 NODE *latan(NODE *args)
    {
-   return binary(args, 'x');
+   return binary(args, MATHFUNC_ArcTan);
    }
 
 NODE *lradsin(NODE *args)
    {
-   return binary(args, 'S');
+   return binary(args, MATHFUNC_RadSin);
    }
 
 NODE *lradcos(NODE *args)
    {
-   return binary(args, 'C');
+   return binary(args, MATHFUNC_RadCos);
    }
 
 NODE *lradtan(NODE *args)
    {
-   return binary(args, 'T');
+   return binary(args, MATHFUNC_RadTan);
    }
 
 NODE *lradasin(NODE *args)
    {
-   return (binary(args, 'V'));
+   return binary(args, MATHFUNC_RadArcSin);
    }
 
 NODE *lradacos(NODE *args)
    {
-   return binary(args, 'W');
+   return binary(args, MATHFUNC_RadArcCos);
    }
 
 NODE *lradatan(NODE *args)
    {
-   return binary(args, 'X');
+   return binary(args, MATHFUNC_RadArcTan);
    }
 
 NODE *lsqrt(NODE *args)
    {
-   return binary(args, 'q');
+   return binary(args, MATHFUNC_SquareRoot);
    }
 
 NODE *linteg(NODE *args)
    {
-   return binary(args, 'i');
+   return binary(args, MATHFUNC_Integer);
    }
 
 NODE *lround(NODE *args)
    {
-   return binary(args, 'r');
+   return binary(args, MATHFUNC_Round);
    }
 
 NODE *lexp(NODE *args)
    {
-   return binary(args, 'e');
+   return binary(args, MATHFUNC_Exp);
    }
 
 NODE *llog10(NODE *args)
    {
-   return binary(args, 'g');
+   return binary(args, MATHFUNC_Log10);
    }
 
 NODE *lln(NODE *args)
    {
-   return binary(args, 'n');
+   return binary(args, MATHFUNC_Ln);
    }
 
 NODE *lpower(NODE *args)
    {
-   return binary(args, 'p');
+   return binary(args, MATHFUNC_Power);
    }
 
 static
