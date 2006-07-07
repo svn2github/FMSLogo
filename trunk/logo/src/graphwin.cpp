@@ -2231,55 +2231,6 @@ FindFont(
    return 1; // keep enumerating fonts
    }
 
-class CAppendableList
-{
-public:
-   CAppendableList();
-
-   void   TailAdd(NODE * TailNode);
-   NODE * GetList();
-
-private:
-   NODE * m_Head;
-   NODE * m_Tail;
-};
-
-CAppendableList::CAppendableList()
-   : m_Head(NIL),
-     m_Tail(NULL)
-   {
-   }
-
-void CAppendableList::TailAdd(NODE * NewTail)
-   {
-   assert(m_Tail == NULL || cdr(m_Tail) == NIL);
-
-   // Create a new node for this font face name.
-   // By convention this is a list containing a string.
-   NODE * newtailnode = cons_list(cons_list(NewTail));
-
-   // Add this node to the list
-   if (m_Tail == NULL)
-      {
-      // list is empty to this node because the list
-      m_Head = newtailnode;
-      m_Tail = m_Head;
-      }
-   else 
-      {
-      // list has at least one item
-      setcdr(m_Tail, newtailnode);
-      m_Tail = newtailnode;
-      }
-
-   assert(cdr(m_Tail) == NIL);
-   }
-
-NODE * CAppendableList::GetList()
-   {
-   return m_Head;
-   }
-
 
 static
 int CALLBACK
@@ -2292,9 +2243,12 @@ GatherFontFaces(
    {
    CAppendableList * fontfaces = reinterpret_cast<CAppendableList *>(lParam);
 
-   // add this font to the end of the list
-   NODE * fontFaceNode = make_strnode(LogFont->lfFaceName);
-   fontfaces->TailAdd(fontFaceNode);
+   // Create a new node for this font face name.
+   // By convention font face names are a list containing a string.
+   NODE * fontFaceNode = cons_list(make_strnode(LogFont->lfFaceName));
+
+   // Append the font face name to the end of the list.
+   fontfaces->AppendElement(fontFaceNode);
 
    return 1; // keep enumerating fonts
    }

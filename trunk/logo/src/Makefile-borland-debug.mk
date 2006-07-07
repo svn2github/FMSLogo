@@ -51,6 +51,7 @@ version.h : ..\version.mk
 Dep_fmslogoddexe = \
    DEBUG\3dsolid.obj\
    DEBUG\areawind.obj\
+   DEBUG\appendablelist.obj\
    DEBUG\assembly.obj\
    DEBUG\colordlg.obj\
    DEBUG\commanderbutton.obj\
@@ -109,6 +110,7 @@ fmslogod.exe : $(Dep_fmslogoddexe)
  /v $(IDE_LinkFLAGS32) $(LinkerOptsAt_fmslogoddexe) $(LinkerInheritOptsAt_fmslogoddexe) +
 \BC5\LIB\c0w32.obj+
 DEBUG\3dsolid.obj+
+DEBUG\appendablelist.obj+
 DEBUG\areawind.obj+
 DEBUG\assembly.obj+
 DEBUG\colordlg.obj+
@@ -173,6 +175,11 @@ DEBUG\logorc.res
 DEBUG\3dsolid.obj :  3dsolid.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ 3dsolid.cpp
+|
+
+DEBUG\appendablelist.obj :  appendablelist.cpp
+  $(BCC32) -c @&&|
+ $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ appendablelist.cpp
 |
 
 DEBUG\areawind.obj :  areawind.cpp

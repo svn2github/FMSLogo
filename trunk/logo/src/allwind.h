@@ -76,6 +76,7 @@
 #include "savebeforeexitdialog.h"
 #include "utils.h"
 #include "smartnode.h"
+#include "appendablelist.h"
 
 #endif // _ALLWIND_H_
 

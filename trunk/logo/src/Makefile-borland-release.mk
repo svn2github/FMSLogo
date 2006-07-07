@@ -48,6 +48,8 @@ version.h : ..\version.mk
 
 Dep_fmslogodexe = \
    RELEASE\3dsolid.obj\
+   RELEASE\appendablelist.obj\
+   RELEASE\areawind.obj\
    RELEASE\assembly.obj\
    RELEASE\cmdwind.obj\
    RELEASE\colordlg.obj\
@@ -60,7 +62,6 @@ Dep_fmslogodexe = \
    RELEASE\dllstack.obj\
    RELEASE\dllwind.obj\
    RELEASE\editwnd.obj\
-   RELEASE\areawind.obj\
    RELEASE\error.obj\
    RELEASE\eval.obj\
    RELEASE\files.obj\
@@ -106,6 +107,8 @@ fmslogo.exe : $(Dep_fmslogodexe)
  /v $(IDE_LinkFLAGS32) $(LinkerOptsAt_fmslogodexe) $(LinkerInheritOptsAt_fmslogodexe) +
 C:\BC5\LIB\c0w32.obj+
 RELEASE\3dsolid.obj+
+RELEASE\appendablelist.obj+
+RELEASE\areawind.obj+
 RELEASE\assembly.obj+
 RELEASE\cmdwind.obj+
 RELEASE\colordlg.obj+
@@ -118,7 +121,6 @@ RELEASE\dlgwind.obj+
 RELEASE\dllstack.obj+
 RELEASE\dllwind.obj+
 RELEASE\editwnd.obj+
-RELEASE\areawind.obj+
 RELEASE\error.obj+
 RELEASE\eval.obj+
 RELEASE\files.obj+
@@ -172,9 +174,19 @@ RELEASE\3dsolid.obj :  3dsolid.cpp
  $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ 3dsolid.cpp
 |
 
+RELEASE\appendablelist.obj :  appendablelist.cpp
+  $(BCC32) -c @&&|
+ $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ appendablelist.cpp
+|
+
 RELEASE\assembly.obj :  assembly.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ assembly.cpp
+|
+
+RELEASE\areawind.obj :  areawind.cpp
+  $(BCC32) -c @&&|
+ $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ areawind.cpp
 |
 
 RELEASE\cmdwind.obj :  cmdwind.cpp
@@ -230,11 +242,6 @@ RELEASE\dllwind.obj :  dllwind.cpp
 RELEASE\editwnd.obj :  editwnd.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ editwnd.cpp
-|
-
-RELEASE\areawind.obj :  areawind.cpp
-  $(BCC32) -c @&&|
- $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ areawind.cpp
 |
 
 RELEASE\error.obj :  error.cpp
