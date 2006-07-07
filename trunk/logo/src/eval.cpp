@@ -1286,7 +1286,13 @@ NODE *evaluator(NODE *list, enum labels where)
                   max = getprimmax(proc);
                   }
                }
-            for (n = 0, arg = argl; arg != NIL; n++, arg = cdr(arg));
+
+            for (n = 0, arg = argl; 
+                 arg != NIL; 
+                 n++, arg = cdr(arg))
+               {
+               }
+
             if (n < min)
                {
                err_logo(NOT_ENOUGH, NIL);
