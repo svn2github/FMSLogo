@@ -646,7 +646,7 @@ NODE *runparse_node(NODE *nd, NODE **ndsptr)
    NODE * snd = cnv_node_to_strnode(nd);
    ref(snd);
    const char *wptr  = getstrptr(snd);
-   int         wlen  = getstrlen(snd);
+   const int   wlen  = getstrlen(snd);
    NODETYPES   wtyp  = nodetype(snd);
    int         wcnt  = 0;
 
@@ -729,26 +729,55 @@ NODE *runparse_node(NODE *nd, NODE **ndsptr)
          {
          tcnt = 0;
          tptr = wptr;
-         /* isnumb 4 means nothing yet;
-          * 0 means digits so far, 1 means just saw
-          * 'e' so minus can be next, 2 means no longer
-          * eligible even if an 'e' comes along */
+         // isnumb
+         // 0 means digits so far, 
+         // 1 means just saw 'e' so minus can be next
+         // 2 means no longer eligible even if an 'e' comes along 
+         // 3 means we saw a '?'
+         // 4 means nothing yet;
          isnumb = 4;
          if (*wptr == '?')
             {
-            isnumb = 3;                // turn ?5 to (? 5)
+            // turn ?5 to (? 5)
+            isnumb = 3; 
             wptr++, wcnt++, tcnt++;
             }
-         while (wcnt < wlen && !parens(*wptr) &&
-               (!infixs(*wptr) || (isnumb == 1 && (*wptr == '-' || *wptr == '+'))))
+
+         bool gotdot = false;
+         while (wcnt < wlen    && 
+                !parens(*wptr) &&
+                (!infixs(*wptr) || (isnumb == 1 && (*wptr == '-' || *wptr == '+'))))
             {
-            if (isnumb == 4 && isdigit(*wptr)) isnumb = 0;
+            if (isnumb == 4 && isdigit(*wptr)) 
+               {
+               // could be a number
+               isnumb = 0;
+               }
+
             if (isnumb == 0 && tcnt > 0 && (*wptr == 'e' || *wptr == 'E'))
+               {
+               // just saw an 'e', so a - could be next
                isnumb = 1;
-            else if (!(isdigit(*wptr) || *wptr == '.') || isnumb == 1)
+               }
+            else if ((!isdigit(*wptr) && (*wptr != '.' || gotdot)) || isnumb == 1)
+               {
+               // can't be a number
                isnumb = 2;
+               }
+
+            if (*wptr == '.') 
+               {
+               gotdot = true;
+               }
             wptr++, wcnt++, tcnt++;
             }
+
+         if (MAX_NUMBER <= tcnt)
+            {
+            // too many characters to be a valid number
+            isnumb = 2;
+            }
+
          if (isnumb == 3 && tcnt > 1)
             {
             /* ?5 syntax */
