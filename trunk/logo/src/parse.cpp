@@ -653,9 +653,6 @@ NODE *runparse_node(NODE *nd, NODE **ndsptr)
    NODE *return_list = NIL;
    NODE *return_list_lastnode = NIL;
 
-   const char *tptr;
-   int tcnt;
-   int isnumb;
    bool monadic_minus = false;
 
    while (wcnt < wlen)
@@ -670,8 +667,8 @@ NODE *runparse_node(NODE *nd, NODE **ndsptr)
 
       if (*wptr == '"')
          {
-         tcnt = 0;
-         tptr = ++wptr;
+         int tcnt = 0;
+         const char * tptr = ++wptr;
          wcnt++;
          while (wcnt < wlen && !parens(*wptr))
             {
@@ -696,8 +693,8 @@ NODE *runparse_node(NODE *nd, NODE **ndsptr)
          }
       else if (*wptr == ':')
          {
-         tcnt = 0;
-         tptr = ++wptr;
+         int tcnt = 0;
+         const char * tptr = ++wptr;
          wcnt++;
          while (wcnt < wlen && !parens(*wptr) && !infixs(*wptr))
             {
@@ -705,12 +702,12 @@ NODE *runparse_node(NODE *nd, NODE **ndsptr)
             }
          tnode = make_colon(intern(make_strnode(tptr, tcnt, wtyp, strnzcpy)));
          }
-      else if (wcnt == 0 && *wptr == '-' && monadic_minus == FALSE &&
+      else if (wcnt == 0 && *wptr == '-' && !monadic_minus &&
             wcnt+1 < wlen && !white_space(*(wptr + 1)))
          {
          /* minus sign with space before and no space after is unary */
          tnode = make_intnode(0);
-         monadic_minus = TRUE;
+         monadic_minus = true;
          }
       else if (parens(*wptr) || infixs(*wptr))
          {
@@ -727,15 +724,15 @@ NODE *runparse_node(NODE *nd, NODE **ndsptr)
          }
       else
          {
-         tcnt = 0;
-         tptr = wptr;
+         int tcnt = 0;
+         const char * tptr = wptr;
          // isnumb
          // 0 means digits so far, 
          // 1 means just saw 'e' so minus can be next
          // 2 means no longer eligible even if an 'e' comes along 
          // 3 means we saw a '?'
          // 4 means nothing yet;
-         isnumb = 4;
+         int isnumb = 4;
          if (*wptr == '?')
             {
             // turn ?5 to (? 5)
