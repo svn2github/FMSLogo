@@ -31,6 +31,8 @@ Part II) New features/bugs fixed:
     o Fix bug #1508400; SORT no longer goes into infinite loop when given 
       NOT LESS? as a predicate.
     o Fix bug #1471059: value of REPCOUNT is now -1 outside of REPEAT loop.
+    o Fix bug #1384326; "RIGHT 1.1." no longer has the baffling error message
+      "RIGHT didn't output to RIGHT".
     o Implement request #1492605; SORT is now faster and the design fits
       better with Logo's LISP heritage.
     o Minor updates to the manual.
