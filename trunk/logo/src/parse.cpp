@@ -410,8 +410,7 @@ parser_iterate(
    bool broken = false;
    bool vbar   = false;
 
-   NODE *return_list          = NIL;
-   NODE *return_list_lastnode = NIL;
+   CAppendableList return_list;
 
    char ch;
    do
@@ -482,8 +481,11 @@ parser_iterate(
                      }
                   }
                while (ch != '\0' && ch != '~' && **inln != '\n' && **inln != '\r');
-            //          while (ch != '\0' && ch != '~' && **inln != '\n');
-            if (ch != '\0' && ch != '~') ch = '\n';
+
+            if (ch != '\0' && ch != '~') 
+               {
+               ch = '\n';
+               }
             }
          }
 
@@ -590,23 +592,10 @@ parser_iterate(
          }
 
       // put the word onto the end of the return list
-      if (tnode != NIL)
-         {
-         if (return_list == NIL) 
-            {
-            // this is first node in the return list
-            return_list = vref(tnode);
-            }
-         else 
-            {
-            // add tnode to the end of the list
-            setcdr(return_list_lastnode, tnode);
-            }
-         return_list_lastnode = tnode;
-         }
+      return_list.AppendList(tnode);
       }
    while (ch);
-   return unref(return_list);
+   return return_list.GetList();
    }
 
 NODE *parser(NODE *nd, bool semi)
@@ -650,8 +639,7 @@ NODE *runparse_node(NODE *nd, NODE **ndsptr)
    NODETYPES   wtyp  = nodetype(snd);
    int         wcnt  = 0;
 
-   NODE *return_list = NIL;
-   NODE *return_list_lastnode = NIL;
+   CAppendableList return_list;
 
    bool monadic_minus = false;
 
@@ -751,9 +739,9 @@ NODE *runparse_node(NODE *nd, NODE **ndsptr)
                isnumb = 0;
                }
 
-            if (isnumb == 0 && tcnt > 0 && (*wptr == 'e' || *wptr == 'E'))
+            if (isnumb == 0 && (*wptr == 'e' || *wptr == 'E'))
                {
-               // just saw an 'e', so a - could be next
+               // just saw an 'e', so a '-' or '+' could be next
                isnumb = 1;
                }
             else if ((!isdigit(*wptr) && (*wptr != '.' || gotdot)) || isnumb == 1)
@@ -777,23 +765,20 @@ NODE *runparse_node(NODE *nd, NODE **ndsptr)
 
          if (isnumb == 3 && tcnt > 1)
             {
-            /* ?5 syntax */
+            // turn ?5 into (? 5)
+
+            // append "( ? 5" now
             NODE * qmtnode = cons_list(
                Left_Paren,
                Query,
                cnv_node_to_numnode(make_strnode(tptr + 1, tcnt - 1, wtyp, strnzcpy)));
-            if (return_list == NIL)
-               {
-               return_list = qmtnode;
-               }
-            else
-               {
-               setcdr(return_list_lastnode, qmtnode);
-               }
-            return_list_lastnode = cddr(qmtnode);
+
+            return_list.AppendList(qmtnode);
+
+            // append ")" later
             tnode = Right_Paren;
             }
-         else if (isnumb < 2 && tcnt > 0)
+         else if (isnumb < 2)
             {
             tnode = cnv_node_to_numnode(make_strnode(tptr, tcnt, wtyp, strnzcpy));
             }
@@ -804,19 +789,10 @@ NODE *runparse_node(NODE *nd, NODE **ndsptr)
          }
 
       // append tnode to the end of return_list
-      tnode = cons_list(tnode);
-      if (return_list == NIL)
-         {
-         return_list = tnode;
-         }
-      else 
-         {
-         setcdr(return_list_lastnode, tnode);
-         }
-      return_list_lastnode = tnode;
+      return_list.AppendElement(tnode);
       }
    deref(snd);
-   return return_list;
+   return return_list.GetList();
    }
 
 NODE *runparse(NODE *ndlist)
@@ -847,8 +823,7 @@ NODE *runparse(NODE *ndlist)
          }
       }
 
-   NODE *return_list          = NIL;
-   NODE *return_list_lastnode = NIL;
+   CAppendableList return_list;
 
    while (ndlist != NIL)
       {
@@ -872,30 +847,16 @@ NODE *runparse(NODE *ndlist)
             }
          }
 
-      if (tnode != NIL)
-         {
          // append tnode to the end of return_list
-         if (return_list == NIL) 
-            {
-            return_list = tnode;
-            }
-         else
-            {
-            setcdr(return_list_lastnode, tnode);
-            }
+      return_list.AppendList(tnode);
 
-         // advance return_list_lastnode to the new last node
-         return_list_lastnode = tnode;
-         while (cdr(return_list_lastnode) != NIL)
-            {
-            return_list_lastnode = cdr(return_list_lastnode);
-            if (check_throwing) break;
-            }
+      if (check_throwing) 
+         {
+         break;
          }
-      if (check_throwing) break;
       }
 
-   return return_list;
+   return return_list.GetList();
    }
 
 NODE *lrunparse(NODE *args)
