@@ -204,7 +204,7 @@ NODE *paren_expr(NODE **expr, bool inparen)
          }
       else
          {
-         /* it must be a procedure */
+         // it must be a procedure
          if (procnode__caseobj(first) == UNDEFINED && 
              NOT_THROWING &&
              first != Null_Word)
@@ -220,8 +220,14 @@ NODE *paren_expr(NODE **expr, bool inparen)
          proc = procnode__caseobj(first);
          if (proc == UNDEFINED && NOT_THROWING)
             {
-            retval = cons(first, NIL);
+            retval = cons_list(first);
             tree_dk_how = TRUE;
+            }
+         else if (nodetype(proc) == INFIX && NOT_THROWING)
+            {
+            // make sure that 5**6 says "not enough inputs to *"
+            err_logo(NOT_ENOUGH, first);
+            retval = cons_list(first);
             }
          else
             {

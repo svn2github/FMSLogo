@@ -129,7 +129,7 @@ NODE *err_logo(ERR_TYPES error_type, NODE *error_desc)
       case NOT_ENOUGH:
          error_message = cons_list(
             make_static_strnode("not enough inputs to"), 
-            fun);
+            error_desc == NIL ? fun : error_desc);
            break;
 
       case BAD_DATA:
