@@ -1245,8 +1245,6 @@ NODE *evaluator(NODE *list, enum labels where)
       else
          {
          /* name of procedure to apply */
-         int min, max, n;
-         NODE *arg;
          assign(fun, intern(fun));
          if (procnode__caseobj(fun) == UNDEFINED && 
              NOT_THROWING &&
@@ -1267,16 +1265,21 @@ NODE *evaluator(NODE *list, enum labels where)
             }
          if (NOT_THROWING)
             {
+            int min;
+            int max;
+
             if (nodetype(proc) == CONS)
                {
+               // proc is a user-defined or library procedure
                min = getint(minargs__procnode(proc));
                max = getint(maxargs__procnode(proc));
                }
             else
                {
+               // proc is a primitive
                if (getprimdflt(proc) < 0)
                   {
-                  /* special form */
+                  // special form (TO or .MACRO)
                   err_logo(DK_HOW_UNREC, fun); // can't apply
                   goto fetch_cont;
                   }
@@ -1287,10 +1290,12 @@ NODE *evaluator(NODE *list, enum labels where)
                   }
                }
 
-            for (n = 0, arg = argl; 
-                 arg != NIL; 
-                 n++, arg = cdr(arg))
+            int n = 0;
+            for (NODE *arg = argl;
+                 arg != NIL;
+                 arg = cdr(arg))
                {
+               n++;
                }
 
             if (n < min)
