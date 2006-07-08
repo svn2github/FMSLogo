@@ -236,6 +236,12 @@ NODE *paren_expr(NODE **expr, bool inparen)
                // Kludge: turn IF to IFELSE sometimes.
                ifnode = &first;
                }
+
+            // update "fun" in case this is a special form (TO or .MACRO)
+            // and can encounter an erro within gather_args().
+            // This allows proper error reporting if fun receive bad input.
+            assign(fun, first);
+
             retval = gather_args(proc, expr, inparen, ifnode);
             if (retval != Unbound)
                {
