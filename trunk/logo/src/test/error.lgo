@@ -159,29 +159,25 @@ CATCH "ERROR [OUTPUT 123]
 ERRORTEST.CHECKERROR "|OUTPUT at the toplevel| 31 (LIST "|Can only use| "OUTPUT "|inside a procedure|)
 
 ;; bug #1457755
-; (commented out because it fails and failing halts automation)
 IGNORE ERROR
 CATCH "ERROR [TO 1]
-;ERRORTEST.CHECKERROR "|TO 1| 6 (LIST "TO "|doesn't like| 1 "|as input|)
+ERRORTEST.CHECKERROR "|TO 1| 4 (LIST "TO "|doesn't like| 1 "|as input|)
 
 IGNORE ERROR
 CATCH "ERROR [TO [1]]
-; (commented out because it fails and failing halts automation)
-;ERRORTEST.CHECKERROR "|TO 1| 4 (LIST "TO "|doesn't like| 1 "|as input|)
+ERRORTEST.CHECKERROR "|TO [1]| 4 (LIST "TO "|doesn't like| [1] "|as input|)
 
 IGNORE ERROR
-CATCH "ERROR [TO {1}]
-; (commented out because it fails and failing halts automation)
-;ERRORTEST.CHECKERROR "|TO 1| 4 (LIST "TO "|doesn't like| 1 "|as input|)
+MAKE "ERRORTEST.ARRAY {1}
+CATCH "ERROR (LIST "TO :ERRORTEST.ARRAY)
+ERRORTEST.CHECKERROR "|TO {1}| 4 (LIST "TO "|doesn't like| :ERRORTEST.ARRAY "|as input|)
 
 ;; bug #1457745 
 IGNORE ERROR
 CATCH "ERROR [TO]
-; (commented out because it fails and failing halts automation)
-;ERRORTEST.CHECKERROR "|TO with no inputs| 6 (LIST "|not enough inputs to| "TO)
+ERRORTEST.CHECKERROR "|TO with no inputs| 6 (LIST "|not enough inputs to| "TO)
 
-;; bug #???????  TO leaks formal parameters when one of them is bad
+;; TO used to leaks formal parameters when one of them is bad
 IGNORE ERROR
 CATCH "ERROR [TO MYPROC :A :B C]
-; (commented out because it fails and failing halts automation)
-;ERRORTEST.CHECKERROR "|TO with no inputs| 6 (LIST "|not enough inputs to| "TO)
+ERRORTEST.CHECKERROR "|TO MYPROC :A :B C| 4 (LIST "TO "|doesn't like| "C "|as input|)
