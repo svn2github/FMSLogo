@@ -330,6 +330,7 @@ extern NODE *lpprop(NODE *args);
 extern NODE *lremprop(NODE *args);
 extern NODE *lplist(NODE *args);
 extern NODE *llogoversion(NODE *args);
+extern bool variableIsTrue(NODE *variable);
 
 // File term.cpp
 extern void termcap_putter(char ch);

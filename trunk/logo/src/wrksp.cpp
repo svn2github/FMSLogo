@@ -149,7 +149,6 @@ NODE *define_helper(NODE *args, int macro_flag)
    int deflt = 0;
    int maximum = 0;
    int old_default = -1;
-   bool redef = (compare_node(valnode__caseobj(Redefp), Truex, true) == 0);
 
    if (macro_flag >= 0)
       {
@@ -158,6 +157,7 @@ NODE *define_helper(NODE *args, int macro_flag)
          {
          name = intern(name);
          val = procnode__caseobj(name);
+         bool redef = variableIsTrue(Redefp);
          if (!redef && is_prim(val))
             {
             err_logo(IS_PRIM, name);
@@ -1095,8 +1095,6 @@ NODE *lpot(NODE *arg)
 
 NODE *lerase(NODE *arg)
    {
-   bool redef = (compare_node(valnode__caseobj(Redefp), Truex, true) == 0);
-
    NODE *proclst;
    NODE *varlst;
    NODE *plistlst;
@@ -1115,6 +1113,7 @@ NODE *lerase(NODE *arg)
          break;
          }
       NODE * nd = intern(car(proclst));
+      bool redef = variableIsTrue(Redefp);
       if (!redef && is_prim(procnode__caseobj(nd)))
          {
          err_logo(IS_PRIM, nd);
@@ -1439,8 +1438,6 @@ NODE *lmacrop(NODE *args)
 
 NODE *lcopydef(NODE *args)
    {
-   bool redef = (compare_node(valnode__caseobj(Redefp), Truex, true) == 0);
-
    NODE * arg1 = name_arg(args);
    NODE * arg2 = name_arg(cdr(args));
    if (numberp(arg2)) 
@@ -1461,6 +1458,8 @@ NODE *lcopydef(NODE *args)
       {
       err_logo(DK_HOW, arg2);
       }
+
+   bool redef = variableIsTrue(Redefp);
    if (NOT_THROWING && !redef && is_prim(procnode__caseobj(arg1)))
       {
       err_logo(IS_PRIM, arg1);

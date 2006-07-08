@@ -1153,15 +1153,8 @@ NODE *lequalp(NODE *args)
    NODE * arg1 = car(args);
    NODE * arg2 = cadr(args);
 
-   bool val;
-   if (compare_node(valnode__caseobj(Caseignoredp), Truex, true) == 0)
-      {
-      val = equalp_help(arg1, arg2, true);
-      }
-   else
-      {
-      val = equalp_help(arg1, arg2, false);
-      }
+   bool caseig = variableIsTrue(Caseignoredp);
+   bool val = equalp_help(arg1, arg2, caseig);
 
    return torf(val);
    }
@@ -1176,15 +1169,8 @@ NODE *lbeforep(NODE *args)
    NODE * arg1 = string_arg(args);
    NODE * arg2 = string_arg(cdr(args));
 
-   int val;
-   if (compare_node(valnode__caseobj(Caseignoredp), Truex, true) == 0)
-      {
-      val = compare_node(arg1, arg2, true);
-      }
-   else
-      {
-      val = compare_node(arg1, arg2, false);
-      }
+   bool caseig = variableIsTrue(Caseignoredp);
+   int  val    = compare_node(arg1, arg2, caseig);
 
    return torf(val < 0);
    }

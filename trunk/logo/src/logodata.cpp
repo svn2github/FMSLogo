@@ -708,7 +708,7 @@ NODE *luppercase(NODE *args)
 /* property list stuff */
 NODE *getprop(NODE *plist, NODE *name, bool before)
    {
-   bool caseig = compare_node(valnode__caseobj(Caseignoredp), Truex, true) == 0;
+   bool caseig = variableIsTrue(Caseignoredp);
 
    NODE *prev = NIL;
    while (plist != NIL)
@@ -802,8 +802,6 @@ NODE *lpprop(NODE *args)
 
 NODE *lremprop(NODE *args)
    {
-   bool caseig = compare_node(valnode__caseobj(Caseignoredp), Truex, true) == 0;
-
    NODE * plname = string_arg(args);
    NODE * pname = string_arg(cdr(args));
    if (NOT_THROWING)
@@ -812,6 +810,7 @@ NODE *lremprop(NODE *args)
       NODE * plist = plist__caseobj(plname);
       if (plist != NIL)
          {
+         bool caseig = variableIsTrue(Caseignoredp);
          if (compare_node(car(plist), pname, caseig) == 0)
             {
             setplist__caseobj(plname, cddr(plist));
@@ -883,4 +882,9 @@ NODE * llogoversion(NODE * args)
       application_name,
       application_version,
       os_name);
+   }
+
+bool variableIsTrue(NODE *variable) 
+   {
+   return 0 == compare_node(valnode__caseobj(variable), Truex, true);
    }

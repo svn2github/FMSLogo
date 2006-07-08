@@ -557,7 +557,7 @@ NODE *larrayp(NODE *arg)
 static
 NODE *memberp_helper(NODE *args, bool notp, bool substr)
    {
-   bool caseig = (compare_node(valnode__caseobj(Caseignoredp), Truex, TRUE) == 0);
+   bool caseig = variableIsTrue(Caseignoredp);
 
    NODE * obj1 = car(args);
    NODE * obj2 = cadr(args);
