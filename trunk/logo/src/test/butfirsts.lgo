@@ -17,7 +17,7 @@ TO BUTFIRSTSTEST.BADINPUT
 
    ; bad number of inputs
    RUNNOTENOUGHINPUTSTEST [(BUTFIRSTS)]
-   RUNTOOMANYINPUTSTEST   [(BUTFIRSTS [[1 2 3]] toomany)]
+   RUNTOOMANYINPUTSTEST   [(BUTFIRSTS [[1 2 3]] "toomany)]
 
    ; bad inputs (a list containing a bad input to BUTFIRST
    RUNBADINPUTTEST [BUTFIRSTS (LIST [1 2 3]  []  [1 2 3] ) ]
