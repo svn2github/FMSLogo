@@ -4,6 +4,8 @@
 LOAD "testlib.lgo
 
 LOAD "list.lgo
+LOAD "first.lgo
+LOAD "firsts.lgo
 LOAD "butfirst.lgo
 LOAD "butfirsts.lgo
 LOAD "butlast.lgo
@@ -78,6 +80,8 @@ TO TESTALL
   LISTTEST           ; from list.lgo
   PREDICATETEST      ; from predicate.lgo
   WORDTEST           ; from word.lgo
+  FIRSTTEST          ; from first.lgo
+  FIRSTSTEST         ; from firsts.lgo
   BUTFIRSTTEST       ; from butfirst.lgo
   BUTFIRSTSTEST      ; from butfirsts.lgo
   BUTLASTTEST        ; from butlast.lgo

@@ -35,6 +35,24 @@ NODE *bfable_arg(NODE *args)
    return arg;
    }
 
+static
+NODE *firstable_arg(NODE *args)
+   {
+   NODE *arg = car(args);
+
+   while ((arg == NIL       ||  // empty list
+           arg == Unbound   ||  // uninitialized
+           arg == Null_Word ||  // empty string
+           (nodetype(arg) == ARRAY && getarrdim(arg) == 0))  // empty array
+           && NOT_THROWING)
+      {
+      setcar(args, err_logo(BAD_DATA, arg));
+      arg = car(args);
+      }
+
+   return arg;
+   }
+
 NODE *list_arg(NODE *args)
    {
    NODE *arg = car(args);
@@ -135,25 +153,28 @@ NODE *lfirst(NODE *args)
    {
    NODE *val = Unbound;
 
-   if (nodetype(car(args)) == ARRAY)
-      {
-      return make_intnode((FIXNUM) getarrorg(car(args)));
-      }
-
-   NODE * arg = bfable_arg(args);
+   NODE * arg = firstable_arg(args);
    if (NOT_THROWING)
       {
-      if (is_list(arg))
+      if (nodetype(arg) == ARRAY)
          {
+         // arg is an array -- output the origin
+         val = make_intnode((FIXNUM) getarrorg(arg));
+         }
+      else if (is_list(arg))
+         {
+         // arg is a list -- output the first item
          val = car(arg);
          }
       else
          {
+         // arg is a string -- output a string of the first character
          setcar(args, cnv_node_to_strnode(arg));
          arg = car(args);
          val = make_strnode(getstrptr(arg), 1, nodetype(arg), strnzcpy);
          }
       }
+
    return val;
    }
 

@@ -21,6 +21,7 @@ Part I) Kit Description/Location (http://sourceforge.net/projects/fmslogo):
 Part II) New features/bugs fixed:
 
   * Added for 6.10.0,
+    o Fix bug #1519319: FIRST now throws an error when given the empty array.
     o Fix bug #1517301: bitwise operators now treat decimal numbers that are 
       integers as valid input (for example, 1.0 is treated as 1).
     o Fix bug #1516689: BITAND, BITOR, BITXOR now validate input when there is
