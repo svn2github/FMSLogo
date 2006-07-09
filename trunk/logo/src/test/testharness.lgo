@@ -4,6 +4,7 @@
 LOAD "testlib.lgo
 
 LOAD "list.lgo
+LOAD "sentence.lgo
 LOAD "first.lgo
 LOAD "firsts.lgo
 LOAD "butfirst.lgo
@@ -78,6 +79,7 @@ TO TESTALL
   RUNTEST            ; from run.lgo
   ERRORTEST          ; from error.lgo
   LISTTEST           ; from list.lgo
+  SENTENCETEST       ; from sentence.lgo
   PREDICATETEST      ; from predicate.lgo
   WORDTEST           ; from word.lgo
   FIRSTTEST          ; from first.lgo

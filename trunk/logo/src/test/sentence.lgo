@@ -1,0 +1,48 @@
+LOAD "testlib.lgo
+
+TO SENTENCETEST.SMOKETEST
+
+   SIMPLEREPORTTEST [SE       "abc "def  ] [abc def]
+
+   SIMPLEREPORTTEST [SENTENCE "abc  "def         ] [abc def]
+   SIMPLEREPORTTEST [SENTENCE "abc  [def]        ] [abc def]
+   SIMPLEREPORTTEST [SENTENCE [abc] "def         ] [abc def]
+   SIMPLEREPORTTEST [SENTENCE [abc def] "ghi     ] [abc def ghi]
+   SIMPLEREPORTTEST [SENTENCE [abc def] [ghi jlk]] [abc def ghi jlk]
+   SIMPLEREPORTTEST [SENTENCE []    [abc]        ] [abc]
+   SIMPLEREPORTTEST [SENTENCE []    []           ] []
+
+   SIMPLEREPORTTEST [SENTENCE [[abc]] "def       ] [[abc] def]
+
+
+   SIMPLEREPORTTEST [(SE       "A "sentence "is "simply "a "list "of "words)] [A sentence is simply a list of words]
+   SIMPLEREPORTTEST [(SENTENCE "A "sentence "is "simply "a "list "of "words)] [A sentence is simply a list of words]
+
+   SIMPLEREPORTTEST [(SENTENCE [] [abc] [])] [abc]
+
+   ; no inputs is valid
+   SIMPLEREPORTTEST [(SE)      ]  []
+   SIMPLEREPORTTEST [(SENTENCE)]  []
+
+   ; one input is valid
+   SIMPLEREPORTTEST [(SE "abc)      ]  [abc]
+   SIMPLEREPORTTEST [(SENTENCE "abc)]  [abc]
+
+END
+
+TO SENTENCETEST.BADINPUT
+
+   RUNBADINPUTTEST  [SENTENCE "abc  {def} ]
+   RUNBADINPUTTEST  [SENTENCE {abc} "def  ]
+
+   RUNBADINPUTTEST  [(SENTENCE "abc {def} "ghi)]
+
+END
+
+TO SENTENCETEST
+
+   SENTENCETEST.SMOKETEST
+   SENTENCETEST.BADINPUT
+
+END
+
