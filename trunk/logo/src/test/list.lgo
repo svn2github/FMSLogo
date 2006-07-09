@@ -1,6 +1,6 @@
 LOAD "testlib.lgo
 
-TO LISTSMOKETEST
+TO LISTTEST.SMOKETEST
 
    ; smoke test
    LOCALMAKE "testlist (LIST 1 2 3)
@@ -18,7 +18,7 @@ END
 
 TO LISTTEST
 
-   LISTSMOKETEST
+   LISTTEST.SMOKETEST
 
 END
 
