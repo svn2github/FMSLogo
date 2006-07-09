@@ -12,20 +12,30 @@
 
 <varlistentry><term>Description</term>
 <listitem>
-    <para>If <parameter>thing</parameter> is a word, outputs the first character of the word.
+<para>
+If <parameter>thing</parameter> is a word, outputs the first character of the word.
 If <parameter>thing</parameter> is a list, outputs the first member of the list.
 If <parameter>thing</parameter> is an array, outputs the origin of the array (that is, the index of the first element of the array).
 </para>
+
+<para>
+FIRST throws a bad input error if given the empty list, the empty string, or the empty array.
+</para>
+
 </listitem>
 </varlistentry>
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>SHOW FIRST [1 2 3]
+<programlisting><userinput>SHOW FIRST [1 2 3]
 </userinput>1</programlisting>
 
-    <programlisting><userinput>SHOW FIRST "Hello
+<programlisting><userinput>SHOW FIRST "Hello
 </userinput>H</programlisting>
+
+<programlisting><userinput>SHOW FIRST {a b c}
+</userinput>1</programlisting>
+
 </listitem>
 </varlistentry>
 
