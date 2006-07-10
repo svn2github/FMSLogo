@@ -831,27 +831,15 @@ NODE *lremprop(NODE *args)
 static
 NODE *copy_list(NODE *arg)
    {
-   NODE *lastnode;
-   NODE* val = NIL;
+   CAppendableList copy;
 
    while (arg != NIL)
       {
-      NODE * tnode = cons_list(car(arg));
-      if (val == NIL)
-         {
-         // this is the first node
-         lastnode = val = tnode;
-         }
-      else
-         {
-         // This is not the first node.
-         // link it in just after the last node.
-         setcdr(lastnode, tnode);
-         lastnode = tnode;
-         }
+      copy.AppendElement(car(arg));
       arg = cdr(arg);
       }
-   return val;
+
+   return copy.GetList();
    }
 
 NODE *lplist(NODE *args)
@@ -863,10 +851,7 @@ NODE *lplist(NODE *args)
       {
       plname = intern(plname);
       NODE * plist = plist__caseobj(plname);
-      if (plist != NIL)
-         {
-         val = copy_list(plist);
-         }
+      val = copy_list(plist);
       }
    return val;
    }
