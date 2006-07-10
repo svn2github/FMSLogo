@@ -38,7 +38,7 @@
 #define numrestore(register) (register=(FIXNUM)car(stack), numpop(&stack))
 
 // save/restore two FIXNUMs
-#define num2save(reg1,reg2) (numpush(reg1,&stack),stack->n_obj=(NODE *)reg2)
+#define num2save(reg1,reg2) (numpush(reg1,&stack),stack->nunion.ncons.nobj=(NODE *)reg2)
 #define num2restore(reg1,reg2) (reg2=(FIXNUM)getobject(stack), \
            reg1=(FIXNUM)car(stack), numpop(&stack))
 
@@ -83,11 +83,11 @@ static NODE *var_stack = NIL;    // the stack of variables and their bindings
 
 void spop(NODE **stack)
    {
-   NODE *temp = (*stack)->n_cdr;
+   NODE *temp = (*stack)->nunion.ncons.ncdr;
 
    if (decrefcnt(*stack) == 0)
       {
-      (*stack)->n_cdr = NIL;
+      (*stack)->nunion.ncons.ncdr = NIL;
       gc(*stack);
       }
    else
@@ -105,7 +105,7 @@ void spush(NODE *obj, NODE **stack)
    NODE *temp = newnode(CONS);
 
    setcar(temp, obj);
-   temp->n_cdr = *stack;
+   temp->nunion.ncons.ncdr = *stack;
    ref(temp);
    *stack = temp;
    }
@@ -113,11 +113,11 @@ void spush(NODE *obj, NODE **stack)
 static
 void numpop(NODE **stack)
    {
-   NODE *temp = (*stack)->n_cdr;
+   NODE *temp = (*stack)->nunion.ncons.ncdr;
 
-   (*stack)->n_car = NIL;
-   (*stack)->n_cdr = NIL;
-   (*stack)->n_obj = NIL;
+   (*stack)->nunion.ncons.ncar = NIL;
+   (*stack)->nunion.ncons.ncdr = NIL;
+   (*stack)->nunion.ncons.nobj = NIL;
    deref(*stack);
    *stack = temp;
    }
@@ -127,8 +127,8 @@ void numpush(FIXNUM obj, NODE **stack)
    {
    NODE *temp = newnode(CONS);
 
-   temp->n_car = (NODE *) obj;
-   temp->n_cdr = *stack;
+   temp->nunion.ncons.ncar = (NODE *) obj;
+   temp->nunion.ncons.ncdr = *stack;
    ref(temp);
    *stack = temp;
    }
@@ -254,7 +254,7 @@ NODE *reverse(NODE *list)
       {
       temp = list;
       list = cdr(list);
-      temp->n_cdr = ret;
+      temp->nunion.ncons.ncdr = ret;
       ret = temp;
       }
    return unref(ret);
@@ -403,21 +403,23 @@ NODE *evaluator(NODE *list, enum labels where)
               goto ev_no_args;
               }
 
-       case ARRAY:                      /* array must be copied                */
+       case ARRAY:                      // array must be copied
            {
-              NODE **p, **q;
               assign(val, make_array(getarrdim(exp)));
               setarrorg(val, getarrorg(exp));
-              for (p = getarrptr(exp), q = getarrptr(val), i = 0;
-                   i < getarrdim(exp); 
-                   i++, p++)
+
+              NODE ** p = getarrptr(exp);
+              NODE ** q = getarrptr(val);
+              for (int i = 0; i < getarrdim(exp); i++)
                  {
                  *q++ = vref(*p);
+                 p++;
                  }
            }
            goto fetch_cont;
+
        default:
-           assign(val, exp);             /* self-evaluating                     */
+           assign(val, exp);             // self-evaluating
            goto fetch_cont;
       }
 
@@ -982,7 +984,7 @@ NODE *evaluator(NODE *list, enum labels where)
       if (is_cont(val))
          {
          newcont(cont__cont(val));
-         val->n_car = NIL;
+         val->nunion.ncons.ncar = NIL;
          assign(val, val__cont(val));
          goto fetch_cont;
          }

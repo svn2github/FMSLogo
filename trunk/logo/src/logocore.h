@@ -19,7 +19,7 @@
  *
  */
 
-extern void gc(struct logo_node* o);
+extern void gc(struct NODE* node);
 
 #define ecma // for European extended character set using parity bit
 #define ibm
@@ -32,7 +32,7 @@ typedef enum
    }
 mode_type;
 
-typedef struct logo_node * (*logofunc) (struct logo_node *);
+typedef struct NODE * (*logofunc) (struct NODE *);
 
 #define WORDSIZE        32             /* bits per int                        */
 
@@ -119,7 +119,7 @@ const NODETYPES NT_FREE          = 0xFFFF;
 
 
 // IMPORTANT: Logo programs depend on the value of these
-// enumerates types, so any new values must be added to the
+// enumerated types, so any new values must be added to the
 // end of the list.
 enum ERR_TYPES
    {
@@ -158,6 +158,9 @@ enum ERR_TYPES
    APPLY_BAD_DATA       = 32, 
    DEEPEND              = 33,
    OUT_OF_MEM_UNREC     = 34,
+
+   // FMSLogo-specific error codes start at 1000
+   WINDOW_NOTING_SELECTED = 1000,
    };
 
 #define FALSE   0
@@ -174,11 +177,12 @@ typedef double FLONUM;
 #define FLONUM_MAX     DBL_MAX
 #define FLONUM_EPSILON DBL_EPSILON
 
-typedef struct logo_node
+struct NODE
    {
 #ifdef MEM_DEBUG
-   int       magic; // set to 'NODE'
+   int magic; // set to 'NODE'
 #endif
+
    NODETYPES node_type;
    /*   char gc_flags;  */
    long ref_count;
@@ -186,16 +190,16 @@ typedef struct logo_node
       {
       struct
          {
-         struct logo_node *ncar;
-         struct logo_node *ncdr;
-         struct logo_node *nobj;    // used only for oblist
+         NODE * ncar;
+         NODE * ncdr;
+         NODE * nobj;    // used only for oblist
          }
          ncons;
       struct
          {
-         const char *nstring_ptr;
-         char *nstring_head;
-         int nstring_len;
+         const char * nstring_ptr;
+         char       * nstring_head;
+         int          nstring_len;
          }
          nstring;
       struct
@@ -211,15 +215,14 @@ typedef struct logo_node
       FLONUM nfloat;
       struct
          {
-         int narray_dim;
-         int narray_origin;
-         struct logo_node **narray_data;
+         int     narray_dim;
+         int     narray_origin;
+         NODE ** narray_data;
          }
          narray;
       }
       nunion;
-   }
-NODE;
+   };
 
 #define settype(node, type)     ((node)->node_type = (type))
 
@@ -228,13 +231,9 @@ NODE;
 #define increfcnt(node)         (((node)->ref_count)++)
 #define decrefcnt(node)         (--((node)->ref_count))
 
-#define n_car                   nunion.ncons.ncar
-#define n_cdr                   nunion.ncons.ncdr
-#define n_obj                   nunion.ncons.nobj
-
 inline
 bool
-is_freed(const logo_node * node)
+is_freed(const NODE * node)
    {
    return node->node_type == 0xCCCC || node->node_type == NT_FREE;
    }
@@ -249,7 +248,7 @@ car(const NODE * node)
    assert(node->node_type != INTEGER);
    assert(node->node_type != FLOATINGPOINT);
 
-   return node->n_car;
+   return node->nunion.ncons.ncar;
    }
 
 inline
@@ -262,7 +261,7 @@ cdr(const NODE * node)
    assert(node->node_type != INTEGER);
    assert(node->node_type != FLOATINGPOINT);
 
-   return node->n_cdr;
+   return node->nunion.ncons.ncdr;
    }
 
 inline
@@ -275,7 +274,7 @@ getobject(const NODE * node)
    assert(node->node_type != INTEGER);
    assert(node->node_type != FLOATINGPOINT);
 
-   return node->n_obj;
+   return node->nunion.ncons.nobj;
    }
 
 #define caar(node)              car(car(node))
@@ -283,15 +282,12 @@ getobject(const NODE * node)
 #define cdar(node)              cdr(car(node))
 #define cddr(node)              cdr(cdr(node))
 
-#define n_str                   nunion.nstring.nstring_ptr
-#define n_len                   nunion.nstring.nstring_len
-#define n_head                  nunion.nstring.nstring_head
-#define getstrptr(node)         ((node)->n_str)
-#define getstrlen(node)         ((node)->n_len)
-#define getstrhead(node)        ((node)->n_head)
-#define setstrptr(node,ptr)     ((node)->n_str = (ptr))
-#define setstrlen(node,len)     ((node)->n_len = (len))
-#define setstrhead(node,ptr)    ((node)->n_head = (ptr))
+#define getstrptr(node)         ((node)->nunion.nstring.nstring_ptr)
+#define getstrlen(node)         ((node)->nunion.nstring.nstring_len)
+#define getstrhead(node)        ((node)->nunion.nstring.nstring_head)
+#define setstrptr(node,ptr)     ((node)->nunion.nstring.nstring_ptr = (ptr))
+#define setstrlen(node,len)     ((node)->nunion.nstring.nstring_len = (len))
+#define setstrhead(node,ptr)    ((node)->nunion.nstring.nstring_head = (ptr))
 
 #define getstrrefcnt(sh)        (*sh)
 #define setstrrefcnt(sh, v)     (*sh = (v))
@@ -314,34 +310,27 @@ getfloat(const NODE * nd)
    return nd->nunion.nfloat;
    }
 
-#define n_pfun                  nunion.nprim.nprim_fun
-#define n_ppri                  nunion.nprim.npriority
-#define n_pmin                  nunion.nprim.nmin_args
-#define n_pdef                  nunion.nprim.ndef_args
-#define n_pmax                  nunion.nprim.nmax_args
-#define getprimfun(node)        ((node)->n_pfun)
-#define setprimfun(node,fun)    ((node)->n_pfun = (fun))
-#define getprimmin(node)        ((node)->n_pmin)
-#define setprimmin(node,num)    ((node)->n_pmin = (num))
-#define getprimmax(node)        ((node)->n_pmax)
-#define setprimmax(node,num)    ((node)->n_pmax = (num))
-#define getprimdflt(node)       ((node)->n_pdef)
-#define setprimdflt(node,num)   ((node)->n_pdef = (num))
-#define getprimpri(node)        ((node)->n_ppri)
-#define setprimpri(node,num)    ((node)->n_ppri = (num))
-/* Special value for pmin, means that it's
-*  OK if primitive name on line by itself even though defltargs=1 (ED, CO) */
+#define getprimfun(node)        ((node)->nunion.nprim.nprim_fun)
+#define setprimfun(node,fun)    ((node)->nunion.nprim.nprim_fun = (fun))
+#define getprimmin(node)        ((node)->nunion.nprim.nmin_args)
+#define setprimmin(node,num)    ((node)->nunion.nprim.nmin_args = (num))
+#define getprimmax(node)        ((node)->nunion.nprim.nmax_args)
+#define setprimmax(node,num)    ((node)->nunion.nprim.nmax_args = (num))
+#define getprimdflt(node)       ((node)->nunion.nprim.ndef_args)
+#define setprimdflt(node,num)   ((node)->nunion.nprim.ndef_args = (num))
+#define getprimpri(node)        ((node)->nunion.nprim.npriority)
+#define setprimpri(node,num)    ((node)->nunion.nprim.npriority = (num))
+
+// Special value for pmin, means that it's
+// OK if primitive name on line by itself even though defltargs=1 (ED, CO)
 #define OK_NO_ARG       01000
 
-#define n_dim                   nunion.narray.narray_dim
-#define n_org                   nunion.narray.narray_origin
-#define n_array                 nunion.narray.narray_data
-#define getarrdim(node)         ((node)->n_dim)
-#define getarrorg(node)         ((node)->n_org)
-#define getarrptr(node)         ((node)->n_array)
-#define setarrdim(node,len)     ((node)->n_dim = (len))
-#define setarrorg(node,org)     ((node)->n_org = (org))
-#define setarrptr(node,ptr)     ((node)->n_array = (ptr))
+#define getarrdim(node)         ((node)->nunion.narray.narray_dim)
+#define getarrorg(node)         ((node)->nunion.narray.narray_origin)
+#define getarrptr(node)         ((node)->nunion.narray.narray_data)
+#define setarrdim(node,len)     ((node)->nunion.narray.narray_dim    = (len))
+#define setarrorg(node,org)     ((node)->nunion.narray.narray_origin = (org))
+#define setarrptr(node,ptr)     ((node)->nunion.narray.narray_data   = (ptr))
 
 #ifdef ecma
 #define clearparity(ch)         ecma_clear(ch)
@@ -395,9 +384,9 @@ CTRLTYPE;
 #define setbodywords__procnode(p,v) setcar(cdr(p),v)
 
 inline
-logo_node*
+NODE*
 parsed__runparse(
-   const logo_node * runparsed_node
+   const NODE * runparsed_node
 )
    {
    assert(runparsed_node->node_type == RUN_PARSE);
@@ -443,7 +432,7 @@ parsed__runparse(
 
 inline
 void
-ref(logo_node * object)
+ref(NODE * object)
    {
    if (object != NIL)
       {
@@ -453,8 +442,8 @@ ref(logo_node * object)
    }
 
 inline
-logo_node*
-vref(logo_node * object)
+NODE*
+vref(NODE * object)
    {
    if (object != NIL)
       {
@@ -467,7 +456,7 @@ vref(logo_node * object)
 
 inline 
 void
-deref(logo_node * object)
+deref(NODE * object)
    {
    if (object == NIL)
       {
@@ -485,7 +474,7 @@ deref(logo_node * object)
 
 inline 
 void
-gcref(logo_node * object)
+gcref(NODE * object)
    {
    if (object == NIL)
       {

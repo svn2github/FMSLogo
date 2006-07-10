@@ -24,8 +24,8 @@
 // a segment is a pool of nodes that is allocated in a single malloc.
 struct segment
    {
-   struct segment * next;
-   struct logo_node nodes[SEG_SIZE];
+   segment * next;
+   NODE      nodes[SEG_SIZE];
    };
 
 NODE **gcstack;
@@ -56,7 +56,7 @@ void setobject(NODE *nd, NODE *newobj)
    ref(newobj);
    deref(oldobj);
 
-   nd->n_obj = newobj;
+   nd->nunion.ncons.nobj = newobj;
    }
 
 void setcar(NODE *nd, NODE *newcar)
@@ -66,7 +66,7 @@ void setcar(NODE *nd, NODE *newcar)
    ref(newcar);
    deref(oldcar);
 
-   nd->n_car = newcar;
+   nd->nunion.ncons.ncar = newcar;
    }
 
 void setcdr(NODE *nd, NODE *newcdr)
@@ -76,7 +76,7 @@ void setcdr(NODE *nd, NODE *newcdr)
    ref(newcdr);
    deref(oldcdr);
 
-   nd->n_cdr = newcdr;
+   nd->nunion.ncons.ncdr = newcdr;
    }
 
 NODE *reref(NODE *oldval, NODE *newval)
@@ -109,7 +109,7 @@ void addseg()
       {
       memcpy(&new_node->magic, "NODE", 4);
       settype(new_node, NT_FREE);
-      new_node->n_cdr = free_list;
+      new_node->nunion.ncons.ncdr = free_list;
       free_list = new_node;
       }
 #else
@@ -126,7 +126,7 @@ void addseg()
       segment_list = newseg;
       for (int p = 0; p < SEG_SIZE; p++)
          {
-         newseg->nodes[p].n_cdr = free_list;
+         newseg->nodes[p].nunion.ncons.ncdr = free_list;
          free_list = &newseg->nodes[p];
          }
       }
@@ -153,12 +153,12 @@ NODE *newnode(NODETYPES type)
             }
          }
       }
-   free_list = newnd->n_cdr;
+   free_list = newnd->nunion.ncons.ncdr;
    settype(newnd, type);
    setrefcnt(newnd, 0);
-   newnd->n_car = NIL;
-   newnd->n_cdr = NIL;
-   newnd->n_obj = NIL;
+   newnd->nunion.ncons.ncar = NIL;
+   newnd->nunion.ncons.ncdr = NIL;
+   newnd->nunion.ncons.nobj = NIL;
    mem_nodes++;
    if (mem_nodes > mem_max) 
       {
@@ -251,7 +251,7 @@ void gc(NODE *nd)
       free(nd);
 #else
       // "free" this node by adding it to the free list
-      nd->n_cdr = free_list;
+      nd->nunion.ncons.ncdr = free_list;
       free_list = nd;
 #endif
 

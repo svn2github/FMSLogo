@@ -498,58 +498,50 @@ NODE *lword(NODE *args)
 
 NODE *lsentence(NODE *args)
    {
-   NODE *tnode = NIL, *lastnode = NIL, *val = NIL, *arg = NIL;
+   CAppendableList sentence;
 
    while (args != NIL && NOT_THROWING)
       {
-      arg = car(args);
+      NODE * arg = car(args);
+
       while (nodetype(arg) == ARRAY && NOT_THROWING)
          {
          setcar(args, err_logo(BAD_DATA, arg));
          arg = car(args);
          }
+
       args = cdr(args);
       if (stopping_flag == THROWING) 
          {
          break;
          }
+
       if (is_list(arg))
          {
+         // arg is a list.
+         // Append each element in the list, instead of appending
+         // the list so that we don't change the input.
          while (arg != NIL && NOT_THROWING)
             {
-            tnode = cons_list(car(arg));
+            sentence.AppendElement(car(arg));
+
             arg = cdr(arg);
-            if (val == NIL) 
-               {
-               val = tnode;
-               }
-            else 
-               {
-               setcdr(lastnode, tnode);
-               }
-            lastnode = tnode;
             }
          }
       else
          {
-         tnode = cons_list(arg);
-         if (val == NIL) 
-            {
-            val = tnode;
-            }
-         else 
-            {
-            setcdr(lastnode, tnode);
-            }
-         lastnode = tnode;
+         // arg must be a word
+         sentence.AppendElement(arg);
          }
       }
+
    if (stopping_flag == THROWING)
       {
-      gcref(val);
+      gcref(sentence.GetList());
       return Unbound;
       }
-   return val;
+
+   return sentence.GetList();
    }
 
 NODE *lwordp(NODE *arg)

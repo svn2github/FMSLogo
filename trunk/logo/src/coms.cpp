@@ -26,21 +26,8 @@ FIXNUM ift_iff_flag = -1;
 
 NODE *make_cont(enum labels cont, NODE *val)
    {
-#ifdef __ZTC__
-   union
-      {
-      enum labels lll;
-      NODE *ppp;
-      }
-   cast;
-#endif
    NODE *retval = cons(NIL, val);
-#ifdef __ZTC__
-   cast.lll = cont;
-   retval->n_car = cast.ppp;
-#else
-   retval->n_car = (NODE *) cont;
-#endif
+   retval->nunion.ncons.ncar = reinterpret_cast<NODE *>(cont);
    settype(retval, CONT);
    return retval;
    }
@@ -58,7 +45,9 @@ NODE *loutput(NODE *arg)
 NODE *lstop(NODE *)
    {
    if (NOT_THROWING)
+      {
       stopping_flag = STOP;
+      }
    return Unbound;
    }
 
@@ -66,7 +55,7 @@ NODE *lthrow(NODE *arg)
    {
    if (NOT_THROWING)
       {
-      if (compare_node(car(arg), Error, TRUE) == 0)
+      if (compare_node(car(arg), Error, true) == 0)
          {
          if (cdr(arg) != NIL)
             {
@@ -105,11 +94,11 @@ bool boolean_arg(NODE *args)
 
    while (NOT_THROWING)
       {
-      if (compare_node(arg, Truex, TRUE) == 0) 
+      if (compare_node(arg, Truex, true) == 0) 
          {
          return true;
          }
-      if (compare_node(arg, Falsex, TRUE) == 0) 
+      if (compare_node(arg, Falsex, true) == 0) 
          {
          return false;
          }

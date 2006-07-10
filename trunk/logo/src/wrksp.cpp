@@ -46,6 +46,7 @@ NODE *get_bodywords(NODE *proc, NODE *name)
       return val;
       }
 
+   // bodywords__procnode(proc) isn't set yet.  Set it.
    name = intern(name);
    NODE * head = cons_list((is_macro(name) ? Macro : To), name);
    NODE * tail = cdr(head);
@@ -53,18 +54,23 @@ NODE *get_bodywords(NODE *proc, NODE *name)
         val != NIL;
         val = cdr(val))
       {
+      NODE * tnode;
+
       if (is_list(car(val)))
          {
-         setcdr(tail, cons_list(cons(make_colon(caar(val)), cdar(val))));
+         tnode = cons(make_colon(caar(val)), cdar(val));
          }
       else if (nodetype(car(val)) == INTEGER)
          {
-         setcdr(tail, cons_list(car(val)));
+         tnode = car(val);
          }
       else
          {
-         setcdr(tail, cons_list(make_colon(car(val))));
+         tnode = make_colon(car(val));
          }
+
+      // append tnode to the list
+      setcdr(tail, cons_list(tnode));
       tail = cdr(tail);
       }
 
@@ -622,11 +628,19 @@ void ms_listlist(NODE *nd)
 static
 NODE *merge(NODE *a, NODE *b)
    {
-   NODE *ret, *tail;
+   if (a == NIL) 
+      {
+      return b;
+      }
 
-   if (a == NIL) return (b);
-   if (b == NIL) return (a);
-   if (compare_node(car(a), car(b), FALSE) < 0)
+   if (b == NIL) 
+      {
+      return a;
+      }
+
+   NODE *ret;
+   NODE *tail;
+   if (compare_node(car(a), car(b), false) < 0)
       {
       ret = a;
       tail = a;
@@ -641,14 +655,14 @@ NODE *merge(NODE *a, NODE *b)
 
    while (a != NIL && b != NIL)
       {
-      if (compare_node(car(a), car(b), FALSE) < 0)
+      if (compare_node(car(a), car(b), false) < 0)
          {
-         tail->n_cdr = a;
+         tail->nunion.ncons.ncdr = a;
          a = cdr(a);
          }
       else
          {
-         tail->n_cdr = b;
+         tail->nunion.ncons.ncdr = b;
          b = cdr(b);
          }
       tail = cdr(tail);
@@ -656,11 +670,11 @@ NODE *merge(NODE *a, NODE *b)
 
    if (b == NIL) 
       {
-      tail->n_cdr = a;
+      tail->nunion.ncons.ncdr = a;
       }
    else
       {
-      tail->n_cdr = b;
+      tail->nunion.ncons.ncdr = b;
       }
 
    return ret;
@@ -673,10 +687,10 @@ void mergepairs(NODE *nd)
 
    while (nd != NIL && cdr(nd) != NIL)
       {
-      nd->n_car = merge(car(nd), cadr(nd));
+      nd->nunion.ncons.ncar = merge(car(nd), cadr(nd));
       temp = cdr(nd);
-      nd->n_cdr = cddr(nd);
-      temp->n_car = temp->n_cdr = NIL;
+      nd->nunion.ncons.ncdr = cddr(nd);
+      temp->nunion.ncons.ncar = temp->nunion.ncons.ncdr = NIL;
       gc(temp);
       nd = cdr(nd);
       }
@@ -685,8 +699,6 @@ void mergepairs(NODE *nd)
 static
 NODE *mergesort(NODE *nd)
    {
-   NODE *ret;
-
    if (nd == NIL)
       {
       return NIL;
@@ -702,8 +714,8 @@ NODE *mergesort(NODE *nd)
       {
       mergepairs(nd);
       }
-   ret = car(nd);
-   nd->n_car = NIL;
+   NODE * ret = car(nd);
+   nd->nunion.ncons.ncar = NIL;
    gc(nd);
    return ret;
    }
@@ -712,7 +724,7 @@ static
 NODE *
 get_contents(
    CNTLSTTYP contents_type
-)
+   )
    {
    deref(cnt_list);
    cnt_list = NIL;

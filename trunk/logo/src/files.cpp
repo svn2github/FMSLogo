@@ -138,10 +138,10 @@ FILE *find_file(NODE *arg, bool remove)
       {
       if (compare_node(arg, car(t), false) == 0)
          {
-         fp = (FILE *) t->n_obj;
+         fp = (FILE *) t->nunion.ncons.nobj;
          if (remove)
             {
-            t->n_obj = NIL;
+            t->nunion.ncons.nobj = NIL;
             if (prev == NIL)
                {
                file_list = reref(file_list, cdr(t));
@@ -190,7 +190,7 @@ open_helper(
       else if ((tmp = open_file(Arguments, mode)) != NULL)
          {
          push(Arguments, file_list);
-         file_list->n_obj = (NODE *) tmp;
+         file_list->nunion.ncons.nobj = (NODE *) tmp;
          }
       else
          {
@@ -749,10 +749,10 @@ NODE *lcloseall(NODE *)
         current_file != NIL;
         current_file = cdr(current_file))
       {
-      FILE * fp = reinterpret_cast<FILE *>(current_file->n_obj);
+      FILE * fp = reinterpret_cast<FILE *>(current_file->nunion.ncons.nobj);
       fclose(fp);
 
-      current_file->n_obj = NIL;
+      current_file->nunion.ncons.nobj = NIL;
       }
 
    // empty the file list
