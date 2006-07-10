@@ -1482,23 +1482,20 @@ NODE *lcopydef(NODE *args)
       NODE *new_proc = procnode__caseobj(arg2);
       if (old_proc != UNDEFINED)
          {
-         int old_default = (is_prim(old_proc) ? getprimdflt(old_proc) :
-               getint(dfltargs__procnode(old_proc)));
-         int new_default = (is_prim(new_proc) ? getprimdflt(new_proc) :
-               getint(dfltargs__procnode(new_proc)));
+         int old_default = is_prim(old_proc) ? 
+            getprimdflt(old_proc) :
+            getint(dfltargs__procnode(old_proc));
+
+         int new_default = is_prim(new_proc) ? 
+            getprimdflt(new_proc) :
+            getint(dfltargs__procnode(new_proc));
+
          if (old_default != new_default)
             {
             the_generation = reref(the_generation, cons_list(NIL));
             }
          }
-      //      if (old_proc != UNDEFINED)
-      //         {
-      //         if (getint(dfltargs__procnode(old_proc)) !=
-      //         getint(dfltargs__procnode(new_proc)))
-      //            {
-      //            the_generation = reref(the_generation, cons_list(NIL));
-      //            }
-      //         }
+
       setprocnode__caseobj(arg1, new_proc);
       setflag__caseobj(arg1, PROC_BURIED);
       if (is_macro(arg2)) 
