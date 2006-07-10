@@ -46,7 +46,7 @@ NODETYPES nodetype(const NODE *nd)
       return PNIL;
       }
 
-   return nd->node_type;
+   return nd->type;
    }
 
 void setobject(NODE *nd, NODE *newobj)
@@ -155,7 +155,7 @@ NODE *newnode(NODETYPES type)
       }
    free_list = newnd->nunion.ncons.ncdr;
    settype(newnd, type);
-   setrefcnt(newnd, 0);
+   newnd->ref_count = 0;
    newnd->nunion.ncons.ncar = NIL;
    newnd->nunion.ncons.ncdr = NIL;
    newnd->nunion.ncons.nobj = NIL;
@@ -190,7 +190,7 @@ void gc(NODE *nd)
       switch (nodetype(nd))
          {
          case PUNBOUND:
-            setrefcnt(nd, 10000);  // save some time
+            nd->ref_count = 10000;  // save some time
          case PNIL:
             if (gctop == gcstack) 
                {

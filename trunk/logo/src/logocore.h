@@ -19,18 +19,18 @@
  *
  */
 
-extern void gc(struct NODE* node);
-
 #define ecma // for European extended character set using parity bit
 #define ibm
 
 #define check_throwing (check_stop(false) || stopping_flag == THROWING)
 
-typedef enum
+enum mode_type
    {
-   wrapmode, fencemode, windowmode, perspectivemode
-   }
-mode_type;
+   wrapmode, 
+   fencemode, 
+   windowmode, 
+   perspectivemode,
+   };
 
 typedef struct NODE * (*logofunc) (struct NODE *);
 
@@ -183,8 +183,8 @@ struct NODE
    int magic; // set to 'NODE'
 #endif
 
-   NODETYPES node_type;
-   /*   char gc_flags;  */
+   NODETYPES type;
+
    long ref_count;
    union
       {
@@ -197,14 +197,14 @@ struct NODE
          ncons;
       struct
          {
-         const char * nstring_ptr;
-         char       * nstring_head;
-         int          nstring_len;
+         const char * ptr;
+         char       * head;
+         int          len;
          }
          nstring;
       struct
          {
-         logofunc nprim_fun;
+         logofunc fun;
          short    npriority;
          short    nmin_args;
          short    ndef_args;
@@ -215,27 +215,50 @@ struct NODE
       FLONUM nfloat;
       struct
          {
-         int     narray_dim;
-         int     narray_origin;
-         NODE ** narray_data;
+         int     dim;
+         int     origin;
+         NODE ** data;
          }
          narray;
       }
       nunion;
    };
 
-#define settype(node, type)     ((node)->node_type = (type))
+extern void      gc(NODE* node);
+extern NODETYPES nodetype(const NODE *nd);
 
-#define getrefcnt(node)         ((node)->ref_count)
-#define setrefcnt(node,val)     ((node)->ref_count = (val))
-#define increfcnt(node)         (((node)->ref_count)++)
-#define decrefcnt(node)         (--((node)->ref_count))
+inline
+void
+settype(NODE * Node, NODETYPES Type)
+   {
+   Node->type = Type;
+   }
+
+inline
+long
+getrefcnt(const NODE * Node)
+   {
+   return Node->ref_count;
+   }
+
+inline
+void increfcnt(NODE * Node)
+   {
+   Node->ref_count++;
+   }
+
+inline
+long
+decrefcnt(NODE * Node)
+   {
+   return --Node->ref_count;
+   }
 
 inline
 bool
 is_freed(const NODE * node)
    {
-   return node->node_type == 0xCCCC || node->node_type == NT_FREE;
+   return node->type == 0xCCCC || node->type == NT_FREE;
    }
 
 inline
@@ -244,9 +267,9 @@ car(const NODE * node)
    {
    assert(node != NULL);
    assert(!is_freed(node));
-   assert(node->node_type != STRING);
-   assert(node->node_type != INTEGER);
-   assert(node->node_type != FLOATINGPOINT);
+   assert(node->type != STRING);
+   assert(node->type != INTEGER);
+   assert(node->type != FLOATINGPOINT);
 
    return node->nunion.ncons.ncar;
    }
@@ -257,9 +280,9 @@ cdr(const NODE * node)
    {
    assert(node != NULL);
    assert(!is_freed(node));
-   assert(node->node_type != STRING);
-   assert(node->node_type != INTEGER);
-   assert(node->node_type != FLOATINGPOINT);
+   assert(node->type != STRING);
+   assert(node->type != INTEGER);
+   assert(node->type != FLOATINGPOINT);
 
    return node->nunion.ncons.ncdr;
    }
@@ -270,9 +293,9 @@ getobject(const NODE * node)
    {
    assert(node != NULL);
    assert(!is_freed(node));
-   assert(node->node_type != STRING);
-   assert(node->node_type != INTEGER);
-   assert(node->node_type != FLOATINGPOINT);
+   assert(node->type != STRING);
+   assert(node->type != INTEGER);
+   assert(node->type != FLOATINGPOINT);
 
    return node->nunion.ncons.nobj;
    }
@@ -282,12 +305,12 @@ getobject(const NODE * node)
 #define cdar(node)              cdr(car(node))
 #define cddr(node)              cdr(cdr(node))
 
-#define getstrptr(node)         ((node)->nunion.nstring.nstring_ptr)
-#define getstrlen(node)         ((node)->nunion.nstring.nstring_len)
-#define getstrhead(node)        ((node)->nunion.nstring.nstring_head)
-#define setstrptr(node,ptr)     ((node)->nunion.nstring.nstring_ptr = (ptr))
-#define setstrlen(node,len)     ((node)->nunion.nstring.nstring_len = (len))
-#define setstrhead(node,ptr)    ((node)->nunion.nstring.nstring_head = (ptr))
+#define getstrptr(node)         ((node)->nunion.nstring.ptr)
+#define getstrlen(node)         ((node)->nunion.nstring.len)
+#define getstrhead(node)        ((node)->nunion.nstring.head)
+#define setstrptr(node,str)     ((node)->nunion.nstring.ptr = (str))
+#define setstrlen(node,length)  ((node)->nunion.nstring.len = (length))
+#define setstrhead(node,ptr)    ((node)->nunion.nstring.head = (ptr))
 
 #define getstrrefcnt(sh)        (*sh)
 #define setstrrefcnt(sh, v)     (*sh = (v))
@@ -295,42 +318,169 @@ getobject(const NODE * node)
 #define decstrrefcnt(sh)        (--(*sh))
 
 inline FIXNUM 
-getint(const NODE * nd) 
+getint(const NODE * Node) 
    {
-   assert(nd != NULL);
-   //assert(nd->node_type == INTEGER);
-   return nd->nunion.nint;
+   assert(Node != NULL);
+   //assert(Node->type == INTEGER);
+   return Node->nunion.nint;
    }
 
 inline FLONUM
-getfloat(const NODE * nd) 
+getfloat(const NODE * Node)
    {
-   assert(nd != NULL);
-   //assert(nd->node_type == FLOATINGPOINT);
-   return nd->nunion.nfloat;
+   assert(Node != NULL);
+   //assert(Node->type == FLOATINGPOINT);
+   return Node->nunion.nfloat;
    }
 
-#define getprimfun(node)        ((node)->nunion.nprim.nprim_fun)
-#define setprimfun(node,fun)    ((node)->nunion.nprim.nprim_fun = (fun))
-#define getprimmin(node)        ((node)->nunion.nprim.nmin_args)
-#define setprimmin(node,num)    ((node)->nunion.nprim.nmin_args = (num))
-#define getprimmax(node)        ((node)->nunion.nprim.nmax_args)
-#define setprimmax(node,num)    ((node)->nunion.nprim.nmax_args = (num))
-#define getprimdflt(node)       ((node)->nunion.nprim.ndef_args)
-#define setprimdflt(node,num)   ((node)->nunion.nprim.ndef_args = (num))
-#define getprimpri(node)        ((node)->nunion.nprim.npriority)
-#define setprimpri(node,num)    ((node)->nunion.nprim.npriority = (num))
+inline
+logofunc 
+getprimfun(const NODE * Node)
+   {
+   assert(Node != NULL);
+   assert(is_prim(Node));
+   return Node->nunion.nprim.fun;
+   }
+
+inline 
+void
+setprimfun(NODE * Node, logofunc Func)
+   {
+   assert(Node != NULL);
+   assert(is_prim(Node));
+   Node->nunion.nprim.fun = Func;
+   }
+
+inline
+short 
+getprimmin(const NODE * Node)
+   {
+   assert(Node != NULL);
+   assert(is_prim(Node));
+   return Node->nunion.nprim.nmin_args;
+   }
+
+inline
+void 
+setprimmin(NODE * Node, short Min)
+   {
+   assert(Node != NULL);
+   assert(is_prim(Node));
+   Node->nunion.nprim.nmin_args = Min;
+   }
+
+
+inline
+short 
+getprimmax(const NODE * Node)
+   {
+   assert(Node != NULL);
+   assert(is_prim(Node));
+   return Node->nunion.nprim.nmax_args;
+   }
+
+inline
+void 
+setprimmax(NODE * Node, short Max)
+   {
+   assert(Node != NULL);
+   assert(is_prim(Node));
+   Node->nunion.nprim.nmax_args = Max;
+   }
+
+inline
+short 
+getprimdflt(const NODE * Node)
+   {
+   assert(Node != NULL);
+   assert(is_prim(Node));
+   return Node->nunion.nprim.ndef_args;
+   }
+
+inline
+void 
+setprimdflt(NODE * Node, short Default)
+   {
+   assert(Node != NULL);
+   assert(is_prim(Node));
+   Node->nunion.nprim.ndef_args = Default;
+   }
+
+inline
+short 
+getprimpri(const NODE * Node)
+   {
+   assert(Node != NULL);
+   assert(is_prim(Node));
+   return Node->nunion.nprim.npriority;
+   }
+
+inline
+void
+setprimpri(NODE * Node, short Priority)
+   {
+   assert(Node != NULL);
+   assert(is_prim(Node));
+   Node->nunion.nprim.npriority = Priority;
+   }
 
 // Special value for pmin, means that it's
 // OK if primitive name on line by itself even though defltargs=1 (ED, CO)
 #define OK_NO_ARG       01000
 
-#define getarrdim(node)         ((node)->nunion.narray.narray_dim)
-#define getarrorg(node)         ((node)->nunion.narray.narray_origin)
-#define getarrptr(node)         ((node)->nunion.narray.narray_data)
-#define setarrdim(node,len)     ((node)->nunion.narray.narray_dim    = (len))
-#define setarrorg(node,org)     ((node)->nunion.narray.narray_origin = (org))
-#define setarrptr(node,ptr)     ((node)->nunion.narray.narray_data   = (ptr))
+inline
+int 
+getarrdim(const NODE * Node)
+   {
+   assert(Node != NULL);
+   assert(Node->type == ARRAY);
+   return Node->nunion.narray.dim;
+   }
+
+inline
+int
+getarrorg(const NODE * Node)
+   {
+   assert(Node != NULL);
+   assert(Node->type == ARRAY);
+   return Node->nunion.narray.origin;
+   }
+
+inline
+NODE **
+getarrptr(const NODE * Node)
+   {
+   assert(Node != NULL);
+   assert(Node->type == ARRAY);
+   return Node->nunion.narray.data;
+   }
+
+inline
+void
+setarrdim(NODE * Node, int Length)
+   {
+   assert(Node != NULL);
+   assert(Node->type == ARRAY);
+   Node->nunion.narray.dim = Length;
+   }
+
+inline
+void
+setarrorg(NODE * Node, int Origin)
+   {
+   assert(Node != NULL);
+   assert(Node->type == ARRAY);
+   Node->nunion.narray.origin = Origin;
+   }
+
+inline
+void
+setarrptr(NODE * Node, NODE ** Ptr)
+   {
+   assert(Node != NULL);
+   assert(Node->type == ARRAY);
+   Node->nunion.narray.data = Ptr;
+   }
 
 #ifdef ecma
 #define clearparity(ch)         ecma_clear(ch)
@@ -343,11 +493,14 @@ getfloat(const NODE * nd)
 #define getparity(ch)           (ch & 0x80)
 #endif
 
-typedef enum
+enum CTRLTYPE
    {
-   RUN, STOP, OUTPUT, THROWING, MACRO_RETURN
-   }
-CTRLTYPE;
+   RUN, 
+   STOP, 
+   OUTPUT, 
+   THROWING, 
+   MACRO_RETURN,
+   };
 
 #define NOT_THROWING            (stopping_flag != THROWING)
 #define RUNNING                 (stopping_flag == RUN)
@@ -389,7 +542,7 @@ parsed__runparse(
    const NODE * runparsed_node
 )
    {
-   assert(runparsed_node->node_type == RUN_PARSE);
+   assert(runparsed_node->type == RUN_PARSE);
    return getobject(runparsed_node);
    }
 
@@ -495,16 +648,25 @@ gcref(NODE * object)
 /* evaluator labels, needed by macros in other files */
 
 #define do_list(x) \
-           x(all_done) \
-           x(begin_line) x(end_line) x(begin_seq) x(begin_apply) \
-           x(eval_sequence_continue) \
-           x(accumulate_arg) x(compound_apply_continue) \
-           x(set_args_continue) x(macro_return) \
-           x(qm_continue) \
-           x(runresult_continuation) x(runresult_followup) \
-           x(repeat_continuation) x(repeat_followup) \
-           x(catch_continuation) x(catch_followup) \
-           x(goto_continuation)
+   x(all_done) \
+   x(begin_line) \
+   x(end_line) \
+   x(begin_seq) \
+   x(begin_apply) \
+   x(eval_sequence_continue) \
+   x(accumulate_arg) \
+   x(compound_apply_continue) \
+   x(set_args_continue) \
+   x(macro_return) \
+   x(qm_continue) \
+   x(runresult_continuation) \
+   x(runresult_followup) \
+   x(repeat_continuation) \
+   x(repeat_followup) \
+   x(catch_continuation) \
+   x(catch_followup) \
+   x(goto_continuation) \
+
 
 #define do_enum(x) x,
 
@@ -512,8 +674,7 @@ enum labels
    {
    do_list(do_enum)
    NUM_TOKENS
-   }
-;
+   };
 
 /* types of graphics moves that can be recorded */
 #define LINEXY         1
