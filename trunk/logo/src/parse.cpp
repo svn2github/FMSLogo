@@ -371,11 +371,7 @@ NODE *reader(FILE *strm, const char *prompt)
 static
 NODE *list_to_array(NODE *list)
    {
-   int len = 0;
-   for (NODE * np = list; np; np = cdr(np)) 
-      {
-      len++;
-      }
+   int len = list_length(list);
 
    NODE * result = make_array(len);
    setarrorg(result, 1);

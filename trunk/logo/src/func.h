@@ -321,6 +321,7 @@ extern NODE *cons_list(NODE * node1, NODE * node2);
 extern NODE *cons_list(NODE * node1, NODE * node2, NODE * node3);
 extern NODE *cons_list(NODE * node1, NODE * node2, NODE * node3, NODE * node4);
 extern NODE *cons_list(NODE * node1, NODE * node2, NODE * node3, NODE * node4, NODE * node5);
+extern int list_length(const NODE * List);
 extern NODE *make_array(int len);
 extern NODE *llowercase(NODE *args);
 extern NODE *luppercase(NODE *args);

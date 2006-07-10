@@ -663,6 +663,20 @@ NODE *cons_list(NODE * node1, NODE * node2, NODE * node3, NODE * node4, NODE * n
               cons(node5, NIL)))));
 }
 
+int list_length(const NODE * List)
+   {
+   int length = 0;
+
+   for (const NODE * current_node = List;
+        current_node != NIL;
+        current_node = cdr(current_node))
+      {
+      length++;
+      }
+
+   return length;
+   }
+
 NODE *make_array(int len)
    {
    NODE* node = newnode(ARRAY);
@@ -873,3 +887,4 @@ bool variableIsTrue(NODE *variable)
    {
    return 0 == compare_node(valnode__caseobj(variable), Truex, true);
    }
+

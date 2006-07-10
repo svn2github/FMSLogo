@@ -1292,13 +1292,7 @@ NODE *evaluator(NODE *list, enum labels where)
                   }
                }
 
-            int n = 0;
-            for (NODE *arg = argl;
-                 arg != NIL;
-                 arg = cdr(arg))
-               {
-               n++;
-               }
+            int n = list_length(argl);
 
             if (n < min)
                {
