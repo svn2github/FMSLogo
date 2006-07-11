@@ -158,6 +158,11 @@ IGNORE ERROR
 CATCH "ERROR [OUTPUT 123]
 ERRORTEST.CHECKERROR "|OUTPUT at the toplevel| 31 (LIST "|Can only use| "OUTPUT "|inside a procedure|)
 
+;; bug #1519088 -- this used to leak memory
+IGNORE ERROR
+CATCH "ERROR [ APPLY [OP ?] [3] ]
+ERRORTEST.CHECKERROR "|OUTPUT at the toplevel| 31 (LIST "|Can only use| "OP "|inside a procedure|)
+
 ;; bug #1457755
 IGNORE ERROR
 CATCH "ERROR [TO 1]
