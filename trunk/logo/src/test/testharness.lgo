@@ -52,6 +52,7 @@ LOAD "sort.lgo
 LOAD "run.lgo
 LOAD "dll.lgo
 LOAD "error.lgo
+LOAD "erract.lgo
 LOAD "copydef.lgo
 LOAD "iseq.lgo
 LOAD "load.lgo
@@ -78,6 +79,7 @@ TO TESTALL
   LOADTEST           ; from load.lgo
   RUNTEST            ; from run.lgo
   ERRORTEST          ; from error.lgo
+  ERRACTTEST         ; from erract.lgo
   LISTTEST           ; from list.lgo
   SENTENCETEST       ; from sentence.lgo
   PREDICATETEST      ; from predicate.lgo
