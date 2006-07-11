@@ -335,7 +335,6 @@ NODE *err_logo(ERR_TYPES error_type, NODE *error_desc)
    // If this error is recoverable and ERRACT is defined,
    // then we should run :ERRACT to get a new value.
    NODE * err_act = vref(valnode__caseobj(Erract));
-   NODE * val     = Unbound;
 
    if (err_act != NIL && err_act != UNDEFINED)
       {
@@ -343,21 +342,24 @@ NODE *err_logo(ERR_TYPES error_type, NODE *error_desc)
          {
          int sv_val_status = val_status;
 
-         erract_errtype = error_type;
-         setvalnode__caseobj(Erract, NIL);
-         val_status = 5;
+         erract_errtype = error_type;       // don't let one erract interrupt another
+         setvalnode__caseobj(Erract, NIL);  // avoid an erract loop
 
-         val = err_eval_driver(err_act);
+         NODE * val = err_eval_driver(err_act);
 
          val_status = sv_val_status;
          setvalnode__caseobj(Erract, err_act);
          deref(err_act);
 
+         // reset the erract so that it can be called again
+         erract_errtype = FATAL;
+
          if (val != Unbound)
             {
             if (recoverable)
                {
-               // use the new value instead of the old one
+               // Return the value returned from :ERRACT so that the
+               // caller can replace the bad value with this one.
                return unref(val);
                }
             else
@@ -365,7 +367,7 @@ NODE *err_logo(ERR_TYPES error_type, NODE *error_desc)
                // This error wasn't recoverable, so ERRACT shouldn't
                // have output a new value to use.
                ndprintf(stdout, "You don't say what to do with %s\n", val);
-               val = reref(val, Unbound);
+               deref(val);
                throw_node = reref(throw_node, Toplevel);
                }
             }
@@ -376,18 +378,20 @@ NODE *err_logo(ERR_TYPES error_type, NODE *error_desc)
          }
       else
          {
+         // this should never happen
          ndprintf(stdout, "Erract loop\n");
          throw_node = reref(throw_node, Toplevel);
          }
       }
    else
       {
-      /* no erract */
+      // no erract is defined, so we should throw the error
       throw_node = reref(throw_node, Error);
       }
+
    stopping_flag = THROWING;
-   output_node = Unbound;
-   return unref(val);
+   output_node = reref(output_node, Unbound);
+   return Unbound;
    }
 
 NODE *lerror(NODE *)
