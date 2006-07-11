@@ -332,6 +332,8 @@ NODE *err_logo(ERR_TYPES error_type, NODE *error_desc)
       return Unbound;
       }
 
+   // If this error is recoverable and ERRACT is defined,
+   // then we should run :ERRACT to get a new value.
    NODE * err_act = vref(valnode__caseobj(Erract));
    NODE * val     = Unbound;
 
@@ -344,20 +346,28 @@ NODE *err_logo(ERR_TYPES error_type, NODE *error_desc)
          erract_errtype = error_type;
          setvalnode__caseobj(Erract, NIL);
          val_status = 5;
+
          val = err_eval_driver(err_act);
-         ref(val);
+
          val_status = sv_val_status;
          setvalnode__caseobj(Erract, err_act);
          deref(err_act);
-         if (recoverable && val != Unbound)
+
+         if (val != Unbound)
             {
-            return unref(val);
-            }
-         else if (!recoverable && val != Unbound)
-            {
-            ndprintf(stdout, "You don't say what to do with %s\n", val);
-            val = reref(val, Unbound);
-            throw_node = reref(throw_node, Toplevel);
+            if (recoverable)
+               {
+               // use the new value instead of the old one
+               return unref(val);
+               }
+            else
+               {
+               // This error wasn't recoverable, so ERRACT shouldn't
+               // have output a new value to use.
+               ndprintf(stdout, "You don't say what to do with %s\n", val);
+               val = reref(val, Unbound);
+               throw_node = reref(throw_node, Toplevel);
+               }
             }
          else
             {
@@ -382,66 +392,71 @@ NODE *err_logo(ERR_TYPES error_type, NODE *error_desc)
 
 NODE *lerror(NODE *)
    {
-   NODE *val;
-
-   val = err_mesg;
+   NODE *val = err_mesg;
    err_mesg = NIL;
-   return (unref(val));
+   return unref(val);
    }
 
 NODE *lpause(NODE*)
    {
-   NODE *elist = NIL, *val = Unbound, *uname = NIL;
-   int sav_input_blocking;
-   int sv_val_status;
+   if (err_mesg != NIL) 
+      {
+      err_print();
+      }
 
-   jmp_buf sav_iblk;
-
-
-   if (err_mesg != NIL) err_print();
-   /* if (ufun != NIL) */
-   {
-      uname = reref(uname, ufun);
-      ufun = NIL;
-   }
+   NODE * uname = vref(ufun);
+   ufun = NIL;
 
    ndprintf(stdout, "Pausing...");
 
+   jmp_buf sav_iblk;
    memcpy(sav_iblk, iblk_buf, sizeof(sav_iblk));
 
-   sav_input_blocking = input_blocking;
+   int sav_input_blocking = input_blocking;
    input_blocking = 0;
-   sv_val_status = val_status;
+   int sv_val_status = val_status;
    while (RUNNING)
       {
-      if (uname != NIL) print_node(stdout, uname);
+      if (uname != NIL) 
+         {
+         print_node(stdout, uname);
+         }
+
       new_line(stdout);
+
+      // get the interactive input for the "pause"
       input_mode = INPUTMODE_Pause;
-      elist = reref(elist, reader(stdin, "? "));
+      NODE * elist = vref(reader(stdin, "? "));
       if (NOT_THROWING) 
          {
-         elist = reref(elist, parser(elist, TRUE));
+         elist = reref(elist, parser(elist, true));
          }
       else 
          {
          elist = reref(elist, NIL);
          }
+
+      // check if there are other things to do
       input_mode = INPUTMODE_None;
       MyMessageScan();
-      if (feof(stdin) /*ggm && !isatty(0)*/) lbye(NIL);
-#ifdef __ZTC__
-      if (feof(stdin)) rewind(stdin);
-#endif
+
+      if (feof(stdin)) 
+         {
+         lbye(NIL);
+         }
+
       val_status = 5;
-      if (elist != NIL) eval_driver(elist);
+      if (elist != NIL) 
+         {
+         eval_driver(elist);
+         }
       if (stopping_flag == THROWING)
          {
-         if (compare_node(throw_node, Pause, TRUE) == 0)
+         if (compare_node(throw_node, Pause, true) == 0)
             {
-            val = vref(output_node);
+            NODE * val = vref(output_node);
             output_node = reref(output_node, Unbound);
             stopping_flag = RUN;
-            deref(elist);
 
             memcpy(iblk_buf, sav_iblk, sizeof(sav_iblk));
 
@@ -452,16 +467,18 @@ NODE *lpause(NODE*)
                ufun = reref(ufun, uname);
                deref(uname);
                }
+
+            deref(elist);
             return unref(val);
             }
-         else if (compare_node(throw_node, Error, TRUE) == 0)
+         else if (compare_node(throw_node, Error, true) == 0)
             {
             err_print();
             stopping_flag = RUN;
             }
          }
+      deref(elist);
       }
-   deref(elist);
 
    memcpy(iblk_buf, sav_iblk, sizeof(sav_iblk));
 
@@ -474,7 +491,7 @@ NODE *lpause(NODE*)
       deref(uname);
       }
    
-   return unref(val);
+   return Unbound;
    }
 
 NODE *lcontinue(NODE *args)
