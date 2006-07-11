@@ -11,8 +11,36 @@ TO ERRACTTEST.BUG1517326
    REPORTTESTPASSED [Bug #1517326 passed.  Bad ERRACT did not halt Logo]
 END
 
+TO ERRACTTEST.SMOKETEST
+   LOCAL [saved.erract erract.was.called ]
+
+   ; backup the current value of :ERRACT
+   LOCALMAKE "savederract []
+   IF NAME? "ERRACT [MAKE "savederract :erract]
+
+
+   ;
+   ; make sure erract can get called
+   ;
+   REPORTTESTINFO [ Setting ERRACT to a value such that we can verify if it is called ]
+   MAKE "erract.was.called "false
+   MAKE "ERRACT [ MAKE "erract.was.called "true ]
+
+   REPORTTESTINFO [ Causing an unrecoverable error outside of a CATCH block ]
+   FUNCTION.DOES.NOT.EXIST
+
+   SIMPLEREPORTTEST [ :erract.was.called ] "true
+
+
+
+   ; restore the previous value of :ERRACT
+   MAKE "ERRACT :savederract
+
+END
+
 TO ERRACTTEST
 
-  ERRACTTEST.BUG1517326
+  ERRACTTEST.SMOKETEST
+  ;ERRACTTEST.BUG1517326
 
 END
