@@ -347,7 +347,7 @@ NODE *err_logo(ERR_TYPES error_type, NODE *error_desc)
          setvalnode__caseobj(Erract, NIL);
          val_status = 5;
 
-         val = eval_driver(err_act);
+         val = err_eval_driver(err_act);
 
          val_status = sv_val_status;
          setvalnode__caseobj(Erract, err_act);
