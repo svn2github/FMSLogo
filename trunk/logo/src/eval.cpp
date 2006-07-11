@@ -1326,18 +1326,10 @@ NODE *evaluator(NODE *list, enum labels where)
    return val;
    }
 
-// Evaluate a line of input.
-void eval_driver(NODE *line)
-   {
-   evaluator(line, begin_line);
-   }
-
 // Evaluate a sequence of expressions until we get a value to return.
-// (Called from erract.)
-NODE *err_eval_driver(NODE *seq)
+NODE * eval_driver(NODE *line)
    {
-   val_status = 5;
-   return evaluator(seq, begin_seq);
+   return evaluator(line, begin_line);
    }
 
 

@@ -517,10 +517,9 @@ extern NODE *lsetwritepos(NODE *arg);
 extern NODE *lcloseall(NODE * arg);
 
 // file eval.cpp
-extern NODE *err_eval_driver(NODE *seq);
 extern void spop(NODE **stack);
 extern void spush(NODE *obj, NODE **stack);
-extern void eval_driver(NODE *line);
+extern NODE *eval_driver(NODE *line);
 extern NODE *lapply(NODE *args);
 extern NODE *lqm(NODE *args);
 extern NODE *llocal(NODE *args);
