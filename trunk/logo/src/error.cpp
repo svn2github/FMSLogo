@@ -312,7 +312,7 @@ NODE *err_logo(ERR_TYPES error_type, NODE *error_desc)
 
    NODE * error_code = make_intnode((FIXNUM) error_type);
 
-   // replace the old error 4-tuple withthe new one
+   // replace the old error 4-tuple with the new one
    deref(err_mesg);
    if (ufun != NIL)
       {
