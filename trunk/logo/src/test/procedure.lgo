@@ -134,6 +134,9 @@ TO PROCEDURETEST
    RUNBADINPUTTEST        [(DEFINE "function [])]
    RUNTOOMANYINPUTSTEST   [(DEFINE "function [[a] [output :a] ] "toomany)]
 
+   ; commented out because it crashes FMSLogo
+   ; RUNBADINPUTTEST [DEFINE "BUG1520950 [[] APPLY [OUTPUT ?] [3]] BUG1520950 ]
+
    ; test LOCAL
    SIMPLEREPORTTEST [LOCALVARTEST "unknownlocalvar 42] 42
    SIMPLEREPORTTEST [NAME? "unknownlocalvar] "false
