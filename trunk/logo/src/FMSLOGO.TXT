@@ -21,7 +21,8 @@ Part I) Kit Description/Location (http://sourceforge.net/projects/fmslogo):
 Part II) New features/bugs fixed:
 
   * Added for 6.10.0,
-    o Fix bug #1519088: "APPLY [OP ?] [3]" no longer leaks memory.
+    o Fix bug #1520950: 'DEFINE "F [[] APPLY [OP ?] [3]] F' no longer crashes.
+    o Fix bug #1519088: 'APPLY [OP ?] [3]' no longer leaks memory.
     o Fix bug #1517323: Running CONTINUE from ERRACT no longer leaks memory.
     o Fix bug #1519319: FIRST now throws an error when given the empty array.
     o Fix bug #1517301: bitwise operators now treat decimal numbers that are 
@@ -34,10 +35,10 @@ Part II) New features/bugs fixed:
     o Fix bug #1508400; SORT no longer goes into infinite loop when given 
       NOT LESS? as a predicate.
     o Fix bug #1471059: value of REPCOUNT is now -1 outside of REPEAT loop.
-    o Fix bug #1457755: CATCH "ERROR [TO] now throws meaningful error.
+    o Fix bug #1457755: 'CATCH "ERROR [TO]' now throws meaningful error.
     o Fix bug #1457733: TO 1 now throws meaning error.
-    o Fix bug #1395740: "3 ** 4" now throws a meaningful error.
-    o Fix bug #1384326; "RIGHT 1.1." no longer has the baffling error message
+    o Fix bug #1395740: '3 ** 4' now throws a meaningful error.
+    o Fix bug #1384326; 'RIGHT 1.1.' no longer has the baffling error message
       "RIGHT didn't output to RIGHT".
     o Implement request #1492605; SORT is now faster and the design fits
       better with Logo's LISP heritage.
@@ -70,7 +71,7 @@ Part II) New features/bugs fixed:
       callbacks.
     o Fix bug #1474902; WINDOWFILEEDIT no longer crashes on long filenames.
     o Fix bug #1472599; BYE immediately exits FMSLogo.
-    o Fix bug #1372723; THROW "SYSTEM now exits FMSLogo.
+    o Fix bug #1372723; 'THROW "SYSTEM' now exits FMSLogo.
     o Fix bug #1474855; UI doesn't add newlines to the commander 
       history when prompting for user input.
     o Fix bug #1349368; When a malformed program loaded with the -L 
@@ -156,7 +157,7 @@ Part II) New features/bugs fixed:
     o Improve joystick samples.
     o Improve the SPRITE.LGO sample.
     o Fix typos and inaccuracies in the logo.hlp file.
-    o Fix bug #1349374; "ARRAY 0" now works.
+    o Fix bug #1349374; 'ARRAY 0' now works.
     o Fix bug #1349377; comments may now contain a single '|'.
     o Fix bug #1352838; EDALL can now save files on all Windows systems.
     o Fix bug #1365943; removed EDALLBTN from Logolib.
@@ -215,7 +216,7 @@ Part II) New features/bugs fixed:
     o Many internal changes.
 
   * Added for 6.5f,
-    o Do not start multiple instances of Logo
+    o Do not start multiple instances of Logo.
     o Fix editor font-changing bug on Windows 95.
     o Many internal changes.
 

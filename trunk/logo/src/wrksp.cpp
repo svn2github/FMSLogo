@@ -146,6 +146,30 @@ NODE *lfulltext(NODE *args)
    }
 
 static
+bool is_list_of_lists(const NODE *val) 
+   {
+   if (val == NIL) 
+      {
+      // base case: empty list
+      return true;
+      }
+
+   if (!is_list(val))
+      {
+      // not even a list
+      return false;
+      }
+
+   if (!is_list(car(val))) 
+      {
+      // a list of something other than lists
+      return false;
+      }
+
+   return is_list_of_lists(cdr(val));
+   }
+
+static
 NODE *define_helper(NODE *args, int macro_flag)
    {
    /* macro_flag is -1 for anonymous function */
@@ -158,6 +182,7 @@ NODE *define_helper(NODE *args, int macro_flag)
 
    if (macro_flag >= 0)
       {
+      // macro or procedure
       name = name_arg(args);
       if (NOT_THROWING)
          {
@@ -177,8 +202,9 @@ NODE *define_helper(NODE *args, int macro_flag)
          }
       if (NOT_THROWING)
          {
+         // make sure the bodylist is valid input
          val = cadr(args);
-         while ((val == NIL || !is_list(val) || !is_list(car(val))) &&
+         while ((val == NIL || !is_list_of_lists(val)) &&
                NOT_THROWING)
             {
             setcar(cdr(args), err_logo(BAD_DATA, val));
@@ -188,9 +214,11 @@ NODE *define_helper(NODE *args, int macro_flag)
       }
    else
       {
-      /* lambda */
+      // lambda 
       val = args;
       }
+
+
    if (NOT_THROWING)
       {
       args = car(val);
@@ -231,6 +259,7 @@ NODE *define_helper(NODE *args, int macro_flag)
             err_logo(BAD_DATA_UNREC, arg);
             break;
             }
+
          args = cdr(args);
          if (check_throwing) 
             {
@@ -238,15 +267,19 @@ NODE *define_helper(NODE *args, int macro_flag)
             }
          }
       }
+
    if (macro_flag < 0)
       {
+      // lambda
       return make_procnode(val, NIL, minimum, deflt, maximum);
       }
    else if (NOT_THROWING)
       {
+      // macro or procedure
       setprocnode__caseobj(
          name,
          make_procnode(val, NIL, minimum, deflt, maximum));
+
       if (macro_flag)
          {
          setflag__caseobj(name, PROC_MACRO);
@@ -255,6 +288,7 @@ NODE *define_helper(NODE *args, int macro_flag)
          {
          clearflag__caseobj(name, PROC_MACRO);
          }
+
       if (deflt != old_default && old_default >= 0)
          {
          the_generation = reref(the_generation, cons_list(NIL));
