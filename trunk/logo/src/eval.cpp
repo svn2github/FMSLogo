@@ -821,6 +821,12 @@ NODE *evaluator(NODE *list, enum labels where)
             assign(val, Unbound);
             goto fetch_cont;
             }
+         else if (val_status == 5)
+            {
+	        // pr apply [output ?] [3]
+            assign(didnt_output_name, fun);
+            goto tail_eval_dispatch;
+            }
          }
       else
          {
