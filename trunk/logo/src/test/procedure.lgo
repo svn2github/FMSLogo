@@ -32,6 +32,54 @@ TO BUG1438863TEST
    REPORTTESTPASSED ["|Bug #1438863 is fixed; erasing a procedure in the middle of running it does not crash|]
 END
 
+TO DEFINETEST.SMOKETEST
+
+   DEFINE "ECHO [[a] [output :a] ]
+   SIMPLEREPORTTEST [ECHO "input] "input
+   SIMPLEREPORTTEST [DEFINEDP "ECHO] "true
+   SIMPLEREPORTTEST [DEFINED? "ECHO] "true
+
+   ; this should be legal
+   TRACEINSTRUCTION [ DEFINE "DONOTHING [[]] ]
+   SIMPLEREPORTTEST [ DEFINED? "DONOTHING] "true
+   TRACEINSTRUCTION [ DONOTHING ]
+
+END
+
+TO DEFINETEST.BADINPUT
+
+   RUNNOTENOUGHINPUTSTEST [(DEFINE "BADPROCEDURE)]
+   RUNTOOMANYINPUTSTEST   [(DEFINE "BADPROCEDURE [[a] [output :a]] "toomany)]
+
+   RUNBADINPUTTEST [DEFINE [BADPROCEDURE] [[a] [output :a]]]
+   RUNBADINPUTTEST [DEFINE {BADPROCEDURE} [[a] [output :a]]]
+   RUNBADINPUTTEST [DEFINE "BADPROCEDURE  "badtext         ]
+   RUNBADINPUTTEST [DEFINE "BADPROCEDURE  []               ]
+   RUNBADINPUTTEST [DEFINE "BADPROCEDURE  {[a] [output :a]}]
+   RUNBADINPUTTEST [DEFINE "BADPROCEDURE  ["a  [output :a]]]
+   RUNBADINPUTTEST [DEFINE "BADPROCEDURE  [[a] {output :a}]]
+   RUNBADINPUTTEST [DEFINE "BADPROCEDURE  [[a]  output :a ]]
+
+   ; try to force a memory leak on error
+   RUNBADINPUTTEST [DEFINE "BADPROCEDURE [{a b} [FORWARD 10]] ]
+   RUNBADINPUTTEST [DEFINE "BADPROCEDURE [[a b] [FORWARD 10] BADINPUT [FORWARD 10]] ]
+
+   ; make sure that none of the above defined a procedure
+   SIMPLEREPORTTEST [DEFINED? "BADPROCEDURE] "false
+
+   ; Regression test for bug #1520950 (this used to crash)
+   RUNBADINPUTTEST  [DEFINE "BUG1520950 [[] APPLY [OUTPUT ?] [3]] BUG1520950 ]
+   SIMPLEREPORTTEST [DEFINED? "BUG1520950] "false
+
+END
+
+TO DEFINETEST
+
+    DEFINETEST.SMOKETEST
+    DEFINETEST.BADINPUT
+
+END
+
 TO PROCEDURETEST
 
   ; test TEXT
@@ -124,18 +172,9 @@ TO PROCEDURETEST
    RUNBADINPUTTEST        [(MACRO? [])]
    RUNTOOMANYINPUTSTEST   [(MACRO? "mymacro "toomany)]
 
-   ; test DEFINE
-   DEFINE "ECHO [[a] [output :a] ]
-   SIMPLEREPORTTEST [ECHO "input] "input
-   SIMPLEREPORTTEST [DEFINEDP "ECHO] "true
-   SIMPLEREPORTTEST [DEFINED? "ECHO] "true
-   RUNNOTENOUGHINPUTSTEST [(DEFINE)]
-   RUNBADINPUTTEST        [(DEFINE "function)]
-   RUNBADINPUTTEST        [(DEFINE "function [])]
-   RUNTOOMANYINPUTSTEST   [(DEFINE "function [[a] [output :a] ] "toomany)]
 
-   ; Regression test for bug #1520950 (this used to crash)
-   RUNBADINPUTTEST [DEFINE "BUG1520950 [[] APPLY [OUTPUT ?] [3]] BUG1520950 ]
+   ; test DEFINE
+   DEFINETEST
 
    ; test LOCAL
    SIMPLEREPORTTEST [LOCALVARTEST "unknownlocalvar 42] 42
