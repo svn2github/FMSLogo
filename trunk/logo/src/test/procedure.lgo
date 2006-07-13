@@ -5,6 +5,13 @@ TO SAMPLEPROC  :a  :b
   SHOW  :b ; show
 END
 
+TO PROCEDURETEST.COMPLEXPROC :a :b [:c 1] [:d SUM 1 2] 2
+  PRINT :a ; print
+  SHOW  :b ; show
+
+  OUTPUT SUM :c :d ; output
+END
+
 ; Creates a local variable named varname (which must be a string).
 ; It assigns a value to the variable,
 ; then outputs the value of the variable.
@@ -74,39 +81,87 @@ TO DEFINETEST.BADINPUT
 END
 
 TO DEFINETEST
+  DEFINETEST.SMOKETEST
+  DEFINETEST.BADINPUT
+END
 
-    DEFINETEST.SMOKETEST
-    DEFINETEST.BADINPUT
+TO TEXTTEST.SMOKETEST
+
+  SIMPLEREPORTTEST ~
+    [TEXT "SAMPLEPROC] ~
+    [[a b] [PRINT :a] [SHOW :b]]
+
+  SIMPLEREPORTTEST ~
+    [TEXT "PROCEDURETEST.COMPLEXPROC] ~
+    [[a b [c 1] [d SUM 1 2] 2] [PRINT :a] [SHOW :b] [OUTPUT SUM :c :d]]
+
+END
+
+TO TEXTTEST.BADINPUT
+
+  RUNNOTENOUGHINPUTSTEST              [(TEXT)]
+  RUNNONRECOVERABLEIDONTKNOWHOWTOTEST [(TEXT "nonexistent)]
+  RUNBADINPUTTEST                     [(TEXT [sampleproc])]
+  RUNBADINPUTTEST                     [(TEXT {sampleproc})]
+  RUNTOOMANYINPUTSTEST                [(TEXT "sampleproc  "toomany)]
+
+END
+
+TO TEXTTEST
+  TEXTTEST.SMOKETEST
+  TEXTTEST.BADINPUT
+END
+
+
+TO FULLTEXTTEST.SMOKETEST
+
+  LOCAL "fulltext
+
+  TRACEINSTRUCTION [ MAKE "fulltext FULLTEXT "SAMPLEPROC]
+  SIMPLEREPORTTEST [ LIST?  :fulltext] "true
+  SIMPLEREPORTTEST [ ITEM 1 :fulltext] "|TO SAMPLEPROC  :a  :b|
+  SIMPLEREPORTTEST [ ITEM 2 :fulltext] "|  PRINT :a ; print| 
+  SIMPLEREPORTTEST [ ITEM 3 :fulltext] "|  SHOW  :b ; show| 
+  SIMPLEREPORTTEST [ ITEM 4 :fulltext] "END
+  SIMPLEREPORTTEST [ COUNT  :fulltext] 4
+
+  TRACEINSTRUCTION [ MAKE "fulltext FULLTEXT "PROCEDURETEST.COMPLEXPROC]
+  SIMPLEREPORTTEST [ LIST?  :fulltext] "true
+  SIMPLEREPORTTEST [ ITEM 1 :fulltext] "|TO PROCEDURETEST.COMPLEXPROC :a :b [:c 1] [:d SUM 1 2] 2|
+  SIMPLEREPORTTEST [ ITEM 2 :fulltext] "|  PRINT :a ; print|
+  SIMPLEREPORTTEST [ ITEM 3 :fulltext] "|  SHOW  :b ; show|
+  SIMPLEREPORTTEST [ ITEM 4 :fulltext] "||
+  SIMPLEREPORTTEST [ ITEM 5 :fulltext] "|  OUTPUT SUM :c :d ; output|
+  SIMPLEREPORTTEST [ ITEM 6 :fulltext] "END
+  SIMPLEREPORTTEST [ COUNT  :fulltext] 6
+
+END
+
+TO FULLTEXTTEST.BADINPUT
+
+   RUNNOTENOUGHINPUTSTEST              [(FULLTEXT)]
+   RUNNONRECOVERABLEIDONTKNOWHOWTOTEST [(FULLTEXT "nonexistent)]
+   RUNBADINPUTTEST                     [(FULLTEXT [sampleproc])]
+   RUNBADINPUTTEST                     [(FULLTEXT {sampleproc})]
+   RUNTOOMANYINPUTSTEST                [(FULLTEXT "sampleproc  "toomany)]
+
+END
+
+
+TO FULLTEXTTEST
+
+  FULLTEXTTEST.SMOKETEST
+  FULLTEXTTEST.BADINPUT
 
 END
 
 TO PROCEDURETEST
 
-  ; test TEXT
-  SIMPLEREPORTTEST ~
-    [TEXT "SAMPLEPROC] ~
-    [[a b] [PRINT :a] [SHOW :b]]
+   ; test TEXT
+   TEXTTEST
 
-  RUNNOTENOUGHINPUTSTEST [(TEXT)]
-  RUNBADINPUTTEST        [(TEXT "nonexistent)]
-  RUNBADINPUTTEST        [(TEXT [sampleproc])]
-  RUNBADINPUTTEST        [(TEXT {sampleproc})]
-  RUNTOOMANYINPUTSTEST   [(TEXT "sampleproc  "toomany)]
-
-  ; test FULLTEXT
-  SIMPLEREPORTTEST ~
-     [FULLTEXT "SAMPLEPROC] ~
-     (LIST 
-        "|TO SAMPLEPROC  :a  :b|
-        "|  PRINT :a ; print| 
-        "|  SHOW  :b ; show| 
-        "END)
-
-   RUNNOTENOUGHINPUTSTEST [(FULLTEXT)]
-   RUNBADINPUTTEST        [(FULLTEXT "nonexistent)]
-   RUNBADINPUTTEST        [(FULLTEXT [sampleproc])]
-   RUNBADINPUTTEST        [(FULLTEXT {sampleproc})]
-   RUNTOOMANYINPUTSTEST   [(FULLTEXT "sampleproc  "toomany)]
+   ; test FULLTEXT
+   FULLTEXTTEST
 
    ; test DEFINEDP
    SIMPLEREPORTTEST [DEFINEDP "nonexistent] "false
