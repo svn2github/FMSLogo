@@ -5,7 +5,7 @@ TO SAMPLEPROC  :a  :b
   SHOW  :b ; show
 END
 
-TO PROCEDURETEST.COMPLEXPROC :a :b [:c 1] [:d SUM 1 2] 2
+TO PROCEDURETEST.COMPLEXPROC :a :b [:c 1] [:d SUM 1 2] [:e] 2
   PRINT :a ; print
   SHOW  :b ; show
 
@@ -93,7 +93,7 @@ TO TEXTTEST.SMOKETEST
 
   SIMPLEREPORTTEST ~
     [TEXT "PROCEDURETEST.COMPLEXPROC] ~
-    [[a b [c 1] [d SUM 1 2] 2] [PRINT :a] [SHOW :b] [OUTPUT SUM :c :d]]
+    [[a b [c 1] [d SUM 1 2] [e] 2] [PRINT :a] [SHOW :b] [OUTPUT SUM :c :d]]
 
 END
 
@@ -127,7 +127,7 @@ TO FULLTEXTTEST.SMOKETEST
 
   TRACEINSTRUCTION [ MAKE "fulltext FULLTEXT "PROCEDURETEST.COMPLEXPROC]
   SIMPLEREPORTTEST [ LIST?  :fulltext] "true
-  SIMPLEREPORTTEST [ ITEM 1 :fulltext] "|TO PROCEDURETEST.COMPLEXPROC :a :b [:c 1] [:d SUM 1 2] 2|
+  SIMPLEREPORTTEST [ ITEM 1 :fulltext] "|TO PROCEDURETEST.COMPLEXPROC :a :b [:c 1] [:d SUM 1 2] [:e] 2|
   SIMPLEREPORTTEST [ ITEM 2 :fulltext] "|  PRINT :a ; print|
   SIMPLEREPORTTEST [ ITEM 3 :fulltext] "|  SHOW  :b ; show|
   SIMPLEREPORTTEST [ ITEM 4 :fulltext] "||
