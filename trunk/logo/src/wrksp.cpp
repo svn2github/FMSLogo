@@ -39,54 +39,74 @@ NODE *make_procnode(NODE *lst, NODE *wrds, short min, short df, short max)
 static
 NODE *get_bodywords(NODE *proc, NODE *name)
    {
-   NODE *val = bodywords__procnode(proc);
+   NODE *bodywords = bodywords__procnode(proc);
 
-   if (val != NIL) 
+   if (bodywords != NIL) 
       {
-      return val;
+      // bodywords__procnode(proc) was already created.
+      // Just return it.
+      return bodywords;
       }
 
    // bodywords__procnode(proc) isn't set yet.  Set it.
-   name = intern(name);
-   NODE * head = cons_list((is_macro(name) ? Macro : To), name);
-   NODE * tail = cdr(head);
-   for (val = formals__procnode(proc);
-        val != NIL;
-        val = cdr(val))
-      {
-      NODE * tnode;
 
-      if (is_list(car(val)))
+   // Create the "TO" line, which also contains the inputs
+   CAppendableList toline;
+   name = intern(name);
+   toline.AppendElement(is_macro(name) ? Macro : To);
+   toline.AppendElement(name);
+   for (NODE * formals = formals__procnode(proc);
+        formals != NIL;
+        formals = cdr(formals))
+      {
+      NODE * formal = car(formals);
+
+      NODE * tnode;
+      if (is_list(formal))
          {
-         tnode = cons(make_colon(caar(val)), cdar(val));
+         // an input with a default value or a "rest" input
+         tnode = cons(make_colon(car(formal)), cdr(formal));
          }
-      else if (nodetype(car(val)) == INTEGER)
+      else if (nodetype(formal) == INTEGER)
          {
-         tnode = car(val);
+         // a number, which indicates the default number of inputs
+         tnode = formal;
          }
       else
          {
-         tnode = make_colon(car(val));
+         // the name of a formal parameter (add a colon in front of it).
+         tnode = make_colon(formal);
          }
 
-      // append tnode to the list
-      setcdr(tail, cons_list(tnode));
-      tail = cdr(tail);
+      // append tnode to the "TO" line
+      toline.AppendElement(tnode);
       }
 
 
-   head = cons_list(head);
-   tail = head;
-   for (val = bodylist__procnode(proc);
-        val != NIL;
-        val = cdr(val))
+   // Add the body of the procedure
+   CAppendableList bodywordslist;
+   bodywordslist.AppendElement(toline.GetList());
+   for (NODE * line = bodylist__procnode(proc);
+        line != NIL;
+        line = cdr(line))
       {
-      setcdr(tail, cons_list(runparse(car(val))));
-      tail = cdr(tail);
+      NODE * bodywords = runparse(car(line));
+
+      bodywordslist.AppendElement(bodywords);
       }
-   setcdr(tail, cons_list(cons_list(End)));
-   setbodywords__procnode(proc, head);
-   return head;
+
+   // add the END line
+   bodywordslist.AppendElement(cons_list(End));
+
+   // we're done making the bodywords list
+   bodywords = bodywordslist.GetList();
+
+   // cache the value of the bodywords so we won't have to
+   // create it the next time.
+   setbodywords__procnode(proc, bodywords);
+
+   // return the bodywords
+   return bodywords;
    }
 
 static
@@ -116,7 +136,9 @@ NODE *ltext(NODE *args)
          return Unbound;
          }
       else
+         {
          return text__procnode(val);
+         }
       }
    return Unbound;
    }
@@ -146,6 +168,12 @@ NODE *lfulltext(NODE *args)
    }
 
 static
+void set_new_generation()
+   {
+   the_generation = reref(the_generation, cons_list(NIL));
+   }
+
+static
 bool is_list_of_lists(const NODE *val) 
    {
    if (val == NIL) 
@@ -167,6 +195,17 @@ bool is_list_of_lists(const NODE *val)
       }
 
    return is_list_of_lists(cdr(val));
+   }
+
+
+// returns the number of default arguments for a procedure node
+static
+int
+get_default_args_for_procedure(const NODE * procedure)
+   {
+   return is_prim(procedure) ? 
+      getprimdflt(procedure) :
+      getint(dfltargs__procnode(procedure));
    }
 
 static
@@ -196,8 +235,7 @@ NODE *define_helper(NODE *args, int macro_flag)
             }
          else if (val != UNDEFINED)
             {
-            old_default = (is_prim(val) ? getprimdflt(val) :
-                  getint(dfltargs__procnode(val)));
+            old_default = get_default_args_for_procedure(val);
             }
          }
       if (NOT_THROWING)
@@ -291,7 +329,7 @@ NODE *define_helper(NODE *args, int macro_flag)
 
       if (deflt != old_default && old_default >= 0)
          {
-         the_generation = reref(the_generation, cons_list(NIL));
+         set_new_generation();
          }
       }
    return Unbound;
@@ -488,7 +526,7 @@ NODE *to_helper(NODE *args, bool is_macro)
 
          if (deflt != old_default && old_default >= 0)
             {
-            the_generation = reref(the_generation, cons_list(NIL));
+            set_new_generation();
             }
          if (loadstream == stdin)
             {
@@ -531,9 +569,7 @@ NODE *lmacro(NODE *args)
 
 NODE *lmake(NODE *args)
    {
-   NODE *what;
-
-   what = name_arg(args);
+   NODE * what = name_arg(args);
    if (NOT_THROWING)
       {
       what = intern(what);
@@ -569,13 +605,12 @@ static NODE *cnt_list = NIL;
 static NODE *cnt_last = NIL;
 static int want_buried = 0;
 
-typedef enum
+enum CNTLSTTYP
    {
    c_PROCS, 
    c_VARS, 
    c_PLISTS,
-   }
-CNTLSTTYP;
+   };
 
 
 static
@@ -593,7 +628,10 @@ contents_map(
    {
    int flag_check = PROC_BURIED;
 	
-   if (want_buried) flag_check = want_buried;
+   if (want_buried) 
+      {
+      flag_check = want_buried;
+      }
 	
    switch (contents_list_type)
       {
@@ -981,7 +1019,7 @@ NODE *po_helper(NODE *arg, int just_titles)  /* >0 for POT, <0 for EDIT       */
             break;
             }
          }
-      else if (nodetype(tvar) & NT_PRIM)
+      else if (is_prim(tvar))
          {
          err_logo(IS_PRIM, car(proclst));
          break;
@@ -1148,7 +1186,7 @@ NODE *lerase(NODE *arg)
 
    if (proclst != NIL)
       {
-      the_generation = reref(the_generation, cons_list(NIL));
+      set_new_generation();
       }
 
    while (proclst != NIL)
@@ -1516,17 +1554,12 @@ NODE *lcopydef(NODE *args)
       NODE *new_proc = procnode__caseobj(arg2);
       if (old_proc != UNDEFINED)
          {
-         int old_default = is_prim(old_proc) ? 
-            getprimdflt(old_proc) :
-            getint(dfltargs__procnode(old_proc));
-
-         int new_default = is_prim(new_proc) ? 
-            getprimdflt(new_proc) :
-            getint(dfltargs__procnode(new_proc));
+         int old_default = get_default_args_for_procedure(old_proc);
+         int new_default = get_default_args_for_procedure(new_proc);
 
          if (old_default != new_default)
             {
-            the_generation = reref(the_generation, cons_list(NIL));
+            set_new_generation();
             }
          }
 
