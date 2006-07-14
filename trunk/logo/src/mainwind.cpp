@@ -856,13 +856,14 @@ bool TMainFrame::CanClose()
          }
       }
 
-   // if not halted warn user and give chance to abort shutdown
 
    if (is_executing())
       {
-      // if we already tried warn user of doom
+      // The language engine is not halted.
+      // Warn user and give chance to abort shutdown.
       if (IsTimeToHalt)
          {
+         // we already tried warn user of doom
          if (MessageBox(
                "FMSLogo does not like exiting while not halted.\n"
                   "\n"
@@ -873,9 +874,9 @@ bool TMainFrame::CanClose()
             return false;
             }
          }
-         // else let the user optionally halt first
       else
          {
+         // let the user optionally halt first
          if (MessageBox(
                "FMSLogo does not like exiting while not halted.\n"
                   "\n"
@@ -899,6 +900,9 @@ bool TMainFrame::CanClose()
       if (exitCode == IDCANCEL)
          {
          // don't exit FMSLogo
+         IsTimeToHalt  = false;
+         IsTimeToExit  = false;
+         stopping_flag = RUN;
          return false;
          }
       else if (exitCode == IDYES)
@@ -2554,7 +2558,7 @@ LRESULT TMainFrame::OnNetworkConnectSendAck(WPARAM /* wParam */, LPARAM lParam)
                   }
                else
                   {
-                  // read the whole thng for real
+                  // read the whole thing for real
                   memset(Buffer, 0, MAX_PACKET_SIZE);
                   status = recv(sendSock, Buffer, MAX_PACKET_SIZE - 1, 0);
                   }
