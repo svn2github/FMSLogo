@@ -21,7 +21,7 @@
 
 #include "allwind.h"
 
-#define MAX_PENDING_CONNECTS 4   // The backlog allowed for listen()
+const int MAX_PENDING_CONNECTS = 4;  // The backlog allowed for listen()
 
 calllist calllists;
 
@@ -2481,11 +2481,79 @@ LRESULT TMainFrame::WMCheckQueue(WPARAM, LPARAM)
    return (LRESULT) msg.Result;
    }
 
+
+static
+void
+SocketAsyncReceive(
+   TWindow    *       Window,
+   SOCKET             Socket,
+   bool               IsSendSocket,
+   CCarryOverBuffer & CarryOverData,
+   const char *       ErrorMessage
+   )
+   {
+   char Buffer[MAX_PACKET_SIZE];
+   memset(Buffer, 0, MAX_PACKET_SIZE);
+
+   // read the data from the buffer
+   int status = recv(Socket, Buffer, sizeof(Buffer) - 1, 0);
+   if (status == SOCKET_ERROR)
+      {
+      // if this would block, we just wait until we get called again
+      if (WSAGetLastError() != WSAEWOULDBLOCK) 
+         {
+         Window->MessageBox(WSAGetLastErrorString(0), ErrorMessage);
+         // err_logo(STOP_ERROR,NIL);
+         }
+      }
+   else
+      {
+      // we received some data.
+
+      // We have some data left from the last time we were called.
+      // Append this buffer to the end of the network receive buffer. 
+
+      // TODO: Don't Append the data to the carry-over buffer if there is none.
+      //       We should be able to use Buffer, instead.
+      CarryOverData.Append(Buffer, status);
+
+      // now queue up a separate message for each packet
+      int begin = 0;
+      int end   = strlen(CarryOverData.m_Buffer);
+
+      while (end < CarryOverData.m_BytesOfData)
+         {
+         callthing *callevent;
+
+         if (IsSendSocket)
+            {
+            callevent = callthing::CreateNetworkSendEvent(
+               network_send_receive,
+               CarryOverData.m_Buffer + begin);
+            }
+         else
+            {
+            callevent = callthing::CreateNetworkReceiveEvent(
+               network_receive_receive,
+               CarryOverData.m_Buffer + begin);
+            }
+
+         calllists.insert(callevent);
+                  
+         Window->PostMessage(WM_CHECKQUEUE, 0, 0);
+
+         begin = end + 1;
+         end   = begin + strlen(CarryOverData.m_Buffer + begin);
+         }
+
+      // shift the buffer such that it begins at "begin"
+      CarryOverData.ShiftLeft(begin);
+      }
+   }
+
 LRESULT TMainFrame::OnNetworkConnectSendAck(WPARAM /* wParam */, LPARAM lParam)
    {
    TMessage msg = __GetTMessage();
-   char Buffer[MAX_PACKET_SIZE];
-   int status;
 
    if (WSAGETASYNCERROR(lParam) != 0)
       {
@@ -2505,74 +2573,12 @@ LRESULT TMainFrame::OnNetworkConnectSendAck(WPARAM /* wParam */, LPARAM lParam)
       switch (WSAGETSELECTEVENT(lParam))
          {
          case FD_READ:
-            memset(Buffer, 0, MAX_PACKET_SIZE);
-
-            // get a copy first for examination
-            if ((status = recv(sendSock, Buffer, sizeof(Buffer) - 1, MSG_PEEK)) == SOCKET_ERROR)
-               {
-               // if block wait til we get called again
-               if (WSAGetLastError() == WSAEWOULDBLOCK) 
-                  {
-                  return 0L;
-                  }
-
-               MessageBox(WSAGetLastErrorString(0), "recv(sendsock)");
-               // err_logo(STOP_ERROR,NIL);
-               return 0L;
-               }
-
-            // if something is there (better be) then process it
-
-            if (status != 0)
-               {
-               int i;
-               
-               // find the end of the last packet
-               for (i = status - 1; i >= 0; i--) 
-                  {
-                  if (Buffer[i] == '\0') 
-                     {
-                     break;
-                     }
-                  }
-
-               // if not found
-               if (i < 0)
-                  {
-                  if (status < sizeof(Buffer) - 1) 
-                     {
-                     // the buffer isn't full yet, we can wait for more
-                     return 0L;
-                     }
-
-                  // The buffer is full, even though we haven't found
-                  // the NUL byte.  Read the whole thing anyway.
-                  i = sizeof(Buffer) - 2;
-                  }
-
-               // read for real up to the last packet boundary
-               status = recv(sendSock, Buffer, i + 1, 0);
-
-               // now queue up a separate message for each packet
-               i = 0;
-               while (1)
-                  {
-                  callthing *callevent = callthing::CreateNetworkSendEvent(
-                     network_send_receive,
-                     &Buffer[i]);
-
-                  calllists.insert(callevent);
-
-                  PostMessage(WM_CHECKQUEUE, 0, 0);
-
-
-                  i += strlen(&Buffer[i]) + 1;
-                  if (i >= status)
-                     {
-                     break;
-                     }
-                  }
-               }
+            SocketAsyncReceive(
+               this,
+               sendSock,
+               true,
+               g_SendCarryOverData,
+               "recv(sendsock)");
 
             return 0L;
 
@@ -2588,6 +2594,21 @@ LRESULT TMainFrame::OnNetworkConnectSendAck(WPARAM /* wParam */, LPARAM lParam)
 
          case FD_CLOSE:
             // done
+
+            // send any data in the carry-over buffer upwards
+            if (g_SendCarryOverData.m_BytesOfData != 0)
+               {
+               callthing *callevent = callthing::CreateNetworkSendEvent(
+                  network_send_receive,
+                  g_SendCarryOverData.m_Buffer);
+               
+               calllists.insert(callevent);
+               
+               PostMessage(WM_CHECKQUEUE, 0, 0);
+               }
+
+            g_SendCarryOverData.ReleaseBuffer();
+
             bSendConnected = false;
             break;
          }
@@ -2683,8 +2704,6 @@ LRESULT TMainFrame::OnNetworkListenReceiveAck(WPARAM /* wParam */, LPARAM lParam
    {
    SOCKADDR_IN acc_sin;       // Accept socket address - internet style
    int acc_sin_len;           // Accept socket address length
-   int status;
-   char Buffer[MAX_PACKET_SIZE];
 
    TMessage msg = __GetTMessage();
 
@@ -2705,119 +2724,60 @@ LRESULT TMainFrame::OnNetworkListenReceiveAck(WPARAM /* wParam */, LPARAM lParam
       switch (WSAGETSELECTEVENT(lParam))
          {
          case FD_READ:
-            memset(Buffer, 0, MAX_PACKET_SIZE);
-
-            // get a copy first for examination
-            if ((status = recv(receiveSock, Buffer, MAX_PACKET_SIZE - 1, MSG_PEEK)) == SOCKET_ERROR)
-               {
-               // if block wait til we get called again
-               if (WSAGetLastError() == WSAEWOULDBLOCK) 
-                  {
-                  return 0L;
-                  }
-
-               MessageBox(
-                  WSAGetLastErrorString(0),
-                  "recv(receivesock)");
-               // err_logo(STOP_ERROR,NIL);
-               return 0L;
-               }
-
-            // if something is there (better be) then process it
-            if (status != 0)
-               {
-               int i;
-
-               // last byte is not end of packet then try to find one
-               if (Buffer[status - 1] != '\0')
-                  {
-                  for (i = status - 1; i >= 0; i--)
-                     {
-                     if (Buffer[i] == '\0') 
-                        {
-                        break;
-                        }
-                     }
-
-                  // if not found
-
-                  if (i < 0)
-                     {
-                     // if not full wait for more
-                     if (status < MAX_PACKET_SIZE - 1) 
-                        {
-                        return 0L;
-                        }
-
-                     // read the whole thing anyway
-                     i = MAX_PACKET_SIZE - 2;
-                     }
-
-                  // read for real up to a last packet boundary
-                  memset(Buffer, 0, MAX_PACKET_SIZE);
-                  status = recv(receiveSock, Buffer, i + 1, 0);
-                  }
-               else
-                  {
-                  // read the whole thng for real
-                  memset(Buffer, 0, MAX_PACKET_SIZE);
-                  status = recv(receiveSock, Buffer, MAX_PACKET_SIZE - 1, 0);
-                  }
-
-               i = 0;
-               // now queue up a seperate message for each packet
-
-               while (1)
-                  {
-                  callthing *callevent = callthing::CreateNetworkReceiveEvent(
-                     network_receive_receive,
-                     &Buffer[i]);
-
-                  calllists.insert(callevent);
-                  PostMessage(WM_CHECKQUEUE, 0, 0);
-
-                  i += strlen(&Buffer[i]) + 1;
-                  if (i >= status)
-                     {
-                     break;
-                     }
-                  }
-               }
+            SocketAsyncReceive(
+               this,
+               receiveSock,
+               false,
+               g_ReceiveCarryOverData,
+               "recv(receivesock)");
 
             return 0L;
 
-          case FD_ACCEPT:
-              bReceiveConnected = true;
+         case FD_ACCEPT:
+            bReceiveConnected = true;
 
-              // disabled for UDP
+            // disabled for UDP
 
 #ifndef USE_UDP
-              acc_sin_len = sizeof(acc_sin);
+            acc_sin_len = sizeof(acc_sin);
 
-              if ((receiveSock = accept(receiveSock, (struct sockaddr *) &acc_sin, (int *) &acc_sin_len)) == INVALID_SOCKET)
-                 {
-                 MessageBox(WSAGetLastErrorString(0), "accept(receivesock)");
-                 // err_logo(STOP_ERROR,NIL);
-                 }
+             if ((receiveSock = accept(receiveSock, (struct sockaddr *) &acc_sin, (int *) &acc_sin_len)) == INVALID_SOCKET)
+                {
+                MessageBox(WSAGetLastErrorString(0), "accept(receivesock)");
+                // err_logo(STOP_ERROR,NIL);
+                }
 #endif
-              break;
+             break;
 
-          case FD_CLOSE:
+         case FD_CLOSE:
 
-              // done
-              bReceiveConnected = false;
-              break;
+            // the remote endpoint has finished sending
+            // send any data in the carry-over buffer to Logo
+            if (g_ReceiveCarryOverData.m_BytesOfData != 0)
+               {
+               callthing *callevent = callthing::CreateNetworkReceiveEvent(
+                  network_receive_receive,
+                  g_ReceiveCarryOverData.m_Buffer);
 
-          case FD_WRITE:
+               calllists.insert(callevent);
 
-              // allow another frame to go out.
-              bReceiveBusy = false;
-              break;
+               PostMessage(WM_CHECKQUEUE, 0, 0);
+               }
+             
+            g_SendCarryOverData.ReleaseBuffer();
+            bReceiveConnected = false;
+            break;
 
-          default:
-              MessageBox("Unexpected Message", "Status");
-              // err_logo(STOP_ERROR,NIL);
-              break;
+         case FD_WRITE:
+
+            // allow another frame to go out.
+            bReceiveBusy = false;
+            break;
+
+         default:
+            MessageBox("Unexpected Message", "Status");
+            // err_logo(STOP_ERROR,NIL);
+            break;
 
          }
 
@@ -2835,8 +2795,6 @@ LRESULT TMainFrame::OnNetworkListenReceiveFinish(WPARAM /* wParam */, LPARAM lPa
    {
    TMessage msg = __GetTMessage();
 
-   SOCKADDR_IN receive_local_sin;      // Local socket - internet style
-
    if (WSAGETASYNCERROR(lParam) != 0)
       {
       MessageBox(
@@ -2847,6 +2805,7 @@ LRESULT TMainFrame::OnNetworkListenReceiveFinish(WPARAM /* wParam */, LPARAM lPa
       }
 
    // always start clean
+   SOCKADDR_IN receive_local_sin;  // Local socket - internet style
    memset(&receive_local_sin, 0, sizeof(SOCKADDR_IN));
 
    // what else is there

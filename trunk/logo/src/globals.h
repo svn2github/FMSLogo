@@ -78,6 +78,8 @@ extern char *network_receive_value;
 extern char *network_send_value;
 extern bool network_send_on;
 extern bool network_receive_on;
+extern CCarryOverBuffer g_SendCarryOverData;
+extern CCarryOverBuffer g_ReceiveCarryOverData;
 
 /* logodata.c */
 #ifdef ecma

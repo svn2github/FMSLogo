@@ -62,7 +62,6 @@
 #include "vector.h"
 #include "threed.h"
 #include "3dsolid.h"
-#include "globals.h"
 #include "editwnd.h"
 #include "class.h"
 #include "colordlg.h"
@@ -77,6 +76,7 @@
 #include "utils.h"
 #include "smartnode.h"
 #include "appendablelist.h"
+#include "globals.h"
 
 #endif // _ALLWIND_H_
 

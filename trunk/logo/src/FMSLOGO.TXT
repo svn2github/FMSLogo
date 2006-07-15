@@ -41,6 +41,8 @@ Part II) New features/bugs fixed:
     o Fix bug #1395740: '3 ** 4' now throws a meaningful error.
     o Fix bug #1384326; 'RIGHT 1.1.' no longer has the baffling error message
       "RIGHT didn't output to RIGHT".
+    o Fix bug #1367386: Networking code no longer goes into an infinite loop 
+      when it receives data that does not contain NUL.
     o Implement request #1492605; SORT is now faster and the design fits
       better with Logo's LISP heritage.
     o Minor updates to the manual.

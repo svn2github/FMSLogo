@@ -69,6 +69,23 @@ typedef struct
    }
 CUTMAP;
 
+// Class for buffering (carrying over) network data from 
+// one "receive" call to another when 
+class CCarryOverBuffer 
+{
+public:
+   CCarryOverBuffer();
+
+   void ReleaseBuffer();
+
+   void Append(const char * AppendBuffer, int AppendBufferLength);
+   void ShiftLeft(int ShiftAmount);
+
+   char * m_Buffer;
+   int    m_BufferSize;
+   int    m_BytesOfData;
+};
+
 class TMyFileWindow : public TEditWindow
    {
  public:

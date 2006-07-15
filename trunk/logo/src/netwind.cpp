@@ -45,9 +45,68 @@ char *network_send_value = NULL;       // Buffer for current received data
 bool network_send_on    = false;    // flag for send enabled (enables message processing)
 bool network_receive_on = false;    // flag for receive enabled (enabled message processing)
 
+CCarryOverBuffer g_SendCarryOverData;
+CCarryOverBuffer g_ReceiveCarryOverData;
+
 static int network_dns_sync = 0;
 
 static bool network_is_started = false;
+
+
+CCarryOverBuffer::CCarryOverBuffer() :
+   m_Buffer(NULL),
+   m_BufferSize(0),
+   m_BytesOfData(0)
+   {
+   }
+
+void
+CCarryOverBuffer::ReleaseBuffer()
+   {
+   free(m_Buffer);
+   m_Buffer = NULL;
+
+   m_BytesOfData = 0;
+   m_BufferSize  = 0;
+   }
+
+void
+CCarryOverBuffer::Append(
+   const char * AppendBuffer,
+   int          AppendBufferLength
+   )
+   {
+   if (m_BufferSize < m_BytesOfData + AppendBufferLength + 1)
+      {
+      // there isn't enough room on the buffer.  Grow it.
+
+      m_BufferSize += AppendBufferLength + 1; // leave room for NUL
+
+      m_Buffer = (char*) realloc(m_Buffer, m_BufferSize);
+      }
+
+   memcpy(m_Buffer + m_BytesOfData, AppendBuffer, AppendBufferLength);
+
+   m_BytesOfData += AppendBufferLength;
+
+   // always keep m_Buffer NUL-terminated
+   m_Buffer[m_BytesOfData] = '\0';
+   }
+
+void
+CCarryOverBuffer::ShiftLeft(
+   int ShiftAmount
+   )
+   {
+   assert(0 <= ShiftAmount);
+   assert(ShiftAmount <= m_BytesOfData);
+
+   // shift the buffer such that it begins at "begin"
+   memmove(m_Buffer, m_Buffer + ShiftAmount, m_BytesOfData - ShiftAmount);
+   
+   m_BytesOfData -= ShiftAmount;
+   }
+
 
 // converts winsock errorcode to string
 LPCSTR WSAGetLastErrorString(int error_arg)
@@ -301,6 +360,9 @@ NODE *lnetshutdown(NODE *)
 
    free(network_send_value);
    network_send_value = NULL;
+
+   g_SendCarryOverData.ReleaseBuffer();
+   g_ReceiveCarryOverData.ReleaseBuffer();
 
    if (network_dns_sync != 1)
       {
