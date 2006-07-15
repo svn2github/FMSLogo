@@ -2508,7 +2508,7 @@ LRESULT TMainFrame::OnNetworkConnectSendAck(WPARAM /* wParam */, LPARAM lParam)
             memset(Buffer, 0, MAX_PACKET_SIZE);
 
             // get a copy first for examination
-            if ((status = recv(sendSock, Buffer, MAX_PACKET_SIZE - 1, MSG_PEEK)) == SOCKET_ERROR)
+            if ((status = recv(sendSock, Buffer, sizeof(Buffer) - 1, MSG_PEEK)) == SOCKET_ERROR)
                {
                // if block wait til we get called again
                if (WSAGetLastError() == WSAEWOULDBLOCK) 
@@ -2527,41 +2527,31 @@ LRESULT TMainFrame::OnNetworkConnectSendAck(WPARAM /* wParam */, LPARAM lParam)
                {
                int i;
                
-               // last byte is not end of packet then try to find one
-               if (Buffer[status - 1] |= 0)
+               // find the end of the last packet
+               for (i = status - 1; i >= 0; i--) 
                   {
-                  // find last end of packet
-                  for (i = status - 1; i >= 0; i--) 
+                  if (Buffer[i] == '\0') 
                      {
-                     if (Buffer[i] == '\0') 
-                        {
-                        break;
-                        }
+                     break;
+                     }
+                  }
+
+               // if not found
+               if (i < 0)
+                  {
+                  if (status < sizeof(Buffer) - 1) 
+                     {
+                     // the buffer isn't full yet, we can wait for more
+                     return 0L;
                      }
 
-                  // if not found
-                  if (i < 0)
-                     {
-                     // if not full wait for more
-                     if (status < MAX_PACKET_SIZE - 1) 
-                        {
-                        return 0L;
-                        }
-
-                     // read the whole thing anyway
-                     i = MAX_PACKET_SIZE - 2;
-                     }
-
-                  // read for real up to a last packet boundary
-                  memset(Buffer, 0, MAX_PACKET_SIZE);
-                  status = recv(sendSock, Buffer, i + 1, 0);
+                  // The buffer is full, even though we haven't found
+                  // the NUL byte.  Read the whole thing anyway.
+                  i = sizeof(Buffer) - 2;
                   }
-               else
-                  {
-                  // read the whole thing for real
-                  memset(Buffer, 0, MAX_PACKET_SIZE);
-                  status = recv(sendSock, Buffer, MAX_PACKET_SIZE - 1, 0);
-                  }
+
+               // read for real up to the last packet boundary
+               status = recv(sendSock, Buffer, i + 1, 0);
 
                // now queue up a separate message for each packet
                i = 0;
@@ -2574,6 +2564,8 @@ LRESULT TMainFrame::OnNetworkConnectSendAck(WPARAM /* wParam */, LPARAM lParam)
                   calllists.insert(callevent);
 
                   PostMessage(WM_CHECKQUEUE, 0, 0);
+
+
                   i += strlen(&Buffer[i]) + 1;
                   if (i >= status)
                      {
