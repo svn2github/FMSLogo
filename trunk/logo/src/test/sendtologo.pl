@@ -16,7 +16,7 @@ my $hostname = shift @ARGV or die "not enough parameters";
 my $port     = shift @ARGV or die "not enough parameters";
 
 my $proto = getprotobyname('tcp');
-socket(SOCKET, PF_INET, SOCK_STREAM, $proto);
+socket(SOCKET, PF_INET, SOCK_STREAM, $proto) or die $!;
 my $sin = sockaddr_in($port, inet_aton($hostname));
 
 connect(SOCKET, $sin) or die $!;
