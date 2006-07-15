@@ -1,4 +1,4 @@
-#! /usr/bin/perl -c
+#! /usr/bin/perl -W
 ############################################################
 # A simple test application that opens a socket to a given
 # host/port, sends some data, then closes the socket.
@@ -12,10 +12,12 @@
 use Socket;
 use strict;
 
+my $hostname = shift @ARGV or die "not enough parameters";
+my $port     = shift @ARGV or die "not enough parameters";
+
 my $proto = getprotobyname('tcp');
 socket(SOCKET, PF_INET, SOCK_STREAM, $proto);
-my $port = $ARGV[1];
-my $sin = sockaddr_in($port, inet_aton($ARGV[0]));
+my $sin = sockaddr_in($port, inet_aton($hostname));
 
 connect(SOCKET, $sin) or die $!;
 
