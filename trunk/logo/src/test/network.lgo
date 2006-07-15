@@ -59,23 +59,81 @@ TO NETWORKTEST.NETSHUTDOWNCRASH
 END
 
 
-TO NETWORKTEST.RECEIVEUNFRAMEDPACKET
+TO NETWORKTEST.SERVER.RECEIVEUNFRAMEDPACKET
 
-   LOCALMAKE "localport 1234
+   LOCAL [localport server.data shellcommand]
+
+   MAKE "localport   1234
+   MAKE "server.data []
+
+   ; start the server
+   NETSTARTUP
+   SIMPLEREPORTTEST [ NETACCEPTON :localport [] [QUEUE "server.data NETACCEPTRECEIVEVALUE ]] "true
+
+   WAIT 60*2
+
+   ; spawn a client to send some data such that the data not end in NUL.
+   ; This is a regression test for bug #1367386, which sent FMSLogo into a tight loop
+   MAKE "shellcommand (SENTENCE [perl.exe sendtologo.pl] NETWORKTEST.HOSTNAME :localport)
+   SIMPLEREPORTTEST [ SHELL :shellcommand ] "true
+ 
+   ; wait two seconds for the network connection
+   WAIT 60*2
+
+   ; shutdown the server
+   NETACCEPTOFF
+   NETSHUTDOWN
+
+   ; verify that we received the expected data
+   SIMPLEREPORTTEST [:server.data] [[hello]]
+
+END
+
+TO NETWORKTEST.SERVER.TWOCONNECTIONS
+
+   LOCALMAKE "localport 2222
 
    ; start the server
    NETSTARTUP
    IGNORE NETACCEPTON :localport [] []
 
-   ; spawn a client to send some data such that the data not end in NUL.
-   ; This is a regression test for bug #1367386, which sent FMSLogo into a tight loop
+   ; spawn a client to open a connection to the server
+   IGNORE SHELL (SENTENCE [perl.exe sendtologo.pl] NETWORKTEST.HOSTNAME :localport)
+
+   ; spawn a client to open a second connection to the server
    IGNORE SHELL (SENTENCE [perl.exe sendtologo.pl] NETWORKTEST.HOSTNAME :localport)
  
-   ; wait five seconds for the network connection
-   WAIT 60*5
+   ; wait two seconds for the network connection
+   WAIT 60*2
+
+   NETACCEPTOFF
 
    NETSHUTDOWN
 
+END
+
+TO NETWORKTEST.CLIENT.RECEIVEUNFRAMEDPACKET
+
+   LOCAL [localport client.data shellcommand]
+
+   MAKE "remoteport  5555
+   MAKE "client.data []
+
+   ; spawn a server
+   MAKE "shellcommand (SENTENCE [perl.exe networkserver.pl] :remoteport)
+   SIMPLEREPORTTEST [ SHELL :shellcommand ] "true
+
+   ; connect the client to the server
+   NETSTARTUP
+   IGNORE NETCONNECTON NETWORKTEST.HOSTNAME :remoteport [] [QUEUE "client.data NETCONNECTRECEIVEVALUE]
+
+   ; wait two seconds for the network connection
+   WAIT 60*2
+
+   NETCONNECTOFF
+   NETSHUTDOWN
+
+   SIMPLEREPORTTEST [:client.data] [[Hello]]
 END
 
 TO NETWORKTEST.SHUTDOWNRACE
@@ -99,6 +157,10 @@ TO NETWORKTEST
   NETWORKTEST.SMOKETEST
   NETWORKTEST.NETSHUTDOWNCRASH
   ; NETWORKTEST.SHUTDOWNRACE
-  ; NETWORKTEST.RECEIVEUNFRAMEDPACKET
+
+  NETWORKTEST.SERVER.RECEIVEUNFRAMEDPACKET
+  NETWORKTEST.SERVER.TWOCONNECTIONS
+
+  NETWORKTEST.CLIENT.RECEIVEUNFRAMEDPACKET
 
 END
