@@ -269,8 +269,11 @@ TO PROCEDURETEST
    RUNTOOMANYINPUTSTEST [(PROCEDURES "toomany)]
 
    ; test NAMES
-   LOCALMAKE "instruction    [] ; create some variables so that CONTENTS
-   LOCALMAKE "expectedresult [] ; will match NAMES inside SIMPLEREPORTTEST
+
+   ; Create some variables so that CONTENTS will match 
+   ; NAMES when run inside SIMPLREPOTTEST
+   LOCALMAKE "instruction    []
+   LOCALMAKE "expectedresult []
    SIMPLEREPORTTEST [NAMES] (LIST [] ITEM 2 CONTENTS)
    RUNTOOMANYINPUTSTEST [(NAMES "toomany)]
 
