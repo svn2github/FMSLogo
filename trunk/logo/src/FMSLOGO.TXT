@@ -36,6 +36,7 @@ Part II) New features/bugs fixed:
     o Fix bug #1511966; LIST now returns the empty list when given no inputs.
     o Fix bug #1508400; SORT no longer goes into infinite loop when given 
       NOT LESS? as a predicate.
+    o Fix bug #1455201: Calling TO from STARTUP no longer hangs FMSLogo.
     o Fix bug #1483191: Cancelling BYE no longer puts Logo in a Stopping state.
     o Fix bug #1471059: value of REPCOUNT is now -1 outside of REPEAT loop.
     o Fix bug #1457755: 'CATCH "ERROR [TO]' now throws meaningful error.

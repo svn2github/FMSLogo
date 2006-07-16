@@ -66,7 +66,7 @@ bool fileload(const char *Filename)
    if (filestream != NULL)
       {
       // save all global state that may be modified
-      NODE *st = valnode__caseobj(Startup);
+      NODE *previous_startup = valnode__caseobj(Startup);
 
       int    savedValStatus   = val_status;
       bool   savedIsDirty     = IsDirty;
@@ -84,7 +84,7 @@ bool fileload(const char *Filename)
          current_line = reref(current_line, reader(loadstream, ""));
          NODE * exec_list = parser(current_line, true);
          val_status = 0;
-         if (exec_list != NIL) 
+         if (exec_list != NIL)
             {
             eval_driver(exec_list);
             }
@@ -94,11 +94,15 @@ bool fileload(const char *Filename)
       lsetcursorarrow(NIL);
       yield_flag = savedYieldFlag;
 
-      runstartup(st);
+      loadstream = savedLoadStream;
+
+      // run startup after restoring loadstream so
+      // that we don't confuse to_helper into reading
+      // more data from the current (closed) file stream.
+      runstartup(previous_startup);
 
       // restore the global state
       val_status = savedValStatus;
-      loadstream = savedLoadStream;
       IsDirty    = savedIsDirty;
       deref(current_line);
       current_line = savedCurrentLine;
