@@ -26,8 +26,8 @@ FILE *readstream = stdin;
 FILE *writestream = stdout;
 FILE *loadstream = stdin;
 FILE *dribblestream = NULL;
-int input_blocking = 0;
-enum INPUTMODE input_mode = INPUTMODE_None;
+bool input_blocking = false;
+INPUTMODE input_mode = INPUTMODE_None;
 
 static int buffer_length = 0;
 static int buffer_index = 0;
@@ -119,7 +119,6 @@ void rd_print_prompt(const char * /*str*/)
 
 NODE *reader(FILE *strm, const char *prompt)
    {
-
    static const char ender[] = "\nEND\n";
 
    int p_pos;
@@ -172,7 +171,7 @@ NODE *reader(FILE *strm, const char *prompt)
       }
    if (strm == stdin)
       {
-      input_blocking++;
+      input_blocking = true;
       erract_errtype = FATAL;
       }
 
@@ -315,7 +314,7 @@ NODE *reader(FILE *strm, const char *prompt)
       }
 
    *phys_line = '\0';
-   input_blocking = 0;
+   input_blocking = false;
 
    if (dribbling)
       {

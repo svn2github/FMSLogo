@@ -757,14 +757,14 @@ NODE *evaluator(NODE *list, enum labels where)
             }
          // print_node(stdout, this_line);
          // ndprintf(stdout, " >>> ");
-         input_blocking++;
+         input_blocking = true;
 
          if (!setjmp(iblk_buf))
             {
             single_step_box(this_line);
             }
 
-         input_blocking = 0;
+         input_blocking = false;
          // update_coords('\n');
          }
       }

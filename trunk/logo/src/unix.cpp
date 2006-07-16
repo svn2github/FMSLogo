@@ -269,7 +269,7 @@ void unblock_input()
    {
    if (input_blocking)
       {
-      input_blocking = 0;
+      input_blocking = false;
       longjmp(iblk_buf, 1);
       }
    }

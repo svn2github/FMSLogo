@@ -580,7 +580,7 @@ NODE *lreadword(NODE *)
 NODE *lreadchar(NODE *)
    {
    charmode_on();
-   input_blocking++;
+   input_blocking = true;
 
    char c;
    if (!setjmp(iblk_buf))
@@ -594,7 +594,7 @@ NODE *lreadchar(NODE *)
          c = (char) getc(readstream);
          }
       }
-   input_blocking = 0;
+   input_blocking = false;
    if (feof(readstream))
       {
       return NIL;
@@ -620,9 +620,12 @@ NODE *lreadchars(NODE *args)
    NODETYPES type = STRING;
 
    unsigned int c = (unsigned int) getint(pos_int_arg(args));
-   if (stopping_flag == THROWING) return Unbound;
+   if (stopping_flag == THROWING) 
+      {
+      return Unbound;
+      }
    charmode_on();
-   input_blocking++;
+   input_blocking = true;
 
    if (!setjmp(iblk_buf))
       {
@@ -632,7 +635,8 @@ NODE *lreadchars(NODE *args)
       unsigned short * temp = (unsigned short *) strhead;
       setstrrefcnt(temp, 0);
       }
-   input_blocking = 0;
+
+   input_blocking = false;
 
    if (stopping_flag == THROWING) 
       {

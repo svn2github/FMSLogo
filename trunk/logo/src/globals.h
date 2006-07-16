@@ -97,7 +97,7 @@ extern FILE *loadstream;
 extern FILE *writestream;
 extern FILE *readstream;
 extern FILE *dribblestream;
-extern int input_blocking;
+extern bool input_blocking;
 extern enum INPUTMODE input_mode;
 
 /* math.c */

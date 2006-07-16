@@ -416,8 +416,8 @@ NODE *lpause(NODE*)
    jmp_buf sav_iblk;
    memcpy(sav_iblk, iblk_buf, sizeof(sav_iblk));
 
-   int sav_input_blocking = input_blocking;
-   input_blocking = 0;
+   bool sav_input_blocking = input_blocking;
+   input_blocking = false;
    int sv_val_status = val_status;
    while (RUNNING)
       {
