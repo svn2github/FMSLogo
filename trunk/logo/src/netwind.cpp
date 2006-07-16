@@ -52,6 +52,14 @@ static int network_dns_sync = 0;
 
 static bool network_is_started = false;
 
+void
+safe_free(
+   char * & buffer
+   )
+   {
+   free(buffer);
+   buffer = NULL;
+   }
 
 CCarryOverBuffer::CCarryOverBuffer() :
    m_Buffer(NULL),
@@ -63,8 +71,7 @@ CCarryOverBuffer::CCarryOverBuffer() :
 void
 CCarryOverBuffer::ReleaseBuffer()
    {
-   free(m_Buffer);
-   m_Buffer = NULL;
+   safe_free(m_Buffer);
 
    m_BytesOfData = 0;
    m_BufferSize  = 0;
@@ -301,7 +308,7 @@ NODE *lnetstartup(NODE *args)
 
    // tell winsock to wakeup
    WSADATA WSAData;
-   if (WSAStartup(/*MAKEWORD(1,1)*/ 0x0101, &WSAData) != 0)
+   if (WSAStartup(MAKEWORD(1,1), &WSAData) != 0)
       {
       ShowMessageAndStop("WSAStartup()", WSAGetLastErrorString(0));
       return Unbound;
@@ -343,23 +350,12 @@ NODE *lnetshutdown(NODE *)
       network_is_started = false;
       }
 
-   free(network_receive_receive);
-   network_receive_receive = NULL;
-
-   free(network_receive_send);
-   network_receive_send = NULL;
-
-   free(network_receive_value);
-   network_receive_value = NULL;
-
-   free(network_send_receive);
-   network_send_receive = NULL;
-
-   free(network_send_send);
-   network_send_send = NULL;
-
-   free(network_send_value);
-   network_send_value = NULL;
+   safe_free(network_receive_receive);
+   safe_free(network_receive_send);
+   safe_free(network_receive_value);
+   safe_free(network_send_receive);
+   safe_free(network_send_send);
+   safe_free(network_send_value);
 
    g_SendCarryOverData.ReleaseBuffer();
    g_ReceiveCarryOverData.ReleaseBuffer();
@@ -406,8 +402,7 @@ NODE *lnetreceiveon(NODE *args)
 
    if (network_receive_value == NULL)
       {
-      network_receive_value = (char *) malloc(MAX_PACKET_SIZE);
-      memset(network_receive_value, 0, MAX_PACKET_SIZE);
+      network_receive_value = (char *) calloc(1, MAX_PACKET_SIZE);
       }
 
    // get args (socket and callback)
@@ -486,7 +481,7 @@ NODE *lnetreceiveoff(NODE *)
    // tell handler not to do anything with messages for network receive
    if (network_receive_on)
       {
-      network_receive_on = 0;
+      network_receive_on = false;
       strcpy(network_receive_value, "");
 
       closesocket(receiveSock);
@@ -555,8 +550,7 @@ NODE *lnetsendon(NODE *args)
 
    if (network_send_value == NULL)
       {
-      network_send_value = (char *) malloc(MAX_PACKET_SIZE);
-      memset(network_send_value, 0, MAX_PACKET_SIZE);
+      network_send_value = (char *) calloc(1, MAX_PACKET_SIZE);
       }
 
    // get args (remotemachinename, socket, callback)
@@ -584,10 +578,11 @@ NODE *lnetsendon(NODE *args)
 
       // get sockets
 #ifdef USE_UDP
-      if ((sendSock = socket(AF_INET, SOCK_DGRAM, 0)) == INVALID_SOCKET)
+      sendSock = socket(AF_INET, SOCK_DGRAM, 0);
 #else
-      if ((sendSock = socket(AF_INET, SOCK_STREAM, 0)) == INVALID_SOCKET)
+      sendSock = socket(AF_INET, SOCK_STREAM, 0);
 #endif
+      if (sendSock == INVALID_SOCKET)
          {
          ShowMessageAndStop("socket(sendsocket)", WSAGetLastErrorString(0));
          return Falsex;
@@ -610,8 +605,7 @@ NODE *lnetsendon(NODE *args)
 
       if (phes == NULL)
          {
-         phes = (PHOSTENT) malloc(MAXGETHOSTSTRUCT);
-         memset(phes, 0, MAXGETHOSTSTRUCT);
+         phes = (PHOSTENT) calloc(1, MAXGETHOSTSTRUCT);
          }
 
       // get address of remote machine
@@ -638,7 +632,7 @@ NODE *lnetsendoff(NODE *)
    if (network_send_on)
       {
       network_send_on = false;
-      strcpy(network_send_value, "");
+      network_send_value[0] = '\0';
 
       closesocket(sendSock);
       sendSock = INVALID_SOCKET;
@@ -686,7 +680,6 @@ NODE *lnetsendsendvalue(NODE *args)
       }
 
    return Unbound;
-
    }
 
 NODE *lnetreceivesendvalue(NODE *args)
