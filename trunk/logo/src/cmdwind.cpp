@@ -173,6 +173,12 @@ TMyCommandWindow::EditBoxWantsKeyEvent(
       return true;
       }
 
+   // we want the backspace key
+   if (KeyEventWParam == VK_BACK)
+      {
+      return true;
+      }
+
    // we want alphanumeric keys
    if ('0' <= KeyEventWParam && KeyEventWParam <= 'Z')
       {
