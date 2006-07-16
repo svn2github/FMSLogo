@@ -13,9 +13,17 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-An instructionlist that is run when an error is thrown.
+ERRACT is an instructionlist that is run whenever an error is thrown and there is no <link linkend="command-catch">CATCH</link> tag for "ERROR.
 ERRACT typically has the value <userinput>[PAUSE]</userinput> to allow interactive debugging.
 </para>
+
+<para>
+Some errors may be recoverable if ERRACT can fix the problem.
+For example, many bad input errors (such as running <userinput>FORWARD [1]</userinput>) are recoverable.
+If a bad input error causes ERRACT to be run, then the output of ERRACT will be used instead of the bad input that caused the error.
+If ERRACT outputs another datum of bad input, then it will be run again to fix the new problem.
+</para>
+
 </listitem>
 </varlistentry>
 
