@@ -4,6 +4,10 @@ TO ERRACTTEST.BUG1517326.CONTINUE5
    (CONTINUE 5)
 END
 
+TO ERRACTTEST.OUTPUT.5
+   OUTPUT 5
+END
+
 TO ERRACTTEST.BUG1517326 
 
    MAKE "erract [ERRACTTEST.BUG1517326.CONTINUE5]
@@ -31,6 +35,20 @@ TO ERRACTTEST.SMOKETEST
 
    SIMPLEREPORTTEST [ :erract.was.called ] "true
 
+
+
+   REPORTTESTINFO [ Setting ERRACT to a procedure that outputs 5 ]
+   make "erract [ERRACTTEST.OUTPUT.5]
+
+   REPORTTESTINFO [ Calling "SUM 1 [1]", which should run :erract to replace [1] with 5 ]
+
+   MAKE "thesum SUM 1 [1]
+   SIMPLEREPORTTEST [ :thesum ] 6
+
+; calling it a second time crashes
+;   REPORTTESTINFO [ Calling "SUM 1 [1]" again.  This same thing should happen. ]
+;   MAKE "thesum SUM 1 [1]
+;   SIMPLEREPORTTEST [ :thesum ] 6
 
 
    ; restore the previous value of :ERRACT
