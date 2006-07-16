@@ -179,7 +179,7 @@ GetConfigurationString(
    )
    {
 #ifdef DEBUG
-   memset(Value, ValueLength, 0xDD);
+   memset(Value, 0xDD, ValueLength);
 #endif
 
    bool useDefaultValue = true;
