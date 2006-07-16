@@ -64,6 +64,27 @@ OpenFmsLogoKeyForSettingValue()
    return fmslogoKey;
    }
 
+static
+HKEY
+OpenFmsLogoKeyForGettingValue()
+   {
+   HKEY fmslogoKey;
+
+   LONG result = RegOpenKeyEx(
+      HKEY_CURRENT_USER,
+      FMSLOGO_REGISTRY_KEY_NAME,
+      0, // reserved
+      KEY_QUERY_VALUE,
+      &fmslogoKey);
+   if (result != ERROR_SUCCESS)
+      {
+      // failed!
+      fmslogoKey = NULL;
+      }
+
+   return fmslogoKey;
+   }
+
 void
 SetConfigurationInt(
    const char *        Name,
@@ -96,21 +117,15 @@ GetConfigurationInt(
    {
    int returnValue = DefaultValue;
 
-   HKEY fmslogoKey;
-   LONG result = RegOpenKeyEx(
-      HKEY_CURRENT_USER,
-      FMSLOGO_REGISTRY_KEY_NAME,
-      0, // reserved
-      KEY_QUERY_VALUE,
-      &fmslogoKey);
-   if (result == ERROR_SUCCESS)
+   HKEY fmslogoKey = OpenFmsLogoKeyForGettingValue();
+   if (fmslogoKey != NULL)
       {
       DWORD value;
       DWORD valueSize = sizeof value;
       BYTE *valuePtr  = reinterpret_cast<BYTE*>(&value);
       DWORD type      = REG_DWORD;
 
-      result = RegQueryValueEx(
+      LONG result = RegQueryValueEx(
          fmslogoKey,
          Name,
          0,   // reserved
@@ -169,20 +184,14 @@ GetConfigurationString(
 
    bool useDefaultValue = true;
 
-   HKEY fmslogoKey;
-   LONG result = RegOpenKeyEx(
-      HKEY_CURRENT_USER,
-      FMSLOGO_REGISTRY_KEY_NAME,
-      0, // reserved
-      KEY_QUERY_VALUE,
-      &fmslogoKey);
-   if (result == ERROR_SUCCESS)
+   HKEY fmslogoKey = OpenFmsLogoKeyForGettingValue();
+   if (fmslogoKey != NULL)
       {
       DWORD valueSize = ValueLength - 1;  // leave room for NUL
       BYTE *valuePtr  = reinterpret_cast<BYTE*>(Value);
       DWORD valueType;
 
-      result = RegQueryValueEx(
+      LONG result = RegQueryValueEx(
          fmslogoKey,
          Name,
          0,   // reserved
