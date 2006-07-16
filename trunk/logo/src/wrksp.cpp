@@ -473,7 +473,7 @@ NODE *to_helper(NODE *args, bool is_macro)
       NODE * body_list_lastnode = body_list;
 
       to_pending = true;      // for int or quit signal
-      while (NOT_THROWING && to_pending && (!feof(loadstream)))
+      while (NOT_THROWING && to_pending && !feof(loadstream))
          {
          NODE * ttnode = reader(loadstream, "> ");
 
