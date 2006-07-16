@@ -133,7 +133,7 @@ void plain_xor_pen()
    // setcolor(turtle_color);
    // setwritemode(XOR_PUT);
    current_write_mode = XOR_PUT;
-   in_erase_mode = FALSE;
+   in_erase_mode = false;
    }
 
 void pen_down()
@@ -143,7 +143,7 @@ void pen_down()
    if (in_erase_mode)
       {
       // setcolor(prev_color);
-      in_erase_mode = FALSE;
+      in_erase_mode = false;
       }
    }
 
@@ -154,7 +154,7 @@ void pen_reverse()
    if (in_erase_mode)
       {
       // setcolor(prev_color);
-      in_erase_mode = FALSE;
+      in_erase_mode = false;
       }
    }
 
@@ -166,16 +166,20 @@ void pen_erase()
       current_write_mode = COPY_PUT;
       //        prev_color = getcolor();
       //        setcolor(0);
-      in_erase_mode = TRUE;
+      in_erase_mode = true;
       }
    }
 
 int get_pen_mode()
    {
    if (in_erase_mode)
+      {
       return 2;
+      }
    else
+      {
       return current_write_mode;
+      }
    }
 
 void set_pen_mode(int m)
@@ -246,17 +250,22 @@ NODE *get_node_pen_pattern()
 
 NODE *get_node_pen_mode()
    {
+   const char * mode;
+
    if (in_erase_mode)
       {
-      return make_static_strnode("erase");
+      mode = "erase";
       }
-
-   if (current_write_mode == XOR_PUT)
+   else if (current_write_mode == XOR_PUT)
       {
-      return make_static_strnode("reverse");
+      mode = "reverse";
+      }
+   else
+      {
+      mode = "paint";
       }
 
-   return make_static_strnode("paint");
+   return make_static_strnode(mode);
    }
 
 void erase_screen()
