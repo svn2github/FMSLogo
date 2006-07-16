@@ -1405,19 +1405,17 @@ bool endedit(void)
          current_line = reref(current_line, reader(loadstream, ""));
          
          val_status = 0;
-         NODE * exec_list = parser(current_line, TRUE);
-         if (exec_list != NIL)
-            {
-            eval_driver(exec_list);
-            }
+         NODE * exec_list = parser(current_line, true);
+         eval_driver(exec_list);
          }
       fclose(loadstream);
       val_status = sv_val_status;
       }
    else
       {
-      //        err_logo(FILE_ERROR,
-      //              make_static_strnode("Could not read editor file"));
+      // err_logo(
+      //    FILE_ERROR,
+      //    make_static_strnode("Could not read editor file"));
       }
 
    lsetcursorarrow(NIL);

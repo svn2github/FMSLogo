@@ -450,10 +450,8 @@ NODE *lpause(NODE*)
          }
 
       val_status = 5;
-      if (elist != NIL) 
-         {
-         eval_driver(elist);
-         }
+      eval_driver(elist);
+
       if (stopping_flag == THROWING)
          {
          if (compare_node(throw_node, Pause, true) == 0)

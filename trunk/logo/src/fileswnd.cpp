@@ -84,10 +84,7 @@ bool fileload(const char *Filename)
          current_line = reref(current_line, reader(loadstream, ""));
          NODE * exec_list = parser(current_line, true);
          val_status = 0;
-         if (exec_list != NIL)
-            {
-            eval_driver(exec_list);
-            }
+         eval_driver(exec_list);
          }
       fclose(loadstream);
 

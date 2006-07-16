@@ -1335,7 +1335,10 @@ NODE *evaluator(NODE *list, enum labels where)
 // Evaluate a line of input.
 void eval_driver(NODE *line)
    {
-   evaluator(line, begin_line);
+   if (line != NIL)
+      {
+      evaluator(line, begin_line);
+      }
    }
 
 // Evaluate a sequence of expressions until we get a value to return.
