@@ -81,27 +81,11 @@ NODE *ldllcall(NODE *arg)
       {
 
       // count items in list and check that they are pairs
-      bool odd = false;
-      arg = args;
-      while (arg != NIL)
-         {
-         if (arg != NIL) 
-            {
-            arg = cdr(arg);
-            }
-
-         if (arg != NIL)
-            {
-            arg = cdr(arg);
-            }
-         else 
-            {
-            odd = true;
-            }
-         }
+      int total_args = list_length(args);
+      bool even_args = even_p(total_args);
 
       // if we have pairs continue
-      if (!odd)
+      if (even_args)
          {
          arg = args;
 
