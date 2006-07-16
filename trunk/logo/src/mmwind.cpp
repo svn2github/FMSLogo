@@ -33,33 +33,16 @@ NODE *lsound(NODE *arg)
       {
 
       /* count items in list and check that they are pairs */
-      arg = args;
-      bool odd = false;
-
-      while (arg != NIL)
-         {
-         if (arg != NIL) 
-            {
-            arg = cdr(arg);
-            }
-
-         if (arg != NIL) 
-            {
-            arg = cdr(arg);
-            }
-         else 
-            {
-            odd = true;
-            }
-         }
+      int total_args = list_length(args);
+      bool even_args = even_p(total_args);
 
       /* if sound creation ok and we have pairs continue */
-      if (!odd)
+      if (even_args)
          {
-         arg = args;
-
          /* play each freq/duration pair */
-         while (arg != NIL)
+         for (arg = args;
+              arg != NIL;
+              arg = cdr(arg))
             {
             int duration = 0;
 
@@ -71,11 +54,6 @@ NODE *lsound(NODE *arg)
 
             /* play it */
             tone(hertz, duration);
-
-            if (arg != NIL)
-               {
-               arg = cdr(arg);
-               }
             }
          }
       else
@@ -198,16 +176,8 @@ NODE *lmidimessage(NODE *arg)
             }
          else
             {
-
             /* count elements in list so we can allocate buffer */
-            int i = 0;
-            arg = args;
-
-            while (arg != NIL)
-               {
-               arg = cdr(arg);
-               i++;
-               }
+            int i = list_length(args);
 
             /* allocate structure buffer */
             // REVISIT: why not use malloc()?
