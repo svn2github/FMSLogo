@@ -166,7 +166,8 @@ enum ERR_TYPES
 #define FALSE   0
 #define TRUE    1
 
-#define even_p(x) !(x & 0x1)
+#define even_p(x)  ((x % 2) == 0)
+#define odd_p(x)   ((x % 2) != 0)
 
 typedef long    FIXNUM;
 // typedef __int64 FIXNUM  
