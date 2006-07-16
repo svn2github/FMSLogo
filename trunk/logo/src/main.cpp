@@ -24,8 +24,6 @@
 
 CUTMAP *CutBmp;              // Pointer to Bit Cut memory array malloc on init
 
-//HANDLE HashHandle = 0;           // Handle to Hashtable
-//HANDLE StackHandle = 0;          // Handle to Garbage Collector Stack
 bool bExpert;                      // Expert mode
 bool bFixed;                       // Fixed mode
 bool bWidth;                       // Width mode
@@ -152,12 +150,11 @@ TThreeDSolid ThreeD;
 
 OSVERSIONINFO g_OsVersionInformation;
 
-
-typedef struct line_segent
+struct LINE3D
    {
    VECTOR from;
    VECTOR to;
-   } LINE3D;
+   };
 
 static const LINE3D turtle_vertices[4] =
    {
@@ -470,12 +467,7 @@ void TMyApp::InitMainWindow()
       w = min(w, MaxWidth);
       h = min(h, (int) (MaxHeight * ScreenSz));
 
-      GetConfigurationQuadruple(
-         "Screen",
-         &x,
-         &y,
-         &w,
-         &h);
+      GetConfigurationQuadruple("Screen", &x, &y, &w, &h);
 
       // The "Screen" also has the height of the commander
       // window and the splitter that goes between the
