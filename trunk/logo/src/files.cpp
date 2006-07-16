@@ -579,22 +579,20 @@ NODE *lreadword(NODE *)
 
 NODE *lreadchar(NODE *)
    {
-   char c;
-
    charmode_on();
    input_blocking++;
 
+   char c;
    if (!setjmp(iblk_buf))
       {
-#ifdef ibm
       if (interactive && readstream == stdin)
+         {
          c = (char) rd_getc(stdin);
+         }
       else
+         {
          c = (char) getc(readstream);
-
-#else
-      c = (char) getc(readstream);
-#endif
+         }
       }
    input_blocking = 0;
    if (feof(readstream))
@@ -673,38 +671,12 @@ NODE *leofp(NODE *)
 
 NODE *lkeyp(NODE *)
    {
-#ifdef mac
-   int c;
-#endif
-
    if (readstream == stdin && interactive)
       {
       charmode_on();
-      //        fflush(stdout);
-#ifdef __ZTC__
-      zflush();
-#endif
-#if defined(mac)
-      csetmode(C_RAW, stdin);
-      c = ungetc(getc(readstream), readstream);
-      csetmode(C_ECHO, stdin);
-      return (c == EOF ? Falsex : Truex);
-#elif defined(ibm)
-      return (Truex
-       //kbhit() ? Truex : Falsex
-       );
-#else
-#ifdef FIONREAD
-      ioctl(0, FIONREAD, (char *) (&nc));
-#else
-      ndprintf(stdout, "Can't KEYP, no FIONREAD on this system\n");
-      nc = 1;                 /* pretend there's a char so we don't loop*/
-#endif
-      if (nc > 0)
-         return (Truex);
-      else
-         return (Falsex);
-#endif
+      //fflush(stdout);
+      return Truex;
+      //return kbhit() ? Truex : Falsex
       }
 
    return leofp(NIL);

@@ -35,14 +35,6 @@ char so_arr[40];
 char se_arr[40];
 */
 
-#ifdef unix
-#ifdef SYSV
-struct termio tty_cooked, tty_cbreak;
-#else
-struct sgttyb tty_cooked, tty_cbreak;
-#endif
-#endif
-
 bool interactive;
 
 void term_init()
@@ -88,19 +80,10 @@ NODE *lsetcursor(NODE *  /*args*/)
       {
       x_coord = x_margin + getint(car(arg));
       y_coord = y_margin + getint(cadr(arg));
-#ifdef mac
-      mac_gotoxy(x_coord, y_coord);
-#else
-#ifdef ibm
+
       ibm_gotoxy(x_coord, y_coord);
-#else
-      printf("%s", tgoto(cm_arr, x_coord, y_coord));
-#endif
-#endif
+
       fflush(stdout);
-#ifdef __ZTC__
-      zflush();
-#endif
       }
    */
    return Unbound;

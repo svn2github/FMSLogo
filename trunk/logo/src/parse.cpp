@@ -98,32 +98,11 @@ static
 void rd_print_prompt(const char * /*str*/)
    {
    /*
-   int ch;
-
-#ifdef ibm
-#ifdef __ZTC__
-   if (in_graphics_mode && !in_splitscreen)
-#else
    if (in_graphics_mode && ibm_screen_top == 0)
-#endif
-   lsplitscreen();
-#endif
+      lsplitscreen();
    ndprintf(stdout,"%t",str);
-#ifdef __ZTC__
-   zflush();
-#endif
    */
    }
-
-#ifdef __ZTC__
-void zrd_print_prompt(char *str)
-   {
-   newline_bugfix();
-   rd_print_prompt(str);
-   }
-#else
-#define zrd_print_prompt rd_print_prompt
-#endif
 
 #define into_line(chr) \
    { \
@@ -198,10 +177,9 @@ NODE *reader(FILE *strm, const char *prompt)
       }
 
    int c = 0;
-#ifndef TIOCSTI
+
    if (!setjmp(iblk_buf))
       {
-#endif
       c = rd_getc(strm);
       while (c != EOF && (vbar || paren || bracket || brace || c != '\n'))
          {
@@ -225,7 +203,7 @@ NODE *reader(FILE *strm, const char *prompt)
                {
                if (interactive)
                   {
-                  zrd_print_prompt("\\ ");
+                  rd_print_prompt("\\ ");
                   }
 
                if (dribbling)
@@ -296,7 +274,7 @@ NODE *reader(FILE *strm, const char *prompt)
                {
                if (interactive)
                   {
-                  zrd_print_prompt(vbar ? "| " : "~ ");
+                  rd_print_prompt(vbar ? "| " : "~ ");
                   }
                if (dribbling)
                   {
@@ -320,7 +298,7 @@ NODE *reader(FILE *strm, const char *prompt)
                incomment = false;
                if (interactive) 
                   {
-                  zrd_print_prompt("~ ");
+                  rd_print_prompt("~ ");
                   }
                if (dribbling)
                   {
@@ -334,18 +312,10 @@ NODE *reader(FILE *strm, const char *prompt)
             c = rd_getc(strm);
             }
          }
-#ifndef TIOCSTI
       }
-#endif
+
    *phys_line = '\0';
    input_blocking = 0;
-#ifdef __ZTC__
-   fix_cursor();
-   if (interactive && strm == stdin) 
-      {
-      newline_bugfix();
-      }
-#endif
 
    if (dribbling)
       {
