@@ -115,6 +115,9 @@ INFO: Executing [THROW "ERROR] set error string to [Throw "Error]
 INFO: Executing invalid instruction: [DEFINE "forward [[]]]
 PASS: Executing [DEFINE "forward [[]]] set error code to 22 , as expected
 INFO: Executing [DEFINE "forward [[]]] set error string to [forward is a primitive]
+INFO: Executing invalid instruction: [PROCEDURE.WITH.TO.INSIDE.IT]
+PASS: Executing [PROCEDURE.WITH.TO.INSIDE.IT] set error code to 23 , as expected
+INFO: Executing [PROCEDURE.WITH.TO.INSIDE.IT] set error string to [Can't use TO inside a procedure]
 INFO: Executing invalid instruction: [TEXT "NO.SUCH.PROCEDURE.IS.DEFINED]
 PASS: Executing [TEXT "NO.SUCH.PROCEDURE.IS.DEFINED] set error code to 24 , as expected
 INFO: Executing [TEXT "NO.SUCH.PROCEDURE.IS.DEFINED] set error string to [I don't know how to NO.SUCH.PROCEDURE.IS.DEFINED]
@@ -136,6 +139,9 @@ INFO: Executing [APPLY "ONE.INPUT.NO.OUTPUT 1] set error string to [APPLY doesn'
 INFO: Executing invalid instruction: [LOAD "endinmultilineinstruction.lgo]
 PASS: Executing [LOAD "endinmultilineinstruction.lgo] set error code to 33 , as expected
 INFO: Executing [LOAD "endinmultilineinstruction.lgo] set error string to [END inside multi-line instruction.]
+INFO: Setting ERRACT to a value such that we can verify if it is called
+INFO: Causing an unrecoverable error outside of a CATCH block
+PASS: [:erract.was.called] returned true , as expected.
 PASS: [(LIST)] returned [] , as expected.
 PASS: [(LIST 1)] returned [1] , as expected.
 PASS: [(LIST 1 2)] returned [1 2] , as expected.
@@ -842,6 +848,7 @@ INFO: Executing [APPLY "APPLYTEST.NONPRIMITIVE [1]] set error string to [not eno
 INFO: Executing invalid instruction: [APPLY "APPLYTEST.NONPRIMITIVE [1 2 3]]
 PASS: Executing [APPLY "APPLYTEST.NONPRIMITIVE [1 2 3]] set error code to 8 , as expected
 INFO: Executing [APPLY "APPLYTEST.NONPRIMITIVE [1 2 3]] set error string to [too much inside ()'s]
+PASS: [APPLYTEST.APPLYOUTPUT] returned 3 , as expected.
 CALL: MAKE "list []
 CALL: REPEAT 5 [MAKE "list LPUT REPCOUNT :list]
 PASS: [:list] returned [1 2 3 4 5] , as expected.
@@ -2589,11 +2596,12 @@ INFO: Executing invalid instruction: [ASHIFT 5 12.30]
 PASS: Executing [ASHIFT 5 12.30] set error code to 7
 INFO: Executing [ASHIFT 5 12.30] set error string to [ASHIFT doesn't like 12.3 as input]
 PASS: [TEXT "SAMPLEPROC] returned [[a b] [PRINT :a] [SHOW :b]] , as expected.
+PASS: [TEXT "PROCEDURETEST.COMPLEXPROC] returned [[a b [c 1] [d SUM 1 2] [e] 2] [PRINT :a] [SHOW :b] [OUTPUT SUM :c :d]] , as expected.
 INFO: Executing invalid instruction: [(TEXT)]
 PASS: Executing [(TEXT)] set error code to 6 , as expected
 INFO: Executing [(TEXT)] set error string to [not enough inputs to TEXT]
 INFO: Executing invalid instruction: [(TEXT "nonexistent)]
-PASS: Executing [(TEXT "nonexistent)] set error code to 24
+PASS: Executing [(TEXT "nonexistent)] set error code to 24 , as expected
 INFO: Executing [(TEXT "nonexistent)] set error string to [I don't know how to nonexistent]
 INFO: Executing invalid instruction: [(TEXT [sampleproc] )]
 PASS: Executing [(TEXT [sampleproc] )] set error code to 7
@@ -2604,12 +2612,27 @@ INFO: Executing [(TEXT {sampleproc} )] set error string to [TEXT doesn't like {s
 INFO: Executing invalid instruction: [(TEXT "sampleproc "toomany)]
 PASS: Executing [(TEXT "sampleproc "toomany)] set error code to 8 , as expected
 INFO: Executing [(TEXT "sampleproc "toomany)] set error string to [too much inside ()'s]
-PASS: [FULLTEXT "SAMPLEPROC] returned [TO SAMPLEPROC  :a  :b   PRINT :a ; print   SHOW  :b ; show END] , as expected.
+CALL: MAKE "fulltext FULLTEXT "SAMPLEPROC
+PASS: [LIST? :fulltext] returned true , as expected.
+PASS: [ITEM 1 :fulltext] returned TO SAMPLEPROC  :a  :b , as expected.
+PASS: [ITEM 2 :fulltext] returned   PRINT :a ; print , as expected.
+PASS: [ITEM 3 :fulltext] returned   SHOW  :b ; show , as expected.
+PASS: [ITEM 4 :fulltext] returned END , as expected.
+PASS: [COUNT :fulltext] returned 4 , as expected.
+CALL: MAKE "fulltext FULLTEXT "PROCEDURETEST.COMPLEXPROC
+PASS: [LIST? :fulltext] returned true , as expected.
+PASS: [ITEM 1 :fulltext] returned TO PROCEDURETEST.COMPLEXPROC :a :b [:c 1] [:d SUM 1 2] [:e] 2 , as expected.
+PASS: [ITEM 2 :fulltext] returned   PRINT :a ; print , as expected.
+PASS: [ITEM 3 :fulltext] returned   SHOW  :b ; show , as expected.
+PASS: [ITEM 4 :fulltext] returned  , as expected.
+PASS: [ITEM 5 :fulltext] returned   OUTPUT SUM :c :d ; output , as expected.
+PASS: [ITEM 6 :fulltext] returned END , as expected.
+PASS: [COUNT :fulltext] returned 6 , as expected.
 INFO: Executing invalid instruction: [(FULLTEXT)]
 PASS: Executing [(FULLTEXT)] set error code to 6 , as expected
 INFO: Executing [(FULLTEXT)] set error string to [not enough inputs to FULLTEXT]
 INFO: Executing invalid instruction: [(FULLTEXT "nonexistent)]
-PASS: Executing [(FULLTEXT "nonexistent)] set error code to 24
+PASS: Executing [(FULLTEXT "nonexistent)] set error code to 24 , as expected
 INFO: Executing [(FULLTEXT "nonexistent)] set error string to [I don't know how to nonexistent]
 INFO: Executing invalid instruction: [(FULLTEXT [sampleproc] )]
 PASS: Executing [(FULLTEXT [sampleproc] )] set error code to 7
@@ -2715,18 +2738,50 @@ INFO: Executing [(MACRO? "mymacro "toomany)] set error string to [too much insid
 PASS: [ECHO "input] returned input , as expected.
 PASS: [DEFINEDP "ECHO] returned true , as expected.
 PASS: [DEFINED? "ECHO] returned true , as expected.
-INFO: Executing invalid instruction: [(DEFINE)]
-PASS: Executing [(DEFINE)] set error code to 6 , as expected
-INFO: Executing [(DEFINE)] set error string to [not enough inputs to DEFINE]
-INFO: Executing invalid instruction: [(DEFINE "function)]
-PASS: Executing [(DEFINE "function)] set error code to 6
-INFO: Executing [(DEFINE "function)] set error string to [not enough inputs to DEFINE]
-INFO: Executing invalid instruction: [(DEFINE "function [] )]
-PASS: Executing [(DEFINE "function [] )] set error code to 7
-INFO: Executing [(DEFINE "function [] )] set error string to [DEFINE doesn't like [] as input]
-INFO: Executing invalid instruction: [(DEFINE "function [[a] [output :a]] "toomany)]
-PASS: Executing [(DEFINE "function [[a] [output :a]] "toomany)] set error code to 8 , as expected
-INFO: Executing [(DEFINE "function [[a] [output :a]] "toomany)] set error string to [too much inside ()'s]
+CALL: DEFINE "DONOTHING [[]]
+PASS: [DEFINED? "DONOTHING] returned true , as expected.
+CALL: DONOTHING
+INFO: Executing invalid instruction: [(DEFINE "BADPROCEDURE)]
+PASS: Executing [(DEFINE "BADPROCEDURE)] set error code to 6 , as expected
+INFO: Executing [(DEFINE "BADPROCEDURE)] set error string to [not enough inputs to DEFINE]
+INFO: Executing invalid instruction: [(DEFINE "BADPROCEDURE [[a] [output :a]] "toomany)]
+PASS: Executing [(DEFINE "BADPROCEDURE [[a] [output :a]] "toomany)] set error code to 8 , as expected
+INFO: Executing [(DEFINE "BADPROCEDURE [[a] [output :a]] "toomany)] set error string to [too much inside ()'s]
+INFO: Executing invalid instruction: [DEFINE [BADPROCEDURE] [[a] [output :a]]]
+PASS: Executing [DEFINE [BADPROCEDURE] [[a] [output :a]]] set error code to 7
+INFO: Executing [DEFINE [BADPROCEDURE] [[a] [output :a]]] set error string to [DEFINE doesn't like [BADPROCEDURE] as input]
+INFO: Executing invalid instruction: [DEFINE {BADPROCEDURE} [[a] [output :a]]]
+PASS: Executing [DEFINE {BADPROCEDURE} [[a] [output :a]]] set error code to 7
+INFO: Executing [DEFINE {BADPROCEDURE} [[a] [output :a]]] set error string to [DEFINE doesn't like {BADPROCEDURE} as input]
+INFO: Executing invalid instruction: [DEFINE "BADPROCEDURE "badtext]
+PASS: Executing [DEFINE "BADPROCEDURE "badtext] set error code to 7
+INFO: Executing [DEFINE "BADPROCEDURE "badtext] set error string to [DEFINE doesn't like badtext as input]
+INFO: Executing invalid instruction: [DEFINE "BADPROCEDURE []]
+PASS: Executing [DEFINE "BADPROCEDURE []] set error code to 7
+INFO: Executing [DEFINE "BADPROCEDURE []] set error string to [DEFINE doesn't like [] as input]
+INFO: Executing invalid instruction: [DEFINE "BADPROCEDURE {[a] [output :a]}]
+PASS: Executing [DEFINE "BADPROCEDURE {[a] [output :a]}] set error code to 7
+INFO: Executing [DEFINE "BADPROCEDURE {[a] [output :a]}] set error string to [DEFINE doesn't like {[a] [output :a]} as input]
+INFO: Executing invalid instruction: [DEFINE "BADPROCEDURE ["a [output :a]]]
+PASS: Executing [DEFINE "BADPROCEDURE ["a [output :a]]] set error code to 7
+INFO: Executing [DEFINE "BADPROCEDURE ["a [output :a]]] set error string to [DEFINE doesn't like ["a [output :a]] as input]
+INFO: Executing invalid instruction: [DEFINE "BADPROCEDURE [[a] {output :a}]]
+PASS: Executing [DEFINE "BADPROCEDURE [[a] {output :a}]] set error code to 7
+INFO: Executing [DEFINE "BADPROCEDURE [[a] {output :a}]] set error string to [DEFINE doesn't like [[a] {output :a}] as input]
+INFO: Executing invalid instruction: [DEFINE "BADPROCEDURE [[a] output :a]]
+PASS: Executing [DEFINE "BADPROCEDURE [[a] output :a]] set error code to 7
+INFO: Executing [DEFINE "BADPROCEDURE [[a] output :a]] set error string to [DEFINE doesn't like [[a] output :a] as input]
+INFO: Executing invalid instruction: [DEFINE "BADPROCEDURE [{a b} [FORWARD 10]]]
+PASS: Executing [DEFINE "BADPROCEDURE [{a b} [FORWARD 10]]] set error code to 7
+INFO: Executing [DEFINE "BADPROCEDURE [{a b} [FORWARD 10]]] set error string to [DEFINE doesn't like [{a b} [FORWARD 10]] as input]
+INFO: Executing invalid instruction: [DEFINE "BADPROCEDURE [[a b] [FORWARD 10] BADINPUT [FORWARD 10]]]
+PASS: Executing [DEFINE "BADPROCEDURE [[a b] [FORWARD 10] BADINPUT [FORWARD 10]]] set error code to 7
+INFO: Executing [DEFINE "BADPROCEDURE [[a b] [FORWARD 10] BADINPUT [FORWARD 10]]] set error string to [DEFINE doesn't like [[a b] [FORWARD 10] BADINPUT [FORWARD 10]] as input]
+PASS: [DEFINED? "BADPROCEDURE] returned false , as expected.
+INFO: Executing invalid instruction: [DEFINE "BUG1520950 [[] APPLY [OUTPUT ?] [3]] BUG1520950]
+PASS: Executing [DEFINE "BUG1520950 [[] APPLY [OUTPUT ?] [3]] BUG1520950] set error code to 7
+INFO: Executing [DEFINE "BUG1520950 [[] APPLY [OUTPUT ?] [3]] BUG1520950] set error string to [DEFINE doesn't like [[] APPLY [OUTPUT ?] [3]] as input]
+PASS: [DEFINED? "BUG1520950] returned false , as expected.
 PASS: [LOCALVARTEST "unknownlocalvar 42] returned 42 , as expected.
 PASS: [NAME? "unknownlocalvar] returned false , as expected.
 PASS: [:10] returned ten , as expected.
@@ -2746,7 +2801,7 @@ INFO: Executing [(LOCALMAKE)] set error string to [not enough inputs to LOCALMAK
 INFO: Executing invalid instruction: [(CONTENTS "toomany)]
 PASS: Executing [(CONTENTS "toomany)] set error code to 8 , as expected
 INFO: Executing [(CONTENTS "toomany)] set error string to [too much inside ()'s]
-PASS: [PROCEDURES] returned [#test .eqtest abstest activeareatest andtest angleiscloseenough applytest applytest.badinput applytest.nonprimitive applytest.nooutput applytest.smoketest arcbadinputtest arccostest arcsintest arcsmoketest arctantest arctest arraybadinputtest arrayorigintest arrayptest arraysmoketest arraytest asciitest ashifttest.badinput ashifttest.smoketest beforeptest bitandtest.badinput bitandtest.smoketest bitcopytest bitloadsizetest bitmaptest bitnottest.badinput bitnottest.smoketest bitortest.badinput bitortest.smoketest bitwisetest bitxortest.badinput bitxortest.smoketest bug1349374test bug1377856test bug1383281test bug1384267test bug1388325test bug1397560test bug1429960test bug1438863test bug1448155test bug1458661test burytest burytest.badinput burytest.buriedprocedure burytest.buryall burytest.procedure burytest.propertylist burytest.variable butfirststest butfirststest.badinput butfirststest.smoketest butfirsttest butlasttest buttonptest chdirtest client.onreadytosend colorsetgettest colortest controlflowtest copydefmaybeoutputtest copydefoptest copydefoutputtest copydefstoptest copydeftest copydeftotest costest differencetest difficultcomments directorysmoketest directorytest dllcalltest dllfreetest dllloadtest dllsmoketest dlltest doorientationtest echo edalltest editortest emptyptest equalptest erasetest erasetest.badinput erasetest.eraseall erasetest.eraseprocedure erasetest.erasepropertylist erasetest.erasevariable erasetest.ern erasetest.erpl error.30.test errortest errortest.checkerror exptest filetest filetest.allopen filetest.badinput filetest.closeall filetest.dribble filetest.erasefile filetest.openappend filetest.opendirectoryasfile filetest.openopenfile filetest.openupdate filetest.setreadpos filetest.setwritepos filetest.smoketest filltest filltimerevent firststest firststest.badinput firststest.smoketest firsttest floodcolortest fontfacenamestest fontfacenamestest.badinput fontfacenamestest.manualtest fontfacenamestest.smoketest formtest helptest i.dont.know.what.to.do.with.value iftest inporttest inttest iseqtest labelbadinputtest labelcircletest labeltest largeedittest lasttest listptest listtest listtest.smoketest lntest loadtest localvartest log10test logictest logoversiontest logoversiontest.badinput logoversiontest.smoketest lshifttest.badinput lshifttest.smoketest macro.return.unbound.instead.of.list macrotest macrotest.outputnothing mathtest memberptest miditest miditest.badinput miditest.devicezero miditest.longformat miditest.playtune miditest.smoketest minustest misctest mkdirtest modulotest mousetest mousetest.badinput mousetest.simpletest my.proc.to.step myadd mymacro netshutdowncrash networksmoketest networktest no.input.no.output nodestest nottest numberptest one.input.no.output orientationtest ortest outporttest output.373 parsetest parsetest.expression parsetest.func parsetest.number parsetest.word pasteincircle pencolortest penmodetest pentest penupdowntest perspectivetest pitest plisttest porttest powertest predicatetest procedure.shadows.myshadowedvar procedure.with.to.inside.it procedureinworkingdirectory proceduretest producttest queuetest queuetest.badinput queuetest.circulartest queuetest.smoketest quotedtest quotedtest.badinput quotedtest.smoketest quotienttest radarccostest radarcsintest radarctantest radcostest radsintest radtantest rawasciitest remaindertest repcounttest repcounttest.badinput repcounttest.smoketest repcounttest.timercallback repcounttest.timertest repeattest repeattest.badinput repeattest.outputinrepeat repeattest.smoketest repeattest.stopinrepeat rmdirtest roundtest runtest sampleproc screencolortest screentest scrunchtest sentencetest sentencetest.badinput sentencetest.noalias sentencetest.smoketest server.start server.stop setitemtest setlabelfonttest setrandomorientation shellscripttest signtest sintest sorttest sorttest.after? sorttest.badinput sorttest.nonpredicate sorttest.oneinputbydefault sorttest.oneinputproc sorttest.performance sorttest.regression sorttest.sortbylegs sorttest.sortbyname sorttest.threeinputproc soundtest soundtest.badinput soundtest.frequency.a4 soundtest.frequency.b4 soundtest.frequency.c4 soundtest.frequency.c5 soundtest.frequency.d4 soundtest.frequency.d5 soundtest.frequency.e4 soundtest.frequency.f4 soundtest.frequency.g4 soundtest.sound soundtest.tone sqrttest stacktest stacktest.badinput stacktest.circulartest stacktest.smoketest steptest steptest.badinput steptest.procedure steptest.propertylist steptest.shadowvariable steptest.stepall steptest.steppedprocedure steptest.variable sumtest tantest testall timewait tracetest tracetest.badinput tracetest.function tracetest.procedure tracetest.propertylist tracetest.traceall tracetest.tracedfunction tracetest.tracedprocedure tracetest.variable waittest windowfileedittest windowfileedittest.bug1330752 windowfileedittest.longfilename windowsettest windowstest windowstest.button windowstest.button.badinput windowstest.checkbox windowstest.checkbox.badinput windowstest.checkbox.deletegroupbox windowstest.combobox windowstest.combobox.badinput windowstest.debugwindows windowstest.debugwindows.badinput windowstest.debugwindows.stress windowstest.dialog.badinput windowstest.dialog.badinput.fromcallback windowstest.dialog.smoketest windowstest.groupbox windowstest.groupbox.badinput windowstest.listbox windowstest.listbox.badinput windowstest.mainwindow.smoketest windowstest.radiobutton windowstest.radiobutton.badinput windowstest.radiobutton.deletegroupbox windowstest.regressiontest windowstest.scrollbar windowstest.scrollbar.badinput windowstest.setup windowstest.static windowstest.static.badinput windowstest.window.badinput windowstest.window.smoketest windowtest wordproctest wordptest wordtest yesnoboxtest yesnoboxtest.badinput yesnoboxtest.smoketest ~ignoreme ~ignoremewascalled] , as expected.
+PASS: [PROCEDURES] returned [#test .eqtest abstest activeareatest andtest angleiscloseenough applytest applytest.applyoutput applytest.badinput applytest.bug1519088 applytest.nonprimitive applytest.nooutput applytest.smoketest arcbadinputtest arccostest arcsintest arcsmoketest arctantest arctest arraybadinputtest arrayorigintest arrayptest arraysmoketest arraytest asciitest ashifttest.badinput ashifttest.smoketest beforeptest bitandtest.badinput bitandtest.smoketest bitcopytest bitloadsizetest bitmaptest bitnottest.badinput bitnottest.smoketest bitortest.badinput bitortest.smoketest bitwisetest bitxortest.badinput bitxortest.smoketest bug1349374test bug1377856test bug1383281test bug1384267test bug1388325test bug1397560test bug1429960test bug1438863test bug1448155test bug1458661test burytest burytest.badinput burytest.buriedprocedure burytest.buryall burytest.procedure burytest.propertylist burytest.variable butfirststest butfirststest.badinput butfirststest.smoketest butfirsttest butlasttest buttonptest chdirtest client.onreadytosend colorsetgettest colortest controlflowtest copydefmaybeoutputtest copydefoptest copydefoutputtest copydefstoptest copydeftest copydeftotest costest definetest definetest.badinput definetest.smoketest differencetest difficultcomments directorysmoketest directorytest dllcalltest dllfreetest dllloadtest dllsmoketest dlltest donothing doorientationtest echo edalltest editortest emptyptest equalptest erasetest erasetest.badinput erasetest.eraseall erasetest.eraseprocedure erasetest.erasepropertylist erasetest.erasevariable erasetest.ern erasetest.erpl erracttest erracttest.bug1517326 erracttest.bug1517326.continue5 erracttest.output.5 erracttest.smoketest error.30.test errortest errortest.checkerror exptest filetest filetest.allopen filetest.badinput filetest.closeall filetest.dribble filetest.erasefile filetest.openappend filetest.opendirectoryasfile filetest.openopenfile filetest.openupdate filetest.setreadpos filetest.setwritepos filetest.smoketest filltest filltimerevent firststest firststest.badinput firststest.smoketest firsttest floodcolortest fontfacenamestest fontfacenamestest.badinput fontfacenamestest.manualtest fontfacenamestest.smoketest formtest fulltexttest fulltexttest.badinput fulltexttest.smoketest helptest i.dont.know.what.to.do.with.value iftest inporttest inttest iseqtest labelbadinputtest labelcircletest labeltest largeedittest lasttest listptest listtest listtest.smoketest lntest loadtest localvartest log10test logictest logoversiontest logoversiontest.badinput logoversiontest.smoketest lshifttest.badinput lshifttest.smoketest macro.return.unbound.instead.of.list macrotest macrotest.outputnothing mathtest memberptest miditest miditest.badinput miditest.devicezero miditest.longformat miditest.playtune miditest.smoketest minustest misctest mkdirtest modulotest mousetest mousetest.badinput mousetest.simpletest my.proc.to.step myadd mymacro networktest networktest.client.receiveunframedpacket networktest.hostname networktest.netshutdowncrash networktest.server.receiveunframedpacket networktest.server.twoconnections networktest.shutdownrace networktest.smoketest no.input.no.output nodestest nottest numberptest one.input.no.output orientationtest ortest outporttest output.373 parsetest parsetest.expression parsetest.func parsetest.number parsetest.word pasteincircle pencolortest penmodetest pentest penupdowntest perspectivetest pitest plisttest porttest powertest predicatetest procedure.shadows.myshadowedvar procedure.with.to.inside.it procedureinworkingdirectory proceduretest proceduretest.complexproc producttest queuetest queuetest.badinput queuetest.circulartest queuetest.smoketest quotedtest quotedtest.badinput quotedtest.smoketest quotienttest radarccostest radarcsintest radarctantest radcostest radsintest radtantest rawasciitest remaindertest repcounttest repcounttest.badinput repcounttest.smoketest repcounttest.timercallback repcounttest.timertest repeattest repeattest.badinput repeattest.outputinrepeat repeattest.smoketest repeattest.stopinrepeat rmdirtest roundtest runtest sampleproc screencolortest screentest scrunchtest sentencetest sentencetest.badinput sentencetest.noalias sentencetest.smoketest setitemtest setlabelfonttest setrandomorientation shellscripttest signtest sintest sorttest sorttest.after? sorttest.badinput sorttest.nonpredicate sorttest.oneinputbydefault sorttest.oneinputproc sorttest.performance sorttest.regression sorttest.sortbylegs sorttest.sortbyname sorttest.threeinputproc soundtest soundtest.badinput soundtest.frequency.a4 soundtest.frequency.b4 soundtest.frequency.c4 soundtest.frequency.c5 soundtest.frequency.d4 soundtest.frequency.d5 soundtest.frequency.e4 soundtest.frequency.f4 soundtest.frequency.g4 soundtest.sound soundtest.tone sqrttest stacktest stacktest.badinput stacktest.circulartest stacktest.smoketest steptest steptest.badinput steptest.procedure steptest.propertylist steptest.shadowvariable steptest.stepall steptest.steppedprocedure steptest.variable sumtest tantest testall texttest texttest.badinput texttest.smoketest timewait tracetest tracetest.badinput tracetest.function tracetest.procedure tracetest.propertylist tracetest.traceall tracetest.tracedfunction tracetest.tracedprocedure tracetest.variable waittest windowfileedittest windowfileedittest.bug1330752 windowfileedittest.longfilename windowsettest windowstest windowstest.button windowstest.button.badinput windowstest.checkbox windowstest.checkbox.badinput windowstest.checkbox.deletegroupbox windowstest.combobox windowstest.combobox.badinput windowstest.debugwindows windowstest.debugwindows.badinput windowstest.debugwindows.stress windowstest.dialog.badinput windowstest.dialog.badinput.fromcallback windowstest.dialog.smoketest windowstest.groupbox windowstest.groupbox.badinput windowstest.listbox windowstest.listbox.badinput windowstest.mainwindow.smoketest windowstest.radiobutton windowstest.radiobutton.badinput windowstest.radiobutton.deletegroupbox windowstest.regressiontest windowstest.scrollbar windowstest.scrollbar.badinput windowstest.setup windowstest.static windowstest.static.badinput windowstest.window.badinput windowstest.window.smoketest windowtest wordproctest wordptest wordtest yesnoboxtest yesnoboxtest.badinput yesnoboxtest.smoketest ~ignoreme ~ignoremewascalled] , as expected.
 INFO: Executing invalid instruction: [(PROCEDURES "toomany)]
 PASS: Executing [(PROCEDURES "toomany)] set error code to 8 , as expected
 INFO: Executing [(PROCEDURES "toomany)] set error string to [too much inside ()'s]
@@ -3892,6 +3947,15 @@ PASS: [BUTTON?] returned false , as expected.
 INFO: Executing invalid instruction: [(BUTTON? "too-many)]
 PASS: Executing [(BUTTON? "too-many)] set error code to 8 , as expected
 INFO: Executing [(BUTTON? "too-many)] set error string to [too much inside ()'s]
+PASS: [NETACCEPTON :localport [] [QUEUE "server.data NETACCEPTRECEIVEVALUE]] returned true , as expected.
+PASS: [SHELL :shellcommand] returned true , as expected.
+PASS: [:server.data] returned [[hello]] , as expected.
+PASS: [NETACCEPTON :localport [] [QUEUE "server.data NETACCEPTRECEIVEVALUE]] returned true , as expected.
+PASS: [SHELL :shellcommand] returned true , as expected.
+PASS: [SHELL :shellcommand] returned true , as expected.
+FAIL: [:server.data] returned [[hello]] . We expected [[Hello] [Hello]]
+PASS: [SHELL :shellcommand] returned true , as expected.
+PASS: [:client.data] returned [[Hello]] , as expected.
 INFO: executing regression test for bug #1384267
 PASS: "bug #1384267 is fixed; turning by a large number in perspective mode did not crash.
 INFO: Executing invalid instruction: [(PERSPECTIVE "toomany)]
