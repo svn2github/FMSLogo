@@ -21,36 +21,201 @@
 
 #include "allwind.h"
 
-const char LOGOINIFILENAME[] = "Logo.ini";
+// the name of the FMSLogo registry key under HKCU
+const char FMSLOGO_REGISTRY_KEY_NAME[] = "Software\\FMSLogo";
 
-void
-SetPrivateProfileInt(
-    const char *        Section,
-    const char *        Key,
-    int                 Value
-)
+// manifest constants to help protect against typos
+const char FONTPROPERTY_FaceName[]       = "FaceName";
+const char FONTPROPERTY_Height[]         = "Height";
+const char FONTPROPERTY_Weight[]         = "Weight";
+const char FONTPROPERTY_Italic[]         = "Italic";
+const char FONTPROPERTY_CharSet[]        = "CharSet";
+const char FONTPROPERTY_OutPrecision[]   = "OutPrecision";
+const char FONTPROPERTY_ClipPrecision[]  = "ClipPrecision";
+const char FONTPROPERTY_Quality[]        = "Quality";
+const char FONTPROPERTY_PitchAndFamily[] = "PitchAndFamily";
+
+static
+HKEY
+OpenFmsLogoKeyForSettingValue()
    {
-   char buffer[64];
+   HKEY fmslogoKey;
 
-   wsprintf(buffer, "%d", Value);
+   // Use RegCreateKeyEx() instead of RegOpenKeyEx() because
+   // the key may not already exist.  For example, if FMSlogo 
+   // were "installed" with XCOPY or by uncompressing a ZIP file.
 
-   WritePrivateProfileString(
-      Section,
-      Key,
-      buffer,
-      LOGOINIFILENAME);
+   LONG result = RegCreateKeyEx(
+      HKEY_CURRENT_USER,
+      FMSLOGO_REGISTRY_KEY_NAME,
+      0,      // reserved
+      NULL,   // ignored
+      REG_OPTION_NON_VOLATILE,
+      KEY_SET_VALUE,
+      NULL,   // default security attributes
+      &fmslogoKey,
+      NULL);  // don't care if the key already existed
+   if (result != ERROR_SUCCESS)
+      {
+      // failed!
+      fmslogoKey = NULL;
+      }
+
+   return fmslogoKey;
    }
 
+void
+SetConfigurationInt(
+   const char *        Name,
+   int                 Value
+   )
+   {
+   HKEY fmslogoKey = OpenFmsLogoKeyForSettingValue();
+   if (fmslogoKey != NULL)
+      {
+      DWORD value          = static_cast<DWORD>(Value);
+      const BYTE *valuePtr = reinterpret_cast<BYTE*>(&value);
+
+      RegSetValueEx(
+         fmslogoKey,
+         Name,
+         0,   // reserved
+         REG_DWORD,
+         valuePtr,
+         sizeof value);
+
+      RegCloseKey(fmslogoKey);
+      }
+   }
+
+int
+GetConfigurationInt(
+   const char *        Name,
+   int                 DefaultValue
+   )
+   {
+   int returnValue = DefaultValue;
+
+   HKEY fmslogoKey;
+   LONG result = RegOpenKeyEx(
+      HKEY_CURRENT_USER,
+      FMSLOGO_REGISTRY_KEY_NAME,
+      0, // reserved
+      KEY_QUERY_VALUE,
+      &fmslogoKey);
+   if (result == ERROR_SUCCESS)
+      {
+      DWORD value;
+      DWORD valueSize = sizeof value;
+      BYTE *valuePtr  = reinterpret_cast<BYTE*>(&value);
+      DWORD type      = REG_DWORD;
+
+      result = RegQueryValueEx(
+         fmslogoKey,
+         Name,
+         0,   // reserved
+         &type,
+         valuePtr,
+         &valueSize);
+      if (result    == ERROR_SUCCESS && 
+          type      == REG_DWORD     &&
+          valueSize == sizeof(value))
+         {
+         // we successfully read the value as a DWORD
+         returnValue = value;
+         }
+
+      RegCloseKey(fmslogoKey);
+      }
+
+   return returnValue;
+   }
 
 void
-GetPrivateProfileQuadruple(
-   const char *        Section,
-   const char *        Key,
+SetConfigurationString(
+   const char *        Name,
+   const char *        Value
+   )
+   {
+   HKEY fmslogoKey = OpenFmsLogoKeyForSettingValue();
+   if (fmslogoKey != NULL)
+      {
+      DWORD valueLength    = strlen(Value) + sizeof(char);   // include NUL
+      const BYTE *valuePtr = reinterpret_cast<const BYTE*>(Value);
+
+      RegSetValueEx(
+         fmslogoKey,
+         Name,
+         0,   // reserved
+         REG_SZ,
+         valuePtr,
+         valueLength);
+
+      RegCloseKey(fmslogoKey);
+      }
+   }
+
+void
+GetConfigurationString(
+   const char *        Name,
+   char *              Value,
+   size_t              ValueLength,
+   const char *        DefaultValue
+   )
+   {
+#ifdef DEBUG
+   memset(Value, ValueLength, 0xDD);
+#endif
+
+   bool useDefaultValue = true;
+
+   HKEY fmslogoKey;
+   LONG result = RegOpenKeyEx(
+      HKEY_CURRENT_USER,
+      FMSLOGO_REGISTRY_KEY_NAME,
+      0, // reserved
+      KEY_QUERY_VALUE,
+      &fmslogoKey);
+   if (result == ERROR_SUCCESS)
+      {
+      DWORD valueSize = ValueLength - 1;  // leave room for NUL
+      BYTE *valuePtr  = reinterpret_cast<BYTE*>(Value);
+      DWORD valueType;
+
+      result = RegQueryValueEx(
+         fmslogoKey,
+         Name,
+         0,   // reserved
+         &valueType,
+         valuePtr,
+         &valueSize);
+      if (result == ERROR_SUCCESS && 
+          valueType == REG_SZ     &&
+          valueSize < ValueLength - 1)
+         {
+         // we successfully read the value as a string
+         Value[valueSize] = '\0';
+         useDefaultValue  = false;
+         }
+
+      RegCloseKey(fmslogoKey);
+      }
+
+   if (useDefaultValue)
+      {
+      strcpy(Value, DefaultValue);
+      }
+
+   }
+
+void
+GetConfigurationQuadruple(
+   const char *        Name,
    int *               Value1,
    int *               Value2,
    int *               Value3,
    int *               Value4
-)
+   )
    {
    char defaultString[256];
    sprintf(
@@ -62,18 +227,15 @@ GetPrivateProfileQuadruple(
       *Value4);
 
    char outputString[256];
-   outputString[0] = '\0';
 
-   // Get the quadruple from the WIN.INI file.
-   GetPrivateProfileString(
-      Section,
-      Key,
-      defaultString,
+   // Get the quadruple from the configuration settings
+   GetConfigurationString(
+      Name,
       outputString,
       sizeof(outputString),
-      LOGOINIFILENAME);
+      defaultString);
 
-   // Decode location and size of window from profile string.
+   // Decode the quadruple string into numbers
    char * cp = outputString;
 
    *Value1 = (int) strtol(cp, &cp, 10);
@@ -89,16 +251,14 @@ GetPrivateProfileQuadruple(
    }
 
 
-
 void
-SetPrivateProfileQuadruple(
-    const char *        Section,
-    const char *        Key,
-    int                 Value1,
-    int                 Value2,
-    int                 Value3,
-    int                 Value4
-)
+SetConfigurationQuadruple(
+   const char *        Name,
+   int                 Value1,
+   int                 Value2,
+   int                 Value3,
+   int                 Value4
+   )
    {
    char quadruple[256];
 
@@ -110,101 +270,110 @@ SetPrivateProfileQuadruple(
       Value3,
       Value4);
 
-   // Set the quadruple in the INI file.
-   WritePrivateProfileString(
-      Section,
-      Key,
-      quadruple,
-      LOGOINIFILENAME);
+   // Set the quadruple in the configuration.
+   SetConfigurationString(
+      Name,
+      quadruple);
    }
 
-bool
-GetPrivateProfileFont(
-   LPCSTR     ApplicationName,
-   LOGFONT  & LogFont
-)
+static
+char *
+GetRelativeFontPropertyPointer(
+   char *  FullyQualifiedName
+   )
+   {
+   // find where the relative property name should start
+   char * relativeName = strchr(FullyQualifiedName, '\0');
+
+   // add a '.' to distigush the relative part from the absolute part.
+   *relativeName++ = '.';
+
+   return relativeName;
+   }
+   
+
+
+void
+GetConfigurationFont(
+   const char * Name,
+   LOGFONT  &   LogFont
+   )
 {
    memset(&LogFont, 0, sizeof(LogFont));
 
-   GetPrivateProfileString(
-      ApplicationName,
-      "FaceName",
-      "Courier",
+   char fullyQualifiedName[256];
+
+   strcpy(fullyQualifiedName, Name);
+
+   // find the end of the fullyQualifiedName
+   char * relativeName = GetRelativeFontPropertyPointer(fullyQualifiedName);
+   
+   strcpy(relativeName, FONTPROPERTY_FaceName);
+   GetConfigurationString(
+      fullyQualifiedName, 
       LogFont.lfFaceName,
       LF_FACESIZE,
-      LOGOINIFILENAME);
+      "Courier");
 
-   LogFont.lfHeight = GetPrivateProfileInt(
-      ApplicationName,
-      "Height",
-      -13,
-      LOGOINIFILENAME);
+   strcpy(relativeName, FONTPROPERTY_Height);
+   LogFont.lfHeight = GetConfigurationInt(fullyQualifiedName, -13);
 
-   LogFont.lfWeight = GetPrivateProfileInt(
-      ApplicationName,
-      "Weight",
-      400,
-      LOGOINIFILENAME);
+   strcpy(relativeName, FONTPROPERTY_Weight);
+   LogFont.lfWeight = GetConfigurationInt(fullyQualifiedName, 400);
 
-   LogFont.lfItalic = GetPrivateProfileInt(
-      ApplicationName,
-      "Italic",
-      0,
-      LOGOINIFILENAME);
+   strcpy(relativeName, FONTPROPERTY_Italic);
+   LogFont.lfItalic = GetConfigurationInt(fullyQualifiedName, 0);
 
-   LogFont.lfCharSet = GetPrivateProfileInt(
-      ApplicationName,
-      "CharSet",
-      0,
-      LOGOINIFILENAME);
+   strcpy(relativeName, FONTPROPERTY_CharSet);
+   LogFont.lfCharSet = GetConfigurationInt(fullyQualifiedName, 0);
 
-   LogFont.lfOutPrecision = GetPrivateProfileInt(
-      ApplicationName,
-      "OutPrecision",
-      1,
-      LOGOINIFILENAME);
+   strcpy(relativeName, FONTPROPERTY_OutPrecision);
+   LogFont.lfOutPrecision = GetConfigurationInt(fullyQualifiedName, 1);
 
-   LogFont.lfClipPrecision = GetPrivateProfileInt(
-      ApplicationName,
-      "ClipPrecision",
-      2,
-      LOGOINIFILENAME);
+   strcpy(relativeName, FONTPROPERTY_ClipPrecision);
+   LogFont.lfClipPrecision = GetConfigurationInt(fullyQualifiedName, 2);
 
-   LogFont.lfQuality = GetPrivateProfileInt(
-      ApplicationName,
-      "Quality",
-      1,
-      LOGOINIFILENAME);
+   strcpy(relativeName, FONTPROPERTY_Quality);
+   LogFont.lfQuality = GetConfigurationInt(fullyQualifiedName, 1);
 
-   LogFont.lfPitchAndFamily = GetPrivateProfileInt(
-      ApplicationName,
-      "PitchAndFamily",
-      49,
-      LOGOINIFILENAME);
-
-   return true;
+   strcpy(relativeName, FONTPROPERTY_PitchAndFamily);
+   LogFont.lfPitchAndFamily = GetConfigurationInt(fullyQualifiedName, 49);
 }
 
-bool
-SetPrivateProfileFont(
-   LPCSTR     ApplicationName,
-   LOGFONT  & LogFont
-)
+void
+SetConfigurationFont(
+   const char *       Name,
+   const LOGFONT  &   LogFont
+   )
    {
-   WritePrivateProfileString(
-      ApplicationName,
-      "FaceName",
-      LogFont.lfFaceName,
-      LOGOINIFILENAME);
+   char fullyQualifiedName[256];
 
-   SetPrivateProfileInt(ApplicationName, "Height",         LogFont.lfHeight);
-   SetPrivateProfileInt(ApplicationName, "Weight",         LogFont.lfWeight);
-   SetPrivateProfileInt(ApplicationName, "Italic",         LogFont.lfItalic);
-   SetPrivateProfileInt(ApplicationName, "CharSet",        LogFont.lfCharSet);
-   SetPrivateProfileInt(ApplicationName, "OutPrecision",   LogFont.lfOutPrecision);
-   SetPrivateProfileInt(ApplicationName, "ClipPrecision",  LogFont.lfClipPrecision);
-   SetPrivateProfileInt(ApplicationName, "Quality",        LogFont.lfQuality);
-   SetPrivateProfileInt(ApplicationName, "PitchAndFamily", LogFont.lfPitchAndFamily);
-   return true;
+   strcpy(fullyQualifiedName, Name);
+
+   // find where the relative property name should start
+   char * relativeName = GetRelativeFontPropertyPointer(fullyQualifiedName);
+
+   strcpy(relativeName, FONTPROPERTY_FaceName);
+   SetConfigurationString(fullyQualifiedName, LogFont.lfFaceName);
+
+   struct PROPERTY {
+      const char * Name;
+      int          Value;
+   } properties[] = {
+      {FONTPROPERTY_Height,          LogFont.lfHeight},
+      {FONTPROPERTY_Weight,          LogFont.lfWeight},
+      {FONTPROPERTY_Italic,          LogFont.lfItalic},
+      {FONTPROPERTY_CharSet,         LogFont.lfCharSet},
+      {FONTPROPERTY_OutPrecision,    LogFont.lfOutPrecision},
+      {FONTPROPERTY_ClipPrecision,   LogFont.lfClipPrecision},
+      {FONTPROPERTY_Quality,         LogFont.lfQuality},
+      {FONTPROPERTY_PitchAndFamily,  LogFont.lfPitchAndFamily},
+   };
+
+   for (int i = 0; i < sizeof(properties) / sizeof(*properties); i++)
+      {
+      strcpy(relativeName, properties[i].Name);
+      SetConfigurationInt(fullyQualifiedName, properties[i].Value);
+      }
    }
 

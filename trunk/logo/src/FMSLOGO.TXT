@@ -43,6 +43,8 @@ Part II) New features/bugs fixed:
       "RIGHT didn't output to RIGHT".
     o Fix bug #1367386: Networking code no longer goes into an infinite loop 
       when it receives data that does not contain NUL.
+    o Mitigate bug #1327718: Application settings are now stored per-user 
+      so that limited user accounts can write persistent settings.
     o Implement request #1492605; SORT is now faster and the design fits
       better with Logo's LISP heritage.
     o Minor updates to the manual.

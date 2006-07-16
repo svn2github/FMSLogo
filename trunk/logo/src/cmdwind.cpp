@@ -54,7 +54,7 @@ void TMyCommandWindow::SetupWindow()
    TDialog::SetupWindow();
 
    LOGFONT lf;
-   GetPrivateProfileFont("CommanderFont", lf);
+   GetConfigurationFont("CommanderFont", lf);
 
    Font = CreateFontIndirect(&lf);
 
@@ -621,8 +621,7 @@ void TMyCommandWindow::EvDestroy()
       TRect wrect;
       GetWindowRect(wrect);
 
-      SetPrivateProfileQuadruple(
-         "LOGO",
+      SetConfigurationQuadruple(
          "Commander",
          wrect.Left(),
          wrect.Top(),
@@ -648,7 +647,7 @@ void TMyCommandWindow::EvClose()
 void TMyCommandWindow::ChooseNewFont()
    {
    LOGFONT lf;
-   GetPrivateProfileFont("CommanderFont", lf);
+   GetConfigurationFont("CommanderFont", lf);
 
    // initialize the font chooser with the current font preference
    CHOOSEFONT CF;
@@ -664,7 +663,7 @@ void TMyCommandWindow::ChooseNewFont()
    if (ChooseFont(&CF))
       {
       // safe the new font preference to persistent storage
-      SetPrivateProfileFont("CommanderFont", lf);
+      SetConfigurationFont("CommanderFont", lf);
 
       HFONT hFont = CreateFontIndirect(&lf);
       Listbox.SetWindowFont(hFont, TRUE);

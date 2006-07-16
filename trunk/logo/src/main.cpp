@@ -99,8 +99,8 @@ int TPrinterAreaYLow;
 int TPrinterAreaYHigh;
 int TPrinterAreaPixels;
 
-int GCMAX = 8192;                      // Garbage Collector Stack Size (Logo.ini)
-int MAX_PHYS_LINE = 8192;              // Maximum Physical Line Size (Logo.ini)
+int GCMAX = 8192;                      // Garbage Collector Stack Size
+int MAX_PHYS_LINE = 8192;              // Maximum Physical Line Size
 Color dpen;                            // Current pen color
 Color dfld;                            // Current flood color
 Color dscn;                            // Current screen color
@@ -470,8 +470,7 @@ void TMyApp::InitMainWindow()
       w = min(w, MaxWidth);
       h = min(h, (int) (MaxHeight * ScreenSz));
 
-      GetPrivateProfileQuadruple(
-         "LOGO",
+      GetConfigurationQuadruple(
          "Screen",
          &x,
          &y,
@@ -486,8 +485,7 @@ void TMyApp::InitMainWindow()
       int commander_y      = 0;
       int commander_width  = 0;
       int commander_height = DEFAULT_COMMANDER_HEIGHT;
-      GetPrivateProfileQuadruple(
-         "LOGO",
+      GetConfigurationQuadruple(
          "Commander",
          &commander_x,
          &commander_y,
@@ -618,12 +616,11 @@ void TMyApp::InitMainWindow()
 
    MakeHelpPathName(MCIHelpFileName, "mcistrwh.hlp");
 
-   PrinterAreaXLow  = GetPrivateProfileInt("Printer", "Xlow",  -BitMapWidth  / 2, "LOGO.INI");
-   PrinterAreaXHigh = GetPrivateProfileInt("Printer", "XHigh", +BitMapWidth  / 2, "LOGO.INI");
-   PrinterAreaYLow  = GetPrivateProfileInt("Printer", "Ylow",  -BitMapHeight / 2, "LOGO.INI");
-   PrinterAreaYHigh = GetPrivateProfileInt("Printer", "YHigh", +BitMapHeight / 2, "LOGO.INI");
-
-   PrinterAreaPixels = GetPrivateProfileInt("Printer", "Pixels", max(BitMapWidth, BitMapHeight) / 8, "LOGO.INI");
+   PrinterAreaXLow   = GetConfigurationInt("Printer.Xlow",  -BitMapWidth  / 2);
+   PrinterAreaXHigh  = GetConfigurationInt("Printer.XHigh", +BitMapWidth  / 2);
+   PrinterAreaYLow   = GetConfigurationInt("Printer.Ylow",  -BitMapHeight / 2);
+   PrinterAreaYHigh  = GetConfigurationInt("Printer.YHigh", +BitMapHeight / 2);
+   PrinterAreaPixels = GetConfigurationInt("Printer.Pixels", max(BitMapWidth, BitMapHeight) / 8);
 
    if ((PrinterAreaXLow  == -BitMapWidth  / 2) &&
        (PrinterAreaXHigh == +BitMapWidth  / 2) &&
@@ -854,13 +851,13 @@ WinMain(
       }
 
 
-   // Get garbage collector stack size from logo.ini
-   GCMAX = GetPrivateProfileInt("LOGO", "GCStackSize", 8192, "LOGO.INI");
+   // Get garbage collector stack size from the configuration settings
+   GCMAX = GetConfigurationInt("GCStackSize", 8192);
 
-   // Get Max Physical line from logo.ini
-   MAX_PHYS_LINE = GetPrivateProfileInt("LOGO", "MaxPhysLine", 8192, "LOGO.INI");
+   // Get Max Physical line from the configuration settings
+   MAX_PHYS_LINE = GetConfigurationInt("MaxPhysLine", 8192);
 
-   /* Get video mode parameters */
+   // Get video mode parameters
    HDC TempDC = GetDC(0);
 
    RECT MaxRect;
@@ -875,7 +872,6 @@ WinMain(
    ReleaseDC(0, TempDC);
 
    // Get Dialog Units for Controls
-
    BaseUnitsx = LOWORD(GetDialogBaseUnits());
    BaseUnitsy = HIWORD(GetDialogBaseUnits());
 

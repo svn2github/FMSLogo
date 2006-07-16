@@ -373,7 +373,10 @@ void TScreenWindow::Printit(TDC &PrintDC)
    PrintbitCount *= GetDeviceCaps(PrintDC, PLANES);
 
    // If a mono printer lets let it try to dither a 256 grey scale image
-   if (PrintbitCount == 1) PrintbitCount = 8;
+   if (PrintbitCount == 1)
+      {
+      PrintbitCount = 8;
+      }
 
    // Get screen bitCount
    HDC ScreenDC = GetDC(0);
@@ -382,7 +385,10 @@ void TScreenWindow::Printit(TDC &PrintDC)
    ScreenbitCount *= GetDeviceCaps(ScreenDC, PLANES);
 
    // Don't bother creating a DIB with more colors than we have
-   if (ScreenbitCount < PrintbitCount) PrintbitCount = ScreenbitCount;
+   if (ScreenbitCount < PrintbitCount) 
+      {
+      PrintbitCount = ScreenbitCount;
+      }
 
    // Round to nearest legal bitmap color depth
    if      (                        (PrintbitCount <  1)) PrintbitCount =  1;
@@ -392,7 +398,7 @@ void TScreenWindow::Printit(TDC &PrintDC)
    else if ((PrintbitCount > 16) && (PrintbitCount < 24)) PrintbitCount = 24;
    else if ((PrintbitCount > 24)                        ) PrintbitCount = 32;
 
-   PrintbitCount = GetPrivateProfileInt("LOGO", "PrintColorDepth", PrintbitCount, "LOGO.INI");
+   PrintbitCount = GetConfigurationInt("PrintColorDepth", PrintbitCount);
 
    WORD size;
    if (PrintbitCount <= 8)
@@ -1669,11 +1675,11 @@ void TMainFrame::CMBitmapPrinterArea()
             PrinterAreaPixels      = TPrinterAreaPixels;
             IsPrinterSettingCustom = IsTPrinterSettingCustom;
 
-            SetPrivateProfileInt("Printer", "XLow",   PrinterAreaXLow);
-            SetPrivateProfileInt("Printer", "XHigh",  PrinterAreaXHigh);
-            SetPrivateProfileInt("Printer", "YLow",   PrinterAreaYLow);
-            SetPrivateProfileInt("Printer", "YHigh",  PrinterAreaYHigh);
-            SetPrivateProfileInt("Printer", "Pixels", PrinterAreaPixels);
+            SetConfigurationInt("Printer.XLow",   PrinterAreaXLow);
+            SetConfigurationInt("Printer.XHigh",  PrinterAreaXHigh);
+            SetConfigurationInt("Printer.YLow",   PrinterAreaYLow);
+            SetConfigurationInt("Printer.YHigh",  PrinterAreaYHigh);
+            SetConfigurationInt("Printer.Pixels", PrinterAreaPixels);
             }
          }
       } while (!bAok);
@@ -1749,20 +1755,13 @@ void TMainFrame::CreateEditWindow(const char *FileName, NODE *args, bool check_f
    // NOTE: EditWindow is deleted when "this" is deleted.
    EditWindow = new TMyFileWindow(this, "Editor", FileName, args, check_for_errors);
 
-   // Do win.ini stuff. Build default coords
+   // Do configuration stuff. Build default coords
    int x = (int) (MaxWidth * 0.25);
    int y = (int) (MaxHeight * 0.25);
    int w = (int) (MaxWidth * 0.75);
    int h = (int) (MaxHeight * ScreenSz * 0.75);
 
-   GetPrivateProfileQuadruple(
-      "LOGO",
-      "Editor",
-      &x,
-      &y,
-      &w,
-      &h);
-
+   GetConfigurationQuadruple("Editor", &x, &y, &w, &h); 
    checkwindow(&x, &y, &w, &h);
 
    /* now set them */
@@ -2003,8 +2002,7 @@ void TMainFrame::DockCommanderWindow()
       int commanderWindowY      = 0;
       int commanderWindowWidth  = 0;
       int commanderWindowHeight = DEFAULT_COMMANDER_HEIGHT;
-      GetPrivateProfileQuadruple(
-         "LOGO",
+      GetConfigurationQuadruple(
          "Commander",
          &commanderWindowX,
          &commanderWindowY,
@@ -2072,8 +2070,7 @@ void TMainFrame::MyPopupStatusKill()
    StatusWindow->GetWindowRect(wrect);
 
    // save the current location
-   SetPrivateProfileQuadruple(
-      "LOGO",
+   SetConfigurationQuadruple(
       "Status",
       wrect.Left(),
       wrect.Top(),
@@ -2107,15 +2104,8 @@ void TMainFrame::MyPopupStatus()
    int w = 0;
    int h = 0;
 
-   // Get last location and size of command window from WIN.INI file.
-   GetPrivateProfileQuadruple(
-      "LOGO",
-      "Status",
-      &x,
-      &y,
-      &w,
-      &h);
-
+   // Get last location and size of command window from configuration settings.
+   GetConfigurationQuadruple("Status", &x, &y, &w, &h); 
    checkwindow(&x, &y, &w, &h);
 
    // now set position
@@ -2461,8 +2451,7 @@ void TMainFrame::EvDestroy()
       const TRect mainWindowRect = GetWindowRect();
 
       // save the current location
-      SetPrivateProfileQuadruple(
-         "LOGO",
+      SetConfigurationQuadruple(
          "Screen",
          mainWindowRect.Left(),
          mainWindowRect.Top(),

@@ -114,11 +114,11 @@ NODE *lsetactivearea(NODE *arg)
          return Unbound;
          }
 
-      SetPrivateProfileInt("Printer", "XLow",   PrinterAreaXLow);
-      SetPrivateProfileInt("Printer", "XHigh",  PrinterAreaXHigh);
-      SetPrivateProfileInt("Printer", "YLow",   PrinterAreaYLow);
-      SetPrivateProfileInt("Printer", "YHigh",  PrinterAreaYHigh);
-      SetPrivateProfileInt("Printer", "Pixels", PrinterAreaPixels);
+      SetConfigurationInt("Printer.XLow",   PrinterAreaXLow);
+      SetConfigurationInt("Printer.XHigh",  PrinterAreaXHigh);
+      SetConfigurationInt("Printer.YLow",   PrinterAreaYLow);
+      SetConfigurationInt("Printer.YHigh",  PrinterAreaYHigh);
+      SetConfigurationInt("Printer.Pixels", PrinterAreaPixels);
 
       if ((PrinterAreaXLow  == -BitMapWidth  / 2) &&
           (PrinterAreaXHigh == +BitMapWidth  / 2) &&

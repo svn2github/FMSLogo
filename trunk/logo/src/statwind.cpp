@@ -45,8 +45,7 @@ void TMyStatusWindow::EvClose()
    GetWindowRect(wrect);
 
    // save the current location
-   SetPrivateProfileQuadruple(
-      "LOGO",
+   SetConfigurationQuadruple(
       "Status",
       wrect.Left(),
       wrect.Top(),

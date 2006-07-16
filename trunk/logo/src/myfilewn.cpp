@@ -424,7 +424,7 @@ void TMyFileWindow::SetupWindow()
       }
    
    LOGFONT lf;
-   GetPrivateProfileFont("EditFont", lf);
+   GetConfigurationFont("EditFont", lf);
    hEdtFont = CreateFontIndirect(&lf);
    Editor->SetWindowFont(hEdtFont, true);
 
@@ -437,7 +437,7 @@ void TMyFileWindow::CMEditSetFont()
    {
    // initialize the font chooser to the current font preference
    LOGFONT lf;
-   GetPrivateProfileFont("EditFont", lf);
+   GetConfigurationFont("EditFont", lf);
 
    // clear the struct
    CHOOSEFONT CF;
@@ -452,7 +452,7 @@ void TMyFileWindow::CMEditSetFont()
    if (::ChooseFont(&CF))
       {
       // save the new font preference to persistent storage
-      SetPrivateProfileFont("EditFont", lf);
+      SetConfigurationFont("EditFont", lf);
 
       // Changing the font counts a modification as far as
       // the edit control is concerned, but not as far as
@@ -568,8 +568,7 @@ void TMyFileWindow::EvDestroy()
       GetWindowRect(wrect);
 
       // Make a string with our window location and size.
-      SetPrivateProfileQuadruple(
-         "LOGO",
+      SetConfigurationQuadruple(
          "Editor",
          wrect.Left(),
          wrect.Top(),

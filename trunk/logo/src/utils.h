@@ -23,43 +23,60 @@
 #define __UTILS_H
 
 void
-GetPrivateProfileQuadruple(
-   const char *        Section,
-   const char *        Key,
+SetConfigurationInt(
+   const char *        Name,
+   int                 Value
+   );
+
+int
+GetConfigurationInt(
+   const char *        Name,
+   int                 DefaultValue
+   );
+
+void
+SetConfigurationString(
+   const char *        Name,
+   const char *        Value
+   );
+
+void
+GetConfigurationString(
+   const char *        Name,
+   char *              Value,
+   size_t              ValueLength,
+   const char *        DefaultValue
+   );
+
+void
+GetConfigurationQuadruple(
+   const char *        Name,
    int *               Value1,
    int *               Value2,
    int *               Value3,
    int *               Value4
-);
+   );
 
 void
-SetPrivateProfileQuadruple(
-    const char *        Section,
-    const char *        Key,
-    int                 Value1,
-    int                 Value2,
-    int                 Value3,
-    int                 Value4
-);
-
-bool
-SetPrivateProfileFont(
-   LPCSTR     ApplicationName,
-   LOGFONT  & LogFont
-);
-
-bool
-GetPrivateProfileFont(
-   LPCSTR     ApplicationName,
-   LOGFONT  & LogFont
-);
+SetConfigurationQuadruple(
+   const char *        Name,
+   int                 Value1,
+   int                 Value2,
+   int                 Value3,
+   int                 Value4
+   );
 
 void
-SetPrivateProfileInt(
-    const char *        Section,
-    const char *        Key,
-    int                 Value
-);
+GetConfigurationFont(
+   const char * Name,
+   LOGFONT  &   LogFont
+  );
+
+void
+SetConfigurationFont(
+   const char *       Name,
+   const LOGFONT  &   LogFont
+   );
 
 #endif // __UTILS_H_
 
