@@ -1,5 +1,10 @@
 LOAD "testlib.lgo
 
+TO TESTLIB.REPEATWORD :word :repeat
+   IF :repeat = 0 [ OUTPUT "|| ]
+   OUTPUT WORD :word TESTLIB.REPEATWORD :word :repeat - 1
+END
+
 TO NETWORKTEST.HOSTNAME
    OUTPUT "|DAVID-LAPTOP| 
 END
@@ -119,6 +124,65 @@ TO NETWORKTEST.SERVER.TWOCONNECTIONS
 
 END
 
+TO NETWORKTEST.CLIENT.SMOKETEST
+
+   LOCAL [localport client.data shellcommand]
+
+   MAKE "remoteport  5556
+   MAKE "client.data []
+
+   ; spawn a server
+   MAKE "shellcommand (SENTENCE [perl.exe networkserver.pl simple] :remoteport)
+   SIMPLEREPORTTEST (LIST "SHELL :shellcommand) "true
+
+   ; wait a second for the server to come online
+   TRACEINSTRUCTION  [ WAIT 60 ]
+
+   ; connect the client to the server
+   TRACEINSTRUCTION  [ NETSTARTUP ]
+   SIMPLEREPORTTEST  [ NETCONNECTON NETWORKTEST.HOSTNAME :remoteport [] [QUEUE "client.data NETCONNECTRECEIVEVALUE] ] "true
+
+   ; wait two seconds for the network connection
+   TRACEINSTRUCTION  [ WAIT 60*2 ]
+
+   TRACEINSTRUCTION  [ NETCONNECTOFF ]
+   TRACEINSTRUCTION  [ NETSHUTDOWN   ]
+
+   SIMPLEREPORTTEST [:client.data] [[Hello]]
+END
+
+TO NETWORKTEST.CLIENT.RECEIVELARGEPACKET
+
+   LOCAL [localport client.data shellcommand]
+
+   MAKE "remoteport  5556
+   MAKE "client.data []
+
+   ; spawn a server
+   MAKE "shellcommand (SENTENCE [perl.exe networkserver.pl largepacket] :remoteport)
+   SIMPLEREPORTTEST (LIST "SHELL :shellcommand) "true
+
+   ; wait a second for the server to come online
+   TRACEINSTRUCTION  [ WAIT 60 ]
+
+   ; connect the client to the server
+   TRACEINSTRUCTION  [ NETSTARTUP ]
+   SIMPLEREPORTTEST  [ NETCONNECTON NETWORKTEST.HOSTNAME :remoteport [] [QUEUE "client.data ITEM 1 NETCONNECTRECEIVEVALUE] ] "true
+
+   ; wait two seconds for the network connection
+   TRACEINSTRUCTION  [ WAIT 60*2 ]
+
+   TRACEINSTRUCTION  [ NETCONNECTOFF ]
+   TRACEINSTRUCTION  [ NETSHUTDOWN   ]
+
+   MAKE "expecteddata TESTLIB.REPEATWORD "abcdefghijklmnopqrstuvwxyz 1000
+   
+   ; TESTBUG: we shouldn't have to concatenate the data because it should have come in a single packet.
+   ;SIMPLEREPORTTEST [:client.data] (LIST :expecteddata)
+   SIMPLEREPORTTEST [APPLY "WORD :client.data] :expecteddata
+END
+
+
 TO NETWORKTEST.CLIENT.RECEIVEUNFRAMEDPACKET
 
    LOCAL [localport client.data shellcommand]
@@ -127,7 +191,7 @@ TO NETWORKTEST.CLIENT.RECEIVEUNFRAMEDPACKET
    MAKE "client.data []
 
    ; spawn a server
-   MAKE "shellcommand (SENTENCE [perl.exe networkserver.pl] :remoteport)
+   MAKE "shellcommand (SENTENCE [perl.exe networkserver.pl nonul] :remoteport)
    SIMPLEREPORTTEST (LIST "SHELL :shellcommand) "true
 
    ; wait a second for the server to come online
@@ -188,7 +252,9 @@ TO NETWORKTEST
   NETWORKTEST.SERVER.TWOCONNECTIONS
   NETWORKTEST.SERVER.SHUTDOWNRACE
 
+  NETWORKTEST.CLIENT.SMOKETEST
   NETWORKTEST.CLIENT.RECEIVEUNFRAMEDPACKET
+  NETWORKTEST.CLIENT.RECEIVELARGEPACKET
   NETWORKTEST.CLIENT.SHUTDOWNRACE
 
 END
