@@ -47,10 +47,10 @@ TO NETWORKTEST.SMOKETEST
 END
 
 TO NETWORKTEST.NETSHUTDOWNCRASH
-  (NETSTARTUP 1) ; must be synchronous
-  IGNORE  NETCONNECTON "localhost 9999 [] []
-  NETSHUTDOWN
-  NETSHUTDOWN ; crashes (bug #1367352)
+  TRACEINSTRUCTION [(NETSTARTUP 1)] ; must be synchronous
+  TRACEINSTRUCTION [ IGNORE NETCONNECTON "localhost 9999 [] [] ]
+  TRACEINSTRUCTION [ NETSHUTDOWN ]
+  TRACEINSTRUCTION [ NETSHUTDOWN ] ; crashes (bug #1367352)
 END
 
 
@@ -62,22 +62,22 @@ TO NETWORKTEST.SERVER.RECEIVEUNFRAMEDPACKET
    MAKE "server.data []
 
    ; start the server
-   NETSTARTUP
+   TRACEINSTRUCTION [ NETSTARTUP ]
    SIMPLEREPORTTEST [ NETACCEPTON :localport [] [QUEUE "server.data NETACCEPTRECEIVEVALUE ]] "true
 
-   WAIT 60*2
+   TRACEINSTRUCTION [ WAIT 60 * 2 ]
 
    ; spawn a client to send some data such that the data not end in NUL.
    ; This is a regression test for bug #1367386, which sent FMSLogo into a tight loop
    MAKE "shellcommand (SENTENCE [perl.exe sendtologo.pl] NETWORKTEST.HOSTNAME :localport)
-   SIMPLEREPORTTEST [ SHELL :shellcommand ] "true
+   SIMPLEREPORTTEST (LIST "SHELL :shellcommand) "true
  
    ; wait two seconds for the network connection
-   WAIT 60*2
+   TRACEINSTRUCTION [ WAIT 60 * 2 ]
 
    ; shutdown the server
-   NETACCEPTOFF
-   NETSHUTDOWN
+   TRACEINSTRUCTION [ NETACCEPTOFF ]
+   TRACEINSTRUCTION [ NETSHUTDOWN  ]
 
    ; verify that we received the expected data
    SIMPLEREPORTTEST [:server.data] [[hello]]
@@ -98,13 +98,13 @@ TO NETWORKTEST.SERVER.TWOCONNECTIONS
 
    ; spawn a client to open a connection to the server
    MAKE "shellcommand (SENTENCE [perl.exe sendtologo.pl] NETWORKTEST.HOSTNAME :localport)
-   SIMPLEREPORTTEST [ SHELL :shellcommand ] "true
+   SIMPLEREPORTTEST (LIST "SHELL :shellcommand) "true
 
    ; wait two seconds for the network connection
    WAIT 60*2
 
    ; spawn a client to open a second connection to the server
-   SIMPLEREPORTTEST [ SHELL :shellcommand ] "true
+   SIMPLEREPORTTEST (LIST "SHELL :shellcommand) "true
 
    ; wait two seconds for the network connection
    WAIT 60*2
@@ -128,46 +128,67 @@ TO NETWORKTEST.CLIENT.RECEIVEUNFRAMEDPACKET
 
    ; spawn a server
    MAKE "shellcommand (SENTENCE [perl.exe networkserver.pl] :remoteport)
-   SIMPLEREPORTTEST [ SHELL :shellcommand ] "true
+   SIMPLEREPORTTEST (LIST "SHELL :shellcommand) "true
+
+   ; wait a second for the server to come online
+   TRACEINSTRUCTION  [ WAIT 60 ]
 
    ; connect the client to the server
-   NETSTARTUP
-   IGNORE NETCONNECTON NETWORKTEST.HOSTNAME :remoteport [] [QUEUE "client.data NETCONNECTRECEIVEVALUE]
+   TRACEINSTRUCTION  [ NETSTARTUP ]
+   SIMPLEREPORTTEST  [ NETCONNECTON NETWORKTEST.HOSTNAME :remoteport [] [QUEUE "client.data NETCONNECTRECEIVEVALUE] ] "true
 
    ; wait two seconds for the network connection
-   WAIT 60*2
+   TRACEINSTRUCTION  [ WAIT 60*2 ]
 
-   NETCONNECTOFF
-   NETSHUTDOWN
+   TRACEINSTRUCTION  [ NETCONNECTOFF ]
+   TRACEINSTRUCTION  [ NETSHUTDOWN   ]
 
    SIMPLEREPORTTEST [:client.data] [[Hello]]
 END
 
-TO NETWORKTEST.SHUTDOWNRACE
+TO NETWORKTEST.SERVER.SHUTDOWNRACE
 
    ; start the network system
-   NETSTARTUP
+   TRACEINSTRUCTION [ NETSTARTUP ]
 
    ; start a server.  This scheduled an asynchronous callback.
-   IGNORE NETACCEPTON 1234 [] []
+   SIMPLEREPORTTEST [ NETACCEPTON 1234 [] [] ] "true
 
    ; immediately shutdown (before the server's sendready gets called)
    ; this forces a race condition where the WSAAsyncGetHostByName message
    ; comes in after the network subsystem has been shut down.
    ; This is a regression test for bug #1522350, which is a crash.
-   NETSHUTDOWN
+   TRACEINSTRUCTION [ NETSHUTDOWN ]
 
+END
+
+TO NETWORKTEST.CLIENT.SHUTDOWNRACE
+
+   ; start the network system
+   TRACEINSTRUCTION  [ NETSTARTUP ]
+
+   ; make an outbound connection.  Because this is asynchronous, 
+   ; we don't even need a server, we are going to shutdown before
+   ; the call to connect() is made.
+   SIMPLEREPORTTEST [ NETCONNECTON NETWORKTEST.HOSTNAME 4444 [] [] ] "true
+
+   ; Immediately shutdown (before the client's sendready gets called)
+   ; this forces a race condition where the WSAAsyncGetHostByName message
+   ; comes in after the network subsystem has been shut down.
+   ; This is a regression test for bug #1522350, which is a crash.
+   TRACEINSTRUCTION [ NETSHUTDOWN ]
 END
 
 TO NETWORKTEST
 
   NETWORKTEST.SMOKETEST
   NETWORKTEST.NETSHUTDOWNCRASH
-  ; NETWORKTEST.SHUTDOWNRACE
 
   NETWORKTEST.SERVER.RECEIVEUNFRAMEDPACKET
   NETWORKTEST.SERVER.TWOCONNECTIONS
+  NETWORKTEST.SERVER.SHUTDOWNRACE
 
   NETWORKTEST.CLIENT.RECEIVEUNFRAMEDPACKET
+  NETWORKTEST.CLIENT.SHUTDOWNRACE
 
 END
