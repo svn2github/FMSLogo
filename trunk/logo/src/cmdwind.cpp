@@ -446,10 +446,7 @@ void do_execution(char * logocommand)
 
       // now process it
       val_status = 0;
-      if (exec_list != NIL)
-         {
-         eval_driver(exec_list);
-         }
+      eval_driver(exec_list);
 
       process_special_conditions();
 
