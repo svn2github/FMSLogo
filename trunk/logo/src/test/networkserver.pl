@@ -35,9 +35,9 @@ elsif ($test eq 'nonul')
   print CLIENT "Hello";
 }
 elsif ($test eq 'largepacket')
-  {
+{
   print CLIENT ("abcdefghijklmnopqrstuvwxyz" x 1000), "\0";
-  }
+}
 
 close CLIENT;
 close SERVER;
