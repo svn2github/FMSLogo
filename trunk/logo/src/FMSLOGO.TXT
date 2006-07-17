@@ -21,14 +21,16 @@ Part I) Kit Description/Location (http://sourceforge.net/projects/fmslogo):
 Part II) New features/bugs fixed:
 
   * Added for 6.10.0,
-    o Fix bug #1517319: Pressing BACKSPACE in the commander history no longer 
-      deletes the history.
+    o Fix bug #1522350: Running NETSHUTDOWN immediately after NETACCEPTON no
+      longer crashes.
     o Fix bug #1520950: 'DEFINE "F [[] APPLY [OP ?] [3]] F' no longer crashes.
     o Fix bug #1519088: 'APPLY [OP ?] [3]' no longer leaks memory.
     o Fix bug #1517323: Running CONTINUE from ERRACT no longer leaks memory.
     o Fix bug #1519319: FIRST now throws an error when given the empty array.
     o Fix bug #1517301: bitwise operators now treat decimal numbers that are 
       integers as valid input (for example, 1.0 is treated as 1).
+    o Fix bug #1517319: Pressing BACKSPACE/DELETE in the commander history no 
+      longer deletes the history.
     o Fix bug #1516689: BITAND, BITOR, BITXOR now validate input when there is
       only one input.
     o Fix bug #1516688: REPEAT loops in event callbacks no longer interfere 
