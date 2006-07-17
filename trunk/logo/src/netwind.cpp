@@ -502,9 +502,16 @@ NODE *lnetreceivereceivevalue(NODE *)
    // return current network value
    if (network_receive_on)
       {
-      NODE* targ = make_strnode(network_receive_value);
-      NODE* val = parser(targ, false);
-      return val;
+      if (network_receive_value == NULL)
+         {
+         return NIL;
+         }
+      else
+         {
+         NODE* targ = make_strnode(network_receive_value);
+         NODE* val = parser(targ, false);
+         return val;
+         }
       }
 
    return Unbound;
@@ -515,9 +522,16 @@ NODE *lnetsendreceivevalue(NODE *)
    // return current network value
    if (network_send_on)
       {
-      NODE* targ = make_strnode(network_send_value);
-      NODE* val = parser(targ, false);
-      return val;
+      if (network_send_value == NULL)
+         {
+         return NIL;
+         }
+      else
+         {
+         NODE* targ = make_strnode(network_send_value);
+         NODE* val = parser(targ, false);
+         return val;
+         }
       }
 
    return Unbound;
