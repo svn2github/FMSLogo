@@ -333,6 +333,10 @@ NODE *lnetshutdown(NODE *)
       closesocket(receiveSock);
       receiveSock = INVALID_SOCKET;
       }
+   safe_free(network_receive_receive);
+   safe_free(network_receive_send);
+   safe_free(network_receive_value);
+   g_ReceiveCarryOverData.ReleaseBuffer();
 
    // cleanup send
    if (network_send_on)
@@ -344,6 +348,10 @@ NODE *lnetshutdown(NODE *)
       closesocket(sendSock);
       sendSock = INVALID_SOCKET;
       }
+   safe_free(network_send_receive);
+   safe_free(network_send_send);
+   safe_free(network_send_value);
+   g_SendCarryOverData.ReleaseBuffer();
 
    // cleanup library
    if (network_is_started) 
@@ -351,16 +359,6 @@ NODE *lnetshutdown(NODE *)
       WSACleanup();
       network_is_started = false;
       }
-
-   safe_free(network_receive_receive);
-   safe_free(network_receive_send);
-   safe_free(network_receive_value);
-   safe_free(network_send_receive);
-   safe_free(network_send_send);
-   safe_free(network_send_value);
-
-   g_SendCarryOverData.ReleaseBuffer();
-   g_ReceiveCarryOverData.ReleaseBuffer();
 
    if (network_dns_sync != 1)
       {
@@ -401,12 +399,6 @@ NODE *lnetreceiveon(NODE *args)
       {
       network_receive_send = (char *) malloc(MAX_BUFFER_SIZE);
       }
-
-   if (network_receive_value == NULL)
-      {
-      network_receive_value = (char *) malloc(MAX_PACKET_SIZE);
-      }
-   network_receive_value[0] = '\0';
 
    // get args (socket and callback)
    int isocket = getint(pos_int_arg(args));
@@ -491,7 +483,8 @@ NODE *lnetreceiveoff(NODE *)
       network_receive_on = false;
       bReceiveConnected  = false;
       bReceiveBusy       = false;
-      network_receive_value[0] = '\0';
+
+      safe_free(network_receive_value);
 
       closesocket(receiveSock);
       receiveSock = INVALID_SOCKET;
@@ -556,12 +549,6 @@ NODE *lnetsendon(NODE *args)
       {
       network_send_receive = (char *) malloc(MAX_BUFFER_SIZE);
       }
-
-   if (network_send_value == NULL)
-      {
-      network_send_value = (char *) malloc(MAX_PACKET_SIZE);
-      }
-   network_send_value[0] = '\0';
 
    // get args (remotemachinename, socket, callback)
    char networkaddress[MAX_BUFFER_SIZE];
@@ -646,7 +633,8 @@ NODE *lnetsendoff(NODE *)
       network_send_on = false;
       bSendConnected  = false;
       bSendBusy       = false;
-      network_send_value[0] = '\0';
+
+      safe_free(network_send_value);
 
       closesocket(sendSock);
       sendSock = INVALID_SOCKET;

@@ -846,12 +846,12 @@ void checkqueue()
              {
              save_yield_flag = yield_flag;
              yield_flag = 0;
-             if (thing->networkpacket != NULL)
-                {
-                strcpy(network_receive_value, thing->networkpacket);
-                free(thing->networkpacket);
-                thing->networkpacket = NULL;
-                }
+
+             // use the new value
+             free(network_receive_value);
+             network_receive_value = thing->networkpacket;
+             thing->networkpacket  = NULL;
+
              do_execution(thing->func);
              yield_flag = save_yield_flag;
              break;
@@ -862,12 +862,12 @@ void checkqueue()
              {
              save_yield_flag = yield_flag;
              yield_flag = 0;
-             if (thing->networkpacket != NULL)
-                {
-                strcpy(network_send_value, thing->networkpacket);
-                free(thing->networkpacket);
-                thing->networkpacket = NULL;
-                }
+
+             // use the new value
+             free(network_send_value);
+             network_send_value   = thing->networkpacket;
+             thing->networkpacket = NULL;
+
              do_execution(thing->func);
              yield_flag = save_yield_flag;
              break;
