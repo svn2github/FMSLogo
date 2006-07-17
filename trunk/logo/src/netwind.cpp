@@ -327,7 +327,8 @@ NODE *lnetshutdown(NODE *)
    if (network_receive_on)
       {
       network_receive_on = false;
-      strcpy(network_receive_value, "");
+      bReceiveConnected  = false;
+      bReceiveBusy       = false;
 
       closesocket(receiveSock);
       receiveSock = INVALID_SOCKET;
@@ -337,7 +338,8 @@ NODE *lnetshutdown(NODE *)
    if (network_send_on)
       {
       network_send_on = false;
-      strcpy(network_send_value, "");
+      bSendConnected  = false;
+      bSendBusy       = false;
 
       closesocket(sendSock);
       sendSock = INVALID_SOCKET;
@@ -402,8 +404,9 @@ NODE *lnetreceiveon(NODE *args)
 
    if (network_receive_value == NULL)
       {
-      network_receive_value = (char *) calloc(1, MAX_PACKET_SIZE);
+      network_receive_value = (char *) malloc(MAX_PACKET_SIZE);
       }
+   network_receive_value[0] = '\0';
 
    // get args (socket and callback)
    int isocket = getint(pos_int_arg(args));
@@ -416,8 +419,6 @@ NODE *lnetreceiveon(NODE *args)
 
    if (NOT_THROWING)
       {
-      network_receive_on = true;
-
       // copy callback (I really should keep these as true Nodes)
       strcpy(network_receive_receive, networkreceive);
       strcpy(network_receive_send, networksend);
@@ -446,29 +447,35 @@ NODE *lnetreceiveon(NODE *args)
          pher = gethostbyname(szThisHost);
          if (pher != NULL)
             {
-            MainWindowx->SendMessage(WM_NETWORK_LISTENRECEIVEFINISH, 0, 0L);
-            return Truex;
-            }
-         else
-            {
             ShowMessageAndStop("gethostbyname(thishost)", WSAGetLastErrorString(0));
             return Falsex;
             }
-         }
 
-      if (pher == NULL)
+         network_receive_on = true;
+         MainWindowx->SendMessage(WM_NETWORK_LISTENRECEIVEFINISH, 0, 0);
+         }
+      else
          {
-         pher = (PHOSTENT) malloc(MAXGETHOSTSTRUCT);
-         memset(pher, 0, MAXGETHOSTSTRUCT);
-         }
+         if (pher == NULL)
+            {
+            pher = (PHOSTENT) calloc(1, MAXGETHOSTSTRUCT);
+            }
 
-      if (!WSAAsyncGetHostByName(MainWindowx->HWindow, WM_NETWORK_LISTENRECEIVEFINISH, szThisHost, (LPSTR) pher, MAXGETHOSTSTRUCT))
-         {
-         ShowMessageAndStop("WSAAsyncGetHostByName()", WSAGetLastErrorString(0));
-         return Falsex;
-         }
+         HANDLE getHostByNameHandle = WSAAsyncGetHostByName(
+            MainWindowx->HWindow, 
+            WM_NETWORK_LISTENRECEIVEFINISH, 
+            szThisHost, 
+            (LPSTR) pher, 
+            MAXGETHOSTSTRUCT);
+         if (getHostByNameHandle == NULL)
+            {
+            ShowMessageAndStop("WSAAsyncGetHostByName()", WSAGetLastErrorString(0));
+            return Falsex;
+            }
 
-      // wait for callback
+         network_receive_on = true;
+         // wait for callback
+         }
 
       return Truex;
       }
@@ -482,7 +489,9 @@ NODE *lnetreceiveoff(NODE *)
    if (network_receive_on)
       {
       network_receive_on = false;
-      strcpy(network_receive_value, "");
+      bReceiveConnected  = false;
+      bReceiveBusy       = false;
+      network_receive_value[0] = '\0';
 
       closesocket(receiveSock);
       receiveSock = INVALID_SOCKET;
@@ -550,8 +559,9 @@ NODE *lnetsendon(NODE *args)
 
    if (network_send_value == NULL)
       {
-      network_send_value = (char *) calloc(1, MAX_PACKET_SIZE);
+      network_send_value = (char *) malloc(MAX_PACKET_SIZE);
       }
+   network_send_value[0] = '\0';
 
    // get args (remotemachinename, socket, callback)
    char networkaddress[MAX_BUFFER_SIZE];
@@ -567,8 +577,6 @@ NODE *lnetsendon(NODE *args)
 
    if (NOT_THROWING)
       {
-      network_send_on = true;
-
       // copy the callback
       strcpy(network_send_send, networksend);
       strcpy(network_send_receive, networkreceive);
@@ -591,47 +599,53 @@ NODE *lnetsendon(NODE *args)
       if (network_dns_sync == 1)
          {
          phes = gethostbyname(networkaddress);
-         if (phes != NULL)
-            {
-            MainWindowx->SendMessage(WM_NETWORK_CONNECTSENDFINISH, 0, 0L);
-            return Truex;
-            }
-         else
+         if (phes == NULL)
             {
             ShowMessageAndStop("gethostbyname(host)", WSAGetLastErrorString(0));
             return Falsex;
             }
-         }
 
-      if (phes == NULL)
+         network_send_on = true;
+         MainWindowx->SendMessage(WM_NETWORK_CONNECTSENDFINISH, 0, 0);
+         }
+      else
          {
-         phes = (PHOSTENT) calloc(1, MAXGETHOSTSTRUCT);
+         if (phes == NULL)
+            {
+            phes = (PHOSTENT) calloc(1, MAXGETHOSTSTRUCT);
+            }
+
+         // get address of remote machine
+         HANDLE getHostByNameHandle = WSAAsyncGetHostByName(
+            MainWindowx->HWindow, 
+            WM_NETWORK_CONNECTSENDFINISH, 
+            networkaddress, 
+            (LPSTR) phes, 
+            MAXGETHOSTSTRUCT);
+         if (getHostByNameHandle == NULL)
+            {
+            ShowMessageAndStop("WSAAsyncGetHostByName()", WSAGetLastErrorString(0));
+            return Falsex;
+            }
+
+         network_send_on = true;
+         // wait for callback
          }
 
-      // get address of remote machine
-
-      if (!WSAAsyncGetHostByName(MainWindowx->HWindow, WM_NETWORK_CONNECTSENDFINISH, networkaddress, (LPSTR) phes, MAXGETHOSTSTRUCT))
-         {
-         ShowMessageAndStop("WSAAsyncGetHostByName()", WSAGetLastErrorString(0));
-         return Falsex;
-         }
-
-      // wait for callback
       return Truex;
       }
 
    return Unbound;
-
    }
 
 NODE *lnetsendoff(NODE *)
    {
-
    // tell handler not to do anything with messages for network send
-
    if (network_send_on)
       {
       network_send_on = false;
+      bSendConnected  = false;
+      bSendBusy       = false;
       network_send_value[0] = '\0';
 
       closesocket(sendSock);

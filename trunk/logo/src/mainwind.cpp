@@ -2358,12 +2358,12 @@ void TMainFrame::CMHelp()
 
 void TMainFrame::CMHelpMCI()
    {
-   WinHelp(MCIHelpFileName, HELP_INDEX, 0L);
+   WinHelp(MCIHelpFileName, HELP_INDEX, 0);
    }
 
 void TMainFrame::CMHelpHelp()
    {
-   WinHelp("WINHELP.HLP", HELP_FINDER, 0L);
+   WinHelp("WINHELP.HLP", HELP_FINDER, 0);
    }
 
 void TMainFrame::CMHelpDemo()
@@ -2550,74 +2550,71 @@ LRESULT TMainFrame::OnNetworkConnectSendAck(WPARAM /* wParam */, LPARAM lParam)
          WSAGetLastErrorString(WSAGETASYNCERROR(lParam)),
          "WSAAsyncGetHostByNameCallBack()");
       // err_logo(STOP_ERROR,NIL);
-      return 0L;
+      return 0;
       }
 
-   // queue message if send is enabled
-   if (network_send_on)
+   if (!network_send_on)
       {
-
-      // update flags based on event type
-
-      switch (WSAGETSELECTEVENT(lParam))
-         {
-         case FD_READ:
-            SocketAsyncReceive(
-               this,
-               sendSock,
-               true,
-               g_SendCarryOverData,
-               "recv(sendsock)");
-
-            return 0L;
-
-         case FD_WRITE:
-            // allow another frame to go out.
-            bSendBusy = false;
-            break;
-
-         case FD_CONNECT:
-            // flag it's ok to start firing
-            bSendConnected = true;
-            break;
-
-         case FD_CLOSE:
-            // done
-
-            // send any data in the carry-over buffer upwards
-            if (g_SendCarryOverData.m_BytesOfData != 0)
-               {
-               callthing *callevent = callthing::CreateNetworkSendEvent(
-                  network_send_receive,
-                  g_SendCarryOverData.m_Buffer);
-               
-               calllists.insert(callevent);
-               
-               PostMessage(WM_CHECKQUEUE, 0, 0);
-               }
-
-            g_SendCarryOverData.ReleaseBuffer();
-
-            bSendConnected = false;
-            break;
-         }
-
-      // we don't distinguish between all event types
-      callthing *callevent = callthing::CreateNoYieldFunctionEvent(network_send_send);
-
-      calllists.insert(callevent);
-      PostMessage(WM_CHECKQUEUE, 0, 0);
+      // The network client side has been shut down.
+      // This message must have been delayed.
+      return 0;
       }
 
-   return 0L;
+   // update flags based on event type
+   switch (WSAGETSELECTEVENT(lParam))
+      {
+      case FD_READ:
+         SocketAsyncReceive(
+            this,
+            sendSock,
+            true,
+            g_SendCarryOverData,
+            "recv(sendsock)");
+
+         return 0;
+
+      case FD_WRITE:
+         // allow another frame to go out.
+         bSendBusy = false;
+         break;
+
+      case FD_CONNECT:
+         // flag it's ok to start firing
+         bSendConnected = true;
+         break;
+
+      case FD_CLOSE:
+         // done
+
+         // send any data in the carry-over buffer upwards
+         if (g_SendCarryOverData.m_BytesOfData != 0)
+            {
+            callthing *callevent = callthing::CreateNetworkSendEvent(
+               network_send_receive,
+               g_SendCarryOverData.m_Buffer);
+            
+            calllists.insert(callevent);
+               
+            PostMessage(WM_CHECKQUEUE, 0, 0);
+            }
+
+         g_SendCarryOverData.ReleaseBuffer();
+
+         bSendConnected = false;
+         break;
+      }
+
+   // we don't distinguish between all event types
+   callthing *callevent = callthing::CreateNoYieldFunctionEvent(network_send_send);
+
+   calllists.insert(callevent);
+   PostMessage(WM_CHECKQUEUE, 0, 0);
+   return 0;
    }
 
 LRESULT TMainFrame::OnNetworkConnectSendFinish(WPARAM /* wParam */, LPARAM lParam)
    {
    TMessage msg = __GetTMessage();
-
-   // should these not be automatic?
-   SOCKADDR_IN send_dest_sin;
 
    if (WSAGETASYNCERROR(lParam) != 0)
       {
@@ -2625,27 +2622,27 @@ LRESULT TMainFrame::OnNetworkConnectSendFinish(WPARAM /* wParam */, LPARAM lPara
          WSAGetLastErrorString(WSAGETASYNCERROR(lParam)),
          "WSAAsyncGetHostByNameCallBack()");
       // err_logo(STOP_ERROR,NIL);
-      return 0L;
+      return 0;
+      }
+
+   if (!network_send_on)
+      {
+      // The client-side is not initialized.
+      // This must be a delayed event coming in after shutdown.
+      MessageBox(
+         "Unexpected Error, Network may be shutdown",
+         "Network Error");
+      return 0;
       }
 
    // always start clean
+   SOCKADDR_IN send_dest_sin;
    memset(&send_dest_sin, 0, sizeof(SOCKADDR_IN));
 
    // what else is there
    send_dest_sin.sin_family = AF_INET;
 
-   if (phes)
-      {
-      memcpy(&(send_dest_sin.sin_addr), phes->h_addr, phes->h_length);
-      }
-   else
-      {
-      MessageBox(
-         "Unexpected Error, Network may be shutdown",
-         "Network Error");
-      // err_logo(STOP_ERROR,NIL);
-      return 0L;
-      }
+   memcpy(&send_dest_sin.sin_addr, phes->h_addr, phes->h_length);
 
    // set ports
    send_dest_sin.sin_port = htons(sendPort); // Convert to network ordering
@@ -2668,7 +2665,7 @@ LRESULT TMainFrame::OnNetworkConnectSendFinish(WPARAM /* wParam */, LPARAM lPara
          {
          MessageBox(WSAGetLastErrorString(0), "connect(sendsock)");
          // err_logo(STOP_ERROR,NIL);
-         return 0L;
+         return 0;
          }
       }
 
@@ -2678,15 +2675,11 @@ LRESULT TMainFrame::OnNetworkConnectSendFinish(WPARAM /* wParam */, LPARAM lPara
 #endif
 
    // fire event that connection is made
-   if (network_send_on)
-      {
-      callthing *callevent = callthing::CreateNoYieldFunctionEvent(network_send_send);
+   callthing *callevent = callthing::CreateNoYieldFunctionEvent(network_send_send);
 
-      calllists.insert(callevent);
-      PostMessage(WM_CHECKQUEUE, 0, 0);
-      }
-
-   return 0L;
+   calllists.insert(callevent);
+   PostMessage(WM_CHECKQUEUE, 0, 0);
+   return 0;
    }
 
 LRESULT TMainFrame::OnNetworkListenReceiveAck(WPARAM /* wParam */, LPARAM lParam)
@@ -2702,82 +2695,84 @@ LRESULT TMainFrame::OnNetworkListenReceiveAck(WPARAM /* wParam */, LPARAM lParam
          WSAGetLastErrorString(WSAGETASYNCERROR(lParam)),
          "WSAAsyncGetHostByNameCallBack()");
       // err_logo(STOP_ERROR,NIL);
-      return 0L;
+      return 0;
       }
 
-   // if receive is on process it
-   if (network_receive_on)
+   if (!network_receive_on)
       {
+      // The server-side is not initialized.
+      // This must be a delayed event coming in after shutdown.
+      return 0;
+      }
 
-      // based on event do the right thing
-      switch (WSAGETSELECTEVENT(lParam))
-         {
-         case FD_READ:
-            SocketAsyncReceive(
-               this,
-               receiveSock,
-               false,
-               g_ReceiveCarryOverData,
-               "recv(receivesock)");
 
-            return 0L;
+   // based on event do the right thing
+   switch (WSAGETSELECTEVENT(lParam))
+      {
+      case FD_READ:
+         SocketAsyncReceive(
+            this,
+            receiveSock,
+            false,
+            g_ReceiveCarryOverData,
+            "recv(receivesock)");
 
-         case FD_ACCEPT:
-            bReceiveConnected = true;
+         return 0;
 
-            // disabled for UDP
+      case FD_ACCEPT:
+         bReceiveConnected = true;
+
+         // disabled for UDP
 
 #ifndef USE_UDP
-            acc_sin_len = sizeof(acc_sin);
+         acc_sin_len = sizeof(acc_sin);
 
-             if ((receiveSock = accept(receiveSock, (struct sockaddr *) &acc_sin, (int *) &acc_sin_len)) == INVALID_SOCKET)
-                {
-                MessageBox(WSAGetLastErrorString(0), "accept(receivesock)");
-                // err_logo(STOP_ERROR,NIL);
-                }
-#endif
-             break;
-
-         case FD_CLOSE:
-
-            // the remote endpoint has finished sending
-            // send any data in the carry-over buffer to Logo
-            if (g_ReceiveCarryOverData.m_BytesOfData != 0)
-               {
-               callthing *callevent = callthing::CreateNetworkReceiveEvent(
-                  network_receive_receive,
-                  g_ReceiveCarryOverData.m_Buffer);
-
-               calllists.insert(callevent);
-
-               PostMessage(WM_CHECKQUEUE, 0, 0);
-               }
-             
-            g_SendCarryOverData.ReleaseBuffer();
-            bReceiveConnected = false;
-            break;
-
-         case FD_WRITE:
-
-            // allow another frame to go out.
-            bReceiveBusy = false;
-            break;
-
-         default:
-            MessageBox("Unexpected Message", "Status");
+         if ((receiveSock = accept(receiveSock, (struct sockaddr *) &acc_sin, (int *) &acc_sin_len)) == INVALID_SOCKET)
+            {
+            MessageBox(WSAGetLastErrorString(0), "accept(receivesock)");
             // err_logo(STOP_ERROR,NIL);
-            break;
+            }
+#endif
+         break;
 
-         }
+      case FD_CLOSE:
 
-      // all other events just queue the event
-      callthing * callevent = callthing::CreateNoYieldFunctionEvent(network_receive_send);
+         // the remote endpoint has finished sending
+         // send any data in the carry-over buffer to Logo
+         if (g_ReceiveCarryOverData.m_BytesOfData != 0)
+            {
+            callthing *callevent = callthing::CreateNetworkReceiveEvent(
+               network_receive_receive,
+               g_ReceiveCarryOverData.m_Buffer);
 
-      calllists.insert(callevent);
-      PostMessage(WM_CHECKQUEUE, 0, 0);
+            calllists.insert(callevent);
+
+            PostMessage(WM_CHECKQUEUE, 0, 0);
+            }
+             
+         g_SendCarryOverData.ReleaseBuffer();
+         bReceiveConnected = false;
+         break;
+
+      case FD_WRITE:
+
+         // allow another frame to go out.
+         bReceiveBusy = false;
+         break;
+
+      default:
+         MessageBox("Unexpected Message", "Status");
+         // err_logo(STOP_ERROR,NIL);
+         break;
+
       }
 
-   return 0L;
+   // all other events just queue the event
+   callthing * callevent = callthing::CreateNoYieldFunctionEvent(network_receive_send);
+
+   calllists.insert(callevent);
+   PostMessage(WM_CHECKQUEUE, 0, 0);
+   return 0;
    }
 
 LRESULT TMainFrame::OnNetworkListenReceiveFinish(WPARAM /* wParam */, LPARAM lParam)
@@ -2790,7 +2785,13 @@ LRESULT TMainFrame::OnNetworkListenReceiveFinish(WPARAM /* wParam */, LPARAM lPa
          WSAGetLastErrorString(WSAGETASYNCERROR(lParam)),
          "WSAAsyncGetHostByNameCallBack()");
       // err_logo(STOP_ERROR,NIL);
-      return 0L;
+      return 0;
+      }
+
+   if (!network_receive_on)
+      {
+      // TODO: print an error about the network being shutdown
+      return 0;
       }
 
    // always start clean
@@ -2800,7 +2801,7 @@ LRESULT TMainFrame::OnNetworkListenReceiveFinish(WPARAM /* wParam */, LPARAM lPa
    // what else is there
    receive_local_sin.sin_family = AF_INET;
 
-   memcpy(&(receive_local_sin.sin_addr), pher->h_addr, pher->h_length);
+   memcpy(&receive_local_sin.sin_addr, pher->h_addr, pher->h_length);
 
    // set ports
    receive_local_sin.sin_port = htons(receivePort); // Convert to network ordering
@@ -2810,7 +2811,7 @@ LRESULT TMainFrame::OnNetworkListenReceiveFinish(WPARAM /* wParam */, LPARAM lPa
       {
       MessageBox(WSAGetLastErrorString(0), "bind(receivesock)");
       // err_logo(STOP_ERROR,NIL);
-      return 0L;
+      return 0;
       }
 
    // listen for connect
@@ -2820,7 +2821,7 @@ LRESULT TMainFrame::OnNetworkListenReceiveFinish(WPARAM /* wParam */, LPARAM lPa
       {
       MessageBox(WSAGetLastErrorString(0), "listen(receivesock)");
       // err_logo(STOP_ERROR,NIL);
-      return 0L;
+      return 0;
       }
 #endif
 
@@ -2842,15 +2843,12 @@ LRESULT TMainFrame::OnNetworkListenReceiveFinish(WPARAM /* wParam */, LPARAM lPa
 #endif
 
    // queue this event
-   if (network_receive_on)
-      {
-      callthing * callevent = callthing::CreateNoYieldFunctionEvent(network_receive_send);
+   callthing * callevent = callthing::CreateNoYieldFunctionEvent(network_receive_send);
 
-      calllists.insert(callevent);
-      PostMessage(WM_CHECKQUEUE, 0, 0);
-      }
+   calllists.insert(callevent);
+   PostMessage(WM_CHECKQUEUE, 0, 0);
 
-   return 0L;
+   return 0;
    }
 
 LRESULT TMainFrame::MMMCINotify(WPARAM, LPARAM)
