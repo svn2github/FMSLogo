@@ -173,8 +173,8 @@ TMyCommandWindow::EditBoxWantsKeyEvent(
       return true;
       }
 
-   // we want the backspace key
-   if (KeyEventWParam == VK_BACK)
+   // we want the backspace and delete keys
+   if (KeyEventWParam == VK_BACK || KeyEventWParam == VK_DELETE)
       {
       return true;
       }
