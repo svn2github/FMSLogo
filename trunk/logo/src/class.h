@@ -28,13 +28,12 @@ const int DEFAULT_SPLITTER_WIDTH   = 5;
 // what is this?  Some kind of border?
 const int LL = 1;
 
-typedef struct
+struct Color
    {
    int   red;
    int   green;
    int   blue;
-   }
-Color;
+   };
 
 enum KEYBOARDCAPTURE
    {
@@ -52,27 +51,25 @@ enum INPUTMODE
    };
 
 
-typedef struct
+struct LINEX
    {
    POINT from;
    POINT to;
    bool  bValid;
-   }
-LINEX;
+   };
 
-typedef struct
+struct CUTMAP
    {
    HBITMAP CutMemoryBitMap;  // Used to store cut and paste
    int CutHeight;            // current cut height
    int CutWidth;             // current cut width
    long CutFlag;             // flag to signal something in cut buffer
-   }
-CUTMAP;
+   };
 
 // Class for buffering (carrying over) network data from 
 // one "receive" call to another when 
 class CCarryOverBuffer 
-{
+   {
 public:
    CCarryOverBuffer();
 
@@ -84,7 +81,7 @@ public:
    char * m_Buffer;
    int    m_BufferSize;
    int    m_BytesOfData;
-};
+   };
 
 class TMyFileWindow : public TEditWindow
    {
