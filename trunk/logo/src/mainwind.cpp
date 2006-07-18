@@ -2471,75 +2471,6 @@ LRESULT TMainFrame::WMCheckQueue(WPARAM, LPARAM)
    }
 
 
-static
-void
-SocketAsyncReceive(
-   TWindow    *       Window,
-   SOCKET             Socket,
-   bool               IsSendSocket,
-   CCarryOverBuffer & CarryOverData,
-   const char *       ErrorMessage
-   )
-   {
-   char Buffer[MAX_PACKET_SIZE];
-   memset(Buffer, 0, MAX_PACKET_SIZE);
-
-   // read the data from the buffer
-   int status = recv(Socket, Buffer, sizeof(Buffer) - 1, 0);
-   if (status == SOCKET_ERROR)
-      {
-      // if this would block, we just wait until we get called again
-      if (WSAGetLastError() != WSAEWOULDBLOCK) 
-         {
-         Window->MessageBox(WSAGetLastErrorString(0), ErrorMessage);
-         // err_logo(STOP_ERROR,NIL);
-         }
-      }
-   else
-      {
-      // we received some data.
-
-      // We have some data left from the last time we were called.
-      // Append this buffer to the end of the network receive buffer. 
-
-      // TODO: Don't Append the data to the carry-over buffer if there is none.
-      //       We should be able to use Buffer, instead.
-      CarryOverData.Append(Buffer, status);
-
-      // now queue up a separate message for each packet
-      int begin = 0;
-      int end   = strlen(CarryOverData.m_Buffer);
-
-      while (end < CarryOverData.m_BytesOfData)
-         {
-         callthing *callevent;
-
-         if (IsSendSocket)
-            {
-            callevent = callthing::CreateNetworkSendEvent(
-               g_ClientConnection.m_OnReceiveReady,
-               CarryOverData.m_Buffer + begin);
-            }
-         else
-            {
-            callevent = callthing::CreateNetworkReceiveEvent(
-               g_ServerConnection.m_OnReceiveReady,
-               CarryOverData.m_Buffer + begin);
-            }
-
-         calllists.insert(callevent);
-                  
-         Window->PostMessage(WM_CHECKQUEUE, 0, 0);
-
-         begin = end + 1;
-         end   = begin + strlen(CarryOverData.m_Buffer + begin);
-         }
-
-      // shift the buffer such that it begins at "begin"
-      CarryOverData.ShiftLeft(begin);
-      }
-   }
-
 LRESULT TMainFrame::OnNetworkConnectSendAck(WPARAM /* wParam */, LPARAM lParam)
    {
    TMessage msg = __GetTMessage();
@@ -2564,11 +2495,9 @@ LRESULT TMainFrame::OnNetworkConnectSendAck(WPARAM /* wParam */, LPARAM lParam)
    switch (WSAGETSELECTEVENT(lParam))
       {
       case FD_READ:
-         SocketAsyncReceive(
+         g_ClientConnection.AsyncReceive(
             this,
-            g_ClientConnection.m_Socket,
             true,
-            g_ClientConnection.m_CarryOverData,
             "recv(sendsock)");
 
          return 0;
@@ -2725,11 +2654,9 @@ LRESULT TMainFrame::OnNetworkListenReceiveAck(WPARAM /* wParam */, LPARAM lParam
    switch (WSAGETSELECTEVENT(lParam))
       {
       case FD_READ:
-         SocketAsyncReceive(
+         g_ServerConnection.AsyncReceive(
             this,
-            g_ServerConnection.m_Socket,
             false,
-            g_ServerConnection.m_CarryOverData,
             "recv(receivesock)");
 
          return 0;

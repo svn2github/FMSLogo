@@ -227,6 +227,70 @@ CNetworkConnection::Enable(
       }
    }
 
+void
+CNetworkConnection::AsyncReceive(
+   TWindow    *         Window,
+   bool                 IsClientConnection,  // TODO: replace with inheritence
+   const char *         ErrorMessage
+   )
+   {
+   char buffer[MAX_PACKET_SIZE];
+   memset(buffer, 0, MAX_PACKET_SIZE);
+
+   // read the data from the buffer
+   int status = recv(m_Socket, buffer, sizeof(buffer) - 1, 0);
+   if (status == SOCKET_ERROR)
+      {
+      // if this would block, we just wait until we get called again
+      if (WSAGetLastError() != WSAEWOULDBLOCK) 
+         {
+         Window->MessageBox(WSAGetLastErrorString(0), ErrorMessage);
+         // err_logo(STOP_ERROR,NIL);
+         }
+      }
+   else
+      {
+      // we received some data.
+
+      // We have some data left from the last time we were called.
+      // Append this buffer to the end of the network receive buffer. 
+
+      // TODO: Don't Append the data to the carry-over buffer if there is none.
+      //       We should be able to use buffer, instead.
+      m_CarryOverData.Append(buffer, status);
+
+      // now queue up a separate message for each packet
+      int begin = 0;
+      int end   = strlen(m_CarryOverData.m_Buffer);
+
+      while (end < m_CarryOverData.m_BytesOfData)
+         {
+         callthing *callevent;
+
+         if (IsClientConnection)
+            {
+            callevent = callthing::CreateNetworkSendEvent(
+               m_OnReceiveReady,
+               m_CarryOverData.m_Buffer + begin);
+            }
+         else
+            {
+            callevent = callthing::CreateNetworkReceiveEvent(
+               m_OnReceiveReady,
+               m_CarryOverData.m_Buffer + begin);
+            }
+
+         calllists.insert(callevent);
+         Window->PostMessage(WM_CHECKQUEUE, 0, 0);
+
+         begin = end + 1;
+         end   = begin + strlen(m_CarryOverData.m_Buffer + begin);
+         }
+
+      // shift the buffer such that it begins at "begin"
+      m_CarryOverData.ShiftLeft(begin);
+      }
+   }
 
 // converts winsock errorcode to string
 LPCSTR WSAGetLastErrorString(int error_arg)

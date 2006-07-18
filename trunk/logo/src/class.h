@@ -104,6 +104,13 @@ public:
    void SetLastPacketReceived(char * LastPacket);
    NODE * GetLastPacketReceived() const;
 
+   void
+   AsyncReceive(
+      TWindow    *     Window,
+      bool             IsClientConnection,
+      const char *     ErrorMessage
+      );
+
    SOCKET       m_Socket;     // socket for the connection
    unsigned int m_Port;       // server's listen port
 
