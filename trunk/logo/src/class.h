@@ -88,6 +88,9 @@ class CNetworkConnection
 public:
    CNetworkConnection();
 
+   bool IsEnabled() const;
+   void Disable();
+
    void SetLastPacketReceived(char * LastPacket);
 
    SOCKET       m_Socket;     // socket for the connection

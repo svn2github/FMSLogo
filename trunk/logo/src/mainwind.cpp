@@ -2553,7 +2553,7 @@ LRESULT TMainFrame::OnNetworkConnectSendAck(WPARAM /* wParam */, LPARAM lParam)
       return 0;
       }
 
-   if (!g_ClientConnection.m_IsEnabled)
+   if (!g_ClientConnection.IsEnabled())
       {
       // The network client side has been shut down.
       // This message must have been delayed.
@@ -2625,7 +2625,7 @@ LRESULT TMainFrame::OnNetworkConnectSendFinish(WPARAM /* wParam */, LPARAM lPara
       return 0;
       }
 
-   if (!g_ClientConnection.m_IsEnabled)
+   if (!g_ClientConnection.IsEnabled())
       {
       // The client-side is not initialized.
       // This must be a delayed event coming in after shutdown.
@@ -2702,7 +2702,7 @@ LRESULT TMainFrame::OnNetworkListenReceiveAck(WPARAM /* wParam */, LPARAM lParam
       return 0;
       }
 
-   if (!g_ServerConnection.m_IsEnabled)
+   if (!g_ServerConnection.IsEnabled())
       {
       // The server-side is not initialized.
       // This must be a delayed event coming in after shutdown.
@@ -2792,7 +2792,7 @@ LRESULT TMainFrame::OnNetworkListenReceiveFinish(WPARAM /* wParam */, LPARAM lPa
       return 0;
       }
 
-   if (!g_ServerConnection.m_IsEnabled)
+   if (!g_ServerConnection.IsEnabled())
       {
       // TODO: print an error about the network being shutdown
       return 0;

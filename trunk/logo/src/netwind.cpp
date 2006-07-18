@@ -113,6 +113,28 @@ CNetworkConnection::SetLastPacketReceived(
    m_ReceiveValue = LastPacket;
    }
 
+bool
+CNetworkConnection::IsEnabled() const
+   {
+   return m_IsEnabled;
+   }
+
+void
+CNetworkConnection::Disable()
+   {
+   if (IsEnabled())
+      {
+      m_IsEnabled    = false;
+      m_IsConnected  = false;
+      m_IsBusy       = false;
+
+      safe_free(m_ReceiveValue);
+
+      closesocket(m_Socket);
+      m_Socket = INVALID_SOCKET;
+      }
+   }
+
 // converts winsock errorcode to string
 LPCSTR WSAGetLastErrorString(int error_arg)
    {
@@ -322,30 +344,15 @@ NODE *lnetshutdown(NODE *)
    {
 
    // cleanup receive
-   if (g_ServerConnection.m_IsEnabled)
-      {
-      g_ServerConnection.m_IsEnabled = false;
-      g_ServerConnection.m_IsConnected  = false;
-      g_ServerConnection.m_IsBusy       = false;
+   g_ServerConnection.Disable();
 
-      closesocket(g_ServerConnection.m_Socket);
-      g_ServerConnection.m_Socket = INVALID_SOCKET;
-      }
    safe_free(g_ServerConnection.m_OnReceiveReady);
    safe_free(g_ServerConnection.m_OnSendReady);
    safe_free(g_ServerConnection.m_ReceiveValue);
    g_ServerConnection.m_CarryOverData.ReleaseBuffer();
 
    // cleanup send
-   if (g_ClientConnection.m_IsEnabled)
-      {
-      g_ClientConnection.m_IsEnabled = false;
-      g_ClientConnection.m_IsConnected  = false;
-      g_ClientConnection.m_IsBusy       = false;
-
-      closesocket(g_ClientConnection.m_Socket);
-      g_ClientConnection.m_Socket = INVALID_SOCKET;
-      }
+   g_ClientConnection.Disable();
    safe_free(g_ClientConnection.m_OnReceiveReady);
    safe_free(g_ClientConnection.m_OnSendReady);
    safe_free(g_ClientConnection.m_ReceiveValue);
@@ -381,7 +388,7 @@ NODE *lnetreceiveon(NODE *args)
       return Unbound;
       }
 
-   if (g_ServerConnection.m_IsEnabled)
+   if (g_ServerConnection.IsEnabled())
       {
       ShowMessageAndStop("Network Receive Error", "Already On");
       return Falsex;
@@ -476,16 +483,9 @@ NODE *lnetreceiveon(NODE *args)
 NODE *lnetreceiveoff(NODE *)
    {
    // tell handler not to do anything with messages for network receive
-   if (g_ServerConnection.m_IsEnabled)
+   if (g_ServerConnection.IsEnabled())
       {
-      g_ServerConnection.m_IsEnabled = false;
-      g_ServerConnection.m_IsConnected  = false;
-      g_ServerConnection.m_IsBusy       = false;
-
-      safe_free(g_ServerConnection.m_ReceiveValue);
-
-      closesocket(g_ServerConnection.m_Socket);
-      g_ServerConnection.m_Socket = INVALID_SOCKET;
+      g_ServerConnection.Disable();
       }
    else
       {
@@ -498,7 +498,7 @@ NODE *lnetreceiveoff(NODE *)
 NODE *lnetreceivereceivevalue(NODE *)
    {
    // return current network value
-   if (g_ServerConnection.m_IsEnabled)
+   if (g_ServerConnection.IsEnabled())
       {
       if (g_ServerConnection.m_ReceiveValue == NULL)
          {
@@ -518,7 +518,7 @@ NODE *lnetreceivereceivevalue(NODE *)
 NODE *lnetsendreceivevalue(NODE *)
    {
    // return current network value
-   if (g_ClientConnection.m_IsEnabled)
+   if (g_ClientConnection.IsEnabled())
       {
       if (g_ClientConnection.m_ReceiveValue == NULL)
          {
@@ -544,7 +544,7 @@ NODE *lnetsendon(NODE *args)
       return Unbound;
       }
 
-   if (g_ClientConnection.m_IsEnabled)
+   if (g_ClientConnection.IsEnabled())
       {
       ShowMessageAndStop("Network Send Error", "Already On");
       return Falsex;
@@ -640,16 +640,9 @@ NODE *lnetsendon(NODE *args)
 NODE *lnetsendoff(NODE *)
    {
    // tell handler not to do anything with messages for network send
-   if (g_ClientConnection.m_IsEnabled)
+   if (g_ClientConnection.IsEnabled())
       {
-      g_ClientConnection.m_IsEnabled = false;
-      g_ClientConnection.m_IsConnected  = false;
-      g_ClientConnection.m_IsBusy       = false;
-
-      safe_free(g_ClientConnection.m_ReceiveValue);
-
-      closesocket(g_ClientConnection.m_Socket);
-      g_ClientConnection.m_Socket = INVALID_SOCKET;
+      g_ClientConnection.Disable();
       }
    else
       {
