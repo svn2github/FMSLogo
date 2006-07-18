@@ -2612,6 +2612,25 @@ LRESULT TMainFrame::OnNetworkConnectSendAck(WPARAM /* wParam */, LPARAM lParam)
    return 0;
    }
 
+static
+void
+InitializeSocketAddress(
+   SOCKADDR_IN & SocketAddress,
+   PHOSTENT      HostEntry,
+   unsigned int  Port
+   )
+   {
+   // always start clean
+   memset(&SocketAddress, 0, sizeof(SOCKADDR_IN));
+
+   // what else is there
+   SocketAddress.sin_family = AF_INET;
+
+   memcpy(&SocketAddress.sin_addr, HostEntry->h_addr, HostEntry->h_length);
+
+   SocketAddress.sin_port = htons(Port); // Convert to network ordering
+   }
+
 LRESULT TMainFrame::OnNetworkConnectSendFinish(WPARAM /* wParam */, LPARAM lParam)
    {
    TMessage msg = __GetTMessage();
@@ -2635,20 +2654,12 @@ LRESULT TMainFrame::OnNetworkConnectSendFinish(WPARAM /* wParam */, LPARAM lPara
       return 0;
       }
 
-   // always start clean
    SOCKADDR_IN send_dest_sin;
-   memset(&send_dest_sin, 0, sizeof(SOCKADDR_IN));
 
-   // what else is there
-   send_dest_sin.sin_family = AF_INET;
-
-   memcpy(
-      &send_dest_sin.sin_addr, 
-      g_ClientConnection.m_HostEntry->h_addr, 
-      g_ClientConnection.m_HostEntry->h_length);
-
-   // set ports
-   send_dest_sin.sin_port = htons(g_ClientConnection.m_Port); // Convert to network ordering
+   InitializeSocketAddress(
+      send_dest_sin,
+      g_ClientConnection.m_HostEntry,
+      g_ClientConnection.m_Port);
 
    // watch for connect
    if (WSAAsyncSelect(
@@ -2779,6 +2790,7 @@ LRESULT TMainFrame::OnNetworkListenReceiveAck(WPARAM /* wParam */, LPARAM lParam
    return 0;
    }
 
+
 LRESULT TMainFrame::OnNetworkListenReceiveFinish(WPARAM /* wParam */, LPARAM lParam)
    {
    TMessage msg = __GetTMessage();
@@ -2798,20 +2810,12 @@ LRESULT TMainFrame::OnNetworkListenReceiveFinish(WPARAM /* wParam */, LPARAM lPa
       return 0;
       }
 
-   // always start clean
-   SOCKADDR_IN receive_local_sin;  // Local socket - internet style
-   memset(&receive_local_sin, 0, sizeof(SOCKADDR_IN));
+   SOCKADDR_IN receive_local_sin;
 
-   // what else is there
-   receive_local_sin.sin_family = AF_INET;
-
-   memcpy(
-      &receive_local_sin.sin_addr, 
-      g_ServerConnection.m_HostEntry->h_addr, 
-      g_ServerConnection.m_HostEntry->h_length);
-
-   // set ports
-   receive_local_sin.sin_port = htons(g_ServerConnection.m_Port); // Convert to network ordering
+   InitializeSocketAddress(
+      receive_local_sin,
+      g_ServerConnection.m_HostEntry,
+      g_ServerConnection.m_Port);
 
    // Associate an address with a socket. (bind)
    if (bind(g_ServerConnection.m_Socket, (struct sockaddr *) &receive_local_sin, sizeof(receive_local_sin)) == SOCKET_ERROR)
