@@ -2659,7 +2659,11 @@ LRESULT TMainFrame::OnNetworkListenReceiveAck(WPARAM /* wParam */, LPARAM lParam
 #ifndef USE_UDP
          acc_sin_len = sizeof(acc_sin);
 
-         if ((g_ServerConnection.m_Socket = accept(g_ServerConnection.m_Socket, (struct sockaddr *) &acc_sin, (int *) &acc_sin_len)) == INVALID_SOCKET)
+         g_ServerConnection.m_Socket = accept(
+            g_ServerConnection.m_Socket, 
+            (struct sockaddr *) &acc_sin, 
+            &acc_sin_len);
+         if (g_ServerConnection.m_Socket == INVALID_SOCKET)
             {
             MessageBox(WSAGetLastErrorString(0), "accept(receivesock)");
             // err_logo(STOP_ERROR,NIL);
@@ -2735,7 +2739,11 @@ LRESULT TMainFrame::OnNetworkListenReceiveFinish(WPARAM /* wParam */, LPARAM lPa
       g_ServerConnection.m_Port);
 
    // Associate an address with a socket. (bind)
-   if (bind(g_ServerConnection.m_Socket, (struct sockaddr *) &receive_local_sin, sizeof(receive_local_sin)) == SOCKET_ERROR)
+   int rval = bind(
+      g_ServerConnection.m_Socket, 
+      (struct sockaddr *) &receive_local_sin, 
+      sizeof(receive_local_sin));
+   if (rval == SOCKET_ERROR)
       {
       MessageBox(WSAGetLastErrorString(0), "bind(receivesock)");
       // err_logo(STOP_ERROR,NIL);
@@ -2754,11 +2762,12 @@ LRESULT TMainFrame::OnNetworkListenReceiveFinish(WPARAM /* wParam */, LPARAM lPa
 #endif
 
    // watch for when connect happens
-   if (WSAAsyncSelect(
-          g_ServerConnection.m_Socket,
-          MainWindowx->HWindow,
-          WM_NETWORK_LISTENRECEIVEACK,
-          FD_ACCEPT | FD_READ | FD_WRITE | FD_CLOSE) == SOCKET_ERROR)
+   rval = WSAAsyncSelect(
+      g_ServerConnection.m_Socket,
+      MainWindowx->HWindow,
+      WM_NETWORK_LISTENRECEIVEACK,
+      FD_ACCEPT | FD_READ | FD_WRITE | FD_CLOSE);
+   if (rval == SOCKET_ERROR)
       {
       MessageBox(WSAGetLastErrorString(0), "WSAAsyncSelect(receivesock) FD_ACCEPT");
       // err_logo(STOP_ERROR,NIL);
