@@ -102,6 +102,7 @@ public:
    void Disable();
 
    void SetLastPacketReceived(char * LastPacket);
+   NODE * GetLastPacketReceived() const;
 
    SOCKET       m_Socket;     // socket for the connection
    unsigned int m_Port;       // server's listen port
@@ -116,8 +117,10 @@ public:
 
    char * m_OnReceiveReady;  // Buffer for receive callback
    char * m_OnSendReady;     // Buffer for send    callback
+private:
    char * m_ReceiveValue;    // pointer to the last packet received
 
+public:
    CCarryOverBuffer m_CarryOverData;  // a buffer for carrying over partial packets 
                                       // from one recv() call to the next.
    };

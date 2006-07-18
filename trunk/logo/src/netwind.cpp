@@ -113,6 +113,21 @@ CNetworkConnection::SetLastPacketReceived(
    m_ReceiveValue = LastPacket;
    }
 
+NODE*
+CNetworkConnection::GetLastPacketReceived() const
+   {
+   if (m_ReceiveValue == NULL)
+      {
+      return NIL;
+      }
+   else
+      {
+      NODE* targ = make_strnode(m_ReceiveValue);
+      NODE* val = parser(targ, false);
+      return val;
+      }
+   }
+
 bool
 CNetworkConnection::IsEnabled() const
    {
@@ -426,14 +441,14 @@ NODE *lnetshutdown(NODE *)
 
    safe_free(g_ServerConnection.m_OnReceiveReady);
    safe_free(g_ServerConnection.m_OnSendReady);
-   safe_free(g_ServerConnection.m_ReceiveValue);
+   g_ServerConnection.SetLastPacketReceived(NULL);
    g_ServerConnection.m_CarryOverData.ReleaseBuffer();
 
    // cleanup send
    g_ClientConnection.Disable();
    safe_free(g_ClientConnection.m_OnReceiveReady);
    safe_free(g_ClientConnection.m_OnSendReady);
-   safe_free(g_ClientConnection.m_ReceiveValue);
+   g_ClientConnection.SetLastPacketReceived(NULL);
    g_ClientConnection.m_CarryOverData.ReleaseBuffer();
 
    // cleanup library
@@ -523,16 +538,7 @@ NODE *lnetreceivereceivevalue(NODE *)
    // return current network value
    if (g_ServerConnection.IsEnabled())
       {
-      if (g_ServerConnection.m_ReceiveValue == NULL)
-         {
-         return NIL;
-         }
-      else
-         {
-         NODE* targ = make_strnode(g_ServerConnection.m_ReceiveValue);
-         NODE* val = parser(targ, false);
-         return val;
-         }
+      return g_ServerConnection.GetLastPacketReceived();
       }
 
    return Unbound;
@@ -543,16 +549,7 @@ NODE *lnetsendreceivevalue(NODE *)
    // return current network value
    if (g_ClientConnection.IsEnabled())
       {
-      if (g_ClientConnection.m_ReceiveValue == NULL)
-         {
-         return NIL;
-         }
-      else
-         {
-         NODE* targ = make_strnode(g_ClientConnection.m_ReceiveValue);
-         NODE* val = parser(targ, false);
-         return val;
-         }
+      return g_ClientConnection.GetLastPacketReceived();
       }
 
    return Unbound;
