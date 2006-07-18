@@ -83,6 +83,30 @@ public:
    int    m_BytesOfData;
    };
 
+class CNetworkConnection 
+   {
+public:
+   CNetworkConnection();
+
+   void SetLastPacketReceived(char * LastPacket);
+
+   SOCKET       m_Socket;     // socket for the connection
+   unsigned int m_Port;       // server's listen port
+
+   bool         m_IsConnected;  // socket is connected
+   bool         m_IsBusy;       // socket is too busy to send
+   bool         m_IsEnabled;    // if message processing is enabled for this socket
+
+   PHOSTENT     m_HostEntry;    // Pointer to Host Entry
+
+   char * m_OnReceiveReady;  // Buffer for receive callback
+   char * m_OnSendReady;     // Buffer for send    callback
+   char * m_ReceiveValue;    // pointer to the last packet received
+
+   CCarryOverBuffer m_CarryOverData;  // a buffer for carrying over partial packets 
+                                      // from one recv() call to the next.
+   };
+
 class TMyFileWindow : public TEditWindow
    {
  public:

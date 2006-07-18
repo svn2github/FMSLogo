@@ -60,25 +60,17 @@ extern char edit_editexit[];
 extern char mci_callback[];
 extern char *timer_callback[];
 
-extern SOCKET sendSock;
+// netwind.cpp
+extern CNetworkConnection g_ClientConnection;
 extern SOCKET receiveSock;
-extern unsigned int sendPort;
 extern unsigned int receivePort;
-extern bool bSendConnected;
-extern bool bSendBusy;
 extern bool bReceiveConnected;
 extern bool bReceiveBusy;
-extern PHOSTENT phes;
 extern PHOSTENT pher;
 extern char *network_receive_receive;
 extern char *network_receive_send;
-extern char *network_send_receive;
-extern char *network_send_send;
 extern char *network_receive_value;
-extern char *network_send_value;
-extern bool network_send_on;
 extern bool network_receive_on;
-extern CCarryOverBuffer g_SendCarryOverData;
 extern CCarryOverBuffer g_ReceiveCarryOverData;
 
 /* logodata.c */

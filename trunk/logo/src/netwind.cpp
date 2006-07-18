@@ -21,32 +21,23 @@
 
 #include "allwind.h"
 
-SOCKET       sendSock    = INVALID_SOCKET;   // Current Handle Send Socket
 SOCKET       receiveSock = INVALID_SOCKET;   // Current Handle receive Socket
-unsigned int sendPort;                       // Current requested send Port
 unsigned int receivePort;                    // Current requested receive Port
 
-bool bSendConnected    = false;        // Flag that send socket is connected
-bool bSendBusy         = false;        // Flag that send socket is busy
 bool bReceiveConnected = false;        // Flag that receive socket is connected
 bool bReceiveBusy      = false;        // Flag that receive socket is busy
 
-PHOSTENT phes = NULL;                  // Pointer to Host Entry for send
 PHOSTENT pher = NULL;                  // Pointer to Host Entry for receive
 
 char *network_receive_receive = NULL;  // Buffer for receive callback
 char *network_receive_send = NULL;     // Buffer for send callback
 char *network_receive_value = NULL;    // Buffer for current received data
 
-char *network_send_receive = NULL;     // Buffer for receive callback
-char *network_send_send = NULL;        // Buffer for send callback
-char *network_send_value = NULL;       // Buffer for current received data
+bool network_receive_on = false;       // flag for receive enabled (enabled message processing)
 
-bool network_send_on    = false;    // flag for send enabled (enables message processing)
-bool network_receive_on = false;    // flag for receive enabled (enabled message processing)
-
-CCarryOverBuffer g_SendCarryOverData;
 CCarryOverBuffer g_ReceiveCarryOverData;
+
+CNetworkConnection g_ClientConnection;
 
 static int network_dns_sync = 0;
 
@@ -114,6 +105,28 @@ CCarryOverBuffer::ShiftLeft(
    m_BytesOfData -= ShiftAmount;
    }
 
+
+CNetworkConnection::CNetworkConnection() :
+   m_Socket(INVALID_SOCKET),
+   m_Port(0),
+   m_IsConnected(false),
+   m_IsBusy(false),
+   m_IsEnabled(false),
+   m_HostEntry(NULL),
+   m_OnReceiveReady(NULL),
+   m_OnSendReady(NULL),
+   m_ReceiveValue(NULL)
+   {
+   }
+
+void
+CNetworkConnection::SetLastPacketReceived(
+   char * LastPacket
+   )
+   {
+   free(m_ReceiveValue);
+   m_ReceiveValue = LastPacket;
+   }
 
 // converts winsock errorcode to string
 LPCSTR WSAGetLastErrorString(int error_arg)
@@ -266,8 +279,8 @@ LPCSTR WSAGetLastErrorString(int error_arg)
       case WSAEHOSTDOWN:
          return "Host is down";
          
-       case WSAEHOSTUNREACH:
-          return "Host is unreachable";
+      case WSAEHOSTUNREACH:
+         return "Host is unreachable";
           
       case WSAEPROTOTYPE:
          return "Protocol is wrong type for socket";
@@ -339,19 +352,19 @@ NODE *lnetshutdown(NODE *)
    g_ReceiveCarryOverData.ReleaseBuffer();
 
    // cleanup send
-   if (network_send_on)
+   if (g_ClientConnection.m_IsEnabled)
       {
-      network_send_on = false;
-      bSendConnected  = false;
-      bSendBusy       = false;
+      g_ClientConnection.m_IsEnabled = false;
+      g_ClientConnection.m_IsConnected  = false;
+      g_ClientConnection.m_IsBusy       = false;
 
-      closesocket(sendSock);
-      sendSock = INVALID_SOCKET;
+      closesocket(g_ClientConnection.m_Socket);
+      g_ClientConnection.m_Socket = INVALID_SOCKET;
       }
-   safe_free(network_send_receive);
-   safe_free(network_send_send);
-   safe_free(network_send_value);
-   g_SendCarryOverData.ReleaseBuffer();
+   safe_free(g_ClientConnection.m_OnReceiveReady);
+   safe_free(g_ClientConnection.m_OnSendReady);
+   safe_free(g_ClientConnection.m_ReceiveValue);
+   g_ClientConnection.m_CarryOverData.ReleaseBuffer();
 
    // cleanup library
    if (network_is_started) 
@@ -362,10 +375,10 @@ NODE *lnetshutdown(NODE *)
 
    if (network_dns_sync != 1)
       {
-      free(phes);
+      free(g_ClientConnection.m_HostEntry);
       free(pher);
       }
-   phes = NULL;
+   g_ClientConnection.m_HostEntry = NULL;
    pher = NULL;
 
    network_dns_sync = 0;
@@ -520,15 +533,15 @@ NODE *lnetreceivereceivevalue(NODE *)
 NODE *lnetsendreceivevalue(NODE *)
    {
    // return current network value
-   if (network_send_on)
+   if (g_ClientConnection.m_IsEnabled)
       {
-      if (network_send_value == NULL)
+      if (g_ClientConnection.m_ReceiveValue == NULL)
          {
          return NIL;
          }
       else
          {
-         NODE* targ = make_strnode(network_send_value);
+         NODE* targ = make_strnode(g_ClientConnection.m_ReceiveValue);
          NODE* val = parser(targ, false);
          return val;
          }
@@ -546,7 +559,7 @@ NODE *lnetsendon(NODE *args)
       return Unbound;
       }
 
-   if (network_send_on)
+   if (g_ClientConnection.m_IsEnabled)
       {
       ShowMessageAndStop("Network Send Error", "Already On");
       return Falsex;
@@ -554,21 +567,21 @@ NODE *lnetsendon(NODE *args)
 
    // allocate the callback buffer
 
-   if (network_send_send == NULL)
+   if (g_ClientConnection.m_OnSendReady == NULL)
       {
-      network_send_send = (char *) malloc(MAX_BUFFER_SIZE);
+      g_ClientConnection.m_OnSendReady = (char *) malloc(MAX_BUFFER_SIZE);
       }
 
-   if (network_send_receive == NULL)
+   if (g_ClientConnection.m_OnReceiveReady == NULL)
       {
-      network_send_receive = (char *) malloc(MAX_BUFFER_SIZE);
+      g_ClientConnection.m_OnReceiveReady = (char *) malloc(MAX_BUFFER_SIZE);
       }
 
    // get args (remotemachinename, socket, callback)
    char networkaddress[MAX_BUFFER_SIZE];
    cnv_strnode_string(networkaddress, args);
 
-   int isocket = getint(pos_int_arg(cdr(args)));
+   int remote_port = getint(pos_int_arg(cdr(args)));
 
    char networksend[MAX_BUFFER_SIZE];
    cnv_strnode_string(networksend, cdr(cdr(args)));
@@ -579,19 +592,19 @@ NODE *lnetsendon(NODE *args)
    if (NOT_THROWING)
       {
       // copy the callback
-      strcpy(network_send_send, networksend);
-      strcpy(network_send_receive, networkreceive);
+      strcpy(g_ClientConnection.m_OnSendReady, networksend);
+      strcpy(g_ClientConnection.m_OnReceiveReady, networkreceive);
 
-      // save the socket globally
-      sendPort = isocket;
+      // save the port globally
+      g_ClientConnection.m_Port = remote_port;
 
       // get sockets
 #ifdef USE_UDP
-      sendSock = socket(AF_INET, SOCK_DGRAM, 0);
+      g_ClientConnection.m_Socket = socket(AF_INET, SOCK_DGRAM, 0);
 #else
-      sendSock = socket(AF_INET, SOCK_STREAM, 0);
+      g_ClientConnection.m_Socket = socket(AF_INET, SOCK_STREAM, 0);
 #endif
-      if (sendSock == INVALID_SOCKET)
+      if (g_ClientConnection.m_Socket == INVALID_SOCKET)
          {
          ShowMessageAndStop("socket(sendsocket)", WSAGetLastErrorString(0));
          return Falsex;
@@ -599,21 +612,21 @@ NODE *lnetsendon(NODE *args)
 
       if (network_dns_sync == 1)
          {
-         phes = gethostbyname(networkaddress);
-         if (phes == NULL)
+         g_ClientConnection.m_HostEntry = gethostbyname(networkaddress);
+         if (g_ClientConnection.m_HostEntry == NULL)
             {
             ShowMessageAndStop("gethostbyname(host)", WSAGetLastErrorString(0));
             return Falsex;
             }
 
-         network_send_on = true;
+         g_ClientConnection.m_IsEnabled = true;
          MainWindowx->SendMessage(WM_NETWORK_CONNECTSENDFINISH, 0, 0);
          }
       else
          {
-         if (phes == NULL)
+         if (g_ClientConnection.m_HostEntry == NULL)
             {
-            phes = (PHOSTENT) calloc(1, MAXGETHOSTSTRUCT);
+            g_ClientConnection.m_HostEntry = (PHOSTENT) calloc(1, MAXGETHOSTSTRUCT);
             }
 
          // get address of remote machine
@@ -621,7 +634,7 @@ NODE *lnetsendon(NODE *args)
             MainWindowx->HWindow, 
             WM_NETWORK_CONNECTSENDFINISH, 
             networkaddress, 
-            (LPSTR) phes, 
+            (LPSTR) g_ClientConnection.m_HostEntry, 
             MAXGETHOSTSTRUCT);
          if (getHostByNameHandle == NULL)
             {
@@ -629,7 +642,7 @@ NODE *lnetsendon(NODE *args)
             return Falsex;
             }
 
-         network_send_on = true;
+         g_ClientConnection.m_IsEnabled = true;
          // wait for callback
          }
 
@@ -642,16 +655,16 @@ NODE *lnetsendon(NODE *args)
 NODE *lnetsendoff(NODE *)
    {
    // tell handler not to do anything with messages for network send
-   if (network_send_on)
+   if (g_ClientConnection.m_IsEnabled)
       {
-      network_send_on = false;
-      bSendConnected  = false;
-      bSendBusy       = false;
+      g_ClientConnection.m_IsEnabled = false;
+      g_ClientConnection.m_IsConnected  = false;
+      g_ClientConnection.m_IsBusy       = false;
 
-      safe_free(network_send_value);
+      safe_free(g_ClientConnection.m_ReceiveValue);
 
-      closesocket(sendSock);
-      sendSock = INVALID_SOCKET;
+      closesocket(g_ClientConnection.m_Socket);
+      g_ClientConnection.m_Socket = INVALID_SOCKET;
       }
    else
       {
@@ -669,11 +682,11 @@ NODE *lnetsendsendvalue(NODE *args)
 
    if (NOT_THROWING)
       {
-      if (bSendConnected && !bSendBusy)
+      if (g_ClientConnection.m_IsConnected && !g_ClientConnection.m_IsBusy)
          {
 
          // send the data
-         if ((send(sendSock, Data, strlen(Data) + 1, 0)) == SOCKET_ERROR)
+         if ((send(g_ClientConnection.m_Socket, Data, strlen(Data) + 1, 0)) == SOCKET_ERROR)
             {
 
             if (WSAGetLastError() != WSAEWOULDBLOCK)
@@ -683,7 +696,7 @@ NODE *lnetsendsendvalue(NODE *args)
                }
 
             // Idle Until it's ok again.
-            bSendBusy = true;
+            g_ClientConnection.m_IsBusy = true;
             return Falsex;
             }
          }

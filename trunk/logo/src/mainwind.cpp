@@ -2517,7 +2517,7 @@ SocketAsyncReceive(
          if (IsSendSocket)
             {
             callevent = callthing::CreateNetworkSendEvent(
-               network_send_receive,
+               g_ClientConnection.m_OnReceiveReady,
                CarryOverData.m_Buffer + begin);
             }
          else
@@ -2553,7 +2553,7 @@ LRESULT TMainFrame::OnNetworkConnectSendAck(WPARAM /* wParam */, LPARAM lParam)
       return 0;
       }
 
-   if (!network_send_on)
+   if (!g_ClientConnection.m_IsEnabled)
       {
       // The network client side has been shut down.
       // This message must have been delayed.
@@ -2566,46 +2566,46 @@ LRESULT TMainFrame::OnNetworkConnectSendAck(WPARAM /* wParam */, LPARAM lParam)
       case FD_READ:
          SocketAsyncReceive(
             this,
-            sendSock,
+            g_ClientConnection.m_Socket,
             true,
-            g_SendCarryOverData,
+            g_ClientConnection.m_CarryOverData,
             "recv(sendsock)");
 
          return 0;
 
       case FD_WRITE:
          // allow another frame to go out.
-         bSendBusy = false;
+         g_ClientConnection.m_IsBusy = false;
          break;
 
       case FD_CONNECT:
          // flag it's ok to start firing
-         bSendConnected = true;
+         g_ClientConnection.m_IsConnected = true;
          break;
 
       case FD_CLOSE:
          // done
 
          // send any data in the carry-over buffer upwards
-         if (g_SendCarryOverData.m_BytesOfData != 0)
+         if (g_ClientConnection.m_CarryOverData.m_BytesOfData != 0)
             {
             callthing *callevent = callthing::CreateNetworkSendEvent(
-               network_send_receive,
-               g_SendCarryOverData.m_Buffer);
+               g_ClientConnection.m_OnReceiveReady,
+               g_ClientConnection.m_CarryOverData.m_Buffer);
             
             calllists.insert(callevent);
                
             PostMessage(WM_CHECKQUEUE, 0, 0);
             }
 
-         g_SendCarryOverData.ReleaseBuffer();
+         g_ClientConnection.m_CarryOverData.ReleaseBuffer();
 
-         bSendConnected = false;
+         g_ClientConnection.m_IsConnected = false;
          break;
       }
 
    // we don't distinguish between all event types
-   callthing *callevent = callthing::CreateNoYieldFunctionEvent(network_send_send);
+   callthing *callevent = callthing::CreateNoYieldFunctionEvent(g_ClientConnection.m_OnSendReady);
 
    calllists.insert(callevent);
    PostMessage(WM_CHECKQUEUE, 0, 0);
@@ -2625,7 +2625,7 @@ LRESULT TMainFrame::OnNetworkConnectSendFinish(WPARAM /* wParam */, LPARAM lPara
       return 0;
       }
 
-   if (!network_send_on)
+   if (!g_ClientConnection.m_IsEnabled)
       {
       // The client-side is not initialized.
       // This must be a delayed event coming in after shutdown.
@@ -2642,14 +2642,17 @@ LRESULT TMainFrame::OnNetworkConnectSendFinish(WPARAM /* wParam */, LPARAM lPara
    // what else is there
    send_dest_sin.sin_family = AF_INET;
 
-   memcpy(&send_dest_sin.sin_addr, phes->h_addr, phes->h_length);
+   memcpy(
+      &send_dest_sin.sin_addr, 
+      g_ClientConnection.m_HostEntry->h_addr, 
+      g_ClientConnection.m_HostEntry->h_length);
 
    // set ports
-   send_dest_sin.sin_port = htons(sendPort); // Convert to network ordering
+   send_dest_sin.sin_port = htons(g_ClientConnection.m_Port); // Convert to network ordering
 
    // watch for connect
    if (WSAAsyncSelect(
-          sendSock,
+          g_ClientConnection.m_Socket,
           MainWindowx->HWindow,
           WM_NETWORK_CONNECTSENDACK,
           FD_CONNECT | FD_WRITE | FD_READ | FD_CLOSE) == SOCKET_ERROR)
@@ -2659,7 +2662,8 @@ LRESULT TMainFrame::OnNetworkConnectSendFinish(WPARAM /* wParam */, LPARAM lPara
       }
 
    // lets try now
-   if (connect(sendSock, (PSOCKADDR) & send_dest_sin, sizeof(send_dest_sin)) == SOCKET_ERROR)
+   int rval = connect(g_ClientConnection.m_Socket, (PSOCKADDR) & send_dest_sin, sizeof(send_dest_sin));
+   if (rval == SOCKET_ERROR)
       {
       if (WSAGetLastError() != WSAEWOULDBLOCK)
          {
@@ -2675,7 +2679,7 @@ LRESULT TMainFrame::OnNetworkConnectSendFinish(WPARAM /* wParam */, LPARAM lPara
 #endif
 
    // fire event that connection is made
-   callthing *callevent = callthing::CreateNoYieldFunctionEvent(network_send_send);
+   callthing *callevent = callthing::CreateNoYieldFunctionEvent(g_ClientConnection.m_OnSendReady);
 
    calllists.insert(callevent);
    PostMessage(WM_CHECKQUEUE, 0, 0);
@@ -2749,8 +2753,8 @@ LRESULT TMainFrame::OnNetworkListenReceiveAck(WPARAM /* wParam */, LPARAM lParam
 
             PostMessage(WM_CHECKQUEUE, 0, 0);
             }
-             
-         g_SendCarryOverData.ReleaseBuffer();
+
+         g_ClientConnection.m_CarryOverData.ReleaseBuffer();
          bReceiveConnected = false;
          break;
 
