@@ -230,7 +230,6 @@ CNetworkConnection::Enable(
 void
 CNetworkConnection::AsyncReceive(
    TWindow    *         Window,
-   bool                 IsClientConnection,  // TODO: replace with inheritence
    const char *         ErrorMessage
    )
    {
@@ -265,20 +264,9 @@ CNetworkConnection::AsyncReceive(
 
       while (end < m_CarryOverData.m_BytesOfData)
          {
-         callthing *callevent;
-
-         if (IsClientConnection)
-            {
-            callevent = callthing::CreateNetworkSendEvent(
-               m_OnReceiveReady,
-               m_CarryOverData.m_Buffer + begin);
-            }
-         else
-            {
-            callevent = callthing::CreateNetworkReceiveEvent(
-               m_OnReceiveReady,
-               m_CarryOverData.m_Buffer + begin);
-            }
+         callthing * callevent = callthing::CreateNetworkReceiveReadyEvent(
+            this,
+            m_CarryOverData.m_Buffer + begin);
 
          calllists.insert(callevent);
          Window->PostMessage(WM_CHECKQUEUE, 0, 0);

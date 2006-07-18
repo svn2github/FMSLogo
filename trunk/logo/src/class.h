@@ -107,7 +107,6 @@ public:
    void
    AsyncReceive(
       TWindow    *     Window,
-      bool             IsClientConnection,
       const char *     ErrorMessage
       );
 
@@ -579,8 +578,7 @@ enum EVENTTYPE
    EVENTTYPE_Keyboard,
    EVENTTYPE_YieldFunction,
    EVENTTYPE_NoYieldFunction,
-   EVENTTYPE_NetworkReceive,
-   EVENTTYPE_NetworkSend,
+   EVENTTYPE_NetworkReceiveReady,
    };
 
 class callthing
@@ -596,15 +594,15 @@ public:
    static callthing * CreateMouseEvent(char * function, int x, int y);
    static callthing * CreateFunctionEvent(char * function);
    static callthing * CreateNoYieldFunctionEvent(char * function);
-   static callthing * CreateNetworkReceiveEvent(char * function, const char * packet);
-   static callthing * CreateNetworkSendEvent(char * function, const char * packet);
+   static callthing * CreateNetworkReceiveReadyEvent(CNetworkConnection * NetworkConnection, const char * packet);
 
    // CONSIDER: a union would make this struct smaller
-   EVENTTYPE  kind;
-   char *     func;
-   char *     networkpacket;
-   int        arg1;
-   int        arg2;
+   EVENTTYPE            kind;
+   CNetworkConnection * networkconnection;
+   char *               func;
+   char *               networkpacket;
+   int                  arg1;
+   int                  arg2;
    };
 
 struct calllist : public qlist

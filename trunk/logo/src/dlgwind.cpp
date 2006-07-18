@@ -842,30 +842,13 @@ void checkqueue()
              }
 
           // Network events must not yield while processing
-          case EVENTTYPE_NetworkReceive:
+          case EVENTTYPE_NetworkReceiveReady:
              {
              save_yield_flag = yield_flag;
              yield_flag = 0;
 
              // use the new value
-             g_ServerConnection.SetLastPacketReceived(thing->networkpacket);
-             thing->networkpacket  = NULL;
-
-             do_execution(thing->func);
-             free(thing->func);
-
-             yield_flag = save_yield_flag;
-             break;
-             }
-
-          // Network events must not yield while processing
-          case EVENTTYPE_NetworkSend:
-             {
-             save_yield_flag = yield_flag;
-             yield_flag = 0;
-
-             // use the new value
-             g_ClientConnection.SetLastPacketReceived(thing->networkpacket);
+             thing->networkconnection->SetLastPacketReceived(thing->networkpacket);
              thing->networkpacket = NULL;
 
              do_execution(thing->func);
@@ -894,8 +877,7 @@ void emptyqueue()
       switch (thing->kind)
          {
          // TODO: move this logic into callthing's destructor
-         case EVENTTYPE_NetworkReceive:
-         case EVENTTYPE_NetworkSend:
+         case EVENTTYPE_NetworkReceiveReady:
             {
             free(thing->func);
             free(thing->networkpacket);

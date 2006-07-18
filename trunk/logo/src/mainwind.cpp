@@ -138,21 +138,19 @@ callthing * callthing::CreateNoYieldFunctionEvent(char * function)
    return callevent;
    }
 
-callthing * callthing::CreateNetworkReceiveEvent(char * function, const char * packet)
+callthing * callthing::CreateNetworkReceiveReadyEvent(CNetworkConnection * NetworkConnection, const char * packet)
    {
    callthing * callevent = new callthing;
-   callevent->kind = EVENTTYPE_NetworkReceive;
-   callevent->func = strdup(function);
-   callevent->networkpacket = strdup(packet);
+   callevent->kind = EVENTTYPE_NetworkReceiveReady;
+   
+   callevent->networkconnection = NetworkConnection;
 
-   return callevent;
-   }
+   // copy m_OnReceiveReady now because it might be freed by the time 
+   // the event is processed.
+   callevent->func = strdup(NetworkConnection->m_OnReceiveReady);
 
-callthing * callthing::CreateNetworkSendEvent(char * function, const char * packet)
-   {
-   callthing * callevent = new callthing;
-   callevent->kind = EVENTTYPE_NetworkSend;
-   callevent->func = strdup(function);
+   // copy the network packet into the event (instead of into NetworkConnection) 
+   // so that it can be processed in the order in which is was received.
    callevent->networkpacket = strdup(packet);
 
    return callevent;
@@ -2495,11 +2493,7 @@ LRESULT TMainFrame::OnNetworkConnectSendAck(WPARAM /* wParam */, LPARAM lParam)
    switch (WSAGETSELECTEVENT(lParam))
       {
       case FD_READ:
-         g_ClientConnection.AsyncReceive(
-            this,
-            true,
-            "recv(sendsock)");
-
+         g_ClientConnection.AsyncReceive(this, "recv(sendsock)");
          return 0;
 
       case FD_WRITE:
@@ -2518,8 +2512,8 @@ LRESULT TMainFrame::OnNetworkConnectSendAck(WPARAM /* wParam */, LPARAM lParam)
          // send any data in the carry-over buffer upwards
          if (g_ClientConnection.m_CarryOverData.m_BytesOfData != 0)
             {
-            callthing *callevent = callthing::CreateNetworkSendEvent(
-               g_ClientConnection.m_OnReceiveReady,
+            callthing *callevent = callthing::CreateNetworkReceiveReadyEvent(
+               &g_ClientConnection,
                g_ClientConnection.m_CarryOverData.m_Buffer);
             
             calllists.insert(callevent);
@@ -2654,11 +2648,7 @@ LRESULT TMainFrame::OnNetworkListenReceiveAck(WPARAM /* wParam */, LPARAM lParam
    switch (WSAGETSELECTEVENT(lParam))
       {
       case FD_READ:
-         g_ServerConnection.AsyncReceive(
-            this,
-            false,
-            "recv(receivesock)");
-
+         g_ServerConnection.AsyncReceive(this, "recv(receivesock)");
          return 0;
 
       case FD_ACCEPT:
@@ -2683,8 +2673,8 @@ LRESULT TMainFrame::OnNetworkListenReceiveAck(WPARAM /* wParam */, LPARAM lParam
          // send any data in the carry-over buffer to Logo
          if (g_ServerConnection.m_CarryOverData.m_BytesOfData != 0)
             {
-            callthing *callevent = callthing::CreateNetworkReceiveEvent(
-               g_ServerConnection.m_OnReceiveReady,
+            callthing *callevent = callthing::CreateNetworkReceiveReadyEvent(
+               &g_ServerConnection,
                g_ServerConnection.m_CarryOverData.m_Buffer);
 
             calllists.insert(callevent);
