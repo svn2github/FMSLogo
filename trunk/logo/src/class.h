@@ -88,6 +88,16 @@ class CNetworkConnection
 public:
    CNetworkConnection();
 
+
+   void
+   Enable(
+      const char *    OnSendReady,
+      const char *    OnReceiveReady,
+      unsigned int    ServerPort,
+      const char *    HostName,
+      DWORD           ResolvedHostNameMessage
+      );
+
    bool IsEnabled() const;
    void Disable();
 
@@ -98,8 +108,10 @@ public:
 
    bool         m_IsConnected;  // socket is connected
    bool         m_IsBusy;       // socket is too busy to send
+private:
    bool         m_IsEnabled;    // if message processing is enabled for this socket
 
+public:
    PHOSTENT     m_HostEntry;    // Pointer to Host Entry
 
    char * m_OnReceiveReady;  // Buffer for receive callback
@@ -109,6 +121,7 @@ public:
    CCarryOverBuffer m_CarryOverData;  // a buffer for carrying over partial packets 
                                       // from one recv() call to the next.
    };
+
 
 class TMyFileWindow : public TEditWindow
    {

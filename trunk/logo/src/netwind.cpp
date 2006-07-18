@@ -135,6 +135,84 @@ CNetworkConnection::Disable()
       }
    }
 
+void
+CNetworkConnection::Enable(
+   const char *    OnSendReady,
+   const char *    OnReceiveReady,
+   unsigned int    ServerPort,
+   const char *    HostName,
+   DWORD           ResolvedHostNameMessage
+   )
+   {
+
+   // copy the receive ready callback
+   if (m_OnReceiveReady == NULL)
+      {
+      m_OnReceiveReady = (char *) malloc(MAX_BUFFER_SIZE);
+      }
+   strcpy(m_OnReceiveReady, OnReceiveReady);
+
+   // copy the send ready callback
+   if (m_OnSendReady == NULL)
+      {
+      m_OnSendReady = (char *) malloc(MAX_BUFFER_SIZE);
+      }
+   strcpy(m_OnSendReady, OnSendReady);
+
+   // copy the server port
+   m_Port = ServerPort;
+
+   // get sockets
+#ifdef USE_UDP
+   m_Socket = socket(AF_INET, SOCK_DGRAM, 0);
+#else
+   m_Socket = socket(AF_INET, SOCK_STREAM, 0);
+#endif
+
+   if (m_Socket == INVALID_SOCKET)
+      {
+      ShowMessageAndStop("socket()", WSAGetLastErrorString(0));
+      return;
+      }
+
+   if (network_dns_sync == 1)
+      {
+      m_HostEntry = gethostbyname(HostName);
+      if (m_HostEntry == NULL)
+         {
+         ShowMessageAndStop("gethostbyname(host)", WSAGetLastErrorString(0));
+         return;
+         }
+
+      m_IsEnabled = true;
+      MainWindowx->SendMessage(ResolvedHostNameMessage, 0, 0);
+      }
+   else
+      {
+      if (m_HostEntry == NULL)
+         {
+         m_HostEntry = (PHOSTENT) calloc(1, MAXGETHOSTSTRUCT);
+         }
+
+      // get address of remote machine
+      HANDLE getHostByNameHandle = WSAAsyncGetHostByName(
+         MainWindowx->HWindow, 
+         ResolvedHostNameMessage, 
+         HostName, 
+         (LPSTR) m_HostEntry, 
+         MAXGETHOSTSTRUCT);
+      if (getHostByNameHandle == NULL)
+         {
+         ShowMessageAndStop("WSAAsyncGetHostByName()", WSAGetLastErrorString(0));
+         return;
+         }
+
+      m_IsEnabled = true;
+      // wait for callback
+      }
+   }
+
+
 // converts winsock errorcode to string
 LPCSTR WSAGetLastErrorString(int error_arg)
    {
@@ -391,18 +469,7 @@ NODE *lnetreceiveon(NODE *args)
    if (g_ServerConnection.IsEnabled())
       {
       ShowMessageAndStop("Network Receive Error", "Already On");
-      return Falsex;
-      }
-
-   // allocate buffers
-   if (g_ServerConnection.m_OnReceiveReady == NULL)
-      {
-      g_ServerConnection.m_OnReceiveReady = (char *) malloc(MAX_BUFFER_SIZE);
-      }
-
-   if (g_ServerConnection.m_OnSendReady == NULL)
-      {
-      g_ServerConnection.m_OnSendReady = (char *) malloc(MAX_BUFFER_SIZE);
+      return Unbound;
       }
 
    // get args (socket and callback)
@@ -416,64 +483,20 @@ NODE *lnetreceiveon(NODE *args)
 
    if (NOT_THROWING)
       {
-      // copy callback (I really should keep these as true Nodes)
-      strcpy(g_ServerConnection.m_OnReceiveReady, networkreceive);
-      strcpy(g_ServerConnection.m_OnSendReady, networksend);
-
-      // save socket globally
-      g_ServerConnection.m_Port = port;
-
-      // open the socket
-
-#ifdef USE_UDP
-      if ((g_ServerConnection.m_Socket = socket(AF_INET, SOCK_DGRAM, 0)) == INVALID_SOCKET)
-#else
-      if ((g_ServerConnection.m_Socket = socket(AF_INET, SOCK_STREAM, 0)) == INVALID_SOCKET)
-#endif
-         {
-         ShowMessageAndStop("socket(receivesock)", WSAGetLastErrorString(0));
-         return Falsex;
-         }
-
       // get who we are
       char szThisHost[80];
       gethostname(szThisHost, sizeof(szThisHost));
 
-      if (network_dns_sync == 1)
-         {
-         g_ServerConnection.m_HostEntry = gethostbyname(szThisHost);
-         if (g_ServerConnection.m_HostEntry != NULL)
-            {
-            ShowMessageAndStop("gethostbyname(thishost)", WSAGetLastErrorString(0));
-            return Falsex;
-            }
+      g_ServerConnection.Enable(
+         networksend,
+         networkreceive,
+         port,
+         szThisHost,
+         WM_NETWORK_LISTENRECEIVEFINISH);
+      }
 
-         g_ServerConnection.m_IsEnabled = true;
-         MainWindowx->SendMessage(WM_NETWORK_LISTENRECEIVEFINISH, 0, 0);
-         }
-      else
-         {
-         if (g_ServerConnection.m_HostEntry == NULL)
-            {
-            g_ServerConnection.m_HostEntry = (PHOSTENT) calloc(1, MAXGETHOSTSTRUCT);
-            }
-
-         HANDLE getHostByNameHandle = WSAAsyncGetHostByName(
-            MainWindowx->HWindow, 
-            WM_NETWORK_LISTENRECEIVEFINISH, 
-            szThisHost, 
-            (LPSTR) g_ServerConnection.m_HostEntry, 
-            MAXGETHOSTSTRUCT);
-         if (getHostByNameHandle == NULL)
-            {
-            ShowMessageAndStop("WSAAsyncGetHostByName()", WSAGetLastErrorString(0));
-            return Falsex;
-            }
-
-         g_ServerConnection.m_IsEnabled = true;
-         // wait for callback
-         }
-
+   if (NOT_THROWING)
+      {
       return Truex;
       }
 
@@ -547,24 +570,12 @@ NODE *lnetsendon(NODE *args)
    if (g_ClientConnection.IsEnabled())
       {
       ShowMessageAndStop("Network Send Error", "Already On");
-      return Falsex;
-      }
-
-   // allocate the callback buffer
-
-   if (g_ClientConnection.m_OnSendReady == NULL)
-      {
-      g_ClientConnection.m_OnSendReady = (char *) malloc(MAX_BUFFER_SIZE);
-      }
-
-   if (g_ClientConnection.m_OnReceiveReady == NULL)
-      {
-      g_ClientConnection.m_OnReceiveReady = (char *) malloc(MAX_BUFFER_SIZE);
+      return Unbound;
       }
 
    // get args (remotemachinename, socket, callback)
-   char networkaddress[MAX_BUFFER_SIZE];
-   cnv_strnode_string(networkaddress, args);
+   char remotehostname[MAX_BUFFER_SIZE];
+   cnv_strnode_string(remotehostname, args);
 
    int remote_port = getint(pos_int_arg(cdr(args)));
 
@@ -576,61 +587,16 @@ NODE *lnetsendon(NODE *args)
 
    if (NOT_THROWING)
       {
-      // copy the callback
-      strcpy(g_ClientConnection.m_OnSendReady, networksend);
-      strcpy(g_ClientConnection.m_OnReceiveReady, networkreceive);
+      g_ClientConnection.Enable(
+         networksend,
+         networkreceive,
+         remote_port,
+         remotehostname,
+         WM_NETWORK_CONNECTSENDFINISH);
+      }
 
-      // save the port globally
-      g_ClientConnection.m_Port = remote_port;
-
-      // get sockets
-#ifdef USE_UDP
-      g_ClientConnection.m_Socket = socket(AF_INET, SOCK_DGRAM, 0);
-#else
-      g_ClientConnection.m_Socket = socket(AF_INET, SOCK_STREAM, 0);
-#endif
-      if (g_ClientConnection.m_Socket == INVALID_SOCKET)
-         {
-         ShowMessageAndStop("socket(sendsocket)", WSAGetLastErrorString(0));
-         return Falsex;
-         }
-
-      if (network_dns_sync == 1)
-         {
-         g_ClientConnection.m_HostEntry = gethostbyname(networkaddress);
-         if (g_ClientConnection.m_HostEntry == NULL)
-            {
-            ShowMessageAndStop("gethostbyname(host)", WSAGetLastErrorString(0));
-            return Falsex;
-            }
-
-         g_ClientConnection.m_IsEnabled = true;
-         MainWindowx->SendMessage(WM_NETWORK_CONNECTSENDFINISH, 0, 0);
-         }
-      else
-         {
-         if (g_ClientConnection.m_HostEntry == NULL)
-            {
-            g_ClientConnection.m_HostEntry = (PHOSTENT) calloc(1, MAXGETHOSTSTRUCT);
-            }
-
-         // get address of remote machine
-         HANDLE getHostByNameHandle = WSAAsyncGetHostByName(
-            MainWindowx->HWindow, 
-            WM_NETWORK_CONNECTSENDFINISH, 
-            networkaddress, 
-            (LPSTR) g_ClientConnection.m_HostEntry, 
-            MAXGETHOSTSTRUCT);
-         if (getHostByNameHandle == NULL)
-            {
-            ShowMessageAndStop("WSAAsyncGetHostByName()", WSAGetLastErrorString(0));
-            return Falsex;
-            }
-
-         g_ClientConnection.m_IsEnabled = true;
-         // wait for callback
-         }
-
+   if (NOT_THROWING)
+      {
       return Truex;
       }
 
