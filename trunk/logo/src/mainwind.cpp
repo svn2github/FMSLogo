@@ -142,7 +142,7 @@ callthing * callthing::CreateNetworkReceiveEvent(char * function, const char * p
    {
    callthing * callevent = new callthing;
    callevent->kind = EVENTTYPE_NetworkReceive;
-   callevent->func = function;
+   callevent->func = strdup(function);
    callevent->networkpacket = strdup(packet);
 
    return callevent;
@@ -152,7 +152,7 @@ callthing * callthing::CreateNetworkSendEvent(char * function, const char * pack
    {
    callthing * callevent = new callthing;
    callevent->kind = EVENTTYPE_NetworkSend;
-   callevent->func = function;
+   callevent->func = strdup(function);
    callevent->networkpacket = strdup(packet);
 
    return callevent;
