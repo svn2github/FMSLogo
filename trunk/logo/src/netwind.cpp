@@ -21,23 +21,8 @@
 
 #include "allwind.h"
 
-SOCKET       receiveSock = INVALID_SOCKET;   // Current Handle receive Socket
-unsigned int receivePort;                    // Current requested receive Port
-
-bool bReceiveConnected = false;        // Flag that receive socket is connected
-bool bReceiveBusy      = false;        // Flag that receive socket is busy
-
-PHOSTENT pher = NULL;                  // Pointer to Host Entry for receive
-
-char *network_receive_receive = NULL;  // Buffer for receive callback
-char *network_receive_send = NULL;     // Buffer for send callback
-char *network_receive_value = NULL;    // Buffer for current received data
-
-bool network_receive_on = false;       // flag for receive enabled (enabled message processing)
-
-CCarryOverBuffer g_ReceiveCarryOverData;
-
 CNetworkConnection g_ClientConnection;
+CNetworkConnection g_ServerConnection;
 
 static int network_dns_sync = 0;
 
@@ -337,19 +322,19 @@ NODE *lnetshutdown(NODE *)
    {
 
    // cleanup receive
-   if (network_receive_on)
+   if (g_ServerConnection.m_IsEnabled)
       {
-      network_receive_on = false;
-      bReceiveConnected  = false;
-      bReceiveBusy       = false;
+      g_ServerConnection.m_IsEnabled = false;
+      g_ServerConnection.m_IsConnected  = false;
+      g_ServerConnection.m_IsBusy       = false;
 
-      closesocket(receiveSock);
-      receiveSock = INVALID_SOCKET;
+      closesocket(g_ServerConnection.m_Socket);
+      g_ServerConnection.m_Socket = INVALID_SOCKET;
       }
-   safe_free(network_receive_receive);
-   safe_free(network_receive_send);
-   safe_free(network_receive_value);
-   g_ReceiveCarryOverData.ReleaseBuffer();
+   safe_free(g_ServerConnection.m_OnReceiveReady);
+   safe_free(g_ServerConnection.m_OnSendReady);
+   safe_free(g_ServerConnection.m_ReceiveValue);
+   g_ServerConnection.m_CarryOverData.ReleaseBuffer();
 
    // cleanup send
    if (g_ClientConnection.m_IsEnabled)
@@ -376,10 +361,10 @@ NODE *lnetshutdown(NODE *)
    if (network_dns_sync != 1)
       {
       free(g_ClientConnection.m_HostEntry);
-      free(pher);
+      free(g_ServerConnection.m_HostEntry);
       }
    g_ClientConnection.m_HostEntry = NULL;
-   pher = NULL;
+   g_ServerConnection.m_HostEntry = NULL;
 
    network_dns_sync = 0;
    return Unbound;
@@ -396,25 +381,25 @@ NODE *lnetreceiveon(NODE *args)
       return Unbound;
       }
 
-   if (network_receive_on)
+   if (g_ServerConnection.m_IsEnabled)
       {
       ShowMessageAndStop("Network Receive Error", "Already On");
       return Falsex;
       }
 
    // allocate buffers
-   if (network_receive_receive == NULL)
+   if (g_ServerConnection.m_OnReceiveReady == NULL)
       {
-      network_receive_receive = (char *) malloc(MAX_BUFFER_SIZE);
+      g_ServerConnection.m_OnReceiveReady = (char *) malloc(MAX_BUFFER_SIZE);
       }
 
-   if (network_receive_send == NULL)
+   if (g_ServerConnection.m_OnSendReady == NULL)
       {
-      network_receive_send = (char *) malloc(MAX_BUFFER_SIZE);
+      g_ServerConnection.m_OnSendReady = (char *) malloc(MAX_BUFFER_SIZE);
       }
 
    // get args (socket and callback)
-   int isocket = getint(pos_int_arg(args));
+   int port = getint(pos_int_arg(args));
 
    char networksend[MAX_BUFFER_SIZE];
    cnv_strnode_string(networksend, cdr(args));
@@ -425,18 +410,18 @@ NODE *lnetreceiveon(NODE *args)
    if (NOT_THROWING)
       {
       // copy callback (I really should keep these as true Nodes)
-      strcpy(network_receive_receive, networkreceive);
-      strcpy(network_receive_send, networksend);
+      strcpy(g_ServerConnection.m_OnReceiveReady, networkreceive);
+      strcpy(g_ServerConnection.m_OnSendReady, networksend);
 
       // save socket globally
-      receivePort = isocket;
+      g_ServerConnection.m_Port = port;
 
       // open the socket
 
 #ifdef USE_UDP
-      if ((receiveSock = socket(AF_INET, SOCK_DGRAM, 0)) == INVALID_SOCKET)
+      if ((g_ServerConnection.m_Socket = socket(AF_INET, SOCK_DGRAM, 0)) == INVALID_SOCKET)
 #else
-      if ((receiveSock = socket(AF_INET, SOCK_STREAM, 0)) == INVALID_SOCKET)
+      if ((g_ServerConnection.m_Socket = socket(AF_INET, SOCK_STREAM, 0)) == INVALID_SOCKET)
 #endif
          {
          ShowMessageAndStop("socket(receivesock)", WSAGetLastErrorString(0));
@@ -449,28 +434,28 @@ NODE *lnetreceiveon(NODE *args)
 
       if (network_dns_sync == 1)
          {
-         pher = gethostbyname(szThisHost);
-         if (pher != NULL)
+         g_ServerConnection.m_HostEntry = gethostbyname(szThisHost);
+         if (g_ServerConnection.m_HostEntry != NULL)
             {
             ShowMessageAndStop("gethostbyname(thishost)", WSAGetLastErrorString(0));
             return Falsex;
             }
 
-         network_receive_on = true;
+         g_ServerConnection.m_IsEnabled = true;
          MainWindowx->SendMessage(WM_NETWORK_LISTENRECEIVEFINISH, 0, 0);
          }
       else
          {
-         if (pher == NULL)
+         if (g_ServerConnection.m_HostEntry == NULL)
             {
-            pher = (PHOSTENT) calloc(1, MAXGETHOSTSTRUCT);
+            g_ServerConnection.m_HostEntry = (PHOSTENT) calloc(1, MAXGETHOSTSTRUCT);
             }
 
          HANDLE getHostByNameHandle = WSAAsyncGetHostByName(
             MainWindowx->HWindow, 
             WM_NETWORK_LISTENRECEIVEFINISH, 
             szThisHost, 
-            (LPSTR) pher, 
+            (LPSTR) g_ServerConnection.m_HostEntry, 
             MAXGETHOSTSTRUCT);
          if (getHostByNameHandle == NULL)
             {
@@ -478,7 +463,7 @@ NODE *lnetreceiveon(NODE *args)
             return Falsex;
             }
 
-         network_receive_on = true;
+         g_ServerConnection.m_IsEnabled = true;
          // wait for callback
          }
 
@@ -491,16 +476,16 @@ NODE *lnetreceiveon(NODE *args)
 NODE *lnetreceiveoff(NODE *)
    {
    // tell handler not to do anything with messages for network receive
-   if (network_receive_on)
+   if (g_ServerConnection.m_IsEnabled)
       {
-      network_receive_on = false;
-      bReceiveConnected  = false;
-      bReceiveBusy       = false;
+      g_ServerConnection.m_IsEnabled = false;
+      g_ServerConnection.m_IsConnected  = false;
+      g_ServerConnection.m_IsBusy       = false;
 
-      safe_free(network_receive_value);
+      safe_free(g_ServerConnection.m_ReceiveValue);
 
-      closesocket(receiveSock);
-      receiveSock = INVALID_SOCKET;
+      closesocket(g_ServerConnection.m_Socket);
+      g_ServerConnection.m_Socket = INVALID_SOCKET;
       }
    else
       {
@@ -513,15 +498,15 @@ NODE *lnetreceiveoff(NODE *)
 NODE *lnetreceivereceivevalue(NODE *)
    {
    // return current network value
-   if (network_receive_on)
+   if (g_ServerConnection.m_IsEnabled)
       {
-      if (network_receive_value == NULL)
+      if (g_ServerConnection.m_ReceiveValue == NULL)
          {
          return NIL;
          }
       else
          {
-         NODE* targ = make_strnode(network_receive_value);
+         NODE* targ = make_strnode(g_ServerConnection.m_ReceiveValue);
          NODE* val = parser(targ, false);
          return val;
          }
@@ -719,10 +704,10 @@ NODE *lnetreceivesendvalue(NODE *args)
 
    if (NOT_THROWING)
       {
-      if (bReceiveConnected && !bReceiveBusy)
+      if (g_ServerConnection.m_IsConnected && !g_ServerConnection.m_IsBusy)
          {
          // send the data
-         if ((send(receiveSock, Data, strlen(Data) + 1, 0)) == SOCKET_ERROR)
+         if ((send(g_ServerConnection.m_Socket, Data, strlen(Data) + 1, 0)) == SOCKET_ERROR)
             {
             if (WSAGetLastError() != WSAEWOULDBLOCK)
                {
@@ -731,7 +716,7 @@ NODE *lnetreceivesendvalue(NODE *args)
                }
 
             // Idle Until it's ok again.
-            bReceiveBusy = true;
+            g_ServerConnection.m_IsBusy = true;
             return Falsex;
             }
          }

@@ -62,16 +62,7 @@ extern char *timer_callback[];
 
 // netwind.cpp
 extern CNetworkConnection g_ClientConnection;
-extern SOCKET receiveSock;
-extern unsigned int receivePort;
-extern bool bReceiveConnected;
-extern bool bReceiveBusy;
-extern PHOSTENT pher;
-extern char *network_receive_receive;
-extern char *network_receive_send;
-extern char *network_receive_value;
-extern bool network_receive_on;
-extern CCarryOverBuffer g_ReceiveCarryOverData;
+extern CNetworkConnection g_ServerConnection;
 
 /* logodata.c */
 #ifdef ecma

@@ -848,8 +848,7 @@ void checkqueue()
              yield_flag = 0;
 
              // use the new value
-             free(network_receive_value);
-             network_receive_value = thing->networkpacket;
+             g_ServerConnection.SetLastPacketReceived(thing->networkpacket);
              thing->networkpacket  = NULL;
 
              do_execution(thing->func);

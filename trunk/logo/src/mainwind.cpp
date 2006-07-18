@@ -2523,7 +2523,7 @@ SocketAsyncReceive(
          else
             {
             callevent = callthing::CreateNetworkReceiveEvent(
-               network_receive_receive,
+               g_ServerConnection.m_OnReceiveReady,
                CarryOverData.m_Buffer + begin);
             }
 
@@ -2702,7 +2702,7 @@ LRESULT TMainFrame::OnNetworkListenReceiveAck(WPARAM /* wParam */, LPARAM lParam
       return 0;
       }
 
-   if (!network_receive_on)
+   if (!g_ServerConnection.m_IsEnabled)
       {
       // The server-side is not initialized.
       // This must be a delayed event coming in after shutdown.
@@ -2716,22 +2716,22 @@ LRESULT TMainFrame::OnNetworkListenReceiveAck(WPARAM /* wParam */, LPARAM lParam
       case FD_READ:
          SocketAsyncReceive(
             this,
-            receiveSock,
+            g_ServerConnection.m_Socket,
             false,
-            g_ReceiveCarryOverData,
+            g_ServerConnection.m_CarryOverData,
             "recv(receivesock)");
 
          return 0;
 
       case FD_ACCEPT:
-         bReceiveConnected = true;
+         g_ServerConnection.m_IsConnected = true;
 
          // disabled for UDP
 
 #ifndef USE_UDP
          acc_sin_len = sizeof(acc_sin);
 
-         if ((receiveSock = accept(receiveSock, (struct sockaddr *) &acc_sin, (int *) &acc_sin_len)) == INVALID_SOCKET)
+         if ((g_ServerConnection.m_Socket = accept(g_ServerConnection.m_Socket, (struct sockaddr *) &acc_sin, (int *) &acc_sin_len)) == INVALID_SOCKET)
             {
             MessageBox(WSAGetLastErrorString(0), "accept(receivesock)");
             // err_logo(STOP_ERROR,NIL);
@@ -2743,11 +2743,11 @@ LRESULT TMainFrame::OnNetworkListenReceiveAck(WPARAM /* wParam */, LPARAM lParam
 
          // the remote endpoint has finished sending
          // send any data in the carry-over buffer to Logo
-         if (g_ReceiveCarryOverData.m_BytesOfData != 0)
+         if (g_ServerConnection.m_CarryOverData.m_BytesOfData != 0)
             {
             callthing *callevent = callthing::CreateNetworkReceiveEvent(
-               network_receive_receive,
-               g_ReceiveCarryOverData.m_Buffer);
+               g_ServerConnection.m_OnReceiveReady,
+               g_ServerConnection.m_CarryOverData.m_Buffer);
 
             calllists.insert(callevent);
 
@@ -2755,13 +2755,13 @@ LRESULT TMainFrame::OnNetworkListenReceiveAck(WPARAM /* wParam */, LPARAM lParam
             }
 
          g_ClientConnection.m_CarryOverData.ReleaseBuffer();
-         bReceiveConnected = false;
+         g_ServerConnection.m_IsConnected = false;
          break;
 
       case FD_WRITE:
 
          // allow another frame to go out.
-         bReceiveBusy = false;
+         g_ServerConnection.m_IsBusy = false;
          break;
 
       default:
@@ -2772,7 +2772,7 @@ LRESULT TMainFrame::OnNetworkListenReceiveAck(WPARAM /* wParam */, LPARAM lParam
       }
 
    // all other events just queue the event
-   callthing * callevent = callthing::CreateNoYieldFunctionEvent(network_receive_send);
+   callthing * callevent = callthing::CreateNoYieldFunctionEvent(g_ServerConnection.m_OnSendReady);
 
    calllists.insert(callevent);
    PostMessage(WM_CHECKQUEUE, 0, 0);
@@ -2792,7 +2792,7 @@ LRESULT TMainFrame::OnNetworkListenReceiveFinish(WPARAM /* wParam */, LPARAM lPa
       return 0;
       }
 
-   if (!network_receive_on)
+   if (!g_ServerConnection.m_IsEnabled)
       {
       // TODO: print an error about the network being shutdown
       return 0;
@@ -2805,13 +2805,16 @@ LRESULT TMainFrame::OnNetworkListenReceiveFinish(WPARAM /* wParam */, LPARAM lPa
    // what else is there
    receive_local_sin.sin_family = AF_INET;
 
-   memcpy(&receive_local_sin.sin_addr, pher->h_addr, pher->h_length);
+   memcpy(
+      &receive_local_sin.sin_addr, 
+      g_ServerConnection.m_HostEntry->h_addr, 
+      g_ServerConnection.m_HostEntry->h_length);
 
    // set ports
-   receive_local_sin.sin_port = htons(receivePort); // Convert to network ordering
+   receive_local_sin.sin_port = htons(g_ServerConnection.m_Port); // Convert to network ordering
 
    // Associate an address with a socket. (bind)
-   if (bind(receiveSock, (struct sockaddr *) &receive_local_sin, sizeof(receive_local_sin)) == SOCKET_ERROR)
+   if (bind(g_ServerConnection.m_Socket, (struct sockaddr *) &receive_local_sin, sizeof(receive_local_sin)) == SOCKET_ERROR)
       {
       MessageBox(WSAGetLastErrorString(0), "bind(receivesock)");
       // err_logo(STOP_ERROR,NIL);
@@ -2821,7 +2824,7 @@ LRESULT TMainFrame::OnNetworkListenReceiveFinish(WPARAM /* wParam */, LPARAM lPa
    // listen for connect
 
 #ifndef USE_UDP
-   if (listen(receiveSock, MAX_PENDING_CONNECTS) == SOCKET_ERROR)
+   if (listen(g_ServerConnection.m_Socket, MAX_PENDING_CONNECTS) == SOCKET_ERROR)
       {
       MessageBox(WSAGetLastErrorString(0), "listen(receivesock)");
       // err_logo(STOP_ERROR,NIL);
@@ -2831,7 +2834,7 @@ LRESULT TMainFrame::OnNetworkListenReceiveFinish(WPARAM /* wParam */, LPARAM lPa
 
    // watch for when connect happens
    if (WSAAsyncSelect(
-          receiveSock,
+          g_ServerConnection.m_Socket,
           MainWindowx->HWindow,
           WM_NETWORK_LISTENRECEIVEACK,
           FD_ACCEPT | FD_READ | FD_WRITE | FD_CLOSE) == SOCKET_ERROR)
@@ -2847,7 +2850,7 @@ LRESULT TMainFrame::OnNetworkListenReceiveFinish(WPARAM /* wParam */, LPARAM lPa
 #endif
 
    // queue this event
-   callthing * callevent = callthing::CreateNoYieldFunctionEvent(network_receive_send);
+   callthing * callevent = callthing::CreateNoYieldFunctionEvent(g_ServerConnection.m_OnSendReady);
 
    calllists.insert(callevent);
    PostMessage(WM_CHECKQUEUE, 0, 0);
