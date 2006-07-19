@@ -9,6 +9,10 @@ TO NETWORKTEST.HOSTNAME
    OUTPUT "|DAVID-LAPTOP| 
 END
 
+TO NETWORKTEST.SERVERCOMMAND :test :port
+   OUTPUT (LIST "perl.exe "networkserver.pl :test :port)
+END
+
 TO CLIENT.ONREADYTOSEND
   LOCALMAKE "payload [This is my payload]
 
@@ -142,7 +146,7 @@ TO NETWORKTEST.CLIENT.SMOKETEST
    MAKE "client.data []
 
    ; spawn a server
-   MAKE "shellcommand (SENTENCE [perl.exe networkserver.pl simple] :remoteport)
+   MAKE "shellcommand NETWORKTEST.SERVERCOMMAND "simple :remoteport
    SIMPLEREPORTTEST (LIST "SHELL :shellcommand) "true
 
    ; wait a second for the server to come online
@@ -161,6 +165,53 @@ TO NETWORKTEST.CLIENT.SMOKETEST
    SIMPLEREPORTTEST [:client.data] [[Hello]]
 END
 
+TO NETWORKTEST.CLIENT.ECHO
+
+   LOCAL [localport client.data onsendreadycounter shellcommand]
+
+   MAKE "remoteport  5557
+   MAKE "client.data []
+   MAKE "onsendreadycounter 0
+
+   ; spawn a server
+   MAKE "shellcommand NETWORKTEST.SERVERCOMMAND "echo :remoteport
+   SIMPLEREPORTTEST (LIST "SHELL :shellcommand) "true
+
+   ; wait a second for the server to come online
+   TRACEINSTRUCTION  [ WAIT 60 ]
+
+   ; connect the client to the server
+   TRACEINSTRUCTION  [ NETSTARTUP ]
+
+   SIMPLEREPORTTEST  [ 
+      NETCONNECTON 
+         NETWORKTEST.HOSTNAME 
+         :remoteport 
+         [ MAKE   "onsendreadycounter :onsendreadycounter + 1 ] 
+         [ QUEUE "client.data         NETCONNECTRECEIVEVALUE  ]
+   ] "true
+
+   ; wait two seconds for the network connection
+   TRACEINSTRUCTION  [ WAIT 60*2 ]
+
+   ; send the data that we expect to see echo'd back to us
+   SIMPLEREPORTTEST  [ NETCONNECTSENDVALUE "yodle ] "true
+
+   ; we shouldn't be able to send right away (the client should be busy)
+   SIMPLEREPORTTEST  [ NETCONNECTSENDVALUE "XXXXX ] "false
+
+   ; wait two seconds for the server to echo the data
+   TRACEINSTRUCTION  [ WAIT 60*2 ]
+
+   TRACEINSTRUCTION  [ NETCONNECTOFF ]
+   TRACEINSTRUCTION  [ NETSHUTDOWN   ]
+
+   MAKE "expecteddata TESTLIB.REPEATWORD "abcdefghijklmnopqrstuvwxyz 1000
+
+   SIMPLEREPORTTEST [:onsendreadycounter ] 4
+   SIMPLEREPORTTEST [:client.data]         [[yodle]]
+END
+
 TO NETWORKTEST.CLIENT.RECEIVELARGEPACKET
 
    LOCAL [localport client.data onsendreadycounter shellcommand]
@@ -170,7 +221,7 @@ TO NETWORKTEST.CLIENT.RECEIVELARGEPACKET
    MAKE "onsendreadycounter 0
 
    ; spawn a server
-   MAKE "shellcommand (SENTENCE [perl.exe networkserver.pl largepacket] :remoteport)
+   MAKE "shellcommand NETWORKTEST.SERVERCOMMAND "largepacket :remoteport
    SIMPLEREPORTTEST (LIST "SHELL :shellcommand) "true
 
    ; wait a second for the server to come online
@@ -211,7 +262,7 @@ TO NETWORKTEST.CLIENT.RECEIVEUNFRAMEDPACKET
    MAKE "client.data []
 
    ; spawn a server
-   MAKE "shellcommand (SENTENCE [perl.exe networkserver.pl nonul] :remoteport)
+   MAKE "shellcommand NETWORKTEST.SERVERCOMMAND "nonul :remoteport
    SIMPLEREPORTTEST (LIST "SHELL :shellcommand) "true
 
    ; wait a second for the server to come online
@@ -273,6 +324,7 @@ TO NETWORKTEST
   NETWORKTEST.SERVER.SHUTDOWNRACE             WAIT 60 * 2
 
   NETWORKTEST.CLIENT.SMOKETEST                WAIT 60 * 2
+  NETWORKTEST.CLIENT.ECHO                     WAIT 60 * 2
   NETWORKTEST.CLIENT.RECEIVEUNFRAMEDPACKET    WAIT 60 * 2
   NETWORKTEST.CLIENT.RECEIVELARGEPACKET       WAIT 60 * 2
   NETWORKTEST.CLIENT.SHUTDOWNRACE             WAIT 60 * 2

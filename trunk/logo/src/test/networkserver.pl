@@ -38,6 +38,12 @@ elsif ($test eq 'largepacket')
 {
   print CLIENT ("abcdefghijklmnopqrstuvwxyz" x 1000), "\0";
 }
+elsif ($test eq 'echo')
+{
+  my $data = '';
+  recv(CLIENT, $data, 1024, 0) or die "recv: $!";
+  print CLIENT $data;
+}
 
 close CLIENT;
 close SERVER;
