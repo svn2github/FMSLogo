@@ -117,6 +117,11 @@ public:
 
    void Shutdown();
 
+   void
+   PostOnSendReadyEvent(
+      TWindow  *  Window
+      );
+
    SOCKET       m_Socket;     // socket for the connection
    unsigned int m_Port;       // server's listen port
 
@@ -129,9 +134,9 @@ public:
    PHOSTENT     m_HostEntry;    // Pointer to Host Entry
 
    char * m_OnReceiveReady;  // Buffer for receive callback
+private:
    char * m_OnSendReady;     // Buffer for send    callback
 
-private:
    char * m_ReceiveValue;    // pointer to the last packet received
 
    CCarryOverBuffer m_CarryOverData;  // a buffer for carrying over partial packets 

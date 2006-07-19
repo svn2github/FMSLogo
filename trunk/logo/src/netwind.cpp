@@ -313,6 +313,19 @@ CNetworkConnection::Shutdown()
    m_CarryOverData.ReleaseBuffer();
    }
 
+void
+CNetworkConnection::PostOnSendReadyEvent(
+   TWindow  *  Window
+   )
+   {
+   // we don't distinguish between all event types
+   callthing *callevent = callthing::CreateNoYieldFunctionEvent(m_OnSendReady);
+
+   calllists.insert(callevent);
+   Window->PostMessage(WM_CHECKQUEUE, 0, 0);
+   }
+
+
 // converts winsock errorcode to string
 LPCSTR WSAGetLastErrorString(int error_arg)
    {

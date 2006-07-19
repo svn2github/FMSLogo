@@ -2524,10 +2524,7 @@ LRESULT TMainFrame::OnNetworkConnectSendAck(WPARAM /* wParam */, LPARAM lParam)
       }
 
    // we don't distinguish between all event types
-   callthing *callevent = callthing::CreateNoYieldFunctionEvent(g_ClientConnection.m_OnSendReady);
-
-   calllists.insert(callevent);
-   PostMessage(WM_CHECKQUEUE, 0, 0);
+   g_ClientConnection.PostOnSendReadyEvent(this);
    return 0;
    }
 
@@ -2609,10 +2606,7 @@ LRESULT TMainFrame::OnNetworkConnectSendFinish(WPARAM /* wParam */, LPARAM lPara
 #endif
 
    // fire event that connection is made
-   callthing *callevent = callthing::CreateNoYieldFunctionEvent(g_ClientConnection.m_OnSendReady);
-
-   calllists.insert(callevent);
-   PostMessage(WM_CHECKQUEUE, 0, 0);
+   g_ClientConnection.PostOnSendReadyEvent(this);
    return 0;
    }
 
@@ -2686,10 +2680,7 @@ LRESULT TMainFrame::OnNetworkListenReceiveAck(WPARAM /* wParam */, LPARAM lParam
       }
 
    // all other events just queue the event
-   callthing * callevent = callthing::CreateNoYieldFunctionEvent(g_ServerConnection.m_OnSendReady);
-
-   calllists.insert(callevent);
-   PostMessage(WM_CHECKQUEUE, 0, 0);
+   g_ServerConnection.PostOnSendReadyEvent(this);
    return 0;
    }
 
@@ -2762,11 +2753,7 @@ LRESULT TMainFrame::OnNetworkListenReceiveFinish(WPARAM /* wParam */, LPARAM lPa
 #endif
 
    // queue this event
-   callthing * callevent = callthing::CreateNoYieldFunctionEvent(g_ServerConnection.m_OnSendReady);
-
-   calllists.insert(callevent);
-   PostMessage(WM_CHECKQUEUE, 0, 0);
-
+   g_ServerConnection.PostOnSendReadyEvent(this);
    return 0;
    }
 
