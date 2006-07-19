@@ -61,14 +61,20 @@ END
 
 TO NETWORKTEST.SERVER.RECEIVEUNFRAMEDPACKET
 
-   LOCAL [localport server.data shellcommand]
+   LOCAL [localport server.data onsendreadycounter shellcommand]
 
    MAKE "localport   1234
    MAKE "server.data []
+   MAKE "onsendreadycounter 0
 
    ; start the server
    TRACEINSTRUCTION [ NETSTARTUP ]
-   SIMPLEREPORTTEST [ NETACCEPTON :localport [] [QUEUE "server.data NETACCEPTRECEIVEVALUE ]] "true
+   SIMPLEREPORTTEST [ 
+      NETACCEPTON 
+         :localport 
+         [ MAKE  "onsendreadycounter :onsendreadycounter + 1 ] 
+         [ QUEUE "server.data        NETACCEPTRECEIVEVALUE   ]
+      ] "true
 
    TRACEINSTRUCTION [ WAIT 60 * 2 ]
 
@@ -84,8 +90,12 @@ TO NETWORKTEST.SERVER.RECEIVEUNFRAMEDPACKET
    TRACEINSTRUCTION [ NETACCEPTOFF ]
    TRACEINSTRUCTION [ NETSHUTDOWN  ]
 
+
+   ; verify that the "send ready" callback was called the correct number of times
+   SIMPLEREPORTTEST [:onsendreadycounter] 3
+
    ; verify that we received the expected data
-   SIMPLEREPORTTEST [:server.data] [[hello]]
+   SIMPLEREPORTTEST [:server.data]    [[hello]]
 
 END
 
@@ -153,10 +163,11 @@ END
 
 TO NETWORKTEST.CLIENT.RECEIVELARGEPACKET
 
-   LOCAL [localport client.data shellcommand]
+   LOCAL [localport client.data onsendreadycounter shellcommand]
 
    MAKE "remoteport  5556
    MAKE "client.data []
+   MAKE "onsendreadycounter 0
 
    ; spawn a server
    MAKE "shellcommand (SENTENCE [perl.exe networkserver.pl largepacket] :remoteport)
@@ -167,7 +178,14 @@ TO NETWORKTEST.CLIENT.RECEIVELARGEPACKET
 
    ; connect the client to the server
    TRACEINSTRUCTION  [ NETSTARTUP ]
-   SIMPLEREPORTTEST  [ NETCONNECTON NETWORKTEST.HOSTNAME :remoteport [] [QUEUE "client.data ITEM 1 NETCONNECTRECEIVEVALUE] ] "true
+
+   SIMPLEREPORTTEST  [ 
+      NETCONNECTON 
+         NETWORKTEST.HOSTNAME 
+         :remoteport 
+         [ MAKE "onsendreadycounter :onsendreadycounter + 1 ] 
+         [ QUEUE "client.data ITEM 1 NETCONNECTRECEIVEVALUE ]
+   ] "true
 
    ; wait two seconds for the network connection
    TRACEINSTRUCTION  [ WAIT 60*2 ]
@@ -176,6 +194,8 @@ TO NETWORKTEST.CLIENT.RECEIVELARGEPACKET
    TRACEINSTRUCTION  [ NETSHUTDOWN   ]
 
    MAKE "expecteddata TESTLIB.REPEATWORD "abcdefghijklmnopqrstuvwxyz 1000
+
+   SIMPLEREPORTTEST [:onsendreadycounter ] 3
    
    ; TESTBUG: we shouldn't have to concatenate the data because it should have come in a single packet.
    ;SIMPLEREPORTTEST [:client.data] (LIST :expecteddata)
