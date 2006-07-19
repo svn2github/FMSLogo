@@ -302,6 +302,17 @@ CNetworkConnection::AsyncClose(
    m_IsConnected = false;
    }
 
+void
+CNetworkConnection::Shutdown()
+   {
+   Disable();
+
+   safe_free(m_OnReceiveReady);
+   safe_free(m_OnSendReady);
+   SetLastPacketReceived(NULL);
+   m_CarryOverData.ReleaseBuffer();
+   }
+
 // converts winsock errorcode to string
 LPCSTR WSAGetLastErrorString(int error_arg)
    {
@@ -478,7 +489,6 @@ LPCSTR WSAGetLastErrorString(int error_arg)
    }
 
 // startup network
-
 NODE *lnetstartup(NODE *args)
    {
    // check if already started
@@ -506,24 +516,14 @@ NODE *lnetstartup(NODE *args)
    }
 
 // put everything back to original state
-
 NODE *lnetshutdown(NODE *)
    {
 
    // cleanup receive
-   g_ServerConnection.Disable();
-
-   safe_free(g_ServerConnection.m_OnReceiveReady);
-   safe_free(g_ServerConnection.m_OnSendReady);
-   g_ServerConnection.SetLastPacketReceived(NULL);
-   g_ServerConnection.m_CarryOverData.ReleaseBuffer();
+   g_ServerConnection.Shutdown();
 
    // cleanup send
-   g_ClientConnection.Disable();
-   safe_free(g_ClientConnection.m_OnReceiveReady);
-   safe_free(g_ClientConnection.m_OnSendReady);
-   g_ClientConnection.SetLastPacketReceived(NULL);
-   g_ClientConnection.m_CarryOverData.ReleaseBuffer();
+   g_ClientConnection.Shutdown();
 
    // cleanup library
    if (network_is_started) 
