@@ -852,7 +852,6 @@ void checkqueue()
              thing->networkpacket = NULL;
 
              do_execution(thing->func);
-             free(thing->func);
 
              yield_flag = save_yield_flag;
              break;
@@ -874,16 +873,6 @@ void emptyqueue()
    while (thing = calllists.get())
       {
       calllists.zap();
-      switch (thing->kind)
-         {
-         // TODO: move this logic into callthing's destructor
-         case EVENTTYPE_NetworkReceiveReady:
-            {
-            free(thing->func);
-            free(thing->networkpacket);
-            break;
-            }
-         }
 
       delete thing;
       }

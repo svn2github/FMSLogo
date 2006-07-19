@@ -603,6 +603,8 @@ public:
    static callthing * CreateNoYieldFunctionEvent(char * function);
    static callthing * CreateNetworkReceiveReadyEvent(CNetworkConnection * NetworkConnection, const char * packet);
 
+   ~callthing();
+
    // CONSIDER: a union would make this struct smaller
    EVENTTYPE            kind;
    CNetworkConnection * networkconnection;

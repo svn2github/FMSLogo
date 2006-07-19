@@ -156,6 +156,17 @@ callthing * callthing::CreateNetworkReceiveReadyEvent(CNetworkConnection * Netwo
    return callevent;
    }
 
+callthing::~callthing()
+   {
+   switch (kind)
+      {
+      case EVENTTYPE_NetworkReceiveReady:
+         free(func);
+         free(networkpacket);
+         break;
+      }
+   }
+
 TScreenWindow::TScreenWindow(
    TWindow *AParent,
    LPCSTR   ATitle
