@@ -2642,10 +2642,7 @@ LRESULT TMainFrame::OnNetworkListenReceiveAck(WPARAM /* wParam */, LPARAM lParam
          return 0;
 
       case FD_ACCEPT:
-         g_ServerConnection.m_IsConnected = true;
-
          // disabled for UDP
-
 #ifndef USE_UDP
          acc_sin_len = sizeof(acc_sin);
 
@@ -2657,8 +2654,11 @@ LRESULT TMainFrame::OnNetworkListenReceiveAck(WPARAM /* wParam */, LPARAM lParam
             {
             MessageBox(WSAGetLastErrorString(0), "accept(receivesock)");
             // err_logo(STOP_ERROR,NIL);
+            return 0;
             }
 #endif
+         g_ServerConnection.m_IsConnected = true;
+
          break;
 
       case FD_CLOSE:
@@ -2671,12 +2671,6 @@ LRESULT TMainFrame::OnNetworkListenReceiveAck(WPARAM /* wParam */, LPARAM lParam
          // allow another frame to go out.
          g_ServerConnection.m_IsBusy = false;
          break;
-
-      default:
-         MessageBox("Unexpected Message", "Status");
-         // err_logo(STOP_ERROR,NIL);
-         break;
-
       }
 
    // all other events just queue the event
