@@ -2508,22 +2508,7 @@ LRESULT TMainFrame::OnNetworkConnectSendAck(WPARAM /* wParam */, LPARAM lParam)
 
       case FD_CLOSE:
          // done
-
-         // send any data in the carry-over buffer upwards
-         if (g_ClientConnection.m_CarryOverData.m_BytesOfData != 0)
-            {
-            callthing *callevent = callthing::CreateNetworkReceiveReadyEvent(
-               &g_ClientConnection,
-               g_ClientConnection.m_CarryOverData.m_Buffer);
-            
-            calllists.insert(callevent);
-               
-            PostMessage(WM_CHECKQUEUE, 0, 0);
-            }
-
-         g_ClientConnection.m_CarryOverData.ReleaseBuffer();
-
-         g_ClientConnection.m_IsConnected = false;
+         g_ClientConnection.AsyncClose(this);
          break;
       }
 
@@ -2673,21 +2658,7 @@ LRESULT TMainFrame::OnNetworkListenReceiveAck(WPARAM /* wParam */, LPARAM lParam
 
       case FD_CLOSE:
 
-         // the remote endpoint has finished sending
-         // send any data in the carry-over buffer to Logo
-         if (g_ServerConnection.m_CarryOverData.m_BytesOfData != 0)
-            {
-            callthing *callevent = callthing::CreateNetworkReceiveReadyEvent(
-               &g_ServerConnection,
-               g_ServerConnection.m_CarryOverData.m_Buffer);
-
-            calllists.insert(callevent);
-
-            PostMessage(WM_CHECKQUEUE, 0, 0);
-            }
-
-         g_ClientConnection.m_CarryOverData.ReleaseBuffer();
-         g_ServerConnection.m_IsConnected = false;
+         g_ServerConnection.AsyncClose(this);
          break;
 
       case FD_WRITE:

@@ -110,6 +110,11 @@ public:
       const char *     ErrorMessage
       );
 
+   void
+   AsyncClose(
+      TWindow    *         Window
+      );
+
    SOCKET       m_Socket;     // socket for the connection
    unsigned int m_Port;       // server's listen port
 

@@ -280,6 +280,28 @@ CNetworkConnection::AsyncReceive(
       }
    }
 
+void
+CNetworkConnection::AsyncClose(
+   TWindow    *         Window
+   )
+   {
+   // send any data in the carry-over buffer upwards
+   if (m_CarryOverData.m_BytesOfData != 0)
+      {
+      callthing *callevent = callthing::CreateNetworkReceiveReadyEvent(
+         this,
+         m_CarryOverData.m_Buffer);
+            
+      calllists.insert(callevent);
+               
+      Window->PostMessage(WM_CHECKQUEUE, 0, 0);
+      }
+
+   m_CarryOverData.ReleaseBuffer();
+
+   m_IsConnected = false;
+   }
+
 // converts winsock errorcode to string
 LPCSTR WSAGetLastErrorString(int error_arg)
    {
