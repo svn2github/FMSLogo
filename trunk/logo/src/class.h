@@ -122,6 +122,11 @@ public:
       TWindow  *  Window
       );
 
+    bool
+    SendValue(
+       const char * Data
+       );
+
    SOCKET       m_Socket;     // socket for the connection
    unsigned int m_Port;       // server's listen port
 

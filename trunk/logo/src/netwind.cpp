@@ -227,6 +227,37 @@ CNetworkConnection::Enable(
       }
    }
 
+bool
+CNetworkConnection::SendValue(
+   const char * Data
+   )
+   {
+   if (m_IsConnected && !m_IsBusy)
+      {
+      // send the data
+      int rval = send(m_Socket, Data, strlen(Data) + 1, 0);
+      if (rval == SOCKET_ERROR)
+         {
+         if (WSAGetLastError() != WSAEWOULDBLOCK)
+            {
+            ShowMessageAndStop("send(socket)", WSAGetLastErrorString(0));
+            return false;
+            }
+
+         // Don't send anymore until we receive confirmation
+         // that the remote side received the data.
+         m_IsBusy = true;
+         return false;
+         }
+      }
+   else
+      {
+      return false;
+      }
+
+   return true;
+   }
+
 void
 CNetworkConnection::AsyncReceive(
    TWindow    *         Window,
@@ -705,35 +736,14 @@ NODE *lnetsendoff(NODE *)
 NODE *lnetsendsendvalue(NODE *args)
    {
    // get args (data)
-   char Data[MAX_BUFFER_SIZE];
-   cnv_strnode_string(Data, args);
+   char data[MAX_BUFFER_SIZE];
+   cnv_strnode_string(data, args);
 
    if (NOT_THROWING)
       {
-      if (g_ClientConnection.m_IsConnected && !g_ClientConnection.m_IsBusy)
-         {
-
-         // send the data
-         if ((send(g_ClientConnection.m_Socket, Data, strlen(Data) + 1, 0)) == SOCKET_ERROR)
-            {
-
-            if (WSAGetLastError() != WSAEWOULDBLOCK)
-               {
-               ShowMessageAndStop("send(sendsock)", WSAGetLastErrorString(0));
-               return Falsex;
-               }
-
-            // Idle Until it's ok again.
-            g_ClientConnection.m_IsBusy = true;
-            return Falsex;
-            }
-         }
-      else
-         {
-         return Falsex;
-         }
-
-      return Truex;
+      // try to send data
+      bool isOk = g_ClientConnection.SendValue(data);
+      return torf(isOk);
       }
 
    return Unbound;
@@ -742,33 +752,14 @@ NODE *lnetsendsendvalue(NODE *args)
 NODE *lnetreceivesendvalue(NODE *args)
    {
    // get args (data)
-   char Data[MAX_BUFFER_SIZE];
-   cnv_strnode_string(Data, args);
+   char data[MAX_BUFFER_SIZE];
+   cnv_strnode_string(data, args);
 
    if (NOT_THROWING)
       {
-      if (g_ServerConnection.m_IsConnected && !g_ServerConnection.m_IsBusy)
-         {
-         // send the data
-         if ((send(g_ServerConnection.m_Socket, Data, strlen(Data) + 1, 0)) == SOCKET_ERROR)
-            {
-            if (WSAGetLastError() != WSAEWOULDBLOCK)
-               {
-               ShowMessageAndStop("send(sendsock)", WSAGetLastErrorString(0));
-               return Falsex;
-               }
-
-            // Idle Until it's ok again.
-            g_ServerConnection.m_IsBusy = true;
-            return Falsex;
-            }
-         }
-      else
-         {
-         return Falsex;
-         }
-
-      return Truex;
+      // try to send data
+      bool isOk = g_ServerConnection.SendValue(data);
+      return torf(isOk);
       }
 
    return Unbound;
