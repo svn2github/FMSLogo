@@ -61,9 +61,9 @@ struct LINEX
 struct CUTMAP
    {
    HBITMAP CutMemoryBitMap;  // Used to store cut and paste
-   int CutHeight;            // current cut height
-   int CutWidth;             // current cut width
-   long CutFlag;             // flag to signal something in cut buffer
+   int     CutHeight;        // current cut height
+   int     CutWidth;         // current cut width
+   bool    CutFlag;          // flag to signal something in cut buffer
    };
 
 // Class for buffering (carrying over) network data from 

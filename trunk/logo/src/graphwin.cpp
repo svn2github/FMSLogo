@@ -1282,7 +1282,7 @@ CopyCutIndexToClipboard(
 
    // Never mung with bitmaps that belong to ClipBoard
 
-   CutBmp[CutBmpIndex].CutFlag = 0;
+   CutBmp[CutBmpIndex].CutFlag = false;
    }
 
 
@@ -1326,7 +1326,7 @@ PasteFromClipboardToCutIndex(
 
       // Let code know below that we have something
 
-      CutBmp[CutBmpIndex].CutFlag = 1;
+      CutBmp[CutBmpIndex].CutFlag = true;
 
       // We created a BitMap from the DIB that we only need for the
       // purpose of this "paste", next paste could be something new.
@@ -1364,11 +1364,11 @@ PasteFromClipboardToCutIndex(
 
       if (CutBmp[CutBmpIndex].CutMemoryBitMap != NULL)
          {
-         CutBmp[CutBmpIndex].CutFlag = 1;
+         CutBmp[CutBmpIndex].CutFlag = true;
          }
       else
          {
-         CutBmp[CutBmpIndex].CutFlag = 0;
+         CutBmp[CutBmpIndex].CutFlag = false;
          }
       }
 
@@ -1423,7 +1423,7 @@ BitCopyOrCut(NODE *arg, bool IsCut)
             // else get rid of it and make a new one later
             DeleteObject(CutBmp[CutIndex].CutMemoryBitMap);
             }
-         CutBmp[CutIndex].CutFlag = 0;
+         CutBmp[CutIndex].CutFlag = false;
          }
 
       CutBmp[CutIndex].CutWidth = TempWidth;
@@ -1433,7 +1433,7 @@ BitCopyOrCut(NODE *arg, bool IsCut)
       if ((CutBmp[CutIndex].CutWidth != 0) && (CutBmp[CutIndex].CutHeight != 0))
          {
          // flag it so we will delete it
-         CutBmp[CutIndex].CutFlag = 1;
+         CutBmp[CutIndex].CutFlag = true;
 
          HDC ScreenDC = GetDC(MainWindowx->ScreenWindow->HWindow);
 
@@ -1692,7 +1692,7 @@ NODE *lbitpaste(NODE *)
          // if clipboard then never leave Cut Flag true
          if (CutIndex == 0)
             {
-            CutBmp[CutIndex].CutFlag = 0;
+            CutBmp[CutIndex].CutFlag = false;
             }
 
          HDC ScreenDC = GetDC(MainWindowx->ScreenWindow->HWindow);
@@ -1815,7 +1815,7 @@ NODE *lbitpastetoindex(NODE *arg)
          // if clipboard then never leave Cut Flag true
          if (CutIndex == 0)
             {
-            CutBmp[CutIndex].CutFlag = 0;
+            CutBmp[CutIndex].CutFlag = false;
             }
 
          HDC ScreenDC = GetDC(MainWindowx->ScreenWindow->HWindow);
@@ -1833,8 +1833,8 @@ NODE *lbitpastetoindex(NODE *arg)
             MemDC,
             +x,
             CutBmp[i].CutHeight - y - CutBmp[CutIndex].CutHeight,
-            (int) (CutBmp[CutIndex].CutWidth),
-            (int) (CutBmp[CutIndex].CutHeight),
+            CutBmp[CutIndex].CutWidth,
+            CutBmp[CutIndex].CutHeight,
             TempMemDC,
             0,
             0,
@@ -1971,7 +1971,7 @@ void turtlepaste(int TurtleToPaste)
          // if clipboard then never leave Cut Flag true
          if (TurtleToPaste == 0)
             {
-            CutBmp[TurtleToPaste].CutFlag = 0;
+            CutBmp[TurtleToPaste].CutFlag = false;
             }
 
          HDC ScreenDC = GetDC(MainWindowx->ScreenWindow->HWindow);
