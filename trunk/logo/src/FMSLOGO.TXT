@@ -50,6 +50,7 @@ Part II) New features/bugs fixed:
       when it receives data that does not contain NUL.
     o Mitigate bug #1327718: Application settings are now stored per-user 
       so that limited user accounts can write persistent settings.
+    o Implement request #1525706; BITPASTETOINDEX supports negative X,Y inputs.
     o Implement request #1492605; SORT is now faster and the design fits
       better with Logo's LISP heritage.
     o Minor updates to the manual.

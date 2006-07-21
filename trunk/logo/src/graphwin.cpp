@@ -1777,14 +1777,10 @@ NODE *lbitpastetoindex(NODE *arg)
 
    // set the current bitmap index if within range
    int i = getint(pos_int_arg(arg));
-   int x = getint(pos_int_arg(cdr(arg)));
-   int y = getint(pos_int_arg(cdr(cdr(arg))));
+   int x = int_arg(cdr(arg));
+   int y = int_arg(cdr(cdr(arg)));
 
-   if (i < MaxBitCuts)
-      {
-      // CutIndex = i;
-      }
-   else
+   if (MaxBitCuts <= i)
       {
       ShowMessageAndStop("Error", "BitMap Index out of range");
       return Unbound;
