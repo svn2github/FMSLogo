@@ -34,6 +34,11 @@ use IO::File;
 $main::TotalErrors   = 0;
 $main::TotalWarnings = 0;
 
+@main::BannedWords = qw(
+  left-hand
+  right-hand
+);
+
 my %Commands = ();
 
 my %AlternateSpellings = ();
@@ -772,6 +777,15 @@ foreach my $filename (<*.xml>) {
       }
     }
 
+    # Find use of banned words
+    foreach my $bannedWord (@main::BannedWords) {
+      while ($line =~ m!\b($bannedWord)\b!gi) {
+
+        if (not $Exceptions{$filename}{bannedword}{$bannedWord}) {
+          LogError($filename, $linenumber, "use of banned word: $bannedWord");
+        }
+      }
+    }
   }
 
   if ($command and $exampleIsStarted and not $exampleContainsCommand) {
