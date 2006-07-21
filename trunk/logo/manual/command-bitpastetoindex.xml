@@ -13,22 +13,25 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-This command "pastes" the image that was "cut" with <link linkend="command-bitcut">BITCUT</link> at <parameter>index</parameter> to the <parameter>x</parameter>, <parameter>y</parameter> coordinate of the current bitmap index (or to the clipboard, if <link linkend="command-bitindex">BITINDEX</link> is 0).
-Don't confuse the indices here; the <parameter>index</parameter> input specifies the index to paste from, SETBITINDEX specifies the index to paste to.
-The <parameter>x</parameter> and <parameter>y</parameter> inputs specify where to place the lower left-hand corner of the image to be pasted on the destination image.
+This command "pastes" the entire image that was "cut" with <link linkend="command-bitcut">BITCUT</link> to the <parameter>x</parameter>, <parameter>y</parameter> coordinate of the bitmap at the <parameter>index</parameter> input.
+Don't confuse the indices here; the <parameter>index</parameter> input specifies the index to paste to, whereas <link linkend="command-setbitindex">SETBITINDEX</link> specifies the index to copy from.
+</para>
+
+<para>
+The <parameter>x</parameter> and <parameter>y</parameter> inputs specify the coordinates on the destination bitmap where the lower-left corner of the source bitmap is pasted.
 </para>
 
 <para>
 This command is useful for producing flicker-free animation.
 For example, let's say you have a ball rolling across a background.
-You have to erase the ball, put the background back and draw the ball in its new position.
-The problem is that the user momentarily sees a screen with no ball when you erase it (but before you draw it in the new position).
+You have to erase the ball, put the background back, and draw the ball in its new position.
+The problem is that the user momentarily sees a screen with no ball after you erase it, but before you draw it in its new position.
 This is called "flicker".
-However, if you create the entire animation frame in memory (by using BITPASTETOINDEX) and draw (paste) each frame to the screen all at once, then the user doesn't see any flicker.
+However, if you create the entire animation frame in memory (by using BITPASTETOINDEX) and <link linkend="command-bitpaste">BITPASTE</link> each frame to the screen in a single instruction, then the user doesn't see any flicker.
 </para>
 
 <para>
-Note, the destination index must already have an image to paste to.
+Note that the destination index must already have an image to paste to.
 </para>
 
 <para>
