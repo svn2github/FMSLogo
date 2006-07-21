@@ -27,11 +27,11 @@ The <parameter>name</parameter> input identifies the new group box control and <
 </para>
 
 <para>
-The <parameter>xpos</parameter> input is the X coordinate where the upper left-hand corner of the new group box control is placed.
+The <parameter>xpos</parameter> input is the X coordinate where the upper-left corner of the new group box control is placed.
 </para>
 
 <para>
-The <parameter>ypos</parameter> input is the Y coordinate where the upper left-hand corner of the new group box control is placed.
+The <parameter>ypos</parameter> input is the Y coordinate where the upper-left corner of the new group box control is placed.
 </para>
 
 <para>

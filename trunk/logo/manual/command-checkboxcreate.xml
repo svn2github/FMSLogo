@@ -35,11 +35,11 @@ The <parameter>label</parameter> input is a word that will be written next to th
 </para>
 
 <para>
-The <parameter>xpos</parameter> input is the X coordinate where the upper left-hand corner of the new checkbox is placed.
+The <parameter>xpos</parameter> input is the X coordinate where the upper-left corner of the new checkbox is placed.
 </para>
 
 <para>
-The <parameter>ypos</parameter> input is the Y coordinate where the upper left-hand corner of the new checkbox is placed.
+The <parameter>ypos</parameter> input is the Y coordinate where the upper-left corner of the new checkbox is placed.
 </para>
 
 <para>
