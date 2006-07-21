@@ -121,7 +121,6 @@ TO TESTALL
   WAITTEST           ; from wait.lgo
   DIRECTORYTEST      ; from directory.lgo
   MISCTEST           ; from misc.lgo
-  NETWORKTEST        ; from network.lgo
   PERSPECTIVETEST    ; from perspective.lgo
   ORIENTATIONTEST    ; from orientation.lgo
   SCRUNCHTEST        ; from scrunch.lgo
@@ -141,6 +140,7 @@ TO TESTALL
   MOUSETEST          ; from mouse.lgo
   MIDITEST           ; from midi.lgo
   SOUNDTEST          ; from sound.lgo
+  NETWORKTEST        ; from network.lgo
 
   REPORTTESTUNINITIALIZE
 
