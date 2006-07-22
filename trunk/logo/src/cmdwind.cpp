@@ -810,19 +810,62 @@ void TMyListboxWindow::EvMouseMove(uint modKeys, TPoint& point)
 
 void TMyListboxWindow::CopyCurrentLineToEditBox()
    {
-      char buf[MAX_BUFFER_SIZE];
+   char buf[1024] = {0};
 
-      GetLine(buf, MAX_BUFFER_SIZE, GetLineFromPos(-1));
-
-      // remove trailing whitespace
-      for (char * stringend = buf + strlen(buf) - 1;
-           buf <= stringend && isspace(*stringend);
-           stringend--)
+   char * ptr = buf;
+   char * end = buf + sizeof(buf) - 1;
+   int currentline = GetLineFromPos(-1);
+   
+   // read as many word-wrapped lines as it takes to get to the end of a real line
+   while (ptr < end)
+      {
+      bool isok = GetLine(ptr, end - ptr, currentline);
+      if (!isok)
          {
-         *stringend = '\0';
+         break;
          }
 
-      MainWindowx->CommandWindow->Editbox.SetText(buf);
+      // advance to the last char in buf
+      ptr = ptr + strlen(ptr) - 1;
+      assert(ptr < end && "ptr is not NUL-terminated");
+
+      if (*ptr == '\n' || *ptr == '\r')
+         {
+         // we reached the end of the line
+         break;
+         }
+
+      // This line doesn't end in an EOL sequence.
+      // This must be a word-wrapped line.
+
+      if (end <= ptr + 2)
+         {
+         // buf can't hold any more characters
+         break;
+         }
+
+      if (*ptr != ' ')
+         {
+         // append a space to the end of buf
+         ptr++;
+         ptr[0] = ' ';
+         ptr[1] = '\0';
+         }
+
+      // advance to the NUL
+      ptr++;
+      currentline++;
+      }
+
+   // remove trailing whitespace
+   for (char * stringend = buf + strlen(buf) - 1;
+        buf <= stringend && isspace(*stringend);
+        stringend--)
+      {
+      *stringend = '\0';
+      }
+
+   MainWindowx->CommandWindow->Editbox.SetText(buf);
    }
 
 void TMyListboxWindow::EvChar(uint key, uint repeatCount, uint flags)
