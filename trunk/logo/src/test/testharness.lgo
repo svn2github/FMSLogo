@@ -70,6 +70,7 @@ LOAD "midi.lgo
 LOAD "sound.lgo
 LOAD "yesnobox.lgo
 LOAD "shellscript.lgo
+LOAD "timer.lgo
 
 TO TESTALL
 
@@ -117,6 +118,7 @@ TO TESTALL
   FILLTEST           ; from fill.lgo
   FILETEST           ; from file.lgo
   COLORTEST          ; from color.lgo
+  TIMERTEST          ; from timer.lgo
   SCREENTEST         ; from screen.lgo
   WAITTEST           ; from wait.lgo
   DIRECTORYTEST      ; from directory.lgo
