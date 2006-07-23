@@ -1236,7 +1236,7 @@ NODE *lhideturtle(NODE *)
 
 NODE *lshownp(NODE *)
    {
-   return g_Turtles[turtle_which].IsShown ? Truex : Falsex;
+   return true_or_false(g_Turtles[turtle_which].IsShown);
    }
 
 NODE *lsetheading(NODE *arg)
@@ -2140,7 +2140,7 @@ NODE *lfullscreen(NODE *)
 
 NODE *lpendownp(NODE *)
    {
-   return g_Turtles[turtle_which].IsPenUp ? Falsex : Truex;
+   return true_or_false(!g_Turtles[turtle_which].IsPenUp);
    }
 
 NODE *lpenmode(NODE *)
@@ -2331,11 +2331,8 @@ NODE *lsetscrunch(NODE *args)
 
 NODE *lbuttonp(NODE *)
    {
-   if (button())
-      {
-      return Truex;
-      }
-   return Falsex;
+   bool btn = button();
+   return true_or_false(btn);
    }
 
 NODE *ltone(NODE *args) 

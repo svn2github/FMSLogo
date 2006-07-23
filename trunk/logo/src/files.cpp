@@ -660,14 +660,8 @@ NODE *lreadchars(NODE *args)
 NODE *leofp(NODE *)
    {
    ungetc(getc(readstream), readstream);
-   if (feof(readstream))
-      {
-      return Truex;
-      }
-   else
-      {
-      return Falsex;
-      }
+   int isEof = feof(readstream);
+   return true_or_false(isEof);
    }
 
 NODE *lkeyp(NODE *)

@@ -127,14 +127,7 @@ NODE *lnot(NODE *args)
 
    if (NOT_THROWING)
       {
-      if (arg) 
-         {
-         return Falsex;
-         }
-      else 
-         {
-         return Truex;
-         }
+      return true_or_false(!arg);
       }
 
    return Unbound;
@@ -434,12 +427,6 @@ NODE *lshell(NODE *args)
    char textbuf[MAX_BUFFER_SIZE];
    cnv_strnode_string(textbuf, args);
 
-   if (WinExec(textbuf, SW_SHOW) > 31)
-      {
-      return Truex;
-      }
-   else
-      {
-      return Falsex;
-      }
+   int rval = WinExec(textbuf, SW_SHOW);
+   return true_or_false(rval > 31);
    }

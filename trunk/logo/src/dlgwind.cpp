@@ -1999,14 +1999,8 @@ NODE *lradiobuttonget(NODE *args)
       dialogthing *parent = dialogboxes.get(parentname, WINDOWTYPE_RadioButton);
       if (parent != NULL)
          {
-         if (BF_CHECKED == parent->TRmybox->GetCheck())
-            {
-            return Truex;
-            }
-         else
-            {
-            return Falsex;
-            }
+         uint check = parent->TRmybox->GetCheck();
+         return true_or_false(BF_CHECKED == check);
          }
       else
          {
@@ -2035,7 +2029,7 @@ NODE *lradiobuttonset(NODE *args)
             }
          else
             {
-         parent->TRmybox->Uncheck();
+            parent->TRmybox->Uncheck();
             }
          }
       else
@@ -2149,14 +2143,8 @@ NODE *lcheckboxget(NODE *args)
       dialogthing *parent = dialogboxes.get(parentname, WINDOWTYPE_CheckBox);
       if (parent != NULL)
          {
-         if (BF_CHECKED == parent->TCBmybox->GetCheck())
-            {
-            return Truex;
-            }
-         else
-            {
-            return Falsex;
-            }
+         uint check = parent->TCBmybox->GetCheck();
+         return true_or_false(BF_CHECKED == check);
          }
       else
          {
