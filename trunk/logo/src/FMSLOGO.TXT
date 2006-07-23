@@ -41,6 +41,8 @@ Part II) New features/bugs fixed:
       NOT LESS? as a predicate.
     o Fix bug #1455201: Calling TO from STARTUP no longer hangs FMSLogo.
     o Fix bug #1483191: Cancelling BYE no longer puts Logo in a Stopping state.
+    o Fix bug #1497077: SETTIMER now throws bad input error when given a 
+      negative delay input, instead of behaving unpredictably.
     o Fix bug #1471059: value of REPCOUNT is now -1 outside of REPEAT loop.
     o Fix bug #1457755: 'CATCH "ERROR [TO]' now throws meaningful error.
     o Fix bug #1457733: TO 1 now throws meaning error.

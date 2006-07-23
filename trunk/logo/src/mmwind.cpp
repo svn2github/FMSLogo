@@ -283,36 +283,38 @@ NODE *lmci(NODE *args)
 
 NODE *lsettimer(NODE *args)
    {
-
-   // get id and if valid continue
+   // get the timer id 
    int id = int_arg(args);
 
-   if ((id > 0) && (id < MAX_TIMERS))
+   // get delay
+   int delay = getint(pos_int_arg(args = cdr(args)));
+
+   // get callback
+   char callback[MAX_BUFFER_SIZE];
+   cnv_strnode_string(callback, args = cdr(args));
+
+   if (NOT_THROWING)
       {
-      // get delay
-      WORD delay = int_arg(args = cdr(args));
-
-      // get callback
-      char callback[MAX_BUFFER_SIZE];
-      cnv_strnode_string(callback, args = cdr(args));
-
-      if (timer_callback[id] == NULL) 
+      if ((id > 0) && (id < MAX_TIMERS))
          {
-         timer_callback[id] = (char *) malloc(MAX_BUFFER_SIZE);
+         if (timer_callback[id] == NULL) 
+            {
+            timer_callback[id] = (char *) malloc(MAX_BUFFER_SIZE);
+            }
+         strcpy(timer_callback[id], callback);
+
+         // if not set sucessfully error
+         if (!::SetTimer(MainWindowx->HWindow, id, delay, NULL))
+            {
+            ShowMessageAndStop("Error", "Too Many Timers");
+            }
          }
-      strcpy(timer_callback[id], callback);
-
-      // if not set sucessfully error
-
-      if (!::SetTimer(MainWindowx->HWindow, id, delay, NULL))
+      else
          {
-         ShowMessageAndStop("Error", "Too Many Timers");
+         ShowMessageAndStop("Error", "Bad Timer Id");
          }
       }
-   else
-      {
-      ShowMessageAndStop("Error", "Bad Timer Id");
-      }
+
    return Unbound;
    }
 
