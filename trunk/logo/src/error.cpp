@@ -479,6 +479,9 @@ NODE *lpause(NODE*)
             stopping_flag = RUN;
             }
          }
+
+      check_stop(false);
+
       deref(elist);
       }
 
