@@ -941,7 +941,7 @@ int compare_numnodes(NODE *n1, NODE *n2)
       }
    }
 
-NODE *torf(bool tf)
+NODE *true_or_false(bool tf)
    {
    return (tf ? Truex : Falsex);
    }
@@ -953,7 +953,7 @@ NODE *llessp(NODE *args)
 
    if (NOT_THROWING)
       {
-      return torf(compare_numnodes(n1, n2) < 0);
+      return true_or_false(compare_numnodes(n1, n2) < 0);
       }
    return Unbound;
    }
@@ -965,7 +965,7 @@ NODE *lgreaterp(NODE *args)
 
    if (NOT_THROWING)
       {
-      return torf(compare_numnodes(n1, n2) > 0);
+      return true_or_false(compare_numnodes(n1, n2) > 0);
       }
    return Unbound;
    }
@@ -1156,12 +1156,12 @@ NODE *lequalp(NODE *args)
    bool caseig = variableIsTrue(Caseignoredp);
    bool val = equalp_help(arg1, arg2, caseig);
 
-   return torf(val);
+   return true_or_false(val);
    }
 
 NODE *l_eq(NODE *args)
    {
-   return torf(car(args) == cadr(args));
+   return true_or_false(car(args) == cadr(args));
    }
 
 NODE *lbeforep(NODE *args)
@@ -1172,6 +1172,6 @@ NODE *lbeforep(NODE *args)
    bool caseig = variableIsTrue(Caseignoredp);
    int  val    = compare_node(arg1, arg2, caseig);
 
-   return torf(val < 0);
+   return true_or_false(val < 0);
    }
 

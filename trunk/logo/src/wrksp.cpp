@@ -1449,7 +1449,7 @@ NODE *lnamep(NODE *args)
    NODE *arg = name_arg(args);
    if (NOT_THROWING)
       {
-      return torf(valnode__caseobj(intern(arg)) != Unbound);
+      return true_or_false(valnode__caseobj(intern(arg)) != Unbound);
       }
    return Unbound;
    }
@@ -1459,7 +1459,7 @@ NODE *lprocedurep(NODE *args)
    NODE *arg = name_arg(args);
    if (NOT_THROWING)
       {
-      return torf(procnode__caseobj(intern(arg)) != UNDEFINED);
+      return true_or_false(procnode__caseobj(intern(arg)) != UNDEFINED);
       }
    return Unbound;
    }
@@ -1469,7 +1469,7 @@ NODE *lproplistp(NODE *args)
    NODE *arg = name_arg(args);
    if (NOT_THROWING)
       {
-      return torf(plist__caseobj(intern(arg)) != NIL);
+      return true_or_false(plist__caseobj(intern(arg)) != NIL);
       }
    return Unbound;
    }
@@ -1491,13 +1491,13 @@ NODE *check_proctype(NODE *args, int wanted)
 
    if (wanted == 2)
       {
-      return torf(is_macro(intern(arg)));
+      return true_or_false(is_macro(intern(arg)));
       }
 
    int isprim = is_prim(cell);
    if (NOT_THROWING)
       {
-      return torf((isprim != 0) == wanted);
+      return true_or_false((isprim != 0) == wanted);
       }
 
    return Unbound;

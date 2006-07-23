@@ -281,7 +281,7 @@ NODE *llist(NODE *args)
 
 NODE *lemptyp(NODE *arg)
    {
-   return torf(car(arg) == NIL || car(arg) == Null_Word);
+   return true_or_false(car(arg) == NIL || car(arg) == Null_Word);
    }
 
 static
@@ -333,7 +333,7 @@ NODE *lbackslashedp(NODE *args)
    if (NOT_THROWING)
       {
       char i = *getstrptr(arg);
-      return torf(getparity(i));
+      return true_or_false(getparity(i));
       }
    return Unbound;
    }
@@ -547,24 +547,24 @@ NODE *lsentence(NODE *args)
 NODE *lwordp(NODE *arg)
    {
    arg = car(arg);
-   return torf(arg != Unbound && !is_aggregate(arg));
+   return true_or_false(arg != Unbound && !is_aggregate(arg));
    }
 
 NODE *llistp(NODE *arg)
    {
    arg = car(arg);
-   return torf(is_list(arg));
+   return true_or_false(is_list(arg));
    }
 
 NODE *lnumberp(NODE *arg)
    {
    setcar(arg, cnv_node_to_numnode(car(arg)));
-   return torf(car(arg) != Unbound);
+   return true_or_false(car(arg) != Unbound);
    }
 
 NODE *larrayp(NODE *arg)
    {
-   return torf(nodetype(car(arg)) == ARRAY);
+   return true_or_false(nodetype(car(arg)) == ARRAY);
    }
 
 static

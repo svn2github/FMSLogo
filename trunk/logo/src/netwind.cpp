@@ -743,7 +743,7 @@ NODE *lnetconnectsendvalue(NODE *args)
       {
       // try to send data
       bool isOk = g_ClientConnection.SendValue(data);
-      return torf(isOk);
+      return true_or_false(isOk);
       }
 
    return Unbound;
@@ -759,7 +759,7 @@ NODE *lnetacceptsendvalue(NODE *args)
       {
       // try to send data
       bool isOk = g_ServerConnection.SendValue(data);
-      return torf(isOk);
+      return true_or_false(isOk);
       }
 
    return Unbound;

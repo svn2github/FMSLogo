@@ -425,7 +425,7 @@ extern NODE *lexp(NODE *args);
 extern NODE *llog10(NODE *args);
 extern NODE *lln(NODE *args);
 extern NODE *lpower(NODE *args);
-extern NODE *torf(bool tf);
+extern NODE *true_or_false(bool tf);
 extern NODE *llessp(NODE *args);
 extern NODE *lgreaterp(NODE *args);
 extern int compare_node(NODE *n1, NODE *n2, bool ignorecase);
