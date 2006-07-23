@@ -590,7 +590,7 @@ NODE *lnetshutdown(NODE *)
 
 // enable receiving
 
-NODE *lnetreceiveon(NODE *args)
+NODE *lnetaccepton(NODE *args)
    {
    // check sanity
    if (!network_is_started)
@@ -636,7 +636,7 @@ NODE *lnetreceiveon(NODE *args)
    return Unbound;
    }
 
-NODE *lnetreceiveoff(NODE *)
+NODE *lnetacceptoff(NODE *)
    {
    // tell handler not to do anything with messages for network receive
    if (g_ServerConnection.IsEnabled())
@@ -651,7 +651,7 @@ NODE *lnetreceiveoff(NODE *)
    return Unbound;
    }
 
-NODE *lnetreceivereceivevalue(NODE *)
+NODE *lnetacceptreceivevalue(NODE *)
    {
    // return current network value
    if (g_ServerConnection.IsEnabled())
@@ -662,7 +662,7 @@ NODE *lnetreceivereceivevalue(NODE *)
    return Unbound;
    }
 
-NODE *lnetsendreceivevalue(NODE *)
+NODE *lnetconnectreceivevalue(NODE *)
    {
    // return current network value
    if (g_ClientConnection.IsEnabled())
@@ -673,7 +673,7 @@ NODE *lnetsendreceivevalue(NODE *)
    return Unbound;
    }
 
-NODE *lnetsendon(NODE *args)
+NODE *lnetconnecton(NODE *args)
    {
    // sanity check first
    if (!network_is_started)
@@ -718,7 +718,7 @@ NODE *lnetsendon(NODE *args)
    return Unbound;
    }
 
-NODE *lnetsendoff(NODE *)
+NODE *lnetconnectoff(NODE *)
    {
    // tell handler not to do anything with messages for network send
    if (g_ClientConnection.IsEnabled())
@@ -733,7 +733,7 @@ NODE *lnetsendoff(NODE *)
    return Unbound;
    }
 
-NODE *lnetsendsendvalue(NODE *args)
+NODE *lnetconnectsendvalue(NODE *args)
    {
    // get args (data)
    char data[MAX_BUFFER_SIZE];
@@ -749,7 +749,7 @@ NODE *lnetsendsendvalue(NODE *args)
    return Unbound;
    }
 
-NODE *lnetreceivesendvalue(NODE *args)
+NODE *lnetacceptsendvalue(NODE *args)
    {
    // get args (data)
    char data[MAX_BUFFER_SIZE];
