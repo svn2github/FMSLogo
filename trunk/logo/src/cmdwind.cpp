@@ -414,7 +414,10 @@ void do_execution(char * logocommand)
             strcpy(c, c + 1);
             if (*c)
                {
-               if (*c == 'n') *c = '\n';
+               if (*c == 'n') 
+                  {
+                  *c = '\n';
+                  }
                *c = setparity(*c);
                }
             this_type = BACKSLASH_STRING;
