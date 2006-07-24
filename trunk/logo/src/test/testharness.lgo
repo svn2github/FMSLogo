@@ -71,6 +71,9 @@ LOAD "sound.lgo
 LOAD "yesnobox.lgo
 LOAD "shellscript.lgo
 LOAD "timer.lgo
+LOAD "shell.lgo
+LOAD "time.lgo
+LOAD "thing.lgo
 
 TO TESTALL
 
@@ -85,6 +88,7 @@ TO TESTALL
   SENTENCETEST       ; from sentence.lgo
   PREDICATETEST      ; from predicate.lgo
   WORDTEST           ; from word.lgo
+  THINGTEST          ; from thing.lgo
   FIRSTTEST          ; from first.lgo
   FIRSTSTEST         ; from firsts.lgo
   BUTFIRSTTEST       ; from butfirst.lgo
@@ -121,6 +125,8 @@ TO TESTALL
   TIMERTEST          ; from timer.lgo
   SCREENTEST         ; from screen.lgo
   WAITTEST           ; from wait.lgo
+  TIMETEST           ; from time.lgo
+  SHELLTEST          ; from shell.lgo
   DIRECTORYTEST      ; from directory.lgo
   MISCTEST           ; from misc.lgo
   PERSPECTIVETEST    ; from perspective.lgo
