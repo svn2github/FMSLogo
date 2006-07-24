@@ -1,5 +1,5 @@
 /*
-*      init.c     logo init module                      dvb
+*      init.cpp     logo init module                      dvb
 *
 *       Copyright (C) 1995 by the Regents of the University of California
 *       Copyright (C) 1995 by George Mills
@@ -473,7 +473,7 @@ const PRIMTYPE prims[] =
       { "setxyz", 3, 3, 3, PREFIX_PRIORITY, lsetxyz },
       { "sety", 1, 1, 1, PREFIX_PRIORITY, lsety },
       { "setz", 1, 1, 1, PREFIX_PRIORITY, lsetz },
-      { "shell", 1, 1, 2, PREFIX_PRIORITY, lshell },
+      { "shell", 1, 1, 1, PREFIX_PRIORITY, lshell },
       { "show", 0, 1, -1, PREFIX_PRIORITY, lshow },
       { "shownp", 0, 0, 0, PREFIX_PRIORITY, lshownp },
       { "shown?", 0, 0, 0, PREFIX_PRIORITY, lshownp },
