@@ -815,11 +815,37 @@ void TMyListboxWindow::CopyCurrentLineToEditBox()
    {
    char buf[1024] = {0};
 
-   char * ptr = buf;
-   char * end = buf + sizeof(buf) - 1;
    int currentline = GetLineFromPos(-1);
+
+   // Look for the first line backwards from the current line
+   // that doesn't ends in an EOL sequence.
+   // This tells us where this line really begins (ignoring word-wrapping)
+   for (int prevline = currentline - 1;
+        0 <= prevline;
+        prevline--)
+      {
+      bool isok = GetLine(buf, sizeof buf, prevline);
+      if (!isok)
+         {
+         break;
+         }
+
+      // advance to the last char in buf
+      char * ptr = buf + strlen(buf) - 1;
+      if (*ptr == '\n' || *ptr == '\r')
+         {
+         // we reached a line that ends in an EOL
+         break;
+         }
+
+      // This line does not end in an EOL sequence.
+      // Therefore, it is part of the current line.
+      currentline = prevline;
+      }
    
    // read as many word-wrapped lines as it takes to get to the end of a real line
+   char * ptr = buf;
+   char * end = buf + sizeof(buf) - 1;
    while (ptr < end)
       {
       bool isok = GetLine(ptr, end - ptr, currentline);
