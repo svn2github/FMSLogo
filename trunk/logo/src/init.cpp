@@ -22,16 +22,15 @@
 
 #include "allwind.h"
 
-typedef struct priminfo
+struct PRIMTYPE
    {
-   char *name;
+   const char *name;
    short minargs;
    short defargs;
    short maxargs;
    short priority;
    logofunc prim;
-   }
-PRIMTYPE;
+   };
 
 NODE *Truex;
 NODE *Falsex;
@@ -548,12 +547,6 @@ void init()
    fill_reserve_tank();
    Unbound = newnode(PUNBOUND);
 
-#ifdef bsd
-   srandom((int) time((long *) NULL));
-#else
-   //    srand((int)time((long *)NULL));
-   //    srand((int)12345);
-#endif
 #ifdef ecma
    for (int i = 0; i < 128; i++)
       {
