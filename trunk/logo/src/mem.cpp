@@ -242,8 +242,18 @@ void gc(NODE *nd)
                   free(getstrhead(nd));
                   }
                }
-         default:
+
+         case INTEGER:
+         case FLOATINGPOINT:
+         case PRIM:
+         case MACRO:
+         case TAILFORM:
+         case INFIX:
             tcar = tcdr = tobj = NIL;
+            break;
+
+         default:
+            assert(0 && "freeing unrecognized node type");
          }
 
 #ifdef MEM_DEBUG
