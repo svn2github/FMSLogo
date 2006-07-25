@@ -339,6 +339,8 @@ make_strnode(
    char *    (*copy_routine) (char *, const char *, int)
 )
    {
+   assert(typ & NT_STRING);
+
    if (len == 0 && Null_Word != NIL)
       {
       return Null_Word;
