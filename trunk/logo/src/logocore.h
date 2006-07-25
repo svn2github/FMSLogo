@@ -313,10 +313,33 @@ getobject(const NODE * node)
 #define setstrlen(node,length)  ((node)->nunion.nstring.len = (length))
 #define setstrhead(node,ptr)    ((node)->nunion.nstring.head = (ptr))
 
-#define getstrrefcnt(sh)        (*sh)
-#define setstrrefcnt(sh, v)     (*sh = (v))
-#define incstrrefcnt(sh)        ((*sh)++)
-#define decstrrefcnt(sh)        (--(*sh))
+inline 
+unsigned short
+getstrrefcnt(const unsigned short * refcnt)
+   {
+   return *refcnt;
+   }
+
+inline 
+void
+setstrrefcnt(unsigned short * refcnt, unsigned short value)
+   {
+   *refcnt = value;
+   }
+
+inline 
+unsigned short
+incstrrefcnt(unsigned short * refcnt)
+   {
+   return (*refcnt)++;
+   }
+
+inline 
+unsigned short
+decstrrefcnt(unsigned short * refcnt)
+   {
+   return --(*refcnt);
+   }
 
 inline FIXNUM 
 getint(const NODE * Node) 
