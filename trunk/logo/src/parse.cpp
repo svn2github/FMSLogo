@@ -712,6 +712,7 @@ NODE *runparse_node(NODE *nd, NODE **ndsptr)
             else if ((!isdigit(*wptr) && (*wptr != '.' || gotdot)) || isnumb == 1)
                {
                // can't be a number
+               // REVISIT: can be break out of the loop here?
                isnumb = 2;
                }
 
