@@ -28,6 +28,7 @@ Part II) New features/bugs fixed:
     o Fix bug #1521664: BYE in PAUSE dialog now exits FMSLogo.
     o Fix bug #1520950: 'DEFINE "F [[] APPLY [OP ?] [3]] F' no longer crashes.
     o Fix bug #1519088: 'APPLY [OP ?] [3]' no longer leaks memory.
+    o Fix bug #1517326: Bad ERRACT values no longer cause FMSLogo to crash.
     o Fix bug #1517323: Running CONTINUE from ERRACT no longer leaks memory.
     o Fix bug #1519319: FIRST now throws an error when given the empty array.
     o Fix bug #1517301: bitwise operators now treat decimal numbers that are 

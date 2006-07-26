@@ -328,11 +328,12 @@ NODE *evaluator(NODE *list, enum labels where)
    save2(fun, ufun);
    cont = (FIXNUM) all_done;
    numsave((FIXNUM) cont);
+   ref(list);
+
    newcont(where);
    goto fetch_cont;
 
  begin_line:
-   ref(list);
    assign(this_line, list);
    newcont(end_line);
  begin_seq:
@@ -349,14 +350,13 @@ NODE *evaluator(NODE *list, enum labels where)
  end_line:
    if (val != Unbound)
       {
-      if (NOT_THROWING) 
+      if (NOT_THROWING)
          {
          err_logo(DK_WHAT, val);
          }
       deref(val);
       }
    val = NIL;
-   deref(list);
    goto fetch_cont;
 
 
@@ -531,7 +531,7 @@ NODE *evaluator(NODE *list, enum labels where)
       goto fetch_cont;
       }
 
-   if (is_list(proc)) 
+   if (is_list(proc))
       {
       goto compound_apply;
       }
@@ -700,7 +700,7 @@ NODE *evaluator(NODE *list, enum labels where)
       }
    assign(val, Unbound);
    assign(last_ufun, ufun);
-   if (!is_list(fun)) 
+   if (!is_list(fun))
       {
       assign(ufun, fun);
       }
@@ -1318,15 +1318,16 @@ NODE *evaluator(NODE *list, enum labels where)
    goto fetch_cont;
 
  all_done:
+   deref(list);
    tailcall = oldtailcall;
    ift_iff_flag = old_ift_iff;
    restore2(fun, ufun);
    reset_args(var);
    restore2(var, this_line);
-   deref(argl); 
-   deref(unev); 
-   deref(stack); 
-   deref(catch_tag); 
+   deref(argl);
+   deref(unev);
+   deref(stack);
+   deref(catch_tag);
    deref(exp);
    deref(proc);
    return val;
