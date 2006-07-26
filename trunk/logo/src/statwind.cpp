@@ -62,6 +62,28 @@ DEFINE_RESPONSE_TABLE1(TMyStatusWindow, TDialog)
   EV_WM_CLOSE,
 END_RESPONSE_TABLE;
 
+static
+void 
+update_status_color_helper(
+   int           ChildDialogId,
+   const Color & TheColor
+   )
+   {
+   if (status_flag)
+      {
+      char colortext[256];
+
+      sprintf(
+         colortext,
+         "%d,%d,%d",
+         TheColor.red,
+         TheColor.green,
+         TheColor.blue);
+
+      MainWindowx->StatusWindow->SetDlgItemText(ChildDialogId, colortext);
+      }
+   }
+
 void update_status_turtleposition(void)
    {
    if (status_flag)
@@ -79,55 +101,20 @@ void update_status_turtleposition(void)
       }
    }
 
+
 void update_status_pencolor(void)
    {
-   if (status_flag)
-      {
-      char text[256];
-
-      sprintf(
-         text,
-         "%d,%d,%d",
-         dpen.red,
-         dpen.green,
-         dpen.blue);
-
-      MainWindowx->StatusWindow->SetDlgItemText(ID_PENCOLOR, text);
-      }
+   update_status_color_helper(ID_PENCOLOR, dpen);
    }
 
 void update_status_floodcolor(void)
    {
-   if (status_flag)
-      {
-      char text[256];
-
-      sprintf(
-         text,
-         "%d,%d,%d",
-         dfld.red,
-         dfld.green,
-         dfld.blue);
-
-      MainWindowx->StatusWindow->SetDlgItemText(ID_FLOODCOLOR, text);
-      }
+   update_status_color_helper(ID_FLOODCOLOR, dfld);
    }
 
 void update_status_screencolor(void)
    {
-   if (status_flag)
-      {
-      char text[256];
-
-      sprintf(
-         text,
-         "%d,%d,%d",
-         dscn.red,
-         dscn.green,
-         dscn.blue);
-
-      MainWindowx->StatusWindow->SetDlgItemText(ID_SCREENCOLOR, text);
-      }
+   update_status_color_helper(ID_SCREENCOLOR, dscn);
    }
 
 void update_status_paletteuse(void)
