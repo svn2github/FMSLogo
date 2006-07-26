@@ -49,7 +49,7 @@ void TColorControl::EvPaint()
       SelectPalette(dc, OldPalette, FALSE);
       MyLogPalette->palNumEntries = oldentries;
       DeleteObject(ThePalette);
-      if (status_flag) update_status_paletteuse();
+      update_status_paletteuse();
       ThePalette = CreatePalette(MyLogPalette);
       }
    else

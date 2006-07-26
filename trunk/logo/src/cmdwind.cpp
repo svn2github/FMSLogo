@@ -492,8 +492,7 @@ void TMyCommandWindow::DoButtonExecute(UINT)
       // copy to list box for command recall
       putcombobox(selectedtext);
 
-      /* if dribble then dribble */
-
+      // if dribble then dribble 
       if (dribblestream != NULL)
         {
         fprintf(dribblestream, "%s\n", selectedtext);
@@ -504,13 +503,10 @@ void TMyCommandWindow::DoButtonExecute(UINT)
 
       // reset evaluation counter (call counter) and execute
       eval_count = 0;
-      vector_count = 0;
+      update_status_evals();
 
-      if (status_flag)
-        {
-        update_status_evals();
-        update_status_vectors();
-        }
+      vector_count = 0;
+      update_status_vectors();
 
       do_execution(selectedtext);
       }

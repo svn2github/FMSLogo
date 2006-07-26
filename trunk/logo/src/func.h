@@ -217,23 +217,22 @@ extern void mouse_uninit(void);
 
 
 // File main.cpp
-extern void update_status_all(BOOL bUpdate);
-extern void update_status_memory(void);
 extern void update_status_evals(void);
-extern void update_status_vectors(void);
-extern void update_status_turtleposition(void);
-extern void update_status_pencolor(void);
 extern void update_status_floodcolor(void);
-extern void update_status_screencolor(void);
+extern void update_status_memory(void);
 extern void update_status_paletteuse(void);
-extern void update_status_penwidth(void);
-extern void update_status_turtleheading(void);
-extern void update_status_penstyle(void);
+extern void update_status_pencolor(void);
 extern void update_status_pencontact(void);
-extern void update_status_turtlevisability(void);
+extern void update_status_penstyle(void);
+extern void update_status_penwidth(void);
+extern void update_status_screencolor(void);
+extern void update_status_turtleheading(void);
 extern void update_status_turtlepitch(void);
+extern void update_status_turtleposition(void);
 extern void update_status_turtleroll(void);
+extern void update_status_turtlevisability(void);
 extern void update_status_turtlewhich(void);
+extern void update_status_vectors(void);
 
 extern void ShowMessageAndStop(const char * Title, const char * Message);
 extern void MyMessageScan(void);

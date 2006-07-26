@@ -113,168 +113,145 @@ of the recording buffer to 1 in logo.h.
 static
 bool safe_to_save()
    {
-   /*
-      return(refresh_p && record_index < (GR_SIZE - 300));
-    */
+   // return(refresh_p && record_index < (GR_SIZE - 300));
    return true;
    }
 
 static
 void save_lm_helper()
    {
-   /*
-    *(int *)(record + record_index + 2) = pen_x;
-    *(int *)(record + record_index + 4) = pen_y;
-      record_index += 6;
-    */
+   // *(int *)(record + record_index + 2) = pen_x;
+   // *(int *)(record + record_index + 4) = pen_y;
+   // record_index += 6;
    }
 
 static
 void save_line()
    {
-   if (status_flag) update_status_turtleposition();
-   /*
-      if (safe_to_save())
-      {
-      record[record_index] = LINEXY;
-      save_lm_helper();
-      }
-    */
+   update_status_turtleposition();
+
+   // if (safe_to_save())
+   //    {
+   //    record[record_index] = LINEXY;
+   //    save_lm_helper();
+   //    }
    }
 
 static
 void save_move()
    {
-   if (status_flag) update_status_turtleposition();
-   /*
-      if (safe_to_save())
-      {
-      record[record_index] = MOVEXY;
-      save_lm_helper();
-      }
-    */
+   update_status_turtleposition();
+
+   // if (safe_to_save())
+   //    {
+   //    record[record_index] = MOVEXY;
+   //    save_lm_helper();
+   //    }
    }
 
 static
 void save_vis()
    {
-   if (status_flag) update_status_pencontact();
-   /*
-      if (safe_to_save())
-      {
-      record[record_index] = SETPENVIS;
-      record[record_index + 1] = (char)g_Turtles[turtle_which].PenUp;
-      record_index += 2;
-      }
-    */
+   update_status_pencontact();
+
+   // if (safe_to_save())
+   //    {
+   //    record[record_index] = SETPENVIS;
+   //    record[record_index + 1] = (char)g_Turtles[turtle_which].PenUp;
+   //    record_index += 2;
+   //    }
    }
 
 static
 void save_mode()
    {
-   if (status_flag) update_status_penstyle();
-   /*
-      if (safe_to_save())
-      {
-      record[record_index] = SETPENMODE;
-#ifdef x_window
-      *(GC *)(record + record_index + 2) = pen_mode;
-#else
-      *(int *)(record + record_index + 2) = pen_mode;
-#endif
-      record_index += 4;
-      }
-   */
+   update_status_penstyle();
+
+   // if (safe_to_save())
+   //   {
+   //   record[record_index] = SETPENMODE;
+   //   *(int *)(record + record_index + 2) = pen_mode;
+   //   record_index += 4;
+   //   }
+
    }
 
 static
 void save_color_pen()
    {
-   if (status_flag) update_status_pencolor();
-   /*
-      if (safe_to_save())
-      {
-      record[record_index] = SETPENCOLOR;
-    *(long *)(record + record_index + 2) = pen_color;
-      record_index += 6;
-      }
-    */
+   update_status_pencolor();
+   // if (safe_to_save())
+   //    {
+   //    record[record_index] = SETPENCOLOR;
+   //    *(long *)(record + record_index + 2) = pen_color;
+   //    record_index += 6;
+   //    }
    }
 
 static
 void save_color_screen()
    {
-   if (status_flag) update_status_screencolor();
-   /*
-      if (safe_to_save())
-      {
-      record[record_index] = SETPENCOLOR;
-    *(long *)(record + record_index + 2) = pen_color;
-      record_index += 6;
-      }
-    */
+   update_status_screencolor();
+
+   // if (safe_to_save())
+   //    {
+   //    record[record_index] = SETPENCOLOR;
+   //    *(long *)(record + record_index + 2) = pen_color;
+   //    record_index += 6;
+   //    }
    }
 
 static
 void save_color_flood()
    {
-   if (status_flag) update_status_floodcolor();
-   /*
-      if (safe_to_save())
-      {
-      record[record_index] = SETPENCOLOR;
-    *(long *)(record + record_index + 2) = pen_color;
-      record_index += 6;
-      }
-    */
+   update_status_floodcolor();
+
+   // if (safe_to_save())
+   //    {
+   //    record[record_index] = SETPENCOLOR;
+   //    *(long *)(record + record_index + 2) = pen_color;
+   //    record_index += 6;
+   //    }
    }
 
 static
 void save_size()
    {
-   if (status_flag) update_status_penwidth();
-   /*
-      if (safe_to_save())
-      {
-      record[record_index] = SETPENSIZE;
-      *(int *)(record + record_index + 2) = get_pen_width();
-      *(int *)(record + record_index + 4) = get_pen_height();
-      record_index += 6;
-      }
-    */
+   update_status_penwidth();
+
+   // if (safe_to_save())
+   //    {
+   //    record[record_index] = SETPENSIZE;
+   //    *(int *)(record + record_index + 2) = get_pen_width();
+   //    *(int *)(record + record_index + 4) = get_pen_height();
+   //    record_index += 6;
+   //    }
    }
 
 static
 void save_pattern()
    {
-   //    if (status_flag) update_status(SETPENPATTERN);
-   /*
-      int count;
+   // update_status(SETPENPATTERN);
 
-      if (safe_to_save())
-      {
-      record[record_index] = SETPENPATTERN;
-      get_pen_pattern(&record[record_index + 2]);
-      record_index += 10;
-      }
-    */
+   // if (safe_to_save())
+   //    {
+   //    record[record_index] = SETPENPATTERN;
+   //    get_pen_pattern(&record[record_index + 2]);
+   //    record_index += 10;
+   //    }
    }
 
 static
 void save_string(char /* s */[])
    {
-   /*
-      int count;
-
-      if (safe_to_save())
-      {
-      record[record_index] = LABEL;
-      record[record_index + 2] = s[0];
-      for (count = 0; count < s[0]; count++)
-      record[record_index + 3 + count] = s[1 + count];
-      record_index += 3 + s[0] + even_p(s[0]);
-      }
-    */
+   // if (safe_to_save())
+   //    {
+   //    record[record_index] = LABEL;
+   //    record[record_index + 2] = s[0];
+   //    for (int count = 0; count < s[0]; count++)
+   //       record[record_index + 3 + count] = s[1 + count];
+   //    record_index += 3 + s[0] + even_p(s[0]);
+   //    }
    }
 
 
@@ -466,12 +443,9 @@ void uppitch(FLONUM a)
          g_Turtles[turtle_which].Matrix,
          pitch);
 
-      if (status_flag)
-         {
-         update_status_turtleheading();
-         update_status_turtleroll();
-         update_status_turtlepitch();
-         }
+      update_status_turtleheading();
+      update_status_turtlepitch();
+      update_status_turtleroll();
 
       draw_turtle(true);
       }
@@ -504,12 +478,9 @@ void rightroll(FLONUM a)
          g_Turtles[turtle_which].Matrix,
          roll);
 
-      if (status_flag)
-         {
-         update_status_turtleheading();
-         update_status_turtleroll();
-         update_status_turtlepitch();
-         }
+      update_status_turtleheading();
+      update_status_turtlepitch();
+      update_status_turtleroll();
 
       draw_turtle(true);
       }
@@ -539,12 +510,9 @@ void right_helper(FLONUM a)
          turn);
       }
 
-   if (status_flag)
-      {
-      update_status_turtleheading();
-      update_status_turtleroll();
-      update_status_turtlepitch();
-      }
+   update_status_turtleheading();
+   update_status_turtlepitch();
+   update_status_turtleroll();
 
    draw_turtle(true);
    }
@@ -967,7 +935,7 @@ NODE *lellipsearc(NODE *arg)
       g_Turtles[turtle_which].Position.y = ty;
       g_Turtles[turtle_which].Position.z = tz;
 
-      if (status_flag) update_status_turtleposition();
+      update_status_turtleposition();
 
       draw_turtle(true);
       g_Wanna = g_Turtles[turtle_which].Position;
@@ -1217,7 +1185,7 @@ NODE *lshowturtle(NODE *)
    if (!g_Turtles[turtle_which].IsShown)
       {
       g_Turtles[turtle_which].IsShown = true;
-      if (status_flag) update_status_turtlevisability();
+      update_status_turtlevisability();
       draw_turtle(true);
       }
    return Unbound;
@@ -1229,7 +1197,7 @@ NODE *lhideturtle(NODE *)
       {
       draw_turtle(false);
       g_Turtles[turtle_which].IsShown = false;
-      if (status_flag) update_status_turtlevisability();
+      update_status_turtlevisability();
       }
    return Unbound;
    }
@@ -1258,12 +1226,9 @@ NODE *lsetheading(NODE *arg)
          g_Turtles[turtle_which].Heading = a;
          }
 
-      if (status_flag)
-         {
-         update_status_turtleheading();
-         update_status_turtleroll();
-         update_status_turtlepitch();
-         }
+      update_status_turtleheading();
+      update_status_turtlepitch();
+      update_status_turtleroll();
 
       draw_turtle(true);
       }
@@ -1282,12 +1247,9 @@ NODE *lsetroll(NODE *arg)
       a = positive_fmod(a, 360.0);
       rightroll(a);
 
-      if (status_flag)
-         {
-         update_status_turtleheading();
-         update_status_turtleroll();
-         update_status_turtlepitch();
-         }
+      update_status_turtleheading();
+      update_status_turtlepitch();
+      update_status_turtleroll();
 
       draw_turtle(true);
       }
@@ -1306,12 +1268,9 @@ NODE *lsetpitch(NODE *arg)
       a = positive_fmod(a, 360.0);
       uppitch(a);
 
-      if (status_flag)
-         {
-         update_status_turtleheading();
-         update_status_turtleroll();
-         update_status_turtlepitch();
-         }
+      update_status_turtleheading();
+      update_status_turtlepitch();
+      update_status_turtleroll();
 
       draw_turtle(true);
       }
@@ -1753,7 +1712,7 @@ void cs_helper(bool centerp, bool clearp)
    ThreeD.DisposeVertices(ThePolygon);
    ThePolygon = NULL;
    ThreeD.DisposeTree();
-   if (status_flag) update_status_vectors();
+   update_status_vectors();
 
    if (clearp) 
       {
@@ -1782,21 +1741,18 @@ void cs_helper(bool centerp, bool clearp)
       g_Turtles[turtle_which].Matrix.e32 = 0.0;
       g_Turtles[turtle_which].Matrix.e33 = 1.0;
 
-      if (status_flag)
-         {
-         update_status_turtleheading();
-         update_status_turtleroll();
-         update_status_turtlepitch();
-         update_status_turtleposition();
-         update_status_turtlewhich();
-         }
+      update_status_turtleheading();
+      update_status_turtleposition();
+      update_status_turtleroll();
+      update_status_turtlepitch();
+      update_status_turtlewhich();
 
       out_of_bounds = false;
       }
    draw_turtle(true);
    save_pen(&orig_pen);
-   //   p_info_x(orig_pen) = g_round(screen_x_coord);
-   //   p_info_y(orig_pen) = g_round(screen_y_coord);
+   // p_info_x(orig_pen) = g_round(screen_x_coord);
+   // p_info_y(orig_pen) = g_round(screen_y_coord);
    record_index = 0;
    }
 

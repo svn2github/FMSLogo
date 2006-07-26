@@ -490,10 +490,7 @@ NODE *evaluator(NODE *list, enum labels where)
    /* --------------------- APPLY ---------------------------- */
  apply_dispatch:
    eval_count++;
-   if (status_flag)
-      {
-      update_status_evals();
-      }
+   update_status_evals();
 
    /* Load in the procedure's definition and decide whether it's a compound
     * procedure or a primitive procedure.

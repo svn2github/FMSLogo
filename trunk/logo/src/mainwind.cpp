@@ -2121,23 +2121,21 @@ void TMainFrame::MyPopupStatus()
    StatusWindow->SetWindowPos(NULL, x, y, 0, 0, SWP_NOSIZE);
 
    // update all fields
-   update_status_turtleposition();
-   update_status_pencolor();
-   update_status_floodcolor();
-   update_status_screencolor();
-   update_status_paletteuse();
-   update_status_penwidth();
-   update_status_turtleheading();
-   update_status_turtleroll();
-   update_status_turtlepitch();
-   update_status_penstyle();
-   update_status_pencontact();
-   update_status_turtlevisability();
-   update_status_turtlepitch();
-   update_status_turtleroll();
-   update_status_turtlewhich();
    update_status_evals();
+   update_status_floodcolor();
    update_status_memory();
+   update_status_paletteuse();
+   update_status_pencolor();
+   update_status_pencontact();
+   update_status_penstyle();
+   update_status_penwidth();
+   update_status_screencolor();
+   update_status_turtleheading();
+   update_status_turtlepitch();
+   update_status_turtleposition();
+   update_status_turtleroll();
+   update_status_turtlevisability();
+   update_status_turtlewhich();
    update_status_vectors();
 
    StatusWindow->ShowWindow(SW_SHOW);

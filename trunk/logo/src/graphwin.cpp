@@ -875,7 +875,7 @@ NODE *lclearpalette(NODE *)
 
          MyLogPalette->palNumEntries = 2;
 
-         if (status_flag) update_status_paletteuse();
+         update_status_paletteuse();
 
          ThePalette = CreatePalette(MyLogPalette);
 
@@ -1318,10 +1318,7 @@ PasteFromClipboardToCutIndex(
          // now rebuild palette
          ::DeleteObject(ThePalette);
          ThePalette = ::CreatePalette(MyLogPalette);
-         if (status_flag)
-            {
-            update_status_paletteuse();
-            }
+         update_status_paletteuse();
          }
 
       // Let code know below that we have something
@@ -1901,16 +1898,13 @@ NODE *lsetturtle(NODE *arg)
             turtle_which = (TURTLES - (TURTLEN+1)) - turtle_which;
             }
 
-         if (status_flag)
-            {
-            update_status_turtlevisability();
-            update_status_turtleposition();
-            update_status_turtleheading();
-            update_status_turtleroll();
-            update_status_turtlepitch();
-            update_status_pencontact();
-            update_status_turtlewhich();
-            }
+         update_status_turtleposition();
+         update_status_pencontact();
+         update_status_turtlevisability();
+         update_status_turtleheading();
+         update_status_turtlepitch();
+         update_status_turtleroll();
+         update_status_turtlewhich();
 
          g_Wanna = g_Turtles[turtle_which].Position;
 
@@ -2521,12 +2515,9 @@ NODE *lsetlabelfont(NODE *arg)
 
       // update status window
 
-      // if (status_flag)
-      //   {
-      //   update_status_fontwieght();
-      //   update_status_fontsize();
-      //   update_status_fontname();
-      //   }
+      // update_status_fontwieght();
+      // update_status_fontsize();
+      // update_status_fontname();
       }
 
    return Unbound;

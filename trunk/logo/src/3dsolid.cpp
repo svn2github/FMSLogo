@@ -60,10 +60,7 @@ void TThreeDSolid::AddPolygon(VERTEXLIST* Vertices, COLORREF ColorNdx)
 
    AddToBSPTree(t, &Tree/*, NULL*/);
    iPolyCount++;
-   if (status_flag) 
-      {
-      update_status_vectors();
-      }
+   update_status_vectors();
    }
 
 // Precompute the d term in the plane equation for each polygon.
@@ -353,7 +350,7 @@ void TThreeDSolid::AddToBSPTree(POLYGON* Poly, BSPNode** Root)
       {
 #ifdef NOASM
       iSplitPolyCount++;
-      if (status_flag) update_status_vectors();
+      update_status_vectors();
       if (iPolyCount == POLYCOUNT)
          {
          iPolyCount = iPolyCount*1;

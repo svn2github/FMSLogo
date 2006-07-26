@@ -117,7 +117,7 @@ void addseg()
    // Allocate a large block of nodes at one time
    // and link them into the free_list.
    memory_count++;
-   if (status_flag) update_status_memory();
+   update_status_memory();
 
    struct segment *newseg;
    if ((newseg = (segment *) malloc(sizeof(*newseg))) != NULL)
@@ -139,7 +139,7 @@ NODE *newnode(NODETYPES type)
 
    // include for debugging leaks
    //    memory_count++;
-   //    if (status_flag) update_status_memory();
+   //    update_status_memory();
 
    if ((newnd = free_list) == NIL)
       {

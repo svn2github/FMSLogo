@@ -194,7 +194,7 @@ COLORREF LoadColor(int dpenr, int dpeng, int dpenb)
       if (MyLogPalette->palNumEntries < 255)
          {
 
-         /* kill old palette */
+         // kill old palette
          DeleteObject(ThePalette);
 
          MyLogPalette->palPalEntry[MyLogPalette->palNumEntries].peRed = dpenr;
@@ -203,13 +203,10 @@ COLORREF LoadColor(int dpenr, int dpeng, int dpenb)
          MyLogPalette->palPalEntry[MyLogPalette->palNumEntries].peFlags = 0;
          MyLogPalette->palNumEntries++;
 
-         /* if status window then update palette usage */
-         if (status_flag)
-            {
-            update_status_paletteuse();
-            }
+         // if status window then update palette usage
+         update_status_paletteuse();
 
-         /* make new palette with added color */
+         // make new palette with added color
          ThePalette = CreatePalette(MyLogPalette);
          }
       }
@@ -1341,10 +1338,7 @@ void line_to(FLONUM x, FLONUM y)
    if (!g_Turtles[turtle_which].IsPenUp)
       {
       vector_count++;
-      if (status_flag) 
-         {
-         update_status_vectors();
-         }
+      update_status_vectors();
 
       Point toPoint;
       toPoint.x = x;
@@ -1375,10 +1369,7 @@ void line_to_3d(const Point & ToPoint)
    if (!g_Turtles[turtle_which].IsPenUp)
       {
       vector_count++;
-      if (status_flag) 
-         {
-         update_status_vectors();
-         }
+      update_status_vectors();
 
       if (in_erase_mode)
          {
