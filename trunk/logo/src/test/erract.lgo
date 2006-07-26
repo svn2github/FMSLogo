@@ -41,14 +41,12 @@ TO ERRACTTEST.SMOKETEST
    make "erract [ERRACTTEST.OUTPUT.5]
 
    REPORTTESTINFO [ Calling "SUM 1 [1]", which should run :erract to replace [1] with 5 ]
-
    MAKE "thesum SUM 1 [1]
    SIMPLEREPORTTEST [ :thesum ] 6
 
-; calling it a second time crashes
-;   REPORTTESTINFO [ Calling "SUM 1 [1]" again.  This same thing should happen. ]
-;   MAKE "thesum SUM 1 [1]
-;   SIMPLEREPORTTEST [ :thesum ] 6
+   REPORTTESTINFO [ Calling "SUM 1 [1]" again.  This used to crash (bug #1517326) ]
+   MAKE "thesum SUM 1 [1]
+   SIMPLEREPORTTEST [ :thesum ] 6
 
 
    ; restore the previous value of :ERRACT
