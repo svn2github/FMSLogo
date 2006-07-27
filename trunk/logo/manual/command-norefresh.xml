@@ -12,12 +12,14 @@
 
 <varlistentry><term>Description</term>
 <listitem>
-
-<note><para>NOREFRESH is not supported (or needed) in &PRODUCTNAME;.</para></note>
-
 <para>
 Tells &GENERICNAME; not to remember the turtle's motions.
-This will make drawing faster, but prevents recovery if the window is overlaid.
+This will make drawing faster, but prevents recovery if the window is obscured by another window.
+</para>
+
+<para>
+NOREFRESH is not needed in &PRODUCTNAME;.
+It is provided for compatibility with other &GENERICNAME; environments.
 </para>
 </listitem>
 </varlistentry>
