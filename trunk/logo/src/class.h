@@ -700,7 +700,6 @@ extern bool IsPrinterSettingCustom;
 extern bool IsTPrinterSettingCustom;
 extern bool IsOkayToUseCommanderWindow;
 extern bool stepflag;
-extern int pause_flag;
 extern int MaxWidth;
 extern int MaxHeight;
 extern bool GiveFocusToEditbox;

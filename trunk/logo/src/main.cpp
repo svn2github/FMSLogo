@@ -114,7 +114,6 @@ bool IsTPrinterSettingCustom = false;  // Dynamic copy of CustomFlag
 bool IsOkayToUseCommanderWindow = false; // Flag to signal it's OK to write to recall box
 bool traceflag = false;                // Flag to signal trace button is active
 bool stepflag = false;                 // Flag to signal step button is active
-int pause_flag = 0;                    // Flag to signal pause button is pushed
 int yield_flag = 1;                    // Flag to signal yield state
 bool status_flag = false;              // Flag to signal status box is popped up
 int MaxWidth = 0;                      // Actual Main window size x
