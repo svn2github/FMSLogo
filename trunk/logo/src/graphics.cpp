@@ -88,8 +88,6 @@ VECTOR g_OneOverScale = {1.0, 1.0, 1.0};
 Point  g_Wanna = {0.0, 0.0, 0.0};
 bool   out_of_bounds = false;
 
-static bool refresh_p        = true;
-
 #define sq(z) ((z)*(z))
 
 static void forward_helper(FLONUM d);
@@ -2087,12 +2085,10 @@ NODE *ltone(NODE *args)
 
 NODE *lrefresh()
    {
-   refresh_p = true;
    return Unbound;
    }
 
 NODE *lnorefresh()
    {
-   refresh_p = false;
    return Unbound;
    }
