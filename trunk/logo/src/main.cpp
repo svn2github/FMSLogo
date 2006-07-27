@@ -227,44 +227,46 @@ void clearcombobox()
    
 void putcombobox(const char *str)
    {
-   /* only if OK to write to recall box do we do it */
+   // only if OK to write to recall box do we do it
    if (IsOkayToUseCommanderWindow)
       {
+      TMyListboxWindow & commanderRecallBox = MainWindowx->CommandWindow->Listbox;
+
       for (int i=0;i<16;i++)
          {
-         /* remember where we started */
-         UINT uBefore = MainWindowx->CommandWindow->Listbox.GetTextLen();
+         // remember where we started
+         UINT uBefore = commanderRecallBox.GetTextLen();
 
-         /* output to list box */
-         MainWindowx->CommandWindow->Listbox.SetSelection(uBefore, uBefore);
-         MainWindowx->CommandWindow->Listbox.Insert(str);
-         UINT uCheck = MainWindowx->CommandWindow->Listbox.GetTextLen();
-         MainWindowx->CommandWindow->Listbox.Insert("\r\n");
-         UINT uAfter = MainWindowx->CommandWindow->Listbox.GetTextLen();
+         // output to list box 
+         commanderRecallBox.SetSelection(uBefore, uBefore);
+         commanderRecallBox.Insert(str);
+         UINT uCheck = commanderRecallBox.GetTextLen();
+         commanderRecallBox.Insert("\r\n");
+         UINT uAfter = commanderRecallBox.GetTextLen();
 
-         /* if last 2 bytes inserted ok get out */
+         // if last 2 bytes inserted ok get out
          if (uCheck+2 == uAfter) 
             {
             return;
             }
 
-         /* strip what we inserted */
-         MainWindowx->CommandWindow->Listbox.SetReadOnly(FALSE);
+         // strip what we inserted
+         commanderRecallBox.SetReadOnly(FALSE);
 
-         MainWindowx->CommandWindow->Listbox.SetSelection(uBefore, uAfter);
-         MainWindowx->CommandWindow->Listbox.DeleteSelection();
+         commanderRecallBox.SetSelection(uBefore, uAfter);
+         commanderRecallBox.DeleteSelection();
 
-         /* strip 4k off top */
-         MainWindowx->CommandWindow->Listbox.SetSelection(0, 4096);
-         MainWindowx->CommandWindow->Listbox.DeleteSelection();
+         // strip 4k off top
+         commanderRecallBox.SetSelection(0, 4096);
+         commanderRecallBox.DeleteSelection();
 
-         MainWindowx->CommandWindow->Listbox.SetReadOnly(TRUE);
+         commanderRecallBox.SetReadOnly(TRUE);
          }
 
       // if all else fails try this, should never get here
       clearcombobox();
-      MainWindowx->CommandWindow->Listbox.Insert(str);
-      MainWindowx->CommandWindow->Listbox.Insert("\r\n");
+      commanderRecallBox.Insert(str);
+      commanderRecallBox.Insert("\r\n");
       }
    }
 
@@ -1289,20 +1291,22 @@ void ibmturt(bool erase)
          dest.y = g_round(g_Turtles[turtle_which].Position.y);
          }
 
+      TScroller * screenScroller = MainWindowx->ScreenWindow->Scroller;
       screenBoundingBox.Set(
-         (+dest.x - MainWindowx->ScreenWindow->Scroller->XPos / the_zoom + xoffset                                      ) * the_zoom,
-         (-dest.y - MainWindowx->ScreenWindow->Scroller->YPos / the_zoom + yoffset + LL - CutBmp[turtle_which].CutHeight) * the_zoom,
-         (+dest.x - MainWindowx->ScreenWindow->Scroller->XPos / the_zoom + xoffset + CutBmp[turtle_which].CutWidth      ) * the_zoom,
-         (-dest.y - MainWindowx->ScreenWindow->Scroller->YPos / the_zoom + yoffset + LL                                 ) * the_zoom);
+         (+dest.x - screenScroller->XPos / the_zoom + xoffset                                      ) * the_zoom,
+         (-dest.y - screenScroller->YPos / the_zoom + yoffset + LL - CutBmp[turtle_which].CutHeight) * the_zoom,
+         (+dest.x - screenScroller->XPos / the_zoom + xoffset + CutBmp[turtle_which].CutWidth      ) * the_zoom,
+         (-dest.y - screenScroller->YPos / the_zoom + yoffset + LL                                 ) * the_zoom);
 
       screenBoundingBox.Normalize();
       }
    else
       {
-      screenBoundingBox.left   = (+minx - MainWindowx->ScreenWindow->Scroller->XPos / the_zoom + xoffset) * the_zoom;
-      screenBoundingBox.top    = (-maxy - MainWindowx->ScreenWindow->Scroller->YPos / the_zoom + yoffset) * the_zoom;
-      screenBoundingBox.right  = (+maxx - MainWindowx->ScreenWindow->Scroller->XPos / the_zoom + xoffset) * the_zoom;
-      screenBoundingBox.bottom = (-miny - MainWindowx->ScreenWindow->Scroller->YPos / the_zoom + yoffset) * the_zoom;
+      TScroller * screenScroller = MainWindowx->ScreenWindow->Scroller;
+      screenBoundingBox.left   = (+minx - screenScroller->XPos / the_zoom + xoffset) * the_zoom;
+      screenBoundingBox.top    = (-maxy - screenScroller->YPos / the_zoom + yoffset) * the_zoom;
+      screenBoundingBox.right  = (+maxx - screenScroller->XPos / the_zoom + xoffset) * the_zoom;
+      screenBoundingBox.bottom = (-miny - screenScroller->YPos / the_zoom + yoffset) * the_zoom;
       }
 
 
