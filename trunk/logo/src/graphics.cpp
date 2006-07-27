@@ -79,8 +79,7 @@ Turtle g_Turtles[TURTLES] =
          true,
          false,
       },
-   }
-;
+   };
 
 int    turtle_which = 0;
 int    turtle_max = 0;
@@ -89,219 +88,11 @@ VECTOR g_OneOverScale = {1.0, 1.0, 1.0};
 Point  g_Wanna = {0.0, 0.0, 0.0};
 bool   out_of_bounds = false;
 
-//char record[GR_SIZE];
-static int record_index = 0;
-static pen_info orig_pen; // DELETEME
-static int forward_count = 0; // DELETEME
-
-static bool record_next_move = false;
 static bool refresh_p        = true;
 
 #define sq(z) ((z)*(z))
 
 static void forward_helper(FLONUM d);
-
-/************************************************************/
-/* The next block of code implements the recording of moves in
-the graphics window and the playing back of those moves.  It's
-needed on machines like the Macintosh where the contents of the
-graphics window can get erased and need to be redrawn.  On
-machines where no graphics redrawing is necessary, set the size
-of the recording buffer to 1 in logo.h. 
-*/
-
-static
-bool safe_to_save()
-   {
-   // return(refresh_p && record_index < (GR_SIZE - 300));
-   return true;
-   }
-
-static
-void save_lm_helper()
-   {
-   // *(int *)(record + record_index + 2) = pen_x;
-   // *(int *)(record + record_index + 4) = pen_y;
-   // record_index += 6;
-   }
-
-static
-void save_line()
-   {
-   update_status_turtleposition();
-
-   // if (safe_to_save())
-   //    {
-   //    record[record_index] = LINEXY;
-   //    save_lm_helper();
-   //    }
-   }
-
-static
-void save_move()
-   {
-   update_status_turtleposition();
-
-   // if (safe_to_save())
-   //    {
-   //    record[record_index] = MOVEXY;
-   //    save_lm_helper();
-   //    }
-   }
-
-static
-void save_vis()
-   {
-   update_status_pencontact();
-
-   // if (safe_to_save())
-   //    {
-   //    record[record_index] = SETPENVIS;
-   //    record[record_index + 1] = (char)g_Turtles[turtle_which].PenUp;
-   //    record_index += 2;
-   //    }
-   }
-
-static
-void save_mode()
-   {
-   update_status_penstyle();
-
-   // if (safe_to_save())
-   //   {
-   //   record[record_index] = SETPENMODE;
-   //   *(int *)(record + record_index + 2) = pen_mode;
-   //   record_index += 4;
-   //   }
-
-   }
-
-static
-void save_color_pen()
-   {
-   update_status_pencolor();
-   // if (safe_to_save())
-   //    {
-   //    record[record_index] = SETPENCOLOR;
-   //    *(long *)(record + record_index + 2) = pen_color;
-   //    record_index += 6;
-   //    }
-   }
-
-static
-void save_color_screen()
-   {
-   update_status_screencolor();
-
-   // if (safe_to_save())
-   //    {
-   //    record[record_index] = SETPENCOLOR;
-   //    *(long *)(record + record_index + 2) = pen_color;
-   //    record_index += 6;
-   //    }
-   }
-
-static
-void save_color_flood()
-   {
-   update_status_floodcolor();
-
-   // if (safe_to_save())
-   //    {
-   //    record[record_index] = SETPENCOLOR;
-   //    *(long *)(record + record_index + 2) = pen_color;
-   //    record_index += 6;
-   //    }
-   }
-
-static
-void save_size()
-   {
-   update_status_penwidth();
-
-   // if (safe_to_save())
-   //    {
-   //    record[record_index] = SETPENSIZE;
-   //    *(int *)(record + record_index + 2) = get_pen_width();
-   //    *(int *)(record + record_index + 4) = get_pen_height();
-   //    record_index += 6;
-   //    }
-   }
-
-static
-void save_pattern()
-   {
-   // update_status(SETPENPATTERN);
-
-   // if (safe_to_save())
-   //    {
-   //    record[record_index] = SETPENPATTERN;
-   //    get_pen_pattern(&record[record_index + 2]);
-   //    record_index += 10;
-   //    }
-   }
-
-static
-void save_string(char /* s */[])
-   {
-   // if (safe_to_save())
-   //    {
-   //    record[record_index] = LABEL;
-   //    record[record_index + 2] = s[0];
-   //    for (int count = 0; count < s[0]; count++)
-   //       record[record_index + 3 + count] = s[1 + count];
-   //    record_index += 3 + s[0] + even_p(s[0]);
-   //    }
-   }
-
-
-/* This is called when the graphics coordinate system has been shifted.
-It adds a constant amount to each x and y coordinate in the record. */
-static
-void resize_record(int /* dh */, int /* dv */)
-   {
-   /*
-      int r_index = 0;
-
-   //   p_info_x(orig_pen) += dh;
-   //   p_info_y(orig_pen) += dv;
-
-      while (r_index < record_index)
-      switch (record[r_index])
-      {
-      case (LINEXY) :
-    *(int *)(record + r_index + 2) += dh;
-    *(int *)(record + r_index + 4) += dv;
-      r_index += 6;
-      break;
-      case (MOVEXY) :
-    *(int *)(record + r_index + 2) += dh;
-    *(int *)(record + r_index + 4) += dv;
-      r_index += 6;
-      break;
-      case (LABEL) :
-      r_index += 3 + record[r_index + 2] + even_p(record[r_index + 2]);
-      break;
-      case (SETPENVIS) :
-      r_index += 2;
-      break;
-      case (SETPENMODE) :
-      r_index += 4;
-      break;
-      case (SETPENCOLOR) :
-      r_index += 6;
-      break;
-      case (SETPENSIZE) :
-      r_index += 6;
-      break;
-      case (SETPENPATTERN) :
-      r_index += 10;
-      break;
-      }
-    */
-   }
-
-/************************************************************/
 
 static
 double positive_fmod(double x, double y)
@@ -322,10 +113,13 @@ FLONUM cut_error(FLONUM n)
       n *= 1000000.0;
       n = (n > 0.0 ? floor(n) : ceil(n));
       n /= 1000000.0;
-      if (n == -0.0) n = 0.0;
+      if (n == -0.0) 
+         {
+         n = 0.0;
+         }
       }
 
-   return (n);
+   return n;
    }
 
 FIXNUM g_round(FLONUM n)
@@ -333,11 +127,17 @@ FIXNUM g_round(FLONUM n)
    n += (n < 0.0 ? -0.5 : 0.5);
 
    if (n > (FLONUM) LONG_MAX)
+      {
       return LONG_MAX;
+      }
    else if (n < (FLONUM) LONG_MIN)
+      {
       return LONG_MIN;
+      }
    else
+      {
       return (FIXNUM) n;
+      }
    }
 
 
@@ -693,7 +493,6 @@ setpos_helper_2d(
       line_to(
          g_Turtles[turtle_which].Position.x, 
          g_Turtles[turtle_which].Position.y);
-      save_line();
       }
    }
 
@@ -720,7 +519,6 @@ setpos_helper_3d(
    g_Wanna = g_Turtles[turtle_which].Position = target;
    out_of_bounds = false;
    line_to_3d(g_Turtles[turtle_which].Position);
-   save_line();
    }
 
 static
@@ -955,8 +753,6 @@ bool wrap_right(FLONUM d, FLONUM x1, FLONUM y1, FLONUM x2, FLONUM y2)
       if (yi >= screen_bottom && yi <= screen_top)
          {
          line_to(screen_right, yi);
-         save_line();
-         record_next_move = true;
          g_Turtles[turtle_which].Position.x = turtle_left_max;
          g_Turtles[turtle_which].Position.y = yi;
          if (current_mode == wrapmode)
@@ -980,8 +776,6 @@ bool wrap_up(FLONUM d, FLONUM x1, FLONUM y1, FLONUM x2, FLONUM y2)
       if (xi >= screen_left && xi <= screen_right)
          {
          line_to(xi, screen_top);
-         save_line();
-         record_next_move = true;
          g_Turtles[turtle_which].Position.x = xi;
          g_Turtles[turtle_which].Position.y = turtle_bottom_max;
          if (current_mode == wrapmode)
@@ -1005,8 +799,6 @@ bool wrap_left(FLONUM d, FLONUM x1, FLONUM y1, FLONUM x2, FLONUM y2)
       if (yi >= screen_bottom && yi <= screen_top)
          {
          line_to(screen_left, yi);
-         save_line();
-         record_next_move = true;
          g_Turtles[turtle_which].Position.x = turtle_right_max;
          g_Turtles[turtle_which].Position.y = yi;
          if (current_mode == wrapmode)
@@ -1030,8 +822,6 @@ bool wrap_down(FLONUM d, FLONUM x1, FLONUM y1, FLONUM x2, FLONUM y2)
       if (xi >= screen_left && xi <= screen_right)
          {
          line_to(xi, screen_bottom);
-         save_line();
-         record_next_move = true;
          g_Turtles[turtle_which].Position.x = xi;
          g_Turtles[turtle_which].Position.y = turtle_top_max;
          if (current_mode == wrapmode)
@@ -1048,6 +838,8 @@ bool wrap_down(FLONUM d, FLONUM x1, FLONUM y1, FLONUM x2, FLONUM y2)
 
 void forward_helper(FLONUM d)
    {
+   static int forward_count = 0; // DELETEME
+
    if ((forward_count > 32) || !_finite(d))
       {
       return;
@@ -1068,14 +860,9 @@ void forward_helper(FLONUM d)
    FLONUM y2 = y1 + dy;
 
    move_to(x1, y1);
-   if (record_next_move)
-      {
-      save_move();
-      record_next_move = false;
-      }
 
-   //    if (check_throwing) return;
-   //    if (stopping_flag == THROWING) return;
+   // if (check_throwing) return;
+   // if (stopping_flag == THROWING) return;
 
    if (current_mode == windowmode ||
          (
@@ -1088,7 +875,6 @@ void forward_helper(FLONUM d)
       g_Turtles[turtle_which].Position.x = x2;
       g_Turtles[turtle_which].Position.y = y2;
       line_to(x2, y2);
-      save_line();
       }
    else
       {
@@ -1108,12 +894,6 @@ void forward_helper3d(FLONUM d)
 
    move_to_3d(g_Turtles[turtle_which].Position.x, g_Turtles[turtle_which].Position.y, g_Turtles[turtle_which].Position.z);
 
-   if (record_next_move)
-      {
-      save_move();
-      record_next_move = false;
-      }
-
    direction.x = 0.0;
    direction.y = d;
    direction.z = 0.0;
@@ -1125,7 +905,6 @@ void forward_helper3d(FLONUM d)
    g_Turtles[turtle_which].Position.z += direction.z;
 
    line_to_3d(g_Turtles[turtle_which].Position);
-   save_line();
    }
 
 static
@@ -1402,38 +1181,50 @@ FLONUM rotation_x()
 
 NODE *lheading(NODE *)
    {
+   FLONUM heading;
+
    if (current_mode == perspectivemode)
       {
-      return make_floatnode(rotation_z());
+      heading = rotation_z();
       }
    else
       {
-      return make_floatnode(g_Turtles[turtle_which].Heading);
+      heading = g_Turtles[turtle_which].Heading;
       }
+
+   return make_floatnode(heading);
    }
 
 NODE *lroll(NODE *)
    {
+   FLONUM roll;
+
    if (current_mode == perspectivemode)
       {
-      return make_floatnode(rotation_y());
+      roll = rotation_y();
       }
    else
       {
-      return make_floatnode(0.0);
+      roll = 0.0;
       }
+
+   return make_floatnode(roll);
    }
 
 NODE *lpitch(NODE *)
    {
+   FLONUM pitch;
+
    if (current_mode == perspectivemode)
       {
-      return make_floatnode(rotation_x());
+      pitch = rotation_x();
       }
    else
       {
-      return make_floatnode(0.0);
+      pitch = 0.0;
       }
+
+   return make_floatnode(pitch);
    }
 
 NODE *vec_arg_helper(NODE *args, bool floatok)
@@ -1443,9 +1234,9 @@ NODE *vec_arg_helper(NODE *args, bool floatok)
    while (NOT_THROWING)
       {
       if (arg != NIL &&
-            is_list(arg) &&
-            cdr(arg) != NIL &&
-            cddr(arg) == NIL)
+          is_list(arg) &&
+          cdr(arg) != NIL &&
+          cddr(arg) == NIL)
          {
          NODE * val1 = cnv_node_to_numnode(car(arg));
          NODE * val2 = cnv_node_to_numnode(cadr(arg));
@@ -1504,7 +1295,7 @@ NODE *vec_3_arg_helper(NODE *args, bool floatok)
             setcar(arg, val1);
             setcar(cdr(arg), val2);
             setcar(cddr(arg), val3);
-            return (arg);
+            return arg;
             }
          gcref(val1);
          gcref(val2);
@@ -1523,11 +1314,11 @@ NODE *vec_4_arg_helper(NODE *args, bool floatok)
    while (NOT_THROWING)
       {
       if (arg != NIL &&
-            is_list(arg) &&
-            cdr(arg) != NIL &&
-            cdr(cdr(arg)) != NIL &&
-            cdr(cdr(cdr(arg))) != NIL &&
-            cdr(cdr(cdr(cdr(arg)))) == NIL)
+          is_list(arg) &&
+          cdr(arg) != NIL &&
+          cdr(cdr(arg)) != NIL &&
+          cdr(cdr(cdr(arg))) != NIL &&
+          cdr(cdr(cdr(cdr(arg)))) == NIL)
          {
          NODE* val1 = cnv_node_to_numnode(car(arg));
          NODE* val2 = cnv_node_to_numnode(car(cdr(arg)));
@@ -1548,7 +1339,7 @@ NODE *vec_4_arg_helper(NODE *args, bool floatok)
             setcar(cdr(arg), val2);
             setcar(cdr(cdr(arg)), val3);
             setcar(cdr(cdr(cdr(arg))), val4);
-            return (arg);
+            return arg;
             }
          gcref(val1);
          gcref(val2);
@@ -1604,10 +1395,10 @@ NODE *ltowards(NODE *args)
       FLONUM y = numeric_node_to_flonum(ynode);
 
       FLONUM heading = towards_helper(
-            x, 
-            y, 
-            g_Turtles[turtle_which].Position.x, 
-            g_Turtles[turtle_which].Position.y);
+         x, 
+         y, 
+         g_Turtles[turtle_which].Position.x, 
+         g_Turtles[turtle_which].Position.y);
 
       return make_floatnode(heading);
       }
@@ -1645,7 +1436,10 @@ NODE *ltowardsxyz(NODE *args)
 
       // Heading was limited to 0 to 180 but we must be able to roll -180 to 180
       // if point is in positive Z hemisphere then "roll" left to it.
-      if (diff.z > 0.0) Ry = -Ry;
+      if (diff.z > 0.0) 
+         {
+         Ry = -Ry;
+         }
 
       // No Pitch needed
       FLONUM Rx = 0.0;
@@ -1750,10 +1544,6 @@ void cs_helper(bool centerp, bool clearp)
       out_of_bounds = false;
       }
    draw_turtle(true);
-   save_pen(&orig_pen);
-   // p_info_x(orig_pen) = g_round(screen_x_coord);
-   // p_info_y(orig_pen) = g_round(screen_y_coord);
-   record_index = 0;
    }
 
 NODE *lclearscreen(NODE *)
@@ -2069,8 +1859,6 @@ NODE *llabel(NODE *arg)
       {
       draw_turtle(false);
       label(textbuf);
-      save_string(textbuf);
-      record_next_move = true;
       draw_turtle(true);
       }
    return Unbound;
@@ -2119,35 +1907,30 @@ NODE *lpenpattern(NODE *)
 NODE *lpendown(NODE *)
    {
    g_Turtles[turtle_which].IsPenUp = false;
-   save_vis();
    return Unbound;
    }
 
 NODE *lpenup(NODE *)
    {
    g_Turtles[turtle_which].IsPenUp = true;
-   save_vis();
    return Unbound;
    }
 
 NODE *lpenpaint(NODE *)
    {
    pen_down();
-   save_mode();
    return lpendown(NIL);
    }
 
 NODE *lpenerase(NODE *)
    {
    pen_erase();
-   save_mode();
    return lpendown(NIL);
    }
 
 NODE *lpenreverse(NODE *)
    {
    pen_reverse();
-   save_mode();
    return lpendown(NIL);
    }
 
@@ -2156,9 +1939,8 @@ static
 NODE *
 setcolor_helper(
    NODE *args,
-   void (*setcolorfunc)  (int, int, int),
-   void (*savecolorfunc) (void)
-)
+   void (*setcolorfunc)  (int, int, int)
+   )
    {
    if (is_list(car(args)))
       {
@@ -2173,7 +1955,6 @@ setcolor_helper(
                numeric_node_to_fixnum(cadr(arg)),
                numeric_node_to_fixnum(cadr(cdr(arg))));
             }
-         savecolorfunc();
          }
 
       bIndexMode = false;
@@ -2192,7 +1973,6 @@ setcolor_helper(
                GetGValue(colortable[icolor]), 
                GetBValue(colortable[icolor]));
             }
-         savecolorfunc();
          }
 
       bIndexMode = true;
@@ -2204,17 +1984,17 @@ setcolor_helper(
 
 NODE *lsetpencolor(NODE *args)
    {
-   return setcolor_helper(args, thepencolor, save_color_pen);
+   return setcolor_helper(args, thepencolor);
    }
 
 NODE *lsetfloodcolor(NODE *args)
    {
-   return setcolor_helper(args, thefloodcolor, save_color_flood);
+   return setcolor_helper(args, thefloodcolor);
    }
 
 NODE *lsetscreencolor(NODE *args)
    {
-   return setcolor_helper(args, thescreencolor, save_color_screen);
+   return setcolor_helper(args, thescreencolor);
    }
 
 NODE *lsetpensize(NODE *args)
@@ -2225,7 +2005,6 @@ NODE *lsetpensize(NODE *args)
       {
       set_pen_width(numeric_node_to_fixnum(car(arg)));
       set_pen_height(numeric_node_to_fixnum(cadr(arg)));
-      save_size();
       }
    return Unbound;
    }
@@ -2243,7 +2022,6 @@ NODE *lsetpenpattern(NODE *args)
    if (NOT_THROWING)
       {
       set_list_pen_pattern(arg);
-      save_pattern();
       }
 
    deref(arg);
