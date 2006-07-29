@@ -48,7 +48,7 @@ void qlist::insert(void * a)
 
 void * qlist::get(void)
    {
-   // class "event list queue" member to get event
+   // class "event list queue" member to get the next event
    if (last == NULL)
       {
       return NULL;
@@ -59,7 +59,7 @@ void * qlist::get(void)
 
 void qlist::zap(void)
    {
-   // class "event list queue" member to zap all events
+   // class "event list queue" member function to remove the first event
    if (last == NULL) 
       {
       return;
