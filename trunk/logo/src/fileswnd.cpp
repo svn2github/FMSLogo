@@ -37,8 +37,8 @@ void filesave(const char *Filename)
    writestream = fopen(Filename, "w+");
    if (writestream != NULL)
       {
-      int save_yield_flag = yield_flag;
-      yield_flag = 0;
+      bool save_yield_flag = yield_flag;
+      yield_flag = false;
       lsetcursorwait(NIL);
 
       NODE * entire_workspace = vref(cons_list(lcontents(NIL)));
@@ -70,13 +70,13 @@ bool fileload(const char *Filename)
 
       int    savedValStatus   = val_status;
       bool   savedIsDirty     = IsDirty;
+      bool   savedYieldFlag   = yield_flag;
       FILE * savedLoadStream  = loadstream;
       NODE * savedCurrentLine = vref(current_line);
-      int    savedYieldFlag   = yield_flag;
 
       loadstream = filestream;
 
-      yield_flag = 0;
+      yield_flag = false;
       lsetcursorwait(NIL);
 
       while (!feof(loadstream) && NOT_THROWING)

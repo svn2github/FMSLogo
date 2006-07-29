@@ -789,77 +789,59 @@ NODE *leventcheck(NODE *)
 // function that processes our own queued events 
 void checkqueue()
    {
-   callthing *thing;
-
-   while (thing = calllists.get())
+   while (callthing * thing = calllists.get())
       {
-      int save_yield_flag;
-      int sv_val_status;
-
-      sv_val_status = val_status;
+      bool save_yield_flag = yield_flag;
+      int  sv_val_status = val_status;;
 
       calllists.zap();
       switch (thing->kind)
          {
          // mouse event must not yield while processing
          case EVENTTYPE_Mouse:
-            {
-            save_yield_flag = yield_flag;
-            yield_flag = 0;
+            yield_flag = false;
             mouse_posx = thing->arg1;
             mouse_posy = thing->arg2;
             do_execution(thing->func);
-            yield_flag = save_yield_flag;
             break;
-            }
 
           // keyboard event must not yield while processing
           case EVENTTYPE_Keyboard:
-             {
-             save_yield_flag = yield_flag;
-             yield_flag = 0;
+             yield_flag = false;
              keyboard_value = thing->arg1;
              do_execution(thing->func);
-             yield_flag = save_yield_flag;
              break;
-             }
 
           // Button, timer or other event ok to yield while processing
           case EVENTTYPE_YieldFunction:
-             {
              do_execution(thing->func);
              break;
-             }
 
           // Scrollbar, MCI, Net, timer or other event must not yield while processing
           case EVENTTYPE_NoYieldFunction:
-             {
-             save_yield_flag = yield_flag;
-             yield_flag = 0;
+             yield_flag = false;
              do_execution(thing->func);
-             yield_flag = save_yield_flag;
              break;
-             }
 
           // Network events must not yield while processing
           case EVENTTYPE_NetworkReceiveReady:
-             {
-             save_yield_flag = yield_flag;
-             yield_flag = 0;
+             yield_flag = false;
 
              // use the new value
              thing->networkconnection->SetLastPacketReceived(thing->networkpacket);
              thing->networkpacket = NULL;
 
              do_execution(thing->func);
-
-             yield_flag = save_yield_flag;
              break;
-             }
+
+         default:
+            assert(0 && "bad callthing type");
+            break;
          }
 
       delete thing;
 
+      yield_flag = save_yield_flag;
       val_status = sv_val_status;
       }
    }
@@ -868,9 +850,7 @@ void checkqueue()
 
 void emptyqueue()
    {
-   callthing *thing;
-
-   while (thing = calllists.get())
+   while (callthing * thing = calllists.get())
       {
       calllists.zap();
 

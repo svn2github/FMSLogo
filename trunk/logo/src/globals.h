@@ -19,8 +19,8 @@
  *
  */
 
-/* main.c */
-extern int yield_flag;
+// main.cpp
+extern bool yield_flag;
 extern int GCMAX;
 extern int MAX_PHYS_LINE;
 extern bool bExpert;

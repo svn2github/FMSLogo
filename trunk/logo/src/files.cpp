@@ -371,8 +371,8 @@ NODE *lsave(NODE *arg)
    writestream = open_file(car(arg), "w+");
    if (writestream != NULL)
       {
-      int save_yield_flag = yield_flag;
-      yield_flag = 0;
+      bool save_yield_flag = yield_flag;
+      yield_flag = false;
       lsetcursorwait(NIL);
 
       NODE * entire_workspace = vref(cons_list(lcontents(NIL)));
@@ -519,8 +519,8 @@ NODE *lload(NODE *arg)
    loadstream = open_file(car(arg), "r");
    if (loadstream != NULL)
       {
-      int save_yield_flag = yield_flag;
-      yield_flag = 0;
+      bool save_yield_flag = yield_flag;
+      yield_flag = false;
       lsetcursorwait(NIL);
 
       while (!feof(loadstream) && NOT_THROWING)

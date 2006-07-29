@@ -692,17 +692,15 @@ NODE *lhalt(NODE *)
 
 NODE *lyield(NODE *)
    {
-   // set flag and update button label
-   yield_flag = 1;
-   // MainWindowx->CommandWindow->YieldButton->SetWindowText("NoYield");
+   // set flag
+   yield_flag = true;
    return Unbound;
    }
 
 NODE *lnoyield(NODE *)
    {
-   // clear flag and update button label
-   yield_flag = 0;
-   // MainWindowx->CommandWindow->YieldButton->SetWindowText("Yield");
+   // clear flag
+   yield_flag = false;
    return Unbound;
    }
 

@@ -208,7 +208,7 @@ NODE *err_logo(ERR_TYPES error_type, NODE *error_desc)
          break;
 
       case STOP_ERROR:
-         yield_flag = 1;
+         yield_flag = true;
          error_message = cons_list(make_static_strnode("Stopping..."));
          break;
 

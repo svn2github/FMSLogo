@@ -1335,8 +1335,8 @@ NODE *ledit(NODE *args)
          }
       }
 
-   int save_yield_flag = yield_flag;
-   yield_flag = 0;
+   bool save_yield_flag = yield_flag;
+   yield_flag = false;
    lsetcursorwait(NIL);
 
    if (args != NIL)
@@ -1387,8 +1387,8 @@ bool endedit(void)
 
    FILE * holdstrm = loadstream;
    NODE * tmp_line = reref(NIL, current_line);
-   int save_yield_flag = yield_flag;
-   yield_flag = 0;
+   bool save_yield_flag = yield_flag;
+   yield_flag = false;
    lsetcursorwait(NIL);
 
    LinesLoadedOnEdit = 0;
