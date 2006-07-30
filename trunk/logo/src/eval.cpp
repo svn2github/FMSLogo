@@ -1087,7 +1087,7 @@ NODE *evaluator(NODE *list, enum labels where)
  catch_continuation:
    assign(list, cdr(val));
    assign(catch_tag, car(val));
-   if (compare_node(catch_tag, Error, TRUE) == 0)
+   if (compare_node(catch_tag, Error, true) == 0)
       {
       push(Erract, var_stack);
       setobject(var_stack, valnode__caseobj(Erract));
@@ -1121,7 +1121,7 @@ NODE *evaluator(NODE *list, enum labels where)
          }
       }
    if (stopping_flag == THROWING &&
-         compare_node(throw_node, catch_tag, TRUE) == 0)
+         compare_node(throw_node, catch_tag, true) == 0)
       {
       throw_node = reref(throw_node, Unbound);
       stopping_flag = RUN;
