@@ -149,6 +149,8 @@ extern FIXNUM tailcall;
 extern FIXNUM val_status;
 extern FIXNUM dont_fix_ift;
 
+extern int g_CatchErrorCount;
+
 /* print.cpp */
 extern bool print_backslashes;
 

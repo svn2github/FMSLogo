@@ -347,12 +347,13 @@ NODE *err_logo(ERR_TYPES error_type, NODE *error_desc)
 
    // If this error is recoverable and ERRACT is defined,
    // then we should run :ERRACT to get a new value.
-   NODE * err_act = valnode__caseobj(Erract);
+   NODE * err_act_value = valnode__caseobj(Erract);
    NODE * new_throw_node;
 
-   if (!g_IsRunningErractInstructionList && 
-       err_act != NIL && 
-       err_act != UNDEFINED)
+   if (g_CatchErrorCount == 0 && 
+       !g_IsRunningErractInstructionList && 
+       err_act_value != NIL && 
+       err_act_value != UNDEFINED)
       {
       // don't let one erract interrupt another
       set_is_running_erract_flag();
@@ -360,7 +361,7 @@ NODE *err_logo(ERR_TYPES error_type, NODE *error_desc)
       // run the erract instruction list
       int sv_val_status = val_status;
 
-      NODE * val = err_eval_driver(err_act);
+      NODE * val = err_eval_driver(err_act_value);
 
       val_status = sv_val_status;
 
@@ -399,7 +400,8 @@ NODE *err_logo(ERR_TYPES error_type, NODE *error_desc)
       }
    else
       {
-      // No erract is defined or the erract instruction list threw an error.
+      // We're in a catch block, or no erract is defined, or the erract 
+      // instruction list that we are currently processing threw an error.
       // Either way, we should throw the error.
       new_throw_node = Error;
       }

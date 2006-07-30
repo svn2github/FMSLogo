@@ -1,5 +1,5 @@
 /*
-*      eval.c          logo eval/apply module                  dko
+*      eval.cpp          logo eval/apply module                  dko
 *
 *       Copyright (C) 1995 by the Regents of the University of California
 *       Copyright (C) 1995 by George Mills
@@ -75,11 +75,15 @@ FIXNUM val_status;  // 0 means no value allowed (body of cmd),
 
 FIXNUM dont_fix_ift = 0;
 
+int g_CatchErrorCount = 0;       // the number of nested blocks of CATCH "ERROR
+                                 // This is used to disable "ERRACT processing.
+
 static NODE *qm_list = NIL;      // question mark list
 static int trace_level = 0;      // indentation level when tracing
 
 static NODE *var       = NIL;    // frame pointer into var_stack
 static NODE *var_stack = NIL;    // the stack of variables and their bindings
+
 
 void spop(NODE **stack)
    {
@@ -1089,9 +1093,10 @@ NODE *evaluator(NODE *list, enum labels where)
    assign(catch_tag, car(val));
    if (compare_node(catch_tag, Error, true) == 0)
       {
-      push(Erract, var_stack);
-      setobject(var_stack, valnode__caseobj(Erract));
-      setvalnode__caseobj(Erract, Unbound);
+      // Increment the number of nested CATCH "ERROR blocks.
+      // When an error does occur, this value is used to decide
+      // between throwing an error or using the value of ERRACT.
+      g_CatchErrorCount++;
       }
    save(catch_tag);
    save2(didnt_output_name, didnt_get_output);
@@ -1120,6 +1125,14 @@ NODE *evaluator(NODE *list, enum labels where)
             }
          }
       }
+
+   if (compare_node(catch_tag, Error, true) == 0)
+      {
+      // we have reached the end of a CATCH "ERROR [] block
+      assert(0 < g_CatchErrorCount);
+      g_CatchErrorCount--;
+      }
+
    if (stopping_flag == THROWING &&
          compare_node(throw_node, catch_tag, true) == 0)
       {

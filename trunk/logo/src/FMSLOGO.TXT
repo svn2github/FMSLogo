@@ -27,6 +27,7 @@ Part II) New features/bugs fixed:
     o Fix bug #1520952: Copying the selected line from the commander's history
       to the commander's edit box now ignores artifical boundries introduced by
       word-wrapping.
+    o Fix bug #1523549: ERRACT is now preserved inside CATCH "ERROR blocks.
     o Fix bug #1521664: BYE in PAUSE dialog now exits FMSLogo.
     o Fix bug #1520950: 'DEFINE "F [[] APPLY [OP ?] [3]] F' no longer crashes.
     o Fix bug #1519088: 'APPLY [OP ?] [3]' no longer leaks memory.
