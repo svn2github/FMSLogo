@@ -348,6 +348,7 @@ NODE *err_logo(ERR_TYPES error_type, NODE *error_desc)
    // If this error is recoverable and ERRACT is defined,
    // then we should run :ERRACT to get a new value.
    NODE * err_act = valnode__caseobj(Erract);
+   NODE * new_throw_node;
 
    if (!g_IsRunningErractInstructionList && 
        err_act != NIL && 
@@ -380,22 +381,31 @@ NODE *err_logo(ERR_TYPES error_type, NODE *error_desc)
             // have output a new value to use.
             ndprintf(stdout, "You don't say what to do with %s\n", val);
             deref(val);
-            throw_node = reref(throw_node, Toplevel);
+            new_throw_node = Toplevel;
             }
          }
       else
          {
-         return Unbound;
+         // val is Unbound
+         //
+         // If the error is recoverable, this is a problem because
+         // Erract didn't output a replacement value.
+         //
+         // If the error is not recoverable, then the Error was not handled.
+         //
+         // Either way, we throw Error
+         new_throw_node = Error;
          }
       }
    else
       {
       // No erract is defined or the erract instruction list threw an error.
       // Either way, we should throw the error.
-      throw_node = reref(throw_node, Error);
+      new_throw_node = Error;
       }
 
    stopping_flag = THROWING;
+   throw_node  = reref(throw_node, new_throw_node);
    output_node = reref(output_node, Unbound);
    return Unbound;
    }
