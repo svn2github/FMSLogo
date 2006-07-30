@@ -37,8 +37,20 @@ END
 
 TO CATCHTEST.SMOKETEST
 
-  ; throw and catch
-  LOCALMAKE "outputvalue CATCH "throwtag [CATCHTEST.SMOKETEST.THROW]
+  LOCAL [outputvalue]
+
+  REPORTTESTINFO [Running test where CATCH instruction list doesn't output or throw]
+  CATCH "throwtag [ CLEARSCREEN ]
+
+  REPORTTESTINFO [Running test where CATCH instruction list outputs a value]
+  MAKE "outputvalue CATCH "throwtag [SUM 1 2]
+  SIMPLEREPORTTEST [:outputvalue] 3
+
+  REPORTTESTINFO [Running test where CATCH instruction list throws ]
+  CATCH "throwtag [ THROW "throwtag ]
+
+  REPORTTESTINFO [Running test where CATCH instruction list throws a value]
+  MAKE "outputvalue CATCH "throwtag [CATCHTEST.SMOKETEST.THROW]
   SIMPLEREPORTTEST [:outputvalue] [1 2 3 4 5]
 
 END
