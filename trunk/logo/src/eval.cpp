@@ -371,28 +371,31 @@ NODE *evaluator(NODE *list, enum labels where)
  eval_dispatch:
    switch (nodetype(exp))
       {
-       case QUOTE:                      /* quoted literal                      */
-           assign(val, node__quote(exp));
-           goto fetch_cont;
+      case QUOTE:
+         // quoted literal
+         assign(val, node__quote(exp));
+         goto fetch_cont;
 
-       case COLON:                      /* variable                            */
-           assign(val, valnode__colon(exp));
-           while (val == Unbound && NOT_THROWING)
-              {
-              assign(val, err_logo(NO_VALUE, node__colon(exp)));
-              }
-           goto fetch_cont;
+       case COLON:
+          // variable
+          assign(val, valnode__colon(exp));
+          while (val == Unbound && NOT_THROWING)
+             {
+             assign(val, err_logo(NO_VALUE, node__colon(exp)));
+             }
+          goto fetch_cont;
 
-       case CONS:                       /* procedure application               */
-           if (tailcall == 1 && is_macro(car(exp)) &&
-                 is_list(procnode__caseobj(car(exp))))
-              {
-              /* tail call to user-defined macro must be treated as non-tail
-               * because the expression returned by the macro
-               * remains to be evaluated in the caller's context */
-              assign(unev, NIL);
-              goto non_tail_eval;
-              }
+      case CONS:
+         // procedure application
+         if (tailcall == 1 && is_macro(car(exp)) &&
+             is_list(procnode__caseobj(car(exp))))
+            {
+            // tail call to user-defined macro must be treated as non-tail
+            // because the expression returned by the macro
+            // remains to be evaluated in the caller's context
+            assign(unev, NIL);
+            goto non_tail_eval;
+            }
 
            // the first element in the list is the function
            assign(fun, car(exp));
@@ -407,33 +410,35 @@ NODE *evaluator(NODE *list, enum labels where)
               goto ev_no_args;
               }
 
-       case ARRAY:                      // array must be copied
-           {
-              assign(val, make_array(getarrdim(exp)));
-              setarrorg(val, getarrorg(exp));
+       case ARRAY:
+          // array must be copied
+          {
+          assign(val, make_array(getarrdim(exp)));
+          setarrorg(val, getarrorg(exp));
 
-              NODE ** p = getarrptr(exp);
-              NODE ** q = getarrptr(val);
-              for (int i = 0; i < getarrdim(exp); i++)
-                 {
-                 *q++ = vref(*p);
-                 p++;
-                 }
-           }
-           goto fetch_cont;
+          NODE ** p = getarrptr(exp);
+          NODE ** q = getarrptr(val);
+          for (int i = 0; i < getarrdim(exp); i++)
+             {
+             *q++ = vref(*p);
+             p++;
+             }
+          }
+          goto fetch_cont;
 
-       default:
-           assign(val, exp);             // self-evaluating
-           goto fetch_cont;
+      default: 
+         // self-evaluating
+         assign(val, exp);
+         goto fetch_cont;
       }
 
  ev_no_args:
-   /* Evaluate an application of a procedure with no arguments. */
+   // Evaluate an application of a procedure with no arguments.
    assign(argl, NIL);
-   goto apply_dispatch;                /* apply the procedure                 */
+   goto apply_dispatch;   // apply the procedure
 
  ev_application:
-   /* Evaluate an application of a procedure with arguments. */
+   // Evaluate an application of a procedure with arguments.
    assign(unev, cdr(exp));
    assign(argl, NIL);
    mixsave(tailcall, var);
@@ -564,6 +569,7 @@ NODE *evaluator(NODE *list, enum labels where)
    }
 
  compound_apply:
+   // call (that is, APPLY) a non-primitive procedure/macro
 
    check_stop(true);
 
@@ -576,8 +582,9 @@ NODE *evaluator(NODE *list, enum labels where)
       trace_level++;
       ndprintf(writestream, "( %s ", fun);
       }
-   /* Bind the actuals to the formals */
+
  lambda_apply:
+   // Bind the actual inputs to the formal inputs
    var_stack_position = var_stack; // remember where we came in
    for (formals = formals__procnode(proc);
         formals != NIL;
@@ -736,9 +743,9 @@ NODE *evaluator(NODE *list, enum labels where)
       }
 
  eval_sequence:
-   /* Evaluate each expression in the sequence.  Stop as soon as
-    * val != Unbound.
-    */
+   // Evaluate each expression in the sequence.  
+   // Stop as soon as val != Unbound.
+
    if (!RUNNING || val != Unbound)
       {
       goto fetch_cont;
@@ -775,7 +782,7 @@ NODE *evaluator(NODE *list, enum labels where)
        is_list(exp) && 
        is_tailform(procnode__caseobj(car(exp))))
       {
-      // Get the priority of the primitive to get the "true identify".
+      // Get the priority of the primitive to get the "true identity".
       // This will compare correctly, even if the procedure is a copydef
       // of another procedure.
       short expression_priority = getprimpri(procnode__caseobj(car(exp)));
@@ -824,7 +831,7 @@ NODE *evaluator(NODE *list, enum labels where)
             }
          else if (val_status == 5)
             {
-	        // pr apply [output ?] [3]
+            // pr apply [output ?] [3]
             assign(didnt_output_name, fun);
             goto tail_eval_dispatch;
             }
