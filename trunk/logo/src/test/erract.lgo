@@ -206,12 +206,35 @@ TO ERRACTTEST.UNRECOVERABLEERROR.OUTPUTVALUE
 
 END
 
+
+TO ERRACTTEST.ERRACTAFTERCATCH
+   ; tests that the use of erract is restored after a catch block
+
+   LOCAL [outputvalue]
+
+   ; backup the current value of :ERRACT
+   LOCALMAKE "savederract []
+   IF NAME? "ERRACT [MAKE "savederract :erract]
+
+   REPORTTESTINFO [ Setting ERRACT to a value that outputs 5 ]
+   MAKE "ERRACT [ ERRACTTEST.OUTPUT.5 ]
+
+   REPORTTESTINFO [ Causing a recoverable error just after a CATCH block ]
+   CATCH "ERROR [ MAKE :outputvalue SUM 1 2 ] MAKE "outputvalue SUM 1 [1]
+   SIMPLEREPORTTEST [:outputvalue] 6
+
+   ; restore the previous value of :ERRACT
+   MAKE "ERRACT :savederract
+
+END
+
 TO ERRACTTEST
 
   ERRACTTEST.SMOKETEST
   ERRACTTEST.CATCHBLOCKSERRACT
   ERRACTTEST.OUTPUTWRONGVALUE
   ERRACTTEST.CHANGEERRACTINERRACT
+  ERRACTTEST.ERRACTAFTERCATCH
 
   ;ERRACTTEST.BUG1517326
   ;ERRACTTEST.ERRORINERRACT
