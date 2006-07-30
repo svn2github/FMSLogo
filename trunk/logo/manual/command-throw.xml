@@ -7,17 +7,18 @@
 <varlistentry><term>Synopsis</term>
 <listitem>
 <synopsis><command>THROW</command> <parameter>tag</parameter>
-(<command>THROW</command> <parameter>tag</parameter> <parameter>value</parameter>)</synopsis>
+(<command>THROW</command> <parameter>tag</parameter> <parameter>value</parameter>)
+(<command>THROW</command> "ERROR <parameter>errortext</parameter>)</synopsis>
 </listitem>
 </varlistentry>
 
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-Command that must be used within the scope of a <link linkend="command-catch">CATCH</link> instruction that has a tag equal to <parameter>tag</parameter>.
-THROW ends the running of the CATCH instruction's instruction list parameter.
-If THROW is not given a <parameter>value</parameter> parameter, then the corresponding CATCH does not output a value.
-If THROW is given a <parameter>value</parameter> parameter, then CATCH outputs <parameter>value</parameter>.
+Ends the running of a CATCH instruction's <parameter>instructionlist</parameter> input.
+THROW must be used within the scope of a <link linkend="command-catch">CATCH</link> instruction that has a tag equal to <parameter>tag</parameter>.
+If THROW is given a <parameter>value</parameter> input, then CATCH outputs <parameter>value</parameter>.
+If THROW is not given a <parameter>value</parameter> input, then the corresponding CATCH does not output a value.
 </para>
 
 <para>
@@ -25,21 +26,24 @@ The <parameter>tag</parameter> parameter must be a word.
 </para>
 
 <para>
-<userinput>THROW "TOPLEVEL</userinput> can be used to terminate all running procedures and interactive pauses, and return to the toplevel instruction prompt.
+<userinput>THROW "SYSTEM</userinput> causes &PRODUCTNAME; to immediately exit.
+</para>
+
+<para>
+<userinput>THROW "TOPLEVEL</userinput> terminates all running procedures and interactive pauses, and returns control to the toplevel instruction prompt.
 This has the same effect as pressing the <link linkend="commander-halt">Halt Button</link>.
 </para>
 
 <para>
 <userinput>THROW "ERROR</userinput> can be used to generate an error condition.
 If the error is not caught, it prints a message <userinput>(THROW "ERROR)</userinput> with the usual indication of where the error (in this case the THROW) occurred.
-If a <parameter>value</parameter> input is given and <parameter>tag</parameter> equals <userinput>"ERROR</userinput>, then <parameter>value</parameter> is used as the text of the error message instead of the standard message.
+If <parameter>tag</parameter> equals <userinput>"ERROR</userinput> and an <parameter>errortext</parameter> input is given, then <parameter>errortext</parameter> is used as the text of the error message instead of the standard message.
 In this case, the location indicated for the error will not be the location of the THROW, but the location where the procedure containing the THROW was invoked.
 This allows user-defined procedures to generate error messages as if they were primitives.
-Note: in this case the corresponding <userinput>CATCH "ERROR</userinput>, if any, does not output, since the second input to THROW is not considered a return value.
 </para>
 
 <para>
-<userinput>THROW "SYSTEM</userinput> causes &PRODUCTNAME; to immediately exit.
+Note that when <userinput>THROW "ERROR</userinput> is used, the corresponding <userinput>CATCH "ERROR</userinput>, if any, does not output a value because the second input to THROW is treated as an error message, not an output.
 </para>
 
 </listitem>
