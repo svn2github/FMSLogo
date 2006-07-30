@@ -8,6 +8,15 @@ TO ERRACTTEST.OUTPUT.5
    OUTPUT 5
 END
 
+TO ERRACTTEST.OUTPUT.NEXTERRACTVALUE
+
+   LOCALMAKE "value POP "erractvalues
+
+   REPORTTESTINFO (SENTENCE [ERRACT handler outputs] :value)
+   OUTPUT :value
+END
+
+
 TO ERRACTTEST.BUG1517326 
 
    MAKE "erract [ERRACTTEST.BUG1517326.CONTINUE5]
@@ -16,7 +25,7 @@ TO ERRACTTEST.BUG1517326
 END
 
 TO ERRACTTEST.SMOKETEST
-   LOCAL [saved.erract erract.was.called ]
+   LOCAL [saved.erract erract.was.called]
 
    ; backup the current value of :ERRACT
    LOCALMAKE "savederract []
@@ -36,7 +45,23 @@ TO ERRACTTEST.SMOKETEST
    SIMPLEREPORTTEST [ :erract.was.called ] "true
 
 
+   ;
+   ; make sure erract is not invoked if within a CATCH "ERROR block
+   ;
+   REPORTTESTINFO [ Setting ERRACT to a value such that we can verify if it is called ]
+   MAKE "erract.was.called "false
+   MAKE "ERRACT [ MAKE "erract.was.called "true ]
 
+   REPORTTESTINFO [ Causing an unrecoverable error outside of a CATCH block ]
+   RUNIDONTKNOWHOWTOTEST [ FUNCTION.DOES.NOT.EXIST ]
+
+   SIMPLEREPORTTEST [ :erract.was.called ] "false
+   SIMPLEREPORTTEST [ :erract            ] [ MAKE "erract.was.called "true ]
+
+
+   ;
+   ; make sure that erract can output a value
+   ;
    REPORTTESTINFO [ Setting ERRACT to a procedure that outputs 5 ]
    make "erract [ERRACTTEST.OUTPUT.5]
 
@@ -49,6 +74,87 @@ TO ERRACTTEST.SMOKETEST
    SIMPLEREPORTTEST [ :thesum ] 6
 
 
+
+   ; restore the previous value of :ERRACT
+   MAKE "ERRACT :savederract
+
+END
+
+TO ERRACTTEST.CHANGEERRACT.OUTPUT.6
+   REPORTTESTINFO   [Entering ERRACTTEST.CHANGEERRACT.OUTPUT.6]
+
+   SIMPLEREPORTTEST [ :erract ] [ERRACTTEST.CHANGEERRACT.OUTPUT.6]
+
+   REPORTTESTINFO   [Changing the value of :erract to [ERRACTTEST.OUTPUT.5] ]
+   make "erract [ERRACTTEST.OUTPUT.5]
+   SIMPLEREPORTTEST [ :erract ] [ERRACTTEST.OUTPUT.5]
+
+   REPORTTESTINFO   [Exiting ERRACTTEST.CHANGEERRACT.OUTPUT.6]
+   OUTPUT 6
+END
+
+TO ERRACTTEST.CHANGEERRACTINERRACT
+   LOCAL [saved.erract]
+
+   ; backup the current value of :ERRACT
+   LOCALMAKE "savederract []
+   IF NAME? "ERRACT [MAKE "savederract :erract]
+
+
+   REPORTTESTINFO [ Setting ERRACT to a procedure changes erract and outputs 6 ]
+   make "erract [ERRACTTEST.CHANGEERRACT.OUTPUT.6]
+
+   REPORTTESTINFO [ Calling "SUM 1 [1]", which should run :erract to replace [1] with 6 ]
+   MAKE "thesum SUM 1 [1]
+   SIMPLEREPORTTEST [ :thesum ] 7
+
+   REPORTTESTINFO [ Calling "SUM 1 [1]" again.  This should use the new erract value ]
+   MAKE "thesum SUM 1 [1]
+   SIMPLEREPORTTEST [ :thesum ] 6
+
+
+   ; restore the previous value of :ERRACT
+   MAKE "ERRACT :savederract
+
+END
+
+
+TO ERRACTTEST.OUTPUTWRONGVALUE
+   LOCAL [saved.erract erractvalue]
+
+   ; backup the current value of :ERRACT
+   LOCALMAKE "savederract []
+   IF NAME? "ERRACT [MAKE "savederract :erract]
+
+   REPORTTESTINFO [Setting ERRACT to a procedure outputs the next value in :erractvalues]
+   make "erract [ERRACTTEST.OUTPUT.NEXTERRACTVALUE]
+
+   TRACEINSTRUCTION [MAKE "erractvalues [[100] 5]]
+
+   REPORTTESTINFO [Calling "SUM 1 [1]" this should keep calling :ERRACT until it gets a good value]
+   MAKE "thesum SUM 1 [1]
+   SIMPLEREPORTTEST [ :thesum ] 6
+
+   ; restore the previous value of :ERRACT
+   MAKE "ERRACT :savederract
+
+END
+
+
+TO ERRACTTEST.ERRORINERRACT
+   LOCAL [saved.erract erractvalue]
+
+   ; backup the current value of :ERRACT
+   LOCALMAKE "savederract []
+   IF NAME? "ERRACT [MAKE "savederract :erract]
+
+   TRACEINSTRUCTION [ make "erract [THROW "Error] ]
+
+   TRACEINSTRUCTION [MAKE "erractvalues [[100] 5]]
+
+   REPORTTESTINFO [Calling "SUM 1 [1].  This should call Erract which throws an error"]
+   MAKE "thesum SUM 1 [1]
+
    ; restore the previous value of :ERRACT
    MAKE "ERRACT :savederract
 
@@ -57,6 +163,10 @@ END
 TO ERRACTTEST
 
   ERRACTTEST.SMOKETEST
+  ERRACTTEST.OUTPUTWRONGVALUE
+  ERRACTTEST.CHANGEERRACTINERRACT
+
   ;ERRACTTEST.BUG1517326
+  ;ERRACTTEST.ERRORINERRACT
 
 END
