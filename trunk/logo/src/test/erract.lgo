@@ -24,26 +24,11 @@ TO ERRACTTEST.BUG1517326
    REPORTTESTPASSED [Bug #1517326 passed.  Bad ERRACT did not halt Logo]
 END
 
-TO ERRACTTEST.SMOKETEST
-   LOCAL [saved.erract erract.was.called]
+TO ERRACTTEST.CATCHBLOCKSERRACT
 
    ; backup the current value of :ERRACT
    LOCALMAKE "savederract []
    IF NAME? "ERRACT [MAKE "savederract :erract]
-
-
-   ;
-   ; make sure erract can get called
-   ;
-   REPORTTESTINFO [ Setting ERRACT to a value such that we can verify if it is called ]
-   MAKE "erract.was.called "false
-   MAKE "ERRACT [ MAKE "erract.was.called "true ]
-
-   REPORTTESTINFO [ Causing an unrecoverable error outside of a CATCH block ]
-   FUNCTION.DOES.NOT.EXIST
-
-   SIMPLEREPORTTEST [ :erract.was.called ] "true
-
 
    ;
    ; make sure erract is not invoked if within a CATCH "ERROR block
@@ -59,6 +44,17 @@ TO ERRACTTEST.SMOKETEST
    SIMPLEREPORTTEST [ :erract            ] [ MAKE "erract.was.called "true ]
 
 
+   ; restore the previous value of :ERRACT
+   MAKE "ERRACT :savederract
+END
+
+TO ERRACTTEST.SMOKETEST
+
+   ; backup the current value of :ERRACT
+   LOCALMAKE "savederract []
+   IF NAME? "ERRACT [MAKE "savederract :erract]
+
+
    ;
    ; make sure that erract can output a value
    ;
@@ -72,7 +68,6 @@ TO ERRACTTEST.SMOKETEST
    REPORTTESTINFO [ Calling "SUM 1 [1]" again.  This used to crash (bug #1517326) ]
    MAKE "thesum SUM 1 [1]
    SIMPLEREPORTTEST [ :thesum ] 6
-
 
 
    ; restore the previous value of :ERRACT
@@ -94,7 +89,6 @@ TO ERRACTTEST.CHANGEERRACT.OUTPUT.6
 END
 
 TO ERRACTTEST.CHANGEERRACTINERRACT
-   LOCAL [saved.erract]
 
    ; backup the current value of :ERRACT
    LOCALMAKE "savederract []
@@ -120,7 +114,6 @@ END
 
 
 TO ERRACTTEST.OUTPUTWRONGVALUE
-   LOCAL [saved.erract erractvalue]
 
    ; backup the current value of :ERRACT
    LOCALMAKE "savederract []
@@ -129,6 +122,7 @@ TO ERRACTTEST.OUTPUTWRONGVALUE
    REPORTTESTINFO [Setting ERRACT to a procedure outputs the next value in :erractvalues]
    make "erract [ERRACTTEST.OUTPUT.NEXTERRACTVALUE]
 
+   LOCAL "erractvalues
    TRACEINSTRUCTION [MAKE "erractvalues [[100] 5]]
 
    REPORTTESTINFO [Calling "SUM 1 [1]" this should keep calling :ERRACT until it gets a good value]
@@ -142,7 +136,6 @@ END
 
 
 TO ERRACTTEST.ERRORINERRACT
-   LOCAL [saved.erract erractvalue]
 
    ; backup the current value of :ERRACT
    LOCALMAKE "savederract []
@@ -150,6 +143,7 @@ TO ERRACTTEST.ERRORINERRACT
 
    TRACEINSTRUCTION [ make "erract [THROW "Error] ]
 
+   LOCAL "erractvalues
    TRACEINSTRUCTION [MAKE "erractvalues [[100] 5]]
 
    REPORTTESTINFO [Calling "SUM 1 [1].  This should call Erract which throws an error"]
@@ -160,13 +154,69 @@ TO ERRACTTEST.ERRORINERRACT
 
 END
 
+
+TO ERRACTTEST.RECOVERABLEERROR.OUTPUTNOTHING
+
+   ; backup the current value of :ERRACT
+   LOCALMAKE "savederract []
+   IF NAME? "ERRACT [MAKE "savederract :erract]
+
+   REPORTTESTINFO [ Setting ERRACT to a value that does not output anything ]
+   MAKE "ERRACT [ print [in erract instructionlist] ]
+
+   REPORTTESTINFO [ Causing a recoverable error outside of a CATCH block ]
+   SUM 1 [10]
+
+   ; restore the previous value of :ERRACT
+   MAKE "ERRACT :savederract
+
+END
+
+TO ERRACTTEST.UNRECOVERABLEERROR.OUTPUTNOTHING
+
+   ; backup the current value of :ERRACT
+   LOCALMAKE "savederract []
+   IF NAME? "ERRACT [MAKE "savederract :erract]
+
+   REPORTTESTINFO [ Setting ERRACT to a value that does not output anything ]
+   MAKE "ERRACT [ print [in erract instructionlist] ]
+
+   REPORTTESTINFO [ Causing an unrecoverable error outside of a CATCH block ]
+   FUNCTION.DOES.NOT.EXIST
+
+   ; restore the previous value of :ERRACT
+   MAKE "ERRACT :savederract
+
+END
+
+TO ERRACTTEST.UNRECOVERABLEERROR.OUTPUTVALUE
+
+   ; backup the current value of :ERRACT
+   LOCALMAKE "savederract []
+   IF NAME? "ERRACT [MAKE "savederract :erract]
+
+   REPORTTESTINFO [ Setting ERRACT to a value that outputs 5 ]
+   MAKE "ERRACT [ ERRACTTEST.OUTPUT.5 ]
+
+   REPORTTESTINFO [ Causing an unrecoverable error outside of a CATCH block ]
+   FUNCTION.DOES.NOT.EXIST
+
+   ; restore the previous value of :ERRACT
+   MAKE "ERRACT :savederract
+
+END
+
 TO ERRACTTEST
 
   ERRACTTEST.SMOKETEST
+  ERRACTTEST.CATCHBLOCKSERRACT
   ERRACTTEST.OUTPUTWRONGVALUE
   ERRACTTEST.CHANGEERRACTINERRACT
 
   ;ERRACTTEST.BUG1517326
   ;ERRACTTEST.ERRORINERRACT
+  ;ERRACTTEST.UNRECOVERABLEERROR.OUTPUTVALUE
+  ;ERRACTTEST.UNRECOVERABLEERROR.OUTPUTNOTHING
+  ;ERRACTTEST.RECOVERABLEERROR.OUTPUTNOTHING
 
 END
