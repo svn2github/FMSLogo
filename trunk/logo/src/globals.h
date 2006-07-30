@@ -130,7 +130,6 @@ extern fpos_t LinesLoadedOnEdit;
 
 // error.cpp
 extern NODE *throw_node;
-extern ERR_TYPES erract_errtype;
 
 // eval.cpp
 extern FIXNUM repcountup;

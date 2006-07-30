@@ -21,6 +21,8 @@ Part I) Kit Description/Location (http://sourceforge.net/projects/fmslogo):
 Part II) New features/bugs fixed:
 
   * Added for 6.10.0,
+    o Fix bug #1531127: ERRACT can now be read/written to from inside the 
+      ERRACT instructionlist.
     o Fix bug #1527547: SHELL now throw error when given too many inputs.
     o Fix bug #1520952: Copying the selected line from the commander's history
       to the commander's edit box now ignores artifical boundries introduced by

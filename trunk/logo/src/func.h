@@ -528,6 +528,7 @@ extern bool not_local(NODE *name, NODE *sp);
 extern void uninitialize_eval(void);
 
 // file error.cpp
+extern void clear_is_running_erract_flag();
 extern void err_print(void);
 extern NODE *err_logo(ERR_TYPES error_type, NODE *error_desc);
 extern NODE *lerror(NODE *arg);

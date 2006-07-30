@@ -499,7 +499,7 @@ void TMyCommandWindow::DoButtonExecute(UINT)
         }
 
       // reset erract loop error history
-      erract_errtype = FATAL;
+      clear_is_running_erract_flag();
 
       // reset evaluation counter (call counter) and execute
       eval_count = 0;

@@ -172,7 +172,7 @@ NODE *reader(FILE *strm, const char *prompt)
    if (strm == stdin)
       {
       input_blocking = true;
-      erract_errtype = FATAL;
+      clear_is_running_erract_flag();
       }
 
    int c = 0;

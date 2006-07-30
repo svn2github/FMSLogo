@@ -1,5 +1,5 @@
 /*
-*      error.c         logo error module                       dvb
+*      error.cpp         logo error module                       dvb
 *
 *       Copyright (C) 1995 by the Regents of the University of California
 *       Copyright (C) 1995 by George Mills
@@ -23,9 +23,22 @@
 #include "allwind.h"
 
 NODE *    throw_node = NIL;
-ERR_TYPES erract_errtype;
 
 static NODE * err_mesg = NIL;
+static bool g_IsRunningErractInstructionList = false;
+
+static
+void set_is_running_erract_flag()
+   {
+   g_IsRunningErractInstructionList = true;
+   }
+
+// REVISIT: does this really need to be callable from other files?
+void clear_is_running_erract_flag()
+   {
+   g_IsRunningErractInstructionList = false;
+   }
+
 
 void err_print()
    {
@@ -334,58 +347,51 @@ NODE *err_logo(ERR_TYPES error_type, NODE *error_desc)
 
    // If this error is recoverable and ERRACT is defined,
    // then we should run :ERRACT to get a new value.
-   NODE * err_act = vref(valnode__caseobj(Erract));
+   NODE * err_act = valnode__caseobj(Erract);
 
-   if (err_act != NIL && err_act != UNDEFINED)
+   if (!g_IsRunningErractInstructionList && 
+       err_act != NIL && 
+       err_act != UNDEFINED)
       {
-      if (error_type != erract_errtype)
+      // don't let one erract interrupt another
+      set_is_running_erract_flag();
+
+      // run the erract instruction list
+      int sv_val_status = val_status;
+
+      NODE * val = err_eval_driver(err_act);
+
+      val_status = sv_val_status;
+
+      // reset the erract-is-running flag so that it can be called again
+      clear_is_running_erract_flag();
+
+      if (val != Unbound)
          {
-         int sv_val_status = val_status;
-
-         erract_errtype = error_type;       // don't let one erract interrupt another
-         setvalnode__caseobj(Erract, NIL);  // avoid an erract loop
-
-         NODE * val = err_eval_driver(err_act);
-
-         val_status = sv_val_status;
-         setvalnode__caseobj(Erract, err_act);
-         deref(err_act);
-
-         // reset the erract so that it can be called again
-         erract_errtype = FATAL;
-
-         if (val != Unbound)
+         if (recoverable)
             {
-            if (recoverable)
-               {
-               // Return the value returned from :ERRACT so that the
-               // caller can replace the bad value with this one.
-               return unref(val);
-               }
-            else
-               {
-               // This error wasn't recoverable, so ERRACT shouldn't
-               // have output a new value to use.
-               ndprintf(stdout, "You don't say what to do with %s\n", val);
-               deref(val);
-               throw_node = reref(throw_node, Toplevel);
-               }
+            // Return the value returned from :ERRACT so that the
+            // caller can replace the bad value with this one.
+            return unref(val);
             }
          else
             {
-            return Unbound;
+            // This error wasn't recoverable, so ERRACT shouldn't
+            // have output a new value to use.
+            ndprintf(stdout, "You don't say what to do with %s\n", val);
+            deref(val);
+            throw_node = reref(throw_node, Toplevel);
             }
          }
       else
          {
-         // this should never happen
-         ndprintf(stdout, "Erract loop\n");
-         throw_node = reref(throw_node, Toplevel);
+         return Unbound;
          }
       }
    else
       {
-      // no erract is defined, so we should throw the error
+      // No erract is defined or the erract instruction list threw an error.
+      // Either way, we should throw the error.
       throw_node = reref(throw_node, Error);
       }
 
