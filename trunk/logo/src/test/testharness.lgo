@@ -74,6 +74,7 @@ LOAD "timer.lgo
 LOAD "shell.lgo
 LOAD "time.lgo
 LOAD "thing.lgo
+LOAD "catch.lgo
 
 TO TESTALL
 
@@ -84,6 +85,7 @@ TO TESTALL
   RUNTEST            ; from run.lgo
   ERRORTEST          ; from error.lgo
   ERRACTTEST         ; from erract.lgo
+  CATCHTEST          ; from catch.lgo
   LISTTEST           ; from list.lgo
   SENTENCETEST       ; from sentence.lgo
   PREDICATETEST      ; from predicate.lgo

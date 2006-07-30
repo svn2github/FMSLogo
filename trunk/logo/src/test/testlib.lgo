@@ -123,6 +123,47 @@ END
 BURY [REPORTTESTUNINITIALIZE]
 
 
+TO CHECKERRORITEM :item :lasterror :expectedvalue :description
+
+  LOCALMAKE "lastitem ITEM :item :lasterror
+  IFELSE EQUALP :lastitem :expectedvalue [
+    REPORTTESTPASSED (LIST "Running :instructions "set "error :description "to :expectedvalue "|, as expected.|)
+  ] [
+    REPORTTESTFAILED (LIST "ITEM :item "|ERROR output| :lastitem "|.  We expected| :expectedvalue ".)
+  ]
+
+END
+BURY [CHECKERRORITEM]
+
+TO CHECKERROR :instructions :expectederror :expectedtext :expectedprocedure :expectedline
+
+   ; TODO: allow [] as inputs to mean "don't care".
+   ; then rewrite bad input tests to use this procedture
+
+  LOCALMAKE "lasterror ERROR
+  IF EMPTYP :lasterror [
+    REPORTTESTFAILED (LIST "Executing :instructions "|did not change ERROR.|)
+    STOP
+  ]
+
+  IF NOT LISTP :lasterror [
+    REPORTTESTFAILED [ERROR did not return a list.]
+    STOP
+  ]
+
+  IF NOT EQUALP (COUNT :lasterror) 4 [
+    REPORTTESTFAILED [ERROR did not return a list of four values.]
+    STOP
+  ]
+
+  CHECKERRORITEM 1 :lasterror :expectederror     "code
+  CHECKERRORITEM 2 :lasterror :expectedtext      "text
+  CHECKERRORITEM 3 :lasterror :expectedprocedure "procedure
+  CHECKERRORITEM 4 :lasterror :expectedline      "line
+
+END
+BURY [CHECKERROR]
+
 TO RUNBADINPUTTEST :instructions
 
   REPORTTESTINFO (LIST "|Executing invalid instruction:| :instructions )
