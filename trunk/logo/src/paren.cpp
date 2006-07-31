@@ -78,7 +78,7 @@ void untreeify_proc(NODE *procname)
    untreeify(body);
    }
 
-// Treeify a body by appending the trees of the lines.
+// Treeify a procedure's bodylines by appending the trees of the lines.
 void make_tree_from_body(NODE *body)
    {
    if (body == NIL ||
@@ -91,12 +91,20 @@ void make_tree_from_body(NODE *body)
    for (NODE * body_ptr = body; body_ptr != NIL; body_ptr = cdr(body_ptr))
       {
       NODE * tree = car(body_ptr);
+      if (tree == NIL)
+         {
+         // skip blank lines or else we'd error out at is_tree()
+         continue;
+         }
+
       assign(this_line, tree);
       make_tree(tree);
       if (is_tree(tree))
          {
          tree = tree__tree(tree);
          make_line(tree, car(body_ptr));
+
+         // append "tree" to the end of body's tree list
          if (end_ptr == NIL)
             {
             settree__tree(body, tree);
@@ -105,11 +113,15 @@ void make_tree_from_body(NODE *body)
             {
             setcdr(end_ptr, tree);
             }
+
          if (generation__tree(car(body_ptr)) == Unbound)
             {
             setgeneration__tree(body, Unbound);
             }
+
          untreeify(car(body_ptr));
+
+         // advance end_ptr to the end of body's tree list
          while (cdr(tree) != NIL)
             {
             tree = cdr(tree);
@@ -118,11 +130,13 @@ void make_tree_from_body(NODE *body)
          }
       else
          {
-         /* error while treeifying */
+         // error while treeifying 
          untreeify(body);
          return;
          }
       }
+
+   // body is now tree-ified
    settype(body, TREE);
    }
 

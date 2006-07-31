@@ -53,6 +53,7 @@ Part II) New features/bugs fixed:
     o Fix bug #1457755: 'CATCH "ERROR [TO]' now throws meaningful error.
     o Fix bug #1457733: TO 1 now throws meaning error.
     o Fix bug #1395740: '3 ** 4' now throws a meaningful error.
+    o Fix bug #1395737: DEFINE now allows empty lines.
     o Fix bug #1384326; 'RIGHT 1.1.' no longer has the baffling error message
       "RIGHT didn't output to RIGHT".
     o Fix bug #1367386: Networking code no longer goes into an infinite loop 
