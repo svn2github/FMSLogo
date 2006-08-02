@@ -126,6 +126,14 @@ BURY [REPORTTESTUNINITIALIZE]
 TO CHECKERRORITEM :item :lasterror :expectedvalue :description
 
   LOCALMAKE "lastitem ITEM :item :lasterror
+
+  ; An :expectedvalue of "DONTCARE indicates that the caller
+  ; doesn't care what the value of the field is.
+  IF :expectedvalue = "DONTCARE [ 
+     REPORTTESTINFO (LIST "ITEM :item "|ERROR output| :lastitem ".)
+     STOP
+  ]
+
   IFELSE EQUALP :lastitem :expectedvalue [
     REPORTTESTPASSED (LIST "Running :instructions "set "error :description "to :expectedvalue "|, as expected.|)
   ] [
