@@ -116,73 +116,46 @@ TO ERRORTEST
    ; CATCH "ERROR [TO ERRORTEST.ALREADYDEFINEDPROCEDURE]
 END
 
-;;
-;; The following tests can only be run at the top-level
-;;
-TO ERRORTEST.CHECKERROR :explaination :expectederrorcode :expectederrormessage
-
-  PRINT (SENTENCE "Executing :explaination)
-
-  LOCALMAKE "lasterror ERROR
-  IF EMPTYP :lasterror [
-    MESSAGEBOX [Test Failed] (LIST :explaination "|did not change ERROR|)
-    PRINT [Failing test]
-    THROW "error
-  ]
-  IF NOT EQUALP (ITEM 1 :lasterror) :expectederrorcode [
-    MESSAGEBOX [Test Failed] (LIST "|ITEM 1 ERROR returned | (ITEM 1 :lasterror) "|, we expected| :expectederrorcode)
-    PRINT [Failing test]
-    THROW "error
-  ]
-  IF NOT EQUALP (ITEM 2 :lasterror) :expectederrormessage [
-    MESSAGEBOX [Test Failed] (LIST "|ITEM 2 ERROR returned | (ITEM 2 :lasterror) "|, we expected| :expectederrormessage)
-    PRINT [Failing test]
-    THROW "error
-  ]
-  PRINT (LIST :explaination "|set error code to|   (ITEM 1 :lasterror) )
-  PRINT (LIST :explaination "|set error string to| (ITEM 2 :lasterror) )
-END
-
 ;; error 15: Try to define a primitive with TO
 IGNORE ERROR
 CATCH "ERROR [TO FORWARD]
-ERRORTEST.CHECKERROR "|TO FORWARD at the toplevel| 15 (LIST "FORWARD "|is already defined|)
+CHECKERROR "|TO FORWARD at the toplevel| 15 (LIST "FORWARD "|is already defined|) [] []
 
 ;; error 31: Can only use STOP inside a procedure
 IGNORE ERROR
 CATCH "ERROR [STOP]
-ERRORTEST.CHECKERROR "|STOP at the toplevel| 31 (LIST "|Can only use| "STOP "|inside a procedure|)
+CHECKERROR "|STOP at the toplevel| 31 (LIST "|Can only use| "STOP "|inside a procedure|) [] []
 
 ;; error 31: Can only use OUTPUT inside a procedure
 IGNORE ERROR
 CATCH "ERROR [OUTPUT 123]
-ERRORTEST.CHECKERROR "|OUTPUT at the toplevel| 31 (LIST "|Can only use| "OUTPUT "|inside a procedure|)
+CHECKERROR "|OUTPUT at the toplevel| 31 (LIST "|Can only use| "OUTPUT "|inside a procedure|) [] []
 
 ;; bug #1519088 -- this used to leak memory
 IGNORE ERROR
 CATCH "ERROR [ APPLY [OP ?] [3] ]
-ERRORTEST.CHECKERROR "|OUTPUT at the toplevel| 31 (LIST "|Can only use| "OP "|inside a procedure|)
+CHECKERROR "|OUTPUT at the toplevel| 31 (LIST "|Can only use| "OP "|inside a procedure|) []  []
 
 ;; bug #1457755
 IGNORE ERROR
 CATCH "ERROR [TO 1]
-ERRORTEST.CHECKERROR "|TO 1| 4 (LIST "TO "|doesn't like| 1 "|as input|)
+CHECKERROR "|TO 1| 4 (LIST "TO "|doesn't like| 1 "|as input|) [] []
 
 IGNORE ERROR
 CATCH "ERROR [TO [1]]
-ERRORTEST.CHECKERROR "|TO [1]| 4 (LIST "TO "|doesn't like| [1] "|as input|)
+CHECKERROR "|TO [1]| 4 (LIST "TO "|doesn't like| [1] "|as input|) [] []
 
 IGNORE ERROR
 MAKE "ERRORTEST.ARRAY {1}
 CATCH "ERROR (LIST "TO :ERRORTEST.ARRAY)
-ERRORTEST.CHECKERROR "|TO {1}| 4 (LIST "TO "|doesn't like| :ERRORTEST.ARRAY "|as input|)
+CHECKERROR "|TO {1}| 4 (LIST "TO "|doesn't like| :ERRORTEST.ARRAY "|as input|) [] []
 
 ;; bug #1457745 
 IGNORE ERROR
 CATCH "ERROR [TO]
-ERRORTEST.CHECKERROR "|TO with no inputs| 6 (LIST "|not enough inputs to| "TO)
+CHECKERROR "|TO with no inputs| 6 (LIST "|not enough inputs to| "TO) [] []
 
 ;; TO used to leaks formal parameters when one of them is bad
 IGNORE ERROR
 CATCH "ERROR [TO MYPROC :A :B C]
-ERRORTEST.CHECKERROR "|TO MYPROC :A :B C| 4 (LIST "TO "|doesn't like| "C "|as input|)
+CHECKERROR "|TO MYPROC :A :B C| 4 (LIST "TO "|doesn't like| "C "|as input|) [] []
