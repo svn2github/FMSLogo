@@ -3,6 +3,7 @@
 
 LOAD "testlib.lgo
 
+LOAD "to.lgo
 LOAD "list.lgo
 LOAD "sentence.lgo
 LOAD "first.lgo
@@ -83,6 +84,7 @@ TO TESTALL
   PARSETEST          ; from parse.lgo
   LOADTEST           ; from load.lgo
   RUNTEST            ; from run.lgo
+  TOTEST             ; from to.lgo
   ERRORTEST          ; from error.lgo
   ERRACTTEST         ; from erract.lgo
   CATCHTEST          ; from catch.lgo

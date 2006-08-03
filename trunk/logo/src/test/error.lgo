@@ -135,27 +135,3 @@ CHECKERROR "|OUTPUT at the toplevel| 31 (LIST "|Can only use| "OUTPUT "|inside a
 IGNORE ERROR
 CATCH "ERROR [ APPLY [OP ?] [3] ]
 CHECKERROR "|OUTPUT at the toplevel| 31 (LIST "|Can only use| "OP "|inside a procedure|) []  []
-
-;; bug #1457755
-IGNORE ERROR
-CATCH "ERROR [TO 1]
-CHECKERROR "|TO 1| 4 (LIST "TO "|doesn't like| 1 "|as input|) [] []
-
-IGNORE ERROR
-CATCH "ERROR [TO [1]]
-CHECKERROR "|TO [1]| 4 (LIST "TO "|doesn't like| [1] "|as input|) [] []
-
-IGNORE ERROR
-MAKE "ERRORTEST.ARRAY {1}
-CATCH "ERROR (LIST "TO :ERRORTEST.ARRAY)
-CHECKERROR "|TO {1}| 4 (LIST "TO "|doesn't like| :ERRORTEST.ARRAY "|as input|) [] []
-
-;; bug #1457745 
-IGNORE ERROR
-CATCH "ERROR [TO]
-CHECKERROR "|TO with no inputs| 6 (LIST "|not enough inputs to| "TO) [] []
-
-;; TO used to leaks formal parameters when one of them is bad
-IGNORE ERROR
-CATCH "ERROR [TO MYPROC :A :B C]
-CHECKERROR "|TO MYPROC :A :B C| 4 (LIST "TO "|doesn't like| "C "|as input|) [] []
