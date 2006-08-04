@@ -156,9 +156,7 @@ NODE *paren_expr(NODE **expr, bool inparen)
       return NIL;
       }
 
-   NODE *proc;
    NODE *retval;
-   NODE **ifnode = (NODE **) NIL;
 
    // REVISIT: do we really need to ref and deref first?
    NODE * first = vref(car(*expr));
@@ -231,7 +229,8 @@ NODE *paren_expr(NODE **expr, bool inparen)
             {
             silent_load(first, logolib); // try <logolib>/<first>
             }
-         proc = procnode__caseobj(first);
+         
+         NODE * proc = procnode__caseobj(first);
          if (proc == UNDEFINED && NOT_THROWING)
             {
             retval = cons_list(first);
@@ -245,6 +244,8 @@ NODE *paren_expr(NODE **expr, bool inparen)
             }
          else
             {
+            NODE **ifnode = (NODE **) NIL;
+
             if (compare_node(first, If, true) == 0)
                {
                // Kludge: turn IF to IFELSE sometimes.
@@ -252,8 +253,8 @@ NODE *paren_expr(NODE **expr, bool inparen)
                }
 
             // update "fun" in case this is a special form (TO or .MACRO)
-            // and can encounter an erro within gather_args().
-            // This allows proper error reporting if fun receive bad input.
+            // and can encounter an error within gather_args().
+            // This allows proper error reporting if fun receives bad input.
             assign(fun, first);
 
             retval = gather_args(proc, expr, inparen, ifnode);
@@ -356,8 +357,13 @@ NODE *gather_some_args(int min, int max, NODE **args, bool inparen, NODE **ifnod
    return NIL;
    }
 
-// Gather the correct number of arguments to proc into a list.
-// Set args to immediately after the last arg.
+// Gather the correct number of inputs to proc starting at *args.
+// Upon exit, this sets *args to immediately after the last arg.
+// If inparen is true, then *args is set to Right_Parn.
+//
+// ifnode is a hack that allows for IF->IFELSE conversion.
+// If proc is IF, then *ifnode is a pointer to the proc.
+// If it should be an IFELSE, then *ifnode is changed to IfElse.
 static
 NODE *gather_args(NODE *proc, NODE **args, bool inparen, NODE **ifnode)
    {
@@ -365,6 +371,7 @@ NODE *gather_args(NODE *proc, NODE **args, bool inparen, NODE **ifnode)
 
    if (nodetype(proc) == CONS)
       {
+      // user-defined procedure
       min = (inparen ? getint(minargs__procnode(proc))
             : getint(dfltargs__procnode(proc)));
       max = (inparen ? getint(maxargs__procnode(proc))
@@ -372,11 +379,11 @@ NODE *gather_args(NODE *proc, NODE **args, bool inparen, NODE **ifnode)
       }
    else
       {
-      /* primitive */
+      // primitive
       min = (inparen ? getprimmin(proc) : getprimdflt(proc));
       if (min < 0)
-         {
-         /* special form */
+         {            
+         // special form (either TO or .MACRO)
          return ((logofunc) *getprimfun(proc)) (*args);
          }
 
