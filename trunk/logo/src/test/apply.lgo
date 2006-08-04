@@ -24,10 +24,20 @@ END
 
 TO APPLYTEST.SMOKETEST
 
+   ; apply a primitive
    SIMPLEREPORTTEST [APPLY "SUM [123]      ] 123
    SIMPLEREPORTTEST [APPLY "SUM [100 20 3] ] 123
 
+   ; apply a non-primitive procedure that has already been defined
    SIMPLEREPORTTEST [APPLY "APPLYTEST.NONPRIMITIVE [120 3] ] 123
+
+   ; apply a library procedure that must get loaded
+   TRACEINSTRUCTION [ERASE "ARRAYTOLIST]
+   SIMPLEREPORTTEST [APPLY "ARRAYTOLIST [{1 2 3}] ] [1 2 3]
+
+   ; apply a procedure in the current directory that must get loaded
+   TRACEINSTRUCTION [ERASE "procedureinworkingdirectory]
+   SIMPLEREPORTTEST [APPLY "procedureinworkingdirectory [] ] 123
 
    TRACEINSTRUCTION [APPLY "APPLYTEST.NOOUTPUT [] ]
 
@@ -58,11 +68,17 @@ TO APPLYTEST.BADINPUT
 
 END
 
+TO APPLYTEST.TEMPLATE
+
+   ; applying a template with empty lines used to crash
+   TRACEINSTRUCTION [ APPLY [[][]] [] ]
+END
+
 TO APPLYTEST
 
    APPLYTEST.SMOKETEST
    APPLYTEST.BADINPUT
    APPLYTEST.BUG1519088
-
+   APPLYTEST.TEMPLATE
 END
 
