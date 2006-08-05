@@ -217,20 +217,7 @@ NODE *paren_expr(NODE **expr, bool inparen)
       else
          {
          // it must be a procedure
-         if (procnode__caseobj(first) == UNDEFINED && 
-             NOT_THROWING &&
-             first != Null_Word)
-            {
-            silent_load(first, NULL);  // try ./<first>.lgo
-            }
-         if (procnode__caseobj(first) == UNDEFINED && 
-             NOT_THROWING &&
-             first != Null_Word)
-            {
-            silent_load(first, logolib); // try <logolib>/<first>
-            }
-         
-         NODE * proc = procnode__caseobj(first);
+         NODE * proc = load_procedure_if_necessary(first);
          if (proc == UNDEFINED && NOT_THROWING)
             {
             retval = cons_list(first);

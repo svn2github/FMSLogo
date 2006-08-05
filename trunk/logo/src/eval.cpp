@@ -85,6 +85,35 @@ static NODE *var       = NIL;    // frame pointer into var_stack
 static NODE *var_stack = NIL;    // the stack of variables and their bindings
 
 
+// Load the definition of ProcNode if the definition of ProcNode
+// is currently UNDEFINED.
+//
+// Return the case object of ProcNode, if successful.
+// Return UNDEFINED, otherwise.
+NODE *
+load_procedure_if_necessary(
+   NODE * ProcNode
+   )
+   {
+   // try loading from ./<proc>.lgo
+   if (procnode__caseobj(ProcNode) == UNDEFINED && 
+       NOT_THROWING &&
+       ProcNode != Null_Word)
+      {
+      silent_load(ProcNode, NULL);
+      }
+
+   // try loading from <logolib>/<proc>
+   if (procnode__caseobj(ProcNode) == UNDEFINED && 
+       NOT_THROWING &&
+       ProcNode != Null_Word)
+      {
+      silent_load(ProcNode, logolib);
+      }
+
+   return procnode__caseobj(ProcNode);
+   }
+
 void spop(NODE **stack)
    {
    NODE *temp = (*stack)->nunion.ncons.ncdr;
@@ -1269,21 +1298,11 @@ NODE *evaluator(NODE *list, enum labels where)
          }
       else
          {
-         /* name of procedure to apply */
+         // name of procedure to apply
          assign(fun, intern(fun));
-         if (procnode__caseobj(fun) == UNDEFINED && 
-             NOT_THROWING &&
-             fun != Null_Word)
-            {
-            silent_load(fun, NULL);  // try ./<fun>.lg
-            }
-         if (procnode__caseobj(fun) == UNDEFINED && 
-             NOT_THROWING &&
-             fun != Null_Word)
-            {
-            silent_load(fun, logolib); // try <logolib>/<fun>
-            }
-         assign(proc, procnode__caseobj(fun));
+
+         // load the definition of fun, if necessary
+         assign(proc, load_procedure_if_necessary(fun));
          while (proc == UNDEFINED && NOT_THROWING)
             {
             assign(val, err_logo(DK_HOW_UNREC, fun));
