@@ -5,7 +5,7 @@ TO SELECTBOXTEST.SMOKETEST
    SIMPLEREPORTTEST  [ SELECTBOX [SELECTBOX Test: Select First]  [First Second Third] ] 1
    SIMPLEREPORTTEST  [ SELECTBOX [SELECTBOX Test: Select Second] [First Second Third] ] 2
    SIMPLEREPORTTEST  [ SELECTBOX [SELECTBOX Test: Select Third]  [First Second Third] ] 3
-   RUNBADINPUTTEST   [ SELECTBOX [SELECTBOX Test: Press Cancel]  [First Second Third] ]
+   RUNSTOPPINGTEST   [ SELECTBOX [SELECTBOX Test: Press Cancel]  [First Second Third] ]
 
 END
 

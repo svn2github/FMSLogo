@@ -4,7 +4,7 @@ TO YESNOBOXTEST.SMOKETEST
 
    SIMPLEREPORTTEST  [ YESNOBOX [YESNOBOX Test] [Press "Yes"]    ] "true
    SIMPLEREPORTTEST  [ YESNOBOX [YESNOBOX Test] [Press "No"]     ] "false
-   RUNBADINPUTTEST   [ YESNOBOX [YESNOBOX Test] [Press "Cancel"] ]
+   RUNSTOPPINGTEST   [ YESNOBOX [YESNOBOX Test] [Press "Cancel"] ]
 
 END
 
