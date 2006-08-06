@@ -69,7 +69,10 @@ LOAD "windows.lgo
 LOAD "windowfileedit.lgo
 LOAD "midi.lgo
 LOAD "sound.lgo
+LOAD "messagebox.lgo
 LOAD "yesnobox.lgo
+LOAD "selectbox.lgo
+LOAD "questionbox.lgo
 LOAD "shellscript.lgo
 LOAD "timer.lgo
 LOAD "shell.lgo
@@ -147,7 +150,10 @@ TO TESTALL
   ERASETEST          ; from erase.lgo
   LOGOVERSIONTEST    ; from logoversion.lgo
   QUOTEDTEST         ; from quoted.lgo
+  MESSAGEBOXTEST     ; from messagebox.lgo
   YESNOBOXTEST       ; from yesnobox.lgo
+  SELECTBOXTEST      ; from selectbox.lgo
+  QUESTIONBOXTEST    ; from questionbox.lgo
   WINDOWSTEST        ; from windows.lgo
   MOUSETEST          ; from mouse.lgo
   MIDITEST           ; from midi.lgo
