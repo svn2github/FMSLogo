@@ -689,6 +689,7 @@ NODE *evaluator(NODE *list, enum labels where)
             /* parm is rest */
             setvalnode__caseobj(car(parm), argl);
             // BUG: should this be traced?
+            assign(argl, NIL);
             break;
             }
          if (arg == Unbound)
@@ -743,11 +744,17 @@ NODE *evaluator(NODE *list, enum labels where)
          pop(argl);
          }
       }
+   if (argl != NIL) 
+      {
+      // APPLY [[A] [IGNORE :A]] [1 2]
+      err_logo(TOO_MUCH, fun);
+      }
    if (check_throwing)
       {
       assign(val, Unbound);
       goto fetch_cont;
       }
+
    var_stack_position = NIL;
    if (tracing = (!is_list(fun) && flag__caseobj(fun, PROC_TRACED)) || traceflag)
       {
@@ -779,8 +786,8 @@ NODE *evaluator(NODE *list, enum labels where)
    if (treepair__tree(list) == NIL)
       {
       // The function body consisted of nothing by empty lines.
-      // Trying to evaluate this found would crash, but we can
-      // safely ignore this function call, since it is a no-op.
+      // Trying to evaluate this function would crash, but we can
+      // instead ignore this function call, since it is a no-op.
       assign(val, Unbound);
       goto fetch_cont;
       }
@@ -1323,8 +1330,8 @@ NODE *evaluator(NODE *list, enum labels where)
                   } 
                else if (argl != NIL) 
                   {
-                  // too many inputs
-                  err_logo(DK_WHAT, car(argl));
+                  // too many inputs.
+                  err_logo(TOO_MUCH, car(argl));
                   goto fetch_cont;
                   }
                else
