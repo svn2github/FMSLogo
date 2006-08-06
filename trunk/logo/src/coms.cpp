@@ -22,6 +22,10 @@
 
 #include "allwind.h"
 
+// ift_iff_flag: flag for if TEST has been called within the scope
+// -1 : TEST has not been called.
+//  0 : TEST "FALSE has been called.
+//  1 : TEST "TRUE has been called.
 FIXNUM ift_iff_flag = -1;
 
 NODE *make_cont(enum labels cont, NODE *val)
@@ -342,14 +346,17 @@ NODE *liftrue(NODE *args)
    {
    if (ift_iff_flag < 0)
       {
+      // TEST has not been run in this scope
       return err_logo(NO_TEST, NIL);
       }
    else if (ift_iff_flag > 0)
       {
+      // TEST "TRUE has been run in this scope
       return lrun(args);
       }
    else
       {
+      // TEST "FALSE has been run in this scope
       return NIL;
       }
    }
@@ -358,14 +365,17 @@ NODE *liffalse(NODE *args)
    {
    if (ift_iff_flag < 0)
       {
+      // TEST has not been run in this scope
       return err_logo(NO_TEST, NIL);
       }
    else if (ift_iff_flag == 0)
       {
+      // TEST "FALSE has been run in this scope
       return lrun(args);
       }
    else
       {
+      // TEST "TRUE has been run in this scope
       return NIL;
       }
    }
