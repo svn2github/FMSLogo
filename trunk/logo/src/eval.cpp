@@ -116,6 +116,9 @@ load_procedure_if_necessary(
 
 void spop(NODE **stack)
    {
+   assert(stack != NULL && "bad input");
+   assert(*stack != NIL && "popping from an empty stack");
+
    NODE *temp = (*stack)->nunion.ncons.ncdr;
 
    if (decrefcnt(*stack) == 0)
@@ -135,6 +138,8 @@ void spop(NODE **stack)
 
 void spush(NODE *obj, NODE **stack)
    {
+   assert(stack != NULL && "bad input");
+
    NODE *temp = newnode(CONS);
 
    setcar(temp, obj);
@@ -525,6 +530,7 @@ NODE *evaluator(NODE *list, enum labels where)
       goto fetch_cont;
       }
    assign(argl, reverse(argl));
+
    /* --------------------- APPLY ---------------------------- */
  apply_dispatch:
    eval_count++;
@@ -644,8 +650,11 @@ NODE *evaluator(NODE *list, enum labels where)
 
       if (nodetype(parm) == CASEOBJ)
          {
+         // A named input (the common case) -- treat this a local variable
          if (not_local(parm, var_stack_position))
             {
+            // A variable by this name didn't already exist in
+            // this scope, so we must create a new scope for it.
             push(parm, var_stack);
             setobject(var_stack, valnode__caseobj(parm));
             }
@@ -665,6 +674,7 @@ NODE *evaluator(NODE *list, enum labels where)
             {
             /* parm is rest */
             setvalnode__caseobj(car(parm), argl);
+            // BUG: should this be traced?
             break;
             }
          if (arg == Unbound)
@@ -784,6 +794,7 @@ NODE *evaluator(NODE *list, enum labels where)
       assign(this_line, unparsed__line(unev));
       if (flag__caseobj(ufun, PROC_STEPPED) || stepflag)
          {
+         // this is not a lambda function and it is being stepped
          if (tracing || traceflag)
             {
             int i = 1;
@@ -1052,6 +1063,8 @@ NODE *evaluator(NODE *list, enum labels where)
    assign(val, Unbound);
    goto fetch_cont;
 
+   /* --------------------- RUNRESULT ---------------------------- */
+
  runresult_continuation:
    assign(list, val);
    newcont(runresult_followup);
@@ -1068,6 +1081,8 @@ NODE *evaluator(NODE *list, enum labels where)
       assign(val, cons(val, NIL));
       }
    goto fetch_cont;
+
+   /* --------------------- REPEAT ---------------------------- */
 
  repeat_continuation:
    assign(list, cdr(val));
@@ -1124,6 +1139,7 @@ NODE *evaluator(NODE *list, enum labels where)
    assign(val, Unbound);
    goto repeat_done;
 
+   /* --------------------- CATCH/THROW ---------------------------- */
  catch_continuation:
    assign(list, cdr(val));
    assign(catch_tag, car(val));
@@ -1212,6 +1228,7 @@ NODE *evaluator(NODE *list, enum labels where)
    assign(val, Unbound);
    goto fetch_cont;
 
+   /* --------------------- APPLY ---------------------------- */
  begin_apply:
    /* This is for lapply. */
    assign(fun, car(val));
@@ -1229,34 +1246,37 @@ NODE *evaluator(NODE *list, enum labels where)
       {
       if (is_list(fun))
          {
-         /* template */
+         // template
          if (is_list(car(fun)) && cdr(fun) != NIL)
             {
             if (is_list(cadr(fun)))
                {
-               /* procedure text form */
+               // procedure text form [[param ...] [instr ...] ... ] 
                assign(proc, anonymous_function(fun));
                tracing = false;
                goto lambda_apply;
                }
-            /* lambda form */
-            formals = car(fun);
-            numsave(tailcall);
-            tailcall = 0;
-            llocal(formals);  /* bind the formals locally            */
-            numrestore(tailcall);
-            for (;
-                 formals != NIL && argl && NOT_THROWING;
-                 formals = cdr(formals), assign(argl, cdr(argl)))
+            else
                {
-               setvalnode__caseobj(car(formals), car(argl));
+               // lambda form [[param ...] instr ...]
+               formals = car(fun);
+               numsave(tailcall);
+               tailcall = 0;
+               llocal(formals);  // bind the formals locally
+               numrestore(tailcall);
+               for (;
+                    formals != NIL && argl && NOT_THROWING;
+                    formals = cdr(formals), assign(argl, cdr(argl)))
+                  {
+                  setvalnode__caseobj(car(formals), car(argl));
+                  }
+               assign(val, cdr(fun));
+               goto macro_reval;
                }
-            assign(val, cdr(fun));
-            goto macro_reval;
             }
          else
             {
-            /* question-mark form */
+            // question-mark form [instr ...]
             save(qm_list);
             assign(qm_list, argl);
             assign(list, fun);
@@ -1335,7 +1355,7 @@ NODE *evaluator(NODE *list, enum labels where)
                }
 
             int n = list_length(argl);
-
+            
             if (n < min)
                {
                err_logo(NOT_ENOUGH, NIL);
