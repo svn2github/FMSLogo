@@ -1087,11 +1087,15 @@ NODE *evaluator(NODE *list, enum labels where)
  runresult_followup:
    if (val == Unbound)
       {
+      // If the input to RUNRESULT doesn't output, 
+      // then the output is []
       assign(val, NIL);
       }
    else
       {
-      assign(val, cons(val, NIL));
+      // If the input to RUNRESULT outputs something,
+      // then the output goes in a list.
+      assign(val, cons_list(val));
       }
    goto fetch_cont;
 
