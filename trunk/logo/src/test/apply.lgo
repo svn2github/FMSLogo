@@ -66,12 +66,27 @@ TO APPLYTEST.BADINPUT
    RUNNOTENOUGHINPUTSTEST [APPLY "APPLYTEST.NONPRIMITIVE [1]]
    RUNTOOMANYINPUTSTEST   [APPLY "APPLYTEST.NONPRIMITIVE [1 2 3]]
 
+   ; lambda form has bad inputs
+   RUNNOTENOUGHINPUTSTEST [APPLY [[A] IGNORE :A] []     ]
+   RUNTOOMANYINPUTSTEST   [APPLY [[A] IGNORE :A] [1 2]  ]
+
+   ; procedure text form has bad inputs
+   RUNNOTENOUGHINPUTSTEST [APPLY [[A] [IGNORE :A]] []     ]
+   RUNTOOMANYINPUTSTEST   [APPLY [[A] [IGNORE :A]] [1 2]  ]
+
 END
 
 TO APPLYTEST.TEMPLATE
 
    ; applying a template with empty lines used to crash
    TRACEINSTRUCTION [ APPLY [[][]] [] ]
+
+
+   ; lambda form template
+   SIMPLEREPORTTEST  [APPLY [[A] OUTPUT SUM 1 :A] [2] ] 3
+
+   ; procedure text template
+   SIMPLEREPORTTEST  [APPLY [[A] [OUTPUT SUM 1 :A]] [2] ] 3
 END
 
 TO APPLYTEST
