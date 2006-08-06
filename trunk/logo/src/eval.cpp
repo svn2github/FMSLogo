@@ -1286,7 +1286,7 @@ NODE *evaluator(NODE *list, enum labels where)
                if (tailcall <= 0) 
                   {
                   save(var);
-                  var = var_stack;
+                  assign(var, var_stack);
                   newcont(after_lambda);
                   }
                //numsave(tailcall);
