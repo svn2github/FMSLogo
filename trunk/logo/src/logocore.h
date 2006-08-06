@@ -682,7 +682,7 @@ gcref(NODE * object)
    x(compound_apply_continue) \
    x(set_args_continue) \
    x(macro_return) \
-   x(qm_continue) \
+   x(after_lambda) \
    x(runresult_continuation) \
    x(runresult_followup) \
    x(repeat_continuation) \

@@ -530,7 +530,6 @@ NODE *evaluator(NODE *list, enum labels where)
       goto fetch_cont;
       }
    assign(argl, reverse(argl));
-
    /* --------------------- APPLY ---------------------------- */
  apply_dispatch:
    eval_count++;
@@ -660,6 +659,11 @@ NODE *evaluator(NODE *list, enum labels where)
             }
          tell_shadow(parm);
          setvalnode__caseobj(parm, arg);
+         if (arg == Unbound)
+            {
+            // we have more formal inputs than actual inputs
+            err_logo(NOT_ENOUGH, fun);
+            }
          }
       else if (nodetype(parm) == CONS)
          {
@@ -792,7 +796,7 @@ NODE *evaluator(NODE *list, enum labels where)
    if (nodetype(unev) == LINE)
       {
       assign(this_line, unparsed__line(unev));
-      if (flag__caseobj(ufun, PROC_STEPPED) || stepflag)
+      if (ufun != NIL && flag__caseobj(ufun, PROC_STEPPED) || stepflag)
          {
          // this is not a lambda function and it is being stepped
          if (tracing || traceflag)
@@ -1042,7 +1046,6 @@ NODE *evaluator(NODE *list, enum labels where)
          assign(val, val__cont(val));
          goto fetch_cont;
          }
- macro_reval:
       if (tailcall == 0)
          {
          make_tree(val);
@@ -1253,6 +1256,12 @@ NODE *evaluator(NODE *list, enum labels where)
                {
                // procedure text form [[param ...] [instr ...] ... ] 
                assign(proc, anonymous_function(fun));
+               
+               if (stopping_flag == THROWING)
+                  {
+                  goto fetch_cont;
+                  }
+
                tracing = false;
                goto lambda_apply;
                }
@@ -1260,60 +1269,64 @@ NODE *evaluator(NODE *list, enum labels where)
                {
                // lambda form [[param ...] instr ...]
                formals = car(fun);
-               numsave(tailcall);
+               if (tailcall <= 0) 
+                  {
+                  save(var);
+                  var = var_stack;
+                  newcont(after_lambda);
+                  }
+               //numsave(tailcall);
                tailcall = 0;
                llocal(formals);  // bind the formals locally
-               numrestore(tailcall);
+               //numrestore(tailcall);
                for (;
                     formals != NIL && argl && NOT_THROWING;
                     formals = cdr(formals), assign(argl, cdr(argl)))
                   {
                   setvalnode__caseobj(car(formals), car(argl));
                   }
-               assign(val, cdr(fun));
-               goto macro_reval;
+
+               if (formals != NIL) 
+                  {
+                  // too few inputs
+                  err_logo(NOT_ENOUGH, fun);
+                  goto fetch_cont;
+                  } 
+               else if (argl != NIL) 
+                  {
+                  // too many inputs
+                  err_logo(DK_WHAT, car(argl));
+                  goto fetch_cont;
+                  }
+               else
+                  {
+                  // correct number of inputs
+                  assign(list, cdr(fun));
+                  goto lambda_qm;
+                  }
                }
             }
          else
             {
             // question-mark form [instr ...]
-            save(qm_list);
             assign(qm_list, argl);
             assign(list, fun);
+ lambda_qm:
             make_tree(list);
             if (list == NIL || !is_tree(list))
                {
-               goto qm_failed;
+               goto fetch_cont;
                }
             assign(unev, tree__tree(list));
-            save2(didnt_output_name, didnt_get_output);
-            num2save(val_status, tailcall);
-            newcont(qm_continue);
-            val_status = 5;
-            goto eval_sequence;
 
- qm_continue:
-            num2restore(val_status, tailcall);
-            restore2(didnt_output_name, didnt_get_output);
-            if (val_status < 4 && tailcall != 0)
+            if (tailcall <= 0) 
                {
-               if (STOPPING || RUNNING) 
-                  {
-                  assign(output_node, Unbound);
-                  }
-               if (stopping_flag == OUTPUT || STOPPING)
-                  {
-                  stopping_flag = RUN;
-                  assign(val, output_node);
-                  if (val != Unbound && val_status < 2)
-                     {
-                     err_logo(DK_WHAT_UP, val);
-                     }
-                  }
+               val_status = 5;
+               save(var);
+               assign(var, var_stack);
+               newcont(after_lambda);
                }
- qm_failed:
-            restore(qm_list);
-            goto fetch_cont;
+            goto eval_sequence;
             }
          }
       else
@@ -1355,7 +1368,7 @@ NODE *evaluator(NODE *list, enum labels where)
                }
 
             int n = list_length(argl);
-            
+
             if (n < min)
                {
                err_logo(NOT_ENOUGH, NIL);
@@ -1371,6 +1384,11 @@ NODE *evaluator(NODE *list, enum labels where)
             }
          }
       }
+   goto fetch_cont;
+
+ after_lambda:
+   reset_args(var);
+   restore(var);
    goto fetch_cont;
 
  all_done:
