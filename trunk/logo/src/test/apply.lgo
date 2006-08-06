@@ -66,23 +66,56 @@ TO APPLYTEST.BADINPUT
    RUNNOTENOUGHINPUTSTEST [APPLY "APPLYTEST.NONPRIMITIVE [1]]
    RUNTOOMANYINPUTSTEST   [APPLY "APPLYTEST.NONPRIMITIVE [1 2 3]]
 
-   ; lambda form has bad inputs
+   ; lambda template has bad inputs
    RUNNOTENOUGHINPUTSTEST [APPLY [[A] IGNORE :A] []     ]
    RUNTOOMANYINPUTSTEST   [APPLY [[A] IGNORE :A] [1 2]  ]
 
-   ; procedure text form has bad inputs
+   ; procedure text template has bad inputs
    RUNNOTENOUGHINPUTSTEST [APPLY [[A] [IGNORE :A]] []     ]
    RUNTOOMANYINPUTSTEST   [APPLY [[A] [IGNORE :A]] [1 2]  ]
 
+   ; questionmark template has bad inputs
+   RUNBADINPUTTEST        [APPLY [IGNORE ?2] [1] ]
+
 END
 
-TO APPLYTEST.TEMPLATE
+TO APPLYTEST.LAMBDATEMPLATE.NEWSCOPETEST
+
+   ; Tests that APPLY properly creates a local variable scope
+   ; for the lambda template.
+
+   LOCALMAKE "input        5
+   LOCALMAKE "input.before 5
+
+   APPLY [[input ignored] 
+          SIMPLEREPORTTEST [NAME? "ignored] "true
+          SIMPLEREPORTTEST [:input]         :input.before + 1
+   ] (LIST :input + 1 1234)
+
+   SIMPLEREPORTTEST [:input.before] :input
+   SIMPLEREPORTTEST [NAME? "ignored] "false
+END
+
+TO APPLYTEST.PROCEDURETEXTTEMPLATE.NEWSCOPETEST
+
+   ; Tests that APPLY properly creates a local variable scope
+   ; for the procedure text template.
+
+   LOCALMAKE "input        5
+   LOCALMAKE "input.before 5
+   APPLY [[input ignored] 
+          [SIMPLEREPORTTEST [NAME? "ignored] "true]
+          [SIMPLEREPORTTEST [:input]         :input.before + 1]
+   ] (LIST :input + 1 1234)
+
+   SIMPLEREPORTTEST [:input.before] :input
+   SIMPLEREPORTTEST [NAME? "ignored] "false
+END
+
+
+TO APPLYTEST.LAMBDATEMPLATE
 
    LOCAL [lambda.function.ran]
-
-   ; applying a template with empty lines used to crash
-   ;TRACEINSTRUCTION [ APPLY [[][]] [] ]
-
 
    ;
    ; lambda form template
@@ -95,7 +128,16 @@ TO APPLYTEST.TEMPLATE
    TRACEINSTRUCTION  [APPLY [[A] MAKE "lambda.function.ran :A] [true] ]
    SIMPLEREPORTTEST  [:lambda.function.ran] "true
 
-   SIMPLEREPORTTEST  [APPLY [[A] OUTPUT SUM 1 :A] [2] ] 3
+   SIMPLEREPORTTEST  [APPLY [[A] SUM 1 :A] [2] ] 3
+END
+
+
+TO APPLYTEST.PROCEDURETEXTTEMPLATE
+
+   LOCAL [lambda.function.ran]
+
+   ; applying a template with empty lines used to crash
+   TRACEINSTRUCTION [ APPLY [[][]] [] ]
 
    ;
    ; procedure text template
@@ -115,11 +157,45 @@ TO APPLYTEST.TEMPLATE
    SIMPLEREPORTTEST  [APPLY [[A] [OUTPUT SUM 1 :A]] [2] ] 3
 END
 
+
+TO APPLYTEST.QUESTIONMARKTEMPLATE
+
+   ;
+   ; question-mark template
+   ;
+
+   ; no inputs
+   TRACEINSTRUCTION  [MAKE "lambda.function.ran "false]
+   TRACEINSTRUCTION  [APPLY [MAKE "lambda.function.ran "true] [] ]
+   SIMPLEREPORTTEST  [:lambda.function.ran] "true
+
+   ; one input
+   TRACEINSTRUCTION  [MAKE "lambda.function.ran "false]
+   TRACEINSTRUCTION  [APPLY [MAKE "lambda.function.ran ?] [true] ]
+   SIMPLEREPORTTEST  [:lambda.function.ran] "true
+
+   ; nested questionmark
+   TRACEINSTRUCTION  [MAKE "lambda.function.ran "false]
+   TRACEINSTRUCTION  [APPLY [APPLY [MAKE "lambda.function.ran ?] ?] [[true]] ]
+   SIMPLEREPORTTEST  [:lambda.function.ran] "true
+
+   ; questionmark template that outputs
+   SIMPLEREPORTTEST  [APPLY [SUM 1 ?] [2] ] 3
+
+END
+
 TO APPLYTEST
 
    APPLYTEST.SMOKETEST
    APPLYTEST.BADINPUT
    APPLYTEST.BUG1519088
-   APPLYTEST.TEMPLATE
+
+   APPLYTEST.LAMBDATEMPLATE
+   APPLYTEST.LAMBDATEMPLATE.NEWSCOPETEST
+
+   APPLYTEST.PROCEDURETEXTTEMPLATE
+   APPLYTEST.PROCEDURETEXTTEMPLATE.NEWSCOPETEST
+
+   APPLYTEST.QUESTIONMARKTEMPLATE
 END
 
