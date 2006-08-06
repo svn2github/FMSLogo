@@ -78,14 +78,28 @@ END
 
 TO APPLYTEST.TEMPLATE
 
+   LOCAL [lambda.function.ran]
+
    ; applying a template with empty lines used to crash
-   TRACEINSTRUCTION [ APPLY [[][]] [] ]
+   ;TRACEINSTRUCTION [ APPLY [[][]] [] ]
 
 
+   ;
    ; lambda form template
+   ;
+   TRACEINSTRUCTION  [MAKE "lambda.function.ran "false]
+   TRACEINSTRUCTION  [APPLY [[] MAKE "lambda.function.ran "true] [] ]
+   SIMPLEREPORTTEST  [:lambda.function.ran] "true
+
+   TRACEINSTRUCTION  [MAKE "lambda.function.ran "false]
+   TRACEINSTRUCTION  [APPLY [[A] MAKE "lambda.function.ran :A] [true] ]
+   SIMPLEREPORTTEST  [:lambda.function.ran] "true
+
    SIMPLEREPORTTEST  [APPLY [[A] OUTPUT SUM 1 :A] [2] ] 3
 
+   ;
    ; procedure text template
+   ;
    SIMPLEREPORTTEST  [APPLY [[A] [OUTPUT SUM 1 :A]] [2] ] 3
 END
 

@@ -1008,7 +1008,7 @@ PASS: Executing [APPLY "APPLYTEST.NONPRIMITIVE [1 2 3]] set error code to 8 , as
 INFO: Executing [APPLY "APPLYTEST.NONPRIMITIVE [1 2 3]] set error string to [too much inside ()'s]
 INFO: Executing invalid instruction: [APPLY [[A] IGNORE :A] []]
 PASS: Executing [APPLY [[A] IGNORE :A] []] set error code to 6 , as expected
-INFO: Executing [APPLY [[A] IGNORE :A] []] set error string to [not enough inputs to "[]]
+INFO: Executing [APPLY [[A] IGNORE :A] []] set error string to [not enough inputs to [[A] IGNORE :A]]
 INFO: Executing invalid instruction: [APPLY [[A] IGNORE :A] [1 2]]
 FAIL: ITEM 1 ERROR returned  9 , we expected 8
 INFO: Executing invalid instruction: [APPLY [[A] [IGNORE :A]] []]
@@ -1018,8 +1018,13 @@ INFO: Executing invalid instruction: [APPLY [[A] [IGNORE :A]] [1 2]]
 FAIL: Executing [APPLY [[A] [IGNORE :A]] [1 2]] did not throw an error.
 FAIL: Executing [APPLY [[A] [IGNORE :A]] [1 2]] did not change ERROR.
 PASS: [APPLYTEST.APPLYOUTPUT] returned 3 , as expected.
-CALL: APPLY [[] []] []
-FAIL: [APPLY [[A] OUTPUT SUM 1 :A] [2]] threw error.  code= 5 . [[[A] OUTPUT SUM 1 :A] didn't output to MAKE]
+CALL: MAKE "lambda.function.ran "false
+CALL: APPLY [[] MAKE "lambda.function.ran "true] []
+PASS: [:lambda.function.ran] returned true , as expected.
+CALL: MAKE "lambda.function.ran "false
+CALL: APPLY [[A] MAKE "lambda.function.ran :A] [true]
+PASS: [:lambda.function.ran] returned true , as expected.
+FAIL: [APPLY [[A] OUTPUT SUM 1 :A] [2]] threw error.  code= 5 . [OUTPUT didn't output to OUTPUT]
 PASS: [APPLY [[A] [OUTPUT SUM 1 :A]] [2]] returned 3 , as expected.
 CALL: MAKE "list []
 CALL: REPEAT 5 [MAKE "list LPUT REPCOUNT :list]
