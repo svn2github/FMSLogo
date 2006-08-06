@@ -4,7 +4,7 @@ LOAD "testlib.lgo
 TO BUG1383281TEST
 
   REPORTTESTINFO [executing regression test for bug #1383281]
-  FOREACH [1] [[][]]
+  CATCH "ERROR [FOREACH [1] [[][]]]
   REPORTTESTPASSED [Bug #1382181 is fixed. 'FOREACH [1] [[][]]' did not crash.]
 
 END
