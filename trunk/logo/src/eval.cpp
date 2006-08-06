@@ -762,6 +762,16 @@ NODE *evaluator(NODE *list, enum labels where)
    make_tree_from_body(list);
    if (!is_tree(list))
       {
+      assign(val, Unbound);
+      goto fetch_cont;
+      }
+
+   if (treepair__tree(list) == NIL)
+      {
+      // The function body consisted of nothing by empty lines.
+      // Trying to evaluate this found would crash, but we can
+      // safely ignore this function call, since it is a no-op.
+      assign(val, Unbound);
       goto fetch_cont;
       }
 
