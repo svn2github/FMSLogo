@@ -1025,6 +1025,15 @@ CALL: MAKE "lambda.function.ran "false
 CALL: APPLY [[A] MAKE "lambda.function.ran :A] [true]
 PASS: [:lambda.function.ran] returned true , as expected.
 FAIL: [APPLY [[A] OUTPUT SUM 1 :A] [2]] threw error.  code= 5 . [OUTPUT didn't output to OUTPUT]
+CALL: MAKE "lambda.function.ran "false
+CALL: APPLY [[] [MAKE "lambda.function.ran "true]] []
+PASS: [:lambda.function.ran] returned true , as expected.
+CALL: MAKE "lambda.function.ran "false
+CALL: APPLY [[A] [MAKE "lambda.function.ran :A]] [true]
+PASS: [:lambda.function.ran] returned true , as expected.
+CALL: MAKE "lambda.function.ran "false
+CALL: APPLY [[A] [] [MAKE "lambda.function.ran :A] []] [true]
+PASS: [:lambda.function.ran] returned true , as expected.
 PASS: [APPLY [[A] [OUTPUT SUM 1 :A]] [2]] returned 3 , as expected.
 CALL: MAKE "list []
 CALL: REPEAT 5 [MAKE "list LPUT REPCOUNT :list]
@@ -2921,7 +2930,7 @@ CALL: DONOTHING
 CALL: MAKE "linewascalled "false
 CALL: DEFINE "BODYHASEMPTYLINES [[] [] [MAKE "linewascalled "true] []]
 CALL: BODYHASEMPTYLINES
-FAIL: [:linewascalled] returned false . We expected true
+PASS: [:linewascalled] returned true , as expected.
 INFO: Executing invalid instruction: [(DEFINE "BADPROCEDURE)]
 PASS: Executing [(DEFINE "BADPROCEDURE)] set error code to 6 , as expected
 INFO: Executing [(DEFINE "BADPROCEDURE)] set error string to [not enough inputs to DEFINE]
