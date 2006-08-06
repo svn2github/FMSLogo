@@ -177,14 +177,22 @@ NODE *lapply(NODE *args)
    return make_cont(begin_apply, args);
    }
 
-/* The logo word ? <question-mark>. */
+// The logo word ? <question-mark>.
+// This evalutes some element within qm_list.
+//
+// ?  evaluates to the first element
+// ?1 evaluates to the first element
+// ?2 evaluates to the second element
+// etc.
+//
 NODE *lqm(NODE *args)
    {
-   FIXNUM argnum = 1;
-   NODE *np = qm_list;
 
+   // Assume ?1 by default
+   FIXNUM argnum = 1;
    if (args != NIL) 
       {
+      // ?# was given
       argnum = getint(pos_int_arg(args));
       }
    if (stopping_flag == THROWING) 
@@ -192,6 +200,8 @@ NODE *lqm(NODE *args)
       return Unbound;
       }
 
+   // get the argnum-th item from qm_list
+   NODE *np = qm_list;
    FIXNUM i = argnum;
    while (--i > 0 && np != NIL) 
       {
@@ -255,7 +265,7 @@ NODE *llocal(NODE *args)
          break;
          }
       }
-   var = reref(var, var_stack);        // so eval won't undo our work
+   assign(var, var_stack);  // so eval won't undo our work
    return Unbound;
    }
 
@@ -1276,6 +1286,7 @@ NODE *evaluator(NODE *list, enum labels where)
                   goto fetch_cont;
                   }
 
+               // disable tracing for lambda functions
                tracing = false;
                goto lambda_apply;
                }
@@ -1285,10 +1296,14 @@ NODE *evaluator(NODE *list, enum labels where)
                formals = car(fun);
                if (tailcall <= 0) 
                   {
+                  // Create a new local variable scope for 
+                  // the lambda function call before binding
+                  // the formals.
                   save(var);
                   assign(var, var_stack);
                   newcont(after_lambda);
                   }
+
                //numsave(tailcall);
                tailcall = 0;
                llocal(formals);  // bind the formals locally
@@ -1336,6 +1351,9 @@ NODE *evaluator(NODE *list, enum labels where)
             if (tailcall <= 0) 
                {
                val_status = 5;
+
+               // Create a new local variable scope for 
+               // the lambda function call.
                save(var);
                assign(var, var_stack);
                newcont(after_lambda);
