@@ -83,10 +83,106 @@ TO #TEST
   RUNTOOMANYINPUTSTEST [(# "toomany)]
 END
 
+TO TESTTEST.SMOKETEST
+
+  LOCAL [iftrue.was.run iffalse.was.run]
+
+  ;
+  ; TEST with a true condition
+  ;
+
+  ; must call TEST in this procedure or else effects won't be visible.
+  REPORTTESTINFO [Running [TEST "true]]
+  TEST "true 
+
+  TRACEINSTRUCTION [MAKE "iftrue.was.run  "false]
+  TRACEINSTRUCTION [MAKE "iffalse.was.run "false]
+  TRACEINSTRUCTION [ IFTRUE  [MAKE "iftrue.was.run  "true ] ]
+  TRACEINSTRUCTION [ IFFALSE [MAKE "iffalse.was.run "true ] ]
+  SIMPLEREPORTTEST [:iftrue.was.run]  "true
+  SIMPLEREPORTTEST [:iffalse.was.run] "false
+
+  ; the value should persist until another TEST call is made
+  TRACEINSTRUCTION [MAKE "iftrue.was.run  "false]
+  TRACEINSTRUCTION [MAKE "iffalse.was.run "false]
+  TRACEINSTRUCTION [ IFTRUE  [MAKE "iftrue.was.run  "true ] ]
+  TRACEINSTRUCTION [ IFFALSE [MAKE "iffalse.was.run "true ] ]
+  SIMPLEREPORTTEST [:iftrue.was.run]  "true
+  SIMPLEREPORTTEST [:iffalse.was.run] "false
+
+
+  ;
+  ; TEST with a false condition
+  ;
+
+  ; must call TEST in this procedure or else effects won't be visible.
+  REPORTTESTINFO [Running [TEST "false]]
+  TEST "false
+
+  TRACEINSTRUCTION [MAKE "iftrue.was.run  "false]
+  TRACEINSTRUCTION [MAKE "iffalse.was.run "false]
+  TRACEINSTRUCTION [ IFTRUE  [MAKE "iftrue.was.run  "true ] ]
+  TRACEINSTRUCTION [ IFFALSE [MAKE "iffalse.was.run "true ] ]
+  SIMPLEREPORTTEST [:iftrue.was.run]  "false
+  SIMPLEREPORTTEST [:iffalse.was.run] "true
+
+END
+
+TO TESTTEST.BADINPUT
+
+  ;
+  ; bad input
+  ;
+  RUNNOTENOUGHINPUTSTEST [ (TEST)                ]
+  RUNTOOMANYINPUTSTEST   [ (TEST "true "toomany) ]
+  RUNBADINPUTTEST        [ TEST "word  ]
+  RUNBADINPUTTEST        [ TEST 1234   ]
+  RUNBADINPUTTEST        [ TEST [1234] ]
+  RUNBADINPUTTEST        [ TEST {1234} ]
+
+  ; IFTRUE and IFFALSE should throw the "TEST has not been run" error.
+  RUNEXPECTERRORTEST [IFTRUE  []] 25
+  RUNEXPECTERRORTEST [IFFALSE []] 25
+
+  ; make sure that IFTRUE and IFFALSE don't complain 
+  ; because the TEST value wasn't sent
+  TEST "true
+  RUNNOTENOUGHINPUTSTEST [ (IFTRUE)             ]
+  RUNTOOMANYINPUTSTEST   [ (IFTRUE [] "toomany) ]
+  RUNBADINPUTTEST        [ IFTRUE {1234}        ]
+
+  TEST "false
+  RUNNOTENOUGHINPUTSTEST [ (IFFALSE)             ]
+  RUNTOOMANYINPUTSTEST   [ (IFFALSE [] "toomany) ]
+  RUNBADINPUTTEST        [ IFFALSE {1234}        ]
+
+END
+
+TO TESTTEST.SCOPETEST
+
+  ; Run TEST in a child scope.
+  ; This result should not be visible in this scope
+  TRACEINSTRUCTION [TEST "TRUE]
+
+  RUNEXPECTERRORTEST [IFTRUE  []] 25
+  RUNEXPECTERRORTEST [IFFALSE []] 25
+
+END
+
+TO TESTTEST
+
+  TESTTEST.SMOKETEST
+  TESTTEST.BADINPUT
+  TESTTEST.SCOPETEST
+
+END
+
 TO CONTROLFLOWTEST
 
   IFTEST
   #TEST
+
+  TESTTEST
 
   BUG1383281TEST
   BUG1448155TEST
