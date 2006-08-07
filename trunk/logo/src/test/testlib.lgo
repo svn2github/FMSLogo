@@ -145,9 +145,6 @@ BURY [CHECKERRORITEM]
 
 TO CHECKERROR :instructions :expectederror :expectedtext :expectedprocedure :expectedline
 
-   ; TODO: allow [] as inputs to mean "don't care".
-   ; then rewrite bad input tests to use this procedture
-
   LOCALMAKE "lasterror ERROR
   IF EMPTYP :lasterror [
     REPORTTESTFAILED (LIST "Executing :instructions "|did not change ERROR.|)
@@ -174,7 +171,7 @@ BURY [CHECKERROR]
 
 TO RUNBADINPUTTEST :instructions
 
-  REPORTTESTINFO (LIST "|Executing invalid instruction:| :instructions )
+  REPORTTESTINFO (LIST "|Running invalid instruction:| :instructions )
 
   ; clear the value of ERROR
   IGNORE ERROR
@@ -185,19 +182,7 @@ TO RUNBADINPUTTEST :instructions
     STOP
   ]
 
-  LOCALMAKE "lasterror ERROR
-  IF EMPTYP :lasterror [
-    REPORTTESTFAILED (LIST "Executing :instructions "|did not change ERROR.|)
-    STOP
-  ]
-
-  IF NOT EQUALP (COUNT :lasterror) 4 [
-    REPORTTESTFAILED (LIST "|ERROR did not return a list of four values.|)
-    STOP
-  ]
-
-  REPORTTESTPASSED (LIST "Executing :instructions "|set error code to|   (ITEM 1 :lasterror) )
-  REPORTTESTINFO   (LIST "Executing :instructions "|set error string to| (ITEM 2 :lasterror) )
+  CHECKERROR :instructions "DONTCARE "DONTCARE "DONTCARE "DONTCARE 
 
 END
 BURY [RUNBADINPUTTEST]
@@ -214,23 +199,7 @@ TO RUNEXPECTERRORTEST :instructions :expectederror
     REPORTTESTFAILED (LIST "Executing :instructions "|did not throw an error.|)
   ]
 
-  LOCALMAKE "lasterror ERROR
-  IF EMPTYP :lasterror [
-    REPORTTESTFAILED (LIST "Executing :instructions "|did not change ERROR.|)
-    STOP
-  ]
-
-  IF NOT EQUALP (COUNT :lasterror) 4 [
-    REPORTTESTFAILED (LIST "|ERROR did not return a list of four values.|)
-    STOP
-  ]
-
-  IF NOT EQUALP (ITEM 1 :lasterror) :expectederror [
-    REPORTTESTFAILED (LIST "|ITEM 1 ERROR returned | (ITEM 1 :lasterror) "|, we expected| :expectederror)
-    STOP
-  ]
-  REPORTTESTPASSED (LIST "Executing :instructions "|set error code to|   (ITEM 1 :lasterror) "|, as expected|)
-  REPORTTESTINFO   (LIST "Executing :instructions "|set error string to| (ITEM 2 :lasterror) )
+  CHECKERROR :instructions :expectederror "DONTCARE "DONTCARE "DONTCARE 
 END
 BURY [RUNEXPECTERRORTEST]
 
