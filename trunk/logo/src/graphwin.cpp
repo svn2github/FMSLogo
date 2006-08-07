@@ -148,7 +148,7 @@ static
 COLORREF
 GetRGBorIndexColor(
    NODE* &args
-)
+   )
    {
    COLORREF color = (COLORREF) -1;
 
@@ -159,43 +159,40 @@ GetRGBorIndexColor(
 
       if (NOT_THROWING)
          {
+         const int red   = numeric_node_to_fixnum(car(arg));
+         const int green = numeric_node_to_fixnum(cadr(arg));
+         const int blue  = numeric_node_to_fixnum(cadr(cdr(arg)));
+
          if (EnablePalette)
             {
-            color = LoadColor(
-                ((nodetype(     car(arg) ) == FLOATINGPOINT) ? (FIXNUM) getfloat(     car(arg) ) : getint(     car(arg)) ),
-                ((nodetype(    cadr(arg) ) == FLOATINGPOINT) ? (FIXNUM) getfloat(    cadr(arg) ) : getint(    cadr(arg)) ),
-                ((nodetype(cadr(cdr(arg))) == FLOATINGPOINT) ? (FIXNUM) getfloat(cadr(cdr(arg))) : getint(cadr(cdr(arg)))));
+            color = LoadColor(red, green, blue);
             }
          else
             {
-            color = RGB(
-               ((nodetype(     car(arg) ) == FLOATINGPOINT) ? (FIXNUM) getfloat(     car(arg) ) : getint(     car(arg)) ),
-               ((nodetype(    cadr(arg) ) == FLOATINGPOINT) ? (FIXNUM) getfloat(    cadr(arg) ) : getint(    cadr(arg)) ),
-               ((nodetype(cadr(cdr(arg))) == FLOATINGPOINT) ? (FIXNUM) getfloat(cadr(cdr(arg))) : getint(cadr(cdr(arg)))));
+            color = RGB(red, green, blue);
             }
          }
 
       bIndexMode = false;
-   }
+      }
    else
       {
       NODE * cnode = numeric_arg(args);
 
       if (NOT_THROWING)
          {
-         FIXNUM icolor = numeric_node_to_fixnum(cnode);
+         const int color_index = numeric_node_to_fixnum(cnode) % 16;
 
-         icolor = icolor % 16;
          if (EnablePalette)
             {
             color = LoadColor(
-               GetRValue(colortable[icolor]),
-               GetGValue(colortable[icolor]),
-               GetBValue(colortable[icolor]));
+               GetRValue(colortable[color_index]),
+               GetGValue(colortable[color_index]),
+               GetBValue(colortable[color_index]));
             }
          else
             {
-            color = colortable[icolor];
+            color = colortable[color_index];
             }
          }
 
