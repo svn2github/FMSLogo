@@ -40,6 +40,7 @@ LOAD "procedure.lgo
 LOAD "parse.lgo
 LOAD "word.lgo
 LOAD "color.lgo
+LOAD "pixel.lgo
 LOAD "screen.lgo
 LOAD "misc.lgo
 LOAD "network.lgo
@@ -129,6 +130,7 @@ TO TESTALL
   FILLTEST           ; from fill.lgo
   FILETEST           ; from file.lgo
   COLORTEST          ; from color.lgo
+  PIXELTEST          ; from pixel.lgo
   TIMERTEST          ; from timer.lgo
   SCREENTEST         ; from screen.lgo
   WAITTEST           ; from wait.lgo
