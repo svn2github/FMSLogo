@@ -141,7 +141,7 @@ FIXNUM g_round(FLONUM n)
 
 FLONUM
 numeric_node_to_flonum(
-   NODE * numeric_node // TODO: const
+   const NODE * numeric_node
 )
    {
    FLONUM number;
@@ -161,7 +161,7 @@ numeric_node_to_flonum(
 
 FIXNUM 
 numeric_node_to_fixnum(
-   NODE * numeric_node // TODO: const
+   const NODE * numeric_node
 )
    {
    FIXNUM number;
