@@ -629,40 +629,28 @@ NODE *cons_list(NODE * node1, NODE * node2)
 {
   return cons(
      node1, 
-     cons(node2, NIL));
+     cons_list(node2));
 }
 
 NODE *cons_list(NODE * node1, NODE * node2, NODE * node3)
 {
   return cons(
      node1, 
-     cons(
-        node2, 
-        cons(node3, NIL)));
+     cons_list(node2, node3));
 }
 
 NODE *cons_list(NODE * node1, NODE * node2, NODE * node3, NODE * node4)
 {
   return cons(
      node1, 
-     cons(
-        node2, 
-        cons(
-           node3,
-           cons(node4, NIL))));
+     cons_list(node2, node3, node4));
 }
 
 NODE *cons_list(NODE * node1, NODE * node2, NODE * node3, NODE * node4, NODE * node5)
 {
   return cons(
      node1, 
-     cons(
-        node2, 
-        cons(
-           node3,
-           cons(
-              node4,
-              cons(node5, NIL)))));
+     cons_list(node2, node3, node4, node5));
 }
 
 int list_length(const NODE * List)
