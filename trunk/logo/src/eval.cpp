@@ -1345,6 +1345,8 @@ NODE *evaluator(NODE *list, enum labels where)
          else
             {
             // question-mark form [instr ...]
+
+            // REVISIT: where should qm_list get freed?
             assign(qm_list, argl);
             assign(list, fun);
  lambda_qm:
@@ -1467,6 +1469,9 @@ NODE *err_eval_driver(NODE *seq)
 void uninitialize_eval()
    {
    // CONSIDER: should any of these be deref'd in evaluator()?
+   deref(qm_list);
+   qm_list = NIL;
+
    deref(last_call);
    last_call = NIL;
 
