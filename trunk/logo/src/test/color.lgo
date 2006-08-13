@@ -54,9 +54,39 @@ TO SCREENCOLORTEST
    COLORSETGETTEST "SETSC           "SCREENCOLOR
 END
 
+TO COLORINDEXTEST
+
+   ; tests that the color index table given in the manual is correct
+
+   FOREACH  [ [0     0   0] ; black
+              [0     0 255] ; blue
+              [0   255   0] ; green
+              [0   255 255] ; cyan
+              [255   0   0] ; red
+              [255   0 255] ; magenta
+              [255 255   0] ; yellow
+              [255 255 255] ; white
+              [155  96  59] ; brown 
+              [197 136  18] ; tan 
+              [100 162  64] ; olive 
+              [120 187 187] ; sky blue 
+              [255 149 119] ; salmon 
+              [144 113 208] ; medium purple 
+              [255 163   0] ; orange 
+              [183 183 183] ; gray 
+   ] [
+       TRACEINSTRUCTION [SETPENCOLOR (# - 1)]
+       SETFLOODCOLOR [255 255 255]
+       SIMPLEREPORTTEST [ PENCOLOR ] ?
+   ]
+
+END
+
 TO COLORTEST
    PENCOLORTEST
    FLOODCOLORTEST
    SCREENCOLORTEST
+
+   COLORINDEXTEST
 END
 
