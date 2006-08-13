@@ -1,22 +1,28 @@
-/*
-* Copyright (C) 2005 by David Costanzo
-*
-* This program is free software; you can redistribute it and/or modify
-* it under the terms of the GNU General Public License as published by
-* the Free Software Foundation; either version 2 of the License, or
-* (at your option) any later version.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU General Public License for more details.
-*
-* You should have received a copy of the GNU General Public License
-* along with this program; if not, write to the Free Software
-* Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
-*/
+// Copyright (C) 2005 by David Costanzo
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
 #include "allwind.h"
+
+// ASSUME_NO_INVALID_FREES
+// false - Check that each block is in our list before freeing it.
+//         This is computationally expensive, but catches double-frees and
+//         freeing invalid memory.
+// true  - Assume that every block that is freed was previously allocated.
+//
+const bool ASSUME_NO_INVALID_FREES = true;
 
 #undef malloc
 #undef calloc
@@ -33,8 +39,8 @@ struct memory_header_t
 };
 
 static struct memory_header_t g_allocated_blocks;
-static long g_nextid         = 1;
-static long g_break_alloc_id = 0;
+static long g_nextid             = 1;
+static long g_break_alloc_id     = 0;
 
 
 // get a pointer to the header
@@ -287,16 +293,24 @@ void debug_free(void * userptr)
 
    memory_header_t * header = debug_userptr_to_header(userptr);
 
-   // before doing anything destructive, make sure this block is on our list
    bool userptr_is_allocated = false;
-   for (struct memory_header_t * current_block = g_allocated_blocks.next; 
-        current_block != &g_allocated_blocks;
-        current_block = current_block->next)
+   if (ASSUME_NO_INVALID_FREES)
       {
-      if (header == current_block)
+      // just assume that the caller is freeing a valid memory block
+      userptr_is_allocated = true;
+      }
+   else
+      {
+      // before doing anything destructive, make sure this block is on our list
+      for (struct memory_header_t * current_block = g_allocated_blocks.next; 
+           current_block != &g_allocated_blocks;
+           current_block = current_block->next)
          {
-         userptr_is_allocated = true;
-         break;
+         if (header == current_block)
+            {
+            userptr_is_allocated = true;
+            break;
+            }
          }
       }
 
