@@ -21,6 +21,8 @@ Part I) Kit Description/Location (http://sourceforge.net/projects/fmslogo):
 Part II) New features/bugs fixed:
 
   * Added for 6.10.0,
+    o Fix bug #1539716: FMSLogo no longer crashes when procedures have lots 
+      of inputs >30000.
     o Fix bug #1534923: FMSLogo no longer crashes when the wrong number of
       inputs is given to an APPLY template (example: APPLY [[A] [FD :A]] []).
     o Fix bug #1531127: ERRACT can now be read/written to from inside the 

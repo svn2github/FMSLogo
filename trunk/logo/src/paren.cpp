@@ -294,54 +294,80 @@ NODE *paren_line(NODE *line)
    }
 
 
+static
+bool
+gather_more_args(
+   NODE *  RemainingArguments
+   )
+   {
+   if (RemainingArguments == NIL)
+      {
+      // no more arguments in the list
+      return false;
+      }
+   if (car(RemainingArguments) == Right_Paren)
+      {
+      // we hit a right-paren (which ends this)
+      return false;
+      }
+   if (nodetype(car(RemainingArguments)) == CASEOBJ &&
+       nodetype(procnode__caseobj(car(RemainingArguments))) == INFIX)
+      {
+      // we hit an infix procedure, which indicates the end of the inputs
+      return false;
+      }
+
+   return true;
+   }
+
 // Make a list of the next n expressions, where n is between min and max.
 // Set args to immediately after the last expression.
 NODE *gather_some_args(int min, int max, NODE **args, bool inparen, NODE **ifnode)
    {
-   if (*args == NIL || car(*args) == Right_Paren ||
-       (nodetype(car(*args)) == CASEOBJ &&
-        nodetype(procnode__caseobj(car(*args))) == INFIX))
+   CAppendableList inputs;
+
+   while (gather_more_args(*args))
       {
-      if (min > 0)
+      if (max == 0)
          {
-         return cons_list(Not_Enough_Node);
+         if (ifnode != (NODE **) NIL && is_list(car(*args)))
+            {
+            /* if -> ifelse kludge */
+            err_logo(IF_WARNING, NIL);
+            assign(*ifnode, Ifelse);
+            }
+         else
+            {
+            // we have gathered enough arguments
+            break;
+            }
          }
-      }
-   else if (max == 0)
-      {
-      if (ifnode != (NODE **) NIL && is_list(car(*args)))
+      else
          {
-         /* if -> ifelse kludge */
-         NODE *retval;
-         err_logo(IF_WARNING, NIL);
-         assign(*ifnode, Ifelse);
-         retval = paren_expr(args, FALSE);
-         retval = paren_infix(retval, args, -1, inparen);
-         return cons(
-            retval, 
-            gather_some_args(min, max, args, inparen, NULL));
-         }
-      }
-   else
-      {
-      if (max < 0) 
-         { 
-         // negative max means unlimited 
-         max = 0;
+         if (max < 0) 
+            { 
+            // negative max means unlimited 
+            max = 0;
+            }
+
+         min--;
+         max--;
          }
 
-      if (car(*args) != Right_Paren &&
-            (nodetype(car(*args)) != CASEOBJ ||
-               nodetype(procnode__caseobj(car(*args))) != INFIX))
-         {
-         NODE *retval = paren_expr(args, FALSE);
-         retval = paren_infix(retval, args, -1, inparen);
-         return cons(
-            retval, 
-            gather_some_args(min - 1, max - 1, args, inparen, ifnode));
-         }
+      NODE *nextinput = paren_expr(args, false);
+      nextinput = paren_infix(nextinput, args, -1, inparen);
+
+      inputs.AppendElement(nextinput);
       }
-   return NIL;
+
+   if (min > 0)
+      {
+      // We weren't able to find enough inputs.
+      gcref(inputs.GetList());
+      return cons_list(Not_Enough_Node);
+      }
+   
+   return inputs.GetList();
    }
 
 // Gather the correct number of inputs to proc starting at *args.
