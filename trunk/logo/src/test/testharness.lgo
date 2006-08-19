@@ -80,6 +80,7 @@ LOAD "shell.lgo
 LOAD "time.lgo
 LOAD "thing.lgo
 LOAD "catch.lgo
+LOAD "refresh.lgo
 
 TO TESTALL
 
@@ -151,6 +152,7 @@ TO TESTALL
   BURYTEST           ; from bury.lgo
   ERASETEST          ; from erase.lgo
   LOGOVERSIONTEST    ; from logoversion.lgo
+  REFRESHTEST        ; from refresh.lgo
   QUOTEDTEST         ; from quoted.lgo
   MESSAGEBOXTEST     ; from messagebox.lgo
   YESNOBOXTEST       ; from yesnobox.lgo
