@@ -60,8 +60,10 @@ Most procedures are either one or the other, but some are both.
        &command-while;
        &command-do.until;
        &command-until;
+<!-- commented out of the manual until they are implemented in FMSLogo
        &command-goto;
        &command-tag;
+-->
     </section>
 
 
