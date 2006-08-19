@@ -971,11 +971,6 @@ NODE *lform(NODE *args)
    return Unbound;
    }
 
-NODE *lscan(NODE */*args*/)
-   {
-   return Unbound;
-   }
-
 NODE *l_setfirst(NODE *args)
    {
    NODE * list = car(args);

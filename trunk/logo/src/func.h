@@ -210,8 +210,6 @@ extern NODE *lmousepos(NODE *args);
 extern NODE *lkeyboardvalue(NODE *args);
 extern NODE *lbuttonp(NODE *args);
 extern NODE *ltone(NODE *args);
-extern NODE *lrefresh(NODE *args);
-extern NODE *lnorefresh(NODE *args);
 extern void keyboard_uninit(void);
 extern void mouse_uninit(void);
 
@@ -469,7 +467,6 @@ extern NODE *l_setitem(NODE *args);
 extern NODE *larray(NODE *args);
 extern FLONUM float_arg(NODE *args);
 extern NODE *lform(NODE *args);
-extern NODE *lscan(NODE *args);
 extern NODE *l_setfirst(NODE *args);
 extern NODE *l_setbf(NODE *args);
 

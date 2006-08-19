@@ -2082,13 +2082,3 @@ NODE *ltone(NODE *args)
    return Unbound;
    }
 
-
-NODE *lrefresh()
-   {
-   return Unbound;
-   }
-
-NODE *lnorefresh()
-   {
-   return Unbound;
-   }
