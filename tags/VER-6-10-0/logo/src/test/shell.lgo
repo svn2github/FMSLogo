@@ -1,0 +1,27 @@
+LOAD "testlib.lgo
+
+TO SHELLTEST.SMOKETEST
+
+   SIMPLEREPORTTEST [SHELL [dir]              ] "true
+   SIMPLEREPORTTEST [SHELL [doesnotexist.exe] ] "false
+
+   ; bad input tests that cause SHELL to return "false
+   SIMPLEREPORTTEST [SHELL {1} ] "false
+   SIMPLEREPORTTEST [SHELL 100 ] "false
+END
+
+TO SHELLTEST.BADINPUT
+
+   ; bad number of inputs
+   RUNNOTENOUGHINPUTSTEST [(SHELL)]
+   RUNTOOMANYINPUTSTEST   [(SHELL [dir] "toomany)]
+
+END
+
+
+TO SHELLTEST
+
+   SHELLTEST.SMOKETEST
+   SHELLTEST.BADINPUT
+
+END

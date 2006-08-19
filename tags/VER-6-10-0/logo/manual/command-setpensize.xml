@@ -1,0 +1,34 @@
+<section id="command-setpensize">
+    <title>SETPENSIZE</title>
+<indexterm><primary>SETPENSIZE</primary></indexterm>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>SETPENSIZE</command> <parameter>size</parameter></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+Set the pen's thickness.
+The <parameter>size</parameter> parameter is a list with two members, width and height.
+&PRODUCTNAME; only uses the width member, but this may change.
+It it recommended that you set the width and height to the same value.
+</para>
+
+</listitem>
+</varlistentry>
+<varlistentry><term>Example</term>
+<listitem>
+    <programlisting><userinput>
+SETPENSIZE [5 5]
+REPEAT 4 [FORWARD 100 RIGHT 90]</userinput></programlisting>
+
+</listitem>
+</varlistentry>
+</variablelist>
+
+</section>

@@ -1,0 +1,108 @@
+LOAD "testlib.lgo
+
+
+MAKE "~IGNOREMEWASCALLED "false 
+
+TO ~IGNOREME
+   MAKE "~IGNOREMEWASCALLED "true 
+END
+
+TO ~IGNOREMEWASCALLED
+   OUTPUT :~IGNOREMEWASCALLED
+END
+
+
+;
+; The next function contains some comments that
+; have given the tokenizer some difficulty.
+;
+; comments in the main scope should be ignored
+;
+TO DIFFICULTCOMMENTS ; comments here should be legal
+
+  ; a single vertical bar in a comment |
+
+  ; other special characters ?[]!+
+
+  ; regression test: tildes should be ignored ~ignoreme
+
+  OUTPUT ; a comment that continues~
+  1 
+END ; comments here should be legal
+
+
+TO PARSETEST.FUNC
+   SIMPLEREPORTTEST [DIFFICULTCOMMENTS]  1
+   SIMPLEREPORTTEST [~IGNOREMEWASCALLED] "false
+END
+
+TO PARSETEST.NUMBER
+
+   SIMPLEREPORTTEST [-0]     0
+   SIMPLEREPORTTEST [-0.0]   0
+   SIMPLEREPORTTEST [.00]    0
+   SIMPLEREPORTTEST [0e10]   0
+   SIMPLEREPORTTEST [0e+10]  0
+   SIMPLEREPORTTEST [0e-10]  0
+
+   SIMPLEREPORTTEST [00012]  12
+
+   SIMPLEREPORTTEST [1e3]      1000
+   SIMPLEREPORTTEST [1.234e3]  1234
+   SIMPLEREPORTTEST [1.234e+3] 1234
+   SIMPLEREPORTTEST [1.23e-1]  0.123
+
+   SIMPLEREPORTTEST [.5]        0.5
+   SIMPLEREPORTTEST [-.5]      -0.5
+   SIMPLEREPORTTEST [0.50000]   0.5
+
+   ; A number can be up to 49 digits long
+   ;                 0000000001111111111122222222233333333334444444444
+   ;                 1234567890123456789012345678901234567890123456789
+   SIMPLEREPORTTEST [5000000000000000000000000000000000000000000000000] 5e48
+
+   ; these can't be numbers -- they have too many e's
+   RUNIDONTKNOWHOWTOTEST [1e1e]
+   RUNIDONTKNOWHOWTOTEST [1e1.5]
+
+   ; these can't be numbers -- they have too many dots
+   RUNIDONTKNOWHOWTOTEST [1.1.]
+   RUNIDONTKNOWHOWTOTEST [1..]
+   RUNIDONTKNOWHOWTOTEST [.1.]
+
+   ; this can't be a number -- it has 50 digits in it (arbitrary cutoff)
+   RUNIDONTKNOWHOWTOTEST [50000000000000000000000000000000000000000000000000]
+
+END
+
+
+TO PARSETEST.WORD
+   SIMPLEREPORTTEST ["WORD]   "word
+   SIMPLEREPORTTEST ["|A B|]  "A\ B
+END
+
+TO PARSETEST.EXPRESSION
+
+   RUNNOTENOUGHINPUTSTEST [ 5**5 ] ; bug #1395740
+   RUNNOTENOUGHINPUTSTEST [ *5   ]
+   RUNNOTENOUGHINPUTSTEST [ 5*   ] ; bug #1518558 
+
+   RUNNOTENOUGHINPUTSTEST [ -    ] ; bug #1443731 
+
+   RUNNOTENOUGHINPUTSTEST [ MODULO 100 * 100 ] ; argument gathering halts at an infix operation
+END
+
+TO PARSETEST.MANYINPUTS
+
+   ; bug #1539716 (this used to crash)
+   LOCALMAKE "longsequence (SENTENCE "\( "SUM ISEQ 1 100000 "\))
+   SIMPLEREPORTTEST [ RUN :longsequence ] 5000050000
+END
+
+TO PARSETEST
+   PARSETEST.NUMBER
+   PARSETEST.WORD
+   PARSETEST.FUNC
+   PARSETEST.EXPRESSION
+   PARSETEST.MANYINPUTS
+END

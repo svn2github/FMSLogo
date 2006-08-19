@@ -1,0 +1,89 @@
+<section id="command-dllcall">
+    <title>DLLCALL</title>
+<indexterm><primary>DLLCALL</primary></indexterm>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>DLLCALL</command> <parameter>function_parameter_list</parameter></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+Call a given function with the given parameters and outputs the return value.
+The function must be in the DLL that was loaded with <link linkend="command-dllload">DLLLOAD</link>.
+</para>
+
+<para>
+The <parameter>function_parameter_list</parameter> is of the form <userinput>[typef function type1 arg1 type2 arg2 type3 arg3 ...]</userinput>.
+</para>
+
+<para>
+<parameter>function</parameter> must be a word that exactly matches symbol that is exported from the DLL.
+For Win32 functions that take a parameter of type TCHAR, the exported symbol probably ends in either W or A, even if you wouldn't call it like that from C.
+</para>
+
+<para>
+The "type" parameters are interpreted according to the table:
+
+<informaltable frame='all'>
+  <tgroup cols='2'>
+    <thead>
+      <row><entry>Given Type</entry> <entry>Interpreted As Type</entry></row>
+    </thead>
+    <tbody>
+      <row><entry><userinput>V</userinput></entry><entry>void</entry></row>
+      <row><entry><userinput>W</userinput></entry><entry>WORD</entry></row>
+      <row><entry><userinput>L</userinput></entry><entry>DWORD</entry></row>
+      <row><entry><userinput>F</userinput></entry><entry>DOUBLE</entry></row>
+      <row><entry><userinput>S</userinput></entry><entry>LPSTR</entry></row>
+    </tbody>
+  </tgroup>
+</informaltable>
+</para>
+
+
+<para>
+DLLCALL interprets (and outputs) the function's return value as being of the type specified by typef.
+It will pass in arg1 as a type1, arg2 as a type2, and so on.
+</para>
+
+<para>
+<parameter>function_parameter_list</parameter> must contain at least 4 items (typef function type1 arg1) even if arg1 is not used.
+If the formal argument list is "void" then use <userinput>["funcname "v 0]</userinput>.
+</para>
+
+
+<para>
+This command is meant for experienced users and you should be familiar with the Windows calling conventions to use it.
+If you do not properly match the argument list the results will be unpredictable (including crashing Windows).
+This function can handle a wide variety of functions but certainly not all.
+</para>
+
+<para>
+DLLCALL allow you to get outside of &PRODUCTNAME;.
+You can write your own DLL with a compatible call interface to call more complex interfaces.
+</para>
+
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Example</term>
+<listitem>
+<para>
+<programlisting><userinput>DLLLOAD "user32.dll
+DLLCALL [w MessageBoxA w 0 s MyMessage s [Hello How are you] w 0]
+</userinput></programlisting>
+See a message box pop up.
+<programlisting><userinput>DLLFREE
+</userinput></programlisting>
+</para>
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</section>

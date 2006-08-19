@@ -1,0 +1,43 @@
+<section id="command-definedp">
+    <title>DEFINEDP</title>
+<indexterm><primary>DEFINEDP</primary></indexterm>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>DEFINEDP</command> <parameter>name</parameter>
+<command>DEFINED?</command> <parameter>name</parameter></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+Outputs TRUE if the input is the name of a user-defined procedure or a library procedure.
+However, &PRODUCTNAME; does not know about library procedures until they have been called.
+</para>
+
+<para>
+<parameter>name</parameter> must be a word.
+</para>
+</listitem>
+</varlistentry>
+
+
+<varlistentry><term>Example</term>
+<listitem>
+<programlisting><userinput>DEFINE "abc [[a b] [print :a] [print :b]]
+SHOW DEFINEDP "forward</userinput>
+false
+
+<userinput>SHOW DEFINEDP "abc</userinput>
+true
+</programlisting>
+</listitem>
+</varlistentry>
+
+
+</variablelist>
+
+</section>

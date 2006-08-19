@@ -1,0 +1,70 @@
+<section id="command-netconnecton">
+    <title>NETCONNECTON</title>
+<indexterm><primary>NETCONNECTON</primary></indexterm>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>NETCONNECTON</command> <parameter>machinename</parameter> <parameter>socket</parameter> <parameter>sendready</parameter> <parameter>receiveready</parameter></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+Enable you to initiate a connection over the network to the <parameter>socket</parameter> at <parameter>machinename</parameter>.
+To turn off the connection call <link linkend="command-netconnectoff">NETCONNECTOFF</link>.
+To obtain the data received call <link linkend="command-netconnectreceivevalue">NETCONNECTRECEIVEVALUE</link> in your <parameter>receiveready</parameter> instruction list.
+When you actually send data with <link linkend="command-netconnectsendvalue">NETCONNECTSENDVALUE</link> it might return FALSE (meaning that it's not ready to send).
+If this happens you must wait until the <parameter>sendready</parameter> callback code is run before trying to send the data again.
+Note you cannot just send data from the <parameter>sendready</parameter> callback code, it won't be run unless the previous send was blocked.
+</para>
+
+<para>
+NETCONNECTON outputs TRUE if the command was successful.
+Otherwise it outputs, FALSE.
+</para>
+
+<para>
+The <parameter>machinename</parameter> input is a TCP/IP host name from DNS or a <filename>HOSTS</filename> file.
+It can be a list or a word.
+</para>
+
+<para>
+The <parameter>socket</parameter> input is an integer that is used to identify which socket to connect to.
+</para>
+
+<para>
+The <parameter>sendready</parameter> input is an instruction list (a list of instructions or a procedure name) to run when data is ready to send again.
+The first time <parameter>sendready</parameter> is run is when &PRODUCTNAME; successfully issues the connection request.
+The second time <parameter>sendready</parameter> is run is when &PRODUCTNAME; actually connects to the remote machine.
+The third time <parameter>sendready</parameter> is run is when &PRODUCTNAME; is ready to send on the connection.
+After that, <parameter>sendready</parameter> is run when &PRODUCTNAME; is ready to send after an earlier call to NETCONNECTSENDVALUE failed.
+</para>
+
+<para>
+The <parameter>receiveready</parameter> input is an instruction list (a list of instructions or a procedure name) to execute when data are available.
+It is called whenever data is received and is ready to be read.
+</para>
+
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Example</term>
+<listitem>
+<programlisting><userinput>; This example assumes remotemachinename is listening on socket 5124
+NETSTARTUP ; Start up the network
+SHOW NETCONNECTON "remotemachinename 5124 [PRINT [ready to send again]] [PRINT [I have something]]</userinput>
+true
+<userinput>
+NETCONNECTOFF
+NETSHUTDOWN</userinput>
+</programlisting>
+</listitem>
+</varlistentry>
+
+
+</variablelist>
+
+</section>

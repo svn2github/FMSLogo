@@ -1,0 +1,42 @@
+<section id="command-backtick">
+    <title>`</title>
+<indexterm><primary>`</primary></indexterm>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>`</command> <parameter>list</parameter></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+Outputs a list equal to its input but with certain substitutions.
+</para>
+
+<para>
+If a member of the input list is the word "," (comma) then the following member should be an instruction list that produces an output when run.
+That output value replaces the comma and the instruction list.
+This is called substitution.
+</para>
+
+<para>
+If a member of the input list is the word ",@" (comma atsign) then the following member should be an instruction list that outputs a list when run.
+The members of that list replace the ,@ and the instruction list.
+This is called splicing.
+</para>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Example</term>
+<listitem>
+<programlisting><userinput>SHOW `[foo baz ,[BUTFIRST [a b c]] garply ,@[BUTFIRST [a b c]]]</userinput>
+[foo baz [b c] garply b c]
+</programlisting>
+</listitem>
+</varlistentry>
+
+</variablelist>
+</section>

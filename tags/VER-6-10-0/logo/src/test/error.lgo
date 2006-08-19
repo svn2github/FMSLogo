@@ -1,0 +1,137 @@
+LOAD "testlib.lgo
+
+TO PROCEDURE.WITH.TO.INSIDE.IT
+   ; Attempt to define a procedure within a procedure.
+   ; This is illegal.
+   TO X
+END
+
+TO I.DONT.KNOW.WHAT.TO.DO.WITH.VALUE
+   1
+   2
+END
+
+TO NO.INPUT.NO.OUTPUT
+END
+
+TO ONE.INPUT.NO.OUTPUT :X
+END
+
+.MACRO MACRO.RETURN.UNBOUND.INSTEAD.OF.LIST
+END
+
+TO MY.PROC.TO.STEP
+  ; indicate to the test runner that we want them to 
+  ; press the cancel button.
+  PRINT [Press Cancel]
+END
+
+TO PROCEDURE.SHADOWS.MYSHADOWEDVAR
+  LOCALMAKE "myshadowedvar 42
+END
+
+TO ERROR.30.TEST
+   OUTPUT CATCH "XXX [(THROW "XXX 1)]
+END
+
+TO ERRORTEST
+
+   ; Catch an error without explicitly calling ERROR.
+   ; This is a regression test for a memory leak.
+   CATCH "ERROR [1 / 0]
+   CATCH "ERROR [1 / 0]
+
+   ; error 0 is fatal and can't be caught
+   ; error 1 is a fatal out of memory error and can't be caught
+   ; error 2 is a stack overflow error that is now never thrown
+   
+   FENCE
+   RUNEXPECTERRORTEST [FORWARD 1e10]                          3
+   WINDOW
+
+   RUNEXPECTERRORTEST [1 / 0]                                 4
+   RUNEXPECTERRORTEST [IGNORE NO.INPUT.NO.OUTPUT]             5
+   RUNEXPECTERRORTEST [(ONE.INPUT.NO.OUTPUT)]                 6
+   RUNEXPECTERRORTEST [FORWARD "tensteps]                     7
+   RUNEXPECTERRORTEST [(NO.INPUT.NO.OUTPUT "toomany)]         8
+   RUNEXPECTERRORTEST [I.DONT.KNOW.WHAT.TO.DO.WITH.VALUE]     9
+   RUNEXPECTERRORTEST [(ONE.INPUT.NO.OUTPUT ]                10
+   RUNEXPECTERRORTEST [ONE.INPUT.NO.OUTPUT :novalue]         11
+   RUNEXPECTERRORTEST [)]                                    12
+   RUNEXPECTERRORTEST [UNKNOWN.PROC]                         13
+
+   ; error 14: is an uncaught exception, which can't be caught
+   ; error 15: can only be tested at the top level
+
+   STEP "MY.PROC.TO.STEP
+   RUNEXPECTERRORTEST [MY.PROC.TO.STEP]                      16
+   UNSTEP "MY.PROC.TO.STEP
+
+   DRIBBLE "DELETEME.TXT
+   RUNEXPECTERRORTEST [DRIBBLE "DELETEME.TXT]                17
+   NODRIBBLE
+   ERASEFILE "DELETEME.TXT
+
+   RUNEXPECTERRORTEST [OPENREAD "DELETEME.TXT]               18
+
+   ; error #19 is just a warning
+   if "TRUE [IGNORE "TRUE] [IGNORE "FALSE]
+
+   ; error #20 is just a warning
+   LOCALMAKE "myshadowedvar 100
+   STEP NAMELIST "myshadowedvar
+   PROCEDURE.SHADOWS.MYSHADOWEDVAR
+   UNSTEP NAMELIST "myshadowedvar
+
+   RUNEXPECTERRORTEST [THROW "ERROR]                         21
+   RUNEXPECTERRORTEST [DEFINE "forward [[]]]                 22
+   RUNEXPECTERRORTEST [PROCEDURE.WITH.TO.INSIDE.IT]          23 ; bug 1455201 
+   RUNEXPECTERRORTEST [TEXT "NO.SUCH.PROCEDURE.IS.DEFINED]   24
+   RUNEXPECTERRORTEST [IFTRUE "x]                            25
+   RUNEXPECTERRORTEST [PARSE "\] ]                           26
+   RUNEXPECTERRORTEST [RUN "|}|  ]                           27
+
+   ; error 28: is "can't initialize graphics", which is never thrown in FMSLogo
+
+   RUNEXPECTERRORTEST [MACRO.RETURN.UNBOUND.INSTEAD.OF.LIST] 29
+
+   ; error 30: can't be caught, but this exercises the code
+   IGNORE ERROR.30.TEST
+
+   ; error 31: can only be tested at the top level
+
+   RUNEXPECTERRORTEST [APPLY "ONE.INPUT.NO.OUTPUT 1 ]        32
+   RUNEXPECTERRORTEST [LOAD "endinmultilineinstruction.lgo]  33
+
+   ;CATCH "PAUSE [CONTINUE]
+
+   ;; tests that can't be automated within this framework because
+   ;; they halt processing.
+   ;;
+   ;; error 14: can't find catch tag for "unknowntag 
+   ; CATCH "ERROR [THROW "unknowntag]
+   ;
+   ;; error 15: TO can't redefine a procedure
+   ; DEFINE "ERRORTEST.ALREADYDEFINEDPROCEDURE [[]]
+   ; CATCH "ERROR [TO ERRORTEST.ALREADYDEFINEDPROCEDURE]
+END
+
+;; error 15: Try to define a primitive with TO
+IGNORE ERROR
+CATCH "ERROR [TO FORWARD]
+CHECKERROR "|TO FORWARD at the toplevel| 15 (LIST "FORWARD "|is already defined|) [] []
+
+;; error 31: Can only use STOP inside a procedure
+IGNORE ERROR
+CATCH "ERROR [STOP]
+CHECKERROR "|STOP at the toplevel| 31 (LIST "|Can only use| "STOP "|inside a procedure|) [] []
+
+;; error 31: Can only use OUTPUT inside a procedure
+IGNORE ERROR
+CATCH "ERROR [OUTPUT 123]
+CHECKERROR "|OUTPUT at the toplevel| 31 (LIST "|Can only use| "OUTPUT "|inside a procedure|) [] []
+
+;; bug #1519088 -- this used to leak memory
+IGNORE ERROR
+CATCH "ERROR [ APPLY [OP ?] [3] ]
+CHECKERROR "|OUTPUT at the toplevel| 31 (LIST "|Can only use| "OP "|inside a procedure|) []  []

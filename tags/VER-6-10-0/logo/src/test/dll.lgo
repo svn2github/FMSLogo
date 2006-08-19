@@ -1,0 +1,117 @@
+LOAD "testlib.lgo
+
+TO DLLSMOKETEST
+  ; Load the User System Kernel
+  DLLLOAD "user32.dll
+
+  ; Get Handle to Main Window (Note args are in REVERSE order)
+  LOCALMAKE "hwnd DLLCALL [l FindWindowA s FMSLogo l 0]
+
+  ; Resize Main Window
+  LOCALMAKE "status DLLCALL (LIST "l "MoveWindow "w "1 "l "100 "l "100 "l "0 "l "0 "l :hwnd)
+
+  WAIT 30
+
+  ; Restore Main Window
+  LOCALMAKE "status DLLCALL (LIST "l "MoveWindow "w "1 "l "600 "l "800 "l "0 "l "0 "l :hwnd)
+
+  DLLFREE
+END
+
+
+TO DLLCALLTEST
+
+  ; call a function when no DLL is loaded
+  RUNBADINPUTTEST [DLLCALL [L FindWindowA S FMSLogo L 0]]
+
+  ; Load the User System Kernel
+  DLLLOAD "kernel32.dll
+
+  ; invalid calls
+  RUNNOTENOUGHINPUTSTEST [(DLLCALL)]
+  RUNTOOMANYINPUTSTEST   [(DLLCALL [L GetTickCount] "toomany)]
+
+  ; invalid inputs
+  RUNBADINPUTTEST [DLLCALL {0}]
+
+  ; missing the function type
+  RUNBADINPUTTEST [DLLCALL [0]]
+
+  ; missing the function name
+  RUNBADINPUTTEST [DLLCALL [L]]
+
+  ; unknown function
+  RUNBADINPUTTEST [DLLCALL [L FunctionDoesNotExist]]
+
+  ; unknown function type
+  RUNBADINPUTTEST [DLLCALL [E GetTickCount]]
+
+  ; unknown function type
+  RUNBADINPUTTEST [DLLCALL [E GetTickCount]]
+
+  ; type/values are not paired
+  RUNBADINPUTTEST [DLLCALL [L GetTickCount L ]]
+
+  ; unknown parameter type
+  RUNBADINPUTTEST [DLLCALL [L GetTickCount E Unknown]]
+
+  ; wrong number of inputs (DLLCALL may crash on this)
+  ; RUNBADINPUTTEST [DLLCALL [L GetTickCount L 0]]
+
+  DLLFREE
+
+END
+
+
+TO DLLLOADTEST
+
+  ; wrong number of inputs
+  RUNNOTENOUGHINPUTSTEST [(DLLLOAD)]
+  RUNTOOMANYINPUTSTEST   [(DLLLOAD "kernel32 "user32)]
+
+  ; invalid filenames
+  RUNBADINPUTTEST [DLLLOAD {0}]
+  RUNBADINPUTTEST [DLLLOAD [0]]
+  RUNBADINPUTTEST [DLLLOAD 12345]
+  RUNBADINPUTTEST [DLLLOAD "nonexistent.dll]
+  RUNBADINPUTTEST [DLLLOAD "c:\\]
+
+  ; DLLLOAD a very long filename name
+  localmake "longdllname ".dll
+  repeat 5000 [ make "longdllname word "A :longdllname ]
+  make "longdllname word "|"| :longdllname
+  RUNBADINPUTTEST (list "DLLLOAD :longdllname)
+
+  ; load a DLL when one is already loaded
+  DLLLOAD "kernel32.dll
+  RUNBADINPUTTEST [DLLLOAD "user32.dll]
+  DLLFREE
+
+  ; Regression test for bug #1438438 
+  ; Call DLLLOAD with invalid input while a DLL is loaded.
+  DLLLOAD "kernel32.dll
+  RUNBADINPUTTEST [DLLLOAD {0}]
+  DLLFREE
+
+END
+
+TO DLLFREETEST
+
+  ; can't free a DLL when nothing is loaded
+  RUNBADINPUTTEST [DLLFREE]
+
+  ; wrong number of inputs
+  RUNTOOMANYINPUTSTEST [(DLLFREE 0)]
+
+END
+
+
+TO DLLTEST
+
+   DLLSMOKETEST
+
+   DLLLOADTEST
+   DLLCALLTEST
+   DLLFREETEST
+END
+

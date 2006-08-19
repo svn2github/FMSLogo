@@ -1,0 +1,51 @@
+<section id="command-setposxyz">
+    <title>SETPOSXYZ</title>
+<indexterm><primary>SETPOSXYZ</primary></indexterm>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>SETPOSXYZ</command> <parameter>position</parameter></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+Moves the turtle to an absolute X,Y,Z coordinate.
+The argument is a list of three numbers, the X, Y and Z coordinates.
+This command is designed to run in <link linkend="command-perspective">PERSPECTIVE</link> mode.
+See also <link linkend="command-posxyz">POSXYZ</link>.
+</para>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Example</term>
+<listitem>
+    <programlisting><userinput>; draw a cube
+CLEARSCREEN
+PERSPECTIVE
+SETPOSXYZ [0 100 0]
+SETPOSXYZ [100 100 0]
+SETPOSXYZ [100 0 0]
+SETPOSXYZ [0 0 0]
+SETPOSXYZ [0 0 100]
+SETPOSXYZ [100 0 100]
+SETPOSXYZ [100 100 100]
+SETPOSXYZ [0 100 100]
+SETPOSXYZ [0 0 100]
+SETPOSXYZ [0 100 100]
+SETPOSXYZ [0 100 0]
+SETPOSXYZ [100 100 0]
+SETPOSXYZ [100 100 100]
+SETPOSXYZ [100 0 100]
+SETPOSXYZ [100 0 0]</userinput>
+</programlisting>
+
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</section>

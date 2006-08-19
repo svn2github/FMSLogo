@@ -1,0 +1,174 @@
+; This is the testharness.
+; It loads all unit tests and executes them.
+
+LOAD "testlib.lgo
+
+LOAD "to.lgo
+LOAD "list.lgo
+LOAD "sentence.lgo
+LOAD "first.lgo
+LOAD "firsts.lgo
+LOAD "butfirst.lgo
+LOAD "butfirsts.lgo
+LOAD "butlast.lgo
+LOAD "last.lgo
+LOAD "array.lgo
+LOAD "queue.lgo
+LOAD "stack.lgo
+LOAD "repeat.lgo
+LOAD "repcount.lgo
+LOAD "wait.lgo
+LOAD "predicate.lgo
+LOAD "logic.lgo
+LOAD "math.lgo
+LOAD "bitwise.lgo
+LOAD "activearea.lgo
+LOAD "bitmap.lgo
+LOAD "form.lgo
+LOAD "plist.lgo
+LOAD "editor.lgo
+LOAD "port.lgo
+LOAD "fontfacenames.lgo
+LOAD "label.lgo
+LOAD "pen.lgo
+LOAD "curves.lgo
+LOAD "fill.lgo
+LOAD "directory.lgo
+LOAD "file.lgo
+LOAD "macro.lgo
+LOAD "procedure.lgo
+LOAD "parse.lgo
+LOAD "word.lgo
+LOAD "color.lgo
+LOAD "pixel.lgo
+LOAD "screen.lgo
+LOAD "misc.lgo
+LOAD "network.lgo
+LOAD "controlflow.lgo
+LOAD "perspective.lgo
+LOAD "orientation.lgo
+LOAD "scrunch.lgo
+LOAD "help.lgo
+LOAD "window.lgo
+LOAD "sort.lgo
+LOAD "run.lgo
+LOAD "dll.lgo
+LOAD "error.lgo
+LOAD "erract.lgo
+LOAD "copydef.lgo
+LOAD "iseq.lgo
+LOAD "load.lgo
+LOAD "trace.lgo
+LOAD "step.lgo
+LOAD "bury.lgo
+LOAD "erase.lgo
+LOAD "logoversion.lgo
+LOAD "apply.lgo
+LOAD "quoted.lgo
+LOAD "mouse.lgo
+LOAD "windows.lgo
+LOAD "windowfileedit.lgo
+LOAD "midi.lgo
+LOAD "sound.lgo
+LOAD "messagebox.lgo
+LOAD "yesnobox.lgo
+LOAD "selectbox.lgo
+LOAD "questionbox.lgo
+LOAD "shellscript.lgo
+LOAD "timer.lgo
+LOAD "shell.lgo
+LOAD "time.lgo
+LOAD "thing.lgo
+LOAD "catch.lgo
+LOAD "refresh.lgo
+
+TO TESTALL
+
+  REPORTTESTINITIALIZE
+
+  PARSETEST          ; from parse.lgo
+  LOADTEST           ; from load.lgo
+  RUNTEST            ; from run.lgo
+  TOTEST             ; from to.lgo
+  ERRORTEST          ; from error.lgo
+  ERRACTTEST         ; from erract.lgo
+  CATCHTEST          ; from catch.lgo
+  LISTTEST           ; from list.lgo
+  SENTENCETEST       ; from sentence.lgo
+  PREDICATETEST      ; from predicate.lgo
+  WORDTEST           ; from word.lgo
+  THINGTEST          ; from thing.lgo
+  FIRSTTEST          ; from first.lgo
+  FIRSTSTEST         ; from firsts.lgo
+  BUTFIRSTTEST       ; from butfirst.lgo
+  BUTFIRSTSTEST      ; from butfirsts.lgo
+  BUTLASTTEST        ; from butlast.lgo
+  LASTTEST           ; from last.lgo
+  ARRAYTEST          ; from array.lgo
+  QUEUETEST          ; from queue.lgo
+  STACKTEST          ; from stack.lgo
+  LOGICTEST          ; from logic.lgo
+  APPLYTEST          ; from apply.lgo
+  REPEATTEST         ; from repeat.lgo
+  REPCOUNTTEST       ; from repcount.lgo
+  MATHTEST           ; from math.lgo
+  BITWISETEST        ; from bitwise.lgo
+  PROCEDURETEST      ; from procedure.lgo
+  MACROTEST          ; from macro.lgo
+  COPYDEFTEST        ; from copydef.lgo
+  PLISTTEST          ; from plist.lgo
+  CONTROLFLOWTEST    ; from controlflow.lgo
+  ACTIVEAREATEST     ; from activearea.lgo
+  BITMAPTEST         ; from bitmap.lgo
+  FORMTEST           ; from form.lgo
+  EDITORTEST         ; from editor.lgo 
+  WINDOWFILEEDITTEST ; from windowfileedit.lgo
+  PORTTEST           ; from port.lgo
+  FONTFACENAMESTEST  ; from fontfacenames.lgo
+  LABELTEST          ; from label.lgo
+  PENTEST            ; from pen.lgo
+  ARCTEST            ; from curves.lgo
+  FILLTEST           ; from fill.lgo
+  FILETEST           ; from file.lgo
+  COLORTEST          ; from color.lgo
+  PIXELTEST          ; from pixel.lgo
+  TIMERTEST          ; from timer.lgo
+  SCREENTEST         ; from screen.lgo
+  WAITTEST           ; from wait.lgo
+  TIMETEST           ; from time.lgo
+  SHELLTEST          ; from shell.lgo
+  DIRECTORYTEST      ; from directory.lgo
+  MISCTEST           ; from misc.lgo
+  PERSPECTIVETEST    ; from perspective.lgo
+  ORIENTATIONTEST    ; from orientation.lgo
+  SCRUNCHTEST        ; from scrunch.lgo
+  HELPTEST           ; from help.lgo
+  WINDOWTEST         ; from window.lgo
+  DLLTEST            ; from dll.lgo
+  SORTTEST           ; from sort.lgo
+  ISEQTEST           ; from iseq.lgo
+  TRACETEST          ; from trace.lgo
+  STEPTEST           ; from step.lgo
+  BURYTEST           ; from bury.lgo
+  ERASETEST          ; from erase.lgo
+  LOGOVERSIONTEST    ; from logoversion.lgo
+  REFRESHTEST        ; from refresh.lgo
+  QUOTEDTEST         ; from quoted.lgo
+  MESSAGEBOXTEST     ; from messagebox.lgo
+  YESNOBOXTEST       ; from yesnobox.lgo
+  SELECTBOXTEST      ; from selectbox.lgo
+  QUESTIONBOXTEST    ; from questionbox.lgo
+  WINDOWSTEST        ; from windows.lgo
+  MOUSETEST          ; from mouse.lgo
+  MIDITEST           ; from midi.lgo
+  SOUNDTEST          ; from sound.lgo
+  NETWORKTEST        ; from network.lgo
+
+  REPORTTESTUNINITIALIZE
+
+  print [The tests are now complete!]
+END
+
+; execute all tests on startup
+make "startup [TESTALL]
+
