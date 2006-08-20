@@ -6,6 +6,9 @@ LOAD "testlib.lgo
 LOAD "to.lgo
 LOAD "list.lgo
 LOAD "sentence.lgo
+LOAD "fput.lgo
+LOAD "lput.lgo
+LOAD "reverse.lgo
 LOAD "first.lgo
 LOAD "firsts.lgo
 LOAD "butfirst.lgo
@@ -95,6 +98,8 @@ TO TESTALL
   ERRACTTEST         ; from erract.lgo
   CATCHTEST          ; from catch.lgo
   LISTTEST           ; from list.lgo
+  LPUTTEST           ; from lput.lgo
+  FPUTTEST           ; from fput.lgo
   SENTENCETEST       ; from sentence.lgo
   PREDICATETEST      ; from predicate.lgo
   WORDTEST           ; from word.lgo
@@ -109,6 +114,7 @@ TO TESTALL
   QUEUETEST          ; from queue.lgo
   STACKTEST          ; from stack.lgo
   COMBINETEST        ; from combine.lgo
+  REVERSETEST        ; from reverse.lgo
   LOGICTEST          ; from logic.lgo
   APPLYTEST          ; from apply.lgo
   REPEATTEST         ; from repeat.lgo
