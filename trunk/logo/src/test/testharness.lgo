@@ -85,6 +85,7 @@ LOAD "thing.lgo
 LOAD "catch.lgo
 LOAD "refresh.lgo
 LOAD "combine.lgo
+LOAD "print.lgo
 
 TO TESTALL
 
@@ -129,6 +130,7 @@ TO TESTALL
   ACTIVEAREATEST     ; from activearea.lgo
   BITMAPTEST         ; from bitmap.lgo
   FORMTEST           ; from form.lgo
+  PRINTTEST          ; from print.lgo
   EDITORTEST         ; from editor.lgo 
   WINDOWFILEEDITTEST ; from windowfileedit.lgo
   PORTTEST           ; from port.lgo
