@@ -127,6 +127,13 @@ TO CHECKERRORITEM :item :lasterror :expectedvalue :description
 
   LOCALMAKE "lastitem ITEM :item :lasterror
 
+  ; An :expectedvalue of "DONTREPORT indicates two things:
+  ; 1) The caller doesn't care what the value of the field.
+  ; 2) The caller doesn't even want the value logged.
+  IF :expectedvalue = "DONTREPORT [ 
+     STOP
+  ]
+
   ; An :expectedvalue of "DONTCARE indicates that the caller
   ; doesn't care what the value of the field is.
   IF :expectedvalue = "DONTCARE [ 
@@ -182,7 +189,7 @@ TO RUNBADINPUTTEST :instructions
     STOP
   ]
 
-  CHECKERROR :instructions "DONTCARE "DONTCARE "DONTCARE "DONTCARE 
+  CHECKERROR :instructions "DONTCARE "DONTCARE "DONTREPORT "DONTREPORT
 
 END
 BURY [RUNBADINPUTTEST]
@@ -199,7 +206,7 @@ TO RUNEXPECTERRORTEST :instructions :expectederror
     REPORTTESTFAILED (LIST "Executing :instructions "|did not throw an error.|)
   ]
 
-  CHECKERROR :instructions :expectederror "DONTCARE "DONTCARE "DONTCARE 
+  CHECKERROR :instructions :expectederror "DONTCARE "DONTREPORT "DONTREPORT 
 END
 BURY [RUNEXPECTERRORTEST]
 
