@@ -403,40 +403,45 @@ NODE *lfput(NODE *args)
 
 NODE *llput(NODE *args)
    {
-   NODE *val = Unbound;
-   NODE *lastnode = NIL;
-
-   NODE * arg = car(args);
+   NODE * newtail = car(args);
    NODE * lst = list_arg(cdr(args));
-   if (NOT_THROWING)
+   if (stopping_flag == THROWING)
       {
-      val = NIL;
-      while (lst != NIL)
-         {
-         NODE * tnode = cons_list(car(lst));
-         if (val == NIL)
-            {
-            val = tnode;
-            }
-         else
-            {
-            setcdr(lastnode, tnode);
-            }
-         lastnode = tnode;
-         lst = cdr(lst);
-         if (check_throwing) 
-            {
-            break;
-            }
-         }
+      // something is wrong with the inputs
+      return Unbound;
+      }
+
+   // copy the list
+   NODE * lastnode = NIL;
+   NODE * val = NIL;
+
+   while (lst != NIL)
+      {
+      NODE * tnode = cons_list(car(lst));
       if (val == NIL)
          {
-         val = cons_list(arg);
+         val = tnode;
          }
       else
          {
-         setcdr(lastnode, cons_list(arg));
+         setcdr(lastnode, tnode);
          }
+      lastnode = tnode;
+      lst = cdr(lst);
+      if (check_throwing) 
+         {
+         break;
+         }
+      }
+
+   // append the new tail element
+   if (val == NIL)
+      {
+      val = cons_list(newtail);
+      }
+   else
+      {
+      setcdr(lastnode, cons_list(newtail));
       }
 
    return val;
