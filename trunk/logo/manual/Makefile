@@ -4,7 +4,8 @@ HHP_STYLESHEET = htmlhelp.xsl
 ROOTFILE       = logohelp.xml
 SOURCEFILES    = $(wildcard *.xml) logoversion.xml
 
-HHC = "C:\Program Files\Help Workshop\hhc.exe"
+HHC      = "C:\Program Files\Help Workshop\hhc.exe"
+UNIXECHO = "c:\cygwin\bin\echo.exe"
 
 
 htmlhelp.hhp : $(SOURCEFILES)  $(HHP_STYLESHEET)
@@ -22,9 +23,10 @@ logohelp.pdf : $(SOURCEFILES)
 logohelp.rtf : $(SOURCEFILES)
 	docbook2rtf $(ROOTFILE)
 
-# generate an XML file that contains the version
+# Generate an XML file that contains the version
+# We use the UNIX version of echo to make sure there is no newline
 logoversion.xml : ../version.mk
-	echo $(FMSLOGO_VERSION) > $@
+	$(UNIXECHO) -n $(FMSLOGO_VERSION) > $@
 
 clean :
 	$(RM) logohelp.rtf 
