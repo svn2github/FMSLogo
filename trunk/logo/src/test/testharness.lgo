@@ -81,6 +81,7 @@ LOAD "time.lgo
 LOAD "thing.lgo
 LOAD "catch.lgo
 LOAD "refresh.lgo
+LOAD "combine.lgo
 
 TO TESTALL
 
@@ -107,6 +108,7 @@ TO TESTALL
   ARRAYTEST          ; from array.lgo
   QUEUETEST          ; from queue.lgo
   STACKTEST          ; from stack.lgo
+  COMBINETEST        ; from combine.lgo
   LOGICTEST          ; from logic.lgo
   APPLYTEST          ; from apply.lgo
   REPEATTEST         ; from repeat.lgo
