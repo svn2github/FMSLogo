@@ -1,8 +1,8 @@
 FMSLogo Extras 1.3
 o ludo
   * fix syntax errors that kept it from working in FMSLogo 6.10.0
-  * untabify and reformat souce cod
-  * remove "Setup" button, which did nothing
+  * untabify and reformat souce code
+  * remove the "Setup" button, which did nothing
 
 FMSLogo Extras 1.2
 o tetrads
