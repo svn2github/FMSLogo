@@ -1,5 +1,5 @@
 ----------------------------------------------------------------------
-FMSLogo Version 6.10.0 for Microsoft Windows 95/98/ME/NT/2000/XP/Vista
+FMSLogo Version 6.11.0 for Microsoft Windows 95/98/ME/NT/2000/XP/Vista
 ----------------------------------------------------------------------
 
 Part    I) Kit Description/Location:
@@ -14,15 +14,19 @@ Part VIII) Minimum System Requirements:
 
 Part I) Kit Description/Location (http://sourceforge.net/projects/fmslogo):
 
-  fmslogo-6.10.0.exe       (binary kit: Windows self-extracting installer)
-  fmslogo-6.10.0.zip       (binary kit: Windows ZIP archive)
-  fmslogo-src-6.10.0.zip   (source kit)
+  fmslogo-6.11.0.exe       (binary kit: Windows self-extracting installer)
+  fmslogo-6.11.0.zip       (binary kit: Windows ZIP archive)
+  fmslogo-src-6.11.0.zip   (source kit)
 
 Part II) New features/bugs fixed:
 
+  * Added for 6.11.0,
+    o Fix bug #1543643: FMSLogo is responsive when running 'PR ISEQ 1 100000'.
+    o Minor updates to the manual.
+
   * Added for 6.10.0,
     o Fix bug #1539716: FMSLogo no longer crashes when procedures have lots 
-      of inputs >30000.
+      of inputs (>30000).
     o Fix bug #1534923: FMSLogo no longer crashes when the wrong number of
       inputs is given to an APPLY template (example: APPLY [[A] [FD :A]] []).
     o Fix bug #1531127: ERRACT can now be read/written to from inside the 

@@ -23,15 +23,68 @@
 
 jmp_buf iblk_buf;
 
-static char * combo_buff      = NULL;
-static size_t combo_buff_size = 0;
+static char * combo_buff        = NULL;
+static size_t combo_buff_size   = 0;    // size of the buffer
+static size_t combo_buff_length = 0;    // bytes of string in buffer (not including NUL)
 
+
+#ifdef NDEBUG
+#  define ASSERT_COMBOBUFF_INVARIANT
+#else
+#  define ASSERT_COMBOBUFF_INVARIANT CBufferInvariant invariant;
+
+class CBufferInvariant
+   {
+public:
+   CBufferInvariant()
+      {
+      AssertInvariant();
+      }
+
+   ~CBufferInvariant()
+      {
+      AssertInvariant();
+      }
+
+   void AssertInvariant()
+      {
+      if (combo_buff == NULL)
+         {
+         assert(combo_buff_length == 0);
+         assert(combo_buff_size   == 0);
+         }
+      else
+         {
+         assert(combo_buff_length <= combo_buff_size);
+         assert(combo_buff[combo_buff_length] == '\0');
+
+         // a good assert, but it takes too long
+         //assert(strlen(combo_buff) == combo_buff_length);
+         }
+      }
+   };
+
+#endif // NDEBUG
+
+
+// empty the combo_buff, but don't free it
 static
 void
-prepare_combo_buff(
-   const char * str
-)
+reset_combo_buff()
    {
+   combo_buff[0]     = '\0';
+   combo_buff_length = 0;
+   }
+
+// resizes combo_buff to hold extra_length more bytes.
+static
+void
+resize_combo_buff(
+   size_t  extra_length
+   )
+   {
+   ASSERT_COMBOBUFF_INVARIANT
+
    // if combo_buff has never been allocated, do so now.
    if (combo_buff == NULL)
       {
@@ -39,12 +92,18 @@ prepare_combo_buff(
       combo_buff_size = MAX_BUFFER_SIZE;
       }
 
-   // if it won't fit extend it
-   size_t length = strlen(combo_buff) + strlen(str) + 1;
-   if (combo_buff_size < length)
+   // if it won't fit, then make the buffer bigger
+   size_t required_length = combo_buff_length + extra_length + 1;
+   if (combo_buff_size < required_length)
       {
-      combo_buff = (char *) realloc(combo_buff, length);
-      combo_buff_size = length;
+      // Double the size of the buffer, instead of only requesting 
+      // required_length bytes.  If we don't do this, then printing 
+      // a long string takes a *very* long time because we repeatedly 
+      // reallocate the buffer to be one byte larger.
+      size_t newsize = max(combo_buff_size * 2, required_length);
+
+      combo_buff = (char *) realloc(combo_buff, newsize);
+      combo_buff_size = newsize;
       }
    }
 
@@ -52,68 +111,75 @@ static
 void
 mputcombobox(
    const char *str
-)
+   )
    {
+   ASSERT_COMBOBUFF_INVARIANT
+
    // resize combo_buff to be large enough to hold str
-   prepare_combo_buff(str);
+   size_t str_length = strlen(str);
+
+   resize_combo_buff(str_length);
 
    // append str
-   strcat(combo_buff, str);
+   combo_buff_length += str_length;
+   strcpy(combo_buff + combo_buff_length, str);
 
    // process lines
-   char * tempbuff = combo_buff;
-   size_t i = strlen(combo_buff);
-
-   for (size_t j = 0; j < i; j++)
+   char * next_line = combo_buff;
+   for (size_t j = 0; j < combo_buff_length; j++)
       {
-
-      // if <cr> pump it out
       if (combo_buff[j] == '\n')
          {
+         // if <cr> pump it out
          combo_buff[j] = '\0';
-         putcombobox(tempbuff);
+         putcombobox(next_line);
          combo_buff[j] = '\n';
-         tempbuff = &combo_buff[j + 1];
-         //         MyMessageScan(); // didn't help
+         next_line = &combo_buff[j + 1];
          }
       }
 
-   if (tempbuff != '\0') 
+   // flush the last line (which doesn't end in \n)
+   if (next_line[0] != '\0') 
       {
-      putcombobox(tempbuff);
+      putcombobox(next_line);
       }
 
-   combo_buff[0] = '\0';
+   reset_combo_buff();
    }
 
 void putcombochar(char c)
    {
-   // resize combo_buff to be large enough to one more character
-   prepare_combo_buff("x");
+   ASSERT_COMBOBUFF_INVARIANT
 
-   // if <cr> pump it out
+   // resize combo_buff to be large enough to one more character
+   resize_combo_buff(1);
+
    if (c == '\n')
       {
+      // if <cr> pump it out
       putcombobox(combo_buff);
-      combo_buff[0] = '\0';
+      reset_combo_buff();
       }
    else
       {
       // else append it
-      size_t i = strlen(combo_buff);
+      size_t i = combo_buff_length;
       combo_buff[i] = c;
       combo_buff[i + 1] = '\0';
+      combo_buff_length++;
       }
    }
 
 
 void flushcombobox()
    {
+   ASSERT_COMBOBUFF_INVARIANT
+
    // resize combo_buff to be large enough to one byte
-   prepare_combo_buff("x");
+   resize_combo_buff(1);
 
    putcombobox(combo_buff);
-   combo_buff[0] = '\0';
+   reset_combo_buff();
    }
 
 int printfx(const char *fmt)
@@ -276,8 +342,10 @@ void unblock_input()
 
 void uninitialize_combobox()
    {
-   free(combo_buff);
-   combo_buff = NULL;
+   ASSERT_COMBOBUFF_INVARIANT
 
-   combo_buff_size = 0;
+   free(combo_buff);
+   combo_buff        = NULL;
+   combo_buff_size   = 0;
+   combo_buff_length = 0;
    }
