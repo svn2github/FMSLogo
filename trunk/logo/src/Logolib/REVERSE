@@ -1,6 +1,10 @@
-to reverse :in [:out ifelse listp :in [[]] ["]]
-if emptyp :in [output :out]
-output (reverse bf :in combine first :in :out)
+to reverse :in
+op reverse.helper :in ifelse listp :in [[]] ["]
 end
 
-bury "reverse
+to reverse.helper :in :out
+if emptyp :in [op :out]
+op reverse.helper bf :in combine first :in :out
+end
+
+bury [reverse reverse.helper]

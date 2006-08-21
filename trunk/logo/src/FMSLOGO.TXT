@@ -22,6 +22,7 @@ Part II) New features/bugs fixed:
 
   * Added for 6.11.0,
     o Fix bug #1543643: FMSLogo is responsive when running 'PR ISEQ 1 100000'.
+    o Fix bug #1543354: REVERSE now throws an error when given two inputs.
     o Minor updates to the manual.
 
   * Added for 6.10.0,
