@@ -224,7 +224,9 @@ void clearcombobox()
    MainWindowx->CommandWindow->Listbox.SetCursorAtBottom();
    }
 
-   
+
+// Appends "str" to the end of the what is in the Commander's Recall box.
+// If "str" doesn't fit, then some text will be removed from the top to make it fit.
 void putcombobox(const char *str)
    {
    // only if OK to write to recall box do we do it
