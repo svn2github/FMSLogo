@@ -57,7 +57,7 @@ NODE *list_arg(NODE *args)
    {
    NODE *arg = car(args);
 
-   while (!(arg == NIL || is_list(arg)) && NOT_THROWING)
+   while (arg != NIL && !is_list(arg) && NOT_THROWING)
       {
       setcar(args, err_logo(BAD_DATA, arg));
       arg = car(args);
