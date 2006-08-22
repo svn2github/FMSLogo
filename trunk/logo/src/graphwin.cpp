@@ -147,7 +147,7 @@ gifsave_helper(
 static
 COLORREF
 GetRGBorIndexColor(
-   NODE* &args
+   NODE* args
    )
    {
    COLORREF color = (COLORREF) -1;
@@ -526,21 +526,23 @@ NODE *lsetpixel(NODE *args)
 
       if (zoom_flag)
          {
-         TRect TempRect;
+         TRect temprect;
 
-         SetRect(&TempRect,
+         SetRect(
+            &temprect,
             (+dest.x - MainWindowx->ScreenWindow->Scroller->XPos / the_zoom + xoffset) * the_zoom,
             (-dest.y - MainWindowx->ScreenWindow->Scroller->YPos / the_zoom + yoffset) * the_zoom,
             (+dest.x - MainWindowx->ScreenWindow->Scroller->XPos / the_zoom + xoffset) * the_zoom,
             (-dest.y - MainWindowx->ScreenWindow->Scroller->YPos / the_zoom + yoffset) * the_zoom);
 
-         TempRect.Inflate(1+the_zoom,1+the_zoom);
+         temprect.Inflate(1+the_zoom,1+the_zoom);
 
-         MainWindowx->ScreenWindow->InvalidateRect(TempRect, false);
+         MainWindowx->ScreenWindow->InvalidateRect(temprect, false);
          }
       else
          {
-         SetPixel(ScreenDC,
+         SetPixel(
+            ScreenDC,
             +dest.x - MainWindowx->ScreenWindow->Scroller->XPos + xoffset,
             -dest.y - MainWindowx->ScreenWindow->Scroller->YPos + yoffset,
             color);
