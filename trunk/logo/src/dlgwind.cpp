@@ -46,26 +46,26 @@ public:
 
    void InitializeFromInput(NODE * & Args);
 
-   int GetX() const {return x;}
-   int GetY() const {return y;}
-   int GetWidth() const {return width;}
-   int GetHeight() const {return height;}
+   int GetX() const {return m_X;}
+   int GetY() const {return m_Y;}
+   int GetWidth() const {return m_Width;}
+   int GetHeight() const {return m_Height;}
 
    void ConvertToDialogCoordinates();
    void ConvertToScreenCoordinates();
 
 private:
-   int x;
-   int y;
-   int width;
-   int height;
+   int m_X;
+   int m_Y;
+   int m_Width;
+   int m_Height;
    };
 
 TClientRectangle::TClientRectangle() : 
-   x(0),
-   y(0),
-   width(0), 
-   height(0)
+   m_X(0),
+   m_Y(0),
+   m_Width(0), 
+   m_Height(0)
    {
    }
 
@@ -73,16 +73,16 @@ void TClientRectangle::InitializeFromInput(NODE * & Args)
    {
    NODE * nextinput = Args;
 
-   x = int_arg(nextinput);
+   m_X = int_arg(nextinput);
    nextinput = cdr(nextinput);
 
-   y = int_arg(nextinput);
+   m_Y = int_arg(nextinput);
    nextinput = cdr(nextinput);
 
-   width = getint(pos_int_arg(nextinput));
+   m_Width = getint(pos_int_arg(nextinput));
    nextinput = cdr(nextinput);
 
-   height = getint(pos_int_arg(nextinput));
+   m_Height = getint(pos_int_arg(nextinput));
    nextinput = cdr(nextinput);
    
    Args = nextinput;
@@ -90,17 +90,17 @@ void TClientRectangle::InitializeFromInput(NODE * & Args)
 
 void TClientRectangle::ConvertToDialogCoordinates()
    {
-   x = (x * BaseUnitsx) / 4;
-   y = (y * BaseUnitsy) / 8;
+   m_X = (m_X * BaseUnitsx) / 4;
+   m_Y = (m_Y * BaseUnitsy) / 8;
 
-   width  = (width  * BaseUnitsx) / 4;
-   height = (height * BaseUnitsy) / 8;
+   m_Width  = (m_Width  * BaseUnitsx) / 4;
+   m_Height = (m_Height * BaseUnitsy) / 8;
    }
 
 void TClientRectangle::ConvertToScreenCoordinates()
    {
-   x =  x - MainWindowx->ScreenWindow->Scroller->XPos + xoffset;
-   y = -y - MainWindowx->ScreenWindow->Scroller->YPos + yoffset;
+   m_X =  m_X - MainWindowx->ScreenWindow->Scroller->XPos + xoffset;
+   m_Y = -m_Y - MainWindowx->ScreenWindow->Scroller->YPos + yoffset;
    }
 
 // class structures for the controls we support, for the most part they
