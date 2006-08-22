@@ -2215,77 +2215,81 @@ NODE *lmessagebox(NODE *args)
 
 NODE *lquestionbox(NODE *args)
    {
+   // read/validate inputs
    char banner[MAX_BUFFER_SIZE];
    cnv_strnode_string(banner, args);
 
    char body[MAX_BUFFER_SIZE];
-   cnv_strnode_string(body, args = cdr(args));
+   cnv_strnode_string(body, cdr(args));
 
-   if (NOT_THROWING)
+   if (stopping_flag == THROWING)
       {
-      char str[MAX_BUFFER_SIZE];
-      memset(str, 0, MAX_BUFFER_SIZE);
-
-      TInputDialog dlg(
-         MainWindowx->ScreenWindow,
-         banner,
-         body,
-         str,
-         MAX_BUFFER_SIZE);
-
-      if (dlg.Execute() == IDCANCEL)
-         {
-         memset(str, 0, MAX_BUFFER_SIZE);
-         err_logo(STOP_ERROR, NIL);
+      // bad input
+      return Unbound;
       }
 
-      NODE * targ = make_strnode(str);
-      NODE * val = parser(targ, false);
-      return val;
+   char str[MAX_BUFFER_SIZE];
+   str[0] = '\0';
+
+   TInputDialog dlg(
+      MainWindowx->ScreenWindow,
+      banner,
+      body,
+      str,
+      MAX_BUFFER_SIZE);
+
+   if (dlg.Execute() == IDCANCEL)
+      {
+      // the user pressed cancel
+      err_logo(STOP_ERROR, NIL);
+      return Unbound;
       }
 
-   return Unbound;
+   NODE * targ = make_strnode(str);
+   NODE * val = parser(targ, false);
+   return val;
    }
+
 
 NODE *lselectbox(NODE *args)
    {
+   // read/validate inputs
    char banner[MAX_BUFFER_SIZE];
    cnv_strnode_string(banner, args);
 
-   TPickListDialog dlg(
+   NODE * choices = list_arg(cdr(args));
+   if (stopping_flag == THROWING)
+      {
+      return Unbound;
+      }
+
+   TPickListDialog selectbox(
       MainWindowx->ScreenWindow,
       0,
       0,
       0,
       banner);
 
-   args = car(cdr(args));
-
-   // must be a list that contains something
-   if (is_list(args) && (args != NIL))
+   // add a string to the pick-list for each choice
+   while (choices != NIL)
       {
-      while (args != NIL)
-         {
-         char textbuf[MAX_BUFFER_SIZE];
-         cnv_strnode_string(textbuf, args);
+      char choice[MAX_BUFFER_SIZE];
+      cnv_strnode_string(choice, choices);
 
-         dlg.AddString(textbuf);
+      selectbox.AddString(choice);
 
-         args = cdr(args);
-         }
+      choices = cdr(choices);
       }
 
-   int iStatus = dlg.Execute();
-
-   if (iStatus >= 0)
+   int status = selectbox.Execute();
+   if (status < 0)
       {
-      return make_intnode(iStatus + 1);
-      }
-   else
-      {
+      // the user pressed cancel
       err_logo(STOP_ERROR, NIL);
-      return make_intnode(0);
+      return Unbound;
       }
+
+   return make_intnode(status + 1);
    }
 
 NODE *lyesnobox(NODE *args)
@@ -2298,12 +2302,12 @@ NODE *lyesnobox(NODE *args)
 
    if (NOT_THROWING)
       {
-      int iStatus = MainWindowx->CommandWindow->MessageBox(
+      int status = MainWindowx->CommandWindow->MessageBox(
          body,
          banner,
          MB_YESNOCANCEL | MB_ICONQUESTION);
 
-      switch (iStatus)
+      switch (status)
          {
          case IDYES:
             {
@@ -2361,9 +2365,7 @@ NODE *ldialogfileopen(NODE *args)
    if (TFileOpenDialog(MainWindowx, FileData).Execute() == IDOK)
       {
       strcpy(filename, FileData.FileName);
-      NODE * arg = make_strnode(filename);
-      NODE * val = arg; // parser(arg, false);
-      return val;
+      return make_strnode(filename);
       }
    else
       {
