@@ -2,9 +2,10 @@ LOAD "testlib.lgo
 
 TO QUESTIONBOXTEST.SMOKETEST
 
-   SIMPLEREPORTTEST  [ QUESTIONBOX [QUESTIONBOX Test] [Press "OK" without typing anything]               ] []
-   SIMPLEREPORTTEST  [ QUESTIONBOX [QUESTIONBOX Test] [Type "Hello" (without the quotes) and press "OK"] ] [Hello]
-   RUNSTOPPINGTEST   [ QUESTIONBOX [QUESTIONBOX Test] [Press "Cancel"] ]
+   SIMPLEREPORTTEST  [ QUESTIONBOX [QUESTIONBOX Test] [Press OK without typing anything. ] ] []
+   SIMPLEREPORTTEST  [ QUESTIONBOX [QUESTIONBOX Test] [Enter "Hello" and press OK.       ] ] [Hello]
+   SIMPLEREPORTTEST  [ QUESTIONBOX [QUESTIONBOX Test] [Enter "Hi Bye" and press OK.      ] ] [Hi Bye]
+   RUNSTOPPINGTEST   [ QUESTIONBOX [QUESTIONBOX Test] [Press Cancel.] ]
 
 END
 
@@ -17,4 +18,5 @@ TO QUESTIONBOXTEST
 
   QUESTIONBOXTEST.SMOKETEST
   QUESTIONBOXTEST.BADINPUT
+
 END
