@@ -1225,9 +1225,32 @@ NODE *lpitch(NODE *)
    return make_floatnode(pitch);
    }
 
-NODE *vec_arg_helper(NODE *args, bool floatok)
+// returns true if the node is zero or positive.
+// returns false, otherwise
+static
+bool
+NumericNodeIsNotNegative(
+   const NODE * NumericNode
+   )
    {
-   NODE *arg = car(args);
+   assert(nodetype(NumericNode) == INTEGER || nodetype(NumericNode) == FLOATINGPOINT);
+
+   if (nodetype(NumericNode) == INTEGER && getint(NumericNode) >= 0)
+      {
+      return true;
+      }
+
+   if (nodetype(NumericNode) == FLOATINGPOINT && getfloat(NumericNode) >= 0.0)
+      {
+      return true;
+      }
+
+   return false;
+   }
+
+NODE *vec_arg_helper(NODE *Arguments, bool NegativeIsOk)
+   {
+   NODE *arg = car(Arguments);
 
    while (NOT_THROWING)
       {
@@ -1236,17 +1259,15 @@ NODE *vec_arg_helper(NODE *args, bool floatok)
           cdr(arg) != NIL &&
           cddr(arg) == NIL)
          {
+
          NODE * val1 = cnv_node_to_numnode(car(arg));
          NODE * val2 = cnv_node_to_numnode(cadr(arg));
-         if (val1 != Unbound && val2 != Unbound &&
-            (
-            floatok ||
-            (
-            (nodetype(val1) == INTEGER && getint(val1) >= 0 || nodetype(val1) == FLOATINGPOINT && getfloat(val1) >= 0.0)&&
-            (nodetype(val2) == INTEGER && getint(val2) >= 0 || nodetype(val2) == FLOATINGPOINT && getfloat(val2) >= 0.0)
-            )
-            )
-            )
+
+         if (val1 != Unbound && 
+             val2 != Unbound && (
+                NegativeIsOk || (
+                   NumericNodeIsNotNegative(val1) && 
+                   NumericNodeIsNotNegative(val2))))
             {
             setcar(arg, val1);
             setcar(cdr(arg), val2);
@@ -1255,15 +1276,15 @@ NODE *vec_arg_helper(NODE *args, bool floatok)
          gcref(val1);
          gcref(val2);
          }
-      setcar(args, err_logo(BAD_DATA, arg));
-      arg = car(args);
+      setcar(Arguments, err_logo(BAD_DATA, arg));
+      arg = car(Arguments);
       }
    return Unbound;
    }
 
-NODE *vec_3_arg_helper(NODE *args, bool floatok)
+NODE *vec_3_arg_helper(NODE *Arguments, bool NegativeIsOk)
    {
-   NODE *arg = car(args);
+   NODE *arg = car(Arguments);
 
    while (NOT_THROWING)
       {
@@ -1276,38 +1297,33 @@ NODE *vec_3_arg_helper(NODE *args, bool floatok)
          NODE * val1 = cnv_node_to_numnode(car(arg));
          NODE * val2 = cnv_node_to_numnode(cadr(arg));
          NODE * val3 = cnv_node_to_numnode(cadr(cdr(arg)));
-         if (
-            val1 != Unbound &&
-            val2 != Unbound &&
-            val3 != Unbound &&
-            (
-            floatok ||
-            (
-            (nodetype(val1) == INTEGER && getint(val1) >= 0 || nodetype(val1) == FLOATINGPOINT && getfloat(val1) >= 0.0)&&
-            (nodetype(val2) == INTEGER && getint(val2) >= 0 || nodetype(val2) == FLOATINGPOINT && getfloat(val2) >= 0.0)&&
-            (nodetype(val3) == INTEGER && getint(val3) >= 0 || nodetype(val3) == FLOATINGPOINT && getfloat(val3) >= 0.0)
-            )
-            )
-            )
+         if (val1 != Unbound &&
+             val2 != Unbound &&
+             val3 != Unbound && (
+                NegativeIsOk || (
+                   NumericNodeIsNotNegative(val1) && 
+                   NumericNodeIsNotNegative(val2) &&
+                   NumericNodeIsNotNegative(val3)))) 
             {
             setcar(arg, val1);
             setcar(cdr(arg), val2);
             setcar(cddr(arg), val3);
             return arg;
             }
+
          gcref(val1);
          gcref(val2);
          gcref(val3);
          }
-      setcar(args, err_logo(BAD_DATA, arg));
-      arg = car(args);
+      setcar(Arguments, err_logo(BAD_DATA, arg));
+      arg = car(Arguments);
       }
    return Unbound;
    }
 
-NODE *vec_4_arg_helper(NODE *args, bool floatok)
+NODE *vec_4_arg_helper(NODE *Arguments, bool NegativeIsOk)
    {
-   NODE *arg = car(args);
+   NODE *arg = car(Arguments);
 
    while (NOT_THROWING)
       {
@@ -1322,16 +1338,15 @@ NODE *vec_4_arg_helper(NODE *args, bool floatok)
          NODE* val2 = cnv_node_to_numnode(car(cdr(arg)));
          NODE* val3 = cnv_node_to_numnode(car(cdr(cdr(arg))));
          NODE* val4 = cnv_node_to_numnode(car(cdr(cdr(cdr(arg)))));
-         if (
-               val1 != Unbound &&
-               val2 != Unbound &&
-               val3 != Unbound &&
-               val4 != Unbound &&
-               (floatok || (
-                     nodetype(val1) == INTEGER && getint(val1) >= 0 &&
-                     nodetype(val2) == INTEGER && getint(val2) >= 0 &&
-                     nodetype(val3) == INTEGER && getint(val3) >= 0 &&
-                     nodetype(val4) == INTEGER && getint(val4) >= 0)))
+         if (val1 != Unbound &&
+             val2 != Unbound &&
+             val3 != Unbound &&
+             val4 != Unbound &&
+             (NegativeIsOk || (
+                 NumericNodeIsNotNegative(val1) && 
+                 NumericNodeIsNotNegative(val2) &&
+                 NumericNodeIsNotNegative(val3) &&
+                 NumericNodeIsNotNegative(val4))))
             {
             setcar(arg, val1);
             setcar(cdr(arg), val2);
@@ -1344,8 +1359,8 @@ NODE *vec_4_arg_helper(NODE *args, bool floatok)
          gcref(val3);
          gcref(val4);
          }
-      setcar(args, err_logo(BAD_DATA, arg));
-      arg = car(args);
+      setcar(Arguments, err_logo(BAD_DATA, arg));
+      arg = car(Arguments);
       }
    return Unbound;
    }
