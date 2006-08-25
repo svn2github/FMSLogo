@@ -182,6 +182,9 @@ TO APPLYTEST.QUESTIONMARKTEMPLATE
    ; questionmark template that outputs
    SIMPLEREPORTTEST  [APPLY [SUM 1 ?] [2] ] 3
 
+   ; nested questionmark template (outer template list should be restored)
+   ; this is a regression test for bug #1545911
+   SIMPLEREPORTTEST [APPLY [ IGNORE APPLY [1] [BAD] ? ] [GOOD] ] "GOOD
 END
 
 TO APPLYTEST
