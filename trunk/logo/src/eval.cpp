@@ -502,7 +502,7 @@ NODE *evaluator(NODE *list, enum labels where)
          }
       goto eval_args_done;
       }
-   save(argl);
+   save2(argl, qm_list);
    save2(unev, fun);
    save2(ufun, last_ufun);
    save2(this_line, last_line);
@@ -521,7 +521,7 @@ NODE *evaluator(NODE *list, enum labels where)
    restore2(ufun, last_ufun);
    assign(last_call, fun);
    restore2(unev, fun);
-   restore(argl);
+   restore2(argl, qm_list);
    while (NOT_THROWING && val == Unbound)
       {
       assign(val, err_logo(DIDNT_OUTPUT, NIL));
@@ -714,16 +714,18 @@ NODE *evaluator(NODE *list, enum labels where)
                {
                assign(list, NIL);
                }
-            if (!is_tree(list))
+
+            if (is_tree(list))
+               {
+               assign(unev, tree__tree(list));
+               assign(val, Unbound);
+               newcont(set_args_continue);
+               goto eval_sequence;
+               }
+            else
                {
                assign(val, Unbound);
-               goto set_args_continue;
                }
-            assign(unev, tree__tree(list));
-            assign(val, Unbound);
-            newcont(set_args_continue);
-            goto eval_sequence;
-
 
  set_args_continue:
             restore(var_stack_position);
@@ -1346,7 +1348,7 @@ NODE *evaluator(NODE *list, enum labels where)
             {
             // question-mark form [instr ...]
 
-            // REVISIT: where should qm_list get freed?
+            // qm_list is restored at accumulate_arg
             assign(qm_list, argl);
             assign(list, fun);
  lambda_qm:
