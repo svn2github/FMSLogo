@@ -77,6 +77,13 @@ TO APPLYTEST.BADINPUT
    ; questionmark template has bad inputs
    RUNBADINPUTTEST        [APPLY [IGNORE ?2] [1] ]
 
+
+   ; fill the questionmark list
+   TRACEINSTRUCTION [ APPLY [] [1 2 3 4 5] ]
+ 
+   ; make sure the questionmark list is empty
+   RUNBADINPUTTEST [ SHOW ? ]
+
 END
 
 TO APPLYTEST.LAMBDATEMPLATE.NEWSCOPETEST
@@ -185,6 +192,7 @@ TO APPLYTEST.QUESTIONMARKTEMPLATE
    ; nested questionmark template (outer template list should be restored)
    ; this is a regression test for bug #1545911
    SIMPLEREPORTTEST [APPLY [ IGNORE APPLY [1] [BAD] ? ] [GOOD] ] "GOOD
+
 END
 
 TO APPLYTEST
