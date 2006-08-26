@@ -25,6 +25,7 @@ LOAD "predicate.lgo
 LOAD "logic.lgo
 LOAD "math.lgo
 LOAD "bitwise.lgo
+LOAD "reduce.lgo
 LOAD "activearea.lgo
 LOAD "bitmap.lgo
 LOAD "form.lgo
@@ -125,6 +126,7 @@ TO TESTALL
   BITWISETEST        ; from bitwise.lgo
   PROCEDURETEST      ; from procedure.lgo
   MACROTEST          ; from macro.lgo
+  REDUCETEST         ; from reduce.lgo
   COPYDEFTEST        ; from copydef.lgo
   PLISTTEST          ; from plist.lgo
   CONTROLFLOWTEST    ; from controlflow.lgo
