@@ -1,0 +1,32 @@
+LOAD "testlib.lgo
+
+TO PRINTTEST.PERFORMANCE
+
+   ; bug #1543643: FMSLogo hangs when printing a long line.
+
+   ; ISEQ is not part of the repro, per-se.
+   ; If there is a faster way to generate a long string, we can use that.
+   LOCALMAKE "longlist ISEQ 1 100000
+
+   ; print to the commander's recall box
+   LOCALMAKE "previouswriter WRITER
+   SETWRITE []
+
+   TRACEINSTRUCTION [ PRINT :longlist ]
+
+   SETWRITE :previouswriter
+
+END
+
+TO PRINTTEST.SMOKETEST
+
+   ; TODO: print various Logo constructs to a file 
+   ; and verify that the output looks correct
+END
+
+TO PRINTTEST
+
+   PRINTTEST.SMOKETEST
+   PRINTTEST.PERFORMANCE
+
+END

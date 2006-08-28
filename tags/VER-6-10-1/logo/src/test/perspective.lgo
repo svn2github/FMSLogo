@@ -1,0 +1,34 @@
+LOAD "testlib.lgo
+
+TO BUG1384267TEST
+
+   ; these statements used to crash
+
+   REPORTTESTINFO [executing regression test for bug #1384267]
+   RIGHT     1e30
+   LEFT      1e30
+   UPPITCH   1e30
+   DOWNPITCH 1e30
+   RIGHTROLL 1e30
+   LEFTROLL  1e30
+
+   REPORTTESTPASSED ["|bug #1384267 is fixed; turning by a large number in perspective mode did not crash.| ]
+END
+
+
+TO PERSPECTIVETEST
+
+   ; switch to perspective mode
+   PERSPECTIVE
+
+   BUG1384267TEST
+
+   ; go back to the default mode
+   CLEARSCREEN
+   WRAP
+
+
+   ; bad input tests (shouldn't change modes)
+   RUNTOOMANYINPUTSTEST [(PERSPECTIVE "toomany)]
+END
+

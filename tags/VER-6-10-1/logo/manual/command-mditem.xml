@@ -1,0 +1,28 @@
+<section id="command-mditem">
+<title>MDITEM</title>
+<indexterm><primary>MDITEM</primary></indexterm>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>MDITEM</command> <parameter>indexlist</parameter> <parameter>mdarray</parameter></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>Outputs an element of the multidimensional array selected by the list of numbers (an index list).</para>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Example</term>
+<listitem>
+    <programlisting><userinput>SHOW MDITEM [2 2] {{0 1} {2 3}}
+</userinput>3</programlisting>
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</section>
