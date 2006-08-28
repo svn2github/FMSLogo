@@ -1,0 +1,87 @@
+a.infocus 
+{ 
+  text-decoration : underline; 
+}
+
+a.blurred 
+{ 
+  text-decoration : none; 
+}
+
+/* the current page in the navigation pane */
+div.currentpage
+{
+  padding-left    : 10px;
+  background-color: tan;
+  font-weight     : bold;
+}
+
+/* the non-current page in the navigation pane */
+div.navbarentry
+{
+  padding-left : 10px;
+}
+
+h1
+{
+  text-align: center;
+}
+
+body
+{ 
+  background-color: lightblue;
+}
+
+a img
+{ 
+  border : 0;
+}
+
+#body 
+{
+  /* center the Web page */
+  margin-left:  auto;
+  margin-right: auto;
+
+  width  : 800px;
+}
+
+#banner
+{
+  width  : 100%;
+}
+
+#navbar
+{
+  width      : 150px;
+
+  padding-top  : 50px;
+  padding-left : 10px;
+
+  vertical-align  : top;
+}
+
+/* leave some space on the top and left with the margin-* properties */
+#content 
+{
+  width : 600px; 
+  right : 800px; 
+
+  padding-left:   25px;
+  padding-right:  25px;
+  padding-top:    10px;
+  padding-bottom: 10px;
+
+  background-color: tan;
+
+  vertical-align  : top;
+}
+
+
+#footer
+{ 
+  float : left;
+
+  position : relative;
+  width    : 100%;
+}

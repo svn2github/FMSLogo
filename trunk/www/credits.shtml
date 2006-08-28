@@ -1,0 +1,43 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+
+ <head>
+   <title>FMSLogo: Credits</title>
+    <link rel="stylesheet" type="text/css" href="fmslogo.css" >
+ </head>
+
+ <body onload="onPageLoad('credits')" >
+
+   <script src="fmslogo.js" type="text/javascript" ></script>
+
+   <div id="body">
+
+     <!--#include virtual="banner.html" -->
+
+     <table border="0" cellspacing="0" cellpadding="0"><tr>
+
+       <!--#include virtual="navbar.html" -->
+
+       <td id="content">
+
+   <h2>Credits</h2>
+
+    <p>
+      FMSLogo was originally called MSWLogo.
+      It was written by George Mills and based on UCBLogo, which is written by Brian Harvey and is still under active development.
+      A large, international community adopted MSWLogo, translated it into several languages, and created countless lessons plans around it.
+      Today, FMSLogo has a home on SourceForge.
+      It is my hope that SourceForge will serve as a focal point for future community involvement.
+    </p>
+
+       </td>
+
+     </tr></table>
+
+   <!--#include virtual="footer.html" -->
+   </div>
+
+
+ </body>
+</html>
