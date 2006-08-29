@@ -306,6 +306,7 @@ Part III) Special Thanks:
     Jason Gervich
     Andy Owen
     Theodoros Chatzigiannakis
+    Jim Foster
 
   Special thanks to:
     George Mills
