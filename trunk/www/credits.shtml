@@ -21,15 +21,53 @@
 
        <td id="content">
 
-   <h2>Credits</h2>
+      <h2>Credits</h2>
 
-    <p>
+      <p>
       FMSLogo was originally called MSWLogo.
-      It was written by George Mills and based on UCBLogo, which is written by Brian Harvey and is still under active development.
+      It was written by <b>George Mills</b> and based on UCBLogo, which is written by <b>Brian Harvey</b> and is still under active development.
       A large, international community adopted MSWLogo, translated it into several languages, and created countless lessons plans around it.
-      Today, FMSLogo has a home on SourceForge.
-      It is my hope that SourceForge will serve as a focal point for future community involvement.
-    </p>
+      </p>
+
+       <p>
+       I wish to extend my sincerest thanks to everyone who has used, supported,
+       criticized, praised, filed a bug on, or otherwise contributed to
+       either FMSLogo or MSWLogo.
+       </p>
+
+       <p>
+       Thanks to:
+       </p>
+
+       <ul>
+         <li>Michael Malin</li>
+         <li>Kari Hoijarvi</li>
+         <li>Clem Rutter</li>
+         <li>Lionel Laske</li>
+         <li>Relja Medic</li>
+         <li>Daniel Ajoy</li>
+         <li>Narayanan Chitoor</li>
+         <li>Jason Gervich</li>
+         <li>Andy Owen</li>
+         <li>Theodoros Chatzigiannakis</li>
+         <li>Jim Foster</li>
+       </ul>
+
+       <p>
+       Special thanks to:
+       </p>
+
+       <ul>
+         <li>George Mills</li>
+         <li>Brian Harvey</li>
+         <li>Jim Muller</li>
+         <li>Erich Neuwirth</li>
+         <li>Yehuda Katz</li>
+       </ul>
+
+      <p>
+      It is my hope that FMSLogo's new home on SourceForge will serve as a focal point for future community involvement.
+      </p>
 
        </td>
 
