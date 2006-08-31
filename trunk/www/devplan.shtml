@@ -33,32 +33,48 @@
 
 
         <ol>
-         <li><b>Port the documentation from RTF to DocBook.</b><br>
+         <li>
+          <span class="devplan-item">Port the documentation from RTF to DocBook.</span>
+          <span class="devplan-update">Completed on 2006-02-19.</span>
+          <br>
           This will make the manual easier to update.
           It also gives me an opportunity to carefully read the documentation, learn what FMSLogo is capable of, and fix typos.</li>
 
-         <li><b>Write an extensive set of automated tests.</b><br>
+         <li>
+           <span class="devplan-item">Write an extensive set of automated tests.</span>
+           <span class="devplan-update">In Progress.</span>
+           <br>
            Without a good test suite, I cannot confidently update FMSLogo without introducing regressions.
            Because FMSLogo has a lot of features, writing a comprehensive set of tests is very time consuming.</li>
 
-         <li><b>Port FMSLogo to gcc and wxWindows.</b><br>
+         <li>
+           <span class="devplan-item">Port FMSLogo to gcc and wxWindows.</span>
+           <br>
            Currently FMSLogo is built with a defunct compiler and links to a proprietary window toolkit.
            Porting FMSLogo to gcc and wxWindows will open up development to more people.</li>
 
-         <li><b>Use the GNU tools to find performance bottlenecks and fix memory leaks.</b><br>
+         <li>
+           <span class="devplan-item">Use the GNU tools to find performance bottlenecks and fix memory leaks.</span>
+           <br>
            This purpose of this step is to gain a better understanding of where FMSLogo's problems lie.</li>
 
-         <li><b>Update the language engine to the latest from UCBLogo.</b><br>
+         <li>
+           <span class="devplan-item">Update the language engine to the latest from UCBLogo.</span>
+           <br>
            FMSLogo is based on UCBLogo's language engine.
            However, while UCBLogo has made many advances, FMSLogo is still using a snapshot of UCBLogo that is at least five years old.
            There are some major benefits to updating the language engine.
            Just adding a "not equals" operator would make FMSLogo a significantly better programming environment.</li>
 
-         <li><b>Internationalize FMSLogo.</b><br>
+         <li>
+           <span class="devplan-item">Internationalize FMSLogo.</span>
+           <br>
            This will make it easier for third-parties to localize FMSLogo.
            Localization is a requirement for adoption within schools systems.</li>
 
-         <li><b>Begin implementing new features.</b><br>
+         <li>
+           <span class="devplan-item">Begin implementing new features.</span>
+           <br>
            By the time I get here, FMSLogo will still be roughly the same as MSWLogo 6.5b, but it will be ready to be extended.
            The possibilities are limitless, but I'd like to start by adding a good sprite library, better support for 3D drawing, an interface for text to speech, a clean networking API, etc.</li>
         </ol>

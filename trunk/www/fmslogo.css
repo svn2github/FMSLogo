@@ -37,6 +37,16 @@ a img
   border : 0;
 }
 
+.devplan-item
+{ 
+  font-weight : bold;
+}
+
+.devplan-update
+{ 
+  color : blue;
+}
+
 #body 
 {
   /* center the Web page */
