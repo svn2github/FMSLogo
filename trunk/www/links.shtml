@@ -23,16 +23,20 @@
 
     <h2>Useful Links</h2>
     <ul>
-      <li><a href="http://www.seansastronomyshop.com/~dan/Asteroid_Miner/Asteroid_Miner.html">Asteroid Miner</a> - 
-        An impressive game written in FMSLogo.</li>
+      <li><a href="http://sourceforge.net/projects/fmslogo">FMSLogo on SourceForge</a> -
+        The FMSLogo project portal on SourceForge.net.
+        This is where you download FMSLogo, file bugs, make feature requests, submit support requests, etc.</li>
 
       <li><a href="http://et.bgcbellevue.org/logo">The Logo Workshop</a> - 
         A short lesson plan for introducing FMSLogo to children K-5.
         I use this Web site to run computer workshops at my local Boys and Girls Club.</li>
 
+      <li><a href="http://www.seansastronomyshop.com/~dan/Asteroid_Miner/Asteroid_Miner.html">Asteroid Miner</a> - 
+        An impressive game written in FMSLogo.</li>
+
       <li><a href="http://www.cs.berkeley.edu/~bh/logo.html">Berkley Logo</a> - 
         A powerful, cross-platform Logo environment written by Brian Harvey.
-        The Web page also links the three college-level textbooks taught in Logo.
+        The Web page also links to three college-level textbooks taught in Logo.
         FMSLogo uses the language engine from UCBLogo.</li>
 
       <li><a href="http://softronix.com/logo.html">MSWLogo Homepage</a> - 
