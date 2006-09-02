@@ -219,7 +219,7 @@ NODE *llocal(NODE *args)
    {
    NODE *var_stack_position = var_stack;
 
-   if (tailcall != 0) 
+   if (tailcall != 0)
      {
      return Unbound;
      }
@@ -589,6 +589,7 @@ NODE *evaluator(NODE *list, enum labels where)
    /* primitive_apply */
    if (NOT_THROWING)
       {
+      // REVSIST: Trace primitives like UCBLogo does?
       if (!IsTimeToExit)
          {
          assign(val, ((logofunc) * getprimfun(proc)) (argl));
