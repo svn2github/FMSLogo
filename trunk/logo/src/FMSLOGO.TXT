@@ -21,7 +21,7 @@ Part I) Kit Description/Location (http://sourceforge.net/projects/fmslogo):
 Part II) New features/bugs fixed:
 
   * Added for 6.11.0,
-    o Fix bug #1458661; Macros that output nothing no longer crash FMSLogo.
+    o Fix bug #1547408; 'RUNRESULT {1}' no longer crashes FMSLogo.
 
   * Added for 6.10.1,
     o Fix bug #1545911: The questionmark inputs in template-based iteration
