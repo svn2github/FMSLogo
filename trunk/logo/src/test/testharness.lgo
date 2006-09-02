@@ -88,6 +88,7 @@ LOAD "catch.lgo
 LOAD "refresh.lgo
 LOAD "combine.lgo
 LOAD "print.lgo
+LOAD "runresult.lgo
 
 TO TESTALL
 
@@ -96,6 +97,7 @@ TO TESTALL
   PARSETEST          ; from parse.lgo
   LOADTEST           ; from load.lgo
   RUNTEST            ; from run.lgo
+  RUNRESULTTEST      ; from runresult.lgo
   TOTEST             ; from to.lgo
   ERRORTEST          ; from error.lgo
   ERRACTTEST         ; from erract.lgo
