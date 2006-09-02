@@ -1,5 +1,5 @@
 ----------------------------------------------------------------------
-FMSLogo Version 6.10.1 for Microsoft Windows 95/98/ME/NT/2000/XP/Vista
+FMSLogo Version 6.11.0 for Microsoft Windows 95/98/ME/NT/2000/XP/Vista
 ----------------------------------------------------------------------
 
 Part    I) Kit Description/Location:
@@ -14,14 +14,17 @@ Part VIII) Minimum System Requirements:
 
 Part I) Kit Description/Location (http://sourceforge.net/projects/fmslogo):
 
-  fmslogo-6.10.1.exe       (binary kit: Windows self-extracting installer)
-  fmslogo-6.10.1.zip       (binary kit: Windows ZIP archive)
-  fmslogo-src-6.10.1.zip   (source kit)
+  fmslogo-6.11.0.exe       (binary kit: Windows self-extracting installer)
+  fmslogo-6.11.0.zip       (binary kit: Windows ZIP archive)
+  fmslogo-src-6.11.0.zip   (source kit)
 
 Part II) New features/bugs fixed:
 
+  * Added for 6.11.0,
+    o Fix bug #1458661; Macros that output nothing no longer crash FMSLogo.
+
   * Added for 6.10.1,
-    o Fix bug #1545911: The questionmark inputs in template-based iteration 
+    o Fix bug #1545911: The questionmark inputs in template-based iteration
       are now correctly restored when the template goes out of scope.
     o Fix bug #1543643: FMSLogo is responsive when running 'PR ISEQ 1 100000'.
     o Fix bug #1543354: REVERSE now throws an error when given two inputs.

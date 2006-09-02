@@ -208,10 +208,16 @@ void gc(NODE *nd)
          case QUOTE:
          case COLON:
          case TREE:
-         case CONT:
-            tcdr = cdr(nd);
             tcar = car(nd);
+            tcdr = cdr(nd);
             tobj = getobject(nd);
+            break;
+
+         case CONT:
+            // Continuation nodes only have a valid cdr.
+            tcar = NIL;   // the car is a labels, not a NODE*
+            tcdr = cdr(nd);
+            tobj = NIL;   // the object shouldn't exist
             break;
 
          case ARRAY:
