@@ -298,15 +298,15 @@ NODE *pos_int_arg(NODE *args)
 
 NODE *lrepeat(NODE *args)
    {
-   NODE * cnt = pos_int_arg(args);
-   NODE * torpt = lrun(cdr(args));
+   NODE * cnt       = pos_int_arg(args);
+   NODE * to_repeat = lrun(cdr(args));
 
-   NODE *retval = NIL;
-   if (NOT_THROWING)
+   if (stopping_flag == THROWING)
       {
-      retval = make_cont(repeat_continuation, cons(cnt, torpt));
+      return Unbound;
       }
-   return retval;
+
+   return make_cont(repeat_continuation, cons(cnt, to_repeat));
    }
 
 NODE *lrepcount(NODE *)
@@ -316,13 +316,14 @@ NODE *lrepcount(NODE *)
 
 NODE *lforever(NODE *args)
    {
-   NODE *torpt = lrun(args);
+   NODE *to_repeat = lrun(args);
 
-   if (NOT_THROWING)
+   if (stopping_flag == THROWING)
       {
-      return make_cont(repeat_continuation, cons(make_intnode(-1), torpt));
+      return Unbound;
       }
-   return NIL;
+
+   return make_cont(repeat_continuation, cons(make_intnode(-1), to_repeat));
    }
 
 NODE *ltest(NODE *args)
