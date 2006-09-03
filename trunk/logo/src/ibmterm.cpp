@@ -28,13 +28,10 @@
 
 /************************************************************/
 
-bool in_graphics_mode = false;
 bool in_erase_mode = false;
 
-int ibm_screen_top;
 int current_write_mode = COPY_PUT;
 int turtle_color;
-int prev_color;
 
 extern int *TopOfStack;
 
@@ -78,132 +75,26 @@ bool check_stop(bool scan_for_messages)
    return false;
    }
 
-void term_init_ibm()
-   {
-   x_max = 80;
-   y_max = 24;
-   x_coord = y_coord = 0;
-   }
-
-void ibm_gotoxy(int x, int y)
-   {
-   gotoxy(x + 1, y + 1);
-   }
-
-void ibm_clear_text()
-   {
-   clearcombobox();
-   }
-
-void ibm_plain_mode()
-   {
-   // textattr(oldattr); /* white on black */
-   }
-
-/************************************************************/
-/* These are the machine-specific graphics definitions.  All versions must
-provide a set of functions analogous to these. */
-
-void save_pen(pen_info *p)
-   {
-   // p->h = getx();
-   // p->v = gety();
-   p->penup = g_Turtles[turtle_which].IsPenUp;
-   p->width = get_pen_width();
-   // p->color = getcolor();
-   p->prev_color = prev_color;
-   get_pen_pattern(p->pattern);
-   p->mode = get_pen_mode();
-   }
-
-void restore_pen(const pen_info *p)
-   {
-   // moveto(p->h, p->v);
-   g_Turtles[turtle_which].IsPenUp = p->penup;
-   set_pen_width(p->width);
-   set_pen_mode(p->mode);    // must restore mode before color
-   // setcolor(p->color);
-   prev_color = p->prev_color;
-   set_pen_pattern(p->pattern);
-   }
-
-void plain_xor_pen()
-   {
-   set_pen_width(1);
-   // setcolor(turtle_color);
-   // setwritemode(XOR_PUT);
-   current_write_mode = XOR_PUT;
-   in_erase_mode = false;
-   }
 
 void pen_down()
    {
-   // setwritemode(COPY_PUT);
    current_write_mode = COPY_PUT;
-   if (in_erase_mode)
-      {
-      // setcolor(prev_color);
-      in_erase_mode = false;
-      }
+   in_erase_mode = false;
    }
 
 void pen_reverse()
    {
-   // setwritemode(XOR_PUT);
    current_write_mode = XOR_PUT;
-   if (in_erase_mode)
-      {
-      // setcolor(prev_color);
-      in_erase_mode = false;
-      }
+   in_erase_mode = false;
    }
 
 void pen_erase()
    {
    if (!in_erase_mode)
       {
-      //        setwritemode(COPY_PUT);
       current_write_mode = COPY_PUT;
-      //        prev_color = getcolor();
-      //        setcolor(0);
       in_erase_mode = true;
       }
-   }
-
-int get_pen_mode()
-   {
-   if (in_erase_mode)
-      {
-      return 2;
-      }
-   else
-      {
-      return current_write_mode;
-      }
-   }
-
-void set_pen_mode(int m)
-   {
-   switch (m)
-      {
-       case 2: pen_erase(); break;
-       case COPY_PUT: pen_down(); break;
-       case XOR_PUT: pen_reverse(); break;
-      }
-   }
-
-//int get_pen_width()
-//{
-//    struct linesettingstype ls;
-//
-//    getlinesettings(&ls);
-//    return ls.thickness;
-//return (0);
-//}
-
-void set_pen_pattern(const char * /* pat */)
-   {
-   //    setfillpattern(pat, getcolor());
    }
 
 void set_list_pen_pattern(NODE *arg)

@@ -575,7 +575,6 @@ NODE *lreadword(NODE *)
 
 NODE *lreadchar(NODE *)
    {
-   charmode_on();
    input_blocking = true;
 
    char c;
@@ -612,7 +611,6 @@ NODE *lreadchar(NODE *)
 
 NODE *lreadchars(NODE *args)
    {
-   char *strhead, *strptr;
    NODETYPES type = STRING;
 
    unsigned int c = (unsigned int) getint(pos_int_arg(args));
@@ -620,9 +618,10 @@ NODE *lreadchars(NODE *args)
       {
       return Unbound;
       }
-   charmode_on();
+
    input_blocking = true;
 
+   char *strhead, *strptr;
    if (!setjmp(iblk_buf))
       {
       strhead = (char *) malloc((size_t) (c + sizeof(short) + 1));
@@ -667,7 +666,6 @@ NODE *lkeyp(NODE *)
    {
    if (readstream == stdin && interactive)
       {
-      charmode_on();
       //fflush(stdout);
       return Truex;
       //return kbhit() ? Truex : Falsex

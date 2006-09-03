@@ -22,41 +22,17 @@
 
 #include "allwind.h"
 
-int x_coord;
-int y_coord;
-int x_max;
-int y_max;
-
-/*
-char bp[1024];
-char cl_arr[40];
-char cm_arr[40];
-char so_arr[40];
-char se_arr[40];
-*/
-
 bool interactive;
 
 void term_init()
    {
    interactive = true;
    ift_iff_flag = -1;
-   term_init_ibm();
-   }
-
-// TODO: remove
-void charmode_on()
-   {
-   }
-
-// TODO: remove
-void charmode_off()
-   {
    }
 
 NODE *lcleartext(NODE *)
    {
-   ibm_clear_text();
+   clearcombobox();
    return Unbound;
    }
 

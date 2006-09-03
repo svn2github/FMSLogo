@@ -171,10 +171,6 @@ extern bool print_backslashes;
 extern FIXNUM ift_iff_flag;
 
 /* term.cpp */
-extern int x_coord;
-extern int y_coord;
-extern int x_max;
-extern int y_max;
 extern bool interactive;
 extern bool in_erase_mode;
 
@@ -210,10 +206,8 @@ extern HTMLHELPFUNC g_HtmlHelpFunc;
 extern HMODULE      g_HtmlHelpLib;
 
 /* ibmterm.cpp */
-extern bool in_graphics_mode;
 extern int MaxX;
 extern int MaxY;
-extern int ibm_screen_top;
 const int SIGQUIT = 15;
 
 /* unix.cpp */

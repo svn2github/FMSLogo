@@ -97,11 +97,7 @@ int rd_getc(FILE *strm)
 static
 void rd_print_prompt(const char * /*str*/)
    {
-   /*
-   if (in_graphics_mode && ibm_screen_top == 0)
-      lsplitscreen();
-   ndprintf(stdout,"%t",str);
-   */
+   //ndprintf(stdout,"%t",str);
    }
 
 #define into_line(chr) \
@@ -142,7 +138,6 @@ NODE *reader(FILE *strm, const char *prompt)
       contin = false;
       }
 
-   charmode_off();
    bool dribbling = (dribblestream != NULL && strm == stdin);
 
    // allocate p_line if it hasn't been allocated yet

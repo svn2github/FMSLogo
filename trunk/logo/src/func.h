@@ -14,26 +14,14 @@ extern short Myinport(short portid);
 extern int Myingameport (short portid, short mask);
 
 extern bool check_stop(bool scan_for_messages);
-extern void term_init_ibm(void);
-extern void ibm_gotoxy(int x, int y);
-extern void ibm_clear_text(void);
 extern void ibm_clear_screen(void);
-extern void ibm_plain_mode(void);
-extern void ibm_bold_mode(void);
-extern void erase_graphics_top(void);
-extern void save_pen(pen_info *pen);
-extern void restore_pen(const pen_info *pen);
-extern void plain_xor_pen(void);
 extern void pen_down(void);
 extern void pen_reverse(void);
 extern void pen_erase(void);
-extern int get_pen_mode(void);
-extern void set_pen_mode(int m);
 extern int get_pen_width(void);
 extern void set_pen_width(int w);
 extern int get_pen_height(void);
 extern void set_pen_height(int h);
-extern void set_pen_pattern(const char *pat);
 extern void set_list_pen_pattern(NODE *arg);
 extern void get_pen_pattern(char *pat);
 extern NODE *get_node_pen_pattern(void);
@@ -44,7 +32,6 @@ extern void logofill(bool bOld);
 extern void erase_screen(void);
 extern bool button(void);
 extern void tone(FIXNUM pitch, FIXNUM duration);
-extern void check_scroll(void);
 
 // File wrksp.cpp
 extern NODE *ltext(NODE *args);
@@ -331,11 +318,7 @@ extern NODE *llogoversion(NODE *args);
 extern bool variableIsTrue(NODE *variable);
 
 // File term.cpp
-extern void termcap_putter(char ch);
-extern void termcap_getter(char *cap, char *buf);
 extern void term_init(void);
-extern void charmode_on(void);
-extern void charmode_off(void);
 extern NODE *lcleartext(NODE *args);
 extern NODE *lcursor(NODE *args);
 extern NODE *lsetcursor(NODE *args);
