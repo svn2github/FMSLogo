@@ -19,6 +19,7 @@ LOAD "array.lgo
 LOAD "queue.lgo
 LOAD "stack.lgo
 LOAD "repeat.lgo
+LOAD "forever.lgo
 LOAD "repcount.lgo
 LOAD "wait.lgo
 LOAD "predicate.lgo
@@ -123,6 +124,7 @@ TO TESTALL
   LOGICTEST          ; from logic.lgo
   APPLYTEST          ; from apply.lgo
   REPEATTEST         ; from repeat.lgo
+  FOREVERTEST        ; from forever.lgo
   REPCOUNTTEST       ; from repcount.lgo
   MATHTEST           ; from math.lgo
   BITWISETEST        ; from bitwise.lgo
