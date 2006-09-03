@@ -431,7 +431,8 @@ NODE *evaluator(NODE *list, enum labels where)
 
       case CONS:
          // procedure application
-         if (tailcall == 1 && is_macro(car(exp)) &&
+         if (tailcall == 1 && 
+             is_macro(car(exp)) &&
              is_list(procnode__caseobj(car(exp))))
             {
             // tail call to user-defined macro must be treated as non-tail
@@ -475,6 +476,8 @@ NODE *evaluator(NODE *list, enum labels where)
          assign(val, exp);
          goto fetch_cont;
       }
+
+   assert(0 && !"can't fall through");
 
  ev_no_args:
    // Evaluate an application of a procedure with no arguments.
@@ -918,6 +921,8 @@ NODE *evaluator(NODE *list, enum labels where)
          goto tail_eval_dispatch;
          }
       }
+
+
    if (unev == NIL)
       {
       // falling off tail of sequence
@@ -932,6 +937,9 @@ NODE *evaluator(NODE *list, enum labels where)
          goto tail_eval_dispatch;
          }
       }
+      
+      
+      
    if (car(unev) != NIL &&
        is_list(car(unev)) && 
        is_tailform(procnode__caseobj(car(car(unev)))) &&
@@ -949,6 +957,7 @@ NODE *evaluator(NODE *list, enum labels where)
          }
       }
  non_tail_eval:
+   // REVISIT: copy after_constant optimization from UCBLogo?
    save2(unev, fun);
    num2save(ift_iff_flag, val_status);
    save2(ufun, last_ufun);
@@ -1018,8 +1027,10 @@ NODE *evaluator(NODE *list, enum labels where)
          goto fetch_cont;
          }
       }
-   if (val != Unbound)
+
+   if (NOT_THROWING && val != Unbound)
       {
+      // we have a return value with no function to consume it
       err_logo((unev == NIL ? DK_WHAT_UP : DK_WHAT), val);
       assign(val, Unbound);
       }
@@ -1059,6 +1070,8 @@ NODE *evaluator(NODE *list, enum labels where)
       }
    goto fetch_cont;
 
+   assert(0 && !"doesn't fall through");
+
    /* --------------------- MACROS ---------------------------- */
 
  macro_return:
@@ -1071,12 +1084,12 @@ NODE *evaluator(NODE *list, enum labels where)
       {
       if (is_cont(val))
          {
+         // continue to the continuation within val
          newcont(cont__cont(val));
-         val->nunion.ncons.ncar = NIL;
          assign(val, val__cont(val));
          goto fetch_cont;
          }
-      if (tailcall == 0)
+      else if (tailcall == 0)
          {
          make_tree(val);
          stopping_flag = MACRO_RETURN;
@@ -1090,11 +1103,19 @@ NODE *evaluator(NODE *list, enum labels where)
             }
          goto fetch_cont;
          }
-      assign(list, val);
-      goto begin_seq;
+      else
+         {
+         assign(list, val);
+         goto begin_seq;
+         }
       }
-   assign(val, Unbound);
-   goto fetch_cont;
+   else
+      {
+      assign(val, Unbound);
+      goto fetch_cont;
+      }
+
+   assert(0 && !"doesn't fall through");
 
    /* --------------------- RUNRESULT ---------------------------- */
 
@@ -1126,22 +1147,24 @@ NODE *evaluator(NODE *list, enum labels where)
    num2save(repcount,repcountup);
    repcount = getint(car(val));
    repcountup = 0;
+
  repeat_again:
    assign(val, Unbound);
-   if (repcount == 0)
+   if (repcount != 0)
       {
- repeat_done:
-      num2restore(repcount,repcountup);
-      goto fetch_cont;
+      repcountup++;
+      save2(list,var);
+      var = reref(var, var_stack);
+      num2save(repcount,repcountup);
+      num2save(val_status,tailcall);
+      val_status = 4;
+      newcont(repeat_followup);
+      goto begin_seq;
       }
-   repcountup++;
-   save2(list,var);
-   var = reref(var, var_stack);
-   num2save(repcount,repcountup);
-   num2save(val_status,tailcall);
-   val_status = 4;
-   newcont(repeat_followup);
-   goto begin_seq;
+
+ repeat_done:
+   num2restore(repcount,repcountup);
+   goto fetch_cont;
 
  repeat_followup:
    if (val != Unbound && NOT_THROWING)
@@ -1172,9 +1195,18 @@ NODE *evaluator(NODE *list, enum labels where)
       }
    check_stop(true);
 
-   if (RUNNING) goto repeat_again;
-   assign(val, Unbound);
-   goto repeat_done;
+   if (RUNNING)
+      {
+      goto repeat_again;
+      }
+   else
+      {
+      assign(val, Unbound);
+      goto repeat_done;
+      }
+
+   assert(0 && !"can't fall through");
+
 
    /* --------------------- CATCH/THROW ---------------------------- */
  catch_continuation:
