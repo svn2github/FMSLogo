@@ -399,10 +399,9 @@ void runstartup(NODE *oldst)
    NODE* st = valnode__caseobj(Startup);
    if (st != oldst && st != NIL && is_list(st))
       {
-      val_status = 0;
-
       start_execution();
 
+      g_ValueStatus = VALUE_STATUS_NotOk;
       eval_driver(st);
 
       // process special conditions
@@ -511,7 +510,7 @@ void silent_load(NODE *arg, const char *prefix)
 NODE *lload(NODE *arg)
    {
    NODE *st = valnode__caseobj(Startup);
-   int sv_val_status = val_status;
+   FIXNUM saved_value_status = g_ValueStatus;
 
    bool isDirtySave = IsDirty;
    FILE * tmp = loadstream;
@@ -527,7 +526,7 @@ NODE *lload(NODE *arg)
          {
          current_line = reref(current_line, reader(loadstream, ""));
          NODE * exec_list = parser(current_line, true);
-         val_status = 0;
+         g_ValueStatus = VALUE_STATUS_NotOk;
          eval_driver(exec_list);
          }
       fclose(loadstream);
@@ -536,7 +535,7 @@ NODE *lload(NODE *arg)
       yield_flag = save_yield_flag;
 
       runstartup(st);
-      val_status = sv_val_status;
+      g_ValueStatus = saved_value_status;
       }
    else
       {

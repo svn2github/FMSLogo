@@ -791,8 +791,8 @@ void checkqueue()
    {
    while (callthing * thing = calllists.get())
       {
-      bool save_yield_flag = yield_flag;
-      int  sv_val_status = val_status;;
+      bool    save_yield_flag   = yield_flag;
+      FIXNUM  save_value_status = g_ValueStatus;
 
       calllists.zap();
       switch (thing->kind)
@@ -841,8 +841,8 @@ void checkqueue()
 
       delete thing;
 
-      yield_flag = save_yield_flag;
-      val_status = sv_val_status;
+      yield_flag    = save_yield_flag;
+      g_ValueStatus = save_value_status;
       }
    }
 

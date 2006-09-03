@@ -68,7 +68,7 @@ bool fileload(const char *Filename)
       // save all global state that may be modified
       NODE *previous_startup = valnode__caseobj(Startup);
 
-      int    savedValStatus   = val_status;
+      FIXNUM savedValueStatus = g_ValueStatus;
       bool   savedIsDirty     = IsDirty;
       bool   savedYieldFlag   = yield_flag;
       FILE * savedLoadStream  = loadstream;
@@ -83,7 +83,7 @@ bool fileload(const char *Filename)
          {
          current_line = reref(current_line, reader(loadstream, ""));
          NODE * exec_list = parser(current_line, true);
-         val_status = 0;
+         g_ValueStatus = VALUE_STATUS_NotOk;
          eval_driver(exec_list);
          }
       fclose(loadstream);
@@ -99,8 +99,8 @@ bool fileload(const char *Filename)
       runstartup(previous_startup);
 
       // restore the global state
-      val_status = savedValStatus;
-      IsDirty    = savedIsDirty;
+      g_ValueStatus = savedValueStatus;
+      IsDirty       = savedIsDirty;
       deref(current_line);
       current_line = savedCurrentLine;
 

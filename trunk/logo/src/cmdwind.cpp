@@ -431,7 +431,7 @@ void do_execution(char * logocommand)
       // This is important because do_execution() can be called to process
       // event handlers while evaluator() is running.
       // See bug #1479111 for details.
-      int      saved_val_status    = val_status;
+      FIXNUM   saved_value_status  = g_ValueStatus;
       CTRLTYPE saved_stopping_flag = stopping_flag;
       NODE *   saved_output_node   = vref(output_node);
       NODE *   saved_current_line  = current_line;
@@ -448,14 +448,14 @@ void do_execution(char * logocommand)
       NODE * exec_list = vref(parser(current_line, true));
 
       // now process it
-      val_status = 0;
+      g_ValueStatus = VALUE_STATUS_NotOk;
       eval_driver(exec_list);
 
       process_special_conditions();
 
       // restore the stopping flag
       stopping_flag = saved_stopping_flag;
-      val_status    = saved_val_status;
+      g_ValueStatus = saved_value_status;
 
       deref(output_node);
       output_node = saved_output_node;

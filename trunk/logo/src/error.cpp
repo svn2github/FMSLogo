@@ -359,11 +359,11 @@ NODE *err_logo(ERR_TYPES error_type, NODE *error_desc)
       set_is_running_erract_flag();
 
       // run the erract instruction list
-      int sv_val_status = val_status;
+      FIXNUM saved_value_status = g_ValueStatus;
 
       NODE * val = err_eval_driver(err_act_value);
 
-      val_status = sv_val_status;
+      g_ValueStatus = saved_value_status;
 
       // reset the erract-is-running flag so that it can be called again
       clear_is_running_erract_flag();
@@ -434,9 +434,9 @@ NODE *lpause(NODE*)
    jmp_buf sav_iblk;
    memcpy(sav_iblk, iblk_buf, sizeof(sav_iblk));
 
-   bool sav_input_blocking = input_blocking;
+   bool saved_input_blocking = input_blocking;
    input_blocking = false;
-   int sv_val_status = val_status;
+   FIXNUM saved_value_status = g_ValueStatus;
    while (RUNNING)
       {
       if (uname != NIL) 
@@ -467,7 +467,7 @@ NODE *lpause(NODE*)
          lbye(NIL);
          }
 
-      val_status = 5;
+      g_ValueStatus = VALUE_STATUS_ValueMaybeOkInMacro;
       eval_driver(elist);
 
       if (stopping_flag == THROWING)
@@ -480,8 +480,8 @@ NODE *lpause(NODE*)
 
             memcpy(iblk_buf, sav_iblk, sizeof(sav_iblk));
 
-            input_blocking = sav_input_blocking;
-            val_status = sv_val_status;
+            input_blocking = saved_input_blocking;
+            g_ValueStatus  = saved_value_status;
             if (uname != NIL)
                {
                ufun = reref(ufun, uname);
@@ -505,9 +505,9 @@ NODE *lpause(NODE*)
 
    memcpy(iblk_buf, sav_iblk, sizeof(sav_iblk));
 
-   input_blocking = sav_input_blocking;
+   input_blocking = saved_input_blocking;
    unblock_input();
-   val_status = sv_val_status;
+   g_ValueStatus = saved_value_status;
    if (uname != NIL)
       {
       ufun = reref(ufun, uname);

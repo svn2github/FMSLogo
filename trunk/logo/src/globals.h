@@ -146,8 +146,15 @@ extern NODE *didnt_output_name;
 extern CTRLTYPE stopping_flag;
 extern char *logolib;
 extern FIXNUM tailcall;
-extern FIXNUM val_status;
 extern FIXNUM dont_fix_ift;
+
+extern FIXNUM g_ValueStatus;
+const FIXNUM VALUE_STATUS_NotOk               = 0; // no value allowed (body of cmd)
+const FIXNUM VALUE_STATUS_Required            = 1; // value required (arg)
+const FIXNUM VALUE_STATUS_OutputOk            = 2; // OUTPUT ok (body of oper)
+const FIXNUM VALUE_STATUS_MaybeOk             = 3; // val or no val ok (fn inside catch)
+const FIXNUM VALUE_STATUS_NoValueInMacro      = 4; // no value in macro (repeat)
+const FIXNUM VALUE_STATUS_ValueMaybeOkInMacro = 5; // value maybe ok in macro (catch)
 
 extern int g_CatchErrorCount;
 

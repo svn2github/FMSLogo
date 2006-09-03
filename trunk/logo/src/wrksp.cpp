@@ -1396,7 +1396,7 @@ bool endedit(void)
    loadstream = fopen(TempPathName, "r");
    if (loadstream != NULL)
       {
-      int sv_val_status = val_status;
+      FIXNUM saved_value_status = g_ValueStatus;
 
       realsave = true;
       while (!feof(loadstream) && NOT_THROWING)
@@ -1404,12 +1404,13 @@ bool endedit(void)
          fgetpos(loadstream, &LinesLoadedOnEdit);
          current_line = reref(current_line, reader(loadstream, ""));
          
-         val_status = 0;
          NODE * exec_list = parser(current_line, true);
+
+         g_ValueStatus = VALUE_STATUS_NotOk;
          eval_driver(exec_list);
          }
       fclose(loadstream);
-      val_status = sv_val_status;
+      g_ValueStatus = saved_value_status;
       }
    else
       {

@@ -51,6 +51,17 @@
 
 #define nameis(x,y)         ((object__caseobj(x)) == (object__caseobj(y)))
 
+inline
+bool
+IsInMacro(
+   FIXNUM ValueStatus
+   )
+   {
+   return 
+      ValueStatus == VALUE_STATUS_NoValueInMacro ||
+      ValueStatus == VALUE_STATUS_ValueMaybeOkInMacro;
+   }
+
 NODE *fun = NIL;                 // current function name
 NODE *ufun = NIL;                // current user-defined function name
 NODE *last_ufun = NIL;           // the function that called this one
@@ -66,12 +77,7 @@ CTRLTYPE stopping_flag = RUN;
 char *logolib;
 FIXNUM tailcall;    // 0 in sequence, 1 for tail, -1 for arg
 
-FIXNUM val_status;  // 0 means no value allowed (body of cmd),
-                    // 1 means value required (arg),
-                    // 2 means OUTPUT ok (body of oper),
-                    // 3 means val or no val ok (fn inside catch),
-                    // 4 means no value in macro (repeat),
-                    // 5 means value maybe ok in macro (catch)
+FIXNUM g_ValueStatus;
 
 FIXNUM dont_fix_ift = 0;
 
@@ -489,7 +495,7 @@ NODE *evaluator(NODE *list, enum labels where)
    assign(unev, cdr(exp));
    assign(argl, NIL);
    mixsave(tailcall, var);
-   num2save(val_status, ift_iff_flag);
+   num2save(g_ValueStatus, ift_iff_flag);
    save2(didnt_get_output, didnt_output_name);
  eval_arg_loop:
    if (unev == NIL) 
@@ -511,7 +517,7 @@ NODE *evaluator(NODE *list, enum labels where)
    save2(this_line, last_line);
    assign(var, var_stack);
    tailcall = -1;
-   val_status = 1;
+   g_ValueStatus = VALUE_STATUS_Required;
    assign(didnt_get_output, cons_list(fun, ufun, this_line));
    assign(didnt_output_name, NIL);
    newcont(accumulate_arg);
@@ -535,7 +541,7 @@ NODE *evaluator(NODE *list, enum labels where)
 
  eval_args_done:
    restore2(didnt_get_output, didnt_output_name);
-   num2restore(val_status, ift_iff_flag);
+   num2restore(g_ValueStatus, ift_iff_flag);
    mixrestore(tailcall, var);
    if (stopping_flag == THROWING)
       {
@@ -560,8 +566,8 @@ NODE *evaluator(NODE *list, enum labels where)
       assign(proc, procnode__caseobj(fun));
       if (is_macro(fun))
          {
-         num2save(val_status, tailcall);
-         val_status = 1;
+         num2save(g_ValueStatus, tailcall);
+         g_ValueStatus = VALUE_STATUS_Required;
          newcont(macro_return);
          }
       }
@@ -703,10 +709,10 @@ NODE *evaluator(NODE *list, enum labels where)
             save2(ufun, last_ufun);
             save2(this_line, last_line);
             save2(didnt_output_name, didnt_get_output);
-            num2save(ift_iff_flag, val_status);
+            num2save(ift_iff_flag, g_ValueStatus);
             assign(var, var_stack);
             tailcall = -1;
-            val_status = 1;
+            g_ValueStatus = VALUE_STATUS_Required;
             save2(formals, argl);
             save(var_stack_position);
             assign(list, cdr(parm));
@@ -736,7 +742,7 @@ NODE *evaluator(NODE *list, enum labels where)
             restore2(formals, argl);
             parm = car(formals);
             reset_args(var);
-            num2restore(ift_iff_flag, val_status);
+            num2restore(ift_iff_flag, g_ValueStatus);
             restore2(didnt_output_name, didnt_get_output);
             restore2(this_line, last_line);
             restore2(ufun, last_ufun);
@@ -805,17 +811,17 @@ NODE *evaluator(NODE *list, enum labels where)
       }
    assign(output_node, Unbound);
 
-   if (val_status == 1) 
+   if (g_ValueStatus == VALUE_STATUS_Required) 
       {
-      val_status = 2;
+      g_ValueStatus = VALUE_STATUS_OutputOk;
       }
-   else if (val_status == 5) 
+   else if (g_ValueStatus == VALUE_STATUS_ValueMaybeOkInMacro) 
       {
-      val_status = 3;
+      g_ValueStatus = VALUE_STATUS_MaybeOk;
       }
    else 
       {
-      val_status = 0;
+      g_ValueStatus = VALUE_STATUS_NotOk;
       }
 
  eval_sequence:
@@ -867,9 +873,10 @@ NODE *evaluator(NODE *list, enum labels where)
          {
          assign(didnt_get_output, cons_list(car(exp), ufun, this_line));
          assign(didnt_output_name, NIL);
-         if (val_status == 2 || val_status == 3)
+         if (g_ValueStatus == VALUE_STATUS_OutputOk || 
+             g_ValueStatus == VALUE_STATUS_MaybeOk)
             {
-            val_status = 1;
+            g_ValueStatus = VALUE_STATUS_Required;
             assign(exp, cadr(exp));
             goto tail_eval_dispatch;
             }
@@ -879,12 +886,14 @@ NODE *evaluator(NODE *list, enum labels where)
             assign(val, Unbound);
             goto fetch_cont;
             }
-         else if (val_status < 4)
+         else if (!IsInMacro(g_ValueStatus))
             {
-            val_status = 1;
+            g_ValueStatus = VALUE_STATUS_Required;
             assign(exp, cadr(exp));
             assign(unev, NIL);
-            goto non_tail_eval;        /* compute value then give error       */
+
+            // compute value then give error
+            goto non_tail_eval;
             }
          }
       else if (expression_priority == STOP_PRIORITY)
@@ -895,18 +904,19 @@ NODE *evaluator(NODE *list, enum labels where)
             assign(val, Unbound);
             goto fetch_cont;
             }
-         else if (val_status == 0 || val_status == 3)
+         else if (g_ValueStatus == VALUE_STATUS_NotOk || 
+                  g_ValueStatus == VALUE_STATUS_MaybeOk)
             {
             assign(val, Unbound);
             goto fetch_cont;
             }
-         else if (val_status < 4)
+         else if (!IsInMacro(g_ValueStatus))
             {
             assign(didnt_output_name, fun);
             assign(val, Unbound);
             goto fetch_cont;
             }
-         else if (val_status == 5)
+         else if (g_ValueStatus == VALUE_STATUS_ValueMaybeOkInMacro)
             {
             // pr apply [output ?] [3]
             assign(didnt_output_name, fun);
@@ -915,9 +925,9 @@ NODE *evaluator(NODE *list, enum labels where)
          }
       else
          {
-         /* maybeoutput */
+         // maybeoutput
          assign(exp, cadr(exp));
-         val_status = 5;
+         g_ValueStatus = VALUE_STATUS_ValueMaybeOkInMacro;
          goto tail_eval_dispatch;
          }
       }
@@ -926,7 +936,8 @@ NODE *evaluator(NODE *list, enum labels where)
    if (unev == NIL)
       {
       // falling off tail of sequence
-      if (val_status == 2 || val_status == 4)
+      if (g_ValueStatus == VALUE_STATUS_OutputOk || 
+          g_ValueStatus == VALUE_STATUS_NoValueInMacro)
          {
          assign(didnt_output_name, fun);
          assign(unev, Unbound);
@@ -946,11 +957,12 @@ NODE *evaluator(NODE *list, enum labels where)
        getprimpri(procnode__caseobj(car(car(unev)))) == STOP_PRIORITY)
       {
       // next is STOP
-      if ((val_status == 0 || val_status == 3) && ufun != NIL)
+      if ((g_ValueStatus == VALUE_STATUS_NotOk || g_ValueStatus == VALUE_STATUS_MaybeOk) && 
+          ufun != NIL)
          {
          goto tail_eval_dispatch;
          }
-      else if (val_status < 4)
+      else if (!IsInMacro(g_ValueStatus))
          {
          assign(didnt_output_name, fun);
          goto tail_eval_dispatch;
@@ -959,7 +971,7 @@ NODE *evaluator(NODE *list, enum labels where)
  non_tail_eval:
    // REVISIT: copy after_constant optimization from UCBLogo?
    save2(unev, fun);
-   num2save(ift_iff_flag, val_status);
+   num2save(ift_iff_flag, g_ValueStatus);
    save2(ufun, last_ufun);
    save2(this_line, last_line);
    save(var);
@@ -975,12 +987,12 @@ NODE *evaluator(NODE *list, enum labels where)
    restore2(ufun, last_ufun);
    if (dont_fix_ift)
       {
-      num2restore(dont_fix_ift, val_status);
+      num2restore(dont_fix_ift, g_ValueStatus);
       dont_fix_ift = 0;
       }
    else
       {
-      num2restore(ift_iff_flag, val_status);
+      num2restore(ift_iff_flag, g_ValueStatus);
       }
    restore2(unev, fun);
    if (stopping_flag == MACRO_RETURN)
@@ -1004,25 +1016,42 @@ NODE *evaluator(NODE *list, enum labels where)
          goto fetch_cont;
          }
       }
-   else if (val_status < 4)
+   else if (!IsInMacro(g_ValueStatus))
       {
       if (STOPPING || RUNNING)
          {
          assign(output_node, Unbound);
          }
+
       if (stopping_flag == OUTPUT || STOPPING)
          {
          stopping_flag = RUN;
          assign(val, output_node);
-         if (val != Unbound && val_status < 2 && NOT_THROWING)
+
+         // set errors, if appropriate
+         if (NOT_THROWING)
             {
-            assign(didnt_output_name, Output);
-            err_logo(DIDNT_OUTPUT, Output);
-            }
-         if (val == Unbound && val_status == 1 && NOT_THROWING)
-            {
-            assign(didnt_output_name, Stop);
-            err_logo(DIDNT_OUTPUT, Output);
+            if (val != Unbound)
+               {
+               // value is bound
+               if (g_ValueStatus == VALUE_STATUS_NotOk || 
+                   g_ValueStatus == VALUE_STATUS_Required) // BUG???
+                  {
+                  // value is bound, but no value was expected
+                  assign(didnt_output_name, Output);
+                  err_logo(DIDNT_OUTPUT, Output);
+                  }
+               }
+            else 
+               {
+               // value is not bound
+               if (g_ValueStatus == VALUE_STATUS_Required)
+                  {
+                  // a value is required, but was not given
+                  assign(didnt_output_name, Stop);
+                  err_logo(DIDNT_OUTPUT, Output);
+                  }
+               }
             }
          goto fetch_cont;
          }
@@ -1036,7 +1065,7 @@ NODE *evaluator(NODE *list, enum labels where)
       }
    if (NOT_THROWING && (unev == NIL || unev == Unbound))
       {
-      if (val_status != 4) 
+      if (g_ValueStatus != VALUE_STATUS_NoValueInMacro) 
          {
          err_logo(DIDNT_OUTPUT, NIL);
          }
@@ -1075,7 +1104,7 @@ NODE *evaluator(NODE *list, enum labels where)
    /* --------------------- MACROS ---------------------------- */
 
  macro_return:
-   num2restore(val_status, tailcall);
+   num2restore(g_ValueStatus, tailcall);
    while (!is_list(val) && NOT_THROWING)
       {
       assign(val, err_logo(ERR_MACRO, val));
@@ -1122,7 +1151,7 @@ NODE *evaluator(NODE *list, enum labels where)
  runresult_continuation:
    assign(list, val);
    newcont(runresult_followup);
-   val_status = 5;
+   g_ValueStatus = VALUE_STATUS_ValueMaybeOkInMacro;
    goto begin_seq;
 
  runresult_followup:
@@ -1156,8 +1185,8 @@ NODE *evaluator(NODE *list, enum labels where)
       save2(list,var);
       var = reref(var, var_stack);
       num2save(repcount,repcountup);
-      num2save(val_status,tailcall);
-      val_status = 4;
+      num2save(g_ValueStatus,tailcall);
+      g_ValueStatus = VALUE_STATUS_NoValueInMacro;
       newcont(repeat_followup);
       goto begin_seq;
       }
@@ -1173,10 +1202,10 @@ NODE *evaluator(NODE *list, enum labels where)
       err_logo(DK_WHAT, val);
       unref(val);
       }
-   num2restore(val_status, tailcall);
+   num2restore(g_ValueStatus, tailcall);
    num2restore(repcount, repcountup);
    restore2(list,var);
-   if (val_status < 4 && tailcall != 0)
+   if (!IsInMacro(g_ValueStatus) && tailcall != 0)
       {
       if (STOPPING || RUNNING) 
          {
@@ -1221,16 +1250,16 @@ NODE *evaluator(NODE *list, enum labels where)
       }
    save(catch_tag);
    save2(didnt_output_name, didnt_get_output);
-   num2save(val_status, tailcall);
+   num2save(g_ValueStatus, tailcall);
    newcont(catch_followup);
-   val_status = 5;
+   g_ValueStatus = VALUE_STATUS_ValueMaybeOkInMacro;
    goto begin_seq;
 
  catch_followup:
-   num2restore(val_status, tailcall);
+   num2restore(g_ValueStatus, tailcall);
    restore2(didnt_output_name, didnt_get_output);
    restore(catch_tag);
-   if (val_status < 4 && tailcall != 0)
+   if (!IsInMacro(g_ValueStatus) && tailcall != 0)
       {
       if (STOPPING || RUNNING) 
          {
@@ -1240,9 +1269,13 @@ NODE *evaluator(NODE *list, enum labels where)
          {
          stopping_flag = RUN;
          assign(val, output_node);
-         if (val != Unbound && val_status < 2)
+         if (val != Unbound)
             {
-            err_logo(DK_WHAT_UP, val);
+            if (g_ValueStatus == VALUE_STATUS_NotOk ||
+                g_ValueStatus == VALUE_STATUS_Required) // BUG???
+               {
+               err_logo(DK_WHAT_UP, val);
+               }
             }
          }
       }
@@ -1394,7 +1427,7 @@ NODE *evaluator(NODE *list, enum labels where)
 
             if (tailcall <= 0) 
                {
-               val_status = 5;
+               g_ValueStatus = VALUE_STATUS_ValueMaybeOkInMacro;
 
                // Create a new local variable scope for 
                // the lambda function call.
@@ -1496,7 +1529,7 @@ void eval_driver(NODE *line)
 // (Called from erract.)
 NODE *err_eval_driver(NODE *seq)
    {
-   val_status = 5;
+   g_ValueStatus = VALUE_STATUS_ValueMaybeOkInMacro;
    return evaluator(seq, begin_seq);
    }
 
