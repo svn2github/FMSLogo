@@ -777,6 +777,12 @@ foreach my $filename (<*.xml>) {
       }
     }
 
+    # Find places where <programlisting> includes undesired leading whitespace.
+    # This extra space is unneccesary, since padding is automatically added by the CSS.
+    if ($line =~ m!<programlisting>\s+\S!) {
+      LogWarning($filename, $linenumber, "<programlisting> section includes leading whitespace");
+    }
+
     # Find places where <userinput> includes undesired leading/trailing whitespace.
     # This extra space looks bad when it is rendered within a grey box.
     if ($line =~ m!<userinput>\s+\S!) {
