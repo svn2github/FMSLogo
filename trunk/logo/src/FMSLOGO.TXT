@@ -22,6 +22,8 @@ Part II) New features/bugs fixed:
 
   * Added for 6.11.0,
     o Fix bug #1547408; 'RUNRESULT {1}' no longer crashes FMSLogo.
+    o Minor updates to the manual, including shading the examples and 
+      removing the root node from the table of contents.
 
   * Added for 6.10.1,
     o Fix bug #1545911: The questionmark inputs in template-based iteration
