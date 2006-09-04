@@ -32,6 +32,10 @@ logohelp.pdf : logohelp.fo
 logohelp.rtf : $(SOURCEFILES)
 	docbook2rtf $(ROOTFILE)
 
+website : index.html
+	-mkdir www
+	cp $(wildcard *.html) www
+	cp logohelp.css www
 
 # Generate an XML file that contains the version
 # We use the UNIX version of echo to make sure there is no newline
