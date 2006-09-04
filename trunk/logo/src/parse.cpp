@@ -353,6 +353,10 @@ NODE *list_to_array(NODE *list)
 #define infixs(ch)      (ch == '*' || ch == '/' || ch == '+' || ch == '-' || ch == '=' || ch == '<' || ch == '>')
 #define white_space(ch) (ch == ' ' || ch == '\t' || ch == '\n')
 
+// Parses the text from "*inln" to "inlimit", or until the first "endchar" is found.
+// The parsed text is returned as a NODE* list.
+// Nested arrays and lists are parsed into their structured form.
+// parser_iterate() sets stopping_flag to THROWING if it encounters a syntax error.
 static
 NODE *
 parser_iterate(
