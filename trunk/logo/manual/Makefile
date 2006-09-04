@@ -2,29 +2,35 @@ include ../version.mk
 
 HHP_STYLESHEET  = htmlhelp.xsl 
 HTML_STYLESHEET = html.xsl
+FO_STYLESHEET   = fo.xsl
 ROOTFILE        = logohelp.xml
 SOURCEFILES     = $(wildcard *.xml) logoversion.xml
 
+XSLTPROC = xsltproc
 HHC      = "C:\Program Files\Help Workshop\hhc.exe"
+FOP      = "C:\Program Files\fop-0.20.5\fop.bat"
 UNIXECHO = "c:\cygwin\bin\echo.exe"
 
-XSLTOPTIONS=--nonet --stringparam html.stylesheet logohelp.css --stringparam html.stylesheet.type text/css
+CSSOPTIONS=--stringparam html.stylesheet logohelp.css --stringparam html.stylesheet.type text/css
 
 
-htmlhelp.hhp : $(SOURCEFILES)  $(HHP_STYLESHEET)
-	xsltproc $(XSLTOPTIONS) $(HHP_STYLESHEET) $(ROOTFILE)
+htmlhelp.hhp : $(SOURCEFILES) $(HHP_STYLESHEET)
+	$(XSLTPROC) --nonet $(CSSOPTIONS) $(HHP_STYLESHEET) $(ROOTFILE)
 
 index.html : $(SOURCEFILES) $(HTML_STYLESHEET)
-	xsltproc $(XSLTOPTIONS) $(HTML_STYLESHEET) $(ROOTFILE)
+	$(XSLTPROC) --nonet $(CSSOPTIONS) $(HTML_STYLESHEET) $(ROOTFILE)
 
-logohelp.chm : htmlhelp.hhp
+logohelp.fo : $(SOURCEFILES) $(FO_STYLESHEET)
+	$(XSLTPROC) --nonet --output $@ $(FO_STYLESHEET) $(ROOTFILE)
+
+logohelp.chm : htmlhelp.hhp logohelp.css
 	-$(HHC) htmlhelp.hhp
 
 logohelp.ps : $(SOURCEFILES)
 	docbook2ps $(ROOTFILE)
 
-logohelp.pdf : $(SOURCEFILES)
-	docbook2pdf $(ROOTFILE)
+logohelp.pdf : logohelp.fo
+	$(FOP) -q -fo $< -pdf $@
 
 logohelp.rtf : $(SOURCEFILES)
 	docbook2rtf $(ROOTFILE)
@@ -39,13 +45,15 @@ clean :
 	$(RM) logohelp.rtf 
 	$(RM) logohelp.pdf 
 	$(RM) logohelp.dvi
+	$(RM) logohelp.ps
+	$(RM) logohelp.fo
 	$(RM) $(wildcard *.html)
 	$(RM) $(wildcard *.hhp) 
 	$(RM) $(wildcard *.hhc)
 	$(RM) $(wildcard *.chm) 
 	$(RM) $(wildcard *~)
 
-all : htmlhelp.hhp logohelp.ps logohelp.pdf logohelp.rtf
+all : htmlhelp.hhp logohelp.ps logohelp.pdf logohelp.rtf logohelp.fo
 
 
 test :
