@@ -1,5 +1,5 @@
 <section id="command-setread">
-    <title>SETREAD</title>
+<title>SETREAD</title>
 <indexterm><primary>SETREAD</primary></indexterm>
 
 <variablelist>
@@ -25,7 +25,8 @@ Changing the read stream does not close the file that was previously the read st
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>OPENWRITE "dummy.fil
+
+<programlisting><userinput>OPENWRITE "dummy.fil
 SETWRITE "dummy.fil
 PRINT "Hello
 PRINT [Good Bye]
@@ -38,9 +39,9 @@ REPEAT 2 [SHOW READLIST]</userinput>
 [Hello]
 [Good Bye]
 <userinput>SETREAD []
-CLOSE "dummy.fil
-</userinput>
+CLOSE "dummy.fil</userinput>
 </programlisting>
+
 </listitem>
 </varlistentry>
 

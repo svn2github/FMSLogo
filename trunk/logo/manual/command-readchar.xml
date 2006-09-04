@@ -1,5 +1,5 @@
 <section id="command-readchar">
-    <title>READCHAR</title>
+<title>READCHAR</title>
 <indexterm><primary>READCHAR</primary></indexterm>
 
 <variablelist>
@@ -24,9 +24,11 @@ Backslash, vertical bar, and tilde characters have no special meaning in this co
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>SHOW READCHAR
-Hello how are you?
-</userinput>H</programlisting>
+
+<programlisting><userinput>SHOW READCHAR
+Hello how are you?</userinput>
+H</programlisting>
+
 </listitem>
 </varlistentry>
 

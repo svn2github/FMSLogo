@@ -74,13 +74,17 @@ You can write your own DLL with a compatible call interface to call more complex
 <varlistentry><term>Example</term>
 <listitem>
 <para>
+
 <programlisting><userinput>DLLLOAD "user32.dll
-DLLCALL [w MessageBoxA w 0 s MyMessage s [Hello How are you] w 0]
-</userinput></programlisting>
+DLLCALL [w MessageBoxA w 0 s MyMessage s [Hello How are you] w 0]</userinput>
+</programlisting>
+
 See a message box pop up.
-<programlisting><userinput>DLLFREE
-</userinput></programlisting>
+
+<programlisting><userinput>DLLFREE</userinput>
+</programlisting>
 </para>
+
 </listitem>
 </varlistentry>
 

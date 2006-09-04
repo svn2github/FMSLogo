@@ -1,5 +1,5 @@
 <section id="command-setwrite">
-    <title>SETWRITE</title>
+<title>SETWRITE</title>
 <indexterm><primary>SETWRITE</primary></indexterm>
 
 <variablelist>
@@ -24,7 +24,8 @@ Changing the write stream does not close the file that was previously the write 
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>OPENWRITE "dummy.fil
+
+<programlisting><userinput>OPENWRITE "dummy.fil
 SETWRITE "dummy.fil
 PRINT "Hello
 PRINT [Good Bye]
@@ -37,8 +38,7 @@ REPEAT 2 [SHOW READLIST]</userinput>
 [Hello]
 [Good Bye]
 <userinput>SETREAD []
-CLOSE "dummy.fil
-</userinput>
+CLOSE "dummy.fil</userinput>
 </programlisting>
 </listitem>
 </varlistentry>

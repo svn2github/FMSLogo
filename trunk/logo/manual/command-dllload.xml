@@ -28,9 +28,8 @@ Only one DLL can be loaded at any given time.
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>DLLLOAD "user32.dll
-DLLFREE
-</userinput>
+<programlisting><userinput>DLLLOAD "user32.dll
+DLLFREE</userinput>
 </programlisting>
 </listitem>
 </varlistentry>

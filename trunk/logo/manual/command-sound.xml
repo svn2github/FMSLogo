@@ -32,12 +32,13 @@ The sound will only come out the PC speaker.
 
 <varlistentry><term>Example</term>
 <listitem>
-<programlisting><userinput>SOUND [1000 200]
 
-MAKE "zing []
+<programlisting><userinput>SOUND [1000 200]</userinput>
+</programlisting>
+
+<programlisting><userinput>MAKE "zing []
 REPEAT 50 [MAKE "zing LPUT REPCOUNT*10 :zing MAKE "zing LPUT 100 :zing]
-SOUND :zing
-</userinput>
+SOUND :zing</userinput>
 </programlisting>
 </listitem>
 </varlistentry>

@@ -1,5 +1,5 @@
 <section id="command-outportb">
-    <title>OUTPORTB</title>
+<title>OUTPORTB</title>
 <indexterm><primary>OUTPORTB</primary></indexterm>
 
 <variablelist>
@@ -24,8 +24,8 @@ See also <link linkend="command-outport">OUTPORT</link> and <link linkend="comma
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>OUTPORTB 198 0
-</userinput>
+
+<programlisting><userinput>OUTPORTB 198 0</userinput>
 </programlisting>
 </listitem>
 </varlistentry>

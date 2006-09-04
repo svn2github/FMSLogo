@@ -1,5 +1,5 @@
 <section id="command-help">
-    <title>HELP</title>
+<title>HELP</title>
 <indexterm><primary>HELP</primary></indexterm>
 
 <variablelist>
@@ -24,11 +24,15 @@ You may enter the full keyword or a partial keyword.
 
 <varlistentry><term>Example</term>
 <listitem>
-<programlisting><userinput>HELP "introduction ; open to the "introduction" section
-HELP "erase ; open the description of the ERASE command
-</userinput>
 
+<programlisting><userinput>; open to the "introduction" section
+HELP "introduction</userinput>
 </programlisting>
+
+<programlisting><userinput>; open the description of the ERASE command
+HELP "erase</userinput>
+</programlisting>
+
 </listitem>
 </varlistentry>
 

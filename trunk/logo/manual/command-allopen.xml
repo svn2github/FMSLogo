@@ -1,5 +1,5 @@
 <section id="command-allopen">
-    <title>ALLOPEN</title>
+<title>ALLOPEN</title>
 <indexterm><primary>ALLOPEN</primary></indexterm>
 
 <variablelist>
@@ -22,10 +22,10 @@ This list does not include the dribble file, if any.
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>OPENWRITE "dummy1.fil
+<programlisting><userinput>OPENWRITE "dummy1.fil
 OPENWRITE "dummy2.fil
-SHOW ALLOPEN
-</userinput>[dummy1.fil dummy2.fil]
+SHOW ALLOPEN</userinput>
+[dummy1.fil dummy2.fil]
 </programlisting>
 </listitem>
 </varlistentry>

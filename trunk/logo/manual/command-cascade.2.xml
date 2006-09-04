@@ -1,5 +1,5 @@
 <section id="command-cascade.2">
-    <title>CASCADE.2</title>
+<title>CASCADE.2</title>
 <indexterm><primary>CASCADE.2</primary></indexterm>
 
 <variablelist>
@@ -23,8 +23,7 @@ The only difference is that the default number of inputs is five instead of thre
 <listitem>
 <programlisting><userinput>TO FIBONACCI :n
   OUTPUT CASCADE.2 :n [?1 + ?2] 1 [?1] 0
-END
-</userinput>
+END</userinput>
 </programlisting>
 </listitem>
 </varlistentry>

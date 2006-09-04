@@ -12,23 +12,27 @@
 
 <varlistentry><term>Description</term>
 <listitem>
-<para>Outputs a randomly chosen item from <parameter>thing</parameter>.</para>
+<para>
+Outputs a randomly chosen item from <parameter>thing</parameter>.
+</para>
 </listitem>
 </varlistentry>
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>SHOW PICK [1 2 3]
-</userinput>2</programlisting>
 
-    <programlisting><userinput>SHOW PICK [1 2 3]
-</userinput>3</programlisting>
+<programlisting><userinput>SHOW PICK [1 2 3]</userinput>
+2</programlisting>
 
-    <programlisting><userinput>SHOW PICK [1 2 3]
-</userinput>2</programlisting>
+<programlisting><userinput>SHOW PICK [1 2 3]</userinput>
+3</programlisting>
 
-    <programlisting><userinput>SHOW PICK "Hello
-</userinput>l</programlisting>
+<programlisting><userinput>SHOW PICK [1 2 3]</userinput>
+2</programlisting>
+
+<programlisting><userinput>SHOW PICK "Hello</userinput>
+e</programlisting>
+
 </listitem>
 </varlistentry>
 

@@ -1,5 +1,5 @@
 <section id="command-checkboxcreate">
-    <title>CHECKBOXCREATE</title>
+<title>CHECKBOXCREATE</title>
 <indexterm><primary>CHECKBOXCREATE</primary></indexterm>
 
 <variablelist>
@@ -55,7 +55,8 @@ The <parameter>height</parameter> input is the height of the new checkbox, in pi
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>; create a checkbox in a new window:
+
+<programlisting><userinput>; create a checkbox in a new window:
 TO CHECKONTHINGS
   IFELSE CHECKBOXGET "myhideturtle [HIDETURTLE] [SHOWTURTLE]
 END
@@ -64,10 +65,10 @@ WINDOWCREATE "main "mywindow "mytitle 0 0 100 100 []
 GROUPBOXCREATE "mywindow "mygroupbox 10 10 80 40
 CHECKBOXCREATE "mywindow "mygroupbox "myhideturtle [Hide Turtle] 20 20 60 20
 BUTTONCREATE "mywindow "mybutton "Go 40 50 25 25 [CHECKONTHINGS]
-WINDOWDELETE "mywindow
+WINDOWDELETE "mywindow</userinput>
+</programlisting>
 
-
-; create a checkbox on graphics window:
+<programlisting><userinput>; create a checkbox on graphics window:
 TO CHECKONTHINGS
   IFELSE CHECKBOXGET "myhideturtle [HIDETURTLE] [SHOWTURTLE]
 END
@@ -75,8 +76,7 @@ END
 GROUPBOXCREATE "main "mygroupbox 110 90 140 60
 CHECKBOXCREATE "main "mygroupbox "myhideturtle [Hide Turtle] 120 80 120 40
 BUTTONCREATE "main "mybutton "Go 160 20 50 50 [CHECKONTHINGS]
-WINDOWDELETE "main
-</userinput>
+WINDOWDELETE "main</userinput>
 </programlisting>
 
 </listitem>

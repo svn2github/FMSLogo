@@ -23,13 +23,13 @@ The use of mutators can lead to circular data structures, infinite loops, or cra
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>MAKE "x 1
+<programlisting><userinput>MAKE "x 1
 MAKE "y 1
-SHOW .EQ :x :y
-</userinput>false</programlisting>
+SHOW .EQ :x :y</userinput>
+false</programlisting>
 
-    <programlisting><userinput>SHOW .EQ :x :x
-</userinput>true</programlisting>
+<programlisting><userinput>SHOW .EQ :x :x</userinput>
+true</programlisting>
 </listitem>
 </varlistentry>
 

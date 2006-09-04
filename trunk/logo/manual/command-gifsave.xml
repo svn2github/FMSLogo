@@ -1,5 +1,5 @@
 <section id="command-gifsave">
-    <title>GIFSAVE</title>
+<title>GIFSAVE</title>
 <indexterm><primary>GIFSAVE</primary></indexterm>
 
 <variablelist>
@@ -73,8 +73,9 @@ REPEAT 72 [REPEAT 4 [FORWARD 100 RIGHT 90] RIGHT 5]
 GIFSAVE "myfile.gif
 CLEARSCREEN
 GIFLOAD "myfile.gif</userinput>
+</programlisting>
 
-<userinput>; GIF animation
+<programlisting><userinput>; GIF animation
 CLEARSCREEN
 SETACTIVEAREA [-150 -150 150 150]
 
@@ -86,8 +87,8 @@ REPEAT 36 [
   ; Save a frame (no delay and loop forever)
   (GIFSAVE "myfile.gif 0 :append 0)
   MAKE "append "TRUE
-]
-</userinput>
+]</userinput>
+
 <replaceable>Open the file myfile.gif with your Web browser (for example, Firfox or Internet Explorer).</replaceable>
 </programlisting>
 </listitem>

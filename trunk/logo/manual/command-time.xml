@@ -1,5 +1,5 @@
 <section id="command-time">
-    <title>TIME</title>
+<title>TIME</title>
 <indexterm><primary>TIME</primary></indexterm>
 
 <variablelist>
@@ -20,8 +20,10 @@ Outputs the current time on the system as a list of words.
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>SHOW TIME
-</userinput>[Wed Jul 14 23:34:08 1993]</programlisting>
+
+<programlisting><userinput>SHOW TIME</userinput>
+[Wed Jul 14 23:34:08 1993]</programlisting>
+
 </listitem>
 </varlistentry>
 

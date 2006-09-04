@@ -1,5 +1,5 @@
 <section id="command-parse">
-    <title>PARSE</title>
+<title>PARSE</title>
 <indexterm><primary>PARSE</primary></indexterm>
 
 <variablelist>
@@ -21,8 +21,10 @@ That is, PARSE <link linkend="command-readword">READWORD</link> has the same val
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>SHOW PARSE "Hello
-</userinput>[Hello]</programlisting>
+
+<programlisting><userinput>SHOW PARSE "Hello</userinput>
+[Hello]</programlisting>
+
 </listitem>
 </varlistentry>
 

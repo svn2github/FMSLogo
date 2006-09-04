@@ -22,10 +22,10 @@ The use of .SETBF can lead to circular list structures, which will get some prim
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>MAKE "mylist [1 2 3]
+<programlisting><userinput>MAKE "mylist [1 2 3]
 .SETBF :mylist [a b]
-SHOW :mylist
-</userinput>[1 a b]</programlisting>
+SHOW :mylist</userinput>
+[1 a b]</programlisting>
 </listitem>
 </varlistentry>
 

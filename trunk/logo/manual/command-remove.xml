@@ -1,5 +1,5 @@
 <section id="command-remove">
-    <title>REMOVE</title>
+<title>REMOVE</title>
 <indexterm><primary>REMOVE</primary></indexterm>
 
 <variablelist>
@@ -12,17 +12,21 @@
 
 <varlistentry><term>Description</term>
 <listitem>
-    <para>Outputs a new thing that is equal to the input thing with all elements equal to <parameter>thingtoremove</parameter> removed.</para>
+<para>
+Outputs a new thing that is equal to the input thing with all elements equal to <parameter>thingtoremove</parameter> removed.
+</para>
 </listitem>
 </varlistentry>
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>SHOW REMOVE "b [a b c b]
-</userinput>[a c]</programlisting>
 
-    <programlisting><userinput>SHOW REMOVE "e "Hello
-</userinput>Hllo</programlisting>
+<programlisting><userinput>SHOW REMOVE "b [a b c b]</userinput>
+[a c]</programlisting>
+
+<programlisting><userinput>SHOW REMOVE "e "Hello</userinput>
+Hllo</programlisting>
+
 </listitem>
 </varlistentry>
 

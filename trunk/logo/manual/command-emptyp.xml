@@ -14,23 +14,27 @@
 
 <varlistentry><term>Description</term>
 <listitem>
-<para>Outputs TRUE if <parameter>thing</parameter> is either the empty string or the empty list, FALSE otherwise.</para>
+<para>
+Outputs TRUE if <parameter>thing</parameter> is either the empty string or the empty list, FALSE otherwise.
+</para>
 </listitem>
 </varlistentry>
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>SHOW EMPTYP "Hello
-</userinput>false</programlisting>
 
-    <programlisting><userinput>SHOW EMPTYP "
-</userinput>true</programlisting>
+<programlisting><userinput>SHOW EMPTYP "Hello</userinput>
+false</programlisting>
 
-    <programlisting><userinput>SHOW EMPTYP [1 2 3]
-</userinput>false</programlisting>
+<programlisting><userinput>SHOW EMPTYP "</userinput>
+true</programlisting>
 
-    <programlisting><userinput>SHOW EMPTYP []
-</userinput>true</programlisting>
+<programlisting><userinput>SHOW EMPTYP [1 2 3]</userinput>
+false</programlisting>
+
+<programlisting><userinput>SHOW EMPTYP []</userinput>
+true</programlisting>
+
 </listitem>
 </varlistentry>
 

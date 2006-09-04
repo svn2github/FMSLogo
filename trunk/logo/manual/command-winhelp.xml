@@ -24,8 +24,8 @@ You must enter the full keyword.
 
 <varlistentry><term>Example</term>
 <listitem>
-<programlisting><userinput>WINHELP "c:\\windows\\help\\notepad.hlp ; Open winhelp file for notepad.exe
-</userinput>
+<programlisting><userinput>; Open winhelp file for notepad.exe
+WINHELP "c:\\windows\\help\\notepad.hlp</userinput>
 </programlisting>
 </listitem>
 </varlistentry>

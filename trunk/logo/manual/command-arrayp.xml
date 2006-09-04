@@ -13,23 +13,25 @@
 
 <varlistentry><term>Description</term>
 <listitem>
-<para>Outputs TRUE if the input is an array, FALSE otherwise.</para>
+<para>
+Outputs TRUE if the input is an array, FALSE otherwise.
+</para>
 </listitem>
 </varlistentry>
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>SHOW ARRAYP "Hello
-</userinput>false</programlisting>
 
-    <programlisting><userinput>SHOW ARRAYP [Hello]
-</userinput>false</programlisting>
+<programlisting><userinput>SHOW ARRAYP "Hello</userinput>
+false</programlisting>
 
-    <programlisting><userinput>SHOW ARRAYP {Hello}
-</userinput>true</programlisting>
+<programlisting><userinput>SHOW ARRAYP [Hello]</userinput>
+false</programlisting>
+
+<programlisting><userinput>SHOW ARRAYP {Hello}</userinput>
+true</programlisting>
 </listitem>
 </varlistentry>
-
 
 </variablelist>
 

@@ -22,8 +22,8 @@ Closes the MIDI device that was opened with <link linkend="command-midiopen">MID
 
 <varlistentry><term>Example</term>
 <listitem>
-<programlisting><userinput>PRINT MIDIOPEN
-</userinput>[MIDI Mapper]
+<programlisting><userinput>PRINT MIDIOPEN</userinput>
+[MIDI Mapper]
 <userinput>MIDICLOSE</userinput>
 </programlisting>
 </listitem>

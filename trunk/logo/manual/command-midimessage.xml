@@ -56,7 +56,7 @@ The meaning of the midi messages are given in the <link linkend="midi-table">MID
 </para>
 
 <para>
-This documentation is not attempt to teach you MIDI, but it contains enough information to get you started.
+This documentation does not attempt to teach you MIDI, but it contains enough information to get you started.
 For more information you may be interested in reading a book on MIDI such as: "MIDI Basics" by Akira Otsuka and Akihiko Nakajima.
 </para>
 
@@ -66,12 +66,12 @@ For more information you may be interested in reading a book on MIDI such as: "M
 
 <varlistentry><term>Example</term>
 <listitem>
-<programlisting><userinput>PRINT MIDIOPEN
-</userinput>[MIDI Mapper]
-MIDIMESSAGE (LIST 192+13 56 0 192+13 56 0)
+<programlisting><userinput>PRINT MIDIOPEN</userinput>
+[MIDI Mapper]
+<userinput>MIDIMESSAGE (LIST 192+13 56 0 192+13 56 0)</userinput>
 <replaceable>listen to tone</replaceable>
-MIDIMESSAGE (LIST 144+13 100 100)
-MIDICLOSE
+<userinput>MIDIMESSAGE (LIST 144+13 100 100)
+MIDICLOSE</userinput>
 </programlisting>
 </listitem>
 </varlistentry>

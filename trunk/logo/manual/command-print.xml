@@ -26,11 +26,12 @@ Braces are always printed around arrays.
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>PRINT "Hello
-</userinput>Hello</programlisting>
 
-    <programlisting><userinput>PRINT [Hello how are you]
-</userinput>Hello how are you</programlisting>
+<programlisting><userinput>PRINT "Hello</userinput>
+Hello</programlisting>
+
+<programlisting><userinput>PRINT [Hello how are you]</userinput>
+Hello how are you</programlisting>
 </listitem>
 </varlistentry>
 

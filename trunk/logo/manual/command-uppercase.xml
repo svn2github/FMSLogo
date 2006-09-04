@@ -1,5 +1,5 @@
 <section id="command-uppercase">
-    <title>UPPERCASE</title>
+<title>UPPERCASE</title>
 <indexterm><primary>UPPERCASE</primary></indexterm>
 
 <variablelist>
@@ -20,8 +20,9 @@ Outputs a word which is a copy of <parameter>word</parameter>, but with all lowe
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>SHOW UPPERCASE "HeLlo
-</userinput>HELLO</programlisting>
+
+<programlisting><userinput>SHOW UPPERCASE "HeLlo</userinput>
+HELLO</programlisting>
 
 </listitem>
 </varlistentry>

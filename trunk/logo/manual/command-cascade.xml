@@ -71,11 +71,8 @@ TO PIGLATIN :word
                   [WORD BUTFIRST ? FIRST ?]
                   :word 
                   [WORD ? "ay])
-END
-</userinput>
-
+END</userinput>
 </programlisting>
-
 
 </listitem>
 </varlistentry>

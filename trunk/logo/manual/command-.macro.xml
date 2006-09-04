@@ -1,5 +1,5 @@
 <section id="command-.macro">
-    <title>.MACRO</title>
+<title>.MACRO</title>
 <indexterm><primary>.MACRO</primary></indexterm>
 
 <variablelist>
@@ -22,28 +22,28 @@ Macros are useful for inventing new control structures comparable to <link linke
 Such control structures can almost, but not quite, be duplicated by ordinary procedures.
 For example, here is an ordinary procedure version of REPEAT:
 
-<programlisting>  TO MY.REPEAT :num :instructions
-    IF :num=0 [STOP]
-    RUN :instructions
-    MY.REPEAT :num-1 :instructions
-  END
+<programlisting>TO MY.REPEAT :num :instructions
+  IF :num=0 [STOP]
+  RUN :instructions
+  MY.REPEAT :num-1 :instructions
+END
 </programlisting>
 </para>
 
 <para>
 This version works fine for most purposes, for example
 
-<programlisting>  MY.REPEAT 5 [PRINT "hello]
+<programlisting>MY.REPEAT 5 [PRINT "hello]
 </programlisting>
 
 But it doesn't work if the instructions to be carried out include <link linkend="command-output">OUTPUT</link>, <link linkend="command-stop">STOP</link>, or <link linkend="command-local">LOCAL</link>.
 For example, consider this procedure:
 
-<programlisting>  TO EXAMPLE
-    PRINT [Guess my secret word.  You get three guesses.]
-    REPEAT 3 [TYPE "|?? | IF READWORD = "secret [PRINT "Right! STOP]]
-    PRINT [Sorry, the word was "secret"!]
-  END
+<programlisting>TO EXAMPLE
+  PRINT [Guess my secret word.  You get three guesses.]
+  REPEAT 3 [TYPE "|?? | IF READWORD = "secret [PRINT "Right! STOP]]
+  PRINT [Sorry, the word was "secret"!]
+END
 </programlisting>
 </para>
 
@@ -57,10 +57,10 @@ Instead of carrying out the computation, a macro must return a list containing i
 The contents of that list are evaluated as if they appeared in place of the call to the macro.
 Here's a macro version of REPEAT:
 
-<programlisting>  .MACRO MY.REPEAT :num :instructions
-    IF :num=0 [OUTPUT []]
-    OUTPUT SENTENCE :instructions (LIST "my.repeat :num-1 :instructions)
-  END
+<programlisting>.MACRO MY.REPEAT :num :instructions
+  IF :num=0 [OUTPUT []]
+  OUTPUT SENTENCE :instructions (LIST "my.repeat :num-1 :instructions)
+END
 </programlisting>
 </para>
 
@@ -72,13 +72,13 @@ Even in the base case, MY.REPEAT outputs an empty instruction list.
 <para>
 To see how the MY.REPEAT macro works, let's take the example
 
-<programlisting>  MY.REPEAT 5 [PRINT "hello]
+<programlisting>MY.REPEAT 5 [PRINT "hello]
 </programlisting>
 </para>
 
 <para>
 For this example, MY.REPEAT will output the instruction list
-<programlisting>  [PRINT "hello my.repeat 4 [PRINT "hello]]
+<programlisting>[PRINT "hello my.repeat 4 [PRINT "hello]]
 </programlisting>
 </para>
 
@@ -91,21 +91,21 @@ For this example, MY.REPEAT will output the instruction list
 The technique just shown, although fairly easy to understand, is too slow because each repetition constructs an instruction list for evaluation.
 Another approach is to make MY.REPEAT a macro that works just like the non-macro version unless the instructions to be repeated includes OUTPUT or STOP:
 
-<programlisting>  .MACRO MY.REPEAT :num :instructions
-    CATCH "repeat.catchtag [OUTPUT REPEAT.DONE RUNRESULT [REPEAT1 :num :instructions]]
-    OUTPUT []
-  END
+<programlisting>.MACRO MY.REPEAT :num :instructions
+  CATCH "repeat.catchtag [OUTPUT REPEAT.DONE RUNRESULT [REPEAT1 :num :instructions]]
+  OUTPUT []
+END
 
-  TO REPEAT1 :num :instructions
-    IF :num=0 [THROW "repeat.catchtag]
-    RUN :instructions
-    .MAYBEOUTPUT REPEAT1 :num-1 :instructions
-  END
+TO REPEAT1 :num :instructions
+  IF :num=0 [THROW "repeat.catchtag]
+  RUN :instructions
+  .MAYBEOUTPUT REPEAT1 :num-1 :instructions
+END
 
-  TO REPEAT.DONE :repeat.result
-    IF EMPTYP :repeat.result [OUTPUT [STOP]]
-    OUTPUT LIST "output QUOTED FIRST :repeat.result
-  END
+TO REPEAT.DONE :repeat.result
+  IF EMPTYP :repeat.result [OUTPUT [STOP]]
+  OUTPUT LIST "output QUOTED FIRST :repeat.result
+END
 </programlisting>
 </para>
 
@@ -128,26 +128,26 @@ It's only the output from the macro that's handled unusually.
 
 <para>
 Here's how you can implement <link linkend="command-localmake">LOCALMAKE</link> with .MACRO:
-<programlisting>  .MACRO LOCALMAKE :name :value
-    OUTPUT (LIST ("local  word "" :name  "apply ""make (LIST :name :value))
-  END
+<programlisting>.MACRO LOCALMAKE :name :value
+  OUTPUT (LIST ("local  word "" :name  "apply ""make (LIST :name :value))
+END
 </programlisting>
 </para>
 
 <para>
 It's used this way:
 
-<programlisting>  TO TRY
-    LOCALMAKE "myvar "hello
-    PRINT :myvar
-  END
+<programlisting>TO TRY
+  LOCALMAKE "myvar "hello
+  PRINT :myvar
+END
 </programlisting>
 </para>
 
 <para>
 LOCALMAKE outputs the list:
 
-<programlisting>  [LOCAL "myvar apply "make [myvar hello]]
+<programlisting>[LOCAL "myvar apply "make [myvar hello]]
 </programlisting>
 </para>
 
@@ -159,9 +159,9 @@ In this case it would--<userinput>MAKE "myvar "hello</userinput>--but the quotat
 <para>
 It's often convenient to use the <link linkend="command-backtick">`</link> function to construct the instruction list:
 
-<programlisting>  .MACRO LOCALMAKE :name :value
-    OUTPUT `[LOCAL ,[WORD "" :name] APPLY "make [,[:name] ,[:value]]]
-  END
+<programlisting>.MACRO LOCALMAKE :name :value
+  OUTPUT `[LOCAL ,[WORD "" :name] APPLY "make [,[:name] ,[:value]]]
+END
 </programlisting>
 </para>
 

@@ -20,9 +20,8 @@ Unloads the DLL that was loaded with <link linkend="command-dllload">DLLLOAD</li
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>DLLLOAD "user32.dll
-DLLFREE
-</userinput>
+<programlisting><userinput>DLLLOAD "user32.dll
+DLLFREE</userinput>
 </programlisting>
 </listitem>
 </varlistentry>

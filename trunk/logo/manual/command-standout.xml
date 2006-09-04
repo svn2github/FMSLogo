@@ -1,5 +1,5 @@
 <section id="command-standout">
-    <title>STANDOUT</title>
+<title>STANDOUT</title>
 <indexterm><primary>STANDOUT</primary></indexterm>
 
 <variablelist>
@@ -25,11 +25,13 @@ The output is always a word, even if the input is of some other type, but it may
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>SHOW (LIST "This "is STANDOUT "very "important)
-</userinput>This is very important</programlisting>
 
-    <programlisting><userinput>SHOW STANDOUT [1 2 3]
-</userinput>[1 2 3]</programlisting>
+<programlisting><userinput>SHOW (LIST "This "is STANDOUT "very "important)</userinput>
+This is very important</programlisting>
+
+<programlisting><userinput>SHOW STANDOUT [1 2 3]</userinput>
+[1 2 3]</programlisting>
+
 </listitem>
 </varlistentry>
 

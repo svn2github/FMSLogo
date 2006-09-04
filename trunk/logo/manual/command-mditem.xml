@@ -18,8 +18,10 @@
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>SHOW MDITEM [2 2] {{0 1} {2 3}}
-</userinput>3</programlisting>
+
+<programlisting><userinput>SHOW MDITEM [2 2] {{0 1} {2 3}}</userinput>
+3</programlisting>
+
 </listitem>
 </varlistentry>
 

@@ -27,11 +27,13 @@ BUTFIRST throws a bad input error if given the empty list, the empty string, or 
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>SHOW BUTFIRST [1 2 3]
-</userinput>[2 3]</programlisting>
 
-    <programlisting><userinput>SHOW BUTFIRST "Hello
-</userinput>ello</programlisting>
+<programlisting><userinput>SHOW BUTFIRST [1 2 3]</userinput>
+[2 3]</programlisting>
+
+<programlisting><userinput>SHOW BUTFIRST "Hello</userinput>
+ello</programlisting>
+
 </listitem>
 </varlistentry>
 

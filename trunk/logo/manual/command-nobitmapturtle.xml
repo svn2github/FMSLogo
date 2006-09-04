@@ -1,5 +1,5 @@
 <section id="command-nobitmapturtle">
-    <title>NOBITMAPTURTLE</title>
+<title>NOBITMAPTURTLE</title>
 <indexterm><primary>NOBITMAPTURTLE</primary></indexterm>
 
 <variablelist>
@@ -21,13 +21,13 @@ It is the opposite of <link linkend="command-bitmapturtle">BITMAPTURTLE</link>.
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>CLEARSCREEN
+
+<programlisting><userinput>CLEARSCREEN
 LABEL "+ 
 BITCUT 20 20
 BITMAPTURTLE
 FORWARD 100
-NOBITMAPTURTLE
-</userinput>
+NOBITMAPTURTLE</userinput>
 </programlisting>
 </listitem>
 </varlistentry>

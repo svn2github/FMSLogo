@@ -1,5 +1,5 @@
 <section id="command-writepos">
-    <title>WRITEPOS</title>
+<title>WRITEPOS</title>
 <indexterm><primary>WRITEPOS</primary></indexterm>
 
 <variablelist>
@@ -34,8 +34,8 @@ PRINT [Good Bye]
 MAKE "history LPUT WRITEPOS :history
 SETWRITE []
 CLOSE "dummy.fil
-SHOW :history
-</userinput>[0 7 17]
+SHOW :history</userinput>
+[0 7 17]
 </programlisting>
 </listitem>
 </varlistentry>

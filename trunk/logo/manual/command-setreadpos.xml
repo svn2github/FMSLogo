@@ -1,5 +1,5 @@
 <section id="command-setreadpos">
-    <title>SETREADPOS</title>
+<title>SETREADPOS</title>
 <indexterm><primary>SETREADPOS</primary></indexterm>
 
 <variablelist>
@@ -22,7 +22,8 @@ This is meaningless if the read stream is [].
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>OPENWRITE "dummy.fil
+
+<programlisting><userinput>OPENWRITE "dummy.fil
 SETWRITE "dummy.fil
 PRINT "Hello
 PRINT [Good Bye]
@@ -37,9 +38,9 @@ SHOW READLIST</userinput>
 SHOW READLIST</userinput>
 [Hello]
 <userinput>SETREAD []
-CLOSE "dummy.fil
-</userinput>
+CLOSE "dummy.fil</userinput>
 </programlisting>
+
 </listitem>
 </varlistentry>
 

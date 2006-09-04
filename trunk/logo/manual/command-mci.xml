@@ -62,8 +62,7 @@ The Microsoft speaker sound card emulator does <emphasis>not</emphasis> work wit
 
   MCI [close wa1]
   MCI [close wa2]
-END
-</userinput>
+END</userinput>
 </programlisting>
 </listitem>
 </varlistentry>

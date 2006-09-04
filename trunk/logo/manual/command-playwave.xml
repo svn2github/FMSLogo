@@ -79,8 +79,7 @@ PLAYWAVE "c:\\windows\\tada.wav 1+8
 WAIT 120
 
 ; stop the sound
-PLAYWAVE [] 0
-</userinput>
+PLAYWAVE [] 0</userinput>
 </programlisting>
 </listitem>
 </varlistentry>

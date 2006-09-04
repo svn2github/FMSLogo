@@ -19,14 +19,15 @@
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>SHOW NUMBERP 1
-</userinput>true</programlisting>
 
-    <programlisting><userinput>SHOW NUMBERP "1
-</userinput>true</programlisting>
+<programlisting><userinput>SHOW NUMBERP 1</userinput>
+true</programlisting>
 
-    <programlisting><userinput>SHOW NUMBERP [1]
-</userinput>false</programlisting>
+<programlisting><userinput>SHOW NUMBERP "1</userinput>
+true</programlisting>
+
+<programlisting><userinput>SHOW NUMBERP [1]</userinput>
+false</programlisting>
 </listitem>
 </varlistentry>
 

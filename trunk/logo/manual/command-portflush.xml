@@ -1,5 +1,5 @@
 <section id="command-portflush">
-    <title>PORTFLUSH</title>
+<title>PORTFLUSH</title>
 <indexterm><primary>PORTFLUSH</primary></indexterm>
 
 <variablelist>
@@ -23,9 +23,10 @@ If <parameter>port</parameter> is 1, then the input queue is flushed.
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>PORTFLUSH 1
-</userinput>
+
+<programlisting><userinput>PORTFLUSH 1</userinput>
 </programlisting>
+
 </listitem>
 </varlistentry>
 

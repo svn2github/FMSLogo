@@ -1,5 +1,5 @@
 <section id="command-ascii">
-    <title>ASCII</title>
+<title>ASCII</title>
 <indexterm><primary>ASCII</primary></indexterm>
 
 <variablelist>
@@ -24,14 +24,14 @@ corresponding to the punctuation character without the backslash.
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>SHOW ASCII "a
-</userinput>97</programlisting>
+<programlisting><userinput>SHOW ASCII "a</userinput>
+97</programlisting>
 
-    <programlisting><userinput>SHOW ASCII "A
-</userinput>65</programlisting>
+<programlisting><userinput>SHOW ASCII "A</userinput>
+65</programlisting>
 
-    <programlisting><userinput>SHOW ASCII "|(|
-</userinput>40</programlisting>
+<programlisting><userinput>SHOW ASCII "|(|</userinput>
+40</programlisting>
 </listitem>
 </varlistentry>
 

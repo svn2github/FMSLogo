@@ -1,5 +1,5 @@
 <section id="command-setxy">
-    <title>SETXY</title>
+<title>SETXY</title>
 <indexterm><primary>SETXY</primary></indexterm>
 
 <variablelist>
@@ -22,8 +22,8 @@ See also <link linkend="command-pos">POS</link>.
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>REPEAT 360 [SETXY REPCOUNT 100*SIN REPCOUNT]
-</userinput>
+
+<programlisting><userinput>REPEAT 360 [SETXY REPCOUNT 100*SIN REPCOUNT]</userinput>
 </programlisting>
 
 </listitem>

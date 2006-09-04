@@ -1,5 +1,5 @@
 <section id="command-readchars">
-    <title>READCHARS</title>
+<title>READCHARS</title>
 <indexterm><primary>READCHARS</primary></indexterm>
 
 <variablelist>
@@ -15,8 +15,8 @@
 <listitem>
 
 
-<note><para>This is not yet supported in &PRODUCTNAME; when reader is [] (keyboard).  See <link linkend="command-keyboardon">KEYBOARDON</link></para></note>
-
+<note><para>This is not yet supported in &PRODUCTNAME; when reader is [] (keyboard).
+See <link linkend="command-keyboardon">KEYBOARDON</link></para></note>
 
 <para>
 Reads <parameter>number</parameter> characters from the read stream and outputs those characters as a word.
@@ -29,7 +29,8 @@ Backslash, vertical bar, and tilde characters have no special meaning in this co
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>OPENWRITE "dummy.fil
+
+<programlisting><userinput>OPENWRITE "dummy.fil
 SETWRITE "dummy.fil
 PRINT "Hello
 SETWRITE []
@@ -37,12 +38,10 @@ CLOSE "dummy.fil
 
 OPENREAD "dummy.fil
 SETREAD "dummy.fil
-SHOW READCHARS 5
-</userinput>Hello
-<userinput>
-SETREAD []
-CLOSE "dummy.fil
-</userinput>
+SHOW READCHARS 5</userinput>
+Hello
+<userinput>SETREAD []
+CLOSE "dummy.fil</userinput>
 </programlisting>
 </listitem>
 </varlistentry>

@@ -21,13 +21,14 @@ That is, <parameter>value</parameter> may not be a list or array that contains t
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>MAKE "myarray (ARRAY 3 0)
+
+<programlisting><userinput>MAKE "myarray (ARRAY 3 0)
 SETITEM 2 :myarray 1
 SETITEM 1 :myarray [2]
 SETITEM 0 :myarray 3
-SHOW :myarray
-</userinput>{3 [2] 1}
-</programlisting>
+SHOW :myarray</userinput>
+{3 [2] 1}</programlisting>
+
 </listitem>
 </varlistentry>
 

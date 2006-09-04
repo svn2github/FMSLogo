@@ -1,5 +1,5 @@
 <section id="command-pen">
-    <title>PEN</title>
+<title>PEN</title>
 <indexterm><primary>PEN</primary></indexterm>
 
 <variablelist>
@@ -37,8 +37,8 @@ REPEAT 4 [FORWARD 100 RIGHT 90]
 SETPEN :savepen
 
 CLEARSCREEN
-REPEAT 4 [FORWARD 100 RIGHT 90]
-</userinput></programlisting>
+REPEAT 4 [FORWARD 100 RIGHT 90]</userinput>
+</programlisting>
 </listitem>
 </varlistentry>
 </variablelist>

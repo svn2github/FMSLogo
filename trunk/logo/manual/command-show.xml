@@ -1,5 +1,5 @@
 <section id="command-show">
-    <title>SHOW</title>
+<title>SHOW</title>
 <indexterm><primary>SHOW</primary></indexterm>
 
 <variablelist>
@@ -14,17 +14,20 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-Prints the input or inputs to the current write stream, just like <link linkend="command-print">PRINT</link>, except that if an input is a list it is printed inside square brackets.</para>
+Prints the input or inputs to the current write stream, just like <link linkend="command-print">PRINT</link>, except that if an input is a list it is printed inside square brackets.
+</para>
 </listitem>
 </varlistentry>
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>SHOW [1 2 3]
-</userinput>[1 2 3]</programlisting>
 
-    <programlisting><userinput>PRINT [1 2 3]
-</userinput>1 2 3</programlisting>
+<programlisting><userinput>SHOW [1 2 3]</userinput>
+[1 2 3]</programlisting>
+
+<programlisting><userinput>PRINT [1 2 3]</userinput>
+1 2 3</programlisting>
+
 </listitem>
 </varlistentry>
 

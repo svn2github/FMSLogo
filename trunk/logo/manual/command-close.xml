@@ -1,5 +1,5 @@
 <section id="command-close">
-    <title>CLOSE</title>
+<title>CLOSE</title>
 <indexterm><primary>CLOSE</primary></indexterm>
 
 <variablelist>
@@ -26,7 +26,8 @@ You can also close the reserved file <userinput>"clipboard</userinput> with this
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>OPENWRITE "dummy.fil
+
+<programlisting><userinput>OPENWRITE "dummy.fil
 SETWRITE "dummy.fil
 PRINT "Hello
 PRINT [Good Bye]
@@ -35,13 +36,13 @@ CLOSE "dummy.fil
 
 OPENREAD "dummy.fil
 SETREAD "dummy.fil
-REPEAT 2 [SHOW READLIST]
-</userinput>[Hello]
+REPEAT 2 [SHOW READLIST]</userinput>
+[Hello]
 [Good Bye]
 <userinput>SETREAD []
-CLOSE "dummy.fil
-</userinput>
+CLOSE "dummy.fil</userinput>
 </programlisting>
+
 </listitem>
 </varlistentry>
 

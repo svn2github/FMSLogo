@@ -32,24 +32,25 @@ An array is only equal to itself; two separately created arrays are never equal 
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>SHOW EQUALP 1 1
-</userinput>true</programlisting>
 
-    <programlisting><userinput>SHOW EQUALP 1 2
-</userinput>false</programlisting>
+<programlisting><userinput>SHOW EQUALP 1 1</userinput>
+true</programlisting>
 
-    <programlisting><userinput>SHOW EQUALP [1 2 3] [1 2 3]
-</userinput>true</programlisting>
+<programlisting><userinput>SHOW EQUALP 1 2</userinput>
+false</programlisting>
 
-    <programlisting><userinput>SHOW EQUALP [1 2 3] [3 2 1]
-</userinput>false</programlisting>
+<programlisting><userinput>SHOW EQUALP [1 2 3] [1 2 3]</userinput>
+true</programlisting>
 
-    <programlisting><userinput>SHOW EQUALP {1 2 3} {1 2 3}
-</userinput>false</programlisting>
+<programlisting><userinput>SHOW EQUALP [1 2 3] [3 2 1]</userinput>
+false</programlisting>
 
-    <programlisting><userinput>MAKE "myarray {1 2 3}
-SHOW EQUALP :myarray :myarray
-</userinput>true</programlisting>
+<programlisting><userinput>SHOW EQUALP {1 2 3} {1 2 3}</userinput>
+false</programlisting>
+
+<programlisting><userinput>MAKE "myarray {1 2 3}
+SHOW EQUALP :myarray :myarray</userinput>
+true</programlisting>
 </listitem>
 </varlistentry>
 

@@ -26,11 +26,12 @@ BUTLAST throws a bad input error if given the empty list, the empty string, or a
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>SHOW BUTLAST [1 2 3]
-</userinput>[1 2]</programlisting>
+<programlisting><userinput>SHOW BUTLAST [1 2 3]</userinput>
+[1 2]</programlisting>
 
-    <programlisting><userinput>SHOW BUTLAST "Hello
-</userinput>Hell</programlisting>
+<programlisting><userinput>SHOW BUTLAST "Hello</userinput>
+Hell</programlisting>
+
 </listitem>
 </varlistentry>
 

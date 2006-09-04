@@ -1,5 +1,5 @@
 <section id="command-readword">
-    <title>READWORD</title>
+<title>READWORD</title>
 <indexterm><primary>READWORD</primary></indexterm>
 
 <variablelist>
@@ -28,9 +28,11 @@ Programs can use <link linkend="command-backslashedp">BACKSLASHEDP</link> to che
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>SHOW READWORD
-Hello how are you?
-</userinput>Hello how are you?</programlisting>
+
+<programlisting><userinput>SHOW READWORD
+Hello how are you?</userinput>
+Hello how are you?</programlisting>
+
 </listitem>
 </varlistentry>
 

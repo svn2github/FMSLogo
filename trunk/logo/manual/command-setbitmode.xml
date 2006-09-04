@@ -1,5 +1,5 @@
 <section id="command-setbitmode">
-    <title>SETBITMODE</title>
+<title>SETBITMODE</title>
 <indexterm><primary>SETBITMODE</primary></indexterm>
 
 <variablelist>
@@ -85,8 +85,7 @@ CLEARSCREEN
 SETBITMODE 3
 BITPASTE
 
-; Notice the white background disappeared
-</userinput>
+; Notice the white background disappeared</userinput>
 </programlisting>
 
 </listitem>

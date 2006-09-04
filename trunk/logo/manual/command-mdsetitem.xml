@@ -1,5 +1,5 @@
 <section id="command-mdsetitem">
-    <title>MDSETITEM</title>
+<title>MDSETITEM</title>
 <indexterm><primary>MDSETITEM</primary></indexterm>
 
 <variablelist>
@@ -12,22 +12,26 @@
 
 <varlistentry><term>Description</term>
 <listitem>
-    <para>Replaces an element of a multi-dimensional array that is selected by a list of indices with a new value.</para>
+<para>
+Replaces an element of a multi-dimensional array that is selected by a list of indices with a new value.
+</para>
 </listitem>
 </varlistentry>
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>MAKE "myarray (MDARRAY [2 3] 0)
+
+<programlisting><userinput>MAKE "myarray (MDARRAY [2 3] 0)
 MDSETITEM [0 0] :myarray 1
 MDSETITEM [0 1] :myarray 2
 MDSETITEM [0 2] :myarray 3
 MDSETITEM [1 0] :myarray 4
 MDSETITEM [1 1] :myarray 5
 MDSETITEM [1 2] :myarray 6
-SHOW :myarray
-</userinput>{{1 2 3} {4 5 6}}
+SHOW :myarray</userinput>
+{{1 2 3} {4 5 6}}
 </programlisting>
+
 </listitem>
 </varlistentry>
 

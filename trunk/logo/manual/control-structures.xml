@@ -91,8 +91,8 @@ The most commonly used form of template is the "explicit-slot" form, which is so
 <para>
 Example:
 <programlisting>
-<userinput>  SHOW MAP [? * ?] [2 3 4 5]</userinput>
-  [4 9 16 25]
+<userinput>SHOW MAP [? * ?] [2 3 4 5]</userinput>
+[4 9 16 25]
 </programlisting>
 </para>
 
@@ -106,8 +106,8 @@ Some tools allow for more than one datum to be substituted in parallel; in these
 <para>
 Example:
 <programlisting>
-<userinput>  SHOW (MAP [(WORD ?1 ?2 ?1)] [a b c] [d e f])</userinput>
-  [ada beb cfc]
+<userinput>SHOW (MAP [(WORD ?1 ?2 ?1)] [a b c] [d e f])</userinput>
+[ada beb cfc]
 </programlisting>
 </para>
 
@@ -132,12 +132,12 @@ That is, if data <userinput>?1</userinput> through <userinput>?3</userinput> are
 <para>
 Example:
 <programlisting>
-<userinput>  SHOW (MAP "word [a b c] [d e f])</userinput>
-  [ad be cf]
+<userinput>SHOW (MAP "word [a b c] [d e f])</userinput>
+[ad be cf]
 
-  TO DOTPRODUCT :a :b  ; vector dot product
-    OUTPUT APPLY "sum (MAP "product :a :b)
-  END
+TO DOTPRODUCT :a :b  ; vector dot product
+  OUTPUT APPLY "sum (MAP "product :a :b)
+END
 </programlisting>
 </para>
 
@@ -158,9 +158,9 @@ This form is needed when one iteration tool is used within the template list of 
 <para>
 Example:
 <programlisting>
-<userinput>  TO MATRIXMULTIPLY :m1 :m2 [:tm2 TRANSPOSE :m2]
-    OUTPUT MAP [[row] MAP [[col] DOTPRODUCT :row :col] :tm2] :m1
-  END</userinput>
+<userinput>TO MATRIXMULTIPLY :m1 :m2 [:tm2 TRANSPOSE :m2]
+  OUTPUT MAP [[row] MAP [[col] DOTPRODUCT :row :col] :tm2] :m1
+END</userinput>
 </programlisting>
 </para>
 

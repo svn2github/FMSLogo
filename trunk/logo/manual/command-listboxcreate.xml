@@ -1,5 +1,5 @@
 <section id="command-listboxcreate">
-    <title>LISTBOXCREATE</title>
+<title>LISTBOXCREATE</title>
 <indexterm><primary>LISTBOXCREATE</primary></indexterm>
 
 <variablelist>
@@ -47,12 +47,14 @@ The <parameter>height</parameter> input is the height of the new listbox, in pix
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>; create a listbox in a new window:
+
+<programlisting><userinput>; create a listbox in a new window:
 WINDOWCREATE "main "mywindow "mytitle 0 0 100 100 []
 LISTBOXCREATE "mywindow "mylist 25 25 50 50
-WINDOWDELETE "mywindow
+WINDOWDELETE "mywindow</userinput>
+</programlisting>
 
-; create a listbox on graphics window:
+<programlisting><userinput>; create a listbox on graphics window:
 LISTBOXCREATE "main "mylist 25 25 100 100
 WINDOWDELETE "main</userinput>
 </programlisting>

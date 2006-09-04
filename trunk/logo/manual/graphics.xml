@@ -719,8 +719,8 @@ REPEAT 36 [
   POLYEND
   RIGHTROLL 10
 ]
-POLYVIEW
-</userinput></programlisting>
+POLYVIEW</userinput>
+</programlisting>
 </para>
 
 </section> <!-- Polygon Samples -->

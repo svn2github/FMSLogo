@@ -14,20 +14,24 @@
 
 <varlistentry><term>Description</term>
 <listitem>
-    <para>Outputs TRUE if the input is a list, FALSE otherwise.</para>
+<para>
+Outputs TRUE if the input is a list, FALSE otherwise.
+</para>
 </listitem>
 </varlistentry>
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>SHOW LISTP "Hello
-</userinput>false</programlisting>
 
-    <programlisting><userinput>SHOW LISTP [Hello]
-</userinput>true</programlisting>
+<programlisting><userinput>SHOW LISTP "Hello</userinput>
+false</programlisting>
 
-    <programlisting><userinput>SHOW LISTP {Hello}
-</userinput>false</programlisting>
+<programlisting><userinput>SHOW LISTP [Hello]</userinput>
+true</programlisting>
+
+<programlisting><userinput>SHOW LISTP {Hello}</userinput>
+false</programlisting>
+
 </listitem>
 </varlistentry>
 

@@ -1,5 +1,5 @@
 <section id="command-lowercase">
-    <title>LOWERCASE</title>
+<title>LOWERCASE</title>
 <indexterm><primary>LOWERCASE</primary></indexterm>
 
 <variablelist>
@@ -20,8 +20,9 @@ Outputs a word which is a copy of <parameter>word</parameter>, but with all uppe
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>SHOW LOWERCASE "HeLlo
-</userinput>hello</programlisting>
+
+<programlisting><userinput>SHOW LOWERCASE "HeLlo</userinput>
+hello</programlisting>
 
 </listitem>
 </varlistentry>

@@ -19,7 +19,7 @@ The palette is only supported when Windows is in 256 color mode (see <link linke
 Once you run out of colors Windows will choose the closest match.
 For example, the instruction
 
-<programlisting><userinput>    REPEAT 256 [SETPENCOLOR (LIST REPCOUNT 0 0)]</userinput></programlisting> 
+<programlisting><userinput>REPEAT 256 [SETPENCOLOR (LIST REPCOUNT 0 0)]</userinput></programlisting>
 
 fills the palette with 256 shades of red.
 At this point the palette cannot hold any more colors.

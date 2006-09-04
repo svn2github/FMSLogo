@@ -21,8 +21,8 @@ The input itself may be empty, in which case the output is also empty.
 
 <varlistentry><term>Example</term>
 <listitem>
-<programlisting><userinput>SHOW FIRSTS [[1 2 3] [a b c]]
-</userinput>[1 a]</programlisting>
+<programlisting><userinput>SHOW FIRSTS [[1 2 3] [a b c]]</userinput>
+[1 a]</programlisting>
 </listitem>
 </varlistentry>
 

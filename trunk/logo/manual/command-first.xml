@@ -27,14 +27,14 @@ FIRST throws a bad input error if given the empty list, the empty string, or the
 
 <varlistentry><term>Example</term>
 <listitem>
-<programlisting><userinput>SHOW FIRST [1 2 3]
-</userinput>1</programlisting>
+<programlisting><userinput>SHOW FIRST [1 2 3]</userinput>
+1</programlisting>
 
-<programlisting><userinput>SHOW FIRST "Hello
-</userinput>H</programlisting>
+<programlisting><userinput>SHOW FIRST "Hello</userinput>
+H</programlisting>
 
-<programlisting><userinput>SHOW FIRST {a b c}
-</userinput>1</programlisting>
+<programlisting><userinput>SHOW FIRST {a b c}</userinput>
+1</programlisting>
 
 </listitem>
 </varlistentry>

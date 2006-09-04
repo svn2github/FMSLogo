@@ -37,11 +37,13 @@ The larger the duration the longer the tone will play for.
 
 <varlistentry><term>Example</term>
 <listitem>
-<programlisting><userinput>TONE 1000 200
 
-REPEAT 50 [ TONE REPCOUNT * 10 50 ]
-</userinput>
+<programlisting><userinput>TONE 1000 200</userinput>
 </programlisting>
+
+<programlisting><userinput>REPEAT 50 [ TONE REPCOUNT * 10 50 ]</userinput>
+</programlisting>
+
 </listitem>
 </varlistentry>
 

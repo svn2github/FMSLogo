@@ -1,5 +1,5 @@
 <section id="command-readpos">
-    <title>READPOS</title>
+<title>READPOS</title>
 <indexterm><primary>READPOS</primary></indexterm>
 
 <variablelist>
@@ -21,7 +21,8 @@ An output value of 0 means that the read position is at the beginning of the str
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>OPENWRITE "dummy.fil
+
+<programlisting><userinput>OPENWRITE "dummy.fil
 SETWRITE "dummy.fil
 PRINT "Hello
 PRINT [Good Bye]
@@ -36,8 +37,7 @@ REPEAT 2 [SHOW READPOS SHOW READLIST]</userinput>
 7
 [Good Bye]
 <userinput>SETREAD []
-CLOSE "dummy.fil
-</userinput>
+CLOSE "dummy.fil</userinput>
 </programlisting>
 </listitem>
 </varlistentry>

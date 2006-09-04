@@ -777,6 +777,15 @@ foreach my $filename (<*.xml>) {
       }
     }
 
+    # Find places where <userinput> includes undesired leading/trailing whitespace.
+    # This extra space looks bad when it is rendered within a grey box.
+    if ($line =~ m!<userinput>\s+\S!) {
+      LogWarning($filename, $linenumber, "<userinput> section includes leading whitespace");
+    }
+    if ($line =~ m!^</userinput>!) {
+      LogWarning($filename, $linenumber, "<userinput> section includes trailing newline");
+    }
+
     # Find use of banned words
     foreach my $bannedWord (@main::BannedWords) {
       while ($line =~ m!\b($bannedWord)\b!gi) {

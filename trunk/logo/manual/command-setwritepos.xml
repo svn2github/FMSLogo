@@ -1,5 +1,5 @@
 <section id="command-setwritepos">
-    <title>SETWRITEPOS</title>
+<title>SETWRITEPOS</title>
 <indexterm><primary>SETWRITEPOS</primary></indexterm>
 
 <variablelist>
@@ -22,7 +22,8 @@ This is meaningless if the write stream is [].
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>OPENWRITE "dummy.fil
+
+<programlisting><userinput>OPENWRITE "dummy.fil
 SETWRITE "dummy.fil
 PRINT "Hello
 SETWRITEPOS 0
@@ -35,8 +36,7 @@ SETREAD "dummy.fil
 SHOW READLIST</userinput>
 [Jello]
 <userinput>SETREAD []
-CLOSE "dummy.fil
-</userinput>
+CLOSE "dummy.fil</userinput>
 </programlisting>
 </listitem>
 </varlistentry>

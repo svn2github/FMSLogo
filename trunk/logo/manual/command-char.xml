@@ -1,5 +1,5 @@
 <section id="command-char">
-    <title>CHAR</title>
+<title>CHAR</title>
 <indexterm><primary>CHAR</primary></indexterm>
 
 <variablelist>
@@ -20,11 +20,13 @@ Outputs the character represented in the ASCII code by <parameter>number</parame
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>SHOW CHAR 97
-</userinput>a</programlisting>
 
-    <programlisting><userinput>SHOW CHAR 65
-</userinput>A</programlisting>
+<programlisting><userinput>SHOW CHAR 97</userinput>
+a</programlisting>
+
+<programlisting><userinput>SHOW CHAR 65</userinput>
+A</programlisting>
+
 </listitem>
 </varlistentry>
 

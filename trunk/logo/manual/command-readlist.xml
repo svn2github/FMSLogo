@@ -1,5 +1,5 @@
 <section id="command-readlist">
-    <title>READLIST</title>
+<title>READLIST</title>
 <indexterm><primary>READLIST</primary></indexterm>
 
 <variablelist>
@@ -19,15 +19,20 @@ The line is separated into elements as though it were typed in square brackets i
 If the read stream is a file, and the end of file is reached, READLIST outputs the empty word (not the empty list).
 READLIST process's backslash, vertical bar, and tilde characters in the read stream; 
 the output list will not contain these characters but they will have had their usual effect.
-READLIST does not, however, treat semicolon as a comment character.</para>
+READLIST does not, however, treat semicolon as a comment character.
+</para>
+
 </listitem>
 </varlistentry>
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>SHOW READLIST
-Hello how are you?
-</userinput>[Hello how are you?]</programlisting>
+
+<programlisting><userinput>SHOW READLIST
+Hello how are you?</userinput>
+[Hello how are you?]
+</programlisting>
+
 </listitem>
 </varlistentry>
 

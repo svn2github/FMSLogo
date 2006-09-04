@@ -1,5 +1,5 @@
 <section id="command-listboxgetselect">
-    <title>LISTBOXGETSELECT</title>
+<title>LISTBOXGETSELECT</title>
 <indexterm><primary>LISTBOXGETSELECT</primary></indexterm>
 
 <variablelist>
@@ -23,7 +23,8 @@ If nothing is selected, then LISTBOXGETSELECT outputs the empty list.
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>TO DODRAW
+
+<programlisting><userinput>TO DODRAW
   CLEARSCREEN
   IF EQUALP [Triangle] LISTBOXGETSELECT "mylist [REPEAT 3 [FORWARD 100 RIGHT 120]]
   IF EQUALP [Square]   LISTBOXGETSELECT "mylist [REPEAT 4 [FORWARD 100 RIGHT 90]]
@@ -37,8 +38,7 @@ BUTTONCREATE "mywindow "mydraw "Draw 25 50 50 25 [DODRAW]
 
 <replaceable>Select an item from the listbox and then click the Draw button.</replaceable>
 
-WINDOWDELETE "mywindow
-</userinput>
+WINDOWDELETE "mywindow</userinput>
 </programlisting>
 
 </listitem>

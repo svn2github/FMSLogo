@@ -1,5 +1,5 @@
 <section id="command-bitfit">
-    <title>BITFIT</title>
+<title>BITFIT</title>
 <indexterm><primary>BITFIT</primary></indexterm>
 
 <variablelist>
@@ -37,8 +37,7 @@ CLEARSCREEN
 BITPASTE
 CLEARSCREEN
 BITFIT 200 100
-BITPASTE
-</userinput>
+BITPASTE</userinput>
 </programlisting>
 
 </listitem>

@@ -54,8 +54,8 @@ See also the <link linkend="command-midimessage">MIDIMESSAGE</link> and <link li
 
 <varlistentry><term>Example</term>
 <listitem>
-<programlisting><userinput>PRINT MIDIOPEN
-</userinput>[MIDI Mapper]
+<programlisting><userinput>PRINT MIDIOPEN</userinput>
+[MIDI Mapper]
 <userinput>MIDICLOSE</userinput>
 </programlisting>
 </listitem>

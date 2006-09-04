@@ -1,5 +1,5 @@
 <section id="command-openwrite">
-    <title>OPENWRITE</title>
+<title>OPENWRITE</title>
 <indexterm><primary>OPENWRITE</primary></indexterm>
 
 <variablelist>
@@ -35,7 +35,8 @@ That is, no end-of-line sequence conversion will be performed.
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>OPENWRITE "dummy.fil
+
+<programlisting><userinput>OPENWRITE "dummy.fil
 SETWRITE "dummy.fil
 PRINT "Hello
 PRINT [Good Bye]
@@ -44,12 +45,11 @@ CLOSE "dummy.fil
 
 OPENREAD "dummy.fil
 SETREAD "dummy.fil
-REPEAT 2 [SHOW READLIST]
-</userinput>[Hello]
+REPEAT 2 [SHOW READLIST]</userinput>
+[Hello]
 [Good Bye]
 <userinput>SETREAD []
-CLOSE "dummy.fil
-</userinput>
+CLOSE "dummy.fil</userinput>
 </programlisting>
 </listitem>
 </varlistentry>

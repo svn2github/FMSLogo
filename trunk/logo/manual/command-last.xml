@@ -25,11 +25,13 @@ LAST throws a bad input error if given the empty list, the empty string, or an a
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>SHOW LAST [1 2 3]
-</userinput>3</programlisting>
 
-    <programlisting><userinput>SHOW LAST "Hello
-</userinput>o</programlisting>
+<programlisting><userinput>SHOW LAST [1 2 3]</userinput>
+3</programlisting>
+
+<programlisting><userinput>SHOW LAST "Hello</userinput>
+o</programlisting>
+
 </listitem>
 </varlistentry>
 

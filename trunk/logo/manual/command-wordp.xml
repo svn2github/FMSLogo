@@ -1,5 +1,5 @@
 <section id="command-wordp">
-    <title>WORDP</title>
+<title>WORDP</title>
 <indexterm><primary>WORDP</primary></indexterm>
 
 <variablelist>
@@ -13,20 +13,23 @@
 
 <varlistentry><term>Description</term>
 <listitem>
-   <para>Outputs TRUE if the input is a word, FALSE otherwise.</para>
+<para>
+Outputs TRUE if the input is a word, FALSE otherwise.
+</para>
 </listitem>
 </varlistentry>
 
 <varlistentry><term>Example</term>
 <listitem>
-<programlisting><userinput>SHOW WORDP "Hello
-</userinput>true</programlisting>
+<programlisting><userinput>SHOW WORDP "Hello</userinput>
+true</programlisting>
 
-<programlisting><userinput>SHOW WORDP [Hello]
-</userinput>false</programlisting>
+<programlisting><userinput>SHOW WORDP [Hello]</userinput>
+false</programlisting>
 
-<programlisting><userinput>SHOW WORDP {Hello}
-</userinput>false</programlisting>
+<programlisting><userinput>SHOW WORDP {Hello}</userinput>
+false</programlisting>
+
 </listitem>
 </varlistentry>
 

@@ -1,5 +1,5 @@
 <section id="command-shell">
-    <title>SHELL</title>
+<title>SHELL</title>
 <indexterm><primary>SHELL</primary></indexterm>
 
 <variablelist>
@@ -23,12 +23,13 @@ If the command is a literal list in the instruction line, and if you want a back
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>SHOW SHELL [notepad c:\\test.txt]
-</userinput>true
+
+<programlisting><userinput>SHOW SHELL [notepad c:\\test.txt]</userinput>
+true
 </programlisting>
 
-    <programlisting><userinput>SHOW SHELL [unknown-app c:\\test.txt]
-</userinput>false
+<programlisting><userinput>SHOW SHELL [unknown-app c:\\test.txt]</userinput>
+false
 </programlisting>
 
 </listitem>

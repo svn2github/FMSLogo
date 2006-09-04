@@ -1,5 +1,5 @@
 <section id="command-inportb">
-    <title>INPORTB</title>
+<title>INPORTB</title>
 <indexterm><primary>INPORTB</primary></indexterm>
 
 <variablelist>
@@ -24,10 +24,11 @@ See also <link linkend="command-inport">INPORT</link> and <link linkend="command
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>SHOW INPORTB 198
-</userinput>
+
+<programlisting><userinput>SHOW INPORTB 198</userinput>
 130
 </programlisting>
+
 </listitem>
 </varlistentry>
 

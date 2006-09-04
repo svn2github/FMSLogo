@@ -1,5 +1,5 @@
 <section id="command-setpencolor">
-    <title>SETPENCOLOR</title>
+<title>SETPENCOLOR</title>
 <indexterm><primary>SETPENCOLOR</primary></indexterm>
 
 <variablelist>
@@ -30,21 +30,22 @@ It also affects text that is drawn with <link linkend="command-label">LABEL</lin
 </varlistentry>
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>REPEAT 255 [
+
+<programlisting><userinput>REPEAT 255 [
   SETPENCOLOR (LIST REPCOUNT 0 0) 
   FORWARD 100 
   BACK    100
   RIGHT 1
-]
-</userinput></programlisting>
+]</userinput>
+</programlisting>
 
-    <programlisting><userinput>; using variables in a color vector
+<programlisting><userinput>; using variables in a color vector
 MAKE "red   100
 MAKE "green 100
 MAKE "blue  100
 SETPENCOLOR [:red :green :blue]      ; error
-SETPENCOLOR (LIST :red :green :blue) ; works
-</userinput></programlisting>
+SETPENCOLOR (LIST :red :green :blue) ; works</userinput>
+</programlisting>
 
 
 </listitem>

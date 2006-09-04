@@ -1,5 +1,5 @@
 <section id="command-quoted">
-   <title>QUOTED</title>
+<title>QUOTED</title>
 <indexterm><primary>QUOTED</primary></indexterm>
 
 <variablelist>
@@ -21,14 +21,16 @@ Otherwise, QUOTED outputs whatever the input is.
 
 <varlistentry><term>Example</term>
 <listitem>
-<programlisting><userinput>SHOW "Hello
-</userinput>Hello</programlisting>
 
-<programlisting><userinput>SHOW QUOTED "Hello
-</userinput>"Hello</programlisting>
+<programlisting><userinput>SHOW "Hello</userinput>
+Hello</programlisting>
 
-<programlisting><userinput>SHOW QUOTED [1 2 3]
-</userinput>[1 2 3]</programlisting>
+<programlisting><userinput>SHOW QUOTED "Hello</userinput>
+"Hello</programlisting>
+
+<programlisting><userinput>SHOW QUOTED [1 2 3]</userinput>
+[1 2 3]</programlisting>
+
 </listitem>
 </varlistentry>
 

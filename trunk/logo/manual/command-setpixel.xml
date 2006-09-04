@@ -1,5 +1,5 @@
 <section id="command-setpixel">
-    <title>SETPIXEL</title>
+<title>SETPIXEL</title>
 <indexterm><primary>SETPIXEL</primary></indexterm>
 
 <variablelist>
@@ -33,7 +33,8 @@ See <filename>Examples\3D\3DBITMAP.LGO</filename> for an example of using SETPIX
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>PENUP
+
+<programlisting><userinput>PENUP
 SETXY -128 -128
 FOR [red 0 255] [
   FOR [green 0 255] [
@@ -44,8 +45,7 @@ FOR [red 0 255] [
   RIGHT   90
   FORWARD 1 
   LEFT    90
-]
-</userinput>
+]</userinput>
 </programlisting>
 
 </listitem>

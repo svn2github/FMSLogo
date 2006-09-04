@@ -1,5 +1,5 @@
 <section id="command-dribble">
-    <title>DRIBBLE</title>
+<title>DRIBBLE</title>
 <indexterm><primary>DRIBBLE</primary></indexterm>
 
 <variablelist>
@@ -23,22 +23,21 @@ The intent is to create a transcript of a &GENERICNAME; session, including thing
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>DRIBBLE "dummy.fil
+
+<programlisting><userinput>DRIBBLE "dummy.fil
 FORWARD 100
 RIGHT 90
 NODRIBBLE
 OPENREAD "dummy.fil
 SETREAD "dummy.fil
-REPEAT 3 [SHOW READLIST]
-</userinput>
+REPEAT 3 [SHOW READLIST]</userinput>
 [FORWARD 100]
 [RIGHT 90]
 [NODRIBBLE]
 <userinput>SETREAD []
-CLOSE "dummy.fil
-</userinput>
-
+CLOSE "dummy.fil</userinput>
 </programlisting>
+
 </listitem>
 </varlistentry>
 

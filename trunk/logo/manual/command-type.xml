@@ -1,5 +1,5 @@
 <section id="command-type">
-    <title>TYPE</title>
+<title>TYPE</title>
 <indexterm><primary>TYPE</primary></indexterm>
 
 <variablelist>
@@ -23,11 +23,12 @@ This buffering makes the program much faster than it would be if each character 
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>TYPE "Hello
+
+<programlisting><userinput>TYPE "Hello
 TYPE "How
 TYPE "Are
-PRINT "You
-</userinput>HelloHowAreYou</programlisting>
+PRINT "You</userinput>
+HelloHowAreYou</programlisting>
 
 </listitem>
 </varlistentry>

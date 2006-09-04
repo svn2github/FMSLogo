@@ -1,5 +1,5 @@
 <section id="command-nodribble">
-    <title>NODRIBBLE</title>
+<title>NODRIBBLE</title>
 <indexterm><primary>NODRIBBLE</primary></indexterm>
 
 <variablelist>
@@ -13,7 +13,7 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-Stops copying information into the dribble file, and closes the file.
+Stops copying information to the dribble file and closes the file.
 </para>
 
 </listitem>
@@ -21,22 +21,21 @@ Stops copying information into the dribble file, and closes the file.
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>DRIBBLE "dummy.fil
+
+<programlisting><userinput>DRIBBLE "dummy.fil
 FORWARD 100
 RIGHT 90
 NODRIBBLE
 OPENREAD "dummy.fil
 SETREAD "dummy.fil
-REPEAT 3 [SHOW READLIST]
-</userinput>
+REPEAT 3 [SHOW READLIST]</userinput>
 [FORWARD 100]
 [RIGHT 90]
 [NODRIBBLE]
 <userinput>SETREAD []
-CLOSE "dummy.fil
-</userinput>
-
+CLOSE "dummy.fil</userinput>
 </programlisting>
+
 </listitem>
 </varlistentry>
 

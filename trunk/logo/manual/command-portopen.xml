@@ -1,5 +1,5 @@
 <section id="command-portopen">
-    <title>PORTOPEN</title>
+<title>PORTOPEN</title>
 <indexterm><primary>PORTOPEN</primary></indexterm>
 
 <variablelist>
@@ -34,9 +34,9 @@ Do not confuse this command with <link linkend="command-inport">INPORT</link> an
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>PORTOPEN "com1
-PORTCLOSE
-</userinput>
+
+<programlisting><userinput>PORTOPEN "com1
+PORTCLOSE</userinput>
 </programlisting>
 </listitem>
 </varlistentry>
