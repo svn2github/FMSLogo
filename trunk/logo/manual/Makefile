@@ -11,14 +11,11 @@ HHC      = "C:\Program Files\Help Workshop\hhc.exe"
 FOP      = "C:\Program Files\fop-0.20.5\fop.bat"
 UNIXECHO = "c:\cygwin\bin\echo.exe"
 
-CSSOPTIONS=--stringparam html.stylesheet logohelp.css --stringparam html.stylesheet.type text/css
-
-
 htmlhelp.hhp : $(SOURCEFILES) $(HHP_STYLESHEET)
-	$(XSLTPROC) --nonet $(CSSOPTIONS) $(HHP_STYLESHEET) $(ROOTFILE)
+	$(XSLTPROC) --nonet $(HHP_STYLESHEET) $(ROOTFILE)
 
 index.html : $(SOURCEFILES) $(HTML_STYLESHEET)
-	$(XSLTPROC) --nonet $(CSSOPTIONS) $(HTML_STYLESHEET) $(ROOTFILE)
+	$(XSLTPROC) --nonet $(HTML_STYLESHEET) $(ROOTFILE)
 
 logohelp.fo : $(SOURCEFILES) $(FO_STYLESHEET)
 	$(XSLTPROC) --nonet --output $@ $(FO_STYLESHEET) $(ROOTFILE)

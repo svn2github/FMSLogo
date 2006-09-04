@@ -6,12 +6,14 @@
 
   <xsl:param name="htmlhelp.only" select="0"/>
 
-  <xsl:param name="htmlhelp.chm"           select="'logohelp.chm'"/>
+  <xsl:param name="htmlhelp.chm">logohelp.chm</xsl:param>
 
   <xsl:param name="htmlhelp.hhc.show.root"             select="0"/>
   <xsl:param name="htmlhelp.hhc.folders.instead.books" select="1"/>
   <xsl:param name="htmlhelp.hhc.binary"                select="1"/>
 
+  <xsl:param name="html.stylesheet">logohelp.css</xsl:param>
+  <xsl:param name="html.stylesheet.type">text/css</xsl:param>
 
   <xsl:param name="toc.section.depth"    select="5"/>
   <xsl:param name="chunk.section.depth"  select="5"/>

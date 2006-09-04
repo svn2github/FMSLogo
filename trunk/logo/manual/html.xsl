@@ -6,11 +6,15 @@
 -->
 
   <xsl:param name="toc.section.depth"    select="5"/>
-  <xsl:param name="chunk.section.depth"  select="5"/>
   <xsl:param name="use.id.as.filename"   select="1"/>
+
+  <xsl:param name="chunk.section.depth"  select="5"/>
   <xsl:param name="chunk.first.sections" select="1"/>
 
   <xsl:param name="generate.section.toc.level" select="3"/>
+
+  <xsl:param name="html.stylesheet">logohelp.css</xsl:param>
+  <xsl:param name="html.stylesheet.type">text/css</xsl:param>
 
   <xsl:param name="generate.toc">
 book      toc,title,figure,table,example,equation
