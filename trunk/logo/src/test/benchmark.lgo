@@ -1,6 +1,6 @@
 load "testlib.lgo
 
-TO RESIZECONSOLE :width :height
+TO BENCHMARK.RESIZECONSOLE :width :height
 
   ; Load the User System Kernel
   DLLLOAD "user32.dll
@@ -16,9 +16,45 @@ TO RESIZECONSOLE :width :height
 END
 
 
+TO BENCHMARK.NONTAILRECURSIVECOUNT :depth
+
+   ; base-case
+   if :depth = 0  [ output 0 ]
+
+   ; call this recursively
+   MAKE "count 1 + BENCHMARK.NONTAILRECURSIVECOUNT :depth - 1 
+
+   ; put some code after the recursive call
+   MAKE "something.to.break.tail.recursion "true
+
+   OUTPUT :count
+
+END
+
+TO BENCHMARK.TAILRECURSIVECOUNT :depth
+
+   ; put some code before teh recursive call
+   MAKE "something.that.does.not.break.tail.recursion "true
+
+   ; base-case
+   if :depth = 0  [ output 0 ]
+
+   ; call this recursively
+   OUTPUT 1 + BENCHMARK.TAILRECURSIVECOUNT :depth - 1 
+
+END
+
+
 TO BENCHMARK 
 
-   RESIZECONSOLE 600 800 ; for consistent results
+   BENCHMARK.RESIZECONSOLE 600 800 ; for consistent results when drawing
+
+   ; time the tail-recurision optimization 
+   IGNORE TIMECOMMAND [BENCHMARK.TAILRECURSIVECOUNT    1000000 ]
+   IGNORE TIMECOMMAND [BENCHMARK.NONTAILRECURSIVECOUNT 1000000 ]
+
+   ; time creating/manipulating a large list
+   IGNORE TIMECOMMAND [REVERSE ISEQ 1 300000 ]
 
    ; time drawing concentric circles
    CLEARSCREEN
@@ -27,9 +63,6 @@ TO BENCHMARK
    ; time drawing a large squiral
    CLEARSCREEN
    IGNORE TIMECOMMAND [REPEAT 20000 [ FORWARD REPCOUNT RIGHT 91 ] ]
-
-   ; time creating/manipulating a large list
-   IGNORE TIMECOMMAND [REVERSE ISEQ 1 30000 ]
 
 END
 
