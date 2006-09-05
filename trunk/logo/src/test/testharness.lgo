@@ -43,6 +43,7 @@ LOAD "file.lgo
 LOAD "macro.lgo
 LOAD "procedure.lgo
 LOAD "parse.lgo
+LOAD "eval.lgo
 LOAD "word.lgo
 LOAD "color.lgo
 LOAD "pensize.lgo
@@ -103,6 +104,7 @@ TO TESTALL
   ERRORTEST          ; from error.lgo
   ERRACTTEST         ; from erract.lgo
   CATCHTEST          ; from catch.lgo
+  EVALTEST           ; from eval.lgo
   LISTTEST           ; from list.lgo
   LPUTTEST           ; from lput.lgo
   FPUTTEST           ; from fput.lgo

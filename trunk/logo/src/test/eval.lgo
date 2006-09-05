@@ -1,0 +1,57 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; This file contains some regression tests for the evaluator (eval.cpp)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+LOAD "testlib.lgo
+
+TO EVALTEST.NONTAILRECURSIVECOUNT :depth
+
+   ; base-case
+   if :depth = 0  [ output 0 ]
+
+   ; call this recursively
+   MAKE "count 1 + EVALTEST.NONTAILRECURSIVECOUNT :depth - 1 
+
+   ; put some code after the recursive call
+   MAKE "something.to.break.tail.recursion "true
+
+   OUTPUT :count
+
+END
+
+TO EVALTEST.NONTAILRECURSIVE
+
+   SIMPLEREPORTTEST [ EVALTEST.NONTAILRECURSIVECOUNT 120   ] 120
+   SIMPLEREPORTTEST [ EVALTEST.NONTAILRECURSIVECOUNT 60000 ] 60000
+
+END
+
+
+TO EVALTEST.TAILRECURSIVECOUNT :depth
+
+   ; base-case
+   if :depth = 0  [ output 0 ]
+
+   ; call this recursively
+   OUTPUT EVALTEST.TAILRECURSIVECOUNT :depth - 1 
+
+END
+
+
+TO EVALTEST.NONTAILRECURSIVE
+   SIMPLEREPORTTEST [ EVALTEST.NONTAILRECURSIVECOUNT 120    ] 120
+   SIMPLEREPORTTEST [ EVALTEST.NONTAILRECURSIVECOUNT 100000 ] 100000
+END
+
+TO EVALTEST.TAILRECURSIVE
+   SIMPLEREPORTTEST [ EVALTEST.TAILRECURSIVECOUNT 120   ]  120
+   SIMPLEREPORTTEST [ EVALTEST.TAILRECURSIVECOUNT 100000 ] 100000
+END
+
+
+TO EVALTEST
+
+   EVALTEST.TAILRECURSIVE
+   EVALTEST.NONTAILRECURSIVE
+
+END
