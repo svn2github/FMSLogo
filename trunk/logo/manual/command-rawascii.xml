@@ -13,12 +13,13 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-Outputs the number (between 0 and 127) that represents <parameter>character</parameter> in the ASCII character set.
+Outputs the number that represents <parameter>character</parameter> in your current code page.
 </para>
 
 <para>
-ASCII interprets control characters as representing themselves.
+Unlike <link linkend="command-ascii">ASCII</link>, RAWASCII interprets control characters as representing themselves.
 </para>
+
 </listitem>
 </varlistentry>
 
@@ -36,6 +37,15 @@ ASCII interprets control characters as representing themselves.
 
 </listitem>
 </varlistentry>
+
+<varlistentry><term>See Also</term>
+<listitem>
+<simplelist>
+<member><link linkend="command-ascii">ASCII</link></member>
+</simplelist>
+</listitem>
+</varlistentry>
+
 
 </variablelist>
 

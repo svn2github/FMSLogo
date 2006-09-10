@@ -13,12 +13,17 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-Outputs the number (between 0 and 127) that represents <parameter>character</parameter> in the ASCII character set.
+Outputs the number from 0-255 that represents <parameter>character</parameter> in your current code page.
 </para>
+
 <para>
-ASCII interprets control characters as representing backslashed punctuation and returns the character code for 
-corresponding to the punctuation character without the backslash.
+ASCII interprets control characters as representing backslashed punctuation and returns the character code corresponding to the punctuation character without the backslash.
 </para>
+
+<para>
+This command is called "ASCII" because &PRODUCTNAME; was originally restricted to the ASCII character set.
+</para>
+
 </listitem>
 </varlistentry>
 
@@ -35,6 +40,14 @@ corresponding to the punctuation character without the backslash.
 </listitem>
 </varlistentry>
 
-</variablelist>
+<varlistentry><term>See Also</term>
+<listitem>
+<simplelist>
+<member><link linkend="command-rawascii">RAWASCII</link></member>
+<member><link linkend="command-char">CHAR</link></member>
+</simplelist>
+</listitem>
+</varlistentry>
 
+</variablelist>
 </section>

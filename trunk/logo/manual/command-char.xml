@@ -13,7 +13,7 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-Outputs the character represented in the ASCII code by <parameter>number</parameter>, which must be an number between 0 and 127.
+Outputs the character represented by the numeric code <parameter>number</parameter>, which must be an integer between 0 and 255.
 </para>
 </listitem>
 </varlistentry>
@@ -27,6 +27,14 @@ a</programlisting>
 <programlisting><userinput>SHOW CHAR 65</userinput>
 A</programlisting>
 
+</listitem>
+</varlistentry>
+
+<varlistentry><term>See Also</term>
+<listitem>
+<simplelist>
+<member><link linkend="command-ascii">ASCII</link></member>
+</simplelist>
 </listitem>
 </varlistentry>
 
