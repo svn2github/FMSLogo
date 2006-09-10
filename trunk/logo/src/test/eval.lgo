@@ -33,7 +33,7 @@ TO EVALTEST.TAILRECURSIVECOUNT :depth
    if :depth = 0  [ output 0 ]
 
    ; call this recursively
-   OUTPUT EVALTEST.TAILRECURSIVECOUNT :depth - 1 
+   OUTPUT 1 + EVALTEST.TAILRECURSIVECOUNT :depth - 1 
 
 END
 
