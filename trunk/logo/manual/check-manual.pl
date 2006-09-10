@@ -14,6 +14,8 @@
 # * All <chapter> elements have an id attribute.
 # * All <section> elements have an id attribute.
 # * All occurances of "Logo" and "FMSLogo" are correct.
+# * There is no extraneous whitespace in program listings.
+# * Banned words/phrases are not used
 #
 # Missing checks:
 # * Spelling is correct.
@@ -23,7 +25,6 @@
 # * All instances of the <parameter> tag refer to actual parameters.
 # * All abbreviations are correct (and that the list is complete).
 # * Ensure program listings are 75 columns or less.
-# * Banned words/phrases are not used (for example "i.e").
 #
 ###############################################################################
 
@@ -37,6 +38,8 @@ $main::TotalWarnings = 0;
 @main::BannedWords = qw(
   left-hand
   right-hand
+  i.e.
+  e.g.
 );
 
 my %Commands = ();
@@ -794,7 +797,7 @@ foreach my $filename (<*.xml>) {
 
     # Find use of banned words
     foreach my $bannedWord (@main::BannedWords) {
-      while ($line =~ m!\b($bannedWord)\b!gi) {
+      while ($line =~ m!\b(\Q$bannedWord\E)\b!gi) {
 
         if (not $Exceptions{$filename}{bannedword}{$bannedWord}) {
           LogError($filename, $linenumber, "use of banned word: $bannedWord");
