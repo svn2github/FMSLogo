@@ -574,11 +574,8 @@ NODE *evaluator(NODE *list, enum labels where)
 
    if (proc == UNDEFINED)
       {
-      if (ufun != NIL)
-         {
-         untreeify_proc(ufun);
-         }
-
+      // proc is still undefined, so we can't apply it.
+      // Throw a "don't know how to" error.
       if (NOT_THROWING)
          {
          assign(val, err_logo(DK_HOW, fun));
@@ -592,6 +589,7 @@ NODE *evaluator(NODE *list, enum labels where)
 
    if (is_list(proc))
       {
+      // user-defined procedure (non-primitive)
       goto compound_apply;
       }
 
@@ -624,7 +622,6 @@ NODE *evaluator(NODE *list, enum labels where)
 
  compound_apply:
    // call (that is, APPLY) a non-primitive procedure/macro
-
    check_stop(true);
 
    if (tracing = flag__caseobj(fun, PROC_TRACED) || traceflag)
@@ -824,16 +821,67 @@ NODE *evaluator(NODE *list, enum labels where)
       g_ValueStatus = VALUE_STATUS_NotOk;
       }
 
+   // save the list so that we can untreeify it after we're done
+   save(list);
+   newcont(eval_sequence_cleanup);
+
  eval_sequence:
    // Evaluate each expression in the sequence.  
    // Stop as soon as val != Unbound.
-
    if (!RUNNING || val != Unbound)
       {
       goto fetch_cont;
       }
    if (nodetype(unev) == LINE)
       {
+      // HACK: The is_tree() clause is a hack to prevent a crash on 
+      // HACK: non-tail-recursive procedure calls.  The problem is that I can't
+      // HACK: figure out where to un-treeify the procedures.  This is currently
+      // HACK: done in eval_sequence_cleanup, but if the is a non-tail-recursive
+      // HACK: call the procedure body will be untreeified when the inner call
+      // HACK: returns but while the outer call is still using it.
+      if (is_tree(unparsed__line(unev)) && 
+          the_generation != generation__line(unev))
+         {
+         // Something got redefined while we're running.
+         //
+         // We must re-tree-ify the bodylist of the current
+         // procedure to ensure that it is tree-ified with the
+         // most recent procedure definitions.
+         //
+         // If we don't do this, the programmer would get the
+         // wrong behavior, but we might also AV if the old tree
+         // passed the wrong number of inputs to a primitive.
+
+         int linenum = 0;
+         assign(this_line, tree__tree(bodylist__procnode(proc)));
+         while (this_line != unev) 
+            {
+            // If redef isn't end of line, don't try to fix,
+            // but don't blow up either. (Maybe not called from here.)
+            if (this_line == NULL) 
+               {
+               goto no_fixup_necessary;
+               }
+            if (nodetype(this_line) == LINE) 
+               {
+               linenum++;
+               }
+            assign(this_line, cdr(this_line));
+	    }
+
+         make_tree_from_body(bodylist__procnode(proc));
+         assign(unev, tree__tree(bodylist__procnode(proc)));
+         while (--linenum >= 0) 
+            {
+            do 
+               {
+               pop(unev);
+               } while (unev != NIL && nodetype(unev) != LINE);
+            }
+         }
+
+ no_fixup_necessary:
       assign(this_line, unparsed__line(unev));
       if (ufun != NIL && flag__caseobj(ufun, PROC_STEPPED) || stepflag)
          {
@@ -865,13 +913,17 @@ NODE *evaluator(NODE *list, enum labels where)
        is_list(exp) && 
        is_tailform(procnode__caseobj(car(exp))))
       {
+      NODE * const caseobj = car(exp);
+
       // Get the priority of the primitive to get the "true identity".
       // This will compare correctly, even if the procedure is a copydef
       // of another procedure.
-      short expression_priority = getprimpri(procnode__caseobj(car(exp)));
+      short expression_priority = getprimpri(procnode__caseobj(caseobj));
       if (expression_priority == OUTPUT_PRIORITY)
          {
-         assign(didnt_get_output, cons_list(car(exp), ufun, this_line));
+         // they are calling some form of OUTPUT
+
+         assign(didnt_get_output, cons_list(caseobj, ufun, this_line));
          assign(didnt_output_name, NIL);
          if (g_ValueStatus == VALUE_STATUS_OutputOk || 
              g_ValueStatus == VALUE_STATUS_MaybeOk)
@@ -882,7 +934,9 @@ NODE *evaluator(NODE *list, enum labels where)
             }
          else if (ufun == NIL)
             {
-            err_logo(AT_TOPLEVEL, car(exp));
+            // We are not in a user-defined function, so they must 
+            // be calling OUTPUT at the top-level, which is an error.
+            err_logo(AT_TOPLEVEL, caseobj);
             assign(val, Unbound);
             goto fetch_cont;
             }
@@ -898,9 +952,13 @@ NODE *evaluator(NODE *list, enum labels where)
          }
       else if (expression_priority == STOP_PRIORITY)
          {
+         // they are calling some form of STOP
+
          if (ufun == NIL)
             {
-            err_logo(AT_TOPLEVEL, car(exp));
+            // We are not in a user-defined function, so they must 
+            // be calling STOP at the top-level, which is an error.
+            err_logo(AT_TOPLEVEL, caseobj);
             assign(val, Unbound);
             goto fetch_cont;
             }
@@ -974,7 +1032,7 @@ NODE *evaluator(NODE *list, enum labels where)
    num2save(ift_iff_flag, g_ValueStatus);
    save2(ufun, last_ufun);
    save2(this_line, last_line);
-   save(var);
+   save2(var, proc);
    assign(var, var_stack);
    tailcall = 0;
    newcont(eval_sequence_continue);
@@ -982,7 +1040,7 @@ NODE *evaluator(NODE *list, enum labels where)
 
  eval_sequence_continue:
    reset_args(var);
-   restore(var);
+   restore2(var, proc);
    restore2(this_line, last_line);
    restore2(ufun, last_ufun);
    if (dont_fix_ift)
@@ -1072,6 +1130,17 @@ NODE *evaluator(NODE *list, enum labels where)
       goto fetch_cont;
       }
    goto eval_sequence;
+
+
+ eval_sequence_cleanup:
+   
+   // Untreeify the bodylist to free memory that was allocated in 
+   // make_tree_from_body().  Note that this is not quite right,
+   // we can end up un-treeifying a procedure while it's still in use
+   // if it is tree recursive.  See bug #1454113.
+   restore(list);
+   untreeify_body(list);
+   goto fetch_cont;
 
  compound_apply_continue:
    /* Only get here if tracing */

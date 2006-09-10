@@ -56,27 +56,14 @@ void untreeify_line(NODE *line)
       }
    }
 
-void untreeify_proc(NODE *procname)
-   {
-   NODE *procnode = procnode__caseobj(procname);
-   if (procnode == Unbound)
-      {
-      // the procedure got erased while we were processing it
-      return;
-      }
+void untreeify_body(NODE *body) {
+    NODE *body_ptr;
 
-   // get the list of S-expressions that make up this procedure
-   NODE *body = bodylist__procnode(procnode);
-
-   // untreeify each S-expression within the body
-   for (NODE * body_ptr = body; body_ptr != NIL; body_ptr = cdr(body_ptr))
-      {
-      untreeify_line(car(body_ptr));
-      }
-
-   // untreeify the body
-   untreeify(body);
-   }
+    for (body_ptr = body; body_ptr != NIL; body_ptr = cdr(body_ptr)) {
+	untreeify_line(car(body_ptr));
+    }
+    untreeify(body);
+}
 
 // Treeify a procedure's bodylines by appending the trees of the lines.
 void make_tree_from_body(NODE *body)
@@ -85,6 +72,15 @@ void make_tree_from_body(NODE *body)
          (is_tree(body) && generation__tree(body) == the_generation))
       {
       return;
+      }
+
+   if (is_tree(body)) 
+      {
+      // The definition of something has changed.
+      // We must re-treeify this body in case it calls the 
+      // procedure which changed.
+      assert(generation__tree(body) != the_generation);
+      untreeify_body(body);
       }
 
    NODE *end_ptr = NIL;
@@ -97,7 +93,10 @@ void make_tree_from_body(NODE *body)
          continue;
          }
 
+      // store the current line (for error reporting)
       assign(this_line, tree);
+
+      // tree-ify this line
       make_tree(tree);
       if (is_tree(tree))
          {
@@ -118,8 +117,6 @@ void make_tree_from_body(NODE *body)
             {
             setgeneration__tree(body, Unbound);
             }
-
-         untreeify(car(body_ptr));
 
          // advance end_ptr to the end of body's tree list
          while (cdr(tree) != NIL)

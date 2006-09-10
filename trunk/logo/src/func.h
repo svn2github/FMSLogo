@@ -349,7 +349,7 @@ extern NODE *lrunparse(NODE *args);
 extern void uninitialize_parser(void);
 
 // File paren.cpp 
-extern void untreeify_proc(NODE *procname);
+extern void untreeify_body(NODE *body);
 extern void make_tree_from_body(NODE *body);
 extern void make_tree(NODE *list);
 extern int priority(NODE *proc_obj);

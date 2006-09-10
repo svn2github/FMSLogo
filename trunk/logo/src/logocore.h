@@ -583,6 +583,7 @@ parsed__runparse(
 #define settree__tree(t, v)     settreepair__tree(t, cons(the_generation, v))
 
 #define unparsed__line(l)       getobject(l)
+#define generation__line(l)	    (generation__tree(unparsed__line(l)))
 #define tree__line(l)           l
 
 #define cont__cont(c)           (int)car(c)
@@ -690,6 +691,7 @@ gcref(NODE * object)
    x(catch_continuation) \
    x(catch_followup) \
    x(goto_continuation) \
+   x(eval_sequence_cleanup) \
 
 
 #define do_enum(x) x,
