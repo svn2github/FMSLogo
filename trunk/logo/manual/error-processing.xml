@@ -3,30 +3,33 @@
 
 <para>
 If an error occurs, &GENERICNAME; takes the following steps.
-First, if there is an available variable named <link linkend="command-erract">ERRACT</link>, &GENERICNAME; takes its value as an instructionlist and runs the instructions.
+First, if there is an available variable named <link linkend="command-erract">ERRACT</link>, &GENERICNAME; takes its value as an instruction list and runs the instructions.
 The operation <link linkend="command-error">ERROR</link> may be used within the instructions (once) to examine the error condition.
-If the instructionlist invokes <link linkend="command-pause">PAUSE</link>, the error message is printed before the pause happens.
-Certain errors are "recoverable"; for one of those errors, if the instructionlist outputs a value, that value is used in place of the expression that caused the error.
-(If ERRACT invokes PAUSE and the user then invokes <link linkend="command-continue">CONTINUE</link> with an input, that input becomes the output from PAUSE and therefore the output from the ERRACT instructionlist.)
+If the instruction list invokes <link linkend="command-pause">PAUSE</link>, the error message is printed before the pause happens.
+Certain errors are "recoverable"; for one of those errors, if the instruction list outputs a value, that value is used in place of the expression that caused the error.
+(If ERRACT invokes PAUSE and the user then invokes <link linkend="command-continue">CONTINUE</link> with an input, that input becomes the output from PAUSE and therefore the output from the ERRACT instruction list.)
 </para>
 
 <para>
-It is possible for an ERRACT instructionlist to produce an inappropriate value or no value where one is needed.
+It is possible for an ERRACT instruction list to produce an inappropriate value or no value where one is needed.
 As a result, the same error condition could recur forever.
-To avoid that danger, if the same error condition occurs twice in a row from an ERRACT instructionlist without user interaction, the message "Erract loop" is printed and control returns to toplevel.
+
+<!-- The following is commented out because this functionality has been removed.
+     It has not been removed because maybe I should add it back.
+To avoid that danger, if the same error condition occurs twice in a row from an ERRACT instruction list without user interaction, the message "Erract loop" is printed and control returns to toplevel.
 "Without user interaction" means that if ERRACT invokes PAUSE and the user provides an incorrect value, this loop prevention mechanism does not take effect and the user gets to try again.
+-->
 </para>
 
 <para>
-During the running of the ERRACT instructionlist, ERRACT is locally unbound, so an error in the ERRACT instructions themselves will not cause a loop.
-In particular, an error during a pause will not cause a pause-within-a-pause unless the user reassigns the value [PAUSE] to ERRACT during the pause.
-Such an error will not return to toplevel; it will remain within the original pause loop.
+During the running of the ERRACT instruction list, the value of ERRACT is ignored, so that an error in the ERRACT instruction list will not cause a loop.
+In particular, an error during a pause will not cause a pause-within-a-pause.
 </para>
 
 <para>
 If ERRACT has no value, &GENERICNAME; handles the error by generating an internal <userinput>THROW "ERROR</userinput>.
 If this <link linkend="command-throw">THROW</link> is not caught by a <userinput>CATCH "ERROR</userinput> in the user program, it is eventually caught either by the toplevel instruction loop or by a pause loop, which prints the error message.
-An invocation of <userinput>CATCH "ERROR</userinput> in a user program locally unbinds ERRACT, so the effect is that whichever of ERRACT and CATCH "ERROR is more local will take precedence.
+An invocation of <userinput>CATCH "ERROR</userinput> will take precedence over ERRACT.
 </para>
 
 <para>
@@ -35,13 +38,33 @@ If a floating point overflow occurs during an arithmetic operation, or a two-inp
 
    <section id="error-codes">
       <title>Error Codes</title>
+      <indexterm><primary>Error Codes</primary></indexterm>
 
 <para>
-Here are the numeric codes that appear as the first element of the list output by ERROR when an error is caught, with the corresponding messages.
-Some messages may have two different codes depending on whether the error is recoverable (that is, a substitute value can be provided through the ERRACT mechanism) in the specific context.
-Some messages are warnings rather than errors; these will not be caught.
-The first two are so bad that &GENERICNAME; exits immediately.
+When an error happens, you can use the <link linkend="command-error">ERROR</link> command to figure out what went wrong.
+ERROR outputs a list whose items describe the error.
+The first item is a numeric code for the type of error that occurred. 
+The second item is a human-readable message that explains the error.
+</para>
 
+<para>
+Some messages may have two different codes depending on whether the error is recoverable (that is, if a substitute value can be provided through the <link linkend="command-erract">ERRACT</link> mechanism).
+</para>
+
+<para>
+Some messages are warnings rather than errors; these can not be caught.
+</para>
+
+<para>
+The conditions which generate the first two error codes so bad that &GENERICNAME; exits immediately.
+These also cannot be caught.
+</para>
+
+<para>
+The numeric error codes and their corresponding human-readable messages are given in the table below.
+</para>
+
+<para>
 <informaltable frame='all'>
   <tgroup cols='2'>
     <thead>
