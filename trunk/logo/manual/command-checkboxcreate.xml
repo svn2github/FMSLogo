@@ -15,7 +15,7 @@
 <para>
 Creates a checkbox control.
 A checkbox control is used to give the user a selection between True and False.
-A checkbox must also be associated with a groupbox control (see <link linkend="command-groupboxcreate">GROUPBOXCREATE</link>).
+A checkbox must be associated with a groupbox control (see <link linkend="command-groupboxcreate">GROUPBOXCREATE</link>).
 </para>
 
 <para>
@@ -83,5 +83,4 @@ WINDOWDELETE "main</userinput>
 </varlistentry>
 
 </variablelist>
-
 </section>
