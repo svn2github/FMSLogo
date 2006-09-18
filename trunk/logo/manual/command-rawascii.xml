@@ -39,11 +39,9 @@ Unlike <link linkend="command-ascii">ASCII</link>, RAWASCII interprets control c
 </varlistentry>
 
 <varlistentry><term>See Also</term>
-<listitem>
-<simplelist>
+<listitem><simplelist>
 <member><link linkend="command-ascii">ASCII</link></member>
-</simplelist>
-</listitem>
+</simplelist></listitem>
 </varlistentry>
 
 

@@ -31,11 +31,9 @@ A</programlisting>
 </varlistentry>
 
 <varlistentry><term>See Also</term>
-<listitem>
-<simplelist>
+<listitem><simplelist>
 <member><link linkend="command-ascii">ASCII</link></member>
-</simplelist>
-</listitem>
+</simplelist></listitem>
 </varlistentry>
 
 </variablelist>
