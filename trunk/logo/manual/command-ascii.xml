@@ -41,12 +41,10 @@ This command is called "ASCII" because &PRODUCTNAME; was originally restricted t
 </varlistentry>
 
 <varlistentry><term>See Also</term>
-<listitem>
-<simplelist>
+<listitem><simplelist>
 <member><link linkend="command-rawascii">RAWASCII</link></member>
 <member><link linkend="command-char">CHAR</link></member>
-</simplelist>
-</listitem>
+</simplelist></listitem>
 </varlistentry>
 
 </variablelist>
