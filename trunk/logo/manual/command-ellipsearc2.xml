@@ -1,5 +1,5 @@
 <section id="command-ellipsearc2">
-    <title>ELLIPSEARC2</title>
+<title>ELLIPSEARC2</title>
 <indexterm><primary>ELLIPSEARC2</primary></indexterm>
 
 <variablelist>
@@ -28,21 +28,18 @@ Normally, the turtle moves forward in a clockwise direction, but if the <paramet
 The <parameter>startangle</parameter> input should always be zero.
 </para>
 
-<para>
-See also <link linkend="command-ellipsearc">ELLIPSEARC</link>.
-</para>
-
 </listitem>
 </varlistentry>
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>; a 2D example
+
+<programlisting><userinput>; a 2D example
 ELLIPSEARC2 90 100 200 0
 ELLIPSEARC2 90  50 100 0</userinput>
 </programlisting>
 
-    <programlisting><userinput>; a 3D example
+<programlisting><userinput>; a 3D example
 PERSPECTIVE
 REPEAT 72 [ELLIPSEARC2 90 50 100 0 RIGHTROLL 5]</userinput>
 </programlisting>
@@ -50,6 +47,11 @@ REPEAT 72 [ELLIPSEARC2 90 50 100 0 RIGHTROLL 5]</userinput>
 </listitem>
 </varlistentry>
 
-</variablelist>
+<varlistentry><term>See Also</term>
+<listitem><simplelist>
+<member><link linkend="command-ellipsearc">ELLIPSEARC</link></member>
+</simplelist></listitem>
+</varlistentry>
 
+</variablelist>
 </section>

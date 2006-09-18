@@ -1,5 +1,5 @@
 <section id="command-cos">
-    <title>COS</title>
+<title>COS</title>
 <indexterm><primary>COS</primary></indexterm>
 
 <variablelist>
@@ -14,7 +14,6 @@
 <listitem>
 <para>
 Outputs the cosine of <parameter>angle</parameter>, which is taken in degrees.
-See also <link linkend="command-radcos">RADCOS</link>.
 </para>
 
 </listitem>
@@ -22,15 +21,24 @@ See also <link linkend="command-radcos">RADCOS</link>.
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>SHOW COS 0</userinput>
+
+<programlisting><userinput>SHOW COS 0</userinput>
 1</programlisting>
-    <programlisting><userinput>SHOW COS 90</userinput>
+
+<programlisting><userinput>SHOW COS 90</userinput>
 0</programlisting>
-    <programlisting><userinput>SHOW COS 180</userinput>
+
+<programlisting><userinput>SHOW COS 180</userinput>
 -1</programlisting>
+
 </listitem>
 </varlistentry>
 
-</variablelist>
+<varlistentry><term>See Also</term>
+<listitem><simplelist>
+<member><link linkend="command-radcos">RADCOS</link></member>
+</simplelist></listitem>
+</varlistentry>
 
+</variablelist>
 </section>

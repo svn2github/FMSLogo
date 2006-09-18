@@ -1,5 +1,5 @@
 <section id="command-chdir">
-    <title>CHDIR</title>
+<title>CHDIR</title>
 <indexterm><primary>CHDIR</primary></indexterm>
 
 <variablelist>
@@ -17,10 +17,6 @@ Changes the current working directory to <parameter>directoryname</parameter>, j
 The <parameter>directoryname</parameter> input must be a word.
 You can use <link linkend="command-dir">DIR</link> to list both files and directories.
 </para>
-
-<para>
-See also <link linkend="command-popdir">POPDIR</link> and <link linkend="command-mkdir">MKDIR</link>.
-</para>
 </listitem>
 </varlistentry>
 
@@ -33,6 +29,13 @@ Changed to "C:\Program Files\&PRODUCTNAME;\Examples"
 Changed to "C:\Program Files\&PRODUCTNAME;"
 </programlisting>
 </listitem>
+</varlistentry>
+
+<varlistentry><term>See Also</term>
+<listitem><simplelist>
+<member><link linkend="command-popdir">POPDIR</link></member>
+<member><link linkend="command-mkdir">MKDIR</link></member>
+</simplelist></listitem>
 </varlistentry>
 
 </variablelist>

@@ -1,5 +1,5 @@
 <section id="command-ellipse2">
-    <title>ELLIPSE2</title>
+<title>ELLIPSE2</title>
 <indexterm><primary>ELLIPSE2</primary></indexterm>
 
 <variablelist>
@@ -18,17 +18,12 @@ The size of the ellipse is based on the <parameter>crosswise.semiaxis</parameter
 The <parameter>crosswise.semiaxis</parameter> input is the distance from the center-point of the ellipse to the ellipse's edge in the direction perpendicular to the turtle's current heading.
 The <parameter>inline.semiaxis</parameter> input is the distance from the center-point of the ellipse to the ellipse's edge in the direction which the turtle is currently heading.
 </para>
-
-<para>
-See also <link linkend="command-ellipse">ELLIPSE</link>.
-</para>
-
 </listitem>
 </varlistentry>
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>; a 2D example
+<programlisting><userinput>; a 2D example
 ELLIPSE2 100 200
 CLEARSCREEN
 ELLIPSE2 50 50
@@ -36,7 +31,7 @@ CLEARSCREEN
 ELLIPSE2 50 50</userinput>
 </programlisting>
 
-    <programlisting><userinput>; a 3D example
+<programlisting><userinput>; a 3D example
 PERSPECTIVE
 REPEAT 72 [ELLIPSE2 200 100 RIGHTROLL 5 FORWARD 5]</userinput>
 </programlisting>
@@ -44,6 +39,11 @@ REPEAT 72 [ELLIPSE2 200 100 RIGHTROLL 5 FORWARD 5]</userinput>
 </listitem>
 </varlistentry>
 
-</variablelist>
+<varlistentry><term>See Also</term>
+<listitem><simplelist>
+<member><link linkend="command-ellipse">ELLIPSE</link></member>
+</simplelist></listitem>
+</varlistentry>
 
+</variablelist>
 </section>

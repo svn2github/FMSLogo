@@ -1,5 +1,5 @@
 <section id="command-ellipsearc">
-    <title>ELLIPSEARC</title>
+<title>ELLIPSEARC</title>
 <indexterm><primary>ELLIPSEARC</primary></indexterm>
 
 <variablelist>
@@ -35,16 +35,13 @@ For example, a <parameter>startangle</parameter> of 90 will start <parameter>cro
 Normally the elliptic arc is draw clockwise, but if the <parameter>angle</parameter> input is negative, then the elliptic arc is draw counter-clockwise.
 </para>
 
-<para>
-See also <link linkend="command-ellipsearc2">ELLIPSEARC2</link>.
-</para>
-
 </listitem>
 </varlistentry>
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>; a 2D example
+
+<programlisting><userinput>; a 2D example
 ELLIPSEARC 360 100 200 0
 CLEARSCREEN
 ELLIPSEARC 90 50 50 0
@@ -52,7 +49,7 @@ CLEARSCREEN
 ELLIPSEARC 90 50 50 90</userinput>
 </programlisting>
 
-    <programlisting><userinput>; a 3D example
+<programlisting><userinput>; a 3D example
 PERSPECTIVE
 REPEAT 72 [ELLIPSEARC 90 100 150 45 RIGHTROLL 5]</userinput>
 </programlisting>
@@ -60,6 +57,11 @@ REPEAT 72 [ELLIPSEARC 90 100 150 45 RIGHTROLL 5]</userinput>
 </listitem>
 </varlistentry>
 
-</variablelist>
+<varlistentry><term>See Also</term>
+<listitem><simplelist>
+<member><link linkend="command-ellipsearc2">ELLIPSEARC2</link></member>
+</simplelist></listitem>
+</varlistentry>
 
+</variablelist>
 </section>
