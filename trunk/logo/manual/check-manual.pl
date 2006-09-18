@@ -25,6 +25,7 @@
 # * All instances of the <parameter> tag refer to actual parameters.
 # * All abbreviations are correct (and that the list is complete).
 # * Ensure program listings are 75 columns or less.
+# * Links in the "See Also" section don't reference the current page.
 #
 ###############################################################################
 
@@ -38,8 +39,10 @@ $main::TotalWarnings = 0;
 @main::BannedWords = qw(
   left-hand
   right-hand
+  ie
   i.e.
   e.g.
+  eg
 );
 
 my %Commands = ();
@@ -706,6 +709,12 @@ foreach my $filename (<*.xml>) {
           $exampleContainsCommand = 1;
         }
       }
+
+      # Find variations of the phrase "see also" that should be replaced
+      # with a "See Also" section
+      if ($line =~ m/see/i and $line =~ m/also/i and $line !~ m/<term>/) {
+        LogWarning($filename, $linenumber, "Use of term 'see also'.  Consider using a formal 'See Also' section, instead.");
+      }
     }
 
     while ($line =~ m!<link linkend="(.*?)">(.*?)</link>!g) {
@@ -782,13 +791,13 @@ foreach my $filename (<*.xml>) {
 
     # Find places where <programlisting> includes undesired leading whitespace.
     # This extra space is unneccesary, since padding is automatically added by the CSS.
-    if ($line =~ m!<programlisting>\s+\S!) {
+    if ($line =~ m!<programlisting>\s+!) {
       LogWarning($filename, $linenumber, "<programlisting> section includes leading whitespace");
     }
 
     # Find places where <userinput> includes undesired leading/trailing whitespace.
     # This extra space looks bad when it is rendered within a grey box.
-    if ($line =~ m!<userinput>\s+\S!) {
+    if ($line =~ m!<userinput>\s+!) {
       LogWarning($filename, $linenumber, "<userinput> section includes leading whitespace");
     }
     if ($line =~ m!^</userinput>!) {
