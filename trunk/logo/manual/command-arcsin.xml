@@ -1,5 +1,5 @@
 <section id="command-arcsin">
-    <title>ARCSIN</title>
+<title>ARCSIN</title>
 <indexterm><primary>ARCSIN</primary></indexterm>
 
 <variablelist>
@@ -19,10 +19,6 @@ The output is given in degrees in the range [-90, 90].
 <parameter>num</parameter> must be in the range [-1, 1].
 </para>
 
-<para>
-See also <link linkend="command-radarcsin">RADARCSIN</link>.
-</para>
-
 </listitem>
 </varlistentry>
 
@@ -35,6 +31,11 @@ See also <link linkend="command-radarcsin">RADARCSIN</link>.
 </listitem>
 </varlistentry>
 
-</variablelist>
+<varlistentry><term>See Also</term>
+<listitem><simplelist>
+<member><link linkend="command-radarcsin">RADARCSIN</link></member>
+</simplelist></listitem>
+</varlistentry>
 
+</variablelist>
 </section>

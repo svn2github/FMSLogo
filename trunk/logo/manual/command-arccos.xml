@@ -1,5 +1,5 @@
 <section id="command-arccos">
-    <title>ARCCOS</title>
+<title>ARCCOS</title>
 <indexterm><primary>ARCCOS</primary></indexterm>
 
 <variablelist>
@@ -19,10 +19,6 @@ The output is given in degrees in the range [0, 180].
 <parameter>num</parameter> must be in the range [-1, 1].
 </para>
 
-<para>
-See also <link linkend="command-radarccos">RADARCCOS</link>.
-</para>
-
 </listitem>
 </varlistentry>
 
@@ -35,6 +31,11 @@ See also <link linkend="command-radarccos">RADARCCOS</link>.
 </listitem>
 </varlistentry>
 
-</variablelist>
+<varlistentry><term>See Also</term>
+<listitem><simplelist>
+<member><link linkend="command-radarccos">RADARCCOS</link></member>
+</simplelist></listitem>
+</varlistentry>
 
+</variablelist>
 </section>
