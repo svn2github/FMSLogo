@@ -1,5 +1,5 @@
 <section id="command-bitpaste">
-    <title>BITPASTE</title>
+<title>BITPASTE</title>
 <indexterm><primary>BITPASTE</primary></indexterm>
 
 <variablelist>
@@ -16,10 +16,6 @@
 This command "pastes" the image that was <link linkend="command-bitcut">BITCUT</link> into the bitmap index specified by <link linkend="command-bitindex">BITINDEX</link>.
 If BITINDEX is 0, then BITPASTE will paste the contents of the clipboard.
 The bitmap is pasted to the location of the turtle, with the turtle being the lower-left corner.
-</para>
-
-<para>
-See also <link linkend="command-setbitindex">SETBITINDEX</link> and <link linkend="command-setbitmode">SETBITMODE</link>.
 </para>
 </listitem>
 </varlistentry>
@@ -40,6 +36,12 @@ REPEAT 36 [FORWARD 150 BITPASTE BACK 150 RIGHT 10]</userinput>
 </listitem>
 </varlistentry>
 
-</variablelist>
+<varlistentry><term>See Also</term>
+<listitem><simplelist>
+<member><link linkend="command-setbitindex">SETBITINDEX</link></member>
+<member><link linkend="command-setbitmode">SETBITMODE</link></member>
+</simplelist></listitem>
+</varlistentry>
 
+</variablelist>
 </section>

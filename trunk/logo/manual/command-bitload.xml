@@ -1,5 +1,5 @@
 <section id="command-bitload">
-    <title>BITLOAD</title>
+<title>BITLOAD</title>
 <indexterm><primary>BITLOAD</primary></indexterm>
 
 <variablelist>
@@ -27,10 +27,6 @@ The picture is always pasted right-side-up with the bottom running horizontally 
 BITLOAD is equivalent to selecting the <link linkend="menu-bitmap-load">Bitmap - Load</link> menu option.
 </para>
 
-<para>
-See also <link linkend="command-bitsave">BITSAVE</link>.
-</para>
-
 </listitem>
 </varlistentry>
 
@@ -43,6 +39,11 @@ See also <link linkend="command-bitsave">BITSAVE</link>.
 </listitem>
 </varlistentry>
 
-</variablelist>
+<varlistentry><term>See Also</term>
+<listitem><simplelist>
+<member><link linkend="command-bitsave">BITSAVE</link></member>
+</simplelist></listitem>
+</varlistentry>
 
+</variablelist>
 </section>
