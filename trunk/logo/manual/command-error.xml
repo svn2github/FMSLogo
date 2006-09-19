@@ -19,7 +19,7 @@ The error list contains four members: an integer code corresponding to the type 
 </para>
 
 <para>
-See also the list of <link linkend="error-codes">error codes</link>.
+The meaning of the first item in the list is explained in the section on <link linkend="error-codes">Error Codes</link>.
 </para>
 
 </listitem>
