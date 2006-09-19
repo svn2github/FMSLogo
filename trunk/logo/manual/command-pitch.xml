@@ -1,5 +1,5 @@
 <section id="command-pitch">
-    <title>PITCH</title>
+<title>PITCH</title>
 <indexterm><primary>PITCH</primary></indexterm>
 
 <variablelist>
@@ -15,7 +15,6 @@
 <para>
 Outputs the angle of the turtle's pitch in degrees.
 It is important to <link linkend="understand-your-orientation-in-3D">understand your orientation in 3D</link>.
-See also <link linkend="command-setpitch">SETPITCH</link>.
 </para>
 <para>
 This command is designed to run in <link linkend="command-perspective">PERSPECTIVE</link> mode.
@@ -25,13 +24,20 @@ This command is designed to run in <link linkend="command-perspective">PERSPECTI
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>SETPITCH 90
+<programlisting><userinput>SETPITCH 90
 SHOW PITCH</userinput>
 90
 </programlisting>
 </listitem>
 </varlistentry>
 
-</variablelist>
 
+<varlistentry><term>See Also</term>
+<listitem><simplelist>
+<member><link linkend="command-setpitch">SETPITCH</link></member>
+</simplelist></listitem>
+</varlistentry>
+
+
+</variablelist>
 </section>

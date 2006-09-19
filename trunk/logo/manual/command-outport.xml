@@ -16,7 +16,6 @@
 Writes <parameter>data</parameter> to the "hardware" port specified by <parameter>portid</parameter>.
 The <parameter>data</parameter> parameter must be a 2 byte integer (a number from 0 to 65525).
 Do not confuse this command with <link linkend="command-portopen">PORTOPEN</link> and <link linkend="command-portwritechar">PORTWRITECHAR</link> which are for communications through the serial and parallel ports.
-See also <link linkend="command-outportb">OUTPORTB</link> and <link linkend="command-inport">INPORT</link>.
 </para>
 
 </listitem>
@@ -31,6 +30,13 @@ See also <link linkend="command-outportb">OUTPORTB</link> and <link linkend="com
 </listitem>
 </varlistentry>
 
-</variablelist>
 
+<varlistentry><term>See Also</term>
+<listitem><simplelist>
+<member><link linkend="command-outportb">OUTPORTB</link></member>
+<member><link linkend="command-inport">INPORT</link></member>
+</simplelist></listitem>
+</varlistentry>
+
+</variablelist>
 </section>

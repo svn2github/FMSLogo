@@ -1,5 +1,5 @@
 <section id="command-rmdir">
-    <title>RMDIR</title>
+<title>RMDIR</title>
 <indexterm><primary>RMDIR</primary></indexterm>
 
 <variablelist>
@@ -18,10 +18,6 @@ The <parameter>directoryname</parameter> input must be a word (a name of an exis
 You cannot remove a directory if it is your working directory.
 You cannot remove a directory that contains files or other directories (both <link linkend="command-files">FILES</link> and <link linkend="command-directories">DIRECTORIES</link> must return the empty list when it is your working directory).
 </para>
-
-<para>
-See also <link linkend="command-mkdir">MKDIR</link>.
-</para>
 </listitem>
 </varlistentry>
 
@@ -38,6 +34,13 @@ Removed directory "junk"
 </programlisting>
 </listitem>
 </varlistentry>
+
+<varlistentry><term>See Also</term>
+<listitem><simplelist>
+<member><link linkend="command-mkdir">MKDIR</link></member>
+</simplelist></listitem>
+</varlistentry>
+
 
 </variablelist>
 </section>

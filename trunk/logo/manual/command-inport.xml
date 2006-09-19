@@ -16,7 +16,6 @@
 Reads 2 bytes (16 bits) from the port specified by <parameter>portid</parameter> and output the data as an integer.
 The <parameter>portid</parameter> parameter specifies a "Hardware" port.
 Do not confuse this command with <link linkend="command-portopen">PORTOPEN</link> and <link linkend="command-portreadchar">PORTREADCHAR</link> which are for communications through the serial and parallel ports.
-See also <link linkend="command-inportb">INPORTB</link> and <link linkend="command-outport">OUTPORT</link>.
 </para>
 
 </listitem>
@@ -32,6 +31,12 @@ See also <link linkend="command-inportb">INPORTB</link> and <link linkend="comma
 </listitem>
 </varlistentry>
 
-</variablelist>
+<varlistentry><term>See Also</term>
+<listitem><simplelist>
+<member><link linkend="command-inportb">INPORTB</link></member>
+<member><link linkend="command-outport">OUTPORT</link></member>
+</simplelist></listitem>
+</varlistentry>
 
+</variablelist>
 </section>

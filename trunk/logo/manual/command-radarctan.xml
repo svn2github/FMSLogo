@@ -1,5 +1,5 @@
 <section id="command-radarctan">
-    <title>RADARCTAN</title>
+<title>RADARCTAN</title>
 <indexterm><primary>RADARCTAN</primary></indexterm>
 
 <variablelist>
@@ -23,10 +23,6 @@ With two inputs, outputs the inverse tangent angle of <parameter>y</parameter> /
 The output is given in radians in the range [-PI,PI].
 </para>
 
-<para>
-See also <link linkend="command-arctan">ARCTAN</link>.
-</para>
-
 </listitem>
 </varlistentry>
 
@@ -37,6 +33,12 @@ true</programlisting>
 </listitem>
 </varlistentry>
 
-</variablelist>
 
+<varlistentry><term>See Also</term>
+<listitem><simplelist>
+<member><link linkend="command-arctan">ARCTAN</link></member>
+</simplelist></listitem>
+</varlistentry>
+
+</variablelist>
 </section>

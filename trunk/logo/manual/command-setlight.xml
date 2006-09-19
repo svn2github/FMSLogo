@@ -1,5 +1,5 @@
 <section id="command-setlight">
-    <title>SETLIGHT</title>
+<title>SETLIGHT</title>
 <indexterm><primary>SETLIGHT</primary></indexterm>
 
 <variablelist>
@@ -19,7 +19,6 @@ The ambient component defines how much background light there is; the larger the
 The diffusion component is not a property of light source, but a property of how smooth the surface is (how much it scatters light).
 A higher value means the objects are smoother and reflective (like marble) a low value means the objects are rough (like chalk).
 To position the light use <userinput>SETTURTLE -3</userinput>.
-See also <link linkend="command-light">LIGHT</link>.
 </para>
 
 </listitem>
@@ -28,12 +27,12 @@ See also <link linkend="command-light">LIGHT</link>.
 <varlistentry><term>Example</term>
 <listitem>
 
-    <programlisting><userinput>; simple usage
+<programlisting><userinput>; simple usage
 SETLIGHT [0.3 0.6]
 SHOW LIGHT</userinput>
 [0.3 0.6]</programlisting>
 
-    <programlisting><userinput>; a lightshow
+<programlisting><userinput>; a lightshow
 TO SQUARE
   POLYSTART
   REPEAT 4 [FORWARD 100 RIGHT 90]
@@ -52,6 +51,13 @@ REPEAT 10 [
 </listitem>
 </varlistentry>
 
-</variablelist>
+<varlistentry><term>See Also</term>
+<listitem><simplelist>
+<member><link linkend="command-light">LIGHT</link></member>
+</simplelist></listitem>
+</varlistentry>
 
+
+
+</variablelist>
 </section>

@@ -1,5 +1,5 @@
 <section id="command-untrace">
-    <title>UNTRACE</title>
+<title>UNTRACE</title>
 <indexterm><primary>UNTRACE</primary></indexterm>
 
 <variablelist>
@@ -18,10 +18,6 @@ Turns off tracing for the named items.
 
 <para>
 UNTRACE does not throw an error if it is asked to untrace a procedure, variable, or property list that is not being trace, but doing so has no effect.
-</para>
-
-<para>
-See also the <link linkend="command-trace">TRACE</link> command and the <link linkend="commander-trace">Trace Button</link>.
 </para>
 </listitem>
 </varlistentry>
@@ -47,6 +43,12 @@ Hello
 </listitem>
 </varlistentry>
 
-</variablelist>
+<varlistentry><term>See Also</term>
+<listitem><simplelist>
+<member><link linkend="command-trace">TRACE</link></member>
+<member><link linkend="commander-trace">The Trace Button</link></member>
+</simplelist></listitem>
+</varlistentry>
 
+</variablelist>
 </section>

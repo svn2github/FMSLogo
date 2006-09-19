@@ -1,5 +1,5 @@
 <section id="command-trace">
-    <title>TRACE</title>
+<title>TRACE</title>
 <indexterm><primary>TRACE</primary></indexterm>
 
 <variablelist>
@@ -25,11 +25,7 @@ TRACE also does not throw an error if asked to trace a primitive, but this also 
 </para>
 
 <para>
-See also the <link linkend="command-untrace">UNTRACE</link> command and the <link linkend="commander-trace">Trace Button</link>.
-</para>
-
-<para>
-See the <link linkend="workspace-queries">Workspace Queries</link> section for an explanation of the <parameter>contentslist</parameter> parameter.
+See the <link linkend="workspace-queries">Workspace Queries</link> section for an explanation of the <parameter>contentslist</parameter> input.
 </para>
 </listitem>
 </varlistentry>
@@ -56,6 +52,13 @@ Hello
 </listitem>
 </varlistentry>
 
-</variablelist>
+<varlistentry><term>See Also</term>
+<listitem><simplelist>
+<member><link linkend="command-untrace">UNTRACE</link></member>
+<member><link linkend="commander-trace">The Trace Button</link></member>
+<member><link linkend="workspace-queries">Workspace Queries</link></member>
+</simplelist></listitem>
+</varlistentry>
 
+</variablelist>
 </section>

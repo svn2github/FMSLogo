@@ -44,10 +44,6 @@ You can think of MIDI commands in &PRODUCTNAME; as a programmable keyboard.
 It just so happens that the link between your programmable keyboard (MIDI commands) and your Speaker is MIDI.
 </para>
 
-<para>
-See also the <link linkend="command-midimessage">MIDIMESSAGE</link> and <link linkend="command-midiclose">MIDICLOSE</link> commands.
-</para>
-
 </listitem>
 </varlistentry>
 
@@ -61,7 +57,13 @@ See also the <link linkend="command-midimessage">MIDIMESSAGE</link> and <link li
 </listitem>
 </varlistentry>
 
+<varlistentry><term>See Also</term>
+<listitem><simplelist>
+<member><link linkend="command-midimessage">MIDIMESSAGE</link></member>
+<member><link linkend="command-midiclose">MIDICLOSE</link></member>
+</simplelist></listitem>
+</varlistentry>
+
 
 </variablelist>
-
 </section>

@@ -1,5 +1,5 @@
 <section id="command-unstep">
-    <title>UNSTEP</title>
+<title>UNSTEP</title>
 <indexterm><primary>UNSTEP</primary></indexterm>
 
 <variablelist>
@@ -18,10 +18,6 @@ Turns off stepping for the items in a contents list.
 
 <para>
 UNSTEP does not throw an error if it is asked to unstep a procedure or variable is not stepped, but doing so has no effect.
-</para>
-
-<para>
-See also the <link linkend="command-step">STEP</link> command and the <link linkend="commander-step">Step Button</link>.
 </para>
 </listitem>
 </varlistentry>
@@ -44,6 +40,12 @@ MYPROGRAM</userinput>
 </listitem>
 </varlistentry>
 
-</variablelist>
+<varlistentry><term>See Also</term>
+<listitem><simplelist>
+<member><link linkend="command-step">STEP</link></member>
+<member><link linkend="commander-step">The Step Button</link></member>
+</simplelist></listitem>
+</varlistentry>
 
+</variablelist>
 </section>

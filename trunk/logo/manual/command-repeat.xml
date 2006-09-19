@@ -1,5 +1,5 @@
 <section id="command-repeat">
-    <title>REPEAT</title>
+<title>REPEAT</title>
 <indexterm><primary>REPEAT</primary></indexterm>
 
 <variablelist>
@@ -14,8 +14,12 @@
 <listitem>
 <para>
 Runs the instructions in <parameter>instructionlist</parameter> repeatedly, <parameter>count</parameter> times.
-See also <link linkend="command-repcount">REPCOUNT</link>.
 </para>
+
+<para>
+The number of times which instructionlist has been run can be determined with <link linkend="command-repcount">REPCOUNT</link>.
+</para>
+
 </listitem>
 </varlistentry>
 
@@ -29,6 +33,14 @@ This is iteration 3
 </listitem>
 </varlistentry>
 
-</variablelist>
 
+<varlistentry><term>See Also</term>
+<listitem><simplelist>
+<member><link linkend="command-repcount">REPCOUNT</link></member>
+<member><link linkend="command-forever">FOREVER</link></member>
+</simplelist></listitem>
+</varlistentry>
+
+
+</variablelist>
 </section>

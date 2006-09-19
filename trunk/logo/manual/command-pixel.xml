@@ -1,5 +1,5 @@
 <section id="command-pixel">
-    <title>PIXEL</title>
+<title>PIXEL</title>
 <indexterm><primary>PIXEL</primary></indexterm>
 
 <variablelist>
@@ -15,13 +15,11 @@
 
 <para>
 Outputs a three element list of numbers that represent the red, green, and blue intensity of the pixel currently under the turtle.
-For an explanation of colorvector see <link linkend="using-color">Using Color</link>.
-See also <link linkend="command-setpixel">SETPIXEL</link>.
+For an explanation of a color vector see <link linkend="using-color">Using Color</link>.
 </para>
 
 <para>
-Pixel can be used in <link linkend="command-perspective">PERSPECTIVE</link> mode but the pixel seen will be what ever is under
-the turtle in the 2D projection.
+Pixel can be used in <link linkend="command-perspective">PERSPECTIVE</link> mode but the pixel seen will be what ever is under the turtle in the 2D projection.
 </para>
 
 </listitem>
@@ -29,7 +27,7 @@ the turtle in the 2D projection.
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>
+<programlisting><userinput>
 CLEARSCREEN
 SHOW PIXEL</userinput>
 <userinput>[255 255 255]
@@ -43,6 +41,13 @@ SHOW PIXEL</userinput>
 </listitem>
 </varlistentry>
 
-</variablelist>
 
+<varlistentry><term>See Also</term>
+<listitem><simplelist>
+<member><link linkend="command-setpixel">SETPIXEL</link></member>
+</simplelist></listitem>
+</varlistentry>
+
+
+</variablelist>
 </section>

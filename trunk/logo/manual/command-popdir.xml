@@ -1,5 +1,5 @@
 <section id="command-popdir">
-    <title>POPDIR</title>
+<title>POPDIR</title>
 <indexterm><primary>POPDIR</primary></indexterm>
 
 <variablelist>
@@ -17,10 +17,6 @@ This command pops you up (1 level) out of a directory.
 It is equivalent to:
 <programlisting><userinput>CHDIR "..</userinput></programlisting>
 </para>
-
-<para>
-See also <link linkend="command-chdir">CHDIR</link> and <link linkend="command-mkdir">MKDIR</link>.
-</para>
 </listitem>
 </varlistentry>
 
@@ -34,6 +30,15 @@ Changed to "C:\Program Files\&PRODUCTNAME;"
 </programlisting>
 </listitem>
 </varlistentry>
+
+
+<varlistentry><term>See Also</term>
+<listitem><simplelist>
+<member><link linkend="command-chdir">CHDIR</link></member>
+<member><link linkend="command-mkdir">MKDIR</link></member>
+</simplelist></listitem>
+</varlistentry>
+
 
 </variablelist>
 </section>

@@ -1,5 +1,5 @@
 <section id="command-radiobuttoncreate">
-    <title>RADIOBUTTONCREATE</title>
+<title>RADIOBUTTONCREATE</title>
 <indexterm><primary>RADIOBUTTONCREATE</primary></indexterm>
 
 <variablelist>
@@ -16,7 +16,7 @@
 Creates a radio button control.
 A radio button control is used to give the user a selection of a two state (TRUE or FALSE) item.
 But along with this the user will be restricted to only have one radio button set TRUE within a group box at any given time.
-A radio button must also be associated with a groupbox control (see <link linkend="command-groupboxcreate">GROUPBOXCREATE</link>).
+A radio button be associated with a groupbox control (see <link linkend="command-groupboxcreate">GROUPBOXCREATE</link>).
 </para>
 
 <para>
@@ -56,7 +56,8 @@ The <parameter>height</parameter> input is the height of the new radio button, i
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>; create a radio button in a new window:
+
+<programlisting><userinput>; create a radio button in a new window:
 TO CHECKONTHINGS
   IFELSE RADIOBUTTONGET "myhideturtle [HIDETURTLE] [SHOWTURTLE]
 END
@@ -86,6 +87,16 @@ WINDOWDELETE "main</userinput></programlisting>
 </listitem>
 </varlistentry>
 
-</variablelist>
+<varlistentry><term>See Also</term>
+<listitem><simplelist>
+<member><link linkend="command-radiobuttondelete">RADIOBUTTONDELETE</link></member>
+<member><link linkend="command-radiobuttonget">RADIOBUTTONGET</link></member>
+<member><link linkend="command-radiobuttonset">RADIOBUTTONSET</link></member>
+<member><link linkend="command-radiobuttonenable">RADIOBUTTONENABLE</link></member>
+</simplelist></listitem>
+</varlistentry>
 
+
+
+</variablelist>
 </section>
