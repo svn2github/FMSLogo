@@ -39,14 +39,15 @@ END
 MYPROGRAM</userinput>
 Pausing...MYPROGRAM
 </programlisting>
+
 Enter <userinput>SHOW HEADING</userinput> in Pause Mode dialog box and hit OK.
-<programlisting>
-180
-</programlisting>
+
+<programlisting>180</programlisting>
+
 Enter <userinput>CONTINUE</userinput> in Pause Box and hit OK.
-<programlisting>
-Done
-</programlisting>
+
+<programlisting>Done</programlisting>
+
 </para>
 </listitem>
 </varlistentry>

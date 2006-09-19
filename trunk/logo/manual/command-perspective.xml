@@ -1,5 +1,5 @@
 <section id="command-perspective">
-    <title>PERSPECTIVE</title>
+<title>PERSPECTIVE</title>
 <indexterm><primary>PERSPECTIVE</primary></indexterm>
 
 <variablelist>
@@ -308,13 +308,11 @@ This will be limited by how much memory your computer has.
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>
-PERSPECTIVE
+<programlisting><userinput>PERSPECTIVE
 REPEAT 72 [ELLIPSEARC 90 100 150 45 RIGHTROLL 5]</userinput>
 </programlisting>
 </listitem>
 </varlistentry>
 
 </variablelist>
-
 </section>
