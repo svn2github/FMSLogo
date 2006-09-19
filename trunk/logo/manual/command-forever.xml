@@ -1,5 +1,5 @@
 <section id="command-forever">
-    <title>FOREVER</title>
+<title>FOREVER</title>
 <indexterm><primary>FOREVER</primary></indexterm>
 
 <variablelist>
@@ -14,7 +14,6 @@
 <listitem>
 <para>
 Runs <parameter>instructionlist</parameter> repeatedly, forever.
-See also <link linkend="command-repeat">REPEAT</link>.
 </para>
 </listitem>
 </varlistentry>
@@ -31,6 +30,12 @@ Wake me when you are done.
 <replaceable>...</replaceable>
 </programlisting>
 </listitem>
+</varlistentry>
+
+<varlistentry><term>See Also</term>
+<listitem><simplelist>
+<member><link linkend="command-repeat">REPEAT</link></member>
+</simplelist></listitem>
 </varlistentry>
 
 </variablelist>
