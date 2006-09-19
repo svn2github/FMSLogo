@@ -271,8 +271,7 @@ If it uses a modeless window, then SETUP can be called after the WINDOWCREATE re
 If it uses a modal window, then SETUP is called during the DIALOGCREATE because DIALOGCREATE does not return until the window is closed.
 </para>
 
-<programlisting>
-TO WIN
+<programlisting>TO WIN
   ; For modeless example use this line
   WINDOWCREATE "root "d1 [Draw Pictures] 0 0 150 110 [] SETUP  ; Create main window
 
