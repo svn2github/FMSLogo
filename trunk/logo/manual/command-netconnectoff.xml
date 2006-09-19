@@ -1,5 +1,5 @@
 <section id="command-netconnectoff">
-    <title>NETCONNECTOFF</title>
+<title>NETCONNECTOFF</title>
 <indexterm><primary>NETCONNECTOFF</primary></indexterm>
 
 <variablelist>
@@ -25,14 +25,11 @@ Shuts down a connection that was created with <link linkend="command-netconnecto
 NETSTARTUP ; Start up the network
 SHOW NETCONNECTON "remotemachinename 5124 [PRINT [ready to send again]] [PRINT [I have something]]</userinput>
 true
-<userinput>
-NETCONNECTOFF
-NETSHUTDOWN</userinput>
-</programlisting>
+
+<userinput>NETCONNECTOFF
+NETSHUTDOWN</userinput></programlisting>
 </listitem>
 </varlistentry>
 
-
 </variablelist>
-
 </section>

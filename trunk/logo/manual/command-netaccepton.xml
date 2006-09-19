@@ -1,5 +1,5 @@
 <section id="command-netaccepton">
-    <title>NETACCEPTON</title>
+<title>NETACCEPTON</title>
 <indexterm><primary>NETACCEPTON</primary></indexterm>
 
 <variablelist>
@@ -55,8 +55,8 @@ The <parameter>receiveready</parameter> input is an instruction list (a list of 
 ; Wait for someone to connect to you on socket 5124
 SHOW NETACCEPTON 5124 [PRINT [Ready to send]] [PRINT [Ready to receive]]</userinput>
 true
-<userinput>
-NETACCEPTOFF
+
+<userinput>NETACCEPTOFF
 NETSHUTDOWN</userinput>
 </programlisting>
 </listitem>

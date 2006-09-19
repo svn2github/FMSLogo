@@ -1,5 +1,5 @@
 <section id="command-netconnectsendvalue">
-    <title>NETCONNECTSENDVALUE</title>
+<title>NETCONNECTSENDVALUE</title>
 <indexterm><primary>NETCONNECTSENDVALUE</primary></indexterm>
 
 <variablelist>
@@ -38,22 +38,23 @@ NETSTARTUP ; Start up the network
 ; Wait for someone to connect to you on socket 5124
 SHOW NETACCEPTON 5124 [] [PRINT NETACCEPTRECEIVEVALUE]</userinput>
 true
-<userinput>
-; Connect to MyMachineName on socket 5124 (myself)
+
+<userinput>; Connect to MyMachineName on socket 5124 (myself)
 SHOW NETCONNECTON "MyMachineName 5124 [PRINT [Ok to Send Again]] []</userinput>
 true
-<userinput>
-WAIT 100 ; Wait little for connection to establish</userinput>
+
+<userinput>WAIT 100 ; Wait little for connection to establish</userinput>
 Ok to Send Again
 Ok to Send Again
 Ok to Send Again
+
 <userinput>SHOW NETCONNECTSENDVALUE [Hello thanks for taking my call] ; Send some data</userinput>
 true
-<userinput>
-WAIT 100 ; Wait a little before we shut things down</userinput>
+
+<userinput>WAIT 100 ; Wait a little before we shut things down</userinput>
 Hello thanks for taking my call
-<userinput>
-NETCONNECTOFF
+
+<userinput>NETCONNECTOFF
 NETACCEPTOFF
 NETSHUTDOWN</userinput>
 </programlisting>
@@ -62,5 +63,4 @@ NETSHUTDOWN</userinput>
 
 
 </variablelist>
-
 </section>
