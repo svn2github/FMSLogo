@@ -9,6 +9,7 @@ LOAD "sentence.lgo
 LOAD "fput.lgo
 LOAD "lput.lgo
 LOAD "reverse.lgo
+LOAD "remdup.lgo
 LOAD "first.lgo
 LOAD "firsts.lgo
 LOAD "butfirst.lgo
@@ -123,6 +124,7 @@ TO TESTALL
   STACKTEST          ; from stack.lgo
   COMBINETEST        ; from combine.lgo
   REVERSETEST        ; from reverse.lgo
+  REMDUPTEST         ; from remdup.lgo
   LOGICTEST          ; from logic.lgo
   APPLYTEST          ; from apply.lgo
   REPEATTEST         ; from repeat.lgo
