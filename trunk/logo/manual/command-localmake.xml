@@ -1,5 +1,5 @@
 <section id="command-localmake">
-    <title>LOCALMAKE</title>
+<title>LOCALMAKE</title>
 <indexterm><primary>LOCALMAKE</primary></indexterm>
 
 <variablelist>
@@ -15,10 +15,8 @@
 <para>
 LOCALMAKE declares a local variable and assigns it a variable.
 It is convenient shorthand for the following code:
-<programlisting>
-<link linkend="command-local">LOCAL</link> <parameter>varname</parameter>
-<link linkend="command-make">MAKE</link> <parameter>varname</parameter> <parameter>value</parameter>
-</programlisting>
+<programlisting><link linkend="command-local">LOCAL</link> <parameter>varname</parameter>
+<link linkend="command-make">MAKE</link> <parameter>varname</parameter> <parameter>value</parameter></programlisting>
 </para>
 </listitem>
 </varlistentry>
