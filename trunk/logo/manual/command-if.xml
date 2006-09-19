@@ -1,5 +1,5 @@
 <section id="command-if">
-    <title>IF</title>
+<title>IF</title>
 <indexterm><primary>IF</primary></indexterm>
 
 <variablelist>
@@ -54,12 +54,11 @@ If this aberrant IF appears in a procedure body, the warning is given only the f
 
 <varlistentry><term>Example</term>
 <listitem>
-<programlisting><userinput>
-; single instruction list
+<programlisting><userinput>; single instruction list
 IF 1=1 [PRINT [Yes it is true]]</userinput>
-Yes it is true
+Yes it is true</programlisting>
 
-<userinput>; two instruction lists
+<programlisting><userinput>; two instruction lists
 TO MAX :a :b
   OUTPUT (IF :a > :b [:a] [:b])
 END
@@ -71,5 +70,4 @@ SHOW MAX 1 2</userinput>
 </varlistentry>
 
 </variablelist>
-
 </section>

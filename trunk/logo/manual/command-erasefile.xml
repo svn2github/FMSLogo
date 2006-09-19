@@ -1,5 +1,5 @@
 <section id="command-erasefile">
-    <title>ERASEFILE</title>
+<title>ERASEFILE</title>
 <indexterm><primary>ERASEFILE</primary></indexterm>
 
 <variablelist>
@@ -23,7 +23,7 @@ The file must not be currently be open.
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>OPENWRITE "dummy.fil
+<programlisting><userinput>OPENWRITE "dummy.fil
 SETWRITE "dummy.fil
 PRINT "Hello
 SETWRITE []
@@ -33,8 +33,8 @@ OPENREAD "dummy.fil
 SETREAD "dummy.fil
 SHOW READLIST</userinput>
 [Hello]
-<userinput>
-SETREAD []
+
+<userinput>SETREAD []
 CLOSE "dummy.fil
 
 ERASEFILE "dummy.fil

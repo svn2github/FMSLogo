@@ -1,5 +1,5 @@
 <section id="command-continue">
-    <title>CONTINUE</title>
+<title>CONTINUE</title>
 <indexterm><primary>CONTINUE</primary></indexterm>
 
 <variablelist>
@@ -41,12 +41,10 @@ MYPROGRAM</userinput>
 Pausing...MYPROGRAM
 </programlisting>
 Enter <userinput>SHOW HEADING</userinput> in Pause Mode dialog box and hit OK.
-<programlisting>
-180
+<programlisting>180
 </programlisting>
 Enter <userinput>CONTINUE</userinput> in Pause Box and hit OK.
-<programlisting>
-Done
+<programlisting>Done
 </programlisting>
 </para>
 </listitem>
