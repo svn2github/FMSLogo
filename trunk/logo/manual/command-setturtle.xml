@@ -34,8 +34,7 @@ CLEARSCREEN
 REPEAT 4 [REPEAT 4 [FORWARD 100 RIGHT 90] FORWARD 100 DOWNPITCH 90]</userinput>
 </programlisting>
 
-<programlisting>
-<userinput>; 3D Example with moving eye
+<programlisting><userinput>; 3D Example with moving eye
 PERSPECTIVE
 CLEARSCREEN
 SETTURTLE -1 ; select the "eye position" turtle
@@ -48,5 +47,4 @@ REPEAT 4 [REPEAT 4 [FORWARD 100 RIGHT 90] FORWARD 100 DOWNPITCH 90]</userinput>
 </varlistentry>
 
 </variablelist>
-
 </section>

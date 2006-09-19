@@ -1,5 +1,5 @@
 <section id="command-procedures">
-    <title>PROCEDURES</title>
+<title>PROCEDURES</title>
 <indexterm><primary>PROCEDURES</primary></indexterm>
 
 <variablelist>
@@ -21,16 +21,14 @@ Outputs a contents list consisting of all unburied user-defined procedures in th
 
 <varlistentry><term>Example</term>
 <listitem>
-<programlisting><userinput>
-TO FOO
+<programlisting><userinput>TO FOO
 END
 
 TO BAR
 END
 
 SHOW PROCEDURES</userinput>
-[bar foo]
-</programlisting>
+[bar foo]</programlisting>
 </listitem>
 </varlistentry>
 

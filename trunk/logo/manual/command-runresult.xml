@@ -1,5 +1,5 @@
 <section id="command-runresult">
-    <title>RUNRESULT</title>
+<title>RUNRESULT</title>
 <indexterm><primary>RUNRESULT</primary></indexterm>
 
 <variablelist>
@@ -18,8 +18,7 @@ RUNRESULT outputs an empty list if those instructions produce no output.
 Otherwise, it outputs a list whose only member is the output from running the input instructionlist.
 This is useful for inventing command-or-operation control structures:
 
-<programlisting>
-LOCAL "result
+<programlisting>LOCAL "result
 MAKE "result RUNRESULT [something]
 IF EMPTYP :result [STOP]
 OUTPUT FIRST :result
@@ -34,8 +33,7 @@ OUTPUT FIRST :result
 <programlisting><userinput>MAKE "thingstodo [FIRST [1 2 3]]
 MAKE "answer RUNRESULT :thingstodo
 SHOW :answer</userinput>
-[1]
-</programlisting>
+[1]</programlisting>
 </listitem>
 </varlistentry>
 

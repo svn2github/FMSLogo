@@ -1,5 +1,5 @@
 <section id="command-towardsxyz">
-    <title>TOWARDSXYZ</title>
+<title>TOWARDSXYZ</title>
 <indexterm><primary>TOWARDSXYZ</primary></indexterm>
 
 <variablelist>
@@ -25,18 +25,15 @@ This command is designed to run in <link linkend="command-perspective">PERSPECTI
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>
-PERSPECTIVE
+<programlisting><userinput>PERSPECTIVE
 SETPOS [0 0 0]
 SHOW TOWARDSXYZ [100 100 0]</userinput>
 [0 0 45]</programlisting>
 
-    <programlisting><userinput>SETORIENTATION TOWARDSXYZ [100 100 100]
-FORWARD DISTANCEXYZ [100 100 100]</userinput>
-</programlisting>
+<programlisting><userinput>SETORIENTATION TOWARDSXYZ [100 100 100]
+FORWARD DISTANCEXYZ [100 100 100]</userinput></programlisting>
 </listitem>
 </varlistentry>
 
 </variablelist>
-
 </section>

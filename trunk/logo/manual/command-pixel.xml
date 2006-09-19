@@ -27,8 +27,7 @@ Pixel can be used in <link linkend="command-perspective">PERSPECTIVE</link> mode
 
 <varlistentry><term>Example</term>
 <listitem>
-<programlisting><userinput>
-CLEARSCREEN
+<programlisting><userinput>CLEARSCREEN
 SHOW PIXEL</userinput>
 <userinput>[255 255 255]
 FORWARD 1
@@ -37,7 +36,6 @@ SHOW PIXEL</userinput>
 <userinput>BACK 1
 SHOW PIXEL</userinput>
 [0 0 0]</programlisting>
-
 </listitem>
 </varlistentry>
 

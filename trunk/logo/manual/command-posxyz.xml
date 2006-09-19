@@ -1,5 +1,5 @@
 <section id="command-posxyz">
-    <title>POSXYZ</title>
+<title>POSXYZ</title>
 <indexterm><primary>POSXYZ</primary></indexterm>
 
 <variablelist>
@@ -23,8 +23,7 @@ This command is designed to run in <link linkend="command-perspective">PERSPECTI
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>
-PERSPECTIVE
+<programlisting><userinput>PERSPECTIVE
 SETPOS [100 100 50]
 SHOW POSXYZ</userinput>
 [100 100 50]
@@ -33,5 +32,4 @@ SHOW POSXYZ</userinput>
 </varlistentry>
 
 </variablelist>
-
 </section>

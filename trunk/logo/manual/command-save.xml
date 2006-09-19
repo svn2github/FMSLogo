@@ -1,5 +1,5 @@
 <section id="command-save">
-    <title>SAVE</title>
+<title>SAVE</title>
 <indexterm><primary>SAVE</primary></indexterm>
 
 <variablelist>
@@ -19,8 +19,7 @@ Saves the definitions of all unburied procedures, variables, and property lists 
 <para>
 SAVE is equivalent to:
 
-<programlisting>
-TO SAVE :filename
+<programlisting>TO SAVE :filename
   LOCAL "oldwriter
   MAKE "oldwriter WRITER
   OPENWRITE :filename
@@ -56,11 +55,9 @@ POTS
 LOAD "myprograms.lgo
 POTS</userinput>
 TO MYPROGRAM1
-TO MYPROGRAM2
-</programlisting>
+TO MYPROGRAM2</programlisting>
 </listitem>
 </varlistentry>
 
 </variablelist>
-
 </section>

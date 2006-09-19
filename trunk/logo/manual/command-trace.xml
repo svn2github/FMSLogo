@@ -40,15 +40,14 @@ END
 
 MYPRINT "Hello</userinput>
 Hello
-<userinput>
-TRACE "MYPRINT
+
+<userinput>TRACE "MYPRINT
 MYPRINT "Hello</userinput>
 ( MYPRINT "Hello )
 Hello
 <userinput>UNTRACE "MYPRINT
 MYPRINT "Hello</userinput>
-Hello
-</programlisting>
+Hello</programlisting>
 </listitem>
 </varlistentry>
 
