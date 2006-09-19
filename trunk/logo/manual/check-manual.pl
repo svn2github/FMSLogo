@@ -16,10 +16,10 @@
 # * All occurances of "Logo" and "FMSLogo" are correct.
 # * There is no extraneous whitespace in program listings or synopses.
 # * Banned words/phrases are not used
+# * Examples include at least one instance of the command that they document.
 #
 # Missing checks:
 # * Spelling is correct.
-# * Examples include at least one instance of the command that they document.
 # * Only the first reference to a command in any section is hyperlinked.
 # * Commands are not hyperlinked when they occurs within their own definition.
 # * All instances of the <parameter> tag refer to actual parameters.
@@ -760,24 +760,9 @@ foreach my $filename (<*.xml>) {
       }
     }
 
-    # Find <book> elements with no id attribute
-    while ($line =~ m!<book>!g) {
-      LogWarning($filename, $linenumber, "<book> element does not have id attribute");
-    }
-
-    # Find <preface> elements with no id attribute
-    while ($line =~ m!<preface>!g) {
-      LogWarning($filename, $linenumber, "<preface> element does not have id attribute");
-    }
-
-    # Find <chapter> elements with no id attribute
-    while ($line =~ m!<chapter>!g) {
-      LogWarning($filename, $linenumber, "<chapter> element does not have id attribute");
-    }
-
-    # Find <section> elements with no id attribute
-    while ($line =~ m!<section>!g) {
-      LogWarning($filename, $linenumber, "<section> element does not have id attribute");
+    # Find <book>, <preface>, <chapter>, and <section> elements with no id attribute
+    while ($line =~ m!<(book|preface|chapter|section)>!g) {
+      LogWarning($filename, $linenumber, "<$1> element does not have id attribute");
     }
 
     # Find non-standard uses of the word Logo
@@ -789,29 +774,20 @@ foreach my $filename (<*.xml>) {
       }
     }
 
-    # Find places where <programlisting> includes undesired leading whitespace.
-    # This extra space is unneccesary, since padding is automatically added by the CSS.
-    if ($line =~ m!<programlisting>\s+!) {
-      LogWarning($filename, $linenumber, "<programlisting> section includes leading whitespace");
+
+    # Find places where <userinput>, <synopsis>, or <programlisting> includes
+    # undesired leading whitespace.
+    # This extra space looks bad when it is rendered within a grey box.
+    if ($line =~ m!<(userinput|synopsis|programlisting)>\s+!) {
+      LogWarning($filename, $linenumber, "<$1> section includes leading whitespace");
     }
 
-    # Find places where <userinput> includes undesired leading/trailing whitespace.
+    # Find places where <userinput> or <synopsis> includes undesired trailing whitespace.
     # This extra space looks bad when it is rendered within a grey box.
-    if ($line =~ m!<userinput>\s+!) {
-      LogWarning($filename, $linenumber, "<userinput> section includes leading whitespace");
-    }
-    if ($line =~ m!^</userinput>!) {
-      LogWarning($filename, $linenumber, "<userinput> section includes trailing newline");
+    if ($line =~ m!<^(userinput|synopsis)>!) {
+      LogWarning($filename, $linenumber, "<$1> section includes trailing whitespace");
     }
 
-    # Find places where <synopsis> includes undesired leading/trailing whitespace.
-    # This extra space looks bad when it is rendered within a grey box.
-    if ($line =~ m!<synopsis>\s+!) {
-      LogWarning($filename, $linenumber, "<synopsis> section includes leading whitespace");
-    }
-    if ($line =~ m!^</synopsis>!) {
-      LogWarning($filename, $linenumber, "<synopsis> section includes trailing newline");
-    }
 
     # Find use of banned words
     foreach my $bannedWord (@main::BannedWords) {
