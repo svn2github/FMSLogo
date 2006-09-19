@@ -14,7 +14,7 @@
 # * All <chapter> elements have an id attribute.
 # * All <section> elements have an id attribute.
 # * All occurances of "Logo" and "FMSLogo" are correct.
-# * There is no extraneous whitespace in program listings.
+# * There is no extraneous whitespace in program listings or synopses.
 # * Banned words/phrases are not used
 #
 # Missing checks:
@@ -802,6 +802,15 @@ foreach my $filename (<*.xml>) {
     }
     if ($line =~ m!^</userinput>!) {
       LogWarning($filename, $linenumber, "<userinput> section includes trailing newline");
+    }
+
+    # Find places where <synopsis> includes undesired leading/trailing whitespace.
+    # This extra space looks bad when it is rendered within a grey box.
+    if ($line =~ m!<synopsis>\s+!) {
+      LogWarning($filename, $linenumber, "<synopsis> section includes leading whitespace");
+    }
+    if ($line =~ m!^</synopsis>!) {
+      LogWarning($filename, $linenumber, "<synopsis> section includes trailing newline");
     }
 
     # Find use of banned words
