@@ -278,6 +278,7 @@ NODE *llocal(NODE *args)
 // Warn the user if a local variable shadows a global one.
 void tell_shadow(NODE *arg)
    {
+   assert(is_caseobject(arg));
    if (flag__caseobj(arg, VAL_STEPPED))
       {
       err_logo(SHADOW_WARN, arg);
@@ -685,6 +686,7 @@ NODE *evaluator(NODE *list, enum labels where)
       else if (nodetype(parm) == CONS)
          {
          /* parm is optional or rest */
+         assert(is_caseobject(car(parm)));
          if (not_local(car(parm), var_stack_position))
             {
             push(car(parm), var_stack);

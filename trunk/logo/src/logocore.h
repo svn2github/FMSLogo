@@ -113,6 +113,7 @@ const NODETYPES NT_FREE          = 0xFFFF;
 #define is_number(nd)    ((nodetype(nd) & NT_NUMBER))
 #define is_prim(nd)      ((nodetype(nd) & NT_PRIM))
 #define is_word(nd)      ((nodetype(nd) & NT_WORD))
+#define is_caseobject(nd)((nodetype(nd) == CASEOBJ))
 #define runparsed(nd)    ((nodetype(nd) & NT_RUNP))
 #define backslashed(nd)  ((nodetype(nd) & NT_BACKSL))
 #define is_tailform(nd)  ((nodetype(nd) == TAILFORM))
