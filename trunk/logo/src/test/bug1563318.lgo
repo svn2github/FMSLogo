@@ -1,0 +1,23 @@
+;
+; Bug 1563318 is that FMSLogo crashes when this 
+; file is loaded.
+;
+
+to bug1563318.oneinput :n
+op []
+end
+
+to bug1563318.defaultrest :a [:b] 2
+op []
+end
+
+to bug1563318.applysum
+op apply "sum bug1563318.defaultrest [] "x
+end
+
+to bug1563318.crash ~
+  [:x bug1563318.applysum ] ~
+  [:y bug1563318.oneinput bug1563318.defaultrest [] "x ]
+end
+
+bug1563318.crash
