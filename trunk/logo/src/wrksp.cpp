@@ -407,22 +407,23 @@ NODE *to_helper(NODE *args, bool is_macro)
             // this is either an input with a default value or a "rest" input
             make_runparse(arg);
             arg = parsed__runparse(arg);
-            maximum++;
             if (nodetype(car(arg)) != COLON)
                {
                // input names must begin with a colon
                err_logo(BAD_DATA_UNREC, arg);
                break;
                }
-            else
-               {
-               // this is an input with a defaut value
-               setcar(arg, node__colon(car(arg)));
-               }
+
+            setcar(arg, node__colon(car(arg)));
             if (cdr(arg) == NIL)
                {
                // this is a "rest" input
                maximum = -1;
+               }
+            else
+               {
+               // this is an input with a default value
+               maximum++;
                }
             }
          else if (nodetype(arg) == COLON && maximum == minimum)
