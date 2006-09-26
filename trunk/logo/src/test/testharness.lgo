@@ -9,6 +9,7 @@ LOAD "sentence.lgo
 LOAD "fput.lgo
 LOAD "lput.lgo
 LOAD "reverse.lgo
+LOAD "bug1563318.lgo
 LOAD "remdup.lgo
 LOAD "first.lgo
 LOAD "firsts.lgo
