@@ -72,18 +72,22 @@ int numberp(NODE *snd)
       return 0;
       }
 
-   // HACK: only ref() and deref() stringnode if is not snd.  
-   // This hack is necessary because cnv_node_to_strnode is so hard to use.
+   // HACK: only ref() and deref() stringnode if cnv_node_to_strnode()
+   // creates a new node.
+   // This hack is necessary because cnv_node_to_strnode() is so hard to use. 
    // Really, cnv_node_to_strnode() should be simplified.
-   if (stringnode != snd)
+   bool mustDerefStringnode = false;
+   if (snd != stringnode)
       {
       ref(stringnode);
+      mustDerefStringnode = true;
       }
+
    const char * p = getstrptr(stringnode);
    int plen = getstrlen(stringnode);
    if (plen >= MAX_NUMBER)
       {
-      if (stringnode != snd)
+      if (mustDerefStringnode)
          {
          deref(stringnode);
          }
@@ -137,12 +141,13 @@ int numberp(NODE *snd)
       rval = dr + 1;
       }
 
-   if (stringnode != snd)
+   if (mustDerefStringnode)
       {
       deref(stringnode);
       }
    return rval;
    }
+
 
 NODE *lrandom(NODE *arg)
    {
