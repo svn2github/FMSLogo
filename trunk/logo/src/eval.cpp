@@ -568,6 +568,7 @@ NODE *evaluator(NODE *list, enum labels where)
       if (is_macro(fun))
          {
          num2save(g_ValueStatus, tailcall);
+         // BUG: save didnt_get_output, current_unode like UCBLogo?
          g_ValueStatus = VALUE_STATUS_Required;
          newcont(macro_return);
          }
@@ -636,15 +637,23 @@ NODE *evaluator(NODE *list, enum labels where)
       }
 
  lambda_apply:
+
    // Bind the actual inputs to the formal inputs
    var_stack_position = var_stack; // remember where we came in
    for (formals = formals__procnode(proc);
         formals != NIL;
         formals = cdr(formals))
       {
+      // Add a reference to the formals list in case it is freed
+      // while we are processing the function.
+      // I don't know why this happens, but it does.  
+      // See bug #1563318.
+      ref(formals);
+
       parm = car(formals);
       if (nodetype(parm) == INTEGER) 
          {
+         deref(formals);
          break; // default # args
          }
       if (argl != NIL)
@@ -676,6 +685,8 @@ NODE *evaluator(NODE *list, enum labels where)
             setobject(var_stack, valnode__caseobj(parm));
             }
          tell_shadow(parm);
+
+         // bind the argument to the formal parameter object
          setvalnode__caseobj(parm, arg);
          if (arg == Unbound)
             {
@@ -695,7 +706,8 @@ NODE *evaluator(NODE *list, enum labels where)
          tell_shadow(car(parm));
          if (cdr(parm) == NIL)
             {
-            /* parm is rest */
+            // parm is a "rest" input.
+            // Bind the rest of the argument list to the formal parameter object
             setvalnode__caseobj(car(parm), argl);
             // BUG: should this be traced?
             assign(argl, NIL);
@@ -748,13 +760,19 @@ NODE *evaluator(NODE *list, enum labels where)
             restore2(fun, var);
             arg = val;
             }
+
+         // bind the given argument to the formal argument
          setvalnode__caseobj(car(parm), arg);
          }
       if (argl != NIL) 
          {
          pop(argl);
          }
+
+      // release the reference we took at the beginning of the loop
+      deref(formals);
       }
+
    if (argl != NIL) 
       {
       // APPLY [[A] [IGNORE :A]] [1 2]

@@ -21,6 +21,9 @@ Part I) Kit Description/Location (http://sourceforge.net/projects/fmslogo):
 Part II) New features/bugs fixed:
 
   * Added for 6.11.0,
+    o Fix bug #1563318; This is a regression that caused FMSLogo to crash
+      when running procedures with complex inputs that include chains
+      of default values and rest inputs.
     o Fix bug #1547408; 'RUNRESULT {1}' no longer crashes FMSLogo.
     o Minor updates to the manual, including shading the examples, removing
       the root node from the table of contents, and adding "See Also" 
