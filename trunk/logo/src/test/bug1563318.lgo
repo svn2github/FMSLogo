@@ -4,20 +4,20 @@
 ;
 
 to bug1563318.oneinput :n
-op []
+OP []
 end
 
 to bug1563318.defaultrest :a [:b] 2
-op []
+output []
 end
 
 to bug1563318.applysum
-op apply "sum bug1563318.defaultrest [] "x
+op apply "sum bug1563318.defaultrest [u] "xyz
 end
 
 to bug1563318.crash ~
   [:x bug1563318.applysum ] ~
-  [:y bug1563318.oneinput bug1563318.defaultrest [] "x ]
+  [:y bug1563318.oneinput bug1563318.defaultrest [t] "abc ]
 end
 
 bug1563318.crash
