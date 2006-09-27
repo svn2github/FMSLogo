@@ -30,6 +30,8 @@ Part II) New features/bugs fixed:
       sections.
 
   * Added for 6.10.1,
+    o Fix bug #1565788: Running long instruction list of unnested expressions
+      (for example, 'RUN [FD 1 FD 1 ... FD 1]') no longer crashes.
     o Fix bug #1545911: The questionmark inputs in template-based iteration
       are now correctly restored when the template goes out of scope.
     o Fix bug #1543643: FMSLogo is responsive when running 'PR ISEQ 1 100000'.

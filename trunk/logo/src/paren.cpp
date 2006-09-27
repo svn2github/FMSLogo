@@ -218,11 +218,13 @@ NODE *paren_expr(NODE **expr, bool inparen)
          if (proc == UNDEFINED && NOT_THROWING)
             {
             retval = cons_list(first);
-            tree_dk_how = TRUE;
+            tree_dk_how = true;
             }
          else if (nodetype(proc) == INFIX && NOT_THROWING)
             {
-            // make sure that 5**6 says "not enough inputs to *"
+            // If proc is an infix operator, then an operand should
+            // have come before it, but didn't.
+            // This makes sure that 5**6 says "not enough inputs to *"
             err_logo(NOT_ENOUGH, first);
             retval = cons_list(first);
             }
@@ -269,25 +271,27 @@ NODE *paren_expr(NODE **expr, bool inparen)
 static
 NODE *paren_line(NODE *line)
    {
-   if (line == NIL) 
+   CAppendableList parenthesizedLine;
+
+   while (line != NIL)
       {
-      return NIL;
+      NODE * addition = paren_expr(&line, false);
+      if (stopping_flag == THROWING || addition == Unbound)
+         {
+         // Something went wrong. 
+         // For example, a syntax error was detected.
+         // Clean up whatever hasn't been consumed.
+         deref(line);
+         gcref(addition);
+         gcref(parenthesizedLine.GetList());
+         return Unbound;
+         }
+      
+      addition = paren_infix(addition, &line, -1, false);
+      parenthesizedLine.AppendElement(addition);
       }
 
-   NODE * retval = paren_expr(&line, FALSE);
-   if (NOT_THROWING && retval != Unbound)
-      {
-      retval = paren_infix(retval, &line, -1, FALSE);
-      retval = cons(retval, paren_line(line));
-      }
-   else
-      {
-      // clean up whatever hasn't been consumed.
-      // (for example, if a syntax error was detected).
-      deref(line);
-      }
-
-   return retval;
+   return parenthesizedLine.GetList();
    }
 
 
