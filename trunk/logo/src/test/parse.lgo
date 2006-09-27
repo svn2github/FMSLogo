@@ -103,8 +103,30 @@ TO PARSETEST.MANYNESTEDCALLS
 
    ; bug #1552426 (this crashes)
    LOCALMAKE "longsequence [0]
-   REPEAT 100000 [ MAKE "longsequence FPUT "SUM FPUT "1 :longsequence ]
+   REPEAT 100000 [ MAKE "longsequence FPUT "SUM FPUT 1 :longsequence ]
    SIMPLEREPORTTEST :longsequence 100000
+
+   REPORTTESTPASSED [|Bug #1552426 is fixed; running a long list of deeply nested expressions didn't crash.|]
+END
+
+TO PARSETEST.LONGINSTRUCTIONLINE
+
+   ; bug #1565788 (this crashes)
+
+   ; Create an instruction list line that's a repeated application of 
+   ;   MAKE "value :value + 1
+   ;
+   LOCALMAKE "instructions [0]
+   REPEAT 100000 [ MAKE "instructions FPUT "MAKE FPUT ""value FPUT ":value FPUT "+ FPUT 1 :instructions ]
+
+   ; Run the long instruction list
+   LOCALMAKE "value 0
+   TRACEINSTRUCTION :instructions
+
+   ; test that the the instructions actually ran
+   SIMPLEREPORTTEST :value 100000
+
+   REPORTTESTPASSED [|Bug #1565788 is fixed; running a long list of expressions didn't crash.|]
 END
 
 TO PARSETEST
@@ -114,4 +136,5 @@ TO PARSETEST
    PARSETEST.EXPRESSION
    PARSETEST.MANYINPUTS
    ;PARSETEST.MANYNESTEDCALLS
+   ;PARSETEST.LONGINSTRUCTIONLIST
 END
