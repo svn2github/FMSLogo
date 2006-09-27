@@ -92,6 +92,20 @@ TO PARSETEST.EXPRESSION
    RUNNOTENOUGHINPUTSTEST [ MODULO 100 * 100 ] ; argument gathering halts at an infix operation
 END
 
+TO PARSETEST.INFIXEXPRESSION
+   SIMPLEREPORTTEST [ (1 +  2) * 3 ] 9
+   SIMPLEREPORTTEST [  1 + (2 * 3) ] 7
+   SIMPLEREPORTTEST [  1 +  2 * 3  ] 7
+
+   SIMPLEREPORTTEST [ (2 *  3) + 4 ] 10
+   SIMPLEREPORTTEST [  2 * (3 + 4) ] 14
+   SIMPLEREPORTTEST [  2 *  3 + 4  ] 10
+
+   SIMPLEREPORTTEST [ 1 + 1 = 2 ] "true
+   SIMPLEREPORTTEST [ 2 = 1 + 1 ] "true
+   SIMPLEREPORTTEST [ 2 = 1 = 1 ] "false
+END
+
 TO PARSETEST.MANYINPUTS
 
    ; bug #1539716 (this used to crash)
@@ -129,12 +143,28 @@ TO PARSETEST.LONGINSTRUCTIONLINE
    REPORTTESTPASSED [|Bug #1565788 is fixed; running a long list of expressions didn't crash.|]
 END
 
+TO PARSETEST.DEEPLYNESTEDINFIXEXPRESSION
+
+   ; bug #1566166 (this crashes)
+
+   ; Create and RUN an instruction list of the form
+   ;   1 + 1 + 1 ... + 1 + 0
+   ;
+   LOCALMAKE "instructions [0]
+   REPEAT 100000 [ MAKE "instructions FPUT 1 FPUT "+ :instructions ]
+   SIMPLEREPORTTEST :instructions 100000
+
+   REPORTTESTPASSED [|Bug #1566166 is fixed; running a long list of infix expressions didn't crash.|]
+END
+
 TO PARSETEST
    PARSETEST.NUMBER
    PARSETEST.WORD
    PARSETEST.FUNC
    PARSETEST.EXPRESSION
+   PARSETEST.INFIXEXPRESSION
    PARSETEST.MANYINPUTS
    PARSETEST.LONGINSTRUCTIONLINE
    ;PARSETEST.MANYNESTEDCALLS
+   ;PARSETEST.DEEPLYNESTEDINFIXEXPRESSION
 END
