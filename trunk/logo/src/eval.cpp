@@ -315,15 +315,43 @@ NODE *reverse(NODE *list)
    return unref(ret);
    }
 
-// nondestructive append
+// Returns a new list with the members of "a", followed by the members of "b".
+// Neither list is modified, but "b" is referenced by the new list.
 static
 NODE *append(NODE *a, NODE *b)
    {
-   if (a == NIL) 
+   NODE * completelist     = NIL;
+   NODE * completelist_end = NIL;
+
+   // first, build up a copy of "a"
+   while (a != NIL)
       {
-      return b;
+      NODE * newnode = cons_list(car(a));
+
+      if (completelist == NIL)
+         {
+         completelist = newnode;
+         }
+      else
+         {
+         setcdr(completelist_end, newnode);
+         }
+      completelist_end = newnode;
+
+      a = cdr(a);
       }
-   return cons(car(a), append(cdr(a), b));
+
+   // now, append "b"
+   if (completelist == NIL)
+      {
+      completelist = b;
+      }
+   else
+      {
+      setcdr(completelist_end, b);
+      }
+
+   return completelist;
    }
 
 // Reset the var stack to the previous place holder.
