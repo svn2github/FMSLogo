@@ -326,17 +326,6 @@ NODE *append(NODE *a, NODE *b)
    return cons(car(a), append(cdr(a), b));
    }
 
-// nondestructive flatten 
-static
-NODE *flatten(NODE *a)
-   {
-   if (a == NIL) 
-      {
-      return NIL;
-      }
-   return append(car(a), flatten(cdr(a)));
-   }
-
 // Reset the var stack to the previous place holder.
 static
 void reset_args(NODE *old_stack)
