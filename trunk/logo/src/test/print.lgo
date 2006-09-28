@@ -24,9 +24,36 @@ TO PRINTTEST.SMOKETEST
    ; and verify that the output looks correct
 END
 
+TO PRINTTEST.DEEPLYNESTEDLIST
+
+   LOCALMAKE "deeplist []
+   REPEAT 10000 [ MAKE "deeplist (LIST :deeplist) ]
+   PRINT :deeplist
+
+   REPORTTESTPASSED [|Bug #1566775 is fixed; printing a deeply nested list didn't crash.|]
+END
+
+TO PRINTTEST.DEEPLYNESTEDARRAY
+
+   LOCALMAKE "deeparray  ARRAY 1
+   LOCALMAKE "innerarray :deeparray
+
+   REPEAT 10000 [
+      SETITEM 1 :innerarray ARRAY 1
+      MAKE "innerarray ITEM 1 :innerarray
+   ]
+
+   PRINT :deeparray
+
+   REPORTTESTPASSED [|Bug #1566778 is fixed; printing a deeply nested array didn't crash.|]
+
+END
+
 TO PRINTTEST
 
    PRINTTEST.SMOKETEST
    PRINTTEST.PERFORMANCE
 
+   ; PRINTTEST.DEEPLYNESTEDLIST
+   ; PRINTTEST.DEEPLYNESTEDARRAY
 END
