@@ -47,7 +47,11 @@ END
 
 TO BENCHMARK 
 
-   BENCHMARK.RESIZECONSOLE 600 800 ; for consistent results when drawing
+   REPORTTESTINFO LOGOVERSION ; put the version into the test log
+
+   ; for consistent results when drawing
+   ICON "Commander
+   BENCHMARK.RESIZECONSOLE 600 800
 
    ; time the tail-recurision optimization 
    IGNORE TIMECOMMAND [BENCHMARK.TAILRECURSIVECOUNT    1000000 ]
@@ -64,6 +68,7 @@ TO BENCHMARK
    CLEARSCREEN
    IGNORE TIMECOMMAND [REPEAT 20000 [ FORWARD REPCOUNT RIGHT 91 ] ]
 
+   SPLITSCREEN
 END
 
 make "startup [BENCHMARK]
