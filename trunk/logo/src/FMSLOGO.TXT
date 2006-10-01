@@ -30,6 +30,9 @@ Part II) New features/bugs fixed:
       sections.
 
   * Added for 6.10.1,
+    o Fix bug #1566166 : Running an instruction list of deeply nested 
+      right-associative infix expressions (for example, 'RUN [1+1+1+...+1]') 
+      no longer crashes.
     o Fix bug #1565788: Running long instruction list of unnested expressions
       (for example, 'RUN [FD 1 FD 1 ... FD 1]') no longer crashes.
     o Fix bug #1545911: The questionmark inputs in template-based iteration

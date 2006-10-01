@@ -207,6 +207,7 @@ NODE *paren_expr(NODE **expr, bool inparen)
          }
       else if (first == Minus_Sign)
          {
+         // pretend that -X is really 0 - 1
          deref(first);
          push(Minus_Tight, *expr);
          retval = paren_infix(make_intnode(0), expr, -1, inparen);
@@ -467,28 +468,35 @@ int priority(NODE *proc_obj)
    return is_prim(proc) ? getprimpri(proc) : PREFIX_PRIORITY;
    }
 
-/* Parenthesize an infix expression.  left_arg is the expression on the left
-* (already parenthesized), and rest is a pointer to the list starting with the
-* infix procedure, if it's there.  Set rest to after the right end of the
-* infix expression.
-*/
+// Parenthesize an infix expression.
+// left_arg is the expression on the left (already parenthesized).
+// rest is a pointer to the list starting with the infix procedure, if it's there.
+// Set rest to after the right end of the infix expression.
 static 
 NODE *paren_infix(NODE *left_arg, NODE **rest, int old_pri, bool inparen)
    {
-
    NODE *infix_proc;
-   int pri;
-   if (*rest == NIL || !(pri = priority(infix_proc = car(*rest))) || pri <= old_pri)
+   int new_pri;
+
+   while (*rest != NIL &&  // not end of expression
+          0 != (new_pri = priority(infix_proc = car(*rest))) &&  // 2nd node is an infix proc
+          old_pri < new_pri) // this infix node has a lower priority than previous node
       {
-      return left_arg;
+      ref(infix_proc);
+      pop(*rest);
+
+      // parenthesize the right input
+      NODE * right_arg = paren_expr(rest, inparen);
+      right_arg = paren_infix(right_arg, rest, new_pri, inparen);
+
+      // change the infix notation to prefix notation
+      right_arg = cons_list(infix_proc, left_arg, right_arg);
+
+      deref(infix_proc);
+
+      // move on to the next possible infix expression
+      left_arg = right_arg;
       }
-   ref(infix_proc);
-   pop(*rest);
 
-   NODE * retval = paren_expr(rest, inparen);
-   retval = paren_infix(retval, rest, pri, inparen);
-   retval = cons_list(infix_proc, left_arg, retval);
-   deref(infix_proc);
-
-   return paren_infix(retval, rest, old_pri, inparen);
+   return left_arg;
    }
