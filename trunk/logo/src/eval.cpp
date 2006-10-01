@@ -177,105 +177,9 @@ void numpush(FIXNUM obj, NODE **stack)
    *stack = temp;
    }
 
-/* The logo word APPLY. */
-NODE *lapply(NODE *args)
-   {
-   return make_cont(begin_apply, args);
-   }
-
-// The logo word ? <question-mark>.
-// This evalutes some element within qm_list.
-//
-// ?  evaluates to the first element
-// ?1 evaluates to the first element
-// ?2 evaluates to the second element
-// etc.
-//
-NODE *lqm(NODE *args)
-   {
-
-   // Assume ?1 by default
-   FIXNUM argnum = 1;
-   if (args != NIL) 
-      {
-      // ?# was given
-      argnum = getint(pos_int_arg(args));
-      }
-   if (stopping_flag == THROWING) 
-      {
-      return Unbound;
-      }
-
-   // get the argnum-th item from qm_list
-   NODE *np = qm_list;
-   FIXNUM i = argnum;
-   while (--i > 0 && np != NIL) 
-      {
-      np = cdr(np);
-      }
-   if (np == NIL)
-      {
-      return err_logo(BAD_DATA_UNREC, make_intnode(argnum));
-      }
-   return car(np);
-   }
-
-
-NODE *llocal(NODE *args)
-   {
-   NODE *var_stack_position = var_stack;
-
-   if (tailcall != 0)
-     {
-     return Unbound;
-     }
-
-   if (args == NIL) 
-     {
-     return Unbound;
-     }
-
-   while (is_list(car(args)) && cdr(args) != NIL && NOT_THROWING)
-      {
-      setcar(args, err_logo(BAD_DATA, car(args)));
-      }
-
-   if (is_list(car(args)))
-      {
-      args = car(args);
-      }
-
-   while (args != NIL && NOT_THROWING)
-      {
-      NODE * arg = car(args);
-      while (!is_word(arg) && NOT_THROWING)
-         {
-         arg = err_logo(BAD_DATA, arg);
-         setcar(args, arg);            // prevent crash in lapply
-         }
-      if (NOT_THROWING)
-         {
-         arg = intern(arg);
-         setcar(args, arg);            // local [a b] faster next time
-         if (not_local(arg, var_stack_position))
-            {
-            push(arg, var_stack);
-            setobject(var_stack, valnode__caseobj(arg));
-            }
-         setvalnode__caseobj(arg, Unbound);
-         tell_shadow(arg);
-         args = cdr(args);
-         }
-      if (check_throwing) 
-         {
-         break;
-         }
-      }
-   assign(var, var_stack);  // so eval won't undo our work
-   return Unbound;
-   }
 
 // Warn the user if a local variable shadows a global one.
+static
 void tell_shadow(NODE *arg)
    {
    assert(is_caseobject(arg));
@@ -286,6 +190,7 @@ void tell_shadow(NODE *arg)
    }
 
 // Check if a local variable is already in this frame 
+static
 bool not_local(NODE *name, NODE *sp)
    {
    for (; sp != var; sp = cdr(sp))
@@ -1619,6 +1524,105 @@ NODE *err_eval_driver(NODE *seq)
    {
    g_ValueStatus = VALUE_STATUS_ValueMaybeOkInMacro;
    return evaluator(seq, begin_seq);
+   }
+
+
+/* The logo word APPLY. */
+NODE *lapply(NODE *args)
+   {
+   return make_cont(begin_apply, args);
+   }
+
+// The logo word ? <question-mark>.
+// This evalutes some element within qm_list.
+//
+// ?  evaluates to the first element
+// ?1 evaluates to the first element
+// ?2 evaluates to the second element
+// etc.
+//
+NODE *lqm(NODE *args)
+   {
+
+   // Assume ?1 by default
+   FIXNUM argnum = 1;
+   if (args != NIL) 
+      {
+      // ?# was given
+      argnum = getint(pos_int_arg(args));
+      }
+   if (stopping_flag == THROWING) 
+      {
+      return Unbound;
+      }
+
+   // get the argnum-th item from qm_list
+   NODE *np = qm_list;
+   FIXNUM i = argnum;
+   while (--i > 0 && np != NIL) 
+      {
+      np = cdr(np);
+      }
+   if (np == NIL)
+      {
+      return err_logo(BAD_DATA_UNREC, make_intnode(argnum));
+      }
+   return car(np);
+   }
+
+
+NODE *llocal(NODE *args)
+   {
+   NODE *var_stack_position = var_stack;
+
+   if (tailcall != 0)
+     {
+     return Unbound;
+     }
+
+   if (args == NIL) 
+     {
+     return Unbound;
+     }
+
+   while (is_list(car(args)) && cdr(args) != NIL && NOT_THROWING)
+      {
+      setcar(args, err_logo(BAD_DATA, car(args)));
+      }
+
+   if (is_list(car(args)))
+      {
+      args = car(args);
+      }
+
+   while (args != NIL && NOT_THROWING)
+      {
+      NODE * arg = car(args);
+      while (!is_word(arg) && NOT_THROWING)
+         {
+         arg = err_logo(BAD_DATA, arg);
+         setcar(args, arg);            // prevent crash in lapply
+         }
+      if (NOT_THROWING)
+         {
+         arg = intern(arg);
+         setcar(args, arg);            // local [a b] faster next time
+         if (not_local(arg, var_stack_position))
+            {
+            push(arg, var_stack);
+            setobject(var_stack, valnode__caseobj(arg));
+            }
+         setvalnode__caseobj(arg, Unbound);
+         tell_shadow(arg);
+         args = cdr(args);
+         }
+      if (check_throwing) 
+         {
+         break;
+         }
+      }
+   assign(var, var_stack);  // so eval won't undo our work
+   return Unbound;
    }
 
 

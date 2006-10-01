@@ -504,8 +504,6 @@ extern void eval_driver(NODE *line);
 extern NODE *lapply(NODE *args);
 extern NODE *lqm(NODE *args);
 extern NODE *llocal(NODE *args);
-extern void tell_shadow(NODE *arg);
-extern bool not_local(NODE *name, NODE *sp);
 extern void uninitialize_eval(void);
 
 // file error.cpp
