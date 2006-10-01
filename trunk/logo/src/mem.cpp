@@ -176,6 +176,33 @@ NODE *cons(NODE *x, NODE *y)
    return val;
    }
 
+static
+void maybe_gc(NODE * nd)
+   {
+   if (nd == NIL)
+      {
+      // NIL doesn't need to be garbage collected
+      return;
+      }
+
+   if (decrefcnt(nd) != 0)
+      {
+      // more references remain--don't garbage collect now
+      return;
+      }
+
+   if (&gcstack[GCMAX] <= gctop)
+      {
+      // there's no more room on the stack.
+      // we have to leak this node.
+      return;
+      }
+
+   // push node onto the garbage-collection stack
+   // to be garbage collected in due time
+   *gctop++ = nd;
+   }
+
 void gc(NODE *nd)
    {
    for (;;)
@@ -272,35 +299,10 @@ void gc(NODE *nd)
 #endif
 
       mem_nodes--;
-      if (tcdr != NIL && decrefcnt(tcdr) == 0)
-         {
-         // push tcdr onto the stack of nodes to
-         // be garbage collected.
-         if (gctop < &gcstack[GCMAX])
-            {
-            *gctop++ = tcdr;
-            }
-         }
 
-      if (tcar != NIL && decrefcnt(tcar) == 0)
-         {
-         // push tcar onto the stack of nodes to
-         // be garbage collected.
-         if (gctop < &gcstack[GCMAX])
-            {
-            *gctop++ = tcar;
-            }
-         }
-
-      if (tobj != NIL && decrefcnt(tobj) == 0)
-         {
-         // push tobj onto the garbage-collection stack
-         // to be garbage collected in due time
-         if (gctop < &gcstack[GCMAX])
-            {
-            *gctop++ = tobj;
-            }
-         }
+      maybe_gc(tcdr);
+      maybe_gc(tcar);
+      maybe_gc(tobj);
 
       if (gctop == gcstack) 
          {
