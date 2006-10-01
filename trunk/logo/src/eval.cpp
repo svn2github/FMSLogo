@@ -858,10 +858,6 @@ NODE *evaluator(NODE *list, enum labels where)
       g_ValueStatus = VALUE_STATUS_NotOk;
       }
 
-   // save the list so that we can untreeify it after we're done
-   save(list);
-   newcont(eval_sequence_cleanup);
-
  eval_sequence:
    // Evaluate each expression in the sequence.  
    // Stop as soon as val != Unbound.
@@ -871,12 +867,8 @@ NODE *evaluator(NODE *list, enum labels where)
       }
    if (nodetype(unev) == LINE)
       {
-      // HACK: The is_tree() clause is a hack to prevent a crash on 
-      // HACK: non-tail-recursive procedure calls.  The problem is that I can't
-      // HACK: figure out where to un-treeify the procedures.  This is currently
-      // HACK: done in eval_sequence_cleanup, but if the is a non-tail-recursive
-      // HACK: call the procedure body will be untreeified when the inner call
-      // HACK: returns but while the outer call is still using it.
+      // The is_tree() clause prevents a crash when a procedure 
+      // is erased while it is being run.
       if (is_tree(unparsed__line(unev)) && 
           the_generation != generation__line(unev))
          {
@@ -1168,16 +1160,6 @@ NODE *evaluator(NODE *list, enum labels where)
       }
    goto eval_sequence;
 
-
- eval_sequence_cleanup:
-   
-   // Untreeify the bodylist to free memory that was allocated in 
-   // make_tree_from_body().  Note that this is not quite right,
-   // we can end up un-treeifying a procedure while it's still in use
-   // if it is tree recursive.  See bug #1454113.
-   restore(list);
-   untreeify_body(list);
-   goto fetch_cont;
 
  compound_apply_continue:
    /* Only get here if tracing */

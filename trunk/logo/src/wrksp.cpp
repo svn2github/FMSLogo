@@ -1204,7 +1204,19 @@ NODE *lerase(NODE *arg)
          err_logo(IS_PRIM, nd);
          break;
          }
+
+     NODE * procnode = procnode__caseobj(nd);
+     if (procnode != NIL && procnode != UNDEFINED)
+        {
+        // untreeify the body
+        if (!is_prim(procnode) && is_tree(bodylist__procnode(procnode)))
+           {
+           untreeify_body(bodylist__procnode(procnode));
+           }
+        }
+
       setprocnode__caseobj(nd, UNDEFINED);
+
       proclst = cdr(proclst);
       }
 

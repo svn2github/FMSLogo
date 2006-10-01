@@ -274,6 +274,20 @@ void release_all_objects()
          // force garbage collection
          setcar(object, NIL);
 
+         NODE * procnode = procnode__object(object);
+         if (procnode != NIL && procnode != UNDEFINED)
+            {
+            // untreeify the body
+            if (!is_prim(procnode) && is_tree(bodylist__procnode(procnode)))
+               {
+               untreeify_body(bodylist__procnode(procnode));
+               }
+            }
+
+         // overwrite the "proc node" with NIL to 
+         // force garbage collection
+         setprocnode__object(object, NIL);
+
          // overwrite the "proc node" with NIL to 
          // force garbage collection
          setprocnode__object(object, NIL);
