@@ -176,6 +176,39 @@ TO PARSETEST.DEEPLYNESTEDINFIXEXPRESSION
    REPORTTESTPASSED [|Bug #1566166 is fixed; running a long list of infix expressions didn't crash.|]
 END
 
+
+TO PARSETEST.DEEPLYPARENTHESIZEDEXPRESSION
+
+   ; bug #1568610 (this crashes)
+
+   ; Create and RUN an instruction list of the form
+   ;   ((( ... 0 ... )))
+   ;
+   LOCALMAKE "instructions []
+   REPEAT 100000 [ MAKE "instructions FPUT "\) :instructions ]
+   MAKE "instructions FPUT 123 :instructions 
+   REPEAT 100000 [ MAKE "instructions FPUT "\( :instructions ]
+   LOCALMAKE "sum RUN :instructions
+
+   SIMPLEREPORTTEST :sum 123
+   REPORTTESTPASSED [|Bug #1568610 is fixed; running a deeply parenthesized expression didn't crash.|]
+END
+
+TO PARSETEST.LOTSOFNEGATIONOPERATORS
+
+   ; bug #1568615 (this crashes)
+
+   ; Create and RUN an instruction list of the form
+   ;   ------ ... -1
+   ;
+   LOCALMAKE "instructions [1]
+   REPEAT 100000 [ MAKE "instructions FPUT "- :instructions ]
+   LOCALMAKE "value RUN :instructions
+
+   SIMPLEREPORTTEST :value 1
+   REPORTTESTPASSED [|Bug #1568615  is fixed; running a long chain of minus expressions didn't crash.|]
+END
+
 TO PARSETEST
    PARSETEST.NUMBER
    PARSETEST.WORD
@@ -185,6 +218,8 @@ TO PARSETEST
    PARSETEST.MANYINPUTS
    PARSETEST.DEEPLYNESTEDINFIXEXPRESSION
    PARSETEST.LONGINSTRUCTIONLINEWITHCATCH
-   ;PARSETEST.LONGINSTRUCTIONLINE
+   PARSETEST.LONGINSTRUCTIONLINE
+   ;PARSETEST.DEEPLYPARENTHESIZEDEXPRESSION
    ;PARSETEST.MANYNESTEDCALLS
+   ;PARSETEST.LOTSOFNEGATIONOPERATORS
 END
