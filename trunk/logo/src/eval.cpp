@@ -178,17 +178,6 @@ void numpush(FIXNUM obj, NODE **stack)
    }
 
 
-// Warn the user if a local variable shadows a global one.
-static
-void tell_shadow(NODE *arg)
-   {
-   assert(is_caseobject(arg));
-   if (flag__caseobj(arg, VAL_STEPPED))
-      {
-      err_logo(SHADOW_WARN, arg);
-      }
-   }
-
 // Check if a local variable is already in this frame 
 static
 bool not_local(NODE *name, NODE *sp)
@@ -201,6 +190,26 @@ bool not_local(NODE *name, NODE *sp)
          }
       }
    return true;
+   }
+
+static
+void create_local_variable(NODE * caseobject, NODE * var_stack_position)
+   {
+   assert(is_caseobject(caseobject));
+
+   if (not_local(caseobject, var_stack_position))
+      {
+      // A variable by this name didn't already exist in
+      // this scope, so we must create a new scope for it.
+      push(caseobject, var_stack);
+      setobject(var_stack, valnode__caseobj(caseobject));
+      }
+
+   if (flag__caseobj(caseobject, VAL_STEPPED))
+      {
+      // If the variable is stepped, emit a warning that it is being shadowed
+      err_logo(SHADOW_WARN, caseobject);
+      }
    }
 
 // reverse a list destructively
@@ -599,14 +608,7 @@ NODE *evaluator(NODE *list, enum labels where)
       if (nodetype(parm) == CASEOBJ)
          {
          // A named input (the common case) -- treat this a local variable
-         if (not_local(parm, var_stack_position))
-            {
-            // A variable by this name didn't already exist in
-            // this scope, so we must create a new scope for it.
-            push(parm, var_stack);
-            setobject(var_stack, valnode__caseobj(parm));
-            }
-         tell_shadow(parm);
+         create_local_variable(parm, var_stack_position);
 
          // bind the argument to the formal parameter object
          setvalnode__caseobj(parm, arg);
@@ -618,14 +620,11 @@ NODE *evaluator(NODE *list, enum labels where)
          }
       else if (nodetype(parm) == CONS)
          {
-         /* parm is optional or rest */
+         // parm is optional or rest 
          assert(is_caseobject(car(parm)));
-         if (not_local(car(parm), var_stack_position))
-            {
-            push(car(parm), var_stack);
-            setobject(var_stack, valnode__caseobj(car(parm)));
-            }
-         tell_shadow(car(parm));
+
+         create_local_variable(car(parm), var_stack_position);
+
          if (cdr(parm) == NIL)
             {
             // parm is a "rest" input.
@@ -1573,8 +1572,6 @@ NODE *lqm(NODE *args)
 
 NODE *llocal(NODE *args)
    {
-   NODE *var_stack_position = var_stack;
-
    if (tailcall != 0)
      {
      return Unbound;
@@ -1595,6 +1592,8 @@ NODE *llocal(NODE *args)
       args = car(args);
       }
 
+   NODE *var_stack_position = var_stack;
+
    while (args != NIL && NOT_THROWING)
       {
       NODE * arg = car(args);
@@ -1607,13 +1606,10 @@ NODE *llocal(NODE *args)
          {
          arg = intern(arg);
          setcar(args, arg);            // local [a b] faster next time
-         if (not_local(arg, var_stack_position))
-            {
-            push(arg, var_stack);
-            setobject(var_stack, valnode__caseobj(arg));
-            }
+
+         create_local_variable(arg, var_stack_position);
+
          setvalnode__caseobj(arg, Unbound);
-         tell_shadow(arg);
          args = cdr(args);
          }
       if (check_throwing) 
