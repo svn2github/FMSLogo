@@ -268,6 +268,14 @@ TO PROCEDURETEST
    SIMPLEREPORTTEST [LOCALVARTEST "unknownlocalvar 42] 42
    SIMPLEREPORTTEST [NAME? "unknownlocalvar] "false
 
+   ; local values start off unbound
+   LOCAL "thisvariableisunbound
+   RUNHASNOVALUETEST [:thisvariableisunbound]
+
+   MAKE  "thisvariableisunbound 123
+   LOCAL "thisvariableisunbound
+   RUNHASNOVALUETEST [:thisvariableisunbound]
+
    ; silly, but legal
    LOCAL [10 11]
    MAKE "10 "ten
