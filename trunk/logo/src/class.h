@@ -711,7 +711,7 @@ extern COLORREF scolor;
 extern COLORREF fcolor;
 extern COLORREF pcolor;
 extern long width;
-extern long zoom_flag;
+extern bool zoom_flag;
 extern long MaxColors;
 
 extern LINEX TurtlePoints[][4];

@@ -140,7 +140,7 @@ COLORREF scolor = 1;                   // screen color
 COLORREF fcolor = 1;                   // flood color
 COLORREF pcolor = 1;                   // pen color
 long width = 1;                        // pen width
-long zoom_flag = 0;                    // flag to signal in zoomed state
+bool zoom_flag = false;                // flag to signal in zoomed state
 long MaxColors = 0;                    // The maximum # of colors available
 
 LINEX TurtlePoints[TURTLES][4];        // used to store 3 vertices of turtle
