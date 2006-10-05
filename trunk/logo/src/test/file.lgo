@@ -172,7 +172,7 @@ TO FILETEST.OPENAPPEND
    ERASEFILE :filename
 
    ; shouldn't be able to open a file that was erased
-   RUNBADINPUTTEST [OPENREAD :filename]
+   RUNFILESYSTEMERRORTEST [OPENREAD :filename]
 END
 
 
@@ -258,14 +258,14 @@ TO FILETEST.BADINPUT
    RUNTOOMANYINPUTSTEST [(OPENUPDATE "testfile.txt "true "toomany)]
 
    ; try to overflow an internal buffer
-   RUNBADINPUTTEST [OPENREAD   :longfilename]
-   RUNBADINPUTTEST [OPENWRITE  :longfilename]
-   RUNBADINPUTTEST [OPENAPPEND :longfilename]
-   RUNBADINPUTTEST [OPENUPDATE :longfilename]
+   RUNFILESYSTEMERRORTEST [OPENREAD   :longfilename]
+   RUNFILESYSTEMERRORTEST [OPENWRITE  :longfilename]
+   RUNFILESYSTEMERRORTEST [OPENAPPEND :longfilename]
+   RUNFILESYSTEMERRORTEST [OPENUPDATE :longfilename]
 
    ; test CLOSE
-   RUNBADINPUTTEST        [CLOSE :longfilename]
-   RUNBADINPUTTEST        [CLOSE "nonexistent.txt]
+   RUNFILESYSTEMERRORTEST [CLOSE :longfilename]
+   RUNFILESYSTEMERRORTEST [CLOSE "nonexistent.txt]
    RUNNOTENOUGHINPUTSTEST [(CLOSE)]
    RUNTOOMANYINPUTSTEST   [(CLOSE "testfile.txt "many)]
 
@@ -286,7 +286,7 @@ TO FILETEST.ERASEFILE
    ; try to erase a non-existent file (should fail silently)
    ERASEFILE "nonexistent
 
-   ; try to erase a file that doesn't exist (should fail silently)
+   ; try to erase a file that does exist
    OPENWRITE "mytestfile
    ERASEFILE "mytestfile
    SIMPLEREPORTTEST [MEMBERP "mytestfile FILES] "true
@@ -314,18 +314,18 @@ TO FILETEST.OPENOPENFILE
 
    ; can't open a file that is already open for writing 
    OPENWRITE  "mytestfile
-   RUNBADINPUTTEST [OPENREAD   "mytestfile]
-   RUNBADINPUTTEST [OPENWRITE  "mytestfile]
-   RUNBADINPUTTEST [OPENAPPEND "mytestfile]
-   RUNBADINPUTTEST [OPENUPDATE "mytestfile]
+   RUNFILESYSTEMERRORTEST [OPENREAD   "mytestfile]
+   RUNFILESYSTEMERRORTEST [OPENWRITE  "mytestfile]
+   RUNFILESYSTEMERRORTEST [OPENAPPEND "mytestfile]
+   RUNFILESYSTEMERRORTEST [OPENUPDATE "mytestfile]
    CLOSE     "mytestfile
 
    ; can't open a file that is already open for reading
    OPENREAD "mytestfile
-   RUNBADINPUTTEST [OPENREAD   "mytestfile]
-   RUNBADINPUTTEST [OPENWRITE  "mytestfile]
-   RUNBADINPUTTEST [OPENAPPEND "mytestfile]
-   RUNBADINPUTTEST [OPENUPDATE "mytestfile]
+   RUNFILESYSTEMERRORTEST [OPENREAD   "mytestfile]
+   RUNFILESYSTEMERRORTEST [OPENWRITE  "mytestfile]
+   RUNFILESYSTEMERRORTEST [OPENAPPEND "mytestfile]
+   RUNFILESYSTEMERRORTEST [OPENUPDATE "mytestfile]
    CLOSE     "mytestfile
 
    ERASEFILE "mytestfile
@@ -339,10 +339,10 @@ TO FILETEST.OPENDIRECTORYASFILE
    MKDIR  "testdir
    POPDIR
 
-   RUNBADINPUTTEST [OPENREAD   "testdir]
-   RUNBADINPUTTEST [OPENWRITE  "testdir]
-   RUNBADINPUTTEST [OPENAPPEND "testdir]
-   RUNBADINPUTTEST [OPENUPDATE "testdir]
+   RUNFILESYSTEMERRORTEST [OPENREAD   "testdir]
+   RUNFILESYSTEMERRORTEST [OPENWRITE  "testdir]
+   RUNFILESYSTEMERRORTEST [OPENAPPEND "testdir]
+   RUNFILESYSTEMERRORTEST [OPENUPDATE "testdir]
 
    RMDIR "testdir
    SIMPLEREPORTTEST [MEMBERP "mytestfile DIRECTORIES] "false
