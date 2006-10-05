@@ -2,7 +2,8 @@ LOAD "testlib.lgo
 
 TO LABELCIRCLETEST
 
-  CLEARSCREEN
+  SETSCREENCOLOR 7
+  HOME
 
   HIDETURTLE
   PENUP
@@ -17,12 +18,7 @@ TO LABELCIRCLETEST
   PENDOWN
   SHOWTURTLE
 
-  MAKE "isok YESNOBOX [Question] [Does the font circle look correct?]
-  IFELSE :isok [
-    REPORTTESTPASSED (sentence "|The font circle was drawn correctly|) 
-  ] [
-    REPORTTESTFAILED (sentence "|The font circle did not look right|) 
-  ]
+  CHECKSCREEN "font-circle
 
 END
 
@@ -33,27 +29,46 @@ END
 
 TO SETLABELFONTTEST
 
-  ; setting with an unknown font is defined to 
-  ; enumerate all known fonts
+  SETPENCOLOR    2
+  SETSCREENCOLOR 7
+  HOME
+
+  ; Setting the label font to an unknown font is defined to 
+  ; enumerate all known fonts.
   SETLABELFONT [unknown]
 
   SETLABELFONT [System]
   CLEARSCREEN
   RIGHT 90
   LABEL [This is the system font]
-  ; TODO verify the font is correct
+
+  ; verify the font is correct
+  CHECKSCREEN "system-font
 
 
   SETLABELFONT [[Arial] 24 0 0 400 0 0 0 0 0 0 0 0]
   CLEARSCREEN
   RIGHT 90
   LABEL [This is Arial]
-  ; TODO verify the font is correct
+  CHECKSCREEN "arial-font
 
 
-  ;
-  ; TODO: verify that each of the font components gets set as expected
-  ; 
+  ; verify that the LABELFONT was set as expected
+  SIMPLEREPORTTEST [ LIST? LABELFONT ] "true
+  SIMPLEREPORTTEST [ COUNT LABELFONT ] 13
+  SIMPLEREPORTTEST [ITEM  1 LABELFONT] [Arial]
+  SIMPLEREPORTTEST [ITEM  2 LABELFONT] 24
+  SIMPLEREPORTTEST [ITEM  3 LABELFONT] 0
+  SIMPLEREPORTTEST [ITEM  4 LABELFONT] 0
+  SIMPLEREPORTTEST [ITEM  5 LABELFONT] 400
+  SIMPLEREPORTTEST [ITEM  6 LABELFONT] 0
+  SIMPLEREPORTTEST [ITEM  7 LABELFONT] 0
+  SIMPLEREPORTTEST [ITEM  8 LABELFONT] 0
+  SIMPLEREPORTTEST [ITEM  9 LABELFONT] 0
+  SIMPLEREPORTTEST [ITEM 10 LABELFONT] 0
+  SIMPLEREPORTTEST [ITEM 11 LABELFONT] 0
+  SIMPLEREPORTTEST [ITEM 12 LABELFONT] 0
+  SIMPLEREPORTTEST [ITEM 13 LABELFONT] 0
 
 
   ; these result in a font-not-found behavior
