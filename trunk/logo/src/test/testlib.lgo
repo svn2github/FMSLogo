@@ -272,6 +272,105 @@ TO TIMECOMMAND :instructions
 END
 BURY [TIMECOMMAND]
 
+
+TO FILEEXISTS :filename
+
+   IGNORE ERROR
+   CATCH "ERROR [OPENREAD :filename]
+   IF EMPTY? ERROR [
+      ; no error means we opened a file
+      CLOSE :filename
+      OUTPUT "true
+   ]
+
+   OUTPUT "false
+
+END
+
+TO FILESAREEQUAL :filea :fileb
+
+   ; do a binary byte-for-byte comparison of the files
+   ; OUTPUT "true if the files have the same content
+   ; OUTPUT "false, otherwise
+
+   LOCAL [bytea byteb]
+
+   (OPENREAD :filea "true)
+   (OPENREAD :fileb "true)
+
+   SETREAD :filea
+   WHILE [NOT EOFP] [
+      SETREAD :fileb
+      MAKE "byteb READCHAR
+
+      SETREAD :filea
+      MAKE "bytea READCHAR
+
+      IF NOT EQUAL? :bytea :byteb [
+         ; found a discrepency
+         CLOSE :filea
+         CLOSE :fileb
+         OUTPUT "false
+      ]
+   ]
+
+   SETREAD :fileb
+   IF NOT EOFP [
+      ; fileb is shorter than filea
+      CLOSE :filea
+      CLOSE :fileb
+      OUTPUT "false
+   ]
+
+   ; no file differences were found
+   CLOSE :filea
+   CLOSE :fileb
+
+   OUTPUT "true
+END
+
+TO CHECKSCREEN :screenname
+   
+   LOCAL [baselinefilename newfilename isok]
+
+   ; set the active area to the entire screen
+   SETACTIVEAREA (LIST -500 -500 500 500)
+
+   MAKE "baselinefilename WORD :screenname ".gif
+ 
+   IFELSE FILEEXISTS :baselinefilename [
+
+      ; The baseline file exists, so we can automate the process of 
+      ; testing the contents of the screen for correctness.
+      MAKE "newfilename WORD :screenname "-new.gif
+      GIFSAVE :newfilename
+
+      ; do a binary byte-for-byte comparison of the files
+      MAKE "isok FILESAREEQUAL :baselinefilename :newfilename
+
+      ERASEFILE :newfilename
+   ][
+
+       ; The baseline file does not exist.
+       ; We must ask the user if the screen looks correct.
+
+       MAKE "isok YESNOBOX :screenname [Does the screen look correct?]
+       IF :isok [
+         ; Everything is good.  Save the screen as a baseline.
+         GIFSAVE :baselinefilename
+       ]
+   ]
+
+   IFELSE :isok [
+      ; everything is good.  save the image as a baseline
+      REPORTTESTPASSED (sentence :screenname "|was drawn correctly.|)
+   ] [
+      ; something is wrong.  Fail this test.
+      REPORTTESTFAILED (sentence :screenname "|was not drawn correctly.|)
+   ]
+
+END
+
 ; protect against loading the file twice
 if not name? "testlog [
   MAKE "testlog []
