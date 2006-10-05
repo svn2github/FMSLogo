@@ -284,8 +284,8 @@ TO FILEEXISTS :filename
    ]
 
    OUTPUT "false
-
 END
+BURY [FILEEXISTS]
 
 TO FILESAREEQUAL :filea :fileb
 
@@ -328,6 +328,7 @@ TO FILESAREEQUAL :filea :fileb
 
    OUTPUT "true
 END
+BURY [FILESAREEQUAL]
 
 TO CHECKSCREEN :screenname
    
@@ -368,8 +369,8 @@ TO CHECKSCREEN :screenname
       ; something is wrong.  Fail this test.
       REPORTTESTFAILED (sentence :screenname "|was not drawn correctly.|)
    ]
-
 END
+BURY [CHECKSCREEN]
 
 ; protect against loading the file twice
 if not name? "testlog [
