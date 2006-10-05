@@ -101,12 +101,7 @@ TO BITCOPYTEST
   FORWARD  200
   BITPASTE
 
-  MAKE "isok YESNOBOX [Question] [Does the bitpaste look correct?]
-  IFELSE :isok [
-    REPORTTESTPASSED (sentence "|The bitpaste was drawn correctly|) 
-  ] [
-    REPORTTESTFAILED (sentence "|The bitpaste did not look right|) 
-  ]
+  CHECKSCREEN "bitpaste-pattern
 
   PENDOWN
   
