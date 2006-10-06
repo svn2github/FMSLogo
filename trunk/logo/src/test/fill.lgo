@@ -32,12 +32,7 @@ TO FILLTEST
   SETPENCOLOR 11
   (FILL "true)
 
-  MAKE "isok YESNOBOX [Question] [Is the screen solid green?]
-  IFELSE :isok [
-    REPORTTESTPASSED (sentence "|(FILL "true) worked as expected|) 
-  ] [
-    REPORTTESTFAILED (sentence "|(FILL "true) did not work as expected|) 
-  ]
+  CHECKSCREEN "solid-green
 
   RUNBADINPUTTEST      [(FILL 10)]
   RUNBADINPUTTEST      [(FILL ["true])]
