@@ -171,8 +171,12 @@ NODE *paren_expr(NODE **expr, bool inparen)
             }
          else if (car(*expr) != Right_Paren)
             {
-            // throw the rest away
+            // there are too many inputs
             err_logo(TOO_MUCH, NIL);
+
+            // throw away the rest of the line
+            // REVISIT: Why does ths matter?  
+            // REVISIT: Don't we cleanup when we error-out?
             for (int parens = 0; *expr; pop(*expr))
                {
                if (car(*expr) == Left_Paren)
@@ -440,10 +444,17 @@ void make_tree(NODE *newtree)
       {
       settype(newtree, TREE);
       settree__tree(newtree, childtree);
+
       if (tree_dk_how || stopping_flag == THROWING)
          {
+         // make sure this gets re-treeified later
          setgeneration__tree(newtree, Unbound);
          }
+      }
+   else
+      {
+      // cleanup on error
+      untreeify_line(newtree);
       }
    }
 
