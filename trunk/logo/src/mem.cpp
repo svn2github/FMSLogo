@@ -39,6 +39,11 @@ static long int mem_max = 0;
 
 static NODE *reserve_tank;
 
+#ifdef DEBUG
+NODE * tracked_node = NIL;
+#endif
+
+
 NODETYPES nodetype(const NODE *nd)
    {
    if (nd == NIL) 

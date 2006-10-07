@@ -22,6 +22,34 @@
 #define ecma // for European extended character set using parity bit
 #define ibm
 
+#ifdef DEBUG
+
+extern struct NODE * tracked_node;
+
+void set_tracked_node(struct NODE * node)
+   {
+   tracked_node = node;
+   }
+
+void trace_node_change(struct NODE * Node)
+   {
+   if (Node != NULL && Node == tracked_node)
+      {
+      DebugBreak();
+      }
+   }
+
+#define TRACE_NODE_CHANGE(NODE) trace_node_change(NODE)
+#define SET_TRACKED_NODE(NODE)  set_tracked_node(NODE)
+
+#else
+
+#define TRACE_NODE_CHANGE(NODE)
+#define SET_TRACKED_NODE(NODE)
+
+#endif // DEBUG
+
+
 #define check_throwing (check_stop(false) || stopping_flag == THROWING)
 
 enum mode_type
@@ -246,6 +274,7 @@ getrefcnt(const NODE * Node)
 inline
 void increfcnt(NODE * Node)
    {
+   TRACE_NODE_CHANGE(Node);
    Node->ref_count++;
    }
 
@@ -253,6 +282,7 @@ inline
 long
 decrefcnt(NODE * Node)
    {
+   TRACE_NODE_CHANGE(Node);
    return --Node->ref_count;
    }
 
@@ -664,6 +694,7 @@ gcref(NODE * object)
 
    if (getrefcnt(object) == 0)
       {
+      TRACE_NODE_CHANGE(object);
       gc(object);
       }
    }
