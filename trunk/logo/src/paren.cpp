@@ -459,8 +459,8 @@ void make_tree(NODE *newtree)
    }
 
 
-/* Calculate the priority of a procedure.
-*/
+// Calculate the priority of a procedure.
+static
 int priority(NODE *proc_obj)
    {
    if (proc_obj == Minus_Tight)

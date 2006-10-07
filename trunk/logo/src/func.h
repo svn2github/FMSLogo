@@ -352,7 +352,6 @@ extern void uninitialize_parser(void);
 extern void untreeify_body(NODE *body);
 extern void make_tree_from_body(NODE *body);
 extern void make_tree(NODE *list);
-extern int priority(NODE *proc_obj);
 
 // File mem.cpp
 extern NODETYPES nodetype(const NODE *nd);
