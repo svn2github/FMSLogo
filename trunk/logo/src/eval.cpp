@@ -650,6 +650,7 @@ NODE *evaluator(NODE *list, enum labels where)
             g_ValueStatus = VALUE_STATUS_Required;
             save2(formals, argl);
             save(var_stack_position);
+
             assign(list, cdr(parm));
             if (NOT_THROWING)
                {
@@ -660,16 +661,13 @@ NODE *evaluator(NODE *list, enum labels where)
                assign(list, NIL);
                }
 
+            assign(val, Unbound);
             if (is_tree(list))
                {
+               // the default value is an expression, which must be run
                assign(unev, tree__tree(list));
-               assign(val, Unbound);
                newcont(set_args_continue);
                goto eval_sequence;
-               }
-            else
-               {
-               assign(val, Unbound);
                }
 
  set_args_continue:
@@ -688,6 +686,8 @@ NODE *evaluator(NODE *list, enum labels where)
          // bind the given argument to the formal argument
          setvalnode__caseobj(car(parm), arg);
          }
+
+      // advance to the next argument in the list
       if (argl != NIL) 
          {
          pop(argl);
