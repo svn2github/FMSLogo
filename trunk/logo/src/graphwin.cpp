@@ -25,8 +25,8 @@
 extern COLORREF colortable[];
 extern bool bIndexMode;
 
-extern int gbmBmpToGif(char *BmpName, char *GifName);
-extern int gbmGifToBmp(char *GifName, char *BmpName);
+extern int gbmBmpToGif(const char *BmpName, const char *GifName);
+extern int gbmGifToBmp(const char *GifName, const char *BmpName);
 
 int iDelay;
 int bAppendMode;
@@ -912,11 +912,11 @@ void UpdateZoomControlFlag()
    {
    if ((the_zoom != 1.0) || CheckOnScreenControls())
       {
-      zoom_flag = 1;
+      zoom_flag = true;
       }
    else
       {
-      zoom_flag = 0;
+      zoom_flag = false;
       }
 
    if (the_zoom != 1.0)
