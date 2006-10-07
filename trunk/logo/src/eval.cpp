@@ -575,17 +575,15 @@ NODE *evaluator(NODE *list, enum labels where)
         formals != NIL;
         formals = cdr(formals))
       {
-      // Add a reference to the formals list in case it is freed
-      // while we are processing the function.
-      // I don't know why this happens, but it does.  
-      // See bug #1563318.
-      ref(formals);
 
       parm = car(formals);
       if (nodetype(parm) == INTEGER) 
          {
-         deref(formals);
-         break; // default # args
+         // default # args
+
+         // set formals to NIL so that it doesn't get deref'ed in restore
+         formals = NIL;
+         break;
          }
       if (argl != NIL)
          {
@@ -632,6 +630,11 @@ NODE *evaluator(NODE *list, enum labels where)
             setvalnode__caseobj(car(parm), argl);
             // BUG: should this be traced?
             assign(argl, NIL);
+
+            // Set formals to NIL so that it doesn't get deref'ed in restore2()
+            // Otherwise this could crash. 
+            // See bug #1563318.
+            formals = NIL;
             break;
             }
          if (arg == Unbound)
@@ -689,9 +692,6 @@ NODE *evaluator(NODE *list, enum labels where)
          {
          pop(argl);
          }
-
-      // release the reference we took at the beginning of the loop
-      deref(formals);
       }
 
    if (argl != NIL) 
@@ -1360,12 +1360,12 @@ NODE *evaluator(NODE *list, enum labels where)
             else
                {
                // lambda form [[param ...] instr ...]
-               formals = car(fun);
+               NODE * formal_inputs = car(fun);
                if (tailcall <= 0) 
                   {
                   // Create a new local variable scope for 
                   // the lambda function call before binding
-                  // the formals.
+                  // the formal inputs.
                   save(var);
                   assign(var, var_stack);
                   newcont(after_lambda);
@@ -1373,16 +1373,16 @@ NODE *evaluator(NODE *list, enum labels where)
 
                //numsave(tailcall);
                tailcall = 0;
-               llocal(formals);  // bind the formals locally
+               llocal(formal_inputs);  // bind the formals locally
                //numrestore(tailcall);
                for (;
-                    formals != NIL && argl && NOT_THROWING;
-                    formals = cdr(formals), assign(argl, cdr(argl)))
+                    formal_inputs != NIL && argl && NOT_THROWING;
+                    formal_inputs = cdr(formal_inputs), assign(argl, cdr(argl)))
                   {
-                  setvalnode__caseobj(car(formals), car(argl));
+                  setvalnode__caseobj(car(formal_inputs), car(argl));
                   }
 
-               if (formals != NIL) 
+               if (formal_inputs != NIL) 
                   {
                   // too few inputs
                   err_logo(NOT_ENOUGH, fun);
