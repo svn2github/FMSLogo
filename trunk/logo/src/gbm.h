@@ -93,40 +93,28 @@ typedef int GBM_ERR;
 #define	GBM_FT_W8		0x0040
 #define	GBM_FT_W24		0x0080
 
-typedef struct
-	{
-	char *short_name;		/* Eg: "Targa"                       */
-	char *long_name;		/* Eg: "Truevision Targa / Vista"    */
-	char *extensions;		/* Eg: "TGA VST"                     */
-	int flags;			/* What functionality exists         */
-	} GBMFT;
+struct GBMFT
+   {
+   char *short_name;		/* Eg: "Targa"                       */
+   char *long_name;		/* Eg: "Truevision Targa / Vista"    */
+   char *extensions;		/* Eg: "TGA VST"                     */
+   int flags;			/* What functionality exists         */
+   };
 
-typedef struct { byte r, g, b; } GBMRGB;
+struct GBMRGB { byte r, g, b; };
 
 #define	PRIV_SIZE 2000
 
-typedef struct
-	{
-	int w, h, bpp;			/* Bitmap dimensions                 */
-	byte priv[PRIV_SIZE];		/* Private internal buffer           */
-	} GBM;
+struct GBM
+   {
+   int w, h, bpp;			/* Bitmap dimensions                 */
+   byte priv[PRIV_SIZE];		/* Private internal buffer           */
+   };
 
 #ifndef _GBM_
 
 #define	GBMEXPORT
 #define	GBMENTRY
-
-GBMEXPORT GBM_ERR GBMENTRY gbm_init(void);
-GBMEXPORT GBM_ERR GBMENTRY gbm_deinit(void);
-
-GBMEXPORT GBM_ERR GBMENTRY gbm_io_setup(
-	int  (*open  )(const char *fn, int mode),
-	int  (*create)(const char *fn, int mode),
-	void (*close )(int fd),
-	long (*lseek )(int fd, long pos, int whence),
-	int  (*read  )(int fd, void *buf, int len),
-	int  (*write )(int fd, const void *buf, int len)
-	);
 
 GBMEXPORT int  GBMENTRY gbm_io_open  (const char *fn, int mode);
 GBMEXPORT int  GBMENTRY gbm_io_create(const char *fn, int mode);
