@@ -216,7 +216,6 @@ TO RUNOUTOFBOUNDSTEST :instructions
 END
 BURY [RUNOUTOFBOUNDSTEST]
 
-
 TO RUNNOTENOUGHINPUTSTEST :instructions
   RUNEXPECTERRORTEST :instructions 6
 END
@@ -343,13 +342,13 @@ TO CHECKSCREEN :screenname
    ; set the active area to the entire screen
    SETACTIVEAREA (LIST -500 -500 500 500)
 
-   MAKE "baselinefilename WORD :screenname ".gif
+   MAKE "baselinefilename (WORD "testimage- :screenname ".gif)
  
    IFELSE FILEEXISTS :baselinefilename [
 
       ; The baseline file exists, so we can automate the process of 
       ; testing the contents of the screen for correctness.
-      MAKE "newfilename WORD :screenname "-new.gif
+      MAKE "newfilename (WORD "testimage- :screenname "-new.gif)
       GIFSAVE :newfilename
 
       ; do a binary byte-for-byte comparison of the files
