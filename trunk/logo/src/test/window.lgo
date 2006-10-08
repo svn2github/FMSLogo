@@ -1,41 +1,51 @@
 LOAD "testlib.lgo
 
-TO BUG1429960TEST
-  ; For backward-compatibility with MSWLogo programs, ICON "Commander
-  ; should always minimize the commander, even when the commander is docked.
+TO WINDOWTEST.SMOKETEST
 
-  SPLITSCREEN
-  ICON "Commander
+   ; switch to window mode
+   WINDOW
+   CLEARSCREEN
 
-  LOCALMAKE "isok YESNOBOX [Question] [Is the commander minimized?]
-  IF NOT :isok [
-    REPORTTESTFAILED (sentence "|ICON "Commander did not minimize the commander when it was docked|) 
-    STOP
-  ]
+   ; draw a circle whose edges are just barely visible
+   CIRCLE 600
 
-  REPORTTESTPASSED (sentence "|ICON "Commander minimized the commander when it was docked|) 
-  UNICON "Commander
-  SPLITSCREEN
+   ; draw a diamond-like shape that falls mostly outside of the screen
+   ; these should be within the boundries
+   PENUP
+   SETXY  0   750
+   PENDOWN
+   SETXY 750   0
+   SETXY  0  -750
+   SETXY -750  0
+   SETXY  0   750
+
+   CHECKSCREEN "window-test
+
+   ; go back to the default mode
+   CLEARSCREEN
+   WRAP
 END
 
-TO WINDOWSETTEST
+TO WINDOWTEST.BADINPUT
 
-  BUG1429960TEST
+   FENCE
 
+   ; bad input tests (shouldn't change modes)
+   RUNTOOMANYINPUTSTEST [(WINDOW "toomany)]
 
-  ; bad input
-  RUNNOTENOUGHINPUTSTEST [(WINDOWSET)]
-  RUNNOTENOUGHINPUTSTEST [(WINDOWSET "FMSLogo)]
-  RUNTOOMANYINPUTSTEST   [(WINDOWSET "FMSLogo 0 "toomany)]
+   ; The easiest way to test that we're not in window mode
+   ; is to try to force an out-of-bounds error in fence mode
+   HOME
+   RUNOUTOFBOUNDSTEST [ FD 1000 ]
 
-  RUNBADINPUTTEST [WINDOWSET "FMSLogo [1]  ]
-  RUNBADINPUTTEST [WINDOWSET "FMSLogo {1}  ]
-  RUNBADINPUTTEST [WINDOWSET "FMSLogo "one ]
-  RUNBADINPUTTEST [WINDOWSET "FMSLogo -1   ]
+   WRAP
+   CLEARSCREEN
 END
 
 TO WINDOWTEST
 
-  WINDOWSETTEST
+   WINDOWTEST.SMOKETEST
+   WINDOWTEST.BADINPUT
 
 END
+

@@ -54,11 +54,14 @@ LOAD "screen.lgo
 LOAD "misc.lgo
 LOAD "network.lgo
 LOAD "controlflow.lgo
+LOAD "fence.lgo
+LOAD "wrap.lgo
+LOAD "window.lgo
 LOAD "perspective.lgo
 LOAD "orientation.lgo
 LOAD "scrunch.lgo
 LOAD "help.lgo
-LOAD "window.lgo
+LOAD "windowset.lgo
 LOAD "sort.lgo
 LOAD "run.lgo
 LOAD "dll.lgo
@@ -162,11 +165,14 @@ TO TESTALL
   SHELLTEST          ; from shell.lgo
   DIRECTORYTEST      ; from directory.lgo
   MISCTEST           ; from misc.lgo
+  FENCETEST          ; from fence.lgo
+  WRAPTEST           ; from wrap.lgo
+  WINDOWTEST         ; from window.lgo
   PERSPECTIVETEST    ; from perspective.lgo
   ORIENTATIONTEST    ; from orientation.lgo
   SCRUNCHTEST        ; from scrunch.lgo
   HELPTEST           ; from help.lgo
-  WINDOWTEST         ; from window.lgo
+  WINDOWSETTEST      ; from windowset.lgo
   DLLTEST            ; from dll.lgo
   SORTTEST           ; from sort.lgo
   ISEQTEST           ; from iseq.lgo
