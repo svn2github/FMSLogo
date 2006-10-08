@@ -636,7 +636,7 @@ void uninit()
    lnetshutdown(NIL);
 
    // uninitialize the file subsystem
-   lcloseall(NIL);
+   uninitialize_files();
 
    deref(Not_Enough_Node);
    deref(the_generation);

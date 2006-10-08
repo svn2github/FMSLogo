@@ -330,12 +330,12 @@ NODE *lsetread(NODE *arg)
 
 NODE *lreader(NODE *)
    {
-   return (reader_name);
+   return reader_name;
    }
 
 NODE *lwriter(NODE *)
    {
-   return (writer_name);
+   return writer_name;
    }
 
 NODE *lerasefile(NODE *arg)
@@ -724,4 +724,15 @@ NODE *lcloseall(NODE *)
    file_list = NIL;
 
    return Unbound;
+   }
+
+void uninitialize_files()
+   {
+   lcloseall(NIL);
+
+   deref(reader_name);
+   reader_name = NIL;
+
+   deref(writer_name);
+   writer_name = NIL;
    }

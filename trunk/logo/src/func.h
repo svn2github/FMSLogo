@@ -493,6 +493,7 @@ extern NODE *lsetreadpos(NODE *arg);
 extern NODE *lwritepos(NODE *arg);
 extern NODE *lsetwritepos(NODE *arg);
 extern NODE *lcloseall(NODE * arg);
+extern void uninitialize_files(void);
 
 // file eval.cpp
 extern NODE *load_procedure_if_necessary(NODE * ProcNode);
