@@ -6,7 +6,8 @@
 
 <varlistentry><term>Synopsis</term>
 <listitem>
-<synopsis><command>EOFP</command></synopsis>
+<synopsis><command>EOFP</command>
+<command>EOF?</command></synopsis>
 </listitem>
 </varlistentry>
 

@@ -62,6 +62,7 @@ $AlternateSpellings{DEFINEDP}       = ['DEFINED?'];
 $AlternateSpellings{DOWNPITCH}      = ['DOWN'];
 $AlternateSpellings{EDIT}           = ['ED'];
 $AlternateSpellings{EMPTYP}         = ['EMPTY?'];
+$AlternateSpellings{EOFP}           = ['EOF?'];
 $AlternateSpellings{EQUALP}         = ['EQUAL?'];
 $AlternateSpellings{ERASEFILE}      = ['ERF'];
 $AlternateSpellings{ERASE}          = ['ER'];
