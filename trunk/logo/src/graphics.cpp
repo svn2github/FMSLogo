@@ -86,7 +86,8 @@ int    turtle_max = 0;
 VECTOR g_Scale        = {1.0, 1.0, 1.0};
 VECTOR g_OneOverScale = {1.0, 1.0, 1.0};
 Point  g_Wanna = {0.0, 0.0, 0.0};
-bool   out_of_bounds = false;
+
+static bool out_of_bounds = false;
 
 #define sq(z) ((z)*(z))
 
