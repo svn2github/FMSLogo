@@ -47,6 +47,8 @@ LOAD "procedure.lgo
 LOAD "parse.lgo
 LOAD "eval.lgo
 LOAD "word.lgo
+LOAD "uppercase.lgo
+LOAD "lowercase.lgo
 LOAD "color.lgo
 LOAD "pensize.lgo
 LOAD "pixel.lgo
@@ -116,6 +118,8 @@ TO TESTALL
   SENTENCETEST       ; from sentence.lgo
   PREDICATETEST      ; from predicate.lgo
   WORDTEST           ; from word.lgo
+  UPPERCASETEST      ; from uppercase.lgo
+  LOWERCASETEST      ; from lowercase.lgo
   THINGTEST          ; from thing.lgo
   FIRSTTEST          ; from first.lgo
   FIRSTSTEST         ; from firsts.lgo
