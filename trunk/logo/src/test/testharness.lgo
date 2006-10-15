@@ -98,6 +98,7 @@ LOAD "refresh.lgo
 LOAD "combine.lgo
 LOAD "print.lgo
 LOAD "runresult.lgo
+LOAD "slowdraw.lgo
 
 TO TESTALL
 
@@ -196,6 +197,7 @@ TO TESTALL
   MIDITEST           ; from midi.lgo
   SOUNDTEST          ; from sound.lgo
   NETWORKTEST        ; from network.lgo
+  SLOWDRAWTEST       ; from slowdraw.lgo
 
   REPORTTESTUNINITIALIZE
 
