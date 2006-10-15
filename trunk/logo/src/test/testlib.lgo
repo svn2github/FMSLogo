@@ -278,6 +278,27 @@ END
 BURY [TIMECOMMAND]
 
 
+TO CHECKEXECUTIONTIME :instructions :actualtime :minacceptabletime :maxacceptabletime
+
+    if :maxacceptabletime < :actualtime [
+       REPORTTESTFAILED (list 
+          :instructions "ran "in :actualtime "ms.
+          "|We expected no more than| :maxacceptabletime "ms.)
+    ]
+    if :actualtime < :minacceptabletime [
+       REPORTTESTFAILED (list 
+          :instructions "ran "in :actualtime "ms.
+          "|We expected at least| :minacceptabletime "ms.)
+    ]
+    if and (:minacceptabletime < :actualtime + 1) (:actualtime + 1 < :maxacceptabletime) [
+       REPORTTESTPASSED (list 
+          :instructions "ran "in :actualtime "ms.
+          "|Anywhere between| :minacceptabletime "|ms and| :maxacceptabletime "|is acceptable.|)
+    ]
+END
+BURY [CHECKEXECUTIONTIME]
+
+
 TO FILEEXISTS :filename
 
    IGNORE ERROR
@@ -376,6 +397,8 @@ TO CHECKSCREEN :screenname
    ]
 END
 BURY [CHECKSCREEN]
+
+
 
 ; protect against loading the file twice
 if not name? "testlog [
