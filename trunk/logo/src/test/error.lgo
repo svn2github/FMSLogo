@@ -34,6 +34,28 @@ TO ERROR.30.TEST
    OUTPUT CATCH "XXX [(THROW "XXX 1)]
 END
 
+
+TO ERRORTEST.OUTPUT.RUN.5
+   OUTPUT RUN [5]
+END
+
+TO ERRORTEST.CALL.OUTPUT.RUN.5
+  ; don't do anything with the output
+  ERRORTEST.OUTPUT.RUN.5
+END
+
+TO ERRORTEST.BUG1577034
+  IGNORE ERROR
+  CATCH "ERROR [ ERRORTEST.CALL.OUTPUT.RUN.5 ]
+  
+  CHECKERROR ~
+    [ERRORTEST.CALL.OUTPUT.RUN.5]      ~
+    9                                  ~
+    [You don't say what to do with 5]  ~
+    [ERRORTEST.CALL.OUTPUT.RUN.5]      ~
+    [ERRORTEST.OUTPUT.RUN.5]
+END
+
 TO ERRORTEST
 
    ; Catch an error without explicitly calling ERROR.
@@ -103,7 +125,7 @@ TO ERRORTEST
    RUNEXPECTERRORTEST [APPLY "ONE.INPUT.NO.OUTPUT 1 ]        32
    RUNEXPECTERRORTEST [LOAD "endinmultilineinstruction.lgo]  33
 
-   ;CATCH "PAUSE [CONTINUE]
+   CATCH "PAUSE [CONTINUE]
 
    ;; tests that can't be automated within this framework because
    ;; they halt processing.
@@ -114,6 +136,8 @@ TO ERRORTEST
    ;; error 15: TO can't redefine a procedure
    ; DEFINE "ERRORTEST.ALREADYDEFINEDPROCEDURE [[]]
    ; CATCH "ERROR [TO ERRORTEST.ALREADYDEFINEDPROCEDURE]
+
+   ; ERRORTEST.BUG1577034
 END
 
 ;; error 15: Try to define a primitive with TO
