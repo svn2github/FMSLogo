@@ -396,6 +396,9 @@ $Exceptions{'command-setmargins.xml'}{'allcaps'}{'TV'} = 1;
 
 $Exceptions{'command-settimer.xml'}{'allcaps'}{'OK'} = 1;
 
+$Exceptions{'command-slowdraw.xml'}{'allcaps'}{'BK'} = 1;
+$Exceptions{'command-slowdraw.xml'}{'allcaps'}{'FD'} = 1;
+
 $Exceptions{'command-sound.xml'}{'allcaps'}{'PC'} = 1;
 
 $Exceptions{'command-soundoff.xml'}{'allcaps'}{'NT'} = 1;

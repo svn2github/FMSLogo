@@ -185,6 +185,7 @@ Each time you enter <link linkend="command-perspective">PERSPECTIVE</link> mode 
         &command-fence;
         &command-perspective;
         &command-fill;
+        &command-slowdraw;
         &command-label;
         &command-setpixel;
         &command-fontfacenames;

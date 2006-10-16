@@ -256,6 +256,7 @@
   <!ENTITY command-fence          SYSTEM "command-fence.xml">
   <!ENTITY command-perspective    SYSTEM "command-perspective.xml">
   <!ENTITY command-fill           SYSTEM "command-fill.xml">
+  <!ENTITY command-slowdraw       SYSTEM "command-slowdraw.xml">
   <!ENTITY command-label          SYSTEM "command-label.xml">
   <!ENTITY command-setpixel       SYSTEM "command-setpixel.xml">
   <!ENTITY command-fontfacenames  SYSTEM "command-fontfacenames.xml">
