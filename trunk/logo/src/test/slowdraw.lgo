@@ -37,6 +37,29 @@ TO SLOWDRAWTEST.SMOKETEST
 
 END
 
+TO SLOWDRAWTEST.REDEFPTEST
+   
+   ; tests that SLOWDRAW doesn't change the value of REDEFP
+   LOCAL [redefp]
+
+   ; call SLOWDRAW while redefp is unbound
+   TRACEINSTRUCTION  [ SLOWDRAW 100 ]
+   RUNHASNOVALUETEST [ :redefp ]
+
+   ; call SLOWDRAW while redefp is false
+   TRACEINSTRUCTION [ MAKE "redefp "false ]
+   TRACEINSTRUCTION [ SLOWDRAW 100 ]
+   SIMPLEREPORTTEST [ :redefp ] "false
+
+   ; call SLOWDRAW while redefp is true
+   TRACEINSTRUCTION [ MAKE "redefp "true ]
+   TRACEINSTRUCTION [ SLOWDRAW 100 ]
+   SIMPLEREPORTTEST [ :redefp ] "true
+
+   ; restore the original movement commands
+   SLOWDRAW 0
+
+END
 
 TO SLOWDRAWTEST.BADINPUT
 
@@ -62,6 +85,7 @@ END
 TO SLOWDRAWTEST
 
    SLOWDRAWTEST.SMOKETEST
+   SLOWDRAWTEST.REDEFPTEST
    SLOWDRAWTEST.BADINPUT
 
 END
