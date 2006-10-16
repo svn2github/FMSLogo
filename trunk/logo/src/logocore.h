@@ -26,18 +26,8 @@
 
 extern struct NODE * tracked_node;
 
-void set_tracked_node(struct NODE * node)
-   {
-   tracked_node = node;
-   }
-
-void trace_node_change(struct NODE * Node)
-   {
-   if (Node != NULL && Node == tracked_node)
-      {
-      DebugBreak();
-      }
-   }
+void set_tracked_node(struct NODE * node);
+void trace_node_change(struct NODE * Node);
 
 #define TRACE_NODE_CHANGE(NODE) trace_node_change(NODE)
 #define SET_TRACKED_NODE(NODE)  set_tracked_node(NODE)

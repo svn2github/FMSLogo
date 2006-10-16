@@ -39,9 +39,25 @@ static long int mem_max = 0;
 
 static NODE *reserve_tank;
 
+
 #ifdef DEBUG
+
 NODE * tracked_node = NIL;
-#endif
+
+void set_tracked_node(struct NODE * node)
+   {
+   tracked_node = node;
+   }
+
+void trace_node_change(struct NODE * Node)
+   {
+   if (Node != NULL && Node == tracked_node)
+      {
+      DebugBreak();
+      }
+   }
+
+#endif // DEBUG
 
 
 NODETYPES nodetype(const NODE *nd)
