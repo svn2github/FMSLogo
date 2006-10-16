@@ -323,7 +323,7 @@ NODE *evaluator(NODE *list, enum labels where)
    assign(this_line, list);
    newcont(end_line);
  begin_seq:
-   make_tree(list);
+   treeify_line(list);
    if (!is_tree(list))
       {
       assign(val, Unbound);
@@ -654,7 +654,7 @@ NODE *evaluator(NODE *list, enum labels where)
             assign(list, cdr(parm));
             if (NOT_THROWING)
                {
-               make_tree(list);
+               treeify_line(list);
                }
             else
                {
@@ -726,7 +726,7 @@ NODE *evaluator(NODE *list, enum labels where)
    assign(this_line, NIL);
    assign(proc, (is_list(fun) ? anonymous_function(fun) : procnode__caseobj(fun)));
    assign(list, bodylist__procnode(proc));// get the body ...
-   make_tree_from_body(list);
+   treeify_body(list);
    if (!is_tree(list))
       {
       assign(val, Unbound);
@@ -803,7 +803,7 @@ NODE *evaluator(NODE *list, enum labels where)
             assign(this_line, cdr(this_line));
 	    }
 
-         make_tree_from_body(bodylist__procnode(proc));
+         treeify_body(bodylist__procnode(proc));
          assign(unev, tree__tree(bodylist__procnode(proc)));
          while (--linenum >= 0) 
             {
@@ -1112,7 +1112,7 @@ NODE *evaluator(NODE *list, enum labels where)
          }
       else if (tailcall == 0)
          {
-         make_tree(val);
+         treeify_line(val);
          stopping_flag = MACRO_RETURN;
          if (!is_tree(val)) 
             {
@@ -1410,7 +1410,7 @@ NODE *evaluator(NODE *list, enum labels where)
             assign(qm_list, argl);
             assign(list, fun);
  lambda_qm:
-            make_tree(list);
+            treeify_line(list);
             if (list == NIL || !is_tree(list))
                {
                goto fetch_cont;

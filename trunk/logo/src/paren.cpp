@@ -66,7 +66,7 @@ void untreeify_body(NODE *body) {
 }
 
 // Treeify a procedure's bodylines by appending the trees of the lines.
-void make_tree_from_body(NODE *body)
+void treeify_body(NODE *body)
    {
    if (body == NIL ||
          (is_tree(body) && generation__tree(body) == the_generation))
@@ -97,7 +97,7 @@ void make_tree_from_body(NODE *body)
       assign(this_line, tree);
 
       // tree-ify this line
-      make_tree(tree);
+      treeify_line(tree);
       if (is_tree(tree))
          {
          tree = tree__tree(tree);
@@ -419,7 +419,7 @@ NODE *gather_args(NODE *proc, NODE **args, bool inparen, NODE **ifnode)
    }
 
 // Treeify a list of tokens (runparsed or not).
-void make_tree(NODE *newtree)
+void treeify_line(NODE *newtree)
    {
 
    if (newtree == NIL ||

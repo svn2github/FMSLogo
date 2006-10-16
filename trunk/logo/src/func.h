@@ -350,8 +350,8 @@ extern void uninitialize_parser(void);
 
 // File paren.cpp 
 extern void untreeify_body(NODE *body);
-extern void make_tree_from_body(NODE *body);
-extern void make_tree(NODE *list);
+extern void treeify_body(NODE *body);
+extern void treeify_line(NODE *list);
 
 // File mem.cpp
 extern NODETYPES nodetype(const NODE *nd);
