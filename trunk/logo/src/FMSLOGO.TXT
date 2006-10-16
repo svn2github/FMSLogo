@@ -21,6 +21,7 @@ Part I) Kit Description/Location (http://sourceforge.net/projects/fmslogo):
 Part II) New features/bugs fixed:
 
   * Added for 6.11.0,
+    o Fix bug #1577528; SLOWDRAW now throws an error when given bad input.
     o Fix bug #1563318; This is a regression that caused FMSLogo to crash
       when running procedures with complex inputs that include chains
       of default values and rest inputs.
