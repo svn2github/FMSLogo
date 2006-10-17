@@ -34,6 +34,7 @@ extern bool button(void);
 extern void tone(FIXNUM pitch, FIXNUM duration);
 
 // File wrksp.cpp
+extern void untreeify_procnode(NODE * procnode);
 extern NODE *ltext(NODE *args);
 extern NODE *lfulltext(NODE *args);
 extern NODE *ldefine(NODE *args);

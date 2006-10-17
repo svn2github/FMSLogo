@@ -119,6 +119,18 @@ NODE *name_arg(NODE *args)
    return car(args);
    }
 
+void untreeify_procnode(NODE * procnode)
+   {
+   if (procnode != NIL && procnode != UNDEFINED)
+      {
+      // untreeify the body
+      if (!is_prim(procnode) && is_tree(bodylist__procnode(procnode)))
+         {
+         untreeify_body(bodylist__procnode(procnode));
+         }
+      }
+   }
+
 NODE *ltext(NODE *args)
    {
    NODE* name = name_arg(args);
@@ -235,6 +247,7 @@ NODE *define_helper(NODE *args, int macro_flag)
             }
          else if (val != UNDEFINED)
             {
+            untreeify_procnode(val);
             old_default = get_default_args_for_procedure(val);
             }
          }
@@ -390,6 +403,7 @@ NODE *to_helper(NODE *args, bool is_macro)
       NODE *old_proc = procnode__caseobj(proc_name);
       if (old_proc != UNDEFINED)
          {
+         untreeify_procnode(old_proc);
          old_default = getint(dfltargs__procnode(old_proc));
          }
 
@@ -1205,15 +1219,7 @@ NODE *lerase(NODE *arg)
          break;
          }
 
-     NODE * procnode = procnode__caseobj(nd);
-     if (procnode != NIL && procnode != UNDEFINED)
-        {
-        // untreeify the body
-        if (!is_prim(procnode) && is_tree(bodylist__procnode(procnode)))
-           {
-           untreeify_body(bodylist__procnode(procnode));
-           }
-        }
+      untreeify_procnode(procnode__caseobj(nd));
 
       setprocnode__caseobj(nd, UNDEFINED);
 
@@ -1561,6 +1567,8 @@ NODE *lcopydef(NODE *args)
       NODE *new_proc = procnode__caseobj(arg2);
       if (old_proc != UNDEFINED)
          {
+         untreeify_procnode(old_proc);
+
          int old_default = get_default_args_for_procedure(old_proc);
          int new_default = get_default_args_for_procedure(new_proc);
 
