@@ -61,6 +61,29 @@ TO SLOWDRAWTEST.REDEFPTEST
 
 END
 
+TO SLOWDRAWTEST.BURIED
+
+   LOCALMAKE "contentsBefore []
+   LOCALMAKE "contentsAfter  []
+   
+   ; tests that SLOWDRAW doesn't pollute the unburied workspace
+   MAKE "contentsBefore CONTENTS
+   SLOWDRAW 100
+   MAKE "contentsAfter  CONTENTS
+
+   IFELSE EQUALP :contentsBefore :contentsAfter [
+      REPORTTESTPASSED [SLOWDRAW buried all procedures that it defined.]
+   ][
+      REPORTTESTFAILED [SLOWDRAW did not bury all procedures that it defined.]
+      REPORTTESTINFO   (LIST "Contents "Before "= :contentsBefore)
+      REPORTTESTINFO   (LIST "Contents "After "= :contentsAfter)
+   ]
+
+   ; restore the original movement commands
+   SLOWDRAW 0
+
+END
+
 TO SLOWDRAWTEST.BADINPUT
 
    ; clear any slowdraw that may already exist
@@ -86,6 +109,7 @@ TO SLOWDRAWTEST
 
    SLOWDRAWTEST.SMOKETEST
    SLOWDRAWTEST.REDEFPTEST
+   SLOWDRAWTEST.BURIED
    SLOWDRAWTEST.BADINPUT
 
 END
