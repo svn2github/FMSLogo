@@ -25,13 +25,17 @@ if primitivep "origback~
 if not :slowness = 0~
    [
    copydef "origforward "forward
-   copydef "origback    "back
    erase "fd
    define "fd (list [d] (list "repeat :slowness (list "origforward (word ": "d) "/ :slowness "wait 1)))
+   copydef "forward "fd
+   bury "fd
+
+   copydef "origback    "back
    erase "bk
    define "bk (list [d] (list "repeat :slowness (list "origback    (word ": "d) "/ :slowness "wait 1)))
-   copydef "forward "fd
    copydef "back    "bk
+   bury "bk
    ]
 
 end
+bury "slowdraw
