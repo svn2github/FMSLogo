@@ -20,6 +20,42 @@ end
 
 To TurtleMaze
 
+  Window ; use window mode to prevent wrap-around
+
+  localmake "redefp "true
+
+  If Not Primitivep "originalforward [
+    Copydef "originalforward "forward
+    Erase "fd
+    Define "fd  (list [d] (list "MyForward Word ": "d))
+    Copydef "forward "fd
+    Bury "fd
+  ]
+
+  If Not Primitivep "originalback [
+    Copydef "originalback "back
+    Erase "bk
+    Define "bk (list [d] (list "MyBack Word ": "d))
+    Copydef "back "bk
+    Bury "bk
+  ]
+
+  If Not Primitivep "originalright [
+    Copydef "originalright "right
+    Erase "rt
+    Define "rt (list [angle] (list "MyRight Word ": "angle))
+    Copydef "right "rt
+    Bury "rt
+  ]
+
+  If Not Primitivep "originalleft [
+    Copydef "originalleft "left
+    Erase "lt
+    Define "lt (list [angle] (list "MyLeft Word ": "angle))
+    Copydef "left "lt
+    Bury "lt
+  ]
+
   Make "width        100
   Make "height       140
   Make "moveDistance 20
@@ -228,11 +264,14 @@ To Normalize :P1 :P2
 End
 
 To InRange? :x :x0 :x1
+
+  ; allow a tolerance of 1e-5 to account for floating point precision problems
+
   If :x0 < :x1 [
-     Output And (Or (:x0 < :x) (:x0 = :x)) (Or (:x < :x1) (:x = :x1))
+     Output And (:x0 - 1e-5 < :x) (:x < :x1 + 1e-5)
   ]
 
-  Output And (Or (:x1 < :x) (:x1 = :x)) (Or (:x < :x0) (:x = :x0))
+  Output And (:x1 - 1e-5 < :x) (:x < :x0 + 1e-5)
 End
 
 To InBox? :p :p0 :p1
@@ -284,7 +323,7 @@ To Crashed? :oldpos :newpos
 End
 
 To finished? :oldpos :newpos
-   Output or (inbox? :newpos :finishLowerLeft :finishUpperRight) (crashedinwall? :oldpos :newpos :finishWall)
+   Output inbox? :newpos :finishLowerLeft :finishUpperRight
 End
 
 To PlayFinishSong   
@@ -298,19 +337,25 @@ To PlayCrashSong
    Print [Press RESET to try again.]
 End
 
+
+To Moves
+  If :totalMoves = 1 [ Output "move ]
+  Output "moves
+End
+
 To MoveRacer :oldpos :newpos
 
-  Make "totalmoves :totalmoves + 1
+  Make "totalMoves :totalMoves + 1
 
   If Crashed? :oldpos :newpos [ 
-    (Print [You crashed after] :totalmoves [moves.])
+    (Print [You crashed after] :totalMoves Word Moves ".)
     PlayCrashSong
     Make "isCrashed "true
     Stop
   ]
 
   If Finished? :oldpos :newpos [ 
-    (Print [You have finished in] :totalmoves [moves!!])
+    (Print [You have finished in] :totalMoves Word Moves "!)
     PlayFinishSong
     Make "isFinished "true
     Stop
@@ -318,7 +363,7 @@ To MoveRacer :oldpos :newpos
 
 End
 
-To MyFd :distance
+To MyForward :distance
 
   If :isCrashed [
      PlayCrashSong
@@ -331,14 +376,14 @@ To MyFd :distance
   ]
 
   Make "oldpos pos
-  Run (List "FD :distance)
+  Run (List "OriginalForward :distance)
   Make "newpos pos
 
   MoveRacer :oldpos :newpos
 
 End
 
-To MyBk :distance
+To MyBack :distance
 
   If :isCrashed [
      PlayCrashSong
@@ -351,14 +396,14 @@ To MyBk :distance
   ]
 
   Make "oldpos pos
-  Run  (List "BK :distance)
+  Run (List "OriginalBack :distance)
   Make "newpos pos
 
   MoveRacer :oldpos :newpos
 
 End
 
-To MyRt :angle
+To MyRight :angle
 
   If :isCrashed [
      PlayCrashSong
@@ -370,11 +415,12 @@ To MyRt :angle
      Stop
   ]
 
-  Run (List "RT :angle)
+  Run (List "OriginalRight :angle)
+  Make "totalmoves :totalmoves + 1
 
 End
 
-To MyLt :angle
+To MyLeft :angle
 
   If :isCrashed [
      PlayCrashSong
@@ -386,7 +432,8 @@ To MyLt :angle
      Stop
   ]
 
-  Run (List "LT :angle)
+  Run (List "OriginalLeft :angle)
+  Make "totalmoves :totalmoves + 1
 
 End
 
@@ -398,6 +445,20 @@ To NextBoard
 
   StartRace
    
+End
+
+To Reset
+  ; So that the user can type "RESET" in addition to pressing it
+  StartRace
+End
+
+To Next
+  ; So that the user can type "NEXT" in addition to pressing it
+  NextBoard
+End
+
+To SlowDraw :slowness
+  print [SLOWDRAW is disabled to prevent cheating.]
 End
 
 To Setup
@@ -415,29 +476,29 @@ To Setup
 
   ; row 1
   LocalMake "ypos :gapy
-  ButtonCreate "window "fdbutton (LIST "|FORWARD| :movedistance) :onebuttonx :ypos :buttonwidthlong  :buttonheight [MyFd :movedistance]
+  ButtonCreate "window "fdbutton (LIST "|FORWARD| :movedistance) :onebuttonx :ypos :buttonwidthlong  :buttonheight [MyForward :movedistance]
 
   ; row 2
   Make "ypos :ypos + :buttonheight + :gapy
-  ButtonCreate "window "rt90button "|LEFT  90|  :twobuttonx1 :ypos :buttonwidthshort :buttonheight [MyLt 90]
-  ButtonCreate "window "lt90button "|RIGHT 90|  :twobuttonx2 :ypos :buttonwidthshort :buttonheight [MyRt 90]
+  ButtonCreate "window "rt90button "|LEFT  90|  :twobuttonx1 :ypos :buttonwidthshort :buttonheight [MyLeft  90]
+  ButtonCreate "window "lt90button "|RIGHT 90|  :twobuttonx2 :ypos :buttonwidthshort :buttonheight [MyRight 90]
 
   ; row 3
   Make "ypos :ypos + :buttonheight + :gapy
-  ButtonCreate "window "rt30button "|LEFT  30|  :twobuttonx1 :ypos :buttonwidthshort :buttonheight [MyLt 30]
-  ButtonCreate "window "lt30button "|RIGHT 30|  :twobuttonx2 :ypos :buttonwidthshort :buttonheight [MyRt 30]
+  ButtonCreate "window "rt30button "|LEFT  30|  :twobuttonx1 :ypos :buttonwidthshort :buttonheight [MyLeft  30]
+  ButtonCreate "window "lt30button "|RIGHT 30|  :twobuttonx2 :ypos :buttonwidthshort :buttonheight [MyRight 30]
 
   ; row 4
   Make "ypos :ypos + :buttonheight + :gapy
-  ButtonCreate "window "bkbutton  (LIST "|BACK   | :movedistance)  :onebuttonx  :ypos :buttonwidthlong  :buttonheight [mybk :movedistance]
+  ButtonCreate "window "bkbutton  (LIST "|BACK   | :movedistance)  :onebuttonx  :ypos :buttonwidthlong  :buttonheight [MyBack :movedistance]
 
   ; row 5
   Make "ypos :ypos + :buttonheight + :gapy + 10
-  ButtonCreate "window "csbutton   "|RESET| :onebuttonx  :ypos :buttonwidthlong  :buttonheight [StartRace]
+  ButtonCreate "window "csbutton   "|RESET| :onebuttonx  :ypos :buttonwidthlong  :buttonheight [Reset]
 
   ; row 6
   Make "ypos :ypos + :buttonheight + :gapy
-  ButtonCreate "window "nextbutton "|NEXT|  :onebuttonx  :ypos :buttonwidthlong  :buttonheight [NextBoard]
+  ButtonCreate "window "nextbutton "|NEXT|  :onebuttonx  :ypos :buttonwidthlong  :buttonheight [Next]
 
 End
 
