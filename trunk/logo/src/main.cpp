@@ -136,9 +136,9 @@ int BaseUnitsy = 0;                    // Y Units Windows uses to for units in d
 
 long eval_count = 0;                   // current count of "evaluations" calls
 long vector_count = 0;                 // current count of vectors drawn
-COLORREF scolor = 1;                   // screen color
-COLORREF fcolor = 1;                   // flood color
-COLORREF pcolor = 1;                   // pen color
+COLORREF scolor;                       // screen color
+COLORREF fcolor;                       // flood color
+COLORREF pcolor;                       // pen color
 long width = 1;                        // pen width
 bool zoom_flag = false;                // flag to signal in zoomed state
 long MaxColors = 0;                    // The maximum # of colors available
