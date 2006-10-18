@@ -24,7 +24,8 @@
 const unsigned int CN_CLICKED = 1;     // color control notifications
 
 TColorControl::TColorControl(TWindow *parent, int resId, TColor color)
-: TControl(parent, resId,::Module), Color(color)
+   : TControl(parent, resId), 
+     Color(color)
    {
    DisableTransfer();
    }
@@ -66,12 +67,14 @@ void TColorControl::SetColor(TColor color)
 
 UINT TColorControl::Transfer(void *buffer, TTransferDirection direction)
    {
-
    if (direction == tdGetData)
+      {
       memcpy(buffer, &Color, sizeof Color);
-
+      }
    else if (direction == tdSetData)
+      {
       memcpy(&Color, buffer, sizeof Color);
+      }
 
    return sizeof Color;
    }
@@ -97,11 +100,10 @@ static void DisableChildTransfer(TWindow *w, void *)
    w->DisableTransfer();
    }
 
-TColorDialog::TColorDialog(TWindow *parent, TColor &color, char *caption)
-: TDialog(parent, "IDD_PICKCOLOR", ::Module)
+TColorDialog::TColorDialog(TWindow *parent, TColor &color, const char *caption)
+   : TDialog(parent, "IDD_PICKCOLOR"),
+     colorcaption(caption)
    {
-   colorcaption = caption;
-
    new TColorControl(this, ID_COLOR1, TColor(000, 000, 000));
    new TColorControl(this, ID_COLOR2, TColor(255, 255, 255));
    new TColorControl(this, ID_COLOR3, TColor(255, 000, 000));
@@ -111,9 +113,9 @@ TColorDialog::TColorDialog(TWindow *parent, TColor &color, char *caption)
    new TColorControl(this, ID_COLOR7, TColor(255, 000, 255));
    new TColorControl(this, ID_COLOR8, TColor(255, 255, 000));
 
-   ColorBar1 = new TScrollBar(this, ID_COLORBAR1,::Module);
-   ColorBar2 = new TScrollBar(this, ID_COLORBAR2,::Module);
-   ColorBar3 = new TScrollBar(this, ID_COLORBAR3,::Module);
+   ColorBar1 = new TScrollBar(this, ID_COLORBAR1);
+   ColorBar2 = new TScrollBar(this, ID_COLORBAR2);
+   ColorBar3 = new TScrollBar(this, ID_COLORBAR3);
 
    ForEach(DisableChildTransfer);
 
@@ -187,10 +189,11 @@ void TColorDialog::SetupWindow()
 
 void TColorDialog::TransferData(TTransferDirection transferFlag)
    {
-
    TDialog::TransferData(transferFlag);
-   if (transferFlag == tdSetData) UpdateBars(SelColor->GetColor());
-
+   if (transferFlag == tdSetData) 
+      {
+      UpdateBars(SelColor->GetColor());
+      }
    }
 
 void TColorDialog::UpdateBars(TColor color)

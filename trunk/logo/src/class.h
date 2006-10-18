@@ -492,6 +492,14 @@ class TMainFrame : public TDecoratedFrame
    LRESULT OnNetworkListenReceiveAck(WPARAM, LPARAM);
    LRESULT OnNetworkListenReceiveFinish(WPARAM, LPARAM);
 
+ private:
+   void 
+   ChooseColor(
+      COLORREF       InitialColor,
+      const char *   EnglishDescription,
+      const char *   LogoCommand
+      );
+
  public:
    class TPrinter               Printer;
    class TMyFileWindow        * EditWindow;

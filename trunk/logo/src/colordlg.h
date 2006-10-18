@@ -17,7 +17,7 @@ class TColorControl : public TControl
  private:
    TColor Color;
 
-   char far *GetClassName()
+   char *GetClassName()
       {
       return "ColorControl";
       }
@@ -37,14 +37,14 @@ class TColorControl : public TControl
 class TColorDialog : public TDialog
    {
  public:
-   TColorDialog(TWindow * parent, TColor & color, char *caption);
+   TColorDialog(TWindow * parent, TColor & color, const char *caption);
 
  protected:
    TScrollBar *ColorBar1;
    TScrollBar *ColorBar2;
    TScrollBar *ColorBar3;
    TColorControl *SelColor;
-   char *colorcaption;
+   const char *colorcaption;
 
    void SetupWindow();
    void TransferData(TTransferDirection direction);

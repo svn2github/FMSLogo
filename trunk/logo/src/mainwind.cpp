@@ -2286,68 +2286,45 @@ void TMainFrame::CMSetPenSize()
       }
    }
 
-void TMainFrame::CMSetPenColor()
+void 
+TMainFrame::ChooseColor(
+   COLORREF       InitialColor,
+   const char *   EnglishDescription,
+   const char *   LogoCommand
+   )
    {
-   TColor TheColor(pcolor);
+   TColor color(InitialColor);
 
-   // if OK then make change
-
-   if (TColorDialog(this, TheColor, "Pen Color").Execute() == IDOK)
+   if (TColorDialog(this, color, EnglishDescription).Execute() == IDOK)
       {
+      // the user pressed "OK" so we change the color
       char logoInstruction[256];
 
       sprintf(
           logoInstruction,
-          "SETPENCOLOR [%d %d %d]",
-          TheColor.Red(),
-          TheColor.Green(),
-          TheColor.Blue());
+          "%s [%d %d %d]",
+          LogoCommand,
+          color.Red(),
+          color.Green(),
+          color.Blue());
 
       RunLogoInstructionFromGui(logoInstruction);
       }
+   }
+
+void TMainFrame::CMSetPenColor()
+   {
+   ChooseColor(pcolor, "Pen Color", "SETPENCOLOR");
    }
 
 void TMainFrame::CMSetFloodColor()
    {
-   TColor TheColor(fcolor);
-
-   // if OK then make changes
-
-   if (TColorDialog(this, TheColor, "Flood Color").Execute() == IDOK)
-      {
-      char logoInstruction[256];
-
-      sprintf(
-          logoInstruction,
-          "SETFLOODCOLOR [%d %d %d]",
-          TheColor.Red(),
-          TheColor.Green(),
-          TheColor.Blue());
-
-      RunLogoInstructionFromGui(logoInstruction);
-      }
+   ChooseColor(fcolor, "Flood Color", "SETFLOODCOLOR");
    }
 
 void TMainFrame::CMSetScreenColor()
    {
-   TColor TheColor(scolor);
-
-   // if OK then make changes
-
-   if (TColorDialog(this, TheColor, "Screen Color").Execute() == IDOK)
-      {
-      char logoInstruction[256];
-
-      sprintf(
-          logoInstruction,
-          "SETSCREENCOLOR [%d %d %d]",
-          TheColor.Red(),
-          TheColor.Green(),
-          TheColor.Blue());
-
-      RunLogoInstructionFromGui(logoInstruction);
-      }
-
+   ChooseColor(scolor, "Screen Color", "SETSCREENCOLOR");
    }
 
 void TMainFrame::CMHelp()
