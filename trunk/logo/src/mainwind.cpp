@@ -2257,8 +2257,7 @@ void TMainFrame::CMSetFont()
           logFont.lfQuality,
           logFont.lfPitchAndFamily);
 
-      putcombobox(logoInstruction);
-      do_execution(logoInstruction);
+      RunLogoInstructionFromGui(logoInstruction);
       }
    }
 
@@ -2275,7 +2274,6 @@ void TMainFrame::CMSetPenSize()
 
    if (TSizeDialog(this, TheSize, "Pen Size").Execute() == IDOK)
       {
-      
       char logoInstruction[256];
 
       sprintf(
@@ -2284,10 +2282,8 @@ void TMainFrame::CMSetPenSize()
           TheSize.Red(),
           TheSize.Green());
 
-      putcombobox(logoInstruction);
-      do_execution(logoInstruction);
+      RunLogoInstructionFromGui(logoInstruction);
       }
-
    }
 
 void TMainFrame::CMSetPenColor()
@@ -2307,10 +2303,8 @@ void TMainFrame::CMSetPenColor()
           TheColor.Green(),
           TheColor.Blue());
 
-      putcombobox(logoInstruction);
-      do_execution(logoInstruction);
+      RunLogoInstructionFromGui(logoInstruction);
       }
-
    }
 
 void TMainFrame::CMSetFloodColor()
@@ -2330,8 +2324,7 @@ void TMainFrame::CMSetFloodColor()
           TheColor.Green(),
           TheColor.Blue());
 
-      putcombobox(logoInstruction);
-      do_execution(logoInstruction);
+      RunLogoInstructionFromGui(logoInstruction);
       }
    }
 
@@ -2352,8 +2345,7 @@ void TMainFrame::CMSetScreenColor()
           TheColor.Green(),
           TheColor.Blue());
 
-      putcombobox(logoInstruction);
-      do_execution(logoInstruction);
+      RunLogoInstructionFromGui(logoInstruction);
       }
 
    }

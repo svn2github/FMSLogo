@@ -485,33 +485,9 @@ void TMyCommandWindow::DoButtonExecute(UINT)
    // get what's in the edit box
    getcombobox(selectedtext);
 
-   // if real do something with it
-   if (strlen(selectedtext) != 0)
-      {
+   RunLogoInstructionFromGui(selectedtext);
 
-      // copy to list box for command recall
-      putcombobox(selectedtext);
-
-      // if dribble then dribble 
-      if (dribblestream != NULL)
-        {
-        fprintf(dribblestream, "%s\n", selectedtext);
-        }
-
-      // reset erract loop error history
-      clear_is_running_erract_flag();
-
-      // reset evaluation counter (call counter) and execute
-      eval_count = 0;
-      update_status_evals();
-
-      vector_count = 0;
-      update_status_vectors();
-
-      do_execution(selectedtext);
-      }
-
-   // calling do_execution() will delete the "this" pointer,
+   // calling RunLogoInstructionFromGui() can delete the "this" pointer,
    // if it executes FULLSCREEN, TEXTSCREEN, or SPLITSCREEN.
    // Therefore, we must not touch any member variable at this point.
    if (GiveFocusToEditbox)
@@ -543,10 +519,8 @@ void TMyCommandWindow::DoButtonStatus(UINT)
 
 void TMyCommandWindow::DoButtonReset(UINT)
    {
-   /* just do a clear screen and return focus */
-   char logoInstruction[] = "CLEARSCREEN";
-   putcombobox(logoInstruction);
-   do_execution(logoInstruction);
+   // just do a clear screen and return focus
+   RunLogoInstructionFromGui("CLEARSCREEN");
 
    Editbox.SetFocus();
    }

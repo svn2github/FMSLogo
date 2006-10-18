@@ -222,6 +222,7 @@ extern void update_status_vectors(void);
 
 extern void ShowMessageAndStop(const char * Title, const char * Message);
 extern void MyMessageScan(void);
+extern void RunLogoInstructionFromGui(char * LogoInstruction);
 extern void putcombobox(const char *str);
 extern void clearcombobox(void);
 extern COLORREF LoadColor(int dpenr, int dpeng, int dpenb);

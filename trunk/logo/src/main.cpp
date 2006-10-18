@@ -272,6 +272,42 @@ void putcombobox(const char *str)
       }
    }
 
+
+// Process a Logo instruction, as it is processed by the GUI when you click
+// on the "Execute" button.  This can be used by other UI elements, such as
+// the "Reset" button, to teach the user what a UI element is doing.
+void
+RunLogoInstructionFromGui(
+   char * LogoInstruction
+   )
+   {
+   if (strlen(LogoInstruction) != 0)
+      {
+      // The instruction is real.  Do something with it.
+
+      // copy to list box for command recall
+      putcombobox(LogoInstruction);
+
+      // if dribble then dribble 
+      if (dribblestream != NULL)
+         {
+         fprintf(dribblestream, "%s\n", LogoInstruction);
+         }
+
+      // reset erract loop error history
+      clear_is_running_erract_flag();
+
+      // reset evaluation counter (call counter) and execute
+      eval_count = 0;
+      update_status_evals();
+
+      vector_count = 0;
+      update_status_vectors();
+
+      do_execution(LogoInstruction);
+      }
+   }
+
 bool promptuser(char *str, const char *prompt)
    {
    *str = '\0';

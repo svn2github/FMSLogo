@@ -28,6 +28,8 @@ Part II) New features/bugs fixed:
       when running procedures with complex inputs that include chains
       of default values and rest inputs.
     o Fix bug #1547408; 'RUNRESULT {1}' no longer crashes FMSLogo.
+    o Fix bug #1327711; Instructions run by GUI elements now also write 
+      to DRIBBLE file.
     o Minor updates to the manual, including shading the examples, removing
       the root node from the table of contents, and adding "See Also" 
       sections.
