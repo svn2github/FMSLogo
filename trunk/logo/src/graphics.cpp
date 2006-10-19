@@ -153,6 +153,7 @@ numeric_node_to_flonum(
       }
    else
       {
+      assert(nodetype(numeric_node) == FLOATINGPOINT);
       number = getfloat(numeric_node);
       }
 
@@ -173,6 +174,7 @@ numeric_node_to_fixnum(
       }
    else
       {
+      assert(nodetype(numeric_node) == FLOATINGPOINT);
       number = (FIXNUM) getfloat(numeric_node);
       }
 
@@ -332,7 +334,29 @@ NODE *numeric_arg(NODE *args)
       val = cnv_node_to_numnode(arg);
       }
    setcar(args, val);
-   return (val);
+   return val;
+   }
+
+// If the first element in args can be interpreted as a non-negative number
+// then it is changed into an numeric node and returned.
+// Otherwise it is set to whatever ERRACT returns.
+NODE *pos_numeric_arg(NODE *args)
+   {
+   NODE *arg = car(args);
+
+   NODE * val = cnv_node_to_numnode(arg);
+   while (NOT_THROWING && 
+          (val == Unbound || numeric_node_to_fixnum(val) < 0))
+      {
+      // The arg node is either non-numeric or negative.
+      // Try to get a different value.
+      gcref(val);
+      setcar(args, err_logo(BAD_DATA, arg));
+      arg = car(args);
+      val = cnv_node_to_numnode(arg);
+      }
+   setcar(args, val);
+   return val;
    }
 
 NODE *luppitch(NODE *arg)

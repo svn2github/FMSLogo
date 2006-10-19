@@ -79,6 +79,7 @@ extern FLONUM cut_error(FLONUM n);
 extern void draw_turtle(bool erase);
 extern void draw_turtles(bool erase);
 extern NODE *numeric_arg(NODE *args);
+extern NODE *pos_numeric_arg(NODE *args);
 extern NODE *lright(NODE *arg);
 extern NODE *lleft(NODE *arg);
 extern NODE *lrightroll(NODE *arg);

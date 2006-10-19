@@ -416,18 +416,28 @@ NODE *ltimemilli(NODE *)
 
 NODE *lwait(NODE *args)
    {
-   NODE * num = pos_int_arg(args);
+   NODE * num = pos_numeric_arg(args);
    if (NOT_THROWING)
       {
+      FLONUM input = numeric_node_to_flonum(num);
+
       // The input is in 60ths of a second.  To convert to milliseconds:  
       //   (input / 60) * 1000 = input * 50 / 3 
-      DWORD totalTicksToWait = ((unsigned int) getint(num) * 50 / 3);
+      DWORD totalTicksToWait = g_round(input * 50.0 / 3.0);
      
+
+      // Do a busy sleep so that a long WAIT can be interrupted by a HALT
       DWORD endTime = GetTickCount() + totalTicksToWait;
       while (GetTickCount() < endTime && !IsTimeToHalt) 
          {
          MyMessageScan();
-         Sleep(1);  // yield
+
+         if (GetTickCount() + 10 < endTime)
+            {
+            // We're more than 10 ms away from the target time,
+            // so we don't risk missing our target time by yielding.
+            Sleep(1);  // yield
+            }
          }
       }
    return Unbound;
