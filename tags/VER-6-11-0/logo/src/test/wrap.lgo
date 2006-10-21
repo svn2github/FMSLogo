@@ -1,0 +1,45 @@
+LOAD "testlib.lgo
+
+TO WRAPTEST.SMOKETEST
+
+   ; switch to wrap mode
+   WRAP
+   CLEARSCREEN
+
+   ; draw a circle whose edges fall outside the window boundaries
+   CIRCLE 600
+
+   FD 1000
+   RT 90
+   FD 1000
+
+   CHECKSCREEN "wrap-test
+
+   ; go back to the default mode
+   CLEARSCREEN
+   WRAP
+END
+
+TO WRAPTEST.BADINPUT
+
+   FENCE
+
+   ; bad input tests (shouldn't change modes)
+   RUNTOOMANYINPUTSTEST [(WRAP "toomany)]
+
+   ; The easiest way to test that we're not in wrap mode
+   ; is to try to force an out-of-bounds error in fence mode
+   HOME
+   RUNOUTOFBOUNDSTEST [ FD 1000 ]
+
+   WRAP
+   CLEARSCREEN
+END
+
+TO WRAPTEST
+
+   WRAPTEST.SMOKETEST
+   WRAPTEST.BADINPUT
+
+END
+

@@ -1,0 +1,39 @@
+This file contains the steps for doing a formal release.
+
+Build the Release Files
+==================================================================================
+
+1) Build the Binary Installer Package
+1.a) Update FMSLOGO.TXT
+1.b) Update version.mk
+1.c) gmake clean (to force a complete rebuild)
+1.d) gmake binaryexe 
+     (This builds fmslogo.exe, the documentation, and the installer)
+1.e) Copy resulting fmslogo-X-Y-Z.exe to \\dcostanz\dcostanz\logo
+1.f) Checkin all changes, "cvs up -APd", and tag the tree VER-X-Y-Z
+
+2) Build the Binary ZIP Package
+2.a) gmake binaryzip
+2.b) Copy resulting fmslogo-X-Y-Z.zip to \\dcostanz\dcostanz\logo
+
+3) Build the source code archive
+3.a) cd to logo-cvs\logo-src-release and do a "cvs up -APd"
+3.b) do "gmake sourcezip"
+3.c) Copy resulting fmslogo-src-X-Y-Z.zip to \\dcostanz\dcostanz\logo
+
+
+Test the Release
+==================================================================================
+
+1) Test on both Windows XP and Windows 95
+1.a) Install FMSLogo and run "test\testharness.lgo".
+1.b) Do a file comparison against the testlog.baseline.txt to look for regressions
+1.c) Run DEMO
+
+
+Release the files
+==================================================================================
+1) FTP fmslogo-X-Y-Z.exe, fmslogo-X-Y-Z.zip, and fmslogo-src-X-Y-Z.zip to sourceforge
+2) Use the "Admin" tool to release the files
+3) Post the changelog to the Logo forums
+4) Upload the new manual to the Web site

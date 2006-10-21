@@ -1,0 +1,75 @@
+load "testlib.lgo
+
+TO BENCHMARK.RESIZECONSOLE :width :height
+
+  ; Load the User System Kernel
+  DLLLOAD "user32.dll
+
+  ; Get Handle to Main Window (Note args are in REVERSE order)
+  LOCALMAKE "hwnd DLLCALL [l FindWindowA s FMSLogo l 0]
+
+  ; Resize Main Window
+  LOCALMAKE "status DLLCALL (LIST "l "MoveWindow "w "1 "l :width "l :height "l "0 "l "0 "l :hwnd)
+
+  DLLFREE
+
+END
+
+
+TO BENCHMARK.NONTAILRECURSIVECOUNT :depth
+
+   ; base-case
+   if :depth = 0  [ output 0 ]
+
+   ; call this recursively
+   MAKE "count 1 + BENCHMARK.NONTAILRECURSIVECOUNT :depth - 1 
+
+   ; put some code after the recursive call
+   MAKE "something.to.break.tail.recursion "true
+
+   OUTPUT :count
+
+END
+
+TO BENCHMARK.TAILRECURSIVECOUNT :depth
+
+   ; put some code before teh recursive call
+   MAKE "something.that.does.not.break.tail.recursion "true
+
+   ; base-case
+   if :depth = 0  [ output 0 ]
+
+   ; call this recursively
+   OUTPUT 1 + BENCHMARK.TAILRECURSIVECOUNT :depth - 1 
+
+END
+
+
+TO BENCHMARK 
+
+   REPORTTESTINFO LOGOVERSION ; put the version into the test log
+
+   ; for consistent results when drawing
+   ICON "Commander
+   BENCHMARK.RESIZECONSOLE 600 800
+
+   ; time the tail-recurision optimization 
+   IGNORE TIMECOMMAND [BENCHMARK.TAILRECURSIVECOUNT    1000000 ]
+   IGNORE TIMECOMMAND [BENCHMARK.NONTAILRECURSIVECOUNT 1000000 ]
+
+   ; time creating/manipulating a large list
+   IGNORE TIMECOMMAND [REVERSE ISEQ 1 300000 ]
+
+   ; time drawing concentric circles
+   CLEARSCREEN
+   IGNORE TIMECOMMAND [REPEAT 1000  [ CIRCLE REPCOUNT ] ]
+
+   ; time drawing a large squiral
+   CLEARSCREEN
+   IGNORE TIMECOMMAND [REPEAT 20000 [ FORWARD REPCOUNT RIGHT 91 ] ]
+
+   SPLITSCREEN
+END
+
+make "startup [BENCHMARK]
+

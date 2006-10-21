@@ -1,0 +1,70 @@
+<section id="command-clearpalette">
+    <title>CLEARPALETTE</title>
+<indexterm><primary>CLEARPALETTE</primary></indexterm>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>CLEARPALETTE</command></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+This command clears the color palette.
+The color palette is filled by using the <link linkend="command-setpencolor">SETPENCOLOR</link>, <link linkend="command-setscreencolor">SETSCREENCOLOR</link>, and <link linkend="command-setfloodcolor">SETFLOODCOLOR</link> commands.
+The palette is only supported when Windows is in 256 color mode (see <link linkend="using-color">Using Color</link>).
+Once you run out of colors Windows will choose the closest match.
+For example, the instruction
+
+<programlisting><userinput>REPEAT 256 [SETPENCOLOR (LIST REPCOUNT 0 0)]</userinput></programlisting>
+
+fills the palette with 256 shades of red.
+At this point the palette cannot hold any more colors.
+If you wanted to draw green, they would end up being matched to red.
+In order for them to be drawn as green, you must "clear the palette" of the 256 shades of red.
+</para>
+
+<para>
+If you want a wide range of colors then select a wide range into the palette.
+For example, the following would give you 216 colors covering a wide range.
+Once the few empty color slots in the palette are used, Windows will have something reasonable to match further requests to (unlike the example above in which only shades of reds could be matched to).
+
+
+<programlisting><userinput>REPEAT 6 [
+  MAKE "red REPCOUNT * 40
+  REPEAT 6 [
+    MAKE "green REPCOUNT * 40
+    REPEAT 6 [
+      MAKE "blue REPCOUNT * 40
+      SETPENCOLOR (LIST :red :green :blue)
+    ]
+  ]
+]</userinput></programlisting> 
+</para>
+ 
+<para>
+Note also that loading bitmap files with <link linkend="command-bitload">BITLOAD</link> uses up colors in the palette.
+Again, this can be cleared using CLEARPALETTE.
+</para>
+
+<para>
+Clearing the screen does <emphasis>not</emphasis> clear the palette, but it is a good time to do so.
+</para>
+
+</listitem>
+</varlistentry>
+<varlistentry><term>Example</term>
+<listitem>
+
+<programlisting><userinput>REPEAT 256 [SETPENCOLOR (LIST REPCOUNT 0 0)]
+STATUS
+CLEARPALETTE</userinput></programlisting> 
+
+</listitem>
+</varlistentry>
+</variablelist>
+
+</section>

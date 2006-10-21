@@ -1,0 +1,62 @@
+<section id="command-step">
+    <title>STEP</title>
+<indexterm><primary>STEP</primary></indexterm>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>STEP</command> <parameter>contentslist</parameter></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+Marks the items in the contents list for stepping.
+Whenever a stepped procedure is invoked, each instruction line in the procedure body is displayed in a dialog box before being executed and &PRODUCTNAME; waits for the user to press the OK button before continuing.
+A dialog box is displayed whenever a stepped variable name is "shadowed".
+A variable is shadowed when a variable of the same name is created with the <link linkend="command-local">LOCAL</link> command or when a procedure is invoked that inputs a parameter with the same name.
+</para>
+
+<para>
+STEP has no effect on property lists.
+</para>
+
+<para>
+STEP does not throw an error if it is asked to step a procedure or variable that is not in the workspace, but doing so has no effect.
+STEP also does not throw an error if asked to step a primitive, but this also has no effect.
+</para>
+
+<para>
+See the <link linkend="workspace-queries">Workspace Queries</link> section for an explanation of the <parameter>contentslist</parameter> input.
+</para>
+
+<para>
+You can step all procedures and variables with the <link linkend="commander-step">Step Button</link>.
+</para>
+
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Example</term>
+<listitem>
+<programlisting><userinput>TO MYPROGRAM
+  FORWARD 10
+  RIGHT   90
+  FORWARD 20
+  LEFT    90
+END
+
+MYPROGRAM
+STEP "MYPROGRAM</userinput>
+<replaceable>Each line of MYPROGRAM will be displayed and will wait for OK to continue to next line.</replaceable>
+<userinput>UNSTEP "MYPROGRAM
+MYPROGRAM</userinput>
+</programlisting>
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</section>

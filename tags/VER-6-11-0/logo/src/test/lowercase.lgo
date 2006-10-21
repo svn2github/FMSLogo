@@ -1,0 +1,49 @@
+LOAD "testlib.lgo
+
+TO LOWERCASETEST.SMOKETEST
+
+  ; words are okay
+  SIMPLEREPORTTEST [LOWERCASE "hello] "hello
+  SIMPLEREPORTTEST [LOWERCASE "HELLO] "hello
+  SIMPLEREPORTTEST [LOWERCASE "HeLlo] "hello
+
+  ; the empty string is okay
+  SIMPLEREPORTTEST [LOWERCASE "||   ] "||
+
+  ; numbers are okay
+  SIMPLEREPORTTEST [LOWERCASE  12345] 12345
+  SIMPLEREPORTTEST [LOWERCASE  12.34] 12.34
+
+  ; all alphanumeric characters in ASCII
+  SIMPLEREPORTTEST [LOWERCASE "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_ ] ~
+                              "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz0123456789_
+
+  ; non-alphanumeric characters in ASCII should remain unchanged
+  SIMPLEREPORTTEST [LOWERCASE "| `\~!@#$%^&*()_+-=\[\]\{\}\|\\;:'",<.>/?| ] ~
+                              "| `\~!@#$%^&*()_+-=\[\]\{\}\|\\;:'",<.>/?|
+
+  ; Some characters from Latin-1 set that are not in ASCII
+  ; NOTE: We can't put the characters in here directly or else this 
+  ;       won't look like a text file to CVS.
+  SIMPLEREPORTTEST [LOWERCASE (WORD CHAR 241 CHAR 209) ] (WORD CHAR 241 CHAR 241)
+
+END
+
+
+TO LOWERCASETEST.BADINPUT
+
+   RUNTOOMANYINPUTSTEST   [(LOWERCASE "hello "toomany)]
+   RUNNOTENOUGHINPUTSTEST [(LOWERCASE)]
+
+   RUNBADINPUTTEST        [LOWERCASE [1 2 3]]
+   RUNBADINPUTTEST        [LOWERCASE {1 2 3}]
+
+END
+
+TO LOWERCASETEST
+
+   LOWERCASETEST.SMOKETEST
+   LOWERCASETEST.BADINPUT
+
+END
+
