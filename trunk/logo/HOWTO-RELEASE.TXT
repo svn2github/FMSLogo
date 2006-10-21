@@ -36,3 +36,4 @@ Release the files
 1) FTP fmslogo-X-Y-Z.exe, fmslogo-X-Y-Z.zip, and fmslogo-src-X-Y-Z.zip to sourceforge
 2) Use the "Admin" tool to release the files
 3) Post the changelog to the Logo forums
+4) Upload the new manual to the Web site
