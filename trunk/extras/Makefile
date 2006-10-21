@@ -1,4 +1,4 @@
-EXTRAS_VERSION=1.3
+EXTRAS_VERSION=1.3+
 
 SOURCEZIP=fmslogo-extras-$(EXTRAS_VERSION).zip
 
@@ -11,17 +11,20 @@ TOINCLUDE= \
   boink         \
   domino        \
   lightcycle    \
+  logoui        \
   ludo          \
   midipiano     \
   pacturtle     \
   snake         \
   sudoku        \
   tetrads       \
+  turtlemaze    \
 
 $(SOURCEZIP) :
 	$(RM) $(shell /usr/bin/find release -name '*~')
 	$(RM) $(shell /usr/bin/find release -name '*.bak')
-	$(RM) $(shell /usr/bin/find release -name AM_Hiscores)
+	$(RM) asteriodminer/AM_Hiscores
+	$(RM) logoui/transcript.lgo
 	cd .. && zip -r -9 -X $(SOURCEZIP) $(addprefix extras/,$(TOINCLUDE)) -x */.cvsignore */CVS/ */CVS/* */*/.cvsignore */*/CVS/ */*/CVS/* */*/*/CVS/
 	mv ../$(SOURCEZIP) .
 

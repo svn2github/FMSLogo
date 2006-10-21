@@ -31,6 +31,13 @@ Description: Four "light cycles" race around in a room and try not to
              run into wall, each other, or the trail left by the cycles.
              The winner is the one who doesn't run into anything.
 
+Directory:   logoui
+Author:      David Costanzo
+Genre:       educational
+Description: A simple GUI for controlling the turtle.
+             Designed to introduce young children (aged 5-8 yrs) to
+             Logo without the distraction of learning to type.
+
 Directory:   ludo
 Author:      Hensley Bass
 Genre:       board game
@@ -66,3 +73,10 @@ Author:      David Costanzo
 Genre:       puzzle game
 Description: A remake of the classic game Tetris.
              Assemble falling tetronimos into horizontal row of 10 squares.
+
+Directory:   turtlemaze
+Author:      David Costanzo
+Genre:       educational
+Description: Move the turtle through various mazes.
+             Designed to familiarize the user with basic turtle commands
+             (FD, BK, RT, and LT) in a fun, game-like manner.
