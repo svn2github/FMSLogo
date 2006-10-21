@@ -1401,7 +1401,7 @@ end
 to startnewgame
  setbitindex 0
  make "stopcontinue "True
- if :gamefinished = 0 [make "stopcontinue yesnobox [Domino v0.91] [Game not finished. Do you want ot start a new game?]]
+ if :gamefinished = 0 [make "stopcontinue yesnobox [Domino v0.91] [Game not finished. Do you want to start a new game?]]
  if :stopcontinue = "True [
 	 make "bigtotal1 0
 	 make "bigtotal2 0
