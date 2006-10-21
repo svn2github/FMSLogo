@@ -505,29 +505,6 @@ void TMyApp::InitMainWindow()
 
       GetConfigurationQuadruple("Screen", &x, &y, &w, &h);
 
-      // The "Screen" also has the height of the commander
-      // window and the splitter that goes between the
-      // screen and the commander window.
-      // We must subtract these out to get the real height.
-      int commander_x      = 0;
-      int commander_y      = 0;
-      int commander_width  = 0;
-      int commander_height = DEFAULT_COMMANDER_HEIGHT;
-      GetConfigurationQuadruple(
-         "Commander",
-         &commander_x,
-         &commander_y,
-         &commander_width,
-         &commander_height);
-
-      // sanity-check the input
-      if (0 < commander_height && commander_height < h)
-        {
-        h -= commander_height;
-        }
-
-      h -= DEFAULT_SPLITTER_WIDTH;
-
       // sanatize against screen size
       checkwindow(&x, &y, &w, &h);
       }

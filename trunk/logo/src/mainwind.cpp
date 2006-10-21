@@ -1960,18 +1960,22 @@ void TMainFrame::UndockCommanderWindow()
       newCommandWindow->Duplicate(*CommandWindow);
       newCommandWindow->ShowWindow(SW_SHOW);
 
-      // shrink the main window to hold just the screen
-      TRect screenWindowRect;
-      screenWindowRect.SetWH(
-         0,
-         0,
-         Attr.W,
-         Attr.H - CommandWindow->GetWindowRect().Height() - PaneSplitterWindow->GetSplitterWidth());
+      if (bFixed)
+         {
+         // The user requested that we never change the size of the drawing surface,
+         // so we must shrink the main window to hold just the screen.
+         TRect screenWindowRect;
+         screenWindowRect.SetWH(
+            0,
+            0,
+            Attr.W,
+            Attr.H - CommandWindow->GetWindowRect().Height() - PaneSplitterWindow->GetSplitterWidth());
 
-      SetWindowPos(
-         NULL,
-         screenWindowRect,
-         SWP_NOZORDER | SWP_NOMOVE | SWP_NOCOPYBITS);
+         SetWindowPos(
+            NULL,
+            screenWindowRect,
+            SWP_NOZORDER | SWP_NOMOVE | SWP_NOCOPYBITS);
+         }
 
       PaneSplitterWindow->RemovePane(
          CommandWindow,
@@ -1998,14 +2002,6 @@ void TMainFrame::DockCommanderWindow()
          0, 
          "IDD_DOCKEDCOMMANDER");
 
-      // grow the main window to hold the splitter and the commander
-      TRect originalWindowRect;
-      originalWindowRect.SetWH(
-         Attr.X,
-         Attr.Y,
-         Attr.W,
-         Attr.H);
-
       // restore the commander window's height
       int commanderWindowX      = 0;
       int commanderWindowY      = 0;
@@ -2021,27 +2017,41 @@ void TMainFrame::DockCommanderWindow()
       // sanity-check the input
       commanderWindowHeight = max(commanderWindowHeight, MIN_COMMANDER_HEIGHT);
 
-      const int totalHeight =
-         originalWindowRect.Height() +
-         PaneSplitterWindow->GetSplitterWidth() +
-         commanderWindowHeight;
 
-      const TRect newWindowRect(
-         originalWindowRect.Left(),
-         originalWindowRect.Top(),
-         originalWindowRect.Right(),
-         originalWindowRect.Top() + totalHeight);
+      if (bFixed)
+         {
+         // The user requested that we never change the size of the drawing surface,
+         // so we must grpw the main window to hold the commander window.
 
-      SetWindowPos(
-         NULL,
-         newWindowRect,
-         SWP_NOZORDER | SWP_NOMOVE | SWP_NOCOPYBITS);
+         TRect originalWindowRect;
+         originalWindowRect.SetWH(
+            Attr.X,
+            Attr.Y,
+            Attr.W,
+            Attr.H);
+
+         // grow the main window to hold the splitter and the commander
+         const int totalHeight =
+            originalWindowRect.Height() +
+            PaneSplitterWindow->GetSplitterWidth() +
+            commanderWindowHeight;
+         
+         const TRect newWindowRect(
+            originalWindowRect.Left(),
+            originalWindowRect.Top(),
+            originalWindowRect.Right(),
+            originalWindowRect.Top() + totalHeight);
+
+         SetWindowPos(
+            NULL,
+            newWindowRect,
+            SWP_NOZORDER | SWP_NOMOVE | SWP_NOCOPYBITS);
+         }
 
       PaneSplitterWindow->SplitPane(
          ScreenWindow,
          newCommandWindow,
          psHorizontal);
-
 
       const int moveDistance =
          newCommandWindow->GetWindowRect().Height() -
@@ -2419,8 +2429,9 @@ void TMainFrame::CMBitmapPrinterSetup()
 
 void TMainFrame::EvDestroy()
    {
-   // don't save sizes if iconed
-   if (!IsIconic())
+   // don't save the window size if it's minimized, the commander is undocked,
+   // or if FMSLogo was started with the -F option.
+   if (!IsIconic() && IsCommanderDocked && !bFixed)
       {
       // Get location and size of our window on the screen so we can
       // come back up in the same spot next time we are invoked.

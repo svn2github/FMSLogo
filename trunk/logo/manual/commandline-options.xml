@@ -80,9 +80,13 @@ The default is 1000.
 <synopsis>-F</synopsis>
 
 <para>
-This tells &PRODUCTNAME; to not use scrollbars ("F" is for fixed window).
-The default is with scroll bars.
-If you use this option without using <link linkend="commandline-h">-H</link> or <link linkend="commandline-w">-W</link> it will automatically calculate a workspace to fit your full screen exactly and the turtle will always be in view.
+This tells &PRODUCTNAME; not to use scrollbars on the screen window ("F" stands for "fixed-size").
+If this option is not given, then scrollbars are used, as needed.
+If you use this option without using <link linkend="commandline-h">-H</link> or <link linkend="commandline-w">-W</link>, then &PRODUCTNAME; automatically calculates a workspace to fit your full screen.
+</para>
+
+<para>
+<link linkend="command-fullscreen">FULLSCREEN</link>, <link linkend="command-splitscreen">SPLITSCREEN</link>, and <link linkend="command-textscreen">TEXTSCREEN</link> do not change the dimensions of the screen window when &PRODUCTNAME; is started in fixed-size mode.
 </para>
 
 <para>Example:</para>

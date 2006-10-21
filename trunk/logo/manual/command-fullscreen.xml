@@ -1,5 +1,5 @@
 <section id="command-fullscreen">
-    <title>FULLSCREEN</title>
+<title>FULLSCREEN</title>
 <indexterm><primary>FULLSCREEN</primary></indexterm>
 
 <variablelist>
@@ -25,6 +25,12 @@ Compare this command with <link linkend="command-splitscreen">SPLITSCREEN</link>
 </listitem>
 </varlistentry>
 
-</variablelist>
+<varlistentry><term>Example</term>
+<listitem>
+<programlisting><userinput>FULLSCREEN
+ICON "Commander</userinput></programlisting>
+</listitem>
+</varlistentry>
 
+</variablelist>
 </section>

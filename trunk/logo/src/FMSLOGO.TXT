@@ -30,6 +30,8 @@ Part II) New features/bugs fixed:
     o Fix bug #1547408; 'RUNRESULT {1}' no longer crashes FMSLogo.
     o Fix bug #1327711; Instructions run by GUI elements now also write 
       to DRIBBLE file.
+    o Implement request #1577908; FULLSCREEN and TEXTSCREEN only
+      preserve the size of the "Screen" window in "fixed" mode.
     o Implement request #1577722; WAIT now accepts fractional inputs.
     o Minor updates to the manual, including shading the examples, removing
       the root node from the table of contents, and adding "See Also" 
@@ -327,6 +329,7 @@ Part III) Special Thanks:
     Andy Owen
     Theodoros Chatzigiannakis
     Jim Foster
+    Juan J. Paredes G.
 
   Special thanks to:
     George Mills
