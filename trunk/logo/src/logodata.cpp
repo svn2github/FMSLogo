@@ -190,46 +190,71 @@ char *colon_strnzcpy(char *dst, const char * src, int len)
    return (dst);
    }
 
-#define uncapital(c)    (c - 'A' + 'a')
+static
+char
+uncapital(
+   char Capital
+   )
+   {
+   char lowercase;
+
+   LCMapString(
+      MAKELCID(MAKELANGID(LANG_NEUTRAL, SUBLANG_NEUTRAL), SORT_DEFAULT),
+      LCMAP_LOWERCASE,
+      &Capital,
+      sizeof(Capital),
+      &lowercase,
+      sizeof(lowercase));
+
+   return lowercase;
+   }
 
 char *low_strnzcpy(char *dst, const char * src, int len)
    {
-   char *temp = dst;
+   LCMapString(
+      MAKELCID(MAKELANGID(LANG_NEUTRAL, SUBLANG_NEUTRAL), SORT_DEFAULT),
+      LCMAP_LOWERCASE,
+      src,
+      len,
+      dst,
+      len);
 
-   for (int i = 0; i < len; i++)
-      {
-      if (upper_p(*src))
-         {
-         *dst++ = uncapital(*src++);
-         }
-      else
-         {
-         *dst++ = *src++;
-         }
-      }
-   *dst = '\0';
-   return temp;
+   dst[len] = '\0';
+   return dst;
    }
 
-#define capital(c)    (c - 'a' + 'A')
+static
+char
+capital(
+   char LowerCase
+   )
+   {
+   char capital;
+
+   LCMapString(
+      MAKELCID(MAKELANGID(LANG_NEUTRAL, SUBLANG_NEUTRAL), SORT_DEFAULT),
+      LCMAP_UPPERCASE,
+      &LowerCase,
+      sizeof(LowerCase),
+      &capital,
+      sizeof(capital));
+
+   return capital;
+   }
 
 char *cap_strnzcpy(char *dst, const char * src, int len)
    {
-   char *temp = dst;
+   LCMapString(
+      MAKELCID(MAKELANGID(LANG_NEUTRAL, SUBLANG_NEUTRAL), SORT_DEFAULT),
+      LCMAP_UPPERCASE,
+      src,
+      len,
+      dst,
+      len);
 
-   for (int i = 0; i < len; i++)
-      {
-      if (lower_p(*src))
-         {
-         *dst++ = capital(*src++);
-         }
-      else
-         {
-         *dst++ = *src++;
-         }
-      }
-   *dst = '\0';
-   return (temp);
+   dst[len] = '\0';
+
+   return dst;
    }
 
 char *noparitylow_strnzcpy(char *dst, const char *src, int len)
