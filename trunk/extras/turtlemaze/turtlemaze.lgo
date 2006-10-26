@@ -169,7 +169,7 @@ To StartRace
 
   DrawWalls  :walls
 
-  ; move the turtle into positin
+  ; move the turtle into position
   PenUp
   SetXY      :startX :startY
   SetHeading :startheading
@@ -179,7 +179,38 @@ To StartRace
   SetPenSize  [1 1]
   SetPenColor 0
 
+
+  UpdateScore 
+
 End
+
+To UpdateScore [:PreviousPenColor PenColor] [:PreviousTurtle Turtle]
+
+  ; Move the turtle that will keep score in place
+  SetTurtle 1
+  HideTurtle
+
+  PenUp
+  SetXY 0 -300
+  SetHeading 90    ; face right
+  PenDown
+
+  ; draw a black box for the score board
+  SetFloodColor 0
+
+  localmake "boxsize labelsize [Total Moves 999]
+
+  BitBlock (item 1 :boxsize) + 40   (item 2 :boxsize) + 40
+  SetXY XCor + 20    YCor + 20 + item 2 :boxsize
+
+  SetPenColor 7
+  Label (list "Total "Moves :totalMoves)
+
+  SetTurtle   :PreviousTurtle
+  SetPenColor :PreviousPenColor
+
+End
+
 
 To MoveTo :x :y
    PenUp
@@ -327,9 +358,15 @@ To finished? :oldpos :newpos
 End
 
 To PlayFinishSong   
-   Repeat 50 [ Tone (500 + RepCount * 5) 5]
-   Repeat 50 [ Tone (750 - RepCount * 5) 5]
-   Print [Press RESET to play again.  Press NEXT to move to a new race track.]
+   Repeat 50 [ 
+     Tone (500 + RepCount * 5) 5 
+     OriginalRight 360 / 100
+   ]
+   Repeat 50 [ 
+     Tone (750 - RepCount * 5) 5
+     OriginalRight 360 / 100
+   ]
+   Print [Press RESET to play again.  Press NEXT to move to a new maze.]
 End
 
 To PlayCrashSong
@@ -343,9 +380,11 @@ To Moves
   Output "moves
 End
 
+
 To MoveRacer :oldpos :newpos
 
   Make "totalMoves :totalMoves + 1
+  UpdateScore
 
   If Crashed? :oldpos :newpos [ 
     (Print [You crashed after] :totalMoves Word Moves ".)
@@ -417,6 +456,7 @@ To MyRight :angle
 
   Run (List "OriginalRight :angle)
   Make "totalmoves :totalmoves + 1
+  UpdateScore
 
 End
 
@@ -434,6 +474,7 @@ To MyLeft :angle
 
   Run (List "OriginalLeft :angle)
   Make "totalmoves :totalmoves + 1
+  UpdateScore
 
 End
 
