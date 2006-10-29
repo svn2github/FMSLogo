@@ -23,9 +23,9 @@ Otherwise, QUOTED outputs whatever the input is.
 <listitem>
 
 <programlisting><userinput>SHOW "Hello</userinput>
-Hello</programlisting>
+Hello 
 
-<programlisting><userinput>SHOW QUOTED "Hello</userinput>
+<userinput>SHOW QUOTED "Hello</userinput>
 "Hello</programlisting>
 
 <programlisting><userinput>SHOW QUOTED [1 2 3]</userinput>
