@@ -33,6 +33,7 @@ TO EQUALPTEST
   SIMPLEREPORTTEST [EQUALP "||  "||                    ] "true
   SIMPLEREPORTTEST [EQUALP "true  "TRUE                ] "true
   SIMPLEREPORTTEST [EQUALP "false "FALSE               ] "true
+  SIMPLEREPORTTEST [EQUALP "HELLO "hello               ] "true
 
   MAKE "myarray {1 2 3}
   SIMPLEREPORTTEST [EQUAL? :myarray :myarray           ] "true
