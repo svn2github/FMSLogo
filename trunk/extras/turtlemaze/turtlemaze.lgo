@@ -191,7 +191,7 @@ To UpdateScore [:PreviousPenColor PenColor] [:PreviousTurtle Turtle]
   HideTurtle
 
   PenUp
-  SetXY 0 -300
+  SetXY 0 220      ; move above the maze
   SetHeading 90    ; face right
   PenDown
 
@@ -387,16 +387,16 @@ To MoveRacer :oldpos :newpos
   UpdateScore
 
   If Crashed? :oldpos :newpos [ 
+    Make "isCrashed "true
     (Print [You crashed after] :totalMoves Word Moves ".)
     PlayCrashSong
-    Make "isCrashed "true
     Stop
   ]
 
   If Finished? :oldpos :newpos [ 
+    Make "isFinished "true
     (Print [You have finished in] :totalMoves Word Moves "!)
     PlayFinishSong
-    Make "isFinished "true
     Stop
   ]
 
