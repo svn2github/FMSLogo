@@ -15,10 +15,10 @@ fmslogod.exe :
 
 clean :
 	$(RM) version.h
-	$(RM) $(shell /usr/bin/find release -name '*.obj')
-	$(RM) $(shell /usr/bin/find release -name '*.res')
-	$(RM) $(shell /usr/bin/find -name '*.bak')
-	$(RM) $(shell /usr/bin/find -name '*~')
+	$(RM) $(shell /usr/bin/find . -name '*.obj')
+	$(RM) $(shell /usr/bin/find . -name '*.res')
+	$(RM) $(shell /usr/bin/find . -name '*.bak')
+	$(RM) $(shell /usr/bin/find . -name '*~')
 	$(RM) $(wildcard fmslogo*.exe)
 	$(RM) $(wildcard fmslogo*.ils)
 	$(RM) $(wildcard fmslogo*.ilc)
