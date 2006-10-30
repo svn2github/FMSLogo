@@ -34,7 +34,7 @@ logohelp.rtf : $(SOURCEFILES)
 
 website : index.html
 	-mkdir www
-	cp $(wildcard *.html) www
+	cp $(shell /usr/bin/find -maxdepth 1 -name '*.html') www
 	cp logohelp.css www
 
 # Generate an XML file that contains the version
