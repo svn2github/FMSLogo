@@ -1,23 +1,28 @@
 LOAD "testlib.lgo
 
-TO EDALLTEST
+TO EDALLTEST.DISPLAYBYHWND
 
   WINDOWCREATE "root "edalltest "Editor 100 100 100 100 []
   EDALL
   WINDOWDELETE "edalltest
 
   MAKE "isok YESNOBOX [Question] [Is the editor showing?]
-  IF NOT :isok [
-    REPORTTESTFAILED (sentence "|The editor window did not popup|) 
-    STOP
+  IFELSE :isok [
+    REPORTTESTPASSED [The editor window was displayed, as expected.]
+  ][
+    REPORTTESTFAILED [The editor window did not popup.  We expected it to be displayed.]
   ]
 
-  REPORTTESTPASSED (sentence "|The editor window was displayed|) 
-  WINDOWDELETE "edalltest
+END
+
+TO EDALLTEST.BADINPUT
+
+   RUNTOOMANYINPUTSTEST [(EDALL "toomany)]
+
 END
 
 
-TO LARGEEDITTEST
+TO EDITTEST.MANYVARIABLES
   ; Opens a large amount of data in the editor.
   ; This is a regression test for bug #1372735.
 
@@ -44,8 +49,7 @@ TO LARGEEDITTEST
     MAKE "variablename (WORD "largeedittest :i)
 
     IFELSE NOT NAMEP :variablename [
-      REPORTTESTFAILED (sentence "|The editor did not save the value of| :variablename "|(the variable does not exist)|
-)
+      REPORTTESTFAILED (sentence "|The editor did not save the value of| :variablename "|(the variable does not exist)|)
       MAKE "testpassed "false
     ][
       IF NOT :i = RUN (word ": :variablename) [ 
@@ -59,7 +63,7 @@ TO LARGEEDITTEST
   ]
 
   if :testpassed [
-    REPORTTESTPASSED (sentence "|The editor saved the values of all| :totalvariables "variables)
+    REPORTTESTPASSED (sentence "|The editor saved the values of all| :totalvariables "variables.)
   ]
 
   ; remove these variables
@@ -67,8 +71,22 @@ TO LARGEEDITTEST
 
 END
 
+TO EDITTEST.BADINPUT
+
+   RUNTOOMANYINPUTSTEST [ (EDIT [[][][]] "toomany) ]
+
+   RUNBADINPUTTEST [ EDIT {1}         ]
+   RUNBADINPUTTEST [ EDIT [{1}      ] ]
+   RUNBADINPUTTEST [ EDIT [[] {1}   ] ]
+   RUNBADINPUTTEST [ EDIT [[] [] {1}] ]
+END
+
 TO EDITORTEST
-  EDALLTEST
-  LARGEEDITTEST
+
+  EDALLTEST.DISPLAYBYHWND
+  EDALLTEST.BADINPUT
+
+  EDITTEST.MANYVARIABLES
+  ;EDITTEST.BADINPUT
 END
 
