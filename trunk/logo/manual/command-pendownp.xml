@@ -32,5 +32,12 @@ true</programlisting>
 </listitem>
 </varlistentry>
 
+<varlistentry><term>See Also</term>
+<listitem><simplelist>
+<member><link linkend="command-penup">PENUP</link></member>
+<member><link linkend="command-pendown">PENDOWN</link></member>
+</simplelist></listitem>
+</varlistentry>
+
 </variablelist>
 </section>
