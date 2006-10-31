@@ -99,6 +99,7 @@ LOAD "combine.lgo
 LOAD "print.lgo
 LOAD "runresult.lgo
 LOAD "slowdraw.lgo
+LOAD "status.lgo
 
 TO TESTALL
 
@@ -198,6 +199,7 @@ TO TESTALL
   SOUNDTEST          ; from sound.lgo
   NETWORKTEST        ; from network.lgo
   SLOWDRAWTEST       ; from slowdraw.lgo
+  STATUSTEST         ; from status.lgo
 
   REPORTTESTUNINITIALIZE
 
