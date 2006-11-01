@@ -516,6 +516,7 @@ setpos_helper_2d(
       line_to(
          g_Turtles[turtle_which].Position.x, 
          g_Turtles[turtle_which].Position.y);
+      update_status_turtleposition();
       }
    }
 
@@ -542,6 +543,7 @@ setpos_helper_3d(
    g_Wanna = g_Turtles[turtle_which].Position = target;
    out_of_bounds = false;
    line_to_3d(g_Turtles[turtle_which].Position);
+   update_status_turtleposition();
    }
 
 static
@@ -776,6 +778,7 @@ bool wrap_right(FLONUM d, FLONUM x1, FLONUM y1, FLONUM x2, FLONUM y2)
       if (yi >= screen_bottom && yi <= screen_top)
          {
          line_to(screen_right, yi);
+         update_status_turtleposition();
          g_Turtles[turtle_which].Position.x = turtle_left_max;
          g_Turtles[turtle_which].Position.y = yi;
          if (current_mode == wrapmode)
@@ -799,6 +802,7 @@ bool wrap_up(FLONUM d, FLONUM x1, FLONUM y1, FLONUM x2, FLONUM y2)
       if (xi >= screen_left && xi <= screen_right)
          {
          line_to(xi, screen_top);
+         update_status_turtleposition();
          g_Turtles[turtle_which].Position.x = xi;
          g_Turtles[turtle_which].Position.y = turtle_bottom_max;
          if (current_mode == wrapmode)
@@ -822,6 +826,7 @@ bool wrap_left(FLONUM d, FLONUM x1, FLONUM y1, FLONUM x2, FLONUM y2)
       if (yi >= screen_bottom && yi <= screen_top)
          {
          line_to(screen_left, yi);
+         update_status_turtleposition();
          g_Turtles[turtle_which].Position.x = turtle_right_max;
          g_Turtles[turtle_which].Position.y = yi;
          if (current_mode == wrapmode)
@@ -845,6 +850,7 @@ bool wrap_down(FLONUM d, FLONUM x1, FLONUM y1, FLONUM x2, FLONUM y2)
       if (xi >= screen_left && xi <= screen_right)
          {
          line_to(xi, screen_bottom);
+         update_status_turtleposition();
          g_Turtles[turtle_which].Position.x = xi;
          g_Turtles[turtle_which].Position.y = turtle_top_max;
          if (current_mode == wrapmode)
@@ -898,6 +904,7 @@ void forward_helper(FLONUM d)
       g_Turtles[turtle_which].Position.x = x2;
       g_Turtles[turtle_which].Position.y = y2;
       line_to(x2, y2);
+      update_status_turtleposition();
       }
    else
       {
@@ -928,6 +935,7 @@ void forward_helper3d(FLONUM d)
    g_Turtles[turtle_which].Position.z += direction.z;
 
    line_to_3d(g_Turtles[turtle_which].Position);
+   update_status_turtleposition();
    }
 
 static
@@ -1945,30 +1953,35 @@ NODE *lpenpattern(NODE *)
 NODE *lpendown(NODE *)
    {
    g_Turtles[turtle_which].IsPenUp = false;
+   update_status_pencontact();
    return Unbound;
    }
 
 NODE *lpenup(NODE *)
    {
    g_Turtles[turtle_which].IsPenUp = true;
+   update_status_pencontact();
    return Unbound;
    }
 
 NODE *lpenpaint(NODE *)
    {
    pen_down();
+   update_status_penstyle();
    return lpendown(NIL);
    }
 
 NODE *lpenerase(NODE *)
    {
    pen_erase();
+   update_status_penstyle();
    return lpendown(NIL);
    }
 
 NODE *lpenreverse(NODE *)
    {
    pen_reverse();
+   update_status_penstyle();
    return lpendown(NIL);
    }
 
@@ -1977,7 +1990,8 @@ static
 NODE *
 setcolor_helper(
    NODE *args,
-   void (*setcolorfunc)  (int, int, int)
+   void (*setcolorfunc)  (int, int, int),
+   void (*updatecolorfunc) (void)
    )
    {
    if (is_list(car(args)))
@@ -1993,6 +2007,7 @@ setcolor_helper(
                numeric_node_to_fixnum(cadr(arg)),
                numeric_node_to_fixnum(cadr(cdr(arg))));
             }
+         updatecolorfunc();
          }
 
       bIndexMode = false;
@@ -2011,6 +2026,7 @@ setcolor_helper(
                GetGValue(colortable[icolor]), 
                GetBValue(colortable[icolor]));
             }
+         updatecolorfunc();
          }
 
       bIndexMode = true;
@@ -2022,17 +2038,17 @@ setcolor_helper(
 
 NODE *lsetpencolor(NODE *args)
    {
-   return setcolor_helper(args, thepencolor);
+   return setcolor_helper(args, thepencolor, update_status_pencolor);
    }
 
 NODE *lsetfloodcolor(NODE *args)
    {
-   return setcolor_helper(args, thefloodcolor);
+   return setcolor_helper(args, thefloodcolor, update_status_floodcolor);
    }
 
 NODE *lsetscreencolor(NODE *args)
    {
-   return setcolor_helper(args, thescreencolor);
+   return setcolor_helper(args, thescreencolor, update_status_screencolor);
    }
 
 NODE *lsetpensize(NODE *args)
@@ -2043,6 +2059,7 @@ NODE *lsetpensize(NODE *args)
       {
       set_pen_width(numeric_node_to_fixnum(car(arg)));
       set_pen_height(numeric_node_to_fixnum(cadr(arg)));
+      update_status_penwidth();
       }
    return Unbound;
    }
