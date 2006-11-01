@@ -22,10 +22,50 @@ TO UPPERCASETEST.SMOKETEST
   SIMPLEREPORTTEST [UPPERCASE "| `\~!@#$%^&*()_+-=\[\]\{\}\|\\;:'",<.>/?| ] ~
                               "| `\~!@#$%^&*()_+-=\[\]\{\}\|\\;:'",<.>/?|
 
-  ; Some characters from Latin-1 set that are not in ASCII
-  ; NOTE: We can't put the characters in here directly or else this 
-  ;       won't look like a text file to CVS.
-  SIMPLEREPORTTEST [UPPERCASE (WORD CHAR 241 CHAR 209) ] (WORD CHAR 209 CHAR 209)
+
+END
+
+TO UPPERCASETEST.INTERNATIONAL
+
+  ; Test some characters from Latin-1 set that are not in ASCII
+
+  ; NOTE: We can't put the characters in here directly or else this
+  ;       won't look like a text file to CVS, so we use their numeric value
+  local [pairs lowercase capital]
+
+  make "pairs [
+    [253 221]
+    [241 209]
+    [225 193]
+    [226 194]
+    [227 195]
+    [228 196]
+    [231 199]
+    [232 200]
+    [233 201]
+    [234 202]
+    [235 203]
+    [236 204]
+    [237 205]
+    [238 206]
+    [239 207]
+    [240 208]
+    [241 209]
+    [243 211]
+    [244 212]
+    [245 213]
+    [246 214]
+    [248 216]
+    [249 217]
+  ]
+
+  foreach :pairs [
+     make "lowercase CHAR (ITEM 1 ?)
+     make "capital   CHAR (ITEM 2 ?)
+
+     SIMPLEREPORTTEST (LIST "UPPERCASE (WORD "" :lowercase :capital)) ~
+                      (WORD :capital :capital)
+  ]
 
 END
 
@@ -43,6 +83,7 @@ END
 TO UPPERCASETEST
 
    UPPERCASETEST.SMOKETEST
+   UPPERCASETEST.INTERNATIONAL
    UPPERCASETEST.BADINPUT
 
 END
