@@ -1,5 +1,5 @@
 /*
-*      logodata.c      logo data management module             dvb
+*      logodata.cpp    logo data management module             dvb
 *
 *       Copyright (C) 1995 by the Regents of the University of California
 *       Copyright (C) 1995 by George Mills
@@ -199,7 +199,7 @@ uncapital(
    char lowercase;
 
    LCMapString(
-      MAKELCID(MAKELANGID(LANG_NEUTRAL, SUBLANG_NEUTRAL), SORT_DEFAULT),
+      MAKELCID(LANG_USER_DEFAULT, SORT_DEFAULT),
       LCMAP_LOWERCASE,
       &Capital,
       sizeof(Capital),
@@ -212,7 +212,7 @@ uncapital(
 char *low_strnzcpy(char *dst, const char * src, int len)
    {
    LCMapString(
-      MAKELCID(MAKELANGID(LANG_NEUTRAL, SUBLANG_NEUTRAL), SORT_DEFAULT),
+      MAKELCID(LANG_USER_DEFAULT, SORT_DEFAULT),
       LCMAP_LOWERCASE,
       src,
       len,
@@ -232,7 +232,7 @@ capital(
    char capital;
 
    LCMapString(
-      MAKELCID(MAKELANGID(LANG_NEUTRAL, SUBLANG_NEUTRAL), SORT_DEFAULT),
+      MAKELCID(LANG_USER_DEFAULT, SORT_DEFAULT),
       LCMAP_UPPERCASE,
       &LowerCase,
       sizeof(LowerCase),
@@ -245,7 +245,7 @@ capital(
 char *cap_strnzcpy(char *dst, const char * src, int len)
    {
    LCMapString(
-      MAKELCID(MAKELANGID(LANG_NEUTRAL, SUBLANG_NEUTRAL), SORT_DEFAULT),
+      MAKELCID(LANG_USER_DEFAULT, SORT_DEFAULT),
       LCMAP_UPPERCASE,
       src,
       len,
