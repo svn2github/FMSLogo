@@ -19,7 +19,8 @@ TO .EQTEST
   RUNTOOMANYINPUTSTEST   [(.EQ 1 1 "toomany)]
 END
 
-TO EQUALPTEST
+TO EQUALPTEST.SMOKETEST
+
   MAKE "CASEIGNOREDP "TRUE
 
   LOCAL "myarray
@@ -41,20 +42,46 @@ TO EQUALPTEST
   MAKE "myarray {}
   SIMPLEREPORTTEST [EQUAL? :myarray :myarray           ] "true
 
-
   ; arrays are never equal to other arrays
   SIMPLEREPORTTEST [EQUAL? {} {}                       ] "false
   SIMPLEREPORTTEST [EQUAL? {1 2 3} {1 2 3}             ] "false
 
-  SIMPLEREPORTTEST [EQUALP 1     1.1                    ] "false
-  SIMPLEREPORTTEST [EQUALP 0     1                      ] "false
-  SIMPLEREPORTTEST [EQUALP "hi   "hil                   ] "false
-  SIMPLEREPORTTEST [EQUALP "hil  "hi                    ] "false
-  SIMPLEREPORTTEST [EQUALP "true "false                 ] "false
+  SIMPLEREPORTTEST [EQUALP 1       1.1                 ] "false
+  SIMPLEREPORTTEST [EQUALP 0       1                   ] "false
+  SIMPLEREPORTTEST [EQUALP "hi     "hil                ] "false
+  SIMPLEREPORTTEST [EQUALP "hil    "hi                 ] "false
+  SIMPLEREPORTTEST [EQUALP "true   "false              ] "false
+  SIMPLEREPORTTEST [EQUALP []      "false              ] "false
+  SIMPLEREPORTTEST [EQUALP "false  []                  ] "false
+  SIMPLEREPORTTEST [EQUALP [1 2]   [1 2 3]             ] "false
+  SIMPLEREPORTTEST [EQUALP [1 2 3] [1 2]               ] "false
+  SIMPLEREPORTTEST [EQUALP {1}     [1]                 ] "false
+  SIMPLEREPORTTEST [EQUALP [1]     {1}                 ] "false
 
+END
+
+TO EQUALPTEST.DEEPLYNESTEDLIST
+
+  LOCALMAKE "nestedlist1 []
+  REPEAT 50000 [ MAKE "nestedlist1 FPUT :nestedlist1 [] ]
+
+  LOCALMAKE "nestedlist2 []
+  REPEAT 50000 [ MAKE "nestedlist2 FPUT :nestedlist2 [] ]
+
+  SIMPLEREPORTTEST [EQUALP :nestedlist1 :nestedlist2] "true
+  
+END
+
+TO EQUALPTEST.BADINPUT
   RUNNOTENOUGHINPUTSTEST [(EQUAL?)]
   RUNNOTENOUGHINPUTSTEST [(EQUAL? 1)]
   RUNTOOMANYINPUTSTEST   [(EQUAL? 1 1 "toomany)]
+END
+
+TO EQUALPTEST
+  EQUALPTEST.SMOKETEST
+  ;EQUALPTEST.DEEPLYNESTEDLIST
+  EQUALPTEST.BADINPUT
 END
 
 TO EMPTYPTEST
