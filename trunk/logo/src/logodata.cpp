@@ -187,7 +187,7 @@ char *colon_strnzcpy(char *dst, const char * src, int len)
    dst[0] = ':';
    strncpy(dst + 1, src, len - 1);
    dst[len] = '\0';
-   return (dst);
+   return dst;
    }
 
 static
@@ -277,35 +277,20 @@ char *noparitylow_strnzcpy(char *dst, const char *src, int len)
    return temp;
    }
 
-int low_strncmp(const char *s1, const char * s2, int len)
+int low_strncmp(const char *string1, const char * string2, int length)
    {
-   for (int i = 0; i < len; i++)
-      {
-      if (*s1 != *s2)
-         {
-         if (upper_p(*s2))
-            {
-            if (upper_p(*s1))
-               {
-               if (uncapital(*s1) != uncapital(*s2))
-                  return (uncapital(*s1) - uncapital(*s2));
-               }
-            else
-               {
-               if (*s1 != uncapital(*s2))
-                  return (*s1 - uncapital(*s2));
-               }
-            }
-         else if (upper_p(*s1))
-            {
-            if (uncapital(*s1) != *s2)
-               return (uncapital(*s1) - *s2);
-            }
-         else return (*s1 - *s2);
-         }
-      s1++, s2++;
-      }
-   return 0;
+   int rval = CompareString(
+      MAKELCID(LANG_USER_DEFAULT, SORT_DEFAULT),
+      NORM_IGNORECASE,
+      string1,
+      length,
+      string2,
+      length);
+
+   // convert from CompareString() to C return value
+   rval -= 2;
+
+   return rval;
    }
 
 int noparity_strncmp(const char * s1, const char * s2, int len)
@@ -327,28 +312,16 @@ int noparitylow_strncmp(const char * s1, const char * s2, int len)
       char c2 = clearparity(*s2);
       if (c1 != c2)
          {
-         if (upper_p(c2))
+         int rval = low_strncmp(&c1, &c2, 1);
+         if (rval != 0)
             {
-            if (upper_p(c1))
-               {
-               if (uncapital(c1) != uncapital(c2))
-                  return (uncapital(c1) - uncapital(c2));
-               }
-            else
-               {
-               if (c1 != uncapital(c2))
-                  return (c1 - uncapital(c2));
-               }
+            return rval;
             }
-         else if (upper_p(c1))
-            {
-            if (uncapital(c1) != c2)
-               return (uncapital(c1) - c2);
-            }
-         else return (c1 - c2);
          }
-      s1++, s2++;
+      s1++;
+      s2++;
       }
+
    return 0;
    }
 
