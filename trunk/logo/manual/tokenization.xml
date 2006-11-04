@@ -55,7 +55,7 @@ you</programlisting>
 
     <para>This will work in a procedure or from the input control box.</para>
 
-    <para>A character entered with backslash is <link linkend="command-equalp">EQUALP</link> to the same character without the backslash, but can be distinguished by the <link linkend="command-backslashedp">BACKSLASHEDP</link> predicate.  (In Europe, backslashing is effective only on characters for which it is necessary: whitespace, parentheses, brackets, infix operators, backslash, vertical bar, tilde, quote, question mark, colon, and semicolon.)</para>
+    <para>A character entered with backslash is <link linkend="command-equalp">EQUALP</link> to the same character without the backslash, but can be distinguished by the <link linkend="command-backslashedp">BACKSLASHEDP</link> predicate.  Backslashing is effective only on characters for which it is necessary: whitespace, parentheses, brackets, infix operators, backslash, vertical bar, tilde, quote, question mark, colon, and semicolon.</para>
 
     <para>An alternative notation to include otherwise delimiting characters in words is to enclose a group of characters in vertical bars (<userinput>|</userinput>).
 All characters between vertical bars are treated as if they were letters.
