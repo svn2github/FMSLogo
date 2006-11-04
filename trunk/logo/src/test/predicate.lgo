@@ -35,6 +35,9 @@ TO EQUALPTEST.SMOKETEST
   SIMPLEREPORTTEST [EQUALP "true  "TRUE                ] "true
   SIMPLEREPORTTEST [EQUALP "false "FALSE               ] "true
   SIMPLEREPORTTEST [EQUALP "HELLO "hello               ] "true
+  SIMPLEREPORTTEST [EQUALP "hello "HELLO               ] "true
+  SIMPLEREPORTTEST [EQUALP "HELLO "HELLO               ] "true
+  SIMPLEREPORTTEST [EQUALP "hello "hello               ] "true
 
   MAKE "myarray {1 2 3}
   SIMPLEREPORTTEST [EQUAL? :myarray :myarray           ] "true
@@ -78,9 +81,57 @@ TO EQUALPTEST.BADINPUT
   RUNTOOMANYINPUTSTEST   [(EQUAL? 1 1 "toomany)]
 END
 
+TO EQUALPTEST.INTERNATIONAL
+
+  ; Test uppercase/lowercase string comparisons for character 
+  ; from Latin-1 set that are not in ASCII
+
+  ; NOTE: We can't put the characters in here directly or else this
+  ;       won't look like a text file to CVS, so we use their numeric value
+  local [pairs lowercase capital]
+
+  make "pairs [
+    [253 221]
+    [241 209]
+    [225 193]
+    [226 194]
+    [227 195]
+    [228 196]
+    [231 199]
+    [232 200]
+    [233 201]
+    [234 202]
+    [235 203]
+    [236 204]
+    [237 205]
+    [238 206]
+    [239 207]
+    [240 208]
+    [241 209]
+    [243 211]
+    [244 212]
+    [245 213]
+    [246 214]
+    [248 216]
+    [249 217]
+  ]
+
+  foreach :pairs [
+     make "lowercase CHAR (ITEM 1 ?)
+     make "capital   CHAR (ITEM 2 ?)
+
+     make "word1 (WORD "" :lowercase :capital)
+     make "word2 (WORD "" :capital   :lowercase)
+
+     SIMPLEREPORTTEST (LIST "EQUALP :word1 :word2) "true
+  ]
+
+END
+
 TO EQUALPTEST
   EQUALPTEST.SMOKETEST
   ;EQUALPTEST.DEEPLYNESTEDLIST
+  EQUALPTEST.INTERNATIONAL
   EQUALPTEST.BADINPUT
 END
 
