@@ -1,5 +1,5 @@
 <section id="command-penpaint">
-    <title>PENPAINT</title>
+<title>PENPAINT</title>
 <indexterm><primary>PENPAINT</primary></indexterm>
 
 <variablelist>
@@ -23,7 +23,7 @@ This is the default mode.
 </varlistentry>
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>PENREVERSE
+<programlisting><userinput>PENREVERSE
 FORWARD 100
 BACK 100
 PENPAINT
@@ -31,6 +31,13 @@ FORWARD 100
 BACK 100</userinput></programlisting>
 </listitem>
 </varlistentry>
-</variablelist>
 
+<varlistentry><term>See Also</term>
+<listitem><simplelist>
+<member><link linkend="command-penerase">PENERASE</link></member>
+<member><link linkend="command-penreverse">PENREVERSE</link></member>
+</simplelist></listitem>
+</varlistentry>
+
+</variablelist>
 </section>
