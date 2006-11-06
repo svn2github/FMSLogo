@@ -509,12 +509,13 @@ void TMyCommandWindow::DoButtonStatus(UINT)
    if (status_flag)
       {
       MainWindowx->MyPopupStatusKill();
-      Editbox.SetFocus();
       }
    else
       {
       MainWindowx->MyPopupStatus();
       }
+
+   Editbox.SetFocus();
    }
 
 void TMyCommandWindow::DoButtonReset(UINT)
@@ -722,6 +723,19 @@ void TMyEditboxWindow::EvKeyDown(UINT, UINT, UINT)
    DefaultProcessing();
    }
 
+void TMyEditboxWindow::EvSetFocus(THandle hWndGetFocus)
+   {
+   DefaultProcessing();
+
+   // unselect anything that is selected in the listbox to 
+   // prevent the confusion of potentially seeing something
+   // selected in both the commander's edit box and the history.
+   UINT begin;
+   UINT end;
+   MainWindowx->CommandWindow->Listbox.GetSelection(begin, end);
+   MainWindowx->CommandWindow->Listbox.SetSelection(begin, begin);
+   }
+
 /* Listbox members */
 
 TMyListboxWindow::TMyListboxWindow(
@@ -754,18 +768,6 @@ void TMyListboxWindow::SetupWindow()
 TMyListboxWindow::~TMyListboxWindow()
    {
    }
-
-void TMyListboxWindow::EvKillFocus(THandle hWndGetFocus /* may be 0 */)
-   {
-   // unselect whatever is selected when we lose focus
-   UINT begin;
-   UINT end;
-   GetSelection(begin, end);
-   SetSelection(begin, begin);
-
-   DefaultProcessing();
-   }
-
 
 void TMyListboxWindow::EvMouseMove(uint modKeys, TPoint& point)
    {
@@ -874,8 +876,7 @@ void TMyListboxWindow::EvKeyDown(UINT, UINT, UINT)
    {
    TMessage Msg = __GetTMessage();
 
-   // if Down off bottom then focus to edit box
-
+   // if the cursor moves down off bottom then give focus to edit box
    if (Msg.WParam == VK_DOWN)
       {
       UINT from;
@@ -934,11 +935,11 @@ void TMyListboxWindow::EvKeyDown(UINT, UINT, UINT)
       }
    else if (MainWindowx->CommandWindow->EditBoxWantsKeyEvent(Msg.WParam))
       {
-         // we don't handle this key.
-         // give focus to the edit box and send the press to it.
-         MainWindowx->CommandWindow->PostKeyDownToEditBox(
-            Msg.WParam,
-            Msg.LParam);
+      // we don't handle this key.
+      // give focus to the edit box and send the press to it.
+      MainWindowx->CommandWindow->PostKeyDownToEditBox(
+         Msg.WParam,
+         Msg.LParam);
       }
    else if (Msg.WParam == VK_NEXT  ||
             Msg.WParam == VK_PRIOR)
@@ -1021,12 +1022,12 @@ void TMyListboxWindow::SetCursorAtBottom()
    }
 
 DEFINE_RESPONSE_TABLE1(TMyEditboxWindow, TEdit)
+   EV_WM_SETFOCUS,
    EV_WM_KEYDOWN,
    EV_COMMAND(CM_EDITSELECTALL, CmSelectAll),
 END_RESPONSE_TABLE;
 
 DEFINE_RESPONSE_TABLE1(TMyListboxWindow, TRichEditWithPopup)
-   EV_WM_KILLFOCUS,
    EV_WM_CHAR,
    EV_WM_KEYDOWN,
    EV_WM_KEYUP,

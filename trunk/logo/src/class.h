@@ -112,7 +112,7 @@ public:
 
    void
    AsyncClose(
-      TWindow    *         Window
+      TWindow    *      Window
       );
 
    void Shutdown();
@@ -199,6 +199,7 @@ class TMyEditboxWindow : public TEdit
    ~TMyEditboxWindow();
 
  protected:
+   void EvSetFocus(THandle hWndGetFocus);
    void EvKeyDown(UINT, UINT, UINT);
    void CmSelectAll();
 
@@ -223,7 +224,6 @@ class TMyListboxWindow : public TRichEditWithPopup
    void EvLButtonDown(UINT modKeys, TPoint & point);
    void EvLButtonDblClk(UINT modKeys, TPoint & point);
    void EvMouseMove(uint modKeys, TPoint& point);
-   void EvKillFocus(THandle hWndGetFocus);
 
    void CmDisableCommand(TCommandEnabler& commandHandler);
 

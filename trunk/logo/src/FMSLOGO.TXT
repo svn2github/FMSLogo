@@ -27,6 +27,8 @@ Part II) New features/bugs fixed:
       updated while the status window is open.
     o Fix bug #1576430; UPPERCASE and LOWERCASE now correctly handle some 
       international characters.
+    o Fix bug #1584198; Commander selection no longer disappears when FMSLogo
+      loses focus.
     o Minor updates to the manual.
 
   * Added for 6.11.0,
