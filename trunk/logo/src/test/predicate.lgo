@@ -21,6 +21,8 @@ END
 
 TO EQUALPTEST.SMOKETEST
 
+  LOCAL "CASEIGNOREDP
+
   MAKE "CASEIGNOREDP "TRUE
 
   LOCAL "myarray
@@ -60,6 +62,21 @@ TO EQUALPTEST.SMOKETEST
   SIMPLEREPORTTEST [EQUALP [1 2 3] [1 2]               ] "false
   SIMPLEREPORTTEST [EQUALP {1}     [1]                 ] "false
   SIMPLEREPORTTEST [EQUALP [1]     {1}                 ] "false
+
+
+  ; now test case-sensitive searching
+  TRACEINSTRUCTION [MAKE "CASEIGNOREDP "false]
+
+  ; even true and false obey the rules of case
+  SIMPLEREPORTTEST [EQUALP "true  "true                ] "true
+  SIMPLEREPORTTEST [EQUALP "false "false               ] "true
+  SIMPLEREPORTTEST [EQUALP "true  "TRUE                ] "false
+  SIMPLEREPORTTEST [EQUALP "false "FALSE               ] "false
+
+  SIMPLEREPORTTEST [EQUALP "HELLO "hello               ] "false
+  SIMPLEREPORTTEST [EQUALP "hello "HELLO               ] "false
+  SIMPLEREPORTTEST [EQUALP "HELLO "HELLO               ] "true
+  SIMPLEREPORTTEST [EQUALP "hello "hello               ] "true
 
 END
 
