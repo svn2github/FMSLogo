@@ -876,20 +876,6 @@ void TMyListboxWindow::EvKeyDown(UINT, UINT, UINT)
    {
    TMessage Msg = __GetTMessage();
 
-   // if the cursor moves down off bottom then give focus to edit box
-   if (Msg.WParam == VK_DOWN)
-      {
-      UINT from;
-      UINT to;
-
-      GetSelection(from, to);
-      if (GetTextLen() == to)
-         {
-         MainWindowx->CommandWindow->Editbox.SetFocus();
-         return;
-         }
-      }
-
    // track when a control key is pressed down
    if (Msg.WParam == VK_CONTROL)
       {
@@ -925,9 +911,31 @@ void TMyListboxWindow::EvKeyDown(UINT, UINT, UINT)
             Msg.WParam == VK_DOWN ||
             Msg.WParam == VK_LEFT)
       {
+      // If the caret moves down off bottom, then give focus to edit box.
+      // NOTE: This logic is needed so that we don't call DefaultProcessing()
+      // when the cursor is already at the bottom, because doing so would result
+      // in an extra beep.
+      if (Msg.WParam == VK_DOWN && !HasSelection())
+         {
+         if (IsCursorAtBottom())
+            {
+            MainWindowx->CommandWindow->Editbox.SetFocus();
+            return;
+            }
+         }
+
       // up&down keys move up and down
       DefaultProcessing();
       CopyCurrentLineToEditBox();
+
+      // If the caret moves down off bottom, then give focus to edit box.
+      if (Msg.WParam == VK_DOWN && !HasSelection())
+         {
+         if (IsCursorAtBottom())
+            {
+            MainWindowx->CommandWindow->Editbox.SetFocus();
+            }
+         }
       }
    else if (Msg.WParam == VK_F1)
       {
@@ -1019,6 +1027,14 @@ void TMyListboxWindow::SetCursorAtBottom()
    CopyCurrentLineToEditBox();
 
    Invalidate(true);
+   }
+
+bool TMyListboxWindow::IsCursorAtBottom() const
+   {
+   UINT from;
+   UINT to;
+   GetSelection(from, to);
+   return GetTextLen() == to;
    }
 
 DEFINE_RESPONSE_TABLE1(TMyEditboxWindow, TEdit)

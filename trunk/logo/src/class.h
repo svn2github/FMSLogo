@@ -214,6 +214,7 @@ class TMyListboxWindow : public TRichEditWithPopup
    ~TMyListboxWindow();
 
    void SetCursorAtBottom();
+   bool IsCursorAtBottom() const;
 
  protected:
    void EvChar(uint key, uint repeatCount, uint flags);
