@@ -21,6 +21,8 @@
 
 #include "allwind.h"
 
+#define SELECTBOTTOMLINE
+
 static int halt_flag = 0; // Flag to signal it's OK to halt
 
 TMyCommandWindow::TMyCommandWindow(
@@ -912,9 +914,8 @@ void TMyListboxWindow::EvKeyDown(UINT, UINT, UINT)
             Msg.WParam == VK_LEFT)
       {
       // If the caret moves down off bottom, then give focus to edit box.
-      // NOTE: This logic is needed so that we don't call DefaultProcessing()
-      // when the cursor is already at the bottom, because doing so would result
-      // in an extra beep.
+      // NOTE: This logic must come before DefaultProcessing() when the cursor 
+      // is already at the bottom in order to prevent an extra beep.
       if (Msg.WParam == VK_DOWN && !HasSelection())
          {
          if (IsCursorAtBottom())
@@ -928,6 +929,7 @@ void TMyListboxWindow::EvKeyDown(UINT, UINT, UINT)
       DefaultProcessing();
       CopyCurrentLineToEditBox();
 
+#ifndef SELECTBOTTOMLINE
       // If the caret moves down off bottom, then give focus to edit box.
       if (Msg.WParam == VK_DOWN && !HasSelection())
          {
@@ -936,6 +938,8 @@ void TMyListboxWindow::EvKeyDown(UINT, UINT, UINT)
             MainWindowx->CommandWindow->Editbox.SetFocus();
             }
          }
+#endif
+
       }
    else if (Msg.WParam == VK_F1)
       {
@@ -1021,6 +1025,16 @@ void TMyListboxWindow::SetCursorAtBottom()
 
    // set the selection to the end of the text.
    int endOfText = GetTextLen();
+
+#ifndef SELECTBOTTOMLINE
+   // Don't select the empty line at the bottom.
+   int totalLines = GetNumLines();
+   if (totalLines != 0)
+      {
+      endOfText = GetLineIndex(totalLines - 2);
+      }
+#endif
+
    SetSelection(endOfText, endOfText);
 
    // copy the bottom line to the edit box
