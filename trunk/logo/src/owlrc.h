@@ -42,4 +42,3 @@
 #define ID_PROMPTONREPLACE  4085
 
 #define ID_EDITOR           4084
-
