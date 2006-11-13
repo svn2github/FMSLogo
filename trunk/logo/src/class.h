@@ -445,6 +445,7 @@ class TMainFrame : public TDecoratedFrame
    void EvSize(UINT, TSize &);
 
    void CMFileNew();
+   void CMFileLoad();
    void CMFileOpen();
    void CMFileSave();
    void CMFileSaveAs();
@@ -494,6 +495,9 @@ class TMainFrame : public TDecoratedFrame
    LRESULT OnNetworkListenReceiveFinish(WPARAM, LPARAM);
 
  private:
+
+   void EraseContentsOfWorkspace();
+
    void 
    ChooseColor(
       COLORREF       InitialColor,

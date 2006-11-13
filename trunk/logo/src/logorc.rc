@@ -22,8 +22,9 @@ IDM_COMMANDS MENU
 {
  POPUP "&File"
  {
-  MENUITEM "&New", CM_FILENEW
-  MENUITEM "&Open...", CM_FILEOPEN
+  MENUITEM "&New\t(erase workspace)", CM_FILENEW
+  MENUITEM "&Load...\t(merge into workspace)", CM_FILELOAD
+  MENUITEM "&Open...\t(replace workspace)", CM_FILEOPEN
   MENUITEM "&Save", CM_FILESAVE
   MENUITEM "Save &As...", CM_FILESAVEAS
   MENUITEM SEPARATOR
@@ -305,7 +306,8 @@ END
 STRINGTABLE 
 {
  CM_FILESAVEAS, "Saves the contents of the EDALL window to a new file"
- CM_FILEOPEN, "Locates and opens a Logo program"
+ CM_FILEOPEN, "Erases the current workspace and loads a Logo program as the new workspace"
+ CM_FILELOAD, "Locates and loads a Logo program into the current workspace"
  CM_FILENEW, "Erases the contents of the EDALL session"
  CM_FILESAVE, "Saves the contents of the EDALL window"
  CM_FILEEDIT, "Selects a procedure to edit"

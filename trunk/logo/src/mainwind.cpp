@@ -1525,6 +1525,13 @@ void TMainFrame::SaveBitmap()
       }
    }
 
+void TMainFrame::EraseContentsOfWorkspace()
+   {
+   NODE * workspace_contents = vref(lcontents(NIL));
+   lerase(workspace_contents);
+   deref(workspace_contents);
+   }
+
 void TMainFrame::CMFileNew()
    {
    // if doing new and dirty give user a chance to abort the new
@@ -1545,20 +1552,16 @@ void TMainFrame::CMFileNew()
    IsNewFile = true;
    IsDirty = false;
 
-   NODE * workspace_contents = vref(lcontents(NIL));
-
-   lerase(workspace_contents);
-
-   deref(workspace_contents);
+   EraseContentsOfWorkspace();
    }
 
-
-void TMainFrame::CMFileOpen()
+void TMainFrame::CMFileLoad()
    {
    if (IsDirty)
       {
       if (MainWindowx->CommandWindow->MessageBox(
-            "The file being loaded may over write your changes.\n"
+            "The file being loaded will be merged into your workspace\n"
+                "and may overwrite your unsaved changes.\n"
                 "\n"
                 "Continue with Load?",
             "You have not saved to disk",
@@ -1568,7 +1571,7 @@ void TMainFrame::CMFileOpen()
          }
       }
 
-   // if user found a file the try to load it
+   // show the user a file-picker dialog
    TOpenSaveDialog::TData FileData;
    FileData.Flags = OFN_FILEMUSTEXIST | OFN_HIDEREADONLY | OFN_EXPLORER;
    FileData.SetFilter("Logo Files (*.lgo)|*.lgo|All Files (*.*)|*.*|");
@@ -1579,6 +1582,54 @@ void TMainFrame::CMFileOpen()
    if (TFileOpenDialog(this, FileData).Execute() == IDOK)
       {
       IsNewFile = false;
+
+      start_execution();
+
+      strcpy(FileName, FileData.FileName);
+      bool isOk = fileload(FileName);
+      if (!isOk) 
+         {
+         err_logo(FILE_ERROR, make_static_strnode("Could not open file"));
+         }
+
+      // handle any error that may have occured
+      process_special_conditions();
+
+      stop_execution();
+      }
+   }
+
+void TMainFrame::CMFileOpen()
+   {
+   if (IsDirty)
+      {
+      if (MainWindowx->CommandWindow->MessageBox(
+            "This will erase all of your unsaved changes.\n"
+                "\n"
+                "Continue with Open?",
+            "You have not saved to disk",
+            MB_OKCANCEL | MB_ICONQUESTION) == IDCANCEL)
+         {
+         return;
+         }
+      }
+
+   // show the user a file-picker dialog
+   TOpenSaveDialog::TData FileData;
+   FileData.Flags = OFN_FILEMUSTEXIST | OFN_HIDEREADONLY | OFN_EXPLORER;
+   FileData.SetFilter("Logo Files (*.lgo)|*.lgo|All Files (*.*)|*.*|");
+   strcpy(FileData.FileName, "*.lgo");
+   FileData.DefExt = "lgo";
+
+   // if user found a file then try to open it
+   if (TFileOpenDialog(this, FileData).Execute() == IDOK)
+      {
+      // start with a clean plate
+      IsNewFile = false;
+      IsDirty   = false;
+
+      // erase the contents of the workspace
+      EraseContentsOfWorkspace();
 
       start_execution();
 
@@ -2801,6 +2852,7 @@ DEFINE_RESPONSE_TABLE1(TMainFrame, TDecoratedFrame)
   EV_WM_TIMER,
   EV_WM_SIZE,
   EV_COMMAND(CM_FILENEW, CMFileNew),
+  EV_COMMAND(CM_FILELOAD, CMFileLoad),
   EV_COMMAND(CM_FILEOPEN, CMFileOpen),
   EV_COMMAND(CM_FILESAVE, CMFileSave),
   EV_COMMAND(CM_FILESAVEAS, CMFileSaveAs),

@@ -86,48 +86,49 @@
 #define CM_CONTROLHALT          CMD_BASE + 0
 #define CM_CONTROLEXECUTE       CMD_BASE + 1
 
-#define CM_FILEEDIT             CMD_BASE + 2
-#define CM_FILEERASE            CMD_BASE + 3
+#define CM_FILEEDIT             CMD_BASE + 10
+#define CM_FILEERASE            CMD_BASE + 11
+#define CM_FILELOAD             CMD_BASE + 12
 
-#define CM_HELPEDIT             CMD_BASE + 4
-#define CM_HELPEDIT_TOPIC       CMD_BASE + 5
+#define CM_HELPEDIT             CMD_BASE + 20
+#define CM_HELPEDIT_TOPIC       CMD_BASE + 21
 
-#define CM_HELP                 CMD_BASE + 6
-#define CM_HELPABOUT            CMD_BASE + 7
-#define CM_HELPABOUTMS          CMD_BASE + 8
-#define CM_HELPINDEX            CMD_BASE + 9
-#define CM_HELPHELP             CMD_BASE + 10
-#define CM_HELPMCI              CMD_BASE + 11
-#define CM_HELPTUTORIAL         CMD_BASE + 12
-#define CM_HELPDEMO             CMD_BASE + 13
-#define CM_HELPEXAMPLES         CMD_BASE + 14
-#define CM_HELPRELEASENOTES     CMD_BASE + 15
+#define CM_HELP                 CMD_BASE + 30
+#define CM_HELPABOUT            CMD_BASE + 31
+#define CM_HELPABOUTMS          CMD_BASE + 32
+#define CM_HELPINDEX            CMD_BASE + 33
+#define CM_HELPHELP             CMD_BASE + 34
+#define CM_HELPMCI              CMD_BASE + 35
+#define CM_HELPTUTORIAL         CMD_BASE + 36
+#define CM_HELPDEMO             CMD_BASE + 37
+#define CM_HELPEXAMPLES         CMD_BASE + 38
+#define CM_HELPRELEASENOTES     CMD_BASE + 39
 
-#define CM_BITMAPNEW            CMD_BASE + 16
-#define CM_BITMAPSAVE           CMD_BASE + 17
-#define CM_BITMAPSAVEAS         CMD_BASE + 18
-#define CM_BITMAPOPEN           CMD_BASE + 19
-#define CM_BITMAPPRINT          CMD_BASE + 20
-#define CM_BITMAPPRINTERSETUP   CMD_BASE + 21
-#define CM_BITMAPPRINTERAREA    CMD_BASE + 22
+#define CM_BITMAPNEW            CMD_BASE + 40
+#define CM_BITMAPSAVE           CMD_BASE + 41
+#define CM_BITMAPSAVEAS         CMD_BASE + 42
+#define CM_BITMAPOPEN           CMD_BASE + 43
+#define CM_BITMAPPRINT          CMD_BASE + 44
+#define CM_BITMAPPRINTERSETUP   CMD_BASE + 45
+#define CM_BITMAPPRINTERAREA    CMD_BASE + 46
 
-#define CM_SETFONT              CMD_BASE + 23
-#define CM_SETCOMMANDERFONT     CMD_BASE + 24
-#define CM_SETPENCOLOR          CMD_BASE + 25
-#define CM_SETFLOODCOLOR        CMD_BASE + 26
-#define CM_SETSCREENCOLOR       CMD_BASE + 27
-#define CM_SETPENSIZE           CMD_BASE + 28
+#define CM_SETFONT              CMD_BASE + 50
+#define CM_SETCOMMANDERFONT     CMD_BASE + 51
+#define CM_SETPENCOLOR          CMD_BASE + 52
+#define CM_SETFLOODCOLOR        CMD_BASE + 53
+#define CM_SETSCREENCOLOR       CMD_BASE + 54
+#define CM_SETPENSIZE           CMD_BASE + 55
 
-#define CM_ZOOMIN               CMD_BASE + 29
-#define CM_ZOOMOUT              CMD_BASE + 30
-#define CM_ZOOMNORMAL           CMD_BASE + 31
+#define CM_ZOOMIN               CMD_BASE + 60
+#define CM_ZOOMOUT              CMD_BASE + 61
+#define CM_ZOOMNORMAL           CMD_BASE + 62
 
-#define CM_TEST                 CMD_BASE + 32
-#define CM_EDITSETFONT          CMD_BASE + 33
-#define CM_FILESAVETOWORKSPACE  CMD_BASE + 34
-#define CM_FILESAVEANDEXIT      CMD_BASE + 35
-#define CM_EDALLEXIT	        CMD_BASE + 36
-#define CM_EDITSELECTALL        CMD_BASE + 37
+#define CM_TEST                 CMD_BASE + 70
+#define CM_EDITSETFONT          CMD_BASE + 71
+#define CM_FILESAVETOWORKSPACE  CMD_BASE + 72
+#define CM_FILESAVEANDEXIT      CMD_BASE + 73
+#define CM_EDALLEXIT	        CMD_BASE + 74
+#define CM_EDITSELECTALL        CMD_BASE + 75
 
 #define WM_MYSCROLLBARCALLBACK         WM_USER + 0
 #define WM_CHECKQUEUE                  WM_USER + 1
