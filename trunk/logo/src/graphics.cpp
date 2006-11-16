@@ -1542,6 +1542,11 @@ NODE *lhome(NODE *)
    g_Turtles[turtle_which].Matrix.e32 = 0.0;
    g_Turtles[turtle_which].Matrix.e33 = 1.0;
    draw_turtle(true);
+
+   update_status_turtleheading();
+   update_status_turtlepitch();
+   update_status_turtleroll();
+
    return Unbound;
    }
 
