@@ -13,12 +13,18 @@ Note that, as a side effect, any selection in this menu that has a directory in 
 It's like starting with a "new" session.</para>
         </section>
 
-        <section id="menu-file-open">
-          <title>File - Open...</title>
+        <section id="menu-file-load">
+          <title>File - Load...</title>
           <para>This loads procedures from disk into memory so that they can be executed or edited.
 See also the <link linkend="command-load">LOAD</link> command.</para>
         </section>
 
+        <section id="menu-file-open">
+          <title>File - Open...</title>
+          <para>This erases all procedures in the workspace, then loads procedures from disk into memory.
+This is equivalent to <link linkend="menu-file-new">File - New</link> followed by <link linkend="menu-file-load">File - Load</link>.
+It exists to emphasize the difference between File - Load (which is modeled after the <link linkend="command-load">LOAD</link> command) and the way File - Open behaves in most Windows applications.</para>
+        </section>
 
         <section id="menu-file-save">
           <title>File - Save</title>
@@ -28,7 +34,7 @@ See also the <link linkend="command-save">SAVE</link> command.</para>
 
         <section id="menu-file-saveas">
           <title>File - Save As...</title>
-          <para>This is the same as the File - Save command, except that it prompts you for a file name.</para>
+          <para>This is the same as <link linkend="menu-file-save">File - Save</link>, except that it prompts you for a file name.</para>
         </section>
 
         <section id="menu-file-edit">
