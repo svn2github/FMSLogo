@@ -1,5 +1,5 @@
 <section id="command-home">
-    <title>HOME</title>
+<title>HOME</title>
 <indexterm><primary>HOME</primary></indexterm>
 
 <variablelist>
@@ -13,23 +13,31 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-Moves the turtle to the center of the screen.
-HOME is equivalent to <userinput>SETPOS [0 0]</userinput> in 2D mode and <userinput>SETPOSXYZ [0 0 0]</userinput> in PERSPECTIVE mode.
+Moves the turtle to the center of the screen and sets the turtle's heading, pitch, and roll to 0.
 </para>
+
+<para>
+In 2D modes, HOME is equivalent to
+<programlisting><userinput>SETPOS [0 0] SETHEADING 0</userinput>
+</programlisting>
+
+In PERSPECTIVE mode, HOME is equivalent to 
+<programlisting><userinput>SETPOSXYZ [0 0 0] SETORIENTATION [0 0 0]</userinput>
+</programlisting>
+</para>
+
 </listitem>
 </varlistentry>
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>FORWARD 100 
+<programlisting><userinput>FORWARD 100 
 RIGHT 90
 FORWARD 100
 HOME</userinput>
 </programlisting>
-
 </listitem>
 </varlistentry>
 
 </variablelist>
-
 </section>
