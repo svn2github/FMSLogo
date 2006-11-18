@@ -89,12 +89,6 @@ err_print_helper(
       }
    else
       {
-      if (writestream == NULL)
-         {
-         // HACK: SETWRITE []
-         lsetwrite(the_generation);
-         }
-
       print_stringptr = Buffer;
       print_stringlen = BufferLength;
       fp = NULL;
@@ -316,14 +310,7 @@ NODE *err_logo(ERR_TYPES error_type, NODE *error_desc)
             uplevel = true;
 
             g_ErrorFormatString = "%p";
-            if (is_list(error_desc))
-               {
-               error_message = error_desc;
-               }
-            else
-               {
-               error_message = cons_list(error_desc);
-               }
+            error_message = cons_list(error_desc);
             }
          break;
          
