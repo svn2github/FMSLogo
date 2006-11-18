@@ -34,7 +34,7 @@ END
 FENCE
 CATCH "ERROR [MYPROGRAM]
 SHOW ERROR</userinput>
-[3 [turtle out of bounds] MYPROGRAM [FORWARD 1000]]
+[3 turtle out of bounds MYPROGRAM [FORWARD 1000]]
 <userinput>SHOW ERROR</userinput>
 []
 </programlisting>
