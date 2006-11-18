@@ -121,7 +121,7 @@ err_print_helper(
       }
 
    // Print the location where the error happened, if applicable.
-   if (g_ErrorFunction != NIL)
+   if (g_ErrorFunction != NIL && Buffer == NULL)
       {
       ndprintf(fp, " in %s\n%s", g_ErrorFunction, g_ErrorLine);
       }
@@ -347,7 +347,7 @@ NODE *err_logo(ERR_TYPES error_type, NODE *error_desc)
          break;
 
       case ERR_MACRO:
-         g_ErrorFormatString = "Macro returned %s instead of a list";
+         g_ErrorFormatString = "Macro output %s instead of a list";
          error_message = cons_list(error_desc);
          break;
 
@@ -477,7 +477,7 @@ NODE *lerror(NODE *)
    // return the ERROR 4-tuple [code message function line]
    NODE * val = cons_list(
       g_ErrorCode,
-      cons_list(make_strnode(error_message)),
+      make_strnode(error_message),
       g_ErrorFunction,
       g_ErrorLine);
 
