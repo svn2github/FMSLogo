@@ -66,6 +66,9 @@ void print_space(FILE *strm)
 /*VARARGS2*/
 void ndprintf(FILE *strm, const char *fmt, ...)
    {
+   assert(writestream != NULL);
+   assert(readstream != NULL);
+
    va_list ap;
    char ch;
 
