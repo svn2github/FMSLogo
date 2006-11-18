@@ -176,40 +176,29 @@ TO CHECKERROR :instructions :expectederror :expectedtext :expectedprocedure :exp
 END
 BURY [CHECKERROR]
 
-TO RUNBADINPUTTEST :instructions
-
-  REPORTTESTINFO (LIST "|Running invalid instruction:| :instructions )
-
-  ; clear the value of ERROR
-  IGNORE ERROR
-
-  CATCH "ERROR [ 
-    IGNORE RUNRESULT :instructions 
-    REPORTTESTFAILED (LIST "Executing :instructions "|did not throw an error|)
-    STOP
-  ]
-
-  CHECKERROR :instructions "DONTCARE "DONTCARE "DONTREPORT "DONTREPORT
-
-END
-BURY [RUNBADINPUTTEST]
 
 TO RUNEXPECTERRORTEST :instructions :expectederror [:expectedtext "DONTCARE]
 
-  REPORTTESTINFO (LIST "|Executing invalid instruction:| :instructions)
+  REPORTTESTINFO (LIST "|Running invalid instruction:| :instructions)
 
   ; clear the value of ERROR
   IGNORE ERROR
 
   CATCH "ERROR [ 
     IGNORE RUNRESULT :instructions 
-    REPORTTESTFAILED (LIST "Executing :instructions "|did not throw an error.|)
+    REPORTTESTFAILED (LIST "Running :instructions "|did not throw an error.|)
+    STOP
   ]
 
   CHECKERROR :instructions :expectederror :expectedtext "DONTREPORT "DONTREPORT 
 END
 BURY [RUNEXPECTERRORTEST]
 
+
+TO RUNBADINPUTTEST :instructions
+  RUNEXPECTERRORTEST :instructions "DONTCARE
+END
+BURY [RUNBADINPUTTEST]
 
 TO RUNOUTOFBOUNDSTEST :instructions
   RUNEXPECTERRORTEST :instructions 3
