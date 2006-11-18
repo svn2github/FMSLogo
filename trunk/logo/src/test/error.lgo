@@ -143,19 +143,19 @@ END
 ;; error 15: Try to define a primitive with TO
 IGNORE ERROR
 CATCH "ERROR [TO FORWARD]
-CHECKERROR "|TO FORWARD at the toplevel| 15 (LIST "FORWARD "|is already defined|) [] []
+CHECKERROR "|TO FORWARD at the toplevel| 15 [|FORWARD is already defined|] [] []
 
 ;; error 31: Can only use STOP inside a procedure
 IGNORE ERROR
 CATCH "ERROR [STOP]
-CHECKERROR "|STOP at the toplevel| 31 (LIST "|Can only use| "STOP "|inside a procedure|) [] []
+CHECKERROR "|STOP at the toplevel| 31 [|Can only use STOP inside a procedure|] [] []
 
 ;; error 31: Can only use OUTPUT inside a procedure
 IGNORE ERROR
 CATCH "ERROR [OUTPUT 123]
-CHECKERROR "|OUTPUT at the toplevel| 31 (LIST "|Can only use| "OUTPUT "|inside a procedure|) [] []
+CHECKERROR "|OUTPUT at the toplevel| 31 [|Can only use OUTPUT inside a procedure|] [] []
 
 ;; bug #1519088 -- this used to leak memory
 IGNORE ERROR
 CATCH "ERROR [ APPLY [OP ?] [3] ]
-CHECKERROR "|OUTPUT at the toplevel| 31 (LIST "|Can only use| "OP "|inside a procedure|) []  []
+CHECKERROR "|OUTPUT at the toplevel| 31 [|Can only use OP inside a procedure|] [] []

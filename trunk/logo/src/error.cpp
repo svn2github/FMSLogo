@@ -24,7 +24,13 @@
 
 NODE *    throw_node = NIL;
 
-static NODE * err_mesg = NIL;
+// Holds the values for ERROR
+static const char * g_ErrorFormatString = NULL;
+static NODE *       g_ErrorArguments    = NIL;
+static NODE *       g_ErrorCode         = NIL;
+static NODE *       g_ErrorFunction     = NIL;
+static NODE *       g_ErrorLine         = NIL;
+
 static bool g_IsRunningErractInstructionList = false;
 
 static
@@ -39,44 +45,114 @@ void clear_is_running_erract_flag()
    g_IsRunningErractInstructionList = false;
    }
 
-
-void err_print()
+static
+bool last_error_exists()
    {
-   if (err_mesg == NIL) 
+   return g_ErrorFormatString != NULL;
+   }
+
+static
+void clear_last_error()
+   {
+   g_ErrorFormatString = NULL;
+
+   deref(g_ErrorArguments);
+   g_ErrorArguments = NIL;
+
+   deref(g_ErrorCode);
+   g_ErrorCode = NIL;
+
+   deref(g_ErrorFunction);
+   g_ErrorFunction = NIL;
+
+   deref(g_ErrorLine);
+   g_ErrorLine = NIL;
+   }
+
+static
+void 
+err_print_helper(
+   char * Buffer,
+   size_t BufferLength
+   )
+   {
+   if (!last_error_exists())
       {
+      // there is no error to print
       return;
+      }
+
+   FILE * fp;
+   if (Buffer == NULL)
+      {
+      fp = stdout;
+      }
+   else
+      {
+      if (writestream == NULL)
+         {
+         // HACK: SETWRITE []
+         lsetwrite(the_generation);
+         }
+
+      print_stringptr = Buffer;
+      print_stringlen = BufferLength;
+      fp = NULL;
       }
 
    CTRLTYPE save_flag = stopping_flag;
-
    stopping_flag = RUN;
    print_backslashes = true;
 
-   print_helper(stdout, cadr(err_mesg));
-
-   if (err_mesg == NIL)
+   if (g_ErrorArguments == NIL)
       {
-      MainWindowx->CommandWindow->MessageBox(
-         "I Lost an Error Message",
-         "Double Error");
-      return;
+      // this is a zero-argument error message
+      ndprintf(fp, g_ErrorFormatString);
+      }
+   else if (cdr(g_ErrorArguments) == NIL)
+      {
+      // this is a one-argument error message
+      ndprintf(fp, g_ErrorFormatString, car(g_ErrorArguments));
+      }
+   else
+      {
+      // this is a two-argument error message
+      ndprintf(fp, g_ErrorFormatString, car(g_ErrorArguments), cadr(g_ErrorArguments));
       }
 
-   if (car(cddr(err_mesg)) != NIL)
+   // Print the location where the error happened, if applicable.
+   if (g_ErrorFunction != NIL)
       {
-      ndprintf(stdout, "  in %s\n%s", car(cddr(err_mesg)), cadr(cddr(err_mesg)));
+      ndprintf(fp, " in %s\n%s", g_ErrorFunction, g_ErrorLine);
       }
 
-   deref(err_mesg);
-   err_mesg = NIL;
-   new_line(stdout);
+   // flush the file stream
+   if (Buffer == NULL)
+      {
+      new_line(stdout);
+      }
+   else
+      {
+      *print_stringptr = '\0';
+      }
 
    print_backslashes = false;
    stopping_flag = save_flag;
    }
 
+void err_print()
+   {
+   // print the error
+   err_print_helper(NULL, 0);
+
+   // clear the error now that it has been consumed
+   clear_last_error();
+   }
+
 NODE *err_logo(ERR_TYPES error_type, NODE *error_desc)
    {
+   clear_last_error();
+
    bool recoverable = false;
    bool warning = false;
    bool uplevel = false;
@@ -98,31 +174,28 @@ NODE *err_logo(ERR_TYPES error_type, NODE *error_desc)
 
       case OUT_OF_MEM:
          use_reserve_tank();
-         error_message = cons_list(make_static_strnode("out of space"));
+         g_ErrorFormatString = "out of space";
          break;
 
       case STACK_OVERFLOW:
-         error_message = cons_list(make_static_strnode("stack overflow"));
+         g_ErrorFormatString = "stack overflow";
          break;
 
       case TURTLE_OUT_OF_BOUNDS:
-         error_message = cons_list(make_static_strnode("turtle out of bounds"));
+         g_ErrorFormatString = "turtle out of bounds";
          break;
 
       case BAD_GRAPH_INIT:
-         error_message = cons_list(make_static_strnode("couldn't initialize graphics"));
+         g_ErrorFormatString = "couldn't initialize graphics";
          break;
 
       case BAD_DATA_UNREC:
-         error_message = cons_list(
-            fun,
-            make_static_strnode("doesn\'t like"),
-            error_desc, 
-            make_static_strnode("as input"));
+         g_ErrorFormatString = "%p doesn\'t like %s as input";
+         error_message = cons_list(fun, error_desc);
          break;
          
       case DIDNT_OUTPUT:
-          if (didnt_output_name != NIL)
+         if (didnt_output_name != NIL)
              {
              last_call = reref(last_call, didnt_output_name);
              }
@@ -132,70 +205,61 @@ NODE *err_logo(ERR_TYPES error_type, NODE *error_desc)
              ufun = reref(ufun, cadr(didnt_get_output));
              this_line = reref(this_line, cadr(cdr(didnt_get_output)));
              }
-          error_message = cons_list(
-             last_call,
-             make_static_strnode("didn\'t output to"),
-             error_desc);
+
+          g_ErrorFormatString = "%p didn\'t output to %p";
+          error_message = cons_list(last_call, error_desc);
           recoverable = true;
           break;
 
       case NOT_ENOUGH:
-         error_message = cons_list(
-            make_static_strnode("not enough inputs to"), 
-            error_desc == NIL ? fun : error_desc);
-           break;
+         g_ErrorFormatString = "not enough inputs to %p";
+         error_message = cons_list(error_desc == NIL ? fun : error_desc);
+         break;
 
       case BAD_DATA:
-         error_message = cons_list(
-            fun,
-            make_static_strnode("doesn\'t like"), 
-            error_desc,
-            make_static_strnode("as input"));
+         g_ErrorFormatString = "%p doesn't like %s as input";
+         error_message = cons_list(fun, error_desc);
          recoverable = true;
          break;
 
       case APPLY_BAD_DATA:
-         error_message = cons_list(
-            make_static_strnode("APPLY doesn\'t like"),
-            error_desc,
-            make_static_strnode("as input"));
+         g_ErrorFormatString = "%p doesn't like %s as input";
+         error_message = cons_list(make_static_strnode("APPLY"), error_desc);
          recoverable = true;
          break;
 
       case TOO_MUCH:
-         error_message = cons_list(make_static_strnode("too much inside ()\'s"));
+         g_ErrorFormatString = "too much inside ()\'s";
          break;
 
       case DK_WHAT_UP:
          uplevel = true;
          // FALLTHROUGH
       case DK_WHAT:
-         error_message = cons_list(
-            make_static_strnode("You don\'t say what to do with"), 
-            error_desc);
+         g_ErrorFormatString = "You don\'t say what to do with %s";
+         error_message = cons_list(error_desc);
          break;
 
       case PAREN_MISMATCH:
-         error_message = cons_list(make_static_strnode("too many (\'s"));
+         g_ErrorFormatString = "too many (\'s";
          break;
 
       case NO_VALUE:
-         error_message = cons_list(
-            error_desc,
-            make_static_strnode("has no value"));
+         g_ErrorFormatString = "%s has no value";
+         error_message = cons_list(error_desc);
          recoverable = true;
          break;
 
       case UNEXPECTED_PAREN:
-         error_message = cons_list(make_static_strnode("unexpected \')\'"));
+         g_ErrorFormatString = "unexpected \')\'";
          break;
 
       case UNEXPECTED_BRACKET:
-         error_message = cons_list(make_static_strnode("unexpected \']\'"));
+         g_ErrorFormatString = "unexpected \']\'";
          break;
 
       case UNEXPECTED_BRACE:
-         error_message = cons_list(make_static_strnode("unexpected \'}\'"));
+         g_ErrorFormatString = "unexpected \'}\'";
          break;
 
       case DK_HOW:
@@ -203,58 +267,55 @@ NODE *err_logo(ERR_TYPES error_type, NODE *error_desc)
          /* FALLTHROUGH */
 
       case DK_HOW_UNREC:
-         error_message = cons_list(
-            make_static_strnode("I don\'t know how to"), 
-            error_desc);
+         g_ErrorFormatString = "I don\'t know how to %p";
+         error_message = cons_list(error_desc);
          break;
 
       case NO_CATCH_TAG:
-         error_message = cons_list(
-            make_static_strnode("Can't find catch tag for"), 
-            error_desc);
+         g_ErrorFormatString = "Can't find catch tag for %p";
+         error_message = cons_list(error_desc);
          break;
 
       case ALREADY_DEFINED:
-         error_message = cons_list(
-            error_desc,
-            make_static_strnode("is already defined"));
+         g_ErrorFormatString = "%p is already defined";
+         error_message = cons_list(error_desc);
          break;
 
       case STOP_ERROR:
+         g_ErrorFormatString = "Stopping...";
          yield_flag = true;
-         error_message = cons_list(make_static_strnode("Stopping..."));
          break;
 
       case ALREADY_DRIBBLING:
-         error_message = cons_list(make_static_strnode("Already dribbling"));
+         g_ErrorFormatString = "Already dribbling";
          break;
 
       case FILE_ERROR:
-         error_message = cons_list(
-            make_static_strnode("File system error:"),
-            error_desc);
+         g_ErrorFormatString = "File system error: %p";
+         error_message = cons_list(error_desc);
          break;
 
       case IF_WARNING:
-         error_message = cons_list(make_static_strnode("Assuming you mean IFELSE, not IF"));
+         g_ErrorFormatString = "Assuming you mean IFELSE, not IF";
          warning = true;
          break;
 
       case SHADOW_WARN:
-         error_message = cons_list(
-            error_desc,
-            make_static_strnode("shadowed by local in procedure call"));
+         g_ErrorFormatString = "%p shadowed by local in procedure call";
+         error_message = cons_list(error_desc);
          warning = true;
          break;
 
       case USER_ERR:
          if (error_desc == Unbound)
             {
-            error_message = cons_list(make_static_strnode("Throw \"Error"));
+            g_ErrorFormatString = "Throw \"Error";
             }
          else
             {
             uplevel = true;
+
+            g_ErrorFormatString = "%p";
             if (is_list(error_desc))
                {
                error_message = error_desc;
@@ -267,45 +328,38 @@ NODE *err_logo(ERR_TYPES error_type, NODE *error_desc)
          break;
          
       case IS_PRIM:
-         error_message = cons_list(
-            error_desc,
-            make_static_strnode("is a primitive"));
+         g_ErrorFormatString = "%p is a primitive";
+         error_message = cons_list(error_desc);
          break;
 
       case NOT_INSIDE:
-         error_message = cons_list(make_static_strnode("Can't use TO inside a procedure"));
+         g_ErrorFormatString = "Can't use TO inside a procedure";
          break;
          
       case AT_TOPLEVEL:
-         error_message = cons_list(
-            make_static_strnode("Can only use"),
-            error_desc,
-            make_static_strnode("inside a procedure"));
+         g_ErrorFormatString = "Can only use %p inside a procedure";
+         error_message = cons_list(error_desc);
          break;
 
       case NO_TEST:
-         error_message = cons_list(
-            fun,
-            make_static_strnode("without TEST"));
+         g_ErrorFormatString = "%p without TEST";
+         error_message = cons_list(fun);
          break;
 
       case ERR_MACRO:
-         error_message = cons_list(
-            make_static_strnode("Macro returned"), 
-            error_desc,
-            make_static_strnode("instead of a list"));
+         g_ErrorFormatString = "Macro returned %s instead of a list";
+         error_message = cons_list(error_desc);
          break;
 
       case DEEPEND:
          if (error_desc == NIL)
             {
-            error_message = cons_list(make_static_strnode("END inside multi-line instruction."));
+            g_ErrorFormatString = "END inside multi-line instruction";
             }
          else
             {
-            error_message = cons_list(
-               make_static_strnode("END inside multi-line instruction in"),
-               error_desc);
+            g_ErrorFormatString = "END inside multi-line instruction in %p";
+            error_message = cons_list(error_desc);
             }
          break;
              
@@ -323,19 +377,16 @@ NODE *err_logo(ERR_TYPES error_type, NODE *error_desc)
       this_line = reref(this_line, last_line);
       }
 
-   NODE * error_code = make_intnode((FIXNUM) error_type);
+   g_ErrorCode = vref(make_intnode((FIXNUM) error_type));
 
-   // replace the old error 4-tuple with the new one
-   deref(err_mesg);
+   // replace the old error parameters with the new ones
+   g_ErrorArguments = vref(error_message);
+
    if (ufun != NIL)
       {
-      err_mesg = cons_list(error_code, error_message, ufun, this_line);
+      g_ErrorFunction = vref(ufun);
+      g_ErrorLine     = vref(this_line);
       }
-   else
-      {
-      err_mesg = cons_list(error_code, error_message, NIL, NIL);
-      }
-   vref(err_mesg);
 
    deref(error_desc);
 
@@ -414,14 +465,30 @@ NODE *err_logo(ERR_TYPES error_type, NODE *error_desc)
 
 NODE *lerror(NODE *)
    {
-   NODE *val = err_mesg;
-   err_mesg = NIL;
-   return unref(val);
+   if (!last_error_exists())
+      {
+      return NIL;
+      }
+
+   // format the error message into a buffer
+   char error_message[200];
+   err_print_helper(error_message, sizeof(error_message));
+
+   // return the ERROR 4-tuple [code message function line]
+   NODE * val = cons_list(
+      g_ErrorCode,
+      cons_list(make_strnode(error_message)),
+      g_ErrorFunction,
+      g_ErrorLine);
+
+   clear_last_error();
+
+   return val;
    }
 
 NODE *lpause(NODE*)
    {
-   if (err_mesg != NIL) 
+   if (last_error_exists())
       {
       err_print();
       }
@@ -539,6 +606,5 @@ void uninitialize_error()
    deref(throw_node);
    throw_node = NIL;
 
-   deref(err_mesg);
-   err_mesg = NIL;
+   clear_last_error();
    }
