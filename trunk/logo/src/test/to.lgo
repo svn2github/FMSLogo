@@ -142,98 +142,96 @@ END
 ;; bug #1457745 
 IGNORE ERROR
 CATCH "ERROR [TO]
-CHECKERROR "|TO with no inputs| 6 (LIST "|not enough inputs to| "TO) [] []
+CHECKERROR "|TO with no inputs| 6 "|not enough inputs to TO| [] []
 
 IGNORE ERROR
 CATCH "ERROR [TO [1]]
-CHECKERROR "|TO [1]| 4 (LIST "TO "|doesn't like| [1] "|as input|) [] []
+CHECKERROR "|TO [1]| 4 "|TO doesn't like [1] as input| [] []
 
 IGNORE ERROR
-MAKE "TOTEST.ARRAY {1}
-CATCH "ERROR (LIST "TO :TOTEST.ARRAY)
-CHECKERROR "|TO {1}| 4 (LIST "TO "|doesn't like| :TOTEST.ARRAY "|as input|) [] []
+CATCH "ERROR [TO {1}]
+CHECKERROR "|TO {1}| 4 "|TO doesn't like {1} as input| [] []
 
 ;; bug #1457755
 IGNORE ERROR
 CATCH "ERROR [TO 1]
-CHECKERROR "|TO 1| 4 (LIST "TO "|doesn't like| 1 "|as input|) [] []
+CHECKERROR "|TO 1| 4 "|TO doesn't like 1 as input| [] []
 
 
 ; bug #1457745 
 ;IGNORE ERROR
 ;CATCH "ERROR [(TO)]
-;CHECKERROR "|(TO)| 6 (LIST "|not enough inputs to| "TO) [] []
+;CHECKERROR "|(TO)| 6 "|not enough inputs to TO| [] []
 
 
 
-; NOTE: TO used to leaks formal parameters when one of them is bad
+; NOTE: TO used to leak formal parameters when one of them is bad
 IGNORE ERROR
-MAKE "TOTEST.ARRAY {:B}
-CATCH "ERROR (LIST "TO "TOTEST.BADINPUT ":A :TOTEST.ARRAY)
-CHECKERROR "|TO TOTEST.BADINPUT :A {:B} :C| 4 (LIST "TO "|doesn't like| :TOTEST.ARRAY "|as input|) [] []
+CATCH "ERROR [TO TOTEST.BADINPUT :A {:B} :C]
+CHECKERROR "|TO TOTEST.BADINPUT :A {:B} :C| 4 "|TO doesn't like {:B} as input| [] []
 
 IGNORE ERROR
 CATCH "ERROR [TO TOTEST.BADINPUT :A B]
-CHECKERROR "|TO TOTEST.BADINPUT :A B| 4 (LIST "TO "|doesn't like| "B "|as input|) [] []
+CHECKERROR "|TO TOTEST.BADINPUT :A B| 4 "|TO doesn't like B as input| [] []
 
 IGNORE ERROR
 CATCH "ERROR [TO TOTEST.BADINPUT :A []]
-CHECKERROR "|TO TOTEST.BADINPUT :A []| 4 (LIST "TO "|doesn't like| [] "|as input|) [] []
+CHECKERROR "|TO TOTEST.BADINPUT :A []| 4 "|TO doesn't like [] as input| [] []
 
 IGNORE ERROR
 CATCH "ERROR [TO TOTEST.BADINPUT :A [B]]
-CHECKERROR "|TO TOTEST.BADINPUT :A [B]| 4 (LIST "TO "|doesn't like| [B] "|as input|) [] []
+CHECKERROR "|TO TOTEST.BADINPUT :A [B]| 4 "|TO doesn't like [B] as input| [] []
 
 IGNORE ERROR
 CATCH "ERROR [TO TOTEST.BADINPUT :A [:B 123] :C]
-CHECKERROR "|TO TOTEST.BADINPUT :A [:B 123] :C| 4 (LIST "TO "|doesn't like| ":C "|as input|) [] []
+CHECKERROR "|TO TOTEST.BADINPUT :A [:B 123] :C| 4 "|TO doesn't like :C as input| [] []
 
 IGNORE ERROR
 CATCH "ERROR [TO TOTEST.BADINPUT :A [:B] :C]
-CHECKERROR "|TO TOTEST.BADINPUT :A [:B] :C| 4 (LIST "TO "|doesn't like| ":C "|as input|) [] []
+CHECKERROR "|TO TOTEST.BADINPUT :A [:B] :C| 4 "|TO doesn't like :C as input| [] []
 
 IGNORE ERROR
 CATCH "ERROR [TO TOTEST.BADINPUT :A [:B] [:C]]
-CHECKERROR "|TO TOTEST.BADINPUT :A [:B] [:C]| 4 (LIST "TO "|doesn't like| [:C] "|as input|) [] []
+CHECKERROR "|TO TOTEST.BADINPUT :A [:B] [:C]| 4 "|TO doesn't like [:C] as input| [] []
 
 IGNORE ERROR
 CATCH "ERROR [TO TOTEST.BADINPUT :A [:B] [:C 123]]
-CHECKERROR "|TO TOTEST.BADINPUT :A [:B] [:C 123]| 4 (LIST "TO "|doesn't like| [:C 123] "|as input|) [] []
+CHECKERROR "|TO TOTEST.BADINPUT :A [:B] [:C 123]| 4  "|TO doesn't like [:C 123] as input| [] []
 
 ; bug #1533541 
 ;IGNORE ERROR
 ;CATCH "ERROR [TO TOTEST.BADINPUT [:A "foo "toomany]]
-;CHECKERROR "|TO TOTEST.BADINPUT [:A "foo "toomany]| 4 (LIST "TO "|doesn't like| "toomany "|as input|) [] []
+;CHECKERROR "|TO TOTEST.BADINPUT [:A "foo "toomany]| 4 "|TO doesn't like "toomany as input| [] []
 
 
 IGNORE ERROR
 CATCH "ERROR [TO TOTEST.BADDEFAULTINPUTS :a 0]
-CHECKERROR "|TO TOTEST.BADDEFAULTINPUTS :a 0| 4 (LIST "TO "|doesn't like| 0 "|as input|) [] []
+CHECKERROR "|TO TOTEST.BADDEFAULTINPUTS :a 0| 4 "|TO doesn't like 0 as input| [] []
 
 IGNORE ERROR
 CATCH "ERROR [TO TOTEST.BADDEFAULTINPUTS :a 2]
-CHECKERROR "|TO TOTEST.BADDEFAULTINPUTS :a 2| 4 (LIST "TO "|doesn't like| 2 "|as input|) [] []
+CHECKERROR "|TO TOTEST.BADDEFAULTINPUTS :a 2| 4 "|TO doesn't like 2 as input| [] []
 
 IGNORE ERROR
 CATCH "ERROR [TO TOTEST.BADDEFAULTINPUTS :a -1]
-CHECKERROR "|TO TOTEST.BADDEFAULTINPUTS :a -1| 4 (LIST "TO "|doesn't like| -1 "|as input|) [] []
+CHECKERROR "|TO TOTEST.BADDEFAULTINPUTS :a -1| 4 "|TO doesn't like -1 as input| [] []
 
 IGNORE ERROR
 CATCH "ERROR [TO TOTEST.BADDEFAULTINPUTS :a 1.5]
-CHECKERROR "|TO TOTEST.BADDEFAULTINPUTS :a 1.5| 4 (LIST "TO "|doesn't like| 1.5 "|as input|) [] []
+CHECKERROR "|TO TOTEST.BADDEFAULTINPUTS :a 1.5| 4 "|TO doesn't like 1.5 as input| [] []
 
 IGNORE ERROR
 CATCH "ERROR [TO TOTEST.BADDEFAULTINPUTS :a 1 :b]
-CHECKERROR "|TO TOTEST.BADDEFAULTINPUTS :a 1 :b| 4 (LIST "TO "|doesn't like| ":b "|as input|) [] []
+CHECKERROR "|TO TOTEST.BADDEFAULTINPUTS :a 1 :b| 4 "|TO doesn't like :b as input| [] []
 
 IGNORE ERROR
 CATCH "ERROR [TO TOTEST.BADDEFAULTINPUTS :a 1 [:b]]
-CHECKERROR "|TO TOTEST.BADDEFAULTINPUTS :a 1 [:b]| 4 (LIST "TO "|doesn't like| [:b] "|as input|) [] []
+CHECKERROR "|TO TOTEST.BADDEFAULTINPUTS :a 1 [:b]| 4 "|TO doesn't like [:b] as input| [] []
 
 IGNORE ERROR
 CATCH "ERROR [TO TOTEST.BADDEFAULTINPUTS :a 1 [:b 123]]
-CHECKERROR "|TO TOTEST.BADDEFAULTINPUTS :a 1 [:b]| 4 (LIST "TO "|doesn't like| [:b 123] "|as input|) [] []
+CHECKERROR "|TO TOTEST.BADDEFAULTINPUTS :a 1 [:b]| 4 "|TO doesn't like [:b 123] as input| [] []
 
 IGNORE ERROR
 CATCH "ERROR [TO TOTEST.BADDEFAULTINPUTS :a 1 2]
-CHECKERROR "|TO TOTEST.BADDEFAULTINPUTS :a 1 2| 4 (LIST "TO "|doesn't like| 2 "|as input|) [] []
+CHECKERROR "|TO TOTEST.BADDEFAULTINPUTS :a 1 2| 4 "|TO doesn't like 2 as input| [] []

@@ -137,14 +137,14 @@ TO CHECKERRORITEM :item :lasterror :expectedvalue :description
   ; An :expectedvalue of "DONTCARE indicates that the caller
   ; doesn't care what the value of the field is.
   IF :expectedvalue = "DONTCARE [ 
-     REPORTTESTINFO (LIST "ITEM :item "|ERROR output| :lastitem ".)
+     REPORTTESTINFO (LIST "error :description "is :lastitem ".)
      STOP
   ]
 
   IFELSE EQUALP :lastitem :expectedvalue [
-    REPORTTESTPASSED (LIST "Running :instructions "set "error :description "to :expectedvalue "|, as expected.|)
+    REPORTTESTPASSED (LIST "error :description "is :lastitem "|, as expected.|)
   ] [
-    REPORTTESTFAILED (LIST "ITEM :item "|ERROR output| :lastitem "|.  We expected| :expectedvalue ".)
+    REPORTTESTFAILED (LIST "error :description "is :lastitem "|.  We expected| :expectedvalue ".)
   ]
 
 END
@@ -154,7 +154,7 @@ TO CHECKERROR :instructions :expectederror :expectedtext :expectedprocedure :exp
 
   LOCALMAKE "lasterror ERROR
   IF EMPTYP :lasterror [
-    REPORTTESTFAILED (LIST "Executing :instructions "|did not change ERROR.|)
+    REPORTTESTFAILED (LIST "Running :instructions "|did not change ERROR.|)
     STOP
   ]
 
@@ -194,7 +194,7 @@ TO RUNBADINPUTTEST :instructions
 END
 BURY [RUNBADINPUTTEST]
 
-TO RUNEXPECTERRORTEST :instructions :expectederror
+TO RUNEXPECTERRORTEST :instructions :expectederror [:expectedtext "DONTCARE]
 
   REPORTTESTINFO (LIST "|Executing invalid instruction:| :instructions)
 
@@ -206,7 +206,7 @@ TO RUNEXPECTERRORTEST :instructions :expectederror
     REPORTTESTFAILED (LIST "Executing :instructions "|did not throw an error.|)
   ]
 
-  CHECKERROR :instructions :expectederror "DONTCARE "DONTREPORT "DONTREPORT 
+  CHECKERROR :instructions :expectederror :expectedtext "DONTREPORT "DONTREPORT 
 END
 BURY [RUNEXPECTERRORTEST]
 
