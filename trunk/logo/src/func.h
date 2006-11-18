@@ -333,7 +333,7 @@ extern void real_print_node(FILE *strm, const NODE *nd, int depth, int width);
 extern void update_coords(char ch);
 extern void print_char(FILE *strm, char ch);
 extern void print_space(FILE *strm);
-extern void ndprintf(FILE *strm, char *fmt, ...);
+extern void ndprintf(FILE *strm, const char *fmt, ...);
 extern void print_helper(FILE *strm, NODE *nd);
 extern void print_node(FILE *strm, NODE *nd);
 extern void print_nobrak(FILE *strm, NODE *nd);

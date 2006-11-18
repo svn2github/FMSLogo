@@ -64,7 +64,7 @@ void print_space(FILE *strm)
    }
 
 /*VARARGS2*/
-void ndprintf(FILE *strm, char *fmt, ...)
+void ndprintf(FILE *strm, const char *fmt, ...)
    {
    va_list ap;
    char ch;
