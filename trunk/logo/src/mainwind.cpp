@@ -696,53 +696,84 @@ void TScreenWindow::EvMouseMove(UINT, TPoint &point)
       }
    }
 
+void TScreenWindow::GetScrollRatios(FLONUM & XRatio, FLONUM & YRatio)
+   {
+   // find out where we are (percentage of pos/range for x and y)
+
+   if (Scroller->XRange <= 1)
+      {
+      XRatio = 0.5; // center
+      }
+   else
+      {
+      // Subtract 1 because the range includes the endpoint.
+      // 0-100 implies range = 101
+      XRatio = (FLONUM) Scroller->XPos / (FLONUM) (Scroller->XRange - 1);
+      }
+
+   if (Scroller->YRange <= 1)
+      {
+      YRatio = 0.5; // center
+      }
+   else
+      {
+      // Subtract 1 because the range includes the endpoint.
+      // 0-100 implies range = 101
+      YRatio = (FLONUM) Scroller->YPos / (FLONUM) (Scroller->YRange - 1);
+      }
+   }
+
+void TScreenWindow::AdjustScrollPositionToZoomFactor(FLONUM ZoomFactor)
+   {
+
+   //
+   // Get the scrollbar position as a ratio of position/range
+   //
+   FLONUM xRatio;
+   FLONUM yRatio;
+   GetScrollRatios(xRatio, yRatio);
+
+   //
+   // Calculate the new scrollbar ranges
+   //
+   TRect screenRect;
+   GetClientRect(screenRect);
+
+   FLONUM xRange = (BitMapWidth * ZoomFactor) - screenRect.right;
+   FIXNUM xRangeRounded = g_round(xRange);
+   if (xRangeRounded < 0)
+      {
+      xRangeRounded = 0;
+      }
+
+   FLONUM yRange = (BitMapHeight * ZoomFactor) - screenRect.bottom;
+   FIXNUM yRangeRounded = g_round(yRange);
+   if (yRangeRounded < 0)
+      {
+      yRangeRounded = 0;
+      }
+
+
+   //
+   // update the scoller
+   //
+
+   // Add 1 because the range includes the endpoint.
+   // 0-100 implies range = 101
+   Scroller->SetRange(xRangeRounded + 1, yRangeRounded + 1);
+
+   // Position the scrollbar to the same ratio as before
+   Scroller->ScrollTo(g_round(xRatio * xRange), g_round(yRatio * yRange));
+}
+
 
 void TScreenWindow::EvSize(UINT arg1, TSize &arg2)
    {
    TWindow::EvSize(arg1, arg2);
-   
-   // Adjust scroller range so that thumb at each extreme corresponds
-   // to edge of extreme image.
-   TRect clientRect;
-   GetClientRect(clientRect);
 
-   int Xr = (BitMapWidth * the_zoom) - clientRect.right;
-   int Yr = (BitMapHeight * the_zoom) - clientRect.bottom;
-
-   if (Xr < 0)
-      {
-      Xr = 0;
-      }
-
-   if (Yr < 0)
-      {
-      Yr = 0;
-      }
-
-   FLONUM XRatio;
-   FLONUM YRatio;
-
-   if (Scroller->XRange <= 0)
-      {
-      XRatio = 0.5;
-      }
-   else
-      {
-      XRatio = (FLONUM) Scroller->XPos / (FLONUM) Scroller->XRange;
-      }
-
-   if (Scroller->YRange <= 0)
-      {
-      YRatio = 0.5;
-      }
-   else
-      {
-      YRatio = (FLONUM) Scroller->YPos / (FLONUM) Scroller->YRange;
-      }
-
-   Scroller->SetRange(Xr, Yr);
-   Scroller->ScrollTo(XRatio * Xr, YRatio * Yr);
-   
+   // readjust scroller range so that thumb at each extreme 
+   // corresponds to edge of extreme image.
+   AdjustScrollPositionToZoomFactor(the_zoom);
    }
 
 

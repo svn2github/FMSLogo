@@ -933,65 +933,15 @@ void UpdateZoomControlFlag()
 // to something reasonable so that what was basically in the center of the
 // screen still is. It also readjusts the ranges on the scrollers.
 
-void zoom_helper(FLONUM temp_zoom)
+void zoom_helper(FLONUM NewZoomFactor)
    {
-   if (the_zoom != temp_zoom)
+   if (the_zoom != NewZoomFactor)
       {
-      the_zoom = temp_zoom;
+      the_zoom = NewZoomFactor;
 
-      TWindow * const screen = MainWindowx->ScreenWindow;
+      TScreenWindow * const screen = MainWindowx->ScreenWindow;
 
-      TRect MainRect;
-      screen->GetClientRect(MainRect);
-
-      // find out where we are (percentage of pos/range for x and y)
-      TScroller * const scroller = screen->Scroller;
-      FLONUM xRatio;
-      if (scroller->XRange <= 1)
-         {
-         xRatio = 0.5; // center
-         }
-      else
-         {
-         // Subtract 1 because the range includes the endpoint.
-         // 0-100 implies range = 101
-         xRatio = (FLONUM) scroller->XPos / (FLONUM) (scroller->XRange - 1);
-         }
-
-      FLONUM yRatio;
-      if (scroller->YRange <= 1)
-         {
-         yRatio = 0.5; // center
-         }
-      else
-         {
-         // Subtract 1 because the range includes the endpoint.
-         // 0-100 implies range = 101
-         yRatio = (FLONUM) scroller->YPos / (FLONUM) (scroller->YRange - 1);
-         }
-
-
-      // calculate new scroller ranges
-      FLONUM xRange = g_round(BitMapWidth * the_zoom) - MainRect.right;
-      FIXNUM xRangeRounded = g_round(xRange);
-      if (xRangeRounded < 0)
-         {
-         xRangeRounded = 0;
-         }
-
-      FLONUM yRange = (BitMapHeight * the_zoom) - MainRect.bottom;
-      FIXNUM yRangeRounded = g_round(yRange);
-      if (yRangeRounded < 0)
-         {
-         yRangeRounded = 0;
-         }
-
-      // Add 1 because the range includes the endpoint.
-      // 0-100 implies range = 101
-      scroller->SetRange(xRangeRounded + 1, yRangeRounded + 1);
-
-      // Position to the same percentage down the scroll bars as before
-      scroller->ScrollTo(g_round(xRatio * xRange), g_round(yRatio * yRange));
+      screen->AdjustScrollPositionToZoomFactor(NewZoomFactor);
 
       // hide turtle while we do this
       draw_turtle(false);

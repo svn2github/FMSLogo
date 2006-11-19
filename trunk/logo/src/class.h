@@ -386,6 +386,7 @@ class TScreenWindow : public TWindow
    TScreenWindow(TWindow * AParent, LPCSTR ATitle);
    ~TScreenWindow();
 
+   void AdjustScrollPositionToZoomFactor(FLONUM ZoomFactor);
    void Printit(TDC & DC);
 
  protected:
@@ -404,6 +405,9 @@ class TScreenWindow : public TWindow
    void EvSize(UINT, TSize &);
 
    DECLARE_RESPONSE_TABLE(TScreenWindow);
+
+ private:
+   void GetScrollRatios(FLONUM & XRatio, FLONUM & YRatio);
    }
 ;
 
