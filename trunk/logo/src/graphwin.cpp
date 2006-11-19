@@ -732,7 +732,7 @@ void thepencolor(int r, int g, int b)
       }
 
    NormalPen.lopnStyle = PS_INSIDEFRAME;
-   NormalPen.lopnWidth.x = width;
+   NormalPen.lopnWidth.x = g_PenWidth;
    NormalPen.lopnColor = pcolor;
    }
 
@@ -798,7 +798,7 @@ void thescreencolor(int r, int g, int b)
    // writes the screen color
 
    ErasePen.lopnStyle = PS_INSIDEFRAME;
-   ErasePen.lopnWidth.x = width;
+   ErasePen.lopnWidth.x = g_PenWidth;
    ErasePen.lopnColor = scolor;
 
    HBRUSH TempBrush = CreateBrushIndirect(&ScreenBrush);
@@ -834,7 +834,7 @@ void thescreencolor(int r, int g, int b)
 
 int get_pen_width()
    {
-   return width;
+   return g_PenWidth;
    }
 
 int get_pen_height()
@@ -844,16 +844,16 @@ int get_pen_height()
 
 void set_pen_width(int w)
    {
-   width = w;
+   g_PenWidth = w;
 
    // we erase with the same pen width as we write
 
    NormalPen.lopnStyle = PS_INSIDEFRAME;
-   NormalPen.lopnWidth.x = width;
+   NormalPen.lopnWidth.x = g_PenWidth;
    NormalPen.lopnColor = pcolor;
 
    ErasePen.lopnStyle = PS_INSIDEFRAME;
-   ErasePen.lopnWidth.x = width;
+   ErasePen.lopnWidth.x = g_PenWidth;
    ErasePen.lopnColor = scolor;
    }
 

@@ -139,7 +139,7 @@ long vector_count = 0;                 // current count of vectors drawn
 COLORREF scolor;                       // screen color
 COLORREF fcolor;                       // flood color
 COLORREF pcolor;                       // pen color
-long width = 1;                        // pen width
+long g_PenWidth = 1;                   // pen width
 bool zoom_flag = false;                // flag to signal in zoomed state
 long MaxColors = 0;                    // The maximum # of colors available
 
@@ -447,11 +447,11 @@ void TMyApp::InitMainWindow()
    /* init all the pens based on the color */
 
    NormalPen.lopnStyle = PS_INSIDEFRAME;
-   NormalPen.lopnWidth.x = width;
+   NormalPen.lopnWidth.x = g_PenWidth;
    NormalPen.lopnColor = pcolor;
 
    ErasePen.lopnStyle = PS_INSIDEFRAME;
-   ErasePen.lopnWidth.x = width;
+   ErasePen.lopnWidth.x = g_PenWidth;
    ErasePen.lopnColor = scolor;
 
    FloodBrush.lbStyle = BS_SOLID;

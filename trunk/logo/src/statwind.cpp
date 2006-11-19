@@ -141,7 +141,7 @@ void update_status_penwidth(void)
    if (status_flag)
       {
       char text[256];
-      sprintf(text, "%d", width);
+      sprintf(text, "%d", g_PenWidth);
       MainWindowx->StatusWindow->SetDlgItemText(ID_PENWIDTH, text);
       }
    }
@@ -322,7 +322,7 @@ void update_status_memory(void)
    if (status_flag)
       {
       char text[256];
-      sprintf(text, "%ld Nodes", (long) ((long) memory_count * (long) SEG_SIZE));
+      sprintf(text, "%ld Nodes", memory_count * SEG_SIZE);
 
       MainWindowx->StatusWindow->SetDlgItemText(ID_MEMORY, text);
       }

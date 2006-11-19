@@ -723,7 +723,7 @@ extern int current_write_mode;
 extern COLORREF scolor;
 extern COLORREF fcolor;
 extern COLORREF pcolor;
-extern long width;
+extern long g_PenWidth;
 extern bool zoom_flag;
 extern long MaxColors;
 
