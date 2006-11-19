@@ -21,6 +21,7 @@ Part I) Kit Description/Location (http://sourceforge.net/projects/fmslogo):
 Part II) New features/bugs fixed:
 
   * Added for 6.12.0,
+    o Fix bug #1599097; ZOOM no longer moves the X/Y scrollbar position.
     o Fix bug #1598768; The text description of an error (ITEM 2 ERROR) 
       is now a single word, just like in UCBLogo.
     o Fix bug #1590114; EQUALP now compares strings in a manner that

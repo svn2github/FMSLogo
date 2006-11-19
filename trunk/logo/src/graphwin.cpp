@@ -935,51 +935,63 @@ void UpdateZoomControlFlag()
 
 void zoom_helper(FLONUM temp_zoom)
    {
-
    if (the_zoom != temp_zoom)
       {
-
       the_zoom = temp_zoom;
 
+      TWindow * const screen = MainWindowx->ScreenWindow;
+
       TRect MainRect;
-      MainWindowx->ScreenWindow->GetClientRect(MainRect);
-
-      // calculate new scroller ranges
-      int Xr = (BitMapWidth * the_zoom) - MainRect.right;
-      int Yr = (BitMapHeight * the_zoom) - MainRect.bottom;
-
-      if (Xr < 0) Xr = 0;
-      if (Yr < 0) Yr = 0;
+      screen->GetClientRect(MainRect);
 
       // find out where we are (percentage of pos/range for x and y)
-      FLONUM XRatio;
-      FLONUM YRatio;
-
-      if (MainWindowx->ScreenWindow->Scroller->XRange <= 0)
+      TScroller * const scroller = screen->Scroller;
+      FLONUM xRatio;
+      if (scroller->XRange <= 1)
          {
-         XRatio = 0.5;
+         xRatio = 0.5; // center
          }
       else
          {
-         XRatio = (FLONUM) MainWindowx->ScreenWindow->Scroller->XPos /
-                  (FLONUM) MainWindowx->ScreenWindow->Scroller->XRange;
+         // Subtract 1 because the range includes the endpoint.
+         // 0-100 implies range = 101
+         xRatio = (FLONUM) scroller->XPos / (FLONUM) (scroller->XRange - 1);
          }
 
-      if (MainWindowx->ScreenWindow->Scroller->YRange <= 0)
+      FLONUM yRatio;
+      if (scroller->YRange <= 1)
          {
-         YRatio = 0.5;
+         yRatio = 0.5; // center
          }
       else
          {
-         YRatio = (FLONUM) MainWindowx->ScreenWindow->Scroller->YPos /
-                  (FLONUM) MainWindowx->ScreenWindow->Scroller->YRange;
+         // Subtract 1 because the range includes the endpoint.
+         // 0-100 implies range = 101
+         yRatio = (FLONUM) scroller->YPos / (FLONUM) (scroller->YRange - 1);
          }
 
-      // set the new ranges
-      MainWindowx->ScreenWindow->Scroller->SetRange(Xr, Yr);
+
+      // calculate new scroller ranges
+      FLONUM xRange = g_round(BitMapWidth * the_zoom) - MainRect.right;
+      FIXNUM xRangeRounded = g_round(xRange);
+      if (xRangeRounded < 0)
+         {
+         xRangeRounded = 0;
+         }
+
+      FLONUM yRange = (BitMapHeight * the_zoom) - MainRect.bottom;
+      FIXNUM yRangeRounded = g_round(yRange);
+      if (yRangeRounded < 0)
+         {
+         yRangeRounded = 0;
+         }
+
+      // Add 1 because the range includes the endpoint.
+      // 0-100 implies range = 101
+      scroller->SetRange(xRangeRounded + 1, yRangeRounded + 1);
 
       // Position to the same percentage down the scroll bars as before
-      MainWindowx->ScreenWindow->Scroller->ScrollTo(XRatio * Xr, YRatio * Yr);
+      scroller->ScrollTo(g_round(xRatio * xRange), g_round(yRatio * yRange));
 
       // hide turtle while we do this
       draw_turtle(false);
@@ -989,7 +1001,7 @@ void zoom_helper(FLONUM temp_zoom)
       draw_turtle(true);
 
       // paint
-      MainWindowx->ScreenWindow->Invalidate(true);
+      screen->Invalidate(true);
       }
    }
 
