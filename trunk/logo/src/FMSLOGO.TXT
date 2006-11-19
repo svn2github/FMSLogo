@@ -34,6 +34,8 @@ Part II) New features/bugs fixed:
       gives focus to the edit control.
     o Fix bug #1584198; Commander selection no longer disappears when FMSLogo
       loses focus.
+    o Fix bug #1372200; Scrollbars on screen window now always repaint when 
+      you run SPLITSCREEN.
     o Implement request #1480374; There are now separate menu options for
       loading a file (merging it into the workspace) and opening one
       (replacing what's in the workspace).

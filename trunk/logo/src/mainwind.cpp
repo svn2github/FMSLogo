@@ -2099,6 +2099,16 @@ void TMainFrame::DockCommanderWindow()
             SWP_NOZORDER | SWP_NOMOVE | SWP_NOCOPYBITS);
          }
 
+      // HACK: Hide the current commander window before adding
+      // the new one to the splitter.  This somehow forces a 
+      // refresh of the entire screen window.  Without it, the
+      // scrollbars sometimes don't show up (I don't know why).
+      // This is a hack because I'm sure there's a more direct
+      // way to force the scrollbars to show up.
+      //
+      // See bug #1372200 for details.
+      CommandWindow->Show(SW_HIDE);
+
       PaneSplitterWindow->SplitPane(
          ScreenWindow,
          newCommandWindow,
