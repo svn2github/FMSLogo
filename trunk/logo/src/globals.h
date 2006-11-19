@@ -187,7 +187,7 @@ struct Turtle
    MATRIX   Matrix;
    VECTOR   Position;
    FLONUM   Heading;
-   long     Bitmap;
+   DWORD    Bitmap;
    bool     IsShown;
    bool     IsPenUp;
    };

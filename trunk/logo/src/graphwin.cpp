@@ -44,7 +44,7 @@ struct font_find_t
    bool        found;
    };
 
-static long bitmode = SRCCOPY;
+static DWORD bitmode = SRCCOPY;
 
 #ifdef NDEBUG
 #  define ASSERT_TURTLE_INVARIANT
