@@ -410,19 +410,16 @@ NODE *lshow(NODE *args)
    }
 
 static
-void type_helper(NODE *args, bool sp)
+void type_helper(NODE *args, bool print_space_between_arguments)
    {
-   NODE *arg /* = NIL */;
-
    while (args != NIL)
       {
-      arg = car(args);
+      NODE * arg = car(args);
+
+      print_nobrak(writestream, arg);
+
       args = cdr(args);
-      if (is_list(arg))
-         print_helper(writestream, arg);
-      else
-         print_node(writestream, arg);
-      if (sp && (args != NIL))
+      if (print_space_between_arguments && (args != NIL))
          {
          print_space(writestream);
          }
