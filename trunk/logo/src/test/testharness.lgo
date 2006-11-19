@@ -179,6 +179,7 @@ TO TESTALL
   PERSPECTIVETEST    ; from perspective.lgo
   ORIENTATIONTEST    ; from orientation.lgo
   SCRUNCHTEST        ; from scrunch.lgo
+  ZOOMTEST           ; from zoom.lgo
   HELPTEST           ; from help.lgo
   WINDOWSETTEST      ; from windowset.lgo
   DLLTEST            ; from dll.lgo
