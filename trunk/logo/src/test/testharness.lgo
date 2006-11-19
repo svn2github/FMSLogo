@@ -100,6 +100,7 @@ LOAD "print.lgo
 LOAD "runresult.lgo
 LOAD "slowdraw.lgo
 LOAD "status.lgo
+LOAD "type.lgo
 
 TO TESTALL
 
@@ -173,6 +174,7 @@ TO TESTALL
   MISCTEST           ; from misc.lgo
   FENCETEST          ; from fence.lgo
   WRAPTEST           ; from wrap.lgo
+  TYPETEST           ; from type.lgo
   WINDOWTEST         ; from window.lgo
   PERSPECTIVETEST    ; from perspective.lgo
   ORIENTATIONTEST    ; from orientation.lgo
