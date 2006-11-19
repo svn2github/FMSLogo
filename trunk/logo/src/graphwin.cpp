@@ -774,7 +774,7 @@ NODE *lscreencolor(NODE *)
    return color_helper(dscn);
    }
 
-// funtion to set the screen color while updating palette if need be
+// Set the screen color and update palette, if necessary
 void thescreencolor(int r, int g, int b)
    {
    dscn.red   = r;
