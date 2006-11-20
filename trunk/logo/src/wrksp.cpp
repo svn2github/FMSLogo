@@ -1378,15 +1378,20 @@ NODE *ledit(NODE *args)
          }
       }
 
-   NODE * args_list = vref(args);
-   if (TMainFrame::PopupEditorForFile(TempPathName, args_list))
+   if (NOT_THROWING)
       {
-      err_logo(FILE_ERROR, make_static_strnode("Could not launch the editor"));
-      }
-   else
-      {
-      unlink(TempPathName);
-      IsDirty = true;
+      NODE * args_list = vref(args);
+      if (TMainFrame::PopupEditorForFile(TempPathName, args_list))
+         {
+         err_logo(
+            FILE_ERROR, 
+            make_static_strnode("Could not launch the editor"));
+         }
+      else
+         {
+         unlink(TempPathName);
+         IsDirty = true;
+         }
       }
 
    lsetcursorarrow(NIL);
