@@ -1378,7 +1378,7 @@ NODE *ledit(NODE *args)
          }
       }
 
-   NODE * args_list = reref(NIL, args);
+   NODE * args_list = vref(args);
    if (TMainFrame::PopupEditorForFile(TempPathName, args_list))
       {
       err_logo(FILE_ERROR, make_static_strnode("Could not launch the editor"));
@@ -1400,7 +1400,7 @@ bool endedit(void)
    bool realsave = false;
 
    FILE * holdstrm = loadstream;
-   NODE * tmp_line = reref(NIL, current_line);
+   NODE * tmp_line = vref(current_line);
    bool save_yield_flag = yield_flag;
    yield_flag = false;
    lsetcursorwait(NIL);
