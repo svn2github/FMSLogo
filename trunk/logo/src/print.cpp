@@ -219,10 +219,9 @@ void real_print_node(FILE *strm, const NODE *nd, int depth, int width)
       // print the origin
       if (print_backslashes && (getarrorg(nd) != 1))
          {
-         char org[] = "@        ";
-
-         sprintf(&org[1], "%d", getarrorg(nd));
-         ndprintf(strm, org);
+         char origin[32];
+         sprintf(origin, "@%d", getarrorg(nd));
+         ndprintf(strm, origin);
          }
       }
    else if (ndty == QUOTE)
