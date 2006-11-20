@@ -64,36 +64,37 @@ extern char *timer_callback[];
 extern CNetworkConnection g_ClientConnection;
 extern CNetworkConnection g_ServerConnection;
 
-/* logodata.c */
+// logodata.cpp
 #ifdef ecma
 extern char ecma_array[];
 extern char special_chars[];
 extern int ecma_size;
 #endif
 
-/* mem.cpp */
+// mem.cpp
 extern NODE **gcstack;
 extern NODE **gctop;
 
-/* parse.c */
+// parse.cpp
 extern FILE *loadstream;
 extern FILE *writestream;
 extern FILE *readstream;
 extern FILE *dribblestream;
 extern bool input_blocking;
 extern enum INPUTMODE input_mode;
+extern NODE *deepend_proc_name;
 
-/* math.c */
+// math.cpp
 
-/* intern.c */
+// intern.cpp
 
-/* debug.c */
+// debug.cpp
 
-/* print.c */
+// print.cpp
 extern int print_stringlen;
 extern char *print_stringptr;
 
-/* init.c */
+// init.cpp
 extern NODE *Truex;
 extern NODE *Falsex;
 extern NODE *Left_Paren;
@@ -158,26 +159,26 @@ const FIXNUM VALUE_STATUS_ValueMaybeOkInMacro = 5; // value maybe ok in macro (c
 
 extern int g_CatchErrorCount;
 
-/* print.cpp */
+// print.cpp */
 extern bool print_backslashes;
 
-/* math.cpp */
+// math.cpp
 
-/* lists.cpp */
+// lists.cpp
 
-/* files.cpp */
+// files.cpp
 
-/* coms.cpp */
+// coms.cpp
 extern FIXNUM ift_iff_flag;
 
-/* term.cpp */
+// term.cpp
 extern bool interactive;
 extern bool in_erase_mode;
 
-/* paren.cpp */
+// paren.cpp
 extern NODE *the_generation;
 
-/* graphics.cpp */
+// graphics.cpp
 extern mode_type   current_mode;
 extern bool        bPolyFlag;
 extern VERTEXLIST* ThePolygon;
@@ -205,11 +206,11 @@ typedef HWND WINAPI (*HTMLHELPFUNC)(HWND, LPCSTR, UINT, DWORD);
 extern HTMLHELPFUNC g_HtmlHelpFunc;
 extern HMODULE      g_HtmlHelpLib;
 
-/* ibmterm.cpp */
+// ibmterm.cpp
 extern int MaxX;
 extern int MaxY;
 const int SIGQUIT = 15;
 
-/* unix.cpp */
+// unix.cpp
 extern jmp_buf iblk_buf;
 

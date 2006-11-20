@@ -27,6 +27,8 @@ FILE *writestream = stdout;
 FILE *loadstream = stdin;
 FILE *dribblestream = NULL;
 bool input_blocking = false;
+NODE *deepend_proc_name = NIL;
+
 INPUTMODE input_mode = INPUTMODE_None;
 
 static int buffer_length = 0;
@@ -217,7 +219,9 @@ NODE *reader(FILE *strm, const char *prompt)
             lookfor++;
             if (*lookfor == '\0')
                {
-               err_logo(DEEPEND, NIL);
+               // We found the ender while still 
+               // inside a [, |, (, or {.
+               err_logo(DEEPEND, deepend_proc_name);
                break;
                }
             }
@@ -849,6 +853,9 @@ NODE *lrunparse(NODE *args)
 
 void uninitialize_parser()
    {
+   deref(deepend_proc_name);
+   deepend_proc_name = NIL;
+
    free(p_line);
    p_line = NULL;
    p_end  = NULL;

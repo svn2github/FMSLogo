@@ -389,6 +389,8 @@ NODE *to_helper(NODE *args, bool is_macro)
 
    NODE * proc_name = car(args);
 
+   deepend_proc_name = vref(proc_name);  // for error reporting
+
    if (nodetype(proc_name) != CASEOBJ)
       {
       err_logo(BAD_DATA_UNREC, proc_name);
@@ -566,6 +568,7 @@ NODE *to_helper(NODE *args, bool is_macro)
       gcref(formals);
       }
 
+   deepend_proc_name = reref(deepend_proc_name, NIL);
    input_mode = INPUTMODE_None;
    return Unbound;
    }
