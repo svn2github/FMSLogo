@@ -388,6 +388,51 @@ END
 BURY [CHECKSCREEN]
 
 
+TO RUNPRINTTEST :printinstruction :expectedstring
+
+  LOCALMAKE "testfile  "printtest-output.txt
+
+  ;
+  ; use PRINT to write to a file
+  ;
+  OPENWRITE :testfile
+
+  LOCALMAKE "oldwriter WRITER
+  SETWRITE :testfile
+
+  RUN :printinstruction
+
+  SETWRITE :oldwriter
+  CLOSE :testfile
+
+
+  ;
+  ; now read back the file and ensure that it is as expected
+  ;
+  OPENREAD :testfile
+
+  LOCALMAKE "oldreader READER
+  SETREAD  :testfile
+
+  LOCALMAKE "actualstring READWORD
+
+  IFELSE EQUAL? :actualstring :expectedstring [
+      REPORTTESTPASSED (LIST "Running :printinstruction "printed :actualstring "|, as expected.|)
+  ][
+      REPORTTESTFAILED (LIST "Running :printinstruction "printed :actualstring "|.  We expected| :expectedstring)
+  ]
+
+  IF NOT EQUAL? READWORD [] [
+      REPORTTESTFAILED (LIST "Running :printinstruction "|printed more than one line|)
+  ]
+
+  SETREAD  :oldreader
+  CLOSE :testfile
+
+  ERASEFILE :testfile
+END
+BURY [RUNPRINTTEST]
+
 
 ; protect against loading the file twice
 if not name? "testlog [
