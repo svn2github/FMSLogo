@@ -1,6 +1,6 @@
 
 TO END.INSIDE.MULTILINE.INSTRUCTION
-   ; This file contains a single procudure that has an END
+   ; This file contains a single procedure that has an END
    ; inside a multiline instruction.
    ; This is illegal and loading the file should throw an error.
    if "true [
