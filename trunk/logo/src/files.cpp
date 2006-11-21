@@ -278,12 +278,26 @@ NODE *lclose(NODE *arg)
          }
       }
 
+   if (compare_node(arg, writer_name, false) == 0) 
+      {
+      deref(writer_name);
+      writer_name = NIL;
+      writestream = stdout;
+      }
+
+   if (compare_node(arg, reader_name, false) == 0)
+      {
+      deref(reader_name);
+      reader_name = NIL;
+      readstream = stdin;
+      }
+
    deref(arg);
    free(fnstr);
 
    return Unbound;
-   }
-
+   
+}
 NODE *lsetwrite(NODE *arg)
    {
    FILE *tmp;
