@@ -30,3 +30,6 @@ clean :
 	$(RM) $(wildcard logo*.csm)
 	$(RM) $(wildcard *.fts)
 	$(RM) $(wildcard *.gid)
+
+tags : *.cpp *.h *.c
+	etags $(shell /usr/bin/find . -name '*.cpp' -o -name '*.h' -o -name '*.c')
