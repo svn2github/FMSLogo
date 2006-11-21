@@ -201,9 +201,9 @@ TO TESTALL
   MOUSETEST          ; from mouse.lgo
   MIDITEST           ; from midi.lgo
   SOUNDTEST          ; from sound.lgo
+  NETWORKTEST        ; from network.lgo
   SLOWDRAWTEST       ; from slowdraw.lgo
   STATUSTEST         ; from status.lgo
-  NETWORKTEST        ; from network.lgo
 
   REPORTTESTUNINITIALIZE
 
