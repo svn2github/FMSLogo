@@ -101,6 +101,7 @@ LOAD "runresult.lgo
 LOAD "slowdraw.lgo
 LOAD "status.lgo
 LOAD "type.lgo
+LOAD "zoom.lgo
 
 TO TESTALL
 
