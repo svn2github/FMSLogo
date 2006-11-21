@@ -257,6 +257,18 @@ TO FILETEST.BADINPUT
    RUNTOOMANYINPUTSTEST [(OPENAPPEND "testfile.txt "true "toomany)]
    RUNTOOMANYINPUTSTEST [(OPENUPDATE "testfile.txt "true "toomany)]
 
+   ; empty list is bad input
+   RUNFILESYSTEMERRORTEST [OPENREAD   []]
+   RUNFILESYSTEMERRORTEST [OPENWRITE  []]
+   RUNFILESYSTEMERRORTEST [OPENAPPEND []]
+   RUNFILESYSTEMERRORTEST [OPENUPDATE []]
+
+   ; an array is bad input
+   RUNFILESYSTEMERRORTEST [OPENREAD   {1}]
+   RUNFILESYSTEMERRORTEST [OPENWRITE  {1}]
+   RUNFILESYSTEMERRORTEST [OPENAPPEND {1}]
+   RUNFILESYSTEMERRORTEST [OPENUPDATE {1}]
+
    ; try to overflow an internal buffer
    RUNFILESYSTEMERRORTEST [OPENREAD   :longfilename]
    RUNFILESYSTEMERRORTEST [OPENWRITE  :longfilename]
@@ -266,6 +278,7 @@ TO FILETEST.BADINPUT
    ; test CLOSE
    RUNFILESYSTEMERRORTEST [CLOSE :longfilename]
    RUNFILESYSTEMERRORTEST [CLOSE "nonexistent.txt]
+   RUNFILESYSTEMERRORTEST [CLOSE [] ] ; bug 1600159
    RUNNOTENOUGHINPUTSTEST [(CLOSE)]
    RUNTOOMANYINPUTSTEST   [(CLOSE "testfile.txt "many)]
 
@@ -349,12 +362,46 @@ TO FILETEST.OPENDIRECTORYASFILE
 END
 
 
+TO FILETEST.CLOSEREADER
+   ; Closes the active reader and writer.
+   ; This is a regression test for bug #1600163.
+
+   LOCALMAKE "filename  "closereadertest.txt
+   LOCALMAKE "oldreader READER
+   LOCALMAKE "oldwriter WRITER
+
+   OPENWRITE :filename
+   SETWRITE  :filename
+   PRINT [This is line 1]
+
+   ; closing the active writer should switch the writer to stdout
+   TRACEINSTRUCTION [ CLOSE WRITER ]
+   SIMPLEREPORTTEST [WRITER] []
+
+   PRINT [This goes to stdout]
+
+
+   ; now open the file for reading and do the same thing
+   OPENREAD  :filename
+   SETREAD   :filename
+   SIMPLEREPORTTEST [READWORD] "|This is line 1|
+
+   ; closing the active reader should switch the reader to stdin
+   TRACEINSTRUCTION [ CLOSE READER ]
+   SIMPLEREPORTTEST [READER] []
+
+   ; cleanup
+   ERASEFILE :filename
+
+END
+
 TO FILETEST
 
   ; This tests the basic functionality of the following functions
   ; OPENWRITE, SETWRITE, WRITER, WRITEPOS, READER, READPOS, and EOFP
 
   FILETEST.SMOKETEST
+  FILETEST.CLOSEREADER
 
   FILETEST.SETREADPOS
   FILETEST.SETWRITEPOS
