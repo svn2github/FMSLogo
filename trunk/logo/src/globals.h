@@ -68,7 +68,6 @@ extern CNetworkConnection g_ServerConnection;
 #ifdef ecma
 extern char ecma_array[];
 extern char special_chars[];
-extern int ecma_size;
 #endif
 
 // mem.cpp

@@ -531,7 +531,6 @@ setarrptr(NODE * Node, NODE ** Ptr)
 #define clearparity(ch)         ecma_clear(ch)
 #define setparity(ch)           ecma_set(ch)
 #define getparity(ch)           ecma_get(ch)
-#define ecma_begin		003	/* first char used for quoteds */
 #else
 #define clearparity(ch)         (ch & 0x7f)
 #define setparity(ch)           (ch | 0x80)

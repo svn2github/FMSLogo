@@ -23,17 +23,20 @@
 #include "allwind.h"
 #include "version.h"
 
-//char special_chars[] = " \t\n()[]+-*/=<>\"\\~:;|?";
-char special_chars[] = " \t\n(\?\?\?\?\?\?\?+~)[]-*/=<>\"\\:;|\?";
+// characters that must be escaped with a backslash when put in a string
+//
+//                               1         2           3
+//                      3 4 56789012345678901234 5 678901
+char special_chars[] = " \t\n(?????+++~)[]-*/=<>\"\\:;|{}";
 
 #ifdef ecma
+
+const int ecma_begin = 3; // first char used for quoteds
 
 #define upper_p(ch)     (isupper((ch) & 0xFF))
 #define lower_p(ch)     (islower((ch) & 0xFF))
 
-char ecma_array[128];
-
-int ecma_size = sizeof(special_chars);
+static char ecma_array[128];
 
 char ecma_set(int ch)
    {
@@ -48,7 +51,7 @@ char ecma_set(int ch)
 char ecma_clear(int ch)
    {
    ch &= 0xFF;
-   if (ch < ecma_begin || ch >= ecma_begin + sizeof(special_chars)) 
+   if (ch < ecma_begin || ch >= ecma_begin + sizeof(special_chars) - 1) 
       {
       return ch;
       }
@@ -63,8 +66,25 @@ char ecma_clear(int ch)
 int ecma_get(int ch)
    {
    ch &= 0xFF;
-   return ((ch >= ecma_begin && ch < ecma_begin + sizeof(special_chars))
+   return ((ch >= ecma_begin && ch < ecma_begin + sizeof(special_chars) - 1)
       && (ch < 0x7 || ch > 0xD));
+   }
+
+void init_ecma_array()
+   {
+   // Initialize ecma_array to map all characters to themselves.
+   for (int i = 0; i < sizeof(ecma_array); i++)
+      {
+      ecma_array[i] = i;
+      }
+
+   // Override the special characters to map to ecma_begin+index.
+   // Characters a "backslashed" by replacing them with very small 
+   // values that are usually used for control characters.
+   for (int i = 0; i < sizeof(special_chars) - 1; i++)
+      {
+      ecma_array[special_chars[i]] = ecma_begin+i;
+      }
    }
 
 #else

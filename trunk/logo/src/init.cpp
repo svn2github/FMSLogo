@@ -545,14 +545,7 @@ void init()
    Unbound = newnode(PUNBOUND);
 
 #ifdef ecma
-   for (int i = 0; i < 128; i++)
-      {
-      ecma_array[i] = i;
-      }
-   for (int i = 0; i < ecma_size; i++)
-      {
-      ecma_array[special_chars[i]] = ecma_begin+i;
-      }
+   init_ecma_array();
 #endif
 
    for (int i = 0; prims[i].name != NULL; i++)
