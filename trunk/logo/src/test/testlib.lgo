@@ -308,7 +308,9 @@ TO FILESAREEQUAL :filea :fileb
    ; OUTPUT "true if the files have the same content
    ; OUTPUT "false, otherwise
 
-   LOCAL [bytea byteb]
+   LOCAL [oldreader bytea byteb]
+
+   MAKE "oldreader READER
 
    (OPENREAD :filea "true)
    (OPENREAD :fileb "true)
@@ -323,8 +325,12 @@ TO FILESAREEQUAL :filea :fileb
 
       IF NOT EQUAL? :bytea :byteb [
          ; found a discrepency
-         CLOSE :filea
-         CLOSE :fileb
+
+         ; cleanup
+         CLOSE   :filea
+         CLOSE   :fileb
+         SETREAD :oldreader
+
          OUTPUT "false
       ]
    ]
@@ -337,9 +343,15 @@ TO FILESAREEQUAL :filea :fileb
       OUTPUT "false
    ]
 
+   ;
    ; no file differences were found
+   ;
+
+   ; cleanup
    CLOSE :filea
    CLOSE :fileb
+
+   SETREAD :oldreader
 
    OUTPUT "true
 END
@@ -426,7 +438,7 @@ TO RUNPRINTTEST :printinstruction :expectedstring
       REPORTTESTFAILED (LIST "Running :printinstruction "|printed more than one line|)
   ]
 
-  SETREAD  :oldreader
+  SETREAD :oldreader
   CLOSE :testfile
 
   ERASEFILE :testfile
