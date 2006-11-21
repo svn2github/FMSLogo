@@ -94,11 +94,11 @@ TO SIMPLEREPORTTEST :instruction :expectedresult
   ]
 
   IF NOT EQUAL? :result :expectedresult [
-    REPORTTESTFAILED (LIST :instruction "returned :result "|. We expected| :expectedresult)
+    REPORTTESTFAILED (LIST :instruction "output :result "|. We expected| :expectedresult ".)
     STOP
   ]
 
-  REPORTTESTPASSED (LIST :instruction "returned :result "|, as expected.|)
+  REPORTTESTPASSED (LIST :instruction "output :result "|, as expected.|)
 END
 BURY [SIMPLEREPORTTEST]
 
@@ -435,7 +435,7 @@ TO RUNPRINTTEST :printinstruction :expectedstring
   ]
 
   IF NOT EQUAL? READWORD [] [
-      REPORTTESTFAILED (LIST "Running :printinstruction "|printed more than one line|)
+      REPORTTESTFAILED (LIST "Running :printinstruction "|printed more than one line.|)
   ]
 
   SETREAD :oldreader
