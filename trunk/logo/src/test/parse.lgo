@@ -84,14 +84,20 @@ END
 TO PARSETEST.SYMBOLSOFINCLUSION
 
    ; bug #1583317 
-   ; SIMPLEREPORTTEST [  \{  ]  "\{
-   ; SIMPLEREPORTTEST [  \}  ]  "\}
+   SIMPLEREPORTTEST [ ITEM 1 [ \{ ] ]  "\{
+   SIMPLEREPORTTEST [ ITEM 1 [ \} ] ]  "\}
+   SIMPLEREPORTTEST [ ITEM 1 [ \] ] ]  "\]
+   SIMPLEREPORTTEST [ ITEM 1 [ \[ ] ]  "\[
+   SIMPLEREPORTTEST [ ITEM 1 [ \| ] ]  "\|
 
-   SIMPLEREPORTTEST [    [||]  ]   []
+   SIMPLEREPORTTEST [    [||]     ]  []
 
    ; bug #1583317 
-   ; SIMPLEREPORTTEST [ITEM 1 {\[}]  "\[
-   ; SIMPLEREPORTTEST [ITEM 1 {\]}]  "\]
+   SIMPLEREPORTTEST [ITEM 1 { \[ }]  "\[
+   SIMPLEREPORTTEST [ITEM 1 { \] }]  "\]
+   SIMPLEREPORTTEST [ITEM 1 { \{ }]  "\{
+   SIMPLEREPORTTEST [ITEM 1 { \} }]  "\}
+   SIMPLEREPORTTEST [ITEM 1 { \| }]  "\|
 
    SIMPLEREPORTTEST [ITEM 1 ["]]  ""
    SIMPLEREPORTTEST [ITEM 1 {"}]  ""
