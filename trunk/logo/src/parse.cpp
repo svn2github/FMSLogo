@@ -22,8 +22,6 @@
 
 #include "allwind.h"
 
-FILE *readstream = stdin;
-FILE *writestream = stdout;
 FILE *loadstream = stdin;
 FILE *dribblestream = NULL;
 bool input_blocking = false;

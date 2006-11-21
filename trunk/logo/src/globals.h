@@ -66,7 +66,6 @@ extern CNetworkConnection g_ServerConnection;
 
 // logodata.cpp
 #ifdef ecma
-extern char ecma_array[];
 extern char special_chars[];
 #endif
 
@@ -76,8 +75,6 @@ extern NODE **gctop;
 
 // parse.cpp
 extern FILE *loadstream;
-extern FILE *writestream;
-extern FILE *readstream;
 extern FILE *dribblestream;
 extern bool input_blocking;
 extern enum INPUTMODE input_mode;
@@ -166,6 +163,8 @@ extern bool print_backslashes;
 // lists.cpp
 
 // files.cpp
+extern CFileStream g_Reader;
+extern CFileStream g_Writer;
 
 // coms.cpp
 extern FIXNUM ift_iff_flag;

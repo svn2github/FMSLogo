@@ -600,7 +600,7 @@ NODE *lmake(NODE *args)
          NODE *quoted_variable_name = vref(make_quote(what));
 
          ndprintf(
-            writestream, 
+            g_Writer.GetStream(), 
             "Make %s %s", 
             quoted_variable_name, 
             new_value);
@@ -611,9 +611,9 @@ NODE *lmake(NODE *args)
          // trace the name of the procedure where the assignment happened.
          if (ufun != NIL)
             {
-            ndprintf(writestream, " in %s\n%s", ufun, this_line);
+            ndprintf(g_Writer.GetStream(), " in %s\n%s", ufun, this_line);
             }
-         new_line(writestream);
+         new_line(g_Writer.GetStream());
          }
       }
    return Unbound;
@@ -1029,7 +1029,7 @@ NODE *po_helper(NODE *arg, int just_titles)  /* >0 for POT, <0 for EDIT       */
          {
          if (just_titles < 0)
             {
-            ndprintf(writestream, "to %p\nend\n\n", car(proclst));
+            ndprintf(g_Writer.GetStream(), "to %p\nend\n\n", car(proclst));
             }
          else
             {
@@ -1047,7 +1047,7 @@ NODE *po_helper(NODE *arg, int just_titles)  /* >0 for POT, <0 for EDIT       */
          tvar = get_bodywords(tvar, car(proclst));
          if (just_titles > 0)
             {
-            print_nobrak(writestream, car(tvar));
+            print_nobrak(g_Writer.GetStream(), car(tvar));
             }
          else 
             {
@@ -1055,12 +1055,12 @@ NODE *po_helper(NODE *arg, int just_titles)  /* >0 for POT, <0 for EDIT       */
                {
                if (is_list(car(tvar)))
                   {
-                  print_nobrak(writestream, car(tvar));
+                  print_nobrak(g_Writer.GetStream(), car(tvar));
                   }
                else
                   {
                   char *str = expand_slash(car(tvar));
-                  if (writestream == stdout)
+                  if (g_Writer.GetStream() == stdout)
                      {
                      printfx(str);
                      if (dribblestream != NULL)
@@ -1070,18 +1070,18 @@ NODE *po_helper(NODE *arg, int just_titles)  /* >0 for POT, <0 for EDIT       */
                      }
                   else
                      {
-                     fprintf(writestream, "%s", str);
+                     fprintf(g_Writer.GetStream(), "%s", str);
                      }
                   free(str);
                   }
-               if (writestream != stdout) 
+               if (g_Writer.GetStream() != stdout) 
                   {
-                  new_line(writestream);
+                  new_line(g_Writer.GetStream());
                   }
                tvar = cdr(tvar);
                }
             }
-         new_line(writestream);
+         new_line(g_Writer.GetStream());
          }
       proclst = cdr(proclst);
       if (check_throwing) break;
@@ -1117,7 +1117,7 @@ NODE *po_helper(NODE *arg, int just_titles)  /* >0 for POT, <0 for EDIT       */
          NODE * quoted_variable_name = make_quote(current_variable);
 
          ndprintf(
-            writestream, 
+            g_Writer.GetStream(), 
             "Make %s %s\n",
             quoted_variable_name,
             quoted_value);
@@ -1142,7 +1142,7 @@ NODE *po_helper(NODE *arg, int just_titles)  /* >0 for POT, <0 for EDIT       */
       if (plist != NIL && just_titles > 0)
          {
          ndprintf(
-            writestream, 
+            g_Writer.GetStream(), 
             "Plist %s = %s\n",
             quoted_plist_name, 
             plist);
@@ -1155,7 +1155,7 @@ NODE *po_helper(NODE *arg, int just_titles)  /* >0 for POT, <0 for EDIT       */
             NODE * quoted_property_value = maybe_quote(cadr(plist));
 
             ndprintf(
-               writestream, 
+               g_Writer.GetStream(), 
                "Pprop %s %s %s\n",
                quoted_plist_name,
                quoted_property_name,
@@ -1361,23 +1361,28 @@ NODE *ledit(NODE *args)
    yield_flag = false;
    lsetcursorwait(NIL);
 
+   // Write the requested contents to a file
    if (args != NIL)
       {
-      FILE * holdstrm = writestream;
-      writestream = fopen(TempPathName, "w");
-      if (writestream != NULL)
+      FILE * fileStream = fopen(TempPathName, "w");
+      if (fileStream != NULL)
          {
+         // HACK: change g_Writer to use the new stream
+         FILE * savedWriterStream = g_Writer.GetStream();
+         g_Writer.SetStream(fileStream);
+
          po_helper(args, -1);
-         fclose(writestream);
-         writestream = holdstrm;
+
+         // restore g_Writer
+         g_Writer.SetStream(savedWriterStream);
+
+         fclose(fileStream);
          }
       else
          {
          err_logo(
             FILE_ERROR,
             make_static_strnode("Could not create editor file"));
-         writestream = holdstrm;
-         return Unbound;
          }
       }
 

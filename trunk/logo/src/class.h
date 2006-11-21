@@ -66,6 +66,38 @@ struct CUTMAP
    bool    CutFlag;          // flag to signal something in cut buffer
    };
 
+class CFileStream
+   {
+ public:
+   CFileStream(FILE * DefaultStream);
+
+   void   SetStreamToOpenFile(NODE * FileName);
+   void   ResetToDefaultStream();
+   bool   IsNamed(NODE * FileName) const;
+   NODE * GetName() const;
+   NODE * GetPosition() const;
+   void   SetPosition(NODE * Arguments);
+
+   FILE * GetStream() const
+      {
+      assert(m_Stream != NULL);
+      return m_Stream;
+      }
+
+   void SetStream(FILE * Stream)
+      {
+      assert(m_Stream != NULL);
+      m_Stream = Stream;
+      assert(m_Stream != NULL);
+      }
+
+ private:
+   FILE *  m_Stream;
+   NODE *  m_Name;
+   FILE *  m_DefaultStream;
+   };
+
+
 // Class for buffering (carrying over) network data from 
 // one "receive" call to another when 
 class CCarryOverBuffer 

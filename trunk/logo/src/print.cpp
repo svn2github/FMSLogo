@@ -66,9 +66,6 @@ void print_space(FILE *strm)
 /*VARARGS2*/
 void ndprintf(FILE *strm, const char *fmt, ...)
    {
-   assert(writestream != NULL);
-   assert(readstream != NULL);
-
    va_list ap;
    char ch;
 
@@ -403,8 +400,8 @@ void new_line(FILE *strm)
 
 NODE *lshow(NODE *args)
    {
-   print_helper(writestream, args);
-   new_line(writestream);
+   print_helper(g_Writer.GetStream(), args);
+   new_line(g_Writer.GetStream());
    return Unbound;
    }
 
@@ -415,12 +412,12 @@ void type_helper(NODE *args, bool print_space_between_arguments)
       {
       NODE * arg = car(args);
 
-      print_nobrak(writestream, arg);
+      print_nobrak(g_Writer.GetStream(), arg);
 
       args = cdr(args);
       if (print_space_between_arguments && (args != NIL))
          {
-         print_space(writestream);
+         print_space(g_Writer.GetStream());
          }
       }
    }
@@ -434,7 +431,7 @@ NODE *ltype(NODE *args)
 NODE *lprint(NODE *args)
    {
    type_helper(args, true);
-   new_line(writestream);
+   new_line(g_Writer.GetStream());
    return Unbound;
    }
 

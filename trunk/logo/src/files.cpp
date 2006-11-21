@@ -22,9 +22,10 @@
 
 #include "allwind.h"
 
-NODE *file_list = NULL;
-NODE *reader_name = NIL;
-NODE *writer_name = NIL;
+static NODE *g_OpenFiles = NULL;
+
+CFileStream g_Reader(stdin);
+CFileStream g_Writer(stdout);
 
 FILE *open_file(NODE *arg, const char *access)
    {
@@ -134,7 +135,7 @@ FILE *find_file(NODE *arg, bool remove)
    NODE *prev = NIL;
    FILE *fp = NULL;
 
-   for (NODE * t = file_list; t != NIL; t = cdr(t))
+   for (NODE * t = g_OpenFiles; t != NIL; t = cdr(t))
       {
       if (compare_node(arg, car(t), false) == 0)
          {
@@ -144,7 +145,7 @@ FILE *find_file(NODE *arg, bool remove)
             t->nunion.ncons.nobj = NIL;
             if (prev == NIL)
                {
-               file_list = reref(file_list, cdr(t));
+               g_OpenFiles = reref(g_OpenFiles, cdr(t));
                }
             else
                {
@@ -189,8 +190,8 @@ open_helper(
          }
       else if ((tmp = open_file(Arguments, mode)) != NULL)
          {
-         push(Arguments, file_list);
-         file_list->nunion.ncons.nobj = (NODE *) tmp;
+         push(Arguments, g_OpenFiles);
+         g_OpenFiles->nunion.ncons.nobj = (NODE *) tmp;
          }
       else
          {
@@ -222,7 +223,7 @@ NODE *lopenupdate(NODE *args)
 
 NODE *lallopen(NODE *)
    {
-   return file_list;
+   return g_OpenFiles;
    }
 
 NODE *lclose(NODE *arg)
@@ -278,78 +279,117 @@ NODE *lclose(NODE *arg)
          }
       }
 
-   if (compare_node(arg, writer_name, false) == 0) 
+   if (g_Writer.IsNamed(arg)) 
       {
-      deref(writer_name);
-      writer_name = NIL;
-      writestream = stdout;
+      g_Writer.ResetToDefaultStream();
       }
 
-   if (compare_node(arg, reader_name, false) == 0)
+   if (g_Reader.IsNamed(arg)) 
       {
-      deref(reader_name);
-      reader_name = NIL;
-      readstream = stdin;
+      g_Reader.ResetToDefaultStream();
       }
 
    deref(arg);
    free(fnstr);
 
    return Unbound;
-   
 }
-NODE *lsetwrite(NODE *arg)
+
+CFileStream::CFileStream(
+   FILE * DefaultFileStream
+   ) :
+   m_Name(NIL),
+   m_Stream(DefaultFileStream),
+   m_DefaultStream(DefaultFileStream)
+   {
+   }
+
+void
+CFileStream::ResetToDefaultStream()
+   {
+   deref(m_Name);
+   m_Name = NIL;
+
+   m_Stream = m_DefaultStream;
+   }
+
+void
+CFileStream::SetStreamToOpenFile(
+   NODE * FileName
+   )
    {
    FILE *tmp;
 
-   if (car(arg) == NIL)
+   if (FileName == NIL)
       {
-      writestream = stdout;
-      deref(writer_name);
-      writer_name = NIL;
+      // reset to the default stream
+      ResetToDefaultStream();
       }
-   else if ((tmp = find_file(car(arg), false)) != NULL)
+   else if ((tmp = find_file(FileName, false)) != NULL)
       {
-      writestream = tmp;
-      writer_name = reref(writer_name, car(arg));
+      m_Stream = tmp;
+      m_Name = reref(m_Name, FileName);
       }
    else
       {
       err_logo(FILE_ERROR, make_static_strnode("File not open"));
       }
+   }
+
+bool
+CFileStream::IsNamed(
+   NODE * FileName
+   ) const
+   {
+   return compare_node(FileName, m_Name, false) == 0;
+   }
+
+NODE *
+CFileStream::GetName() const
+   {
+   return m_Name;
+   }
+
+NODE *
+CFileStream::GetPosition() const
+   {
+   return make_intnode(ftell(m_Stream));
+   }
+
+void
+CFileStream::SetPosition(
+   NODE * Arguments
+   )
+   {
+   NODE *val = pos_int_arg(Arguments);
+
+   if (NOT_THROWING)
+      {
+      fseek(m_Stream, getint(val), SEEK_SET);
+      }
+   }
+
+
+NODE *lsetwrite(NODE *arg)
+   {
+   g_Writer.SetStreamToOpenFile(car(arg));
    return Unbound;
    }
 
 NODE *lsetread(NODE *arg)
    {
-   FILE *tmp;
-
-   if (car(arg) == NIL)
-      {
-      readstream = stdin;
-      deref(reader_name);
-      reader_name = NIL;
-      }
-   else if ((tmp = find_file(car(arg), false)) != NULL)
-      {
-      readstream = tmp;
-      reader_name = reref(reader_name, car(arg));
-      }
-   else
-      {
-      err_logo(FILE_ERROR, make_static_strnode("File not open"));
-      }
+   g_Reader.SetStreamToOpenFile(car(arg));
    return Unbound;
    }
 
 NODE *lreader(NODE *)
    {
-   return reader_name;
+   return g_Reader.GetName();
    }
 
 NODE *lwriter(NODE *)
    {
-   return writer_name;
+   return g_Writer.GetName();
    }
 
 NODE *lerasefile(NODE *arg)
@@ -367,6 +407,42 @@ NODE *lerasefile(NODE *arg)
    return Unbound;
    }
 
+
+void
+PrintWorkspaceToFileStream(
+   FILE * FileStream
+   )
+   {
+   if (FileStream != NULL)
+      {
+      // HACK: change g_Writer to use the new stream
+      FILE * savedWriterStream = g_Writer.GetStream();
+      g_Writer.SetStream(FileStream);
+
+      bool save_yield_flag = yield_flag;
+      yield_flag = false;
+      lsetcursorwait(NIL);
+
+      NODE * entire_workspace = vref(cons_list(lcontents(NIL)));
+      lpo(entire_workspace);
+      deref(entire_workspace);
+
+      fclose(g_Writer.GetStream());
+      IsDirty = false;
+
+      lsetcursorarrow(NIL);
+      yield_flag = save_yield_flag;
+
+      // restore g_Writer
+      g_Writer.SetStream(savedWriterStream);
+      }
+   else
+      {
+      err_logo(FILE_ERROR, make_static_strnode("Could not open file"));
+      }
+   }
+
+
 NODE *lsave(NODE *arg)
    {
    if (::FindWindow(NULL, "Editor"))
@@ -381,30 +457,8 @@ NODE *lsave(NODE *arg)
 
    lprint(arg);
 
-   FILE * tmp = writestream;
-   writestream = open_file(car(arg), "w+");
-   if (writestream != NULL)
-      {
-      bool save_yield_flag = yield_flag;
-      yield_flag = false;
-      lsetcursorwait(NIL);
+   PrintWorkspaceToFileStream(open_file(car(arg), "w+"));
 
-      NODE * entire_workspace = vref(cons_list(lcontents(NIL)));
-      lpo(entire_workspace);
-      deref(entire_workspace);
-
-      fclose(writestream);
-      IsDirty = false;
-
-      lsetcursorarrow(NIL);
-      yield_flag = save_yield_flag;
-      }
-   else
-      {
-      err_logo(FILE_ERROR, make_static_strnode("Could not open file"));
-      }
-
-   writestream = tmp;
    return Unbound;
    }
 
@@ -566,9 +620,9 @@ NODE *lload(NODE *arg)
 NODE *lreadlist(NODE *)
    {
    input_mode = INPUTMODE_List;
-   NODE * val = parser(reader(readstream, ""), false);
+   NODE * val = parser(reader(g_Reader.GetStream(), ""), false);
    input_mode = INPUTMODE_None;
-   if (feof(readstream))
+   if (feof(g_Reader.GetStream()))
       {
       gcref(val);
       return Null_Word;
@@ -578,8 +632,8 @@ NODE *lreadlist(NODE *)
 
 NODE *lreadword(NODE *)
    {
-   NODE * val = reader(readstream, "RW");  // fake prompt flags no auto-continue
-   if (feof(readstream))
+   NODE * val = reader(g_Reader.GetStream(), "RW");  // fake prompt flags no auto-continue
+   if (feof(g_Reader.GetStream()))
       {
       gcref(val);
       return NIL;
@@ -594,22 +648,22 @@ NODE *lreadchar(NODE *)
    char c;
    if (!setjmp(iblk_buf))
       {
-      if (interactive && readstream == stdin)
+      if (interactive && g_Reader.GetStream() == stdin)
          {
          c = (char) rd_getc(stdin);
          }
       else
          {
-         c = (char) getc(readstream);
+         c = (char) getc(g_Reader.GetStream());
          }
       }
    input_blocking = false;
-   if (feof(readstream))
+   if (feof(g_Reader.GetStream()))
       {
       return NIL;
       }
 
-   if (readstream->flags & _F_BIN)
+   if (g_Reader.GetStream()->flags & _F_BIN)
       {
       return make_intnode(((unsigned char) c));
       }
@@ -640,7 +694,7 @@ NODE *lreadchars(NODE *args)
       {
       strhead = (char *) malloc((size_t) (c + sizeof(short) + 1));
       strptr = strhead + sizeof(short);
-      fread(strptr, 1, (int) c, readstream);
+      fread(strptr, 1, (int) c, g_Reader.GetStream());
       unsigned short * temp = (unsigned short *) strhead;
       setstrrefcnt(temp, 0);
       }
@@ -652,7 +706,7 @@ NODE *lreadchars(NODE *args)
       return Unbound;
       }
 
-   if (feof(readstream))
+   if (feof(g_Reader.GetStream()))
       {
       free(strhead);
       return NIL;
@@ -671,14 +725,14 @@ NODE *lreadchars(NODE *args)
 
 NODE *leofp(NODE *)
    {
-   ungetc(getc(readstream), readstream);
-   int isEof = feof(readstream);
+   ungetc(getc(g_Reader.GetStream()), g_Reader.GetStream());
+   int isEof = feof(g_Reader.GetStream());
    return true_or_false(isEof);
    }
 
 NODE *lkeyp(NODE *)
    {
-   if (readstream == stdin && interactive)
+   if (g_Reader.GetStream() == stdin && interactive)
       {
       //fflush(stdout);
       return Truex;
@@ -690,40 +744,30 @@ NODE *lkeyp(NODE *)
 
 NODE *lreadpos(NODE *)
    {
-   return make_intnode(ftell(readstream));
+   return g_Reader.GetPosition();
    }
 
 NODE *lsetreadpos(NODE *arg)
    {
-   NODE *val = pos_int_arg(arg);
-
-   if (NOT_THROWING)
-      {
-      fseek(readstream, getint(val), 0);
-      }
+   g_Reader.SetPosition(arg);
    return Unbound;
    }
 
 NODE *lwritepos(NODE *)
    {
-   return make_intnode(ftell(writestream));
+   return g_Writer.GetPosition();
    }
 
 NODE *lsetwritepos(NODE *arg)
    {
-   NODE *val = pos_int_arg(arg);
-
-   if (NOT_THROWING)
-      {
-      fseek(writestream, getint(val), 0);
-      }
+   g_Writer.SetPosition(arg);
    return Unbound;
    }
 
 NODE *lcloseall(NODE *)
    {
    // close all open file pointers
-   for (NODE * current_file = file_list;
+   for (NODE * current_file = g_OpenFiles;
         current_file != NIL;
         current_file = cdr(current_file))
       {
@@ -734,8 +778,8 @@ NODE *lcloseall(NODE *)
       }
 
    // empty the file list
-   deref(file_list);
-   file_list = NIL;
+   deref(g_OpenFiles);
+   g_OpenFiles = NIL;
 
    return Unbound;
    }
@@ -744,9 +788,6 @@ void uninitialize_files()
    {
    lcloseall(NIL);
 
-   deref(reader_name);
-   reader_name = NIL;
-
-   deref(writer_name);
-   writer_name = NIL;
+   g_Reader.ResetToDefaultStream();
+   g_Writer.ResetToDefaultStream();
    }

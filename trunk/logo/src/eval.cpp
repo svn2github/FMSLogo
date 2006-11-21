@@ -561,10 +561,10 @@ NODE *evaluator(NODE *list, enum labels where)
       {
       for (i = 0; i < trace_level; i++) 
          {
-         print_space(writestream);
+         print_space(g_Writer.GetStream());
          }
       trace_level++;
-      ndprintf(writestream, "( %s ", fun);
+      ndprintf(g_Writer.GetStream(), "( %s ", fun);
       }
 
  lambda_apply:
@@ -592,10 +592,10 @@ NODE *evaluator(NODE *list, enum labels where)
             {
             // trace the input
             NODE * quoted_arg = vref(maybe_quote(arg));
-            print_node(writestream, quoted_arg);
+            print_node(g_Writer.GetStream(), quoted_arg);
             deref(quoted_arg);
 
-            print_space(writestream);
+            print_space(g_Writer.GetStream());
             }
          }
       else
@@ -710,9 +710,9 @@ NODE *evaluator(NODE *list, enum labels where)
       {
       if (NOT_THROWING) 
          {
-         print_char(writestream, ')');
+         print_char(g_Writer.GetStream(), ')');
          }
-      new_line(writestream);
+      new_line(g_Writer.GetStream());
       save(fun);
       newcont(compound_apply_continue);
       }
@@ -1073,19 +1073,19 @@ NODE *evaluator(NODE *list, enum labels where)
       {
       for (i = 0; i < trace_level; i++) 
          {
-         print_space(writestream);
+         print_space(g_Writer.GetStream());
          }
-      print_node(writestream, fun);
+      print_node(g_Writer.GetStream(), fun);
       if (val == Unbound)
          {
          // trace that the procedure stopped (without outputting anything)
-         ndprintf(writestream, " stops\n");
+         ndprintf(g_Writer.GetStream(), " stops\n");
          }
       else
          {
          // trace the output
          NODE * quoted_val = vref(maybe_quote(val));
-         ndprintf(writestream, " outputs %s\n", quoted_val);
+         ndprintf(g_Writer.GetStream(), " outputs %s\n", quoted_val);
          deref(quoted_val);
          }
       }

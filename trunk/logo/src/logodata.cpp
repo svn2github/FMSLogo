@@ -802,7 +802,7 @@ NODE *lpprop(NODE *args)
          NODE * propertyvalue = vref(maybe_quote(newval));
 
          ndprintf(
-            writestream, 
+            g_Writer.GetStream(), 
             "Pprop %s %s %s", 
             propertylist,
             propertyname,
@@ -815,9 +815,9 @@ NODE *lpprop(NODE *args)
          // trace the name of the function where the pprop was run.
          if (ufun != NIL)
             {
-            ndprintf(writestream, " in %s\n%s", ufun, this_line);
+            ndprintf(g_Writer.GetStream(), " in %s\n%s", ufun, this_line);
             }
-         new_line(writestream);
+         new_line(g_Writer.GetStream());
          }
 
       NODE * plist = plist__caseobj(plname);

@@ -466,6 +466,7 @@ extern void init(void);
 extern void uninit(void);
 
 // File files.cpp
+extern void PrintWorkspaceToFileStream(FILE * FileStream);
 extern FILE *open_file(NODE *arg, const char *access);
 extern NODE *ldribble(NODE *arg);
 extern NODE *lnodribble(NODE *arg);

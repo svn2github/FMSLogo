@@ -21,7 +21,7 @@
 
 #include "allwind.h"
 
-void filesave(const char *Filename)
+void filesave(const char *FileName)
    {
    if (::FindWindow(NULL, "Editor"))
       {
@@ -33,30 +33,9 @@ void filesave(const char *Filename)
          MB_OK | MB_ICONQUESTION);
       }
 
-   FILE * tmp = writestream;
-   writestream = fopen(Filename, "w+");
-   if (writestream != NULL)
-      {
-      bool save_yield_flag = yield_flag;
-      yield_flag = false;
-      lsetcursorwait(NIL);
-
-      NODE * entire_workspace = vref(cons_list(lcontents(NIL)));
-      lpo(entire_workspace);
-      deref(entire_workspace);
-
-      fclose(writestream);
-      IsDirty = false;
-
-      lsetcursorarrow(NIL);
-      yield_flag = save_yield_flag;
-      }
-   else
-      {
-      err_logo(FILE_ERROR, make_static_strnode("Could not open file"));
-      }
-   writestream = tmp;
+   PrintWorkspaceToFileStream(fopen(FileName, "w+"));
    }
+
 
 bool fileload(const char *Filename)
    {
