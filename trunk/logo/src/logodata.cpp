@@ -23,7 +23,13 @@
 #include "allwind.h"
 #include "version.h"
 
-// characters that must be escaped with a backslash when put in a string
+// special_chars[] is an array of characters that must be escaped 
+// with a backslash when put in a string.
+//
+// The series of "+" characters from 0x7 to 0xD (but not 0xB) represent 
+// a hole in the set of backslahed representations.
+//
+// REVISIT: why does ? and the infix operators need to be backslashed?
 //
 //                               1         2           3
 //                      3 4 56789012345678901234 5 678901
@@ -40,6 +46,7 @@ static char ecma_array[128];
 
 char ecma_set(int ch)
    {
+   // Return the backslashed form of "ch".
    ch &= 0xFF;
    if (ch >= 0x80)
       {
@@ -50,24 +57,32 @@ char ecma_set(int ch)
 
 char ecma_clear(int ch)
    {
+   // Return the unbackslashed form of "ch".
    ch &= 0xFF;
    if (ch < ecma_begin || ch >= ecma_begin + sizeof(special_chars) - 1) 
       {
+      // ch is not backslashed
       return ch;
       }
-   if (ch >= 0x7 && ch <= 0xD) 
+   if (ch >= 0x7 && ch <= 0xD && ch != 0xB) 
       {
+      // ch is not backslashed
       return ch;
       }
 
+   // ch is backslashed
    return special_chars[ch - ecma_begin];
    }
 
 int ecma_get(int ch)
    {
+   // return 0 if "ch" is backslashed.
+   // return 1, otherwise.
+
    ch &= 0xFF;
-   return ((ch >= ecma_begin && ch < ecma_begin + sizeof(special_chars) - 1)
-      && (ch < 0x7 || ch > 0xD));
+   return 
+      ((ch >= ecma_begin && ch < ecma_begin + sizeof(special_chars) - 1) && 
+       (ch < 0x7 || ch > 0xD || ch == 0xB));
    }
 
 void init_ecma_array()
