@@ -114,8 +114,8 @@ TO ERRORTEST
    (RUNEXPECTERRORTEST [PROCEDURE.WITH.TO.INSIDE.IT]          23 "|Can't use TO inside a procedure|) ; bug 1455201
    (RUNEXPECTERRORTEST [TEXT "NO.SUCH.PROCEDURE.IS.DEFINED]   24 "|I don't know how to NO.SUCH.PROCEDURE.IS.DEFINED|)
    (RUNEXPECTERRORTEST [IFTRUE "x]                            25 "|IFTRUE without TEST|)
-   (RUNEXPECTERRORTEST [PARSE "\] ]                           26 "|unexpected ']'|)
-   (RUNEXPECTERRORTEST [RUN "|}|  ]                           27 "|unexpected '}'|)
+   (RUNEXPECTERRORTEST [LOAD "unexpectedclosebracket.lgo]     26 "|unexpected ']'|)
+   (RUNEXPECTERRORTEST [LOAD "unexpectedclosebrace.lgo]       27 "|unexpected '}'|)
 
    ; error 28: is "can't initialize graphics", which is never thrown in FMSLogo
 
@@ -127,7 +127,7 @@ TO ERRORTEST
    ; error 31: can only be tested at the top level
 
    (RUNEXPECTERRORTEST [APPLY "ONE.INPUT.NO.OUTPUT 1 ]        32 "|APPLY doesn't like 1 as input|)
-   (RUNEXPECTERRORTEST [LOAD "endinmultilineinstruction.lgo]  33 "|END inside multi-line instruction|)
+   (RUNEXPECTERRORTEST [LOAD "endinmultilineinstruction.lgo]  33 "|END inside multi-line instruction in END.INSIDE.MULTILINE.INSTRUCTION|)
 
    CATCH "PAUSE [CONTINUE]
 
