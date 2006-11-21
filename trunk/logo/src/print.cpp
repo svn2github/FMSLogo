@@ -328,8 +328,9 @@ void real_print_node(FILE *strm, const NODE *nd, int depth, int width)
             // word was not in vbars
             for (i = 0; i < wid; i++)
                {
-               if (strchr(special_chars, (int) * cp))
+               if (is_special_character(*cp))
                   {
+                  // *cp must be escaped with a backslash
                   print_char(strm, '\\');
                   }
                print_char(strm, *cp++);

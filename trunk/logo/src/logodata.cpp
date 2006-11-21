@@ -23,7 +23,9 @@
 #include "allwind.h"
 #include "version.h"
 
-// special_chars[] is an array of characters that must be escaped 
+#ifdef ecma
+
+// g_SpecialCharacters[] is an array of characters that must be escaped
 // with a backslash when put in a string.
 //
 // The series of "+" characters from 0x7 to 0xD (but not 0xB) represent 
@@ -31,11 +33,15 @@
 //
 // REVISIT: why does ? and the infix operators need to be backslashed?
 //
-//                               1         2           3
-//                      3 4 56789012345678901234 5 678901
-char special_chars[] = " \t\n(?????+++~)[]-*/=<>\"\\:;|{}";
+//                                            1         2           3
+//                                   3 4 56789012345678901234 5 678901
+static char g_SpecialCharacters[] = " \t\n(?????+++~)[]-*/=<>\"\\:;|{}";
 
-#ifdef ecma
+bool
+is_special_character(char ch)
+   {
+   return strchr(g_SpecialCharacters, ch) != NULL;
+   }
 
 const int ecma_begin = 3; // first char used for quoteds
 
@@ -59,7 +65,7 @@ char ecma_clear(int ch)
    {
    // Return the unbackslashed form of "ch".
    ch &= 0xFF;
-   if (ch < ecma_begin || ch >= ecma_begin + sizeof(special_chars) - 1) 
+   if (ch < ecma_begin || ch >= ecma_begin + sizeof(g_SpecialCharacters) - 1) 
       {
       // ch is not backslashed
       return ch;
@@ -71,17 +77,17 @@ char ecma_clear(int ch)
       }
 
    // ch is backslashed
-   return special_chars[ch - ecma_begin];
+   return g_SpecialCharacters[ch - ecma_begin];
    }
 
 int ecma_get(int ch)
    {
-   // return 0 if "ch" is backslashed.
-   // return 1, otherwise.
+   // return 1 if "ch" is backslashed.
+   // return 0, otherwise.
 
    ch &= 0xFF;
    return 
-      ((ch >= ecma_begin && ch < ecma_begin + sizeof(special_chars) - 1) && 
+      ((ch >= ecma_begin && ch < ecma_begin + sizeof(g_SpecialCharacters) - 1) && 
        (ch < 0x7 || ch > 0xD || ch == 0xB));
    }
 
@@ -96,9 +102,9 @@ void init_ecma_array()
    // Override the special characters to map to ecma_begin+index.
    // Characters a "backslashed" by replacing them with very small 
    // values that are usually used for control characters.
-   for (int i = 0; i < sizeof(special_chars) - 1; i++)
+   for (int i = 0; i < sizeof(g_SpecialCharacters) - 1; i++)
       {
-      ecma_array[special_chars[i]] = ecma_begin+i;
+      ecma_array[g_SpecialCharacters[i]] = ecma_begin+i;
       }
    }
 
@@ -154,10 +160,14 @@ char *mend_strnzcpy(char *dst, const char * src, int len)
          }
       if (vbar)
          {
-         if (strchr(special_chars, (int) * src))
+         if (is_special_character(*src))
+            {
             dst[i++] = setparity(*src++);
+            }
          else
+            {
             dst[i++] = *src++;
+            }
          }
       else
          {
@@ -171,11 +181,15 @@ char *mend_strnzcpy(char *dst, const char * src, int len)
                   }
                while (*src != '\0' && *src != '~' && *(src + 1) != '\n');
             }
-         if (*src != '|') dst[i++] = *src++;
+
+         if (*src != '|') 
+            {
+            dst[i++] = *src++;
+            }
          }
       }
    dst[len] = '\0';
-   return (dst);
+   return dst;
    }
 
 char *mend_nosemi(char *dst, const char * src, int len)
@@ -191,10 +205,14 @@ char *mend_nosemi(char *dst, const char * src, int len)
          }
       if (vbar)
          {
-         if (strchr(special_chars, (int) * src))
+         if (is_special_character(*src))
+            {
             dst[i++] = setparity(*src++);
+            }
          else
+            {
             dst[i++] = *src++;
+            }
          }
       else
          {
@@ -202,11 +220,14 @@ char *mend_nosemi(char *dst, const char * src, int len)
             {
             while (*src == '~' && *(src + 1) == '\n') src += 2;
             }
-         if (*src != '|') dst[i++] = *src++;
+         if (*src != '|') 
+            {
+            dst[i++] = *src++;
+            }
          }
       }
    dst[len] = '\0';
-   return (dst);
+   return dst;
    }
 
 char *quote_strnzcpy(char *dst, const char *src, int len)

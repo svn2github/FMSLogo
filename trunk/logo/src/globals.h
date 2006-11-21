@@ -65,9 +65,6 @@ extern CNetworkConnection g_ClientConnection;
 extern CNetworkConnection g_ServerConnection;
 
 // logodata.cpp
-#ifdef ecma
-extern char special_chars[];
-#endif
 
 // mem.cpp
 extern NODE **gcstack;
