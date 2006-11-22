@@ -323,7 +323,6 @@ extern NODE *llogoversion(NODE *args);
 extern bool variableIsTrue(NODE *variable);
 
 // File term.cpp
-extern void term_init(void);
 extern NODE *lcleartext(NODE *args);
 extern NODE *lcursor(NODE *args);
 extern NODE *lsetcursor(NODE *args);

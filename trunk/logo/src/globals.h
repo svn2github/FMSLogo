@@ -166,8 +166,7 @@ extern CFileStream g_Writer;
 // coms.cpp
 extern FIXNUM ift_iff_flag;
 
-// term.cpp
-extern bool interactive;
+// ibmterm.cpp
 extern bool in_erase_mode;
 
 // paren.cpp

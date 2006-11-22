@@ -648,7 +648,7 @@ NODE *lreadchar(NODE *)
    char c;
    if (!setjmp(iblk_buf))
       {
-      if (interactive && g_Reader.GetStream() == stdin)
+      if (g_Reader.GetStream() == stdin)
          {
          c = (char) rd_getc(stdin);
          }
@@ -658,6 +658,7 @@ NODE *lreadchar(NODE *)
          }
       }
    input_blocking = false;
+
    if (feof(g_Reader.GetStream()))
       {
       return NIL;
@@ -672,7 +673,7 @@ NODE *lreadchar(NODE *)
       return make_strnode(
         &c,
         1,
-        (getparity(c) ? STRING : BACKSLASH_STRING),
+        getparity(c) ? STRING : BACKSLASH_STRING,
         strnzcpy);
       }
    }
@@ -732,11 +733,9 @@ NODE *leofp(NODE *)
 
 NODE *lkeyp(NODE *)
    {
-   if (g_Reader.GetStream() == stdin && interactive)
+   if (g_Reader.GetStream() == stdin)
       {
-      //fflush(stdout);
       return Truex;
-      //return kbhit() ? Truex : Falsex
       }
 
    return leofp(NIL);

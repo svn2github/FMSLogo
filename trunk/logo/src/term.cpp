@@ -22,14 +22,6 @@
 
 #include "allwind.h"
 
-bool interactive;
-
-void term_init()
-   {
-   interactive = true;
-   ift_iff_flag = -1;
-   }
-
 NODE *lcleartext(NODE *)
    {
    clearcombobox();

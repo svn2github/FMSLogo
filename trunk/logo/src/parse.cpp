@@ -153,19 +153,18 @@ NODE *reader(FILE *strm, const char *prompt)
       }
 
    phys_line = p_line;
-   if (strm == stdin && *prompt)
-     {
-      if (interactive) 
-         {
-         rd_print_prompt(prompt);
-         }
-      if (dribblestream != NULL)
-         {
-         fprintf(dribblestream, "%s", prompt);
-         }
-      }
    if (strm == stdin)
       {
+      if (*prompt)
+         {
+         rd_print_prompt(prompt);
+
+         if (dribblestream != NULL)
+            {
+            fprintf(dribblestream, "%s", prompt);
+            }
+         }
+
       input_blocking = true;
       clear_is_running_erract_flag();
       }
@@ -195,10 +194,7 @@ NODE *reader(FILE *strm, const char *prompt)
             this_type = BACKSLASH_STRING;
             if (c == setparity('\n') && strm == stdin)
                {
-               if (interactive)
-                  {
-                  rd_print_prompt("\\ ");
-                  }
+               rd_print_prompt("\\ ");
 
                if (dribbling)
                   {
@@ -268,10 +264,8 @@ NODE *reader(FILE *strm, const char *prompt)
             incomment = false;
             if (strm == stdin)
                {
-               if (interactive)
-                  {
-                  rd_print_prompt(vbar ? "| " : "~ ");
-                  }
+               rd_print_prompt(vbar ? "| " : "~ ");
+
                if (dribbling)
                   {
                   fprintf(dribblestream, vbar ? "| " : "~ ");
@@ -292,10 +286,9 @@ NODE *reader(FILE *strm, const char *prompt)
             if (c == '\n' && strm == stdin)
                {
                incomment = false;
-               if (interactive) 
-                  {
-                  rd_print_prompt("~ ");
-                  }
+
+               rd_print_prompt("~ ");
+
                if (dribbling)
                   {
                   fprintf(dribblestream, "~ ");
@@ -319,10 +312,8 @@ NODE *reader(FILE *strm, const char *prompt)
       }
    if (c == EOF && strm == stdin)
       {
-      if (interactive) 
-         {
-         clearerr(stdin);
-         }
+      clearerr(stdin);
+
       rd_print_prompt("\n");
       }
    if (phys_line == p_line)

@@ -2028,7 +2028,6 @@ void TMainFrame::SetupWindow()
 
    // it's show time for our little friend
    draw_turtle(true);
-   term_init();
    }
 
 void TMainFrame::UndockCommanderWindow()
