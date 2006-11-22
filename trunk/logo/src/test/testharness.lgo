@@ -102,6 +102,7 @@ LOAD "slowdraw.lgo
 LOAD "status.lgo
 LOAD "type.lgo
 LOAD "zoom.lgo
+LOAD "bitblock.lgo
 
 TO TESTALL
 
@@ -152,6 +153,7 @@ TO TESTALL
   CONTROLFLOWTEST    ; from controlflow.lgo
   ACTIVEAREATEST     ; from activearea.lgo
   BITMAPTEST         ; from bitmap.lgo
+  BITBLOCKTEST       ; from bitblock.lgo
   FORMTEST           ; from form.lgo
   PRINTTEST          ; from print.lgo
   EDITORTEST         ; from editor.lgo 
