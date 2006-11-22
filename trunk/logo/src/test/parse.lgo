@@ -1,14 +1,12 @@
 LOAD "testlib.lgo
 
-
-MAKE "~IGNOREMEWASCALLED "false 
-
 TO ~IGNOREME
    MAKE "~IGNOREMEWASCALLED "true 
 END
 
-TO ~IGNOREMEWASCALLED
-   OUTPUT :~IGNOREMEWASCALLED
+
+TO ~CALLME
+   MAKE "~CALLMEWASCALLED "true 
 END
 
 
@@ -18,22 +16,63 @@ END
 ;
 ; comments in the main scope should be ignored
 ;
-TO DIFFICULTCOMMENTS ; comments here should be legal
+TO DIFFICULTCOMMENTS1 ; comments here should be legal
 
   ; a single vertical bar in a comment |
 
-  ; other special characters ?[]!+
+  ; other special characters ?][!+}{"<>-
+
+  ; The Great Logo Atlas conformance test:\
+  comments can be continued to the next line when\
+  then end in a backslash
+
+  ; a comment with nothing after it
+  ;
 
   ; regression test: tildes should be ignored ~ignoreme
 
   OUTPUT ; a comment that continues~
-  1 
+  1 ; comment here is okay
 END ; comments here should be legal
+
+TO DIFFICULTCOMMENTS2
+  ; try a comment immediatly followed by a tilde
+  OUTPUT ;~
+  2
+END
+
+TO LINECONTINUATION3
+
+  ; a multi-line continuation
+
+  OUTPUT ; commnet ~
+  ;~
+  ~
+~
+  3~
+  ; almost done~
+~
+
+END
+
+TO TILDAINLINE
+  ~CALLME ; yes, this is a function
+  OUTPUT 4
+END
 
 
 TO PARSETEST.FUNC
-   SIMPLEREPORTTEST [DIFFICULTCOMMENTS]  1
-   SIMPLEREPORTTEST [~IGNOREMEWASCALLED] "false
+
+   LOCALMAKE "~IGNOREMEWASCALLED "false
+   LOCALMAKE "~CALLMEWASCALLED   "false
+
+   SIMPLEREPORTTEST [DIFFICULTCOMMENTS1]  1
+   SIMPLEREPORTTEST [DIFFICULTCOMMENTS2]  2
+   SIMPLEREPORTTEST [LINECONTINUATION3]   3
+   SIMPLEREPORTTEST [TILDAINLINE]         4
+
+   SIMPLEREPORTTEST [:~IGNOREMEWASCALLED] "false
+   SIMPLEREPORTTEST [:~CALLMEWASCALLED]   "true
 END
 
 TO PARSETEST.NUMBER
