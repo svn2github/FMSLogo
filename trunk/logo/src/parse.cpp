@@ -350,12 +350,14 @@ NODE *list_to_array(NODE *list)
 // The parsed text is returned as a NODE* list.
 // Nested arrays and lists are parsed into their structured form.
 // parser_iterate() sets stopping_flag to THROWING if it encounters a syntax error.
+//
+// if "ignore_comments" is true then comments should be ignored
 static
 NODE *
 parser_iterate(
    const char **inln,
    const char *inlimit,
-   bool        semi, 
+   bool        ignore_comments, 
    int         endchar
    )
    {
@@ -384,9 +386,12 @@ parser_iterate(
          }
 
       /* skip through comments and line continuations */
-      while (!vbar && ((semi && ch == ';') ||
-              (ch == '~' && **inln == '\n')))
+      while (!vbar && 
+             ((ignore_comments && ch == ';') || (ch == '~' && **inln == '\n')))
          {
+
+         // If this is a line continuation, keep going 
+         // until we reach the end of the next line
          while (ch == '~' && **inln == '\n')
             {
             if (++ (*inln) >= inlimit) 
@@ -394,14 +399,14 @@ parser_iterate(
                *inln = &terminate;
                }
             ch = **inln;
-            if (windex == 0) 
+            if (windex == 0)
                {
                wptr = *inln;
                }
             else
                {
                if (**inln == ']' || **inln == '[' ||
-                     **inln == '{' || **inln == '}')
+                   **inln == '{' || **inln == '}')
                   {
                   ch = ' ';
                   break;
@@ -417,28 +422,32 @@ parser_iterate(
                }
             }
 
-         if (semi && ch == ';')
+         // If this is a comment and we're supposed to ignore comments, 
+         // keep going until the end of the line.
+         if (ignore_comments && ch == ';')
             {
-            if (**inln != '\n' && **inln != '\r')
-               do
+            // While ch is not the end of the string and
+            // the next char is not the end of the line
+            while (ch != '\0' && **inln != '\n')
+               {
+               // advance to the next character
+               ch = **inln;
+               if (windex == 0) 
                   {
-                  ch = **inln;
-                  if (windex == 0) 
-                     {
-                     wptr = *inln;
-                     }
-                  else 
-                     {
-                     broken = true;
-                     }
-
-                  if (++ (*inln) >= inlimit) 
-                     {
-                     *inln = &terminate;
-                     }
+                  wptr = *inln;
                   }
-               while (ch != '\0' && ch != '~' && **inln != '\n' && **inln != '\r');
+               else 
+                  {
+                  broken = true;
+                  }
 
+               if (++ (*inln) >= inlimit) 
+                  {
+                  *inln = &terminate;
+                  }
+               }
+
+            // mark this as the end of a line
             if (ch != '\0' && ch != '~') 
                {
                ch = '\n';
@@ -446,7 +455,7 @@ parser_iterate(
             }
          }
 
-      /* flag that this word will be of BACKSLASH_STRING type */
+      // flag that this word will be of BACKSLASH_STRING type
       if (getparity(ch)) 
          {
          this_type = BACKSLASH_STRING;
@@ -487,7 +496,7 @@ parser_iterate(
       else if (ch == '[')
          {
          // this is a '[', parse a new list 
-         tnode = cons_list(parser_iterate(inln, inlimit, semi, ']'));
+         tnode = cons_list(parser_iterate(inln, inlimit, ignore_comments, ']'));
          if (**inln == '\0') 
             {
             ch = '\0';
@@ -495,29 +504,17 @@ parser_iterate(
          }
       else if (ch == '{')
          {
-         NODE * array_as_list = parser_iterate(inln, inlimit, semi, '}');
+         NODE * array_as_list = parser_iterate(inln, inlimit, ignore_comments, '}');
          tnode = cons_list(list_to_array(array_as_list));
          gcref(array_as_list);
          if (**inln == '@')
             {
-            // parse the origin as a number
-            // CONSIDER for MAINTAINABILITY: use strtol() here
-            int sign = 1;
+            // parse the origin as a decimal number
+            char * unparsedPortion;
+            long origin = strtol((*inln) + 1, &unparsedPortion, 10);
+            *inln = unparsedPortion;
 
-            (*inln) ++;
-            if (**inln == '-')
-               {
-               sign = -1;
-               (*inln) ++;
-               }
-
-            int i = 0;
-            while ((ch = **inln) >= '0' && ch <= '9')
-               {
-               i = (i * 10) + ch - '0';
-               (*inln) ++;
-               }
-            setarrorg(car(tnode), sign * i);
+            setarrorg(car(tnode), origin);
             }
          if (**inln == '\0') 
             {
@@ -531,20 +528,32 @@ parser_iterate(
          // this character or the next one will terminate string, make the word 
          if (windex > 0)
             {
-            NODE * string_node;
-            if (!broken)
+
+            char * (*copyRoutine) (char *, const char *, int);
+
+            if (broken)
                {
-               string_node = make_strnode(wptr, windex, this_type, strnzcpy);
+               // The logical line is broken across several lines,
+               // so it must be mended.
+               copyRoutine = ignore_comments ? mend_strnzcpy : mend_nosemi;
                }
             else
                {
-               string_node = make_strnode(wptr, windex, this_type, (semi ? mend_strnzcpy : mend_nosemi));
-               broken = false;
+               // The logical line is entirely on a single line,
+               // so a normal string copy will suffice.
+               copyRoutine = strnzcpy;
                }
+
+            NODE * string_node = make_strnode(
+               wptr, 
+               windex, 
+               this_type, 
+               copyRoutine);
 
             tnode = cons_list(string_node);
             this_type = STRING;
             windex = 0;
+            broken = false;
             }
          }
 
@@ -552,6 +561,8 @@ parser_iterate(
       return_list.AppendList(tnode);
       }
    while (ch);
+
+
    return return_list.GetList();
    }
 

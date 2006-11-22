@@ -40,6 +40,7 @@ Part II) New features/bugs fixed:
     o Fix bug #1583317; [ \{ ] is now parsed correctly.
     o Fix bug #1372200; Scrollbars on screen window now always repaint when 
       you run SPLITSCREEN.
+    o Fix bug #1395739; Comments can now contain a tilde (~).
     o Implement request #1592813; SHELL now supports an option to wait for 
       the program to finish before running the next instruction.
     o Implement request #1480374; There are now separate menu options for
