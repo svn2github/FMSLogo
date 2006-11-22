@@ -979,51 +979,53 @@ NODE *lbitblock(NODE *arg)
    {
    ASSERT_TURTLE_INVARIANT
 
-   POINT dest;
-   if (!WorldCoordinateToScreenCoordinate(g_Turtles[turtle_which].Position, dest))
+   POINT turtleLocation;
+   if (!WorldCoordinateToScreenCoordinate(
+          g_Turtles[turtle_which].Position, 
+          turtleLocation))
       {
+      // the turtle is not on the screen
       return Unbound;
       }
 
    // get args
-   int CutWidth = getint(pos_int_arg(arg));
-   int CutHeight = getint(pos_int_arg(cdr(arg)));
+   int cutWidth = getint(pos_int_arg(arg));
+   int cutHeight = getint(pos_int_arg(cdr(arg)));
 
    if (NOT_THROWING)
       {
-      // only if a surface was specified continue or UAEs big time
-      if ((CutWidth != 0) && (CutHeight != 0))
+      // only do the blit if a non-zero area was specified
+      if (cutWidth != 0 && cutHeight != 0)
          {
-         HBRUSH TempBrush = CreateBrushIndirect(&FloodBrush);
+         HBRUSH fillBrush = CreateBrushIndirect(&FloodBrush);
 
-         HDC ScreenDC = GetDC(MainWindowx->ScreenWindow->HWindow);
+         TScreenWindow * const screen = MainWindowx->ScreenWindow;
+         HDC screenDC = GetDC(screen->HWindow);
 
          // memory
-         HDC MemDC = CreateCompatibleDC(ScreenDC);
-         HBITMAP oldBitmap = (HBITMAP) SelectObject(MemDC, MemoryBitMap);
+         HDC memDC = CreateCompatibleDC(screenDC);
+         HBITMAP oldBitmap = (HBITMAP) SelectObject(memDC, MemoryBitMap);
 
          if (EnablePalette)
             {
-            OldPalette = SelectPalette(MemDC, ThePalette, FALSE);
-            RealizePalette(MemDC);
+            OldPalette = SelectPalette(memDC, ThePalette, FALSE);
+            RealizePalette(memDC);
             }
 
-         RECT TempRect;
-         SetRect(
-            &TempRect,
-            +dest.x + xoffset,
-            -dest.y + yoffset + LL - CutHeight,
-            +dest.x + xoffset + CutWidth,
-            -dest.y + yoffset + LL);
+         RECT memoryRect;
+         memoryRect.left   = +turtleLocation.x + xoffset;
+         memoryRect.right  = memoryRect.left + cutWidth;
+         memoryRect.bottom = -turtleLocation.y + yoffset + LL;
+         memoryRect.top    = memoryRect.bottom - cutHeight;
 
-         FillRect(MemDC, &TempRect, TempBrush);
+         FillRect(memDC, &memoryRect, fillBrush);
 
-         SelectObject(MemDC, oldBitmap);
+         SelectObject(memDC, oldBitmap);
          if (EnablePalette)
             {
-            SelectPalette(MemDC, OldPalette, FALSE);
+            SelectPalette(memDC, OldPalette, FALSE);
             }
-         DeleteDC(MemDC);
+         DeleteDC(memDC);
 
          //screen
 
@@ -1033,38 +1035,43 @@ NODE *lbitblock(NODE *arg)
          HPALETTE oldPalette2;
          if (EnablePalette)
             {
-            oldPalette2 = SelectPalette(ScreenDC, ThePalette, FALSE);
-            RealizePalette(ScreenDC);
+            oldPalette2 = SelectPalette(screenDC, ThePalette, FALSE);
+            RealizePalette(screenDC);
             }
 
          if (zoom_flag)
             {
-            MainWindowx->ScreenWindow->Invalidate(false);
+            // It's easier to invalidate the screen and forcing a 
+            // repaint from the image memory.
+            screen->Invalidate(false);
             }
          else
             {
-            SetRect(
-               &TempRect,
-               +dest.x - MainWindowx->ScreenWindow->Scroller->XPos + xoffset,
-               -dest.y - MainWindowx->ScreenWindow->Scroller->YPos + yoffset + LL - CutHeight,
-               +dest.x - MainWindowx->ScreenWindow->Scroller->XPos + xoffset + CutWidth,
-               -dest.y - MainWindowx->ScreenWindow->Scroller->YPos + yoffset + LL);
+            // Shift the coordinates of the memory rectange by how
+            // much the screen is scrolled to get the screen coordinates.
+            const UINT scrollerX = screen->Scroller->XPos;
+            const UINT scrollerY = screen->Scroller->YPos;
 
-            FillRect(ScreenDC, &TempRect, TempBrush);
+            RECT screenRect;
+            screenRect.left   = memoryRect.left   - scrollerX;
+            screenRect.right  = memoryRect.right  - scrollerX;
+            screenRect.top    = memoryRect.top    - scrollerY;
+            screenRect.bottom = memoryRect.bottom - scrollerY;
+
+            FillRect(screenDC, &screenRect, fillBrush);
             }
 
          if (EnablePalette)
             {
-            SelectPalette(ScreenDC, oldPalette2, FALSE);
+            SelectPalette(screenDC, oldPalette2, FALSE);
             }
 
-         ReleaseDC(MainWindowx->ScreenWindow->HWindow, ScreenDC);
+         ReleaseDC(screen->HWindow, screenDC);
 
-         DeleteObject(TempBrush);
+         DeleteObject(fillBrush);
 
          draw_turtle(true);
          }
-
       }
 
    return Unbound;
