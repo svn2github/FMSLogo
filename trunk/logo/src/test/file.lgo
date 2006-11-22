@@ -292,6 +292,21 @@ TO FILETEST.BADINPUT
    ; test ALLOPEN
    RUNTOOMANYINPUTSTEST   [(ALLOPEN "toomany)]
 
+   ; test EOFP
+   RUNTOOMANYINPUTSTEST   [(EOFP "toomany)]
+
+   ; test SETREAD
+   RUNFILESYSTEMERRORTEST [SETREAD    {1}]
+   RUNFILESYSTEMERRORTEST [SETREAD    :longfilename]
+   RUNNOTENOUGHINPUTSTEST [(SETREAD)]
+   RUNTOOMANYINPUTSTEST   [(SETREAD "file.txt "toomany)]
+
+   ; test SETWRITE
+   RUNFILESYSTEMERRORTEST [SETWRITE   {1}]
+   RUNFILESYSTEMERRORTEST [SETWRITE   :longfilename]
+   RUNNOTENOUGHINPUTSTEST [(SETWRITE)]
+   RUNTOOMANYINPUTSTEST   [(SETWRITE "file.txt "toomany)]
+
 END
 
 TO FILETEST.ERASEFILE
@@ -395,6 +410,58 @@ TO FILETEST.CLOSEREADER
 
 END
 
+TO FILETEST.SETREAD.CLOSEDFILE
+
+   ; Sets the READER/WRITER to a closed file.
+
+   LOCALMAKE "openfile    "openfile.txt
+   LOCALMAKE "closedfile  "closedfile.txt
+
+   LOCALMAKE "oldreader READER
+   LOCALMAKE "oldwriter WRITER
+
+   ; set the reader/writer to something
+   OPENAPPEND :openfile
+   SETREAD    :openfile
+   SETWRITE   :openfile
+
+   ; create the file that we will close
+   OPENWRITE :closedfile
+   CLOSE     :closedfile
+
+   ; try to set the writer to the closed file
+   RUNFILESYSTEMERRORTEST [SETWRITE :closedfile]
+   SIMPLEREPORTTEST       [WRITER]  :openfile
+
+   OPENREAD  :closedfile
+   CLOSE     :closedfile
+
+   RUNFILESYSTEMERRORTEST [SETREAD :closedfile]
+   SIMPLEREPORTTEST       [READER] :openfile
+
+   CLOSE     :openfile
+
+   ; cleanup
+   ERASEFILE :openfile
+   ERASEFILE :closedfile
+END
+
+TO FILETEST.EOFPONSTDIN
+
+    LOCALMAKE "oldreader READER
+
+    ; change the reader to STDIN
+    TRACEINSTRUCTION [ SETREAD [] ]
+
+    ; EOFP should return false
+    SIMPLEREPORTTEST [ EOFP ] "false
+    SIMPLEREPORTTEST [ EOF? ] "false
+
+    ; restore the original reader
+    SETREAD :oldreader
+END
+
+
 TO FILETEST
 
   ; This tests the basic functionality of the following functions
@@ -417,6 +484,9 @@ TO FILETEST
   FILETEST.OPENOPENFILE
   FILETEST.OPENDIRECTORYASFILE
 
+  FILETEST.EOFPONSTDIN
+
   FILETEST.BADINPUT
+  FILETEST.SETREAD.CLOSEDFILE
 END
 
