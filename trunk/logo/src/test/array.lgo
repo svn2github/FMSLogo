@@ -52,6 +52,38 @@ TO ARRAYORIGINTEST
    SIMPLEREPORTTEST [ITEM  0 :myarray] 3
    SIMPLEREPORTTEST [ITEM  1 :myarray] 4
 
+   MAKE "myarray {1 2 3 4}@0
+   SIMPLEREPORTTEST [COUNT :myarray ] 4
+   SIMPLEREPORTTEST [ITEM  0 :myarray] 1
+   SIMPLEREPORTTEST [ITEM  1 :myarray] 2
+   SIMPLEREPORTTEST [ITEM  2 :myarray] 3
+   SIMPLEREPORTTEST [ITEM  3 :myarray] 4
+
+   MAKE "myarray {1 2 3 4}@-100
+   SIMPLEREPORTTEST [COUNT :myarray ] 4
+   SIMPLEREPORTTEST [ITEM  -100 :myarray] 1
+   SIMPLEREPORTTEST [ITEM  -99  :myarray] 2
+   SIMPLEREPORTTEST [ITEM  -98  :myarray] 3
+   SIMPLEREPORTTEST [ITEM  -97  :myarray] 4
+
+   MAKE "myarray {1 2 3 4}@+12345
+   SIMPLEREPORTTEST [COUNT :myarray ] 4
+   SIMPLEREPORTTEST [ITEM  12345 :myarray]  1
+   SIMPLEREPORTTEST [ITEM  12346  :myarray] 2
+   SIMPLEREPORTTEST [ITEM  12347  :myarray] 3
+   SIMPLEREPORTTEST [ITEM  12348  :myarray] 4
+
+   ; bad input to origin
+   (RUNEXPECTERRORTEST 
+        [ MAKE "myarray {1 2 3 4}@1e10]
+        13 
+        "|I don't know how to e10|)
+
+   (RUNEXPECTERRORTEST 
+        [ MAKE "myarray {1 2 3 4}@1.23 SHOW 1]  
+        9 
+        "|You don't say what to do with 0.23|)
+
 END
 
 
