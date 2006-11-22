@@ -445,9 +445,58 @@ NODE *lwait(NODE *args)
 
 NODE *lshell(NODE *args)
    {
-   char textbuf[MAX_BUFFER_SIZE];
-   cnv_strnode_string(textbuf, args);
+   char shellCommand[MAX_BUFFER_SIZE];
+   cnv_strnode_string(shellCommand, args);
 
-   int rval = WinExec(textbuf, SW_SHOW);
-   return true_or_false(rval > 31);
+   bool waitForChildProcess;
+   if (cdr(args) != NIL)
+      {
+      // a second input was given
+      waitForChildProcess = boolean_arg(cdr(args));
+      }
+   else
+      {
+      // no second input was given
+      waitForChildProcess = false;
+      }
+
+   if (stopping_flag == THROWING)
+      {
+      // we were passed invalid arguments
+      return Unbound;
+      }
+
+   STARTUPINFO         startupInfo = {0};
+   PROCESS_INFORMATION processInfo;
+
+   BOOL isOk = CreateProcess(
+      NULL,
+      shellCommand,
+      NULL,  // process security attribute
+      NULL,  // thread security attributes
+      FALSE, // don't inherit handles
+      0,     // creation flags
+      NULL,  // use FMSLogo's environment
+      NULL,  // use FMSLogo's current working directory
+      &startupInfo,
+      &processInfo);
+   if (isOk)
+      {
+      if (waitForChildProcess)
+         {
+         // Wait for the child process to exit.
+         // Do a busy wait so that it can be interrupted by a HALT
+         DWORD waitStatus = WAIT_TIMEOUT;
+         while (waitStatus == WAIT_TIMEOUT && !IsTimeToHalt)
+            {
+            MyMessageScan();
+            waitStatus = ::WaitForSingleObject(processInfo.hProcess, 10);
+            }
+         }
+
+      CloseHandle(processInfo.hProcess);
+      CloseHandle(processInfo.hThread);
+      }
+
+   return true_or_false(isOk);
    }
