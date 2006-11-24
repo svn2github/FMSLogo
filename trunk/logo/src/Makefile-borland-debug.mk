@@ -332,7 +332,7 @@ DEBUG\logodata.obj :  logodata.cpp version.h
  $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ logodata.cpp
 |
 
-DEBUG\logorc.res :  logorc.rc version.h
+DEBUG\logorc.res :  logorc.rc version.h localizedstrings*.h
   $(BRC32) -R @&&|
  $(IDE_ResFLAGS32) $(ROptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe)  -FO$@ logorc.rc
 |
