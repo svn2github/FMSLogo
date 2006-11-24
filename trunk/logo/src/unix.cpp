@@ -121,8 +121,8 @@ mputcombobox(
    resize_combo_buff(str_length);
 
    // append str
-   combo_buff_length += str_length;
    strcpy(combo_buff + combo_buff_length, str);
+   combo_buff_length += str_length;
 
    // process lines
    char * next_line = combo_buff;
