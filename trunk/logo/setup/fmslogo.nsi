@@ -7,6 +7,8 @@ Name "FMSLogo"
 ; The file to write
 OutFile "fmslogo.exe"
 
+; Use an XP manifest
+XPStyle on
 
 ; The default installation directory
 InstallDir "$PROGRAMFILES\FMSLogo"
@@ -29,6 +31,9 @@ UninstPage instfiles
 ; variables
 var uninstallExe
 
+; Languages
+LoadLanguageFile "${NSISDIR}\Contrib\Language files\English.nlf"  ; the default language
+LoadLanguageFile "${NSISDIR}\Contrib\Language files\French.nlf"
 
 ; uninstall must be able to remove all traces of any 
 ; previous installation.
@@ -39,6 +44,8 @@ Function uninstall
 
   ; Remove files and uninstaller
   Delete $INSTDIR\fmslogo.exe
+  Delete $INSTDIR\fmslogo-1033.exe
+  Delete $INSTDIR\fmslogo-1036.exe
 
   Delete $INSTDIR\logo.hlp
   Delete $INSTDIR\logo.gid
@@ -74,7 +81,23 @@ FunctionEnd
 
 Function .onInit
 
+  ;Language selection dialog
+
+  Push ""
+  Push ${LANG_ENGLISH}
+  Push English
+  Push ${LANG_FRENCH}
+  Push French
+  Push A ; A means auto count languages
+         ; for the auto count to work the first empty push (Push "") must remain
+  LangDLL::LangDialog "Installer Language" "Please select the language of the installer"
+
+  Pop $LANGUAGE
+  StrCmp $LANGUAGE "cancel" 0 SetupUser
+    Abort
+
   ; assume regular user until we know they are a power user
+SetupUser:
   SetShellVarContext current
   StrLen $2 "$PROFILE\FMSLogo"
   StrCpy $INSTDIR "$PROFILE\FMSLogo" $2 0
@@ -164,13 +187,16 @@ Section "FMSLogo"
   ;
   ; Put file there
   ;
-  File "..\src\fmslogo.exe"
+  File "..\src\fmslogo-1033.exe"
+  File "..\src\fmslogo-1036.exe"
   File "..\manual\logohelp.chm"
   File "..\src\Mcistrwh.hlp"
   File "..\src\fmslogo.txt"
   File "..\src\license.txt"
   File /r /x CVS "..\src\logolib"
   File /r /x CVS "..\src\examples"
+
+  CopyFiles "$INSTDIR\fmslogo-$LANGUAGE.exe" "$INSTDIR\fmslogo.exe"
 
   ;
   ; Write the uninstall keys for Windows
@@ -287,6 +313,8 @@ SetupUser.Done:
 
   ; Remove files and uninstaller
   Delete $INSTDIR\fmslogo.exe
+  Delete $INSTDIR\fmslogo-1033.exe
+  Delete $INSTDIR\fmslogo-1036.exe
 
   Delete $INSTDIR\logohelp.chm
 
