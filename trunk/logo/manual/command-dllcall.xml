@@ -1,5 +1,5 @@
 <section id="command-dllcall">
-    <title>DLLCALL</title>
+<title>DLLCALL</title>
 <indexterm><primary>DLLCALL</primary></indexterm>
 
 <variablelist>
@@ -13,7 +13,7 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-Call a given function with the given parameters and outputs the return value.
+Calls a given function with the given parameters and outputs the return value.
 The function must be in the DLL that was loaded with <link linkend="command-dllload">DLLLOAD</link>.
 </para>
 
@@ -64,7 +64,7 @@ This function can handle a wide variety of functions but certainly not all.
 </para>
 
 <para>
-DLLCALL allow you to get outside of &PRODUCTNAME;.
+DLLCALL allows you to get outside of &PRODUCTNAME;.
 You can write your own DLL with a compatible call interface to call more complex interfaces.
 </para>
 
