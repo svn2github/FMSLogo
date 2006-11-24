@@ -30,7 +30,7 @@ IDE_ResFLAGS32 =
 LinkerLocalOptsAtW32_fmslogoddexe =  -v -wdpl -went -wdup -wdef -wimt -wbdl -wsrf -wmsk -L\BC5\LIB -Tpe -aa -V4.0 -c
 ResLocalOptsAtW32_fmslogoddexe = 
 BLocalOptsAtW32_fmslogoddexe = 
-CompInheritOptsAt_fmslogoddexe = -I"\BC5\INCLUDE;C:\PROGRAM FILES\HELP WORKSHOP\INCLUDE" -DSTRICT;_OWLPCH;NOASM;DEBUG;MEM_DEBUG
+CompInheritOptsAt_fmslogoddexe = -I"\BC5\INCLUDE;C:\PROGRAM FILES\HELP WORKSHOP\INCLUDE" -DSTRICT;_OWLPCH;NOASM;DEBUG;MEM_DEBUG;LOCALE=1033
 LinkerInheritOptsAt_fmslogoddexe = -x
 LinkerOptsAt_fmslogoddexe = $(LinkerLocalOptsAtW32_fmslogoddexe)
 ResOptsAt_fmslogoddexe = $(ResLocalOptsAtW32_fmslogoddexe)

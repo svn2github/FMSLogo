@@ -914,7 +914,7 @@ bool TMainFrame::CanClose()
                "FMSLogo does not like exiting while not halted.\n"
                   "\n"
                   "Do you really want to exit FMSLogo?",
-               "Logo is not Halted",
+               LOCALIZED_LOGOISNOTHALTED,
                MB_OKCANCEL | MB_ICONQUESTION) != IDOK)
             {
             return false;
@@ -927,7 +927,7 @@ bool TMainFrame::CanClose()
                "FMSLogo does not like exiting while not halted.\n"
                   "\n"
                	  "Do you really want to Halt FMSLogo?",
-               "Logo is not Halted",
+               LOCALIZED_LOGOISNOTHALTED,
                MB_OKCANCEL | MB_ICONQUESTION) == IDOK)
             {
             CommandWindow->DoButtonHalt(0);

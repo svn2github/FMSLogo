@@ -3,12 +3,14 @@
 # GNU-based build system
 .PHONY : fmslogod.exe fmslogo.exe
 
-all : fmslogo.exe ;
+default : fmslogo-1033.exe;
+
+all : fmslogo-1033.exe fmslogo-1036.exe ;
 debug : fmslogod.exe ;
 
-fmslogo.exe :
-	make -fMakefile-borland-release.mk
-	tdstrp32 fmslogo.exe
+fmslogo-%.exe :
+	make -fMakefile-borland-release.mk -DLOCALECODE=$*
+	tdstrp32 $@
 
 fmslogod.exe :
 	make -fMakefile-borland-debug.mk

@@ -56,6 +56,7 @@
 #include <assert.h>
 #include <errno.h>
 
+#include "localizedstrings.h"
 #include "debugheap.h"
 #include "logorc.h"
 #include "logocore.h"

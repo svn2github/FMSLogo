@@ -6,6 +6,10 @@
 
 !include ..\version.mk
 
+!ifndef LOCALECODE
+   # English-US
+   LOCALECODE=1033
+!endif
 
 #
 # Borland C++ tools
@@ -26,20 +30,24 @@ TASM32  = Tasm32
 IDE_LinkFLAGS32 =  -LC:\BC5\LIB
 IDE_ResFLAGS32 = 
 LinkerLocalOptsAtW32_fmslogodexe =  -wdpl -went -wdup -wdef -wimt -wbdl -wsrf -wmsk -Tpe -aa -V4.0 -c -LC:\BC5\LIB
-ResLocalOptsAtW32_fmslogodexe =  -l1033
+ResLocalOptsAtW32_fmslogodexe = -l$(LOCALECODE)
 BLocalOptsAtW32_fmslogodexe = 
-CompInheritOptsAt_fmslogodexe = -I"C:\Program Files\Help Workshop\include" -IC:\BC5\INCLUDE -DSTRICT;_OWLPCH;NDEBUG
+CompInheritOptsAt_fmslogodexe = -I"C:\Program Files\Help Workshop\include" -IC:\BC5\INCLUDE -DSTRICT;_OWLPCH;NDEBUG;LOCALE=$(LOCALECODE)
 LinkerInheritOptsAt_fmslogodexe = -x
 LinkerOptsAt_fmslogodexe = $(LinkerLocalOptsAtW32_fmslogodexe)
 ResOptsAt_fmslogodexe = $(ResLocalOptsAtW32_fmslogodexe)
 BOptsAt_fmslogodexe = $(BLocalOptsAtW32_fmslogodexe)
 
+ExecutableName=fmslogo-$(LOCALECODE).exe
+IntermediateDirectory=RELEASE$(LOCALECODE)
+
 #
 # Dependency List
 #
-Dep_logo32 = \
-   fmslogo.exe
+Dep_logo32 = $(ExecutableName)
 
+
+# top-level target
 logo32 : BccW32.cfg $(Dep_logo32)
   echo MakeNode
 
@@ -47,117 +55,117 @@ version.h : ..\version.mk
   generate-version.bat $(FMSLOGO_VERSION)
 
 Dep_fmslogodexe = \
-   RELEASE\3dsolid.obj\
-   RELEASE\appendablelist.obj\
-   RELEASE\areawind.obj\
-   RELEASE\assembly.obj\
-   RELEASE\cmdwind.obj\
-   RELEASE\colordlg.obj\
-   RELEASE\commanderbutton.obj\
-   RELEASE\commandercheckbox.obj\
-   RELEASE\coms.obj\
-   RELEASE\devwind.obj\
-   RELEASE\dib.obj\
-   RELEASE\dlgwind.obj\
-   RELEASE\dllstack.obj\
-   RELEASE\dllwind.obj\
-   RELEASE\editwnd.obj\
-   RELEASE\error.obj\
-   RELEASE\eval.obj\
-   RELEASE\files.obj\
-   RELEASE\fileswnd.obj\
-   RELEASE\gbm.obj\
-   RELEASE\gbmhelp.obj\
-   RELEASE\gbmgif.obj\
-   RELEASE\gbmbmp.obj\
-   RELEASE\gbmsize.obj\
-   RELEASE\graphics.obj\
-   RELEASE\graphwin.obj\
-   RELEASE\ibmterm.obj\
-   RELEASE\init.obj\
-   RELEASE\intern.obj\
-   RELEASE\lists.obj\
+   $(IntermediateDirectory)\3dsolid.obj\
+   $(IntermediateDirectory)\appendablelist.obj\
+   $(IntermediateDirectory)\areawind.obj\
+   $(IntermediateDirectory)\assembly.obj\
+   $(IntermediateDirectory)\cmdwind.obj\
+   $(IntermediateDirectory)\colordlg.obj\
+   $(IntermediateDirectory)\commanderbutton.obj\
+   $(IntermediateDirectory)\commandercheckbox.obj\
+   $(IntermediateDirectory)\coms.obj\
+   $(IntermediateDirectory)\devwind.obj\
+   $(IntermediateDirectory)\dib.obj\
+   $(IntermediateDirectory)\dlgwind.obj\
+   $(IntermediateDirectory)\dllstack.obj\
+   $(IntermediateDirectory)\dllwind.obj\
+   $(IntermediateDirectory)\editwnd.obj\
+   $(IntermediateDirectory)\error.obj\
+   $(IntermediateDirectory)\eval.obj\
+   $(IntermediateDirectory)\files.obj\
+   $(IntermediateDirectory)\fileswnd.obj\
+   $(IntermediateDirectory)\gbm.obj\
+   $(IntermediateDirectory)\gbmhelp.obj\
+   $(IntermediateDirectory)\gbmgif.obj\
+   $(IntermediateDirectory)\gbmbmp.obj\
+   $(IntermediateDirectory)\gbmsize.obj\
+   $(IntermediateDirectory)\graphics.obj\
+   $(IntermediateDirectory)\graphwin.obj\
+   $(IntermediateDirectory)\ibmterm.obj\
+   $(IntermediateDirectory)\init.obj\
+   $(IntermediateDirectory)\intern.obj\
+   $(IntermediateDirectory)\lists.obj\
    logo32.def\
-   RELEASE\logodata.obj\
-   RELEASE\logorc.res\
-   RELEASE\main.obj\
-   RELEASE\mainwind.obj\
-   RELEASE\math.obj\
-   RELEASE\mem.obj\
-   RELEASE\mmwind.obj\
-   RELEASE\myfileed.obj\
-   RELEASE\myfilewn.obj\
-   RELEASE\netwind.obj\
-   RELEASE\paren.obj\
-   RELEASE\parse.obj\
-   RELEASE\print.obj\
-   RELEASE\richedpr.obj\
-   RELEASE\savebeforeexitdialog.obj\
-   RELEASE\sizedlg.obj\
-   RELEASE\statwind.obj\
-   RELEASE\term.obj\
-   RELEASE\threed.obj\
-   RELEASE\utils.obj\
-   RELEASE\unix.obj\
-   RELEASE\vector.obj\
-   RELEASE\wrksp.obj
+   $(IntermediateDirectory)\logodata.obj\
+   $(IntermediateDirectory)\logorc.res\
+   $(IntermediateDirectory)\main.obj\
+   $(IntermediateDirectory)\mainwind.obj\
+   $(IntermediateDirectory)\math.obj\
+   $(IntermediateDirectory)\mem.obj\
+   $(IntermediateDirectory)\mmwind.obj\
+   $(IntermediateDirectory)\myfileed.obj\
+   $(IntermediateDirectory)\myfilewn.obj\
+   $(IntermediateDirectory)\netwind.obj\
+   $(IntermediateDirectory)\paren.obj\
+   $(IntermediateDirectory)\parse.obj\
+   $(IntermediateDirectory)\print.obj\
+   $(IntermediateDirectory)\richedpr.obj\
+   $(IntermediateDirectory)\savebeforeexitdialog.obj\
+   $(IntermediateDirectory)\sizedlg.obj\
+   $(IntermediateDirectory)\statwind.obj\
+   $(IntermediateDirectory)\term.obj\
+   $(IntermediateDirectory)\threed.obj\
+   $(IntermediateDirectory)\utils.obj\
+   $(IntermediateDirectory)\unix.obj\
+   $(IntermediateDirectory)\vector.obj\
+   $(IntermediateDirectory)\wrksp.obj
 
-fmslogo.exe : $(Dep_fmslogodexe)
+$(ExecutableName) : $(Dep_fmslogodexe)
   $(ILINK32) @&&|
  /v $(IDE_LinkFLAGS32) $(LinkerOptsAt_fmslogodexe) $(LinkerInheritOptsAt_fmslogodexe) +
 C:\BC5\LIB\c0w32.obj+
-RELEASE\3dsolid.obj+
-RELEASE\appendablelist.obj+
-RELEASE\areawind.obj+
-RELEASE\assembly.obj+
-RELEASE\cmdwind.obj+
-RELEASE\colordlg.obj+
-RELEASE\commanderbutton.obj+
-RELEASE\commandercheckbox.obj+
-RELEASE\coms.obj+
-RELEASE\devwind.obj+
-RELEASE\dib.obj+
-RELEASE\dlgwind.obj+
-RELEASE\dllstack.obj+
-RELEASE\dllwind.obj+
-RELEASE\editwnd.obj+
-RELEASE\error.obj+
-RELEASE\eval.obj+
-RELEASE\files.obj+
-RELEASE\fileswnd.obj+
-RELEASE\gbm.obj+
-RELEASE\gbmhelp.obj+
-RELEASE\gbmgif.obj+
-RELEASE\gbmbmp.obj+
-RELEASE\gbmsize.obj+
-RELEASE\graphics.obj+
-RELEASE\graphwin.obj+
-RELEASE\ibmterm.obj+
-RELEASE\init.obj+
-RELEASE\intern.obj+
-RELEASE\lists.obj+
-RELEASE\logodata.obj+
-RELEASE\main.obj+
-RELEASE\mainwind.obj+
-RELEASE\math.obj+
-RELEASE\mem.obj+
-RELEASE\mmwind.obj+
-RELEASE\myfileed.obj+
-RELEASE\myfilewn.obj+
-RELEASE\netwind.obj+
-RELEASE\paren.obj+
-RELEASE\parse.obj+
-RELEASE\print.obj+
-RELEASE\richedpr.obj+
-RELEASE\savebeforeexitdialog.obj+
-RELEASE\sizedlg.obj+
-RELEASE\statwind.obj+
-RELEASE\term.obj+
-RELEASE\threed.obj+
-RELEASE\utils.obj+
-RELEASE\unix.obj+
-RELEASE\vector.obj+
-RELEASE\wrksp.obj
+$(IntermediateDirectory)\3dsolid.obj+
+$(IntermediateDirectory)\appendablelist.obj+
+$(IntermediateDirectory)\areawind.obj+
+$(IntermediateDirectory)\assembly.obj+
+$(IntermediateDirectory)\cmdwind.obj+
+$(IntermediateDirectory)\colordlg.obj+
+$(IntermediateDirectory)\commanderbutton.obj+
+$(IntermediateDirectory)\commandercheckbox.obj+
+$(IntermediateDirectory)\coms.obj+
+$(IntermediateDirectory)\devwind.obj+
+$(IntermediateDirectory)\dib.obj+
+$(IntermediateDirectory)\dlgwind.obj+
+$(IntermediateDirectory)\dllstack.obj+
+$(IntermediateDirectory)\dllwind.obj+
+$(IntermediateDirectory)\editwnd.obj+
+$(IntermediateDirectory)\error.obj+
+$(IntermediateDirectory)\eval.obj+
+$(IntermediateDirectory)\files.obj+
+$(IntermediateDirectory)\fileswnd.obj+
+$(IntermediateDirectory)\gbm.obj+
+$(IntermediateDirectory)\gbmhelp.obj+
+$(IntermediateDirectory)\gbmgif.obj+
+$(IntermediateDirectory)\gbmbmp.obj+
+$(IntermediateDirectory)\gbmsize.obj+
+$(IntermediateDirectory)\graphics.obj+
+$(IntermediateDirectory)\graphwin.obj+
+$(IntermediateDirectory)\ibmterm.obj+
+$(IntermediateDirectory)\init.obj+
+$(IntermediateDirectory)\intern.obj+
+$(IntermediateDirectory)\lists.obj+
+$(IntermediateDirectory)\logodata.obj+
+$(IntermediateDirectory)\main.obj+
+$(IntermediateDirectory)\mainwind.obj+
+$(IntermediateDirectory)\math.obj+
+$(IntermediateDirectory)\mem.obj+
+$(IntermediateDirectory)\mmwind.obj+
+$(IntermediateDirectory)\myfileed.obj+
+$(IntermediateDirectory)\myfilewn.obj+
+$(IntermediateDirectory)\netwind.obj+
+$(IntermediateDirectory)\paren.obj+
+$(IntermediateDirectory)\parse.obj+
+$(IntermediateDirectory)\print.obj+
+$(IntermediateDirectory)\richedpr.obj+
+$(IntermediateDirectory)\savebeforeexitdialog.obj+
+$(IntermediateDirectory)\sizedlg.obj+
+$(IntermediateDirectory)\statwind.obj+
+$(IntermediateDirectory)\term.obj+
+$(IntermediateDirectory)\threed.obj+
+$(IntermediateDirectory)\utils.obj+
+$(IntermediateDirectory)\unix.obj+
+$(IntermediateDirectory)\vector.obj+
+$(IntermediateDirectory)\wrksp.obj
 $<,$*
 C:\BC5\LIB\owlwf.lib+
 C:\BC5\LIB\bidsf.lib+
@@ -165,298 +173,298 @@ C:\BC5\LIB\ctl3d32.lib+
 C:\BC5\LIB\import32.lib+
 C:\BC5\LIB\cw32.lib
 logo32.def
-RELEASE\logorc.res
+$(IntermediateDirectory)\logorc.res
 
 |
 
-RELEASE\3dsolid.obj :  3dsolid.cpp
+$(IntermediateDirectory)\3dsolid.obj :  3dsolid.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ 3dsolid.cpp
 |
 
-RELEASE\appendablelist.obj :  appendablelist.cpp
+$(IntermediateDirectory)\appendablelist.obj :  appendablelist.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ appendablelist.cpp
 |
 
-RELEASE\assembly.obj :  assembly.cpp
+$(IntermediateDirectory)\assembly.obj :  assembly.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ assembly.cpp
 |
 
-RELEASE\areawind.obj :  areawind.cpp
+$(IntermediateDirectory)\areawind.obj :  areawind.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ areawind.cpp
 |
 
-RELEASE\cmdwind.obj :  cmdwind.cpp
+$(IntermediateDirectory)\cmdwind.obj :  cmdwind.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ cmdwind.cpp
 |
 
-RELEASE\colordlg.obj :  colordlg.cpp
+$(IntermediateDirectory)\colordlg.obj :  colordlg.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ colordlg.cpp
 |
 
-RELEASE\commanderbutton.obj :  commanderbutton.cpp
+$(IntermediateDirectory)\commanderbutton.obj :  commanderbutton.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ commanderbutton.cpp
 |
 
-RELEASE\commandercheckbox.obj :  commandercheckbox.cpp
+$(IntermediateDirectory)\commandercheckbox.obj :  commandercheckbox.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ commandercheckbox.cpp
 |
 
-RELEASE\coms.obj :  coms.cpp
+$(IntermediateDirectory)\coms.obj :  coms.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ coms.cpp
 |
 
-RELEASE\devwind.obj :  devwind.cpp
+$(IntermediateDirectory)\devwind.obj :  devwind.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ devwind.cpp
 |
 
-RELEASE\dib.obj :  dib.cpp
+$(IntermediateDirectory)\dib.obj :  dib.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ dib.cpp
 |
 
-RELEASE\dlgwind.obj :  dlgwind.cpp
+$(IntermediateDirectory)\dlgwind.obj :  dlgwind.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ dlgwind.cpp
 |
 
-RELEASE\dllstack.obj :  dllstack.c
+$(IntermediateDirectory)\dllstack.obj :  dllstack.c
   $(BCC32) -P- -c @&&|
  $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ dllstack.c
 |
 
-RELEASE\dllwind.obj :  dllwind.cpp
+$(IntermediateDirectory)\dllwind.obj :  dllwind.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ dllwind.cpp
 |
 
-RELEASE\editwnd.obj :  editwnd.cpp
+$(IntermediateDirectory)\editwnd.obj :  editwnd.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ editwnd.cpp
 |
 
-RELEASE\error.obj :  error.cpp
+$(IntermediateDirectory)\error.obj :  error.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ error.cpp
 |
 
-RELEASE\eval.obj :  eval.cpp
+$(IntermediateDirectory)\eval.obj :  eval.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ eval.cpp
 |
 
-RELEASE\files.obj :  files.cpp
+$(IntermediateDirectory)\files.obj :  files.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ files.cpp
 |
 
-RELEASE\fileswnd.obj :  fileswnd.cpp
+$(IntermediateDirectory)\fileswnd.obj :  fileswnd.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ fileswnd.cpp
 |
 
-RELEASE\gbm.obj :  gbm.cpp
+$(IntermediateDirectory)\gbm.obj :  gbm.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ gbm.cpp
 |
 
-RELEASE\gbmhelp.obj :  gbmhelp.cpp
+$(IntermediateDirectory)\gbmhelp.obj :  gbmhelp.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ gbmhelp.cpp
 |
 
-RELEASE\gbmgif.obj :  gbmgif.cpp
+$(IntermediateDirectory)\gbmgif.obj :  gbmgif.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ gbmgif.cpp
 |
 
-RELEASE\gbmbmp.obj :  gbmbmp.cpp
+$(IntermediateDirectory)\gbmbmp.obj :  gbmbmp.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ gbmbmp.cpp
 |
 
-RELEASE\gbmsize.obj :  gbmsize.cpp
+$(IntermediateDirectory)\gbmsize.obj :  gbmsize.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ gbmsize.cpp
 |
 
-RELEASE\graphics.obj :  graphics.cpp
+$(IntermediateDirectory)\graphics.obj :  graphics.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ graphics.cpp
 |
 
-RELEASE\graphwin.obj :  graphwin.cpp
+$(IntermediateDirectory)\graphwin.obj :  graphwin.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ graphwin.cpp
 |
 
-RELEASE\ibmterm.obj :  ibmterm.cpp
+$(IntermediateDirectory)\ibmterm.obj :  ibmterm.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ ibmterm.cpp
 |
 
-RELEASE\init.obj :  init.cpp
+$(IntermediateDirectory)\init.obj :  init.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ init.cpp
 |
 
-RELEASE\intern.obj :  intern.cpp
+$(IntermediateDirectory)\intern.obj :  intern.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ intern.cpp
 |
 
-RELEASE\lists.obj :  lists.cpp
+$(IntermediateDirectory)\lists.obj :  lists.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ lists.cpp
 |
 
-RELEASE\logodata.obj :  logodata.cpp version.h
+$(IntermediateDirectory)\logodata.obj :  logodata.cpp version.h
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ logodata.cpp
 |
 
-RELEASE\logorc.res :  logorc.rc version.h
+$(IntermediateDirectory)\logorc.res :  logorc.rc version.h
   $(BRC32) -R @&&|
  $(IDE_ResFLAGS32) $(ROptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe)  -FO$@ logorc.rc
 |
-RELEASE\printer.res :  ..\..\..\bc5\include\owl\printer.rc
+$(IntermediateDirectory)\printer.res :  ..\..\..\bc5\include\owl\printer.rc
   $(BRC32) -R @&&|
  $(IDE_ResFLAGS32) $(ROptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe)  -FO$@ ..\..\..\bc5\include\owl\printer.rc
 |
-RELEASE\inputdia.res :  ..\..\..\bc5\include\owl\inputdia.rc
+$(IntermediateDirectory)\inputdia.res :  ..\..\..\bc5\include\owl\inputdia.rc
   $(BRC32) -R @&&|
  $(IDE_ResFLAGS32) $(ROptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe)  -FO$@ ..\..\..\bc5\include\owl\inputdia.rc
 |
-RELEASE\picklist.res :  ..\..\..\bc5\include\owl\picklist.rc
+$(IntermediateDirectory)\picklist.res :  ..\..\..\bc5\include\owl\picklist.rc
   $(BRC32) -R @&&|
  $(IDE_ResFLAGS32) $(ROptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe)  -FO$@ ..\..\..\bc5\include\owl\picklist.rc
 |
-RELEASE\except.res :  ..\..\..\bc5\include\owl\except.rc
+$(IntermediateDirectory)\except.res :  ..\..\..\bc5\include\owl\except.rc
   $(BRC32) -R @&&|
  $(IDE_ResFLAGS32) $(ROptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe)  -FO$@ ..\..\..\bc5\include\owl\except.rc
 |
-RELEASE\stdwnds.res :  stdwnds.rc
+$(IntermediateDirectory)\stdwnds.res :  stdwnds.rc
   $(BRC32) -R @&&|
  $(IDE_ResFLAGS32) $(ROptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe)  -FO$@ stdwnds.rc
 |
-RELEASE\fileacc.res :  fileacc.rc
+$(IntermediateDirectory)\fileacc.res :  fileacc.rc
   $(BRC32) -R @&&|
  $(IDE_ResFLAGS32) $(ROptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe)  -FO$@ fileacc.rc
 |
-RELEASE\filemenu.res :  filemenu.rc
+$(IntermediateDirectory)\filemenu.res :  filemenu.rc
   $(BRC32) -R @&&|
  $(IDE_ResFLAGS32) $(ROptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe)  -FO$@ filemenu.rc
 |
-RELEASE\main.obj :  main.cpp
+$(IntermediateDirectory)\main.obj :  main.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ main.cpp
 |
 
-RELEASE\mainwind.obj :  mainwind.cpp
+$(IntermediateDirectory)\mainwind.obj :  mainwind.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ mainwind.cpp
 |
 
-RELEASE\math.obj :  math.cpp
+$(IntermediateDirectory)\math.obj :  math.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ math.cpp
 |
 
-RELEASE\mem.obj :  mem.cpp
+$(IntermediateDirectory)\mem.obj :  mem.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ mem.cpp
 |
 
-RELEASE\mmwind.obj :  mmwind.cpp
+$(IntermediateDirectory)\mmwind.obj :  mmwind.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ mmwind.cpp
 |
 
-RELEASE\myfileed.obj :  myfileed.cpp
+$(IntermediateDirectory)\myfileed.obj :  myfileed.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ myfileed.cpp
 |
 
-RELEASE\myfilewn.obj :  myfilewn.cpp
+$(IntermediateDirectory)\myfilewn.obj :  myfilewn.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ myfilewn.cpp
 |
 
-RELEASE\netwind.obj :  netwind.cpp
+$(IntermediateDirectory)\netwind.obj :  netwind.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ netwind.cpp
 |
 
-RELEASE\paren.obj :  paren.cpp
+$(IntermediateDirectory)\paren.obj :  paren.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ paren.cpp
 |
 
-RELEASE\parse.obj :  parse.cpp
+$(IntermediateDirectory)\parse.obj :  parse.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ parse.cpp
 |
 
-RELEASE\print.obj :  print.cpp
+$(IntermediateDirectory)\print.obj :  print.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ print.cpp
 |
 
-RELEASE\richedpr.obj :  richedpr.cpp
+$(IntermediateDirectory)\richedpr.obj :  richedpr.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ richedpr.cpp
 |
 
-RELEASE\savebeforeexitdialog.obj :  savebeforeexitdialog.cpp
+$(IntermediateDirectory)\savebeforeexitdialog.obj :  savebeforeexitdialog.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ savebeforeexitdialog.cpp
 |
 
-RELEASE\sizedlg.obj :  sizedlg.cpp
+$(IntermediateDirectory)\sizedlg.obj :  sizedlg.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ sizedlg.cpp
 |
 
-RELEASE\statwind.obj :  statwind.cpp
+$(IntermediateDirectory)\statwind.obj :  statwind.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ statwind.cpp
 |
 
-RELEASE\term.obj :  term.cpp
+$(IntermediateDirectory)\term.obj :  term.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ term.cpp
 |
 
-RELEASE\threed.obj :  threed.cpp
+$(IntermediateDirectory)\threed.obj :  threed.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ threed.cpp
 |
 
-RELEASE\utils.obj :  utils.cpp
+$(IntermediateDirectory)\utils.obj :  utils.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ utils.cpp
 |
 
-RELEASE\unix.obj :  unix.cpp
+$(IntermediateDirectory)\unix.obj :  unix.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ unix.cpp
 |
 
-RELEASE\vector.obj :  vector.cpp
+$(IntermediateDirectory)\vector.obj :  vector.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ vector.cpp
 |
 
-RELEASE\wrksp.obj :  wrksp.cpp
+$(IntermediateDirectory)\wrksp.obj :  wrksp.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ wrksp.cpp
 |
@@ -512,5 +520,4 @@ BccW32.cfg :
 -H"owl\pch.h"
 -d
 | $@
-
 
