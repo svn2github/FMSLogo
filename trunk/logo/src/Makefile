@@ -1,19 +1,21 @@
 # A wrapper for the real Makefile, which uses Borland's "make"
 # This wrapper helps integrate the Makefile into an otherwise
 # GNU-based build system
-.PHONY : fmslogod.exe fmslogo.exe
+.PHONY : clean fmslogod.exe
 
-default : fmslogo-1033.exe;
+fmslogo.exe : fmslogo-1033.exe
+	cp $< $@
 
-all : fmslogo-1033.exe fmslogo-1036.exe ;
-debug : fmslogod.exe ;
+all : fmslogo-1033.exe fmslogo-1036.exe fmslogo-1032.exe
 
-fmslogo-%.exe :
+fmslogo-%.exe : FORCE
 	make -fMakefile-borland-release.mk -DLOCALECODE=$*
 	tdstrp32 $@
 
 fmslogod.exe :
 	make -fMakefile-borland-debug.mk
+
+debug : fmslogod.exe ;
 
 clean :
 	$(RM) version.h
@@ -35,3 +37,7 @@ clean :
 
 tags : *.cpp *.h *.c
 	etags $(shell /usr/bin/find . -name '*.cpp' -o -name '*.h' -o -name '*.c')
+
+# a phony target that always gets remade
+FORCE :
+

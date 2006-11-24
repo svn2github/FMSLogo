@@ -32,13 +32,12 @@ struct FT
    GBM_ERR (*read_palette)(int fd, GBM *gbm, GBMRGB *gbmrgb);
    GBM_ERR (*read_data   )(int fd, GBM *gbm, byte *data);
    GBM_ERR (*write       )(const char *fn, int fd, const GBM *gbm, const GBMRGB *gbmrgb, const byte *data, const char *opt);
-   const char * (*err         )(GBM_ERR rc);
    };
 
 static FT fts[] =
    {
-      {bmp_qft, bmp_rhdr, bmp_rpal, bmp_rdata, bmp_w, bmp_err},
-      {gif_qft, gif_rhdr, gif_rpal, gif_rdata, gif_w, gif_err}
+      {bmp_qft, bmp_rhdr, bmp_rpal, bmp_rdata, bmp_w},
+      {gif_qft, gif_rhdr, gif_rpal, gif_rdata, gif_w}
    };
 
 #define	N_FT (sizeof(fts) / sizeof(fts[0]))
@@ -149,51 +148,5 @@ GBMEXPORT GBM_ERR GBMENTRY gbm_write(const char *fn, int fd, int ft, const GBM *
    if ( fn == NULL || opt == NULL )
       return GBM_ERR_BAD_ARG;
    return (*fts[ft].write)(fn, fd, gbm, gbmrgb, data, opt);
-   }
-
-
-GBMEXPORT const char * GBMENTRY gbm_err(GBM_ERR rc)
-   {
-   int ft;
-
-   switch ( (int) rc )
-      {
-      case GBM_ERR_OK:
-         return "ok";
-      case GBM_ERR_MEM:
-         return "out of memory";
-      case GBM_ERR_NOT_SUPP:
-         return "not supported";
-      case GBM_ERR_BAD_OPTION:
-         return "bad option(s)";
-      case GBM_ERR_NOT_FOUND:
-         return "not found";
-      case GBM_ERR_BAD_MAGIC:
-         return "bad magic number / signiture block";
-      case GBM_ERR_BAD_SIZE:
-         return "bad bitmap size";
-      case GBM_ERR_READ:
-         return "can't read file";
-      case GBM_ERR_WRITE:
-         return "can't write file";
-      case GBM_ERR_BAD_ARG:
-         return "bad argument to gbm function";
-      }
-
-   for ( ft = 0; ft < N_FT; ft++ )
-      {
-      const char *s;
-
-      if ( (s = (*fts[ft].err)(rc)) != NULL )
-         return s;
-      }
-   
-   return "general error";
-   }
-
-
-GBMEXPORT int GBMENTRY gbm_version(void)
-   {
-   return 107; /* 1.07 */
    }
 

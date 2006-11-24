@@ -142,7 +142,7 @@ bool TMyFileWindow::Read(const char *fileName)
       {
       char err[MAXPATH + 33];
 
-      wsprintf(err, "Unable to read file \"%s\" from disk", fileName);
+      wsprintf(err, LOCALIZED_ERROR_CANTREADFILE, fileName);
       MessageBox(err, GetModule()->GetName(), MB_ICONEXCLAMATION | MB_OK);
       }
    return success;
@@ -171,7 +171,7 @@ bool TMyFileWindow::Write(const char * fileName)
       {
       char msg[MAXPATH + 33];
 
-      wsprintf(msg, "Unable to write file \"%s\" to disk", fileName);
+      wsprintf(msg, LOCALIZED_ERROR_CANTWRITEFILE, fileName);
       MessageBox(msg, GetModule()->GetName(), MB_ICONEXCLAMATION | MB_OK);
       return false;
       }
@@ -236,9 +236,10 @@ void TMyFileWindow::CMSaveToWorkspace()
    {
    if (!bExpert)
       {
+      // Notify the user that this feature is only for experts
       MainWindowx->CommandWindow->MessageBox(
-         "This feature is for expert mode only (use Save and Exit)",
-         "Save to Workspace",
+         LOCALIZED_SAVEISFOREXPERTSONLY,
+         LOCALIZED_SAVETOWORKSPACE,
          MB_OK);
       return;
       }
@@ -256,10 +257,13 @@ void TMyFileWindow::CMSaveToWorkspace()
 
       if (error_happen)
          {
+         // notify the user that:
+         // 1) The changes in the editor failed to load
+         // 2) The cursor is positioned just after the last 
+         //    successful definition
          MainWindowx->CommandWindow->MessageBox(
-            "The cursor will be positioned just after last successful definition.\n"
-               "Check Commander Window for possible error Message.",
-            "Your Edit has FAILED to load",
+            LOCALIZED_CURSORISATLASTGOODDEFINITION,
+            LOCALIZED_EDITFAILEDTOLOAD,
             MB_OK);
 
          // "force" a change so that we still in "dirty" state
@@ -393,7 +397,7 @@ void TMyFileWindow::SetFileName(const char *fileName)
       FileName = fileName ? strnewdup(fileName) : 0;
       }
 
-   const char *p = FileName ? FileName : "(Untitled)";
+   const char *p = FileName ? FileName : "("LOCALIZED_UNTITLED")";
 
    if (!Title || !*Title)
       {
@@ -506,16 +510,20 @@ void TMyFileWindow::EvDestroy()
 
       int realsave = EndEdit();
 
-      // if error the ask user to reedit
-
       if (error_happen)
          {
+         // Notify the user that:
+         // 1) The changes in the editor failed to load
+         // 2) The cursor is positioned just after the last 
+         //    successful definition
+         //
+         // Ask if they want to reedit.
+
          if (MainWindowx->CommandWindow->MessageBox(
-               "The cursor will be positioned just after last successful definition.\n"
-                  "Check Commander Window for possible error Message.\n"
-                  "\n"
-                  "Return to edit?",
-               "Your Edit has FAILED to load",
+                LOCALIZED_CURSORISATLASTGOODDEFINITION"\n"
+                   "\n"
+                   LOCALIZED_RETURNTOEDIT,
+                LOCALIZED_EDITFAILEDTOLOAD,
                MB_OKCANCEL | MB_ICONQUESTION) == IDOK)
             {
             // open up another editor
@@ -586,8 +594,8 @@ bool TMyFileWindow::CanClose()
    if (Editor->IsModified())
       {
       int rslt = MessageBox(
-         "Contents have changed. Save to workspace?",
-         "Contents Changed",
+         LOCALIZED_SAVECHANGEDCONTENTSTOWORKSPACE,
+         LOCALIZED_CONTENTSCHANGED,
          MB_YESNOCANCEL | MB_ICONQUESTION);
       if (rslt == IDYES)
          {

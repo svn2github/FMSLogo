@@ -23,13 +23,13 @@
 
 void filesave(const char *FileName)
    {
-   if (::FindWindow(NULL, "Editor"))
+   if (::FindWindow(NULL, LOCALIZED_EDITOR_TITLE))
       {
+      // Notify the user that they have an editor open
+      // and that changes in the editor will not be saved.
       MainWindowx->CommandWindow->MessageBox(
-         "Did you know you have an edit session running?\n"
-            "\n"
-            "Any changes in this edit session are not being saved.",
-         "Information",
+         LOCALIZED_EDITORISOPEN,
+         LOCALIZED_INFORMATION,
          MB_OK | MB_ICONQUESTION);
       }
 

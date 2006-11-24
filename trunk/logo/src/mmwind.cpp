@@ -58,12 +58,16 @@ NODE *lsound(NODE *arg)
          }
       else
          {
-         ShowMessageAndStop("Sound Error", "Not paired");
+         ShowMessageAndStop(
+            LOCALIZED_ERROR_SOUND, 
+            LOCALIZED_ERROR_BADINPUTNOTPAIRED);
          }
       }
    else
       {
-      ShowMessageAndStop("Sound Error", "Bad argument");
+      ShowMessageAndStop(
+         LOCALIZED_ERROR_SOUND, 
+         LOCALIZED_ERROR_BADINPUT);
       }
 
    return Unbound;
@@ -81,7 +85,9 @@ NODE *lmidiopen(NODE *args)
          id = int_arg(args);
          if (id > midiOutGetNumDevs())
             {
-            ShowMessageAndStop("Midi Error", "Invalid Midi device");
+            ShowMessageAndStop(
+               LOCALIZED_ERROR_MIDI, 
+               LOCALIZED_ERROR_MIDIINVALIDDEVICE);
             }
          }
 
@@ -96,7 +102,7 @@ NODE *lmidiopen(NODE *args)
          {
          char MidiErrorBuffer[MAX_BUFFER_SIZE];
          midiOutGetErrorText(MidiError, MidiErrorBuffer, MAX_BUFFER_SIZE);
-         ShowMessageAndStop("Midi Error", MidiErrorBuffer);
+         ShowMessageAndStop(LOCALIZED_ERROR_MIDI, MidiErrorBuffer);
          }
       else
          {
@@ -107,7 +113,9 @@ NODE *lmidiopen(NODE *args)
       }
    else
       {
-      ShowMessageAndStop("Midi Error", "Already Open");
+      ShowMessageAndStop(
+         LOCALIZED_ERROR_MIDI, 
+         LOCALIZED_ERROR_MIDIALREADYOPEN);
       }
 
    return Unbound;
@@ -125,12 +133,12 @@ NODE *lmidiclose(NODE *  /*args*/)
          {
          char MidiErrorBuffer[MAX_BUFFER_SIZE];
          midiOutGetErrorText(MidiError, MidiErrorBuffer, MAX_BUFFER_SIZE);
-         ShowMessageAndStop("Midi Error", MidiErrorBuffer);
+         ShowMessageAndStop(LOCALIZED_ERROR_MIDI, MidiErrorBuffer);
          }
       }
    else
       {
-      ShowMessageAndStop("Midi Error", "Already closed");
+      ShowMessageAndStop(LOCALIZED_ERROR_MIDI, LOCALIZED_ERROR_MIDINOTOPEN);
       }
 
    return Unbound;
@@ -220,17 +228,17 @@ NODE *lmidimessage(NODE *arg)
             {
             char MidiErrorBuffer[MAX_BUFFER_SIZE];
             midiOutGetErrorText(MidiError, MidiErrorBuffer, MAX_BUFFER_SIZE);
-            ShowMessageAndStop("Midi Error", MidiErrorBuffer);
+            ShowMessageAndStop(LOCALIZED_ERROR_MIDI, MidiErrorBuffer);
             }
          }
       else
          {
-         ShowMessageAndStop("Midi Error", "Bad argument");
+         ShowMessageAndStop(LOCALIZED_ERROR_MIDI, LOCALIZED_ERROR_BADINPUT);
          }
       }
    else
       {
-      ShowMessageAndStop("Midi Error", "Not Open");
+      ShowMessageAndStop(LOCALIZED_ERROR_MIDI, LOCALIZED_ERROR_MIDINOTOPEN);
       }
 
    return Unbound;
@@ -265,7 +273,7 @@ NODE *lmci(NODE *args)
       // let user know about the error
       char MciErrorBuffer[MAX_BUFFER_SIZE];
       mciGetErrorString(MciError, MciErrorBuffer, MAX_BUFFER_SIZE);
-      ShowMessageAndStop("MCI Error", MciErrorBuffer);
+      ShowMessageAndStop(LOCALIZED_ERROR_MCI, MciErrorBuffer);
       }
    else
       {
@@ -306,12 +314,12 @@ NODE *lsettimer(NODE *args)
          // if not set sucessfully error
          if (!::SetTimer(MainWindowx->HWindow, id, delay, NULL))
             {
-            ShowMessageAndStop("Error", "Too Many Timers");
+            ShowMessageAndStop(LOCALIZED_ERROR, LOCALIZED_ERROR_TIMERTOOMANY);
             }
          }
       else
          {
-         ShowMessageAndStop("Error", "Bad Timer Id");
+         ShowMessageAndStop(LOCALIZED_ERROR, LOCALIZED_ERROR_TIMERBADID);
          }
       }
 
@@ -326,7 +334,7 @@ NODE *lcleartimer(NODE *args)
    // if timer was not set let user know
    if (!::KillTimer(MainWindowx->HWindow, id))
       {
-      ShowMessageAndStop("Error", "Timer not found");
+      ShowMessageAndStop(LOCALIZED_ERROR, LOCALIZED_ERROR_TIMERNOTFOUND);
       }
 
    return Unbound;

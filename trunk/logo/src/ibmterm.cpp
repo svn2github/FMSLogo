@@ -145,15 +145,15 @@ NODE *get_node_pen_mode()
 
    if (in_erase_mode)
       {
-      mode = "erase";
+      mode = LOCALIZED_PENMODE_ERASE;
       }
    else if (current_write_mode == XOR_PUT)
       {
-      mode = "reverse";
+      mode = LOCALIZED_PENMODE_REVERSE;
       }
    else
       {
-      mode = "paint";
+      mode = LOCALIZED_PENMODE_PAINT;
       }
 
    return make_static_strnode(mode);

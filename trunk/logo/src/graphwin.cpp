@@ -136,8 +136,8 @@ gifsave_helper(
    if (gbmBmpToGif(TempBmpName, textbuf) != 0)
       {
       ShowMessageAndStop(
-         "Error", 
-         "Problem Generating GIF, check memory and diskspace");
+         LOCALIZED_ERROR,
+         LOCALIZED_ERROR_GIFSAVEFAILED);
       }
    lsetcursorarrow(NIL);
    unlink(TempBmpName);
@@ -295,8 +295,8 @@ void gifload_helper(char *textbuf, DWORD &dwPixelWidth, DWORD &dwPixelHeight)
    if (gbmGifToBmp(textbuf, TempBmpName) != 0)
       {
       ShowMessageAndStop(
-         "Error", 
-         "Problem Reading GIF, check memory and diskspace");
+         LOCALIZED_ERROR,
+         LOCALIZED_ERROR_GIFREADFAILED);
       }
    lsetcursorarrow(NIL);
    MainWindowx->LoadBitmapFile(TempBmpName, dwPixelWidth, dwPixelHeight);
@@ -1097,7 +1097,7 @@ NODE *lbitmode(NODE *)
        case DSTINVERT: temp = 9; break;
       }
 
-   return (make_intnode((FIXNUM) temp));
+   return make_intnode((FIXNUM) temp);
    }
 
 NODE *lsetbitmode(NODE *arg)
@@ -1117,7 +1117,10 @@ NODE *lsetbitmode(NODE *arg)
        case 8: bitmode = MERGEPAINT; break;
        case 9: bitmode = DSTINVERT; break;
        default:
-          ShowMessageAndStop("Error", "Illegal Bitmode");
+          // notify the user that the bitmode was invalid
+          ShowMessageAndStop(
+             LOCALIZED_ERROR, 
+             LOCALIZED_ERROR_BITMODEBADBITMODE);
       }
 
    return Unbound;
@@ -1172,7 +1175,10 @@ NODE *lsetturtlemode(NODE *arg)
          case 8: g_Turtles[turtle_which].Bitmap = MERGEPAINT; break;
          case 9: g_Turtles[turtle_which].Bitmap = DSTINVERT; break;
          default:
-            ShowMessageAndStop("Error", "Illegal Bitmode");
+            // notify the user that the bitmode was invalid
+            ShowMessageAndStop(
+               LOCALIZED_ERROR, 
+               LOCALIZED_ERROR_BITMODEBADBITMODE);
          }
 
       draw_turtle(true);
@@ -1201,7 +1207,10 @@ NODE *lsetbitindex(NODE *arg)
       }
    else
       {
-      ShowMessageAndStop("Error", "BitMap Index out of range");
+      // notify the user that the bit index was out-of-range
+      ShowMessageAndStop(
+         LOCALIZED_ERROR, 
+         LOCALIZED_ERROR_BITMAPINDEXOUTOFRANGE);
       }
 
    return Unbound;
@@ -1417,8 +1426,8 @@ BitCopyOrCut(NODE *arg, bool IsCut)
          if (!CutBmp[CutIndex].CutMemoryBitMap)
             {
             ShowMessageAndStop(
-               "Error", 
-               "Cut failed, Possibly not enough Memory");
+               LOCALIZED_ERROR,
+               LOCALIZED_ERROR_BITMAPCUTFAILED);
             return Unbound;
             }
 
@@ -1562,8 +1571,8 @@ NODE *lbitfit(NODE *arg)
          if (!TempMemoryBitMap)
             {
             ShowMessageAndStop(
-               "Error", 
-               "Fit failed, Possibly not enough Memory");
+               LOCALIZED_ERROR,
+               LOCALIZED_ERROR_BITMAPFITFAILED);
             return Unbound;
             }
 
@@ -1729,7 +1738,10 @@ NODE *lbitpaste(NODE *)
          }
       else
          {
-         ShowMessageAndStop("Error", "Nothing to Paste");
+         // notify the user that the clipboard is empty
+         ShowMessageAndStop(
+            LOCALIZED_ERROR,
+            LOCALIZED_ERROR_BITMAPNOTHINGTOPASTE);
          }
       }
 
@@ -1747,15 +1759,19 @@ NODE *lbitpastetoindex(NODE *arg)
 
    if (MaxBitCuts <= i)
       {
-      ShowMessageAndStop("Error", "BitMap Index out of range");
+      // notify the user that the bitmap index is out of range
+      ShowMessageAndStop(
+         LOCALIZED_ERROR, 
+         LOCALIZED_ERROR_BITMAPINDEXOUTOFRANGE);
       return Unbound;
       }
 
    if (!CutBmp[i].CutFlag)
       {
+      // nofity the user that there is no bitmap at this index
       ShowMessageAndStop(
-         "Error", 
-         "BitMap at Index must be initialized with a bitmap");
+         LOCALIZED_ERROR,
+         LOCALIZED_ERROR_BITMAPINDEXISNOTBITMAP);
       return Unbound;
       }
 
@@ -1813,7 +1829,10 @@ NODE *lbitpastetoindex(NODE *arg)
          }
       else
          {
-         ShowMessageAndStop("Error", "Nothing to Paste");
+         // notify the user that the clipboard is empty
+         ShowMessageAndStop(
+            LOCALIZED_ERROR,
+            LOCALIZED_ERROR_BITMAPNOTHINGTOPASTE);
          }
       }
    return Unbound;
@@ -1831,7 +1850,10 @@ NODE *lsetturtle(NODE *arg)
       int temp = getint(val);
       if ((temp >= (TURTLES - TURTLEN)) || (temp < -TURTLEN))
          {
-         ShowMessageAndStop("Error", "Bad Turtle Id");
+         // notify the user that the turtle ID is out of range
+         ShowMessageAndStop(
+            LOCALIZED_ERROR,
+            LOCALIZED_ERROR_BADTURTLEID);
          }
       else
          {
@@ -1981,10 +2003,11 @@ void turtlepaste(int TurtleToPaste)
          }
       else
          {
+         // notify the user that this turtle has no picture
          g_Turtles[TurtleToPaste].Bitmap = 0;
          char errorMessage[255];
-         sprintf(errorMessage, "Turtle %d has no picture, will Halt", TurtleToPaste);
-         ShowMessageAndStop("Error", errorMessage);
+         sprintf(errorMessage, LOCALIZED_ERROR_TURTLEHASNOPICTURE, TurtleToPaste);
+         ShowMessageAndStop(LOCALIZED_ERROR, errorMessage);
          }
       }
    }
@@ -2244,11 +2267,11 @@ setfont(
       FindFont,
       reinterpret_cast<LPARAM>(&context));
 
-   // if not found print all available fonts
    if (!context.found)
       {
+      // The font wasn't found.  Print all available fonts
       printfx(
-         "Sorry, no font named %s was found.  Choose one of the following:\n",
+         LOCALIZED_ERROR_FONTNOTFOUND,
          fontname);
 
       EnumFontFamilies(hdc, NULL, PrintFont, NULL);
@@ -2274,8 +2297,8 @@ HtmlHelpInitialize(
       {
       ::MessageBox(
          GetDesktopWindow(), 
-         "Online help is unavailable because hhctrl.ocx could not be loaded.", 
-         "Error", 
+         LOCALIZED_ERROR_HHCTRLNOTLOADED, 
+         LOCALIZED_ERROR,
          MB_OK);
       return false;
       }
@@ -2288,8 +2311,8 @@ HtmlHelpInitialize(
       {
       ::MessageBox(
          GetDesktopWindow(),
-         "Online help is unavailable because hhctrl.ocx does not contain ATOM_HTMLHELP_API_ANSI.",
-         "Error", 
+         LOCALIZED_ERROR_HHCTRLATOMNOTFOUND,
+         LOCALIZED_ERROR,
          MB_OK);
 
       HtmlHelpUninitialize();

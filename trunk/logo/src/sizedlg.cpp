@@ -28,8 +28,13 @@ EV_WM_LBUTTONDOWN,
 EV_WM_PAINT,
 END_RESPONSE_TABLE;
 
-TSizeControl::TSizeControl(TWindow *parent, int resId, TColor size)
-: TControl(parent, resId,::Module), Size(size)
+TSizeControl::TSizeControl(
+   TWindow *parent, 
+   int resId, 
+   TColor size
+   )
+   : TControl(parent, resId), 
+     Size(size)
    {
    DisableTransfer();
    }
@@ -96,11 +101,12 @@ static void DisableChildTransfer(TWindow *w, void *)
    w->DisableTransfer();
    }
 
-TSizeDialog::TSizeDialog(TWindow *parent, TColor &size, char *caption)
-: TDialog(parent, "SIZEDIALOG",::Module)
+TSizeDialog::TSizeDialog(
+   TWindow * Parent, 
+   TColor  & Size
+   )
+   : TDialog(Parent, "SIZEDIALOG")
    {
-   sizecaption = caption;
-
    new TSizeControl(this, ID_SIZE1, TColor(1, 1, 000));
    new TSizeControl(this, ID_SIZE2, TColor(2, 2, 000));
    new TSizeControl(this, ID_SIZE3, TColor(3, 3, 000));
@@ -110,14 +116,14 @@ TSizeDialog::TSizeDialog(TWindow *parent, TColor &size, char *caption)
    new TSizeControl(this, ID_SIZE7, TColor(16, 16, 000));
    new TSizeControl(this, ID_SIZE8, TColor(32, 32, 000));
 
-   SizeBar = new TScrollBar(this, ID_SIZEBAR,::Module);
+   SizeBar = new TScrollBar(this, ID_SIZEBAR);
 
    ForEach(DisableChildTransfer);
 
-   SelSize = new TSizeControl(this, ID_SELSIZE, size);
+   SelSize = new TSizeControl(this, ID_SELSIZE, Size);
    SelSize->EnableTransfer();
 
-   TransferBuffer = &size;
+   TransferBuffer = &Size;
    }
 
 // Handlers for each custom control
@@ -179,18 +185,20 @@ void TSizeDialog::SetupWindow()
    {
    TDialog::SetupWindow();
    UpdateBars(SelSize->GetSize());
-   SetCaption(sizecaption);
    }
 
 void TSizeDialog::TransferData(TTransferDirection transferFlag)
    {
    TDialog::TransferData(transferFlag);
-   if (transferFlag == tdSetData) UpdateBars(SelSize->GetSize());
+   if (transferFlag == tdSetData) 
+      {
+      UpdateBars(SelSize->GetSize());
+      }
    }
 
-void TSizeDialog::UpdateBars(TColor size)
+void TSizeDialog::UpdateBars(const TColor & Size)
    {
    SizeBar->SetRange(1, 32);
-   SizeBar->SetPosition(size.Red());
+   SizeBar->SetPosition(Size.Red());
    }
 

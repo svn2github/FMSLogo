@@ -32,22 +32,22 @@ TRichEditWithPopup::TRichEditWithPopup(
    const char * fileName
 ) : TRichEdit(parent, id, text, x, y, w, h, fileName)
    {
-   PopupMenu.AppendMenu(MF_STRING, CM_EDITUNDO,   "Undo");
+   PopupMenu.AppendMenu(MF_STRING, CM_EDITUNDO,       LOCALIZED_POPUP_UNDO);
    PopupMenu.AppendMenu(MF_SEPARATOR, 0, NULL);
-   PopupMenu.AppendMenu(MF_STRING, CM_EDITCUT,    "Cut");
-   PopupMenu.AppendMenu(MF_STRING, CM_EDITCOPY,   "Copy");
-   PopupMenu.AppendMenu(MF_STRING, CM_EDITPASTE,  "Paste");
-   PopupMenu.AppendMenu(MF_STRING, CM_EDITDELETE, "Delete");
-   PopupMenu.AppendMenu(MF_STRING, CM_EDITSELECTALL, "Select All");
+   PopupMenu.AppendMenu(MF_STRING, CM_EDITCUT,        LOCALIZED_POPUP_CUT);
+   PopupMenu.AppendMenu(MF_STRING, CM_EDITCOPY,       LOCALIZED_POPUP_COPY);
+   PopupMenu.AppendMenu(MF_STRING, CM_EDITPASTE,      LOCALIZED_POPUP_PASTE);
+   PopupMenu.AppendMenu(MF_STRING, CM_EDITDELETE,     LOCALIZED_POPUP_DELETE);
+   PopupMenu.AppendMenu(MF_STRING, CM_EDITSELECTALL,  LOCALIZED_POPUP_SELECTALL);
    PopupMenu.AppendMenu(MF_SEPARATOR, 0, NULL);
-   PopupMenu.AppendMenu(MF_STRING, CM_HELPEDIT_TOPIC, "Topic Search");
+   PopupMenu.AppendMenu(MF_STRING, CM_HELPEDIT_TOPIC, LOCALIZED_POPUP_HELP);
    }
 
 // protected constructor does not supply a menu
 TRichEditWithPopup::TRichEditWithPopup(
    TWindow* parent,
    int      id
-) : TRichEdit(parent, id, NULL, 0, 0, 0, 0)
+   ) : TRichEdit(parent, id, NULL, 0, 0, 0, 0)
    {
    }
 

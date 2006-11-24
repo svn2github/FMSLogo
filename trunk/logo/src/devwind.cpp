@@ -163,7 +163,7 @@ NODE *lportclose(NODE *)
    // if port closed output error else close it
    if (!ComIsOpen)
       {
-      ShowMessageAndStop("Error", "Could not CLOSE port");
+      ShowMessageAndStop(LOCALIZED_ERROR, LOCALIZED_ERROR_CANTCLOSEPORT);
       }
    else
       {
@@ -182,7 +182,7 @@ NODE *lportopen(NODE *args)
    // if port open output error else open it
    if (ComIsOpen)
       {
-      ShowMessageAndStop("Error", "PORT already open");
+      ShowMessageAndStop(LOCALIZED_ERROR, LOCALIZED_ERROR_PORTALREADYOPEN);
       }
    else
       {
@@ -208,7 +208,7 @@ NODE *lportopen(NODE *args)
 
       if (ComId < 0)
          {
-         ShowMessageAndStop("Error", "Could not open PORT");
+         ShowMessageAndStop(LOCALIZED_ERROR, LOCALIZED_ERROR_CANTOPENPORT);
          }
       else
          {
@@ -223,14 +223,14 @@ NODE *lportflush(NODE */* args */)
    {
    if (!ComIsOpen)
       {
-      ShowMessageAndStop("Error", "PORT not open");
+      ShowMessageAndStop(LOCALIZED_ERROR, LOCALIZED_ERROR_PORTNOTOPEN);
       }
    else
       {
       int err = FlushFileBuffers(ComId);
       if (err == 0)
          {
-         ShowMessageAndStop("Error", "Could not flush PORT");
+         ShowMessageAndStop(LOCALIZED_ERROR, LOCALIZED_ERROR_CANTFLUSHPORT);
          }
       }
 
@@ -245,7 +245,7 @@ NODE *lportmode(NODE *args)
    // if closed output error else set mode
    if (!ComIsOpen)
       {
-      ShowMessageAndStop("Error", "PORT not open");
+      ShowMessageAndStop(LOCALIZED_ERROR, LOCALIZED_ERROR_PORTNOTOPEN);
       }
    else
       {
@@ -257,7 +257,7 @@ NODE *lportmode(NODE *args)
 
       if (err == 0)
          {
-         ShowMessageAndStop("Error", "Could not build dcb on PORT");
+         ShowMessageAndStop(LOCALIZED_ERROR, LOCALIZED_ERROR_CANTDCBONPORT);
          }
       else
          {
@@ -274,7 +274,7 @@ NODE *lportmode(NODE *args)
          err = SetCommState(ComId, &dcbold);
          if (err == 0)
             {
-            ShowMessageAndStop("Error", "Could not set PORT");
+            ShowMessageAndStop(LOCALIZED_ERROR, LOCALIZED_ERROR_CANTSETPORT);
             }
          }
       }
@@ -301,7 +301,7 @@ NODE *lportwritearray(NODE *args)
          // if closed the error, else continue
          if (!ComIsOpen)
             {
-            ShowMessageAndStop("Error", "PORT not open");
+            ShowMessageAndStop(LOCALIZED_ERROR, LOCALIZED_ERROR_PORTNOTOPEN);
             }
          else
             {
@@ -335,11 +335,13 @@ NODE *lportwritearray(NODE *args)
          }
       else
          {
-         ShowMessageAndStop("Error", "First arg must be an array");
+         ShowMessageAndStop(
+            LOCALIZED_ERROR, 
+            LOCALIZED_ERROR_FIRSTINPUTNOTANARRY);
          }
       }
 
-   return make_intnode(0);
+   return Unbound;
    }
 
 NODE *lportreadarray(NODE *args)
@@ -362,7 +364,7 @@ NODE *lportreadarray(NODE *args)
 
          if (!ComIsOpen)
             {
-            ShowMessageAndStop("Error", "PORT not open");
+            ShowMessageAndStop(LOCALIZED_ERROR, LOCALIZED_ERROR_PORTNOTOPEN);
             }
          else
             {
@@ -416,7 +418,7 @@ NODE *lportwritechar(NODE *args)
 
    if (!ComIsOpen)
       {
-      ShowMessageAndStop("Error", "PORT not open");
+      ShowMessageAndStop(LOCALIZED_ERROR, LOCALIZED_ERROR_PORTNOTOPEN);
       }
    else
       {
@@ -438,7 +440,7 @@ NODE *lportwritechar(NODE *args)
       return make_intnode(status);
       }
 
-   return make_intnode(0);
+   return Unbound;
    }
 
 NODE *lportreadchar(NODE *)
@@ -446,7 +448,7 @@ NODE *lportreadchar(NODE *)
    // if closed output error, else continue
    if (!ComIsOpen)
       {
-      ShowMessageAndStop("Error", "PORT not open");
+      ShowMessageAndStop(LOCALIZED_ERROR, LOCALIZED_ERROR_PORTNOTOPEN);
       }
    else
       {
@@ -470,7 +472,7 @@ NODE *lportreadchar(NODE *)
          }
       }
 
-   return make_intnode(-1);
+   return Unbound;
    }
 
 NODE *loutportb(NODE *args)

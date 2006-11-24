@@ -126,7 +126,7 @@ BSPNode* TThreeDSolid::MakeBSPNode(POLYGON* Poly)
    BSPNode *node = new BSPNode;
    if (!node)
       {
-      return node;
+      return NULL;
       }
    node->Poly = Poly;    // Point to the POLYGON's data
    node->Outside = 0;
@@ -141,8 +141,11 @@ void TThreeDSolid::AddList(PLIST** tlist, POLYGON* Poly)
    nuL = new PLIST;
    if (!nuL)
       {
-      MessageBox(GetActiveWindow(), "AddList: Out of Memory",
-      GetApplicationObject()->GetName(), MB_OK | MB_ICONEXCLAMATION);
+      MessageBox(
+         GetActiveWindow(), 
+         LOCALIZED_ERROR_OUTOFMEMORY,
+         GetApplicationObject()->GetName(), 
+         MB_OK | MB_ICONEXCLAMATION);
       return;
       }
    nuL->T = Poly;

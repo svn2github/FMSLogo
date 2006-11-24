@@ -29,11 +29,20 @@ extern "C" void PASCAL pushl(DWORD);
 extern "C" void PASCAL pushf(double);
 extern "C" void PASCAL pushs(LPCSTR);
 
+static
+void
+ShowDllErrorAndStop(
+   const char * ErrorMessage
+   )
+   {
+   ShowMessageAndStop(LOCALIZED_ERROR_DLL, ErrorMessage);
+   }
+
 NODE *ldllload(NODE *arg)
    {
    if (hDLLModule)
       {
-      ShowMessageAndStop("DLL Error", "DLL already loaded");
+      ShowDllErrorAndStop(LOCALIZED_ERROR_DLLALREADYLOADED);
       }
    else
       {
@@ -43,7 +52,7 @@ NODE *ldllload(NODE *arg)
       hDLLModule = LoadLibrary(dllname);
       if (hDLLModule == NULL)
          {
-         ShowMessageAndStop("DLL Error", "DLL load failed");
+         ShowDllErrorAndStop(LOCALIZED_ERROR_DLLLOADFAILED);
          }
       }
 
@@ -54,7 +63,7 @@ NODE *ldllfree(NODE *)
    {
    if (hDLLModule == NULL)
       {
-      ShowMessageAndStop("DLL Error", "DLL not loaded");
+      ShowDllErrorAndStop(LOCALIZED_ERROR_DLLNOTLOADED);
       }
    else
       {
@@ -69,7 +78,7 @@ NODE *ldllcall(NODE *arg)
    {
    if (hDLLModule == NULL)
       {
-      ShowMessageAndStop("DLL Error", "DLL not loaded");
+      ShowDllErrorAndStop(LOCALIZED_ERROR_DLLNOTLOADED);
       return Unbound;
       }
 
@@ -163,7 +172,7 @@ NODE *ldllcall(NODE *arg)
 
                   default:
                      {
-                     ShowMessageAndStop("DLL Error", "Invalid Argument Data Type");
+                     ShowDllErrorAndStop(LOCALIZED_ERROR_DLLINVALIDDATATYPE);
                      return Unbound;
                      }
                   }
@@ -218,7 +227,7 @@ NODE *ldllcall(NODE *arg)
                   
                default:
                   {
-                  ShowMessageAndStop("DLL Error", "Invalid Return Data Type");
+                  ShowDllErrorAndStop(LOCALIZED_ERROR_DLLINVALIDOUTPUTTYPE);
                   break;
                   }
                }
@@ -238,17 +247,17 @@ NODE *ldllcall(NODE *arg)
             }
          else
             {
-            ShowMessageAndStop("DLL Error", "Function not Found");
+            ShowDllErrorAndStop(LOCALIZED_ERROR_DLLFUNCTIONNOTFOUND);
             }
          }
       else
          {
-         ShowMessageAndStop("DLL Error", "Not Type/Data paired");
+         ShowDllErrorAndStop(LOCALIZED_ERROR_DLLTYPEDATANOTPAIRED);
          }
       }
    else
       {
-      ShowMessageAndStop("DLL Error", "Bad argument");
+      ShowDllErrorAndStop(LOCALIZED_ERROR_BADINPUT);
       }
 
    return Unbound;

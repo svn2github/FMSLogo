@@ -52,29 +52,33 @@ int rd_getc(FILE *strm)
          switch (input_mode)
             {
             case INPUTMODE_To:
-               if (!promptuser(buffer_input, "To Mode (Cancel to End)"))
+               if (!promptuser(buffer_input, LOCALIZED_PROMPT_TO))
                   {
+                  // "End" the procedure definition when done
                   strcpy(buffer_input, "End");
                   }
                break;
 
             case INPUTMODE_List:
-               if (!promptuser(buffer_input, "List Mode (Cancel to Halt)"))
+               if (!promptuser(buffer_input, LOCALIZED_PROMPT_LIST))
                   {
+                   // Halt when done
                   err_logo(STOP_ERROR, NIL);
                   }
                break;
 
             case INPUTMODE_Pause:
-               if (!promptuser(buffer_input, "Pause Mode (Cancel to Continue)"))
+               if (!promptuser(buffer_input, LOCALIZED_PROMPT_PAUSE))
                   {
+                   // continue when done
                   strcpy(buffer_input, "Continue");
                   }
                break;
 
              case INPUTMODE_None:
-                if (!promptuser(buffer_input, "Input Mode (Cancel to Halt)"))
+                if (!promptuser(buffer_input, LOCALIZED_PROMPT_INPUT))
                    {
+                   // Halt when done
                    err_logo(STOP_ERROR, NIL);
                    }
                 break;

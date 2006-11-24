@@ -171,16 +171,16 @@ void update_status_penstyle(void)
       const char * text;
       if (current_write_mode == XOR_PUT)
          {
-         text = "Reverse";
+         text = LOCALIZED_STATUS_PENREVERSE;
          }
       else
          {
-         text = "Normal";
+         text = LOCALIZED_STATUS_PENNORMAL;
          }
 
       if (in_erase_mode)
          {
-         text = "Erase";
+         text = LOCALIZED_STATUS_PENERASE;
          }
 
       MainWindowx->StatusWindow->SetDlgItemText(ID_PENSTYLE, text);
@@ -194,11 +194,11 @@ void update_status_pencontact(void)
       const char * text;
       if (g_Turtles[turtle_which].IsPenUp)
          {
-         text = "Up";
+         text = LOCALIZED_STATUS_PENUP;
          }
       else
          {
-         text = "Down";
+         text = LOCALIZED_STATUS_PENDOWN;
          }
 
       MainWindowx->StatusWindow->SetDlgItemText(ID_PENCONTACT, text);
@@ -213,11 +213,11 @@ void update_status_turtlevisability(void)
 
       if (g_Turtles[turtle_which].IsShown)
          {
-         text = "Shown";
+         text = LOCALIZED_STATUS_PENSHOWN;
          }
       else
          {
-         text = "Hidden";
+         text = LOCALIZED_STATUS_PENHIDDEN;
          }
 
       MainWindowx->StatusWindow->SetDlgItemText(ID_TURTLEVISABILITY, text);
@@ -305,12 +305,16 @@ void update_status_vectors(void)
 #else
          sprintf(text, "%ld", ThreeD.iPolyCount);
 #endif
-         MainWindowx->StatusWindow->SetDlgItemText(ID_THINGS, "Polygons:");
+         MainWindowx->StatusWindow->SetDlgItemText(
+            ID_THINGS, 
+            LOCALIZED_STATUS_POLYGONS":");
          }
       else
          {
          sprintf(text, "%ld", vector_count);
-         MainWindowx->StatusWindow->SetDlgItemText(ID_THINGS, "Vectors:");
+         MainWindowx->StatusWindow->SetDlgItemText(
+            ID_THINGS, 
+            LOCALIZED_STATUS_VECTORS":");
          }
 
       MainWindowx->StatusWindow->SetDlgItemText(ID_VECTORS, text);
@@ -322,7 +326,7 @@ void update_status_memory(void)
    if (status_flag)
       {
       char text[256];
-      sprintf(text, "%ld Nodes", memory_count * SEG_SIZE);
+      sprintf(text, "%ld "LOCALIZED_STATUS_NODES, memory_count * SEG_SIZE);
 
       MainWindowx->StatusWindow->SetDlgItemText(ID_MEMORY, text);
       }

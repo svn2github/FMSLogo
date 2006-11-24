@@ -335,7 +335,7 @@ void single_step_box(NODE *the_line)
 
    if (MainWindowx->CommandWindow->MessageBox(
            textbuf,
-           "Single Step",
+           LOCALIZED_STEPPING,
            MB_OKCANCEL) == IDCANCEL)
       {
       if (stepflag)
@@ -583,11 +583,11 @@ void TMyApp::InitMainWindow()
 
    if (!tempPathIsValid)
       {
+      // warn the user that no TMP variable was defined.
       MessageBox(
          0,
-         "The environment variable TMP is not defined or invalid.\n"
-            "FMSLogo will attempt to use C:\\ for storing temporary files",
-         "Warning",
+         LOCALIZED_ERROR_TMPNOTDEFINED,
+         LOCALIZED_WARNING,
          MB_OK);
 
       strcpy(tempPath, "C:");
@@ -724,7 +724,12 @@ WinMain(
          {
          if (*++ptr == '\0')
             {
-            MessageBox(GetFocus(), lpCmdLine, "Invalid Command Line", MB_OK);
+            // invalid command line: "-" was not followed by a letter.
+            MessageBox(
+               GetFocus(), 
+               lpCmdLine, 
+               LOCALIZED_ERROR_BADCOMMANDLINE, 
+               MB_OK);
             break;
             }
          switch (*ptr++)
@@ -790,7 +795,12 @@ WinMain(
                 break;
 
              default:
-                MessageBox(GetFocus(), lpCmdLine, "Invalid Command Line", MB_OK);
+                // invalid command line: unrecognized switch
+                MessageBox(
+                   GetFocus(), 
+                   lpCmdLine, 
+                   LOCALIZED_ERROR_BADCOMMANDLINE, 
+                   MB_OK);
                 break;
             }
          }
@@ -807,10 +817,11 @@ WinMain(
       if (commandarg[0] == '\0')
          {
          // No logo scripts were specified on the command-line.
-         // We should re-use the exiting window, since this was probably
-         // just an accidently not create a new instance of logo.
+         // We should re-use the existing window instead of creating a new 
+         // instance of logo, since this was probably just an accident.
+
          // Find that running copy of Logo and make it visible.
-         HWND runningInstance = FindWindow(NULL, "FMSLogo");
+         HWND runningInstance = FindWindow(NULL, LOCALIZED_GENERAL_PRODUCTNAME);
          if (runningInstance != NULL)
             {
             // bring running instance to the the foreground
@@ -910,7 +921,12 @@ WinMain(
    int exitCode;
       {
       // go for it
-      TMyApp myApp("FMSLogo", hInstance, hPrevInstance, lpCmdLine, nCmdShow);
+      TMyApp myApp(
+         LOCALIZED_GENERAL_PRODUCTNAME,
+         hInstance, 
+         hPrevInstance, 
+         lpCmdLine, 
+         nCmdShow);
       myApp.Run();
       exitCode = myApp.Status;
       }
@@ -958,7 +974,7 @@ transline3d(
    long          modex, 
    const Point & from,
    const Point & to
-)
+   )
    {
    VECTOR from3d;
    from3d.x = from.x / WorldWidth;
@@ -1071,7 +1087,7 @@ transline(
    long          modex, 
    const Point & from,
    const Point & to
-)
+   )
    {
    long iFromx =  g_round(from.x) + xoffset;
    long iFromy = -g_round(from.y) + yoffset;

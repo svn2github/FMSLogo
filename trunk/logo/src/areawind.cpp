@@ -22,9 +22,8 @@
 #include "allwind.h"
 
 TMyPrinterAreaWindow::TMyPrinterAreaWindow(
-   TWindow *AParent,
-   LPCSTR   ATitle
-) : TDialog(AParent, ATitle)
+   TWindow * ParentWindow
+   ) : TDialog(ParentWindow, "PRINTERAREA")
    {
    }
 
@@ -110,7 +109,7 @@ NODE *lsetactivearea(NODE *arg)
 
       if ((PrinterAreaXLow >= PrinterAreaXHigh) || (PrinterAreaYLow >= PrinterAreaYHigh))
          {
-         ShowMessageAndStop("Active Area", "Bad argument");
+         ShowMessageAndStop(LOCALIZED_ACTIVEAREA, LOCALIZED_ERROR_BADINPUT);
          return Unbound;
          }
 

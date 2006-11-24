@@ -132,10 +132,6 @@ GBMEXPORT GBM_ERR GBMENTRY gbm_read_palette(int fd, int ft, GBM *gbm, GBMRGB *gb
 GBMEXPORT GBM_ERR GBMENTRY gbm_read_data(int fd, int ft, GBM *gbm, byte *data);
 GBMEXPORT GBM_ERR GBMENTRY gbm_write(const char *fn, int fd, int ft, const GBM *gbm, const GBMRGB *gbmrgb, const byte *data, const char *opt);
 
-GBMEXPORT const char * GBMENTRY gbm_err(GBM_ERR rc);
-
-GBMEXPORT int     GBMENTRY gbm_version(void);
-
 #endif
 
 #endif

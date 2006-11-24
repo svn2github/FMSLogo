@@ -1079,13 +1079,13 @@ NODE *evaluator(NODE *list, enum labels where)
       if (val == Unbound)
          {
          // trace that the procedure stopped (without outputting anything)
-         ndprintf(g_Writer.GetStream(), " stops\n");
+         ndprintf(g_Writer.GetStream(), LOCALIZED_TRACING_STOPS);
          }
       else
          {
          // trace the output
          NODE * quoted_val = vref(maybe_quote(val));
-         ndprintf(g_Writer.GetStream(), " outputs %s\n", quoted_val);
+         ndprintf(g_Writer.GetStream(), LOCALIZED_TRACING_OUTPUTS, quoted_val);
          deref(quoted_val);
          }
       }

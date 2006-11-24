@@ -793,22 +793,3 @@ if ( actual != total )
 	return GBM_ERR_OK;
 	}
 /*...e*/
-/*...sbmp_err:0:*/
-const char *bmp_err(GBM_ERR rc)
-	{
-	switch ( (int) rc )
-		{
-		case GBM_ERR_BMP_PLANES:
-			return "number of bitmap planes is not 1";
-		case GBM_ERR_BMP_BITCOUNT:
-			return "bit count not 1, 4, 8 or 24";
-		case GBM_ERR_BMP_CBFIX:
-			return "cbFix bad";
-		case GBM_ERR_BMP_COMP:
-			return "compression type not uncompressed, RLE4 or RLE8";
-		case GBM_ERR_BMP_OFFSET:
-			return "less bitmaps in file than index requested";
-		}
-	return NULL;
-	}
-/*...e*/

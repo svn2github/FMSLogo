@@ -158,33 +158,33 @@ NODE *err_logo(ERR_TYPES error_type, NODE *error_desc)
       {
       case FATAL:
          prepare_to_exit(FALSE);
-         printfx("Logo: Fatal Internal Error.\n");
+         printfx("%s", LOCALIZED_ERROR_FATALINTERNAL);
          exit(1);
 
       case OUT_OF_MEM_UNREC:
          prepare_to_exit(FALSE);
-         printfx("Logo: Out of Memory.\n");
+         printfx("%s", LOCALIZED_ERROR_OUTOFMEMORY);
          exit(1);
 
       case OUT_OF_MEM:
          use_reserve_tank();
-         g_ErrorFormatString = "out of space";
+         g_ErrorFormatString = LOCALIZED_ERROR_OUTOFMEMORY;
          break;
 
       case STACK_OVERFLOW:
-         g_ErrorFormatString = "stack overflow";
+         g_ErrorFormatString = LOCALIZED_ERROR_STACKOVERFLOW;
          break;
 
       case TURTLE_OUT_OF_BOUNDS:
-         g_ErrorFormatString = "turtle out of bounds";
+         g_ErrorFormatString = LOCALIZED_ERROR_TURTLEOUTOFBOUNDS;
          break;
 
       case BAD_GRAPH_INIT:
-         g_ErrorFormatString = "couldn't initialize graphics";
+         g_ErrorFormatString = LOCALIZED_ERROR_BADGRAPHINIT;
          break;
 
       case BAD_DATA_UNREC:
-         g_ErrorFormatString = "%p doesn\'t like %s as input";
+         g_ErrorFormatString = LOCALIZED_ERROR_BADDATA;
          error_message = cons_list(fun, error_desc);
          break;
          
@@ -200,60 +200,60 @@ NODE *err_logo(ERR_TYPES error_type, NODE *error_desc)
              this_line = reref(this_line, cadr(cdr(didnt_get_output)));
              }
 
-          g_ErrorFormatString = "%p didn\'t output to %p";
+          g_ErrorFormatString = LOCALIZED_ERROR_DIDNTOUTPUT;
           error_message = cons_list(last_call, error_desc);
           recoverable = true;
           break;
 
       case NOT_ENOUGH:
-         g_ErrorFormatString = "not enough inputs to %p";
+         g_ErrorFormatString = LOCALIZED_ERROR_NOTENOUGHINPUTS;
          error_message = cons_list(error_desc == NIL ? fun : error_desc);
          break;
 
       case BAD_DATA:
-         g_ErrorFormatString = "%p doesn't like %s as input";
+         g_ErrorFormatString = LOCALIZED_ERROR_BADDATA;
          error_message = cons_list(fun, error_desc);
          recoverable = true;
          break;
 
       case APPLY_BAD_DATA:
-         g_ErrorFormatString = "%p doesn't like %s as input";
+         g_ErrorFormatString = LOCALIZED_ERROR_BADDATA;
          error_message = cons_list(make_static_strnode("APPLY"), error_desc);
          recoverable = true;
          break;
 
       case TOO_MUCH:
-         g_ErrorFormatString = "too much inside ()\'s";
+         g_ErrorFormatString = LOCALIZED_ERROR_TOOMUCH;
          break;
 
       case DK_WHAT_UP:
          uplevel = true;
          // FALLTHROUGH
       case DK_WHAT:
-         g_ErrorFormatString = "You don\'t say what to do with %s";
+         g_ErrorFormatString = LOCALIZED_ERROR_DONTSAYWHATTODOWITH;
          error_message = cons_list(error_desc);
          break;
 
       case PAREN_MISMATCH:
-         g_ErrorFormatString = "too many (\'s";
+         g_ErrorFormatString = LOCALIZED_ERROR_PARENMISMATCH;
          break;
 
       case NO_VALUE:
-         g_ErrorFormatString = "%s has no value";
+         g_ErrorFormatString = LOCALIZED_ERROR_NOVALUE;
          error_message = cons_list(error_desc);
          recoverable = true;
          break;
 
       case UNEXPECTED_PAREN:
-         g_ErrorFormatString = "unexpected \')\'";
+         g_ErrorFormatString = LOCALIZED_ERROR_UNEXPECTEDPAREN;
          break;
 
       case UNEXPECTED_BRACKET:
-         g_ErrorFormatString = "unexpected \']\'";
+         g_ErrorFormatString = LOCALIZED_ERROR_UNEXPECTEDBRACKET;
          break;
 
       case UNEXPECTED_BRACE:
-         g_ErrorFormatString = "unexpected \'}\'";
+         g_ErrorFormatString = LOCALIZED_ERROR_UNEXPECTEDBRACE;
          break;
 
       case DK_HOW:
@@ -261,41 +261,41 @@ NODE *err_logo(ERR_TYPES error_type, NODE *error_desc)
          /* FALLTHROUGH */
 
       case DK_HOW_UNREC:
-         g_ErrorFormatString = "I don\'t know how to %p";
+         g_ErrorFormatString = LOCALIZED_ERROR_DONTKNOWHOWTO;
          error_message = cons_list(error_desc);
          break;
 
       case NO_CATCH_TAG:
-         g_ErrorFormatString = "Can't find catch tag for %p";
+         g_ErrorFormatString = LOCALIZED_ERROR_NOCATCHTAG;
          error_message = cons_list(error_desc);
          break;
 
       case ALREADY_DEFINED:
-         g_ErrorFormatString = "%p is already defined";
+         g_ErrorFormatString = LOCALIZED_ERROR_ALREADYDEFINED;
          error_message = cons_list(error_desc);
          break;
 
       case STOP_ERROR:
-         g_ErrorFormatString = "Stopping...";
+         g_ErrorFormatString = LOCALIZED_ERROR_STOPPING;
          yield_flag = true;
          break;
 
       case ALREADY_DRIBBLING:
-         g_ErrorFormatString = "Already dribbling";
+         g_ErrorFormatString = LOCALIZED_ERROR_ALREADYDRIBBLING;
          break;
 
       case FILE_ERROR:
-         g_ErrorFormatString = "File system error: %p";
+         g_ErrorFormatString = LOCALIZED_ERROR_FILESYSTEM;
          error_message = cons_list(error_desc);
          break;
 
       case IF_WARNING:
-         g_ErrorFormatString = "Assuming you mean IFELSE, not IF";
+         g_ErrorFormatString = LOCALIZED_ERROR_IFWARNING;
          warning = true;
          break;
 
       case SHADOW_WARN:
-         g_ErrorFormatString = "%p shadowed by local in procedure call";
+         g_ErrorFormatString = LOCALIZED_ERROR_SHADOWWARNING;
          error_message = cons_list(error_desc);
          warning = true;
          break;
@@ -303,7 +303,7 @@ NODE *err_logo(ERR_TYPES error_type, NODE *error_desc)
       case USER_ERR:
          if (error_desc == Unbound)
             {
-            g_ErrorFormatString = "Throw \"Error";
+            g_ErrorFormatString = LOCALIZED_ERROR_USER;
             }
          else
             {
@@ -315,44 +315,44 @@ NODE *err_logo(ERR_TYPES error_type, NODE *error_desc)
          break;
          
       case IS_PRIM:
-         g_ErrorFormatString = "%p is a primitive";
+         g_ErrorFormatString = LOCALIZED_ERROR_ISPRIMITIVE;
          error_message = cons_list(error_desc);
          break;
 
       case NOT_INSIDE:
-         g_ErrorFormatString = "Can't use TO inside a procedure";
+         g_ErrorFormatString = LOCALIZED_ERROR_TONOTINSIDE;
          break;
          
       case AT_TOPLEVEL:
-         g_ErrorFormatString = "Can only use %p inside a procedure";
+         g_ErrorFormatString = LOCALIZED_ERROR_ATTOPLEVEL;
          error_message = cons_list(error_desc);
          break;
 
       case NO_TEST:
-         g_ErrorFormatString = "%p without TEST";
+         g_ErrorFormatString = LOCALIZED_ERROR_NOTEST;
          error_message = cons_list(fun);
          break;
 
       case ERR_MACRO:
-         g_ErrorFormatString = "Macro output %s instead of a list";
+         g_ErrorFormatString = LOCALIZED_ERROR_BADMACROOUTPUT;
          error_message = cons_list(error_desc);
          break;
 
       case DEEPEND:
          if (error_desc == NIL)
             {
-            g_ErrorFormatString = "END inside multi-line instruction";
+            g_ErrorFormatString = LOCALIZED_ERROR_DEEPEND;
             }
          else
             {
-            g_ErrorFormatString = "END inside multi-line instruction in %p";
+            g_ErrorFormatString = LOCALIZED_ERROR_DEEPENDIN;
             error_message = cons_list(error_desc);
             }
          break;
              
       default:
          prepare_to_exit(FALSE);
-         printfx("Unknown error condition - internal error.\n");
+         printfx("%s", LOCALIZED_ERROR_UNKNOWN);
          exit(1);
       }
 
@@ -418,7 +418,7 @@ NODE *err_logo(ERR_TYPES error_type, NODE *error_desc)
             {
             // This error wasn't recoverable, so ERRACT shouldn't
             // have output a new value to use.
-            ndprintf(stdout, "You don't say what to do with %s\n", val);
+            ndprintf(stdout, LOCALIZED_ERROR_DONTSAYWHATTODOWITH"\n", val);
             deref(val);
             new_throw_node = Toplevel;
             }
@@ -483,7 +483,7 @@ NODE *lpause(NODE*)
    NODE * uname = vref(ufun);
    ufun = NIL;
 
-   ndprintf(stdout, "Pausing...");
+   ndprintf(stdout, LOCALIZED_PAUSING);
 
    jmp_buf sav_iblk;
    memcpy(sav_iblk, iblk_buf, sizeof(sav_iblk));

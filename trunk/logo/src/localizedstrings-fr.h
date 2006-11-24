@@ -11,7 +11,7 @@
 //
 // The menu options on the main window 
 //
-#define LOCALIZED_FILE        "&FRENCH"
+#define LOCALIZED_FILE        "&File"
 #define LOCALIZED_FILE_NEW    "&New\t(erase workspace)"
 #define LOCALIZED_FILE_LOAD   "&Load...\t(merge into workspace)"
 #define LOCALIZED_FILE_OPEN   "&Open...\t(replace workspace)" 
@@ -68,6 +68,54 @@
 
 
 //
+// Menu options in the popup menu
+//
+#define LOCALIZED_POPUP_COPY                     "Copy"
+#define LOCALIZED_POPUP_CUT                      "Cut"
+#define LOCALIZED_POPUP_PASTE                    "Paste"
+#define LOCALIZED_POPUP_DELETE                   "Delete"
+#define LOCALIZED_POPUP_UNDO                     "Undo"
+#define LOCALIZED_POPUP_SELECTALL                "Select All"
+#define LOCALIZED_POPUP_HELP                     "Topic Search"
+
+//
+// The menu options on the editor
+//
+#define LOCALIZED_EDITOR_TITLE                   "Editor"
+
+#define LOCALIZED_EDITOR_FILE                    "&File"
+#define LOCALIZED_EDITOR_FILE_SAVEANDEXIT        "&Save and Exit\tCtrl+D"
+#define LOCALIZED_EDITOR_FILE_SAVETOWORKSPACE    "Save to &Workspace"
+#define LOCALIZED_EDITOR_FILE_PRINT              "&Print..." 
+#define LOCALIZED_EDITOR_FILE_EXIT               "E&xit" 
+
+#define LOCALIZED_EDITOR_EDIT                    "&Edit"
+#define LOCALIZED_EDITOR_EDIT_UNDO               "&Undo\tCtrl+Z"
+#define LOCALIZED_EDITOR_EDIT_CUT                "&Cut\tCtrl+X"
+#define LOCALIZED_EDITOR_EDIT_COPY               "C&opy\tCtrl+C"
+#define LOCALIZED_EDITOR_EDIT_PASTE              "&Paste\tCtrl+V"
+#define LOCALIZED_EDITOR_EDIT_PASTE              "&Paste\tCtrl+V"
+#define LOCALIZED_EDITOR_EDIT_DELETE             "&Delete\tDel"
+#define LOCALIZED_EDITOR_EDIT_CLEARALL           "C&lear All\tCtrl+Del"
+#define LOCALIZED_EDITOR_EDIT_SELECTALL          "S&elect All\tCtrl+A"
+
+#define LOCALIZED_EDITOR_SEARCH                  "&Search"
+#define LOCALIZED_EDITOR_SEARCH_FIND             "&Find...\tCtrl+F"
+#define LOCALIZED_EDITOR_SEARCH_REPLACE          "&Replace...\tCtrl+H" 
+#define LOCALIZED_EDITOR_SEARCH_NEXT             "&Next\tF3" 
+
+#define LOCALIZED_EDITOR_SET                     "Se&t" 
+#define LOCALIZED_EDITOR_SET_FONT                "&Font..." 
+
+#define LOCALIZED_EDITOR_TEST                    "Test!"
+
+#define LOCALIZED_EDITOR_HELP                    "&Help" 
+#define LOCALIZED_EDITOR_HELP_INDEX              "&Index"
+#define LOCALIZED_EDITOR_HELP_EDITOR             "&Editor"
+#define LOCALIZED_EDITOR_HELP_TOPICSEARCH        "&Topic Search\tF1"
+
+
+//
 // The strings in the "You have unsaved changes" dialog
 //
 #define LOCALIZED_UNSAVEDCHANGES                LOCALIZED_GENERAL_PRODUCTNAME
@@ -84,9 +132,12 @@
 #define LOCALIZED_COMMANDER                     "Commander"
 #define LOCALIZED_COMMANDER_HALT                "Halt"
 #define LOCALIZED_COMMANDER_TRACE               "Trace"
+#define LOCALIZED_COMMANDER_NOTRACE             "NoTrace"
 #define LOCALIZED_COMMANDER_PAUSE               "Pause"
 #define LOCALIZED_COMMANDER_STATUS              "Status"
+#define LOCALIZED_COMMANDER_NOSTATUS            "NoStatus"
 #define LOCALIZED_COMMANDER_STEP                "Step"
+#define LOCALIZED_COMMANDER_UNSTEP              "UnStep"
 #define LOCALIZED_COMMANDER_RESET               "Reset"
 #define LOCALIZED_COMMANDER_EXECUTE             "Execute"
 #define LOCALIZED_COMMANDER_EDALL               "Edall"
@@ -116,6 +167,17 @@
 #define LOCALIZED_STATUS_CALLS                  "Calls:"
 #define LOCALIZED_STATUS_PEAKMEMORY             "Peak Memory:"
 
+#define LOCALIZED_STATUS_PENREVERSE  "Reverse"
+#define LOCALIZED_STATUS_PENNORMAL   "Normal"
+#define LOCALIZED_STATUS_PENERASE    "Erase"
+#define LOCALIZED_STATUS_PENUP       "Up"
+#define LOCALIZED_STATUS_PENDOWN     "Down"
+#define LOCALIZED_STATUS_PENSHOWN    "Shown"
+#define LOCALIZED_STATUS_PENHIDDEN   "Hidden"
+#define LOCALIZED_STATUS_POLYGONS    "Polygons"
+#define LOCALIZED_STATUS_VECTORS     "Vectors"
+#define LOCALIZED_STATUS_NODES       "Nodes"
+
 //
 // Strings on the Erase Procedure dialog box window
 //
@@ -135,7 +197,7 @@
 //
 // Strings on the Color Picker Dialog box
 //
-#define LOCALIZED_SETCOLOR                     "Color Dialog"
+#define LOCALIZED_SETCOLOR                     "Set Color"
 #define LOCALIZED_SETCOLOR_RED                 "Red"
 #define LOCALIZED_SETCOLOR_GREEN               "Green"
 #define LOCALIZED_SETCOLOR_BLUE                "Blue"
@@ -145,7 +207,7 @@
 //
 // Strings on the Pen Size Picker Dialog box
 //
-#define LOCALIZED_SETPENSIZE                   "Size Dialog"
+#define LOCALIZED_SETPENSIZE                   "Pen Size"
 #define LOCALIZED_SIZE                         "Size"
 #define LOCALIZED_SETCOLOR_OK                  LOCALIZED_GENERAL_OKBUTTON
 #define LOCALIZED_SETCOLOR_CANCEL              LOCALIZED_GENERAL_CANCELBUTTON
@@ -175,8 +237,307 @@
 #define LOCALIZED_ABOUTMS_CONSIDERDONATING     "Please consider donating to the\nNational Multiple Sclerosis Society.\nhttp:/\x2Fwww.nmss.org\n1-800-FIGHT-MS"
 #define LOCALIZED_ABOUTMS_OK                   LOCALIZED_GENERAL_OKBUTTON
 
+
+// 
+// Strings in various other dialog boxes
+// 
+
+#define LOCALIZED_CHANGEDINEDITORMAYBELOST  "Changes in this edit session may be lost.\n\nDo you really want to exit "LOCALIZED_GENERAL_PRODUCTNAME"?"
+#define LOCALIZED_EDITSESSIONISRUNNING      "An Edit session is running"
+
+#define LOCALIZED_NOTHALTEDREALLYEXIT        LOCALIZED_GENERAL_PRODUCTNAME" does not like exiting while not halted.\n\nDo you really want to exit "LOCALIZED_GENERAL_PRODUCTNAME"?"
+#define LOCALIZED_NOTHALTEDREALLYHALT        LOCALIZED_GENERAL_PRODUCTNAME" does not like exiting while not halted.\n\nDo you really want to Halt "LOCALIZED_GENERAL_PRODUCTNAME"?"
+#define LOCALIZED_LOGOISNOTHALTED            LOCALIZED_GENERAL_PRODUCTNAME" is not Halted"
+
+#define LOCALIZED_WRITEFAILEDNOMEMORY         "Write failed, Possibly no Memory"
+#define LOCALIZED_COULDNOTWRITEBMP            "Could not write .bmp"
+#define LOCALIZED_COULDNOTOPENBMP             "Could not open .bmp"
+#define LOCALIZED_COULDNOTCREATEBMP           "Unable to create Windows 3.0 bitmap"
+#define LOCALIZED_NOTVALIDBMP                 "Not a Windows 3.0 bitmap"
+
+#define LOCALIZED_YOUHAVEUNSAVEDCHANGES         "You have not saved to disk"
+#define LOCALIZED_FILENEWWILLERASEWORKSPACE     "Executing a new will erase all definitions.\n\nContinue with New?"
+#define LOCALIZED_FILELOADMAYOVERWRITEWORKSPACE "The file being loaded will be merged into your workspace\nand may overwrite your unsaved changes.\n\nContinue with Load?"
+#define LOCALIZED_FILEOPENWILLERASEWORKSPACE    "This will erase all of your unsaved changes.\n\nContinue with Open?"
+
+#define LOCALIZED_EDITORISOPEN                  "Did you know you have an edit session running?\n\nAny changes in this edit session are not being saved."
+
+#define LOCALIZED_ERROR_CANTREADFILE            "Unable to read file \"%s\" from disk"
+#define LOCALIZED_ERROR_CANTWRITEFILE           "Unable to write file \"%s\" to disk"
+
+#define LOCALIZED_SAVEISFOREXPERTSONLY          "This feature is for expert mode only (use "LOCALIZED_UNSAVEDCHANGES_SAVEANDEXIT")"
+#define LOCALIZED_SAVETOWORKSPACE                "Save to Workspace"
+#define LOCALIZED_CONTENTSCHANGED                "Contents Changed"
+#define LOCALIZED_SAVECHANGEDCONTENTSTOWORKSPACE "The contents have changed.\nWould you like to save the changes to the workspace?"
+
+
+
+#define LOCALIZED_CURSORISATLASTGOODDEFINITION  "The cursor will be positioned just after last successful definition.\nCheck the Commander window for possible error message."
+#define LOCALIZED_RETURNTOEDIT                  "Return to edit?"
+
+#define LOCALIZED_EDITFAILEDTOLOAD              "Your Edit has FAILED to load"
+
+
+
+// 
+//  Strings used in the File-Open filters
+//
+#define LOCALIZED_FILEFILTER_ALLFILES "All Files (*.*)|*.*|"
+#define LOCALIZED_FILEFILTER_LOGO     "Logo Files (*.lgo)|*.lgo|"LOCALIZED_FILEFILTER_ALLFILES
+#define LOCALIZED_FILEFILTER_IMAGE    "Bitmap Files (*.bmp)|*.bmp|GIF Files (*.gif)|*.gif|"LOCALIZED_FILEFILTER_ALLFILES
+
+
+
+//
+// strings seen when tracing is enabled
+//
+#define LOCALIZED_TRACING_STOPS             " stops\n"
+#define LOCALIZED_TRACING_OUTPUTS           " outputs %s\n"
+#define LOCALIZED_TRACING_MAKE              "Make %s %s" 
+#define LOCALIZED_TRACING_PPROP             "Pprop %s %s %s"
+#define LOCALIZED_TRACING_LOCATION          " in %s\n%s"
+
+//
+// strings seen when single-stepping execution
+//
+#define LOCALIZED_STEPPING                  "Single Step"
+
+//
+// Notification when defining a procedure with TO in the commander
+//
+#define LOCALIZED_PROCEDUREDEFINED  "%s defined\n"
+
+
+//
+// Words that represent the pen's mode
+//
+#define LOCALIZED_PENMODE_ERASE    "erase"
+#define LOCALIZED_PENMODE_REVERSE  "reverse"
+#define LOCALIZED_PENMODE_PAINT    "paint"
+
+//
+// Error message thrown by Logo
+//
+#define LOCALIZED_ERROR_BADINPUTNOTPAIRED      "Input is not paired"
+#define LOCALIZED_ERROR_FATALINTERNAL          "Logo: Fatal Internal Error"
+#define LOCALIZED_ERROR_OUTOFMEMORYUNREC       "Logo: Out of memory"
+#define LOCALIZED_ERROR_OUTOFMEMORY            "Out of memory"
+#define LOCALIZED_ERROR_STACKOVERFLOW          "stack overflow"
+#define LOCALIZED_ERROR_TURTLEOUTOFBOUNDS      "turtle out of bounds"
+#define LOCALIZED_ERROR_BADGRAPHINIT           "couldn't initialize graphics"
+#define LOCALIZED_ERROR_BADDATA                "%p doesn\'t like %s as input"
+#define LOCALIZED_ERROR_DIDNTOUTPUT            "%p didn\'t output to %p"
+#define LOCALIZED_ERROR_NOTENOUGHINPUTS        "not enough inputs to %p"
+#define LOCALIZED_ERROR_TOOMUCH                "too much inside ()\'s"
+#define LOCALIZED_ERROR_DONTSAYWHATTODOWITH    "You don\'t say what to do with %s"
+#define LOCALIZED_ERROR_PARENMISMATCH          "too many (\'s"
+#define LOCALIZED_ERROR_NOVALUE                "%s has no value"
+#define LOCALIZED_ERROR_UNEXPECTEDPAREN        "unexpected \')\'"
+#define LOCALIZED_ERROR_UNEXPECTEDBRACKET      "unexpected \']\'"
+#define LOCALIZED_ERROR_UNEXPECTEDBRACE        "unexpected \'}\'"
+#define LOCALIZED_ERROR_DONTKNOWHOWTO          "I don\'t know how to %p"
+#define LOCALIZED_ERROR_NOCATCHTAG             "Can't find catch tag for %p"
+#define LOCALIZED_ERROR_ALREADYDEFINED         "%p is already defined"
+#define LOCALIZED_ERROR_STOPPING               "Stopping..."
+#define LOCALIZED_ERROR_ALREADYDRIBBLING       "Already dribbling"
+#define LOCALIZED_ERROR_FILESYSTEM                   "File system error: %p"
+#define LOCALIZED_ERROR_FILESYSTEM_CANTOPEN          "Could not open file"
+#define LOCALIZED_ERROR_FILESYSTEM_CANTOPEN2         "Unable to open file: %t"
+#define LOCALIZED_ERROR_FILESYSTEM_ALREADYOPEN       "File already open"
+#define LOCALIZED_ERROR_FILESYSTEM_NOTOPEN           "File not open"
+#define LOCALIZED_ERROR_FILESYSTEM_CANTCREATEEDITOR  "Could not create editor file"
+#define LOCALIZED_ERROR_FILESYSTEM_CANTSTARTEDITOR   "Could not launch the editor" 
+#define LOCALIZED_ERROR_FILESYSTEM_CANTREADEDITOR    "Could not read editor file" 
+#define LOCALIZED_ERROR_IFWARNING              "Assuming you mean IFELSE, not IF"
+#define LOCALIZED_ERROR_SHADOWWARNING          "%p shadowed by local in procedure call"
+#define LOCALIZED_ERROR_USER                   "Throw \"Error"
+#define LOCALIZED_ERROR_ISPRIMITIVE            "%p is a primitive"
+#define LOCALIZED_ERROR_TONOTINSIDE            "Can't use TO inside a procedure"
+#define LOCALIZED_ERROR_ATTOPLEVEL             "Can only use %p inside a procedure"
+#define LOCALIZED_ERROR_ATTOPLEVEL2            "You must be in a procedure to use OUTPUT or STOP"
+#define LOCALIZED_ERROR_NOTEST                 "%p without TEST"
+#define LOCALIZED_ERROR_BADMACROOUTPUT         "Macro output %s instead of a list"
+#define LOCALIZED_ERROR_DEEPEND                "END inside multi-line instruction"
+#define LOCALIZED_ERROR_DEEPENDIN              "END inside multi-line instruction in %p"
+#define LOCALIZED_ERROR_UNKNOWN                "Unknown error condition - internal error."
+
+#define LOCALIZED_PAUSING                      "Pausing..."
+
+
+//
+// Error messages displayed in Message Boxes.
+//
+#define LOCALIZED_ERROR                      "Error"
+#define LOCALIZED_ERROR_BADINPUT             "Bad input"
+
+#define LOCALIZED_ERROR_CANTOPENPORT         "Could not open port"
+#define LOCALIZED_ERROR_CANTCLOSEPORT        "Could not close port"
+#define LOCALIZED_ERROR_CANTFLUSHPORT        "Could not flush port"
+#define LOCALIZED_ERROR_CANTDCBONPORT        "Could not build dcb on port"
+#define LOCALIZED_ERROR_CANTSETPORT          "Could not set port"
+#define LOCALIZED_ERROR_PORTALREADYOPEN      "Port is already open"
+#define LOCALIZED_ERROR_PORTNOTOPEN          "Port is not open"
+#define LOCALIZED_ERROR_FIRSTINPUTNOTANARRY  "First input must be an array"
+
+#define LOCALIZED_ERROR_WINDOWALREADYEXISTS   "Already exists"
+#define LOCALIZED_ERROR_WINDOWDOESNOTEXIST    "Does not exist"
+
+#define LOCALIZED_ERROR_DLL                   "DLL Error"
+#define LOCALIZED_ERROR_DLLNOTLOADED          "DLL is not loaded"
+#define LOCALIZED_ERROR_DLLALREADYLOADED      "DLL is already loaded"
+#define LOCALIZED_ERROR_DLLLOADFAILED         "DLL load failed"
+#define LOCALIZED_ERROR_DLLINVALIDDATATYPE    "Invalid data type input"
+#define LOCALIZED_ERROR_DLLINVALIDOUTPUTTYPE  "Invalid output type"
+#define LOCALIZED_ERROR_DLLFUNCTIONNOTFOUND   "Function not found"
+#define LOCALIZED_ERROR_DLLTYPEDATANOTPAIRED  "Not all Type/Data inputs are paired"
+
+#define LOCALIZED_ERROR_NETWORK                    "Network Error"
+#define LOCALIZED_ERROR_NETWORKRECEIVE             "Network Receive Error"
+#define LOCALIZED_ERROR_NETWORKSEND                "Network Send Error"
+#define LOCALIZED_ERROR_NETWORKSHUTDOWN            "Unexpected Error, Network may be shutdown"
+#define LOCALIZED_ERROR_NETWORKNOTSTARTED          "Not started"
+#define LOCALIZED_ERROR_NETWORKALREADYSTARTED      "Already started"
+#define LOCALIZED_ERROR_NETWORKALREADYON           "Already on"
+#define LOCALIZED_ERROR_NETWORKALREADYOFF          "Already off"
+
+// The rest of the network errors shouldn't really see -- may be okay not to localize
+#define LOCALIZED_ERROR_NETWORKNAMETOOLONG         "Name too long"
+#define LOCALIZED_ERROR_NETWORKNOTINITIALIZED      "Not initialized"
+#define LOCALIZED_ERROR_NETWORKSYSTEMNOTREADY      "System not ready"
+#define LOCALIZED_ERROR_NETWORKVERSIONNOTSUPPORTED "Version is not supported"
+#define LOCALIZED_ERROR_NETWORKSENDAFTERSHUTDOWN   "Can't send after socket shutdown"
+#define LOCALIZED_ERROR_NETWORKINTERRUPTED         "Interrupted system call"
+#define LOCALIZED_ERROR_NETWORKHOSTNOTFOUNDAUTH    "Authoritative Answer: Host not found"
+#define LOCALIZED_ERROR_NETWORKHOSTNOTFOUNDNONAUTH "Non-Authoritative: Host not found. See NETSTARTUP"
+#define LOCALIZED_ERROR_NETWORKNOTRECOVERABLE      "Non-recoverable error"
+#define LOCALIZED_ERROR_NETWORKNODATA              "No data record available"
+#define LOCALIZED_ERROR_NETWORKBADFILENUMBER       "Bad file number"
+#define LOCALIZED_ERROR_NETWORKWOULDBLOCK          "Operation would block"
+#define LOCALIZED_ERROR_NETWORKNOWINPROGRESS       "Operation now in progress"
+#define LOCALIZED_ERROR_NETWORKALREADYINPROGRESS   "Operation already in progress"
+#define LOCALIZED_ERROR_NETWORKBADADDRESS          "Bad address"
+#define LOCALIZED_ERROR_NETWORKNEEDDESTADDRESS     "Destination address required"
+#define LOCALIZED_ERROR_NETWORKMESSAGETOOLONG      "Message too long"
+#define LOCALIZED_ERROR_NETWORKPFNOTSUPPORTED      "Protocol family not supported"
+#define LOCALIZED_ERROR_NETWORKDIRNOTEMPTY         "Directory not empty"
+#define LOCALIZED_ERROR_NETWORKAPPLIMITREACHED     "Application limit has been reached"
+#define LOCALIZED_ERROR_NETWORKDISKQUOTA           "Disk quota exceeded"
+#define LOCALIZED_ERROR_NETWORKINVALIDARGUMENTS    LOCALIZED_ERROR_BADINPUT
+#define LOCALIZED_ERROR_NETWORKTOOMANYFILES        "Too many open files"
+#define LOCALIZED_ERROR_NETWORKACCESSDENIED        "Access denied"
+#define LOCALIZED_ERROR_NETWORKNOTASOCKET          "Socket operation on non-socket"
+#define LOCALIZED_ERROR_NETWORKADDRNOTAVAILABLE    "Can't assign requested address"
+#define LOCALIZED_ERROR_NETWORKADDRINUSE           "Address already in use"
+#define LOCALIZED_ERROR_NETWORKAFNOTSUPPORTED      "Address family not supported by protocol family"
+#define LOCALIZED_ERROR_NETWORKTIMEDOUT            "Connection timed out"
+#define LOCALIZED_ERROR_NETWORKTYPENOTSUPPORTED    "Socket type not supported"
+#define LOCALIZED_ERROR_NETWORKPROTONOTSUPPORTED   "Protocol not supported"
+#define LOCALIZED_ERROR_NETWORKNOBUFFER            "No space in buffer"
+#define LOCALIZED_ERROR_NETWORKALREADYCONNECTED    "Socket is already connected"
+#define LOCALIZED_ERROR_NETWORKNOTCONNECTED        "Socket is not connected"
+#define LOCALIZED_ERROR_NETWORKBADPROTOOPT         "Bad protocol option"
+#define LOCALIZED_ERROR_NETWORKCONNECTIONRESET     "Connection reset by peer"
+#define LOCALIZED_ERROR_NETWORKCONNECTIONABORT     "Software caused connection abort"
+#define LOCALIZED_ERROR_NETWORKISDOWN              "Network is down"
+#define LOCALIZED_ERROR_NETWORKRESET               "Network was reset"
+#define LOCALIZED_ERROR_NETWORKCONNECTIONREFUSED   "Connection refused"
+#define LOCALIZED_ERROR_NETWORKHOSTISDOWN          "Host is down"
+#define LOCALIZED_ERROR_NETWORKHOSTISUNREACHABLE   "Host is unreachable"
+#define LOCALIZED_ERROR_NETWORKBADPROTOTYPE        "Protocol is wrong type for socket"
+#define LOCALIZED_ERROR_NETWORKBADOPNOTSUPPORTED   "Operation not supported on socket"
+#define LOCALIZED_ERROR_NETWORKUNREACHABLE         "No path to remote host was found"
+#define LOCALIZED_ERROR_NETWORKTOOMANYREFS         "Too many references"
+
+#define LOCALIZED_ERROR_POLYSTART               "PolyStart Error"
+#define LOCALIZED_ERROR_POLYSTARTALREADYSTARTED "You already have a Polygon started"
+
+#define LOCALIZED_ERROR_POLYEND                 "PolyEnd Error"
+#define LOCALIZED_ERROR_POLYENDNOTSTARTED       "You have not started a Polygon"
+#define LOCALIZED_ERROR_POLYENDNEED3VECTORS     "You must have at least 3 vectors to define a polygon" 
+
+#define LOCALIZED_ERROR_SOUND                 "Sound Error"
+
+#define LOCALIZED_ERROR_MIDI                  "MIDI Error"
+#define LOCALIZED_ERROR_MIDIINVALIDDEVICE     "Invalid MIDI device"
+#define LOCALIZED_ERROR_MIDIALREADYOPEN       "Already open"
+#define LOCALIZED_ERROR_MIDINOTOPEN           "Not open"
+
+#define LOCALIZED_ERROR_MCI                   "MCI Error"
+
+#define LOCALIZED_ERROR_CLIPBOARDISEMPTY      "No Text in Clipboard"
+
+#define LOCALIZED_ERROR_MCI                   "MCI Error"
+
+#define LOCALIZED_ERROR_TIMERTOOMANY          "Too Many Timers"
+#define LOCALIZED_ERROR_TIMERBADID            "Bad Timer Id"
+#define LOCALIZED_ERROR_TIMERNOTFOUND         "Timer not found"
+
+#define LOCALIZED_ERROR_BITMODEBADBITMODE     "Illegal Bitmode"
+
+#define LOCALIZED_ERROR_HHCTRLNOTLOADED       "Online help is unavailable because hhctrl.ocx could not be loaded." 
+#define LOCALIZED_ERROR_HHCTRLATOMNOTFOUND    "Online help is unavailable because hhctrl.ocx does not contain ATOM_HTMLHELP_API_ANSI." 
+
+#define LOCALIZED_ERROR_BADCOMMANDLINE        "Invalid Command Line" 
+
+#define LOCALIZED_ERROR_TMPNOTDEFINED         "The environment variable TMP is not defined or invalid.\n"LOCALIZED_GENERAL_PRODUCTNAME" will attempt to use C:\\ for storing temporary files"
+
+#define LOCALIZED_ERROR_GIFSAVEFAILED         "Problem Generating GIF, check memory and diskspace"
+#define LOCALIZED_ERROR_GIFREADFAILED         "Problem Reading GIF, check memory and diskspace"
+
+#define LOCALIZED_ERROR_BITMAPINDEXOUTOFRANGE  "BitMap Index out of range"
+#define LOCALIZED_ERROR_BITMAPCUTFAILED        "Cut failed, Possibly not enough Memory"
+#define LOCALIZED_ERROR_BITMAPFITFAILED        "Fit failed, Possibly not enough Memory"
+
+#define LOCALIZED_ERROR_BITMAPNOTHINGTOPASTE    "Nothing to Paste" 
+#define LOCALIZED_ERROR_BITMAPINDEXISNOTBITMAP  "BitMap at Index must be initialized with a bitmap" 
+
+#define LOCALIZED_ERROR_BADTURTLEID             "Bad Turtle Id"
+#define LOCALIZED_ERROR_TURTLEHASNOPICTURE      "Turtle %d has no picture, will Halt"
+
+#define LOCALIZED_ERROR_FONTNOTFOUND            "Sorry, no font named %s was found.  Choose one of the following:\n"
+
+#define LOCALIZED_ERROR_PRINTERCANTSCALE        "Print driver does not support this function" 
+#define LOCALIZED_ERROR_CANTDRAWIMAGE           "Cannot draw image"
+#define LOCALIZED_ERROR_CANTEXTRACTIMAGE        "Cannot extract image"
+#define LOCALIZED_ERROR_SUBCODE                 "Sub Code"
+
+//
+// Strings in the dialog box for reading from "stdin"
+//
+#define LOCALIZED_INPUT         "Input:"
+#define LOCALIZED_PROMPT_TO     "To Mode (Cancel to End)"
+#define LOCALIZED_PROMPT_LIST   "List Mode (Cancel to Halt)"
+#define LOCALIZED_PROMPT_PAUSE  "Pause Mode (Cancel to Continue)"
+#define LOCALIZED_PROMPT_INPUT  "Input Mode (Cancel to Halt)"
+
+//
+// Messages shown by the FILE API.
+//
+#define LOCALIZED_FILE_CHDIRSUCCEEDED      "Changed to \"%s\""
+#define LOCALIZED_FILE_CHDIRFAILED         "Could not chdir to directory \"%s\""
+#define LOCALIZED_FILE_POPPEDTO            "Popped to \"%s\""
+#define LOCALIZED_FILE_MKDIRSUCCEEDED      "Now in newly created directory \"%s\"" 
+#define LOCALIZED_FILE_MKDIRFAILED         "Failed to create directory \"%s\"" 
+#define LOCALIZED_FILE_RMDIRSUCCEEDED      "Removed directory \"%s\"" 
+#define LOCALIZED_FILE_RMDIRFAILED         "Failed to remove directory \"%s\"" 
+#define LOCALIZED_FILE_RMDIRFAILEDNOEXIST  "The directory does not exist."
+#define LOCALIZED_FILE_RMDIRFAILEDNOTEMPTY "Make sure the directory is empty before trying to remove it."
+
+
+//
+// Other strings
+//
+#define LOCALIZED_ACTIVEAREA    "Active Area"
+#define LOCALIZED_INFORMATION   "Information"
+#define LOCALIZED_WARNING       "Warning"
+#define LOCALIZED_UNTITLED      "Untitled"
+#define LOCALIZED_UNKNOWN       "Unknown"
+
+#define LOCALIZED_UNBOUND       "Unbound"
+
 //
 // Localized Strings that explain each accelerator
+// I don't think that any of these strings can be seen by the user
 //
 #define LOCALIZED_STRINGTABLE_FILESAVEAS "Saves the contents of the EDALL window to a new file"
 #define LOCALIZED_STRINGTABLE_FILEOPEN "Erases the current workspace and loads a Logo program as the new workspace"
@@ -231,10 +592,3 @@
 #define LOCALIZED_STRINGTABLE_EDALLEXIT "Closes the EDALL session"
 
 #define LOCALIZED_STRINGTABLE_CANNOTFINDSTRING "Cannot find %s"
-
-
-
-// 
-// Strings in various other dialog boxes
-// 
-#define LOCALIZED_LOGOISNOTHALTED  LOCALIZED_GENERAL_PRODUCTNAME" is not Halted"

@@ -374,7 +374,10 @@ void TScreenWindow::Printit(TDC &PrintDC)
    // do we even have a chance?
    if ((GetDeviceCaps(PrintDC, RASTERCAPS) & RC_STRETCHDIB) == 0)
       {
-      MessageBox("Print driver does not support this function", "Error");
+      // notify the user that the printer does not support scaling
+      MessageBox(
+         LOCALIZED_ERROR_PRINTERCANTSCALE, 
+         LOCALIZED_ERROR);
       return;
       }
 
@@ -507,15 +510,23 @@ void TScreenWindow::Printit(TDC &PrintDC)
 
       if (Status <= 0)
          {
-         MessageBox("Cannot draw image", "Error");
+         // TODO: message the last error into the current locale
+         MessageBox(
+            LOCALIZED_ERROR_CANTDRAWIMAGE, 
+            LOCALIZED_ERROR);
+
          char buffer[64];
-         MessageBox(itoa(GetLastError(), buffer, 10), "Sub Code");
+         MessageBox(
+            itoa(GetLastError(), buffer, 10), 
+            LOCALIZED_ERROR_SUBCODE);
          }
       }
     else
       {
-      /* can't do it */
-      MessageBox("Cannot extract image", "Error");
+      // can't do it
+      MessageBox(
+         LOCALIZED_ERROR_CANTEXTRACTIMAGE,
+         LOCALIZED_ERROR);
       }
 
    // restore resources 
@@ -882,7 +893,7 @@ char * TMainFrame::GetClassName()
 
 bool TMainFrame::CanClose()
    {
-   HWND editH = ::FindWindow(NULL, "Editor");
+   HWND editH = ::FindWindow(NULL, LOCALIZED_EDITOR_TITLE);
 
    // if editor is running we could lose unsaved changes
    if (editH)
@@ -892,11 +903,9 @@ bool TMainFrame::CanClose()
       GiveFocusToEditbox = false;
 
       if (MessageBox(
-            "Changes in this edit session may be lost.\n"
-               "\n"
-               "Do you really want to exit FMSLogo?",
-            "An Edit session is running",
-            MB_OKCANCEL | MB_ICONQUESTION) != IDOK)
+             LOCALIZED_CHANGEDINEDITORMAYBELOST,
+             LOCALIZED_EDITSESSIONISRUNNING,
+             MB_OKCANCEL | MB_ICONQUESTION) != IDOK)
          {
          return false;
          }
@@ -911,11 +920,9 @@ bool TMainFrame::CanClose()
          {
          // we already tried warn user of doom
          if (MessageBox(
-               "FMSLogo does not like exiting while not halted.\n"
-                  "\n"
-                  "Do you really want to exit FMSLogo?",
-               LOCALIZED_LOGOISNOTHALTED,
-               MB_OKCANCEL | MB_ICONQUESTION) != IDOK)
+                LOCALIZED_NOTHALTEDREALLYEXIT,
+                LOCALIZED_LOGOISNOTHALTED,
+                MB_OKCANCEL | MB_ICONQUESTION) != IDOK)
             {
             return false;
             }
@@ -924,11 +931,9 @@ bool TMainFrame::CanClose()
          {
          // let the user optionally halt first
          if (MessageBox(
-               "FMSLogo does not like exiting while not halted.\n"
-                  "\n"
-               	  "Do you really want to Halt FMSLogo?",
-               LOCALIZED_LOGOISNOTHALTED,
-               MB_OKCANCEL | MB_ICONQUESTION) == IDOK)
+                LOCALIZED_NOTHALTEDREALLYHALT,
+                LOCALIZED_LOGOISNOTHALTED,
+                MB_OKCANCEL | MB_ICONQUESTION) == IDOK)
             {
             CommandWindow->DoButtonHalt(0);
             }
@@ -1066,7 +1071,7 @@ bool TMainFrame::WriteDIB(FILE* File, int MaxBitCount)
 
       if (!AreaMemoryBitMap)
          {
-         ShowMessageAndStop("Error", "Write failed, Possibly no Memory");
+         ShowMessageAndStop(LOCALIZED_ERROR, LOCALIZED_WRITEFAILEDNOMEMORY);
          }
 
       HDC     memoryDC     = CreateCompatibleDC(screen);
@@ -1159,7 +1164,7 @@ bool TMainFrame::DumpBitmapFile(LPCSTR Filename, int MaxBitCount)
       // do it and if error then let user know 
       if (!WriteDIB(file, MaxBitCount))
          {
-         ShowMessageAndStop("Error", "Could not write .bmp");
+         ShowMessageAndStop(LOCALIZED_ERROR, LOCALIZED_COULDNOTWRITEBMP);
          }
 
       // Restore the arrow cursor
@@ -1170,7 +1175,7 @@ bool TMainFrame::DumpBitmapFile(LPCSTR Filename, int MaxBitCount)
    else
       {
       // else file never opened
-      ShowMessageAndStop("Error", "Could not open .bmp");
+      ShowMessageAndStop(LOCALIZED_ERROR, LOCALIZED_COULDNOTOPENBMP);
       }
 
    return true;
@@ -1402,7 +1407,7 @@ bool TMainFrame::LoadBitmapFile(LPCSTR Filename, DWORD &dwPixelWidth, DWORD &dwP
             }
          else
             {
-            errorMessage = "Unable to create Windows 3.0 bitmap";
+            errorMessage = LOCALIZED_COULDNOTCREATEBMP;
             }
 
          // Restore the arrow cursor.
@@ -1411,14 +1416,14 @@ bool TMainFrame::LoadBitmapFile(LPCSTR Filename, DWORD &dwPixelWidth, DWORD &dwP
       else
          {
          /* not a bitmap */
-         errorMessage = "Not a Windows 3.0 bitmap";
+         errorMessage = LOCALIZED_NOTVALIDBMP;
          }
       fclose(file);
       }
    else
       {
       /* else file not there */
-      errorMessage = "Cannot open bitmap file";
+      errorMessage = LOCALIZED_COULDNOTOPENBMP;
       }
 
    // if no message the we are ok else display error message
@@ -1428,7 +1433,7 @@ bool TMainFrame::LoadBitmapFile(LPCSTR Filename, DWORD &dwPixelWidth, DWORD &dwP
       }
    else
       {
-      ShowMessageAndStop("Error", errorMessage);
+      ShowMessageAndStop(LOCALIZED_ERROR, errorMessage);
       retval = false;
       }
 
@@ -1480,7 +1485,7 @@ void TMainFrame::CMBitmapOpen()
 
    TOpenSaveDialog::TData FileData;
    FileData.Flags = OFN_FILEMUSTEXIST | OFN_HIDEREADONLY | OFN_EXPLORER;
-   FileData.SetFilter("Bitmap Files (*.bmp)|*.bmp|GIF Files (*.gif)|*.gif|All Files (*.*)|*.*|");
+   FileData.SetFilter(LOCALIZED_FILEFILTER_IMAGE);
    strcpy(FileData.FileName, "*.bmp");
    FileData.DefExt = "bmp";
 
@@ -1494,10 +1499,14 @@ void TMainFrame::CMBitmapOpen()
       strcpy(BitmapName, FileData.FileName);
       
       _splitpath(BitmapName, NULL, NULL, NULL, ext);
-      if (stricmp(ext, ".GIF") == 0)
+      if (stricmp(ext, ".gif") == 0)
+         {
          gifload_helper(BitmapName, dwPixelWidth, dwPixelHeight);
+         }
       else
+         {
          LoadBitmapFile(BitmapName, dwPixelWidth, dwPixelHeight);
+         }
       }
    }
 
@@ -1525,7 +1534,7 @@ void TMainFrame::SaveBitmapAs()
    // Get file name from user and then save the file
    TOpenSaveDialog::TData FileData;
    FileData.Flags = OFN_OVERWRITEPROMPT | OFN_HIDEREADONLY | OFN_EXPLORER;
-   FileData.SetFilter("Bitmap Files (*.bmp)|*.bmp|GIF Files (*.gif)|*.gif|All Files (*.*)|*.*|");
+   FileData.SetFilter(LOCALIZED_FILEFILTER_IMAGE);
    strcpy(FileData.FileName, BitmapName);
    FileData.DefExt = "bmp";
 
@@ -1546,7 +1555,7 @@ void TMainFrame::SaveBitmap()
    {
    char ext[_MAX_EXT];
    _splitpath(BitmapName, NULL, NULL, NULL, ext);
-   if (stricmp(ext, ".GIF") == 0)
+   if (stricmp(ext, ".gif") == 0)
       {
       gifsave_helper(BitmapName, -1, 0, -1, -1, 8);
       }
@@ -1568,11 +1577,12 @@ void TMainFrame::CMFileNew()
    // if doing new and dirty give user a chance to abort the new
    if (IsDirty)
       {
+      // Warn the user that File-New will erase the contents 
+      // of the workspace and give them a chance to cancel the
+      // operation.
       if (MainWindowx->CommandWindow->MessageBox(
-             "Executing a new will erase all definitions.\n"
-                "\n"
-                "Continue with New?",
-             "You have not saved to disk",
+             LOCALIZED_FILENEWWILLERASEWORKSPACE,
+             LOCALIZED_YOUHAVEUNSAVEDCHANGES,
              MB_OKCANCEL | MB_ICONQUESTION) == IDCANCEL)
          {
          return;
@@ -1590,13 +1600,13 @@ void TMainFrame::CMFileLoad()
    {
    if (IsDirty)
       {
+      // Warn the user that File-Load may erase the contents 
+      // of the workspace and give them a chance to cancel the
+      // operation.
       if (MainWindowx->CommandWindow->MessageBox(
-            "The file being loaded will be merged into your workspace\n"
-                "and may overwrite your unsaved changes.\n"
-                "\n"
-                "Continue with Load?",
-            "You have not saved to disk",
-            MB_OKCANCEL | MB_ICONQUESTION) == IDCANCEL)
+             LOCALIZED_YOUHAVEUNSAVEDCHANGES,
+             LOCALIZED_FILELOADMAYOVERWRITEWORKSPACE,
+             MB_OKCANCEL | MB_ICONQUESTION) == IDCANCEL)
          {
          return;
          }
@@ -1605,7 +1615,7 @@ void TMainFrame::CMFileLoad()
    // show the user a file-picker dialog
    TOpenSaveDialog::TData FileData;
    FileData.Flags = OFN_FILEMUSTEXIST | OFN_HIDEREADONLY | OFN_EXPLORER;
-   FileData.SetFilter("Logo Files (*.lgo)|*.lgo|All Files (*.*)|*.*|");
+   FileData.SetFilter(LOCALIZED_FILEFILTER_LOGO);
    strcpy(FileData.FileName, "*.lgo");
    FileData.DefExt = "lgo";
 
@@ -1620,7 +1630,9 @@ void TMainFrame::CMFileLoad()
       bool isOk = fileload(FileName);
       if (!isOk) 
          {
-         err_logo(FILE_ERROR, make_static_strnode("Could not open file"));
+         err_logo(
+            FILE_ERROR, 
+            make_static_strnode(LOCALIZED_ERROR_FILESYSTEM_CANTOPEN));
          }
 
       // handle any error that may have occured
@@ -1634,12 +1646,13 @@ void TMainFrame::CMFileOpen()
    {
    if (IsDirty)
       {
+      // Warn the user that File-Open will erase the contents 
+      // of the workspace and give them a chance to cancel the
+      // operation.
       if (MainWindowx->CommandWindow->MessageBox(
-            "This will erase all of your unsaved changes.\n"
-                "\n"
-                "Continue with Open?",
-            "You have not saved to disk",
-            MB_OKCANCEL | MB_ICONQUESTION) == IDCANCEL)
+             LOCALIZED_FILEOPENWILLERASEWORKSPACE,
+             LOCALIZED_YOUHAVEUNSAVEDCHANGES,
+             MB_OKCANCEL | MB_ICONQUESTION) == IDCANCEL)
          {
          return;
          }
@@ -1648,7 +1661,7 @@ void TMainFrame::CMFileOpen()
    // show the user a file-picker dialog
    TOpenSaveDialog::TData FileData;
    FileData.Flags = OFN_FILEMUSTEXIST | OFN_HIDEREADONLY | OFN_EXPLORER;
-   FileData.SetFilter("Logo Files (*.lgo)|*.lgo|All Files (*.*)|*.*|");
+   FileData.SetFilter(LOCALIZED_FILEFILTER_LOGO);
    strcpy(FileData.FileName, "*.lgo");
    FileData.DefExt = "lgo";
 
@@ -1668,7 +1681,9 @@ void TMainFrame::CMFileOpen()
       bool isOk = fileload(FileName);
       if (!isOk) 
          {
-         err_logo(FILE_ERROR, make_static_strnode("Could not open file"));
+         err_logo(
+            FILE_ERROR, 
+            make_static_strnode(LOCALIZED_ERROR_FILESYSTEM_CANTOPEN));
          }
 
       // handle any error that may have occured
@@ -1702,7 +1717,7 @@ void TMainFrame::SaveFileAs()
    // Get file name from user and then save the file
    TOpenSaveDialog::TData FileData;
    FileData.Flags = OFN_OVERWRITEPROMPT | OFN_HIDEREADONLY | OFN_EXPLORER;
-   FileData.SetFilter("Logo Files (*.lgo)|*.lgo|All Files (*.*)|*.*|");
+   FileData.SetFilter(LOCALIZED_FILEFILTER_LOGO);
    strcpy(FileData.FileName, FileName);
    FileData.DefExt = "lgo";
 
@@ -1743,14 +1758,15 @@ void TMainFrame::CMBitmapPrinterArea()
       {
       bAok = true;
 
-      /* if user does not cancel then copy dynamic to real */
-
-      if (TMyPrinterAreaWindow(this, "PrinterArea").Execute() == IDOK)
+      // if user does not cancel then copy dynamic to real
+      if (TMyPrinterAreaWindow(this).Execute() == IDOK)
          {
 
          if ((TPrinterAreaXLow >= TPrinterAreaXHigh) || (TPrinterAreaYLow >= TPrinterAreaYHigh))
             {
-            MainWindowx->CommandWindow->MessageBox("Bad arguments", "Active Area");
+            MainWindowx->CommandWindow->MessageBox(
+               LOCALIZED_ERROR_BADINPUT,
+               LOCALIZED_ACTIVEAREA);
             bAok = false;
             }
          else
@@ -1844,7 +1860,12 @@ void TMainFrame::CMFileErase()
 void TMainFrame::CreateEditWindow(const char *FileName, NODE *args, bool check_for_errors)
    {
    // NOTE: EditWindow is deleted when "this" is deleted.
-   EditWindow = new TMyFileWindow(this, "Editor", FileName, args, check_for_errors);
+   EditWindow = new TMyFileWindow(
+      this, 
+      LOCALIZED_EDITOR_TITLE,
+      FileName, 
+      args, 
+      check_for_errors);
 
    // Do configuration stuff. Build default coords
    int x = (int) (MaxWidth * 0.25);
@@ -1869,7 +1890,7 @@ void TMainFrame::CreateEditWindow(const char *FileName, NODE *args, bool check_f
    if (args != NULL || check_for_errors)
       {
       // retitle without filename
-      EditWindow->SetWindowText("Editor");
+      EditWindow->SetWindowText(LOCALIZED_EDITOR_TITLE);
       }
    }
 
@@ -1971,11 +1992,16 @@ int TMainFrame::PopupEditorForFile(const char *FileName, NODE *args)
    }
 
 
-bool TMainFrame::MyPopupInput(char *str, const char *prompt)
+bool TMainFrame::MyPopupInput(char *Output, const char *Prompt)
    {
    // get user input
 
-   if (TInputDialog(this, prompt, "Input:", str, MAX_BUFFER_SIZE).Execute() == IDOK)
+   if (TInputDialog(
+          this, 
+          Prompt, 
+          LOCALIZED_INPUT, 
+          Output, 
+          MAX_BUFFER_SIZE).Execute() == IDOK)
       {
       return true;
       }
@@ -2246,7 +2272,7 @@ void TMainFrame::MyPopupStatus()
 void TMainFrame::CMControlExecute()
    {
 
-   HWND EditH = FindWindow(NULL, "Editor");
+   HWND EditH = FindWindow(NULL, LOCALIZED_EDITOR_TITLE);
    HWND TempH = GetActiveWindow();
 
    // if Main is active find alternate
@@ -2373,7 +2399,7 @@ void TMainFrame::CMSetPenSize()
 
    // if OK then make change
 
-   if (TSizeDialog(this, TheSize, "Pen Size").Execute() == IDOK)
+   if (TSizeDialog(this, TheSize).Execute() == IDOK)
       {
       char logoInstruction[256];
 
@@ -2493,12 +2519,12 @@ void TMainFrame::CMHelpReleaseNotes()
 
 void TMainFrame::CMHelpAbout()
    {
-   TDialog(this, "AboutBox").Execute();
+   TDialog(this, "ABOUTBOX").Execute();
    }
 
 void TMainFrame::CMHelpAboutMS()
    {
-   TDialog(this, "AboutMSBox").Execute();
+   TDialog(this, "ABOUTMSBOX").Execute();
    }
 
 // Execute File:Print command
@@ -2634,8 +2660,8 @@ LRESULT TMainFrame::OnNetworkConnectSendFinish(WPARAM /* wParam */, LPARAM lPara
       // The client-side is not initialized.
       // This must be a delayed event coming in after shutdown.
       MessageBox(
-         "Unexpected Error, Network may be shutdown",
-         "Network Error");
+         LOCALIZED_ERROR_NETWORKSHUTDOWN,
+         LOCALIZED_ERROR_NETWORK);
       return 0;
       }
 

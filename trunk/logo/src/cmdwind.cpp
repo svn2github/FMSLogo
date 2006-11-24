@@ -252,12 +252,12 @@ void TMyCommandWindow::UpdateYieldButtonState()
    {
    if (stepflag)
       {
-      YieldButton.SetWindowText("UnStep");
+      YieldButton.SetWindowText(LOCALIZED_COMMANDER_UNSTEP);
       YieldButton.SetCheck(BF_CHECKED);
       }
    else
       {
-      YieldButton.SetWindowText("Step");
+      YieldButton.SetWindowText(LOCALIZED_COMMANDER_STEP);
       YieldButton.SetCheck(BF_UNCHECKED);
       }
    }
@@ -266,12 +266,12 @@ void TMyCommandWindow::UpdateTraceButtonState()
    {
    if (traceflag)
       {
-      TraceButton.SetWindowText("UnTrace");
+      TraceButton.SetWindowText(LOCALIZED_COMMANDER_NOTRACE);
       TraceButton.SetCheck(BF_CHECKED);
       }
    else
       {
-      TraceButton.SetWindowText("Trace");
+      TraceButton.SetWindowText(LOCALIZED_COMMANDER_TRACE);
       TraceButton.SetCheck(BF_UNCHECKED);
       }
    }
@@ -280,12 +280,12 @@ void TMyCommandWindow::UpdateStatusButtonState()
    {
    if (status_flag)
       {
-      StatusButton.SetWindowText("NoStatus");
+      StatusButton.SetWindowText(LOCALIZED_COMMANDER_NOSTATUS);
       StatusButton.SetCheck(BF_CHECKED);
       }
    else
       {
-      StatusButton.SetWindowText("Status");
+      StatusButton.SetWindowText(LOCALIZED_COMMANDER_STATUS);
       StatusButton.SetCheck(BF_UNCHECKED);
       }
    }
@@ -360,7 +360,8 @@ bool process_special_conditions()
       // stopping_flag of THROWING.
       ndprintf(
          stdout, 
-         "You must be in a procedure to use OUTPUT or STOP.\n");
+         "%t.\n"
+         LOCALIZED_ERROR_ATTOPLEVEL2);
       stopping_flag = RUN;
       }
 
@@ -748,10 +749,10 @@ TMyListboxWindow::TMyListboxWindow(
    m_IsLeftControlKeyDown(false),
    m_IsRightControlKeyDown(false)
    {
-   PopupMenu.AppendMenu(MF_STRING, CM_EDITCOPY,      "Copy");
-   PopupMenu.AppendMenu(MF_STRING, CM_EDITSELECTALL, "Select All");
+   PopupMenu.AppendMenu(MF_STRING, CM_EDITCOPY,      LOCALIZED_POPUP_COPY);
+   PopupMenu.AppendMenu(MF_STRING, CM_EDITSELECTALL, LOCALIZED_POPUP_SELECTALL);
    PopupMenu.AppendMenu(MF_SEPARATOR, 0, NULL);
-   PopupMenu.AppendMenu(MF_STRING, CM_HELPEDIT_TOPIC, "Topic Search");
+   PopupMenu.AppendMenu(MF_STRING, CM_HELPEDIT_TOPIC, LOCALIZED_POPUP_HELP);
    }
 
 bool TMyListboxWindow::CanClose()

@@ -946,21 +946,3 @@ hashtable is big enough so that MAX_HASH > 4*MAX_DICT.
    return GBM_ERR_OK;
    }
 
-const char *gif_err(GBM_ERR rc)
-   {
-   switch ( (int) rc )
-      {
-      case GBM_ERR_GIF_BPP:
-         return "bad bits per pixel";
-      case GBM_ERR_GIF_TERM:
-         return "terminator found before requested image descriptor";
-      case GBM_ERR_GIF_CODE_SIZE:
-         return "code size not in range 2 to 9";
-      case GBM_ERR_GIF_CORRUPT:
-         return "encoded data is corrupt";
-      case GBM_ERR_GIF_HEADER:
-         return "bad header";
-      }
-   return NULL;
-   }
-

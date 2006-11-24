@@ -266,7 +266,7 @@ HBITMAP DIBToBitmap(HANDLE hDIB, HPALETTE hPal)
 
    if (!hBitmap)
       {
-      ShowMessageAndStop("Error", "Not Enough Memory");
+      ShowMessageAndStop(LOCALIZED_ERROR, LOCALIZED_ERROR_OUTOFMEMORY);
       }
    // DIBError (ERR_CREATEDDB);
 

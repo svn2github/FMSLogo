@@ -1,5 +1,5 @@
 /*
-*      files.c         logo file management module             dvb
+*      files.cpp         logo file management module             dvb
 *
 *       Copyright (C) 1995 by the Regents of the University of California
 *       Copyright (C) 1995 by George Mills
@@ -66,7 +66,7 @@ FILE *open_file(NODE *arg, const char *access)
             FILE *clipstrm = fopen(TempClipName, "w");
             if (clipstrm != NULL)
                {
-               fputs( "No Text in Clipboard", clipstrm);
+               fputs(LOCALIZED_ERROR_CLIPBOARDISEMPTY, clipstrm);
                fclose(clipstrm);
                }
             }
@@ -186,7 +186,9 @@ open_helper(
       Arguments = car(Arguments);
       if (find_file(Arguments, false) != NULL)
          {
-         err_logo(FILE_ERROR, make_static_strnode("File already open"));
+         err_logo(
+            FILE_ERROR, 
+            make_static_strnode(LOCALIZED_ERROR_FILESYSTEM_ALREADYOPEN));
          }
       else if ((tmp = open_file(Arguments, mode)) != NULL)
          {
@@ -195,7 +197,9 @@ open_helper(
          }
       else
          {
-         err_logo(FILE_ERROR, make_static_strnode("I can't open that file"));
+         err_logo(
+            FILE_ERROR, 
+            make_static_strnode(LOCALIZED_ERROR_FILESYSTEM_CANTOPEN));
          }
       }
    return Unbound;
@@ -243,7 +247,9 @@ NODE *lclose(NODE *arg)
    FILE *tmp;
    if ((tmp = find_file(arg, true)) == NULL)
       {
-      err_logo(FILE_ERROR, make_static_strnode("File not open"));
+      err_logo(
+         FILE_ERROR, 
+         make_static_strnode(LOCALIZED_ERROR_FILESYSTEM_NOTOPEN));
       }
    else
       {
@@ -332,7 +338,9 @@ CFileStream::SetStreamToOpenFile(
       }
    else
       {
-      err_logo(FILE_ERROR, make_static_strnode("File not open"));
+      err_logo(
+         FILE_ERROR, 
+         make_static_strnode(LOCALIZED_ERROR_FILESYSTEM_NOTOPEN));
       }
    }
 
@@ -438,20 +446,22 @@ PrintWorkspaceToFileStream(
       }
    else
       {
-      err_logo(FILE_ERROR, make_static_strnode("Could not open file"));
+      err_logo(
+         FILE_ERROR, 
+         make_static_strnode(LOCALIZED_ERROR_FILESYSTEM_CANTOPEN));
       }
    }
 
 
 NODE *lsave(NODE *arg)
    {
-   if (::FindWindow(NULL, "Editor"))
+   if (::FindWindow(NULL, LOCALIZED_EDITOR_TITLE))
       {
+      // Notify the user that the editor is open and that 
+      // the changes made in that editor won't be saved.
       MainWindowx->CommandWindow->MessageBox(
-         "Did you know you have an edit session running?\n"
-            "\n"
-            "Any changes in this edit session are not being saved.", 
-         "Information", 
+         LOCALIZED_EDITORISOPEN,
+         LOCALIZED_INFORMATION,
          MB_OK | MB_ICONQUESTION);
       }
 
@@ -567,7 +577,7 @@ void silent_load(NODE *arg, const char *prefix)
          {
          // we're loading argv (not from Logolib or current directory)
          // so we should display an error
-         ndprintf(stdout, "Unable to open file: %t\n", prefix);
+         ndprintf(stdout, LOCALIZED_ERROR_FILESYSTEM_CANTOPEN2"\n", prefix);
          }
       }
    }
@@ -607,7 +617,9 @@ NODE *lload(NODE *arg)
       }
    else
       {
-      err_logo(FILE_ERROR, make_static_strnode("Could not open file"));
+      err_logo(
+         FILE_ERROR, 
+         make_static_strnode(LOCALIZED_ERROR_FILESYSTEM_CANTOPEN));
       }
 
    loadstream = tmp;

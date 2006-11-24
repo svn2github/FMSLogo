@@ -1745,7 +1745,9 @@ NODE *lpolystart(NODE *)
       bPolyFlag = false;
       ThreeD.DisposeVertices(ThePolygon);
       ThePolygon = NULL;
-      ShowMessageAndStop("PolyStart Error", "You already have a Polygon started");
+      ShowMessageAndStop(
+         LOCALIZED_ERROR_POLYSTART, 
+         LOCALIZED_ERROR_POLYSTARTALREADYSTARTED);
       }
    else
       {
@@ -1770,25 +1772,29 @@ NODE *lpolyend(NODE *)
 
    if (bPolyFlag)
       {
-      if (ThePolygon && (ThePolygon != ThePolygon->Next) && (ThePolygon->Next != ThePolygon->Next->Next))
+      if (ThePolygon && 
+          (ThePolygon != ThePolygon->Next) && 
+          (ThePolygon->Next != ThePolygon->Next->Next))
          {
+         // there are at least three vertices in the polygon
          ThreeD.AddPolygon(ThePolygon, pcolor);
          }
       else
          {
+         // the polygon doesn't have three vertices
          ThreeD.DisposeVertices(ThePolygon);
          ThePolygon = NULL;
          ShowMessageAndStop(
-            "PolyEnd Error", 
-            "You must have at least 3 vectors to define a polygon");
+            LOCALIZED_ERROR_POLYEND,
+            LOCALIZED_ERROR_POLYENDNEED3VECTORS);
          }
       }
    else
       {
       ThreeD.DisposeVertices(ThePolygon);
       ShowMessageAndStop(
-         "PolyEnd Error", 
-         "You have not started a Polygon");
+         LOCALIZED_ERROR_POLYEND,
+         LOCALIZED_ERROR_POLYENDNOTSTARTED);
       }
 
    ThePolygon = NULL;

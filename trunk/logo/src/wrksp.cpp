@@ -547,7 +547,7 @@ NODE *to_helper(NODE *args, bool is_macro)
             }
          if (loadstream == stdin)
             {
-            ndprintf(stdout, "%s defined\n", proc_name);
+            ndprintf(stdout, LOCALIZED_PROCEDUREDEFINED, proc_name);
             }
 
          // Set the "dirty" flag so that closing FMSLogo will
@@ -600,9 +600,9 @@ NODE *lmake(NODE *args)
          NODE *quoted_variable_name = vref(make_quote(what));
 
          ndprintf(
-            g_Writer.GetStream(), 
-            "Make %s %s", 
-            quoted_variable_name, 
+            g_Writer.GetStream(),
+            LOCALIZED_TRACING_MAKE,
+            quoted_variable_name,
             new_value);
 
          deref(quoted_variable_name);
@@ -611,7 +611,11 @@ NODE *lmake(NODE *args)
          // trace the name of the procedure where the assignment happened.
          if (ufun != NIL)
             {
-            ndprintf(g_Writer.GetStream(), " in %s\n%s", ufun, this_line);
+            ndprintf(
+               g_Writer.GetStream(),
+               LOCALIZED_TRACING_LOCATION,
+               ufun,
+               this_line);
             }
          new_line(g_Writer.GetStream());
          }
@@ -1348,7 +1352,7 @@ NODE *ledit(NODE *args)
    if (!bExpert)
       {
       // if an editor is already open, just give it focus
-      HWND editorWindow = ::FindWindow(NULL, "Editor");
+      HWND editorWindow = ::FindWindow(NULL, LOCALIZED_EDITOR_TITLE);
       if (editorWindow)
          {
          ::ShowWindow(editorWindow, SW_SHOWNORMAL);
@@ -1382,7 +1386,7 @@ NODE *ledit(NODE *args)
          {
          err_logo(
             FILE_ERROR,
-            make_static_strnode("Could not create editor file"));
+            make_static_strnode(LOCALIZED_ERROR_FILESYSTEM_CANTCREATEEDITOR));
          }
       }
 
@@ -1393,7 +1397,7 @@ NODE *ledit(NODE *args)
          {
          err_logo(
             FILE_ERROR, 
-            make_static_strnode("Could not launch the editor"));
+            make_static_strnode(LOCALIZED_ERROR_FILESYSTEM_CANTSTARTEDITOR));
          }
       else
          {
@@ -1443,7 +1447,7 @@ bool endedit(void)
       {
       // err_logo(
       //    FILE_ERROR,
-      //    make_static_strnode("Could not read editor file"));
+      //    make_static_strnode(LOCALIZED_ERROR_FILESYSTEM_CANTREADEDITOR));
       }
 
    lsetcursorarrow(NIL);

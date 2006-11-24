@@ -36,17 +36,16 @@ class TSizeControl : public TControl
 class TSizeDialog : public TDialog
    {
    public:
-   TSizeDialog(TWindow* parent, TColor& size, char *caption);
+   TSizeDialog(TWindow* parent, TColor& size);
 
    protected:
    TScrollBar*   SizeBar;
    TSizeControl* SelSize;
-   char *sizecaption;
 
    void SetupWindow();
    void TransferData(TTransferDirection direction);
 
-   virtual void UpdateBars(TColor size);
+   void UpdateBars(const TColor & Size);
 
    void ClickFmControl1();
    void ClickFmControl2();
@@ -63,4 +62,4 @@ class TSizeDialog : public TDialog
    }
 ;
 
-#endif
+#endif // __SIZEDLG_H

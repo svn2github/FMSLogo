@@ -167,7 +167,7 @@ void real_print_node(FILE *strm, const NODE *nd, int depth, int width)
       }
    else if (nd == Unbound)
       {
-      ndprintf(strm, "Unbound");
+      ndprintf(strm, LOCALIZED_UNBOUND);
       }
    else if ((ndty = nodetype(nd)) & NT_PRIM)
       {

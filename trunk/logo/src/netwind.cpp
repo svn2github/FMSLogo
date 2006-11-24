@@ -374,160 +374,148 @@ LPCSTR WSAGetLastErrorString(int error_arg)
    switch (error)
       {
       case WSAENAMETOOLONG:
-         return "Name too long";
+         return LOCALIZED_ERROR_NETWORKNAMETOOLONG;
          
       case WSANOTINITIALISED:
-         return "Not initialized";
+         return LOCALIZED_ERROR_NETWORKNOTINITIALIZED;
 
       case WSASYSNOTREADY:
-         return "System not ready";
+         return LOCALIZED_ERROR_NETWORKSYSTEMNOTREADY;
 
       case WSAVERNOTSUPPORTED:
-         return "Version is not supported";
+         return LOCALIZED_ERROR_NETWORKVERSIONNOTSUPPORTED;
 
       case WSAESHUTDOWN:
-         return "Can't send after socket shutdown";
+         return LOCALIZED_ERROR_NETWORKSENDAFTERSHUTDOWN;
 
       case WSAEINTR:
-         return "Interrupted system call";
+         return LOCALIZED_ERROR_NETWORKINTERRUPTED;
 
       case WSAHOST_NOT_FOUND:
-         return "Authoritative Answer: Host not found";
+         return LOCALIZED_ERROR_NETWORKHOSTNOTFOUNDAUTH;
 
       case WSATRY_AGAIN:
-         return "Non-Authoritative: Host not found, See NETSTARTUP";
+         return LOCALIZED_ERROR_NETWORKHOSTNOTFOUNDNONAUTH;
 
       case WSANO_RECOVERY:
-         return "Non-recoverable error";
+         return LOCALIZED_ERROR_NETWORKNOTRECOVERABLE;
 
       case WSANO_DATA:
-         return "No data record available";
+         return LOCALIZED_ERROR_NETWORKNODATA;
 
       case WSAEBADF:
-         return "Bad file number";
+         return LOCALIZED_ERROR_NETWORKBADFILENUMBER;
            
       case WSAEWOULDBLOCK:
-         return "Operation would block";
+         return LOCALIZED_ERROR_NETWORKWOULDBLOCK;
 
       case WSAEINPROGRESS:
-         return "Operation now in progress";
+         return LOCALIZED_ERROR_NETWORKNOWINPROGRESS;
 
       case WSAEALREADY:
-         return "Operation already in progress";
+         return LOCALIZED_ERROR_NETWORKALREADYINPROGRESS;
 
       case WSAEFAULT:
-         return "Bad address";
+         return LOCALIZED_ERROR_NETWORKBADADDRESS;
 
       case WSAEDESTADDRREQ:
-         return "Destination address required";
+         return LOCALIZED_ERROR_NETWORKNEEDDESTADDRESS;
 
       case WSAEMSGSIZE:
-         return "Message too long";
+         return LOCALIZED_ERROR_NETWORKMESSAGETOOLONG;
 
       case WSAEPFNOSUPPORT:
-         return "Protocol family not supported";
+         return LOCALIZED_ERROR_NETWORKPFNOTSUPPORTED;
            
       case WSAENOTEMPTY:
-         return "Directory not empty";
+         return LOCALIZED_ERROR_NETWORKDIRNOTEMPTY;
 
       case WSAEPROCLIM:
-         return "EPROCLIM returned";
-
-      case WSAEUSERS:
-         return "EUSERS returned";
+         return LOCALIZED_ERROR_NETWORKAPPLIMITREACHED;
 
       case WSAEDQUOT:
-         return "Disk quota exceeded";
-
-      case WSAESTALE:
-         return "ESTALE returned";
+         return LOCALIZED_ERROR_NETWORKDISKQUOTA;
 
       case WSAEINVAL:
-         return "Invalid argument";
+         return LOCALIZED_ERROR_NETWORKINVALIDARGUMENTS;
 
       case WSAEMFILE:
-         return "Too many open files";
+         return LOCALIZED_ERROR_NETWORKTOOMANYFILES;
 
       case WSAEACCES:
-         return "Access denied";
+         return LOCALIZED_ERROR_NETWORKACCESSDENIED;
          
-      case WSAELOOP:
-         return "Too many levels of symbolic links";
-
-      case WSAEREMOTE:
-         return "The object is remote";
-
       case WSAENOTSOCK:
-         return "Socket operation on non-socket";
+         return LOCALIZED_ERROR_NETWORKNOTASOCKET;
 
       case WSAEADDRNOTAVAIL:
-         return "Can't assign requested address";
+         return LOCALIZED_ERROR_NETWORKADDRNOTAVAILABLE;
 
       case WSAEADDRINUSE:
-         return "Address already in use";
+         return LOCALIZED_ERROR_NETWORKADDRINUSE;
 
       case WSAEAFNOSUPPORT:
-         return "Address family not supported by protocol family";
+         return LOCALIZED_ERROR_NETWORKAFNOTSUPPORTED;
 
       case WSAESOCKTNOSUPPORT:
-         return "Socket type not supported";
+         return LOCALIZED_ERROR_NETWORKTYPENOTSUPPORTED;
          
       case WSAEPROTONOSUPPORT:
-         return "Protocol not supported";
+         return LOCALIZED_ERROR_NETWORKPROTONOTSUPPORTED;
 
       case WSAENOBUFS:
-         return "No buffer space is supported";
+         return LOCALIZED_ERROR_NETWORKNOBUFFER;
 
       case WSAETIMEDOUT:
-         return "Connection timed out";
+         return LOCALIZED_ERROR_NETWORKTIMEDOUT;
 
       case WSAEISCONN:
-         return "Socket is already connected";
+         return LOCALIZED_ERROR_NETWORKALREADYCONNECTED;
 
       case WSAENOTCONN:
-         return "Socket is not connected";
+         return LOCALIZED_ERROR_NETWORKNOTCONNECTED;
 
       case WSAENOPROTOOPT:
-         return "Bad protocol option";
+         return LOCALIZED_ERROR_NETWORKBADPROTOOPT;
 
       case WSAECONNRESET:
-         return "Connection reset by peer";
+         return LOCALIZED_ERROR_NETWORKCONNECTIONRESET;
 
       case WSAECONNABORTED:
-         return "Software caused connection abort";
+         return LOCALIZED_ERROR_NETWORKCONNECTIONABORT;
 
       case WSAENETDOWN:
-         return "Network is down";
+         return LOCALIZED_ERROR_NETWORKISDOWN;
 
       case WSAENETRESET:
-         return "Network was reset";
+         return LOCALIZED_ERROR_NETWORKRESET;
 
       case WSAECONNREFUSED:
-         return "Connection refused";
+         return LOCALIZED_ERROR_NETWORKCONNECTIONREFUSED;
 
       case WSAEHOSTDOWN:
-         return "Host is down";
+         return LOCALIZED_ERROR_NETWORKHOSTISDOWN;
          
       case WSAEHOSTUNREACH:
-         return "Host is unreachable";
+         return LOCALIZED_ERROR_NETWORKHOSTISUNREACHABLE;
           
       case WSAEPROTOTYPE:
-         return "Protocol is wrong type for socket";
+         return LOCALIZED_ERROR_NETWORKBADPROTOTYPE;
          
       case WSAEOPNOTSUPP:
-         return "Operation not supported on socket";
+         return LOCALIZED_ERROR_NETWORKBADOPNOTSUPPORTED;
 
       case WSAENETUNREACH:
-         return "ICMP network unreachable";
+         return LOCALIZED_ERROR_NETWORKUNREACHABLE;
 
       case WSAETOOMANYREFS:
-          return "Too many references";
+          return LOCALIZED_ERROR_NETWORKTOOMANYREFS;
 
       default:
          {
-         static char Buffer[32];
-         sprintf(Buffer, "Unknown %d", error);
-         return Buffer;
+         static char buffer[32];
+         sprintf(buffer, LOCALIZED_UNKNOWN" %d", error);
+         return buffer;
          }
       }
    }
@@ -538,7 +526,9 @@ NODE *lnetstartup(NODE *args)
    // check if already started
    if (network_is_started)
       {
-      ShowMessageAndStop("Network Error", "Already Started");
+      ShowMessageAndStop(
+         LOCALIZED_ERROR_NETWORK, 
+         LOCALIZED_ERROR_NETWORKALREADYSTARTED);
       return Unbound;
       }
 
@@ -595,13 +585,17 @@ NODE *lnetaccepton(NODE *args)
    // check sanity
    if (!network_is_started)
       {
-      ShowMessageAndStop("Network Error", "Not Started");
+      ShowMessageAndStop(
+         LOCALIZED_ERROR_NETWORK, 
+         LOCALIZED_ERROR_NETWORKNOTSTARTED);
       return Unbound;
       }
 
    if (g_ServerConnection.IsEnabled())
       {
-      ShowMessageAndStop("Network Receive Error", "Already On");
+      ShowMessageAndStop(
+         LOCALIZED_ERROR_NETWORKRECEIVE, 
+         LOCALIZED_ERROR_NETWORKALREADYON);
       return Unbound;
       }
 
@@ -645,7 +639,9 @@ NODE *lnetacceptoff(NODE *)
       }
    else
       {
-      ShowMessageAndStop("Network Receive Error", "Already Off");
+      ShowMessageAndStop(
+         LOCALIZED_ERROR_NETWORKRECEIVE, 
+         LOCALIZED_ERROR_NETWORKALREADYOFF);
       }
 
    return Unbound;
@@ -678,13 +674,17 @@ NODE *lnetconnecton(NODE *args)
    // sanity check first
    if (!network_is_started)
       {
-      ShowMessageAndStop("Network Error", "Not Started");
+      ShowMessageAndStop(
+         LOCALIZED_ERROR_NETWORK, 
+         LOCALIZED_ERROR_NETWORKNOTSTARTED);
       return Unbound;
       }
 
    if (g_ClientConnection.IsEnabled())
       {
-      ShowMessageAndStop("Network Send Error", "Already On");
+      ShowMessageAndStop(
+         LOCALIZED_ERROR_NETWORKSEND, 
+         LOCALIZED_ERROR_NETWORKALREADYON);
       return Unbound;
       }
 
@@ -727,7 +727,9 @@ NODE *lnetconnectoff(NODE *)
       }
    else
       {
-      ShowMessageAndStop("Network Send Error", "Already Off");
+      ShowMessageAndStop(
+         LOCALIZED_ERROR_NETWORKSEND, 
+         LOCALIZED_ERROR_NETWORKALREADYOFF);
       }
 
    return Unbound;

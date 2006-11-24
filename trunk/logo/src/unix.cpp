@@ -208,12 +208,12 @@ NODE *lchdir(NODE *arg)
 
    if (chdir(fname))
       {
-      printfx("Could not chdir to directory \"%s\"", fname);
+      printfx(LOCALIZED_FILE_CHDIRFAILED, fname);
       }
    else
       {
       getcwd(fname, sizeof fname);
-      printfx("Changed to \"%s\"", fname);
+      printfx(LOCALIZED_FILE_CHDIRSUCCEEDED, fname);
       }
 
    return Unbound;
@@ -226,7 +226,7 @@ NODE *lpopdir(NODE *)
    char fname[MAX_BUFFER_SIZE + 1];
    getcwd(fname, sizeof fname);
 
-   printfx("Popped to \"%s\"", fname);
+   printfx(LOCALIZED_FILE_POPPEDTO, fname);
 
    return Unbound;
    }
@@ -238,12 +238,12 @@ NODE *lmkdir(NODE *arg)
 
    if (mkdir(fname))
       {
-      printfx("Failed to create directory \"%s\"", fname);
+      printfx(LOCALIZED_FILE_MKDIRFAILED, fname);
       }
    else
       {
       chdir(fname);
-      printfx("Now in newly created directory \"%s\"", fname);
+      printfx(LOCALIZED_FILE_MKDIRSUCCEEDED, fname);
       }
 
    return Unbound;
@@ -256,14 +256,14 @@ NODE *lrmdir(NODE *arg)
 
    if (rmdir(fname))
       {
-      printfx("Failed to remove directory \"%s\"", fname);
+      printfx(LOCALIZED_FILE_RMDIRFAILED, fname);
       if (errno == EEXIST)
          {
-         printfx("The directory does not exist.");
+         printfx(LOCALIZED_FILE_RMDIRFAILEDNOEXIST);
          }
-      else if (errno == EEXIST || errno==EPERM)
+      else if (errno == EEXIST || errno == EPERM)
          {
-         printfx("Make sure the directory is empty before trying to remove it.");
+         printfx(LOCALIZED_FILE_RMDIRFAILEDNOTEMPTY);
          }
       else
          {
@@ -272,7 +272,7 @@ NODE *lrmdir(NODE *arg)
       }
    else
       {
-      printfx("Removed directory \"%s\"", fname);
+      printfx(LOCALIZED_FILE_RMDIRSUCCEEDED, fname);
       }
 
    return Unbound;

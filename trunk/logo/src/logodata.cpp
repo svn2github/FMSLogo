@@ -824,7 +824,7 @@ NODE *lpprop(NODE *args)
 
          ndprintf(
             g_Writer.GetStream(), 
-            "Pprop %s %s %s", 
+            LOCALIZED_TRACING_PPROP, 
             propertylist,
             propertyname,
             propertyvalue);
@@ -836,7 +836,11 @@ NODE *lpprop(NODE *args)
          // trace the name of the function where the pprop was run.
          if (ufun != NIL)
             {
-            ndprintf(g_Writer.GetStream(), " in %s\n%s", ufun, this_line);
+            ndprintf(
+               g_Writer.GetStream(), 
+               LOCALIZED_TRACING_LOCATION,
+               ufun, 
+               this_line);
             }
          new_line(g_Writer.GetStream());
          }
@@ -917,7 +921,7 @@ NODE *lplist(NODE *args)
 
 NODE * llogoversion(NODE * args)
    {
-   NODE * application_name    = make_static_strnode("FMSLogo");
+   NODE * application_name    = make_static_strnode(LOCALIZED_GENERAL_PRODUCTNAME);
    NODE * application_version = make_static_strnode(FMSLOGO_VERSION);
    NODE * os_name             = make_static_strnode("Windows");
 

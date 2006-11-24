@@ -357,7 +357,7 @@ class TMyPrinterAreaWindow : public TDialog
    {
  public:
 
-   TMyPrinterAreaWindow(TWindow *, LPCSTR);
+   TMyPrinterAreaWindow(TWindow * Parent);
    ~TMyPrinterAreaWindow();
 
    void SetupWindow();

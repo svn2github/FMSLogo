@@ -8,15 +8,10 @@
 #include <owl\picklist.rc>
 #include <owl\except.rc>
 
+#include "localizedstrings.h"
+
 #include "stdwnds.rc"
 #include "filemenu.rc"
-#ifdef CTL3D
-#include "ctl3d.rc"
-#undef SS_SUNKEN
-#define SS_SUNKEN SS_BLACKFRAME
-#endif
-
-#include "localizedstrings.h"
 
 LOGOICON ICON "logo.ico"
 

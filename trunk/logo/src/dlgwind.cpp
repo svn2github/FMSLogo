@@ -38,6 +38,24 @@ enum WINDOWTYPE
 
 static HICON hCursorSave = 0; // handle for saved cursor
 
+static
+void
+ShowWindowDoesNotExistErrorAndStop(
+   const char * WindowName
+   )
+   {
+   ShowMessageAndStop(LOCALIZED_ERROR_WINDOWDOESNOTEXIST, WindowName);
+   }
+
+static
+void
+ShowWindowAlreadyExistsErrorAndStop(
+   const char * WindowName
+   )
+   {
+   ShowMessageAndStop(LOCALIZED_ERROR_WINDOWALREADYEXISTS, WindowName);
+   }
+
 
 class TClientRectangle
    {
@@ -932,7 +950,7 @@ NODE *lwindowcreate(NODE *args)
          }
       else
          {     
-         ShowMessageAndStop("Already exists", childname);
+         ShowWindowAlreadyExistsErrorAndStop(childname);
          }
       }
 
@@ -961,7 +979,7 @@ WindowEnableHelper(
          }
       else
          {
-         ShowMessageAndStop("Does not exist", childname);
+         ShowWindowDoesNotExistErrorAndStop(childname);
          }
       }
 
@@ -993,7 +1011,7 @@ WindowDeleteHelper(
          }
       else
          {
-         ShowMessageAndStop("Does not exist", windowkey);
+         ShowWindowDoesNotExistErrorAndStop(windowkey);
          }
       }
 
@@ -1117,7 +1135,7 @@ NODE *ldialogcreate(NODE *args)
          }
       else
          {
-         ShowMessageAndStop("Already exists", childname);
+         ShowWindowAlreadyExistsErrorAndStop(childname);
          }
       }
 
@@ -1189,7 +1207,7 @@ NODE *llistboxcreate(NODE *args)
          }
       else
          {
-         ShowMessageAndStop("Already exists", childname);
+         ShowWindowAlreadyExistsErrorAndStop(childname);
          }
       }
    
@@ -1234,7 +1252,7 @@ NODE *llistboxgetselect(NODE *args)
          }
       else
          {
-         ShowMessageAndStop("Does not exist", parentname);
+         ShowWindowDoesNotExistErrorAndStop(parentname);
          }
       }
 
@@ -1262,7 +1280,7 @@ NODE *llistboxaddstring(NODE *args)
          }
       else
          {
-         ShowMessageAndStop("Does not exist", parentname);
+         ShowWindowDoesNotExistErrorAndStop(parentname);
          }
       }
 
@@ -1289,7 +1307,7 @@ NODE *llistboxdeletestring(NODE *args)
          }
       else
          {
-         ShowMessageAndStop("Does not exist", listboxname);
+         ShowWindowDoesNotExistErrorAndStop(listboxname);
          }
       }
 
@@ -1352,7 +1370,7 @@ NODE *lcomboboxcreate(NODE *args)
          }
       else
          {
-         ShowMessageAndStop("Already exists", childname);
+         ShowWindowAlreadyExistsErrorAndStop(childname);
          }
       }
 
@@ -1390,7 +1408,7 @@ NODE *lcomboboxgettext(NODE *args)
       }
    else
       {
-      ShowMessageAndStop("Does not exist", parentname);
+      ShowWindowDoesNotExistErrorAndStop(parentname);
       }
 
    return Unbound;
@@ -1414,7 +1432,7 @@ NODE *lcomboboxsettext(NODE *args)
       }
    else
       {
-      ShowMessageAndStop("Does not exist", parentname);
+      ShowWindowDoesNotExistErrorAndStop(parentname);
       }
 
    return Unbound;
@@ -1439,7 +1457,7 @@ NODE *lcomboboxaddstring(NODE *args)
       }
    else
       {
-      ShowMessageAndStop("Does not exist", parentname);
+      ShowWindowDoesNotExistErrorAndStop(parentname);
       }
 
    return Unbound;
@@ -1463,7 +1481,7 @@ NODE *lcomboboxdeletestring(NODE *args)
       }
    else
       {
-      ShowMessageAndStop("Does not exist", parentname);
+      ShowWindowDoesNotExistErrorAndStop(parentname);
       }
 
    return Unbound;
@@ -1531,7 +1549,7 @@ NODE *lscrollbarcreate(NODE *args)
          }
       else
          {
-         ShowMessageAndStop("Already exists", childname);
+         ShowWindowAlreadyExistsErrorAndStop(childname);
          }
       }
 
@@ -1567,7 +1585,7 @@ NODE *lscrollbarset(NODE *args)
          }
       else
          {
-         ShowMessageAndStop("Does not exist", parentname);
+         ShowWindowDoesNotExistErrorAndStop(parentname);
          }
       }
 
@@ -1589,7 +1607,7 @@ NODE *lscrollbarget(NODE *args)
          }
       else
          {
-         ShowMessageAndStop("Does not exist", parentname);
+         ShowWindowDoesNotExistErrorAndStop(parentname);
          }
       }
 
@@ -1629,7 +1647,10 @@ NODE *lstaticcreate(NODE *args)
          {
          dialogthing * child = new dialogthing(WINDOWTYPE_Static, childname);
 
-         dialogthing *parent = dialogboxes.get(parentname, WINDOWTYPE_Window, WINDOWTYPE_Dialog);
+         dialogthing *parent = dialogboxes.get(
+            parentname, 
+            WINDOWTYPE_Window, 
+            WINDOWTYPE_Dialog);
          if (parent != NULL)
             {
             clientrect.ConvertToDialogCoordinates();
@@ -1666,7 +1687,7 @@ NODE *lstaticcreate(NODE *args)
          }
       else
          {
-         ShowMessageAndStop("Already exists", childname);
+         ShowWindowAlreadyExistsErrorAndStop(childname);
          }
       }
    
@@ -1688,7 +1709,7 @@ NODE *lstaticupdate(NODE *args)
       }
    else
       {
-      ShowMessageAndStop("Does not exist", childname);
+      ShowWindowDoesNotExistErrorAndStop(childname);
       }
 
    return Unbound;
@@ -1732,7 +1753,10 @@ NODE *lbuttoncreate(NODE *args)
          {
          dialogthing * child = new dialogthing(WINDOWTYPE_Button, childname);
 
-         dialogthing *parent = dialogboxes.get(parentname, WINDOWTYPE_Window, WINDOWTYPE_Dialog);
+         dialogthing *parent = dialogboxes.get(
+            parentname, 
+            WINDOWTYPE_Window, 
+            WINDOWTYPE_Dialog);
          if (parent != NULL)
             {
             clientrect.ConvertToDialogCoordinates();
@@ -1771,7 +1795,7 @@ NODE *lbuttoncreate(NODE *args)
          }
       else
          {
-         ShowMessageAndStop("Already exists", childname);
+         ShowWindowAlreadyExistsErrorAndStop(childname);
          }
       }
       
@@ -1795,7 +1819,7 @@ NODE *lbuttonupdate(NODE *args)
          }
       else
          {
-         ShowMessageAndStop("Does not exist", childname);
+         ShowWindowDoesNotExistErrorAndStop(childname);
          }
       }
 
@@ -1831,7 +1855,10 @@ NODE *lgroupboxcreate(NODE *args)
          {
          dialogthing * child = new dialogthing(WINDOWTYPE_GroupBox, childname);
 
-         dialogthing *parent = dialogboxes.get(parentname, WINDOWTYPE_Window, WINDOWTYPE_Dialog);
+         dialogthing *parent = dialogboxes.get(
+            parentname, 
+            WINDOWTYPE_Window, 
+            WINDOWTYPE_Dialog);
          if (parent != NULL)
             {
             clientrect.ConvertToDialogCoordinates();
@@ -1866,7 +1893,7 @@ NODE *lgroupboxcreate(NODE *args)
          }
       else
          {
-         ShowMessageAndStop("Already exists", childname);
+         ShowWindowAlreadyExistsErrorAndStop(childname);
          }
       }
 
@@ -1908,7 +1935,10 @@ NODE *lradiobuttoncreate(NODE *args)
             {
             dialogthing * child = new dialogthing(WINDOWTYPE_RadioButton, childname);
 
-            dialogthing *parent = dialogboxes.get(parentname, WINDOWTYPE_Window, WINDOWTYPE_Dialog);
+            dialogthing *parent = dialogboxes.get(
+               parentname, 
+               WINDOWTYPE_Window, 
+               WINDOWTYPE_Dialog);
             if (parent != NULL)
                {
                clientrect.ConvertToDialogCoordinates();
@@ -1947,12 +1977,12 @@ NODE *lradiobuttoncreate(NODE *args)
             }
          else
             {
-            ShowMessageAndStop("Already exists", childname);
+            ShowWindowAlreadyExistsErrorAndStop(childname);
             }
          }
       else
          {
-         ShowMessageAndStop("Does not exist", groupname);
+         ShowWindowDoesNotExistErrorAndStop(childname);
          }
       }
    
@@ -1984,7 +2014,7 @@ NODE *lradiobuttonget(NODE *args)
          }
       else
          {
-         ShowMessageAndStop("Does not exist", parentname);
+         ShowWindowDoesNotExistErrorAndStop(parentname);
          }
       }
 
@@ -2014,7 +2044,7 @@ NODE *lradiobuttonset(NODE *args)
          }
       else
          {
-         ShowMessageAndStop("Does not exist", parentname);
+         ShowWindowDoesNotExistErrorAndStop(parentname);
          }
       }
 
@@ -2052,7 +2082,10 @@ NODE *lcheckboxcreate(NODE *args)
             {
             dialogthing * child = new dialogthing(WINDOWTYPE_CheckBox, childname);
 
-            dialogthing *parent = dialogboxes.get(parentname, WINDOWTYPE_Window, WINDOWTYPE_Dialog);
+            dialogthing *parent = dialogboxes.get(
+               parentname, 
+               WINDOWTYPE_Window, 
+               WINDOWTYPE_Dialog);
             if (parent != NULL)
                {
                clientrect.ConvertToDialogCoordinates();
@@ -2091,12 +2124,12 @@ NODE *lcheckboxcreate(NODE *args)
             }
          else
             {
-            ShowMessageAndStop("Already exists", childname);
+            ShowWindowAlreadyExistsErrorAndStop(childname);
             }
          }
       else
          {
-         ShowMessageAndStop("Does not exist", groupname);
+         ShowWindowDoesNotExistErrorAndStop(groupname);
          }
       }
    
@@ -2128,7 +2161,7 @@ NODE *lcheckboxget(NODE *args)
          }
       else
          {
-         ShowMessageAndStop("Does not exist", parentname);
+         ShowWindowDoesNotExistErrorAndStop(parentname);
          }
       }
 
@@ -2158,7 +2191,7 @@ NODE *lcheckboxset(NODE *args)
          }
       else
          {
-         ShowMessageAndStop("Does not exist", parentname);
+         ShowWindowDoesNotExistErrorAndStop(parentname);
          }
       }
 
@@ -2183,7 +2216,7 @@ NODE *ldebugwindows(NODE *arg)
          }
       else
          {
-         ShowMessageAndStop("Does not exist", childname);
+         ShowWindowDoesNotExistErrorAndStop(childname);
          }
       }
    else
@@ -2204,7 +2237,10 @@ NODE *lmessagebox(NODE *args)
 
    if (NOT_THROWING)
       {
-      if (MainWindowx->CommandWindow->MessageBox(body, banner, MB_OKCANCEL) == IDCANCEL)
+      if (MainWindowx->CommandWindow->MessageBox(
+             body, 
+             banner, 
+             MB_OKCANCEL) == IDCANCEL)
          {
          err_logo(STOP_ERROR, NIL);
          }
@@ -2358,7 +2394,7 @@ NODE *ldialogfileopen(NODE *args)
 
    TOpenSaveDialog::TData FileData;
    FileData.Flags = OFN_HIDEREADONLY | OFN_EXPLORER;
-   FileData.SetFilter("All Files (*.*)|*.*|");
+   FileData.SetFilter(LOCALIZED_FILEFILTER_ALLFILES);
    strcpy(FileData.FileName, filename);
 
    // if user found a file then try to load it
@@ -2380,7 +2416,7 @@ NODE *ldialogfilesave(NODE *args)
 
    // Get file name from user and then save the file
    TOpenSaveDialog::TData FileData;
-   FileData.SetFilter("All Files (*.*)|*.*|");
+   FileData.SetFilter(LOCALIZED_FILEFILTER_ALLFILES);
    strcpy(FileData.FileName, filename);
 
    if (TFileSaveDialog(MainWindowx, FileData).Execute() == IDOK)

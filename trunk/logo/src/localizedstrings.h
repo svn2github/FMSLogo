@@ -1,25 +1,26 @@
 #ifndef _LOCALIZEDSTRINGS_H_
 #define _LOCALIZEDSTRINGS_H_ 
 
+// This file includes the proper header file for this locale.
 
 #ifndef LOCALE
 
-  // No locale is defined
   #error LOCALE is not define
+
+#elif LOCALE == 1032
+  
+  #include "localizedstrings-gr.h"  // Greek
 
 #elif LOCALE == 1033
 
-  // English-US
-  #include "localizedstrings-en.h"
+  #include "localizedstrings-en.h"  // English
 
 #elif LOCALE == 1036
 
-  // French-France
-  #include "localizedstrings-fr.h"
+  #include "localizedstrings-fr.h"  // French
 
 #else
 
-  // LOCALE is defined to an unknown value
   #error LOCALE is an unknown value!
 
 #endif 
