@@ -201,7 +201,7 @@ int printfx(const char *fmt, const char *str)
    return cnt;
    }
 
-NODE *lpushdir(NODE *arg)
+NODE *lchdir(NODE *arg)
    {
    char fname[MAX_BUFFER_SIZE + 1];
    cnv_strnode_string(fname, arg);

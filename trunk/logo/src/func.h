@@ -529,7 +529,7 @@ extern int printfx(const char *fmt, const char *str);
 extern void unblock_input(void);
 extern void flushcombobox(void);
 extern void putcombochar(char c);
-extern NODE *lpushdir(NODE *arg);
+extern NODE *lchdir(NODE *arg);
 extern NODE *lpopdir(NODE *arg);
 extern NODE *lmkdir(NODE *arg);
 extern NODE *lrmdir(NODE *arg);

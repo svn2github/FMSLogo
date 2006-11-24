@@ -133,7 +133,7 @@ const PRIMTYPE prims[] =
       { "bye", 0, 0, 0, PREFIX_PRIORITY, lbye },
       { "catch", 2, 2, 2, MACRO_PRIORITY, lcatch },
       { "char", 1, 1, 1, PREFIX_PRIORITY, lchar },
-      { "chdir", 1, 1, 1, PREFIX_PRIORITY, lpushdir },
+      { "chdir", 1, 1, 1, PREFIX_PRIORITY, lchdir },
       { "checkboxcreate", 8, 8, 8, PREFIX_PRIORITY, lcheckboxcreate },
       { "checkboxdelete", 1, 1, 1, PREFIX_PRIORITY, lcheckboxdelete },
       { "checkboxenable", 2, 2, 2, PREFIX_PRIORITY, lcheckboxenable },
