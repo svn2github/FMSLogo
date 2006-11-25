@@ -98,7 +98,7 @@ TO ERRORTEST
    NODRIBBLE
    ERASEFILE "DELETEME.TXT
 
-   (RUNEXPECTERRORTEST [OPENREAD "DELETEME.TXT]               18 "|File system error: I can't open that file|)
+   (RUNEXPECTERRORTEST [OPENREAD "DELETEME.TXT]               18 "|File system error: Could not open file|)
 
    ; error #19 is just a warning
    if "TRUE [IGNORE "TRUE] [IGNORE "FALSE]
