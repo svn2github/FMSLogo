@@ -1604,8 +1604,8 @@ void TMainFrame::CMFileLoad()
       // of the workspace and give them a chance to cancel the
       // operation.
       if (MainWindowx->CommandWindow->MessageBox(
-             LOCALIZED_YOUHAVEUNSAVEDCHANGES,
              LOCALIZED_FILELOADMAYOVERWRITEWORKSPACE,
+             LOCALIZED_YOUHAVEUNSAVEDCHANGES,
              MB_OKCANCEL | MB_ICONQUESTION) == IDCANCEL)
          {
          return;
