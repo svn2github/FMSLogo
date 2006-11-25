@@ -299,10 +299,11 @@ SectionEnd
 ;--------------------------------
 ; Uninstaller
 
-Section "Uninstall"
+Function un.onInit
+
   System::Call 'kernel32::CreateMutexA(i 0, i 0, t "LogoForWindowsMutex") i .r1 ?e'
   Pop $R0 
-  StrCmp $R0 0 uninstall
+  StrCmp $R0 0 SetupUser
 
   ; Notify the user that the uninstall cannot continue.
   ; We can't use a LangString because those aren't available in .onInit
@@ -314,7 +315,7 @@ Section "Uninstall"
      MessageBox MB_OK|MB_ICONEXCLAMATION "Either the installer or FMSLogo is currently running.$\nThis uninstallation cannot continue." ; NOT_YET_TRANSLATED
   Abort
 
-uninstall:
+SetupUser:
   ; assume regular user until we know they are a power user
   SetShellVarContext current
   StrLen $2 "$PROFILE\FMSLogo"
@@ -344,6 +345,10 @@ SetupUser.CurrentUser:
 
 SetupUser.Done:
 
+FunctionEnd
+
+
+Section "Uninstall"
   ; Remove registry keys
   DeleteRegKey HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\FMSLogo"
   DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\FMSLogo"
@@ -364,7 +369,6 @@ SetupUser.Done:
   Delete $INSTDIR\license.txt
 
   Delete $INSTDIR\uninstall.exe
-
 
 
   ; Remove shortcuts, if any
