@@ -51,6 +51,17 @@
 // please leave the //<status> comment so that that someone else may investigate
 // it.
 //
+//
+// For quoted strings that refer to commands, please refer to the command
+// in your language, then put the English form in parentheses.  For example:
+//
+//   "Can't use TO inside a procedure"
+//
+// is translated into French as:
+//
+//   "Impossible d'utiliser POUR (TO) dans une procédure"
+//
+//
 // Please note that some of the quoted strings embed a <TOKEN> within them.
 // For example, the phrase:
 //
@@ -188,7 +199,6 @@
 #define LOCALIZED_EDITOR_EDIT_UNDO               "&Undo\tCtrl+Z"
 #define LOCALIZED_EDITOR_EDIT_CUT                "&Cut\tCtrl+X"
 #define LOCALIZED_EDITOR_EDIT_COPY               "C&opy\tCtrl+C"
-#define LOCALIZED_EDITOR_EDIT_PASTE              "&Paste\tCtrl+V"
 #define LOCALIZED_EDITOR_EDIT_PASTE              "&Paste\tCtrl+V"
 #define LOCALIZED_EDITOR_EDIT_DELETE             "&Delete\tDel"
 #define LOCALIZED_EDITOR_EDIT_CLEARALL           "C&lear All\tCtrl+Del"
@@ -548,7 +558,7 @@
 
 #define LOCALIZED_ERROR_POLYEND                 "PolyEnd Error"
 #define LOCALIZED_ERROR_POLYENDNOTSTARTED       "You have not started a Polygon"
-#define LOCALIZED_ERROR_POLYENDNEED3VECTORS     "You must have at least 3 vectors to define a polygon" 
+#define LOCALIZED_ERROR_POLYENDNEED3VECTORS     "You must have at least 3 vectors to define a polygon"
 
 #define LOCALIZED_ERROR_SOUND                 "Sound Error"
 
@@ -556,8 +566,6 @@
 #define LOCALIZED_ERROR_MIDIINVALIDDEVICE     "Invalid MIDI device"
 #define LOCALIZED_ERROR_MIDIALREADYOPEN       "Already open"
 #define LOCALIZED_ERROR_MIDINOTOPEN           "Not open"
-
-#define LOCALIZED_ERROR_MCI                   "MCI Error"
 
 #define LOCALIZED_ERROR_CLIPBOARDISEMPTY      "No Text in Clipboard"
 
