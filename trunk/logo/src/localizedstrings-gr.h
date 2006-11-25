@@ -51,6 +51,17 @@
 // please leave the //<status> comment so that that someone else may investigate
 // it.
 //
+//
+// For quoted strings that refer to commands, please refer to the command
+// in your language, then put the English form in parentheses.  For example:
+//
+//   "Can't use TO inside a procedure"
+//
+// is translated into French as:
+//
+//   "Impossible d'utiliser POUR (TO) dans une procédure"
+//
+//
 // Please note that some of the quoted strings embed a <TOKEN> within them.
 // For example, the phrase:
 //
@@ -188,7 +199,6 @@
 #define LOCALIZED_EDITOR_EDIT_UNDO               "&Undo\tCtrl+Z" // NOT_YET_LOCALIZED
 #define LOCALIZED_EDITOR_EDIT_CUT                "&Cut\tCtrl+X" // NOT_YET_LOCALIZED
 #define LOCALIZED_EDITOR_EDIT_COPY               "C&opy\tCtrl+C" // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITOR_EDIT_PASTE              "&Paste\tCtrl+V" // NOT_YET_LOCALIZED
 #define LOCALIZED_EDITOR_EDIT_PASTE              "&Paste\tCtrl+V" // NOT_YET_LOCALIZED
 #define LOCALIZED_EDITOR_EDIT_DELETE             "&Delete\tDel" // NOT_YET_LOCALIZED
 #define LOCALIZED_EDITOR_EDIT_CLEARALL           "C&lear All\tCtrl+Del" // NOT_YET_LOCALIZED
@@ -413,7 +423,6 @@
 //
 // Error message thrown by Logo
 //
-#define LOCALIZED_ERROR_BADINPUTNOTPAIRED      "Input is not paired" // NOT_YET_LOCALIZED
 #define LOCALIZED_ERROR_FATALINTERNAL          "Logo: Fatal Internal Error" // NOT_YET_LOCALIZED
 #define LOCALIZED_ERROR_OUTOFMEMORYUNREC       "Logo: Out of memory" // NOT_YET_LOCALIZED
 #define LOCALIZED_ERROR_OUTOFMEMORY            "Out of memory" // NOT_YET_LOCALIZED
@@ -464,6 +473,7 @@
 //
 #define LOCALIZED_ERROR                      "Error" // NOT_YET_LOCALIZED
 #define LOCALIZED_ERROR_BADINPUT             "Bad input" // NOT_YET_LOCALIZED
+#define LOCALIZED_ERROR_BADINPUTNOTPAIRED    "Input is not paired" // NOT_YET_LOCALIZED
 
 #define LOCALIZED_ERROR_CANTOPENPORT         "Could not open port" // NOT_YET_LOCALIZED
 #define LOCALIZED_ERROR_CANTCLOSEPORT        "Could not close port" // NOT_YET_LOCALIZED
@@ -548,7 +558,7 @@
 
 #define LOCALIZED_ERROR_POLYEND                 "PolyEnd Error" // NOT_YET_LOCALIZED
 #define LOCALIZED_ERROR_POLYENDNOTSTARTED       "You have not started a Polygon" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_POLYENDNEED3VECTORS     "You must have at least 3 vectors to define a polygon"  // NOT_YET_LOCALIZED
+#define LOCALIZED_ERROR_POLYENDNEED3VECTORS     "You must have at least 3 vectors to define a polygon" // NOT_YET_LOCALIZED
 
 #define LOCALIZED_ERROR_SOUND                 "Sound Error" // NOT_YET_LOCALIZED
 
@@ -556,8 +566,6 @@
 #define LOCALIZED_ERROR_MIDIINVALIDDEVICE     "Invalid MIDI device" // NOT_YET_LOCALIZED
 #define LOCALIZED_ERROR_MIDIALREADYOPEN       "Already open" // NOT_YET_LOCALIZED
 #define LOCALIZED_ERROR_MIDINOTOPEN           "Not open" // NOT_YET_LOCALIZED
-
-#define LOCALIZED_ERROR_MCI                   "MCI Error" // NOT_YET_LOCALIZED
 
 #define LOCALIZED_ERROR_CLIPBOARDISEMPTY      "No Text in Clipboard" // NOT_YET_LOCALIZED
 

@@ -423,7 +423,6 @@
 //
 // Error message thrown by Logo
 //
-#define LOCALIZED_ERROR_BADINPUTNOTPAIRED      "Input is not paired"
 #define LOCALIZED_ERROR_FATALINTERNAL          "Logo: Fatal Internal Error"
 #define LOCALIZED_ERROR_OUTOFMEMORYUNREC       "Logo: Out of memory"
 #define LOCALIZED_ERROR_OUTOFMEMORY            "Out of memory"
@@ -474,6 +473,7 @@
 //
 #define LOCALIZED_ERROR                      "Error"
 #define LOCALIZED_ERROR_BADINPUT             "Bad input"
+#define LOCALIZED_ERROR_BADINPUTNOTPAIRED    "Input is not paired"
 
 #define LOCALIZED_ERROR_CANTOPENPORT         "Could not open port"
 #define LOCALIZED_ERROR_CANTCLOSEPORT        "Could not close port"

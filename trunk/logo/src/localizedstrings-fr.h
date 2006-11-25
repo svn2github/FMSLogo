@@ -51,6 +51,7 @@
 // please leave the //<status> comment so that that someone else may investigate
 // it.
 //
+//
 // For quoted strings that refer to commands, please refer to the command
 // in your language, then put the English form in parentheses.  For example:
 //
@@ -59,6 +60,7 @@
 // is translated into French as:
 //
 //   "Impossible d'utiliser POUR (TO) dans une procédure"
+//
 //
 // Please note that some of the quoted strings embed a <TOKEN> within them.
 // For example, the phrase:
@@ -421,7 +423,6 @@
 //
 // Error message thrown by Logo
 //
-#define LOCALIZED_ERROR_BADINPUTNOTPAIRED      "Input is not paired" // NOT_YET_LOCALIZED
 #define LOCALIZED_ERROR_FATALINTERNAL          "Logo: erreur interne fatale"
 #define LOCALIZED_ERROR_OUTOFMEMORYUNREC       "Logo: Plus assez de mémoire (fatale)"
 #define LOCALIZED_ERROR_OUTOFMEMORY            "Plus assez de mémoire"
@@ -472,6 +473,7 @@
 //
 #define LOCALIZED_ERROR                      "Erreur"
 #define LOCALIZED_ERROR_BADINPUT             "Bad input" // NOT_YET_LOCALIZED
+#define LOCALIZED_ERROR_BADINPUTNOTPAIRED    "Input is not paired" // NOT_YET_LOCALIZED
 
 #define LOCALIZED_ERROR_CANTOPENPORT         "Could not open port" // NOT_YET_LOCALIZED
 #define LOCALIZED_ERROR_CANTCLOSEPORT        "Could not close port" // NOT_YET_LOCALIZED
