@@ -116,8 +116,8 @@
 // The menu options on the main window 
 //
 #define LOCALIZED_FILE        "&Fichier"
-#define LOCALIZED_FILE_NEW    "&Nouveua\t(supprime l'espace de travial)"
-#define LOCALIZED_FILE_LOAD   "&Load...\t(merge into workspace)" // NOT_YET_LOCALIZED
+#define LOCALIZED_FILE_NEW    "&Nouveau\t(supprime l'espace de travial)"
+#define LOCALIZED_FILE_LOAD   "&Ramène...\t(fusionne avec l'espace de travial)"
 #define LOCALIZED_FILE_OPEN   "&Ouvrir...\t(remplace l'espace de travial)"
 #define LOCALIZED_FILE_SAVE   "&Enregistrer"
 #define LOCALIZED_FILE_SAVEAS "En&registrer sous..."
@@ -127,7 +127,7 @@
 
 #define LOCALIZED_BITMAP               "&Dessin"
 #define LOCALIZED_BITMAP_NEW           "&Nouveau"
-#define LOCALIZED_BITMAP_LOAD          "&Load..." // NOT_YET_LOCALIZED
+#define LOCALIZED_BITMAP_LOAD          "&Ramène..."
 #define LOCALIZED_BITMAP_SAVE          "&Enregistrer"
 #define LOCALIZED_BITMAP_SAVEAS        "En&registrer sous..."
 #define LOCALIZED_BITMAP_PRINT         "&Imprimer..."
@@ -136,7 +136,7 @@
 
 #define LOCALIZED_SET                  "&Options"
 #define LOCALIZED_SET_PENSIZE          "&Largeur Crayon..."
-#define LOCALIZED_SET_LABELFONT        "&Font Texte..."
+#define LOCALIZED_SET_LABELFONT        "&Font Étiquette..."
 #define LOCALIZED_SET_COMMANDERFONT    "Font &Poste de Pilotage..."// NOT_YET_LOCALIZED
 #define LOCALIZED_SET_PENCOLOR         "&Couleur Crayon..."
 #define LOCALIZED_SET_FLOODCOLOR       "Couleur &Remplissage..."
@@ -284,7 +284,7 @@
 //
 // Strings on the Erase Procedure dialog box window
 //
-#define LOCALIZED_ERASEPROCEDURE                "Erase Procedure" // NOT_YET_LOCALIZED
+#define LOCALIZED_ERASEPROCEDURE                "Procédure à effacer"
 #define LOCALIZED_ERASEPROCEDURE_OK             LOCALIZED_GENERAL_OKBUTTON
 #define LOCALIZED_ERASEPROCEDURE_CANCEL         LOCALIZED_GENERAL_CANCELBUTTON
 #define LOCALIZED_ERASEPROCEDURE_ALL            "&Toutes"
@@ -292,7 +292,7 @@
 //
 // Strings on the Edit Procedure dialog box window
 //
-#define LOCALIZED_EDITPROCEDURE                "Procédure TO EDIT" // NOT_YET_LOCALIZED
+#define LOCALIZED_EDITPROCEDURE                "Procédure à éditer"
 #define LOCALIZED_EDITPROCEDURE_OK             LOCALIZED_GENERAL_OKBUTTON
 #define LOCALIZED_EDITPROCEDURE_CANCEL         LOCALIZED_GENERAL_CANCELBUTTON
 #define LOCALIZED_EDITPROCEDURE_ALL            "&Toutes"
@@ -605,30 +605,30 @@
 //
 // Strings in the dialog box for reading from "stdin"
 //
-#define LOCALIZED_INPUT         "Input:" // NOT_YET_LOCALIZED
-#define LOCALIZED_PROMPT_TO     "To Mode (Cancel to End)" // NOT_YET_LOCALIZED
-#define LOCALIZED_PROMPT_LIST   "List Mode (Cancel to Halt)" // NOT_YET_LOCALIZED
-#define LOCALIZED_PROMPT_PAUSE  "Pause Mode (Cancel to Continue)" // NOT_YET_LOCALIZED
-#define LOCALIZED_PROMPT_INPUT  "Input Mode (Cancel to Halt)" // NOT_YET_LOCALIZED
+#define LOCALIZED_INPUT         "Entrée:"
+#define LOCALIZED_PROMPT_TO     "Mode POUR (TO) - Annuler pour FIN (END)"
+#define LOCALIZED_PROMPT_LIST   "Mode List Annuler pour HALT"
+#define LOCALIZED_PROMPT_PAUSE  "Mode Pause - Annuler pour CONTINUE"
+#define LOCALIZED_PROMPT_INPUT  "Mode Entrée - Annuler pour HALT"
 
 //
 // Messages shown by the FILE API.
 //
-#define LOCALIZED_FILE_CHDIRSUCCEEDED      "Changed to \"%s\"" // NOT_YET_LOCALIZED
-#define LOCALIZED_FILE_CHDIRFAILED         "Could not chdir to directory \"%s\"" // NOT_YET_LOCALIZED
-#define LOCALIZED_FILE_POPPEDTO            "Popped to \"%s\"" // NOT_YET_LOCALIZED
-#define LOCALIZED_FILE_MKDIRSUCCEEDED      "Now in newly created directory \"%s\""  // NOT_YET_LOCALIZED
-#define LOCALIZED_FILE_MKDIRFAILED         "Failed to create directory \"%s\""  // NOT_YET_LOCALIZED
-#define LOCALIZED_FILE_RMDIRSUCCEEDED      "Removed directory \"%s\""  // NOT_YET_LOCALIZED
-#define LOCALIZED_FILE_RMDIRFAILED         "Failed to remove directory \"%s\""  // NOT_YET_LOCALIZED
-#define LOCALIZED_FILE_RMDIRFAILEDNOEXIST  "The directory does not exist." // NOT_YET_LOCALIZED
-#define LOCALIZED_FILE_RMDIRFAILEDNOTEMPTY "Make sure the directory is empty before trying to remove it." // NOT_YET_LOCALIZED
+#define LOCALIZED_FILE_CHDIRSUCCEEDED      "Changement vers \"%s\""
+#define LOCALIZED_FILE_CHDIRFAILED         "Impossible changement vers le répertoire \"%s\""
+#define LOCALIZED_FILE_POPPEDTO            "Depiler dans \"%s\""
+#define LOCALIZED_FILE_MKDIRSUCCEEDED      "Le répertoire \"%s\" est créé"
+#define LOCALIZED_FILE_MKDIRFAILED         "Imposible de créer le répertoire \"%s\""
+#define LOCALIZED_FILE_RMDIRSUCCEEDED      "Le répertoire \"%s\" est supprimé"
+#define LOCALIZED_FILE_RMDIRFAILED         "Imposible de supprimé le répertoire \"%s\""
+#define LOCALIZED_FILE_RMDIRFAILEDNOEXIST  "Le répertoire n'éxiste pas"
+#define LOCALIZED_FILE_RMDIRFAILEDNOTEMPTY "Le répertoire est-il vide?"
 
 
 //
 // Other strings
 //
-#define LOCALIZED_ACTIVEAREA    "Active Area" // NOT_YET_LOCALIZED
+#define LOCALIZED_ACTIVEAREA    "Zone Active"
 #define LOCALIZED_INFORMATION   "Information" // NOT_YET_LOCALIZED
 #define LOCALIZED_WARNING       "Warning" // NOT_YET_LOCALIZED
 #define LOCALIZED_UNTITLED      "Untitled" // NOT_YET_LOCALIZED
@@ -692,4 +692,4 @@
 #define LOCALIZED_STRINGTABLE_FILEPRINT "Prints the current EDALL session" // NOT_YET_LOCALIZED
 #define LOCALIZED_STRINGTABLE_EDALLEXIT "Closes the EDALL session" // NOT_YET_LOCALIZED
 
-#define LOCALIZED_STRINGTABLE_CANNOTFINDSTRING "Cannot find %s" // NOT_YET_LOCALIZED
+#define LOCALIZED_STRINGTABLE_CANNOTFINDSTRING "'%s' non trouvé"
