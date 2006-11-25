@@ -51,6 +51,15 @@
 // please leave the //<status> comment so that that someone else may investigate
 // it.
 //
+// For quoted strings that refer to commands, please refer to the command
+// in your language, then put the English form in parentheses.  For example:
+//
+//   "Can't use TO inside a procedure"
+//
+// is translated into French as:
+//
+//   "Impossible d'utiliser POUR (TO) dans une procédure"
+//
 // Please note that some of the quoted strings embed a <TOKEN> within them.
 // For example, the phrase:
 //
@@ -96,70 +105,70 @@
 //
 // General localized strings
 //
-#define LOCALIZED_GENERAL_OKBUTTON      "&OK" // NOT_YET_LOCALIZED
-#define LOCALIZED_GENERAL_CANCELBUTTON  "&Cancel" // NOT_YET_LOCALIZED
+#define LOCALIZED_GENERAL_OKBUTTON      "&OK"
+#define LOCALIZED_GENERAL_CANCELBUTTON  "&Annuler"
 
-#define LOCALIZED_GENERAL_PRODUCTNAME   "FMSLogo" // NOT_YET_LOCALIZED
+#define LOCALIZED_GENERAL_PRODUCTNAME   "FMSLogo"
 
 
 
 //
 // The menu options on the main window 
 //
-#define LOCALIZED_FILE        "&File" // NOT_YET_LOCALIZED
-#define LOCALIZED_FILE_NEW    "&New\t(erase workspace)" // NOT_YET_LOCALIZED
+#define LOCALIZED_FILE        "&Fichier"
+#define LOCALIZED_FILE_NEW    "&Nouveua\t(supprime l'espace de travial)"
 #define LOCALIZED_FILE_LOAD   "&Load...\t(merge into workspace)" // NOT_YET_LOCALIZED
-#define LOCALIZED_FILE_OPEN   "&Open...\t(replace workspace)"  // NOT_YET_LOCALIZED
-#define LOCALIZED_FILE_SAVE   "&Save"  // NOT_YET_LOCALIZED
-#define LOCALIZED_FILE_SAVEAS "Save &As..." // NOT_YET_LOCALIZED
-#define LOCALIZED_FILE_EDIT   "&Edit..." // NOT_YET_LOCALIZED
-#define LOCALIZED_FILE_ERASE  "E&rase..." // NOT_YET_LOCALIZED
-#define LOCALIZED_FILE_EXIT   "E&xit" // NOT_YET_LOCALIZED
+#define LOCALIZED_FILE_OPEN   "&Ouvrir...\t(remplace l'espace de travial)"
+#define LOCALIZED_FILE_SAVE   "&Enregistrer"
+#define LOCALIZED_FILE_SAVEAS "En&registrer sous..."
+#define LOCALIZED_FILE_EDIT   "E&diter..."
+#define LOCALIZED_FILE_ERASE  "E&ffacer..."
+#define LOCALIZED_FILE_EXIT   "&Quitter"
 
-#define LOCALIZED_BITMAP               "&Bitmap" // NOT_YET_LOCALIZED
-#define LOCALIZED_BITMAP_NEW           "&New" // NOT_YET_LOCALIZED
+#define LOCALIZED_BITMAP               "&Dessin"
+#define LOCALIZED_BITMAP_NEW           "&Nouveau"
 #define LOCALIZED_BITMAP_LOAD          "&Load..." // NOT_YET_LOCALIZED
-#define LOCALIZED_BITMAP_SAVE          "&Save" // NOT_YET_LOCALIZED
-#define LOCALIZED_BITMAP_SAVEAS        "Save &As..." // NOT_YET_LOCALIZED
-#define LOCALIZED_BITMAP_PRINT         "&Print..." // NOT_YET_LOCALIZED
-#define LOCALIZED_BITMAP_PRINTERSETUP  "P&rinter Setup..." // NOT_YET_LOCALIZED
-#define LOCALIZED_BITMAP_ACTIVEAREA    "A&ctive Area..." // NOT_YET_LOCALIZED
+#define LOCALIZED_BITMAP_SAVE          "&Enregistrer"
+#define LOCALIZED_BITMAP_SAVEAS        "En&registrer sous..."
+#define LOCALIZED_BITMAP_PRINT         "&Imprimer..."
+#define LOCALIZED_BITMAP_PRINTERSETUP  "&Paramètres Impr...."
+#define LOCALIZED_BITMAP_ACTIVEAREA    "&Zone active..."
 
-#define LOCALIZED_SET                  "&Set" // NOT_YET_LOCALIZED
-#define LOCALIZED_SET_PENSIZE          "Pen Si&ze..." // NOT_YET_LOCALIZED
-#define LOCALIZED_SET_LABELFONT        "&Label Font..." // NOT_YET_LOCALIZED
-#define LOCALIZED_SET_COMMANDERFONT    "&Commander Font..." // NOT_YET_LOCALIZED
-#define LOCALIZED_SET_PENCOLOR         "&Pen Color..." // NOT_YET_LOCALIZED
-#define LOCALIZED_SET_FLOODCOLOR       "F&lood Color..." // NOT_YET_LOCALIZED
-#define LOCALIZED_SET_SCREENCOLOR      "&Screen Color..." // NOT_YET_LOCALIZED
+#define LOCALIZED_SET                  "&Options"
+#define LOCALIZED_SET_PENSIZE          "&Largeur Crayon..."
+#define LOCALIZED_SET_LABELFONT        "&Font Texte..."
+#define LOCALIZED_SET_COMMANDERFONT    "Font &Poste de Pilotage..."// NOT_YET_LOCALIZED
+#define LOCALIZED_SET_PENCOLOR         "&Couleur Crayon..."
+#define LOCALIZED_SET_FLOODCOLOR       "Couleur &Remplissage..."
+#define LOCALIZED_SET_SCREENCOLOR      "Couleur &Ecran..."
 
-#define LOCALIZED_ZOOM                 "&Zoom"  // NOT_YET_LOCALIZED
-#define LOCALIZED_ZOOM_IN              "&In" // NOT_YET_LOCALIZED
-#define LOCALIZED_ZOOM_OUT             "&Out" // NOT_YET_LOCALIZED
-#define LOCALIZED_ZOOM_NORMAL          "&Normal" // NOT_YET_LOCALIZED
+#define LOCALIZED_ZOOM                 "&Zoom"
+#define LOCALIZED_ZOOM_IN              "&Avant"
+#define LOCALIZED_ZOOM_OUT             "&Arrière"
+#define LOCALIZED_ZOOM_NORMAL          "&Normal"
 
-#define LOCALIZED_HELP                 "&Help"  // NOT_YET_LOCALIZED
-#define LOCALIZED_HELP_INDEX           "&Index" // NOT_YET_LOCALIZED
-#define LOCALIZED_HELP_MCI             "&MCI" // NOT_YET_LOCALIZED
-#define LOCALIZED_HELP_HELP            "&Using Help" // NOT_YET_LOCALIZED
-#define LOCALIZED_HELP_TUTORIAL        "&Tutorial" // NOT_YET_LOCALIZED
-#define LOCALIZED_HELP_DEMO            "&Demo"  // NOT_YET_LOCALIZED
-#define LOCALIZED_HELP_EXAMPLE         "&Examples" // NOT_YET_LOCALIZED
-#define LOCALIZED_HELP_RELEASENOTES    "&Release Notes" // NOT_YET_LOCALIZED
-#define LOCALIZED_HELP_ABOUTFMSLOGO    "&About "LOCALIZED_GENERAL_PRODUCTNAME"..." // NOT_YET_LOCALIZED
-#define LOCALIZED_HELP_MS              "&About MS..." // NOT_YET_LOCALIZED
+#define LOCALIZED_HELP                 "Aide"
+#define LOCALIZED_HELP_INDEX           "&Manuel (en Anglais)"
+#define LOCALIZED_HELP_MCI             "M&anuel MCI (en Anglais)"
+#define LOCALIZED_HELP_HELP            "&Utilisation Help"
+#define LOCALIZED_HELP_TUTORIAL        "&Tutoriel (en Anglais)"
+#define LOCALIZED_HELP_DEMO            "&Demo"
+#define LOCALIZED_HELP_EXAMPLE         "&Exemples"
+#define LOCALIZED_HELP_RELEASENOTES    "&MAJ Notes"
+#define LOCALIZED_HELP_ABOUTFMSLOGO    "&A propos de "LOCALIZED_GENERAL_PRODUCTNAME"..."
+#define LOCALIZED_HELP_MS              "A &propos de MS..."
 
 // The "Set Active Area" dialog box
-#define LOCALIZED_SELECTACTIVEAREA              "Select Active Area" // NOT_YET_LOCALIZED
-#define LOCALIZED_SELECTACTIVEAREA_EFFECT       "These affect Printing and Saving Bitmaps" // NOT_YET_LOCALIZED
-#define LOCALIZED_SELECTACTIVEAREA_YHIGH        "Y-High" // NOT_YET_LOCALIZED
-#define LOCALIZED_SELECTACTIVEAREA_YLOW         "Y-Low"  // NOT_YET_LOCALIZED
-#define LOCALIZED_SELECTACTIVEAREA_XHIGH        "X-High" // NOT_YET_LOCALIZED
-#define LOCALIZED_SELECTACTIVEAREA_XLOW         "X-Low" // NOT_YET_LOCALIZED
-#define LOCALIZED_SELECTACTIVEAREA_STEPSPERINCH "Turtle steps per inch printed:" // NOT_YET_LOCALIZED
-#define LOCALIZED_SELECTACTIVEAREA_RESET        "&Reset"  // NOT_YET_LOCALIZED
-#define LOCALIZED_SELECTACTIVEAREA_OK           LOCALIZED_GENERAL_OKBUTTON // NOT_YET_LOCALIZED
-#define LOCALIZED_SELECTACTIVEAREA_CANCEL       LOCALIZED_GENERAL_CANCELBUTTON // NOT_YET_LOCALIZED
+#define LOCALIZED_SELECTACTIVEAREA              "Zone active"
+#define LOCALIZED_SELECTACTIVEAREA_EFFECT       "Zone d'impression et de sauvegarde"
+#define LOCALIZED_SELECTACTIVEAREA_YHIGH        "Y-Haut"
+#define LOCALIZED_SELECTACTIVEAREA_YLOW         "Y-Bas"
+#define LOCALIZED_SELECTACTIVEAREA_XHIGH        "X-Driot"
+#define LOCALIZED_SELECTACTIVEAREA_XLOW         "X-Gauche"
+#define LOCALIZED_SELECTACTIVEAREA_STEPSPERINCH "Pixels tortue par pouce"
+#define LOCALIZED_SELECTACTIVEAREA_RESET        "&Raz"
+#define LOCALIZED_SELECTACTIVEAREA_OK           LOCALIZED_GENERAL_OKBUTTON
+#define LOCALIZED_SELECTACTIVEAREA_CANCEL       LOCALIZED_GENERAL_CANCELBUTTON
 
 
 //
@@ -176,30 +185,29 @@
 //
 // The menu options on the editor
 //
-#define LOCALIZED_EDITOR_TITLE                   "Editor" // NOT_YET_LOCALIZED
+#define LOCALIZED_EDITOR_TITLE                   "Editeur"
 
-#define LOCALIZED_EDITOR_FILE                    "&File" // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITOR_FILE_SAVEANDEXIT        "&Save and Exit\tCtrl+D" // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITOR_FILE_SAVETOWORKSPACE    "Save to &Workspace" // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITOR_FILE_PRINT              "&Print..."  // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITOR_FILE_EXIT               "E&xit"  // NOT_YET_LOCALIZED
+#define LOCALIZED_EDITOR_FILE                    "&Espace de travail"
+#define LOCALIZED_EDITOR_FILE_SAVEANDEXIT        "&Interpréter et Quitter\tCtrl+D"
+#define LOCALIZED_EDITOR_FILE_SAVETOWORKSPACE    "E&nregistrer"
+#define LOCALIZED_EDITOR_FILE_PRINT              "&Imprimer..."
+#define LOCALIZED_EDITOR_FILE_EXIT               "&Quitter"
 
-#define LOCALIZED_EDITOR_EDIT                    "&Edit" // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITOR_EDIT_UNDO               "&Undo\tCtrl+Z" // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITOR_EDIT_CUT                "&Cut\tCtrl+X" // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITOR_EDIT_COPY               "C&opy\tCtrl+C" // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITOR_EDIT_PASTE              "&Paste\tCtrl+V" // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITOR_EDIT_PASTE              "&Paste\tCtrl+V" // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITOR_EDIT_DELETE             "&Delete\tDel" // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITOR_EDIT_CLEARALL           "C&lear All\tCtrl+Del" // NOT_YET_LOCALIZED
+#define LOCALIZED_EDITOR_EDIT                    "&Edition"
+#define LOCALIZED_EDITOR_EDIT_UNDO               "&Annuler frappe\tCtrl+Z"
+#define LOCALIZED_EDITOR_EDIT_CUT                "&Couper\tCtrl+X"
+#define LOCALIZED_EDITOR_EDIT_COPY               "C&opier\tCtrl+C"
+#define LOCALIZED_EDITOR_EDIT_PASTE              "&Coller\tCtrl+V"
+#define LOCALIZED_EDITOR_EDIT_DELETE             "&Effacer\tDel"
+#define LOCALIZED_EDITOR_EDIT_CLEARALL           "E&ffacer Tout\tCtrl+Del"
 #define LOCALIZED_EDITOR_EDIT_SELECTALL          "S&elect All\tCtrl+A" // NOT_YET_LOCALIZED
 
-#define LOCALIZED_EDITOR_SEARCH                  "&Search" // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITOR_SEARCH_FIND             "&Find...\tCtrl+F" // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITOR_SEARCH_REPLACE          "&Replace...\tCtrl+H"  // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITOR_SEARCH_NEXT             "&Next\tF3"  // NOT_YET_LOCALIZED
+#define LOCALIZED_EDITOR_SEARCH                  "&Outils"
+#define LOCALIZED_EDITOR_SEARCH_FIND             "&Rechercher...\tCtrl+F"
+#define LOCALIZED_EDITOR_SEARCH_REPLACE          "&Remplacer...\tCtrl+H"
+#define LOCALIZED_EDITOR_SEARCH_NEXT             "&Suivant\tF3"
 
-#define LOCALIZED_EDITOR_SET                     "Se&t"  // NOT_YET_LOCALIZED
+#define LOCALIZED_EDITOR_SET                     "O&ptions"
 #define LOCALIZED_EDITOR_SET_FONT                "&Font..."  // NOT_YET_LOCALIZED
 
 #define LOCALIZED_EDITOR_TEST                    "Test!" // NOT_YET_LOCALIZED
@@ -224,94 +232,94 @@
 //
 // Strings on the Commander window
 //
-#define LOCALIZED_COMMANDER                     "Commander" // NOT_YET_LOCALIZED
-#define LOCALIZED_COMMANDER_HALT                "Halt" // NOT_YET_LOCALIZED
-#define LOCALIZED_COMMANDER_TRACE               "Trace" // NOT_YET_LOCALIZED
-#define LOCALIZED_COMMANDER_NOTRACE             "NoTrace" // NOT_YET_LOCALIZED
-#define LOCALIZED_COMMANDER_PAUSE               "Pause" // NOT_YET_LOCALIZED
-#define LOCALIZED_COMMANDER_STATUS              "Status" // NOT_YET_LOCALIZED
-#define LOCALIZED_COMMANDER_NOSTATUS            "NoStatus" // NOT_YET_LOCALIZED
-#define LOCALIZED_COMMANDER_STEP                "Step" // NOT_YET_LOCALIZED
-#define LOCALIZED_COMMANDER_UNSTEP              "UnStep" // NOT_YET_LOCALIZED
-#define LOCALIZED_COMMANDER_RESET               "Reset" // NOT_YET_LOCALIZED
-#define LOCALIZED_COMMANDER_EXECUTE             "Execute" // NOT_YET_LOCALIZED
+#define LOCALIZED_COMMANDER                     "Poste de pilotage"
+#define LOCALIZED_COMMANDER_HALT                "Arrêt"
+#define LOCALIZED_COMMANDER_TRACE               "Trace"
+#define LOCALIZED_COMMANDER_NOTRACE             "Sup. Trace"
+#define LOCALIZED_COMMANDER_PAUSE               "Pause"
+#define LOCALIZED_COMMANDER_STATUS              "Etat"
+#define LOCALIZED_COMMANDER_NOSTATUS            "Eff. Etat"
+#define LOCALIZED_COMMANDER_STEP                "Pas"
+#define LOCALIZED_COMMANDER_UNSTEP              "Sup. Pas"
+#define LOCALIZED_COMMANDER_RESET               "Initial."
+#define LOCALIZED_COMMANDER_EXECUTE             "Execute"
 #define LOCALIZED_COMMANDER_EDALL               "Edall" // NOT_YET_LOCALIZED
 
 //
 // Strings on the Status window
 //
-#define LOCALIZED_STATUS                        "Status" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_CONTACT                "Contact:" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_PENCOLOR               "Pen(RGB):" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_FLOODCOLOR             "Flood(RGB):" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_SCREENCOLOR            "Screen(RGB):" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_PALETTE                "Palette use:" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_WIDTH                  "Width:" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_POSITION               "Position(XYZ):" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_WHICH                  "Which:" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_VISIBILITY             "Visibility:" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_STYLE                  "Style:" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_HEADING                "Heading:" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_PITCH                  "Pitch:" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_ROLL                   "Roll:" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_PEN                    "Pen" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_ORIENTATION            "Orientation" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_TURTLE                 "Turtle" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_COLOR                  "Color" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_KERNEL                 "Kernel" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_CALLS                  "Calls:" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_PEAKMEMORY             "Peak Memory:" // NOT_YET_LOCALIZED
+#define LOCALIZED_STATUS                        "Etat"
+#define LOCALIZED_STATUS_CONTACT                "Position:"
+#define LOCALIZED_STATUS_PENCOLOR               "Crayon(RVB):"
+#define LOCALIZED_STATUS_FLOODCOLOR             "Remplis(RVB):"
+#define LOCALIZED_STATUS_SCREENCOLOR            "Ecran(RVB):"
+#define LOCALIZED_STATUS_PALETTE                "Palette:"
+#define LOCALIZED_STATUS_WIDTH                  "Largeur:"
+#define LOCALIZED_STATUS_POSITION               "Position(XYZ):"
+#define LOCALIZED_STATUS_WHICH                  "Laquelle:"
+#define LOCALIZED_STATUS_VISIBILITY             "Visibilité:"
+#define LOCALIZED_STATUS_STYLE                  "Style:"
+#define LOCALIZED_STATUS_HEADING                "Cap:"
+#define LOCALIZED_STATUS_PITCH                  "Tang:"
+#define LOCALIZED_STATUS_ROLL                   "Roul:"
+#define LOCALIZED_STATUS_PEN                    "Crayon"
+#define LOCALIZED_STATUS_ORIENTATION            "Orientation"
+#define LOCALIZED_STATUS_TURTLE                 "Tortue"
+#define LOCALIZED_STATUS_COLOR                  "Couleurs"
+#define LOCALIZED_STATUS_KERNEL                 "Noyau"
+#define LOCALIZED_STATUS_CALLS                  "Appels:"
+#define LOCALIZED_STATUS_PEAKMEMORY             "Mémiore:"
 
-#define LOCALIZED_STATUS_PENREVERSE  "Reverse" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_PENNORMAL   "Normal" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_PENERASE    "Erase" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_PENUP       "Up" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_PENDOWN     "Down" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_PENSHOWN    "Shown" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_PENHIDDEN   "Hidden" // NOT_YET_LOCALIZED
+#define LOCALIZED_STATUS_PENREVERSE  "Inverse"
+#define LOCALIZED_STATUS_PENNORMAL   "Normal"
+#define LOCALIZED_STATUS_PENERASE    "Efface"
+#define LOCALIZED_STATUS_PENUP       "Haut"
+#define LOCALIZED_STATUS_PENDOWN     "Bas"
+#define LOCALIZED_STATUS_PENSHOWN    "Visible"
+#define LOCALIZED_STATUS_PENHIDDEN   "Caché"
 #define LOCALIZED_STATUS_POLYGONS    "Polygons" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_VECTORS     "Vectors" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_NODES       "Nodes" // NOT_YET_LOCALIZED
+#define LOCALIZED_STATUS_VECTORS     "Vecteurs"
+#define LOCALIZED_STATUS_NODES       "Noeuds"
 
 //
 // Strings on the Erase Procedure dialog box window
 //
 #define LOCALIZED_ERASEPROCEDURE                "Erase Procedure" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERASEPROCEDURE_OK             LOCALIZED_GENERAL_OKBUTTON // NOT_YET_LOCALIZED
-#define LOCALIZED_ERASEPROCEDURE_CANCEL         LOCALIZED_GENERAL_CANCELBUTTON // NOT_YET_LOCALIZED
-#define LOCALIZED_ERASEPROCEDURE_ALL            "&All" // NOT_YET_LOCALIZED
+#define LOCALIZED_ERASEPROCEDURE_OK             LOCALIZED_GENERAL_OKBUTTON
+#define LOCALIZED_ERASEPROCEDURE_CANCEL         LOCALIZED_GENERAL_CANCELBUTTON
+#define LOCALIZED_ERASEPROCEDURE_ALL            "&Toutes"
 
 //
 // Strings on the Edit Procedure dialog box window
 //
-#define LOCALIZED_EDITPROCEDURE                "Edit Procedure" // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITPROCEDURE_OK             LOCALIZED_GENERAL_OKBUTTON // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITPROCEDURE_CANCEL         LOCALIZED_GENERAL_CANCELBUTTON // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITPROCEDURE_ALL            "&All" // NOT_YET_LOCALIZED
+#define LOCALIZED_EDITPROCEDURE                "Procédure TO EDIT" // NOT_YET_LOCALIZED
+#define LOCALIZED_EDITPROCEDURE_OK             LOCALIZED_GENERAL_OKBUTTON
+#define LOCALIZED_EDITPROCEDURE_CANCEL         LOCALIZED_GENERAL_CANCELBUTTON
+#define LOCALIZED_EDITPROCEDURE_ALL            "&Toutes"
 
 //
 // Strings on the Color Picker Dialog box
 //
 #define LOCALIZED_SETCOLOR                     "Set Color" // NOT_YET_LOCALIZED
-#define LOCALIZED_SETCOLOR_RED                 "Red" // NOT_YET_LOCALIZED
-#define LOCALIZED_SETCOLOR_GREEN               "Green" // NOT_YET_LOCALIZED
-#define LOCALIZED_SETCOLOR_BLUE                "Blue" // NOT_YET_LOCALIZED
-#define LOCALIZED_SETCOLOR_OK                  LOCALIZED_GENERAL_OKBUTTON // NOT_YET_LOCALIZED
-#define LOCALIZED_SETCOLOR_CANCEL              LOCALIZED_GENERAL_CANCELBUTTON // NOT_YET_LOCALIZED
+#define LOCALIZED_SETCOLOR_RED                 "Rouge"
+#define LOCALIZED_SETCOLOR_GREEN               "Vert"
+#define LOCALIZED_SETCOLOR_BLUE                "Bleu"
+#define LOCALIZED_SETCOLOR_OK                  LOCALIZED_GENERAL_OKBUTTON
+#define LOCALIZED_SETCOLOR_CANCEL              LOCALIZED_GENERAL_CANCELBUTTON
 
 //
 // Strings on the Pen Size Picker Dialog box
 //
 #define LOCALIZED_SETPENSIZE                   "Pen Size" // NOT_YET_LOCALIZED
-#define LOCALIZED_SIZE                         "Size" // NOT_YET_LOCALIZED
-#define LOCALIZED_SETCOLOR_OK                  LOCALIZED_GENERAL_OKBUTTON // NOT_YET_LOCALIZED
-#define LOCALIZED_SETCOLOR_CANCEL              LOCALIZED_GENERAL_CANCELBUTTON // NOT_YET_LOCALIZED
+#define LOCALIZED_SIZE                         "Dimension"
+#define LOCALIZED_SETCOLOR_OK                  LOCALIZED_GENERAL_OKBUTTON
+#define LOCALIZED_SETCOLOR_CANCEL              LOCALIZED_GENERAL_CANCELBUTTON
 
 
 //
 // Strings on the "About FMSLogo" Dialog box
 //
-#define LOCALIZED_ABOUTFMS                     "About "LOCALIZED_GENERAL_PRODUCTNAME // NOT_YET_LOCALIZED
+#define LOCALIZED_ABOUTFMS                     "A propos de "LOCALIZED_GENERAL_PRODUCTNAME // NOT_YET_LOCALIZED
 #define LOCALIZED_ABOUTFMS_VERSION             LOCALIZED_GENERAL_PRODUCTNAME" Version "FMSLOGO_VERSION // NOT_YET_LOCALIZED
 #define LOCALIZED_ABOUTFMS_GUI                 "GUI by George Mills (mills@softronix.com)\nSoftronics, Inc.\nhttp:\x2F/www.softronix.com/" // NOT_YET_LOCALIZED
 #define LOCALIZED_ABOUTFMS_INSTALLER           "Installer based on Nullsoft Scriptable Install System\nhttp:\x2F/nsis.sourceforge.net" // NOT_YET_LOCALIZED
@@ -327,7 +335,7 @@
 //
 // Strings on the "About FMS" Dialog box
 //
-#define LOCALIZED_ABOUTMS                      "About FMS" // NOT_YET_LOCALIZED
+#define LOCALIZED_ABOUTMS                      "A propos de FMS"
 #define LOCALIZED_ABOUTMS_FMS                  "FMS stands for Fight Multiple Sclerosis." // NOT_YET_LOCALIZED
 #define LOCALIZED_ABOUTMS_CONSIDERDONATING     "Please consider donating to the\nNational Multiple Sclerosis Society.\nhttp:\x2F/www.nmss.org\n1-800-FIGHT-MS" // NOT_YET_LOCALIZED
 #define LOCALIZED_ABOUTMS_OK                   LOCALIZED_GENERAL_OKBUTTON // NOT_YET_LOCALIZED
@@ -350,27 +358,27 @@
 #define LOCALIZED_COULDNOTCREATEBMP           "Unable to create Windows 3.0 bitmap" // NOT_YET_LOCALIZED
 #define LOCALIZED_NOTVALIDBMP                 "Not a Windows 3.0 bitmap" // NOT_YET_LOCALIZED
 
-#define LOCALIZED_YOUHAVEUNSAVEDCHANGES         "You have not saved to disk" // NOT_YET_LOCALIZED
-#define LOCALIZED_FILENEWWILLERASEWORKSPACE     "Executing a new will erase all definitions.\n\nContinue with New?" // NOT_YET_LOCALIZED
+#define LOCALIZED_YOUHAVEUNSAVEDCHANGES         "Non sauvegardé sur disque"
+#define LOCALIZED_FILENEWWILLERASEWORKSPACE     "Nouveau supprime toutes les définitions.\n\nContinuer avec nouveau?"
 #define LOCALIZED_FILELOADMAYOVERWRITEWORKSPACE "The file being loaded will be merged into your workspace\nand may overwrite your unsaved changes.\n\nContinue with Load?" // NOT_YET_LOCALIZED
-#define LOCALIZED_FILEOPENWILLERASEWORKSPACE    "This will erase all of your unsaved changes.\n\nContinue with Open?" // NOT_YET_LOCALIZED
+#define LOCALIZED_FILEOPENWILLERASEWORKSPACE    "Le chargement du fichier va écraser l'espace de travail.\n\nContinuer le chargement?"
 
 #define LOCALIZED_EDITORISOPEN                  "Did you know you have an edit session running?\n\nAny changes in this edit session are not being saved." // NOT_YET_LOCALIZED
 
 #define LOCALIZED_ERROR_CANTREADFILE            "Unable to read file \"%s\" from disk" // NOT_YET_LOCALIZED
 #define LOCALIZED_ERROR_CANTWRITEFILE           "Unable to write file \"%s\" to disk" // NOT_YET_LOCALIZED
 
-#define LOCALIZED_SAVEISFOREXPERTSONLY          "This feature is for expert mode only (use "LOCALIZED_UNSAVEDCHANGES_SAVEANDEXIT")" // NOT_YET_LOCALIZED
-#define LOCALIZED_SAVETOWORKSPACE                "Save to Workspace" // NOT_YET_LOCALIZED
-#define LOCALIZED_CONTENTSCHANGED                "Contents Changed" // NOT_YET_LOCALIZED
-#define LOCALIZED_SAVECHANGEDCONTENTSTOWORKSPACE "The contents have changed.\nWould you like to save the changes to the workspace?" // NOT_YET_LOCALIZED
+#define LOCALIZED_SAVEISFOREXPERTSONLY          "Cette possibilité est réservée au mode expert (utiliser "LOCALIZED_UNSAVEDCHANGES_SAVEANDEXIT")"
+#define LOCALIZED_SAVETOWORKSPACE                "Sauve l'espace de travail"
+#define LOCALIZED_CONTENTSCHANGED                "Changement du contenu"
+#define LOCALIZED_SAVECHANGEDCONTENTSTOWORKSPACE "Le contenu a été modifié. Voulez-vous interpréter l'espace de travail?"
 
 
 
-#define LOCALIZED_CURSORISATLASTGOODDEFINITION  "The cursor will be positioned just after last successful definition.\nCheck the Commander window for possible error message." // NOT_YET_LOCALIZED
-#define LOCALIZED_RETURNTOEDIT                  "Return to edit?" // NOT_YET_LOCALIZED
+#define LOCALIZED_CURSORISATLASTGOODDEFINITION  "Le curseur est placé après la dernière bonne définition.\nRegarde la fenêtre de pilotage pour le message d'erreur."
+#define LOCALIZED_RETURNTOEDIT                  "Retour à l'éditeur?"
 
-#define LOCALIZED_EDITFAILEDTOLOAD              "Your Edit has FAILED to load" // NOT_YET_LOCALIZED
+#define LOCALIZED_EDITFAILEDTOLOAD              "L'éditeur n'a pas réussi le chargement"
 
 
 
@@ -386,11 +394,11 @@
 //
 // strings seen when tracing is enabled
 //
-#define LOCALIZED_TRACING_STOPS             " stops\n" // NOT_YET_LOCALIZED
-#define LOCALIZED_TRACING_OUTPUTS           " outputs %s\n" // NOT_YET_LOCALIZED
+#define LOCALIZED_TRACING_STOPS             " arrête\n"
+#define LOCALIZED_TRACING_OUTPUTS           " sort %s\n"
 #define LOCALIZED_TRACING_MAKE              "Make %s %s"  // NOT_YET_LOCALIZED
 #define LOCALIZED_TRACING_PPROP             "Pprop %s %s %s" // NOT_YET_LOCALIZED
-#define LOCALIZED_TRACING_LOCATION          " in %s\n%s" // NOT_YET_LOCALIZED
+#define LOCALIZED_TRACING_LOCATION          " dans %s\n%s"
 
 //
 // strings seen when single-stepping execution
@@ -400,7 +408,7 @@
 //
 // Notification when defining a procedure with TO in the commander
 //
-#define LOCALIZED_PROCEDUREDEFINED  "%s defined\n" // NOT_YET_LOCALIZED
+#define LOCALIZED_PROCEDUREDEFINED  "%s définie\n"
 
 
 //
@@ -414,55 +422,55 @@
 // Error message thrown by Logo
 //
 #define LOCALIZED_ERROR_BADINPUTNOTPAIRED      "Input is not paired" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_FATALINTERNAL          "Logo: Fatal Internal Error" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_OUTOFMEMORYUNREC       "Logo: Out of memory" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_OUTOFMEMORY            "Out of memory" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_STACKOVERFLOW          "stack overflow" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_TURTLEOUTOFBOUNDS      "turtle out of bounds" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_BADGRAPHINIT           "couldn't initialize graphics" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_BADDATA                "%p doesn't like %s as input" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_DIDNTOUTPUT            "%p didn't output to %p" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_NOTENOUGHINPUTS        "not enough inputs to %p" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_TOOMUCH                "too much inside ()'s" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_DONTSAYWHATTODOWITH    "You don't say what to do with %s" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_PARENMISMATCH          "too many ('s" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_NOVALUE                "%s has no value" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_UNEXPECTEDPAREN        "unexpected ')'" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_UNEXPECTEDBRACKET      "unexpected ']'" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_UNEXPECTEDBRACE        "unexpected '}'" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_DONTKNOWHOWTO          "I don't know how to %p" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_NOCATCHTAG             "Can't find catch tag for %p" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_ALREADYDEFINED         "%p is already defined" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_STOPPING               "Stopping..." // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_ALREADYDRIBBLING       "Already dribbling" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_FILESYSTEM                   "File system error: %p" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_FILESYSTEM_CANTOPEN          "Could not open file" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_FILESYSTEM_CANTOPEN2         "Unable to open file: %t" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_FILESYSTEM_ALREADYOPEN       "File already open" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_FILESYSTEM_NOTOPEN           "File not open" // NOT_YET_LOCALIZED
+#define LOCALIZED_ERROR_FATALINTERNAL          "Logo: erreur interne fatale"
+#define LOCALIZED_ERROR_OUTOFMEMORYUNREC       "Logo: Plus assez de mémoire (fatale)"
+#define LOCALIZED_ERROR_OUTOFMEMORY            "Plus assez de mémoire"
+#define LOCALIZED_ERROR_STACKOVERFLOW          "Débordement de pile"
+#define LOCALIZED_ERROR_TURTLEOUTOFBOUNDS      "Tortue en dehors des limites"
+#define LOCALIZED_ERROR_BADGRAPHINIT           "Impossible d'initialiser le graphisme"
+#define LOCALIZED_ERROR_BADDATA                "%p n'aime pas l'argument %s"
+#define LOCALIZED_ERROR_DIDNTOUTPUT            "%p ne donne pas de valeur à %p"
+#define LOCALIZED_ERROR_NOTENOUGHINPUTS        "Pas assez d'arguments pour %p"
+#define LOCALIZED_ERROR_TOOMUCH                "Trop de choses entre les ( )"
+#define LOCALIZED_ERROR_DONTSAYWHATTODOWITH    "Vous ne dites pas ce qu'il faut faire de %s"
+#define LOCALIZED_ERROR_PARENMISMATCH          "Trop de '('"
+#define LOCALIZED_ERROR_NOVALUE                "%s n'a pas de valeur"
+#define LOCALIZED_ERROR_UNEXPECTEDPAREN        "')' inattendue"
+#define LOCALIZED_ERROR_UNEXPECTEDBRACKET      "']' inattendue"
+#define LOCALIZED_ERROR_UNEXPECTEDBRACE        "'}' inattendue"
+#define LOCALIZED_ERROR_DONTKNOWHOWTO          "Je ne connais pas la procédure %p"
+#define LOCALIZED_ERROR_NOCATCHTAG             "Pas de CATCH correspondant à l'étiquette (tag) %p"
+#define LOCALIZED_ERROR_ALREADYDEFINED         "%p est déjà définie"
+#define LOCALIZED_ERROR_STOPPING               "Arrêt..."
+#define LOCALIZED_ERROR_ALREADYDRIBBLING       "Déjà en train d'appliquer DRIBBLE"
+#define LOCALIZED_ERROR_FILESYSTEM                   "Erreur système de fichiers: %p"
+#define LOCALIZED_ERROR_FILESYSTEM_CANTOPEN          "Impossible d'ouvrir fichier"
+#define LOCALIZED_ERROR_FILESYSTEM_CANTOPEN2         "Impossible d'ouvrir fichier: %t"
+#define LOCALIZED_ERROR_FILESYSTEM_ALREADYOPEN       "Fichier déjà ouvert"
+#define LOCALIZED_ERROR_FILESYSTEM_NOTOPEN           "Fichier non ouvert"
 #define LOCALIZED_ERROR_FILESYSTEM_CANTCREATEEDITOR  "Could not create editor file" // NOT_YET_LOCALIZED
 #define LOCALIZED_ERROR_FILESYSTEM_CANTSTARTEDITOR   "Could not launch the editor"  // NOT_YET_LOCALIZED
 #define LOCALIZED_ERROR_FILESYSTEM_CANTREADEDITOR    "Could not read editor file"  // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_IFWARNING              "Assuming you mean IFELSE, not IF" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_SHADOWWARNING          "%p shadowed by local in procedure call" // NOT_YET_LOCALIZED
+#define LOCALIZED_ERROR_IFWARNING              "Supposant que vous voulez dire SINON (IFELSE) et non SI (IF)"
+#define LOCALIZED_ERROR_SHADOWWARNING          "%p masquée dans un appel de procédure"
 #define LOCALIZED_ERROR_USER                   "Throw \"Error" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_ISPRIMITIVE            "%p is a primitive" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_TONOTINSIDE            "Can't use TO inside a procedure" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_ATTOPLEVEL             "Can only use %p inside a procedure" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_ATTOPLEVEL2            "You must be in a procedure to use OUTPUT or STOP" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_NOTEST                 "%p without TEST" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_BADMACROOUTPUT         "Macro output %s instead of a list" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_DEEPEND                "END inside multi-line instruction" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_DEEPENDIN              "END inside multi-line instruction in %p" // NOT_YET_LOCALIZED
+#define LOCALIZED_ERROR_ISPRIMITIVE            "%p est une primitive"
+#define LOCALIZED_ERROR_TONOTINSIDE            "Impossible d'utiliser POUR (TO) dans une procédure"
+#define LOCALIZED_ERROR_ATTOPLEVEL             "Ne peux utiliser %p que dans une procédure" // NOT_YET_LOCALIZED
+#define LOCALIZED_ERROR_ATTOPLEVEL2            "Ne peux utiliser RETOURNE (OUTPUT) ou STOPPE (STOP) que dans une procédure"
+#define LOCALIZED_ERROR_NOTEST                 "%p sans TEST"
+#define LOCALIZED_ERROR_BADMACROOUTPUT         "La macro retourne %s au lieu d'une liste"
+#define LOCALIZED_ERROR_DEEPEND                "FIN (END) dans une instruction multi-ligne"
+#define LOCALIZED_ERROR_DEEPENDIN              "FIN (END) dans une instruction multi-ligne dans %p"
 #define LOCALIZED_ERROR_UNKNOWN                "Unknown error condition - internal error." // NOT_YET_LOCALIZED
 
-#define LOCALIZED_PAUSING                      "Pausing..." // NOT_YET_LOCALIZED
+#define LOCALIZED_PAUSING                      "Pause..."
 
 
 //
 // Error messages displayed in Message Boxes.
 //
-#define LOCALIZED_ERROR                      "Error" // NOT_YET_LOCALIZED
+#define LOCALIZED_ERROR                      "Erreur"
 #define LOCALIZED_ERROR_BADINPUT             "Bad input" // NOT_YET_LOCALIZED
 
 #define LOCALIZED_ERROR_CANTOPENPORT         "Could not open port" // NOT_YET_LOCALIZED
@@ -552,20 +560,18 @@
 
 #define LOCALIZED_ERROR_SOUND                 "Sound Error" // NOT_YET_LOCALIZED
 
-#define LOCALIZED_ERROR_MIDI                  "MIDI Error" // NOT_YET_LOCALIZED
+#define LOCALIZED_ERROR_MIDI                  "Erreur Midi"
 #define LOCALIZED_ERROR_MIDIINVALIDDEVICE     "Invalid MIDI device" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_MIDIALREADYOPEN       "Already open" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_MIDINOTOPEN           "Not open" // NOT_YET_LOCALIZED
-
-#define LOCALIZED_ERROR_MCI                   "MCI Error" // NOT_YET_LOCALIZED
+#define LOCALIZED_ERROR_MIDIALREADYOPEN       "Déja ouvert"
+#define LOCALIZED_ERROR_MIDINOTOPEN           "Déja fermé"
 
 #define LOCALIZED_ERROR_CLIPBOARDISEMPTY      "No Text in Clipboard" // NOT_YET_LOCALIZED
 
-#define LOCALIZED_ERROR_MCI                   "MCI Error" // NOT_YET_LOCALIZED
+#define LOCALIZED_ERROR_MCI                   "Erreur MCI"
 
 #define LOCALIZED_ERROR_TIMERTOOMANY          "Too Many Timers" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_TIMERBADID            "Bad Timer Id" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_TIMERNOTFOUND         "Timer not found" // NOT_YET_LOCALIZED
+#define LOCALIZED_ERROR_TIMERBADID            "Mauvais numéro de timer"
+#define LOCALIZED_ERROR_TIMERNOTFOUND         "Timer non trouvé"
 
 #define LOCALIZED_ERROR_BITMODEBADBITMODE     "Illegal Bitmode" // NOT_YET_LOCALIZED
 
