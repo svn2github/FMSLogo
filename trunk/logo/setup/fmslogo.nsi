@@ -36,6 +36,15 @@ LoadLanguageFile "${NSISDIR}\Contrib\Language files\English.nlf"  ; the default 
 LoadLanguageFile "${NSISDIR}\Contrib\Language files\French.nlf"
 LoadLanguageFile "${NSISDIR}\Contrib\Language files\Greek.nlf"
 
+LangString DesktopShortcut ${LANG_ENGLISH} "Desktop Shortcut"
+LangString DesktopShortcut ${LANG_FRENCH}  "Desktop Shortcut" ; NOT_YET_TRANSLATED
+LangString DesktopShortcut ${LANG_GREEK}   "Desktop Shortcut" ; NOT_YET_TRANSLATED
+
+LangString StartMenuShortcuts ${LANG_ENGLISH} "Start Menu Shortcuts"
+LangString StartMenuShortcuts ${LANG_FRENCH}  "Start Menu Shortcuts" ; NOT_YET_TRANSLATED
+LangString StartMenuShortcuts ${LANG_GREEK}   "Start Menu Shortcuts" ; NOT_YET_TRANSLATED
+
+
 ; uninstall must be able to remove all traces of any 
 ; previous installation.
 Function uninstall
@@ -135,8 +144,16 @@ SetupUser.Done:
   System::Call 'kernel32::CreateMutexA(i 0, i 0, t "LogoForWindowsMutex") i .r1 ?e'
   Pop $R0 
   StrCmp $R0 0 checkifinstalled
-    MessageBox MB_OK|MB_ICONEXCLAMATION "Either the installer or FMSLogo is currently running.$\nThis installation cannot continue."
-    Abort
+
+  ; Notify the user that the install cannot continue.
+  ; We can't use a LangString because those aren't available in .onInit
+  StrCmp $LANGUAGE ${LANG_ENGLISH} 0 +2
+     MessageBox MB_OK|MB_ICONEXCLAMATION "Either the installer or FMSLogo is currently running.$\nThis installation cannot continue."
+  StrCmp $LANGUAGE ${LANG_FRENCH} 0 +2
+     MessageBox MB_OK|MB_ICONEXCLAMATION "Either the installer or FMSLogo is currently running.$\nThis installation cannot continue." ; NOT_YET_TRANSLATED
+  StrCmp $LANGUAGE ${LANG_GREEK} 0 +2
+     MessageBox MB_OK|MB_ICONEXCLAMATION "Either the installer or FMSLogo is currently running.$\nThis installation cannot continue." ; NOT_YET_TRANSLATED
+  Abort
 
 checkifinstalled:
 
@@ -161,7 +178,14 @@ GetPreviousInstall.Done:
   StrCpy $uninstallExe $0 $1 1 
 
   IfFileExists $uninstallExe 0 end
+  ; Notify the user that the install cannot continue.
+  ; We can't use a LangString because those aren't available in .onInit
+  StrCmp $LANGUAGE ${LANG_ENGLISH} 0 +2
     MessageBox MB_YESNO "The existing copy of FMSLogo must be uninstalled to continue.$\nDo you want to uninstall it?$\n$\n(Selecting No will abort the installation)" IDYES uninstall IDNO abort
+  StrCmp $LANGUAGE ${LANG_FRENCH} 0 +2
+    MessageBox MB_YESNO "The existing copy of FMSLogo must be uninstalled to continue.$\nDo you want to uninstall it?$\n$\n(Selecting No will abort the installation)" IDYES uninstall IDNO abort ; NOT_YET_TRANSLATED
+  StrCmp $LANGUAGE ${LANG_GREEK} 0 +2
+    MessageBox MB_YESNO "The existing copy of FMSLogo must be uninstalled to continue.$\nDo you want to uninstall it?$\n$\n(Selecting No will abort the installation)" IDYES uninstall IDNO abort ; NOT_YET_TRANSLATED
 
 abort:
     Abort
@@ -258,7 +282,7 @@ FileAssociation.Done:
 SectionEnd
 
 
-Section "Start Menu Shortcuts"
+Section $(StartMenuShortcuts)
   CreateDirectory "$SMPROGRAMS\FMSLogo"
   CreateShortCut "$SMPROGRAMS\FMSLogo\Uninstall.lnk"        "$INSTDIR\uninstall.exe"       "" "$INSTDIR\uninstall.exe" 0
   CreateShortCut "$SMPROGRAMS\FMSLogo\FMSLogo.lnk"          "$INSTDIR\fmslogo.exe"         "" "$INSTDIR\fmslogo.exe" 0
@@ -267,7 +291,7 @@ Section "Start Menu Shortcuts"
 SectionEnd
 
 
-Section "Desktop Shortcut"
+Section $(DesktopShortcut)
   CreateShortCut "$DESKTOP\FMSLogo.lnk" "$INSTDIR\fmslogo.exe" "" "$INSTDIR\fmslogo.exe" 0 
 SectionEnd
 
@@ -279,8 +303,16 @@ Section "Uninstall"
   System::Call 'kernel32::CreateMutexA(i 0, i 0, t "LogoForWindowsMutex") i .r1 ?e'
   Pop $R0 
   StrCmp $R0 0 uninstall
-    MessageBox MB_OK|MB_ICONEXCLAMATION "Either the installer or FMSLogo is currently running.$\nThis installation cannot continue."
-    Abort
+
+  ; Notify the user that the uninstall cannot continue.
+  ; We can't use a LangString because those aren't available in .onInit
+  StrCmp $LANGUAGE ${LANG_ENGLISH} 0 +2
+     MessageBox MB_OK|MB_ICONEXCLAMATION "Either the installer or FMSLogo is currently running.$\nThis uninstallation cannot continue."
+  StrCmp $LANGUAGE ${LANG_FRENCH} 0 +2
+     MessageBox MB_OK|MB_ICONEXCLAMATION "Either the installer or FMSLogo is currently running.$\nThis uninstallation cannot continue." ; NOT_YET_TRANSLATED
+  StrCmp $LANGUAGE ${LANG_GREEK} 0 +2
+     MessageBox MB_OK|MB_ICONEXCLAMATION "Either the installer or FMSLogo is currently running.$\nThis uninstallation cannot continue." ; NOT_YET_TRANSLATED
+  Abort
 
 uninstall:
   ; assume regular user until we know they are a power user
