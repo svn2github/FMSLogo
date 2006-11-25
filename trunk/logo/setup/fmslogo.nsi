@@ -34,6 +34,7 @@ var uninstallExe
 ; Languages
 LoadLanguageFile "${NSISDIR}\Contrib\Language files\English.nlf"  ; the default language
 LoadLanguageFile "${NSISDIR}\Contrib\Language files\French.nlf"
+LoadLanguageFile "${NSISDIR}\Contrib\Language files\Greek.nlf"
 
 ; uninstall must be able to remove all traces of any 
 ; previous installation.
@@ -44,8 +45,9 @@ Function uninstall
 
   ; Remove files and uninstaller
   Delete $INSTDIR\fmslogo.exe
-  Delete $INSTDIR\fmslogo-1033.exe
-  Delete $INSTDIR\fmslogo-1036.exe
+  Delete $INSTDIR\fmslogo-${LANG_ENGLISH}.exe
+  Delete $INSTDIR\fmslogo-${LANG_GREEK}.exe
+  Delete $INSTDIR\fmslogo-${LANG_FRENCH}.exe
 
   Delete $INSTDIR\logo.hlp
   Delete $INSTDIR\logo.gid
@@ -88,6 +90,8 @@ Function .onInit
   Push English
   Push ${LANG_FRENCH}
   Push French
+  Push ${LANG_GREEK}
+  Push Greek
   Push A ; A means auto count languages
          ; for the auto count to work the first empty push (Push "") must remain
   LangDLL::LangDialog "Installer Language" "Please select the language of the installer"
@@ -187,8 +191,9 @@ Section "FMSLogo"
   ;
   ; Put file there
   ;
-  File "..\src\fmslogo-1033.exe"
-  File "..\src\fmslogo-1036.exe"
+  File "..\src\fmslogo-${LANG_ENGLISH}.exe"
+  File "..\src\fmslogo-${LANG_FRENCH}.exe"
+  File "..\src\fmslogo-${LANG_GREEK}.exe"
   File "..\manual\logohelp.chm"
   File "..\src\Mcistrwh.hlp"
   File "..\src\fmslogo.txt"
@@ -313,8 +318,9 @@ SetupUser.Done:
 
   ; Remove files and uninstaller
   Delete $INSTDIR\fmslogo.exe
-  Delete $INSTDIR\fmslogo-1033.exe
-  Delete $INSTDIR\fmslogo-1036.exe
+  Delete $INSTDIR\fmslogo-${LANG_ENGLISH}.exe
+  Delete $INSTDIR\fmslogo-${LANG_GREEK}.exe
+  Delete $INSTDIR\fmslogo-${LANG_FRENCH}.exe
 
   Delete $INSTDIR\logohelp.chm
 
