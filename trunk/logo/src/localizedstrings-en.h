@@ -1,6 +1,101 @@
-// Localized strings for English
+//
+// Copyright (C) 2006 by David Costanzo
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+//
 
+/////////////////////////////////////////////////////////////////////////////
+// This file contains localized strings for English
+/////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////////////
+// Localization Instructions:
+//
+// This file a C++ header file, so if you are familiar with how C++ works, it
+// will help.
+//
+// Each localized string is a line that takes the following form:
+//
+//      #define <TOKEN> "<quoted-string>" //<status>
+//
+//   #define         - is part of C++.  Do not change this.
+//   <TOKEN>         - is how the FMSLogo source code refers to the string.
+//                     This must not change, regardless of the locale.
+//   <quoted-string> - is what fmslogo.exe will use whenever it refers 
+//                     to <TOKEN>.  This is bit that must be translated.
+//   <status>        - This is some information on whether or not the
+//                     string has been localized yet.  For example, is 
+//                     someone has localized FMSLogo into French, then I add
+//                     a new string, I will append //NOT_YET_LOCALIZED as a
+//                     reminder that we need to localized just this one string.
+//
+// To localize FMSLogo, you must to translate the phrases in <quoted-string>
+// from English to your language.  Once you have localized a string, please
+// remove the //<status> comment at the end of the line.
+//
+// If you think that a string should *NOT* be translated (for example "FMSLogo"),
+// then just delete the //<status> comment to indicate that you have decided
+// not to translate the string.  If you are not sure how to translate a string
+// please leave the //<status> comment so that that someone else may investigate
+// it.
+//
+// Please note that some of the quoted strings embed a <TOKEN> within them.
+// For example, the phrase:
+//
+//   "I like FMSLogo, do you?"
+//
+// Might appear as:
+//
+//   "I like "LOCALIZED_GENERAL_PRODUCTNAME", do you?"
+//
+// When fmslogo.exe is built, the LOCALIZED_GENERAL_PRODUCTNAME will be 
+// replaced with the localized form of FMSLogo and will look like the
+// original phrase.  Please only translate the "I like " and ", do you?".
+//
+// Some of the quoted strings (the ones that appear in menus and buttons)
+// have ampersands "&" characters in them.  For example the word "File" 
+// may appear as "&File".  This tells Windows that ALT+F should take the
+// user straight to this option.
+// 
+// Some of the quoted strings have a "%p" or a "%s" in them.  For example,
+// the error message for when you give bad input looks like this:
+//
+//    "%p doesn't like %s as input"
+//
+// The "%p" and "%s" are replaced with the procedure name and the input
+// that it doesn't like.  You must NOT add any "%" characters to any string, 
+// nor can you change the order in which the %p and %s occur.
+//
+// There are some special characters that you can add to a string with a 
+// special "escape sequence", which begins with a backslash "\".
+//
+//    Tab       - "\t"
+//    Newline   - "\n"
+//    Backslash - "\\"
+//
+// Due to a bug in Borland's resource compiler, two forward slashes cannot
+// appear in a quoted string.  To work around this problem, I "escape" the
+// first slash, as in:
+// 
+//    "http://fmslogo.org/" -> "http:\x2F/fmslogo.org/
+//
+/////////////////////////////////////////////////////////////////////////////
+
+//
 // General localized strings
+//
 #define LOCALIZED_GENERAL_OKBUTTON      "&OK"
 #define LOCALIZED_GENERAL_CANCELBUTTON  "&Cancel"
 
@@ -218,12 +313,12 @@
 //
 #define LOCALIZED_ABOUTFMS                     "About "LOCALIZED_GENERAL_PRODUCTNAME
 #define LOCALIZED_ABOUTFMS_VERSION             LOCALIZED_GENERAL_PRODUCTNAME" Version "FMSLOGO_VERSION
-#define LOCALIZED_ABOUTFMS_GUI                 "GUI by George Mills (mills@softronix.com)\nSoftronics, Inc.\nhttp:/\x2Fwww.softronix.com/"
-#define LOCALIZED_ABOUTFMS_INSTALLER           "Installer based on Nullsoft Scriptable Install System\nhttp:/\x2Fnsis.sourceforge.net"
-#define LOCALIZED_ABOUTFMS_ADVENTURE           "The Great Logo Adventure (ISBN 0-9651934-6-2)\nWritten and donated by Jim Muller\nAvailable at http:/\x2Fwww.softronix.com/"
+#define LOCALIZED_ABOUTFMS_GUI                 "GUI by George Mills (mills@softronix.com)\nSoftronics, Inc.\nhttp:\x2F/www.softronix.com/"
+#define LOCALIZED_ABOUTFMS_INSTALLER           "Installer based on Nullsoft Scriptable Install System\nhttp:\x2F/nsis.sourceforge.net"
+#define LOCALIZED_ABOUTFMS_ADVENTURE           "The Great Logo Adventure (ISBN 0-9651934-6-2)\nWritten and donated by Jim Muller\nAvailable at http:\x2F/www.softronix.com/"
 #define LOCALIZED_ABOUTFMS_SPECIALTHANKS       "Thanks to Yehuda Katz (yehuka@softhome.net)\nand Erich Neuwirth (erich.neuwirth@univie.ac.at)"
 #define LOCALIZED_ABOUTFMS_GPL                 LOCALIZED_GENERAL_PRODUCTNAME" is free software\nSee GNU Public License"
-#define LOCALIZED_ABOUTFMS_NEWSGROUP           "Internet News Group: comp.lang.logo\nVisit the Logo-Forum at\nhttp:/\x2Fgroups.yahoo.com/group/LogoForum/"
+#define LOCALIZED_ABOUTFMS_NEWSGROUP           "Internet News Group: comp.lang.logo\nVisit the Logo-Forum at\nhttp:\x2F/groups.yahoo.com/group/LogoForum/"
 #define LOCALIZED_ABOUTFMS_MULTIMEDIALOGIC     "To learn the internals of computers,\ntry MultiMedia Logic from Softronics, Inc."
 #define LOCALIZED_ABOUTFMS_CORE                "Core by Brian Harvey (bh@cs.berkeley.edu)\nUniversity of California Berkeley"
 #define LOCALIZED_ABOUTFMS_OK                  LOCALIZED_GENERAL_OKBUTTON
@@ -234,7 +329,7 @@
 //
 #define LOCALIZED_ABOUTMS                      "About FMS"
 #define LOCALIZED_ABOUTMS_FMS                  "FMS stands for Fight Multiple Sclerosis."
-#define LOCALIZED_ABOUTMS_CONSIDERDONATING     "Please consider donating to the\nNational Multiple Sclerosis Society.\nhttp:/\x2Fwww.nmss.org\n1-800-FIGHT-MS"
+#define LOCALIZED_ABOUTMS_CONSIDERDONATING     "Please consider donating to the\nNational Multiple Sclerosis Society.\nhttp:\x2F/www.nmss.org\n1-800-FIGHT-MS"
 #define LOCALIZED_ABOUTMS_OK                   LOCALIZED_GENERAL_OKBUTTON
 
 
@@ -242,7 +337,7 @@
 // Strings in various other dialog boxes
 // 
 
-#define LOCALIZED_CHANGEDINEDITORMAYBELOST  "Changes in this edit session may be lost.\n\nDo you really want to exit "LOCALIZED_GENERAL_PRODUCTNAME"?"
+#define LOCALIZED_CHANGESINEDITORMAYBELOST  "Changes in this edit session may be lost.\n\nDo you really want to exit "LOCALIZED_GENERAL_PRODUCTNAME"?"
 #define LOCALIZED_EDITSESSIONISRUNNING      "An Edit session is running"
 
 #define LOCALIZED_NOTHALTEDREALLYEXIT        LOCALIZED_GENERAL_PRODUCTNAME" does not like exiting while not halted.\n\nDo you really want to exit "LOCALIZED_GENERAL_PRODUCTNAME"?"
@@ -325,17 +420,17 @@
 #define LOCALIZED_ERROR_STACKOVERFLOW          "stack overflow"
 #define LOCALIZED_ERROR_TURTLEOUTOFBOUNDS      "turtle out of bounds"
 #define LOCALIZED_ERROR_BADGRAPHINIT           "couldn't initialize graphics"
-#define LOCALIZED_ERROR_BADDATA                "%p doesn\'t like %s as input"
-#define LOCALIZED_ERROR_DIDNTOUTPUT            "%p didn\'t output to %p"
+#define LOCALIZED_ERROR_BADDATA                "%p doesn't like %s as input"
+#define LOCALIZED_ERROR_DIDNTOUTPUT            "%p didn't output to %p"
 #define LOCALIZED_ERROR_NOTENOUGHINPUTS        "not enough inputs to %p"
-#define LOCALIZED_ERROR_TOOMUCH                "too much inside ()\'s"
-#define LOCALIZED_ERROR_DONTSAYWHATTODOWITH    "You don\'t say what to do with %s"
-#define LOCALIZED_ERROR_PARENMISMATCH          "too many (\'s"
+#define LOCALIZED_ERROR_TOOMUCH                "too much inside ()'s"
+#define LOCALIZED_ERROR_DONTSAYWHATTODOWITH    "You don't say what to do with %s"
+#define LOCALIZED_ERROR_PARENMISMATCH          "too many ('s"
 #define LOCALIZED_ERROR_NOVALUE                "%s has no value"
-#define LOCALIZED_ERROR_UNEXPECTEDPAREN        "unexpected \')\'"
-#define LOCALIZED_ERROR_UNEXPECTEDBRACKET      "unexpected \']\'"
-#define LOCALIZED_ERROR_UNEXPECTEDBRACE        "unexpected \'}\'"
-#define LOCALIZED_ERROR_DONTKNOWHOWTO          "I don\'t know how to %p"
+#define LOCALIZED_ERROR_UNEXPECTEDPAREN        "unexpected ')'"
+#define LOCALIZED_ERROR_UNEXPECTEDBRACKET      "unexpected ']'"
+#define LOCALIZED_ERROR_UNEXPECTEDBRACE        "unexpected '}'"
+#define LOCALIZED_ERROR_DONTKNOWHOWTO          "I don't know how to %p"
 #define LOCALIZED_ERROR_NOCATCHTAG             "Can't find catch tag for %p"
 #define LOCALIZED_ERROR_ALREADYDEFINED         "%p is already defined"
 #define LOCALIZED_ERROR_STOPPING               "Stopping..."

@@ -903,7 +903,7 @@ bool TMainFrame::CanClose()
       GiveFocusToEditbox = false;
 
       if (MessageBox(
-             LOCALIZED_CHANGEDINEDITORMAYBELOST,
+             LOCALIZED_CHANGESINEDITORMAYBELOST,
              LOCALIZED_EDITSESSIONISRUNNING,
              MB_OKCANCEL | MB_ICONQUESTION) != IDOK)
          {
