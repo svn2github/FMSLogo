@@ -107,591 +107,599 @@
 //
 // General localized strings
 //
-#define LOCALIZED_GENERAL_OKBUTTON      "&OK" // NOT_YET_LOCALIZED
-#define LOCALIZED_GENERAL_CANCELBUTTON  "&Cancel" // NOT_YET_LOCALIZED
+#define LOCALIZED_GENERAL_OKBUTTON      "&OK"
+#define LOCALIZED_GENERAL_CANCELBUTTON  "&’κυρο"
 
-#define LOCALIZED_GENERAL_PRODUCTNAME   "FMSLogo" // NOT_YET_LOCALIZED
+#define LOCALIZED_GENERAL_PRODUCTNAME   "FMSLogo"
 
 
 
 //
 // The menu options on the main window 
 //
-#define LOCALIZED_FILE        "&File" // NOT_YET_LOCALIZED
-#define LOCALIZED_FILE_NEW    "&New\t(erase workspace)" // NOT_YET_LOCALIZED
-#define LOCALIZED_FILE_LOAD   "&Load...\t(merge into workspace)" // NOT_YET_LOCALIZED
-#define LOCALIZED_FILE_OPEN   "&Open...\t(replace workspace)"  // NOT_YET_LOCALIZED
-#define LOCALIZED_FILE_SAVE   "&Save"  // NOT_YET_LOCALIZED
-#define LOCALIZED_FILE_SAVEAS "Save &As..." // NOT_YET_LOCALIZED
-#define LOCALIZED_FILE_EDIT   "&Edit..." // NOT_YET_LOCALIZED
-#define LOCALIZED_FILE_ERASE  "E&rase..." // NOT_YET_LOCALIZED
-#define LOCALIZED_FILE_EXIT   "E&xit" // NOT_YET_LOCALIZED
+#define LOCALIZED_FILE        "&Αρχείο" // 
+#define LOCALIZED_FILE_NEW    "&Νέο\t(διαγράφει εντολές και μεταβλητές)" // I'm sure "workspace" can have a better translation.
+#define LOCALIZED_FILE_LOAD   "&Φόρτωση...\t(προσθέτει εντολές και μεταβλητές από αρχείο)" // 
+#define LOCALIZED_FILE_OPEN   "’ν&οιγμα...\t(διαγράφει εντολές και μεταβλητές και ανοίγει ένα νέο αρχείο)" // 
+#define LOCALIZED_FILE_SAVE   "&Αποθήκευση"  // 
+#define LOCALIZED_FILE_SAVEAS "Αποθήκευση &ως..." // 
+#define LOCALIZED_FILE_EDIT   "&Επεξεργασία..." // 
+#define LOCALIZED_FILE_ERASE  "&Σβήσιμο..." // 
+#define LOCALIZED_FILE_EXIT   "Έ&ξοδος" // 
 
-#define LOCALIZED_BITMAP               "&Bitmap" // NOT_YET_LOCALIZED
-#define LOCALIZED_BITMAP_NEW           "&New" // NOT_YET_LOCALIZED
-#define LOCALIZED_BITMAP_LOAD          "&Load..." // NOT_YET_LOCALIZED
-#define LOCALIZED_BITMAP_SAVE          "&Save" // NOT_YET_LOCALIZED
-#define LOCALIZED_BITMAP_SAVEAS        "Save &As..." // NOT_YET_LOCALIZED
-#define LOCALIZED_BITMAP_PRINT         "&Print..." // NOT_YET_LOCALIZED
-#define LOCALIZED_BITMAP_PRINTERSETUP  "P&rinter Setup..." // NOT_YET_LOCALIZED
-#define LOCALIZED_BITMAP_ACTIVEAREA    "A&ctive Area..." // NOT_YET_LOCALIZED
+#define LOCALIZED_BITMAP               "Ει&κόνα" // 
+#define LOCALIZED_BITMAP_NEW           "&Νέο" // 
+#define LOCALIZED_BITMAP_LOAD          "’ν&οιγμα..." // 
+#define LOCALIZED_BITMAP_SAVE          "&Αποθήκευση" // 
+#define LOCALIZED_BITMAP_SAVEAS        "Αποθήκευση &ως..." // 
+#define LOCALIZED_BITMAP_PRINT         "&Εκτύπωση..." // 
+#define LOCALIZED_BITMAP_PRINTERSETUP  "Ε&πιλογές εκτύπωσης..." // 
+#define LOCALIZED_BITMAP_ACTIVEAREA    "Ενε&ργή Περιοχή..." // 
 
-#define LOCALIZED_SET                  "&Set" // NOT_YET_LOCALIZED
-#define LOCALIZED_SET_PENSIZE          "Pen Si&ze..." // NOT_YET_LOCALIZED
-#define LOCALIZED_SET_LABELFONT        "&Label Font..." // NOT_YET_LOCALIZED
-#define LOCALIZED_SET_COMMANDERFONT    "&Commander Font..." // NOT_YET_LOCALIZED
-#define LOCALIZED_SET_PENCOLOR         "&Pen Color..." // NOT_YET_LOCALIZED
-#define LOCALIZED_SET_FLOODCOLOR       "F&lood Color..." // NOT_YET_LOCALIZED
-#define LOCALIZED_SET_SCREENCOLOR      "&Screen Color..." // NOT_YET_LOCALIZED
+#define LOCALIZED_SET                  "&Ρύθμιση" // 
+#define LOCALIZED_SET_PENSIZE          "&Μέγεθος πένας..." // 
+#define LOCALIZED_SET_LABELFONT        "Γραμματοσειρά &χελωνας..." // 
+#define LOCALIZED_SET_COMMANDERFONT    "Γραμματοσειρά παραθύρου &ελέγχου (commander)..." // 
+#define LOCALIZED_SET_PENCOLOR         "Χρώμα &πένας..." // 
+#define LOCALIZED_SET_FLOODCOLOR       "Χρώμα &γεμίσματος..." // 
+#define LOCALIZED_SET_SCREENCOLOR      "Χρώμα &οθόνης..." // 
 
-#define LOCALIZED_ZOOM                 "&Zoom"  // NOT_YET_LOCALIZED
-#define LOCALIZED_ZOOM_IN              "&In" // NOT_YET_LOCALIZED
-#define LOCALIZED_ZOOM_OUT             "&Out" // NOT_YET_LOCALIZED
-#define LOCALIZED_ZOOM_NORMAL          "&Normal" // NOT_YET_LOCALIZED
+#define LOCALIZED_ZOOM                 "&Ζουμ"  // 
+#define LOCALIZED_ZOOM_IN              "&Μεγέθυνση" // 
+#define LOCALIZED_ZOOM_OUT             "&Σμίκρυνση" // 
+#define LOCALIZED_ZOOM_NORMAL          "&Κανονικό" // 
 
-#define LOCALIZED_HELP                 "&Help"  // NOT_YET_LOCALIZED
-#define LOCALIZED_HELP_INDEX           "&Index" // NOT_YET_LOCALIZED
-#define LOCALIZED_HELP_MCI             "&MCI" // NOT_YET_LOCALIZED
-#define LOCALIZED_HELP_HELP            "&Using Help" // NOT_YET_LOCALIZED
-#define LOCALIZED_HELP_TUTORIAL        "&Tutorial" // NOT_YET_LOCALIZED
-#define LOCALIZED_HELP_DEMO            "&Demo"  // NOT_YET_LOCALIZED
-#define LOCALIZED_HELP_EXAMPLE         "&Examples" // NOT_YET_LOCALIZED
-#define LOCALIZED_HELP_RELEASENOTES    "&Release Notes" // NOT_YET_LOCALIZED
-#define LOCALIZED_HELP_ABOUTFMSLOGO    "&About "LOCALIZED_GENERAL_PRODUCTNAME"..." // NOT_YET_LOCALIZED
-#define LOCALIZED_HELP_MS              "&About MS..." // NOT_YET_LOCALIZED
+#define LOCALIZED_HELP                 "&Βοήθεια"  // 
+#define LOCALIZED_HELP_INDEX           "&Θέματα στη βοήθεια" // 
+#define LOCALIZED_HELP_MCI             "Βοήθεια για το &MCI" // 
+#define LOCALIZED_HELP_HELP            "&Χρήση βοήθειας" // 
+#define LOCALIZED_HELP_TUTORIAL        "&Μάθημα" // Perhaps not the best one for "tutorial"
+#define LOCALIZED_HELP_DEMO            "&Επίδειξη"  // 
+#define LOCALIZED_HELP_EXAMPLE         "&Παραδείγματα" // 
+#define LOCALIZED_HELP_RELEASENOTES    "&Σημειώσεις έκδοσης" // 
+#define LOCALIZED_HELP_ABOUTFMSLOGO    "&Πληροφορίες για την "LOCALIZED_GENERAL_PRODUCTNAME"..." // I have assumed here that FMSLogo would be female grammatically, as are all the programming languages in Greek
+#define LOCALIZED_HELP_MS              "&Πληροφορίες για την MS..." // 
 
 // The "Set Active Area" dialog box
-#define LOCALIZED_SELECTACTIVEAREA              "Select Active Area" // NOT_YET_LOCALIZED
-#define LOCALIZED_SELECTACTIVEAREA_EFFECT       "These affect Printing and Saving Bitmaps" // NOT_YET_LOCALIZED
-#define LOCALIZED_SELECTACTIVEAREA_YHIGH        "Y-High" // NOT_YET_LOCALIZED
-#define LOCALIZED_SELECTACTIVEAREA_YLOW         "Y-Low"  // NOT_YET_LOCALIZED
-#define LOCALIZED_SELECTACTIVEAREA_XHIGH        "X-High" // NOT_YET_LOCALIZED
-#define LOCALIZED_SELECTACTIVEAREA_XLOW         "X-Low" // NOT_YET_LOCALIZED
-#define LOCALIZED_SELECTACTIVEAREA_STEPSPERINCH "Turtle steps per inch printed:" // NOT_YET_LOCALIZED
-#define LOCALIZED_SELECTACTIVEAREA_RESET        "&Reset"  // NOT_YET_LOCALIZED
-#define LOCALIZED_SELECTACTIVEAREA_OK           LOCALIZED_GENERAL_OKBUTTON // NOT_YET_LOCALIZED
-#define LOCALIZED_SELECTACTIVEAREA_CANCEL       LOCALIZED_GENERAL_CANCELBUTTON // NOT_YET_LOCALIZED
+#define LOCALIZED_SELECTACTIVEAREA              "Επιλογή ενεργής περιοχής" // 
+#define LOCALIZED_SELECTACTIVEAREA_EFFECT       "Αυτές οι επιλογές επηρεάζουν την εκτύπωση και αποθήκευση εικόνων" // 
+#define LOCALIZED_SELECTACTIVEAREA_YHIGH        "Πάνω όριο" // 
+#define LOCALIZED_SELECTACTIVEAREA_YLOW         "Κάτω όριο"  // 
+#define LOCALIZED_SELECTACTIVEAREA_XHIGH        "Δεξί όριο" // 
+#define LOCALIZED_SELECTACTIVEAREA_XLOW         "Αριστερό όριο" // 
+#define LOCALIZED_SELECTACTIVEAREA_STEPSPERINCH "Βήματα χελώνας ανά ίντσα που εκτυπώνονται:" // 
+#define LOCALIZED_SELECTACTIVEAREA_RESET        "&Επαναφορά"  // 
+#define LOCALIZED_SELECTACTIVEAREA_OK           LOCALIZED_GENERAL_OKBUTTON // Localized above
+#define LOCALIZED_SELECTACTIVEAREA_CANCEL       LOCALIZED_GENERAL_CANCELBUTTON // 
 
 
 //
 // Menu options in the popup menu
 //
-#define LOCALIZED_POPUP_COPY                     "Copy" // NOT_YET_LOCALIZED
-#define LOCALIZED_POPUP_CUT                      "Cut" // NOT_YET_LOCALIZED
-#define LOCALIZED_POPUP_PASTE                    "Paste" // NOT_YET_LOCALIZED
-#define LOCALIZED_POPUP_DELETE                   "Delete" // NOT_YET_LOCALIZED
-#define LOCALIZED_POPUP_UNDO                     "Undo" // NOT_YET_LOCALIZED
-#define LOCALIZED_POPUP_SELECTALL                "Select All" // NOT_YET_LOCALIZED
-#define LOCALIZED_POPUP_HELP                     "Topic Search" // NOT_YET_LOCALIZED
+#define LOCALIZED_POPUP_COPY                     "Αντι&γραφή" // 
+#define LOCALIZED_POPUP_CUT                      "Απ&οκοπή" // 
+#define LOCALIZED_POPUP_PASTE                    "&Επικόλληση" // 
+#define LOCALIZED_POPUP_DELETE                   "&Διαγραφή" // 
+#define LOCALIZED_POPUP_UNDO                     "Α&ναίρεση" // 
+#define LOCALIZED_POPUP_SELECTALL                "Ε&πιλογή όλων" // 
+#define LOCALIZED_POPUP_HELP                     "Ανα&ζήτηση στη βοήθεια" // 
 
 //
 // The menu options on the editor
 //
-#define LOCALIZED_EDITOR_TITLE                   "Editor" // NOT_YET_LOCALIZED
 
-#define LOCALIZED_EDITOR_FILE                    "&File" // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITOR_FILE_SAVEANDEXIT        "&Save and Exit\tCtrl+D" // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITOR_FILE_SAVETOWORKSPACE    "Save to &Workspace" // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITOR_FILE_PRINT              "&Print..."  // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITOR_FILE_EXIT               "E&xit"  // NOT_YET_LOCALIZED
+/*
+ * By the way, FMSLogo seems to use the editor's caption in order
+ * to find out if it's open and focus on it. If you have a window
+ * named "Editor" open, FMSLogo won't open an instance of the editor,
+ * but will focus on that window instead. -Teo :)
+ */
 
-#define LOCALIZED_EDITOR_EDIT                    "&Edit" // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITOR_EDIT_UNDO               "&Undo\tCtrl+Z" // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITOR_EDIT_CUT                "&Cut\tCtrl+X" // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITOR_EDIT_COPY               "C&opy\tCtrl+C" // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITOR_EDIT_PASTE              "&Paste\tCtrl+V" // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITOR_EDIT_DELETE             "&Delete\tDel" // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITOR_EDIT_CLEARALL           "C&lear All\tCtrl+Del" // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITOR_EDIT_SELECTALL          "S&elect All\tCtrl+A" // NOT_YET_LOCALIZED
+#define LOCALIZED_EDITOR_TITLE                   "Επεξεργαστής" // 
 
-#define LOCALIZED_EDITOR_SEARCH                  "&Search" // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITOR_SEARCH_FIND             "&Find...\tCtrl+F" // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITOR_SEARCH_REPLACE          "&Replace...\tCtrl+H"  // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITOR_SEARCH_NEXT             "&Next\tF3"  // NOT_YET_LOCALIZED
+#define LOCALIZED_EDITOR_FILE                    "&Αρχείο" // 
+#define LOCALIZED_EDITOR_FILE_SAVEANDEXIT        "Αποθήκευση και έ&ξοδος\tCtrl+D" // 
+#define LOCALIZED_EDITOR_FILE_SAVETOWORKSPACE    "Απο&θήκευση" // 
+#define LOCALIZED_EDITOR_FILE_PRINT              "&Εκτύπωση..."  // 
+#define LOCALIZED_EDITOR_FILE_EXIT               "Έ&ξοδος"  // 
 
-#define LOCALIZED_EDITOR_SET                     "Se&t"  // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITOR_SET_FONT                "&Font..."  // NOT_YET_LOCALIZED
+#define LOCALIZED_EDITOR_EDIT                    "&Επεξεργασία" // 
+#define LOCALIZED_EDITOR_EDIT_UNDO               "Αναίρεσ&η\tCtrl+Z" // 
+#define LOCALIZED_EDITOR_EDIT_CUT                "Απ&οκοπή\tCtrl+X" // 
+#define LOCALIZED_EDITOR_EDIT_COPY               "Αντι&γραφή\tCtrl+C" // 
+#define LOCALIZED_EDITOR_EDIT_PASTE              "&Επικόλληση\tCtrl+V" // 
+#define LOCALIZED_EDITOR_EDIT_DELETE             "&Διαγραφή\tDel" // 
+#define LOCALIZED_EDITOR_EDIT_CLEARALL           "Κα&θαρισμός όλων\tCtrl+Del" // 
+#define LOCALIZED_EDITOR_EDIT_SELECTALL          "Ε&πιλογή όλων\tCtrl+A" // 
 
-#define LOCALIZED_EDITOR_TEST                    "Test!" // NOT_YET_LOCALIZED
+#define LOCALIZED_EDITOR_SEARCH                  "Ανα&ζήτηση" // 
+#define LOCALIZED_EDITOR_SEARCH_FIND             "Εύ&ρεση...\tCtrl+F" // 
+#define LOCALIZED_EDITOR_SEARCH_REPLACE          "Αντι&κατάσταση...\tCtrl+H"  // 
+#define LOCALIZED_EDITOR_SEARCH_NEXT             "Ε&πόμενο\tF3"  // 
 
-#define LOCALIZED_EDITOR_HELP                    "&Help"  // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITOR_HELP_INDEX              "&Index" // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITOR_HELP_EDITOR             "&Editor" // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITOR_HELP_TOPICSEARCH        "&Topic Search\tF1" // NOT_YET_LOCALIZED
+#define LOCALIZED_EDITOR_SET                     "&Ρυθμίση"  // 
+#define LOCALIZED_EDITOR_SET_FONT                "&Γραμματοσειρά..."  // 
+
+#define LOCALIZED_EDITOR_TEST                    "Δοκιμή!" // 
+
+#define LOCALIZED_EDITOR_HELP                    "&Βοήθεια"  // 
+#define LOCALIZED_EDITOR_HELP_INDEX              "&Θέματα στη βοήθεια" // 
+#define LOCALIZED_EDITOR_HELP_EDITOR             "Επε&ξεργαστής" // 
+#define LOCALIZED_EDITOR_HELP_TOPICSEARCH        "Ανα&ζήτηση θέματος\tF1" // 
 
 
 //
 // The strings in the "You have unsaved changes" dialog
 //
-#define LOCALIZED_UNSAVEDCHANGES                LOCALIZED_GENERAL_PRODUCTNAME // NOT_YET_LOCALIZED
-#define LOCALIZED_UNSAVEDCHANGES_SAVEANDEXIT    "&Save and Exit" // NOT_YET_LOCALIZED
-#define LOCALIZED_UNSAVEDCHANGES_DONTSAVE       "&Don't Save" // NOT_YET_LOCALIZED
-#define LOCALIZED_UNSAVEDCHANGES_CANCEL         LOCALIZED_GENERAL_CANCELBUTTON // NOT_YET_LOCALIZED
-#define LOCALIZED_UNSAVEDCHANGES_MESSAGE1       "There are unsaved changes in the workspace.  If you exit without saving, these changes will be lost.  " // NOT_YET_LOCALIZED
-#define LOCALIZED_UNSAVEDCHANGES_MESSAGE2       "Would you like to save your changes before exiting?"  // NOT_YET_LOCALIZED
+#define LOCALIZED_UNSAVEDCHANGES                LOCALIZED_GENERAL_PRODUCTNAME // 
+#define LOCALIZED_UNSAVEDCHANGES_SAVEANDEXIT    "Απο&θήκευση και έξοδος" // 
+#define LOCALIZED_UNSAVEDCHANGES_DONTSAVE       "Χωρίς αποθήκευση" // 
+#define LOCALIZED_UNSAVEDCHANGES_CANCEL         LOCALIZED_GENERAL_CANCELBUTTON // 
+#define LOCALIZED_UNSAVEDCHANGES_MESSAGE1       "Υπάρχουν αλλαγές που δεν έχουν αποθηκευθεί.  Αν δεν τις αποθηκεύσετε, αυτές οι αλλαγές θα χαθούν.  " // 
+#define LOCALIZED_UNSAVEDCHANGES_MESSAGE2       "Θέλετε να αποθηκεύσετε τις αλλαγές σας πριν την έξοδο;"  // 
 
 
 //
 // Strings on the Commander window
 //
-#define LOCALIZED_COMMANDER                     "Commander" // NOT_YET_LOCALIZED
-#define LOCALIZED_COMMANDER_HALT                "Halt" // NOT_YET_LOCALIZED
-#define LOCALIZED_COMMANDER_TRACE               "Trace" // NOT_YET_LOCALIZED
-#define LOCALIZED_COMMANDER_NOTRACE             "NoTrace" // NOT_YET_LOCALIZED
-#define LOCALIZED_COMMANDER_PAUSE               "Pause" // NOT_YET_LOCALIZED
-#define LOCALIZED_COMMANDER_STATUS              "Status" // NOT_YET_LOCALIZED
-#define LOCALIZED_COMMANDER_NOSTATUS            "NoStatus" // NOT_YET_LOCALIZED
-#define LOCALIZED_COMMANDER_STEP                "Step" // NOT_YET_LOCALIZED
-#define LOCALIZED_COMMANDER_UNSTEP              "UnStep" // NOT_YET_LOCALIZED
-#define LOCALIZED_COMMANDER_RESET               "Reset" // NOT_YET_LOCALIZED
-#define LOCALIZED_COMMANDER_EXECUTE             "Execute" // NOT_YET_LOCALIZED
-#define LOCALIZED_COMMANDER_EDALL               "Edall" // NOT_YET_LOCALIZED
+#define LOCALIZED_COMMANDER                     "Παράθυρο ελέγχου" // 
+#define LOCALIZED_COMMANDER_HALT                "Σταμάτημα" // 
+#define LOCALIZED_COMMANDER_TRACE               "Ανίχνευση" // 
+#define LOCALIZED_COMMANDER_NOTRACE             "Χωρίς" // 
+#define LOCALIZED_COMMANDER_PAUSE               "Παύση" // 
+#define LOCALIZED_COMMANDER_STATUS              "Κατάσταση" // 
+#define LOCALIZED_COMMANDER_NOSTATUS            "Χωρίς" // 
+#define LOCALIZED_COMMANDER_STEP                "Βήμα" // 
+#define LOCALIZED_COMMANDER_UNSTEP              "Χωρίς" // 
+#define LOCALIZED_COMMANDER_RESET               "Επαναφορά" // 
+#define LOCALIZED_COMMANDER_EXECUTE             "Εκτέλεση" // 
+#define LOCALIZED_COMMANDER_EDALL               "Επεξεργασία" // If that's too long, please replace it again with EDALL
 
 //
 // Strings on the Status window
 //
-#define LOCALIZED_STATUS                        "Status" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_CONTACT                "Contact:" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_PENCOLOR               "Pen(RGB):" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_FLOODCOLOR             "Flood(RGB):" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_SCREENCOLOR            "Screen(RGB):" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_PALETTE                "Palette use:" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_WIDTH                  "Width:" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_POSITION               "Position(XYZ):" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_WHICH                  "Which:" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_VISIBILITY             "Visibility:" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_STYLE                  "Style:" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_HEADING                "Heading:" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_PITCH                  "Pitch:" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_ROLL                   "Roll:" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_PEN                    "Pen" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_ORIENTATION            "Orientation" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_TURTLE                 "Turtle" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_COLOR                  "Color" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_KERNEL                 "Kernel" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_CALLS                  "Calls:" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_PEAKMEMORY             "Peak Memory:" // NOT_YET_LOCALIZED
+#define LOCALIZED_STATUS                        "Κατάσταση" // 
+#define LOCALIZED_STATUS_CONTACT                "Επαφή:" // 
+#define LOCALIZED_STATUS_PENCOLOR               "Πένα (ΚΠΓ):" // Maybe a teacher would recognize RGB more easily than the Greek equivalent, but I've translated it anyway.
+#define LOCALIZED_STATUS_FLOODCOLOR             "Γέμισμα (ΚΠΓ):" // 
+#define LOCALIZED_STATUS_SCREENCOLOR            "Οθόνη (ΚΠΓ):" // 
+#define LOCALIZED_STATUS_PALETTE                "Παλέτα:" // 
+#define LOCALIZED_STATUS_WIDTH                  "Πλάτος:" // 
+#define LOCALIZED_STATUS_POSITION               "Θέση (XYZ):" // XYZ is fine :P
+#define LOCALIZED_STATUS_WHICH                  "Χελώνα:" // 
+#define LOCALIZED_STATUS_VISIBILITY             "Ορατότητα:" // 
+#define LOCALIZED_STATUS_STYLE                  "Στυλ:" // 
+#define LOCALIZED_STATUS_HEADING                "Κατεύθυνση:" // 
+#define LOCALIZED_STATUS_PITCH                  "Κλίση:" // 
+#define LOCALIZED_STATUS_ROLL                   "Στροφή:" // 
+#define LOCALIZED_STATUS_PEN                    "Πένα" // 
+#define LOCALIZED_STATUS_ORIENTATION            "Προσανατολισμός" // 
+#define LOCALIZED_STATUS_TURTLE                 "Χελώνα" // 
+#define LOCALIZED_STATUS_COLOR                  "Χρώμα" // 
+#define LOCALIZED_STATUS_KERNEL                 "Πυρήνας" // 
+#define LOCALIZED_STATUS_CALLS                  "Κλήσεις:" // 
+#define LOCALIZED_STATUS_PEAKMEMORY             "Μνήμη:" // 
 
-#define LOCALIZED_STATUS_PENREVERSE  "Reverse" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_PENNORMAL   "Normal" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_PENERASE    "Erase" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_PENUP       "Up" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_PENDOWN     "Down" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_PENSHOWN    "Shown" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_PENHIDDEN   "Hidden" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_POLYGONS    "Polygons" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_VECTORS     "Vectors" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_NODES       "Nodes" // NOT_YET_LOCALIZED
+#define LOCALIZED_STATUS_PENREVERSE  "Αντίστροφο" // 
+#define LOCALIZED_STATUS_PENNORMAL   "Κανονικό" // 
+#define LOCALIZED_STATUS_PENERASE    "Σβήσιμο" // 
+#define LOCALIZED_STATUS_PENUP       "Πάνω" // 
+#define LOCALIZED_STATUS_PENDOWN     "Κάτω" // 
+#define LOCALIZED_STATUS_PENSHOWN    "Ορατή" //  
+#define LOCALIZED_STATUS_PENHIDDEN   "Αόρατη" // 
+#define LOCALIZED_STATUS_POLYGONS    "Πολύγωνα" // 
+#define LOCALIZED_STATUS_VECTORS     "Διανύσματα" // 
+#define LOCALIZED_STATUS_NODES       "Κόμβοι" // 
 
 //
 // Strings on the Erase Procedure dialog box window
 //
-#define LOCALIZED_ERASEPROCEDURE                "Erase Procedure" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERASEPROCEDURE_OK             LOCALIZED_GENERAL_OKBUTTON // NOT_YET_LOCALIZED
-#define LOCALIZED_ERASEPROCEDURE_CANCEL         LOCALIZED_GENERAL_CANCELBUTTON // NOT_YET_LOCALIZED
-#define LOCALIZED_ERASEPROCEDURE_ALL            "&All" // NOT_YET_LOCALIZED
+#define LOCALIZED_ERASEPROCEDURE                "Σβήσιμο εντολής" // 
+#define LOCALIZED_ERASEPROCEDURE_OK             LOCALIZED_GENERAL_OKBUTTON // 
+#define LOCALIZED_ERASEPROCEDURE_CANCEL         LOCALIZED_GENERAL_CANCELBUTTON // 
+#define LOCALIZED_ERASEPROCEDURE_ALL            "&Όλες" // 
 
 //
 // Strings on the Edit Procedure dialog box window
 //
-#define LOCALIZED_EDITPROCEDURE                "Edit Procedure" // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITPROCEDURE_OK             LOCALIZED_GENERAL_OKBUTTON // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITPROCEDURE_CANCEL         LOCALIZED_GENERAL_CANCELBUTTON // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITPROCEDURE_ALL            "&All" // NOT_YET_LOCALIZED
+#define LOCALIZED_EDITPROCEDURE                "Επεξεργασία εντολής" // 
+#define LOCALIZED_EDITPROCEDURE_OK             LOCALIZED_GENERAL_OKBUTTON // 
+#define LOCALIZED_EDITPROCEDURE_CANCEL         LOCALIZED_GENERAL_CANCELBUTTON // 
+#define LOCALIZED_EDITPROCEDURE_ALL            "&Όλες" // 
 
 //
 // Strings on the Color Picker Dialog box
 //
-#define LOCALIZED_SETCOLOR                     "Set Color" // NOT_YET_LOCALIZED
-#define LOCALIZED_SETCOLOR_RED                 "Red" // NOT_YET_LOCALIZED
-#define LOCALIZED_SETCOLOR_GREEN               "Green" // NOT_YET_LOCALIZED
-#define LOCALIZED_SETCOLOR_BLUE                "Blue" // NOT_YET_LOCALIZED
-#define LOCALIZED_SETCOLOR_OK                  LOCALIZED_GENERAL_OKBUTTON // NOT_YET_LOCALIZED
-#define LOCALIZED_SETCOLOR_CANCEL              LOCALIZED_GENERAL_CANCELBUTTON // NOT_YET_LOCALIZED
+#define LOCALIZED_SETCOLOR                     "Ρύθμιση χρώματος" // 
+#define LOCALIZED_SETCOLOR_RED                 "Κόκκινο" // 
+#define LOCALIZED_SETCOLOR_GREEN               "Πράσινο" // 
+#define LOCALIZED_SETCOLOR_BLUE                "Γαλάζιο" // 
+#define LOCALIZED_SETCOLOR_OK                  LOCALIZED_GENERAL_OKBUTTON // 
+#define LOCALIZED_SETCOLOR_CANCEL              LOCALIZED_GENERAL_CANCELBUTTON // 
 
 //
 // Strings on the Pen Size Picker Dialog box
 //
-#define LOCALIZED_SETPENSIZE                   "Pen Size" // NOT_YET_LOCALIZED
-#define LOCALIZED_SIZE                         "Size" // NOT_YET_LOCALIZED
-#define LOCALIZED_SETCOLOR_OK                  LOCALIZED_GENERAL_OKBUTTON // NOT_YET_LOCALIZED
-#define LOCALIZED_SETCOLOR_CANCEL              LOCALIZED_GENERAL_CANCELBUTTON // NOT_YET_LOCALIZED
+#define LOCALIZED_SETPENSIZE                   "Μέγεθος πένας" // 
+#define LOCALIZED_SIZE                         "Μέγεθος" // 
+#define LOCALIZED_SETCOLOR_OK                  LOCALIZED_GENERAL_OKBUTTON // 
+#define LOCALIZED_SETCOLOR_CANCEL              LOCALIZED_GENERAL_CANCELBUTTON // 
 
 
 //
 // Strings on the "About FMSLogo" Dialog box
 //
-#define LOCALIZED_ABOUTFMS                     "About "LOCALIZED_GENERAL_PRODUCTNAME // NOT_YET_LOCALIZED
-#define LOCALIZED_ABOUTFMS_VERSION             LOCALIZED_GENERAL_PRODUCTNAME" Version "FMSLOGO_VERSION // NOT_YET_LOCALIZED
-#define LOCALIZED_ABOUTFMS_GUI                 "GUI by George Mills (mills@softronix.com)\nSoftronics, Inc.\nhttp:\x2F/www.softronix.com/" // NOT_YET_LOCALIZED
-#define LOCALIZED_ABOUTFMS_INSTALLER           "Installer based on Nullsoft Scriptable Install System\nhttp:\x2F/nsis.sourceforge.net" // NOT_YET_LOCALIZED
-#define LOCALIZED_ABOUTFMS_ADVENTURE           "The Great Logo Adventure (ISBN 0-9651934-6-2)\nWritten and donated by Jim Muller\nAvailable at http:\x2F/www.softronix.com/" // NOT_YET_LOCALIZED
-#define LOCALIZED_ABOUTFMS_SPECIALTHANKS       "Thanks to Yehuda Katz (yehuka@softhome.net)\nand Erich Neuwirth (erich.neuwirth@univie.ac.at)" // NOT_YET_LOCALIZED
-#define LOCALIZED_ABOUTFMS_GPL                 LOCALIZED_GENERAL_PRODUCTNAME" is free software\nSee GNU Public License" // NOT_YET_LOCALIZED
-#define LOCALIZED_ABOUTFMS_NEWSGROUP           "Internet News Group: comp.lang.logo\nVisit the Logo-Forum at\nhttp:\x2F/groups.yahoo.com/group/LogoForum/" // NOT_YET_LOCALIZED
-#define LOCALIZED_ABOUTFMS_MULTIMEDIALOGIC     "To learn the internals of computers,\ntry MultiMedia Logic from Softronics, Inc." // NOT_YET_LOCALIZED
-#define LOCALIZED_ABOUTFMS_CORE                "Core by Brian Harvey (bh@cs.berkeley.edu)\nUniversity of California Berkeley" // NOT_YET_LOCALIZED
-#define LOCALIZED_ABOUTFMS_OK                  LOCALIZED_GENERAL_OKBUTTON // NOT_YET_LOCALIZED
+#define LOCALIZED_ABOUTFMS                     "Πληροφορίες για την "LOCALIZED_GENERAL_PRODUCTNAME // 
+#define LOCALIZED_ABOUTFMS_VERSION             LOCALIZED_GENERAL_PRODUCTNAME", έκδοση "FMSLOGO_VERSION // 
+#define LOCALIZED_ABOUTFMS_GUI                 "GUI από τον George Mills (mills@softronix.com)\nSoftronics, Inc.\nhttp:\x2F/www.softronix.com/" // 
+#define LOCALIZED_ABOUTFMS_INSTALLER           "Εγκαταστάτης βασισμένος στο Nullsoft Scriptable Install System\nhttp:\x2F/nsis.sourceforge.net" // 
+#define LOCALIZED_ABOUTFMS_ADVENTURE           "The Great Logo Adventure (ISBN 0-9651934-6-2)\nΓράφτηκε και δωρίστηκε από τον Jim Muller\nΔιαθέσιμο στο http:\x2F/www.softronix.com/" // 
+#define LOCALIZED_ABOUTFMS_SPECIALTHANKS       "Ευχαριστούμε τους Yehuda Katz (yehuka@softhome.net)\nκαι Erich Neuwirth (erich.neuwirth@univie.ac.at)" // 
+#define LOCALIZED_ABOUTFMS_GPL                 "Η "LOCALIZED_GENERAL_PRODUCTNAME" είναι ελεύθερο λογισμικό\nΔείτε τη GNU Public License" // I dared to add a string ("H ") before the PRODUCTNAME constant :P
+#define LOCALIZED_ABOUTFMS_NEWSGROUP           "News Group στο Διαδίκτυο: comp.lang.logo\nΕπισκεφθείτε το Logo-Forum στο\nhttp:\x2F/groups.yahoo.com/group/LogoForum/" // 
+#define LOCALIZED_ABOUTFMS_MULTIMEDIALOGIC     "Για να μάθετε το εσωτερικό το υπολογιστή,\nδοκιμάστε τη MultiMedia Logic της Softronics, Inc." // 
+#define LOCALIZED_ABOUTFMS_CORE                "Πυρήνας από τον Brian Harvey (bh@cs.berkeley.edu)\nUniversity of California Berkeley" // 
+#define LOCALIZED_ABOUTFMS_OK                  LOCALIZED_GENERAL_OKBUTTON // 
 
 
 //
 // Strings on the "About FMS" Dialog box
 //
-#define LOCALIZED_ABOUTMS                      "About FMS" // NOT_YET_LOCALIZED
-#define LOCALIZED_ABOUTMS_FMS                  "FMS stands for Fight Multiple Sclerosis." // NOT_YET_LOCALIZED
+#define LOCALIZED_ABOUTMS                      "Πληροφορίες για το FMS" // 
+#define LOCALIZED_ABOUTMS_FMS                  "FMS σημαίνει Fight Multiple Sclerosis." // Maybe someone should give an accurate translation of Multiple Sclerosis
 #define LOCALIZED_ABOUTMS_CONSIDERDONATING     "Please consider donating to the\nNational Multiple Sclerosis Society.\nhttp:\x2F/www.nmss.org\n1-800-FIGHT-MS" // NOT_YET_LOCALIZED
-#define LOCALIZED_ABOUTMS_OK                   LOCALIZED_GENERAL_OKBUTTON // NOT_YET_LOCALIZED
+#define LOCALIZED_ABOUTMS_OK                   LOCALIZED_GENERAL_OKBUTTON // 
 
 
 // 
 // Strings in various other dialog boxes
 // 
 
-#define LOCALIZED_CHANGESINEDITORMAYBELOST  "Changes in this edit session may be lost.\n\nDo you really want to exit "LOCALIZED_GENERAL_PRODUCTNAME"?" // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITSESSIONISRUNNING      "An Edit session is running" // NOT_YET_LOCALIZED
+#define LOCALIZED_CHANGESINEDITORMAYBELOST  "Αλλαγές σε αυτή την περίοδο λειτουργίας ίσως χαθούν.\n\nΘέλετε πραγματικά να κλείσετε την "LOCALIZED_GENERAL_PRODUCTNAME";" // 
+#define LOCALIZED_EDITSESSIONISRUNNING      "Ο επεξεργαστής κώδικα είναι ήδη ανοιχτός" // 
 
-#define LOCALIZED_NOTHALTEDREALLYEXIT        LOCALIZED_GENERAL_PRODUCTNAME" does not like exiting while not halted.\n\nDo you really want to exit "LOCALIZED_GENERAL_PRODUCTNAME"?" // NOT_YET_LOCALIZED
-#define LOCALIZED_NOTHALTEDREALLYHALT        LOCALIZED_GENERAL_PRODUCTNAME" does not like exiting while not halted.\n\nDo you really want to Halt "LOCALIZED_GENERAL_PRODUCTNAME"?" // NOT_YET_LOCALIZED
-#define LOCALIZED_LOGOISNOTHALTED            LOCALIZED_GENERAL_PRODUCTNAME" is not Halted" // NOT_YET_LOCALIZED
+#define LOCALIZED_NOTHALTEDREALLYEXIT        "Στην "LOCALIZED_GENERAL_PRODUCTNAME" δεν αρέσει να κλείνει πριν σταματήσει.\n\nΘέλετε πραγματικά να κλείσει η "LOCALIZED_GENERAL_PRODUCTNAME"?" // 
+#define LOCALIZED_NOTHALTEDREALLYHALT        "Στην "LOCALIZED_GENERAL_PRODUCTNAME" δεν αρέσει να κλέινει πριν σταματήσει.\n\nΘέλετε πραγματικά να σταματήσει η "LOCALIZED_GENERAL_PRODUCTNAME"?" // 
+#define LOCALIZED_LOGOISNOTHALTED            "Η "LOCALIZED_GENERAL_PRODUCTNAME" δε σταματάει" // 
 
-#define LOCALIZED_WRITEFAILEDNOMEMORY         "Write failed, Possibly no Memory" // NOT_YET_LOCALIZED
-#define LOCALIZED_COULDNOTWRITEBMP            "Could not write .bmp" // NOT_YET_LOCALIZED
-#define LOCALIZED_COULDNOTOPENBMP             "Could not open .bmp" // NOT_YET_LOCALIZED
-#define LOCALIZED_COULDNOTCREATEBMP           "Unable to create Windows 3.0 bitmap" // NOT_YET_LOCALIZED
-#define LOCALIZED_NOTVALIDBMP                 "Not a Windows 3.0 bitmap" // NOT_YET_LOCALIZED
+#define LOCALIZED_WRITEFAILEDNOMEMORY         "Η εγγραφή απέτυχε. Ίσως δεν υπάρχει αρκετή ελεύθερη μνήμη." // 
+#define LOCALIZED_COULDNOTWRITEBMP            "Αδύνατη η εγγραφή στο .bmp" // 
+#define LOCALIZED_COULDNOTOPENBMP             "Αδύνατη η ανάγνωση από το .bmp" // 
+#define LOCALIZED_COULDNOTCREATEBMP           "Αδύνατο να δημιουργηθεί η εικόνα Windows 3.0 bitmap" // 
+#define LOCALIZED_NOTVALIDBMP                 "Η εικόν δεν είναι Windows 3.0 bitmap" // 
 
-#define LOCALIZED_YOUHAVEUNSAVEDCHANGES         "You have not saved to disk" // NOT_YET_LOCALIZED
-#define LOCALIZED_FILENEWWILLERASEWORKSPACE     "Executing a new will erase all definitions.\n\nContinue with New?" // NOT_YET_LOCALIZED
-#define LOCALIZED_FILELOADMAYOVERWRITEWORKSPACE "The file being loaded will be merged into your workspace\nand may overwrite your unsaved changes.\n\nContinue with Load?" // NOT_YET_LOCALIZED
-#define LOCALIZED_FILEOPENWILLERASEWORKSPACE    "This will erase all of your unsaved changes.\n\nContinue with Open?" // NOT_YET_LOCALIZED
+#define LOCALIZED_YOUHAVEUNSAVEDCHANGES         "Δεν αποθηκεύσατε στο δίσκο" // 
+#define LOCALIZED_FILENEWWILLERASEWORKSPACE     "Η εκτέλεση ενός νέου αρχείου θα σβήσει τις υπάρχουσες εντολές και μεταβλητές.\n\nΣυνέχεια;" // 
+#define LOCALIZED_FILELOADMAYOVERWRITEWORKSPACE "Το αρχείο που φορτώνεται θα προστεθεί στις υπάρχουσες εντολές και μεταβλητές\nκαι ίσως σβήσει όποιες αλλαγές δεν έχετε αποθηκεύσει.\n\nΣυνέχεια;" // 
+#define LOCALIZED_FILEOPENWILLERASEWORKSPACE    "Αυτό θα σβήσει όλες τις αλλαγές που δεν έχετε αποθηκεύσει.\n\nΣυνέχεια;" // 
 
-#define LOCALIZED_EDITORISOPEN                  "Did you know you have an edit session running?\n\nAny changes in this edit session are not being saved." // NOT_YET_LOCALIZED
+#define LOCALIZED_EDITORISOPEN                  "Ξέρετε ότι ήδη έχετε μια περίοδο επεξεργασίας ανοιχτή;\n\nΟποιαδήποτε αλλαγή σε αυτή την περίοδο δε θα αποθηκευθεί." // 
 
-#define LOCALIZED_ERROR_CANTREADFILE            "Unable to read file \"%s\" from disk" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_CANTWRITEFILE           "Unable to write file \"%s\" to disk" // NOT_YET_LOCALIZED
+#define LOCALIZED_ERROR_CANTREADFILE            "Αδυναμία ανάγνωσης του αρχείου \"%s\" από το δίσκο" // 
+#define LOCALIZED_ERROR_CANTWRITEFILE           "Αδυναμία εγγραφής του αρχείου \"%s\" στο δίσκο" // 
 
-#define LOCALIZED_SAVEISFOREXPERTSONLY          "This feature is for expert mode only (use "LOCALIZED_UNSAVEDCHANGES_SAVEANDEXIT")" // NOT_YET_LOCALIZED
-#define LOCALIZED_SAVETOWORKSPACE                "Save to Workspace" // NOT_YET_LOCALIZED
-#define LOCALIZED_CONTENTSCHANGED                "Contents Changed" // NOT_YET_LOCALIZED
-#define LOCALIZED_SAVECHANGEDCONTENTSTOWORKSPACE "The contents have changed.\nWould you like to save the changes to the workspace?" // NOT_YET_LOCALIZED
+#define LOCALIZED_SAVEISFOREXPERTSONLY          "Αυτή η δυνατότητα είναι μόνο για το expert mode (χρησιμοποιήστε το "LOCALIZED_UNSAVEDCHANGES_SAVEANDEXIT")" // 
+#define LOCALIZED_SAVETOWORKSPACE                "Αποθήκευση" // 
+#define LOCALIZED_CONTENTSCHANGED                "Τα περιεχόμενα άλλαξαν" // 
+#define LOCALIZED_SAVECHANGEDCONTENTSTOWORKSPACE "Τα περιεχόμενα έχουν αλλάξει.\nΘέλετε να τα αποθηκεύσετε;" // 
 
 
 
-#define LOCALIZED_CURSORISATLASTGOODDEFINITION  "The cursor will be positioned just after last successful definition.\nCheck the Commander window for possible error message." // NOT_YET_LOCALIZED
-#define LOCALIZED_RETURNTOEDIT                  "Return to edit?" // NOT_YET_LOCALIZED
+#define LOCALIZED_CURSORISATLASTGOODDEFINITION  "Ο δείκτης θα τοποθετηθεί μετά τον τελευταίο επιτυχημένο ορισμό.\nΕλέγξτε το παράθυρο ελέγχου για πιθανό μήνυμα λάθους." // 
+#define LOCALIZED_RETURNTOEDIT                  "Επιστροφή στην επεξεργασία;" // 
 
-#define LOCALIZED_EDITFAILEDTOLOAD              "Your Edit has FAILED to load" // NOT_YET_LOCALIZED
+#define LOCALIZED_EDITFAILEDTOLOAD              "Η επεξεργασία σας ΑΠΕΤΥΧΕ να φορτωθεί" // Isn't the use of capitals like shouting to the programmer for making a mistake? ;P
 
 
 
 // 
 //  Strings used in the File-Open filters
 //
-#define LOCALIZED_FILEFILTER_ALLFILES "All Files (*.*)|*.*|" // NOT_YET_LOCALIZED
-#define LOCALIZED_FILEFILTER_LOGO     "Logo Files (*.lgo)|*.lgo|"LOCALIZED_FILEFILTER_ALLFILES // NOT_YET_LOCALIZED
-#define LOCALIZED_FILEFILTER_IMAGE    "Bitmap Files (*.bmp)|*.bmp|GIF Files (*.gif)|*.gif|"LOCALIZED_FILEFILTER_ALLFILES // NOT_YET_LOCALIZED
+#define LOCALIZED_FILEFILTER_ALLFILES "Όλα τα αρχεία (*.*)|*.*|" // 
+#define LOCALIZED_FILEFILTER_LOGO     "Αρχεία Logo (*.lgo)|*.lgo|"LOCALIZED_FILEFILTER_ALLFILES // 
+#define LOCALIZED_FILEFILTER_IMAGE    "Αρχεία εικόνας Bitmap (*.bmp)|*.bmp|Αρχεία εικόνας GIF (*.gif)|*.gif|"LOCALIZED_FILEFILTER_ALLFILES // 
 
 
 
 //
 // strings seen when tracing is enabled
 //
-#define LOCALIZED_TRACING_STOPS             " stops\n" // NOT_YET_LOCALIZED
-#define LOCALIZED_TRACING_OUTPUTS           " outputs %s\n" // NOT_YET_LOCALIZED
-#define LOCALIZED_TRACING_MAKE              "Make %s %s"  // NOT_YET_LOCALIZED
-#define LOCALIZED_TRACING_PPROP             "Pprop %s %s %s" // NOT_YET_LOCALIZED
-#define LOCALIZED_TRACING_LOCATION          " in %s\n%s" // NOT_YET_LOCALIZED
+#define LOCALIZED_TRACING_STOPS             " σταματάει\n" // 
+#define LOCALIZED_TRACING_OUTPUTS           " επιστρέφει %s\n" // 
+#define LOCALIZED_TRACING_MAKE              "Μεταβλητή %s %s"  // 
+#define LOCALIZED_TRACING_PPROP             "Ιδιότητα %s %s %s" // 
+#define LOCALIZED_TRACING_LOCATION          " στο %s\n%s" // 
 
 //
 // strings seen when single-stepping execution
 //
-#define LOCALIZED_STEPPING                  "Single Step" // NOT_YET_LOCALIZED
+#define LOCALIZED_STEPPING                  "Βήμα-βήμα" // NOT_YET_LOCALIZED
 
 //
 // Notification when defining a procedure with TO in the commander
 //
-#define LOCALIZED_PROCEDUREDEFINED  "%s defined\n" // NOT_YET_LOCALIZED
+#define LOCALIZED_PROCEDUREDEFINED  "%s ορίστηκε\n" // 
 
 
 //
 // Words that represent the pen's mode
 //
-#define LOCALIZED_PENMODE_ERASE    "erase" // NOT_YET_LOCALIZED
-#define LOCALIZED_PENMODE_REVERSE  "reverse" // NOT_YET_LOCALIZED
-#define LOCALIZED_PENMODE_PAINT    "paint" // NOT_YET_LOCALIZED
+#define LOCALIZED_PENMODE_ERASE    "σβήσιμο" // 
+#define LOCALIZED_PENMODE_REVERSE  "αντίστροφο" // 
+#define LOCALIZED_PENMODE_PAINT    "σχεδιασμός" // 
 
 //
 // Error message thrown by Logo
 //
-#define LOCALIZED_ERROR_FATALINTERNAL          "Logo: Fatal Internal Error" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_OUTOFMEMORYUNREC       "Logo: Out of memory" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_OUTOFMEMORY            "Out of memory" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_STACKOVERFLOW          "stack overflow" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_TURTLEOUTOFBOUNDS      "turtle out of bounds" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_BADGRAPHINIT           "couldn't initialize graphics" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_BADDATA                "%p doesn't like %s as input" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_DIDNTOUTPUT            "%p didn't output to %p" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_NOTENOUGHINPUTS        "not enough inputs to %p" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_TOOMUCH                "too much inside ()'s" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_DONTSAYWHATTODOWITH    "You don't say what to do with %s" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_PARENMISMATCH          "too many ('s" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_NOVALUE                "%s has no value" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_UNEXPECTEDPAREN        "unexpected ')'" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_UNEXPECTEDBRACKET      "unexpected ']'" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_UNEXPECTEDBRACE        "unexpected '}'" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_DONTKNOWHOWTO          "I don't know how to %p" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_NOCATCHTAG             "Can't find catch tag for %p" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_ALREADYDEFINED         "%p is already defined" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_STOPPING               "Stopping..." // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_ALREADYDRIBBLING       "Already dribbling" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_FILESYSTEM                   "File system error: %p" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_FILESYSTEM_CANTOPEN          "Could not open file" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_FILESYSTEM_CANTOPEN2         "Unable to open file: %t" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_FILESYSTEM_ALREADYOPEN       "File already open" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_FILESYSTEM_NOTOPEN           "File not open" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_FILESYSTEM_CANTCREATEEDITOR  "Could not create editor file" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_FILESYSTEM_CANTSTARTEDITOR   "Could not launch the editor"  // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_FILESYSTEM_CANTREADEDITOR    "Could not read editor file"  // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_IFWARNING              "Assuming you mean IFELSE, not IF" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_SHADOWWARNING          "%p shadowed by local in procedure call" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_USER                   "Throw \"Error" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_ISPRIMITIVE            "%p is a primitive" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_TONOTINSIDE            "Can't use TO inside a procedure" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_ATTOPLEVEL             "Can only use %p inside a procedure" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_ATTOPLEVEL2            "You must be in a procedure to use OUTPUT or STOP" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_NOTEST                 "%p without TEST" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_BADMACROOUTPUT         "Macro output %s instead of a list" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_DEEPEND                "END inside multi-line instruction" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_DEEPENDIN              "END inside multi-line instruction in %p" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_UNKNOWN                "Unknown error condition - internal error." // NOT_YET_LOCALIZED
+#define LOCALIZED_ERROR_FATALINTERNAL          "Logo: Εσωτερικό σφάλμα" // 
+#define LOCALIZED_ERROR_OUTOFMEMORYUNREC       "Logo: Ανεπάρκεια μνήμης" // 
+#define LOCALIZED_ERROR_OUTOFMEMORY            "Ανεπάρκεια μνήμης" // 
+#define LOCALIZED_ERROR_STACKOVERFLOW          "υπερχείλιση στοίβας" // 
+#define LOCALIZED_ERROR_TURTLEOUTOFBOUNDS      "χελώνα εκτός ορίων" // 
+#define LOCALIZED_ERROR_BADGRAPHINIT           "αδυναμία εκκίνησης γραφικών" // 
+#define LOCALIZED_ERROR_BADDATA                "Στο %p δεν αρέσει το %s ως παράμετρος" // 
+#define LOCALIZED_ERROR_DIDNTOUTPUT            "Το %p επέστρεψε τιμή για το %p" // 
+#define LOCALIZED_ERROR_NOTENOUGHINPUTS        "ανεπάρκεια παραμέτρων για το %p" // 
+#define LOCALIZED_ERROR_TOOMUCH                "υπερβολικά μεγάλη παράσταση ανάμεσα στα ()" // 
+#define LOCALIZED_ERROR_DONTSAYWHATTODOWITH    "Δεν είπες τί να κάνω με το %s" // 
+#define LOCALIZED_ERROR_PARENMISMATCH          "Υπερβολικά πολλά ('s" // 
+#define LOCALIZED_ERROR_NOVALUE                "Το %s δεν έχει τιμή" // 
+#define LOCALIZED_ERROR_UNEXPECTEDPAREN        "μη προβλεπόμενο ')'" // 
+#define LOCALIZED_ERROR_UNEXPECTEDBRACKET      "μη προβλεπόμενο ']'" // 
+#define LOCALIZED_ERROR_UNEXPECTEDBRACE        "μη προβλεπόμενο '}'" // 
+#define LOCALIZED_ERROR_DONTKNOWHOWTO          "Δεν ξέρω το %p" // 
+#define LOCALIZED_ERROR_NOCATCHTAG             "Δε μπορώ να βρω ετικέτα συνέχειας για το %p" // 
+#define LOCALIZED_ERROR_ALREADYDEFINED         "Το %p έχει ήδη οριστεί" // 
+#define LOCALIZED_ERROR_STOPPING               "Σταμάτημα..." // 
+#define LOCALIZED_ERROR_ALREADYDRIBBLING       "Γίνεται ήδη καταγραφή" // 
+#define LOCALIZED_ERROR_FILESYSTEM                   "Σφάλμα συστήματος αρχείων: %p" // 
+#define LOCALIZED_ERROR_FILESYSTEM_CANTOPEN          "Αδυναμία ανοίγματος" // 
+#define LOCALIZED_ERROR_FILESYSTEM_CANTOPEN2         "Αδυναμία ανοίγματος του %t" // 
+#define LOCALIZED_ERROR_FILESYSTEM_ALREADYOPEN       "Το αρχείο είναι ήδη ανοιχτό" // 
+#define LOCALIZED_ERROR_FILESYSTEM_NOTOPEN           "Το αρχείο δεν είναι ανοιχτό" // 
+#define LOCALIZED_ERROR_FILESYSTEM_CANTCREATEEDITOR  "Αδυναμία δημιουργία του αρχείου επεξεργαστή κώδικα"// 
+#define LOCALIZED_ERROR_FILESYSTEM_CANTSTARTEDITOR   "Αδυναμία ανοίγματος του επεξεργαστή κώδικα"  // 
+#define LOCALIZED_ERROR_FILESYSTEM_CANTREADEDITOR    "Αδυναμία ανάγνωσης του αρχείου επεξεργαστή κώδικα"  // 
+#define LOCALIZED_ERROR_IFWARNING              "Θεωρώ ότι εννοούσες IFELSE, όχι IF" // This should change a little when primitives are localized
+#define LOCALIZED_ERROR_SHADOWWARNING          "Το %p υποσκιάζεται από τοπικό στην κλήση της εντολής" // I could make it a little more accurate if I knew whether it refers to a variable or something else
+#define LOCALIZED_ERROR_USER                   "Throw \"Error" // 
+#define LOCALIZED_ERROR_ISPRIMITIVE            "Το %p είναι στοιχειώδης εντολή" // 
+#define LOCALIZED_ERROR_TONOTINSIDE            "Αδύνατη η χρήση του TO μέσα σε εντολή" // But why? :D
+#define LOCALIZED_ERROR_ATTOPLEVEL             "Το %p χρησιμοποιείται μόνο μέσα σε εντολές" // 
+#define LOCALIZED_ERROR_ATTOPLEVEL2            "Μπορείτε να χρησιμοποιήσετε OUTPUT ή STOP μόνο μέσα σε εντολή" // 
+#define LOCALIZED_ERROR_NOTEST                 "%p χωρίς TEST" // 
+#define LOCALIZED_ERROR_BADMACROOUTPUT         "Η μακροεντολή επέστρεψε %s αντί για λίστα" // 
+#define LOCALIZED_ERROR_DEEPEND                "Το END βρίσκεται μέσα σε οδηγία πολλαπλών γραμμών" // 
+#define LOCALIZED_ERROR_DEEPENDIN              "Το END βρίσκεται μέσα σε οδηγία πολλαπλών γραμμών στο %p" // 
+#define LOCALIZED_ERROR_UNKNOWN                "’γνωστη κατάσταση σφάλματος - εσωτερικό σφάλμα." // 
 
-#define LOCALIZED_PAUSING                      "Pausing..." // NOT_YET_LOCALIZED
+#define LOCALIZED_PAUSING                      "Παύση..." // 
 
 
 //
 // Error messages displayed in Message Boxes.
 //
-#define LOCALIZED_ERROR                      "Error" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_BADINPUT             "Bad input" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_BADINPUTNOTPAIRED    "Input is not paired" // NOT_YET_LOCALIZED
+#define LOCALIZED_ERROR                      "Σφάλμα" // 
+#define LOCALIZED_ERROR_BADINPUT             "Κακή παράμετρος" // 
+#define LOCALIZED_ERROR_BADINPUTNOTPAIRED    "Η παράμετρος δεν ταιριάζει" // 
 
-#define LOCALIZED_ERROR_CANTOPENPORT         "Could not open port" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_CANTCLOSEPORT        "Could not close port" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_CANTFLUSHPORT        "Could not flush port" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_CANTDCBONPORT        "Could not build dcb on port" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_CANTSETPORT          "Could not set port" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_PORTALREADYOPEN      "Port is already open" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_PORTNOTOPEN          "Port is not open" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_FIRSTINPUTNOTANARRY  "First input must be an array" // NOT_YET_LOCALIZED
+#define LOCALIZED_ERROR_CANTOPENPORT         "Αδύνατο το άνοιγμα της θύρας" // 
+#define LOCALIZED_ERROR_CANTCLOSEPORT        "Αδύνατο το κλείσιμο της θύρας" // 
+#define LOCALIZED_ERROR_CANTFLUSHPORT        "Αδύνατο το άδειασμα της θύρας" // 
+#define LOCALIZED_ERROR_CANTDCBONPORT        "Αδύνατη η δημιουργία dcb στη θύρα" // 
+#define LOCALIZED_ERROR_CANTSETPORT          "Αδύνατη η ρύθμιση της θύρας" // 
+#define LOCALIZED_ERROR_PORTALREADYOPEN      "Η θύρα είναι ήδη ανοιχτή" // 
+#define LOCALIZED_ERROR_PORTNOTOPEN          "Η θύρα δεν είναι ανοιχτή" // 
+#define LOCALIZED_ERROR_FIRSTINPUTNOTANARRY  "Η πρώτη παράγραφος πρέπει να είναι πίνακας (array)" // 
 
-#define LOCALIZED_ERROR_WINDOWALREADYEXISTS   "Already exists" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_WINDOWDOESNOTEXIST    "Does not exist" // NOT_YET_LOCALIZED
+#define LOCALIZED_ERROR_WINDOWALREADYEXISTS   "Υπάρχει ήδη" // 
+#define LOCALIZED_ERROR_WINDOWDOESNOTEXIST    "Δεν υπάρχει" // 
 
-#define LOCALIZED_ERROR_DLL                   "DLL Error" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_DLLNOTLOADED          "DLL is not loaded" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_DLLALREADYLOADED      "DLL is already loaded" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_DLLLOADFAILED         "DLL load failed" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_DLLINVALIDDATATYPE    "Invalid data type input" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_DLLINVALIDOUTPUTTYPE  "Invalid output type" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_DLLFUNCTIONNOTFOUND   "Function not found" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_DLLTYPEDATANOTPAIRED  "Not all Type/Data inputs are paired" // NOT_YET_LOCALIZED
+#define LOCALIZED_ERROR_DLL                   "Σφάλμα DLL" // 
+#define LOCALIZED_ERROR_DLLNOTLOADED          "Το DLL δεν έχει φορτωθεί" // 
+#define LOCALIZED_ERROR_DLLALREADYLOADED      "Το DLL έχει ήδη φορτωθεί" // 
+#define LOCALIZED_ERROR_DLLLOADFAILED         "Η φόρτωση του DLL απέτυχε" // 
+#define LOCALIZED_ERROR_DLLINVALIDDATATYPE    "’κυρος τύπος δεδομένων" // 
+#define LOCALIZED_ERROR_DLLINVALIDOUTPUTTYPE  "’κυρος τύπος επιστροφής" // 
+#define LOCALIZED_ERROR_DLLFUNCTIONNOTFOUND   "Η συνάρτηση δε βρέθηκε" // 
+#define LOCALIZED_ERROR_DLLTYPEDATANOTPAIRED  "Δεν ταιριάζουιν όλες οι παράμετροι Τύπου/Δεδομένων" // 
 
-#define LOCALIZED_ERROR_NETWORK                    "Network Error" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_NETWORKRECEIVE             "Network Receive Error" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_NETWORKSEND                "Network Send Error" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_NETWORKSHUTDOWN            "Unexpected Error, Network may be shutdown" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_NETWORKNOTSTARTED          "Not started" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_NETWORKALREADYSTARTED      "Already started" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_NETWORKALREADYON           "Already on" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_NETWORKALREADYOFF          "Already off" // NOT_YET_LOCALIZED
+#define LOCALIZED_ERROR_NETWORK                    "Σφάλμα δικτύου" // 
+#define LOCALIZED_ERROR_NETWORKRECEIVE             "Σφάλμα αποδοχής από το δίκτυο" // 
+#define LOCALIZED_ERROR_NETWORKSEND                "Σφάλμα αποστολής στο δίκτυο" // 
+#define LOCALIZED_ERROR_NETWORKSHUTDOWN            "Μη προβλεπόμενο σφάλμα, ίσως το δίκτυο να έκλεισε" // 
+#define LOCALIZED_ERROR_NETWORKNOTSTARTED          "Δεν άρχισε" // 
+#define LOCALIZED_ERROR_NETWORKALREADYSTARTED      "Έχει ήδη αρχίσει" // 
+#define LOCALIZED_ERROR_NETWORKALREADYON           "Ήδη ανοιχτό" // 
+#define LOCALIZED_ERROR_NETWORKALREADYOFF          "Ήδη κλειστό" // 
 
 // The rest of the network errors shouldn't really see -- may be okay not to localize
-#define LOCALIZED_ERROR_NETWORKNAMETOOLONG         "Name too long" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_NETWORKNOTINITIALIZED      "Not initialized" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_NETWORKSYSTEMNOTREADY      "System not ready" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_NETWORKVERSIONNOTSUPPORTED "Version is not supported" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_NETWORKSENDAFTERSHUTDOWN   "Can't send after socket shutdown" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_NETWORKINTERRUPTED         "Interrupted system call" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_NETWORKHOSTNOTFOUNDAUTH    "Authoritative Answer: Host not found" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_NETWORKHOSTNOTFOUNDNONAUTH "Non-Authoritative: Host not found. See NETSTARTUP" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_NETWORKNOTRECOVERABLE      "Non-recoverable error" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_NETWORKNODATA              "No data record available" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_NETWORKBADFILENUMBER       "Bad file number" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_NETWORKWOULDBLOCK          "Operation would block" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_NETWORKNOWINPROGRESS       "Operation now in progress" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_NETWORKALREADYINPROGRESS   "Operation already in progress" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_NETWORKBADADDRESS          "Bad address" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_NETWORKNEEDDESTADDRESS     "Destination address required" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_NETWORKMESSAGETOOLONG      "Message too long" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_NETWORKPFNOTSUPPORTED      "Protocol family not supported" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_NETWORKDIRNOTEMPTY         "Directory not empty" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_NETWORKAPPLIMITREACHED     "Application limit has been reached" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_NETWORKDISKQUOTA           "Disk quota exceeded" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_NETWORKINVALIDARGUMENTS    LOCALIZED_ERROR_BADINPUT // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_NETWORKTOOMANYFILES        "Too many open files" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_NETWORKACCESSDENIED        "Access denied" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_NETWORKNOTASOCKET          "Socket operation on non-socket" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_NETWORKADDRNOTAVAILABLE    "Can't assign requested address" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_NETWORKADDRINUSE           "Address already in use" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_NETWORKAFNOTSUPPORTED      "Address family not supported by protocol family" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_NETWORKTIMEDOUT            "Connection timed out" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_NETWORKTYPENOTSUPPORTED    "Socket type not supported" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_NETWORKPROTONOTSUPPORTED   "Protocol not supported" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_NETWORKNOBUFFER            "No space in buffer" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_NETWORKALREADYCONNECTED    "Socket is already connected" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_NETWORKNOTCONNECTED        "Socket is not connected" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_NETWORKBADPROTOOPT         "Bad protocol option" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_NETWORKCONNECTIONRESET     "Connection reset by peer" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_NETWORKCONNECTIONABORT     "Software caused connection abort" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_NETWORKISDOWN              "Network is down" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_NETWORKRESET               "Network was reset" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_NETWORKCONNECTIONREFUSED   "Connection refused" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_NETWORKHOSTISDOWN          "Host is down" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_NETWORKHOSTISUNREACHABLE   "Host is unreachable" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_NETWORKBADPROTOTYPE        "Protocol is wrong type for socket" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_NETWORKBADOPNOTSUPPORTED   "Operation not supported on socket" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_NETWORKUNREACHABLE         "No path to remote host was found" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_NETWORKTOOMANYREFS         "Too many references" // NOT_YET_LOCALIZED
+#define LOCALIZED_ERROR_NETWORKNAMETOOLONG         "Πολύ μεγάλο όνομα" // 
+#define LOCALIZED_ERROR_NETWORKNOTINITIALIZED      "Δεν άρχισε" // 
+#define LOCALIZED_ERROR_NETWORKSYSTEMNOTREADY      "Το σύστημα δεν είναι έτοιμο" // 
+#define LOCALIZED_ERROR_NETWORKVERSIONNOTSUPPORTED "Η έκδοση δεν υποστηρίζεται" // 
+#define LOCALIZED_ERROR_NETWORKSENDAFTERSHUTDOWN   "Αδύνατη η αποστολή μετά το κλείσιμο της υποδοχής" // 
+#define LOCALIZED_ERROR_NETWORKINTERRUPTED         "Η κλήση συστήματος διακόπηκε" // 
+#define LOCALIZED_ERROR_NETWORKHOSTNOTFOUNDAUTH    "Επίσημη απάντηση: δε βρέθηκε ο κεντρικός υπολογιστής" // 
+#define LOCALIZED_ERROR_NETWORKHOSTNOTFOUNDNONAUTH "Ανεπίσημη: δε βρέθηκε ο κεντρικός υπολογιστής. Δείτε το NETSTARTUP" // 
+#define LOCALIZED_ERROR_NETWORKNOTRECOVERABLE      "Μη ανανήψιμο σφάλμα" // 
+#define LOCALIZED_ERROR_NETWORKNODATA              "Δεν υπάρχει εγγραφή δεδομένων" // 
+#define LOCALIZED_ERROR_NETWORKBADFILENUMBER       "Λάθος αριθμός αρχείου" // 
+#define LOCALIZED_ERROR_NETWORKWOULDBLOCK          "Η διαδικασία θα εμπόδιζε" // 
+#define LOCALIZED_ERROR_NETWORKNOWINPROGRESS       "Η διαδικασία εκτελείται τώρα" // 
+#define LOCALIZED_ERROR_NETWORKALREADYINPROGRESS   "Η διαδικασία εκτελείται ήδη" // 
+#define LOCALIZED_ERROR_NETWORKBADADDRESS          "Κακή διεύθυνση" // 
+#define LOCALIZED_ERROR_NETWORKNEEDDESTADDRESS     "Χρειάζεται διεύθυνση προορισμού" // 
+#define LOCALIZED_ERROR_NETWORKMESSAGETOOLONG      "Το μήνυμα είναι πολύ μεγάλο" // 
+#define LOCALIZED_ERROR_NETWORKPFNOTSUPPORTED      "Η οικογένεια πρωτοκόλλου δεν υποστηρίζεται" // 
+#define LOCALIZED_ERROR_NETWORKDIRNOTEMPTY         "Ο κατάλογος δεν είναι άδειος" // 
+#define LOCALIZED_ERROR_NETWORKAPPLIMITREACHED     "Όριο εφαρμογών" // 
+#define LOCALIZED_ERROR_NETWORKDISKQUOTA           "Η αναλογία δίσκου ξεπεράστηκε" // 
+#define LOCALIZED_ERROR_NETWORKINVALIDARGUMENTS    LOCALIZED_ERROR_BADINPUT // 
+#define LOCALIZED_ERROR_NETWORKTOOMANYFILES        "Πολλά ανοιχτά αρχεία" // 
+#define LOCALIZED_ERROR_NETWORKACCESSDENIED        "Η πρόσβαση απαγορεύτηκε" // 
+#define LOCALIZED_ERROR_NETWORKNOTASOCKET          "Διαδικασία υποδοχής σε μη υποδοχή" // 
+#define LOCALIZED_ERROR_NETWORKADDRNOTAVAILABLE    "Αδύνατη η εκχώρηση των ζητούμενων διευθύνσεων" // 
+#define LOCALIZED_ERROR_NETWORKADDRINUSE           "Η διεύθυνση χρησιμοποιείται ήδη" // 
+#define LOCALIZED_ERROR_NETWORKAFNOTSUPPORTED      "Η οικογένεια διευθύνσεων δεν υποστηρίζεται από την οικογένεια πρωτοκόλλου" // 
+#define LOCALIZED_ERROR_NETWORKTIMEDOUT            "Ο χρόνος σύνδεσης έληξε" // 
+#define LOCALIZED_ERROR_NETWORKTYPENOTSUPPORTED    "Ο τύπος υποδοχής δεν υποστηρίζεται" // 
+#define LOCALIZED_ERROR_NETWORKPROTONOTSUPPORTED   "Ο τύπος πρωτοκόλλου δεν υποστηρίζεται" // 
+#define LOCALIZED_ERROR_NETWORKNOBUFFER            "Δεν υπάρχει χώρος στην προσωρινή μνήμη (buffer)" // 
+#define LOCALIZED_ERROR_NETWORKALREADYCONNECTED    "Η υποδοχή είναι ήδη συνδεδεμένη" // 
+#define LOCALIZED_ERROR_NETWORKNOTCONNECTED        "Η υποδοχή δεν είναι συνδεδεμένη" // 
+#define LOCALIZED_ERROR_NETWORKBADPROTOOPT         "Κακή επιλογή στο πρωτόκολλο" // 
+#define LOCALIZED_ERROR_NETWORKCONNECTIONRESET     "Η σύνδεση επανήλθε" // 
+#define LOCALIZED_ERROR_NETWORKCONNECTIONABORT     "Το λογισμικό προκάλεσε κλείσιμο της σύνδεσης" // 
+#define LOCALIZED_ERROR_NETWORKISDOWN              "Το δίκτυο δε λειτουργεί" // 
+#define LOCALIZED_ERROR_NETWORKRESET               "Το δίκτυο επανήλθε" // 
+#define LOCALIZED_ERROR_NETWORKCONNECTIONREFUSED   "Η σύνδεση δεν έγινε δεκτή" // 
+#define LOCALIZED_ERROR_NETWORKHOSTISDOWN          "Ο κεντρικός υπολογιστής δε λειτουργεί" // 
+#define LOCALIZED_ERROR_NETWORKHOSTISUNREACHABLE   "Αδύνατη η επαφή με τον κεντρικό υπολογιστή" // 
+#define LOCALIZED_ERROR_NETWORKBADPROTOTYPE        "Το πρωτόκολλο είναι λάθος τύπου για την υποδοχή" // 
+#define LOCALIZED_ERROR_NETWORKBADOPNOTSUPPORTED   "Η διαδικασία δεν υποστηρίζεται στην υποδοχή" // 
+#define LOCALIZED_ERROR_NETWORKUNREACHABLE         "Δε βρέθηκε διαδρομή στον απομακρυσμένο κεντρικό υπολογιστή" // 
+#define LOCALIZED_ERROR_NETWORKTOOMANYREFS         "Υπερβολικά πολλές αναφορές" // 
 
-#define LOCALIZED_ERROR_POLYSTART               "PolyStart Error" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_POLYSTARTALREADYSTARTED "You already have a Polygon started" // NOT_YET_LOCALIZED
+#define LOCALIZED_ERROR_POLYSTART               "Σφάλμα PolyStart" // 
+#define LOCALIZED_ERROR_POLYSTARTALREADYSTARTED "Έχετε ήδη ξεκινήσει ένα πολύγωνο" // 
 
-#define LOCALIZED_ERROR_POLYEND                 "PolyEnd Error" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_POLYENDNOTSTARTED       "You have not started a Polygon" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_POLYENDNEED3VECTORS     "You must have at least 3 vectors to define a polygon" // NOT_YET_LOCALIZED
+#define LOCALIZED_ERROR_POLYEND                 "Σφάλμα PolyEnd" // 
+#define LOCALIZED_ERROR_POLYENDNOTSTARTED       "Δεν έχετε ξεκινήσει πολύγωνο" // 
+#define LOCALIZED_ERROR_POLYENDNEED3VECTORS     "Χρειάζεστε τουλάχιστον 3 διανύσματα για να ορίσετε ένα πολύγωνο" // 
 
-#define LOCALIZED_ERROR_SOUND                 "Sound Error" // NOT_YET_LOCALIZED
+#define LOCALIZED_ERROR_SOUND                 "Σφάλμα ήχου" // 
 
-#define LOCALIZED_ERROR_MIDI                  "MIDI Error" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_MIDIINVALIDDEVICE     "Invalid MIDI device" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_MIDIALREADYOPEN       "Already open" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_MIDINOTOPEN           "Not open" // NOT_YET_LOCALIZED
+#define LOCALIZED_ERROR_MIDI                  "Σφάλμα MIDI" // 
+#define LOCALIZED_ERROR_MIDIINVALIDDEVICE     "’κυρη συσκευή MIDI" // 
+#define LOCALIZED_ERROR_MIDIALREADYOPEN       "Είναι ήδη ανοιχτή" // 
+#define LOCALIZED_ERROR_MIDINOTOPEN           "Δεν είναι ανοιχτή" // 
 
-#define LOCALIZED_ERROR_CLIPBOARDISEMPTY      "No Text in Clipboard" // NOT_YET_LOCALIZED
+#define LOCALIZED_ERROR_CLIPBOARDISEMPTY      "Δεν υπάρχει κείμενο στο πρόχειρο" // 
 
-#define LOCALIZED_ERROR_MCI                   "MCI Error" // NOT_YET_LOCALIZED
+#define LOCALIZED_ERROR_MCI                   "Σφάλμα MCI" // 
 
-#define LOCALIZED_ERROR_TIMERTOOMANY          "Too Many Timers" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_TIMERBADID            "Bad Timer Id" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_TIMERNOTFOUND         "Timer not found" // NOT_YET_LOCALIZED
+#define LOCALIZED_ERROR_TIMERTOOMANY          "Υπερβολικά πολλοί χρονοδιακόπτες" // 
+#define LOCALIZED_ERROR_TIMERBADID            "Λάθος αριθμός χρονοδιακόπτη" // 
+#define LOCALIZED_ERROR_TIMERNOTFOUND         "Ο χρονοδιακόπτης δε βρέθηκε" // 
 
-#define LOCALIZED_ERROR_BITMODEBADBITMODE     "Illegal Bitmode" // NOT_YET_LOCALIZED
+#define LOCALIZED_ERROR_BITMODEBADBITMODE     "’κυρο BitMode" // 
 
-#define LOCALIZED_ERROR_HHCTRLNOTLOADED       "Online help is unavailable because hhctrl.ocx could not be loaded."  // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_HHCTRLATOMNOTFOUND    "Online help is unavailable because hhctrl.ocx does not contain ATOM_HTMLHELP_API_ANSI."  // NOT_YET_LOCALIZED
+#define LOCALIZED_ERROR_HHCTRLNOTLOADED       "Η online βοήθεια δεν είναι διαθέσιμη γιατί το hhctrl.ocx δε φορτώθηκε."  // 
+#define LOCALIZED_ERROR_HHCTRLATOMNOTFOUND    "Η online βοήθεια δεν είναι διαθέσιμη γιατί το hhctrl.ocx δεν περιέχει ATOM_HTMLHELP_API_ANSI."  // 
 
-#define LOCALIZED_ERROR_BADCOMMANDLINE        "Invalid Command Line"  // NOT_YET_LOCALIZED
+#define LOCALIZED_ERROR_BADCOMMANDLINE        "Λάθος εντολή γραμμής εντολών"  // 
 
-#define LOCALIZED_ERROR_TMPNOTDEFINED         "The environment variable TMP is not defined or invalid.\n"LOCALIZED_GENERAL_PRODUCTNAME" will attempt to use C:\\ for storing temporary files" // NOT_YET_LOCALIZED
+#define LOCALIZED_ERROR_TMPNOTDEFINED         "Η μεταβλητή περιβάλλοντος TMP δεν έχει οριστεί ή είναι άκυρη.\nΗ "LOCALIZED_GENERAL_PRODUCTNAME" θα προσπαθήσει να χρησιμοποιήσει το C:\\ για την αποθήκευση προσωρινών αρχείων" // 
 
-#define LOCALIZED_ERROR_GIFSAVEFAILED         "Problem Generating GIF, check memory and diskspace" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_GIFREADFAILED         "Problem Reading GIF, check memory and diskspace" // NOT_YET_LOCALIZED
+#define LOCALIZED_ERROR_GIFSAVEFAILED         "Αδύνατη η δημιουργία του GIF, ελέγξτε τη μνήμη και το χώρο στο δίσκο" // 
+#define LOCALIZED_ERROR_GIFREADFAILED         "Αδύνατη η ανάγνωση του GIF, ελέγξτε τη μνήμη και το χώρο στο δίσκο" // 
 
-#define LOCALIZED_ERROR_BITMAPINDEXOUTOFRANGE  "BitMap Index out of range" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_BITMAPCUTFAILED        "Cut failed, Possibly not enough Memory" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_BITMAPFITFAILED        "Fit failed, Possibly not enough Memory" // NOT_YET_LOCALIZED
+#define LOCALIZED_ERROR_BITMAPINDEXOUTOFRANGE  "Ο δείκτης BitMap είναι εκτός ορίου" // 
+#define LOCALIZED_ERROR_BITMAPCUTFAILED        "Η αποκοπή (cut) απέτυχε, ίσως δεν υπάρχει αρκετή μνήμη" // 
+#define LOCALIZED_ERROR_BITMAPFITFAILED        "Η προσαρμογή (fit) απέτυχε, ίσως δεν υπάρχει αρκετή μνήμη" // 
 
-#define LOCALIZED_ERROR_BITMAPNOTHINGTOPASTE    "Nothing to Paste"  // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_BITMAPINDEXISNOTBITMAP  "BitMap at Index must be initialized with a bitmap"  // NOT_YET_LOCALIZED
+#define LOCALIZED_ERROR_BITMAPNOTHINGTOPASTE    "Δεν υπάρχει τίποτα για επικόλληση"  // 
+#define LOCALIZED_ERROR_BITMAPINDEXISNOTBITMAP  "Το BitMap στον κατάλογο πρέπει να έχει εκκινηθεί με μια εικόνα"  // 
 
-#define LOCALIZED_ERROR_BADTURTLEID             "Bad Turtle Id" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_TURTLEHASNOPICTURE      "Turtle %d has no picture, will Halt" // NOT_YET_LOCALIZED
+#define LOCALIZED_ERROR_BADTURTLEID             "Λάθος αριθμός χελώνας" // 
+#define LOCALIZED_ERROR_TURTLEHASNOPICTURE      "Η χελώνα %d δεν έχει εικόνα, θα σταματήσει" // 
 
-#define LOCALIZED_ERROR_FONTNOTFOUND            "Sorry, no font named %s was found.  Choose one of the following:\n" // NOT_YET_LOCALIZED
+#define LOCALIZED_ERROR_FONTNOTFOUND            "Η γραμματοσειρά %s δε βρέθηκε.  Επιλέξτε μία από τις παρακάτω:\n" // 
 
-#define LOCALIZED_ERROR_PRINTERCANTSCALE        "Print driver does not support this function"  // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_CANTDRAWIMAGE           "Cannot draw image" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_CANTEXTRACTIMAGE        "Cannot extract image" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_SUBCODE                 "Sub Code" // NOT_YET_LOCALIZED
+#define LOCALIZED_ERROR_PRINTERCANTSCALE        "Ο οδηγός του εκτυπωτή δεν υποστηρίζει αυτή τη δυνατότητα."  // 
+#define LOCALIZED_ERROR_CANTDRAWIMAGE           "Η εικόνα δε μπορεί να σχεδιαστεί" // 
+#define LOCALIZED_ERROR_CANTEXTRACTIMAGE        "Η εικόνα δε μπορεί να εξαχθεί" // 
+#define LOCALIZED_ERROR_SUBCODE                 "Υποκώδικας" // 
 
 //
 // Strings in the dialog box for reading from "stdin"
 //
-#define LOCALIZED_INPUT         "Input:" // NOT_YET_LOCALIZED
-#define LOCALIZED_PROMPT_TO     "To Mode (Cancel to End)" // NOT_YET_LOCALIZED
-#define LOCALIZED_PROMPT_LIST   "List Mode (Cancel to Halt)" // NOT_YET_LOCALIZED
-#define LOCALIZED_PROMPT_PAUSE  "Pause Mode (Cancel to Continue)" // NOT_YET_LOCALIZED
-#define LOCALIZED_PROMPT_INPUT  "Input Mode (Cancel to Halt)" // NOT_YET_LOCALIZED
+#define LOCALIZED_INPUT         "Παράμετρος:" // 
+#define LOCALIZED_PROMPT_TO     "Σύστημα To (Ακύρωση για End)" // 
+#define LOCALIZED_PROMPT_LIST   "Σύστημα List (Ακύρωση για Σταμάτημα)" // 
+#define LOCALIZED_PROMPT_PAUSE  "Σύστημα Pause (Ακύρωση για Συνέχεια)" // 
+#define LOCALIZED_PROMPT_INPUT  "Σύστημα Input (Ακύρωση για Σταμάτημα)" // 
 
 //
 // Messages shown by the FILE API.
 //
-#define LOCALIZED_FILE_CHDIRSUCCEEDED      "Changed to \"%s\"" // NOT_YET_LOCALIZED
-#define LOCALIZED_FILE_CHDIRFAILED         "Could not chdir to directory \"%s\"" // NOT_YET_LOCALIZED
-#define LOCALIZED_FILE_POPPEDTO            "Popped to \"%s\"" // NOT_YET_LOCALIZED
-#define LOCALIZED_FILE_MKDIRSUCCEEDED      "Now in newly created directory \"%s\""  // NOT_YET_LOCALIZED
-#define LOCALIZED_FILE_MKDIRFAILED         "Failed to create directory \"%s\""  // NOT_YET_LOCALIZED
-#define LOCALIZED_FILE_RMDIRSUCCEEDED      "Removed directory \"%s\""  // NOT_YET_LOCALIZED
-#define LOCALIZED_FILE_RMDIRFAILED         "Failed to remove directory \"%s\""  // NOT_YET_LOCALIZED
-#define LOCALIZED_FILE_RMDIRFAILEDNOEXIST  "The directory does not exist." // NOT_YET_LOCALIZED
-#define LOCALIZED_FILE_RMDIRFAILEDNOTEMPTY "Make sure the directory is empty before trying to remove it." // NOT_YET_LOCALIZED
+#define LOCALIZED_FILE_CHDIRSUCCEEDED      "Είσοδος στον κατάλογο \"%s\"" // 
+#define LOCALIZED_FILE_CHDIRFAILED         "Αδύνατη η είσοδος τον κατάλογο \"%s\"" // 
+#define LOCALIZED_FILE_POPPEDTO            "Έξοδος στον κατάλογο \"%s\"" // 
+#define LOCALIZED_FILE_MKDIRSUCCEEDED      "Είσοδος στο νέο κατάλογο \"%s\""  // 
+#define LOCALIZED_FILE_MKDIRFAILED         "Αδυναμία δημιουργίας του καταλόγου \"%s\""  // 
+#define LOCALIZED_FILE_RMDIRSUCCEEDED      "Αφαιρέθηκε κατάλογος \"%s\""  // 
+#define LOCALIZED_FILE_RMDIRFAILED         "Αδυναμία αφαίρεσης του καταλόγου \"%s\""  // 
+#define LOCALIZED_FILE_RMDIRFAILEDNOEXIST  "Ο κατάλογος δεν υπάρχει" // 
+#define LOCALIZED_FILE_RMDIRFAILEDNOTEMPTY "Σιγουρευτείτε ότι ο κατάλογος είναι άδειος πριν προσπαθήσετε να τον αφαιρέσετε." // 
 
 
 //
 // Other strings
 //
-#define LOCALIZED_ACTIVEAREA    "Active Area" // NOT_YET_LOCALIZED
-#define LOCALIZED_INFORMATION   "Information" // NOT_YET_LOCALIZED
-#define LOCALIZED_WARNING       "Warning" // NOT_YET_LOCALIZED
-#define LOCALIZED_UNTITLED      "Untitled" // NOT_YET_LOCALIZED
-#define LOCALIZED_UNKNOWN       "Unknown" // NOT_YET_LOCALIZED
+#define LOCALIZED_ACTIVEAREA    "Ενεργή περιοχή" // 
+#define LOCALIZED_INFORMATION   "Πληροφορίες" // 
+#define LOCALIZED_WARNING       "Προσοχή" // 
+#define LOCALIZED_UNTITLED      "Χωρίς τίτλο" // 
+#define LOCALIZED_UNKNOWN       "’γνωστο" // 
 
-#define LOCALIZED_UNBOUND       "Unbound" // NOT_YET_LOCALIZED
+#define LOCALIZED_UNBOUND       "(Εκτός ορίου)" // 
 
 //
 // Localized Strings that explain each accelerator
 // I don't think that any of these strings can be seen by the user
 //
-#define LOCALIZED_STRINGTABLE_FILESAVEAS "Saves the contents of the EDALL window to a new file" // NOT_YET_LOCALIZED
-#define LOCALIZED_STRINGTABLE_FILEOPEN "Erases the current workspace and loads a Logo program as the new workspace" // NOT_YET_LOCALIZED
-#define LOCALIZED_STRINGTABLE_FILELOAD "Locates and loads a Logo program into the current workspace" // NOT_YET_LOCALIZED
-#define LOCALIZED_STRINGTABLE_FILENEW "Erases the contents of the EDALL session" // NOT_YET_LOCALIZED
-#define LOCALIZED_STRINGTABLE_FILESAVE "Saves the contents of the EDALL window" // NOT_YET_LOCALIZED
-#define LOCALIZED_STRINGTABLE_FILEEDIT "Selects a procedure to edit" // NOT_YET_LOCALIZED
-#define LOCALIZED_STRINGTABLE_FILEERASE "Selects a procedure to erase" // NOT_YET_LOCALIZED
-#define LOCALIZED_STRINGTABLE_EXIT "Exits Logo" // NOT_YET_LOCALIZED
-#define LOCALIZED_STRINGTABLE_BITMAPNEW "Clears the screen" // NOT_YET_LOCALIZED
-#define LOCALIZED_STRINGTABLE_BITMAPOPEN "Loads a new screen from a Windows bitmap file" // NOT_YET_LOCALIZED
-#define LOCALIZED_STRINGTABLE_BITMAPSAVE "Saves the contents of the screen to a bitmap" // NOT_YET_LOCALIZED
-#define LOCALIZED_STRINGTABLE_BITMAPSAVEAS "Saves the contents of the screen to a different file" // NOT_YET_LOCALIZED
-#define LOCALIZED_STRINGTABLE_BITMAPPRINT "Prints the contents of the screen" // NOT_YET_LOCALIZED
-#define LOCALIZED_STRINGTABLE_BITMAPPRINTERSETUP "Configures your printer" // NOT_YET_LOCALIZED
-#define LOCALIZED_STRINGTABLE_BITMAPPRINTERAREA "Sets the area of the screen that will be printed or saved to a bitmap" // NOT_YET_LOCALIZED
-#define LOCALIZED_STRINGTABLE_SETPENSIZE "Sets the thickness of the turtle's pen" // NOT_YET_LOCALIZED
-#define LOCALIZED_STRINGTABLE_SETFONT "Sets the font that is used by the LABEL command" // NOT_YET_LOCALIZED
-#define LOCALIZED_STRINGTABLE_SETCOMMANDERFONT "Sets the font used in the commander window" // NOT_YET_LOCALIZED
-#define LOCALIZED_STRINGTABLE_SETPENCOLOR "Sets the color of the turtle's pen" // NOT_YET_LOCALIZED
-#define LOCALIZED_STRINGTABLE_SETFLOODCOLOR "Sets the color used by the FILL command" // NOT_YET_LOCALIZED
-#define LOCALIZED_STRINGTABLE_SETSCREENCOLOR "Clears the screen and sets it to a new color" // NOT_YET_LOCALIZED
-#define LOCALIZED_STRINGTABLE_ZOOMIN "Zooms in on the screen" // NOT_YET_LOCALIZED
-#define LOCALIZED_STRINGTABLE_ZOOMOUT "Zooms out on the screen" // NOT_YET_LOCALIZED
-#define LOCALIZED_STRINGTABLE_ZOOMNORMAL "Restores the screen to its original size" // NOT_YET_LOCALIZED
-#define LOCALIZED_STRINGTABLE_HELP "Opens an index of help topics" // NOT_YET_LOCALIZED
-#define LOCALIZED_STRINGTABLE_HELPMCI "Opens an index of help topics for the Media Control Interface" // NOT_YET_LOCALIZED
-#define LOCALIZED_STRINGTABLE_HELPHELP "Opens help on using help" // NOT_YET_LOCALIZED
-#define LOCALIZED_STRINGTABLE_HELPTUTORIAL "Opens a short tutorial on using "LOCALIZED_GENERAL_PRODUCTNAME // NOT_YET_LOCALIZED
-#define LOCALIZED_STRINGTABLE_HELPDEMO "Shows a demonstration of some things you can do in "LOCALIZED_GENERAL_PRODUCTNAME // NOT_YET_LOCALIZED
-#define LOCALIZED_STRINGTABLE_HELPEXAMPLES "Displays an index of the sample programs" // NOT_YET_LOCALIZED
-#define LOCALIZED_STRINGTABLE_HELPRELEASENOTES "Displays the release notes for this version of "LOCALIZED_GENERAL_PRODUCTNAME // NOT_YET_LOCALIZED
-#define LOCALIZED_STRINGTABLE_HELPABOUT "Displays version and copyright information" // NOT_YET_LOCALIZED
-#define LOCALIZED_STRINGTABLE_HELPABOUTMS "Displays a message about Multiple Sclerosis" // NOT_YET_LOCALIZED
-#define LOCALIZED_STRINGTABLE_EDITDELETE "Deletes the current selection (and does not copy to the clipboard)" // NOT_YET_LOCALIZED
-#define LOCALIZED_STRINGTABLE_EDITCLEAR "Deletes all text" // NOT_YET_LOCALIZED
-#define LOCALIZED_STRINGTABLE_EDITUNDO "Undoes the previous action" // NOT_YET_LOCALIZED
-#define LOCALIZED_STRINGTABLE_EDITCUT "Removes the selected text and puts it on the clipboard" // NOT_YET_LOCALIZED
-#define LOCALIZED_STRINGTABLE_EDITCOPY "Copies the selected text to the clipboard" // NOT_YET_LOCALIZED
-#define LOCALIZED_STRINGTABLE_EDITPASTE "Inserts the text from the clipboard at the current position" // NOT_YET_LOCALIZED
-#define LOCALIZED_STRINGTABLE_EDITSELECTALL "Selects all text" // NOT_YET_LOCALIZED
-#define LOCALIZED_STRINGTABLE_EDITFIND "Searches for text" // NOT_YET_LOCALIZED
-#define LOCALIZED_STRINGTABLE_EDITREPLACE "Searches for text and replaces it with other text" // NOT_YET_LOCALIZED
-#define LOCALIZED_STRINGTABLE_EDITFINDNEXT "Repeats the previous Find or Replace command" // NOT_YET_LOCALIZED
-#define LOCALIZED_STRINGTABLE_EDITSETFONT "Sets the font for the EDALL window" // NOT_YET_LOCALIZED
-#define LOCALIZED_STRINGTABLE_TEST "Runs the selected Logo instructions" // NOT_YET_LOCALIZED
-#define LOCALIZED_STRINGTABLE_HELPEDIT "Displays help on using the editor" // NOT_YET_LOCALIZED
-#define LOCALIZED_STRINGTABLE_HELPEDIT_TOPIC "Displays help for Logo" // NOT_YET_LOCALIZED
-#define LOCALIZED_STRINGTABLE_FILESAVEANDEXIT "Saves and exits the current EDALL session" // NOT_YET_LOCALIZED
-#define LOCALIZED_STRINGTABLE_FILESAVETOWORKSPACE "Saves the current EDALL session" // NOT_YET_LOCALIZED
-#define LOCALIZED_STRINGTABLE_FILEPRINT "Prints the current EDALL session" // NOT_YET_LOCALIZED
-#define LOCALIZED_STRINGTABLE_EDALLEXIT "Closes the EDALL session" // NOT_YET_LOCALIZED
+#define LOCALIZED_STRINGTABLE_FILESAVEAS               "Αποθηκεύει τον κώδικα και τις μεταβλητές σε ένα αρχείο" // 
+#define LOCALIZED_STRINGTABLE_FILEOPEN                 "Σβήνει τον τρέχοντα κώδικα και φορτώνει ένα νέο αρχείο" // 
+#define LOCALIZED_STRINGTABLE_FILELOAD                 "Εντοπίζει και φορτώνει ένα πρόγραμμα Logo, προσθέτοντάς το στον υπάρχοντα κώδικα" // 
+#define LOCALIZED_STRINGTABLE_FILENEW                  "Σβήνει όλο τον κώδικα" // 
+#define LOCALIZED_STRINGTABLE_FILESAVE                 "Αποθηκεύει όλο τον κώδικα" // 
+#define LOCALIZED_STRINGTABLE_FILEEDIT                 "Επιλογή μιας εντολής προς επεξεργασία" // 
+#define LOCALIZED_STRINGTABLE_FILEERASE                "Επιλογή μιας εντολής προς διαγραφή" // 
+#define LOCALIZED_STRINGTABLE_EXIT                     "Κλείνει τη Logo" // 
+#define LOCALIZED_STRINGTABLE_BITMAPNEW                "Καθαρίζει τη οθόνη" // 
+#define LOCALIZED_STRINGTABLE_BITMAPOPEN               "Φορτώνει μια εικόνα Windows bitmap" // 
+#define LOCALIZED_STRINGTABLE_BITMAPSAVE               "Αποθηκεύει τα περιεχόμενα της οθόνης σε μια εικόνα bitmap" // 
+#define LOCALIZED_STRINGTABLE_BITMAPSAVEAS             "Αποθηκεύει τα περιεχόμενα της οθόνης σε άλλο αρχείο" // 
+#define LOCALIZED_STRINGTABLE_BITMAPPRINT              "Εκτυπώνει τα περιεχόμενα της οθόνης" // 
+#define LOCALIZED_STRINGTABLE_BITMAPPRINTERSETUP       "Ρυθμίζει τον εκτυπωτή σας" // 
+#define LOCALIZED_STRINGTABLE_BITMAPPRINTERAREA        "Ρυθμίζει την περιοχή της οθόνης που θα εκτυπωθεί ή θα αποθηκευθεί" // 
+#define LOCALIZED_STRINGTABLE_SETPENSIZE               "Ρυθμίζει το πάχος της πένας της χελώνας" // 
+#define LOCALIZED_STRINGTABLE_SETFONT                  "Ρυθμίζει τη γραμματοσειρά που χρησιμοποιείται από την εντολή LABEL" // 
+#define LOCALIZED_STRINGTABLE_SETCOMMANDERFONT         "Ρυθμίζει τη γραμματοσειρά που χρησιμοποιείται στο παράθυρο ελέγχου" // 
+#define LOCALIZED_STRINGTABLE_SETPENCOLOR              "Ρυθμίζει το χρώμα της πένας της χελώνας" // 
+#define LOCALIZED_STRINGTABLE_SETFLOODCOLOR            "Ρυθμίζει το χρώμα που χρησιμοποιείται από την εντολή FILL" // 
+#define LOCALIZED_STRINGTABLE_SETSCREENCOLOR           "Καθαρίζει την οθόνη και τις δίνει ένα διαφορετικό χρώμα" // 
+#define LOCALIZED_STRINGTABLE_ZOOMIN                   "Μεγεθύνει την οθόνη" // 
+#define LOCALIZED_STRINGTABLE_ZOOMOUT                  "Σμικρύνει την οθόνη" // 
+#define LOCALIZED_STRINGTABLE_ZOOMNORMAL               "Επαναφέρει την οθόνη στο κανονικό της μέγεθος" // 
+#define LOCALIZED_STRINGTABLE_HELP                     "Ανοίγει έναν κατάλογο με θέματα στη βοήθεια" // 
+#define LOCALIZED_STRINGTABLE_HELPMCI                  "Ανοίγει έναν κατάλογο με θέματα στη βοήθεια για το Media Control Interface" // 
+#define LOCALIZED_STRINGTABLE_HELPHELP                 "Ανοίγει βοήθεια σχετική με τη χρήση της βοήθειας" // 
+#define LOCALIZED_STRINGTABLE_HELPTUTORIAL             "Ανοίγει ένα μικρό μάθημα σχετικό με τη χρήση της "LOCALIZED_GENERAL_PRODUCTNAME // 
+#define LOCALIZED_STRINGTABLE_HELPDEMO                 "Κάνει μια επίδειξη του τί μπορείτε να κάνετε στην "LOCALIZED_GENERAL_PRODUCTNAME // 
+#define LOCALIZED_STRINGTABLE_HELPEXAMPLES             "Εμφανίζει έναν κατάλογο με προγράμματα-δείγματα" // 
+#define LOCALIZED_STRINGTABLE_HELPRELEASENOTES         "Εμφανίζει τις σημειώσεις αυτής της έκδοσης της "LOCALIZED_GENERAL_PRODUCTNAME // 
+#define LOCALIZED_STRINGTABLE_HELPABOUT                "Εμφανίζει την έκδοση και πληροφορίες copyright" // 
+#define LOCALIZED_STRINGTABLE_HELPABOUTMS              "Εμφανίζει ένα μήνυμα σχετικά με τη Multiple Sclerosis" // 
+#define LOCALIZED_STRINGTABLE_EDITDELETE               "Διαγράφει την τρέχουσα επιλογή (και δεν αντιγράφει στο πρόχειρο)" // 
+#define LOCALIZED_STRINGTABLE_EDITCLEAR                "Διαγράφει όλο το κείμενο" // 
+#define LOCALIZED_STRINGTABLE_EDITUNDO                 "Αναιρεί την προηγούμενη ενέργεια" // 
+#define LOCALIZED_STRINGTABLE_EDITCUT                  "Αφαιρεί το επιλεγμένο κείμενο και το μεταφέρει στο πρόχειρο" // 
+#define LOCALIZED_STRINGTABLE_EDITCOPY                 "Αντιγράφει το επιλεγμένο κείμενο στο πρόχειρο" // 
+#define LOCALIZED_STRINGTABLE_EDITPASTE                "Εισάγει το κείμενο από το πρόχειρο στην τρέχουσα θέση" // 
+#define LOCALIZED_STRINGTABLE_EDITSELECTALL            "Επιλέγει όλο το κείμενο" // 
+#define LOCALIZED_STRINGTABLE_EDITFIND                 "Ψάχνει για κείμενο" // 
+#define LOCALIZED_STRINGTABLE_EDITREPLACE              "Ψάχνει για κείμενο και το αντικαθιστά με άλλο κείμενο" // 
+#define LOCALIZED_STRINGTABLE_EDITFINDNEXT             "Επαναλαμβάνει την τελευταία εντολή Εύρεσης ή Αντικατάστασης" // 
+#define LOCALIZED_STRINGTABLE_EDITSETFONT              "Ρυθμίζει τη γραμματοσειρά για τον επεξεργαστή κώδικα" // 
+#define LOCALIZED_STRINGTABLE_TEST                     "Εκτελεί τις επιλεγμένες εντολές Logo " // 
+#define LOCALIZED_STRINGTABLE_HELPEDIT                 "Εμφανίζει βοήθεια για τη χρήση του επεξεργαστή κώδικα" // 
+#define LOCALIZED_STRINGTABLE_HELPEDIT_TOPIC           "Εμφανίζει βοήθεια για τη Logo" // 
+#define LOCALIZED_STRINGTABLE_FILESAVEANDEXIT          "Αποθηκεύει τον κώδικα και κλείνει τον επεξεργαστή κώδικα" // 
+#define LOCALIZED_STRINGTABLE_FILESAVETOWORKSPACE      "Αποθηκεύει τον κώδικα" // 
+#define LOCALIZED_STRINGTABLE_FILEPRINT                "Εκτυπώνει τον κώδικα" // 
+#define LOCALIZED_STRINGTABLE_EDALLEXIT                "Κλείνει τον επεξεργαστή κώδικα" // 
 
-#define LOCALIZED_STRINGTABLE_CANNOTFINDSTRING "Cannot find %s" // NOT_YET_LOCALIZED
+#define LOCALIZED_STRINGTABLE_CANNOTFINDSTRING         "{ Δε βρέθηκε το %s }" // 
