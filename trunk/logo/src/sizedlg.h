@@ -8,7 +8,7 @@ class TSizeControl : public TControl
    {
    public:
    TSizeControl(TWindow* parent, int resId, TColor size);
-   virtual void SetSize(TColor size);
+   void SetSize(TColor size);
    TColor GetSize() const
       {
       return Size;
