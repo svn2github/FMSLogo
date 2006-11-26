@@ -100,10 +100,10 @@ void TMyCommandWindow::RecalculateLayout()
    TRect commanderRect;
    GetClientRect(commanderRect);
 
-   int total_width   = commanderRect.Width();
-   int total_height  = commanderRect.Height();
-   int button_height = buttonRect.Height();
-   int button_width  = buttonRect.Width();
+   const int total_width   = commanderRect.Width();
+   const int total_height  = commanderRect.Height();
+   const int button_height = buttonRect.Height();
+   const int button_width  = buttonRect.Width();
 
    const int x_border = 4;
    const int y_border = 4;
