@@ -147,12 +147,14 @@ SetupUser.Done:
 
   ; Notify the user that the install cannot continue.
   ; We can't use a LangString because those aren't available in .onInit
-  StrCmp $LANGUAGE ${LANG_ENGLISH} 0 +2
-     MessageBox MB_OK|MB_ICONEXCLAMATION "Either the installer or FMSLogo is currently running.$\nThis installation cannot continue."
-  StrCmp $LANGUAGE ${LANG_FRENCH} 0 +2
+  StrCmp $LANGUAGE ${LANG_FRENCH} 0 +3
      MessageBox MB_OK|MB_ICONEXCLAMATION "Either the installer or FMSLogo is currently running.$\nThis installation cannot continue." ; NOT_YET_TRANSLATED
-  StrCmp $LANGUAGE ${LANG_GREEK} 0 +2
+     Abort
+  StrCmp $LANGUAGE ${LANG_GREEK} 0 +3
      MessageBox MB_OK|MB_ICONEXCLAMATION "Either the installer or FMSLogo is currently running.$\nThis installation cannot continue." ; NOT_YET_TRANSLATED
+     Abort
+  ; default to English
+  MessageBox MB_OK|MB_ICONEXCLAMATION "Either the installer or FMSLogo is currently running.$\nThis installation cannot continue."
   Abort
 
 checkifinstalled:
@@ -178,14 +180,15 @@ GetPreviousInstall.Done:
   StrCpy $uninstallExe $0 $1 1 
 
   IfFileExists $uninstallExe 0 end
-  ; Notify the user that the install cannot continue.
+
+  ; Notify the user that the install cannot continue until the existing FMSLogo is uninstalled
   ; We can't use a LangString because those aren't available in .onInit
-  StrCmp $LANGUAGE ${LANG_ENGLISH} 0 +2
-    MessageBox MB_YESNO "The existing copy of FMSLogo must be uninstalled to continue.$\nDo you want to uninstall it?$\n$\n(Selecting No will abort the installation)" IDYES uninstall IDNO abort
   StrCmp $LANGUAGE ${LANG_FRENCH} 0 +2
     MessageBox MB_YESNO "The existing copy of FMSLogo must be uninstalled to continue.$\nDo you want to uninstall it?$\n$\n(Selecting No will abort the installation)" IDYES uninstall IDNO abort ; NOT_YET_TRANSLATED
   StrCmp $LANGUAGE ${LANG_GREEK} 0 +2
     MessageBox MB_YESNO "The existing copy of FMSLogo must be uninstalled to continue.$\nDo you want to uninstall it?$\n$\n(Selecting No will abort the installation)" IDYES uninstall IDNO abort ; NOT_YET_TRANSLATED
+ ; default to English
+ MessageBox MB_YESNO "The existing copy of FMSLogo must be uninstalled to continue.$\nDo you want to uninstall it?$\n$\n(Selecting No will abort the installation)" IDYES uninstall IDNO abort
 
 abort:
     Abort
@@ -302,17 +305,19 @@ SectionEnd
 Function un.onInit
 
   System::Call 'kernel32::CreateMutexA(i 0, i 0, t "LogoForWindowsMutex") i .r1 ?e'
-  Pop $R0 
+  Pop $R0
   StrCmp $R0 0 SetupUser
 
   ; Notify the user that the uninstall cannot continue.
   ; We can't use a LangString because those aren't available in .onInit
-  StrCmp $LANGUAGE ${LANG_ENGLISH} 0 +2
-     MessageBox MB_OK|MB_ICONEXCLAMATION "Either the installer or FMSLogo is currently running.$\nThis uninstallation cannot continue."
-  StrCmp $LANGUAGE ${LANG_FRENCH} 0 +2
+  StrCmp $LANGUAGE ${LANG_FRENCH} 0 +3
      MessageBox MB_OK|MB_ICONEXCLAMATION "Either the installer or FMSLogo is currently running.$\nThis uninstallation cannot continue." ; NOT_YET_TRANSLATED
-  StrCmp $LANGUAGE ${LANG_GREEK} 0 +2
+     Abort
+  StrCmp $LANGUAGE ${LANG_GREEK} 0 +3
      MessageBox MB_OK|MB_ICONEXCLAMATION "Either the installer or FMSLogo is currently running.$\nThis uninstallation cannot continue." ; NOT_YET_TRANSLATED
+     Abort
+  ; default to English
+  MessageBox MB_OK|MB_ICONEXCLAMATION "Either the installer or FMSLogo is currently running.$\nThis uninstallation cannot continue."
   Abort
 
 SetupUser:
