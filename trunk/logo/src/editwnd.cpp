@@ -30,7 +30,7 @@ TRichEditWithPopup::TRichEditWithPopup(
    int w,
    int h,
    const char * fileName
-) : TRichEdit(parent, id, text, x, y, w, h, fileName)
+   ) : TRichEdit(parent, id, text, x, y, w, h, fileName)
    {
    PopupMenu.AppendMenu(MF_STRING, CM_EDITUNDO,       LOCALIZED_POPUP_UNDO);
    PopupMenu.AppendMenu(MF_SEPARATOR, 0, NULL);
