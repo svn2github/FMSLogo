@@ -286,6 +286,11 @@ $(IntermediateDirectory)\gbm.obj :  gbm.cpp
  $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ gbm.cpp
 |
 
+$(IntermediateDirectory)\gbmbmp.obj :  gbmbmp.cpp
+  $(BCC32) -c @&&|
+ $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ gbmbmp.cpp
+|
+
 $(IntermediateDirectory)\gbmhelp.obj :  gbmhelp.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ gbmhelp.cpp
@@ -295,12 +300,7 @@ $(IntermediateDirectory)\gbmgif.obj :  gbmgif.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ gbmgif.cpp
 |
-
-$(IntermediateDirectory)\gbmbmp.obj :  gbmbmp.cpp
-  $(BCC32) -c @&&|
- $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ gbmbmp.cpp
-|
-
+ 
 $(IntermediateDirectory)\gbmsize.obj :  gbmsize.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ gbmsize.cpp

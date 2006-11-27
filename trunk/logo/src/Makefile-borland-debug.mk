@@ -36,11 +36,13 @@ LinkerOptsAt_fmslogoddexe = $(LinkerLocalOptsAtW32_fmslogoddexe)
 ResOptsAt_fmslogoddexe = $(ResLocalOptsAtW32_fmslogoddexe)
 BOptsAt_fmslogoddexe = $(BLocalOptsAtW32_fmslogoddexe)
 
+ExecutableName=fmslogod.exe
+IntermediateDirectory=DEBUG
+
 #
 # Dependency List
 #
-Dep_logo32d = \
-   fmslogod.exe
+Dep_logo32d = $(ExecutableName)
 
 logo32d : BccW32.cfg $(Dep_logo32d)
   echo MakeNode
@@ -49,432 +51,434 @@ version.h : ..\version.mk
   generate-version.bat $(FMSLOGO_VERSION)
 
 Dep_fmslogoddexe = \
-   DEBUG\3dsolid.obj\
-   DEBUG\areawind.obj\
-   DEBUG\appendablelist.obj\
-   DEBUG\assembly.obj\
-   DEBUG\colordlg.obj\
-   DEBUG\commanderbutton.obj\
-   DEBUG\commandercheckbox.obj\
-   DEBUG\coms.obj\
-   DEBUG\cmdwind.obj\
-   DEBUG\debugheap.obj\
-   DEBUG\devwind.obj\
-   DEBUG\dib.obj\
-   DEBUG\dlgwind.obj\
-   DEBUG\dllwind.obj\
-   DEBUG\dllstack.obj\
-   DEBUG\dynamicbuffer.obj\
-   DEBUG\editwnd.obj\
-   DEBUG\error.obj\
-   DEBUG\eval.obj\
-   DEBUG\files.obj\
-   DEBUG\fileswnd.obj\
-   DEBUG\gbm.obj\
-   DEBUG\gbmbmp.obj\
-   DEBUG\gbmhelp.obj\
-   DEBUG\gbmgif.obj\
-   DEBUG\gbmsize.obj\
-   DEBUG\graphics.obj\
-   DEBUG\graphwin.obj\
-   DEBUG\ibmterm.obj\
-   DEBUG\init.obj\
-   DEBUG\intern.obj\
-   DEBUG\lists.obj\
+   $(IntermediateDirectory)\3dsolid.obj\
+   $(IntermediateDirectory)\appendablelist.obj\
+   $(IntermediateDirectory)\areawind.obj\
+   $(IntermediateDirectory)\assembly.obj\
+   $(IntermediateDirectory)\cmdwind.obj\
+   $(IntermediateDirectory)\colordlg.obj\
+   $(IntermediateDirectory)\commanderbutton.obj\
+   $(IntermediateDirectory)\commandercheckbox.obj\
+   $(IntermediateDirectory)\coms.obj\
+   $(IntermediateDirectory)\debugheap.obj\
+   $(IntermediateDirectory)\devwind.obj\
+   $(IntermediateDirectory)\dib.obj\
+   $(IntermediateDirectory)\dlgwind.obj\
+   $(IntermediateDirectory)\dllstack.obj\
+   $(IntermediateDirectory)\dllwind.obj\
+   $(IntermediateDirectory)\dynamicbuffer.obj\
+   $(IntermediateDirectory)\editwnd.obj\
+   $(IntermediateDirectory)\error.obj\
+   $(IntermediateDirectory)\eval.obj\
+   $(IntermediateDirectory)\files.obj\
+   $(IntermediateDirectory)\fileswnd.obj\
+   $(IntermediateDirectory)\gbm.obj\
+   $(IntermediateDirectory)\gbmhelp.obj\
+   $(IntermediateDirectory)\gbmgif.obj\
+   $(IntermediateDirectory)\gbmbmp.obj\
+   $(IntermediateDirectory)\gbmsize.obj\
+   $(IntermediateDirectory)\graphics.obj\
+   $(IntermediateDirectory)\graphwin.obj\
+   $(IntermediateDirectory)\ibmterm.obj\
+   $(IntermediateDirectory)\init.obj\
+   $(IntermediateDirectory)\intern.obj\
+   $(IntermediateDirectory)\lists.obj\
    logo32.def\
-   DEBUG\logodata.obj\
-   DEBUG\logorc.res\
-   DEBUG\main.obj\
-   DEBUG\mainwind.obj\
-   DEBUG\math.obj\
-   DEBUG\mem.obj\
-   DEBUG\minieditor.obj\
-   DEBUG\mmwind.obj\
-   DEBUG\myfileed.obj\
-   DEBUG\myfilewn.obj\
-   DEBUG\netwind.obj\
-   DEBUG\paren.obj\
-   DEBUG\parse.obj\
-   DEBUG\print.obj\
-   DEBUG\richedpr.obj\
-   DEBUG\savebeforeexitdialog.obj\
-   DEBUG\sizedlg.obj\
-   DEBUG\statwind.obj\
-   DEBUG\term.obj\
-   DEBUG\threed.obj\
-   DEBUG\unix.obj\
-   DEBUG\utils.obj\
-   DEBUG\vector.obj\
-   DEBUG\wrksp.obj
+   $(IntermediateDirectory)\logodata.obj\
+   $(IntermediateDirectory)\logorc.res\
+   $(IntermediateDirectory)\main.obj\
+   $(IntermediateDirectory)\mainwind.obj\
+   $(IntermediateDirectory)\math.obj\
+   $(IntermediateDirectory)\mem.obj\
+   $(IntermediateDirectory)\minieditor.obj\
+   $(IntermediateDirectory)\mmwind.obj\
+   $(IntermediateDirectory)\myfileed.obj\
+   $(IntermediateDirectory)\myfilewn.obj\
+   $(IntermediateDirectory)\netwind.obj\
+   $(IntermediateDirectory)\paren.obj\
+   $(IntermediateDirectory)\parse.obj\
+   $(IntermediateDirectory)\print.obj\
+   $(IntermediateDirectory)\richedpr.obj\
+   $(IntermediateDirectory)\savebeforeexitdialog.obj\
+   $(IntermediateDirectory)\sizedlg.obj\
+   $(IntermediateDirectory)\statwind.obj\
+   $(IntermediateDirectory)\term.obj\
+   $(IntermediateDirectory)\threed.obj\
+   $(IntermediateDirectory)\utils.obj\
+   $(IntermediateDirectory)\unix.obj\
+   $(IntermediateDirectory)\vector.obj\
+   $(IntermediateDirectory)\wrksp.obj
 
-fmslogod.exe : $(Dep_fmslogoddexe)
+$(ExecutableName) : $(Dep_fmslogoddexe)
   $(ILINK32) @&&|
  /v $(IDE_LinkFLAGS32) $(LinkerOptsAt_fmslogoddexe) $(LinkerInheritOptsAt_fmslogoddexe) +
 \BC5\LIB\c0w32.obj+
-DEBUG\3dsolid.obj+
-DEBUG\appendablelist.obj+
-DEBUG\areawind.obj+
-DEBUG\assembly.obj+
-DEBUG\colordlg.obj+
-DEBUG\commanderbutton.obj+
-DEBUG\commandercheckbox.obj+
-DEBUG\coms.obj+
-DEBUG\cmdwind.obj+
-DEBUG\debugheap.obj+
-DEBUG\devwind.obj+
-DEBUG\dib.obj+
-DEBUG\dlgwind.obj+
-DEBUG\dllwind.obj+
-DEBUG\dllstack.obj+
-DEBUG\dynamicbuffer.obj+
-DEBUG\editwnd.obj+
-DEBUG\error.obj+
-DEBUG\eval.obj+
-DEBUG\files.obj+
-DEBUG\fileswnd.obj+
-DEBUG\gbm.obj+
-DEBUG\gbmbmp.obj+
-DEBUG\gbmhelp.obj+
-DEBUG\gbmgif.obj+
-DEBUG\gbmsize.obj+
-DEBUG\graphics.obj+
-DEBUG\graphwin.obj+
-DEBUG\ibmterm.obj+
-DEBUG\init.obj+
-DEBUG\intern.obj+
-DEBUG\lists.obj+
-DEBUG\logodata.obj+
-DEBUG\main.obj+
-DEBUG\mainwind.obj+
-DEBUG\math.obj+
-DEBUG\mem.obj+
-DEBUG\minieditor.obj+
-DEBUG\mmwind.obj+
-DEBUG\myfileed.obj+
-DEBUG\myfilewn.obj+
-DEBUG\netwind.obj+
-DEBUG\paren.obj+
-DEBUG\parse.obj+
-DEBUG\print.obj+
-DEBUG\richedpr.obj+
-DEBUG\savebeforeexitdialog.obj+
-DEBUG\sizedlg.obj+
-DEBUG\statwind.obj+
-DEBUG\term.obj+
-DEBUG\threed.obj+
-DEBUG\unix.obj+
-DEBUG\utils.obj+
-DEBUG\vector.obj+
-DEBUG\wrksp.obj
+$(IntermediateDirectory)\3dsolid.obj+
+$(IntermediateDirectory)\appendablelist.obj+
+$(IntermediateDirectory)\areawind.obj+
+$(IntermediateDirectory)\assembly.obj+
+$(IntermediateDirectory)\cmdwind.obj+
+$(IntermediateDirectory)\colordlg.obj+
+$(IntermediateDirectory)\commanderbutton.obj+
+$(IntermediateDirectory)\commandercheckbox.obj+
+$(IntermediateDirectory)\coms.obj+
+$(IntermediateDirectory)\debugheap.obj+
+$(IntermediateDirectory)\devwind.obj+
+$(IntermediateDirectory)\dib.obj+
+$(IntermediateDirectory)\dlgwind.obj+
+$(IntermediateDirectory)\dllstack.obj+
+$(IntermediateDirectory)\dllwind.obj+
+$(IntermediateDirectory)\dynamicbuffer.obj+
+$(IntermediateDirectory)\editwnd.obj+
+$(IntermediateDirectory)\error.obj+
+$(IntermediateDirectory)\eval.obj+
+$(IntermediateDirectory)\files.obj+
+$(IntermediateDirectory)\fileswnd.obj+
+$(IntermediateDirectory)\gbm.obj+
+$(IntermediateDirectory)\gbmhelp.obj+
+$(IntermediateDirectory)\gbmgif.obj+
+$(IntermediateDirectory)\gbmbmp.obj+
+$(IntermediateDirectory)\gbmsize.obj+
+$(IntermediateDirectory)\graphics.obj+
+$(IntermediateDirectory)\graphwin.obj+
+$(IntermediateDirectory)\ibmterm.obj+
+$(IntermediateDirectory)\init.obj+
+$(IntermediateDirectory)\intern.obj+
+$(IntermediateDirectory)\lists.obj+
+$(IntermediateDirectory)\logodata.obj+
+$(IntermediateDirectory)\main.obj+
+$(IntermediateDirectory)\mainwind.obj+
+$(IntermediateDirectory)\math.obj+
+$(IntermediateDirectory)\mem.obj+
+$(IntermediateDirectory)\minieditor.obj+
+$(IntermediateDirectory)\mmwind.obj+
+$(IntermediateDirectory)\myfileed.obj+
+$(IntermediateDirectory)\myfilewn.obj+
+$(IntermediateDirectory)\netwind.obj+
+$(IntermediateDirectory)\paren.obj+
+$(IntermediateDirectory)\parse.obj+
+$(IntermediateDirectory)\print.obj+
+$(IntermediateDirectory)\richedpr.obj+
+$(IntermediateDirectory)\savebeforeexitdialog.obj+
+$(IntermediateDirectory)\sizedlg.obj+
+$(IntermediateDirectory)\statwind.obj+
+$(IntermediateDirectory)\term.obj+
+$(IntermediateDirectory)\threed.obj+
+$(IntermediateDirectory)\utils.obj+
+$(IntermediateDirectory)\unix.obj+
+$(IntermediateDirectory)\vector.obj+
+$(IntermediateDirectory)\wrksp.obj
 $<,$*
-\BC5\LIB\owlwf.lib+
-\BC5\LIB\bidsf.lib+
-\BC5\LIB\ctl3d32.lib+
-\BC5\LIB\import32.lib+
-\BC5\LIB\cw32.lib
+C:\BC5\LIB\owlwf.lib+
+C:\BC5\LIB\bidsf.lib+
+C:\BC5\LIB\ctl3d32.lib+
+C:\BC5\LIB\import32.lib+
+C:\BC5\LIB\cw32.lib
 logo32.def
-DEBUG\logorc.res
+$(IntermediateDirectory)\logorc.res
 
 |
-DEBUG\3dsolid.obj :  3dsolid.cpp
+
+$(IntermediateDirectory)\3dsolid.obj :  3dsolid.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ 3dsolid.cpp
 |
 
-DEBUG\appendablelist.obj :  appendablelist.cpp
+$(IntermediateDirectory)\appendablelist.obj :  appendablelist.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ appendablelist.cpp
 |
 
-DEBUG\areawind.obj :  areawind.cpp
-  $(BCC32) -c @&&|
- $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ areawind.cpp
-|
-
-DEBUG\assembly.obj :  assembly.cpp
+$(IntermediateDirectory)\assembly.obj :  assembly.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ assembly.cpp
 |
 
-DEBUG\colordlg.obj :  colordlg.cpp
+$(IntermediateDirectory)\areawind.obj :  areawind.cpp
   $(BCC32) -c @&&|
- $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ colordlg.cpp
+ $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ areawind.cpp
 |
 
-DEBUG\commanderbutton.obj :  commanderbutton.cpp
-  $(BCC32) -c @&&|
- $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ commanderbutton.cpp
-|
-
-DEBUG\commandercheckbox.obj :  commandercheckbox.cpp
-  $(BCC32) -c @&&|
- $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ commandercheckbox.cpp
-|
-
-DEBUG\coms.obj :  coms.cpp
-  $(BCC32) -c @&&|
- $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ coms.cpp
-|
-
-DEBUG\cmdwind.obj :  cmdwind.cpp
+$(IntermediateDirectory)\cmdwind.obj :  cmdwind.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ cmdwind.cpp
 |
 
-DEBUG\debugheap.obj :  debugheap.cpp
+$(IntermediateDirectory)\colordlg.obj :  colordlg.cpp
+  $(BCC32) -c @&&|
+ $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ colordlg.cpp
+|
+
+$(IntermediateDirectory)\commanderbutton.obj :  commanderbutton.cpp
+  $(BCC32) -c @&&|
+ $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ commanderbutton.cpp
+|
+
+$(IntermediateDirectory)\commandercheckbox.obj :  commandercheckbox.cpp
+  $(BCC32) -c @&&|
+ $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ commandercheckbox.cpp
+|
+
+$(IntermediateDirectory)\coms.obj :  coms.cpp
+  $(BCC32) -c @&&|
+ $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ coms.cpp
+|
+
+
+$(IntermediateDirectory)\debugheap.obj :  debugheap.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ debugheap.cpp
 |
 
-DEBUG\devwind.obj :  devwind.cpp
+$(IntermediateDirectory)\devwind.obj :  devwind.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ devwind.cpp
 |
 
-DEBUG\dib.obj :  dib.cpp
+$(IntermediateDirectory)\dib.obj :  dib.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ dib.cpp
 |
 
-DEBUG\dlgwind.obj :  dlgwind.cpp
+$(IntermediateDirectory)\dlgwind.obj :  dlgwind.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ dlgwind.cpp
 |
 
-DEBUG\dllwind.obj :  dllwind.cpp
-  $(BCC32) -c @&&|
- $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ dllwind.cpp
-|
-
-DEBUG\dllstack.obj :  dllstack.c
+$(IntermediateDirectory)\dllstack.obj :  dllstack.c
   $(BCC32) -P- -c @&&|
  $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ dllstack.c
 |
 
-DEBUG\dynamicbuffer.obj :  dynamicbuffer.cpp
+$(IntermediateDirectory)\dllwind.obj :  dllwind.cpp
+  $(BCC32) -c @&&|
+ $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ dllwind.cpp
+|
+
+$(IntermediateDirectory)\dynamicbuffer.obj :  dynamicbuffer.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ dynamicbuffer.cpp
 |
 
-DEBUG\editwnd.obj :  editwnd.cpp
+$(IntermediateDirectory)\editwnd.obj :  editwnd.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ editwnd.cpp
 |
 
-DEBUG\error.obj :  error.cpp
+$(IntermediateDirectory)\error.obj :  error.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ error.cpp
 |
 
-DEBUG\eval.obj :  eval.cpp
+$(IntermediateDirectory)\eval.obj :  eval.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ eval.cpp
 |
 
-DEBUG\files.obj :  files.cpp
+$(IntermediateDirectory)\files.obj :  files.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ files.cpp
 |
 
-DEBUG\fileswnd.obj :  fileswnd.cpp
+$(IntermediateDirectory)\fileswnd.obj :  fileswnd.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ fileswnd.cpp
 |
 
-DEBUG\gbm.obj :  gbm.cpp
+$(IntermediateDirectory)\gbm.obj :  gbm.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ gbm.cpp
 |
 
-DEBUG\gbmbmp.obj :  gbmbmp.cpp
+$(IntermediateDirectory)\gbmbmp.obj :  gbmbmp.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ gbmbmp.cpp
 |
 
-DEBUG\gbmhelp.obj :  gbmhelp.cpp
+$(IntermediateDirectory)\gbmhelp.obj :  gbmhelp.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ gbmhelp.cpp
 |
 
-DEBUG\gbmgif.obj :  gbmgif.cpp
+$(IntermediateDirectory)\gbmgif.obj :  gbmgif.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ gbmgif.cpp
 |
 
-DEBUG\gbmsize.obj :  gbmsize.cpp
+$(IntermediateDirectory)\gbmsize.obj :  gbmsize.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ gbmsize.cpp
 |
 
-DEBUG\graphics.obj :  graphics.cpp
+$(IntermediateDirectory)\graphics.obj :  graphics.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ graphics.cpp
 |
 
-DEBUG\graphwin.obj :  graphwin.cpp
+$(IntermediateDirectory)\graphwin.obj :  graphwin.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ graphwin.cpp
 |
 
-DEBUG\ibmterm.obj :  ibmterm.cpp
+$(IntermediateDirectory)\ibmterm.obj :  ibmterm.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ ibmterm.cpp
 |
 
-DEBUG\init.obj :  init.cpp
+$(IntermediateDirectory)\init.obj :  init.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ init.cpp
 |
 
-DEBUG\intern.obj :  intern.cpp
+$(IntermediateDirectory)\intern.obj :  intern.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ intern.cpp
 |
 
-DEBUG\lists.obj :  lists.cpp
+$(IntermediateDirectory)\lists.obj :  lists.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ lists.cpp
 |
 
-DEBUG\logodata.obj :  logodata.cpp version.h
+$(IntermediateDirectory)\logodata.obj :  logodata.cpp version.h
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ logodata.cpp
 |
 
-DEBUG\logorc.res :  logorc.rc version.h localizedstrings*.h
+$(IntermediateDirectory)\logorc.res :  logorc.rc version.h localizedstrings*.h
   $(BRC32) -R @&&|
  $(IDE_ResFLAGS32) $(ROptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe)  -FO$@ logorc.rc
 |
-DEBUG\printer.res :  ..\..\..\..\..\..\bc5\include\owl\printer.rc
+$(IntermediateDirectory)\printer.res :  ..\..\..\..\..\..\bc5\include\owl\printer.rc
   $(BRC32) -R @&&|
  $(IDE_ResFLAGS32) $(ROptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe)  -FO$@ ..\..\..\..\..\..\bc5\include\owl\printer.rc
 |
-DEBUG\inputdia.res :  ..\..\..\..\..\..\bc5\include\owl\inputdia.rc
+$(IntermediateDirectory)\inputdia.res :  ..\..\..\..\..\..\bc5\include\owl\inputdia.rc
   $(BRC32) -R @&&|
  $(IDE_ResFLAGS32) $(ROptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe)  -FO$@ ..\..\..\..\..\..\bc5\include\owl\inputdia.rc
 |
-DEBUG\picklist.res :  ..\..\..\..\..\..\bc5\include\owl\picklist.rc
+$(IntermediateDirectory)\picklist.res :  ..\..\..\..\..\..\bc5\include\owl\picklist.rc
   $(BRC32) -R @&&|
  $(IDE_ResFLAGS32) $(ROptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe)  -FO$@ ..\..\..\..\..\..\bc5\include\owl\picklist.rc
 |
-DEBUG\except.res :  ..\..\..\..\..\..\bc5\include\owl\except.rc
+$(IntermediateDirectory)\except.res :  ..\..\..\..\..\..\bc5\include\owl\except.rc
   $(BRC32) -R @&&|
  $(IDE_ResFLAGS32) $(ROptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe)  -FO$@ ..\..\..\..\..\..\bc5\include\owl\except.rc
 |
-DEBUG\stdwnds.res :  stdwnds.rc
+$(IntermediateDirectory)\stdwnds.res :  stdwnds.rc
   $(BRC32) -R @&&|
  $(IDE_ResFLAGS32) $(ROptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe)  -FO$@ stdwnds.rc
 |
-DEBUG\filemenu.res :  filemenu.rc
+$(IntermediateDirectory)\filemenu.res :  filemenu.rc
   $(BRC32) -R @&&|
  $(IDE_ResFLAGS32) $(ROptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe)  -FO$@ filemenu.rc
 |
-DEBUG\main.obj :  main.cpp
+$(IntermediateDirectory)\main.obj :  main.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ main.cpp
 |
 
-DEBUG\mainwind.obj :  mainwind.cpp
+$(IntermediateDirectory)\mainwind.obj :  mainwind.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ mainwind.cpp
 |
 
-DEBUG\math.obj :  math.cpp
+$(IntermediateDirectory)\math.obj :  math.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ math.cpp
 |
 
-DEBUG\mem.obj :  mem.cpp
+$(IntermediateDirectory)\mem.obj :  mem.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ mem.cpp
 |
 
-DEBUG\minieditor.obj :  minieditor.cpp
+$(IntermediateDirectory)\minieditor.obj :  minieditor.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ minieditor.cpp
 |
 
-DEBUG\mmwind.obj :  mmwind.cpp
+$(IntermediateDirectory)\mmwind.obj :  mmwind.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ mmwind.cpp
 |
 
-DEBUG\myfileed.obj :  myfileed.cpp
+$(IntermediateDirectory)\myfileed.obj :  myfileed.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ myfileed.cpp
 |
 
-DEBUG\myfilewn.obj :  myfilewn.cpp
+$(IntermediateDirectory)\myfilewn.obj :  myfilewn.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ myfilewn.cpp
 |
 
-DEBUG\netwind.obj :  netwind.cpp
+$(IntermediateDirectory)\netwind.obj :  netwind.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ netwind.cpp
 |
 
-DEBUG\paren.obj :  paren.cpp
+$(IntermediateDirectory)\paren.obj :  paren.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ paren.cpp
 |
 
-DEBUG\parse.obj :  parse.cpp
+$(IntermediateDirectory)\parse.obj :  parse.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ parse.cpp
 |
 
-DEBUG\print.obj :  print.cpp
+$(IntermediateDirectory)\print.obj :  print.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ print.cpp
 |
 
-DEBUG\richedpr.obj :  richedpr.cpp
+$(IntermediateDirectory)\richedpr.obj :  richedpr.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ richedpr.cpp
 |
 
-DEBUG\savebeforeexitdialog.obj :  savebeforeexitdialog.cpp
+$(IntermediateDirectory)\savebeforeexitdialog.obj :  savebeforeexitdialog.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ savebeforeexitdialog.cpp
 |
 
-DEBUG\sizedlg.obj :  sizedlg.cpp
+$(IntermediateDirectory)\sizedlg.obj :  sizedlg.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ sizedlg.cpp
 |
 
-DEBUG\statwind.obj :  statwind.cpp
+$(IntermediateDirectory)\statwind.obj :  statwind.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ statwind.cpp
 |
 
-DEBUG\term.obj :  term.cpp
+$(IntermediateDirectory)\term.obj :  term.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ term.cpp
 |
 
-DEBUG\threed.obj :  threed.cpp
+$(IntermediateDirectory)\threed.obj :  threed.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ threed.cpp
 |
 
-DEBUG\unix.obj :  unix.cpp
-  $(BCC32) -c @&&|
- $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ unix.cpp
-|
-
-DEBUG\utils.obj :  utils.cpp
+$(IntermediateDirectory)\utils.obj :  utils.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ utils.cpp
 |
 
-DEBUG\vector.obj :  vector.cpp
+$(IntermediateDirectory)\unix.obj :  unix.cpp
+  $(BCC32) -c @&&|
+ $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ unix.cpp
+|
+
+$(IntermediateDirectory)\vector.obj :  vector.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ vector.cpp
 |
 
-DEBUG\wrksp.obj :  wrksp.cpp
+$(IntermediateDirectory)\wrksp.obj :  wrksp.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ wrksp.cpp
 |
@@ -536,5 +540,4 @@ BccW32.cfg :
 -VF-
 -r-
 | $@
-
 
