@@ -23,9 +23,29 @@
 
 jmp_buf iblk_buf;
 
-static char * combo_buff        = NULL;
-static size_t combo_buff_size   = 0;    // size of the buffer
-static size_t combo_buff_length = 0;    // bytes of string in buffer (not including NUL)
+class CDynamicBuffer 
+{
+public:
+   friend class CBufferInvariant;
+   friend void mputcombobox(const char * str);  // HACK
+   friend void putcombochar(char ch);           // HACK
+
+   CDynamicBuffer();
+
+   void Empty();
+   void Dispose();
+   void AppendString(const char * ToAppend);
+   void AppendChar(char ToAppend);
+
+private:
+   void GrowBy(size_t ExtraLength);
+
+   char * m_Buffer;        // the contents of the dynamic buffer
+   size_t m_BufferSize;    // size of the buffer
+   size_t m_BufferLength;  // bytes of string in buffer (not including NUL)
+};
+
+CDynamicBuffer g_ComboBuffer;
 
 
 #ifdef NDEBUG
@@ -48,63 +68,119 @@ public:
 
    void AssertInvariant()
       {
-      if (combo_buff == NULL)
+      if (g_ComboBuffer.m_Buffer == NULL)
          {
-         assert(combo_buff_length == 0);
-         assert(combo_buff_size   == 0);
+         assert(g_ComboBuffer.m_BufferLength == 0);
+         assert(g_ComboBuffer.m_BufferSize   == 0);
          }
       else
          {
-         assert(combo_buff_length <= combo_buff_size);
-         assert(combo_buff[combo_buff_length] == '\0');
+         assert(g_ComboBuffer.m_BufferLength <= g_ComboBuffer.m_BufferSize);
+         assert(g_ComboBuffer.m_Buffer[g_ComboBuffer.m_BufferLength] == '\0');
 
          // a good assert, but it takes too long
-         //assert(strlen(combo_buff) == combo_buff_length);
+         //assert(strlen(g_ComboBuffer.m_Buffer) == g_ComboBuffer.m_BufferLength);
          }
       }
    };
 
 #endif // NDEBUG
 
-
-// empty the combo_buff, but don't free it
-static
-void
-reset_combo_buff()
+// constructs an empty buffer
+CDynamicBuffer::CDynamicBuffer() : 
+   m_Buffer(NULL),
+   m_BufferSize(0),
+   m_BufferLength(0)
    {
-   combo_buff[0]     = '\0';
-   combo_buff_length = 0;
+   ASSERT_COMBOBUFF_INVARIANT
+   }
+
+// deletes the contents of the internal buffer
+void CDynamicBuffer::Dispose()
+   {
+   ASSERT_COMBOBUFF_INVARIANT
+
+   free(m_Buffer);
+   
+   m_Buffer       = NULL;
+   m_BufferSize   = 0;
+   m_BufferLength = 0;
+   }
+
+
+// empties the contents of the enternal buffer, but doesn't free it.
+void CDynamicBuffer::Empty()
+   {
+   ASSERT_COMBOBUFF_INVARIANT
+
+   if (m_Buffer != NULL)
+      {
+      m_Buffer[0]    = '\0';
+      m_BufferLength = 0;
+      }
    }
 
 // resizes combo_buff to hold extra_length more bytes.
-static
-void
-resize_combo_buff(
-   size_t  extra_length
+void 
+CDynamicBuffer::GrowBy(
+   size_t  ExtraLength
    )
    {
    ASSERT_COMBOBUFF_INVARIANT
 
    // if combo_buff has never been allocated, do so now.
-   if (combo_buff == NULL)
+   if (m_Buffer == NULL)
       {
-      combo_buff = (char *) calloc(MAX_BUFFER_SIZE, sizeof(char));
-      combo_buff_size = MAX_BUFFER_SIZE;
+      m_Buffer     = (char *) calloc(MAX_BUFFER_SIZE, sizeof(char));
+      m_BufferSize = MAX_BUFFER_SIZE;
       }
 
    // if it won't fit, then make the buffer bigger
-   size_t required_length = combo_buff_length + extra_length + 1;
-   if (combo_buff_size < required_length)
+   size_t requiredLength = m_BufferLength + ExtraLength + 1;
+   if (m_BufferSize < requiredLength)
       {
       // Double the size of the buffer, instead of only requesting 
-      // required_length bytes.  If we don't do this, then printing 
-      // a long string takes a *very* long time because we repeatedly 
+      // requiredLength bytes.  If we don't do this, then printing 
+      // a long string takes a *very* long time because we repeatedly
       // reallocate the buffer to be one byte larger.
-      size_t newsize = max(combo_buff_size * 2, required_length);
+      size_t newsize = max(m_BufferSize * 2, requiredLength);
 
-      combo_buff = (char *) realloc(combo_buff, newsize);
-      combo_buff_size = newsize;
+      m_Buffer     = (char *) realloc(m_Buffer, newsize);
+      m_BufferSize = newsize;
       }
+   }
+
+// Append a NUL-terminated string to the combo buffer
+void 
+CDynamicBuffer::AppendString(
+   const char * ToAppend
+   )
+   {
+   ASSERT_COMBOBUFF_INVARIANT
+
+   // resize combo_buff to be large enough to hold ToAppend
+   size_t toAppendLength = strlen(ToAppend);
+   g_ComboBuffer.GrowBy(toAppendLength);
+
+   // append ToAppend
+   strcpy(m_Buffer + m_BufferLength, ToAppend);
+   m_BufferLength += toAppendLength;
+   }
+
+void 
+CDynamicBuffer::AppendChar(
+   char         ToAppend
+   )
+   {
+   ASSERT_COMBOBUFF_INVARIANT
+
+   // resize combo_buff to be large enough to hold ToAppend
+   g_ComboBuffer.GrowBy(1);
+
+   // append ToAppend
+   m_Buffer[m_BufferLength    ] =  ToAppend;
+   m_Buffer[m_BufferLength + 1] =  '\0';
+   m_BufferLength++;
    }
 
 static
@@ -113,28 +189,20 @@ mputcombobox(
    const char *str
    )
    {
-   ASSERT_COMBOBUFF_INVARIANT
-
-   // resize combo_buff to be large enough to hold str
-   size_t str_length = strlen(str);
-
-   resize_combo_buff(str_length);
-
-   // append str
-   strcpy(combo_buff + combo_buff_length, str);
-   combo_buff_length += str_length;
+   // Append the string to the buffer
+   g_ComboBuffer.AppendString(str);
 
    // process lines
-   char * next_line = combo_buff;
-   for (size_t j = 0; j < combo_buff_length; j++)
+   char * next_line = g_ComboBuffer.m_Buffer;
+   for (size_t i = 0; i < g_ComboBuffer.m_BufferLength; i++)
       {
-      if (combo_buff[j] == '\n')
+      if (g_ComboBuffer.m_Buffer[i] == '\n')
          {
-         // if <cr> pump it out
-         combo_buff[j] = '\0';
+         // if <lf> pump it out
+         g_ComboBuffer.m_Buffer[i] = '\0';
          putcombobox(next_line);
-         combo_buff[j] = '\n';
-         next_line = &combo_buff[j + 1];
+         g_ComboBuffer.m_Buffer[i] = '\n';
+         next_line = &g_ComboBuffer.m_Buffer[i + 1];
          }
       }
 
@@ -144,43 +212,24 @@ mputcombobox(
       putcombobox(next_line);
       }
 
-   reset_combo_buff();
+   // clear the contents of the buffer, since we wrote the entire thing
+   g_ComboBuffer.Empty();
    }
 
-void putcombochar(char c)
+void putcombochar(char ch)
    {
-   ASSERT_COMBOBUFF_INVARIANT
-
-   // resize combo_buff to be large enough to one more character
-   resize_combo_buff(1);
-
-   if (c == '\n')
+   if (ch == '\n')
       {
-      // if <cr> pump it out
-      putcombobox(combo_buff);
-      reset_combo_buff();
+      // if <lf> pump it out
+      putcombobox(g_ComboBuffer.m_Buffer);
+      g_ComboBuffer.Empty();
       }
    else
       {
-      // else append it
-      size_t i = combo_buff_length;
-      combo_buff[i] = c;
-      combo_buff[i + 1] = '\0';
-      combo_buff_length++;
+      g_ComboBuffer.AppendChar(ch);
       }
    }
 
-
-void flushcombobox()
-   {
-   ASSERT_COMBOBUFF_INVARIANT
-
-   // resize combo_buff to be large enough to one byte
-   resize_combo_buff(1);
-
-   putcombobox(combo_buff);
-   reset_combo_buff();
-   }
 
 int printfx(const char *fmt)
    {
@@ -344,8 +393,5 @@ void uninitialize_combobox()
    {
    ASSERT_COMBOBUFF_INVARIANT
 
-   free(combo_buff);
-   combo_buff        = NULL;
-   combo_buff_size   = 0;
-   combo_buff_length = 0;
+   g_ComboBuffer.Dispose();
    }
