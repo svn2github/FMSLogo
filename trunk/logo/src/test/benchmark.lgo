@@ -33,7 +33,7 @@ END
 
 TO BENCHMARK.TAILRECURSIVECOUNT :depth
 
-   ; put some code before teh recursive call
+   ; put some code before the recursive call
    MAKE "something.that.does.not.break.tail.recursion "true
 
    ; base-case
