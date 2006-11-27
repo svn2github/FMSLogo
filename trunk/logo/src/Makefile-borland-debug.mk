@@ -64,6 +64,7 @@ Dep_fmslogoddexe = \
    DEBUG\dlgwind.obj\
    DEBUG\dllwind.obj\
    DEBUG\dllstack.obj\
+   DEBUG\dynamicbuffer.obj\
    DEBUG\editwnd.obj\
    DEBUG\error.obj\
    DEBUG\eval.obj\
@@ -125,6 +126,7 @@ DEBUG\dib.obj+
 DEBUG\dlgwind.obj+
 DEBUG\dllwind.obj+
 DEBUG\dllstack.obj+
+DEBUG\dynamicbuffer.obj+
 DEBUG\editwnd.obj+
 DEBUG\error.obj+
 DEBUG\eval.obj+
@@ -247,6 +249,11 @@ DEBUG\dllwind.obj :  dllwind.cpp
 DEBUG\dllstack.obj :  dllstack.c
   $(BCC32) -P- -c @&&|
  $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ dllstack.c
+|
+
+DEBUG\dynamicbuffer.obj :  dynamicbuffer.cpp
+  $(BCC32) -c @&&|
+ $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ dynamicbuffer.cpp
 |
 
 DEBUG\editwnd.obj :  editwnd.cpp

@@ -69,6 +69,7 @@ Dep_fmslogodexe = \
    $(IntermediateDirectory)\dlgwind.obj\
    $(IntermediateDirectory)\dllstack.obj\
    $(IntermediateDirectory)\dllwind.obj\
+   $(IntermediateDirectory)\dynamicbuffer.obj\
    $(IntermediateDirectory)\editwnd.obj\
    $(IntermediateDirectory)\error.obj\
    $(IntermediateDirectory)\eval.obj\
@@ -129,6 +130,7 @@ $(IntermediateDirectory)\dib.obj+
 $(IntermediateDirectory)\dlgwind.obj+
 $(IntermediateDirectory)\dllstack.obj+
 $(IntermediateDirectory)\dllwind.obj+
+$(IntermediateDirectory)\dynamicbuffer.obj+
 $(IntermediateDirectory)\editwnd.obj+
 $(IntermediateDirectory)\error.obj+
 $(IntermediateDirectory)\eval.obj+
@@ -247,6 +249,11 @@ $(IntermediateDirectory)\dllstack.obj :  dllstack.c
 $(IntermediateDirectory)\dllwind.obj :  dllwind.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ dllwind.cpp
+|
+
+$(IntermediateDirectory)\dynamicbuffer.obj :  dynamicbuffer.cpp
+  $(BCC32) -c @&&|
+ $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ dynamicbuffer.cpp
 |
 
 $(IntermediateDirectory)\editwnd.obj :  editwnd.cpp

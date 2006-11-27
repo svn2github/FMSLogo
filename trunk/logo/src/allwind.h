@@ -78,6 +78,7 @@
 #include "utils.h"
 #include "smartnode.h"
 #include "appendablelist.h"
+#include "dynamicbuffer.h"
 #include "globals.h"
 
 #endif // _ALLWIND_H_
