@@ -314,12 +314,12 @@ NODE *lsettimer(NODE *args)
          // if not set sucessfully error
          if (!::SetTimer(MainWindowx->HWindow, id, delay, NULL))
             {
-            ShowMessageAndStop(LOCALIZED_ERROR, LOCALIZED_ERROR_TIMERTOOMANY);
+            ShowErrorMessageAndStop(LOCALIZED_ERROR_TIMERTOOMANY);
             }
          }
       else
          {
-         ShowMessageAndStop(LOCALIZED_ERROR, LOCALIZED_ERROR_TIMERBADID);
+         ShowErrorMessageAndStop(LOCALIZED_ERROR_TIMERBADID);
          }
       }
 
@@ -334,7 +334,7 @@ NODE *lcleartimer(NODE *args)
    // if timer was not set let user know
    if (!::KillTimer(MainWindowx->HWindow, id))
       {
-      ShowMessageAndStop(LOCALIZED_ERROR, LOCALIZED_ERROR_TIMERNOTFOUND);
+      ShowErrorMessageAndStop(LOCALIZED_ERROR_TIMERNOTFOUND);
       }
 
    return Unbound;

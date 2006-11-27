@@ -135,9 +135,7 @@ gifsave_helper(
    lsetcursorwait(NIL);
    if (gbmBmpToGif(TempBmpName, textbuf) != 0)
       {
-      ShowMessageAndStop(
-         LOCALIZED_ERROR,
-         LOCALIZED_ERROR_GIFSAVEFAILED);
+      ShowErrorMessageAndStop(LOCALIZED_ERROR_GIFSAVEFAILED);
       }
    lsetcursorarrow(NIL);
    unlink(TempBmpName);
@@ -294,9 +292,7 @@ void gifload_helper(char *textbuf, DWORD &dwPixelWidth, DWORD &dwPixelHeight)
    lsetcursorwait(NIL);
    if (gbmGifToBmp(textbuf, TempBmpName) != 0)
       {
-      ShowMessageAndStop(
-         LOCALIZED_ERROR,
-         LOCALIZED_ERROR_GIFREADFAILED);
+      ShowErrorMessageAndStop(LOCALIZED_ERROR_GIFREADFAILED);
       }
    lsetcursorarrow(NIL);
    MainWindowx->LoadBitmapFile(TempBmpName, dwPixelWidth, dwPixelHeight);
@@ -1118,9 +1114,7 @@ NODE *lsetbitmode(NODE *arg)
        case 9: bitmode = DSTINVERT; break;
        default:
           // notify the user that the bitmode was invalid
-          ShowMessageAndStop(
-             LOCALIZED_ERROR, 
-             LOCALIZED_ERROR_BITMODEBADBITMODE);
+          ShowErrorMessageAndStop(LOCALIZED_ERROR_BITMODEBADBITMODE);
       }
 
    return Unbound;
@@ -1176,9 +1170,7 @@ NODE *lsetturtlemode(NODE *arg)
          case 9: g_Turtles[turtle_which].Bitmap = DSTINVERT; break;
          default:
             // notify the user that the bitmode was invalid
-            ShowMessageAndStop(
-               LOCALIZED_ERROR, 
-               LOCALIZED_ERROR_BITMODEBADBITMODE);
+            ShowErrorMessageAndStop(LOCALIZED_ERROR_BITMODEBADBITMODE);
          }
 
       draw_turtle(true);
@@ -1208,9 +1200,7 @@ NODE *lsetbitindex(NODE *arg)
    else
       {
       // notify the user that the bit index was out-of-range
-      ShowMessageAndStop(
-         LOCALIZED_ERROR, 
-         LOCALIZED_ERROR_BITMAPINDEXOUTOFRANGE);
+      ShowErrorMessageAndStop(LOCALIZED_ERROR_BITMAPINDEXOUTOFRANGE);
       }
 
    return Unbound;
@@ -1425,9 +1415,7 @@ BitCopyOrCut(NODE *arg, bool IsCut)
 
          if (!CutBmp[CutIndex].CutMemoryBitMap)
             {
-            ShowMessageAndStop(
-               LOCALIZED_ERROR,
-               LOCALIZED_ERROR_BITMAPCUTFAILED);
+            ShowErrorMessageAndStop(LOCALIZED_ERROR_BITMAPCUTFAILED);
             return Unbound;
             }
 
@@ -1570,9 +1558,7 @@ NODE *lbitfit(NODE *arg)
          HBITMAP TempMemoryBitMap = CreateCompatibleBitmap(ScreenDC, (int) FitWidth, (int) FitHeight);
          if (!TempMemoryBitMap)
             {
-            ShowMessageAndStop(
-               LOCALIZED_ERROR,
-               LOCALIZED_ERROR_BITMAPFITFAILED);
+            ShowErrorMessageAndStop(LOCALIZED_ERROR_BITMAPFITFAILED);
             return Unbound;
             }
 
@@ -1739,9 +1725,7 @@ NODE *lbitpaste(NODE *)
       else
          {
          // notify the user that the clipboard is empty
-         ShowMessageAndStop(
-            LOCALIZED_ERROR,
-            LOCALIZED_ERROR_BITMAPNOTHINGTOPASTE);
+         ShowErrorMessageAndStop(LOCALIZED_ERROR_BITMAPNOTHINGTOPASTE);
          }
       }
 
@@ -1760,18 +1744,14 @@ NODE *lbitpastetoindex(NODE *arg)
    if (MaxBitCuts <= i)
       {
       // notify the user that the bitmap index is out of range
-      ShowMessageAndStop(
-         LOCALIZED_ERROR, 
-         LOCALIZED_ERROR_BITMAPINDEXOUTOFRANGE);
+      ShowErrorMessageAndStop(LOCALIZED_ERROR_BITMAPINDEXOUTOFRANGE);
       return Unbound;
       }
 
    if (!CutBmp[i].CutFlag)
       {
       // nofity the user that there is no bitmap at this index
-      ShowMessageAndStop(
-         LOCALIZED_ERROR,
-         LOCALIZED_ERROR_BITMAPINDEXISNOTBITMAP);
+      ShowErrorMessageAndStop(LOCALIZED_ERROR_BITMAPINDEXISNOTBITMAP);
       return Unbound;
       }
 
@@ -1830,9 +1810,7 @@ NODE *lbitpastetoindex(NODE *arg)
       else
          {
          // notify the user that the clipboard is empty
-         ShowMessageAndStop(
-            LOCALIZED_ERROR,
-            LOCALIZED_ERROR_BITMAPNOTHINGTOPASTE);
+         ShowErrorMessageAndStop(LOCALIZED_ERROR_BITMAPNOTHINGTOPASTE);
          }
       }
    return Unbound;
@@ -1851,9 +1829,7 @@ NODE *lsetturtle(NODE *arg)
       if ((temp >= (TURTLES - TURTLEN)) || (temp < -TURTLEN))
          {
          // notify the user that the turtle ID is out of range
-         ShowMessageAndStop(
-            LOCALIZED_ERROR,
-            LOCALIZED_ERROR_BADTURTLEID);
+         ShowErrorMessageAndStop(LOCALIZED_ERROR_BADTURTLEID);
          }
       else
          {
@@ -2007,7 +1983,7 @@ void turtlepaste(int TurtleToPaste)
          g_Turtles[TurtleToPaste].Bitmap = 0;
          char errorMessage[255];
          sprintf(errorMessage, LOCALIZED_ERROR_TURTLEHASNOPICTURE, TurtleToPaste);
-         ShowMessageAndStop(LOCALIZED_ERROR, errorMessage);
+         ShowErrorMessageAndStop(errorMessage);
          }
       }
    }

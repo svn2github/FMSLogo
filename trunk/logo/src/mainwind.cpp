@@ -1071,7 +1071,7 @@ bool TMainFrame::WriteDIB(FILE* File, int MaxBitCount)
 
       if (!AreaMemoryBitMap)
          {
-         ShowMessageAndStop(LOCALIZED_ERROR, LOCALIZED_WRITEFAILEDNOMEMORY);
+         ShowErrorMessageAndStop(LOCALIZED_WRITEFAILEDNOMEMORY);
          }
 
       HDC     memoryDC     = CreateCompatibleDC(screen);
@@ -1164,7 +1164,7 @@ bool TMainFrame::DumpBitmapFile(LPCSTR Filename, int MaxBitCount)
       // do it and if error then let user know 
       if (!WriteDIB(file, MaxBitCount))
          {
-         ShowMessageAndStop(LOCALIZED_ERROR, LOCALIZED_COULDNOTWRITEBMP);
+         ShowErrorMessageAndStop(LOCALIZED_COULDNOTWRITEBMP);
          }
 
       // Restore the arrow cursor
@@ -1175,7 +1175,7 @@ bool TMainFrame::DumpBitmapFile(LPCSTR Filename, int MaxBitCount)
    else
       {
       // else file never opened
-      ShowMessageAndStop(LOCALIZED_ERROR, LOCALIZED_COULDNOTOPENBMP);
+      ShowErrorMessageAndStop(LOCALIZED_COULDNOTOPENBMP);
       }
 
    return true;
@@ -1433,7 +1433,7 @@ bool TMainFrame::LoadBitmapFile(LPCSTR Filename, DWORD &dwPixelWidth, DWORD &dwP
       }
    else
       {
-      ShowMessageAndStop(LOCALIZED_ERROR, errorMessage);
+      ShowErrorMessageAndStop(errorMessage);
       retval = false;
       }
 

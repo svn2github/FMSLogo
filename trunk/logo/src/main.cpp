@@ -681,6 +681,13 @@ ShowMessageAndStop(
    err_logo(STOP_ERROR, NIL);
    }
 
+void
+ShowErrorMessageAndStop(
+   const char * Message
+   )
+   {
+   ShowMessageAndStop(LOCALIZED_ERROR, Message);
+   }
 
 // Print page (or pages)
 void TRulerOut::PrintPage(int /* page */, TRect & /* rect */, UINT /* flags */)

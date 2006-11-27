@@ -233,17 +233,14 @@ DWORD DIBWidth(LPSTR lpDIB)
 
 HBITMAP DIBToBitmap(HANDLE hDIB, HPALETTE hPal)
    {
-   LPSTR lpDIBHdr, lpDIBBits;
-   HBITMAP hBitmap;
-   HPALETTE hOldPal = NULL;
-
    if (!hDIB)
       {
       return NULL;
       }
 
-   lpDIBHdr = (char *) GlobalLock(hDIB);
-   lpDIBBits = FindDIBBits(lpDIBHdr);
+
+   LPSTR lpDIBHdr = (char *) GlobalLock(hDIB);
+   LPSTR lpDIBBits = FindDIBBits(lpDIBHdr);
    HDC hDC = GetDC(MainWindowx->ScreenWindow->HWindow);
 
    if (!hDC)
@@ -252,11 +249,15 @@ HBITMAP DIBToBitmap(HANDLE hDIB, HPALETTE hPal)
       return NULL;
       }
 
-   if (hPal) hOldPal = SelectPalette(hDC, hPal, FALSE);
+   HPALETTE hOldPal = NULL;
+   if (hPal)
+      {
+      hOldPal = SelectPalette(hDC, hPal, FALSE);
+      }
 
    RealizePalette(hDC);
 
-   hBitmap = CreateDIBitmap(
+   HBITMAP hBitmap = CreateDIBitmap(
       hDC,
       (LPBITMAPINFOHEADER) lpDIBHdr,
       CBM_INIT,
@@ -266,11 +267,14 @@ HBITMAP DIBToBitmap(HANDLE hDIB, HPALETTE hPal)
 
    if (!hBitmap)
       {
-      ShowMessageAndStop(LOCALIZED_ERROR, LOCALIZED_ERROR_OUTOFMEMORY);
+      ShowErrorMessageAndStop(LOCALIZED_ERROR_OUTOFMEMORY);
       }
    // DIBError (ERR_CREATEDDB);
 
-   if (hOldPal) SelectPalette(hDC, hOldPal, FALSE);
+   if (hOldPal) 
+      {
+      SelectPalette(hDC, hOldPal, FALSE);
+      }
 
    ReleaseDC(MainWindowx->ScreenWindow->HWindow, hDC);
    GlobalUnlock(hDIB);
