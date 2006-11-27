@@ -83,6 +83,9 @@
 #define MYCHECKBOX_ID           IDC_BASE + 69
 #define MYDIALOG_ID             IDC_BASE + 70
 
+#define ID_MINIEDITCTRL         IDC_BASE + 80
+#define ID_TOLINE               IDC_BASE + 81
+
 #define CM_CONTROLHALT          CMD_BASE + 0
 #define CM_CONTROLEXECUTE       CMD_BASE + 1
 

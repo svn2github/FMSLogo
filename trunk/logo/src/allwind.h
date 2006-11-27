@@ -73,6 +73,7 @@
 #include "func.h"
 #include "commanderbutton.h"
 #include "commandercheckbox.h"
+#include "minieditor.h"
 #include "savebeforeexitdialog.h"
 #include "utils.h"
 #include "smartnode.h"

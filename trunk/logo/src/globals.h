@@ -76,6 +76,7 @@ extern FILE *dribblestream;
 extern bool input_blocking;
 extern enum INPUTMODE input_mode;
 extern NODE *deepend_proc_name;
+extern NODE *g_ToLine;
 
 // math.cpp
 

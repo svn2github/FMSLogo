@@ -155,14 +155,8 @@ void TMiniEditor::RecalculateLayout()
    const int xBorder = 4;
    const int yBorder = 4;
    
-   m_ToLine.SetWindowPos(
-      NULL, 
-      xBorder, 
-      yBorder,
-      totalWidth - xBorder * 2, 
-      toLineHeight,
-      0);
 
+   // position the "END" button
    m_EndButton.SetWindowPos(
       NULL, 
       xBorder, 
@@ -171,6 +165,7 @@ void TMiniEditor::RecalculateLayout()
       endButtonHeight,
       0);
 
+   // position the procedure body
    m_TextField.SetWindowPos(
       NULL, 
       xBorder, 
@@ -179,6 +174,14 @@ void TMiniEditor::RecalculateLayout()
       totalHeight - (4 * yBorder + toLineHeight + endButtonHeight),
       0);
 
+   // position the "TO" line
+   m_ToLine.SetWindowPos(
+      NULL, 
+      xBorder, 
+      yBorder,
+      totalWidth - xBorder * 2, 
+      toLineHeight,
+      0);
    }
 
 void TMiniEditor::EvSize(UINT Arg1, TSize & NewSize)

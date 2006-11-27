@@ -87,6 +87,7 @@ Dep_fmslogoddexe = \
    DEBUG\mainwind.obj\
    DEBUG\math.obj\
    DEBUG\mem.obj\
+   DEBUG\minieditor.obj\
    DEBUG\mmwind.obj\
    DEBUG\myfileed.obj\
    DEBUG\myfilewn.obj\
@@ -145,6 +146,7 @@ DEBUG\main.obj+
 DEBUG\mainwind.obj+
 DEBUG\math.obj+
 DEBUG\mem.obj+
+DEBUG\minieditor.obj+
 DEBUG\mmwind.obj+
 DEBUG\myfileed.obj+
 DEBUG\myfilewn.obj+
@@ -378,6 +380,11 @@ DEBUG\math.obj :  math.cpp
 DEBUG\mem.obj :  mem.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ mem.cpp
+|
+
+DEBUG\minieditor.obj :  minieditor.cpp
+  $(BCC32) -c @&&|
+ $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ minieditor.cpp
 |
 
 DEBUG\mmwind.obj :  mmwind.cpp

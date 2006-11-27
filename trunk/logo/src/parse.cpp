@@ -26,6 +26,7 @@ FILE *loadstream = stdin;
 FILE *dribblestream = NULL;
 bool input_blocking = false;
 NODE *deepend_proc_name = NIL;
+NODE *g_ToLine          = NIL;
 
 INPUTMODE input_mode = INPUTMODE_None;
 
@@ -36,6 +37,19 @@ static char buffer_input[MAX_BUFFER_SIZE];
 static char *p_line = 0;
 static char *p_end;
 static int   p_len = MAX_PHYS_LINE;
+
+// This is a hack to purge the "INPUTMODE_TO" buffer when
+// loading from the editor.  If this is not done, any unused
+// portion will hang around and be silently used the next time
+// TO is run.
+void rd_clearbuffer(FILE *strm)
+   {
+   if (input_mode == INPUTMODE_To && strm == stdin)
+      {
+      buffer_length = 0;
+      buffer_index  = 0;
+      }
+   }
 
 int rd_getc(FILE *strm)
    {
@@ -52,17 +66,45 @@ int rd_getc(FILE *strm)
          switch (input_mode)
             {
             case INPUTMODE_To:
-               if (!promptuser(buffer_input, LOCALIZED_PROMPT_TO))
+               {
+               char toline[MAX_BUFFER_SIZE];
+               cnv_strnode_string(toline, g_ToLine);
+
+               TMiniEditor editor(MainWindowx, toline);
+
+               if (IDOK != editor.Execute())
                   {
-                  // "End" the procedure definition when done
-                  strcpy(buffer_input, "End");
+                  // the user cancelled the definition
+                  err_logo(STOP_ERROR, NIL);
                   }
+               else
+                  {
+                  const char * definition = editor.GetText();
+
+                  const char * src = definition;
+                  char *       dst = buffer_input;
+
+                  while (*src != '\0')
+                     {
+                     if (src[0] == '\r' && src[1] == '\n')
+                        {
+                        // Skip past the CR in a CRLF sequence because 
+                        // the caller expects a UNIX EOL sequence.
+                        src++;
+                        }
+
+                     *dst++ = *src++;
+                     }
+
+                  strcpy(dst, "\nEnd");
+                  }
+               }
                break;
 
             case INPUTMODE_List:
                if (!promptuser(buffer_input, LOCALIZED_PROMPT_LIST))
                   {
-                   // Halt when done
+                  // Halt when done
                   err_logo(STOP_ERROR, NIL);
                   }
                break;
@@ -70,7 +112,7 @@ int rd_getc(FILE *strm)
             case INPUTMODE_Pause:
                if (!promptuser(buffer_input, LOCALIZED_PROMPT_PAUSE))
                   {
-                   // continue when done
+                  // continue when done
                   strcpy(buffer_input, "Continue");
                   }
                break;

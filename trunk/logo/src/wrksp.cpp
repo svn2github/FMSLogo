@@ -489,6 +489,7 @@ NODE *to_helper(NODE *args, bool is_macro)
       NODE * body_list          = cons_list(formals);
       NODE * body_list_lastnode = body_list;
 
+      g_ToLine    = reref(g_ToLine, body_words);
       to_pending = true;      // for int or quit signal
       while (NOT_THROWING && to_pending && !feof(loadstream))
          {
@@ -561,6 +562,8 @@ NODE *to_helper(NODE *args, bool is_macro)
          gcref(body_list);
          }
 
+      rd_clearbuffer(loadstream);
+      g_ToLine   = reref(g_ToLine, NIL);
       to_pending = false;
       }
    else

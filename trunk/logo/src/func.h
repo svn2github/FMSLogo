@@ -345,6 +345,7 @@ extern NODE *lprint(NODE *args);
 
 // File parse.cpp
 extern int rd_getc(FILE *strm);
+extern void rd_clearbuffer(FILE *strm);
 extern NODE *reader(FILE *strm, const char *prompt);
 extern NODE *parser(NODE *nd, bool semi);
 extern NODE *lparse(NODE *args);

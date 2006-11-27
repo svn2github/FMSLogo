@@ -92,6 +92,7 @@ Dep_fmslogodexe = \
    $(IntermediateDirectory)\mainwind.obj\
    $(IntermediateDirectory)\math.obj\
    $(IntermediateDirectory)\mem.obj\
+   $(IntermediateDirectory)\minieditor.obj\
    $(IntermediateDirectory)\mmwind.obj\
    $(IntermediateDirectory)\myfileed.obj\
    $(IntermediateDirectory)\myfilewn.obj\
@@ -149,6 +150,7 @@ $(IntermediateDirectory)\main.obj+
 $(IntermediateDirectory)\mainwind.obj+
 $(IntermediateDirectory)\math.obj+
 $(IntermediateDirectory)\mem.obj+
+$(IntermediateDirectory)\minieditor.obj+
 $(IntermediateDirectory)\mmwind.obj+
 $(IntermediateDirectory)\myfileed.obj+
 $(IntermediateDirectory)\myfilewn.obj+
@@ -382,6 +384,11 @@ $(IntermediateDirectory)\math.obj :  math.cpp
 $(IntermediateDirectory)\mem.obj :  mem.cpp
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ mem.cpp
+|
+
+$(IntermediateDirectory)\minieditor.obj :  minieditor.cpp
+  $(BCC32) -c @&&|
+ $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ minieditor.cpp
 |
 
 $(IntermediateDirectory)\mmwind.obj :  mmwind.cpp
