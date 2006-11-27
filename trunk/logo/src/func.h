@@ -528,7 +528,6 @@ extern void uninitialize_error(void);
 extern int printfx(const char *fmt);
 extern int printfx(const char *fmt, const char *str);
 extern void unblock_input(void);
-extern void flushcombobox(void);
 extern void putcombochar(char c);
 extern NODE *lchdir(NODE *arg);
 extern NODE *lpopdir(NODE *arg);
