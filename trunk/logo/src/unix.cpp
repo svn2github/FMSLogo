@@ -24,6 +24,7 @@
 jmp_buf iblk_buf;
 
 static CDynamicBuffer g_ComboBuffer;
+
 static
 void
 mputcombobox(
@@ -34,21 +35,24 @@ mputcombobox(
    g_ComboBuffer.AppendString(str);
 
    // process lines
-   char * next_line = g_ComboBuffer.m_Buffer;
-   for (size_t i = 0; i < g_ComboBuffer.m_BufferLength; i++)
+   char * rawBuffer       = g_ComboBuffer.GetBuffer();
+   size_t rawBufferLength = g_ComboBuffer.GetBufferLength();
+
+   char * next_line = rawBuffer;
+   for (size_t i = 0; i < rawBufferLength; i++)
       {
-      if (g_ComboBuffer.m_Buffer[i] == '\n')
+      if (rawBuffer[i] == '\n')
          {
          // if <lf> pump it out
-         g_ComboBuffer.m_Buffer[i] = '\0';
+         rawBuffer[i] = '\0';
          putcombobox(next_line);
-         g_ComboBuffer.m_Buffer[i] = '\n';
-         next_line = &g_ComboBuffer.m_Buffer[i + 1];
+         rawBuffer[i] = '\n';
+         next_line = &rawBuffer[i + 1];
          }
       }
 
    // flush the last line (which doesn't end in \n)
-   if (next_line[0] != '\0') 
+   if (next_line[0] != '\0')
       {
       putcombobox(next_line);
       }
@@ -62,7 +66,7 @@ void putcombochar(char ch)
    if (ch == '\n')
       {
       // if <lf> pump it out
-      putcombobox(g_ComboBuffer.m_Buffer);
+      putcombobox(g_ComboBuffer.GetBuffer());
       g_ComboBuffer.Empty();
       }
    else

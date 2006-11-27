@@ -24,22 +24,27 @@ class CDynamicBuffer
 {
 public:
    friend class CBufferInvariant;
-   friend void mputcombobox(const char * str);  // HACK
-   friend void putcombochar(char ch);           // HACK
 
    CDynamicBuffer();
 
+   bool IsEmpty() const;
    void Empty();
    void Dispose();
    void AppendString(const char * ToAppend);
    void AppendChar(char ToAppend);
+   void GrowTo(size_t MinimumSize);
+
+   char * GetBuffer();
+   size_t GetBufferLength() const;
+   int    PopChar();
 
 private:
    void GrowBy(size_t ExtraLength);
 
    char * m_Buffer;        // the contents of the dynamic buffer
    size_t m_BufferSize;    // size of the buffer
-   size_t m_BufferLength;  // bytes of string in buffer (not including NUL)
+   size_t m_BufferStart;   // offset of first byte of readable data in m_Buffer
+   size_t m_BufferLimit;   // offset of next byte of writable data in m_Buffer
 };
 
 #endif // _DYNAMICBUFFER_H_

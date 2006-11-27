@@ -30,9 +30,7 @@ NODE *g_ToLine          = NIL;
 
 INPUTMODE input_mode = INPUTMODE_None;
 
-static int buffer_length = 0;
-static int buffer_index = 0;
-static char buffer_input[MAX_BUFFER_SIZE];
+static CDynamicBuffer g_ReadBuffer;
 
 static char *p_line = 0;
 static char *p_end;
@@ -46,8 +44,7 @@ void rd_clearbuffer(FILE *strm)
    {
    if (input_mode == INPUTMODE_To && strm == stdin)
       {
-      buffer_length = 0;
-      buffer_index  = 0;
+      g_ReadBuffer.Empty();
       }
    }
 
@@ -61,10 +58,13 @@ int rd_getc(FILE *strm)
       }
    else
       {
-      if (buffer_index + 1 > buffer_length)
+      if (g_ReadBuffer.IsEmpty())
          {
+         // the buffer is empty, so we should read more
          switch (input_mode)
             {
+            char tmpbuffer[MAX_BUFFER_SIZE];
+
             case INPUTMODE_To:
                {
                char toline[MAX_BUFFER_SIZE];
@@ -81,9 +81,8 @@ int rd_getc(FILE *strm)
                   {
                   const char * definition = editor.GetText();
 
+                  // copy the new definition into the read buffer.
                   const char * src = definition;
-                  char *       dst = buffer_input;
-
                   while (*src != '\0')
                      {
                      if (src[0] == '\r' && src[1] == '\n')
@@ -93,51 +92,55 @@ int rd_getc(FILE *strm)
                         src++;
                         }
 
-                     *dst++ = *src++;
+                     g_ReadBuffer.AppendChar(*src);
+                     *src++;
                      }
 
-                  strcpy(dst, "\nEnd");
+                  g_ReadBuffer.AppendString("\nEnd");
                   }
                }
                break;
 
             case INPUTMODE_List:
-               if (!promptuser(buffer_input, LOCALIZED_PROMPT_LIST))
+               if (!promptuser(tmpbuffer, LOCALIZED_PROMPT_LIST))
                   {
                   // Halt when done
                   err_logo(STOP_ERROR, NIL);
                   }
+               g_ReadBuffer.AppendString(tmpbuffer);
                break;
 
             case INPUTMODE_Pause:
-               if (!promptuser(buffer_input, LOCALIZED_PROMPT_PAUSE))
+               if (!promptuser(tmpbuffer, LOCALIZED_PROMPT_PAUSE))
                   {
                   // continue when done
-                  strcpy(buffer_input, "Continue");
+                  g_ReadBuffer.AppendString(tmpbuffer);
+                  g_ReadBuffer.AppendString("Continue");
+                  }
+               else
+                  {
+                  g_ReadBuffer.AppendString(tmpbuffer);
                   }
                break;
 
              case INPUTMODE_None:
-                if (!promptuser(buffer_input, LOCALIZED_PROMPT_INPUT))
+                if (!promptuser(tmpbuffer, LOCALIZED_PROMPT_INPUT))
                    {
                    // Halt when done
                    err_logo(STOP_ERROR, NIL);
                    }
+                g_ReadBuffer.AppendString(tmpbuffer);
                 break;
             }
 
          check_stop(true);
-         strcat(buffer_input, "\n");
-         buffer_length = strlen(buffer_input);
-         buffer_index = 0;
+         g_ReadBuffer.AppendChar('\n');
          }
-      c = buffer_input[buffer_index++];
+
+      c = g_ReadBuffer.PopChar();
       }
-#ifdef ecma
+
    return ecma_clear(c);
-#else
-   return c;
-#endif
    }
 
 static
