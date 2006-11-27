@@ -23,18 +23,14 @@
 
 const unsigned int CN_CLICKED = 1;     // size control notifications
 
-DEFINE_RESPONSE_TABLE1(TSizeControl, TControl)
-EV_WM_LBUTTONDOWN,
-EV_WM_PAINT,
-END_RESPONSE_TABLE;
 
 TSizeControl::TSizeControl(
-   TWindow *parent, 
-   int resId, 
-   TColor size
+   TWindow *     Parent, 
+   int           ResId, 
+   const TSize & OutputSize
    )
-   : TControl(parent, resId), 
-     Size(size)
+   : TControl(Parent, ResId), 
+     m_Size(OutputSize)
    {
    DisableTransfer();
    }
@@ -46,7 +42,7 @@ TSizeControl::TSizeControl(
 void TSizeControl::EvPaint()
    {
    TPaintDC dc(*this);
-   TPen pen(TColor(0, 0, 0), Size.Red());
+   TPen pen(TColor(0, 0, 0), m_Size.X());
    TRect rect(GetClientRect());
 
    dc.FillRect(rect, TBrush(TColor(255, 255, 255)));
@@ -56,22 +52,24 @@ void TSizeControl::EvPaint()
    //   dc.Rectangle(rect);
    }
 
-void TSizeControl::SetSize(TColor size)
+void TSizeControl::SetSize(const TSize & NewSize)
    {
-   Size = size;
+   m_Size = NewSize;
    Invalidate();
    }
 
 UINT TSizeControl::Transfer(void *buffer, TTransferDirection direction)
    {
-
    if (direction == tdGetData)
-      memcpy(buffer, &Size, sizeof Size);
-
+      {
+      memcpy(buffer, &m_Size, sizeof m_Size);
+      }
    else if (direction == tdSetData)
-      memcpy(&Size, buffer, sizeof Size);
+      {
+      memcpy(&m_Size, buffer, sizeof m_Size);
+      }
 
-   return sizeof Size;
+   return sizeof m_Size;
    }
 
 //
@@ -82,19 +80,13 @@ void TSizeControl::EvLButtonDown(UINT, TPoint &)
    Parent->SendNotification(Attr.Id, CN_CLICKED, HWindow);
    }
 
+DEFINE_RESPONSE_TABLE1(TSizeControl, TControl)
+  EV_WM_LBUTTONDOWN,
+  EV_WM_PAINT,
+END_RESPONSE_TABLE;
+
 //----------------------------------------------------------------------------
 
-DEFINE_RESPONSE_TABLE1(TSizeDialog, TDialog)
-EV_CHILD_NOTIFY(ID_SIZE1, CN_CLICKED, ClickFmControl1),
-EV_CHILD_NOTIFY(ID_SIZE2, CN_CLICKED, ClickFmControl2),
-EV_CHILD_NOTIFY(ID_SIZE3, CN_CLICKED, ClickFmControl3),
-EV_CHILD_NOTIFY(ID_SIZE4, CN_CLICKED, ClickFmControl4),
-EV_CHILD_NOTIFY(ID_SIZE5, CN_CLICKED, ClickFmControl5),
-EV_CHILD_NOTIFY(ID_SIZE6, CN_CLICKED, ClickFmControl6),
-EV_CHILD_NOTIFY(ID_SIZE7, CN_CLICKED, ClickFmControl7),
-EV_CHILD_NOTIFY(ID_SIZE8, CN_CLICKED, ClickFmControl8),
-EV_SB_ENDSCROLL(ID_SIZEBAR, SetSizeFmSlider),
-END_RESPONSE_TABLE;
 
 static void DisableChildTransfer(TWindow *w, void *)
    {
@@ -102,28 +94,28 @@ static void DisableChildTransfer(TWindow *w, void *)
    }
 
 TSizeDialog::TSizeDialog(
-   TWindow * Parent, 
-   TColor  & Size
+   TWindow *       Parent, 
+   TSize   &       OutputSize
    )
    : TDialog(Parent, "SIZEDIALOG")
    {
-   new TSizeControl(this, ID_SIZE1, TColor(1, 1, 000));
-   new TSizeControl(this, ID_SIZE2, TColor(2, 2, 000));
-   new TSizeControl(this, ID_SIZE3, TColor(3, 3, 000));
-   new TSizeControl(this, ID_SIZE4, TColor(4, 4, 000));
-   new TSizeControl(this, ID_SIZE5, TColor(6, 6, 000));
-   new TSizeControl(this, ID_SIZE6, TColor(8, 8, 000));
-   new TSizeControl(this, ID_SIZE7, TColor(16, 16, 000));
-   new TSizeControl(this, ID_SIZE8, TColor(32, 32, 000));
+   new TSizeControl(this, ID_SIZE1, TSize(1, 1));
+   new TSizeControl(this, ID_SIZE2, TSize(2, 2));
+   new TSizeControl(this, ID_SIZE3, TSize(3, 3));
+   new TSizeControl(this, ID_SIZE4, TSize(4, 4));
+   new TSizeControl(this, ID_SIZE5, TSize(6, 6));
+   new TSizeControl(this, ID_SIZE6, TSize(8, 8));
+   new TSizeControl(this, ID_SIZE7, TSize(16, 16));
+   new TSizeControl(this, ID_SIZE8, TSize(32, 32));
 
-   SizeBar = new TScrollBar(this, ID_SIZEBAR);
+   m_SizeBar = new TScrollBar(this, ID_SIZEBAR);
 
    ForEach(DisableChildTransfer);
 
-   SelSize = new TSizeControl(this, ID_SELSIZE, Size);
-   SelSize->EnableTransfer();
+   m_SelSize = new TSizeControl(this, ID_SELSIZE, OutputSize);
+   m_SelSize->EnableTransfer();
 
-   TransferBuffer = &Size;
+   TransferBuffer = &OutputSize;
    }
 
 // Handlers for each custom control
@@ -166,8 +158,8 @@ void TSizeDialog::SetSizeFmControl(UINT Id)
    TSizeControl *control = TYPESAFE_DOWNCAST(ChildWithId(Id), TSizeControl);
    if (control)
       {
-      TColor size = control->GetSize();
-      SelSize->SetSize(size);
+      const TSize & size = control->GetSize();
+      m_SelSize->SetSize(size);
       UpdateBars(size);
       }
    }
@@ -175,16 +167,14 @@ void TSizeDialog::SetSizeFmControl(UINT Id)
 // Update the selected size control with the current slider values
 void TSizeDialog::SetSizeFmSlider()
    {
-   SelSize->SetSize(TColor(
-         SizeBar->GetPosition(),
-         SizeBar->GetPosition(),
-         SizeBar->GetPosition()));
+   int width = m_SizeBar->GetPosition();
+   m_SelSize->SetSize(TSize(width, width));
    }
 
 void TSizeDialog::SetupWindow()
    {
    TDialog::SetupWindow();
-   UpdateBars(SelSize->GetSize());
+   UpdateBars(m_SelSize->GetSize());
    }
 
 void TSizeDialog::TransferData(TTransferDirection transferFlag)
@@ -192,13 +182,25 @@ void TSizeDialog::TransferData(TTransferDirection transferFlag)
    TDialog::TransferData(transferFlag);
    if (transferFlag == tdSetData) 
       {
-      UpdateBars(SelSize->GetSize());
+      UpdateBars(m_SelSize->GetSize());
       }
    }
 
-void TSizeDialog::UpdateBars(const TColor & Size)
+void TSizeDialog::UpdateBars(const TSize & NewSize)
    {
-   SizeBar->SetRange(1, 32);
-   SizeBar->SetPosition(Size.Red());
+   m_SizeBar->SetRange(1, 32);
+   m_SizeBar->SetPosition(NewSize.X());
    }
 
+
+DEFINE_RESPONSE_TABLE1(TSizeDialog, TDialog)
+  EV_CHILD_NOTIFY(ID_SIZE1, CN_CLICKED, ClickFmControl1),
+  EV_CHILD_NOTIFY(ID_SIZE2, CN_CLICKED, ClickFmControl2),
+  EV_CHILD_NOTIFY(ID_SIZE3, CN_CLICKED, ClickFmControl3),
+  EV_CHILD_NOTIFY(ID_SIZE4, CN_CLICKED, ClickFmControl4),
+  EV_CHILD_NOTIFY(ID_SIZE5, CN_CLICKED, ClickFmControl5),
+  EV_CHILD_NOTIFY(ID_SIZE6, CN_CLICKED, ClickFmControl6),
+  EV_CHILD_NOTIFY(ID_SIZE7, CN_CLICKED, ClickFmControl7),
+  EV_CHILD_NOTIFY(ID_SIZE8, CN_CLICKED, ClickFmControl8),
+  EV_SB_ENDSCROLL(ID_SIZEBAR, SetSizeFmSlider),
+END_RESPONSE_TABLE;

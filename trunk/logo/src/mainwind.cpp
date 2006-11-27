@@ -2395,19 +2395,18 @@ void TMainFrame::CMSetCommanderFont()
 
 void TMainFrame::CMSetPenSize()
    {
-   TColor TheSize(get_pen_width(), get_pen_width(), get_pen_width());
+   TSize theSize(get_pen_width(), get_pen_height());
 
    // if OK then make change
-
-   if (TSizeDialog(this, TheSize).Execute() == IDOK)
+   if (TSizeDialog(this, theSize).Execute() == IDOK)
       {
       char logoInstruction[256];
 
       sprintf(
           logoInstruction,
           "SETPENSIZE [%d %d]",
-          TheSize.Red(),
-          TheSize.Green());
+          theSize.X(),
+          theSize.Y());
 
       RunLogoInstructionFromGui(logoInstruction);
       }

@@ -1,21 +1,19 @@
-//----------------------------------------------------------------------------
-// ObjectWindows - (C) Copyright 1991, 1993 by Borland International
-//----------------------------------------------------------------------------
 #ifndef __SIZEDLG_H
 #define __SIZEDLG_H
 
 class TSizeControl : public TControl
    {
    public:
-   TSizeControl(TWindow* parent, int resId, TColor size);
-   void SetSize(TColor size);
-   TColor GetSize() const
+   TSizeControl(TWindow* parent, int resId, const TSize & Size);
+   void SetSize(const TSize & NewSize);
+
+   const TSize & GetSize() const
       {
-      return Size;
+      return m_Size;
       }
 
    private:
-   TColor Size;
+   TSize m_Size;
 
    char * GetClassName()
       {
@@ -36,16 +34,16 @@ class TSizeControl : public TControl
 class TSizeDialog : public TDialog
    {
    public:
-   TSizeDialog(TWindow* parent, TColor& size);
+   TSizeDialog(TWindow* Parent, TSize & OutputSize);
 
    protected:
-   TScrollBar*   SizeBar;
-   TSizeControl* SelSize;
+   TScrollBar*   m_SizeBar;
+   TSizeControl* m_SelSize;
 
    void SetupWindow();
    void TransferData(TTransferDirection direction);
 
-   void UpdateBars(const TColor & Size);
+   void UpdateBars(const TSize & Size);
 
    void ClickFmControl1();
    void ClickFmControl2();
