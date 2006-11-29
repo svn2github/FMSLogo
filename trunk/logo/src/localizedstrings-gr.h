@@ -337,7 +337,7 @@
 #define LOCALIZED_ABOUTFMS_SPECIALTHANKS       "Ευχαριστούμε τους Yehuda Katz (yehuka@softhome.net)\nκαι Erich Neuwirth (erich.neuwirth@univie.ac.at)" // 
 #define LOCALIZED_ABOUTFMS_GPL                 "Η "LOCALIZED_GENERAL_PRODUCTNAME" είναι ελεύθερο λογισμικό\nΔείτε τη GNU Public License" // I dared to add a string ("H ") before the PRODUCTNAME constant :P
 #define LOCALIZED_ABOUTFMS_NEWSGROUP           "News Group στο Διαδίκτυο: comp.lang.logo\nΕπισκεφθείτε το Logo-Forum στο\nhttp:\x2F/groups.yahoo.com/group/LogoForum/" // 
-#define LOCALIZED_ABOUTFMS_MULTIMEDIALOGIC     "Για να μάθετε το εσωτερικό το υπολογιστή,\nδοκιμάστε τη MultiMedia Logic της Softronics, Inc." // 
+#define LOCALIZED_ABOUTFMS_MULTIMEDIALOGIC     "Μετάφραση στα Ελληνικά:\nΘοδωρής Χατζηγιαννάκης (teo64x@yahoo.gr)" // 
 #define LOCALIZED_ABOUTFMS_CORE                "Πυρήνας από τον Brian Harvey (bh@cs.berkeley.edu)\nUniversity of California Berkeley" // 
 #define LOCALIZED_ABOUTFMS_OK                  LOCALIZED_GENERAL_OKBUTTON // 
 
