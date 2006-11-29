@@ -16,29 +16,25 @@ TO BENCHMARK.RESIZECONSOLE :width :height
 END
 
 
-TO BENCHMARK.NONTAILRECURSIVECOUNT :depth
+TO BENCHMARK.NONTAILRECURSIVEADD :a :b
 
    ; base-case
-   if :depth = 0  [ output 0 ]
+   if :b = 0  [ output :a ]
 
-   ; call this recursively
-   OUTPUT (1 + BENCHMARK.NONTAILRECURSIVECOUNT (:depth - 1))
+   ; call this non-tail recursively
+   OUTPUT (1 + BENCHMARK.NONTAILRECURSIVEADD :a (:b - 1))
 
 END
 
 
-TO BENCHMARK.TAILRECURSIVECOUNT.ITERATE :depth :accumulator
+TO BENCHMARK.TAILRECURSIVEADD :a :b
 
    ; base-case
-   if :depth = 0  [ output :accumulator ]
+   if :b = 0  [ output :a ]
 
-   ; call this recursively
-   OUTPUT BENCHMARK.TAILRECURSIVECOUNT.ITERATE (:depth - 1) (:accumulator + 1)
+   ; call this tail recursively
+   OUTPUT BENCHMARK.TAILRECURSIVEADD (:a + 1) (:b - 1)
 
-END
-
-TO BENCHMARK.TAILRECURSIVECOUNT :depth
-   OUTPUT BENCHMARK.TAILRECURSIVECOUNT.ITERATE :depth 0
 END
 
 
@@ -51,8 +47,8 @@ TO BENCHMARK
    BENCHMARK.RESIZECONSOLE 600 800
 
    ; time the tail-recurision optimization 
-   IGNORE TIMECOMMAND [BENCHMARK.TAILRECURSIVECOUNT    1000000 ]
-   IGNORE TIMECOMMAND [BENCHMARK.NONTAILRECURSIVECOUNT 1000000 ]
+   IGNORE TIMECOMMAND [BENCHMARK.TAILRECURSIVEADD    0 1000000 ]
+   IGNORE TIMECOMMAND [BENCHMARK.NONTAILRECURSIVEADD 0 1000000 ]
 
    ; time creating/manipulating a large list
    IGNORE TIMECOMMAND [REVERSE ISEQ 1 300000 ]
