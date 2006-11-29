@@ -361,6 +361,7 @@ Part III) Special Thanks:
     Theodoros Chatzigiannakis
     Jim Foster
     Juan J. Paredes G.
+    Andreas Micheler
 
   Special thanks to:
     George Mills
