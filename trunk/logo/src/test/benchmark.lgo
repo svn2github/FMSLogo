@@ -22,26 +22,23 @@ TO BENCHMARK.NONTAILRECURSIVECOUNT :depth
    if :depth = 0  [ output 0 ]
 
    ; call this recursively
-   MAKE "count 1 + BENCHMARK.NONTAILRECURSIVECOUNT :depth - 1 
+   OUTPUT (1 + BENCHMARK.NONTAILRECURSIVECOUNT (:depth - 1))
 
-   ; put some code after the recursive call
-   MAKE "something.to.break.tail.recursion "true
+END
 
-   OUTPUT :count
+
+TO BENCHMARK.TAILRECURSIVECOUNT.ITERATE :depth :accumulator
+
+   ; base-case
+   if :depth = 0  [ output :accumulator ]
+
+   ; call this recursively
+   OUTPUT BENCHMARK.TAILRECURSIVECOUNT.ITERATE (:depth - 1) (:accumulator + 1)
 
 END
 
 TO BENCHMARK.TAILRECURSIVECOUNT :depth
-
-   ; put some code before the recursive call
-   MAKE "something.that.does.not.break.tail.recursion "true
-
-   ; base-case
-   if :depth = 0  [ output 0 ]
-
-   ; call this recursively
-   OUTPUT 1 + BENCHMARK.TAILRECURSIVECOUNT :depth - 1 
-
+   OUTPUT BENCHMARK.TAILRECURSIVECOUNT.ITERATE :depth 0
 END
 
 
