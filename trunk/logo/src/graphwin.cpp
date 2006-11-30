@@ -1885,14 +1885,19 @@ NODE *lturtle(NODE *)
    {
    ASSERT_TURTLE_INVARIANT
 
+   int active_turtle;
    if (turtle_which >= TURTLES - TURTLEN)
       {
-      return make_intnode(-(turtle_which - (TURTLES - (TURTLEN+1))));
+      // this is one of the special turtles (below 0)
+      active_turtle = -(turtle_which - (TURTLES - (TURTLEN+1)));
       }
    else
       {
-      return make_intnode(turtle_which);
+      // this is a normal turtle
+      active_turtle = turtle_which;
       }
+
+   return make_intnode(active_turtle);
    }
 
 NODE *lturtles(NODE *)
