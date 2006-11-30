@@ -103,6 +103,7 @@ LOAD "status.lgo
 LOAD "type.lgo
 LOAD "zoom.lgo
 LOAD "bitblock.lgo
+LOAD "turtle.lgo
 
 TO TESTALL
 
@@ -154,6 +155,7 @@ TO TESTALL
   ACTIVEAREATEST     ; from activearea.lgo
   BITMAPTEST         ; from bitmap.lgo
   BITBLOCKTEST       ; from bitblock.lgo
+  TURTLETEST         ; from turtle.lgo
   FORMTEST           ; from form.lgo
   PRINTTEST          ; from print.lgo
   EDITORTEST         ; from editor.lgo 
