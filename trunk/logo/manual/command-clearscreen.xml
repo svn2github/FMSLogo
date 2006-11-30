@@ -1,5 +1,5 @@
 <section id="command-clearscreen">
-    <title>CLEARSCREEN</title>
+<title>CLEARSCREEN</title>
 <indexterm><primary>CLEARSCREEN</primary></indexterm>
 
 <variablelist>
@@ -14,8 +14,8 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-Erases the graphics window and sends the turtle to its initial position and heading.
-This is equivalent to executing <link linkend="command-home">HOME</link> and <link linkend="command-clean">CLEAN</link> together.
+Fills the screen window with <link linkend="command-screencolor">SCREENCOLOR</link> and sends the turtle to its initial position and heading.
+CLEARSCREEN also removes all turtles created with <link linkend="command-setturtle">SETTURTLE</link> so that there is only one turtle.
 </para>
 </listitem>
 </varlistentry>
@@ -23,12 +23,18 @@ This is equivalent to executing <link linkend="command-home">HOME</link> and <li
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>FORWARD 100
+<programlisting><userinput>FORWARD 100
 CLEARSCREEN</userinput>
 </programlisting>
 </listitem>
 </varlistentry>
 
-</variablelist>
+<varlistentry><term>See Also</term>
+<listitem><simplelist>
+<member><link linkend="command-home">HOME</link></member>
+<member><link linkend="command-setscreencolor">SETSCREENCOLOR</link></member>
+</simplelist></listitem>
+</varlistentry>
 
+</variablelist>
 </section>
