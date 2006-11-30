@@ -1820,7 +1820,7 @@ NODE *lsetturtle(NODE *arg)
    {
    ASSERT_TURTLE_INVARIANT
 
-   NODE * val = numeric_arg(arg);
+   NODE * val = integer_arg(arg);
 
    if (NOT_THROWING)
       {

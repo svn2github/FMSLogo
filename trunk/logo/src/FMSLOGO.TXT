@@ -21,6 +21,8 @@ Part I) Kit Description/Location (http://sourceforge.net/projects/fmslogo):
 Part II) New features/bugs fixed:
 
   * Added for 6.12.0,
+    o Fix bug #1605816: SETTURTLE behaves correctly when it inputs a floating
+      point value.
     o Fix bug #1602846: Uninstaller now exits if FMSLogo is running.
     o Fix bug #1602435: Fix memory corruption in directory procedures 
       (POPDIR, CHKDIR, etc.) and make them print to the commander again.
