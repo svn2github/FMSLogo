@@ -821,7 +821,6 @@ TMainFrame::TMainFrame(
    strcpy(BitmapName, "logo.bmp");
    strcpy(FileName, "logo.lgo");
 
-   AssignMenu("IDM_COMMANDS");
 
    /* check if a palette exists */
    HDC screen = CreateDC("DISPLAY", NULL, NULL, NULL);
@@ -2011,10 +2010,127 @@ bool TMainFrame::MyPopupInput(char *Output, const char *Prompt)
       }
    }
 
+struct MENUITEM {
+   const char *  MenuText;
+   UINT          MenuId;
+};
+
+static
+void
+FillMenu(
+   TMenu &           Menu,
+   const MENUITEM *  MenuItems,
+   size_t            MenuItemsLength
+   )
+   {
+   for (size_t i = 0; i < MenuItemsLength; i++)
+      {
+      if (MenuItems[i].MenuText != NULL)
+         {
+         Menu.AppendMenu(
+            MF_STRING, 
+            MenuItems[i].MenuId,
+            MenuItems[i].MenuText);
+         }
+      else
+         {
+         Menu.AppendMenu(
+            MF_SEPARATOR, 
+            0, 
+            NULL);
+         }
+      }
+   }
+
+static
+void
+AppendPopupMenu(
+   TMenu &           MainMenu,
+   const char *      PopupMenuText,
+   const MENUITEM *  PopupMenuItems,
+   size_t            PopupMenuItemsLength
+   )
+   {
+   // create the popup menu
+   TMenu popupMenu(NoAutoDelete);
+
+   // fill the popup menu with its items
+   FillMenu(popupMenu, PopupMenuItems, PopupMenuItemsLength);
+
+   // append the popup menu to the main menu
+   MainMenu.AppendMenu(MF_POPUP, popupMenu, PopupMenuText);
+   }
 
 void TMainFrame::SetupWindow()
    {
    TDecoratedFrame::SetupWindow();
+
+   //
+   // Construct the main menu
+   //
+   static const MENUITEM fileMenuItems[] = {
+      {LOCALIZED_FILE_NEW,    CM_FILENEW},
+      {LOCALIZED_FILE_LOAD,   CM_FILELOAD},
+      {LOCALIZED_FILE_OPEN,   CM_FILEOPEN},
+      {LOCALIZED_FILE_SAVE,   CM_FILESAVE},
+      {LOCALIZED_FILE_SAVEAS, CM_FILESAVEAS},
+      {0},
+      {LOCALIZED_FILE_EDIT,   CM_FILEEDIT},
+      {LOCALIZED_FILE_ERASE,  CM_FILEERASE},
+      {0},
+      {LOCALIZED_FILE_EXIT,   CM_EXIT},
+   };
+
+   static const MENUITEM bitmapMenuItems[] = {
+      {LOCALIZED_BITMAP_NEW,           CM_BITMAPNEW},
+      {LOCALIZED_BITMAP_LOAD,          CM_BITMAPOPEN},
+      {LOCALIZED_BITMAP_SAVE,          CM_BITMAPSAVE},
+      {LOCALIZED_BITMAP_SAVEAS,        CM_BITMAPSAVEAS},
+      {0},
+      {LOCALIZED_BITMAP_PRINT,         CM_BITMAPPRINT},
+      {LOCALIZED_BITMAP_PRINTERSETUP,  CM_BITMAPPRINTERSETUP},
+      {0},
+      {LOCALIZED_BITMAP_ACTIVEAREA,    CM_BITMAPPRINTERAREA},
+   };
+
+   static const MENUITEM setMenuItems[] = {
+      {LOCALIZED_SET_PENSIZE,       CM_SETPENSIZE},
+      {0},
+      {LOCALIZED_SET_LABELFONT,     CM_SETFONT},
+      {LOCALIZED_SET_COMMANDERFONT, CM_SETCOMMANDERFONT},
+      {0},
+      {LOCALIZED_SET_PENCOLOR,      CM_SETPENCOLOR},
+      {LOCALIZED_SET_FLOODCOLOR,    CM_SETFLOODCOLOR},
+      {LOCALIZED_SET_SCREENCOLOR,   CM_SETSCREENCOLOR},
+   };
+
+   static const MENUITEM zoomMenuItems[] = {
+      {LOCALIZED_ZOOM_IN,     CM_ZOOMIN},
+      {LOCALIZED_ZOOM_OUT,    CM_ZOOMOUT},
+      {LOCALIZED_ZOOM_NORMAL, CM_ZOOMNORMAL},
+   };
+ 
+   static const MENUITEM helpMenuItems[] = {
+      {LOCALIZED_HELP_INDEX,         CM_HELP},
+      {LOCALIZED_HELP_MCI,           CM_HELPMCI},
+      {LOCALIZED_HELP_HELP,          CM_HELPHELP},
+      {0},
+      {LOCALIZED_HELP_TUTORIAL,      CM_HELPTUTORIAL},
+      {LOCALIZED_HELP_DEMO,          CM_HELPDEMO},
+      {LOCALIZED_HELP_EXAMPLE,       CM_HELPEXAMPLES},
+      {LOCALIZED_HELP_RELEASENOTES,  CM_HELPRELEASENOTES},
+      {0},
+      {LOCALIZED_HELP_ABOUTFMSLOGO,  CM_HELPABOUT},
+      {LOCALIZED_HELP_MS,            CM_HELPABOUTMS},
+   };
+
+   TMenu mainMenu(CreateMenu());
+   AppendPopupMenu(mainMenu, LOCALIZED_FILE,   fileMenuItems,   ARRAYSIZE(fileMenuItems));
+   AppendPopupMenu(mainMenu, LOCALIZED_BITMAP, bitmapMenuItems, ARRAYSIZE(bitmapMenuItems));
+   AppendPopupMenu(mainMenu, LOCALIZED_SET,    setMenuItems,    ARRAYSIZE(setMenuItems));
+   AppendPopupMenu(mainMenu, LOCALIZED_ZOOM,   zoomMenuItems,   ARRAYSIZE(zoomMenuItems));
+   AppendPopupMenu(mainMenu, LOCALIZED_HELP,   helpMenuItems,   ARRAYSIZE(helpMenuItems));
+   SetMenu(mainMenu);
 
    PaneSplitterWindow->SetSplitterCushion(MIN_COMMANDER_HEIGHT);
    PaneSplitterWindow->SetSplitterWidth(DEFAULT_SPLITTER_WIDTH);
