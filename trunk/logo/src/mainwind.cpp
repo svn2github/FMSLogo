@@ -2010,12 +2010,6 @@ bool TMainFrame::MyPopupInput(char *Output, const char *Prompt)
       }
    }
 
-struct MENUITEM {
-   const char *  MenuText;
-   UINT          MenuId;
-};
-
-static
 void
 FillMenu(
    TMenu &           Menu,
@@ -2042,7 +2036,6 @@ FillMenu(
       }
    }
 
-static
 void
 AppendPopupMenu(
    TMenu &           MainMenu,

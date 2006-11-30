@@ -21,8 +21,6 @@
 
 #include "allwind.h"
 
-/* File edit Window members */
-
 TMyFileWindow::TMyFileWindow(
    TWindow *AParent,
    LPCSTR   ATitle,
@@ -35,7 +33,6 @@ TMyFileWindow::TMyFileWindow(
     FileName(NULL),
     check_for_errors(check_for_errors)
    {
-   AssignMenu("IDM_FILECOMMANDS");
    Attr.AccelTable = "IDM_FILECOMMANDS";
    FileName = AFileName ? strnewdup(AFileName) : NULL;
    }
@@ -420,6 +417,57 @@ void TMyFileWindow::SetFileName(const char *fileName)
 void TMyFileWindow::SetupWindow()
    {
    TEditWindow::SetupWindow();
+
+   //
+   // Construct the main menu
+   //
+   static const MENUITEM fileMenuItems[] = {
+      {LOCALIZED_EDITOR_FILE_SAVEANDEXIT,     CM_FILESAVEANDEXIT},
+      {LOCALIZED_EDITOR_FILE_SAVETOWORKSPACE, CM_FILESAVETOWORKSPACE},
+      {LOCALIZED_EDITOR_FILE_PRINT,           CM_FILEPRINT},
+      {0},
+      {LOCALIZED_EDITOR_FILE_EXIT,            CM_EDALLEXIT},
+   };
+
+   static const MENUITEM editMenuItems[] = {
+      {LOCALIZED_EDITOR_EDIT_UNDO,      CM_EDITUNDO},
+      {0},
+      {LOCALIZED_EDITOR_EDIT_CUT,       CM_EDITCUT},
+      {LOCALIZED_EDITOR_EDIT_COPY,      CM_EDITCOPY},
+      {LOCALIZED_EDITOR_EDIT_PASTE,     CM_EDITPASTE},
+      {LOCALIZED_EDITOR_EDIT_DELETE,    CM_EDITDELETE},
+      {0},
+      {LOCALIZED_EDITOR_EDIT_CLEARALL,  CM_EDITCLEAR},
+      {LOCALIZED_EDITOR_EDIT_SELECTALL, CM_EDITSELECTALL},
+   };
+
+   static const MENUITEM searchMenuItems[] = {
+      {LOCALIZED_EDITOR_SEARCH_FIND,    CM_EDITFIND},
+      {LOCALIZED_EDITOR_SEARCH_REPLACE, CM_EDITREPLACE},
+      {LOCALIZED_EDITOR_SEARCH_NEXT,    CM_EDITFINDNEXT},
+   };
+
+   static const MENUITEM setMenuItems[] = {
+      {LOCALIZED_EDITOR_SET_FONT,       CM_EDITSETFONT}
+   };
+ 
+   static const MENUITEM helpMenuItems[] = {
+      {LOCALIZED_EDITOR_HELP_INDEX,       CM_HELP},
+      {LOCALIZED_EDITOR_HELP_EDITOR,      CM_HELPEDIT},
+      {LOCALIZED_EDITOR_HELP_TOPICSEARCH, CM_HELPEDIT_TOPIC},
+   };
+
+   TMenu mainMenu(CreateMenu());
+   AppendPopupMenu(mainMenu, LOCALIZED_EDITOR_FILE,   fileMenuItems,   ARRAYSIZE(fileMenuItems));
+   AppendPopupMenu(mainMenu, LOCALIZED_EDITOR_EDIT,   editMenuItems,   ARRAYSIZE(editMenuItems));
+   AppendPopupMenu(mainMenu, LOCALIZED_EDITOR_SEARCH, searchMenuItems, ARRAYSIZE(searchMenuItems));
+   AppendPopupMenu(mainMenu, LOCALIZED_EDITOR_SET,    setMenuItems,    ARRAYSIZE(setMenuItems));
+   mainMenu.AppendMenu(MF_STRING, CM_TEST, LOCALIZED_EDITOR_TEST);
+   AppendPopupMenu(mainMenu, LOCALIZED_EDITOR_HELP,   helpMenuItems,   ARRAYSIZE(helpMenuItems));
+   SetMenu(mainMenu);
+
+
+
    SetFileName(FileName);
 
    if (FileName && !Read())

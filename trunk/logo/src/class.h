@@ -28,6 +28,12 @@ const int DEFAULT_SPLITTER_WIDTH   = 5;
 // what is this?  Some kind of border?
 const int LL = 1;
 
+struct MENUITEM 
+   {
+   const char *  MenuText;
+   UINT          MenuId;
+   };
+
 struct Color
    {
    int   red;
