@@ -1,6 +1,8 @@
-// File ibmterm.cpp
 #include "3dsolid.h"
 
+#define ARRAYSIZE(ARRAY) (sizeof(ARRAY) / sizeof(*(ARRAY)))
+
+// File ibmterm.cpp
 extern void single_step_box(NODE *the_line);
 extern void checkqueue(void);
 extern void emptyqueue(void);
