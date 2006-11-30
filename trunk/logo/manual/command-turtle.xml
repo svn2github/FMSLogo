@@ -1,5 +1,5 @@
 <section id="command-turtle">
-    <title>TURTLE</title>
+<title>TURTLE</title>
 <indexterm><primary>TURTLE</primary></indexterm>
 
 <variablelist>
@@ -10,6 +10,7 @@
 </listitem>
 </varlistentry>
 
+
 <varlistentry><term>Description</term>
 <listitem>
 <para>
@@ -19,15 +20,22 @@ Use <link linkend="command-setturtle">SETTURTLE</link> to select a turtle.
 </listitem>
 </varlistentry>
 
+
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>SETTURTLE 8
+<programlisting><userinput>SETTURTLE 8
 SHOW TURTLE</userinput>
 8
 </programlisting>
 </listitem>
 </varlistentry>
 
-</variablelist>
 
+<varlistentry><term>See Also</term>
+<listitem><simplelist>
+<member><link linkend="command-turtles">TURTLES</link></member>
+</simplelist></listitem>
+</varlistentry>
+
+</variablelist>
 </section>
