@@ -1,5 +1,5 @@
 <section id="command-turtles">
-    <title>TURTLES</title>
+<title>TURTLES</title>
 <indexterm><primary>TURTLES</primary></indexterm>
 
 <variablelist>
@@ -10,6 +10,7 @@
 </listitem>
 </varlistentry>
 
+
 <varlistentry><term>Description</term>
 <listitem>
 <para>
@@ -18,9 +19,10 @@ Outputs the maximum turtle that has been selected since the last time you execut
 </listitem>
 </varlistentry>
 
+
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>CLEARSCREEN
+<programlisting><userinput>CLEARSCREEN
 (SHOW TURTLE TURTLES)</userinput>
 0 0
 <userinput>SETTURTLE 8
@@ -36,6 +38,13 @@ Outputs the maximum turtle that has been selected since the last time you execut
 </listitem>
 </varlistentry>
 
-</variablelist>
 
+<varlistentry><term>See Also</term>
+<listitem><simplelist>
+<member><link linkend="command-turtle">TURTLE</link></member>
+<member><link linkend="command-setturtle">SETTURTLE</link></member>
+</simplelist></listitem>
+</varlistentry>
+
+</variablelist>
 </section>
