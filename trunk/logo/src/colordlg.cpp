@@ -191,6 +191,12 @@ void TColorDialog::SetupWindow()
    {
    TDialog::SetupWindow();
    UpdateBars(m_SelColor->GetColor());
+
+   SetDlgItemText(ID_SETCOLOR_RED,    LOCALIZED_SETCOLOR_RED);
+   SetDlgItemText(ID_SETCOLOR_GREEN,  LOCALIZED_SETCOLOR_GREEN);
+   SetDlgItemText(ID_SETCOLOR_BLUE,   LOCALIZED_SETCOLOR_BLUE);
+   SetDlgItemText(IDOK,               LOCALIZED_SETCOLOR_OK);
+   SetDlgItemText(IDCANCEL,           LOCALIZED_SETCOLOR_CANCEL);
    }
 
 void TColorDialog::TransferData(TTransferDirection TransferFlag)

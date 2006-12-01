@@ -101,6 +101,10 @@
 
 #define ID_SETPENSIZE_SIZE           IDC_BASE + 101
 
+#define ID_SETCOLOR_RED              IDC_BASE + 102
+#define ID_SETCOLOR_GREEN            IDC_BASE + 103
+#define ID_SETCOLOR_BLUE             IDC_BASE + 104
+
 #define CM_CONTROLHALT          CMD_BASE + 0
 #define CM_CONTROLEXECUTE       CMD_BASE + 1
 
