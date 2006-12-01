@@ -66,21 +66,34 @@ void TMyCommandWindow::SetupWindow()
    Listbox.Create();
    Listbox.SetWindowFont(Font, TRUE);
 
+   // Create the windows for the buttons and set the text.
+   // We set the text so that Windows XP will use Unicode text,
+   // instead of the ANSI text in the resource file.
+   // If we don't do this, the text uses the wrong code page and
+   // Greek looks like gibberish.
    TraceButton.Create();
+   UpdateTraceButtonState();
 
    ResetButton.Create();
+   ResetButton.SetWindowText(LOCALIZED_COMMANDER_RESET);
 
    PauseButton.Create();
+   PauseButton.SetWindowText(LOCALIZED_COMMANDER_PAUSE);
 
    HaltButton.Create();
+   HaltButton.SetWindowText(LOCALIZED_COMMANDER_HALT);
 
    StatusButton.Create();
+   UpdateStatusButtonState();
 
    YieldButton.Create();
+   UpdateYieldButtonState();
 
    EdallButton.Create();
+   EdallButton.SetWindowText(LOCALIZED_COMMANDER_EDALL);
 
    ExecuteButton.Create();
+   ExecuteButton.SetWindowText(LOCALIZED_COMMANDER_EXECUTE);
 
    RecalculateLayout();
    }

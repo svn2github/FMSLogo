@@ -2625,10 +2625,43 @@ void TMainFrame::CMHelpReleaseNotes()
    OpenFileWithDefaultApplication(HWindow, szFileName);
    }
 
+// Set the text of each dialog element programmatically, rather 
+// than in the resource files so that that Windows XP uses Unicode,
+// instead of the system code page.  This allows Greek to show up
+// in Greek.
+class CAboutFmsLogoDialog : public TDialog
+{
+public:
+   CAboutFmsLogoDialog(TWindow * Parent) : 
+      TDialog(Parent, "ABOUTBOX")
+      {
+      SetCaption(LOCALIZED_ABOUTFMS);
+      }
+
+protected:
+   void SetupWindow()
+      {
+      TDialog::SetupWindow();
+
+      // set the text in all of the static controls
+      SetDlgItemText(ID_ABOUTFMS_VERSION,         LOCALIZED_ABOUTFMS_VERSION);
+      SetDlgItemText(ID_ABOUTFMS_GUI,             LOCALIZED_ABOUTFMS_GUI);
+      SetDlgItemText(ID_ABOUTFMS_INSTALLER,       LOCALIZED_ABOUTFMS_INSTALLER);
+      SetDlgItemText(ID_ABOUTFMS_ADVENTURE,       LOCALIZED_ABOUTFMS_ADVENTURE);
+      SetDlgItemText(ID_ABOUTFMS_SPECIALTHANKS,   LOCALIZED_ABOUTFMS_SPECIALTHANKS);
+      SetDlgItemText(ID_ABOUTFMS_GPL,             LOCALIZED_ABOUTFMS_GPL);
+      SetDlgItemText(ID_ABOUTFMS_NEWSGROUP,       LOCALIZED_ABOUTFMS_NEWSGROUP);
+      SetDlgItemText(ID_ABOUTFMS_MULTIMEDIALOGIC, LOCALIZED_ABOUTFMS_MULTIMEDIALOGIC);
+      SetDlgItemText(IDOK,                        LOCALIZED_ABOUTFMS_OK);
+      SetDlgItemText(ID_ABOUTFMS_CORE,            LOCALIZED_ABOUTFMS_CORE);
+      }
+};
+
 void TMainFrame::CMHelpAbout()
    {
-   TDialog(this, "ABOUTBOX").Execute();
+   CAboutFmsLogoDialog(this).Execute();
    }
+
 
 void TMainFrame::CMHelpAboutMS()
    {

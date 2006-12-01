@@ -86,6 +86,16 @@
 #define ID_MINIEDITCTRL         IDC_BASE + 80
 #define ID_TOLINE               IDC_BASE + 81
 
+#define ID_ABOUTFMS_VERSION          IDC_BASE + 90
+#define ID_ABOUTFMS_GUI              IDC_BASE + 91
+#define ID_ABOUTFMS_INSTALLER        IDC_BASE + 92
+#define ID_ABOUTFMS_ADVENTURE        IDC_BASE + 93
+#define ID_ABOUTFMS_SPECIALTHANKS    IDC_BASE + 94
+#define ID_ABOUTFMS_GPL              IDC_BASE + 95
+#define ID_ABOUTFMS_NEWSGROUP        IDC_BASE + 96
+#define ID_ABOUTFMS_MULTIMEDIALOGIC  IDC_BASE + 97
+#define ID_ABOUTFMS_CORE             IDC_BASE + 98
+
 #define CM_CONTROLHALT          CMD_BASE + 0
 #define CM_CONTROLEXECUTE       CMD_BASE + 1
 
