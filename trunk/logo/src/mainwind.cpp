@@ -2663,13 +2663,38 @@ void TMainFrame::CMHelpAbout()
    }
 
 
+// Set the text of each dialog element programmatically, rather 
+// than in the resource files so that that Windows XP uses Unicode,
+// instead of the system code page.  This allows Greek to show up
+// in Greek.
+class CAboutMultipleSclerosisDialog : public TDialog
+{
+public:
+   CAboutMultipleSclerosisDialog(TWindow * Parent) : 
+      TDialog(Parent, "ABOUTMSBOX")
+      {
+      SetCaption(LOCALIZED_ABOUTMS);
+      }
+
+protected:
+   void SetupWindow()
+      {
+      TDialog::SetupWindow();
+
+      // set the text in all of the static controls
+      SetDlgItemText(ID_ABOUTMS_CONSIDERDONATING, LOCALIZED_ABOUTMS_CONSIDERDONATING);
+      SetDlgItemText(ID_ABOUTMS_FMS,              LOCALIZED_ABOUTMS_FMS);
+      SetDlgItemText(IDOK,                        LOCALIZED_ABOUTMS_OK);
+      }
+};
+
 void TMainFrame::CMHelpAboutMS()
    {
-   TDialog(this, "ABOUTMSBOX").Execute();
+   CAboutMultipleSclerosisDialog(this).Execute();
    }
 
-// Execute File:Print command
 
+// Execute File:Print command
 void TMainFrame::CMBitmapPrint()
    {
    TRulerOut Printout("Logo Picture");
