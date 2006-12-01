@@ -1,30 +1,29 @@
-//----------------------------------------------------------------------------
-// ObjectWindows - (C) Copyright 1991, 1993 by Borland International
-//----------------------------------------------------------------------------
 #ifndef __COLORDLG_H
 #define __COLORDLG_H
 
 class TColorControl : public TControl
    {
  public:
-   TColorControl(TWindow * parent, int resId, TColor color);
-   virtual void SetColor(TColor color);
-   const TColor GetColor() const
+   TColorControl(TWindow * Parent, int ResourceId, const TColor & Color);
+
+   void SetColor(const TColor & NewColor);
+   const TColor & GetColor() const
       {
-      return Color;
+      return m_Color;
       }
 
  private:
-   TColor Color;
+   TColor m_Color;
+
+ protected:
 
    char *GetClassName()
       {
       return "ColorControl";
       }
 
-   UINT Transfer(void *buffer, TTransferDirection direction);
+   UINT Transfer(void *Buffer, TTransferDirection Direction);
 
- protected:
    void EvPaint();
 
    void EvLButtonDown(UINT, TPoint &);
@@ -37,19 +36,18 @@ class TColorControl : public TControl
 class TColorDialog : public TDialog
    {
  public:
-   TColorDialog(TWindow * parent, TColor & color, const char *caption);
+   TColorDialog(TWindow * Parent, TColor & OutColor, const char *Caption);
 
  protected:
-   TScrollBar *ColorBar1;
-   TScrollBar *ColorBar2;
-   TScrollBar *ColorBar3;
-   TColorControl *SelColor;
-   const char *colorcaption;
+   TScrollBar    * m_ColorBar1;
+   TScrollBar    * m_ColorBar2;
+   TScrollBar    * m_ColorBar3;
+   TColorControl * m_SelColor;
 
    void SetupWindow();
-   void TransferData(TTransferDirection direction);
+   void TransferData(TTransferDirection Direction);
 
-   virtual void UpdateBars(TColor color);
+   void UpdateBars(const TColor & NewColor);
 
    void ClickFmControl1();
    void ClickFmControl2();
@@ -67,5 +65,4 @@ class TColorDialog : public TDialog
 ;
 
 #endif // __COLORDLG_H
-
 

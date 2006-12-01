@@ -23,9 +23,12 @@
 
 const unsigned int CN_CLICKED = 1;     // color control notifications
 
-TColorControl::TColorControl(TWindow *parent, int resId, TColor color)
-   : TControl(parent, resId), 
-     Color(color)
+TColorControl::TColorControl(
+   TWindow      * Parent, 
+   int            ResourceId, 
+   const TColor & Color
+   ) : TControl(Parent, ResourceId), 
+       m_Color(Color)
    {
    DisableTransfer();
    }
@@ -41,7 +44,7 @@ void TColorControl::EvPaint()
    if (EnablePalette)
       {
       int oldentries = MyLogPalette->palNumEntries;
-      COLORREF lColor = LoadColor(GetRValue(Color), GetGValue(Color), GetBValue(Color));
+      COLORREF lColor = LoadColor(GetRValue(m_Color), GetGValue(m_Color), GetBValue(m_Color));
       OldPalette = SelectPalette(dc, ThePalette, FALSE);
       RealizePalette(dc);
 
@@ -55,28 +58,28 @@ void TColorControl::EvPaint()
       }
    else
       {
-      dc.FillRect(GetClientRect(), TBrush(Color));
+      dc.FillRect(GetClientRect(), TBrush(m_Color));
       }
    }
 
-void TColorControl::SetColor(TColor color)
+void TColorControl::SetColor(const TColor & NewColor)
    {
-   Color = color;
+   m_Color = NewColor;
    Invalidate();
    }
 
-UINT TColorControl::Transfer(void *buffer, TTransferDirection direction)
+UINT TColorControl::Transfer(void *Buffer, TTransferDirection Direction)
    {
-   if (direction == tdGetData)
+   if (Direction == tdGetData)
       {
-      memcpy(buffer, &Color, sizeof Color);
+      memcpy(Buffer, &m_Color, sizeof m_Color);
       }
-   else if (direction == tdSetData)
+   else if (Direction == tdSetData)
       {
-      memcpy(&Color, buffer, sizeof Color);
+      memcpy(&m_Color, Buffer, sizeof m_Color);
       }
 
-   return sizeof Color;
+   return sizeof m_Color;
    }
 
 //
@@ -100,9 +103,11 @@ static void DisableChildTransfer(TWindow *w, void *)
    w->DisableTransfer();
    }
 
-TColorDialog::TColorDialog(TWindow *parent, TColor &color, const char *caption)
-   : TDialog(parent, "IDD_PICKCOLOR"),
-     colorcaption(caption)
+TColorDialog::TColorDialog(
+   TWindow    * Parent,
+   TColor     & OutColor,
+   const char * Caption
+   ) : TDialog(Parent, "IDD_PICKCOLOR")
    {
    new TColorControl(this, ID_COLOR1, TColor(000, 000, 000));
    new TColorControl(this, ID_COLOR2, TColor(255, 255, 255));
@@ -113,16 +118,18 @@ TColorDialog::TColorDialog(TWindow *parent, TColor &color, const char *caption)
    new TColorControl(this, ID_COLOR7, TColor(255, 000, 255));
    new TColorControl(this, ID_COLOR8, TColor(255, 255, 000));
 
-   ColorBar1 = new TScrollBar(this, ID_COLORBAR1);
-   ColorBar2 = new TScrollBar(this, ID_COLORBAR2);
-   ColorBar3 = new TScrollBar(this, ID_COLORBAR3);
+   m_ColorBar1 = new TScrollBar(this, ID_COLORBAR1);
+   m_ColorBar2 = new TScrollBar(this, ID_COLORBAR2);
+   m_ColorBar3 = new TScrollBar(this, ID_COLORBAR3);
 
    ForEach(DisableChildTransfer);
 
-   SelColor = new TColorControl(this, ID_SELCOLOR, color);
-   SelColor->EnableTransfer();
+   m_SelColor = new TColorControl(this, ID_SELCOLOR, OutColor);
+   m_SelColor->EnableTransfer();
 
-   TransferBuffer = &color;
+   TransferBuffer = &OutColor;
+
+   SetCaption(Caption);
    }
 
 // Handlers for each custom control
@@ -165,8 +172,8 @@ void TColorDialog::SetColorFmControl(UINT Id)
    TColorControl *control = TYPESAFE_DOWNCAST(ChildWithId(Id), TColorControl);
    if (control)
       {
-      TColor color = control->GetColor();
-      SelColor->SetColor(color);
+      const TColor & color = control->GetColor();
+      m_SelColor->SetColor(color);
       UpdateBars(color);
       }
    }
@@ -174,36 +181,35 @@ void TColorDialog::SetColorFmControl(UINT Id)
 // Update the selected color control with the current slider values
 void TColorDialog::SetColorFmSlider()
    {
-   SelColor->SetColor(TColor(
-         ColorBar1->GetPosition(),
-         ColorBar2->GetPosition(),
-         ColorBar3->GetPosition()));
+   m_SelColor->SetColor(TColor(
+         m_ColorBar1->GetPosition(),
+         m_ColorBar2->GetPosition(),
+         m_ColorBar3->GetPosition()));
    }
 
 void TColorDialog::SetupWindow()
    {
    TDialog::SetupWindow();
-   UpdateBars(SelColor->GetColor());
-   SetCaption(colorcaption);
+   UpdateBars(m_SelColor->GetColor());
    }
 
-void TColorDialog::TransferData(TTransferDirection transferFlag)
+void TColorDialog::TransferData(TTransferDirection TransferFlag)
    {
-   TDialog::TransferData(transferFlag);
-   if (transferFlag == tdSetData) 
+   TDialog::TransferData(TransferFlag);
+   if (TransferFlag == tdSetData) 
       {
-      UpdateBars(SelColor->GetColor());
+      UpdateBars(m_SelColor->GetColor());
       }
    }
 
-void TColorDialog::UpdateBars(TColor color)
+void TColorDialog::UpdateBars(const TColor & NewColor)
    {
-   ColorBar1->SetRange(0, 255);
-   ColorBar2->SetRange(0, 255);
-   ColorBar3->SetRange(0, 255);
-   ColorBar1->SetPosition(color.Red());
-   ColorBar2->SetPosition(color.Green());
-   ColorBar3->SetPosition(color.Blue());
+   m_ColorBar1->SetRange(0, 255);
+   m_ColorBar2->SetRange(0, 255);
+   m_ColorBar3->SetRange(0, 255);
+   m_ColorBar1->SetPosition(NewColor.Red());
+   m_ColorBar2->SetPosition(NewColor.Green());
+   m_ColorBar3->SetPosition(NewColor.Blue());
    }
 
 
