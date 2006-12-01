@@ -9,11 +9,11 @@ fmslogo.exe : fmslogo-1033.exe
 all : fmslogo-1033.exe fmslogo-1036.exe fmslogo-1032.exe
 
 fmslogo-%.exe : FORCE
-	make -fMakefile-borland-release.mk -DLOCALECODE=$*
+	make -fMakefile-borland.mk -DLOCALECODE=$* -DBUILD=RELEASE
 	tdstrp32 $@
 
 fmslogod.exe :
-	make -fMakefile-borland-debug.mk
+	make -fMakefile-borland.mk -DBUILD=DEBUG
 
 debug : fmslogod.exe ;
 

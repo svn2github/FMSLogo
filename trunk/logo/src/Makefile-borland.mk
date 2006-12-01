@@ -22,15 +22,17 @@ TLIB    = TLib
 BRC32   = Brc32
 TASM32  = Tasm32
 
-
 #
 # Options
 #
 IDE_LinkFLAGS32 =  -LC:\BC5\LIB
 IDE_ResFLAGS32 = 
-LinkerLocalOptsAtW32_fmslogodexe =  -wdpl -went -wdup -wdef -wimt -wbdl -wsrf -wmsk -Tpe -aa -V4.0 -c -LC:\BC5\LIB
 ResLocalOptsAtW32_fmslogodexe = -l$(LOCALECODE)
 BLocalOptsAtW32_fmslogodexe = 
+
+!if "$(BUILD)"=="RELEASE"
+
+LinkerLocalOptsAtW32_fmslogodexe =  -wdpl -went -wdup -wdef -wimt -wbdl -wsrf -wmsk -Tpe -aa -V4.0 -c -LC:\BC5\LIB
 CompInheritOptsAt_fmslogodexe = -I"C:\Program Files\Help Workshop\include" -IC:\BC5\INCLUDE -DSTRICT;_OWLPCH;NDEBUG;LOCALE=$(LOCALECODE)
 LinkerInheritOptsAt_fmslogodexe = -x
 LinkerOptsAt_fmslogodexe = $(LinkerLocalOptsAtW32_fmslogodexe)
@@ -40,14 +42,24 @@ BOptsAt_fmslogodexe = $(BLocalOptsAtW32_fmslogodexe)
 ExecutableName=fmslogo-$(LOCALECODE).exe
 IntermediateDirectory=RELEASE$(LOCALECODE)
 
-#
-# Dependency List
-#
-Dep_logo32 = $(ExecutableName)
+!else
+
+LinkerLocalOptsAtW32_fmslogodexe =  -v -wdpl -went -wdup -wdef -wimt -wbdl -wsrf -wmsk -L\BC5\LIB -Tpe -aa -V4.0 -c
+CompInheritOptsAt_fmslogodexe = -I"C:\Program Files\Help Workshop\include" -IC:\BC5\INCLUDE -DSTRICT;_OWLPCH;NOASM;DEBUG;MEM_DEBUG;LOCALE=$(LOCALECODE)
+
+ExecutableName=fmslogod.exe
+IntermediateDirectory=DEBUG
+
+!endif
+
+LinkerInheritOptsAt_fmslogodexe = -x
+LinkerOptsAt_fmslogodexe = $(LinkerLocalOptsAtW32_fmslogodexe)
+ResOptsAt_fmslogodexe = $(ResLocalOptsAtW32_fmslogodexe)
+BOptsAt_fmslogodexe = $(BLocalOptsAtW32_fmslogodexe)
 
 
 # top-level target
-logo32 : BccW32.cfg $(Dep_logo32)
+logo32 : BccW32.cfg $(ExecutableName)
   echo MakeNode
 
 version.h : ..\version.mk
@@ -63,6 +75,7 @@ Dep_fmslogodexe = \
    $(IntermediateDirectory)\commanderbutton.obj\
    $(IntermediateDirectory)\commandercheckbox.obj\
    $(IntermediateDirectory)\coms.obj\
+   $(IntermediateDirectory)\debugheap.obj\
    $(IntermediateDirectory)\devwind.obj\
    $(IntermediateDirectory)\dib.obj\
    $(IntermediateDirectory)\dlgwind.obj\
@@ -124,6 +137,9 @@ $(IntermediateDirectory)\colordlg.obj+
 $(IntermediateDirectory)\commanderbutton.obj+
 $(IntermediateDirectory)\commandercheckbox.obj+
 $(IntermediateDirectory)\coms.obj+
+!if "$(BUILD)"=="DEBUG"
+$(IntermediateDirectory)\debugheap.obj+
+!endif
 $(IntermediateDirectory)\devwind.obj+
 $(IntermediateDirectory)\dib.obj+
 $(IntermediateDirectory)\dlgwind.obj+
@@ -223,6 +239,11 @@ $(IntermediateDirectory)\commandercheckbox.obj :  commandercheckbox.cpp version.
 $(IntermediateDirectory)\coms.obj :  coms.cpp version.h
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ coms.cpp
+|
+
+$(IntermediateDirectory)\debugheap.obj :  debugheap.cpp version.h
+  $(BCC32) -c @&&|
+ $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ debugheap.cpp
 |
 
 $(IntermediateDirectory)\devwind.obj :  devwind.cpp version.h
@@ -465,6 +486,9 @@ $(IntermediateDirectory)\wrksp.obj :  wrksp.cpp version.h
 |
 
 # Compiler configuration file
+
+!if "$(BUILD)"=="RELEASE"
+
 BccW32.cfg : 
    Copy &&|
 -w
@@ -516,3 +540,64 @@ BccW32.cfg :
 -d
 | $@
 
+!else
+
+# Compiler configuration file
+BccW32.cfg : 
+   Copy &&|
+-w
+-R
+-v
+-WM-
+-vi
+-H
+-H=logo32x.csm
+-v
+-R
+-k
+-N
+-H=LOGO.CSM
+-O-c
+-O-i
+-O-v
+-Z-
+-O-
+-O-e
+-O-l
+-O-b
+-O-W
+-O-a
+-O-m
+-O-p
+-wbbf
+-wpin
+-wnak
+-wdef
+-wnod
+-wamb
+-wuse
+-wstv
+-wasm
+-wamp
+-wobs
+-wpch
+-wpia
+-waus
+-wcln
+-wsig
+-wucp
+-u
+-W
+-H"owl\pch.h"
+-d
+-ff-
+-y
+-5
+-Od
+-a-
+-A-
+-VF-
+-r-
+| $@
+
+!endif
