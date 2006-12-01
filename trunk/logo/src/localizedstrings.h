@@ -1,8 +1,9 @@
 #ifndef _LOCALIZEDSTRINGS_H_
 #define _LOCALIZEDSTRINGS_H_ 
 
-// This file includes the proper header file for this locale.
+#include "version.h"
 
+// This file includes the proper header file for this locale.
 #ifndef LOCALE
 
   #error LOCALE is not define

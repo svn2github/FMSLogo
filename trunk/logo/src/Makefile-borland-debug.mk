@@ -1,10 +1,14 @@
 #
-# Borland C++ IDE generated makefile
-# Generated 4/9/2006 at 6:30:40 PM 
+# Borland C++ IDE makefile
 #
 .AUTODEPEND
 
 !include ..\version.mk
+
+!ifndef LOCALECODE
+   # English-US
+   LOCALECODE=1033
+!endif
 
 #
 # Borland C++ tools
@@ -17,9 +21,6 @@ ILINK32 = Ilink32
 TLIB    = TLib
 BRC32   = Brc32
 TASM32  = Tasm32
-#
-# IDE macros
-#
 
 
 #
@@ -27,14 +28,14 @@ TASM32  = Tasm32
 #
 IDE_LinkFLAGS32 =  -LC:\BC5\LIB
 IDE_ResFLAGS32 = 
-LinkerLocalOptsAtW32_fmslogoddexe =  -v -wdpl -went -wdup -wdef -wimt -wbdl -wsrf -wmsk -L\BC5\LIB -Tpe -aa -V4.0 -c
-ResLocalOptsAtW32_fmslogoddexe = 
-BLocalOptsAtW32_fmslogoddexe = 
-CompInheritOptsAt_fmslogoddexe = -I"\BC5\INCLUDE;C:\PROGRAM FILES\HELP WORKSHOP\INCLUDE" -DSTRICT;_OWLPCH;NOASM;DEBUG;MEM_DEBUG;LOCALE=1033
-LinkerInheritOptsAt_fmslogoddexe = -x
-LinkerOptsAt_fmslogoddexe = $(LinkerLocalOptsAtW32_fmslogoddexe)
-ResOptsAt_fmslogoddexe = $(ResLocalOptsAtW32_fmslogoddexe)
-BOptsAt_fmslogoddexe = $(BLocalOptsAtW32_fmslogoddexe)
+LinkerLocalOptsAtW32_fmslogodexe =  -v -wdpl -went -wdup -wdef -wimt -wbdl -wsrf -wmsk -L\BC5\LIB -Tpe -aa -V4.0 -c
+ResLocalOptsAtW32_fmslogodexe = 
+BLocalOptsAtW32_fmslogodexe = 
+CompInheritOptsAt_fmslogodexe = -I"C:\Program Files\Help Workshop\include" -IC:\BC5\INCLUDE -DSTRICT;_OWLPCH;NOASM;DEBUG;MEM_DEBUG;LOCALE=$(LOCALECODE)
+LinkerInheritOptsAt_fmslogodexe = -x
+LinkerOptsAt_fmslogodexe = $(LinkerLocalOptsAtW32_fmslogodexe)
+ResOptsAt_fmslogodexe = $(ResLocalOptsAtW32_fmslogodexe)
+BOptsAt_fmslogodexe = $(BLocalOptsAtW32_fmslogodexe)
 
 ExecutableName=fmslogod.exe
 IntermediateDirectory=DEBUG
@@ -42,15 +43,15 @@ IntermediateDirectory=DEBUG
 #
 # Dependency List
 #
-Dep_logo32d = $(ExecutableName)
+Dep_logo32 = $(ExecutableName)
 
-logo32d : BccW32.cfg $(Dep_logo32d)
+logo32d : BccW32.cfg $(Dep_logo32)
   echo MakeNode
 
 version.h : ..\version.mk
   generate-version.bat $(FMSLOGO_VERSION)
 
-Dep_fmslogoddexe = \
+Dep_fmslogodexe = \
    $(IntermediateDirectory)\3dsolid.obj\
    $(IntermediateDirectory)\appendablelist.obj\
    $(IntermediateDirectory)\areawind.obj\
@@ -109,9 +110,9 @@ Dep_fmslogoddexe = \
    $(IntermediateDirectory)\vector.obj\
    $(IntermediateDirectory)\wrksp.obj
 
-$(ExecutableName) : $(Dep_fmslogoddexe)
+$(ExecutableName) : $(Dep_fmslogodexe)
   $(ILINK32) @&&|
- /v $(IDE_LinkFLAGS32) $(LinkerOptsAt_fmslogoddexe) $(LinkerInheritOptsAt_fmslogoddexe) +
+ /v $(IDE_LinkFLAGS32) $(LinkerOptsAt_fmslogodexe) $(LinkerInheritOptsAt_fmslogodexe) +
 \BC5\LIB\c0w32.obj+
 $(IntermediateDirectory)\3dsolid.obj+
 $(IntermediateDirectory)\appendablelist.obj+
@@ -179,308 +180,293 @@ $(IntermediateDirectory)\logorc.res
 
 |
 
-$(IntermediateDirectory)\3dsolid.obj :  3dsolid.cpp
+$(IntermediateDirectory)\3dsolid.obj :  3dsolid.cpp version.h
   $(BCC32) -c @&&|
- $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ 3dsolid.cpp
+ $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ 3dsolid.cpp
 |
 
-$(IntermediateDirectory)\appendablelist.obj :  appendablelist.cpp
+$(IntermediateDirectory)\appendablelist.obj :  appendablelist.cpp version.h
   $(BCC32) -c @&&|
- $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ appendablelist.cpp
+ $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ appendablelist.cpp
 |
 
-$(IntermediateDirectory)\assembly.obj :  assembly.cpp
+$(IntermediateDirectory)\assembly.obj :  assembly.cpp version.h
   $(BCC32) -c @&&|
- $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ assembly.cpp
+ $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ assembly.cpp
 |
 
-$(IntermediateDirectory)\areawind.obj :  areawind.cpp
+$(IntermediateDirectory)\areawind.obj :  areawind.cpp version.h
   $(BCC32) -c @&&|
- $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ areawind.cpp
+ $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ areawind.cpp
 |
 
-$(IntermediateDirectory)\cmdwind.obj :  cmdwind.cpp
+$(IntermediateDirectory)\cmdwind.obj :  cmdwind.cpp version.h
   $(BCC32) -c @&&|
- $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ cmdwind.cpp
+ $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ cmdwind.cpp
 |
 
-$(IntermediateDirectory)\colordlg.obj :  colordlg.cpp
+$(IntermediateDirectory)\colordlg.obj :  colordlg.cpp version.h
   $(BCC32) -c @&&|
- $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ colordlg.cpp
+ $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ colordlg.cpp
 |
 
-$(IntermediateDirectory)\commanderbutton.obj :  commanderbutton.cpp
+$(IntermediateDirectory)\commanderbutton.obj :  commanderbutton.cpp version.h
   $(BCC32) -c @&&|
- $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ commanderbutton.cpp
+ $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ commanderbutton.cpp
 |
 
-$(IntermediateDirectory)\commandercheckbox.obj :  commandercheckbox.cpp
+$(IntermediateDirectory)\commandercheckbox.obj :  commandercheckbox.cpp version.h
   $(BCC32) -c @&&|
- $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ commandercheckbox.cpp
+ $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ commandercheckbox.cpp
 |
 
-$(IntermediateDirectory)\coms.obj :  coms.cpp
+$(IntermediateDirectory)\coms.obj :  coms.cpp version.h
   $(BCC32) -c @&&|
- $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ coms.cpp
+ $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ coms.cpp
 |
 
-
-$(IntermediateDirectory)\debugheap.obj :  debugheap.cpp
+$(IntermediateDirectory)\debugheap.obj :  debugheap.cpp version.h
   $(BCC32) -c @&&|
- $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ debugheap.cpp
+ $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ debugheap.cpp
 |
 
-$(IntermediateDirectory)\devwind.obj :  devwind.cpp
+$(IntermediateDirectory)\devwind.obj :  devwind.cpp version.h
   $(BCC32) -c @&&|
- $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ devwind.cpp
+ $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ devwind.cpp
 |
 
-$(IntermediateDirectory)\dib.obj :  dib.cpp
+$(IntermediateDirectory)\dib.obj :  dib.cpp version.h
   $(BCC32) -c @&&|
- $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ dib.cpp
+ $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ dib.cpp
 |
 
-$(IntermediateDirectory)\dlgwind.obj :  dlgwind.cpp
+$(IntermediateDirectory)\dlgwind.obj :  dlgwind.cpp version.h
   $(BCC32) -c @&&|
- $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ dlgwind.cpp
+ $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ dlgwind.cpp
 |
 
-$(IntermediateDirectory)\dllstack.obj :  dllstack.c
+$(IntermediateDirectory)\dllstack.obj :  dllstack.c version.h
   $(BCC32) -P- -c @&&|
- $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ dllstack.c
+ $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ dllstack.c
 |
 
-$(IntermediateDirectory)\dllwind.obj :  dllwind.cpp
+$(IntermediateDirectory)\dllwind.obj :  dllwind.cpp version.h
   $(BCC32) -c @&&|
- $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ dllwind.cpp
+ $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ dllwind.cpp
 |
 
-$(IntermediateDirectory)\dynamicbuffer.obj :  dynamicbuffer.cpp
+$(IntermediateDirectory)\dynamicbuffer.obj :  dynamicbuffer.cpp version.h
   $(BCC32) -c @&&|
- $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ dynamicbuffer.cpp
+ $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ dynamicbuffer.cpp
 |
 
-$(IntermediateDirectory)\editwnd.obj :  editwnd.cpp
+$(IntermediateDirectory)\editwnd.obj :  editwnd.cpp version.h
   $(BCC32) -c @&&|
- $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ editwnd.cpp
+ $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ editwnd.cpp
 |
 
-$(IntermediateDirectory)\error.obj :  error.cpp
+$(IntermediateDirectory)\error.obj :  error.cpp version.h
   $(BCC32) -c @&&|
- $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ error.cpp
+ $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ error.cpp
 |
 
-$(IntermediateDirectory)\eval.obj :  eval.cpp
+$(IntermediateDirectory)\eval.obj :  eval.cpp version.h
   $(BCC32) -c @&&|
- $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ eval.cpp
+ $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ eval.cpp
 |
 
-$(IntermediateDirectory)\files.obj :  files.cpp
+$(IntermediateDirectory)\files.obj :  files.cpp version.h
   $(BCC32) -c @&&|
- $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ files.cpp
+ $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ files.cpp
 |
 
-$(IntermediateDirectory)\fileswnd.obj :  fileswnd.cpp
+$(IntermediateDirectory)\fileswnd.obj :  fileswnd.cpp version.h
   $(BCC32) -c @&&|
- $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ fileswnd.cpp
+ $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ fileswnd.cpp
 |
 
-$(IntermediateDirectory)\gbm.obj :  gbm.cpp
+$(IntermediateDirectory)\gbm.obj :  gbm.cpp version.h
   $(BCC32) -c @&&|
- $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ gbm.cpp
+ $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ gbm.cpp
 |
 
-$(IntermediateDirectory)\gbmbmp.obj :  gbmbmp.cpp
+$(IntermediateDirectory)\gbmbmp.obj :  gbmbmp.cpp version.h
   $(BCC32) -c @&&|
- $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ gbmbmp.cpp
+ $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ gbmbmp.cpp
 |
 
-$(IntermediateDirectory)\gbmhelp.obj :  gbmhelp.cpp
+$(IntermediateDirectory)\gbmhelp.obj :  gbmhelp.cpp version.h
   $(BCC32) -c @&&|
- $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ gbmhelp.cpp
+ $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ gbmhelp.cpp
 |
 
-$(IntermediateDirectory)\gbmgif.obj :  gbmgif.cpp
+$(IntermediateDirectory)\gbmgif.obj :  gbmgif.cpp version.h
   $(BCC32) -c @&&|
- $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ gbmgif.cpp
+ $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ gbmgif.cpp
 |
 
-$(IntermediateDirectory)\gbmsize.obj :  gbmsize.cpp
+$(IntermediateDirectory)\gbmsize.obj :  gbmsize.cpp version.h
   $(BCC32) -c @&&|
- $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ gbmsize.cpp
+ $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ gbmsize.cpp
 |
 
-$(IntermediateDirectory)\graphics.obj :  graphics.cpp
+$(IntermediateDirectory)\graphics.obj :  graphics.cpp version.h
   $(BCC32) -c @&&|
- $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ graphics.cpp
+ $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ graphics.cpp
 |
 
-$(IntermediateDirectory)\graphwin.obj :  graphwin.cpp
+$(IntermediateDirectory)\graphwin.obj :  graphwin.cpp version.h
   $(BCC32) -c @&&|
- $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ graphwin.cpp
+ $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ graphwin.cpp
 |
 
-$(IntermediateDirectory)\ibmterm.obj :  ibmterm.cpp
+$(IntermediateDirectory)\ibmterm.obj :  ibmterm.cpp version.h
   $(BCC32) -c @&&|
- $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ ibmterm.cpp
+ $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ ibmterm.cpp
 |
 
-$(IntermediateDirectory)\init.obj :  init.cpp
+$(IntermediateDirectory)\init.obj :  init.cpp version.h
   $(BCC32) -c @&&|
- $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ init.cpp
+ $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ init.cpp
 |
 
-$(IntermediateDirectory)\intern.obj :  intern.cpp
+$(IntermediateDirectory)\intern.obj :  intern.cpp version.h
   $(BCC32) -c @&&|
- $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ intern.cpp
+ $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ intern.cpp
 |
 
-$(IntermediateDirectory)\lists.obj :  lists.cpp
+$(IntermediateDirectory)\lists.obj :  lists.cpp version.h
   $(BCC32) -c @&&|
- $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ lists.cpp
+ $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ lists.cpp
 |
 
 $(IntermediateDirectory)\logodata.obj :  logodata.cpp version.h
   $(BCC32) -c @&&|
- $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ logodata.cpp
+ $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ logodata.cpp
 |
 
 $(IntermediateDirectory)\logorc.res :  logorc.rc version.h localizedstrings*.h
   $(BRC32) -R @&&|
- $(IDE_ResFLAGS32) $(ROptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe)  -FO$@ logorc.rc
+ $(IDE_ResFLAGS32) $(ROptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe)  -FO$@ logorc.rc
 |
-$(IntermediateDirectory)\printer.res :  ..\..\..\..\..\..\bc5\include\owl\printer.rc
-  $(BRC32) -R @&&|
- $(IDE_ResFLAGS32) $(ROptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe)  -FO$@ ..\..\..\..\..\..\bc5\include\owl\printer.rc
-|
-$(IntermediateDirectory)\inputdia.res :  ..\..\..\..\..\..\bc5\include\owl\inputdia.rc
-  $(BRC32) -R @&&|
- $(IDE_ResFLAGS32) $(ROptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe)  -FO$@ ..\..\..\..\..\..\bc5\include\owl\inputdia.rc
-|
-$(IntermediateDirectory)\picklist.res :  ..\..\..\..\..\..\bc5\include\owl\picklist.rc
-  $(BRC32) -R @&&|
- $(IDE_ResFLAGS32) $(ROptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe)  -FO$@ ..\..\..\..\..\..\bc5\include\owl\picklist.rc
-|
-$(IntermediateDirectory)\except.res :  ..\..\..\..\..\..\bc5\include\owl\except.rc
-  $(BRC32) -R @&&|
- $(IDE_ResFLAGS32) $(ROptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe)  -FO$@ ..\..\..\..\..\..\bc5\include\owl\except.rc
-|
+
 $(IntermediateDirectory)\stdwnds.res :  stdwnds.rc
   $(BRC32) -R @&&|
- $(IDE_ResFLAGS32) $(ROptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe)  -FO$@ stdwnds.rc
+ $(IDE_ResFLAGS32) $(ROptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe)  -FO$@ stdwnds.rc
 |
+
 $(IntermediateDirectory)\filemenu.res :  filemenu.rc
   $(BRC32) -R @&&|
- $(IDE_ResFLAGS32) $(ROptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe)  -FO$@ filemenu.rc
+ $(IDE_ResFLAGS32) $(ROptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe)  -FO$@ filemenu.rc
 |
-$(IntermediateDirectory)\main.obj :  main.cpp
+$(IntermediateDirectory)\main.obj :  main.cpp version.h
   $(BCC32) -c @&&|
- $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ main.cpp
-|
-
-$(IntermediateDirectory)\mainwind.obj :  mainwind.cpp
-  $(BCC32) -c @&&|
- $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ mainwind.cpp
+ $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ main.cpp
 |
 
-$(IntermediateDirectory)\math.obj :  math.cpp
+$(IntermediateDirectory)\mainwind.obj :  mainwind.cpp version.h
   $(BCC32) -c @&&|
- $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ math.cpp
+ $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ mainwind.cpp
 |
 
-$(IntermediateDirectory)\mem.obj :  mem.cpp
+$(IntermediateDirectory)\math.obj :  math.cpp version.h
   $(BCC32) -c @&&|
- $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ mem.cpp
+ $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ math.cpp
 |
 
-$(IntermediateDirectory)\minieditor.obj :  minieditor.cpp
+$(IntermediateDirectory)\mem.obj :  mem.cpp version.h
   $(BCC32) -c @&&|
- $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ minieditor.cpp
+ $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ mem.cpp
 |
 
-$(IntermediateDirectory)\mmwind.obj :  mmwind.cpp
+$(IntermediateDirectory)\minieditor.obj :  minieditor.cpp version.h
   $(BCC32) -c @&&|
- $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ mmwind.cpp
+ $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ minieditor.cpp
 |
 
-$(IntermediateDirectory)\myfileed.obj :  myfileed.cpp
+$(IntermediateDirectory)\mmwind.obj :  mmwind.cpp version.h
   $(BCC32) -c @&&|
- $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ myfileed.cpp
+ $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ mmwind.cpp
 |
 
-$(IntermediateDirectory)\myfilewn.obj :  myfilewn.cpp
+$(IntermediateDirectory)\myfileed.obj :  myfileed.cpp version.h
   $(BCC32) -c @&&|
- $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ myfilewn.cpp
+ $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ myfileed.cpp
 |
 
-$(IntermediateDirectory)\netwind.obj :  netwind.cpp
+$(IntermediateDirectory)\myfilewn.obj :  myfilewn.cpp version.h
   $(BCC32) -c @&&|
- $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ netwind.cpp
+ $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ myfilewn.cpp
 |
 
-$(IntermediateDirectory)\paren.obj :  paren.cpp
+$(IntermediateDirectory)\netwind.obj :  netwind.cpp version.h
   $(BCC32) -c @&&|
- $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ paren.cpp
+ $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ netwind.cpp
 |
 
-$(IntermediateDirectory)\parse.obj :  parse.cpp
+$(IntermediateDirectory)\paren.obj :  paren.cpp version.h
   $(BCC32) -c @&&|
- $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ parse.cpp
+ $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ paren.cpp
 |
 
-$(IntermediateDirectory)\print.obj :  print.cpp
+$(IntermediateDirectory)\parse.obj :  parse.cpp version.h
   $(BCC32) -c @&&|
- $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ print.cpp
+ $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ parse.cpp
 |
 
-$(IntermediateDirectory)\richedpr.obj :  richedpr.cpp
+$(IntermediateDirectory)\print.obj :  print.cpp version.h
   $(BCC32) -c @&&|
- $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ richedpr.cpp
+ $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ print.cpp
 |
 
-$(IntermediateDirectory)\savebeforeexitdialog.obj :  savebeforeexitdialog.cpp
+$(IntermediateDirectory)\richedpr.obj :  richedpr.cpp version.h
   $(BCC32) -c @&&|
- $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ savebeforeexitdialog.cpp
+ $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ richedpr.cpp
 |
 
-$(IntermediateDirectory)\sizedlg.obj :  sizedlg.cpp
+$(IntermediateDirectory)\savebeforeexitdialog.obj :  savebeforeexitdialog.cpp version.h
   $(BCC32) -c @&&|
- $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ sizedlg.cpp
+ $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ savebeforeexitdialog.cpp
 |
 
-$(IntermediateDirectory)\statwind.obj :  statwind.cpp
+$(IntermediateDirectory)\sizedlg.obj :  sizedlg.cpp version.h
   $(BCC32) -c @&&|
- $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ statwind.cpp
+ $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ sizedlg.cpp
 |
 
-$(IntermediateDirectory)\term.obj :  term.cpp
+$(IntermediateDirectory)\statwind.obj :  statwind.cpp version.h
   $(BCC32) -c @&&|
- $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ term.cpp
+ $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ statwind.cpp
 |
 
-$(IntermediateDirectory)\threed.obj :  threed.cpp
+$(IntermediateDirectory)\term.obj :  term.cpp version.h
   $(BCC32) -c @&&|
- $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ threed.cpp
+ $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ term.cpp
 |
 
-$(IntermediateDirectory)\utils.obj :  utils.cpp
+$(IntermediateDirectory)\threed.obj :  threed.cpp version.h
   $(BCC32) -c @&&|
- $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ utils.cpp
+ $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ threed.cpp
 |
 
-$(IntermediateDirectory)\unix.obj :  unix.cpp
+$(IntermediateDirectory)\utils.obj :  utils.cpp version.h
   $(BCC32) -c @&&|
- $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ unix.cpp
+ $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ utils.cpp
 |
 
-$(IntermediateDirectory)\vector.obj :  vector.cpp
+$(IntermediateDirectory)\unix.obj :  unix.cpp version.h
   $(BCC32) -c @&&|
- $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ vector.cpp
+ $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ unix.cpp
 |
 
-$(IntermediateDirectory)\wrksp.obj :  wrksp.cpp
+$(IntermediateDirectory)\vector.obj :  vector.cpp version.h
   $(BCC32) -c @&&|
- $(CompOptsAt_fmslogoddexe) $(CompInheritOptsAt_fmslogoddexe) -o$@ wrksp.cpp
+ $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ vector.cpp
+|
+
+$(IntermediateDirectory)\wrksp.obj :  wrksp.cpp version.h
+  $(BCC32) -c @&&|
+ $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ wrksp.cpp
 |
 
 # Compiler configuration file
