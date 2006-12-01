@@ -1793,10 +1793,8 @@ void TMainFrame::CMBitmapPrinterArea()
 
 void TMainFrame::CMFileEdit()
    {
-
    // create dialog for which procedure to edit
    TMyFileEditWindow FileEditWindow(this, "DIALOGEDIT");
-   FileEditWindow.FileEditAll = false;
 
    // now do it
    if (FileEditWindow.Execute() == IDOK)
@@ -1804,14 +1802,14 @@ void TMainFrame::CMFileEdit()
 
       // if user clicked ALL get all procedures
       NODE *arg;
-      if (FileEditWindow.FileEditAll)
+      if (FileEditWindow.m_FileEditAll)
          {
          arg = lprocedures(NIL);
          }
       else
          {
          // else find what user selected
-         arg = cons_list(make_strnode(SelectedText));
+         arg = cons_list(make_strnode(FileEditWindow.m_SelectedProcedures));
          }
 
       // if something edit it
@@ -1819,6 +1817,8 @@ void TMainFrame::CMFileEdit()
          {
          ledit(arg);
          }
+
+      gcref(arg);
       }
    }
 
@@ -1826,14 +1826,13 @@ void TMainFrame::CMFileErase()
    {
    // create dialog for which procedure to erase
    TMyFileEditWindow FileEditWindow(this, "DIALOGERASE");
-   FileEditWindow.FileEditAll = false;
 
    // now do it
    if (FileEditWindow.Execute() == IDOK)
       {
       NODE *arg;
 
-      if (FileEditWindow.FileEditAll)
+      if (FileEditWindow.m_FileEditAll)
          {
          // if user clicked EDALL get all procedures
          arg = lprocedures(NIL);
@@ -1844,7 +1843,7 @@ void TMainFrame::CMFileErase()
       else
          {
          // else find what user selected
-         arg = cons_list(make_strnode(SelectedText));
+         arg = cons_list(make_strnode(FileEditWindow.m_SelectedProcedures));
          }
 
       // if something erase it
@@ -1852,6 +1851,8 @@ void TMainFrame::CMFileErase()
          {
          lerase(arg);
          }
+
+      gcref(arg);
       }
    }
 

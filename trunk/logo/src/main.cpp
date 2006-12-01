@@ -50,7 +50,6 @@ char TempBmpName[EXE_NAME_MAX_SIZE + 1];    /* path to temp bitmap file       */
 char TempClipName[EXE_NAME_MAX_SIZE + 1];   /* path to temp clipboard file    */
 char szHelpFileName[EXE_NAME_MAX_SIZE + 1]; /* path to help file              */
 char MCIHelpFileName[EXE_NAME_MAX_SIZE + 1];/* path to MCI help file          */
-char SelectedText[MAX_BUFFER_SIZE];    /* buffer for selected text            */
 char commandarg[MAX_BUFFER_SIZE];      /* Routine to exec on start            */
 
 // holds callback code
@@ -352,9 +351,7 @@ void single_step_box(NODE *the_line)
 
 void getcombobox(char *str)
    {
-   // get it and clear it
-   SelectedText[0] = '\0';
-
+   // read the combobox and clear it
    MainWindowx->CommandWindow->Editbox.GetText(str, MAX_BUFFER_SIZE);
    MainWindowx->CommandWindow->Editbox.Clear();
    }

@@ -21,20 +21,19 @@
 
 #include "allwind.h"
 
-/* File editor members */
-
-TMyFileEditWindow::TMyFileEditWindow(TWindow *AParent, LPSTR ATitle)
-: TDialog(AParent, ATitle)
+TMyFileEditWindow::TMyFileEditWindow(
+   TWindow    * Parent, 
+   const char * Resource
+   )
+   : TDialog(Parent, Resource),
+     m_FileEditAll(false)
    {
-   }
-
-TMyFileEditWindow::~TMyFileEditWindow()
-   {
+   m_SelectedProcedures[0] = '\0';
    }
 
 void TMyFileEditWindow::DoAll(UINT)
    {
-   FileEditAll = true;
+   m_FileEditAll = true;
    CloseWindow(TRUE);
    }
 
@@ -50,13 +49,9 @@ void TMyFileEditWindow::DoCombo(UINT)
 
 bool TMyFileEditWindow::CanClose()
    {
-   SendDlgItemMsg(
-      ID_FILEEDITCOMBO,
-      WM_GETTEXT,
-      MAX_BUFFER_SIZE,
-      (LONG) SelectedText);
+   GetDlgItemText(ID_FILEEDITCOMBO, m_SelectedProcedures, MAX_BUFFER_SIZE);
 
-   return TRUE;
+   return true;
    }
 
 void TMyFileEditWindow::SetupWindow()
@@ -78,7 +73,7 @@ void TMyFileEditWindow::SetupWindow()
    }
 
 DEFINE_RESPONSE_TABLE1(TMyFileEditWindow, TDialog)
-  EV_CHILD_NOTIFY_ALL_CODES(ID_FILEEDITALL, DoAll),
+  EV_CHILD_NOTIFY_ALL_CODES(ID_FILEEDITALL,   DoAll),
   EV_CHILD_NOTIFY_ALL_CODES(ID_FILEEDITCOMBO, DoCombo),
 END_RESPONSE_TABLE;
 

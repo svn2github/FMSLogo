@@ -381,11 +381,15 @@ class TMyFileEditWindow : public TDialog
    {
  public:
 
-   bool FileEditAll;
+   TMyFileEditWindow(
+      TWindow *    Parent,
+      const char * Resource
+      );
 
-   TMyFileEditWindow(TWindow *, LPSTR);
-   ~TMyFileEditWindow();
+   bool m_FileEditAll;              // true if all procedures were selected
+   char m_SelectedProcedures[256];  // buffer to hold selected functions
 
+ protected:
    bool CanClose();
    void SetupWindow();
 
@@ -712,7 +716,6 @@ extern char TempBmpName[];
 extern char TempClipName[];
 extern char szHelpFileName[];
 extern char MCIHelpFileName[];
-extern char SelectedText[];
 
 extern HINSTANCE ModulehInstance;
 
