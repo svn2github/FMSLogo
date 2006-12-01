@@ -321,9 +321,9 @@
 // Strings on the Pen Size Picker Dialog box
 //
 #define LOCALIZED_SETPENSIZE                   "Μέγεθος πένας" // 
-#define LOCALIZED_SIZE                         "Μέγεθος" // 
-#define LOCALIZED_SETCOLOR_OK                  LOCALIZED_GENERAL_OKBUTTON // 
-#define LOCALIZED_SETCOLOR_CANCEL              LOCALIZED_GENERAL_CANCELBUTTON // 
+#define LOCALIZED_SETPENSIZE_SIZE              "Μέγεθος" // 
+#define LOCALIZED_SETPENSIZE_OK                LOCALIZED_GENERAL_OKBUTTON // NOT_YET_LOCALIZED
+#define LOCALIZED_SETPENSIZE_CANCEL            LOCALIZED_GENERAL_CANCELBUTTON // NOT_YET_LOCALIZED
 
 
 //
@@ -650,56 +650,56 @@
 // Localized Strings that explain each accelerator
 // I don't think that any of these strings can be seen by the user
 //
-#define LOCALIZED_STRINGTABLE_FILESAVEAS               "Αποθηκεύει τον κώδικα και τις μεταβλητές σε ένα αρχείο" // 
-#define LOCALIZED_STRINGTABLE_FILEOPEN                 "Σβήνει τον τρέχοντα κώδικα και φορτώνει ένα νέο αρχείο" // 
-#define LOCALIZED_STRINGTABLE_FILELOAD                 "Εντοπίζει και φορτώνει ένα πρόγραμμα Logo, προσθέτοντάς το στον υπάρχοντα κώδικα" // 
-#define LOCALIZED_STRINGTABLE_FILENEW                  "Σβήνει όλο τον κώδικα" // 
-#define LOCALIZED_STRINGTABLE_FILESAVE                 "Αποθηκεύει όλο τον κώδικα" // 
-#define LOCALIZED_STRINGTABLE_FILEEDIT                 "Επιλογή μιας εντολής προς επεξεργασία" // 
-#define LOCALIZED_STRINGTABLE_FILEERASE                "Επιλογή μιας εντολής προς διαγραφή" // 
-#define LOCALIZED_STRINGTABLE_EXIT                     "Κλείνει τη Logo" // 
-#define LOCALIZED_STRINGTABLE_BITMAPNEW                "Καθαρίζει τη οθόνη" // 
-#define LOCALIZED_STRINGTABLE_BITMAPOPEN               "Φορτώνει μια εικόνα Windows bitmap" // 
-#define LOCALIZED_STRINGTABLE_BITMAPSAVE               "Αποθηκεύει τα περιεχόμενα της οθόνης σε μια εικόνα bitmap" // 
-#define LOCALIZED_STRINGTABLE_BITMAPSAVEAS             "Αποθηκεύει τα περιεχόμενα της οθόνης σε άλλο αρχείο" // 
-#define LOCALIZED_STRINGTABLE_BITMAPPRINT              "Εκτυπώνει τα περιεχόμενα της οθόνης" // 
-#define LOCALIZED_STRINGTABLE_BITMAPPRINTERSETUP       "Ρυθμίζει τον εκτυπωτή σας" // 
-#define LOCALIZED_STRINGTABLE_BITMAPPRINTERAREA        "Ρυθμίζει την περιοχή της οθόνης που θα εκτυπωθεί ή θα αποθηκευθεί" // 
-#define LOCALIZED_STRINGTABLE_SETPENSIZE               "Ρυθμίζει το πάχος της πένας της χελώνας" // 
-#define LOCALIZED_STRINGTABLE_SETFONT                  "Ρυθμίζει τη γραμματοσειρά που χρησιμοποιείται από την εντολή LABEL" // 
-#define LOCALIZED_STRINGTABLE_SETCOMMANDERFONT         "Ρυθμίζει τη γραμματοσειρά που χρησιμοποιείται στο παράθυρο ελέγχου" // 
-#define LOCALIZED_STRINGTABLE_SETPENCOLOR              "Ρυθμίζει το χρώμα της πένας της χελώνας" // 
-#define LOCALIZED_STRINGTABLE_SETFLOODCOLOR            "Ρυθμίζει το χρώμα που χρησιμοποιείται από την εντολή FILL" // 
-#define LOCALIZED_STRINGTABLE_SETSCREENCOLOR           "Καθαρίζει την οθόνη και τις δίνει ένα διαφορετικό χρώμα" // 
-#define LOCALIZED_STRINGTABLE_ZOOMIN                   "Μεγεθύνει την οθόνη" // 
-#define LOCALIZED_STRINGTABLE_ZOOMOUT                  "Σμικρύνει την οθόνη" // 
-#define LOCALIZED_STRINGTABLE_ZOOMNORMAL               "Επαναφέρει την οθόνη στο κανονικό της μέγεθος" // 
-#define LOCALIZED_STRINGTABLE_HELP                     "Ανοίγει έναν κατάλογο με θέματα στη βοήθεια" // 
-#define LOCALIZED_STRINGTABLE_HELPMCI                  "Ανοίγει έναν κατάλογο με θέματα στη βοήθεια για το Media Control Interface" // 
-#define LOCALIZED_STRINGTABLE_HELPHELP                 "Ανοίγει βοήθεια σχετική με τη χρήση της βοήθειας" // 
-#define LOCALIZED_STRINGTABLE_HELPTUTORIAL             "Ανοίγει ένα μικρό μάθημα σχετικό με τη χρήση της "LOCALIZED_GENERAL_PRODUCTNAME // 
-#define LOCALIZED_STRINGTABLE_HELPDEMO                 "Κάνει μια επίδειξη του τί μπορείτε να κάνετε στην "LOCALIZED_GENERAL_PRODUCTNAME // 
-#define LOCALIZED_STRINGTABLE_HELPEXAMPLES             "Εμφανίζει έναν κατάλογο με προγράμματα-δείγματα" // 
-#define LOCALIZED_STRINGTABLE_HELPRELEASENOTES         "Εμφανίζει τις σημειώσεις αυτής της έκδοσης της "LOCALIZED_GENERAL_PRODUCTNAME // 
-#define LOCALIZED_STRINGTABLE_HELPABOUT                "Εμφανίζει την έκδοση και πληροφορίες copyright" // 
-#define LOCALIZED_STRINGTABLE_HELPABOUTMS              "Εμφανίζει ένα μήνυμα σχετικά με τη Multiple Sclerosis" // 
-#define LOCALIZED_STRINGTABLE_EDITDELETE               "Διαγράφει την τρέχουσα επιλογή (και δεν αντιγράφει στο πρόχειρο)" // 
-#define LOCALIZED_STRINGTABLE_EDITCLEAR                "Διαγράφει όλο το κείμενο" // 
-#define LOCALIZED_STRINGTABLE_EDITUNDO                 "Αναιρεί την προηγούμενη ενέργεια" // 
-#define LOCALIZED_STRINGTABLE_EDITCUT                  "Αφαιρεί το επιλεγμένο κείμενο και το μεταφέρει στο πρόχειρο" // 
-#define LOCALIZED_STRINGTABLE_EDITCOPY                 "Αντιγράφει το επιλεγμένο κείμενο στο πρόχειρο" // 
-#define LOCALIZED_STRINGTABLE_EDITPASTE                "Εισάγει το κείμενο από το πρόχειρο στην τρέχουσα θέση" // 
-#define LOCALIZED_STRINGTABLE_EDITSELECTALL            "Επιλέγει όλο το κείμενο" // 
-#define LOCALIZED_STRINGTABLE_EDITFIND                 "Ψάχνει για κείμενο" // 
-#define LOCALIZED_STRINGTABLE_EDITREPLACE              "Ψάχνει για κείμενο και το αντικαθιστά με άλλο κείμενο" // 
-#define LOCALIZED_STRINGTABLE_EDITFINDNEXT             "Επαναλαμβάνει την τελευταία εντολή Εύρεσης ή Αντικατάστασης" // 
-#define LOCALIZED_STRINGTABLE_EDITSETFONT              "Ρυθμίζει τη γραμματοσειρά για τον επεξεργαστή κώδικα" // 
-#define LOCALIZED_STRINGTABLE_TEST                     "Εκτελεί τις επιλεγμένες εντολές Logo " // 
-#define LOCALIZED_STRINGTABLE_HELPEDIT                 "Εμφανίζει βοήθεια για τη χρήση του επεξεργαστή κώδικα" // 
-#define LOCALIZED_STRINGTABLE_HELPEDIT_TOPIC           "Εμφανίζει βοήθεια για τη Logo" // 
-#define LOCALIZED_STRINGTABLE_FILESAVEANDEXIT          "Αποθηκεύει τον κώδικα και κλείνει τον επεξεργαστή κώδικα" // 
-#define LOCALIZED_STRINGTABLE_FILESAVETOWORKSPACE      "Αποθηκεύει τον κώδικα" // 
-#define LOCALIZED_STRINGTABLE_FILEPRINT                "Εκτυπώνει τον κώδικα" // 
-#define LOCALIZED_STRINGTABLE_EDALLEXIT                "Κλείνει τον επεξεργαστή κώδικα" // 
+#define LOCALIZED_STRINGTABLE_FILESAVEAS "Αποθηκεύει τον κώδικα και τις μεταβλητές σε ένα αρχείο" // 
+#define LOCALIZED_STRINGTABLE_FILEOPEN "Σβήνει τον τρέχοντα κώδικα και φορτώνει ένα νέο αρχείο" // 
+#define LOCALIZED_STRINGTABLE_FILELOAD "Εντοπίζει και φορτώνει ένα πρόγραμμα Logo, προσθέτοντάς το στον υπάρχοντα κώδικα" // 
+#define LOCALIZED_STRINGTABLE_FILENEW "Σβήνει όλο τον κώδικα" // 
+#define LOCALIZED_STRINGTABLE_FILESAVE "Αποθηκεύει όλο τον κώδικα" // 
+#define LOCALIZED_STRINGTABLE_FILEEDIT "Επιλογή μιας εντολής προς επεξεργασία" // 
+#define LOCALIZED_STRINGTABLE_FILEERASE "Επιλογή μιας εντολής προς διαγραφή" // 
+#define LOCALIZED_STRINGTABLE_EXIT "Κλείνει τη Logo" // 
+#define LOCALIZED_STRINGTABLE_BITMAPNEW "Καθαρίζει τη οθόνη" // 
+#define LOCALIZED_STRINGTABLE_BITMAPOPEN "Φορτώνει μια εικόνα Windows bitmap" // 
+#define LOCALIZED_STRINGTABLE_BITMAPSAVE "Αποθηκεύει τα περιεχόμενα της οθόνης σε μια εικόνα bitmap" // 
+#define LOCALIZED_STRINGTABLE_BITMAPSAVEAS "Αποθηκεύει τα περιεχόμενα της οθόνης σε άλλο αρχείο" // 
+#define LOCALIZED_STRINGTABLE_BITMAPPRINT "Εκτυπώνει τα περιεχόμενα της οθόνης" // 
+#define LOCALIZED_STRINGTABLE_BITMAPPRINTERSETUP "Ρυθμίζει τον εκτυπωτή σας" // 
+#define LOCALIZED_STRINGTABLE_BITMAPPRINTERAREA "Ρυθμίζει την περιοχή της οθόνης που θα εκτυπωθεί ή θα αποθηκευθεί" // 
+#define LOCALIZED_STRINGTABLE_SETPENSIZE "Ρυθμίζει το πάχος της πένας της χελώνας" // 
+#define LOCALIZED_STRINGTABLE_SETFONT "Ρυθμίζει τη γραμματοσειρά που χρησιμοποιείται από την εντολή LABEL" // 
+#define LOCALIZED_STRINGTABLE_SETCOMMANDERFONT "Ρυθμίζει τη γραμματοσειρά που χρησιμοποιείται στο παράθυρο ελέγχου" // 
+#define LOCALIZED_STRINGTABLE_SETPENCOLOR "Ρυθμίζει το χρώμα της πένας της χελώνας" // 
+#define LOCALIZED_STRINGTABLE_SETFLOODCOLOR "Ρυθμίζει το χρώμα που χρησιμοποιείται από την εντολή FILL" // 
+#define LOCALIZED_STRINGTABLE_SETSCREENCOLOR "Καθαρίζει την οθόνη και τις δίνει ένα διαφορετικό χρώμα" // 
+#define LOCALIZED_STRINGTABLE_ZOOMIN "Μεγεθύνει την οθόνη" // 
+#define LOCALIZED_STRINGTABLE_ZOOMOUT "Σμικρύνει την οθόνη" // 
+#define LOCALIZED_STRINGTABLE_ZOOMNORMAL "Επαναφέρει την οθόνη στο κανονικό της μέγεθος" // 
+#define LOCALIZED_STRINGTABLE_HELP "Ανοίγει έναν κατάλογο με θέματα στη βοήθεια" // 
+#define LOCALIZED_STRINGTABLE_HELPMCI "Ανοίγει έναν κατάλογο με θέματα στη βοήθεια για το Media Control Interface" // 
+#define LOCALIZED_STRINGTABLE_HELPHELP "Ανοίγει βοήθεια σχετική με τη χρήση της βοήθειας" // 
+#define LOCALIZED_STRINGTABLE_HELPTUTORIAL "Ανοίγει ένα μικρό μάθημα σχετικό με τη χρήση της "LOCALIZED_GENERAL_PRODUCTNAME // 
+#define LOCALIZED_STRINGTABLE_HELPDEMO "Κάνει μια επίδειξη του τί μπορείτε να κάνετε στην "LOCALIZED_GENERAL_PRODUCTNAME // 
+#define LOCALIZED_STRINGTABLE_HELPEXAMPLES "Εμφανίζει έναν κατάλογο με προγράμματα-δείγματα" // 
+#define LOCALIZED_STRINGTABLE_HELPRELEASENOTES "Εμφανίζει τις σημειώσεις αυτής της έκδοσης της "LOCALIZED_GENERAL_PRODUCTNAME // 
+#define LOCALIZED_STRINGTABLE_HELPABOUT "Εμφανίζει την έκδοση και πληροφορίες copyright" // 
+#define LOCALIZED_STRINGTABLE_HELPABOUTMS "Εμφανίζει ένα μήνυμα σχετικά με τη Multiple Sclerosis" // 
+#define LOCALIZED_STRINGTABLE_EDITDELETE "Διαγράφει την τρέχουσα επιλογή (και δεν αντιγράφει στο πρόχειρο)" // 
+#define LOCALIZED_STRINGTABLE_EDITCLEAR "Διαγράφει όλο το κείμενο" // 
+#define LOCALIZED_STRINGTABLE_EDITUNDO "Αναιρεί την προηγούμενη ενέργεια" // 
+#define LOCALIZED_STRINGTABLE_EDITCUT "Αφαιρεί το επιλεγμένο κείμενο και το μεταφέρει στο πρόχειρο" // 
+#define LOCALIZED_STRINGTABLE_EDITCOPY "Αντιγράφει το επιλεγμένο κείμενο στο πρόχειρο" // 
+#define LOCALIZED_STRINGTABLE_EDITPASTE "Εισάγει το κείμενο από το πρόχειρο στην τρέχουσα θέση" // 
+#define LOCALIZED_STRINGTABLE_EDITSELECTALL "Επιλέγει όλο το κείμενο" // 
+#define LOCALIZED_STRINGTABLE_EDITFIND "Ψάχνει για κείμενο" // 
+#define LOCALIZED_STRINGTABLE_EDITREPLACE "Ψάχνει για κείμενο και το αντικαθιστά με άλλο κείμενο" // 
+#define LOCALIZED_STRINGTABLE_EDITFINDNEXT "Επαναλαμβάνει την τελευταία εντολή Εύρεσης ή Αντικατάστασης" // 
+#define LOCALIZED_STRINGTABLE_EDITSETFONT "Ρυθμίζει τη γραμματοσειρά για τον επεξεργαστή κώδικα" // 
+#define LOCALIZED_STRINGTABLE_TEST "Εκτελεί τις επιλεγμένες εντολές Logo " // 
+#define LOCALIZED_STRINGTABLE_HELPEDIT "Εμφανίζει βοήθεια για τη χρήση του επεξεργαστή κώδικα" // 
+#define LOCALIZED_STRINGTABLE_HELPEDIT_TOPIC "Εμφανίζει βοήθεια για τη Logo" // 
+#define LOCALIZED_STRINGTABLE_FILESAVEANDEXIT "Αποθηκεύει τον κώδικα και κλείνει τον επεξεργαστή κώδικα" // 
+#define LOCALIZED_STRINGTABLE_FILESAVETOWORKSPACE "Αποθηκεύει τον κώδικα" // 
+#define LOCALIZED_STRINGTABLE_FILEPRINT "Εκτυπώνει τον κώδικα" // 
+#define LOCALIZED_STRINGTABLE_EDALLEXIT "Κλείνει τον επεξεργαστή κώδικα" // 
 
-#define LOCALIZED_STRINGTABLE_CANNOTFINDSTRING         "{ Δε βρέθηκε το %s }" // 
+#define LOCALIZED_STRINGTABLE_CANNOTFINDSTRING "{ Δε βρέθηκε το %s }" // 

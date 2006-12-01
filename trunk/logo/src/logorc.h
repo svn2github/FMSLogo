@@ -99,6 +99,8 @@
 #define ID_ABOUTMS_FMS               IDC_BASE + 99
 #define ID_ABOUTMS_CONSIDERDONATING  IDC_BASE + 100
 
+#define ID_SETPENSIZE_SIZE           IDC_BASE + 101
+
 #define CM_CONTROLHALT          CMD_BASE + 0
 #define CM_CONTROLEXECUTE       CMD_BASE + 1
 

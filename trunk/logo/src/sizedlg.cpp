@@ -99,6 +99,8 @@ TSizeDialog::TSizeDialog(
    )
    : TDialog(Parent, "SIZEDIALOG")
    {
+   SetCaption(LOCALIZED_SETPENSIZE);
+
    new TSizeControl(this, ID_SIZE1, TSize(1, 1));
    new TSizeControl(this, ID_SIZE2, TSize(2, 2));
    new TSizeControl(this, ID_SIZE3, TSize(3, 3));
@@ -174,6 +176,11 @@ void TSizeDialog::SetSizeFmSlider()
 void TSizeDialog::SetupWindow()
    {
    TDialog::SetupWindow();
+
+   SetDlgItemText(IDOK,                LOCALIZED_SETPENSIZE_OK);
+   SetDlgItemText(IDCANCEL,            LOCALIZED_SETPENSIZE_CANCEL);
+   SetDlgItemText(ID_SETPENSIZE_SIZE,  LOCALIZED_SETPENSIZE_SIZE);
+
    UpdateBars(m_SelSize->GetSize());
    }
 

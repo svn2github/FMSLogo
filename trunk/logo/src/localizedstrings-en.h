@@ -313,9 +313,9 @@
 // Strings on the Pen Size Picker Dialog box
 //
 #define LOCALIZED_SETPENSIZE                   "Pen Size"
-#define LOCALIZED_SIZE                         "Size"
-#define LOCALIZED_SETCOLOR_OK                  LOCALIZED_GENERAL_OKBUTTON
-#define LOCALIZED_SETCOLOR_CANCEL              LOCALIZED_GENERAL_CANCELBUTTON
+#define LOCALIZED_SETPENSIZE_SIZE              "Size"
+#define LOCALIZED_SETPENSIZE_OK                LOCALIZED_GENERAL_OKBUTTON
+#define LOCALIZED_SETPENSIZE_CANCEL            LOCALIZED_GENERAL_CANCELBUTTON
 
 
 //
