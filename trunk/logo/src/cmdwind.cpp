@@ -519,9 +519,7 @@ void TMyCommandWindow::DoButtonEdall(UINT)
 
 void TMyCommandWindow::DoButtonStatus(UINT)
    {
-
    // toggle status state along with poping up and killing the status window
-
    if (status_flag)
       {
       MainWindowx->MyPopupStatusKill();
