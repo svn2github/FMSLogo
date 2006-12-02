@@ -383,7 +383,7 @@ class CSelectProcedureWindow : public TDialog
 
    CSelectProcedureWindow(
       TWindow *    Parent,
-      const char * Resource
+      const char * Caption
       );
 
    void ShowDialog();

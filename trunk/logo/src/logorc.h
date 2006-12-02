@@ -15,10 +15,6 @@
 
 #define ID_MEMORY               IDC_BASE + 6
 #define ID_EVALS                IDC_BASE + 7
-#define ID_FILEEDITOK           IDC_BASE + 8
-#define ID_FILEEDITALL          IDC_BASE + 9
-#define ID_FILEEDITCANCEL       IDC_BASE + 10
-#define ID_FILEEDITCOMBO        IDC_BASE + 11
 #define ID_PALETTEUSE           IDC_BASE + 12
 #define ID_TURTLEROLL           IDC_BASE + 13
 #define ID_FLOODCOLOR           IDC_BASE + 14
@@ -104,6 +100,9 @@
 #define ID_SETCOLOR_RED              IDC_BASE + 102
 #define ID_SETCOLOR_GREEN            IDC_BASE + 103
 #define ID_SETCOLOR_BLUE             IDC_BASE + 104
+
+#define ID_SELECTPROCEDURE_COMBO     IDC_BASE + 107
+#define ID_SELECTPROCEDURE_ALL       IDC_BASE + 108
 
 #define CM_CONTROLHALT          CMD_BASE + 0
 #define CM_CONTROLEXECUTE       CMD_BASE + 1

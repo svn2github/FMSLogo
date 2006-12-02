@@ -187,14 +187,6 @@
 //
 // The menu options on the editor
 //
-
-/*
- * By the way, FMSLogo seems to use the editor's caption in order
- * to find out if it's open and focus on it. If you have a window
- * named "Editor" open, FMSLogo won't open an instance of the editor,
- * but will focus on that window instead. -Teo :)
- */
-
 #define LOCALIZED_EDITOR_TITLE                   "Επεξεργαστής" // 
 
 #define LOCALIZED_EDITOR_FILE                    "&Αρχείο" // 
@@ -292,20 +284,14 @@
 #define LOCALIZED_STATUS_NODES       "Κόμβοι" // 
 
 //
-// Strings on the Erase Procedure dialog box window
+// Strings on the Erase|Edit Procedure dialog box
 //
-#define LOCALIZED_ERASEPROCEDURE                "Σβήσιμο εντολής" // 
-#define LOCALIZED_ERASEPROCEDURE_OK             LOCALIZED_GENERAL_OKBUTTON // 
-#define LOCALIZED_ERASEPROCEDURE_CANCEL         LOCALIZED_GENERAL_CANCELBUTTON // 
-#define LOCALIZED_ERASEPROCEDURE_ALL            "&Όλες" // 
+#define LOCALIZED_SELECTPROCEDURE_OK            LOCALIZED_GENERAL_OKBUTTON
+#define LOCALIZED_SELECTPROCEDURE_CANCEL        LOCALIZED_GENERAL_CANCELBUTTON
+#define LOCALIZED_SELECTPROCEDURE_ALL           "&Όλες"
+#define LOCALIZED_ERASEPROCEDURE                "Σβήσιμο εντολής"
+#define LOCALIZED_EDITPROCEDURE                 "Επεξεργασία εντολής"
 
-//
-// Strings on the Edit Procedure dialog box window
-//
-#define LOCALIZED_EDITPROCEDURE                "Επεξεργασία εντολής" // 
-#define LOCALIZED_EDITPROCEDURE_OK             LOCALIZED_GENERAL_OKBUTTON // 
-#define LOCALIZED_EDITPROCEDURE_CANCEL         LOCALIZED_GENERAL_CANCELBUTTON // 
-#define LOCALIZED_EDITPROCEDURE_ALL            "&Όλες" // 
 
 //
 // Strings on the Color Picker Dialog box

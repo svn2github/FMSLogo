@@ -23,12 +23,14 @@
 
 CSelectProcedureWindow::CSelectProcedureWindow(
    TWindow    * Parent, 
-   const char * Resource
+   const char * Caption
    )
-   : TDialog(Parent, Resource),
+   : TDialog(Parent, "IDD_SELECTPROCEDURE"),
      m_FileEditAll(false)
    {
    m_SelectedProcedures[0] = '\0';
+
+   SetCaption(Caption);
    }
 
 void CSelectProcedureWindow::DoAll(UINT)
@@ -49,13 +51,20 @@ void CSelectProcedureWindow::DoCombo(UINT)
 
 bool CSelectProcedureWindow::CanClose()
    {
-   GetDlgItemText(ID_FILEEDITCOMBO, m_SelectedProcedures, MAX_BUFFER_SIZE);
+   GetDlgItemText(ID_SELECTPROCEDURE_COMBO, m_SelectedProcedures, MAX_BUFFER_SIZE);
 
    return true;
    }
 
 void CSelectProcedureWindow::SetupWindow()
    {
+   TDialog::SetupWindow();
+
+   // fill in the text
+   SetDlgItemText(IDOK,                   LOCALIZED_SELECTPROCEDURE_OK);
+   SetDlgItemText(IDCANCEL,               LOCALIZED_SELECTPROCEDURE_CANCEL);
+   SetDlgItemText(ID_SELECTPROCEDURE_ALL, LOCALIZED_SELECTPROCEDURE_ALL);
+
    // get procedures
    NODE * proclist = lprocedures(NIL);
 
@@ -66,7 +75,7 @@ void CSelectProcedureWindow::SetupWindow()
       {
       char tempbuff[MAX_BUFFER_SIZE];
       cnv_strnode_string(tempbuff, proclist_node);
-      SendDlgItemMsg(ID_FILEEDITCOMBO, CB_ADDSTRING, 0, (LONG) tempbuff);
+      SendDlgItemMsg(ID_SELECTPROCEDURE_COMBO, CB_ADDSTRING, 0, (LONG) tempbuff);
       }
 
    gcref(proclist);
@@ -101,14 +110,14 @@ void CSelectProcedureWindow::ShowDialog()
    }
 
 DEFINE_RESPONSE_TABLE1(CSelectProcedureWindow, TDialog)
-  EV_CHILD_NOTIFY_ALL_CODES(ID_FILEEDITALL,   DoAll),
-  EV_CHILD_NOTIFY_ALL_CODES(ID_FILEEDITCOMBO, DoCombo),
+  EV_CHILD_NOTIFY_ALL_CODES(ID_SELECTPROCEDURE_ALL,   DoAll),
+  EV_CHILD_NOTIFY_ALL_CODES(ID_SELECTPROCEDURE_COMBO, DoCombo),
 END_RESPONSE_TABLE;
 
 
 // shows a "Select Procedures to Edit" dialog
 CEditProcedureWindow::CEditProcedureWindow(TWindow * Parent) 
-   : CSelectProcedureWindow(Parent, "DIALOGEDIT")
+   : CSelectProcedureWindow(Parent, LOCALIZED_EDITPROCEDURE)
    {
    }
 
@@ -121,7 +130,7 @@ CEditProcedureWindow::OnChoice(NODE * Procedures)
 
 // shows a "Select Procedures to Erase" dialog
 CEraseProcedureWindow::CEraseProcedureWindow(TWindow * Parent) 
-   : CSelectProcedureWindow(Parent, "DIALOGERASE")
+   : CSelectProcedureWindow(Parent, LOCALIZED_ERASEPROCEDURE)
    {
    }
 

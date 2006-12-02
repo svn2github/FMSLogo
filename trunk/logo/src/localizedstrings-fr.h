@@ -284,20 +284,14 @@
 #define LOCALIZED_STATUS_NODES       "Noeuds"
 
 //
-// Strings on the Erase Procedure dialog box window
+// Strings on the Erase|Edit Procedure dialog box
 //
+#define LOCALIZED_SELECTPROCEDURE_OK            LOCALIZED_GENERAL_OKBUTTON
+#define LOCALIZED_SELECTPROCEDURE_CANCEL        LOCALIZED_GENERAL_CANCELBUTTON
+#define LOCALIZED_SELECTPROCEDURE_ALL           "&Toutes"
 #define LOCALIZED_ERASEPROCEDURE                "Procédure à effacer"
-#define LOCALIZED_ERASEPROCEDURE_OK             LOCALIZED_GENERAL_OKBUTTON
-#define LOCALIZED_ERASEPROCEDURE_CANCEL         LOCALIZED_GENERAL_CANCELBUTTON
-#define LOCALIZED_ERASEPROCEDURE_ALL            "&Toutes"
+#define LOCALIZED_EDITPROCEDURE                 "Procédure à éditer"
 
-//
-// Strings on the Edit Procedure dialog box window
-//
-#define LOCALIZED_EDITPROCEDURE                "Procédure à éditer"
-#define LOCALIZED_EDITPROCEDURE_OK             LOCALIZED_GENERAL_OKBUTTON
-#define LOCALIZED_EDITPROCEDURE_CANCEL         LOCALIZED_GENERAL_CANCELBUTTON
-#define LOCALIZED_EDITPROCEDURE_ALL            "&Toutes"
 
 //
 // Strings on the Color Picker Dialog box
