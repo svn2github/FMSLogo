@@ -20,13 +20,15 @@
 #ifndef _SAVEBEFOREEXITDIALOG_H_
 #define _SAVEBEFOREEXITDIALOG_H_
 
-class TSaveBeforeExitDialog : public TDialog
+class CSaveBeforeExitDialog : public TDialog
    {
  public:
 
-   TSaveBeforeExitDialog(TWindow * parent);
-
+   CSaveBeforeExitDialog(TWindow * Parent);
    int GetExitCode();
+
+ protected:
+   void SetupWindow();
 
  private:
 
@@ -35,7 +37,7 @@ class TSaveBeforeExitDialog : public TDialog
 
    int m_ExitStatus;
 
-   DECLARE_RESPONSE_TABLE(TSaveBeforeExitDialog);
+   DECLARE_RESPONSE_TABLE(CSaveBeforeExitDialog);
    }
 ;
 

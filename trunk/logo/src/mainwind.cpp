@@ -943,7 +943,7 @@ bool TMainFrame::CanClose()
    // if dirty warn user and give chance to abort shutdown
    if (IsDirty)
       {
-      TSaveBeforeExitDialog saveChangesDialog(this);
+      CSaveBeforeExitDialog saveChangesDialog(this);
 
       saveChangesDialog.Execute();
       int exitCode = saveChangesDialog.GetExitCode();

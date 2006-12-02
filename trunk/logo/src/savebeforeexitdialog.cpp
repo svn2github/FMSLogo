@@ -19,31 +19,43 @@
 
 #include "allwind.h"
 
-TSaveBeforeExitDialog::TSaveBeforeExitDialog(
+CSaveBeforeExitDialog::CSaveBeforeExitDialog(
    TWindow *Parent
    ) : TDialog(Parent, "IDD_SAVEBEFOREEXIT"),
        m_ExitStatus(IDCANCEL)
    {
+   SetCaption(LOCALIZED_UNSAVEDCHANGES);
    }
 
-void TSaveBeforeExitDialog::EvSaveBeforeExit()
+void CSaveBeforeExitDialog::SetupWindow()
+   {
+   TDialog::SetupWindow();
+
+   SetDlgItemText(IDYES,                      LOCALIZED_UNSAVEDCHANGES_SAVEANDEXIT);
+   SetDlgItemText(IDNO,                       LOCALIZED_UNSAVEDCHANGES_DONTSAVE);
+   SetDlgItemText(IDCANCEL,                   LOCALIZED_UNSAVEDCHANGES_CANCEL);
+   SetDlgItemText(ID_UNSAVEDCHANGES_MESSAGE1, LOCALIZED_UNSAVEDCHANGES_MESSAGE1);
+   SetDlgItemText(ID_UNSAVEDCHANGES_MESSAGE2, LOCALIZED_UNSAVEDCHANGES_MESSAGE2);
+   }
+
+void CSaveBeforeExitDialog::EvSaveBeforeExit()
    {
    m_ExitStatus = IDYES;
    CloseWindow();
    }
 
-void TSaveBeforeExitDialog::EvExitWithoutSaving()
+void CSaveBeforeExitDialog::EvExitWithoutSaving()
    {
    m_ExitStatus = IDNO;
    CloseWindow();
    }
 
-int TSaveBeforeExitDialog::GetExitCode()
+int CSaveBeforeExitDialog::GetExitCode()
    {
    return m_ExitStatus;
    }
 
-DEFINE_RESPONSE_TABLE1(TSaveBeforeExitDialog, TDialog)
+DEFINE_RESPONSE_TABLE1(CSaveBeforeExitDialog, TDialog)
    EV_BN_CLICKED(IDYES, EvSaveBeforeExit),
    EV_BN_CLICKED(IDNO,  EvExitWithoutSaving),
 END_RESPONSE_TABLE;

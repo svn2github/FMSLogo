@@ -223,7 +223,7 @@
 //
 // The strings in the "You have unsaved changes" dialog
 //
-#define LOCALIZED_UNSAVEDCHANGES                LOCALIZED_GENERAL_PRODUCTNAME // 
+#define LOCALIZED_UNSAVEDCHANGES                LOCALIZED_YOUHAVEUNSAVEDCHANGES //
 #define LOCALIZED_UNSAVEDCHANGES_SAVEANDEXIT    "Απο&θήκευση και έξοδος" // 
 #define LOCALIZED_UNSAVEDCHANGES_DONTSAVE       "Χωρίς αποθήκευση" // 
 #define LOCALIZED_UNSAVEDCHANGES_CANCEL         LOCALIZED_GENERAL_CANCELBUTTON // 
