@@ -359,21 +359,21 @@ class CStatusWindow : public TDialog
    }
 ;
 
-class TMyPrinterAreaWindow : public TDialog
+class CPrinterAreaWindow : public TDialog
    {
  public:
 
-   TMyPrinterAreaWindow(TWindow * Parent);
-   ~TMyPrinterAreaWindow();
+   CPrinterAreaWindow(TWindow * Parent);
 
+ protected:
    void SetupWindow();
    void CloseWindow(int);
-
-   void ResetWindow();
-
    void DoReset(UINT);
 
-   DECLARE_RESPONSE_TABLE(TMyPrinterAreaWindow);
+ private:
+   void ResetWindow();
+
+   DECLARE_RESPONSE_TABLE(CPrinterAreaWindow);
    }
 ;
 
@@ -584,8 +584,6 @@ class TMainFrame : public TDecoratedFrame
    class TMyFileWindow        * EditWindow;
    class TMyCommandWindow     * CommandWindow;
    class CStatusWindow        * StatusWindow;
-   class TMyPrinterAreaWindow * PrinterAreaWindow;
-   class TMyFileEditWindow    * FileEditWindow;
    class TPaneSplitter        * PaneSplitterWindow;
    class TScreenWindow        * ScreenWindow;
 

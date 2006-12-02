@@ -21,19 +21,15 @@
 
 #include "allwind.h"
 
-TMyPrinterAreaWindow::TMyPrinterAreaWindow(
+CPrinterAreaWindow::CPrinterAreaWindow(
    TWindow * ParentWindow
    ) : TDialog(ParentWindow, "PRINTERAREA")
    {
    }
 
-TMyPrinterAreaWindow::~TMyPrinterAreaWindow()
-   {
-   }
 
-/* These next 4 routines fetch the active area dimensions */
-
-void TMyPrinterAreaWindow::CloseWindow(int arg)
+// The next 4 routines fetch the active area dimensions 
+void CPrinterAreaWindow::CloseWindow(int arg)
    {
    TPrinterAreaXLow  = GetDlgItemInt(ID_XLOW);
    TPrinterAreaXHigh = GetDlgItemInt(ID_XHIGH);
@@ -57,7 +53,7 @@ void TMyPrinterAreaWindow::CloseWindow(int arg)
    TDialog::CloseWindow(arg);
    }
 
-void TMyPrinterAreaWindow::ResetWindow()
+void CPrinterAreaWindow::ResetWindow()
    {
    // display active parameters
    SetDlgItemInt(ID_XLOW,  TPrinterAreaXLow);
@@ -68,7 +64,7 @@ void TMyPrinterAreaWindow::ResetWindow()
    SetDlgItemInt(ID_PIXELS, TPrinterAreaPixels);
    }
 
-void TMyPrinterAreaWindow::SetupWindow()
+void CPrinterAreaWindow::SetupWindow()
    {
    TDialog::SetupWindow();
 
@@ -76,7 +72,7 @@ void TMyPrinterAreaWindow::SetupWindow()
    ResetWindow();
    }
 
-void TMyPrinterAreaWindow::DoReset(UINT)
+void CPrinterAreaWindow::DoReset(UINT)
    {
    // hack to init things
 
@@ -145,7 +141,7 @@ NODE *lactivearea(NODE *)
    }
 
 
-DEFINE_RESPONSE_TABLE1(TMyPrinterAreaWindow, TDialog)
+DEFINE_RESPONSE_TABLE1(CPrinterAreaWindow, TDialog)
   EV_CHILD_NOTIFY_ALL_CODES(ID_RESETEXTENT, DoReset),
 END_RESPONSE_TABLE;
 

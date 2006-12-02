@@ -802,15 +802,13 @@ END_RESPONSE_TABLE;
 
 
 TMainFrame::TMainFrame(
-   TWindow *       AParent,
-   LPCSTR          ATitle,
+   TWindow *       Parent,
+   LPCSTR          Title,
    TPaneSplitter * PaneSplitter
-) : TDecoratedFrame(AParent, ATitle, PaneSplitter),
+) : TDecoratedFrame(Parent, Title, PaneSplitter),
     EditWindow(NULL),
     CommandWindow(new TMyCommandWindow(0, "IDD_DOCKEDCOMMANDER")),
     StatusWindow(NULL),
-    PrinterAreaWindow(NULL),
-    FileEditWindow(NULL),
     PaneSplitterWindow(PaneSplitter),
     ScreenWindow(new TScreenWindow(0, "FMSLogo Screen")),
     IsNewFile(true),
@@ -1758,7 +1756,7 @@ void TMainFrame::CMBitmapPrinterArea()
       bAok = true;
 
       // if user does not cancel then copy dynamic to real
-      if (TMyPrinterAreaWindow(this).Execute() == IDOK)
+      if (CPrinterAreaWindow(this).Execute() == IDOK)
          {
 
          if ((TPrinterAreaXLow >= TPrinterAreaXHigh) || (TPrinterAreaYLow >= TPrinterAreaYHigh))
