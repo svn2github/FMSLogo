@@ -371,8 +371,6 @@ class CPrinterAreaWindow : public TDialog
    int m_YHigh;
    int m_PixelsPerInch;
 
-   bool m_IsCustomSetting;
-
  protected:
    void SetupWindow();
    void CloseWindow(int);
@@ -772,7 +770,6 @@ extern int g_PrinterAreaXHigh;
 extern int g_PrinterAreaYLow;
 extern int g_PrinterAreaYHigh;
 extern int g_PrinterAreaPixels;
-extern bool g_IsPrinterSettingCustom;
 
 extern CUTMAP *CutBmp;
 extern Color dpen;

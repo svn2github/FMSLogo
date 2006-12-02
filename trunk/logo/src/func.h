@@ -570,11 +570,12 @@ extern void UpdateZoomControlFlag();
 extern NODE *lzoom(NODE *arg);
 extern NODE *lwinhelp(NODE *arg);
 extern NODE *lhelp(NODE *arg);
-//extern NODE *lsettextsize(NODE *arg);
-//extern NODE *lsettextstyle(NODE *arg);
 extern NODE *lsetlabelfont(NODE *arg);
 extern NODE *lfontfacenames(NODE *arg);
 extern NODE *llabelfont(NODE *arg);
+
+// areawnd.cpp
+extern bool IsActiveAreaOneToOneWithScreen(void);
 extern NODE *lsetactivearea(NODE *arg);
 extern NODE *lactivearea(NODE *arg);
 

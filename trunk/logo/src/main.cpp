@@ -608,18 +608,6 @@ void TMyApp::InitMainWindow()
    g_PrinterAreaYLow   = GetConfigurationInt("Printer.Ylow",  -BitMapHeight / 2);
    g_PrinterAreaYHigh  = GetConfigurationInt("Printer.YHigh", +BitMapHeight / 2);
    g_PrinterAreaPixels = GetConfigurationInt("Printer.Pixels", max(BitMapWidth, BitMapHeight) / 8);
-
-   if ((g_PrinterAreaXLow  == -BitMapWidth  / 2) &&
-       (g_PrinterAreaXHigh == +BitMapWidth  / 2) &&
-       (g_PrinterAreaYLow  == -BitMapHeight / 2) &&
-       (g_PrinterAreaYHigh == +BitMapHeight / 2))
-      {
-      g_IsPrinterSettingCustom = false;
-      }
-   else
-      {
-      g_IsPrinterSettingCustom = true;
-      }
    }
 
 TMyApp::~TMyApp()

@@ -367,8 +367,8 @@ void TScreenWindow::Paint(TDC &PaintDC, bool /* erase */, TRect &PaintRect)
 void TScreenWindow::Printit(TDC &PrintDC)
    {
 
-   // Must of rewrote this at least 26 times :-) and it still does not
-   // work in some situations. This is just the "Paint" of printing.
+   // Must of rewrote this at least 26 times and it still does not
+   // Work in some situations. This is just the "Paint" of printing.
    // See the print module for all the other stuff.
 
    // do we even have a chance?
@@ -381,134 +381,111 @@ void TScreenWindow::Printit(TDC &PrintDC)
       return;
       }
 
-   WORD PrintbitCount = GetDeviceCaps(PrintDC, BITSPIXEL);
-   PrintbitCount *= GetDeviceCaps(PrintDC, PLANES);
+   int printBitCount = GetDeviceCaps(PrintDC, BITSPIXEL);
+   printBitCount *= GetDeviceCaps(PrintDC, PLANES);
 
-   // If a mono printer lets let it try to dither a 256 grey scale image
-   if (PrintbitCount == 1)
+   if (printBitCount == 1)
       {
-      PrintbitCount = 8;
+      // This is a monochrome mono printer.
+      // Let's let it try to dither a 256 grey scale image
+      printBitCount = 8;
       }
 
    // Get screen bitCount
-   HDC ScreenDC = GetDC(0);
+   HDC screenDc = GetDC(0);
 
-   WORD ScreenbitCount = GetDeviceCaps(ScreenDC, BITSPIXEL);
-   ScreenbitCount *= GetDeviceCaps(ScreenDC, PLANES);
+   int screenBitCount = GetDeviceCaps(screenDc, BITSPIXEL);
+   screenBitCount *= GetDeviceCaps(screenDc, PLANES);
 
    // Don't bother creating a DIB with more colors than we have
-   if (ScreenbitCount < PrintbitCount) 
+   if (screenBitCount < printBitCount) 
       {
-      PrintbitCount = ScreenbitCount;
+      printBitCount = screenBitCount;
       }
 
    // Round to nearest legal bitmap color depth
-   if      (                        (PrintbitCount <  1)) PrintbitCount =  1;
-   else if ((PrintbitCount >  1) && (PrintbitCount <  4)) PrintbitCount =  4;
-   else if ((PrintbitCount >  4) && (PrintbitCount <  8)) PrintbitCount =  8;
-   else if ((PrintbitCount >  8) && (PrintbitCount < 16)) PrintbitCount = 16;
-   else if ((PrintbitCount > 16) && (PrintbitCount < 24)) PrintbitCount = 24;
-   else if ((PrintbitCount > 24)                        ) PrintbitCount = 32;
+   if      (                        (printBitCount <  1)) printBitCount =  1;
+   else if ((printBitCount >  1) && (printBitCount <  4)) printBitCount =  4;
+   else if ((printBitCount >  4) && (printBitCount <  8)) printBitCount =  8;
+   else if ((printBitCount >  8) && (printBitCount < 16)) printBitCount = 16;
+   else if ((printBitCount > 16) && (printBitCount < 24)) printBitCount = 24;
+   else if ((printBitCount > 24)                        ) printBitCount = 32;
 
-   PrintbitCount = GetConfigurationInt("PrintColorDepth", PrintbitCount);
+   printBitCount = GetConfigurationInt("PrintColorDepth", printBitCount);
 
-   WORD size;
-   if (PrintbitCount <= 8)
+   size_t size;
+   if (printBitCount <= 8)
       {
-      size = sizeof(BITMAPINFOHEADER) + ((1 << PrintbitCount) * sizeof(RGBQUAD));
+      size = sizeof(BITMAPINFOHEADER) + ((1 << printBitCount) * sizeof(RGBQUAD));
       }
    else
       {
       size = sizeof(BITMAPINFOHEADER);
       }
 
-   BITMAPINFO * PrintBitmapInfo = (BITMAPINFO *) new char[size];
+   BITMAPINFO * bitmapInfo = (BITMAPINFO *) new char[size];
 
-   PrintBitmapInfo->bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
-   PrintBitmapInfo->bmiHeader.biWidth = BitMapWidth;
-   PrintBitmapInfo->bmiHeader.biHeight = BitMapHeight;
-   PrintBitmapInfo->bmiHeader.biPlanes = 1;
-   PrintBitmapInfo->bmiHeader.biBitCount = PrintbitCount;
-   PrintBitmapInfo->bmiHeader.biCompression = BI_RGB;
-   PrintBitmapInfo->bmiHeader.biSizeImage = ((((PrintBitmapInfo->bmiHeader.biWidth * PrintBitmapInfo->bmiHeader.biBitCount) + 31) / 32) * 4) * PrintBitmapInfo->bmiHeader.biHeight;
-   PrintBitmapInfo->bmiHeader.biXPelsPerMeter = 0;
-   PrintBitmapInfo->bmiHeader.biYPelsPerMeter = 0;
-   PrintBitmapInfo->bmiHeader.biClrUsed = 0;
-   PrintBitmapInfo->bmiHeader.biClrImportant = 0;
+   bitmapInfo->bmiHeader.biSize     = sizeof(BITMAPINFOHEADER);
+   bitmapInfo->bmiHeader.biWidth    = BitMapWidth;
+   bitmapInfo->bmiHeader.biHeight   = BitMapHeight;
+   bitmapInfo->bmiHeader.biPlanes   = 1;
+   bitmapInfo->bmiHeader.biBitCount = printBitCount;
+   bitmapInfo->bmiHeader.biCompression = BI_RGB;
+   bitmapInfo->bmiHeader.biSizeImage   = ((((bitmapInfo->bmiHeader.biWidth * bitmapInfo->bmiHeader.biBitCount) + 31) / 32) * 4) * bitmapInfo->bmiHeader.biHeight;
+   bitmapInfo->bmiHeader.biXPelsPerMeter = 0;
+   bitmapInfo->bmiHeader.biYPelsPerMeter = 0;
+   bitmapInfo->bmiHeader.biClrUsed       = 0;
+   bitmapInfo->bmiHeader.biClrImportant  = 0;
 
    // we don't need hour glass here because print module takes care of it 
 
    // allocate space for the raw DIB data
-   unsigned char * BitsPtr = new unsigned char [PrintBitmapInfo->bmiHeader.biSizeImage];
-   memset(BitsPtr, 0x00, PrintBitmapInfo->bmiHeader.biSizeImage);
+   unsigned char * bitsPtr = new unsigned char [bitmapInfo->bmiHeader.biSizeImage];
+   memset(bitsPtr, 0x00, bitmapInfo->bmiHeader.biSizeImage);
 
    // get printer size per inch 
-   long TempWidth = GetDeviceCaps(PrintDC, LOGPIXELSX);
-   long TempHeight = GetDeviceCaps(PrintDC, LOGPIXELSY);
+   int tempWidth  = GetDeviceCaps(PrintDC, LOGPIXELSX);
+   int tempHeight = GetDeviceCaps(PrintDC, LOGPIXELSY);
 
    // if palette allocate it
    if (EnablePalette)
       {
-      OldPalette = SelectPalette(ScreenDC, ThePalette, FALSE);
-      RealizePalette(ScreenDC);
+      OldPalette = SelectPalette(screenDc, ThePalette, FALSE);
+      RealizePalette(screenDc);
       }
 
    // set up an assured contrast ?
    SetTextColor(PrintDC, 0x00000000L);
    SetBkColor(PrintDC, 0x00ffffffL);
 
-   long ScanLines = GetDIBits(
-      ScreenDC,
+   int scanLines = GetDIBits(
+      screenDc,
       MemoryBitMap,
       0,
       BitMapHeight,
-      BitsPtr,
-      PrintBitmapInfo,
+      bitsPtr,
+      bitmapInfo,
       DIB_RGB_COLORS);
-
-   // check we got something
-   if (ScanLines != 0)
+   if (scanLines != 0)
       {
-      // if "active area" just print that 
-      long Status;
+      // there is something to print.
 
-      if (g_IsPrinterSettingCustom)
-         {
-         Status = StretchDIBits(
-            PrintDC,
-            0,
-            0,
-            (TempWidth  * (g_PrinterAreaXHigh - g_PrinterAreaXLow)) / g_PrinterAreaPixels,
-            (TempHeight * (g_PrinterAreaYHigh - g_PrinterAreaYLow)) / g_PrinterAreaPixels,
-            +g_PrinterAreaXLow + xoffset,
-            BitMapHeight - (-g_PrinterAreaYLow + yoffset),
-            g_PrinterAreaXHigh - g_PrinterAreaXLow,
-            g_PrinterAreaYHigh - g_PrinterAreaYLow,
-            BitsPtr,
-            PrintBitmapInfo,
-            DIB_RGB_COLORS,
-            SRCCOPY);
-         }
-      else
-         {
-         // else print the whole thing
-         Status = StretchDIBits(
-            PrintDC,
-            0,
-            0,
-            (TempWidth  * BitMapWidth)  / g_PrinterAreaPixels,
-            (TempHeight * BitMapHeight) / g_PrinterAreaPixels,
-            0,
-            0,
-            BitMapWidth,
-            BitMapHeight,
-            BitsPtr,
-            PrintBitmapInfo,
-            DIB_RGB_COLORS,
-            SRCCOPY);
-         }
-
-      if (Status <= 0)
+      // print only the active area
+      int status = StretchDIBits(
+         PrintDC,
+         0,
+         0,
+         (tempWidth  * (g_PrinterAreaXHigh - g_PrinterAreaXLow)) / g_PrinterAreaPixels,
+         (tempHeight * (g_PrinterAreaYHigh - g_PrinterAreaYLow)) / g_PrinterAreaPixels,
+         +g_PrinterAreaXLow + xoffset,
+         BitMapHeight - (-g_PrinterAreaYLow + yoffset),
+         g_PrinterAreaXHigh - g_PrinterAreaXLow,
+         g_PrinterAreaYHigh - g_PrinterAreaYLow,
+         bitsPtr,
+         bitmapInfo,
+         DIB_RGB_COLORS,
+         SRCCOPY);
+      if (status <= 0)
          {
          // TODO: message the last error into the current locale
          MessageBox(
@@ -532,14 +509,14 @@ void TScreenWindow::Printit(TDC &PrintDC)
    // restore resources 
    if (EnablePalette)
       {
-      SelectPalette(ScreenDC, OldPalette, FALSE);
+      SelectPalette(screenDc, OldPalette, FALSE);
       }
 
-   delete [] BitsPtr;
+   delete [] bitsPtr;
 
-   ReleaseDC(0, ScreenDC);
+   ReleaseDC(0, screenDc);
 
-   delete PrintBitmapInfo;
+   delete bitmapInfo;
    }
 
 
@@ -1028,8 +1005,8 @@ bool TMainFrame::WriteDIB(FILE* File, int MaxBitCount)
    BITMAPINFO * SaveBitmapInfo = (BITMAPINFO *) new char[size];
 
    SaveBitmapInfo->bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
-   SaveBitmapInfo->bmiHeader.biWidth = BitMapWidth;
-   SaveBitmapInfo->bmiHeader.biHeight = BitMapHeight;
+   SaveBitmapInfo->bmiHeader.biWidth  = g_PrinterAreaXHigh - g_PrinterAreaXLow;
+   SaveBitmapInfo->bmiHeader.biHeight = g_PrinterAreaYHigh - g_PrinterAreaYLow;
    SaveBitmapInfo->bmiHeader.biPlanes = 1;
    SaveBitmapInfo->bmiHeader.biBitCount = SavebitCount;
    SaveBitmapInfo->bmiHeader.biCompression = BI_RGB;
@@ -1038,17 +1015,11 @@ bool TMainFrame::WriteDIB(FILE* File, int MaxBitCount)
    SaveBitmapInfo->bmiHeader.biClrUsed = 0;
    SaveBitmapInfo->bmiHeader.biClrImportant = 0;
 
-   if (g_IsPrinterSettingCustom)
-      {
-      SaveBitmapInfo->bmiHeader.biWidth  = g_PrinterAreaXHigh - g_PrinterAreaXLow;
-      SaveBitmapInfo->bmiHeader.biHeight = g_PrinterAreaYHigh - g_PrinterAreaYLow;
-      }
-
    SaveBitmapInfo->bmiHeader.biSizeImage = ((((SaveBitmapInfo->bmiHeader.biWidth * SaveBitmapInfo->bmiHeader.biBitCount) + 31) / 32) * 4) * SaveBitmapInfo->bmiHeader.biHeight;
 
    // allocate space for the raw DIB data
-   unsigned char * BitsPtr = new unsigned char[SaveBitmapInfo->bmiHeader.biSizeImage];
-   memset(BitsPtr, 0x00, SaveBitmapInfo->bmiHeader.biSizeImage);
+   unsigned char * bitsPtr = new unsigned char[SaveBitmapInfo->bmiHeader.biSizeImage];
+   memset(bitsPtr, 0x00, SaveBitmapInfo->bmiHeader.biSizeImage);
 
    // if palette yank it in 
    HPALETTE oldPalette2;
@@ -1059,23 +1030,24 @@ bool TMainFrame::WriteDIB(FILE* File, int MaxBitCount)
       }
 
    // if custom then use custom dimensions
-   if (g_IsPrinterSettingCustom)
+   if (!IsActiveAreaOneToOneWithScreen())
       {
-      HBITMAP AreaMemoryBitMap = CreateCompatibleBitmap(
+      HBITMAP areaMemoryBitMap = CreateCompatibleBitmap(
          screen,
          g_PrinterAreaXHigh - g_PrinterAreaXLow,
          g_PrinterAreaYHigh - g_PrinterAreaYLow);
 
-      if (!AreaMemoryBitMap)
+      if (!areaMemoryBitMap)
          {
          ShowErrorMessageAndStop(LOCALIZED_WRITEFAILEDNOMEMORY);
+         // BUG: this should error-out
          }
 
       HDC     memoryDC     = CreateCompatibleDC(screen);
       HBITMAP memoryBitmap = (HBITMAP) SelectObject(memoryDC, MemoryBitMap);
 
       HDC     areaMemoryDC     = CreateCompatibleDC(screen);
-      HBITMAP areaMemoryBitmap = (HBITMAP) SelectObject(areaMemoryDC, AreaMemoryBitMap);
+      HBITMAP areaMemoryBitmap = (HBITMAP) SelectObject(areaMemoryDC, areaMemoryBitMap);
 
       BitBlt(
          areaMemoryDC,
@@ -1094,28 +1066,28 @@ bool TMainFrame::WriteDIB(FILE* File, int MaxBitCount)
       SelectObject(memoryDC, memoryBitmap);
       DeleteDC(memoryDC);
 
-      // convert logo bitmap to raw DIB in BitsPtr
+      // convert logo bitmap to raw DIB in bitsPtr
       GetDIBits(
          screen,
-         AreaMemoryBitMap,
+         areaMemoryBitMap,
          0,
          g_PrinterAreaYHigh - g_PrinterAreaYLow,
-         BitsPtr,
+         bitsPtr,
          SaveBitmapInfo,
          DIB_RGB_COLORS);
 
-      DeleteObject(AreaMemoryBitMap);
+      DeleteObject(areaMemoryBitMap);
       }
    else
       {
       // else do whole thing
-      // convert logo bitmap to raw DIB in BitsPtr
+      // convert logo bitmap to raw DIB in bitsPtr
       GetDIBits(
          screen,
          MemoryBitMap,
          0,
          BitMapHeight,
-         BitsPtr,
+         bitsPtr,
          SaveBitmapInfo,
          DIB_RGB_COLORS);
       }
@@ -1141,9 +1113,9 @@ bool TMainFrame::WriteDIB(FILE* File, int MaxBitCount)
    fwrite(SaveBitmapInfo, sizeof(char), size, File);
 
    // write out raw DIB data to file
-   fwrite(BitsPtr, sizeof(char), SaveBitmapInfo->bmiHeader.biSizeImage, File);
+   fwrite(bitsPtr, sizeof(char), SaveBitmapInfo->bmiHeader.biSizeImage, File);
 
-   delete [] BitsPtr;
+   delete [] bitsPtr;
    delete SaveBitmapInfo;
 
    return true;
@@ -1193,12 +1165,12 @@ bool TMainFrame::OpenDIB(FILE* File, DWORD &dwPixelWidth, DWORD &dwPixelHeight)
    fread(ReadBitmapInfo, sizeof(char), BitmapFileHeader.bfOffBits - sizeof(BitmapFileHeader), File);
 
    // save some typing 
-   DWORD NewPixelWidth = ReadBitmapInfo->bmiHeader.biWidth;
+   DWORD NewPixelWidth  = ReadBitmapInfo->bmiHeader.biWidth;
    DWORD NewPixelHeight = ReadBitmapInfo->bmiHeader.biHeight;
 
    if (dwPixelWidth)
       {
-      /* do what the spec says */
+      // do what the spec says 
       if (ReadBitmapInfo->bmiHeader.biClrUsed == 0)
          {
          ReadBitmapInfo->bmiHeader.biClrUsed = 1 << ReadBitmapInfo->bmiHeader.biBitCount;
@@ -1207,7 +1179,7 @@ bool TMainFrame::OpenDIB(FILE* File, DWORD &dwPixelWidth, DWORD &dwPixelHeight)
       /* only allow bitcount equal to display capability */
       WORD ReadbitCount = ReadBitmapInfo->bmiHeader.biBitCount;
 
-      /* if palette load up palette from bitmap color table */
+      // if palette load up palette from bitmap color table
       if (EnablePalette)
          {
          if (ReadbitCount == 8)
@@ -1222,16 +1194,22 @@ bool TMainFrame::OpenDIB(FILE* File, DWORD &dwPixelWidth, DWORD &dwPixelHeight)
             }
          else
             {
-            /* fill palette with a wide range */
+            // fill palette with a wide range
             for (int i = 0; i < 5; i++)
+               {
                for (int j = 0; j < 5; j++)
+                  {
                   for (int k = 0; k < 5; k++)
+                     {
                      LoadColor(i * 42, j * 42, k * 42);
+                     }
+                  }
+               }
             }
          }
 
 
-      /* compute image size if not set */
+      // compute image size if not set
       if (ReadBitmapInfo->bmiHeader.biSizeImage == 0)
          {
          long longWidth = (((NewPixelWidth * ReadbitCount) + 31) / 32) * 4;
@@ -1240,11 +1218,11 @@ bool TMainFrame::OpenDIB(FILE* File, DWORD &dwPixelWidth, DWORD &dwPixelHeight)
          }
 
       // pack and allocate
-      unsigned char * BitsPtr = new unsigned char[ReadBitmapInfo->bmiHeader.biSizeImage];
-      memset(BitsPtr, 0x00, ReadBitmapInfo->bmiHeader.biSizeImage);
+      unsigned char * bitsPtr = new unsigned char[ReadBitmapInfo->bmiHeader.biSizeImage];
+      memset(bitsPtr, 0x00, ReadBitmapInfo->bmiHeader.biSizeImage);
 
       // read the file into the bitmap
-      fread(BitsPtr, sizeof(char), ReadBitmapInfo->bmiHeader.biSizeImage, File);
+      fread(bitsPtr, sizeof(char), ReadBitmapInfo->bmiHeader.biSizeImage, File);
 
       // Create DC comaptible with screen 
       HDC screen = GetDC(MainWindowx->ScreenWindow->HWindow);
@@ -1270,12 +1248,12 @@ bool TMainFrame::OpenDIB(FILE* File, DWORD &dwPixelWidth, DWORD &dwPixelHeight)
          screen,
          &ReadBitmapInfo->bmiHeader,
          CBM_INIT,
-         BitsPtr,
+         bitsPtr,
          ReadBitmapInfo,
          0);
 
       // now dump the bits 
-      delete [] BitsPtr;
+      delete [] bitsPtr;
       
       if (EnablePalette)
          {
@@ -1772,18 +1750,6 @@ void TMainFrame::CMBitmapPrinterArea()
             if (g_PrinterAreaPixels < 1)
                {
                g_PrinterAreaPixels = 1;
-               }
-
-            if ((g_PrinterAreaXLow  == -BitMapWidth  / 2) &&
-                (g_PrinterAreaXHigh == +BitMapWidth  / 2) &&
-                (g_PrinterAreaYLow  == -BitMapHeight / 2) &&
-                (g_PrinterAreaYHigh == +BitMapHeight / 2))
-               {
-               g_IsPrinterSettingCustom = false;
-               }
-            else
-               {
-               g_IsPrinterSettingCustom = true;
                }
 
             SetConfigurationInt("Printer.XLow",   g_PrinterAreaXLow);

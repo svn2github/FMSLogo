@@ -27,7 +27,6 @@ int g_PrinterAreaXHigh;
 int g_PrinterAreaYLow;
 int g_PrinterAreaYHigh;
 int g_PrinterAreaPixels;
-bool g_IsPrinterSettingCustom;         // Flag to signal Active area is 1:1 with the screen
 
 CPrinterAreaWindow::CPrinterAreaWindow(
    TWindow * ParentWindow
@@ -36,8 +35,7 @@ CPrinterAreaWindow::CPrinterAreaWindow(
        m_XHigh(g_PrinterAreaXHigh),
        m_YLow(g_PrinterAreaYLow),
        m_YHigh(g_PrinterAreaYHigh),
-       m_PixelsPerInch(g_PrinterAreaPixels),
-       m_IsCustomSetting(g_IsPrinterSettingCustom)
+       m_PixelsPerInch(g_PrinterAreaPixels)
    {
    }
 
@@ -93,6 +91,24 @@ DEFINE_RESPONSE_TABLE1(CPrinterAreaWindow, TDialog)
 END_RESPONSE_TABLE;
 
 
+bool IsActiveAreaOneToOneWithScreen()
+   {
+   bool isOneToOne;
+
+   if ((g_PrinterAreaXLow  == -BitMapWidth  / 2) &&
+       (g_PrinterAreaXHigh == +BitMapWidth  / 2) &&
+       (g_PrinterAreaYLow  == -BitMapHeight / 2) &&
+       (g_PrinterAreaYHigh == +BitMapHeight / 2))
+      {
+      isOneToOne = true;
+      }
+   else
+      {
+      isOneToOne = false;
+      }
+
+   return isOneToOne;
+   }
 
 NODE *lsetactivearea(NODE *arg)
    {
@@ -123,18 +139,6 @@ NODE *lsetactivearea(NODE *arg)
       SetConfigurationInt("Printer.YLow",   g_PrinterAreaYLow);
       SetConfigurationInt("Printer.YHigh",  g_PrinterAreaYHigh);
       SetConfigurationInt("Printer.Pixels", g_PrinterAreaPixels);
-
-      if ((g_PrinterAreaXLow  == -BitMapWidth  / 2) &&
-          (g_PrinterAreaXHigh == +BitMapWidth  / 2) &&
-          (g_PrinterAreaYLow  == -BitMapHeight / 2) &&
-          (g_PrinterAreaYHigh == +BitMapHeight / 2))
-         {
-         g_IsPrinterSettingCustom = false;
-         }
-      else
-         {
-         g_IsPrinterSettingCustom = true;
-         }
       }
 
    return Unbound;
