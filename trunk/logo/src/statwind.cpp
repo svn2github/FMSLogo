@@ -21,14 +21,58 @@
 
 #include "allwind.h"
 
-/* status window members */
+bool status_flag = false;   // Flag to signal status box is popped up
+
+
 CStatusWindow::CStatusWindow(
    TWindow *    Parent
    ) : TDialog(Parent, "DIALOGSTATUS")
    {
    }
 
-void CStatusWindow::EvClose()
+void CStatusWindow::SetupWindow()
+   {
+   TDialog::SetupWindow();
+
+   // flag so that updates are sent
+   status_flag = true;
+
+   // update button
+   MainWindowx->CommandWindow->UpdateStatusButtonState();
+
+   // build default coords
+   int x = 0;
+   int y = 0;
+   int w = 0;
+   int h = 0;
+
+   // Get last location and size of command window from configuration settings.
+   GetConfigurationQuadruple("Status", &x, &y, &w, &h); 
+   checkwindow(&x, &y, &w, &h);
+
+   // now set position
+   SetWindowPos(NULL, x, y, 0, 0, SWP_NOSIZE);
+
+   // update all fields
+   update_status_evals();
+   update_status_floodcolor();
+   update_status_memory();
+   update_status_paletteuse();
+   update_status_pencolor();
+   update_status_pencontact();
+   update_status_penstyle();
+   update_status_penwidth();
+   update_status_screencolor();
+   update_status_turtleheading();
+   update_status_turtlepitch();
+   update_status_turtleposition();
+   update_status_turtleroll();
+   update_status_turtlevisability();
+   update_status_turtlewhich();
+   update_status_vectors();
+   }
+
+void CStatusWindow::EvDestroy()
    {
    // we are processing the close event before
    // the window has been closed.
@@ -47,14 +91,15 @@ void CStatusWindow::EvClose()
       wrect.Width(),
       wrect.Height());
 
-   // now kill the status window
-   delete MainWindowx->StatusWindow;
-   MainWindowx->StatusWindow = NULL;
    MainWindowx->CommandWindow->UpdateStatusButtonState();
+
+   // the window will delete itself
+   MainWindowx->StatusWindow = NULL;
+   TDialog::EvDestroy();
    }
 
 DEFINE_RESPONSE_TABLE1(CStatusWindow, TDialog)
-  EV_WM_CLOSE,
+  EV_WM_DESTROY,
 END_RESPONSE_TABLE;
 
 static

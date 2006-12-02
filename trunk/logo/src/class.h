@@ -352,7 +352,8 @@ class CStatusWindow : public TDialog
    CStatusWindow(TWindow * Parent);
 
  protected:
-   void EvClose();
+   void EvDestroy();
+   void SetupWindow();
 
    DECLARE_RESPONSE_TABLE(CStatusWindow);
    }

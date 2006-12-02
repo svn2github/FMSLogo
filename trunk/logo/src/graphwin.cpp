@@ -885,21 +885,13 @@ NODE *lstatus(NODE *)
    {
    ASSERT_TURTLE_INVARIANT
 
-   // if status not running then run it
-   if (!status_flag)
-      {
-      MainWindowx->MyPopupStatus();
-      }
+   MainWindowx->MyPopupStatus();
    return Unbound;
    }
 
 NODE *lnostatus(NODE *)
    {
-   // if running then kill it
-   if (status_flag)
-      {
-      MainWindowx->MyPopupStatusKill();
-      }
+   MainWindowx->MyPopupStatusKill();
    return Unbound;
    }
 

@@ -114,7 +114,6 @@ bool IsOkayToUseCommanderWindow = false; // Flag to signal it's OK to write to r
 bool traceflag = false;                // Flag to signal trace button is active
 bool stepflag = false;                 // Flag to signal step button is active
 bool yield_flag = true;                // Flag to signal yield state
-bool status_flag = false;              // Flag to signal status box is popped up
 int MaxWidth = 0;                      // Actual Main window size x
 int MaxHeight = 0;                     // Actual Main window size y
 int xoffset = 0;                       // Used to go from logo to windows coords x

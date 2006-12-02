@@ -2257,72 +2257,23 @@ void TMainFrame::DockCommanderWindow()
 
 void TMainFrame::MyPopupStatusKill()
    {
-   // Get location and size of our window on the screen so we can
-   // come back up in the same spot next time we are invoked.
-   TRect wrect;
-   StatusWindow->GetWindowRect(wrect);
-
-   // save the current location
-   SetConfigurationQuadruple(
-      "Status",
-      wrect.Left(),
-      wrect.Top(),
-      wrect.Width(),
-      wrect.Height());
-
-   // now kill the status window
-   status_flag = false;
-
-   delete StatusWindow;
-   StatusWindow = NULL;
-   CommandWindow->UpdateStatusButtonState();
+   if (StatusWindow != NULL)
+      {
+      // The status window exists, close it
+      StatusWindow->CloseWindow();
+      }
    }
 
 // popup status window
 void TMainFrame::MyPopupStatus()
    {
-   // flag so that updates are sent
-   status_flag = true;
-
-   // pop it up
-   StatusWindow = new CStatusWindow(this);
-   StatusWindow->Create();
-
-   // update button
-   CommandWindow->UpdateStatusButtonState();
-
-   // build default coords
-   int x = 0;
-   int y = 0;
-   int w = 0;
-   int h = 0;
-
-   // Get last location and size of command window from configuration settings.
-   GetConfigurationQuadruple("Status", &x, &y, &w, &h); 
-   checkwindow(&x, &y, &w, &h);
-
-   // now set position
-   StatusWindow->SetWindowPos(NULL, x, y, 0, 0, SWP_NOSIZE);
-
-   // update all fields
-   update_status_evals();
-   update_status_floodcolor();
-   update_status_memory();
-   update_status_paletteuse();
-   update_status_pencolor();
-   update_status_pencontact();
-   update_status_penstyle();
-   update_status_penwidth();
-   update_status_screencolor();
-   update_status_turtleheading();
-   update_status_turtlepitch();
-   update_status_turtleposition();
-   update_status_turtleroll();
-   update_status_turtlevisability();
-   update_status_turtlewhich();
-   update_status_vectors();
-
-   StatusWindow->ShowWindow(SW_SHOW);
+   if (StatusWindow == NULL)
+      {
+      // The status window doesn't exist--create it
+      StatusWindow = new CStatusWindow(this);
+      StatusWindow->Create();
+      StatusWindow->ShowWindow(SW_SHOW);
+      }
    }
 
 

@@ -40,7 +40,6 @@ extern bool error_happen;
 extern long eval_count;
 extern long vector_count;
 extern int memory_count;
-extern bool status_flag;
 extern enum KEYBOARDCAPTURE KeyboardCapture;
 extern int keyboard_value;
 extern bool MouseCaptureIsEnabled;
@@ -59,6 +58,9 @@ extern char *mouse_mousemove;
 extern char edit_editexit[];
 extern char mci_callback[];
 extern char *timer_callback[];
+
+// statwnd.cpp
+extern bool status_flag;
 
 // netwind.cpp
 extern CNetworkConnection g_ClientConnection;
