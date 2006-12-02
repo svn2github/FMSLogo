@@ -377,26 +377,54 @@ class TMyPrinterAreaWindow : public TDialog
    }
 ;
 
-class TMyFileEditWindow : public TDialog
+class CSelectProcedureWindow : public TDialog
    {
  public:
 
-   TMyFileEditWindow(
+   CSelectProcedureWindow(
       TWindow *    Parent,
       const char * Resource
       );
 
-   bool m_FileEditAll;              // true if all procedures were selected
-   char m_SelectedProcedures[256];  // buffer to hold selected functions
+   void ShowDialog();
+
 
  protected:
    bool CanClose();
    void SetupWindow();
 
+   virtual void OnChoice(NODE * Procedures) = 0;
+
    void DoAll(UINT);
    void DoCombo(UINT);
 
-   DECLARE_RESPONSE_TABLE(TMyFileEditWindow);
+   bool m_FileEditAll;              // true if all procedures were selected
+   char m_SelectedProcedures[256];  // buffer to hold selected functions
+
+ private:
+   DECLARE_RESPONSE_TABLE(CSelectProcedureWindow);
+   }
+;
+
+// shows a "Select Procedures to Edit" dialog
+class CEditProcedureWindow : public CSelectProcedureWindow
+   {
+public:
+   CEditProcedureWindow(TWindow * Parent);
+
+protected:
+   void OnChoice(NODE * Procedures);
+   }
+;
+
+// shows a "Select Procedures to Erase" dialog
+class CEraseProcedureWindow : public CSelectProcedureWindow
+   {
+public:
+   CEraseProcedureWindow(TWindow * Parent);
+
+protected:
+   void OnChoice(NODE * Procedures);
    }
 ;
 

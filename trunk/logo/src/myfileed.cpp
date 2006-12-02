@@ -21,7 +21,7 @@
 
 #include "allwind.h"
 
-TMyFileEditWindow::TMyFileEditWindow(
+CSelectProcedureWindow::CSelectProcedureWindow(
    TWindow    * Parent, 
    const char * Resource
    )
@@ -31,13 +31,13 @@ TMyFileEditWindow::TMyFileEditWindow(
    m_SelectedProcedures[0] = '\0';
    }
 
-void TMyFileEditWindow::DoAll(UINT)
+void CSelectProcedureWindow::DoAll(UINT)
    {
    m_FileEditAll = true;
    CloseWindow(TRUE);
    }
 
-void TMyFileEditWindow::DoCombo(UINT)
+void CSelectProcedureWindow::DoCombo(UINT)
    {
    TMessage Msg = __GetTMessage();
 
@@ -47,14 +47,14 @@ void TMyFileEditWindow::DoCombo(UINT)
       }
    }
 
-bool TMyFileEditWindow::CanClose()
+bool CSelectProcedureWindow::CanClose()
    {
    GetDlgItemText(ID_FILEEDITCOMBO, m_SelectedProcedures, MAX_BUFFER_SIZE);
 
    return true;
    }
 
-void TMyFileEditWindow::SetupWindow()
+void CSelectProcedureWindow::SetupWindow()
    {
    // get procedures
    NODE * proclist = lprocedures(NIL);
@@ -72,8 +72,62 @@ void TMyFileEditWindow::SetupWindow()
    gcref(proclist);
    }
 
-DEFINE_RESPONSE_TABLE1(TMyFileEditWindow, TDialog)
+
+void CSelectProcedureWindow::ShowDialog()
+   {
+   // Show the dialog as a modal box
+   if (Execute() == IDOK)
+      {
+      NODE *arg;
+      if (m_FileEditAll)
+         {
+         // the user clicked ALL get all procedures
+         arg = lprocedures(NIL);
+         }
+      else
+         {
+         // else find what user selected
+         arg = cons_list(make_strnode(m_SelectedProcedures));
+         }
+
+      // if something edit it
+      if (arg != NIL) 
+         {
+         OnChoice(arg);
+         }
+
+      gcref(arg);
+      }
+   }
+
+DEFINE_RESPONSE_TABLE1(CSelectProcedureWindow, TDialog)
   EV_CHILD_NOTIFY_ALL_CODES(ID_FILEEDITALL,   DoAll),
   EV_CHILD_NOTIFY_ALL_CODES(ID_FILEEDITCOMBO, DoCombo),
 END_RESPONSE_TABLE;
+
+
+// shows a "Select Procedures to Edit" dialog
+CEditProcedureWindow::CEditProcedureWindow(TWindow * Parent) 
+   : CSelectProcedureWindow(Parent, "DIALOGEDIT")
+   {
+   }
+
+void
+CEditProcedureWindow::OnChoice(NODE * Procedures)
+   {
+   ledit(Procedures);
+   }
+
+
+// shows a "Select Procedures to Erase" dialog
+CEraseProcedureWindow::CEraseProcedureWindow(TWindow * Parent) 
+   : CSelectProcedureWindow(Parent, "DIALOGERASE")
+   {
+   }
+
+void
+CEraseProcedureWindow::OnChoice(NODE * Procedures)
+   {
+   lerase(Procedures);
+   }
 

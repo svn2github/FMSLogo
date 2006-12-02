@@ -1793,67 +1793,14 @@ void TMainFrame::CMBitmapPrinterArea()
 
 void TMainFrame::CMFileEdit()
    {
-   // create dialog for which procedure to edit
-   TMyFileEditWindow FileEditWindow(this, "DIALOGEDIT");
-
-   // now do it
-   if (FileEditWindow.Execute() == IDOK)
-      {
-
-      // if user clicked ALL get all procedures
-      NODE *arg;
-      if (FileEditWindow.m_FileEditAll)
-         {
-         arg = lprocedures(NIL);
-         }
-      else
-         {
-         // else find what user selected
-         arg = cons_list(make_strnode(FileEditWindow.m_SelectedProcedures));
-         }
-
-      // if something edit it
-      if (arg != NIL) 
-         {
-         ledit(arg);
-         }
-
-      gcref(arg);
-      }
+   // create and show a dialog for which procedure to edit
+   CEditProcedureWindow(this).ShowDialog();
    }
 
 void TMainFrame::CMFileErase()
    {
-   // create dialog for which procedure to erase
-   TMyFileEditWindow FileEditWindow(this, "DIALOGERASE");
-
-   // now do it
-   if (FileEditWindow.Execute() == IDOK)
-      {
-      NODE *arg;
-
-      if (FileEditWindow.m_FileEditAll)
-         {
-         // if user clicked EDALL get all procedures
-         arg = lprocedures(NIL);
-
-         IsNewFile = true;
-         IsDirty = false;
-         }
-      else
-         {
-         // else find what user selected
-         arg = cons_list(make_strnode(FileEditWindow.m_SelectedProcedures));
-         }
-
-      // if something erase it
-      if (arg != NIL)
-         {
-         lerase(arg);
-         }
-
-      gcref(arg);
-      }
+   // create and show a dialog for which procedure to edit
+   CEraseProcedureWindow(this).ShowDialog();
    }
 
 
