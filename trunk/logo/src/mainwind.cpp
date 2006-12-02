@@ -472,18 +472,18 @@ void TScreenWindow::Printit(TDC &PrintDC)
       // if "active area" just print that 
       long Status;
 
-      if (IsPrinterSettingCustom)
+      if (g_IsPrinterSettingCustom)
          {
          Status = StretchDIBits(
             PrintDC,
             0,
             0,
-            (TempWidth * (PrinterAreaXHigh - PrinterAreaXLow)) / PrinterAreaPixels,
-            (TempHeight * (PrinterAreaYHigh - PrinterAreaYLow)) / PrinterAreaPixels,
-            +PrinterAreaXLow + xoffset,
-            BitMapHeight - (-PrinterAreaYLow + yoffset),
-            PrinterAreaXHigh - PrinterAreaXLow,
-            PrinterAreaYHigh - PrinterAreaYLow,
+            (TempWidth  * (g_PrinterAreaXHigh - g_PrinterAreaXLow)) / g_PrinterAreaPixels,
+            (TempHeight * (g_PrinterAreaYHigh - g_PrinterAreaYLow)) / g_PrinterAreaPixels,
+            +g_PrinterAreaXLow + xoffset,
+            BitMapHeight - (-g_PrinterAreaYLow + yoffset),
+            g_PrinterAreaXHigh - g_PrinterAreaXLow,
+            g_PrinterAreaYHigh - g_PrinterAreaYLow,
             BitsPtr,
             PrintBitmapInfo,
             DIB_RGB_COLORS,
@@ -496,8 +496,8 @@ void TScreenWindow::Printit(TDC &PrintDC)
             PrintDC,
             0,
             0,
-            (TempWidth * BitMapWidth) / PrinterAreaPixels,
-            (TempHeight * BitMapHeight) / PrinterAreaPixels,
+            (TempWidth  * BitMapWidth)  / g_PrinterAreaPixels,
+            (TempHeight * BitMapHeight) / g_PrinterAreaPixels,
             0,
             0,
             BitMapWidth,
@@ -1038,10 +1038,10 @@ bool TMainFrame::WriteDIB(FILE* File, int MaxBitCount)
    SaveBitmapInfo->bmiHeader.biClrUsed = 0;
    SaveBitmapInfo->bmiHeader.biClrImportant = 0;
 
-   if (IsPrinterSettingCustom)
+   if (g_IsPrinterSettingCustom)
       {
-      SaveBitmapInfo->bmiHeader.biWidth = PrinterAreaXHigh - PrinterAreaXLow;
-      SaveBitmapInfo->bmiHeader.biHeight = PrinterAreaYHigh - PrinterAreaYLow;
+      SaveBitmapInfo->bmiHeader.biWidth  = g_PrinterAreaXHigh - g_PrinterAreaXLow;
+      SaveBitmapInfo->bmiHeader.biHeight = g_PrinterAreaYHigh - g_PrinterAreaYLow;
       }
 
    SaveBitmapInfo->bmiHeader.biSizeImage = ((((SaveBitmapInfo->bmiHeader.biWidth * SaveBitmapInfo->bmiHeader.biBitCount) + 31) / 32) * 4) * SaveBitmapInfo->bmiHeader.biHeight;
@@ -1059,12 +1059,12 @@ bool TMainFrame::WriteDIB(FILE* File, int MaxBitCount)
       }
 
    // if custom then use custom dimensions
-   if (IsPrinterSettingCustom)
+   if (g_IsPrinterSettingCustom)
       {
       HBITMAP AreaMemoryBitMap = CreateCompatibleBitmap(
          screen,
-         PrinterAreaXHigh - PrinterAreaXLow,
-         PrinterAreaYHigh - PrinterAreaYLow);
+         g_PrinterAreaXHigh - g_PrinterAreaXLow,
+         g_PrinterAreaYHigh - g_PrinterAreaYLow);
 
       if (!AreaMemoryBitMap)
          {
@@ -1081,11 +1081,11 @@ bool TMainFrame::WriteDIB(FILE* File, int MaxBitCount)
          areaMemoryDC,
          0,
          0,
-         PrinterAreaXHigh - PrinterAreaXLow,
-         PrinterAreaYHigh - PrinterAreaYLow,
+         g_PrinterAreaXHigh - g_PrinterAreaXLow,
+         g_PrinterAreaYHigh - g_PrinterAreaYLow,
          memoryDC,
-         +PrinterAreaXLow + xoffset,
-         -PrinterAreaYHigh + yoffset,
+         +g_PrinterAreaXLow  + xoffset,
+         -g_PrinterAreaYHigh + yoffset,
          SRCCOPY);
 
       SelectObject(areaMemoryDC, areaMemoryBitmap);
@@ -1099,7 +1099,7 @@ bool TMainFrame::WriteDIB(FILE* File, int MaxBitCount)
          screen,
          AreaMemoryBitMap,
          0,
-         PrinterAreaYHigh - PrinterAreaYLow,
+         g_PrinterAreaYHigh - g_PrinterAreaYLow,
          BitsPtr,
          SaveBitmapInfo,
          DIB_RGB_COLORS);
@@ -1743,24 +1743,20 @@ void TMainFrame::CMBitmapPrinterArea()
    {
    bool bAok;
 
-   // copy real to dynamic
-   TPrinterAreaXLow        = PrinterAreaXLow;
-   TPrinterAreaXHigh       = PrinterAreaXHigh;
-   TPrinterAreaYLow        = PrinterAreaYLow;
-   TPrinterAreaYHigh       = PrinterAreaYHigh;
-   TPrinterAreaPixels      = PrinterAreaPixels;
-   IsTPrinterSettingCustom = IsPrinterSettingCustom;
-
    do
       {
       bAok = true;
 
-      // if user does not cancel then copy dynamic to real
-      if (CPrinterAreaWindow(this).Execute() == IDOK)
-         {
+      CPrinterAreaWindow printerArea(this);
 
-         if ((TPrinterAreaXLow >= TPrinterAreaXHigh) || (TPrinterAreaYLow >= TPrinterAreaYHigh))
+      if (printerArea.Execute() == IDOK)
+         {
+         // the user did not cancel, so commit to the new settings
+
+         if (printerArea.m_XLow >= printerArea.m_XHigh ||
+             printerArea.m_YLow >= printerArea.m_YHigh)
             {
+            // the settings are no good, try again
             MainWindowx->CommandWindow->MessageBox(
                LOCALIZED_ERROR_BADINPUT,
                LOCALIZED_ACTIVEAREA);
@@ -1768,22 +1764,33 @@ void TMainFrame::CMBitmapPrinterArea()
             }
          else
             {
-            PrinterAreaXLow   = TPrinterAreaXLow;
-            PrinterAreaXHigh  = TPrinterAreaXHigh;
-            PrinterAreaYLow   = TPrinterAreaYLow;
-            PrinterAreaYHigh  = TPrinterAreaYHigh;
-            if (TPrinterAreaPixels < 1)
+            g_PrinterAreaXLow   = printerArea.m_XLow;
+            g_PrinterAreaXHigh  = printerArea.m_XHigh;
+            g_PrinterAreaYLow   = printerArea.m_YLow;
+            g_PrinterAreaYHigh  = printerArea.m_YHigh;
+            g_PrinterAreaPixels = printerArea.m_PixelsPerInch;
+            if (g_PrinterAreaPixels < 1)
                {
-               TPrinterAreaPixels = 1;
+               g_PrinterAreaPixels = 1;
                }
-            PrinterAreaPixels      = TPrinterAreaPixels;
-            IsPrinterSettingCustom = IsTPrinterSettingCustom;
 
-            SetConfigurationInt("Printer.XLow",   PrinterAreaXLow);
-            SetConfigurationInt("Printer.XHigh",  PrinterAreaXHigh);
-            SetConfigurationInt("Printer.YLow",   PrinterAreaYLow);
-            SetConfigurationInt("Printer.YHigh",  PrinterAreaYHigh);
-            SetConfigurationInt("Printer.Pixels", PrinterAreaPixels);
+            if ((g_PrinterAreaXLow  == -BitMapWidth  / 2) &&
+                (g_PrinterAreaXHigh == +BitMapWidth  / 2) &&
+                (g_PrinterAreaYLow  == -BitMapHeight / 2) &&
+                (g_PrinterAreaYHigh == +BitMapHeight / 2))
+               {
+               g_IsPrinterSettingCustom = false;
+               }
+            else
+               {
+               g_IsPrinterSettingCustom = true;
+               }
+
+            SetConfigurationInt("Printer.XLow",   g_PrinterAreaXLow);
+            SetConfigurationInt("Printer.XHigh",  g_PrinterAreaXHigh);
+            SetConfigurationInt("Printer.YLow",   g_PrinterAreaYLow);
+            SetConfigurationInt("Printer.YHigh",  g_PrinterAreaYHigh);
+            SetConfigurationInt("Printer.Pixels", g_PrinterAreaPixels);
             }
          }
       } while (!bAok);

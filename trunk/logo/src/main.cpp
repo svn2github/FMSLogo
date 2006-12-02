@@ -83,18 +83,6 @@ RECT FullRect;                         // Ready rectangle of Full bitmap
 
 TMainFrame *MainWindowx;               // Pointer to the Main window
 
-/* Active area dimensions (real and temp) */
-
-int PrinterAreaXLow;
-int PrinterAreaXHigh;
-int PrinterAreaYLow;
-int PrinterAreaYHigh;
-int PrinterAreaPixels;
-int TPrinterAreaXLow;
-int TPrinterAreaXHigh;
-int TPrinterAreaYLow;
-int TPrinterAreaYHigh;
-int TPrinterAreaPixels;
 
 int GCMAX = 8192;                      // Garbage Collector Stack Size
 int MAX_PHYS_LINE = 8192;              // Maximum Physical Line Size
@@ -108,8 +96,6 @@ int WorldWidth = 1000;                 // Current World size in X
 int WorldHeight = 1000;                // Current World size in Y
 int WorldDepth = 1000;                 // Current World size in Z
 bool EnablePalette;                    // Flag to signal 256 color mode with palette
-bool IsPrinterSettingCustom = false;   // Flag to signal Active area is active
-bool IsTPrinterSettingCustom = false;  // Dynamic copy of CustomFlag
 bool IsOkayToUseCommanderWindow = false; // Flag to signal it's OK to write to recall box
 bool traceflag = false;                // Flag to signal trace button is active
 bool stepflag = false;                 // Flag to signal step button is active
@@ -521,12 +507,12 @@ void TMyApp::InitMainWindow()
    yoffset = BitMapHeight / 2;
 
    // Init active area even if off
-   PrinterAreaXLow  = -BitMapWidth  / 2;
-   PrinterAreaXHigh = +BitMapWidth  / 2;
-   PrinterAreaYLow  = -BitMapHeight / 2;
-   PrinterAreaYHigh = +BitMapHeight / 2;
+   g_PrinterAreaXLow  = -BitMapWidth  / 2;
+   g_PrinterAreaXHigh = +BitMapWidth  / 2;
+   g_PrinterAreaYLow  = -BitMapHeight / 2;
+   g_PrinterAreaYHigh = +BitMapHeight / 2;
 
-   PrinterAreaPixels = max(BitMapWidth, BitMapHeight) / 8;
+   g_PrinterAreaPixels = max(BitMapWidth, BitMapHeight) / 8;
 
    // clear bitmap to white
    HDC screenDC = CreateDC("DISPLAY", NULL, NULL, NULL);
@@ -617,22 +603,22 @@ void TMyApp::InitMainWindow()
 
    MakeHelpPathName(MCIHelpFileName, "mcistrwh.hlp");
 
-   PrinterAreaXLow   = GetConfigurationInt("Printer.Xlow",  -BitMapWidth  / 2);
-   PrinterAreaXHigh  = GetConfigurationInt("Printer.XHigh", +BitMapWidth  / 2);
-   PrinterAreaYLow   = GetConfigurationInt("Printer.Ylow",  -BitMapHeight / 2);
-   PrinterAreaYHigh  = GetConfigurationInt("Printer.YHigh", +BitMapHeight / 2);
-   PrinterAreaPixels = GetConfigurationInt("Printer.Pixels", max(BitMapWidth, BitMapHeight) / 8);
+   g_PrinterAreaXLow   = GetConfigurationInt("Printer.Xlow",  -BitMapWidth  / 2);
+   g_PrinterAreaXHigh  = GetConfigurationInt("Printer.XHigh", +BitMapWidth  / 2);
+   g_PrinterAreaYLow   = GetConfigurationInt("Printer.Ylow",  -BitMapHeight / 2);
+   g_PrinterAreaYHigh  = GetConfigurationInt("Printer.YHigh", +BitMapHeight / 2);
+   g_PrinterAreaPixels = GetConfigurationInt("Printer.Pixels", max(BitMapWidth, BitMapHeight) / 8);
 
-   if ((PrinterAreaXLow  == -BitMapWidth  / 2) &&
-       (PrinterAreaXHigh == +BitMapWidth  / 2) &&
-       (PrinterAreaYLow  == -BitMapHeight / 2) &&
-       (PrinterAreaYHigh == +BitMapHeight / 2))
+   if ((g_PrinterAreaXLow  == -BitMapWidth  / 2) &&
+       (g_PrinterAreaXHigh == +BitMapWidth  / 2) &&
+       (g_PrinterAreaYLow  == -BitMapHeight / 2) &&
+       (g_PrinterAreaYHigh == +BitMapHeight / 2))
       {
-      IsPrinterSettingCustom = false;
+      g_IsPrinterSettingCustom = false;
       }
    else
       {
-      IsPrinterSettingCustom = true;
+      g_IsPrinterSettingCustom = true;
       }
    }
 

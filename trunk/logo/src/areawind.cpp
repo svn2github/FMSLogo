@@ -21,9 +21,23 @@
 
 #include "allwind.h"
 
+// Active area dimensions
+int g_PrinterAreaXLow;
+int g_PrinterAreaXHigh;
+int g_PrinterAreaYLow;
+int g_PrinterAreaYHigh;
+int g_PrinterAreaPixels;
+bool g_IsPrinterSettingCustom;         // Flag to signal Active area is 1:1 with the screen
+
 CPrinterAreaWindow::CPrinterAreaWindow(
    TWindow * ParentWindow
-   ) : TDialog(ParentWindow, "PRINTERAREA")
+   ) : TDialog(ParentWindow, "PRINTERAREA"),
+       m_XLow(g_PrinterAreaXLow),
+       m_XHigh(g_PrinterAreaXHigh),
+       m_YLow(g_PrinterAreaYLow),
+       m_YHigh(g_PrinterAreaYHigh),
+       m_PixelsPerInch(g_PrinterAreaPixels),
+       m_IsCustomSetting(g_IsPrinterSettingCustom)
    {
    }
 
@@ -31,24 +45,13 @@ CPrinterAreaWindow::CPrinterAreaWindow(
 // The next 4 routines fetch the active area dimensions 
 void CPrinterAreaWindow::CloseWindow(int arg)
    {
-   TPrinterAreaXLow  = GetDlgItemInt(ID_XLOW);
-   TPrinterAreaXHigh = GetDlgItemInt(ID_XHIGH);
-   TPrinterAreaYLow  = GetDlgItemInt(ID_YLOW);
-   TPrinterAreaYHigh = GetDlgItemInt(ID_YHIGH);
+   // read from the dialog to the member variables
+   m_XLow  = GetDlgItemInt(ID_XLOW);
+   m_XHigh = GetDlgItemInt(ID_XHIGH);
+   m_YLow  = GetDlgItemInt(ID_YLOW);
+   m_YHigh = GetDlgItemInt(ID_YHIGH);
 
-   TPrinterAreaPixels = GetDlgItemInt(ID_PIXELS);
-   
-   if ((TPrinterAreaXLow  == -BitMapWidth  / 2) &&
-       (TPrinterAreaXHigh == +BitMapWidth  / 2) &&
-       (TPrinterAreaYLow  == -BitMapHeight / 2) &&
-       (TPrinterAreaYHigh == +BitMapHeight / 2))
-       {
-       IsTPrinterSettingCustom = false;
-       }
-   else
-       {
-       IsTPrinterSettingCustom = true;
-       }
+   m_PixelsPerInch = GetDlgItemInt(ID_PIXELS);
 
    TDialog::CloseWindow(arg);
    }
@@ -56,12 +59,12 @@ void CPrinterAreaWindow::CloseWindow(int arg)
 void CPrinterAreaWindow::ResetWindow()
    {
    // display active parameters
-   SetDlgItemInt(ID_XLOW,  TPrinterAreaXLow);
-   SetDlgItemInt(ID_XHIGH, TPrinterAreaXHigh);
-   SetDlgItemInt(ID_YLOW,  TPrinterAreaYLow);
-   SetDlgItemInt(ID_YHIGH, TPrinterAreaYHigh);
+   SetDlgItemInt(ID_XLOW,  m_XLow);
+   SetDlgItemInt(ID_XHIGH, m_XHigh);
+   SetDlgItemInt(ID_YLOW,  m_YLow);
+   SetDlgItemInt(ID_YHIGH, m_YHigh);
 
-   SetDlgItemInt(ID_PIXELS, TPrinterAreaPixels);
+   SetDlgItemInt(ID_PIXELS, m_PixelsPerInch);
    }
 
 void CPrinterAreaWindow::SetupWindow()
@@ -74,17 +77,22 @@ void CPrinterAreaWindow::SetupWindow()
 
 void CPrinterAreaWindow::DoReset(UINT)
    {
-   // hack to init things
+   // restore to defaults
+   m_XLow  = -BitMapWidth  / 2;
+   m_XHigh = +BitMapWidth  / 2;
+   m_YLow  = -BitMapHeight / 2;
+   m_YHigh = +BitMapHeight / 2;
 
-   TPrinterAreaXLow  = -BitMapWidth / 2;
-   TPrinterAreaXHigh = +BitMapWidth / 2;
-   TPrinterAreaYLow  = -BitMapHeight / 2;
-   TPrinterAreaYHigh = +BitMapHeight / 2;
-
-   TPrinterAreaPixels = max(BitMapWidth, BitMapHeight) / 8;
+   m_PixelsPerInch = max(BitMapWidth, BitMapHeight) / 8;
 
    ResetWindow();
    }
+
+DEFINE_RESPONSE_TABLE1(CPrinterAreaWindow, TDialog)
+  EV_CHILD_NOTIFY_ALL_CODES(ID_RESETEXTENT, DoReset),
+END_RESPONSE_TABLE;
+
+
 
 NODE *lsetactivearea(NODE *arg)
    {
@@ -98,33 +106,34 @@ NODE *lsetactivearea(NODE *arg)
       NODE * xhigh = car(cdr(cdr(args)));
       NODE * yhigh = car(cdr(cdr(cdr(args))));
 
-      PrinterAreaXLow  = numeric_node_to_fixnum(xlow);
-      PrinterAreaYLow  = numeric_node_to_fixnum(ylow);
-      PrinterAreaXHigh = numeric_node_to_fixnum(xhigh); 
-      PrinterAreaYHigh = numeric_node_to_fixnum(yhigh); 
+      g_PrinterAreaXLow  = numeric_node_to_fixnum(xlow);
+      g_PrinterAreaYLow  = numeric_node_to_fixnum(ylow);
+      g_PrinterAreaXHigh = numeric_node_to_fixnum(xhigh); 
+      g_PrinterAreaYHigh = numeric_node_to_fixnum(yhigh); 
 
-      if ((PrinterAreaXLow >= PrinterAreaXHigh) || (PrinterAreaYLow >= PrinterAreaYHigh))
+      if (g_PrinterAreaXLow >= g_PrinterAreaXHigh || 
+          g_PrinterAreaYLow >= g_PrinterAreaYHigh)
          {
          ShowMessageAndStop(LOCALIZED_ACTIVEAREA, LOCALIZED_ERROR_BADINPUT);
          return Unbound;
          }
 
-      SetConfigurationInt("Printer.XLow",   PrinterAreaXLow);
-      SetConfigurationInt("Printer.XHigh",  PrinterAreaXHigh);
-      SetConfigurationInt("Printer.YLow",   PrinterAreaYLow);
-      SetConfigurationInt("Printer.YHigh",  PrinterAreaYHigh);
-      SetConfigurationInt("Printer.Pixels", PrinterAreaPixels);
+      SetConfigurationInt("Printer.XLow",   g_PrinterAreaXLow);
+      SetConfigurationInt("Printer.XHigh",  g_PrinterAreaXHigh);
+      SetConfigurationInt("Printer.YLow",   g_PrinterAreaYLow);
+      SetConfigurationInt("Printer.YHigh",  g_PrinterAreaYHigh);
+      SetConfigurationInt("Printer.Pixels", g_PrinterAreaPixels);
 
-      if ((PrinterAreaXLow  == -BitMapWidth  / 2) &&
-          (PrinterAreaXHigh == +BitMapWidth  / 2) &&
-          (PrinterAreaYLow  == -BitMapHeight / 2) &&
-          (PrinterAreaYHigh == +BitMapHeight / 2))
+      if ((g_PrinterAreaXLow  == -BitMapWidth  / 2) &&
+          (g_PrinterAreaXHigh == +BitMapWidth  / 2) &&
+          (g_PrinterAreaYLow  == -BitMapHeight / 2) &&
+          (g_PrinterAreaYHigh == +BitMapHeight / 2))
          {
-         IsPrinterSettingCustom = false;
+         g_IsPrinterSettingCustom = false;
          }
       else
          {
-         IsPrinterSettingCustom = true;
+         g_IsPrinterSettingCustom = true;
          }
       }
 
@@ -134,14 +143,8 @@ NODE *lsetactivearea(NODE *arg)
 NODE *lactivearea(NODE *)
    {
    return cons_list(
-      make_intnode((FIXNUM) PrinterAreaXLow),
-      make_intnode((FIXNUM) PrinterAreaYLow),
-      make_intnode((FIXNUM) PrinterAreaXHigh),
-      make_intnode((FIXNUM) PrinterAreaYHigh));
+      make_intnode((FIXNUM) g_PrinterAreaXLow),
+      make_intnode((FIXNUM) g_PrinterAreaYLow),
+      make_intnode((FIXNUM) g_PrinterAreaXHigh),
+      make_intnode((FIXNUM) g_PrinterAreaYHigh));
    }
-
-
-DEFINE_RESPONSE_TABLE1(CPrinterAreaWindow, TDialog)
-  EV_CHILD_NOTIFY_ALL_CODES(ID_RESETEXTENT, DoReset),
-END_RESPONSE_TABLE;
-

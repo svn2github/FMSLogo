@@ -365,6 +365,14 @@ class CPrinterAreaWindow : public TDialog
 
    CPrinterAreaWindow(TWindow * Parent);
 
+   int m_XLow;
+   int m_XHigh;
+   int m_YLow;
+   int m_YHigh;
+   int m_PixelsPerInch;
+
+   bool m_IsCustomSetting;
+
  protected:
    void SetupWindow();
    void CloseWindow(int);
@@ -759,16 +767,12 @@ extern RECT FullRect;
 
 extern TMainFrame *MainWindowx;
 
-extern int PrinterAreaXLow;
-extern int PrinterAreaXHigh;
-extern int PrinterAreaYLow;
-extern int PrinterAreaYHigh;
-extern int PrinterAreaPixels;
-extern int TPrinterAreaXLow;
-extern int TPrinterAreaXHigh;
-extern int TPrinterAreaYLow;
-extern int TPrinterAreaYHigh;
-extern int TPrinterAreaPixels;
+extern int g_PrinterAreaXLow;
+extern int g_PrinterAreaXHigh;
+extern int g_PrinterAreaYLow;
+extern int g_PrinterAreaYHigh;
+extern int g_PrinterAreaPixels;
+extern bool g_IsPrinterSettingCustom;
 
 extern CUTMAP *CutBmp;
 extern Color dpen;
@@ -780,8 +784,6 @@ extern int WorldWidth;
 extern int WorldHeight;
 extern int WorldDepth;
 extern bool EnablePalette;
-extern bool IsPrinterSettingCustom;
-extern bool IsTPrinterSettingCustom;
 extern bool IsOkayToUseCommanderWindow;
 extern bool stepflag;
 extern int MaxWidth;
