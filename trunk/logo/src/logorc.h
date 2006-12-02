@@ -104,6 +104,27 @@
 #define ID_SELECTPROCEDURE_COMBO     IDC_BASE + 107
 #define ID_SELECTPROCEDURE_ALL       IDC_BASE + 108
 
+#define ID_STATUS_CONTACT            IDC_BASE + 109
+#define ID_STATUS_PEN                IDC_BASE + 110
+#define ID_STATUS_FLOODCOLOR         IDC_BASE + 111
+#define ID_STATUS_SCREENCOLOR        IDC_BASE + 112
+#define ID_STATUS_PALETTE            IDC_BASE + 113
+#define ID_STATUS_WIDTH              IDC_BASE + 114
+#define ID_STATUS_POSITION           IDC_BASE + 115
+#define ID_STATUS_WHICH              IDC_BASE + 116
+#define ID_STATUS_VISIBILITY         IDC_BASE + 117
+#define ID_STATUS_STYLE              IDC_BASE + 118
+#define ID_STATUS_HEADING            IDC_BASE + 119
+#define ID_STATUS_PITCH              IDC_BASE + 120
+#define ID_STATUS_ROLL               IDC_BASE + 121
+#define ID_STATUS_PENCOLOR           IDC_BASE + 122
+#define ID_STATUS_ORIENTATION        IDC_BASE + 123
+#define ID_STATUS_TURTLE             IDC_BASE + 124
+#define ID_STATUS_COLOR              IDC_BASE + 125
+#define ID_STATUS_KERNEL             IDC_BASE + 126
+#define ID_STATUS_CALLS              IDC_BASE + 127
+#define ID_STATUS_PEAKMEMORY         IDC_BASE + 128
+
 #define CM_CONTROLHALT          CMD_BASE + 0
 #define CM_CONTROLEXECUTE       CMD_BASE + 1
 

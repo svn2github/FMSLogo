@@ -251,23 +251,23 @@
 // Strings on the Status window
 //
 #define LOCALIZED_STATUS                        "Κατάσταση" // 
+#define LOCALIZED_STATUS_PEN                    "Πένα" // 
 #define LOCALIZED_STATUS_CONTACT                "Επαφή:" // 
+#define LOCALIZED_STATUS_WIDTH                  "Πλάτος:" // 
+#define LOCALIZED_STATUS_STYLE                  "Στυλ:" // 
+#define LOCALIZED_STATUS_ORIENTATION            "Προσανατολισμός" // 
+#define LOCALIZED_STATUS_PITCH                  "Κλίση:" // 
+#define LOCALIZED_STATUS_HEADING                "Κατεύθυνση:" // 
+#define LOCALIZED_STATUS_ROLL                   "Στροφή:" // 
+#define LOCALIZED_STATUS_TURTLE                 "Χελώνα" // 
+#define LOCALIZED_STATUS_POSITION               "Θέση (XYZ):" // XYZ is fine :P
+#define LOCALIZED_STATUS_WHICH                  "Χελώνα:" // 
+#define LOCALIZED_STATUS_VISIBILITY             "Ορατότητα:" // 
+#define LOCALIZED_STATUS_COLOR                  "Χρώμα" // 
 #define LOCALIZED_STATUS_PENCOLOR               "Πένα (ΚΠΓ):" // Maybe a teacher would recognize RGB more easily than the Greek equivalent, but I've translated it anyway.
 #define LOCALIZED_STATUS_FLOODCOLOR             "Γέμισμα (ΚΠΓ):" // 
 #define LOCALIZED_STATUS_SCREENCOLOR            "Οθόνη (ΚΠΓ):" // 
 #define LOCALIZED_STATUS_PALETTE                "Παλέτα:" // 
-#define LOCALIZED_STATUS_WIDTH                  "Πλάτος:" // 
-#define LOCALIZED_STATUS_POSITION               "Θέση (XYZ):" // XYZ is fine :P
-#define LOCALIZED_STATUS_WHICH                  "Χελώνα:" // 
-#define LOCALIZED_STATUS_VISIBILITY             "Ορατότητα:" // 
-#define LOCALIZED_STATUS_STYLE                  "Στυλ:" // 
-#define LOCALIZED_STATUS_HEADING                "Κατεύθυνση:" // 
-#define LOCALIZED_STATUS_PITCH                  "Κλίση:" // 
-#define LOCALIZED_STATUS_ROLL                   "Στροφή:" // 
-#define LOCALIZED_STATUS_PEN                    "Πένα" // 
-#define LOCALIZED_STATUS_ORIENTATION            "Προσανατολισμός" // 
-#define LOCALIZED_STATUS_TURTLE                 "Χελώνα" // 
-#define LOCALIZED_STATUS_COLOR                  "Χρώμα" // 
 #define LOCALIZED_STATUS_KERNEL                 "Πυρήνας" // 
 #define LOCALIZED_STATUS_CALLS                  "Κλήσεις:" // 
 #define LOCALIZED_STATUS_PEAKMEMORY             "Μνήμη:" // 
