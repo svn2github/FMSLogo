@@ -346,16 +346,15 @@ public: // HACK: should be protected
    }
 ;
 
-class TMyStatusWindow : public TDialog
+class CStatusWindow : public TDialog
    {
  public:
-   TMyStatusWindow(TWindow *, LPCSTR);
-   ~TMyStatusWindow();
+   CStatusWindow(TWindow * Parent);
 
  protected:
    void EvClose();
 
-   DECLARE_RESPONSE_TABLE(TMyStatusWindow);
+   DECLARE_RESPONSE_TABLE(CStatusWindow);
    }
 ;
 
@@ -583,7 +582,7 @@ class TMainFrame : public TDecoratedFrame
    class TPrinter               Printer;
    class TMyFileWindow        * EditWindow;
    class TMyCommandWindow     * CommandWindow;
-   class TMyStatusWindow      * StatusWindow;
+   class CStatusWindow        * StatusWindow;
    class TMyPrinterAreaWindow * PrinterAreaWindow;
    class TMyFileEditWindow    * FileEditWindow;
    class TPaneSplitter        * PaneSplitterWindow;

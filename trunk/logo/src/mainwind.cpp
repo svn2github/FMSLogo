@@ -2285,7 +2285,7 @@ void TMainFrame::MyPopupStatus()
    status_flag = true;
 
    // pop it up
-   StatusWindow = new TMyStatusWindow(this, "DIALOGSTATUS");
+   StatusWindow = new CStatusWindow(this);
    StatusWindow->Create();
 
    // update button

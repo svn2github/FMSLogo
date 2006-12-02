@@ -22,18 +22,13 @@
 #include "allwind.h"
 
 /* status window members */
-TMyStatusWindow::TMyStatusWindow(
-   TWindow *    AParent,
-   LPCSTR       ATitle
-) : TDialog(AParent, ATitle)
+CStatusWindow::CStatusWindow(
+   TWindow *    Parent
+   ) : TDialog(Parent, "DIALOGSTATUS")
    {
    }
 
-TMyStatusWindow::~TMyStatusWindow()
-   {
-   }
-
-void TMyStatusWindow::EvClose()
+void CStatusWindow::EvClose()
    {
    // we are processing the close event before
    // the window has been closed.
@@ -58,7 +53,7 @@ void TMyStatusWindow::EvClose()
    MainWindowx->CommandWindow->UpdateStatusButtonState();
    }
 
-DEFINE_RESPONSE_TABLE1(TMyStatusWindow, TDialog)
+DEFINE_RESPONSE_TABLE1(CStatusWindow, TDialog)
   EV_WM_CLOSE,
 END_RESPONSE_TABLE;
 
