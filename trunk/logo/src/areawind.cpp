@@ -37,6 +37,26 @@ CPrinterAreaWindow::CPrinterAreaWindow(
        m_YHigh(g_PrinterAreaYHigh),
        m_PixelsPerInch(g_PrinterAreaPixels)
    {
+   SetCaption(LOCALIZED_SELECTACTIVEAREA);
+   }
+
+void CPrinterAreaWindow::SetupWindow()
+   {
+   TDialog::SetupWindow();
+
+   // set the text in all of the static controls
+   SetDlgItemText(ID_SELECTACTIVEAREA_EFFECT,       LOCALIZED_SELECTACTIVEAREA_EFFECT);
+   SetDlgItemText(ID_SELECTACTIVEAREA_YHIGH,        LOCALIZED_SELECTACTIVEAREA_YHIGH);
+   SetDlgItemText(ID_SELECTACTIVEAREA_YLOW,         LOCALIZED_SELECTACTIVEAREA_YLOW);
+   SetDlgItemText(ID_SELECTACTIVEAREA_XHIGH,        LOCALIZED_SELECTACTIVEAREA_XHIGH);
+   SetDlgItemText(ID_SELECTACTIVEAREA_XLOW,         LOCALIZED_SELECTACTIVEAREA_XLOW);
+   SetDlgItemText(ID_SELECTACTIVEAREA_STEPSPERINCH, LOCALIZED_SELECTACTIVEAREA_STEPSPERINCH);
+   SetDlgItemText(ID_RESETEXTENT,                   LOCALIZED_SELECTACTIVEAREA_RESET);
+   SetDlgItemText(IDCANCEL,                         LOCALIZED_SELECTACTIVEAREA_CANCEL);
+   SetDlgItemText(IDOK,                             LOCALIZED_SELECTACTIVEAREA_OK);
+
+   // display active parameters
+   ResetWindow();
    }
 
 
@@ -63,14 +83,6 @@ void CPrinterAreaWindow::ResetWindow()
    SetDlgItemInt(ID_YHIGH, m_YHigh);
 
    SetDlgItemInt(ID_PIXELS, m_PixelsPerInch);
-   }
-
-void CPrinterAreaWindow::SetupWindow()
-   {
-   TDialog::SetupWindow();
-
-   // display active parameters
-   ResetWindow();
    }
 
 void CPrinterAreaWindow::DoReset(UINT)
