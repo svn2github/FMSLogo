@@ -345,6 +345,7 @@ public: // HACK: should be protected
 private:
 
    int m_EditboxHeight;
+   int m_ButtonWidth;
 
    DECLARE_RESPONSE_TABLE(TMyCommandWindow);
    }

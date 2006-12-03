@@ -40,7 +40,8 @@ TMyCommandWindow::TMyCommandWindow(
     Editbox(this, ID_EDITINPUT, 0),
     Listbox(this, ID_LISTBOX),
     Font(NULL),
-    m_EditboxHeight(10 * BaseUnitsx / 8)
+    m_EditboxHeight(10 * BaseUnitsy / 8),
+    m_ButtonWidth(34 * BaseUnitsx / 4)
    {
    SetCaption(LOCALIZED_COMMANDER);
    }
@@ -133,6 +134,52 @@ void TMyCommandWindow::SetupWindow()
 
    UpdateFont(lf);
 
+   // calculate the desired width for the buttons
+   HDC buttonDC = GetDC(EdallButton.HWindow);
+   if (buttonDC != NULL)
+      {
+      // Iterate through all labels that we ould put
+      // on the button and figure out the longest one.
+      const char * buttonLabels[] = {
+         LOCALIZED_COMMANDER_HALT,
+         LOCALIZED_COMMANDER_TRACE,
+         LOCALIZED_COMMANDER_NOTRACE,
+         LOCALIZED_COMMANDER_PAUSE,
+         LOCALIZED_COMMANDER_STATUS,
+         LOCALIZED_COMMANDER_NOSTATUS,
+         LOCALIZED_COMMANDER_STEP,
+         LOCALIZED_COMMANDER_UNSTEP,
+         LOCALIZED_COMMANDER_RESET,
+         LOCALIZED_COMMANDER_EXECUTE,
+         LOCALIZED_COMMANDER_EDALL,
+      };
+
+      LONG longestWidth = 0;
+
+      for (int i = 0; i < ARRAYSIZE(buttonLabels); i++)
+         {
+         SIZE buttonLabelSize;
+
+         BOOL isOk = GetTextExtentPoint32(
+            buttonDC,
+            buttonLabels[i],
+            strlen(buttonLabels[i]),
+            &buttonLabelSize);
+         if (isOk)
+            {
+            if (longestWidth < buttonLabelSize.cx)
+               {
+               // we found a new longest string
+               longestWidth = buttonLabelSize.cx;
+               }
+            }
+         }
+      
+      m_ButtonWidth = longestWidth + 20;
+
+      ReleaseDC(EdallButton.HWindow, buttonDC);
+      }
+
    RecalculateLayout();
    }
 
@@ -154,7 +201,7 @@ void TMyCommandWindow::RecalculateLayout()
    const int total_width   = commanderRect.Width();
    const int total_height  = commanderRect.Height();
    const int button_height = buttonRect.Height();
-   const int button_width  = buttonRect.Width();
+   const int button_width  = m_ButtonWidth;
 
    const int x_border = 4;
    const int y_border = 4;
