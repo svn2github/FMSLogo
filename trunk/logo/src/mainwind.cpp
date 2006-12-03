@@ -1973,6 +1973,20 @@ AppendPopupMenu(
    MainMenu.AppendMenu(MF_POPUP, popupMenu, PopupMenuText);
    }
 
+static
+void
+SetTextOnChildWindows(
+   TWindow *         Parent,
+   const MENUITEM *  ChildText,
+   size_t            ChildTextLength
+   )
+   {
+   for (int i = 0; i < ChildTextLength; i++)
+      {
+      Parent->SetDlgItemText(ChildText[i].MenuId, ChildText[i].MenuText);
+      }
+   }
+
 void TMainFrame::SetupWindow()
    {
    TDecoratedFrame::SetupWindow();
@@ -2495,10 +2509,7 @@ void TMainFrame::CMHelpReleaseNotes()
    OpenFileWithDefaultApplication(HWindow, szFileName);
    }
 
-// Set the text of each dialog element programmatically, rather 
-// than in the resource files so that that Windows XP uses Unicode,
-// instead of the system code page.  This allows Greek to show up
-// in Greek.
+
 class CAboutFmsLogoDialog : public TDialog
 {
 public:
@@ -2509,23 +2520,155 @@ public:
       }
 
 protected:
-   void SetupWindow()
-      {
-      TDialog::SetupWindow();
-
-      // set the text in all of the static controls
-      SetDlgItemText(ID_ABOUTFMS_VERSION,         LOCALIZED_ABOUTFMS_VERSION);
-      SetDlgItemText(ID_ABOUTFMS_GUI,             LOCALIZED_ABOUTFMS_GUI);
-      SetDlgItemText(ID_ABOUTFMS_INSTALLER,       LOCALIZED_ABOUTFMS_INSTALLER);
-      SetDlgItemText(ID_ABOUTFMS_ADVENTURE,       LOCALIZED_ABOUTFMS_ADVENTURE);
-      SetDlgItemText(ID_ABOUTFMS_SPECIALTHANKS,   LOCALIZED_ABOUTFMS_SPECIALTHANKS);
-      SetDlgItemText(ID_ABOUTFMS_GPL,             LOCALIZED_ABOUTFMS_GPL);
-      SetDlgItemText(ID_ABOUTFMS_NEWSGROUP,       LOCALIZED_ABOUTFMS_NEWSGROUP);
-      SetDlgItemText(ID_ABOUTFMS_MULTIMEDIALOGIC, LOCALIZED_ABOUTFMS_MULTIMEDIALOGIC);
-      SetDlgItemText(IDOK,                        LOCALIZED_ABOUTFMS_OK);
-      SetDlgItemText(ID_ABOUTFMS_CORE,            LOCALIZED_ABOUTFMS_CORE);
-      }
+   void SetupWindow();
 };
+
+void CAboutFmsLogoDialog::SetupWindow()
+   {
+   TDialog::SetupWindow();
+
+   // set the text in all of the static controls
+   static const MENUITEM staticText[] = {
+      {LOCALIZED_ABOUTFMS_VERSION,         ID_ABOUTFMS_VERSION},
+      {LOCALIZED_ABOUTFMS_GUI,             ID_ABOUTFMS_GUI},
+      {LOCALIZED_ABOUTFMS_CORE,            ID_ABOUTFMS_CORE},
+      {LOCALIZED_ABOUTFMS_INSTALLER,       ID_ABOUTFMS_INSTALLER},
+      {LOCALIZED_ABOUTFMS_ADVENTURE,       ID_ABOUTFMS_ADVENTURE},
+      {LOCALIZED_ABOUTFMS_SPECIALTHANKS,   ID_ABOUTFMS_SPECIALTHANKS},
+      {LOCALIZED_ABOUTFMS_GPL,             ID_ABOUTFMS_GPL},
+      {LOCALIZED_ABOUTFMS_NEWSGROUP,       ID_ABOUTFMS_NEWSGROUP},
+      {LOCALIZED_ABOUTFMS_MULTIMEDIALOGIC, ID_ABOUTFMS_MULTIMEDIALOGIC},
+      {LOCALIZED_ABOUTFMS_OK,              IDOK},
+   };
+
+   SetTextOnChildWindows(this, staticText, ARRAYSIZE(staticText));
+
+   // spacing between GUI elements
+   const int padding_y = 4;
+   const int padding_x = 4;
+
+   // -1 because we don't include IDOK
+   int panelHeights[ARRAYSIZE(staticText) - 1] = {0};
+
+   // calculate the width of the widest "thanks" panel
+   int longestWidth = 0;
+   int totalHeight  = 0;
+
+   for (int i = 0; i < ARRAYSIZE(panelHeights); i++)
+      {
+      HWND hwnd = GetItemHandle(staticText[i].MenuId);
+      if (hwnd != NULL)
+         {
+         HDC  dc = GetDC(hwnd);
+         if (dc != NULL)
+            {
+            // Iterate through all lines of text in this panel
+            // and figure out the width of the longest one.
+            const char * lineBegin = staticText[i].MenuText;
+            for (;;)
+               {
+               const char * lineEnd = lineBegin;
+               while (*lineEnd != '\0' && *lineEnd != '\n')
+                  {
+                  lineEnd++;
+                  }
+
+               SIZE lineSize;
+               BOOL isOk = GetTextExtentPoint(
+                  dc,
+                  lineBegin,
+                  lineEnd - lineBegin,
+                  &lineSize);
+               if (isOk)
+                  {
+                  if (longestWidth < lineSize.cx)
+                     {
+                     // we found a new longest line
+                     longestWidth = lineSize.cx;
+                     }
+
+                  panelHeights[i] += lineSize.cy;
+                  }
+
+               if (*lineEnd == '\0')
+                  {
+                  // we reached the end of staticText[i].MenuText
+                  break;
+                  }
+                                                
+               // advance beyond the newline
+               lineBegin = lineEnd + 1;
+               }
+
+            totalHeight += panelHeights[i];
+
+            ReleaseDC(hwnd, dc);
+            }
+         }
+      }
+
+
+   // add in the padding between the child windows.
+   totalHeight += padding_y * ARRAYSIZE(staticText);
+
+   HWND okButtonHwnd = GetItemHandle(IDOK);
+   if (okButtonHwnd != NULL)
+      {
+      // figure out the dimensions of the OK button
+      RECT rect;
+      BOOL isOk = ::GetWindowRect(okButtonHwnd, &rect);
+      if (isOk)
+         {
+         totalHeight += padding_y + rect.bottom - rect.top;
+         }
+
+      // move the OK button to the proper place
+      ::SetWindowPos(
+         okButtonHwnd,
+         NULL,
+         (longestWidth - (rect.right - rect.left)) / 2,
+         totalHeight - (rect.bottom - rect.top) - padding_y,
+         0,
+         0,
+         SWP_NOSIZE);
+      }
+
+
+   // calculate how large the dialog box must be to hold the text
+   TRect windowRect;
+   GetWindowRect(windowRect);
+
+   TRect clientRect;
+   GetClientRect(clientRect);
+   
+   int newWindowWidth  = windowRect.Width() - clientRect.Width()   + longestWidth + 2 * padding_x;
+   int newWindowHeight = windowRect.Height() - clientRect.Height() + totalHeight;
+   
+   // set this dialog box wide enough to hold information
+   SetWindowPos(NULL, 0, 0, newWindowWidth, newWindowHeight, SWP_NOMOVE | SWP_NOZORDER);
+
+   
+   // Now set the size/position of each panel of text
+   int current_y = padding_y;
+   for (int i = 0; i < ARRAYSIZE(panelHeights); i++)
+      {
+      // resize the text
+      HWND hwnd = GetItemHandle(staticText[i].MenuId);
+      if (hwnd != NULL)
+         {
+         ::SetWindowPos(
+            hwnd, 
+            NULL, 
+            padding_x,
+            current_y,
+            longestWidth,
+            panelHeights[i],
+            SWP_NOZORDER);
+
+         current_y += panelHeights[i] + padding_y;
+         }
+      }
+   }
 
 void TMainFrame::CMHelpAbout()
    {
