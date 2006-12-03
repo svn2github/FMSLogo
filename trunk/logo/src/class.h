@@ -287,7 +287,6 @@ class TMyCommandWindow : public TDialog
  public:
 
    TMyCommandWindow(TWindow *, LPCSTR);
-   ~TMyCommandWindow();
 
    bool Duplicate(const TMyCommandWindow & Original);
 
@@ -336,8 +335,6 @@ class TMyCommandWindow : public TDialog
    TCommanderButton   EdallButton;
    TCommanderButton   ExecuteButton;
 
-   HFONT Font;
-   
 public: // HACK: should be protected
    TMyEditboxWindow Editbox;
    TMyListboxWindow Listbox;
