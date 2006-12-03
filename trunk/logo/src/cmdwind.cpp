@@ -41,6 +41,7 @@ TMyCommandWindow::TMyCommandWindow(
    Listbox(this, ID_LISTBOX),
    Font(NULL)
    {
+   SetCaption(LOCALIZED_COMMANDER);
    }
 
 TMyCommandWindow::~TMyCommandWindow()
