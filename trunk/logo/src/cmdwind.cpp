@@ -29,17 +29,18 @@ TMyCommandWindow::TMyCommandWindow(
    TWindow *AParent,
    LPCSTR   ResId
 ) : TDialog(AParent, ResId),
-   TraceButton(this, ID_TRACE),
-   ResetButton(this, ID_RESET),
-   PauseButton(this, ID_PAUSE),
-   HaltButton(this, ID_HALT),
-   StatusButton(this, ID_STATUS),
-   YieldButton(this, ID_YIELD),
-   EdallButton(this, ID_EDALL),
-   ExecuteButton(this, ID_EXECUTE),
-   Editbox(this, ID_EDITINPUT, 0),
-   Listbox(this, ID_LISTBOX),
-   Font(NULL)
+    TraceButton(this, ID_TRACE),
+    ResetButton(this, ID_RESET),
+    PauseButton(this, ID_PAUSE),
+    HaltButton(this, ID_HALT),
+    StatusButton(this, ID_STATUS),
+    YieldButton(this, ID_YIELD),
+    EdallButton(this, ID_EDALL),
+    ExecuteButton(this, ID_EXECUTE),
+    Editbox(this, ID_EDITINPUT, 0),
+    Listbox(this, ID_LISTBOX),
+    Font(NULL),
+    m_EditboxHeight(10 * BaseUnitsx / 8)
    {
    SetCaption(LOCALIZED_COMMANDER);
    }
@@ -52,20 +53,51 @@ TMyCommandWindow::~TMyCommandWindow()
       }
    }
 
+void
+TMyCommandWindow::UpdateFont(const LOGFONT & NewFont)
+   {
+   HFONT font = CreateFontIndirect(&NewFont);
+   if (font != NULL)
+      {
+      // use the new font
+      Editbox.SetWindowFont(font, TRUE);
+      Listbox.SetWindowFont(font, TRUE);
+
+      // calculate the desired height for the edit box
+      HDC editboxDC = GetDC(Editbox.HWindow);
+      if (editboxDC != NULL)
+         {
+         HFONT oldFont = (HFONT) SelectObject(editboxDC, font);
+
+         TEXTMETRIC metrics;
+         BOOL isOk = GetTextMetrics(editboxDC, &metrics);
+         if (isOk)
+            {
+            // font height + some padding
+            m_EditboxHeight = metrics.tmHeight + 6;
+            }
+
+         SelectObject(editboxDC, oldFont);
+
+         ReleaseDC(Editbox.HWindow, editboxDC);
+         }
+
+      // commit to the new font
+      if (Font)
+         {
+         DeleteObject(Font);
+         }
+      Font = font;
+      }
+   }
+
 void TMyCommandWindow::SetupWindow()
    {
    TDialog::SetupWindow();
 
-   LOGFONT lf;
-   GetConfigurationFont("CommanderFont", lf);
-
-   Font = CreateFontIndirect(&lf);
-
    Editbox.Create();
-   Editbox.SetWindowFont(Font, TRUE);
 
    Listbox.Create();
-   Listbox.SetWindowFont(Font, TRUE);
 
    // Create the windows for the buttons and set the text.
    // We set the text so that Windows XP will use Unicode text,
@@ -96,6 +128,11 @@ void TMyCommandWindow::SetupWindow()
    ExecuteButton.Create();
    ExecuteButton.SetWindowText(LOCALIZED_COMMANDER_EXECUTE);
 
+   LOGFONT lf;
+   GetConfigurationFont("CommanderFont", lf);
+
+   UpdateFont(lf);
+
    RecalculateLayout();
    }
 
@@ -123,33 +160,6 @@ void TMyCommandWindow::RecalculateLayout()
    const int y_border = 4;
    const int padding  = 6;
 
-   // Set the height of the editbox based on the height
-   // of the current commander font.
-   int editbox_height = button_height;
-
-   HDC edit_dc = GetDC(Editbox.HWindow);
-   if (edit_dc != NULL)
-      {
-      TEXTMETRIC metrics;
-
-      HFONT oldFont = (HFONT) SelectObject(edit_dc, Font);
-
-      BOOL isOk = GetTextMetrics(edit_dc, &metrics);
-      if (isOk)
-         {
-         // font height + some padding
-         int height_for_font = metrics.tmHeight + 6;
-         if (editbox_height < height_for_font)
-            {
-            editbox_height = height_for_font;
-            }
-         }
-
-      SelectObject(edit_dc, oldFont);
-
-      ReleaseDC(Editbox.HWindow, edit_dc);
-      }
-
    EdallButton.SetWindowPos(NULL,   total_width - button_width * 1 - x_border, total_height - button_height - y_border, button_width, button_height, 0);
    ExecuteButton.SetWindowPos(NULL, total_width - button_width * 2 - x_border, total_height - button_height - y_border, button_width, button_height, 0);
 
@@ -160,8 +170,8 @@ void TMyCommandWindow::RecalculateLayout()
    TraceButton.SetWindowPos(NULL,  total_width - button_width * 1 - x_border, button_height * 0 + y_border, button_width, button_height, 0);
    HaltButton.SetWindowPos(NULL,   total_width - button_width * 2 - x_border, button_height * 0 + y_border, button_width, button_height, 0);
 
-   Editbox.SetWindowPos(NULL, x_border, total_height - editbox_height - y_border, total_width - button_width * 2 - x_border - padding, editbox_height,                          0);
-   Listbox.SetWindowPos(NULL, x_border, 0,                                        total_width - button_width * 2 - x_border - padding, total_height - editbox_height - padding, 0);
+   Editbox.SetWindowPos(NULL, x_border, total_height - m_EditboxHeight - y_border, total_width - button_width * 2 - x_border - padding, m_EditboxHeight,                          0);
+   Listbox.SetWindowPos(NULL, x_border, 0,                                        total_width - button_width * 2 - x_border - padding, total_height - m_EditboxHeight - padding, 0);
 
    }
 
@@ -657,16 +667,7 @@ void TMyCommandWindow::ChooseNewFont()
       // safe the new font preference to persistent storage
       SetConfigurationFont("CommanderFont", lf);
 
-      HFONT hFont = CreateFontIndirect(&lf);
-      Listbox.SetWindowFont(hFont, TRUE);
-      Editbox.SetWindowFont(hFont, TRUE);
-
-      // commit to the new font
-      if (Font)
-         {
-         DeleteObject(Font);
-         }
-      Font = hFont;
+      UpdateFont(lf);
 
       RecalculateLayout();
       Invalidate(true);

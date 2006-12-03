@@ -300,6 +300,7 @@ class TMyCommandWindow : public TDialog
    void SetupWindow();
    char * GetClassName();
    void RecalculateLayout();
+   void UpdateFont(const LOGFONT & NewFont);
 
    void EvDestroy();
    void CmCancel();
@@ -341,6 +342,9 @@ public: // HACK: should be protected
    TMyEditboxWindow Editbox;
    TMyListboxWindow Listbox;
 
+private:
+
+   int m_EditboxHeight;
 
    DECLARE_RESPONSE_TABLE(TMyCommandWindow);
    }
