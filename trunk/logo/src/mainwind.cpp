@@ -2710,7 +2710,7 @@ void TMainFrame::CMHelpAboutMS()
 // Execute File:Print command
 void TMainFrame::CMBitmapPrint()
    {
-   TRulerOut Printout("Logo Picture");
+   TRulerOut Printout(LOCALIZED_BITMAPPRINTOUTTITLE);
    Printout.SetBanding(false);
    Printer.Print(this, Printout, true);
    }

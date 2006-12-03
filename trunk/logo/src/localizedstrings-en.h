@@ -622,6 +622,11 @@
 
 
 //
+// The default title of a Logo picture when it is printed
+//
+#define LOCALIZED_BITMAPPRINTOUTTITLE       "Logo Picture"
+
+//
 // Other strings
 //
 #define LOCALIZED_ACTIVEAREA    "Active Area"
@@ -633,14 +638,15 @@
 #define LOCALIZED_UNBOUND       "Unbound"
 
 //
-// Localized Strings that explain each accelerator
-// I don't think that any of these strings can be seen by the user
+// Strings that explain the purpose of each menu option.
+// I don't think that any of these strings can be seen by the user, 
+// so you probably don't have to translate these.
 //
-#define LOCALIZED_STRINGTABLE_FILESAVEAS "Saves the contents of the EDALL window to a new file"
+#define LOCALIZED_STRINGTABLE_FILESAVEAS "Saves the contents of the workspace to a new file"
 #define LOCALIZED_STRINGTABLE_FILEOPEN "Erases the current workspace and loads a Logo program as the new workspace"
 #define LOCALIZED_STRINGTABLE_FILELOAD "Locates and loads a Logo program into the current workspace"
-#define LOCALIZED_STRINGTABLE_FILENEW "Erases the contents of the EDALL session"
-#define LOCALIZED_STRINGTABLE_FILESAVE "Saves the contents of the EDALL window"
+#define LOCALIZED_STRINGTABLE_FILENEW "Erases the contents of the workspace"
+#define LOCALIZED_STRINGTABLE_FILESAVE "Saves the contents of the workspace"
 #define LOCALIZED_STRINGTABLE_FILEEDIT "Selects a procedure to edit"
 #define LOCALIZED_STRINGTABLE_FILEERASE "Selects a procedure to erase"
 #define LOCALIZED_STRINGTABLE_EXIT "Exits Logo"
@@ -679,13 +685,16 @@
 #define LOCALIZED_STRINGTABLE_EDITFIND "Searches for text"
 #define LOCALIZED_STRINGTABLE_EDITREPLACE "Searches for text and replaces it with other text"
 #define LOCALIZED_STRINGTABLE_EDITFINDNEXT "Repeats the previous Find or Replace command"
-#define LOCALIZED_STRINGTABLE_EDITSETFONT "Sets the font for the EDALL window"
+#define LOCALIZED_STRINGTABLE_EDITSETFONT "Sets the font for the editor window"
 #define LOCALIZED_STRINGTABLE_TEST "Runs the selected Logo instructions"
 #define LOCALIZED_STRINGTABLE_HELPEDIT "Displays help on using the editor"
 #define LOCALIZED_STRINGTABLE_HELPEDIT_TOPIC "Displays help for Logo"
-#define LOCALIZED_STRINGTABLE_FILESAVEANDEXIT "Saves and exits the current EDALL session"
-#define LOCALIZED_STRINGTABLE_FILESAVETOWORKSPACE "Saves the current EDALL session"
-#define LOCALIZED_STRINGTABLE_FILEPRINT "Prints the current EDALL session"
-#define LOCALIZED_STRINGTABLE_EDALLEXIT "Closes the EDALL session"
+#define LOCALIZED_STRINGTABLE_FILESAVEANDEXIT "Saves and exits the current workspace"
+#define LOCALIZED_STRINGTABLE_FILESAVETOWORKSPACE "Saves the current workspace"
+#define LOCALIZED_STRINGTABLE_FILEPRINT "Prints the current workspace"
+#define LOCALIZED_STRINGTABLE_EDALLEXIT "Closes the workspace"
 
+//
+// The text that's displayed when the Editor's Search->Find fails.
+//
 #define LOCALIZED_STRINGTABLE_CANNOTFINDSTRING "Cannot find %s"

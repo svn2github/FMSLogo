@@ -622,6 +622,11 @@
 
 
 //
+// The default title of a Logo picture when it is printed
+//
+#define LOCALIZED_BITMAPPRINTOUTTITLE       "Logo Picture" // NOT_YET_LOCALIZED
+
+//
 // Other strings
 //
 #define LOCALIZED_ACTIVEAREA    "Ενεργή περιοχή" // 
@@ -633,8 +638,9 @@
 #define LOCALIZED_UNBOUND       "(Εκτός ορίου)" // 
 
 //
-// Localized Strings that explain each accelerator
-// I don't think that any of these strings can be seen by the user
+// Strings that explain the purpose of each menu option.
+// I don't think that any of these strings can be seen by the user, 
+// so you probably don't have to translate these.
 //
 #define LOCALIZED_STRINGTABLE_FILESAVEAS "Αποθηκεύει τον κώδικα και τις μεταβλητές σε ένα αρχείο" // 
 #define LOCALIZED_STRINGTABLE_FILEOPEN "Σβήνει τον τρέχοντα κώδικα και φορτώνει ένα νέο αρχείο" // 
@@ -688,4 +694,7 @@
 #define LOCALIZED_STRINGTABLE_FILEPRINT "Εκτυπώνει τον κώδικα" // 
 #define LOCALIZED_STRINGTABLE_EDALLEXIT "Κλείνει τον επεξεργαστή κώδικα" // 
 
+//
+// The text that's displayed when the Editor's Search->Find fails.
+//
 #define LOCALIZED_STRINGTABLE_CANNOTFINDSTRING "{ Δε βρέθηκε το %s }" // 

@@ -622,6 +622,11 @@
 
 
 //
+// The default title of a Logo picture when it is printed
+//
+#define LOCALIZED_BITMAPPRINTOUTTITLE       "Logo Picture" // NOT_YET_LOCALIZED
+
+//
 // Other strings
 //
 #define LOCALIZED_ACTIVEAREA    "Zone Active"
@@ -633,8 +638,9 @@
 #define LOCALIZED_UNBOUND       "Unbound" // NOT_YET_LOCALIZED
 
 //
-// Localized Strings that explain each accelerator
-// I don't think that any of these strings can be seen by the user
+// Strings that explain the purpose of each menu option.
+// I don't think that any of these strings can be seen by the user, 
+// so you probably don't have to translate these.
 //
 #define LOCALIZED_STRINGTABLE_FILESAVEAS "Saves the contents of the EDALL window to a new file" // NOT_YET_LOCALIZED
 #define LOCALIZED_STRINGTABLE_FILEOPEN "Erases the current workspace and loads a Logo program as the new workspace" // NOT_YET_LOCALIZED
@@ -688,4 +694,7 @@
 #define LOCALIZED_STRINGTABLE_FILEPRINT "Prints the current EDALL session" // NOT_YET_LOCALIZED
 #define LOCALIZED_STRINGTABLE_EDALLEXIT "Closes the EDALL session" // NOT_YET_LOCALIZED
 
+//
+// The text that's displayed when the Editor's Search->Find fails.
+//
 #define LOCALIZED_STRINGTABLE_CANNOTFINDSTRING "'%s' non trouvé"
