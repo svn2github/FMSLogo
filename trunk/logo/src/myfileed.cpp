@@ -25,7 +25,7 @@ CSelectProcedureWindow::CSelectProcedureWindow(
    TWindow    * Parent, 
    const char * Caption
    )
-   : TDialog(Parent, "IDD_SELECTPROCEDURE"),
+   : TDialog(Parent, IDD_SELECTPROCEDURE),
      m_FileEditAll(false)
    {
    m_SelectedProcedures[0] = '\0';

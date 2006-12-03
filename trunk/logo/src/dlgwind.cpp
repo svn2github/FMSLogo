@@ -134,7 +134,7 @@ public:
 
    TMxDialog(
       TWindow * Parent
-      ) : TDialog(Parent, "DIALOGSTUB")
+      ) : TDialog(Parent, IDD_STUB)
       {
       }
 

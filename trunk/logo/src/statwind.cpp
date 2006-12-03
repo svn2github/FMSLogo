@@ -26,7 +26,7 @@ bool status_flag = false;   // Flag to signal status box is popped up
 
 CStatusWindow::CStatusWindow(
    TWindow *    Parent
-   ) : TDialog(Parent, "DIALOGSTATUS")
+   ) : TDialog(Parent, IDD_STATUS)
    {
    SetCaption(LOCALIZED_STATUS);
    }

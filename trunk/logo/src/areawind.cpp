@@ -30,7 +30,7 @@ int g_PrinterAreaPixels;
 
 CPrinterAreaWindow::CPrinterAreaWindow(
    TWindow * ParentWindow
-   ) : TDialog(ParentWindow, "PRINTERAREA"),
+   ) : TDialog(ParentWindow, IDD_SELECTACTIVEAREA),
        m_XLow(g_PrinterAreaXLow),
        m_XHigh(g_PrinterAreaXHigh),
        m_YLow(g_PrinterAreaYLow),

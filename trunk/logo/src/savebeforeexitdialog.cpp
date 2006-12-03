@@ -21,7 +21,7 @@
 
 CSaveBeforeExitDialog::CSaveBeforeExitDialog(
    TWindow *Parent
-   ) : TDialog(Parent, "IDD_SAVEBEFOREEXIT"),
+   ) : TDialog(Parent, IDD_SAVEBEFOREEXIT),
        m_ExitStatus(IDCANCEL)
    {
    SetCaption(LOCALIZED_UNSAVEDCHANGES);

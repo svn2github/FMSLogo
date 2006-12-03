@@ -33,7 +33,7 @@ TMiniEditorRichEdit::TMiniEditorRichEdit(TWindow * Parent)
 TMiniEditor::TMiniEditor(
    TWindow *    Parent,
    const char * ToLine
-   ) : TDialog(Parent, "MINIEDITOR"),
+   ) : TDialog(Parent, IDD_MINIEDITOR),
        m_TextField(this),
        m_ToLine(this, ID_TOLINE, 0),
        m_EndButton(this, IDOK),

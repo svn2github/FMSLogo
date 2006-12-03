@@ -26,9 +26,9 @@
 static int halt_flag = 0; // Flag to signal it's OK to halt
 
 TMyCommandWindow::TMyCommandWindow(
-   TWindow *AParent,
-   LPCSTR   ResId
-) : TDialog(AParent, ResId),
+   TWindow *Parent,
+   TResId   ResId
+) : TDialog(Parent, ResId),
     TraceButton(this, ID_TRACE),
     ResetButton(this, ID_RESET),
     PauseButton(this, ID_PAUSE),
@@ -138,8 +138,8 @@ void TMyCommandWindow::SetupWindow()
    HDC buttonDC = GetDC(EdallButton.HWindow);
    if (buttonDC != NULL)
       {
-      // Iterate through all labels that we ould put
-      // on the button and figure out the longest one.
+      // Iterate through all labels that we put on buttons 
+      // and figure out the length of the longest one.
       const char * buttonLabels[] = {
          LOCALIZED_COMMANDER_HALT,
          LOCALIZED_COMMANDER_TRACE,

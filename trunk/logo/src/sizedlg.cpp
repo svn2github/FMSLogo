@@ -97,7 +97,7 @@ TSizeDialog::TSizeDialog(
    TWindow *       Parent, 
    TSize   &       OutputSize
    )
-   : TDialog(Parent, "SIZEDIALOG")
+   : TDialog(Parent, IDD_SETPENSIZE)
    {
    SetCaption(LOCALIZED_SETPENSIZE);
 

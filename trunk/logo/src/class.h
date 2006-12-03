@@ -286,7 +286,7 @@ class TMyCommandWindow : public TDialog
    {
  public:
 
-   TMyCommandWindow(TWindow *, LPCSTR);
+   TMyCommandWindow(TWindow *, TResId);
    ~TMyCommandWindow();
 
    bool Duplicate(const TMyCommandWindow & Original);

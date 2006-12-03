@@ -784,7 +784,7 @@ TMainFrame::TMainFrame(
    TPaneSplitter * PaneSplitter
 ) : TDecoratedFrame(Parent, Title, PaneSplitter),
     EditWindow(NULL),
-    CommandWindow(new TMyCommandWindow(0, "IDD_DOCKEDCOMMANDER")),
+    CommandWindow(new TMyCommandWindow(0, IDD_DOCKEDCOMMANDER)),
     StatusWindow(NULL),
     PaneSplitterWindow(PaneSplitter),
     ScreenWindow(new TScreenWindow(0, "FMSLogo Screen")),
@@ -2104,7 +2104,7 @@ void TMainFrame::UndockCommanderWindow()
       {
       TMyCommandWindow * newCommandWindow = new TMyCommandWindow(
          ScreenWindow, 
-         "IDD_UNDOCKEDCOMMANDER");
+         IDD_UNDOCKEDCOMMANDER);
       newCommandWindow->Create();
       newCommandWindow->Duplicate(*CommandWindow);
       newCommandWindow->ShowWindow(SW_SHOW);
@@ -2149,7 +2149,7 @@ void TMainFrame::DockCommanderWindow()
       {
       TMyCommandWindow * newCommandWindow = new TMyCommandWindow(
          0, 
-         "IDD_DOCKEDCOMMANDER");
+         IDD_DOCKEDCOMMANDER);
 
       // restore the commander window's height
       int commanderWindowX      = 0;
@@ -2514,7 +2514,7 @@ class CAboutFmsLogoDialog : public TDialog
 {
 public:
    CAboutFmsLogoDialog(TWindow * Parent) : 
-      TDialog(Parent, "ABOUTBOX")
+      TDialog(Parent, IDD_ABOUTFMS)
       {
       SetCaption(LOCALIZED_ABOUTFMS);
       }
@@ -2684,7 +2684,7 @@ class CAboutMultipleSclerosisDialog : public TDialog
 {
 public:
    CAboutMultipleSclerosisDialog(TWindow * Parent) : 
-      TDialog(Parent, "ABOUTMSBOX")
+      TDialog(Parent, IDD_ABOUTMS)
       {
       SetCaption(LOCALIZED_ABOUTMS);
       }

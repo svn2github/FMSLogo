@@ -107,7 +107,7 @@ TColorDialog::TColorDialog(
    TWindow    * Parent,
    TColor     & OutColor,
    const char * Caption
-   ) : TDialog(Parent, "IDD_PICKCOLOR")
+   ) : TDialog(Parent, IDD_SETCOLOR)
    {
    new TColorControl(this, ID_COLOR1, TColor(000, 000, 000));
    new TColorControl(this, ID_COLOR2, TColor(255, 255, 255));
