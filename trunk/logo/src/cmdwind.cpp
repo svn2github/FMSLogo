@@ -26,9 +26,9 @@
 static int halt_flag = 0; // Flag to signal it's OK to halt
 
 TMyCommandWindow::TMyCommandWindow(
-   TWindow *Parent,
+   TWindow *AParent,
    LPCSTR   ResId
-) : TDialog(Parent, ResId),
+) : TDialog(AParent, ResId),
     TraceButton(this, ID_TRACE),
     ResetButton(this, ID_RESET),
     PauseButton(this, ID_PAUSE),
@@ -39,9 +39,18 @@ TMyCommandWindow::TMyCommandWindow(
     ExecuteButton(this, ID_EXECUTE),
     Editbox(this, ID_EDITINPUT, 0),
     Listbox(this, ID_LISTBOX),
+    Font(NULL),
     m_EditboxHeight(10 * BaseUnitsx / 8)
    {
    SetCaption(LOCALIZED_COMMANDER);
+   }
+
+TMyCommandWindow::~TMyCommandWindow()
+   {
+   if (Font)
+      {
+      DeleteObject(Font);
+      }
    }
 
 void
@@ -59,10 +68,6 @@ TMyCommandWindow::UpdateFont(const LOGFONT & NewFont)
       if (editboxDC != NULL)
          {
          HFONT oldFont = (HFONT) SelectObject(editboxDC, font);
-         if (oldFont != NULL)
-            {
-            DeleteObject(oldFont);
-            }
 
          TEXTMETRIC metrics;
          BOOL isOk = GetTextMetrics(editboxDC, &metrics);
@@ -72,8 +77,17 @@ TMyCommandWindow::UpdateFont(const LOGFONT & NewFont)
             m_EditboxHeight = metrics.tmHeight + 6;
             }
 
+         SelectObject(editboxDC, oldFont);
+
          ReleaseDC(Editbox.HWindow, editboxDC);
          }
+
+      // commit to the new font
+      if (Font)
+         {
+         DeleteObject(Font);
+         }
+      Font = font;
       }
    }
 
