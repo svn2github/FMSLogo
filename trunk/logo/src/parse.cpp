@@ -96,9 +96,17 @@ int rd_getc(FILE *strm)
                      *src++;
                      }
 
-                  g_ReadBuffer.AppendString("\nEnd");
+                  g_ReadBuffer.AppendChar('\n');
+                  g_ReadBuffer.AppendString(End.GetName());
                   }
                }
+               if (MainWindowx != NULL)
+                  {
+                  // HACK: Reset the window title because the mini-editor's
+                  // edit box appends a "-" (it thinks it's tied to a file 
+                  // and I can't figure out how to tell it that it's not.
+                  MainWindowx->FixWindowTitle();
+                  }
                break;
 
             case INPUTMODE_List:
@@ -115,7 +123,7 @@ int rd_getc(FILE *strm)
                   {
                   // continue when done
                   g_ReadBuffer.AppendString(tmpbuffer);
-                  g_ReadBuffer.AppendString("Continue");
+                  g_ReadBuffer.AppendString("continue");
                   }
                else
                   {

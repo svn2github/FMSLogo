@@ -583,14 +583,14 @@ NODE *memberp_helper(NODE *args, bool notp, bool substr)
       {
       if (substr) 
          {
-         return Falsex;
+         return Falsex.GetNode();
          }
 
       while (obj2 != NIL && NOT_THROWING)
          {
          if (equalp_help(obj1, car(obj2), caseig))
             {
-            return (notp ? obj2 : Truex);
+            return notp ? obj2 : Truex.GetNode();
             }
          obj2 = cdr(obj2);
          if (check_throwing) 
@@ -598,7 +598,7 @@ NODE *memberp_helper(NODE *args, bool notp, bool substr)
             break;
             }
          }
-      return (notp ? NIL : Falsex);
+      return notp ? NIL : Falsex.GetNode();
       }
    else if (nodetype(obj2) == ARRAY)
       {
@@ -612,23 +612,23 @@ NODE *memberp_helper(NODE *args, bool notp, bool substr)
 
       if (substr)
          {
-         return Falsex;
+         return Falsex.GetNode();
          }
 
       while (--len >= 0 && NOT_THROWING)
          {
          if (equalp_help(obj1, *data++, caseig)) 
             {
-            return Truex;
+            return Truex.GetNode();
             }
          }
-      return Falsex;
+      return Falsex.GetNode();
       }
    else
       {
       if (is_aggregate(obj1))
          {
-         return (notp ? Null_Word : Falsex);
+         return (notp ? Null_Word : Falsex.GetNode());
          }
 
       setcar(cdr(args), cnv_node_to_strnode(obj2));
@@ -666,7 +666,7 @@ NODE *memberp_helper(NODE *args, bool notp, bool substr)
                   }
                else
                   {
-                  return Truex;
+                  return Truex.GetNode();
                   }
                }
             // Slide the potential string match down one byte.
@@ -674,7 +674,7 @@ NODE *memberp_helper(NODE *args, bool notp, bool substr)
             setstrptr(tmp, getstrptr(tmp) + 1);
             }
          }
-      return (notp ? Null_Word : Falsex);
+      return notp ? Null_Word : Falsex.GetNode();
       }
    }
 
@@ -933,7 +933,7 @@ FLONUM float_arg(NODE *args)
       val = cnv_node_to_numnode(arg);
       }
    setcar(args, val);
-   if (nodetype(val) == FLOATINGPOINT) 
+   if (nodetype(val) == FLOATINGPOINT)
       {
       return getfloat(val);
       }

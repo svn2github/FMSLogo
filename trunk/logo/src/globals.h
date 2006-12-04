@@ -91,15 +91,15 @@ extern int print_stringlen;
 extern char *print_stringptr;
 
 // init.cpp
-extern NODE *Truex;
-extern NODE *Falsex;
+extern CLocalizedNode Truex;
+extern CLocalizedNode Falsex;
 extern NODE *Left_Paren;
 extern NODE *Right_Paren;
 extern NODE *Null_Word;
 extern NODE *Toplevel;
 extern NODE *System;
 extern NODE *Error;
-extern NODE *End;
+extern CLocalizedNode End;
 extern NODE *Redefp;
 extern NODE *Caseignoredp;
 extern NODE *Erract;
@@ -108,7 +108,7 @@ extern NODE *Printwidthlimit;
 extern NODE *Pause;
 extern NODE *If;
 extern NODE *Ifelse;
-extern NODE *To;
+extern CLocalizedNode To;
 extern NODE *Macro;
 extern NODE *Unbound;
 extern NODE *Not_Enough_Node;

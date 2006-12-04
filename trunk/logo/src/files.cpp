@@ -747,7 +747,7 @@ NODE *lkeyp(NODE *)
    {
    if (g_Reader.GetStream() == stdin)
       {
-      return Truex;
+      return Truex.GetNode();
       }
 
    return leofp(NIL);

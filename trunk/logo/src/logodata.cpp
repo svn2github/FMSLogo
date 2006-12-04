@@ -933,6 +933,6 @@ NODE * llogoversion(NODE * args)
 
 bool variableIsTrue(NODE *variable) 
    {
-   return 0 == compare_node(valnode__caseobj(variable), Truex, true);
+   return Truex.Equals(variable);
    }
 

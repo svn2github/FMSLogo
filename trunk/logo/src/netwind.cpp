@@ -624,7 +624,7 @@ NODE *lnetaccepton(NODE *args)
 
    if (NOT_THROWING)
       {
-      return Truex;
+      return Truex.GetNode();
       }
 
    return Unbound;
@@ -712,7 +712,7 @@ NODE *lnetconnecton(NODE *args)
 
    if (NOT_THROWING)
       {
-      return Truex;
+      return Truex.GetNode();
       }
 
    return Unbound;

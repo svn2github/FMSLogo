@@ -24,22 +24,23 @@
 
 struct PRIMTYPE
    {
-   const char *name;
-   short minargs;
-   short defargs;
-   short maxargs;
-   short priority;
-   logofunc prim;
+   const char * name;
+   short        minargs;
+   short        defargs;
+   short        maxargs;
+   short        priority;
+   logofunc     prim;
+   const char * alternatename;
    };
 
-NODE *Truex;
-NODE *Falsex;
+CLocalizedNode Truex;
+CLocalizedNode Falsex;
 NODE *Right_Paren;
 NODE *Left_Paren;
 NODE *Toplevel;
 NODE *System;
 NODE *Error;
-NODE *End;
+CLocalizedNode End;
 NODE *Redefp;
 NODE *Caseignoredp;
 NODE *Erract;
@@ -48,7 +49,7 @@ NODE *Printwidthlimit;
 NODE *Pause;
 NODE *If;
 NODE *Ifelse;
-NODE *To;
+CLocalizedNode To;
 NODE *Macro;
 NODE *Unbound;         // a special node that means nothing (or void) was returned
                        // This is different from NIL, which is the empty list.
@@ -62,6 +63,89 @@ NODE *Stop;
 NODE *Goto;
 NODE *Tag;
 NODE *Null_Word = NIL;
+
+CLocalizedNode::CLocalizedNode() :
+   m_Primary(NIL),
+   m_PrimaryName(NULL),
+   m_Alternate(NIL),
+   m_AlternateName(NULL)
+   {
+   }
+
+void
+CLocalizedNode::Initialize(
+   const char    * PrimaryName,
+   const char    * AlternateName
+   )
+   {
+   // the Primary name always exists
+   m_PrimaryName = PrimaryName;
+   m_Primary     = intern(make_static_strnode(PrimaryName));
+
+   // the Alternate name may not exist
+   if (AlternateName != NULL)
+      {
+      if (strcmp(PrimaryName, AlternateName) != 0)
+         {
+         // the alternate name is different from the Primary name
+         m_AlternateName = AlternateName;
+         m_Alternate     = intern(make_static_strnode(AlternateName));
+         }
+      }
+   }
+
+NODE *
+CLocalizedNode::GetNode() const
+   {
+   // prefer to use the alternate node, if it exists
+   if (m_Alternate != NULL)
+      {
+      return m_Alternate;
+      }
+   else
+      {
+      return m_Primary;
+      }
+   }
+
+const char * 
+CLocalizedNode::GetName() const
+   {
+   // prefer to use the alternate name, if it exists
+   if (m_AlternateName != NULL)
+      {
+      return m_AlternateName;
+      }
+   else
+      {
+      return m_PrimaryName;
+      }
+   }
+
+bool
+CLocalizedNode::Equals(
+   NODE * Node
+   ) const
+   {
+   // see if this matches the primary node
+   if (compare_node(Node, m_Primary, true) == 0)
+      {
+      return true;
+      }
+
+   // See if this matches the alternate node
+   if (m_Alternate != NIL)
+      {
+      if (compare_node(Node, m_Alternate, true) == 0)
+         {
+         return true;
+         }
+      }
+
+   return false;
+   }
+
+
 
 const PRIMTYPE prims[] =
    {
@@ -501,7 +585,7 @@ const PRIMTYPE prims[] =
       { "throw", 1, 1, 2, PREFIX_PRIORITY, lthrow },
       { "time", 0, 0, 0, PREFIX_PRIORITY, ltime },
       { "timemilli", 0, 0, 0, PREFIX_PRIORITY, ltimemilli },
-      { "to", -1, -1, -1, PREFIX_PRIORITY, lto },
+      { "to", -1, -1, -1, PREFIX_PRIORITY, lto, LOCALIZED_ALTERNATE_TO },
       { "tone", 2, 2, 2, PREFIX_PRIORITY, ltone },
       { "towards", 1, 1, 1, PREFIX_PRIORITY, ltowards },
       { "towardsxyz", 1, 1, 1, PREFIX_PRIORITY, ltowardsxyz },
@@ -535,9 +619,57 @@ const PRIMTYPE prims[] =
       { "yesnobox", 2, 2, 2, PREFIX_PRIORITY, lyesnobox },
       { "yield", 0, 0, 0, PREFIX_PRIORITY, lyield },
       { "zoom", 1, 1, 1, PREFIX_PRIORITY, lzoom },
-      { 0, 0, 0, 0, 0, 0 }
    }
 ;
+
+static
+void
+intern_primitive(
+   const char * Name,
+   short        MinimumArgs,
+   short        DefaultArgs,
+   short        MaximumArgs,
+   short        Priority,
+   logofunc     Primitive
+   )
+   {
+   NODE *proc;
+   if (Priority == MACRO_PRIORITY)
+      {
+      proc = vref(newnode(MACRO));
+      }
+   else if (Priority <= TAIL_PRIORITY)
+      {
+      proc = vref(newnode(TAILFORM));
+      }
+   else if ((Priority & ~4) == (PREFIX_PRIORITY & ~4))
+      {
+      proc = vref(newnode(PRIM)); // include "--"
+      }
+   else
+      {
+      proc = vref(newnode(INFIX));
+      }
+   
+   setprimpri(proc,  Priority);
+   setprimfun(proc,  Primitive);
+   setprimdflt(proc, DefaultArgs);
+   setprimmax(proc,  MaximumArgs);
+   setprimmin(proc,  MinimumArgs);
+
+   NODE * pname  = vref(make_static_strnode(Name));
+   NODE * casend = vref(make_instance(pname, pname));
+   setprocnode__caseobj(casend, proc);
+
+   if (nodetype(proc) == MACRO)
+      {
+      setflag__caseobj(casend, PROC_MACRO);
+      }
+
+   deref(proc);
+   deref(casend);
+   deref(pname);
+   }
 
 void init()
    {
@@ -547,66 +679,55 @@ void init()
 #ifdef ecma
    init_ecma_array();
 #endif
-
-   for (int i = 0; prims[i].name != NULL; i++)
+   
+   // intern all of the primitives
+   for (int i = 0; i < ARRAYSIZE(prims); i++)
       {
-      NODE *proc;
-      if (prims[i].priority == MACRO_PRIORITY)
-         {
-         proc = vref(newnode(MACRO));
-         }
-      else if (prims[i].priority <= TAIL_PRIORITY)
-         {
-         proc = vref(newnode(TAILFORM));
-         }
-      else if ((prims[i].priority & ~4) == (PREFIX_PRIORITY & ~4))
-         {
-         proc = vref(newnode(PRIM));/* incl. -- */
-         }
-      else
-         {
-         proc = vref(newnode(INFIX));
-         }
+      // intern the current primitive
+      intern_primitive(
+         prims[i].name,
+         prims[i].minargs,
+         prims[i].defargs,
+         prims[i].maxargs,
+         prims[i].priority,
+         prims[i].prim);
 
-      setprimpri(proc, prims[i].priority);
-      setprimfun(proc, prims[i].prim);
-      setprimdflt(proc, prims[i].defargs);
-      setprimmax(proc, prims[i].maxargs);
-      setprimmin(proc, prims[i].minargs);
-
-      NODE * pname  = vref(make_static_strnode(prims[i].name));
-      NODE * casend = vref(make_instance(pname, pname));
-      setprocnode__caseobj(casend, proc);
-
-      if (nodetype(proc) == MACRO)
+      // If there is an alternate name for the primitive,
+      // and it's different from the normal name, make a
+      // primivite out of it, too.
+      if (prims[i].alternatename != NULL && 
+          0 != strcmp(prims[i].name, prims[i].alternatename))
          {
-         setflag__caseobj(casend, PROC_MACRO);
+         intern_primitive(
+            prims[i].alternatename,
+            prims[i].minargs,
+            prims[i].defargs,
+            prims[i].maxargs,
+            prims[i].priority,
+            prims[i].prim);
          }
-
-      deref(proc);
-      deref(casend);
-      deref(pname);
       }
 
-   Truex = intern(make_static_strnode("true"));
-   Falsex = intern(make_static_strnode("false"));
+   Truex.Initialize("true",   LOCALIZED_ALTERNATE_TRUE);
+   Falsex.Initialize("false", LOCALIZED_ALTERNATE_FALSE);
+   To.Initialize("to",        LOCALIZED_ALTERNATE_TO);
+   End.Initialize("end",      LOCALIZED_ALTERNATE_END);
+
    Left_Paren = intern(make_static_strnode("("));
    Right_Paren = intern(make_static_strnode(")"));
    Minus_Sign = intern(make_static_strnode("-"));
    Minus_Tight = intern(make_static_strnode("--"));
    Query = intern(make_static_strnode("?"));
    Null_Word = intern(make_static_strnode(""));
-   To = intern(make_static_strnode("to"));
    Macro = intern(make_static_strnode(".macro"));
    Toplevel = intern(make_static_strnode("toplevel"));
    System = intern(make_static_strnode("system"));
    Error = intern(make_static_strnode("error"));
-   End = intern(make_static_strnode("end"));
    If = intern(make_static_strnode("if"));
    Ifelse = intern(make_static_strnode("ifelse"));
    Redefp = intern(make_static_strnode("redefp"));
    Caseignoredp = intern(make_static_strnode("caseignoredp"));
-   setvalnode__caseobj(Caseignoredp, Truex);
+   setvalnode__caseobj(Caseignoredp, Truex.GetNode());
    setflag__caseobj(Caseignoredp, VAL_BURIED);
    Erract = intern(make_static_strnode("erract"));
    Printdepthlimit = intern(make_static_strnode("printdepthlimit"));
@@ -617,8 +738,8 @@ void init()
    Stop = intern(make_static_strnode("stop"));
    Goto = intern(make_static_strnode("goto"));
    Tag = intern(make_static_strnode("Tag"));
-   the_generation = vref(cons_list(NIL));
-   Not_Enough_Node = vref(cons_list(NIL));
+   the_generation = vref(cons_list(NIL));   // some unique pointer
+   Not_Enough_Node = vref(cons_list(NIL));  // some unique pointer
 
    repcountup = -1;
    }

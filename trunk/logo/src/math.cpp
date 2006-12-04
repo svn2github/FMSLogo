@@ -948,7 +948,7 @@ int compare_numnodes(NODE *n1, NODE *n2)
 
 NODE *true_or_false(bool tf)
    {
-   return tf ? Truex : Falsex;
+   return tf ? Truex.GetNode() : Falsex.GetNode();
    }
 
 NODE *llessp(NODE *args)

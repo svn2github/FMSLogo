@@ -1872,12 +1872,12 @@ CreateTemplateLogoFileForEditor(
       {
       if (Args != NULL)
          {
-         fwrite("to\n", 1, 3, logoFile);
-         fwrite("end\n", 1, 4, logoFile);
+         fprintf(logoFile, "%s\n", To.GetName());
+         fprintf(logoFile, "%s\n", End.GetName());
          }
       else
          {
-         fwrite("\n", 1, 1, logoFile);
+         fprintf(logoFile, "\n");
          }
       }
       fclose(logoFile);
@@ -2098,6 +2098,23 @@ void TMainFrame::SetupWindow()
    draw_turtle(true);
    }
 
+void TMainFrame::FixWindowTitle()
+   {
+   // This function restores the titlebar to contain just FMSLogo.
+   // It is a hack to work-around a problem that I don't understand.
+   // When I have a window that contains a text edit control that
+   // is not backed by a file, it appens a "-" to the title bar
+   // (presumably the filename would follow, if it existed).
+   //
+   // This happens when the commander window gets docked/undocked.
+   // It also happens when the mini-editor for a "TO" instruction
+   // is run.
+   //
+   // A better solution is to prevent the window title from changing
+   // in the first place.
+   SetWindowText(GetApplication()->GetName());
+   }
+
 void TMainFrame::UndockCommanderWindow()
    {
    if (IsCommanderDocked) 
@@ -2129,12 +2146,12 @@ void TMainFrame::UndockCommanderWindow()
       PaneSplitterWindow->RemovePane(
          CommandWindow,
          TShouldDelete::NoDelete);
-         
+
       // HACK: Reset the window title because the commander's
       // history box appends a "-" (it thinks it's tied
       // to a file and I can't figure out how to tell it
       // that it's not.
-      SetWindowText(GetApplication()->GetName());
+      FixWindowTitle();
 
       delete CommandWindow;
       CommandWindow = newCommandWindow;
@@ -2230,7 +2247,7 @@ void TMainFrame::DockCommanderWindow()
       // history box appends a "-" (it thinks it's tied
       // to a file and I can't figure out how to tell it
       // that it's not.
-      SetWindowText(GetApplication()->GetName());
+      FixWindowTitle();
 
       delete CommandWindow;
       CommandWindow = newCommandWindow;

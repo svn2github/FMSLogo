@@ -92,9 +92,10 @@
 // There are some special characters that you can add to a string with a 
 // special "escape sequence", which begins with a backslash "\".
 //
-//    Tab       - "\t"
-//    Newline   - "\n"
-//    Backslash - "\\"
+//    Tab         -  \t
+//    Newline     -  \n
+//    Backslash   -  \\
+//    DoubleQuote -  \"
 //
 // Due to a bug in Borland's resource compiler, two forward slashes cannot
 // appear in a quoted string.  To work around this problem, I "escape" the
@@ -103,6 +104,14 @@
 //    "http://fmslogo.org/" -> "http:\x2F/fmslogo.org/
 //
 /////////////////////////////////////////////////////////////////////////////
+
+//
+// Localized "alternate" spellings of Logo reserved words
+//
+#define LOCALIZED_ALTERNATE_TRUE     "vrai"
+#define LOCALIZED_ALTERNATE_FALSE    "faux"
+#define LOCALIZED_ALTERNATE_END      "fin"
+#define LOCALIZED_ALTERNATE_TO       "pour"
 
 //
 // General localized strings

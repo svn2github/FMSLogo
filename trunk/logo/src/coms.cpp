@@ -98,11 +98,11 @@ bool boolean_arg(NODE *args)
 
    while (NOT_THROWING)
       {
-      if (compare_node(arg, Truex, true) == 0) 
+      if (Truex.Equals(arg)) 
          {
          return true;
          }
-      if (compare_node(arg, Falsex, true) == 0) 
+      if (Falsex.Equals(arg))
          {
          return false;
          }
@@ -140,7 +140,7 @@ NODE *lnot(NODE *args)
 NODE *land(NODE *args)
    {
    // if there are no false inputs, then the entire expression is true
-   NODE * rval = Truex;
+   NODE * rval = Truex.GetNode();
    
    for (NODE* current_arg = args;
         current_arg != NIL;
@@ -155,7 +155,7 @@ NODE *land(NODE *args)
       if (!arg)
          {
          // found a false input, so entire expression is false
-         rval = Falsex;
+         rval = Falsex.GetNode();
 
          // Don't break because we want to validate 
          // the rest of the inputs.
@@ -168,7 +168,7 @@ NODE *land(NODE *args)
 NODE *lor(NODE *args)
    {
    // if there are no true inputs, then the entire expression is false
-   NODE * rval = Falsex;
+   NODE * rval = Falsex.GetNode();
    
    for (NODE* current_arg = args;
         current_arg != NIL;
@@ -183,7 +183,7 @@ NODE *lor(NODE *args)
       if (arg)
          {
          // found a true input, so entire expression is true
-         rval = Truex;
+         rval = Truex.GetNode();
 
          // Don't break because we want to validate 
          // the rest of the inputs.

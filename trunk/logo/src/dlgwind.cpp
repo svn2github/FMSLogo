@@ -2347,16 +2347,16 @@ NODE *lyesnobox(NODE *args)
          {
          case IDYES:
             {
-            return Truex;
+            return Truex.GetNode();
             }
          case IDNO:
             {
-            return Falsex;
+            return Falsex.GetNode();
             }
          case IDCANCEL:
             {
             err_logo(STOP_ERROR, NIL);
-            return Falsex;
+            return Falsex.GetNode();
             }
          }
       }

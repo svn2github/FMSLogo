@@ -53,7 +53,7 @@ NODE *get_bodywords(NODE *proc, NODE *name)
    // Create the "TO" line, which also contains the inputs
    CAppendableList toline;
    name = intern(name);
-   toline.AppendElement(is_macro(name) ? Macro : To);
+   toline.AppendElement(is_macro(name) ? Macro : To.GetNode());
    toline.AppendElement(name);
    for (NODE * formals = formals__procnode(proc);
         formals != NIL;
@@ -96,7 +96,7 @@ NODE *get_bodywords(NODE *proc, NODE *name)
       }
 
    // add the END line
-   bodywordslist.AppendElement(cons_list(End));
+   bodywordslist.AppendElement(cons_list(End.GetNode()));
 
    // we're done making the bodywords list
    bodywords = bodywordslist.GetList();
@@ -501,8 +501,7 @@ NODE *to_helper(NODE *args, bool is_macro)
          body_words_lastnode = tnode;
 
          NODE * next_line = parser(car(body_words_lastnode), true);
-         if (next_line != NIL && 
-             compare_node(car(next_line), End, true) == 0)
+         if (next_line != NIL && End.Equals(car(next_line)))
             {
             // This line only contains "End", which denotes 
             // the end of this procedure.
@@ -1036,7 +1035,15 @@ NODE *po_helper(NODE *arg, int just_titles)  /* >0 for POT, <0 for EDIT       */
          {
          if (just_titles < 0)
             {
-            ndprintf(g_Writer.GetStream(), "to %p\nend\n\n", car(proclst));
+            // TO <proc>\n
+            // <procbody>
+            // END
+            ndprintf(
+               g_Writer.GetStream(), 
+               "%t %p\n%t\n\n", 
+               To.GetName(),
+               car(proclst),
+               End.GetName());
             }
          else
             {
@@ -1521,7 +1528,7 @@ NODE *check_proctype(NODE *args, int wanted)
    NODE * cell;
    if (NOT_THROWING && (cell = procnode__caseobj(intern(arg))) == UNDEFINED)
       {
-      return Falsex;
+      return Falsex.GetNode();
       }
 
    if (wanted == 2)

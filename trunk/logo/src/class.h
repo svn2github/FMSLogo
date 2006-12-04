@@ -72,6 +72,28 @@ struct CUTMAP
    bool    CutFlag;          // flag to signal something in cut buffer
    };
 
+class CLocalizedNode
+   {
+ public:
+   CLocalizedNode();
+
+   void Initialize(
+      const char    * PrimaryName,
+      const char    * AlternateName
+      );
+
+   NODE *       GetNode() const;
+   const char * GetName() const;
+   bool         Equals(NODE * Node) const;
+
+ private:
+   NODE       * m_Primary;
+   const char * m_PrimaryName;
+
+   NODE       * m_Alternate;
+   const char * m_AlternateName;
+   };
+
 class CFileStream
    {
  public:
@@ -507,6 +529,7 @@ class TMainFrame : public TDecoratedFrame
    void MyPopupStatusKill();
    bool MyPopupInput(char *str, const char *prompt);
 
+   void FixWindowTitle();
    void UndockCommanderWindow();
    void DockCommanderWindow();
 
