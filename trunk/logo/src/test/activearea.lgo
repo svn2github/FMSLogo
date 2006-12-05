@@ -1,6 +1,6 @@
 LOAD "testlib.lgo
 
-TO ACTIVEAREATEST
+TO ACTIVEAREATEST.SMOKETEST
 
    LOCALMAKE "oldactivearea ACTIVEAREA
 
@@ -22,6 +22,17 @@ TO ACTIVEAREATEST
    SETACTIVEAREA [-500.67 -500.43 500.00 500.9999]
    SIMPLEREPORTTEST [ACTIVEAREA] [-500 -500 500 500]
 
+   ; undo side-effects
+   SETACTIVEAREA :oldactivearea
+END
+
+TO ACTIVEAREATEST.BADINPUT
+
+   LOCALMAKE "oldactivearea ACTIVEAREA
+
+   ; Set to a very strange value to confirm that 
+   ; these tests don't modify the active area
+   SETACTIVEAREA [1 1 2 2]
 
    ; unexpected number of inputs
    RUNNOTENOUGHINPUTSTEST [(SETACTIVEAREA)                ]
@@ -60,6 +71,17 @@ TO ACTIVEAREATEST
 
    RUNTOOMANYINPUTSTEST [(ACTIVEAREA  "toomany)]
 
+   ; check that none of the bad input tests modified 
+   ; the real active area
+   SIMPLEREPORTTEST [ACTIVEAREA] [1 1 2 2]
+
    ; undo side-effects
    SETACTIVEAREA :oldactivearea
+END
+
+TO ACTIVEAREATEST
+
+   ACTIVEAREATEST.SMOKETEST
+   ACTIVEAREATEST.BADINPUT
+
 END
