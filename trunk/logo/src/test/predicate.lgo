@@ -67,11 +67,11 @@ TO EQUALPTEST.SMOKETEST
   ; now test case-sensitive searching
   TRACEINSTRUCTION [MAKE "CASEIGNOREDP "false]
 
-  ; even true and false obey the rules of case
+  ; true and false don't obey the rules of caseignoredp
   SIMPLEREPORTTEST [EQUALP "true  "true                ] "true
   SIMPLEREPORTTEST [EQUALP "false "false               ] "true
-  SIMPLEREPORTTEST [EQUALP "true  "TRUE                ] "false
-  SIMPLEREPORTTEST [EQUALP "false "FALSE               ] "false
+  SIMPLEREPORTTEST [EQUALP "true  "TRUE                ] "true
+  SIMPLEREPORTTEST [EQUALP "false "FALSE               ] "true
 
   SIMPLEREPORTTEST [EQUALP "HELLO "hello               ] "false
   SIMPLEREPORTTEST [EQUALP "hello "HELLO               ] "false
