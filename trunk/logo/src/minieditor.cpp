@@ -72,6 +72,8 @@ void TMiniEditor::SetupWindow()
    m_ToLine.Create();
    m_ToLine.SetCaption(m_ToLineString);
 
+   SetDlgItemText(IDOK, LOCALIZED_ALTERNATE_END);
+
    m_EndButton.Create();
 
    m_TextField.Create();
@@ -159,7 +161,7 @@ void TMiniEditor::RecalculateLayout()
    // position the "END" button
    m_EndButton.SetWindowPos(
       NULL, 
-      xBorder, 
+      xBorder,
       totalHeight - yBorder - endButtonHeight,
       endButtonWidth,
       endButtonHeight,
@@ -167,19 +169,19 @@ void TMiniEditor::RecalculateLayout()
 
    // position the procedure body
    m_TextField.SetWindowPos(
-      NULL, 
-      xBorder, 
+      NULL,
+      xBorder,
       toLineHeight + 2 * yBorder,
-      totalWidth - xBorder * 2, 
+      totalWidth - xBorder * 2,
       totalHeight - (4 * yBorder + toLineHeight + endButtonHeight),
       0);
 
    // position the "TO" line
    m_ToLine.SetWindowPos(
-      NULL, 
-      xBorder, 
+      NULL,
+      xBorder,
       yBorder,
-      totalWidth - xBorder * 2, 
+      totalWidth - xBorder * 2,
       toLineHeight,
       0);
    }
