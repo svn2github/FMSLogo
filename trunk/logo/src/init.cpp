@@ -66,9 +66,7 @@ NODE *Null_Word = NIL;
 
 CLocalizedNode::CLocalizedNode() :
    m_Primary(NIL),
-   m_PrimaryName(NULL),
-   m_Alternate(NIL),
-   m_AlternateName(NULL)
+   m_Alternate(NIL)
    {
    }
 
@@ -79,8 +77,7 @@ CLocalizedNode::Initialize(
    )
    {
    // the Primary name always exists
-   m_PrimaryName = PrimaryName;
-   m_Primary     = intern(make_static_strnode(PrimaryName));
+   m_Primary = intern(make_static_strnode(PrimaryName));
 
    // the Alternate name may not exist
    if (AlternateName != NULL)
@@ -88,8 +85,7 @@ CLocalizedNode::Initialize(
       if (strcmp(PrimaryName, AlternateName) != 0)
          {
          // the alternate name is different from the Primary name
-         m_AlternateName = AlternateName;
-         m_Alternate     = intern(make_static_strnode(AlternateName));
+         m_Alternate = intern(make_static_strnode(AlternateName));
          }
       }
    }
@@ -112,13 +108,16 @@ const char *
 CLocalizedNode::GetName() const
    {
    // prefer to use the alternate name, if it exists
-   if (m_AlternateName != NULL)
+
+   // Because these nodes were created with make_static_strnode()
+   // We can directly return the node's string.
+   if (m_Alternate != NIL)
       {
-      return m_AlternateName;
+      return getstrptr(strnode__caseobj(m_Alternate));
       }
    else
       {
-      return m_PrimaryName;
+      return getstrptr(strnode__caseobj(m_Primary));
       }
    }
 
@@ -128,7 +127,7 @@ CLocalizedNode::Equals(
    ) const
    {
    // see if this matches the primary node
-   if (compare_node(Node, m_Primary, true) == 0)
+   if (0 == compare_node(Node, m_Primary, true, false))
       {
       return true;
       }
@@ -136,7 +135,7 @@ CLocalizedNode::Equals(
    // See if this matches the alternate node
    if (m_Alternate != NIL)
       {
-      if (compare_node(Node, m_Alternate, true) == 0)
+      if (0 == compare_node(Node, m_Alternate, true, false))
          {
          return true;
          }

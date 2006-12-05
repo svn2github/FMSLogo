@@ -419,7 +419,7 @@ extern NODE *lpower(NODE *args);
 extern NODE *true_or_false(bool tf);
 extern NODE *llessp(NODE *args);
 extern NODE *lgreaterp(NODE *args);
-extern int compare_node(NODE *n1, NODE *n2, bool ignorecase);
+extern int compare_node(NODE *n1, NODE *n2, bool ignorecase, bool comparewithtruefalse = true);
 extern bool equalp_help(NODE *arg1, NODE *arg2, bool ingc);
 extern NODE *lequalp(NODE *args);
 extern NODE *l_eq(NODE *args);

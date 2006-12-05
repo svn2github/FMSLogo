@@ -979,7 +979,7 @@ NODE *lgreaterp(NODE *args)
    Many calls to this function are just to see if a node is "True.
    We could write a special-case function for this.
 */
-int compare_node(NODE *n1, NODE *n2, bool ignorecase)
+int compare_node(NODE *n1, NODE *n2, bool ignorecase, bool comparewithtruefalse)
    {
    int icmp;
 
@@ -987,6 +987,17 @@ int compare_node(NODE *n1, NODE *n2, bool ignorecase)
       {
       return 0; // equal
       }
+
+   // Add a special-case for internationalized TRUE and FALSE.
+   if (comparewithtruefalse)
+      {
+      if ((Truex.Equals(n1)  && Truex.Equals(n2)) ||
+          (Falsex.Equals(n1) && Falsex.Equals(n2)))
+         {
+         return 0; // equal
+         }
+      }
+
 
    NODETYPES nt1 = nodetype(n1);
    NODETYPES nt2 = nodetype(n2);

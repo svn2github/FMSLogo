@@ -87,11 +87,8 @@ class CLocalizedNode
    bool         Equals(NODE * Node) const;
 
  private:
-   NODE       * m_Primary;
-   const char * m_PrimaryName;
-
-   NODE       * m_Alternate;
-   const char * m_AlternateName;
+   NODE * m_Primary;
+   NODE * m_Alternate;
    };
 
 class CFileStream
