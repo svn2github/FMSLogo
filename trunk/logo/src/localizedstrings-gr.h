@@ -176,7 +176,7 @@
 #define LOCALIZED_SELECTACTIVEAREA_YLOW         "Κάτω όριο"  // 
 #define LOCALIZED_SELECTACTIVEAREA_XHIGH        "Δεξί όριο" // 
 #define LOCALIZED_SELECTACTIVEAREA_XLOW         "Αριστερό όριο" // 
-#define LOCALIZED_SELECTACTIVEAREA_STEPSPERINCH "Βήματα χελώνας ανά ίντσα που εκτυπώνονται:" // 
+#define LOCALIZED_SELECTACTIVEAREA_STEPSPERINCH "Βήματα χελώνας ανά ίντσα:" // 
 #define LOCALIZED_SELECTACTIVEAREA_RESET        "&Επαναφορά"  // 
 #define LOCALIZED_SELECTACTIVEAREA_OK           LOCALIZED_GENERAL_OKBUTTON // Localized above
 #define LOCALIZED_SELECTACTIVEAREA_CANCEL       LOCALIZED_GENERAL_CANCELBUTTON // 
