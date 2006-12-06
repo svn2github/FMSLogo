@@ -1,3 +1,28 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Filename    : fmslogo.nsi
+; Description : The NSIS installer script that builds the FMSLogo's installer.
+;
+; Localization Instructions: 
+; 
+;   1) If there are no place-holders for your language, then a feature request
+;   on the FMSLogo project asking someone to add the place-holders.
+;
+;   2) Once the place-holders exist, Search the file for the NOT_YET_LOCALIZED
+;   markers, which will be next to the strings that should be localized.
+;   Localize the bit within the double-quotes that corresponds to your language.
+;
+;   After you translate the string, delete the NOT_YET_LOCALIZED marker.
+; 
+;   Note that the some characters with the strings must be escaped with a 
+;   dollar-sign ($).
+;
+;     dollar-sign      -> $$ 
+;     carriage-return  -> $\r 
+;     newline          -> $\n
+;     tab              -> $\t
+;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 ; Compiler Flags
 SetCompressor /SOLID lzma
 
@@ -37,12 +62,12 @@ LoadLanguageFile "${NSISDIR}\Contrib\Language files\French.nlf"
 LoadLanguageFile "${NSISDIR}\Contrib\Language files\Greek.nlf"
 
 LangString DesktopShortcut ${LANG_ENGLISH} "Desktop Shortcut"
-LangString DesktopShortcut ${LANG_FRENCH}  "Desktop Shortcut" ; NOT_YET_TRANSLATED
-LangString DesktopShortcut ${LANG_GREEK}   "Desktop Shortcut" ; NOT_YET_TRANSLATED
+LangString DesktopShortcut ${LANG_FRENCH}  "Desktop Shortcut" ; NOT_YET_LOCALIZED
+LangString DesktopShortcut ${LANG_GREEK}   "Desktop Shortcut" ; NOT_YET_LOCALIZED
 
 LangString StartMenuShortcuts ${LANG_ENGLISH} "Start Menu Shortcuts"
-LangString StartMenuShortcuts ${LANG_FRENCH}  "Start Menu Shortcuts" ; NOT_YET_TRANSLATED
-LangString StartMenuShortcuts ${LANG_GREEK}   "Start Menu Shortcuts" ; NOT_YET_TRANSLATED
+LangString StartMenuShortcuts ${LANG_FRENCH}  "Start Menu Shortcuts" ; NOT_YET_LOCALIZED
+LangString StartMenuShortcuts ${LANG_GREEK}   "Start Menu Shortcuts" ; NOT_YET_LOCALIZED
 
 
 ; uninstall must be able to remove all traces of any 
@@ -148,10 +173,10 @@ SetupUser.Done:
   ; Notify the user that the install cannot continue.
   ; We can't use a LangString because those aren't available in .onInit
   StrCmp $LANGUAGE ${LANG_FRENCH} 0 +3
-     MessageBox MB_OK|MB_ICONEXCLAMATION "Either the installer or FMSLogo is currently running.$\nThis installation cannot continue." ; NOT_YET_TRANSLATED
+     MessageBox MB_OK|MB_ICONEXCLAMATION "Either the installer or FMSLogo is currently running.$\nThis installation cannot continue." ; NOT_YET_LOCALIZED
      Abort
   StrCmp $LANGUAGE ${LANG_GREEK} 0 +3
-     MessageBox MB_OK|MB_ICONEXCLAMATION "Either the installer or FMSLogo is currently running.$\nThis installation cannot continue." ; NOT_YET_TRANSLATED
+     MessageBox MB_OK|MB_ICONEXCLAMATION "Either the installer or FMSLogo is currently running.$\nThis installation cannot continue." ; NOT_YET_LOCALIZED
      Abort
   ; default to English
   MessageBox MB_OK|MB_ICONEXCLAMATION "Either the installer or FMSLogo is currently running.$\nThis installation cannot continue."
@@ -184,9 +209,9 @@ GetPreviousInstall.Done:
   ; Notify the user that the install cannot continue until the existing FMSLogo is uninstalled
   ; We can't use a LangString because those aren't available in .onInit
   StrCmp $LANGUAGE ${LANG_FRENCH} 0 +2
-    MessageBox MB_YESNO "The existing copy of FMSLogo must be uninstalled to continue.$\nDo you want to uninstall it?$\n$\n(Selecting No will abort the installation)" IDYES uninstall IDNO abort ; NOT_YET_TRANSLATED
+    MessageBox MB_YESNO "The existing copy of FMSLogo must be uninstalled to continue.$\nDo you want to uninstall it?$\n$\n(Selecting No will abort the installation)" IDYES uninstall IDNO abort ; NOT_YET_LOCALIZED
   StrCmp $LANGUAGE ${LANG_GREEK} 0 +2
-    MessageBox MB_YESNO "The existing copy of FMSLogo must be uninstalled to continue.$\nDo you want to uninstall it?$\n$\n(Selecting No will abort the installation)" IDYES uninstall IDNO abort ; NOT_YET_TRANSLATED
+    MessageBox MB_YESNO "The existing copy of FMSLogo must be uninstalled to continue.$\nDo you want to uninstall it?$\n$\n(Selecting No will abort the installation)" IDYES uninstall IDNO abort ; NOT_YET_LOCALIZED
  ; default to English
  MessageBox MB_YESNO "The existing copy of FMSLogo must be uninstalled to continue.$\nDo you want to uninstall it?$\n$\n(Selecting No will abort the installation)" IDYES uninstall IDNO abort
 
@@ -311,10 +336,10 @@ Function un.onInit
   ; Notify the user that the uninstall cannot continue.
   ; We can't use a LangString because those aren't available in .onInit
   StrCmp $LANGUAGE ${LANG_FRENCH} 0 +3
-     MessageBox MB_OK|MB_ICONEXCLAMATION "Either the installer or FMSLogo is currently running.$\nThis uninstallation cannot continue." ; NOT_YET_TRANSLATED
+     MessageBox MB_OK|MB_ICONEXCLAMATION "Either the installer or FMSLogo is currently running.$\nThis uninstallation cannot continue." ; NOT_YET_LOCALIZED
      Abort
   StrCmp $LANGUAGE ${LANG_GREEK} 0 +3
-     MessageBox MB_OK|MB_ICONEXCLAMATION "Either the installer or FMSLogo is currently running.$\nThis uninstallation cannot continue." ; NOT_YET_TRANSLATED
+     MessageBox MB_OK|MB_ICONEXCLAMATION "Either the installer or FMSLogo is currently running.$\nThis uninstallation cannot continue." ; NOT_YET_LOCALIZED
      Abort
   ; default to English
   MessageBox MB_OK|MB_ICONEXCLAMATION "Either the installer or FMSLogo is currently running.$\nThis uninstallation cannot continue."
