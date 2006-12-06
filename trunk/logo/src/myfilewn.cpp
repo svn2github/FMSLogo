@@ -261,7 +261,7 @@ void TMyFileWindow::CMSaveToWorkspace()
          MainWindowx->CommandWindow->MessageBox(
             LOCALIZED_CURSORISATLASTGOODDEFINITION,
             LOCALIZED_EDITFAILEDTOLOAD,
-            MB_OK);
+            MB_OK | MB_ICONERROR);
 
          // "force" a change so that we still in "dirty" state
          error_happen = false;
@@ -572,7 +572,7 @@ void TMyFileWindow::EvDestroy()
                    "\n"
                    LOCALIZED_RETURNTOEDIT,
                 LOCALIZED_EDITFAILEDTOLOAD,
-               MB_OKCANCEL | MB_ICONQUESTION) == IDOK)
+                MB_YESNO | MB_ICONERROR) == IDYES)
             {
             // open up another editor
             MainWindowx->MyPopupEdit(TempPathName, args_list, check_for_errors);

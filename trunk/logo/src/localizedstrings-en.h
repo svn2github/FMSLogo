@@ -381,10 +381,10 @@
 
 
 
-#define LOCALIZED_CURSORISATLASTGOODDEFINITION  "The cursor will be positioned just after last successful definition.\nCheck the Commander window for possible error message."
-#define LOCALIZED_RETURNTOEDIT                  "Return to edit?"
+#define LOCALIZED_CURSORISATLASTGOODDEFINITION  "There was a problem saving the contents of the editor to the workspace.  The cursor will be positioned just after last successful definition.\n\nCheck the Commander window for possible error message."
+#define LOCALIZED_RETURNTOEDIT                  "Return to the editor?"
 
-#define LOCALIZED_EDITFAILEDTOLOAD              "Your Edit has FAILED to load"
+#define LOCALIZED_EDITFAILEDTOLOAD              LOCALIZED_SAVETOWORKSPACE
 
 
 
