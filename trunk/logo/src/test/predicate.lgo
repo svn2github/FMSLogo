@@ -4,15 +4,15 @@ TO .EQTEST
   LOCALMAKE "x 1000
   LOCALMAKE "y 1000
 
-  SIMPLEREPORTTEST [.EQ 1000 1000] "false
-  SIMPLEREPORTTEST [.EQ :x   :y  ] "false
-  SIMPLEREPORTTEST [.EQ :x   :x  ] "true
+  FAILIFNOTFALSE [.EQ 1000 1000]
+  FAILIFNOTFALSE [.EQ :x   :y  ]
+  FAILIFNOTTRUE  [.EQ :x   :x  ]
 
   ; test singleton objects that are globally unique
-  SIMPLEREPORTTEST [.EQ "||    "||    ] "true
-  SIMPLEREPORTTEST [.EQ "false "false ] "true
-  SIMPLEREPORTTEST [.EQ "true  "true  ] "true
-  SIMPLEREPORTTEST [.EQ []     []     ] "true
+  FAILIFNOTTRUE [.EQ "||    "||    ]
+  FAILIFNOTTRUE [.EQ "false "false ]
+  FAILIFNOTTRUE [.EQ "true  "true  ]
+  FAILIFNOTTRUE [.EQ []     []     ]
 
   RUNNOTENOUGHINPUTSTEST [(.EQ)]
   RUNNOTENOUGHINPUTSTEST [(.EQ 1)]
@@ -23,60 +23,60 @@ TO EQUALPTEST.SMOKETEST
 
   LOCAL "CASEIGNOREDP
 
-  MAKE "CASEIGNOREDP "TRUE
+  MAKE "CASEIGNOREDP LOCALETRUE
 
   LOCAL "myarray
-  SIMPLEREPORTTEST [EQUALP 1    1                      ] "true
-  SIMPLEREPORTTEST [EQUALP 0    0                      ] "true
-  SIMPLEREPORTTEST [EQUALP 3.14 3.14                   ] "true
-  SIMPLEREPORTTEST [EQUALP "hi  "hi                    ] "true
-  SIMPLEREPORTTEST [EQUAL? ["a 1 "ab]    ["a 1 "ab]    ] "true
-  SIMPLEREPORTTEST [EQUAL? [[1 2 3] [1]] [[1 2 3] [1]] ] "true
-  SIMPLEREPORTTEST [EQUAL? 0 0                         ] "true
-  SIMPLEREPORTTEST [EQUALP "||  "||                    ] "true
-  SIMPLEREPORTTEST [EQUALP "true  "TRUE                ] "true
-  SIMPLEREPORTTEST [EQUALP "false "FALSE               ] "true
-  SIMPLEREPORTTEST [EQUALP "HELLO "hello               ] "true
-  SIMPLEREPORTTEST [EQUALP "hello "HELLO               ] "true
-  SIMPLEREPORTTEST [EQUALP "HELLO "HELLO               ] "true
-  SIMPLEREPORTTEST [EQUALP "hello "hello               ] "true
+  FAILIFNOTTRUE [EQUALP 1    1                      ]
+  FAILIFNOTTRUE [EQUALP 0    0                      ]
+  FAILIFNOTTRUE [EQUALP 3.14 3.14                   ]
+  FAILIFNOTTRUE [EQUALP "hi  "hi                    ]
+  FAILIFNOTTRUE [EQUAL? ["a 1 "ab]    ["a 1 "ab]    ]
+  FAILIFNOTTRUE [EQUAL? [[1 2 3] [1]] [[1 2 3] [1]] ]
+  FAILIFNOTTRUE [EQUAL? 0 0                         ]
+  FAILIFNOTTRUE [EQUALP "||  "||                    ]
+  FAILIFNOTTRUE [EQUALP "true  "TRUE                ]
+  FAILIFNOTTRUE [EQUALP "false "FALSE               ]
+  FAILIFNOTTRUE [EQUALP "HELLO "hello               ]
+  FAILIFNOTTRUE [EQUALP "hello "HELLO               ]
+  FAILIFNOTTRUE [EQUALP "HELLO "HELLO               ]
+  FAILIFNOTTRUE [EQUALP "hello "hello               ]
 
   MAKE "myarray {1 2 3}
-  SIMPLEREPORTTEST [EQUAL? :myarray :myarray           ] "true
+  FAILIFNOTTRUE [EQUAL? :myarray :myarray           ]
 
   MAKE "myarray {}
-  SIMPLEREPORTTEST [EQUAL? :myarray :myarray           ] "true
+  FAILIFNOTTRUE [EQUAL? :myarray :myarray           ]
 
   ; arrays are never equal to other arrays
-  SIMPLEREPORTTEST [EQUAL? {} {}                       ] "false
-  SIMPLEREPORTTEST [EQUAL? {1 2 3} {1 2 3}             ] "false
+  FAILIFNOTFALSE [EQUAL? {} {}                      ]
+  FAILIFNOTFALSE [EQUAL? {1 2 3} {1 2 3}            ]
 
-  SIMPLEREPORTTEST [EQUALP 1       1.1                 ] "false
-  SIMPLEREPORTTEST [EQUALP 0       1                   ] "false
-  SIMPLEREPORTTEST [EQUALP "hi     "hil                ] "false
-  SIMPLEREPORTTEST [EQUALP "hil    "hi                 ] "false
-  SIMPLEREPORTTEST [EQUALP "true   "false              ] "false
-  SIMPLEREPORTTEST [EQUALP []      "false              ] "false
-  SIMPLEREPORTTEST [EQUALP "false  []                  ] "false
-  SIMPLEREPORTTEST [EQUALP [1 2]   [1 2 3]             ] "false
-  SIMPLEREPORTTEST [EQUALP [1 2 3] [1 2]               ] "false
-  SIMPLEREPORTTEST [EQUALP {1}     [1]                 ] "false
-  SIMPLEREPORTTEST [EQUALP [1]     {1}                 ] "false
+  FAILIFNOTFALSE [EQUALP 1       1.1                ]
+  FAILIFNOTFALSE [EQUALP 0       1                  ]
+  FAILIFNOTFALSE [EQUALP "hi     "hil               ]
+  FAILIFNOTFALSE [EQUALP "hil    "hi                ]
+  FAILIFNOTFALSE [EQUALP "true   "false             ]
+  FAILIFNOTFALSE [EQUALP []      "false             ]
+  FAILIFNOTFALSE [EQUALP "false  []                 ]
+  FAILIFNOTFALSE [EQUALP [1 2]   [1 2 3]            ]
+  FAILIFNOTFALSE [EQUALP [1 2 3] [1 2]              ]
+  FAILIFNOTFALSE [EQUALP {1}     [1]                ]
+  FAILIFNOTFALSE [EQUALP [1]     {1}                ]
 
 
-  ; now test case-sensitive searching
-  TRACEINSTRUCTION [MAKE "CASEIGNOREDP "false]
+  ; now test case-sensitive comparisons
+  TRACEINSTRUCTION [MAKE "CASEIGNOREDP LOCALEFALSE]
 
-  ; true and false don't obey the rules of caseignoredp
-  SIMPLEREPORTTEST [EQUALP "true  "true                ] "true
-  SIMPLEREPORTTEST [EQUALP "false "false               ] "true
-  SIMPLEREPORTTEST [EQUALP "true  "TRUE                ] "true
-  SIMPLEREPORTTEST [EQUALP "false "FALSE               ] "true
+  ; Even "true and "false obey the rules of caseignoredp
+  FAILIFNOTTRUE  [ EQUALP "true  "true    ]
+  FAILIFNOTTRUE  [ EQUALP "false "false   ]
+  FAILIFNOTFALSE [ EQUALP "true  "TRUE    ]
+  FAILIFNOTFALSE [ EQUALP "false "FALSE   ]
 
-  SIMPLEREPORTTEST [EQUALP "HELLO "hello               ] "false
-  SIMPLEREPORTTEST [EQUALP "hello "HELLO               ] "false
-  SIMPLEREPORTTEST [EQUALP "HELLO "HELLO               ] "true
-  SIMPLEREPORTTEST [EQUALP "hello "hello               ] "true
+  FAILIFNOTTRUE  [ EQUALP "HELLO "HELLO ]
+  FAILIFNOTTRUE  [ EQUALP "hello "hello ]
+  FAILIFNOTFALSE [ EQUALP "HELLO "hello ]
+  FAILIFNOTFALSE [ EQUALP "hello "HELLO ]
 
 END
 
@@ -140,7 +140,7 @@ TO EQUALPTEST.INTERNATIONAL
      make "word1 (WORD "" :lowercase :capital)
      make "word2 (WORD "" :capital   :lowercase)
 
-     SIMPLEREPORTTEST (LIST "EQUALP :word1 :word2) "true
+     FAILIFNOTTRUE (LIST "EQUALP :word1 :word2)
   ]
 
 END
@@ -153,122 +153,122 @@ TO EQUALPTEST
 END
 
 TO EMPTYPTEST
-  SIMPLEREPORTTEST [EMPTYP [] ]  "true
-  SIMPLEREPORTTEST [EMPTY? [] ]  "true
-  SIMPLEREPORTTEST [EMPTY? [1]]  "false
-  SIMPLEREPORTTEST [EMPTY? [0]]  "false
-  SIMPLEREPORTTEST [EMPTY? 0]    "false
-  SIMPLEREPORTTEST [EMPTY? "||]  "true
-  SIMPLEREPORTTEST [EMPTY? "| |] "false
+  FAILIFNOTTRUE  [EMPTYP [] ]
+  FAILIFNOTTRUE  [EMPTY? [] ]
+  FAILIFNOTFALSE [EMPTY? [1]]
+  FAILIFNOTFALSE [EMPTY? [0]]
+  FAILIFNOTFALSE [EMPTY? 0]
+  FAILIFNOTTRUE  [EMPTY? "||]
+  FAILIFNOTFALSE [EMPTY? "| |]
 
-  SIMPLEREPORTTEST [EMPTY? {}]   "false
+  FAILIFNOTFALSE [EMPTY? {}]
 
   RUNNOTENOUGHINPUTSTEST [(EMPTY?)]
   RUNTOOMANYINPUTSTEST   [(EMPTY? [] "toomany)]
 END
 
 TO NUMBERPTEST
-  SIMPLEREPORTTEST [NUMBERP 1     ] "true
-  SIMPLEREPORTTEST [NUMBER? 1     ] "true
-  SIMPLEREPORTTEST [NUMBER? 0     ] "true
-  SIMPLEREPORTTEST [NUMBER? -1    ] "true
-  SIMPLEREPORTTEST [NUMBER? 3.14  ] "true
-  SIMPLEREPORTTEST [NUMBER? "1    ] "true
-  SIMPLEREPORTTEST [NUMBER? "-1   ] "true
-  SIMPLEREPORTTEST [NUMBER? "3.14 ] "true
+  FAILIFNOTTRUE [NUMBERP 1     ]
+  FAILIFNOTTRUE [NUMBER? 1     ]
+  FAILIFNOTTRUE [NUMBER? 0     ]
+  FAILIFNOTTRUE [NUMBER? -1    ]
+  FAILIFNOTTRUE [NUMBER? 3.14  ]
+  FAILIFNOTTRUE [NUMBER? "1    ]
+  FAILIFNOTTRUE [NUMBER? "-1   ]
+  FAILIFNOTTRUE [NUMBER? "3.14 ]
 
-  SIMPLEREPORTTEST [NUMBER? {}]   "false
-  SIMPLEREPORTTEST [NUMBER? {2}]  "false
-  SIMPLEREPORTTEST [NUMBER? []]   "false
-  SIMPLEREPORTTEST [NUMBER? [1]]  "false
-  SIMPLEREPORTTEST [NUMBER? "one] "false
-  SIMPLEREPORTTEST [NUMBER? "1A]  "false
-  SIMPLEREPORTTEST [NUMBER? "||]  "false
+  FAILIFNOTFALSE [NUMBER? {}]
+  FAILIFNOTFALSE [NUMBER? {2}]
+  FAILIFNOTFALSE [NUMBER? []]
+  FAILIFNOTFALSE [NUMBER? [1]]
+  FAILIFNOTFALSE [NUMBER? "one]
+  FAILIFNOTFALSE [NUMBER? "1A]
+  FAILIFNOTFALSE [NUMBER? "||]
 
   RUNNOTENOUGHINPUTSTEST [(NUMBER?)]
   RUNTOOMANYINPUTSTEST   [(NUMBER? 1 "toomany)]
 END
 
 TO LISTPTEST
-  SIMPLEREPORTTEST [LISTP [1 2 3] ] "true
-  SIMPLEREPORTTEST [LIST? [1 2 3] ] "true
-  SIMPLEREPORTTEST [LIST? []      ] "true
+  FAILIFNOTTRUE [LISTP [1 2 3] ]
+  FAILIFNOTTRUE [LIST? [1 2 3] ]
+  FAILIFNOTTRUE [LIST? []      ]
 
-  SIMPLEREPORTTEST [LIST? "list   ] "false
-  SIMPLEREPORTTEST [LIST? "|[1]|  ] "false
-  SIMPLEREPORTTEST [LIST? 1       ] "false
-  SIMPLEREPORTTEST [LIST? 3.14    ] "false
-  SIMPLEREPORTTEST [LIST? {1}     ] "false
-  SIMPLEREPORTTEST [LIST? {}      ] "false
-  SIMPLEREPORTTEST [LIST? "||     ] "false
+  FAILIFNOTFALSE [LIST? "list  ]
+  FAILIFNOTFALSE [LIST? "|[1]| ]
+  FAILIFNOTFALSE [LIST? 1      ]
+  FAILIFNOTFALSE [LIST? 3.14   ]
+  FAILIFNOTFALSE [LIST? {1}    ]
+  FAILIFNOTFALSE [LIST? {}     ]
+  FAILIFNOTFALSE [LIST? "||    ]
 
   RUNNOTENOUGHINPUTSTEST [(LIST?)]
   RUNTOOMANYINPUTSTEST   [(LIST? [] "toomany)]
 END
 
 TO WORDPTEST
-  SIMPLEREPORTTEST [WORDP "hello ] "true
-  SIMPLEREPORTTEST [WORD? "hello ] "true
-  SIMPLEREPORTTEST [WORD? 123    ] "true
-  SIMPLEREPORTTEST [WORD? 3.14   ] "true
-  SIMPLEREPORTTEST [WORD? "||    ] "true
-  SIMPLEREPORTTEST [WORD? "|[1]| ] "true
+  FAILIFNOTTRUE [WORDP "hello ]
+  FAILIFNOTTRUE [WORD? "hello ]
+  FAILIFNOTTRUE [WORD? 123    ]
+  FAILIFNOTTRUE [WORD? 3.14   ]
+  FAILIFNOTTRUE [WORD? "||    ]
+  FAILIFNOTTRUE [WORD? "|[1]| ]
 
-  SIMPLEREPORTTEST [WORD? []       ] "false
-  SIMPLEREPORTTEST [WORD? ["hello] ] "false
-  SIMPLEREPORTTEST [WORD? {}       ] "false
-  SIMPLEREPORTTEST [WORD? {"hello} ] "false
+  FAILIFNOTFALSE [WORD? []       ]
+  FAILIFNOTFALSE [WORD? ["hello] ]
+  FAILIFNOTFALSE [WORD? {}       ]
+  FAILIFNOTFALSE [WORD? {"hello} ]
 
   RUNNOTENOUGHINPUTSTEST [(WORD?)]
   RUNTOOMANYINPUTSTEST   [(WORD? [] "toomany)]
 END
 
 TO ARRAYPTEST
-  SIMPLEREPORTTEST [ARRAYP {1 2 3} ] "true
-  SIMPLEREPORTTEST [ARRAY? {1 2 3} ] "true
-  SIMPLEREPORTTEST [ARRAY? {}      ] "true
+  FAILIFNOTTRUE [ARRAYP {1 2 3} ]
+  FAILIFNOTTRUE [ARRAY? {1 2 3} ]
+  FAILIFNOTTRUE [ARRAY? {}      ]
 
-  SIMPLEREPORTTEST [ARRAY? "word   ] "false
-  SIMPLEREPORTTEST [ARRAY? "|{}|   ] "false
-  SIMPLEREPORTTEST [ARRAY? 1       ] "false
-  SIMPLEREPORTTEST [ARRAY? 3.14    ] "false
-  SIMPLEREPORTTEST [ARRAY? [1]     ] "false
-  SIMPLEREPORTTEST [ARRAY? []      ] "false
-  SIMPLEREPORTTEST [ARRAY? "||     ] "false
+  FAILIFNOTFALSE [ARRAY? "word  ]
+  FAILIFNOTFALSE [ARRAY? "|{}|  ]
+  FAILIFNOTFALSE [ARRAY? 1      ]
+  FAILIFNOTFALSE [ARRAY? 3.14   ]
+  FAILIFNOTFALSE [ARRAY? [1]    ]
+  FAILIFNOTFALSE [ARRAY? []     ]
+  FAILIFNOTFALSE [ARRAY? "||    ]
 
   RUNNOTENOUGHINPUTSTEST [(ARRAY?)]
   RUNTOOMANYINPUTSTEST   [(ARRAY? {1} "toomany)]
 END
 
 TO MEMBERPTEST
-  SIMPLEREPORTTEST [MEMBERP 2 [1 2 3] ] "true
-  SIMPLEREPORTTEST [MEMBER? 2 [1 2 3] ] "true
+  FAILIFNOTTRUE  [MEMBERP 2 [1 2 3] ]
+  FAILIFNOTTRUE  [MEMBER? 2 [1 2 3] ]
 
-  SIMPLEREPORTTEST [MEMBER? 1   [1]           ] "true
-  SIMPLEREPORTTEST [MEMBER? 1   [1 1 1]       ] "true
-  SIMPLEREPORTTEST [MEMBER? 0   [1 2 3]       ] "false
-  SIMPLEREPORTTEST [MEMBER? [2] [[1] [2] [3]] ] "true
-  SIMPLEREPORTTEST [MEMBER? 2   [[1] [2] [3]] ] "false
-  SIMPLEREPORTTEST [MEMBER? [2] [1 2 3]       ] "false
-  SIMPLEREPORTTEST [MEMBER? 1   []            ] "false
+  FAILIFNOTTRUE  [MEMBER? 1   [1]           ]
+  FAILIFNOTTRUE  [MEMBER? 1   [1 1 1]       ]
+  FAILIFNOTFALSE [MEMBER? 0   [1 2 3]       ]
+  FAILIFNOTTRUE  [MEMBER? [2] [[1] [2] [3]] ]
+  FAILIFNOTFALSE [MEMBER? 2   [[1] [2] [3]] ]
+  FAILIFNOTFALSE [MEMBER? [2] [1 2 3]       ]
+  FAILIFNOTFALSE [MEMBER? 1   []            ]
 
-  SIMPLEREPORTTEST [MEMBER? 1   {1}        ] "true
-  SIMPLEREPORTTEST [MEMBER? 1   {1 1 1}    ] "true
-  SIMPLEREPORTTEST [MEMBER? 12  {11 12 13} ] "true
-  SIMPLEREPORTTEST [MEMBER? 12  {}         ] "false
+  FAILIFNOTTRUE  [MEMBER? 1   {1}        ]
+  FAILIFNOTTRUE  [MEMBER? 1   {1 1 1}    ]
+  FAILIFNOTTRUE  [MEMBER? 12  {11 12 13} ]
+  FAILIFNOTFALSE [MEMBER? 12  {}         ]
 
-  SIMPLEREPORTTEST [MEMBER? 1   123  ] "true
-  SIMPLEREPORTTEST [MEMBER? 4   123  ] "false
-  SIMPLEREPORTTEST [MEMBER? 23  123  ] "false
-  SIMPLEREPORTTEST [MEMBER? 1   "||  ] "false
-  SIMPLEREPORTTEST [MEMBER? [1] "123 ] "false
+  FAILIFNOTTRUE  [MEMBER? 1   123  ]
+  FAILIFNOTFALSE [MEMBER? 4   123  ]
+  FAILIFNOTFALSE [MEMBER? 23  123  ]
+  FAILIFNOTFALSE [MEMBER? 1   "||  ]
+  FAILIFNOTFALSE [MEMBER? [1] "123 ]
 
-  SIMPLEREPORTTEST [MEMBER? "|| "hello     ] "false
-  SIMPLEREPORTTEST [MEMBER? "|| (LIST "||) ] "true
+  FAILIFNOTFALSE [MEMBER? "|| "hello     ]
+  FAILIFNOTTRUE  [MEMBER? "|| (LIST "||) ]
 
   LOCALMAKE "arrayofemptystring ARRAY 1
   SETITEM 1 :arrayofemptystring "||
-  SIMPLEREPORTTEST [MEMBER? "|| :arrayofemptystring ] "true
+  FAILIFNOTTRUE [MEMBER? "|| :arrayofemptystring ]
 
   RUNNOTENOUGHINPUTSTEST [(MEMBER?)]
   RUNNOTENOUGHINPUTSTEST [(MEMBER? 1)]
@@ -277,18 +277,18 @@ END
 
 TO BEFOREPTEST 
 
-  MAKE "CASEIGNOREDP "TRUE
+  MAKE "CASEIGNOREDP LOCALETRUE
 
-  SIMPLEREPORTTEST [BEFOREP "ABC "ABD ] "true
-  SIMPLEREPORTTEST [BEFORE? "ABC "ABD ] "true
-  SIMPLEREPORTTEST [BEFORE? "ABD "ABC ] "false
-  SIMPLEREPORTTEST [BEFORE? "ABC "ABC ] "false
+  FAILIFNOTTRUE  [BEFOREP "ABC "ABD ]
+  FAILIFNOTTRUE  [BEFORE? "ABC "ABD ]
+  FAILIFNOTFALSE [BEFORE? "ABD "ABC ]
+  FAILIFNOTFALSE [BEFORE? "ABC "ABC ]
 
-  SIMPLEREPORTTEST [BEFORE? "ABC  "ABCD ] "true
-  SIMPLEREPORTTEST [BEFORE? "ABCD "ABC  ] "false
+  FAILIFNOTTRUE  [BEFORE? "ABC  "ABCD ]
+  FAILIFNOTFALSE [BEFORE? "ABCD "ABC  ]
 
-  SIMPLEREPORTTEST [BEFORE? "||  "A]    "true
-  SIMPLEREPORTTEST [BEFORE? "Z   "||]   "false
+  FAILIFNOTTRUE  [BEFORE? "||  "A]
+  FAILIFNOTFALSE [BEFORE? "Z   "||]
  
   RUNNOTENOUGHINPUTSTEST [(BEFORE?)]
   RUNNOTENOUGHINPUTSTEST [(BEFORE? "ABC)]

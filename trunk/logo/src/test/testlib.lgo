@@ -1,3 +1,18 @@
+TO LOCALETRUE
+  ; A locale-independent value for truth.
+  ; This should compare equally with what we expect
+  ; when a predicate outputs "true.
+  OUTPUT EQUAL? 1 1
+END
+BURY [LOCALETRUE]
+
+TO LOCALEFALSE
+  ; A locale-independent value for falsity.
+  ; This should compare equally with what we expect
+  ; when a predicate outputs "false.
+  OUTPUT EQUAL? 1 0
+END
+BURY [LOCALEFALSE]
 
 TO REPORTTESTINFO :message
 
@@ -101,6 +116,18 @@ TO SIMPLEREPORTTEST :instruction :expectedresult
   REPORTTESTPASSED (LIST :instruction "output :result "|, as expected.|)
 END
 BURY [SIMPLEREPORTTEST]
+
+
+TO FAILIFNOTTRUE :instruction
+  SIMPLEREPORTTEST :instruction LOCALETRUE
+END
+BURY [FAILIFNOTTRUE]
+
+TO FAILIFNOTFALSE :instruction
+  SIMPLEREPORTTEST :instruction LOCALEFALSE
+END
+BURY [FAILIFNOTFALSE]
+
 
 
 TO REPORTTESTINITIALIZE

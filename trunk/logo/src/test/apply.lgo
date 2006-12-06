@@ -95,12 +95,12 @@ TO APPLYTEST.LAMBDATEMPLATE.NEWSCOPETEST
    LOCALMAKE "input.before 5
 
    APPLY [[input ignored] 
-          SIMPLEREPORTTEST [NAME? "ignored] "true
-          SIMPLEREPORTTEST [:input]         :input.before + 1
+          FAILIFNOTTRUE    [NAME? "ignored]
+          SIMPLEREPORTTEST [:input] :input.before + 1
    ] (LIST :input + 1 1234)
 
-   SIMPLEREPORTTEST [:input.before] :input
-   SIMPLEREPORTTEST [NAME? "ignored] "false
+   FAILIFNOTFALSE   [NAME? "ignored]
+   SIMPLEREPORTTEST [:input.before]  :input
 END
 
 TO APPLYTEST.PROCEDURETEXTTEMPLATE.NEWSCOPETEST
@@ -111,12 +111,12 @@ TO APPLYTEST.PROCEDURETEXTTEMPLATE.NEWSCOPETEST
    LOCALMAKE "input        5
    LOCALMAKE "input.before 5
    APPLY [[input ignored] 
-          [SIMPLEREPORTTEST [NAME? "ignored] "true]
-          [SIMPLEREPORTTEST [:input]         :input.before + 1]
+          [FAILIFNOTTRUE    [NAME? "ignored]                   ]
+          [SIMPLEREPORTTEST [:input]         :input.before + 1 ]
    ] (LIST :input + 1 1234)
 
+   FAILIFNOTFALSE   [NAME? "ignored]
    SIMPLEREPORTTEST [:input.before] :input
-   SIMPLEREPORTTEST [NAME? "ignored] "false
 END
 
 
@@ -127,13 +127,13 @@ TO APPLYTEST.LAMBDATEMPLATE
    ;
    ; lambda form template
    ;
-   TRACEINSTRUCTION  [MAKE "lambda.function.ran "false]
-   TRACEINSTRUCTION  [APPLY [[] MAKE "lambda.function.ran "true] [] ]
-   SIMPLEREPORTTEST  [:lambda.function.ran] "true
+   TRACEINSTRUCTION  [MAKE "lambda.function.ran 0]
+   TRACEINSTRUCTION  [APPLY [[] MAKE "lambda.function.ran 1] [] ]
+   SIMPLEREPORTTEST  [:lambda.function.ran] 1
 
-   TRACEINSTRUCTION  [MAKE "lambda.function.ran "false]
-   TRACEINSTRUCTION  [APPLY [[A] MAKE "lambda.function.ran :A] [true] ]
-   SIMPLEREPORTTEST  [:lambda.function.ran] "true
+   TRACEINSTRUCTION  [MAKE "lambda.function.ran 0]
+   TRACEINSTRUCTION  [APPLY [[A] MAKE "lambda.function.ran :A] [1]]
+   SIMPLEREPORTTEST  [:lambda.function.ran] 1
 
    SIMPLEREPORTTEST  [APPLY [[A] SUM 1 :A] [2] ] 3
 END
