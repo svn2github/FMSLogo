@@ -31,15 +31,15 @@ TO FILETEST.SMOKETEST
    SIMPLEREPORTTEST [READER] :filename
 
    SIMPLEREPORTTEST [READPOS] 0
-   SIMPLEREPORTTEST [EOFP] "false
+   FAILIFNOTFALSE   [EOFP]
 
    SIMPLEREPORTTEST [READLIST] [Hello]
    SIMPLEREPORTTEST [READPOS] 7
-   SIMPLEREPORTTEST [EOFP] "false
+   FAILIFNOTFALSE   [EOFP]
 
    SIMPLEREPORTTEST [READLIST] [Good Bye]
    SIMPLEREPORTTEST [READPOS] 17
-   SIMPLEREPORTTEST [EOFP] "true
+   FAILIFNOTTRUE    [EOFP]
 
    SETREAD []
    SIMPLEREPORTTEST [READER] []
@@ -104,15 +104,15 @@ TO FILETEST.ALLOPEN
    TRACEINSTRUCTION [OPENWRITE :filename2]
 
    ; make sure that ALLOPEN returns both open files
-   SIMPLEREPORTTEST [ MEMBERP :filename1 ALLOPEN ] "TRUE
-   SIMPLEREPORTTEST [ MEMBERP :filename2 ALLOPEN ] "TRUE
+   FAILIFNOTTRUE [ MEMBERP :filename1 ALLOPEN ]
+   FAILIFNOTTRUE [ MEMBERP :filename2 ALLOPEN ]
 
    TRACEINSTRUCTION [CLOSE :filename1]
    TRACEINSTRUCTION [CLOSE :filename2]
 
    ; make sure that ALLOPEN returns neither file
-   SIMPLEREPORTTEST [ MEMBERP :filename1 ALLOPEN ] "FALSE
-   SIMPLEREPORTTEST [ MEMBERP :filename2 ALLOPEN ] "FALSE
+   FAILIFNOTFALSE [ MEMBERP :filename1 ALLOPEN ]
+   FAILIFNOTFALSE [ MEMBERP :filename2 ALLOPEN ]
 
    ; cleanup
    ERASEFILE :filename1
@@ -130,14 +130,14 @@ TO FILETEST.CLOSEALL
    TRACEINSTRUCTION [OPENWRITE :filename2]
 
    ; make sure that ALLOPEN returns both open files
-   SIMPLEREPORTTEST [ MEMBERP :filename1 ALLOPEN ] "TRUE
-   SIMPLEREPORTTEST [ MEMBERP :filename2 ALLOPEN ] "TRUE
+   FAILIFNOTTRUE [ MEMBERP :filename1 ALLOPEN ]
+   FAILIFNOTTRUE [ MEMBERP :filename2 ALLOPEN ]
 
    TRACEINSTRUCTION [CLOSEALL]
 
    ; make sure that ALLOPEN returns neither file
-   SIMPLEREPORTTEST [ MEMBERP :filename1 ALLOPEN ] "FALSE
-   SIMPLEREPORTTEST [ MEMBERP :filename2 ALLOPEN ] "FALSE
+   FAILIFNOTFALSE [ MEMBERP :filename1 ALLOPEN ]
+   FAILIFNOTFALSE [ MEMBERP :filename2 ALLOPEN ]
 
    ERASEFILE :filename2
    ERASEFILE :filename1
@@ -252,10 +252,10 @@ TO FILETEST.BADINPUT
    RUNNOTENOUGHINPUTSTEST [(OPENUPDATE)]
 
    ; too many inputs
-   RUNTOOMANYINPUTSTEST [(OPENREAD   "testfile.txt "true "toomany)]
-   RUNTOOMANYINPUTSTEST [(OPENWRITE  "testfile.txt "true "toomany)]
-   RUNTOOMANYINPUTSTEST [(OPENAPPEND "testfile.txt "true "toomany)]
-   RUNTOOMANYINPUTSTEST [(OPENUPDATE "testfile.txt "true "toomany)]
+   RUNTOOMANYINPUTSTEST [(OPENREAD   "testfile.txt LOCALETRUE "toomany)]
+   RUNTOOMANYINPUTSTEST [(OPENWRITE  "testfile.txt LOCALETRUE "toomany)]
+   RUNTOOMANYINPUTSTEST [(OPENAPPEND "testfile.txt LOCALETRUE "toomany)]
+   RUNTOOMANYINPUTSTEST [(OPENUPDATE "testfile.txt LOCALETRUE "toomany)]
 
    ; empty list is bad input
    RUNFILESYSTEMERRORTEST [OPENREAD   []]
@@ -317,10 +317,10 @@ TO FILETEST.ERASEFILE
    ; try to erase a file that does exist
    OPENWRITE "mytestfile
    ERASEFILE "mytestfile
-   SIMPLEREPORTTEST [MEMBERP "mytestfile FILES] "true
+   FAILIFNOTTRUE [MEMBERP "mytestfile FILES]
    CLOSE     "mytestfile
    ERASEFILE "mytestfile
-   SIMPLEREPORTTEST [MEMBERP "mytestfile FILES] "false
+   FAILIFNOTFALSE [MEMBERP "mytestfile FILES]
 
    ; erase a device (should fail silently)
    ERASEFILE "NUL
@@ -329,7 +329,7 @@ TO FILETEST.ERASEFILE
    MKDIR "mytestdir
    POPDIR
    ERASEFILE "mytestdir
-   SIMPLEREPORTTEST [MEMBERP "mytestdir DIRECTORIES] "true
+   FAILIFNOTTRUE [MEMBERP "mytestdir DIRECTORIES]
    RMDIR     "mytestdir
 
    ; erase a long file name to overflow an internal buffer
@@ -357,7 +357,7 @@ TO FILETEST.OPENOPENFILE
    CLOSE     "mytestfile
 
    ERASEFILE "mytestfile
-   SIMPLEREPORTTEST [MEMBERP "mytestfile FILES] "false
+   FAILIFNOTFALSE [MEMBERP "mytestfile FILES]
 
 END
 
@@ -373,7 +373,7 @@ TO FILETEST.OPENDIRECTORYASFILE
    RUNFILESYSTEMERRORTEST [OPENUPDATE "testdir]
 
    RMDIR "testdir
-   SIMPLEREPORTTEST [MEMBERP "mytestfile DIRECTORIES] "false
+   FAILIFNOTFALSE [MEMBERP "mytestfile DIRECTORIES]
 END
 
 
@@ -454,8 +454,8 @@ TO FILETEST.EOFPONSTDIN
     TRACEINSTRUCTION [ SETREAD [] ]
 
     ; EOFP should return false
-    SIMPLEREPORTTEST [ EOFP ] "false
-    SIMPLEREPORTTEST [ EOF? ] "false
+    FAILIFNOTFALSE [ EOFP ]
+    FAILIFNOTFALSE [ EOF? ]
 
     ; restore the original reader
     SETREAD :oldreader
