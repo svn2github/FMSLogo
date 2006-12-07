@@ -11,13 +11,13 @@ END
 TO SORTTEST.ONEINPUTPROC :a
   ; A predicate that takes one input.
   ; This is bad input for SORT
-  OUTPUT "true
+  OUTPUT LOCALETRUE
 END
 
 TO SORTTEST.THREEINPUTPROC :a :b :c
   ; A predicate that takes one input.
   ; This is bad input for SORT
-  OUTPUT "true
+  OUTPUT LOCALETRUE
 END
 
 TO SORTTEST.ONEINPUTBYDEFAULT :a [:b 0]
@@ -84,7 +84,7 @@ TO SORTTEST.REGRESSION
   ;
   local [sortedarray]
   TRACEINSTRUCTION [make "sortedarray SORT {3 2 1 1 2 3 3 2 1}]
-  SIMPLEREPORTTEST [ARRAY? :sortedarray] "true
+  FAILIFNOTTRUE    [ARRAY? :sortedarray]
   SIMPLEREPORTTEST [COUNT  :sortedarray] 9
   SIMPLEREPORTTEST [ITEM 1 :sortedarray] 1
   SIMPLEREPORTTEST [ITEM 2 :sortedarray] 1

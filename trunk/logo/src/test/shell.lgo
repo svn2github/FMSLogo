@@ -2,14 +2,13 @@ LOAD "testlib.lgo
 
 TO SHELLTEST.SMOKETEST
 
-   SIMPLEREPORTTEST [SHELL [perl -v]          ] "true
-   SIMPLEREPORTTEST [SHELL [doesnotexist.exe] ] "false
+   FAILIFNOTTRUE  [SHELL [perl -v]          ]
+   FAILIFNOTFALSE [SHELL [doesnotexist.exe] ]
 
    ; bad input tests that cause SHELL to return "false
-   SIMPLEREPORTTEST [SHELL {1} ] "false
-   SIMPLEREPORTTEST [SHELL 100 ] "false
-
-   SIMPLEREPORTTEST [SHELL 100 ] "false
+   FAILIFNOTFALSE [SHELL {1} ]
+   FAILIFNOTFALSE [SHELL [1] ]
+   FAILIFNOTFALSE [SHELL  1  ]
 
    ; test the "wait" functionality
    LOCAL [instructions executionTime rval]
@@ -17,19 +16,19 @@ TO SHELLTEST.SMOKETEST
    ; wait for a sleep 5
    MAKE "instructions [MAKE "rval (SHELL [perl -e "sleep 5"] "true)]
    MAKE "executionTime TIMECOMMAND :instructions
-   REPORTTEST :rval = "true (LIST :instructions "output :rval ".) "true
+   REPORTTEST :rval = LOCALETRUE (LIST :instructions "output :rval ".) LOCALETRUE
    CHECKEXECUTIONTIME :instructions :executionTime 4000 6000
 
    ; don't wait for a sleep 5
    MAKE "instructions [MAKE "rval  (SHELL [perl -e "sleep 5"] "false)]
    MAKE "executionTime TIMECOMMAND :instructions
-   REPORTTEST :rval = "true (LIST :instructions "output :rval ".) "true
+   REPORTTEST :rval = LOCALETRUE (LIST :instructions "output :rval ".) LOCALETRUE
    CHECKEXECUTIONTIME :instructions :executionTime 0 500
 
    ; verify that the default behavior is to not wait
    MAKE "instructions [MAKE "rval SHELL [perl -e "sleep 5"]]
    MAKE "executionTime TIMECOMMAND :instructions
-   REPORTTEST :rval = "true (LIST :instructions "output :rval ".) "true
+   REPORTTEST :rval = LOCALETRUE (LIST :instructions "output :rval ".) LOCALETRUE
    CHECKEXECUTIONTIME :instructions :executionTime 0 500
 
 END
@@ -38,7 +37,7 @@ TO SHELLTEST.BADINPUT
 
    ; bad number of inputs
    RUNNOTENOUGHINPUTSTEST [(SHELL)]
-   RUNTOOMANYINPUTSTEST   [(SHELL [perl -v] "false "toomany)]
+   RUNTOOMANYINPUTSTEST   [(SHELL [perl -v] LOCALEFALSE "toomany)]
 
    ; bad inputs
    RUNBADINPUTTEST [IGNORE (SHELL [perl -v] 1)]
@@ -66,7 +65,7 @@ TO SHELLTEST.WAITYIELDS
    ; Create a SHELL command that takes about 10 seconds to run.
    ; The timer event should cancel our wait after about 5 seconds.
    ; Then the shell command should exit on its own.
-   LOCALMAKE "instructions [IGNORE (SHELL [perl -e "sleep 10"] "true)]
+   LOCALMAKE "instructions [IGNORE (SHELL [perl -e "sleep 10"] LOCALETRUE)]
    LOCALMAKE "executionTime TIMECOMMAND (LIST "RUNEXPECTERRORTEST :instructions 16)
    CHECKEXECUTIONTIME :instructions :executionTime 0 6000
 
