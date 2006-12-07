@@ -54,7 +54,7 @@ TO SETLABELFONTTEST
 
 
   ; verify that the LABELFONT was set as expected
-  SIMPLEREPORTTEST [ LIST? LABELFONT ] "true
+  FAILIFNOTTRUE    [ LIST? LABELFONT ]
   SIMPLEREPORTTEST [ COUNT LABELFONT ] 13
   SIMPLEREPORTTEST [ITEM  1 LABELFONT] [Arial]
   SIMPLEREPORTTEST [ITEM  2 LABELFONT] 24
@@ -104,7 +104,7 @@ TO SETLABELFONTTEST
   CATCH "ERROR :used
   IGNORE ERROR
   REPORTTESTINFO [Now comparing the original instruction to the one that was used]
-  SIMPLEREPORTTEST (LIST :original "= :used) "true
+  FAILIFNOTTRUE (LIST :original "= :used)
 
 END
 
