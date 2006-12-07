@@ -38,8 +38,8 @@ TO WINDOWSTEST.SETUP :toplevelwindow
   RADIOBUTTONCREATE :toplevelwindow "radiogroupbox "radiooptionb [Choice B] :xpos + 10 :ypos 60 20
   make "ypos :ypos + 20
 
-  RADIOBUTTONSET "radiooptiona "true
-  RADIOBUTTONSET "radiooptionb "false
+  RADIOBUTTONSET "radiooptiona "true  ; "true should be okay in all locales
+  RADIOBUTTONSET "radiooptionb "false ; "false should be okay in all locales
   make "ypos :ypos + 10
 
   ; create a group box for some checkboxes
@@ -113,9 +113,10 @@ TO WINDOWSTEST.WINDOW.BADINPUT
   ; bad input for WINDOWENABLE
   ;
   RUNNOTENOUGHINPUTSTEST [ (windowenable "goodwindow) ]
-  RUNTOOMANYINPUTSTEST   [ (windowenable "goodwindow "true "toomany) ]
+  RUNTOOMANYINPUTSTEST   [ (windowenable "goodwindow LOCALETRUE "toomany) ]
 
-  RUNBADINPUTTEST  [ windowenable "nonexistent "true  ]
+  RUNBADINPUTTEST  [ windowenable "nonexistent LOCALETRUE ]
+
   RUNBADINPUTTEST  [ windowenable "goodwindow  1      ]
   RUNBADINPUTTEST  [ windowenable "goodwindow  [true] ]
   RUNBADINPUTTEST  [ windowenable "goodwindow  {true} ]
@@ -154,10 +155,11 @@ TO WINDOWSTEST.DIALOG.BADINPUT.FROMCALLBACK
   ; bad input for DIALOGENABLE
   ;
   RUNNOTENOUGHINPUTSTEST [ (dialogenable "gooddialog) ]
-  RUNTOOMANYINPUTSTEST   [ (dialogenable "gooddialog "true "toomany) ]
+  RUNTOOMANYINPUTSTEST   [ (dialogenable "gooddialog LOCALETRUE "toomany) ]
 
-  RUNBADINPUTTEST  [ dialogenable "nonexistent "true  ]
-  RUNBADINPUTTEST  [ dialogenable "notadialog  "true  ]
+  RUNBADINPUTTEST  [ dialogenable "nonexistent LOCALETRUE ]
+  RUNBADINPUTTEST  [ dialogenable "notadialog  LOCALETRUE ]
+
   RUNBADINPUTTEST  [ dialogenable "gooddialog  1      ]
   RUNBADINPUTTEST  [ dialogenable "gooddialog  [true] ]
   RUNBADINPUTTEST  [ dialogenable "gooddialog  {true} ]
@@ -297,9 +299,9 @@ END
 
 TO WINDOWSTEST.LISTBOX
 
-  TRACEINSTRUCTION [ WINDOWCREATE "main "windowstest.listbox "mytitle 0 0 100 100 []      ]
+  TRACEINSTRUCTION [ WINDOWCREATE "main "windowstest.listbox "mytitle 0 0 100 100 [] ]
 
-  TRACEINSTRUCTION [ LISTBOXCREATE "windowstest.listbox "testlist 5 5 90 90               ]
+  TRACEINSTRUCTION [ LISTBOXCREATE "windowstest.listbox "testlist 5 5 90 90 ]
 
   ; get a string when none is select.
   SIMPLEREPORTTEST [ LISTBOXGETSELECT "testlist ] []
@@ -322,6 +324,8 @@ TO WINDOWSTEST.LISTBOX
     LISTBOXADDSTRING "testlist word "option repcount
   ]
 
+  ; "true and "false should be valid input in all locales
+  TRACEINSTRUCTION [ LISTBOXENABLE "testlist "false ]
   TRACEINSTRUCTION [ LISTBOXENABLE "testlist "false ]
   TRACEINSTRUCTION [ LISTBOXENABLE "testlist "true  ]
 
@@ -365,10 +369,11 @@ TO WINDOWSTEST.LISTBOX.BADINPUT
   ; bad input for LISTBOXENABLE
   ;
   RUNNOTENOUGHINPUTSTEST [ (listboxenable "goodlistbox) ]
-  RUNTOOMANYINPUTSTEST   [ (listboxenable "goodlistbox "true "toomany) ]
+  RUNTOOMANYINPUTSTEST   [ (listboxenable "goodlistbox LOCALETRUE "toomany) ]
 
-  RUNBADINPUTTEST  [ listboxenable "doesnotexist "true  ]
-  RUNBADINPUTTEST  [ listboxenable "notalistbox  "true  ]
+  RUNBADINPUTTEST  [ listboxenable "doesnotexist LOCALETRUE ]
+  RUNBADINPUTTEST  [ listboxenable "notalistbox  LOCALETRUE ]
+
   RUNBADINPUTTEST  [ listboxenable "goodlistbox  1      ]
   RUNBADINPUTTEST  [ listboxenable "goodlistbox  [true] ]
   RUNBADINPUTTEST  [ listboxenable "goodlistbox  {true} ]
@@ -464,6 +469,8 @@ TO WINDOWSTEST.COMBOBOX
     COMBOBOXADDSTRING "combobox REPCOUNT
   ]
 
+  ; "true and "false should be valid input in all locales
+  TRACEINSTRUCTION [ COMBOBOXENABLE "combobox "false ]
   TRACEINSTRUCTION [ COMBOBOXENABLE "combobox "false ]
   TRACEINSTRUCTION [ COMBOBOXENABLE "combobox "true  ]
 
@@ -506,13 +513,14 @@ TO WINDOWSTEST.COMBOBOX.BADINPUT
   ; bad input for COMBOBOXENABLE
   ;
   RUNNOTENOUGHINPUTSTEST [ (comboboxenable "goodcombobox) ]
-  RUNTOOMANYINPUTSTEST   [ (comboboxenable "goodcombobox "true "toomany) ]
+  RUNTOOMANYINPUTSTEST   [ (comboboxenable "goodcombobox LOCALETRUE "toomany) ]
 
-  RUNBADINPUTTEST  [ comboboxenable "doesnotexist "true  ]
-  RUNBADINPUTTEST  [ comboboxenable "notacombobox  "true  ]
-  RUNBADINPUTTEST  [ comboboxenable "goodcombobox  1      ]
-  RUNBADINPUTTEST  [ comboboxenable "goodcombobox  [true] ]
-  RUNBADINPUTTEST  [ comboboxenable "goodcombobox  {true} ]
+  RUNBADINPUTTEST  [ comboboxenable "doesnotexist LOCALETRUE ]
+  RUNBADINPUTTEST  [ comboboxenable "notacombobox LOCALETRUE ]
+
+  RUNBADINPUTTEST  [ comboboxenable "goodcombobox 1      ]
+  RUNBADINPUTTEST  [ comboboxenable "goodcombobox [true] ]
+  RUNBADINPUTTEST  [ comboboxenable "goodcombobox {true} ]
 
 
   ;
@@ -521,7 +529,7 @@ TO WINDOWSTEST.COMBOBOX.BADINPUT
   RUNNOTENOUGHINPUTSTEST [ (comboboxaddstring) ]
   RUNTOOMANYINPUTSTEST   [ (comboboxaddstring "goodcombobox "item "toomany) ]
 
-  RUNBADINPUTTEST [ comboboxaddstring "nonexistent "item ]
+  RUNBADINPUTTEST [ comboboxaddstring "nonexistent  "item ]
   RUNBADINPUTTEST [ comboboxaddstring "notacombobox "item ]
 
 
@@ -642,18 +650,21 @@ TO WINDOWSTEST.RADIOBUTTON
   RADIOBUTTONCREATE "windowstest.radiobutton "mygroupbox "radio1 [Radio #1] 20 15 60 20
   RADIOBUTTONCREATE "windowstest.radiobutton "mygroupbox "radio2 [Radio #2] 20 35 60 20
 
+
+  ; "true and "false should be valid input in all locales
   RADIOBUTTONSET "radio1 "true
   RADIOBUTTONSET "radio2 "false
 
-  SIMPLEREPORTTEST [ RADIOBUTTONGET "radio1 ] "true
-  SIMPLEREPORTTEST [ RADIOBUTTONGET "radio2 ] "false
+  FAILIFNOTTRUE  [ RADIOBUTTONGET "radio1 ]
+  FAILIFNOTFALSE [ RADIOBUTTONGET "radio2 ]
 
   TRACEINSTRUCTION [ RADIOBUTTONSET "radio1 "false ]
-  SIMPLEREPORTTEST [ RADIOBUTTONGET "radio1 ] "false
+  FAILIFNOTFALSE   [ RADIOBUTTONGET "radio1 ]
 
   TRACEINSTRUCTION [ RADIOBUTTONSET "radio2 "true  ]
-  SIMPLEREPORTTEST [ RADIOBUTTONGET "radio2 ] "true
+  FAILIFNOTTRUE    [ RADIOBUTTONGET "radio2 ]
 
+  TRACEINSTRUCTION [ RADIOBUTTONENABLE "radio1 "false ]
   TRACEINSTRUCTION [ RADIOBUTTONENABLE "radio1 "false ]
   TRACEINSTRUCTION [ RADIOBUTTONENABLE "radio1 "true ]
 
@@ -674,21 +685,21 @@ TO WINDOWSTEST.RADIOBUTTON.BADINPUT
   RUNNOTENOUGHINPUTSTEST [(radiobuttoncreate "main "groupbox "name "label 0 0 10)]
   RUNTOOMANYINPUTSTEST   [(radiobuttoncreate "main "groupbox "name "label 0 0 10 80 "toomany)]
 
-  RUNBADINPUTTEST  [radiobuttoncreate "main "notfound "name01 "label [10]  10   80   20   ]
-  RUNBADINPUTTEST  [radiobuttoncreate "main "groupbox "name10 "label [10]  10   80   20   ]
-  RUNBADINPUTTEST  [radiobuttoncreate "main "groupbox "name20 "label {10}  10   80   20   ]
-  RUNBADINPUTTEST  [radiobuttoncreate "main "groupbox "name25 "label 10.5  10   80   20   ]
-  RUNBADINPUTTEST  [radiobuttoncreate "main "groupbox "name30 "label  10   [10] 80   20   ]
-  RUNBADINPUTTEST  [radiobuttoncreate "main "groupbox "name40 "label  10   {10} 80   20   ]
-  RUNBADINPUTTEST  [radiobuttoncreate "main "groupbox "name45 "label  10  10.5  80   20   ]
-  RUNBADINPUTTEST  [radiobuttoncreate "main "groupbox "name50 "label  10   10  [80]  20   ]
-  RUNBADINPUTTEST  [radiobuttoncreate "main "groupbox "name60 "label  10   10  {80}  20   ]
-  RUNBADINPUTTEST  [radiobuttoncreate "main "groupbox "name70 "label  10   10  -80   20   ]
-  RUNBADINPUTTEST  [radiobuttoncreate "main "groupbox "name75 "label  10   10   8.5  20   ]
-  RUNBADINPUTTEST  [radiobuttoncreate "main "groupbox "name80 "label  10   10   80  [20]  ]
-  RUNBADINPUTTEST  [radiobuttoncreate "main "groupbox "name90 "label  10   10   80  {20}  ]
-  RUNBADINPUTTEST  [radiobuttoncreate "main "groupbox "name00 "label  10   10   80  -20   ]
-  RUNBADINPUTTEST  [radiobuttoncreate "main "groupbox "name05 "label  10   10   80  20.5  ]
+  RUNBADINPUTTEST  [radiobuttoncreate "main "notfound "name01 "label [10]  10   80   20  ]
+  RUNBADINPUTTEST  [radiobuttoncreate "main "groupbox "name10 "label [10]  10   80   20  ]
+  RUNBADINPUTTEST  [radiobuttoncreate "main "groupbox "name20 "label {10}  10   80   20  ]
+  RUNBADINPUTTEST  [radiobuttoncreate "main "groupbox "name25 "label 10.5  10   80   20  ]
+  RUNBADINPUTTEST  [radiobuttoncreate "main "groupbox "name30 "label  10   [10] 80   20  ]
+  RUNBADINPUTTEST  [radiobuttoncreate "main "groupbox "name40 "label  10   {10} 80   20  ]
+  RUNBADINPUTTEST  [radiobuttoncreate "main "groupbox "name45 "label  10  10.5  80   20  ]
+  RUNBADINPUTTEST  [radiobuttoncreate "main "groupbox "name50 "label  10   10  [80]  20  ]
+  RUNBADINPUTTEST  [radiobuttoncreate "main "groupbox "name60 "label  10   10  {80}  20  ]
+  RUNBADINPUTTEST  [radiobuttoncreate "main "groupbox "name70 "label  10   10  -80   20  ]
+  RUNBADINPUTTEST  [radiobuttoncreate "main "groupbox "name75 "label  10   10   8.5  20  ]
+  RUNBADINPUTTEST  [radiobuttoncreate "main "groupbox "name80 "label  10   10   80  [20] ]
+  RUNBADINPUTTEST  [radiobuttoncreate "main "groupbox "name90 "label  10   10   80  {20} ]
+  RUNBADINPUTTEST  [radiobuttoncreate "main "groupbox "name00 "label  10   10   80  -20  ]
+  RUNBADINPUTTEST  [radiobuttoncreate "main "groupbox "name05 "label  10   10   80  20.5 ]
 
   ; already exists
   TRACEINSTRUCTION [ radiobuttoncreate "main "groupbox "goodradiobutton "label 10 10 80 20 ]
@@ -701,10 +712,10 @@ TO WINDOWSTEST.RADIOBUTTON.BADINPUT
   ; bad input for RADIOBUTTONENABLE
   ;
   RUNNOTENOUGHINPUTSTEST [ (radiobuttonenable "goodradiobutton) ]
-  RUNTOOMANYINPUTSTEST   [ (radiobuttonenable "goodradiobutton "true "toomany) ]
+  RUNTOOMANYINPUTSTEST   [ (radiobuttonenable "goodradiobutton LOCALETRUE "toomany) ]
 
-  RUNBADINPUTTEST  [ radiobuttonenable "doesnotexist     "true  ]
-  RUNBADINPUTTEST  [ radiobuttonenable "notaradiobutton  "true  ]
+  RUNBADINPUTTEST  [ radiobuttonenable "doesnotexist     LOCALETRUE  ]
+  RUNBADINPUTTEST  [ radiobuttonenable "notaradiobutton  LOCALETRUE  ]
 
   RUNBADINPUTTEST  [ radiobuttonenable "goodradiobutton  1      ]
   RUNBADINPUTTEST  [ radiobuttonenable "goodradiobutton  [true] ]
@@ -731,17 +742,17 @@ TO WINDOWSTEST.RADIOBUTTON.BADINPUT
   TRACEINSTRUCTION [ radiobuttonset "goodradiobutton "false ]
 
   RUNNOTENOUGHINPUTSTEST [ (radiobuttonset "goodradiobutton) ]
-  RUNTOOMANYINPUTSTEST   [ (radiobuttonset "goodradiobutton "true "toomany) ]
+  RUNTOOMANYINPUTSTEST   [ (radiobuttonset "goodradiobutton LOCALETRUE "toomany) ]
 
-  RUNBADINPUTTEST [ radiobuttonset "doesnotexist     "true ]
-  RUNBADINPUTTEST [ radiobuttonset "notaradiobutton  "true ]
+  RUNBADINPUTTEST [ radiobuttonset "doesnotexist     LOCALETRUE ]
+  RUNBADINPUTTEST [ radiobuttonset "notaradiobutton  LOCALETRUE ]
 
   RUNBADINPUTTEST [ radiobuttonset "goodradiobutton  1      ]
   RUNBADINPUTTEST [ radiobuttonset "goodradiobutton  [true] ]
   RUNBADINPUTTEST [ radiobuttonset "goodradiobutton  {true} ]
 
   ; The radio button should still be unchecked
-  SIMPLEREPORTTEST [ radiobuttonget "goodradiobutton ] "false
+  FAILIFNOTFALSE [ radiobuttonget "goodradiobutton ]
 
 
   ;
@@ -773,8 +784,9 @@ TO WINDOWSTEST.RADIOBUTTON.DELETEGROUPBOX
 
   ; manipulate the radio buttons
   TRACEINSTRUCTION [ RADIOBUTTONSET "radio "false ]
-  SIMPLEREPORTTEST [ RADIOBUTTONGET "radio ] "false
+  FAILIFNOTFALSE   [ RADIOBUTTONGET "radio ]
 
+  TRACEINSTRUCTION [ RADIOBUTTONENABLE "radio "false ]
   TRACEINSTRUCTION [ RADIOBUTTONENABLE "radio "false ]
   TRACEINSTRUCTION [ RADIOBUTTONENABLE "radio "true  ]
 
@@ -794,15 +806,16 @@ TO WINDOWSTEST.CHECKBOX
   TRACEINSTRUCTION [ CHECKBOXSET "checkbox1 "true  ]
   TRACEINSTRUCTION [ CHECKBOXSET "checkbox2 "false ]
 
-  SIMPLEREPORTTEST [ CHECKBOXGET "checkbox1 ] "true
-  SIMPLEREPORTTEST [ CHECKBOXGET "checkbox2 ] "false
+  FAILIFNOTTRUE  [ CHECKBOXGET "checkbox1 ]
+  FAILIFNOTFALSE [ CHECKBOXGET "checkbox2 ]
 
   TRACEINSTRUCTION [ CHECKBOXSET "checkbox1 "false ]
-  SIMPLEREPORTTEST [ CHECKBOXGET "checkbox1 ] "false
-  SIMPLEREPORTTEST [ CHECKBOXGET "checkbox2 ] "false
+  FAILIFNOTFALSE   [ CHECKBOXGET "checkbox1 ]
+  FAILIFNOTFALSE   [ CHECKBOXGET "checkbox2 ]
 
   TRACEINSTRUCTION [ CHECKBOXENABLE "checkbox1 "false ]
-  TRACEINSTRUCTION [ CHECKBOXENABLE "checkbox1 "true ]
+  TRACEINSTRUCTION [ CHECKBOXENABLE "checkbox1 "false ]
+  TRACEINSTRUCTION [ CHECKBOXENABLE "checkbox1 "true  ]
 
   TRACEINSTRUCTION [ CHECKBOXDELETE "checkbox1 ]
   TRACEINSTRUCTION [ CHECKBOXDELETE "checkbox2 ]
@@ -848,10 +861,10 @@ TO WINDOWSTEST.CHECKBOX.BADINPUT
   ; bad input for CHECKBOXENABLE
   ;
   RUNNOTENOUGHINPUTSTEST [ (checkboxenable "goodcheckbox) ]
-  RUNTOOMANYINPUTSTEST   [ (checkboxenable "goodcheckbox "true "toomany) ]
+  RUNTOOMANYINPUTSTEST   [ (checkboxenable "goodcheckbox LOCALETRUE "toomany) ]
 
-  RUNBADINPUTTEST  [ checkboxenable "doesnotexist  "true  ]
-  RUNBADINPUTTEST  [ checkboxenable "notacheckbox  "true  ]
+  RUNBADINPUTTEST  [ checkboxenable "doesnotexist  LOCALETRUE ]
+  RUNBADINPUTTEST  [ checkboxenable "notacheckbox  LOCALETRUE ]
 
   RUNBADINPUTTEST  [ checkboxenable "goodcheckbox  1      ]
   RUNBADINPUTTEST  [ checkboxenable "goodcheckbox  [true] ]
@@ -872,22 +885,22 @@ TO WINDOWSTEST.CHECKBOX.BADINPUT
   ; bad input for CHECKBOXSET
   ;
   RUNNOTENOUGHINPUTSTEST [ (checkboxset "goodcheckbox) ]
-  RUNTOOMANYINPUTSTEST   [ (checkboxset "goodcheckbox "true "toomany) ]
+  RUNTOOMANYINPUTSTEST   [ (checkboxset "goodcheckbox LOCALETRUE "toomany) ]
 
   ; Set the checkbox to false so we can detect if CHECKBOXSET 
   ; has side-effects on bad input.
   ; (This is a regression test for bug #1504189)
   TRACEINSTRUCTION [ checkboxset "goodcheckbox "false ]
 
-  RUNBADINPUTTEST [ checkboxset "doesnotexist  "true ]
-  RUNBADINPUTTEST [ checkboxset "notacheckbox  "true ]
+  RUNBADINPUTTEST [ checkboxset "doesnotexist  LOCALETRUE ]
+  RUNBADINPUTTEST [ checkboxset "notacheckbox  LOCALETRUE ]
 
   RUNBADINPUTTEST [ checkboxset "goodcheckbox  1      ]
   RUNBADINPUTTEST [ checkboxset "goodcheckbox  [true] ]
   RUNBADINPUTTEST [ checkboxset "goodcheckbox  {true} ]
 
   ; The checkbox should still be unchecked
-  SIMPLEREPORTTEST [ checkboxget "goodcheckbox ] "false
+  FAILIFNOTFALSE [ checkboxget "goodcheckbox ]
 
 
   ;
@@ -920,8 +933,9 @@ TO WINDOWSTEST.CHECKBOX.DELETEGROUPBOX
 
   ; manipulate the checkbox buttons
   TRACEINSTRUCTION [ CHECKBOXSET "checkbox "false ]
-  SIMPLEREPORTTEST [ CHECKBOXGET "checkbox ] "false
+  FAILIFNOTFALSE   [ CHECKBOXGET "checkbox ]
 
+  TRACEINSTRUCTION [ CHECKBOXENABLE "checkbox "false ]
   TRACEINSTRUCTION [ CHECKBOXENABLE "checkbox "false ]
   TRACEINSTRUCTION [ CHECKBOXENABLE "checkbox "true  ]
 
@@ -1003,10 +1017,11 @@ TO WINDOWSTEST.SCROLLBAR.BADINPUT
   ; bad input for SCROLLBARENABLE
   ;
   RUNNOTENOUGHINPUTSTEST [ (scrollbarenable "goodscrollbar) ]
-  RUNTOOMANYINPUTSTEST   [ (scrollbarenable "goodscrollbar "true "toomany) ]
+  RUNTOOMANYINPUTSTEST   [ (scrollbarenable "goodscrollbar LOCALETRUE "toomany) ]
 
-  RUNBADINPUTTEST [ scrollbarenable "doesnotexist  "true  ]
-  RUNBADINPUTTEST [ scrollbarenable "notascrollbar "true  ]
+  RUNBADINPUTTEST [ scrollbarenable "doesnotexist  LOCALETRUE ]
+  RUNBADINPUTTEST [ scrollbarenable "notascrollbar LOCALETRUE ]
+
   RUNBADINPUTTEST [ scrollbarenable "goodscrollbar 1      ]
   RUNBADINPUTTEST [ scrollbarenable "goodscrollbar [true] ]
   RUNBADINPUTTEST [ scrollbarenable "goodscrollbar {true} ]
@@ -1124,8 +1139,9 @@ TO WINDOWSTEST.BUTTON.BADINPUT
   RUNNOTENOUGHINPUTSTEST [ (buttonenable "goodbutton) ]
   RUNTOOMANYINPUTSTEST   [ (buttonenable "goodbutton "true "toomany) ]
 
-  RUNBADINPUTTEST [ buttonenable "doesnotexist  "true  ]
-  RUNBADINPUTTEST [ buttonenable "notabutton    "true  ]
+  RUNBADINPUTTEST [ buttonenable "doesnotexist  LOCALETRUE ]
+  RUNBADINPUTTEST [ buttonenable "notabutton    LOCALETRUE ]
+
   RUNBADINPUTTEST [ buttonenable "goodbutton    1      ]
   RUNBADINPUTTEST [ buttonenable "goodbutton    [true] ]
   RUNBADINPUTTEST [ buttonenable "goodbutton    {true} ]

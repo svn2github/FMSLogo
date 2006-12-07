@@ -47,14 +47,14 @@ TO SLOWDRAWTEST.REDEFPTEST
    RUNHASNOVALUETEST [ :redefp ]
 
    ; call SLOWDRAW while redefp is false
-   TRACEINSTRUCTION [ MAKE "redefp "false ]
+   TRACEINSTRUCTION [ MAKE "redefp LOCALEFALSE ]
    TRACEINSTRUCTION [ SLOWDRAW 100 ]
-   SIMPLEREPORTTEST [ :redefp ] "false
+   FAILIFNOTFALSE   [ :redefp ]
 
    ; call SLOWDRAW while redefp is true
-   TRACEINSTRUCTION [ MAKE "redefp "true ]
+   TRACEINSTRUCTION [ MAKE "redefp LOCALETRUE ]
    TRACEINSTRUCTION [ SLOWDRAW 100 ]
-   SIMPLEREPORTTEST [ :redefp ] "true
+   FAILIFNOTTRUE    [ :redefp ]
 
    ; restore the original movement commands
    SLOWDRAW 0
