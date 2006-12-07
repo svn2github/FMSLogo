@@ -36,38 +36,38 @@ TO PLISTTEST
    REPEAT 7 [
      LOCALMAKE "name  POP "listcontents
      LOCALMAKE "value POP "listcontents
-     LOCALMAKE "found "false
+     LOCALMAKE "found 0
    
      IF :name = "property1 [
         SIMPLEREPORTTEST [ :value ] "one
-        MAKE "found "true
+        MAKE "found 1
      ]
      IF :name = "property2 [
         SIMPLEREPORTTEST [ :value ] "abc
-        MAKE "found "true
+        MAKE "found 1
      ]
      IF :name = "property3 [
         SIMPLEREPORTTEST [ :value ] [a b c]
-        MAKE "found "true
+        MAKE "found 1
      ]
      IF :name = "property4 [
         SIMPLEREPORTTEST [ :value ] :myarray
-        MAKE "found "true
+        MAKE "found 1
      ]
      IF :name = "property5 [
         SIMPLEREPORTTEST [ :value ] []
-        MAKE "found "true
+        MAKE "found 1
      ]
      IF :name = "property6 [
         SIMPLEREPORTTEST [ :value ] "||
-        MAKE "found "true
+        MAKE "found 1
      ]
      IF :name = "|| [
         SIMPLEREPORTTEST [ :value ] "empty
-        MAKE "found "true
+        MAKE "found 1
      ]
 
-     IF NOT :found [ 
+     IF :found=0 [ 
         REPORTTESTFAILED (list "|Unrecognized property in plist:| :name) 
      ]
    ]
@@ -78,7 +78,7 @@ TO PLISTTEST
    SIMPLEREPORTTEST [ COUNT  :plistsoutput ] 3
    SIMPLEREPORTTEST [ ITEM 1 :plistsoutput ] []
    SIMPLEREPORTTEST [ ITEM 2 :plistsoutput ] []
-   SIMPLEREPORTTEST [ MEMBERP "testplist1 ITEM 3 :plistsoutput ] "true
+   FAILIFNOTTRUE    [ MEMBERP "testplist1 ITEM 3 :plistsoutput ]
 
    ; remove all properties from the plist
    REMPROP "testplist1 "property1
@@ -95,7 +95,7 @@ TO PLISTTEST
    SIMPLEREPORTTEST [ COUNT  :plistsoutput ] 3
    SIMPLEREPORTTEST [ ITEM 1 :plistsoutput ] []
    SIMPLEREPORTTEST [ ITEM 2 :plistsoutput ] []
-   SIMPLEREPORTTEST [ MEMBERP "testplist1 ITEM 3 :plistsoutput ] "false
+   FAILIFNOTFALSE   [ MEMBERP "testplist1 ITEM 3 :plistsoutput ]
 
    SIMPLEREPORTTEST [ GPROP "testplist1  "property1 ] []
    SIMPLEREPORTTEST [ GPROP "testplist1  "property2 ] []
