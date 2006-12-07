@@ -37,8 +37,8 @@ PASS: [DIFFICULTCOMMENTS1] output 1 , as expected.
 PASS: [DIFFICULTCOMMENTS2] output 2 , as expected.
 PASS: [LINECONTINUATION3] output 3 , as expected.
 PASS: [TILDAINLINE] output 4 , as expected.
-PASS: [:~IGNOREMEWASCALLED] output false , as expected.
-PASS: [:~CALLMEWASCALLED] output true , as expected.
+PASS: [:~IGNOREMEWASCALLED] output 0 , as expected.
+PASS: [:~CALLMEWASCALLED] output 1 , as expected.
 PASS: [ITEM 1 [{]] output { , as expected.
 PASS: [ITEM 1 [}]] output } , as expected.
 PASS: [ITEM 1 []]] output ] , as expected.
@@ -487,15 +487,15 @@ PASS: [EQUALP [1 2] [1 2 3]] output false , as expected.
 PASS: [EQUALP [1 2 3] [1 2]] output false , as expected.
 PASS: [EQUALP {1} [1]] output false , as expected.
 PASS: [EQUALP [1] {1}] output false , as expected.
-CALL: MAKE "CASEIGNOREDP "false
+CALL: MAKE "CASEIGNOREDP LOCALEFALSE
 PASS: [EQUALP "true "true] output true , as expected.
 PASS: [EQUALP "false "false] output true , as expected.
 PASS: [EQUALP "true "TRUE] output false , as expected.
 PASS: [EQUALP "false "FALSE] output false , as expected.
-PASS: [EQUALP "HELLO "hello] output false , as expected.
-PASS: [EQUALP "hello "HELLO] output false , as expected.
 PASS: [EQUALP "HELLO "HELLO] output true , as expected.
 PASS: [EQUALP "hello "hello] output true , as expected.
+PASS: [EQUALP "HELLO "hello] output false , as expected.
+PASS: [EQUALP "hello "HELLO] output false , as expected.
 PASS: [EQUALP "ýÝ "Ýý] output true , as expected.
 PASS: [EQUALP "ñÑ "Ññ] output true , as expected.
 PASS: [EQUALP "áÁ "Áá] output true , as expected.
@@ -1360,32 +1360,32 @@ CALL: APPLY [] [1 2 3 4 5]
 INFO: Running invalid instruction: [SHOW ?]
 FAIL: Running [SHOW ?] did not throw an error.
 PASS: [APPLYTEST.APPLYOUTPUT] output 3 , as expected.
-CALL: MAKE "lambda.function.ran "false
-CALL: APPLY [[] MAKE "lambda.function.ran "true] []
-PASS: [:lambda.function.ran] output true , as expected.
-CALL: MAKE "lambda.function.ran "false
-CALL: APPLY [[A] MAKE "lambda.function.ran :A] [true]
-PASS: [:lambda.function.ran] output true , as expected.
+CALL: MAKE "lambda.function.ran 0
+CALL: APPLY [[] MAKE "lambda.function.ran 1] []
+PASS: [:lambda.function.ran] output 1 , as expected.
+CALL: MAKE "lambda.function.ran 0
+CALL: APPLY [[A] MAKE "lambda.function.ran :A] [1]
+PASS: [:lambda.function.ran] output 1 , as expected.
 PASS: [APPLY [[A] SUM 1 :A] [2]] output 3 , as expected.
 PASS: [NAME? "ignored] output true , as expected.
 PASS: [:input] output 6 , as expected.
-PASS: [:input.before] output 5 , as expected.
 PASS: [NAME? "ignored] output false , as expected.
+PASS: [:input.before] output 5 , as expected.
 CALL: APPLY [[] []] []
-CALL: MAKE "lambda.function.ran "false
-CALL: APPLY [[] [MAKE "lambda.function.ran "true]] []
-PASS: [:lambda.function.ran] output true , as expected.
-CALL: MAKE "lambda.function.ran "false
-CALL: APPLY [[A] [MAKE "lambda.function.ran :A]] [true]
-PASS: [:lambda.function.ran] output true , as expected.
-CALL: MAKE "lambda.function.ran "false
-CALL: APPLY [[A] [] [MAKE "lambda.function.ran :A] []] [true]
-PASS: [:lambda.function.ran] output true , as expected.
+CALL: MAKE "lambda.function.ran 0
+CALL: APPLY [[] [MAKE "lambda.function.ran 1]] []
+PASS: [:lambda.function.ran] output 1 , as expected.
+CALL: MAKE "lambda.function.ran 0
+CALL: APPLY [[A] [MAKE "lambda.function.ran :A]] [1]
+PASS: [:lambda.function.ran] output 1 , as expected.
+CALL: MAKE "lambda.function.ran "0
+CALL: APPLY [[A] [] [MAKE "lambda.function.ran :A] []] [1]
+PASS: [:lambda.function.ran] output 1 , as expected.
 PASS: [APPLY [[A] [OUTPUT SUM 1 :A]] [2]] output 3 , as expected.
 PASS: [NAME? "ignored] output true , as expected.
 PASS: [:input] output 6 , as expected.
-PASS: [:input.before] output 5 , as expected.
 PASS: [NAME? "ignored] output false , as expected.
+PASS: [:input.before] output 5 , as expected.
 CALL: MAKE "lambda.function.ran "false
 CALL: APPLY [MAKE "lambda.function.ran "true] []
 PASS: [:lambda.function.ran] output true , as expected.
@@ -3312,10 +3312,10 @@ PASS: [DEFINED? "ECHO] output true , as expected.
 CALL: DEFINE "DONOTHING [[]]
 PASS: [DEFINED? "DONOTHING] output true , as expected.
 CALL: DONOTHING
-CALL: MAKE "linewascalled "false
-CALL: DEFINE "BODYHASEMPTYLINES [[] [] [MAKE "linewascalled "true] []]
+CALL: MAKE "linewascalled 0
+CALL: DEFINE "BODYHASEMPTYLINES [[] [] [MAKE "linewascalled 1] []]
 CALL: BODYHASEMPTYLINES
-PASS: [:linewascalled] output true , as expected.
+PASS: [:linewascalled] output 1 , as expected.
 PASS: [DEFINETEST.REDEFINEDPROC 123] output 123 , as expected.
 INFO: Running invalid instruction: [(DEFINE "BADPROCEDURE)]
 PASS: error code is 6 , as expected.
@@ -3383,7 +3383,7 @@ INFO: error text is not enough inputs to LOCALMAKE .
 INFO: Running invalid instruction: [(CONTENTS "toomany)]
 PASS: error code is 8 , as expected.
 INFO: error text is too much inside ()'s .
-PASS: [PROCEDURES] output [#test .eqtest abstest activeareatest andtest angleiscloseenough applytest applytest.applyoutput applytest.badinput applytest.bug1519088 applytest.lambdatemplate applytest.lambdatemplate.newscopetest applytest.nonprimitive applytest.nooutput applytest.proceduretexttemplate applytest.proceduretexttemplate.newscopetest applytest.questionmarktemplate applytest.smoketest arcbadinputtest arccostest arcsintest arcsmoketest arctantest arctest arraybadinputtest arrayorigintest arrayptest arraysmoketest arraytest asciitest ashifttest.badinput ashifttest.smoketest beforeptest bitandtest.badinput bitandtest.smoketest bitblocktest bitblocktest.badinput bitblocktest.smoketest bitcopytest bitloadsizetest bitmaptest bitnottest.badinput bitnottest.smoketest bitortest.badinput bitortest.smoketest bitpastetoindextest.badinput bitpastetoindextest.smoketest bitwisetest bitxortest.badinput bitxortest.smoketest bodyhasemptylines bug1349374test bug1377856test bug1383281test bug1384267test bug1388325test bug1397560test bug1438863test bug1448155test bug1458661test bug1563318.applysum bug1563318.crash bug1563318.defaultrest bug1563318.oneinput burytest burytest.badinput burytest.buriedprocedure burytest.buryall burytest.procedure burytest.propertylist burytest.variable butfirststest butfirststest.badinput butfirststest.smoketest butfirsttest butlasttest buttonptest catchtest catchtest.badinput catchtest.catchbuiltinerror catchtest.catchusererror catchtest.doublecatcherror catchtest.doublecatcherror.innercatcherror catchtest.doublecatcherror.throwerror catchtest.skiperrortag catchtest.skiperrortag.catcherror catchtest.skiperrortag.throw catchtest.skipthrowtag catchtest.skipthrowtag.catchthrowtag catchtest.skipthrowtag.throwerror catchtest.skipthrowtagwithvalue catchtest.skipthrowtagwithvalue.catchinnertag catchtest.skipthrowtagwithvalue.throwoutertag catchtest.smoketest catchtest.smoketest.throw catchtest.throw.builtin.error chdirtest client.onreadytosend colorindextest colorsetgettest colortest combinetest combinetest.badinput combinetest.smoketest controlflowtest copydef.allow.redefinitions copydefmaybeoutputtest copydefoptest copydefoutputtest copydefstoptest copydeftest copydeftest.badinput copydeftest.infix copydeftest.innontailrecursiveprocedure copydeftest.nontailrecursivecount copydeftest.primitive copydeftest.primitivewithinputs copydeftest.redefp copydeftest.specialform copydeftest.userdefined copydeftotest costest definetest definetest.badinput definetest.bodyhasemptylines definetest.smoketest differencetest difficultcomments1 difficultcomments2 directorysmoketest directorytest dllcalltest dllfreetest dllloadtest dllsmoketest dlltest donothing doorientationtest echo edalltest.badinput edalltest.displaybyhwnd editortest edittest.badinput edittest.manyvariables emptyptest equalptest equalptest.badinput equalptest.deeplynestedlist equalptest.international equalptest.smoketest erasetest erasetest.badinput erasetest.eraseall erasetest.eraseprocedure erasetest.erasepropertylist erasetest.erasevariable erasetest.ern erasetest.erpl erracttest erracttest.bug1517326 erracttest.bug1517326.continue5 erracttest.catchblockserract erracttest.changeerract.output.6 erracttest.changeerractinerract erracttest.erractaftercatch erracttest.errorinerract erracttest.output.5 erracttest.output.nexterractvalue erracttest.outputwrongvalue erracttest.recoverableerror.outputnothing erracttest.smoketest erracttest.unrecoverableerror.outputnothing erracttest.unrecoverableerror.outputvalue error.30.test errortest errortest.bug1577034 errortest.call.output.run.5 errortest.output.run.5 evaltest evaltest.catcherrormanytimes evaltest.catchtoomanyinputserror evaltest.nontailrecursive evaltest.nontailrecursivecount evaltest.tailrecursive evaltest.tailrecursivecount exptest fencetest fencetest.badinput fencetest.bug1573061 fencetest.smoketest filetest filetest.allopen filetest.badinput filetest.closeall filetest.closereader filetest.dribble filetest.eofponstdin filetest.erasefile filetest.openappend filetest.opendirectoryasfile filetest.openopenfile filetest.openupdate filetest.setread.closedfile filetest.setreadpos filetest.setwritepos filetest.smoketest filltest filltimerevent firststest firststest.badinput firststest.smoketest firsttest floodcolortest fontfacenamestest fontfacenamestest.badinput fontfacenamestest.manualtest fontfacenamestest.smoketest forevertest forevertest.badinput forevertest.errorinforever forevertest.outputinforever forevertest.smoketest forevertest.stopinforever formtest fputtest fputtest.badinput fputtest.smoketest fulltexttest fulltexttest.badinput fulltexttest.smoketest helptest i.dont.know.what.to.do.with.value iftest inporttest inttest iseqtest labelbadinputtest labelcircletest labeltest lasttest linecontinuation3 listptest listtest listtest.smoketest lntest loadtest localvartest log10test logictest logoversiontest logoversiontest.badinput logoversiontest.smoketest lowercasetest lowercasetest.badinput lowercasetest.international lowercasetest.smoketest lputtest lputtest.badinput lputtest.smoketest lshifttest.badinput lshifttest.smoketest macro.return.unbound.instead.of.list macrotest macrotest.outputnothing mathtest memberptest messageboxtest messageboxtest.badinput messageboxtest.smoketest miditest miditest.badinput miditest.devicezero miditest.longformat miditest.playtune miditest.smoketest minustest misctest mkdirtest modulotest mousetest mousetest.badinput mousetest.simpletest my.proc.to.step myadd mymacro networktest networktest.client.echo networktest.client.receivelargepacket networktest.client.receiveunframedpacket networktest.client.shutdownrace networktest.client.smoketest networktest.hostname networktest.netshutdowncrash networktest.server.receiveunframedpacket networktest.server.shutdownrace networktest.server.twoconnections networktest.servercommand networktest.smoketest no.input.no.output nodestest nottest numberptest one.input.no.output orientationtest ortest outporttest output.373 parsetest parsetest.deeplynestedinfixexpression parsetest.deeplyparenthesizedexpression parsetest.expression parsetest.func parsetest.infixexpression parsetest.longinstructionline parsetest.longinstructionlinewithcatch parsetest.lotsofnegationoperators parsetest.manyinputs parsetest.manynestedcalls parsetest.number parsetest.symbolsofinclusion parsetest.word pasteincircle pencolortest penmodetest pensizetest pensizetest.badinput pensizetest.setgettest pensizetest.smoketest pentest penupdowntest perspectivetest perspectivetest.badinput perspectivetest.smoketest pitest pixeltest pixeltest.badinput pixeltest.smoketest plisttest porttest potest potest.badinput potest.smoketest powertest predicatetest printtest printtest.deeplynestedarray printtest.deeplynestedlist printtest.performance printtest.smoketest procedure.shadows.myshadowedvar procedure.with.to.inside.it procedureinworkingdirectory proceduretest proceduretest.complexproc producttest questionboxtest questionboxtest.badinput questionboxtest.smoketest queuetest queuetest.badinput queuetest.circulartest queuetest.smoketest quotedtest quotedtest.badinput quotedtest.smoketest quotienttest radarccostest radarcsintest radarctantest radcostest radsintest radtantest rawasciitest reducetest reducetest.badinput reducetest.max reducetest.max.rest reducetest.smoketest refreshtest remaindertest remduptest remduptest.badinput remduptest.smoketest repcounttest repcounttest.badinput repcounttest.smoketest repcounttest.timercallback repcounttest.timertest repeattest repeattest.badinput repeattest.errorinrepeat repeattest.outputinrepeat repeattest.smoketest repeattest.stopinrepeat reversetest reversetest.badinput reversetest.smoketest rmdirtest roundtest runresulttest runresulttest.badinput runresulttest.smoketest runtest sampleproc screencolortest screentest scrunchtest selectboxtest selectboxtest.badinput selectboxtest.smoketest sentencetest sentencetest.badinput sentencetest.noalias sentencetest.smoketest setitemtest setlabelfonttest setpixeltest.badinput setpixeltest.smoketest setrandomorientation shellscripttest shelltest shelltest.badinput shelltest.smoketest shelltest.waityields signtest sintest slowdrawtest slowdrawtest.badinput slowdrawtest.buried slowdrawtest.redefptest slowdrawtest.smoketest slowdrawtest.timecommand sorttest sorttest.after? sorttest.badinput sorttest.nonpredicate sorttest.oneinputbydefault sorttest.oneinputproc sorttest.performance sorttest.regression sorttest.sortbylegs sorttest.sortbyname sorttest.threeinputproc soundtest soundtest.badinput soundtest.frequency.a4 soundtest.frequency.b4 soundtest.frequency.c4 soundtest.frequency.c5 soundtest.frequency.d4 soundtest.frequency.d5 soundtest.frequency.e4 soundtest.frequency.f4 soundtest.frequency.g4 soundtest.sound soundtest.tone sqrttest stacktest stacktest.badinput stacktest.circulartest stacktest.smoketest statustest statustest.badinput statustest.smoketest steptest steptest.badinput steptest.procedure steptest.propertylist steptest.shadowvariable steptest.stepall steptest.steppedprocedure steptest.variable sumtest tantest testall testlib.repeatword testtest testtest.badinput testtest.scopetest testtest.smoketest texttest texttest.badinput texttest.smoketest thingtest thingtest.badinput thingtest.shadowedvariable thingtest.smoketest throwtest.badinput throwtest.usererror throwtest.usererror.actualthrowlocation tildainline timertest timertest.badinput timertest.smoketest timetest timetest.badinput timetest.smoketest timewait totest totest.baddefaultinputs totest.chaineddefaults totest.chaineddefaultstest totest.defaultinput totest.defaultnumberofinputs totest.nooutput totest.output5 totest.outputdefaultinput totest.outputdefaultinput.twoinputs totest.outputrest totest.outputrest.twoinputs totest.repeatedinput totest.repeatedinputtest totest.rest totest.singleinput totest.smoketest tracetest tracetest.badinput tracetest.function tracetest.procedure tracetest.propertylist tracetest.traceall tracetest.tracedfunction tracetest.tracedprocedure tracetest.variable typetest typetest.smoketest uppercasetest uppercasetest.badinput uppercasetest.international uppercasetest.smoketest waittest waittest.badinput waittest.smoketest windowfileedittest windowfileedittest.bug1330752 windowfileedittest.longfilename windowsettest windowsettest.badinput windowsettest.bug1429960 windowstest windowstest.button windowstest.button.badinput windowstest.checkbox windowstest.checkbox.badinput windowstest.checkbox.deletegroupbox windowstest.combobox windowstest.combobox.badinput windowstest.debugwindows windowstest.debugwindows.badinput windowstest.debugwindows.stress windowstest.dialog.badinput windowstest.dialog.badinput.fromcallback windowstest.dialog.smoketest windowstest.groupbox windowstest.groupbox.badinput windowstest.listbox windowstest.listbox.badinput windowstest.mainwindow.smoketest windowstest.radiobutton windowstest.radiobutton.badinput windowstest.radiobutton.deletegroupbox windowstest.regressiontest windowstest.scrollbar windowstest.scrollbar.badinput windowstest.setup windowstest.static windowstest.static.badinput windowstest.window.badinput windowstest.window.smoketest windowtest windowtest.badinput windowtest.smoketest wordproctest wordptest wordtest wraptest wraptest.badinput wraptest.smoketest yesnoboxtest yesnoboxtest.badinput yesnoboxtest.smoketest zoomtest zoomtest.badinput zoomtest.smoketest zoomtest.zoomstayscentered ~callme ~ignoreme] , as expected.
+PASS: [PROCEDURES] output [#test .eqtest abstest activeareatest activeareatest.badinput activeareatest.smoketest andtest angleiscloseenough applytest applytest.applyoutput applytest.badinput applytest.bug1519088 applytest.lambdatemplate applytest.lambdatemplate.newscopetest applytest.nonprimitive applytest.nooutput applytest.proceduretexttemplate applytest.proceduretexttemplate.newscopetest applytest.questionmarktemplate applytest.smoketest arcbadinputtest arccostest arcsintest arcsmoketest arctantest arctest arraybadinputtest arrayorigintest arrayptest arraysmoketest arraytest asciitest ashifttest.badinput ashifttest.smoketest beforeptest bitandtest.badinput bitandtest.smoketest bitblocktest bitblocktest.badinput bitblocktest.smoketest bitcopytest bitloadsizetest bitmaptest bitnottest.badinput bitnottest.smoketest bitortest.badinput bitortest.smoketest bitpastetoindextest.badinput bitpastetoindextest.smoketest bitwisetest bitxortest.badinput bitxortest.smoketest bodyhasemptylines bug1349374test bug1377856test bug1383281test bug1384267test bug1388325test bug1397560test bug1438863test bug1448155test bug1458661test bug1563318.applysum bug1563318.crash bug1563318.defaultrest bug1563318.oneinput burytest burytest.badinput burytest.buriedprocedure burytest.buryall burytest.procedure burytest.propertylist burytest.variable butfirststest butfirststest.badinput butfirststest.smoketest butfirsttest butlasttest buttonptest catchtest catchtest.badinput catchtest.catchbuiltinerror catchtest.catchusererror catchtest.doublecatcherror catchtest.doublecatcherror.innercatcherror catchtest.doublecatcherror.throwerror catchtest.skiperrortag catchtest.skiperrortag.catcherror catchtest.skiperrortag.throw catchtest.skipthrowtag catchtest.skipthrowtag.catchthrowtag catchtest.skipthrowtag.throwerror catchtest.skipthrowtagwithvalue catchtest.skipthrowtagwithvalue.catchinnertag catchtest.skipthrowtagwithvalue.throwoutertag catchtest.smoketest catchtest.smoketest.throw catchtest.throw.builtin.error chdirtest client.onreadytosend colorindextest colorsetgettest colortest combinetest combinetest.badinput combinetest.smoketest controlflowtest copydef.allow.redefinitions copydefmaybeoutputtest copydefoptest copydefoutputtest copydefstoptest copydeftest copydeftest.badinput copydeftest.infix copydeftest.innontailrecursiveprocedure copydeftest.nontailrecursivecount copydeftest.primitive copydeftest.primitivewithinputs copydeftest.redefp copydeftest.specialform copydeftest.userdefined copydeftotest costest definetest definetest.badinput definetest.bodyhasemptylines definetest.smoketest differencetest difficultcomments1 difficultcomments2 directorysmoketest directorytest dllcalltest dllfreetest dllloadtest dllsmoketest dlltest donothing doorientationtest echo edalltest.badinput edalltest.displaybyhwnd editortest edittest.badinput edittest.manyvariables emptyptest equalptest equalptest.badinput equalptest.deeplynestedlist equalptest.international equalptest.smoketest erasetest erasetest.badinput erasetest.eraseall erasetest.eraseprocedure erasetest.erasepropertylist erasetest.erasevariable erasetest.ern erasetest.erpl erracttest erracttest.bug1517326 erracttest.bug1517326.continue5 erracttest.catchblockserract erracttest.changeerract.output.6 erracttest.changeerractinerract erracttest.erractaftercatch erracttest.errorinerract erracttest.output.5 erracttest.output.nexterractvalue erracttest.outputwrongvalue erracttest.recoverableerror.outputnothing erracttest.smoketest erracttest.unrecoverableerror.outputnothing erracttest.unrecoverableerror.outputvalue error.30.test errortest errortest.bug1577034 errortest.call.output.run.5 errortest.output.run.5 evaltest evaltest.catcherrormanytimes evaltest.catchtoomanyinputserror evaltest.nontailrecursive evaltest.nontailrecursivecount evaltest.tailrecursive evaltest.tailrecursivecount exptest fencetest fencetest.badinput fencetest.bug1573061 fencetest.smoketest filetest filetest.allopen filetest.badinput filetest.closeall filetest.closereader filetest.dribble filetest.eofponstdin filetest.erasefile filetest.openappend filetest.opendirectoryasfile filetest.openopenfile filetest.openupdate filetest.setread.closedfile filetest.setreadpos filetest.setwritepos filetest.smoketest filltest filltimerevent firststest firststest.badinput firststest.smoketest firsttest floodcolortest fontfacenamestest fontfacenamestest.badinput fontfacenamestest.manualtest fontfacenamestest.smoketest forevertest forevertest.badinput forevertest.errorinforever forevertest.outputinforever forevertest.smoketest forevertest.stopinforever formtest fputtest fputtest.badinput fputtest.smoketest fulltexttest fulltexttest.badinput fulltexttest.smoketest helptest i.dont.know.what.to.do.with.value iftest inporttest inttest iseqtest labelbadinputtest labelcircletest labeltest lasttest linecontinuation3 listptest listtest listtest.smoketest lntest loadtest localvartest log10test logictest logoversiontest logoversiontest.badinput logoversiontest.smoketest lowercasetest lowercasetest.badinput lowercasetest.international lowercasetest.smoketest lputtest lputtest.badinput lputtest.smoketest lshifttest.badinput lshifttest.smoketest macro.return.unbound.instead.of.list macrotest macrotest.outputnothing mathtest memberptest messageboxtest messageboxtest.badinput messageboxtest.smoketest miditest miditest.badinput miditest.devicezero miditest.longformat miditest.playtune miditest.smoketest minustest misctest mkdirtest modulotest mousetest mousetest.badinput mousetest.simpletest my.proc.to.step myadd mymacro networktest networktest.client.echo networktest.client.receivelargepacket networktest.client.receiveunframedpacket networktest.client.shutdownrace networktest.client.smoketest networktest.hostname networktest.netshutdowncrash networktest.server.receiveunframedpacket networktest.server.shutdownrace networktest.server.twoconnections networktest.servercommand networktest.smoketest no.input.no.output nodestest nottest numberptest one.input.no.output orientationtest ortest outporttest output.373 parsetest parsetest.deeplynestedinfixexpression parsetest.deeplyparenthesizedexpression parsetest.expression parsetest.func parsetest.infixexpression parsetest.longinstructionline parsetest.longinstructionlinewithcatch parsetest.lotsofnegationoperators parsetest.manyinputs parsetest.manynestedcalls parsetest.number parsetest.symbolsofinclusion parsetest.word pasteincircle pencolortest penmodetest pensizetest pensizetest.badinput pensizetest.setgettest pensizetest.smoketest pentest penupdowntest perspectivetest perspectivetest.badinput perspectivetest.smoketest pitest pixeltest pixeltest.badinput pixeltest.smoketest plisttest porttest potest potest.badinput potest.smoketest powertest predicatetest printtest printtest.deeplynestedarray printtest.deeplynestedlist printtest.performance printtest.smoketest procedure.shadows.myshadowedvar procedure.with.to.inside.it procedureinworkingdirectory proceduretest proceduretest.complexproc producttest questionboxtest questionboxtest.badinput questionboxtest.smoketest queuetest queuetest.badinput queuetest.circulartest queuetest.smoketest quotedtest quotedtest.badinput quotedtest.smoketest quotienttest radarccostest radarcsintest radarctantest radcostest radsintest radtantest rawasciitest reducetest reducetest.badinput reducetest.max reducetest.max.rest reducetest.smoketest refreshtest remaindertest remduptest remduptest.badinput remduptest.smoketest repcounttest repcounttest.badinput repcounttest.smoketest repcounttest.timercallback repcounttest.timertest repeattest repeattest.badinput repeattest.errorinrepeat repeattest.outputinrepeat repeattest.smoketest repeattest.stopinrepeat reversetest reversetest.badinput reversetest.smoketest rmdirtest roundtest runresulttest runresulttest.badinput runresulttest.smoketest runtest sampleproc screencolortest screentest scrunchtest selectboxtest selectboxtest.badinput selectboxtest.smoketest sentencetest sentencetest.badinput sentencetest.noalias sentencetest.smoketest setitemtest setlabelfonttest setpixeltest.badinput setpixeltest.smoketest setrandomorientation shellscripttest shelltest shelltest.badinput shelltest.smoketest shelltest.waityields signtest sintest slowdrawtest slowdrawtest.badinput slowdrawtest.buried slowdrawtest.redefptest slowdrawtest.smoketest slowdrawtest.timecommand sorttest sorttest.after? sorttest.badinput sorttest.nonpredicate sorttest.oneinputbydefault sorttest.oneinputproc sorttest.performance sorttest.regression sorttest.sortbylegs sorttest.sortbyname sorttest.threeinputproc soundtest soundtest.badinput soundtest.frequency.a4 soundtest.frequency.b4 soundtest.frequency.c4 soundtest.frequency.c5 soundtest.frequency.d4 soundtest.frequency.d5 soundtest.frequency.e4 soundtest.frequency.f4 soundtest.frequency.g4 soundtest.sound soundtest.tone sqrttest stacktest stacktest.badinput stacktest.circulartest stacktest.smoketest statustest statustest.badinput statustest.smoketest steptest steptest.badinput steptest.procedure steptest.propertylist steptest.shadowvariable steptest.stepall steptest.steppedprocedure steptest.variable sumtest tantest testall testlib.repeatword testtest testtest.badinput testtest.scopetest testtest.smoketest texttest texttest.badinput texttest.smoketest thingtest thingtest.badinput thingtest.shadowedvariable thingtest.smoketest throwtest.badinput throwtest.usererror throwtest.usererror.actualthrowlocation tildainline timertest timertest.badinput timertest.smoketest timetest timetest.badinput timetest.smoketest timewait totest totest.baddefaultinputs totest.chaineddefaults totest.chaineddefaultstest totest.defaultinput totest.defaultnumberofinputs totest.nooutput totest.output5 totest.outputdefaultinput totest.outputdefaultinput.twoinputs totest.outputrest totest.outputrest.twoinputs totest.repeatedinput totest.repeatedinputtest totest.rest totest.singleinput totest.smoketest tracetest tracetest.badinput tracetest.function tracetest.procedure tracetest.propertylist tracetest.traceall tracetest.tracedfunction tracetest.tracedprocedure tracetest.variable turtletest turtletest.badinput turtletest.characteristics turtletest.smoketest typetest typetest.smoketest uppercasetest uppercasetest.badinput uppercasetest.international uppercasetest.smoketest waittest waittest.badinput waittest.smoketest windowfileedittest windowfileedittest.bug1330752 windowfileedittest.longfilename windowsettest windowsettest.badinput windowsettest.bug1429960 windowstest windowstest.button windowstest.button.badinput windowstest.checkbox windowstest.checkbox.badinput windowstest.checkbox.deletegroupbox windowstest.combobox windowstest.combobox.badinput windowstest.debugwindows windowstest.debugwindows.badinput windowstest.debugwindows.stress windowstest.dialog.badinput windowstest.dialog.badinput.fromcallback windowstest.dialog.smoketest windowstest.groupbox windowstest.groupbox.badinput windowstest.listbox windowstest.listbox.badinput windowstest.mainwindow.smoketest windowstest.radiobutton windowstest.radiobutton.badinput windowstest.radiobutton.deletegroupbox windowstest.regressiontest windowstest.scrollbar windowstest.scrollbar.badinput windowstest.setup windowstest.static windowstest.static.badinput windowstest.window.badinput windowstest.window.smoketest windowtest windowtest.badinput windowtest.smoketest wordproctest wordptest wordtest wraptest wraptest.badinput wraptest.smoketest yesnoboxtest yesnoboxtest.badinput yesnoboxtest.smoketest zoomtest zoomtest.badinput zoomtest.smoketest zoomtest.zoomstayscentered ~callme ~ignoreme] , as expected.
 INFO: Running invalid instruction: [(PROCEDURES "toomany)]
 PASS: error code is 8 , as expected.
 INFO: error text is too much inside ()'s .
@@ -3935,6 +3935,7 @@ INFO: error text is Stopping... .
 INFO: Running invalid instruction: [(ACTIVEAREA "toomany)]
 PASS: error code is 8 , as expected.
 INFO: error text is too much inside ()'s .
+FAIL: [ACTIVEAREA] output [0 0 0 0] . We expected [1 1 2 2] .
 PASS: Size is [100 100] , as expected.
 PASS: Size is [100 101] , as expected.
 PASS: Size is [101 100] , as expected.
@@ -4127,6 +4128,71 @@ INFO: error text is not enough inputs to BITBLOCK .
 INFO: Running invalid instruction: [(BITBLOCK 10 10 "toomany)]
 PASS: error code is 8 , as expected.
 INFO: error text is too much inside ()'s .
+CALL: CLEARSCREEN
+PASS: [TURTLE] output 0 , as expected.
+PASS: [TURTLES] output 0 , as expected.
+CALL: SETTURTLE 2
+PASS: [TURTLES] output 2 , as expected.
+PASS: [TURTLE] output 2 , as expected.
+CALL: SETTURTLE 1
+PASS: [TURTLES] output 2 , as expected.
+PASS: [TURTLE] output 1 , as expected.
+CALL: SETTURTLE 3.0
+PASS: [TURTLES] output 3 , as expected.
+PASS: [TURTLE] output 3 , as expected.
+CALL: SETTURTLE 1023
+PASS: [TURTLES] output 1023 , as expected.
+PASS: [TURTLE] output 1023 , as expected.
+CALL: SETTURTLE -1
+CALL: SETTURTLE -2
+CALL: SETTURTLE -3
+PASS: [TURTLES] output 1023 , as expected.
+PASS: [TURTLE] output -3 , as expected.
+CALL: CLEARSCREEN
+PASS: [TURTLE] output 0 , as expected.
+PASS: [TURTLES] output 0 , as expected.
+CALL: CLEARSCREEN
+CALL: SETXY 130 15
+CALL: SETTURTLE 1
+PASS: [POS] output [0 0] , as expected.
+CALL: SETXY 70 120
+CALL: SETTURTLE 0
+PASS: [POS] output [130 15] , as expected.
+INFO: Running invalid instruction: [(SETTURTLE "toomany)]
+FAIL: error code is 7 .  We expected 8 .
+INFO: error text is SETTURTLE doesn't like toomany as input .
+INFO: Running invalid instruction: [(TURTLES "toomany)]
+PASS: error code is 8 , as expected.
+INFO: error text is too much inside ()'s .
+INFO: Running invalid instruction: [(SETTURTLE)]
+PASS: error code is 6 , as expected.
+INFO: error text is not enough inputs to SETTURTLE .
+INFO: Running invalid instruction: [(SETTURTLE 10 "toomany)]
+PASS: error code is 8 , as expected.
+INFO: error text is too much inside ()'s .
+INFO: Running invalid instruction: [SETTURTLE "ten]
+FAIL: error code is 7 .  We expected 6 .
+INFO: error text is SETTURTLE doesn't like ten as input .
+INFO: Running invalid instruction: [SETTURTLE [10]]
+FAIL: error code is 7 .  We expected 6 .
+INFO: error text is SETTURTLE doesn't like [10] as input .
+INFO: Running invalid instruction: [SETTURTLE {10}]
+FAIL: error code is 7 .  We expected 6 .
+INFO: error text is SETTURTLE doesn't like {10} as input .
+INFO: Running invalid instruction: [SETTURTLE 10.5]
+FAIL: error code is 7 .  We expected 6 .
+INFO: error text is SETTURTLE doesn't like 10.5 as input .
+INFO: Running invalid instruction: [SETTURTLE -4]
+FAIL: error code is 16 .  We expected 6 .
+INFO: error text is Stopping... .
+INFO: Running invalid instruction: [SETTURTLE 1024]
+FAIL: error code is 16 .  We expected 6 .
+INFO: error text is Stopping... .
+INFO: Running invalid instruction: [(SETTURTLE)]
+PASS: error code is 6 , as expected.
+INFO: error text is not enough inputs to SETTURTLE .
+PASS: [TURTLE] output 1 , as expected.
+PASS: [TURTLES] output 1 , as expected.
 PASS: [FORM 123.1 10 10] output 123.1000000000 , as expected.
 INFO: Running invalid instruction: [FORM "string 10 10]
 INFO: error code is 7 .
@@ -4534,16 +4600,16 @@ INFO: error text is not enough inputs to OPENAPPEND .
 INFO: Running invalid instruction: [(OPENUPDATE)]
 PASS: error code is 6 , as expected.
 INFO: error text is not enough inputs to OPENUPDATE .
-INFO: Running invalid instruction: [(OPENREAD "testfile.txt "true "toomany)]
+INFO: Running invalid instruction: [(OPENREAD "testfile.txt LOCALETRUE "toomany)]
 PASS: error code is 8 , as expected.
 INFO: error text is too much inside ()'s .
-INFO: Running invalid instruction: [(OPENWRITE "testfile.txt "true "toomany)]
+INFO: Running invalid instruction: [(OPENWRITE "testfile.txt LOCALETRUE "toomany)]
 PASS: error code is 8 , as expected.
 INFO: error text is too much inside ()'s .
-INFO: Running invalid instruction: [(OPENAPPEND "testfile.txt "true "toomany)]
+INFO: Running invalid instruction: [(OPENAPPEND "testfile.txt LOCALETRUE "toomany)]
 PASS: error code is 8 , as expected.
 INFO: error text is too much inside ()'s .
-INFO: Running invalid instruction: [(OPENUPDATE "testfile.txt "true "toomany)]
+INFO: Running invalid instruction: [(OPENUPDATE "testfile.txt LOCALETRUE "toomany)]
 PASS: error code is 8 , as expected.
 INFO: error text is too much inside ()'s .
 INFO: Running invalid instruction: [OPENREAD []]
@@ -5099,8 +5165,8 @@ INFO: error text is too much inside ()'s .
 PASS: [SHELL [perl -v]] output true , as expected.
 PASS: [SHELL [doesnotexist.exe]] output false , as expected.
 PASS: [SHELL {1}] output false , as expected.
-PASS: [SHELL 100] output false , as expected.
-PASS: [SHELL 100] output false , as expected.
+PASS: [SHELL [1]] output false , as expected.
+PASS: [SHELL 1] output false , as expected.
 INFO: [MAKE "rval (SHELL [perl -e "sleep 5"] "true)] took 5197 ms to execute
 PASS: [MAKE "rval (SHELL [perl -e "sleep 5"] "true)] output true . , as expected.
 PASS: [MAKE "rval (SHELL [perl -e "sleep 5"] "true)] ran in 5197 ms. Anywhere between 4000 ms and 6000 is acceptable.
@@ -5113,7 +5179,7 @@ PASS: [MAKE "rval SHELL [perl -e "sleep 5"]] ran in 0 ms. Anywhere between 0 ms 
 INFO: Running invalid instruction: [(SHELL)]
 PASS: error code is 6 , as expected.
 INFO: error text is not enough inputs to SHELL .
-INFO: Running invalid instruction: [(SHELL [perl -v] "false "toomany)]
+INFO: Running invalid instruction: [(SHELL [perl -v] LOCALEFALSE "toomany)]
 PASS: error code is 8 , as expected.
 INFO: error text is too much inside ()'s .
 INFO: Running invalid instruction: [IGNORE (SHELL [perl -v] 1)]
@@ -5128,11 +5194,11 @@ INFO: error text is SHELL doesn't like [true] as input .
 INFO: Running invalid instruction: [IGNORE (SHELL [perl -v] {false} )]
 INFO: error code is 7 .
 INFO: error text is SHELL doesn't like {false} as input .
-INFO: Running invalid instruction: [IGNORE (SHELL [perl -e "sleep 10"] "true)]
+INFO: Running invalid instruction: [IGNORE (SHELL [perl -e "sleep 10"] LOCALETRUE)]
 PASS: error code is 16 , as expected.
 INFO: error text is Stopping... .
-INFO: [RUNEXPECTERRORTEST [IGNORE (SHELL [perl -e "sleep 10"] "true)] 16] took 5017 ms to execute
-PASS: [IGNORE (SHELL [perl -e "sleep 10"] "true)] ran in 5017 ms. Anywhere between 0 ms and 6000 is acceptable.
+INFO: [RUNEXPECTERRORTEST [IGNORE (SHELL [perl -e "sleep 10"] LOCALETRUE)] 16] took 5017 ms to execute
+PASS: [IGNORE (SHELL [perl -e "sleep 10"] LOCALETRUE)] ran in 5017 ms. Anywhere between 0 ms and 6000 is acceptable.
 PASS: [FILES] output [] , as expected.
 PASS: [DIRECTORIES] output [.. .] , as expected.
 PASS: [FILES] output [file1.txt] , as expected.
@@ -5674,7 +5740,7 @@ CALL: PPROP "TRACETEST.TRACEDPLIST "PROPERTY9 [1 2 3]
 CALL: PPROP "TRACETEST.TRACEDPLIST "PROPERTY0 {1 2 3}
 CALL: MAKE "TRACETEST.TRACEDPLIST 4321
 INFO: Calling TRACE CONTENTS
-PASS: [TRACED] output [[#test .eqtest abstest activeareatest andtest angleiscloseenough applytest applytest.applyoutput applytest.badinput applytest.bug1519088 applytest.lambdatemplate applytest.lambdatemplate.newscopetest applytest.nonprimitive applytest.nooutput applytest.proceduretexttemplate applytest.proceduretexttemplate.newscopetest applytest.questionmarktemplate applytest.smoketest arcbadinputtest arccostest arcsintest arcsmoketest arctantest arctest arraybadinputtest arrayorigintest arrayptest arraysmoketest arraytest asciitest ashifttest.badinput ashifttest.smoketest beforeptest bitandtest.badinput bitandtest.smoketest bitblocktest bitblocktest.badinput bitblocktest.smoketest bitcopytest bitloadsizetest bitmaptest bitnottest.badinput bitnottest.smoketest bitortest.badinput bitortest.smoketest bitpastetoindextest.badinput bitpastetoindextest.smoketest bitwisetest bitxortest.badinput bitxortest.smoketest bodyhasemptylines bug1349374test bug1377856test bug1383281test bug1384267test bug1388325test bug1397560test bug1448155test bug1458661test bug1563318.applysum bug1563318.crash bug1563318.defaultrest bug1563318.oneinput burytest burytest.badinput burytest.buriedprocedure burytest.buryall burytest.procedure burytest.propertylist burytest.variable butfirststest butfirststest.badinput butfirststest.smoketest butfirsttest butlasttest buttonptest catchtest catchtest.badinput catchtest.catchbuiltinerror catchtest.catchusererror catchtest.doublecatcherror catchtest.doublecatcherror.innercatcherror catchtest.doublecatcherror.throwerror catchtest.skiperrortag catchtest.skiperrortag.catcherror catchtest.skiperrortag.throw catchtest.skipthrowtag catchtest.skipthrowtag.catchthrowtag catchtest.skipthrowtag.throwerror catchtest.skipthrowtagwithvalue catchtest.skipthrowtagwithvalue.catchinnertag catchtest.skipthrowtagwithvalue.throwoutertag catchtest.smoketest catchtest.smoketest.throw catchtest.throw.builtin.error chdirtest client.onreadytosend colorindextest colorsetgettest colortest combinetest combinetest.badinput combinetest.smoketest controlflowtest copydef.allow.redefinitions copydefmaybeoutputtest copydefoptest copydefoutputtest copydefstoptest copydeftest copydeftest.badinput copydeftest.infix copydeftest.innontailrecursiveprocedure copydeftest.nontailrecursivecount copydeftest.primitive copydeftest.primitivewithinputs copydeftest.redefp copydeftest.specialform copydeftest.userdefined copydeftotest costest definetest definetest.badinput definetest.bodyhasemptylines definetest.smoketest differencetest difficultcomments1 difficultcomments2 directorysmoketest directorytest dllcalltest dllfreetest dllloadtest dllsmoketest dlltest donothing doorientationtest echo edalltest.badinput edalltest.displaybyhwnd editortest edittest.badinput edittest.manyvariables emptyptest equalptest equalptest.badinput equalptest.deeplynestedlist equalptest.international equalptest.smoketest erasetest erasetest.badinput erasetest.eraseall erasetest.eraseprocedure erasetest.erasepropertylist erasetest.erasevariable erasetest.ern erasetest.erpl erracttest erracttest.bug1517326 erracttest.bug1517326.continue5 erracttest.catchblockserract erracttest.changeerract.output.6 erracttest.changeerractinerract erracttest.erractaftercatch erracttest.errorinerract erracttest.output.5 erracttest.output.nexterractvalue erracttest.outputwrongvalue erracttest.recoverableerror.outputnothing erracttest.smoketest erracttest.unrecoverableerror.outputnothing erracttest.unrecoverableerror.outputvalue error.30.test errortest errortest.bug1577034 errortest.call.output.run.5 errortest.output.run.5 evaltest evaltest.catcherrormanytimes evaltest.catchtoomanyinputserror evaltest.nontailrecursive evaltest.nontailrecursivecount evaltest.tailrecursive evaltest.tailrecursivecount exptest fencetest fencetest.badinput fencetest.bug1573061 fencetest.smoketest filetest filetest.allopen filetest.badinput filetest.closeall filetest.closereader filetest.dribble filetest.eofponstdin filetest.erasefile filetest.openappend filetest.opendirectoryasfile filetest.openopenfile filetest.openupdate filetest.setread.closedfile filetest.setreadpos filetest.setwritepos filetest.smoketest filltest filltimerevent firststest firststest.badinput firststest.smoketest firsttest floodcolortest fontfacenamestest fontfacenamestest.badinput fontfacenamestest.manualtest fontfacenamestest.smoketest forevertest forevertest.badinput forevertest.errorinforever forevertest.outputinforever forevertest.smoketest forevertest.stopinforever formtest fputtest fputtest.badinput fputtest.smoketest fulltexttest fulltexttest.badinput fulltexttest.smoketest helptest i.dont.know.what.to.do.with.value iftest inporttest inttest iseqtest labelbadinputtest labelcircletest labeltest lasttest linecontinuation3 listptest listtest listtest.smoketest lntest loadtest localvartest log10test logictest logoversiontest logoversiontest.badinput logoversiontest.smoketest lowercasetest lowercasetest.badinput lowercasetest.international lowercasetest.smoketest lputtest lputtest.badinput lputtest.smoketest lshifttest.badinput lshifttest.smoketest macro.return.unbound.instead.of.list macrotest macrotest.outputnothing mathtest memberptest messageboxtest messageboxtest.badinput messageboxtest.smoketest miditest miditest.badinput miditest.devicezero miditest.longformat miditest.playtune miditest.smoketest minustest misctest mkdirtest modulotest mousetest mousetest.badinput mousetest.simpletest my.proc.to.step myadd mymacro networktest networktest.client.echo networktest.client.receivelargepacket networktest.client.receiveunframedpacket networktest.client.shutdownrace networktest.client.smoketest networktest.hostname networktest.netshutdowncrash networktest.server.receiveunframedpacket networktest.server.shutdownrace networktest.server.twoconnections networktest.servercommand networktest.smoketest no.input.no.output nodestest nottest numberptest one.input.no.output orientationtest ortest outporttest output.373 parsetest parsetest.deeplynestedinfixexpression parsetest.deeplyparenthesizedexpression parsetest.expression parsetest.func parsetest.infixexpression parsetest.longinstructionline parsetest.longinstructionlinewithcatch parsetest.lotsofnegationoperators parsetest.manyinputs parsetest.manynestedcalls parsetest.number parsetest.symbolsofinclusion parsetest.word pasteincircle pencolortest penmodetest pensizetest pensizetest.badinput pensizetest.setgettest pensizetest.smoketest pentest penupdowntest perspectivetest perspectivetest.badinput perspectivetest.smoketest pitest pixeltest pixeltest.badinput pixeltest.smoketest plisttest porttest potest potest.badinput potest.smoketest powertest predicatetest printtest printtest.deeplynestedarray printtest.deeplynestedlist printtest.performance printtest.smoketest procedure.shadows.myshadowedvar procedure.with.to.inside.it procedureinworkingdirectory proceduretest proceduretest.complexproc producttest questionboxtest questionboxtest.badinput questionboxtest.smoketest queuetest queuetest.badinput queuetest.circulartest queuetest.smoketest quotedtest quotedtest.badinput quotedtest.smoketest quotienttest radarccostest radarcsintest radarctantest radcostest radsintest radtantest rawasciitest reducetest reducetest.badinput reducetest.max reducetest.max.rest reducetest.smoketest refreshtest remaindertest remduptest remduptest.badinput remduptest.smoketest repcounttest repcounttest.badinput repcounttest.smoketest repcounttest.timercallback repcounttest.timertest repeattest repeattest.badinput repeattest.errorinrepeat repeattest.outputinrepeat repeattest.smoketest repeattest.stopinrepeat reversetest reversetest.badinput reversetest.smoketest rmdirtest roundtest runresulttest runresulttest.badinput runresulttest.smoketest runtest sampleproc screencolortest screentest scrunchtest selectboxtest selectboxtest.badinput selectboxtest.smoketest sentencetest sentencetest.badinput sentencetest.noalias sentencetest.smoketest setitemtest setlabelfonttest setpixeltest.badinput setpixeltest.smoketest setrandomorientation shellscripttest shelltest shelltest.badinput shelltest.smoketest shelltest.waityields signtest sintest slowdrawtest slowdrawtest.badinput slowdrawtest.buried slowdrawtest.redefptest slowdrawtest.smoketest slowdrawtest.timecommand sorttest sorttest.after? sorttest.badinput sorttest.nonpredicate sorttest.oneinputbydefault sorttest.oneinputproc sorttest.performance sorttest.regression sorttest.sortbylegs sorttest.sortbyname sorttest.threeinputproc soundtest soundtest.badinput soundtest.frequency.a4 soundtest.frequency.b4 soundtest.frequency.c4 soundtest.frequency.c5 soundtest.frequency.d4 soundtest.frequency.d5 soundtest.frequency.e4 soundtest.frequency.f4 soundtest.frequency.g4 soundtest.sound soundtest.tone sqrttest stacktest stacktest.badinput stacktest.circulartest stacktest.smoketest statustest statustest.badinput statustest.smoketest steptest steptest.badinput steptest.procedure steptest.propertylist steptest.shadowvariable steptest.stepall steptest.steppedprocedure steptest.variable sumtest tantest testall testlib.repeatword testtest testtest.badinput testtest.scopetest testtest.smoketest texttest texttest.badinput texttest.smoketest thingtest thingtest.badinput thingtest.shadowedvariable thingtest.smoketest throwtest.badinput throwtest.usererror throwtest.usererror.actualthrowlocation tildainline timertest timertest.badinput timertest.smoketest timetest timetest.badinput timetest.smoketest timewait totest totest.baddefaultinputs totest.chaineddefaults totest.chaineddefaultstest totest.defaultinput totest.defaultnumberofinputs totest.nooutput totest.output5 totest.outputdefaultinput totest.outputdefaultinput.twoinputs totest.outputrest totest.outputrest.twoinputs totest.repeatedinput totest.repeatedinputtest totest.rest totest.singleinput totest.smoketest tracetest tracetest.badinput tracetest.function tracetest.procedure tracetest.propertylist tracetest.traceall tracetest.tracedfunction tracetest.tracedprocedure tracetest.variable typetest typetest.smoketest uppercasetest uppercasetest.badinput uppercasetest.international uppercasetest.smoketest waittest waittest.badinput waittest.smoketest windowfileedittest windowfileedittest.bug1330752 windowfileedittest.longfilename windowsettest windowsettest.badinput windowsettest.bug1429960 windowstest windowstest.button windowstest.button.badinput windowstest.checkbox windowstest.checkbox.badinput windowstest.checkbox.deletegroupbox windowstest.combobox windowstest.combobox.badinput windowstest.debugwindows windowstest.debugwindows.badinput windowstest.debugwindows.stress windowstest.dialog.badinput windowstest.dialog.badinput.fromcallback windowstest.dialog.smoketest windowstest.groupbox windowstest.groupbox.badinput windowstest.listbox windowstest.listbox.badinput windowstest.mainwindow.smoketest windowstest.radiobutton windowstest.radiobutton.badinput windowstest.radiobutton.deletegroupbox windowstest.regressiontest windowstest.scrollbar windowstest.scrollbar.badinput windowstest.setup windowstest.static windowstest.static.badinput windowstest.window.badinput windowstest.window.smoketest windowtest windowtest.badinput windowtest.smoketest wordproctest wordptest wordtest wraptest wraptest.badinput wraptest.smoketest yesnoboxtest yesnoboxtest.badinput yesnoboxtest.smoketest zoomtest zoomtest.badinput zoomtest.smoketest zoomtest.zoomstayscentered ~callme ~ignoreme] [array count erract erract.was.called isok lambda.function.ran something.to.break.tail.recursion startup string sum testlog thesum tracetest.tracedplist word1 word2] [tracetest.tracedplist]] , as expected.
+PASS: [TRACED] output [[#test .eqtest abstest activeareatest activeareatest.badinput activeareatest.smoketest andtest angleiscloseenough applytest applytest.applyoutput applytest.badinput applytest.bug1519088 applytest.lambdatemplate applytest.lambdatemplate.newscopetest applytest.nonprimitive applytest.nooutput applytest.proceduretexttemplate applytest.proceduretexttemplate.newscopetest applytest.questionmarktemplate applytest.smoketest arcbadinputtest arccostest arcsintest arcsmoketest arctantest arctest arraybadinputtest arrayorigintest arrayptest arraysmoketest arraytest asciitest ashifttest.badinput ashifttest.smoketest beforeptest bitandtest.badinput bitandtest.smoketest bitblocktest bitblocktest.badinput bitblocktest.smoketest bitcopytest bitloadsizetest bitmaptest bitnottest.badinput bitnottest.smoketest bitortest.badinput bitortest.smoketest bitpastetoindextest.badinput bitpastetoindextest.smoketest bitwisetest bitxortest.badinput bitxortest.smoketest bodyhasemptylines bug1349374test bug1377856test bug1383281test bug1384267test bug1388325test bug1397560test bug1448155test bug1458661test bug1563318.applysum bug1563318.crash bug1563318.defaultrest bug1563318.oneinput burytest burytest.badinput burytest.buriedprocedure burytest.buryall burytest.procedure burytest.propertylist burytest.variable butfirststest butfirststest.badinput butfirststest.smoketest butfirsttest butlasttest buttonptest catchtest catchtest.badinput catchtest.catchbuiltinerror catchtest.catchusererror catchtest.doublecatcherror catchtest.doublecatcherror.innercatcherror catchtest.doublecatcherror.throwerror catchtest.skiperrortag catchtest.skiperrortag.catcherror catchtest.skiperrortag.throw catchtest.skipthrowtag catchtest.skipthrowtag.catchthrowtag catchtest.skipthrowtag.throwerror catchtest.skipthrowtagwithvalue catchtest.skipthrowtagwithvalue.catchinnertag catchtest.skipthrowtagwithvalue.throwoutertag catchtest.smoketest catchtest.smoketest.throw catchtest.throw.builtin.error chdirtest client.onreadytosend colorindextest colorsetgettest colortest combinetest combinetest.badinput combinetest.smoketest controlflowtest copydef.allow.redefinitions copydefmaybeoutputtest copydefoptest copydefoutputtest copydefstoptest copydeftest copydeftest.badinput copydeftest.infix copydeftest.innontailrecursiveprocedure copydeftest.nontailrecursivecount copydeftest.primitive copydeftest.primitivewithinputs copydeftest.redefp copydeftest.specialform copydeftest.userdefined copydeftotest costest definetest definetest.badinput definetest.bodyhasemptylines definetest.smoketest differencetest difficultcomments1 difficultcomments2 directorysmoketest directorytest dllcalltest dllfreetest dllloadtest dllsmoketest dlltest donothing doorientationtest echo edalltest.badinput edalltest.displaybyhwnd editortest edittest.badinput edittest.manyvariables emptyptest equalptest equalptest.badinput equalptest.deeplynestedlist equalptest.international equalptest.smoketest erasetest erasetest.badinput erasetest.eraseall erasetest.eraseprocedure erasetest.erasepropertylist erasetest.erasevariable erasetest.ern erasetest.erpl erracttest erracttest.bug1517326 erracttest.bug1517326.continue5 erracttest.catchblockserract erracttest.changeerract.output.6 erracttest.changeerractinerract erracttest.erractaftercatch erracttest.errorinerract erracttest.output.5 erracttest.output.nexterractvalue erracttest.outputwrongvalue erracttest.recoverableerror.outputnothing erracttest.smoketest erracttest.unrecoverableerror.outputnothing erracttest.unrecoverableerror.outputvalue error.30.test errortest errortest.bug1577034 errortest.call.output.run.5 errortest.output.run.5 evaltest evaltest.catcherrormanytimes evaltest.catchtoomanyinputserror evaltest.nontailrecursive evaltest.nontailrecursivecount evaltest.tailrecursive evaltest.tailrecursivecount exptest fencetest fencetest.badinput fencetest.bug1573061 fencetest.smoketest filetest filetest.allopen filetest.badinput filetest.closeall filetest.closereader filetest.dribble filetest.eofponstdin filetest.erasefile filetest.openappend filetest.opendirectoryasfile filetest.openopenfile filetest.openupdate filetest.setread.closedfile filetest.setreadpos filetest.setwritepos filetest.smoketest filltest filltimerevent firststest firststest.badinput firststest.smoketest firsttest floodcolortest fontfacenamestest fontfacenamestest.badinput fontfacenamestest.manualtest fontfacenamestest.smoketest forevertest forevertest.badinput forevertest.errorinforever forevertest.outputinforever forevertest.smoketest forevertest.stopinforever formtest fputtest fputtest.badinput fputtest.smoketest fulltexttest fulltexttest.badinput fulltexttest.smoketest helptest i.dont.know.what.to.do.with.value iftest inporttest inttest iseqtest labelbadinputtest labelcircletest labeltest lasttest linecontinuation3 listptest listtest listtest.smoketest lntest loadtest localvartest log10test logictest logoversiontest logoversiontest.badinput logoversiontest.smoketest lowercasetest lowercasetest.badinput lowercasetest.international lowercasetest.smoketest lputtest lputtest.badinput lputtest.smoketest lshifttest.badinput lshifttest.smoketest macro.return.unbound.instead.of.list macrotest macrotest.outputnothing mathtest memberptest messageboxtest messageboxtest.badinput messageboxtest.smoketest miditest miditest.badinput miditest.devicezero miditest.longformat miditest.playtune miditest.smoketest minustest misctest mkdirtest modulotest mousetest mousetest.badinput mousetest.simpletest my.proc.to.step myadd mymacro networktest networktest.client.echo networktest.client.receivelargepacket networktest.client.receiveunframedpacket networktest.client.shutdownrace networktest.client.smoketest networktest.hostname networktest.netshutdowncrash networktest.server.receiveunframedpacket networktest.server.shutdownrace networktest.server.twoconnections networktest.servercommand networktest.smoketest no.input.no.output nodestest nottest numberptest one.input.no.output orientationtest ortest outporttest output.373 parsetest parsetest.deeplynestedinfixexpression parsetest.deeplyparenthesizedexpression parsetest.expression parsetest.func parsetest.infixexpression parsetest.longinstructionline parsetest.longinstructionlinewithcatch parsetest.lotsofnegationoperators parsetest.manyinputs parsetest.manynestedcalls parsetest.number parsetest.symbolsofinclusion parsetest.word pasteincircle pencolortest penmodetest pensizetest pensizetest.badinput pensizetest.setgettest pensizetest.smoketest pentest penupdowntest perspectivetest perspectivetest.badinput perspectivetest.smoketest pitest pixeltest pixeltest.badinput pixeltest.smoketest plisttest porttest potest potest.badinput potest.smoketest powertest predicatetest printtest printtest.deeplynestedarray printtest.deeplynestedlist printtest.performance printtest.smoketest procedure.shadows.myshadowedvar procedure.with.to.inside.it procedureinworkingdirectory proceduretest proceduretest.complexproc producttest questionboxtest questionboxtest.badinput questionboxtest.smoketest queuetest queuetest.badinput queuetest.circulartest queuetest.smoketest quotedtest quotedtest.badinput quotedtest.smoketest quotienttest radarccostest radarcsintest radarctantest radcostest radsintest radtantest rawasciitest reducetest reducetest.badinput reducetest.max reducetest.max.rest reducetest.smoketest refreshtest remaindertest remduptest remduptest.badinput remduptest.smoketest repcounttest repcounttest.badinput repcounttest.smoketest repcounttest.timercallback repcounttest.timertest repeattest repeattest.badinput repeattest.errorinrepeat repeattest.outputinrepeat repeattest.smoketest repeattest.stopinrepeat reversetest reversetest.badinput reversetest.smoketest rmdirtest roundtest runresulttest runresulttest.badinput runresulttest.smoketest runtest sampleproc screencolortest screentest scrunchtest selectboxtest selectboxtest.badinput selectboxtest.smoketest sentencetest sentencetest.badinput sentencetest.noalias sentencetest.smoketest setitemtest setlabelfonttest setpixeltest.badinput setpixeltest.smoketest setrandomorientation shellscripttest shelltest shelltest.badinput shelltest.smoketest shelltest.waityields signtest sintest slowdrawtest slowdrawtest.badinput slowdrawtest.buried slowdrawtest.redefptest slowdrawtest.smoketest slowdrawtest.timecommand sorttest sorttest.after? sorttest.badinput sorttest.nonpredicate sorttest.oneinputbydefault sorttest.oneinputproc sorttest.performance sorttest.regression sorttest.sortbylegs sorttest.sortbyname sorttest.threeinputproc soundtest soundtest.badinput soundtest.frequency.a4 soundtest.frequency.b4 soundtest.frequency.c4 soundtest.frequency.c5 soundtest.frequency.d4 soundtest.frequency.d5 soundtest.frequency.e4 soundtest.frequency.f4 soundtest.frequency.g4 soundtest.sound soundtest.tone sqrttest stacktest stacktest.badinput stacktest.circulartest stacktest.smoketest statustest statustest.badinput statustest.smoketest steptest steptest.badinput steptest.procedure steptest.propertylist steptest.shadowvariable steptest.stepall steptest.steppedprocedure steptest.variable sumtest tantest testall testlib.repeatword testtest testtest.badinput testtest.scopetest testtest.smoketest texttest texttest.badinput texttest.smoketest thingtest thingtest.badinput thingtest.shadowedvariable thingtest.smoketest throwtest.badinput throwtest.usererror throwtest.usererror.actualthrowlocation tildainline timertest timertest.badinput timertest.smoketest timetest timetest.badinput timetest.smoketest timewait totest totest.baddefaultinputs totest.chaineddefaults totest.chaineddefaultstest totest.defaultinput totest.defaultnumberofinputs totest.nooutput totest.output5 totest.outputdefaultinput totest.outputdefaultinput.twoinputs totest.outputrest totest.outputrest.twoinputs totest.repeatedinput totest.repeatedinputtest totest.rest totest.singleinput totest.smoketest tracetest tracetest.badinput tracetest.function tracetest.procedure tracetest.propertylist tracetest.traceall tracetest.tracedfunction tracetest.tracedprocedure tracetest.variable turtletest turtletest.badinput turtletest.characteristics turtletest.smoketest typetest typetest.smoketest uppercasetest uppercasetest.badinput uppercasetest.international uppercasetest.smoketest waittest waittest.badinput waittest.smoketest windowfileedittest windowfileedittest.bug1330752 windowfileedittest.longfilename windowsettest windowsettest.badinput windowsettest.bug1429960 windowstest windowstest.button windowstest.button.badinput windowstest.checkbox windowstest.checkbox.badinput windowstest.checkbox.deletegroupbox windowstest.combobox windowstest.combobox.badinput windowstest.debugwindows windowstest.debugwindows.badinput windowstest.debugwindows.stress windowstest.dialog.badinput windowstest.dialog.badinput.fromcallback windowstest.dialog.smoketest windowstest.groupbox windowstest.groupbox.badinput windowstest.listbox windowstest.listbox.badinput windowstest.mainwindow.smoketest windowstest.radiobutton windowstest.radiobutton.badinput windowstest.radiobutton.deletegroupbox windowstest.regressiontest windowstest.scrollbar windowstest.scrollbar.badinput windowstest.setup windowstest.static windowstest.static.badinput windowstest.window.badinput windowstest.window.smoketest windowtest windowtest.badinput windowtest.smoketest wordproctest wordptest wordtest wraptest wraptest.badinput wraptest.smoketest yesnoboxtest yesnoboxtest.badinput yesnoboxtest.smoketest zoomtest zoomtest.badinput zoomtest.smoketest zoomtest.zoomstayscentered ~callme ~ignoreme] [array count erract erract.was.called isok lambda.function.ran something.to.break.tail.recursion startup string sum testlog thesum tracetest.tracedplist word1 word2] [tracetest.tracedplist]] , as expected.
 CALL: UNTRACE CONTENTS
 PASS: [TRACED] output [[] [] []] , as expected.
 INFO: Running invalid instruction: [(TRACED "toomany)]
@@ -5755,8 +5821,8 @@ CALL: PPROP "STEPTEST.STEPPEDPLIST "PROPERTY4 [1 2 3]
 CALL: PPROP "STEPTEST.STEPPEDPLIST "PROPERTY5 {1 2 3}
 CALL: UNSTEP PLLIST "STEPTEST.STEPPEDPLIST
 PASS: [MEMBERP "STEPTEST.STEPPEDPLIST (ITEM 3 STEPPED)] output false , as expected.
-INFO: Calling STEP CONTENTS
-INFO: Called UNSTEP CONTENTS
+INFO: Running STEP CONTENTS
+INFO: Ran UNSTEP CONTENTS
 PASS: [STEPPED] output [[] [] []] , as expected.
 INFO: Running invalid instruction: [(STEPPED "toomany)]
 PASS: error code is 8 , as expected.
@@ -5908,7 +5974,7 @@ INFO: Running invalid instruction: [(UNBURYALL "toomany)]
 PASS: error code is 8 , as expected.
 INFO: error text is too much inside ()'s .
 CALL: BURYALL
-PASS: [BURIED] output [[# #test .eqtest ?rest ` abs abstest activeareatest andtest angleiscloseenough applytest applytest.applyoutput applytest.badinput applytest.bug1519088 applytest.lambdatemplate applytest.lambdatemplate.newscopetest applytest.nonprimitive applytest.nooutput applytest.proceduretexttemplate applytest.proceduretexttemplate.newscopetest applytest.questionmarktemplate applytest.smoketest arc arc2 arcbadinputtest arccostest arcsintest arcsmoketest arctantest arctest arraybadinputtest arrayorigintest arrayptest arraysmoketest arraytest arraytolist asciitest ashifttest.badinput ashifttest.smoketest beforeptest bitandtest.badinput bitandtest.smoketest bitblocktest bitblocktest.badinput bitblocktest.smoketest bitcopytest bitloadsizetest bitmaptest bitnottest.badinput bitnottest.smoketest bitortest.badinput bitortest.smoketest bitpastetoindextest.badinput bitpastetoindextest.smoketest bitwisetest bitxortest.badinput bitxortest.smoketest bodyhasemptylines bug1349374test bug1377856test bug1383281test bug1384267test bug1388325test bug1397560test bug1448155test bug1458661test bug1563318.applysum bug1563318.crash bug1563318.defaultrest bug1563318.oneinput buryall burytest burytest.badinput burytest.buriedprocedure burytest.buryall burytest.procedure burytest.propertylist burytest.variable butfirststest butfirststest.badinput butfirststest.smoketest butfirsttest butlasttest buttonptest cascade cascade.eval cascade.setup cascade1 catchtest catchtest.badinput catchtest.catchbuiltinerror catchtest.catchusererror catchtest.doublecatcherror catchtest.doublecatcherror.innercatcherror catchtest.doublecatcherror.throwerror catchtest.skiperrortag catchtest.skiperrortag.catcherror catchtest.skiperrortag.throw catchtest.skipthrowtag catchtest.skipthrowtag.catchthrowtag catchtest.skipthrowtag.throwerror catchtest.skipthrowtagwithvalue catchtest.skipthrowtagwithvalue.catchinnertag catchtest.skipthrowtagwithvalue.throwoutertag catchtest.smoketest catchtest.smoketest.throw catchtest.throw.builtin.error chdirtest checkerror checkerroritem checkexecutiontime checkscreen circle circle2 client.onreadytosend colorindextest colorsetgettest colortest combine combinetest combinetest.badinput combinetest.smoketest controlflowtest copydef.allow.redefinitions copydefmaybeoutputtest copydefoptest copydefoutputtest copydefstoptest copydeftest copydeftest.badinput copydeftest.infix copydeftest.innontailrecursiveprocedure copydeftest.nontailrecursivecount copydeftest.primitive copydeftest.primitivewithinputs copydeftest.redefp copydeftest.specialform copydeftest.userdefined copydeftotest costest definetest definetest.badinput definetest.bodyhasemptylines definetest.smoketest dequeue differencetest difficultcomments1 difficultcomments2 dir directorysmoketest directorytest dllcalltest dllfreetest dllloadtest dllsmoketest dlltest donothing doorientationtest echo edall edalltest.badinput edalltest.displaybyhwnd editortest edittest.badinput edittest.manyvariables ellipsa2 ellipsearc2 emptyptest equalptest equalptest.badinput equalptest.deeplynestedlist equalptest.international equalptest.smoketest erasetest erasetest.badinput erasetest.eraseall erasetest.eraseprocedure erasetest.erasepropertylist erasetest.erasevariable erasetest.ern erasetest.erpl erracttest erracttest.bug1517326 erracttest.bug1517326.continue5 erracttest.catchblockserract erracttest.changeerract.output.6 erracttest.changeerractinerract erracttest.erractaftercatch erracttest.errorinerract erracttest.output.5 erracttest.output.nexterractvalue erracttest.outputwrongvalue erracttest.recoverableerror.outputnothing erracttest.smoketest erracttest.unrecoverableerror.outputnothing erracttest.unrecoverableerror.outputvalue error.30.test errortest errortest.bug1577034 errortest.call.output.run.5 errortest.output.run.5 evaltest evaltest.catcherrormanytimes evaltest.catchtoomanyinputserror evaltest.nontailrecursive evaltest.nontailrecursivecount evaltest.tailrecursive evaltest.tailrecursivecount exptest fencetest fencetest.badinput fencetest.bug1573061 fencetest.smoketest fileexists filesareequal filetest filetest.allopen filetest.badinput filetest.closeall filetest.closereader filetest.dribble filetest.eofponstdin filetest.erasefile filetest.openappend filetest.opendirectoryasfile filetest.openopenfile filetest.openupdate filetest.setread.closedfile filetest.setreadpos filetest.setwritepos filetest.smoketest filltest filltimerevent filter firststest firststest.badinput firststest.smoketest firsttest floodcolortest fontfacenamestest fontfacenamestest.badinput fontfacenamestest.manualtest fontfacenamestest.smoketest for for.done foreach foreach.done foreach1 forevertest forevertest.badinput forevertest.errorinforever forevertest.outputinforever forevertest.smoketest forevertest.stopinforever forloop formtest forstep fputtest fputtest.badinput fputtest.smoketest fulltexttest fulltexttest.badinput fulltexttest.smoketest helptest i.dont.know.what.to.do.with.value icon iftest ignore inporttest inttest iseq iseq.integer? iseq1 iseqtest labelbadinputtest labelcircletest labeltest lasttest linecontinuation3 listptest listtest listtest.smoketest listtoarray listtoarray1 lntest loadtest localmake localvartest log10test logictest logoversiontest logoversiontest.badinput logoversiontest.smoketest lowercasetest lowercasetest.badinput lowercasetest.international lowercasetest.smoketest lputtest lputtest.badinput lputtest.smoketest lshifttest.badinput lshifttest.smoketest macro.return.unbound.instead.of.list macrotest macrotest.outputnothing map map1 mathtest memberptest messageboxtest messageboxtest.badinput messageboxtest.smoketest miditest miditest.badinput miditest.devicezero miditest.longformat miditest.playtune miditest.smoketest minustest misctest mkdirtest modulotest mousetest mousetest.badinput mousetest.simpletest my.proc.to.step myadd myaddcopy mymacro namelist networktest networktest.client.echo networktest.client.receivelargepacket networktest.client.receiveunframedpacket networktest.client.shutdownrace networktest.client.smoketest networktest.hostname networktest.netshutdowncrash networktest.server.receiveunframedpacket networktest.server.shutdownrace networktest.server.twoconnections networktest.servercommand networktest.smoketest no.input.no.output nodestest nottest numberptest one.input.no.output orientation orientationtest ortest outporttest output.373 parsetest parsetest.deeplynestedinfixexpression parsetest.deeplyparenthesizedexpression parsetest.expression parsetest.func parsetest.infixexpression parsetest.longinstructionline parsetest.longinstructionlinewithcatch parsetest.lotsofnegationoperators parsetest.manyinputs parsetest.manynestedcalls parsetest.number parsetest.symbolsofinclusion parsetest.word pasteincircle pen pencolortest penmodetest pensizetest pensizetest.badinput pensizetest.setgettest pensizetest.smoketest pentest penupdowntest perspectivetest perspectivetest.badinput perspectivetest.smoketest pi pitest pixeltest pixeltest.badinput pixeltest.smoketest plisttest pllist poall pon pons pop popl popls pops porttest potest potest.badinput potest.smoketest pots powertest predicatetest printtest printtest.deeplynestedarray printtest.deeplynestedlist printtest.performance printtest.smoketest procedure.shadows.myshadowedvar procedure.with.to.inside.it procedureinworkingdirectory proceduretest proceduretest.complexproc producttest push questionboxtest questionboxtest.badinput questionboxtest.smoketest queue queuetest queuetest.badinput queuetest.circulartest queuetest.smoketest quoted quotedtest quotedtest.badinput quotedtest.smoketest quotienttest radarccostest radarcsintest radarctantest radcostest radsintest radtantest rawasciitest reduce reducetest reducetest.badinput reducetest.max reducetest.max.rest reducetest.smoketest refreshtest remaindertest remdup remduptest remduptest.badinput remduptest.smoketest repcounttest repcounttest.badinput repcounttest.smoketest repcounttest.timercallback repcounttest.timertest repeattest repeattest.badinput repeattest.errorinrepeat repeattest.outputinrepeat repeattest.smoketest repeattest.stopinrepeat reporttest reporttestfailed reporttestinfo reporttestinitialize reporttestpassed reporttestuninitialize reverse reverse.helper reversetest reversetest.badinput reversetest.smoketest rmdirtest roundtest runbadinputtest runexpecterrortest runfilesystemerrortest runhasnovaluetest runidontknowhowtotest runisaprimitivetest runnonrecoverableidontknowhowtotest runnotenoughinputstest runoutofboundstest runprinttest runresulttest runresulttest.badinput runresulttest.smoketest runstoppingtest runtest runtoomanyinputstest runyoudontsaywhattodowithtest sampleproc screencolortest screentest scrunchtest selectboxtest selectboxtest.badinput selectboxtest.smoketest sentencetest sentencetest.badinput sentencetest.noalias sentencetest.smoketest setitemtest setlabelfonttest setorientation setpixeltest.badinput setpixeltest.smoketest setrandomorientation settextfont shellscripttest shelltest shelltest.badinput shelltest.smoketest shelltest.waityields sign signtest simplereporttest sintest slowdrawtest slowdrawtest.badinput slowdrawtest.buried slowdrawtest.redefptest slowdrawtest.smoketest slowdrawtest.timecommand sort sort.listtoword sort.merge sort.mergepairwise sort.mergesort sort.wordtolist sorttest sorttest.after? sorttest.badinput sorttest.nonpredicate sorttest.oneinputbydefault sorttest.oneinputproc sorttest.performance sorttest.regression sorttest.sortbylegs sorttest.sortbyname sorttest.threeinputproc soundtest soundtest.badinput soundtest.frequency.a4 soundtest.frequency.b4 soundtest.frequency.c4 soundtest.frequency.c5 soundtest.frequency.d4 soundtest.frequency.d5 soundtest.frequency.e4 soundtest.frequency.f4 soundtest.frequency.g4 soundtest.sound soundtest.tone sqrttest stacktest stacktest.badinput stacktest.circulartest stacktest.smoketest statustest statustest.badinput statustest.smoketest steptest steptest.badinput steptest.procedure steptest.propertylist steptest.shadowvariable steptest.stepall steptest.steppedprocedure steptest.variable sumtest tantest testall testlib.repeatword testtest testtest.badinput testtest.scopetest testtest.smoketest texttest texttest.badinput texttest.smoketest thingtest thingtest.badinput thingtest.shadowedvariable thingtest.smoketest throwtest.badinput throwtest.usererror throwtest.usererror.actualthrowlocation tildainline timecommand timertest timertest.badinput timertest.smoketest timetest timetest.badinput timetest.smoketest timewait totest totest.baddefaultinputs totest.chaineddefaults totest.chaineddefaultstest totest.defaultinput totest.defaultnumberofinputs totest.nooutput totest.output5 totest.outputdefaultinput totest.outputdefaultinput.twoinputs totest.outputrest totest.outputrest.twoinputs totest.repeatedinput totest.repeatedinputtest totest.rest totest.singleinput totest.smoketest traceinstruction tracetest tracetest.badinput tracetest.function tracetest.procedure tracetest.propertylist tracetest.traceall tracetest.tracedfunction tracetest.tracedprocedure tracetest.variable typetest typetest.smoketest unburyall unicon uppercasetest uppercasetest.badinput uppercasetest.international uppercasetest.smoketest waittest waittest.badinput waittest.smoketest while windowfileedittest windowfileedittest.bug1330752 windowfileedittest.longfilename windowsettest windowsettest.badinput windowsettest.bug1429960 windowstest windowstest.button windowstest.button.badinput windowstest.checkbox windowstest.checkbox.badinput windowstest.checkbox.deletegroupbox windowstest.combobox windowstest.combobox.badinput windowstest.debugwindows windowstest.debugwindows.badinput windowstest.debugwindows.stress windowstest.dialog.badinput windowstest.dialog.badinput.fromcallback windowstest.dialog.smoketest windowstest.groupbox windowstest.groupbox.badinput windowstest.listbox windowstest.listbox.badinput windowstest.mainwindow.smoketest windowstest.radiobutton windowstest.radiobutton.badinput windowstest.radiobutton.deletegroupbox windowstest.regressiontest windowstest.scrollbar windowstest.scrollbar.badinput windowstest.setup windowstest.static windowstest.static.badinput windowstest.window.badinput windowstest.window.smoketest windowtest windowtest.badinput windowtest.smoketest wordproctest wordptest wordtest wraptest wraptest.badinput wraptest.smoketest xcor ycor yesnoboxtest yesnoboxtest.badinput yesnoboxtest.smoketest zoomtest zoomtest.badinput zoomtest.smoketest zoomtest.zoomstayscentered ~callme ~ignoreme] [array caseignoredp count erract erract.was.called instruction isok lambda.function.ran realcontents savedburied something.to.break.tail.recursion startup string sum testlog thesum tracetest.tracedplist word1 word2] [burytest.buriedplist steptest.steppedplist tracetest.tracedplist]] , as expected.
+PASS: [BURIED] output [[# #test .eqtest ?rest ` abs abstest activeareatest activeareatest.badinput activeareatest.smoketest andtest angleiscloseenough applytest applytest.applyoutput applytest.badinput applytest.bug1519088 applytest.lambdatemplate applytest.lambdatemplate.newscopetest applytest.nonprimitive applytest.nooutput applytest.proceduretexttemplate applytest.proceduretexttemplate.newscopetest applytest.questionmarktemplate applytest.smoketest arc arc2 arcbadinputtest arccostest arcsintest arcsmoketest arctantest arctest arraybadinputtest arrayorigintest arrayptest arraysmoketest arraytest arraytolist asciitest ashifttest.badinput ashifttest.smoketest beforeptest bitandtest.badinput bitandtest.smoketest bitblocktest bitblocktest.badinput bitblocktest.smoketest bitcopytest bitloadsizetest bitmaptest bitnottest.badinput bitnottest.smoketest bitortest.badinput bitortest.smoketest bitpastetoindextest.badinput bitpastetoindextest.smoketest bitwisetest bitxortest.badinput bitxortest.smoketest bodyhasemptylines bug1349374test bug1377856test bug1383281test bug1384267test bug1388325test bug1397560test bug1448155test bug1458661test bug1563318.applysum bug1563318.crash bug1563318.defaultrest bug1563318.oneinput buryall burytest burytest.badinput burytest.buriedprocedure burytest.buryall burytest.procedure burytest.propertylist burytest.variable butfirststest butfirststest.badinput butfirststest.smoketest butfirsttest butlasttest buttonptest cascade cascade.eval cascade.setup cascade1 catchtest catchtest.badinput catchtest.catchbuiltinerror catchtest.catchusererror catchtest.doublecatcherror catchtest.doublecatcherror.innercatcherror catchtest.doublecatcherror.throwerror catchtest.skiperrortag catchtest.skiperrortag.catcherror catchtest.skiperrortag.throw catchtest.skipthrowtag catchtest.skipthrowtag.catchthrowtag catchtest.skipthrowtag.throwerror catchtest.skipthrowtagwithvalue catchtest.skipthrowtagwithvalue.catchinnertag catchtest.skipthrowtagwithvalue.throwoutertag catchtest.smoketest catchtest.smoketest.throw catchtest.throw.builtin.error chdirtest checkerror checkerroritem checkexecutiontime checkscreen circle circle2 client.onreadytosend colorindextest colorsetgettest colortest combine combinetest combinetest.badinput combinetest.smoketest controlflowtest copydef.allow.redefinitions copydefmaybeoutputtest copydefoptest copydefoutputtest copydefstoptest copydeftest copydeftest.badinput copydeftest.infix copydeftest.innontailrecursiveprocedure copydeftest.nontailrecursivecount copydeftest.primitive copydeftest.primitivewithinputs copydeftest.redefp copydeftest.specialform copydeftest.userdefined copydeftotest costest definetest definetest.badinput definetest.bodyhasemptylines definetest.smoketest dequeue differencetest difficultcomments1 difficultcomments2 dir directorysmoketest directorytest dllcalltest dllfreetest dllloadtest dllsmoketest dlltest donothing doorientationtest echo edall edalltest.badinput edalltest.displaybyhwnd editortest edittest.badinput edittest.manyvariables ellipsa2 ellipsearc2 emptyptest equalptest equalptest.badinput equalptest.deeplynestedlist equalptest.international equalptest.smoketest erasetest erasetest.badinput erasetest.eraseall erasetest.eraseprocedure erasetest.erasepropertylist erasetest.erasevariable erasetest.ern erasetest.erpl erracttest erracttest.bug1517326 erracttest.bug1517326.continue5 erracttest.catchblockserract erracttest.changeerract.output.6 erracttest.changeerractinerract erracttest.erractaftercatch erracttest.errorinerract erracttest.output.5 erracttest.output.nexterractvalue erracttest.outputwrongvalue erracttest.recoverableerror.outputnothing erracttest.smoketest erracttest.unrecoverableerror.outputnothing erracttest.unrecoverableerror.outputvalue error.30.test errortest errortest.bug1577034 errortest.call.output.run.5 errortest.output.run.5 evaltest evaltest.catcherrormanytimes evaltest.catchtoomanyinputserror evaltest.nontailrecursive evaltest.nontailrecursivecount evaltest.tailrecursive evaltest.tailrecursivecount exptest failifnotfalse failifnottrue fencetest fencetest.badinput fencetest.bug1573061 fencetest.smoketest fileexists filesareequal filetest filetest.allopen filetest.badinput filetest.closeall filetest.closereader filetest.dribble filetest.eofponstdin filetest.erasefile filetest.openappend filetest.opendirectoryasfile filetest.openopenfile filetest.openupdate filetest.setread.closedfile filetest.setreadpos filetest.setwritepos filetest.smoketest filltest filltimerevent filter firststest firststest.badinput firststest.smoketest firsttest floodcolortest fontfacenamestest fontfacenamestest.badinput fontfacenamestest.manualtest fontfacenamestest.smoketest for for.done foreach foreach.done foreach1 forevertest forevertest.badinput forevertest.errorinforever forevertest.outputinforever forevertest.smoketest forevertest.stopinforever forloop formtest forstep fputtest fputtest.badinput fputtest.smoketest fulltexttest fulltexttest.badinput fulltexttest.smoketest helptest i.dont.know.what.to.do.with.value icon iftest ignore inporttest inttest iseq iseq.integer? iseq1 iseqtest labelbadinputtest labelcircletest labeltest lasttest linecontinuation3 listptest listtest listtest.smoketest listtoarray listtoarray1 lntest loadtest localefalse localetrue localmake localvartest log10test logictest logoversiontest logoversiontest.badinput logoversiontest.smoketest lowercasetest lowercasetest.badinput lowercasetest.international lowercasetest.smoketest lputtest lputtest.badinput lputtest.smoketest lshifttest.badinput lshifttest.smoketest macro.return.unbound.instead.of.list macrotest macrotest.outputnothing map map1 mathtest memberptest messageboxtest messageboxtest.badinput messageboxtest.smoketest miditest miditest.badinput miditest.devicezero miditest.longformat miditest.playtune miditest.smoketest minustest misctest mkdirtest modulotest mousetest mousetest.badinput mousetest.simpletest my.proc.to.step myadd myaddcopy mymacro namelist networktest networktest.client.echo networktest.client.receivelargepacket networktest.client.receiveunframedpacket networktest.client.shutdownrace networktest.client.smoketest networktest.hostname networktest.netshutdowncrash networktest.server.receiveunframedpacket networktest.server.shutdownrace networktest.server.twoconnections networktest.servercommand networktest.smoketest no.input.no.output nodestest nottest numberptest one.input.no.output orientation orientationtest ortest outporttest output.373 parsetest parsetest.deeplynestedinfixexpression parsetest.deeplyparenthesizedexpression parsetest.expression parsetest.func parsetest.infixexpression parsetest.longinstructionline parsetest.longinstructionlinewithcatch parsetest.lotsofnegationoperators parsetest.manyinputs parsetest.manynestedcalls parsetest.number parsetest.symbolsofinclusion parsetest.word pasteincircle pen pencolortest penmodetest pensizetest pensizetest.badinput pensizetest.setgettest pensizetest.smoketest pentest penupdowntest perspectivetest perspectivetest.badinput perspectivetest.smoketest pi pitest pixeltest pixeltest.badinput pixeltest.smoketest plisttest pllist poall pon pons pop popl popls pops porttest potest potest.badinput potest.smoketest pots powertest predicatetest printtest printtest.deeplynestedarray printtest.deeplynestedlist printtest.performance printtest.smoketest procedure.shadows.myshadowedvar procedure.with.to.inside.it procedureinworkingdirectory proceduretest proceduretest.complexproc producttest push questionboxtest questionboxtest.badinput questionboxtest.smoketest queue queuetest queuetest.badinput queuetest.circulartest queuetest.smoketest quoted quotedtest quotedtest.badinput quotedtest.smoketest quotienttest radarccostest radarcsintest radarctantest radcostest radsintest radtantest rawasciitest reduce reducetest reducetest.badinput reducetest.max reducetest.max.rest reducetest.smoketest refreshtest remaindertest remdup remduptest remduptest.badinput remduptest.smoketest repcounttest repcounttest.badinput repcounttest.smoketest repcounttest.timercallback repcounttest.timertest repeattest repeattest.badinput repeattest.errorinrepeat repeattest.outputinrepeat repeattest.smoketest repeattest.stopinrepeat reporttest reporttestfailed reporttestinfo reporttestinitialize reporttestpassed reporttestuninitialize reverse reverse.helper reversetest reversetest.badinput reversetest.smoketest rmdirtest roundtest runbadinputtest rundoesntlikeinputtest runexpecterrortest runfilesystemerrortest runhasnovaluetest runidontknowhowtotest runisaprimitivetest runnonrecoverableidontknowhowtotest runnotenoughinputstest runoutofboundstest runprinttest runresulttest runresulttest.badinput runresulttest.smoketest runstoppingtest runtest runtoomanyinputstest runyoudontsaywhattodowithtest sampleproc screencolortest screentest scrunchtest selectboxtest selectboxtest.badinput selectboxtest.smoketest sentencetest sentencetest.badinput sentencetest.noalias sentencetest.smoketest setitemtest setlabelfonttest setorientation setpixeltest.badinput setpixeltest.smoketest setrandomorientation settextfont shellscripttest shelltest shelltest.badinput shelltest.smoketest shelltest.waityields sign signtest simplereporttest sintest slowdrawtest slowdrawtest.badinput slowdrawtest.buried slowdrawtest.redefptest slowdrawtest.smoketest slowdrawtest.timecommand sort sort.listtoword sort.merge sort.mergepairwise sort.mergesort sort.wordtolist sorttest sorttest.after? sorttest.badinput sorttest.nonpredicate sorttest.oneinputbydefault sorttest.oneinputproc sorttest.performance sorttest.regression sorttest.sortbylegs sorttest.sortbyname sorttest.threeinputproc soundtest soundtest.badinput soundtest.frequency.a4 soundtest.frequency.b4 soundtest.frequency.c4 soundtest.frequency.c5 soundtest.frequency.d4 soundtest.frequency.d5 soundtest.frequency.e4 soundtest.frequency.f4 soundtest.frequency.g4 soundtest.sound soundtest.tone sqrttest stacktest stacktest.badinput stacktest.circulartest stacktest.smoketest statustest statustest.badinput statustest.smoketest steptest steptest.badinput steptest.procedure steptest.propertylist steptest.shadowvariable steptest.stepall steptest.steppedprocedure steptest.variable sumtest tantest testall testlib.repeatword testtest testtest.badinput testtest.scopetest testtest.smoketest texttest texttest.badinput texttest.smoketest thingtest thingtest.badinput thingtest.shadowedvariable thingtest.smoketest throwtest.badinput throwtest.usererror throwtest.usererror.actualthrowlocation tildainline timecommand timertest timertest.badinput timertest.smoketest timetest timetest.badinput timetest.smoketest timewait totest totest.baddefaultinputs totest.chaineddefaults totest.chaineddefaultstest totest.defaultinput totest.defaultnumberofinputs totest.nooutput totest.output5 totest.outputdefaultinput totest.outputdefaultinput.twoinputs totest.outputrest totest.outputrest.twoinputs totest.repeatedinput totest.repeatedinputtest totest.rest totest.singleinput totest.smoketest traceinstruction tracetest tracetest.badinput tracetest.function tracetest.procedure tracetest.propertylist tracetest.traceall tracetest.tracedfunction tracetest.tracedprocedure tracetest.variable turtletest turtletest.badinput turtletest.characteristics turtletest.smoketest typetest typetest.smoketest unburyall unicon uppercasetest uppercasetest.badinput uppercasetest.international uppercasetest.smoketest waittest waittest.badinput waittest.smoketest while windowfileedittest windowfileedittest.bug1330752 windowfileedittest.longfilename windowsettest windowsettest.badinput windowsettest.bug1429960 windowstest windowstest.button windowstest.button.badinput windowstest.checkbox windowstest.checkbox.badinput windowstest.checkbox.deletegroupbox windowstest.combobox windowstest.combobox.badinput windowstest.debugwindows windowstest.debugwindows.badinput windowstest.debugwindows.stress windowstest.dialog.badinput windowstest.dialog.badinput.fromcallback windowstest.dialog.smoketest windowstest.groupbox windowstest.groupbox.badinput windowstest.listbox windowstest.listbox.badinput windowstest.mainwindow.smoketest windowstest.radiobutton windowstest.radiobutton.badinput windowstest.radiobutton.deletegroupbox windowstest.regressiontest windowstest.scrollbar windowstest.scrollbar.badinput windowstest.setup windowstest.static windowstest.static.badinput windowstest.window.badinput windowstest.window.smoketest windowtest windowtest.badinput windowtest.smoketest wordproctest wordptest wordtest wraptest wraptest.badinput wraptest.smoketest xcor ycor yesnoboxtest yesnoboxtest.badinput yesnoboxtest.smoketest zoomtest zoomtest.badinput zoomtest.smoketest zoomtest.zoomstayscentered ~callme ~ignoreme] [array caseignoredp count erract erract.was.called instruction isok lambda.function.ran realcontents savedburied something.to.break.tail.recursion startup string sum testlog thesum tracetest.tracedplist word1 word2] [burytest.buriedplist steptest.steppedplist tracetest.tracedplist]] , as expected.
 PASS: CONTENTS returned [[] [] []] , as expected.
 INFO: Called UNBURYALL
 PASS: [BURIED] output [[] [] []] , as expected.
@@ -6164,10 +6230,10 @@ INFO: error text is Stopping... .
 INFO: Running invalid instruction: [(windowenable "goodwindow)]
 PASS: error code is 6 , as expected.
 INFO: error text is not enough inputs to windowenable .
-INFO: Running invalid instruction: [(windowenable "goodwindow "true "toomany)]
+INFO: Running invalid instruction: [(windowenable "goodwindow LOCALETRUE "toomany)]
 PASS: error code is 8 , as expected.
 INFO: error text is too much inside ()'s .
-INFO: Running invalid instruction: [windowenable "nonexistent "true]
+INFO: Running invalid instruction: [windowenable "nonexistent LOCALETRUE]
 INFO: error code is 16 .
 INFO: error text is Stopping... .
 INFO: Running invalid instruction: [windowenable "goodwindow 1]
@@ -6241,13 +6307,13 @@ INFO: error text is Stopping... .
 INFO: Running invalid instruction: [(dialogenable "gooddialog)]
 PASS: error code is 6 , as expected.
 INFO: error text is not enough inputs to dialogenable .
-INFO: Running invalid instruction: [(dialogenable "gooddialog "true "toomany)]
+INFO: Running invalid instruction: [(dialogenable "gooddialog LOCALETRUE "toomany)]
 PASS: error code is 8 , as expected.
 INFO: error text is too much inside ()'s .
-INFO: Running invalid instruction: [dialogenable "nonexistent "true]
+INFO: Running invalid instruction: [dialogenable "nonexistent LOCALETRUE]
 INFO: error code is 16 .
 INFO: error text is Stopping... .
-INFO: Running invalid instruction: [dialogenable "notadialog "true]
+INFO: Running invalid instruction: [dialogenable "notadialog LOCALETRUE]
 INFO: error code is 16 .
 INFO: error text is Stopping... .
 INFO: Running invalid instruction: [dialogenable "gooddialog 1]
@@ -6369,6 +6435,7 @@ CALL: LISTBOXDELETESTRING "testlist 100
 CALL: LISTBOXADDSTRING "testlist [secondstring]
 PASS: [LISTBOXGETSELECT "testlist] output [secondstring] , as expected.
 CALL: LISTBOXENABLE "testlist "false
+CALL: LISTBOXENABLE "testlist "false
 CALL: LISTBOXENABLE "testlist "true
 INFO: Running invalid instruction: [(listboxcreate "main "name 0 0 120)]
 PASS: error code is 6 , as expected.
@@ -6426,13 +6493,13 @@ CALL: staticcreate "main "notalistbox [text] 0 100 100 100
 INFO: Running invalid instruction: [(listboxenable "goodlistbox)]
 PASS: error code is 6 , as expected.
 INFO: error text is not enough inputs to listboxenable .
-INFO: Running invalid instruction: [(listboxenable "goodlistbox "true "toomany)]
+INFO: Running invalid instruction: [(listboxenable "goodlistbox LOCALETRUE "toomany)]
 PASS: error code is 8 , as expected.
 INFO: error text is too much inside ()'s .
-INFO: Running invalid instruction: [listboxenable "doesnotexist "true]
+INFO: Running invalid instruction: [listboxenable "doesnotexist LOCALETRUE]
 INFO: error code is 16 .
 INFO: error text is Stopping... .
-INFO: Running invalid instruction: [listboxenable "notalistbox "true]
+INFO: Running invalid instruction: [listboxenable "notalistbox LOCALETRUE]
 INFO: error code is 16 .
 INFO: error text is Stopping... .
 INFO: Running invalid instruction: [listboxenable "goodlistbox 1]
@@ -6524,6 +6591,7 @@ PASS: [COMBOBOXGETTEXT "combobox] output [secondstring] , as expected.
 CALL: COMBOBOXSETTEXT "combobox "text
 PASS: [COMBOBOXGETTEXT "combobox] output [text] , as expected.
 CALL: COMBOBOXENABLE "combobox "false
+CALL: COMBOBOXENABLE "combobox "false
 CALL: COMBOBOXENABLE "combobox "true
 CALL: COMBOBOXDELETE "combobox
 CALL: WINDOWDELETE "windowstest.combocombobox
@@ -6583,13 +6651,13 @@ CALL: staticcreate "main "notacombobox [text] 0 100 100 100
 INFO: Running invalid instruction: [(comboboxenable "goodcombobox)]
 PASS: error code is 6 , as expected.
 INFO: error text is not enough inputs to comboboxenable .
-INFO: Running invalid instruction: [(comboboxenable "goodcombobox "true "toomany)]
+INFO: Running invalid instruction: [(comboboxenable "goodcombobox LOCALETRUE "toomany)]
 PASS: error code is 8 , as expected.
 INFO: error text is too much inside ()'s .
-INFO: Running invalid instruction: [comboboxenable "doesnotexist "true]
+INFO: Running invalid instruction: [comboboxenable "doesnotexist LOCALETRUE]
 INFO: error code is 16 .
 INFO: error text is Stopping... .
-INFO: Running invalid instruction: [comboboxenable "notacombobox "true]
+INFO: Running invalid instruction: [comboboxenable "notacombobox LOCALETRUE]
 INFO: error code is 16 .
 INFO: error text is Stopping... .
 INFO: Running invalid instruction: [comboboxenable "goodcombobox 1]
@@ -6752,6 +6820,7 @@ PASS: [RADIOBUTTONGET "radio1] output false , as expected.
 CALL: RADIOBUTTONSET "radio2 "true
 PASS: [RADIOBUTTONGET "radio2] output true , as expected.
 CALL: RADIOBUTTONENABLE "radio1 "false
+CALL: RADIOBUTTONENABLE "radio1 "false
 CALL: RADIOBUTTONENABLE "radio1 "true
 CALL: RADIOBUTTONDELETE "radio1
 CALL: RADIOBUTTONDELETE "radio2
@@ -6815,13 +6884,13 @@ CALL: staticcreate "main "notaradiobutton [text] 0 100 100 100
 INFO: Running invalid instruction: [(radiobuttonenable "goodradiobutton)]
 PASS: error code is 6 , as expected.
 INFO: error text is not enough inputs to radiobuttonenable .
-INFO: Running invalid instruction: [(radiobuttonenable "goodradiobutton "true "toomany)]
+INFO: Running invalid instruction: [(radiobuttonenable "goodradiobutton LOCALETRUE "toomany)]
 PASS: error code is 8 , as expected.
 INFO: error text is too much inside ()'s .
-INFO: Running invalid instruction: [radiobuttonenable "doesnotexist "true]
+INFO: Running invalid instruction: [radiobuttonenable "doesnotexist LOCALETRUE]
 INFO: error code is 16 .
 INFO: error text is Stopping... .
-INFO: Running invalid instruction: [radiobuttonenable "notaradiobutton "true]
+INFO: Running invalid instruction: [radiobuttonenable "notaradiobutton LOCALETRUE]
 INFO: error code is 16 .
 INFO: error text is Stopping... .
 INFO: Running invalid instruction: [radiobuttonenable "goodradiobutton 1]
@@ -6849,13 +6918,13 @@ CALL: radiobuttonset "goodradiobutton "false
 INFO: Running invalid instruction: [(radiobuttonset "goodradiobutton)]
 PASS: error code is 6 , as expected.
 INFO: error text is not enough inputs to radiobuttonset .
-INFO: Running invalid instruction: [(radiobuttonset "goodradiobutton "true "toomany)]
+INFO: Running invalid instruction: [(radiobuttonset "goodradiobutton LOCALETRUE "toomany)]
 PASS: error code is 8 , as expected.
 INFO: error text is too much inside ()'s .
-INFO: Running invalid instruction: [radiobuttonset "doesnotexist "true]
+INFO: Running invalid instruction: [radiobuttonset "doesnotexist LOCALETRUE]
 INFO: error code is 16 .
 INFO: error text is Stopping... .
-INFO: Running invalid instruction: [radiobuttonset "notaradiobutton "true]
+INFO: Running invalid instruction: [radiobuttonset "notaradiobutton LOCALETRUE]
 INFO: error code is 16 .
 INFO: error text is Stopping... .
 INFO: Running invalid instruction: [radiobuttonset "goodradiobutton 1]
@@ -6890,6 +6959,7 @@ CALL: GROUPBOXDELETE "groupbox
 CALL: RADIOBUTTONSET "radio "false
 PASS: [RADIOBUTTONGET "radio] output false , as expected.
 CALL: RADIOBUTTONENABLE "radio "false
+CALL: RADIOBUTTONENABLE "radio "false
 CALL: RADIOBUTTONENABLE "radio "true
 CALL: RADIOBUTTONDELETE "radio
 CALL: WINDOWDELETE "windowstest.radiobutton
@@ -6900,6 +6970,7 @@ PASS: [CHECKBOXGET "checkbox2] output false , as expected.
 CALL: CHECKBOXSET "checkbox1 "false
 PASS: [CHECKBOXGET "checkbox1] output false , as expected.
 PASS: [CHECKBOXGET "checkbox2] output false , as expected.
+CALL: CHECKBOXENABLE "checkbox1 "false
 CALL: CHECKBOXENABLE "checkbox1 "false
 CALL: CHECKBOXENABLE "checkbox1 "true
 CALL: CHECKBOXDELETE "checkbox1
@@ -6964,13 +7035,13 @@ CALL: staticcreate "main "notacheckbox [text] 0 100 100 100
 INFO: Running invalid instruction: [(checkboxenable "goodcheckbox)]
 PASS: error code is 6 , as expected.
 INFO: error text is not enough inputs to checkboxenable .
-INFO: Running invalid instruction: [(checkboxenable "goodcheckbox "true "toomany)]
+INFO: Running invalid instruction: [(checkboxenable "goodcheckbox LOCALETRUE "toomany)]
 PASS: error code is 8 , as expected.
 INFO: error text is too much inside ()'s .
-INFO: Running invalid instruction: [checkboxenable "doesnotexist "true]
+INFO: Running invalid instruction: [checkboxenable "doesnotexist LOCALETRUE]
 INFO: error code is 16 .
 INFO: error text is Stopping... .
-INFO: Running invalid instruction: [checkboxenable "notacheckbox "true]
+INFO: Running invalid instruction: [checkboxenable "notacheckbox LOCALETRUE]
 INFO: error code is 16 .
 INFO: error text is Stopping... .
 INFO: Running invalid instruction: [checkboxenable "goodcheckbox 1]
@@ -6997,14 +7068,14 @@ INFO: error text is Stopping... .
 INFO: Running invalid instruction: [(checkboxset "goodcheckbox)]
 PASS: error code is 6 , as expected.
 INFO: error text is not enough inputs to checkboxset .
-INFO: Running invalid instruction: [(checkboxset "goodcheckbox "true "toomany)]
+INFO: Running invalid instruction: [(checkboxset "goodcheckbox LOCALETRUE "toomany)]
 PASS: error code is 8 , as expected.
 INFO: error text is too much inside ()'s .
 CALL: checkboxset "goodcheckbox "false
-INFO: Running invalid instruction: [checkboxset "doesnotexist "true]
+INFO: Running invalid instruction: [checkboxset "doesnotexist LOCALETRUE]
 INFO: error code is 16 .
 INFO: error text is Stopping... .
-INFO: Running invalid instruction: [checkboxset "notacheckbox "true]
+INFO: Running invalid instruction: [checkboxset "notacheckbox LOCALETRUE]
 INFO: error code is 16 .
 INFO: error text is Stopping... .
 INFO: Running invalid instruction: [checkboxset "goodcheckbox 1]
@@ -7038,6 +7109,7 @@ CALL: CHECKBOXCREATE "windowstest.checkbox "groupbox "checkbox [Checkbox] 20 15 
 CALL: GROUPBOXDELETE "groupbox
 CALL: CHECKBOXSET "checkbox "false
 PASS: [CHECKBOXGET "checkbox] output false , as expected.
+CALL: CHECKBOXENABLE "checkbox "false
 CALL: CHECKBOXENABLE "checkbox "false
 CALL: CHECKBOXENABLE "checkbox "true
 CALL: CHECKBOXDELETE "checkbox
@@ -7119,13 +7191,13 @@ CALL: staticcreate "main "notascrollbar [text] 0 100 100 100
 INFO: Running invalid instruction: [(scrollbarenable "goodscrollbar)]
 PASS: error code is 6 , as expected.
 INFO: error text is not enough inputs to scrollbarenable .
-INFO: Running invalid instruction: [(scrollbarenable "goodscrollbar "true "toomany)]
+INFO: Running invalid instruction: [(scrollbarenable "goodscrollbar LOCALETRUE "toomany)]
 PASS: error code is 8 , as expected.
 INFO: error text is too much inside ()'s .
-INFO: Running invalid instruction: [scrollbarenable "doesnotexist "true]
+INFO: Running invalid instruction: [scrollbarenable "doesnotexist LOCALETRUE]
 INFO: error code is 16 .
 INFO: error text is Stopping... .
-INFO: Running invalid instruction: [scrollbarenable "notascrollbar "true]
+INFO: Running invalid instruction: [scrollbarenable "notascrollbar LOCALETRUE]
 INFO: error code is 16 .
 INFO: error text is Stopping... .
 INFO: Running invalid instruction: [scrollbarenable "goodscrollbar 1]
@@ -7280,10 +7352,10 @@ INFO: error text is not enough inputs to buttonenable .
 INFO: Running invalid instruction: [(buttonenable "goodbutton "true "toomany)]
 PASS: error code is 8 , as expected.
 INFO: error text is too much inside ()'s .
-INFO: Running invalid instruction: [buttonenable "doesnotexist "true]
+INFO: Running invalid instruction: [buttonenable "doesnotexist LOCALETRUE]
 INFO: error code is 16 .
 INFO: error text is Stopping... .
-INFO: Running invalid instruction: [buttonenable "notabutton "true]
+INFO: Running invalid instruction: [buttonenable "notabutton LOCALETRUE]
 INFO: error code is 16 .
 INFO: error text is Stopping... .
 INFO: Running invalid instruction: [buttonenable "goodbutton 1]
@@ -7666,10 +7738,10 @@ CALL: SLOWDRAW 100
 INFO: Running invalid instruction: [:redefp]
 PASS: error code is 11 , as expected.
 INFO: error text is redefp has no value .
-CALL: MAKE "redefp "false
+CALL: MAKE "redefp LOCALEFALSE
 CALL: SLOWDRAW 100
 PASS: [:redefp] output false , as expected.
-CALL: MAKE "redefp "true
+CALL: MAKE "redefp LOCALETRUE
 CALL: SLOWDRAW 100
 PASS: [:redefp] output true , as expected.
 PASS: SLOWDRAW buried all procedures that it defined.
