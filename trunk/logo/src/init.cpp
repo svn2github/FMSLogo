@@ -127,7 +127,7 @@ CLocalizedNode::Equals(
    ) const
    {
    // see if this matches the primary node
-   if (0 == compare_node(Node, m_Primary, true, false))
+   if (0 == compare_node(Node, m_Primary, true))
       {
       return true;
       }
@@ -135,7 +135,7 @@ CLocalizedNode::Equals(
    // See if this matches the alternate node
    if (m_Alternate != NIL)
       {
-      if (0 == compare_node(Node, m_Alternate, true, false))
+      if (0 == compare_node(Node, m_Alternate, true))
          {
          return true;
          }
