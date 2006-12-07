@@ -2,17 +2,17 @@ LOAD "testlib.lgo
 
 TO ORTEST
 
-  SIMPLEREPORTTEST [(OR) ]       "false
-  SIMPLEREPORTTEST [(OR "true)]  "true
-  SIMPLEREPORTTEST [(OR "false)] "false
+  FAILIFNOTFALSE [(OR) ]
+  FAILIFNOTTRUE  [(OR "true)]
+  FAILIFNOTFALSE [(OR "false)]
 
-  SIMPLEREPORTTEST [(OR "false "false)] "false
-  SIMPLEREPORTTEST [(OR "true  "false)] "true
-  SIMPLEREPORTTEST [(OR "false "true)]  "true
-  SIMPLEREPORTTEST [(OR "true  "true)]  "true
+  FAILIFNOTFALSE [(OR "false "false)]
+  FAILIFNOTTRUE  [(OR "true  "false)]
+  FAILIFNOTTRUE  [(OR "false "true)]
+  FAILIFNOTTRUE  [(OR "true  "true)]
 
-  SIMPLEREPORTTEST [(OR "false "FALSE "false "FALSE)] "false
-  SIMPLEREPORTTEST [(OR "false "FALSE "false "TRUE)]  "true
+  FAILIFNOTFALSE [(OR "false "FALSE "false "FALSE)]
+  FAILIFNOTTRUE  [(OR "false "FALSE "false "TRUE)]
 
   RUNBADINPUTTEST [(OR 1)]
   RUNBADINPUTTEST [(OR 0)]
@@ -26,17 +26,17 @@ END
 
 TO ANDTEST
 
-  SIMPLEREPORTTEST [(AND)]        "true
-  SIMPLEREPORTTEST [(AND "true)]  "true
-  SIMPLEREPORTTEST [(AND "false)] "false
+  FAILIFNOTTRUE  [(AND)]
+  FAILIFNOTTRUE  [(AND "true)]
+  FAILIFNOTFALSE [(AND "false)]
 
-  SIMPLEREPORTTEST [(AND "false "false)] "false
-  SIMPLEREPORTTEST [(AND "true  "false)] "false
-  SIMPLEREPORTTEST [(AND "false "true)]  "false
-  SIMPLEREPORTTEST [(AND "true  "true)]  "true
+  FAILIFNOTFALSE [(AND "false "false)]
+  FAILIFNOTFALSE [(AND "true  "false)]
+  FAILIFNOTFALSE [(AND "false "true)]
+  FAILIFNOTTRUE  [(AND "true  "true)]
 
-  SIMPLEREPORTTEST [(AND "TRUE "true "TRUE "false)] "false
-  SIMPLEREPORTTEST [(AND "TRUE "true "TRUE "true)]  "true
+  FAILIFNOTFALSE [(AND "TRUE "true "TRUE "false)]
+  FAILIFNOTTRUE  [(AND "TRUE "true "TRUE "true)]
 
   RUNBADINPUTTEST [(AND 1)]
   RUNBADINPUTTEST [(AND 0)]
@@ -50,8 +50,8 @@ END
 
 TO NOTTEST
 
-  SIMPLEREPORTTEST [(NOT "true)]  "false
-  SIMPLEREPORTTEST [(NOT "false)] "true
+  FAILIFNOTFALSE [(NOT "true)]
+  FAILIFNOTTRUE  [(NOT "false)]
 
   RUNNOTENOUGHINPUTSTEST [(NOT)]
   RUNBADINPUTTEST        [(NOT 0)]
