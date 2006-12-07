@@ -51,7 +51,7 @@ TO DIRECTORYSMOKETEST
    RMDIR     "mytestdir
 
    ; make sure it really got removed
-   SIMPLEREPORTTEST [MEMBERP "mytestdir DIRECTORIES] "false
+   FAILIFNOTFALSE [MEMBERP "mytestdir DIRECTORIES]
 END
 
 TO MKDIRTEST
