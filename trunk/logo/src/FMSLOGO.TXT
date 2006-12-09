@@ -377,7 +377,7 @@ Part III) Special Thanks:
 
 Part IV) Standard features:
 
-  * Supports Window 95/98/ME/NT/2000/XP/Vista.
+  * Supports Windows 95/98/ME/NT/2000/XP/Vista.
   * Supports TCP/IP WinSock Networking.
   * Supports Text in all available fonts and sizes.
   * Supports 1024 independent Turtles.
