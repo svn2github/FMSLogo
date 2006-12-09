@@ -2375,11 +2375,18 @@ void TMainFrame::CMSetFont()
    if (ChooseFont(&chooseFont))
       {
       // commit to the new font
-      char logoInstruction[512];
+      char setlabelfont[MAX_BUFFER_SIZE];
 
+      cap_strnzcpy(
+         setlabelfont,
+         LOCALIZED_ALTERNATE_SETLABELFONT,
+         sizeof(setlabelfont));
+
+      char logoInstruction[512];
       sprintf(
           logoInstruction,
-          "SETLABELFONT [[%s] %d %d %d %d %d %d %d %d %d %d %d %d]",
+          "%s [[%s] %d %d %d %d %d %d %d %d %d %d %d %d]",
+          setlabelfont,
           logFont.lfFaceName,
           logFont.lfHeight,
           logFont.lfWidth,
@@ -2407,14 +2414,23 @@ void TMainFrame::CMSetPenSize()
    {
    TSize theSize(get_pen_width(), get_pen_height());
 
-   // if OK then make change
+
    if (TSizeDialog(this, theSize).Execute() == IDOK)
       {
+      // the user pressed OK, so run the SETPENSIZE instruction
+      char setpensize[MAX_BUFFER_SIZE];
+
+      cap_strnzcpy(
+         setpensize,
+         LOCALIZED_ALTERNATE_SETPENSIZE,
+         sizeof(setpensize));
+
       char logoInstruction[256];
 
       sprintf(
           logoInstruction,
-          "SETPENSIZE [%d %d]",
+          "%s [%d %d]",
+          setpensize,
           theSize.X(),
           theSize.Y());
 
@@ -2434,12 +2450,19 @@ TMainFrame::ChooseColor(
    if (TColorDialog(this, color, EnglishDescription).Execute() == IDOK)
       {
       // the user pressed "OK" so we change the color
+      char upperCaseCommand[MAX_BUFFER_SIZE];
+
+      cap_strnzcpy(
+         upperCaseCommand,
+         LogoCommand,
+         sizeof(upperCaseCommand));
+
       char logoInstruction[256];
 
       sprintf(
           logoInstruction,
           "%s [%d %d %d]",
-          LogoCommand,
+          upperCaseCommand,
           color.Red(),
           color.Green(),
           color.Blue());
@@ -2450,17 +2473,26 @@ TMainFrame::ChooseColor(
 
 void TMainFrame::CMSetPenColor()
    {
-   ChooseColor(pcolor, "Pen Color", "SETPENCOLOR");
+   ChooseColor(
+      pcolor, 
+      LOCALIZED_SETCOLOR_PENCOLOR, 
+      LOCALIZED_ALTERNATE_SETPENCOLOR);
    }
 
 void TMainFrame::CMSetFloodColor()
    {
-   ChooseColor(fcolor, "Flood Color", "SETFLOODCOLOR");
+   ChooseColor(
+      fcolor, 
+      LOCALIZED_SETCOLOR_FLOODCOLOR, 
+      LOCALIZED_ALTERNATE_SETFLOODCOLOR);
    }
 
 void TMainFrame::CMSetScreenColor()
    {
-   ChooseColor(scolor, "Screen Color", "SETSCREENCOLOR");
+   ChooseColor(
+      scolor, 
+      LOCALIZED_SETCOLOR_SCREENCOLOR,
+      LOCALIZED_ALTERNATE_SETSCREENCOLOR);
    }
 
 void TMainFrame::CMHelp()
