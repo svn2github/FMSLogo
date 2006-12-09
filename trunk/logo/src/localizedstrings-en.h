@@ -113,7 +113,23 @@
 #define LOCALIZED_ALTERNATE_END     "end"
 
 //
-// Localized "alternate" spellings of Logo primitives
+// Localized "alternate" spellings of Logo primitives.
+// These become the perferred name of the primitives.  For example,
+// when you press the "reset" button, FMSLogo will write the value of
+// LOCALIZED_ALTERNATE_CLEARSCREEN to the commander.
+// 
+// Furthermore, if one of the LOCALIZED_ALTERNATE names uses the same text 
+// as the English counterpart, then the localized name will be used. 
+// For example, in the English version, "ct" is short for "CLEARTEXT".
+// In the French version, "ct" is short for "CACHETORTUE" (HIDETURTLE).
+// So in the French FMSLogo, running "ct" will hide the turtle.
+//
+// That said, it is strongly recommended that you do not choose names
+// that match the long English name of any command.  If you do, you may
+// find that some programs won't run on the localized version of FMSLogo.
+// 
+// If you don't know how to translate a particular command, leave it
+// as the English name and it will be ignored.
 //
 #define LOCALIZED_ALTERNATE__DEFMACRO              ".defmacro"
 #define LOCALIZED_ALTERNATE__EQ                    ".eq"
@@ -764,6 +780,9 @@
 // Strings on the Color Picker Dialog box
 //
 #define LOCALIZED_SETCOLOR                     "Set Color"
+#define LOCALIZED_SETCOLOR_PENCOLOR            "Pen Color"
+#define LOCALIZED_SETCOLOR_FLOODCOLOR          "Flood Color"
+#define LOCALIZED_SETCOLOR_SCREENCOLOR         "Screen Color"
 #define LOCALIZED_SETCOLOR_RED                 "Red"
 #define LOCALIZED_SETCOLOR_GREEN               "Green"
 #define LOCALIZED_SETCOLOR_BLUE                "Blue"
