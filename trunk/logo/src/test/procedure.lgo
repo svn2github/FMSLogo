@@ -299,7 +299,17 @@ TO POTEST
    POTEST.BADINPUT
 END
 
+TO PROCEDURETEST.ÀCÇÊNT
+  OUTPUT 3333
+END
+
 TO PROCEDURETEST
+
+   ; test that we can call procedures with accent marks
+   ; in their names in both uppercase, lowercase, and mixed case.
+   SIMPLEREPORTTEST [PROCEDURETEST.ÀCÇÊNT] 3333
+   SIMPLEREPORTTEST [proceduretest.àcçênt] 3333
+   SIMPLEREPORTTEST [ProcedureTest.Àcçênt] 3333
 
    ; test TEXT
    TEXTTEST
