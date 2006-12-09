@@ -592,8 +592,15 @@ void TMyCommandWindow::DoButtonStatus(UINT)
 
 void TMyCommandWindow::DoButtonReset(UINT)
    {
-   // just do a clear screen and return focus
-   RunLogoInstructionFromGui("CLEARSCREEN");
+   // run 'CLEARSCREEN' and return focus
+   char instruction[MAX_BUFFER_SIZE];
+   
+   cap_strnzcpy(
+      instruction,
+      LOCALIZED_ALTERNATE_CLEARSCREEN, 
+      sizeof(instruction));
+
+   RunLogoInstructionFromGui(instruction);
 
    Editbox.SetFocus();
    }
