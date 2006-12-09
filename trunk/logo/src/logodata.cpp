@@ -23,8 +23,6 @@
 #include "allwind.h"
 #include "version.h"
 
-#ifdef ecma
-
 // g_SpecialCharacters[] is an array of characters that must be escaped
 // with a backslash when put in a string.
 //
@@ -44,9 +42,6 @@ is_special_character(char ch)
    }
 
 const int ecma_begin = 3; // first char used for quoteds
-
-#define upper_p(ch)     (isupper((ch) & 0xFF))
-#define lower_p(ch)     (islower((ch) & 0xFF))
 
 static char ecma_array[128];
 
@@ -107,13 +102,6 @@ void init_ecma_array()
       ecma_array[g_SpecialCharacters[i]] = ecma_begin+i;
       }
    }
-
-#else
-
-#define upper_p(c)     (c >= 'A' && c <= 'Z')
-#define lower_p(c)     (c >= 'a' && c <= 'z')
-
-#endif
 
 char *strnzcpy(char *dst, const char *src, int len)
    {
@@ -320,14 +308,8 @@ char *noparitylow_strnzcpy(char *dst, const char *src, int len)
    for (int i = 0; i < len; i++)
       {
       char c = clearparity(*src++);
-      if (upper_p(c))
-         {
-         *dst++ = uncapital(c);
-         }
-      else
-         {
-         *dst++ = c;
-         }
+
+      *dst++ = uncapital(c);
       }
    *dst = '\0';
    return temp;
