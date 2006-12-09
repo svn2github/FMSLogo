@@ -113,22 +113,38 @@
 #define LOCALIZED_ALTERNATE_END     "fin"
 
 //
-// Localized "alternate" spellings of Logo primitives
+// Localized "alternate" spellings of Logo primitives.
+// These become the perferred name of the primitives.  For example,
+// when you press the "reset" button, FMSLogo will write the value of
+// LOCALIZED_ALTERNATE_CLEARSCREEN to the commander.
+// 
+// Furthermore, if one of the LOCALIZED_ALTERNATE names uses the same text 
+// as the English counterpart, then the localized name will be used. 
+// For example, in the English version, "ct" is short for "CLEARTEXT".
+// In the French version, "ct" is short for "CACHETORTUE" (HIDETURTLE).
+// So in the French FMSLogo, running "ct" will hide the turtle.
+//
+// That said, it is strongly recommended that you do not choose names
+// that match the long English name of any command.  If you do, you may
+// find that some programs won't run on the localized version of FMSLogo.
+// 
+// If you don't know how to translate a particular command, leave it
+// as the English name and it will be ignored.
 //
 #define LOCALIZED_ALTERNATE__DEFMACRO              ".defmacro" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE__EQ                    ".eq" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE__MACRO                 ".macro" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE__MAYBEOUTPUT           ".maybeoutput" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE__SETBF                 ".setbf" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE__SETFIRST              ".setfirst" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE__SETITEM               ".setitem" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_ACTIVEAREA             "activearea" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE__SETBF                 ".metssaufpremier"
+#define LOCALIZED_ALTERNATE__SETFIRST              ".metspremier"
+#define LOCALIZED_ALTERNATE__SETITEM               ".metsitem"
+#define LOCALIZED_ALTERNATE_ACTIVEAREA             "zoneactive" 
 #define LOCALIZED_ALTERNATE_ALLOPEN                "allopen" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_AND                    "and" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_AND                    "et"
 #define LOCALIZED_ALTERNATE_APPLY                  "apply" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_ARCCOS                 "arccos" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_ARCSIN                 "arcsin" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_ARCTAN                 "arctan" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_ARCCOS                 "arccos"
+#define LOCALIZED_ALTERNATE_ARCSIN                 "arcsin"
+#define LOCALIZED_ALTERNATE_ARCTAN                 "arctan"
 #define LOCALIZED_ALTERNATE_ARRAY                  "array" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_ARRAYP                 "arrayp" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_ARRAY_                 "array?" // NOT_YET_LOCALIZED
@@ -137,57 +153,57 @@
 #define LOCALIZED_ALTERNATE_BACK                   "recule"
 #define LOCALIZED_ALTERNATE_BACKSLASHEDP           "backslashedp" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_BACKSLASHED_           "backslashed?" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_BEFOREP                "beforep" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_BEFORE_                "before?" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_BF                     "bf" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_BFS                    "bfs" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_BEFOREP                "précedep"
+#define LOCALIZED_ALTERNATE_BEFORE_                "précede?"
+#define LOCALIZED_ALTERNATE_BF                     "sp"
+#define LOCALIZED_ALTERNATE_BFS                    "sps"
 #define LOCALIZED_ALTERNATE_BITAND                 "bitand" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_BITBLOCK               "bitblock" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_BITCOPY                "bitcopy" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_BITCUT                 "bitcut" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_BITCOPY                "copiebmp"
+#define LOCALIZED_ALTERNATE_BITCUT                 "coupebmp"
 #define LOCALIZED_ALTERNATE_BITFIT                 "bitfit" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_BITINDEX               "bitindex" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_BITLOAD                "bitload" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_BITLOADSIZE            "bitloadsize" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_BITSIZE                "bitsize" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_BITMAPTURTLE           "bitmapturtle" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_BITINDEX               "indexbmp"
+#define LOCALIZED_ALTERNATE_BITLOAD                "ramènebmp"
+#define LOCALIZED_ALTERNATE_BITLOADSIZE            "tailleramènebmp"
+#define LOCALIZED_ALTERNATE_BITSIZE                "taillebmp"
+#define LOCALIZED_ALTERNATE_BITMAPTURTLE           "tortuebmp"
 #define LOCALIZED_ALTERNATE_BITMODE                "bitmode" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_BITNOT                 "bitnot" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_BITOR                  "bitor" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_BITPASTE               "bitpaste" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_BITPASTETOINDEX        "bitpastetoindex" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_BITSAVE                "bitsave" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_BITPASTE               "collerbmp"
+#define LOCALIZED_ALTERNATE_BITPASTETOINDEX        "collerbmpindex"
+#define LOCALIZED_ALTERNATE_BITSAVE                "sauvebmp"
 #define LOCALIZED_ALTERNATE_BITXOR                 "bitxor" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_BK                     "re"
-#define LOCALIZED_ALTERNATE_BL                     "bl" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_BL                     "sd"
 #define LOCALIZED_ALTERNATE_BURIED                 "buried" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_BURY                   "bury" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_BUTFIRST               "butfirst" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_BUTFIRST               "saufpremier"
 #define LOCALIZED_ALTERNATE_BUTFIRSTS              "butfirsts" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_BUTLAST                "butlast" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_BUTLAST                "saufdernier" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_BUTTONCREATE           "buttoncreate" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_BUTTONDELETE           "buttondelete" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_BUTTONENABLE           "buttonenable" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_BUTTONUPDATE           "buttonupdate" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_BUTTONP                "buttonp" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_BUTTON_                "button?" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_BYE                    "bye" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_CATCH                  "catch" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_CHAR                   "char" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_BYE                    "aurevior"
+#define LOCALIZED_ALTERNATE_CATCH                  "attrape"
+#define LOCALIZED_ALTERNATE_CHAR                   "car"
 #define LOCALIZED_ALTERNATE_CHDIR                  "chdir" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_CHECKBOXCREATE         "checkboxcreate" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_CHECKBOXDELETE         "checkboxdelete" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_CHECKBOXENABLE         "checkboxenable" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_CHECKBOXGET            "checkboxget" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_CHECKBOXSET            "checkboxset" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_CLEAN                  "clean" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_CLEARPALETTE           "clearpalette" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_CLEARSCREEN            "clearscreen" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_CLEARTEXT              "cleartext" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_CLEAN                  "nettoie"
+#define LOCALIZED_ALTERNATE_CLEARPALETTE           "videpalette"
+#define LOCALIZED_ALTERNATE_CLEARSCREEN            "videécran"
+#define LOCALIZED_ALTERNATE_CLEARTEXT              "videtexte"
 #define LOCALIZED_ALTERNATE_CLEARTIMER             "cleartimer" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_CLOSE                  "close" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_CLOSEALL               "closeall" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_CO                     "co" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_CLOSE                  "ferme"
+#define LOCALIZED_ALTERNATE_CLOSEALL               "fermetout"
+#define LOCALIZED_ALTERNATE_CO                     "co"
 #define LOCALIZED_ALTERNATE_COMBOBOXADDSTRING      "comboboxaddstring" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_COMBOBOXCREATE         "comboboxcreate" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_COMBOBOXDELETE         "comboboxdelete" // NOT_YET_LOCALIZED
@@ -196,24 +212,24 @@
 #define LOCALIZED_ALTERNATE_COMBOBOXGETTEXT        "comboboxgettext" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_COMBOBOXSETTEXT        "comboboxsettext" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_CONTENTS               "contents" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_CONTINUE               "continue" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_CONTINUE               "continue"
 #define LOCALIZED_ALTERNATE_COPYDEF                "copydef" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_COS                    "cos" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_COUNT                  "count" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_CS                     "cs" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_CT                     "ct" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_COS                    "cos"
+#define LOCALIZED_ALTERNATE_COUNT                  "compte"
+#define LOCALIZED_ALTERNATE_CS                     "vé"
+#define LOCALIZED_ALTERNATE_CT                     "vt"
 #define LOCALIZED_ALTERNATE_CURSOR                 "cursor" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_DEBUGWINDOWS           "debugwindows" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_DEFINE                 "define" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_DEFINEDP               "definedp" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_DEFINED_               "defined?" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_DEFINE                 "definis"
+#define LOCALIZED_ALTERNATE_DEFINEDP               "procédurep"
+#define LOCALIZED_ALTERNATE_DEFINED_               "procédure?"
 #define LOCALIZED_ALTERNATE_DIALOGCREATE           "dialogcreate" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_DIALOGENABLE           "dialogenable" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_DIALOGDELETE           "dialogdelete" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_DIALOGFILEOPEN         "dialogfileopen" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_DIALOGFILESAVE         "dialogfilesave" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_DIFFERENCE             "difference" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_DIRECTORIES            "directories" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_DIFFERENCE             "différence"
+#define LOCALIZED_ALTERNATE_DIRECTORIES            "répertoires"
 #define LOCALIZED_ALTERNATE_DLLCALL                "dllcall" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_DLLFREE                "dllfree" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_DLLLOAD                "dllload" // NOT_YET_LOCALIZED
@@ -223,26 +239,26 @@
 #define LOCALIZED_ALTERNATE_ED                     "ed" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_EDIT                   "edit" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_ELLIPSEARC             "ellipsearc" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_EMPTYP                 "emptyp" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_EMPTY_                 "empty?" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_EMPTYP                 "videp"
+#define LOCALIZED_ALTERNATE_EMPTY_                 "vide?"
 #define LOCALIZED_ALTERNATE_EOFP                   "eofp" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_EOF_                   "eof?" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_EQUALP                 "equalp" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_EQUAL_                 "equal?" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_EQUALP                 "egalp"
+#define LOCALIZED_ALTERNATE_EQUAL_                 "egal?"
 #define LOCALIZED_ALTERNATE_ER                     "er" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_ERASE                  "erase" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_ERASE                  "efface"
 #define LOCALIZED_ALTERNATE_ERASEFILE              "erasefile" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_ERF                    "erf" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_ERROR                  "error" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_EVENTCHECK             "eventcheck" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_EXP                    "exp" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_FD                     "av"
-#define LOCALIZED_ALTERNATE_FENCE                  "fence" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_FILL                   "fill" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_FILES                  "files" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_FIRST                  "first" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_FIRSTS                 "firsts" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_FLOODCOLOR             "floodcolor" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_FENCE                  "clos"
+#define LOCALIZED_ALTERNATE_FILL                   "remplis"
+#define LOCALIZED_ALTERNATE_FILES                  "fichiers"
+#define LOCALIZED_ALTERNATE_FIRST                  "premier"
+#define LOCALIZED_ALTERNATE_FIRSTS                 "premiers"
+#define LOCALIZED_ALTERNATE_FLOODCOLOR             "couleurremplis"
 #define LOCALIZED_ALTERNATE_FONTFACENAMES          "fontfacenames" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_FOREVER                "forever" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_FORM                   "form" // NOT_YET_LOCALIZED
@@ -264,27 +280,27 @@
 #define LOCALIZED_ALTERNATE_HALT                   "halt" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_HEADING                "heading" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_HELP                   "help" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_HIDETURTLE             "hideturtle" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_HIDETURTLE             "cachetortue"
 #define LOCALIZED_ALTERNATE_HOME                   "origine"
-#define LOCALIZED_ALTERNATE_HT                     "ht" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_IF                     "if" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_IFELSE                 "ifelse" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_IFF                    "iff" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_IFFALSE                "iffalse" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_IFT                    "ift" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_IFTRUE                 "iftrue" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_HT                     "ct"
+#define LOCALIZED_ALTERNATE_IF                     "si"
+#define LOCALIZED_ALTERNATE_IFELSE                 "sisinon"
+#define LOCALIZED_ALTERNATE_IFF                    "sif"
+#define LOCALIZED_ALTERNATE_IFFALSE                "sifaux"
+#define LOCALIZED_ALTERNATE_IFT                    "siv"
+#define LOCALIZED_ALTERNATE_IFTRUE                 "sivrai"
 #define LOCALIZED_ALTERNATE_INGAMEPORT             "ingameport" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_INPORT                 "inport" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_INPORTB                "inportb" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_INT                    "int" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_INT                    "tronque"
 #define LOCALIZED_ALTERNATE_ITEM                   "item" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_KEYBOARDOFF            "keyboardoff" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_KEYBOARDON             "keyboardon" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_KEYBOARDVALUE          "keyboardvalue" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_KEYP                   "keyp" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_KEY_                   "key?" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_LABEL                  "label" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_LABELFONT              "labelfont" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_KEYP                   "touchep"
+#define LOCALIZED_ALTERNATE_KEY_                   "touche?"
+#define LOCALIZED_ALTERNATE_LABEL                  "étiquette"
+#define LOCALIZED_ALTERNATE_LABELFONT              "police"
 #define LOCALIZED_ALTERNATE_LABELSIZE              "labelsize" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_LAST                   "last" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_LEFT                   "gauche"
@@ -299,14 +315,14 @@
 #define LOCALIZED_ALTERNATE_LISTBOXDELETE          "listboxdelete" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_LISTBOXDELETESTRING    "listboxdeletestring" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_LISTBOXGETSELECT       "listboxgetselect" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_LISTP                  "listp" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_LIST_                  "list?" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_LISTP                  "listep"
+#define LOCALIZED_ALTERNATE_LIST_                  "liste?"
 #define LOCALIZED_ALTERNATE_LN                     "ln" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_LOAD                   "load" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_LOCAL                  "local" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_LOG10                  "log10" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_LOAD                   "ramène"
+#define LOCALIZED_ALTERNATE_LOCAL                  "locale"
+#define LOCALIZED_ALTERNATE_LOG10                  "log10"
 #define LOCALIZED_ALTERNATE_LOGOVERSION            "logoversion" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_LOWERCASE              "lowercase" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_LOWERCASE              "miniscule"
 #define LOCALIZED_ALTERNATE_LPUT                   "metspremier"
 #define LOCALIZED_ALTERNATE_LR                     "lr" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_LSHIFT                 "lshift" // NOT_YET_LOCALIZED
@@ -314,24 +330,24 @@
 #define LOCALIZED_ALTERNATE_MACHINE                "machine" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_MACROP                 "macrop" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_MACRO_                 "macro?" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_MAKE                   "make" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_MCI                    "mci" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_MEMBER                 "member" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_MEMBERP                "memberp" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_MEMBER_                "member?" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_MESSAGEBOX             "messagebox" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_MAKE                   "donne"
+#define LOCALIZED_ALTERNATE_MCI                    "mci"
+#define LOCALIZED_ALTERNATE_MEMBER                 "membre"
+#define LOCALIZED_ALTERNATE_MEMBERP                "membrep"
+#define LOCALIZED_ALTERNATE_MEMBER_                "membre?"
+#define LOCALIZED_ALTERNATE_MESSAGEBOX             "message"
 #define LOCALIZED_ALTERNATE_MIDICLOSE              "midiclose" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_MIDIMESSAGE            "midimessage" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_MIDIOPEN               "midiopen" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_MINUS                  "minus" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_MINUS                  "moins"
 #define LOCALIZED_ALTERNATE_MKDIR                  "mkdir" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_MODULO                 "modulo" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_MODULO                 "modulo"
 #define LOCALIZED_ALTERNATE_MOUSEOFF               "mouseoff" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_MOUSEON                "mouseon" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_MOUSEPOS               "mousepos" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_NAMEP                  "namep" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_NAME_                  "name?" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_NAMES                  "names" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_MOUSEPOS               "possouris"
+#define LOCALIZED_ALTERNATE_NAMEP                  "nomp"
+#define LOCALIZED_ALTERNATE_NAME_                  "nom?"
+#define LOCALIZED_ALTERNATE_NAMES                  "noms"
 #define LOCALIZED_ALTERNATE_NETACCEPTOFF           "netacceptoff" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_NETACCEPTON            "netaccepton" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_NETACCEPTRECEIVEVALUE  "netacceptreceivevalue" // NOT_YET_LOCALIZED
@@ -346,38 +362,38 @@
 #define LOCALIZED_ALTERNATE_NODES                  "nodes" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_NODRIBBLE              "nodribble" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_NOSTATUS               "nostatus" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_NOT                    "not" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_NOT                    "non"
 #define LOCALIZED_ALTERNATE_NOYIELD                "noyield" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_NUMBERP                "numberp" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_NUMBER_                "number?" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_NUMBERP                "nombrep" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_NUMBER_                "nombre?" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_OP                     "op" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_OPENAPPEND             "openappend" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_OPENREAD               "openread" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_OPENUPDATE             "openupdate" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_OPENWRITE              "openwrite" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_OR                     "or" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_OR                     "ou" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_OUTPORT                "outport" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_OUTPORTB               "outportb" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_OUTPUT                 "output" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_OUTPUT                 "retourne"
 #define LOCALIZED_ALTERNATE_PARSE                  "parse" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_PAUSE                  "pause" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_PC                     "pc" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_PD                     "pd" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_PE                     "pe" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_PENCOLOR               "pencolor" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_PENDOWN                "pendown" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_PENDOWNP               "pendownp" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_PENDOWN_               "pendown?" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_PENERASE               "penerase" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_PENMODE                "penmode" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_PENPAINT               "penpaint" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_PC                     "cc"
+#define LOCALIZED_ALTERNATE_PD                     "bc"
+#define LOCALIZED_ALTERNATE_PE                     "go"
+#define LOCALIZED_ALTERNATE_PENCOLOR               "couleurcrayon"
+#define LOCALIZED_ALTERNATE_PENDOWN                "baissecrayon"
+#define LOCALIZED_ALTERNATE_PENDOWNP               "baiseecrayonp"
+#define LOCALIZED_ALTERNATE_PENDOWN_               "baiseecrayon?"
+#define LOCALIZED_ALTERNATE_PENERASE               "gomme"
+#define LOCALIZED_ALTERNATE_PENMODE                "modecrayon"
+#define LOCALIZED_ALTERNATE_PENPAINT               "dessine"
 #define LOCALIZED_ALTERNATE_PENPATTERN             "penpattern" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_PENREVERSE             "penreverse" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_PENREVERSE             "inversecrayon"
 #define LOCALIZED_ALTERNATE_PENSIZE                "pensize" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_PENUP                  "penup" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_PERSPECTIVE            "perspective" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_PENUP                  "levecrayon"
+#define LOCALIZED_ALTERNATE_PERSPECTIVE            "perspective"
 #define LOCALIZED_ALTERNATE_PITCH                  "pitch" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_PIXEL                  "pixel" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_PIXEL                  "point"
 #define LOCALIZED_ALTERNATE_PLAYWAVE               "playwave" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_PLIST                  "plist" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_PLISTS                 "plists" // NOT_YET_LOCALIZED
@@ -397,23 +413,23 @@
 #define LOCALIZED_ALTERNATE_POS                    "pos" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_POSXYZ                 "posxyz" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_POT                    "pot" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_POWER                  "power" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_POWER                  "puissance"
 #define LOCALIZED_ALTERNATE_PPROP                  "pprop" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_PPT                    "ppt" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_PPT                    "de"
 #define LOCALIZED_ALTERNATE_PR                     "pr" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_PRIMITIVEP             "primitivep" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_PRIMITIVE_             "primitive?" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_PRIMITIVEP             "primitivep"
+#define LOCALIZED_ALTERNATE_PRIMITIVE_             "primitive?"
 #define LOCALIZED_ALTERNATE_PRINT                  "print" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_PROCEDUREP             "procedurep" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_PROCEDURE_             "procedure?" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_PROPLISTP              "proplistp" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_PROPLIST_              "proplist?" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_PROCEDURES             "procedures" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_PRODUCT                "product" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_PU                     "pu" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_PX                     "px" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_PRODUCT                "produit"
+#define LOCALIZED_ALTERNATE_PU                     "lc"
+#define LOCALIZED_ALTERNATE_PX                     "ic"
 #define LOCALIZED_ALTERNATE_QUESTIONBOX            "questionbox" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_QUOTIENT               "quotient" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_QUOTIENT               "divise"
 #define LOCALIZED_ALTERNATE_RADARCCOS              "radarccos" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_RADARCSIN              "radarcsin" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_RADARCTAN              "radarctan" // NOT_YET_LOCALIZED
@@ -425,17 +441,17 @@
 #define LOCALIZED_ALTERNATE_RADIOBUTTONSET         "radiobuttonset" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_RADSIN                 "radsin" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_RADTAN                 "radtan" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_RANDOM                 "random" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_RANDOM                 "hasard"
 #define LOCALIZED_ALTERNATE_RAWASCII               "rawascii" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_RC                     "rc" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_RCS                    "rcs" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_READCHAR               "readchar" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_READCHARS              "readchars" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_READER                 "reader" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_READLIST               "readlist" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_READPOS                "readpos" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_READWORD               "readword" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_REMAINDER              "remainder" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_RC                     "rc"
+#define LOCALIZED_ALTERNATE_RCS                    "rcs"
+#define LOCALIZED_ALTERNATE_READCHAR               "liscar"
+#define LOCALIZED_ALTERNATE_READCHARS              "liscars"
+#define LOCALIZED_ALTERNATE_READER                 "liseur"
+#define LOCALIZED_ALTERNATE_READLIST               "lisliste"
+#define LOCALIZED_ALTERNATE_READPOS                "lispos"
+#define LOCALIZED_ALTERNATE_READWORD               "lismot"
+#define LOCALIZED_ALTERNATE_REMAINDER              "reste"
 #define LOCALIZED_ALTERNATE_REMPROP                "remprop" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_REPCOUNT               "repcount" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_REPEAT                 "repeat" // NOT_YET_LOCALIZED
@@ -445,15 +461,15 @@
 #define LOCALIZED_ALTERNATE_RL                     "rl" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_RMDIR                  "rmdir" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_ROLL                   "roll" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_ROUND                  "round" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_ROUND                  "arrondi"
 #define LOCALIZED_ALTERNATE_RR                     "rr" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_RT                     "dr"
-#define LOCALIZED_ALTERNATE_RUN                    "run" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_RUN                    "execute"
 #define LOCALIZED_ALTERNATE_RUNPARSE               "runparse" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_RUNRESULT              "runresult" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_RW                     "rw" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_SAVE                   "save" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_SCREENCOLOR            "screencolor" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_SAVE                   "sauve"
+#define LOCALIZED_ALTERNATE_SCREENCOLOR            "couleurfond" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_SCROLLBARCREATE        "scrollbarcreate" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_SCROLLBARENABLE        "scrollbarenable" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_SCROLLBARDELETE        "scrollbardelete" // NOT_YET_LOCALIZED
@@ -465,57 +481,57 @@
 #define LOCALIZED_ALTERNATE_SE                     "ph"
 #define LOCALIZED_ALTERNATE_SELECTBOX              "selectbox" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_SENTENCE               "phrase"
-#define LOCALIZED_ALTERNATE_SETACTIVEAREA          "setactivearea" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_SETACTIVEAREA          "fixezoneactive"
 #define LOCALIZED_ALTERNATE_SETBITINDEX            "setbitindex" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_SETBITMODE             "setbitmode" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_SETCLIP                "setclip" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_SETCURSOR              "setcursor" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_SETCURSORNOWAIT        "setcursornowait" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_SETCURSORWAIT          "setcursorwait" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_SETFC                  "setfc" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_SETFLOODCOLOR          "setfloodcolor" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_SETFC                  "fcr"
+#define LOCALIZED_ALTERNATE_SETFLOODCOLOR          "fixecouleurremplis"
 #define LOCALIZED_ALTERNATE_SETFOCUS               "setfocus" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_SETH                   "seth" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_SETHEADING             "setheading" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_SETITEM                "setitem" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_SETLABELFONT           "setlabelfont" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_SETHEADING             "fixecap"
+#define LOCALIZED_ALTERNATE_SETITEM                "remplace"
+#define LOCALIZED_ALTERNATE_SETLABELFONT           "fixepolice"
 #define LOCALIZED_ALTERNATE_SETLIGHT               "setlight" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_SETMARGINS             "setmargins" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_SETPC                  "setpc" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_SETPENCOLOR            "setpencolor" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_SETPC                  "fcc"
+#define LOCALIZED_ALTERNATE_SETPENCOLOR            "fixecouleurcrayon"
 #define LOCALIZED_ALTERNATE_SETPENPATTERN          "setpenpattern" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_SETPENSIZE             "setpensize" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_SETPENSIZE             "fixetaillecrayon"
 #define LOCALIZED_ALTERNATE_SETPITCH               "setpitch" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_SETPIXEL               "setpixel" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_SETPOS                 "setpos" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_SETPOSXYZ              "setposxyz" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_SETPOS                 "fixeposition"
+#define LOCALIZED_ALTERNATE_SETPOSXYZ              "fixepositionxyz"
 #define LOCALIZED_ALTERNATE_SETREAD                "setread" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_SETREADPOS             "setreadpos" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_SETROLL                "setroll" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_SETSC                  "setsc" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_SETSCREENCOLOR         "setscreencolor" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_SETSC                  "fcf"
+#define LOCALIZED_ALTERNATE_SETSCREENCOLOR         "fixecouleurfond"
 #define LOCALIZED_ALTERNATE_SETSCRUNCH             "setscrunch" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_SETTIMER               "settimer" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_SETTURTLE              "setturtle" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_SETTURTLEMODE          "setturtlemode" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_SETTURTLE              "fixetortue"
+#define LOCALIZED_ALTERNATE_SETTURTLEMODE          "fixemodetortue" 
 #define LOCALIZED_ALTERNATE_SETWRITE               "setwrite" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_SETWRITEPOS            "setwritepos" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_SETX                   "setx" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_SETXY                  "setxy" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_SETXYZ                 "setxyz" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_SETY                   "sety" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_SETZ                   "setz" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_SETX                   "fixex"
+#define LOCALIZED_ALTERNATE_SETXY                  "fixexy"
+#define LOCALIZED_ALTERNATE_SETXYZ                 "fixexyz"
+#define LOCALIZED_ALTERNATE_SETY                   "fixey"
+#define LOCALIZED_ALTERNATE_SETZ                   "fixez"
 #define LOCALIZED_ALTERNATE_SHELL                  "shell" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_SHOW                   "show" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_SHOWNP                 "shownp" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_SHOWN_                 "shown?" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_SHOWTURTLE             "showturtle" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_SIN                    "sin" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_SHOW                   "ecris"
+#define LOCALIZED_ALTERNATE_SHOWNP                 "visiblep"
+#define LOCALIZED_ALTERNATE_SHOWN_                 "visible?"
+#define LOCALIZED_ALTERNATE_SHOWTURTLE             "montretortue"
+#define LOCALIZED_ALTERNATE_SIN                    "sin"
 #define LOCALIZED_ALTERNATE_SOUND                  "sound" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_SPLITSCREEN            "splitscreen" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_SQRT                   "sqrt" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_SQRT                   "racine"
 #define LOCALIZED_ALTERNATE_SS                     "ss" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_ST                     "st" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_ST                     "mt"
 #define LOCALIZED_ALTERNATE_STANDOUT               "standout" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_STATICCREATE           "staticcreate" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_STATICDELETE           "staticdelete" // NOT_YET_LOCALIZED
@@ -526,48 +542,48 @@
 #define LOCALIZED_ALTERNATE_STOP                   "stop" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_SUBSTRINGP             "substringp" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_SUBSTRING_             "substring?" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_SUM                    "sum" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_SUM                    "somme"
 #define LOCALIZED_ALTERNATE_TAG                    "tag" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_TAN                    "tan" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_TAN                    "tan"
 #define LOCALIZED_ALTERNATE_TEST                   "test" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_TEXT                   "text" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_TEXTSCREEN             "textscreen" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_THING                  "thing" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_THROW                  "throw" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_TIME                   "time" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_THING                  "chose"
+#define LOCALIZED_ALTERNATE_THROW                  "lance"
+#define LOCALIZED_ALTERNATE_TIME                   "temps"
 #define LOCALIZED_ALTERNATE_TIMEMILLI              "timemilli" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_TO                     "pour"
 #define LOCALIZED_ALTERNATE_TONE                   "tone" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_TOWARDS                "towards" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_TOWARDSXYZ             "towardsxyz" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_TOWARDS                "vers"
+#define LOCALIZED_ALTERNATE_TOWARDSXYZ             "versxyz"
 #define LOCALIZED_ALTERNATE_TRACE                  "trace" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_TRACED                 "traced" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_TS                     "ts" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_TURTLE                 "turtle" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_TURTLEMODE             "turtlemode" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_TURTLES                "turtles" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_TYPE                   "type" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_TURTLE                 "tortue"
+#define LOCALIZED_ALTERNATE_TURTLEMODE             "modetortue"
+#define LOCALIZED_ALTERNATE_TURTLES                "tortues"
+#define LOCALIZED_ALTERNATE_TYPE                   "tape"
 #define LOCALIZED_ALTERNATE_UNBURY                 "unbury" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_UNSTEP                 "unstep" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_UNTRACE                "untrace" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_UP                     "up" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_UPPERCASE              "uppercase" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_UPPERCASE              "majascule"
 #define LOCALIZED_ALTERNATE_UPPITCH                "uppitch" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_WAIT                   "wait" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_WINDOW                 "window" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_WAIT                   "attends"
+#define LOCALIZED_ALTERNATE_WINDOW                 "fenêtre"
 #define LOCALIZED_ALTERNATE_WINDOWCREATE           "windowcreate" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_WINDOWENABLE           "windowenable" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_WINDOWDELETE           "windowdelete" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_WINDOWFILEEDIT         "windowfileedit" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_WINDOWSET              "windowset" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_WINHELP                "winhelp" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_WORD                   "word" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_WORDP                  "wordp" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_WORD_                  "word?" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_WRAP                   "wrap" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_WORD                   "mot"
+#define LOCALIZED_ALTERNATE_WORDP                  "motp"
+#define LOCALIZED_ALTERNATE_WORD_                  "mot?"
+#define LOCALIZED_ALTERNATE_WRAP                   "enroule"
 #define LOCALIZED_ALTERNATE_WRITEPOS               "writepos" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_WRITER                 "writer" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_YESNOBOX               "yesnobox" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_WRITER                 "écrivain" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_YESNOBOX               "messageouino"
 #define LOCALIZED_ALTERNATE_YIELD                  "yield" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_ZOOM                   "zoom" // NOT_YET_LOCALIZED
 
@@ -604,12 +620,12 @@
 #define LOCALIZED_BITMAP_ACTIVEAREA    "&Zone active..."
 
 #define LOCALIZED_SET                  "&Options"
-#define LOCALIZED_SET_PENSIZE          "&Largeur Crayon..."
-#define LOCALIZED_SET_LABELFONT        "&Font Étiquette..."
-#define LOCALIZED_SET_COMMANDERFONT    "Font &Poste de Pilotage..."// NOT_YET_LOCALIZED
+#define LOCALIZED_SET_PENSIZE          "&Taille Crayon..."
+#define LOCALIZED_SET_LABELFONT        "&Police de Caractères de l'Étiquette..."
+#define LOCALIZED_SET_COMMANDERFONT    "Police de Caractères de la &Poste de Pilotage..."
 #define LOCALIZED_SET_PENCOLOR         "&Couleur Crayon..."
 #define LOCALIZED_SET_FLOODCOLOR       "Couleur &Remplissage..."
-#define LOCALIZED_SET_SCREENCOLOR      "Couleur &Ecran..."
+#define LOCALIZED_SET_SCREENCOLOR      "Couleur &Fond..."
 
 #define LOCALIZED_ZOOM                 "&Zoom"
 #define LOCALIZED_ZOOM_IN              "&Avant"
@@ -643,10 +659,10 @@
 //
 // Menu options in the popup menu
 //
-#define LOCALIZED_POPUP_COPY                     "Copy" // NOT_YET_LOCALIZED
-#define LOCALIZED_POPUP_CUT                      "Cut" // NOT_YET_LOCALIZED
-#define LOCALIZED_POPUP_PASTE                    "Paste" // NOT_YET_LOCALIZED
-#define LOCALIZED_POPUP_DELETE                   "Delete" // NOT_YET_LOCALIZED
+#define LOCALIZED_POPUP_COPY                     "Copier"
+#define LOCALIZED_POPUP_CUT                      "Couper"
+#define LOCALIZED_POPUP_PASTE                    "Coller"
+#define LOCALIZED_POPUP_DELETE                   "Effacer"
 #define LOCALIZED_POPUP_UNDO                     "Undo" // NOT_YET_LOCALIZED
 #define LOCALIZED_POPUP_SELECTALL                "Select All" // NOT_YET_LOCALIZED
 #define LOCALIZED_POPUP_HELP                     "Topic Search" // NOT_YET_LOCALIZED
@@ -763,7 +779,10 @@
 //
 // Strings on the Color Picker Dialog box
 //
-#define LOCALIZED_SETCOLOR                     "Set Color" // NOT_YET_LOCALIZED
+#define LOCALIZED_SETCOLOR                     "Fixe Coleur"
+#define LOCALIZED_SETCOLOR_PENCOLOR            "Fixe Coleur Crayon"
+#define LOCALIZED_SETCOLOR_FLOODCOLOR          "Fixe Coleur de Remplissage"
+#define LOCALIZED_SETCOLOR_SCREENCOLOR         "Fixe Coleur Fond"
 #define LOCALIZED_SETCOLOR_RED                 "Rouge"
 #define LOCALIZED_SETCOLOR_GREEN               "Vert"
 #define LOCALIZED_SETCOLOR_BLUE                "Bleu"
@@ -773,16 +792,16 @@
 //
 // Strings on the Pen Size Picker Dialog box
 //
-#define LOCALIZED_SETPENSIZE                   "Pen Size" // NOT_YET_LOCALIZED
+#define LOCALIZED_SETPENSIZE                   "Taille Crayon"
 #define LOCALIZED_SETPENSIZE_SIZE              "Dimension"
-#define LOCALIZED_SETPENSIZE_OK                LOCALIZED_GENERAL_OKBUTTON // NOT_YET_LOCALIZED
-#define LOCALIZED_SETPENSIZE_CANCEL            LOCALIZED_GENERAL_CANCELBUTTON // NOT_YET_LOCALIZED
+#define LOCALIZED_SETPENSIZE_OK                LOCALIZED_GENERAL_OKBUTTON
+#define LOCALIZED_SETPENSIZE_CANCEL            LOCALIZED_GENERAL_CANCELBUTTON
 
 
 //
 // Strings on the "About FMSLogo" Dialog box
 //
-#define LOCALIZED_ABOUTFMS                     "A propos de "LOCALIZED_GENERAL_PRODUCTNAME // NOT_YET_LOCALIZED
+#define LOCALIZED_ABOUTFMS                     "A propos de "LOCALIZED_GENERAL_PRODUCTNAME
 #define LOCALIZED_ABOUTFMS_VERSION             LOCALIZED_GENERAL_PRODUCTNAME" Version "FMSLOGO_VERSION // NOT_YET_LOCALIZED
 #define LOCALIZED_ABOUTFMS_GUI                 "GUI by George Mills (mills@softronix.com)\nSoftronics, Inc.\nhttp:\x2F/www.softronix.com/" // NOT_YET_LOCALIZED
 #define LOCALIZED_ABOUTFMS_CORE                "Core by Brian Harvey (bh@cs.berkeley.edu)\nUniversity of California Berkeley" // NOT_YET_LOCALIZED
