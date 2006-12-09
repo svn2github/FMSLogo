@@ -679,7 +679,16 @@ void init()
    init_ecma_array();
 #endif
    
-   // intern all of the primitives
+   // intern all of the primitives.
+   //
+   // We intern all of the English forms first so if there
+   // are conflicts between an English command and a localized command,
+   // the localized one will win.  For example, in the French version,
+   // we want "ct" to mean "cachetortue" (HIDETURTLE), not "CLEARTEXT",
+   // even though all other locales will use "ct" to mean "CLEARTEXT".
+   // 
+
+   // intern all of the primitives by their English name
    for (int i = 0; i < ARRAYSIZE(prims); i++)
       {
       // intern the current primitive
@@ -690,7 +699,11 @@ void init()
          prims[i].maxargs,
          prims[i].priority,
          prims[i].prim);
+      }
 
+   // Now intern the commands by their localized name
+   for (int i = 0; i < ARRAYSIZE(prims); i++)
+      {
       // If there is an alternate name for the primitive,
       // and it's different from the normal name, make a
       // primivite out of it, too.
@@ -706,6 +719,7 @@ void init()
             prims[i].prim);
          }
       }
+
 
    Truex.Initialize("true",   LOCALIZED_ALTERNATE_TRUE);
    Falsex.Initialize("false", LOCALIZED_ALTERNATE_FALSE);
