@@ -583,7 +583,7 @@
 #define LOCALIZED_ALTERNATE_WRAP                   "enroule"
 #define LOCALIZED_ALTERNATE_WRITEPOS               "writepos" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_WRITER                 "écrivain" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_YESNOBOX               "messageouino"
+#define LOCALIZED_ALTERNATE_YESNOBOX               "messageouinon"
 #define LOCALIZED_ALTERNATE_YIELD                  "yield" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_ZOOM                   "zoom" // NOT_YET_LOCALIZED
 
