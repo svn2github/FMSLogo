@@ -1973,7 +1973,6 @@ AppendPopupMenu(
    MainMenu.AppendMenu(MF_POPUP, popupMenu, PopupMenuText);
    }
 
-static
 void
 SetTextOnChildWindows(
    TWindow *         Parent,

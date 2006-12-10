@@ -245,6 +245,7 @@ extern void thescreencolor(int, int, int);
 // File mainwnd.cpp
 extern void FillMenu(TMenu & Menu, const MENUITEM * MenuItems, size_t MenuItemsLength);
 extern void AppendPopupMenu(TMenu & Menu, const char * PopupMenuText, const MENUITEM * PopupMenuItems, size_t PopupMenuItemsLength);
+extern void SetTextOnChildWindows(TWindow * Parent, const MENUITEM * ChildText, size_t ChildTextLength);
 
 // File coms.cpp
 extern void prepare_to_exit(bool okay);
