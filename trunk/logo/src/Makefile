@@ -4,9 +4,14 @@
 .PHONY : clean fmslogod.exe
 
 fmslogo.exe : fmslogo-1033.exe
+	cp startup-1033.logoscript startup.logoscript
 	cp $< $@
 
+toenglish-1036.txt : make-translation-tables.pl
+	perl -W make-translation-tables.pl
+
 all : fmslogo-1033.exe fmslogo-1036.exe fmslogo-1032.exe
+	perl -W make-translation-tables.pl
 
 fmslogo-%.exe : FORCE
 	make -fMakefile-borland.mk -DLOCALECODE=$* -DBUILD=RELEASE
