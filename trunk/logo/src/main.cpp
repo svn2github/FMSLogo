@@ -373,6 +373,17 @@ bool TMyApp::IdleAction(long idleCount)
       lperspective(NIL);
       }
 
+   // run the script that localizes FMSLogo
+   static bool hasRunStartup = false;
+   if (!hasRunStartup)
+      {
+      char startupScript[EXE_NAME_MAX_SIZE + 1];
+      MakeHelpPathName(startupScript, "startup.logoscript");
+      silent_load(NIL, startupScript);
+
+      hasRunStartup = true;
+      }
+
    // if command arg loaded then execute
    if (commandarg[0] != '\0')
       {
