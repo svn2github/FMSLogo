@@ -83,6 +83,11 @@ Function uninstall
   Delete $INSTDIR\fmslogo-${LANG_GREEK}.exe
   Delete $INSTDIR\fmslogo-${LANG_FRENCH}.exe
 
+  Delete $INSTDIR\startup.logoscript
+  Delete $INSTDIR\startup-${LANG_ENGLISH}.logoscript
+  Delete $INSTDIR\startup-${LANG_GREEK}.logoscript
+  Delete $INSTDIR\startup-${LANG_FRENCH}.logoscript
+
   Delete $INSTDIR\logo.hlp
   Delete $INSTDIR\logo.gid
   Delete $INSTDIR\logo.fts
@@ -243,9 +248,14 @@ Section "FMSLogo"
   ;
   ; Put file there
   ;
+  File "..\src\startup-${LANG_ENGLISH}.logoscript"
+  File "..\src\startup-${LANG_FRENCH}.logoscript"
+  File "..\src\startup-${LANG_GREEK}.logoscript"
+
   File "..\src\fmslogo-${LANG_ENGLISH}.exe"
   File "..\src\fmslogo-${LANG_FRENCH}.exe"
   File "..\src\fmslogo-${LANG_GREEK}.exe"
+
   File "..\manual\logohelp.chm"
   File "..\src\Mcistrwh.hlp"
   File "..\src\fmslogo.txt"
@@ -253,7 +263,8 @@ Section "FMSLogo"
   File /r /x CVS "..\src\logolib"
   File /r /x CVS "..\src\examples"
 
-  CopyFiles "$INSTDIR\fmslogo-$LANGUAGE.exe" "$INSTDIR\fmslogo.exe"
+  CopyFiles "$INSTDIR\startup-$LANGUAGE.logoscript" "$INSTDIR\startup.logoscript"
+  CopyFiles "$INSTDIR\fmslogo-$LANGUAGE.exe"        "$INSTDIR\fmslogo.exe"
 
   ;
   ; Write the uninstall keys for Windows
@@ -388,6 +399,11 @@ Section "Uninstall"
   Delete $INSTDIR\fmslogo-${LANG_ENGLISH}.exe
   Delete $INSTDIR\fmslogo-${LANG_GREEK}.exe
   Delete $INSTDIR\fmslogo-${LANG_FRENCH}.exe
+
+  Delete $INSTDIR\startup.logoscript
+  Delete $INSTDIR\startup-${LANG_ENGLISH}.logoscript
+  Delete $INSTDIR\startup-${LANG_GREEK}.logoscript
+  Delete $INSTDIR\startup-${LANG_FRENCH}.logoscript
 
   Delete $INSTDIR\logohelp.chm
 
