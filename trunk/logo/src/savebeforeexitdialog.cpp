@@ -31,16 +31,89 @@ void CSaveBeforeExitDialog::SetupWindow()
    {
    TDialog::SetupWindow();
 
-   // set the text in all of the static controls
+   // Note that the buttons must be first and go from right-to-left
    static const MENUITEM staticText[] = {
-      {LOCALIZED_UNSAVEDCHANGES_SAVEANDEXIT, IDYES},
-      {LOCALIZED_UNSAVEDCHANGES_DONTSAVE,    IDNO},
       {LOCALIZED_UNSAVEDCHANGES_CANCEL,      IDCANCEL},
+      {LOCALIZED_UNSAVEDCHANGES_DONTSAVE,    IDNO},
+      {LOCALIZED_UNSAVEDCHANGES_SAVEANDEXIT, IDYES},
       {LOCALIZED_UNSAVEDCHANGES_MESSAGE1,    ID_UNSAVEDCHANGES_MESSAGE1},
       {LOCALIZED_UNSAVEDCHANGES_MESSAGE2,    ID_UNSAVEDCHANGES_MESSAGE2},
    };
 
+   // set the text in all of the static controls
    SetTextOnChildWindows(this, staticText, ARRAYSIZE(staticText));
+
+   // 3 because we only care about the buttons.
+   SIZE buttonSizes[3] = {{0,0}};
+
+   for (int i = 0; i < ARRAYSIZE(buttonSizes); i++)
+      {
+      HWND hwnd = GetItemHandle(staticText[i].MenuId);
+      if (hwnd != NULL)
+         {
+         HDC  dc = GetDC(hwnd);
+         if (dc != NULL)
+            {
+            GetTextExtentPoint(
+               dc,
+               staticText[i].MenuText,
+               strlen(staticText[i].MenuText),
+               &buttonSizes[i]);
+
+            ReleaseDC(hwnd, dc);
+            }
+         }
+      }
+
+   // get the overall dialog box's dimensions
+   TRect clientRect;
+   GetClientRect(clientRect);
+
+   // get cancel button's dimension
+   HWND cancelButton = GetItemHandle(IDCANCEL);
+   if (cancelButton == NULL)
+      {
+      // we can't correct the button layout
+      return;
+      }
+
+   RECT cancelButtonRect;
+   BOOL isOk = ::GetClientRect(cancelButton, &cancelButtonRect);
+   if (!isOk)
+      {
+      // we can't correct the button layout
+      return;
+      }
+
+   const int spacingX = 8;
+   const int paddingX = 4 * BaseUnitsx / 4;
+   const int paddingY = 4 * BaseUnitsy / 8;
+
+   const int buttonHeight = cancelButtonRect.bottom;
+   const int buttonY      = clientRect.bottom - buttonHeight - paddingY;
+
+
+   // Now set the size/position of each button by moving
+   // from left-to-right.
+   int buttonX = clientRect.Width() - spacingX;
+   for (int i = 0; i < ARRAYSIZE(buttonSizes); i++)
+      {
+      // resize the text
+      HWND hwnd = GetItemHandle(staticText[i].MenuId);
+      if (hwnd != NULL)
+         {
+         buttonX -= buttonSizes[i].cx + spacingX + paddingX;
+
+         ::SetWindowPos(
+            hwnd, 
+            NULL, 
+            buttonX,
+            buttonY,
+            buttonSizes[i].cx + paddingX,
+            buttonHeight,
+            SWP_NOZORDER);
+         }
+      }
    }
 
 void CSaveBeforeExitDialog::EvSaveBeforeExit()
