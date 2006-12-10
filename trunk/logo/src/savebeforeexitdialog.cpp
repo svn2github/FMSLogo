@@ -31,11 +31,16 @@ void CSaveBeforeExitDialog::SetupWindow()
    {
    TDialog::SetupWindow();
 
-   SetDlgItemText(IDYES,                      LOCALIZED_UNSAVEDCHANGES_SAVEANDEXIT);
-   SetDlgItemText(IDNO,                       LOCALIZED_UNSAVEDCHANGES_DONTSAVE);
-   SetDlgItemText(IDCANCEL,                   LOCALIZED_UNSAVEDCHANGES_CANCEL);
-   SetDlgItemText(ID_UNSAVEDCHANGES_MESSAGE1, LOCALIZED_UNSAVEDCHANGES_MESSAGE1);
-   SetDlgItemText(ID_UNSAVEDCHANGES_MESSAGE2, LOCALIZED_UNSAVEDCHANGES_MESSAGE2);
+   // set the text in all of the static controls
+   static const MENUITEM staticText[] = {
+      {LOCALIZED_UNSAVEDCHANGES_SAVEANDEXIT, IDYES},
+      {LOCALIZED_UNSAVEDCHANGES_DONTSAVE,    IDNO},
+      {LOCALIZED_UNSAVEDCHANGES_CANCEL,      IDCANCEL},
+      {LOCALIZED_UNSAVEDCHANGES_MESSAGE1,    ID_UNSAVEDCHANGES_MESSAGE1},
+      {LOCALIZED_UNSAVEDCHANGES_MESSAGE2,    ID_UNSAVEDCHANGES_MESSAGE2},
+   };
+
+   SetTextOnChildWindows(this, staticText, ARRAYSIZE(staticText));
    }
 
 void CSaveBeforeExitDialog::EvSaveBeforeExit()
