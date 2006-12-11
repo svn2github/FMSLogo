@@ -63,11 +63,11 @@ LoadLanguageFile "${NSISDIR}\Contrib\Language files\Greek.nlf"
 
 LangString DesktopShortcut ${LANG_ENGLISH} "Desktop Shortcut"
 LangString DesktopShortcut ${LANG_FRENCH}  "Desktop Shortcut" ; NOT_YET_LOCALIZED
-LangString DesktopShortcut ${LANG_GREEK}   "Desktop Shortcut" ; NOT_YET_LOCALIZED
+LangString DesktopShortcut ${LANG_GREEK}   "Συντόμευση Επιφάνειας Εργασίας"
 
 LangString StartMenuShortcuts ${LANG_ENGLISH} "Start Menu Shortcuts"
 LangString StartMenuShortcuts ${LANG_FRENCH}  "Start Menu Shortcuts" ; NOT_YET_LOCALIZED
-LangString StartMenuShortcuts ${LANG_GREEK}   "Start Menu Shortcuts" ; NOT_YET_LOCALIZED
+LangString StartMenuShortcuts ${LANG_GREEK}   "Συντομεύσεις Μενού Έναρξη" 
 
 
 ; uninstall must be able to remove all traces of any 
@@ -181,7 +181,7 @@ SetupUser.Done:
      MessageBox MB_OK|MB_ICONEXCLAMATION "Either the installer or FMSLogo is currently running.$\nThis installation cannot continue." ; NOT_YET_LOCALIZED
      Abort
   StrCmp $LANGUAGE ${LANG_GREEK} 0 +3
-     MessageBox MB_OK|MB_ICONEXCLAMATION "Either the installer or FMSLogo is currently running.$\nThis installation cannot continue." ; NOT_YET_LOCALIZED
+     MessageBox MB_OK|MB_ICONEXCLAMATION "Ο εγκαταστάτης ή η FMSLogo εκτελείται ήδη.$\nΑυτή η εγκατάσταση δε μπορεί να συνεχιστεί."
      Abort
   ; default to English
   MessageBox MB_OK|MB_ICONEXCLAMATION "Either the installer or FMSLogo is currently running.$\nThis installation cannot continue."
@@ -216,7 +216,7 @@ GetPreviousInstall.Done:
   StrCmp $LANGUAGE ${LANG_FRENCH} 0 +2
     MessageBox MB_YESNO "The existing copy of FMSLogo must be uninstalled to continue.$\nDo you want to uninstall it?$\n$\n(Selecting No will abort the installation)" IDYES uninstall IDNO abort ; NOT_YET_LOCALIZED
   StrCmp $LANGUAGE ${LANG_GREEK} 0 +2
-    MessageBox MB_YESNO "The existing copy of FMSLogo must be uninstalled to continue.$\nDo you want to uninstall it?$\n$\n(Selecting No will abort the installation)" IDYES uninstall IDNO abort ; NOT_YET_LOCALIZED
+    MessageBox MB_YESNO "Το υπάρχον αντίγραφο της FMSLogo πρέπει να απεγκατασταθεί πριν συνεχιστεί αυτή η εγκατάσταση.$\nΘέλετε να το εγκαταστήσετε;$\n$\n(Επιλέγοντας Όχι η εγκατάσταση θα κλείσει.)" IDYES uninstall IDNO abort
  ; default to English
  MessageBox MB_YESNO "The existing copy of FMSLogo must be uninstalled to continue.$\nDo you want to uninstall it?$\n$\n(Selecting No will abort the installation)" IDYES uninstall IDNO abort
 
@@ -350,7 +350,7 @@ Function un.onInit
      MessageBox MB_OK|MB_ICONEXCLAMATION "Either the installer or FMSLogo is currently running.$\nThis uninstallation cannot continue." ; NOT_YET_LOCALIZED
      Abort
   StrCmp $LANGUAGE ${LANG_GREEK} 0 +3
-     MessageBox MB_OK|MB_ICONEXCLAMATION "Either the installer or FMSLogo is currently running.$\nThis uninstallation cannot continue." ; NOT_YET_LOCALIZED
+     MessageBox MB_OK|MB_ICONEXCLAMATION "Ο εγκαταστάτης ή η FMSLogo εκτελείται ήδη.$\nΑυτή η απεγκατάσταση δε μπορεί να συνεχιστεί."
      Abort
   ; default to English
   MessageBox MB_OK|MB_ICONEXCLAMATION "Either the installer or FMSLogo is currently running.$\nThis uninstallation cannot continue."
