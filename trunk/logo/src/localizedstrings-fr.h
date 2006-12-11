@@ -236,8 +236,8 @@
 #define LOCALIZED_ALTERNATE_DOWN                   "down" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_DOWNPITCH              "downpitch" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_DRIBBLE                "dribble" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_ED                     "ed" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_EDIT                   "edit" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_ED                     "ed"
+#define LOCALIZED_ALTERNATE_EDIT                   "edite"
 #define LOCALIZED_ALTERNATE_ELLIPSEARC             "ellipsearc" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_EMPTYP                 "videp"
 #define LOCALIZED_ALTERNATE_EMPTY_                 "vide?"
@@ -249,7 +249,7 @@
 #define LOCALIZED_ALTERNATE_ERASE                  "efface"
 #define LOCALIZED_ALTERNATE_ERASEFILE              "erasefile" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_ERF                    "erf" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_ERROR                  "error" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_ERROR                  "erreur"
 #define LOCALIZED_ALTERNATE_EVENTCHECK             "eventcheck" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_EXP                    "exp" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_FD                     "av"
@@ -416,10 +416,10 @@
 #define LOCALIZED_ALTERNATE_POWER                  "puissance"
 #define LOCALIZED_ALTERNATE_PPROP                  "pprop" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_PPT                    "de"
-#define LOCALIZED_ALTERNATE_PR                     "pr" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_PR                     "éc"
 #define LOCALIZED_ALTERNATE_PRIMITIVEP             "primitivep"
 #define LOCALIZED_ALTERNATE_PRIMITIVE_             "primitive?"
-#define LOCALIZED_ALTERNATE_PRINT                  "print" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_PRINT                  "écris"
 #define LOCALIZED_ALTERNATE_PROCEDUREP             "procedurep" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_PROCEDURE_             "procedure?" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_PROPLISTP              "proplistp" // NOT_YET_LOCALIZED
@@ -430,17 +430,17 @@
 #define LOCALIZED_ALTERNATE_PX                     "ic"
 #define LOCALIZED_ALTERNATE_QUESTIONBOX            "questionbox" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_QUOTIENT               "divise"
-#define LOCALIZED_ALTERNATE_RADARCCOS              "radarccos" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_RADARCSIN              "radarcsin" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_RADARCTAN              "radarctan" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_RADCOS                 "radcos" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_RADARCCOS              "radarccos"
+#define LOCALIZED_ALTERNATE_RADARCSIN              "radarcsin"
+#define LOCALIZED_ALTERNATE_RADARCTAN              "radarctan"
+#define LOCALIZED_ALTERNATE_RADCOS                 "radcos"
 #define LOCALIZED_ALTERNATE_RADIOBUTTONCREATE      "radiobuttoncreate" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_RADIOBUTTONENABLE      "radiobuttonenable" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_RADIOBUTTONDELETE      "radiobuttondelete" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_RADIOBUTTONGET         "radiobuttonget" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_RADIOBUTTONSET         "radiobuttonset" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_RADSIN                 "radsin" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_RADTAN                 "radtan" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_RADSIN                 "radsin"
+#define LOCALIZED_ALTERNATE_RADTAN                 "radtan"
 #define LOCALIZED_ALTERNATE_RANDOM                 "hasard"
 #define LOCALIZED_ALTERNATE_RAWASCII               "rawascii" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_RC                     "rc"
@@ -453,8 +453,8 @@
 #define LOCALIZED_ALTERNATE_READWORD               "lismot"
 #define LOCALIZED_ALTERNATE_REMAINDER              "reste"
 #define LOCALIZED_ALTERNATE_REMPROP                "remprop" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_REPCOUNT               "repcount" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_REPEAT                 "repeat" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_REPCOUNT               "compteur"
+#define LOCALIZED_ALTERNATE_REPEAT                 "repétè"
 #define LOCALIZED_ALTERNATE_RERANDOM               "rerandom" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_RIGHT                  "droite"
 #define LOCALIZED_ALTERNATE_RIGHTROLL              "rightroll" // NOT_YET_LOCALIZED
@@ -522,7 +522,7 @@
 #define LOCALIZED_ALTERNATE_SETY                   "fixey"
 #define LOCALIZED_ALTERNATE_SETZ                   "fixez"
 #define LOCALIZED_ALTERNATE_SHELL                  "shell" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_SHOW                   "ecris"
+#define LOCALIZED_ALTERNATE_SHOW                   "montre"
 #define LOCALIZED_ALTERNATE_SHOWNP                 "visiblep"
 #define LOCALIZED_ALTERNATE_SHOWN_                 "visible?"
 #define LOCALIZED_ALTERNATE_SHOWTURTLE             "montretortue"
@@ -582,7 +582,7 @@
 #define LOCALIZED_ALTERNATE_WORD_                  "mot?"
 #define LOCALIZED_ALTERNATE_WRAP                   "enroule"
 #define LOCALIZED_ALTERNATE_WRITEPOS               "writepos" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_WRITER                 "écrivain" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_WRITER                 "écrivain"
 #define LOCALIZED_ALTERNATE_YESNOBOX               "messageouinon"
 #define LOCALIZED_ALTERNATE_YIELD                  "yield" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_ZOOM                   "zoom" // NOT_YET_LOCALIZED
