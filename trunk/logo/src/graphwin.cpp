@@ -2111,16 +2111,25 @@ NODE *lwindowset(NODE *args)
 
    if (NOT_THROWING)
       {
-      // For backward compatibility with MSWLogo, we must undock
-      // the commander into its own window so that window operations
-      // on it have the expected effect.
+      HWND window;
+
+      // For compatibility with other translations of FMSLogo (with
+      // possibly alternate names for the commander), we always treat
+      // the window "commander" as meaning the commander.
       if (0 == stricmp(caption, "commander"))
          {
+         // For backward compatibility with MSWLogo, we must undock
+         // the commander into its own window so that window operations
+         // on it have the expected effect.
          MainWindowx->UndockCommanderWindow();
-         }
 
-      // get handle to Window with arg as Caption
-      HWND window = FindWindow(NULL, caption);
+         window = MainWindowx->CommandWindow->HWindow;
+         }
+      else
+         {
+         // get handle to Window with arg as Caption
+         window = FindWindow(NULL, caption);
+         }
 
       // if it exists set its state it.
       if (window != NULL)
