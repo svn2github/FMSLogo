@@ -88,10 +88,14 @@ Function uninstall
   Delete $INSTDIR\startup-${LANG_GREEK}.logoscript
   Delete $INSTDIR\startup-${LANG_FRENCH}.logoscript
 
+  Delete $INSTDIR\logohelp.chm
+  Delete $INSTDIR\logohelp-${LANG_ENGLISH}.chm
+  Delete $INSTDIR\logohelp-${LANG_GREEK}.chm
+  Delete $INSTDIR\logohelp-${LANG_FRENCH}.chm
+
   Delete $INSTDIR\logo.hlp
   Delete $INSTDIR\logo.gid
   Delete $INSTDIR\logo.fts
-  Delete $INSTDIR\logohelp.chm
 
   Delete $INSTDIR\mcistrwh.hlp
   Delete $INSTDIR\mcistrwh.gid
@@ -256,7 +260,10 @@ Section "FMSLogo"
   File "..\src\fmslogo-${LANG_FRENCH}.exe"
   File "..\src\fmslogo-${LANG_GREEK}.exe"
 
-  File "..\manual\logohelp.chm"
+  File "..\manual\logohelp-${LANG_ENGLISH}.chm"
+  File "..\manual\logohelp-${LANG_FRENCH}.chm"
+  File "..\manual\logohelp-${LANG_GREEK}.chm"
+
   File "..\src\Mcistrwh.hlp"
   File "..\src\fmslogo.txt"
   File "..\src\license.txt"
@@ -265,6 +272,20 @@ Section "FMSLogo"
 
   CopyFiles "$INSTDIR\startup-$LANGUAGE.logoscript" "$INSTDIR\startup.logoscript"
   CopyFiles "$INSTDIR\fmslogo-$LANGUAGE.exe"        "$INSTDIR\fmslogo.exe"
+  CopyFiles "$INSTDIR\logohelp-$LANGUAGE.chm"       "$INSTDIR\logohelp.chm"
+
+  ; Remove the unused language files
+  Delete $INSTDIR\fmslogo-${LANG_ENGLISH}.exe
+  Delete $INSTDIR\fmslogo-${LANG_GREEK}.exe
+  Delete $INSTDIR\fmslogo-${LANG_FRENCH}.exe
+
+  Delete $INSTDIR\startup-${LANG_ENGLISH}.logoscript
+  Delete $INSTDIR\startup-${LANG_GREEK}.logoscript
+  Delete $INSTDIR\startup-${LANG_FRENCH}.logoscript
+
+  Delete $INSTDIR\logohelp-${LANG_ENGLISH}.chm
+  Delete $INSTDIR\logohelp-${LANG_GREEK}.chm
+  Delete $INSTDIR\logohelp-${LANG_FRENCH}.chm
 
   ;
   ; Write the uninstall keys for Windows
@@ -406,6 +427,9 @@ Section "Uninstall"
   Delete $INSTDIR\startup-${LANG_FRENCH}.logoscript
 
   Delete $INSTDIR\logohelp.chm
+  Delete $INSTDIR\logohelp-${LANG_ENGLISH}.chm
+  Delete $INSTDIR\logohelp-${LANG_GREEK}.chm
+  Delete $INSTDIR\logohelp-${LANG_FRENCH}.chm
 
   Delete $INSTDIR\mcistrwh.hlp
   Delete $INSTDIR\mcistrwh.gid
