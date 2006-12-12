@@ -642,6 +642,11 @@
 #define LOCALIZED_HELP_RELEASENOTES    "&Release Notes"
 #define LOCALIZED_HELP_ABOUTFMSLOGO    "&About "LOCALIZED_GENERAL_PRODUCTNAME"..."
 #define LOCALIZED_HELP_MS              "&About MS..."
+// The following two help options display tables for translating to/from English
+// These tables are built from the LOCALIZED_ALTERNATE_* macros above and the
+// and starup-xxxx.logoscript file.
+#define LOCALIZED_HELP_LANGTOENGLISH   "LANGUAGE to English"
+#define LOCALIZED_HELP_ENGLISHTOLANG   "English to LANGUAGE"
 
 // The "Set Active Area" dialog box
 #define LOCALIZED_SELECTACTIVEAREA              "Select Active Area"

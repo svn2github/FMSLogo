@@ -642,6 +642,11 @@
 #define LOCALIZED_HELP_RELEASENOTES    "&Σημειώσεις έκδοσης" // 
 #define LOCALIZED_HELP_ABOUTFMSLOGO    "&Πληροφορίες για την "LOCALIZED_GENERAL_PRODUCTNAME"..." // I have assumed here that FMSLogo would be female grammatically, as are all the programming languages in Greek
 #define LOCALIZED_HELP_MS              "&Πληροφορίες για την MS..." // 
+// The following two help options display tables for translating to/from English
+// These tables are built from the LOCALIZED_ALTERNATE_* macros above and the
+// and starup-xxxx.logoscript file.
+#define LOCALIZED_HELP_LANGTOENGLISH   "LANGUAGE to English" // NOT_YET_LOCALIZED
+#define LOCALIZED_HELP_ENGLISHTOLANG   "English to LANGUAGE" // NOT_YET_LOCALIZED
 
 // The "Set Active Area" dialog box
 #define LOCALIZED_SELECTACTIVEAREA              "Επιλογή ενεργής περιοχής" // 

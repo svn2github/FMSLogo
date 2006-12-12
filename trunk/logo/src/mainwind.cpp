@@ -1184,7 +1184,7 @@ bool TMainFrame::OpenDIB(FILE* File, DWORD &dwPixelWidth, DWORD &dwPixelHeight)
          {
          if (ReadbitCount == 8)
             {
-            for (int i = 0; i < ReadBitmapInfo->bmiHeader.biClrUsed; i++)
+            for (DWORD i = 0; i < ReadBitmapInfo->bmiHeader.biClrUsed; i++)
                {
                LoadColor(
                   ReadBitmapInfo->bmiColors[i].rgbRed,
@@ -1980,7 +1980,7 @@ SetTextOnChildWindows(
    size_t            ChildTextLength
    )
    {
-   for (int i = 0; i < ChildTextLength; i++)
+   for (size_t i = 0; i < ChildTextLength; i++)
       {
       Parent->SetDlgItemText(ChildText[i].MenuId, ChildText[i].MenuText);
       }
@@ -2037,6 +2037,11 @@ void TMainFrame::SetupWindow()
  
    static const MENUITEM helpMenuItems[] = {
       {LOCALIZED_HELP_INDEX,         CM_HELP},
+#if LOCALE!=1033
+      // options for translating to/from English
+      {LOCALIZED_HELP_LANGTOENGLISH, CM_HELPLANGTOENGLISH},
+      {LOCALIZED_HELP_ENGLISHTOLANG, CM_HELPENGLISHTOLANG},
+#endif
       {LOCALIZED_HELP_MCI,           CM_HELPMCI},
       {LOCALIZED_HELP_HELP,          CM_HELPHELP},
       {0},
@@ -2518,6 +2523,20 @@ void TMainFrame::CMHelpTutorial()
    {
    do_help("Where to Start");
    }
+
+#if LOCALE!=1033
+
+void TMainFrame::CMHelpLangToEnglish()
+   {
+   do_help("To English");
+   }
+
+void TMainFrame::CMHelpEnglishToLang()
+   {
+   do_help("From English");
+   }
+
+#endif
 
 
 static
@@ -3169,6 +3188,10 @@ DEFINE_RESPONSE_TABLE1(TMainFrame, TDecoratedFrame)
   EV_COMMAND(CM_HELPHELP, CMHelpHelp),
   EV_COMMAND(CM_HELPABOUT, CMHelpAbout),
   EV_COMMAND(CM_HELPABOUTMS, CMHelpAboutMS),
+#if LOCALE!=1033
+  EV_COMMAND(CM_HELPLANGTOENGLISH, CMHelpLangToEnglish),
+  EV_COMMAND(CM_HELPENGLISHTOLANG, CMHelpEnglishToLang),
+#endif
   EV_COMMAND(CM_CONTROLEXECUTE, CMControlExecute),
   EV_COMMAND(CM_SETFONT, CMSetFont),
   EV_COMMAND(CM_SETCOMMANDERFONT, CMSetCommanderFont),

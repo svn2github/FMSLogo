@@ -579,6 +579,11 @@ class TMainFrame : public TDecoratedFrame
    void CMHelpAbout();
    void CMHelpAboutMS();
 
+#if LOCALE!=1033
+   void CMHelpLangToEnglish();
+   void CMHelpEnglishToLang();
+#endif
+
    void CMControlExecute();
 
    void CMSetFont();

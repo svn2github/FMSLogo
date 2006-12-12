@@ -632,7 +632,7 @@
 #define LOCALIZED_ZOOM_OUT             "&Arrière"
 #define LOCALIZED_ZOOM_NORMAL          "&Normal"
 
-#define LOCALIZED_HELP                 "Aide"
+#define LOCALIZED_HELP                 "&Aide"
 #define LOCALIZED_HELP_INDEX           "&Manuel (en Anglais)"
 #define LOCALIZED_HELP_MCI             "M&anuel MCI (en Anglais)"
 #define LOCALIZED_HELP_HELP            "&Utilisation Help"
@@ -642,6 +642,11 @@
 #define LOCALIZED_HELP_RELEASENOTES    "&MAJ Notes"
 #define LOCALIZED_HELP_ABOUTFMSLOGO    "&A propos de "LOCALIZED_GENERAL_PRODUCTNAME"..."
 #define LOCALIZED_HELP_MS              "A &propos de MS..."
+// The following two help options display tables for translating to/from English
+// These tables are built from the LOCALIZED_ALTERNATE_* macros above and the
+// and startup-xxxx.logoscript file.
+#define LOCALIZED_HELP_LANGTOENGLISH   "Français à Anglais"
+#define LOCALIZED_HELP_ENGLISHTOLANG   "Anglais à Français"
 
 // The "Set Active Area" dialog box
 #define LOCALIZED_SELECTACTIVEAREA              "Zone active"
