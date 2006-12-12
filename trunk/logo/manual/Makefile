@@ -11,6 +11,10 @@ HHC      = "C:\Program Files\Help Workshop\hhc.exe"
 FOP      = "C:\Program Files\fop-0.20.5\fop.bat"
 UNIXECHO = "c:\cygwin\bin\echo.exe"
 
+# by default, build the English CHM file
+logohelp.chm : logohelp-1033.chm
+	cp $^ $@
+
 htmlhelp.hhp : $(SOURCEFILES) $(HHP_STYLESHEET)
 	$(XSLTPROC) --nonet $(HHP_STYLESHEET) $(ROOTFILE)
 
@@ -20,8 +24,17 @@ index.html : $(SOURCEFILES) $(HTML_STYLESHEET)
 logohelp.fo : $(SOURCEFILES) $(FO_STYLESHEET)
 	$(XSLTPROC) --nonet --output $@ $(FO_STYLESHEET) $(ROOTFILE)
 
-logohelp.chm : htmlhelp.hhp logohelp.css
-	-$(HHC) htmlhelp.hhp
+# other translations
+logohelp-%.chm : htmlhelp-%.hhp logohelp.css
+	-$(HHC) htmlhelp-$*.hhp
+
+htmlhelp-%.hhp : translations-%.xml $(SOURCEFILES) $(HHP_STYLESHEET)
+	cp translations-$*.xml translations.xml
+	$(XSLTPROC) --nonet --param htmlhelp.chm "'logohelp-$*.chm'" $(HHP_STYLESHEET) $(ROOTFILE)
+	mv htmlhelp.hhp htmlhelp-$*.hhp
+
+# The "all" target builds all translations of the .chm
+all : logohelp-1032.chm logohelp-1033.chm logohelp-1036.chm;
 
 logohelp.ps : $(SOURCEFILES)
 	docbook2ps $(ROOTFILE)
@@ -53,9 +66,6 @@ clean :
 	$(RM) $(wildcard *.hhc)
 	$(RM) $(wildcard *.chm) 
 	$(RM) $(wildcard *~)
-
-all : htmlhelp.hhp logohelp.ps logohelp.pdf logohelp.rtf logohelp.fo
-
 
 test :
 	perl -W check-manual.pl

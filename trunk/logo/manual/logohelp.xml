@@ -32,6 +32,7 @@
   <!ENTITY networking-commands       SYSTEM "networking-commands.xml">
   <!ENTITY multimedia-commands       SYSTEM "multimedia-commands.xml">
   <!ENTITY abbreviations             SYSTEM "abbreviations.xml">
+  <!ENTITY translations              SYSTEM "translations.xml">
 
   <!ENTITY command-.setbf       SYSTEM "command-.setbf.xml">
   <!ENTITY command-.setfirst    SYSTEM "command-.setfirst.xml">
@@ -621,6 +622,7 @@
   &networking-commands;
   &multimedia-commands;
   &abbreviations;
+  &translations;
 
 </book>
 

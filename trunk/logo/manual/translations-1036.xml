@@ -1,0 +1,1869 @@
+<appendix id='translations'>
+<title>Commands: English to French</title>
+<informaltable>
+  <indexterm><primary>From English</primary></indexterm>
+  <tgroup cols='2'>
+   <thead>
+     <row>
+       <entry>English Command</entry>
+       <entry>French Command</entry>
+     </row>
+   </thead>
+  <tbody>
+     <row>
+       <entry><link linkend='command-.setbf'>.setbf</link></entry>
+       <entry>.metssaufpremier</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-.setfirst'>.setfirst</link></entry>
+       <entry>.metspremier</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-.setitem'>.setitem</link></entry>
+       <entry>.metsitem</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-abs'>abs</link></entry>
+       <entry>absolue</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-activearea'>activearea</link></entry>
+       <entry>zoneactive</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-and'>and</link></entry>
+       <entry>et</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-arccos'>arccos</link></entry>
+       <entry>arccos</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-arcsin'>arcsin</link></entry>
+       <entry>arcsin</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-arctan'>arctan</link></entry>
+       <entry>arctan</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-back'>back</link></entry>
+       <entry>recule</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-beforep'>before?</link></entry>
+       <entry>précede?</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-beforep'>before?</link></entry>
+       <entry>precede?</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-beforep'>beforep</link></entry>
+       <entry>précedep</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-beforep'>beforep</link></entry>
+       <entry>precedep</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-bf'>bf</link></entry>
+       <entry>sp</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-bfs'>bfs</link></entry>
+       <entry>sps</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-bitcopy'>bitcopy</link></entry>
+       <entry>copiebmp</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-bitcut'>bitcut</link></entry>
+       <entry>coupebmp</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-bitindex'>bitindex</link></entry>
+       <entry>indexbmp</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-bitload'>bitload</link></entry>
+       <entry>ramènebmp</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-bitload'>bitload</link></entry>
+       <entry>ramenebmp</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-bitloadsize'>bitloadsize</link></entry>
+       <entry>tailleramènebmp</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-bitloadsize'>bitloadsize</link></entry>
+       <entry>tailleramenebmp</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-bitmapturtle'>bitmapturtle</link></entry>
+       <entry>tortuebmp</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-bitpaste'>bitpaste</link></entry>
+       <entry>collerbmp</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-bitpastetoindex'>bitpastetoindex</link></entry>
+       <entry>collerbmpindex</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-bitsave'>bitsave</link></entry>
+       <entry>sauvebmp</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-bitsize'>bitsize</link></entry>
+       <entry>taillebmp</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-bk'>bk</link></entry>
+       <entry>re</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-bl'>bl</link></entry>
+       <entry>sd</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-butfirst'>butfirst</link></entry>
+       <entry>saufpremier</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-bye'>bye</link></entry>
+       <entry>aurevior</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-catch'>catch</link></entry>
+       <entry>attrape</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-char'>char</link></entry>
+       <entry>car</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-circle'>circle</link></entry>
+       <entry>cercle</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-circle2'>circle2</link></entry>
+       <entry>cercle2</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-clean'>clean</link></entry>
+       <entry>nettoie</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-clearpalette'>clearpalette</link></entry>
+       <entry>videpalette</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-clearscreen'>clearscreen</link></entry>
+       <entry>videécran</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-clearscreen'>clearscreen</link></entry>
+       <entry>videecran</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-cleartext'>cleartext</link></entry>
+       <entry>videtexte</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-close'>close</link></entry>
+       <entry>ferme</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-closeall'>closeall</link></entry>
+       <entry>fermetout</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-co'>co</link></entry>
+       <entry>co</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-continue'>continue</link></entry>
+       <entry>continue</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-cos'>cos</link></entry>
+       <entry>cos</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-count'>count</link></entry>
+       <entry>compte</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-cs'>cs</link></entry>
+       <entry>vé</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-cs'>cs</link></entry>
+       <entry>ve</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-ct'>ct</link></entry>
+       <entry>vt</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-define'>define</link></entry>
+       <entry>definis</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-definedp'>defined?</link></entry>
+       <entry>procédure?</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-definedp'>defined?</link></entry>
+       <entry>procedure?</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-definedp'>definedp</link></entry>
+       <entry>procédurep</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-definedp'>definedp</link></entry>
+       <entry>procedurep</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-difference'>difference</link></entry>
+       <entry>différence</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-difference'>difference</link></entry>
+       <entry>difference</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-dir'>dir</link></entry>
+       <entry>catalogue</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-directories'>directories</link></entry>
+       <entry>répertoires</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-directories'>directories</link></entry>
+       <entry>repertiores</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-do.until'>do.until</link></entry>
+       <entry>fairejusque</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-do.while'>do.while</link></entry>
+       <entry>fairetanque</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-ed'>ed</link></entry>
+       <entry>ed</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-edit'>edit</link></entry>
+       <entry>edite</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-emptyp'>empty?</link></entry>
+       <entry>vide?</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-emptyp'>emptyp</link></entry>
+       <entry>videp</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-end'>end</link></entry>
+       <entry>fin</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-equalp'>equal?</link></entry>
+       <entry>egal?</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-equalp'>equalp</link></entry>
+       <entry>egalp</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-erase'>erase</link></entry>
+       <entry>efface</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-ern'>ern</link></entry>
+       <entry>effacevarible</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-error'>error</link></entry>
+       <entry>erreur</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-false'>false</link></entry>
+       <entry>faux</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-fd'>fd</link></entry>
+       <entry>av</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-fence'>fence</link></entry>
+       <entry>clos</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-files'>files</link></entry>
+       <entry>fichiers</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-fill'>fill</link></entry>
+       <entry>remplis</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-first'>first</link></entry>
+       <entry>premier</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-firsts'>firsts</link></entry>
+       <entry>premiers</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-floodcolor'>floodcolor</link></entry>
+       <entry>couleurremplis</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-for'>for</link></entry>
+       <entry>repetepour</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-for'>for</link></entry>
+       <entry>repétèpour</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-forward'>forward</link></entry>
+       <entry>avance</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-fput'>fput</link></entry>
+       <entry>metspremier</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-hideturtle'>hideturtle</link></entry>
+       <entry>cachetortue</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-home'>home</link></entry>
+       <entry>origine</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-ht'>ht</link></entry>
+       <entry>ct</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-if'>if</link></entry>
+       <entry>si</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-ifelse'>ifelse</link></entry>
+       <entry>sisinon</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-iff'>iff</link></entry>
+       <entry>sif</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-iffalse'>iffalse</link></entry>
+       <entry>sifaux</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-ift'>ift</link></entry>
+       <entry>siv</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-iftrue'>iftrue</link></entry>
+       <entry>sivrai</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-int'>int</link></entry>
+       <entry>tronque</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-keyp'>key?</link></entry>
+       <entry>touche?</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-keyp'>keyp</link></entry>
+       <entry>touchep</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-label'>label</link></entry>
+       <entry>étiquette</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-label'>label</link></entry>
+       <entry>etiquette</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-labelfont'>labelfont</link></entry>
+       <entry>police</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-left'>left</link></entry>
+       <entry>gauche</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-list'>list</link></entry>
+       <entry>liste</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-listp'>list?</link></entry>
+       <entry>liste?</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-listp'>listp</link></entry>
+       <entry>listep</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-load'>load</link></entry>
+       <entry>ramène</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-load'>load</link></entry>
+       <entry>ramene</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-local'>local</link></entry>
+       <entry>locale</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-localmake'>localmake</link></entry>
+       <entry>donnelocale</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-log10'>log10</link></entry>
+       <entry>log10</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-lowercase'>lowercase</link></entry>
+       <entry>miniscule</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-lput'>lput</link></entry>
+       <entry>metspremier</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-lt'>lt</link></entry>
+       <entry>ga</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-make'>make</link></entry>
+       <entry>donne</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-mci'>mci</link></entry>
+       <entry>mci</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-member'>member</link></entry>
+       <entry>membre</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-memberp'>member?</link></entry>
+       <entry>membre?</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-memberp'>memberp</link></entry>
+       <entry>membrep</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-messagebox'>messagebox</link></entry>
+       <entry>message</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-minus'>minus</link></entry>
+       <entry>moins</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-modulo'>modulo</link></entry>
+       <entry>modulo</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-mousepos'>mousepos</link></entry>
+       <entry>possouris</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-namep'>name?</link></entry>
+       <entry>nom?</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-namep'>namep</link></entry>
+       <entry>nomp</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-names'>names</link></entry>
+       <entry>noms</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-not'>not</link></entry>
+       <entry>non</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-output'>output</link></entry>
+       <entry>retourne</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-pc'>pc</link></entry>
+       <entry>cc</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-pd'>pd</link></entry>
+       <entry>bc</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-pe'>pe</link></entry>
+       <entry>go</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-pencolor'>pencolor</link></entry>
+       <entry>couleurcrayon</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-pendown'>pendown</link></entry>
+       <entry>baissecrayon</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-pendownp'>pendown?</link></entry>
+       <entry>baiseecrayon?</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-pendownp'>pendownp</link></entry>
+       <entry>baiseecrayonp</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-penerase'>penerase</link></entry>
+       <entry>gomme</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-penmode'>penmode</link></entry>
+       <entry>modecrayon</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-penpaint'>penpaint</link></entry>
+       <entry>dessine</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-penreverse'>penreverse</link></entry>
+       <entry>inversecrayon</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-penup'>penup</link></entry>
+       <entry>levecrayon</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-perspective'>perspective</link></entry>
+       <entry>perspective</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-pixel'>pixel</link></entry>
+       <entry>point</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-power'>power</link></entry>
+       <entry>puissance</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-ppt'>ppt</link></entry>
+       <entry>de</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-pr'>pr</link></entry>
+       <entry>éc</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-pr'>pr</link></entry>
+       <entry>ec</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-primitivep'>primitive?</link></entry>
+       <entry>primitive?</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-primitivep'>primitivep</link></entry>
+       <entry>primitivep</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-print'>print</link></entry>
+       <entry>écris</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-print'>print</link></entry>
+       <entry>ecris</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-product'>product</link></entry>
+       <entry>produit</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-pu'>pu</link></entry>
+       <entry>lc</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-px'>px</link></entry>
+       <entry>ic</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-quotient'>quotient</link></entry>
+       <entry>divise</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-radarccos'>radarccos</link></entry>
+       <entry>radarccos</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-radarcsin'>radarcsin</link></entry>
+       <entry>radarcsin</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-radarctan'>radarctan</link></entry>
+       <entry>radarctan</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-radcos'>radcos</link></entry>
+       <entry>radcos</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-radsin'>radsin</link></entry>
+       <entry>radsin</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-radtan'>radtan</link></entry>
+       <entry>radtan</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-random'>random</link></entry>
+       <entry>hasard</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-rc'>rc</link></entry>
+       <entry>rc</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-rcs'>rcs</link></entry>
+       <entry>rcs</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-readchar'>readchar</link></entry>
+       <entry>liscar</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-readchars'>readchars</link></entry>
+       <entry>liscars</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-reader'>reader</link></entry>
+       <entry>liseur</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-readlist'>readlist</link></entry>
+       <entry>lisliste</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-readpos'>readpos</link></entry>
+       <entry>lispos</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-readword'>readword</link></entry>
+       <entry>lismot</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-remainder'>remainder</link></entry>
+       <entry>reste</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-repcount'>repcount</link></entry>
+       <entry>compteur</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-repeat'>repeat</link></entry>
+       <entry>repétè</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-repeat'>repeat</link></entry>
+       <entry>repete</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-right'>right</link></entry>
+       <entry>droite</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-round'>round</link></entry>
+       <entry>arrondi</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-rt'>rt</link></entry>
+       <entry>dr</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-run'>run</link></entry>
+       <entry>execute</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-save'>save</link></entry>
+       <entry>sauve</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-se'>se</link></entry>
+       <entry>ph</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-sentence'>sentence</link></entry>
+       <entry>phrase</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-setactivearea'>setactivearea</link></entry>
+       <entry>fixezoneactive</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-setfc'>setfc</link></entry>
+       <entry>fcr</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-setfloodcolor'>setfloodcolor</link></entry>
+       <entry>fixecouleurremplis</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-setheading'>setheading</link></entry>
+       <entry>fixecap</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-setitem'>setitem</link></entry>
+       <entry>remplace</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-setlabelfont'>setlabelfont</link></entry>
+       <entry>fixepolice</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-setpc'>setpc</link></entry>
+       <entry>fcc</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-setpencolor'>setpencolor</link></entry>
+       <entry>fixecouleurcrayon</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-setpensize'>setpensize</link></entry>
+       <entry>fixetaillecrayon</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-setpos'>setpos</link></entry>
+       <entry>fixeposition</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-setposxyz'>setposxyz</link></entry>
+       <entry>fixepositionxyz</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-setsc'>setsc</link></entry>
+       <entry>fcf</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-setscreencolor'>setscreencolor</link></entry>
+       <entry>fixecouleurfond</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-setturtle'>setturtle</link></entry>
+       <entry>fixetortue</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-setturtlemode'>setturtlemode</link></entry>
+       <entry>fixemodetortue</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-setx'>setx</link></entry>
+       <entry>fixex</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-setxy'>setxy</link></entry>
+       <entry>fixexy</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-setxyz'>setxyz</link></entry>
+       <entry>fixexyz</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-sety'>sety</link></entry>
+       <entry>fixey</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-setz'>setz</link></entry>
+       <entry>fixez</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-show'>show</link></entry>
+       <entry>montre</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-shownp'>shown?</link></entry>
+       <entry>visible?</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-shownp'>shownp</link></entry>
+       <entry>visiblep</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-showturtle'>showturtle</link></entry>
+       <entry>montretortue</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-sin'>sin</link></entry>
+       <entry>sin</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-sqrt'>sqrt</link></entry>
+       <entry>racine</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-st'>st</link></entry>
+       <entry>mt</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-sum'>sum</link></entry>
+       <entry>somme</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-tan'>tan</link></entry>
+       <entry>tan</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-thing'>thing</link></entry>
+       <entry>chose</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-throw'>throw</link></entry>
+       <entry>lance</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-time'>time</link></entry>
+       <entry>temps</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-to'>to</link></entry>
+       <entry>pour</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-towards'>towards</link></entry>
+       <entry>vers</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-towardsxyz'>towardsxyz</link></entry>
+       <entry>versxyz</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-true'>true</link></entry>
+       <entry>vrai</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-turtle'>turtle</link></entry>
+       <entry>tortue</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-turtlemode'>turtlemode</link></entry>
+       <entry>modetortue</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-turtles'>turtles</link></entry>
+       <entry>tortues</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-type'>type</link></entry>
+       <entry>tape</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-until'>until</link></entry>
+       <entry>jusque</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-uppercase'>uppercase</link></entry>
+       <entry>majascule</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-wait'>wait</link></entry>
+       <entry>attends</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-while'>while</link></entry>
+       <entry>tantque</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-window'>window</link></entry>
+       <entry>fenêtre</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-window'>window</link></entry>
+       <entry>fenetre</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-word'>word</link></entry>
+       <entry>mot</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-wordp'>word?</link></entry>
+       <entry>mot?</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-wordp'>wordp</link></entry>
+       <entry>motp</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-wrap'>wrap</link></entry>
+       <entry>enroule</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-writer'>writer</link></entry>
+       <entry>écrivain</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-writer'>writer</link></entry>
+       <entry>ecrivain</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-yesnobox'>yesnobox</link></entry>
+       <entry>messageouinon</entry>
+     </row>
+  </tbody>
+  </tgroup>
+</informaltable>
+</appendix>
+
+<appendix>
+<title>Commands: French to English</title>
+<indexterm><primary>To English</primary></indexterm>
+<informaltable>
+  <tgroup cols='2'>
+   <thead>
+     <row>
+       <entry>French Command</entry>
+       <entry>English Command</entry>
+     </row>
+   </thead>
+  <tbody>
+     <row>
+       <entry>.metsitem</entry>
+       <entry><link linkend='command-.setitem'>.setitem</link></entry>
+     </row>
+     <row>
+       <entry>.metspremier</entry>
+       <entry><link linkend='command-.setfirst'>.setfirst</link></entry>
+     </row>
+     <row>
+       <entry>.metssaufpremier</entry>
+       <entry><link linkend='command-.setbf'>.setbf</link></entry>
+     </row>
+     <row>
+       <entry>absolue</entry>
+       <entry><link linkend='command-abs'>abs</link></entry>
+     </row>
+     <row>
+       <entry>arccos</entry>
+       <entry><link linkend='command-arccos'>arccos</link></entry>
+     </row>
+     <row>
+       <entry>arcsin</entry>
+       <entry><link linkend='command-arcsin'>arcsin</link></entry>
+     </row>
+     <row>
+       <entry>arctan</entry>
+       <entry><link linkend='command-arctan'>arctan</link></entry>
+     </row>
+     <row>
+       <entry>arrondi</entry>
+       <entry><link linkend='command-round'>round</link></entry>
+     </row>
+     <row>
+       <entry>attends</entry>
+       <entry><link linkend='command-wait'>wait</link></entry>
+     </row>
+     <row>
+       <entry>attrape</entry>
+       <entry><link linkend='command-catch'>catch</link></entry>
+     </row>
+     <row>
+       <entry>aurevior</entry>
+       <entry><link linkend='command-bye'>bye</link></entry>
+     </row>
+     <row>
+       <entry>av</entry>
+       <entry><link linkend='command-fd'>fd</link></entry>
+     </row>
+     <row>
+       <entry>avance</entry>
+       <entry><link linkend='command-forward'>forward</link></entry>
+     </row>
+     <row>
+       <entry>baiseecrayon?</entry>
+       <entry><link linkend='command-pendownp'>pendown?</link></entry>
+     </row>
+     <row>
+       <entry>baiseecrayonp</entry>
+       <entry><link linkend='command-pendownp'>pendownp</link></entry>
+     </row>
+     <row>
+       <entry>baissecrayon</entry>
+       <entry><link linkend='command-pendown'>pendown</link></entry>
+     </row>
+     <row>
+       <entry>bc</entry>
+       <entry><link linkend='command-pd'>pd</link></entry>
+     </row>
+     <row>
+       <entry>cachetortue</entry>
+       <entry><link linkend='command-hideturtle'>hideturtle</link></entry>
+     </row>
+     <row>
+       <entry>car</entry>
+       <entry><link linkend='command-char'>char</link></entry>
+     </row>
+     <row>
+       <entry>catalogue</entry>
+       <entry><link linkend='command-dir'>dir</link></entry>
+     </row>
+     <row>
+       <entry>cc</entry>
+       <entry><link linkend='command-pc'>pc</link></entry>
+     </row>
+     <row>
+       <entry>cercle</entry>
+       <entry><link linkend='command-circle'>circle</link></entry>
+     </row>
+     <row>
+       <entry>cercle2</entry>
+       <entry><link linkend='command-circle2'>circle2</link></entry>
+     </row>
+     <row>
+       <entry>chose</entry>
+       <entry><link linkend='command-thing'>thing</link></entry>
+     </row>
+     <row>
+       <entry>clos</entry>
+       <entry><link linkend='command-fence'>fence</link></entry>
+     </row>
+     <row>
+       <entry>co</entry>
+       <entry><link linkend='command-co'>co</link></entry>
+     </row>
+     <row>
+       <entry>collerbmp</entry>
+       <entry><link linkend='command-bitpaste'>bitpaste</link></entry>
+     </row>
+     <row>
+       <entry>collerbmpindex</entry>
+       <entry><link linkend='command-bitpastetoindex'>bitpastetoindex</link></entry>
+     </row>
+     <row>
+       <entry>compte</entry>
+       <entry><link linkend='command-count'>count</link></entry>
+     </row>
+     <row>
+       <entry>compteur</entry>
+       <entry><link linkend='command-repcount'>repcount</link></entry>
+     </row>
+     <row>
+       <entry>continue</entry>
+       <entry><link linkend='command-continue'>continue</link></entry>
+     </row>
+     <row>
+       <entry>copiebmp</entry>
+       <entry><link linkend='command-bitcopy'>bitcopy</link></entry>
+     </row>
+     <row>
+       <entry>cos</entry>
+       <entry><link linkend='command-cos'>cos</link></entry>
+     </row>
+     <row>
+       <entry>couleurcrayon</entry>
+       <entry><link linkend='command-pencolor'>pencolor</link></entry>
+     </row>
+     <row>
+       <entry>couleurremplis</entry>
+       <entry><link linkend='command-floodcolor'>floodcolor</link></entry>
+     </row>
+     <row>
+       <entry>coupebmp</entry>
+       <entry><link linkend='command-bitcut'>bitcut</link></entry>
+     </row>
+     <row>
+       <entry>ct</entry>
+       <entry><link linkend='command-ht'>ht</link></entry>
+     </row>
+     <row>
+       <entry>de</entry>
+       <entry><link linkend='command-ppt'>ppt</link></entry>
+     </row>
+     <row>
+       <entry>definis</entry>
+       <entry><link linkend='command-define'>define</link></entry>
+     </row>
+     <row>
+       <entry>dessine</entry>
+       <entry><link linkend='command-penpaint'>penpaint</link></entry>
+     </row>
+     <row>
+       <entry>difference</entry>
+       <entry><link linkend='command-difference'>difference</link></entry>
+     </row>
+     <row>
+       <entry>différence</entry>
+       <entry><link linkend='command-difference'>difference</link></entry>
+     </row>
+     <row>
+       <entry>divise</entry>
+       <entry><link linkend='command-quotient'>quotient</link></entry>
+     </row>
+     <row>
+       <entry>donne</entry>
+       <entry><link linkend='command-make'>make</link></entry>
+     </row>
+     <row>
+       <entry>donnelocale</entry>
+       <entry><link linkend='command-localmake'>localmake</link></entry>
+     </row>
+     <row>
+       <entry>dr</entry>
+       <entry><link linkend='command-rt'>rt</link></entry>
+     </row>
+     <row>
+       <entry>droite</entry>
+       <entry><link linkend='command-right'>right</link></entry>
+     </row>
+     <row>
+       <entry>ec</entry>
+       <entry><link linkend='command-pr'>pr</link></entry>
+     </row>
+     <row>
+       <entry>ecris</entry>
+       <entry><link linkend='command-print'>print</link></entry>
+     </row>
+     <row>
+       <entry>ecrivain</entry>
+       <entry><link linkend='command-writer'>writer</link></entry>
+     </row>
+     <row>
+       <entry>ed</entry>
+       <entry><link linkend='command-ed'>ed</link></entry>
+     </row>
+     <row>
+       <entry>edite</entry>
+       <entry><link linkend='command-edit'>edit</link></entry>
+     </row>
+     <row>
+       <entry>efface</entry>
+       <entry><link linkend='command-erase'>erase</link></entry>
+     </row>
+     <row>
+       <entry>effacevarible</entry>
+       <entry><link linkend='command-ern'>ern</link></entry>
+     </row>
+     <row>
+       <entry>egal?</entry>
+       <entry><link linkend='command-equalp'>equal?</link></entry>
+     </row>
+     <row>
+       <entry>egalp</entry>
+       <entry><link linkend='command-equalp'>equalp</link></entry>
+     </row>
+     <row>
+       <entry>enroule</entry>
+       <entry><link linkend='command-wrap'>wrap</link></entry>
+     </row>
+     <row>
+       <entry>erreur</entry>
+       <entry><link linkend='command-error'>error</link></entry>
+     </row>
+     <row>
+       <entry>et</entry>
+       <entry><link linkend='command-and'>and</link></entry>
+     </row>
+     <row>
+       <entry>etiquette</entry>
+       <entry><link linkend='command-label'>label</link></entry>
+     </row>
+     <row>
+       <entry>execute</entry>
+       <entry><link linkend='command-run'>run</link></entry>
+     </row>
+     <row>
+       <entry>fairejusque</entry>
+       <entry><link linkend='command-do.until'>do.until</link></entry>
+     </row>
+     <row>
+       <entry>fairetanque</entry>
+       <entry><link linkend='command-do.while'>do.while</link></entry>
+     </row>
+     <row>
+       <entry>faux</entry>
+       <entry><link linkend='command-false'>false</link></entry>
+     </row>
+     <row>
+       <entry>fcc</entry>
+       <entry><link linkend='command-setpc'>setpc</link></entry>
+     </row>
+     <row>
+       <entry>fcf</entry>
+       <entry><link linkend='command-setsc'>setsc</link></entry>
+     </row>
+     <row>
+       <entry>fcr</entry>
+       <entry><link linkend='command-setfc'>setfc</link></entry>
+     </row>
+     <row>
+       <entry>fenetre</entry>
+       <entry><link linkend='command-window'>window</link></entry>
+     </row>
+     <row>
+       <entry>fenêtre</entry>
+       <entry><link linkend='command-window'>window</link></entry>
+     </row>
+     <row>
+       <entry>ferme</entry>
+       <entry><link linkend='command-close'>close</link></entry>
+     </row>
+     <row>
+       <entry>fermetout</entry>
+       <entry><link linkend='command-closeall'>closeall</link></entry>
+     </row>
+     <row>
+       <entry>fichiers</entry>
+       <entry><link linkend='command-files'>files</link></entry>
+     </row>
+     <row>
+       <entry>fin</entry>
+       <entry><link linkend='command-end'>end</link></entry>
+     </row>
+     <row>
+       <entry>fixecap</entry>
+       <entry><link linkend='command-setheading'>setheading</link></entry>
+     </row>
+     <row>
+       <entry>fixecouleurcrayon</entry>
+       <entry><link linkend='command-setpencolor'>setpencolor</link></entry>
+     </row>
+     <row>
+       <entry>fixecouleurfond</entry>
+       <entry><link linkend='command-setscreencolor'>setscreencolor</link></entry>
+     </row>
+     <row>
+       <entry>fixecouleurremplis</entry>
+       <entry><link linkend='command-setfloodcolor'>setfloodcolor</link></entry>
+     </row>
+     <row>
+       <entry>fixemodetortue</entry>
+       <entry><link linkend='command-setturtlemode'>setturtlemode</link></entry>
+     </row>
+     <row>
+       <entry>fixepolice</entry>
+       <entry><link linkend='command-setlabelfont'>setlabelfont</link></entry>
+     </row>
+     <row>
+       <entry>fixeposition</entry>
+       <entry><link linkend='command-setpos'>setpos</link></entry>
+     </row>
+     <row>
+       <entry>fixepositionxyz</entry>
+       <entry><link linkend='command-setposxyz'>setposxyz</link></entry>
+     </row>
+     <row>
+       <entry>fixetaillecrayon</entry>
+       <entry><link linkend='command-setpensize'>setpensize</link></entry>
+     </row>
+     <row>
+       <entry>fixetortue</entry>
+       <entry><link linkend='command-setturtle'>setturtle</link></entry>
+     </row>
+     <row>
+       <entry>fixex</entry>
+       <entry><link linkend='command-setx'>setx</link></entry>
+     </row>
+     <row>
+       <entry>fixexy</entry>
+       <entry><link linkend='command-setxy'>setxy</link></entry>
+     </row>
+     <row>
+       <entry>fixexyz</entry>
+       <entry><link linkend='command-setxyz'>setxyz</link></entry>
+     </row>
+     <row>
+       <entry>fixey</entry>
+       <entry><link linkend='command-sety'>sety</link></entry>
+     </row>
+     <row>
+       <entry>fixez</entry>
+       <entry><link linkend='command-setz'>setz</link></entry>
+     </row>
+     <row>
+       <entry>fixezoneactive</entry>
+       <entry><link linkend='command-setactivearea'>setactivearea</link></entry>
+     </row>
+     <row>
+       <entry>ga</entry>
+       <entry><link linkend='command-lt'>lt</link></entry>
+     </row>
+     <row>
+       <entry>gauche</entry>
+       <entry><link linkend='command-left'>left</link></entry>
+     </row>
+     <row>
+       <entry>go</entry>
+       <entry><link linkend='command-pe'>pe</link></entry>
+     </row>
+     <row>
+       <entry>gomme</entry>
+       <entry><link linkend='command-penerase'>penerase</link></entry>
+     </row>
+     <row>
+       <entry>hasard</entry>
+       <entry><link linkend='command-random'>random</link></entry>
+     </row>
+     <row>
+       <entry>ic</entry>
+       <entry><link linkend='command-px'>px</link></entry>
+     </row>
+     <row>
+       <entry>indexbmp</entry>
+       <entry><link linkend='command-bitindex'>bitindex</link></entry>
+     </row>
+     <row>
+       <entry>inversecrayon</entry>
+       <entry><link linkend='command-penreverse'>penreverse</link></entry>
+     </row>
+     <row>
+       <entry>jusque</entry>
+       <entry><link linkend='command-until'>until</link></entry>
+     </row>
+     <row>
+       <entry>lance</entry>
+       <entry><link linkend='command-throw'>throw</link></entry>
+     </row>
+     <row>
+       <entry>lc</entry>
+       <entry><link linkend='command-pu'>pu</link></entry>
+     </row>
+     <row>
+       <entry>levecrayon</entry>
+       <entry><link linkend='command-penup'>penup</link></entry>
+     </row>
+     <row>
+       <entry>liscar</entry>
+       <entry><link linkend='command-readchar'>readchar</link></entry>
+     </row>
+     <row>
+       <entry>liscars</entry>
+       <entry><link linkend='command-readchars'>readchars</link></entry>
+     </row>
+     <row>
+       <entry>liseur</entry>
+       <entry><link linkend='command-reader'>reader</link></entry>
+     </row>
+     <row>
+       <entry>lisliste</entry>
+       <entry><link linkend='command-readlist'>readlist</link></entry>
+     </row>
+     <row>
+       <entry>lismot</entry>
+       <entry><link linkend='command-readword'>readword</link></entry>
+     </row>
+     <row>
+       <entry>lispos</entry>
+       <entry><link linkend='command-readpos'>readpos</link></entry>
+     </row>
+     <row>
+       <entry>liste</entry>
+       <entry><link linkend='command-list'>list</link></entry>
+     </row>
+     <row>
+       <entry>liste?</entry>
+       <entry><link linkend='command-listp'>list?</link></entry>
+     </row>
+     <row>
+       <entry>listep</entry>
+       <entry><link linkend='command-listp'>listp</link></entry>
+     </row>
+     <row>
+       <entry>locale</entry>
+       <entry><link linkend='command-local'>local</link></entry>
+     </row>
+     <row>
+       <entry>log10</entry>
+       <entry><link linkend='command-log10'>log10</link></entry>
+     </row>
+     <row>
+       <entry>majascule</entry>
+       <entry><link linkend='command-uppercase'>uppercase</link></entry>
+     </row>
+     <row>
+       <entry>mci</entry>
+       <entry><link linkend='command-mci'>mci</link></entry>
+     </row>
+     <row>
+       <entry>membre</entry>
+       <entry><link linkend='command-member'>member</link></entry>
+     </row>
+     <row>
+       <entry>membre?</entry>
+       <entry><link linkend='command-memberp'>member?</link></entry>
+     </row>
+     <row>
+       <entry>membrep</entry>
+       <entry><link linkend='command-memberp'>memberp</link></entry>
+     </row>
+     <row>
+       <entry>message</entry>
+       <entry><link linkend='command-messagebox'>messagebox</link></entry>
+     </row>
+     <row>
+       <entry>messageouinon</entry>
+       <entry><link linkend='command-yesnobox'>yesnobox</link></entry>
+     </row>
+     <row>
+       <entry>metspremier</entry>
+       <entry><link linkend='command-lput'>lput</link></entry>
+     </row>
+     <row>
+       <entry>miniscule</entry>
+       <entry><link linkend='command-lowercase'>lowercase</link></entry>
+     </row>
+     <row>
+       <entry>modecrayon</entry>
+       <entry><link linkend='command-penmode'>penmode</link></entry>
+     </row>
+     <row>
+       <entry>modetortue</entry>
+       <entry><link linkend='command-turtlemode'>turtlemode</link></entry>
+     </row>
+     <row>
+       <entry>modulo</entry>
+       <entry><link linkend='command-modulo'>modulo</link></entry>
+     </row>
+     <row>
+       <entry>moins</entry>
+       <entry><link linkend='command-minus'>minus</link></entry>
+     </row>
+     <row>
+       <entry>montre</entry>
+       <entry><link linkend='command-show'>show</link></entry>
+     </row>
+     <row>
+       <entry>montretortue</entry>
+       <entry><link linkend='command-showturtle'>showturtle</link></entry>
+     </row>
+     <row>
+       <entry>mot</entry>
+       <entry><link linkend='command-word'>word</link></entry>
+     </row>
+     <row>
+       <entry>mot?</entry>
+       <entry><link linkend='command-wordp'>word?</link></entry>
+     </row>
+     <row>
+       <entry>motp</entry>
+       <entry><link linkend='command-wordp'>wordp</link></entry>
+     </row>
+     <row>
+       <entry>mt</entry>
+       <entry><link linkend='command-st'>st</link></entry>
+     </row>
+     <row>
+       <entry>nettoie</entry>
+       <entry><link linkend='command-clean'>clean</link></entry>
+     </row>
+     <row>
+       <entry>nom?</entry>
+       <entry><link linkend='command-namep'>name?</link></entry>
+     </row>
+     <row>
+       <entry>nomp</entry>
+       <entry><link linkend='command-namep'>namep</link></entry>
+     </row>
+     <row>
+       <entry>noms</entry>
+       <entry><link linkend='command-names'>names</link></entry>
+     </row>
+     <row>
+       <entry>non</entry>
+       <entry><link linkend='command-not'>not</link></entry>
+     </row>
+     <row>
+       <entry>origine</entry>
+       <entry><link linkend='command-home'>home</link></entry>
+     </row>
+     <row>
+       <entry>perspective</entry>
+       <entry><link linkend='command-perspective'>perspective</link></entry>
+     </row>
+     <row>
+       <entry>ph</entry>
+       <entry><link linkend='command-se'>se</link></entry>
+     </row>
+     <row>
+       <entry>phrase</entry>
+       <entry><link linkend='command-sentence'>sentence</link></entry>
+     </row>
+     <row>
+       <entry>point</entry>
+       <entry><link linkend='command-pixel'>pixel</link></entry>
+     </row>
+     <row>
+       <entry>police</entry>
+       <entry><link linkend='command-labelfont'>labelfont</link></entry>
+     </row>
+     <row>
+       <entry>possouris</entry>
+       <entry><link linkend='command-mousepos'>mousepos</link></entry>
+     </row>
+     <row>
+       <entry>pour</entry>
+       <entry><link linkend='command-to'>to</link></entry>
+     </row>
+     <row>
+       <entry>precede?</entry>
+       <entry><link linkend='command-beforep'>before?</link></entry>
+     </row>
+     <row>
+       <entry>precedep</entry>
+       <entry><link linkend='command-beforep'>beforep</link></entry>
+     </row>
+     <row>
+       <entry>premier</entry>
+       <entry><link linkend='command-first'>first</link></entry>
+     </row>
+     <row>
+       <entry>premiers</entry>
+       <entry><link linkend='command-firsts'>firsts</link></entry>
+     </row>
+     <row>
+       <entry>primitive?</entry>
+       <entry><link linkend='command-primitivep'>primitive?</link></entry>
+     </row>
+     <row>
+       <entry>primitivep</entry>
+       <entry><link linkend='command-primitivep'>primitivep</link></entry>
+     </row>
+     <row>
+       <entry>procedure?</entry>
+       <entry><link linkend='command-definedp'>defined?</link></entry>
+     </row>
+     <row>
+       <entry>procedurep</entry>
+       <entry><link linkend='command-definedp'>definedp</link></entry>
+     </row>
+     <row>
+       <entry>procédure?</entry>
+       <entry><link linkend='command-definedp'>defined?</link></entry>
+     </row>
+     <row>
+       <entry>procédurep</entry>
+       <entry><link linkend='command-definedp'>definedp</link></entry>
+     </row>
+     <row>
+       <entry>produit</entry>
+       <entry><link linkend='command-product'>product</link></entry>
+     </row>
+     <row>
+       <entry>précede?</entry>
+       <entry><link linkend='command-beforep'>before?</link></entry>
+     </row>
+     <row>
+       <entry>précedep</entry>
+       <entry><link linkend='command-beforep'>beforep</link></entry>
+     </row>
+     <row>
+       <entry>puissance</entry>
+       <entry><link linkend='command-power'>power</link></entry>
+     </row>
+     <row>
+       <entry>racine</entry>
+       <entry><link linkend='command-sqrt'>sqrt</link></entry>
+     </row>
+     <row>
+       <entry>radarccos</entry>
+       <entry><link linkend='command-radarccos'>radarccos</link></entry>
+     </row>
+     <row>
+       <entry>radarcsin</entry>
+       <entry><link linkend='command-radarcsin'>radarcsin</link></entry>
+     </row>
+     <row>
+       <entry>radarctan</entry>
+       <entry><link linkend='command-radarctan'>radarctan</link></entry>
+     </row>
+     <row>
+       <entry>radcos</entry>
+       <entry><link linkend='command-radcos'>radcos</link></entry>
+     </row>
+     <row>
+       <entry>radsin</entry>
+       <entry><link linkend='command-radsin'>radsin</link></entry>
+     </row>
+     <row>
+       <entry>radtan</entry>
+       <entry><link linkend='command-radtan'>radtan</link></entry>
+     </row>
+     <row>
+       <entry>ramene</entry>
+       <entry><link linkend='command-load'>load</link></entry>
+     </row>
+     <row>
+       <entry>ramenebmp</entry>
+       <entry><link linkend='command-bitload'>bitload</link></entry>
+     </row>
+     <row>
+       <entry>ramène</entry>
+       <entry><link linkend='command-load'>load</link></entry>
+     </row>
+     <row>
+       <entry>ramènebmp</entry>
+       <entry><link linkend='command-bitload'>bitload</link></entry>
+     </row>
+     <row>
+       <entry>rc</entry>
+       <entry><link linkend='command-rc'>rc</link></entry>
+     </row>
+     <row>
+       <entry>rcs</entry>
+       <entry><link linkend='command-rcs'>rcs</link></entry>
+     </row>
+     <row>
+       <entry>re</entry>
+       <entry><link linkend='command-bk'>bk</link></entry>
+     </row>
+     <row>
+       <entry>recule</entry>
+       <entry><link linkend='command-back'>back</link></entry>
+     </row>
+     <row>
+       <entry>remplace</entry>
+       <entry><link linkend='command-setitem'>setitem</link></entry>
+     </row>
+     <row>
+       <entry>remplis</entry>
+       <entry><link linkend='command-fill'>fill</link></entry>
+     </row>
+     <row>
+       <entry>repertiores</entry>
+       <entry><link linkend='command-directories'>directories</link></entry>
+     </row>
+     <row>
+       <entry>repete</entry>
+       <entry><link linkend='command-repeat'>repeat</link></entry>
+     </row>
+     <row>
+       <entry>repetepour</entry>
+       <entry><link linkend='command-for'>for</link></entry>
+     </row>
+     <row>
+       <entry>repétè</entry>
+       <entry><link linkend='command-repeat'>repeat</link></entry>
+     </row>
+     <row>
+       <entry>repétèpour</entry>
+       <entry><link linkend='command-for'>for</link></entry>
+     </row>
+     <row>
+       <entry>reste</entry>
+       <entry><link linkend='command-remainder'>remainder</link></entry>
+     </row>
+     <row>
+       <entry>retourne</entry>
+       <entry><link linkend='command-output'>output</link></entry>
+     </row>
+     <row>
+       <entry>répertoires</entry>
+       <entry><link linkend='command-directories'>directories</link></entry>
+     </row>
+     <row>
+       <entry>saufpremier</entry>
+       <entry><link linkend='command-butfirst'>butfirst</link></entry>
+     </row>
+     <row>
+       <entry>sauve</entry>
+       <entry><link linkend='command-save'>save</link></entry>
+     </row>
+     <row>
+       <entry>sauvebmp</entry>
+       <entry><link linkend='command-bitsave'>bitsave</link></entry>
+     </row>
+     <row>
+       <entry>sd</entry>
+       <entry><link linkend='command-bl'>bl</link></entry>
+     </row>
+     <row>
+       <entry>si</entry>
+       <entry><link linkend='command-if'>if</link></entry>
+     </row>
+     <row>
+       <entry>sif</entry>
+       <entry><link linkend='command-iff'>iff</link></entry>
+     </row>
+     <row>
+       <entry>sifaux</entry>
+       <entry><link linkend='command-iffalse'>iffalse</link></entry>
+     </row>
+     <row>
+       <entry>sin</entry>
+       <entry><link linkend='command-sin'>sin</link></entry>
+     </row>
+     <row>
+       <entry>sisinon</entry>
+       <entry><link linkend='command-ifelse'>ifelse</link></entry>
+     </row>
+     <row>
+       <entry>siv</entry>
+       <entry><link linkend='command-ift'>ift</link></entry>
+     </row>
+     <row>
+       <entry>sivrai</entry>
+       <entry><link linkend='command-iftrue'>iftrue</link></entry>
+     </row>
+     <row>
+       <entry>somme</entry>
+       <entry><link linkend='command-sum'>sum</link></entry>
+     </row>
+     <row>
+       <entry>sp</entry>
+       <entry><link linkend='command-bf'>bf</link></entry>
+     </row>
+     <row>
+       <entry>sps</entry>
+       <entry><link linkend='command-bfs'>bfs</link></entry>
+     </row>
+     <row>
+       <entry>taillebmp</entry>
+       <entry><link linkend='command-bitsize'>bitsize</link></entry>
+     </row>
+     <row>
+       <entry>tailleramenebmp</entry>
+       <entry><link linkend='command-bitloadsize'>bitloadsize</link></entry>
+     </row>
+     <row>
+       <entry>tailleramènebmp</entry>
+       <entry><link linkend='command-bitloadsize'>bitloadsize</link></entry>
+     </row>
+     <row>
+       <entry>tan</entry>
+       <entry><link linkend='command-tan'>tan</link></entry>
+     </row>
+     <row>
+       <entry>tantque</entry>
+       <entry><link linkend='command-while'>while</link></entry>
+     </row>
+     <row>
+       <entry>tape</entry>
+       <entry><link linkend='command-type'>type</link></entry>
+     </row>
+     <row>
+       <entry>temps</entry>
+       <entry><link linkend='command-time'>time</link></entry>
+     </row>
+     <row>
+       <entry>tortue</entry>
+       <entry><link linkend='command-turtle'>turtle</link></entry>
+     </row>
+     <row>
+       <entry>tortuebmp</entry>
+       <entry><link linkend='command-bitmapturtle'>bitmapturtle</link></entry>
+     </row>
+     <row>
+       <entry>tortues</entry>
+       <entry><link linkend='command-turtles'>turtles</link></entry>
+     </row>
+     <row>
+       <entry>touche?</entry>
+       <entry><link linkend='command-keyp'>key?</link></entry>
+     </row>
+     <row>
+       <entry>touchep</entry>
+       <entry><link linkend='command-keyp'>keyp</link></entry>
+     </row>
+     <row>
+       <entry>tronque</entry>
+       <entry><link linkend='command-int'>int</link></entry>
+     </row>
+     <row>
+       <entry>ve</entry>
+       <entry><link linkend='command-cs'>cs</link></entry>
+     </row>
+     <row>
+       <entry>vers</entry>
+       <entry><link linkend='command-towards'>towards</link></entry>
+     </row>
+     <row>
+       <entry>versxyz</entry>
+       <entry><link linkend='command-towardsxyz'>towardsxyz</link></entry>
+     </row>
+     <row>
+       <entry>vide?</entry>
+       <entry><link linkend='command-emptyp'>empty?</link></entry>
+     </row>
+     <row>
+       <entry>videecran</entry>
+       <entry><link linkend='command-clearscreen'>clearscreen</link></entry>
+     </row>
+     <row>
+       <entry>videp</entry>
+       <entry><link linkend='command-emptyp'>emptyp</link></entry>
+     </row>
+     <row>
+       <entry>videpalette</entry>
+       <entry><link linkend='command-clearpalette'>clearpalette</link></entry>
+     </row>
+     <row>
+       <entry>videtexte</entry>
+       <entry><link linkend='command-cleartext'>cleartext</link></entry>
+     </row>
+     <row>
+       <entry>videécran</entry>
+       <entry><link linkend='command-clearscreen'>clearscreen</link></entry>
+     </row>
+     <row>
+       <entry>visible?</entry>
+       <entry><link linkend='command-shownp'>shown?</link></entry>
+     </row>
+     <row>
+       <entry>visiblep</entry>
+       <entry><link linkend='command-shownp'>shownp</link></entry>
+     </row>
+     <row>
+       <entry>vrai</entry>
+       <entry><link linkend='command-true'>true</link></entry>
+     </row>
+     <row>
+       <entry>vt</entry>
+       <entry><link linkend='command-ct'>ct</link></entry>
+     </row>
+     <row>
+       <entry>vé</entry>
+       <entry><link linkend='command-cs'>cs</link></entry>
+     </row>
+     <row>
+       <entry>zoneactive</entry>
+       <entry><link linkend='command-activearea'>activearea</link></entry>
+     </row>
+     <row>
+       <entry>éc</entry>
+       <entry><link linkend='command-pr'>pr</link></entry>
+     </row>
+     <row>
+       <entry>écris</entry>
+       <entry><link linkend='command-print'>print</link></entry>
+     </row>
+     <row>
+       <entry>écrivain</entry>
+       <entry><link linkend='command-writer'>writer</link></entry>
+     </row>
+     <row>
+       <entry>étiquette</entry>
+       <entry><link linkend='command-label'>label</link></entry>
+     </row>
+  </tbody>
+  </tgroup>
+</informaltable>
+</appendix>
