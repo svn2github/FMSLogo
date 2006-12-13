@@ -26,6 +26,7 @@ logohelp.fo : $(SOURCEFILES) $(FO_STYLESHEET)
 
 # other translations
 logohelp-%.chm : htmlhelp-%.hhp logohelp.css
+	perl -W clean-html.pl
 	-$(HHC) htmlhelp-$*.hhp
 
 htmlhelp-%.hhp : translations-%.xml $(SOURCEFILES) $(HHP_STYLESHEET)
