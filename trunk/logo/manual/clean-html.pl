@@ -31,6 +31,8 @@ while (<*.html>)
       $line =~ s/<link rel="up" [^>]*>//;
       $line =~ s/<link rel="next" [^>]*>//;
       $line =~ s/<link rel="prev" [^>]*>//;
+      $line =~ s/<body [^>]*>/<body>/;
+
       $htmlfile->print($line);
    }
    $htmlfile->close();
