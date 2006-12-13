@@ -17,8 +17,10 @@
 
   <xsl:param name="toc.section.depth"    select="5"/>
   <xsl:param name="chunk.section.depth"  select="5"/>
-  <xsl:param name="use.id.as.filename"   select="1"/>
   <xsl:param name="chunk.first.sections" select="1"/>
+
+  <!-- using short filenames removes 3% from the file size -->
+  <xsl:param name="use.id.as.filename"   select="0"/>
 
   <xsl:param name="generate.section.toc.level" select="3"/>
 
