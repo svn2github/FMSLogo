@@ -63,9 +63,11 @@ clean :
 	$(RM) logohelp.ps
 	$(RM) logohelp.fo
 	$(RM) $(wildcard *.html)
+	$(RM) $(wildcard *.htm)
 	$(RM) $(wildcard *.hhp) 
 	$(RM) $(wildcard *.hhc)
-	$(RM) $(wildcard *.chm) 
+	$(RM) $(wildcard *.chw)
+	$(RM) $(wildcard *.chm)
 	$(RM) $(wildcard *~)
 
 test :
