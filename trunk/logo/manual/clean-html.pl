@@ -32,6 +32,18 @@ while (<*.html>)
       $line =~ s/<link rel="next" [^>]*>//;
       $line =~ s/<link rel="prev" [^>]*>//;
       $line =~ s/<body [^>]*>/<body>/;
+      $line =~ s/<(\w+) class="chapter" lang="en">/<$1>/g;
+      $line =~ s/<(\w+) class="command">/<$1>/g;
+      $line =~ s/<(\w+) class="informaltable">/<$1>/g;
+      $line =~ s/<(\w+) class="parameter">/<$1>/g;
+      $line =~ s/<(\w+) class="section" lang="en">/<$1>/g;
+      $line =~ s/<(\w+) class="section">/<$1>/g;
+      $line =~ s/<(\w+) class="term">/<$1>/g;
+      $line =~ s/<(\w+) class="title">/<$1>/g;
+      $line =~ s/<(\w+) class="titlepage">/<$1>/g;
+      $line =~ s/<(\w+) class="toc">/<$1>/g;
+      $line =~ s/<(\w+) class="userinput">/<$1>/g;
+      $line =~ s/<(\w+) class="variablelist">/<$1>/g;
 
       $htmlfile->print($line);
    }
