@@ -2432,11 +2432,11 @@ void TMainFrame::CMSetPenSize()
       char logoInstruction[256];
 
       sprintf(
-          logoInstruction,
-          "%s [%d %d]",
-          setpensize,
-          theSize.X(),
-          theSize.Y());
+         logoInstruction,
+         "%s [%d %d]",
+         setpensize,
+         theSize.Y(), // REVISIT: why doesn't X work?
+         theSize.Y());
 
       RunLogoInstructionFromGui(logoInstruction);
       }
