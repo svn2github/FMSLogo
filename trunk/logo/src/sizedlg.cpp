@@ -27,10 +27,10 @@ const unsigned int CN_CLICKED = 1;     // size control notifications
 TSizeControl::TSizeControl(
    TWindow *     Parent, 
    int           ResId, 
-   const TSize & OutputSize
+   const TSize & Size
    )
    : TControl(Parent, ResId), 
-     m_Size(OutputSize)
+     m_Size(Size)
    {
    DisableTransfer();
    }
@@ -177,11 +177,16 @@ void TSizeDialog::SetupWindow()
    {
    TDialog::SetupWindow();
 
-   SetDlgItemText(IDOK,                LOCALIZED_SETPENSIZE_OK);
-   SetDlgItemText(IDCANCEL,            LOCALIZED_SETPENSIZE_CANCEL);
-   SetDlgItemText(ID_SETPENSIZE_SIZE,  LOCALIZED_SETPENSIZE_SIZE);
-
    UpdateBars(m_SelSize->GetSize());
+
+   // set the text in all of the controls
+   static const MENUITEM text[] = {
+      {LOCALIZED_SETPENSIZE_OK,     IDOK},
+      {LOCALIZED_SETPENSIZE_CANCEL, IDCANCEL},
+      {LOCALIZED_SETPENSIZE_SIZE,   ID_SETPENSIZE_SIZE},
+   };
+
+   SetTextOnChildWindows(this, text, ARRAYSIZE(text));
    }
 
 void TSizeDialog::TransferData(TTransferDirection transferFlag)

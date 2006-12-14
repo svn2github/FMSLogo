@@ -192,11 +192,16 @@ void TColorDialog::SetupWindow()
    TDialog::SetupWindow();
    UpdateBars(m_SelColor->GetColor());
 
-   SetDlgItemText(ID_SETCOLOR_RED,    LOCALIZED_SETCOLOR_RED);
-   SetDlgItemText(ID_SETCOLOR_GREEN,  LOCALIZED_SETCOLOR_GREEN);
-   SetDlgItemText(ID_SETCOLOR_BLUE,   LOCALIZED_SETCOLOR_BLUE);
-   SetDlgItemText(IDOK,               LOCALIZED_SETCOLOR_OK);
-   SetDlgItemText(IDCANCEL,           LOCALIZED_SETCOLOR_CANCEL);
+   // set the text in all of the controls
+   static const MENUITEM text[] = {
+      {LOCALIZED_SETCOLOR_RED,    ID_SETCOLOR_RED},
+      {LOCALIZED_SETCOLOR_GREEN,  ID_SETCOLOR_GREEN},
+      {LOCALIZED_SETCOLOR_BLUE,   ID_SETCOLOR_BLUE},
+      {LOCALIZED_SETCOLOR_OK,     IDOK},
+      {LOCALIZED_SETCOLOR_CANCEL, IDCANCEL},
+   };
+
+   SetTextOnChildWindows(this, text, ARRAYSIZE(text));
    }
 
 void TColorDialog::TransferData(TTransferDirection TransferFlag)
@@ -211,10 +216,12 @@ void TColorDialog::TransferData(TTransferDirection TransferFlag)
 void TColorDialog::UpdateBars(const TColor & NewColor)
    {
    m_ColorBar1->SetRange(0, 255);
-   m_ColorBar2->SetRange(0, 255);
-   m_ColorBar3->SetRange(0, 255);
    m_ColorBar1->SetPosition(NewColor.Red());
+
+   m_ColorBar2->SetRange(0, 255);
    m_ColorBar2->SetPosition(NewColor.Green());
+
+   m_ColorBar3->SetRange(0, 255);
    m_ColorBar3->SetPosition(NewColor.Blue());
    }
 
