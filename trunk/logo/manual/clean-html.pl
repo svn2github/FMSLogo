@@ -13,17 +13,17 @@
 use IO::File;
 use strict;
 
-while (<*.html>)
-{
-   my $filename = $_;
+sub CleanHtmlFile($) {
 
-   my $htmlfile = new IO::File $filename or die $!;
+   my $Filename = shift or die "too few arguments";
+
+   my $htmlfile = new IO::File $Filename or die $!;
    my @lines = <$htmlfile>;
    $htmlfile->close();
 
 
    # reopen the file for writing
-   $htmlfile = new IO::File "> $filename" or die $!;
+   $htmlfile = new IO::File "> $Filename" or die $!;
    foreach my $line (@lines)
    {
       $line =~ s/<meta name="generator" [^>]*>//;
@@ -48,4 +48,14 @@ while (<*.html>)
       $htmlfile->print($line);
    }
    $htmlfile->close();
+}
+
+while (<*.html>)
+{
+  CleanHtmlFile($_);
+}
+
+while (<*.htm>)
+{
+  CleanHtmlFile($_);
 }
