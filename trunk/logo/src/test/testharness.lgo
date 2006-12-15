@@ -104,6 +104,7 @@ LOAD "type.lgo
 LOAD "zoom.lgo
 LOAD "bitblock.lgo
 LOAD "turtle.lgo
+LOAD "readword.lgo
 
 TO TESTALL
 
@@ -158,6 +159,7 @@ TO TESTALL
   TURTLETEST         ; from turtle.lgo
   FORMTEST           ; from form.lgo
   PRINTTEST          ; from print.lgo
+  READWORDTEST       ; from readword.lgo
   EDITORTEST         ; from editor.lgo 
   WINDOWFILEEDITTEST ; from windowfileedit.lgo
   PORTTEST           ; from port.lgo
