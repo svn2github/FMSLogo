@@ -29,6 +29,7 @@ logohelp-%.chm : htmlhelp-%.hhp logohelp.css
 	perl -W clean-html.pl
 	-$(HHC) htmlhelp-$*.hhp
 
+# Greek builds requires a different character set
 logohelp-1032.chm : htmlhelp-1032.hhp logohelp.css
 	perl -W clean-html.pl windows-1253
 	-$(HHC) htmlhelp-1032.hhp
