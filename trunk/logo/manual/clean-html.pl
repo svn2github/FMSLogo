@@ -13,9 +13,10 @@
 use IO::File;
 use strict;
 
-sub CleanHtmlFile($) {
+sub CleanHtmlFile($$) {
 
-   my $Filename = shift or die "too few arguments";
+   my $Filename     = shift or die "too few arguments";
+   my $CharacterSet = shift or die "too few arguments";
 
    my $htmlfile = new IO::File $Filename or die $!;
    my @lines = <$htmlfile>;
@@ -45,17 +46,23 @@ sub CleanHtmlFile($) {
       $line =~ s/<(\w+) class="userinput">/<$1>/g;
       $line =~ s/<(\w+) class="variablelist">/<$1>/g;
 
+      # Replace the character set with the one we actually used.
+      # This is how the Greek manual shows up in Greek.
+      $line =~ s/charset=ISO-8859-1/charset=$CharacterSet/;
+
       $htmlfile->print($line);
    }
    $htmlfile->close();
 }
 
+my $characterset = $ARGV[0] || 'ISO-8859-1';
+
 while (<*.html>)
 {
-  CleanHtmlFile($_);
+  CleanHtmlFile($_, $characterset);
 }
 
 while (<*.htm>)
 {
-  CleanHtmlFile($_);
+  CleanHtmlFile($_, $characterset);
 }
