@@ -60,10 +60,14 @@ void CSelectProcedureWindow::SetupWindow()
    {
    TDialog::SetupWindow();
 
+   static const MENUITEM text[] = {
+      {LOCALIZED_SELECTPROCEDURE_OK,     IDOK},
+      {LOCALIZED_SELECTPROCEDURE_CANCEL, IDCANCEL},
+      {LOCALIZED_SELECTPROCEDURE_ALL,    ID_SELECTPROCEDURE_ALL},
+   };
+
    // fill in the text
-   SetDlgItemText(IDOK,                   LOCALIZED_SELECTPROCEDURE_OK);
-   SetDlgItemText(IDCANCEL,               LOCALIZED_SELECTPROCEDURE_CANCEL);
-   SetDlgItemText(ID_SELECTPROCEDURE_ALL, LOCALIZED_SELECTPROCEDURE_ALL);
+   SetTextOnChildWindows(this, text, ARRAYSIZE(text));
 
    // get procedures
    NODE * proclist = lprocedures(NIL);
