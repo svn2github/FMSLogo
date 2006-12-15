@@ -2761,10 +2761,14 @@ protected:
       {
       TDialog::SetupWindow();
 
+      static const MENUITEM staticText[] = {
+         {LOCALIZED_ABOUTMS_CONSIDERDONATING, ID_ABOUTMS_CONSIDERDONATING},
+         {LOCALIZED_ABOUTMS_FMS,              ID_ABOUTMS_FMS},
+         {LOCALIZED_ABOUTMS_OK,               IDOK},
+      };
+
       // set the text in all of the static controls
-      SetDlgItemText(ID_ABOUTMS_CONSIDERDONATING, LOCALIZED_ABOUTMS_CONSIDERDONATING);
-      SetDlgItemText(ID_ABOUTMS_FMS,              LOCALIZED_ABOUTMS_FMS);
-      SetDlgItemText(IDOK,                        LOCALIZED_ABOUTMS_OK);
+      SetTextOnChildWindows(this, staticText, ARRAYSIZE(staticText));
       }
 };
 
