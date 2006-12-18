@@ -14,6 +14,9 @@ TO READWORDTEST.SMOKETEST
   ; tilde is a line concatenator, but is not removed
   RUNPRINTTEST [SHOW "|Hello~| SHOW "Hello] "|Hello~\nHello|
 
+  ; linear whitespace after a tilde is ignored
+  RUNPRINTTEST [SHOW "|Hello~   | SHOW "Hello] "|Hello~\nHello|
+
   ; vertical bars are kept in the input stream
   RUNPRINTTEST [SHOW "\|ABC\| ] "\|ABC\|
 
