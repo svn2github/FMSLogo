@@ -37,6 +37,32 @@ TO BENCHMARK.TAILRECURSIVEADD :a :b
 
 END
 
+TO BENCHMARK.READWORD :bytesperline :totallines
+
+   ; setup - create the file
+   OPENWRITE "benchmark.readword.txt
+   SETWRITE  "benchmark.readword.txt
+
+   REPEAT :totallines [
+      REPEAT :bytesperline [ PRINT "A ]
+      PRINT "\n
+   ]
+
+   CLOSE WRITER
+
+   ; open the file for reading
+
+   OPENREAD "benchmark.readword.txt
+   SETREAD  "benchmark.readword.txt
+
+   ; time how long it takes to read file
+   IGNORE TIMECOMMAND [ WHILE [ NOT EOF? ] [ IGNORE READWORD ] ]
+
+   CLOSE READER
+
+   ; cleanup - erase the file
+   ERASEFILE "benchmark.readword.txt
+END
 
 TO BENCHMARK 
 
@@ -45,6 +71,9 @@ TO BENCHMARK
    ; for consistent results when drawing
    ICON "Commander
    BENCHMARK.RESIZECONSOLE 600 800
+
+   ; time file IO
+   BENCHMARK.READWORD 1024 1024
 
    ; time the tail-recurision optimization 
    IGNORE TIMECOMMAND [BENCHMARK.TAILRECURSIVEADD    0 1000000 ]
