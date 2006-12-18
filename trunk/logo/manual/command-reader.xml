@@ -13,7 +13,7 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-Outputs the name of the current read stream file, or the empty list if the read stream is the terminal.
+Outputs the name of the current read stream file, or the empty list if the read stream is the Commander.
 </para>
 </listitem>
 </varlistentry>
