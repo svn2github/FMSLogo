@@ -13,8 +13,8 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-Sets the read stream to the file named <parameter>filename</parameter>. 
-The read stream is used by used for <link linkend="command-readlist">READLIST</link>, etc. 
+Sets the read stream to the file named <parameter>filename</parameter>.
+The read stream is used by <link linkend="command-readlist">READLIST</link>, <link linkend="command-readword">READWORD</link>, etc.
 The file must already be open with <link linkend="command-openread">OPENREAD</link> or <link linkend="command-openupdate">OPENUPDATE</link>.
 If the input is the empty list, then the read stream becomes the Commander, as usual.
 Changing the read stream does not close the file that was previously the read stream, so it is possible to alternate between files.
