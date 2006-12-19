@@ -58,7 +58,6 @@ typedef struct NODE * (*logofunc) (struct NODE *);
 #define UNDEFINED       Unbound
 #define HASH_LEN        1021           /* a prime number                      */
 #define SEG_SIZE        1000           /* 1 for debugging internal leaks      */
-//#define MAX_PHYS_LINE   5000
 //#define GCMAX         8192
 #define MAX_NUMBER      50             /* max number of digits in a float     */
 #define MAX_BUFFER_SIZE 256
