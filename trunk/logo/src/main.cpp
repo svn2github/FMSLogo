@@ -85,7 +85,6 @@ TMainFrame *MainWindowx;               // Pointer to the Main window
 
 
 int GCMAX = 8192;                      // Garbage Collector Stack Size
-int MAX_PHYS_LINE = 8192;              // Maximum Physical Line Size
 Color dpen;                            // Current pen color
 Color dfld;                            // Current flood color
 Color dscn;                            // Current screen color
@@ -857,9 +856,6 @@ WinMain(
 
    // Get garbage collector stack size from the configuration settings
    GCMAX = GetConfigurationInt("GCStackSize", 8192);
-
-   // Get Max Physical line from the configuration settings
-   MAX_PHYS_LINE = GetConfigurationInt("MaxPhysLine", 8192);
 
    // Get video mode parameters
    HDC TempDC = GetDC(0);
