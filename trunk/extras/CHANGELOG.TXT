@@ -1,3 +1,7 @@
+FMSLogo Extras 1.5
+o tetrads
+  * Dropping a block is much faster
+
 FMSLogo Extras 1.4
 o logoui
   * new program
