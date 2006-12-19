@@ -31,10 +31,7 @@ NODE *g_ToLine          = NIL;
 INPUTMODE input_mode = INPUTMODE_None;
 
 static CDynamicBuffer g_ReadBuffer;
-
-static char *p_line = 0;
-static char *p_end;
-static int   p_len = MAX_PHYS_LINE;
+static CDynamicBuffer g_PhysicalLine;
 
 // This is a hack to purge the "INPUTMODE_TO" buffer when
 // loading from the editor.  If this is not done, any unused
@@ -152,29 +149,15 @@ int rd_getc(FILE *strm)
    }
 
 static
+inline
 void rd_print_prompt(const char * /*str*/)
    {
    //ndprintf(stdout,"%t",str);
    }
 
-#define into_line(chr) \
-   { \
-   if (phys_line >= p_end) \
-      { \
-      p_len += MAX_PHYS_LINE; \
-      p_pos = phys_line - p_line; \
-      p_line = (char *)realloc(p_line, p_len); \
-      p_end = &p_line[p_len-1]; \
-      phys_line = &p_line[p_pos]; \
-      } \
-   *phys_line++ = (chr); \
-   }
-
 NODE *reader(FILE *strm, const char *prompt)
    {
    static const char ender[] = "\nEND\n";
-
-   int p_pos;
 
    int paren   = 0;
    int bracket = 0;
@@ -184,7 +167,6 @@ NODE *reader(FILE *strm, const char *prompt)
    bool contin    = true;
    bool incomment = false;
 
-   char *phys_line;
    const char *lookfor = ender;
    NODETYPES this_type = STRING;
 
@@ -197,19 +179,9 @@ NODE *reader(FILE *strm, const char *prompt)
 
    bool dribbling = (dribblestream != NULL && strm == stdin);
 
-   // allocate p_line if it hasn't been allocated yet
-   if (p_line == NULL)
-      {
-      p_line = (char *) malloc(MAX_PHYS_LINE);
-      if (p_line == NULL)
-         {
-         err_logo(OUT_OF_MEM, NIL);
-         return Unbound;
-         }
-      p_end = &p_line[MAX_PHYS_LINE - 1];
-      }
+   // clean out the buffer in case it contains data
+   g_PhysicalLine.Empty();
 
-   phys_line = p_line;
    if (strm == stdin)
       {
       if (*prompt)
@@ -226,17 +198,19 @@ NODE *reader(FILE *strm, const char *prompt)
       clear_is_running_erract_flag();
       }
 
-   int c = 0;
-
+   // this setjmp matches with the longjmp in unblock_input(), which 
+   // is called when a PAUSE continues
    if (!setjmp(iblk_buf))
       {
-      c = rd_getc(strm);
+      int c = rd_getc(strm);
       while (c != EOF && (vbar || paren || bracket || brace || c != '\n'))
          {
          if (dribbling) 
             {
             putc(c, dribblestream);
             }
+
+         // if c is a backslash, then read the next character and escape it
          if (c == '\\' && (c = rd_getc(strm)) != EOF)
             {
             if (dribbling) 
@@ -247,8 +221,13 @@ NODE *reader(FILE *strm, const char *prompt)
                {
                c = '\n'; //ggm
                }
+
+            // mark this character as being backslashed
             c = setparity(c);
+
+            // the resulting string will be backslashed
             this_type = BACKSLASH_STRING;
+
             if (c == setparity('\n') && strm == stdin)
                {
                rd_print_prompt("\\ ");
@@ -260,9 +239,9 @@ NODE *reader(FILE *strm, const char *prompt)
                }
             }
 
-         if (c != EOF) 
+         if (c != EOF)
             {
-            into_line(c);
+            g_PhysicalLine.AppendChar(c);
             }
 
          if (*prompt && (c & 0x5F) == *lookfor)
@@ -287,37 +266,50 @@ NODE *reader(FILE *strm, const char *prompt)
             }
          else if (contin && !vbar && !incomment)
             {
-            if (c == '(') 
+            switch (c)
                {
-               paren++;
-               }
-            else if (paren && c == ')') 
-               {
-               paren--;
-               }
-            else if (c == '[')
-               {
-               bracket++;
-               }
-            else if (bracket && c == ']')
-               {
-               bracket--;
-               }
-            else if (c == '{')
-               {
-               brace++;
-               }
-            else if (brace && c == '}')
-               {
-               brace--;
-               }
-            else if (c == ';')
-               { 
-               incomment = true;
+               case '(': 
+                  paren++;
+                  break;
+              
+               case ')':
+                  if (paren)
+                     {
+                     paren--;
+                     }
+                  break;
+
+               case '[':
+                  bracket++;
+                  break;
+
+               case ']':
+                  if (bracket)
+                     {
+                     bracket--;
+                     }
+                  break;
+
+               case '{':
+                  brace++;
+                  break;
+
+               case '}':
+                  if (brace)
+                     {
+                     brace--;
+                     }
+                  break;
+
+               case ';':
+                  incomment = true;
+                  break;
                }
             }
+
          if (/* (vbar || paren ...) && */ c == '\n')
             {
+            // newlines end comment
             incomment = false;
             if (strm == stdin)
                {
@@ -329,17 +321,22 @@ NODE *reader(FILE *strm, const char *prompt)
                   }
                }
             }
+
          while (!vbar && c == '~' && (c = rd_getc(strm)) != EOF)
             {
+            // ignore linear whitespace
             while (c == ' ' || c == '\t')
                {
                c = rd_getc(strm);
                }
+
             if (dribbling) 
                {
                putc(c, dribblestream);
                }
-            into_line(c);
+
+            g_PhysicalLine.AppendChar(c);
+
             if (c == '\n' && strm == stdin)
                {
                incomment = false;
@@ -360,26 +357,25 @@ NODE *reader(FILE *strm, const char *prompt)
          }
       }
 
-   *phys_line = '\0';
    input_blocking = false;
 
    if (dribbling)
       {
       putc('\n', dribblestream);
       }
-   if (c == EOF && strm == stdin)
-      {
-      clearerr(stdin);
 
-      rd_print_prompt("\n");
-      }
-   if (phys_line == p_line)
+   if (g_PhysicalLine.IsEmpty())
       {
       return Null_Word; // so emptyp works
       }
 
-   NODE * ret = make_strnode(p_line, (int) strlen(p_line), this_type, strnzcpy);
-   return ret;
+   NODE * line = make_strnode(
+      g_PhysicalLine.GetBuffer(),
+      g_PhysicalLine.GetBufferLength(),
+      this_type,
+      strnzcpy);
+
+   return line;
    }
 
 static
@@ -913,8 +909,6 @@ void uninitialize_parser()
    deref(deepend_proc_name);
    deepend_proc_name = NIL;
 
-   free(p_line);
-   p_line = NULL;
-   p_end  = NULL;
-   p_len  = 0;
+   g_ReadBuffer.Dispose();
+   g_PhysicalLine.Dispose();
    }
