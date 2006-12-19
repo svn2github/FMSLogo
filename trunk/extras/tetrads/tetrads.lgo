@@ -751,12 +751,16 @@ to UpdateNextFrame
        make "rotate "ignoreright
     ]
 
-    if :move = "right [ 
-       ShapeMoveRight   :newshape
-    ]
+    ; every third frame, the shapes get to move
+    if (modulo :framenumber 3) = 2 [
 
-    if :move = "left  [ 
-       ShapeMoveLeft    :newshape 
+       if :move = "right [ 
+          ShapeMoveRight  :newshape
+       ]
+
+       if :move = "left  [ 
+          ShapeMoveLeft   :newshape 
+       ]
     ]
 
     make "framesuntildrop :framesuntildrop - 1
@@ -795,6 +799,7 @@ to UpdateNextFrame
          ; reset the timeout counter
          make "framesuntildrop :TotalFramesUntilDrop
 
+         make "DropFaster "false
          stop
       ]
 
@@ -857,6 +862,7 @@ to GameLoop
    localmake "move            "none
    localmake "currentshape    ShapeCreate
    localmake "framesuntildrop :TotalFramesUntilDrop
+   localmake "framenumber     0
 
    MoveTo :GameBoardWidth + 2 :GameBoardHeight - 5
    setpencolor [255 255 255]
@@ -874,7 +880,10 @@ to GameLoop
    while [ not :IsDone ] [
 
       UpdateNextFrame
-      wait 4
+
+      make "framenumber :framenumber + 1
+
+      wait 1
    ]
 
    KeyboardCaptureEnd
