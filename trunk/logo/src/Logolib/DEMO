@@ -186,11 +186,11 @@ end
 to demo.13
 setxy 0 0
 bitcut 50 50
-rt 90
-setfloodcolor [125 125 125]
 setxy -250 -50
+setfloodcolor [125 125 125]
 bitblock 550 150
 setxy -200 0
+setheading 90
 repeat 9 [setbitmode repcount bitpaste fd 50 wait 5]
 setbitmode 1
 end
@@ -604,24 +604,24 @@ end
 
 to Slice :rad :step
    ; Draw an "orange" slice (just the outside surface)
-   up 90
-   localmake "i 0
-   repeat 360/:step [
+   local [i PointA PointB PointC PointD PointE]
+   make "i 0
+   repeat 180/:step [
      down :i
-     localmake "PointA GetPoint :rad
+     make "PointA GetPoint :rad
      down :step
-     localmake "PointB GetPoint :rad
+     make "PointB GetPoint :rad
      up :step
      up :i
-     rt :step
+     rr :step
      down :i
-     localmake "PointD GetPoint :rad
+     make "PointD GetPoint :rad
      down :step
-     localmake "PointC GetPoint :rad
+     make "PointC GetPoint :rad
      up :step
      up :i
-     lt :step
-     localmake "PointE posxyz
+     lr :step
+     make "PointE posxyz
      setposxyz :PointA
      pd
      polystart
@@ -634,14 +634,12 @@ to Slice :rad :step
      setposxyz :PointE
      make "i :i + :step
      ]
-   down 90
 end
 
 to Sphere :rad :step :color
    setpc :color
    ; Cover the surface of the sphere with polygons
-   repeat 180/:step [Slice :rad :step rr :step]
-   rr 180
+   repeat 360/:step [Slice :rad :step rr :step]
 end
 
 bury "axis
