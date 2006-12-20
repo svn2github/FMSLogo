@@ -59,31 +59,29 @@ end
 
 to Slice :rad :step
    ; Draw an "orange" slice (just the outside surface)
-   localmake "i 0
-   repeat 180/:step ~
-     [
+   local [i PointA PointB PointC PointD PointE]
+   make "i 0
+   repeat 180/:step [
      down :i
-     localmake "PointA GetPoint :rad
+     make "PointA GetPoint :rad
      down :step
-     localmake "PointB GetPoint :rad
+     make "PointB GetPoint :rad
      up :step
      up :i
      rr :step
      down :i
-     localmake "PointD GetPoint :rad
+     make "PointD GetPoint :rad
      down :step
-     localmake "PointC GetPoint :rad
+     make "PointC GetPoint :rad
      up :step
      up :i
      lr :step
-     localmake "PointE posxyz
+     make "PointE posxyz
      setposxyz :PointA
      pd
      polystart
      setposxyz :PointB
-;     if not equalp :i 180 [setposxyz :PointC]
      setposxyz :PointC
-;     if not equalp :i 0   [setposxyz :PointD]
      setposxyz :PointD
      setposxyz :PointA
      polyend
@@ -91,7 +89,6 @@ to Slice :rad :step
      setposxyz :PointE
      make "i :i + :step
      ]
-;   down 90
 end
 
 to Sphere :rad :step :color
