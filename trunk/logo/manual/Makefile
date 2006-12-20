@@ -71,6 +71,7 @@ clean :
 	$(RM) $(wildcard *.htm)
 	$(RM) $(wildcard *.hhp)
 	$(RM) $(wildcard *.hhc)
+	$(RM) $(wildcard *.hhk)
 	$(RM) $(wildcard *.chw)
 	$(RM) $(wildcard *.chm)
 	$(RM) $(wildcard *~)
