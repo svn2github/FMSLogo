@@ -367,7 +367,7 @@ to drawChar :c :action
   if :c=ascii "'  [make "charWidth 5]
   if :c=ascii "\" [make "charWidth 6]
   if :c=ascii "_  [make "charWidth 11]
-  if :c = 32        [make "charWidth 7]
+  if :c = 32      [make "charWidth 7]
 
   pu
   setpos :cPos
@@ -397,33 +397,36 @@ to drawCrystal :pos1 :action
     make "points array 6
     setpensize(list (round :scale) (round :scale))
     seth 0
-    make "color abs(remainder first( :pos1 ) 7)
     if :action = "draw [
-      if :color = 0 [ setpc[ 0 255 255 ] ]
-      if :color = 1 [ setpc[ 255 160 190 ] ]
-      if :color = 2 [ setpc[ 240 170 255 ] ]
-      if :color = 3 [ setpc[ 0 180 255 ] ]
-      if :color = 4 [ setpc[ 255 255 255 ] ]
-      if :color = 5 [ setpc[ 170 255 170 ] ]
-      if :color = 6 [ setpc[ 255 255 170 ] ]
-    ]
-    if :ee1 = "true [
-    make "color abs(remainder first( :pos1 ) 2)
-      if :action = "draw [
-        if :color = 0 [ setpc[ 255 100 100 ] ]
-        if :color = 1 [ setpc[ 0 255 0 ] ]
+      setpc item abs(remainder first(:pos1) 7) {
+         [ 0   255 255 ]
+         [ 255 160 190 ]
+         [ 240 170 255 ]
+         [ 0   180 255 ]
+         [ 255 255 255 ] 
+         [ 170 255 170 ]
+         [ 255 255 170 ]
+       }@0
+
+      if :ee1 [
+        setpc item abs(remainder first(:pos1) 2) {
+          [ 255 100 100 ]
+          [   0 255   0 ]
+        }@0
       ]
     ]
     if :action = "erase [ setpc[ 0 0 0 ] ]
+
     repeat 6 [
       pu setpos :pos1 pd
       ifelse( or repcount = 1 repcount = 4 ) [
         fd :crystalRad
         setitem repcount :points pos
       ][
-        fd (:crystalRad / 4 * 3)
+        fd :crystalRad * 0.75
         setitem repcount :points pos
       ]
+
       ifelse( or repcount = 2 repcount = 5 ) [ rt 90 ] [ rt 45 ]
     ]
     setpos item 6 :points
@@ -490,24 +493,57 @@ to drawRock :pos1
 end
 
 to drawShip :x :y :d :action
+  ; :x      is xcor of ship
+  ; :y      is ycor of ship
+  ; :d      is heading of ship
+  ; :action is "draw, "redraw, or "erase
+
   setturtle 0
   setpensize(list round( :scale*:shipRad/:normalShipRad) round( :scale*:shipRad/:normalShipRad) )
 
-  make "r (255 - 138) / :shipFadeStart * :shipGlow + 138
-  make "g (255 - 60) / :shipFadeStart * :shipGlow + 60
-  make "b (255 - 255) / :shipFadeStart * :shipGlow + 255
-
-  if :shipGlow > :shipFadeStart [ make "r 255 make "g 255 make "b 255 ]
-  if :action = "draw [
-    make "blink :blink + 1
-    if :blink = 41 [ make "blink 0 ]  ;blink cyles through two seconds, then resets (there are 20 fps)
+  ifelse :shipGlow > :shipFadeStart [ 
+     make "pencolor [255 255 255]
+  ][
+     make "pencolor (list
+        (255 - 138) / :shipFadeStart * :shipGlow + 138  ; red
+        (255 - 60)  / :shipFadeStart * :shipGlow + 60   ; green
+        (255 - 255) / :shipFadeStart * :shipGlow + 255  ; blue
+     )
+  ]
+  if :action = "erase [ 
+     make "pencolor [ 0 0 0 ] 
   ]
 
-  if(or :action = "draw :action = "redraw) [ setpc( list :r :g :b ) ]
-  if :action = "erase [ setpc[ 0 0 0 ] ]
-  ifelse not :shipIsExploding [
+  if :action = "draw [
+    ; blink cyles through two seconds, then resets (there are 20 fps)
+    ifelse :blink = 40 [ 
+       make "blink 0 
+    ][
+       make "blink :blink + 1
+    ]
+  ]
 
-    ;draw right side of nose
+  setpc :pencolor 
+
+  ifelse :shipIsExploding [
+
+    ;explosion--random numbers for the fragment attribute lists are picked in playLoop
+    if :action = "draw [ make "expLen :expLen - :shipRad / :numExpSteps ]
+    repeat :numFrags [
+      setpos list :x :y  seth :d
+      rt 360/:numFrags * repcount
+      make "fal item repcount :fragments  ;fal stands for fragment attribute list
+      fd :shipRad * (item 1 :fal) + :expStep * (item 2 :fal)
+      rt (item 3 :fal) + :expStep * (item 4 :fal)
+      pd
+      fd :expLen * (item 5 :fal) * :scale
+      rt 180
+      fd :expLen * (item 6 :fal) * :scale
+      if (item 7 :fal) = 1 [ rt (item 8 :fal)  fd :expLen * (item 9 :fal) * :scale ]
+      pu
+    ]
+  ][
+    ; draw right side of nose
     setpos list :x :y
     seth :d
     fd :shipRad
@@ -518,13 +554,13 @@ to drawShip :x :y :d :action
 
     pd
     fd :shipRad3 * 2
-    bk 1 * :scale
+    bk :scale
     make "light1Pos pos
-    fd 1 * :scale
+    fd :scale
     rt 112.5
     fd :shipSide
 
-    if ( or :leaveStep < :numLeaveSteps/3*2  not :isLeaving) [ drawShip.light :light1Pos ]
+    if (or :leaveStep < :numLeaveSteps * 0.6666 not :isLeaving) [ drawShip.light :light1Pos ]
 
     ;draw back of ship, trace back over it partway, draw engine if thrusting, then trace forward again--
     ;this keeps the engine over top of all the other lines
@@ -536,15 +572,15 @@ to drawShip :x :y :d :action
     fd :shipSide - 1.414*:scale
     bk :shipSide - 1.414*:scale
     lt 45
-    if( or :isThrustOn  :action = "erase ) [
+    if ( or :isThrustOn  :action = "erase ) [
       setpensize(list round( 2*:scale*:shipRad/:normalShipRad ) round( 2*:scale*:shipRad/:normalShipRad ) )
     ]
-    if( and (:leaveStep < :numLeaveSteps/5*4) :isThrustOn (or :action = "draw :action = "redraw) ) [
+    if ( and (:leaveStep < :numLeaveSteps * .80) :isThrustOn (not :action = "erase) ) [
       setpc[ 255 230 130 ]
     ]
     bk :shipSide + 2*:scale
 
-    if(or :action = "draw :action = "redraw) [ setpc( list :r :g :b ) ]
+    setpc :pencolor
     setpensize(list round( :scale*:shipRad/:normalShipRad) round( :scale*:shipRad/:normalShipRad) )
 
     pu
@@ -563,7 +599,7 @@ to drawShip :x :y :d :action
     bk :scale
     fd :shipRad3 * 2
 
-    if ( or :leaveStep < :numLeaveSteps/3*2  not :isLeaving) [ drawShip.light :light2Pos ]
+    if ( or :leaveStep < :numLeaveSteps * 0.6666  not :isLeaving) [ drawShip.light :light2Pos ]
 
     lt 93.06
     fd 12.95 * :scale*:shipRad/:normalShipRad
@@ -585,23 +621,6 @@ to drawShip :x :y :d :action
     rt 45  fd :shipRad6 / 2
     lt 90 pu
     ;draw cockpit end 
-
-  ][
-    ;explosion--random numbers for the fragment attribute lists are picked in playLoop
-    if :action = "draw [ make "expLen :expLen - :shipRad / :numExpSteps ]
-    repeat :numFrags [
-      setpos list :x :y  seth :d
-      rt 360/:numFrags * repcount
-      make "fal item repcount :fragments  ;fal stands for fragment attribute list
-      fd :shipRad * (item 1 :fal) + :expStep * (item 2 :fal)
-      rt (item 3 :fal) + :expStep * (item 4 :fal)
-      pd
-      fd :expLen * (item 5 :fal) * :scale
-      rt 180
-      fd :expLen * (item 6 :fal) * :scale
-      if (item 7 :fal) = 1 [ rt (item 8 :fal)  fd :expLen * (item 9 :fal) * :scale ]
-      pu
-    ]
   ]
   if and( :shipGlow > 0 ) ( :action = "draw ) [ make "shipGlow :shipGlow - 1 ]
   make "erase "false
@@ -756,6 +775,7 @@ to gameLoop
 end
 
 to glint :action
+
   if :glintStep = 1 [
     seth 315
     make "glintSize 0
@@ -769,9 +789,11 @@ to glint :action
   pu
   setpos item :glintCrystal :crystals
   seth 0
-  if :speedUp = 0 [ rt 45 fd :crystalRad / 4 * 3 lt 45 ]
-  if :speedUp = 1 [ lt 45 fd :crystalRad / 4 * 3 rt 45 ]
-  if :speedUp = 2 [ rt 135 fd :crystalRad / 4 * 3 lt 135 ]
+  run item :speedUp {
+     [ rt 45  fd :crystalRad * 0.75 lt 45  ]
+     [ lt 45  fd :crystalRad * 0.75 rt 45  ]
+     [ rt 135 fd :crystalRad * 0.75 lt 135 ]
+  }@0
   pd
 
   if :glintStep > 0 [
@@ -785,8 +807,8 @@ to glint :action
   if and :glintStep < 20 :action = "animate [
     setturtle 3
 
-    if :glintStep < 11 [ make "glintSize :glintStep*:scale ]
-    if :glintStep > 10 [ make "glintSize 21*:scale - :glintStep*:scale ]
+    if :glintStep < 11 [ make "glintSize :scale*:glintStep ]
+    if :glintStep > 10 [ make "glintSize :scale*(21 - :glintStep)]
 
     setpc[ 255 255 255 ]
     seth 0
@@ -795,10 +817,13 @@ to glint :action
     repeat 4[ fd :glintSize bk :glintSize rt 90 ]
   ]
   pu
+
 end
 
 to hitCrystalCheck
-  ;checks all the crystals, whether they are on the screen or not, to keep the speed more constant on slow computers
+
+  ; Checks all crystals, whether they are on the screen or not.
+  ; This keeps the speed more constant on slow computers.
   repeat :maxCrystals [
     make "x first (item repcount :crystals)
     make "y last  (item repcount :crystals)
@@ -835,7 +860,8 @@ to hitCrystalCheck
 end
 
 to hitRockCheck
-  ;checks all the rocks, whether they are on the screen or not, to keep the speed more constant on slow computers
+  ; Checks all rocks, whether they are on the screen or not.
+  ; This keeps the speed more constant on slow computers
   repeat :numRocks [
     make "x first (item repcount :rocks)
     make "y last  (item repcount :rocks)
@@ -942,8 +968,8 @@ to initMain
   make "glintCrystal 0
   make "timer "false
   sbitblock 1 1
-  ifelse and (item 2 time) = "Dec (and (item 3 time) > 22 (item 3 time) < 27) [ make "ee1 "true ] [ make "ee1 "false ]
-  ifelse and (item 2 time) = "Mar (item 3 time) = 11 [ make "ee2 "true ] [ make "ee2 "false ]
+  make "ee1 and (item 2 time) = "Dec (and (item 3 time) > 22 (item 3 time) < 27)
+  make "ee2 and (item 2 time) = "Mar (item 3 time) = 11
 
 ;CONSTANTS
   make "open.scale 1.25 * :scale
@@ -1277,7 +1303,7 @@ end
 
 to ofdd :d
   fd :d*:open.scale
-  if not( :open.quit = "true ) [wait 4]
+  if not :open.quit [wait 4]
 end
 
 to open
@@ -1293,20 +1319,20 @@ to open
 
   menuOn :menuOn
 
-  if :open.quit = "false [ waitStop 8 ]
-  if :ee2 = "true [open.author]
+  if not :open.quit [ waitStop 8 ]
+  if :ee2 [open.author]
   open.ASTEROID
   open.MINER
   open.turtleO
-  if :open.quit = "false [ waitStop 60 ]
+  if not :open.quit [ waitStop 60 ]
   open.author
-  repeat 7 [ if :open.quit = "false [ waitStop 30 ] ]
+  repeat 7 [ if not :open.quit [ waitStop 30 ] ]
 
   clearBox
   setturtle 2 ht
-  if( and :displayHighScores = "false :displayInstructions = "false :open.quit = "false ) [ menuOn :menuOn ]
+  if( and :displayHighScores = "false :displayInstructions = "false not :open.quit ) [ menuOn :menuOn ]
 
-  if :open.quit = "false [ displayHighScores ]
+  if not :open.quit [ displayHighScores ]
 
   ifelse :displayHighScores = "true [
     displayHighScores
@@ -1315,7 +1341,7 @@ to open
 
     do.while [ waitStop 10 ] [ :displayHighScores = "true ]
   ][
-    repeat 8 [if not( :open.quit = "true ) [waitStop 30] ]
+    repeat 8 [if not :open.quit [waitStop 30] ]
   ]
 
   if :displayHighScores = "true [
@@ -1344,7 +1370,7 @@ to open.ASTEROID
   ofd 55  make "oPos pos  ofdd 105  obk 160
   lt 30  ofdd 80
   obk 20
-  seth 270  setpos :oPos  if not( :open.quit = "true ) [wait 4]
+  seth 270  setpos :oPos  if not :open.quit [wait 4]
   ;S
   setpc[ 183 125 255 ]
   pu  setpos :Apos  seth 90  ofd 70  pd
@@ -1390,7 +1416,7 @@ to open.ASTEROID
   ofdd 75  make "oPos pos  obk 75
   lt 70  ofdd 40
   rt 60  ofdd 30
-  setpos :oPos  if not( :open.quit = "true ) [waitStop 4]
+  setpos :oPos  if not :open.quit [waitStop 4]
 end
 
 to open.author
@@ -1406,12 +1432,16 @@ to open.author
   setpc( list 200*.9 120*.9 255*.9 )
   make "fontAttribList ( list [Times New Roman] round( 13 * :open.scale ) 0 0 400 0 0 0 0 0 0 0 0 )
   setlabelfont :fontAttribList
-  ifelse :ee2 = "false [label [by Dan Gerhards]] [label [by Dan Gerhards whose birthday is today!]]
+  ifelse :ee2 [
+    label [by Dan Gerhards whose birthday is today!]
+  ][
+    label [by Dan Gerhards]
+  ]
 end
 
 to open.loop
   open
-  if not( :open.quit = "true ) [ open.loop ]
+  if not :open.quit [ open.loop ]
 end
 
 to open.MINER
@@ -1450,7 +1480,7 @@ to open.MINER
   ofdd 70  obk 40  make "oPos pos  obk 30
   lt 80  ofdd 30 
   rt 45  ofdd 15
-  setpos :oPos  if not( :open.quit = "true ) [wait 4]
+  setpos :oPos  if not :open.quit [wait 4]
   lt 8  ofdd 115
 end
 
@@ -1475,7 +1505,7 @@ to open.turtleO
   make "oy last pos
   make "ox first pos
   make "bounce 0
-  if not( :open.quit = "true ) [ open.turtleO.animate ]
+  if not :open.quit [ open.turtleO.animate ]
   setpos( list :ox 40*:open.scale )
 end
 
@@ -1491,7 +1521,7 @@ to open.turtleO.animate
     wait 1
   ]
   setpos( list :ox :oy*:open.scale )
-  if( and :bounce < round(3*1.25) :open.quit = "false ) [ open.turtleO.animate ]
+  if( and :bounce < round(3*1.25) not :open.quit ) [ open.turtleO.animate ]
 end
 
 to pauseGame
@@ -1562,11 +1592,12 @@ to playLoop
       drawShip :shipXInt :shipYInt :dr "redraw
     ]
     ;...and if it just went behind one, erase it now
-     if (and :isBehindRock   not :oldIsBehindRock) [
+    if (and :isBehindRock   not :oldIsBehindRock) [
       drawShip :shipXInt :shipYInt :dr "erase
     ]
 
-    if :expStep < :numExpSteps [ printText ]  ;the if keeps it from showing the taking of a life just yet
+    ; the if keeps it from showing the taking of a life just yet
+    if :expStep < :numExpSteps [ printText ]
 
     if and :shipIsExploding  (:expStep = 0) [
       setpos :expCtr
@@ -1592,9 +1623,12 @@ to playLoop
     ][
       make "glint? random 100
       if :glint? = 0 [ 
-        make "glintCrystal (random (:level*2+2) ) + 1   ;level*2+2 is the number of crystals the level started with
+        ;level*2+2 is the number of crystals the level started with
+        make "glintCrystal (random (:level*2+2) ) + 1
         make "y (last (item :glintCrystal :crystals))
-        if and ((round :y) = :y) not(:y = :offScreenY) [ make "glintStep 0 ]  ;if round :y != :y, then crystal is close to a rock
+
+        ; if round :y != :y, then crystal is close to a rock
+        if and ((round :y) = :y) not(:y = :offScreenY) [ make "glintStep 0 ]
       ]
     ]
     make "oldShipX :shipXInt
@@ -1613,9 +1647,8 @@ to playLoop
     make "shipXInt round :shipX
     make "shipYInt round :shipY
 
-    ;the "50" is the animation delay
-    make "now timemilli
-    while [ :now - :start < 50 ] [ make "now timemilli ]
+    ; the "50" is the animation delay (20 fps)
+    while [ timemilli - :start < 50 ] []
   ]
 
 end
