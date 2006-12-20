@@ -54,7 +54,8 @@ UninstPage uninstConfirm
 UninstPage instfiles
 
 ; variables
-var uninstallExe
+var previousinstalldir ; full path to the uninstaller
+var UserType           ; "limited" or "power"
 
 ; Languages
 LoadLanguageFile "${NSISDIR}\Contrib\Language files\English.nlf"  ; the default language
@@ -70,42 +71,40 @@ LangString StartMenuShortcuts ${LANG_FRENCH}  "Start Menu Shortcuts" ; NOT_YET_L
 LangString StartMenuShortcuts ${LANG_GREEK}   "Συντομεύσεις Μενού Έναρξη" 
 
 
-; uninstall must be able to remove all traces of any 
-; previous installation.
+; uninstall must be able to remove all traces of any previous installation.
 Function uninstall
 
   ; Remove registry keys
   DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\FMSLogo"
 
   ; Remove files and uninstaller
-  Delete $INSTDIR\fmslogo.exe
-  Delete $INSTDIR\fmslogo-${LANG_ENGLISH}.exe
-  Delete $INSTDIR\fmslogo-${LANG_GREEK}.exe
-  Delete $INSTDIR\fmslogo-${LANG_FRENCH}.exe
+  Delete $previousinstalldir\fmslogo.exe
+  Delete $previousinstalldir\fmslogo-${LANG_ENGLISH}.exe
+  Delete $previousinstalldir\fmslogo-${LANG_GREEK}.exe
+  Delete $previousinstalldir\fmslogo-${LANG_FRENCH}.exe
 
-  Delete $INSTDIR\startup.logoscript
-  Delete $INSTDIR\startup-${LANG_ENGLISH}.logoscript
-  Delete $INSTDIR\startup-${LANG_GREEK}.logoscript
-  Delete $INSTDIR\startup-${LANG_FRENCH}.logoscript
+  Delete $previousinstalldir\startup.logoscript
+  Delete $previousinstalldir\startup-${LANG_ENGLISH}.logoscript
+  Delete $previousinstalldir\startup-${LANG_GREEK}.logoscript
+  Delete $previousinstalldir\startup-${LANG_FRENCH}.logoscript
 
-  Delete $INSTDIR\logohelp.chm
-  Delete $INSTDIR\logohelp-${LANG_ENGLISH}.chm
-  Delete $INSTDIR\logohelp-${LANG_GREEK}.chm
-  Delete $INSTDIR\logohelp-${LANG_FRENCH}.chm
+  Delete $previousinstalldir\logohelp.chm
+  Delete $previousinstalldir\logohelp-${LANG_ENGLISH}.chm
+  Delete $previousinstalldir\logohelp-${LANG_GREEK}.chm
+  Delete $previousinstalldir\logohelp-${LANG_FRENCH}.chm
 
-  Delete $INSTDIR\logo.hlp
-  Delete $INSTDIR\logo.gid
-  Delete $INSTDIR\logo.fts
+  Delete $previousinstalldir\logo.hlp
+  Delete $previousinstalldir\logo.gid
+  Delete $previousinstalldir\logo.fts
 
-  Delete $INSTDIR\mcistrwh.hlp
-  Delete $INSTDIR\mcistrwh.gid
-  Delete $INSTDIR\mcistrwh.fts
+  Delete $previousinstalldir\mcistrwh.hlp
+  Delete $previousinstalldir\mcistrwh.gid
+  Delete $previousinstalldir\mcistrwh.fts
 
-  Delete $INSTDIR\fmslogo.txt
-  Delete $INSTDIR\license.txt
+  Delete $previousinstalldir\fmslogo.txt
+  Delete $previousinstalldir\license.txt
 
-  Delete $INSTDIR\uninstall.exe
-
+  Delete $previousinstalldir\uninstall.exe
 
   ; Remove shortcuts, if any
   Delete "$SMPROGRAMS\FMSLogo\*.*"
@@ -113,9 +112,9 @@ Function uninstall
 
   ; Remove directories used
   RMDir "$SMPROGRAMS\FMSLogo"
-  RMDir /r "$INSTDIR\logolib"
-  RMDir /r "$INSTDIR\examples"
-  RMDir "$INSTDIR"
+  RMDir /r "$previousinstalldir\logolib"
+  RMDir /r "$previousinstalldir\examples"
+  RMDir "$previousinstalldir"
 
   ; remove the file association for .LGO
   DeleteRegValue HKCR ".lgo" "Logo program"
@@ -137,7 +136,7 @@ Function .onInit
   Push Greek
   Push A ; A means auto count languages
          ; for the auto count to work the first empty push (Push "") must remain
-  LangDLL::LangDialog "Installer Language" "Please select the language of the installer"
+  LangDLL::LangDialog "Installer Language" "Please select the language to install"
 
   Pop $LANGUAGE
   StrCmp $LANGUAGE "cancel" 0 SetupUser
@@ -146,6 +145,7 @@ Function .onInit
   ; assume regular user until we know they are a power user
 SetupUser:
   SetShellVarContext current
+  StrCpy $UserType "limited"
   StrLen $2 "$PROFILE\FMSLogo"
   StrCpy $INSTDIR "$PROFILE\FMSLogo" $2 0
 
@@ -158,17 +158,15 @@ SetupUser:
 
   StrCmp $1 "Admin" SetupUser.AllUsers +1
   StrCmp $1 "Power" SetupUser.AllUsers +1
-  goto SetupUser.CurrentUser
+  goto SetupUser.Done
 
 SetupUser.Win9x:
 SetupUser.AllUsers:
   SetShellVarContext all
+  StrCpy $UserType "power"
   StrLen $2       "$PROGRAMFILES\FMSLogo"
   StrCpy $INSTDIR "$PROGRAMFILES\FMSLogo" $2 0
   goto SetupUser.Done
-
-SetupUser.CurrentUser:
-  ; nothing to do because this is the default
 
 SetupUser.Done:
 
@@ -196,7 +194,7 @@ checkifinstalled:
   ;
   ; If FMSLogo is already installed, either uninstall it or abort. 
   ;
-  StrCmp $INSTDIR "$PROGRAMFILES\FMSLogo" GetPreviousInstall.AllUsers GetPreviousInstall.CurrentUser
+  StrCmp $UserType "power" GetPreviousInstall.AllUsers GetPreviousInstall.CurrentUser
 
 GetPreviousInstall.AllUsers:
   ReadRegStr $0 HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\FMSLogo" "UninstallString"
@@ -208,12 +206,13 @@ GetPreviousInstall.CurrentUser:
 
 GetPreviousInstall.Done:
 
-  ; remove quotes from $uninstallExe
-  StrLen $1 $0
-  IntOp  $1 $1 - 2
-  StrCpy $uninstallExe $0 $1 1 
+  ; If no uninstaller was found, then we're done
+  StrCmp $0 "" end 0
 
-  IfFileExists $uninstallExe 0 end
+  ; Extract the file path from the full path to the uninstaller.
+  ; hack: assumes the string is quoted and ends in `\uninstall.exe"'.
+  StrCpy $previousinstalldir $0 -15 1
+  IfFileExists "$previousinstalldir\*.*" 0 end
 
   ; Notify the user that the install cannot continue until the existing FMSLogo is uninstalled
   ; We can't use a LangString because those aren't available in .onInit
@@ -290,7 +289,7 @@ Section "FMSLogo"
   ;
   ; Write the uninstall keys for Windows
   ;
-  StrCmp $INSTDIR "$PROGRAMFILES\FMSLogo" Uninstaller.AllUsers Uninstaller.CurrentUser
+  StrCmp $UserType "power" Uninstaller.AllUsers Uninstaller.CurrentUser
 
 Uninstaller.AllUsers:
   ; Write the installation path into the registry
@@ -319,7 +318,7 @@ Uninstaller.Done:
   ;
   ; create a file association for .lgo
   ;
-  StrCmp $INSTDIR "$PROGRAMFILES\FMSLogo" FileAssociation.AllUsers FileAssociation.CurrentUser
+  StrCmp $UserType "power" FileAssociation.AllUsers FileAssociation.CurrentUser
 
 FileAssociation.AllUsers:
   WriteRegStr HKCR ".lgo" ""             "Logo program"
@@ -380,8 +379,9 @@ Function un.onInit
 SetupUser:
   ; assume regular user until we know they are a power user
   SetShellVarContext current
-  StrLen $2 "$PROFILE\FMSLogo"
-  StrCpy $INSTDIR "$PROFILE\FMSLogo" $2 0
+  StrCpy $UserType "limited"
+  ReadRegStr $1 HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\FMSLogo" "UninstallString"
+  StrCpy $INSTDIR $1 -15 1 ; hack: assumes the string is quoted and ends in `\uninstall.exe"'.
 
   ClearErrors
   UserInfo::GetName
@@ -392,20 +392,37 @@ SetupUser:
 
   StrCmp $1 "Admin" SetupUser.AllUsers +1
   StrCmp $1 "Power" SetupUser.AllUsers +1
-  goto SetupUser.CurrentUser
+  goto SetupUser.Done
 
 SetupUser.Win9x:
 SetupUser.AllUsers:
   SetShellVarContext all
-  StrLen $2       "$PROGRAMFILES\FMSLogo"
-  StrCpy $INSTDIR "$PROGRAMFILES\FMSLogo" $2 0
+  StrCpy $UserType "power"
+  ReadRegStr $1 HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\FMSLogo" "UninstallString"
+  StrCpy $INSTDIR $1 -15 1 ; hack: assumes the string is quoted and ends in `\uninstall.exe"'.
 
   goto SetupUser.Done
 
-SetupUser.CurrentUser:
-  ; nothing to do because this is the default
-
 SetupUser.Done:
+
+  ; check if FMSLogo exists where we think it does
+  StrCmp $INSTDIR "" CheckIfInstallExists.ShowError 0
+  IfFileExists "$INSTDIR\*.*" CheckIfInstallExists.Done CheckIfInstallExists.ShowError
+
+CheckIfInstallExists.ShowError:
+  ; Notify the user that FMSLogo does not exist where we think it does.
+  ; We can't use a LangString because those aren't available in .onInit
+  StrCmp $LANGUAGE ${LANG_FRENCH} 0 +3
+     MessageBox MB_OK|MB_ICONEXCLAMATION "Either FMSLogo has already been deleted or you do not have permission to uninstall it.$\nEither way, this uninstallation cannot continue." ; NOT_YET_LOCALIZED
+     Abort
+  StrCmp $LANGUAGE ${LANG_GREEK} 0 +3
+     MessageBox MB_OK|MB_ICONEXCLAMATION "Either FMSLogo has already been deleted or you do not have permission to uninstall it.$\nEither way, this uninstallation cannot continue." ; NOT_YET_LOCALIZED
+     Abort
+  ; default to English
+  MessageBox MB_OK|MB_ICONEXCLAMATION "Either FMSLogo has already been deleted or you do not have permission to uninstall it.$\nEither way, this uninstallation cannot continue."
+  Abort
+
+CheckIfInstallExists.Done:
 
 FunctionEnd
 
