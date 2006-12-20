@@ -50,28 +50,28 @@ end
 
 to Slice :rad1 :rad2 :step
    ; Draw an open ended cylinder
-   localmake "i 0
-   repeat 360/:step ~
-     [
+   local [i PointA PointB PointC PointD PointE]
+   make "i 0
+   repeat 360/:step [
      fd :rad1
      down :i
-     localmake "PointA GetPoint :rad2
+     make "PointA GetPoint :rad2
      down :step
-     localmake "PointB GetPoint :rad2
+     make "PointB GetPoint :rad2
      up :step
      up :i
      bk :rad1 
      rt :step
      fd :rad1
      down :i
-     localmake "PointD GetPoint :rad2
+     make "PointD GetPoint :rad2
      down :step
-     localmake "PointC GetPoint :rad2
+     make "PointC GetPoint :rad2
      up :step
      up :i
      bk :rad1 
      lt :step
-     localmake "PointE posxyz
+     make "PointE posxyz
      setposxyz :PointA
      pd
      polystart
@@ -83,7 +83,7 @@ to Slice :rad1 :rad2 :step
      pu
      setposxyz :PointE
      make "i :i + :step
-     ]
+   ]
 end
 
 to Torus :rad1 :rad2 :step
