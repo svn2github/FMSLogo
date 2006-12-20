@@ -4,8 +4,8 @@ to aaa
 ;
 ; The original code had to be converted to FMSLogo's RGB color system
 ;
-; Also modified it such that it did not matter what your start heading
-; was which made it more flexible in 2D or 3D.
+; Also modified it such that your start heading doesn't matter, which
+; made it more flexible in 2D or 3D.
 ;
 main
 end
@@ -30,7 +30,8 @@ fill        ; Red or Black Checks
 pu bk 10 lt 45 pd
 end
 
-to main ; Chessboard's
+to main ; Chessboards
+ht
 cs
 wrap
 MessageBox [Chessboard] [You can use the same code in 2D]
@@ -56,6 +57,7 @@ rt 90
 lr 90
 ; Draw face 3
 chess 128 4 heading
+st
 end
 
 to zzz
