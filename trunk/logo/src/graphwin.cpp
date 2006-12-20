@@ -1065,27 +1065,58 @@ NODE *lbitblock(NODE *arg)
    return Unbound;
    }
 
+
+// Converts the Window raster mode to a FMSLogo bitmode.
+static
+FIXNUM
+RasterModeToBitMode(
+   DWORD RasterMode
+   )
+   {
+   // return the logo "code" for the bit mode
+   switch (RasterMode)
+      {
+      case 0:
+      case SRCCOPY: 
+         return 1;
+
+      case SRCPAINT: 
+         return 2;
+
+      case SRCAND: 
+         return 3;
+
+      case SRCINVERT: 
+         return 4;
+
+      case SRCERASE: 
+         return 5;
+
+      case NOTSRCCOPY:
+         return 6;
+
+      case NOTSRCERASE:
+         return 7;
+
+      case MERGEPAINT: 
+         return 8;
+
+      case DSTINVERT:
+         return 9;
+      }
+
+   assert(0 && "can't happen");
+   return 0;
+   }
+
 NODE *lbitmode(NODE *)
    {
    ASSERT_TURTLE_INVARIANT
 
-   int temp;
-
    // return the logo "code" for the bit mode
-   switch (bitmode)
-      {
-       case SRCCOPY: temp = 1; break;
-       case SRCPAINT: temp = 2; break;
-       case SRCAND: temp = 3; break;
-       case SRCINVERT: temp = 4; break;
-       case SRCERASE: temp = 5; break;
-       case NOTSRCCOPY: temp = 6; break;
-       case NOTSRCERASE: temp = 7; break;
-       case MERGEPAINT: temp = 8; break;
-       case DSTINVERT: temp = 9; break;
-      }
+   FIXNUM temp = RasterModeToBitMode(bitmode);
 
-   return make_intnode((FIXNUM) temp);
+   return make_intnode(temp);
    }
 
 NODE *lsetbitmode(NODE *arg)
@@ -1116,28 +1147,9 @@ NODE *lturtlemode(NODE *)
    {
    ASSERT_TURTLE_INVARIANT
 
-   FIXNUM temp;
-
    // return the logo "code" for the bit mode
-
-   switch (g_Turtles[turtle_which].Bitmap)
-      {
-       case 0:
-       case SRCCOPY: temp = 1; break;
-       case SRCPAINT: temp = 2; break;
-       case SRCAND: temp = 3; break;
-       case SRCINVERT: temp = 4; break;
-       case SRCERASE: temp = 5; break;
-       case NOTSRCCOPY: temp = 6; break;
-       case NOTSRCERASE: temp = 7; break;
-       case MERGEPAINT: temp = 8; break;
-       case DSTINVERT: temp = 9; break;
-       default:
-          assert(0); // invalid state
-          temp=0;
-      }
-
-   return make_intnode(temp);
+   FIXNUM turtlemode = RasterModeToBitMode(g_Turtles[turtle_which].Bitmap);
+   return make_intnode(turtlemode);
    }
 
 NODE *lsetturtlemode(NODE *arg)
