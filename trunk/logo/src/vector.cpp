@@ -9,25 +9,25 @@ double Mag(const VECTOR &v)
 // Add two vectors
 const VECTOR Add(const VECTOR &v1, const VECTOR &v2)
    {
-   VECTOR product;
+   VECTOR sum;
 
-   product.x = v1.x + v2.x;
-   product.y = v1.y + v2.y;
-   product.z = v1.z + v2.z;
+   sum.x = v1.x + v2.x;
+   sum.y = v1.y + v2.y;
+   sum.z = v1.z + v2.z;
 
-   return product;
+   return sum;
    }
 
 // Subtract the two vectors
 const VECTOR Subtract(const VECTOR &v1, const VECTOR &v2)
    {
-   VECTOR product;
+   VECTOR difference;
 
-   product.x = v1.x - v2.x;
-   product.y = v1.y - v2.y;
-   product.z = v1.z - v2.z;
+   difference.x = v1.x - v2.x;
+   difference.y = v1.y - v2.y;
+   difference.z = v1.z - v2.z;
 
-   return product;
+   return difference;
    }
 
 // Compute the cross product of two vectors
