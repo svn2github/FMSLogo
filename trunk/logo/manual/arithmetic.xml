@@ -21,6 +21,7 @@
       &command-log10;
       &command-ln;
       &command-pi;
+      &command-goldenratio;
       &command-tan;
       &command-radtan;
       &command-sin;
