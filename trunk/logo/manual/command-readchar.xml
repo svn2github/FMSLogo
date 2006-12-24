@@ -14,9 +14,12 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-Reads a single character from the read stream and outputs that character as a word. 
-If the read stream is a file, and the end of file is reached, READCHAR outputs the empty list (not the empty word).
-If the read stream is a terminal, echoing is turned off when READCHAR is invoked, and remains off until <link linkend="command-readlist">READLIST</link> or <link linkend="command-readword">READWORD</link> are invoked or a &GENERICNAME; prompt is printed.
+Reads a single character from the read stream and outputs that character as a word.
+If the read stream is a file and the end of file is reached, READCHAR outputs the empty list (not the empty word).
+If the read stream is the Commander, then the "Input Mode" dialog prompts the user for a line of text and READCHAR outputs the first character entered by the user.
+Successive calls to READCHAR read the rest of the line until there are no more characters, in which case the "Input Mode" dialog will be shown again.
+</para>
+<para>
 Backslash, vertical bar, and tilde characters have no special meaning in this context.
 </para>
 </listitem>
@@ -27,11 +30,20 @@ Backslash, vertical bar, and tilde characters have no special meaning in this co
 
 <programlisting><userinput>SHOW READCHAR
 Hello how are you?</userinput>
-H</programlisting>
-
+H
+<userinput>SHOW READCHAR</userinput>
+e
+</programlisting>
 </listitem>
 </varlistentry>
 
-</variablelist>
+<varlistentry><term>See Also</term>
+<listitem><simplelist>
+<member><link linkend="command-readchars">READCHARS</link></member>
+<member><link linkend="command-readword">READWORD</link></member>
+<member><link linkend="command-readlist">READLIST</link></member>
+</simplelist></listitem>
+</varlistentry>
 
+</variablelist>
 </section>
