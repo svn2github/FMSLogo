@@ -24,7 +24,7 @@ To guarantee portability, the input should be taken from an earlier invocation o
 
 <varlistentry><term>Example</term>
 <listitem>
-<programlisting><userinput>CLEARSCREEN 
+<programlisting><userinput>CLEARSCREEN
 REPEAT 4 [FORWARD 100 RIGHT 90]
 MAKE "savepen PEN
 
