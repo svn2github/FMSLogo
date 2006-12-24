@@ -169,6 +169,7 @@
   <!ENTITY command-log10          SYSTEM "command-log10.xml">
   <!ENTITY command-ln             SYSTEM "command-ln.xml">
   <!ENTITY command-pi             SYSTEM "command-pi.xml">
+  <!ENTITY command-goldenratio    SYSTEM "command-goldenratio.xml">
   <!ENTITY command-tan            SYSTEM "command-tan.xml">
   <!ENTITY command-radtan         SYSTEM "command-radtan.xml">
   <!ENTITY command-sin            SYSTEM "command-sin.xml">
