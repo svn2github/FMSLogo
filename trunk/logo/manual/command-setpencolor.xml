@@ -25,15 +25,16 @@ For an explanation of the <parameter>color</parameter> parameter, see the sectio
 The pen color affects any line drawn by the turtle (such as <link linkend="command-forward">FORWARD</link>).
 It also affects text that is drawn with <link linkend="command-label">LABEL</link>.
 </para>
-
 </listitem>
 </varlistentry>
+
+
 <varlistentry><term>Example</term>
 <listitem>
 
 <programlisting><userinput>REPEAT 255 [
-  SETPENCOLOR (LIST REPCOUNT 0 0) 
-  FORWARD 100 
+  SETPENCOLOR (LIST REPCOUNT 0 0)
+  FORWARD 100
   BACK    100
   RIGHT 1
 ]</userinput>
@@ -47,9 +48,9 @@ SETPENCOLOR [:red :green :blue]      ; error
 SETPENCOLOR (LIST :red :green :blue) ; works</userinput>
 </programlisting>
 
-
 </listitem>
 </varlistentry>
-</variablelist>
 
+
+</variablelist>
 </section>

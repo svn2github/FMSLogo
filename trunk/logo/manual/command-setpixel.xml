@@ -33,24 +33,21 @@ See <filename>Examples\3D\3DBITMAP.LGO</filename> for an example of using SETPIX
 
 <varlistentry><term>Example</term>
 <listitem>
-
 <programlisting><userinput>PENUP
 SETXY -128 -128
 FOR [red 0 255] [
   FOR [green 0 255] [
-    SETPIXEL (LIST :red :green 0) 
+    SETPIXEL (LIST :red :green 0)
     FORWARD 1
   ]
   BACK    256
   RIGHT   90
-  FORWARD 1 
+  FORWARD 1
   LEFT    90
 ]</userinput>
 </programlisting>
-
 </listitem>
 </varlistentry>
 
 </variablelist>
-
 </section>
