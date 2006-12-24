@@ -67,9 +67,9 @@ If the total number of inputs is even, then the last input is a template that is
 END
 
 TO PIGLATIN :word
-  OUTPUT (CASCADE [VOWELP FIRST ?] 
+  OUTPUT (CASCADE [VOWELP FIRST ?]
                   [WORD BUTFIRST ? FIRST ?]
-                  :word 
+                  :word
                   [WORD ? "ay])
 END</userinput>
 </programlisting>

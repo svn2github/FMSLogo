@@ -42,9 +42,9 @@ Once the few empty color slots in the palette are used, Windows will have someth
       SETPENCOLOR (LIST :red :green :blue)
     ]
   ]
-]</userinput></programlisting> 
+]</userinput></programlisting>
 </para>
- 
+
 <para>
 Note also that loading bitmap files with <link linkend="command-bitload">BITLOAD</link> uses up colors in the palette.
 Again, this can be cleared using CLEARPALETTE.
@@ -56,15 +56,15 @@ Clearing the screen does <emphasis>not</emphasis> clear the palette, but it is a
 
 </listitem>
 </varlistentry>
+
+
 <varlistentry><term>Example</term>
 <listitem>
-
 <programlisting><userinput>REPEAT 256 [SETPENCOLOR (LIST REPCOUNT 0 0)]
 STATUS
-CLEARPALETTE</userinput></programlisting> 
-
+CLEARPALETTE</userinput></programlisting>
 </listitem>
 </varlistentry>
-</variablelist>
 
+</variablelist>
 </section>

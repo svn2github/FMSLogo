@@ -38,7 +38,7 @@ When four or more inputs are given, you can save a GIF animation frame (series o
 The <parameter>delay</parameter> input specifies how many hundredths of a second to display the frame.
 The <parameter>append</parameter> input specifies whether to start a new animation or append a new frame to an existing animation.
 This should be either "TRUE or "FALSE.
-The <parameter>loop</parameter> input specifies how many times the animation should loop (the default of -1 = no loop, 0 = loop forever, n = loop n times). 
+The <parameter>loop</parameter> input specifies how many times the animation should loop (the default of -1 = no loop, 0 = loop forever, n = loop n times).
 </para>
 
 <para>

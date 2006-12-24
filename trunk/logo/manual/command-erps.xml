@@ -13,7 +13,7 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-Erases all unburied procedures from the workspace.  
+Erases all unburied procedures from the workspace.
 ERPS abbreviates <userinput><link linkend="command-erase">ERASE</link> <link linkend="command-procedures">PROCEDURES</link></userinput>.
 </para>
 </listitem>

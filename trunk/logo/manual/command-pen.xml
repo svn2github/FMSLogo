@@ -27,7 +27,7 @@ The format of this list may change in future version of &PRODUCTNAME;, as additi
 
 <varlistentry><term>Example</term>
 <listitem>
-<programlisting><userinput>CLEARSCREEN 
+<programlisting><userinput>CLEARSCREEN
 REPEAT 4 [FORWARD 100 RIGHT 90]
 MAKE "savepen PEN
 

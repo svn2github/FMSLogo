@@ -40,7 +40,7 @@ Note that the destination index must already have an image to paste to.
 <varlistentry><term>Example</term>
 <listitem>
 
-<programlisting><userinput>; Draw a red block 100x100 in Bitmap Buffer 1 
+<programlisting><userinput>; Draw a red block 100x100 in Bitmap Buffer 1
 SETBITINDEX 1
 SETFLOODCOLOR [255 0 0]
 BITBLOCK 100 100

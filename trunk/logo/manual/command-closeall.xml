@@ -17,8 +17,7 @@ Closes all open files.
 </para>
 
 <para>
-This is equivalent to 
-<userinput><link linkend="command-foreach">FOREACH</link> <link linkend="command-allopen">ALLOPEN</link> [<link linkend="command-close">CLOSE</link> ?]</userinput>
+This is equivalent to <programlisting><link linkend="command-foreach">FOREACH</link> <link linkend="command-allopen">ALLOPEN</link> [<link linkend="command-close">CLOSE</link> ?]</programlisting>
 </para>
 
 </listitem>

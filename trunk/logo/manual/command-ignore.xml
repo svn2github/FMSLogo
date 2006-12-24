@@ -13,7 +13,7 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-IGNORE does nothing.  
+IGNORE does nothing.
 This is useful when an expression is evaluated for a side effect and its actual output is unimportant.
 </para>
 </listitem>

@@ -15,13 +15,13 @@
 <para>
 Creates a window that is suitable for use as a dialog box.
 A dialog window is used as the framework to which you add other window objects or controls (sometimes called widgets).
-You can add things such as buttons, scrollbars, listboxes, etc. to the dialog. 
+You can add things such as buttons, scrollbars, listboxes, etc. to the dialog.
 This function is similar to <link linkend="command-windowcreate">WINDOWCREATE</link> except it will not return to the caller until the dialog is closed (see <link linkend="windows-modal-vs-modeless">Modal vs. Modeless</link>).
 </para>
 
 <para>
 The <parameter>parent</parameter> input is the name of the window that will own the new dialog.
-If this is the first window you are creating, use <userinput>"root</userinput> as the <parameter>parent</parameter> input. 
+If this is the first window you are creating, use <userinput>"root</userinput> as the <parameter>parent</parameter> input.
 </para>
 
 <para>

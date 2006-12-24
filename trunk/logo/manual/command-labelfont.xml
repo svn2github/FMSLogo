@@ -1,5 +1,5 @@
 <section id="command-labelfont">
-    <title>LABELFONT</title>
+<title>LABELFONT</title>
 <indexterm><primary>LABELFONT</primary></indexterm>
 
 <variablelist>
@@ -24,16 +24,15 @@ See <link linkend="command-setlabelfont">SETLABELFONT</link> for a description o
 </listitem>
 </varlistentry>
 
+
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>SETLABELFONT [[Times New Roman] -24 0 0 400 0 0 0 0 3 2 1 18] 
+<programlisting><userinput>SETLABELFONT [[Times New Roman] -24 0 0 400 0 0 0 0 3 2 1 18]
 SHOW LABELFONT</userinput>
-[[Times New Roman] -24 0 0 400 0 0 0 0 3 2 1 18] 
+[[Times New Roman] -24 0 0 400 0 0 0 0 3 2 1 18]
 </programlisting>
-
 </listitem>
 </varlistentry>
 
 </variablelist>
-
 </section>

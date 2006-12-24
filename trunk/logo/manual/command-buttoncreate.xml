@@ -14,7 +14,7 @@
 <listitem>
 <para>
 Creates a button control.
-A button control lets the user trigger events. 
+A button control lets the user trigger events.
 The only function of the button control is to execute the <parameter>callback</parameter> instruction list when it is pressed.
 </para>
 

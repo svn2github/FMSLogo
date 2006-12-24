@@ -16,7 +16,7 @@
 Makes a new procedure called <parameter>newname</parameter> that is identical to procedure <parameter>oldname</parameter>, which may be a primitive.
 If <parameter>newname</parameter> is already defined, its previous definition is lost.
 If <parameter>newname</parameter> was already a primitive, the redefinition is not permitted unless the variable <link linkend="command-redefp">REDEFP</link> has the value TRUE.
-Definitions created by COPYDEF are not saved by <link linkend="command-save">SAVE</link>; primitives are never saved, and user-defined procedures created by COPYDEF are buried. 
+Definitions created by COPYDEF are not saved by <link linkend="command-save">SAVE</link>; primitives are never saved, and user-defined procedures created by COPYDEF are buried.
 (You are likely to be confused if you <link linkend="command-po">PO</link> or <link linkend="command-pot">POT</link> a procedure defined with COPYDEF because its title line will contain the old name.
 This is why it's buried.)
 </para>
