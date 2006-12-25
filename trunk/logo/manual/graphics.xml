@@ -56,7 +56,7 @@ When using color-by-index, the index to color mapping is given in the following 
 
    <section id="multiple-turtles">
        <title>Multiple Turtles</title>
-      
+
 <para>
 &PRODUCTNAME; supports up to 1024 different turtles.
 Each turtle maintains its own heading (orientation in 3D), position, and pen control, but not pen color.
@@ -124,7 +124,7 @@ Each time you enter <link linkend="command-perspective">PERSPECTIVE</link> mode 
 
    <section id="turtle-motion">
        <title>Turtle Motion</title>
-      
+
         &command-forward;
         &command-back;
         &command-left;
@@ -158,7 +158,7 @@ Each time you enter <link linkend="command-perspective">PERSPECTIVE</link> mode 
 
    <section id="turtle-motion-queries">
        <title>Turtle Motion Queries</title>
-      
+
         &command-pos;
         &command-posxyz;
         &command-xcor;
@@ -496,7 +496,7 @@ And like explained earlier changes in your heading with RIGHT, LEFT and SETHEADI
 You should also be thinking the same way you do in 2D.
 You don't often worry about your absolute HEADING in 2D, it's most often a turn relative to your current HEADING.
 It's no different in 3D except you have more ways to turn.
-Think like you're an airplane and that you're in the cockpit of the turtle 
+Think like the turtle is an airplane and you're in the cockpit.
 Then decide where you want to go next.
 </para>
 
@@ -632,15 +632,15 @@ REPEAT 3 [
   RIGHT   90
 ]
 FORWARD 50
-RIGHT   90  ; error: these instruction 
+RIGHT   90  ; error: these instruction
 FORWARD 50  ;        add a cavity to the
 LEFT    90  ;        polygon
 FORWARD 50  ;
 LEFT    90  ;
 FORWARD 50  ;
 RIGHT   90  ;
-FORWARD 50  
-RIGHT   90 
+FORWARD 50
+RIGHT   90
 POLYEND</userinput></programlisting>
 </para>
 
@@ -671,7 +671,7 @@ This is NOT legal:
 
 <programlisting><userinput>POLYSTART
 REPEAT 3 [
-  FORWARD   100 
+  FORWARD   100
   RIGHT     90
 ]
 FORWARD   50
@@ -682,8 +682,8 @@ FORWARD   50  ;
 DOWNPITCH 90  ;
 FORWARD   50  ;
 UPPITCH   90  ;
-FORWARD   50  
-RIGHT     90 
+FORWARD   50
+RIGHT     90
 POLYEND</userinput></programlisting>
 </para>
 
@@ -732,13 +732,13 @@ POLYVIEW</userinput>
 
    <section id="turtle-and-window-queries">
        <title>Turtle And Window Queries</title>
-      
+
         &command-shownp;
    </section>
 
    <section id="pen-control">
        <title>Pen Control</title>
-      
+
 <para>
 The turtle carries a pen that can draw pictures.
 At any time the pen can be "up" (in which case moving the turtle does not change what's on the graphics screen) or "down" (in which case the turtle leaves a trace).
@@ -762,7 +762,7 @@ If the pen is down, it can operate in one of three modes: "paint" (so that it dr
 
    <section id="pen-queries">
        <title>Pen Queries</title>
-      
+
         &command-pendownp;
         &command-penmode;
         &command-pencolor;
