@@ -1,5 +1,5 @@
 <section id="command-cursor">
-    <title>CURSOR</title>
+<title>CURSOR</title>
 <indexterm><primary>CURSOR</primary></indexterm>
 
 <variablelist>
@@ -16,12 +16,11 @@
 <note><para>CURSOR is not supported in &PRODUCTNAME;.</para></note>
 
 <para>
-Outputs a list containing the current x and y coordinates of the screen cursor.
-&PRODUCTNAME; may get confused about the current cursor position if you type in a long line that wraps around or your program prints escape codes that affect the terminal strangely.
+In other &GENERICNAME; environments, CURSOR outputs a list containing the current x and y coordinates of the screen cursor.
+In &PRODUCTNAME;, it always outputs [0 0].
 </para>
 </listitem>
 </varlistentry>
 
 </variablelist>
-
 </section>
