@@ -37,7 +37,7 @@ Otherwise, the <parameter>endtest</parameter> input must be a predicate expressi
 <listitem>
 
 <para>
-For each word in the last input, if that word is already part of the result, forget it; if not, append that word to the result so far. 
+For each word in the last input, if that word is already part of the result, forget it; if not, append that word to the result so far.
 The result is initially empty.
 </para>
 

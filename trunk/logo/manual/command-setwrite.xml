@@ -15,8 +15,8 @@
 <para>
 Sets the write stream to the file named <parameter>filename</parameter>.
 The write stream is used by <link linkend="command-print">PRINT</link>, <link linkend="command-show">SHOW</link>, etc.
-The file must already be open with <link linkend="command-openwrite">OPENWRITE</link>, <link linkend="command-openappend">OPENAPPEND</link>, or <link linkend="command-openupdate">OPENUPDATE</link>.  
-If the input is the empty list, then the write stream becomes the Commander, as usual. 
+The file must already be open with <link linkend="command-openwrite">OPENWRITE</link>, <link linkend="command-openappend">OPENAPPEND</link>, or <link linkend="command-openupdate">OPENUPDATE</link>.
+If the input is the empty list, then the write stream becomes the Commander, as usual.
 Changing the write stream does not close the file that was previously the write stream, so it is possible to alternate between files.
 </para>
 

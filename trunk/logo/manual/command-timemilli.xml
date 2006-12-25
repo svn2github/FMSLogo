@@ -10,27 +10,26 @@
 </listitem>
 </varlistentry>
 
+
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-Outputs the time since Windows started, measured in milliseconds.  
+Outputs the time since Windows started, measured in milliseconds.
 Use this for precision timing.
 The output is also known as the "tick count".
 </para>
 </listitem>
 </varlistentry>
 
+
 <varlistentry><term>Example</term>
 <listitem>
-
 <programlisting><userinput>MAKE "start TIMEMILLI
 REPEAT 36 [ELLIPSE 100 200 RIGHT 5]
 SHOW TIMEMILLI - :start</userinput>
 8189</programlisting>
-
 </listitem>
 </varlistentry>
 
 </variablelist>
-
 </section>
