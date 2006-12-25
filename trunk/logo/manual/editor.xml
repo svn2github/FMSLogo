@@ -6,7 +6,7 @@
 Multiple edit sessions are supported.
 But be careful of having multiple edits going that include the same definition.
 The final editor that is exited (and saved) is what takes precedence.
-Also realize if you delete procedures, property lists or names while in the editor they will be erased (see <link linkend="command-erase">ERASE</link>) from the environment at the time of exiting (and saving) the edit session you deleted them from.  
+Also realize if you delete procedures, property lists or names while in the editor they will be erased (see <link linkend="command-erase">ERASE</link>) from the environment at the time of exiting (and saving) the edit session you deleted them from.
 </para>
 
     <section id="editor-menu">
@@ -17,18 +17,18 @@ Also realize if you delete procedures, property lists or names while in the edit
 
         <section id="editor-menu-file-saveandexit">
           <title>File - Save and Exit</title>
-          <para>Exits the editor and prompts you whether to save the work to the &GENERICNAME; workspace.  
-When you exit the editor, &PRODUCTNAME; loads the revised definitions and modifies the workspace accordingly.  
-Multiple edit sessions are supported, but be careful not to have multiple edits that include the same definition.  
-The final editor that is exited (and saved) is what takes precedence.  
-Also realize if you delete procedures, property lists or names while in the editor they will be erased (see <link linkend="command-erase">ERASE</link>) from the environment at the time of exiting (and saving) the edit session you deleted them from.  
+          <para>Exits the editor and prompts you whether to save the work to the &GENERICNAME; workspace.
+When you exit the editor, &PRODUCTNAME; loads the revised definitions and modifies the workspace accordingly.
+Multiple edit sessions are supported, but be careful not to have multiple edits that include the same definition.
+The final editor that is exited (and saved) is what takes precedence.
+Also realize if you delete procedures, property lists or names while in the editor they will be erased (see <link linkend="command-erase">ERASE</link>) from the environment at the time of exiting (and saving) the edit session you deleted them from.
 See also <link linkend="editor-errors">Edit Errors</link>.
 </para>
         </section>
 
         <section id="editor-menu-file-savetoworkspace">
           <title>File - Save to Workspace</title>
-          <para>Saves the contents of the editor to the &GENERICNAME; workspace.  
+          <para>Saves the contents of the editor to the &GENERICNAME; workspace.
 This is only available in <link linkend="commandline-e">expert mode</link>.
 </para>
         </section>
@@ -182,7 +182,7 @@ The <link linkend="commander-input">Input Box</link> also supports the clipboard
 Only one line of text is supported between the Input Box and the clipboard.
 You can either use the context-sensitive popup menu or keyboard shortcuts for the desired actions (Cut <keycombo><keycap>CTRL</keycap><keycap>X</keycap></keycombo>, Copy <keycombo><keycap>CTRL</keycap><keycap>C</keycap></keycombo>, Paste <keycombo><keycap>CTRL</keycap><keycap>V</keycap></keycombo>).
 </para>
-      
+
 <para>
 The <link linkend="commander-history">Output/Command-Recall</link> also supports the clipboard.
 This means you can turn code you entered in the commander into procedure by copying the Commander Output to the clipboard and pasting it into the editor.
