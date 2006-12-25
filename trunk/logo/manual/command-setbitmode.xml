@@ -24,8 +24,8 @@ The meaning of each value is given by the following table:
       <row><entry>Mode</entry> <entry>Meaning</entry></row>
     </thead>
     <tbody>
-      <row><entry>1</entry> <entry>Take copy of memory then copy to screen.</entry></row>
-      <row><entry>2</entry> <entry>Take copy of memory OR with copy of screen then copy to screen.</entry></row>
+      <row><entry>1</entry> <entry>Take copy of memory then copy to screen</entry></row>
+      <row><entry>2</entry> <entry>Take copy of memory OR with copy of screen then copy to screen</entry></row>
       <row><entry>3</entry> <entry>Take copy of memory AND with copy of screen then copy to screen</entry></row>
       <row><entry>4</entry> <entry>Take copy of memory XOR with copy of screen then copy to screen</entry></row>
       <row><entry>5</entry> <entry>Take copy of memory AND with invert of screen then copy to screen</entry></row>
@@ -51,40 +51,36 @@ Use <link linkend="command-bitmode">BITMODE</link> to obtain the current setting
 </varlistentry>
 
 
-
 <varlistentry><term>Example</term>
 <listitem>
-
-<programlisting><userinput>; Set screen to white
+<programlisting><userinput>; Fill the screen with white
 SETSCREENCOLOR [255 255 255]
-CLEARSCREEN
-PENDOWN
 
 ; Draw a circle and fill it with red
+PENDOWN
 CIRCLE 50
 SETFLOODCOLOR [255 0 0]
 FILL
-PENUP
 
-; Position to lower left of bounding rectangle
+; Copy the red circle to the clipboard
+PENUP
 SETXY -50 -50
 BITCOPY 101 101
 
-; Set screen to yellow
+; Fill the screen with yellow
 SETSCREENCOLOR [255 255 0]
-CLEARSCREEN
 
-; Set paste mode to copy
+; Paste by simply copying the image onto the background
 SETBITMODE 1
 BITPASTE
-
 ; Notice how the white background still exists
-CLEARSCREEN
 
-; Set paste mode to AND
+; Fill the screen with yellow
+SETSCREENCOLOR [255 255 0]
+
+; Now, paste by AND-ing the image onto the background
 SETBITMODE 3
 BITPASTE
-
 ; Notice the white background disappeared</userinput>
 </programlisting>
 
@@ -92,5 +88,4 @@ BITPASTE
 </varlistentry>
 
 </variablelist>
-
 </section>
