@@ -1,31 +1,39 @@
 <section id="command-keyp">
-    <title>KEYP</title>
+<title>KEYP</title>
 <indexterm><primary>KEYP</primary></indexterm>
 
 <variablelist>
 
 <varlistentry><term>Synopsis</term>
 <listitem>
-<synopsis><command>KEYP</command></synopsis>
+<synopsis><command>KEYP</command>
+<command>KEY?</command></synopsis>
 </listitem>
 </varlistentry>
 
 <varlistentry><term>Description</term>
 <listitem>
 
-
-<note><para>KEYP is not supported in &PRODUCTNAME;.  See <link linkend="command-keyboardon">KEYBOARDON</link>.</para></note>
+<para>
+A predicate that outputs TRUE if there are more characters to read from the read stream.
+If the read stream is a file, then KEYP is equivalent to <userinput>NOT EOFP</userinput>.
+If the read stream is set to the Commander, then KEYP always outputs TRUE.
+</para>
 
 <para>
-A predicate that outputs TRUE if there are characters waiting to be read from the read stream.
-If the read stream is a file, this is equivalent to <userinput>NOT EOFP</userinput>.
-If the read stream is the terminal, then echoing is turned off and the terminal is set to CBREAK (character at a time instead of line at a time) mode.
-It remains in this mode until some line-mode reading is requested (e.g., <link linkend="command-readlist">READLIST</link>).
-The UNIX operating system forgets any pending characters when it switches modes, so the first KEYP invocation will always output FALSE.
+KEYP is provided for compatibility with other &GENERICNAME; environments.
+The traditional semantics of KEYP are not appropriate to &PRODUCTNAME;'s graphical environment.
 </para>
+
 </listitem>
 </varlistentry>
 
-</variablelist>
+<varlistentry><term>See Also</term>
+<listitem><simplelist>
+<member><link linkend="command-keyboardon">KEYBOARDON</link></member>
+<member><link linkend="command-reader">READER</link></member>
+</simplelist></listitem>
+</varlistentry>
 
+</variablelist>
 </section>
