@@ -34,12 +34,16 @@ abcdef</programlisting>
 
 
     <para>Semicolon has no special meaning in data lines read by <link linkend="command-readlist">READLIST</link> or <link linkend="command-readword">READWORD</link>, but such a line can later be reparsed using <link linkend="command-runparse">RUNPARSE</link> and then comments will be recognized.
-If a tilde is typed at the terminal for line continuation, &GENERICNAME; will issue a tilde as a prompt character for the continuation line.</para>
+<!-- not true in fms:
+If a tilde is typed for line continuation, &GENERICNAME; will issue a tilde as a prompt character for the continuation line.
+--></para>
 
     <para>To include an otherwise delimiting character (including semicolon or tilde) in a word, precede it with backslash (<userinput>\</userinput>).
 If the last character of a line is a backslash, then the newline character following the backslash will be part of the last word on the line, and the line continues onto the following line.
 To include a backslash in a word, use <userinput>\\</userinput>.
-If the combination backslash-newline is entered at the terminal, &GENERICNAME; will issue a backslash as a prompt character for the continuation line.
+<!-- not true in fms:
+If the combination backslash-newline is entered, &GENERICNAME; will issue a backslash as a prompt character for the continuation line.
+-->
 All of this applies to data lines read with <link linkend="command-readlist">READLIST</link> or <link linkend="command-readword">READWORD</link> as well as to instruction lines.</para>
 
     <para>In &PRODUCTNAME; there is no "prompt character" nor is the carriage return passed from the input control box of the commander.
