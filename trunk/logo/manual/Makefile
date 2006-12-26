@@ -20,9 +20,11 @@ logohelp.chm : logohelp-1033.chm
 	cp $^ $@
 
 index.html : $(SOURCEFILES) $(HTML_STYLESHEET)
+	cp translations-1033.xml translations.xml
 	$(XSLTPROC) --nonet $(HTML_STYLESHEET) $(ROOTFILE)
 
 logohelp.fo : $(SOURCEFILES) $(FO_STYLESHEET)
+	cp translations-1033.xml translations.xml
 	$(XSLTPROC) --nonet --output $@ $(FO_STYLESHEET) $(ROOTFILE)
 
 logohelp-%.chm : htmlhelp-%.hhp logohelp.css
