@@ -16,7 +16,7 @@ The multimedia commands in &PRODUCTNAME; manipulate multimedia devices such as C
    &command-midiclose;
    &command-midimessage;
 
- 
+
   <section id="midi-table">
      <title>MIDI Table</title>
 
@@ -354,7 +354,7 @@ This table defines the mapping between instrument numbers and instruments.
         <entry>Instrument</entry>
       </row>
     </thead>
-    
+
     <tbody>
       <row>
         <entry>0</entry>

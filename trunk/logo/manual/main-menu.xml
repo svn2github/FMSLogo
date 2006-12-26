@@ -47,7 +47,7 @@ See also the <link linkend="command-edit">EDIT</link> command.</para>
         <section id="menu-file-erase">
           <title>File - Erase...</title>
           <para>This is how you erase procedures that have already been loaded (or developed) in memory.
-You will be prompted with all existing procedures (currently loaded within memory). 
+You will be prompted with all existing procedures (currently loaded within memory).
 See also the <link linkend="command-erase">ERASE</link> command.</para>
         </section>
 
