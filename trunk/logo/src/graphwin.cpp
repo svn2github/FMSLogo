@@ -44,7 +44,7 @@ struct font_find_t
    bool        found;
    };
 
-static DWORD bitmode = SRCCOPY;
+static DWORD g_BitMode = SRCCOPY;
 
 #ifdef NDEBUG
 #  define ASSERT_TURTLE_INVARIANT
@@ -101,15 +101,15 @@ public:
       assert(CutIndex < MaxBitCuts);
 
       assert(
-            bitmode == SRCCOPY     ||
-            bitmode == SRCPAINT    ||
-            bitmode == SRCAND      ||
-            bitmode == SRCINVERT   ||
-            bitmode == SRCERASE    ||
-            bitmode == NOTSRCCOPY  ||
-            bitmode == NOTSRCERASE ||
-            bitmode == MERGEPAINT  ||
-            bitmode == DSTINVERT);
+            g_BitMode == SRCCOPY     ||
+            g_BitMode == SRCPAINT    ||
+            g_BitMode == SRCAND      ||
+            g_BitMode == SRCINVERT   ||
+            g_BitMode == SRCERASE    ||
+            g_BitMode == NOTSRCCOPY  ||
+            g_BitMode == NOTSRCERASE ||
+            g_BitMode == MERGEPAINT  ||
+            g_BitMode == DSTINVERT);
       }
 };
 
@@ -1066,6 +1066,49 @@ NODE *lbitblock(NODE *arg)
    }
 
 
+// Converts the FMSLogo bitmode to the Window raster mode
+static
+DWORD
+BitModeToRasterMode(
+   FIXNUM BitMode
+   )
+   {
+   switch (BitMode)
+      {
+      case 1:
+         return SRCCOPY;
+
+      case 2:
+         return SRCPAINT;
+
+      case 3: 
+         return SRCAND;
+
+      case 4:
+         return SRCINVERT;
+
+      case 5:
+         return SRCERASE;
+
+      case 6:
+         return NOTSRCCOPY;
+
+      case 7:
+         return NOTSRCERASE;
+
+      case 8:
+         return MERGEPAINT;
+
+      case 9:
+         return DSTINVERT;
+
+      default:
+         // notify the user that the bitmode was invalid
+         ShowErrorMessageAndStop(LOCALIZED_ERROR_BITMODEBADBITMODE);
+         return 0;
+      }
+   }
+
 // Converts the Window raster mode to a FMSLogo bitmode.
 static
 FIXNUM
@@ -1114,7 +1157,7 @@ NODE *lbitmode(NODE *)
    ASSERT_TURTLE_INVARIANT
 
    // return the logo "code" for the bit mode
-   FIXNUM temp = RasterModeToBitMode(bitmode);
+   FIXNUM temp = RasterModeToBitMode(g_BitMode);
 
    return make_intnode(temp);
    }
@@ -1124,22 +1167,11 @@ NODE *lsetbitmode(NODE *arg)
    ASSERT_TURTLE_INVARIANT
 
    // convert from logo "code" to Windows constants
-   switch (int_arg(arg))
+   FIXNUM bitmode = BitModeToRasterMode(int_arg(arg)); 
+   if (NOT_THROWING)
       {
-       case 1: bitmode = SRCCOPY; break;
-       case 2: bitmode = SRCPAINT; break;
-       case 3: bitmode = SRCAND; break;
-       case 4: bitmode = SRCINVERT; break;
-       case 5: bitmode = SRCERASE; break;
-       case 6: bitmode = NOTSRCCOPY; break;
-       case 7: bitmode = NOTSRCERASE; break;
-       case 8: bitmode = MERGEPAINT; break;
-       case 9: bitmode = DSTINVERT; break;
-       default:
-          // notify the user that the bitmode was invalid
-          ShowErrorMessageAndStop(LOCALIZED_ERROR_BITMODEBADBITMODE);
+      g_BitMode = bitmode;
       }
-
    return Unbound;
    }
 
@@ -1156,25 +1188,15 @@ NODE *lsetturtlemode(NODE *arg)
    {
    ASSERT_TURTLE_INVARIANT
 
-   // convert from logo "code" to Windows constants
    if (g_Turtles[turtle_which].Bitmap)
       {
       draw_turtle(false);
 
-      switch (int_arg(arg))
+      // convert from logo "code" to Windows constants
+      FIXNUM turtlemode = BitModeToRasterMode(int_arg(arg)); 
+      if (NOT_THROWING)
          {
-         case 1: g_Turtles[turtle_which].Bitmap = SRCCOPY; break;
-         case 2: g_Turtles[turtle_which].Bitmap = SRCPAINT; break;
-         case 3: g_Turtles[turtle_which].Bitmap = SRCAND; break;
-         case 4: g_Turtles[turtle_which].Bitmap = SRCINVERT; break;
-         case 5: g_Turtles[turtle_which].Bitmap = SRCERASE; break;
-         case 6: g_Turtles[turtle_which].Bitmap = NOTSRCCOPY; break;
-         case 7: g_Turtles[turtle_which].Bitmap = NOTSRCERASE; break;
-         case 8: g_Turtles[turtle_which].Bitmap = MERGEPAINT; break;
-         case 9: g_Turtles[turtle_which].Bitmap = DSTINVERT; break;
-         default:
-            // notify the user that the bitmode was invalid
-            ShowErrorMessageAndStop(LOCALIZED_ERROR_BITMODEBADBITMODE);
+         g_Turtles[turtle_which].Bitmap = turtlemode;
          }
 
       draw_turtle(true);
@@ -1679,7 +1701,7 @@ NODE *lbitpaste(NODE *)
             TempMemDC,
             0,
             0,
-            bitmode);
+            g_BitMode);
 
          SelectObject(MemDC, oldBitmap);
          DeleteDC(MemDC);
@@ -1714,7 +1736,7 @@ NODE *lbitpaste(NODE *)
                TempMemDC,
                0,
                0,
-               bitmode);
+               g_BitMode);
             }
 
          ReleaseDC(MainWindowx->ScreenWindow->HWindow, ScreenDC);
@@ -1799,7 +1821,7 @@ NODE *lbitpastetoindex(NODE *arg)
             TempMemDC,
             0,
             0,
-            bitmode);
+            g_BitMode);
 
          SelectObject(MemDC, oldBitmap);
          DeleteDC(MemDC);
