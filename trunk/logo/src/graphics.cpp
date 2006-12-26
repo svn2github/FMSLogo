@@ -2064,14 +2064,37 @@ NODE *lsetscreencolor(NODE *args)
 
 NODE *lsetpensize(NODE *args)
    {
-   NODE * arg = pos_int_vector_arg(args);
+   int width;
+   int height;
 
-   if (NOT_THROWING)
+   if (is_list(car(args)))
       {
-      set_pen_width(numeric_node_to_fixnum(car(arg)));
-      set_pen_height(numeric_node_to_fixnum(cadr(arg)));
-      update_status_penwidth();
+      // input is of the form [width height]
+      NODE * arg = pos_int_vector_arg(args);
+      if (stopping_flag == THROWING)
+         {
+         return Unbound;
+         }
+
+      width  = numeric_node_to_fixnum(car(arg));
+      height = numeric_node_to_fixnum(cadr(arg));
       }
+   else
+      {
+      // the input is just the width
+      NODE * arg = pos_int_arg(args);
+      if (stopping_flag == THROWING)
+         {
+         return Unbound;
+         }
+
+      width  = getint(arg);
+      height = width;
+      }
+
+   set_pen_width(width);
+   set_pen_height(height);
+   update_status_penwidth();
    return Unbound;
    }
 
