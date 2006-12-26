@@ -22,8 +22,8 @@ This control also supports <link linkend="editor-context-help">Context Sensitive
       <title>Output/Command-Recall List Box</title>
       <para>The output/command-recall list box will record all output including what you type into the <link linkend="commander-input">Input Box</link>.
 You can select a command for re-execution by clicking on the desired line or by using the arrow keys.
-If something went out of view, use the scroll bar.  
-Once a line is clicked on it is automatically copied to the Input Box.  
+If something went out of view, use the scroll bar.
+Once a line is clicked on it is automatically copied to the Input Box.
 A double-click on the mouse will automatically execute what you're pointing at.
 This control also supports <link linkend="editor-context-help">Context Sensitive Help</link> and <link linkend="editor-clipboard">Editing with the Clipboard</link>.</para>
    </section>
@@ -35,8 +35,8 @@ This control also supports <link linkend="editor-context-help">Context Sensitive
 
    <section id="commander-status">
       <title>Status Button</title>
-      <para>This button pops up a status window telling you what &PRODUCTNAME; is up to.  
-Click it again to close the window. 
+      <para>This button pops up a status window telling you what &PRODUCTNAME; is up to.
+Click it again to close the window.
 See also the <link linkend="command-status">STATUS</link> and <link linkend="command-nostatus">NOSTATUS</link> commands.</para>
    </section>
 
@@ -46,7 +46,7 @@ See also the <link linkend="command-status">STATUS</link> and <link linkend="com
 Click again to disable tracing.
 You can turn tracing on or off even while &PRODUCTNAME; it running.
 Note that the trace button works independent of what you are tracing with the TRACE command.
-See also <link linkend="command-trace">TRACE</link> and <link linkend="command-untrace">UNTRACE</link> commands.</para>           
+See also <link linkend="command-trace">TRACE</link> and <link linkend="command-untrace">UNTRACE</link> commands.</para>
    </section>
 
 
@@ -70,7 +70,7 @@ See also the <link linkend="command-halt">HALT</link> command.</para>
 Click again to disable single stepping.
 You can turn single stepping on or off even while &PRODUCTNAME; is running.
 Note that the step button works independent of what you are stepping with the STEP command.
-See also <link linkend="command-step">STEP</link> and <link linkend="command-unstep">UNSTEP</link> commands.</para>           
+See also <link linkend="command-step">STEP</link> and <link linkend="command-unstep">UNSTEP</link> commands.</para>
    </section>
 
 
@@ -80,13 +80,13 @@ See also <link linkend="command-step">STEP</link> and <link linkend="command-uns
 Once paused the pause button will show what depth you paused to.
 To continue you can issue a <link linkend="command-continue">CONTINUE</link> command or hit Cancel.
 You can also issue a <link linkend="command-pause">PAUSE</link> command within code to act as a "Break Point".
-You can think of pause and continue as sort of a Halt-n-Push and Pop-n-Continue of your state respectively.</para> 
+You can think of pause and continue as sort of a Halt-n-Push and Pop-n-Continue of your state respectively.</para>
    </section>
 
    <section id="commander-edall">
       <title>Edall Button</title>
       <para>The Edall button opens the contents of the entire workspace (all unburied procedures, variables, and property lists) in the <link linkend="editor">Editor</link>.
-This is the same as running the <link linkend="command-edall">EDALL</link> command.</para> 
+This is the same as running the <link linkend="command-edall">EDALL</link> command.</para>
    </section>
 
 </chapter>

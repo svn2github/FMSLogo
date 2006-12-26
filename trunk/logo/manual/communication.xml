@@ -6,7 +6,7 @@
 
 <para>
 If there is a variable named <link linkend="command-printdepthlimit">PRINTDEPTHLIMIT</link> with a nonnegative integer value, then complex list and array structures will be printed only to the allowed depth.
-That is, members of members of...  of members will be allowed only so far. 
+That is, members of members of...  of members will be allowed only so far.
 The elements or members omitted because they are just past the depth limit are indicated by an ellipsis for each one, so a too-deep list of two elements will print as <userinput>[...  ...]</userinput>.
 </para>
 

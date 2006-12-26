@@ -3,7 +3,7 @@
    <indexterm><primary>Introduction</primary></indexterm>
 
    <section id="tutorial">
-      <title>Why &GENERICNAME;?</title>  
+      <title>Why &GENERICNAME;?</title>
       <indexterm><primary>Why &GENERICNAME;?</primary></indexterm>
 
 <para>
@@ -111,7 +111,7 @@ That was easy but too much typing, let's try again.
 <programlisting>REPEAT 4 [FD 100 RT 90]</programlisting>
 
 <para>
-That's it? 
+That's it?
 Yes, that's the same square.
 We did two things.
 We noticed too much redundant code in our first example, so we asked &GENERICNAME; to repeat the same sequence 4 times.
