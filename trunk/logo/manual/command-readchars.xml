@@ -14,16 +14,16 @@
 <varlistentry><term>Description</term>
 <listitem>
 
-
-<note><para>This is not yet supported in &PRODUCTNAME; when reader is [] (keyboard).
-See <link linkend="command-keyboardon">KEYBOARDON</link></para></note>
-
 <para>
 Reads <parameter>number</parameter> characters from the read stream and outputs those characters as a word.
-If the read stream is a file, and the end of file is reached, READCHARS outputs the empty list (not the empty word).
-If the read stream is a terminal, echoing is turned off when READCHARS is invoked, and remains off until <link linkend="command-readlist">READLIST</link> or <link linkend="command-readword">READWORD</link> are invoked or a &GENERICNAME; prompt is printed.
+If the read stream is a file and the end of file is reached, READCHARS outputs the empty list (not the empty word).
+If the read stream is the Commander, then READCHARS always outputs the empty list.
+</para>
+
+<para>
 Backslash, vertical bar, and tilde characters have no special meaning in this context.
 </para>
+
 </listitem>
 </varlistentry>
 
@@ -47,5 +47,4 @@ CLOSE "dummy.fil</userinput>
 </varlistentry>
 
 </variablelist>
-
 </section>
