@@ -1,6 +1,7 @@
 #include "3dsolid.h"
 
-#define ARRAYSIZE(ARRAY) (sizeof(ARRAY) / sizeof(*(ARRAY)))
+#define ARRAYSIZE(ARRAY)            (sizeof(ARRAY) / sizeof(*(ARRAY)))
+#define STRINGLENGTH(STRINGLITERAL) (sizeof(STRINGLITERAL) - 1)
 
 // File ibmterm.cpp
 extern void single_step_box(NODE *the_line);

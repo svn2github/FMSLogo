@@ -583,7 +583,7 @@ void TMyApp::InitMainWindow()
          MB_OK);
 
       strcpy(tempPath, "C:");
-      tempPathLength = strlen("C:");
+      tempPathLength = STRINGLENGTH("C:");
       }
 
    // construct the name of the temporary editor file
