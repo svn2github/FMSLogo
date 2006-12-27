@@ -17,6 +17,8 @@
 # * There is no extraneous whitespace in program listings or synopses.
 # * Banned words/phrases are not used
 # * Examples include at least one instance of the command that they document.
+# * There is no trailing whitespace.
+# * All library procedures are documented.
 #
 # Missing checks:
 # * Spelling is correct.
@@ -36,13 +38,14 @@ use IO::File;
 $main::TotalErrors   = 0;
 $main::TotalWarnings = 0;
 
-@main::BannedWords = qw(
-  left-hand
-  right-hand
-  ie
-  i.e.
-  e.g.
-  eg
+@main::BannedWords = (
+  'left-hand',    # use "left", instead
+  'right-hand',   # use "right", instead
+  'ie',           # use "that is", instead
+  'i.e.',         # use "that is", instead
+  'e.g.',         # use "for example", instead
+  'eg',           # use "for example", instead
+  'terminal',     # use "the Commander", instead
 );
 
 my %Commands = ();
@@ -73,6 +76,7 @@ $AlternateSpellings{GREATERP}       = ['GREATER?'];
 $AlternateSpellings{HIDETURTLE}     = ['HT'];
 $AlternateSpellings{IFFALSE}        = ['IFF'];
 $AlternateSpellings{IFTRUE}         = ['IFT'];
+$AlternateSpellings{KEYP}           = ['KEY?'];
 $AlternateSpellings{LEFTROLL}       = ['LR'];
 $AlternateSpellings{LEFT}           = ['LT'];
 $AlternateSpellings{LESSP}          = ['LESS?'];
@@ -396,6 +400,8 @@ $Exceptions{'command-setmargins.xml'}{'allcaps'}{'TV'} = 1;
 
 $Exceptions{'command-settimer.xml'}{'allcaps'}{'OK'} = 1;
 
+$Exceptions{'command-setturtlemode.xml'}{'allcaps'}{'XOR'} = 1;
+
 $Exceptions{'command-slowdraw.xml'}{'allcaps'}{'BK'} = 1;
 $Exceptions{'command-slowdraw.xml'}{'allcaps'}{'FD'} = 1;
 
@@ -407,6 +413,8 @@ $Exceptions{'command-soundoff.xml'}{'allcaps'}{'XP'} = 1;
 $Exceptions{'command-soundon.xml'}{'allcaps'}{'NT'} = 1;
 $Exceptions{'command-soundon.xml'}{'allcaps'}{'PC'} = 1;
 $Exceptions{'command-soundon.xml'}{'allcaps'}{'XP'} = 1;
+
+$Exceptions{'command-standout.xml'}{'bannedword'}{'terminal'} = 1;
 
 $Exceptions{'command-startup.xml'}{'allcaps'}{'MYPROGRAM'} = 1;
 
@@ -802,6 +810,11 @@ foreach my $filename (<*.xml>) {
         }
       }
     }
+
+    # Find trailing whitespace
+    if ($line =~ m/ +$/) {
+      LogWarning($filename, $linenumber, "trailing whitespace found");
+    }
   }
 
   if ($command and $exampleIsStarted and not $exampleContainsCommand) {
@@ -809,6 +822,25 @@ foreach my $filename (<*.xml>) {
   }
 
   $fh->close;
+}
+
+#
+# Report all undocumented procedure
+#
+foreach my $filename (<../src/Logolib/*>) {
+
+  # only files (not directories) are library routines
+  if ( -f $filename ) {
+
+    # strip off the path to get the name of the library routine
+    if (my ($procedureName) = $filename =~ m!.*/(.*)!) {
+
+      # make sure that this library routine appears in the manual
+      if (not $Commands{$procedureName}) {
+        LogWarning($filename, 0, "Library routine $procedureName is not documented");
+      }
+    }
+  }
 }
 
 print "Found $main::TotalErrors errors and $main::TotalWarnings warnings\n";
