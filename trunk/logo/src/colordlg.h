@@ -22,8 +22,6 @@ class TColorControl : public TControl
       return "ColorControl";
       }
 
-   UINT Transfer(void *Buffer, TTransferDirection Direction);
-
    void EvPaint();
 
    void EvLButtonDown(UINT, TPoint &);
@@ -36,16 +34,16 @@ class TColorControl : public TControl
 class TColorDialog : public TDialog
    {
  public:
-   TColorDialog(TWindow * Parent, TColor & OutColor, const char *Caption);
+   TColorDialog(TWindow * Parent, const TColor & InitialColor, const char *Caption);
+   const TColor & GetSelectedColor() const;
 
  protected:
-   TScrollBar    * m_ColorBar1;
-   TScrollBar    * m_ColorBar2;
-   TScrollBar    * m_ColorBar3;
-   TColorControl * m_SelColor;
+   TScrollBar    m_ColorBar1;
+   TScrollBar    m_ColorBar2;
+   TScrollBar    m_ColorBar3;
+   TColorControl m_SelColor;
 
    void SetupWindow();
-   void TransferData(TTransferDirection Direction);
 
    void UpdateBars(const TColor & NewColor);
 
