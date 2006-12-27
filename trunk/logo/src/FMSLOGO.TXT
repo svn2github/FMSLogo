@@ -57,6 +57,11 @@ Part II) New features/bugs fixed:
     o Implement request #1480374; There are now separate menu options for
       loading a file (merging it into the workspace) and opening one
       (replacing what's in the workspace).
+    o Implement request #1327712; FMSLogo is internationalized.  As a 
+      proof-of-concept, a partial localization of French and Greek are
+      included in this release.  The French version translated the GUI and
+      many command names.  The Greek version has only translated the GUI.
+      Neither localization has translated the manual.
     o Minor updates to the manual.
 
   * Added for 6.11.0,
