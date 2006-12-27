@@ -3,7 +3,7 @@
 
 class TSizeControl : public TControl
    {
-   public:
+ public:
    TSizeControl(TWindow* parent, int resId, const TSize & Size);
    void SetSize(const TSize & NewSize);
 
@@ -12,15 +12,13 @@ class TSizeControl : public TControl
       return m_Size;
       }
 
-   private:
+ private:
    TSize m_Size;
 
    char * GetClassName()
       {
       return "SizeControl";
       }
-
-   UINT Transfer(void* buffer, TTransferDirection direction);
 
    void EvPaint();
 
@@ -33,15 +31,15 @@ class TSizeControl : public TControl
 
 class TSizeDialog : public TDialog
    {
-   public:
-   TSizeDialog(TWindow* Parent, TSize & OutputSize);
+ public:
+   TSizeDialog(TWindow* Parent, const TSize & InitialSize);
+   const TSize & GetSelectedSize() const;
 
-   protected:
-   TScrollBar*   m_SizeBar;
-   TSizeControl* m_SelSize;
+ protected:
+   TScrollBar   m_SizeBar;
+   TSizeControl m_SelSize;
 
    void SetupWindow();
-   void TransferData(TTransferDirection direction);
 
    void UpdateBars(const TSize & Size);
 

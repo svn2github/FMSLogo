@@ -32,7 +32,6 @@ TSizeControl::TSizeControl(
    : TControl(Parent, ResId), 
      m_Size(Size)
    {
-   DisableTransfer();
    }
 
 //
@@ -58,20 +57,6 @@ void TSizeControl::SetSize(const TSize & NewSize)
    Invalidate();
    }
 
-UINT TSizeControl::Transfer(void *buffer, TTransferDirection direction)
-   {
-   if (direction == tdGetData)
-      {
-      memcpy(buffer, &m_Size, sizeof m_Size);
-      }
-   else if (direction == tdSetData)
-      {
-      memcpy(&m_Size, buffer, sizeof m_Size);
-      }
-
-   return sizeof m_Size;
-   }
-
 //
 // Notify parent of a CN_CLICKED event by sending a WM_COMMAND message
 //
@@ -87,37 +72,37 @@ END_RESPONSE_TABLE;
 
 //----------------------------------------------------------------------------
 
-
-static void DisableChildTransfer(TWindow *w, void *)
-   {
-   w->DisableTransfer();
-   }
-
 TSizeDialog::TSizeDialog(
    TWindow *       Parent, 
-   TSize   &       OutputSize
-   )
-   : TDialog(Parent, IDD_SETPENSIZE)
+   const TSize &   InitialSize
+   ) 
+   : TDialog(Parent, IDD_SETPENSIZE),
+     m_SizeBar(this, ID_SIZEBAR),
+     m_SelSize(this, ID_SELSIZE, InitialSize)
    {
+   static const struct {
+      UINT ChildId;
+      int  PenWidth;
+   } data[] = {
+      {ID_SIZE1, 1},
+      {ID_SIZE2, 2},
+      {ID_SIZE3, 3},
+      {ID_SIZE4, 4},
+      {ID_SIZE5, 6},
+      {ID_SIZE6, 8},
+      {ID_SIZE7, 16},
+      {ID_SIZE8, 32},
+   };
+
+   for (size_t i = 0; i < ARRAYSIZE(data); i++)
+      {
+      new TSizeControl(
+         this, 
+         data[i].ChildId,
+         TSize(data[i].PenWidth, data[i].PenWidth));
+      }
+
    SetCaption(LOCALIZED_SETPENSIZE);
-
-   new TSizeControl(this, ID_SIZE1, TSize(1, 1));
-   new TSizeControl(this, ID_SIZE2, TSize(2, 2));
-   new TSizeControl(this, ID_SIZE3, TSize(3, 3));
-   new TSizeControl(this, ID_SIZE4, TSize(4, 4));
-   new TSizeControl(this, ID_SIZE5, TSize(6, 6));
-   new TSizeControl(this, ID_SIZE6, TSize(8, 8));
-   new TSizeControl(this, ID_SIZE7, TSize(16, 16));
-   new TSizeControl(this, ID_SIZE8, TSize(32, 32));
-
-   m_SizeBar = new TScrollBar(this, ID_SIZEBAR);
-
-   ForEach(DisableChildTransfer);
-
-   m_SelSize = new TSizeControl(this, ID_SELSIZE, OutputSize);
-   m_SelSize->EnableTransfer();
-
-   TransferBuffer = &OutputSize;
    }
 
 // Handlers for each custom control
@@ -161,7 +146,7 @@ void TSizeDialog::SetSizeFmControl(UINT Id)
    if (control)
       {
       const TSize & size = control->GetSize();
-      m_SelSize->SetSize(size);
+      m_SelSize.SetSize(size);
       UpdateBars(size);
       }
    }
@@ -169,15 +154,15 @@ void TSizeDialog::SetSizeFmControl(UINT Id)
 // Update the selected size control with the current slider values
 void TSizeDialog::SetSizeFmSlider()
    {
-   int width = m_SizeBar->GetPosition();
-   m_SelSize->SetSize(TSize(width, width));
+   int width = m_SizeBar.GetPosition();
+   m_SelSize.SetSize(TSize(width, width));
    }
 
 void TSizeDialog::SetupWindow()
    {
    TDialog::SetupWindow();
 
-   UpdateBars(m_SelSize->GetSize());
+   UpdateBars(m_SelSize.GetSize());
 
    // set the text in all of the controls
    static const MENUITEM text[] = {
@@ -189,19 +174,15 @@ void TSizeDialog::SetupWindow()
    SetTextOnChildWindows(this, text, ARRAYSIZE(text));
    }
 
-void TSizeDialog::TransferData(TTransferDirection transferFlag)
-   {
-   TDialog::TransferData(transferFlag);
-   if (transferFlag == tdSetData) 
-      {
-      UpdateBars(m_SelSize->GetSize());
-      }
-   }
-
 void TSizeDialog::UpdateBars(const TSize & NewSize)
    {
-   m_SizeBar->SetRange(1, 32);
-   m_SizeBar->SetPosition(NewSize.X());
+   m_SizeBar.SetRange(1, 32);
+   m_SizeBar.SetPosition(NewSize.X());
+   }
+
+const TSize & TSizeDialog::GetSelectedSize() const
+   {
+   return m_SelSize.GetSize();
    }
 
 
