@@ -12,6 +12,7 @@ TO BITMODETEST.SMOKETEST
    ]
 
    ; verify that each bitmode does the right thing
+   SETSCREENCOLOR [255 255 255]
    CLEARSCREEN
    PENDOWN
 
