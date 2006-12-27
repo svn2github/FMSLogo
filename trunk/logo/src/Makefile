@@ -5,7 +5,7 @@
 
 fmslogo.exe : fmslogo-1033.exe
 	cp startup-1033.logoscript startup.logoscript
-	-cp ..\manual\logohelp-1033.chm ..\manual\logohelp.chm
+	-cp ..\manual\logohelp-1033.chm logohelp.chm
 	cp $< $@
 
 toenglish-1036.txt : make-translation-tables.pl
