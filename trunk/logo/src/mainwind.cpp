@@ -2416,10 +2416,14 @@ void TMainFrame::CMSetCommanderFont()
 
 void TMainFrame::CMSetPenSize()
    {
-   TSize theSize(get_pen_width(), get_pen_height());
+   TSize initialSize(get_pen_width(), get_pen_height());
 
-   if (TSizeDialog(this, theSize).Execute() == IDOK)
+   TSizeDialog sizePicker(this, initialSize);
+
+   if (sizePicker.Execute() == IDOK)
       {
+      const TSize & size = sizePicker.GetSelectedSize();
+
       // the user pressed OK, so run the SETPENSIZE instruction
       char setpensize[MAX_BUFFER_SIZE];
 
@@ -2434,7 +2438,7 @@ void TMainFrame::CMSetPenSize()
          logoInstruction,
          "%s %d",
          setpensize,
-         theSize.X());
+         size.X());
 
       RunLogoInstructionFromGui(logoInstruction);
       }
@@ -2451,7 +2455,7 @@ TMainFrame::ChooseColor(
 
    if (colorPicker.Execute() == IDOK)
       {
-      TColor color = colorPicker.GetSelectedColor();
+      const TColor & color = colorPicker.GetSelectedColor();
 
       // the user pressed "OK" so we change the color
       char upperCaseCommand[MAX_BUFFER_SIZE];
