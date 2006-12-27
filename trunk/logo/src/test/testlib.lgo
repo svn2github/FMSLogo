@@ -477,6 +477,18 @@ TO RUNPRINTTEST :printinstruction :expectedstring
 END
 BURY [RUNPRINTTEST]
 
+TO WRITEBINARYDATA :filename :data
+
+   LOCALMAKE "previouswriter WRITER
+
+   (OPENWRITE :filename LOCALETRUE)
+   SETWRITE :filename
+   TYPE :data
+   CLOSE :filename
+
+   SETWRITE :previouswriter
+END
+BURY [WRITEBINARYDATA]
 
 ; protect against loading the file twice
 if not name? "testlog [

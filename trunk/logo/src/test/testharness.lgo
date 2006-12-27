@@ -105,6 +105,10 @@ LOAD "zoom.lgo
 LOAD "bitblock.lgo
 LOAD "turtle.lgo
 LOAD "readword.lgo
+LOAD "readchar.lgo
+LOAD "readchars.lgo
+LOAD "bitmode.lgo
+LOAD "turtlemode.lgo
 
 TO TESTALL
 
@@ -155,11 +159,15 @@ TO TESTALL
   CONTROLFLOWTEST    ; from controlflow.lgo
   ACTIVEAREATEST     ; from activearea.lgo
   BITMAPTEST         ; from bitmap.lgo
+  BITMODETEST        ; from bitmode.lgo
   BITBLOCKTEST       ; from bitblock.lgo
   TURTLETEST         ; from turtle.lgo
+  TURTLEMODETEST     ; from turtlemode.lgo
   FORMTEST           ; from form.lgo
   PRINTTEST          ; from print.lgo
   READWORDTEST       ; from readword.lgo
+  READCHARTEST       ; from readchar.lgo
+  READCHARSTEST      ; from readchars.lgo
   EDITORTEST         ; from editor.lgo 
   WINDOWFILEEDITTEST ; from windowfileedit.lgo
   PORTTEST           ; from port.lgo
