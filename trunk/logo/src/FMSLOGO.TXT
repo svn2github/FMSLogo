@@ -21,6 +21,8 @@ Part I) Kit Description/Location (http://sourceforge.net/projects/fmslogo):
 Part II) New features/bugs fixed:
 
   * Added for 6.12.0,
+    o The colors in the Set Color dialog boxes now follow the order that
+      setting the color by index follows.
     o SETPENSIZE can now accept just a width input.
     o Fix bug #1605816: SETTURTLE behaves correctly when it inputs a floating
       point value.

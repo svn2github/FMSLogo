@@ -4,7 +4,7 @@
 class TColorControl : public TControl
    {
  public:
-   TColorControl(TWindow * Parent, int ResourceId, const TColor & Color);
+   TColorControl(TWindow * Parent, UINT ResourceId, const TColor & Color);
 
    void SetColor(const TColor & NewColor);
    const TColor & GetColor() const

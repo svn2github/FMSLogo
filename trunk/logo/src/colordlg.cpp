@@ -24,10 +24,10 @@
 const unsigned int CN_CLICKED = 1;     // color control notifications
 
 TColorControl::TColorControl(
-   TWindow      * Parent, 
-   int            ResourceId, 
+   TWindow      * Parent,
+   UINT           ResourceId,
    const TColor & Color
-   ) : TControl(Parent, ResourceId), 
+   ) : TControl(Parent, ResourceId),
        m_Color(Color)
    {
    }
@@ -94,15 +94,29 @@ TColorDialog::TColorDialog(
    m_ColorBar3(this, ID_COLORBAR3),
    m_SelColor(this, ID_SELCOLOR, InitialColor)
    {
-   new TColorControl(this, ID_COLOR1, TColor(000, 000, 000));
-   new TColorControl(this, ID_COLOR2, TColor(255, 255, 255));
-   new TColorControl(this, ID_COLOR3, TColor(255, 000, 000));
-   new TColorControl(this, ID_COLOR4, TColor(000, 255, 000));
-   new TColorControl(this, ID_COLOR5, TColor(000, 000, 255));
-   new TColorControl(this, ID_COLOR6, TColor(000, 255, 255));
-   new TColorControl(this, ID_COLOR7, TColor(255, 000, 255));
-   new TColorControl(this, ID_COLOR8, TColor(255, 255, 000));
 
+   static const UINT childIds[] = {
+      ID_COLOR1,
+      ID_COLOR2,
+      ID_COLOR3,
+      ID_COLOR4,
+      ID_COLOR5,
+      ID_COLOR6,
+      ID_COLOR7,
+      ID_COLOR8,
+   };
+
+   // initialize the child controls to match the color-by-index values
+   for (size_t i = 0; i < ARRAYSIZE(childIds); i++)
+      {
+      const TColor color(
+         GetRValue(colortable[i]),
+         GetGValue(colortable[i]),
+         GetBValue(colortable[i]));
+
+      new TColorControl(this, childIds[i], color);
+      }
+   
    SetCaption(Caption);
    }
 
