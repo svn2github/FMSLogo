@@ -23,6 +23,12 @@ TO READWORDTEST.SMOKETEST
   ; vertical bars allow the text to span newlines
   RUNPRINTTEST [SHOW "A\|B\nC\| ] "A\|B\nC\|
 
+  ; comments are ignored
+  RUNPRINTTEST [SHOW "AB\;CD ] "AB\;CD
+
+  ; vertical bars in comments are treated normally
+  RUNPRINTTEST [SHOW "A\;B\|C\nD\| ] "A\;B\|C\nD\|
+
   ; not having a closing vertical bar is like having an empty file
   RUNPRINTTEST [SHOW "A\|B\nC ]   []
 
@@ -35,7 +41,6 @@ TO READWORDTEST.BADINPUT
 
    RUNTOOMANYINPUTSTEST [(READWORD "toomany)]
    RUNTOOMANYINPUTSTEST [(RW       "toomany)]
-
 
 END
 
