@@ -598,7 +598,7 @@ void TMyCommandWindow::DoButtonReset(UINT)
    cap_strnzcpy(
       instruction,
       LOCALIZED_ALTERNATE_CLEARSCREEN, 
-      sizeof(instruction));
+      STRINGLENGTH(LOCALIZED_ALTERNATE_CLEARSCREEN));
 
    RunLogoInstructionFromGui(instruction);
 

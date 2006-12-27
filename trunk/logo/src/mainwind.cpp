@@ -2384,7 +2384,7 @@ void TMainFrame::CMSetFont()
       cap_strnzcpy(
          setlabelfont,
          LOCALIZED_ALTERNATE_SETLABELFONT,
-         sizeof(setlabelfont));
+         STRINGLENGTH(LOCALIZED_ALTERNATE_SETLABELFONT));
 
       char logoInstruction[512];
       sprintf(
@@ -2418,7 +2418,6 @@ void TMainFrame::CMSetPenSize()
    {
    TSize theSize(get_pen_width(), get_pen_height());
 
-
    if (TSizeDialog(this, theSize).Execute() == IDOK)
       {
       // the user pressed OK, so run the SETPENSIZE instruction
@@ -2427,16 +2426,15 @@ void TMainFrame::CMSetPenSize()
       cap_strnzcpy(
          setpensize,
          LOCALIZED_ALTERNATE_SETPENSIZE,
-         sizeof(setpensize));
+         STRINGLENGTH(LOCALIZED_ALTERNATE_SETPENSIZE));
 
       char logoInstruction[256];
 
       sprintf(
          logoInstruction,
-         "%s [%d %d]",
+         "%s %d",
          setpensize,
-         theSize.Y(), // REVISIT: why doesn't X work?
-         theSize.Y());
+         theSize.X());
 
       RunLogoInstructionFromGui(logoInstruction);
       }
@@ -2449,17 +2447,19 @@ TMainFrame::ChooseColor(
    const char *   LogoCommand
    )
    {
-   TColor color(InitialColor);
+   TColorDialog colorPicker(this, InitialColor, EnglishDescription);
 
-   if (TColorDialog(this, color, EnglishDescription).Execute() == IDOK)
+   if (colorPicker.Execute() == IDOK)
       {
+      TColor color = colorPicker.GetSelectedColor();
+
       // the user pressed "OK" so we change the color
       char upperCaseCommand[MAX_BUFFER_SIZE];
 
       cap_strnzcpy(
          upperCaseCommand,
          LogoCommand,
-         sizeof(upperCaseCommand));
+         strlen(LogoCommand));
 
       char logoInstruction[256];
 
