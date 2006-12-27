@@ -15,14 +15,14 @@
 <para>
 Creates a window.
 A window is used as the framework to which you add other window objects or controls (sometimes called widgets).
-You can add things such as buttons, scrollbars, listboxes, etc. to the window. 
+You can add things such as buttons, scrollbars, listboxes, etc. to the window.
 The window created by WINDOWCREATE is modeless, which means that it WINDOWCREATE returns before the window is destroyed.
 See <link linkend="windows-modal-vs-modeless">Modal vs. Modeless</link> for more details.
 </para>
 
 <para>
 The <parameter>parent</parameter> input is the name of the window that will own the new window.
-If this is the first window you are creating, use <userinput>"root</userinput> as the <parameter>parent</parameter> input. 
+If this is the first window you are creating, use <userinput>"root</userinput> as the <parameter>parent</parameter> input.
 </para>
 
 <para>
