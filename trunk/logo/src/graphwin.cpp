@@ -22,7 +22,6 @@
 #include "allwind.h"
 #include "htmlhelp.h"
 
-extern COLORREF colortable[];
 extern bool bIndexMode;
 
 extern int gbmBmpToGif(const char *BmpName, const char *GifName);

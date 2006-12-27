@@ -178,6 +178,7 @@ extern NODE *the_generation;
 extern mode_type   current_mode;
 extern bool        bPolyFlag;
 extern VERTEXLIST* ThePolygon;
+extern COLORREF    colortable[];
 
 struct Turtle
    {
