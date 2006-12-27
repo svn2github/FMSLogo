@@ -79,7 +79,7 @@ The following table details acceptable values and their meanings.
       <row>
         <entry>9</entry>
         <entry>Activates and displays the window.
-               If the window is minimized or maximized, Windows restores it to its original size and position. 
+               If the window is minimized or maximized, Windows restores it to its original size and position.
                An application should specify this flag when restoring a minimized window</entry>
       </row>
 
