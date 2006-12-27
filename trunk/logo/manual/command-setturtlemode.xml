@@ -79,7 +79,7 @@ SETXY -50 -50
 BITCOPY 101 101
 
 ; Use a simple copy for the turtle's mode
-BITMAPTURTLE 
+BITMAPTURTLE
 
 ; fill the screen with yellow
 SETSCREENCOLOR [255 255 0]
