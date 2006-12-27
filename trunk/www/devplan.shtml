@@ -68,6 +68,7 @@
 
          <li>
            <span class="devplan-item">Internationalize FMSLogo.</span>
+           <span class="devplan-update">Completed on 2006-12-26 (out-of-order).</span>
            <br>
            This will make it easier for third-parties to localize FMSLogo.
            Localization is a requirement for adoption within schools systems.</li>
