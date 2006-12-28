@@ -38,9 +38,6 @@
           If you have a Logo program to donate, post a link in <a href="http://sourceforge.net/forum/forum.php?forum_id=500407">the discussion forum</a>.
       </li>
 
-      <li>Improve the installer so that it can be used more easily by a limited user.
-          FMSLogo uses <a href="http://sourceforge.net/projects/nsis">NSIS</a> as its installation system.</li>
-
       <li>Translate FMSLogo to a new language.
           Each new translation of FMSLogo expands its potential audience.
           Translators are expected to translate the text in the GUI and the names of each command.
