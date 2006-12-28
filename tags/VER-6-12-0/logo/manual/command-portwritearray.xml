@@ -1,0 +1,50 @@
+<section id="command-portwritearray">
+    <title>PORTWRITEARRAY</title>
+<indexterm><primary>PORTWRITEARRAY</primary></indexterm>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>PORTWRITEARRAY</command> <parameter>count</parameter> <parameter>buffer</parameter></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+This command will write to the currently open port with the data in <parameter>buffer</parameter>, which must be an array of byte-sized integers.
+It will attempt to write <parameter>count</parameter> many characters to the port if possible.
+It will output the actual number of bytes written.
+</para>
+
+<para>
+If <parameter>count</parameter> is larger than the size of the <parameter>buffer</parameter> array, then
+then entire array will be written.
+</para>
+
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Example</term>
+<listitem>
+    <programlisting><userinput>PORTOPEN "com1
+PRINT SENTENCE [Sending...] PORTWRITEARRAY 3 LISTTOARRAY MAP [ASCII ?] ARRAYTOLIST LISTTOARRAY "at</userinput>
+Sending... 2
+<userinput>SHOW PORTWRITECHAR 13</userinput>
+1
+<userinput>WAIT 60
+MAKE "buff {0 0 0 0 0 0 0 0 0 0}
+PRINT SENTENCE [Receiving...] PORTREADARRAY 10 :buff</userinput>
+Receiving... 9
+<userinput>PRINT SENTENCE [Data Rx...] MAP [CHAR ?] REMOVE [] ARRAYTOLIST :buff</userinput>
+Data Rx... at | |
+O K |
+<userinput>PORTCLOSE</userinput>
+</programlisting>
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</section>

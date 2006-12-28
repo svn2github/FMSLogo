@@ -1,0 +1,17 @@
+LOAD "testlib.lgo
+
+.MACRO MACROTEST.OUTPUTNOTHING
+  ; a macro that outputs nothing (instead of a list)
+  ; This is a regression test for bug #1458661 
+  SHOW "|This is a macro that returns nothing (instead of a list)|
+END
+
+TO BUG1458661TEST
+  RUNEXPECTERRORTEST [MACROTEST.OUTPUTNOTHING] 29
+  REPORTTESTPASSED [Bug #1458661 is fixed.  Running a macro that returns nothing doesn't crash.]
+END
+
+TO MACROTEST
+   ; BUG1458661TEST
+END
+

@@ -1,0 +1,288 @@
+LOAD "testlib.lgo
+
+TO ~IGNOREME
+   MAKE "~IGNOREMEWASCALLED 1
+END
+
+
+TO ~CALLME
+   MAKE "~CALLMEWASCALLED 1
+END
+
+
+;
+; The next function contains some comments that
+; have given the tokenizer some difficulty.
+;
+; comments in the main scope should be ignored
+;
+TO DIFFICULTCOMMENTS1 ; comments here should be legal
+
+  ; a single vertical bar in a comment |
+
+  ; other special characters ?][!+}{"<>-
+
+  ; The Great Logo Atlas conformance test:\
+  comments can be continued to the next line when\
+  then end in a backslash
+
+  ; a comment with nothing after it
+  ;
+
+  ; regression test: tildes should be ignored ~ignoreme
+
+  OUTPUT ; a comment that continues~
+  1 ; comment here is okay
+END ; comments here should be legal
+
+TO DIFFICULTCOMMENTS2
+  ; try a comment immediatly followed by a tilde
+  OUTPUT ;~
+  2
+END
+
+TO LINECONTINUATION3
+
+  ; a multi-line continuation
+
+  OUTPUT ; commnet ~
+  ;~
+  ~
+~
+  3~
+  ; almost done~
+~
+
+END
+
+TO TILDAINLINE
+  ~CALLME ; yes, this is a function
+  OUTPUT 4
+END
+
+
+TO PARSETEST.FUNC
+
+   LOCALMAKE "~IGNOREMEWASCALLED 0
+   LOCALMAKE "~CALLMEWASCALLED   0
+
+   SIMPLEREPORTTEST [DIFFICULTCOMMENTS1]  1
+   SIMPLEREPORTTEST [DIFFICULTCOMMENTS2]  2
+   SIMPLEREPORTTEST [LINECONTINUATION3]   3
+   SIMPLEREPORTTEST [TILDAINLINE]         4
+
+   SIMPLEREPORTTEST [:~IGNOREMEWASCALLED] 0
+   SIMPLEREPORTTEST [:~CALLMEWASCALLED]   1
+END
+
+TO PARSETEST.NUMBER
+
+   SIMPLEREPORTTEST [-0]     0
+   SIMPLEREPORTTEST [-0.0]   0
+   SIMPLEREPORTTEST [.00]    0
+   SIMPLEREPORTTEST [0e10]   0
+   SIMPLEREPORTTEST [0e+10]  0
+   SIMPLEREPORTTEST [0e-10]  0
+
+   SIMPLEREPORTTEST [00012]  12
+
+   SIMPLEREPORTTEST [1e3]      1000
+   SIMPLEREPORTTEST [1.234e3]  1234
+   SIMPLEREPORTTEST [1.234e+3] 1234
+   SIMPLEREPORTTEST [1.23e-1]  0.123
+
+   SIMPLEREPORTTEST [.5]        0.5
+   SIMPLEREPORTTEST [-.5]      -0.5
+   SIMPLEREPORTTEST [0.50000]   0.5
+
+   ; A number can be up to 49 digits long
+   ;                 0000000001111111111122222222233333333334444444444
+   ;                 1234567890123456789012345678901234567890123456789
+   SIMPLEREPORTTEST [5000000000000000000000000000000000000000000000000] 5e48
+
+   ; these can't be numbers -- they have too many e's
+   RUNIDONTKNOWHOWTOTEST [1e1e]
+   RUNIDONTKNOWHOWTOTEST [1e1.5]
+
+   ; these can't be numbers -- they have too many dots
+   RUNIDONTKNOWHOWTOTEST [1.1.]
+   RUNIDONTKNOWHOWTOTEST [1..]
+   RUNIDONTKNOWHOWTOTEST [.1.]
+
+   ; this can't be a number -- it has 50 digits in it (arbitrary cutoff)
+   RUNIDONTKNOWHOWTOTEST [50000000000000000000000000000000000000000000000000]
+
+END
+
+
+TO PARSETEST.WORD
+   SIMPLEREPORTTEST ["WORD]   "word
+   SIMPLEREPORTTEST ["|A B|]  "A\ B
+END
+
+TO PARSETEST.SYMBOLSOFINCLUSION
+
+   ; bug #1583317 
+   SIMPLEREPORTTEST [ ITEM 1 [ \{ ] ]  "\{
+   SIMPLEREPORTTEST [ ITEM 1 [ \} ] ]  "\}
+   SIMPLEREPORTTEST [ ITEM 1 [ \] ] ]  "\]
+   SIMPLEREPORTTEST [ ITEM 1 [ \[ ] ]  "\[
+   SIMPLEREPORTTEST [ ITEM 1 [ \| ] ]  "\|
+
+   SIMPLEREPORTTEST [    [||]     ]  []
+
+   ; bug #1583317 
+   SIMPLEREPORTTEST [ITEM 1 { \[ }]  "\[
+   SIMPLEREPORTTEST [ITEM 1 { \] }]  "\]
+   SIMPLEREPORTTEST [ITEM 1 { \{ }]  "\{
+   SIMPLEREPORTTEST [ITEM 1 { \} }]  "\}
+   SIMPLEREPORTTEST [ITEM 1 { \| }]  "\|
+
+   SIMPLEREPORTTEST [ITEM 1 ["]]  ""
+   SIMPLEREPORTTEST [ITEM 1 {"}]  ""
+
+END
+
+TO PARSETEST.EXPRESSION
+
+   RUNNOTENOUGHINPUTSTEST [ 5**5 ] ; bug #1395740
+   RUNNOTENOUGHINPUTSTEST [ *5   ]
+   RUNNOTENOUGHINPUTSTEST [ 5*   ] ; bug #1518558 
+
+   RUNNOTENOUGHINPUTSTEST [ -    ] ; bug #1443731 
+
+   RUNNOTENOUGHINPUTSTEST [ MODULO 100 * 100 ] ; argument gathering halts at an infix operation
+END
+
+TO PARSETEST.INFIXEXPRESSION
+   SIMPLEREPORTTEST [ (1 +  2) * 3 ] 9
+   SIMPLEREPORTTEST [  1 + (2 * 3) ] 7
+   SIMPLEREPORTTEST [  1 +  2 * 3  ] 7
+
+   SIMPLEREPORTTEST [ (2 *  3) + 4 ] 10
+   SIMPLEREPORTTEST [  2 * (3 + 4) ] 14
+   SIMPLEREPORTTEST [  2 *  3 + 4  ] 10
+
+   FAILIFNOTTRUE  [ 1 + 1 = 2 ]
+   FAILIFNOTTRUE  [ 2 = 1 + 1 ]
+   FAILIFNOTFALSE [ 2 = 1 = 1 ]
+END
+
+TO PARSETEST.MANYINPUTS
+
+   ; bug #1539716 (this used to crash)
+   LOCALMAKE "longsequence (SENTENCE "\( "SUM ISEQ 1 100000 "\))
+   MAKE "sum RUN :longsequence 
+
+   SIMPLEREPORTTEST [ :sum ] 5000050000
+   REPORTTESTPASSED [|Bug #1539716 is fixed; running an expression with a long list of inputs didn't crash.|]
+END
+
+TO PARSETEST.MANYNESTEDCALLS
+
+   ; bug #1552426 (this crashes)
+   LOCALMAKE "longsequence [0]
+   REPEAT 100000 [ MAKE "longsequence FPUT "SUM FPUT 1 :longsequence ]
+   LOCALMAKE "sum RUN :longsequence
+
+   SIMPLEREPORTTEST :sum 100000
+   REPORTTESTPASSED [|Bug #1552426 is fixed; running a long list of deeply nested expressions didn't crash.|]
+END
+
+TO PARSETEST.LONGINSTRUCTIONLINEWITHCATCH
+
+   ; Create an instruction list line that's a repeated application of 
+   ;   MAKE "value :value + 1
+   ;
+   LOCALMAKE "instructions []
+   REPEAT 100000 [ MAKE "instructions FPUT "MAKE FPUT ""value FPUT ":value FPUT "+ FPUT 1 :instructions ]
+
+   ; Run the long instruction list inside a catch block
+   LOCALMAKE "value 0
+   CATCH "ERROR [ RUN :instructions ]
+
+   ; test that the the instructions actually ran
+   SIMPLEREPORTTEST :value 100000
+   REPORTTESTPASSED [|Bug #1565788 is fixed; running a long list of expressions didn't crash.|]
+END
+
+TO PARSETEST.LONGINSTRUCTIONLINE
+
+   ; Create an instruction list line that's a repeated application of 
+   ;   MAKE "value :value + 1
+   ;
+   LOCALMAKE "instructions []
+   REPEAT 100000 [ MAKE "instructions FPUT "MAKE FPUT ""value FPUT ":value FPUT "+ FPUT 1 :instructions ]
+
+   ; Run the long instruction list with no catch block
+   LOCALMAKE "value 0
+   RUN :instructions
+
+   ; test that the the instructions actually ran
+   SIMPLEREPORTTEST :value 100000
+   REPORTTESTPASSED [|Bug #1565788 is fixed; running a long list of expressions didn't crash.|]
+END
+
+TO PARSETEST.DEEPLYNESTEDINFIXEXPRESSION
+
+   ; bug #1566166 (this crashes)
+
+   ; Create and RUN an instruction list of the form
+   ;   1 + 1 + 1 ... + 1 + 0
+   ;
+   LOCALMAKE "instructions [0]
+   REPEAT 100000 [ MAKE "instructions FPUT 1 FPUT "+ :instructions ]
+   LOCALMAKE "sum RUN :instructions
+
+   SIMPLEREPORTTEST :sum 100000
+   REPORTTESTPASSED [|Bug #1566166 is fixed; running a long list of infix expressions didn't crash.|]
+END
+
+
+TO PARSETEST.DEEPLYPARENTHESIZEDEXPRESSION
+
+   ; bug #1568610 (this crashes)
+
+   ; Create and RUN an instruction list of the form
+   ;   ((( ... 0 ... )))
+   ;
+   LOCALMAKE "instructions []
+   REPEAT 100000 [ MAKE "instructions FPUT "\) :instructions ]
+   MAKE "instructions FPUT 123 :instructions 
+   REPEAT 100000 [ MAKE "instructions FPUT "\( :instructions ]
+   LOCALMAKE "sum RUN :instructions
+
+   SIMPLEREPORTTEST :sum 123
+   REPORTTESTPASSED [|Bug #1568610 is fixed; running a deeply parenthesized expression didn't crash.|]
+END
+
+TO PARSETEST.LOTSOFNEGATIONOPERATORS
+
+   ; bug #1568615 (this crashes)
+
+   ; Create and RUN an instruction list of the form
+   ;   ------ ... -1
+   ;
+   LOCALMAKE "instructions [1]
+   REPEAT 100000 [ MAKE "instructions FPUT "- :instructions ]
+   LOCALMAKE "value RUN :instructions
+
+   SIMPLEREPORTTEST :value 1
+   REPORTTESTPASSED [|Bug #1568615  is fixed; running a long chain of minus expressions didn't crash.|]
+END
+
+TO PARSETEST
+   PARSETEST.NUMBER
+   PARSETEST.WORD
+   PARSETEST.FUNC
+   PARSETEST.SYMBOLSOFINCLUSION
+   PARSETEST.EXPRESSION
+   PARSETEST.INFIXEXPRESSION
+   PARSETEST.MANYINPUTS
+   PARSETEST.DEEPLYNESTEDINFIXEXPRESSION
+   PARSETEST.LONGINSTRUCTIONLINEWITHCATCH
+   PARSETEST.LONGINSTRUCTIONLINE
+   ;PARSETEST.DEEPLYPARENTHESIZEDEXPRESSION
+   ;PARSETEST.MANYNESTEDCALLS
+   ;PARSETEST.LOTSOFNEGATIONOPERATORS
+END

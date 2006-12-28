@@ -1,0 +1,56 @@
+catch "error [ copydef "difference       "différence         ]
+catch "error [ copydef "ecrivain         "écrivain           ]
+catch "error [ copydef "fenetre          "fenêtre            ]
+catch "error [ copydef "etiquette        "étiquette          ]
+catch "error [ copydef "precede?         "précede?           ]
+catch "error [ copydef "precedep         "précedep           ]
+catch "error [ copydef "procedure?       "procédure?         ]
+catch "error [ copydef "procedurep       "procédurep         ]
+catch "error [ copydef "ecris            "écris              ]
+catch "error [ copydef "ec               "éc                 ]
+catch "error [ copydef "ramene           "ramène             ]
+catch "error [ copydef "ramenebmp        "ramènebmp          ]
+catch "error [ copydef "repete           "repétè             ]
+catch "error [ copydef "tailleramenebmp  "tailleramènebmp    ]
+catch "error [ copydef "repertiores      "répertoires        ]
+catch "error [ copydef "ve               "vé                 ]
+catch "error [ copydef "videecran        "videécran          ]
+
+; preload the library routines so we can copydef them
+catch "error [(dir "toomany)]
+catch "error [ copydef "catalogue "dir ]
+
+catch "error [(abs)]
+catch "error [ copydef "absolue   "abs ]
+
+catch "error [(while)]
+catch "error [ copydef "tantque   "while ]
+
+catch "error [(for)]
+catch "error [ copydef "repetepour "for ]
+catch "error [ copydef "repétèpour "for ]
+
+
+catch "error [(until)]
+catch "error [ copydef "jusque "until ]
+
+catch "error [(do.until)]
+catch "error [ copydef "fairejusque "do.until ]
+
+catch "error [(do.while)]
+catch "error [ copydef "fairetanque "do.while ]
+
+
+catch "error [(ern) ]
+catch "error [ copydef "effacevarible "ern ]
+
+
+catch "error [(localmake)]
+catch "error [ copydef "donnelocale "localmake ]
+
+
+catch "error [(circle)]
+catch "error [ copydef "cercle      "circle    ]
+
+catch "error [(circle2)]
+catch "error [ copydef "cercle2     "circle2   ]

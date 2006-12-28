@@ -1,0 +1,6 @@
+COMPILER OPTIONS
+
+No Dead Code Elimination on WIN32 (Causes No Dialog drawn)
+No Global Register Allocation on WIN32 (Causes Demo to fail)
+No Out of Line Inline on Dynamic link WIN32 (causes links to fail)
+No Long WIN32 Align (Causes Replace in Edit to Fail)

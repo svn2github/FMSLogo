@@ -1,0 +1,458 @@
+LOAD "testlib.lgo
+
+TO SAMPLEPROC  :a  :b
+  PRINT :a ; print
+  SHOW  :b ; show
+END
+
+TO PROCEDURETEST.COMPLEXPROC :a :b [:c 1] [:d SUM 1 2] [:e] 2
+  PRINT :a ; print
+  SHOW  :b ; show
+
+  OUTPUT SUM :c :d ; output
+END
+
+; Creates a local variable named varname (which must be a string).
+; It assigns a value to the variable,
+; then outputs the value of the variable.
+TO LOCALVARTEST :varname :value
+
+  ; create the local variable
+  LOCAL :varname
+
+  ; assign it a value
+  MAKE  :varname :value
+
+  ; return the value of :varname (evaluated twice)
+  OUTPUT RUN (WORD ": :varname)
+END
+
+TO BUG1438863TEST
+   ; bug #1438863 is that if you erase a procedure while in the middle
+   ; of calling it and you have a call to a non-primitive afterwards,
+   ; then FMSLogo crashes.
+   ERASE [BUG1438863TEST]
+
+   ; catch the "I don't know how to BUG1438863TEST.NONEXISTINGPROC" error
+   CATCH "ERROR [BUG1438863TEST.NONEXISTINGPROC]
+
+   REPORTTESTPASSED ["|Bug #1438863 is fixed; erasing a procedure in the middle of running it does not crash|]
+END
+
+TO DEFINETEST.REDEFINEPROCINERASEDPROC
+
+   ; This test makes sure that the lines in an erased procedure are 
+   ; properly re-treeified so that it can gives the proper number of inputs
+   ; to a procedure that gets redefined.
+
+   ERASE [DEFINETEST.REDEFINEPROCINERASEDPROC]
+
+   ; start off outputing 123 and taking no inputs
+   DEFINE "DEFINETEST.REDEFINEDPROC [[] [OUTPUT 321] ]
+
+   ; now make the procedure take an input
+   DEFINE "DEFINETEST.REDEFINEDPROC [[a] [OUTPUT :a] ]
+
+   ; should use the one-input definition
+   SIMPLEREPORTTEST [ DEFINETEST.REDEFINEDPROC 123 ] 123
+
+   ERASE "DEFINETEST.REDEFINEDPROC
+END
+
+TO DEFINETEST.SMOKETEST
+
+   DEFINE "ECHO [[a] [output :a] ]
+   SIMPLEREPORTTEST [ECHO "input] "input
+   FAILIFNOTTRUE [DEFINEDP "ECHO]
+   FAILIFNOTTRUE [DEFINED? "ECHO]
+
+   ; this should be legal
+   TRACEINSTRUCTION [ DEFINE "DONOTHING [[]] ]
+   FAILIFNOTTRUE    [ DEFINED? "DONOTHING]
+   TRACEINSTRUCTION [ DONOTHING ]
+
+END
+
+TO DEFINETEST.BADINPUT
+
+   RUNNOTENOUGHINPUTSTEST [(DEFINE "BADPROCEDURE)]
+   RUNTOOMANYINPUTSTEST   [(DEFINE "BADPROCEDURE [[a] [output :a]] "toomany)]
+
+   RUNBADINPUTTEST [DEFINE [BADPROCEDURE] [[a] [output :a]]]
+   RUNBADINPUTTEST [DEFINE {BADPROCEDURE} [[a] [output :a]]]
+   RUNBADINPUTTEST [DEFINE "BADPROCEDURE  "badtext         ]
+   RUNBADINPUTTEST [DEFINE "BADPROCEDURE  []               ]
+   RUNBADINPUTTEST [DEFINE "BADPROCEDURE  {[a] [output :a]}]
+   RUNBADINPUTTEST [DEFINE "BADPROCEDURE  ["a  [output :a]]]
+   RUNBADINPUTTEST [DEFINE "BADPROCEDURE  [[a] {output :a}]]
+   RUNBADINPUTTEST [DEFINE "BADPROCEDURE  [[a]  output :a ]]
+
+   ; try to force a memory leak on error
+   RUNBADINPUTTEST [DEFINE "BADPROCEDURE [{a b} [FORWARD 10]] ]
+   RUNBADINPUTTEST [DEFINE "BADPROCEDURE [[a b] [FORWARD 10] BADINPUT [FORWARD 10]] ]
+
+   ; make sure that none of the above defined a procedure
+   FAILIFNOTFALSE [DEFINED? "BADPROCEDURE]
+
+   ; Regression test for bug #1520950 (this used to crash)
+   RUNBADINPUTTEST [DEFINE "BUG1520950 [[] APPLY [OUTPUT ?] [3]] BUG1520950 ]
+   FAILIFNOTFALSE  [DEFINED? "BUG1520950]
+
+END
+
+TO DEFINETEST.BODYHASEMPTYLINES
+
+   ; this is a regression test for bug #1395737 
+   LOCAL [linewascalled]
+
+   TRACEINSTRUCTION [ MAKE "linewascalled 0 ]
+   TRACEINSTRUCTION [ DEFINE "BODYHASEMPTYLINES [[] [] [MAKE "linewascalled 1] [] ] ]
+   TRACEINSTRUCTION [ BODYHASEMPTYLINES ]
+   SIMPLEREPORTTEST [:linewascalled] 1
+END
+
+TO DEFINETEST
+  DEFINETEST.SMOKETEST
+  DEFINETEST.BODYHASEMPTYLINES
+  DEFINETEST.REDEFINEPROCINERASEDPROC
+  DEFINETEST.BADINPUT
+END
+
+TO TEXTTEST.SMOKETEST
+
+  SIMPLEREPORTTEST ~
+    [TEXT "SAMPLEPROC] ~
+    [[a b] [PRINT :a] [SHOW :b]]
+
+  SIMPLEREPORTTEST ~
+    [TEXT "PROCEDURETEST.COMPLEXPROC] ~
+    [[a b [c 1] [d SUM 1 2] [e] 2] [PRINT :a] [SHOW :b] [OUTPUT SUM :c :d]]
+
+END
+
+TO TEXTTEST.BADINPUT
+
+  RUNNOTENOUGHINPUTSTEST              [(TEXT)]
+  RUNNONRECOVERABLEIDONTKNOWHOWTOTEST [(TEXT "nonexistent)]
+  RUNBADINPUTTEST                     [(TEXT [sampleproc])]
+  RUNBADINPUTTEST                     [(TEXT {sampleproc})]
+  RUNTOOMANYINPUTSTEST                [(TEXT "sampleproc  "toomany)]
+
+END
+
+TO TEXTTEST
+  TEXTTEST.SMOKETEST
+  TEXTTEST.BADINPUT
+END
+
+
+TO FULLTEXTTEST.SMOKETEST
+
+  LOCAL "fulltext
+
+  TRACEINSTRUCTION [ MAKE "fulltext FULLTEXT "SAMPLEPROC]
+  FAILIFNOTTRUE    [ LIST?  :fulltext]
+  SIMPLEREPORTTEST [ ITEM 1 :fulltext] "|TO SAMPLEPROC  :a  :b|
+  SIMPLEREPORTTEST [ ITEM 2 :fulltext] "|  PRINT :a ; print| 
+  SIMPLEREPORTTEST [ ITEM 3 :fulltext] "|  SHOW  :b ; show| 
+  SIMPLEREPORTTEST [ ITEM 4 :fulltext] "END
+  SIMPLEREPORTTEST [ COUNT  :fulltext] 4
+
+  TRACEINSTRUCTION [ MAKE "fulltext FULLTEXT "PROCEDURETEST.COMPLEXPROC]
+  FAILIFNOTTRUE    [ LIST?  :fulltext]
+  SIMPLEREPORTTEST [ ITEM 1 :fulltext] "|TO PROCEDURETEST.COMPLEXPROC :a :b [:c 1] [:d SUM 1 2] [:e] 2|
+  SIMPLEREPORTTEST [ ITEM 2 :fulltext] "|  PRINT :a ; print|
+  SIMPLEREPORTTEST [ ITEM 3 :fulltext] "|  SHOW  :b ; show|
+  SIMPLEREPORTTEST [ ITEM 4 :fulltext] "||
+  SIMPLEREPORTTEST [ ITEM 5 :fulltext] "|  OUTPUT SUM :c :d ; output|
+  SIMPLEREPORTTEST [ ITEM 6 :fulltext] "END
+  SIMPLEREPORTTEST [ COUNT  :fulltext] 6
+
+END
+
+TO FULLTEXTTEST.BADINPUT
+
+   RUNNOTENOUGHINPUTSTEST              [(FULLTEXT)]
+   RUNNONRECOVERABLEIDONTKNOWHOWTOTEST [(FULLTEXT "nonexistent)]
+   RUNBADINPUTTEST                     [(FULLTEXT [sampleproc])]
+   RUNBADINPUTTEST                     [(FULLTEXT {sampleproc})]
+   RUNTOOMANYINPUTSTEST                [(FULLTEXT "sampleproc  "toomany)]
+
+END
+
+
+TO FULLTEXTTEST
+
+  FULLTEXTTEST.SMOKETEST
+  FULLTEXTTEST.BADINPUT
+
+END
+
+TO POTEST.SMOKETEST
+
+   LOCALMAKE "namepvariable 0
+
+   ; Just exercise the PO routines for now.
+   ; we'll figure out how to test its output later
+   OPENWRITE "po.dump.txt
+   LOCALMAKE "previouswriter WRITER
+   SETWRITE "po.dump.txt
+
+   TRACEINSTRUCTION       [PO CONTENTS    ]
+   TRACEINSTRUCTION       [PO NAMES       ]
+   TRACEINSTRUCTION       [PO PROCEDURES  ]
+   TRACEINSTRUCTION       [PO BURIED      ]
+   TRACEINSTRUCTION       [PO PLISTS      ]
+   TRACEINSTRUCTION       [PO []          ]
+
+   TRACEINSTRUCTION [POALL]
+   TRACEINSTRUCTION [POPS]
+   TRACEINSTRUCTION [PONS]
+   TRACEINSTRUCTION [POPLS]
+
+   TRACEINSTRUCTION [PON "namepvariable  ]
+   TRACEINSTRUCTION [PON [namepvariable] ]
+
+   ; create some property lists for testing POPL
+   PPROP "wordtonumber "one 1
+   PPROP "wordtonumber "two 2
+   PPROP "numbertoword 1 "one
+   PPROP "numbertoword 2 "two
+   POPL "wordtonumber
+   POPL "numbertoword
+   POPL [wordtonumber numbertoword nonexistent]
+
+   ; remove the property lists
+   REMPROP "wordtonumber "one
+   REMPROP "wordtonumber "two
+   REMPROP "numbertoword 1
+   REMPROP "numbertoword 2
+   POPL "wordtonumber
+   POPL "numbertoword
+   POPL [wordtonumber numbertoword nonexistent]
+
+   RUNNOTENOUGHINPUTSTEST [(POPL)]
+   RUNTOOMANYINPUTSTEST   [(POPL "numbertoword "toomany)]
+
+   POT CONTENTS
+   POT NAMES
+   POT PROCEDURES
+   POT BURIED
+   POT PLISTS
+   POT []
+
+   POTS
+
+   SETWRITE :previouswriter
+   CLOSE "po.dump.txt
+   ERASEFILE "po.dump.txt
+
+
+   ; Unlike PRINT and SHOW, the PO primitives print out "backslashed" 
+   ; strings, which means they retain meta-characters like @.
+   LOCALMAKE "noindex       {1 2 3}
+   LOCALMAKE "positiveindex {1 2 3}@10
+   LOCALMAKE "negativeindex {1 2 3}@-10
+   LOCALMAKE "oneindex      {1 2 3}@1
+
+   RUNPRINTTEST [PON [noindex]        ] "|Make "noindex {1 2 3}|
+   RUNPRINTTEST [PON [positiveindex]  ] "|Make "positiveindex {1 2 3}@10| 
+   RUNPRINTTEST [PON [negativeindex]  ] "|Make "negativeindex {1 2 3}@-10| 
+   RUNPRINTTEST [PON [oneindex]       ] "|Make "oneindex {1 2 3}| 
+
+END
+
+TO POTEST.BADINPUT
+
+   RUNNOTENOUGHINPUTSTEST               [(PO)]
+   RUNTOOMANYINPUTSTEST                 [(PO [[][][]] "toomany)]
+   RUNISAPRIMITIVETEST                  [PO [[forward]     []             []]]
+   RUNNONRECOVERABLEIDONTKNOWHOWTOTEST  [PO [[nonexistent] []             []]]
+   RUNHASNOVALUETEST                    [PO [[]            [nonexistent]  []]]
+   RUNBADINPUTTEST                      [PO {PROCEDURETEST}]
+   RUNBADINPUTTEST                      [PO [[PROCEDURETEST][namepvariable]{c}] ]
+   RUNBADINPUTTEST                      [PO [PROCEDURETEST SAMPLEPROC {c}]   ]
+   RUNBADINPUTTEST                      [PO [[PROCEDURETEST SAMPLEPROC {c}]]]
+   RUNBADINPUTTEST                      [PO [[PROCEDURETEST][namepvariable][c][d]]]
+   RUNBADINPUTTEST                      [PO [[[PROCEDURETEST]]]]
+
+   RUNTOOMANYINPUTSTEST [(POALL "toomany)]
+   RUNTOOMANYINPUTSTEST [(POPS  "toomany)]
+   RUNTOOMANYINPUTSTEST [(POPLS "toomany)]
+   RUNTOOMANYINPUTSTEST [(POTS  "toomany)]
+
+   RUNNOTENOUGHINPUTSTEST [(PON)]
+   RUNBADINPUTTEST        [PON "sampleproc]
+   RUNTOOMANYINPUTSTEST   [(PON "too "many)]
+   RUNBADINPUTTEST        [PON {a b}]
+
+   RUNNOTENOUGHINPUTSTEST [(POT)]
+   RUNTOOMANYINPUTSTEST   [(POT "pot "pots)]
+   RUNBADINPUTTEST        [POT "forward]
+   RUNBADINPUTTEST        [POT "nonexistent]
+   RUNBADINPUTTEST        [POT [nonexistent]]
+   RUNBADINPUTTEST        [POT {a}]
+END
+
+TO POTEST
+   POTEST.SMOKETEST
+   POTEST.BADINPUT
+END
+
+TO PROCEDURETEST.ÀCÇÊNT
+  OUTPUT 3333
+END
+
+TO PROCEDURETEST
+
+   ; test that we can call procedures with accent marks
+   ; in their names in both uppercase, lowercase, and mixed case.
+   SIMPLEREPORTTEST [PROCEDURETEST.ÀCÇÊNT] 3333
+   SIMPLEREPORTTEST [proceduretest.àcçênt] 3333
+   SIMPLEREPORTTEST [ProcedureTest.Àcçênt] 3333
+
+   ; test TEXT
+   TEXTTEST
+
+   ; test FULLTEXT
+   FULLTEXTTEST
+
+   ; test DEFINEDP
+   FAILIFNOTFALSE [DEFINEDP "nonexistent]
+   FAILIFNOTFALSE [DEFINED? "nonexistent]
+   FAILIFNOTFALSE [DEFINED? "FORWARD]
+   FAILIFNOTTRUE  [DEFINED? "SAMPLEPROC]
+   FAILIFNOTTRUE  [DEFINED? "sampleproc]
+   FAILIFNOTFALSE [DEFINED? "||]
+   RUNNOTENOUGHINPUTSTEST [(DEFINED?)]
+   RUNBADINPUTTEST        [(DEFINED? {a})]
+   RUNBADINPUTTEST        [(DEFINED? [])]
+   RUNTOOMANYINPUTSTEST   [(DEFINED? "sampleproc "toomany)]
+
+   ; test PROCEDUREP
+   FAILIFNOTFALSE [PROCEDUREP "nonexistent]
+   FAILIFNOTFALSE [PROCEDURE? "nonexistent]
+   FAILIFNOTTRUE  [PROCEDURE? "FORWARD]
+   FAILIFNOTTRUE  [PROCEDURE? "SAMPLEPROC]
+   FAILIFNOTTRUE  [PROCEDURE? "sampleproc]
+   FAILIFNOTFALSE [PROCEDURE? "||]
+   RUNNOTENOUGHINPUTSTEST [(PROCEDURE?)]
+   RUNBADINPUTTEST        [(PROCEDURE? {a})]
+   RUNBADINPUTTEST        [(PROCEDURE? [])]
+   RUNTOOMANYINPUTSTEST   [(PROCEDURE? "sampleproc "toomany)]
+
+   ; test NAMEP
+   LOCALMAKE "namepvariable 0
+   FAILIFNOTFALSE [NAMEP "nonexistent]
+   FAILIFNOTFALSE [NAME? "nonexistent]
+   FAILIFNOTFALSE [NAME? "FORWARD]
+   FAILIFNOTFALSE [NAME? "||]
+   FAILIFNOTTRUE  [NAME? "namepvariable]
+   FAILIFNOTTRUE  [NAME? "NAMEPVARIABLE]
+   RUNNOTENOUGHINPUTSTEST [(NAME?)]
+   RUNBADINPUTTEST        [(NAME? {a})]
+   RUNBADINPUTTEST        [(NAME? [])]
+   RUNTOOMANYINPUTSTEST   [(NAME? "namepvariable "toomany)]
+
+   ; test PRIMITIVEP
+   FAILIFNOTFALSE [PRIMITIVEP "nonexistent]
+   FAILIFNOTFALSE [PRIMITIVE? "nonexistent]
+   FAILIFNOTTRUE  [PRIMITIVE? "FORWARD]
+   FAILIFNOTTRUE  [PRIMITIVE? "FD]
+   FAILIFNOTFALSE [PRIMITIVE? "||]
+   FAILIFNOTFALSE [PRIMITIVE? "namepvariable]
+   FAILIFNOTFALSE [PRIMITIVE? "sampleproc]
+   RUNNOTENOUGHINPUTSTEST [(PRIMITIVE?)]
+   RUNBADINPUTTEST        [(PRIMITIVE? {a})]
+   RUNBADINPUTTEST        [(PRIMITIVE? [])]
+   RUNTOOMANYINPUTSTEST   [(PRIMITIVE? "namepvariable "toomany)]
+
+   ; test MACROP
+   .DEFMACRO "mymacro [[a b] [print :a] [print :b]]
+   FAILIFNOTTRUE  [MACROP "mymacro]
+   FAILIFNOTTRUE  [MACRO? "mymacro]
+   FAILIFNOTFALSE [MACRO? "FORWARD]
+   FAILIFNOTFALSE [MACRO? "FD]
+   FAILIFNOTFALSE [MACRO? "||]
+   FAILIFNOTFALSE [MACRO? "namepvariable]
+   FAILIFNOTFALSE [MACRO? "sampleproc]
+   RUNNOTENOUGHINPUTSTEST [(MACRO?)]
+   RUNBADINPUTTEST        [(MACRO? {a})]
+   RUNBADINPUTTEST        [(MACRO? [])]
+   RUNTOOMANYINPUTSTEST   [(MACRO? "mymacro "toomany)]
+
+
+   ; test DEFINE
+   DEFINETEST
+
+   ; test LOCAL
+   SIMPLEREPORTTEST [LOCALVARTEST "unknownlocalvar 42] 42
+   FAILIFNOTFALSE [NAME? "unknownlocalvar]
+
+   ; local values start off unbound
+   LOCAL "thisvariableisunbound
+   RUNHASNOVALUETEST [:thisvariableisunbound]
+
+   MAKE  "thisvariableisunbound 123
+   LOCAL "thisvariableisunbound
+   RUNHASNOVALUETEST [:thisvariableisunbound]
+
+   ; silly, but legal
+   LOCAL [10 11]
+   MAKE "10 "ten
+   MAKE "11 "eleven
+   SIMPLEREPORTTEST [:10] "ten
+   SIMPLEREPORTTEST [:11] "eleven
+
+   (LOCAL "12 "13)
+   MAKE "12 "twelve
+   MAKE "13 "eleven
+   SIMPLEREPORTTEST [:10] "ten
+   SIMPLEREPORTTEST [:11] "eleven
+
+   LOCAL []
+   RUNNOTENOUGHINPUTSTEST [(LOCAL)]
+   RUNBADINPUTTEST        [LOCAL {a}] ; bug #1355761 
+
+
+   ; test LOCALMAKE
+   LOCALMAKE "mylocalvarname 32
+   SIMPLEREPORTTEST [LOCALVARTEST "mylocalvarname 42]  42
+   SIMPLEREPORTTEST [:mylocalvarname]                  32
+   RUNNOTENOUGHINPUTSTEST [(LOCALMAKE)]
+
+   ; Just exercise CONTENTS for now.
+   ; we'll figure out how to test its output later
+   IGNORE CONTENTS
+   RUNTOOMANYINPUTSTEST [(CONTENTS "toomany)]
+
+   ; test PROCEDURES
+   SIMPLEREPORTTEST [PROCEDURES] ITEM 1 CONTENTS
+   RUNTOOMANYINPUTSTEST [(PROCEDURES "toomany)]
+
+   ; test NAMES
+
+   ; Create some variables so that CONTENTS will match 
+   ; NAMES when run inside SIMPLREPOTTEST
+   LOCALMAKE "instruction    []
+   LOCALMAKE "expectedresult []
+   SIMPLEREPORTTEST [NAMES] (LIST [] ITEM 2 CONTENTS)
+   RUNTOOMANYINPUTSTEST [(NAMES "toomany)]
+
+   ; test PLISTS
+   SIMPLEREPORTTEST [PLISTS] (LIST [] [] ITEM 3 CONTENTS)
+   RUNTOOMANYINPUTSTEST [(PLISTS "toomany)]
+
+   ; test NAMELIST
+   SIMPLEREPORTTEST [NAMELIST "a]     [[] [a]]
+   SIMPLEREPORTTEST [NAMELIST [a b]]  [[] [a b]]
+   SIMPLEREPORTTEST [NAMELIST "||]    (list [] (list "||))
+   SIMPLEREPORTTEST [NAMELIST []]     [[] []]
+   RUNNOTENOUGHINPUTSTEST [(NAMELIST)]
+   RUNBADINPUTTEST        [NAMELIST {a b}]
+   RUNTOOMANYINPUTSTEST   [(NAMELIST "a "b)]
+
+   POTEST
+   BUG1438863TEST
+END
+
