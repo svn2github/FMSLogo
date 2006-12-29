@@ -10,7 +10,7 @@ o Fix bug #1602846: Uninstaller now exits if FMSLogo is running.
 o Fix bug #1602844: Installer/Uninstaller can now uninstall FMSLogo when
   it's installed in a non-default directory.
 o Fix bug #1602435: Fix memory corruption in directory procedures 
-  (POPDIR, CHKDIR, etc.) and make them print to the commander again.
+  (POPDIR, CHDIR, etc.) and make them print to the commander again.
 o Fix bug #1600163: CLOSE READER now resets the READER to [].
 o Fix bug #1599367; SPLITSCREEN no longer moves the X/Y scrollbar position.
 o Fix bug #1599097; ZOOM no longer moves the X/Y scrollbar position.
