@@ -46,6 +46,7 @@ III. Special Thanks
     Jim Foster
     Juan J. Paredes G.
     Andreas Micheler
+    Mike Sandy
 
   Special thanks to:
     George Mills
