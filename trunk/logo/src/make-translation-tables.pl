@@ -166,7 +166,7 @@ sub MakeTranslationTables($$$) {
       my $localizedname = $2;
       my $englishword   = $english{$symbolicname};
 
-      $englishword or die "Found a translated $symbolicname that is not English";
+      $englishword or die "Found a localization for $symbolicname that is not present in the English localization";
 
       unless (m/NOT_YET_LOCALIZED/) {
         $englishtolocalized{$englishword} = () if not $englishtolocalized{$englishword};
