@@ -551,6 +551,9 @@ $Exceptions{'multimedia-commands.xml'}{'allcaps'}{'LSB'}  = 1;
 $Exceptions{'multimedia-commands.xml'}{'allcaps'}{'MIDI'} = 1;
 $Exceptions{'multimedia-commands.xml'}{'allcaps'}{'MSB'}  = 1;
 
+$Exceptions{'translations-1032.xml'}{'logo'}                = 1;
+$Exceptions{'translations-1036.xml'}{'logo'}                = 1;
+
 $Exceptions{'windows-commands.xml'}{'allcaps'}{'GUI'}       = 1;
 $Exceptions{'windows-commands.xml'}{'allcaps'}{'SETUP'}     = 1;
 $Exceptions{'windows-commands.xml'}{'allcaps'}{'WIN'}       = 1;
