@@ -22,7 +22,8 @@ II. New features/bugs fixed:
 
   * Added for 6.13.0
     o Fix bug #1625098; French translation tables are now properly collated.
-    o Improve the translations used by the French version.
+    o Improve the translation of the French FMSLogo.
+    o Minor updates to the manual.
 
 
   For a complete history of changes across all versions of FMSLogo, see
