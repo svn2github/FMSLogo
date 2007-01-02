@@ -6,6 +6,7 @@
 # "English-to-LANG" tables that are built into the online
 # documentation.
 ############################################################
+use locale;
 use utf8;
 use IO::File;
 use strict;
