@@ -339,12 +339,14 @@
   <!ENTITY command-macrop         SYSTEM "command-macrop.xml">
 
   <!ENTITY command-contents       SYSTEM "command-contents.xml">
-  <!ENTITY command-buried         SYSTEM "command-buried.xml">
   <!ENTITY command-procedures     SYSTEM "command-procedures.xml">
   <!ENTITY command-names          SYSTEM "command-names.xml">
   <!ENTITY command-plists         SYSTEM "command-plists.xml">
   <!ENTITY command-namelist       SYSTEM "command-namelist.xml">
   <!ENTITY command-pllist         SYSTEM "command-pllist.xml">
+  <!ENTITY command-buried         SYSTEM "command-buried.xml">
+  <!ENTITY command-traced         SYSTEM "command-traced.xml">
+  <!ENTITY command-stepped        SYSTEM "command-stepped.xml">
 
   <!ENTITY command-po             SYSTEM "command-po.xml">
   <!ENTITY command-poall          SYSTEM "command-poall.xml">
@@ -371,7 +373,6 @@
   <!ENTITY command-unburyname     SYSTEM "command-unburyname.xml">
   <!ENTITY command-trace          SYSTEM "command-trace.xml">
   <!ENTITY command-untrace        SYSTEM "command-untrace.xml">
-  <!ENTITY command-traced         SYSTEM "command-traced.xml">
   <!ENTITY command-step           SYSTEM "command-step.xml">
   <!ENTITY command-unstep         SYSTEM "command-unstep.xml">
   <!ENTITY command-edit           SYSTEM "command-edit.xml">

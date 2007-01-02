@@ -82,12 +82,14 @@ All procedures whose input is indicated as "contentslist" will accept any of the
 </para>
 
        &command-contents;
-       &command-buried;
        &command-procedures;
        &command-names;
        &command-plists;
        &command-namelist;
        &command-pllist;
+       &command-buried;
+       &command-stepped;
+       &command-traced;
     </section>
 
    <section id="workspace-inspection">
@@ -150,7 +152,6 @@ Buried things can be completely restored to the workspace by unburying them (for
        &command-unburyname;
        &command-trace;
        &command-untrace;
-       &command-traced;
        &command-step;
        &command-unstep;
        &command-edit;
