@@ -21,6 +21,7 @@ I. Kit Description/Location (http://sourceforge.net/projects/fmslogo)
 II. New features/bugs fixed:
 
   * Added for 6.13.0
+    o Improve the translations used by the French version.
 
 
   For a complete history of changes across all versions of FMSLogo, see
