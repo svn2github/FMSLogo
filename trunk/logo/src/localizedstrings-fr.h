@@ -734,6 +734,7 @@
 #define LOCALIZED_COMMANDER_RESET               "Initial."
 #define LOCALIZED_COMMANDER_EXECUTE             "Execute"
 #define LOCALIZED_COMMANDER_EDALL               "Edite tout" // 
+
 //
 // Strings on the Status window
 //

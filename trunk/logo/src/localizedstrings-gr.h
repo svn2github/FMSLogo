@@ -644,7 +644,7 @@
 #define LOCALIZED_HELP_MS              "&Πληροφορίες για την MS..." // 
 // The following two help options display tables for translating to/from English
 // These tables are built from the LOCALIZED_ALTERNATE_* macros above and the
-// and starup-xxxx.logoscript file.
+// and startup-xxxx.logoscript file.
 #define LOCALIZED_HELP_LANGTOENGLISH   "LANGUAGE to English" // NOT_YET_LOCALIZED
 #define LOCALIZED_HELP_ENGLISHTOLANG   "English to LANGUAGE" // NOT_YET_LOCALIZED
 
