@@ -37,6 +37,9 @@ That is, if the data input is <userinput>[A B C D E]</userinput> and the templat
 
 <varlistentry><term>Example</term>
 <listitem>
+<programlisting><userinput>SHOW MAP [2 * ?] [1 2 3 4 5 6]</userinput>
+[2 4 6 8 10 12]
+</programlisting>
 <programlisting><userinput>SHOW (MAP "LIST [a b c] [d e f])</userinput>
 [[a d] [b e] [c f]]
 </programlisting>
