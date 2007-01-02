@@ -22,7 +22,7 @@ o Fix bug #1586914; The values in the status window are (once again)
   updated while the status window is open.
 o Fix bug #1576430; UPPERCASE and LOWERCASE now correctly handle some 
   international characters.
-o Fix bug #1584204; SHIFT+DOWN in the commander's histroy box now never
+o Fix bug #1584204; SHIFT+DOWN in the commander's history box now never
   gives focus to the edit control.
 o Fix bug #1584198; Commander selection no longer disappears when FMSLogo
   loses focus.
@@ -45,7 +45,6 @@ o Implement request #1327712; FMSLogo is internationalized.  As a
   many command names.  The Greek version has only translated the GUI.
   Neither localization has translated the manual.
 o Minor updates to the manual.
-
 
 Added for 6.11.0
 o Fix bug #1577528; SLOWDRAW now throws an error when given bad input.
