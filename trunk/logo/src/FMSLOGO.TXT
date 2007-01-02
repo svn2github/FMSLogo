@@ -47,6 +47,7 @@ III. Special Thanks
     Juan J. Paredes G.
     Andreas Micheler
     Mike Sandy
+    Bertrand Carette
 
   Special thanks to:
     George Mills
