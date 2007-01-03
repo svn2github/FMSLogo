@@ -107,7 +107,7 @@ TO DIFFERENCETEST
    ;
    ; bad input
    ; 
-   ; bad input of inputs
+   ; bad number of inputs
    RUNNOTENOUGHINPUTSTEST [(DIFFERENCE)]
    RUNNOTENOUGHINPUTSTEST [(DIFFERENCE 5)]
    RUNTOOMANYINPUTSTEST   [(DIFFERENCE 5 6 7)]
@@ -303,7 +303,7 @@ TO QUOTIENTTEST
    ; bad input
    ; 
 
-   ; bad input of inputs
+   ; bad number of inputs
    RUNNOTENOUGHINPUTSTEST [(QUOTIENT)]
    RUNTOOMANYINPUTSTEST   [(QUOTIENT 5 6 7)]
 
@@ -375,7 +375,7 @@ TO REMAINDERTEST
    ; bad input
    ; 
 
-   ; bad input of inputs
+   ; bad number of inputs
    RUNNOTENOUGHINPUTSTEST [(REMAINDER)]
    RUNNOTENOUGHINPUTSTEST [(REMAINDER 1)]
    RUNTOOMANYINPUTSTEST   [(REMAINDER 5 6 7)]
@@ -421,7 +421,7 @@ TO MODULOTEST
    ; bad input
    ; 
 
-   ; bad input of inputs
+   ; bad number of inputs
    RUNNOTENOUGHINPUTSTEST [(MODULO)]
    RUNNOTENOUGHINPUTSTEST [(MODULO 1)]
    RUNTOOMANYINPUTSTEST   [(MODULO 5 6 7)]
@@ -464,7 +464,7 @@ TO INTTEST
    ; bad input
    ; 
 
-   ; bad input of inputs
+   ; bad number of inputs
    RUNNOTENOUGHINPUTSTEST [(INT)]
    RUNTOOMANYINPUTSTEST   [(INT 1 2)]
 
@@ -497,7 +497,7 @@ TO ROUNDTEST
    ; bad input
    ; 
 
-   ; bad input of inputs
+   ; bad number of inputs
    RUNNOTENOUGHINPUTSTEST [(ROUND)]
    RUNTOOMANYINPUTSTEST   [(ROUND 1 2)]
 
@@ -526,7 +526,7 @@ TO ABSTEST
    ; bad input
    ; 
 
-   ; bad input of inputs
+   ; bad number of inputs
    RUNNOTENOUGHINPUTSTEST [(ABS)]
    RUNTOOMANYINPUTSTEST   [(ABS 1 2)]
 
@@ -542,7 +542,7 @@ END
 
 TO SIGNTEST
 
-   ; test absolute values
+   ; test sign
    SIMPLEREPORTTEST [SIGN  0    ]  0
    SIMPLEREPORTTEST [SIGN  8    ]  1
    SIMPLEREPORTTEST [SIGN -8    ]  -1
@@ -557,7 +557,7 @@ TO SIGNTEST
    ; bad input
    ; 
 
-   ; bad input of inputs
+   ; bad number of inputs
    RUNNOTENOUGHINPUTSTEST [(SIGN)]
    RUNTOOMANYINPUTSTEST   [(SIGN 1 2)]
 
@@ -588,7 +588,7 @@ TO SQRTTEST
    ; bad input
    ; 
 
-   ; bad input of inputs
+   ; bad number of inputs
    RUNNOTENOUGHINPUTSTEST [(SQRT)]
    RUNTOOMANYINPUTSTEST   [(SQRT 1 2)]
 
