@@ -8,7 +8,7 @@ to iseq :a :b
 if not iseq.integer? :a [(throw "error (list "iseq "doesn't "like :a "as "input))]
 if not iseq.integer? :b [(throw "error (list "iseq "doesn't "like :b "as "input))]
 if not (:a > :b) [output iseq1 :a :b]
-output map [[x] -1 * :x] iseq1 (-1 * :a) (-1 * :b)
+output map [-?] iseq1 -:a -:b
 end
 
 to iseq1 :a :b
