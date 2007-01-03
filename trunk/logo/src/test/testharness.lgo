@@ -109,6 +109,7 @@ LOAD "readchar.lgo
 LOAD "readchars.lgo
 LOAD "bitmode.lgo
 LOAD "turtlemode.lgo
+LOAD "map.lgo
 
 TO TESTALL
 
@@ -198,6 +199,7 @@ TO TESTALL
   HELPTEST           ; from help.lgo
   WINDOWSETTEST      ; from windowset.lgo
   DLLTEST            ; from dll.lgo
+  MAPTEST            ; from map.lgo
   SORTTEST           ; from sort.lgo
   ISEQTEST           ; from iseq.lgo
   TRACETEST          ; from trace.lgo
