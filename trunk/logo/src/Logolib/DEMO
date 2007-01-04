@@ -243,7 +243,7 @@ cs
 setturtle -1
 setxyz 500 500 1000
 setturtle 0
-repeat 36 [rr 10 ellipsa2 180 100 100 0 ellipsa2 -180 100 100 0]
+repeat 36 [rr 10 ellipsearc2 180 100 100 0 ellipsearc2 -180 100 100 0]
 end
 
 to demo.20
