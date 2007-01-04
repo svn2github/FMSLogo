@@ -258,7 +258,7 @@ end
 to drawChar :c :action
   make "validChar "true
   setturtle 0
-  setpensize list (round :scale) (round :scale)
+  setpensize round :scale
   seth 0
   make "cPos pos
   make "x first :cPos
@@ -395,7 +395,7 @@ to drawCrystal :pos1 :action
   if not( (last :pos1) = :offScreenY ) [
     setturtle 0
     make "points array 6
-    setpensize(list (round :scale) (round :scale))
+    setpensize round :scale
     seth 0
     if :action = "draw [
       setpc item abs(remainder first(:pos1) 7) {
@@ -438,7 +438,7 @@ end
 to drawRock :pos1
   local "points
   setturtle 0
-  setpensize(list round( 2*:scale ) round( 2*:scale ) )
+  setpensize round 2*:scale
   make "x item 1 :pos1
   make "y item 2 :pos1
   make "d :x
@@ -489,7 +489,7 @@ to drawRock :pos1
   setpos item 1 :points
   pu
 
-  setpensize(list (round :scale) (round :scale) )
+  setpensize round :scale
 end
 
 to drawShip :x :y :d :action
@@ -499,7 +499,7 @@ to drawShip :x :y :d :action
   ; :action is "draw, "redraw, or "erase
 
   setturtle 0
-  setpensize(list round( :scale*:shipRad/:normalShipRad) round( :scale*:shipRad/:normalShipRad) )
+  setpensize round :scale*:shipRad/:normalShipRad
 
   ifelse :shipGlow > :shipFadeStart [ 
      make "pencolor [255 255 255]
@@ -573,7 +573,7 @@ to drawShip :x :y :d :action
     bk :shipSide - 1.414*:scale
     lt 45
     if ( or :isThrustOn  :action = "erase ) [
-      setpensize(list round( 2*:scale*:shipRad/:normalShipRad ) round( 2*:scale*:shipRad/:normalShipRad ) )
+      setpensize round 2*:scale*:shipRad/:normalShipRad
     ]
     if ( and (:leaveStep < :numLeaveSteps * .80) :isThrustOn (not :action = "erase) ) [
       setpc[ 255 230 130 ]
@@ -581,7 +581,7 @@ to drawShip :x :y :d :action
     bk :shipSide + 2*:scale
 
     setpc :pencolor
-    setpensize(list round( :scale*:shipRad/:normalShipRad) round( :scale*:shipRad/:normalShipRad) )
+    setpensize round :scale*:shipRad/:normalShipRad
 
     pu
     fd :shipSide + 2*:scale
@@ -785,7 +785,7 @@ to glint :action
 
   if :glintStep = 20 [ drawCrystal (item :glintCrystal :crystals) "draw ]
   setturtle 3
-  setpensize(list (round :scale) (round :scale) )
+  setpensize round :scale
   pu
   setpos item :glintCrystal :crystals
   seth 0
@@ -898,7 +898,7 @@ to initGame
   setturtle 2 ht pu
   setturtle 3 ht pu
 
-  setpensize(list (round :scale) (round :scale) )
+  setpensize round :scale
 end
 
 to initLevel
@@ -1313,7 +1313,7 @@ to open
   make "open.quit "false
 
   if :score > 0 [ make "textCount 2 printText ]
-  setpensize( list round(3*:open.scale) round(3*:open.scale) )
+  setpensize round 3*:open.scale
   setturtle 0
   open.stars
 
