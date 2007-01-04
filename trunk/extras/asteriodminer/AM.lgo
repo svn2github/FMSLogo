@@ -48,7 +48,7 @@ to buttonDraw :num :draw
     setpos :tempPos
     make "x round( first :tempPos )
     make "y round( last :tempPos )
-    setpos list :x :y
+    setxy :x :y
     seth 180 tfd 4 lt 90
     pd
     ifelse( ( item 1 (item :num :buttonList) ) = [Instructions] ) [ tfd 7 ] [ tfd 12 ]
@@ -156,7 +156,7 @@ end
 
 to clearBox
   setturtle 1
-  setpos( list (:displayWidth/2 - :displayWidth)+1 (:displayHeight/2 - :displayHeight)+1 )
+  setxy (:displayWidth/2 - :displayWidth)+1 (:displayHeight/2 - :displayHeight)+1
   setfc[ 0 0 0 ]
   bitblock :displayWidth+1 :displayHeight+1
 end
@@ -204,17 +204,17 @@ to displayHighScores
   loadScores
   setturtle 0
   drawText [ High Scores ] "getLength
-  setpos list 0 - ( :textLength / 2 ) ( :displayHeight/2 - :textBarHeight*2 )
+  setxy -( :textLength / 2 ) ( :displayHeight/2 - :textBarHeight*2 )
   drawText [ High Scores ] "draw
   repeat 10 [
     setturtle 0
-    setpos list (-1 * ( 12 * :scale * 17 / 2)) ((22 * :scale) * 6 - (22 * :scale) * repcount) 
+    setxy (-12 * :scale * 17 / 2) ((22 * :scale) * 6 - (22 * :scale) * repcount)
     make "name item repcount :hiNames 
     drawText :name "draw
     make "scoreS item repcount :AM_Hiscores
     if :scoreS = 0 [ make "scoreS " ]
     drawText :scoreS "getLength
-    setpos list (( 12 * :scale * 17 / 2 ) - :textLength) ((22 * :scale) * 6 - (22 * :scale) * repcount)
+    setxy ((12 * :scale * 17 / 2 ) - :textLength) ((22 * :scale) * 6 - (22 * :scale) * repcount)
     drawText :scoreS "draw
   ]
 end
@@ -223,34 +223,34 @@ to displayInstructions
   clearBox
   setturtle 0
   drawText [ Instructions ] "getLength
-  setpos list 0 - ( :textLength / 2 ) ( :displayHeight/2 - 30*:textScale )
+  setxy (-:textLength / 2)  ( :displayHeight/2 - 30*:textScale )
   drawText [ Instructions ] "draw
   make "ty :displayHeight/2 - 40*:textScale
   make "tx -:displayWidth/2 + 102*:textScale
   make "th -:displayWidth/2 + 66*:textScale  ;heading
   make "ti -:displayWidth/2 + 150*:textScale  ;indent
   make "line 32*:textScale
-  setpos( list :th :ty - :line*1 ) drawText [Playing the game:] "draw
-  setpos( list :ti :ty - :line*2 ) drawText [Navigate your mining ship through the asteroid field and] "draw
-  setpos( list :tx :ty - :line*3 ) drawText [pick up the crystals. \ When you have collected all the crystals] "draw
-  setpos( list :tx :ty - :line*4 ) drawText [you can see, you advance to the next level to mine a new section] "draw
-  setpos( list :tx :ty - :line*5 ) drawText [of the asteroid field. \ If you can finish all 13 levels, you win!] "draw
-  setpos( list :ti :ty - :line*6 ) drawText [Don't get going too fast. \ In space, the only way to slow] "draw
-  setpos( list :tx :ty - :line*7 ) drawText [down is to turn around and fire your engine in the other] "draw
-  setpos( list :tx :ty - :line*8 ) drawText [direction. \ By the time you finish doing that, you may be dust!] "draw
-  setpos( list :th :ty - :line*9.5 ) drawText [Ship controls:] "draw
-  setpos( list :tx :ty - :line*10.5) drawText [J....Turn the ship to the left] "draw
-  setpos( list :tx :ty - :line*11.5) drawText [K....Fire the engines] "draw
-  setpos( list :tx :ty - :line*12.5) drawText [L....Turn the ship to the right] "draw
-  setpos( list :th :ty - :line*14) drawText [Game controls:] "draw
-  setpos( list :tx :ty - :line*15) drawText [Q....Quit] "draw
-  setpos( list :tx :ty - :line*16) drawText [P....Pause or Reset] "draw
+  setxy :th :ty - :line*1    drawText [Playing the game:] "draw
+  setxy :ti :ty - :line*2    drawText [Navigate your mining ship through the asteroid field and] "draw
+  setxy :tx :ty - :line*3    drawText [pick up the crystals. \ When you have collected all the crystals] "draw
+  setxy :tx :ty - :line*4    drawText [you can see, you advance to the next level to mine a new section] "draw
+  setxy :tx :ty - :line*5    drawText [of the asteroid field. \ If you can finish all 13 levels, you win!] "draw
+  setxy :ti :ty - :line*6    drawText [Don't get going too fast. \ In space, the only way to slow] "draw
+  setxy :tx :ty - :line*7    drawText [down is to turn around and fire your engine in the other] "draw
+  setxy :tx :ty - :line*8    drawText [direction. \ By the time you finish doing that, you may be dust!] "draw
+  setxy :th :ty - :line*9.5  drawText [Ship controls:] "draw
+  setxy :tx :ty - :line*10.5 drawText [J....Turn the ship to the left] "draw
+  setxy :tx :ty - :line*11.5 drawText [K....Fire the engines] "draw
+  setxy :tx :ty - :line*12.5 drawText [L....Turn the ship to the right] "draw
+  setxy :th :ty - :line*14   drawText [Game controls:] "draw
+  setxy :tx :ty - :line*15   drawText [Q....Quit] "draw
+  setxy :tx :ty - :line*16   drawText [P....Pause or Reset] "draw
 end
 
 to displayText :text :pause
   clearBox
   drawText :text "getLength
-  setpos( list 0 - :textLength/2  0 )
+  setxy -:textLength/2  0 
   drawText :text "draw
   waitStop :pause
 end
@@ -265,7 +265,7 @@ to drawChar :c :action
   make "y last :cPos
   make "x round :x
   make "y round :y
-  setpos list :x :y
+  setxy :x :y
   setpc [ 255 255 0 ]
   pd
   if not :action = "getLength [
@@ -387,7 +387,7 @@ to drawChar :c :action
   make "y last pos
   make "x round :x
   make "y round :y
-  setpos list :x :y
+  setxy :x :y
 end
 
 to drawCrystal :pos1 :action
@@ -530,7 +530,7 @@ to drawShip :x :y :d :action
     ;explosion--random numbers for the fragment attribute lists are picked in playLoop
     if :action = "draw [ make "expLen :expLen - :shipRad / :numExpSteps ]
     repeat :numFrags [
-      setpos list :x :y  seth :d
+      setxy :x :y  seth :d
       rt 360/:numFrags * repcount
       make "fal item repcount :fragments  ;fal stands for fragment attribute list
       fd :shipRad * (item 1 :fal) + :expStep * (item 2 :fal)
@@ -544,7 +544,7 @@ to drawShip :x :y :d :action
     ]
   ][
     ; draw right side of nose
-    setpos list :x :y
+    setxy :x :y
     seth :d
     fd :shipRad
 
@@ -607,7 +607,7 @@ to drawShip :x :y :d :action
     fd 12.95 * :scale*:shipRad/:normalShipRad
     pu
 
-    setpos list :x :y
+    setxy :x :y
     seth :d
 
     ;draw cockpit begin
@@ -679,7 +679,7 @@ to findXy :object
     make "y round( (random round( :gameHeight - :rockRad*4 )) - 
                    (:gameHeight - :rockRad*4) / 2 - :textBarHeight / 2 
                  ) 
-    setpos( list :x :y )
+    setxy :x :y
 
     ;make sure rock is not on top of ship
     if (distance[ 0 0 ]) < ( :rockRad + :shipRad + 6 ) [ make "findNew "true ]
@@ -711,7 +711,7 @@ to findXy :object
     make "y round( (random round( :gameHeight - :shipRad*3.2 )) -
                    (:gameHeight - :shipRad*3.2) / 2 - :textBarHeight / 2 
                  )
-    setpos( list :x :y )
+    setxy :x :y
 
     ;make sure crystals don't overlap rocks
     repeat :numRocks [
@@ -1020,7 +1020,7 @@ to initMain
 
   setturtle 2
   setbitindex 2
-  setpos( list 0 0 - :displayHeight/2 + 10*:scale + 42 )
+  setxy 0  -:displayHeight/2 + 10*:scale + 42
   bitcut 80 110 wait 1
   bitfit round(53*:open.scale) round(73*:open.scale)
   bitmapturtle
@@ -1040,7 +1040,7 @@ to initMain
 
   setbitindex 3
   setpos :pos1
-  drawText [Score:] "draw 
+  drawText [Score:] "draw
   make "scoreLength :textLength
   setpos :pos1
   sbitcut :textLength round( 18 * :scale )+1 
@@ -1489,9 +1489,7 @@ to open.stars
   repeat 400 [
     make "x random( round :displayWidth )
     make "y random( round :displayHeight )
-    setpos( list (:x - :displayWidth / 2)
-            (:y - :displayHeight / 2)
-          )
+    setxy (:x - :displayWidth / 2) (:y - :displayHeight / 2)
     setpixel[ 255 255 255 ]
   ]
 end
@@ -1499,14 +1497,14 @@ end
 to open.turtleO
   setturtle 2
   bitmapturtle
-  pu  setpos( list (( first :Apos ) + 232*:open.scale) (:displayHeight / 2) )  
+  pu  setxy (( first :Apos ) + 232*:open.scale) (:displayHeight / 2)
   st
   make "speed 3
   make "oy last pos
   make "ox first pos
   make "bounce 0
   if not :open.quit [ open.turtleO.animate ]
-  setpos( list :ox 40*:open.scale )
+  setxy :ox 40*:open.scale
 end
 
 to open.turtleO.animate
@@ -1517,10 +1515,10 @@ to open.turtleO.animate
     make "oy :oy + ( 10*:open.scale - (:oy - 40*:open.scale) )
     make "speed (:speed - 10*:open.scale) * (-1)
     make "bounce :bounce + 1
-    setpos( list :ox 40*:open.scale )
+    setxy :ox 40*:open.scale
     wait 1
   ]
-  setpos( list :ox :oy*:open.scale )
+  setxy :ox :oy*:open.scale
   if( and :bounce < round(3*1.25) not :open.quit ) [ open.turtleO.animate ]
 end
 
@@ -1529,7 +1527,7 @@ to pauseGame
   make "keepOff "false
   make "pauseNow "false
   setturtle 1
-  setpos list -57*:scale -43*:scale
+  setxy -57*:scale -43*:scale
   setbitindex 20
   sbitcut round(110*:scale) round(90*:scale)
 
@@ -1548,7 +1546,7 @@ to pauseGame
   buttonOn 10 "false
 
   setturtle 1
-  setpos list -57*:scale -43*:scale
+  setxy -57*:scale -43*:scale
   setbitindex 20
   bitpaste
   wait 10
@@ -1580,7 +1578,7 @@ to playLoop
     if (and not :levelIsOver   not :isBehindRock) [ drawShip :shipXInt :shipYInt :dr "draw ]
     make "oldIsBehindRock :isBehindRock
     make "isBehindRock "false
-    setpos (list :shipX :shipY)
+    setxy :shipX :shipY
     if not :isLeaving [
       hitCrystalCheck
     ]
@@ -1659,16 +1657,14 @@ to printText
   ;They need to be continuously printed though, because the ship can fly through them.
   if :textCount = 1 [
     ;paste "Bonus"
-    setpos( list (:displayWidth / 2 - :displayWidth + 4 * :scale) 
-            (:displayHeight / 2 - :textBarHeight + ((:textBarHeight-18 * :scale) / 2) )
-          )
+    (setxy (:displayWidth / 2 - :displayWidth + 4 * :scale) 
+           (:displayHeight / 2 - :textBarHeight + ((:textBarHeight-18 * :scale) / 2) ))
     setbitindex 4
     bitpaste
 
     ;paste time left
-    setpos( list (:displayWidth / 2 - :displayWidth + :bonusLength + 7 * :scale)
-            (:displayHeight / 2 - :textBarHeight + ((:textBarHeight-18 * :scale) / 2) )
-          )
+    (setxy (:displayWidth / 2 - :displayWidth + :bonusLength + 7 * :scale)
+           (:displayHeight / 2 - :textBarHeight + ((:textBarHeight-18 * :scale) / 2) ))
     seth 90
     ;noyield keeps time from changing while it is being printed
     noyield
@@ -1683,9 +1679,8 @@ to printText
 
   if :textCount = 2 [
     ;paste "Score"
-    setpos( list ( (0 - ((count :score)*13 + :scoreLength * :scale)) / 2 )
-            (:displayHeight / 2 - :textBarHeight + ((:textBarHeight-18 * :scale) / 2) )
-          )
+    (setxy ( -((count :score)*13 + :scoreLength * :scale) / 2 )
+           (:displayHeight / 2 - :textBarHeight + ((:textBarHeight-18 * :scale) / 2) ))
     seth 90
     sbitblock round( :scoreLength + :scale)+1+5*:textScale round( 18 * :scale + :scale)+1
     setbitindex 3
@@ -1705,9 +1700,7 @@ to printText
     ;print extra lives left
     make "extraLives :lives - 1
     if :extraLives < 0 [ make "extraLives 0 ]
-    setpos( list (:displayWidth / 2 - 4)
-            (:displayHeight / 2 - :textBarHeight + ((:textBarHeight-17 * :scale) / 2) )
-          )
+    setxy (:displayWidth / 2 - 4) (:displayHeight / 2 - :textBarHeight + ((:textBarHeight-17 *:scale) / 2))
     seth 270
     setbitindex 6
     repeat :extraLives [ fd 20*:scale  bitpaste ]
