@@ -545,22 +545,15 @@ to drawShip :x :y :d :action
   ][
     ; draw right side of nose
     setxy :x :y
-    seth :d
-    fd :shipRad
-
-    bk :shipRad
-    rt 67.5
+    seth :d + 67.5
     fd :shipRad3
 
     pd
-    fd :shipRad3 * 2
-    bk :scale
+    fd :shipRad3 * 2 - :scale
     make "light1Pos pos
     fd :scale
     rt 112.5
     fd :shipSide
-
-    if (or :leaveStep < :numLeaveSteps * 0.6666 not :isLeaving) [ drawShip.light :light1Pos ]
 
     ;draw back of ship, trace back over it partway, draw engine if thrusting, then trace forward again--
     ;this keeps the engine over top of all the other lines
@@ -596,27 +589,32 @@ to drawShip :x :y :d :action
 
     fd :scale
     make "light2Pos pos
-    bk :scale
-    fd :shipRad3 * 2
+    fd :shipRad3 * 2 - :scale
 
-    if ( or :leaveStep < :numLeaveSteps * 0.6666  not :isLeaving) [ drawShip.light :light2Pos ]
 
+    ; draw the ship's nose
     lt 93.06
     fd 12.95 * :scale*:shipRad/:normalShipRad
     rt 141.11
     fd 12.95 * :scale*:shipRad/:normalShipRad
     pu
 
+    ; draw the first light, now that we won't draw over it
+    if (or :leaveStep < :numLeaveSteps * 0.6666 not :isLeaving) [ 
+       drawShip.light :light1Pos 
+       drawShip.light :light2Pos
+    ]
+
     setxy :x :y
-    seth :d
+    seth :d+90
+    pd
 
     ;draw cockpit begin
-    rt 90  pd
     fd :shipRad6 / 2
     rt 45  fd :shipRad6Diag
     rt 45  fd :shipRad3
-    rt 90 rt 45 fd :shipRad6Diag lt 45 fd :shipRad6 lt 45 fd :shipRad6Diag rt 45
-    rt 90  fd :shipRad3
+    rt 135 fd :shipRad6Diag lt 45 fd :shipRad6 lt 45 fd :shipRad6Diag 
+    rt 135 fd :shipRad3
     rt 45  fd :shipRad6Diag
     rt 45  fd :shipRad6 / 2
     lt 90 pu
@@ -627,24 +625,25 @@ to drawShip :x :y :d :action
 
 end
 
+; Draws the ship's lights at :lightPos (or erases it, if the ship is being erased)
+; Assumes the pen is up.  Does not restore current position.
 to drawShip.light :lightPos
-  pu
-  make "h heading
-  make "pos3 pos
+
   setpos :lightPos
   seth 225 fd 1.414*:scale
-  ;draw light if it is on, erase it if it is off
-  if and (:blink > 19) (or :action = "draw :action = "redraw) [
-    setfc[ 180 60 60 ]
-    sbitblock round( 2.4*:scale / (:leaveStep+1) ) round( 2.4*:scale / (:leaveStep+1) )
-    setfc [ 0 0 0 ]
-  ]
-  if (:action = "erase) [
+
+  ifelse :action = "erase [
+    ; we are erasing the ship, so we erase the lights, too
     sbitblock round( 2.4*:scale ) round( 2.4*:scale )
+  ][
+    if (:blink > 19) [
+      ; the light is on--draw it
+      setfc [ 180 60 60 ]
+      sbitblock round( 2.4*:scale / (:leaveStep+1) ) round( 2.4*:scale / (:leaveStep+1) )
+      setfc [ 0 0 0 ]
+    ]
   ]
-  setpos :pos3
-  seth :h
-  pd
+
 end
 
 to drawText :txt :action
