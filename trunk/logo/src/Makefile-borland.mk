@@ -497,12 +497,11 @@ BccW32.cfg :
 -WM-
 -vi
 -H
--H=logo32x.csm
 -v-
 -R-
 -k-
 -N
--H=LOGO.CSM
+-H=$(IntermediateDirectory)\LOGO.CSM
 -Og
 -Oi
 -Ov
@@ -536,7 +535,6 @@ BccW32.cfg :
 -OS
 -5
 -W
--H"owl\pch.h"
 -d
 | $@
 
@@ -551,12 +549,11 @@ BccW32.cfg :
 -WM-
 -vi
 -H
--H=logo32x.csm
 -v
 -R
 -k
 -N
--H=LOGO.CSM
+-H=$(IntermediateDirectory)\LOGO.CSM
 -O-c
 -O-i
 -O-v
@@ -588,7 +585,6 @@ BccW32.cfg :
 -wucp
 -u
 -W
--H"owl\pch.h"
 -d
 -ff-
 -y
