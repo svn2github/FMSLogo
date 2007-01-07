@@ -212,5 +212,6 @@ sub MakeTranslationTables($$$) {
 }
 
 
-MakeTranslationTables('French', 'fr', 1036);
-MakeTranslationTables('Greek',  'gr', 1032);
+MakeTranslationTables('Greek',   'gr', 1032);
+MakeTranslationTables('Spanish', 'es', 1034);
+MakeTranslationTables('French',  'fr', 1036);

@@ -16,6 +16,10 @@
 
   #include "localizedstrings-en.h"  // English
 
+#elif LOCALE == 1034
+
+  #include "localizedstrings-es.h"  // Spanish
+
 #elif LOCALE == 1036
 
   #include "localizedstrings-fr.h"  // French

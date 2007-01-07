@@ -3,15 +3,16 @@
 # GNU-based build system
 .PHONY : clean fmslogod.exe
 
+include ../lcids.mk
+
+EXES = $(addprefix fmslogo-, $(addsuffix .exe, $(LCIDS)))
+
 fmslogo.exe : fmslogo-1033.exe
 	cp startup-1033.logoscript startup.logoscript
 	-cp ..\manual\logohelp-1033.chm logohelp.chm
 	cp $< $@
 
-toenglish-1036.txt : make-translation-tables.pl
-	perl -W make-translation-tables.pl
-
-all : fmslogo-1033.exe fmslogo-1036.exe fmslogo-1032.exe
+all : $(EXES)
 	perl -W make-translation-tables.pl
 
 fmslogo-%.exe : FORCE
@@ -25,10 +26,15 @@ debug : fmslogod.exe ;
 
 clean :
 	$(RM) version.h
+	$(RM) BccW32.cfg
 	$(RM) $(shell /usr/bin/find . -name '*.obj')
 	$(RM) $(shell /usr/bin/find . -name '*.res')
 	$(RM) $(shell /usr/bin/find . -name '*.bak')
 	$(RM) $(shell /usr/bin/find . -name '*~')
+	$(RM) $(shell /usr/bin/find . -name '*.csm')
+	$(RM) $(wildcard toenglish-*.txt)
+	$(RM) $(wildcard fromenglish-*.txt)
+	$(RM) $(wildcard translations-*.xml)
 	$(RM) $(wildcard fmslogo*.exe)
 	$(RM) $(wildcard fmslogo*.ils)
 	$(RM) $(wildcard fmslogo*.ilc)
@@ -37,9 +43,9 @@ clean :
 	$(RM) $(wildcard fmslogo*.tds)
 	$(RM) $(wildcard logo32*.mrt)
 	$(RM) $(wildcard logo32*.mbt)
-	$(RM) $(wildcard logo*.csm)
 	$(RM) $(wildcard *.fts)
 	$(RM) $(wildcard *.gid)
+	$(RM) $(wildcard LOGO.\#*)
 
 tags : *.cpp *.h *.c
 	etags $(shell /usr/bin/find . -name '*.cpp' -o -name '*.h' -o -name '*.c')
