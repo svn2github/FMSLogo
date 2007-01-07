@@ -1,0 +1,121 @@
+<appendix id='translations'>
+<title>Commands: English to Spanish</title>
+<informaltable>
+  <indexterm><primary>From English</primary></indexterm>
+  <tgroup cols='2'>
+   <thead>
+     <row>
+       <entry>English Command</entry>
+       <entry>Spanish Command</entry>
+     </row>
+   </thead>
+  <tbody>
+     <row>
+       <entry><link linkend='command-.macro'>.macro</link></entry>
+       <entry>.macro</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-end'>end</link></entry>
+       <entry>fin</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-false'>false</link></entry>
+       <entry>falso</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-goto'>goto</link></entry>
+       <entry>saltoa</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-if'>if</link></entry>
+       <entry>si</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-ifelse'>ifelse</link></entry>
+       <entry>siotro</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-output'>output</link></entry>
+       <entry>respuesta</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-stop'>stop</link></entry>
+       <entry>alto</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-tag'>tag</link></entry>
+       <entry>etiqueta</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-to'>to</link></entry>
+       <entry>para</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-true'>true</link></entry>
+       <entry>cierto</entry>
+     </row>
+  </tbody>
+  </tgroup>
+</informaltable>
+</appendix>
+
+<appendix>
+<title>Commands: Spanish to English</title>
+<indexterm><primary>To English</primary></indexterm>
+<informaltable>
+  <tgroup cols='2'>
+   <thead>
+     <row>
+       <entry>Spanish Command</entry>
+       <entry>English Command</entry>
+     </row>
+   </thead>
+  <tbody>
+     <row>
+       <entry>.macro</entry>
+       <entry><link linkend='command-.macro'>.macro</link></entry>
+     </row>
+     <row>
+       <entry>alto</entry>
+       <entry><link linkend='command-stop'>stop</link></entry>
+     </row>
+     <row>
+       <entry>cierto</entry>
+       <entry><link linkend='command-true'>true</link></entry>
+     </row>
+     <row>
+       <entry>etiqueta</entry>
+       <entry><link linkend='command-tag'>tag</link></entry>
+     </row>
+     <row>
+       <entry>falso</entry>
+       <entry><link linkend='command-false'>false</link></entry>
+     </row>
+     <row>
+       <entry>fin</entry>
+       <entry><link linkend='command-end'>end</link></entry>
+     </row>
+     <row>
+       <entry>para</entry>
+       <entry><link linkend='command-to'>to</link></entry>
+     </row>
+     <row>
+       <entry>respuesta</entry>
+       <entry><link linkend='command-output'>output</link></entry>
+     </row>
+     <row>
+       <entry>saltoa</entry>
+       <entry><link linkend='command-goto'>goto</link></entry>
+     </row>
+     <row>
+       <entry>si</entry>
+       <entry><link linkend='command-if'>if</link></entry>
+     </row>
+     <row>
+       <entry>siotro</entry>
+       <entry><link linkend='command-ifelse'>ifelse</link></entry>
+     </row>
+  </tbody>
+  </tgroup>
+</informaltable>
+</appendix>

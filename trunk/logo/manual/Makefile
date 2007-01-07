@@ -1,4 +1,5 @@
 include ../version.mk
+include ../lcids.mk
 
 HHP_STYLESHEET  = htmlhelp.xsl 
 HTML_STYLESHEET = html.xsl
@@ -12,8 +13,9 @@ FOP      = "C:\Program Files\fop-0.20.5\fop.bat"
 UNIXECHO = "c:\cygwin\bin\echo.exe"
 
 # prevent the hhp files from being automatically deleted
-.SECONDARY : htmlhelp-1032.hhp htmlhelp-1033.hhp htmlhelp-1036.hhp
+.SECONDARY : $(addprefix htmlhelp-, $(addsuffix .hhp, $(LCIDS)))
 
+MANUALS = $(addprefix logohelp-, $(addsuffix .chm, $(LCIDS)))
 
 # by default, build the English CHM file
 logohelp.chm : logohelp-1033.chm
@@ -46,7 +48,7 @@ htmlhelp-%.hhp : translations-%.xml $(SOURCEFILES) $(HHP_STYLESHEET)
 	mv htmlhelp.hhp htmlhelp-$*.hhp
 
 # The "all" target builds all translations of the .chm
-all : logohelp-1032.chm logohelp-1033.chm logohelp-1036.chm;
+all : $(MANUALS)
 
 logohelp.ps : $(SOURCEFILES)
 	docbook2ps $(ROOTFILE)

@@ -1,4 +1,5 @@
 include version.mk
+include lcids.mk
 
 BINARYBASENAME=fmslogo-$(FMSLOGO_VERSION)
 BINARYZIP=$(BINARYBASENAME).zip
@@ -7,7 +8,6 @@ SOURCEZIP=fmslogo-src-$(FMSLOGO_VERSION).zip
 
 ZIPEXCLUDE=*/.cvsignore */CVS/ */CVS/* */*/.cvsignore */*/CVS/ */*/CVS/* */*/*/CVS/ */*/*/CVS/*
 
-LCIDS   = 1032 1033 1036
 MANUALS = $(addprefix manual/logohelp-, $(addsuffix .chm, $(LCIDS)))
 EXES    = $(addprefix src/fmslogo-, $(addsuffix .exe, $(LCIDS)))
 
@@ -41,14 +41,17 @@ $(BINARYZIP) : $(MANUALS) $(EXES)
 	mkdir $(BINARYBASENAME)
 	cp src/fmslogo-1032.exe        $(BINARYBASENAME)
 	cp src/fmslogo-1033.exe        $(BINARYBASENAME)
+	cp src/fmslogo-1034.exe        $(BINARYBASENAME)
 	cp src/fmslogo-1036.exe        $(BINARYBASENAME)
 	cp src/fmslogo-1033.exe        $(BINARYBASENAME)/fmslogo.exe
 	cp src/startup-1032.logoscript $(BINARYBASENAME)
 	cp src/startup-1033.logoscript $(BINARYBASENAME)
+	cp src/startup-1034.logoscript $(BINARYBASENAME)
 	cp src/startup-1036.logoscript $(BINARYBASENAME)
 	cp src/startup-1033.logoscript $(BINARYBASENAME)/startup.logoscript
 	cp manual/logohelp-1032.chm    $(BINARYBASENAME)
 	cp manual/logohelp-1033.chm    $(BINARYBASENAME)
+	cp manual/logohelp-1034.chm    $(BINARYBASENAME)
 	cp manual/logohelp-1036.chm    $(BINARYBASENAME)
 	cp manual/logohelp-1033.chm    $(BINARYBASENAME)/logohelp.chm
 	cp src/FMSLOGO.TXT             $(BINARYBASENAME)
