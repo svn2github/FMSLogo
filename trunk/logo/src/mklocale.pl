@@ -62,3 +62,4 @@ sub UpdateLocalizationFiles($$) {
 
 UpdateLocalizationFiles('fr', 'French');
 UpdateLocalizationFiles('gr', 'Greek');
+UpdateLocalizationFiles('es', 'Spanish');
