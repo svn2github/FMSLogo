@@ -60,7 +60,7 @@ TO POLYGONTEST.DRAWFACE :k :n
 
     if NOT ORIENTATION = :saved.orientation [
        ; this is too noisy right now (bug #1429938)
-       REPORTTESTFAILED (LIST "SETORIENTATION :saved.orientation "set "ORIENTATION "to ORIENTATION)
+       ; REPORTTESTFAILED (LIST "SETORIENTATION :saved.orientation "set "ORIENTATION "to ORIENTATION)
     ]
 
     LEFT :k*:ang.p
@@ -110,8 +110,9 @@ TO POLYGONTEST.SMOKETEST
   CLEARSCREEN
   PENUP
   HIDETURTLE
-
   SETPENCOLOR 1
+
+  ; We draw a tetrahedron as a regression test for bug #1624729
   POLYGONTEST.DEFINEPOLYGON 3 3 250
 
   ; rotate the perspective a bit
