@@ -194,7 +194,7 @@ typedef long    FIXNUM;
 
 typedef double FLONUM;
 #define FLONUM_MAX     DBL_MAX
-#define FLONUM_EPSILON DBL_EPSILON
+#define FLONUM_EPSILON 1.0e-12 // don't use DLB_EPSILON (see bug #1624729)
 
 struct NODE
    {
