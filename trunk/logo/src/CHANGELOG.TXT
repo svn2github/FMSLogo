@@ -217,7 +217,6 @@ o Fix bug #1377856; ELLIPSEARC can now be paused/halted.
 o Fix bug #1395734; the editor is no longer double-spaced on error.
 o Fix bug #1429970; WINDOWSET now throws error on bad input.
 o Fix bug #1429960; ICON can minimize the commander when it's docked.
-o Fix bug #1429938; SETORIENTATION now works correctly.
 o Fix bug #1327284; the documentation is now distributed as a .CHM.
 o Fix bug #1399926; SETCURSORNOWAIT is now documented.
 o Fix bug #1399929; TONE is now documented.
@@ -226,6 +225,7 @@ o Fix bug #1392433; the documentation for EDALL is clearer.
 o Fix bug #1327785; the manual and example code no longer refer to MSWLogo.
 o Fix bug #1406412; the documentation for SETTIMER is updated for Win95.
 o Fix bug #1417187; the documentation for ARC and friends is clearer.
+o Mitigate bug #1429938; SETORIENTATION now works better than before.
 o Mitigate bug #1397519; numbers within DBL_EPSILON of each other are equal.
 o Add SORT to Logolib.
 
