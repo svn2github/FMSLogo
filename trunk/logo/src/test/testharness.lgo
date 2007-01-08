@@ -110,6 +110,7 @@ LOAD "readchars.lgo
 LOAD "bitmode.lgo
 LOAD "turtlemode.lgo
 LOAD "map.lgo
+LOAD "polygon.lgo
 
 TO TESTALL
 
@@ -194,6 +195,7 @@ TO TESTALL
   WINDOWTEST         ; from window.lgo
   PERSPECTIVETEST    ; from perspective.lgo
   ORIENTATIONTEST    ; from orientation.lgo
+  POLYGONTEST        ; from polygon.lgo
   SCRUNCHTEST        ; from scrunch.lgo
   ZOOMTEST           ; from zoom.lgo
   HELPTEST           ; from help.lgo
