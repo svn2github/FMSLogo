@@ -679,7 +679,7 @@ NODE *evaluator(NODE *list, enum labels where)
             restore2(didnt_output_name, didnt_get_output);
             restore2(this_line, last_line);
             restore2(ufun, last_ufun);
-            restore2(fun, var);
+            restore2(fun, var);  
             arg = val;
             }
 
@@ -966,6 +966,7 @@ NODE *evaluator(NODE *list, enum labels where)
    save2(ufun, last_ufun);
    save2(this_line, last_line);
    save2(var, proc);
+   save2(qm_list, argl);
    assign(var, var_stack);
    tailcall = 0;
    newcont(eval_sequence_continue);
@@ -973,6 +974,7 @@ NODE *evaluator(NODE *list, enum labels where)
 
  eval_sequence_continue:
    reset_args(var);
+   restore2(qm_list, argl);
    restore2(var, proc);
    restore2(this_line, last_line);
    restore2(ufun, last_ufun);

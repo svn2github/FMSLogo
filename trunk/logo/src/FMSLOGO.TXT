@@ -21,6 +21,8 @@ I. Kit Description/Location (http://sourceforge.net/projects/fmslogo)
 II. New features/bugs fixed:
 
   * Added for 6.13.0
+    o Fix bug #1630234: nested APPLY instructions no longer change the 
+      value of ? in the outer APPLY.
     o Fix bug #1624729; the pitch, roll, and heading values now "snap to"
       values like 0, 90, 180, and 270 as easily as they did in MSWLogo.
     o Fix bug #1625096; the TORUS.LGO and SPHERE.LGO examples no longer
