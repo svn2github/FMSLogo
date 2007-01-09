@@ -944,7 +944,17 @@ bool TMainFrame::CanClose()
 
          IsTimeToExit = false;
          IsTimeToHalt = false;
-         CMFileSave();
+         bool isOk = FileSave();
+         if (!isOk)
+            {
+            // Something went wrong (most likely, the user 
+            // pressed "Cancel" when asked to choose a filename).
+            // Give the user a chance to fix the problem.
+            IsTimeToHalt  = false;
+            IsTimeToExit  = false;
+            stopping_flag = RUN;
+            return false;
+            }
 
          IsTimeToExit = savedIsTimeToExit;
          IsTimeToHalt = savedIsTimeToHalt;
@@ -1668,20 +1678,13 @@ void TMainFrame::CMFileOpen()
       }
    }
 
-void TMainFrame::CMFileSave()
-   {
-   // if new file the switch to save file as, else save
-   if (IsNewFile)
-      {
-      SaveFileAs();
-      }
-   else
-      {
-      SaveFile();
-      }
-   }
-
-void TMainFrame::SaveFileAs()
+// Prompts the user for the name of the file to save
+// the contents as, then saves the file.
+//
+// Returns "true" if the user saves the file.
+// Returns "false" if the user cancels the save or if the 
+// file couldn't be saved for other reasons.
+bool TMainFrame::SaveFileAs()
    {
    // if new the nulify File name
    if (IsNewFile)
@@ -1696,25 +1699,61 @@ void TMainFrame::SaveFileAs()
    strcpy(FileData.FileName, FileName);
    FileData.DefExt = "lgo";
 
+   bool isOk;
    if (TFileSaveDialog(this, FileData).Execute() == IDOK)
       {
       IsNewFile = false;
       strcpy(FileName, FileData.FileName);
-      SaveFile();
+      isOk = SaveFile();
       }
+   else
+      {
+      isOk = false;
+      }
+
+   return isOk;
    }
 
-void TMainFrame::CMFileSaveAs()
-   {
-   SaveFileAs();
-   }
-
-void TMainFrame::SaveFile()
+bool TMainFrame::SaveFile()
    {
    filesave(FileName);
 
    // handle any error that may have occured
    process_special_conditions();
+
+   // BUG: don't assume the file was saved
+   return true;
+   }
+
+
+bool TMainFrame::FileSave()
+   {
+   bool isOk;
+
+   if (IsNewFile)
+      {
+      // The file has never been saved, so we don't know
+      // what file we should save it to.
+      // As the user with a "Save As" dialog.
+      isOk = SaveFileAs();
+      }
+   else
+      {
+      // Save the file
+      isOk = SaveFile();
+      }
+
+   return isOk;
+   }
+
+void TMainFrame::CMFileSave()
+   {
+   FileSave();
+   }
+
+void TMainFrame::CMFileSaveAs()
+   {
+   SaveFileAs();
    }
 
 void TMainFrame::CMBitmapPrinterArea()

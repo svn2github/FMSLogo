@@ -534,17 +534,20 @@ class TMainFrame : public TDecoratedFrame
    bool OpenDIB(FILE* File, DWORD &, DWORD &);
    bool DumpBitmapFile(LPCSTR Filename, int MaxBitCount);
    bool WriteDIB(FILE* File, int MaxBitCount);
-   void SaveFile();
-   void SaveFileAs();
-   void SaveBitmap();
-   void SaveBitmapAs();
 
+
+ protected:
    void SetupWindow();
    bool CanClose();
    void GetWindowClass(WNDCLASS & WndClass);
    char * GetClassName();
 
- protected:
+   bool FileSave();
+   bool SaveFile();
+   bool SaveFileAs();
+   void SaveBitmap();
+   void SaveBitmapAs();
+
    void EvDestroy();
    void EvTimer(UINT);
    void EvSize(UINT, TSize &);
