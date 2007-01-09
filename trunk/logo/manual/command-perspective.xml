@@ -13,14 +13,14 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-Tells the turtle to enter "perspetive" mode.
+Tells the turtle to enter "perspective" mode.
 Perspective mode adds a third dimension (Z axis) for the turtle to live in.
-Perspective is a term to describe how we will view a 3 dimensional world on a 2 dimensional surface.
+Perspective is a term to describe how we view a three-dimensional world on a two-dimensional surface.
 You should be familiar with using &PRODUCTNAME; in 2D before jumping into 3D.
 </para>
 
 <para>
-Compare this command with <link linkend="command-wrap">WRAP</link>, <link linkend="command-window">WINDOW</link>, and <link linkend="command-fence">FENCE</link>.
+You can switch out perspective mode by entering any of the 2D modes: <link linkend="command-wrap">WRAP</link>, <link linkend="command-window">WINDOW</link>, or <link linkend="command-fence">FENCE</link>.
 </para>
 
 
