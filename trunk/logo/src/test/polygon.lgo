@@ -122,6 +122,7 @@ TO POLYGONTEST.SMOKETEST
  
   ; restore to default state
   SHOWTURTLE
+  PENDOWN
   SETPENCOLOR 1
   WRAP
 END
