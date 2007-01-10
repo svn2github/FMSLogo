@@ -392,7 +392,6 @@
 #define LOCALIZED_ALTERNATE_PENSIZE                "taillecrayon" // 
 #define LOCALIZED_ALTERNATE_PENUP                  "lèvecrayon"
 #define LOCALIZED_ALTERNATE_PERSPECTIVE            "perspective"
-#define LOCALIZED_ALTERNATE_PICK                   "choisis"
 #define LOCALIZED_ALTERNATE_PITCH                  "cabrement" // 
 #define LOCALIZED_ALTERNATE_PIXEL                  "point"
 #define LOCALIZED_ALTERNATE_PLAYWAVE               "jouewave" // 
@@ -1013,7 +1012,7 @@
 #define LOCALIZED_ERROR_NETWORKDISKQUOTA           "Quota disque dépassé" // 
 #define LOCALIZED_ERROR_NETWORKINVALIDARGUMENTS    LOCALIZED_ERROR_BADINPUT // NOT_YET_LOCALIZED
 #define LOCALIZED_ERROR_NETWORKTOOMANYFILES        "Trop de fichiers ouverts" // 
-#define LOCALIZED_ERROR_NETWORKACCESSDENIED        "Accès refusé
+#define LOCALIZED_ERROR_NETWORKACCESSDENIED        "Accès refusé"
 #define LOCALIZED_ERROR_NETWORKNOTASOCKET          "Socket operation on non-socket" // NOT_YET_LOCALIZED
 #define LOCALIZED_ERROR_NETWORKADDRNOTAVAILABLE    "Impossible d'assigner l'adresse demandée" // 
 #define LOCALIZED_ERROR_NETWORKADDRINUSE           "Adresse déjà utilisée" // 
