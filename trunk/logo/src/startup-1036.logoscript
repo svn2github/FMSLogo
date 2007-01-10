@@ -124,7 +124,7 @@ catch "error [ copydef "mod               "modulo             ]
 
 
 ; preload the library routines so we can copydef them
-catch "error [(dir "toomany)]
+catch "error [(dir 1)]
 catch "error [ copydef "catalogue "dir ]
 catch "error [ copydef "cat "dir ]
 
@@ -137,7 +137,7 @@ catch "error [ copydef "tableauversliste "arraytolist ]
 catch "error [(ask)]
 catch "error [ copydef "demande   "ask ]
 
-catch "error [(buryall)]
+catch "error [(buryall 1)]
 catch "error [ copydef "enterretout   "buryall ]
 
 catch "error [(buryname)]
@@ -150,41 +150,41 @@ catch "error [(dequeue)]
 catch "error [ copydef "ôte   "dequeue ]
 catch "error [ copydef "ote   "dequeue ]
 
-catch "error [(edall)]
+catch "error [(edall 1)]
 catch "error [ copydef "édtout  "edall ]
 catch "error [ copydef "edtout  "edall ]
 
 catch "error [(edn)]
 catch "error [ copydef "édn  "edn ]
 
-catch "error [(edns)]
+catch "error [(edns 1)]
 catch "error [ copydef "édns  "edns ]
 
 catch "error [(edpl)]
 catch "error [ copydef "édlp  "edpl ]
 catch "error [ copydef "edlp  "edpl ]
 
-catch "error [(edpls)]
+catch "error [(edpls 1)]
 catch "error [ copydef "édlps  "edpls ]
 catch "error [ copydef "edlps  "edpls ]
 
-catch "error [(edps)]
+catch "error [(edps 1)]
 catch "error [ copydef "édps  "edps ]
 
 catch "error [(ern)]
 catch "error [ copydef "effacenom "ern ]
 catch "error [ copydef "efn  "ern ]
 
-catch "error [(erns)]
+catch "error [(erns 1)]
 catch "error [ copydef "efns  "erns ]
 
 catch "error [(erpl)]
 catch "error [ copydef "eflp  "erpl ]
 
-catch "error [(erpls)]
+catch "error [(erpls 1)]
 catch "error [ copydef "eflps  "erpls ]
 
-catch "error [(erps)]
+catch "error [(erps 1)]
 catch "error [ copydef "efps  "erps ]
 
 catch "error [(filep)]
@@ -228,7 +228,7 @@ catch "error [ copydef "item.md "mditem ]
 catch "error [(mdsetitem)]
 catch "error [ copydef "fixeitem.md "mdsetitem ]
 
-catch "error [(mousecopy)]
+catch "error [(mousecopy 1)]
 catch "error [ copydef "copiesouris "mousecopy ]
 
 catch "error [(name)]
@@ -237,13 +237,13 @@ catch "error [ copydef "nomme "name ]
 catch "error [(namelist)]
 catch "error [ copydef "listenoms "namelist ]
 
-catch "error [(norefresh)]
+catch "error [(norefresh 1)]
 catch "error [ copydef "finrafraichis "norefresh ]
 
-catch "error [(pen)]
+catch "error [(pen 1)]
 catch "error [ copydef "crayon "pen ]
 
-catch "error [(pennormal)]
+catch "error [(pennormal 1)]
 catch "error [ copydef "crayonnormal "pennormal ]
 
 catch "error [(pick)]
@@ -252,13 +252,13 @@ catch "error [ copydef "choisis "pick ]
 catch "error [(pllist)]
 catch "error [ copydef "listelp "pllist ]
 
-catch "error [(poall)]
+catch "error [(poall 1)]
 catch "error [ copydef "imtout "poall ]
 
 catch "error [(pon)]
 catch "error [ copydef "imn "pon ]
 
-catch "error [(pons)]
+catch "error [(pons 1)]
 catch "error [ copydef "imns "pons ]
 
 catch "error [(pop)]
@@ -267,13 +267,13 @@ catch "error [ copydef "retire "pop ]
 catch "error [(popl)]
 catch "error [ copydef "imlp "popl ]
 
-catch "error [(popls)]
+catch "error [(popls 1)]
 catch "error [ copydef "imlps "popls ]
 
-catch "error [(pops)]
+catch "error [(pops 1)]
 catch "error [ copydef "imps "pops ]
 
-catch "error [(pots)]
+catch "error [(pots 1)]
 catch "error [ copydef "imts "pots ]
 
 catch "error [(push)]
@@ -290,7 +290,7 @@ catch "error [(reduce)]
 catch "error [ copydef "réduis "reduce ]
 catch "error [ copydef "reduis "reduce ]
 
-catch "error [(refresh)]
+catch "error [(refresh 1)]
 catch "error [ copydef "rafraichis "refresh ]
 
 catch "error [(remdup)]
@@ -329,14 +329,14 @@ catch "error [(soundon)]
 catch "error [ copydef "débutson "soundon ]
 catch "error [ copydef "debutson "soundon ]
 
-catch "error [(textfont)]
+catch "error [(textfont 1)]
 catch "error [ copydef "police "textfont ]
 
 catch "error [(transfer)]
 catch "error [ copydef "transfère "transfer ]
 catch "error [ copydef "transfere "transfer ]
 
-catch "error [(unburyall)]
+catch "error [(unburyall 1)]
 catch "error [ copydef "déterretout "unburyall ]
 catch "error [ copydef "deterretout "unburyall ]
 
@@ -350,13 +350,13 @@ catch "error [ copydef "minimise "icon ]
 catch "error [(unicon)]
 catch "error [ copydef "restaure "unicon ]
 
-catch "error [(xcor)]
+catch "error [(xcor 1)]
 catch "error [ copydef "coorx "xcor ]
 
-catch "error [(ycor)]
+catch "error [(ycor 1)]
 catch "error [ copydef "coory "ycor ]
 
-catch "error [(zcor)]
+catch "error [(zcor 1)]
 catch "error [ copydef "coorz "zcor ]
 
 catch "error [(while)]
@@ -383,5 +383,4 @@ catch "error [ copydef "cercle      "circle    ]
 
 catch "error [(circle2)]
 catch "error [ copydef "cercle2     "circle2   ]
-
 
