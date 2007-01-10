@@ -190,7 +190,8 @@ sub MakeTranslationTables($$$) {
       my $original = lc $2;
 
       # they probably copydef'd the localized version
-      while ($localizedtoenglish{$original}) {
+      while ($localizedtoenglish{$original} &&
+             $localizedtoenglish{$original} ne $original) {
         $original = $localizedtoenglish{$original};
       }
 
