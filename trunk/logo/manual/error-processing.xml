@@ -78,7 +78,7 @@ The numeric error codes and their corresponding human-readable messages are give
       <row><entry>4</entry><entry>PROC doesn't like DATUM as input (not recoverable)</entry></row>
       <row><entry>5</entry><entry>PROC didn't output to PROC</entry></row>
       <row><entry>6</entry><entry>Not enough inputs to PROC</entry></row>
-      <row><entry>7</entry><entry>PROC doesn't like DATUM as input (not recoverable)</entry></row>
+      <row><entry>7</entry><entry>PROC doesn't like DATUM as input (recoverable)</entry></row>
       <row><entry>8</entry><entry>Too much inside ( )'s</entry></row>
       <row><entry>9</entry><entry>I don't know what to do with DATUM</entry></row>
       <row><entry>10</entry><entry>')' not found</entry></row>
