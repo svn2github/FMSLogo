@@ -109,10 +109,26 @@ NODE *get_bodywords(NODE *proc, NODE *name)
    return bodywords;
    }
 
+
+// Gets the first argument in the args list as a name of a variable or plist.
+// Throws recoverable bad input errors until it gets one.
 static
 NODE *name_arg(NODE *args)
    {
    while (is_aggregate(car(args)) && NOT_THROWING)
+      {
+      setcar(args, err_logo(BAD_DATA, car(args)));
+      }
+   return car(args);
+   }
+
+
+// Gets the first argument in the args list as a name of a procedure.
+// Throws recoverable bad input errors until it gets one.
+static
+NODE *proc_name_arg(NODE *args)
+   {
+   while ((is_aggregate(car(args)) || numberp(car(args))) && NOT_THROWING)
       {
       setcar(args, err_logo(BAD_DATA, car(args)));
       }
@@ -133,7 +149,7 @@ void untreeify_procnode(NODE * procnode)
 
 NODE *ltext(NODE *args)
    {
-   NODE* name = name_arg(args);
+   NODE* name = proc_name_arg(args);
    if (NOT_THROWING)
       {
       NODE* val = procnode__caseobj(intern(name));
@@ -157,7 +173,7 @@ NODE *ltext(NODE *args)
 
 NODE *lfulltext(NODE *args)
    {
-   NODE* name = name_arg(args);
+   NODE* name = proc_name_arg(args);
    if (NOT_THROWING)
       {
       NODE* val = procnode__caseobj(intern(name));
@@ -234,7 +250,7 @@ NODE *define_helper(NODE *args, int macro_flag)
    if (macro_flag >= 0)
       {
       // macro or procedure
-      name = name_arg(args);
+      name = proc_name_arg(args);
       if (NOT_THROWING)
          {
          name = intern(name);
@@ -1523,7 +1539,7 @@ NODE *lproplistp(NODE *args)
 static
 NODE *check_proctype(NODE *args, int wanted)
    {
-   NODE * arg = name_arg(args);
+   NODE * arg = proc_name_arg(args);
 
    NODE * cell;
    if (NOT_THROWING && (cell = procnode__caseobj(intern(arg))) == UNDEFINED)
@@ -1562,8 +1578,8 @@ NODE *lmacrop(NODE *args)
 
 NODE *lcopydef(NODE *args)
    {
-   NODE * arg1 = name_arg(args);
-   NODE * arg2 = name_arg(cdr(args));
+   NODE * arg1 = proc_name_arg(args);
+   NODE * arg2 = proc_name_arg(cdr(args));
    if (numberp(arg2)) 
       {
       err_logo(BAD_DATA_UNREC, arg2);

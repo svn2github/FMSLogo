@@ -30,6 +30,7 @@ II. New features/bugs fixed:
     o Fix bug #1625096; the TORUS.LGO and SPHERE.LGO examples no longer
       prevent the other from working.
     o Fix bug #1625098; French translation tables are now properly collated.
+    o Fix bug #1602864; All COPYDEF bad input errors are now recoverable.
     o Improve the translation of the French FMSLogo.
     o Minor updates to the manual.
 
