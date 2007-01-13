@@ -123,264 +123,103 @@ catch "error [ copydef "der               "dernier            ]
 catch "error [ copydef "mod               "modulo             ]
 
 
-; preload the library routines so we can copydef them
-catch "error [(dir 1)]
-catch "error [ copydef "catalogue "dir ]
-catch "error [ copydef "cat "dir ]
-
-catch "error [(abs)]
-catch "error [ copydef "absolue   "abs ]
-
-catch "error [(arraytolist)]
-catch "error [ copydef "tableauversliste "arraytolist ]
-
-catch "error [(ask)]
-catch "error [ copydef "demande   "ask ]
-
-catch "error [(buryall 1)]
-catch "error [ copydef "enterretout   "buryall ]
-
-catch "error [(buryname)]
-catch "error [ copydef "enterrenom   "buryname ]
-
-catch "error [(crossmap)]
-catch "error [ copydef "collectetout   "crossmap ]
-
-catch "error [(dequeue)]
-catch "error [ copydef "ôte   "dequeue ]
-catch "error [ copydef "ote   "dequeue ]
-
-catch "error [(edall 1)]
-catch "error [ copydef "édtout  "edall ]
-catch "error [ copydef "edtout  "edall ]
-
-catch "error [(edn)]
-catch "error [ copydef "édn  "edn ]
-
-catch "error [(edns 1)]
-catch "error [ copydef "édns  "edns ]
-
-catch "error [(edpl)]
-catch "error [ copydef "édlp  "edpl ]
-catch "error [ copydef "edlp  "edpl ]
-
-catch "error [(edpls 1)]
-catch "error [ copydef "édlps  "edpls ]
-catch "error [ copydef "edlps  "edpls ]
-
-catch "error [(edps 1)]
-catch "error [ copydef "édps  "edps ]
-
-catch "error [(ern)]
-catch "error [ copydef "effacenom "ern ]
-catch "error [ copydef "efn  "ern ]
-
-catch "error [(erns 1)]
-catch "error [ copydef "efns  "erns ]
-
-catch "error [(erpl)]
-catch "error [ copydef "eflp  "erpl ]
-
-catch "error [(erpls 1)]
-catch "error [ copydef "eflps  "erpls ]
-
-catch "error [(erps 1)]
-catch "error [ copydef "efps  "erps ]
-
-catch "error [(filep)]
-catch "error [ copydef "fichierp  "filep ]
-catch "error [ copydef "fichier?  "filep ]
-
-catch "error [(filter)]
-catch "error [ copydef "filtre "filter ]
-
-catch "error [(find)]
-catch "error [ copydef "trouve "find ]
-
-catch "error [(foreach)]
-catch "error [ copydef "pourchaque "foreach ]
-
-catch "error [(invoke)]
-catch "error [ copydef "appelle "invoke ]
-
-catch "error [(listtoarray)]
-catch "error [ copydef "listeverstableau "listtoarray ]
-
-catch "error [(macroexpand)]
-catch "error [ copydef "déploiemacro "macroexpand ]
-catch "error [ copydef "deploiemacro "macroexpand ]
-
-catch "error [(maketurtle)]
-catch "error [ copydef "donnetortue "maketurtle ]
-
-catch "error [(map)]
-catch "error [ copydef "collecte "map ]
-
-catch "error [(map.se)]
-catch "error [ copydef "collecte.ph "map.se ]
-
-catch "error [(mdarray)]
-catch "error [ copydef "tableau.md "mdarray ]
-
-catch "error [(mditem)]
-catch "error [ copydef "item.md "mditem ]
-
-catch "error [(mdsetitem)]
-catch "error [ copydef "fixeitem.md "mdsetitem ]
-
-catch "error [(mousecopy 1)]
-catch "error [ copydef "copiesouris "mousecopy ]
-
-catch "error [(name)]
-catch "error [ copydef "nomme "name ]
-
-catch "error [(namelist)]
-catch "error [ copydef "listenoms "namelist ]
-
-catch "error [(norefresh 1)]
-catch "error [ copydef "finrafraichis "norefresh ]
-
-catch "error [(pen 1)]
-catch "error [ copydef "crayon "pen ]
-
-catch "error [(pennormal 1)]
-catch "error [ copydef "crayonnormal "pennormal ]
-
-catch "error [(pick)]
-catch "error [ copydef "choisis "pick ]
-
-catch "error [(pllist)]
-catch "error [ copydef "listelp "pllist ]
-
-catch "error [(poall 1)]
-catch "error [ copydef "imtout "poall ]
-
-catch "error [(pon)]
-catch "error [ copydef "imn "pon ]
-
-catch "error [(pons 1)]
-catch "error [ copydef "imns "pons ]
-
-catch "error [(pop)]
-catch "error [ copydef "retire "pop ]
-
-catch "error [(popl)]
-catch "error [ copydef "imlp "popl ]
-
-catch "error [(popls 1)]
-catch "error [ copydef "imlps "popls ]
-
-catch "error [(pops 1)]
-catch "error [ copydef "imps "pops ]
-
-catch "error [(pots 1)]
-catch "error [ copydef "imts "pots ]
-
-catch "error [(push)]
-catch "error [ copydef "empile "push ]
-
-catch "error [(queue)]
-catch "error [ copydef "ajoute "queue ]
-
-catch "error [(quoted)]
-catch "error [ copydef "cité "quoted ]
-catch "error [ copydef "cite "quoted ]
-
-catch "error [(reduce)]
-catch "error [ copydef "réduis "reduce ]
-catch "error [ copydef "reduis "reduce ]
-
-catch "error [(refresh 1)]
-catch "error [ copydef "rafraichis "refresh ]
-
-catch "error [(remdup)]
-catch "error [ copydef "enlèvedup "remdup ]
-catch "error [ copydef "enlevedup "remdup ]
-
-catch "error [(remove)]
-catch "error [ copydef "enlève "remove ]
-catch "error [ copydef "enleve "remove ]
-
-catch "error [(reverse)]
-catch "error [ copydef "inverse "reverse ]
-
-catch "error [(savel)]
-catch "error [ copydef "sauvel "savel ]
-
-catch "error [(setorientation)]
-catch "error [ copydef "fixeorientation "setorientation ]
-
-catch "error [(setpen)]
-catch "error [ copydef "fixecrayon "setpen ]
-
-catch "error [(sign)]
-catch "error [ copydef "signe "sign ]
-
-catch "error [(slowdraw)]
-catch "error [ copydef "ralentis "slowdraw ]
-
-catch "error [(sort)]
-catch "error [ copydef "trie "sort ]
-
-catch "error [(soundoff)]
-catch "error [ copydef "finson "soundoff ]
-
-catch "error [(soundon)]
-catch "error [ copydef "débutson "soundon ]
-catch "error [ copydef "debutson "soundon ]
-
-catch "error [(textfont 1)]
-catch "error [ copydef "police "textfont ]
-
-catch "error [(transfer)]
-catch "error [ copydef "transfère "transfer ]
-catch "error [ copydef "transfere "transfer ]
-
-catch "error [(unburyall 1)]
-catch "error [ copydef "déterretout "unburyall ]
-catch "error [ copydef "deterretout "unburyall ]
-
-catch "error [(unburyname)]
-catch "error [ copydef "déterrenom "unburyname ]
-catch "error [ copydef "deterrenom "unburyname ]
-
-catch "error [(icon)]
-catch "error [ copydef "minimise "icon ]
-
-catch "error [(unicon)]
-catch "error [ copydef "restaure "unicon ]
-
-catch "error [(xcor 1)]
-catch "error [ copydef "coorx "xcor ]
-
-catch "error [(ycor 1)]
-catch "error [ copydef "coory "ycor ]
-
-catch "error [(zcor 1)]
-catch "error [ copydef "coorz "zcor ]
-
-catch "error [(while)]
-catch "error [ copydef "tantque   "while ]
-
-catch "error [(for)]
-catch "error [ copydef "repetepour "for ]
-catch "error [ copydef "répètepour "for ]
-
-catch "error [(until)]
-catch "error [ copydef "jusque "until ]
-
-catch "error [(do.until)]
-catch "error [ copydef "fais.jusque "do.until ]
-
-catch "error [(do.while)]
-catch "error [ copydef "fais.tantque "do.while ]
-
-catch "error [(localmake)]
-catch "error [ copydef "donnelocale "localmake ]
-
-catch "error [(circle)]
-catch "error [ copydef "cercle      "circle    ]
-
-catch "error [(circle2)]
-catch "error [ copydef "cercle2     "circle2   ]
-
+; copydef of library routines
+catch "error [ copydef "absolue          "abs            ]
+catch "error [ copydef "tableauversliste "arraytolist    ]
+catch "error [ copydef "demande          "ask            ]
+catch "error [ copydef "enterretout      "buryall        ]
+catch "error [ copydef "enterrenom       "buryname       ]
+catch "error [ copydef "cercle           "circle         ]
+catch "error [ copydef "cercle2          "circle2        ]
+catch "error [ copydef "collectetout     "crossmap       ]
+catch "error [ copydef "ôte              "dequeue        ]
+catch "error [ copydef "ote              "dequeue        ]
+catch "error [ copydef "catalogue        "dir            ]
+catch "error [ copydef "cat              "dir            ]
+catch "error [ copydef "fais.jusque      "do.until       ]
+catch "error [ copydef "fais.tantque     "do.while       ]
+catch "error [ copydef "édtout           "edall          ]
+catch "error [ copydef "edtout           "edall          ]
+catch "error [ copydef "édn              "edn            ]
+catch "error [ copydef "édns             "edns           ]
+catch "error [ copydef "édlp             "edpl           ]
+catch "error [ copydef "edlp             "edpl           ]
+catch "error [ copydef "édlps            "edpls          ]
+catch "error [ copydef "edlps            "edpls          ]
+catch "error [ copydef "édps             "edps           ]
+catch "error [ copydef "effacenom        "ern            ]
+catch "error [ copydef "efn              "ern            ]
+catch "error [ copydef "efns             "erns           ]
+catch "error [ copydef "eflp             "erpl           ]
+catch "error [ copydef "eflps            "erpls          ]
+catch "error [ copydef "efps             "erps           ]
+catch "error [ copydef "fichierp         "filep          ]
+catch "error [ copydef "fichier?         "filep          ]
+catch "error [ copydef "filtre           "filter         ]
+catch "error [ copydef "trouve           "find           ]
+catch "error [ copydef "repetepour       "for            ]
+catch "error [ copydef "répètepour       "for            ]
+catch "error [ copydef "pourchaque       "foreach        ]
+catch "error [ copydef "minimise         "icon           ]
+catch "error [ copydef "appelle          "invoke         ]
+catch "error [ copydef "listeverstableau "listtoarray    ]
+catch "error [ copydef "donnelocale      "localmake      ]
+catch "error [ copydef "déploiemacro     "macroexpand    ]
+catch "error [ copydef "deploiemacro     "macroexpand    ]
+catch "error [ copydef "donnetortue      "maketurtle     ]
+catch "error [ copydef "collecte         "map            ]
+catch "error [ copydef "collecte.ph      "map.se         ]
+catch "error [ copydef "tableau.md       "mdarray        ]
+catch "error [ copydef "item.md          "mditem         ]
+catch "error [ copydef "fixeitem.md      "mdsetitem      ]
+catch "error [ copydef "copiesouris      "mousecopy      ]
+catch "error [ copydef "nomme            "name           ]
+catch "error [ copydef "listenoms        "namelist       ]
+catch "error [ copydef "finrafraichis    "norefresh      ]
+catch "error [ copydef "crayon           "pen            ]
+catch "error [ copydef "crayonnormal     "pennormal      ]
+catch "error [ copydef "choisis          "pick           ]
+catch "error [ copydef "listelp          "pllist         ]
+catch "error [ copydef "imtout           "poall          ]
+catch "error [ copydef "imn              "pon            ]
+catch "error [ copydef "imns             "pons           ]
+catch "error [ copydef "retire           "pop            ]
+catch "error [ copydef "imlp             "popl           ]
+catch "error [ copydef "imlps            "popls          ]
+catch "error [ copydef "imps             "pops           ]
+catch "error [ copydef "imts             "pots           ]
+catch "error [ copydef "empile           "push           ]
+catch "error [ copydef "ajoute           "queue          ]
+catch "error [ copydef "cité             "quoted         ]
+catch "error [ copydef "cite             "quoted         ]
+catch "error [ copydef "réduis           "reduce         ]
+catch "error [ copydef "reduis           "reduce         ]
+catch "error [ copydef "rafraichis       "refresh        ]
+catch "error [ copydef "enlèvedup        "remdup         ]
+catch "error [ copydef "enlevedup        "remdup         ]
+catch "error [ copydef "enlève           "remove         ]
+catch "error [ copydef "enleve           "remove         ]
+catch "error [ copydef "inverse          "reverse        ]
+catch "error [ copydef "sauvel           "savel          ]
+catch "error [ copydef "fixeorientation  "setorientation ]
+catch "error [ copydef "fixecrayon       "setpen         ]
+catch "error [ copydef "signe            "sign           ]
+catch "error [ copydef "ralentis         "slowdraw       ]
+catch "error [ copydef "trie             "sort           ]
+catch "error [ copydef "finson           "soundoff       ]
+catch "error [ copydef "débutson         "soundon        ]
+catch "error [ copydef "debutson         "soundon        ]
+catch "error [ copydef "police           "textfont       ]
+catch "error [ copydef "transfère        "transfer       ]
+catch "error [ copydef "transfere        "transfer       ]
+catch "error [ copydef "déterretout      "unburyall      ]
+catch "error [ copydef "deterretout      "unburyall      ]
+catch "error [ copydef "déterrenom       "unburyname     ]
+catch "error [ copydef "deterrenom       "unburyname     ]
+catch "error [ copydef "restaure         "unicon         ]
+catch "error [ copydef "jusque           "until          ]
+catch "error [ copydef "tantque          "while          ]
+catch "error [ copydef "coorx            "xcor           ]
+catch "error [ copydef "coory            "ycor           ]
+catch "error [ copydef "coorz            "zcor           ]
+  
