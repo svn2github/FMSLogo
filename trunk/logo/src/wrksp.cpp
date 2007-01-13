@@ -1580,58 +1580,64 @@ NODE *lcopydef(NODE *args)
    {
    NODE * arg1 = proc_name_arg(args);
    NODE * arg2 = proc_name_arg(cdr(args));
-   if (numberp(arg2)) 
+
+   if (stopping_flag == THROWING)
       {
-      err_logo(BAD_DATA_UNREC, arg2);
-      }
-   if (numberp(arg1))
-      {
-      err_logo(BAD_DATA_UNREC, arg1);
+      return Unbound;
       }
 
-   if (NOT_THROWING)
+   arg1 = intern(arg1);
+   arg2 = intern(arg2);
+
+   if (stopping_flag == THROWING)
       {
-      arg1 = intern(arg1);
-      arg2 = intern(arg2);
+      return Unbound;
       }
-   if (NOT_THROWING && procnode__caseobj(arg2) == UNDEFINED)
+
+   // load the procedure, in case we're copydef'ing a library routine
+   NODE * new_proc = load_procedure_if_necessary(arg2);
+   if (procnode__caseobj(arg2) == UNDEFINED)
       {
+      // the second input isn't the name of a procedure
       err_logo(DK_HOW, arg2);
+      return Unbound;
       }
 
    bool redef = variableIsTrue(Redefp);
-   if (NOT_THROWING && !redef && is_prim(procnode__caseobj(arg1)))
+   if (!redef && is_prim(procnode__caseobj(arg1)))
       {
+      // attempted to redefine a primitive
       err_logo(IS_PRIM, arg1);
+      return Unbound;
       }
-   if (NOT_THROWING)
+
+   NODE *old_proc = procnode__caseobj(arg1);
+   if (old_proc != UNDEFINED)
       {
-      NODE *old_proc = procnode__caseobj(arg1);
-      NODE *new_proc = procnode__caseobj(arg2);
-      if (old_proc != UNDEFINED)
-         {
-         untreeify_procnode(old_proc);
+      // The first input was already defined as something,
+      // so we must redefine it.
+      untreeify_procnode(old_proc);
 
-         int old_default = get_default_args_for_procedure(old_proc);
-         int new_default = get_default_args_for_procedure(new_proc);
+      int old_default = get_default_args_for_procedure(old_proc);
+      int new_default = get_default_args_for_procedure(new_proc);
 
-         if (old_default != new_default)
-            {
-            set_new_generation();
-            }
-         }
-
-      setprocnode__caseobj(arg1, new_proc);
-      setflag__caseobj(arg1, PROC_BURIED);
-      if (is_macro(arg2)) 
+      if (old_default != new_default)
          {
-         setflag__caseobj(arg1, PROC_MACRO);
-         }
-      else 
-         {
-         clearflag__caseobj(arg1, PROC_MACRO);
+         set_new_generation();
          }
       }
+
+   // set the first input to have the same procdure as the second input
+   setprocnode__caseobj(arg1, new_proc);
+   setflag__caseobj(arg1, PROC_BURIED);
+   if (is_macro(arg2)) 
+      {
+      setflag__caseobj(arg1, PROC_MACRO);
+      }
+   else 
+      {
+      clearflag__caseobj(arg1, PROC_MACRO);
+      }
+
    return Unbound;
    }
-
