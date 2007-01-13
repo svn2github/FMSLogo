@@ -1,92 +1,125 @@
 <chapter id="commander">
    <title>Commander</title>
-   <para>The commander is where you will spend most of your &PRODUCTNAME; session.
+
+<para>
+The Commander is where you spend most of your &PRODUCTNAME; session.
 It is the means by which you instruct &PRODUCTNAME; to do what you want.
-The most important control (box) within the commander is the Input Box.
-It is located in the bottom left portion of the commander window.
-For information on the different controls, see the specific box below.</para>
+It is also where &PRODUCTNAME; communicates back to you, displaying output and error message.
+The Commander also has buttons that give you quick-access to important ways of controlling your &GENERICNAME; environment.
+</para>
 
 
    <section id="commander-input">
       <title>Input Box</title>
-      <para>The input box is tied to the <link linkend="commander-history">Output/Command-Recall List</link> and to the <link linkend="commander-execute">Execute</link> button.
-You can also edit the text in the input box.
-If what your typing doesn't fit, it will scroll automatically.
-Once your command is in the input box you need to execute it.
-You can do this by hitting <keycap>ENTER</keycap> or clicking on the execute button.
-Using the Up/Down arrow keys will automatically jump to (set focus to) the output/command-recall list box.
-This control also supports <link linkend="editor-context-help">Context Sensitive Help</link> and <link linkend="editor-clipboard">Editing with the Clipboard</link>.</para>
+<para>
+The input box is tied to the <link linkend="commander-history">Output/Command-Recall List</link> and the <link linkend="commander-execute">Execute</link> button.
+You type instructions in the input box and then have &GENERICNAME; run them when you
+press the <keycap>ENTER</keycap> key or the Execute button.
+Pressing the Up/Down arrow keys automatically jumps (gives focus) to the output/command-recall list box.
+</para>
+<para>
+The Input Box supports <link linkend="editor-context-help">Context Sensitive Help</link>.
+</para>
    </section>
 
    <section id="commander-history">
       <title>Output/Command-Recall List Box</title>
-      <para>The output/command-recall list box will record all output including what you type into the <link linkend="commander-input">Input Box</link>.
-You can select a command for re-execution by clicking on the desired line or by using the arrow keys.
-If something went out of view, use the scroll bar.
-Once a line is clicked on it is automatically copied to the Input Box.
-A double-click on the mouse will automatically execute what you're pointing at.
-This control also supports <link linkend="editor-context-help">Context Sensitive Help</link> and <link linkend="editor-clipboard">Editing with the Clipboard</link>.</para>
+<para>
+The output/command-recall list box records all output, as well as every instruction you run from the <link linkend="commander-input">Input Box</link>.
+You can select an instruction to be re-run by clicking on the desired line or by using the arrow keys.
+When a line is clicked, it is automatically copied to the Input Box.
+Double-clicking on a line in the Output box runs it as a &GENERICNAME; instruction.
+</para>
+<para>
+The output/command-recall list box supports <link linkend="editor-context-help">Context Sensitive Help</link>.
+</para>
    </section>
 
    <section id="commander-execute">
       <title>Execute Button</title>
-      <para>The execute button executes what is in the <link linkend="commander-input">Input Box</link> and is also "pushed" when you hit the <keycap>ENTER</keycap> key.</para>
+<para>
+Pressing the Execute button runs whatever is in the <link linkend="commander-input">Input Box</link>.
+It is the same as pressing the <keycap>ENTER</keycap> key, except that you can use it to interrupt &GENERICNAME; while is busy running other instructions.
+</para>
    </section>
 
    <section id="commander-status">
       <title>Status Button</title>
-      <para>This button pops up a status window telling you what &PRODUCTNAME; is up to.
-Click it again to close the window.
-See also the <link linkend="command-status">STATUS</link> and <link linkend="command-nostatus">NOSTATUS</link> commands.</para>
+<para>
+Pressing the Status button displays a status window that shows you what &PRODUCTNAME; is up to.
+Pressing it a second time closes the window.
+</para>
+<para>
+See also the <link linkend="command-status">STATUS</link> and <link linkend="command-nostatus">NOSTATUS</link> commands.
+</para>
    </section>
 
    <section id="commander-trace">
       <title>Trace Button</title>
-      <para>The trace button turns on tracing for debugging your programs.
-Click again to disable tracing.
-You can turn tracing on or off even while &PRODUCTNAME; it running.
+<para>
+Pressing the Trace button enables tracing on all procedures.
+This makes it easier to debug your programs.
+Pressing it a second time disables tracing.
+You can enable or disable tracing while &PRODUCTNAME; is running.
 Note that the trace button works independent of what you are tracing with the TRACE command.
-See also <link linkend="command-trace">TRACE</link> and <link linkend="command-untrace">UNTRACE</link> commands.</para>
+</para>
+<para>
+See also the <link linkend="command-trace">TRACE</link> and <link linkend="command-untrace">UNTRACE</link> commands.
+</para>
    </section>
 
 
    <section id="commander-halt">
       <title>Halt Button</title>
-      <para>The halt button immediately stops &PRODUCTNAME; from processing any further.
-After pressing it, &PRODUCTNAME; will be waiting for a new command.
-See also the <link linkend="command-halt">HALT</link> command.</para>
+<para>
+Pressing the Halt button stops &PRODUCTNAME; from processing any further instructions.
+It works by throwing a "Stopping..." error.
+Pressing the Halt button will leave &PRODUCTNAME; waiting for your next instruction, assuming that the "Stopping..." error isn't caught.
+</para>
+<para>
+See also the <link linkend="command-halt">HALT</link> command.
+</para>
    </section>
 
 
    <section id="commander-reset">
       <title>Reset Button</title>
-      <para>The reset button is like the <link linkend="command-clearscreen">CLEARSCREEN</link> command; it resets the &PRODUCTNAME; screen.</para>
+<para>The Reset button is like the <link linkend="command-clearscreen">CLEARSCREEN</link> command; it resets the &PRODUCTNAME; screen and sends the turtle home.</para>
    </section>
 
 
    <section id="commander-step">
-      <title>Step Button</title>
-      <para>The step button turns on single stepping for debugging your programs.
-Click again to disable single stepping.
-You can turn single stepping on or off even while &PRODUCTNAME; is running.
-Note that the step button works independent of what you are stepping with the STEP command.
-See also <link linkend="command-step">STEP</link> and <link linkend="command-unstep">UNSTEP</link> commands.</para>
+
+       <title>Step Button</title>
+<para>
+Pressing the Step button enables single stepping on all procedures.
+This is helpful when debugging your programs.
+Pressing the Step button a second time disables single stepping.
+You can enable or disable single stepping while &PRODUCTNAME; is running.
+Note that the Step button works independent of what you are stepping with the STEP command.
+</para>
+
+<para>
+See also the <link linkend="command-step">STEP</link> and <link linkend="command-unstep">UNSTEP</link> commands.
+</para>
    </section>
 
 
    <section id="commander-pause">
       <title>Pause Button</title>
-      <para>The pause button stops &PRODUCTNAME; so that you can examine variables, make changes or whatever.
-Once paused the pause button will show what depth you paused to.
-To continue you can issue a <link linkend="command-continue">CONTINUE</link> command or hit Cancel.
-You can also issue a <link linkend="command-pause">PAUSE</link> command within code to act as a "Break Point".
-You can think of pause and continue as sort of a Halt-n-Push and Pop-n-Continue of your state respectively.</para>
+<para>
+Pressing the Pause button stops &PRODUCTNAME; so that you can examine variables, make changes, or whatever else you want to do.
+To continue you can issue a <link linkend="command-continue">CONTINUE</link> command or press the Cancel button.
+You can also run the <link linkend="command-pause">PAUSE</link> command from your programs to act as a "Break Point".
+</para>
    </section>
 
    <section id="commander-edall">
       <title>Edall Button</title>
-      <para>The Edall button opens the contents of the entire workspace (all unburied procedures, variables, and property lists) in the <link linkend="editor">Editor</link>.
-This is the same as running the <link linkend="command-edall">EDALL</link> command.</para>
+<para>
+Pressing the Edall button opens the contents of the entire workspace (all unburied procedures, variables, and property lists) in the <link linkend="editor">Editor</link>.
+This is the same as running the <link linkend="command-edall">EDALL</link> command.
+</para>
    </section>
 
 </chapter>
