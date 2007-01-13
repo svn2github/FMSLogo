@@ -87,6 +87,10 @@
        <entry>tableaup</entry>
      </row>
      <row>
+       <entry><link linkend='command-arraytolist'>arraytolist</link></entry>
+       <entry>tableauversliste</entry>
+     </row>
+     <row>
        <entry><link linkend='command-ascii'>ascii</link></entry>
        <entry>ascii</entry>
      </row>
@@ -97,6 +101,10 @@
      <row>
        <entry><link linkend='command-ashift'>ashift</link></entry>
        <entry>decale</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-ask'>ask</link></entry>
+       <entry>demande</entry>
      </row>
      <row>
        <entry><link linkend='command-back'>back</link></entry>
@@ -140,47 +148,63 @@
      </row>
      <row>
        <entry><link linkend='command-bitblock'>bitblock</link></entry>
-       <entry>blocbmp</entry>
+       <entry>pavé</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-bitblock'>bitblock</link></entry>
+       <entry>pave</entry>
      </row>
      <row>
        <entry><link linkend='command-bitcopy'>bitcopy</link></entry>
-       <entry>copiebmp</entry>
+       <entry>copiedessin</entry>
      </row>
      <row>
        <entry><link linkend='command-bitcut'>bitcut</link></entry>
-       <entry>coupebmp</entry>
+       <entry>coupedessin</entry>
      </row>
      <row>
        <entry><link linkend='command-bitfit'>bitfit</link></entry>
-       <entry>ajustebmp</entry>
+       <entry>ajustedessin</entry>
      </row>
      <row>
        <entry><link linkend='command-bitindex'>bitindex</link></entry>
-       <entry>indexbmp</entry>
+       <entry>indexdessin</entry>
      </row>
      <row>
        <entry><link linkend='command-bitload'>bitload</link></entry>
-       <entry>ramènebmp</entry>
+       <entry>ramènedessin</entry>
      </row>
      <row>
        <entry><link linkend='command-bitload'>bitload</link></entry>
-       <entry>ramenebmp</entry>
+       <entry>ramenedessin</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-bitload'>bitload</link></entry>
+       <entry>ramènedes</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-bitload'>bitload</link></entry>
+       <entry>ramenedes</entry>
      </row>
      <row>
        <entry><link linkend='command-bitloadsize'>bitloadsize</link></entry>
-       <entry>ramènetaillebmp</entry>
+       <entry>ramènetailledes</entry>
      </row>
      <row>
        <entry><link linkend='command-bitloadsize'>bitloadsize</link></entry>
-       <entry>ramenetaillebmp</entry>
+       <entry>ramenetailledes</entry>
      </row>
      <row>
        <entry><link linkend='command-bitmapturtle'>bitmapturtle</link></entry>
-       <entry>tortuebmp</entry>
+       <entry>formetortue</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-bitmapturtle'>bitmapturtle</link></entry>
+       <entry>forme</entry>
      </row>
      <row>
        <entry><link linkend='command-bitmode'>bitmode</link></entry>
-       <entry>modebmp</entry>
+       <entry>modedessin</entry>
      </row>
      <row>
        <entry><link linkend='command-bitnot'>bitnot</link></entry>
@@ -192,19 +216,23 @@
      </row>
      <row>
        <entry><link linkend='command-bitpaste'>bitpaste</link></entry>
-       <entry>collerbmp</entry>
+       <entry>colledessin</entry>
      </row>
      <row>
        <entry><link linkend='command-bitpastetoindex'>bitpastetoindex</link></entry>
-       <entry>collerbmpindex</entry>
+       <entry>collesurindex</entry>
      </row>
      <row>
        <entry><link linkend='command-bitsave'>bitsave</link></entry>
-       <entry>sauvebmp</entry>
+       <entry>sauvedessin</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-bitsave'>bitsave</link></entry>
+       <entry>sauvedes</entry>
      </row>
      <row>
        <entry><link linkend='command-bitsize'>bitsize</link></entry>
-       <entry>taillebmp</entry>
+       <entry>tailledessin</entry>
      </row>
      <row>
        <entry><link linkend='command-bitxor'>bitxor</link></entry>
@@ -220,15 +248,23 @@
      </row>
      <row>
        <entry><link linkend='command-buried'>buried</link></entry>
-       <entry>enterré</entry>
+       <entry>enterrées</entry>
      </row>
      <row>
        <entry><link linkend='command-buried'>buried</link></entry>
-       <entry>enterre</entry>
+       <entry>enterrees</entry>
      </row>
      <row>
        <entry><link linkend='command-bury'>bury</link></entry>
        <entry>enterre</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-buryall'>buryall</link></entry>
+       <entry>enterretout</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-buryname'>buryname</link></entry>
+       <entry>enterrenom</entry>
      </row>
      <row>
        <entry><link linkend='command-butfirst'>butfirst</link></entry>
@@ -236,7 +272,7 @@
      </row>
      <row>
        <entry><link linkend='command-butfirsts'>butfirsts</link></entry>
-       <entry>bsaufpremiers</entry>
+       <entry>saufpremiers</entry>
      </row>
      <row>
        <entry><link linkend='command-butlast'>butlast</link></entry>
@@ -284,6 +320,10 @@
      </row>
      <row>
        <entry><link linkend='command-chdir'>chdir</link></entry>
+       <entry>chrép</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-chdir'>chdir</link></entry>
        <entry>chrep</entry>
      </row>
      <row>
@@ -296,7 +336,7 @@
      </row>
      <row>
        <entry><link linkend='command-checkboxdelete'>checkboxdelete</link></entry>
-       <entry>ceffacecasechoix</entry>
+       <entry>effacecasechoix</entry>
      </row>
      <row>
        <entry><link linkend='command-checkboxenable'>checkboxenable</link></entry>
@@ -304,7 +344,7 @@
      </row>
      <row>
        <entry><link linkend='command-checkboxget'>checkboxget</link></entry>
-       <entry>casexhoix</entry>
+       <entry>casechoix</entry>
      </row>
      <row>
        <entry><link linkend='command-checkboxset'>checkboxset</link></entry>
@@ -340,7 +380,7 @@
      </row>
      <row>
        <entry><link linkend='command-cleartimer'>cleartimer</link></entry>
-       <entry>cvidechrono</entry>
+       <entry>videchrono</entry>
      </row>
      <row>
        <entry><link linkend='command-close'>close</link></entry>
@@ -411,6 +451,10 @@
        <entry>compte</entry>
      </row>
      <row>
+       <entry><link linkend='command-crossmap'>crossmap</link></entry>
+       <entry>collectetout</entry>
+     </row>
+     <row>
        <entry><link linkend='command-cs'>cs</link></entry>
        <entry>vé</entry>
      </row>
@@ -451,6 +495,14 @@
        <entry>procédurep</entry>
      </row>
      <row>
+       <entry><link linkend='command-dequeue'>dequeue</link></entry>
+       <entry>ôte</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-dequeue'>dequeue</link></entry>
+       <entry>ote</entry>
+     </row>
+     <row>
        <entry><link linkend='command-dialogcreate'>dialogcreate</link></entry>
        <entry>créedialogue</entry>
      </row>
@@ -464,23 +516,31 @@
      </row>
      <row>
        <entry><link linkend='command-dialogenable'>dialogenable</link></entry>
-       <entry>dialogueactive</entry>
+       <entry>activedialogue</entry>
      </row>
      <row>
        <entry><link linkend='command-dialogfileopen'>dialogfileopen</link></entry>
-       <entry>dialogueouvrir</entry>
+       <entry>ouvrefichier</entry>
      </row>
      <row>
        <entry><link linkend='command-dialogfilesave'>dialogfilesave</link></entry>
-       <entry>dialoguesauver</entry>
+       <entry>sauvefichier</entry>
      </row>
      <row>
        <entry><link linkend='command-difference'>difference</link></entry>
        <entry>différence</entry>
      </row>
      <row>
+       <entry><link linkend='command-difference'>difference</link></entry>
+       <entry>difference</entry>
+     </row>
+     <row>
        <entry><link linkend='command-dir'>dir</link></entry>
        <entry>catalogue</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-dir'>dir</link></entry>
+       <entry>cat</entry>
      </row>
      <row>
        <entry><link linkend='command-directories'>directories</link></entry>
@@ -508,11 +568,11 @@
      </row>
      <row>
        <entry><link linkend='command-do.until'>do.until</link></entry>
-       <entry>fairejusque</entry>
+       <entry>fais.jusque</entry>
      </row>
      <row>
        <entry><link linkend='command-do.while'>do.while</link></entry>
-       <entry>fairetantque</entry>
+       <entry>fais.tantque</entry>
      </row>
      <row>
        <entry><link linkend='command-down'>down</link></entry>
@@ -531,6 +591,18 @@
        <entry>éd</entry>
      </row>
      <row>
+       <entry><link linkend='command-ed'>ed</link></entry>
+       <entry>ed</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-edall'>edall</link></entry>
+       <entry>édtout</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-edall'>edall</link></entry>
+       <entry>edtout</entry>
+     </row>
+     <row>
        <entry><link linkend='command-edit'>edit</link></entry>
        <entry>édite</entry>
      </row>
@@ -539,8 +611,36 @@
        <entry>edite</entry>
      </row>
      <row>
+       <entry><link linkend='command-edn'>edn</link></entry>
+       <entry>édn</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-edns'>edns</link></entry>
+       <entry>édns</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-edpl'>edpl</link></entry>
+       <entry>édlp</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-edpl'>edpl</link></entry>
+       <entry>edlp</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-edpls'>edpls</link></entry>
+       <entry>édlps</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-edpls'>edpls</link></entry>
+       <entry>edlps</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-edps'>edps</link></entry>
+       <entry>édps</entry>
+     </row>
+     <row>
        <entry><link linkend='command-ellipsearc'>ellipsearc</link></entry>
-       <entry>arcellipse</entry>
+       <entry>ellipsearc</entry>
      </row>
      <row>
        <entry><link linkend='command-emptyp'>empty?</link></entry>
@@ -596,7 +696,27 @@
      </row>
      <row>
        <entry><link linkend='command-ern'>ern</link></entry>
-       <entry>effacevarible</entry>
+       <entry>effacenom</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-ern'>ern</link></entry>
+       <entry>efn</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-erns'>erns</link></entry>
+       <entry>efns</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-erpl'>erpl</link></entry>
+       <entry>eflp</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-erpls'>erpls</link></entry>
+       <entry>eflps</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-erps'>erps</link></entry>
+       <entry>efps</entry>
      </row>
      <row>
        <entry><link linkend='command-error'>error</link></entry>
@@ -604,11 +724,11 @@
      </row>
      <row>
        <entry><link linkend='command-eventcheck'>eventcheck</link></entry>
-       <entry>testévénement</entry>
+       <entry>testév</entry>
      </row>
      <row>
        <entry><link linkend='command-eventcheck'>eventcheck</link></entry>
-       <entry>testevenement</entry>
+       <entry>testev</entry>
      </row>
      <row>
        <entry><link linkend='command-exp'>exp</link></entry>
@@ -627,6 +747,14 @@
        <entry>clos</entry>
      </row>
      <row>
+       <entry><link linkend='command-filep'>filep</link></entry>
+       <entry>fichierp</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-filep'>filep</link></entry>
+       <entry>fichier?</entry>
+     </row>
+     <row>
        <entry><link linkend='command-files'>files</link></entry>
        <entry>fichiers</entry>
      </row>
@@ -635,8 +763,20 @@
        <entry>remplis</entry>
      </row>
      <row>
+       <entry><link linkend='command-filter'>filter</link></entry>
+       <entry>filtre</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-find'>find</link></entry>
+       <entry>trouve</entry>
+     </row>
+     <row>
        <entry><link linkend='command-first'>first</link></entry>
        <entry>premier</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-first'>first</link></entry>
+       <entry>prem</entry>
      </row>
      <row>
        <entry><link linkend='command-firsts'>firsts</link></entry>
@@ -645,6 +785,10 @@
      <row>
        <entry><link linkend='command-floodcolor'>floodcolor</link></entry>
        <entry>couleurremplissage</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-floodcolor'>floodcolor</link></entry>
+       <entry>cr</entry>
      </row>
      <row>
        <entry><link linkend='command-fontfacenames'>fontfacenames</link></entry>
@@ -657,6 +801,10 @@
      <row>
        <entry><link linkend='command-for'>for</link></entry>
        <entry>répètepour</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-foreach'>foreach</link></entry>
+       <entry>pourchaque</entry>
      </row>
      <row>
        <entry><link linkend='command-forever'>forever</link></entry>
@@ -675,12 +823,16 @@
        <entry>metspremier</entry>
      </row>
      <row>
-       <entry><link linkend='command-fs'>fs</link></entry>
-       <entry>pé</entry>
+       <entry><link linkend='command-fput'>fput</link></entry>
+       <entry>mp</entry>
      </row>
      <row>
        <entry><link linkend='command-fs'>fs</link></entry>
-       <entry>pe</entry>
+       <entry>péc</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-fs'>fs</link></entry>
+       <entry>pec</entry>
      </row>
      <row>
        <entry><link linkend='command-fullscreen'>fullscreen</link></entry>
@@ -697,6 +849,14 @@
      <row>
        <entry><link linkend='command-getfocus'>getfocus</link></entry>
        <entry>focus</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-gifload'>gifload</link></entry>
+       <entry>ramènegif</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-gifload'>gifload</link></entry>
+       <entry>ramenegif</entry>
      </row>
      <row>
        <entry><link linkend='command-gifload'>gifload</link></entry>
@@ -725,6 +885,14 @@
      <row>
        <entry><link linkend='command-greaterp'>greater?</link></entry>
        <entry>superieur?</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-greaterp'>greater?</link></entry>
+       <entry>sup?</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-greaterp'>greater?</link></entry>
+       <entry>plg?</entry>
      </row>
      <row>
        <entry><link linkend='command-greaterp'>greaterp</link></entry>
@@ -775,6 +943,10 @@
        <entry>ct</entry>
      </row>
      <row>
+       <entry><link linkend='command-icon'>icon</link></entry>
+       <entry>minimise</entry>
+     </row>
+     <row>
        <entry><link linkend='command-if'>if</link></entry>
        <entry>si</entry>
      </row>
@@ -815,6 +987,10 @@
        <entry>tronque</entry>
      </row>
      <row>
+       <entry><link linkend='command-invoke'>invoke</link></entry>
+       <entry>appelle</entry>
+     </row>
+     <row>
        <entry><link linkend='command-item'>item</link></entry>
        <entry>item</entry>
      </row>
@@ -836,7 +1012,7 @@
      </row>
      <row>
        <entry><link linkend='command-keyboardvalue'>keyboardvalue</link></entry>
-       <entry>kvaleurclavier</entry>
+       <entry>clavier</entry>
      </row>
      <row>
        <entry><link linkend='command-keyp'>keyp</link></entry>
@@ -851,16 +1027,32 @@
        <entry>etiquette</entry>
      </row>
      <row>
+       <entry><link linkend='command-label'>label</link></entry>
+       <entry>etiquette</entry>
+     </row>
+     <row>
        <entry><link linkend='command-labelfont'>labelfont</link></entry>
-       <entry>police</entry>
+       <entry>policeétiquette</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-labelfont'>labelfont</link></entry>
+       <entry>policeetiquette</entry>
      </row>
      <row>
        <entry><link linkend='command-labelsize'>labelsize</link></entry>
-       <entry>taillepolice</entry>
+       <entry>tailleétiquette</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-labelsize'>labelsize</link></entry>
+       <entry>tailleetiquette</entry>
      </row>
      <row>
        <entry><link linkend='command-last'>last</link></entry>
        <entry>dernier</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-last'>last</link></entry>
+       <entry>der</entry>
      </row>
      <row>
        <entry><link linkend='command-left'>left</link></entry>
@@ -877,6 +1069,14 @@
      <row>
        <entry><link linkend='command-lessp'>less?</link></entry>
        <entry>inferieur?</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-lessp'>less?</link></entry>
+       <entry>inf?</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-lessp'>less?</link></entry>
+       <entry>plp?</entry>
      </row>
      <row>
        <entry><link linkend='command-lessp'>lessp</link></entry>
@@ -935,6 +1135,10 @@
        <entry>listep</entry>
      </row>
      <row>
+       <entry><link linkend='command-listtoarray'>listtoarray</link></entry>
+       <entry>listeverstableau</entry>
+     </row>
+     <row>
        <entry><link linkend='command-ln'>ln</link></entry>
        <entry>ln</entry>
      </row>
@@ -968,7 +1172,11 @@
      </row>
      <row>
        <entry><link linkend='command-lput'>lput</link></entry>
-       <entry>metspremier</entry>
+       <entry>metsdernier</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-lput'>lput</link></entry>
+       <entry>md</entry>
      </row>
      <row>
        <entry><link linkend='command-lr'>lr</link></entry>
@@ -995,6 +1203,14 @@
        <entry>macro?</entry>
      </row>
      <row>
+       <entry><link linkend='command-macroexpand'>macroexpand</link></entry>
+       <entry>déploiemacro</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-macroexpand'>macroexpand</link></entry>
+       <entry>deploiemacro</entry>
+     </row>
+     <row>
        <entry><link linkend='command-macrop'>macrop</link></entry>
        <entry>macrop</entry>
      </row>
@@ -1003,8 +1219,32 @@
        <entry>donne</entry>
      </row>
      <row>
+       <entry><link linkend='command-maketurtle'>maketurtle</link></entry>
+       <entry>donnetortue</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-map'>map</link></entry>
+       <entry>collecte</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-map.se'>map.se</link></entry>
+       <entry>collecte.ph</entry>
+     </row>
+     <row>
        <entry><link linkend='command-mci'>mci</link></entry>
        <entry>mci</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-mdarray'>mdarray</link></entry>
+       <entry>tableau.md</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-mditem'>mditem</link></entry>
+       <entry>item.md</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-mdsetitem'>mdsetitem</link></entry>
+       <entry>fixeitem.md</entry>
      </row>
      <row>
        <entry><link linkend='command-member'>member</link></entry>
@@ -1040,11 +1280,23 @@
      </row>
      <row>
        <entry><link linkend='command-mkdir'>mkdir</link></entry>
+       <entry>fixerép</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-mkdir'>mkdir</link></entry>
        <entry>fixerep</entry>
      </row>
      <row>
        <entry><link linkend='command-modulo'>modulo</link></entry>
        <entry>modulo</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-modulo'>modulo</link></entry>
+       <entry>mod</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-mousecopy'>mousecopy</link></entry>
+       <entry>copiesouris</entry>
      </row>
      <row>
        <entry><link linkend='command-mouseoff'>mouseoff</link></entry>
@@ -1063,8 +1315,16 @@
        <entry>possouris</entry>
      </row>
      <row>
+       <entry><link linkend='command-name'>name</link></entry>
+       <entry>nomme</entry>
+     </row>
+     <row>
        <entry><link linkend='command-namep'>name?</link></entry>
        <entry>nom?</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-namelist'>namelist</link></entry>
+       <entry>listenoms</entry>
      </row>
      <row>
        <entry><link linkend='command-namep'>namep</link></entry>
@@ -1076,67 +1336,75 @@
      </row>
      <row>
        <entry><link linkend='command-netacceptoff'>netacceptoff</link></entry>
-       <entry>refuseconnection</entry>
+       <entry>finaccepte</entry>
      </row>
      <row>
        <entry><link linkend='command-netaccepton'>netaccepton</link></entry>
-       <entry>accepteconnection</entry>
+       <entry>accepte</entry>
      </row>
      <row>
        <entry><link linkend='command-netacceptreceivevalue'>netacceptreceivevalue</link></entry>
-       <entry>acceptevaleurréception</entry>
+       <entry>accepte.reçu</entry>
      </row>
      <row>
        <entry><link linkend='command-netacceptreceivevalue'>netacceptreceivevalue</link></entry>
-       <entry>acceptevaleurreception</entry>
+       <entry>accepte.recu</entry>
      </row>
      <row>
        <entry><link linkend='command-netacceptsendvalue'>netacceptsendvalue</link></entry>
-       <entry>acceptevaleurenvoi</entry>
+       <entry>accepte.envoyé</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-netacceptsendvalue'>netacceptsendvalue</link></entry>
+       <entry>accepte.envoye</entry>
      </row>
      <row>
        <entry><link linkend='command-netconnectoff'>netconnectoff</link></entry>
-       <entry>désactiveconnection</entry>
-     </row>
-     <row>
-       <entry><link linkend='command-netconnectoff'>netconnectoff</link></entry>
-       <entry>desactiveconnection</entry>
+       <entry>finconnecte</entry>
      </row>
      <row>
        <entry><link linkend='command-netconnecton'>netconnecton</link></entry>
-       <entry>activeconnection</entry>
+       <entry>connecte</entry>
      </row>
      <row>
        <entry><link linkend='command-netconnectreceivevalue'>netconnectreceivevalue</link></entry>
-       <entry>valeurréception</entry>
+       <entry>connecte.reçu</entry>
      </row>
      <row>
        <entry><link linkend='command-netconnectreceivevalue'>netconnectreceivevalue</link></entry>
-       <entry>valeurreception</entry>
+       <entry>connecte.recu</entry>
      </row>
      <row>
        <entry><link linkend='command-netconnectsendvalue'>netconnectsendvalue</link></entry>
-       <entry>valeurenvoie</entry>
+       <entry>connecte.envoyé</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-netconnectsendvalue'>netconnectsendvalue</link></entry>
+       <entry>connecte.envoye</entry>
      </row>
      <row>
        <entry><link linkend='command-netshutdown'>netshutdown</link></entry>
-       <entry>arrêteréseau</entry>
+       <entry>fermeréseau</entry>
      </row>
      <row>
        <entry><link linkend='command-netshutdown'>netshutdown</link></entry>
-       <entry>arretereseau</entry>
+       <entry>fermereseau</entry>
      </row>
      <row>
        <entry><link linkend='command-netstartup'>netstartup</link></entry>
-       <entry>démarreréseau</entry>
+       <entry>ouvreréseau</entry>
      </row>
      <row>
        <entry><link linkend='command-netstartup'>netstartup</link></entry>
-       <entry>demarrereseau</entry>
+       <entry>ouvrereseau</entry>
      </row>
      <row>
        <entry><link linkend='command-nobitmapturtle'>nobitmapturtle</link></entry>
-       <entry>fintortuebmp</entry>
+       <entry>finformetortue</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-nobitmapturtle'>nobitmapturtle</link></entry>
+       <entry>finforme</entry>
      </row>
      <row>
        <entry><link linkend='command-nodes'>nodes</link></entry>
@@ -1145,6 +1413,10 @@
      <row>
        <entry><link linkend='command-nodribble'>nodribble</link></entry>
        <entry>fintranscription</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-norefresh'>norefresh</link></entry>
+       <entry>finrafraichis</entry>
      </row>
      <row>
        <entry><link linkend='command-nostatus'>nostatus</link></entry>
@@ -1239,6 +1511,10 @@
        <entry>go</entry>
      </row>
      <row>
+       <entry><link linkend='command-pen'>pen</link></entry>
+       <entry>crayon</entry>
+     </row>
+     <row>
        <entry><link linkend='command-pencolor'>pencolor</link></entry>
        <entry>couleurcrayon</entry>
      </row>
@@ -1251,6 +1527,10 @@
        <entry>baissecrayon?</entry>
      </row>
      <row>
+       <entry><link linkend='command-pendownp'>pendown?</link></entry>
+       <entry>bc?</entry>
+     </row>
+     <row>
        <entry><link linkend='command-pendownp'>pendownp</link></entry>
        <entry>baissecrayonp</entry>
      </row>
@@ -1261,6 +1541,10 @@
      <row>
        <entry><link linkend='command-penmode'>penmode</link></entry>
        <entry>modecrayon</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-pennormal'>pennormal</link></entry>
+       <entry>crayonnormal</entry>
      </row>
      <row>
        <entry><link linkend='command-penpaint'>penpaint</link></entry>
@@ -1315,8 +1599,16 @@
        <entry>lprops</entry>
      </row>
      <row>
+       <entry><link linkend='command-pllist'>pllist</link></entry>
+       <entry>listelp</entry>
+     </row>
+     <row>
        <entry><link linkend='command-po'>po</link></entry>
        <entry>im</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-poall'>poall</link></entry>
+       <entry>imtout</entry>
      </row>
      <row>
        <entry><link linkend='command-polyend'>polyend</link></entry>
@@ -1335,8 +1627,36 @@
        <entry>affichepoly</entry>
      </row>
      <row>
+       <entry><link linkend='command-pon'>pon</link></entry>
+       <entry>imn</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-pons'>pons</link></entry>
+       <entry>imns</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-pop'>pop</link></entry>
+       <entry>retire</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-popdir'>popdir</link></entry>
+       <entry>répparent</entry>
+     </row>
+     <row>
        <entry><link linkend='command-popdir'>popdir</link></entry>
        <entry>repparent</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-popl'>popl</link></entry>
+       <entry>imlp</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-popls'>popls</link></entry>
+       <entry>imlps</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-pops'>pops</link></entry>
+       <entry>imps</entry>
      </row>
      <row>
        <entry><link linkend='command-portclose'>portclose</link></entry>
@@ -1391,6 +1711,10 @@
        <entry>imt</entry>
      </row>
      <row>
+       <entry><link linkend='command-pots'>pots</link></entry>
+       <entry>imts</entry>
+     </row>
+     <row>
        <entry><link linkend='command-power'>power</link></entry>
        <entry>puissance</entry>
      </row>
@@ -1431,8 +1755,16 @@
        <entry>procédure?</entry>
      </row>
      <row>
+       <entry><link linkend='command-procedurep'>procedure?</link></entry>
+       <entry>procedure?</entry>
+     </row>
+     <row>
        <entry><link linkend='command-procedurep'>procedurep</link></entry>
        <entry>procédurep</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-procedurep'>procedurep</link></entry>
+       <entry>procedurep</entry>
      </row>
      <row>
        <entry><link linkend='command-procedures'>procedures</link></entry>
@@ -1455,12 +1787,28 @@
        <entry>lc</entry>
      </row>
      <row>
+       <entry><link linkend='command-push'>push</link></entry>
+       <entry>empile</entry>
+     </row>
+     <row>
        <entry><link linkend='command-px'>px</link></entry>
        <entry>ic</entry>
      </row>
      <row>
        <entry><link linkend='command-questionbox'>questionbox</link></entry>
        <entry>question</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-queue'>queue</link></entry>
+       <entry>ajoute</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-quoted'>quoted</link></entry>
+       <entry>cité</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-quoted'>quoted</link></entry>
+       <entry>cite</entry>
      </row>
      <row>
        <entry><link linkend='command-quotient'>quotient</link></entry>
@@ -1555,8 +1903,36 @@
        <entry>lismot</entry>
      </row>
      <row>
+       <entry><link linkend='command-reduce'>reduce</link></entry>
+       <entry>réduis</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-reduce'>reduce</link></entry>
+       <entry>reduis</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-refresh'>refresh</link></entry>
+       <entry>rafraichis</entry>
+     </row>
+     <row>
        <entry><link linkend='command-remainder'>remainder</link></entry>
        <entry>reste</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-remdup'>remdup</link></entry>
+       <entry>enlèvedup</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-remdup'>remdup</link></entry>
+       <entry>enlevedup</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-remove'>remove</link></entry>
+       <entry>enlève</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-remove'>remove</link></entry>
+       <entry>enleve</entry>
      </row>
      <row>
        <entry><link linkend='command-remprop'>remprop</link></entry>
@@ -1579,6 +1955,10 @@
        <entry>rehasard</entry>
      </row>
      <row>
+       <entry><link linkend='command-reverse'>reverse</link></entry>
+       <entry>inverse</entry>
+     </row>
+     <row>
        <entry><link linkend='command-right'>right</link></entry>
        <entry>droite</entry>
      </row>
@@ -1592,6 +1972,10 @@
      </row>
      <row>
        <entry><link linkend='command-rmdir'>rmdir</link></entry>
+       <entry>efrép</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-rmdir'>rmdir</link></entry>
        <entry>efrep</entry>
      </row>
      <row>
@@ -1600,7 +1984,7 @@
      </row>
      <row>
        <entry><link linkend='command-round'>round</link></entry>
-       <entry>arrondi</entry>
+       <entry>arrondis</entry>
      </row>
      <row>
        <entry><link linkend='command-rr'>rr</link></entry>
@@ -1619,12 +2003,28 @@
        <entry>execute</entry>
      </row>
      <row>
+       <entry><link linkend='command-run'>run</link></entry>
+       <entry>exéc</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-run'>run</link></entry>
+       <entry>exec</entry>
+     </row>
+     <row>
        <entry><link linkend='command-runparse'>runparse</link></entry>
        <entry>exécuteanalyse</entry>
      </row>
      <row>
        <entry><link linkend='command-runparse'>runparse</link></entry>
        <entry>executeanalyse</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-runparse'>runparse</link></entry>
+       <entry>exécan</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-runparse'>runparse</link></entry>
+       <entry>execan</entry>
      </row>
      <row>
        <entry><link linkend='command-runresult'>runresult</link></entry>
@@ -1635,6 +2035,14 @@
        <entry>executeresultat</entry>
      </row>
      <row>
+       <entry><link linkend='command-runresult'>runresult</link></entry>
+       <entry>exécrés</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-runresult'>runresult</link></entry>
+       <entry>execres</entry>
+     </row>
+     <row>
        <entry><link linkend='command-rw'>rw</link></entry>
        <entry>lm</entry>
      </row>
@@ -1643,8 +2051,16 @@
        <entry>sauve</entry>
      </row>
      <row>
+       <entry><link linkend='command-savel'>savel</link></entry>
+       <entry>sauvel</entry>
+     </row>
+     <row>
        <entry><link linkend='command-screencolor'>screencolor</link></entry>
        <entry>couleurfond</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-screencolor'>screencolor</link></entry>
+       <entry>cf</entry>
      </row>
      <row>
        <entry><link linkend='command-scrollbarcreate'>scrollbarcreate</link></entry>
@@ -1660,7 +2076,7 @@
      </row>
      <row>
        <entry><link linkend='command-scrollbarenable'>scrollbarenable</link></entry>
-       <entry>sactiveascenseur</entry>
+       <entry>activeascenseur</entry>
      </row>
      <row>
        <entry><link linkend='command-scrollbarget'>scrollbarget</link></entry>
@@ -1724,7 +2140,7 @@
      </row>
      <row>
        <entry><link linkend='command-setcursornowait'>setcursornowait</link></entry>
-       <entry>fincurseurnormal</entry>
+       <entry>fincurseurattente</entry>
      </row>
      <row>
        <entry><link linkend='command-setcursorwait'>setcursorwait</link></entry>
@@ -1771,8 +2187,16 @@
        <entry>fixemarges</entry>
      </row>
      <row>
+       <entry><link linkend='command-setorientation'>setorientation</link></entry>
+       <entry>fixeorientation</entry>
+     </row>
+     <row>
        <entry><link linkend='command-setpc'>setpc</link></entry>
        <entry>fcc</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-setpen'>setpen</link></entry>
+       <entry>fixecrayon</entry>
      </row>
      <row>
        <entry><link linkend='command-setpencolor'>setpencolor</link></entry>
@@ -1797,6 +2221,10 @@
      <row>
        <entry><link linkend='command-setpos'>setpos</link></entry>
        <entry>fixeposition</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-setpos'>setpos</link></entry>
+       <entry>fpos</entry>
      </row>
      <row>
        <entry><link linkend='command-setposxyz'>setposxyz</link></entry>
@@ -1829,6 +2257,14 @@
      <row>
        <entry><link linkend='command-setscrunch'>setscrunch</link></entry>
        <entry>fixeechelle</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-setscrunch'>setscrunch</link></entry>
+       <entry>fech</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-setscrunch'>setscrunch</link></entry>
+       <entry>féch</entry>
      </row>
      <row>
        <entry><link linkend='command-settimer'>settimer</link></entry>
@@ -1899,12 +2335,36 @@
        <entry>montretortue</entry>
      </row>
      <row>
+       <entry><link linkend='command-sign'>sign</link></entry>
+       <entry>signe</entry>
+     </row>
+     <row>
        <entry><link linkend='command-sin'>sin</link></entry>
        <entry>sin</entry>
      </row>
      <row>
+       <entry><link linkend='command-slowdraw'>slowdraw</link></entry>
+       <entry>ralentis</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-sort'>sort</link></entry>
+       <entry>trie</entry>
+     </row>
+     <row>
        <entry><link linkend='command-sound'>sound</link></entry>
        <entry>son</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-soundoff'>soundoff</link></entry>
+       <entry>finson</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-soundon'>soundon</link></entry>
+       <entry>débutson</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-soundon'>soundon</link></entry>
+       <entry>debutson</entry>
      </row>
      <row>
        <entry><link linkend='command-splitscreen'>splitscreen</link></entry>
@@ -1920,11 +2380,11 @@
      </row>
      <row>
        <entry><link linkend='command-ss'>ss</link></entry>
-       <entry>ém</entry>
+       <entry>écm</entry>
      </row>
      <row>
        <entry><link linkend='command-ss'>ss</link></entry>
-       <entry>em</entry>
+       <entry>ecm</entry>
      </row>
      <row>
        <entry><link linkend='command-st'>st</link></entry>
@@ -1960,19 +2420,11 @@
      </row>
      <row>
        <entry><link linkend='command-step'>step</link></entry>
-       <entry>pasàpas</entry>
-     </row>
-     <row>
-       <entry><link linkend='command-step'>step</link></entry>
-       <entry>pasapas</entry>
+       <entry>pas</entry>
      </row>
      <row>
        <entry><link linkend='command-stepped'>stepped</link></entry>
-       <entry>pasàpas?</entry>
-     </row>
-     <row>
-       <entry><link linkend='command-stepped'>stepped</link></entry>
-       <entry>pasapas?</entry>
+       <entry>pas?</entry>
      </row>
      <row>
        <entry><link linkend='command-stop'>stop</link></entry>
@@ -1984,7 +2436,7 @@
      </row>
      <row>
        <entry><link linkend='command-substringp'>substring?</link></entry>
-       <entry>appartient??</entry>
+       <entry>appartient?</entry>
      </row>
      <row>
        <entry><link linkend='command-substringp'>substringp</link></entry>
@@ -2013,6 +2465,10 @@
      <row>
        <entry><link linkend='command-text'>text</link></entry>
        <entry>definition</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-textfont'>textfont</link></entry>
+       <entry>police</entry>
      </row>
      <row>
        <entry><link linkend='command-textscreen'>textscreen</link></entry>
@@ -2063,16 +2519,24 @@
        <entry>suivi?</entry>
      </row>
      <row>
+       <entry><link linkend='command-transfer'>transfer</link></entry>
+       <entry>transfère</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-transfer'>transfer</link></entry>
+       <entry>transfere</entry>
+     </row>
+     <row>
        <entry><link linkend='command-true'>true</link></entry>
        <entry>vrai</entry>
      </row>
      <row>
        <entry><link linkend='command-ts'>ts</link></entry>
-       <entry>ét</entry>
+       <entry>éct</entry>
      </row>
      <row>
        <entry><link linkend='command-ts'>ts</link></entry>
-       <entry>et</entry>
+       <entry>ect</entry>
      </row>
      <row>
        <entry><link linkend='command-turtle'>turtle</link></entry>
@@ -2099,12 +2563,28 @@
        <entry>deterre</entry>
      </row>
      <row>
-       <entry><link linkend='command-unstep'>unstep</link></entry>
-       <entry>finpasàpas</entry>
+       <entry><link linkend='command-unburyall'>unburyall</link></entry>
+       <entry>déterretout</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-unburyall'>unburyall</link></entry>
+       <entry>deterretout</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-unburyname'>unburyname</link></entry>
+       <entry>déterrenom</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-unburyname'>unburyname</link></entry>
+       <entry>deterrenom</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-unicon'>unicon</link></entry>
+       <entry>restaure</entry>
      </row>
      <row>
        <entry><link linkend='command-unstep'>unstep</link></entry>
-       <entry>finpasapas</entry>
+       <entry>finpas</entry>
      </row>
      <row>
        <entry><link linkend='command-until'>until</link></entry>
@@ -2219,12 +2699,24 @@
        <entry>fluxecriture</entry>
      </row>
      <row>
+       <entry><link linkend='command-xcor'>xcor</link></entry>
+       <entry>coorx</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-ycor'>ycor</link></entry>
+       <entry>coory</entry>
+     </row>
+     <row>
        <entry><link linkend='command-yesnobox'>yesnobox</link></entry>
-       <entry>messageouinon</entry>
+       <entry>choixouinon</entry>
      </row>
      <row>
        <entry><link linkend='command-yield'>yield</link></entry>
        <entry>partage</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-zcor'>zcor</link></entry>
+       <entry>coorz</entry>
      </row>
      <row>
        <entry><link linkend='command-zoom'>zoom</link></entry>
@@ -2284,20 +2776,28 @@
        <entry><link linkend='command-abs'>abs</link></entry>
      </row>
      <row>
-       <entry>accepteconnection</entry>
+       <entry>accepte</entry>
        <entry><link linkend='command-netaccepton'>netaccepton</link></entry>
      </row>
      <row>
-       <entry>acceptevaleurenvoi</entry>
+       <entry>accepte.envoye</entry>
        <entry><link linkend='command-netacceptsendvalue'>netacceptsendvalue</link></entry>
      </row>
      <row>
-       <entry>acceptevaleurreception</entry>
+       <entry>accepte.envoyé</entry>
+       <entry><link linkend='command-netacceptsendvalue'>netacceptsendvalue</link></entry>
+     </row>
+     <row>
+       <entry>accepte.recu</entry>
        <entry><link linkend='command-netacceptreceivevalue'>netacceptreceivevalue</link></entry>
      </row>
      <row>
-       <entry>acceptevaleurréception</entry>
+       <entry>accepte.reçu</entry>
        <entry><link linkend='command-netacceptreceivevalue'>netacceptreceivevalue</link></entry>
+     </row>
+     <row>
+       <entry>activeascenseur</entry>
+       <entry><link linkend='command-scrollbarenable'>scrollbarenable</link></entry>
      </row>
      <row>
        <entry>activebouton</entry>
@@ -2320,8 +2820,8 @@
        <entry><link linkend='command-comboboxenable'>comboboxenable</link></entry>
      </row>
      <row>
-       <entry>activeconnection</entry>
-       <entry><link linkend='command-netconnecton'>netconnecton</link></entry>
+       <entry>activedialogue</entry>
+       <entry><link linkend='command-dialogenable'>dialogenable</link></entry>
      </row>
      <row>
        <entry>activefenetre</entry>
@@ -2364,6 +2864,10 @@
        <entry><link linkend='command-winhelp'>winhelp</link></entry>
      </row>
      <row>
+       <entry>ajoute</entry>
+       <entry><link linkend='command-queue'>queue</link></entry>
+     </row>
+     <row>
        <entry>ajouteflux</entry>
        <entry><link linkend='command-openappend'>openappend</link></entry>
      </row>
@@ -2376,7 +2880,7 @@
        <entry><link linkend='command-listboxaddstring'>listboxaddstring</link></entry>
      </row>
      <row>
-       <entry>ajustebmp</entry>
+       <entry>ajustedessin</entry>
        <entry><link linkend='command-bitfit'>bitfit</link></entry>
      </row>
      <row>
@@ -2392,12 +2896,16 @@
        <entry><link linkend='command-backslashedp'>backslashed?</link></entry>
      </row>
      <row>
-       <entry>appartient??</entry>
+       <entry>appartient?</entry>
        <entry><link linkend='command-substringp'>substring?</link></entry>
      </row>
      <row>
        <entry>appartientp</entry>
        <entry><link linkend='command-substringp'>substringp</link></entry>
+     </row>
+     <row>
+       <entry>appelle</entry>
+       <entry><link linkend='command-invoke'>invoke</link></entry>
      </row>
      <row>
        <entry>appelledll</entry>
@@ -2410,10 +2918,6 @@
      <row>
        <entry>arccos</entry>
        <entry><link linkend='command-arccos'>arccos</link></entry>
-     </row>
-     <row>
-       <entry>arcellipse</entry>
-       <entry><link linkend='command-ellipsearc'>ellipsearc</link></entry>
      </row>
      <row>
        <entry>arcsin</entry>
@@ -2432,14 +2936,6 @@
        <entry><link linkend='command-stop'>stop</link></entry>
      </row>
      <row>
-       <entry>arretereseau</entry>
-       <entry><link linkend='command-netshutdown'>netshutdown</link></entry>
-     </row>
-     <row>
-       <entry>arrêteréseau</entry>
-       <entry><link linkend='command-netshutdown'>netshutdown</link></entry>
-     </row>
-     <row>
        <entry>arretetout</entry>
        <entry><link linkend='command-halt'>halt</link></entry>
      </row>
@@ -2448,7 +2944,7 @@
        <entry><link linkend='command-halt'>halt</link></entry>
      </row>
      <row>
-       <entry>arrondi</entry>
+       <entry>arrondis</entry>
        <entry><link linkend='command-round'>round</link></entry>
      </row>
      <row>
@@ -2504,8 +3000,8 @@
        <entry><link linkend='command-pd'>pd</link></entry>
      </row>
      <row>
-       <entry>blocbmp</entry>
-       <entry><link linkend='command-bitblock'>bitblock</link></entry>
+       <entry>bc?</entry>
+       <entry><link linkend='command-pendownp'>pendown?</link></entry>
      </row>
      <row>
        <entry>bouton?</entry>
@@ -2518,10 +3014,6 @@
      <row>
        <entry>boutonradio</entry>
        <entry><link linkend='command-radiobuttonget'>radiobuttonget</link></entry>
-     </row>
-     <row>
-       <entry>bsaufpremiers</entry>
-       <entry><link linkend='command-butfirsts'>butfirsts</link></entry>
      </row>
      <row>
        <entry>cabre</entry>
@@ -2544,8 +3036,12 @@
        <entry><link linkend='command-char'>char</link></entry>
      </row>
      <row>
-       <entry>casexhoix</entry>
+       <entry>casechoix</entry>
        <entry><link linkend='command-checkboxget'>checkboxget</link></entry>
+     </row>
+     <row>
+       <entry>cat</entry>
+       <entry><link linkend='command-dir'>dir</link></entry>
      </row>
      <row>
        <entry>catalogue</entry>
@@ -2556,16 +3052,16 @@
        <entry><link linkend='command-pc'>pc</link></entry>
      </row>
      <row>
-       <entry>ceffacecasechoix</entry>
-       <entry><link linkend='command-checkboxdelete'>checkboxdelete</link></entry>
-     </row>
-     <row>
        <entry>cercle</entry>
        <entry><link linkend='command-circle'>circle</link></entry>
      </row>
      <row>
        <entry>cercle2</entry>
        <entry><link linkend='command-circle2'>circle2</link></entry>
+     </row>
+     <row>
+       <entry>cf</entry>
+       <entry><link linkend='command-screencolor'>screencolor</link></entry>
      </row>
      <row>
        <entry>chargedll</entry>
@@ -2588,12 +3084,32 @@
        <entry><link linkend='command-listboxgetselect'>listboxgetselect</link></entry>
      </row>
      <row>
+       <entry>choixouinon</entry>
+       <entry><link linkend='command-yesnobox'>yesnobox</link></entry>
+     </row>
+     <row>
        <entry>chose</entry>
        <entry><link linkend='command-thing'>thing</link></entry>
      </row>
      <row>
        <entry>chrep</entry>
        <entry><link linkend='command-chdir'>chdir</link></entry>
+     </row>
+     <row>
+       <entry>chrép</entry>
+       <entry><link linkend='command-chdir'>chdir</link></entry>
+     </row>
+     <row>
+       <entry>cite</entry>
+       <entry><link linkend='command-quoted'>quoted</link></entry>
+     </row>
+     <row>
+       <entry>cité</entry>
+       <entry><link linkend='command-quoted'>quoted</link></entry>
+     </row>
+     <row>
+       <entry>clavier</entry>
+       <entry><link linkend='command-keyboardvalue'>keyboardvalue</link></entry>
      </row>
      <row>
        <entry>clos</entry>
@@ -2604,11 +3120,23 @@
        <entry><link linkend='command-co'>co</link></entry>
      </row>
      <row>
-       <entry>collerbmp</entry>
+       <entry>collecte</entry>
+       <entry><link linkend='command-map'>map</link></entry>
+     </row>
+     <row>
+       <entry>collecte.ph</entry>
+       <entry><link linkend='command-map.se'>map.se</link></entry>
+     </row>
+     <row>
+       <entry>collectetout</entry>
+       <entry><link linkend='command-crossmap'>crossmap</link></entry>
+     </row>
+     <row>
+       <entry>colledessin</entry>
        <entry><link linkend='command-bitpaste'>bitpaste</link></entry>
      </row>
      <row>
-       <entry>collerbmpindex</entry>
+       <entry>collesurindex</entry>
        <entry><link linkend='command-bitpastetoindex'>bitpastetoindex</link></entry>
      </row>
      <row>
@@ -2618,6 +3146,26 @@
      <row>
        <entry>compteur</entry>
        <entry><link linkend='command-repcount'>repcount</link></entry>
+     </row>
+     <row>
+       <entry>connecte</entry>
+       <entry><link linkend='command-netconnecton'>netconnecton</link></entry>
+     </row>
+     <row>
+       <entry>connecte.envoye</entry>
+       <entry><link linkend='command-netconnectsendvalue'>netconnectsendvalue</link></entry>
+     </row>
+     <row>
+       <entry>connecte.envoyé</entry>
+       <entry><link linkend='command-netconnectsendvalue'>netconnectsendvalue</link></entry>
+     </row>
+     <row>
+       <entry>connecte.recu</entry>
+       <entry><link linkend='command-netconnectreceivevalue'>netconnectreceivevalue</link></entry>
+     </row>
+     <row>
+       <entry>connecte.reçu</entry>
+       <entry><link linkend='command-netconnectreceivevalue'>netconnectreceivevalue</link></entry>
      </row>
      <row>
        <entry>contenu</entry>
@@ -2632,8 +3180,24 @@
        <entry><link linkend='command-standout'>standout</link></entry>
      </row>
      <row>
-       <entry>copiebmp</entry>
+       <entry>coorx</entry>
+       <entry><link linkend='command-xcor'>xcor</link></entry>
+     </row>
+     <row>
+       <entry>coory</entry>
+       <entry><link linkend='command-ycor'>ycor</link></entry>
+     </row>
+     <row>
+       <entry>coorz</entry>
+       <entry><link linkend='command-zcor'>zcor</link></entry>
+     </row>
+     <row>
+       <entry>copiedessin</entry>
        <entry><link linkend='command-bitcopy'>bitcopy</link></entry>
+     </row>
+     <row>
+       <entry>copiesouris</entry>
+       <entry><link linkend='command-mousecopy'>mousecopy</link></entry>
      </row>
      <row>
        <entry>cos</entry>
@@ -2652,8 +3216,20 @@
        <entry><link linkend='command-floodcolor'>floodcolor</link></entry>
      </row>
      <row>
-       <entry>coupebmp</entry>
+       <entry>coupedessin</entry>
        <entry><link linkend='command-bitcut'>bitcut</link></entry>
+     </row>
+     <row>
+       <entry>cr</entry>
+       <entry><link linkend='command-floodcolor'>floodcolor</link></entry>
+     </row>
+     <row>
+       <entry>crayon</entry>
+       <entry><link linkend='command-pen'>pen</link></entry>
+     </row>
+     <row>
+       <entry>crayonnormal</entry>
+       <entry><link linkend='command-pennormal'>pennormal</link></entry>
      </row>
      <row>
        <entry>creeascenseur</entry>
@@ -2744,10 +3320,6 @@
        <entry><link linkend='command-cursor'>cursor</link></entry>
      </row>
      <row>
-       <entry>cvidechrono</entry>
-       <entry><link linkend='command-cleartimer'>cleartimer</link></entry>
-     </row>
-     <row>
        <entry>de</entry>
        <entry><link linkend='command-ppt'>ppt</link></entry>
      </row>
@@ -2766,6 +3338,14 @@
      <row>
        <entry>débutpoly</entry>
        <entry><link linkend='command-polystart'>polystart</link></entry>
+     </row>
+     <row>
+       <entry>debutson</entry>
+       <entry><link linkend='command-soundon'>soundon</link></entry>
+     </row>
+     <row>
+       <entry>débutson</entry>
+       <entry><link linkend='command-soundon'>soundon</link></entry>
      </row>
      <row>
        <entry>decale</entry>
@@ -2816,12 +3396,20 @@
        <entry><link linkend='command-text'>text</link></entry>
      </row>
      <row>
-       <entry>demarrereseau</entry>
-       <entry><link linkend='command-netstartup'>netstartup</link></entry>
+       <entry>demande</entry>
+       <entry><link linkend='command-ask'>ask</link></entry>
      </row>
      <row>
-       <entry>démarreréseau</entry>
-       <entry><link linkend='command-netstartup'>netstartup</link></entry>
+       <entry>deploiemacro</entry>
+       <entry><link linkend='command-macroexpand'>macroexpand</link></entry>
+     </row>
+     <row>
+       <entry>déploiemacro</entry>
+       <entry><link linkend='command-macroexpand'>macroexpand</link></entry>
+     </row>
+     <row>
+       <entry>der</entry>
+       <entry><link linkend='command-last'>last</link></entry>
      </row>
      <row>
        <entry>dernier</entry>
@@ -2834,14 +3422,6 @@
      <row>
        <entry>désactiveclavier</entry>
        <entry><link linkend='command-keyboardoff'>keyboardoff</link></entry>
-     </row>
-     <row>
-       <entry>desactiveconnection</entry>
-       <entry><link linkend='command-netconnectoff'>netconnectoff</link></entry>
-     </row>
-     <row>
-       <entry>désactiveconnection</entry>
-       <entry><link linkend='command-netconnectoff'>netconnectoff</link></entry>
      </row>
      <row>
        <entry>desactivesouris</entry>
@@ -2864,16 +3444,24 @@
        <entry><link linkend='command-unbury'>unbury</link></entry>
      </row>
      <row>
-       <entry>dialogueactive</entry>
-       <entry><link linkend='command-dialogenable'>dialogenable</link></entry>
+       <entry>deterrenom</entry>
+       <entry><link linkend='command-unburyname'>unburyname</link></entry>
      </row>
      <row>
-       <entry>dialogueouvrir</entry>
-       <entry><link linkend='command-dialogfileopen'>dialogfileopen</link></entry>
+       <entry>déterrenom</entry>
+       <entry><link linkend='command-unburyname'>unburyname</link></entry>
      </row>
      <row>
-       <entry>dialoguesauver</entry>
-       <entry><link linkend='command-dialogfilesave'>dialogfilesave</link></entry>
+       <entry>deterretout</entry>
+       <entry><link linkend='command-unburyall'>unburyall</link></entry>
+     </row>
+     <row>
+       <entry>déterretout</entry>
+       <entry><link linkend='command-unburyall'>unburyall</link></entry>
+     </row>
+     <row>
+       <entry>difference</entry>
+       <entry><link linkend='command-difference'>difference</link></entry>
      </row>
      <row>
        <entry>différence</entry>
@@ -2898,6 +3486,10 @@
      <row>
        <entry>donnelocale</entry>
        <entry><link linkend='command-localmake'>localmake</link></entry>
+     </row>
+     <row>
+       <entry>donnetortue</entry>
+       <entry><link linkend='command-maketurtle'>maketurtle</link></entry>
      </row>
      <row>
        <entry>dprop</entry>
@@ -2926,6 +3518,14 @@
      <row>
        <entry>échelle</entry>
        <entry><link linkend='command-scrunch'>scrunch</link></entry>
+     </row>
+     <row>
+       <entry>ecm</entry>
+       <entry><link linkend='command-ss'>ss</link></entry>
+     </row>
+     <row>
+       <entry>écm</entry>
+       <entry><link linkend='command-ss'>ss</link></entry>
      </row>
      <row>
        <entry>ecranmixte</entry>
@@ -2992,6 +3592,18 @@
        <entry><link linkend='command-portwritearray'>portwritearray</link></entry>
      </row>
      <row>
+       <entry>ect</entry>
+       <entry><link linkend='command-ts'>ts</link></entry>
+     </row>
+     <row>
+       <entry>éct</entry>
+       <entry><link linkend='command-ts'>ts</link></entry>
+     </row>
+     <row>
+       <entry>ed</entry>
+       <entry><link linkend='command-ed'>ed</link></entry>
+     </row>
+     <row>
        <entry>éd</entry>
        <entry><link linkend='command-ed'>ed</link></entry>
      </row>
@@ -3010,6 +3622,42 @@
      <row>
        <entry>éditefichier</entry>
        <entry><link linkend='command-windowfileedit'>windowfileedit</link></entry>
+     </row>
+     <row>
+       <entry>edlp</entry>
+       <entry><link linkend='command-edpl'>edpl</link></entry>
+     </row>
+     <row>
+       <entry>édlp</entry>
+       <entry><link linkend='command-edpl'>edpl</link></entry>
+     </row>
+     <row>
+       <entry>edlps</entry>
+       <entry><link linkend='command-edpls'>edpls</link></entry>
+     </row>
+     <row>
+       <entry>édlps</entry>
+       <entry><link linkend='command-edpls'>edpls</link></entry>
+     </row>
+     <row>
+       <entry>édn</entry>
+       <entry><link linkend='command-edn'>edn</link></entry>
+     </row>
+     <row>
+       <entry>édns</entry>
+       <entry><link linkend='command-edns'>edns</link></entry>
+     </row>
+     <row>
+       <entry>édps</entry>
+       <entry><link linkend='command-edps'>edps</link></entry>
+     </row>
+     <row>
+       <entry>edtout</entry>
+       <entry><link linkend='command-edall'>edall</link></entry>
+     </row>
+     <row>
+       <entry>édtout</entry>
+       <entry><link linkend='command-edall'>edall</link></entry>
      </row>
      <row>
        <entry>ef</entry>
@@ -3034,6 +3682,10 @@
      <row>
        <entry>effaceboutonradio</entry>
        <entry><link linkend='command-radiobuttondelete'>radiobuttondelete</link></entry>
+     </row>
+     <row>
+       <entry>effacecasechoix</entry>
+       <entry><link linkend='command-checkboxdelete'>checkboxdelete</link></entry>
      </row>
      <row>
        <entry>effacecombo</entry>
@@ -3072,15 +3724,39 @@
        <entry><link linkend='command-listboxdelete'>listboxdelete</link></entry>
      </row>
      <row>
+       <entry>effacenom</entry>
+       <entry><link linkend='command-ern'>ern</link></entry>
+     </row>
+     <row>
        <entry>effacetexte</entry>
        <entry><link linkend='command-staticdelete'>staticdelete</link></entry>
      </row>
      <row>
-       <entry>effacevarible</entry>
+       <entry>eflp</entry>
+       <entry><link linkend='command-erpl'>erpl</link></entry>
+     </row>
+     <row>
+       <entry>eflps</entry>
+       <entry><link linkend='command-erpls'>erpls</link></entry>
+     </row>
+     <row>
+       <entry>efn</entry>
        <entry><link linkend='command-ern'>ern</link></entry>
      </row>
      <row>
+       <entry>efns</entry>
+       <entry><link linkend='command-erns'>erns</link></entry>
+     </row>
+     <row>
+       <entry>efps</entry>
+       <entry><link linkend='command-erps'>erps</link></entry>
+     </row>
+     <row>
        <entry>efrep</entry>
+       <entry><link linkend='command-rmdir'>rmdir</link></entry>
+     </row>
+     <row>
+       <entry>efrép</entry>
        <entry><link linkend='command-rmdir'>rmdir</link></entry>
      </row>
      <row>
@@ -3100,12 +3776,28 @@
        <entry><link linkend='command-equalp'>equalp</link></entry>
      </row>
      <row>
-       <entry>em</entry>
-       <entry><link linkend='command-ss'>ss</link></entry>
+       <entry>ellipsearc</entry>
+       <entry><link linkend='command-ellipsearc'>ellipsearc</link></entry>
      </row>
      <row>
-       <entry>ém</entry>
-       <entry><link linkend='command-ss'>ss</link></entry>
+       <entry>empile</entry>
+       <entry><link linkend='command-push'>push</link></entry>
+     </row>
+     <row>
+       <entry>enleve</entry>
+       <entry><link linkend='command-remove'>remove</link></entry>
+     </row>
+     <row>
+       <entry>enlève</entry>
+       <entry><link linkend='command-remove'>remove</link></entry>
+     </row>
+     <row>
+       <entry>enlevedup</entry>
+       <entry><link linkend='command-remdup'>remdup</link></entry>
+     </row>
+     <row>
+       <entry>enlèvedup</entry>
+       <entry><link linkend='command-remdup'>remdup</link></entry>
      </row>
      <row>
        <entry>enroule</entry>
@@ -3113,11 +3805,23 @@
      </row>
      <row>
        <entry>enterre</entry>
+       <entry><link linkend='command-bury'>bury</link></entry>
+     </row>
+     <row>
+       <entry>enterrees</entry>
        <entry><link linkend='command-buried'>buried</link></entry>
      </row>
      <row>
-       <entry>enterré</entry>
+       <entry>enterrées</entry>
        <entry><link linkend='command-buried'>buried</link></entry>
+     </row>
+     <row>
+       <entry>enterrenom</entry>
+       <entry><link linkend='command-buryname'>buryname</link></entry>
+     </row>
+     <row>
+       <entry>enterretout</entry>
+       <entry><link linkend='command-buryall'>buryall</link></entry>
      </row>
      <row>
        <entry>eofp</entry>
@@ -3133,11 +3837,7 @@
      </row>
      <row>
        <entry>et</entry>
-       <entry><link linkend='command-ts'>ts</link></entry>
-     </row>
-     <row>
-       <entry>ét</entry>
-       <entry><link linkend='command-ts'>ts</link></entry>
+       <entry><link linkend='command-and'>and</link></entry>
      </row>
      <row>
        <entry>etat</entry>
@@ -3158,6 +3858,30 @@
      <row>
        <entry>étiquette</entry>
        <entry><link linkend='command-label'>label</link></entry>
+     </row>
+     <row>
+       <entry>exec</entry>
+       <entry><link linkend='command-run'>run</link></entry>
+     </row>
+     <row>
+       <entry>exéc</entry>
+       <entry><link linkend='command-run'>run</link></entry>
+     </row>
+     <row>
+       <entry>execan</entry>
+       <entry><link linkend='command-runparse'>runparse</link></entry>
+     </row>
+     <row>
+       <entry>exécan</entry>
+       <entry><link linkend='command-runparse'>runparse</link></entry>
+     </row>
+     <row>
+       <entry>execres</entry>
+       <entry><link linkend='command-runresult'>runresult</link></entry>
+     </row>
+     <row>
+       <entry>exécrés</entry>
+       <entry><link linkend='command-runresult'>runresult</link></entry>
      </row>
      <row>
        <entry>execute</entry>
@@ -3188,11 +3912,11 @@
        <entry><link linkend='command-exp'>exp</link></entry>
      </row>
      <row>
-       <entry>fairejusque</entry>
+       <entry>fais.jusque</entry>
        <entry><link linkend='command-do.until'>do.until</link></entry>
      </row>
      <row>
-       <entry>fairetantque</entry>
+       <entry>fais.tantque</entry>
        <entry><link linkend='command-do.while'>do.while</link></entry>
      </row>
      <row>
@@ -3214,6 +3938,14 @@
      <row>
        <entry>fcr</entry>
        <entry><link linkend='command-setfc'>setfc</link></entry>
+     </row>
+     <row>
+       <entry>fech</entry>
+       <entry><link linkend='command-setscrunch'>setscrunch</link></entry>
+     </row>
+     <row>
+       <entry>féch</entry>
+       <entry><link linkend='command-setscrunch'>setscrunch</link></entry>
      </row>
      <row>
        <entry>fenetre</entry>
@@ -3244,6 +3976,14 @@
        <entry><link linkend='command-portclose'>portclose</link></entry>
      </row>
      <row>
+       <entry>fermereseau</entry>
+       <entry><link linkend='command-netshutdown'>netshutdown</link></entry>
+     </row>
+     <row>
+       <entry>fermeréseau</entry>
+       <entry><link linkend='command-netshutdown'>netshutdown</link></entry>
+     </row>
+     <row>
        <entry>fermetout</entry>
        <entry><link linkend='command-closeall'>closeall</link></entry>
      </row>
@@ -3252,27 +3992,51 @@
        <entry><link linkend='command-eofp'>eof?</link></entry>
      </row>
      <row>
+       <entry>fichier?</entry>
+       <entry><link linkend='command-filep'>filep</link></entry>
+     </row>
+     <row>
+       <entry>fichierp</entry>
+       <entry><link linkend='command-filep'>filep</link></entry>
+     </row>
+     <row>
        <entry>fichiers</entry>
        <entry><link linkend='command-files'>files</link></entry>
+     </row>
+     <row>
+       <entry>filtre</entry>
+       <entry><link linkend='command-filter'>filter</link></entry>
      </row>
      <row>
        <entry>fin</entry>
        <entry><link linkend='command-end'>end</link></entry>
      </row>
      <row>
-       <entry>fincurseurnormal</entry>
+       <entry>finaccepte</entry>
+       <entry><link linkend='command-netacceptoff'>netacceptoff</link></entry>
+     </row>
+     <row>
+       <entry>finconnecte</entry>
+       <entry><link linkend='command-netconnectoff'>netconnectoff</link></entry>
+     </row>
+     <row>
+       <entry>fincurseurattente</entry>
        <entry><link linkend='command-setcursornowait'>setcursornowait</link></entry>
+     </row>
+     <row>
+       <entry>finforme</entry>
+       <entry><link linkend='command-nobitmapturtle'>nobitmapturtle</link></entry>
+     </row>
+     <row>
+       <entry>finformetortue</entry>
+       <entry><link linkend='command-nobitmapturtle'>nobitmapturtle</link></entry>
      </row>
      <row>
        <entry>finpartage</entry>
        <entry><link linkend='command-noyield'>noyield</link></entry>
      </row>
      <row>
-       <entry>finpasapas</entry>
-       <entry><link linkend='command-unstep'>unstep</link></entry>
-     </row>
-     <row>
-       <entry>finpasàpas</entry>
+       <entry>finpas</entry>
        <entry><link linkend='command-unstep'>unstep</link></entry>
      </row>
      <row>
@@ -3280,12 +4044,16 @@
        <entry><link linkend='command-polyend'>polyend</link></entry>
      </row>
      <row>
-       <entry>finsuivi</entry>
-       <entry><link linkend='command-untrace'>untrace</link></entry>
+       <entry>finrafraichis</entry>
+       <entry><link linkend='command-norefresh'>norefresh</link></entry>
      </row>
      <row>
-       <entry>fintortuebmp</entry>
-       <entry><link linkend='command-nobitmapturtle'>nobitmapturtle</link></entry>
+       <entry>finson</entry>
+       <entry><link linkend='command-soundoff'>soundoff</link></entry>
+     </row>
+     <row>
+       <entry>finsuivi</entry>
+       <entry><link linkend='command-untrace'>untrace</link></entry>
      </row>
      <row>
        <entry>fintranscription</entry>
@@ -3328,6 +4096,10 @@
        <entry><link linkend='command-setfloodcolor'>setfloodcolor</link></entry>
      </row>
      <row>
+       <entry>fixecrayon</entry>
+       <entry><link linkend='command-setpen'>setpen</link></entry>
+     </row>
+     <row>
        <entry>fixecurseur</entry>
        <entry><link linkend='command-setcursor'>setcursor</link></entry>
      </row>
@@ -3364,6 +4136,10 @@
        <entry><link linkend='command-setbitindex'>setbitindex</link></entry>
      </row>
      <row>
+       <entry>fixeitem.md</entry>
+       <entry><link linkend='command-mdsetitem'>mdsetitem</link></entry>
+     </row>
+     <row>
        <entry>fixelecture</entry>
        <entry><link linkend='command-setread'>setread</link></entry>
      </row>
@@ -3390,6 +4166,10 @@
      <row>
        <entry>fixemotifcrayon</entry>
        <entry><link linkend='command-setpenpattern'>setpenpattern</link></entry>
+     </row>
+     <row>
+       <entry>fixeorientation</entry>
+       <entry><link linkend='command-setorientation'>setorientation</link></entry>
      </row>
      <row>
        <entry>fixepoint</entry>
@@ -3421,6 +4201,10 @@
      </row>
      <row>
        <entry>fixerep</entry>
+       <entry><link linkend='command-mkdir'>mkdir</link></entry>
+     </row>
+     <row>
+       <entry>fixerép</entry>
        <entry><link linkend='command-mkdir'>mkdir</link></entry>
      </row>
      <row>
@@ -3484,6 +4268,18 @@
        <entry><link linkend='command-form'>form</link></entry>
      </row>
      <row>
+       <entry>forme</entry>
+       <entry><link linkend='command-bitmapturtle'>bitmapturtle</link></entry>
+     </row>
+     <row>
+       <entry>formetortue</entry>
+       <entry><link linkend='command-bitmapturtle'>bitmapturtle</link></entry>
+     </row>
+     <row>
+       <entry>fpos</entry>
+       <entry><link linkend='command-setpos'>setpos</link></entry>
+     </row>
+     <row>
        <entry>ga</entry>
        <entry><link linkend='command-lt'>lt</link></entry>
      </row>
@@ -3520,8 +4316,36 @@
        <entry><link linkend='command-po'>po</link></entry>
      </row>
      <row>
+       <entry>imlp</entry>
+       <entry><link linkend='command-popl'>popl</link></entry>
+     </row>
+     <row>
+       <entry>imlps</entry>
+       <entry><link linkend='command-popls'>popls</link></entry>
+     </row>
+     <row>
+       <entry>imn</entry>
+       <entry><link linkend='command-pon'>pon</link></entry>
+     </row>
+     <row>
+       <entry>imns</entry>
+       <entry><link linkend='command-pons'>pons</link></entry>
+     </row>
+     <row>
+       <entry>imps</entry>
+       <entry><link linkend='command-pops'>pops</link></entry>
+     </row>
+     <row>
        <entry>imt</entry>
        <entry><link linkend='command-pot'>pot</link></entry>
+     </row>
+     <row>
+       <entry>imtout</entry>
+       <entry><link linkend='command-poall'>poall</link></entry>
+     </row>
+     <row>
+       <entry>imts</entry>
+       <entry><link linkend='command-pots'>pots</link></entry>
      </row>
      <row>
        <entry>inclinaison</entry>
@@ -3536,8 +4360,12 @@
        <entry><link linkend='command-leftroll'>leftroll</link></entry>
      </row>
      <row>
-       <entry>indexbmp</entry>
+       <entry>indexdessin</entry>
        <entry><link linkend='command-bitindex'>bitindex</link></entry>
+     </row>
+     <row>
+       <entry>inf?</entry>
+       <entry><link linkend='command-lessp'>less?</link></entry>
      </row>
      <row>
        <entry>inferieur?</entry>
@@ -3556,6 +4384,10 @@
        <entry><link linkend='command-lessp'>lessp</link></entry>
      </row>
      <row>
+       <entry>inverse</entry>
+       <entry><link linkend='command-reverse'>reverse</link></entry>
+     </row>
+     <row>
        <entry>inversecrayon</entry>
        <entry><link linkend='command-penreverse'>penreverse</link></entry>
      </row>
@@ -3564,16 +4396,16 @@
        <entry><link linkend='command-item'>item</link></entry>
      </row>
      <row>
+       <entry>item.md</entry>
+       <entry><link linkend='command-mditem'>mditem</link></entry>
+     </row>
+     <row>
        <entry>jouewave</entry>
        <entry><link linkend='command-playwave'>playwave</link></entry>
      </row>
      <row>
        <entry>jusque</entry>
        <entry><link linkend='command-until'>until</link></entry>
-     </row>
-     <row>
-       <entry>kvaleurclavier</entry>
-       <entry><link linkend='command-keyboardvalue'>keyboardvalue</link></entry>
      </row>
      <row>
        <entry>lance</entry>
@@ -3656,12 +4488,24 @@
        <entry><link linkend='command-listp'>list?</link></entry>
      </row>
      <row>
+       <entry>listelp</entry>
+       <entry><link linkend='command-pllist'>pllist</link></entry>
+     </row>
+     <row>
+       <entry>listenoms</entry>
+       <entry><link linkend='command-namelist'>namelist</link></entry>
+     </row>
+     <row>
        <entry>listep</entry>
        <entry><link linkend='command-listp'>listp</link></entry>
      </row>
      <row>
        <entry>listepolices</entry>
        <entry><link linkend='command-fontfacenames'>fontfacenames</link></entry>
+     </row>
+     <row>
+       <entry>listeverstableau</entry>
+       <entry><link linkend='command-listtoarray'>listtoarray</link></entry>
      </row>
      <row>
        <entry>ll</entry>
@@ -3728,6 +4572,10 @@
        <entry><link linkend='command-mci'>mci</link></entry>
      </row>
      <row>
+       <entry>md</entry>
+       <entry><link linkend='command-lput'>lput</link></entry>
+     </row>
+     <row>
        <entry>membre</entry>
        <entry><link linkend='command-member'>member</link></entry>
      </row>
@@ -3748,24 +4596,32 @@
        <entry><link linkend='command-midimessage'>midimessage</link></entry>
      </row>
      <row>
-       <entry>messageouinon</entry>
-       <entry><link linkend='command-yesnobox'>yesnobox</link></entry>
+       <entry>metsdernier</entry>
+       <entry><link linkend='command-lput'>lput</link></entry>
      </row>
      <row>
        <entry>metspremier</entry>
-       <entry><link linkend='command-lput'>lput</link></entry>
+       <entry><link linkend='command-fput'>fput</link></entry>
+     </row>
+     <row>
+       <entry>minimise</entry>
+       <entry><link linkend='command-icon'>icon</link></entry>
      </row>
      <row>
        <entry>minuscule</entry>
        <entry><link linkend='command-lowercase'>lowercase</link></entry>
      </row>
      <row>
-       <entry>modebmp</entry>
-       <entry><link linkend='command-bitmode'>bitmode</link></entry>
+       <entry>mod</entry>
+       <entry><link linkend='command-modulo'>modulo</link></entry>
      </row>
      <row>
        <entry>modecrayon</entry>
        <entry><link linkend='command-penmode'>penmode</link></entry>
+     </row>
+     <row>
+       <entry>modedessin</entry>
+       <entry><link linkend='command-bitmode'>bitmode</link></entry>
      </row>
      <row>
        <entry>modefenetre</entry>
@@ -3816,6 +4672,10 @@
        <entry><link linkend='command-wordp'>wordp</link></entry>
      </row>
      <row>
+       <entry>mp</entry>
+       <entry><link linkend='command-fput'>fput</link></entry>
+     </row>
+     <row>
        <entry>mt</entry>
        <entry><link linkend='command-st'>st</link></entry>
      </row>
@@ -3840,6 +4700,10 @@
        <entry><link linkend='command-numberp'>numberp</link></entry>
      </row>
      <row>
+       <entry>nomme</entry>
+       <entry><link linkend='command-name'>name</link></entry>
+     </row>
+     <row>
        <entry>nomp</entry>
        <entry><link linkend='command-namep'>namep</link></entry>
      </row>
@@ -3860,12 +4724,24 @@
        <entry><link linkend='command-home'>home</link></entry>
      </row>
      <row>
+       <entry>ote</entry>
+       <entry><link linkend='command-dequeue'>dequeue</link></entry>
+     </row>
+     <row>
+       <entry>ôte</entry>
+       <entry><link linkend='command-dequeue'>dequeue</link></entry>
+     </row>
+     <row>
        <entry>ou</entry>
        <entry><link linkend='command-or'>or</link></entry>
      </row>
      <row>
        <entry>oubit</entry>
        <entry><link linkend='command-bitor'>bitor</link></entry>
+     </row>
+     <row>
+       <entry>ouvrefichier</entry>
+       <entry><link linkend='command-dialogfileopen'>dialogfileopen</link></entry>
      </row>
      <row>
        <entry>ouvremidi</entry>
@@ -3876,6 +4752,14 @@
        <entry><link linkend='command-portopen'>portopen</link></entry>
      </row>
      <row>
+       <entry>ouvrereseau</entry>
+       <entry><link linkend='command-netstartup'>netstartup</link></entry>
+     </row>
+     <row>
+       <entry>ouvreréseau</entry>
+       <entry><link linkend='command-netstartup'>netstartup</link></entry>
+     </row>
+     <row>
        <entry>ouxbit</entry>
        <entry><link linkend='command-bitxor'>bitxor</link></entry>
      </row>
@@ -3884,19 +4768,11 @@
        <entry><link linkend='command-yield'>yield</link></entry>
      </row>
      <row>
-       <entry>pasapas</entry>
+       <entry>pas</entry>
        <entry><link linkend='command-step'>step</link></entry>
      </row>
      <row>
-       <entry>pasàpas</entry>
-       <entry><link linkend='command-step'>step</link></entry>
-     </row>
-     <row>
-       <entry>pasapas?</entry>
-       <entry><link linkend='command-stepped'>stepped</link></entry>
-     </row>
-     <row>
-       <entry>pasàpas?</entry>
+       <entry>pas?</entry>
        <entry><link linkend='command-stepped'>stepped</link></entry>
      </row>
      <row>
@@ -3904,11 +4780,19 @@
        <entry><link linkend='command-pause'>pause</link></entry>
      </row>
      <row>
-       <entry>pe</entry>
+       <entry>pave</entry>
+       <entry><link linkend='command-bitblock'>bitblock</link></entry>
+     </row>
+     <row>
+       <entry>pavé</entry>
+       <entry><link linkend='command-bitblock'>bitblock</link></entry>
+     </row>
+     <row>
+       <entry>pec</entry>
        <entry><link linkend='command-fs'>fs</link></entry>
      </row>
      <row>
-       <entry>pé</entry>
+       <entry>péc</entry>
        <entry><link linkend='command-fs'>fs</link></entry>
      </row>
      <row>
@@ -3940,11 +4824,27 @@
        <entry><link linkend='command-fulltext'>fulltext</link></entry>
      </row>
      <row>
+       <entry>plg?</entry>
+       <entry><link linkend='command-greaterp'>greater?</link></entry>
+     </row>
+     <row>
+       <entry>plp?</entry>
+       <entry><link linkend='command-lessp'>less?</link></entry>
+     </row>
+     <row>
        <entry>point</entry>
        <entry><link linkend='command-pixel'>pixel</link></entry>
      </row>
      <row>
        <entry>police</entry>
+       <entry><link linkend='command-textfont'>textfont</link></entry>
+     </row>
+     <row>
+       <entry>policeetiquette</entry>
+       <entry><link linkend='command-labelfont'>labelfont</link></entry>
+     </row>
+     <row>
+       <entry>policeétiquette</entry>
        <entry><link linkend='command-labelfont'>labelfont</link></entry>
      </row>
      <row>
@@ -3976,6 +4876,10 @@
        <entry><link linkend='command-to'>to</link></entry>
      </row>
      <row>
+       <entry>pourchaque</entry>
+       <entry><link linkend='command-foreach'>foreach</link></entry>
+     </row>
+     <row>
        <entry>pourtoujours</entry>
        <entry><link linkend='command-forever'>forever</link></entry>
      </row>
@@ -3996,6 +4900,10 @@
        <entry><link linkend='command-beforep'>beforep</link></entry>
      </row>
      <row>
+       <entry>prem</entry>
+       <entry><link linkend='command-first'>first</link></entry>
+     </row>
+     <row>
        <entry>premier</entry>
        <entry><link linkend='command-first'>first</link></entry>
      </row>
@@ -4012,8 +4920,16 @@
        <entry><link linkend='command-primitivep'>primitivep</link></entry>
      </row>
      <row>
+       <entry>procedure?</entry>
+       <entry><link linkend='command-procedurep'>procedure?</link></entry>
+     </row>
+     <row>
        <entry>procédure?</entry>
        <entry><link linkend='command-procedurep'>procedure?</link></entry>
+     </row>
+     <row>
+       <entry>procedurep</entry>
+       <entry><link linkend='command-procedurep'>procedurep</link></entry>
      </row>
      <row>
        <entry>procédurep</entry>
@@ -4068,6 +4984,14 @@
        <entry><link linkend='command-radtan'>radtan</link></entry>
      </row>
      <row>
+       <entry>rafraichis</entry>
+       <entry><link linkend='command-refresh'>refresh</link></entry>
+     </row>
+     <row>
+       <entry>ralentis</entry>
+       <entry><link linkend='command-slowdraw'>slowdraw</link></entry>
+     </row>
+     <row>
        <entry>ramene</entry>
        <entry><link linkend='command-load'>load</link></entry>
      </row>
@@ -4076,19 +5000,35 @@
        <entry><link linkend='command-load'>load</link></entry>
      </row>
      <row>
-       <entry>ramenebmp</entry>
+       <entry>ramenedes</entry>
        <entry><link linkend='command-bitload'>bitload</link></entry>
      </row>
      <row>
-       <entry>ramènebmp</entry>
+       <entry>ramènedes</entry>
        <entry><link linkend='command-bitload'>bitload</link></entry>
      </row>
      <row>
-       <entry>ramenetaillebmp</entry>
+       <entry>ramenedessin</entry>
+       <entry><link linkend='command-bitload'>bitload</link></entry>
+     </row>
+     <row>
+       <entry>ramènedessin</entry>
+       <entry><link linkend='command-bitload'>bitload</link></entry>
+     </row>
+     <row>
+       <entry>ramenegif</entry>
+       <entry><link linkend='command-gifload'>gifload</link></entry>
+     </row>
+     <row>
+       <entry>ramènegif</entry>
+       <entry><link linkend='command-gifload'>gifload</link></entry>
+     </row>
+     <row>
+       <entry>ramenetailledes</entry>
        <entry><link linkend='command-bitloadsize'>bitloadsize</link></entry>
      </row>
      <row>
-       <entry>ramènetaillebmp</entry>
+       <entry>ramènetailledes</entry>
        <entry><link linkend='command-bitloadsize'>bitloadsize</link></entry>
      </row>
      <row>
@@ -4100,8 +5040,12 @@
        <entry><link linkend='command-back'>back</link></entry>
      </row>
      <row>
-       <entry>refuseconnection</entry>
-       <entry><link linkend='command-netacceptoff'>netacceptoff</link></entry>
+       <entry>reduis</entry>
+       <entry><link linkend='command-reduce'>reduce</link></entry>
+     </row>
+     <row>
+       <entry>réduis</entry>
+       <entry><link linkend='command-reduce'>reduce</link></entry>
      </row>
      <row>
        <entry>rehasard</entry>
@@ -4148,12 +5092,24 @@
        <entry><link linkend='command-popdir'>popdir</link></entry>
      </row>
      <row>
+       <entry>répparent</entry>
+       <entry><link linkend='command-popdir'>popdir</link></entry>
+     </row>
+     <row>
+       <entry>restaure</entry>
+       <entry><link linkend='command-unicon'>unicon</link></entry>
+     </row>
+     <row>
        <entry>reste</entry>
        <entry><link linkend='command-remainder'>remainder</link></entry>
      </row>
      <row>
        <entry>ret</entry>
        <entry><link linkend='command-op'>op</link></entry>
+     </row>
+     <row>
+       <entry>retire</entry>
+       <entry><link linkend='command-pop'>pop</link></entry>
      </row>
      <row>
        <entry>retourne</entry>
@@ -4164,10 +5120,6 @@
        <entry><link linkend='command-gprop'>gprop</link></entry>
      </row>
      <row>
-       <entry>sactiveascenseur</entry>
-       <entry><link linkend='command-scrollbarenable'>scrollbarenable</link></entry>
-     </row>
-     <row>
        <entry>saufdernier</entry>
        <entry><link linkend='command-butlast'>butlast</link></entry>
      </row>
@@ -4176,16 +5128,32 @@
        <entry><link linkend='command-butfirst'>butfirst</link></entry>
      </row>
      <row>
+       <entry>saufpremiers</entry>
+       <entry><link linkend='command-butfirsts'>butfirsts</link></entry>
+     </row>
+     <row>
        <entry>sauve</entry>
        <entry><link linkend='command-save'>save</link></entry>
      </row>
      <row>
-       <entry>sauvebmp</entry>
+       <entry>sauvedes</entry>
        <entry><link linkend='command-bitsave'>bitsave</link></entry>
+     </row>
+     <row>
+       <entry>sauvedessin</entry>
+       <entry><link linkend='command-bitsave'>bitsave</link></entry>
+     </row>
+     <row>
+       <entry>sauvefichier</entry>
+       <entry><link linkend='command-dialogfilesave'>dialogfilesave</link></entry>
      </row>
      <row>
        <entry>sauvegif</entry>
        <entry><link linkend='command-gifsave'>gifsave</link></entry>
+     </row>
+     <row>
+       <entry>sauvel</entry>
+       <entry><link linkend='command-savel'>savel</link></entry>
      </row>
      <row>
        <entry>sd</entry>
@@ -4202,6 +5170,10 @@
      <row>
        <entry>sifaux</entry>
        <entry><link linkend='command-iffalse'>iffalse</link></entry>
+     </row>
+     <row>
+       <entry>signe</entry>
+       <entry><link linkend='command-sign'>sign</link></entry>
      </row>
      <row>
        <entry>sin</entry>
@@ -4244,6 +5216,10 @@
        <entry><link linkend='command-traced'>traced</link></entry>
      </row>
      <row>
+       <entry>sup?</entry>
+       <entry><link linkend='command-greaterp'>greater?</link></entry>
+     </row>
+     <row>
        <entry>superieur?</entry>
        <entry><link linkend='command-greaterp'>greater?</link></entry>
      </row>
@@ -4264,6 +5240,10 @@
        <entry><link linkend='command-array'>array</link></entry>
      </row>
      <row>
+       <entry>tableau.md</entry>
+       <entry><link linkend='command-mdarray'>mdarray</link></entry>
+     </row>
+     <row>
        <entry>tableau?</entry>
        <entry><link linkend='command-arrayp'>array?</link></entry>
      </row>
@@ -4272,20 +5252,28 @@
        <entry><link linkend='command-arrayp'>arrayp</link></entry>
      </row>
      <row>
-       <entry>taillebmp</entry>
-       <entry><link linkend='command-bitsize'>bitsize</link></entry>
+       <entry>tableauversliste</entry>
+       <entry><link linkend='command-arraytolist'>arraytolist</link></entry>
      </row>
      <row>
        <entry>taillecrayon</entry>
        <entry><link linkend='command-pensize'>pensize</link></entry>
      </row>
      <row>
-       <entry>taillegif</entry>
-       <entry><link linkend='command-gifsize'>gifsize</link></entry>
+       <entry>tailledessin</entry>
+       <entry><link linkend='command-bitsize'>bitsize</link></entry>
      </row>
      <row>
-       <entry>taillepolice</entry>
+       <entry>tailleetiquette</entry>
        <entry><link linkend='command-labelsize'>labelsize</link></entry>
+     </row>
+     <row>
+       <entry>tailleétiquette</entry>
+       <entry><link linkend='command-labelsize'>labelsize</link></entry>
+     </row>
+     <row>
+       <entry>taillegif</entry>
+       <entry><link linkend='command-gifsize'>gifsize</link></entry>
      </row>
      <row>
        <entry>tan</entry>
@@ -4312,11 +5300,11 @@
        <entry><link linkend='command-test'>test</link></entry>
      </row>
      <row>
-       <entry>testevenement</entry>
+       <entry>testev</entry>
        <entry><link linkend='command-eventcheck'>eventcheck</link></entry>
      </row>
      <row>
-       <entry>testévénement</entry>
+       <entry>testév</entry>
        <entry><link linkend='command-eventcheck'>eventcheck</link></entry>
      </row>
      <row>
@@ -4330,10 +5318,6 @@
      <row>
        <entry>tortue</entry>
        <entry><link linkend='command-turtle'>turtle</link></entry>
-     </row>
-     <row>
-       <entry>tortuebmp</entry>
-       <entry><link linkend='command-bitmapturtle'>bitmapturtle</link></entry>
      </row>
      <row>
        <entry>tortues</entry>
@@ -4352,20 +5336,24 @@
        <entry><link linkend='command-dribble'>dribble</link></entry>
      </row>
      <row>
+       <entry>transfere</entry>
+       <entry><link linkend='command-transfer'>transfer</link></entry>
+     </row>
+     <row>
+       <entry>transfère</entry>
+       <entry><link linkend='command-transfer'>transfer</link></entry>
+     </row>
+     <row>
+       <entry>trie</entry>
+       <entry><link linkend='command-sort'>sort</link></entry>
+     </row>
+     <row>
        <entry>tronque</entry>
        <entry><link linkend='command-int'>int</link></entry>
      </row>
      <row>
-       <entry>valeurenvoie</entry>
-       <entry><link linkend='command-netconnectsendvalue'>netconnectsendvalue</link></entry>
-     </row>
-     <row>
-       <entry>valeurreception</entry>
-       <entry><link linkend='command-netconnectreceivevalue'>netconnectreceivevalue</link></entry>
-     </row>
-     <row>
-       <entry>valeurréception</entry>
-       <entry><link linkend='command-netconnectreceivevalue'>netconnectreceivevalue</link></entry>
+       <entry>trouve</entry>
+       <entry><link linkend='command-find'>find</link></entry>
      </row>
      <row>
        <entry>vavers</entry>
@@ -4394,6 +5382,10 @@
      <row>
        <entry>vide?</entry>
        <entry><link linkend='command-emptyp'>empty?</link></entry>
+     </row>
+     <row>
+       <entry>videchrono</entry>
+       <entry><link linkend='command-cleartimer'>cleartimer</link></entry>
      </row>
      <row>
        <entry>videecran</entry>
