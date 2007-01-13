@@ -1,7 +1,7 @@
 .macro foreach [:foreach.inputs] 2
 catch "foreach.catchtag ~
       [op foreach.done runresult ~
-	    [foreach1 bl :foreach.inputs last :foreach.inputs 1]]
+	    [foreach1 butlast :foreach.inputs last :foreach.inputs 1]]
 op []
 end
 
