@@ -16,7 +16,6 @@
 <para>
 Outputs TRUE if the input is the name of a user-defined macro or a library macro.
 Outputs FALSE, otherwise.
-&PRODUCTNAME; does not know about a library macro until it has been invoked.
 </para>
 
 <para>
