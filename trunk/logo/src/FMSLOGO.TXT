@@ -31,6 +31,8 @@ II. New features/bugs fixed:
       prevent the other from working.
     o Fix bug #1625098; French translation tables are now properly collated.
     o Fix bug #1602864; All COPYDEF bad input errors are now recoverable.
+    o Implement request #1631170; COPYDEF, PROCEDUREP, MACROP, and DEFINEDP
+      now load the procedure as a Logolib routine, if is not already defined.
     o Improve the translation of the French FMSLogo.
     o Minor updates to the manual.
 
