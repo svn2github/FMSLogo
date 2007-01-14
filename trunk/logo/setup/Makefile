@@ -1,11 +1,14 @@
 MAKENSIS="C:\Program Files\NSIS\makensis.exe"
 
+include ../lcids.mk
+
+EXECUTABLES  = $(addprefix ../src/fmslogo-,     $(addsuffix .exe,        $(LCIDS)))
+STARTUPFILES = $(addprefix ../src/startup-,     $(addsuffix .logoscript, $(LCIDS)))
+HELPFILES    = $(addprefix ../manual/logohelp-, $(addsuffix .chm,        $(LCIDS)))
+
 all : fmslogo.exe
 
-EXECUTABLES = $(addprefix ../src/,fmslogo-1032.exe fmslogo-1033.exe fmslogo-1034.exe fmslogo-1036.exe)
-HELPFILES   = $(addprefix ../manual/,logohelp-1032.chm logohelp-1033.chm logohelp-1034.chm logohelp-1036.chm)
-
-fmslogo.exe : fmslogo.nsi ../version.mk $(EXECUTABLES) $(HELPFILES)
+fmslogo.exe : fmslogo.nsi ../version.mk $(EXECUTABLES) $(STARTUPFILES) $(HELPFILES)
 	$(MAKENSIS) $<
 
 clean :
