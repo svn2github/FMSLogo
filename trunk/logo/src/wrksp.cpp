@@ -1515,11 +1515,13 @@ NODE *lnamep(NODE *args)
 NODE *lprocedurep(NODE *args)
    {
    NODE *arg = name_arg(args);
-   if (NOT_THROWING)
+   if (stopping_flag == THROWING)
       {
-      return true_or_false(procnode__caseobj(intern(arg)) != UNDEFINED);
+      return Unbound;
       }
-   return Unbound;
+
+   NODE * procnode = load_procedure_if_necessary(intern(arg));
+   return true_or_false(procnode != UNDEFINED);
    }
 
 NODE *lproplistp(NODE *args)
@@ -1532,48 +1534,80 @@ NODE *lproplistp(NODE *args)
    return Unbound;
    }
 
-// wanted:
-//   0 = defined
-//   1 = primative
-//   2 = macro
+
+enum PROCTYPE
+   {
+   PROCTYPE_UserDefined,
+   PROCTYPE_Primitive,
+   PROCTYPE_Macro,
+   };
+
 static
-NODE *check_proctype(NODE *args, int wanted)
+NODE *check_proctype(NODE *args, PROCTYPE wanted)
    {
    NODE * arg = proc_name_arg(args);
-
-   NODE * cell;
-   if (NOT_THROWING && (cell = procnode__caseobj(intern(arg))) == UNDEFINED)
+   if (stopping_flag == THROWING)
       {
+      return Unbound;
+      }
+
+   NODE * interned_arg = intern(arg);
+
+   NODE * procnode;
+   if (wanted == PROCTYPE_Primitive)
+      {
+      procnode = procnode__caseobj(interned_arg);
+      }
+   else
+      {
+      // macros and user-defined functions may be implemented 
+      // as a library routine, so we try to load it if it's not
+      // already loaded.
+      procnode = load_procedure_if_necessary(interned_arg);
+      }
+
+   if (procnode == UNDEFINED)
+      {
+      // this isn't even a procedure
       return Falsex.GetNode();
       }
 
-   if (wanted == 2)
+   bool istype = false;
+
+   switch (wanted)
       {
-      return true_or_false(is_macro(intern(arg)));
+      case PROCTYPE_UserDefined:
+         istype = is_prim(procnode) ? false : true;
+         break;
+
+      case PROCTYPE_Primitive:
+         istype = is_prim(procnode) ? true : false;
+         break;
+
+      case PROCTYPE_Macro:
+         istype = is_macro(interned_arg);
+         break;
+
+      default:
+         assert(!"Internal Error: Bad Argument");
       }
 
-   int isprim = is_prim(cell);
-   if (NOT_THROWING)
-      {
-      return true_or_false((isprim != 0) == wanted);
-      }
-
-   return Unbound;
+   return true_or_false(istype);
    }
 
 NODE *lprimitivep(NODE *args)
    {
-   return check_proctype(args, 1);
+   return check_proctype(args, PROCTYPE_Primitive);
    }
 
 NODE *ldefinedp(NODE *args)
    {
-   return check_proctype(args, 0);
+   return check_proctype(args, PROCTYPE_UserDefined);
    }
 
 NODE *lmacrop(NODE *args)
    {
-   return check_proctype(args, 2);
+   return check_proctype(args, PROCTYPE_Macro);
    }
 
 NODE *lcopydef(NODE *args)
@@ -1596,7 +1630,7 @@ NODE *lcopydef(NODE *args)
 
    // load the procedure, in case we're copydef'ing a library routine
    NODE * new_proc = load_procedure_if_necessary(arg2);
-   if (procnode__caseobj(arg2) == UNDEFINED)
+   if (new_proc == UNDEFINED)
       {
       // the second input isn't the name of a procedure
       err_logo(DK_HOW, arg2);
