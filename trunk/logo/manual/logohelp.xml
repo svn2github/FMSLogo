@@ -14,7 +14,7 @@
   <!ENTITY commander                 SYSTEM "commander.xml">
   <!ENTITY main-menu                 SYSTEM "main-menu.xml">
   <!ENTITY tokenization              SYSTEM "tokenization.xml">
-  <!ENTITY data-structure-primatives SYSTEM "data-structure-primatives.xml">
+  <!ENTITY data-structure-primitives SYSTEM "data-structure-primitives.xml">
   <!ENTITY communication             SYSTEM "communication.xml">
   <!ENTITY arithmetic                SYSTEM "arithmetic.xml">
   <!ENTITY logical-operations        SYSTEM "logical-operations.xml">
@@ -610,7 +610,7 @@
   &commander;
   &main-menu;
   &tokenization;
-  &data-structure-primatives;
+  &data-structure-primitives;
   &communication;
   &arithmetic;
   &logical-operations;
