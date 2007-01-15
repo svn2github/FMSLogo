@@ -52,6 +52,7 @@
       <title>Data Structure Predicates</title>
 
       &command-wordp;
+      &command-numberp;
       &command-listp;
       &command-arrayp;
       &command-emptyp;

@@ -70,6 +70,7 @@
   <!ENTITY command-word         SYSTEM "command-word.xml">
 
   <!ENTITY command-wordp        SYSTEM "command-wordp.xml">
+  <!ENTITY command-numberp      SYSTEM "command-numberp.xml">
   <!ENTITY command-listp        SYSTEM "command-listp.xml">
   <!ENTITY command-arrayp       SYSTEM "command-arrayp.xml">
   <!ENTITY command-emptyp       SYSTEM "command-emptyp.xml">
