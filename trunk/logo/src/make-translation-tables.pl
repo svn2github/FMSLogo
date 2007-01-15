@@ -11,6 +11,25 @@ use utf8;
 use IO::File;
 use strict;
 
+sub PrintShadowedProcedures($$$) {
+  my $LocaleName         = shift or die "not enough arguments";
+  my $English            = shift or die "not enough arguments";
+  my $LocalizedToEnglish = shift or die "not enough arguments";
+
+  # foreach localized command check to see if:
+  # 1) It's also the name of an English command
+  # 2) It's not a localization of that English command
+  foreach my $localizedCommand (keys %{$LocalizedToEnglish}) {
+    foreach my $englishCommand (values %{$English}) {
+
+      if ($englishCommand eq $localizedCommand and
+          $$LocalizedToEnglish{$localizedCommand} ne $englishCommand) {
+        print "WARNING: $LocaleName shadows the English command `$localizedCommand' as a translations for `$$LocalizedToEnglish{$localizedCommand}'\n";
+      }
+    }
+  }
+}
+
 sub PrintTranslationsAsText($$$) {
 
   my $LocaleId           = shift or die "not enough arguments";
@@ -210,6 +229,8 @@ sub MakeTranslationTables($$$) {
     $LocaleId,
     \%englishtolocalized,
     \%localizedtoenglish);
+
+  PrintShadowedProcedures($LocaleName, \%english, \%localizedtoenglish);
 }
 
 
