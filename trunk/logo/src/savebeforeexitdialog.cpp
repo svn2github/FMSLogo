@@ -65,9 +65,40 @@ void CSaveBeforeExitDialog::SetupWindow()
          }
       }
 
+   const int spacingX = 8;                  // spacing between buttons
+   const int spacingY = 8;                  // spacing between bottom and window
+
+   const int paddingX = 2 * BaseUnitsx / 4; // padding inside the button
+
+   // figure out how much width we need to hold the buttons
+   int totalWidth = spacingX;
+   for (int i = 0; i < ARRAYSIZE(buttonSizes); i++)
+      {
+      totalWidth += buttonSizes[i].cx + paddingX + spacingX;
+      }
+
    // get the overall dialog box's dimensions
    TRect clientRect;
    GetClientRect(clientRect);
+
+   if (clientRect.Width() < totalWidth)
+      {
+      // The client area isn't large enough to hold our buttons.
+      // We must grow it.
+      TRect windowRectangle;
+      GetWindowRect(windowRectangle);
+
+      SetWindowPos(
+         0,
+         0,  // x
+         0,  // y
+         windowRectangle.Width() - clientRect.Width() + totalWidth, // width
+         windowRectangle.Height(),                                  // height
+         SWP_NOMOVE | SWP_NOZORDER);
+
+      // re-get the client rectangle
+      GetClientRect(clientRect);
+      }
 
    // get cancel button's dimension
    HWND cancelButton = GetItemHandle(IDCANCEL);
@@ -85,20 +116,15 @@ void CSaveBeforeExitDialog::SetupWindow()
       return;
       }
 
-   const int spacingX = 8;
-   const int paddingX = 4 * BaseUnitsx / 4;
-   const int paddingY = 4 * BaseUnitsy / 8;
-
    const int buttonHeight = cancelButtonRect.bottom;
-   const int buttonY      = clientRect.bottom - buttonHeight - paddingY;
-
+   const int buttonY      = clientRect.bottom - buttonHeight - spacingY;
 
    // Now set the size/position of each button by moving
    // from left-to-right.
    int buttonX = clientRect.Width() - spacingX;
    for (int i = 0; i < ARRAYSIZE(buttonSizes); i++)
       {
-      // resize the text
+      // resize the button to fix the text
       HWND hwnd = GetItemHandle(staticText[i].MenuId);
       if (hwnd != NULL)
          {
