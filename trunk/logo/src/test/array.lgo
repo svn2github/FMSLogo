@@ -165,8 +165,6 @@ TO SETITEMTEST
    ; can't create circular arrays
    LOCALMAKE "myarray {1 2 3}
    RUNBADINPUTTEST  [SETITEM 1 :myarray :myarray]
-
-   LOCALMAKE "mylist (LIST 1 2 :myarray)
 END
 
 TO ARRAYTEST
