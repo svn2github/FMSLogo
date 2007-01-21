@@ -2605,7 +2605,7 @@ OpenFileWithDefaultApplication(
 
 void TMainFrame::CMHelpExamples()
    {
-   char szFileName[EXE_NAME_MAX_SIZE + 1];
+   char szFileName[MAX_PATH + 1];
    MakeHelpPathName(szFileName, "EXAMPLES\\INDEX.HTML");
 
    OpenFileWithDefaultApplication(HWindow, szFileName);
@@ -2613,7 +2613,7 @@ void TMainFrame::CMHelpExamples()
 
 void TMainFrame::CMHelpReleaseNotes()
    {
-   char szFileName[EXE_NAME_MAX_SIZE + 1];
+   char szFileName[MAX_PATH + 1];
    MakeHelpPathName(szFileName, "FMSLOGO.TXT");
 
    OpenFileWithDefaultApplication(HWindow, szFileName);

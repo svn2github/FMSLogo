@@ -205,5 +205,3 @@
 #define IDD_SAVEBEFOREEXIT      IDD_BASE + 10
 #define IDD_MINIEDITOR          IDD_BASE + 11
 
-#define EXE_NAME_MAX_SIZE 128
-

@@ -74,7 +74,6 @@ NODE *output_node = NIL;         // the output of the current function
 FIXNUM repcountup;               // up count for repeat
 
 CTRLTYPE stopping_flag = RUN;
-char *logolib;
 FIXNUM tailcall;    // 0 in sequence, 1 for tail, -1 for arg
 
 FIXNUM g_ValueStatus;
@@ -114,7 +113,7 @@ load_procedure_if_necessary(
        NOT_THROWING &&
        ProcNode != Null_Word)
       {
-      silent_load(ProcNode, logolib);
+      silent_load(ProcNode, LibPathName);
       }
 
    return procnode__caseobj(ProcNode);

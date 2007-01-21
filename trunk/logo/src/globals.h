@@ -140,7 +140,6 @@ extern NODE *output_node;
 extern NODE *last_call;
 extern NODE *didnt_output_name;
 extern CTRLTYPE stopping_flag;
-extern char *logolib;
 extern FIXNUM tailcall;
 extern FIXNUM dont_fix_ift;
 

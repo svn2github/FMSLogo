@@ -44,13 +44,14 @@ Point  g_OldPos = {0.0, 0.0, 0.0}; // global store for x,y,z "From" routine
 
 NODE *current_line = NIL;       // current line to be parsed
 
-char LibPathName[EXE_NAME_MAX_SIZE + 1];    /* path to library                */
-char TempPathName[EXE_NAME_MAX_SIZE + 1];   /* path to temp edit file         */
-char TempBmpName[EXE_NAME_MAX_SIZE + 1];    /* path to temp bitmap file       */
-char TempClipName[EXE_NAME_MAX_SIZE + 1];   /* path to temp clipboard file    */
-char szHelpFileName[EXE_NAME_MAX_SIZE + 1]; /* path to help file              */
-char MCIHelpFileName[EXE_NAME_MAX_SIZE + 1];/* path to MCI help file          */
-char commandarg[MAX_BUFFER_SIZE];      /* Routine to exec on start            */
+char LibPathName[MAX_PATH + 1];    // path to library
+char TempPathName[MAX_PATH + 1];   // path to temp edit file
+char TempBmpName[MAX_PATH + 1];    // path to temp bitmap file
+char TempClipName[MAX_PATH + 1];   // path to temp clipboard file
+char szHelpFileName[MAX_PATH + 1]; // path to help file
+char MCIHelpFileName[MAX_PATH + 1];// path to MCI help file
+
+char commandarg[MAX_BUFFER_SIZE];  // Routine to exec on start
 
 // holds callback code
 
@@ -65,7 +66,7 @@ char *mouse_mousemove = NULL;          /* Mouse Move cb                       */
 char *keyboard_keydown = NULL;         /* KeyBoard key down                   */
 char *keyboard_keyup = NULL;           /* KeyBoard key up                     */
 
-HINSTANCE ModulehInstance;             /* About box instance handle           */
+HINSTANCE ModulehInstance;             // FMSLogo instance handle
 
 /* place holders for windows resources */
 HPALETTE OldPalette;
@@ -376,7 +377,7 @@ bool TMyApp::IdleAction(long idleCount)
    static bool hasRunStartup = false;
    if (!hasRunStartup)
       {
-      char startupScript[EXE_NAME_MAX_SIZE + 1];
+      char startupScript[MAX_PATH + 1];
       MakeHelpPathName(startupScript, "startup.logoscript");
       silent_load(NIL, startupScript);
 
@@ -395,6 +396,29 @@ bool TMyApp::IdleAction(long idleCount)
    return TApplication::IdleAction(idleCount);
    }
 
+// Creates a unique filename relative to TempPath
+static
+void MakeTempFilename(char *OutBuffer, const char * TempPath, const char * FileName)
+   {
+   // the first part of the temp filename is TempPath
+   char * ptr       = OutBuffer;
+   const char * src = TempPath;
+   while (*src != '\0')
+      {
+      *ptr++ = *src++;
+      }
+
+   // make sure that the path ends in a directory delimiter
+   if (*ptr != '\\')
+      {
+      *ptr++ = '\\';
+      }
+   
+   // append the filename
+   strcpy(ptr, FileName);
+   }
+
+
 void TMyApp::InitMainWindow()
    {
    /* create the window */
@@ -405,8 +429,8 @@ void TMyApp::InitMainWindow()
    /* set appropriate default colors */
 
    pcolor = 0x00000000;
-   scolor = 0x00ffffffL;
-   fcolor = 0x00000000L;
+   scolor = 0x00FFFFFF;
+   fcolor = 0x00000000;
 
    dpen.red   = 0x00;
    dpen.green = 0x00;
@@ -416,28 +440,27 @@ void TMyApp::InitMainWindow()
    dfld.green = 0x00;
    dfld.blue  = 0x00;
 
-   dscn.red   = 0xff;
-   dscn.green = 0xff;
-   dscn.blue  = 0xff;
+   dscn.red   = 0xFF;
+   dscn.green = 0xFF;
+   dscn.blue  = 0xFF;
 
    // init the font structure
 
-   FontRec.lfHeight = 24;
-   FontRec.lfWidth = 0;
-   FontRec.lfOrientation = 0;
-   FontRec.lfWeight = 400;
-   FontRec.lfItalic = 0;
-   FontRec.lfUnderline = 0;
-   FontRec.lfStrikeOut = 0;
-   FontRec.lfCharSet = ANSI_CHARSET;
-   FontRec.lfOutPrecision = OUT_DEFAULT_PRECIS;
-   FontRec.lfClipPrecision = CLIP_DEFAULT_PRECIS;
-   FontRec.lfQuality = DEFAULT_QUALITY;
+   FontRec.lfHeight         = 24;
+   FontRec.lfWidth          = 0;
+   FontRec.lfOrientation    = 0;
+   FontRec.lfWeight         = 400;
+   FontRec.lfItalic         = 0;
+   FontRec.lfUnderline      = 0;
+   FontRec.lfStrikeOut      = 0;
+   FontRec.lfCharSet        = ANSI_CHARSET;
+   FontRec.lfOutPrecision   = OUT_DEFAULT_PRECIS;
+   FontRec.lfClipPrecision  = CLIP_DEFAULT_PRECIS;
+   FontRec.lfQuality        = DEFAULT_QUALITY;
    FontRec.lfPitchAndFamily = DEFAULT_PITCH;
    strcpy(FontRec.lfFaceName, "Arial");
 
-   /* init all the pens based on the color */
-
+   // init all the pens based on the color
    NormalPen.lopnStyle = PS_INSIDEFRAME;
    NormalPen.lopnWidth.x = g_PenWidth;
    NormalPen.lopnColor = pcolor;
@@ -548,9 +571,9 @@ void TMyApp::InitMainWindow()
    ModulehInstance = HInstance;
 
    // init paths to library and help files based on location of .EXE
-   MakeHelpPathName(LibPathName, "logolib\\");
-   logolib = LibPathName;
-   MakeHelpPathName(szHelpFileName, "logohelp.chm");
+   MakeHelpPathName(LibPathName,     "logolib\\");
+   MakeHelpPathName(szHelpFileName,  "logohelp.chm");
+   MakeHelpPathName(MCIHelpFileName, "mcistrwh.hlp");
 
    DWORD tempPathLength;
    char  tempPath[MAX_PATH];
@@ -583,35 +606,16 @@ void TMyApp::InitMainWindow()
          MB_OK);
 
       strcpy(tempPath, "C:");
-      tempPathLength = STRINGLENGTH("C:");
       }
 
    // construct the name of the temporary editor file
-   strcpy(TempPathName, tempPath);
-   if (TempPathName[tempPathLength - 1] == '\\')
-      {
-      TempPathName[tempPathLength - 1] = '\0';
-      }
-   strcat(TempPathName, "\\mswlogo.tmp");
+   MakeTempFilename(TempPathName, tempPath, "mswlogo.tmp");
 
    // construct the name of the temporary bitmap file
-   strcpy(TempBmpName, tempPath);
-   if (TempBmpName[tempPathLength - 1] == '\\')
-      {
-      TempBmpName[tempPathLength - 1] = '\0';
-      }
-   strcat(TempBmpName, "\\mswlogo.bmp");
+   MakeTempFilename(TempBmpName, tempPath, "mswlogo.bmp");
 
    // construct the name of the clipboard file
-   strcpy(TempClipName, tempPath);
-   if (TempClipName[tempPathLength - 1] == '\\')
-      {
-      TempClipName[tempPathLength - 1] = '\0';
-      }
-   strcat(TempClipName, "\\mswlogo.clp");
-
-
-   MakeHelpPathName(MCIHelpFileName, "mcistrwh.hlp");
+   MakeTempFilename(TempClipName, tempPath, "mswlogo.clp");
 
    g_PrinterAreaXLow   = GetConfigurationInt("Printer.Xlow",  -BitMapWidth  / 2);
    g_PrinterAreaXHigh  = GetConfigurationInt("Printer.XHigh", +BitMapWidth  / 2);
@@ -622,7 +626,6 @@ void TMyApp::InitMainWindow()
 
 TMyApp::~TMyApp()
    {
-   //   delete MainWindowx;
    }
 
 void TMyApp::EvSysColorChange()
@@ -1404,31 +1407,27 @@ void line_to_3d(const Point & ToPoint)
       }
    }
 
+// Creates path relative to the directory from to which FMSLogo is installed.
 void MakeHelpPathName(char *OutBuffer, const char * TheFileName)
    {
-   int nFileNameLen = GetModuleFileName(ModulehInstance, OutBuffer, EXE_NAME_MAX_SIZE);
-   char * pcFileName = OutBuffer + nFileNameLen;
+   // get the path name of fmslogo.exe
+   int nFileNameLen = GetModuleFileName(ModulehInstance, OutBuffer, MAX_PATH);
 
+   // start at the end of the full path to fmslogo.exe and walk
+   // backwards in the string until we find the final directory delimiter
+   char * pcFileName = OutBuffer + nFileNameLen;
    while (pcFileName > OutBuffer)
       {
       if (*pcFileName == '\\' || *pcFileName == ':')
          {
-         * (++pcFileName) = '\0';
+         pcFileName++;
          break;
          }
-      nFileNameLen--;
       pcFileName--;
       }
 
-   // BUG: Why 13?
-   if ((nFileNameLen + 13) < EXE_NAME_MAX_SIZE)
-      {
-      lstrcat(OutBuffer, TheFileName);
-      }
-   else
-      {
-      lstrcat(OutBuffer, "?");
-      }
+   // Append the filename to the relative path
+   strcpy(pcFileName, TheFileName);
    }
 
 
