@@ -39,13 +39,14 @@ $main::TotalErrors   = 0;
 $main::TotalWarnings = 0;
 
 @main::BannedWords = (
-  'left-hand',    # use "left", instead
-  'right-hand',   # use "right", instead
-  'ie',           # use "that is", instead
-  'i.e.',         # use "that is", instead
-  'e.g.',         # use "for example", instead
-  'eg',           # use "for example", instead
-  'terminal',     # use "the Commander", instead
+  'left-hand',        # use "left", instead
+  'right-hand',       # use "right", instead
+  'ie',               # use "that is", instead
+  'i.e.',             # use "that is", instead
+  'e.g.',             # use "for example", instead
+  'eg',               # use "for example", instead
+  'terminal',         # use "the Commander", instead
+  'multidimensional', # use "multi-dimensional", instead
 );
 
 my %Commands = ();
