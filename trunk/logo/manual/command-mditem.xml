@@ -12,19 +12,26 @@
 
 <varlistentry><term>Description</term>
 <listitem>
-<para>Outputs an element of the multidimensional array selected by the list of numbers (an index list).</para>
+<para>Outputs an element of the multi-dimensional array selected by the list of numbers (an index list).</para>
 </listitem>
 </varlistentry>
 
 <varlistentry><term>Example</term>
 <listitem>
-
 <programlisting><userinput>SHOW MDITEM [2 2] {{0 1} {2 3}}</userinput>
 3</programlisting>
-
 </listitem>
 </varlistentry>
 
-</variablelist>
 
+<varlistentry><term>See Also</term>
+<listitem><simplelist>
+<member><link linkend="command-mdarray">MDARRAY</link></member>
+<member><link linkend="command-mdsetitem">MDSETITEM</link></member>
+<member><link linkend="command-item">ITEM</link></member>
+</simplelist></listitem>
+</varlistentry>
+
+
+</variablelist>
 </section>
