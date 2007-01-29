@@ -493,7 +493,7 @@
 #define LOCALIZED_ALTERNATE_SETFOCUS               "fixefocus" // 
 #define LOCALIZED_ALTERNATE_SETH                   "fcap" // 
 #define LOCALIZED_ALTERNATE_SETHEADING             "fixecap"
-#define LOCALIZED_ALTERNATE_SETITEM                "remplace"
+#define LOCALIZED_ALTERNATE_SETITEM                "fixeitem"
 #define LOCALIZED_ALTERNATE_SETLABELFONT           "fixepolice"
 #define LOCALIZED_ALTERNATE_SETLIGHT               "fixelumière" // 
 #define LOCALIZED_ALTERNATE_SETMARGINS             "fixemarges" // 
