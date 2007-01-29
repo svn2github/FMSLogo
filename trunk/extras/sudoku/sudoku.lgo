@@ -75,7 +75,7 @@ to start [:w pick :examples]
 make "p :w
 make "q :w
 make "sol []
-ct cs ht
+cleartext cs ht
 pr [Select a number.]
 pr [Click and put a number.]
 pr [Right click to remove a number.]
