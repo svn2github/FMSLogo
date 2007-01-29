@@ -71,7 +71,7 @@ to buttonHit
   make "bhDone "false
   do.while [
     make "bhNum :bhNum + 1
-    if( item 2 (item :bhNum :buttonList)) = "true  [
+    if item 2 (item :bhNum :buttonList) [
       drawText item 1 ( item :bhNum :buttonList ) "getLength
       make "x1 (first item 3 ( item :bhNum :buttonList )) - :textLength/2 - 10*:textScale
       make "x2 (first item 3 ( item :bhNum :buttonList )) + :textLength/2 + 6*:textScale
@@ -123,7 +123,7 @@ to buttonHit
         ]
       ]
     ]
-  ][ and :bhNum < :numButtons :bhDone = "false ]
+  ][ and :bhNum < :numButtons not :bhDone ]
   setturtle 0
   pu setpos :bhPos
   seth :bhHeading
@@ -697,7 +697,7 @@ to findXy :object
       ]
     ]
 
-    if and (:findNew = "false) (:neighbor > 0) [
+    if and (not :findNew) (:neighbor > 0) [
       setitem :loop1 :rockNeighbors :neighbor
       setitem :neighboringRock :rockNeighbors :loop1
     ]
@@ -715,20 +715,22 @@ to findXy :object
     ;make sure crystals don't overlap rocks
     repeat :numRocks [
       if (distance( item repcount :rocks )) < ( :rockRad + :crystalRad + 2 ) [
-         make "findNew "true ]
+         make "findNew "true
       ]
+    ]
+
     ;make sure crystal is not on top of ship
     if (distance[ 0 0 ]) < ( :crystalRad + :shipRad + 2 ) [ make "findNew "true ]
 
     ;make sure crystal is not too close to another
-    if :findNew = "false [
+    if not :findNew [
       repeat (:loop1 - 1) [
         if (distance( item repcount :crystals )) < ( :crystalRad*2 + 2 ) [ make "findNew "true ]
       ]
     ]
 
     ;make sure crystal is not so close to two rocks that the ship can't get to it
-    if :findNew = "false [
+    if not :findNew [
       repeat :numRocks [
         if (distance( item repcount :rocks )) < ( :shipRad*2 + :rockRad + 2 ) [
           make "y :y+.001   ;marks crystal as too close to a rock to glint
@@ -743,11 +745,11 @@ to findXy :object
     ]
   ]  
 
-  if( and :object = "rock  :findNew = "true ) [
+  if (and :object = "rock  :findNew) [
     make "rockCounter :rockCounter + 1
     if :rockCounter < 250 [ findXy "rock ]
   ]
-  if( and :object = "crystal  :findNew = "true ) [ findXy "crystal ]
+  if (and :object = "crystal  :findNew) [ findXy "crystal ]
 end
 
 to gameLoop
@@ -1079,7 +1081,7 @@ to initMain
   repeat count :filelist[
     if (item repcount :filelist) = "AM_Hiscores [ make "fileExist "true ]
   ]
-  if (:fileExist = "false) [
+  if not :fileExist [
     openwrite "AM_Hiscores
     setwrite "AM_Hiscores
     print "AsteroidMinerHS
@@ -1175,7 +1177,7 @@ to inputText.keyHit
     if not( count :string ) = :max [ inputText.eraseChar "_ ]
 
     drawText ( char :key ) "getLength
-    if :validChar = "true [
+    if :validChar [
       if not( count :string ) = :max [
         make "string word :string (char :key)
         drawText ( char :key ) "draw
@@ -1282,14 +1284,14 @@ to ltCnr
 end
 
 to menuOn :action
-  if :action = "true [ buttonOn 1 "false ]
+  if :action [ buttonOn 1 "false ]
   buttonOn 2 :action
   buttonOn 3 :action
   buttonOn 4 :action
   buttonOn 5 :action
   buttonOn 6 :action
   make "menuOn :action
-  if and :action = "false  not :playing [ buttonOn 1 "true ]
+  if and not :action  not :playing [ buttonOn 1 "true ]
 end
 
 to obk :d
@@ -1329,34 +1331,34 @@ to open
 
   clearBox
   setturtle 2 ht
-  if( and :displayHighScores = "false :displayInstructions = "false not :open.quit ) [ menuOn :menuOn ]
+  if (and not :displayHighScores not :displayInstructions not :open.quit) [ menuOn :menuOn ]
 
   if not :open.quit [ displayHighScores ]
 
-  ifelse :displayHighScores = "true [
+  ifelse :displayHighScores [
     displayHighScores
     buttonOn 7 "true 
     capturekeyboardinput
 
-    do.while [ waitStop 10 ] [ :displayHighScores = "true ]
+    do.while [ waitStop 10 ] [ :displayHighScores ]
   ][
     repeat 8 [if not :open.quit [waitStop 30] ]
   ]
 
-  if :displayHighScores = "true [
+  if :displayHighScores [
     displayHighScores
     buttonOn 7 "true 
     capturekeyboardinput
 
-    do.while [ waitStop 10 ] [ :displayHighScores = "true ]
+    do.while [ waitStop 10 ] [ :displayHighScores ]
   ]
 
-  if :displayInstructions = "true [
+  if :displayInstructions [
     displayInstructions
     buttonOn 8 "true 
     capturekeyboardinput
 
-    do.while [ waitStop 10 ] [ :displayInstructions = "true ]
+    do.while [ waitStop 10 ] [ :displayInstructions ]
   ]
 end
 
@@ -1533,13 +1535,13 @@ to pauseGame
   buttonOn 9 "true
   buttonOn 10 "true
 
-  if :timer = "false [ make "keepOff "true ]
+  if not :timer [ make "keepOff "true ]
   timerOff
   mouseon [ buttonHit ] [] [] [] []
   make "paused "true
-  do.while [ eventcheck ][ :paused = "true ]
+  do.while [ eventcheck ][ :paused ]
   mouseoff
-  if :keepOff = "false [ timerOn ]
+  if not :keepOff [ timerOn ]
 
   buttonOn 9 "false
   buttonOn 10 "false
@@ -1712,14 +1714,15 @@ end
 
 to processCommand
   if not :shipIsExploding [
-    if :turnLt="true [ make "dr :dr - 10 ]
-    if :turnRt="true [ make "dr :dr + 10 ]
+    if :turnLt   [ make "dr :dr - 10 ]
+    if :turnRt   [ make "dr :dr + 10 ]
     if :dr > 360 [ make "dr :dr - 360 ]
-    if :dr < 0 [ make "dr :dr + 360 ]
+    if :dr < 0   [ make "dr :dr + 360 ]
+
     if :isThrustOn [
       ;sin and cos are backwards because Logo calls 0 degrees straight up 
-      make "xAccel ( sin (:dr) ) * :acceleration
-      make "yAccel ( cos (:dr) ) * :acceleration
+      make "xAccel ( sin :dr ) * :acceleration
+      make "yAccel ( cos :dr ) * :acceleration
 
       make "shipDeltaX :shipDeltaX + :xAccel
       make "shipDeltaY :shipDeltaY + :yAccel
@@ -1735,7 +1738,7 @@ to processCommand
       ]
     ]
   ]
-  if :pauseNow = "true [ pauseGame ]
+  if :pauseNow [ pauseGame ]
 end
 
 to processKey :key :iskeydown
@@ -1928,7 +1931,7 @@ to tfd :dist
 end
 
 to timerOff
-  if :timer = "true [ cleartimer 1 ]
+  if :timer [ cleartimer 1 ]
   make "timer "false
 end
 
