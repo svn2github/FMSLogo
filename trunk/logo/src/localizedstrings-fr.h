@@ -273,6 +273,8 @@
 #define LOCALIZED_ALTERNATE_GIFSIZE                "taillegif" // 
 #define LOCALIZED_ALTERNATE_GIFSAVE                "sauvegif" // 
 #define LOCALIZED_ALTERNATE_GPROP                  "rprop" // 
+#define LOCALIZED_ALTERNATE_GREATEREQUALP          "greaterequalp" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_GREATEREQUAL_          "greaterequal?" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_GREATERP               "supérieurp" // 
 #define LOCALIZED_ALTERNATE_GREATER_               "supérieur?" // 
 #define LOCALIZED_ALTERNATE_GROUPBOXCREATE         "créegroupe" // 
@@ -305,6 +307,8 @@
 #define LOCALIZED_ALTERNATE_LAST                   "dernier" // 
 #define LOCALIZED_ALTERNATE_LEFT                   "gauche"
 #define LOCALIZED_ALTERNATE_LEFTROLL               "inclinegauche" // 
+#define LOCALIZED_ALTERNATE_LESSEQUALP             "lessequalp" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_LESSEQUAL_             "lessequal?" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_LESSP                  "inférieurp" // 
 #define LOCALIZED_ALTERNATE_LESS_                  "inférieur?" // 
 #define LOCALIZED_ALTERNATE_LIGHT                  "lumière" // 
@@ -363,6 +367,8 @@
 #define LOCALIZED_ALTERNATE_NODRIBBLE              "fintranscription" // 
 #define LOCALIZED_ALTERNATE_NOSTATUS               "fermeétat" // 
 #define LOCALIZED_ALTERNATE_NOT                    "non"
+#define LOCALIZED_ALTERNATE_NOTEQUALP              "notequalp" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_NOTEQUAL_              "notequal?" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_NOYIELD                "finpartage" // 
 #define LOCALIZED_ALTERNATE_NUMBERP                "nombrep" // 
 #define LOCALIZED_ALTERNATE_NUMBER_                "nombre?" // 
@@ -734,6 +740,7 @@
 #define LOCALIZED_COMMANDER_RESET               "RàZ"
 #define LOCALIZED_COMMANDER_EXECUTE             "Exécute"
 #define LOCALIZED_COMMANDER_EDALL               "Edite tout" // 
+
 //
 // Strings on the Status window
 //
@@ -890,6 +897,7 @@
 // strings seen when single-stepping execution
 //
 #define LOCALIZED_STEPPING                  "Simple pas" // 
+
 //
 // Notification when defining a procedure with TO in the commander
 //
@@ -1038,11 +1046,13 @@
 
 #define LOCALIZED_ERROR_POLYSTART               "Erreur DébutPoly" // 
 #define LOCALIZED_ERROR_POLYSTARTALREADYSTARTED "Il y a déjà un Polygone en cours" // 
+
 #define LOCALIZED_ERROR_POLYEND                 "Erreur FinPoly" // 
 #define LOCALIZED_ERROR_POLYENDNOTSTARTED       "Aucun Polygone n'est démarré" // 
 #define LOCALIZED_ERROR_POLYENDNEED3VECTORS     "Il faut au moins 3 vecteurs pour définir un polygone"  // 
 
 #define LOCALIZED_ERROR_SOUND                 "Erreur Son" // 
+
 #define LOCALIZED_ERROR_MIDI                  "Erreur Midi"
 #define LOCALIZED_ERROR_MIDIINVALIDDEVICE     "Périphérique MIDI non valide" // 
 #define LOCALIZED_ERROR_MIDIALREADYOPEN       "Déja ouvert"
@@ -1077,6 +1087,7 @@
 
 #define LOCALIZED_ERROR_BADTURTLEID             "Id Tortue invalide" // 
 #define LOCALIZED_ERROR_TURTLEHASNOPICTURE      "La TortueT %d n'a pas d'image, arrêt" // 
+
 #define LOCALIZED_ERROR_FONTNOTFOUND            "Sorry, no font named %s was found.  Choose one of the following:\n" // NOT_YET_LOCALIZED
 
 #define LOCALIZED_ERROR_PRINTERCANTSCALE        "Print driver does not support this function"  // NOT_YET_LOCALIZED

@@ -273,6 +273,8 @@
 #define LOCALIZED_ALTERNATE_GIFSIZE                "gifsize" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_GIFSAVE                "gifsave" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_GPROP                  "gprop" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_GREATEREQUALP          "greaterequalp" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_GREATEREQUAL_          "greaterequal?" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_GREATERP               "greaterp" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_GREATER_               "greater?" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_GROUPBOXCREATE         "groupboxcreate" // NOT_YET_LOCALIZED
@@ -305,6 +307,8 @@
 #define LOCALIZED_ALTERNATE_LAST                   "last" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_LEFT                   "left" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_LEFTROLL               "leftroll" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_LESSEQUALP             "lessequalp" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_LESSEQUAL_             "lessequal?" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_LESSP                  "lessp" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_LESS_                  "less?" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_LIGHT                  "light" // NOT_YET_LOCALIZED
@@ -363,6 +367,8 @@
 #define LOCALIZED_ALTERNATE_NODRIBBLE              "nodribble" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_NOSTATUS               "nostatus" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_NOT                    "not" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_NOTEQUALP              "notequalp" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_NOTEQUAL_              "notequal?" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_NOYIELD                "noyield" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_NUMBERP                "numberp" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_NUMBER_                "number?" // NOT_YET_LOCALIZED

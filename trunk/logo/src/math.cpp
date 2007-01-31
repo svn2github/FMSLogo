@@ -963,6 +963,18 @@ NODE *llessp(NODE *args)
    return Unbound;
    }
 
+NODE *llessequalp(NODE *args) {
+
+    NODE * n1 = numeric_arg(args);
+    NODE * n2 = numeric_arg(cdr(args));
+
+    if (NOT_THROWING) 
+       {
+       return true_or_false(compare_numnodes(n1, n2) <= 0);
+       }
+    return Unbound;
+}
+
 NODE *lgreaterp(NODE *args)
    {
    NODE * n1 = numeric_arg(args);
@@ -974,6 +986,19 @@ NODE *lgreaterp(NODE *args)
       }
    return Unbound;
    }
+
+NODE *lgreaterequalp(NODE *args)
+   {
+   NODE * n1 = numeric_arg(args);
+   NODE * n2 = numeric_arg(cdr(args));
+
+   if (NOT_THROWING)
+      {
+      return true_or_false(compare_numnodes(n1, n2) >= 0);
+      }
+   return Unbound;
+   }
+
 
 /* CONSIDER for SPEED:
    Many calls to this function are just to see if a node is "True.
@@ -1162,6 +1187,17 @@ NODE *lequalp(NODE *args)
    bool val = equalp_help(arg1, arg2, caseig);
 
    return true_or_false(val);
+   }
+
+NODE *lnotequalp(NODE *args)
+   {
+   NODE * arg1 = car(args);
+   NODE * arg2 = cadr(args);
+
+   bool caseig = variableIsTrue(Caseignoredp);
+   bool val = equalp_help(arg1, arg2, caseig);
+
+   return true_or_false(!val);
    }
 
 NODE *l_eq(NODE *args)
