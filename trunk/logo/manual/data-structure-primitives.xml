@@ -57,6 +57,7 @@
       &command-arrayp;
       &command-emptyp;
       &command-equalp;
+      &command-notequalp;
       &command-beforep;
       &command-.eq;
       &command-memberp;

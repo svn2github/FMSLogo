@@ -75,6 +75,7 @@
   <!ENTITY command-arrayp       SYSTEM "command-arrayp.xml">
   <!ENTITY command-emptyp       SYSTEM "command-emptyp.xml">
   <!ENTITY command-equalp       SYSTEM "command-equalp.xml">
+  <!ENTITY command-notequalp    SYSTEM "command-notequalp.xml">
   <!ENTITY command-beforep      SYSTEM "command-beforep.xml">
   <!ENTITY command-.eq          SYSTEM "command-.eq.xml">
   <!ENTITY command-memberp      SYSTEM "command-memberp.xml">
@@ -184,7 +185,9 @@
   <!ENTITY command-arccos         SYSTEM "command-arccos.xml">
   <!ENTITY command-radarccos      SYSTEM "command-radarccos.xml">
   <!ENTITY command-greaterp       SYSTEM "command-greaterp.xml">
+  <!ENTITY command-greaterequalp  SYSTEM "command-greaterequalp.xml">
   <!ENTITY command-lessp          SYSTEM "command-lessp.xml">
+  <!ENTITY command-lessequalp     SYSTEM "command-lessequalp.xml">
   <!ENTITY command-random         SYSTEM "command-random.xml">
   <!ENTITY command-rerandom       SYSTEM "command-rerandom.xml">
   <!ENTITY command-form           SYSTEM "command-form.xml">
@@ -631,4 +634,3 @@
   &translations;
 
 </book>
-

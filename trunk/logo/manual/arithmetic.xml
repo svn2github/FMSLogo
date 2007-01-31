@@ -40,7 +40,9 @@
       <title>Arithmetic Predicates</title>
 
       &command-lessp;
+      &command-lessequalp;
       &command-greaterp;
+      &command-greaterequalp;
    </section>
 
    <section id="random-numbers">
