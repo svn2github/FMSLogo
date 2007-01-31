@@ -152,6 +152,78 @@ TO EQUALPTEST
   EQUALPTEST.BADINPUT
 END
 
+TO NOTEQUALPTEST.SMOKETEST
+
+  LOCAL "CASEIGNOREDP
+
+  MAKE "CASEIGNOREDP LOCALETRUE
+
+  LOCAL "myarray
+  FAILIFNOTFALSE [NOTEQUALP 1    1                      ]
+  FAILIFNOTFALSE [NOTEQUALP 0    0                      ]
+  FAILIFNOTFALSE [NOTEQUALP 3.14 3.14                   ]
+  FAILIFNOTFALSE [NOTEQUALP "hi  "hi                    ]
+  FAILIFNOTFALSE [NOTEQUAL? ["a 1 "ab]    ["a 1 "ab]    ]
+  FAILIFNOTFALSE [NOTEQUAL? [[1 2 3] [1]] [[1 2 3] [1]] ]
+  FAILIFNOTFALSE [NOTEQUAL? 0 0                         ]
+  FAILIFNOTFALSE [NOTEQUALP "||  "||                    ]
+  FAILIFNOTFALSE [NOTEQUALP "true  "TRUE                ]
+  FAILIFNOTFALSE [NOTEQUALP "false "FALSE               ]
+  FAILIFNOTFALSE [NOTEQUALP "HELLO "hello               ]
+  FAILIFNOTFALSE [NOTEQUALP "hello "HELLO               ]
+  FAILIFNOTFALSE [NOTEQUALP "HELLO "HELLO               ]
+  FAILIFNOTFALSE [NOTEQUALP "hello "hello               ]
+
+  MAKE "myarray {1 2 3}
+  FAILIFNOTFALSE [NOTEQUAL? :myarray :myarray ]
+
+  MAKE "myarray {}
+  FAILIFNOTFALSE [NOTEQUAL? :myarray :myarray ]
+
+  ; arrays are never equal to other arrays
+  FAILIFNOTTRUE [NOTEQUAL? {} {}              ]
+  FAILIFNOTTRUE [NOTEQUAL? {1 2 3} {1 2 3}    ]
+
+  FAILIFNOTTRUE [NOTEQUALP 1       1.1        ]
+  FAILIFNOTTRUE [NOTEQUALP 0       1          ]
+  FAILIFNOTTRUE [NOTEQUALP "hi     "hil       ]
+  FAILIFNOTTRUE [NOTEQUALP "hil    "hi        ]
+  FAILIFNOTTRUE [NOTEQUALP "true   "false     ]
+  FAILIFNOTTRUE [NOTEQUALP []      "false     ]
+  FAILIFNOTTRUE [NOTEQUALP "false  []         ]
+  FAILIFNOTTRUE [NOTEQUALP [1 2]   [1 2 3]    ]
+  FAILIFNOTTRUE [NOTEQUALP [1 2 3] [1 2]      ]
+  FAILIFNOTTRUE [NOTEQUALP {1}     [1]        ]
+  FAILIFNOTTRUE [NOTEQUALP [1]     {1}        ]
+
+
+  ; now test case-sensitive comparisons
+  TRACEINSTRUCTION [MAKE "CASEIGNOREDP LOCALEFALSE]
+
+  ; Even "true and "false obey the rules of caseignoredp
+  FAILIFNOTFALSE [ NOTEQUALP "true  "true    ]
+  FAILIFNOTFALSE [ NOTEQUALP "false "false   ]
+  FAILIFNOTTRUE  [ NOTEQUALP "true  "TRUE    ]
+  FAILIFNOTTRUE  [ NOTEQUALP "false "FALSE   ]
+
+  FAILIFNOTFALSE [ NOTEQUALP "HELLO "HELLO ]
+  FAILIFNOTFALSE [ NOTEQUALP "hello "hello ]
+  FAILIFNOTTRUE  [ NOTEQUALP "HELLO "hello ]
+  FAILIFNOTTRUE  [ NOTEQUALP "hello "HELLO ]
+
+END
+
+TO NOTEQUALPTEST.BADINPUT
+  RUNNOTENOUGHINPUTSTEST [(NOTEQUAL?)]
+  RUNNOTENOUGHINPUTSTEST [(NOTEQUAL? 1)]
+  RUNTOOMANYINPUTSTEST   [(NOTEQUAL? 1 1 "toomany)]
+END
+
+TO NOTEQUALPTEST
+  NOTEQUALPTEST.SMOKETEST
+  NOTEQUALPTEST.BADINPUT
+END
+
 TO EMPTYPTEST
   FAILIFNOTTRUE  [EMPTYP [] ]
   FAILIFNOTTRUE  [EMPTY? [] ]
@@ -301,6 +373,7 @@ TO PREDICATETEST
 
   .EQTEST
   EQUALPTEST
+  NOTEQUALPTEST
 
   EMPTYPTEST
   NUMBERPTEST
