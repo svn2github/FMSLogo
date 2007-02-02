@@ -28,3 +28,6 @@ $(SOURCEZIP) :
 	cd .. && zip -r -9 -X $(SOURCEZIP) $(addprefix extras/,$(TOINCLUDE)) -x */.cvsignore */CVS/ */CVS/* */*/.cvsignore */*/CVS/ */*/CVS/* */*/*/CVS/
 	mv ../$(SOURCEZIP) .
 
+
+test :
+	perl -w check-extra.pl $(shell /usr/bin/find . -name '*.lgo')
