@@ -303,7 +303,7 @@ to ShapeIsOkayToMove :ShapeIndex :ProposedX :ProposedY :ProposedRotation
        make "x repcount
        make "shapesquare item :x :shaperow
 
-       if NOT EQUAL? 0 :shapesquare [
+       if NOTEQUAL? 0 :shapesquare [
 
          ; stop if we would hit the right of the board
          if :ProposedX + :x > :GameBoardWidth [output "false]
@@ -316,7 +316,7 @@ to ShapeIsOkayToMove :ShapeIndex :ProposedX :ProposedY :ProposedRotation
 
          ; stop if we hit a filled-in square on the board
          make "boardrow item :ProposedY - :y :GameBoard 
-         if NOT EQUAL? ". item :ProposedX + :x :boardrow [output "false]
+         if NOTEQUAL? ". item :ProposedX + :x :boardrow [output "false]
        ]
     ]
   ]
@@ -400,7 +400,7 @@ to ShapeEraseRowSquare :Shape :ShapeRow :x :y
 
    localmake "shapesquare item :x :shaperow
 
-   if NOT EQUAL? 0 :shapesquare [
+   if NOTEQUAL? 0 :shapesquare [
      MoveTo ((ShapeX :Shape) + :x - 1)  ((ShapeY :Shape) - :y)
      ClearBlock
    ]
@@ -445,7 +445,7 @@ to ShapeClear :Shape
        make "x repcount
        make "shapesquare item :x :shaperow
 
-       if NOT EQUAL? 0 :shapesquare [
+       if NOTEQUAL? 0 :shapesquare [
          setitem (ShapeX :Shape) + :x :boardrow ".
        ]
     ]
@@ -535,7 +535,7 @@ to ShapeRedraw :OldShape :NewShape
                   ; this square is covered by both the old and new templates.
                   ; To miminize flicker we only erase the old square if it's
                   ; not part of the new one.
-                  if NOT EQUAL? :old.shapesquare :new.shapesquare [
+                  if NOTEQUAL? :old.shapesquare :new.shapesquare [
                      ShapeEraseRowSquare :OldShape :old.shaperow :old.x :old.y
                      ShapeDrawRowSquare  :NewShape :new.shaperow :new.x :new.y
                   ]
@@ -569,7 +569,7 @@ to ShapeMark :Shape
        make "x repcount
        make "shapesquare item :x :shaperow
 
-       if NOT EQUAL? 0 :shapesquare [
+       if NOTEQUAL? 0 :shapesquare [
          setitem (ShapeX :Shape) + :x :boardrow :shapesquare
        ]
     ]
@@ -581,7 +581,7 @@ to ShapeDrawRowSquare :Shape :ShapeRow :x :y
 
    localmake "shapesquare item :x :shaperow
 
-   if NOT EQUAL? 0 :shapesquare [
+   if NOTEQUAL? 0 :shapesquare [
      MoveTo ((ShapeX :Shape) + :x - 1)  ((ShapeY :Shape) - :y)
      DrawBlock ShapeColor :Shape
    ]
