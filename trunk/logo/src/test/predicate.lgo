@@ -63,6 +63,20 @@ TO EQUALPTEST.SMOKETEST
   FAILIFNOTFALSE [EQUALP {1}     [1]                ]
   FAILIFNOTFALSE [EQUALP [1]     {1}                ]
 
+  ; test the EQUALP infix operator
+  FAILIFNOTTRUE [      1 = 1                   ]
+  FAILIFNOTTRUE [      0 = 0                   ]
+  FAILIFNOTTRUE [   3.14 = 3.14                ]
+  FAILIFNOTTRUE [    "|| = "||                 ]
+  FAILIFNOTTRUE [ "true  = "TRUE               ]
+  FAILIFNOTTRUE [ "false = "FALSE              ]
+  FAILIFNOTTRUE [ "HELLO = "hello              ]
+  FAILIFNOTTRUE [ "hello = "HELLO              ]
+  FAILIFNOTTRUE [ "HELLO = "HELLO              ]
+  FAILIFNOTTRUE [ "hello = "hello              ]
+  FAILIFNOTTRUE [["a 1 "ab]    = ["a 1 "ab]    ]
+  FAILIFNOTTRUE [[[1 2 3] [1]] = [[1 2 3] [1]] ]
+
 
   ; now test case-sensitive comparisons
   TRACEINSTRUCTION [MAKE "CASEIGNOREDP LOCALEFALSE]
@@ -195,6 +209,20 @@ TO NOTEQUALPTEST.SMOKETEST
   FAILIFNOTTRUE [NOTEQUALP [1 2 3] [1 2]      ]
   FAILIFNOTTRUE [NOTEQUALP {1}     [1]        ]
   FAILIFNOTTRUE [NOTEQUALP [1]     {1}        ]
+
+  ; test the NOTEQUALP infix operator
+  FAILIFNOTFALSE [     1 <> 1                     ]
+  FAILIFNOTFALSE [     0 <> 0                     ]
+  FAILIFNOTFALSE [  3.14 <> 3.14                  ]
+  FAILIFNOTFALSE [   "|| <> "||                   ]
+  FAILIFNOTFALSE ["true  <> "TRUE                 ]
+  FAILIFNOTFALSE ["false <> "FALSE                ]
+  FAILIFNOTFALSE ["HELLO <> "hello                ]
+  FAILIFNOTFALSE ["hello <> "HELLO                ]
+  FAILIFNOTFALSE ["HELLO <> "HELLO                ]
+  FAILIFNOTFALSE ["hello <> "hello                ]
+  FAILIFNOTFALSE [ ["a 1 "ab]    <> ["a 1 "ab]    ]
+  FAILIFNOTFALSE [ [[1 2 3] [1]] <> [[1 2 3] [1]] ]
 
 
   ; now test case-sensitive comparisons
