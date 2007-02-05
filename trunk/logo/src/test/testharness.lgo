@@ -111,6 +111,9 @@ LOAD "bitmode.lgo
 LOAD "turtlemode.lgo
 LOAD "map.lgo
 LOAD "polygon.lgo
+LOAD "item.lgo
+LOAD "listtoarray.lgo
+LOAD "remove.lgo
 
 TO TESTALL
 
@@ -134,6 +137,7 @@ TO TESTALL
   UPPERCASETEST      ; from uppercase.lgo
   LOWERCASETEST      ; from lowercase.lgo
   THINGTEST          ; from thing.lgo
+  ITEMTEST           ; from item.lgo
   FIRSTTEST          ; from first.lgo
   FIRSTSTEST         ; from firsts.lgo
   BUTFIRSTTEST       ; from butfirst.lgo
@@ -144,7 +148,9 @@ TO TESTALL
   QUEUETEST          ; from queue.lgo
   STACKTEST          ; from stack.lgo
   COMBINETEST        ; from combine.lgo
+  LISTTOARRAYTEST    ; from listtoarray.lgo
   REVERSETEST        ; from reverse.lgo
+  REMOVETEST         ; from remove.lgo
   REMDUPTEST         ; from remdup.lgo
   LOGICTEST          ; from logic.lgo
   APPLYTEST          ; from apply.lgo
