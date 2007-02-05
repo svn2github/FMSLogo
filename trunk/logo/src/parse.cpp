@@ -722,13 +722,21 @@ NODE *runparse_node(NODE *nd, NODE **ndsptr)
          {
          if (monadic_minus)
             {
-            tnode = Minus_Tight;
+            tnode         = Minus_Tight;
+            monadic_minus = false;
+            }
+         else if (wcnt+1 < wlen && 
+                  ((wptr[0] == '<' && (wptr[1] == '=' || wptr[1] == '>')) || 
+                   (wptr[0] == '>' && wptr[1] == '=')))
+            {
+            // This is a two character infix operator: "<=" or ">=" or "<>"
+            tnode = intern(make_strnode(wptr, 2, STRING, strnzcpy));
+            wptr++, wcnt++;
             }
          else
             {
             tnode = intern(make_strnode(wptr, 1, STRING, strnzcpy));
             }
-         monadic_minus = false;
          wptr++, wcnt++;
          }
       else
