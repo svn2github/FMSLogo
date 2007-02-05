@@ -1,5 +1,5 @@
 to remove :thing :list
-output filter [not equalp ? :thing] :list
+output filter [notequalp ? :thing] :list
 end
 
 bury "remove
