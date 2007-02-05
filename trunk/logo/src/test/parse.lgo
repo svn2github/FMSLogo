@@ -166,6 +166,35 @@ TO PARSETEST.INFIXEXPRESSION
    FAILIFNOTTRUE  [ 1 + 1 = 2 ]
    FAILIFNOTTRUE  [ 2 = 1 + 1 ]
    FAILIFNOTFALSE [ 2 = 1 = 1 ]
+
+   ; test parsing of <, >, <>, >=, <=, =
+   FAILIFNOTTRUE  [ 1 <  2 ]
+   FAILIFNOTTRUE  [ 1 <= 2 ]
+   FAILIFNOTFALSE [ 1 >  2 ]
+   FAILIFNOTFALSE [ 1 >= 2 ]
+   FAILIFNOTFALSE [ 1 =  2 ]
+   FAILIFNOTTRUE  [ 1 <  2 ]
+   FAILIFNOTTRUE  [ 1 <> 2 ]
+
+   ; same tests without any spaces to help tokenization
+   FAILIFNOTTRUE  [1<2]
+   FAILIFNOTTRUE  [1<=2]
+   FAILIFNOTFALSE [1>2]
+   FAILIFNOTFALSE [1>=2]
+   FAILIFNOTFALSE [1=2]
+   FAILIFNOTTRUE  [1<2]
+   FAILIFNOTTRUE  [1<>2]
+  
+   ; put spaces between what could have been a 
+   ; two-character infix operator
+   RUNNOTENOUGHINPUTSTEST  [ 1 < > 2 ]
+   RUNNOTENOUGHINPUTSTEST  [ 1 < = 2 ]
+   RUNNOTENOUGHINPUTSTEST  [ 1 > = 2 ]
+
+   ; test when the string ends in the middle of a two-character
+   ; infix operator
+   RUNNOTENOUGHINPUTSTEST  [1>]
+   RUNNOTENOUGHINPUTSTEST  [1<]
 END
 
 TO PARSETEST.MANYINPUTS
