@@ -1,10 +1,11 @@
 FMSLogo Extras 1.5
 o asteriodminer
-  * Improve performance, requires FMSLogo 6.12.0
+  * Improve performance, requires FMSLogo 6.13.0
 o sudoku
   * Change CT to CLEARTEXT so that it works on the French FMSLogo.
 o tetrads
   * Dropping a block is much faster
+  * Add uses of NOTEQUAL?, requres FMSLogo 6.13.0.
 
 FMSLogo Extras 1.4
 o logoui
