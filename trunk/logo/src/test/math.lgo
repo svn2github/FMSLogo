@@ -1397,14 +1397,13 @@ TO LESSEQUALPTEST.SMOKETEST
    FAILIFNOTFALSE [ LESSEQUAL? -1.1  -1.2 ]
 
    ; make sure <= is the same as LESSEQUALP
-   ; NOTE: <= is not yet implemented
-   ; FAILIFNOTTRUE  [ 1    <=   1  ]
-   ; FAILIFNOTTRUE  [ 0    <=   1  ]
-   ; FAILIFNOTFALSE [ 1    <=   0  ]
-   ; FAILIFNOTTRUE  [ -1   <=   0  ]
-   ; FAILIFNOTFALSE [ -5   <= -10  ]
-   ; FAILIFNOTTRUE  [ 1.1  <=  1.2 ]
-   ; FAILIFNOTFALSE [ -1.1 <= -1.2 ]
+   FAILIFNOTTRUE  [ 1    <=   1  ]
+   FAILIFNOTTRUE  [ 0    <=   1  ]
+   FAILIFNOTFALSE [ 1    <=   0  ]
+   FAILIFNOTTRUE  [ -1   <=   0  ]
+   FAILIFNOTFALSE [ -5   <= -10  ]
+   FAILIFNOTTRUE  [ 1.1  <=  1.2 ]
+   FAILIFNOTFALSE [ -1.1 <= -1.2 ]
 
 END
 
@@ -1540,14 +1539,13 @@ TO GREATEREQUALPTEST.SMOKETEST
    FAILIFNOTTRUE  [ GREATEREQUAL? -1.1  -1.2 ]
 
    ; make sure >= is the same as GREATEREQUALP
-   ; NOTE: <= is not yet implemented
-   ; FAILIFNOTTRUE  [ 1    >=   1  ]
-   ; FAILIFNOTFALSE [ 0    >=   1  ]
-   ; FAILIFNOTTRUE  [ 1    >=   0  ]
-   ; FAILIFNOTFALSE [ -1   >=   0  ]
-   ; FAILIFNOTTRUE  [ -5   >= -10  ]
-   ; FAILIFNOTFALSE [ 1.1  >=  1.2 ]
-   ; FAILIFNOTTRUE  [ -1.1 >= -1.2 ]
+   FAILIFNOTTRUE  [ 1    >=   1  ]
+   FAILIFNOTFALSE [ 0    >=   1  ]
+   FAILIFNOTTRUE  [ 1    >=   0  ]
+   FAILIFNOTFALSE [ -1   >=   0  ]
+   FAILIFNOTTRUE  [ -5   >= -10  ]
+   FAILIFNOTFALSE [ 1.1  >=  1.2 ]
+   FAILIFNOTTRUE  [ -1.1 >= -1.2 ]
 
 END
 
