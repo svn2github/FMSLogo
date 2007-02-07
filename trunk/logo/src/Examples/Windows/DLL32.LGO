@@ -16,7 +16,7 @@ resizemain
 end
 
 to resizemain
-  ; Load the User System Kernel
+  ; Load the Windows User API client DLL
   dllload "user32.dll
 
   ; Get Handle to Main Window (Note args are in REVERSE order)

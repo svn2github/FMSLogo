@@ -1,7 +1,7 @@
 LOAD "testlib.lgo
 
 TO DLLSMOKETEST
-  ; Load the User System Kernel
+  ; Load the windowing subsystem library
   DLLLOAD "user32.dll
 
   ; Get Handle to Main Window (Note args are in REVERSE order)
