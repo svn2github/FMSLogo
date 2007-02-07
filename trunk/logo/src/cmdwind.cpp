@@ -894,9 +894,18 @@ void TMyListboxWindow::CopyCurrentLineToEditBox()
          break;
          }
 
+      if (*ptr == '\0')
+         {
+         // The line was blank.  
+         // This happens when the commander is squished such that
+         // it can't hold a single character.
+         // We must detect this condition and break out to avoid an inifnite loop.
+         // See bug #1652924 for details.
+         break;
+         }
+
       // advance to the last char in buf
       ptr = ptr + strlen(ptr) - 1;
-      assert(ptr < end && "ptr is not NUL-terminated");
 
       if (*ptr == '\n' || *ptr == '\r')
          {
