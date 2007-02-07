@@ -520,6 +520,10 @@ void TMyApp::InitMainWindow()
 
       GetConfigurationQuadruple("Screen", &x, &y, &w, &h);
 
+      // the smallest reasonable size is 200 x 200.
+      h = max(h, 200);
+      w = max(w, 200);
+
       // sanatize against screen size
       checkwindow(&x, &y, &w, &h);
       }
