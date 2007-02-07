@@ -2112,7 +2112,7 @@ void TMainFrame::SetupWindow()
    if (bFixed) 
       {
       // HACK: fix up the frame window's size so that the screen's
-      // size matches what the clinet passed in on the command line.
+      // size matches what the client passed in on the command line.
       // There MUST be a simpler/better way, but I do not know
       // how to set the size of the screen client area directly.
       TRect screenWindowRect = ScreenWindow->GetWindowRect();
@@ -2230,7 +2230,7 @@ void TMainFrame::DockCommanderWindow()
       if (bFixed)
          {
          // The user requested that we never change the size of the drawing surface,
-         // so we must grpw the main window to hold the commander window.
+         // so we must grow the main window to hold the commander window.
 
          TRect originalWindowRect;
          originalWindowRect.SetWH(
@@ -2266,19 +2266,34 @@ void TMainFrame::DockCommanderWindow()
       //
       // See bug #1372200 for details.
       CommandWindow->Show(SW_HIDE);
+      
+      double splitRatio = 0.5;
+
+      TRect clientRect;
+      GetClientRect(clientRect);
+      if (clientRect.Height() != 0)
+         {
+         double reverseSplitRatio = 
+            (double) (commanderWindowHeight + PaneSplitterWindow->GetSplitterWidth()) /
+            (double) clientRect.Height();
+
+         splitRatio = 1.0 - reverseSplitRatio;
+
+         if (splitRatio < 0.0)
+            {
+            splitRatio = 0.1;
+            }
+         else if (splitRatio > 1.0)
+            {
+            splitRatio = 0.9;
+            }
+         }
 
       PaneSplitterWindow->SplitPane(
          ScreenWindow,
          newCommandWindow,
-         psHorizontal);
-
-      const int moveDistance =
-         newCommandWindow->GetWindowRect().Height() -
-         commanderWindowHeight;
-
-      PaneSplitterWindow->MoveSplitter(
-         ScreenWindow,
-         moveDistance);
+         psHorizontal,
+         splitRatio);
 
       newCommandWindow->Duplicate(*CommandWindow);
 
