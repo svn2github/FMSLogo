@@ -126,7 +126,7 @@ o Implement request #1492605; SORT is now faster and the design fits
 o Minor updates to the manual.
 
 Added for 6.9.0
-o Fix bug #1504189: CHECBOXSET, RADIOBUTTONSET no longer check the button
+o Fix bug #1504189: CHECKBOXSET, RADIOBUTTONSET no longer check the button
   when given bad input.
 o Fix bug #1503862: LISTBOXDELETESTRING no longer deletes 0th string when
   given bad input.
