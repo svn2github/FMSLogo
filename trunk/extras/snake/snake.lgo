@@ -190,9 +190,6 @@ to InitGameBoard
    local [row boardsquare i j]
 
    ; copy the game board template to the live game board
-   make "GameBoardWidth  40
-   make "GameBoardHeight 40
-
    make "GameBoard array :GameBoardHeight
    repeat :GameBoardHeight [
       make "j repcount
