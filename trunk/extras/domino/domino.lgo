@@ -28,8 +28,8 @@ to aaa
  make "playing 0  
  catch "error [fullscreen]
  windowset "Commander 0
-;------------------------ Drawing the window   
-  windowcreate "main "windowdomino "Domino 0 0 282 30 []
+ ;------------------------ Drawing the window   
+ windowcreate "main "windowdomino "Domino 0 0 282 30 []
  
   buttoncreate "windowdomino "bexit "Exit 0 0 30 15 [windowdelete "windowdomino setsc [255 255 255] cs mouseoff make "playing 0 windowset "Commander 1
 ]
@@ -42,13 +42,13 @@ to aaa
   buttoncreate "windowdomino "bdraw "Draw 250  0 30 15 [drawrandomdomino 1] 
   buttonenable "bdraw "False
 
-;-------------- Initial settings and preferences
+ ;-------------- Initial settings and preferences
  make "gamefinished -1
  make "numberofbones 10
  make "variations "draw
  make "winningscore 100 
  make "highestdoublet "True
-;------------- Starting a new game
+ ;------------- Starting a new game
  startnewgame
  
 end
@@ -92,59 +92,54 @@ end
 to checkstale
 
  windowenable "windowdomino "false
-;------------ Procedure invoked when neither player is able to play
+
+ ;------------ Procedure invoked when neither player is able to play
  if :pass = 2 [
-	message [game over] 
-	displayopponenttile 
-	mouseoff
-	make "maxloop (:maxtile + :bonesdrawn1)
-	 make "total1 0
-	 for [i 1 :maxloop 1] [
+    showmessage [game over] 
+    displayopponenttile 
+    mouseoff
+    make "maxloop (:maxtile + :bonesdrawn1)
+    make "total1 0
+    for [i 1 :maxloop 1] [
 
-		if (mditem (se :i 2) :player1) = 0 [
-			make "temp (mditem (se :i 1) :player1) 
-			make "domino1 first (mditem (se :temp 1) :arraydomino)
-			make "domino2 last (mditem (se :temp 1) :arraydomino)
-			make "total1 :total1 + :domino1 + :domino2
-			]
-		]
-	make "maxloop (:maxtile + :bonesdrawn2)
+        if (mditem (se :i 2) :player1) = 0 [
+            make "temp (mditem (se :i 1) :player1) 
+            make "domino1 first (mditem (se :temp 1) :arraydomino)
+            make "domino2 last (mditem (se :temp 1) :arraydomino)
+            make "total1 :total1 + :domino1 + :domino2
+        ]
+    ]
+    make "maxloop (:maxtile + :bonesdrawn2)
 
-	 make "total2 0
-	 for [i 1 :maxloop 1] [
-		if (mditem (se :i 2) :player2) = 0 [
-			make "temp (mditem (se :i 1) :player2) 
-			make "domino1 first (mditem (se :temp 1) :arraydomino)
-			make "domino2 last (mditem (se :temp 1) :arraydomino)
-			make "total2 :total2 + :domino1 + :domino2
-			]
-		]
-      setlabelfont [[Times New Roman] -24 0 0 400 0 0 0 0 3 2 1 18]
+    make "total2 0
+    for [i 1 :maxloop 1] [
+        if (mditem (se :i 2) :player2) = 0 [
+            make "temp (mditem (se :i 1) :player2) 
+            make "domino1 first (mditem (se :temp 1) :arraydomino)
+            make "domino2 last (mditem (se :temp 1) :arraydomino)
+            make "total2 :total2 + :domino1 + :domino2
+        ]
+    ]
+    setlabelfont [[Times New Roman] -24 0 0 400 0 0 0 0 3 2 1 18]
 
-	if :total2 > :total1 [
+    if :total2 > :total1 [ endofround 1 ]
+    if :total1 > :total2 [ endofround 2 ]
+    if :total1 = :total2 [
+          showmessage [Stalemate] 
+          make "playing 0 
+          mouseoff 
+          displayopponenttile 
+          buttonenable "bnewround "True 
+          buttonenable "bpass "false
+          buttonenable "bdraw "false
+    ]
+    setlabelfont [[Times New Roman] -18 0 0 400 0 0 0 0 3 2 1 18]
+    setpc [40 40 40]
 
-		endofround 1
-		]
-	if :total1 > :total2 [
-		endofround 2
+    pu setxy 0 0 seth 90 label (se [Player 1:] :total1 ) seth 0
+    pu setxy 0 -20 seth 90 label (se [Player 2:] :total2 ) seth 0
 
-		]
-	if :total1 = :total2 [
-		message [Stalemate] 
-		make "playing 0 
-		mouseoff 
-		displayopponenttile 
-		buttonenable "bnewround "True 
-		buttonenable "bpass "false
-		buttonenable "bdraw "false
-		 ]
-      setlabelfont [[Times New Roman] -18 0 0 400 0 0 0 0 3 2 1 18]
-	 setpc [40 40 40]
-
-	pu setxy 0 0 seth 90 label (se [Player 1:] :total1 ) seth 0
-	pu setxy 0 -20 seth 90 label (se [Player 2:] :total2 ) seth 0
-
-	]
+ ]
  windowenable "windowdomino "true
 
 end
@@ -153,54 +148,56 @@ to checkwin
 
  windowenable "windowdomino "false
 
-;------------ Checking whether a player has won the current turn or game
+ ;------------ Checking whether a player has won the current turn or game
  make "total1 0
  make "maxloop (:maxtile + :bonesdrawn1)
 
  for [i 1 :maxloop 1] [
-	if (mditem (se :i 2) :player1) = 0 [
-		make "temp (mditem (se :i 1) :player1) 
-		make "domino1 first (mditem (se :temp 1) :arraydomino)
-		make "domino2 last (mditem (se :temp 1) :arraydomino)
-		make "total1 :total1 + :domino1 + :domino2
-		]
-	]
+    if (mditem (se :i 2) :player1) = 0 [
+         make "temp (mditem (se :i 1) :player1) 
+         make "domino1 first (mditem (se :temp 1) :arraydomino)
+         make "domino2 last (mditem (se :temp 1) :arraydomino)
+         make "total1 :total1 + :domino1 + :domino2
+     ]
+ ]
 
  make "total2 0
  make "maxloop (:maxtile + :bonesdrawn2)
  for [i 1 :maxloop 1] [
-	if (mditem (se :i 2) :player2) = 0 [
-		make "temp (mditem (se :i 1) :player2) 
-		make "domino1 first (mditem (se :temp 1) :arraydomino)
-		make "domino2 last (mditem (se :temp 1) :arraydomino)
-		make "total2 :total2 + :domino1 + :domino2
-		]
-	]
+    if (mditem (se :i 2) :player2) = 0 [
+        make "temp (mditem (se :i 1) :player2) 
+        make "domino1 first (mditem (se :temp 1) :arraydomino)
+        make "domino2 last (mditem (se :temp 1) :arraydomino)
+        make "total2 :total2 + :domino1 + :domino2
+    ]
+ ]
 
  make "c1 0
  make "maxloop (:maxtile + :bonesdrawn1)
 
  for [i 1 :maxloop 1] [
-	if (mditem (se :i 2) :player1) = 0 [make "c1 :c1 + 1]]
+    if (mditem (se :i 2) :player1) = 0 [make "c1 :c1 + 1]
+ ]
 
 
- if :c1 = 0 [endofround 1
-		 setlabelfont [[Times New Roman] -18 0 0 400 0 0 0 0 3 2 1 18]
-		 pu setxy 0 0 seth 90 label (se [Player 1:] :total1 ) seth 0
-		 pu setxy 0 -20 seth 90 label (se [Player 2:] :total2 ) seth 0
-		]
+ if :c1 = 0 [
+    endofround 1
+    setlabelfont [[Times New Roman] -18 0 0 400 0 0 0 0 3 2 1 18]
+    pu setxy 0 0 seth 90 label (se [Player 1:] :total1 ) seth 0
+    pu setxy 0 -20 seth 90 label (se [Player 2:] :total2 ) seth 0
+ ]
  make "c2 0
  make "maxloop (:maxtile + :bonesdrawn2)
 
  for [i 1 :maxloop 1] [
-	if (mditem (se :i 2) :player2) = 0 [make "c2 :c2 + 1]]
+    if (mditem (se :i 2) :player2) = 0 [make "c2 :c2 + 1]
+ ]
  if :c2 = 0 [
-	endofround 2
-	setlabelfont [[Times New Roman] -18 0 0 400 0 0 0 0 3 2 1 18]
-	pu setxy 0 0 seth 90 label (se [Player 1:] :total1 ) seth 0
-	pu setxy 0 -20 seth 90 label (se [Player 2:] :total2 ) seth 0
-	]
-
+    endofround 2
+    setlabelfont [[Times New Roman] -18 0 0 400 0 0 0 0 3 2 1 18]
+    pu setxy 0 0 seth 90 label (se [Player 1:] :total1 ) seth 0
+    pu setxy 0 -20 seth 90 label (se [Player 2:] :total2 ) seth 0
+ ]
 
  windowenable "windowdomino "true
 
@@ -215,50 +212,44 @@ to computerplays
  if :nomorebones = "False [ make "freedomino "true]
  make "maxloop (:maxtile + :bonesdrawn2)
  do.until [
- 	for [i 1 :maxloop 1] [ 
-		if (mditem (se :i 2) :player2) = 0 [
-			make "no mditem (se :i 1) :player2
-			;-------------- Checking whether computer can play
-			make "lm1 (first mditem (se :no 1) :arraydomino) = (item :tpls + 1 :tilesplayed)
-			make "lm2 (last mditem (se :no 1) :arraydomino) = (item :tpls + 1 :tilesplayed)
-			make "rm1 (first mditem (se :no 1) :arraydomino) = (item :tprs - 1 :tilesplayed)
-			make "rm2 (last mditem (se :no 1) :arraydomino) = (item :tprs - 1 :tilesplayed)
+    for [i 1 :maxloop 1] [ 
+        if (mditem (se :i 2) :player2) = 0 [
+            make "no mditem (se :i 1) :player2
+            ;-------------- Checking whether computer can play
+            make "lm1 (first mditem (se :no 1) :arraydomino) = (item :tpls + 1 :tilesplayed)
+            make "lm2 (last mditem (se :no 1) :arraydomino) = (item :tpls + 1 :tilesplayed)
+            make "rm1 (first mditem (se :no 1) :arraydomino) = (item :tprs - 1 :tilesplayed)
+            make "rm2 (last mditem (se :no 1) :arraydomino) = (item :tprs - 1 :tilesplayed)
 
-			if (or (:lm1) (:lm2) (:rm1) (:rm2)) [
-				
-				;--------------- Playing on the left side
-				if (and (:computerplayed = "False) (or (:lm1) (:lm2))) [
-					playerplays 2 :i -1
+            if (or (:lm1) (:lm2) (:rm1) (:rm2)) [
+
+                ;--------------- Playing on the left side
+                if (and (:computerplayed = "False) (or (:lm1) (:lm2))) [
+                    playerplays 2 :i -1
 	
-					make "computerplayed "True
-					make "pass 0
+                    make "computerplayed "True
+                    make "pass 0
 
-					]
+                ]
 
-				;--------------- Playing on the right side
-				if (and (:computerplayed = "False) (or (:rm1) (:rm2))) [
-					playerplays 2 :i 1
-					make "computerplayed "True
-					make "pass 0
+                ;--------------- Playing on the right side
+                if (and (:computerplayed = "False) (or (:rm1) (:rm2))) [
+                    playerplays 2 :i 1
+                    make "computerplayed "True
+                    make "pass 0
+                ]
+            ]
+        ]
+    ]
 
-					]
-					
-				
-			
-				]
-			
-	
-			]
-	
+    ;messagebox [](se :computerplayed :roundvariations :freedomino)
+    if :computerplayed = "False [
+        ifelse :roundvariations  = "draw [drawrandomdomino 2 ][]
+        if (or (equalp :roundvariations "block) (:freedomino = "false)) [ showmessage [I pass] make "pass :pass + 1 checkstale]
+        if (and (:freedomino = "false)(:playing = -1)) [buttonenable "bpass "true buttonenable "bdraw "false ]
+    ]
+ ] [(or (:computerplayed = "true)(:roundvariations = "block)(:freedomino = "false))]
 
-		]
-       ;messagebox [](se :computerplayed :roundvariations :freedomino)
-	 if :computerplayed = "False [
-		ifelse :roundvariations  = "draw [drawrandomdomino 2 ][]
-		if (or (equalp :roundvariations "block) (:freedomino = "false)) [ message [I pass] make "pass :pass + 1 checkstale]
-		if (and (:freedomino = "false)(:playing = -1)) [buttonenable "bpass "true buttonenable "bdraw "false ]
-		]
-	] [(or (:computerplayed = "true)(:roundvariations = "block)(:freedomino = "false))] 
  mouseon [getmousemove -1] [] [getmousemove 1] [] [] 
  if (and (:playing = -1) (:nomorebones = "True)) [buttonenable "bpass "True]
 
@@ -271,15 +262,18 @@ to displayopponenttile
 
  make "maxloop (:maxtile + :bonesdrawn2)
 
-repeat :maxloop  [
-	pu 
-	setxy (:xxx + (repcount - 1) * 33) :yyy  
-	if (mditem (se repcount 2) :player2) = 0 [
-		drawtile (mditem (se repcount 1) :player2) 0 30 0 0]
-		]
+ repeat :maxloop  [
+    pu 
+    setxy (:xxx + (repcount - 1) * 33) :yyy  
+    if (mditem (se repcount 2) :player2) = 0 [
+        drawtile (mditem (se repcount 1) :player2) 0 30 0 0
+    ]
+ ]
+
  windowenable "windowdomino "true
 
 end
+
 
 to draw0 :h
  pu
@@ -339,14 +333,13 @@ to draw3 :h
  rt 90 fd 30 lt 90
 
  repeat 3 [
-	pu lt 90 fd 7  rt 90 fd 7 
-      setfc [255 255 228]	 
-	fill
-	pu bk 4 * sin 45 ppt lt 45 repeat 4 [fd 4 rt 90] rt 45 pu fd 4 * sin 45 ppt 
-	setfc [155 0 155 ]
-	fill
- 	]
-
+    pu lt 90 fd 7  rt 90 fd 7 
+    setfc [255 255 228]	 
+    fill
+    pu bk 4 * sin 45 ppt lt 45 repeat 4 [fd 4 rt 90] rt 45 pu fd 4 * sin 45 ppt 
+    setfc [155 0 155 ]
+    fill
+  ]
 
 End
 
@@ -359,12 +352,12 @@ to draw4 :h
  setfc [255 255 228]
  fill
  repeat 4 [
-	pu bk 4 * sin 45 ppt lt 45 repeat 4 [fd 4 rt 90] rt 45 pu fd 4 * sin 45  
+    pu bk 4 * sin 45 ppt lt 45 repeat 4 [fd 4 rt 90] rt 45 pu fd 4 * sin 45  
 
-	setfc [0 0 255]
-	fill
-	fd 15  rt 90
-	]
+    setfc [0 0 255]
+    fill
+    fd 15  rt 90
+ ]
 
 End
 
@@ -651,14 +644,14 @@ to endofround :winner
  windowenable "windowdomino "false
 
  ifelse :winner = 1 [
-	message [player 1 wins] 
+	showmessage [player 1 wins] 
 	make "bigtotal1 :bigtotal1 + :total2
 	pu setxy -310 -220 bitcut 100 20
 	setpc [40 40 40]
      	setlabelfont [[Times New Roman] -14 0 0 800 0 0 0 0 3 2 1 18]
 	pu setxy -310 -200 seth 90 label (se [Score: ] :bigtotal1) seth 0
 	][
-	message [player 2 wins] 
+	showmessage [player 2 wins] 
 	make "bigtotal2 :bigtotal2 + :total1
 	pu setxy -310 160 bitcut 100 20
 	setpc [40 40 40]
@@ -675,8 +668,8 @@ to endofround :winner
 
  ifelse (or (:bigtotal1 > :roundwinningscore) (:bigtotal2 > :roundwinningscore)) [
 	make "gamefinished -1 
-	if (:bigtotal1 > :roundwinningscore) [message [Congratulations! You win the game]]
-	if (:bigtotal2 > :roundwinningscore) [message [The computer wins the game]]
+	if (:bigtotal1 > :roundwinningscore) [showmessage [Congratulations! You win the game]]
+	if (:bigtotal2 > :roundwinningscore) [showmessage [The computer wins the game]]
 	] [buttonenable "bnewround "True]
 
  windowenable "windowdomino "true
@@ -773,7 +766,7 @@ to initialise
 
 end
 
-to message :message
+to showmessage :message
  wait 1
  windowenable "windowdomino "false
 
@@ -1150,85 +1143,77 @@ end
 to playerplays :pplays :ptile :side
  windowenable "windowdomino "false
 
-   make "match "True
-   if :pplays = 1 [	
-		if (mditem (se :ptile 2) :player1) = -1 [stop]
-		playtile mditem (se :ptile 1) :player1 :side
-		if :match = "True [
-			make "bonesplayed1 :bonesplayed1 + 1
-			pu setxy :startx + 145 + ((:ptile - 1) * 33):starty + 0
-			bitcut 33 70
-			pu setxy :startx + 145 + 33 + ((:ptile - 1) * 33):starty + 0
+  make "match "True
+  if :pplays = 1 [	
+    if (mditem (se :ptile 2) :player1) = -1 [stop]
+    playtile mditem (se :ptile 1) :player1 :side
+    if :match = "True [
+        make "bonesplayed1 :bonesplayed1 + 1
+        pu setxy :startx + 145 + ((:ptile - 1) * 33):starty + 0
+        bitcut 33 70
+        pu setxy :startx + 145 + 33 + ((:ptile - 1) * 33):starty + 0
 
-			bitcut (:maxtile + :bonesdrawn1  - :ptile + 2 - :bonesplayed1 ) * 33 70
-			;pu setxy :startx + 145 + 33 + ((:maxtile + :bonesdrawn1  ) * 33):starty + 0
-			;setfc [0 155 0]
-			;fill
+        bitcut (:maxtile + :bonesdrawn1  - :ptile + 2 - :bonesplayed1 ) * 33 70
+        ;pu setxy :startx + 145 + 33 + ((:maxtile + :bonesdrawn1  ) * 33):starty + 0
+        ;setfc [0 155 0]
+        ;fill
 
 
-			pu setxy :startx + 145 + ((:ptile - 1) * 33):starty + 0
-			bitpaste
+        pu setxy :startx + 145 + ((:ptile - 1) * 33):starty + 0
+        bitpaste
 			
-			make "tmp (mdarray [1 2] 1)
-			mdsetitem [1 1] :tmp mditem (se :ptile 1) :player1
-			mdsetitem [1 2] :tmp mditem (se :ptile 2) :player1
-			make "tmp2 (:maxtile + :bonesdrawn1  - 1)
-			for [i :ptile :tmp2 1] [	
-				mdsetitem (se :i 1) :player1 mditem (se :i + 1 1) :player1
-				mdsetitem (se :i 2) :player1 mditem (se :i + 1 2) :player1
+        make "tmp (mdarray [1 2] 1)
+        mdsetitem [1 1] :tmp mditem (se :ptile 1) :player1
+        mdsetitem [1 2] :tmp mditem (se :ptile 2) :player1
+        make "tmp2 (:maxtile + :bonesdrawn1  - 1)
+        for [i :ptile :tmp2 1] [	
+            mdsetitem (se :i 1) :player1 mditem (se :i + 1 1) :player1
+            mdsetitem (se :i 2) :player1 mditem (se :i + 1 2) :player1
+        ]
 
+        mdsetitem (se :maxtile + :bonesdrawn1 1) :player1 mditem [1 1] :tmp
+        mdsetitem (se :maxtile + :bonesdrawn1 2) :player1 -1
+        mouseoff
+        checkwin
 
-			]
+        if :playing = -1 [computerplays]
+    ]
+  ]
 
-			mdsetitem (se :maxtile + :bonesdrawn1 1) :player1 mditem [1 1] :tmp
-			mdsetitem (se :maxtile + :bonesdrawn1 2) :player1 -1
-			mouseoff
-			checkwin
+  if :pplays = 2 [	
+    if (mditem (se :ptile 2) :player2) = -1 [stop]
+    playtile mditem (se :ptile 1) :player2 :side
+    if :match = "True [
+        make "bonesplayed2 :bonesplayed2 + 1
 
-			if :playing = -1 [computerplays]
-			]
-		]
-
-   if :pplays = 2 [	
-		if (mditem (se :ptile 2) :player2) = -1 [stop]
-		playtile mditem (se :ptile 1) :player2 :side
-		if :match = "True [
-			make "bonesplayed2 :bonesplayed2 + 1
-
-			pu setxy :startx + 145 + ((:ptile - 1) * 33):starty + 370
-			bitcut 33 70
+        pu setxy :startx + 145 + ((:ptile - 1) * 33):starty + 370
+        bitcut 33 70
 			
-			pu setxy :startx + 145 + 33 + ((:ptile - 1) * 33):starty + 370
+        pu setxy :startx + 145 + 33 + ((:ptile - 1) * 33):starty + 370
 
-			bitcut (:maxtile + :bonesdrawn2  - :ptile - :bonesplayed2 + 2) * 33 70
-			;pu setxy :startx + 145 + 33 + ((:maxtile + :bonesdrawn2  ) * 33):starty + 370
-			;setfc [0 155 0]
-			;fill
-
-
-
-			pu setxy :startx + 145 + ((:ptile - 1) * 33):starty + 370
-			bitpaste
+        bitcut (:maxtile + :bonesdrawn2  - :ptile - :bonesplayed2 + 2) * 33 70
+        ;pu setxy :startx + 145 + 33 + ((:maxtile + :bonesdrawn2  ) * 33):starty + 370
+        ;setfc [0 155 0]
+        ;fill
 
 
+        pu setxy :startx + 145 + ((:ptile - 1) * 33):starty + 370
+        bitpaste
 
-			make "tmp (mdarray [1 2] 1)
-			mdsetitem [1 1] :tmp mditem (se :ptile 1) :player2
-			mdsetitem [1 2] :tmp mditem (se :ptile 2) :player2
-			make "tmp2 (:maxtile + :bonesdrawn2 - 1)
-			for [i :ptile :tmp2 1] [	
-				mdsetitem (se :i 1) :player2 mditem (se :i + 1 1) :player2
-				mdsetitem (se :i 2) :player2 mditem (se :i + 1 2) :player2
+        make "tmp (mdarray [1 2] 1)
+        mdsetitem [1 1] :tmp mditem (se :ptile 1) :player2
+        mdsetitem [1 2] :tmp mditem (se :ptile 2) :player2
+        make "tmp2 (:maxtile + :bonesdrawn2 - 1)
+        for [i :ptile :tmp2 1] [	
+            mdsetitem (se :i 1) :player2 mditem (se :i + 1 1) :player2
+            mdsetitem (se :i 2) :player2 mditem (se :i + 1 2) :player2
+        ]
 
-
-			]
-
-			mdsetitem (se :maxtile + :bonesdrawn2 1) :player2 mditem [1 1] :tmp
-			mdsetitem (se :maxtile + :bonesdrawn2 2) :player2 -1
-			checkwin
-
-			]
-		]
+        mdsetitem (se :maxtile + :bonesdrawn2 1) :player2 mditem [1 1] :tmp
+        mdsetitem (se :maxtile + :bonesdrawn2 2) :player2 -1
+        checkwin
+    ]
+ ]
  windowenable "windowdomino "true
 
 end
@@ -1243,21 +1228,22 @@ to playtile :tileno :side
  if :side = -1 [ 
 
 
-      ifelse (or (:ls = :LinTP) ~
-		     (:rs = :LinTP) ~
-		     ((:tprs - :tpls) = 1)) [ 
-		pu
-		setxy :lx :ly
-            ;-------- Checking whether tile has to be "rotated/swapped"
-		if (not equalp :rs  :LinTP) [
-			make "tmp mditem (se :tileno 1) :arraydomino
-			mdsetitem (se :tileno 1) :arraydomino (se last :tmp first :tmp )
-			]
-		;---------- Determining how to place the tile 
-            ifelse :ls = :rs [placetile :side -11] [placetile :side -1]
-		] [message [no match] make "match "False stop]
-	]
+     ifelse (or (:ls = :LinTP)
+                (:rs = :LinTP)
+                ((:tprs - :tpls) = 1)) [ 
+         pu
+         setxy :lx :ly
 
+         ;-------- Checking whether tile has to be "rotated/swapped"
+         if (not equalp :rs  :LinTP) [
+             make "tmp mditem (se :tileno 1) :arraydomino
+             mdsetitem (se :tileno 1) :arraydomino (se last :tmp first :tmp )
+         ]
+
+         ;---------- Determining how to place the tile 
+         ifelse :ls = :rs [placetile :side -11] [placetile :side -1]
+      ] [showmessage [no match] make "match "False stop]
+ ]
 
  if :side = 1 [
       ifelse (or (:ls = :RinTP) ~
@@ -1274,7 +1260,7 @@ to playtile :tileno :side
             ifelse :ls = :rs [placetile :side 11] [placetile :side 1]
 
 	      
-		][message [no match] make "match "False stop]
+		][showmessage [no match] make "match "False stop]
 
 	]
 ;----------------- Recording the move
@@ -1304,14 +1290,14 @@ to setupwindow
  radiobuttoncreate "mydialog "groupboxoption "rdraw [Draw mode] 10 30 60 10
  
  if :variations = "block [ 
-	 radiobuttonset "rblock "true
-	 radiobuttonset "rdraw "false
-	]
+     radiobuttonset "rblock "true
+     radiobuttonset "rdraw "false
+ ]
 
  if :variations = "draw [ 
-	 radiobuttonset "rblock "false
-	 radiobuttonset "rdraw "True
-	]
+     radiobuttonset "rblock "false
+     radiobuttonset "rdraw "True
+ ]
 
  staticcreate "mydialog "statiscore [Winning score] 5 48 100 10
  groupboxcreate "mydialog "groupboxscore 5 55 100 25
@@ -1320,22 +1306,22 @@ to setupwindow
  radiobuttoncreate "mydialog "groupboxscore "r300 [300] 70 65 25 10
 
  if :winningscore = 100 [
-	radiobuttonset "r100 "true
-	radiobuttonset "r200 "false
-	radiobuttonset "r300 "false
-	]
+     radiobuttonset "r100 "true
+     radiobuttonset "r200 "false
+     radiobuttonset "r300 "false
+ ]
 
  if :winningscore = 200 [
-	radiobuttonset "r200 "true
-	radiobuttonset "r100 "false
-	radiobuttonset "r300 "false
-	]
+     radiobuttonset "r200 "true
+     radiobuttonset "r100 "false
+     radiobuttonset "r300 "false
+ ]
 
  if :winningscore = 300 [
-	radiobuttonset "r300 "true
-	radiobuttonset "r100 "false
-	radiobuttonset "r200 "false
-	]
+     radiobuttonset "r300 "true
+     radiobuttonset "r100 "false
+     radiobuttonset "r200 "false
+ ]
 
  staticcreate "mydialog "staticbones [Number of bones] 5 83 100 10
  groupboxcreate "mydialog "groupboxbones 5 90 100 25
@@ -1345,22 +1331,22 @@ to setupwindow
 
 
  if :numberofbones = 5 [ 
-	radiobuttonset "r5 "true
-	radiobuttonset "r7 "false
-	radiobuttonset "r10 "false
-	]
+     radiobuttonset "r5 "true
+     radiobuttonset "r7 "false
+     radiobuttonset "r10 "false
+ ]
 
  if :numberofbones = 7 [ 
-	radiobuttonset "r7 "true
-	radiobuttonset "r5 "false
-	radiobuttonset "r10 "false
-	]
+     radiobuttonset "r7 "true
+     radiobuttonset "r5 "false
+     radiobuttonset "r10 "false
+ ]
 
  if :numberofbones = 10 [ 
-	radiobuttonset "r10 "true
-	radiobuttonset "r5 "false
-	radiobuttonset "r7 "false
-	]
+     radiobuttonset "r10 "true
+     radiobuttonset "r5 "false
+     radiobuttonset "r7 "false
+ ]
 
  staticcreate "mydialog "staticgeneral [General] 5 118 100 10
  groupboxcreate "mydialog "groupboxgeneral 5 125 100 25
@@ -1371,7 +1357,7 @@ end
 
 to shuffle
 
-;------------ Procedure that redistributes the bones at random to the player
+ ;------------ Procedure that redistributes the bones at random to the player
  make "counter 0
  make "player1 (mdarray (se :maxtile  2) 1)
  make "player2 (mdarray (se :maxtile  2) 1)
@@ -1403,16 +1389,15 @@ to startnewgame
  make "stopcontinue "True
  if :gamefinished = 0 [make "stopcontinue yesnobox [Domino v0.91] [Game not finished. Do you want to start a new game?]]
  if :stopcontinue = "True [
-	 make "bigtotal1 0
-	 make "bigtotal2 0
-	 make "playing -1
-	 make "gamefinished 0
-	 make "maxbones :numberofbones
-	 make "roundvariations :variations
-	 make "roundwinningscore :winningscore
-	 startnewround
-
-	]
+     make "bigtotal1 0
+     make "bigtotal2 0
+     make "playing -1
+     make "gamefinished 0
+     make "maxbones :numberofbones
+     make "roundvariations :variations
+     make "roundwinningscore :winningscore
+     startnewround
+ ]
 
 end
 
@@ -1518,14 +1503,14 @@ to startnewround
 
 	;----------- Player 1 has the highest doublet and should play
 	 if :highestdoublet1 > :highestdoublet2 [
-		message [player 1 starts] 
+		showmessage [player 1 starts] 
 		playerplays 1 :hd1 1
 	
 		]
 	;----------- Player 2 has the highest doublet and should play
 
 	 if :highestdoublet2 > :highestdoublet1 [
-		message [player 2 starts] 
+		showmessage [player 2 starts] 
 		playerplays 2 :hd2 1
 		make "computerplayed "True
 		make "pass 0
@@ -1541,11 +1526,11 @@ to startnewround
 			]
 
 		if :highestvalue1 > :highestvalue2 [
-			message [player 1 starts] 
+			showmessage [player 1 starts] 
 			playerplays 1 :hv1 1
 			]
 		if :highestvalue2 > :highestvalue1 [
-			message [player 2 starts] 
+			showmessage [player 2 starts] 
 			playerplays 2 :hv2 1
 			make "computerplayed "True
 			make "pass 0
@@ -1628,7 +1613,7 @@ Make "match "True
 Make "maxbones 10
 Make "maxloop 10
 Make "maxtile 10
-Make "message [I pass]
+Make "showmessage [I pass]
 Make "msg [Domino v0.91 was brought to you by Hensley Bass Email: hbass@intnet.mu Url: http://pages.intnet.mu/jhbpage]
 Make "msg1 [Domino v0.91 was brought to you by Hensley Bass]
 Make "msg2 [Email: hbass@intnet.mu]
