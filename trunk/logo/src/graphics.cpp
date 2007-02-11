@@ -1718,10 +1718,10 @@ NODE *lsetlight(NODE *args)
       NODE * ambient = car(arg);
       NODE * diffuse = cadr(arg);
 
-      ThreeD.Ambient = numeric_node_to_flonum(ambient);
-      ThreeD.Diffuse = numeric_node_to_flonum(diffuse);
+      ThreeD.m_Ambient = numeric_node_to_flonum(ambient);
+      ThreeD.m_Diffuse = numeric_node_to_flonum(diffuse);
 
-      if (ThreeD.Tree) 
+      if (ThreeD.m_Tree)
          {
          ThreeD.View();
          }
@@ -1733,8 +1733,8 @@ NODE *lsetlight(NODE *args)
 NODE *llight(NODE *)
    {
    return cons_list(
-      make_floatnode(ThreeD.Ambient),
-      make_floatnode(ThreeD.Diffuse));
+      make_floatnode(ThreeD.m_Ambient),
+      make_floatnode(ThreeD.m_Diffuse));
    }
 
 NODE *lpolystart(NODE *)
@@ -1759,7 +1759,7 @@ NODE *lpolystart(NODE *)
 
 NODE *lpolyview(NODE *)
    {
-   if (ThreeD.Tree) 
+   if (ThreeD.m_Tree) 
       {
       ThreeD.View();
       }
@@ -1860,7 +1860,7 @@ NODE *lperspective(NODE *)
    ThreeD.SetVolume();
    ThreeD.SetEye();
    ThreeD.SetClip(60.0, 100000.0, -100000.0);
-   if (ThreeD.Tree) 
+   if (ThreeD.m_Tree)
      {
      ThreeD.View();
      }

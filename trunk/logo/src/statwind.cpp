@@ -365,12 +365,12 @@ void update_status_vectors(void)
       {
       char text[256];
 
-      if (ThreeD.iPolyCount)
+      if (ThreeD.m_iPolyCount)
          {
 #ifdef NOASM
-         sprintf(text, "%ld/%ld", ThreeD.iPolyCount, ThreeD.iSplitPolyCount);
+         sprintf(text, "%ld/%ld", ThreeD.m_iPolyCount, ThreeD.m_iSplitPolyCount);
 #else
-         sprintf(text, "%ld", ThreeD.iPolyCount);
+         sprintf(text, "%ld", ThreeD.m_iPolyCount);
 #endif
          MainWindowx->StatusWindow->SetDlgItemText(
             ID_THINGS, 
