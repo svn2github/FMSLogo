@@ -33,6 +33,7 @@ II. New features/bugs fixed:
       prevent the other from working.
     o Fix bug #1625098; French translation tables are now properly collated.
     o Fix bug #1602864; All COPYDEF bad input errors are now recoverable.
+    o Fix bug #1600159; 'CLOSE []' now throws a bad input error.
     o Implement request #1631170; COPYDEF, PROCEDUREP, MACROP, and DEFINEDP
       now load the procedure as a Logolib routine, if is not already defined.
     o Implement request #1542395; LESSEQUALP, GREATEREQUALP, and NOTEQUALP

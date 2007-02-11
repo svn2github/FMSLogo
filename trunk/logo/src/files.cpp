@@ -232,20 +232,17 @@ NODE *lallopen(NODE *)
 
 NODE *lclose(NODE *arg)
    {
-   arg = car(arg);
-   
-   ref(arg);
-   arg = reref(arg, cnv_node_to_strnode(arg));
-   if (arg == Unbound) 
+   NODE * filename = string_arg(arg);
+   if (stopping_flag == THROWING)
       {
-      return (NULL); // why not Unbound?
+      return Unbound;
       }
 
-   char * fnstr = (char *) malloc((size_t) getstrlen(arg) + 1);
-   strnzcpy(fnstr, getstrptr(arg), getstrlen(arg));
+   char * fnstr = (char *) malloc((size_t) getstrlen(filename) + 1);
+   strnzcpy(fnstr, getstrptr(filename), getstrlen(filename));
 
    FILE *tmp;
-   if ((tmp = find_file(arg, true)) == NULL)
+   if ((tmp = find_file(filename, true)) == NULL)
       {
       err_logo(
          FILE_ERROR, 
@@ -285,17 +282,16 @@ NODE *lclose(NODE *arg)
          }
       }
 
-   if (g_Writer.IsNamed(arg)) 
+   if (g_Writer.IsNamed(filename))
       {
       g_Writer.ResetToDefaultStream();
       }
 
-   if (g_Reader.IsNamed(arg)) 
+   if (g_Reader.IsNamed(filename))
       {
       g_Reader.ResetToDefaultStream();
       }
 
-   deref(arg);
    free(fnstr);
 
    return Unbound;
