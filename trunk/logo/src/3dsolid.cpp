@@ -177,6 +177,7 @@ void TThreeDSolid::AddList(PLIST** tlist, POLYGON* Poly)
 // side of the plane the point is on.
 double TThreeDSolid::CalcSign(Point& p, POLYGON* Poly)
    {
+   // REVISIT: use dot product here?
    double value =
       p.x * Poly->Normal.x +
       p.y * Poly->Normal.y +
@@ -1086,10 +1087,10 @@ void TThreeDSolid::View()
    {
    erase_screen();
 
-   m_ScreenDC = GetDC(MainWindowx->ScreenWindow->HWindow);
+   HDC screen = GetDC(MainWindowx->ScreenWindow->HWindow);
 
    // memory
-   m_MemDC = CreateCompatibleDC(m_ScreenDC);
+   m_MemDC = CreateCompatibleDC(screen);
    HBITMAP oldBitmap = (HBITMAP) SelectObject(m_MemDC, MemoryBitMap);
 
    if (EnablePalette)
@@ -1115,7 +1116,7 @@ void TThreeDSolid::View()
    SelectObject(m_MemDC, oldBitmap);
 
    DeleteDC(m_MemDC);
-   ReleaseDC(MainWindowx->ScreenWindow->HWindow, m_ScreenDC);
+   ReleaseDC(MainWindowx->ScreenWindow->HWindow, screen);
 
    MainWindowx->ScreenWindow->Invalidate(FALSE);
    }

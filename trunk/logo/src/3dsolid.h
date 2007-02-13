@@ -58,8 +58,6 @@ class TThreeDSolid : public TThreeD
    {
 private:
    HDC m_MemDC;
-   HDC m_ScreenDC;
-
 
  public: // HACK: should be private
    long m_iPolyCount;
