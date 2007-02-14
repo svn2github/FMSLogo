@@ -273,8 +273,8 @@
 #define LOCALIZED_ALTERNATE_GIFSIZE                "taillegif" // 
 #define LOCALIZED_ALTERNATE_GIFSAVE                "sauvegif" // 
 #define LOCALIZED_ALTERNATE_GPROP                  "rprop" // 
-#define LOCALIZED_ALTERNATE_GREATEREQUALP          "greaterequalp" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_GREATEREQUAL_          "greaterequal?" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_GREATEREQUALP          "supérieurégalp" // 
+#define LOCALIZED_ALTERNATE_GREATEREQUAL_          "supérieurégal?" // 
 #define LOCALIZED_ALTERNATE_GREATERP               "supérieurp" // 
 #define LOCALIZED_ALTERNATE_GREATER_               "supérieur?" // 
 #define LOCALIZED_ALTERNATE_GROUPBOXCREATE         "créegroupe" // 
@@ -307,8 +307,8 @@
 #define LOCALIZED_ALTERNATE_LAST                   "dernier" // 
 #define LOCALIZED_ALTERNATE_LEFT                   "gauche"
 #define LOCALIZED_ALTERNATE_LEFTROLL               "inclinegauche" // 
-#define LOCALIZED_ALTERNATE_LESSEQUALP             "lessequalp" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_LESSEQUAL_             "lessequal?" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_LESSEQUALP             "inférieurégalp" // 
+#define LOCALIZED_ALTERNATE_LESSEQUAL_             "inférieurégal?" // 
 #define LOCALIZED_ALTERNATE_LESSP                  "inférieurp" // 
 #define LOCALIZED_ALTERNATE_LESS_                  "inférieur?" // 
 #define LOCALIZED_ALTERNATE_LIGHT                  "lumière" // 
@@ -367,8 +367,8 @@
 #define LOCALIZED_ALTERNATE_NODRIBBLE              "fintranscription" // 
 #define LOCALIZED_ALTERNATE_NOSTATUS               "fermeétat" // 
 #define LOCALIZED_ALTERNATE_NOT                    "non"
-#define LOCALIZED_ALTERNATE_NOTEQUALP              "notequalp" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_NOTEQUAL_              "notequal?" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_NOTEQUALP              "nonégalp" // 
+#define LOCALIZED_ALTERNATE_NOTEQUAL_              "nonégal?" // 
 #define LOCALIZED_ALTERNATE_NOYIELD                "finpartage" // 
 #define LOCALIZED_ALTERNATE_NUMBERP                "nombrep" // 
 #define LOCALIZED_ALTERNATE_NUMBER_                "nombre?" // 
