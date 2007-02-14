@@ -33,10 +33,10 @@
 //   #define         - is part of C++.  Do not change this.
 //   <TOKEN>         - is how the FMSLogo source code refers to the string.
 //                     This must not change, regardless of the locale.
-//   <quoted-string> - is what fmslogo.exe will use whenever it refers
+//   <quoted-string> - is what fmslogo.exe will use whenever it refers 
 //                     to <TOKEN>.  This is bit that must be translated.
 //   <status>        - This is some information on whether or not the
-//                     string has been localized yet.  For example, is
+//                     string has been localized yet.  For example, is 
 //                     someone has localized FMSLogo into French, then I add
 //                     a new string, I will append //NOT_YET_LOCALIZED as a
 //                     reminder that we need to localized just this one string.
@@ -71,25 +71,25 @@
 //
 //   "I like "LOCALIZED_GENERAL_PRODUCTNAME", do you?"
 //
-// When fmslogo.exe is built, the LOCALIZED_GENERAL_PRODUCTNAME will be
+// When fmslogo.exe is built, the LOCALIZED_GENERAL_PRODUCTNAME will be 
 // replaced with the localized form of FMSLogo and will look like the
 // original phrase.  Please only translate the "I like " and ", do you?".
 //
 // Some of the quoted strings (the ones that appear in menus and buttons)
-// have ampersands "&" characters in them.  For example the word "File"
+// have ampersands "&" characters in them.  For example the word "File" 
 // may appear as "&File".  This tells Windows that ALT+F should take the
 // user straight to this option.
-//
+// 
 // Some of the quoted strings have a "%p" or a "%s" in them.  For example,
 // the error message for when you give bad input looks like this:
 //
 //    "%p doesn't like %s as input"
 //
 // The "%p" and "%s" are replaced with the procedure name and the input
-// that it doesn't like.  You must NOT add any "%" characters to any string,
+// that it doesn't like.  You must NOT add any "%" characters to any string, 
 // nor can you change the order in which the %p and %s occur.
 //
-// There are some special characters that you can add to a string with a
+// There are some special characters that you can add to a string with a 
 // special "escape sequence", which begins with a backslash "\".
 //
 //    Tab         -  \t
@@ -100,7 +100,7 @@
 // Due to a bug in Borland's resource compiler, two forward slashes cannot
 // appear in a quoted string.  To work around this problem, I "escape" the
 // first slash, as in:
-//
+// 
 //    "http://fmslogo.org/" -> "http:\x2F/fmslogo.org/
 //
 /////////////////////////////////////////////////////////////////////////////
@@ -117,9 +117,9 @@
 // These become the perferred name of the primitives.  For example,
 // when you press the "reset" button, FMSLogo will write the value of
 // LOCALIZED_ALTERNATE_CLEARSCREEN to the commander.
-//
-// Furthermore, if one of the LOCALIZED_ALTERNATE names uses the same text
-// as the English counterpart, then the localized name will be used.
+// 
+// Furthermore, if one of the LOCALIZED_ALTERNATE names uses the same text 
+// as the English counterpart, then the localized name will be used. 
 // For example, in the English version, "ct" is short for "CLEARTEXT".
 // In the French version, "ct" is short for "CACHETORTUE" (HIDETURTLE).
 // So in the French FMSLogo, running "ct" will hide the turtle.
@@ -127,7 +127,7 @@
 // That said, it is strongly recommended that you do not choose names
 // that match the long English name of any command.  If you do, you may
 // find that some programs won't run on the localized version of FMSLogo.
-//
+// 
 // If you don't know how to translate a particular command, leave it
 // as the English name and it will be ignored.
 //
@@ -273,6 +273,8 @@
 #define LOCALIZED_ALTERNATE_GIFSIZE                "tamañogif"
 #define LOCALIZED_ALTERNATE_GIFSAVE                "guardagif"
 #define LOCALIZED_ALTERNATE_GPROP                  "propiedad"
+#define LOCALIZED_ALTERNATE_GREATEREQUALP          "greaterequalp" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_GREATEREQUAL_          "greaterequal?" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_GREATERP               "mayor?"
 #define LOCALIZED_ALTERNATE_GREATER_               "mayor?"
 #define LOCALIZED_ALTERNATE_GROUPBOXCREATE         "creagroupbox"
@@ -305,6 +307,8 @@
 #define LOCALIZED_ALTERNATE_LAST                   "ultimo"
 #define LOCALIZED_ALTERNATE_LEFT                   "giraizquierda"
 #define LOCALIZED_ALTERNATE_LEFTROLL               "balanceaizquierda"
+#define LOCALIZED_ALTERNATE_LESSEQUALP             "lessequalp" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_LESSEQUAL_             "lessequal?" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_LESSP                  "menor?"
 #define LOCALIZED_ALTERNATE_LESS_                  "menor?"
 #define LOCALIZED_ALTERNATE_LIGHT                  "luz"
@@ -363,6 +367,8 @@
 #define LOCALIZED_ALTERNATE_NODRIBBLE              "noeco"
 #define LOCALIZED_ALTERNATE_NOSTATUS               "quitaestado"
 #define LOCALIZED_ALTERNATE_NOT                    "no"
+#define LOCALIZED_ALTERNATE_NOTEQUALP              "notequalp" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_NOTEQUAL_              "notequal?" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_NOYIELD                "exclusivo"
 #define LOCALIZED_ALTERNATE_NUMBERP                "numero?"
 #define LOCALIZED_ALTERNATE_NUMBER_                "numero?"
@@ -587,7 +593,6 @@
 #define LOCALIZED_ALTERNATE_YIELD                  "noexclusivo"
 #define LOCALIZED_ALTERNATE_ZOOM                   "ponlupa"
 
-
 //
 // General localized strings
 //
@@ -599,7 +604,7 @@
 
 
 //
-// The menu options on the main window
+// The menu options on the main window 
 //
 #define LOCALIZED_FILE        "&Archivo"
 #define LOCALIZED_FILE_NEW    "&Nuevo\t(borra el trabajo actual)"
@@ -829,9 +834,9 @@
 #define LOCALIZED_ABOUTMS_OK                   LOCALIZED_GENERAL_OKBUTTON
 
 
-//
+// 
 // Strings in various other dialog boxes
-//
+// 
 
 #define LOCALIZED_CHANGESINEDITORMAYBELOST  "Los cambios de la edición pueden perderse.\n\n¿Realmente quieres salir de "LOCALIZED_GENERAL_PRODUCTNAME"?"
 #define LOCALIZED_EDITSESSIONISRUNNING      "Una sesión de edición está activa"
@@ -870,7 +875,7 @@
 
 
 
-//
+// 
 //  Strings used in the File-Open filters
 //
 #define LOCALIZED_FILEFILTER_ALLFILES "Todos los Archivos (*.*)|*.*|"
@@ -1131,7 +1136,7 @@
 
 //
 // Strings that explain the purpose of each menu option.
-// I don't think that any of these strings can be seen by the user,
+// I don't think that any of these strings can be seen by the user, 
 // so you probably don't have to translate these.
 //
 #define LOCALIZED_STRINGTABLE_FILESAVEAS "Saves the contents of the workspace to a new file" // NOT_YET_LOCALIZED
