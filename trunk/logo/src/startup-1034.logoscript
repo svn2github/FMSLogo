@@ -33,7 +33,7 @@ FIN
 TAPA "ABS
 
 
-;copydef "soundoff "apagasonido
+;copydef "apagasonido "soundoff
 
 PARA APAGASONIDO
    ESCRIBEPUERTO 97 BITAND 252 LEEPUERTO 97
@@ -41,7 +41,7 @@ FIN
 TAPA "APAGASONIDO
 
 
-;copydef "push "apila
+;copydef "apila "push
 
 PARA APILA :push.stack.name :item
 HAZ :push.stack.name PONPRIMERO :item VALOR :push.stack.name
@@ -50,7 +50,7 @@ FIN
 TAPA "APILA
 
 
-;copydef "filep "archivop
+;copydef "archivop "filep
 
 PARA ARCHIVOP :filename
 IGNORA ERROR
@@ -61,7 +61,7 @@ FIN
 TAPA "ARCHIVOP
 
 
-;copydef "arc "arco
+;copydef "arco "arc
 
 PARA ARCO :ang :rad
 ARCOELIPSE :ang :rad :rad 0
@@ -69,7 +69,7 @@ FIN
 
 TAPA "ARCO
 
-;copydef "arc2 "arco2
+;copydef "arco2 "arc2
 
 PARA ARCO2 :ang :rad
 ELIPSA2 :ang :rad :rad 0
@@ -78,7 +78,7 @@ FIN
 TAPA "ARCO2
 
 
-;copydef "ellipsearc2 "arcoelipse2
+;copydef "arcoelipse2 "ellipsearc2
 
 PARA ARCOELIPSE2 :ang :radius_x :radius_y :startang
 LOCAL "penstate 
@@ -105,7 +105,7 @@ FIN
 TAPA "ARCOELIPSE2
 
 
-;copydef "erns "bnombres
+;copydef "bnombres "erns
 
 PARA BNOMBRES
 BORRA LVARS
@@ -114,16 +114,7 @@ FIN
 TAPA "BNOMBRES
 
 
-;copydef "erpl "boprop
-
-PARA BOPROP :names
-BORRA LISTAPROPIEDADES :names
-FIN
-
-TAPA "BOPROP
-
-
-;copydef "ern "bovar
+;copydef "bovar "ern
 
 PARA BOVAR :names
 BORRA LISTANOMBRES :names
@@ -132,7 +123,7 @@ FIN
 TAPA "BOVAR
 
 
-;copydef "erns "bovars
+;copydef "bovars "erns
 
 PARA BNOMBRES
 BORRA LVARS
@@ -141,7 +132,7 @@ FIN
 TAPA "BNOMBRES
 
 
-;copydef "erps "bprocs
+;copydef "bprocs "erps
 
 PARA BPROCS
 BORRA LPROCS
@@ -150,7 +141,7 @@ FIN
 TAPA "BPROCS
 
 
-;copydef "erpls "bprops
+;copydef "bprops "erpls
 
 PARA BPROPS
 BORRA LPROPS
@@ -159,7 +150,7 @@ FIN
 TAPA "BPROPS
 
 
-;copydef "erall "btodo
+;copydef "btodo "erall
 
 PARA BTODO [:warning 1 = 1]
 SI :warning [SI NO SINOBOX [Atención] [¿Estás seguro que deseas borrar todo?] [ALTO]]
@@ -169,7 +160,17 @@ FIN
 TAPA "BTODO
 
 
-;copydef "cascade "cascada
+;copydef "btodo "erall
+
+PARA BTODO [:warning "true]
+SI :warning [SI NO SINOBOX [Warning] [Are you sure you wish PARA BORRA ALL?] [ALTO]]
+BORRA CONTENIDO
+FIN
+
+TAPA "BTODO
+
+
+;copydef "cascada "cascade
 
 PARA CASCADA :cascade.limit [:cascade.inputs] 3
 SI NUMERO? :cascade.limit ~
@@ -206,7 +207,7 @@ FIN
 TAPA [CASCADA CASCADA.setup cascade1 CASCADA.eval]
 
 
-;copydef "cascade.2 "cascada.2
+;copydef "cascada.2 "cascade.2
 
 PARA CASCADA.2 [:cascade2.inputs] 5
 DEV APLICA "cascade :cascade2.inputs
@@ -215,7 +216,7 @@ FIN
 TAPA "CASCADA.2
 
 
-;copydef "circle "circulo
+;copydef "circulo "circle
 
 PARA CIRCULO :rad
 ARCOELIPSE 360 :rad :rad 0
@@ -223,7 +224,7 @@ FIN
 
 TAPA "CIRCULO
 
-;copydef "circle2 "circulo2
+;copydef "circulo2 "circle2
 
 PARA CIRCULO2 :rad
 ARCO2 360 :rad
@@ -231,7 +232,7 @@ FIN
 
 TAPA "CIRCULO2
 
-;copydef "combine "combina
+;copydef "combina "combine
 
 PARA COMBINA :this :those
 SI PALABRA? :those [DEVUELVE PALABRA :this :those]
@@ -241,7 +242,7 @@ FIN
 TAPA "COMBINA
 
 
-;copydef "xcor "coorx
+;copydef "coorx "xcor
 
 PARA COORX
 DEVUELVE PRIMERO POS
@@ -250,7 +251,7 @@ FIN
 TAPA "COORX
 
 
-;copydef "ycor "coory
+;copydef "coory "ycor
 
 PARA COORY
 DEVUELVE ULTIMO POS
@@ -259,7 +260,7 @@ FIN
 TAPA "COORY
 
 
-;copydef "zcor "coorz
+;copydef "coorz "zcor
 
 PARA COORZ
 DEVUELVE ULTIMO POS3D
@@ -268,7 +269,7 @@ FIN
 TAPA "COORZ
 
 
-;copydef "mousecopy "copiaraton
+;copydef "copiaraton "mousecopy
 
 PARA COPIARATON.down
 ; Init P1 and P2 and SelectionBox
@@ -354,7 +355,7 @@ TAPA "COPIARATON.selection
 TAPA "COPIARATON.up
 
 
-;copydef "pop "desapila
+;copydef "desapila "pop
 
 PARA DESAPILA :pop.stack.name
 LOCAL "result
@@ -366,7 +367,7 @@ FIN
 TAPA "DESAPILA
 
 
-;copydef "dequeue "descola
+;copydef "descola "dequeue
 
 PARA DESCOLA :queue
 LOCAL "result
@@ -378,7 +379,7 @@ FIN
 TAPA "DESCOLA
 
 
-;copydef "for "desde
+;copydef "desde "for
 
 .MACRO DESDE :for.values :for.instr ~
    [:for.var PRIMERO :for.values] ~
@@ -413,7 +414,7 @@ FIN
 TAPA [DESDE forstep forloop DESDE.done]
 
 
-;copydef "unburyname "destapanombre
+;copydef "destapanombre "unburyname
 
 PARA DESTAPANOMBRE :names
 DESTAPA LISTANOMBRES :names
@@ -422,7 +423,7 @@ FIN
 TAPA "DESTAPANOMBRE
 
 
-;copydef "unburyall "destapatodo
+;copydef "destapatodo "unburyall
 
 PARA DESTAPATODO
 DESTAPA TAPADO
@@ -431,7 +432,7 @@ FIN
 TAPA "DESTAPATODO
 
 
-;copydef "slowdraw "dibujalento
+;copydef "dibujalento "slowdraw
 
 PARA DIBUJALENTO :slowness
 
@@ -473,16 +474,17 @@ FIN
 TAPA "DIBUJALENTO
 
 
-;copydef "ask "dile
+;copydef "dile "ask
 
 PARA DILE :turtle :command
 HAZLOCAL "saveturtle QUIEN
 ACTIVA :turtle
-HAZLOCAL .QUIZADEVUELVE RESULTADOEJECUTA :command
+HAZLOCAL "maybeoutput RESULTADOEJECUTA :command
 ACTIVA :saveturtle
-SI VACIO? .QUIZADEVUELVE [ALTO]
-DEVUELVE PRIMERO .QUIZADEVUELVE
+SI VACIO? :maybeoutput [ALTO]
+DEVUELVE PRIMERO :maybeoutput
 FIN
+
 TAPA "DILE
 
 
@@ -496,7 +498,7 @@ FIN
 TAPA "DIR
 
 
-;copydef "distance "distancia
+;copydef "distancia "distance
 
 PARA DISTANCIA :point
 HAZLOCAL "dx (ELEMENTO 1 POS) - (ELEMENTO 1 :point)
@@ -515,7 +517,7 @@ FIN
 
 TAPA "DISTANCIAXYZ
 
-;copydef "distancexyz "distanciaxyz
+;copydef "distanciaxyz "distancexyz
 
 PARA DISTANCIAXYZ :point
 HAZLOCAL "dx (ELEMENTO 1 POS3D) - (ELEMENTO 1 :point)
@@ -527,7 +529,7 @@ FIN
 TAPA "DISTANCIAXYZ
 
 
-;copydef "edn "ednombre
+;copydef "ednombre "edn
 
 PARA EDNOMBRE :names
 EDITA LISTANOMBRES :names
@@ -536,7 +538,7 @@ FIN
 TAPA "EDNOMBRE
 
 
-;copydef "edns "ednombres
+;copydef "ednombres "edns
 
 PARA EDNOMBRES
 EDITA LVARS
@@ -545,7 +547,7 @@ FIN
 TAPA "EDNOMBRES
 
 
-;copydef "edps "edprocs
+;copydef "edprocs "edps
 
 PARA EDPROCS
 EDITA LPROCS
@@ -554,7 +556,7 @@ FIN
 TAPA "EDPROCS
 
 
-;copydef "edpl "edprop
+;copydef "edprop "edpl
 
 PARA EDPROP :names
 EDITA LISTAPROPIEDADES :names
@@ -563,7 +565,7 @@ FIN
 TAPA "EDPROP
 
 
-;copydef "edpls "edprops
+;copydef "edprops "edpls
 
 PARA EDPROPS
 EDITA LPROPS
@@ -572,7 +574,7 @@ FIN
 TAPA "EDPROPS
 
 
-;copydef "edall "edtodo
+;copydef "edtodo "edall
 
 PARA EDTODO
 EDITA CONTENIDO
@@ -581,7 +583,7 @@ FIN
 TAPA "EDTODO
 
 
-;copydef "mditem "elementomd
+;copydef "elementomd "mditem
 
 PARA ELEMENTOMD :index :array
 SI VACIO? :index [DEV :array]
@@ -591,7 +593,7 @@ FIN
 TAPA "ELEMENTOMD
 
 
-;copydef "ellipsa2 "elipsa2
+;copydef "elipsa2 "ellipsa2
 
 ; NOTE: ELLIPSA2 is kept for backward compatability.
 ; The perferred name is ellipsearc2.
@@ -603,7 +605,7 @@ FIN
 TAPA "ELIPSA2
 
 
-;copydef "ellipse "elipse
+;copydef "elipse "ellipse
 
 PARA ELIPSE :rad1 :rad2
 ARCOELIPSE 360 :rad1 :rad2 0
@@ -611,7 +613,7 @@ FIN
 
 TAPA "ELIPSE
 
-;copydef "ellipse2 "elipse2
+;copydef "elipse2 "ellipse2
 
 PARA ELIPSE2 :radius_x :radius_y
 ELIPSA2 360 :radius_x :radius_y 0
@@ -620,7 +622,7 @@ FIN
 TAPA "ELIPSE2
 
 
-;copydef "soundon "enciendesonido
+;copydef "enciendesonido "soundon
 
 PARA ENCIENDESONIDO :Freq
    HAZLOCAL "count REDONDEA 1193180 / :Freq
@@ -634,7 +636,7 @@ FIN
 TAPA "ENCIENDESONIDO
 
 
-;copydef "queue "encola
+;copydef "encola "queue
 
 PARA ENCOLA :queue :item
 HAZ :queue PONULTIMO :item VALOR :queue
@@ -643,7 +645,7 @@ FIN
 TAPA "ENCOLA
 
 
-;copydef "find "encuentra
+;copydef "encuentra "find
 
 PARA ENCUENTRA :find.template :template.list [:template.number 1] ~
         [:template.lists (LISTA :template.list)]
@@ -659,7 +661,7 @@ FIN
 TAPA [ENCUENTRA ?RESTANTE]
 
 
-;copydef "quoted "entrecomillas
+;copydef "entrecomillas "quoted
 
 PARA ENTRECOMILLAS :stuff
 SI PALABRA? :stuff [DEV PALABRA "" :stuff]
@@ -669,7 +671,7 @@ FIN
 TAPA "ENTRECOMILLAS
 
 
-;copydef "crossmap "entreteje
+;copydef "entreteje "crossmap
 
 PARA ENTRETEJE :cm.template [:cm.lists] 2
 SI VACIO? MP :cm.lists [DEV cm1 PRIMERO :cm.lists 1 []]
@@ -692,7 +694,7 @@ FIN
 TAPA [ENTRETEJE cm1 cm2]
 
 
-;copydef "macroexpand "expandemacro
+;copydef "expandemacro "macroexpand
 
 PARA EXPANDEMACRO :expr
 LOCAL [NOMBRE inputlist macro.result]
@@ -700,15 +702,33 @@ HAZ "name PRIMERO :expr
 HAZ "inputlist MP :expr
 SI NO MACRO? :name [(LANZA "error (FR :name [no es una macro.]))]
 DEFINE "%%%$%macro.procedure TEXTO :name
-HAZ .MACRO.result EJECUTA PONPRIMERO "%%%$%macro.procedure :inputlist
+HAZ "macro.result EJECUTA PONPRIMERO "%%%$%macro.procedure :inputlist
 BORRA "%%%$%macro.procedure
-DEV .MACRO.result
+DEV :macro.result
 FIN
 
 TAPA "EXPANDEMACRO
 
 
-;copydef "filter "filtra
+;copydef "expandemacro "macroexpand
+
+;;; -*- logo -*-
+
+PARA EXPANDEMACRO :expr
+LOCAL [NOMBRE inputlist macro.result]
+HAZ "name PRIMERO :expr
+HAZ "inputlist MP :expr
+SI NO MACRO? :name [(LANZA "error (FR :name [is NO a macro.]))]
+DEFINE "%%%$%macro.procedure TEXTO :name
+HAZ "macro.result EJECUTA PONPRIMERO "%%%$%macro.procedure :inputlist
+BORRA "%%%$%macro.procedure
+DEV :macro.result
+FIN
+
+TAPA "EXPANDEMACRO
+
+
+;copydef "filtra "filter
 
 PARA FILTRA :filter.template :template.list [:template.number 1] ~
           [:template.lists (LISTA :template.list)]
@@ -726,7 +746,7 @@ FIN
 TAPA [FILTRA ?RESTANTE]
 
 
-;copydef "gensym "gensimbolo
+;copydef "gensimbolo "gensym
 
 PARA GENSIMBOLO
 SI NO VAR? "gensym.number [HAZ "gensym.number 0]
@@ -737,7 +757,7 @@ FIN
 TAPA "GENSIMBOLO
 
 
-;copydef "savel "guardal
+;copydef "guardal "savel
 
 PARA GUARDAL :cont :file [:oldwr ESCRITURA]
 ABREESCRITURA :file
@@ -750,7 +770,7 @@ FIN
 TAPA "GUARDAL
 
 
-;copydef "until "hasta
+;copydef "hasta "until
 
 .MACRO HASTA :until.cond :until.instr
 SI EJECUTA :until.cond [DEV []]
@@ -760,7 +780,7 @@ FIN
 TAPA "HASTA
 
 
-;copydef "do.until "haz.hasta
+;copydef "haz.hasta "do.until
 
 .MACRO HAZ.HASTA :until.instr :until.cond
 DEV FR :until.instr (LISTA "HASTA :until.cond :until.instr)
@@ -769,7 +789,16 @@ FIN
 TAPA "HAZ.HASTA
 
 
-;copydef "do.while "haz.mientras
+;copydef "haz.hasta "do.until
+
+.MACRO HAZ.HASTA :until.instr :until.cond
+DEV FR :until.instr (LISTA "until :until.cond :until.instr)
+FIN
+
+TAPA "HAZ.HASTA
+
+
+;copydef "haz.mientras "do.while
 
 .MACRO HAZ.MIENTRAS :while.instr :while.cond
 DEV FR :while.instr (LISTA "MIENTRAS :while.cond :while.instr)
@@ -778,7 +807,16 @@ FIN
 TAPA "HAZ.MIENTRAS
 
 
-;copydef "localmake "hazlocal
+;copydef "haz.mientras "do.while
+
+.MACRO HAZ.MIENTRAS :while.instr :while.cond
+DEV FR :while.instr (LISTA "while :while.cond :while.instr)
+FIN
+
+TAPA "HAZ.MIENTRAS
+
+
+;copydef "hazlocal "localmake
 
 .MACRO HAZLOCAL :name :value
 DEVUELVE (LISTA "LOCAL (PALABRA "" :name)
@@ -787,7 +825,16 @@ FIN
 
 TAPA "HAZLOCAL
 
-;copydef "maketurtle "haztortuga
+;copydef "hazlocal "localmake
+
+.MACRO HAZLOCAL :name :value
+DEVUELVE (LISTA "local (PALABRA "" :name)
+             "apply ""make (LISTA :name :value))
+FIN
+
+TAPA "HAZLOCAL
+
+;copydef "haztortuga "maketurtle
 
 PARA HAZTORTUGA :turtle :pen
 HAZLOCAL "saveturtle QUIEN
@@ -796,15 +843,14 @@ SL
 PONPOS MENOSULTIMO MENOSULTIMO :pen
 BL
 PONRUMBO ULTIMO MENOSULTIMO :pen
-HAZLOCAL .QUIZADEVUELVE RESULTADOEJECUTA ULTIMO :pen
+HAZLOCAL "maybeoutput RESULTADOEJECUTA ULTIMO :pen
 ACTIVA :saveturtle
-SI VACIO? .QUIZADEVUELVE [ALTO]
-DEVUELVE PRIMERO .QUIZADEVUELVE
+SI VACIO? :maybeoutput [ALTO]
+DEVUELVE PRIMERO :maybeoutput
 FIN
-
 TAPA "HAZTORTUGA
 
-;copydef "ignore "ignora
+;copydef "ignora "ignore
 
 PARA IGNORA :stuff
 FIN
@@ -812,7 +858,7 @@ FIN
 TAPA "IGNORA
 
 
-;copydef "pops "imdefprocs
+;copydef "imdefprocs "pops
 
 PARA IMDEFPROCS
 IMDEFS LPROCS
@@ -821,7 +867,7 @@ FIN
 TAPA "IMDEFPROCS
 
 
-;copydef "popl "imdefprop
+;copydef "imdefprop "popl
 
 PARA IMDEFPROP :names
 IGNORA ERROR
@@ -834,7 +880,7 @@ FIN
 TAPA "IMDEFPROP
 
 
-;copydef "pon "imdefvar
+;copydef "imdefvar "pon
 
 PARA IMDEFVAR :names
 IGNORA ERROR
@@ -847,7 +893,7 @@ FIN
 TAPA "IMDEFVAR
 
 
-;copydef "popls "improps
+;copydef "improps "popls
 
 PARA IMPROPS
 IMDEFS LPROPS
@@ -856,7 +902,7 @@ FIN
 TAPA "IMPROPS
 
 
-;copydef "poall "imtodo
+;copydef "imtodo "poall
 
 PARA IMTODO
 IMDEFS CONTENIDO
@@ -865,7 +911,7 @@ FIN
 TAPA "IMTODO
 
 
-;copydef "pots "imts
+;copydef "imts "pots
 
 PARA IMTS
 IMTITULOSTODO LPROCS
@@ -874,7 +920,7 @@ FIN
 TAPA "IMTS
 
 
-;copydef "pons "imvars
+;copydef "imvars "pons
 
 PARA IMVARS
 IMDEFS LVARS
@@ -883,7 +929,7 @@ FIN
 TAPA "IMVARS
 
 
-;copydef "reverse "invierte
+;copydef "invierte "reverse
 
 PARA INVIERTE :in
 DEV INVIERTE.helper :in SISINO LISTA? :in [[]] ["]
@@ -897,7 +943,7 @@ FIN
 TAPA [INVIERTE INVIERTE.helper]
 
 
-;copydef "invoke "invoca
+;copydef "invoca "invoke
 
 ;;; -*- logo -*-
 
@@ -908,7 +954,7 @@ FIN
 TAPA "INVOCA
 
 
-;copydef "pen "lapiz
+;copydef "lapiz "pen
 
 PARA LAPIZ
 DEV (LISTA (SISINO BAJALAPIZ? ["BAJALAPIZ] ["SUBELAPIZ]) ~
@@ -918,16 +964,26 @@ FIN
 TAPA [LAPIZ]
 
 
-;copydef "pennormal "lapiznormal
+;copydef "lapiz "pen
 
-PARA LAPIZNORMAL
+PARA LAPIZ
+DEV (LISTA (SISINO BAJALAPIZ? ["pendown] ["penup]) ~
+         LAPIZMODO GROSOR COLORLAPIZ [1])
+FIN
+
+TAPA [LAPIZ]
+
+
+;copydef "lapizinicial "pennormal
+
+PARA LAPIZINICIAL
 PONLAPIZ [BAJALAPIZ LAPIZNORMAL [1 1] [0 0 0] [255 255 255 255 255 255 255 255]]
 FIN
 
-TAPA "LAPIZNORMAL
+TAPA [LAPIZINICIAL]
 
 
-;copydef "listtoarray "listaavector
+;copydef "listaavector "listtoarray
 
 PARA LISTAAVECTOR :list [:origin 1]
 LOCAL "array
@@ -945,7 +1001,7 @@ FIN
 TAPA [LISTAAVECTOR listtoarray1]
 
 
-;copydef "namelist "listanombres
+;copydef "listanombres "namelist
 
 PARA LISTANOMBRES :names
 SI VECTOR? :names [(LANZA "error (LISTA [A listanombres no le gusta] :names [como entrada]))]
@@ -956,7 +1012,18 @@ FIN
 TAPA "LISTANOMBRES
 
 
-;copydef "pllist "listapropiedades
+;copydef "listanombres "namelist
+
+PARA LISTANOMBRES :names
+SI VECTOR? :names [(LANZA "error (LISTA "namelist "doesn't "like :names "as "input))]
+SI PALABRA? :names [DEVUELVE LISTA [] (LISTA :names)]
+DEVUELVE LISTA [] :names
+FIN
+
+TAPA "LISTANOMBRES
+
+
+;copydef "listapropiedades "pllist
 
 PARA LISTAPROPIEDADES :names
 SI VECTOR? :names [(LANZA "error (LISTA [A ListaPropiedades no le gusta] :names [como entrada]))]
@@ -967,7 +1034,18 @@ FIN
 TAPA "LISTAPROPIEDADES
 
 
-;copydef "unicon "maximiza
+;copydef "listapropiedades "pllist
+
+PARA LISTAPROPIEDADES :names
+SI VECTOR? :names [(LANZA "error (LISTA "pllist "doesn't "like :names "as "input))]
+SI PALABRA? :names [DEVUELVE (LISTA [] [] (LISTA :names))]
+DEVUELVE (LISTA [] [] :names)
+FIN
+
+TAPA "LISTAPROPIEDADES
+
+
+;copydef "maximiza "unicon
 
 PARA MAXIMIZA :window
 ACTIVAVENTANA :window 9
@@ -976,7 +1054,7 @@ FIN
 TAPA "MAXIMIZA
 
 
-;copydef "while "mientras
+;copydef "mientras "while
 
 .MACRO MIENTRAS :while.cond :while.instr
 SI NO EJECUTA :while.cond [DEV []]
@@ -986,7 +1064,7 @@ FIN
 TAPA "MIENTRAS
 
 
-;copydef "icon "minimiza
+;copydef "minimiza "icon
 
 PARA MINIMIZA :window
 ACTIVAVENTANA :window 6
@@ -995,7 +1073,7 @@ FIN
 TAPA "MINIMIZA
 
 
-;copydef "name "nombre
+;copydef "nombre "name
 
 PARA NOMBRE :name.value.input :name.variable.input
 HAZ :name.variable.input :name.value.input
@@ -1004,7 +1082,7 @@ FIN
 TAPA "NOMBRE
 
 
-;copydef "norefresh "norefrescar
+;copydef "norefrescar "norefresh
 
 PARA NOREFRESCAR
 FIN
@@ -1012,14 +1090,14 @@ FIN
 TAPA "NOREFRESCAR
 
 
-;copydef "goldenratio "numeroaureo
+;copydef "numeroaureo "goldenratio
 
 PARA NUMEROAUREO
 DEVUELVE 1/2*(1 + RC 5)
 FIN
 TAPA "NUMEROAUREO
 
-;copydef "sort "ordena
+;copydef "ordena "sort
 
 PARA ORDENA.listtoword :list
   DEV APLICA "word :list
@@ -1064,7 +1142,7 @@ FIN
 TAPA [ORDENA ORDENA.mergesort ORDENA.mergepairwise ORDENA.merge ORDENA.listtoword ORDENA.wordtolist]
 
 
-;copydef "orientation "orientacion
+;copydef "orientacion "orientation
 
 PARA ORIENTACION
 DEVUELVE (LISTA BALANCEO CABECEO RUMBO)
@@ -1072,7 +1150,7 @@ FIN
 
 TAPA "ORIENTACION
 
-;copydef "foreach "paracada
+;copydef "paracada "foreach
 
 .MACRO PARACADA [:foreach.inputs] 2
 ATRAPA "foreach.catchtag ~
@@ -1099,20 +1177,20 @@ FIN
 TAPA [PARACADA foreach1 PARACADA.done ?RESTANTE]
 
 
-;copydef "ask "pide
+;copydef "pide "ask
 
 PARA DILE :turtle :command
 HAZLOCAL "saveturtle QUIEN
 ACTIVA :turtle
-HAZLOCAL .QUIZADEVUELVE RESULTADOEJECUTA :command
+HAZLOCAL "maybeoutput RESULTADOEJECUTA :command
 ACTIVA :saveturtle
-SI VACIO? .QUIZADEVUELVE [ALTO]
-DEVUELVE PRIMERO .QUIZADEVUELVE
+SI VACIO? :maybeoutput [ALTO]
+DEVUELVE PRIMERO :maybeoutput
 FIN
 TAPA "DILE
 
 
-;copydef "mdsetitem "ponelementomd
+;copydef "ponelementomd "mdsetitem
 
 PARA PONELEMENTOMD :index :array :val
 PONELEMENTO ULTIMO :index (ELEMENTOMD MU :index :array) :val
@@ -1121,7 +1199,7 @@ FIN
 TAPA "PONELEMENTOMD
 
 
-;copydef "setpen "ponlapiz
+;copydef "ponlapiz "setpen
 
 PARA PONLAPIZ :pen_data
 EJECUTA ELEMENTO 2 :pen_data
@@ -1134,7 +1212,24 @@ FIN
 TAPA [PONLAPIZ]
 
 
-;copydef "setorientation "ponorientacion
+;copydef "ponlapiz "setpen
+
+PARA PONLAPIZ :pen_data
+SISINO IGUALES? PRIMERO MP :pen_data "reverse ~
+       [LAPIZINVIERTE] ~
+       [SISINO IGUALES? PRIMERO MP :pen_data "erase ~
+               [GOMA] ~
+               [LAPIZNORMAL] ]
+SISINO IGUALES? PRIMERO :pen_data "penup [SUBELAPIZ] [BAJALAPIZ]
+PONGROSOR PRIMERO MP MP :pen_data
+PONCOLORLAPIZ PRIMERO MP MP MP :pen_data
+PONPATRONLAPIZ PRIMERO MP MP MP MP :pen_data
+FIN
+
+TAPA [PONLAPIZ]
+
+
+;copydef "ponorientacion "setorientation
 
 PARA PONORIENTACION :rph
 SI NO LISTA? :rph          [(LANZA "error (LISTA [A ponorientacion no le gusta] :rph [como entrada]))]
@@ -1151,16 +1246,30 @@ FIN
 TAPA "PONORIENTACION
 
 
-;copydef "settextfont "pontipo
+;copydef "ponorientacion "setorientation
 
-PARA PONTIPO :font
-PONTIPO :font
+PARA PONORIENTACION :rph
+SI NO LISTA? :rph          [(LANZA "error (LISTA "setorientation "doesn't "like :rph "as "input))]
+SI NO IGUALES? 3 CUENTA :rph [(LANZA "error (LISTA "setorientation "doesn't "like :rph "as "input))]
+
+GI RUMBO
+ABAJO CABECEO
+BI BALANCEO
+PONBALANCEO  ELEMENTO 1 :rph
+PONCABECEO ELEMENTO 2 :rph
+GD       ELEMENTO 3 :rph
 FIN
 
-TAPA "PONTIPO
+TAPA "PONORIENTACION
 
 
-;copydef "remove "quita
+copydef "pp "fput
+
+
+copydef "pul "lput
+
+
+;copydef "quita "remove
 
 PARA QUITA :thing :list
 DEVUELVE FILTRA [NO IGUALES? ? :thing] :list
@@ -1169,10 +1278,19 @@ FIN
 TAPA "QUITA
 
 
-;copydef "remdup "quitarepetidos
+;copydef "quitarepetidos "remdup
 
 PARA QUITAREPETIDOS :list
 DEVUELVE FILTRA [NO MIEMBRO? ? ?RESTANTE] :list
+FIN
+
+TAPA "QUITAREPETIDOS
+
+
+;copydef "quitarepetidos "remdup
+
+PARA QUITAREPETIDOS :list
+DEVUELVE FILTRA [NO MIEMBRO? ? ?rest] :list
 FIN
 
 TAPA "QUITAREPETIDOS
@@ -1189,7 +1307,7 @@ FIN
 TAPA "REDUCE
 
 
-;copydef "refresh "refresca
+;copydef "refresca "refresh
 
 PARA REFRESCA
 FIN
@@ -1197,7 +1315,7 @@ FIN
 TAPA "REFRESCA
 
 
-;copydef "rest "restante
+;copydef "restante "rest
 
 PARA ?restante [:which 1]
 DEVUELVE MP ELEMENTO :which :template.lists
@@ -1206,7 +1324,16 @@ FIN
 TAPA "?restante
 
 
-;copydef "pick "sacaalazar
+;copydef "restante "rest
+
+PARA ?rest [:which 1]
+DEVUELVE MP ELEMENTO :which :template.lists
+FIN
+
+TAPA "?rest
+
+
+;copydef "sacaalazar "pick
 
 PARA SACAALAZAR :list
 DEVUELVE ELEMENTO (1 + AZAR CUENTA :list) :list
@@ -1215,7 +1342,16 @@ FIN
 TAPA "SACAALAZAR
 
 
-;copydef "iseq "secent
+;copydef "sacaalazar "pick
+
+PARA SACAALAZAR :list
+DEVUELVE ELEMENTO (1+random CUENTA :list) :list
+FIN
+
+TAPA "SACAALAZAR
+
+
+;copydef "secent "iseq
 
 PARA SECENT.integer? :a
 SI NO NUMERO? :a       [DEV 1 = 2]
@@ -1238,7 +1374,30 @@ FIN
 TAPA [SECENT iseq1 SECENT.integer?]
 
 
-;copydef "rseq "secrac
+;copydef "secent "iseq
+
+PARA SECENT.integer? :a
+SI NO number? :a       [DEV "false]
+SI NO equal? :a ENTERO :a [DEV "false]
+DEV "true
+FIN
+
+PARA SECENT :a :b
+SI NO SECENT.integer? :a [(LANZA "error (LISTA "iseq "doesn't "like :a "as "input))]
+SI NO SECENT.integer? :b [(LANZA "error (LISTA "iseq "doesn't "like :b "as "input))]
+SI NO (:a > :b) [DEVUELVE iseq1 :a :b]
+DEVUELVE TEJE [[x] -1 * :x] iseq1 (-1 * :a) (-1 * :b)
+FIN
+
+PARA iseq1 :a :b
+SI :a > :b [DEVUELVE []]
+DEVUELVE PONPRIMERO :a iseq1 :a + 1 :b
+FIN
+
+TAPA [SECENT iseq1 SECENT.integer?]
+
+
+;copydef "secrac "rseq
 
 PARA SECRAC :a :b :n
 DEVUELVE TEJE [[x] :a + :x * (:b - :a) / (:n - 1)] SECENT 0 :n - 1
@@ -1247,7 +1406,7 @@ FIN
 TAPA "SECRAC
 
 
-;copydef "sign "signo
+;copydef "signo "sign
 
 PARA SIGNO :arg
 SI :arg > 0 [DEVUELVE 1]
@@ -1256,7 +1415,7 @@ DEVUELVE 0
 FIN
 TAPA "SIGNO
 
-;copydef "tone "suenatono
+;copydef "suenatono "tone
 
 PARA SUENATONO :freq :dura
 TONO (LISTA :freq :dura)
@@ -1264,7 +1423,7 @@ FIN
 
 TAPA "SUENATONO
 
-;copydef "buryall "tapatodo
+;copydef "tapatodo "buryall
 
 PARA TAPATODO
 TAPA CONTENIDO
@@ -1273,7 +1432,7 @@ FIN
 TAPA "TAPATODO
 
 
-;copydef "buryname "tapavar
+;copydef "tapavar "buryname
 
 PARA TAPAVAR :names
 TAPA LISTANOMBRES :names
@@ -1282,7 +1441,7 @@ FIN
 TAPA "TAPAVAR
 
 
-;copydef "map "teje
+;copydef "teje "map
 
 PARA TEJE :map.template [:template.lists] 2
 DEV map1 :template.lists 1
@@ -1301,7 +1460,7 @@ FIN
 TAPA [TEJE map1 ?RESTANTE]
 
 
-;copydef "map.se "teje.fr
+;copydef "teje.fr "map.se
 
 PARA TEJE.se :map.se.template [:template.lists] 2
 DEV TEJE.se1 :template.lists 1
@@ -1320,7 +1479,7 @@ FIN
 TAPA [TEJE.se TEJE.se1 ?RESTANTE]
 
 
-;copydef "textfont "tipotexto
+;copydef "tipotexto "textfont
 
 PARA TIPOTEXTO
 DEV TIPO
@@ -1329,7 +1488,7 @@ FIN
 TAPA "TIPOTEXTO
 
 
-;copydef "transfer "transfiere
+;copydef "transfiere "transfer
 
 PARA TRANSFIERE :transfer.limit :transfer.template :transfer.init
 DEVUELVE CASCADA.2 (SISINO VACIO? :transfer.limit ~
@@ -1357,7 +1516,7 @@ FIN
 
 TAPA "TUTOR
 
-;copydef "arraytolist "vectoralista
+;copydef "vectoralista "arraytolist
 
 PARA VECTORALISTA :array [:dim CUENTA :array] [:limit :dim + PRIMERO :array]
 DEV CASCADA :dim [PONPRIMERO ELEMENTO (:limit - #) :array ?] []
@@ -1366,14 +1525,14 @@ FIN
 TAPA "VECTORALISTA
 
 
-;copydef "mdarray "vectormd
+;copydef "vectormd "mdarray
 
 PARA VECTORMD :sizes [:origin 1]
 LOCAL "array
 HAZ "array (VECTOR PRIMERO :sizes :origin)
 SI NO VACIO? MP :sizes ~
    [DESDE [i :origin [:origin + (PRIMERO :sizes) - 1]] ~
-        .PONELEMENTO :i :array (VECTORMD MP :sizes :origin)]]
+        [PONELEMENTO :i :array (VECTORMD MP :sizes :origin)]]
 DEVUELVE :array
 FIN
 
