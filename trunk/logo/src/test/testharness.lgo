@@ -115,6 +115,7 @@ LOAD "item.lgo
 LOAD "listtoarray.lgo
 LOAD "remove.lgo
 LOAD "smallwindowhang.lgo
+LOAD "mdarray.lgo
 
 TO TESTALL
 
@@ -211,6 +212,7 @@ TO TESTALL
   MAPTEST             ; from map.lgo
   SORTTEST            ; from sort.lgo
   ISEQTEST            ; from iseq.lgo
+  MDARRAYTEST         ; from mdarray.lgo
   TRACETEST           ; from trace.lgo
   STEPTEST            ; from step.lgo
   BURYTEST            ; from bury.lgo
