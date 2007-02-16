@@ -30,4 +30,4 @@ $(SOURCEZIP) :
 
 
 test :
-	perl -w check-extra.pl $(shell /usr/bin/find . -name '*.lgo')
+	@perl -w check-extra.pl $(shell /usr/bin/find . -name '*.lgo')
