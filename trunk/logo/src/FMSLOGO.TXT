@@ -21,6 +21,8 @@ I. Kit Description/Location (http://sourceforge.net/projects/fmslogo)
 II. New features/bugs fixed:
 
   * Added for 6.13.0
+    o Fix bug #1661232; FMSLogo can (once again) save the workspace when
+      the commander's history has keyboard focus.
     o Fix bug #1652924; FMSLogo can (once again) start up if the window
       was made very small before it was last closed.
     o Fix bug #1602862: "File - Exit" no longer quits if you press 

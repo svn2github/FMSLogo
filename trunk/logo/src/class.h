@@ -277,6 +277,8 @@ class TMyListboxWindow : public TRichEditWithPopup
    void EvChar(uint key, uint repeatCount, uint flags);
    bool CanClose();
    void SetupWindow();
+   void CmFileSave();
+   void CmFileSaveAs();
    void EvKeyDown(UINT, UINT, UINT);
    void EvKeyUp(UINT, UINT, UINT);
    void EvLButtonDown(UINT modKeys, TPoint & point);
@@ -284,6 +286,7 @@ class TMyListboxWindow : public TRichEditWithPopup
    void EvMouseMove(uint modKeys, TPoint& point);
 
    void CmDisableCommand(TCommandEnabler& commandHandler);
+   void CmEnableCommand(TCommandEnabler& commandHandler);
 
    DECLARE_RESPONSE_TABLE(TMyListboxWindow);
 
@@ -555,8 +558,14 @@ class TMainFrame : public TDecoratedFrame
    void CMFileNew();
    void CMFileLoad();
    void CMFileOpen();
+
+ public:
+   // The File-Save options are public so that the
+   // commander's list box can delegate the message.
    void CMFileSave();
    void CMFileSaveAs();
+
+ protected:
    void CMFileEdit();
    void CMFileErase();
    void CMExit();

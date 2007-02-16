@@ -839,6 +839,22 @@ TMyListboxWindow::~TMyListboxWindow()
    {
    }
 
+void TMyListboxWindow::CmFileSave()
+   {
+   // Delegate this to the main window so that we save
+   // the workspace, instead of the contents of the commander 
+   // listbox.
+   MainWindowx->CMFileSave();
+   }
+
+void TMyListboxWindow::CmFileSaveAs()
+   {
+   // Delegate this to the main window so that we save
+   // the workspace, instead of the contents of the commander 
+   // listbox.
+   MainWindowx->CMFileSaveAs();
+   }
+
 void TMyListboxWindow::EvMouseMove(uint modKeys, TPoint& point)
    {
    DefaultProcessing();
@@ -1091,6 +1107,13 @@ void TMyListboxWindow::CmDisableCommand(TCommandEnabler& commandHandler)
    commandHandler.Enable(false);
    }
 
+void TMyListboxWindow::CmEnableCommand(TCommandEnabler& commandHandler)
+   {
+   // Enables this command.
+   // Used to keep Save and Save As enabled on the main window.
+   commandHandler.Enable(true);
+   }
+
 
 void TMyListboxWindow::SetCursorAtBottom()
    {
@@ -1141,11 +1164,15 @@ DEFINE_RESPONSE_TABLE1(TMyListboxWindow, TRichEditWithPopup)
    EV_WM_LBUTTONDOWN,
    EV_WM_LBUTTONDBLCLK,
    EV_WM_MOUSEMOVE,
-   EV_COMMAND(CM_EDITPASTE, CmEditPaste),
-   EV_COMMAND_ENABLE(CM_EDITPASTE,  CmDisableCommand),
-   EV_COMMAND_ENABLE(CM_EDITCUT,    CmDisableCommand),
-   EV_COMMAND_ENABLE(CM_EDITUNDO,   CmDisableCommand),
-   EV_COMMAND_ENABLE(CM_EDITDELETE, CmDisableCommand),
+   EV_COMMAND(CM_EDITPASTE,  CmEditPaste),
+   EV_COMMAND(CM_FILESAVE,   CmFileSave),
+   EV_COMMAND(CM_FILESAVEAS, CmFileSaveAs),
+   EV_COMMAND_ENABLE(CM_FILESAVE,   CmEnableCommand),  // always enabled
+   EV_COMMAND_ENABLE(CM_FILESAVEAS, CmEnableCommand),  // always enabled   
+   EV_COMMAND_ENABLE(CM_EDITPASTE,  CmDisableCommand), // always disabled
+   EV_COMMAND_ENABLE(CM_EDITCUT,    CmDisableCommand), // always disabled
+   EV_COMMAND_ENABLE(CM_EDITUNDO,   CmDisableCommand), // always disabled
+   EV_COMMAND_ENABLE(CM_EDITDELETE, CmDisableCommand), // always disabled
 END_RESPONSE_TABLE;
 
 DEFINE_RESPONSE_TABLE1(TMyCommandWindow, TDialog)
