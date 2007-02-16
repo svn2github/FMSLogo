@@ -895,6 +895,34 @@
        <entry>plg?</entry>
      </row>
      <row>
+       <entry><link linkend='command-greaterequalp'>greaterequal?</link></entry>
+       <entry>sup√©rieur√©gal?</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-greaterequalp'>greaterequal?</link></entry>
+       <entry>superieuregal?</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-greaterequalp'>greaterequal?</link></entry>
+       <entry>sup√©gal?</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-greaterequalp'>greaterequal?</link></entry>
+       <entry>supegal?</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-greaterequalp'>greaterequal?</link></entry>
+       <entry>plge?</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-greaterequalp'>greaterequalp</link></entry>
+       <entry>sup√©rieur√©galp</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-greaterequalp'>greaterequalp</link></entry>
+       <entry>superieuregalp</entry>
+     </row>
+     <row>
        <entry><link linkend='command-greaterp'>greaterp</link></entry>
        <entry>sup√©rieurp</entry>
      </row>
@@ -969,6 +997,26 @@
      <row>
        <entry><link linkend='command-iftrue'>iftrue</link></entry>
        <entry>sivrai</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-infÈrieurieurÈgalp'>infÈrieurieurÈgal?</link></entry>
+       <entry>inferieuregal?</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-infÈrieurieurÈgalp'>infÈrieurieurÈgal?</link></entry>
+       <entry>inf√©gal?</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-infÈrieurieurÈgalp'>infÈrieurieurÈgal?</link></entry>
+       <entry>infegal?</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-infÈrieurieurÈgalp'>infÈrieurieurÈgal?</link></entry>
+       <entry>plpe?</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-infÈrieurieurÈgalp'>infÈrieurieurÈgalp</link></entry>
+       <entry>inferieuregalp</entry>
      </row>
      <row>
        <entry><link linkend='command-ingameport'>ingameport</link></entry>
@@ -1077,6 +1125,14 @@
      <row>
        <entry><link linkend='command-lessp'>less?</link></entry>
        <entry>plp?</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-lessequalp'>lessequal?</link></entry>
+       <entry>inf√©rieur√©gal?</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-lessequalp'>lessequalp</link></entry>
+       <entry>inf√©rieur√©galp</entry>
      </row>
      <row>
        <entry><link linkend='command-lessp'>lessp</link></entry>
@@ -1429,6 +1485,30 @@
      <row>
        <entry><link linkend='command-not'>not</link></entry>
        <entry>non</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-notequalp'>notequal?</link></entry>
+       <entry>non√©gal?</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-notequalp'>notequal?</link></entry>
+       <entry>nonegal?</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-notequalp'>notequal?</link></entry>
+       <entry>n√©gal?</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-notequalp'>notequal?</link></entry>
+       <entry>negal?</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-notequalp'>notequalp</link></entry>
+       <entry>non√©galp</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-notequalp'>notequalp</link></entry>
+       <entry>nonegalp</entry>
      </row>
      <row>
        <entry><link linkend='command-noyield'>noyield</link></entry>
@@ -2168,7 +2248,7 @@
      </row>
      <row>
        <entry><link linkend='command-setitem'>setitem</link></entry>
-       <entry>remplace</entry>
+       <entry>fixeitem</entry>
      </row>
      <row>
        <entry><link linkend='command-setlabelfont'>setlabelfont</link></entry>
@@ -4136,6 +4216,10 @@
        <entry><link linkend='command-setbitindex'>setbitindex</link></entry>
      </row>
      <row>
+       <entry>fixeitem</entry>
+       <entry><link linkend='command-setitem'>setitem</link></entry>
+     </row>
+     <row>
        <entry>fixeitem.md</entry>
        <entry><link linkend='command-mdsetitem'>mdsetitem</link></entry>
      </row>
@@ -4368,12 +4452,36 @@
        <entry><link linkend='command-lessp'>less?</link></entry>
      </row>
      <row>
+       <entry>infegal?</entry>
+       <entry><link linkend='command-infÈrieurieurÈgalp'>infÈrieurieurÈgal?</link></entry>
+     </row>
+     <row>
+       <entry>inf√©gal?</entry>
+       <entry><link linkend='command-infÈrieurieurÈgalp'>infÈrieurieurÈgal?</link></entry>
+     </row>
+     <row>
        <entry>inferieur?</entry>
        <entry><link linkend='command-lessp'>less?</link></entry>
      </row>
      <row>
        <entry>inf√©rieur?</entry>
        <entry><link linkend='command-lessp'>less?</link></entry>
+     </row>
+     <row>
+       <entry>inferieuregal?</entry>
+       <entry><link linkend='command-infÈrieurieurÈgalp'>infÈrieurieurÈgal?</link></entry>
+     </row>
+     <row>
+       <entry>inf√©rieur√©gal?</entry>
+       <entry><link linkend='command-lessequalp'>lessequal?</link></entry>
+     </row>
+     <row>
+       <entry>inferieuregalp</entry>
+       <entry><link linkend='command-infÈrieurieurÈgalp'>infÈrieurieurÈgalp</link></entry>
+     </row>
+     <row>
+       <entry>inf√©rieur√©galp</entry>
+       <entry><link linkend='command-lessequalp'>lessequalp</link></entry>
      </row>
      <row>
        <entry>inferieurp</entry>
@@ -4680,6 +4788,14 @@
        <entry><link linkend='command-st'>st</link></entry>
      </row>
      <row>
+       <entry>negal?</entry>
+       <entry><link linkend='command-notequalp'>notequal?</link></entry>
+     </row>
+     <row>
+       <entry>n√©gal?</entry>
+       <entry><link linkend='command-notequalp'>notequal?</link></entry>
+     </row>
+     <row>
        <entry>nettoie</entry>
        <entry><link linkend='command-clean'>clean</link></entry>
      </row>
@@ -4718,6 +4834,22 @@
      <row>
        <entry>nonbit</entry>
        <entry><link linkend='command-bitnot'>bitnot</link></entry>
+     </row>
+     <row>
+       <entry>nonegal?</entry>
+       <entry><link linkend='command-notequalp'>notequal?</link></entry>
+     </row>
+     <row>
+       <entry>non√©gal?</entry>
+       <entry><link linkend='command-notequalp'>notequal?</link></entry>
+     </row>
+     <row>
+       <entry>nonegalp</entry>
+       <entry><link linkend='command-notequalp'>notequalp</link></entry>
+     </row>
+     <row>
+       <entry>non√©galp</entry>
+       <entry><link linkend='command-notequalp'>notequalp</link></entry>
      </row>
      <row>
        <entry>origine</entry>
@@ -4828,8 +4960,16 @@
        <entry><link linkend='command-greaterp'>greater?</link></entry>
      </row>
      <row>
+       <entry>plge?</entry>
+       <entry><link linkend='command-greaterequalp'>greaterequal?</link></entry>
+     </row>
+     <row>
        <entry>plp?</entry>
        <entry><link linkend='command-lessp'>less?</link></entry>
+     </row>
+     <row>
+       <entry>plpe?</entry>
+       <entry><link linkend='command-infÈrieurieurÈgalp'>infÈrieurieurÈgal?</link></entry>
      </row>
      <row>
        <entry>point</entry>
@@ -5052,10 +5192,6 @@
        <entry><link linkend='command-rerandom'>rerandom</link></entry>
      </row>
      <row>
-       <entry>remplace</entry>
-       <entry><link linkend='command-setitem'>setitem</link></entry>
-     </row>
-     <row>
        <entry>remplis</entry>
        <entry><link linkend='command-fill'>fill</link></entry>
      </row>
@@ -5220,12 +5356,36 @@
        <entry><link linkend='command-greaterp'>greater?</link></entry>
      </row>
      <row>
+       <entry>supegal?</entry>
+       <entry><link linkend='command-greaterequalp'>greaterequal?</link></entry>
+     </row>
+     <row>
+       <entry>sup√©gal?</entry>
+       <entry><link linkend='command-greaterequalp'>greaterequal?</link></entry>
+     </row>
+     <row>
        <entry>superieur?</entry>
        <entry><link linkend='command-greaterp'>greater?</link></entry>
      </row>
      <row>
        <entry>sup√©rieur?</entry>
        <entry><link linkend='command-greaterp'>greater?</link></entry>
+     </row>
+     <row>
+       <entry>superieuregal?</entry>
+       <entry><link linkend='command-greaterequalp'>greaterequal?</link></entry>
+     </row>
+     <row>
+       <entry>sup√©rieur√©gal?</entry>
+       <entry><link linkend='command-greaterequalp'>greaterequal?</link></entry>
+     </row>
+     <row>
+       <entry>superieuregalp</entry>
+       <entry><link linkend='command-greaterequalp'>greaterequalp</link></entry>
+     </row>
+     <row>
+       <entry>sup√©rieur√©galp</entry>
+       <entry><link linkend='command-greaterequalp'>greaterequalp</link></entry>
      </row>
      <row>
        <entry>superieurp</entry>
