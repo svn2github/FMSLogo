@@ -20,6 +20,12 @@ foreach my $filename (@ARGV) {
       $exitCode = 1;
     }
 
+    if (m/\b(rc)\b/i) {
+      print "$filename:$lineNumber file uses RC, which means SQRT in Spanish.\n";
+      $exitCode = 1;
+    }
+
+
     $lineNumber++;
   }
   $fh->close;
