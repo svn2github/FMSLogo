@@ -111,7 +111,7 @@ V. Recommended usage
 
   * Ages 6 and up
      o Beginner     - Forward 100, Right 90
-     o Intermediate - Explore mathematics, art, music, robotics, language, and more.
+     o Intermediate - Explore mathematics, art, music, robotics, language, and more
      o Expert       - Develop games
 
 VI. Reporting bugs
