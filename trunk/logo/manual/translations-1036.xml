@@ -19,10 +19,6 @@
        <entry>.identique?</entry>
      </row>
      <row>
-       <entry><link linkend='command-.macro'>.macro</link></entry>
-       <entry>.macro</entry>
-     </row>
-     <row>
        <entry><link linkend='command-.maybeoutput'>.maybeoutput</link></entry>
        <entry>.retournepeut√™tre</entry>
      </row>
@@ -63,18 +59,6 @@
        <entry>applique</entry>
      </row>
      <row>
-       <entry><link linkend='command-arccos'>arccos</link></entry>
-       <entry>arccos</entry>
-     </row>
-     <row>
-       <entry><link linkend='command-arcsin'>arcsin</link></entry>
-       <entry>arcsin</entry>
-     </row>
-     <row>
-       <entry><link linkend='command-arctan'>arctan</link></entry>
-       <entry>arctan</entry>
-     </row>
-     <row>
        <entry><link linkend='command-array'>array</link></entry>
        <entry>tableau</entry>
      </row>
@@ -89,10 +73,6 @@
      <row>
        <entry><link linkend='command-arraytolist'>arraytolist</link></entry>
        <entry>tableauversliste</entry>
-     </row>
-     <row>
-       <entry><link linkend='command-ascii'>ascii</link></entry>
-       <entry>ascii</entry>
      </row>
      <row>
        <entry><link linkend='command-ashift'>ashift</link></entry>
@@ -391,10 +371,6 @@
        <entry>fermetout</entry>
      </row>
      <row>
-       <entry><link linkend='command-co'>co</link></entry>
-       <entry>co</entry>
-     </row>
-     <row>
        <entry><link linkend='command-comboboxaddstring'>comboboxaddstring</link></entry>
        <entry>ajouteitemcombo</entry>
      </row>
@@ -431,20 +407,12 @@
        <entry>contenu</entry>
      </row>
      <row>
-       <entry><link linkend='command-continue'>continue</link></entry>
-       <entry>continue</entry>
-     </row>
-     <row>
        <entry><link linkend='command-copydef'>copydef</link></entry>
        <entry>donned√©f</entry>
      </row>
      <row>
        <entry><link linkend='command-copydef'>copydef</link></entry>
        <entry>donnedef</entry>
-     </row>
-     <row>
-       <entry><link linkend='command-cos'>cos</link></entry>
-       <entry>cos</entry>
      </row>
      <row>
        <entry><link linkend='command-count'>count</link></entry>
@@ -531,10 +499,6 @@
        <entry>diff√©rence</entry>
      </row>
      <row>
-       <entry><link linkend='command-difference'>difference</link></entry>
-       <entry>difference</entry>
-     </row>
-     <row>
        <entry><link linkend='command-dir'>dir</link></entry>
        <entry>catalogue</entry>
      </row>
@@ -591,10 +555,6 @@
        <entry>√©d</entry>
      </row>
      <row>
-       <entry><link linkend='command-ed'>ed</link></entry>
-       <entry>ed</entry>
-     </row>
-     <row>
        <entry><link linkend='command-edall'>edall</link></entry>
        <entry>√©dtout</entry>
      </row>
@@ -639,10 +599,6 @@
        <entry>√©dps</entry>
      </row>
      <row>
-       <entry><link linkend='command-ellipsearc'>ellipsearc</link></entry>
-       <entry>ellipsearc</entry>
-     </row>
-     <row>
        <entry><link linkend='command-emptyp'>empty?</link></entry>
        <entry>vide?</entry>
      </row>
@@ -657,10 +613,6 @@
      <row>
        <entry><link linkend='command-eofp'>eof?</link></entry>
        <entry>ff?</entry>
-     </row>
-     <row>
-       <entry><link linkend='command-eofp'>eofp</link></entry>
-       <entry>eofp</entry>
      </row>
      <row>
        <entry><link linkend='command-equalp'>equal?</link></entry>
@@ -729,10 +681,6 @@
      <row>
        <entry><link linkend='command-eventcheck'>eventcheck</link></entry>
        <entry>testev</entry>
-     </row>
-     <row>
-       <entry><link linkend='command-exp'>exp</link></entry>
-       <entry>exp</entry>
      </row>
      <row>
        <entry><link linkend='command-false'>false</link></entry>
@@ -999,26 +947,6 @@
        <entry>sivrai</entry>
      </row>
      <row>
-       <entry><link linkend='command-infÈrieurieurÈgalp'>infÈrieurieurÈgal?</link></entry>
-       <entry>inferieuregal?</entry>
-     </row>
-     <row>
-       <entry><link linkend='command-infÈrieurieurÈgalp'>infÈrieurieurÈgal?</link></entry>
-       <entry>inf√©gal?</entry>
-     </row>
-     <row>
-       <entry><link linkend='command-infÈrieurieurÈgalp'>infÈrieurieurÈgal?</link></entry>
-       <entry>infegal?</entry>
-     </row>
-     <row>
-       <entry><link linkend='command-infÈrieurieurÈgalp'>infÈrieurieurÈgal?</link></entry>
-       <entry>plpe?</entry>
-     </row>
-     <row>
-       <entry><link linkend='command-infÈrieurieurÈgalp'>infÈrieurieurÈgalp</link></entry>
-       <entry>inferieuregalp</entry>
-     </row>
-     <row>
        <entry><link linkend='command-ingameport'>ingameport</link></entry>
        <entry>lisportjeu</entry>
      </row>
@@ -1037,10 +965,6 @@
      <row>
        <entry><link linkend='command-invoke'>invoke</link></entry>
        <entry>appelle</entry>
-     </row>
-     <row>
-       <entry><link linkend='command-item'>item</link></entry>
-       <entry>item</entry>
      </row>
      <row>
        <entry><link linkend='command-keyp'>key?</link></entry>
@@ -1131,8 +1055,28 @@
        <entry>inf√©rieur√©gal?</entry>
      </row>
      <row>
+       <entry><link linkend='command-lessequalp'>lessequal?</link></entry>
+       <entry>inferieuregal?</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-lessequalp'>lessequal?</link></entry>
+       <entry>inf√©gal?</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-lessequalp'>lessequal?</link></entry>
+       <entry>infegal?</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-lessequalp'>lessequal?</link></entry>
+       <entry>plpe?</entry>
+     </row>
+     <row>
        <entry><link linkend='command-lessequalp'>lessequalp</link></entry>
        <entry>inf√©rieur√©galp</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-lessequalp'>lessequalp</link></entry>
+       <entry>inferieuregalp</entry>
      </row>
      <row>
        <entry><link linkend='command-lessp'>lessp</link></entry>
@@ -1195,10 +1139,6 @@
        <entry>listeverstableau</entry>
      </row>
      <row>
-       <entry><link linkend='command-ln'>ln</link></entry>
-       <entry>ln</entry>
-     </row>
-     <row>
        <entry><link linkend='command-load'>load</link></entry>
        <entry>ram√®ne</entry>
      </row>
@@ -1213,10 +1153,6 @@
      <row>
        <entry><link linkend='command-localmake'>localmake</link></entry>
        <entry>donnelocale</entry>
-     </row>
-     <row>
-       <entry><link linkend='command-log10'>log10</link></entry>
-       <entry>log10</entry>
      </row>
      <row>
        <entry><link linkend='command-logoversion'>logoversion</link></entry>
@@ -1251,24 +1187,12 @@
        <entry>ga</entry>
      </row>
      <row>
-       <entry><link linkend='command-machine'>machine</link></entry>
-       <entry>machine</entry>
-     </row>
-     <row>
-       <entry><link linkend='command-macrop'>macro?</link></entry>
-       <entry>macro?</entry>
-     </row>
-     <row>
        <entry><link linkend='command-macroexpand'>macroexpand</link></entry>
        <entry>d√©ploiemacro</entry>
      </row>
      <row>
        <entry><link linkend='command-macroexpand'>macroexpand</link></entry>
        <entry>deploiemacro</entry>
-     </row>
-     <row>
-       <entry><link linkend='command-macrop'>macrop</link></entry>
-       <entry>macrop</entry>
      </row>
      <row>
        <entry><link linkend='command-make'>make</link></entry>
@@ -1285,10 +1209,6 @@
      <row>
        <entry><link linkend='command-map.se'>map.se</link></entry>
        <entry>collecte.ph</entry>
-     </row>
-     <row>
-       <entry><link linkend='command-mci'>mci</link></entry>
-       <entry>mci</entry>
      </row>
      <row>
        <entry><link linkend='command-mdarray'>mdarray</link></entry>
@@ -1341,10 +1261,6 @@
      <row>
        <entry><link linkend='command-mkdir'>mkdir</link></entry>
        <entry>fixerep</entry>
-     </row>
-     <row>
-       <entry><link linkend='command-modulo'>modulo</link></entry>
-       <entry>modulo</entry>
      </row>
      <row>
        <entry><link linkend='command-modulo'>modulo</link></entry>
@@ -1575,10 +1491,6 @@
        <entry>analyse</entry>
      </row>
      <row>
-       <entry><link linkend='command-pause'>pause</link></entry>
-       <entry>pause</entry>
-     </row>
-     <row>
        <entry><link linkend='command-pc'>pc</link></entry>
        <entry>cc</entry>
      </row>
@@ -1649,10 +1561,6 @@
      <row>
        <entry><link linkend='command-penup'>penup</link></entry>
        <entry>levecrayon</entry>
-     </row>
-     <row>
-       <entry><link linkend='command-perspective'>perspective</link></entry>
-       <entry>perspective</entry>
      </row>
      <row>
        <entry><link linkend='command-pick'>pick</link></entry>
@@ -1779,14 +1687,6 @@
        <entry>ecriscarport</entry>
      </row>
      <row>
-       <entry><link linkend='command-pos'>pos</link></entry>
-       <entry>pos</entry>
-     </row>
-     <row>
-       <entry><link linkend='command-posxyz'>posxyz</link></entry>
-       <entry>posxyz</entry>
-     </row>
-     <row>
        <entry><link linkend='command-pot'>pot</link></entry>
        <entry>imt</entry>
      </row>
@@ -1815,14 +1715,6 @@
        <entry>ec</entry>
      </row>
      <row>
-       <entry><link linkend='command-primitivep'>primitive?</link></entry>
-       <entry>primitive?</entry>
-     </row>
-     <row>
-       <entry><link linkend='command-primitivep'>primitivep</link></entry>
-       <entry>primitivep</entry>
-     </row>
-     <row>
        <entry><link linkend='command-print'>print</link></entry>
        <entry>√©cris</entry>
      </row>
@@ -1835,16 +1727,8 @@
        <entry>proc√©dure?</entry>
      </row>
      <row>
-       <entry><link linkend='command-procedurep'>procedure?</link></entry>
-       <entry>procedure?</entry>
-     </row>
-     <row>
        <entry><link linkend='command-procedurep'>procedurep</link></entry>
        <entry>proc√©durep</entry>
-     </row>
-     <row>
-       <entry><link linkend='command-procedurep'>procedurep</link></entry>
-       <entry>procedurep</entry>
      </row>
      <row>
        <entry><link linkend='command-procedures'>procedures</link></entry>
@@ -1895,22 +1779,6 @@
        <entry>divise</entry>
      </row>
      <row>
-       <entry><link linkend='command-radarccos'>radarccos</link></entry>
-       <entry>radarccos</entry>
-     </row>
-     <row>
-       <entry><link linkend='command-radarcsin'>radarcsin</link></entry>
-       <entry>radarcsin</entry>
-     </row>
-     <row>
-       <entry><link linkend='command-radarctan'>radarctan</link></entry>
-       <entry>radarctan</entry>
-     </row>
-     <row>
-       <entry><link linkend='command-radcos'>radcos</link></entry>
-       <entry>radcos</entry>
-     </row>
-     <row>
        <entry><link linkend='command-radiobuttoncreate'>radiobuttoncreate</link></entry>
        <entry>cr√©eboutonradio</entry>
      </row>
@@ -1933,14 +1801,6 @@
      <row>
        <entry><link linkend='command-radiobuttonset'>radiobuttonset</link></entry>
        <entry>fixeboutonradio</entry>
-     </row>
-     <row>
-       <entry><link linkend='command-radsin'>radsin</link></entry>
-       <entry>radsin</entry>
-     </row>
-     <row>
-       <entry><link linkend='command-radtan'>radtan</link></entry>
-       <entry>radtan</entry>
      </row>
      <row>
        <entry><link linkend='command-random'>random</link></entry>
@@ -2419,10 +2279,6 @@
        <entry>signe</entry>
      </row>
      <row>
-       <entry><link linkend='command-sin'>sin</link></entry>
-       <entry>sin</entry>
-     </row>
-     <row>
        <entry><link linkend='command-slowdraw'>slowdraw</link></entry>
        <entry>ralentis</entry>
      </row>
@@ -2529,10 +2385,6 @@
      <row>
        <entry><link linkend='command-tag'>tag</link></entry>
        <entry>balise</entry>
-     </row>
-     <row>
-       <entry><link linkend='command-tan'>tan</link></entry>
-       <entry>tan</entry>
      </row>
      <row>
        <entry><link linkend='command-test'>test</link></entry>
@@ -2798,10 +2650,6 @@
        <entry><link linkend='command-zcor'>zcor</link></entry>
        <entry>coorz</entry>
      </row>
-     <row>
-       <entry><link linkend='command-zoom'>zoom</link></entry>
-       <entry>zoom</entry>
-     </row>
   </tbody>
   </tgroup>
 </informaltable>
@@ -2838,10 +2686,6 @@
      <row>
        <entry>.identique?</entry>
        <entry><link linkend='command-.eq'>.eq</link></entry>
-     </row>
-     <row>
-       <entry>.macro</entry>
-       <entry><link linkend='command-.macro'>.macro</link></entry>
      </row>
      <row>
        <entry>.retournepeutetre</entry>
@@ -2996,18 +2840,6 @@
        <entry><link linkend='command-apply'>apply</link></entry>
      </row>
      <row>
-       <entry>arccos</entry>
-       <entry><link linkend='command-arccos'>arccos</link></entry>
-     </row>
-     <row>
-       <entry>arcsin</entry>
-       <entry><link linkend='command-arcsin'>arcsin</link></entry>
-     </row>
-     <row>
-       <entry>arctan</entry>
-       <entry><link linkend='command-arctan'>arctan</link></entry>
-     </row>
-     <row>
        <entry>arrete</entry>
        <entry><link linkend='command-stop'>stop</link></entry>
      </row>
@@ -3030,10 +2862,6 @@
      <row>
        <entry>ascenseur</entry>
        <entry><link linkend='command-scrollbarget'>scrollbarget</link></entry>
-     </row>
-     <row>
-       <entry>ascii</entry>
-       <entry><link linkend='command-ascii'>ascii</link></entry>
      </row>
      <row>
        <entry>asciibrut</entry>
@@ -3196,10 +3024,6 @@
        <entry><link linkend='command-fence'>fence</link></entry>
      </row>
      <row>
-       <entry>co</entry>
-       <entry><link linkend='command-co'>co</link></entry>
-     </row>
-     <row>
        <entry>collecte</entry>
        <entry><link linkend='command-map'>map</link></entry>
      </row>
@@ -3252,10 +3076,6 @@
        <entry><link linkend='command-contents'>contents</link></entry>
      </row>
      <row>
-       <entry>continue</entry>
-       <entry><link linkend='command-continue'>continue</link></entry>
-     </row>
-     <row>
        <entry>contour</entry>
        <entry><link linkend='command-standout'>standout</link></entry>
      </row>
@@ -3278,10 +3098,6 @@
      <row>
        <entry>copiesouris</entry>
        <entry><link linkend='command-mousecopy'>mousecopy</link></entry>
-     </row>
-     <row>
-       <entry>cos</entry>
-       <entry><link linkend='command-cos'>cos</link></entry>
      </row>
      <row>
        <entry>couleurcrayon</entry>
@@ -3540,10 +3356,6 @@
        <entry><link linkend='command-unburyall'>unburyall</link></entry>
      </row>
      <row>
-       <entry>difference</entry>
-       <entry><link linkend='command-difference'>difference</link></entry>
-     </row>
-     <row>
        <entry>diff√©rence</entry>
        <entry><link linkend='command-difference'>difference</link></entry>
      </row>
@@ -3678,10 +3490,6 @@
      <row>
        <entry>√©ct</entry>
        <entry><link linkend='command-ts'>ts</link></entry>
-     </row>
-     <row>
-       <entry>ed</entry>
-       <entry><link linkend='command-ed'>ed</link></entry>
      </row>
      <row>
        <entry>√©d</entry>
@@ -3856,10 +3664,6 @@
        <entry><link linkend='command-equalp'>equalp</link></entry>
      </row>
      <row>
-       <entry>ellipsearc</entry>
-       <entry><link linkend='command-ellipsearc'>ellipsearc</link></entry>
-     </row>
-     <row>
        <entry>empile</entry>
        <entry><link linkend='command-push'>push</link></entry>
      </row>
@@ -3902,10 +3706,6 @@
      <row>
        <entry>enterretout</entry>
        <entry><link linkend='command-buryall'>buryall</link></entry>
-     </row>
-     <row>
-       <entry>eofp</entry>
-       <entry><link linkend='command-eofp'>eofp</link></entry>
      </row>
      <row>
        <entry>eprop</entry>
@@ -3986,10 +3786,6 @@
      <row>
        <entry>ex√©cuter√©sultat</entry>
        <entry><link linkend='command-runresult'>runresult</link></entry>
-     </row>
-     <row>
-       <entry>exp</entry>
-       <entry><link linkend='command-exp'>exp</link></entry>
      </row>
      <row>
        <entry>fais.jusque</entry>
@@ -4453,11 +4249,11 @@
      </row>
      <row>
        <entry>infegal?</entry>
-       <entry><link linkend='command-infÈrieurieurÈgalp'>infÈrieurieurÈgal?</link></entry>
+       <entry><link linkend='command-lessequalp'>lessequal?</link></entry>
      </row>
      <row>
        <entry>inf√©gal?</entry>
-       <entry><link linkend='command-infÈrieurieurÈgalp'>infÈrieurieurÈgal?</link></entry>
+       <entry><link linkend='command-lessequalp'>lessequal?</link></entry>
      </row>
      <row>
        <entry>inferieur?</entry>
@@ -4469,7 +4265,7 @@
      </row>
      <row>
        <entry>inferieuregal?</entry>
-       <entry><link linkend='command-infÈrieurieurÈgalp'>infÈrieurieurÈgal?</link></entry>
+       <entry><link linkend='command-lessequalp'>lessequal?</link></entry>
      </row>
      <row>
        <entry>inf√©rieur√©gal?</entry>
@@ -4477,7 +4273,7 @@
      </row>
      <row>
        <entry>inferieuregalp</entry>
-       <entry><link linkend='command-infÈrieurieurÈgalp'>infÈrieurieurÈgalp</link></entry>
+       <entry><link linkend='command-lessequalp'>lessequalp</link></entry>
      </row>
      <row>
        <entry>inf√©rieur√©galp</entry>
@@ -4498,10 +4294,6 @@
      <row>
        <entry>inversecrayon</entry>
        <entry><link linkend='command-penreverse'>penreverse</link></entry>
-     </row>
-     <row>
-       <entry>item</entry>
-       <entry><link linkend='command-item'>item</link></entry>
      </row>
      <row>
        <entry>item.md</entry>
@@ -4624,16 +4416,8 @@
        <entry><link linkend='command-rw'>rw</link></entry>
      </row>
      <row>
-       <entry>ln</entry>
-       <entry><link linkend='command-ln'>ln</link></entry>
-     </row>
-     <row>
        <entry>locale</entry>
        <entry><link linkend='command-local'>local</link></entry>
-     </row>
-     <row>
-       <entry>log10</entry>
-       <entry><link linkend='command-log10'>log10</link></entry>
      </row>
      <row>
        <entry>lprop</entry>
@@ -4660,24 +4444,8 @@
        <entry><link linkend='command-light'>light</link></entry>
      </row>
      <row>
-       <entry>machine</entry>
-       <entry><link linkend='command-machine'>machine</link></entry>
-     </row>
-     <row>
-       <entry>macro?</entry>
-       <entry><link linkend='command-macrop'>macro?</link></entry>
-     </row>
-     <row>
-       <entry>macrop</entry>
-       <entry><link linkend='command-macrop'>macrop</link></entry>
-     </row>
-     <row>
        <entry>majuscule</entry>
        <entry><link linkend='command-uppercase'>uppercase</link></entry>
-     </row>
-     <row>
-       <entry>mci</entry>
-       <entry><link linkend='command-mci'>mci</link></entry>
      </row>
      <row>
        <entry>md</entry>
@@ -4746,10 +4514,6 @@
      <row>
        <entry>modetortue</entry>
        <entry><link linkend='command-turtlemode'>turtlemode</link></entry>
-     </row>
-     <row>
-       <entry>modulo</entry>
-       <entry><link linkend='command-modulo'>modulo</link></entry>
      </row>
      <row>
        <entry>moins</entry>
@@ -4908,10 +4672,6 @@
        <entry><link linkend='command-stepped'>stepped</link></entry>
      </row>
      <row>
-       <entry>pause</entry>
-       <entry><link linkend='command-pause'>pause</link></entry>
-     </row>
-     <row>
        <entry>pave</entry>
        <entry><link linkend='command-bitblock'>bitblock</link></entry>
      </row>
@@ -4926,10 +4686,6 @@
      <row>
        <entry>p√©c</entry>
        <entry><link linkend='command-fs'>fs</link></entry>
-     </row>
-     <row>
-       <entry>perspective</entry>
-       <entry><link linkend='command-perspective'>perspective</link></entry>
      </row>
      <row>
        <entry>ph</entry>
@@ -4969,7 +4725,7 @@
      </row>
      <row>
        <entry>plpe?</entry>
-       <entry><link linkend='command-infÈrieurieurÈgalp'>infÈrieurieurÈgal?</link></entry>
+       <entry><link linkend='command-lessequalp'>lessequal?</link></entry>
      </row>
      <row>
        <entry>point</entry>
@@ -4988,10 +4744,6 @@
        <entry><link linkend='command-labelfont'>labelfont</link></entry>
      </row>
      <row>
-       <entry>pos</entry>
-       <entry><link linkend='command-pos'>pos</link></entry>
-     </row>
-     <row>
        <entry>posecriture</entry>
        <entry><link linkend='command-writepos'>writepos</link></entry>
      </row>
@@ -5006,10 +4758,6 @@
      <row>
        <entry>possouris</entry>
        <entry><link linkend='command-mousepos'>mousepos</link></entry>
-     </row>
-     <row>
-       <entry>posxyz</entry>
-       <entry><link linkend='command-posxyz'>posxyz</link></entry>
      </row>
      <row>
        <entry>pour</entry>
@@ -5052,24 +4800,8 @@
        <entry><link linkend='command-firsts'>firsts</link></entry>
      </row>
      <row>
-       <entry>primitive?</entry>
-       <entry><link linkend='command-primitivep'>primitive?</link></entry>
-     </row>
-     <row>
-       <entry>primitivep</entry>
-       <entry><link linkend='command-primitivep'>primitivep</link></entry>
-     </row>
-     <row>
-       <entry>procedure?</entry>
-       <entry><link linkend='command-procedurep'>procedure?</link></entry>
-     </row>
-     <row>
        <entry>proc√©dure?</entry>
        <entry><link linkend='command-procedurep'>procedure?</link></entry>
-     </row>
-     <row>
-       <entry>procedurep</entry>
-       <entry><link linkend='command-procedurep'>procedurep</link></entry>
      </row>
      <row>
        <entry>proc√©durep</entry>
@@ -5098,30 +4830,6 @@
      <row>
        <entry>racine</entry>
        <entry><link linkend='command-sqrt'>sqrt</link></entry>
-     </row>
-     <row>
-       <entry>radarccos</entry>
-       <entry><link linkend='command-radarccos'>radarccos</link></entry>
-     </row>
-     <row>
-       <entry>radarcsin</entry>
-       <entry><link linkend='command-radarcsin'>radarcsin</link></entry>
-     </row>
-     <row>
-       <entry>radarctan</entry>
-       <entry><link linkend='command-radarctan'>radarctan</link></entry>
-     </row>
-     <row>
-       <entry>radcos</entry>
-       <entry><link linkend='command-radcos'>radcos</link></entry>
-     </row>
-     <row>
-       <entry>radsin</entry>
-       <entry><link linkend='command-radsin'>radsin</link></entry>
-     </row>
-     <row>
-       <entry>radtan</entry>
-       <entry><link linkend='command-radtan'>radtan</link></entry>
      </row>
      <row>
        <entry>rafraichis</entry>
@@ -5312,10 +5020,6 @@
        <entry><link linkend='command-sign'>sign</link></entry>
      </row>
      <row>
-       <entry>sin</entry>
-       <entry><link linkend='command-sin'>sin</link></entry>
-     </row>
-     <row>
        <entry>sisinon</entry>
        <entry><link linkend='command-ifelse'>ifelse</link></entry>
      </row>
@@ -5434,10 +5138,6 @@
      <row>
        <entry>taillegif</entry>
        <entry><link linkend='command-gifsize'>gifsize</link></entry>
-     </row>
-     <row>
-       <entry>tan</entry>
-       <entry><link linkend='command-tan'>tan</link></entry>
      </row>
      <row>
        <entry>tantque</entry>
@@ -5586,10 +5286,6 @@
      <row>
        <entry>zoneactive</entry>
        <entry><link linkend='command-activearea'>activearea</link></entry>
-     </row>
-     <row>
-       <entry>zoom</entry>
-       <entry><link linkend='command-zoom'>zoom</link></entry>
      </row>
   </tbody>
   </tgroup>
