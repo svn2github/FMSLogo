@@ -214,10 +214,15 @@ sub MakeTranslationTables($$$) {
         $original = $localizedtoenglish{$original};
       }
 
-      $englishtolocalized{$original} = () if not $englishtolocalized{$original};
-      push @{$englishtolocalized{$original}}, $newname;
+      if ($original ne $newname) {
 
-      $localizedtoenglish{$newname} = $original;
+        # TODO: error-out if $original isn't an English command
+
+        $englishtolocalized{$original} = () if not $englishtolocalized{uc $original};
+        push @{$englishtolocalized{$original}}, $newname;
+
+        $localizedtoenglish{$newname} = $original;
+      }
     }
   }
   $localizedfile->close();
