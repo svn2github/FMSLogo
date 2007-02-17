@@ -160,16 +160,6 @@ FIN
 TAPA "BTODO
 
 
-;copydef "btodo "erall
-
-PARA BTODO [:warning "true]
-SI :warning [SI NO SINOBOX [Warning] [Are you sure you wish PARA BORRA ALL?] [ALTO]]
-BORRA CONTENIDO
-FIN
-
-TAPA "BTODO
-
-
 ;copydef "cascada "cascade
 
 PARA CASCADA :cascade.limit [:cascade.inputs] 3
@@ -710,24 +700,6 @@ FIN
 TAPA "EXPANDEMACRO
 
 
-;copydef "expandemacro "macroexpand
-
-;;; -*- logo -*-
-
-PARA EXPANDEMACRO :expr
-LOCAL [NOMBRE inputlist macro.result]
-HAZ "name PRIMERO :expr
-HAZ "inputlist MP :expr
-SI NO MACRO? :name [(LANZA "error (FR :name [is NO a macro.]))]
-DEFINE "%%%$%macro.procedure TEXTO :name
-HAZ "macro.result EJECUTA PONPRIMERO "%%%$%macro.procedure :inputlist
-BORRA "%%%$%macro.procedure
-DEV :macro.result
-FIN
-
-TAPA "EXPANDEMACRO
-
-
 ;copydef "filtra "filter
 
 PARA FILTRA :filter.template :template.list [:template.number 1] ~
@@ -789,28 +761,10 @@ FIN
 TAPA "HAZ.HASTA
 
 
-;copydef "haz.hasta "do.until
-
-.MACRO HAZ.HASTA :until.instr :until.cond
-DEV FR :until.instr (LISTA "until :until.cond :until.instr)
-FIN
-
-TAPA "HAZ.HASTA
-
-
 ;copydef "haz.mientras "do.while
 
 .MACRO HAZ.MIENTRAS :while.instr :while.cond
 DEV FR :while.instr (LISTA "MIENTRAS :while.cond :while.instr)
-FIN
-
-TAPA "HAZ.MIENTRAS
-
-
-;copydef "haz.mientras "do.while
-
-.MACRO HAZ.MIENTRAS :while.instr :while.cond
-DEV FR :while.instr (LISTA "while :while.cond :while.instr)
 FIN
 
 TAPA "HAZ.MIENTRAS
@@ -821,15 +775,6 @@ TAPA "HAZ.MIENTRAS
 .MACRO HAZLOCAL :name :value
 DEVUELVE (LISTA "LOCAL (PALABRA "" :name)
              "APLICA ""HAZ (LISTA :name :value))
-FIN
-
-TAPA "HAZLOCAL
-
-;copydef "hazlocal "localmake
-
-.MACRO HAZLOCAL :name :value
-DEVUELVE (LISTA "local (PALABRA "" :name)
-             "apply ""make (LISTA :name :value))
 FIN
 
 TAPA "HAZLOCAL
@@ -964,16 +909,6 @@ FIN
 TAPA [LAPIZ]
 
 
-;copydef "lapiz "pen
-
-PARA LAPIZ
-DEV (LISTA (SISINO BAJALAPIZ? ["pendown] ["penup]) ~
-         LAPIZMODO GROSOR COLORLAPIZ [1])
-FIN
-
-TAPA [LAPIZ]
-
-
 ;copydef "lapizinicial "pennormal
 
 PARA LAPIZINICIAL
@@ -1012,32 +947,10 @@ FIN
 TAPA "LISTANOMBRES
 
 
-;copydef "listanombres "namelist
-
-PARA LISTANOMBRES :names
-SI VECTOR? :names [(LANZA "error (LISTA "namelist "doesn't "like :names "as "input))]
-SI PALABRA? :names [DEVUELVE LISTA [] (LISTA :names)]
-DEVUELVE LISTA [] :names
-FIN
-
-TAPA "LISTANOMBRES
-
-
 ;copydef "listapropiedades "pllist
 
 PARA LISTAPROPIEDADES :names
 SI VECTOR? :names [(LANZA "error (LISTA [A ListaPropiedades no le gusta] :names [como entrada]))]
-SI PALABRA? :names [DEVUELVE (LISTA [] [] (LISTA :names))]
-DEVUELVE (LISTA [] [] :names)
-FIN
-
-TAPA "LISTAPROPIEDADES
-
-
-;copydef "listapropiedades "pllist
-
-PARA LISTAPROPIEDADES :names
-SI VECTOR? :names [(LANZA "error (LISTA "pllist "doesn't "like :names "as "input))]
 SI PALABRA? :names [DEVUELVE (LISTA [] [] (LISTA :names))]
 DEVUELVE (LISTA [] [] :names)
 FIN
@@ -1212,45 +1125,11 @@ FIN
 TAPA [PONLAPIZ]
 
 
-;copydef "ponlapiz "setpen
-
-PARA PONLAPIZ :pen_data
-SISINO IGUALES? PRIMERO MP :pen_data "reverse ~
-       [LAPIZINVIERTE] ~
-       [SISINO IGUALES? PRIMERO MP :pen_data "erase ~
-               [GOMA] ~
-               [LAPIZNORMAL] ]
-SISINO IGUALES? PRIMERO :pen_data "penup [SUBELAPIZ] [BAJALAPIZ]
-PONGROSOR PRIMERO MP MP :pen_data
-PONCOLORLAPIZ PRIMERO MP MP MP :pen_data
-PONPATRONLAPIZ PRIMERO MP MP MP MP :pen_data
-FIN
-
-TAPA [PONLAPIZ]
-
-
 ;copydef "ponorientacion "setorientation
 
 PARA PONORIENTACION :rph
 SI NO LISTA? :rph          [(LANZA "error (LISTA [A ponorientacion no le gusta] :rph [como entrada]))]
 SI NO IGUALES? 3 CUENTA :rph [(LANZA "error (LISTA [A ponorientacion no le gusta] :rph [como entrada]))]
-
-GI RUMBO
-ABAJO CABECEO
-BI BALANCEO
-PONBALANCEO  ELEMENTO 1 :rph
-PONCABECEO ELEMENTO 2 :rph
-GD       ELEMENTO 3 :rph
-FIN
-
-TAPA "PONORIENTACION
-
-
-;copydef "ponorientacion "setorientation
-
-PARA PONORIENTACION :rph
-SI NO LISTA? :rph          [(LANZA "error (LISTA "setorientation "doesn't "like :rph "as "input))]
-SI NO IGUALES? 3 CUENTA :rph [(LANZA "error (LISTA "setorientation "doesn't "like :rph "as "input))]
 
 GI RUMBO
 ABAJO CABECEO
@@ -1287,15 +1166,6 @@ FIN
 TAPA "QUITAREPETIDOS
 
 
-;copydef "quitarepetidos "remdup
-
-PARA QUITAREPETIDOS :list
-DEVUELVE FILTRA [NO MIEMBRO? ? ?rest] :list
-FIN
-
-TAPA "QUITAREPETIDOS
-
-
 ;copydef "reduce "reduce
 
 PARA REDUCE :reduce.function :reduce.list
@@ -1324,28 +1194,10 @@ FIN
 TAPA "?restante
 
 
-;copydef "restante "rest
-
-PARA ?rest [:which 1]
-DEVUELVE MP ELEMENTO :which :template.lists
-FIN
-
-TAPA "?rest
-
-
 ;copydef "sacaalazar "pick
 
 PARA SACAALAZAR :list
 DEVUELVE ELEMENTO (1 + AZAR CUENTA :list) :list
-FIN
-
-TAPA "SACAALAZAR
-
-
-;copydef "sacaalazar "pick
-
-PARA SACAALAZAR :list
-DEVUELVE ELEMENTO (1+random CUENTA :list) :list
 FIN
 
 TAPA "SACAALAZAR
@@ -1362,29 +1214,6 @@ FIN
 PARA SECENT :a :b
 SI NO SECENT.integer? :a [(LANZA "error (LISTA [A SecEnt no le gusta] :a [como entrada]))]
 SI NO SECENT.integer? :b [(LANZA "error (LISTA [A SecEnt no le gusta] :b [como entrada]))]
-SI NO (:a > :b) [DEVUELVE iseq1 :a :b]
-DEVUELVE TEJE [[x] -1 * :x] iseq1 (-1 * :a) (-1 * :b)
-FIN
-
-PARA iseq1 :a :b
-SI :a > :b [DEVUELVE []]
-DEVUELVE PONPRIMERO :a iseq1 :a + 1 :b
-FIN
-
-TAPA [SECENT iseq1 SECENT.integer?]
-
-
-;copydef "secent "iseq
-
-PARA SECENT.integer? :a
-SI NO number? :a       [DEV "false]
-SI NO equal? :a ENTERO :a [DEV "false]
-DEV "true
-FIN
-
-PARA SECENT :a :b
-SI NO SECENT.integer? :a [(LANZA "error (LISTA "iseq "doesn't "like :a "as "input))]
-SI NO SECENT.integer? :b [(LANZA "error (LISTA "iseq "doesn't "like :b "as "input))]
 SI NO (:a > :b) [DEVUELVE iseq1 :a :b]
 DEVUELVE TEJE [[x] -1 * :x] iseq1 (-1 * :a) (-1 * :b)
 FIN
