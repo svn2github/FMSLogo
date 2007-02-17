@@ -11,20 +11,8 @@
    </thead>
   <tbody>
      <row>
-       <entry><link linkend='command-#'>#</link></entry>
-       <entry>#</entry>
-     </row>
-     <row>
-       <entry><link linkend='command-.defmacro'>.defmacro</link></entry>
-       <entry>.defmacro</entry>
-     </row>
-     <row>
        <entry><link linkend='command-.eq'>.eq</link></entry>
        <entry>.ig</entry>
-     </row>
-     <row>
-       <entry><link linkend='command-.macro'>.macro</link></entry>
-       <entry>.macro</entry>
      </row>
      <row>
        <entry><link linkend='command-.maybeoutput'>.maybeoutput</link></entry>
@@ -41,14 +29,6 @@
      <row>
        <entry><link linkend='command-.setitem'>.setitem</link></entry>
        <entry>.ponelemento</entry>
-     </row>
-     <row>
-       <entry><link linkend='command-`'>`</link></entry>
-       <entry>`</entry>
-     </row>
-     <row>
-       <entry><link linkend='command-abs'>abs</link></entry>
-       <entry>abs</entry>
      </row>
      <row>
        <entry><link linkend='command-activearea'>activearea</link></entry>
@@ -75,16 +55,8 @@
        <entry>arco2</entry>
      </row>
      <row>
-       <entry><link linkend='command-arccos'>arccos</link></entry>
-       <entry>arccos</entry>
-     </row>
-     <row>
        <entry><link linkend='command-arcsin'>arcsin</link></entry>
        <entry>arcsen</entry>
-     </row>
-     <row>
-       <entry><link linkend='command-arctan'>arctan</link></entry>
-       <entry>arctan</entry>
      </row>
      <row>
        <entry><link linkend='command-array'>array</link></entry>
@@ -101,10 +73,6 @@
      <row>
        <entry><link linkend='command-arraytolist'>arraytolist</link></entry>
        <entry>vectoralista</entry>
-     </row>
-     <row>
-       <entry><link linkend='command-ascii'>ascii</link></entry>
-       <entry>ascii</entry>
      </row>
      <row>
        <entry><link linkend='command-ashift'>ashift</link></entry>
@@ -147,10 +115,6 @@
        <entry>mps</entry>
      </row>
      <row>
-       <entry><link linkend='command-bitand'>bitand</link></entry>
-       <entry>bitand</entry>
-     </row>
-     <row>
        <entry><link linkend='command-bitblock'>bitblock</link></entry>
        <entry>rectanguloRelleno</entry>
      </row>
@@ -187,14 +151,6 @@
        <entry>modoBitmap?</entry>
      </row>
      <row>
-       <entry><link linkend='command-bitnot'>bitnot</link></entry>
-       <entry>bitNot</entry>
-     </row>
-     <row>
-       <entry><link linkend='command-bitor'>bitor</link></entry>
-       <entry>bitOr</entry>
-     </row>
-     <row>
        <entry><link linkend='command-bitpaste'>bitpaste</link></entry>
        <entry>bitPega</entry>
      </row>
@@ -209,10 +165,6 @@
      <row>
        <entry><link linkend='command-bitsize'>bitsize</link></entry>
        <entry>tamañoDibujo</entry>
-     </row>
-     <row>
-       <entry><link linkend='command-bitxor'>bitxor</link></entry>
-       <entry>bitxor</entry>
      </row>
      <row>
        <entry><link linkend='command-bk'>bk</link></entry>
@@ -355,10 +307,6 @@
        <entry>cierratodo</entry>
      </row>
      <row>
-       <entry><link linkend='command-co'>co</link></entry>
-       <entry>co</entry>
-     </row>
-     <row>
        <entry><link linkend='command-combine'>combine</link></entry>
        <entry>combina</entry>
      </row>
@@ -403,10 +351,6 @@
        <entry>copiadef</entry>
      </row>
      <row>
-       <entry><link linkend='command-cos'>cos</link></entry>
-       <entry>cos</entry>
-     </row>
-     <row>
        <entry><link linkend='command-count'>count</link></entry>
        <entry>cuenta</entry>
      </row>
@@ -423,16 +367,8 @@
        <entry>bt</entry>
      </row>
      <row>
-       <entry><link linkend='command-cursor'>cursor</link></entry>
-       <entry>cursor</entry>
-     </row>
-     <row>
        <entry><link linkend='command-debugwindows'>debugwindows</link></entry>
        <entry>ventanadepurador</entry>
-     </row>
-     <row>
-       <entry><link linkend='command-define'>define</link></entry>
-       <entry>define</entry>
      </row>
      <row>
        <entry><link linkend='command-definedp'>defined?</link></entry>
@@ -469,10 +405,6 @@
      <row>
        <entry><link linkend='command-difference'>difference</link></entry>
        <entry>diferencia</entry>
-     </row>
-     <row>
-       <entry><link linkend='command-dir'>dir</link></entry>
-       <entry>dir</entry>
      </row>
      <row>
        <entry><link linkend='command-directories'>directories</link></entry>
@@ -525,10 +457,6 @@
      <row>
        <entry><link linkend='command-dribble'>dribble</link></entry>
        <entry>eco</entry>
-     </row>
-     <row>
-       <entry><link linkend='command-ed'>ed</link></entry>
-       <entry>ed</entry>
      </row>
      <row>
        <entry><link linkend='command-edall'>edall</link></entry>
@@ -651,16 +579,8 @@
        <entry>bprocs</entry>
      </row>
      <row>
-       <entry><link linkend='command-error'>error</link></entry>
-       <entry>error</entry>
-     </row>
-     <row>
        <entry><link linkend='command-eventcheck'>eventcheck</link></entry>
        <entry>sievento</entry>
-     </row>
-     <row>
-       <entry><link linkend='command-exp'>exp</link></entry>
-       <entry>exp</entry>
      </row>
      <row>
        <entry><link linkend='command-false'>false</link></entry>
@@ -999,16 +919,8 @@
        <entry>listaavector</entry>
      </row>
      <row>
-       <entry><link linkend='command-ln'>ln</link></entry>
-       <entry>ln</entry>
-     </row>
-     <row>
        <entry><link linkend='command-load'>load</link></entry>
        <entry>carga</entry>
-     </row>
-     <row>
-       <entry><link linkend='command-local'>local</link></entry>
-       <entry>local</entry>
      </row>
      <row>
        <entry><link linkend='command-localmake'>localmake</link></entry>
@@ -1055,10 +967,6 @@
        <entry>sistema</entry>
      </row>
      <row>
-       <entry><link linkend='command-macrop'>macro?</link></entry>
-       <entry>macro?</entry>
-     </row>
-     <row>
        <entry><link linkend='command-macroexpand'>macroexpand</link></entry>
        <entry>expandemacro</entry>
      </row>
@@ -1085,10 +993,6 @@
      <row>
        <entry><link linkend='command-map.se'>map.se</link></entry>
        <entry>teje.fr</entry>
-     </row>
-     <row>
-       <entry><link linkend='command-mci'>mci</link></entry>
-       <entry>mci</entry>
      </row>
      <row>
        <entry><link linkend='command-mdarray'>mdarray</link></entry>
@@ -1399,10 +1303,6 @@
        <entry>cabeceo</entry>
      </row>
      <row>
-       <entry><link linkend='command-pixel'>pixel</link></entry>
-       <entry>pixel</entry>
-     </row>
-     <row>
        <entry><link linkend='command-playwave'>playwave</link></entry>
        <entry>suenawave</entry>
      </row>
@@ -1503,10 +1403,6 @@
        <entry>escribecaracterpuerto</entry>
      </row>
      <row>
-       <entry><link linkend='command-pos'>pos</link></entry>
-       <entry>pos</entry>
-     </row>
-     <row>
        <entry><link linkend='command-posxyz'>posxyz</link></entry>
        <entry>pos3d</entry>
      </row>
@@ -1599,20 +1495,8 @@
        <entry>cociente</entry>
      </row>
      <row>
-       <entry><link linkend='command-radarccos'>radarccos</link></entry>
-       <entry>radarccos</entry>
-     </row>
-     <row>
        <entry><link linkend='command-radarcsin'>radarcsin</link></entry>
        <entry>radarcsen</entry>
-     </row>
-     <row>
-       <entry><link linkend='command-radarctan'>radarctan</link></entry>
-       <entry>radarctan</entry>
-     </row>
-     <row>
-       <entry><link linkend='command-radcos'>radcos</link></entry>
-       <entry>radcos</entry>
      </row>
      <row>
        <entry><link linkend='command-radiobuttoncreate'>radiobuttoncreate</link></entry>
@@ -1637,10 +1521,6 @@
      <row>
        <entry><link linkend='command-radsin'>radsin</link></entry>
        <entry>radsen</entry>
-     </row>
-     <row>
-       <entry><link linkend='command-radtan'>radtan</link></entry>
-       <entry>radtan</entry>
      </row>
      <row>
        <entry><link linkend='command-random'>random</link></entry>
@@ -1681,10 +1561,6 @@
      <row>
        <entry><link linkend='command-readword'>readword</link></entry>
        <entry>leepalabra</entry>
-     </row>
-     <row>
-       <entry><link linkend='command-reduce'>reduce</link></entry>
-       <entry>reduce</entry>
      </row>
      <row>
        <entry><link linkend='command-refresh'>refresh</link></entry>
@@ -2019,10 +1895,6 @@
        <entry>ponz</entry>
      </row>
      <row>
-       <entry><link linkend='command-shell'>shell</link></entry>
-       <entry>shell</entry>
-     </row>
-     <row>
        <entry><link linkend='command-show'>show</link></entry>
        <entry>muestra</entry>
      </row>
@@ -2083,10 +1955,6 @@
        <entry>muestratortuga</entry>
      </row>
      <row>
-       <entry><link linkend='command-standout'>standout</link></entry>
-       <entry>standout</entry>
-     </row>
-     <row>
        <entry><link linkend='command-staticcreate'>staticcreate</link></entry>
        <entry>creaestatico</entry>
      </row>
@@ -2129,10 +1997,6 @@
      <row>
        <entry><link linkend='command-tag'>tag</link></entry>
        <entry>etiqueta</entry>
-     </row>
-     <row>
-       <entry><link linkend='command-tan'>tan</link></entry>
-       <entry>tan</entry>
      </row>
      <row>
        <entry><link linkend='command-test'>test</link></entry>
@@ -2217,10 +2081,6 @@
      <row>
        <entry><link linkend='command-turtles'>turtles</link></entry>
        <entry>tortugas</entry>
-     </row>
-     <row>
-       <entry><link linkend='command-tutor'>tutor</link></entry>
-       <entry>tutor</entry>
      </row>
      <row>
        <entry><link linkend='command-type'>type</link></entry>
@@ -2368,20 +2228,8 @@
    </thead>
   <tbody>
      <row>
-       <entry>#</entry>
-       <entry><link linkend='command-#'>#</link></entry>
-     </row>
-     <row>
-       <entry>.defmacro</entry>
-       <entry><link linkend='command-.defmacro'>.defmacro</link></entry>
-     </row>
-     <row>
        <entry>.ig</entry>
        <entry><link linkend='command-.eq'>.eq</link></entry>
-     </row>
-     <row>
-       <entry>.macro</entry>
-       <entry><link linkend='command-.macro'>.macro</link></entry>
      </row>
      <row>
        <entry>.ponelemento</entry>
@@ -2398,10 +2246,6 @@
      <row>
        <entry>.quizadevuelve</entry>
        <entry><link linkend='command-.maybeoutput'>.maybeoutput</link></entry>
-     </row>
-     <row>
-       <entry>`</entry>
-       <entry><link linkend='command-`'>`</link></entry>
      </row>
      <row>
        <entry>abajo</entry>
@@ -2438,10 +2282,6 @@
      <row>
        <entry>abrepuerto</entry>
        <entry><link linkend='command-portopen'>portopen</link></entry>
-     </row>
-     <row>
-       <entry>abs</entry>
-       <entry><link linkend='command-abs'>abs</link></entry>
      </row>
      <row>
        <entry>activa</entry>
@@ -2504,10 +2344,6 @@
        <entry><link linkend='command-apply'>apply</link></entry>
      </row>
      <row>
-       <entry>arccos</entry>
-       <entry><link linkend='command-arccos'>arccos</link></entry>
-     </row>
-     <row>
        <entry>archivop</entry>
        <entry><link linkend='command-filep'>filep</link></entry>
      </row>
@@ -2532,20 +2368,12 @@
        <entry><link linkend='command-arcsin'>arcsin</link></entry>
      </row>
      <row>
-       <entry>arctan</entry>
-       <entry><link linkend='command-arctan'>arctan</link></entry>
-     </row>
-     <row>
        <entry>areaactiva</entry>
        <entry><link linkend='command-activearea'>activearea</link></entry>
      </row>
      <row>
        <entry>arriba</entry>
        <entry><link linkend='command-up'>up</link></entry>
-     </row>
-     <row>
-       <entry>ascii</entry>
-       <entry><link linkend='command-ascii'>ascii</link></entry>
      </row>
      <row>
        <entry>asciipuro</entry>
@@ -2608,28 +2436,12 @@
        <entry><link linkend='command-lr'>lr</link></entry>
      </row>
      <row>
-       <entry>bitand</entry>
-       <entry><link linkend='command-bitand'>bitand</link></entry>
-     </row>
-     <row>
-       <entry>bitNot</entry>
-       <entry><link linkend='command-bitnot'>bitnot</link></entry>
-     </row>
-     <row>
-       <entry>bitOr</entry>
-       <entry><link linkend='command-bitor'>bitor</link></entry>
-     </row>
-     <row>
        <entry>bitPega</entry>
        <entry><link linkend='command-bitpaste'>bitpaste</link></entry>
      </row>
      <row>
        <entry>bitPegaEnIndice</entry>
        <entry><link linkend='command-bitpastetoindex'>bitpastetoindex</link></entry>
-     </row>
-     <row>
-       <entry>bitxor</entry>
-       <entry><link linkend='command-bitxor'>bitxor</link></entry>
      </row>
      <row>
        <entry>bl</entry>
@@ -2832,10 +2644,6 @@
        <entry><link linkend='command-pc'>pc</link></entry>
      </row>
      <row>
-       <entry>co</entry>
-       <entry><link linkend='command-co'>co</link></entry>
-     </row>
-     <row>
        <entry>cociente</entry>
        <entry><link linkend='command-quotient'>quotient</link></entry>
      </row>
@@ -2892,10 +2700,6 @@
        <entry><link linkend='command-bitcut'>bitcut</link></entry>
      </row>
      <row>
-       <entry>cos</entry>
-       <entry><link linkend='command-cos'>cos</link></entry>
-     </row>
-     <row>
        <entry>creabarradesplazamiento</entry>
        <entry><link linkend='command-scrollbarcreate'>scrollbarcreate</link></entry>
      </row>
@@ -2946,14 +2750,6 @@
      <row>
        <entry>cuentarepite</entry>
        <entry><link linkend='command-repcount'>repcount</link></entry>
-     </row>
-     <row>
-       <entry>cursor</entry>
-       <entry><link linkend='command-cursor'>cursor</link></entry>
-     </row>
-     <row>
-       <entry>define</entry>
-       <entry><link linkend='command-define'>define</link></entry>
      </row>
      <row>
        <entry>definido?</entry>
@@ -3024,10 +2820,6 @@
        <entry><link linkend='command-ask'>ask</link></entry>
      </row>
      <row>
-       <entry>dir</entry>
-       <entry><link linkend='command-dir'>dir</link></entry>
-     </row>
-     <row>
        <entry>directoriopadre</entry>
        <entry><link linkend='command-popdir'>popdir</link></entry>
      </row>
@@ -3046,10 +2838,6 @@
      <row>
        <entry>eco</entry>
        <entry><link linkend='command-dribble'>dribble</link></entry>
-     </row>
-     <row>
-       <entry>ed</entry>
-       <entry><link linkend='command-ed'>ed</link></entry>
      </row>
      <row>
        <entry>edita</entry>
@@ -3152,10 +2940,6 @@
        <entry><link linkend='command-netconnectsendvalue'>netconnectsendvalue</link></entry>
      </row>
      <row>
-       <entry>error</entry>
-       <entry><link linkend='command-error'>error</link></entry>
-     </row>
-     <row>
        <entry>es</entry>
        <entry><link linkend='command-pr'>pr</link></entry>
      </row>
@@ -3206,10 +2990,6 @@
      <row>
        <entry>exclusivo</entry>
        <entry><link linkend='command-noyield'>noyield</link></entry>
-     </row>
-     <row>
-       <entry>exp</entry>
-       <entry><link linkend='command-exp'>exp</link></entry>
      </row>
      <row>
        <entry>expandemacro</entry>
@@ -3596,16 +3376,8 @@
        <entry><link linkend='command-dllcall'>dllcall</link></entry>
      </row>
      <row>
-       <entry>ln</entry>
-       <entry><link linkend='command-ln'>ln</link></entry>
-     </row>
-     <row>
        <entry>lnormal</entry>
        <entry><link linkend='command-ppt'>ppt</link></entry>
-     </row>
-     <row>
-       <entry>local</entry>
-       <entry><link linkend='command-local'>local</link></entry>
      </row>
      <row>
        <entry>log</entry>
@@ -3641,7 +3413,7 @@
      </row>
      <row>
        <entry>macro?</entry>
-       <entry><link linkend='command-macrop'>macro?</link></entry>
+       <entry><link linkend='command-macrop'>macrop</link></entry>
      </row>
      <row>
        <entry>maximiza</entry>
@@ -3658,10 +3430,6 @@
      <row>
        <entry>mayusculas</entry>
        <entry><link linkend='command-uppercase'>uppercase</link></entry>
-     </row>
-     <row>
-       <entry>mci</entry>
-       <entry><link linkend='command-mci'>mci</link></entry>
      </row>
      <row>
        <entry>mejor.o.igual?</entry>
@@ -3888,10 +3656,6 @@
        <entry><link linkend='command-floodcolor'>floodcolor</link></entry>
      </row>
      <row>
-       <entry>pixel</entry>
-       <entry><link linkend='command-pixel'>pixel</link></entry>
-     </row>
-     <row>
        <entry>ponareaactiva</entry>
        <entry><link linkend='command-setactivearea'>setactivearea</link></entry>
      </row>
@@ -4088,10 +3852,6 @@
        <entry><link linkend='command-setz'>setz</link></entry>
      </row>
      <row>
-       <entry>pos</entry>
-       <entry><link linkend='command-pos'>pos</link></entry>
-     </row>
-     <row>
        <entry>pos3d</entry>
        <entry><link linkend='command-posxyz'>posxyz</link></entry>
      </row>
@@ -4180,28 +3940,12 @@
        <entry><link linkend='command-remdup'>remdup</link></entry>
      </row>
      <row>
-       <entry>radarccos</entry>
-       <entry><link linkend='command-radarccos'>radarccos</link></entry>
-     </row>
-     <row>
        <entry>radarcsen</entry>
        <entry><link linkend='command-radarcsin'>radarcsin</link></entry>
      </row>
      <row>
-       <entry>radarctan</entry>
-       <entry><link linkend='command-radarctan'>radarctan</link></entry>
-     </row>
-     <row>
-       <entry>radcos</entry>
-       <entry><link linkend='command-radcos'>radcos</link></entry>
-     </row>
-     <row>
        <entry>radsen</entry>
        <entry><link linkend='command-radsin'>radsin</link></entry>
-     </row>
-     <row>
-       <entry>radtan</entry>
-       <entry><link linkend='command-radtan'>radtan</link></entry>
      </row>
      <row>
        <entry>rc</entry>
@@ -4230,10 +3974,6 @@
      <row>
        <entry>redondea</entry>
        <entry><link linkend='command-round'>round</link></entry>
-     </row>
-     <row>
-       <entry>reduce</entry>
-       <entry><link linkend='command-reduce'>reduce</link></entry>
      </row>
      <row>
        <entry>refresca</entry>
@@ -4308,10 +4048,6 @@
        <entry><link linkend='command-setcursornowait'>setcursornowait</link></entry>
      </row>
      <row>
-       <entry>shell</entry>
-       <entry><link linkend='command-shell'>shell</link></entry>
-     </row>
-     <row>
        <entry>si</entry>
        <entry><link linkend='command-if'>if</link></entry>
      </row>
@@ -4360,10 +4096,6 @@
        <entry><link linkend='command-pu'>pu</link></entry>
      </row>
      <row>
-       <entry>standout</entry>
-       <entry><link linkend='command-standout'>standout</link></entry>
-     </row>
-     <row>
        <entry>subelapiz</entry>
        <entry><link linkend='command-penup'>penup</link></entry>
      </row>
@@ -4386,10 +4118,6 @@
      <row>
        <entry>tamañogif</entry>
        <entry><link linkend='command-gifsize'>gifsize</link></entry>
-     </row>
-     <row>
-       <entry>tan</entry>
-       <entry><link linkend='command-tan'>tan</link></entry>
      </row>
      <row>
        <entry>tapa</entry>
@@ -4466,10 +4194,6 @@
      <row>
        <entry>trazados</entry>
        <entry><link linkend='command-traced'>traced</link></entry>
-     </row>
-     <row>
-       <entry>tutor</entry>
-       <entry><link linkend='command-tutor'>tutor</link></entry>
      </row>
      <row>
        <entry>ultimo</entry>
