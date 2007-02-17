@@ -22,6 +22,13 @@ sub PrintShadowedProcedures($$$) {
   foreach my $localizedCommand (keys %{$LocalizedToEnglish}) {
     foreach my $englishCommand (values %{$English}) {
 
+      # It's okay if predicates that end in "?" shadow the "p"
+      # form of the English predicate.
+      # The Spanish translation does this because "p" has no meaning.
+      if ($localizedCommand =~ m/^(.*)\?$/ and $$LocalizedToEnglish{$localizedCommand} eq "$1p") {
+        next;
+      }
+
       if ($englishCommand eq $localizedCommand and
           $$LocalizedToEnglish{$localizedCommand} ne $englishCommand) {
         print "WARNING: $LocaleName shadows the English command `$localizedCommand' as a translations for `$$LocalizedToEnglish{$localizedCommand}'\n";
@@ -189,10 +196,12 @@ sub MakeTranslationTables($$$) {
       $englishword or die "Found a localization for $symbolicname that is not present in the English localization";
 
       unless (m/NOT_YET_LOCALIZED/) {
-        $englishtolocalized{$englishword} = () if not $englishtolocalized{$englishword};
-        push @{$englishtolocalized{$englishword}}, $localizedname;
+        if (lc $englishword ne lc $localizedname) {
+          $englishtolocalized{$englishword} = () if not $englishtolocalized{$englishword};
+          push @{$englishtolocalized{$englishword}}, $localizedname;
 
-        $localizedtoenglish{$localizedname} = $englishword;
+          $localizedtoenglish{$localizedname} = $englishword;
+        }
       }
     }
   }
@@ -200,7 +209,7 @@ sub MakeTranslationTables($$$) {
 
 
   #
-  # extract the primitives that were translated
+  # extract the library routines and primitives that were translated with COPYDEF
   #
   $localizedfile = new IO::File "startup-$LocaleId.logoscript" or die $!;
   while (<$localizedfile>) {
@@ -214,11 +223,11 @@ sub MakeTranslationTables($$$) {
         $original = $localizedtoenglish{$original};
       }
 
-      if ($original ne $newname) {
+      if (lc $original ne lc $newname) {
 
         # TODO: error-out if $original isn't an English command
 
-        $englishtolocalized{$original} = () if not $englishtolocalized{uc $original};
+        $englishtolocalized{$original} = () if not $englishtolocalized{$original};
         push @{$englishtolocalized{$original}}, $newname;
 
         $localizedtoenglish{$newname} = $original;
