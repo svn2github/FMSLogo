@@ -28,19 +28,18 @@ to aaa
  make "playing 0  
  catch "error [fullscreen]
  windowset "Commander 0
- ;------------------------ Drawing the window   
+ ;------------------------ Drawing the window
  windowcreate "main "windowdomino "Domino 0 0 282 30 []
  
-  buttoncreate "windowdomino "bexit "Exit 0 0 30 15 [windowdelete "windowdomino setsc [255 255 255] cs mouseoff make "playing 0 windowset "Commander 1
-]
-  buttoncreate "windowdomino "babout "About 30 0 30 15 [about]
-  buttoncreate "windowdomino "bhelp "Help 60 0 30 15 [ helpmessage]
-  buttoncreate "windowdomino "bsetup "Setup 90 0 30 15 [dialogcreate "windowdomino "mydialog [Game setup] 100 70 115 180 [setupwindow]]
-  buttoncreate "windowdomino "bnewgame [New Game] 120  0 50 15 [startnewgame]
-  buttoncreate "windowdomino "bnewround [New round] 170  0 50 15 [startnewround]
-  buttoncreate "windowdomino "bpass "Pass 220  0 30 15 [passbuttonpressed]
-  buttoncreate "windowdomino "bdraw "Draw 250  0 30 15 [drawrandomdomino 1] 
-  buttonenable "bdraw "False
+ buttoncreate "windowdomino "bexit "Exit 0 0 30 15 [windowdelete "windowdomino setsc [255 255 255] cs mouseoff make "playing 0 splitscreen ]
+ buttoncreate "windowdomino "babout "About 30 0 30 15 [about]
+ buttoncreate "windowdomino "bhelp "Help 60 0 30 15 [ helpmessage]
+ buttoncreate "windowdomino "bsetup "Setup 90 0 30 15 [dialogcreate "windowdomino "mydialog [Game setup] 100 70 115 180 [setupwindow]]
+ buttoncreate "windowdomino "bnewgame [New Game] 120  0 50 15 [startnewgame]
+ buttoncreate "windowdomino "bnewround [New round] 170  0 50 15 [startnewround]
+ buttoncreate "windowdomino "bpass "Pass 220  0 30 15 [passbuttonpressed]
+ buttoncreate "windowdomino "bdraw "Draw 250  0 30 15 [drawrandomdomino 1] 
+ buttonenable "bdraw "False
 
  ;-------------- Initial settings and preferences
  make "gamefinished -1
@@ -1456,99 +1455,96 @@ to startnewround
 
  ;------------ If the player who has the highest doublet or highest value should start
  if :highestdoublet = "true [
-	 make "highestdoublet1 -1
-	 make "highestvalue1 -1
-	 make "hd1 -1
-	 make "hv1 -1
+     make "highestdoublet1 -1
+     make "highestvalue1 -1
+     make "hd1 -1
+     make "hv1 -1
 
-	 for [i 1 :maxtile 1] [
-		make "temp (mditem (se :i 1) :player1) 
-		make "domino1 first (mditem (se :temp 1) :arraydomino)
-		make "domino2 last (mditem (se :temp 1) :arraydomino)
-      	if :domino1 = :domino2 [ 
-			if (:domino1 + :domino2) > :highestdoublet1 [ 
-				make "highestdoublet1 (:domino1 + :domino2)
-				make "hd1 :i
-				]
+     for [i 1 :maxtile 1] [
+         make "temp (mditem (se :i 1) :player1) 
+         make "domino1 first (mditem (se :temp 1) :arraydomino)
+         make "domino2 last (mditem (se :temp 1) :arraydomino)
+         if :domino1 = :domino2 [ 
+             if (:domino1 + :domino2) > :highestdoublet1 [
+                 make "highestdoublet1 (:domino1 + :domino2)
+                 make "hd1 :i
+             ]
+         ]
 
-		
-			]
-		if (:domino1 + :domino2) > :highestvalue1 [ 
-			make "highestvalue1 (:domino1 + :domino2)
-			make "hv1 :i
-			]
+      if (:domino1 + :domino2) > :highestvalue1 [ 
+          make "highestvalue1 (:domino1 + :domino2)
+          make "hv1 :i
+      ]
 
-		]
-	 make "highestdoublet2 -1
-	 make "highestvalue2 -1
-	 make "hd2 -1
-	 make "hv2 -1
-	 for [i 1 :maxtile 1] [
-		make "temp (mditem (se :i 1) :player2) 
-		make "domino1 first (mditem (se :temp 1) :arraydomino)
-		make "domino2 last (mditem (se :temp 1) :arraydomino)
-	      if :domino1 = :domino2 [ 
-			if (:domino1 + :domino2) > :highestdoublet2 [ 
-				make "highestdoublet2 (:domino1 + :domino2)
-				make "hd2 :i
-				]
+ ]
 
-			]
-		if (:domino1 + :domino2) > :highestvalue2 [ 
-			make "highestvalue2 (:domino1 + :domino2)
-			make "hv2 :i
-			]
+ make "highestdoublet2 -1
+ make "highestvalue2 -1
+ make "hd2 -1
+ make "hv2 -1
+ for [i 1 :maxtile 1] [
+    make "temp (mditem (se :i 1) :player2) 
+    make "domino1 first (mditem (se :temp 1) :arraydomino)
+    make "domino2 last (mditem (se :temp 1) :arraydomino)
+    if :domino1 = :domino2 [ 
+        if (:domino1 + :domino2) > :highestdoublet2 [ 
+            make "highestdoublet2 (:domino1 + :domino2)
+            make "hd2 :i
+        ]
+    ]
 
-		]
+    if (:domino1 + :domino2) > :highestvalue2 [ 
+        make "highestvalue2 (:domino1 + :domino2)
+        make "hv2 :i
+    ]
+ ]
 
-	;----------- Player 1 has the highest doublet and should play
-	 if :highestdoublet1 > :highestdoublet2 [
-		showmessage [player 1 starts] 
-		playerplays 1 :hd1 1
-	
-		]
-	;----------- Player 2 has the highest doublet and should play
+ ;----------- Player 1 has the highest doublet and should play
+ if :highestdoublet1 > :highestdoublet2 [
+    showmessage [player 1 starts] 
+    playerplays 1 :hd1 1
+ ]
 
-	 if :highestdoublet2 > :highestdoublet1 [
-		showmessage [player 2 starts] 
-		playerplays 2 :hd2 1
-		make "computerplayed "True
-		make "pass 0
-		buttonenable "bpass "True
-		mouseon [getmousemove -1] [] [getmousemove 1] [] [] 
-		]
+ ;----------- Player 2 has the highest doublet and should play
+ if :highestdoublet2 > :highestdoublet1 [
+     showmessage [player 2 starts] 
+     playerplays 2 :hd2 1
+     make "computerplayed "True
+     make "pass 0
+     buttonenable "bpass "True
+     mouseon [getmousemove -1] [] [getmousemove 1] [] [] 
+ ]
 
-	 if (and (:highestdoublet2 <0) (:highestdoublet1 < 0))[
-		if :highestvalue1 = :highestvalue2 [
-			make "whostarts (random 2) + 1
-			if :whostarts = 1 [ make "hv2 -1 make "highestvalue2 -1]
-			if :whostarts = 2 [ make "hv1 -1 make "highestvalue1 -1]
-			]
+ if (and (:highestdoublet2 <0) (:highestdoublet1 < 0)) [
+     if :highestvalue1 = :highestvalue2 [
+         make "whostarts (random 2) + 1
+         if :whostarts = 1 [ make "hv2 -1 make "highestvalue2 -1]
+         if :whostarts = 2 [ make "hv1 -1 make "highestvalue1 -1]
+     ]
 
-		if :highestvalue1 > :highestvalue2 [
-			showmessage [player 1 starts] 
-			playerplays 1 :hv1 1
-			]
-		if :highestvalue2 > :highestvalue1 [
-			showmessage [player 2 starts] 
-			playerplays 2 :hv2 1
-			make "computerplayed "True
-			make "pass 0
-			buttonenable "bpass "True
-			mouseon [getmousemove -1] [] [getmousemove 1] [] [] 
+     if :highestvalue1 > :highestvalue2 [
+         showmessage [player 1 starts] 
+         playerplays 1 :hv1 1
+     ]
+     if :highestvalue2 > :highestvalue1 [
+         showmessage [player 2 starts] 
+         playerplays 2 :hv2 1
+         make "computerplayed "True
+         make "pass 0
+         buttonenable "bpass "True
+         mouseon [getmousemove -1] [] [getmousemove 1] [] [] 
+         ]
+     ]	
+ ]
 
-			]
-		]	
-	]
  ifelse :roundvariations = "draw [
-	buttonenable "bdraw "True 
-	buttonenable "bpass "False
-	make "nomorebones "False
-
-	] [
-	make "nomorebones "True
-	buttonenable "bdraw "False
-	]
+     buttonenable "bdraw "True 
+     buttonenable "bpass "False
+     make "nomorebones "False
+ ] [
+     make "nomorebones "True
+     buttonenable "bdraw "False
+ ]
  windowenable "windowdomino "true
 
 end
