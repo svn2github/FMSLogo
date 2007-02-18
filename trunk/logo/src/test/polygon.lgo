@@ -121,9 +121,10 @@ TO POLYGONTEST.SMOKETEST
   CHECKSCREEN "tetrahedron-in-perspective
  
   ; restore to default state
+  CLEARSCREEN
   SHOWTURTLE
   PENDOWN
-  SETPENCOLOR 1
+  SETPENCOLOR 0
   WRAP
 END
 
