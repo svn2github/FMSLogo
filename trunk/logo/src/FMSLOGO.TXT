@@ -41,6 +41,7 @@ II. New features/bugs fixed:
     o Implement request #1542395; LESSEQUALP, GREATEREQUALP, and NOTEQUALP
       are all supported as primitives and <=, >=, and <> are the respective
       infix operators.
+    o Add a Spanish translation of FMSLogo.
     o Improve the translation of the French FMSLogo.
     o Minor updates to the manual.
 
