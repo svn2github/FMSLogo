@@ -1,0 +1,135 @@
+----------------------------------------------------------------------
+FMSLogo Version 6.13.0 for Microsoft Windows 95/98/ME/NT/2000/XP/Vista
+----------------------------------------------------------------------
+
+   I. Kit Description/Location
+  II. New features/bugs fixed
+ III. Special Thanks
+  IV. Standard features
+   V. Recommended usage
+  VI. Reporting bugs
+ VII. Sources
+VIII. Minimum System Requirements
+
+
+I. Kit Description/Location (http://sourceforge.net/projects/fmslogo)
+
+  fmslogo-6.13.0.exe       (binary kit: Windows self-extracting installer)
+  fmslogo-6.13.0.zip       (binary kit: Windows ZIP archive)
+  fmslogo-src-6.13.0.zip   (source kit)
+
+II. New features/bugs fixed:
+
+  * Added for 6.13.0
+    o Fix bug #1661232; FMSLogo can (once again) save the workspace when
+      the commander's history has keyboard focus.
+    o Fix bug #1652924; FMSLogo can (once again) start up if the window
+      was made very small before it was last closed.
+    o Fix bug #1602862: "File - Exit" no longer quits if you press 
+      "Save and Exit" then press "Cancel" when choosing a filename.
+    o Fix bug #1630234: nested APPLY instructions no longer change the 
+      value of ? in the outer APPLY.
+    o Fix bug #1624729; the pitch, roll, and heading values now "snap to"
+      values like 0, 90, 180, and 270 as easily as they did in MSWLogo.
+    o Fix bug #1625096; the TORUS.LGO and SPHERE.LGO examples no longer
+      prevent the other from working.
+    o Fix bug #1625098; French translation tables are now properly collated.
+    o Fix bug #1602864; All COPYDEF bad input errors are now recoverable.
+    o Fix bug #1600159; 'CLOSE []' now throws a bad input error.
+    o Implement request #1631170; COPYDEF, PROCEDUREP, MACROP, and DEFINEDP
+      now load the procedure as a Logolib routine, if is not already defined.
+    o Implement request #1542395; LESSEQUALP, GREATEREQUALP, and NOTEQUALP
+      are all supported as primitives and <=, >=, and <> are the respective
+      infix operators.
+    o Add a Spanish translation of FMSLogo.
+    o Improve the translation of the French FMSLogo.
+    o Minor updates to the manual.
+
+  For a complete history of changes across all versions of FMSLogo, see
+  http://fmslogo.cvs.sourceforge.net/*checkout*/fmslogo/logo/src/CHANGELOG.TXT
+
+III. Special Thanks
+
+  I wish to extend my sincerest thanks to everyone who has used, supported,
+  criticized, praised, filed a bug on, or otherwise contributed to
+  either FMSLogo or MSWLogo.
+
+  Thanks to:
+    Michael Malin
+    Kari Hoijarvi
+    Clem Rutter
+    Lionel Laske
+    Relja Medic
+    Daniel Ajoy
+    Narayanan Chitoor
+    Jason Gervich
+    Andy Owen
+    Theodoros Chatzigiannakis
+    Jim Foster
+    Juan J. Paredes G.
+    Andreas Micheler
+    Mike Sandy
+    Bertrand Carette
+    Carl Bogardus
+
+  Special thanks to:
+    George Mills
+    Brian Harvey
+    Jim Muller
+    Erich Neuwirth
+    Yehuda Katz
+
+IV. Standard features
+
+  * Supports Windows 95/98/ME/NT/2000/XP/Vista.
+  * Supports TCP/IP WinSock Networking.
+  * Supports Text in all available fonts and sizes.
+  * Supports 1024 independent Turtles.
+  * Supports Bitmapped Turtles.
+  * Supports Cut, Paste and stretching bitmaps.
+  * Supports Clipboard Text and Bitmaps.
+  * Supports MIDI devices.
+  * Supports Direct I/O for Controlling External hardware.
+  * Supports Serial and Parallel Port communications.
+  * Supports Zooming.
+  * Supports Tail recursion (optimizes most recursive functions).
+  * Supports User error handling.
+  * Supports "Standard" Logo parsing.
+  * Supports Floodfill.
+  * Supports Save and restore images in .BMP format files.
+  * Supports 1, 4, 8, 16, 24 bits per pixels colors.
+  * Supports standard Windows Hypertext Help.
+  * Supports standard Windows Printing.
+  * Supports separate library and work area.
+  * Supports construction of Windows Dialog Boxes.
+  * Supports Event Driven programming (Mouse, Keyboard, Timer).
+  * Supports MultiMedia Devices (.WAV sound files, CD-ROM control etc.)
+  * Supports Event Timers allowing multiprocessing.
+  * Supports 3D Perspective drawing (Wireframe and Solids).
+  * Supports Animated GIF generation.
+
+V. Recommended usage
+
+  * Ages 6 and up
+     o Beginner     - Forward 100, Right 90
+     o Intermediate - Explore mathematics, art, music, robotics, language, and more
+     o Expert       - Develop games
+
+VI. Reporting bugs
+
+  Report bugs at http://sourceforge.net/projects/fmslogo/
+
+VII. Sources
+ 
+  Source code is available.  It's your legal right!  (See LICENSE.TXT).
+
+  The FMSLogo sources were written/compiled with:
+
+    Borland C++ 5.02 for windows (for .EXE)
+    Borland Turbo 32bit Assembler (for .EXE)
+    DocBook, xsltproc, and Microsoft Help Workshop (for online help)
+    Nullsoft Scriptable Install System (NSIS) (for the installer)
+
+VIII. Minimum System Requirements
+
+   Pentium class processor with minimum of 16 MB RAM running Windows 95.

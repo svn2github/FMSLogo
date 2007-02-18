@@ -1,0 +1,92 @@
+LOAD "testlib.lgo
+
+TO COLORSETGETTEST :setcolorcommand :getcolorcommand
+
+   ; test that color-by-index min value
+   RUN (LIST :setcolorcommand 0)
+   SIMPLEREPORTTEST (LIST :getcolorcommand) 0
+
+   ; test that color-by-index max value
+   RUN (LIST :setcolorcommand 15)
+   SIMPLEREPORTTEST (LIST :getcolorcommand) 15
+
+   ; test float-to-int conversion for color-by-index
+   RUN (LIST :setcolorcommand 7.5090212)
+   SIMPLEREPORTTEST (LIST :getcolorcommand) 7
+
+   ; test that color-by-index is always mod 16.
+   RUN (LIST :setcolorcommand 17)
+   SIMPLEREPORTTEST (LIST :getcolorcommand) 1
+
+   RUN (LIST :setcolorcommand [128 64 32])
+   SIMPLEREPORTTEST (LIST :getcolorcommand) [128 64 32]
+
+   ; test float-to-int conversion
+   RUN (LIST :setcolorcommand [128.0 64.3 32.9])
+   SIMPLEREPORTTEST (LIST :getcolorcommand) [128 64 32]
+
+   RUN (LIST :setcolorcommand [255 255 255])
+   SIMPLEREPORTTEST (LIST :getcolorcommand) [255 255 255]
+
+   RUNBADINPUTTEST (LIST :setcolorcommand {})
+   RUNBADINPUTTEST (LIST :setcolorcommand [0])
+   RUNBADINPUTTEST (LIST :setcolorcommand [0 0])
+   RUNBADINPUTTEST (LIST :setcolorcommand [0 0 0 0])
+   RUNNOTENOUGHINPUTSTEST (LIST "\( :setcolorcommand "\)     )
+   RUNTOOMANYINPUTSTEST   (LIST "\( :setcolorcommand 0 0 "\) )
+END
+
+TO PENCOLORTEST
+   COLORSETGETTEST "SETPENCOLOR  "PENCOLOR
+   COLORSETGETTEST "SETPENCOLOUR "PENCOLOUR
+   COLORSETGETTEST "SETPC        "PENCOLOR
+END
+
+TO FLOODCOLORTEST
+   COLORSETGETTEST "SETFLOODCOLOR  "FLOODCOLOR
+   COLORSETGETTEST "SETFLOODCOLOUR "FLOODCOLOUR
+   COLORSETGETTEST "SETFC          "FLOODCOLOR
+END
+
+TO SCREENCOLORTEST
+   COLORSETGETTEST "SETSCREENCOLOR  "SCREENCOLOR
+   COLORSETGETTEST "SETSCREENCOLOUR "SCREENCOLOUR
+   COLORSETGETTEST "SETSC           "SCREENCOLOR
+END
+
+TO COLORINDEXTEST
+
+   ; tests that the color index table given in the manual is correct
+
+   FOREACH  [ [0     0   0] ; black
+              [0     0 255] ; blue
+              [0   255   0] ; green
+              [0   255 255] ; cyan
+              [255   0   0] ; red
+              [255   0 255] ; magenta
+              [255 255   0] ; yellow
+              [255 255 255] ; white
+              [155  96  59] ; brown 
+              [197 136  18] ; tan 
+              [100 162  64] ; olive 
+              [120 187 187] ; sky blue 
+              [255 149 119] ; salmon 
+              [144 113 208] ; medium purple 
+              [255 163   0] ; orange 
+              [183 183 183] ; gray 
+   ] [
+       TRACEINSTRUCTION [SETPENCOLOR (# - 1)]
+       SETFLOODCOLOR [255 255 255]
+       SIMPLEREPORTTEST [ PENCOLOR ] ?
+   ]
+
+END
+
+TO COLORTEST
+   PENCOLORTEST
+   FLOODCOLORTEST
+   SCREENCOLORTEST
+
+   COLORINDEXTEST
+END
+
