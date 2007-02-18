@@ -16,23 +16,23 @@
      </row>
      <row>
        <entry><link linkend='command-.maybeoutput'>.maybeoutput</link></entry>
-       <entry>.quizadevuelve</entry>
+       <entry>.quizaDevuelve</entry>
      </row>
      <row>
        <entry><link linkend='command-.setbf'>.setbf</link></entry>
-       <entry>.ponmp</entry>
+       <entry>.ponMP</entry>
      </row>
      <row>
        <entry><link linkend='command-.setfirst'>.setfirst</link></entry>
-       <entry>.ponprimero</entry>
+       <entry>.ponPrimero</entry>
      </row>
      <row>
        <entry><link linkend='command-.setitem'>.setitem</link></entry>
-       <entry>.ponelemento</entry>
+       <entry>.ponElemento</entry>
      </row>
      <row>
        <entry><link linkend='command-activearea'>activearea</link></entry>
-       <entry>areaactiva</entry>
+       <entry>areaActiva</entry>
      </row>
      <row>
        <entry><link linkend='command-allopen'>allopen</link></entry>
@@ -92,11 +92,11 @@
      </row>
      <row>
        <entry><link linkend='command-backslashedp'>backslashed?</link></entry>
-       <entry>tienebarra?</entry>
+       <entry>tieneBarra?</entry>
      </row>
      <row>
        <entry><link linkend='command-backslashedp'>backslashedp</link></entry>
-       <entry>tienebarra?</entry>
+       <entry>tieneBarra?</entry>
      </row>
      <row>
        <entry><link linkend='command-beforep'>before?</link></entry>
@@ -120,11 +120,11 @@
      </row>
      <row>
        <entry><link linkend='command-bitcopy'>bitcopy</link></entry>
-       <entry>copiaarea</entry>
+       <entry>copiaArea</entry>
      </row>
      <row>
        <entry><link linkend='command-bitcut'>bitcut</link></entry>
-       <entry>cortaarea</entry>
+       <entry>cortaArea</entry>
      </row>
      <row>
        <entry><link linkend='command-bitfit'>bitfit</link></entry>
@@ -136,11 +136,11 @@
      </row>
      <row>
        <entry><link linkend='command-bitload'>bitload</link></entry>
-       <entry>cargadib</entry>
+       <entry>cargaDib</entry>
      </row>
      <row>
        <entry><link linkend='command-bitloadsize'>bitloadsize</link></entry>
-       <entry>tamañocargadib</entry>
+       <entry>tamañoCargaDib</entry>
      </row>
      <row>
        <entry><link linkend='command-bitmapturtle'>bitmapturtle</link></entry>
@@ -160,7 +160,7 @@
      </row>
      <row>
        <entry><link linkend='command-bitsave'>bitsave</link></entry>
-       <entry>guardadib</entry>
+       <entry>guardaDib</entry>
      </row>
      <row>
        <entry><link linkend='command-bitsize'>bitsize</link></entry>
@@ -192,15 +192,15 @@
      </row>
      <row>
        <entry><link linkend='command-butfirst'>butfirst</link></entry>
-       <entry>menosprimero</entry>
+       <entry>menosPrimero</entry>
      </row>
      <row>
        <entry><link linkend='command-butfirsts'>butfirsts</link></entry>
-       <entry>menosprimeros</entry>
+       <entry>menosPrimeros</entry>
      </row>
      <row>
        <entry><link linkend='command-butlast'>butlast</link></entry>
-       <entry>menosultimo</entry>
+       <entry>menosUltimo</entry>
      </row>
      <row>
        <entry><link linkend='command-buttonp'>button?</link></entry>
@@ -208,15 +208,15 @@
      </row>
      <row>
        <entry><link linkend='command-buttoncreate'>buttoncreate</link></entry>
-       <entry>creaboton</entry>
+       <entry>creaBoton</entry>
      </row>
      <row>
        <entry><link linkend='command-buttondelete'>buttondelete</link></entry>
-       <entry>borraboton</entry>
+       <entry>borraBoton</entry>
      </row>
      <row>
        <entry><link linkend='command-buttonenable'>buttonenable</link></entry>
-       <entry>habilitarboton</entry>
+       <entry>habilitarBoton</entry>
      </row>
      <row>
        <entry><link linkend='command-buttonp'>buttonp</link></entry>
@@ -224,7 +224,7 @@
      </row>
      <row>
        <entry><link linkend='command-buttonupdate'>buttonupdate</link></entry>
-       <entry>actualizaboton</entry>
+       <entry>actualizaBoton</entry>
      </row>
      <row>
        <entry><link linkend='command-bye'>bye</link></entry>
@@ -248,27 +248,27 @@
      </row>
      <row>
        <entry><link linkend='command-chdir'>chdir</link></entry>
-       <entry>cambiadir</entry>
+       <entry>cambiaDir</entry>
      </row>
      <row>
        <entry><link linkend='command-checkboxcreate'>checkboxcreate</link></entry>
-       <entry>creacheckbox</entry>
+       <entry>creaCheckbox</entry>
      </row>
      <row>
        <entry><link linkend='command-checkboxdelete'>checkboxdelete</link></entry>
-       <entry>borracheckbox</entry>
+       <entry>borraCheckbox</entry>
      </row>
      <row>
        <entry><link linkend='command-checkboxenable'>checkboxenable</link></entry>
-       <entry>habilitarcheckbox</entry>
+       <entry>habilitarCheckbox</entry>
      </row>
      <row>
        <entry><link linkend='command-checkboxget'>checkboxget</link></entry>
-       <entry>estadocheckbox</entry>
+       <entry>estadoCheckbox</entry>
      </row>
      <row>
        <entry><link linkend='command-checkboxset'>checkboxset</link></entry>
-       <entry>poncheckbox</entry>
+       <entry>ponCheckbox</entry>
      </row>
      <row>
        <entry><link linkend='command-circle'>circle</link></entry>
@@ -284,19 +284,19 @@
      </row>
      <row>
        <entry><link linkend='command-clearpalette'>clearpalette</link></entry>
-       <entry>borrapaleta</entry>
+       <entry>borraPaleta</entry>
      </row>
      <row>
        <entry><link linkend='command-clearscreen'>clearscreen</link></entry>
-       <entry>borrapantalla</entry>
+       <entry>borraPantalla</entry>
      </row>
      <row>
        <entry><link linkend='command-cleartext'>cleartext</link></entry>
-       <entry>borratexto</entry>
+       <entry>borraTexto</entry>
      </row>
      <row>
        <entry><link linkend='command-cleartimer'>cleartimer</link></entry>
-       <entry>contadoracero</entry>
+       <entry>contadorACero</entry>
      </row>
      <row>
        <entry><link linkend='command-close'>close</link></entry>
@@ -304,7 +304,7 @@
      </row>
      <row>
        <entry><link linkend='command-closeall'>closeall</link></entry>
-       <entry>cierratodo</entry>
+       <entry>cierraTodo</entry>
      </row>
      <row>
        <entry><link linkend='command-combine'>combine</link></entry>
@@ -312,31 +312,31 @@
      </row>
      <row>
        <entry><link linkend='command-comboboxaddstring'>comboboxaddstring</link></entry>
-       <entry>añadelineacombobox</entry>
+       <entry>añadeLineaCombobox</entry>
      </row>
      <row>
        <entry><link linkend='command-comboboxcreate'>comboboxcreate</link></entry>
-       <entry>creacombobox</entry>
+       <entry>creaCombobox</entry>
      </row>
      <row>
        <entry><link linkend='command-comboboxdelete'>comboboxdelete</link></entry>
-       <entry>borracombobox</entry>
+       <entry>borraCombobox</entry>
      </row>
      <row>
        <entry><link linkend='command-comboboxdeletestring'>comboboxdeletestring</link></entry>
-       <entry>borralineacombobox</entry>
+       <entry>borralineaCombobox</entry>
      </row>
      <row>
        <entry><link linkend='command-comboboxenable'>comboboxenable</link></entry>
-       <entry>habilitarcombobox</entry>
+       <entry>habilitarCombobox</entry>
      </row>
      <row>
        <entry><link linkend='command-comboboxgettext'>comboboxgettext</link></entry>
-       <entry>leetextocombobox</entry>
+       <entry>leetextoCombobox</entry>
      </row>
      <row>
        <entry><link linkend='command-comboboxsettext'>comboboxsettext</link></entry>
-       <entry>pontextocombobox</entry>
+       <entry>pontextoCombobox</entry>
      </row>
      <row>
        <entry><link linkend='command-contents'>contents</link></entry>
@@ -348,7 +348,7 @@
      </row>
      <row>
        <entry><link linkend='command-copydef'>copydef</link></entry>
-       <entry>copiadef</entry>
+       <entry>copiaDef</entry>
      </row>
      <row>
        <entry><link linkend='command-count'>count</link></entry>
@@ -368,7 +368,7 @@
      </row>
      <row>
        <entry><link linkend='command-debugwindows'>debugwindows</link></entry>
-       <entry>ventanadepurador</entry>
+       <entry>ventanaDepurador</entry>
      </row>
      <row>
        <entry><link linkend='command-definedp'>defined?</link></entry>
@@ -384,23 +384,23 @@
      </row>
      <row>
        <entry><link linkend='command-dialogcreate'>dialogcreate</link></entry>
-       <entry>creadialogo</entry>
+       <entry>creaDialogo</entry>
      </row>
      <row>
        <entry><link linkend='command-dialogdelete'>dialogdelete</link></entry>
-       <entry>borradialogo</entry>
+       <entry>borraDialogo</entry>
      </row>
      <row>
        <entry><link linkend='command-dialogenable'>dialogenable</link></entry>
-       <entry>habilitardialogo</entry>
+       <entry>habilitarDialogo</entry>
      </row>
      <row>
        <entry><link linkend='command-dialogfileopen'>dialogfileopen</link></entry>
-       <entry>abredialogo</entry>
+       <entry>abreDialogo</entry>
      </row>
      <row>
        <entry><link linkend='command-dialogfilesave'>dialogfilesave</link></entry>
-       <entry>guardadialogo</entry>
+       <entry>guardaDialogo</entry>
      </row>
      <row>
        <entry><link linkend='command-difference'>difference</link></entry>
@@ -420,27 +420,19 @@
      </row>
      <row>
        <entry><link linkend='command-dllcall'>dllcall</link></entry>
-       <entry>llamadll</entry>
+       <entry>llamaDLL</entry>
      </row>
      <row>
        <entry><link linkend='command-dllfree'>dllfree</link></entry>
-       <entry>quitadll</entry>
+       <entry>quitaDLL</entry>
      </row>
      <row>
        <entry><link linkend='command-dllload'>dllload</link></entry>
-       <entry>cargadll</entry>
+       <entry>cargaDLL</entry>
      </row>
      <row>
        <entry><link linkend='command-do.until'>do.until</link></entry>
        <entry>haz.hasta</entry>
-     </row>
-     <row>
-       <entry><link linkend='command-do.until'>do.until</link></entry>
-       <entry>haz.hasta</entry>
-     </row>
-     <row>
-       <entry><link linkend='command-do.while'>do.while</link></entry>
-       <entry>haz.mientras</entry>
      </row>
      <row>
        <entry><link linkend='command-do.while'>do.while</link></entry>
@@ -452,7 +444,7 @@
      </row>
      <row>
        <entry><link linkend='command-downpitch'>downpitch</link></entry>
-       <entry>bajanariz</entry>
+       <entry>bajaNariz</entry>
      </row>
      <row>
        <entry><link linkend='command-dribble'>dribble</link></entry>
@@ -500,7 +492,7 @@
      </row>
      <row>
        <entry><link linkend='command-ellipsearc'>ellipsearc</link></entry>
-       <entry>arcoelipse</entry>
+       <entry>arcoElipse</entry>
      </row>
      <row>
        <entry><link linkend='command-ellipsearc2'>ellipsearc2</link></entry>
@@ -543,20 +535,16 @@
        <entry>btodo</entry>
      </row>
      <row>
-       <entry><link linkend='command-erall'>erall</link></entry>
-       <entry>btodo</entry>
-     </row>
-     <row>
        <entry><link linkend='command-erase'>erase</link></entry>
        <entry>borra</entry>
      </row>
      <row>
        <entry><link linkend='command-erasefile'>erasefile</link></entry>
-       <entry>borraarchivo</entry>
+       <entry>borraArchivo</entry>
      </row>
      <row>
        <entry><link linkend='command-erf'>erf</link></entry>
-       <entry>boarchivo</entry>
+       <entry>boArchivo</entry>
      </row>
      <row>
        <entry><link linkend='command-ern'>ern</link></entry>
@@ -580,7 +568,7 @@
      </row>
      <row>
        <entry><link linkend='command-eventcheck'>eventcheck</link></entry>
-       <entry>sievento</entry>
+       <entry>siEvento</entry>
      </row>
      <row>
        <entry><link linkend='command-false'>false</link></entry>
@@ -592,7 +580,7 @@
      </row>
      <row>
        <entry><link linkend='command-fence'>fence</link></entry>
-       <entry>modojaula</entry>
+       <entry>modoJaula</entry>
      </row>
      <row>
        <entry><link linkend='command-filep'>filep</link></entry>
@@ -600,7 +588,7 @@
      </row>
      <row>
        <entry><link linkend='command-files'>files</link></entry>
-       <entry>listaarch</entry>
+       <entry>listaArchivos</entry>
      </row>
      <row>
        <entry><link linkend='command-fill'>fill</link></entry>
@@ -624,7 +612,7 @@
      </row>
      <row>
        <entry><link linkend='command-floodcolor'>floodcolor</link></entry>
-       <entry>pintacolor</entry>
+       <entry>pintaColor</entry>
      </row>
      <row>
        <entry><link linkend='command-fontfacenames'>fontfacenames</link></entry>
@@ -644,7 +632,7 @@
      </row>
      <row>
        <entry><link linkend='command-form'>form</link></entry>
-       <entry>formatonumero</entry>
+       <entry>formatoNumero</entry>
      </row>
      <row>
        <entry><link linkend='command-forward'>forward</link></entry>
@@ -652,7 +640,7 @@
      </row>
      <row>
        <entry><link linkend='command-fput'>fput</link></entry>
-       <entry>ponprimero</entry>
+       <entry>ponPrimero</entry>
      </row>
      <row>
        <entry><link linkend='command-fput'>fput</link></entry>
@@ -664,11 +652,11 @@
      </row>
      <row>
        <entry><link linkend='command-fullscreen'>fullscreen</link></entry>
-       <entry>pantallagrafica</entry>
+       <entry>pantallaGrafica</entry>
      </row>
      <row>
        <entry><link linkend='command-fulltext'>fulltext</link></entry>
-       <entry>textocompleto</entry>
+       <entry>textoCompleto</entry>
      </row>
      <row>
        <entry><link linkend='command-gensym'>gensym</link></entry>
@@ -676,19 +664,19 @@
      </row>
      <row>
        <entry><link linkend='command-getfocus'>getfocus</link></entry>
-       <entry>leefoco</entry>
+       <entry>leeFoco</entry>
      </row>
      <row>
        <entry><link linkend='command-gifload'>gifload</link></entry>
-       <entry>cargagif</entry>
+       <entry>cargaGif</entry>
      </row>
      <row>
        <entry><link linkend='command-gifsave'>gifsave</link></entry>
-       <entry>guardagif</entry>
+       <entry>guardaGif</entry>
      </row>
      <row>
        <entry><link linkend='command-gifsize'>gifsize</link></entry>
-       <entry>tamañogif</entry>
+       <entry>tamañoGif</entry>
      </row>
      <row>
        <entry><link linkend='command-goldenratio'>goldenratio</link></entry>
@@ -696,7 +684,7 @@
      </row>
      <row>
        <entry><link linkend='command-goto'>goto</link></entry>
-       <entry>saltoa</entry>
+       <entry>saltoA</entry>
      </row>
      <row>
        <entry><link linkend='command-gprop'>gprop</link></entry>
@@ -720,11 +708,11 @@
      </row>
      <row>
        <entry><link linkend='command-groupboxcreate'>groupboxcreate</link></entry>
-       <entry>creagroupbox</entry>
+       <entry>creaGroupbox</entry>
      </row>
      <row>
        <entry><link linkend='command-groupboxdelete'>groupboxdelete</link></entry>
-       <entry>borragroupbox</entry>
+       <entry>borraGroupbox</entry>
      </row>
      <row>
        <entry><link linkend='command-halt'>halt</link></entry>
@@ -748,7 +736,7 @@
      </row>
      <row>
        <entry><link linkend='command-ht'>ht</link></entry>
-       <entry>ocultatortuga</entry>
+       <entry>ocultaTortuga</entry>
      </row>
      <row>
        <entry><link linkend='command-icon'>icon</link></entry>
@@ -760,19 +748,19 @@
      </row>
      <row>
        <entry><link linkend='command-ifelse'>ifelse</link></entry>
-       <entry>sisino</entry>
+       <entry>siSino</entry>
      </row>
      <row>
        <entry><link linkend='command-iff'>iff</link></entry>
-       <entry>sifalso</entry>
+       <entry>siFalso</entry>
      </row>
      <row>
        <entry><link linkend='command-iffalse'>iffalse</link></entry>
-       <entry>sifalso</entry>
+       <entry>siFalso</entry>
      </row>
      <row>
        <entry><link linkend='command-ift'>ift</link></entry>
-       <entry>sicieto</entry>
+       <entry>sicierto</entry>
      </row>
      <row>
        <entry><link linkend='command-iftrue'>iftrue</link></entry>
@@ -784,15 +772,15 @@
      </row>
      <row>
        <entry><link linkend='command-ingameport'>ingameport</link></entry>
-       <entry>leepuertojuego</entry>
+       <entry>leePuertoJuego</entry>
      </row>
      <row>
        <entry><link linkend='command-inport'>inport</link></entry>
-       <entry>leepuerto2</entry>
+       <entry>leePuerto2</entry>
      </row>
      <row>
        <entry><link linkend='command-inportb'>inportb</link></entry>
-       <entry>leepuerto</entry>
+       <entry>leePuerto</entry>
      </row>
      <row>
        <entry><link linkend='command-int'>int</link></entry>
@@ -801,10 +789,6 @@
      <row>
        <entry><link linkend='command-invoke'>invoke</link></entry>
        <entry>invoca</entry>
-     </row>
-     <row>
-       <entry><link linkend='command-iseq'>iseq</link></entry>
-       <entry>secent</entry>
      </row>
      <row>
        <entry><link linkend='command-iseq'>iseq</link></entry>
@@ -820,7 +804,7 @@
      </row>
      <row>
        <entry><link linkend='command-keyboardoff'>keyboardoff</link></entry>
-       <entry>deshabilitaTeclado</entry>
+       <entry>desHabilitaTeclado</entry>
      </row>
      <row>
        <entry><link linkend='command-keyboardon'>keyboardon</link></entry>
@@ -828,7 +812,7 @@
      </row>
      <row>
        <entry><link linkend='command-keyboardvalue'>keyboardvalue</link></entry>
-       <entry>leetecla</entry>
+       <entry>leeTecla</entry>
      </row>
      <row>
        <entry><link linkend='command-keyp'>keyp</link></entry>
@@ -844,7 +828,7 @@
      </row>
      <row>
        <entry><link linkend='command-labelsize'>labelsize</link></entry>
-       <entry>rotulotam</entry>
+       <entry>rotuloTam</entry>
      </row>
      <row>
        <entry><link linkend='command-last'>last</link></entry>
@@ -852,11 +836,11 @@
      </row>
      <row>
        <entry><link linkend='command-left'>left</link></entry>
-       <entry>giraizquierda</entry>
+       <entry>giraIzquierda</entry>
      </row>
      <row>
        <entry><link linkend='command-leftroll'>leftroll</link></entry>
-       <entry>balanceaizquierda</entry>
+       <entry>balanceaIzquierda</entry>
      </row>
      <row>
        <entry><link linkend='command-lessp'>less?</link></entry>
@@ -888,27 +872,27 @@
      </row>
      <row>
        <entry><link linkend='command-listboxaddstring'>listboxaddstring</link></entry>
-       <entry>añadecadenalistbox</entry>
+       <entry>añadeCadenaListbox</entry>
      </row>
      <row>
        <entry><link linkend='command-listboxcreate'>listboxcreate</link></entry>
-       <entry>crealistbox</entry>
+       <entry>creaListbox</entry>
      </row>
      <row>
        <entry><link linkend='command-listboxdelete'>listboxdelete</link></entry>
-       <entry>borralistbox</entry>
+       <entry>borraListbox</entry>
      </row>
      <row>
        <entry><link linkend='command-listboxdeletestring'>listboxdeletestring</link></entry>
-       <entry>borracadenalistbox</entry>
+       <entry>borraCadenaListbox</entry>
      </row>
      <row>
        <entry><link linkend='command-listboxenable'>listboxenable</link></entry>
-       <entry>habilitarlistbox</entry>
+       <entry>habilitarListbox</entry>
      </row>
      <row>
        <entry><link linkend='command-listboxgetselect'>listboxgetselect</link></entry>
-       <entry>leeseleccionlistbox</entry>
+       <entry>leeseLeccionListbox</entry>
      </row>
      <row>
        <entry><link linkend='command-listp'>listp</link></entry>
@@ -927,16 +911,12 @@
        <entry>hazlocal</entry>
      </row>
      <row>
-       <entry><link linkend='command-localmake'>localmake</link></entry>
-       <entry>hazlocal</entry>
-     </row>
-     <row>
        <entry><link linkend='command-log10'>log10</link></entry>
        <entry>log</entry>
      </row>
      <row>
        <entry><link linkend='command-logoversion'>logoversion</link></entry>
-       <entry>versionlogo</entry>
+       <entry>versionLogo</entry>
      </row>
      <row>
        <entry><link linkend='command-lowercase'>lowercase</link></entry>
@@ -944,7 +924,7 @@
      </row>
      <row>
        <entry><link linkend='command-lput'>lput</link></entry>
-       <entry>ponultimo</entry>
+       <entry>ponUltimo</entry>
      </row>
      <row>
        <entry><link linkend='command-lput'>lput</link></entry>
@@ -956,7 +936,7 @@
      </row>
      <row>
        <entry><link linkend='command-lshift'>lshift</link></entry>
-       <entry>desplazaizquierda</entry>
+       <entry>desplazaIzquierda</entry>
      </row>
      <row>
        <entry><link linkend='command-lt'>lt</link></entry>
@@ -965,10 +945,6 @@
      <row>
        <entry><link linkend='command-machine'>machine</link></entry>
        <entry>sistema</entry>
-     </row>
-     <row>
-       <entry><link linkend='command-macroexpand'>macroexpand</link></entry>
-       <entry>expandemacro</entry>
      </row>
      <row>
        <entry><link linkend='command-macroexpand'>macroexpand</link></entry>
@@ -1024,23 +1000,23 @@
      </row>
      <row>
        <entry><link linkend='command-midiclose'>midiclose</link></entry>
-       <entry>cierramidi</entry>
+       <entry>cierraMidi</entry>
      </row>
      <row>
        <entry><link linkend='command-midimessage'>midimessage</link></entry>
-       <entry>mensajemidi</entry>
+       <entry>mensajeMidi</entry>
      </row>
      <row>
        <entry><link linkend='command-midiopen'>midiopen</link></entry>
-       <entry>abremidi</entry>
+       <entry>abreMidi</entry>
      </row>
      <row>
        <entry><link linkend='command-minus'>minus</link></entry>
-       <entry>cambiasigno</entry>
+       <entry>cambiaSigno</entry>
      </row>
      <row>
        <entry><link linkend='command-mkdir'>mkdir</link></entry>
-       <entry>creadir</entry>
+       <entry>creaDir</entry>
      </row>
      <row>
        <entry><link linkend='command-modulo'>modulo</link></entry>
@@ -1060,7 +1036,7 @@
      </row>
      <row>
        <entry><link linkend='command-mousepos'>mousepos</link></entry>
-       <entry>posraton</entry>
+       <entry>posRaton</entry>
      </row>
      <row>
        <entry><link linkend='command-name'>name</link></entry>
@@ -1075,16 +1051,12 @@
        <entry>listanombres</entry>
      </row>
      <row>
-       <entry><link linkend='command-namelist'>namelist</link></entry>
-       <entry>listanombres</entry>
-     </row>
-     <row>
        <entry><link linkend='command-namep'>namep</link></entry>
        <entry>var?</entry>
      </row>
      <row>
        <entry><link linkend='command-names'>names</link></entry>
-       <entry>lvars</entry>
+       <entry>lVars</entry>
      </row>
      <row>
        <entry><link linkend='command-netacceptoff'>netacceptoff</link></entry>
@@ -1096,11 +1068,11 @@
      </row>
      <row>
        <entry><link linkend='command-netacceptreceivevalue'>netacceptreceivevalue</link></entry>
-       <entry>RecibeValorAceptaRed</entry>
+       <entry>recibeValorAceptaRed</entry>
      </row>
      <row>
        <entry><link linkend='command-netacceptsendvalue'>netacceptsendvalue</link></entry>
-       <entry>EnviaValorAceptaRed</entry>
+       <entry>enviaValorAceptaRed</entry>
      </row>
      <row>
        <entry><link linkend='command-netconnectoff'>netconnectoff</link></entry>
@@ -1112,11 +1084,11 @@
      </row>
      <row>
        <entry><link linkend='command-netconnectreceivevalue'>netconnectreceivevalue</link></entry>
-       <entry>RecibeValorConectaRed</entry>
+       <entry>recibeValorConectaRed</entry>
      </row>
      <row>
        <entry><link linkend='command-netconnectsendvalue'>netconnectsendvalue</link></entry>
-       <entry>EnviaValorConectaRed</entry>
+       <entry>enviaValorConectaRed</entry>
      </row>
      <row>
        <entry><link linkend='command-netshutdown'>netshutdown</link></entry>
@@ -1128,7 +1100,7 @@
      </row>
      <row>
        <entry><link linkend='command-nobitmapturtle'>nobitmapturtle</link></entry>
-       <entry>ponformatortuga</entry>
+       <entry>ponFormaTortuga</entry>
      </row>
      <row>
        <entry><link linkend='command-nodes'>nodes</link></entry>
@@ -1136,7 +1108,7 @@
      </row>
      <row>
        <entry><link linkend='command-nodribble'>nodribble</link></entry>
-       <entry>noeco</entry>
+       <entry>noEco</entry>
      </row>
      <row>
        <entry><link linkend='command-norefresh'>norefresh</link></entry>
@@ -1144,7 +1116,7 @@
      </row>
      <row>
        <entry><link linkend='command-nostatus'>nostatus</link></entry>
-       <entry>quitaestado</entry>
+       <entry>quitaEstado</entry>
      </row>
      <row>
        <entry><link linkend='command-not'>not</link></entry>
@@ -1152,11 +1124,11 @@
      </row>
      <row>
        <entry><link linkend='command-notequalp'>notequal?</link></entry>
-       <entry>noiguales?</entry>
+       <entry>noIguales?</entry>
      </row>
      <row>
        <entry><link linkend='command-notequalp'>notequalp</link></entry>
-       <entry>noiguales?</entry>
+       <entry>noIguales?</entry>
      </row>
      <row>
        <entry><link linkend='command-noyield'>noyield</link></entry>
@@ -1176,19 +1148,19 @@
      </row>
      <row>
        <entry><link linkend='command-openappend'>openappend</link></entry>
-       <entry>abreañadir</entry>
+       <entry>abreAñadir</entry>
      </row>
      <row>
        <entry><link linkend='command-openread'>openread</link></entry>
-       <entry>abrelectura</entry>
+       <entry>abreLectura</entry>
      </row>
      <row>
        <entry><link linkend='command-openupdate'>openupdate</link></entry>
-       <entry>abreactualizar</entry>
+       <entry>abreActualizar</entry>
      </row>
      <row>
        <entry><link linkend='command-openwrite'>openwrite</link></entry>
-       <entry>abreescritura</entry>
+       <entry>abreEscritura</entry>
      </row>
      <row>
        <entry><link linkend='command-or'>or</link></entry>
@@ -1200,11 +1172,11 @@
      </row>
      <row>
        <entry><link linkend='command-outport'>outport</link></entry>
-       <entry>escribepuerto2</entry>
+       <entry>escribePuerto2</entry>
      </row>
      <row>
        <entry><link linkend='command-outportb'>outportb</link></entry>
-       <entry>escribepuerto</entry>
+       <entry>escribePuerto</entry>
      </row>
      <row>
        <entry><link linkend='command-output'>output</link></entry>
@@ -1235,24 +1207,20 @@
        <entry>lapiz</entry>
      </row>
      <row>
-       <entry><link linkend='command-pen'>pen</link></entry>
-       <entry>lapiz</entry>
-     </row>
-     <row>
        <entry><link linkend='command-pencolor'>pencolor</link></entry>
-       <entry>colorlapiz</entry>
+       <entry>colorLapiz</entry>
      </row>
      <row>
        <entry><link linkend='command-pendown'>pendown</link></entry>
-       <entry>bajalapiz</entry>
+       <entry>bajaLapiz</entry>
      </row>
      <row>
        <entry><link linkend='command-pendownp'>pendown?</link></entry>
-       <entry>bajalapiz?</entry>
+       <entry>bajaLapiz?</entry>
      </row>
      <row>
        <entry><link linkend='command-pendownp'>pendownp</link></entry>
-       <entry>bajalapiz?</entry>
+       <entry>bajaLapiz?</entry>
      </row>
      <row>
        <entry><link linkend='command-penerase'>penerase</link></entry>
@@ -1260,7 +1228,7 @@
      </row>
      <row>
        <entry><link linkend='command-penmode'>penmode</link></entry>
-       <entry>lapizmodo</entry>
+       <entry>lapizModo</entry>
      </row>
      <row>
        <entry><link linkend='command-pennormal'>pennormal</link></entry>
@@ -1268,15 +1236,15 @@
      </row>
      <row>
        <entry><link linkend='command-penpaint'>penpaint</link></entry>
-       <entry>lapiznormal</entry>
+       <entry>lapizNormal</entry>
      </row>
      <row>
        <entry><link linkend='command-penpattern'>penpattern</link></entry>
-       <entry>patronlapiz</entry>
+       <entry>patronLapiz</entry>
      </row>
      <row>
        <entry><link linkend='command-penreverse'>penreverse</link></entry>
-       <entry>lapizinvierte</entry>
+       <entry>lapizInvierte</entry>
      </row>
      <row>
        <entry><link linkend='command-pensize'>pensize</link></entry>
@@ -1284,15 +1252,11 @@
      </row>
      <row>
        <entry><link linkend='command-penup'>penup</link></entry>
-       <entry>subelapiz</entry>
+       <entry>subeLapiz</entry>
      </row>
      <row>
        <entry><link linkend='command-perspective'>perspective</link></entry>
        <entry>perspectiva</entry>
-     </row>
-     <row>
-       <entry><link linkend='command-pick'>pick</link></entry>
-       <entry>sacaalazar</entry>
      </row>
      <row>
        <entry><link linkend='command-pick'>pick</link></entry>
@@ -1304,19 +1268,15 @@
      </row>
      <row>
        <entry><link linkend='command-playwave'>playwave</link></entry>
-       <entry>suenawave</entry>
+       <entry>suenaWave</entry>
      </row>
      <row>
        <entry><link linkend='command-plist'>plist</link></entry>
-       <entry>lprop</entry>
+       <entry>lProp</entry>
      </row>
      <row>
        <entry><link linkend='command-plists'>plists</link></entry>
-       <entry>lprops</entry>
-     </row>
-     <row>
-       <entry><link linkend='command-pllist'>pllist</link></entry>
-       <entry>listapropiedades</entry>
+       <entry>lProps</entry>
      </row>
      <row>
        <entry><link linkend='command-pllist'>pllist</link></entry>
@@ -1324,7 +1284,7 @@
      </row>
      <row>
        <entry><link linkend='command-po'>po</link></entry>
-       <entry>imdefs</entry>
+       <entry>imDefs</entry>
      </row>
      <row>
        <entry><link linkend='command-poall'>poall</link></entry>
@@ -1332,15 +1292,15 @@
      </row>
      <row>
        <entry><link linkend='command-polyend'>polyend</link></entry>
-       <entry>terminapoligono</entry>
+       <entry>terminaPoligono</entry>
      </row>
      <row>
        <entry><link linkend='command-polystart'>polystart</link></entry>
-       <entry>empiezapoligono</entry>
+       <entry>empiezaPoligono</entry>
      </row>
      <row>
        <entry><link linkend='command-polyview'>polyview</link></entry>
-       <entry>muestrapoligono</entry>
+       <entry>muestraPoligono</entry>
      </row>
      <row>
        <entry><link linkend='command-pon'>pon</link></entry>
@@ -1356,7 +1316,7 @@
      </row>
      <row>
        <entry><link linkend='command-popdir'>popdir</link></entry>
-       <entry>directoriopadre</entry>
+       <entry>directorioPadre</entry>
      </row>
      <row>
        <entry><link linkend='command-popl'>popl</link></entry>
@@ -1372,35 +1332,35 @@
      </row>
      <row>
        <entry><link linkend='command-portclose'>portclose</link></entry>
-       <entry>cierrapuerto</entry>
+       <entry>cierraPuerto</entry>
      </row>
      <row>
        <entry><link linkend='command-portflush'>portflush</link></entry>
-       <entry>limpiapuerto</entry>
+       <entry>limpiaPuerto</entry>
      </row>
      <row>
        <entry><link linkend='command-portmode'>portmode</link></entry>
-       <entry>modopuerto</entry>
+       <entry>modoPuerto</entry>
      </row>
      <row>
        <entry><link linkend='command-portopen'>portopen</link></entry>
-       <entry>abrepuerto</entry>
+       <entry>abrePuerto</entry>
      </row>
      <row>
        <entry><link linkend='command-portreadarray'>portreadarray</link></entry>
-       <entry>leecadenapuerto</entry>
+       <entry>leeCadenaPuerto</entry>
      </row>
      <row>
        <entry><link linkend='command-portreadchar'>portreadchar</link></entry>
-       <entry>leecaracterpuerto</entry>
+       <entry>leeCaracterPuerto</entry>
      </row>
      <row>
        <entry><link linkend='command-portwritearray'>portwritearray</link></entry>
-       <entry>escribecadenapuerto</entry>
+       <entry>escribeCadenaPuerto</entry>
      </row>
      <row>
        <entry><link linkend='command-portwritechar'>portwritechar</link></entry>
-       <entry>escribecaracterpuerto</entry>
+       <entry>escribeCaracterPuerto</entry>
      </row>
      <row>
        <entry><link linkend='command-posxyz'>posxyz</link></entry>
@@ -1424,7 +1384,7 @@
      </row>
      <row>
        <entry><link linkend='command-ppt'>ppt</link></entry>
-       <entry>lnormal</entry>
+       <entry>lNormal</entry>
      </row>
      <row>
        <entry><link linkend='command-pr'>pr</link></entry>
@@ -1452,7 +1412,7 @@
      </row>
      <row>
        <entry><link linkend='command-procedures'>procedures</link></entry>
-       <entry>lprocs</entry>
+       <entry>lProcs</entry>
      </row>
      <row>
        <entry><link linkend='command-product'>product</link></entry>
@@ -1460,11 +1420,11 @@
      </row>
      <row>
        <entry><link linkend='command-proplistp'>proplist?</link></entry>
-       <entry>lprop?</entry>
+       <entry>lProp?</entry>
      </row>
      <row>
        <entry><link linkend='command-proplistp'>proplistp</link></entry>
-       <entry>lprop?</entry>
+       <entry>lProp?</entry>
      </row>
      <row>
        <entry><link linkend='command-pu'>pu</link></entry>
@@ -1476,11 +1436,11 @@
      </row>
      <row>
        <entry><link linkend='command-px'>px</link></entry>
-       <entry>linvierte</entry>
+       <entry>lInvierte</entry>
      </row>
      <row>
        <entry><link linkend='command-questionbox'>questionbox</link></entry>
-       <entry>preguntabox</entry>
+       <entry>preguntaBox</entry>
      </row>
      <row>
        <entry><link linkend='command-queue'>queue</link></entry>
@@ -1496,31 +1456,31 @@
      </row>
      <row>
        <entry><link linkend='command-radarcsin'>radarcsin</link></entry>
-       <entry>radarcsen</entry>
+       <entry>radarcSen</entry>
      </row>
      <row>
        <entry><link linkend='command-radiobuttoncreate'>radiobuttoncreate</link></entry>
-       <entry>creabotonradio</entry>
+       <entry>creaBotonRadio</entry>
      </row>
      <row>
        <entry><link linkend='command-radiobuttondelete'>radiobuttondelete</link></entry>
-       <entry>borrabotonradio</entry>
+       <entry>borraBotonRadio</entry>
      </row>
      <row>
        <entry><link linkend='command-radiobuttonenable'>radiobuttonenable</link></entry>
-       <entry>habilitarbotonradio</entry>
+       <entry>habilitarBotonRadio</entry>
      </row>
      <row>
        <entry><link linkend='command-radiobuttonget'>radiobuttonget</link></entry>
-       <entry>leebotonradio</entry>
+       <entry>leeBotonRadio</entry>
      </row>
      <row>
        <entry><link linkend='command-radiobuttonset'>radiobuttonset</link></entry>
-       <entry>escribebotonradio</entry>
+       <entry>escribeBotonRadio</entry>
      </row>
      <row>
        <entry><link linkend='command-radsin'>radsin</link></entry>
-       <entry>radsen</entry>
+       <entry>radSen</entry>
      </row>
      <row>
        <entry><link linkend='command-random'>random</link></entry>
@@ -1528,7 +1488,7 @@
      </row>
      <row>
        <entry><link linkend='command-rawascii'>rawascii</link></entry>
-       <entry>asciipuro</entry>
+       <entry>asciiPuro</entry>
      </row>
      <row>
        <entry><link linkend='command-rc'>rc</link></entry>
@@ -1540,11 +1500,11 @@
      </row>
      <row>
        <entry><link linkend='command-readchar'>readchar</link></entry>
-       <entry>leecar</entry>
+       <entry>leeCar</entry>
      </row>
      <row>
        <entry><link linkend='command-readchars'>readchars</link></entry>
-       <entry>leecarcs</entry>
+       <entry>leeCarcs</entry>
      </row>
      <row>
        <entry><link linkend='command-reader'>reader</link></entry>
@@ -1552,15 +1512,15 @@
      </row>
      <row>
        <entry><link linkend='command-readlist'>readlist</link></entry>
-       <entry>leelista</entry>
+       <entry>leeLista</entry>
      </row>
      <row>
        <entry><link linkend='command-readpos'>readpos</link></entry>
-       <entry>poslectura</entry>
+       <entry>posLectura</entry>
      </row>
      <row>
        <entry><link linkend='command-readword'>readword</link></entry>
-       <entry>leepalabra</entry>
+       <entry>leePalabra</entry>
      </row>
      <row>
        <entry><link linkend='command-refresh'>refresh</link></entry>
@@ -1575,20 +1535,16 @@
        <entry>quitarepetidos</entry>
      </row>
      <row>
-       <entry><link linkend='command-remdup'>remdup</link></entry>
-       <entry>quitarepetidos</entry>
-     </row>
-     <row>
        <entry><link linkend='command-remove'>remove</link></entry>
        <entry>quita</entry>
      </row>
      <row>
        <entry><link linkend='command-remprop'>remprop</link></entry>
-       <entry>boprop</entry>
+       <entry>boProp</entry>
      </row>
      <row>
        <entry><link linkend='command-repcount'>repcount</link></entry>
-       <entry>cuentarepite</entry>
+       <entry>cuentaRepite</entry>
      </row>
      <row>
        <entry><link linkend='command-repeat'>repeat</link></entry>
@@ -1603,20 +1559,16 @@
        <entry>restante</entry>
      </row>
      <row>
-       <entry><link linkend='command-rest'>rest</link></entry>
-       <entry>restante</entry>
-     </row>
-     <row>
        <entry><link linkend='command-reverse'>reverse</link></entry>
        <entry>invierte</entry>
      </row>
      <row>
        <entry><link linkend='command-right'>right</link></entry>
-       <entry>giraderecha</entry>
+       <entry>giraDerecha</entry>
      </row>
      <row>
        <entry><link linkend='command-rightroll'>rightroll</link></entry>
-       <entry>balanceaderecha</entry>
+       <entry>balanceaDerecha</entry>
      </row>
      <row>
        <entry><link linkend='command-rl'>rl</link></entry>
@@ -1624,7 +1576,7 @@
      </row>
      <row>
        <entry><link linkend='command-rmdir'>rmdir</link></entry>
-       <entry>eliminadir</entry>
+       <entry>eliminaDir</entry>
      </row>
      <row>
        <entry><link linkend='command-roll'>roll</link></entry>
@@ -1652,11 +1604,11 @@
      </row>
      <row>
        <entry><link linkend='command-runparse'>runparse</link></entry>
-       <entry>ejecutaanaliza</entry>
+       <entry>ejecutaAnaliza</entry>
      </row>
      <row>
        <entry><link linkend='command-runresult'>runresult</link></entry>
-       <entry>resultadoejecuta</entry>
+       <entry>resultadoEjecuta</entry>
      </row>
      <row>
        <entry><link linkend='command-rw'>rw</link></entry>
@@ -1676,23 +1628,23 @@
      </row>
      <row>
        <entry><link linkend='command-scrollbarcreate'>scrollbarcreate</link></entry>
-       <entry>creabarradesplazamiento</entry>
+       <entry>creaBarraDesplazamiento</entry>
      </row>
      <row>
        <entry><link linkend='command-scrollbardelete'>scrollbardelete</link></entry>
-       <entry>borrabarradesplazamiento</entry>
+       <entry>borraBarraDesplazamiento</entry>
      </row>
      <row>
        <entry><link linkend='command-scrollbarenable'>scrollbarenable</link></entry>
-       <entry>habilitarbarradesplazamiento</entry>
+       <entry>habilitarBarraDesplazamiento</entry>
      </row>
      <row>
        <entry><link linkend='command-scrollbarget'>scrollbarget</link></entry>
-       <entry>leebarradesplazamiento</entry>
+       <entry>leeBarraDesplazamiento</entry>
      </row>
      <row>
        <entry><link linkend='command-scrollbarset'>scrollbarset</link></entry>
-       <entry>ponbarradesplazamiento</entry>
+       <entry>ponBarraDesplazamiento</entry>
      </row>
      <row>
        <entry><link linkend='command-scrollx'>scrollx</link></entry>
@@ -1712,7 +1664,7 @@
      </row>
      <row>
        <entry><link linkend='command-selectbox'>selectbox</link></entry>
-       <entry>seleccionbox</entry>
+       <entry>seleccionBox</entry>
      </row>
      <row>
        <entry><link linkend='command-sentence'>sentence</link></entry>
@@ -1720,31 +1672,31 @@
      </row>
      <row>
        <entry><link linkend='command-setactivearea'>setactivearea</link></entry>
-       <entry>ponareaactiva</entry>
+       <entry>ponAreaActiva</entry>
      </row>
      <row>
        <entry><link linkend='command-setbitindex'>setbitindex</link></entry>
-       <entry>ponindicebit</entry>
+       <entry>ponIndiceBit</entry>
      </row>
      <row>
        <entry><link linkend='command-setbitmode'>setbitmode</link></entry>
-       <entry>ponmodobit</entry>
+       <entry>ponModobit</entry>
      </row>
      <row>
        <entry><link linkend='command-setclip'>setclip</link></entry>
-       <entry>ponclip</entry>
+       <entry>ponClip</entry>
      </row>
      <row>
        <entry><link linkend='command-setcursor'>setcursor</link></entry>
-       <entry>poncursor</entry>
+       <entry>ponCursor</entry>
      </row>
      <row>
        <entry><link linkend='command-setcursornowait'>setcursornowait</link></entry>
-       <entry>setcursornoespera</entry>
+       <entry>setCursorNoEspera</entry>
      </row>
      <row>
        <entry><link linkend='command-setcursorwait'>setcursorwait</link></entry>
-       <entry>poncursorespera</entry>
+       <entry>ponCursorEspera</entry>
      </row>
      <row>
        <entry><link linkend='command-setfc'>setfc</link></entry>
@@ -1752,11 +1704,11 @@
      </row>
      <row>
        <entry><link linkend='command-setfloodcolor'>setfloodcolor</link></entry>
-       <entry>poncolorrelleno</entry>
+       <entry>ponColorRelleno</entry>
      </row>
      <row>
        <entry><link linkend='command-setfocus'>setfocus</link></entry>
-       <entry>ponfoco</entry>
+       <entry>ponFoco</entry>
      </row>
      <row>
        <entry><link linkend='command-seth'>seth</link></entry>
@@ -1764,27 +1716,23 @@
      </row>
      <row>
        <entry><link linkend='command-setheading'>setheading</link></entry>
-       <entry>ponrumbo</entry>
+       <entry>ponRumbo</entry>
      </row>
      <row>
        <entry><link linkend='command-setitem'>setitem</link></entry>
-       <entry>ponelemento</entry>
+       <entry>ponElemento</entry>
      </row>
      <row>
        <entry><link linkend='command-setlabelfont'>setlabelfont</link></entry>
-       <entry>pontipo</entry>
+       <entry>ponTipo</entry>
      </row>
      <row>
        <entry><link linkend='command-setlight'>setlight</link></entry>
-       <entry>ponluz</entry>
+       <entry>ponLuz</entry>
      </row>
      <row>
        <entry><link linkend='command-setmargins'>setmargins</link></entry>
-       <entry>ponmargenes</entry>
-     </row>
-     <row>
-       <entry><link linkend='command-setorientation'>setorientation</link></entry>
-       <entry>ponorientacion</entry>
+       <entry>ponMargenes</entry>
      </row>
      <row>
        <entry><link linkend='command-setorientation'>setorientation</link></entry>
@@ -1792,11 +1740,7 @@
      </row>
      <row>
        <entry><link linkend='command-setpc'>setpc</link></entry>
-       <entry>poncl</entry>
-     </row>
-     <row>
-       <entry><link linkend='command-setpen'>setpen</link></entry>
-       <entry>ponlapiz</entry>
+       <entry>ponCL</entry>
      </row>
      <row>
        <entry><link linkend='command-setpen'>setpen</link></entry>
@@ -1804,27 +1748,27 @@
      </row>
      <row>
        <entry><link linkend='command-setpencolor'>setpencolor</link></entry>
-       <entry>poncolorlapiz</entry>
+       <entry>ponColorLapiz</entry>
      </row>
      <row>
        <entry><link linkend='command-setpenpattern'>setpenpattern</link></entry>
-       <entry>ponpatronlapiz</entry>
+       <entry>ponPatronLapiz</entry>
      </row>
      <row>
        <entry><link linkend='command-setpensize'>setpensize</link></entry>
-       <entry>pongrosor</entry>
+       <entry>ponGrosor</entry>
      </row>
      <row>
        <entry><link linkend='command-setpitch'>setpitch</link></entry>
-       <entry>poncabeceo</entry>
+       <entry>ponCabeceo</entry>
      </row>
      <row>
        <entry><link linkend='command-setpixel'>setpixel</link></entry>
-       <entry>ponpixel</entry>
+       <entry>ponPixel</entry>
      </row>
      <row>
        <entry><link linkend='command-setpos'>setpos</link></entry>
-       <entry>ponpos</entry>
+       <entry>ponPos</entry>
      </row>
      <row>
        <entry><link linkend='command-setposxyz'>setposxyz</link></entry>
@@ -1832,31 +1776,31 @@
      </row>
      <row>
        <entry><link linkend='command-setread'>setread</link></entry>
-       <entry>ponlectura</entry>
+       <entry>ponLectura</entry>
      </row>
      <row>
        <entry><link linkend='command-setreadpos'>setreadpos</link></entry>
-       <entry>ponposlectura</entry>
+       <entry>ponPosLectura</entry>
      </row>
      <row>
        <entry><link linkend='command-setroll'>setroll</link></entry>
-       <entry>ponbalanceo</entry>
+       <entry>ponBalanceo</entry>
      </row>
      <row>
        <entry><link linkend='command-setsc'>setsc</link></entry>
-       <entry>poncf</entry>
+       <entry>ponCF</entry>
      </row>
      <row>
        <entry><link linkend='command-setscreencolor'>setscreencolor</link></entry>
-       <entry>poncolorfondo</entry>
+       <entry>ponColorFondo</entry>
      </row>
      <row>
        <entry><link linkend='command-setscrunch'>setscrunch</link></entry>
-       <entry>ponronzal</entry>
+       <entry>ponRonzal</entry>
      </row>
      <row>
        <entry><link linkend='command-settimer'>settimer</link></entry>
-       <entry>pontemporizador</entry>
+       <entry>ponTemporizador</entry>
      </row>
      <row>
        <entry><link linkend='command-setturtle'>setturtle</link></entry>
@@ -1864,15 +1808,15 @@
      </row>
      <row>
        <entry><link linkend='command-setturtlemode'>setturtlemode</link></entry>
-       <entry>ponmodotortuga</entry>
+       <entry>ponModoTortuga</entry>
      </row>
      <row>
        <entry><link linkend='command-setwrite'>setwrite</link></entry>
-       <entry>ponescritura</entry>
+       <entry>ponEscritura</entry>
      </row>
      <row>
        <entry><link linkend='command-setwritepos'>setwritepos</link></entry>
-       <entry>ponposescritura</entry>
+       <entry>ponPosEscritura</entry>
      </row>
      <row>
        <entry><link linkend='command-setx'>setx</link></entry>
@@ -1908,7 +1852,7 @@
      </row>
      <row>
        <entry><link linkend='command-showturtle'>showturtle</link></entry>
-       <entry>muestratortuga</entry>
+       <entry>muestraTortuga</entry>
      </row>
      <row>
        <entry><link linkend='command-sign'>sign</link></entry>
@@ -1940,7 +1884,7 @@
      </row>
      <row>
        <entry><link linkend='command-splitscreen'>splitscreen</link></entry>
-       <entry>pantallapartida</entry>
+       <entry>pantallaPartida</entry>
      </row>
      <row>
        <entry><link linkend='command-sqrt'>sqrt</link></entry>
@@ -1952,19 +1896,19 @@
      </row>
      <row>
        <entry><link linkend='command-st'>st</link></entry>
-       <entry>muestratortuga</entry>
+       <entry>muestraTortuga</entry>
      </row>
      <row>
        <entry><link linkend='command-staticcreate'>staticcreate</link></entry>
-       <entry>creaestatico</entry>
+       <entry>creaEstatico</entry>
      </row>
      <row>
        <entry><link linkend='command-staticdelete'>staticdelete</link></entry>
-       <entry>borraestatico</entry>
+       <entry>borraEstatico</entry>
      </row>
      <row>
        <entry><link linkend='command-staticupdate'>staticupdate</link></entry>
-       <entry>actualizaestatico</entry>
+       <entry>actualizaEstatico</entry>
      </row>
      <row>
        <entry><link linkend='command-status'>status</link></entry>
@@ -2012,7 +1956,7 @@
      </row>
      <row>
        <entry><link linkend='command-textscreen'>textscreen</link></entry>
-       <entry>pantallatexto</entry>
+       <entry>pantallaTexto</entry>
      </row>
      <row>
        <entry><link linkend='command-thing'>thing</link></entry>
@@ -2028,7 +1972,7 @@
      </row>
      <row>
        <entry><link linkend='command-timemilli'>timemilli</link></entry>
-       <entry>horamili</entry>
+       <entry>horaMili</entry>
      </row>
      <row>
        <entry><link linkend='command-to'>to</link></entry>
@@ -2076,7 +2020,7 @@
      </row>
      <row>
        <entry><link linkend='command-turtlemode'>turtlemode</link></entry>
-       <entry>modotortuga</entry>
+       <entry>modoTortuga</entry>
      </row>
      <row>
        <entry><link linkend='command-turtles'>turtles</link></entry>
@@ -2104,7 +2048,7 @@
      </row>
      <row>
        <entry><link linkend='command-unstep'>unstep</link></entry>
-       <entry>nopaso</entry>
+       <entry>noPaso</entry>
      </row>
      <row>
        <entry><link linkend='command-until'>until</link></entry>
@@ -2112,7 +2056,7 @@
      </row>
      <row>
        <entry><link linkend='command-untrace'>untrace</link></entry>
-       <entry>notraza</entry>
+       <entry>noTraza</entry>
      </row>
      <row>
        <entry><link linkend='command-up'>up</link></entry>
@@ -2136,31 +2080,31 @@
      </row>
      <row>
        <entry><link linkend='command-window'>window</link></entry>
-       <entry>modoventana</entry>
+       <entry>modoVentana</entry>
      </row>
      <row>
        <entry><link linkend='command-windowcreate'>windowcreate</link></entry>
-       <entry>creaventana</entry>
+       <entry>creaVentana</entry>
      </row>
      <row>
        <entry><link linkend='command-windowdelete'>windowdelete</link></entry>
-       <entry>borraventana</entry>
+       <entry>borraVentana</entry>
      </row>
      <row>
        <entry><link linkend='command-windowenable'>windowenable</link></entry>
-       <entry>habilitarventana</entry>
+       <entry>habilitarVentana</entry>
      </row>
      <row>
        <entry><link linkend='command-windowfileedit'>windowfileedit</link></entry>
-       <entry>editafichero</entry>
+       <entry>editaArchivo</entry>
      </row>
      <row>
        <entry><link linkend='command-windowset'>windowset</link></entry>
-       <entry>activaventana</entry>
+       <entry>activaVentana</entry>
      </row>
      <row>
        <entry><link linkend='command-winhelp'>winhelp</link></entry>
-       <entry>ayudadewindows</entry>
+       <entry>ayudaDeWindows</entry>
      </row>
      <row>
        <entry><link linkend='command-word'>word</link></entry>
@@ -2176,11 +2120,11 @@
      </row>
      <row>
        <entry><link linkend='command-wrap'>wrap</link></entry>
-       <entry>modovuelta</entry>
+       <entry>modoVuelta</entry>
      </row>
      <row>
        <entry><link linkend='command-writepos'>writepos</link></entry>
-       <entry>poslectura</entry>
+       <entry>posLectura</entry>
      </row>
      <row>
        <entry><link linkend='command-writer'>writer</link></entry>
@@ -2196,11 +2140,11 @@
      </row>
      <row>
        <entry><link linkend='command-yesnobox'>yesnobox</link></entry>
-       <entry>sinobox</entry>
+       <entry>siNoBox</entry>
      </row>
      <row>
        <entry><link linkend='command-yield'>yield</link></entry>
-       <entry>noexclusivo</entry>
+       <entry>noExclusivo</entry>
      </row>
      <row>
        <entry><link linkend='command-zcor'>zcor</link></entry>
@@ -2208,7 +2152,7 @@
      </row>
      <row>
        <entry><link linkend='command-zoom'>zoom</link></entry>
-       <entry>ponlupa</entry>
+       <entry>ponLupa</entry>
      </row>
   </tbody>
   </tgroup>
@@ -2232,19 +2176,19 @@
        <entry><link linkend='command-.eq'>.eq</link></entry>
      </row>
      <row>
-       <entry>.ponelemento</entry>
+       <entry>.ponElemento</entry>
        <entry><link linkend='command-.setitem'>.setitem</link></entry>
      </row>
      <row>
-       <entry>.ponmp</entry>
+       <entry>.ponMP</entry>
        <entry><link linkend='command-.setbf'>.setbf</link></entry>
      </row>
      <row>
-       <entry>.ponprimero</entry>
+       <entry>.ponPrimero</entry>
        <entry><link linkend='command-.setfirst'>.setfirst</link></entry>
      </row>
      <row>
-       <entry>.quizadevuelve</entry>
+       <entry>.quizaDevuelve</entry>
        <entry><link linkend='command-.maybeoutput'>.maybeoutput</link></entry>
      </row>
      <row>
@@ -2256,31 +2200,31 @@
        <entry><link linkend='command-allopen'>allopen</link></entry>
      </row>
      <row>
-       <entry>abreactualizar</entry>
+       <entry>abreActualizar</entry>
        <entry><link linkend='command-openupdate'>openupdate</link></entry>
      </row>
      <row>
-       <entry>abreañadir</entry>
+       <entry>abreAñadir</entry>
        <entry><link linkend='command-openappend'>openappend</link></entry>
      </row>
      <row>
-       <entry>abredialogo</entry>
+       <entry>abreDialogo</entry>
        <entry><link linkend='command-dialogfileopen'>dialogfileopen</link></entry>
      </row>
      <row>
-       <entry>abreescritura</entry>
+       <entry>abreEscritura</entry>
        <entry><link linkend='command-openwrite'>openwrite</link></entry>
      </row>
      <row>
-       <entry>abrelectura</entry>
+       <entry>abreLectura</entry>
        <entry><link linkend='command-openread'>openread</link></entry>
      </row>
      <row>
-       <entry>abremidi</entry>
+       <entry>abreMidi</entry>
        <entry><link linkend='command-midiopen'>midiopen</link></entry>
      </row>
      <row>
-       <entry>abrepuerto</entry>
+       <entry>abrePuerto</entry>
        <entry><link linkend='command-portopen'>portopen</link></entry>
      </row>
      <row>
@@ -2288,15 +2232,15 @@
        <entry><link linkend='command-setturtle'>setturtle</link></entry>
      </row>
      <row>
-       <entry>activaventana</entry>
+       <entry>activaVentana</entry>
        <entry><link linkend='command-windowset'>windowset</link></entry>
      </row>
      <row>
-       <entry>actualizaboton</entry>
+       <entry>actualizaBoton</entry>
        <entry><link linkend='command-buttonupdate'>buttonupdate</link></entry>
      </row>
      <row>
-       <entry>actualizaestatico</entry>
+       <entry>actualizaEstatico</entry>
        <entry><link linkend='command-staticupdate'>staticupdate</link></entry>
      </row>
      <row>
@@ -2316,11 +2260,11 @@
        <entry><link linkend='command-stop'>stop</link></entry>
      </row>
      <row>
-       <entry>añadecadenalistbox</entry>
+       <entry>añadeCadenaListbox</entry>
        <entry><link linkend='command-listboxaddstring'>listboxaddstring</link></entry>
      </row>
      <row>
-       <entry>añadelineacombobox</entry>
+       <entry>añadeLineaCombobox</entry>
        <entry><link linkend='command-comboboxaddstring'>comboboxaddstring</link></entry>
      </row>
      <row>
@@ -2356,7 +2300,7 @@
        <entry><link linkend='command-arc2'>arc2</link></entry>
      </row>
      <row>
-       <entry>arcoelipse</entry>
+       <entry>arcoElipse</entry>
        <entry><link linkend='command-ellipsearc'>ellipsearc</link></entry>
      </row>
      <row>
@@ -2368,7 +2312,7 @@
        <entry><link linkend='command-arcsin'>arcsin</link></entry>
      </row>
      <row>
-       <entry>areaactiva</entry>
+       <entry>areaActiva</entry>
        <entry><link linkend='command-activearea'>activearea</link></entry>
      </row>
      <row>
@@ -2376,7 +2320,7 @@
        <entry><link linkend='command-up'>up</link></entry>
      </row>
      <row>
-       <entry>asciipuro</entry>
+       <entry>asciiPuro</entry>
        <entry><link linkend='command-rawascii'>rawascii</link></entry>
      </row>
      <row>
@@ -2396,7 +2340,7 @@
        <entry><link linkend='command-help'>help</link></entry>
      </row>
      <row>
-       <entry>ayudadewindows</entry>
+       <entry>ayudaDeWindows</entry>
        <entry><link linkend='command-winhelp'>winhelp</link></entry>
      </row>
      <row>
@@ -2404,23 +2348,23 @@
        <entry><link linkend='command-random'>random</link></entry>
      </row>
      <row>
-       <entry>bajalapiz</entry>
+       <entry>bajaLapiz</entry>
        <entry><link linkend='command-pendown'>pendown</link></entry>
      </row>
      <row>
-       <entry>bajalapiz?</entry>
+       <entry>bajaLapiz?</entry>
        <entry><link linkend='command-pendownp'>pendown?</link></entry>
      </row>
      <row>
-       <entry>bajanariz</entry>
+       <entry>bajaNariz</entry>
        <entry><link linkend='command-downpitch'>downpitch</link></entry>
      </row>
      <row>
-       <entry>balanceaderecha</entry>
+       <entry>balanceaDerecha</entry>
        <entry><link linkend='command-rightroll'>rightroll</link></entry>
      </row>
      <row>
-       <entry>balanceaizquierda</entry>
+       <entry>balanceaIzquierda</entry>
        <entry><link linkend='command-leftroll'>leftroll</link></entry>
      </row>
      <row>
@@ -2456,11 +2400,11 @@
        <entry><link linkend='command-er'>er</link></entry>
      </row>
      <row>
-       <entry>boarchivo</entry>
+       <entry>boArchivo</entry>
        <entry><link linkend='command-erf'>erf</link></entry>
      </row>
      <row>
-       <entry>boprop</entry>
+       <entry>boProp</entry>
        <entry><link linkend='command-remprop'>remprop</link></entry>
      </row>
      <row>
@@ -2468,67 +2412,67 @@
        <entry><link linkend='command-erase'>erase</link></entry>
      </row>
      <row>
-       <entry>borraarchivo</entry>
+       <entry>borraArchivo</entry>
        <entry><link linkend='command-erasefile'>erasefile</link></entry>
      </row>
      <row>
-       <entry>borrabarradesplazamiento</entry>
+       <entry>borraBarraDesplazamiento</entry>
        <entry><link linkend='command-scrollbardelete'>scrollbardelete</link></entry>
      </row>
      <row>
-       <entry>borraboton</entry>
+       <entry>borraBoton</entry>
        <entry><link linkend='command-buttondelete'>buttondelete</link></entry>
      </row>
      <row>
-       <entry>borrabotonradio</entry>
+       <entry>borraBotonRadio</entry>
        <entry><link linkend='command-radiobuttondelete'>radiobuttondelete</link></entry>
      </row>
      <row>
-       <entry>borracadenalistbox</entry>
+       <entry>borraCadenaListbox</entry>
        <entry><link linkend='command-listboxdeletestring'>listboxdeletestring</link></entry>
      </row>
      <row>
-       <entry>borracheckbox</entry>
+       <entry>borraCheckbox</entry>
        <entry><link linkend='command-checkboxdelete'>checkboxdelete</link></entry>
      </row>
      <row>
-       <entry>borracombobox</entry>
+       <entry>borraCombobox</entry>
        <entry><link linkend='command-comboboxdelete'>comboboxdelete</link></entry>
      </row>
      <row>
-       <entry>borradialogo</entry>
+       <entry>borraDialogo</entry>
        <entry><link linkend='command-dialogdelete'>dialogdelete</link></entry>
      </row>
      <row>
-       <entry>borraestatico</entry>
+       <entry>borraEstatico</entry>
        <entry><link linkend='command-staticdelete'>staticdelete</link></entry>
      </row>
      <row>
-       <entry>borragroupbox</entry>
+       <entry>borraGroupbox</entry>
        <entry><link linkend='command-groupboxdelete'>groupboxdelete</link></entry>
      </row>
      <row>
-       <entry>borralineacombobox</entry>
+       <entry>borralineaCombobox</entry>
        <entry><link linkend='command-comboboxdeletestring'>comboboxdeletestring</link></entry>
      </row>
      <row>
-       <entry>borralistbox</entry>
+       <entry>borraListbox</entry>
        <entry><link linkend='command-listboxdelete'>listboxdelete</link></entry>
      </row>
      <row>
-       <entry>borrapaleta</entry>
+       <entry>borraPaleta</entry>
        <entry><link linkend='command-clearpalette'>clearpalette</link></entry>
      </row>
      <row>
-       <entry>borrapantalla</entry>
+       <entry>borraPantalla</entry>
        <entry><link linkend='command-clearscreen'>clearscreen</link></entry>
      </row>
      <row>
-       <entry>borratexto</entry>
+       <entry>borraTexto</entry>
        <entry><link linkend='command-cleartext'>cleartext</link></entry>
      </row>
      <row>
-       <entry>borraventana</entry>
+       <entry>borraVentana</entry>
        <entry><link linkend='command-windowdelete'>windowdelete</link></entry>
      </row>
      <row>
@@ -2572,11 +2516,11 @@
        <entry><link linkend='command-pitch'>pitch</link></entry>
      </row>
      <row>
-       <entry>cambiadir</entry>
+       <entry>cambiaDir</entry>
        <entry><link linkend='command-chdir'>chdir</link></entry>
      </row>
      <row>
-       <entry>cambiasigno</entry>
+       <entry>cambiaSigno</entry>
        <entry><link linkend='command-minus'>minus</link></entry>
      </row>
      <row>
@@ -2588,15 +2532,15 @@
        <entry><link linkend='command-load'>load</link></entry>
      </row>
      <row>
-       <entry>cargadib</entry>
+       <entry>cargaDib</entry>
        <entry><link linkend='command-bitload'>bitload</link></entry>
      </row>
      <row>
-       <entry>cargadll</entry>
+       <entry>cargaDLL</entry>
        <entry><link linkend='command-dllload'>dllload</link></entry>
      </row>
      <row>
-       <entry>cargagif</entry>
+       <entry>cargaGif</entry>
        <entry><link linkend='command-gifload'>gifload</link></entry>
      </row>
      <row>
@@ -2616,15 +2560,15 @@
        <entry><link linkend='command-close'>close</link></entry>
      </row>
      <row>
-       <entry>cierramidi</entry>
+       <entry>cierraMidi</entry>
        <entry><link linkend='command-midiclose'>midiclose</link></entry>
      </row>
      <row>
-       <entry>cierrapuerto</entry>
+       <entry>cierraPuerto</entry>
        <entry><link linkend='command-portclose'>portclose</link></entry>
      </row>
      <row>
-       <entry>cierratodo</entry>
+       <entry>cierraTodo</entry>
        <entry><link linkend='command-closeall'>closeall</link></entry>
      </row>
      <row>
@@ -2652,7 +2596,7 @@
        <entry><link linkend='command-screencolor'>screencolor</link></entry>
      </row>
      <row>
-       <entry>colorlapiz</entry>
+       <entry>colorLapiz</entry>
        <entry><link linkend='command-pencolor'>pencolor</link></entry>
      </row>
      <row>
@@ -2660,7 +2604,7 @@
        <entry><link linkend='command-combine'>combine</link></entry>
      </row>
      <row>
-       <entry>contadoracero</entry>
+       <entry>contadorACero</entry>
        <entry><link linkend='command-cleartimer'>cleartimer</link></entry>
      </row>
      <row>
@@ -2684,11 +2628,11 @@
        <entry><link linkend='command-zcor'>zcor</link></entry>
      </row>
      <row>
-       <entry>copiaarea</entry>
+       <entry>copiaArea</entry>
        <entry><link linkend='command-bitcopy'>bitcopy</link></entry>
      </row>
      <row>
-       <entry>copiadef</entry>
+       <entry>copiaDef</entry>
        <entry><link linkend='command-copydef'>copydef</link></entry>
      </row>
      <row>
@@ -2696,51 +2640,51 @@
        <entry><link linkend='command-mousecopy'>mousecopy</link></entry>
      </row>
      <row>
-       <entry>cortaarea</entry>
+       <entry>cortaArea</entry>
        <entry><link linkend='command-bitcut'>bitcut</link></entry>
      </row>
      <row>
-       <entry>creabarradesplazamiento</entry>
+       <entry>creaBarraDesplazamiento</entry>
        <entry><link linkend='command-scrollbarcreate'>scrollbarcreate</link></entry>
      </row>
      <row>
-       <entry>creaboton</entry>
+       <entry>creaBoton</entry>
        <entry><link linkend='command-buttoncreate'>buttoncreate</link></entry>
      </row>
      <row>
-       <entry>creabotonradio</entry>
+       <entry>creaBotonRadio</entry>
        <entry><link linkend='command-radiobuttoncreate'>radiobuttoncreate</link></entry>
      </row>
      <row>
-       <entry>creacheckbox</entry>
+       <entry>creaCheckbox</entry>
        <entry><link linkend='command-checkboxcreate'>checkboxcreate</link></entry>
      </row>
      <row>
-       <entry>creacombobox</entry>
+       <entry>creaCombobox</entry>
        <entry><link linkend='command-comboboxcreate'>comboboxcreate</link></entry>
      </row>
      <row>
-       <entry>creadialogo</entry>
+       <entry>creaDialogo</entry>
        <entry><link linkend='command-dialogcreate'>dialogcreate</link></entry>
      </row>
      <row>
-       <entry>creadir</entry>
+       <entry>creaDir</entry>
        <entry><link linkend='command-mkdir'>mkdir</link></entry>
      </row>
      <row>
-       <entry>creaestatico</entry>
+       <entry>creaEstatico</entry>
        <entry><link linkend='command-staticcreate'>staticcreate</link></entry>
      </row>
      <row>
-       <entry>creagroupbox</entry>
+       <entry>creaGroupbox</entry>
        <entry><link linkend='command-groupboxcreate'>groupboxcreate</link></entry>
      </row>
      <row>
-       <entry>crealistbox</entry>
+       <entry>creaListbox</entry>
        <entry><link linkend='command-listboxcreate'>listboxcreate</link></entry>
      </row>
      <row>
-       <entry>creaventana</entry>
+       <entry>creaVentana</entry>
        <entry><link linkend='command-windowcreate'>windowcreate</link></entry>
      </row>
      <row>
@@ -2748,7 +2692,7 @@
        <entry><link linkend='command-count'>count</link></entry>
      </row>
      <row>
-       <entry>cuentarepite</entry>
+       <entry>cuentaRepite</entry>
        <entry><link linkend='command-repcount'>repcount</link></entry>
      </row>
      <row>
@@ -2768,7 +2712,7 @@
        <entry><link linkend='command-for'>for</link></entry>
      </row>
      <row>
-       <entry>deshabilitaTeclado</entry>
+       <entry>desHabilitaTeclado</entry>
        <entry><link linkend='command-keyboardoff'>keyboardoff</link></entry>
      </row>
      <row>
@@ -2776,7 +2720,7 @@
        <entry><link linkend='command-ashift'>ashift</link></entry>
      </row>
      <row>
-       <entry>desplazaizquierda</entry>
+       <entry>desplazaIzquierda</entry>
        <entry><link linkend='command-lshift'>lshift</link></entry>
      </row>
      <row>
@@ -2820,7 +2764,7 @@
        <entry><link linkend='command-ask'>ask</link></entry>
      </row>
      <row>
-       <entry>directoriopadre</entry>
+       <entry>directorioPadre</entry>
        <entry><link linkend='command-popdir'>popdir</link></entry>
      </row>
      <row>
@@ -2844,7 +2788,7 @@
        <entry><link linkend='command-edit'>edit</link></entry>
      </row>
      <row>
-       <entry>editafichero</entry>
+       <entry>editaArchivo</entry>
        <entry><link linkend='command-windowfileedit'>windowfileedit</link></entry>
      </row>
      <row>
@@ -2876,7 +2820,7 @@
        <entry><link linkend='command-run'>run</link></entry>
      </row>
      <row>
-       <entry>ejecutaanaliza</entry>
+       <entry>ejecutaAnaliza</entry>
        <entry><link linkend='command-runparse'>runparse</link></entry>
      </row>
      <row>
@@ -2888,7 +2832,7 @@
        <entry><link linkend='command-mditem'>mditem</link></entry>
      </row>
      <row>
-       <entry>eliminadir</entry>
+       <entry>eliminaDir</entry>
        <entry><link linkend='command-rmdir'>rmdir</link></entry>
      </row>
      <row>
@@ -2904,7 +2848,7 @@
        <entry><link linkend='command-ellipse2'>ellipse2</link></entry>
      </row>
      <row>
-       <entry>empiezapoligono</entry>
+       <entry>empiezaPoligono</entry>
        <entry><link linkend='command-polystart'>polystart</link></entry>
      </row>
      <row>
@@ -2932,11 +2876,11 @@
        <entry><link linkend='command-crossmap'>crossmap</link></entry>
      </row>
      <row>
-       <entry>EnviaValorAceptaRed</entry>
+       <entry>enviaValorAceptaRed</entry>
        <entry><link linkend='command-netacceptsendvalue'>netacceptsendvalue</link></entry>
      </row>
      <row>
-       <entry>EnviaValorConectaRed</entry>
+       <entry>enviaValorConectaRed</entry>
        <entry><link linkend='command-netconnectsendvalue'>netconnectsendvalue</link></entry>
      </row>
      <row>
@@ -2948,23 +2892,23 @@
        <entry><link linkend='command-print'>print</link></entry>
      </row>
      <row>
-       <entry>escribebotonradio</entry>
+       <entry>escribeBotonRadio</entry>
        <entry><link linkend='command-radiobuttonset'>radiobuttonset</link></entry>
      </row>
      <row>
-       <entry>escribecadenapuerto</entry>
+       <entry>escribeCadenaPuerto</entry>
        <entry><link linkend='command-portwritearray'>portwritearray</link></entry>
      </row>
      <row>
-       <entry>escribecaracterpuerto</entry>
+       <entry>escribeCaracterPuerto</entry>
        <entry><link linkend='command-portwritechar'>portwritechar</link></entry>
      </row>
      <row>
-       <entry>escribepuerto</entry>
+       <entry>escribePuerto</entry>
        <entry><link linkend='command-outportb'>outportb</link></entry>
      </row>
      <row>
-       <entry>escribepuerto2</entry>
+       <entry>escribePuerto2</entry>
        <entry><link linkend='command-outport'>outport</link></entry>
      </row>
      <row>
@@ -2980,7 +2924,7 @@
        <entry><link linkend='command-status'>status</link></entry>
      </row>
      <row>
-       <entry>estadocheckbox</entry>
+       <entry>estadoCheckbox</entry>
        <entry><link linkend='command-checkboxget'>checkboxget</link></entry>
      </row>
      <row>
@@ -3016,7 +2960,7 @@
        <entry><link linkend='command-netshutdown'>netshutdown</link></entry>
      </row>
      <row>
-       <entry>formatonumero</entry>
+       <entry>formatoNumero</entry>
        <entry><link linkend='command-form'>form</link></entry>
      </row>
      <row>
@@ -3040,11 +2984,11 @@
        <entry><link linkend='command-lt'>lt</link></entry>
      </row>
      <row>
-       <entry>giraderecha</entry>
+       <entry>giraDerecha</entry>
        <entry><link linkend='command-right'>right</link></entry>
      </row>
      <row>
-       <entry>giraizquierda</entry>
+       <entry>giraIzquierda</entry>
        <entry><link linkend='command-left'>left</link></entry>
      </row>
      <row>
@@ -3060,15 +3004,15 @@
        <entry><link linkend='command-save'>save</link></entry>
      </row>
      <row>
-       <entry>guardadialogo</entry>
+       <entry>guardaDialogo</entry>
        <entry><link linkend='command-dialogfilesave'>dialogfilesave</link></entry>
      </row>
      <row>
-       <entry>guardadib</entry>
+       <entry>guardaDib</entry>
        <entry><link linkend='command-bitsave'>bitsave</link></entry>
      </row>
      <row>
-       <entry>guardagif</entry>
+       <entry>guardaGif</entry>
        <entry><link linkend='command-gifsave'>gifsave</link></entry>
      </row>
      <row>
@@ -3088,35 +3032,35 @@
        <entry><link linkend='command-mouseoff'>mouseoff</link></entry>
      </row>
      <row>
-       <entry>habilitarbarradesplazamiento</entry>
+       <entry>habilitarBarraDesplazamiento</entry>
        <entry><link linkend='command-scrollbarenable'>scrollbarenable</link></entry>
      </row>
      <row>
-       <entry>habilitarboton</entry>
+       <entry>habilitarBoton</entry>
        <entry><link linkend='command-buttonenable'>buttonenable</link></entry>
      </row>
      <row>
-       <entry>habilitarbotonradio</entry>
+       <entry>habilitarBotonRadio</entry>
        <entry><link linkend='command-radiobuttonenable'>radiobuttonenable</link></entry>
      </row>
      <row>
-       <entry>habilitarcheckbox</entry>
+       <entry>habilitarCheckbox</entry>
        <entry><link linkend='command-checkboxenable'>checkboxenable</link></entry>
      </row>
      <row>
-       <entry>habilitarcombobox</entry>
+       <entry>habilitarCombobox</entry>
        <entry><link linkend='command-comboboxenable'>comboboxenable</link></entry>
      </row>
      <row>
-       <entry>habilitardialogo</entry>
+       <entry>habilitarDialogo</entry>
        <entry><link linkend='command-dialogenable'>dialogenable</link></entry>
      </row>
      <row>
-       <entry>habilitarlistbox</entry>
+       <entry>habilitarListbox</entry>
        <entry><link linkend='command-listboxenable'>listboxenable</link></entry>
      </row>
      <row>
-       <entry>habilitarventana</entry>
+       <entry>habilitarVentana</entry>
        <entry><link linkend='command-windowenable'>windowenable</link></entry>
      </row>
      <row>
@@ -3160,7 +3104,7 @@
        <entry><link linkend='command-time'>time</link></entry>
      </row>
      <row>
-       <entry>horamili</entry>
+       <entry>horaMili</entry>
        <entry><link linkend='command-timemilli'>timemilli</link></entry>
      </row>
      <row>
@@ -3180,7 +3124,7 @@
        <entry><link linkend='command-popl'>popl</link></entry>
      </row>
      <row>
-       <entry>imdefs</entry>
+       <entry>imDefs</entry>
        <entry><link linkend='command-po'>po</link></entry>
      </row>
      <row>
@@ -3248,15 +3192,15 @@
        <entry><link linkend='command-pennormal'>pennormal</link></entry>
      </row>
      <row>
-       <entry>lapizinvierte</entry>
+       <entry>lapizInvierte</entry>
        <entry><link linkend='command-penreverse'>penreverse</link></entry>
      </row>
      <row>
-       <entry>lapizmodo</entry>
+       <entry>lapizModo</entry>
        <entry><link linkend='command-penmode'>penmode</link></entry>
      </row>
      <row>
-       <entry>lapiznormal</entry>
+       <entry>lapizNormal</entry>
        <entry><link linkend='command-penpaint'>penpaint</link></entry>
      </row>
      <row>
@@ -3272,63 +3216,63 @@
        <entry><link linkend='command-reader'>reader</link></entry>
      </row>
      <row>
-       <entry>leebarradesplazamiento</entry>
+       <entry>leeBarraDesplazamiento</entry>
        <entry><link linkend='command-scrollbarget'>scrollbarget</link></entry>
      </row>
      <row>
-       <entry>leebotonradio</entry>
+       <entry>leeBotonRadio</entry>
        <entry><link linkend='command-radiobuttonget'>radiobuttonget</link></entry>
      </row>
      <row>
-       <entry>leecadenapuerto</entry>
+       <entry>leeCadenaPuerto</entry>
        <entry><link linkend='command-portreadarray'>portreadarray</link></entry>
      </row>
      <row>
-       <entry>leecar</entry>
+       <entry>leeCar</entry>
        <entry><link linkend='command-readchar'>readchar</link></entry>
      </row>
      <row>
-       <entry>leecaracterpuerto</entry>
+       <entry>leeCaracterPuerto</entry>
        <entry><link linkend='command-portreadchar'>portreadchar</link></entry>
      </row>
      <row>
-       <entry>leecarcs</entry>
+       <entry>leeCarcs</entry>
        <entry><link linkend='command-readchars'>readchars</link></entry>
      </row>
      <row>
-       <entry>leefoco</entry>
+       <entry>leeFoco</entry>
        <entry><link linkend='command-getfocus'>getfocus</link></entry>
      </row>
      <row>
-       <entry>leelista</entry>
+       <entry>leeLista</entry>
        <entry><link linkend='command-readlist'>readlist</link></entry>
      </row>
      <row>
-       <entry>leepalabra</entry>
+       <entry>leePalabra</entry>
        <entry><link linkend='command-readword'>readword</link></entry>
      </row>
      <row>
-       <entry>leepuerto</entry>
+       <entry>leePuerto</entry>
        <entry><link linkend='command-inportb'>inportb</link></entry>
      </row>
      <row>
-       <entry>leepuerto2</entry>
+       <entry>leePuerto2</entry>
        <entry><link linkend='command-inport'>inport</link></entry>
      </row>
      <row>
-       <entry>leepuertojuego</entry>
+       <entry>leePuertoJuego</entry>
        <entry><link linkend='command-ingameport'>ingameport</link></entry>
      </row>
      <row>
-       <entry>leeseleccionlistbox</entry>
+       <entry>leeseLeccionListbox</entry>
        <entry><link linkend='command-listboxgetselect'>listboxgetselect</link></entry>
      </row>
      <row>
-       <entry>leetecla</entry>
+       <entry>leeTecla</entry>
        <entry><link linkend='command-keyboardvalue'>keyboardvalue</link></entry>
      </row>
      <row>
-       <entry>leetextocombobox</entry>
+       <entry>leetextoCombobox</entry>
        <entry><link linkend='command-comboboxgettext'>comboboxgettext</link></entry>
      </row>
      <row>
@@ -3336,11 +3280,11 @@
        <entry><link linkend='command-clean'>clean</link></entry>
      </row>
      <row>
-       <entry>limpiapuerto</entry>
+       <entry>limpiaPuerto</entry>
        <entry><link linkend='command-portflush'>portflush</link></entry>
      </row>
      <row>
-       <entry>linvierte</entry>
+       <entry>lInvierte</entry>
        <entry><link linkend='command-px'>px</link></entry>
      </row>
      <row>
@@ -3352,7 +3296,7 @@
        <entry><link linkend='command-listp'>list?</link></entry>
      </row>
      <row>
-       <entry>listaarch</entry>
+       <entry>listaArchivos</entry>
        <entry><link linkend='command-files'>files</link></entry>
      </row>
      <row>
@@ -3372,11 +3316,11 @@
        <entry><link linkend='command-rl'>rl</link></entry>
      </row>
      <row>
-       <entry>llamadll</entry>
+       <entry>llamaDLL</entry>
        <entry><link linkend='command-dllcall'>dllcall</link></entry>
      </row>
      <row>
-       <entry>lnormal</entry>
+       <entry>lNormal</entry>
        <entry><link linkend='command-ppt'>ppt</link></entry>
      </row>
      <row>
@@ -3388,19 +3332,19 @@
        <entry><link linkend='command-rw'>rw</link></entry>
      </row>
      <row>
-       <entry>lprocs</entry>
+       <entry>lProcs</entry>
        <entry><link linkend='command-procedures'>procedures</link></entry>
      </row>
      <row>
-       <entry>lprop</entry>
+       <entry>lProp</entry>
        <entry><link linkend='command-plist'>plist</link></entry>
      </row>
      <row>
-       <entry>lprop?</entry>
+       <entry>lProp?</entry>
        <entry><link linkend='command-proplistp'>proplist?</link></entry>
      </row>
      <row>
-       <entry>lprops</entry>
+       <entry>lProps</entry>
        <entry><link linkend='command-plists'>plists</link></entry>
      </row>
      <row>
@@ -3408,7 +3352,7 @@
        <entry><link linkend='command-light'>light</link></entry>
      </row>
      <row>
-       <entry>lvars</entry>
+       <entry>lVars</entry>
        <entry><link linkend='command-names'>names</link></entry>
      </row>
      <row>
@@ -3440,15 +3384,15 @@
        <entry><link linkend='command-lessp'>less?</link></entry>
      </row>
      <row>
-       <entry>menosprimero</entry>
+       <entry>menosPrimero</entry>
        <entry><link linkend='command-butfirst'>butfirst</link></entry>
      </row>
      <row>
-       <entry>menosprimeros</entry>
+       <entry>menosPrimeros</entry>
        <entry><link linkend='command-butfirsts'>butfirsts</link></entry>
      </row>
      <row>
-       <entry>menosultimo</entry>
+       <entry>menosUltimo</entry>
        <entry><link linkend='command-butlast'>butlast</link></entry>
      </row>
      <row>
@@ -3456,7 +3400,7 @@
        <entry><link linkend='command-messagebox'>messagebox</link></entry>
      </row>
      <row>
-       <entry>mensajemidi</entry>
+       <entry>mensajeMidi</entry>
        <entry><link linkend='command-midimessage'>midimessage</link></entry>
      </row>
      <row>
@@ -3484,23 +3428,23 @@
        <entry><link linkend='command-bitmode'>bitmode</link></entry>
      </row>
      <row>
-       <entry>modojaula</entry>
+       <entry>modoJaula</entry>
        <entry><link linkend='command-fence'>fence</link></entry>
      </row>
      <row>
-       <entry>modopuerto</entry>
+       <entry>modoPuerto</entry>
        <entry><link linkend='command-portmode'>portmode</link></entry>
      </row>
      <row>
-       <entry>modotortuga</entry>
+       <entry>modoTortuga</entry>
        <entry><link linkend='command-turtlemode'>turtlemode</link></entry>
      </row>
      <row>
-       <entry>modoventana</entry>
+       <entry>modoVentana</entry>
        <entry><link linkend='command-window'>window</link></entry>
      </row>
      <row>
-       <entry>modovuelta</entry>
+       <entry>modoVuelta</entry>
        <entry><link linkend='command-wrap'>wrap</link></entry>
      </row>
      <row>
@@ -3520,7 +3464,7 @@
        <entry><link linkend='command-show'>show</link></entry>
      </row>
      <row>
-       <entry>muestrapoligono</entry>
+       <entry>muestraPoligono</entry>
        <entry><link linkend='command-polyview'>polyview</link></entry>
      </row>
      <row>
@@ -3528,7 +3472,7 @@
        <entry><link linkend='command-type'>type</link></entry>
      </row>
      <row>
-       <entry>muestratortuga</entry>
+       <entry>muestraTortuga</entry>
        <entry><link linkend='command-st'>st</link></entry>
      </row>
      <row>
@@ -3540,15 +3484,15 @@
        <entry><link linkend='command-nodes'>nodes</link></entry>
      </row>
      <row>
-       <entry>noeco</entry>
+       <entry>noEco</entry>
        <entry><link linkend='command-nodribble'>nodribble</link></entry>
      </row>
      <row>
-       <entry>noexclusivo</entry>
+       <entry>noExclusivo</entry>
        <entry><link linkend='command-yield'>yield</link></entry>
      </row>
      <row>
-       <entry>noiguales?</entry>
+       <entry>noIguales?</entry>
        <entry><link linkend='command-notequalp'>notequal?</link></entry>
      </row>
      <row>
@@ -3556,7 +3500,7 @@
        <entry><link linkend='command-name'>name</link></entry>
      </row>
      <row>
-       <entry>nopaso</entry>
+       <entry>noPaso</entry>
        <entry><link linkend='command-unstep'>unstep</link></entry>
      </row>
      <row>
@@ -3564,7 +3508,7 @@
        <entry><link linkend='command-norefresh'>norefresh</link></entry>
      </row>
      <row>
-       <entry>notraza</entry>
+       <entry>noTraza</entry>
        <entry><link linkend='command-untrace'>untrace</link></entry>
      </row>
      <row>
@@ -3580,7 +3524,7 @@
        <entry><link linkend='command-or'>or</link></entry>
      </row>
      <row>
-       <entry>ocultatortuga</entry>
+       <entry>ocultaTortuga</entry>
        <entry><link linkend='command-ht'>ht</link></entry>
      </row>
      <row>
@@ -3608,15 +3552,15 @@
        <entry><link linkend='command-wordp'>word?</link></entry>
      </row>
      <row>
-       <entry>pantallagrafica</entry>
+       <entry>pantallaGrafica</entry>
        <entry><link linkend='command-fullscreen'>fullscreen</link></entry>
      </row>
      <row>
-       <entry>pantallapartida</entry>
+       <entry>pantallaPartida</entry>
        <entry><link linkend='command-splitscreen'>splitscreen</link></entry>
      </row>
      <row>
-       <entry>pantallatexto</entry>
+       <entry>pantallaTexto</entry>
        <entry><link linkend='command-textscreen'>textscreen</link></entry>
      </row>
      <row>
@@ -3632,7 +3576,7 @@
        <entry><link linkend='command-step'>step</link></entry>
      </row>
      <row>
-       <entry>patronlapiz</entry>
+       <entry>patronLapiz</entry>
        <entry><link linkend='command-penpattern'>penpattern</link></entry>
      </row>
      <row>
@@ -3652,51 +3596,51 @@
        <entry><link linkend='command-ask'>ask</link></entry>
      </row>
      <row>
-       <entry>pintacolor</entry>
+       <entry>pintaColor</entry>
        <entry><link linkend='command-floodcolor'>floodcolor</link></entry>
      </row>
      <row>
-       <entry>ponareaactiva</entry>
+       <entry>ponAreaActiva</entry>
        <entry><link linkend='command-setactivearea'>setactivearea</link></entry>
      </row>
      <row>
-       <entry>ponbalanceo</entry>
+       <entry>ponBalanceo</entry>
        <entry><link linkend='command-setroll'>setroll</link></entry>
      </row>
      <row>
-       <entry>ponbarradesplazamiento</entry>
+       <entry>ponBarraDesplazamiento</entry>
        <entry><link linkend='command-scrollbarset'>scrollbarset</link></entry>
      </row>
      <row>
-       <entry>poncabeceo</entry>
+       <entry>ponCabeceo</entry>
        <entry><link linkend='command-setpitch'>setpitch</link></entry>
      </row>
      <row>
-       <entry>poncf</entry>
+       <entry>ponCF</entry>
        <entry><link linkend='command-setsc'>setsc</link></entry>
      </row>
      <row>
-       <entry>poncheckbox</entry>
+       <entry>ponCheckbox</entry>
        <entry><link linkend='command-checkboxset'>checkboxset</link></entry>
      </row>
      <row>
-       <entry>poncl</entry>
+       <entry>ponCL</entry>
        <entry><link linkend='command-setpc'>setpc</link></entry>
      </row>
      <row>
-       <entry>ponclip</entry>
+       <entry>ponClip</entry>
        <entry><link linkend='command-setclip'>setclip</link></entry>
      </row>
      <row>
-       <entry>poncolorfondo</entry>
+       <entry>ponColorFondo</entry>
        <entry><link linkend='command-setscreencolor'>setscreencolor</link></entry>
      </row>
      <row>
-       <entry>poncolorlapiz</entry>
+       <entry>ponColorLapiz</entry>
        <entry><link linkend='command-setpencolor'>setpencolor</link></entry>
      </row>
      <row>
-       <entry>poncolorrelleno</entry>
+       <entry>ponColorRelleno</entry>
        <entry><link linkend='command-setfloodcolor'>setfloodcolor</link></entry>
      </row>
      <row>
@@ -3704,15 +3648,15 @@
        <entry><link linkend='command-setfc'>setfc</link></entry>
      </row>
      <row>
-       <entry>poncursor</entry>
+       <entry>ponCursor</entry>
        <entry><link linkend='command-setcursor'>setcursor</link></entry>
      </row>
      <row>
-       <entry>poncursorespera</entry>
+       <entry>ponCursorEspera</entry>
        <entry><link linkend='command-setcursorwait'>setcursorwait</link></entry>
      </row>
      <row>
-       <entry>ponelemento</entry>
+       <entry>ponElemento</entry>
        <entry><link linkend='command-setitem'>setitem</link></entry>
      </row>
      <row>
@@ -3720,11 +3664,11 @@
        <entry><link linkend='command-mdsetitem'>mdsetitem</link></entry>
      </row>
      <row>
-       <entry>ponescritura</entry>
+       <entry>ponEscritura</entry>
        <entry><link linkend='command-setwrite'>setwrite</link></entry>
      </row>
      <row>
-       <entry>ponfoco</entry>
+       <entry>ponFoco</entry>
        <entry><link linkend='command-setfocus'>setfocus</link></entry>
      </row>
      <row>
@@ -3732,15 +3676,15 @@
        <entry><link linkend='command-bitmapturtle'>bitmapturtle</link></entry>
      </row>
      <row>
-       <entry>ponformatortuga</entry>
+       <entry>ponFormaTortuga</entry>
        <entry><link linkend='command-nobitmapturtle'>nobitmapturtle</link></entry>
      </row>
      <row>
-       <entry>pongrosor</entry>
+       <entry>ponGrosor</entry>
        <entry><link linkend='command-setpensize'>setpensize</link></entry>
      </row>
      <row>
-       <entry>ponindicebit</entry>
+       <entry>ponIndiceBit</entry>
        <entry><link linkend='command-setbitindex'>setbitindex</link></entry>
      </row>
      <row>
@@ -3748,27 +3692,27 @@
        <entry><link linkend='command-setpen'>setpen</link></entry>
      </row>
      <row>
-       <entry>ponlectura</entry>
+       <entry>ponLectura</entry>
        <entry><link linkend='command-setread'>setread</link></entry>
      </row>
      <row>
-       <entry>ponlupa</entry>
+       <entry>ponLupa</entry>
        <entry><link linkend='command-zoom'>zoom</link></entry>
      </row>
      <row>
-       <entry>ponluz</entry>
+       <entry>ponLuz</entry>
        <entry><link linkend='command-setlight'>setlight</link></entry>
      </row>
      <row>
-       <entry>ponmargenes</entry>
+       <entry>ponMargenes</entry>
        <entry><link linkend='command-setmargins'>setmargins</link></entry>
      </row>
      <row>
-       <entry>ponmodobit</entry>
+       <entry>ponModobit</entry>
        <entry><link linkend='command-setbitmode'>setbitmode</link></entry>
      </row>
      <row>
-       <entry>ponmodotortuga</entry>
+       <entry>ponModoTortuga</entry>
        <entry><link linkend='command-setturtlemode'>setturtlemode</link></entry>
      </row>
      <row>
@@ -3776,27 +3720,27 @@
        <entry><link linkend='command-setorientation'>setorientation</link></entry>
      </row>
      <row>
-       <entry>ponpatronlapiz</entry>
+       <entry>ponPatronLapiz</entry>
        <entry><link linkend='command-setpenpattern'>setpenpattern</link></entry>
      </row>
      <row>
-       <entry>ponpixel</entry>
+       <entry>ponPixel</entry>
        <entry><link linkend='command-setpixel'>setpixel</link></entry>
      </row>
      <row>
-       <entry>ponpos</entry>
+       <entry>ponPos</entry>
        <entry><link linkend='command-setpos'>setpos</link></entry>
      </row>
      <row>
-       <entry>ponposescritura</entry>
+       <entry>ponPosEscritura</entry>
        <entry><link linkend='command-setwritepos'>setwritepos</link></entry>
      </row>
      <row>
-       <entry>ponposlectura</entry>
+       <entry>ponPosLectura</entry>
        <entry><link linkend='command-setreadpos'>setreadpos</link></entry>
      </row>
      <row>
-       <entry>ponprimero</entry>
+       <entry>ponPrimero</entry>
        <entry><link linkend='command-fput'>fput</link></entry>
      </row>
      <row>
@@ -3808,27 +3752,27 @@
        <entry><link linkend='command-seth'>seth</link></entry>
      </row>
      <row>
-       <entry>ponronzal</entry>
+       <entry>ponRonzal</entry>
        <entry><link linkend='command-setscrunch'>setscrunch</link></entry>
      </row>
      <row>
-       <entry>ponrumbo</entry>
+       <entry>ponRumbo</entry>
        <entry><link linkend='command-setheading'>setheading</link></entry>
      </row>
      <row>
-       <entry>pontemporizador</entry>
+       <entry>ponTemporizador</entry>
        <entry><link linkend='command-settimer'>settimer</link></entry>
      </row>
      <row>
-       <entry>pontextocombobox</entry>
+       <entry>pontextoCombobox</entry>
        <entry><link linkend='command-comboboxsettext'>comboboxsettext</link></entry>
      </row>
      <row>
-       <entry>pontipo</entry>
+       <entry>ponTipo</entry>
        <entry><link linkend='command-setlabelfont'>setlabelfont</link></entry>
      </row>
      <row>
-       <entry>ponultimo</entry>
+       <entry>ponUltimo</entry>
        <entry><link linkend='command-lput'>lput</link></entry>
      </row>
      <row>
@@ -3860,11 +3804,11 @@
        <entry><link linkend='command-setposxyz'>setposxyz</link></entry>
      </row>
      <row>
-       <entry>poslectura</entry>
+       <entry>posLectura</entry>
        <entry><link linkend='command-writepos'>writepos</link></entry>
      </row>
      <row>
-       <entry>posraton</entry>
+       <entry>posRaton</entry>
        <entry><link linkend='command-mousepos'>mousepos</link></entry>
      </row>
      <row>
@@ -3876,7 +3820,7 @@
        <entry><link linkend='command-fput'>fput</link></entry>
      </row>
      <row>
-       <entry>preguntabox</entry>
+       <entry>preguntaBox</entry>
        <entry><link linkend='command-questionbox'>questionbox</link></entry>
      </row>
      <row>
@@ -3928,11 +3872,11 @@
        <entry><link linkend='command-remove'>remove</link></entry>
      </row>
      <row>
-       <entry>quitadll</entry>
+       <entry>quitaDLL</entry>
        <entry><link linkend='command-dllfree'>dllfree</link></entry>
      </row>
      <row>
-       <entry>quitaestado</entry>
+       <entry>quitaEstado</entry>
        <entry><link linkend='command-nostatus'>nostatus</link></entry>
      </row>
      <row>
@@ -3940,11 +3884,11 @@
        <entry><link linkend='command-remdup'>remdup</link></entry>
      </row>
      <row>
-       <entry>radarcsen</entry>
+       <entry>radarcSen</entry>
        <entry><link linkend='command-radarcsin'>radarcsin</link></entry>
      </row>
      <row>
-       <entry>radsen</entry>
+       <entry>radSen</entry>
        <entry><link linkend='command-radsin'>radsin</link></entry>
      </row>
      <row>
@@ -3960,11 +3904,11 @@
        <entry><link linkend='command-rerandom'>rerandom</link></entry>
      </row>
      <row>
-       <entry>RecibeValorAceptaRed</entry>
+       <entry>recibeValorAceptaRed</entry>
        <entry><link linkend='command-netacceptreceivevalue'>netacceptreceivevalue</link></entry>
      </row>
      <row>
-       <entry>RecibeValorConectaRed</entry>
+       <entry>recibeValorConectaRed</entry>
        <entry><link linkend='command-netconnectreceivevalue'>netconnectreceivevalue</link></entry>
      </row>
      <row>
@@ -3996,7 +3940,7 @@
        <entry><link linkend='command-remainder'>remainder</link></entry>
      </row>
      <row>
-       <entry>resultadoejecuta</entry>
+       <entry>resultadoEjecuta</entry>
        <entry><link linkend='command-runresult'>runresult</link></entry>
      </row>
      <row>
@@ -4012,7 +3956,7 @@
        <entry><link linkend='command-label'>label</link></entry>
      </row>
      <row>
-       <entry>rotulotam</entry>
+       <entry>rotuloTam</entry>
        <entry><link linkend='command-labelsize'>labelsize</link></entry>
      </row>
      <row>
@@ -4024,7 +3968,7 @@
        <entry><link linkend='command-pick'>pick</link></entry>
      </row>
      <row>
-       <entry>saltoa</entry>
+       <entry>saltoA</entry>
        <entry><link linkend='command-goto'>goto</link></entry>
      </row>
      <row>
@@ -4036,7 +3980,7 @@
        <entry><link linkend='command-rseq'>rseq</link></entry>
      </row>
      <row>
-       <entry>seleccionbox</entry>
+       <entry>seleccionBox</entry>
        <entry><link linkend='command-selectbox'>selectbox</link></entry>
      </row>
      <row>
@@ -4044,7 +3988,7 @@
        <entry><link linkend='command-sin'>sin</link></entry>
      </row>
      <row>
-       <entry>setcursornoespera</entry>
+       <entry>setCursorNoEspera</entry>
        <entry><link linkend='command-setcursornowait'>setcursornowait</link></entry>
      </row>
      <row>
@@ -4056,19 +4000,15 @@
        <entry><link linkend='command-iftrue'>iftrue</link></entry>
      </row>
      <row>
-       <entry>sicieto</entry>
-       <entry><link linkend='command-ift'>ift</link></entry>
-     </row>
-     <row>
        <entry>siempre</entry>
        <entry><link linkend='command-forever'>forever</link></entry>
      </row>
      <row>
-       <entry>sievento</entry>
+       <entry>siEvento</entry>
        <entry><link linkend='command-eventcheck'>eventcheck</link></entry>
      </row>
      <row>
-       <entry>sifalso</entry>
+       <entry>siFalso</entry>
        <entry><link linkend='command-iffalse'>iffalse</link></entry>
      </row>
      <row>
@@ -4080,11 +4020,11 @@
        <entry><link linkend='command-continue'>continue</link></entry>
      </row>
      <row>
-       <entry>sinobox</entry>
+       <entry>siNoBox</entry>
        <entry><link linkend='command-yesnobox'>yesnobox</link></entry>
      </row>
      <row>
-       <entry>sisino</entry>
+       <entry>siSino</entry>
        <entry><link linkend='command-ifelse'>ifelse</link></entry>
      </row>
      <row>
@@ -4096,7 +4036,7 @@
        <entry><link linkend='command-pu'>pu</link></entry>
      </row>
      <row>
-       <entry>subelapiz</entry>
+       <entry>subeLapiz</entry>
        <entry><link linkend='command-penup'>penup</link></entry>
      </row>
      <row>
@@ -4104,11 +4044,11 @@
        <entry><link linkend='command-tone'>tone</link></entry>
      </row>
      <row>
-       <entry>suenawave</entry>
+       <entry>suenaWave</entry>
        <entry><link linkend='command-playwave'>playwave</link></entry>
      </row>
      <row>
-       <entry>tamañocargadib</entry>
+       <entry>tamañoCargaDib</entry>
        <entry><link linkend='command-bitloadsize'>bitloadsize</link></entry>
      </row>
      <row>
@@ -4116,7 +4056,7 @@
        <entry><link linkend='command-bitsize'>bitsize</link></entry>
      </row>
      <row>
-       <entry>tamañogif</entry>
+       <entry>tamañoGif</entry>
        <entry><link linkend='command-gifsize'>gifsize</link></entry>
      </row>
      <row>
@@ -4148,7 +4088,7 @@
        <entry><link linkend='command-map.se'>map.se</link></entry>
      </row>
      <row>
-       <entry>terminapoligono</entry>
+       <entry>terminaPoligono</entry>
        <entry><link linkend='command-polyend'>polyend</link></entry>
      </row>
      <row>
@@ -4156,11 +4096,11 @@
        <entry><link linkend='command-text'>text</link></entry>
      </row>
      <row>
-       <entry>textocompleto</entry>
+       <entry>textoCompleto</entry>
        <entry><link linkend='command-fulltext'>fulltext</link></entry>
      </row>
      <row>
-       <entry>tienebarra?</entry>
+       <entry>tieneBarra?</entry>
        <entry><link linkend='command-backslashedp'>backslashed?</link></entry>
      </row>
      <row>
@@ -4228,11 +4168,11 @@
        <entry><link linkend='command-mdarray'>mdarray</link></entry>
      </row>
      <row>
-       <entry>ventanadepurador</entry>
+       <entry>ventanaDepurador</entry>
        <entry><link linkend='command-debugwindows'>debugwindows</link></entry>
      </row>
      <row>
-       <entry>versionlogo</entry>
+       <entry>versionLogo</entry>
        <entry><link linkend='command-logoversion'>logoversion</link></entry>
      </row>
      <row>
