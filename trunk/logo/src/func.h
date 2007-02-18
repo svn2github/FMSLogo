@@ -303,6 +303,7 @@ extern NODE *make_strnode_no_copy(const char *strptr, char *strhead, int len, NO
 extern NODE *make_strnode(const char *string, int len, NODETYPES typ, char * (*copy_routine) (char *, const char *, int));
 extern NODE *make_strnode(const char *string);
 extern NODE *make_strnode_from_wordlist(NODE * wordlist, int len, NODETYPES typ);
+extern NODE *make_lowercase_strnode_from_strnode(NODE * OriginalNode);
 extern void make_runparse(NODE *ndi);
 extern NODE *make_quote(NODE *qnd);
 extern NODE *maybe_quote(NODE *nd);

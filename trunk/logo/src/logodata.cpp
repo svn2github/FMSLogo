@@ -253,6 +253,15 @@ uncapital(
    return lowercase;
    }
 
+static
+bool
+islowercase(
+   char Character
+   )
+   {
+   return uncapital(Character) == Character;
+   }
+
 char *low_strnzcpy(char *dst, const char * src, int len)
    {
    LCMapString(
@@ -480,6 +489,36 @@ make_strnode_no_copy(
    setstrptr(strnode, strptr);
    setstrhead(strnode, strhead);
    return strnode;
+   }
+
+NODE *
+make_lowercase_strnode_from_strnode(
+   NODE * OriginalNode
+   )
+   {
+   assert(is_string(OriginalNode));
+
+   // Check to see if this is already a lower-case node.
+   // There's no need to allocate a new node if the current 
+   // one will do.
+
+   const char * originalString       = getstrptr(OriginalNode);
+   size_t       originalStringLength = getstrlen(OriginalNode);
+   for (size_t i = 0; i < originalStringLength; i++)
+      {
+      if (!islowercase(originalString[i]))
+         {
+         // OriginalNode is not already lowercase.
+         return make_strnode(
+            originalString,
+            originalStringLength,
+            nodetype(OriginalNode), 
+            low_strnzcpy);
+         }
+      }
+
+   // OriginalNode is already a lower-case string
+   return OriginalNode;
    }
 
 void make_runparse(NODE *ndi)

@@ -659,18 +659,20 @@ intern_primitive(
    setprimmax(proc,  MaximumArgs);
    setprimmin(proc,  MinimumArgs);
 
-   NODE * pname  = vref(make_static_strnode(Name));
-   NODE * casend = vref(make_instance(pname, pname));
-   setprocnode__caseobj(casend, proc);
+   NODE * primitive_name = vref(make_static_strnode(Name));
+   NODE * lowercase_name = vref(make_lowercase_strnode_from_strnode(primitive_name));
+   NODE * case_node      = vref(make_instance(primitive_name, lowercase_name));
+   setprocnode__caseobj(case_node, proc);
 
    if (nodetype(proc) == MACRO)
       {
-      setflag__caseobj(casend, PROC_MACRO);
+      setflag__caseobj(case_node, PROC_MACRO);
       }
 
    deref(proc);
-   deref(casend);
-   deref(pname);
+   deref(case_node);
+   deref(primitive_name);
+   deref(lowercase_name);
    }
 
 void init()
