@@ -1,4 +1,11 @@
-<chapter id="tokenization">
+<chapter id="language-mechanics">
+   <title>Language Mechanics</title>
+
+<para>
+This chapter explains how the &GENERICNAME; language works.
+</para>
+
+<section>
    <title>Tokenization</title>
    <indexterm><primary>tokenization</primary></indexterm>
 
@@ -79,5 +86,21 @@ This distinction is important only if you are building a &GENERICNAME; expressio
     <programlisting>RUN (SENTENCE "MAKE ""|(| 2)</programlisting>
 
     <para>will create a variable whose name is open-parenthesis.  (Each example would fail if vertical bars and backslashes were interchanged.)</para>
+
+</section>
+
+<section>
+<title>Procedure Loading</title>
+<para>
+When &PRODUCTNAME; encounters a token that it neither a variable, a number, a word, an infix operator, a parenthesis, nor a bracket, then the token is interpreted as the name of a procedure.
+If this is the name of a primitive or a procedure that has already been defined, then &PRODUCTNAME; calls that procedure.
+Otherwise, &PRODUCTNAME; attempts to load the procedure into the workspace.
+If a ".lgo" file with the same name as with the procedure exists in the current working directory, then &PRODUCTNAME; loads that file (as with the <link linkend="command-load">LOAD</link> command).
+If no errors were encountered and the procedure was defined by loading the file, then that procedure is called.
+However, if the procedure is still not defined and a file with the same name exists in the Logolib directory, then that Logolib file is loaded.
+If no errors were encountered and the procedure was defined by loading the Logolib file, then the procedure is called.
+If the procedure is still not defined, then &PRODUCTNAME; throws an "I don't know how to" error.
+</para>
+</section>
 
 </chapter>
