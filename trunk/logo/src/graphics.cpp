@@ -54,10 +54,6 @@ COLORREF colortable[16] =
    0x00B7B7B7, // grey
    };
 
-bool bIndexMode = false;
-
-bool        bPolyFlag  = false;
-VERTEXLIST* ThePolygon = NULL;
 
 mode_type current_mode = wrapmode;
 
@@ -90,6 +86,170 @@ Point  g_Wanna = {0.0, 0.0, 0.0};
 static bool out_of_bounds = false;
 
 #define sq(z) ((z)*(z))
+
+
+struct NAMEDCOLOR
+{
+   const    char * EnglishName;
+   const    char * LocalizedName;
+   COLORREF        Color;
+};
+
+static const NAMEDCOLOR g_NamedColors[] =
+{
+   {"AliceBlue",             LOCALIZED_COLOR_ALICEBLUE,             0x00FFF8F0},
+   {"AntiqueWhite",          LOCALIZED_COLOR_ANTIQUEWHITE,          0x00D7EBFA},
+   {"Aqua",                  LOCALIZED_COLOR_AQUA,                  0x00FFFF00},
+   {"Aquamarine",            LOCALIZED_COLOR_AQUAMARINE,            0x00D4FF7F},
+   {"Azure",                 LOCALIZED_COLOR_AZURE,                 0x00FFFFF0},
+   {"Beige",                 LOCALIZED_COLOR_BEIGE,                 0x00DCF5F5},
+   {"Bisque",                LOCALIZED_COLOR_BISQUE,                0x00C4E4FF},
+   {"Black",                 LOCALIZED_COLOR_BLACK,                 0x00000000},
+   {"BlanchedAlmond",        LOCALIZED_COLOR_BLANCHEDALMOND,        0x00CDEBFF},
+   {"Blue",                  LOCALIZED_COLOR_BLUE,                  0x00FF0000},
+   {"BlueViolet",            LOCALIZED_COLOR_BLUEVIOLET,            0x00E22B8A},
+   {"Brown",                 LOCALIZED_COLOR_BROWN,                 0x002A2AA5},
+   {"BurlyWood",             LOCALIZED_COLOR_BURLYWOOD,             0x0087B8DE},
+   {"CadetBlue",             LOCALIZED_COLOR_CADETBLUE,             0x00A09E5F},
+   {"Chartreuse",            LOCALIZED_COLOR_CHARTREUSE,            0x0000FF7F},
+   {"Chocolate",             LOCALIZED_COLOR_CHOCOLATE,             0x001E69D2},
+   {"Coral",                 LOCALIZED_COLOR_CORAL,                 0x00507FFF},
+   {"CornflowerBlue",        LOCALIZED_COLOR_CORNFLOWERBLUE,        0x00ED9564},
+   {"Cornsilk",              LOCALIZED_COLOR_CORNSILK,              0x00DCF8FF},
+   {"Crimson",               LOCALIZED_COLOR_CRIMSON,               0x003C14DC},
+   {"Cyan",                  LOCALIZED_COLOR_CYAN,                  0x00FFFF00},
+   {"DarkBlue",              LOCALIZED_COLOR_DARKBLUE,              0x008B0000},
+   {"DarkCyan",              LOCALIZED_COLOR_DARKCYAN,              0x008B8B00},
+   {"DarkGoldenRod",         LOCALIZED_COLOR_DARKGOLDENROD,         0x000B86B8},
+   {"DarkGray",              LOCALIZED_COLOR_DARKGRAY,              0x00A9A9A9},
+   {"DarkGreen",             LOCALIZED_COLOR_DARKGREEN,             0x00006400},
+   {"DarkGrey",              LOCALIZED_COLOR_DARKGREY,              0x00A9A9A9},
+   {"DarkKhaki",             LOCALIZED_COLOR_DARKKHAKI,             0x006BB7BD},
+   {"DarkMagenta",           LOCALIZED_COLOR_DARKMAGENTA,           0x008B008B},
+   {"DarkOliveGreen",        LOCALIZED_COLOR_DARKOLIVEGREEN,        0x002F6B55},
+   {"DarkOrchid",            LOCALIZED_COLOR_DARKORCHID,            0x00CC3299},
+   {"DarkRed",               LOCALIZED_COLOR_DARKRED,               0x0000008B},
+   {"DarkSalmon",            LOCALIZED_COLOR_DARKSALMON,            0x007A96E9},
+   {"DarkSeaGreen",          LOCALIZED_COLOR_DARKSEAGREEN,          0x008FBC8F},
+   {"DarkSlateBlue",         LOCALIZED_COLOR_DARKSLATEBLUE,         0x008B3D48},
+   {"DarkSlateGray",         LOCALIZED_COLOR_DARKSLATEGRAY,         0x004F4F2F},
+   {"DarkSlateGrey",         LOCALIZED_COLOR_DARKSLATEGREY,         0x004F4F2F},
+   {"DarkTurquoise",         LOCALIZED_COLOR_DARKTURQUOISE,         0x00D1CE00},
+   {"DarkViolet",            LOCALIZED_COLOR_DARKVIOLET,            0x00D30094},
+   {"Darkorange",            LOCALIZED_COLOR_DARKORANGE,            0x00008CFF},
+   {"DeepPink",              LOCALIZED_COLOR_DEEPPINK,              0x009314FF},
+   {"DeepSkyBlue",           LOCALIZED_COLOR_DEEPSKYBLUE,           0x00FFBF00},
+   {"DimGray",               LOCALIZED_COLOR_DIMGRAY,               0x00696969},
+   {"DimGrey",               LOCALIZED_COLOR_DIMGREY,               0x00696969},
+   {"DodgerBlue",            LOCALIZED_COLOR_DODGERBLUE,            0x00FF901E},
+   {"FireBrick",             LOCALIZED_COLOR_FIREBRICK,             0x002222B2},
+   {"FloralWhite",           LOCALIZED_COLOR_FLORALWHITE,           0x00F0FAFF},
+   {"ForestGreen",           LOCALIZED_COLOR_FORESTGREEN,           0x00228B22},
+   {"Fuchsia",               LOCALIZED_COLOR_FUCHSIA,               0x00FF00FF},
+   {"Gainsboro",             LOCALIZED_COLOR_GAINSBORO,             0x00DCDCDC},
+   {"GhostWhite",            LOCALIZED_COLOR_GHOSTWHITE,            0x00FFF8F8},
+   {"Gold",                  LOCALIZED_COLOR_GOLD,                  0x0000D7FF},
+   {"GoldenRod",             LOCALIZED_COLOR_GOLDENROD,             0x0020A5DA},
+   {"Gray",                  LOCALIZED_COLOR_GRAY,                  0x00808080},
+   {"Green",                 LOCALIZED_COLOR_GREEN,                 0x00008000},
+   {"GreenYellow",           LOCALIZED_COLOR_GREENYELLOW,           0x002FFFAD},
+   {"Grey",                  LOCALIZED_COLOR_GREY,                  0x00808080},
+   {"HoneyDew",              LOCALIZED_COLOR_HONEYDEW,              0x00F0FFF0},
+   {"HotPink",               LOCALIZED_COLOR_HOTPINK,               0x00B469FF},
+   {"IndianRed",             LOCALIZED_COLOR_INDIANRED,             0x005C5CCD},
+   {"Indigo",                LOCALIZED_COLOR_INDIGO,                0x0082004B},
+   {"Ivory",                 LOCALIZED_COLOR_IVORY,                 0x00F0FFFF},
+   {"Khaki",                 LOCALIZED_COLOR_KHAKI,                 0x008CE6F0},
+   {"Lavender",              LOCALIZED_COLOR_LAVENDER,              0x00FAE6E6},
+   {"LavenderBlush",         LOCALIZED_COLOR_LAVENDERBLUSH,         0x00F5F0FF},
+   {"LawnGreen",             LOCALIZED_COLOR_LAWNGREEN,             0x0000FC7C},
+   {"LemonChiffon",          LOCALIZED_COLOR_LEMONCHIFFON,          0x00CDFAFF},
+   {"LightBlue",             LOCALIZED_COLOR_LIGHTBLUE,             0x00E6D8AD},
+   {"LightCoral",            LOCALIZED_COLOR_LIGHTCORAL,            0x008080F0},
+   {"LightCyan",             LOCALIZED_COLOR_LIGHTCYAN,             0x00FFFFE0},
+   {"LightGoldenRodYellow",  LOCALIZED_COLOR_LIGHTGOLDENRODYELLOW,  0x00D2FAFA},
+   {"LightGray",             LOCALIZED_COLOR_LIGHTGRAY,             0x00D3D3D3},
+   {"LightGreen",            LOCALIZED_COLOR_LIGHTGREEN,            0x0090EE90},
+   {"LightGrey",             LOCALIZED_COLOR_LIGHTGREY,             0x00D3D3D3},
+   {"LightPink",             LOCALIZED_COLOR_LIGHTPINK,             0x00C1B6FF},
+   {"LightSalmon",           LOCALIZED_COLOR_LIGHTSALMON,           0x007AA0FF},
+   {"LightSeaGreen",         LOCALIZED_COLOR_LIGHTSEAGREEN,         0x00AAB220},
+   {"LightSkyBlue",          LOCALIZED_COLOR_LIGHTSKYBLUE,          0x00FACE87},
+   {"LightSlateGray",        LOCALIZED_COLOR_LIGHTSLATEGRAY,        0x00998877},
+   {"LightSlateGrey",        LOCALIZED_COLOR_LIGHTSLATEGREY,        0x00998877},
+   {"LightSteelBlue",        LOCALIZED_COLOR_LIGHTSTEELBLUE,        0x00DEC4B0},
+   {"LightYellow",           LOCALIZED_COLOR_LIGHTYELLOW,           0x00E0FFFF},
+   {"Lime",                  LOCALIZED_COLOR_LIME,                  0x0000FF00},
+   {"LimeGreen",             LOCALIZED_COLOR_LIMEGREEN,             0x0032CD32},
+   {"Linen",                 LOCALIZED_COLOR_LINEN,                 0x00E6F0FA},
+   {"Magenta",               LOCALIZED_COLOR_MAGENTA,               0x00FF00FF},
+   {"Maroon",                LOCALIZED_COLOR_MAROON,                0x00000080},
+   {"MediumAquaMarine",      LOCALIZED_COLOR_MEDIUMAQUAMARINE,      0x00AACD66},
+   {"MediumBlue",            LOCALIZED_COLOR_MEDIUMBLUE,            0x00CD0000},
+   {"MediumOrchid",          LOCALIZED_COLOR_MEDIUMORCHID,          0x00D355BA},
+   {"MediumPurple",          LOCALIZED_COLOR_MEDIUMPURPLE,          0x00D87093},
+   {"MediumSeaGreen",        LOCALIZED_COLOR_MEDIUMSEAGREEN,        0x0071B33C},
+   {"MediumSlateBlue",       LOCALIZED_COLOR_MEDIUMSLATEBLUE,       0x00EE687B},
+   {"MediumSpringGreen",     LOCALIZED_COLOR_MEDIUMSPRINGGREEN,     0x009AFA00},
+   {"MediumTurquoise",       LOCALIZED_COLOR_MEDIUMTURQUOISE,       0x00CCD148},
+   {"MediumVioletRed",       LOCALIZED_COLOR_MEDIUMVIOLETRED,       0x008515C7},
+   {"MidnightBlue",          LOCALIZED_COLOR_MIDNIGHTBLUE,          0x00701919},
+   {"MintCream",             LOCALIZED_COLOR_MINTCREAM,             0x00FAFFF5},
+   {"MistyRose",             LOCALIZED_COLOR_MISTYROSE,             0x00E1E4FF},
+   {"Moccasin",              LOCALIZED_COLOR_MOCCASIN,              0x00B5E4FF},
+   {"NavajoWhite",           LOCALIZED_COLOR_NAVAJOWHITE,           0x00ADDEFF},
+   {"Navy",                  LOCALIZED_COLOR_NAVY,                  0x00800000},
+   {"OldLace",               LOCALIZED_COLOR_OLDLACE,               0x00E6F5FD},
+   {"Olive",                 LOCALIZED_COLOR_OLIVE,                 0x00008080},
+   {"OliveDrab",             LOCALIZED_COLOR_OLIVEDRAB,             0x00238E6B},
+   {"Orange",                LOCALIZED_COLOR_ORANGE,                0x0000A5FF},
+   {"OrangeRed",             LOCALIZED_COLOR_ORANGERED,             0x000045FF},
+   {"Orchid",                LOCALIZED_COLOR_ORCHID,                0x00D670DA},
+   {"PaleGoldenRod",         LOCALIZED_COLOR_PALEGOLDENROD,         0x00AAE8EE},
+   {"PaleGreen",             LOCALIZED_COLOR_PALEGREEN,             0x0098FB98},
+   {"PaleTurquoise",         LOCALIZED_COLOR_PALETURQUOISE,         0x00EEEEAF},
+   {"PaleVioletRed",         LOCALIZED_COLOR_PALEVIOLETRED,         0x009370D8},
+   {"PapayaWhip",            LOCALIZED_COLOR_PAPAYAWHIP,            0x00D5EFFF},
+   {"PeachPuff",             LOCALIZED_COLOR_PEACHPUFF,             0x00B9DAFF},
+   {"Peru",                  LOCALIZED_COLOR_PERU,                  0x003F85CD},
+   {"Pink",                  LOCALIZED_COLOR_PINK,                  0x00CBC0FF},
+   {"Plum",                  LOCALIZED_COLOR_PLUM,                  0x00DDA0DD},
+   {"PowderBlue",            LOCALIZED_COLOR_POWDERBLUE,            0x00E6E0B0},
+   {"Purple",                LOCALIZED_COLOR_PURPLE,                0x00800080},
+   {"Red",                   LOCALIZED_COLOR_RED,                   0x000000FF},
+   {"RosyBrown",             LOCALIZED_COLOR_ROSYBROWN,             0x008F8FBC},
+   {"RoyalBlue",             LOCALIZED_COLOR_ROYALBLUE,             0x00E16941},
+   {"SaddleBrown",           LOCALIZED_COLOR_SADDLEBROWN,           0x0013458B},
+   {"Salmon",                LOCALIZED_COLOR_SALMON,                0x007280FA},
+   {"SandyBrown",            LOCALIZED_COLOR_SANDYBROWN,            0x0060A4F4},
+   {"SeaGreen",              LOCALIZED_COLOR_SEAGREEN,              0x00578B2E},
+   {"SeaShell",              LOCALIZED_COLOR_SEASHELL,              0x00EEF5FF},
+   {"Sienna",                LOCALIZED_COLOR_SIENNA,                0x002D52A0},
+   {"Silver",                LOCALIZED_COLOR_SILVER,                0x00C0C0C0},
+   {"SkyBlue",               LOCALIZED_COLOR_SKYBLUE,               0x00EBCE87},
+   {"SlateBlue",             LOCALIZED_COLOR_SLATEBLUE,             0x00CD5A6A},
+   {"SlateGray",             LOCALIZED_COLOR_SLATEGRAY,             0x00908070},
+   {"SlateGrey",             LOCALIZED_COLOR_SLATEGREY,             0x00908070},
+   {"Snow",                  LOCALIZED_COLOR_SNOW,                  0x00FAFAFF},
+   {"SpringGreen",           LOCALIZED_COLOR_SPRINGGREEN,           0x007FFF00},
+   {"SteelBlue",             LOCALIZED_COLOR_STEELBLUE,             0x00B48246},
+   {"Tan",                   LOCALIZED_COLOR_TAN,                   0x008CB4D2},
+   {"Teal",                  LOCALIZED_COLOR_TEAL,                  0x00808000},
+   {"Thistle",               LOCALIZED_COLOR_THISTLE,               0x00D8BFD8},
+   {"Tomato",                LOCALIZED_COLOR_TOMATO,                0x004763FF},
+   {"Turquoise",             LOCALIZED_COLOR_TURQUOISE,             0x00D0E040},
+   {"Violet",                LOCALIZED_COLOR_VIOLET,                0x00EE82EE},
+   {"Wheat",                 LOCALIZED_COLOR_WHEAT,                 0x00B3DEF5},
+   {"White",                 LOCALIZED_COLOR_WHITE,                 0x00FFFFFF},
+   {"WhiteSmoke",            LOCALIZED_COLOR_WHITESMOKE,            0x00F5F5F5},
+   {"Yellow",                LOCALIZED_COLOR_YELLOW,                0x0000FFFF},
+   {"YellowGreen",           LOCALIZED_COLOR_YELLOWGREEN,           0x0032CD9A},
+};
+
+bool bIndexMode = false;
+
+bool        bPolyFlag  = false;
+VERTEXLIST* ThePolygon = NULL;
 
 static void forward_helper(FLONUM d);
 
@@ -143,7 +303,7 @@ FIXNUM g_round(FLONUM n)
 FLONUM
 numeric_node_to_flonum(
    const NODE * numeric_node
-)
+   )
    {
    FLONUM number;
 
@@ -164,7 +324,7 @@ numeric_node_to_flonum(
 FIXNUM 
 numeric_node_to_fixnum(
    const NODE * numeric_node
-)
+   )
    {
    FIXNUM number;
 
@@ -1996,6 +2156,37 @@ NODE *lpenreverse(NODE *)
    return lpendown(NIL);
    }
 
+typedef 
+int 
+(*COMPAREFUNC) (
+   const char * StringA, 
+   const char * StringB, 
+   int          CompareLength
+   );
+
+static
+bool
+StringNodeEqualsString(
+   NODE       * StringNode,
+   const char * String,
+   COMPAREFUNC  CompareFunc
+   )
+   {
+   assert(is_string(StringNode));
+
+   int stringLength = strlen(String);
+
+   if (stringLength != getstrlen(StringNode))
+      {
+      // the strings aren't even the same length--they can't be the same
+      return false;
+      }
+   else
+      {
+      // the strings are the same length, so we must compare them
+      return 0 == CompareFunc(getstrptr(StringNode), String, stringLength);
+      }
+   }
 
 static
 NODE *
@@ -2005,42 +2196,81 @@ setcolor_helper(
    void (*updatecolorfunc) (void)
    )
    {
+   FIXNUM red   = 0;
+   FIXNUM green = 0;
+   FIXNUM blue  = 0;
+
    if (is_list(car(args)))
       {
       NODE * arg = pos_int_vector_3_arg(args);
-
-      if (NOT_THROWING)
+      if (stopping_flag != THROWING)
          {
-         if (!in_erase_mode)
-            {
-            setcolorfunc(
-               numeric_node_to_fixnum(car(arg)),
-               numeric_node_to_fixnum(cadr(arg)),
-               numeric_node_to_fixnum(cadr(cdr(arg))));
-            }
-         updatecolorfunc();
-         }
+         red   = numeric_node_to_fixnum(car(arg));
+         green = numeric_node_to_fixnum(cadr(arg));
+         blue  = numeric_node_to_fixnum(cadr(cdr(arg)));
 
-      bIndexMode = false;
+         bIndexMode = false;
+         }
       }
    else
       {
-      NODE * cnode = numeric_arg(args);
-
-      if (NOT_THROWING)
+      NODE * strnode = string_arg(args);
+      if (stopping_flag == THROWING)
          {
+         }
+      else if (numberp(strnode))
+         {
+         // this is a number, so it may be a valid index 
+         NODE * cnode = cnv_node_to_numnode(strnode);
          int icolor = numeric_node_to_fixnum(cnode) % 16;
-         if (!in_erase_mode)
+
+         red   = GetRValue(colortable[icolor]); 
+         green = GetGValue(colortable[icolor]); 
+         blue  = GetBValue(colortable[icolor]);
+
+         bIndexMode = true;
+
+         gcref(cnode);
+         }
+      else
+         {
+         bool foundIt = false;
+
+         COMPAREFUNC compareFunc = variableIsTrue(Caseignoredp) ? 
+            low_strncmp : 
+            (COMPAREFUNC) strncmp;
+
+         // search for the color name in g_NamedColors
+         for (size_t i = 0; i < ARRAYSIZE(g_NamedColors); i++)
             {
-            setcolorfunc(
-               GetRValue(colortable[icolor]), 
-               GetGValue(colortable[icolor]), 
-               GetBValue(colortable[icolor]));
+            if (StringNodeEqualsString(strnode, g_NamedColors[i].EnglishName,   compareFunc) ||
+                StringNodeEqualsString(strnode, g_NamedColors[i].LocalizedName, compareFunc))
+               {
+               red   = GetRValue(g_NamedColors[i].Color);
+               green = GetGValue(g_NamedColors[i].Color); 
+               blue  = GetBValue(g_NamedColors[i].Color);
+
+               foundIt = true;
+               break;
+               }
             }
+
+         if (!foundIt)
+            {
+            err_logo(BAD_DATA_UNREC, car(args));
+            }
+
+         bIndexMode = false;
+         }
+      }
+
+   if (stopping_flag != THROWING)
+      {
+      if (!in_erase_mode)
+         {
+         setcolorfunc(red, green, blue);
          updatecolorfunc();
          }
-
-      bIndexMode = true;
       }
 
    return Unbound;

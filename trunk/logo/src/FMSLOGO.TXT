@@ -1,5 +1,5 @@
 ----------------------------------------------------------------------
-FMSLogo Version 6.13.0 for Microsoft Windows 95/98/ME/NT/2000/XP/Vista
+FMSLogo Version 6.14.0 for Microsoft Windows 95/98/ME/NT/2000/XP/Vista
 ----------------------------------------------------------------------
 
    I. Kit Description/Location
@@ -14,35 +14,15 @@ VIII. Minimum System Requirements
 
 I. Kit Description/Location (http://sourceforge.net/projects/fmslogo)
 
-  fmslogo-6.13.0.exe       (binary kit: Windows self-extracting installer)
-  fmslogo-6.13.0.zip       (binary kit: Windows ZIP archive)
-  fmslogo-src-6.13.0.zip   (source kit)
+  fmslogo-6.14.0.exe       (binary kit: Windows self-extracting installer)
+  fmslogo-6.14.0.zip       (binary kit: Windows ZIP archive)
+  fmslogo-src-6.14.0.zip   (source kit)
 
 II. New features/bugs fixed:
 
-  * Added for 6.13.0
-    o Fix bug #1661232; FMSLogo can (once again) save the workspace when
-      the commander's history has keyboard focus.
-    o Fix bug #1652924; FMSLogo can (once again) start up if the window
-      was made very small before it was last closed.
-    o Fix bug #1602862: "File - Exit" no longer quits if you press 
-      "Save and Exit" then press "Cancel" when choosing a filename.
-    o Fix bug #1630234: nested APPLY instructions no longer change the 
-      value of ? in the outer APPLY.
-    o Fix bug #1624729; the pitch, roll, and heading values now "snap to"
-      values like 0, 90, 180, and 270 as easily as they did in MSWLogo.
-    o Fix bug #1625096; the TORUS.LGO and SPHERE.LGO examples no longer
-      prevent the other from working.
-    o Fix bug #1625098; French translation tables are now properly collated.
-    o Fix bug #1602864; All COPYDEF bad input errors are now recoverable.
-    o Fix bug #1600159; 'CLOSE []' now throws a bad input error.
-    o Implement request #1631170; COPYDEF, PROCEDUREP, MACROP, and DEFINEDP
-      now load the procedure as a Logolib routine, if is not already defined.
-    o Implement request #1542395; LESSEQUALP, GREATEREQUALP, and NOTEQUALP
-      are all supported as primitives and <=, >=, and <> are the respective
-      infix operators.
-    o Add a Spanish translation of FMSLogo.
-    o Improve the translation of the French FMSLogo.
+  * Added for 6.14.0
+    o Implement request #1448007; SETPENCOLOR, SETFLOODCOLOR, and SETSCREENCOLOR
+      now accept color names like "Yellow and "Blue.
     o Minor updates to the manual.
 
   For a complete history of changes across all versions of FMSLogo, see

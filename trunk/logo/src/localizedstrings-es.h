@@ -33,10 +33,10 @@
 //   #define         - is part of C++.  Do not change this.
 //   <TOKEN>         - is how the FMSLogo source code refers to the string.
 //                     This must not change, regardless of the locale.
-//   <quoted-string> - is what fmslogo.exe will use whenever it refers
+//   <quoted-string> - is what fmslogo.exe will use whenever it refers 
 //                     to <TOKEN>.  This is bit that must be translated.
 //   <status>        - This is some information on whether or not the
-//                     string has been localized yet.  For example, is
+//                     string has been localized yet.  For example, is 
 //                     someone has localized FMSLogo into French, then I add
 //                     a new string, I will append //NOT_YET_LOCALIZED as a
 //                     reminder that we need to localized just this one string.
@@ -71,25 +71,25 @@
 //
 //   "I like "LOCALIZED_GENERAL_PRODUCTNAME", do you?"
 //
-// When fmslogo.exe is built, the LOCALIZED_GENERAL_PRODUCTNAME will be
+// When fmslogo.exe is built, the LOCALIZED_GENERAL_PRODUCTNAME will be 
 // replaced with the localized form of FMSLogo and will look like the
 // original phrase.  Please only translate the "I like " and ", do you?".
 //
 // Some of the quoted strings (the ones that appear in menus and buttons)
-// have ampersands "&" characters in them.  For example the word "File"
+// have ampersands "&" characters in them.  For example the word "File" 
 // may appear as "&File".  This tells Windows that ALT+F should take the
 // user straight to this option.
-//
+// 
 // Some of the quoted strings have a "%p" or a "%s" in them.  For example,
 // the error message for when you give bad input looks like this:
 //
 //    "%p doesn't like %s as input"
 //
 // The "%p" and "%s" are replaced with the procedure name and the input
-// that it doesn't like.  You must NOT add any "%" characters to any string,
+// that it doesn't like.  You must NOT add any "%" characters to any string, 
 // nor can you change the order in which the %p and %s occur.
 //
-// There are some special characters that you can add to a string with a
+// There are some special characters that you can add to a string with a 
 // special "escape sequence", which begins with a backslash "\".
 //
 //    Tab         -  \t
@@ -100,7 +100,7 @@
 // Due to a bug in Borland's resource compiler, two forward slashes cannot
 // appear in a quoted string.  To work around this problem, I "escape" the
 // first slash, as in:
-//
+// 
 //    "http://fmslogo.org/" -> "http:\x2F/fmslogo.org/
 //
 /////////////////////////////////////////////////////////////////////////////
@@ -117,9 +117,9 @@
 // These become the perferred name of the primitives.  For example,
 // when you press the "reset" button, FMSLogo will write the value of
 // LOCALIZED_ALTERNATE_CLEARSCREEN to the commander.
-//
-// Furthermore, if one of the LOCALIZED_ALTERNATE names uses the same text
-// as the English counterpart, then the localized name will be used.
+// 
+// Furthermore, if one of the LOCALIZED_ALTERNATE names uses the same text 
+// as the English counterpart, then the localized name will be used. 
 // For example, in the English version, "ct" is short for "CLEARTEXT".
 // In the French version, "ct" is short for "CACHETORTUE" (HIDETURTLE).
 // So in the French FMSLogo, running "ct" will hide the turtle.
@@ -127,7 +127,7 @@
 // That said, it is strongly recommended that you do not choose names
 // that match the long English name of any command.  If you do, you may
 // find that some programs won't run on the localized version of FMSLogo.
-//
+// 
 // If you don't know how to translate a particular command, leave it
 // as the English name and it will be ignored.
 //
@@ -604,7 +604,7 @@
 
 
 //
-// The menu options on the main window
+// The menu options on the main window 
 //
 #define LOCALIZED_FILE        "&Archivo"
 #define LOCALIZED_FILE_NEW    "&Nuevo\t(borra el trabajo actual)"
@@ -834,9 +834,9 @@
 #define LOCALIZED_ABOUTMS_OK                   LOCALIZED_GENERAL_OKBUTTON
 
 
-//
+// 
 // Strings in various other dialog boxes
-//
+// 
 
 #define LOCALIZED_CHANGESINEDITORMAYBELOST  "Los cambios de la edición pueden perderse.\n\n¿Realmente quieres salir de "LOCALIZED_GENERAL_PRODUCTNAME"?"
 #define LOCALIZED_EDITSESSIONISRUNNING      "Una sesión de edición está activa"
@@ -875,7 +875,7 @@
 
 
 
-//
+// 
 //  Strings used in the File-Open filters
 //
 #define LOCALIZED_FILEFILTER_ALLFILES "Todos los Archivos (*.*)|*.*|"
@@ -1117,6 +1117,7 @@
 #define LOCALIZED_FILE_RMDIRFAILEDNOEXIST  "El directorio no existe"
 #define LOCALIZED_FILE_RMDIRFAILEDNOTEMPTY "Asegúrate que el directorio esté vacío antes de eliminarlo."
 
+
 //
 // The default title of a Logo picture when it is printed
 //
@@ -1135,7 +1136,7 @@
 
 //
 // Strings that explain the purpose of each menu option.
-// I don't think that any of these strings can be seen by the user,
+// I don't think that any of these strings can be seen by the user, 
 // so you probably don't have to translate these.
 //
 #define LOCALIZED_STRINGTABLE_FILESAVEAS "Saves the contents of the workspace to a new file" // NOT_YET_LOCALIZED
@@ -1194,3 +1195,155 @@
 // The text that's displayed when the Editor's Search->Find fails.
 //
 #define LOCALIZED_STRINGTABLE_CANNOTFINDSTRING "%s no encontrado"
+
+
+//
+// The words that describe color vectors.
+//
+#define LOCALIZED_COLOR_ALICEBLUE             "AliceBlue" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_ANTIQUEWHITE          "AntiqueWhite" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_AQUA                  "Aqua" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_AQUAMARINE            "Aquamarine" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_AZURE                 "Azure" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_BEIGE                 "Beige" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_BISQUE                "Bisque" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_BLACK                 "Black" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_BLANCHEDALMOND        "BlanchedAlmond" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_BLUE                  "Blue" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_BLUEVIOLET            "BlueViolet" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_BROWN                 "Brown" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_BURLYWOOD             "BurlyWood" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_CADETBLUE             "CadetBlue" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_CHARTREUSE            "Chartreuse" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_CHOCOLATE             "Chocolate" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_CORAL                 "Coral" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_CORNFLOWERBLUE        "CornflowerBlue" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_CORNSILK              "Cornsilk" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_CRIMSON               "Crimson" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_CYAN                  "Cyan" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_DARKBLUE              "DarkBlue" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_DARKCYAN              "DarkCyan" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_DARKGOLDENROD         "DarkGoldenRod" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_DARKGRAY              "DarkGray" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_DARKGREEN             "DarkGreen" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_DARKGREY              "DarkGrey" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_DARKKHAKI             "DarkKhaki" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_DARKMAGENTA           "DarkMagenta" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_DARKOLIVEGREEN        "DarkOliveGreen" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_DARKORANGE            "Darkorange" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_DARKORCHID            "DarkOrchid" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_DARKRED               "DarkRed" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_DARKSALMON            "DarkSalmon" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_DARKSEAGREEN          "DarkSeaGreen" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_DARKSLATEBLUE         "DarkSlateBlue" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_DARKSLATEGRAY         "DarkSlateGray" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_DARKSLATEGREY         "DarkSlateGrey" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_DARKTURQUOISE         "DarkTurquoise" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_DARKVIOLET            "DarkViolet" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_DEEPPINK              "DeepPink" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_DEEPSKYBLUE           "DeepSkyBlue" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_DIMGRAY               "DimGray" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_DIMGREY               "DimGrey" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_DODGERBLUE            "DodgerBlue" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_FIREBRICK             "FireBrick" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_FLORALWHITE           "FloralWhite" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_FORESTGREEN           "ForestGreen" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_FUCHSIA               "Fuchsia" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_GAINSBORO             "Gainsboro" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_GHOSTWHITE            "GhostWhite" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_GOLD                  "Gold" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_GOLDENROD             "GoldenRod" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_GRAY                  "Gray" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_GREEN                 "Green" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_GREENYELLOW           "GreenYellow" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_GREY                  "Grey" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_HONEYDEW              "HoneyDew" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_HOTPINK               "HotPink" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_INDIANRED             "IndianRed" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_INDIGO                "Indigo" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_IVORY                 "Ivory" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_KHAKI                 "Khaki" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_LAVENDER              "Lavender" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_LAVENDERBLUSH         "LavenderBlush" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_LAWNGREEN             "LawnGreen" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_LEMONCHIFFON          "LemonChiffon" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_LIGHTBLUE             "LightBlue" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_LIGHTCORAL            "LightCoral" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_LIGHTCYAN             "LightCyan" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_LIGHTGOLDENRODYELLOW  "LightGoldenRodYellow" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_LIGHTGRAY             "LightGray" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_LIGHTGREEN            "LightGreen" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_LIGHTGREY             "LightGrey" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_LIGHTPINK             "LightPink" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_LIGHTSALMON           "LightSalmon" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_LIGHTSEAGREEN         "LightSeaGreen" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_LIGHTSKYBLUE          "LightSkyBlue" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_LIGHTSLATEGRAY        "LightSlateGray" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_LIGHTSLATEGREY        "LightSlateGrey" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_LIGHTSTEELBLUE        "LightSteelBlue" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_LIGHTYELLOW           "LightYellow" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_LIME                  "Lime" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_LIMEGREEN             "LimeGreen" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_LINEN                 "Linen" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_MAGENTA               "Magenta" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_MAROON                "Maroon" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_MEDIUMAQUAMARINE      "MediumAquaMarine" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_MEDIUMBLUE            "MediumBlue" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_MEDIUMORCHID          "MediumOrchid" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_MEDIUMPURPLE          "MediumPurple" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_MEDIUMSEAGREEN        "MediumSeaGreen" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_MEDIUMSLATEBLUE       "MediumSlateBlue" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_MEDIUMSPRINGGREEN     "MediumSpringGreen" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_MEDIUMTURQUOISE       "MediumTurquoise" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_MEDIUMVIOLETRED       "MediumVioletRed" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_MIDNIGHTBLUE          "MidnightBlue" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_MINTCREAM             "MintCream" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_MISTYROSE             "MistyRose" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_MOCCASIN              "Moccasin" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_NAVAJOWHITE           "NavajoWhite" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_NAVY                  "Navy" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_OLDLACE               "OldLace" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_OLIVE                 "Olive" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_OLIVEDRAB             "OliveDrab" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_ORANGE                "Orange" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_ORANGERED             "OrangeRed" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_ORCHID                "Orchid" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_PALEGOLDENROD         "PaleGoldenRod" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_PALEGREEN             "PaleGreen" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_PALETURQUOISE         "PaleTurquoise" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_PALEVIOLETRED         "PaleVioletRed" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_PAPAYAWHIP            "PapayaWhip" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_PEACHPUFF             "PeachPuff" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_PERU                  "Peru" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_PINK                  "Pink" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_PLUM                  "Plum" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_POWDERBLUE            "PowderBlue" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_PURPLE                "Purple" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_RED                   "Red" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_ROSYBROWN             "RosyBrown" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_ROYALBLUE             "RoyalBlue" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_SADDLEBROWN           "SaddleBrown" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_SALMON                "Salmon" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_SANDYBROWN            "SandyBrown" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_SEAGREEN              "SeaGreen" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_SEASHELL              "SeaShell" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_SIENNA                "Sienna" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_SILVER                "Silver" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_SKYBLUE               "SkyBlue" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_SLATEBLUE             "SlateBlue" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_SLATEGRAY             "SlateGray" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_SLATEGREY             "SlateGrey" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_SNOW                  "Snow" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_SPRINGGREEN           "SpringGreen" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_STEELBLUE             "SteelBlue" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_TAN                   "Tan" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_TEAL                  "Teal" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_THISTLE               "Thistle" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_TOMATO                "Tomato" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_TURQUOISE             "Turquoise" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_VIOLET                "Violet" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_WHEAT                 "Wheat" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_WHITE                 "White" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_WHITESMOKE            "WhiteSmoke" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_YELLOW                "Yellow" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_YELLOWGREEN           "YellowGreen" // NOT_YET_LOCALIZED
