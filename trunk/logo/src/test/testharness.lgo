@@ -116,6 +116,8 @@ LOAD "listtoarray.lgo
 LOAD "remove.lgo
 LOAD "smallwindowhang.lgo
 LOAD "mdarray.lgo
+LOAD "foreach.lgo
+LOAD "bye.lgo
 
 TO TESTALL
 
@@ -159,6 +161,7 @@ TO TESTALL
   REPEATTEST          ; from repeat.lgo
   FOREVERTEST         ; from forever.lgo
   REPCOUNTTEST        ; from repcount.lgo
+  FOREACHTEST         ; from foreach.lgo
   MATHTEST            ; from math.lgo
   BITWISETEST         ; from bitwise.lgo
   PROCEDURETEST       ; from procedure.lgo
@@ -232,6 +235,7 @@ TO TESTALL
   SLOWDRAWTEST        ; from slowdraw.lgo
   STATUSTEST          ; from status.lgo
   TESTSMALLWINDOWHANG ; from smallwindowhang.lgo
+  BYETEST             ; from bye.lgo
 
   REPORTTESTUNINITIALIZE
 
