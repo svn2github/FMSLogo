@@ -23,34 +23,8 @@ However, the turtle is drawn one step behind its actual position, so that the di
 </para>
 
 <para>
-&PRODUCTNAME; supports color-by-index and true color.
-When using color-by-index, the index to color mapping is given in the following table.
-
-<informaltable frame='all'>
-  <tgroup cols='2'>
-    <thead>
-      <row><entry>Index</entry> <entry>Color</entry></row>
-    </thead>
-    <tbody>
-      <row><entry>0</entry><entry>black</entry></row>
-      <row><entry>1</entry><entry>blue</entry></row>
-      <row><entry>2</entry><entry>green</entry></row>
-      <row><entry>3</entry><entry>cyan (aqua)</entry></row>
-      <row><entry>4</entry><entry>red</entry></row>
-      <row><entry>5</entry><entry>magenta (fuchsia)</entry></row>
-      <row><entry>6</entry><entry>yellow</entry></row>
-      <row><entry>7</entry><entry>white</entry></row>
-      <row><entry>8</entry><entry>brown</entry></row>
-      <row><entry>9</entry><entry>tan</entry></row>
-      <row><entry>10</entry><entry>olive</entry></row>
-      <row><entry>11</entry><entry>sky blue</entry></row>
-      <row><entry>12</entry><entry>salmon</entry></row>
-      <row><entry>13</entry><entry>medium purple</entry></row>
-      <row><entry>14</entry><entry>orange</entry></row>
-      <row><entry>15</entry><entry>gray</entry></row>
-    </tbody>
-  </tgroup>
-</informaltable>
+&PRODUCTNAME; supports color-by-index, color-by-name, and true color.
+See <link linkend="using-color">Using Color</link> for details.
 </para>
 
 
@@ -213,6 +187,7 @@ Each time you enter <link linkend="command-perspective">PERSPECTIVE</link> mode 
 
    <section id="using-color">
        <title>Using Color</title>
+       <indexterm><primary>Using Color</primary></indexterm>
 
 <para>
 Several commands (<link linkend="command-setpencolor">SETPENCOLOR</link>, <link linkend="command-setfloodcolor">SETFLOODCOLOR</link>, <link linkend="command-setscreencolor">SETSCREENCOLOR</link>) exist in &GENERICNAME; to specify red, green, and blue intensities of color.
@@ -226,7 +201,7 @@ If you're running with a 256 color Windows Driver for your monitor you will get 
 The colors are stored in a table called a palette.
 The palette has room for 256 colors (chosen from 16.7 possibilities).
 You can tell if you are running in 256 color mode (have a palette) by popping up the <link linkend="command-status">STATUS</link> window and looking at the palette usage.
-If it shows "N/A" (Not Applicable) you are not running a 256 (or more) Windows driver.
+If it shows "N/A" (Not Applicable) you are not running in 256 color mode.
 See the <link linkend="command-clearpalette">CLEARPALETTE</link> command for more details about managing the palette.
 </para>
 
@@ -235,8 +210,8 @@ See the <link linkend="command-clearpalette">CLEARPALETTE</link> command for mor
 If you are running with 16 (or less) color Windows Driver for your monitor Windows will simulate all the colors by mixing (dithering) the 16 (or less) colors.
 If the <link linkend="command-setpensize">SETPENSIZE</link> is too narrow (if it equals 1) Windows cannot mix (dither) colors.
 Windows does not mix (dither) colors on Fonts either.
-If your hardware can support a 256 Windows Driver you should look into loading the appropriate Driver.
-The Documentation with your Graphics card explains the capabilities and how to load new Drivers.
+If your hardware can support a 256 Windows Driver you should look into loading the appropriate driver.
+The documentation with your graphics card explains the capabilities and how to load new drivers.
 &PRODUCTNAME; is fun in any mode but it's even more fun in 256 color mode.
 You can load 256 color bitmaps and do some incredible things with them.
 </para>
@@ -281,20 +256,23 @@ Running in 256 color does give much more pleasant colors and even allows manipul
 
 <para>
 For compatibility with other &GENERICNAME; implementations and simplicity for young programmers, &PRODUCTNAME; also supports single index colors.
-If you set any color with an 16 color index, &PRODUCTNAME; will output all colors as a 16 color index.
-If you set any color with an [red green blue] color vector, &PRODUCTNAME; will output all colors as [red green blue] color vectors.
+If you set any color with an 16 color index, then &PRODUCTNAME; outputs all colors as a 16 color index.
+If you set any color with an [red green blue] color vector or with a word such as <userinput>"red</userinput>, then &PRODUCTNAME; will output all colors as [red green blue] color vectors.
 </para>
 
 
 <variablelist>
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>SHOW PENCOLOR</userinput>
-[0 0 0]
-<userinput>SETPENCOLOR 5
+<programlisting><userinput>SETPENCOLOR 5
 SHOW PENCOLOR</userinput>
 5
+
 <userinput>SETPENCOLOR [255 0 0]
+SHOW PENCOLOR</userinput>
+[255 0 0]
+
+<userinput>SETPENCOLOR "Red
 SHOW PENCOLOR</userinput>
 [255 0 0]
 </programlisting>
@@ -304,8 +282,8 @@ SHOW PENCOLOR</userinput>
 </variablelist>
 
 <para>
-&PRODUCTNAME; supports color-by-index and true color.
-When using color-by-index, the index to color mapping is given in the following table.
+Any &PRODUCTNAME; primitive that inputs a color can input it as a color index, color name, or a color vector.
+When using a color index, the index-to-color mapping is given in the following table.
 
 <informaltable frame='all'>
   <tgroup cols='3'>
@@ -315,7 +293,7 @@ When using color-by-index, the index to color mapping is given in the following 
     <tbody>
       <row> <entry>0</entry>  <entry>[0 0 0]</entry>       <entry>Black</entry>             </row>
       <row> <entry>1</entry>  <entry>[0 0 255]</entry>     <entry>Blue</entry>              </row>
-      <row> <entry>2</entry>  <entry>[0 255 0]</entry>     <entry>Green</entry>             </row>
+      <row> <entry>2</entry>  <entry>[0 255 0]</entry>     <entry>Lime</entry>             </row>
       <row> <entry>3</entry>  <entry>[0 255 255]</entry>   <entry>Cyan (Aqua)</entry>       </row>
       <row> <entry>4</entry>  <entry>[255 0 0]</entry>     <entry>Red</entry>               </row>
       <row> <entry>5</entry>  <entry>[255 0 255]</entry>   <entry>Magenta (Fuchsia)</entry> </row>
@@ -328,12 +306,172 @@ When using color-by-index, the index to color mapping is given in the following 
       <row> <entry>12</entry> <entry>[255 149 119]</entry> <entry>Salmon</entry>            </row>
       <row> <entry>13</entry> <entry>[144 113 208]</entry> <entry>Medium Purple</entry>     </row>
       <row> <entry>14</entry> <entry>[255 163 0]</entry>   <entry>Orange</entry>            </row>
-      <row> <entry>15</entry> <entry>[183 183 183]</entry> <entry>Gray</entry>              </row>
+      <row> <entry>15</entry> <entry>[183 183 183]</entry> <entry>Dark Gray</entry>          </row>
     </tbody>
   </tgroup>
 </informaltable>
 </para>
 
+<para>
+When using a color name, the name-to-color mapping is given in the following table.
+
+<informaltable frame='all'>
+  <tgroup cols='2'>
+    <thead>
+     <row> <entry>Color Name</entry>           <entry>Color Vector</entry>  </row>
+    </thead>
+    <tbody>
+     <row> <entry>AliceBlue</entry>            <entry>[240 248 255]</entry> </row>
+     <row> <entry>AntiqueWhite</entry>         <entry>[250 235 215]</entry> </row>
+     <row> <entry>Aqua</entry>                 <entry>[0 255 255]</entry>   </row>
+     <row> <entry>Aquamarine</entry>           <entry>[127 255 212]</entry> </row>
+     <row> <entry>Azure</entry>                <entry>[240 255 255]</entry> </row>
+     <row> <entry>Beige</entry>                <entry>[245 245 220]</entry> </row>
+     <row> <entry>Bisque</entry>               <entry>[255 228 196]</entry> </row>
+     <row> <entry>Black</entry>                <entry>[0 0 0]</entry>       </row>
+     <row> <entry>BlanchedAlmond</entry>       <entry>[255 235 205]</entry> </row>
+     <row> <entry>Blue</entry>                 <entry>[0 0 255]</entry>     </row>
+     <row> <entry>BlueViolet</entry>           <entry>[138 43 226]</entry>  </row>
+     <row> <entry>Brown</entry>                <entry>[165 42 42]</entry>   </row>
+     <row> <entry>BurlyWood</entry>            <entry>[222 184 135]</entry> </row>
+     <row> <entry>CadetBlue</entry>            <entry>[95 158 160]</entry>  </row>
+     <row> <entry>Chartreuse</entry>           <entry>[127 255 0]</entry>   </row>
+     <row> <entry>Chocolate</entry>            <entry>[210 105 30]</entry>  </row>
+     <row> <entry>Coral</entry>                <entry>[255 127 80]</entry>  </row>
+     <row> <entry>CornflowerBlue</entry>       <entry>[100 149 237]</entry> </row>
+     <row> <entry>Cornsilk</entry>             <entry>[255 248 220]</entry> </row>
+     <row> <entry>Crimson</entry>              <entry>[220 20 60]</entry>   </row>
+     <row> <entry>Cyan</entry>                 <entry>[0 255 255]</entry>   </row>
+     <row> <entry>DarkBlue</entry>             <entry>[0 0 139]</entry>     </row>
+     <row> <entry>DarkCyan</entry>             <entry>[0 139 139]</entry>   </row>
+     <row> <entry>DarkGoldenRod</entry>        <entry>[184 134 11]</entry>  </row>
+     <row> <entry>DarkGray</entry>             <entry>[169 169 169]</entry> </row>
+     <row> <entry>DarkGreen</entry>            <entry>[0 100 0]</entry>     </row>
+     <row> <entry>DarkGrey</entry>             <entry>[169 169 169]</entry> </row>
+     <row> <entry>DarkKhaki</entry>            <entry>[189 183 107]</entry> </row>
+     <row> <entry>DarkMagenta</entry>          <entry>[139 0 139]</entry>   </row>
+     <row> <entry>DarkOliveGreen</entry>       <entry>[85 107 47]</entry>   </row>
+     <row> <entry>DarkOrange</entry>           <entry>[255 140 0]</entry>   </row>
+     <row> <entry>DarkOrchid</entry>           <entry>[153 50 204]</entry>  </row>
+     <row> <entry>DarkRed</entry>              <entry>[139 0 0]</entry>     </row>
+     <row> <entry>DarkSalmon</entry>           <entry>[233 150 122]</entry> </row>
+     <row> <entry>DarkSeaGreen</entry>         <entry>[143 188 143]</entry> </row>
+     <row> <entry>DarkSlateBlue</entry>        <entry>[72 61 139]</entry>   </row>
+     <row> <entry>DarkSlateGray</entry>        <entry>[47 79 79]</entry>    </row>
+     <row> <entry>DarkSlateGrey</entry>        <entry>[47 79 79]</entry>    </row>
+     <row> <entry>DarkTurquoise</entry>        <entry>[0 206 209]</entry>   </row>
+     <row> <entry>DarkViolet</entry>           <entry>[148 0 211]</entry>   </row>
+     <row> <entry>DeepPink</entry>             <entry>[255 20 147]</entry>  </row>
+     <row> <entry>DeepSkyBlue</entry>          <entry>[0 191 255]</entry>   </row>
+     <row> <entry>DimGray</entry>              <entry>[105 105 105]</entry> </row>
+     <row> <entry>DimGrey</entry>              <entry>[105 105 105]</entry> </row>
+     <row> <entry>DodgerBlue</entry>           <entry>[30 144 255]</entry>  </row>
+     <row> <entry>FireBrick</entry>            <entry>[178 34 34]</entry>   </row>
+     <row> <entry>FloralWhite</entry>          <entry>[255 250 240]</entry> </row>
+     <row> <entry>ForestGreen</entry>          <entry>[34 139 34]</entry>   </row>
+     <row> <entry>Fuchsia</entry>              <entry>[255 0 255]</entry>   </row>
+     <row> <entry>Gainsboro</entry>            <entry>[220 220 220]</entry> </row>
+     <row> <entry>GhostWhite</entry>           <entry>[248 248 255]</entry> </row>
+     <row> <entry>Gold</entry>                 <entry>[255 215 0]</entry>   </row>
+     <row> <entry>GoldenRod</entry>            <entry>[218 165 32]</entry>  </row>
+     <row> <entry>Gray</entry>                 <entry>[128 128 128]</entry> </row>
+     <row> <entry>Green</entry>                <entry>[0 128 0]</entry>     </row>
+     <row> <entry>GreenYellow</entry>          <entry>[173 255 47]</entry>  </row>
+     <row> <entry>Grey</entry>                 <entry>[128 128 128]</entry> </row>
+     <row> <entry>HoneyDew</entry>             <entry>[240 255 240]</entry> </row>
+     <row> <entry>HotPink</entry>              <entry>[255 105 180]</entry> </row>
+     <row> <entry>IndianRed</entry>            <entry>[205 92 92]</entry>   </row>
+     <row> <entry>Indigo</entry>               <entry>[75 0 130]</entry>    </row>
+     <row> <entry>Ivory</entry>                <entry>[255 255 240]</entry> </row>
+     <row> <entry>Khaki</entry>                <entry>[240 230 140]</entry> </row>
+     <row> <entry>Lavender</entry>             <entry>[230 230 250]</entry> </row>
+     <row> <entry>LavenderBlush</entry>        <entry>[255 240 245]</entry> </row>
+     <row> <entry>LawnGreen</entry>            <entry>[124 252 0]</entry>   </row>
+     <row> <entry>LemonChiffon</entry>         <entry>[255 250 205]</entry> </row>
+     <row> <entry>LightBlue</entry>            <entry>[173 216 230]</entry> </row>
+     <row> <entry>LightCoral</entry>           <entry>[240 128 128]</entry> </row>
+     <row> <entry>LightCyan</entry>            <entry>[224 255 255]</entry> </row>
+     <row> <entry>LightGoldenRodYellow</entry> <entry>[250 250 210]</entry> </row>
+     <row> <entry>LightGray</entry>            <entry>[211 211 211]</entry> </row>
+     <row> <entry>LightGreen</entry>           <entry>[144 238 144]</entry> </row>
+     <row> <entry>LightGrey</entry>            <entry>[211 211 211]</entry> </row>
+     <row> <entry>LightPink</entry>            <entry>[255 182 193]</entry> </row>
+     <row> <entry>LightSalmon</entry>          <entry>[255 160 122]</entry> </row>
+     <row> <entry>LightSeaGreen</entry>        <entry>[32 178 170]</entry>  </row>
+     <row> <entry>LightSkyBlue</entry>         <entry>[135 206 250]</entry> </row>
+     <row> <entry>LightSlateGray</entry>       <entry>[119 136 153]</entry> </row>
+     <row> <entry>LightSlateGrey</entry>       <entry>[119 136 153]</entry> </row>
+     <row> <entry>LightSteelBlue</entry>       <entry>[176 196 222]</entry> </row>
+     <row> <entry>LightYellow</entry>          <entry>[255 255 224]</entry> </row>
+     <row> <entry>Lime</entry>                 <entry>[0 255 0]</entry>     </row>
+     <row> <entry>LimeGreen</entry>            <entry>[50 205 50]</entry>   </row>
+     <row> <entry>Linen</entry>                <entry>[250 240 230]</entry> </row>
+     <row> <entry>Magenta</entry>              <entry>[255 0 255]</entry>   </row>
+     <row> <entry>Maroon</entry>               <entry>[128 0 0]</entry>     </row>
+     <row> <entry>MediumAquaMarine</entry>     <entry>[102 205 170]</entry> </row>
+     <row> <entry>MediumBlue</entry>           <entry>[0 0 205]</entry>     </row>
+     <row> <entry>MediumOrchid</entry>         <entry>[186 85 211]</entry>  </row>
+     <row> <entry>MediumPurple</entry>         <entry>[147 112 216]</entry> </row>
+     <row> <entry>MediumSeaGreen</entry>       <entry>[60 179 113]</entry>  </row>
+     <row> <entry>MediumSlateBlue</entry>      <entry>[123 104 238]</entry> </row>
+     <row> <entry>MediumSpringGreen</entry>    <entry>[0 250 154]</entry>   </row>
+     <row> <entry>MediumTurquoise</entry>      <entry>[72 209 204]</entry>  </row>
+     <row> <entry>MediumVioletRed</entry>      <entry>[199 21 133]</entry>  </row>
+     <row> <entry>MidnightBlue</entry>         <entry>[25 25 112]</entry>   </row>
+     <row> <entry>MintCream</entry>            <entry>[245 255 250]</entry> </row>
+     <row> <entry>MistyRose</entry>            <entry>[255 228 225]</entry> </row>
+     <row> <entry>Moccasin</entry>             <entry>[255 228 181]</entry> </row>
+     <row> <entry>NavajoWhite</entry>          <entry>[255 222 173]</entry> </row>
+     <row> <entry>Navy</entry>                 <entry>[0 0 128]</entry>     </row>
+     <row> <entry>OldLace</entry>              <entry>[253 245 230]</entry> </row>
+     <row> <entry>Olive</entry>                <entry>[128 128 0]</entry>   </row>
+     <row> <entry>OliveDrab</entry>            <entry>[107 142 35]</entry>  </row>
+     <row> <entry>Orange</entry>               <entry>[255 165 0]</entry>   </row>
+     <row> <entry>OrangeRed</entry>            <entry>[255 69 0]</entry>    </row>
+     <row> <entry>Orchid</entry>               <entry>[218 112 214]</entry> </row>
+     <row> <entry>PaleGoldenRod</entry>        <entry>[238 232 170]</entry> </row>
+     <row> <entry>PaleGreen</entry>            <entry>[152 251 152]</entry> </row>
+     <row> <entry>PaleTurquoise</entry>        <entry>[175 238 238]</entry> </row>
+     <row> <entry>PaleVioletRed</entry>        <entry>[216 112 147]</entry> </row>
+     <row> <entry>PapayaWhip</entry>           <entry>[255 239 213]</entry> </row>
+     <row> <entry>PeachPuff</entry>            <entry>[255 218 185]</entry> </row>
+     <row> <entry>Peru</entry>                 <entry>[205 133 63]</entry>  </row>
+     <row> <entry>Pink</entry>                 <entry>[255 192 203]</entry> </row>
+     <row> <entry>Plum</entry>                 <entry>[221 160 221]</entry> </row>
+     <row> <entry>PowderBlue</entry>           <entry>[176 224 230]</entry> </row>
+     <row> <entry>Purple</entry>               <entry>[128 0 128]</entry>   </row>
+     <row> <entry>Red</entry>                  <entry>[255 0 0]</entry>     </row>
+     <row> <entry>RosyBrown</entry>            <entry>[188 143 143]</entry> </row>
+     <row> <entry>RoyalBlue</entry>            <entry>[65 105 225]</entry>  </row>
+     <row> <entry>SaddleBrown</entry>          <entry>[139 69 19]</entry>   </row>
+     <row> <entry>Salmon</entry>               <entry>[250 128 114]</entry> </row>
+     <row> <entry>SandyBrown</entry>           <entry>[244 164 96]</entry>  </row>
+     <row> <entry>SeaGreen</entry>             <entry>[46 139 87]</entry>   </row>
+     <row> <entry>SeaShell</entry>             <entry>[255 245 238]</entry> </row>
+     <row> <entry>Sienna</entry>               <entry>[160 82 45]</entry>   </row>
+     <row> <entry>Silver</entry>               <entry>[192 192 192]</entry> </row>
+     <row> <entry>SkyBlue</entry>              <entry>[135 206 235]</entry> </row>
+     <row> <entry>SlateBlue</entry>            <entry>[106 90 205]</entry>  </row>
+     <row> <entry>SlateGray</entry>            <entry>[112 128 144]</entry> </row>
+     <row> <entry>SlateGrey</entry>            <entry>[112 128 144]</entry> </row>
+     <row> <entry>Snow</entry>                 <entry>[255 250 250]</entry> </row>
+     <row> <entry>SpringGreen</entry>          <entry>[0 255 127]</entry>   </row>
+     <row> <entry>SteelBlue</entry>            <entry>[70 130 180]</entry>  </row>
+     <row> <entry>Tan</entry>                  <entry>[210 180 140]</entry> </row>
+     <row> <entry>Teal</entry>                 <entry>[0 128 128]</entry>   </row>
+     <row> <entry>Thistle</entry>              <entry>[216 191 216]</entry> </row>
+     <row> <entry>Tomato</entry>               <entry>[255 99 71]</entry>   </row>
+     <row> <entry>Turquoise</entry>            <entry>[64 224 208]</entry>  </row>
+     <row> <entry>Violet</entry>               <entry>[238 130 238]</entry> </row>
+     <row> <entry>Wheat</entry>                <entry>[245 222 179]</entry> </row>
+     <row> <entry>White</entry>                <entry>[255 255 255]</entry> </row>
+     <row> <entry>WhiteSmoke</entry>           <entry>[245 245 245]</entry> </row>
+     <row> <entry>Yellow</entry>               <entry>[255 255 0]</entry>   </row>
+     <row> <entry>YellowGreen</entry>          <entry>[154 205 50]</entry>  </row>
+    </tbody>
+  </tgroup>
+</informaltable>
+</para>
 
    </section>
 
