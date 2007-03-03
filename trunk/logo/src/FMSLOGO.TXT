@@ -21,6 +21,8 @@ I. Kit Description/Location (http://sourceforge.net/projects/fmslogo)
 II. New features/bugs fixed:
 
   * Added for 6.14.0
+    o Fix bug #1661230; ?REST now loads on its own, instead of loading
+      when other routines that may use it are loaded.
     o Implement request #1448007; SETPENCOLOR, SETFLOODCOLOR, and SETSCREENCOLOR
       now accept color names like "Yellow and "Blue.
     o Minor updates to the manual.

@@ -536,7 +536,19 @@ void silent_load(NODE *arg, const char *prefix)
          return;
          }
       noparitylow_strnzcpy(filenamePtr, argString, argStringLength);
-      filenamePtr += argStringLength;
+
+      // Replace characters that are illegal in filename (such as '?')
+      // characters that are illegal in procedure names (such as '+')
+      // This permits us to load "?REST" as a Logolib routine.
+      for (const char * limit = filenamePtr + argStringLength;
+           filenamePtr < limit;
+           filenamePtr++)
+         {
+         if (*filenamePtr == '?')
+            {
+            *filenamePtr = '+';
+            }
+         }
 
       if (prefix == NULL)
          {

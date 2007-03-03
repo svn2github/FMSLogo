@@ -8,8 +8,4 @@ output combine (apply :map.template firsts :template.lists) ~
                (map1 bfs :template.lists :template.number+1)
 end
 
-to ?rest [:which 1]
-output bf item :which :template.lists
-end
-
-bury [map map1 ?rest]
+bury [map map1]

@@ -1,7 +1,9 @@
 .macro foreach [:foreach.inputs] 2
-catch "foreach.catchtag ~
-      [op foreach.done runresult ~
-	    [foreach1 butlast :foreach.inputs last :foreach.inputs 1]]
+catch "foreach.catchtag [
+  op foreach.done runresult [
+    foreach1 butlast :foreach.inputs last :foreach.inputs 1
+  ]
+]
 op []
 end
 
@@ -16,8 +18,4 @@ if emptyp :foreach.result [op [stop]]
 op list "output quoted first :foreach.result
 end
 
-to ?rest [:which 1]
-output bf item :which :template.lists
-end
-
-bury [foreach foreach1 foreach.done ?rest]
+bury [foreach foreach1 foreach.done]

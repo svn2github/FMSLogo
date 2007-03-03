@@ -8,8 +8,4 @@ output sentence (apply :map.se.template firsts :template.lists) ~
                 (map.se1 bfs :template.lists :template.number+1)
 end
 
-to ?rest [:which 1]
-output bf item :which :template.lists
-end
-
-bury [map.se map.se1 ?rest]
+bury [map.se map.se1]

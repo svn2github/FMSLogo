@@ -7,8 +7,4 @@ if apply :filter.template (list first :template.list) ~
 op (filter :filter.template bf :template.list :template.number+1)
 end
 
-to ?rest [:which 1]
-output bf item :which :template.lists
-end
-
-bury [filter ?rest]
+bury "filter
