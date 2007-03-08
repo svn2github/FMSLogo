@@ -864,7 +864,7 @@
 #define LOCALIZED_SAVEISFOREXPERTSONLY          "Esta característica es sólo para modo experto (usa "LOCALIZED_UNSAVEDCHANGES_SAVEANDEXIT")"
 #define LOCALIZED_SAVETOWORKSPACE                "Guardar al área de trabajo"
 #define LOCALIZED_CONTENTSCHANGED                "El contenido cambió"
-#define LOCALIZED_SAVECHANGEDCONTENTSTOWORKSPACE "El contenido cambió.\n¿Deseas guardar los cambios al área de trabajo"
+#define LOCALIZED_SAVECHANGEDCONTENTSTOWORKSPACE "El contenido cambió.\n¿Deseas guardar los cambios al área de trabajo?"
 
 
 
@@ -1230,7 +1230,7 @@
 #define LOCALIZED_COLOR_DARKKHAKI             "DarkKhaki" // NOT_YET_LOCALIZED
 #define LOCALIZED_COLOR_DARKMAGENTA           "DarkMagenta" // NOT_YET_LOCALIZED
 #define LOCALIZED_COLOR_DARKOLIVEGREEN        "DarkOliveGreen" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_DARKORANGE            "Darkorange" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_DARKORANGE            "DarkOrange" // NOT_YET_LOCALIZED
 #define LOCALIZED_COLOR_DARKORCHID            "DarkOrchid" // NOT_YET_LOCALIZED
 #define LOCALIZED_COLOR_DARKRED               "DarkRed" // NOT_YET_LOCALIZED
 #define LOCALIZED_COLOR_DARKSALMON            "DarkSalmon" // NOT_YET_LOCALIZED
