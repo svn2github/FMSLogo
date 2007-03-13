@@ -6,7 +6,7 @@ BINARYZIP=$(BINARYBASENAME).zip
 BINARYEXE=$(BINARYBASENAME).exe
 SOURCEZIP=fmslogo-src-$(FMSLOGO_VERSION).zip
 
-ZIPEXCLUDE=*/.cvsignore */CVS/ */CVS/* */*/.cvsignore */*/CVS/ */*/CVS/* */*/*/CVS/ */*/*/CVS/*
+ZIPEXCLUDE=\*/.cvsignore \*/CVS/ \*/CVS/\* \*/\*/.cvsignore \*/\*/CVS/ \*/\*/CVS/\* \*/\*/\*/CVS/ \*/\*/\*/CVS/\*
 
 MANUALS = $(addprefix manual/logohelp-, $(addsuffix .chm, $(LCIDS)))
 EXES    = $(addprefix src/fmslogo-, $(addsuffix .exe, $(LCIDS)))

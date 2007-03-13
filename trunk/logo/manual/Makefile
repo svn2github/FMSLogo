@@ -8,9 +8,8 @@ ROOTFILE        = logohelp.xml
 SOURCEFILES     = $(wildcard *.xml) logoversion.xml
 
 XSLTPROC = xsltproc
-HHC      = "C:\Program Files\Help Workshop\hhc.exe"
-FOP      = "C:\Program Files\fop-0.20.5\fop.bat"
-UNIXECHO = "c:\cygwin\bin\echo.exe"
+HHC      = 'C:\Program Files\HTML Help Workshop\hhc.exe'
+FOP      = 'C:\Program Files\fop-0.20.5\fop.bat'
 
 # prevent the hhp files from being automatically deleted
 .SECONDARY : $(addprefix htmlhelp-, $(addsuffix .hhp, $(LCIDS)))
@@ -44,7 +43,7 @@ logohelp-1032.chm : logohelp-1033.chm
 
 htmlhelp-%.hhp : translations-%.xml $(SOURCEFILES) $(HHP_STYLESHEET)
 	cp translations-$*.xml translations.xml
-	$(XSLTPROC) --nonet --param htmlhelp.chm "'logohelp-$*.chm'" $(HHP_STYLESHEET) $(ROOTFILE)
+	$(XSLTPROC) --nonet --param htmlhelp.chm \"'logohelp-$*.chm'\" $(HHP_STYLESHEET) $(ROOTFILE)
 	mv htmlhelp.hhp htmlhelp-$*.hhp
 
 # The "all" target builds all translations of the .chm
@@ -67,7 +66,7 @@ website : index.html
 # Generate an XML file that contains the version
 # We use the UNIX version of echo to make sure there is no newline
 logoversion.xml : ../version.mk
-	$(UNIXECHO) -n $(FMSLOGO_VERSION) > $@
+	echo -n $(FMSLOGO_VERSION) > $@
 
 clean :
 	$(RM) logohelp.rtf

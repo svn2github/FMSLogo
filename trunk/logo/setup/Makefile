@@ -1,4 +1,4 @@
-MAKENSIS="C:\Program Files\NSIS\makensis.exe"
+MAKENSIS='C:\Program Files\NSIS\makensis.exe'
 
 include ../lcids.mk
 
