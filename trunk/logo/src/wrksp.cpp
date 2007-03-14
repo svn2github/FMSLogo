@@ -1146,9 +1146,11 @@ NODE *po_helper(NODE *arg, int just_titles)  /* >0 for POT, <0 for EDIT       */
          {
          NODE * quoted_variable_name = make_quote(current_variable);
 
+         // MAKE "name "value
          ndprintf(
-            g_Writer.GetStream(), 
-            "Make %s %s\n",
+            g_Writer.GetStream(),
+            "%t %s %s\n",
+            LOCALIZED_ALTERNATE_MAKE,
             quoted_variable_name,
             quoted_value);
 
@@ -1171,9 +1173,11 @@ NODE *po_helper(NODE *arg, int just_titles)  /* >0 for POT, <0 for EDIT       */
       NODE * plist = plist__caseobj(intern(plist_name));
       if (plist != NIL && just_titles > 0)
          {
+         // PLIST "name = [name1 value1 name2 value2]
          ndprintf(
             g_Writer.GetStream(), 
-            "Plist %s = %s\n",
+            "%t %s = %s\n",
+            LOCALIZED_ALTERNATE_PLIST,
             quoted_plist_name, 
             plist);
          }
@@ -1184,9 +1188,11 @@ NODE *po_helper(NODE *arg, int just_titles)  /* >0 for POT, <0 for EDIT       */
             NODE * quoted_property_name  = maybe_quote(car(plist));
             NODE * quoted_property_value = maybe_quote(cadr(plist));
 
+            // PPROP "list "name "value
             ndprintf(
                g_Writer.GetStream(), 
-               "Pprop %s %s %s\n",
+               "%t %s %s %s\n",
+               LOCALIZED_ALTERNATE_PPROP,
                quoted_plist_name,
                quoted_property_name,
                quoted_property_value);
