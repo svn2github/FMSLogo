@@ -5,7 +5,9 @@ Install Borland C++ Compiler 5.02 to C:\BC5 and add C:\BC5\BIN to your PATH.
 Borland does not sell this compiler anymore, so you'll have to find it at
 a used software store (try eBay).
 
-Install Borland's Turbo Assembler.  Add TASM.EXE to the PATH.
+Install Borland's Turbo Assembler 4.1.  Add TASM32.EXE to the PATH.
+If you skip this step, you will still be able to build the debug
+version of FMSLogo.
 
 Install cygwin (from http://cygnus.org/) to c:\cygwin, including all of the 
 following optional packages:
