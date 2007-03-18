@@ -45,7 +45,7 @@ IntermediateDirectory=RELEASE$(LOCALECODE)
 !else
 
 LinkerLocalOptsAtW32_fmslogodexe =  -v -wdpl -went -wdup -wdef -wimt -wbdl -wsrf -wmsk -L\BC5\LIB -Tpe -aa -V4.0 -c
-CompInheritOptsAt_fmslogodexe = -I"C:\Program Files\Help Workshop\include" -IC:\BC5\INCLUDE -DSTRICT;_OWLPCH;NOASM;DEBUG;MEM_DEBUG;LOCALE=$(LOCALECODE)
+CompInheritOptsAt_fmslogodexe = -I"C:\Program Files\HTML Help Workshop\include" -IC:\BC5\INCLUDE -DSTRICT;_OWLPCH;NOASM;DEBUG;MEM_DEBUG;LOCALE=$(LOCALECODE)
 
 ExecutableName=fmslogod.exe
 IntermediateDirectory=DEBUG
