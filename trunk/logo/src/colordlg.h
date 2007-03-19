@@ -34,14 +34,23 @@ class TColorControl : public TControl
 class TColorDialog : public TDialog
    {
  public:
-   TColorDialog(TWindow * Parent, const TColor & InitialColor, const char *Caption);
+   TColorDialog(
+      TWindow            *   Parent,
+      const TColor         & InitialColor,
+      const char         *   Caption,
+      const char         *   LogoCommand,
+      class TColorDialog * & ExternalReference
+      );
+
    const TColor & GetSelectedColor() const;
 
  protected:
-   TScrollBar    m_ColorBar1;
-   TScrollBar    m_ColorBar2;
-   TScrollBar    m_ColorBar3;
-   TColorControl m_SelColor;
+   TScrollBar       m_ColorBar1;
+   TScrollBar       m_ColorBar2;
+   TScrollBar       m_ColorBar3;
+   TColorControl    m_SelColor;
+   const char   *   m_LogoCommand;
+   TColorDialog * & m_ExternalReference;
 
    void SetupWindow();
 
@@ -57,6 +66,10 @@ class TColorDialog : public TDialog
    void ClickFmControl8();
    void SetColorFmControl(UINT Id);
    void SetColorFmSlider();
+
+   void CmOk();
+   void DoApply(UINT);
+   void EvDestroy();
 
    DECLARE_RESPONSE_TABLE(TColorDialog);
    }

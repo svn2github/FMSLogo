@@ -620,11 +620,12 @@ class TMainFrame : public TDecoratedFrame
 
    void EraseContentsOfWorkspace();
 
-   void 
-   ChooseColor(
-      COLORREF       InitialColor,
-      const char *   EnglishDescription,
-      const char *   LogoCommand
+   void
+   ShowColorPicker(
+      class TColorDialog * & ColorPickerDialog,
+      COLORREF               InitialColor,
+      const char *           EnglishDescription,
+      const char *           LogoCommand
       );
 
  public:
@@ -634,6 +635,10 @@ class TMainFrame : public TDecoratedFrame
    class CStatusWindow        * StatusWindow;
    class TPaneSplitter        * PaneSplitterWindow;
    class TScreenWindow        * ScreenWindow;
+
+   class TColorDialog         * m_ScreenColorPicker;
+   class TColorDialog         * m_PenColorPicker;
+   class TColorDialog         * m_FloodColorPicker;
 
  protected:
    char FileName[MAXPATH];

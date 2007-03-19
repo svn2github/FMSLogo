@@ -82,6 +82,8 @@
 #define ID_MINIEDITCTRL         IDC_BASE + 80
 #define ID_TOLINE               IDC_BASE + 81
 
+#define ID_APPLY                IDC_BASE + 85
+
 #define ID_ABOUTFMS_VERSION          IDC_BASE + 90
 #define ID_ABOUTFMS_GUI              IDC_BASE + 91
 #define ID_ABOUTFMS_INSTALLER        IDC_BASE + 92

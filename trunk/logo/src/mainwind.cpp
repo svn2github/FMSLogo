@@ -790,7 +790,10 @@ TMainFrame::TMainFrame(
     ScreenWindow(new TScreenWindow(0, "FMSLogo Screen")),
     IsNewFile(true),
     IsNewBitmap(true),
-    IsCommanderDocked(false)
+    IsCommanderDocked(false),
+    m_ScreenColorPicker(NULL),
+    m_PenColorPicker(NULL),
+    m_FloodColorPicker(NULL)
    {
    /* main window initialization */
    strcpy(BitmapName, "logo.bmp");
@@ -2498,44 +2501,38 @@ void TMainFrame::CMSetPenSize()
       }
    }
 
-void 
-TMainFrame::ChooseColor(
-   COLORREF       InitialColor,
-   const char *   EnglishDescription,
-   const char *   LogoCommand
+void
+TMainFrame::ShowColorPicker(
+   class TColorDialog * & ColorPickerDialog,
+   COLORREF               InitialColor,
+   const char *           EnglishDescription,
+   const char *           LogoCommand
    )
    {
-   TColorDialog colorPicker(this, InitialColor, EnglishDescription);
-
-   if (colorPicker.Execute() == IDOK)
+   if (ColorPickerDialog == NULL)
       {
-      const TColor & color = colorPicker.GetSelectedColor();
-
-      // the user pressed "OK" so we change the color
-      char upperCaseCommand[MAX_BUFFER_SIZE];
-
-      cap_strnzcpy(
-         upperCaseCommand,
+      // The dialog object doesn't exist yet.
+      // Create it.
+      ColorPickerDialog = new TColorDialog(
+         this, 
+         InitialColor, 
+         EnglishDescription,
          LogoCommand,
-         strlen(LogoCommand));
+         ColorPickerDialog);
 
-      char logoInstruction[256];
-
-      sprintf(
-          logoInstruction,
-          "%s [%d %d %d]",
-          upperCaseCommand,
-          color.Red(),
-          color.Green(),
-          color.Blue());
-
-      RunLogoInstructionFromGui(logoInstruction);
+      ColorPickerDialog->Create();
+      ColorPickerDialog->ShowWindow(SW_SHOW);
+      }
+   else
+      {
+      ColorPickerDialog->SetFocus();
       }
    }
 
 void TMainFrame::CMSetPenColor()
    {
-   ChooseColor(
+   ShowColorPicker(
+      m_PenColorPicker,
       pcolor, 
       LOCALIZED_SETCOLOR_PENCOLOR, 
       LOCALIZED_ALTERNATE_SETPENCOLOR);
@@ -2543,7 +2540,8 @@ void TMainFrame::CMSetPenColor()
 
 void TMainFrame::CMSetFloodColor()
    {
-   ChooseColor(
+   ShowColorPicker(
+      m_FloodColorPicker,
       fcolor, 
       LOCALIZED_SETCOLOR_FLOODCOLOR, 
       LOCALIZED_ALTERNATE_SETFLOODCOLOR);
@@ -2551,7 +2549,8 @@ void TMainFrame::CMSetFloodColor()
 
 void TMainFrame::CMSetScreenColor()
    {
-   ChooseColor(
+   ShowColorPicker(
+      m_ScreenColorPicker,
       scolor, 
       LOCALIZED_SETCOLOR_SCREENCOLOR,
       LOCALIZED_ALTERNATE_SETSCREENCOLOR);

@@ -84,15 +84,19 @@ END_RESPONSE_TABLE;
 //----------------------------------------------------------------------------
 
 TColorDialog::TColorDialog(
-   TWindow      * Parent,
-   const TColor & InitialColor,
-   const char   * Caption
-   ) : 
+   TWindow            *   Parent,
+   const TColor         & InitialColor,
+   const char         *   Caption,
+   const char         *   LogoCommand,
+   class TColorDialog * & ExternalReference
+   ) :
    TDialog(Parent, IDD_SETCOLOR),
    m_ColorBar1(this, ID_COLORBAR1),
    m_ColorBar2(this, ID_COLORBAR2),
    m_ColorBar3(this, ID_COLORBAR3),
-   m_SelColor(this, ID_SELCOLOR, InitialColor)
+   m_SelColor(this, ID_SELCOLOR, InitialColor),
+   m_LogoCommand(LogoCommand),
+   m_ExternalReference(ExternalReference)
    {
 
    static const UINT childIds[] = {
@@ -189,6 +193,7 @@ void TColorDialog::SetupWindow()
       {LOCALIZED_SETCOLOR_BLUE,   ID_SETCOLOR_BLUE},
       {LOCALIZED_SETCOLOR_OK,     IDOK},
       {LOCALIZED_SETCOLOR_CANCEL, IDCANCEL},
+      {LOCALIZED_SETCOLOR_APPLY,  ID_APPLY},
    };
 
    SetTextOnChildWindows(this, text, ARRAYSIZE(text));
@@ -211,7 +216,48 @@ const TColor & TColorDialog::GetSelectedColor() const
    return m_SelColor.GetColor();
    }
 
+void TColorDialog::DoApply(UINT)
+   {
+   const TColor & color = GetSelectedColor();
+
+   // the user pressed "OK" so we change the color
+   char upperCaseCommand[MAX_BUFFER_SIZE];
+
+   cap_strnzcpy(
+      upperCaseCommand,
+      m_LogoCommand,
+      strlen(m_LogoCommand));
+
+   char logoInstruction[256];
+
+   sprintf(
+      logoInstruction,
+      "%s [%d %d %d]",
+      upperCaseCommand,
+      color.Red(),
+      color.Green(),
+      color.Blue());
+
+   RunLogoInstructionFromGui(logoInstruction);
+   }
+
+void TColorDialog::CmOk()
+   {
+   DoApply(CN_CLICKED);
+   TDialog::CmOk();
+   }
+
+void TColorDialog::EvDestroy()
+   {
+   // NULL-out the reference that TMainFrame is holding
+   // so that it knows the window is no longer valid.
+   // This object will get deleted on its own.
+   m_ExternalReference = NULL;
+   TDialog::EvDestroy();
+   }
+
 DEFINE_RESPONSE_TABLE1(TColorDialog, TDialog)
+  EV_WM_DESTROY,
   EV_CHILD_NOTIFY(ID_COLOR1, CN_CLICKED, ClickFmControl1),
   EV_CHILD_NOTIFY(ID_COLOR2, CN_CLICKED, ClickFmControl2),
   EV_CHILD_NOTIFY(ID_COLOR3, CN_CLICKED, ClickFmControl3),
@@ -223,5 +269,5 @@ DEFINE_RESPONSE_TABLE1(TColorDialog, TDialog)
   EV_SB_ENDSCROLL(ID_COLORBAR1, SetColorFmSlider),
   EV_SB_ENDSCROLL(ID_COLORBAR2, SetColorFmSlider),
   EV_SB_ENDSCROLL(ID_COLORBAR3, SetColorFmSlider),
+  EV_CHILD_NOTIFY_ALL_CODES(ID_APPLY, DoApply),
 END_RESPONSE_TABLE;
-
