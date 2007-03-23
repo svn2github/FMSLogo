@@ -265,6 +265,7 @@ double positive_fmod(double x, double y)
    return temp;
    }
 
+static
 FLONUM cut_error(FLONUM n)
    {
    if (!bExpert)
