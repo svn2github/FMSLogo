@@ -636,11 +636,14 @@ class TMainFrame : public TDecoratedFrame
    class TPaneSplitter        * PaneSplitterWindow;
    class TScreenWindow        * ScreenWindow;
 
-   class TColorDialog         * m_ScreenColorPicker;
-   class TColorDialog         * m_PenColorPicker;
-   class TColorDialog         * m_FloodColorPicker;
+ private:
 
- protected:
+   class TColorDialog  * m_ScreenColorPicker;
+   class TColorDialog  * m_PenColorPicker;
+   class TColorDialog  * m_FloodColorPicker;
+
+   class TSizeDialog   * m_PenSizePicker;
+
    char FileName[MAXPATH];
    char BitmapName[MAXPATH];
    bool IsNewFile;

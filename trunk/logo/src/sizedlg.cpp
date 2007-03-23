@@ -74,11 +74,13 @@ END_RESPONSE_TABLE;
 
 TSizeDialog::TSizeDialog(
    TWindow *       Parent, 
-   const TSize &   InitialSize
+   const TSize &   InitialSize,
+   TSizeDialog * & ExternalReference
    ) 
    : TDialog(Parent, IDD_SETPENSIZE),
      m_SizeBar(this, ID_SIZEBAR),
-     m_SelSize(this, ID_SELSIZE, InitialSize)
+     m_SelSize(this, ID_SELSIZE, InitialSize),
+     m_ExternalReference(ExternalReference)
    {
    static const struct {
       UINT ChildId;
@@ -169,6 +171,7 @@ void TSizeDialog::SetupWindow()
       {LOCALIZED_SETPENSIZE_OK,     IDOK},
       {LOCALIZED_SETPENSIZE_CANCEL, IDCANCEL},
       {LOCALIZED_SETPENSIZE_SIZE,   ID_SETPENSIZE_SIZE},
+      {LOCALIZED_SETPENSIZE_APPLY,  ID_APPLY},
    };
 
    SetTextOnChildWindows(this, text, ARRAYSIZE(text));
@@ -185,8 +188,46 @@ const TSize & TSizeDialog::GetSelectedSize() const
    return m_SelSize.GetSize();
    }
 
+void TSizeDialog::DoApply(UINT)
+   {
+   const TSize & size = GetSelectedSize();
+
+   char setpensize[MAX_BUFFER_SIZE];
+
+   cap_strnzcpy(
+      setpensize,
+      LOCALIZED_ALTERNATE_SETPENSIZE,
+      STRINGLENGTH(LOCALIZED_ALTERNATE_SETPENSIZE));
+
+   char logoInstruction[256];
+
+   sprintf(
+      logoInstruction,
+      "%s %d",
+      setpensize,
+      size.X());
+
+   RunLogoInstructionFromGui(logoInstruction);
+   }
+
+void TSizeDialog::CmOk()
+   {
+   DoApply(CN_CLICKED);
+   TDialog::CmOk();
+   }
+
+void TSizeDialog::EvDestroy()
+   {
+   // NULL-out the reference that TMainFrame is holding
+   // so that it knows the window is no longer valid.
+   // This object will get deleted on its own.
+   m_ExternalReference = NULL;
+   TDialog::EvDestroy();
+   }
+
 
 DEFINE_RESPONSE_TABLE1(TSizeDialog, TDialog)
+  EV_WM_DESTROY,
   EV_CHILD_NOTIFY(ID_SIZE1, CN_CLICKED, ClickFmControl1),
   EV_CHILD_NOTIFY(ID_SIZE2, CN_CLICKED, ClickFmControl2),
   EV_CHILD_NOTIFY(ID_SIZE3, CN_CLICKED, ClickFmControl3),
@@ -196,4 +237,6 @@ DEFINE_RESPONSE_TABLE1(TSizeDialog, TDialog)
   EV_CHILD_NOTIFY(ID_SIZE7, CN_CLICKED, ClickFmControl7),
   EV_CHILD_NOTIFY(ID_SIZE8, CN_CLICKED, ClickFmControl8),
   EV_SB_ENDSCROLL(ID_SIZEBAR, SetSizeFmSlider),
+  EV_CHILD_NOTIFY_ALL_CODES(ID_APPLY, DoApply),
+  EV_COMMAND(IDOK, CmOk),
 END_RESPONSE_TABLE;

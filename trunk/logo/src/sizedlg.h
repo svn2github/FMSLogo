@@ -32,13 +32,15 @@ class TSizeControl : public TControl
 class TSizeDialog : public TDialog
    {
  public:
-   TSizeDialog(TWindow* Parent, const TSize & InitialSize);
+   TSizeDialog(TWindow* Parent, const TSize & InitialSize, TSizeDialog * &);
    const TSize & GetSelectedSize() const;
 
- protected:
-   TScrollBar   m_SizeBar;
-   TSizeControl m_SelSize;
+ private:
+   TScrollBar      m_SizeBar;
+   TSizeControl    m_SelSize;
+   TSizeDialog * & m_ExternalReference;
 
+ protected:
    void SetupWindow();
 
    void UpdateBars(const TSize & Size);
@@ -53,6 +55,10 @@ class TSizeDialog : public TDialog
    void ClickFmControl8();
    void SetSizeFmControl(UINT Id);
    void SetSizeFmSlider();
+
+   void CmOk();
+   void DoApply(UINT);
+   void EvDestroy();
 
    DECLARE_RESPONSE_TABLE(TSizeDialog);
    }

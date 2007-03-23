@@ -793,7 +793,8 @@ TMainFrame::TMainFrame(
     IsCommanderDocked(false),
     m_ScreenColorPicker(NULL),
     m_PenColorPicker(NULL),
-    m_FloodColorPicker(NULL)
+    m_FloodColorPicker(NULL),
+    m_PenSizePicker(NULL)
    {
    /* main window initialization */
    strcpy(BitmapName, "logo.bmp");
@@ -2473,31 +2474,21 @@ void TMainFrame::CMSetCommanderFont()
 
 void TMainFrame::CMSetPenSize()
    {
-   TSize initialSize(get_pen_width(), get_pen_height());
-
-   TSizeDialog sizePicker(this, initialSize);
-
-   if (sizePicker.Execute() == IDOK)
+   if (m_PenSizePicker == NULL)
       {
-      const TSize & size = sizePicker.GetSelectedSize();
+      const TSize initialSize(get_pen_width(), get_pen_height());
+           
+      m_PenSizePicker = new TSizeDialog(
+         this, 
+         initialSize, 
+         m_PenSizePicker);
 
-      // the user pressed OK, so run the SETPENSIZE instruction
-      char setpensize[MAX_BUFFER_SIZE];
-
-      cap_strnzcpy(
-         setpensize,
-         LOCALIZED_ALTERNATE_SETPENSIZE,
-         STRINGLENGTH(LOCALIZED_ALTERNATE_SETPENSIZE));
-
-      char logoInstruction[256];
-
-      sprintf(
-         logoInstruction,
-         "%s %d",
-         setpensize,
-         size.X());
-
-      RunLogoInstructionFromGui(logoInstruction);
+      m_PenSizePicker->Create();
+      m_PenSizePicker->ShowWindow(SW_SHOW);
+      }
+   else
+      {
+      m_PenSizePicker->SetFocus();
       }
    }
 
