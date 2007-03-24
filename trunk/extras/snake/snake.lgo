@@ -348,6 +348,11 @@ to RunGame
   ; catch errors so we can dock the commander window
   ; if the user halts logo by trying to close it.
   catch "error [ GameLoop ]
+  localmake "lasterror error
+  if not empty? :lasterror [ 
+      (show item 2 :lasterror "in item 3 :lasterror) 
+      show item 4 :lasterror 
+  ]
 
   unicon "Commander
   catch "error [ splitscreen ]

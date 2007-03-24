@@ -1,3 +1,14 @@
+FMSLogo Extras 1.6
+o lightcycle
+  * Add logic to display all errors that are rasied
+o pacturtle
+  * Add logic to display all errors that are rasied
+o snake
+  * Add logic to display all errors that are rasied
+o tetrads
+  * Add logic to display all errors that are rasied
+
+
 FMSLogo Extras 1.5
 o asteriodminer
   * Improve performance, requires FMSLogo 6.13.0
