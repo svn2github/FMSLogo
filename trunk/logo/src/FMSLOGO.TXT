@@ -28,6 +28,8 @@ II. New features/bugs fixed:
       when other routines that may use it are loaded.
     o Implement request #1448007; SETPENCOLOR, SETFLOODCOLOR, and 
       SETSCREENCOLOR now accept color names like "Yellow and "Blue.
+    o Implement request #1615507; The "Set Color" and "Set Pen Size"
+      dialog boxes are now non-modal and have an "Apply" button.
     o Minor updates to the manual.
 
   For a complete history of changes across all versions of FMSLogo, see
