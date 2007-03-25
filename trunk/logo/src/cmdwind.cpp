@@ -44,6 +44,7 @@ TMyCommandWindow::TMyCommandWindow(
     m_ButtonWidth(34 * BaseUnitsx / 4)
    {
    SetCaption(LOCALIZED_COMMANDER);
+   hAccel = GetApplication()->LoadAccelerators("COMMANDERACC");
    }
 
 TMyCommandWindow::~TMyCommandWindow()
@@ -688,6 +689,11 @@ void TMyCommandWindow::EvDestroy()
    TWindow::EvDestroy();
    }
 
+void TMyCommandWindow::CmEditAll()
+   {
+   do_execution("EDALL");
+   }
+
 void TMyCommandWindow::CmCancel()
    {
    }
@@ -1187,7 +1193,8 @@ DEFINE_RESPONSE_TABLE1(TMyCommandWindow, TDialog)
    EV_CHILD_NOTIFY_ALL_CODES(ID_PAUSE,   DoButtonPause),
    EV_CHILD_NOTIFY_ALL_CODES(ID_TRACE,   DoButtonTrace),
    EV_CHILD_NOTIFY_ALL_CODES(ID_RESET,   DoButtonReset),
-   EV_COMMAND(IDCANCEL, CmCancel),
-   EV_COMMAND(IDOK, CmOk),
+   EV_COMMAND(IDCANCEL,   CmCancel),
+   EV_COMMAND(IDOK,       CmOk),
+   EV_COMMAND(CM_EDITALL, CmEditAll),
 END_RESPONSE_TABLE;
 

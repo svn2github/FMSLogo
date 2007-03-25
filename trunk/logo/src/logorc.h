@@ -186,6 +186,8 @@
 #define CM_EDALLEXIT	        CMD_BASE + 74
 #define CM_EDITSELECTALL        CMD_BASE + 75
 
+#define CM_EDITALL              CMD_BASE + 100
+
 #define WM_MYSCROLLBARCALLBACK         WM_USER + 0
 #define WM_CHECKQUEUE                  WM_USER + 1
 

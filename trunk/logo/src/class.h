@@ -327,6 +327,7 @@ class TMyCommandWindow : public TDialog
    void EvDestroy();
    void CmCancel();
    void CmOk();
+   void CmEditAll();
    void EvClose();
  public: // HACK: should be protected
    void EvSize(UINT, TSize &);
