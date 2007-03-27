@@ -22,7 +22,6 @@
 #include <owl\chooseco.h>
 #include <owl\choosefo.h>
 #include <owl\contain.h>
-#include <owl\picklist.h>
 #include <owl\module.h>
 #include <owl\printer.h>
 #include <owl\control.h>
@@ -33,7 +32,6 @@
 
 #include <owl\editsear.rh>
 #include <owl\editfile.rh>
-#include <owl\picklist.rh>
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -75,6 +73,7 @@
 #include "commandercheckbox.h"
 #include "minieditor.h"
 #include "savebeforeexitdialog.h"
+#include "selectbox.h"
 #include "utils.h"
 #include "smartnode.h"
 #include "appendablelist.h"

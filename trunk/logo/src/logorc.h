@@ -137,6 +137,8 @@
 #define ID_SELECTACTIVEAREA_XLOW         IDC_BASE + 135
 #define ID_SELECTACTIVEAREA_STEPSPERINCH IDC_BASE + 136
 
+#define ID_CHOICES              IDC_BASE + 140
+
 #define CM_CONTROLHALT          CMD_BASE + 0
 #define CM_CONTROLEXECUTE       CMD_BASE + 1
 
@@ -208,4 +210,5 @@
 #define IDD_ABOUTMS             IDD_BASE + 9
 #define IDD_SAVEBEFOREEXIT      IDD_BASE + 10
 #define IDD_MINIEDITOR          IDD_BASE + 11
+#define IDD_SELECTBOX           IDD_BASE + 12
 

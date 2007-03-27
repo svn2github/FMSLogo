@@ -837,6 +837,13 @@
 #define LOCALIZED_ABOUTMS_OK                   LOCALIZED_GENERAL_OKBUTTON
 
 
+//
+// Strings on the SELECTBOX Dialog box
+//
+#define LOCALIZED_SELECTBOX_OK                 LOCALIZED_GENERAL_OKBUTTON
+#define LOCALIZED_SELECTBOX_CANCEL             LOCALIZED_GENERAL_CANCELBUTTON
+
+
 // 
 // Strings in various other dialog boxes
 // 

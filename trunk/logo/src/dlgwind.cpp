@@ -2299,25 +2299,12 @@ NODE *lselectbox(NODE *args)
       return Unbound;
       }
 
-   TPickListDialog selectbox(
-      MainWindowx->ScreenWindow,
-      0,
-      0,
-      0,
-      banner);
+   CSelectBox selectbox(MainWindowx->ScreenWindow, banner, choices);
 
-   // add a string to the pick-list for each choice
-   while (choices != NIL)
-      {
-      char choice[MAX_BUFFER_SIZE];
-      cnv_strnode_string(choice, choices);
 
-      selectbox.AddString(choice);
+   selectbox.Execute();
 
-      choices = cdr(choices);
-      }
-
-   int status = selectbox.Execute();
+   int status = selectbox.GetSelection();
    if (status < 0)
       {
       // the user pressed cancel

@@ -30,10 +30,12 @@ IDE_ResFLAGS32 =
 ResLocalOptsAtW32_fmslogodexe = -l$(LOCALECODE)
 BLocalOptsAtW32_fmslogodexe = 
 
+IncludePath = -I"C:\Program Files\HTML Help Workshop\include" -IC:\BC5\INCLUDE
+
 !if "$(BUILD)"=="RELEASE"
 
 LinkerLocalOptsAtW32_fmslogodexe =  -wdpl -went -wdup -wdef -wimt -wbdl -wsrf -wmsk -Tpe -aa -V4.0 -c -LC:\BC5\LIB
-CompInheritOptsAt_fmslogodexe = -I"C:\Program Files\HTML Help Workshop\include" -IC:\BC5\INCLUDE -DSTRICT;_OWLPCH;NDEBUG;LOCALE=$(LOCALECODE)
+CompInheritOptsAt_fmslogodexe = $(IncludePath) -DSTRICT;_OWLPCH;NDEBUG;LOCALE=$(LOCALECODE)
 LinkerInheritOptsAt_fmslogodexe = -x
 LinkerOptsAt_fmslogodexe = $(LinkerLocalOptsAtW32_fmslogodexe)
 ResOptsAt_fmslogodexe = $(ResLocalOptsAtW32_fmslogodexe)
@@ -45,7 +47,7 @@ IntermediateDirectory=RELEASE$(LOCALECODE)
 !else
 
 LinkerLocalOptsAtW32_fmslogodexe =  -v -wdpl -went -wdup -wdef -wimt -wbdl -wsrf -wmsk -L\BC5\LIB -Tpe -aa -V4.0 -c
-CompInheritOptsAt_fmslogodexe = -I"C:\Program Files\HTML Help Workshop\include" -IC:\BC5\INCLUDE -DSTRICT;_OWLPCH;NOASM;DEBUG;MEM_DEBUG;LOCALE=$(LOCALECODE)
+CompInheritOptsAt_fmslogodexe = $(IncludePath) -DSTRICT;_OWLPCH;NOASM;DEBUG;MEM_DEBUG;LOCALE=$(LOCALECODE)
 
 ExecutableName=fmslogod.exe
 IntermediateDirectory=DEBUG
@@ -115,6 +117,7 @@ Dep_fmslogodexe = \
    $(IntermediateDirectory)\print.obj\
    $(IntermediateDirectory)\richedpr.obj\
    $(IntermediateDirectory)\savebeforeexitdialog.obj\
+   $(IntermediateDirectory)\selectbox.obj\
    $(IntermediateDirectory)\sizedlg.obj\
    $(IntermediateDirectory)\statwind.obj\
    $(IntermediateDirectory)\term.obj\
@@ -177,6 +180,7 @@ $(IntermediateDirectory)\parse.obj+
 $(IntermediateDirectory)\print.obj+
 $(IntermediateDirectory)\richedpr.obj+
 $(IntermediateDirectory)\savebeforeexitdialog.obj+
+$(IntermediateDirectory)\selectbox.obj+
 $(IntermediateDirectory)\sizedlg.obj+
 $(IntermediateDirectory)\statwind.obj+
 $(IntermediateDirectory)\term.obj+
@@ -443,6 +447,11 @@ $(IntermediateDirectory)\richedpr.obj :  richedpr.cpp version.h
 $(IntermediateDirectory)\savebeforeexitdialog.obj :  savebeforeexitdialog.cpp version.h
   $(BCC32) -c @&&|
  $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ savebeforeexitdialog.cpp
+|
+
+$(IntermediateDirectory)\selectbox.obj :  selectbox.cpp version.h
+  $(BCC32) -c @&&|
+ $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ selectbox.cpp
 |
 
 $(IntermediateDirectory)\sizedlg.obj :  sizedlg.cpp version.h

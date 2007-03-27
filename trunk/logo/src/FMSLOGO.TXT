@@ -26,6 +26,9 @@ II. New features/bugs fixed:
     o Fix bug #1674159; Fixed minor problems in the Spanish translation.
     o Fix bug #1661230; ?REST now loads on its own, instead of loading
       when other routines that may use it are loaded.
+    o Fix bug #1622720; SELECTBOX GUI is now internationalized.
+      This also fixes a related bug where pressing "X" on dialog didn't
+      act the same as pressing the "Cancel" button.
     o Implement request #1662644; CTRL+D now acts like the EDALL button.
     o Implement request #1448007; SETPENCOLOR, SETFLOODCOLOR, and 
       SETSCREENCOLOR now accept color names like "Yellow and "Blue.
