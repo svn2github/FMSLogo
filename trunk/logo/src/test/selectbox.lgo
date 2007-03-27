@@ -6,6 +6,8 @@ TO SELECTBOXTEST.SMOKETEST
    SIMPLEREPORTTEST  [ SELECTBOX [SELECTBOX Test: Select Second] [First Second Third] ] 2
    SIMPLEREPORTTEST  [ SELECTBOX [SELECTBOX Test: Select Third]  [First Second Third] ] 3
    RUNSTOPPINGTEST   [ SELECTBOX [SELECTBOX Test: Press Cancel]  [First Second Third] ]
+   RUNSTOPPINGTEST   [ SELECTBOX [SELECTBOX Test: Press ESC]     [First Second Third] ]
+   RUNSTOPPINGTEST   [ SELECTBOX [SELECTBOX Test: Press the X]   [First Second Third] ]
 
    ; the choicelist input is empty
    SIMPLEREPORTTEST  [ SELECTBOX [SELECTBOX Test: No Choice (press ok)] [] ] 1
