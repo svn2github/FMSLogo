@@ -21,6 +21,7 @@ I. Kit Description/Location (http://sourceforge.net/projects/fmslogo)
 II. New features/bugs fixed:
 
   * Added for 6.14.0
+    o Fix bug #1688926; '-1e-16 < 0' once again outputs true.
     o Fix bug #1674152; Make, Pprop, and Plist are now properly localized
       when they are shows in the editor and in the output of PO.
     o Fix bug #1674159; Fixed minor problems in the Spanish translation.

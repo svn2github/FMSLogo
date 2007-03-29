@@ -903,9 +903,13 @@ NODE *lpower(NODE *args)
 static
 int compare_flonums(FLONUM n1, FLONUM n2)
    {
-   if (fabs(n1 - n2) < DBL_EPSILON)
+   // we can't use "fabs(n1 - n2) < DBL_EPSILON" to determine
+   // equality because DBL_EPSILON is too large and doing so
+   // would make statements like 1-e16 > 0 false.
+   // Instead we shift the burden of proper floating point
+   // comparisons to the Logo programmer.
+   if (n1 == n2)
       {
-      // floats are equal (or close enough to be considered equal)
       return 0;
       }
    else if (n1 < n2)
