@@ -27,11 +27,11 @@ debug : fmslogod.exe ;
 clean :
 	$(RM) version.h
 	$(RM) BccW32.cfg
-	$(RM) $(shell /usr/bin/find . -name '*.obj')
-	$(RM) $(shell /usr/bin/find . -name '*.res')
-	$(RM) $(shell /usr/bin/find . -name '*.bak')
-	$(RM) $(shell /usr/bin/find . -name '*~')
-	$(RM) $(shell /usr/bin/find . -name '*.csm')
+	$(RM) $(shell /usr/bin/find . -iname '*.obj')
+	$(RM) $(shell /usr/bin/find . -iname '*.res')
+	$(RM) $(shell /usr/bin/find . -iname '*.bak')
+	$(RM) $(shell /usr/bin/find . -iname '*~')
+	$(RM) $(shell /usr/bin/find . -iname '*.csm')
 	$(RM) $(wildcard toenglish-*.txt)
 	$(RM) $(wildcard fromenglish-*.txt)
 	$(RM) $(wildcard translations-*.xml)
@@ -45,10 +45,10 @@ clean :
 	$(RM) $(wildcard logo32*.mbt)
 	$(RM) $(wildcard *.fts)
 	$(RM) $(wildcard *.gid)
-	$(RM) $(wildcard LOGO.\#*)
+	$(RM) $(shell /usr/bin/find . -iname 'logo.#*')
 
 tags : *.cpp *.h *.c
-	etags $(shell /usr/bin/find . -name '*.cpp' -o -name '*.h' -o -name '*.c')
+	etags $(shell /usr/bin/find . -iname '*.cpp' -o -iname '*.h' -o -iname '*.c')
 
 # a phony target that always gets remade
 FORCE :
