@@ -77,6 +77,11 @@ TO EQUALPTEST.SMOKETEST
   FAILIFNOTTRUE [["a 1 "ab]    = ["a 1 "ab]    ]
   FAILIFNOTTRUE [[[1 2 3] [1]] = [[1 2 3] [1]] ]
 
+  ; very small floating point numbers are not equal to 0 (bug #1688926)
+  FAILIFNOTFALSE [ EQUALP   1e-16      0  ]
+  FAILIFNOTFALSE [ EQUALP  -1e-16      0  ]
+  FAILIFNOTFALSE [ EQUALP    0      1e-16 ]
+  FAILIFNOTFALSE [ EQUALP    0     -1e-16 ]
 
   ; now test case-sensitive comparisons
   TRACEINSTRUCTION [MAKE "CASEIGNOREDP LOCALEFALSE]

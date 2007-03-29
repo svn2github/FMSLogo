@@ -1307,6 +1307,12 @@ TO LESSPTEST.SMOKETEST
    FAILIFNOTTRUE  [ LESSP   0.5    1.5 ]
    FAILIFNOTFALSE [ LESSP   1.5    0.5 ]
 
+   ; very small floating point numbers (bug #1688926)
+   FAILIFNOTFALSE [ LESSP   1e-16      0  ]
+   FAILIFNOTTRUE  [ LESSP  -1e-16      0  ]
+   FAILIFNOTTRUE  [ LESSP    0      1e-16 ]
+   FAILIFNOTFALSE [ LESSP    0     -1e-16 ]
+
    ; negative numbers
    FAILIFNOTFALSE [ LESSP   -1     -2 ]
    FAILIFNOTTRUE  [ LESSP   -2     -1 ]
@@ -1447,6 +1453,12 @@ TO GREATERPTEST.SMOKETEST
    FAILIFNOTFALSE [ GREATERP   1.5    1.5 ]
    FAILIFNOTFALSE [ GREATERP   0.5    1.5 ]
    FAILIFNOTTRUE  [ GREATERP   1.5    0.5 ]
+
+   ; very small floating point numbers (bug #1688926)
+   FAILIFNOTTRUE  [ GREATERP   1e-16      0  ]
+   FAILIFNOTFALSE [ GREATERP  -1e-16      0  ]
+   FAILIFNOTFALSE [ GREATERP    0      1e-16 ]
+   FAILIFNOTTRUE  [ GREATERP    0     -1e-16 ]
 
    ; negative numbers
    FAILIFNOTTRUE  [ GREATERP   -1     -2 ]
