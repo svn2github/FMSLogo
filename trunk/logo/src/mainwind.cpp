@@ -868,16 +868,24 @@ char * TMainFrame::GetClassName()
    return "Logo";
    }
 
+bool TMainFrame::IsEditorOpen()
+   {
+   return ::FindWindow(NULL, LOCALIZED_EDITOR_TITLE) ? true : false;
+   }
+
+HWND TMainFrame::GetEditor()
+   {
+   return ::FindWindow(NULL, LOCALIZED_EDITOR_TITLE);
+   }
 
 bool TMainFrame::CanClose()
    {
-   HWND editH = ::FindWindow(NULL, LOCALIZED_EDITOR_TITLE);
-
    // if editor is running we could lose unsaved changes
-   if (editH)
+   HWND editor = GetEditor();
+   if (editor != NULL)
       {
-      ::ShowWindow(editH, SW_SHOWNORMAL);
-      ::SetWindowPos(editH, HWND_TOP, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
+      ::ShowWindow(editor, SW_SHOWNORMAL);
+      ::SetWindowPos(editor, HWND_TOP, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
       GiveFocusToEditbox = false;
 
       if (MessageBox(
@@ -1818,10 +1826,14 @@ void TMainFrame::CMFileErase()
    }
 
 
-void TMainFrame::CreateEditWindow(const char *FileName, NODE *args, bool check_for_errors)
+TMyFileWindow * 
+TMainFrame::CreateEditWindow(
+   const char * FileName, 
+   NODE       * args, 
+   bool         check_for_errors
+   )
    {
-   // NOTE: EditWindow is deleted when "this" is deleted.
-   EditWindow = new TMyFileWindow(
+   TMyFileWindow * editor = new TMyFileWindow(
       this, 
       LOCALIZED_EDITOR_TITLE,
       FileName, 
@@ -1837,27 +1849,29 @@ void TMainFrame::CreateEditWindow(const char *FileName, NODE *args, bool check_f
    GetConfigurationQuadruple("Editor", &x, &y, &w, &h); 
    checkwindow(&x, &y, &w, &h);
 
-   /* now set them */
-   EditWindow->Attr.Style = WS_VISIBLE | WS_POPUPWINDOW | WS_CAPTION | WS_THICKFRAME | WS_MINIMIZEBOX | WS_MAXIMIZEBOX;
-   EditWindow->Editor->Attr.Style |= ES_NOHIDESEL;
+   // now set them 
+   editor->Attr.Style = WS_VISIBLE | WS_POPUPWINDOW | WS_CAPTION | WS_THICKFRAME | WS_MINIMIZEBOX | WS_MAXIMIZEBOX;
+   editor->Editor->Attr.Style |= ES_NOHIDESEL;
 
    // let user edit
-   EditWindow->Create();
+   editor->Create();
 
    // force a resize to fix RichEdit ScrollBar not appearing automatically
-   EditWindow->SetWindowPos(0, x, y, w + 1, h, SWP_NOZORDER);
-   EditWindow->SetWindowPos(0, x, y, w, h, SWP_NOZORDER);
+   editor->SetWindowPos(0, x, y, w + 1, h, SWP_NOZORDER);
+   editor->SetWindowPos(0, x, y, w, h, SWP_NOZORDER);
 
    if (args != NULL || check_for_errors)
       {
       // retitle without filename
-      EditWindow->SetWindowText(LOCALIZED_EDITOR_TITLE);
+      editor->SetWindowText(LOCALIZED_EDITOR_TITLE);
       }
+
+   return editor;
    }
 
 void TMainFrame::MyPopupEdit(const char *FileName, NODE *args, bool check_for_errors)
    {
-   CreateEditWindow(FileName, args, check_for_errors);
+   EditWindow = CreateEditWindow(FileName, args, check_for_errors);
 
    if (args != NULL || check_for_errors)
       {
@@ -1895,7 +1909,7 @@ void TMainFrame::MyPopupEditToError(const char *FileName)
       fclose(srcfile);
       }
 
-   CreateEditWindow(FileName, NIL, true);
+   EditWindow = CreateEditWindow(FileName, NIL, true);
 
    // exit the editor to force it to notice the error.
    error_happen = false;
@@ -2343,8 +2357,7 @@ void TMainFrame::MyPopupStatus()
 
 void TMainFrame::CMControlExecute()
    {
-
-   HWND EditH = FindWindow(NULL, LOCALIZED_EDITOR_TITLE);
+   HWND EditH = GetEditor();
    HWND TempH = GetActiveWindow();
 
    // if Main is active find alternate
@@ -2352,7 +2365,6 @@ void TMainFrame::CMControlExecute()
       {
 
       // if commander up then focus to input box
-
       if (!CommandWindow->IsIconic())
          {
          CommandWindow->Editbox.SetFocus();
@@ -2373,12 +2385,10 @@ void TMainFrame::CMControlExecute()
       {
 
       // if a available editor maybe go there
-
       if (EditH != NULL)
          {
 
          // if really available then go there
-
          if (!::IsIconic(EditH))
             {
             ::SetFocus(EditH);

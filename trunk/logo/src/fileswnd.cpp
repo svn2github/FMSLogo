@@ -23,7 +23,7 @@
 
 void filesave(const char *FileName)
    {
-   if (::FindWindow(NULL, LOCALIZED_EDITOR_TITLE))
+   if (MainWindowx != NULL && MainWindowx->IsEditorOpen())
       {
       // Notify the user that they have an editor open
       // and that changes in the editor will not be saved.

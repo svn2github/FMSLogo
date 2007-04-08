@@ -451,7 +451,7 @@ PrintWorkspaceToFileStream(
 
 NODE *lsave(NODE *arg)
    {
-   if (::FindWindow(NULL, LOCALIZED_EDITOR_TITLE))
+   if (MainWindowx != NULL && MainWindowx->IsEditorOpen())
       {
       // Notify the user that the editor is open and that 
       // the changes made in that editor won't be saved.

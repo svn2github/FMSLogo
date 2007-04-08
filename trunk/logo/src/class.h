@@ -523,7 +523,7 @@ class TMainFrame : public TDecoratedFrame
    ~TMainFrame();
 
    static int PopupEditorForFile(const char *FileName, NODE *args);
-   void CreateEditWindow(const char *FileName, NODE *args, bool check_for_errors);
+   class TMyFileWindow * CreateEditWindow(const char *FileName, NODE *args, bool check_for_errors);
    void MyPopupEdit(const char *FileName, NODE * args, bool check_for_errors);
    void MyPopupEditToError(const char *FileName);
    void MyPopupStatus();
@@ -538,6 +538,9 @@ class TMainFrame : public TDecoratedFrame
    bool OpenDIB(FILE* File, DWORD &, DWORD &);
    bool DumpBitmapFile(LPCSTR Filename, int MaxBitCount);
    bool WriteDIB(FILE* File, int MaxBitCount);
+
+   bool IsEditorOpen();
+   HWND GetEditor();
 
 
  protected:

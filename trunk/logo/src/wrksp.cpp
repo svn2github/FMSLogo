@@ -1383,13 +1383,18 @@ NODE *ledit(NODE *args)
    
    if (!bExpert)
       {
-      // if an editor is already open, just give it focus
-      HWND editorWindow = ::FindWindow(NULL, LOCALIZED_EDITOR_TITLE);
-      if (editorWindow)
+      // non-experts shouldn't have to understand the complexities of 
+      // having multiple editors open.  So if an editor is open, give
+      // it focus instead of opening a new one.
+      if (MainWindowx != NULL)
          {
-         ::ShowWindow(editorWindow, SW_SHOWNORMAL);
-         ::SetWindowPos(editorWindow, HWND_TOP, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
-         return Unbound;
+         HWND editor = MainWindowx->GetEditor();
+         if (editor != NULL)
+            {
+            ::ShowWindow(editor, SW_SHOWNORMAL);
+            ::SetWindowPos(editor, HWND_TOP, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
+            return Unbound;
+            }
          }
       }
 
@@ -1422,6 +1427,7 @@ NODE *ledit(NODE *args)
          }
       }
 
+   // open the file inside an editor
    if (NOT_THROWING)
       {
       NODE * args_list = vref(args);
