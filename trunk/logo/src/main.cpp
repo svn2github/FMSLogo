@@ -691,7 +691,7 @@ WinMain(
    HINSTANCE hPrevInstance,
    LPSTR     lpCmdLine,
    int       nCmdShow
-)
+   )
    {
    int i;
 
@@ -699,8 +699,8 @@ WinMain(
    g_OsVersionInformation.dwOSVersionInfoSize = sizeof g_OsVersionInformation;
    GetVersionEx(&g_OsVersionInformation);
 
-   _control87( EM_OVERFLOW, EM_OVERFLOW );
-   _control87( EM_UNDERFLOW, EM_UNDERFLOW );
+   _control87(EM_OVERFLOW,  EM_OVERFLOW);
+   _control87(EM_UNDERFLOW, EM_UNDERFLOW);
 
    TopOfStack = &i;
 
@@ -712,81 +712,53 @@ WinMain(
    bWidth       = false;
    bHeight      = false;
 
-   for (const char * ptr = lpCmdLine; *ptr != '\0'; ptr++)
+   for (char * ptr = lpCmdLine; *ptr != '\0'; ptr++)
       {
       if (*ptr == '-')
          {
-         if (*++ptr == '\0')
-            {
-            // invalid command line: "-" was not followed by a letter.
-            MessageBox(
-               GetFocus(), 
-               lpCmdLine, 
-               LOCALIZED_ERROR_BADCOMMANDLINE, 
-               MB_OK);
-            break;
-            }
+         *ptr++; // advance beyond the -
+
          switch (*ptr++)
             {
-             case 'p':
-             case 'P':
-                bPerspective = true;
-                break;
+            case 'p':
+            case 'P':
+               bPerspective = true;
+               break;
 
-             case 'e':
-             case 'E':
-                bExpert = true;
-                break;
+            case 'e':
+            case 'E':
+               bExpert = true;
+               break;
 
-             case 'f':
-             case 'F':
-                bFixed = true;
-                break;
+            case 'f':
+            case 'F':
+               bFixed = true;
+               break;
 
-             case 'h':
-             case 'H':
-                i = 0;
-                for (; ((*ptr == ' ') || ((*ptr >= '0') && (*ptr <= '9'))); ptr++)
-                   {
-                   commandarg[i++] = *ptr;
-                   }
-                ptr--;
-                commandarg[i] = '\0';
-                sscanf(commandarg, "%d", &BitMapHeight);
-                commandarg[0] = '\0';
-                bHeight = true;
-                break;
+            case 'h':
+            case 'H':
+               BitMapHeight = strtoul(ptr, &ptr, 10);
+               bHeight = true;
+               break;
 
-             case 'w':
-             case 'W':
-                i = 0;
-                for (; ((*ptr == ' ') || ((*ptr >= '0') && (*ptr <= '9'))); ptr++)
-                   {
-                   commandarg[i++] = *ptr;
-                   }
-                ptr--;
-                commandarg[i] = '\0';
-                sscanf(commandarg, "%d", &BitMapWidth);
-                commandarg[0] = '\0';
-                bWidth = true;
-                break;
+            case 'w':
+            case 'W':
+               BitMapWidth = strtoul(ptr, &ptr, 10);
+               bWidth = true;
+               break;
 
-             case 'l':
-             case 'L':
-                i = 0;
+            case 'l':
+            case 'L':
+               // advance beyond the whitespace
+               while (*ptr == ' ')
+                  {
+                  ptr++;
+                  }
 
-                // advance beyond the whitespace
-                for (; (*ptr == ' '); ptr++)
-                   {
-                   }
-
-                // copy the rest of the line into the commandarg buffer.
-                for (; (*ptr != '\0'); ptr++)
-                   {
-                   // BUG: possible buffer overflow
-                   commandarg[i++] = *ptr;
-                   }
-                break;
+               // copy the rest of the line into the commandarg buffer
+               strncpy(commandarg, ptr, ARRAYSIZE(commandarg) - 1);
+               ptr += strlen(ptr);
+               break;
 
              default:
                 // invalid command line: unrecognized switch
