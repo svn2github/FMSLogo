@@ -721,17 +721,9 @@ enum labels
    NUM_TOKENS
    };
 
-/* types of graphics moves that can be recorded */
-#define LINEXY         1
-#define MOVEXY         2
-#define LABEL          3
-#define SETPENVIS      4
-#define SETPENMODE     5
-#define SETPENCOLOR    6
-#define SETPENSIZE     7
-#define SETPENPATTERN  8
-
-#define XOR_PUT 199
+// write modes (not sure what these numbers mean)
+const int COPY_PUT = 12;
+const int XOR_PUT  = 199;
 
 #define ScreenSz 0.70      // Default proportion of screen size
 #define MaxBitCuts 1024    // Max number of bitmaps

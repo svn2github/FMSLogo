@@ -1,5 +1,5 @@
 /*
-*      ibmterm.c           IBM screen module             mak
+*      ibmterm.cpp         IBM screen module             mak
 *
 *       Copyright (C) 1995 by the Regents of the University of California
 *       Copyright (C) 1995 by George Mills
@@ -22,16 +22,11 @@
 
 #include "allwind.h"
 
-//fake defs
-#define COPY_PUT 12
-//
-
 /************************************************************/
 
 bool in_erase_mode = false;
 
 int current_write_mode = COPY_PUT;
-int turtle_color;
 
 extern int *TopOfStack;
 
