@@ -598,7 +598,7 @@
 //
 #define LOCALIZED_GENERAL_OKBUTTON      "&Valider"
 #define LOCALIZED_GENERAL_CANCELBUTTON  "&Annuler"
-#define LOCALIZED_GENERAL_APPLYBUTTON   "&Apply" // NOT_YET_LOCALIZED
+#define LOCALIZED_GENERAL_APPLYBUTTON   "&Appliquer"
 
 #define LOCALIZED_GENERAL_PRODUCTNAME   "FMSLogo"
 
@@ -1210,150 +1210,150 @@
 //
 // The words that describe color vectors.
 //
-#define LOCALIZED_COLOR_ALICEBLUE             "AliceBlue" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_ANTIQUEWHITE          "AntiqueWhite" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_AQUA                  "Aqua" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_AQUAMARINE            "Aquamarine" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_AZURE                 "Azure" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_BEIGE                 "Beige" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_BISQUE                "Bisque" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_BLACK                 "Black" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_BLANCHEDALMOND        "BlanchedAlmond" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_BLUE                  "Blue" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_BLUEVIOLET            "BlueViolet" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_BROWN                 "Brown" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_BURLYWOOD             "BurlyWood" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_CADETBLUE             "CadetBlue" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_CHARTREUSE            "Chartreuse" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_CHOCOLATE             "Chocolate" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_CORAL                 "Coral" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_CORNFLOWERBLUE        "CornflowerBlue" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_CORNSILK              "Cornsilk" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_CRIMSON               "Crimson" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_CYAN                  "Cyan" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_DARKBLUE              "DarkBlue" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_DARKCYAN              "DarkCyan" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_DARKGOLDENROD         "DarkGoldenRod" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_DARKGRAY              "DarkGray" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_DARKGREEN             "DarkGreen" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_DARKGREY              "DarkGrey" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_DARKKHAKI             "DarkKhaki" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_DARKMAGENTA           "DarkMagenta" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_DARKOLIVEGREEN        "DarkOliveGreen" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_DARKORANGE            "Darkorange" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_DARKORCHID            "DarkOrchid" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_DARKRED               "DarkRed" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_DARKSALMON            "DarkSalmon" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_DARKSEAGREEN          "DarkSeaGreen" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_DARKSLATEBLUE         "DarkSlateBlue" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_DARKSLATEGRAY         "DarkSlateGray" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_DARKSLATEGREY         "DarkSlateGrey" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_DARKTURQUOISE         "DarkTurquoise" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_DARKVIOLET            "DarkViolet" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_DEEPPINK              "DeepPink" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_DEEPSKYBLUE           "DeepSkyBlue" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_DIMGRAY               "DimGray" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_DIMGREY               "DimGrey" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_DODGERBLUE            "DodgerBlue" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_FIREBRICK             "FireBrick" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_FLORALWHITE           "FloralWhite" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_FORESTGREEN           "ForestGreen" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_FUCHSIA               "Fuchsia" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_GAINSBORO             "Gainsboro" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_GHOSTWHITE            "GhostWhite" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_GOLD                  "Gold" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_GOLDENROD             "GoldenRod" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_GRAY                  "Gray" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_GREEN                 "Green" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_GREENYELLOW           "GreenYellow" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_GREY                  "Grey" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_HONEYDEW              "HoneyDew" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_HOTPINK               "HotPink" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_INDIANRED             "IndianRed" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_INDIGO                "Indigo" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_IVORY                 "Ivory" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_KHAKI                 "Khaki" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_LAVENDER              "Lavender" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_LAVENDERBLUSH         "LavenderBlush" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_LAWNGREEN             "LawnGreen" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_LEMONCHIFFON          "LemonChiffon" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_LIGHTBLUE             "LightBlue" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_LIGHTCORAL            "LightCoral" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_LIGHTCYAN             "LightCyan" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_LIGHTGOLDENRODYELLOW  "LightGoldenRodYellow" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_LIGHTGRAY             "LightGray" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_LIGHTGREEN            "LightGreen" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_LIGHTGREY             "LightGrey" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_LIGHTPINK             "LightPink" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_LIGHTSALMON           "LightSalmon" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_LIGHTSEAGREEN         "LightSeaGreen" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_LIGHTSKYBLUE          "LightSkyBlue" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_LIGHTSLATEGRAY        "LightSlateGray" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_LIGHTSLATEGREY        "LightSlateGrey" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_LIGHTSTEELBLUE        "LightSteelBlue" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_LIGHTYELLOW           "LightYellow" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_LIME                  "Lime" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_LIMEGREEN             "LimeGreen" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_LINEN                 "Linen" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_MAGENTA               "Magenta" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_MAROON                "Maroon" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_MEDIUMAQUAMARINE      "MediumAquaMarine" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_MEDIUMBLUE            "MediumBlue" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_MEDIUMORCHID          "MediumOrchid" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_MEDIUMPURPLE          "MediumPurple" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_MEDIUMSEAGREEN        "MediumSeaGreen" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_MEDIUMSLATEBLUE       "MediumSlateBlue" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_MEDIUMSPRINGGREEN     "MediumSpringGreen" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_MEDIUMTURQUOISE       "MediumTurquoise" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_MEDIUMVIOLETRED       "MediumVioletRed" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_MIDNIGHTBLUE          "MidnightBlue" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_MINTCREAM             "MintCream" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_MISTYROSE             "MistyRose" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_MOCCASIN              "Moccasin" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_NAVAJOWHITE           "NavajoWhite" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_NAVY                  "Navy" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_OLDLACE               "OldLace" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_OLIVE                 "Olive" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_OLIVEDRAB             "OliveDrab" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_ORANGE                "Orange" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_ORANGERED             "OrangeRed" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_ORCHID                "Orchid" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_PALEGOLDENROD         "PaleGoldenRod" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_PALEGREEN             "PaleGreen" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_PALETURQUOISE         "PaleTurquoise" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_PALEVIOLETRED         "PaleVioletRed" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_PAPAYAWHIP            "PapayaWhip" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_PEACHPUFF             "PeachPuff" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_PERU                  "Peru" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_PINK                  "Pink" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_PLUM                  "Plum" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_POWDERBLUE            "PowderBlue" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_PURPLE                "Purple" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_RED                   "Red" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_ROSYBROWN             "RosyBrown" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_ROYALBLUE             "RoyalBlue" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_SADDLEBROWN           "SaddleBrown" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_SALMON                "Salmon" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_SANDYBROWN            "SandyBrown" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_SEAGREEN              "SeaGreen" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_SEASHELL              "SeaShell" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_SIENNA                "Sienna" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_SILVER                "Silver" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_SKYBLUE               "SkyBlue" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_SLATEBLUE             "SlateBlue" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_SLATEGRAY             "SlateGray" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_SLATEGREY             "SlateGrey" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_SNOW                  "Snow" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_SPRINGGREEN           "SpringGreen" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_STEELBLUE             "SteelBlue" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_TAN                   "Tan" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_TEAL                  "Teal" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_THISTLE               "Thistle" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_TOMATO                "Tomato" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_TURQUOISE             "Turquoise" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_VIOLET                "Violet" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_WHEAT                 "Wheat" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_WHITE                 "White" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_WHITESMOKE            "WhiteSmoke" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_YELLOW                "Yellow" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_YELLOWGREEN           "YellowGreen" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_ALICEBLUE             "Bleu Alice"
+#define LOCALIZED_COLOR_ANTIQUEWHITE          "Blanc antique"
+#define LOCALIZED_COLOR_AQUA                  "Vert d'eau"
+#define LOCALIZED_COLOR_AQUAMARINE            "Bleu vert"
+#define LOCALIZED_COLOR_AZURE                 "Azur"
+#define LOCALIZED_COLOR_BEIGE                 "Beige"
+#define LOCALIZED_COLOR_BISQUE                "Bisque"
+#define LOCALIZED_COLOR_BLACK                 "Noir"
+#define LOCALIZED_COLOR_BLANCHEDALMOND        "Amande blanchie"
+#define LOCALIZED_COLOR_BLUE                  "Bleu"
+#define LOCALIZED_COLOR_BLUEVIOLET            "Bleu violet"
+#define LOCALIZED_COLOR_BROWN                 "Brun"
+#define LOCALIZED_COLOR_BURLYWOOD             "Bois brut"
+#define LOCALIZED_COLOR_CADETBLUE             "Blue cadet"
+#define LOCALIZED_COLOR_CHARTREUSE            "Chartreuse"
+#define LOCALIZED_COLOR_CHOCOLATE             "Chocolat"
+#define LOCALIZED_COLOR_CORAL                 "Corail"
+#define LOCALIZED_COLOR_CORNFLOWERBLUE        "Bleu barbeau"
+#define LOCALIZED_COLOR_CORNSILK              "Barbe de maïs"
+#define LOCALIZED_COLOR_CRIMSON               "Cramoisi"
+#define LOCALIZED_COLOR_CYAN                  "Cyan"
+#define LOCALIZED_COLOR_DARKBLUE              "Bleu foncé"
+#define LOCALIZED_COLOR_DARKCYAN              "Cyan foncé"
+#define LOCALIZED_COLOR_DARKGOLDENROD         "Verge d'or foncé"
+#define LOCALIZED_COLOR_DARKGRAY              "Gris foncé"
+#define LOCALIZED_COLOR_DARKGREEN             "Vert foncé"
+#define LOCALIZED_COLOR_DARKGREY              "Gris foncé"
+#define LOCALIZED_COLOR_DARKKHAKI             "Kaki foncé"
+#define LOCALIZED_COLOR_DARKMAGENTA           "Magenta foncé"
+#define LOCALIZED_COLOR_DARKOLIVEGREEN        "Olive foncé"
+#define LOCALIZED_COLOR_DARKORANGE            "Orange foncé"
+#define LOCALIZED_COLOR_DARKORCHID            "Orchidée foncé"
+#define LOCALIZED_COLOR_DARKRED               "Rouge foncé"
+#define LOCALIZED_COLOR_DARKSALMON            "Saumon foncé"
+#define LOCALIZED_COLOR_DARKSEAGREEN          "Vert marin foncé"
+#define LOCALIZED_COLOR_DARKSLATEBLUE         "Bleu ardoise foncé"
+#define LOCALIZED_COLOR_DARKSLATEGRAY         "Gris ardoise foncé"
+#define LOCALIZED_COLOR_DARKSLATEGREY         "Gris ardoise foncé"
+#define LOCALIZED_COLOR_DARKTURQUOISE         "Turquoise foncé"
+#define LOCALIZED_COLOR_DARKVIOLET            "Violet foncé"
+#define LOCALIZED_COLOR_DEEPPINK              "Rose soutenu"
+#define LOCALIZED_COLOR_DEEPSKYBLUE           "Bleu ciel intense"
+#define LOCALIZED_COLOR_DIMGRAY               "Gris pâle"
+#define LOCALIZED_COLOR_DIMGREY               "Gris pâle"
+#define LOCALIZED_COLOR_DODGERBLUE            "Bleuté"
+#define LOCALIZED_COLOR_FIREBRICK             "Brique feu"
+#define LOCALIZED_COLOR_FLORALWHITE           "Blanc floral"
+#define LOCALIZED_COLOR_FORESTGREEN           "Vert forêt"
+#define LOCALIZED_COLOR_FUCHSIA               "Fuchsia"
+#define LOCALIZED_COLOR_GAINSBORO             "Gainsborough"
+#define LOCALIZED_COLOR_GHOSTWHITE            "Blanc fantôme"
+#define LOCALIZED_COLOR_GOLD                  "Or"
+#define LOCALIZED_COLOR_GOLDENROD             "Verge d'or"
+#define LOCALIZED_COLOR_GRAY                  "Gris"
+#define LOCALIZED_COLOR_GREEN                 "Vert"
+#define LOCALIZED_COLOR_GREENYELLOW           "Vert jaune"
+#define LOCALIZED_COLOR_GREY                  "Gris"
+#define LOCALIZED_COLOR_HONEYDEW              "Miellé"
+#define LOCALIZED_COLOR_HOTPINK               "Cuisse de nymphe émue"
+#define LOCALIZED_COLOR_INDIANRED             "Rouge indien"
+#define LOCALIZED_COLOR_INDIGO                "Indigo"
+#define LOCALIZED_COLOR_IVORY                 "Ivoire"
+#define LOCALIZED_COLOR_KHAKI                 "Kaki"
+#define LOCALIZED_COLOR_LAVENDER              "Lavande"
+#define LOCALIZED_COLOR_LAVENDERBLUSH         "Bleu lavande"
+#define LOCALIZED_COLOR_LAWNGREEN             "Vert herbe"
+#define LOCALIZED_COLOR_LEMONCHIFFON          "Mousseline citron"
+#define LOCALIZED_COLOR_LIGHTBLUE             "Bleu clair"
+#define LOCALIZED_COLOR_LIGHTCORAL            "Corail clair"
+#define LOCALIZED_COLOR_LIGHTCYAN             "Cyan clair"
+#define LOCALIZED_COLOR_LIGHTGOLDENRODYELLOW  "Verge d'or jaunâtre"
+#define LOCALIZED_COLOR_LIGHTGRAY             "Gris clair"
+#define LOCALIZED_COLOR_LIGHTGREEN            "Vert clair"
+#define LOCALIZED_COLOR_LIGHTGREY             "Gris clair"
+#define LOCALIZED_COLOR_LIGHTPINK             "Rose clair"
+#define LOCALIZED_COLOR_LIGHTSALMON           "Saumon clair"
+#define LOCALIZED_COLOR_LIGHTSEAGREEN         "Vert marin clair"
+#define LOCALIZED_COLOR_LIGHTSKYBLUE          "Bleu ciel clair"
+#define LOCALIZED_COLOR_LIGHTSLATEGRAY        "Gris ardoise clair"
+#define LOCALIZED_COLOR_LIGHTSLATEGREY        "Gris ardoise clair"
+#define LOCALIZED_COLOR_LIGHTSTEELBLUE        "Bleu acier clair"
+#define LOCALIZED_COLOR_LIGHTYELLOW           "Jaune clair"
+#define LOCALIZED_COLOR_LIME                  "Tilleul"
+#define LOCALIZED_COLOR_LIMEGREEN             "Citrone vert"
+#define LOCALIZED_COLOR_LINEN                 "Linon"
+#define LOCALIZED_COLOR_MAGENTA               "Magenta"
+#define LOCALIZED_COLOR_MAROON                "Marron"
+#define LOCALIZED_COLOR_MEDIUMAQUAMARINE      "Bleu vert moyen"
+#define LOCALIZED_COLOR_MEDIUMBLUE            "Bleu moyen"
+#define LOCALIZED_COLOR_MEDIUMORCHID          "Orchidée moyen"
+#define LOCALIZED_COLOR_MEDIUMPURPLE          "Pourpre moyen"
+#define LOCALIZED_COLOR_MEDIUMSEAGREEN        "Vert marin moyen"
+#define LOCALIZED_COLOR_MEDIUMSLATEBLUE       "Bleu ardoise moyen"
+#define LOCALIZED_COLOR_MEDIUMSPRINGGREEN     "Vert printemps moyen"
+#define LOCALIZED_COLOR_MEDIUMTURQUOISE       "Turquoise moyen"
+#define LOCALIZED_COLOR_MEDIUMVIOLETRED       "Rouge violet moyen"
+#define LOCALIZED_COLOR_MIDNIGHTBLUE          "Bleu nuit moyen"
+#define LOCALIZED_COLOR_MINTCREAM             "Creme de menthe"
+#define LOCALIZED_COLOR_MISTYROSE             "Rose fané"
+#define LOCALIZED_COLOR_MOCCASIN              "Moccasin"
+#define LOCALIZED_COLOR_NAVAJOWHITE           "Blanc navajo"
+#define LOCALIZED_COLOR_NAVY                  "Marine"
+#define LOCALIZED_COLOR_OLDLACE               "Vieille dentelle"
+#define LOCALIZED_COLOR_OLIVE                 "Olive"
+#define LOCALIZED_COLOR_OLIVEDRAB             "Olive terne"
+#define LOCALIZED_COLOR_ORANGE                "Orange"
+#define LOCALIZED_COLOR_ORANGERED             "Rouge orangé"
+#define LOCALIZED_COLOR_ORCHID                "Orchidée"
+#define LOCALIZED_COLOR_PALEGOLDENROD         "Verge d'or pâle"
+#define LOCALIZED_COLOR_PALEGREEN             "Vert pâle"
+#define LOCALIZED_COLOR_PALETURQUOISE         "Turquoise pâle"
+#define LOCALIZED_COLOR_PALEVIOLETRED         "Rouge violet pâle"
+#define LOCALIZED_COLOR_PAPAYAWHIP            "Mousse a la papaye"
+#define LOCALIZED_COLOR_PEACHPUFF             "Fleur de pêcher"
+#define LOCALIZED_COLOR_PERU                  "Pérou"
+#define LOCALIZED_COLOR_PINK                  "Rose"
+#define LOCALIZED_COLOR_PLUM                  "Prune"
+#define LOCALIZED_COLOR_POWDERBLUE            "Bleu léger"
+#define LOCALIZED_COLOR_PURPLE                "Pourpre"
+#define LOCALIZED_COLOR_RED                   "Rouge"
+#define LOCALIZED_COLOR_ROSYBROWN             "Brun rosé"
+#define LOCALIZED_COLOR_ROYALBLUE             "Bleu roi"
+#define LOCALIZED_COLOR_SADDLEBROWN           "Brun selle"
+#define LOCALIZED_COLOR_SALMON                "Saumon"
+#define LOCALIZED_COLOR_SANDYBROWN            "Brun sable"
+#define LOCALIZED_COLOR_SEAGREEN              "Vert marin"
+#define LOCALIZED_COLOR_SEASHELL              "Coquillage"
+#define LOCALIZED_COLOR_SIENNA                "Terre de Sienne"
+#define LOCALIZED_COLOR_SILVER                "Argent"
+#define LOCALIZED_COLOR_SKYBLUE               "Bleu ciel"
+#define LOCALIZED_COLOR_SLATEBLUE             "Bleu ardoise"
+#define LOCALIZED_COLOR_SLATEGRAY             "Gris ardoise"
+#define LOCALIZED_COLOR_SLATEGREY             "Gris ardoise"
+#define LOCALIZED_COLOR_SNOW                  "Neige"
+#define LOCALIZED_COLOR_SPRINGGREEN           "Vert printemps"
+#define LOCALIZED_COLOR_STEELBLUE             "Bleu acier"
+#define LOCALIZED_COLOR_TAN                   "Tan"
+#define LOCALIZED_COLOR_TEAL                  "Sarcelle"
+#define LOCALIZED_COLOR_THISTLE               "Chardon"
+#define LOCALIZED_COLOR_TOMATO                "Tomate"
+#define LOCALIZED_COLOR_TURQUOISE             "Turquoise"
+#define LOCALIZED_COLOR_VIOLET                "Violet"
+#define LOCALIZED_COLOR_WHEAT                 "Froment"
+#define LOCALIZED_COLOR_WHITE                 "Blanc"
+#define LOCALIZED_COLOR_WHITESMOKE            "Fumée blanche"
+#define LOCALIZED_COLOR_YELLOW                "Jaune"
+#define LOCALIZED_COLOR_YELLOWGREEN           "Jaune vert"
