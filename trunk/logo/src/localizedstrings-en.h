@@ -1209,6 +1209,8 @@
 
 //
 // The words that describe color vectors.
+// These words were selected from a de facto HTML standard, so you may
+// be able to find translations for the entire set on the Web.
 //
 #define LOCALIZED_COLOR_ALICEBLUE             "AliceBlue"
 #define LOCALIZED_COLOR_ANTIQUEWHITE          "AntiqueWhite"
