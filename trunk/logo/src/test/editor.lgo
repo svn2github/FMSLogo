@@ -6,12 +6,14 @@ TO EDALLTEST.DISPLAYBYHWND
   EDALL
   WINDOWDELETE "edalltest
 
-  MAKE "isok YESNOBOX [Question] [Is the editor showing?]
+  MAKE "isok YESNOBOX [Question] [Is the editor showing?  If so, close it before pressing "Yes".]
   IFELSE :isok [
     REPORTTESTPASSED [The editor window was displayed, as expected.]
   ][
     REPORTTESTFAILED [The editor window did not popup.  We expected it to be displayed.]
   ]
+
+  
 
 END
 

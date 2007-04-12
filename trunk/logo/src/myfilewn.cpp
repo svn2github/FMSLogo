@@ -552,6 +552,9 @@ bool TMyFileWindow::EndEdit()
 
 void TMyFileWindow::EvDestroy()
    {
+   // remove this window from the set of windows that the main window is tracking
+   MainWindowx->DestroyEditWindow(this);
+
    if (args_list != NIL || check_for_errors)
       {
       error_happen = false;

@@ -1388,11 +1388,12 @@ NODE *ledit(NODE *args)
       // it focus instead of opening a new one.
       if (MainWindowx != NULL)
          {
-         HWND editor = MainWindowx->GetEditor();
+         TMyFileWindow * editor = MainWindowx->GetEditor();
          if (editor != NULL)
             {
-            ::ShowWindow(editor, SW_SHOWNORMAL);
-            ::SetWindowPos(editor, HWND_TOP, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
+            editor->ShowWindow(SW_SHOWNORMAL);
+            editor->SetWindowPos(HWND_TOP, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
+            editor->SetFocus();
             return Unbound;
             }
          }

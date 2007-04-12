@@ -30,6 +30,8 @@ II. New features/bugs fixed:
     o Fix bug #1622720; SELECTBOX GUI is now internationalized.
       This also fixes a related bug where pressing "X" on dialog didn't
       act the same as pressing the "Cancel" button.
+    o Fix bug #1327723; EDIT now finds the editor that belongs to the same
+      instance of FMSLogo, instead of finding it by window caption.
     o Implement request #1662644; CTRL+D now acts like the EDALL button.
     o Implement request #1448007; SETPENCOLOR, SETFLOODCOLOR, and 
       SETSCREENCOLOR now accept color names like "Yellow and "Blue.

@@ -25,30 +25,37 @@ const int MAX_PENDING_CONNECTS = 4;  // The backlog allowed for listen()
 
 calllist calllists;
 
+// inserts an element at the front of the list.
 void qlist::insert(void * a)
    {
+   assert(a != NULL && "invalid parameter");
+
    // class "event list queue" member to insert event
    if (last)
       {
-      qlink * ph = last->next;
-      qlink * h = new qlink(a, NULL, NULL);
-      last->next = h;
-      h->prev = last;
-      h->next = ph;
-      ph->prev = h;
+      // list has at least one element.
+      qlink * previousHead = last->next;
+      qlink * head = new qlink(a, NULL, NULL);
+      last->next = head;
+      head->prev = last;
+      head->next = previousHead;
+      previousHead->prev = head;
+
       last = last->next;
       }
    else
       {
+      // list was empty, so this is the new last node
       last = new qlink(a, NULL, NULL);
       last->next = last;
       last->prev = last;
       }
    }
 
+// returns the first element in the list.
+// returns NULL if the list is empty.
 void * qlist::get(void)
    {
-   // class "event list queue" member to get the next event
    if (last == NULL)
       {
       return NULL;
@@ -57,9 +64,9 @@ void * qlist::get(void)
    return last->next->e;
    }
 
+// removes the first item in the list
 void qlist::zap(void)
    {
-   // class "event list queue" member function to remove the first event
    if (last == NULL) 
       {
       return;
@@ -69,6 +76,7 @@ void qlist::zap(void)
 
    if (last == p)
       {
+      // this was the only element in the list
       last = NULL;
       }
    else
@@ -80,6 +88,7 @@ void qlist::zap(void)
    delete p;
    }
 
+// deletes the list structure, but does not modify any of the list elements.
 void qlist::clear()
    {
    qlink *l = last;
@@ -98,6 +107,67 @@ void qlist::clear()
    while (l != last);
    }
 
+// removes an element from the list, but does NOT delete the element
+void qlist::remove(void * a)
+   {
+   qlink * node = find(a);
+   if (node == NULL)
+      {
+      // the element isn't in the list
+      return;
+      }
+
+   if (last == node)
+      {
+      // special case: we are removing the "last" node.
+      if (last == last->next)
+         {
+         // this was the only element in the list
+         last = NULL;
+         }
+      else
+         {
+         last->next->prev = last->prev;
+         last->prev->next = last->next;
+         last = node->prev;
+         }
+      }
+   else
+      {
+      // unlink the node that holds "a" and delete it
+      node->prev->next = node->next;
+      node->next->prev = node->prev;
+      }
+
+   delete node;
+   }
+
+// returns an element's node, if it exists
+qlink * qlist::find(void * a)
+   {
+   if (last == NULL) 
+      {
+      // the list is empty
+      return NULL;
+      }
+
+   // search the list for "a" and remove it.
+   qlink * ptr = last;
+   do 
+      {
+      if (ptr->e == a)
+         {
+         // found it
+         return ptr;
+         }
+        
+      ptr = ptr->next;
+
+      } while (ptr != last);
+   
+   // can't find it
+   return NULL;
+   }
 
 callthing * callthing::CreateKeyboardEvent(char * function, int key)
    {
@@ -783,7 +853,6 @@ TMainFrame::TMainFrame(
    LPCSTR          Title,
    TPaneSplitter * PaneSplitter
 ) : TDecoratedFrame(Parent, Title, PaneSplitter),
-    EditWindow(NULL),
     CommandWindow(new TMyCommandWindow(0, IDD_DOCKEDCOMMANDER)),
     StatusWindow(NULL),
     PaneSplitterWindow(PaneSplitter),
@@ -870,22 +939,22 @@ char * TMainFrame::GetClassName()
 
 bool TMainFrame::IsEditorOpen()
    {
-   return ::FindWindow(NULL, LOCALIZED_EDITOR_TITLE) ? true : false;
+   return GetEditor() != NULL ? true : false;
    }
 
-HWND TMainFrame::GetEditor()
+TMyFileWindow * TMainFrame::GetEditor()
    {
-   return ::FindWindow(NULL, LOCALIZED_EDITOR_TITLE);
+   return m_Editors.get();
    }
 
 bool TMainFrame::CanClose()
    {
    // if editor is running we could lose unsaved changes
-   HWND editor = GetEditor();
+   TMyFileWindow * editor = GetEditor();
    if (editor != NULL)
       {
-      ::ShowWindow(editor, SW_SHOWNORMAL);
-      ::SetWindowPos(editor, HWND_TOP, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
+      editor->ShowWindow(SW_SHOWNORMAL);
+      editor->SetWindowPos(HWND_TOP, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
       GiveFocusToEditbox = false;
 
       if (MessageBox(
@@ -1866,12 +1935,23 @@ TMainFrame::CreateEditWindow(
       editor->SetWindowText(LOCALIZED_EDITOR_TITLE);
       }
 
+   // add this editor the the list of known editors
+   m_Editors.insert(editor);
+
    return editor;
+   }
+
+void
+TMainFrame::DestroyEditWindow(
+   TMyFileWindow * EditWindow
+   )
+   {
+   m_Editors.remove(EditWindow);
    }
 
 void TMainFrame::MyPopupEdit(const char *FileName, NODE *args, bool check_for_errors)
    {
-   EditWindow = CreateEditWindow(FileName, args, check_for_errors);
+   class TMyFileWindow * editor = CreateEditWindow(FileName, args, check_for_errors);
 
    if (args != NULL || check_for_errors)
       {
@@ -1879,11 +1959,11 @@ void TMainFrame::MyPopupEdit(const char *FileName, NODE *args, bool check_for_er
       if (error_happen)
          {
          error_happen = false;
-         EditWindow->Editor->Insert(" ");
-         EditWindow->Editor->DeleteSubText(0, 1);
-         int iLine = EditWindow->Editor->GetLineFromPos(LinesLoadedOnEdit);
-         EditWindow->Editor->Scroll(0, iLine);
-         EditWindow->Editor->SetSelection(LinesLoadedOnEdit, LinesLoadedOnEdit);
+         editor->Editor->Insert(" ");
+         editor->Editor->DeleteSubText(0, 1);
+         int iLine = editor->Editor->GetLineFromPos(LinesLoadedOnEdit);
+         editor->Editor->Scroll(0, iLine);
+         editor->Editor->SetSelection(LinesLoadedOnEdit, LinesLoadedOnEdit);
          }
       }
 
@@ -1909,11 +1989,11 @@ void TMainFrame::MyPopupEditToError(const char *FileName)
       fclose(srcfile);
       }
 
-   EditWindow = CreateEditWindow(FileName, NIL, true);
+   class TMyFileWindow * editor = CreateEditWindow(FileName, NIL, true);
 
    // exit the editor to force it to notice the error.
    error_happen = false;
-   EditWindow->CMExit();
+   editor->CMExit();
    }
 
    
@@ -2357,7 +2437,7 @@ void TMainFrame::MyPopupStatus()
 
 void TMainFrame::CMControlExecute()
    {
-   HWND EditH = GetEditor();
+   TMyFileWindow * editor = GetEditor();
    HWND TempH = GetActiveWindow();
 
    // if Main is active find alternate
@@ -2371,11 +2451,11 @@ void TMainFrame::CMControlExecute()
          }
 
       // else if an editor is available go there
-      else if (EditH != NULL)
+      else if (editor != NULL)
          {
-         if (!::IsIconic(EditH))
+         if (!editor->IsIconic())
             {
-            ::SetFocus(EditH);
+            editor->SetFocus();
             }
          }
       }
@@ -2385,13 +2465,13 @@ void TMainFrame::CMControlExecute()
       {
 
       // if a available editor maybe go there
-      if (EditH != NULL)
+      if (editor != NULL)
          {
 
          // if really available then go there
-         if (!::IsIconic(EditH))
+         if (!editor->IsIconic())
             {
-            ::SetFocus(EditH);
+            editor->SetFocus();
             }
          else
             {

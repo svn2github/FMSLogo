@@ -1867,7 +1867,7 @@ PASS: [DIFFERENCE 5 0] output 5 , as expected.
 PASS: [DIFFERENCE 5 1] output 4 , as expected.
 PASS: [DIFFERENCE 5 -1] output 6 , as expected.
 PASS: [DIFFERENCE "3 "2] output 1 , as expected.
-PASS: [DIFFERENCE 1.2e40 2e39] output 1e+40 , as expected.
+FAIL: [DIFFERENCE 1.2e40 2e39] output 1e+40 . We expected 1e+40 .
 INFO: Running invalid instruction: [(DIFFERENCE)]
 PASS: error code is 6 , as expected.
 INFO: error text is not enough inputs to DIFFERENCE .
@@ -2486,7 +2486,7 @@ PASS: [SQRT 0] output 0 , as expected.
 PASS: [SQRT 4] output 2 , as expected.
 PASS: [SQRT 9] output 3 , as expected.
 PASS: [SQRT 1.44] output 1.2 , as expected.
-FAIL: [SQRT 2] output 1.4142135623731 . We expected 1.41421356237309 .
+FAIL: [SQRT 2] output 1.4142135623731 . We expected 1.4142135623731 .
 PASS: [SQRT 1e40] output 1e+20 , as expected.
 INFO: Running invalid instruction: [(SQRT)]
 PASS: error code is 6 , as expected.
@@ -2539,7 +2539,7 @@ PASS: [POWER 2 5] output 32 , as expected.
 FAIL: [POWER 1.1 5] output 1.61051 . We expected 1.61051 .
 FAIL: [POWER -1.1 5] output -1.61051 . We expected -1.61051 .
 PASS: [POWER 1e2 5] output 10000000000 , as expected.
-FAIL: [POWER 1e-2 5] output 1e-10 . We expected 1e-10 .
+PASS: [POWER 1e-2 5] output 1e-10 , as expected.
 PASS: [POWER 1 -1] output 1 , as expected.
 PASS: [POWER 2 -1] output 0.5 , as expected.
 PASS: [POWER 0.5 -1] output 2 , as expected.
@@ -5189,7 +5189,7 @@ INFO: error text is READCHARS doesn't like {1} as input .
 INFO: Running invalid instruction: [READCHARS "ten]
 INFO: error code is 7 .
 INFO: error text is READCHARS doesn't like ten as input .
-FAIL: The editor window did not popup. We expected it to be displayed.
+PASS: The editor window was displayed, as expected.
 INFO: Running invalid instruction: [(EDALL "toomany)]
 PASS: error code is 8 , as expected.
 INFO: error text is too much inside ()'s .

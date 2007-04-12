@@ -72,6 +72,77 @@ struct CUTMAP
    bool    CutFlag;          // flag to signal something in cut buffer
    };
 
+class qlink
+   {
+   friend class qlist;
+
+   qlink *next;
+   qlink *prev;
+   void * e;
+
+   qlink(void * a, qlink * n, qlink * p)
+      {
+      e = a;
+      next = n;
+      prev = p;
+      }
+   }
+;
+
+class qlist
+   {
+   qlink *last;
+ public:
+   void insert(void * a);
+   void * get();
+   void zap();
+   void clear();
+   void remove(void * a);
+   qlink * find(void * a);
+
+   qlist()
+      {
+      last = NULL;
+      }
+
+   qlist(void * a)
+      {
+      last = new qlink(a, NULL, NULL);
+      last->next = last;
+      last->prev = last;
+      }
+
+   ~qlist()
+      {
+      clear();
+      }
+   }
+;
+
+class CEditors : public qlist
+   {
+public:
+   void insert(class TMyFileWindow * Editor)
+      {
+      qlist::insert(Editor);
+      }
+
+   qlink * find(class TMyFileWindow * Editor)
+      {
+      return qlist::find(Editor);
+      }
+
+   void remove(class TMyFileWindow * Editor)
+      {
+      qlist::remove(Editor);
+      }
+
+   class TMyFileWindow * get()
+      {
+      return (class TMyFileWindow *) qlist::get();
+      }
+   };
+
 class CLocalizedNode
    {
  public:
@@ -524,8 +595,12 @@ class TMainFrame : public TDecoratedFrame
 
    static int PopupEditorForFile(const char *FileName, NODE *args);
    class TMyFileWindow * CreateEditWindow(const char *FileName, NODE *args, bool check_for_errors);
+   void DestroyEditWindow(class TMyFileWindow * EditWindow);
    void MyPopupEdit(const char *FileName, NODE * args, bool check_for_errors);
    void MyPopupEditToError(const char *FileName);
+   bool IsEditorOpen();
+   TMyFileWindow * GetEditor();
+
    void MyPopupStatus();
    void MyPopupStatusKill();
    bool MyPopupInput(char *str, const char *prompt);
@@ -538,9 +613,6 @@ class TMainFrame : public TDecoratedFrame
    bool OpenDIB(FILE* File, DWORD &, DWORD &);
    bool DumpBitmapFile(LPCSTR Filename, int MaxBitCount);
    bool WriteDIB(FILE* File, int MaxBitCount);
-
-   bool IsEditorOpen();
-   HWND GetEditor();
 
 
  protected:
@@ -634,7 +706,6 @@ class TMainFrame : public TDecoratedFrame
 
  public:
    class TPrinter               Printer;
-   class TMyFileWindow        * EditWindow;
    class TMyCommandWindow     * CommandWindow;
    class CStatusWindow        * StatusWindow;
    class TPaneSplitter        * PaneSplitterWindow;
@@ -647,6 +718,8 @@ class TMainFrame : public TDecoratedFrame
    class TColorDialog  * m_FloodColorPicker;
 
    class TSizeDialog   * m_PenSizePicker;
+
+   CEditors              m_Editors;
 
    char FileName[MAXPATH];
    char BitmapName[MAXPATH];
@@ -688,50 +761,6 @@ class TRulerOut : public TPrintout
    }
 ;
 
-class qlink
-   {
-   friend class qlist;
-
-   qlink *next;
-   qlink *prev;
-   void * e;
-
-   qlink(void * a, qlink * n, qlink * p)
-      {
-      e = a;
-      next = n;
-      prev = p;
-      }
-   }
-;
-
-class qlist
-   {
-   qlink *last;
- public:
-   void insert(void * a);
-   void * get();
-   void zap();
-   void clear();
-
-   qlist()
-      {
-      last = NULL;
-      }
-
-   qlist(void * a)
-      {
-      last = new qlink(a, NULL, NULL);
-      last->next = last;
-      last->prev = last;
-      }
-
-   ~qlist()
-      {
-      clear();
-      }
-   }
-;
 
 enum EVENTTYPE
    {
@@ -779,8 +808,7 @@ struct calllist : public qlist
       {
       return (callthing *) qlist::get();
       }
-   }
-;
+   };
 
 extern calllist calllists;
 
