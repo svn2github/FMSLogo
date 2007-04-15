@@ -1,0 +1,44 @@
+<section id="command-logoversion">
+    <title>LOGOVERSION</title>
+<indexterm><primary>LOGOVERSION</primary></indexterm>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>LOGOVERSION</command></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+Outputs a three item list that describes the version of &GENERICNAME; which you are using.
+The first item is the name of the application (&PRODUCTNAME;).
+The second item is the version of &PRODUCTNAME;.
+The third item is the operating system on which you are running.
+</para>
+
+<para>
+LOGOVERSION is provided so that you can write portable &GENERICNAME; programs that run on different versions of &GENERICNAME;.
+By knowing what version of &GENERICNAME; you are using, your program can take best advantage of what each version offers you.
+</para>
+
+<para>
+LOGOVERSION is supported by other &GENERICNAME; environments, including aUCBLogo and Elica.
+</para>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Example</term>
+<listitem>
+
+<programlisting><userinput>SHOW LOGOVERSION</userinput>
+[&PRODUCTNAME; &PRODUCTVERSION; Windows]
+</programlisting>
+
+</listitem>
+</varlistentry>
+
+</variablelist>
+</section>

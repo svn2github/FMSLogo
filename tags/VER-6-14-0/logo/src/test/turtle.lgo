@@ -1,0 +1,107 @@
+LOAD "testlib.lgo
+
+TO TURTLETEST.SMOKETEST
+
+   ; reset to 0 turtles
+   TRACEINSTRUCTION [ CLEARSCREEN ]
+   SIMPLEREPORTTEST [TURTLE ] 0
+   SIMPLEREPORTTEST [TURTLES] 0
+
+   TRACEINSTRUCTION [SETTURTLE 2]
+   SIMPLEREPORTTEST [TURTLES]  2
+   SIMPLEREPORTTEST [TURTLE]   2
+
+   TRACEINSTRUCTION [SETTURTLE 1]
+   SIMPLEREPORTTEST [TURTLES]  2
+   SIMPLEREPORTTEST [TURTLE]   1
+
+   ; SETTURTLE 3.0 is the same as SETTURTLE 3
+   TRACEINSTRUCTION [SETTURTLE 3.0]
+   SIMPLEREPORTTEST [TURTLES]  3
+   SIMPLEREPORTTEST [TURTLE]   3
+
+   TRACEINSTRUCTION [SETTURTLE 1023] ; highest legal value
+   SIMPLEREPORTTEST [TURTLES]  1023
+   SIMPLEREPORTTEST [TURTLE]   1023
+
+   ; negative turtles are meaningful in perspective mode
+   TRACEINSTRUCTION [SETTURTLE -1]
+   TRACEINSTRUCTION [SETTURTLE -2]
+   TRACEINSTRUCTION [SETTURTLE -3]
+   SIMPLEREPORTTEST [TURTLES]  1023
+   SIMPLEREPORTTEST [TURTLE]   -3
+
+   ; reset to 0 turtles
+   TRACEINSTRUCTION [ CLEARSCREEN ]
+   SIMPLEREPORTTEST [TURTLE ] 0
+   SIMPLEREPORTTEST [TURTLES] 0
+END
+
+TO TURTLETEST.CHARACTERISTICS
+
+   ; test that the individual turtles maintain their own state
+   TRACEINSTRUCTION [ CLEARSCREEN ]
+
+   ; give some unique characteristics to turtle 1
+   TRACEINSTRUCTION [ SETXY 130 15 ]
+   ; TODO: give more characteristics
+
+
+   ; switch to a fresh turtle
+   TRACEINSTRUCTION [ SETTURTLE 1  ]
+
+   ; test the initial starting conditions of turtle #1
+   SIMPLEREPORTTEST [ POS          ] [0 0]
+
+   ; give turtle #1 some unique characteritics
+   TRACEINSTRUCTION [ SETXY 70 120 ]
+
+   ; switch back to turtle #0 and test that the characteristics were restored
+   TRACEINSTRUCTION [ SETTURTLE 0  ]
+   SIMPLEREPORTTEST [ POS          ] [130 15]
+
+END
+
+TO TURTLETEST.BADINPUT
+
+   RUNTOOMANYINPUTSTEST   [(SETTURTLE "toomany)]
+
+   RUNTOOMANYINPUTSTEST   [(TURTLES "toomany)]
+
+   
+   CLEARSCREEN ; set the total turtles to 0
+
+   ; Set the turtle to 1, so we can confirm that
+   ; bad input doesn't inadvertantly select turtle 0.
+   ; See bug #1605816.
+   SETTURTLE 1
+
+
+   RUNNOTENOUGHINPUTSTEST [(SETTURTLE)]
+   RUNTOOMANYINPUTSTEST   [(SETTURTLE 10 "toomany)]
+
+   RUNDOESNTLIKEINPUTTEST [SETTURTLE "ten  ]
+   RUNDOESNTLIKEINPUTTEST [SETTURTLE [10]  ]
+   RUNDOESNTLIKEINPUTTEST [SETTURTLE {10}  ]
+   RUNDOESNTLIKEINPUTTEST [SETTURTLE 10.5  ]
+   RUNDOESNTLIKEINPUTTEST [SETTURTLE -4    ]
+   RUNDOESNTLIKEINPUTTEST [SETTURTLE 1024  ]
+
+   RUNNOTENOUGHINPUTSTEST [(SETTURTLE)]
+
+   ; test that the bad input tests didn't change the turtle
+   SIMPLEREPORTTEST [TURTLE]  1
+   SIMPLEREPORTTEST [TURTLES] 1
+
+END
+
+TO TURTLETEST
+
+   ; tests TURTLE, TURTLES, and SETTURTLE
+
+   TURTLETEST.SMOKETEST
+   TURTLETEST.CHARACTERISTICS
+   TURTLETEST.BADINPUT
+
+END
+

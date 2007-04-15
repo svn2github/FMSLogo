@@ -1,0 +1,43 @@
+<section id="command-bitmapturtle">
+<title>BITMAPTURTLE</title>
+<indexterm><primary>BITMAPTURTLE</primary></indexterm>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>BITMAPTURTLE</command></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+
+<para>
+Maps the current turtle (See <link linkend="command-setturtle">SETTURTLE</link>) to the corresponding bitmap buffer (See <link linkend="command-bitcut">BITCUT</link>).
+Since bitmap buffer 0 is mapped to the clipboard, turtle 0 (if mapped to a bitmap with this command) will be mapped to the clipboard.
+That is, if you select turtle 0 and issue BITMAPTURTLE then the turtle will be whatever is in the clipboard and will be updated if the clipboard changes.
+Note the clipboard must have a bitmap in it (or &PRODUCTNAME; will complain).
+</para>
+
+<para>
+Both <link linkend="command-nobitmapturtle">NOBITMAPTURTLE</link> and <link linkend="command-clearscreen">CLEARSCREEN</link> will restore the turtle to its normal shape (it does not erase the corresponding bitmap).
+</para>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Example</term>
+<listitem>
+
+<programlisting><userinput>CLEARSCREEN
+LABEL "+
+BITCUT 20 20
+BITMAPTURTLE
+FORWARD 100</userinput>
+</programlisting>
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</section>

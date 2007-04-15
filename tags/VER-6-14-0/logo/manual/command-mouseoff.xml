@@ -1,0 +1,36 @@
+<section id="command-mouseoff">
+    <title>MOUSEOFF</title>
+<indexterm><primary>MOUSEOFF</primary></indexterm>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>MOUSEOFF</command></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+Disables trapping of mouse events.
+</para>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Example</term>
+<listitem>
+<para>
+<programlisting><userinput>PENUP
+MOUSEON [SETPOS MOUSEPOS PENDOWN] [PENUP] [] [] [SETPOS MOUSEPOS]</userinput>
+</programlisting>
+Move the mouse around.  Hold down the left button to draw.
+<programlisting><userinput>MOUSEOFF</userinput>
+</programlisting>
+</para>
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</section>
