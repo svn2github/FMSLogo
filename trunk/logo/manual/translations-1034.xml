@@ -955,7 +955,7 @@
        <entry>macro?</entry>
      </row>
      <row>
-       <entry><link linkend='command-make'>make</link></entry>
+       <entry><link linkend='command-make'>Make</link></entry>
        <entry>haz</entry>
      </row>
      <row>
@@ -1271,7 +1271,7 @@
        <entry>suenaWave</entry>
      </row>
      <row>
-       <entry><link linkend='command-plist'>plist</link></entry>
+       <entry><link linkend='command-plist'>Plist</link></entry>
        <entry>lProp</entry>
      </row>
      <row>
@@ -1379,7 +1379,7 @@
        <entry>potencia</entry>
      </row>
      <row>
-       <entry><link linkend='command-pprop'>pprop</link></entry>
+       <entry><link linkend='command-pprop'>Pprop</link></entry>
        <entry>ponprop</entry>
      </row>
      <row>
@@ -1889,6 +1889,10 @@
      <row>
        <entry><link linkend='command-sqrt'>sqrt</link></entry>
        <entry>rc</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-sqrt'>sqrt</link></entry>
+       <entry>raizcuadrada</entry>
      </row>
      <row>
        <entry><link linkend='command-ss'>ss</link></entry>
@@ -3081,7 +3085,7 @@
      </row>
      <row>
        <entry>haz</entry>
-       <entry><link linkend='command-make'>make</link></entry>
+       <entry><link linkend='command-make'>Make</link></entry>
      </row>
      <row>
        <entry>haz.hasta</entry>
@@ -3337,7 +3341,7 @@
      </row>
      <row>
        <entry>lProp</entry>
-       <entry><link linkend='command-plist'>plist</link></entry>
+       <entry><link linkend='command-plist'>Plist</link></entry>
      </row>
      <row>
        <entry>lProp?</entry>
@@ -3745,7 +3749,7 @@
      </row>
      <row>
        <entry>ponprop</entry>
-       <entry><link linkend='command-pprop'>pprop</link></entry>
+       <entry><link linkend='command-pprop'>Pprop</link></entry>
      </row>
      <row>
        <entry>ponr</entry>
@@ -3890,6 +3894,10 @@
      <row>
        <entry>radSen</entry>
        <entry><link linkend='command-radsin'>radsin</link></entry>
+     </row>
+     <row>
+       <entry>raizcuadrada</entry>
+       <entry><link linkend='command-sqrt'>sqrt</link></entry>
      </row>
      <row>
        <entry>rc</entry>

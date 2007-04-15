@@ -1195,7 +1195,7 @@
        <entry>deploiemacro</entry>
      </row>
      <row>
-       <entry><link linkend='command-make'>make</link></entry>
+       <entry><link linkend='command-make'>Make</link></entry>
        <entry>donne</entry>
      </row>
      <row>
@@ -1579,7 +1579,7 @@
        <entry>jouewave</entry>
      </row>
      <row>
-       <entry><link linkend='command-plist'>plist</link></entry>
+       <entry><link linkend='command-plist'>Plist</link></entry>
        <entry>lprop</entry>
      </row>
      <row>
@@ -1699,7 +1699,7 @@
        <entry>puissance</entry>
      </row>
      <row>
-       <entry><link linkend='command-pprop'>pprop</link></entry>
+       <entry><link linkend='command-pprop'>Pprop</link></entry>
        <entry>dprop</entry>
      </row>
      <row>
@@ -3365,7 +3365,7 @@
      </row>
      <row>
        <entry>donne</entry>
-       <entry><link linkend='command-make'>make</link></entry>
+       <entry><link linkend='command-make'>Make</link></entry>
      </row>
      <row>
        <entry>donnedef</entry>
@@ -3385,7 +3385,7 @@
      </row>
      <row>
        <entry>dprop</entry>
-       <entry><link linkend='command-pprop'>pprop</link></entry>
+       <entry><link linkend='command-pprop'>Pprop</link></entry>
      </row>
      <row>
        <entry>dr</entry>
@@ -4421,7 +4421,7 @@
      </row>
      <row>
        <entry>lprop</entry>
-       <entry><link linkend='command-plist'>plist</link></entry>
+       <entry><link linkend='command-plist'>Plist</link></entry>
      </row>
      <row>
        <entry>lprop?</entry>
