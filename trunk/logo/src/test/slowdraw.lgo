@@ -10,7 +10,8 @@ TO SLOWDRAWTEST.TIMECOMMAND :instructions :mintime :maxtime
 END
 
 TO SLOWDRAWTEST.SMOKETEST
-   HIDETURTLE ; for more consistent drawing times
+   CLEARSCREEN ; so we can see what we're drawing
+   HIDETURTLE  ; for more consistent drawing times
 
    ; slowdraw at 100
    TRACEINSTRUCTION [ SLOWDRAW 100 ]
