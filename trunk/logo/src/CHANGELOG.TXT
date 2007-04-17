@@ -1,5 +1,24 @@
 This file contains the changes that were made in each revision of FMSLogo.
 
+Added for 6.14.0
+o Fix bug #1688926; '-1e-16 < 0' once again outputs true.
+o Fix bug #1674152; Make, Pprop, and Plist are now properly localized
+  when they are shows in the editor and in the output of PO.
+o Fix bug #1674159; Fixed minor problems in the Spanish translation.
+o Fix bug #1661230; ?REST now loads on its own, instead of loading
+  when other routines that may use it are loaded.
+o Fix bug #1622720; SELECTBOX GUI is now internationalized.
+  This also fixes a related bug where pressing "X" on dialog didn't
+  act the same as pressing the "Cancel" button.
+o Fix bug #1327723; EDIT now finds the editor that belongs to the same
+  instance of FMSLogo, instead of finding it by window caption.
+o Implement request #1662644; CTRL+D now acts like the EDALL button.
+o Implement request #1448007; SETPENCOLOR, SETFLOODCOLOR, and 
+  SETSCREENCOLOR now accept color names like "Yellow and "Blue.
+o Implement request #1615507; The "Set Color" and "Set Pen Size"
+  dialog boxes are now non-modal and have an "Apply" button.
+o Minor updates to the manual.
+
 Added for 6.13.0
 o Fix bug #1661232; FMSLogo can (once again) save the workspace when
   the commander's history has keyboard focus.
