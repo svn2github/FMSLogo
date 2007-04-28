@@ -117,7 +117,7 @@ err_print_helper(
    // Print the location where the error happened, if applicable.
    if (g_ErrorFunction != NIL && Buffer == NULL)
       {
-      ndprintf(fp, " in %s\n%s", g_ErrorFunction, g_ErrorLine);
+      ndprintf(fp, LOCALIZED_TRACING_LOCATION, g_ErrorFunction, g_ErrorLine);
       }
 
    // flush the file stream
