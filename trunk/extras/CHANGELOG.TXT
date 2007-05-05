@@ -1,4 +1,7 @@
 FMSLogo Extras 1.6
+o asteriodminer
+  * Improve the font for larger monitors
+  * Make the framerate configurable
 o lightcycle
   * Add logic to display all errors that are rasied
 o pacturtle

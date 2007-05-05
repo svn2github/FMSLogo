@@ -51,7 +51,7 @@ to buttonDraw :num :draw
     setxy :x :y
     seth 180 tfd 4 lt 90
     pd
-    ifelse( ( item 1 (item :num :buttonList) ) = [Instructions] ) [ tfd 7 ] [ tfd 12 ]
+    ifelse( ( item 1 (item :num :buttonList) ) = [Instructions] ) [ tfd 6 fd 1 ] [ tfd 11 fd 1 ]  ;underline the first letter
   ]
   setturtle 0
   pu setpos :bdPos
@@ -232,9 +232,9 @@ to displayInstructions
   make "line 32*:textScale
   setxy :th :ty - :line*1    drawText [Playing the game:] "draw
   setxy :ti :ty - :line*2    drawText [Navigate your mining ship through the asteroid field and] "draw
-  setxy :tx :ty - :line*3    drawText [pick up the crystals. \ When you have collected all the crystals] "draw
-  setxy :tx :ty - :line*4    drawText [you can see, you advance to the next level to mine a new section] "draw
-  setxy :tx :ty - :line*5    drawText [of the asteroid field. \ If you can finish all 13 levels, you win!] "draw
+  setxy :tx :ty - :line*3    drawText [pick up the gems. \ When you have collected all the gems you] "draw
+  setxy :tx :ty - :line*4    drawText [can see, you advance to the next level to mine a new section of] "draw
+  setxy :tx :ty - :line*5    drawText [the asteroid field. \ If you can finish all 13 levels, you win!] "draw
   setxy :ti :ty - :line*6    drawText [Don't get going too fast. \ In space, the only way to slow] "draw
   setxy :tx :ty - :line*7    drawText [down is to turn around and fire your engine in the other] "draw
   setxy :tx :ty - :line*8    drawText [direction. \ By the time you finish doing that, you may be dust!] "draw
@@ -258,7 +258,9 @@ end
 to drawChar :c :action
   make "validChar "true
   setturtle 0
-  setpensize round :scale
+  ;a pen size of 2 doesn't look nice, so we'll use it in as small a range as possible
+  ifelse and(:scale >= 1.9) (:scale < 2.5) [ make "textPenSize 3 ][ make "textPenSize round :scale ]
+  setpensize :textPenSize
   seth 0
   make "cPos pos
   make "x first :cPos
@@ -270,78 +272,81 @@ to drawChar :c :action
   pd
   if :action <> "getLength [
     if :c=ascii "A [tfd 11 make "pos1 pos pu tfd 10 rt 90 tfd 5.5 make "pos2 pos tfd 5.5 rt 90 tfd 10 pd rt 90 tfd 11 tbk 11 lt 90 tfd 11 tbk 11 setpos :pos2 setpos :pos1]
-    if :c=ascii "B [tfd 21 rt 90 tfd 10 rtCnr tfd 8 rtCnr tfd 10 lt 90 tfd 11 lt 90 tfd 10 ltCnr tfd 9 lt 45 tfd 1.4]
-    if :c=ascii "C [pu rt 90 tfd 11 rt 180 pd tfd 10 rtCnr tfd 19 rtCnr tfd 11]
-    if :c=ascii "D [tfd 21 rt 90 tfd 10 rtCnr tfd 19 rtCnr tfd 10]
-    if :c=ascii "E [rt 90 tfd 11 tbk 11 lt 90 tfd 11 rt 90 tfd 10 tbk 10 lt 90 tfd 10 rt 90 tfd 12]
-    if :c=ascii "F [tfd 11 rt 90 tfd 10 tbk 10 lt 90 tfd 10 rt 90 tfd 12]
-    if :c=ascii "G [pu rt 90 tfd 11 lt 90 pd tfd 11 lt 90 tfd 5 tbk 5 rt 90 tbk 11 lt 90 tfd 10 rtCnr tfd 19 rtCnr tfd 11]
-    if :c=ascii "H [tfd 11 rt 90 tfd 11 tbk 11 lt 90 tfd 11 pu rt 90 tfd 11 rt 90 tfd 1 pd tfd 22]
-    if :c=ascii "I [pu rt 90 pd tfd 6 tbk 3 lt 90 tfd 21 lt 90 tfd 3 tbk 7]
-    if :c=ascii "J [pu tfd 6 rt 180 pd tfd 5 ltCnr tfd 6 ltCnr tfd 20 lt 90 tfd 3 tbk 7]
-    if :c=ascii "K [pu rt 90 tfd 11 rt 45 tfd 1.4 make "pos1 pos tbk 1.4 lt 45 bk 11 lt 90 pd tfd 11 make "pos2 pos tfd 11 rt 90 pu tfd 11 rt 90 tfd 1 pd setpos :pos2 setpos :pos1]
+    if :c=ascii "B [pu tfd 21 pd rt 90 tfd 10 rtCnr tfd 7 rtCnr tfd 6 lt 180 tfd 6 rtCnr tfd 10 rtCnr tfd 10 tbk 4 rt 90 tfd 21]
+    if :c=ascii "C [pu rt 90 tfd 11 rt 180 pd tfd 10 rtCnr tfd 19 rtCnr tfd 10]
+    if :c=ascii "D [rt 90 tfd 10 ltCnr tfd 19 ltCnr tfd 10 tbk 4 lt 90 tfd 21]
+    if :c=ascii "E [rt 90 tfd 11 tbk 11 lt 90 tfd 12 rt 90 tfd 10 tbk 10 lt 90 tfd 9 rt 90 tfd 12]
+    if :c=ascii "F [tfd 12 rt 90 tfd 10 tbk 10 lt 90 tfd 9 rt 90 tfd 12]
+    if :c=ascii "G [pu rt 90 tfd 11 lt 90 pd tfd 12 lt 90 tfd 5 tbk 5 rt 90 tbk 12 lt 90 tfd 10 rtCnr tfd 19 rtCnr tfd 10 fd 1]
+    if :c=ascii "H [tfd 12 rt 90 tfd 11 tbk 11 lt 90 tfd 9 fd 1 pu rt 90 tfd 11 rt 90 fd 1 pd tfd 21 fd 1]
+    if :c=ascii "I [pu rt 90 pd tfd 6 tbk 3 lt 90 tfd 21 lt 90 tfd 3 bk 1 tbk 6]
+    if :c=ascii "J [pu tfd 7 rt 180 pd tfd 6 ltCnr tfd 6 ltCnr tfd 20 lt 90 tfd 3 tbk 6 bk 1]
+    if :c=ascii "K [pu rt 90 tfd 11 rt 90 fd 1 make "pos1 pos bk 1 lt 90 tbk 11 lt 90 pd tfd 12 make "pos2 pos tfd 9 fd 1 rt 90 pu tfd 11 rt 90 tfd 1 pd setpos :pos2 setpos :pos1]
     if :c=ascii "L [rt 90 tfd 11 tbk 11 lt 90 tfd 22]
-    if :c=ascii "M [pu rt 90 tfd 11 lt 90 pd tfd 21 make "pos1 pos tbk 21 lt 90 pu tfd 6 rt 90 tfd 11 make "pos2 pos tbk 11 lt 90 tfd 5 rt 90 pd tfd 21 setpos :pos2 setpos :pos1]
+    if :c=ascii "M [pu rt 90 tfd 11 lt 90 pd tfd 21 make "pos1 pos tbk 21 lt 90 pu tfd 5.5 rt 90 tfd 12 make "pos2 pos tbk 12 lt 90 tfd 5.5 rt 90 pd tfd 21 setpos :pos2 setpos :pos1]
     if :c=ascii "N [pu rt 90 tfd 11 pd make "pos1 pos lt 90 tfd 21 tbk 21 pu lt 90 tfd 11 rt 90 pd tfd 21 setpos :pos1]
     if :c=ascii "O [pu tfd 1 pd repeat 2 [ tfd 19 rtCnr tfd 9 rtCnr]]
-    if :c=ascii "P [tfd 11 rt 90 tfd 10 tbk 10 lt 90 tfd 10 rt 90 tfd 10 rtCnr tfd 8 rt 45 tfd 1.4]
-    if :c=ascii "Q [pu make "pos1 pos rt 90 tfd 11 lt 90 lt 60 pd tfd 7 pu setpos :pos1 rt 60 tfd 1 pd repeat 2 [ tfd 19 rtCnr tfd 8 rtCnr]]
-    if :c=ascii "R [pu rt 90 tfd 11 rt 45 tfd 1.4 make "pos1 pos tbk 1.4 lt 45 tbk 11 lt 90 pd tfd 11 rt 90 tfd 10 tbk 10 lt 90 tfd 10 rt 90 tfd 10 rtCnr tfd 8 rtCnr tfd 9 setpos :pos1]
-    if :c=ascii "S [rt 90 tfd 10 ltCnr tfd 9 ltCnr tfd 9 rtCnr tfd 8 rtCnr tfd 11]
-    if :c=ascii "T [pu rt 90 tfd 6 pd lt 90 tfd 21 lt 90 tfd 6 tbk 12]
-    if :c=ascii "U [pu tfd 1 pd tfd 20 rt 180 tfd 20 ltCnr tfd 9 ltCnr tfd 21]
-    if :c=ascii "V [pu rt 90 tfd 11 lt 90 tfd 21 rt 180 pd tfd 11 tbk 1 make "pos1 pos pu tfd 11 rt 90 tfd 5.5 make "pos2 pos tfd 5.5 rt 90 tfd 10 pd tfd 11 tbk 11 setpos :pos2 setpos :pos1]
-    if :c=ascii "W [pu rt 90 tfd 11 lt 90 tfd 21 rt 180 rt 90 tfd 11 lt 90 pd tfd 21 make "pos1 pos tbk 21 lt 90 pu tfd 6 rt 90 tfd 11 make "pos2 pos tbk 11 lt 90 tfd 5 rt 90 pd tfd 21 setpos :pos2 setpos :pos1]
-    if :c=ascii "X [pu rt 90 tfd 11 lt 90 tfd 21 rt 180 pu make "pos1 pos tfd 21 lt 45 tfd 1.4 make "pos2 pos tbk 1.4 rt 45 rt 90 tfd 11 lt 45 tfd 1.4 make "pos3 pos tbk 1.4 rt 45 rt 90 tfd 21 pd setpos :pos2 pu setpos :pos1 pd setpos :pos3]
-    if :c=ascii "Y [pu rt 90 tfd 11 lt 90 tfd 21 rt 45 tfd 1.4 make "pos1 pos tbk 1.4 lt 45 tbk 21 lt 90  tfd 6 rt 90 tfd 11 make "pos2 pos tbk 11 lt 90 tfd 5 rt 90 tfd 21 pd setpos :pos2 rt 180 tfd 11 tbk 11 setpos :pos1]
+    if :c=ascii "P [tfd 21 rt 90 tfd 10 rtCnr tfd 7 rtCnr tfd 10]
+    if :c=ascii "Q [pu make "pos1 pos rt 90 tfd 11 lt 90 lt 45 pd tfd 8 pu setpos :pos1 rt 45 tfd 1 pd repeat 2 [ tfd 19 rtCnr tfd 8 rtCnr]]
+    if :c=ascii "R [pu rt 90 tfd 11 rt 45 fd 1 make "pos1 pos bk 1 lt 45 tbk 11 lt 90 pd tfd 21 rt 90 tfd 10 rtCnr tfd 7 rtCnr tfd 10 setpos :pos1]
+    if :c=ascii "S [rt 90 tfd 10 ltCnr tfd 10 ltCnr tfd 9 rtCnr tfd 7 rtCnr tfd 10 fd 1]
+    if :c=ascii "T [pu rt 90 tfd 5.5 pd lt 90 tfd 21 lt 90 tfd 5.5 tbk 11]
+    if :c=ascii "U [pu tfd 1 pd tfd 20 rt 180 tfd 20 ltCnr tfd 9 ltCnr tfd 20 fd 1]
+    if :c=ascii "V [pu rt 90 tfd 11 lt 90 tfd 21 rt 180 pd tfd 11 make "pos1 pos pu tfd 10 rt 90 tfd 5.5 make "pos2 pos tfd 5.5 rt 90 tfd 10 pd tfd 11 tbk 11 setpos :pos2 setpos :pos1 fd 1]
+    if :c=ascii "W [pu rt 90 tfd 11 lt 90 tfd 21 rt 180 rt 90 tfd 11 lt 90 pd tfd 21 make "pos1 pos tbk 21 lt 90 pu tfd 5.5 rt 90 tfd 9 make "pos2 pos tbk 9 lt 90 tfd 5.5 rt 90 pd tfd 21 setpos :pos2 setpos :pos1]
+    if :c=ascii "X [pu rt 90 tfd 11 lt 90 tfd 21 rt 180 pu make "pos1 pos tfd 21 lt 45 fd 1 make "pos2 pos bk 1 rt 45 rt 90 tfd 11 lt 45 fd 1 make "pos3 pos bk 1 rt 45 rt 90 tfd 21 pd setpos :pos2 pu setpos :pos1 pd setpos :pos3]
+    if :c=ascii "Y [pu rt 90 tfd 11 lt 90 tfd 21 rt 45 fd 1 make "pos1 pos bk 1 lt 45 tbk 21 lt 90  tfd 5.5 rt 90 tfd 12 make "pos2 pos tbk 12 lt 90 tfd 5.5 rt 90 tfd 21 pd setpos :pos2 rt 180 tfd 12 tbk 12 setpos :pos1]
     if :c=ascii "Z [make "pos1 pos rt 90 tfd 12 pu tbk 1 lt 90 tfd 21 pd lt 90 tfd 11 tbk 11 setpos :pos1]
 
-    if :c=ascii "a [pu rt 90 tfd 1 pd tfd 8 tbk 1 lt 90 tfd 11 lt 90 tfd 7 ltCnr tfd 9 lt 45 tfd 1.4]
-    if :c=ascii "b [pu rt 90 tfd 9 rt 180 tfd 1 pd tfd 8 rt 90 tfd 21 tbk 10 rt 90 tfd 8 rtCnr tfd 9 rt 45 tfd 1.4]
-    if :c=ascii "c [pu rt 90 tfd 9 rt 180 pd tfd 8 rtCnr tfd 9 rtCnr tfd 9]
-    if :c=ascii "d [pu rt 90 tfd 1 pd tfd 8 lt 90 tfd 21 tbk 10 lt 90 tfd 8 ltCnr tfd 9 lt 45 tfd 1.4]
-    if :c=ascii "e [pu rt 90 tfd 8 rt 180 pd tfd 7 rtCnr tfd 9 rtCnr tfd 7 rtCnr tfd 4 rt 90 tfd 9]
-    if :c=ascii "f [pu rt 90 tfd 4 pd lt 90 tfd 11 lt 90 tfd 4 tbk 8 tfd 4 rt 90 tfd 8 rtCnr tfd 4]
-    if :c=ascii "g [pu rt 90 tfd 9 rt 180 pd tfd 8 rtCnr tfd 9 rtCnr tfd 8 rt 90 tfd 17 rtCnr tfd 7 rtCnr tfd 1]
-    if :c=ascii "h [pu rt 90 tfd 9 rt 180 tfd 1 tfd 8 rt 90 pd tfd 21 tbk 10 rt 90 tfd 8 rtCnr tfd 11]
-    if :c=ascii "i [tfd 12 pu tfd 3 pd tfd 2]
+    if :c=ascii "a [pu rt 90 tfd 1 pd tfd 8 tbk 2 lt 90 tfd 12 lt 90 tfd 6 ltCnr tfd 10 ltCnr]  ;ugly
+;    if :c=ascii "a [pu rt 90 tfd 1 pd tfd 8 tbk 2 lt 90 tfd 7 make "pos1 pos lt 90 tfd 6 ltCnr tfd 5 ltCnr pu setpos :pos1 pd lt 90 tfd 4 ltCnr tfd 5 ltCnr tfd 1]  ;too pretty
+;    if :c=ascii "a [pu rt 90 tfd 7 lt 90 tfd 1 pd tfd 11 lt 90 tfd 6 ltCnr tfd 10 ltCnr tfd 5 ltCnr lt 180 ltCnr tfd 1 fd 1]  ;also a bit too pretty
+    if :c=ascii "b [pu rt 90 tfd 9 rt 180 tfd 1 pd tfd 8 rt 90 tfd 21 tbk 9 rt 90 tfd 8 rtCnr tfd 10 rtCnr]
+    if :c=ascii "c [pu rt 90 tfd 9 rt 180 pd tfd 8 rtCnr tfd 10 rtCnr tfd 8 fd 1]
+    if :c=ascii "d [pu rt 90 tfd 1 pd tfd 8 lt 90 tfd 21 tbk 9 lt 90 tfd 8 ltCnr tfd 10 lt 45 tfd 1.4]
+    if :c=ascii "e [pu rt 90 tfd 8 rt 180 pd tfd 7 rtCnr tfd 10 rtCnr tfd 7 rtCnr tfd 5 rt 90 tfd 9]
+    if :c=ascii "f [pu rt 90 tfd 4 pd lt 90 tfd 12 lt 90 tfd 4 tbk 8 tfd 4 rt 90 tfd 8 rtCnr tfd 4]
+    if :c=ascii "g [pu rt 90 tfd 9 rt 180 pd tfd 8 rtCnr tfd 10 rtCnr tfd 8 rt 90 tfd 17 rtCnr tfd 7 rtCnr tfd 1]
+    if :c=ascii "h [tfd 21 tbk 9 rt 90 tfd 8 rtCnr tfd 11 fd 1]
+    if :c=ascii "i [tfd 12 fd 1 pu tfd 3 pd tfd 2]
     if :c=ascii "j [pu rt 90 tfd 4 lt 90 tfd 17 rt 180 pd tfd 2 pu tfd 3 pd tfd 17 rtCnr tfd 4]
-    if :c=ascii "k [tfd 7 make "pos1 pos tfd 14 tbk 21 rt 90 pu tfd 10 rt 90 tfd 1 make "pos2 pos tbk 1 lt 90 tbk 1 lt 90 tfd 11 pd setpos :pos1 setpos :pos2]
-    if :c=ascii "l [tfd 22]
-    if :c=ascii "m [tfd 11 rt 90 tfd 4 rtCnr tfd 10 rt 180 tfd 10 rtCnr tfd 3 rtCnr tfd 11]
-    if :c=ascii "n [tfd 11 rt 90 tfd 8 rtCnr tfd 11]
-    if :c=ascii "o [pu tfd 1 pd repeat 2 [tfd 9 rtCnr tfd 7 rtCnr]]
-    if :c=ascii "p [rt 90 tfd 8 ltCnr tfd 9 ltCnr tfd 8 lt 90 tfd 19]
-    if :c=ascii "q [pu rt 90 tfd 9 rt 180 pd tfd 8 rtCnr tfd 9 rtCnr tfd 8 rt 90 tfd 19]
-    if :c=ascii "r [tfd 10 rtCnr tfd 8]
-    if :c=ascii "s [rt 90 tfd 8 ltCnr tfd 4 ltCnr tfd 7 rtCnr tfd 3 rtCnr tfd 9]
-    if :c=ascii "t [pu rt 90 tfd 4 pd lt 90 tfd 11 lt 90 tfd 4 tbk 8 tfd 4 rt 90 tfd 8]
-    if :c=ascii "u [pu tfd 11 rt 180 pd tfd 10 ltCnr tfd 7 ltCnr tfd 11]
-    if :c=ascii "v [pu tfd 12 make "pos1 pos tbk 12 rt 90 tfd 5 make "pos2 pos tfd 4 lt 90 tfd 11 pd setpos :pos2 setpos :pos1]
-    if :c=ascii "w [pu tfd 6 pd tfd 5 tbk 5 pu make "pos1 pos tbk 6 rt 90 tfd 2 make "pos2 pos tfd 2 lt 90 tfd 5 make "pos3 pos tbk 5 rt 90 tfd 2 make "pos4 pos tfd 2 lt 90 tfd 6 pd tfd 5 tbk 5 setpos :pos4 setpos :pos3 setpos :pos2 setpos :pos1]
-    if :c=ascii "x [pu rt 90 tfd 9 lt 90 tfd 11 rt 180 pu make "pos1 pos tfd 11 lt 45 tfd 1.4 make "pos2 pos tbk 1.4 rt 45 rt 90 tfd 9 lt 45 tfd 1.4 make "pos3 pos tbk 1.4 rt 45 rt 90 tfd 11 pd setpos :pos2 pu setpos :pos1 pd setpos :pos3]
-    if :c=ascii "y [pu tfd 11 make "pos1 pos tbk 19 make "pos2 pos tfd 8 rt 90 tfd 4 make "pos3 pos tfd 5 lt 90 tfd 11 pd setpos :pos3 setpos :pos1 setpos :pos3 setpos :pos2]
-    if :c=ascii "z [make "pos1 pos rt 90 tfd 10 pu tbk 1 lt 90 tfd 11 pd lt 90 tfd 9 tbk 9 setpos :pos1]
+    if :c=ascii "k [tfd 7 make "pos1 pos tfd 14 tbk 21 rt 90 pu tfd 9 fd 1 rt 90 fd 1 make "pos2 pos bk 1 lt 90 bk 1 lt 90 tfd 12 pd setpos :pos1 setpos :pos2]
+    if :c=ascii "l [tfd 21 fd 1]
+    if :c=ascii "m [tfd 12 rt 90 tfd 4 rtCnr tfd 11 rt 180 tfd 11 rtCnr tfd 3 rtCnr tfd 11 fd 1]
+    if :c=ascii "n [tfd 12 rt 90 tfd 8 rtCnr tfd 11 fd 1]
+    if :c=ascii "o [pu tfd 1 pd repeat 2 [tfd 10 rtCnr tfd 7 rtCnr]]
+    if :c=ascii "p [rt 90 tfd 8 ltCnr tfd 10 ltCnr tfd 8 lt 90 tfd 18 fd 1]
+    if :c=ascii "q [pu rt 90 tfd 9 rt 180 pd tfd 8 rtCnr tfd 10 rtCnr tfd 8 rt 90 tfd 18 fd 1]
+    if :c=ascii "r [ tfd 11 rtCnr tfd 8]
+;    if :c=ascii "r [tfd 12 tbk 2 rt 45 tfd 2.828 rt 45 tfd 6]  ;a bit too pretty. goes with nicer "a"
+    if :c=ascii "s [rt 90 tfd 8 ltCnr tfd 4 ltCnr tfd 7 rtCnr tfd 4 rtCnr tfd 8 fd 1]
+    if :c=ascii "t [pu rt 90 tfd 4 pd lt 90 tfd 12 lt 90 tfd 4 tbk 8 tfd 4 rt 90 tfd 9 fd 1]
+    if :c=ascii "u [pu tfd 12 rt 180 pd tfd 11 ltCnr tfd 7 ltCnr tfd 11 fd 1]
+    if :c=ascii "v [pu tfd 12 fd 1 make "pos1 pos bk 1 tbk 12 rt 90 tfd 4.5 make "pos2 pos tfd 4.5 lt 90 tfd 12 pd setpos :pos2 setpos :pos1]
+    if :c=ascii "w [pu tfd 6 pd tfd 6 tbk 6 pu make "pos1 pos tbk 6 rt 90 tfd 2 make "pos2 pos tfd 2 lt 90 tfd 6 make "pos3 pos tbk 6 rt 90 tfd 2 make "pos4 pos tfd 2 lt 90 tfd 6 pd tfd 6 tbk 6 setpos :pos4 setpos :pos3 setpos :pos2 setpos :pos1]
+    if :c=ascii "x [pu rt 90 tfd 9 lt 90 tfd 12 rt 180 pu make "pos1 pos tfd 12 lt 45 fd 1.414 make "pos2 pos bk 1.414 rt 45 rt 90 tfd 9 lt 45 fd 1.414 make "pos3 pos bk 1.414 rt 45 rt 90 tfd 12 pd setpos :pos2 pu setpos :pos1 pd setpos :pos3]
+    if :c=ascii "y [pu tfd 12 fd 1 make "pos1 pos bk 1 tbk 12 rt 90 tfd 2 rt 90 tfd 6 make "pos3 pos tbk 6 lt 90 tfd 2.5 make "pos2 pos tfd 4.5 lt 90 tfd 12 pd setpos :pos2 setpos :pos3 setpos :pos2 setpos :pos1]
+    if :c=ascii "z [make "pos1 pos rt 90 tfd 9 fd 1 pu bk 1 lt 90 tfd 12 pd lt 90 tfd 9 tbk 9 setpos :pos1]
 
     if :c=ascii "0 [pu tfd 1 pd repeat 2 [tfd 19 rtCnr tfd 9 rtCnr]]
-    if :c=ascii "1 [pu rt 90 pd tfd 10 tbk 5 lt 90 tfd 21 lt 90 tfd 6]
-    if :c=ascii "2 [pu rt 90 tfd 11 lt 90 pd lt 90 tfd 11 rt 90 tfd 10 rtCnr tfd 9 ltCnr tfd 8 ltCnr tfd 11]
-    if :c=ascii "3 [rt 90 tfd 10 ltCnr tfd 9 ltCnr tfd 10 rt 180 tfd 10 ltCnr tfd 8 ltCnr tfd 11]
-    if :c=ascii "4 [pu rt 90 tfd 11 lt 90 pd tfd 21 tbk 10 lt 90 tfd 11 rt 90 tfd 11]
-    if :c=ascii "5 [rt 90 tfd 10 ltCnr tfd 9 ltCnr tfd 9 rtCnr tfd 9 rt 90 tfd 12]
-    if :c=ascii "6 [pu tfd 1 pd tfd 11 pu tbk 11 pd rt 90 rt 45 tfd 1.4 lt 45 tfd 9 ltCnr tfd 9 ltCnr tfd 9 rtCnr tfd 8 rtCnr tfd 11]
-    if :c=ascii "7 [pu tfd 21 rt 90 pd tfd 11 rt 90 tfd 22]
-    if :c=ascii "8 [pu tfd 1 pd tfd 9 rt 45 tfd 1.4 bk 1.4 lt 45 pu tbk 9 pd rt 90 rt 45 tfd 1.4 lt 45 tfd 9 ltCnr tfd 9 ltCnr tfd 9 rtCnr tfd 8 rtCnr tfd 9 rtCnr tfd 8 rtCnr]
-    if :c=ascii "9 [pu tfd 21 rt 90 tfd 11 rt 90 tfd 1 pd tfd 11 pu tbk 11 pd rt 90 rt 45 tfd 1.4 lt 45 tfd 9 ltCnr tfd 9 ltCnr tfd 9 rtCnr tfd 8 rtCnr tfd 10]
+    if :c=ascii "1 [pu rt 90 pd tfd 10 tbk 5 lt 90 tfd 21 lt 90 tfd 5 fd 1]
+    if :c=ascii "2 [pu rt 90 tfd 11 lt 90 pd lt 90 tfd 11 rt 90 tfd 10 rtCnr tfd 9 ltCnr tfd 8 ltCnr tfd 10]
+    if :c=ascii "3 [rt 90 tfd 10 ltCnr tfd 9 ltCnr tfd 10 rt 180 tfd 10 ltCnr tfd 8 ltCnr tfd 10 fd 1]
+    if :c=ascii "4 [pu rt 90 tfd 11 lt 90 pd tfd 21 tbk 10 lt 90 tfd 11 rt 90 tfd 10 fd 1]
+    if :c=ascii "5 [rt 90 tfd 10 ltCnr tfd 9 ltCnr tfd 9 rtCnr tfd 9 rt 90 tfd 11]
+    if :c=ascii "6 [pu tfd 1 pd tfd 11 pu tbk 11 pd rt 90 rt 45 tfd 1.414 lt 45 tfd 9 ltCnr tfd 9 ltCnr tfd 9 ltCnr lt 180 tfd 10 rtCnr tfd 10]
+    if :c=ascii "7 [pu tfd 21 rt 90 pd tfd 11 rt 90 tfd 21 fd 1]
+    if :c=ascii "8 [pu tfd 1 pd tfd 9 rt 45 tfd 1.414 tbk 1.414 lt 45 pu tbk 9 pd rt 90 rt 45 tfd 1.414 lt 45 tfd 9 ltCnr tfd 9 ltCnr tfd 9 rtCnr tfd 8 rtCnr tfd 9 rtCnr tfd 8 rtCnr]
+    if :c=ascii "9 [pu tfd 21 rt 90 tfd 11 rt 90 tfd 1 pd tfd 11 pu tbk 11 pd rt 90 rt 45 tfd 1.4 lt 45 tfd 9 ltCnr tfd 9 ltCnr tfd 9 ltCnr lt 180 tfd 10 rtCnr tfd 10]
 
-    if :c=ascii ": [tfd 2 pu tfd 8.5 pd tfd 2]
-    if :c=ascii "- [pu tfd 11 rt 90 pd tfd 10]
-    if :c=ascii "? [pu rt 90 tfd 11 rt 180 tfd 7 rt 90 pd tfd 2 pu tfd 3 pd tfd 5 rtCnr tfd 4 ltCnr tfd 8 ltCnr tfd 8 ltCnr tfd 4]
+    if :c=ascii ": [tfd 2 pu tfd 8 fd 1 pd tfd 2]
+    if :c=ascii "- [pu tfd 12 rt 90 pd tfd 10]
+    if :c=ascii "? [pu rt 90 tfd 5 lt 90 pd tfd 2 pu tfd 3 pd tfd 6 rtCnr tfd 4 ltCnr tfd 7 ltCnr tfd 8 ltCnr tfd 4]
     if :c=ascii "! [tfd 2 pu tfd 3 pd tfd 17]
     if :c=ascii ". [tfd 2]
     if :c=ascii ", [pu tbk 4 rt 30 pd tfd 3 lt 30 tfd 2 lt 90 tfd 3]
     if :c=ascii "' [pu tfd 17 rt 30 pd tfd 3 lt 30 tfd 2 lt 90 tfd 3]
-    if :c=ascii "\" [pu tfd 19 pd tfd 3 pu rt 90 tfd 4 rt 90 tfd 1 pd tfd 4]
+    if :c=ascii "\" [pu tfd 18 pd tfd 4 fd 1 pu rt 90 tfd 4 rt 90 fd 1 pd tfd 4 fd 1] ;actually a double quote
     if :c=ascii "_ [pu tbk 2 rt 90 pd tfd 11]
  ]
 
@@ -390,7 +395,7 @@ to drawChar :c :action
   setxy :x :y
 end
 
-to drawCrystal :pos1 :action
+to drawGem :pos1 :action
   local "points
   if (last :pos1) <> :offScreenY [
     setturtle 0
@@ -420,10 +425,10 @@ to drawCrystal :pos1 :action
     repeat 6 [
       pu setpos :pos1 pd
       ifelse( or repcount = 1 repcount = 4 ) [
-        fd :crystalRad
+        fd :gemRad
         setitem repcount :points pos
       ][
-        fd :crystalRad * 0.75
+        fd :gemRad * 0.75
         setitem repcount :points pos
       ]
 
@@ -515,15 +520,15 @@ to drawShip :x :y :d :action
   ]
 
   if :action = "draw [
-    ; blink cyles through two seconds, then resets (there are 20 fps)
-    ifelse :blink = 40 [ 
+    ; blink cyles through two seconds, then resets
+    ifelse :blink = (40 * :glintSpeed) [ 
        make "blink 0 
     ][
        make "blink :blink + 1
     ]
   ]
 
-  setpc :pencolor 
+  setpc :pencolor
 
   ifelse :shipIsExploding [
 
@@ -600,8 +605,8 @@ to drawShip :x :y :d :action
     pu
 
     ; draw the first light, now that we won't draw over it
-    if (or :leaveStep < :numLeaveSteps * 0.6666 not :isLeaving) [ 
-       drawShip.light :light1Pos 
+    if (or :leaveStep < :numLeaveSteps * 0.5 not :isLeaving) [ 
+       drawShip.light :light1Pos
        drawShip.light :light2Pos
     ]
 
@@ -625,8 +630,6 @@ to drawShip :x :y :d :action
 
 end
 
-; Draws the ship's lights at :lightPos (or erases it, if the ship is being erased)
-; Assumes the pen is up.  Does not restore current position.
 to drawShip.light :lightPos
 
   setpos :lightPos
@@ -634,12 +637,12 @@ to drawShip.light :lightPos
 
   ifelse :action = "erase [
     ; we are erasing the ship, so we erase the lights, too
-    sbitblock round( 2.4*:scale ) round( 2.4*:scale )
+    sbitblock round( 2*:scale ) round( 2*:scale )
   ][
-    if (:blink > 19) [
+    if (:blink > (20 * :glintSpeed - 1) ) [
       ; the light is on--draw it
-      setfc [ 180 60 60 ]
-      sbitblock round( 2.4*:scale / (:leaveStep+1) ) round( 2.4*:scale / (:leaveStep+1) )
+      setfc [ 255 60 60 ] 
+      sbitblock round( 2*:scale / (:leaveStep+1) ) round( 2*:scale / (:leaveStep+1) )
       setfc [ 0 0 0 ]
     ]
   ]
@@ -703,7 +706,7 @@ to findXy :object
     ]
   ]
 
-  if :object = "crystal [ 
+  if :object = "gem [ 
     make "x round( (random round( :gameWidth - :shipRad*3.2 )) -
                    (:gameWidth - :shipRad*3.2) / 2 
                  )
@@ -712,28 +715,28 @@ to findXy :object
                  )
     setxy :x :y
 
-    ;make sure crystals don't overlap rocks
+    ;make sure gems don't overlap rocks
     repeat :numRocks [
-      if (distance( item repcount :rocks )) < ( :rockRad + :crystalRad + 2 ) [
+      if (distance( item repcount :rocks )) < ( :rockRad + :gemRad + 2 ) [
          make "findNew "true
       ]
     ]
 
-    ;make sure crystal is not on top of ship
-    if (distance[ 0 0 ]) < ( :crystalRad + :shipRad + 2 ) [ make "findNew "true ]
+    ;make sure gem is not on top of ship
+    if (distance[ 0 0 ]) < ( :gemRad + :shipRad + 2 ) [ make "findNew "true ]
 
-    ;make sure crystal is not too close to another
+    ;make sure gem is not too close to another
     if not :findNew [
       repeat (:loop1 - 1) [
-        if (distance( item repcount :crystals )) < ( :crystalRad*2 + 2 ) [ make "findNew "true ]
+        if (distance( item repcount :gems )) < ( :gemRad*2 + 2 ) [ make "findNew "true ]
       ]
     ]
 
-    ;make sure crystal is not so close to two rocks that the ship can't get to it
+    ;make sure gem is not so close to two rocks that the ship can't get to it
     if not :findNew [
       repeat :numRocks [
         if (distance( item repcount :rocks )) < ( :shipRad*2 + :rockRad + 2 ) [
-          make "y :y+.001   ;marks crystal as too close to a rock to glint
+          make "y :y+.001   ;marks gem as too close to a rock to glint (otherwise it would erase part of the rock)
           make "firstRock repcount
           repeat :numRocks [
             if repcount <> :firstRock [
@@ -749,7 +752,7 @@ to findXy :object
     make "rockCounter :rockCounter + 1
     if :rockCounter < 250 [ findXy "rock ]
   ]
-  if (and :object = "crystal  :findNew) [ findXy "crystal ]
+  if (and :object = "gem  :findNew) [ findXy "gem ]
 end
 
 to gameLoop
@@ -781,19 +784,19 @@ to glint :action
     seth 315
     make "glintSize 0
     make "speedUp random 3
-    ifelse :speedUp = 0 [ make "rotateSpeed 0 ] [ make "rotateSpeed (random 20) + 5 ]
+    ifelse :speedUp = 0 [ make "rotateSpeed 0 ] [ make "rotateSpeed (random (20 / :glintSpeed)) + 5 ]
   ]
 
-  if :glintStep = 20 [ drawCrystal (item :glintCrystal :crystals) "draw ]
+  if :glintStep = (20 * :glintSpeed) [ drawGem (item :glintGem :gems) "draw ]
   setturtle 3
   setpensize round :scale
   pu
-  setpos item :glintCrystal :crystals
+  setpos item :glintGem :gems
   seth 0
   run item :speedUp {
-     [ rt 45  fd :crystalRad * 0.75 lt 45  ]
-     [ lt 45  fd :crystalRad * 0.75 rt 45  ]
-     [ rt 135 fd :crystalRad * 0.75 lt 135 ]
+     [ rt 45  fd :gemRad * 0.75 lt 45  ]
+     [ lt 45  fd :gemRad * 0.75 rt 45  ]
+     [ rt 135 fd :gemRad * 0.75 lt 135 ]
   }@0
   pd
 
@@ -803,13 +806,13 @@ to glint :action
     rt :rotateSpeed * (:glintStep-1)
     repeat 4[ fd :glintSize bk :glintSize rt 90 ]
 
-    drawCrystal (item :glintCrystal :crystals) "draw
+    drawGem (item :glintGem :gems) "draw
   ]
-  if and :glintStep < 20 :action = "animate [
+  if and :glintStep < (20 * :glintSpeed) :action = "animate [
     setturtle 3
 
-    if :glintStep < 11 [ make "glintSize :scale*:glintStep ]
-    if :glintStep > 10 [ make "glintSize :scale*(21 - :glintStep)]
+    if :glintStep < (10 * :glintSpeed + 1) [ make "glintSize :scale*:glintStep/:glintSpeed ]
+    if :glintStep > (10 * :glintSpeed) [ make "glintSize :scale*( (20*:glintSpeed + 1) - :glintStep)/:glintSpeed]
 
     setpc[ 255 255 255 ]
     seth 0
@@ -821,39 +824,39 @@ to glint :action
 
 end
 
-to hitCrystalCheck
+to hitGemCheck
 
-  ; Checks all crystals, whether they are on the screen or not.
+  ; Checks all gems, whether they are on the screen or not.
   ; This keeps the speed more constant on slow computers.
-  repeat :maxCrystals [
-    make "x first (item repcount :crystals)
-    make "y last  (item repcount :crystals)
+  repeat :maxGems [
+    make "x first (item repcount :gems)
+    make "y last  (item repcount :gems)
     make "dist2 (power (:shipX - :x ) 2) + (power (:shipY - :y ) 2)
     ifelse :shipIsExploding [
-      if :dist2 < (:shipCrystal2 * 4) [
-        drawCrystal (item repcount :crystals) "draw
+      if :dist2 < (:shipGem2 * 4) [
+        drawGem (item repcount :gems) "draw
       ]
     ][
-      if :dist2 < :shipCrystal2 [
-        if and :glintStep < 20 :glintCrystal = repcount [
+      if :dist2 < :shipGem2 [
+        if and :glintStep < (20 * :glintSpeed) :glintGem = repcount [
           make "glintStep :glintStep + 1
           glint "erase
-          make "glintStep 20
+          make "glintStep (20 * :glintSpeed)
         ]
 
-        drawCrystal (item repcount :crystals) "erase
-        setitem repcount :crystals (list :offScreenX :offScreenY)
-        make "numCrystals :numCrystals - 1
-        if :numCrystals = 0 [
+        drawGem (item repcount :gems) "erase
+        setitem repcount :gems (list :offScreenX :offScreenY)
+        make "numGems :numGems - 1
+        if :numGems = 0 [
           make "bonus :timeLeft * 5
           make "isLeaving "true
           make "isThrustOn "true
           timerOff
         ]
-        make "score :score + :crystalWorth
+        make "score :score + :gemWorth
         make "textCount 1  printText
         make "textCount 2  printText
-        make "crystalWorth :crystalWorth + 5
+        make "gemWorth :gemWorth + 5
         make "shipGlow :shipFadeStart + 4
       ]
     ]
@@ -906,18 +909,18 @@ to initLevel
   make "quit "false
   make "reset "false
   make "timeLeft 40 + :level * 40
-  make "numCrystals :level * 2 + 2
+  make "numGems :level * 2 + 2
   make "numRocks :level * 2
   make "levelIsOver "false
   make "isBehindRock "false
-  make "crystalWorth 40
+  make "gemWorth 40
   setShipSize :normalShipRad
 end
 
 to initLife
   clearBox
   repeat :numRocks [ drawRock (item repcount :rocks) ]
-  repeat :maxCrystals [ drawCrystal (item repcount :crystals) "draw ]
+  repeat :maxGems [ drawGem (item repcount :gems) "draw ]
 
   make "key 0
   make "shipX 0
@@ -945,7 +948,7 @@ to initLife
   make "glintCystal 1
   make "glintStep 100
   make "rockDrawCount 1
-  make "crystalDrawCount 1
+  make "gemDrawCount 1
 end
 
 to initMain
@@ -958,7 +961,7 @@ to initMain
   make "displayHeight item 4 machine
   make "textLength 0
   make "numRocks 0
-  make "numCrystals 0
+  make "numGems 0
   make "score 0
   make "displayHighScores "false
   make "displayInstructions "false
@@ -966,18 +969,18 @@ to initMain
   make "pauseNow "false
   make "paused "false
   make "playing "false
-  make "glintCrystal 0
+  make "glintGem 0
   make "timer "false
   sbitblock 1 1
   make "ee1 and (item 2 time) = "Dec (and (item 3 time) > 22 (item 3 time) < 27)
   make "ee2 and (item 2 time) = "Mar (item 3 time) = 11
 
 ;CONSTANTS
+  ;These scales aren't all the same because I changed my mind on sizes a few times:
   make "open.scale 1.25 * :scale
   make "textScale (5/6) * :scale
-  if :scale = 1 [ make "textScale .8 ]
   make "numFrags 7   ;number of framents in an explosion
-  make "crystalRad 8 * :scale   ;crystals should be wider than maxSpeed
+  make "gemRad 8 * :scale   ;gems should be wider than maxSpeed
   make "textBarHeight 24 * :scale
   make "gameWidth :displayWidth
   make "gameHeight :displayHeight - :textBarHeight
@@ -987,29 +990,44 @@ to initMain
   setShipSize :normalShipRad
 
   ;it's faster if the math is done here, once, and saved in a variable
-  make "shipCrystal2 (:shipRad + :crystalRad)*(:shipRad + :crystalRad) ;distance squared
+  make "shipGem2 (:shipRad + :gemRad)*(:shipRad + :gemRad) ;distance squared
 
-  make "numExpSteps 30
-  make "numLeaveSteps 35
-  make "acceleration .4 * :scale
-  make "maxSpeed2 ( 12 * :scale ) * ( 12 * :scale )   ;maximum speed squared
-
-  make "shipFadeStart 20   ;steps until the glowing ship starts to fade again
-
-  make "maxCrystals :maxLevel * 2 + 2
+  make "maxGems :maxLevel * 2 + 2
   make "maxRocks :maxLevel * 2
   make "rocks (array :maxRocks 1)
   make "rockNeighbors (array :maxRocks 1)
-  make "crystals (array :maxCrystals 1)
+  make "gems (array :maxGems 1)
   make "offScreenX 0
   make "offScreenY :displayHeight / 2 + :rockRad * 4
 
-  repeat :maxCrystals [ setitem repcount :crystals ( list :offScreenX :offScreenY ) ]
+  repeat :maxGems [ setitem repcount :gems ( list :offScreenX :offScreenY ) ]
   repeat :maxRocks [ setitem repcount :rocks ( list :offScreenX :offScreenY ) ]
   repeat :maxRocks [ setitem repcount :rockNeighbors 0 ]
 
   make "Apos (list -175*:open.scale 105*:open.scale )
   make "Mpos (list -115*:open.scale 5*:open.scale )
+
+  ;The rest of the constants control speed and frames per second.
+  ;This first set is for modern computers and corresponds to 40 fps.
+  make "animationDelay 25   ;in milliseconds
+  make "turnSpeed 5
+  make "numExpSteps 60
+  make "numLeaveSteps 70
+  make "acceleration .1 * :scale
+  make "maxSpeed2 ( 6 * :scale ) * ( 6 * :scale )   ;maximum speed squared
+  make "shipFadeStart 40   ;steps until the glowing ship starts to fade again
+  make "glintSpeed 2   ;larger is slower--also controls speed of blinking spaceship lights
+
+  ;This set corresponds to 20 fps.
+  ;You can uncomment these to speed things up a little if you have a very old computer.
+  ;make "animationDelay 50
+  ;make "turnSpeed 10
+  ;make "numExpSteps 30
+  ;make "numLeaveSteps 35
+  ;make "acceleration .4 * :scale
+  ;make "maxSpeed2 ( 12 * :scale ) * ( 12 * :scale )   ;maximum speed squared
+  ;make "shipFadeStart 20   ;steps until the glowing ship starts to fade again
+  ;make "glintSpeed 1
 
 ;BITMAPS
   setturtle 0
@@ -1108,12 +1126,12 @@ to initObjects
   ][ :rockCounter = 250 ]  ;if rockCounter = 250, then it tried too long to find spots for new rocks,
                             ;so it will start placing them all over again
 
-  repeat :maxCrystals [ setitem repcount :crystals (list :offScreenX :offScreenY ) ]  ;clear the crystal list
+  repeat :maxGems [ setitem repcount :gems (list :offScreenX :offScreenY ) ]  ;clear the gem list
 
-  make "loop1 1  ;findXy needs this value--now it's the number of crystals so far
-  repeat :numCrystals [
-    findXy "crystal
-    setitem :loop1 :crystals ( list :x :y )
+  make "loop1 1  ;findXy needs this value--now it's the number of gems so far
+  repeat :numGems [
+    findXy "gem
+    setitem :loop1 :gems ( list :x :y )
     make "loop1 :loop1 + 1
   ]
 end
@@ -1575,12 +1593,12 @@ to playLoop
       make "leaveStep :leaveStep + 1  shrinkShip
       if :leaveStep = :numLeaveSteps [ make "levelIsOver "true ]
     ]
-    if (and not :levelIsOver   not :isBehindRock) [ drawShip :shipXInt :shipYInt :dr "draw ]
+    if (and not :levelIsOver   not :isBehindRock  not (:expStep = :numExpSteps)) [ drawShip :shipXInt :shipYInt :dr "draw ]
     make "oldIsBehindRock :isBehindRock
     make "isBehindRock "false
     setxy :shipX :shipY
     if not :isLeaving [
-      hitCrystalCheck
+      hitGemCheck
     ]
 
     hitRockCheck
@@ -1594,7 +1612,7 @@ to playLoop
       drawShip :shipXInt :shipYInt :dr "erase
     ]
 
-    ; the if keeps it from showing the taking of a life just yet
+    ;don't print if they're equal. keeps it from showing the removal of a ship just yet
     if :expStep < :numExpSteps [ printText ]
 
     if and :shipIsExploding  (:expStep = 0) [
@@ -1615,17 +1633,17 @@ to playLoop
       sbitblock (round :shipRad * 2.5 * :scale) (round :shipRad * 2.5 * :scale)
     ]
 
-    ifelse :glintStep < 20 [
+    ifelse :glintStep < (20 * :glintSpeed) [
       make "glintStep :glintStep + 1
       glint "animate
     ][
-      make "glint? random 100
+      make "glint? random 150
       if :glint? = 0 [ 
-        ;level*2+2 is the number of crystals the level started with
-        make "glintCrystal (random (:level*2+2) ) + 1
-        make "y (last (item :glintCrystal :crystals))
+        ;level*2+2 is the number of gems the level started with
+        make "glintGem (random (:level*2+2) ) + 1
+        make "y (last (item :glintGem :gems))
 
-        ; if round :y != :y, then crystal is close to a rock
+        ; if round :y != :y, then gem is close to a rock
         if and ((round :y) = :y) (:y <> :offScreenY) [ make "glintStep 0 ]
       ]
     ]
@@ -1644,9 +1662,7 @@ to playLoop
 
     make "shipXInt round :shipX
     make "shipYInt round :shipY
-
-    ; the "50" is the animation delay (20 fps)
-    while [ timemilli - :start < 50 ] []
+    while [ timemilli - :start < :animationDelay ] []
   ]
 
 end
@@ -1713,8 +1729,8 @@ end
 
 to processCommand
   if not :shipIsExploding [
-    if :turnLt   [ make "dr :dr - 10 ]
-    if :turnRt   [ make "dr :dr + 10 ]
+    if :turnLt   [ make "dr :dr - :turnSpeed ]
+    if :turnRt   [ make "dr :dr + :turnSpeed ]
     if :dr > 360 [ make "dr :dr - 360 ]
     if :dr < 0   [ make "dr :dr + 360 ]
 
@@ -1925,6 +1941,25 @@ to tbk :dist
   bk :dist*:textScale
 end
 
+to testt :t
+cs
+lt 90 fd 400 rt 90 fd 170
+make "textScale 1
+drawText :t "draw
+home 
+lt 90 fd 400 rt 90 fd 100
+make "textScale 2
+drawText :t "draw
+home 
+lt 90 fd 400 lt 90 fd 0
+make "textScale 3
+drawText :t "draw
+home
+lt 90 fd 400 lt 90 fd 125
+make "textScale 4
+drawText :t "draw
+end
+
 to tfd :dist
   fd :dist*:textScale
 end
@@ -1965,4 +2000,3 @@ to wrapCheck
 end
 
 make "startup [ rungame ]
-
