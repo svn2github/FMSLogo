@@ -18,7 +18,7 @@
 # * Banned words/phrases are not used
 # * Examples include at least one instance of the command that they document.
 # * There is no trailing whitespace.
-# * All library procedures are documented.
+# * All procedures are documented.
 #
 # Missing checks:
 # * Spelling is correct.
@@ -56,35 +56,40 @@ $AlternateSpellings{ARRAYP}         = ['ARRAY?'];
 $AlternateSpellings{BACKSLASHEDP}   = ['BACKSLASHED?'];
 $AlternateSpellings{BACK}           = ['BK'];
 $AlternateSpellings{BEFOREP}        = ['BEFORE?'];
-$AlternateSpellings{BUTFIRST}       = ['BF'];
 $AlternateSpellings{BUTFIRSTS}      = ['BFS'];
+$AlternateSpellings{BUTFIRST}       = ['BF'];
 $AlternateSpellings{BUTLAST}        = ['BL'];
 $AlternateSpellings{CLEARSCREEN}    = ['CS'];
 $AlternateSpellings{CLEARTEXT}      = ['CT'];
 $AlternateSpellings{CONTINUE}       = ['CO'];
 $AlternateSpellings{DEFINEDP}       = ['DEFINED?'];
+$AlternateSpellings{DIFFERENCE}     = ['-'];
 $AlternateSpellings{DOWNPITCH}      = ['DOWN'];
 $AlternateSpellings{EDIT}           = ['ED'];
 $AlternateSpellings{EMPTYP}         = ['EMPTY?'];
 $AlternateSpellings{EOFP}           = ['EOF?'];
-$AlternateSpellings{EQUALP}         = ['EQUAL?'];
+$AlternateSpellings{EQUALP}         = ['EQUAL?', '='];
 $AlternateSpellings{ERASEFILE}      = ['ERF'];
 $AlternateSpellings{ERASE}          = ['ER'];
 $AlternateSpellings{FLOODCOLOR}     = ['FLOODCOLOUR'];
 $AlternateSpellings{FORWARD}        = ['FD'];
 $AlternateSpellings{FULLSCREEN}     = ['FS'];
-$AlternateSpellings{GREATERP}       = ['GREATER?'];
+$AlternateSpellings{GREATEREQUALP}  = ['GREATEREQUAL?', '>='];
+$AlternateSpellings{GREATERP}       = ['GREATER?', '>'];
 $AlternateSpellings{HIDETURTLE}     = ['HT'];
 $AlternateSpellings{IFFALSE}        = ['IFF'];
 $AlternateSpellings{IFTRUE}         = ['IFT'];
 $AlternateSpellings{KEYP}           = ['KEY?'];
 $AlternateSpellings{LEFTROLL}       = ['LR'];
 $AlternateSpellings{LEFT}           = ['LT'];
-$AlternateSpellings{LESSP}          = ['LESS?'];
+$AlternateSpellings{LESSEQUALP}     = ['LESSEQUAL?', '<='];
+$AlternateSpellings{LESSP}          = ['LESS?', '<'];
 $AlternateSpellings{LISTP}          = ['LIST?'];
 $AlternateSpellings{MACROP}         = ['MACRO?'];
 $AlternateSpellings{MEMBERP}        = ['MEMBER?'];
+$AlternateSpellings{MINUS}          = ['--'];
 $AlternateSpellings{NAMEP}          = ['NAME?'];
+$AlternateSpellings{NOTEQUALP}      = ['NOTEQUAL?', '<>'];
 $AlternateSpellings{NUMBERP}        = ['NUMBER?'];
 $AlternateSpellings{OUTPUT}         = ['OP'];
 $AlternateSpellings{PENCOLOR}       = ['PENCOLOUR', 'PC'];
@@ -97,6 +102,8 @@ $AlternateSpellings{PENUP}          = ['PU'];
 $AlternateSpellings{PRIMITIVEP}     = ['PRIMITIVE?'];
 $AlternateSpellings{PRINT}          = ['PR'];
 $AlternateSpellings{PROCEDUREP}     = ['PROCEDURE?'];
+$AlternateSpellings{PRODUCT}        = ['*'];
+$AlternateSpellings{QUOTIENT}       = ['/'];
 $AlternateSpellings{READCHARS}      = ['RCS'];
 $AlternateSpellings{READCHAR}       = ['RC'];
 $AlternateSpellings{READLIST}       = ['RL'];
@@ -113,6 +120,7 @@ $AlternateSpellings{SHOWNP}         = ['SHOWN?'];
 $AlternateSpellings{SHOWTURTLE}     = ['ST'];
 $AlternateSpellings{SPLITSCREEN}    = ['SS'];
 $AlternateSpellings{SUBSTRINGP}     = ['SUBSTRING?'];
+$AlternateSpellings{SUM}            = ['+'];
 $AlternateSpellings{TEXTSCREEN}     = ['TS'];
 $AlternateSpellings{UPPITCH}        = ['UP'];
 $AlternateSpellings{WORDP}          = ['WORD?'];
@@ -552,8 +560,14 @@ $Exceptions{'multimedia-commands.xml'}{'allcaps'}{'LSB'}  = 1;
 $Exceptions{'multimedia-commands.xml'}{'allcaps'}{'MIDI'} = 1;
 $Exceptions{'multimedia-commands.xml'}{'allcaps'}{'MSB'}  = 1;
 
-$Exceptions{'translations-1032.xml'}{'logo'}                = 1;
-$Exceptions{'translations-1036.xml'}{'logo'}                = 1;
+$Exceptions{'tokenization.xml'}{'logo'} = 1;
+
+# translation tables are completely exempt
+$Exceptions{'translations-1032.xml'}  = 1;
+$Exceptions{'translations-1033.xml'}  = 1;
+$Exceptions{'translations-1034.xml'}  = 1;
+$Exceptions{'translations-1036.xml'}  = 1;
+$Exceptions{'translations.xml'}       = 1;
 
 $Exceptions{'windows-commands.xml'}{'allcaps'}{'GUI'}       = 1;
 $Exceptions{'windows-commands.xml'}{'allcaps'}{'SETUP'}     = 1;
@@ -583,7 +597,8 @@ sub FilenameToCommand($)
   my $filename = shift or die "not enough inputs";
 
   # check there is a special-case for this filename
-  if ($Exceptions{$filename} and $Exceptions{$filename}{propername}) {
+  if ($Exceptions{$filename} and
+      $Exceptions{$filename}{propername}) {
     return  $Exceptions{$filename}{propername};
   }
 
@@ -644,6 +659,11 @@ foreach my $filename (<command-*.xml>) {
 # Process each XML file
 #
 foreach my $filename (<*.xml>) {
+
+  if ($Exceptions{$filename} and $Exceptions{$filename} == 1) {
+    # the file is completely exempt from all checks
+    next;
+  }
 
   my $fh = new IO::File "< $filename" or die $!;
 
@@ -843,6 +863,24 @@ foreach my $filename (<../src/Logolib/*>) {
       if (not $Commands{$procedureName}) {
         LogWarning($filename, 0, "Library routine $procedureName is not documented");
       }
+    }
+  }
+}
+
+my $linenumber = 0;
+my $fh = new IO::File "< ../src/init.cpp" or die $!;
+foreach my $line (<$fh>) {
+  $linenumber++;
+
+  # look for the primitives table.  Each entry looks something like this
+  #
+  #    { "and", 0, 2, -1, PREFIX_PRIORITY, land, LOCALIZED_ALTERNATE_AND },
+  if ($line =~ m/^\s*{\s*"([^"]+)"\s*,.*},/) {
+    my $procedureName = uc($1);
+
+    # make sure that this primitive appears in the manual
+    if (not $Commands{$procedureName} and not $CanonicalSpelling{$procedureName}) {
+      LogWarning('init.cpp', $linenumber, "Primitive $procedureName is not documented");
     }
   }
 }
