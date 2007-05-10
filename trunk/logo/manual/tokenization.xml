@@ -5,7 +5,7 @@
 This chapter explains how the &GENERICNAME; language works.
 </para>
 
-<section>
+<section id="tokenization">
    <title>Tokenization</title>
    <indexterm><primary>tokenization</primary></indexterm>
 
@@ -89,7 +89,7 @@ This distinction is important only if you are building a &GENERICNAME; expressio
 
 </section>
 
-<section>
+<section id="procedure-loading">
 <title>Procedure Loading</title>
 <para>
 When &PRODUCTNAME; encounters a token that it neither a variable, a number, a word, an infix operator, a parenthesis, nor a bracket, then the token is interpreted as the name of a procedure.
