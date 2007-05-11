@@ -11,6 +11,23 @@ use utf8;
 use IO::File;
 use strict;
 
+# commands that are undocumented and shouldn't be put into
+# the translation tables.
+$main::UndocumentedCommands{buttonp}     = 1;
+$main::UndocumentedCommands{demo}        = 1;
+$main::UndocumentedCommands{ellispa2}    = 1;
+$main::UndocumentedCommands{filep}       = 1;
+$main::UndocumentedCommands{goto}        = 1;
+$main::UndocumentedCommands{maketurtle}  = 1;
+$main::UndocumentedCommands{mousecopy}   = 1;
+$main::UndocumentedCommands{nodes}       = 1;
+$main::UndocumentedCommands{proplistp}   = 1;
+$main::UndocumentedCommands{setclip}     = 1;
+$main::UndocumentedCommands{settextfont} = 1;
+$main::UndocumentedCommands{tag}         = 1;
+$main::UndocumentedCommands{textfont}    = 1;
+$main::UndocumentedCommands{tutor}       = 1;
+
 sub PrintShadowedProcedures($$$) {
   my $LocaleName         = shift or die "not enough arguments";
   my $English            = shift or die "not enough arguments";
@@ -195,12 +212,16 @@ sub MakeTranslationTables($$$) {
 
       $englishword or die "Found a localization for $symbolicname that is not present in the English localization";
 
-      unless (m/NOT_YET_LOCALIZED/) {
-        if (lc $englishword ne lc $localizedname) {
-          $englishtolocalized{$englishword} = () if not $englishtolocalized{$englishword};
-          push @{$englishtolocalized{$englishword}}, $localizedname;
+      # only add documented procedures to the translation tables.
+      if (not $main::UndocumentedCommands{lc $englishword}) {
 
-          $localizedtoenglish{$localizedname} = $englishword;
+        unless (m/NOT_YET_LOCALIZED/) {
+          if (lc $englishword ne lc $localizedname) {
+            $englishtolocalized{$englishword} = () if not $englishtolocalized{$englishword};
+            push @{$englishtolocalized{$englishword}}, $localizedname;
+
+            $localizedtoenglish{$localizedname} = $englishword;
+          }
         }
       }
     }

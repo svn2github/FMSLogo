@@ -219,10 +219,6 @@
        <entry>habilitarBoton</entry>
      </row>
      <row>
-       <entry><link linkend='command-buttonp'>buttonp</link></entry>
-       <entry>boton?</entry>
-     </row>
-     <row>
        <entry><link linkend='command-buttonupdate'>buttonupdate</link></entry>
        <entry>actualizaBoton</entry>
      </row>
@@ -683,10 +679,6 @@
        <entry>numeroaureo</entry>
      </row>
      <row>
-       <entry><link linkend='command-goto'>goto</link></entry>
-       <entry>saltoA</entry>
-     </row>
-     <row>
        <entry><link linkend='command-gprop'>gprop</link></entry>
        <entry>propiedad</entry>
      </row>
@@ -1103,10 +1095,6 @@
        <entry>ponFormaTortuga</entry>
      </row>
      <row>
-       <entry><link linkend='command-nodes'>nodes</link></entry>
-       <entry>nodos</entry>
-     </row>
-     <row>
        <entry><link linkend='command-nodribble'>nodribble</link></entry>
        <entry>noEco</entry>
      </row>
@@ -1423,10 +1411,6 @@
        <entry>lProp?</entry>
      </row>
      <row>
-       <entry><link linkend='command-proplistp'>proplistp</link></entry>
-       <entry>lProp?</entry>
-     </row>
-     <row>
        <entry><link linkend='command-pu'>pu</link></entry>
        <entry>sl</entry>
      </row>
@@ -1683,10 +1667,6 @@
        <entry>ponModobit</entry>
      </row>
      <row>
-       <entry><link linkend='command-setclip'>setclip</link></entry>
-       <entry>ponClip</entry>
-     </row>
-     <row>
        <entry><link linkend='command-setcursor'>setcursor</link></entry>
        <entry>ponCursor</entry>
      </row>
@@ -1941,10 +1921,6 @@
      <row>
        <entry><link linkend='command-sum'>sum</link></entry>
        <entry>adicion</entry>
-     </row>
-     <row>
-       <entry><link linkend='command-tag'>tag</link></entry>
-       <entry>etiqueta</entry>
      </row>
      <row>
        <entry><link linkend='command-test'>test</link></entry>
@@ -2932,10 +2908,6 @@
        <entry><link linkend='command-checkboxget'>checkboxget</link></entry>
      </row>
      <row>
-       <entry>etiqueta</entry>
-       <entry><link linkend='command-tag'>tag</link></entry>
-     </row>
-     <row>
        <entry>exclusivo</entry>
        <entry><link linkend='command-noyield'>noyield</link></entry>
      </row>
@@ -3484,10 +3456,6 @@
        <entry><link linkend='command-not'>not</link></entry>
      </row>
      <row>
-       <entry>nodos</entry>
-       <entry><link linkend='command-nodes'>nodes</link></entry>
-     </row>
-     <row>
        <entry>noEco</entry>
        <entry><link linkend='command-nodribble'>nodribble</link></entry>
      </row>
@@ -3630,10 +3598,6 @@
      <row>
        <entry>ponCL</entry>
        <entry><link linkend='command-setpc'>setpc</link></entry>
-     </row>
-     <row>
-       <entry>ponClip</entry>
-       <entry><link linkend='command-setclip'>setclip</link></entry>
      </row>
      <row>
        <entry>ponColorFondo</entry>
@@ -3974,10 +3938,6 @@
      <row>
        <entry>sacaalazar</entry>
        <entry><link linkend='command-pick'>pick</link></entry>
-     </row>
-     <row>
-       <entry>saltoA</entry>
-       <entry><link linkend='command-goto'>goto</link></entry>
      </row>
      <row>
        <entry>secent</entry>

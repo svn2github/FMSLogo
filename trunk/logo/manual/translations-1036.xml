@@ -279,10 +279,6 @@
        <entry>activebouton</entry>
      </row>
      <row>
-       <entry><link linkend='command-buttonp'>buttonp</link></entry>
-       <entry>boutonp</entry>
-     </row>
-     <row>
        <entry><link linkend='command-buttonupdate'>buttonupdate</link></entry>
        <entry>actualisebouton</entry>
      </row>
@@ -817,10 +813,6 @@
      <row>
        <entry><link linkend='command-gifsize'>gifsize</link></entry>
        <entry>taillegif</entry>
-     </row>
-     <row>
-       <entry><link linkend='command-goto'>goto</link></entry>
-       <entry>vavers</entry>
      </row>
      <row>
        <entry><link linkend='command-gprop'>gprop</link></entry>
@@ -1379,10 +1371,6 @@
        <entry>finforme</entry>
      </row>
      <row>
-       <entry><link linkend='command-nodes'>nodes</link></entry>
-       <entry>noeuds</entry>
-     </row>
-     <row>
        <entry><link linkend='command-nodribble'>nodribble</link></entry>
        <entry>fintranscription</entry>
      </row>
@@ -1741,10 +1729,6 @@
      <row>
        <entry><link linkend='command-proplistp'>proplist?</link></entry>
        <entry>lprop?</entry>
-     </row>
-     <row>
-       <entry><link linkend='command-proplistp'>proplistp</link></entry>
-       <entry>lpropp</entry>
      </row>
      <row>
        <entry><link linkend='command-pu'>pu</link></entry>
@@ -2383,10 +2367,6 @@
        <entry>somme</entry>
      </row>
      <row>
-       <entry><link linkend='command-tag'>tag</link></entry>
-       <entry>balise</entry>
-     </row>
-     <row>
        <entry><link linkend='command-test'>test</link></entry>
        <entry>teste</entry>
      </row>
@@ -2900,10 +2880,6 @@
        <entry><link linkend='command-pendownp'>pendownp</link></entry>
      </row>
      <row>
-       <entry>balise</entry>
-       <entry><link linkend='command-tag'>tag</link></entry>
-     </row>
-     <row>
        <entry>bc</entry>
        <entry><link linkend='command-pd'>pd</link></entry>
      </row>
@@ -2914,10 +2890,6 @@
      <row>
        <entry>bouton?</entry>
        <entry><link linkend='command-buttonp'>button?</link></entry>
-     </row>
-     <row>
-       <entry>boutonp</entry>
-       <entry><link linkend='command-buttonp'>buttonp</link></entry>
      </row>
      <row>
        <entry>boutonradio</entry>
@@ -4428,10 +4400,6 @@
        <entry><link linkend='command-proplistp'>proplist?</link></entry>
      </row>
      <row>
-       <entry>lpropp</entry>
-       <entry><link linkend='command-proplistp'>proplistp</link></entry>
-     </row>
-     <row>
        <entry>lprops</entry>
        <entry><link linkend='command-plists'>plists</link></entry>
      </row>
@@ -4562,10 +4530,6 @@
      <row>
        <entry>nettoie</entry>
        <entry><link linkend='command-clean'>clean</link></entry>
-     </row>
-     <row>
-       <entry>noeuds</entry>
-       <entry><link linkend='command-nodes'>nodes</link></entry>
      </row>
      <row>
        <entry>nom?</entry>
@@ -5214,10 +5178,6 @@
      <row>
        <entry>trouve</entry>
        <entry><link linkend='command-find'>find</link></entry>
-     </row>
-     <row>
-       <entry>vavers</entry>
-       <entry><link linkend='command-goto'>goto</link></entry>
      </row>
      <row>
        <entry>ve</entry>
