@@ -871,7 +871,6 @@
 #define LOCALIZED_ERROR_CANTREADFILE            "Impossible de lire le fichier  \"%s\" sur le disque" // 
 #define LOCALIZED_ERROR_CANTWRITEFILE           "Impossible d'écrire le fichier \"%s\" tsur le disque" // 
 
-#define LOCALIZED_SAVEISFOREXPERTSONLY          "Cette possibilité est réservée au mode expert (utiliser "LOCALIZED_UNSAVEDCHANGES_SAVEANDEXIT")"
 #define LOCALIZED_SAVETOWORKSPACE                "Sauve l'espace de travail"
 #define LOCALIZED_CONTENTSCHANGED                "Changement du contenu"
 #define LOCALIZED_SAVECHANGEDCONTENTSTOWORKSPACE "Le contenu a été modifié. Voulez-vous interpréter l'espace de travail?"

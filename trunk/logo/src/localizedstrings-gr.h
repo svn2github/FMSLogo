@@ -871,7 +871,6 @@
 #define LOCALIZED_ERROR_CANTREADFILE            "Αδυναμία ανάγνωσης του αρχείου \"%s\" από το δίσκο" // 
 #define LOCALIZED_ERROR_CANTWRITEFILE           "Αδυναμία εγγραφής του αρχείου \"%s\" στο δίσκο" // 
 
-#define LOCALIZED_SAVEISFOREXPERTSONLY          "Αυτή η δυνατότητα είναι μόνο για το expert mode (χρησιμοποιήστε το "LOCALIZED_UNSAVEDCHANGES_SAVEANDEXIT")" // 
 #define LOCALIZED_SAVETOWORKSPACE                "Αποθήκευση" // 
 #define LOCALIZED_CONTENTSCHANGED                "Τα περιεχόμενα άλλαξαν" // 
 #define LOCALIZED_SAVECHANGEDCONTENTSTOWORKSPACE "Τα περιεχόμενα έχουν αλλάξει.\nΘέλετε να τα αποθηκεύσετε;" // 

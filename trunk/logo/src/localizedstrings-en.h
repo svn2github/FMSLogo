@@ -871,7 +871,6 @@
 #define LOCALIZED_ERROR_CANTREADFILE            "Unable to read file \"%s\" from disk"
 #define LOCALIZED_ERROR_CANTWRITEFILE           "Unable to write file \"%s\" to disk"
 
-#define LOCALIZED_SAVEISFOREXPERTSONLY          "This feature is for expert mode only (use "LOCALIZED_UNSAVEDCHANGES_SAVEANDEXIT")"
 #define LOCALIZED_SAVETOWORKSPACE                "Save to Workspace"
 #define LOCALIZED_CONTENTSCHANGED                "Contents Changed"
 #define LOCALIZED_SAVECHANGEDCONTENTSTOWORKSPACE "The contents have changed.\nWould you like to save the changes to the workspace?"

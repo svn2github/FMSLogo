@@ -871,7 +871,6 @@
 #define LOCALIZED_ERROR_CANTREADFILE            "No puedo leer el archivo \"%s\" desde disco"
 #define LOCALIZED_ERROR_CANTWRITEFILE           "No puedo escribir el archivo \"%s\" a disco"
 
-#define LOCALIZED_SAVEISFOREXPERTSONLY          "Esta característica es sólo para modo experto (usa "LOCALIZED_UNSAVEDCHANGES_SAVEANDEXIT")"
 #define LOCALIZED_SAVETOWORKSPACE                "Guardar al área de trabajo"
 #define LOCALIZED_CONTENTSCHANGED                "El contenido cambió"
 #define LOCALIZED_SAVECHANGEDCONTENTSTOWORKSPACE "El contenido cambió.\n¿Deseas guardar los cambios al área de trabajo?"

@@ -231,16 +231,6 @@ void TMyFileWindow::CMSaveAndExit()
 
 void TMyFileWindow::CMSaveToWorkspace()
    {
-   if (!bExpert)
-      {
-      // Notify the user that this feature is only for experts
-      MainWindowx->CommandWindow->MessageBox(
-         LOCALIZED_SAVEISFOREXPERTSONLY,
-         LOCALIZED_SAVETOWORKSPACE,
-         MB_OK);
-      return;
-      }
-
    Save();
 
    if (args_list != NULL)
@@ -256,7 +246,7 @@ void TMyFileWindow::CMSaveToWorkspace()
          {
          // notify the user that:
          // 1) The changes in the editor failed to load
-         // 2) The cursor is positioned just after the last 
+         // 2) The cursor is positioned just after the last
          //    successful definition
          MainWindowx->CommandWindow->MessageBox(
             LOCALIZED_CURSORISATLASTGOODDEFINITION,
@@ -421,7 +411,14 @@ void TMyFileWindow::SetupWindow()
    //
    // Construct the main menu
    //
-   static const MENUITEM fileMenuItems[] = {
+   static const MENUITEM defaultFileMenuItems[] = {
+      {LOCALIZED_EDITOR_FILE_SAVEANDEXIT,     CM_FILESAVEANDEXIT},
+      {LOCALIZED_EDITOR_FILE_PRINT,           CM_FILEPRINT},
+      {0},
+      {LOCALIZED_EDITOR_FILE_EXIT,            CM_EDALLEXIT},
+   };
+
+   static const MENUITEM expertFileMenuItems[] = {
       {LOCALIZED_EDITOR_FILE_SAVEANDEXIT,     CM_FILESAVEANDEXIT},
       {LOCALIZED_EDITOR_FILE_SAVETOWORKSPACE, CM_FILESAVETOWORKSPACE},
       {LOCALIZED_EDITOR_FILE_PRINT,           CM_FILEPRINT},
@@ -457,8 +454,25 @@ void TMyFileWindow::SetupWindow()
       {LOCALIZED_EDITOR_HELP_TOPICSEARCH, CM_HELPEDIT_TOPIC},
    };
 
+
    TMenu mainMenu(CreateMenu());
-   AppendPopupMenu(mainMenu, LOCALIZED_EDITOR_FILE,   fileMenuItems,   ARRAYSIZE(fileMenuItems));
+
+   if (bExpert)
+      {
+      AppendPopupMenu(
+         mainMenu, 
+         LOCALIZED_EDITOR_FILE,
+         expertFileMenuItems,
+         ARRAYSIZE(expertFileMenuItems));
+      }
+   else
+      {
+      AppendPopupMenu(
+         mainMenu, 
+         LOCALIZED_EDITOR_FILE,
+         defaultFileMenuItems,
+         ARRAYSIZE(defaultFileMenuItems));
+      }
    AppendPopupMenu(mainMenu, LOCALIZED_EDITOR_EDIT,   editMenuItems,   ARRAYSIZE(editMenuItems));
    AppendPopupMenu(mainMenu, LOCALIZED_EDITOR_SEARCH, searchMenuItems, ARRAYSIZE(searchMenuItems));
    AppendPopupMenu(mainMenu, LOCALIZED_EDITOR_SET,    setMenuItems,    ARRAYSIZE(setMenuItems));
