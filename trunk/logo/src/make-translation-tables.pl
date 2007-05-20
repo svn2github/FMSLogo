@@ -21,7 +21,6 @@ $main::UndocumentedCommands{goto}        = 1;
 $main::UndocumentedCommands{maketurtle}  = 1;
 $main::UndocumentedCommands{mousecopy}   = 1;
 $main::UndocumentedCommands{nodes}       = 1;
-$main::UndocumentedCommands{proplistp}   = 1;
 $main::UndocumentedCommands{setclip}     = 1;
 $main::UndocumentedCommands{settextfont} = 1;
 $main::UndocumentedCommands{tag}         = 1;

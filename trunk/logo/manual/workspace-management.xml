@@ -63,6 +63,7 @@ Names of individual properties are case-sensitive or case-insensitive depending 
        &command-definedp;
        &command-namep;
        &command-macrop;
+       &command-proplistp;
     </section>
 
    <section id="workspace-queries">

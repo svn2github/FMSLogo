@@ -1411,6 +1411,10 @@
        <entry>lProp?</entry>
      </row>
      <row>
+       <entry><link linkend='command-proplistp'>proplistp</link></entry>
+       <entry>lProp?</entry>
+     </row>
+     <row>
        <entry><link linkend='command-pu'>pu</link></entry>
        <entry>sl</entry>
      </row>

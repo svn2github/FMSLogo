@@ -103,6 +103,7 @@ $AlternateSpellings{PRIMITIVEP}     = ['PRIMITIVE?'];
 $AlternateSpellings{PRINT}          = ['PR'];
 $AlternateSpellings{PROCEDUREP}     = ['PROCEDURE?'];
 $AlternateSpellings{PRODUCT}        = ['*'];
+$AlternateSpellings{PROPLISTP}      = ['PROPLIST?'];
 $AlternateSpellings{QUOTIENT}       = ['/'];
 $AlternateSpellings{READCHARS}      = ['RCS'];
 $AlternateSpellings{READCHAR}       = ['RC'];

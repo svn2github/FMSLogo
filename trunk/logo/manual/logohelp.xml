@@ -341,6 +341,7 @@
   <!ENTITY command-definedp       SYSTEM "command-definedp.xml">
   <!ENTITY command-namep          SYSTEM "command-namep.xml">
   <!ENTITY command-macrop         SYSTEM "command-macrop.xml">
+  <!ENTITY command-proplistp      SYSTEM "command-proplistp.xml">
 
   <!ENTITY command-contents       SYSTEM "command-contents.xml">
   <!ENTITY command-procedures     SYSTEM "command-procedures.xml">

@@ -1731,6 +1731,10 @@
        <entry>lprop?</entry>
      </row>
      <row>
+       <entry><link linkend='command-proplistp'>proplistp</link></entry>
+       <entry>lpropp</entry>
+     </row>
+     <row>
        <entry><link linkend='command-pu'>pu</link></entry>
        <entry>lc</entry>
      </row>
@@ -4398,6 +4402,10 @@
      <row>
        <entry>lprop?</entry>
        <entry><link linkend='command-proplistp'>proplist?</link></entry>
+     </row>
+     <row>
+       <entry>lpropp</entry>
+       <entry><link linkend='command-proplistp'>proplistp</link></entry>
      </row>
      <row>
        <entry>lprops</entry>
