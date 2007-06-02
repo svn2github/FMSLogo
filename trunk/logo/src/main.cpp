@@ -931,46 +931,22 @@ WinMain(
    }
 
 static
-void 
-transline3d(
-   const LOGPEN &logPen, 
-   long          modex, 
-   const Point & from,
-   const Point & to
+void
+transline_helper(
+   const LOGPEN &logPen,
+   int           modex,
+   int           FromX,
+   int           FromY,
+   int           ToX,
+   int           ToY
    )
    {
-   VECTOR from3d;
-   from3d.x = from.x / WorldWidth;
-   from3d.y = from.y / WorldHeight;
-   from3d.z = from.z / WorldDepth;
 
-   VECTOR to3d;
-   to3d.x = to.x / WorldWidth;
-   to3d.y = to.y / WorldHeight;
-   to3d.z = to.z / WorldDepth;
-
-   if (bPolyFlag)
-      {
-      if (!ThePolygon ||
-          (fabs(ThePolygon->Vertex.x - to3d.x) > FLONUM_EPSILON) ||
-          (fabs(ThePolygon->Vertex.y - to3d.y) > FLONUM_EPSILON) ||
-          (fabs(ThePolygon->Vertex.z - to3d.z) > FLONUM_EPSILON))
-         {
-         ThreeD.AddPoint(&ThePolygon, to3d);
-         }
-      }
-
-   POINT from2d;
-   POINT to2d;
-   if (!ThreeD.TransformSegment(from3d, to3d, from2d, to2d))
-      {
-      return;
-      }
-
-   long iFromx =  from2d.x + xoffset;
-   long iFromy = -from2d.y + yoffset;
-   long iTox   =  to2d.x   + xoffset;
-   long iToy   = -to2d.y   + yoffset;
+   // Convert from Cartesian coordinates to logical window coordinates.
+   FromX =  FromX + xoffset;
+   FromY = -FromY + yoffset;
+   ToX   =  ToX   + xoffset;
+   ToY   = -ToY   + yoffset;
 
    HPEN hPen = CreatePenIndirect(&logPen);
 
@@ -988,94 +964,22 @@ transline3d(
 
    HPEN oldPen = (HPEN) SelectObject(MemDC, hPen);
 
-   MoveToEx(MemDC, iFromx, iFromy, 0);
-   LineTo(MemDC, iTox, iToy);
+   MoveToEx(MemDC, FromX, FromY, 0);
+   LineTo(MemDC, ToX, ToY);
 
-   if (EnablePalette)
+   // HACK:
+   // LineTo() API does not draw a pixel in the location where it moves to.
+   // As a result, moving forward changing colors, then moving backward leaves
+   // a dot of the previous color at the location where the direction changed.
+   // To address this, we SetPixel to color the end point.
+   //
+   // This isn't necessary when the pensize != 1.
+   // This would be bad to do in penreverse mode.
+   //
+   if (g_PenWidth < 2 && current_write_mode != XOR_PUT)
       {
-      SelectPalette(MemDC, OldPalette, FALSE);
+      SetPixel(MemDC, ToX, ToY, logPen.lopnColor);
       }
-
-   // restore the pen and bitmap
-   SelectObject(MemDC, oldPen);
-   SelectObject(MemDC, oldBitmap);
-   DeleteDC(MemDC);
-
-   // screen
-
-   //   ::SetCapture(MainHWindow);
-   SetROP2(ScreenDC, modex);
-
-   if (EnablePalette)
-      {
-      OldPalette = SelectPalette(ScreenDC, ThePalette, FALSE);
-      RealizePalette(ScreenDC);
-      }
-
-   oldPen = (HPEN) SelectObject(ScreenDC, hPen);
-
-   if (zoom_flag)
-      {
-      MainWindowx->ScreenWindow->Invalidate(false);
-      }
-   else
-      {
-      MoveToEx(
-         ScreenDC,
-         iFromx - MainWindowx->ScreenWindow->Scroller->XPos,
-         iFromy - MainWindowx->ScreenWindow->Scroller->YPos,
-         0);
-
-      LineTo(
-         ScreenDC,
-         iTox - MainWindowx->ScreenWindow->Scroller->XPos,
-         iToy - MainWindowx->ScreenWindow->Scroller->YPos);
-      }
-
-   if (EnablePalette)
-      {
-      SelectPalette(ScreenDC, OldPalette, FALSE);
-      }
-
-   SelectObject(ScreenDC, oldPen);
-
-   DeleteObject(hPen);
-   ReleaseDC(MainWindowx->ScreenWindow->HWindow, ScreenDC);
-   }
-
-static
-void 
-transline(
-   const LOGPEN &logPen, 
-   long          modex, 
-   const Point & from,
-   const Point & to
-   )
-   {
-   long iFromx =  g_round(from.x) + xoffset;
-   long iFromy = -g_round(from.y) + yoffset;
-   long iTox   =  g_round(to.x)   + xoffset;
-   long iToy   = -g_round(to.y)   + yoffset;
-
-   HPEN hPen = CreatePenIndirect(&logPen);
-
-   HDC ScreenDC = GetDC(MainWindowx->ScreenWindow->HWindow);
-   HDC MemDC = CreateCompatibleDC(ScreenDC);
-
-   HBITMAP oldBitmap = (HBITMAP) SelectObject(MemDC, MemoryBitMap);
-   if (EnablePalette)
-      {
-      OldPalette = SelectPalette(MemDC, ThePalette, FALSE);
-      RealizePalette(MemDC);
-      }
-
-   SetROP2(MemDC, modex);
-
-   HPEN oldPen = (HPEN) SelectObject(MemDC, hPen);
-
-   MoveToEx(MemDC, iFromx, iFromy, 0);
-
-   LineTo(MemDC, iTox, iToy);
 
    if (EnablePalette)
       {
@@ -1106,16 +1010,19 @@ transline(
       }
    else
       {
-      MoveToEx(
-         ScreenDC,
-         iFromx - MainWindowx->ScreenWindow->Scroller->XPos,
-         iFromy - MainWindowx->ScreenWindow->Scroller->YPos,
-         0);
-      
-      LineTo(
-         ScreenDC,
-         iTox   - MainWindowx->ScreenWindow->Scroller->XPos,
-         iToy   - MainWindowx->ScreenWindow->Scroller->YPos);
+      UINT screenFromX = FromX - MainWindowx->ScreenWindow->Scroller->XPos;
+      UINT screenFromY = FromY - MainWindowx->ScreenWindow->Scroller->YPos;
+
+      UINT screenToX   = ToX   - MainWindowx->ScreenWindow->Scroller->XPos;
+      UINT screenToY   = ToY   - MainWindowx->ScreenWindow->Scroller->YPos;
+
+      MoveToEx(ScreenDC, screenFromX, screenFromY, 0);
+      LineTo(ScreenDC, screenToX, screenToY);
+
+      if (g_PenWidth < 2 && current_write_mode != XOR_PUT)
+         {
+         SetPixel(ScreenDC, screenFromX, screenFromY, logPen.lopnColor);
+         }
       }
 
    if (EnablePalette)
@@ -1127,9 +1034,79 @@ transline(
    SelectObject(ScreenDC, oldPen);
 
    DeleteObject(hPen);
-   //   ReleaseCapture();
    ReleaseDC(MainWindowx->ScreenWindow->HWindow, ScreenDC);
    }
+
+
+static
+void 
+transline3d(
+   const LOGPEN &logPen, 
+   long          modex, 
+   const Point & from,
+   const Point & to
+   )
+   {
+   // First, project the point from world coordinates to
+   // window coordinates.
+   VECTOR from3d;
+   from3d.x = from.x / WorldWidth;
+   from3d.y = from.y / WorldHeight;
+   from3d.z = from.z / WorldDepth;
+
+   VECTOR to3d;
+   to3d.x = to.x / WorldWidth;
+   to3d.y = to.y / WorldHeight;
+   to3d.z = to.z / WorldDepth;
+
+   if (bPolyFlag)
+      {
+      if (!ThePolygon ||
+          (fabs(ThePolygon->Vertex.x - to3d.x) > FLONUM_EPSILON) ||
+          (fabs(ThePolygon->Vertex.y - to3d.y) > FLONUM_EPSILON) ||
+          (fabs(ThePolygon->Vertex.z - to3d.z) > FLONUM_EPSILON))
+         {
+         ThreeD.AddPoint(&ThePolygon, to3d);
+         }
+      }
+
+   POINT from2d;
+   POINT to2d;
+   if (!ThreeD.TransformSegment(from3d, to3d, from2d, to2d))
+      {
+      return;
+      }
+
+   // Now that we have projected this line into the
+   // window coordinates, we can call the 2D version to
+   // actually draw the line.
+   transline_helper(
+      logPen, 
+      modex,
+      from2d.x,
+      from2d.y,
+      to2d.x,
+      to2d.y);
+   }
+
+static
+void 
+transline(
+   const LOGPEN &logPen, 
+   long          modex, 
+   const Point & from,
+   const Point & to
+   )
+   {
+   transline_helper(
+      logPen,
+      modex,
+      g_round(from.x),
+      g_round(from.y),
+      g_round(to.x),
+      g_round(to.y));
+   }
+
 
 void ibmturt(bool erase)
    {
