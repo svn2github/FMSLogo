@@ -27,6 +27,7 @@ II. New features/bugs fixed:
       the line you just drew.
     o Implement request #1700894; "File - Save to Workspace" no longer appears
       in the editor's menu in non-expert mode.
+    o Implement request #1736883; Updated ` (backtick) to latest from UCBLogo.
     o Minor updates to the manual.
 
   For a complete history of changes across all versions of FMSLogo, see
