@@ -118,6 +118,7 @@ LOAD "smallwindowhang.lgo
 LOAD "mdarray.lgo
 LOAD "foreach.lgo
 LOAD "bye.lgo
+LOAD "backtick.lgo
 
 TO TESTALL
 
@@ -223,6 +224,7 @@ TO TESTALL
   LOGOVERSIONTEST     ; from logoversion.lgo
   REFRESHTEST         ; from refresh.lgo
   QUOTEDTEST          ; from quoted.lgo
+  BACKTICKTEST        ; from backtick.lgo
   MESSAGEBOXTEST      ; from messagebox.lgo
   YESNOBOXTEST        ; from yesnobox.lgo
   SELECTBOXTEST       ; from selectbox.lgo
