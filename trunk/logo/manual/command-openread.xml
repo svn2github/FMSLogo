@@ -51,10 +51,14 @@ REPEAT 2 [SHOW READLIST]</userinput>
 <userinput>SETREAD []
 CLOSE "dummy.fil</userinput>
 </programlisting>
-
 </listitem>
 </varlistentry>
 
-</variablelist>
+<varlistentry><term>See Also</term>
+<listitem><simplelist>
+<member><link linkend="command-close">CLOSE</link></member>
+</simplelist></listitem>
+</varlistentry>
 
+</variablelist>
 </section>

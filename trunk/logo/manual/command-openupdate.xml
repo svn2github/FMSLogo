@@ -1,5 +1,5 @@
 <section id="command-openupdate">
-    <title>OPENUPDATE</title>
+<title>OPENUPDATE</title>
 <indexterm><primary>OPENUPDATE</primary></indexterm>
 
 <variablelist>
@@ -39,7 +39,7 @@ That is, no end-of-line sequence conversion will be performed.
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>OPENWRITE "dummy.fil
+<programlisting><userinput>OPENWRITE "dummy.fil
 SETWRITE "dummy.fil
 PRINT "Hello
 PRINT [Good Bye]
@@ -65,6 +65,12 @@ REPEAT 3 [SHOW READLIST]</userinput>
 </listitem>
 </varlistentry>
 
-</variablelist>
 
+<varlistentry><term>See Also</term>
+<listitem><simplelist>
+<member><link linkend="command-close">CLOSE</link></member>
+</simplelist></listitem>
+</varlistentry>
+
+</variablelist>
 </section>
