@@ -277,6 +277,18 @@ void reset_args(NODE *old_stack)
       }
    }
 
+
+static
+void trace_input(NODE * UnquotedArgument)
+   {
+   // trace a NODE* as if it were an input to a function
+   NODE * quoted_arg = vref(maybe_quote(UnquotedArgument));
+   print_node(g_Writer.GetStream(), quoted_arg);
+   deref(quoted_arg);
+
+   print_space(g_Writer.GetStream());
+   }
+
 // An explicit control evaluator, taken almost directly from SICP, section
 // 5.2.  list is a flat list of expressions to evaluate.  where is a label to
 // begin at.  Return value depends on where.
@@ -528,7 +540,7 @@ NODE *evaluator(NODE *list, enum labels where)
    /* primitive_apply */
    if (NOT_THROWING)
       {
-      // REVSIST: Trace primitives like UCBLogo does?
+      // REVISIT: Trace primitives like UCBLogo does?
       if (!IsTimeToExit)
          {
          assign(val, ((logofunc) * getprimfun(proc)) (argl));
@@ -590,11 +602,7 @@ NODE *evaluator(NODE *list, enum labels where)
          if (tracing || traceflag)
             {
             // trace the input
-            NODE * quoted_arg = vref(maybe_quote(arg));
-            print_node(g_Writer.GetStream(), quoted_arg);
-            deref(quoted_arg);
-
-            print_space(g_Writer.GetStream());
+            trace_input(arg);
             }
          }
       else
@@ -627,7 +635,21 @@ NODE *evaluator(NODE *list, enum labels where)
             // parm is a "rest" input.
             // Bind the rest of the argument list to the formal parameter object
             setvalnode__caseobj(car(parm), argl);
-            // BUG: should this be traced?
+
+            // trace the "rest" inputs, if necessary
+            if (argl != NIL)
+               {
+               if (tracing || traceflag)
+                  {
+                  for (NODE * nextinput = cdr(argl);
+                       nextinput != NIL;
+                       nextinput = cdr(nextinput))
+                     {
+                     trace_input(car(nextinput));
+                     }
+                  }
+               } 
+
             assign(argl, NIL);
 
             // Set formals to NIL so that it doesn't get deref'ed in restore2()

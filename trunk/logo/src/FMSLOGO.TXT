@@ -21,6 +21,7 @@ I. Kit Description/Location (http://sourceforge.net/projects/fmslogo)
 II. New features/bugs fixed:
 
   * Added for 6.15.0
+    o Fix bug #1732803; TRACE now properly traces "rest" inputs.
     o Fix bug #1602928; Turtle now draw a dot at both endpoints of a movement,
       instead of just at one of them.  This fixes little dots that used to
       get left behind when changing the pen color and moving backward to erase
