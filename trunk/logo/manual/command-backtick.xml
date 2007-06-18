@@ -30,7 +30,7 @@ This is called splicing.
 
 <para>
 A word starting with <userinput>,</userinput> or <userinput>,@</userinput> is treated as if the rest of the were were a one-word list.
-For example, <userinput>,:FOO</userinput> is equiavlent to <userinput>,[:FOO]</userinput>.
+For example, <userinput>,:foo</userinput> is equiavlent to <userinput>,[:foo]</userinput>.
 </para>
 
 <para>
@@ -44,7 +44,7 @@ If what comes after the comma is a list, only the first word in the list is used
 </para>
 
 <para>
-Backquotes can be nested. 
+Backquotes can be nested.
 Substitution is only done for commas when they appear at the same depth as the backquote in which they are found.
 See the second and third example below.
 </para>
