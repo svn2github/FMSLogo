@@ -5,6 +5,13 @@ to aaa
 ; Regular expression evaluator. Similar to Regular expressions in Unix
 ; Utilities
 ;
+; This program is the companion code listing to Chapter 7 of
+; "Computer Science Logo Style Volume 2: Advanced Techniques", by
+; Brian Harvey.
+;
+; See http://www.cs.berkeley.edu/~bh/v2ch7/match.html for an online
+; version of this chapter.
+;
 ; To run:
 ;
 ; Load "match.lgo
@@ -13,9 +20,10 @@ to aaa
 ;
 ; "pattern" must be one of ? # ! & @ ^
 ;
+;
 ; Example:
 ;
-SHOW MATCH [?b?] [abc] ; Outputs "True
+SHOW MATCH [#food is for #animal] [Hay is for Horses] ; outputs "true
 ;
 end
 
