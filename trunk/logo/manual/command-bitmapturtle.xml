@@ -15,7 +15,13 @@
 
 <para>
 Maps the current turtle (See <link linkend="command-setturtle">SETTURTLE</link>) to the corresponding bitmap buffer (See <link linkend="command-bitcut">BITCUT</link>).
-Since bitmap buffer 0 is mapped to the clipboard, turtle 0 (if mapped to a bitmap with this command) will be mapped to the clipboard.
+BITMAPTURTLE can map turtle 0 to bitmap 0, turtle 1 to bitmap 1, turtle 2 to bitmap 2, etc., on a per-turtle basis.
+Note that there is no way to map a turtle to any bitmap index other than the turtle's index.
+For example, turtle 2 can only be mapped to bitmap 2, not bitmap 1 or bitmap 3.
+</para>
+
+<para>
+Because bitmap 0 is always mapped to the clipboard, BITMAPTURTLE can only map turtle 0 to the clipboard.
 That is, if you select turtle 0 and issue BITMAPTURTLE then the turtle will be whatever is in the clipboard and will be updated if the clipboard changes.
 Note the clipboard must have a bitmap in it (or &PRODUCTNAME; will complain).
 </para>
