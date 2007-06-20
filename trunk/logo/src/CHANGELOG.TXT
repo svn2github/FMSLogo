@@ -1,5 +1,16 @@
 This file contains the changes that were made in each revision of FMSLogo.
 
+* Added for 6.15.0
+  o Fix bug #1732803; TRACE now properly traces "rest" inputs.
+  o Fix bug #1602928; Turtle now draw a dot at both endpoints of a movement,
+    instead of just at one of them.  This fixes little dots that used to
+    get left behind when changing the pen color and moving backward to erase
+    the line you just drew.
+  o Implement request #1700894; "File - Save to Workspace" no longer appears
+    in the editor's menu in non-expert mode.
+  o Implement request #1736883; Updated ` (backtick) to latest from UCBLogo.
+  o Minor updates to the manual.
+
 Added for 6.14.0
 o Fix bug #1688926; '-1e-16 < 0' once again outputs true.
 o Fix bug #1674152; Make, Pprop, and Plist are now properly localized
