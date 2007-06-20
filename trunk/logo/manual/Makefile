@@ -82,6 +82,7 @@ clean :
 	$(RM) $(wildcard *.chw)
 	$(RM) $(wildcard *.chm)
 	$(RM) $(wildcard *~)
+	$(RM) $(wildcard *.bak)
 
 test :
 	perl -W check-manual.pl
