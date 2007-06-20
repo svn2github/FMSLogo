@@ -15,7 +15,7 @@
 <para>
 Removes the property named <parameter>propertyname</parameter> from the property list named <parameter>plistname</parameter>,
 if it exists.
-If REMPROP removes the final property from a property list, then the property list may be buried.
+If REMPROP removes the final property from a property list, then the property list may be deleted or buried.
 </para>
 <para>
 Both <parameter>plistname</parameter> and <parameter>propertyname</parameter> must be words.
