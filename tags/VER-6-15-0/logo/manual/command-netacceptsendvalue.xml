@@ -1,0 +1,66 @@
+<section id="command-netacceptsendvalue">
+<title>NETACCEPTSENDVALUE</title>
+<indexterm><primary>NETACCEPTSENDVALUE</primary></indexterm>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>NETACCEPTSENDVALUE</command> <parameter>data</parameter></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+Sends <parameter>data</parameter> out the accept socket.
+</para>
+
+<para>
+NETACCEPTSENDVALUE outputs TRUE if <parameter>data</parameter> were successfully queued to be sent.
+Otherwise, it outputs FALSE (meaning that it's not ready to send).
+If it outputs FALSE, you must wait until the <parameter>sendready</parameter> input list of <link linkend="command-netaccepton">NETACCEPTON</link> is run before sending on it again.
+</para>
+
+<para>
+The <parameter>data</parameter> input is a list.  It contains the data you wish to send over the network.
+</para>
+
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Example</term>
+<listitem>
+<programlisting><userinput>; the acceptor sends data to whomever connected
+
+NETSTARTUP ; Start up the network
+
+; Wait for someone to connect to you on socket 5124
+SHOW NETACCEPTON 5124 [PRINT [Ok to Send Again]] []</userinput>
+true
+
+<userinput>; Connect to MyMachineName on socket 5124 (myself)
+SHOW NETCONNECTON "MyMachineName 5124 [] [PRINT NETCONNECTRECEIVEVALUE]</userinput>
+true
+
+<userinput>WAIT 100 ; Wait little for connection to establish</userinput>
+Ok to Send Again
+Ok to Send Again
+Ok to Send Again
+
+<userinput>SHOW NETACCEPTSENDVALUE [Who are you that called me] ; Send some data</userinput>
+true
+
+<userinput>WAIT 100 ; Wait a little before we shut things down</userinput>
+Who are you that called me
+
+<userinput>NETCONNECTOFF
+NETACCEPTOFF
+NETSHUTDOWN</userinput>
+</programlisting>
+</listitem>
+</varlistentry>
+
+
+</variablelist>
+</section>

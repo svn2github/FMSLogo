@@ -1,0 +1,80 @@
+LOAD "testlib.lgo
+
+TO PRINTTEST.PERFORMANCE
+
+   ; bug #1543643: FMSLogo hangs when printing a long line.
+
+   ; ISEQ is not part of the repro, per-se.
+   ; If there is a faster way to generate a long list, we can use that.
+   LOCALMAKE "longlist ISEQ 1 100000
+
+   ; print to the commander's recall box
+   LOCALMAKE "previouswriter WRITER
+   SETWRITE []
+
+   TRACEINSTRUCTION [ PRINT :longlist ]
+
+   SETWRITE :previouswriter
+
+END
+
+TO PRINTTEST.SMOKETEST
+
+   RUNPRINTTEST [PRINT "ABC      ] "ABC
+   RUNPRINTTEST [PRINT "abc      ] "abc
+   RUNPRINTTEST [PRINT "|a b c|  ] "|a b c|
+
+   RUNPRINTTEST [PRINT 123       ] 123
+   RUNPRINTTEST [PRINT 12.3      ] 12.3
+   RUNPRINTTEST [PRINT 12.0      ] 12
+   RUNPRINTTEST [PRINT 1e5       ] 100000
+
+   RUNPRINTTEST [PRINT [a b c]       ] "|a b c|
+   RUNPRINTTEST [PRINT []            ] "||
+   RUNPRINTTEST [PRINT [[a] b [c]]   ] "|[a] b [c]|
+
+   RUNPRINTTEST [PRINT {1 2}@1   ] "|{1 2}|
+   RUNPRINTTEST [PRINT {1 2}@0   ] "|{1 2}|
+   RUNPRINTTEST [PRINT {1 2}@-10 ] "|{1 2}|
+   RUNPRINTTEST [PRINT {}        ] "|{}|
+
+   ; multiple inputs
+   RUNPRINTTEST [(PRINT) ]             "||
+   RUNPRINTTEST [(PRINT [a] [b] [c]) ] "|a b c|
+   RUNPRINTTEST [(PRINT [a] {b} "c)  ] "|a {b} c|
+
+END
+
+TO PRINTTEST.DEEPLYNESTEDLIST
+
+   LOCALMAKE "deeplist []
+   REPEAT 10000 [ MAKE "deeplist (LIST :deeplist) ]
+   PRINT :deeplist
+
+   REPORTTESTPASSED [|Bug #1566775 is fixed; printing a deeply nested list didn't crash.|]
+END
+
+TO PRINTTEST.DEEPLYNESTEDARRAY
+
+   LOCALMAKE "deeparray  ARRAY 1
+   LOCALMAKE "innerarray :deeparray
+
+   REPEAT 10000 [
+      SETITEM 1 :innerarray ARRAY 1
+      MAKE "innerarray ITEM 1 :innerarray
+   ]
+
+   PRINT :deeparray
+
+   REPORTTESTPASSED [|Bug #1566778 is fixed; printing a deeply nested array didn't crash.|]
+
+END
+
+TO PRINTTEST
+
+   PRINTTEST.SMOKETEST
+   PRINTTEST.PERFORMANCE
+
+   ; PRINTTEST.DEEPLYNESTEDLIST
+   ; PRINTTEST.DEEPLYNESTEDARRAY
+END

@@ -1,0 +1,71 @@
+LOAD "testlib.lgo
+
+TO READCHARSTEST.READBINARYDATA :filename :data
+
+   LOCALMAKE "previousreader READER
+
+   (OPENREAD :filename LOCALETRUE)
+   SETREAD   :filename
+
+   WHILE [ NOT EMPTY? :data ] [
+      LOCALMAKE "datum POP "data
+      SIMPLEREPORTTEST [READCHARS 1] :datum
+   ]
+   SIMPLEREPORTTEST [READCHAR] []
+
+   CLOSE :filename
+
+END
+
+TO READCHARSTEST.SMOKETEST
+   ; note: FMSLogo provides no way to write binary values smaller
+   ; than 32 because it implicitly "backslashes" them to a different
+   ; value.
+   LOCALMAKE "data MAP "CHAR ISEQ 32 255
+   LOCALMAKE "filename "readchars-test.txt
+
+   WRITEBINARYDATA :filename APPLY "WORD :data
+
+   (OPENREAD :filename LOCALETRUE)
+   SETREAD   :filename
+
+
+   ; reading zero characters should output the empty word
+   SIMPLEREPORTTEST [READCHARS 0] "||
+
+   ; reading one character should output that character
+   SIMPLEREPORTTEST [READCHARS 1] CHAR 32
+
+   ; reading one character should output that character
+   SIMPLEREPORTTEST [READCHARS 2] WORD CHAR 33 CHAR 34
+
+   ; Read more bytes than remain in the file.  
+   ; This outputs [] instead of returning however much data exists.
+   SIMPLEREPORTTEST [READCHARS 255] []
+
+   ; there is no more data, so READCHARS should always output the empty list
+   SIMPLEREPORTTEST [READCHARS 0] []
+
+   CLOSE     :filename
+   ERASEFILE :filename
+END
+
+TO READCHARSTEST.BADINPUT
+
+   RUNNOTENOUGHINPUTSTEST [(READCHARS)]
+   RUNTOOMANYINPUTSTEST   [(READCHARS 100 "toomany)]
+
+   RUNBADINPUTTEST [READCHARS 12.5 ]
+   RUNBADINPUTTEST [READCHARS [1]  ]
+   RUNBADINPUTTEST [READCHARS -1   ]
+   RUNBADINPUTTEST [READCHARS {1}  ]
+   RUNBADINPUTTEST [READCHARS "ten ]
+
+END
+
+TO READCHARSTEST
+
+   READCHARSTEST.SMOKETEST
+   READCHARSTEST.BADINPUT
+
+END

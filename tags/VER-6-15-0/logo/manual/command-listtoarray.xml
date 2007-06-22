@@ -1,0 +1,28 @@
+<section id="command-listtoarray">
+<title>LISTTOARRAY</title>
+<indexterm><primary>LISTTOARRAY</primary></indexterm>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>LISTTOARRAY</command> <parameter>list</parameter>
+(<command>LISTTOARRAY</command> <parameter>list</parameter> origin)</synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+   <para>Outputs an array with the same elements as the input list.</para>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Example</term>
+<listitem>
+    <programlisting><userinput>SHOW LISTTOARRAY [1 2 3]</userinput>
+{1 2 3}</programlisting>
+</listitem>
+</varlistentry>
+</variablelist>
+
+</section>
