@@ -950,8 +950,9 @@ transline_helper(
 
    HPEN hPen = CreatePenIndirect(&logPen);
 
-   HDC ScreenDC = GetDC(MainWindowx->ScreenWindow->HWindow);
-   HDC MemDC = CreateCompatibleDC(ScreenDC);
+   HDC ScreenDC = MainWindowx->ScreenWindow->m_ScreenDeviceContext;
+   HDC MemDC    = MainWindowx->ScreenWindow->m_MemoryDeviceContext;
+
    HBITMAP oldBitmap = (HBITMAP) SelectObject(MemDC, MemoryBitMap);
 
    if (EnablePalette)
@@ -989,7 +990,6 @@ transline_helper(
    // restore the previous bitmap and pen
    SelectObject(MemDC, oldPen);
    SelectObject(MemDC, oldBitmap);
-   DeleteDC(MemDC);
 
    // screen
 
@@ -1034,7 +1034,6 @@ transline_helper(
    SelectObject(ScreenDC, oldPen);
 
    DeleteObject(hPen);
-   ReleaseDC(MainWindowx->ScreenWindow->HWindow, ScreenDC);
    }
 
 

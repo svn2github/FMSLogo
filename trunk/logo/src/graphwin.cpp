@@ -483,10 +483,9 @@ NODE *lsetpixel(NODE *args)
 
    if (NOT_THROWING)
       {
-      HDC ScreenDC = GetDC(MainWindowx->ScreenWindow->HWindow);
-
       // memory
-      HDC MemDC = CreateCompatibleDC(ScreenDC);
+      HDC MemDC = MainWindowx->ScreenWindow->m_MemoryDeviceContext;
+
       HBITMAP oldBitmap = (HBITMAP) SelectObject(MemDC, MemoryBitMap);
 
       if (EnablePalette)
@@ -506,9 +505,9 @@ NODE *lsetpixel(NODE *args)
          {
          SelectPalette(MemDC, OldPalette, FALSE);
          }
-      DeleteDC(MemDC);
 
       //screen
+      HDC ScreenDC = MainWindowx->ScreenWindow->m_ScreenDeviceContext;
 
       draw_turtle(false);
 
@@ -548,8 +547,6 @@ NODE *lsetpixel(NODE *args)
          SelectPalette(ScreenDC, oldPalette2, FALSE);
          }
 
-      ReleaseDC(MainWindowx->ScreenWindow->HWindow, ScreenDC);
-
       draw_turtle(true);
       }
 
@@ -587,10 +584,8 @@ NODE *lpixel(NODE *)
          make_intnode((FIXNUM) - 1));
       }
 
-   HDC ScreenDC = GetDC(MainWindowx->ScreenWindow->HWindow);
-
    // memory
-   HDC MemDC = CreateCompatibleDC(ScreenDC);
+   HDC MemDC = MainWindowx->ScreenWindow->m_MemoryDeviceContext;
    HBITMAP oldBitmap = (HBITMAP) SelectObject(MemDC, MemoryBitMap);
 
    if (EnablePalette)
@@ -605,9 +600,6 @@ NODE *lpixel(NODE *)
       {
       SelectPalette(MemDC, OldPalette, FALSE);
       }
-
-   DeleteDC(MemDC);
-   ReleaseDC(MainWindowx->ScreenWindow->HWindow, ScreenDC);
 
    if (bIndexMode)
       {
@@ -632,12 +624,10 @@ void logofill(bool bOld)
       return;
       }
 
-   HDC ScreenDC = GetDC(MainWindowx->ScreenWindow->HWindow);
-
    HBRUSH JunkBrush = CreateBrushIndirect(&FloodBrush);
 
    // memory
-   HDC MemDC = CreateCompatibleDC(ScreenDC);
+   HDC MemDC = MainWindowx->ScreenWindow->m_MemoryDeviceContext;
    HBITMAP oldBitmap = (HBITMAP) SelectObject(MemDC, MemoryBitMap);
 
    if (EnablePalette)
@@ -679,9 +669,7 @@ void logofill(bool bOld)
    SelectObject(MemDC, oldBrush);
    SelectObject(MemDC, oldBitmap);
 
-   DeleteDC(MemDC);
    DeleteObject(JunkBrush);
-   ReleaseDC(MainWindowx->ScreenWindow->HWindow, ScreenDC);
    }
 
 
@@ -798,11 +786,9 @@ void thescreencolor(int r, int g, int b)
 
    HBRUSH TempBrush = CreateBrushIndirect(&ScreenBrush);
 
-   HDC ScreenDC = GetDC(MainWindowx->ScreenWindow->HWindow);
-
    // memory
+   HDC MemDC = MainWindowx->ScreenWindow->m_MemoryDeviceContext;
 
-   HDC MemDC = CreateCompatibleDC(ScreenDC);
    HBITMAP oldBitmap = (HBITMAP) SelectObject(MemDC, MemoryBitMap);
 
    if (EnablePalette)
@@ -819,9 +805,6 @@ void thescreencolor(int r, int g, int b)
       }
 
    SelectObject(MemDC, oldBitmap);
-   DeleteDC(MemDC);
-   ReleaseDC(MainWindowx->ScreenWindow->HWindow, ScreenDC);
-
    DeleteObject(TempBrush);
 
    MainWindowx->ScreenWindow->Invalidate(true);
@@ -987,10 +970,10 @@ NODE *lbitblock(NODE *arg)
          HBRUSH fillBrush = CreateBrushIndirect(&FloodBrush);
 
          TScreenWindow * const screen = MainWindowx->ScreenWindow;
-         HDC screenDC = GetDC(screen->HWindow);
+         HDC screenDC = screen->m_ScreenDeviceContext;
 
          // memory
-         HDC memDC = CreateCompatibleDC(screenDC);
+         HDC memDC = screen->m_MemoryDeviceContext;
          HBITMAP oldBitmap = (HBITMAP) SelectObject(memDC, MemoryBitMap);
 
          if (EnablePalette)
@@ -1012,7 +995,6 @@ NODE *lbitblock(NODE *arg)
             {
             SelectPalette(memDC, OldPalette, FALSE);
             }
-         DeleteDC(memDC);
 
          //screen
 
@@ -1052,8 +1034,6 @@ NODE *lbitblock(NODE *arg)
             {
             SelectPalette(screenDC, oldPalette2, FALSE);
             }
-
-         ReleaseDC(screen->HWindow, screenDC);
 
          DeleteObject(fillBrush);
 
@@ -1424,9 +1404,8 @@ BitCopyOrCut(NODE *arg, bool IsCut)
          // flag it so we will delete it
          CutBmp[CutIndex].CutFlag = true;
 
-         HDC ScreenDC = GetDC(MainWindowx->ScreenWindow->HWindow);
-
-         HDC MemDC = CreateCompatibleDC(ScreenDC);
+         HDC ScreenDC = MainWindowx->ScreenWindow->m_ScreenDeviceContext;
+         HDC MemDC    = MainWindowx->ScreenWindow->m_MemoryDeviceContext;
 
          HBITMAP oldBitmap = (HBITMAP) SelectObject(MemDC, MemoryBitMap);
 
@@ -1511,15 +1490,12 @@ BitCopyOrCut(NODE *arg, bool IsCut)
                FillRect(ScreenDC, &TempRect, TempBrush);
                }
 
-            ReleaseDC(MainWindowx->ScreenWindow->HWindow, ScreenDC);
-
             DeleteObject(TempBrush);
 
             draw_turtle(true);
          }
 
          SelectObject(MemDC, oldBitmap);
-         DeleteDC(MemDC);
 
          // if CutIndex == 0 then do Clipboard
          if (CutIndex == 0)
@@ -1565,9 +1541,9 @@ NODE *lbitfit(NODE *arg)
       if ((FitWidth != 0) && (FitHeight != 0) && CutBmp[CutIndex].CutFlag)
          {
 
-         HDC ScreenDC = GetDC(MainWindowx->ScreenWindow->HWindow);
+         HDC ScreenDC = MainWindowx->ScreenWindow->m_ScreenDeviceContext;
+         HDC MemDC    = MainWindowx->ScreenWindow->m_MemoryDeviceContext;
 
-         HDC MemDC = CreateCompatibleDC(ScreenDC);
          HBITMAP oldBitmap = (HBITMAP) SelectObject(MemDC, CutBmp[CutIndex].CutMemoryBitMap);
 
          HPALETTE oldPalette2;
@@ -1595,7 +1571,6 @@ NODE *lbitfit(NODE *arg)
             SelectPalette(ScreenDC, oldPalette2, FALSE);
             }
 
-         ReleaseDC(MainWindowx->ScreenWindow->HWindow, ScreenDC);
 
          if (EnablePalette)
             {
@@ -1634,7 +1609,6 @@ NODE *lbitfit(NODE *arg)
          DeleteDC(TempMemDC);
 
          SelectObject(MemDC, oldBitmap);
-         DeleteDC(MemDC);
 
          DeleteObject(CutBmp[CutIndex].CutMemoryBitMap);
          CutBmp[CutIndex].CutMemoryBitMap = TempMemoryBitMap;
@@ -1680,7 +1654,7 @@ NODE *lbitpaste(NODE *)
             CutBmp[CutIndex].CutFlag = false;
             }
 
-         HDC ScreenDC = GetDC(MainWindowx->ScreenWindow->HWindow);
+         HDC ScreenDC = MainWindowx->ScreenWindow->m_ScreenDeviceContext;
 
          HDC TempMemDC = CreateCompatibleDC(ScreenDC);
          HBITMAP oldBitmap2 = (HBITMAP) SelectObject(
@@ -1688,7 +1662,7 @@ NODE *lbitpaste(NODE *)
             CutBmp[CutIndex].CutMemoryBitMap);
 
          //memory
-         HDC MemDC = CreateCompatibleDC(ScreenDC);
+         HDC MemDC = MainWindowx->ScreenWindow->m_MemoryDeviceContext;
          HBITMAP oldBitmap = (HBITMAP) SelectObject(MemDC, MemoryBitMap);
 
          BitBlt(
@@ -1703,7 +1677,6 @@ NODE *lbitpaste(NODE *)
             g_BitMode);
 
          SelectObject(MemDC, oldBitmap);
-         DeleteDC(MemDC);
 
          //screen
 
@@ -1737,8 +1710,6 @@ NODE *lbitpaste(NODE *)
                0,
                g_BitMode);
             }
-
-         ReleaseDC(MainWindowx->ScreenWindow->HWindow, ScreenDC);
 
          draw_turtle(true);
 
@@ -1800,7 +1771,7 @@ NODE *lbitpastetoindex(NODE *arg)
             CutBmp[CutIndex].CutFlag = false;
             }
 
-         HDC ScreenDC = GetDC(MainWindowx->ScreenWindow->HWindow);
+         HDC ScreenDC = MainWindowx->ScreenWindow->m_ScreenDeviceContext;
 
          HDC TempMemDC = CreateCompatibleDC(ScreenDC);
          HBITMAP oldBitmap2 = (HBITMAP) SelectObject(
@@ -1808,7 +1779,7 @@ NODE *lbitpastetoindex(NODE *arg)
             CutBmp[CutIndex].CutMemoryBitMap);
 
          //memory
-         HDC MemDC = CreateCompatibleDC(ScreenDC);
+         HDC MemDC = MainWindowx->ScreenWindow->m_MemoryDeviceContext;
          HBITMAP oldBitmap = (HBITMAP) SelectObject(MemDC, CutBmp[i].CutMemoryBitMap);
 
          BitBlt(
@@ -1823,9 +1794,6 @@ NODE *lbitpastetoindex(NODE *arg)
             g_BitMode);
 
          SelectObject(MemDC, oldBitmap);
-         DeleteDC(MemDC);
-
-         ReleaseDC(MainWindowx->ScreenWindow->HWindow, ScreenDC);
 
          SelectObject(TempMemDC, oldBitmap2);
          DeleteDC(TempMemDC);
@@ -2182,10 +2150,8 @@ void ibm_clear_screen(void)
    HBRUSH tempBrush = ::CreateBrushIndirect(&ScreenBrush);
    if (tempBrush != NULL)
       {
-      HDC screen = ::GetDC(MainWindowx->ScreenWindow->HWindow);
-
       // memory
-      HDC memoryDC = ::CreateCompatibleDC(screen);
+      HDC memoryDC = MainWindowx->ScreenWindow->m_MemoryDeviceContext;
       HBITMAP oldBitmap = (HBITMAP) ::SelectObject(memoryDC, MemoryBitMap);
 
       ::FillRect(memoryDC, &FullRect, tempBrush);
@@ -2194,9 +2160,7 @@ void ibm_clear_screen(void)
       ::SetBkMode(memoryDC, TRANSPARENT);
 
       ::SelectObject(memoryDC, oldBitmap);
-      ::DeleteDC(memoryDC);
 
-      ::ReleaseDC(MainWindowx->ScreenWindow->HWindow, screen);
       ::DeleteObject(tempBrush);
       }
 
@@ -2594,24 +2558,20 @@ SIZE labelsize(const char *s)
 
    SIZE size = {0};
 
-   HDC screen = GetDC(MainWindowx->ScreenWindow->HWindow);
-   if (screen != NULL)
+   HDC screen = MainWindowx->ScreenWindow->m_ScreenDeviceContext;
+
+   // get a handle to the label's font
+   HFONT tempFont = CreateFontIndirect(&FontRec);
+   if (tempFont != NULL)
       {
-      // get a handle to the label's font
-      HFONT tempFont = CreateFontIndirect(&FontRec);
-      if (tempFont != NULL)
-         {
-         HFONT oldFont = (HFONT) SelectObject(screen, tempFont);
+      HFONT oldFont = (HFONT) SelectObject(screen, tempFont);
 
-         GetTextExtentPoint(screen, s, strlen(s), &size);
+      GetTextExtentPoint(screen, s, strlen(s), &size);
 
-         // restore the original font
-         SelectObject(screen, oldFont);
+      // restore the original font
+      SelectObject(screen, oldFont);
 
-         DeleteObject(tempFont);
-         }
-
-      ReleaseDC(MainWindowx->ScreenWindow->HWindow, screen);
+      DeleteObject(tempFont);
       }
 
    return size;
@@ -2627,10 +2587,11 @@ void label(const char *s)
       return;
       }
 
-   HDC ScreenDC = GetDC(MainWindowx->ScreenWindow->HWindow);
+   HDC ScreenDC = MainWindowx->ScreenWindow->m_ScreenDeviceContext;
 
    // memory
-   HDC MemDC = CreateCompatibleDC(ScreenDC);
+   HDC MemDC = MainWindowx->ScreenWindow->m_MemoryDeviceContext;
+
    HBITMAP oldBitmap = (HBITMAP) SelectObject(MemDC, MemoryBitMap);
 
    if (EnablePalette)
@@ -2669,7 +2630,6 @@ void label(const char *s)
 
    SelectObject(MemDC, oldFont);
    SelectObject(MemDC, oldBitmap);
-   DeleteDC(MemDC);
 
 
    // screen
@@ -2716,8 +2676,6 @@ void label(const char *s)
       }
 
    DeleteObject(tempFont);
-
-   ReleaseDC(MainWindowx->ScreenWindow->HWindow, ScreenDC);
    }
 
 void exit_program(void)
@@ -2728,4 +2686,3 @@ void exit_program(void)
       }
    IsTimeToExit = true;
    }
-

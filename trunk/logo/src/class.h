@@ -575,11 +575,16 @@ class TScreenWindow : public TWindow
    void EvLButtonDown(UINT, TPoint &);
    void EvLButtonUp(UINT, TPoint &);
    void EvRButtonDown(UINT, TPoint &);
-   void EvRButtonUp(UINT, TPoint &);
+   void EvRButtonUp(UINT, TPoint &); 
    void EvMouseMove(UINT, TPoint &);
    void EvSize(UINT, TSize &);
+   void EvDestroy();
 
    DECLARE_RESPONSE_TABLE(TScreenWindow);
+
+ public:
+   HDC   m_ScreenDeviceContext;
+   HDC   m_MemoryDeviceContext;
 
  private:
    void GetScrollRatios(FLONUM & XRatio, FLONUM & YRatio);

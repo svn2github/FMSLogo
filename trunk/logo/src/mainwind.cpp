@@ -240,7 +240,9 @@ callthing::~callthing()
 TScreenWindow::TScreenWindow(
    TWindow *AParent,
    LPCSTR   ATitle
-) : TWindow(AParent, ATitle)
+   ) : TWindow(AParent, ATitle),
+       m_ScreenDeviceContext(NULL),
+       m_MemoryDeviceContext(NULL)
    {
    if (!bFixed)
       {
@@ -270,8 +272,28 @@ void TScreenWindow::SetupWindow()
    Scroller->ScrollTo(
       (BitMapWidth  - clientRect.Width()) / 2,
       (BitMapHeight - clientRect.Height()) / 2);
+
+   m_ScreenDeviceContext = GetDC(HWindow);
+   m_MemoryDeviceContext = CreateCompatibleDC(m_ScreenDeviceContext);
    }
 
+
+void TScreenWindow::EvDestroy()
+   {
+   if (m_MemoryDeviceContext != NULL)
+      {
+      DeleteDC(m_MemoryDeviceContext);
+      m_MemoryDeviceContext = NULL;
+      }
+   
+   if (m_ScreenDeviceContext != NULL)
+      {
+      ReleaseDC(HWindow, m_ScreenDeviceContext);
+      m_ScreenDeviceContext = NULL;
+      }
+
+   TWindow::EvDestroy();
+   }
 
 
 void TScreenWindow::Paint(TDC &PaintDC, bool /* erase */, TRect &PaintRect)
@@ -289,8 +311,7 @@ void TScreenWindow::Paint(TDC &PaintDC, bool /* erase */, TRect &PaintRect)
     */
 
    // grab the client area's backing store (a bitmap)
-   HDC screenDC = GetDC(HWindow);
-   HDC memoryDC = CreateCompatibleDC(screenDC);
+   HDC memoryDC = m_MemoryDeviceContext;
 
    HBITMAP oldBitmap = (HBITMAP) SelectObject(memoryDC, MemoryBitMap);
 
@@ -399,8 +420,6 @@ void TScreenWindow::Paint(TDC &PaintDC, bool /* erase */, TRect &PaintRect)
       }
 
    SelectObject(memoryDC, oldBitmap);
-   DeleteDC(memoryDC);
-   ReleaseDC(HWindow, screenDC);
 
    /* if turtle do it */
 
@@ -836,6 +855,7 @@ void TScreenWindow::EvSize(UINT arg1, TSize &arg2)
 
 
 DEFINE_RESPONSE_TABLE1(TScreenWindow, TWindow)
+  EV_WM_DESTROY,
   EV_WM_KEYUP,
   EV_WM_KEYDOWN,
   EV_WM_CHAR,
@@ -1316,9 +1336,9 @@ bool TMainFrame::OpenDIB(FILE* File, DWORD &dwPixelWidth, DWORD &dwPixelHeight)
       fread(bitsPtr, sizeof(char), ReadBitmapInfo->bmiHeader.biSizeImage, File);
 
       // Create DC comaptible with screen 
-      HDC screen = GetDC(MainWindowx->ScreenWindow->HWindow);
+      HDC screen   = MainWindowx->ScreenWindow->m_ScreenDeviceContext;
+      HDC memoryDC = MainWindowx->ScreenWindow->m_MemoryDeviceContext;
 
-      HDC memoryDC = CreateCompatibleDC(screen);
       HDC DCHandle = CreateCompatibleDC(screen);
 
       HPALETTE oldPalette  = NULL;
@@ -1350,9 +1370,6 @@ bool TMainFrame::OpenDIB(FILE* File, DWORD &dwPixelWidth, DWORD &dwPixelHeight)
          {
          SelectPalette(screen, oldPalette2, FALSE);
          }
-
-      ReleaseDC(MainWindowx->ScreenWindow->HWindow, screen);
-
 
       // now that things are clean we can check if we are ok 
 
@@ -1430,8 +1447,6 @@ bool TMainFrame::OpenDIB(FILE* File, DWORD &dwPixelWidth, DWORD &dwPixelHeight)
          }
 
       SelectObject(memoryDC, oldBitmap);
-      DeleteDC(memoryDC);
-
       SelectObject(DCHandle, oldBitmap2);
       DeleteDC(DCHandle);
 
@@ -1520,24 +1535,17 @@ void TMainFrame::CMBitmapNew()
    HBRUSH brush = ::CreateBrushIndirect(&ScreenBrush);
    if (brush != NULL)
       {
-      HDC deviceContext = ::GetDC(MainWindowx->ScreenWindow->HWindow);
+      HDC memoryDC = MainWindowx->ScreenWindow->m_MemoryDeviceContext;
 
-      HDC memoryDC = ::CreateCompatibleDC(deviceContext);
-      if (memoryDC != NULL)
-         {
-         ::SelectObject(memoryDC, MemoryBitMap);
+      ::SelectObject(memoryDC, MemoryBitMap);
 
-         ::FillRect(memoryDC, &FullRect, brush);
+      ::FillRect(memoryDC, &FullRect, brush);
 
-         ::SetBkColor(memoryDC, scolor);
-         ::SetBkMode(memoryDC, TRANSPARENT);
+      ::SetBkColor(memoryDC, scolor);
+      ::SetBkMode(memoryDC, TRANSPARENT);
 
-         ::DeleteDC(memoryDC);
-         }
-
-      ::ReleaseDC(MainWindowx->ScreenWindow->HWindow, deviceContext);
       ::DeleteObject(brush);
-   }
+      }
 
    // mark the screen window as invalid
    MainWindowx->ScreenWindow->Invalidate(true);

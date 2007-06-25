@@ -1087,10 +1087,8 @@ void TThreeDSolid::View()
    {
    erase_screen();
 
-   HDC screen = GetDC(MainWindowx->ScreenWindow->HWindow);
-
    // memory
-   m_MemDC = CreateCompatibleDC(screen);
+   m_MemDC = MainWindowx->ScreenWindow->m_MemoryDeviceContext;
    HBITMAP oldBitmap = (HBITMAP) SelectObject(m_MemDC, MemoryBitMap);
 
    if (EnablePalette)
@@ -1114,9 +1112,6 @@ void TThreeDSolid::View()
       }
 
    SelectObject(m_MemDC, oldBitmap);
-
-   DeleteDC(m_MemDC);
-   ReleaseDC(MainWindowx->ScreenWindow->HWindow, screen);
 
    MainWindowx->ScreenWindow->Invalidate(FALSE);
    }
