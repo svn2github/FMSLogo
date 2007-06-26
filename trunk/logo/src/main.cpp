@@ -74,8 +74,11 @@ HPALETTE OldPalette;
 LOGFONT FontRec;
 LOGFONT EditFontRec;
 
-LOGPEN NormalPen;                      // Handle to "Normal" logical Pen
-LOGPEN ErasePen;                       // Handle to "Erase" logical Pen
+LOGPEN g_LogicalNormalPen;             // Handle to "Normal" logical Pen
+HPEN   g_NormalPen;                    // Handle to "Normal" Pen
+
+LOGPEN g_LogicalErasePen;              // Handle to "Erase" logical Pen
+HPEN   g_ErasePen;                     // Handle to "Erase" Pen
 
 LOGBRUSH FloodBrush;                   // Handle to the "floodfill" brush
 LOGBRUSH ScreenBrush;                  // Handle to the "screen" background brush
@@ -460,15 +463,6 @@ void TMyApp::InitMainWindow()
    FontRec.lfPitchAndFamily = DEFAULT_PITCH;
    strcpy(FontRec.lfFaceName, "Arial");
 
-   // init all the pens based on the color
-   NormalPen.lopnStyle = PS_INSIDEFRAME;
-   NormalPen.lopnWidth.x = g_PenWidth;
-   NormalPen.lopnColor = pcolor;
-
-   ErasePen.lopnStyle = PS_INSIDEFRAME;
-   ErasePen.lopnWidth.x = g_PenWidth;
-   ErasePen.lopnColor = scolor;
-
    FloodBrush.lbStyle = BS_SOLID;
    FloodBrush.lbColor = fcolor;
    FloodBrush.lbHatch = HS_VERTICAL;
@@ -694,6 +688,39 @@ WinMain(
    )
    {
    int i;
+
+#ifdef MEM_DEBUG
+   // define values that didn't exist when Borland C++ was written
+   const DWORD GR_GDIOBJECTS  = 0;
+   const DWORD GR_USEROBJECTS = 1;
+   typedef DWORD WINAPI (*GETGUIRESOURCES)(HANDLE, DWORD);
+
+   GETGUIRESOURCES getGuiResources     = NULL;
+   DWORD           originalGuiObjects  = 0;
+   DWORD           originalUserObjects = 0;
+
+   HANDLE fmslogo = NULL;
+
+   HMODULE user32 = GetModuleHandle("user32.dll");
+   if (user32 != NULL)
+      {
+      getGuiResources = (GETGUIRESOURCES) GetProcAddress(user32, "GetGuiResources");
+      if (getGuiResources != NULL)
+         {
+         fmslogo = OpenProcess(
+            PROCESS_QUERY_INFORMATION, 
+            FALSE, 
+            GetCurrentProcessId());
+         if (fmslogo != NULL)
+            {
+            originalGuiObjects  = getGuiResources(fmslogo, GR_GDIOBJECTS);
+            originalUserObjects = getGuiResources(fmslogo, GR_USEROBJECTS);
+            }
+         }
+      }
+
+#endif // MEM_DEBUG
+
 
    memset(&g_OsVersionInformation, 0, sizeof g_OsVersionInformation);
    g_OsVersionInformation.dwOSVersionInfoSize = sizeof g_OsVersionInformation;
@@ -927,18 +954,49 @@ WinMain(
 
    CloseHandle(singleInstanceMutex);
 
+#ifdef MEM_DEBUG
+
+   if (fmslogo != NULL)
+      {
+      // Check if any GUI objects were leaked
+      DWORD currentGuiObjects = getGuiResources(fmslogo, GR_GDIOBJECTS);
+      if (originalGuiObjects < currentGuiObjects)
+         {
+         fprintf(
+            stderr, 
+            "%d GUI objects were leaked.\n",
+            currentGuiObjects - originalUserObjects);
+         }
+
+      // Check if any USER objects were leaked
+      DWORD currentUserObjects = getGuiResources(fmslogo, GR_USEROBJECTS);
+      if (originalUserObjects < currentUserObjects)
+         {
+         fprintf(
+            stderr, 
+            "%d USER objects were leaked.\n",
+            currentUserObjects - originalUserObjects);
+         }
+
+      CloseHandle(fmslogo);
+      }
+
+#endif // MEM_DEBUG
+
+
    return exitCode;
    }
 
 static
 void
 transline_helper(
-   const LOGPEN &logPen,
-   int           modex,
-   int           FromX,
-   int           FromY,
-   int           ToX,
-   int           ToY
+   const LOGPEN & LogicalPen,
+   HPEN           Pen,
+   int            LineMode,
+   int            FromX,
+   int            FromY,
+   int            ToX,
+   int            ToY
    )
    {
 
@@ -948,9 +1006,7 @@ transline_helper(
    ToX   =  ToX   + xoffset;
    ToY   = -ToY   + yoffset;
 
-   HPEN hPen = CreatePenIndirect(&logPen);
-
-   HDC MemDC    = MainWindowx->ScreenWindow->GetMemoryDeviceContext();
+   HDC MemDC = MainWindowx->ScreenWindow->GetMemoryDeviceContext();
 
    HBITMAP oldBitmap = (HBITMAP) SelectObject(MemDC, MemoryBitMap);
 
@@ -960,9 +1016,9 @@ transline_helper(
       RealizePalette(MemDC);
       }
 
-   SetROP2(MemDC, modex);
+   SetROP2(MemDC, LineMode);
 
-   HPEN oldPen = (HPEN) SelectObject(MemDC, hPen);
+   HPEN oldPen = (HPEN) SelectObject(MemDC, Pen);
 
    MoveToEx(MemDC, FromX, FromY, 0);
    LineTo(MemDC, ToX, ToY);
@@ -978,7 +1034,7 @@ transline_helper(
    //
    if (g_PenWidth < 2 && current_write_mode != XOR_PUT)
       {
-      SetPixel(MemDC, ToX, ToY, logPen.lopnColor);
+      SetPixel(MemDC, ToX, ToY, LogicalPen.lopnColor);
       }
 
    if (EnablePalette)
@@ -992,7 +1048,7 @@ transline_helper(
 
    // screen
    HDC ScreenDC = MainWindowx->ScreenWindow->GetScreenDeviceContext();
-   SetROP2(ScreenDC, modex);
+   SetROP2(ScreenDC, LineMode);
 
    if (EnablePalette)
       {
@@ -1000,7 +1056,7 @@ transline_helper(
       RealizePalette(ScreenDC);
       }
 
-   oldPen = (HPEN) SelectObject(ScreenDC, hPen);
+   oldPen = (HPEN) SelectObject(ScreenDC, Pen);
 
    if (zoom_flag)
       {
@@ -1008,18 +1064,20 @@ transline_helper(
       }
    else
       {
-      UINT screenFromX = FromX - MainWindowx->ScreenWindow->Scroller->XPos;
-      UINT screenFromY = FromY - MainWindowx->ScreenWindow->Scroller->YPos;
+      TScroller * scroller = MainWindowx->ScreenWindow->Scroller;
 
-      UINT screenToX   = ToX   - MainWindowx->ScreenWindow->Scroller->XPos;
-      UINT screenToY   = ToY   - MainWindowx->ScreenWindow->Scroller->YPos;
+      UINT screenFromX = FromX - scroller->XPos;
+      UINT screenFromY = FromY - scroller->YPos;
+
+      UINT screenToX   = ToX   - scroller->XPos;
+      UINT screenToY   = ToY   - scroller->YPos;
 
       MoveToEx(ScreenDC, screenFromX, screenFromY, 0);
       LineTo(ScreenDC, screenToX, screenToY);
 
       if (g_PenWidth < 2 && current_write_mode != XOR_PUT)
          {
-         SetPixel(ScreenDC, screenFromX, screenFromY, logPen.lopnColor);
+         SetPixel(ScreenDC, screenFromX, screenFromY, LogicalPen.lopnColor);
          }
       }
 
@@ -1030,8 +1088,6 @@ transline_helper(
 
    // restore the previous pen
    SelectObject(ScreenDC, oldPen);
-
-   DeleteObject(hPen);
    }
 
 
@@ -1039,6 +1095,7 @@ static
 void 
 transline3d(
    const LOGPEN &logPen, 
+   HPEN         &pen, 
    long          modex, 
    const Point & from,
    const Point & to
@@ -1078,7 +1135,8 @@ transline3d(
    // window coordinates, we can call the 2D version to
    // actually draw the line.
    transline_helper(
-      logPen, 
+      logPen,
+      pen,
       modex,
       from2d.x,
       from2d.y,
@@ -1090,6 +1148,7 @@ static
 void 
 transline(
    const LOGPEN &logPen, 
+   HPEN         &pen, 
    long          modex, 
    const Point & from,
    const Point & to
@@ -1097,6 +1156,7 @@ transline(
    {
    transline_helper(
       logPen,
+      pen,
       modex,
       g_round(from.x),
       g_round(from.y),
@@ -1315,18 +1375,37 @@ void line_to(FLONUM x, FLONUM y)
       toPoint.x = x;
       toPoint.y = y;
 
+      HPEN           pen;
+      const LOGPEN * logicalPen;
+      int            rasterMode;
+
       if (in_erase_mode)
          {
-         transline(ErasePen, R2_COPYPEN, g_OldPos, toPoint);
-         }
-      else if (current_write_mode == XOR_PUT)
-         {
-         transline(NormalPen, R2_NOT, g_OldPos, toPoint);
+         pen        = g_ErasePen;
+         logicalPen = &g_LogicalErasePen;
+         rasterMode = R2_COPYPEN;
          }
       else
          {
-         transline(NormalPen, R2_COPYPEN, g_OldPos, toPoint);
+         pen        = g_NormalPen;
+         logicalPen = &g_LogicalNormalPen;
+
+         if (current_write_mode == XOR_PUT)
+            {
+            rasterMode = R2_NOT;
+            }
+         else
+            {
+            rasterMode = R2_COPYPEN;
+            }
          }
+
+      transline(
+         *logicalPen,
+         pen,
+         rasterMode,
+         g_OldPos,
+         toPoint);
       }
    }
 
@@ -1342,18 +1421,37 @@ void line_to_3d(const Point & ToPoint)
       vector_count++;
       update_status_vectors();
 
+      HPEN           pen;
+      const LOGPEN * logicalPen;
+      int            rasterMode;
+
       if (in_erase_mode)
          {
-         transline3d(ErasePen, R2_COPYPEN, g_OldPos, ToPoint);
-         }
-      else if (current_write_mode == XOR_PUT)
-         {
-         transline3d(NormalPen, R2_NOT, g_OldPos, ToPoint);
+         pen        = g_ErasePen;
+         logicalPen = &g_LogicalErasePen;
+         rasterMode = R2_COPYPEN;
          }
       else
          {
-         transline3d(NormalPen, R2_COPYPEN, g_OldPos, ToPoint);
+         pen        = g_NormalPen;
+         logicalPen = &g_LogicalNormalPen;
+
+         if (current_write_mode == XOR_PUT)
+            {
+            rasterMode = R2_NOT;
+            }
+         else
+            {
+            rasterMode = R2_COPYPEN;
+            }
          }
+
+      transline3d(
+         *logicalPen,
+         pen,
+         rasterMode,
+         g_OldPos,
+         ToPoint);
       }
    }
 

@@ -851,8 +851,11 @@ extern HPALETTE OldPalette;
 
 extern LOGFONT FontRec;
 
-extern LOGPEN NormalPen;
-extern LOGPEN ErasePen;
+extern LOGPEN g_LogicalNormalPen;
+extern HPEN   g_NormalPen;
+
+extern LOGPEN g_LogicalErasePen;
+extern HPEN   g_ErasePen;
 
 extern LOGBRUSH FloodBrush;
 extern LOGBRUSH ScreenBrush;

@@ -2243,6 +2243,10 @@ void TMainFrame::SetupWindow()
 
    IsOkayToUseCommanderWindow = true;
 
+   // init the pens based on the color
+   UpdateNormalPen(g_PenWidth, pcolor);
+   UpdateErasePen(g_PenWidth,  scolor);
+
    // it's show time for our little friend
    draw_turtle(true);
    }
@@ -2957,6 +2961,19 @@ void TMainFrame::EvDestroy()
          mainWindowRect.Top(),
          mainWindowRect.Width(),
          mainWindowRect.Height());
+      }
+
+   // cleanup the pens
+   if (g_NormalPen != NULL)
+      {
+      DeleteObject(g_NormalPen);
+      g_NormalPen = NULL;
+      }
+
+   if (g_ErasePen != NULL)
+      {
+      DeleteObject(g_ErasePen);
+      g_ErasePen = NULL;
       }
 
    TWindow::EvDestroy();

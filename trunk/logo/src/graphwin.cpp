@@ -114,6 +114,43 @@ public:
 
 #endif
 
+static
+void
+UpdatePen(
+   LOGPEN   & LogicalPen,
+   HPEN     & Pen,
+   int        Width,
+   COLORREF   Color
+   )
+   {
+   LogicalPen.lopnStyle   = PS_INSIDEFRAME;
+   LogicalPen.lopnWidth.x = Width;
+   LogicalPen.lopnColor   = Color;
+
+   if (Pen)
+      {
+      DeleteObject(Pen);
+      }
+   Pen = CreatePenIndirect(&LogicalPen);
+   }
+
+void
+UpdateErasePen(
+   int      Width,
+   COLORREF Color
+   )
+   {
+   UpdatePen(g_LogicalErasePen, g_ErasePen, Width, Color);
+   }
+
+void
+UpdateNormalPen(
+   int      Width,
+   COLORREF Color
+   )
+   {
+   UpdatePen(g_LogicalNormalPen, g_NormalPen, Width, Color);
+   }
 
 void
 gifsave_helper(
@@ -714,9 +751,7 @@ void thepencolor(int r, int g, int b)
       pcolor = RGB(dpen.red, dpen.green, dpen.blue);
       }
 
-   NormalPen.lopnStyle = PS_INSIDEFRAME;
-   NormalPen.lopnWidth.x = g_PenWidth;
-   NormalPen.lopnColor = pcolor;
+   UpdateNormalPen(g_PenWidth, pcolor);
    }
 
 // function to return flood color as a RGB list
@@ -779,10 +814,7 @@ void thescreencolor(int r, int g, int b)
 
    // When the screen changes we change the erase pen which basically
    // writes the screen color
-
-   ErasePen.lopnStyle = PS_INSIDEFRAME;
-   ErasePen.lopnWidth.x = g_PenWidth;
-   ErasePen.lopnColor = scolor;
+   UpdateErasePen(g_PenWidth, scolor);
 
    HBRUSH TempBrush = CreateBrushIndirect(&ScreenBrush);
 
@@ -825,14 +857,8 @@ void set_pen_width(int w)
    g_PenWidth = w;
 
    // we erase with the same pen width as we write
-
-   NormalPen.lopnStyle = PS_INSIDEFRAME;
-   NormalPen.lopnWidth.x = g_PenWidth;
-   NormalPen.lopnColor = pcolor;
-
-   ErasePen.lopnStyle = PS_INSIDEFRAME;
-   ErasePen.lopnWidth.x = g_PenWidth;
-   ErasePen.lopnColor = scolor;
+   UpdateNormalPen(g_PenWidth, pcolor);
+   UpdateErasePen(g_PenWidth,  scolor);
    }
 
 void set_pen_height(int h)
