@@ -1088,7 +1088,7 @@ void TThreeDSolid::View()
    erase_screen();
 
    // memory
-   m_MemDC = MainWindowx->ScreenWindow->m_MemoryDeviceContext;
+   m_MemDC = MainWindowx->ScreenWindow->GetMemoryDeviceContext();
    HBITMAP oldBitmap = (HBITMAP) SelectObject(m_MemDC, MemoryBitMap);
 
    if (EnablePalette)

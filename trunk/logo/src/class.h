@@ -564,6 +564,16 @@ class TScreenWindow : public TWindow
    void AdjustScrollPositionToZoomFactor(FLONUM ZoomFactor);
    void Printit(TDC & DC);
 
+   HDC  GetScreenDeviceContext() const
+      {
+      return m_ScreenDeviceContext;
+      }
+
+   HDC  GetMemoryDeviceContext() const
+      {
+      return m_MemoryDeviceContext;
+      }
+
  protected:
    void SetupWindow();
 
@@ -582,12 +592,11 @@ class TScreenWindow : public TWindow
 
    DECLARE_RESPONSE_TABLE(TScreenWindow);
 
- public:
-   HDC   m_ScreenDeviceContext;
-   HDC   m_MemoryDeviceContext;
-
  private:
    void GetScrollRatios(FLONUM & XRatio, FLONUM & YRatio);
+
+   HDC   m_ScreenDeviceContext;
+   HDC   m_MemoryDeviceContext;
    }
 ;
 

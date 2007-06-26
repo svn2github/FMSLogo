@@ -1336,8 +1336,8 @@ bool TMainFrame::OpenDIB(FILE* File, DWORD &dwPixelWidth, DWORD &dwPixelHeight)
       fread(bitsPtr, sizeof(char), ReadBitmapInfo->bmiHeader.biSizeImage, File);
 
       // Create DC comaptible with screen 
-      HDC screen   = MainWindowx->ScreenWindow->m_ScreenDeviceContext;
-      HDC memoryDC = MainWindowx->ScreenWindow->m_MemoryDeviceContext;
+      HDC screen   = MainWindowx->ScreenWindow->GetScreenDeviceContext();
+      HDC memoryDC = MainWindowx->ScreenWindow->GetMemoryDeviceContext();
 
       HDC DCHandle = CreateCompatibleDC(screen);
 
@@ -1535,7 +1535,7 @@ void TMainFrame::CMBitmapNew()
    HBRUSH brush = ::CreateBrushIndirect(&ScreenBrush);
    if (brush != NULL)
       {
-      HDC memoryDC = MainWindowx->ScreenWindow->m_MemoryDeviceContext;
+      HDC memoryDC = MainWindowx->ScreenWindow->GetMemoryDeviceContext();
 
       ::SelectObject(memoryDC, MemoryBitMap);
 

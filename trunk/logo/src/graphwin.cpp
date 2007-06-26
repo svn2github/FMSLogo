@@ -484,7 +484,7 @@ NODE *lsetpixel(NODE *args)
    if (NOT_THROWING)
       {
       // memory
-      HDC MemDC = MainWindowx->ScreenWindow->m_MemoryDeviceContext;
+      HDC MemDC = MainWindowx->ScreenWindow->GetMemoryDeviceContext();
 
       HBITMAP oldBitmap = (HBITMAP) SelectObject(MemDC, MemoryBitMap);
 
@@ -507,7 +507,7 @@ NODE *lsetpixel(NODE *args)
          }
 
       //screen
-      HDC ScreenDC = MainWindowx->ScreenWindow->m_ScreenDeviceContext;
+      HDC ScreenDC = MainWindowx->ScreenWindow->GetScreenDeviceContext();
 
       draw_turtle(false);
 
@@ -585,7 +585,7 @@ NODE *lpixel(NODE *)
       }
 
    // memory
-   HDC MemDC = MainWindowx->ScreenWindow->m_MemoryDeviceContext;
+   HDC MemDC = MainWindowx->ScreenWindow->GetMemoryDeviceContext();
    HBITMAP oldBitmap = (HBITMAP) SelectObject(MemDC, MemoryBitMap);
 
    if (EnablePalette)
@@ -627,7 +627,7 @@ void logofill(bool bOld)
    HBRUSH JunkBrush = CreateBrushIndirect(&FloodBrush);
 
    // memory
-   HDC MemDC = MainWindowx->ScreenWindow->m_MemoryDeviceContext;
+   HDC MemDC = MainWindowx->ScreenWindow->GetMemoryDeviceContext();
    HBITMAP oldBitmap = (HBITMAP) SelectObject(MemDC, MemoryBitMap);
 
    if (EnablePalette)
@@ -787,7 +787,7 @@ void thescreencolor(int r, int g, int b)
    HBRUSH TempBrush = CreateBrushIndirect(&ScreenBrush);
 
    // memory
-   HDC MemDC = MainWindowx->ScreenWindow->m_MemoryDeviceContext;
+   HDC MemDC = MainWindowx->ScreenWindow->GetMemoryDeviceContext();
 
    HBITMAP oldBitmap = (HBITMAP) SelectObject(MemDC, MemoryBitMap);
 
@@ -970,10 +970,9 @@ NODE *lbitblock(NODE *arg)
          HBRUSH fillBrush = CreateBrushIndirect(&FloodBrush);
 
          TScreenWindow * const screen = MainWindowx->ScreenWindow;
-         HDC screenDC = screen->m_ScreenDeviceContext;
 
          // memory
-         HDC memDC = screen->m_MemoryDeviceContext;
+         HDC memDC = screen->GetMemoryDeviceContext();
          HBITMAP oldBitmap = (HBITMAP) SelectObject(memDC, MemoryBitMap);
 
          if (EnablePalette)
@@ -997,7 +996,7 @@ NODE *lbitblock(NODE *arg)
             }
 
          //screen
-
+         HDC screenDC = screen->GetScreenDeviceContext();
          draw_turtle(false);
 
          
@@ -1404,8 +1403,8 @@ BitCopyOrCut(NODE *arg, bool IsCut)
          // flag it so we will delete it
          CutBmp[CutIndex].CutFlag = true;
 
-         HDC ScreenDC = MainWindowx->ScreenWindow->m_ScreenDeviceContext;
-         HDC MemDC    = MainWindowx->ScreenWindow->m_MemoryDeviceContext;
+         HDC ScreenDC = MainWindowx->ScreenWindow->GetScreenDeviceContext();
+         HDC MemDC    = MainWindowx->ScreenWindow->GetMemoryDeviceContext();
 
          HBITMAP oldBitmap = (HBITMAP) SelectObject(MemDC, MemoryBitMap);
 
@@ -1422,6 +1421,7 @@ BitCopyOrCut(NODE *arg, bool IsCut)
             ShowErrorMessageAndStop(LOCALIZED_ERROR_BITMAPCUTFAILED);
             return Unbound;
             }
+
 
          HDC TempMemDC = CreateCompatibleDC(ScreenDC);
 
@@ -1541,8 +1541,8 @@ NODE *lbitfit(NODE *arg)
       if ((FitWidth != 0) && (FitHeight != 0) && CutBmp[CutIndex].CutFlag)
          {
 
-         HDC ScreenDC = MainWindowx->ScreenWindow->m_ScreenDeviceContext;
-         HDC MemDC    = MainWindowx->ScreenWindow->m_MemoryDeviceContext;
+         HDC ScreenDC = MainWindowx->ScreenWindow->GetScreenDeviceContext();
+         HDC MemDC    = MainWindowx->ScreenWindow->GetMemoryDeviceContext();
 
          HBITMAP oldBitmap = (HBITMAP) SelectObject(MemDC, CutBmp[CutIndex].CutMemoryBitMap);
 
@@ -1654,7 +1654,7 @@ NODE *lbitpaste(NODE *)
             CutBmp[CutIndex].CutFlag = false;
             }
 
-         HDC ScreenDC = MainWindowx->ScreenWindow->m_ScreenDeviceContext;
+         HDC ScreenDC = MainWindowx->ScreenWindow->GetScreenDeviceContext();
 
          HDC TempMemDC = CreateCompatibleDC(ScreenDC);
          HBITMAP oldBitmap2 = (HBITMAP) SelectObject(
@@ -1662,7 +1662,7 @@ NODE *lbitpaste(NODE *)
             CutBmp[CutIndex].CutMemoryBitMap);
 
          //memory
-         HDC MemDC = MainWindowx->ScreenWindow->m_MemoryDeviceContext;
+         HDC MemDC = MainWindowx->ScreenWindow->GetMemoryDeviceContext();
          HBITMAP oldBitmap = (HBITMAP) SelectObject(MemDC, MemoryBitMap);
 
          BitBlt(
@@ -1771,7 +1771,7 @@ NODE *lbitpastetoindex(NODE *arg)
             CutBmp[CutIndex].CutFlag = false;
             }
 
-         HDC ScreenDC = MainWindowx->ScreenWindow->m_ScreenDeviceContext;
+         HDC ScreenDC = MainWindowx->ScreenWindow->GetScreenDeviceContext();
 
          HDC TempMemDC = CreateCompatibleDC(ScreenDC);
          HBITMAP oldBitmap2 = (HBITMAP) SelectObject(
@@ -1779,7 +1779,7 @@ NODE *lbitpastetoindex(NODE *arg)
             CutBmp[CutIndex].CutMemoryBitMap);
 
          //memory
-         HDC MemDC = MainWindowx->ScreenWindow->m_MemoryDeviceContext;
+         HDC MemDC = MainWindowx->ScreenWindow->GetMemoryDeviceContext();
          HBITMAP oldBitmap = (HBITMAP) SelectObject(MemDC, CutBmp[i].CutMemoryBitMap);
 
          BitBlt(
@@ -2151,7 +2151,7 @@ void ibm_clear_screen(void)
    if (tempBrush != NULL)
       {
       // memory
-      HDC memoryDC = MainWindowx->ScreenWindow->m_MemoryDeviceContext;
+      HDC memoryDC = MainWindowx->ScreenWindow->GetMemoryDeviceContext();
       HBITMAP oldBitmap = (HBITMAP) ::SelectObject(memoryDC, MemoryBitMap);
 
       ::FillRect(memoryDC, &FullRect, tempBrush);
@@ -2558,7 +2558,7 @@ SIZE labelsize(const char *s)
 
    SIZE size = {0};
 
-   HDC screen = MainWindowx->ScreenWindow->m_ScreenDeviceContext;
+   HDC screen = MainWindowx->ScreenWindow->GetScreenDeviceContext();
 
    // get a handle to the label's font
    HFONT tempFont = CreateFontIndirect(&FontRec);
@@ -2587,10 +2587,8 @@ void label(const char *s)
       return;
       }
 
-   HDC ScreenDC = MainWindowx->ScreenWindow->m_ScreenDeviceContext;
-
    // memory
-   HDC MemDC = MainWindowx->ScreenWindow->m_MemoryDeviceContext;
+   HDC MemDC = MainWindowx->ScreenWindow->GetMemoryDeviceContext();
 
    HBITMAP oldBitmap = (HBITMAP) SelectObject(MemDC, MemoryBitMap);
 
@@ -2633,6 +2631,8 @@ void label(const char *s)
 
 
    // screen
+   HDC ScreenDC = MainWindowx->ScreenWindow->GetScreenDeviceContext();
+
    if (EnablePalette)
       {
       OldPalette = SelectPalette(ScreenDC, ThePalette, FALSE);

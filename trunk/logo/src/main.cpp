@@ -950,8 +950,7 @@ transline_helper(
 
    HPEN hPen = CreatePenIndirect(&logPen);
 
-   HDC ScreenDC = MainWindowx->ScreenWindow->m_ScreenDeviceContext;
-   HDC MemDC    = MainWindowx->ScreenWindow->m_MemoryDeviceContext;
+   HDC MemDC    = MainWindowx->ScreenWindow->GetMemoryDeviceContext();
 
    HBITMAP oldBitmap = (HBITMAP) SelectObject(MemDC, MemoryBitMap);
 
@@ -992,8 +991,7 @@ transline_helper(
    SelectObject(MemDC, oldBitmap);
 
    // screen
-
-   //   ::SetCapture(MainHWindow);
+   HDC ScreenDC = MainWindowx->ScreenWindow->GetScreenDeviceContext();
    SetROP2(ScreenDC, modex);
 
    if (EnablePalette)
