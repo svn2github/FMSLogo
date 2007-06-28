@@ -80,10 +80,6 @@
      </row>
      <row>
        <entry><link linkend='command-ask'>ask</link></entry>
-       <entry>dile</entry>
-     </row>
-     <row>
-       <entry><link linkend='command-ask'>ask</link></entry>
        <entry>pide</entry>
      </row>
      <row>
@@ -195,12 +191,20 @@
        <entry>menosPrimero</entry>
      </row>
      <row>
+       <entry><link linkend='command-butfirst'>butfirst</link></entry>
+       <entry>mpr</entry>
+     </row>
+     <row>
        <entry><link linkend='command-butfirsts'>butfirsts</link></entry>
        <entry>menosPrimeros</entry>
      </row>
      <row>
        <entry><link linkend='command-butlast'>butlast</link></entry>
        <entry>menosUltimo</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-butlast'>butlast</link></entry>
+       <entry>mul</entry>
      </row>
      <row>
        <entry><link linkend='command-buttonp'>button?</link></entry>
@@ -603,6 +607,10 @@
        <entry>primero</entry>
      </row>
      <row>
+       <entry><link linkend='command-first'>first</link></entry>
+       <entry>pri</entry>
+     </row>
+     <row>
        <entry><link linkend='command-firsts'>firsts</link></entry>
        <entry>primeros</entry>
      </row>
@@ -825,6 +833,10 @@
      <row>
        <entry><link linkend='command-last'>last</link></entry>
        <entry>ultimo</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-last'>last</link></entry>
+       <entry>ul</entry>
      </row>
      <row>
        <entry><link linkend='command-left'>left</link></entry>
@@ -2744,10 +2756,6 @@
        <entry><link linkend='command-difference'>difference</link></entry>
      </row>
      <row>
-       <entry>dile</entry>
-       <entry><link linkend='command-ask'>ask</link></entry>
-     </row>
-     <row>
        <entry>directorioPadre</entry>
        <entry><link linkend='command-popdir'>popdir</link></entry>
      </row>
@@ -3432,6 +3440,10 @@
        <entry><link linkend='command-bf'>bf</link></entry>
      </row>
      <row>
+       <entry>mpr</entry>
+       <entry><link linkend='command-butfirst'>butfirst</link></entry>
+     </row>
+     <row>
        <entry>mps</entry>
        <entry><link linkend='command-bfs'>bfs</link></entry>
      </row>
@@ -3454,6 +3466,10 @@
      <row>
        <entry>muestraTortuga</entry>
        <entry><link linkend='command-st'>st</link></entry>
+     </row>
+     <row>
+       <entry>mul</entry>
+       <entry><link linkend='command-butlast'>butlast</link></entry>
      </row>
      <row>
        <entry>no</entry>
@@ -3796,6 +3812,10 @@
        <entry><link linkend='command-questionbox'>questionbox</link></entry>
      </row>
      <row>
+       <entry>pri</entry>
+       <entry><link linkend='command-first'>first</link></entry>
+     </row>
+     <row>
        <entry>primero</entry>
        <entry><link linkend='command-first'>first</link></entry>
      </row>
@@ -4106,6 +4126,10 @@
      <row>
        <entry>trazados</entry>
        <entry><link linkend='command-traced'>traced</link></entry>
+     </row>
+     <row>
+       <entry>ul</entry>
+       <entry><link linkend='command-last'>last</link></entry>
      </row>
      <row>
        <entry>ultimo</entry>

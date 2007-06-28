@@ -930,7 +930,7 @@
 #define LOCALIZED_ERROR_TURTLEOUTOFBOUNDS      "tortuga fuera de los límites"
 #define LOCALIZED_ERROR_BADGRAPHINIT           "no pude inicializar gráficas"
 #define LOCALIZED_ERROR_BADDATA                "a %p no le gustó recibir %s"
-#define LOCALIZED_ERROR_DIDNTOUTPUT            "%p no devolvió nada a %p"
+#define LOCALIZED_ERROR_DIDNTOUTPUT            "%p no devolvió valor a %p"
 #define LOCALIZED_ERROR_NOTENOUGHINPUTS        "%p necesita recibir más cosas"
 #define LOCALIZED_ERROR_TOOMUCH                "demasiadas cosas entre paréntesis ()"
 #define LOCALIZED_ERROR_DONTSAYWHATTODOWITH    "No dices qué debo hacer con %s"

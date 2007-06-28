@@ -464,20 +464,6 @@ FIN
 TAPA "DIBUJALENTO
 
 
-;copydef "dile "ask
-
-PARA DILE :turtle :command
-HAZLOCAL "saveturtle QUIEN
-ACTIVA :turtle
-HAZLOCAL "maybeoutput RESULTADOEJECUTA :command
-ACTIVA :saveturtle
-SI VACIO? :maybeoutput [ALTO]
-DEVUELVE PRIMERO :maybeoutput
-FIN
-
-TAPA "DILE
-
-
 ;copydef "dir "dir
 
 PARA DIR
@@ -986,6 +972,10 @@ FIN
 TAPA "MINIMIZA
 
 
+copydef "mpr "butfirst
+
+copydef "mul "butlast
+
 ;copydef "nombre "name
 
 PARA NOMBRE :name.value.input :name.variable.input
@@ -1092,7 +1082,7 @@ TAPA [PARACADA foreach1 PARACADA.done ?RESTANTE]
 
 ;copydef "pide "ask
 
-PARA DILE :turtle :command
+PARA PIDE :turtle :command
 HAZLOCAL "saveturtle QUIEN
 ACTIVA :turtle
 HAZLOCAL "maybeoutput RESULTADOEJECUTA :command
@@ -1100,7 +1090,7 @@ ACTIVA :saveturtle
 SI VACIO? :maybeoutput [ALTO]
 DEVUELVE PRIMERO :maybeoutput
 FIN
-TAPA "DILE
+TAPA "PIDE
 
 
 ;copydef "ponelementomd "mdsetitem
@@ -1143,6 +1133,8 @@ TAPA "PONORIENTACION
 
 
 copydef "pp "fput
+
+copydef "pri "first
 
 copydef "pul "lput
 
@@ -1344,6 +1336,8 @@ MENSAJE [Información] [Este tutorial ha sido reemplazado por el material ubicado
 FIN
 
 TAPA "TUTOR
+
+copydef "ul "last
 
 ;copydef "vectoralista "arraytolist
 
