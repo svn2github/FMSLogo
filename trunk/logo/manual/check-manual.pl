@@ -279,7 +279,9 @@ $Exceptions{'command-ignore.xml'}{'allcaps'}{'MYPROGRAM'}  = 1;
 $Exceptions{'command-keyp.xml'}{'allcaps'}{'CBREAK'}  = 1;
 $Exceptions{'command-keyp.xml'}{'allcaps'}{'UNIX'}    = 1;
 
-$Exceptions{'command-label.xml'}{'allcaps'}{'AXIS'}   = 1;
+$Exceptions{'command-label.xml'}{'allcaps'}{'AXIS'}     = 1;
+$Exceptions{'command-label.xml'}{'allcaps'}{'FLASH'}    = 1;
+$Exceptions{'command-label.xml'}{'allcaps'}{'TELLJOKE'} = 1;
 
 $Exceptions{'command-labelsize.xml'}{'allcaps'}{'CENTERLABEL'}   = 1;
 $Exceptions{'command-labelsize.xml'}{'allcaps'}{'VERTICALLABEL'} = 1;
@@ -519,6 +521,7 @@ $Exceptions{'logohelp.xml'}{'allcaps'}{'DTD'}             = 1;
 $Exceptions{'logohelp.xml'}{'allcaps'}{'EN'}              = 1;
 $Exceptions{'logohelp.xml'}{'allcaps'}{'ENTITY'}          = 1;
 $Exceptions{'logohelp.xml'}{'allcaps'}{'FITNESS'}         = 1;
+$Exceptions{'logohelp.xml'}{'allcaps'}{'GENERICNAME'}     = 1;
 $Exceptions{'logohelp.xml'}{'allcaps'}{'GNU'}             = 1;
 $Exceptions{'logohelp.xml'}{'allcaps'}{'LOGOEXE'}         = 1;
 $Exceptions{'logohelp.xml'}{'allcaps'}{'MA'}              = 1;
@@ -526,6 +529,7 @@ $Exceptions{'logohelp.xml'}{'allcaps'}{'MERCHANTABILITY'} = 1;
 $Exceptions{'logohelp.xml'}{'allcaps'}{'OASIS'}           = 1;
 $Exceptions{'logohelp.xml'}{'allcaps'}{'PARTICULAR'}      = 1;
 $Exceptions{'logohelp.xml'}{'allcaps'}{'PRODUCTNAME'}     = 1;
+$Exceptions{'logohelp.xml'}{'allcaps'}{'PRODUCTVERSION'}  = 1;
 $Exceptions{'logohelp.xml'}{'allcaps'}{'PUBLIC'}          = 1;
 $Exceptions{'logohelp.xml'}{'allcaps'}{'PURPOSE'}         = 1;
 $Exceptions{'logohelp.xml'}{'allcaps'}{'SYSTEM'}          = 1;
@@ -768,10 +772,12 @@ foreach my $filename (<*.xml>) {
       }
     }
 
+    # Search for the use of undocumented commands word-by-word within the line
+    # (these are probably misspellings)
     while ($line =~ m!
                       (^|[^\.\w?])                      # preceeded by non-word
                       ([\.?]?[A-Z](?:\.??[A-Z0-9?])+)   # logo token
-                      ([^\.\w?]|$)                      # followed by non-word
+                      (?=([^\.\w?]|$))                  # followed by non-word
                       !gx) {
       my $token = $2;
 
