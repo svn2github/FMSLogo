@@ -84,7 +84,12 @@ The meaning of each of the list elements is explained in the following table:
       </row>
       <row>
         <entry>Quality</entry>
-        <entry>An integer that specifies the font's quality.</entry>
+        <entry>An integer that specifies the font's quality.
+        0 implies the default quality (defined by the current operating system settings).
+        1 implies draft quality.
+        2 implies proof quality.
+        3 implies no anti-aliasing.
+        4 implies anti-aliasing.</entry>
       </row>
       <row>
         <entry>PitchAndFamily</entry>
@@ -97,6 +102,11 @@ The meaning of each of the list elements is explained in the following table:
 
 <para>
 If you choose a font typeface that is not available on the system, then SETLABELFONT will list all fonts that are available.
+</para>
+
+<para>
+If you want to flash a message by writing it in one color, then writing the same message in the background color, you should disable anti-aliasing by choosing a <parameter>Quality</parameter> of 3.
+Otherwise, you'll end up with a faint outline of the message you wanted to completely erase.
 </para>
 
 </listitem>

@@ -43,12 +43,17 @@ LABEL can be used in <link linkend="command-perspective">PERSPECTIVE</link> mode
 The text will be placed wherever the turtle is on the screen and oriented according to the turtle's heading.
 </para>
 
+<para>
+If you want to flash a message by writing it in one color, then writing the same message in the background color, you should disable anti-aliasing in the LABELFONT by choosing a <parameter>Quality</parameter> of 3 when you call SETLABELFONT.
+Otherwise, you'll end up with a faint outline of the message you wanted to completely erase.
+</para>
+
 </listitem>
 </varlistentry>
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>; label the axes of a 3D Cartesian Coordinate System
+<programlisting><userinput>; label the axes of a 3D Cartesian Coordinate System
 TO AXIS
   SETLABELFONT [[Courier New] -19 0 0 700 0 0 0 0 3 2 1 49]
   RIGHT 90
@@ -81,6 +86,24 @@ SETTURTLE 0
 AXIS</userinput>
 </programlisting>
 
+<programlisting><userinput>; flash a message
+TO FLASH :message
+  ; Quality=3 will disable anti-aliasing
+  SETLABELFONT [[Arial] -19 0 0 700 0 0 0 0 3 2 3 49]
+  PENPAINT
+  LABEL :message
+  WAIT 180
+  PENERASE
+  LABEL :message
+  PENPAINT
+END
+
+TO TELLJOKE
+  FLASH [Q: Why did the chicken cross the road?]
+  FLASH [A: To get to the other side!]
+  FLASH [Ha! ha! ha!]
+END</userinput>
+</programlisting>
 </listitem>
 </varlistentry>
 
