@@ -3,13 +3,13 @@ o asteriodminer
   * Improve the font for larger monitors
   * Make the framerate configurable
 o lightcycle
-  * Add logic to display all errors that are rasied
+  * Add logic to display all errors that are raised
 o pacturtle
-  * Add logic to display all errors that are rasied
+  * Add logic to display all errors that are raised
 o snake
-  * Add logic to display all errors that are rasied
+  * Add logic to display all errors that are raised
 o tetrads
-  * Add logic to display all errors that are rasied
+  * Add logic to display all errors that are raised
 
 
 FMSLogo Extras 1.5
