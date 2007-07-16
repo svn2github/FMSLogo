@@ -21,8 +21,8 @@ TOINCLUDE= \
   turtlemaze    \
 
 $(SOURCEZIP) :
-	$(RM) $(shell /usr/bin/find release -name '*~')
-	$(RM) $(shell /usr/bin/find release -name '*.bak')
+	$(RM) $(shell /usr/bin/find . -iname '*~')
+	$(RM) $(shell /usr/bin/find . -iname '*.bak')
 	$(RM) asteriodminer/AM_Hiscores
 	$(RM) logoui/transcript.lgo
 	cd .. && zip -r -9 -X $(SOURCEZIP) $(addprefix extras/,$(TOINCLUDE)) -x */.cvsignore */CVS/ */CVS/* */*/.cvsignore */*/CVS/ */*/CVS/* */*/*/CVS/
