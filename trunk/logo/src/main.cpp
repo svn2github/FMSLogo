@@ -30,10 +30,10 @@ bool bWidth;                       // Width mode
 bool bHeight;                      // Height mode
 static bool bPerspective;          // Perspetive mode start up
 
-HBITMAP MemoryBitMap;              /* Backing store bitmap                */
+HBITMAP MemoryBitMap;              // Backing store bitmap
 
-HCURSOR hCursorWait;               /* handle for hour glass cursor    */
-HCURSOR hCursorArrow;              /* handle for normal cursor        */
+HCURSOR hCursorWait;               /* handle for hourglass cursor    */
+HCURSOR hCursorArrow;              /* handle for normal cursor       */
 
 HPALETTE ThePalette;                   /* Handle for the single color palette */
 
@@ -545,27 +545,6 @@ void TMyApp::InitMainWindow()
 
    g_PrinterAreaPixels = max(BitMapWidth, BitMapHeight) / 8;
 
-   // clear bitmap to white
-   HDC screenDC = CreateDC("DISPLAY", NULL, NULL, NULL);
-   if (screenDC != NULL)
-      {
-      MemoryBitMap = CreateCompatibleBitmap(screenDC, BitMapWidth, BitMapHeight);
-
-      HDC memoryDC = CreateCompatibleDC(screenDC);
-      if (memoryDC != NULL)
-         {
-         HBITMAP oldBitmap = (HBITMAP) SelectObject(memoryDC, MemoryBitMap);
-
-         PatBlt(memoryDC, 0, 0, BitMapWidth, BitMapHeight, WHITENESS);
-
-         SelectObject(memoryDC, oldBitmap);
-
-         DeleteDC(memoryDC);
-         }
-
-      DeleteDC(screenDC);
-      }
-
    ModulehInstance = HInstance;
 
    // init paths to library and help files based on location of .EXE
@@ -1008,8 +987,6 @@ transline_helper(
 
    HDC MemDC = MainWindowx->ScreenWindow->GetMemoryDeviceContext();
 
-   HBITMAP oldBitmap = (HBITMAP) SelectObject(MemDC, MemoryBitMap);
-
    if (EnablePalette)
       {
       OldPalette = SelectPalette(MemDC, ThePalette, FALSE);
@@ -1044,7 +1021,6 @@ transline_helper(
 
    // restore the previous bitmap and pen
    SelectObject(MemDC, oldPen);
-   SelectObject(MemDC, oldBitmap);
 
    // screen
    HDC ScreenDC = MainWindowx->ScreenWindow->GetScreenDeviceContext();

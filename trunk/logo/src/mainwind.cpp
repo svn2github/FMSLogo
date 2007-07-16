@@ -275,11 +275,29 @@ void TScreenWindow::SetupWindow()
 
    m_ScreenDeviceContext = GetDC(HWindow);
    m_MemoryDeviceContext = CreateCompatibleDC(m_ScreenDeviceContext);
+
+   // create the in-memory image of the bitmap
+   MemoryBitMap = CreateCompatibleBitmap(
+      m_ScreenDeviceContext,
+      BitMapWidth,
+      BitMapHeight);
+
+   // set the bitmap object of the screen
+   SelectObject(m_MemoryDeviceContext, MemoryBitMap);
+
+   // clear the screen to white
+   PatBlt(m_MemoryDeviceContext, 0, 0, BitMapWidth, BitMapHeight, WHITENESS);
    }
 
 
 void TScreenWindow::EvDestroy()
    {
+   if (MemoryBitMap != NULL)
+      {
+      DeleteObject(MemoryBitMap);
+      MemoryBitMap = NULL;
+      }
+
    if (m_MemoryDeviceContext != NULL)
       {
       DeleteDC(m_MemoryDeviceContext);
@@ -930,7 +948,6 @@ TMainFrame::TMainFrame(
 TMainFrame::~TMainFrame()
    {
    /* clean things up */
-   DeleteObject(MemoryBitMap);
    delete CommandWindow;
 
    delete ScreenWindow;
