@@ -1,0 +1,63 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<title>AM_Readme.html</title>
+</head>
+
+<body>
+<h1>Asteroid Miner by Dan Gerhards</h1>
+
+With contributions by David Costanzo
+
+<h2>Files</h2>
+AM.ico<br>
+AM.lgo<br>
+AM_Bitmaps.bmp<br>
+AM_Hiscores            (created the first time you run the program)<br>
+AM_Readme.html<br>
+Asteroid Miner(Tiny)   (shoctcut for the smallest size that works)<br>
+Asteroid Miner(Small)  (shortcut intended for 640x480 monitors)<br>
+Asteroid Miner(Med)    (shortcut intended for 800x600 monitors)<br>
+Asteroid Miner(Large)  (shortcut intended for 1024x768 monitors)<br>
+
+<h2>Installing</h2>
+1) Copy all these files into the folder that has logo.exe in it.  (If you want to put them somewhere else, you will have to modify a shortcut appropriately.)<br>
+2) If you have fmslogo.exe in a directory other than the default, C:\Program Files\FMSLogo, change the properties of the shortcut to point at the right directory.<br>
+3) Put the appropriate shortcut wherever you want, and use it to start the game.<br>
+4) The first time you play, press "I" or use the mouse to expand the menu and read the instructions.<br>
+
+<h2>Linux and Wine</h2>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I've tested FMSLogo-6.14.0 under Wine-0.9.36, and it works well enough to play the game! The editor is still kind of unstable, and the help menu doesn't work, but the most important parts are there, and reasonably fast. One thing will have to be changed: the program sets the font to Times New Roman, which probably didn't come with your Linux distro. This will cause the game to seem to lock up while it prints out a list of fonts you <i>do</i> have.  Either install the Times New Roman font, or change the program to use a font you have (on line 1449).  You will also have to create your own shortcut. I made a shortcut that launches "wine /opt/fmslogo.exe -h 660 -w 924 -f -l AM.lgo". You can use whatever you want for width and height, -w and -h, as long as the width is 1.4 times the height.
+
+<h2>Where Asteroid Miner Came From</h2>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;In college I took a class called Computer Science in Education.  The class was to teach Logo to teachers so they could use it in their classrooms.  I was a programmer from way back, so when it came time to create a final project, I showed off a little and wrote this.  Later, when I was, in fact, teaching a Logo class, I brought it in to show what Logo is capable of.  I also got interested in it again, so I added more levels and animation affects.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The game is obviously nothing new, but for the curious, I ripped off the ideas from Asteroids and an old Macintosh game called Crystal Quest.  It was originally going to be just an Asteroids clone, but the fastest computer on campus was a Pentium 100MHz, and it couldn't run the game smoothly with more than one object moving at a time.  Logo is a lot of things, but "fast" isn't one of them!<br>
+
+<h2>Technical Details</h2>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Since Logo is not very fast, very old computers may not run it smoothly.  If the game is too slow, there is a set of constants in the initMain procedure that can be uncommented to speed it up by dropping the frame rate.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The game works on a Dvorak keyboard layout as well as QWERTY.  To move the ship, just use H, T, and N instead of J, K, and L.  (If you don't know what the Dvorak layout is, look it up on the Internet.)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The source code isn't well commented because I wrote it with a deadline (for a class project), and I never originally intended to release it.  If you have a burning question about something, you can email me.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FSMLogo provides some nonstandard commands for dealing with the timer and keyboard, so the program will probably not work with other interpreters.  I don't plan on porting it either, but you can!<br>
+
+<h2>Contacting Me</h2>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;My email is <script language=javascript>
+<!--
+var myname = "dan";
+var site = "eaglenebula.net";
+var linktext = myname + "@" + site;
+document.write("<a href=" + "mail" + "to:" + myname +
+"@" + site + ">" + linktext + "<\/a>")
+//-->
+</script>
+
+<noscript>
+on my website: <a href='http://eaglenebula.net'>eaglenebula.net</a>
+</noscript>.  If you like Asteroid Miner, let me know.  I would also be interested in hearing about it if you manage to beat my high score of 33,595!<br>
+
+<h2>License</h2>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Asteroid Miner is free, and it must stay that way.  You are allowed to change it and make your own versions, but please keep my name on the title screen, and keep this file with the program if you give it away.  Maybe the new title screen could say, "Original Code by Dan Gerhards--Modified by Me."  If you make some siginficant changes, please send me a copy!<br><br>
+
+Last modified 2007-04-29
+</body>
+</html>

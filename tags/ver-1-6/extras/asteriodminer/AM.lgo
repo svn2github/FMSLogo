@@ -1,0 +1,2002 @@
+to addBonus :type
+  if :type = 1 [
+
+    if or :quit :reset [ stop ]
+    make "timeLeft :timeLeft - 1
+    make "score :score + 5
+    make "textCount 1  printText
+    make "textCount 2  printText
+    waitStop 1
+    if :timeLeft > 0 [ addBonus :type ]
+  ]
+  if :type = 2 [
+    if or :quit :reset [ stop ]
+    make "lives :lives - 1
+    make "score :score + 400
+    make "textCount 2  printText
+    make "textCount 3  printText
+    waitStop 40
+    if :lives > 1 [ addBonus :type ]
+  ]
+end
+
+to buttonDraw :num :draw
+  local [ bdTurtle bdPos bdHeading bdPen ]
+  make "bdTurtle turtle
+  setturtle 0
+  make "bdPos pos
+  make "bdHeading heading
+  make "bdPen pen
+  setpc[ 255 255 0 ]
+  pu setpos item 3 ( item :num :buttonList )
+  drawText item 1 ( item :num :buttonList ) "getLength
+  seth 270
+  pu fd :textLength/2 tfd 9 rt 90
+
+  sbitblock round( :textLength + 13 * :textScale + 2) round( 38 * :textScale + 1 )
+
+  if :draw [
+    pd
+    repeat 2 [
+      tfd 8 fd 22 * :textScale tfd 8 rt 90
+      tfd 8 fd :textLength tfd 5 rt 90
+    ]
+    pu tfd 9 rt 90 tfd 9
+    make "tempPos pos
+    drawText item 1 (item :num :buttonList ) "draw
+
+    setpos :tempPos
+    make "x round( first :tempPos )
+    make "y round( last :tempPos )
+    setxy :x :y
+    seth 180 tfd 4 lt 90
+    pd
+    ifelse( ( item 1 (item :num :buttonList) ) = [Instructions] ) [ tfd 6 fd 1 ] [ tfd 11 fd 1 ]  ;underline the first letter
+  ]
+  setturtle 0
+  pu setpos :bdPos
+  seth :bdHeading
+  setpen :bdPen
+  setturtle :bdTurtle
+end
+
+to buttonHit
+  local [ bhTurtle bhPos bhHeading bhPen bhDone bhNum]
+  make "bhTurtle turtle
+  setturtle 0
+  make "bhPos pos
+  make "bhHeading heading
+  make "bhPen pen
+  make "bhNum 0
+  make "bhDone "false
+  do.while [
+    make "bhNum :bhNum + 1
+    if item 2 (item :bhNum :buttonList) [
+      drawText item 1 ( item :bhNum :buttonList ) "getLength
+      make "x1 (first item 3 ( item :bhNum :buttonList )) - :textLength/2 - 10*:textScale
+      make "x2 (first item 3 ( item :bhNum :buttonList )) + :textLength/2 + 6*:textScale
+      make "y1 last item 3 ( item :bhNum :buttonList )
+      make "y2 (last item 3 ( item :bhNum :buttonList )) + 42 * :textScale
+      if( and ((first mousepos) > :x1) ((first mousepos) < :x2) ((last mousepos) > :y1) ((last mousepos) < :y2) ) [
+
+        ;Menu
+        if :bhNum = 1 [
+          menuOn "true
+          make "bhDone "true
+        ]
+
+        ;Menu Off
+        if :bhNum = 2 [
+          menuOn "false
+        ]
+
+        ;Play
+        if :bhNum = 3 [ commandPlay ]
+
+        ;Instructions
+        if :bhNum = 4 [ commandInstructions ]
+
+        ;Quit
+        if :bhNum = 5 [
+          make "quit "true
+          make "open.quit "true
+        ] 
+
+        ;High Scores
+        if :bhNum = 6 [ commandHighScores ]
+
+        ;High Scores Done
+        if :bhNum = 7 [ commandDone ]
+
+        ;Instructions Done
+        if :bhNum = 8 [ commandDone ]
+
+        ;Continue
+        if :bhNum = 9 [
+          make "paused "false
+        ]
+  
+        ;Reset
+        if :bhNum = 10 [
+          make "paused "false
+          make "reset "true
+        ]
+      ]
+    ]
+  ][ and :bhNum < :numButtons not :bhDone ]
+  setturtle 0
+  pu setpos :bhPos
+  seth :bhHeading
+  setpen :bhPen
+  setturtle :bhTurtle
+end
+
+to buttonOn :num :draw
+  setitem :num :buttonList ( list (item 1 ( item :num :buttonList )) :draw (item 3 ( item :num :buttonList )) )
+  buttonDraw :num :draw 
+end
+
+to capturekeyboardinput
+  ( keyboardon [ processKey keyboardvalue "true  ]
+               [ processKey keyboardvalue "false ] )
+end
+
+to checkScreen
+  make "x item 3 machine
+  make "y item 4 machine
+  if (:y < 310) [
+    messagebox [Screen Problem] [The screen height needs to be at least 310. Set the Asteroid Miner shortcut accordingly. (Try "C:\\Program Files\\FMSLogofmslogo.exe -H 500 -W 700 -F -L AM.lgo" as the shortcut target.)]
+    bye
+  ]
+  if (or (:x/:y < 1.39) (:x/:y > 1.405)) [
+    messagebox [Screen Problem] [The screen width needs to be 1.4 times the height. Set the Asteroid Miner shortcut accordingly. If the Logo screen fills the desktop, the height or width may be too large, in which case Logo is ignoring it.]
+    bye
+  ]
+end
+
+to clearBox
+  setturtle 1
+  setxy (:displayWidth/2 - :displayWidth)+1 (:displayHeight/2 - :displayHeight)+1
+  setfc[ 0 0 0 ]
+  bitblock :displayWidth+1 :displayHeight+1
+end
+
+to commandDone
+  make "displayHighScores "false
+  make "open.quit "false
+  make "displayInstructions "false
+  buttonOn 8 "false
+  buttonOn 7 "false
+  make "menuOn :menuState
+  make "doneButtonOn "false
+end
+
+to commandHighScores
+  keyboardoff
+  make "menuState :menuOn
+  make "doneButtonOn "true
+  make "displayHighScores "true
+  make "open.quit "true
+  menuOn "false
+  buttonOn 1 "false
+  make "bhDone "true
+end
+
+to commandInstructions
+  keyboardoff
+  make "menuState :menuOn
+  make "doneButtonOn "true
+  make "displayInstructions "true
+  make "open.quit "true
+  menuOn "false
+  buttonOn 1 "false
+  make "bhDone "true
+end
+
+to commandPlay
+  mouseoff
+  make "playing "true
+  menuOn "false
+  make "open.quit "true
+end
+
+to displayHighScores
+  loadScores
+  setturtle 0
+  drawText [ High Scores ] "getLength
+  setxy -( :textLength / 2 ) ( :displayHeight/2 - :textBarHeight*2 )
+  drawText [ High Scores ] "draw
+  repeat 10 [
+    setturtle 0
+    setxy (-12 * :scale * 17 / 2) ((22 * :scale) * 6 - (22 * :scale) * repcount)
+    make "name item repcount :hiNames 
+    drawText :name "draw
+    make "scoreS item repcount :AM_Hiscores
+    if :scoreS = 0 [ make "scoreS " ]
+    drawText :scoreS "getLength
+    setxy ((12 * :scale * 17 / 2 ) - :textLength) ((22 * :scale) * 6 - (22 * :scale) * repcount)
+    drawText :scoreS "draw
+  ]
+end
+
+to displayInstructions
+  clearBox
+  setturtle 0
+  drawText [ Instructions ] "getLength
+  setxy (-:textLength / 2)  ( :displayHeight/2 - 30*:textScale )
+  drawText [ Instructions ] "draw
+  make "ty :displayHeight/2 - 40*:textScale
+  make "tx -:displayWidth/2 + 102*:textScale
+  make "th -:displayWidth/2 + 66*:textScale  ;heading
+  make "ti -:displayWidth/2 + 150*:textScale  ;indent
+  make "line 32*:textScale
+  setxy :th :ty - :line*1    drawText [Playing the game:] "draw
+  setxy :ti :ty - :line*2    drawText [Navigate your mining ship through the asteroid field and] "draw
+  setxy :tx :ty - :line*3    drawText [pick up the gems. \ When you have collected all the gems you] "draw
+  setxy :tx :ty - :line*4    drawText [can see, you advance to the next level to mine a new section of] "draw
+  setxy :tx :ty - :line*5    drawText [the asteroid field. \ If you can finish all 13 levels, you win!] "draw
+  setxy :ti :ty - :line*6    drawText [Don't get going too fast. \ In space, the only way to slow] "draw
+  setxy :tx :ty - :line*7    drawText [down is to turn around and fire your engine in the other] "draw
+  setxy :tx :ty - :line*8    drawText [direction. \ By the time you finish doing that, you may be dust!] "draw
+  setxy :th :ty - :line*9.5  drawText [Ship controls:] "draw
+  setxy :tx :ty - :line*10.5 drawText [J....Turn the ship to the left] "draw
+  setxy :tx :ty - :line*11.5 drawText [K....Fire the engines] "draw
+  setxy :tx :ty - :line*12.5 drawText [L....Turn the ship to the right] "draw
+  setxy :th :ty - :line*14   drawText [Game controls:] "draw
+  setxy :tx :ty - :line*15   drawText [Q....Quit] "draw
+  setxy :tx :ty - :line*16   drawText [P....Pause or Reset] "draw
+end
+
+to displayText :text :pause
+  clearBox
+  drawText :text "getLength
+  setxy -:textLength/2  0 
+  drawText :text "draw
+  waitStop :pause
+end
+
+to drawChar :c :action
+  make "validChar "true
+  setturtle 0
+  ;a pen size of 2 doesn't look nice, so we'll use it in as small a range as possible
+  ifelse and(:scale >= 1.9) (:scale < 2.5) [ make "textPenSize 3 ][ make "textPenSize round :scale ]
+  setpensize :textPenSize
+  seth 0
+  make "cPos pos
+  make "x first :cPos
+  make "y last :cPos
+  make "x round :x
+  make "y round :y
+  setxy :x :y
+  setpc [ 255 255 0 ]
+  pd
+  if :action <> "getLength [
+    if :c=ascii "A [tfd 11 make "pos1 pos pu tfd 10 rt 90 tfd 5.5 make "pos2 pos tfd 5.5 rt 90 tfd 10 pd rt 90 tfd 11 tbk 11 lt 90 tfd 11 tbk 11 setpos :pos2 setpos :pos1]
+    if :c=ascii "B [pu tfd 21 pd rt 90 tfd 10 rtCnr tfd 7 rtCnr tfd 6 lt 180 tfd 6 rtCnr tfd 10 rtCnr tfd 10 tbk 4 rt 90 tfd 21]
+    if :c=ascii "C [pu rt 90 tfd 11 rt 180 pd tfd 10 rtCnr tfd 19 rtCnr tfd 10]
+    if :c=ascii "D [rt 90 tfd 10 ltCnr tfd 19 ltCnr tfd 10 tbk 4 lt 90 tfd 21]
+    if :c=ascii "E [rt 90 tfd 11 tbk 11 lt 90 tfd 12 rt 90 tfd 10 tbk 10 lt 90 tfd 9 rt 90 tfd 12]
+    if :c=ascii "F [tfd 12 rt 90 tfd 10 tbk 10 lt 90 tfd 9 rt 90 tfd 12]
+    if :c=ascii "G [pu rt 90 tfd 11 lt 90 pd tfd 12 lt 90 tfd 5 tbk 5 rt 90 tbk 12 lt 90 tfd 10 rtCnr tfd 19 rtCnr tfd 10 fd 1]
+    if :c=ascii "H [tfd 12 rt 90 tfd 11 tbk 11 lt 90 tfd 9 fd 1 pu rt 90 tfd 11 rt 90 fd 1 pd tfd 21 fd 1]
+    if :c=ascii "I [pu rt 90 pd tfd 6 tbk 3 lt 90 tfd 21 lt 90 tfd 3 bk 1 tbk 6]
+    if :c=ascii "J [pu tfd 7 rt 180 pd tfd 6 ltCnr tfd 6 ltCnr tfd 20 lt 90 tfd 3 tbk 6 bk 1]
+    if :c=ascii "K [pu rt 90 tfd 11 rt 90 fd 1 make "pos1 pos bk 1 lt 90 tbk 11 lt 90 pd tfd 12 make "pos2 pos tfd 9 fd 1 rt 90 pu tfd 11 rt 90 tfd 1 pd setpos :pos2 setpos :pos1]
+    if :c=ascii "L [rt 90 tfd 11 tbk 11 lt 90 tfd 22]
+    if :c=ascii "M [pu rt 90 tfd 11 lt 90 pd tfd 21 make "pos1 pos tbk 21 lt 90 pu tfd 5.5 rt 90 tfd 12 make "pos2 pos tbk 12 lt 90 tfd 5.5 rt 90 pd tfd 21 setpos :pos2 setpos :pos1]
+    if :c=ascii "N [pu rt 90 tfd 11 pd make "pos1 pos lt 90 tfd 21 tbk 21 pu lt 90 tfd 11 rt 90 pd tfd 21 setpos :pos1]
+    if :c=ascii "O [pu tfd 1 pd repeat 2 [ tfd 19 rtCnr tfd 9 rtCnr]]
+    if :c=ascii "P [tfd 21 rt 90 tfd 10 rtCnr tfd 7 rtCnr tfd 10]
+    if :c=ascii "Q [pu make "pos1 pos rt 90 tfd 11 lt 90 lt 45 pd tfd 8 pu setpos :pos1 rt 45 tfd 1 pd repeat 2 [ tfd 19 rtCnr tfd 8 rtCnr]]
+    if :c=ascii "R [pu rt 90 tfd 11 rt 45 fd 1 make "pos1 pos bk 1 lt 45 tbk 11 lt 90 pd tfd 21 rt 90 tfd 10 rtCnr tfd 7 rtCnr tfd 10 setpos :pos1]
+    if :c=ascii "S [rt 90 tfd 10 ltCnr tfd 10 ltCnr tfd 9 rtCnr tfd 7 rtCnr tfd 10 fd 1]
+    if :c=ascii "T [pu rt 90 tfd 5.5 pd lt 90 tfd 21 lt 90 tfd 5.5 tbk 11]
+    if :c=ascii "U [pu tfd 1 pd tfd 20 rt 180 tfd 20 ltCnr tfd 9 ltCnr tfd 20 fd 1]
+    if :c=ascii "V [pu rt 90 tfd 11 lt 90 tfd 21 rt 180 pd tfd 11 make "pos1 pos pu tfd 10 rt 90 tfd 5.5 make "pos2 pos tfd 5.5 rt 90 tfd 10 pd tfd 11 tbk 11 setpos :pos2 setpos :pos1 fd 1]
+    if :c=ascii "W [pu rt 90 tfd 11 lt 90 tfd 21 rt 180 rt 90 tfd 11 lt 90 pd tfd 21 make "pos1 pos tbk 21 lt 90 pu tfd 5.5 rt 90 tfd 9 make "pos2 pos tbk 9 lt 90 tfd 5.5 rt 90 pd tfd 21 setpos :pos2 setpos :pos1]
+    if :c=ascii "X [pu rt 90 tfd 11 lt 90 tfd 21 rt 180 pu make "pos1 pos tfd 21 lt 45 fd 1 make "pos2 pos bk 1 rt 45 rt 90 tfd 11 lt 45 fd 1 make "pos3 pos bk 1 rt 45 rt 90 tfd 21 pd setpos :pos2 pu setpos :pos1 pd setpos :pos3]
+    if :c=ascii "Y [pu rt 90 tfd 11 lt 90 tfd 21 rt 45 fd 1 make "pos1 pos bk 1 lt 45 tbk 21 lt 90  tfd 5.5 rt 90 tfd 12 make "pos2 pos tbk 12 lt 90 tfd 5.5 rt 90 tfd 21 pd setpos :pos2 rt 180 tfd 12 tbk 12 setpos :pos1]
+    if :c=ascii "Z [make "pos1 pos rt 90 tfd 12 pu tbk 1 lt 90 tfd 21 pd lt 90 tfd 11 tbk 11 setpos :pos1]
+
+    if :c=ascii "a [pu rt 90 tfd 1 pd tfd 8 tbk 2 lt 90 tfd 12 lt 90 tfd 6 ltCnr tfd 10 ltCnr]  ;ugly
+;    if :c=ascii "a [pu rt 90 tfd 1 pd tfd 8 tbk 2 lt 90 tfd 7 make "pos1 pos lt 90 tfd 6 ltCnr tfd 5 ltCnr pu setpos :pos1 pd lt 90 tfd 4 ltCnr tfd 5 ltCnr tfd 1]  ;too pretty
+;    if :c=ascii "a [pu rt 90 tfd 7 lt 90 tfd 1 pd tfd 11 lt 90 tfd 6 ltCnr tfd 10 ltCnr tfd 5 ltCnr lt 180 ltCnr tfd 1 fd 1]  ;also a bit too pretty
+    if :c=ascii "b [pu rt 90 tfd 9 rt 180 tfd 1 pd tfd 8 rt 90 tfd 21 tbk 9 rt 90 tfd 8 rtCnr tfd 10 rtCnr]
+    if :c=ascii "c [pu rt 90 tfd 9 rt 180 pd tfd 8 rtCnr tfd 10 rtCnr tfd 8 fd 1]
+    if :c=ascii "d [pu rt 90 tfd 1 pd tfd 8 lt 90 tfd 21 tbk 9 lt 90 tfd 8 ltCnr tfd 10 lt 45 tfd 1.4]
+    if :c=ascii "e [pu rt 90 tfd 8 rt 180 pd tfd 7 rtCnr tfd 10 rtCnr tfd 7 rtCnr tfd 5 rt 90 tfd 9]
+    if :c=ascii "f [pu rt 90 tfd 4 pd lt 90 tfd 12 lt 90 tfd 4 tbk 8 tfd 4 rt 90 tfd 8 rtCnr tfd 4]
+    if :c=ascii "g [pu rt 90 tfd 9 rt 180 pd tfd 8 rtCnr tfd 10 rtCnr tfd 8 rt 90 tfd 17 rtCnr tfd 7 rtCnr tfd 1]
+    if :c=ascii "h [tfd 21 tbk 9 rt 90 tfd 8 rtCnr tfd 11 fd 1]
+    if :c=ascii "i [tfd 12 fd 1 pu tfd 3 pd tfd 2]
+    if :c=ascii "j [pu rt 90 tfd 4 lt 90 tfd 17 rt 180 pd tfd 2 pu tfd 3 pd tfd 17 rtCnr tfd 4]
+    if :c=ascii "k [tfd 7 make "pos1 pos tfd 14 tbk 21 rt 90 pu tfd 9 fd 1 rt 90 fd 1 make "pos2 pos bk 1 lt 90 bk 1 lt 90 tfd 12 pd setpos :pos1 setpos :pos2]
+    if :c=ascii "l [tfd 21 fd 1]
+    if :c=ascii "m [tfd 12 rt 90 tfd 4 rtCnr tfd 11 rt 180 tfd 11 rtCnr tfd 3 rtCnr tfd 11 fd 1]
+    if :c=ascii "n [tfd 12 rt 90 tfd 8 rtCnr tfd 11 fd 1]
+    if :c=ascii "o [pu tfd 1 pd repeat 2 [tfd 10 rtCnr tfd 7 rtCnr]]
+    if :c=ascii "p [rt 90 tfd 8 ltCnr tfd 10 ltCnr tfd 8 lt 90 tfd 18 fd 1]
+    if :c=ascii "q [pu rt 90 tfd 9 rt 180 pd tfd 8 rtCnr tfd 10 rtCnr tfd 8 rt 90 tfd 18 fd 1]
+    if :c=ascii "r [ tfd 11 rtCnr tfd 8]
+;    if :c=ascii "r [tfd 12 tbk 2 rt 45 tfd 2.828 rt 45 tfd 6]  ;a bit too pretty. goes with nicer "a"
+    if :c=ascii "s [rt 90 tfd 8 ltCnr tfd 4 ltCnr tfd 7 rtCnr tfd 4 rtCnr tfd 8 fd 1]
+    if :c=ascii "t [pu rt 90 tfd 4 pd lt 90 tfd 12 lt 90 tfd 4 tbk 8 tfd 4 rt 90 tfd 9 fd 1]
+    if :c=ascii "u [pu tfd 12 rt 180 pd tfd 11 ltCnr tfd 7 ltCnr tfd 11 fd 1]
+    if :c=ascii "v [pu tfd 12 fd 1 make "pos1 pos bk 1 tbk 12 rt 90 tfd 4.5 make "pos2 pos tfd 4.5 lt 90 tfd 12 pd setpos :pos2 setpos :pos1]
+    if :c=ascii "w [pu tfd 6 pd tfd 6 tbk 6 pu make "pos1 pos tbk 6 rt 90 tfd 2 make "pos2 pos tfd 2 lt 90 tfd 6 make "pos3 pos tbk 6 rt 90 tfd 2 make "pos4 pos tfd 2 lt 90 tfd 6 pd tfd 6 tbk 6 setpos :pos4 setpos :pos3 setpos :pos2 setpos :pos1]
+    if :c=ascii "x [pu rt 90 tfd 9 lt 90 tfd 12 rt 180 pu make "pos1 pos tfd 12 lt 45 fd 1.414 make "pos2 pos bk 1.414 rt 45 rt 90 tfd 9 lt 45 fd 1.414 make "pos3 pos bk 1.414 rt 45 rt 90 tfd 12 pd setpos :pos2 pu setpos :pos1 pd setpos :pos3]
+    if :c=ascii "y [pu tfd 12 fd 1 make "pos1 pos bk 1 tbk 12 rt 90 tfd 2 rt 90 tfd 6 make "pos3 pos tbk 6 lt 90 tfd 2.5 make "pos2 pos tfd 4.5 lt 90 tfd 12 pd setpos :pos2 setpos :pos3 setpos :pos2 setpos :pos1]
+    if :c=ascii "z [make "pos1 pos rt 90 tfd 9 fd 1 pu bk 1 lt 90 tfd 12 pd lt 90 tfd 9 tbk 9 setpos :pos1]
+
+    if :c=ascii "0 [pu tfd 1 pd repeat 2 [tfd 19 rtCnr tfd 9 rtCnr]]
+    if :c=ascii "1 [pu rt 90 pd tfd 10 tbk 5 lt 90 tfd 21 lt 90 tfd 5 fd 1]
+    if :c=ascii "2 [pu rt 90 tfd 11 lt 90 pd lt 90 tfd 11 rt 90 tfd 10 rtCnr tfd 9 ltCnr tfd 8 ltCnr tfd 10]
+    if :c=ascii "3 [rt 90 tfd 10 ltCnr tfd 9 ltCnr tfd 10 rt 180 tfd 10 ltCnr tfd 8 ltCnr tfd 10 fd 1]
+    if :c=ascii "4 [pu rt 90 tfd 11 lt 90 pd tfd 21 tbk 10 lt 90 tfd 11 rt 90 tfd 10 fd 1]
+    if :c=ascii "5 [rt 90 tfd 10 ltCnr tfd 9 ltCnr tfd 9 rtCnr tfd 9 rt 90 tfd 11]
+    if :c=ascii "6 [pu tfd 1 pd tfd 11 pu tbk 11 pd rt 90 rt 45 tfd 1.414 lt 45 tfd 9 ltCnr tfd 9 ltCnr tfd 9 ltCnr lt 180 tfd 10 rtCnr tfd 10]
+    if :c=ascii "7 [pu tfd 21 rt 90 pd tfd 11 rt 90 tfd 21 fd 1]
+    if :c=ascii "8 [pu tfd 1 pd tfd 9 rt 45 tfd 1.414 tbk 1.414 lt 45 pu tbk 9 pd rt 90 rt 45 tfd 1.414 lt 45 tfd 9 ltCnr tfd 9 ltCnr tfd 9 rtCnr tfd 8 rtCnr tfd 9 rtCnr tfd 8 rtCnr]
+    if :c=ascii "9 [pu tfd 21 rt 90 tfd 11 rt 90 tfd 1 pd tfd 11 pu tbk 11 pd rt 90 rt 45 tfd 1.4 lt 45 tfd 9 ltCnr tfd 9 ltCnr tfd 9 ltCnr lt 180 tfd 10 rtCnr tfd 10]
+
+    if :c=ascii ": [tfd 2 pu tfd 8 fd 1 pd tfd 2]
+    if :c=ascii "- [pu tfd 12 rt 90 pd tfd 10]
+    if :c=ascii "? [pu rt 90 tfd 5 lt 90 pd tfd 2 pu tfd 3 pd tfd 6 rtCnr tfd 4 ltCnr tfd 7 ltCnr tfd 8 ltCnr tfd 4]
+    if :c=ascii "! [tfd 2 pu tfd 3 pd tfd 17]
+    if :c=ascii ". [tfd 2]
+    if :c=ascii ", [pu tbk 4 rt 30 pd tfd 3 lt 30 tfd 2 lt 90 tfd 3]
+    if :c=ascii "' [pu tfd 17 rt 30 pd tfd 3 lt 30 tfd 2 lt 90 tfd 3]
+    if :c=ascii "\" [pu tfd 18 pd tfd 4 fd 1 pu rt 90 tfd 4 rt 90 fd 1 pd tfd 4 fd 1] ;actually a double quote
+    if :c=ascii "_ [pu tbk 2 rt 90 pd tfd 11]
+ ]
+
+  make "charWidth 0
+  if( and :c > (ascii "A)-1  :c < (ascii "Z)+1 ) [make "charWidth 12]
+  if( and :c > (ascii "a)-1  :c < (ascii "z)+1 ) [make "charWidth 10]
+  if( and :c > (ascii "0)-1  :c < (ascii "9)+1 ) [make "charWidth 12]
+  if :c=ascii "I  [make "charWidth 7]
+  if :c=ascii "f  [make "charWidth 9]
+  if :c=ascii "j  [make "charWidth 5]
+  if :c=ascii "i  [make "charWidth 1]
+  if :c=ascii "l  [make "charWidth 1]
+  if :c=ascii "m  [make "charWidth 11]
+  if :c=ascii "r  [make "charWidth 9]
+  if :c=ascii "t  [make "charWidth 9]
+  if :c=ascii "1  [make "charWidth 11]
+  if :c=ascii ":  [make "charWidth 1]
+  if :c=ascii "-  [make "charWidth 10]
+  if :c=ascii "?  [make "charWidth 11]
+  if :c=ascii "!  [make "charWidth 1]
+  if :c=ascii ".  [make "charWidth 3] 
+  if :c=ascii ",  [make "charWidth 5]
+  if :c=ascii "'  [make "charWidth 5]
+  if :c=ascii "\" [make "charWidth 6]
+  if :c=ascii "_  [make "charWidth 11]
+  if :c = 32      [make "charWidth 7]
+
+  pu
+  setpos :cPos
+  seth 0
+
+  ifelse :charWidth = 0 [ 
+    make "validChar "false
+  ][
+    if :action <> "getLength [
+      ;the 3 in "tfd 3" is assumed to be 3 by inputText.keyHit and most button procedures
+      rt 90 tfd :charWidth tfd 3 lt 90
+    ]
+    make "textLength :textLength + :charWidth + 3
+  ]
+
+  make "x first pos
+  make "y last pos
+  make "x round :x
+  make "y round :y
+  setxy :x :y
+end
+
+to drawGem :pos1 :action
+  local "points
+  if (last :pos1) <> :offScreenY [
+    setturtle 0
+    make "points array 6
+    setpensize round :scale
+    seth 0
+    if :action = "draw [
+      setpc item abs(remainder first(:pos1) 7) {
+         [ 0   255 255 ]
+         [ 255 160 190 ]
+         [ 240 170 255 ]
+         [ 0   180 255 ]
+         [ 255 255 255 ] 
+         [ 170 255 170 ]
+         [ 255 255 170 ]
+       }@0
+
+      if :ee1 [
+        setpc item abs(remainder first(:pos1) 2) {
+          [ 255 100 100 ]
+          [   0 255   0 ]
+        }@0
+      ]
+    ]
+    if :action = "erase [ setpc[ 0 0 0 ] ]
+
+    repeat 6 [
+      pu setpos :pos1 pd
+      ifelse( or repcount = 1 repcount = 4 ) [
+        fd :gemRad
+        setitem repcount :points pos
+      ][
+        fd :gemRad * 0.75
+        setitem repcount :points pos
+      ]
+
+      ifelse( or repcount = 2 repcount = 5 ) [ rt 90 ] [ rt 45 ]
+    ]
+    setpos item 6 :points
+    repeat 6 [ setpos item repcount :points ]
+    pu
+  ]
+end
+
+to drawRock :pos1
+  local "points
+  setturtle 0
+  setpensize round 2*:scale
+  make "x item 1 :pos1
+  make "y item 2 :pos1
+  make "d :x
+  seth :d
+  make "color (remainder (abs :y) 6)
+  if :color = 0 [ setpc[ 120 120 120 ] ]
+  if :color = 1 [ setpc[ 132 132 132 ] ]
+  if :color = 2 [ setpc[ 144 144 144 ] ]
+  if :color = 3 [ setpc[ 156 156 156 ] ]
+  if :color = 4 [ setpc[ 150 133 111 ] ]
+  if :color = 5 [ setpc[ 150 150 125 ] ]
+  
+  make "points array 18
+  ;create a symetrical rock using twice as many points as that requires
+  repeat 9 [
+    setpos :pos1
+    rt 360 / 9 fd :rockRad
+    setitem repcount*2 - 1 :points pos
+    setitem repcount*2 :points pos
+  ]
+  ;replace "random" points in the symetrical rock with nearby points to make it more
+  ;irregular
+  repeat 5 [
+    ;select the point to mess with (must be between two points that are on the edge). Uses
+    ;an expression based on the rock's screen position instead of a random number so that
+    ;the same point is selected each time the rock is drawn
+    if repcount = 1 [make "pt abs( (remainder :x 8) ) * 2 + 2 ]
+    if repcount = 2 [make "pt abs( (remainder :y 8) ) * 2 + 2 ]
+    if repcount = 3 [make "pt abs( (remainder (:x - :y) 8) ) * 2 + 2 ]
+    if repcount = 4 [make "pt abs( (remainder (:x + :y) 8) ) * 2 + 2 ]
+    if repcount = 5 [make "pt abs( (remainder (:x * 3) 8) ) * 2 + 2 ]
+
+    ;move the point away from the edge
+    setpos :pos1  seth :d
+    if repcount = 1 [ rt 360 / 18 * (:pt + 1)  fd :rockRad - :rockRad / 3 ]
+    if repcount = 2 [ rt 360 / 18 * (:pt + 1)  fd :rockRad - :rockRad / 3.5 ]
+    if repcount = 3 [ rt 360 / 18 * (:pt + 1)  fd :rockRad - :rockRad / 4 ]
+    if repcount = 4 [ rt 360 / 18 * (:pt + 1)  fd :rockRad - :rockRad / 4.5 ]
+    if repcount = 5 [ rt 360 / 18 * (:pt + 1)  fd :rockRad ]
+    make "pt :pt + 1
+    setitem :pt :points pos
+  ]
+
+  setpos item 1 :points
+  pd
+  ;connect the points to draw the rock
+  repeat 18 [ setpos item repcount :points ]
+  setpos item 1 :points
+  pu
+
+  setpensize round :scale
+end
+
+to drawShip :x :y :d :action
+  ; :x      is xcor of ship
+  ; :y      is ycor of ship
+  ; :d      is heading of ship
+  ; :action is "draw, "redraw, or "erase
+
+  setturtle 0
+  setpensize round :scale*:shipRad/:normalShipRad
+
+  ifelse :shipGlow > :shipFadeStart [ 
+     make "pencolor [255 255 255]
+  ][
+     make "pencolor (list
+        (255 - 138) / :shipFadeStart * :shipGlow + 138  ; red
+        (255 - 60)  / :shipFadeStart * :shipGlow + 60   ; green
+        (255 - 255) / :shipFadeStart * :shipGlow + 255  ; blue
+     )
+  ]
+  if :action = "erase [ 
+     make "pencolor [ 0 0 0 ] 
+  ]
+
+  if :action = "draw [
+    ; blink cyles through two seconds, then resets
+    ifelse :blink = (40 * :glintSpeed) [ 
+       make "blink 0 
+    ][
+       make "blink :blink + 1
+    ]
+  ]
+
+  setpc :pencolor
+
+  ifelse :shipIsExploding [
+
+    ;explosion--random numbers for the fragment attribute lists are picked in playLoop
+    if :action = "draw [ make "expLen :expLen - :shipRad / :numExpSteps ]
+    repeat :numFrags [
+      setxy :x :y  seth :d
+      rt 360/:numFrags * repcount
+      make "fal item repcount :fragments  ;fal stands for fragment attribute list
+      fd :shipRad * (item 1 :fal) + :expStep * (item 2 :fal)
+      rt (item 3 :fal) + :expStep * (item 4 :fal)
+      pd
+      fd :expLen * (item 5 :fal) * :scale
+      rt 180
+      fd :expLen * (item 6 :fal) * :scale
+      if (item 7 :fal) = 1 [ rt (item 8 :fal)  fd :expLen * (item 9 :fal) * :scale ]
+      pu
+    ]
+  ][
+    ; draw right side of nose
+    setxy :x :y
+    seth :d + 67.5
+    fd :shipRad3
+
+    pd
+    fd :shipRad3 * 2 - :scale
+    make "light1Pos pos
+    fd :scale
+    rt 112.5
+    fd :shipSide
+
+    ;draw back of ship, trace back over it partway, draw engine if thrusting, then trace forward again--
+    ;this keeps the engine over top of all the other lines
+    rt 45
+    fd :shipSide - 1.414*:scale
+    rt 45
+    fd :shipSide + 2*:scale
+    rt 45
+    fd :shipSide - 1.414*:scale
+    bk :shipSide - 1.414*:scale
+    lt 45
+    if ( or :isThrustOn  :action = "erase ) [
+      setpensize round 2*:scale*:shipRad/:normalShipRad
+    ]
+    if ( and (:leaveStep < :numLeaveSteps * .80) :isThrustOn (:action <> "erase) ) [
+      setpc[ 255 230 130 ]
+    ]
+    bk :shipSide + 2*:scale
+
+    setpc :pencolor
+    setpensize round :scale*:shipRad/:normalShipRad
+
+    pu
+    fd :shipSide + 2*:scale
+    rt 45
+    fd :shipSide - 1.414*:scale
+    pd
+    rt 45
+    fd :shipSide
+
+    ;draw left side of nose
+    rt 112.5
+
+    fd :scale
+    make "light2Pos pos
+    fd :shipRad3 * 2 - :scale
+
+
+    ; draw the ship's nose
+    lt 93.06
+    fd 12.95 * :scale*:shipRad/:normalShipRad
+    rt 141.11
+    fd 12.95 * :scale*:shipRad/:normalShipRad
+    pu
+
+    ; draw the first light, now that we won't draw over it
+    if (or :leaveStep < :numLeaveSteps * 0.5 not :isLeaving) [ 
+       drawShip.light :light1Pos
+       drawShip.light :light2Pos
+    ]
+
+    setxy :x :y
+    seth :d+90
+    pd
+
+    ;draw cockpit begin
+    fd :shipRad6 / 2
+    rt 45  fd :shipRad6Diag
+    rt 45  fd :shipRad3
+    rt 135 fd :shipRad6Diag lt 45 fd :shipRad6 lt 45 fd :shipRad6Diag 
+    rt 135 fd :shipRad3
+    rt 45  fd :shipRad6Diag
+    rt 45  fd :shipRad6 / 2
+    lt 90 pu
+    ;draw cockpit end 
+  ]
+  if and( :shipGlow > 0 ) ( :action = "draw ) [ make "shipGlow :shipGlow - 1 ]
+  make "erase "false
+
+end
+
+to drawShip.light :lightPos
+
+  setpos :lightPos
+  seth 225 fd 1.414*:scale
+
+  ifelse :action = "erase [
+    ; we are erasing the ship, so we erase the lights, too
+    sbitblock round( 2*:scale ) round( 2*:scale )
+  ][
+    if (:blink > (20 * :glintSpeed - 1) ) [
+      ; the light is on--draw it
+      setfc [ 255 60 60 ] 
+      sbitblock round( 2*:scale / (:leaveStep+1) ) round( 2*:scale / (:leaveStep+1) )
+      setfc [ 0 0 0 ]
+    ]
+  ]
+
+end
+
+to drawText :txt :action
+  setturtle 0
+  make "tPos pos
+  make "textLength 0
+  seth 0
+  ifelse listp :txt [
+    make "numWords count :txt
+    repeat :numWords [
+      make "char item repcount :txt
+      make "numChars count :char
+      repeat :numChars [ drawChar ascii (item repcount :char) :action ]
+      if repcount <> :numWords [ rt 90 tfd 6 lt 90 make "textLength :textLength + 6 ]
+    ]
+  ][
+    make "numChars count :txt
+    repeat :numChars [ drawChar ascii (item repcount :txt ) :action ]
+  ]
+
+  make "textLength round( :textLength * :textScale  )
+  if :action = "getLength[ pu setpos :tPos seth 0 ]
+end 
+
+to findXy :object
+  make "findNew "false
+  if :object = "rock [ 
+    make "neighbor 0
+    make "x round( (random round( :gameWidth - :rockRad*4 )) -
+                   (:gameWidth - :rockRad*4) / 2 
+                 ) 
+    make "y round( (random round( :gameHeight - :rockRad*4 )) - 
+                   (:gameHeight - :rockRad*4) / 2 - :textBarHeight / 2 
+                 ) 
+    setxy :x :y
+
+    ;make sure rock is not on top of ship
+    if (distance[ 0 0 ]) < ( :rockRad + :shipRad + 6 ) [ make "findNew "true ]
+
+    ;make sure rock is not touching another--this must be the last thing checked for a rock
+    ;if it is too close to another for a ship to pass between them, that's OK only if the other rock does not already have a neigbor
+    repeat (:loop1 - 1) [
+      if (distance( item repcount :rocks )) < ( :rockRad*2 + :shipRad*2 + 6 ) [
+        ifelse( or(item repcount :rockNeighbors) > 0 (:neighbor>0) (distance( item repcount :rocks)) < :rockRad*2+3 ) [
+          make "findNew "true
+          make "neighbor 0
+        ][
+          make "neighboringRock repcount
+          make "neighbor 1
+        ]
+      ]
+    ]
+
+    if and (not :findNew) (:neighbor > 0) [
+      setitem :loop1 :rockNeighbors :neighbor
+      setitem :neighboringRock :rockNeighbors :loop1
+    ]
+  ]
+
+  if :object = "gem [ 
+    make "x round( (random round( :gameWidth - :shipRad*3.2 )) -
+                   (:gameWidth - :shipRad*3.2) / 2 
+                 )
+    make "y round( (random round( :gameHeight - :shipRad*3.2 )) -
+                   (:gameHeight - :shipRad*3.2) / 2 - :textBarHeight / 2 
+                 )
+    setxy :x :y
+
+    ;make sure gems don't overlap rocks
+    repeat :numRocks [
+      if (distance( item repcount :rocks )) < ( :rockRad + :gemRad + 2 ) [
+         make "findNew "true
+      ]
+    ]
+
+    ;make sure gem is not on top of ship
+    if (distance[ 0 0 ]) < ( :gemRad + :shipRad + 2 ) [ make "findNew "true ]
+
+    ;make sure gem is not too close to another
+    if not :findNew [
+      repeat (:loop1 - 1) [
+        if (distance( item repcount :gems )) < ( :gemRad*2 + 2 ) [ make "findNew "true ]
+      ]
+    ]
+
+    ;make sure gem is not so close to two rocks that the ship can't get to it
+    if not :findNew [
+      repeat :numRocks [
+        if (distance( item repcount :rocks )) < ( :shipRad*2 + :rockRad + 2 ) [
+          make "y :y+.001   ;marks gem as too close to a rock to glint (otherwise it would erase part of the rock)
+          make "firstRock repcount
+          repeat :numRocks [
+            if repcount <> :firstRock [
+              if (distance( item repcount :rocks )) < ( :shipRad*2 + :rockRad + 2 ) [ make "findNew "true ]
+            ]
+          ]
+        ]
+      ]
+    ]
+  ]  
+
+  if (and :object = "rock  :findNew) [
+    make "rockCounter :rockCounter + 1
+    if :rockCounter < 250 [ findXy "rock ]
+  ]
+  if (and :object = "gem  :findNew) [ findXy "gem ]
+end
+
+to gameLoop
+  make "quit "false
+
+  while [not :quit] [ 
+
+     make "reset "false
+
+     capturekeyboardinput
+     mouseon [ buttonHit ] [] [] [] []
+
+     menuOn "false
+     open.loop
+
+     initGame
+     levelLoop
+  ]
+
+  setturtle 0 ht pu
+  setturtle 1 ht pu
+  setturtle 2 ht pu
+  setturtle 3 ht pu
+end
+
+to glint :action
+
+  if :glintStep = 1 [
+    seth 315
+    make "glintSize 0
+    make "speedUp random 3
+    ifelse :speedUp = 0 [ make "rotateSpeed 0 ] [ make "rotateSpeed (random (20 / :glintSpeed)) + 5 ]
+  ]
+
+  if :glintStep = (20 * :glintSpeed) [ drawGem (item :glintGem :gems) "draw ]
+  setturtle 3
+  setpensize round :scale
+  pu
+  setpos item :glintGem :gems
+  seth 0
+  run item :speedUp {
+     [ rt 45  fd :gemRad * 0.75 lt 45  ]
+     [ lt 45  fd :gemRad * 0.75 rt 45  ]
+     [ rt 135 fd :gemRad * 0.75 lt 135 ]
+  }@0
+  pd
+
+  if :glintStep > 0 [
+    setpc [ 0 0 0 ]
+    seth 0
+    rt :rotateSpeed * (:glintStep-1)
+    repeat 4[ fd :glintSize bk :glintSize rt 90 ]
+
+    drawGem (item :glintGem :gems) "draw
+  ]
+  if and :glintStep < (20 * :glintSpeed) :action = "animate [
+    setturtle 3
+
+    if :glintStep < (10 * :glintSpeed + 1) [ make "glintSize :scale*:glintStep/:glintSpeed ]
+    if :glintStep > (10 * :glintSpeed) [ make "glintSize :scale*( (20*:glintSpeed + 1) - :glintStep)/:glintSpeed]
+
+    setpc[ 255 255 255 ]
+    seth 0
+    if :speedUp = 0 [ make "rotateSpeed :rotateSpeed + 2 ]
+    rt :rotateSpeed * :glintStep
+    repeat 4[ fd :glintSize bk :glintSize rt 90 ]
+  ]
+  pu
+
+end
+
+to hitGemCheck
+
+  ; Checks all gems, whether they are on the screen or not.
+  ; This keeps the speed more constant on slow computers.
+  repeat :maxGems [
+    make "x first (item repcount :gems)
+    make "y last  (item repcount :gems)
+    make "dist2 (power (:shipX - :x ) 2) + (power (:shipY - :y ) 2)
+    ifelse :shipIsExploding [
+      if :dist2 < (:shipGem2 * 4) [
+        drawGem (item repcount :gems) "draw
+      ]
+    ][
+      if :dist2 < :shipGem2 [
+        if and :glintStep < (20 * :glintSpeed) :glintGem = repcount [
+          make "glintStep :glintStep + 1
+          glint "erase
+          make "glintStep (20 * :glintSpeed)
+        ]
+
+        drawGem (item repcount :gems) "erase
+        setitem repcount :gems (list :offScreenX :offScreenY)
+        make "numGems :numGems - 1
+        if :numGems = 0 [
+          make "bonus :timeLeft * 5
+          make "isLeaving "true
+          make "isThrustOn "true
+          timerOff
+        ]
+        make "score :score + :gemWorth
+        make "textCount 1  printText
+        make "textCount 2  printText
+        make "gemWorth :gemWorth + 5
+        make "shipGlow :shipFadeStart + 4
+      ]
+    ]
+  ]
+end
+
+to hitRockCheck
+  ; Checks all rocks, whether they are on the screen or not.
+  ; This keeps the speed more constant on slow computers
+  repeat :numRocks [
+    make "x first (item repcount :rocks)
+    make "y last  (item repcount :rocks)
+    make "dist2   (power (:shipX - :x) 2) + (power (:shipY - :y) 2)
+    make "shipRock2 (power (:shipRad + :rockRad) 2)
+    if (and :dist2 < :shipRock2  not :isLeaving   not :shipIsExploding) [
+      timerOff
+      drawShip :shipXInt :shipYInt :dr "erase
+      ;save the point where the ship hit the rock, for the explosion bitmap
+      ;turtle was set by drawShip
+      seth towards ( item repcount :rocks ) fd :shipRad - :shipRad3
+      make "expCtr (list ((first pos) - :shipRad ) ((last pos) - :shipRad ) )
+      make "shipIsExploding "true
+      make "expLen :shipRad
+    ]
+    if and :dist2 < (:shipRock2 * 2) (or :shipIsExploding :isLeaving) [
+       drawRock (item repcount :rocks)
+    ]
+    if and (:dist2 < :shipRock2) :isLeaving [
+       make "isBehindRock "true
+    ]
+  ]
+end
+
+to initGame
+  make "score 0
+  make "level 1
+  make "lives 4
+  make "gameOver "false
+  wrap
+
+  setturtle 0 ht pu
+  setturtle 1 ht pu
+  setturtle 2 ht pu
+  setturtle 3 ht pu
+
+  setpensize round :scale
+end
+
+to initLevel
+  make "quit "false
+  make "reset "false
+  make "timeLeft 40 + :level * 40
+  make "numGems :level * 2 + 2
+  make "numRocks :level * 2
+  make "levelIsOver "false
+  make "isBehindRock "false
+  make "gemWorth 40
+  setShipSize :normalShipRad
+end
+
+to initLife
+  clearBox
+  repeat :numRocks [ drawRock (item repcount :rocks) ]
+  repeat :maxGems [ drawGem (item repcount :gems) "draw ]
+
+  make "key 0
+  make "shipX 0
+  make "shipY 0
+  make "shipXInt 0
+  make "shipYInt 0
+  make "dr 0
+  make "oldShipX :shipX
+  make "oldShipY :shipY
+  make "oldDr :dr
+  make "shipDeltaX 0
+  make "shipDeltaY 0
+  make "turnRt "false
+  make "turnLt "false
+  make "isThrustOn "false
+  make "shipIsExploding "false
+  make "isLeaving "false
+  make "expStep 0
+  make "leaveStep 0
+  make "textCount 1
+  make "erase "false
+  make "lifeOver "false
+  make "shipGlow 0
+  make "blink 0 ;controls the ships blinking lights
+  make "glintCystal 1
+  make "glintStep 100
+  make "rockDrawCount 1
+  make "gemDrawCount 1
+end
+
+to initMain
+  make "scale (item 4 machine) / 500  ;sets the game scale based on the height set on the command line
+  setturtle 1 ht pu
+  setturtle 0 ht pu
+  setturtle 2 ht pu
+  setturtle 3 ht pu
+  make "displayWidth item 3 machine
+  make "displayHeight item 4 machine
+  make "textLength 0
+  make "numRocks 0
+  make "numGems 0
+  make "score 0
+  make "displayHighScores "false
+  make "displayInstructions "false
+  make "doneButtonOn "false
+  make "pauseNow "false
+  make "paused "false
+  make "playing "false
+  make "glintGem 0
+  make "timer "false
+  sbitblock 1 1
+  make "ee1 and (item 2 time) = "Dec (and (item 3 time) > 22 (item 3 time) < 27)
+  make "ee2 and (item 2 time) = "Mar (item 3 time) = 11
+
+;CONSTANTS
+  ;These scales aren't all the same because I changed my mind on sizes a few times:
+  make "open.scale 1.25 * :scale
+  make "textScale (5/6) * :scale
+  make "numFrags 7   ;number of framents in an explosion
+  make "gemRad 8 * :scale   ;gems should be wider than maxSpeed
+  make "textBarHeight 24 * :scale
+  make "gameWidth :displayWidth
+  make "gameHeight :displayHeight - :textBarHeight
+  make "maxLevel 13
+  make "rockRad 25 * :scale
+  make "normalShipRad 14 * :scale
+  setShipSize :normalShipRad
+
+  ;it's faster if the math is done here, once, and saved in a variable
+  make "shipGem2 (:shipRad + :gemRad)*(:shipRad + :gemRad) ;distance squared
+
+  make "maxGems :maxLevel * 2 + 2
+  make "maxRocks :maxLevel * 2
+  make "rocks (array :maxRocks 1)
+  make "rockNeighbors (array :maxRocks 1)
+  make "gems (array :maxGems 1)
+  make "offScreenX 0
+  make "offScreenY :displayHeight / 2 + :rockRad * 4
+
+  repeat :maxGems [ setitem repcount :gems ( list :offScreenX :offScreenY ) ]
+  repeat :maxRocks [ setitem repcount :rocks ( list :offScreenX :offScreenY ) ]
+  repeat :maxRocks [ setitem repcount :rockNeighbors 0 ]
+
+  make "Apos (list -175*:open.scale 105*:open.scale )
+  make "Mpos (list -115*:open.scale 5*:open.scale )
+
+  ;The rest of the constants control speed and frames per second.
+  ;This first set is for modern computers and corresponds to 40 fps.
+  make "animationDelay 25   ;in milliseconds
+  make "turnSpeed 5
+  make "numExpSteps 60
+  make "numLeaveSteps 70
+  make "acceleration .1 * :scale
+  make "maxSpeed2 ( 6 * :scale ) * ( 6 * :scale )   ;maximum speed squared
+  make "shipFadeStart 40   ;steps until the glowing ship starts to fade again
+  make "glintSpeed 2   ;larger is slower--also controls speed of blinking spaceship lights
+
+  ;This set corresponds to 20 fps.
+  ;You can uncomment these to speed things up a little if you have a very old computer.
+  ;make "animationDelay 50
+  ;make "turnSpeed 10
+  ;make "numExpSteps 30
+  ;make "numLeaveSteps 35
+  ;make "acceleration .4 * :scale
+  ;make "maxSpeed2 ( 12 * :scale ) * ( 12 * :scale )   ;maximum speed squared
+  ;make "shipFadeStart 20   ;steps until the glowing ship starts to fade again
+  ;make "glintSpeed 1
+
+;BITMAPS
+  setturtle 0
+  setbitindex 1
+  make "pos1 ( list 0 -:displayHeight/2+10*:scale )
+  setpos :pos1
+  bitload "AM_bitmaps.bmp wait 1
+  bitcut 42 42
+
+  setturtle 2
+  setbitindex 2
+  setxy 0  -:displayHeight/2 + 10*:scale + 42
+  bitcut 80 110 wait 1
+  bitfit round(53*:open.scale) round(73*:open.scale)
+  bitmapturtle
+
+  ;this is down here to allow a "wait" to happen before bitfitting--otherwise data seems to be lost
+  setbitindex 1
+  bitfit round(:shipRad*2.5*:scale) round(:shipRad*2.5*:scale)
+
+  ;cut numbers  indexes 10-19
+  repeat 10 [
+    setbitindex repcount + 9
+    setpos :pos1
+    drawChar (ascii "0) - 1 + repcount "draw 
+    setpos :pos1
+    sbitcut round( 10 * :scale )+1 round( 18 * :scale )+1 
+  ]
+
+  setbitindex 3
+  setpos :pos1
+  drawText [Score:] "draw
+  make "scoreLength :textLength
+  setpos :pos1
+  sbitcut :textLength round( 18 * :scale )+1 
+
+  setbitindex 4
+  setpos :pos1
+  drawText [Bonus:] "draw
+  make "bonusLength :textLength
+  setpos :pos1
+  sbitcut :textLength round( 18 * :scale )+1 
+
+  setbitindex 6
+  setShipSize 9 * :scale
+  initLife
+  drawShip 0 0 0 "draw 
+  pu seth 270 fd :shipRad lt 90 fd :shipRad
+  sbitcut round( 18 * :scale )+1 round( 18 * :scale )+1 
+  setShipSize :normalShipRad
+
+;BUTTONS
+  make "numButtons 10
+  make "buttonList array :numButtons
+  setitem 1  :buttonList (list [Menu]         "true  (list 0 -:displayHeight/2+4 ))
+  setitem 2  :buttonList (list [Menu Off]     "false (list 0 -:displayHeight/2+4 ))
+  setitem 3  :buttonList (list [Play]         "false (list -90*:scale -:displayHeight/2+4 ))
+  setitem 4  :buttonList (list [Instructions] "false (list -197*:scale -:displayHeight/2+4 ))
+  setitem 5  :buttonList (list [Quit]         "false (list 90*:scale -:displayHeight/2+4 ))
+  setitem 6  :buttonList (list [High Scores]  "false (list 192*:scale -:displayHeight/2+4 ))
+  setitem 7  :buttonList (list [Done]         "false (list 0 -:displayHeight/2+4 ))
+  setitem 8  :buttonList (list [Done]         "false (list 0 -:displayHeight/2+4 ))
+  setitem 9  :buttonList (list [Continue]     "false (list 0 8*:textScale ))
+  setitem 10 :buttonList (list [Reset]        "false (list 0 -42*:textScale ))
+
+;HIGH SCORE FILE CHECK
+  make "filelist files
+  make "fileExist "false
+  repeat count :filelist[
+    if (item repcount :filelist) = "AM_Hiscores [ make "fileExist "true ]
+  ]
+  if not :fileExist [
+    openwrite "AM_Hiscores
+    setwrite "AM_Hiscores
+    print "AsteroidMinerHS
+    closeall
+    setwrite []
+  ]
+end
+
+to initObjects
+  do.while [
+    repeat :maxRocks [ setitem repcount :rocks (list :offScreenX :offScreenY ) ]  ;clear the rock list
+    repeat :maxRocks [ setitem repcount :rockNeighbors 0 ]  ;clear the neighbor list
+   
+    make "rockCounter 0
+
+    make "loop1 1  ;findXy needs this value--it's the number of rocks so far
+    repeat :numRocks [
+      if :rockCounter <> 250 [
+        findXy "rock 
+        setitem :loop1 :rocks ( list :x :y )
+      ]
+      make "loop1 :loop1 + 1
+    ]
+  ][ :rockCounter = 250 ]  ;if rockCounter = 250, then it tried too long to find spots for new rocks,
+                            ;so it will start placing them all over again
+
+  repeat :maxGems [ setitem repcount :gems (list :offScreenX :offScreenY ) ]  ;clear the gem list
+
+  make "loop1 1  ;findXy needs this value--now it's the number of gems so far
+  repeat :numGems [
+    findXy "gem
+    setitem :loop1 :gems ( list :x :y )
+    make "loop1 :loop1 + 1
+  ]
+end
+
+to inputText :iPos :txt :max
+  setfocus [ MSWLogo Screen ]
+  setpos :iPos
+  drawText :txt "draw
+  drawChar 32 "draw
+  make "iPos pos
+  pu
+  drawText [_] "draw
+
+  make "key 0
+  make "string "
+  keyboardon [ inputText.keyHit ]
+  
+  do.while [ wait 2 ][ :key <> 13 ]
+
+  keyboardoff
+  output :string
+end
+
+to inputText.eraseChar :char
+  drawText :char "getLength
+  pu seth 0 tbk 9 lt 90 fd :textLength
+  setpc [ 0 0 0 ]
+  pd rt 90 tfd 33 pu tbk 33
+  sbitblock round( :textLength + 1 ) round( 33 * :textScale )
+  tfd 9
+end
+
+to inputText.keyHit
+  make "key keyboardvalue
+
+  ifelse :key = 8 [
+    if (count :string) > 0 [
+
+      if (count :string) <> :max [ inputText.eraseChar "_ ]
+      ifelse (count :string) <> :max [
+        inputText.eraseChar (item (count :string) :string)
+      ][
+        ;erase either the last character or the underscore--whichever is longer
+        drawText [_] "getLength
+        make "underscoreLength :textLength
+        drawText (item (count :string) :string) "getLength
+        ifelse :underscoreLength > :textLength [
+          inputText.eraseChar "_
+        ][
+          inputText.eraseChar (item (count :string) :string)
+        ]
+      ]
+
+      make "s :string
+      make "string "
+      repeat (count :s) - 1 [ make "string word :string (item repcount :s) ]
+
+      drawText [_] "draw
+    ]
+  ][
+    if (count :string) <> :max [ inputText.eraseChar "_ ]
+
+    drawText ( char :key ) "getLength
+    if :validChar [
+      if (count :string) <> :max [
+        make "string word :string (char :key)
+        drawText ( char :key ) "draw
+        if (count :string) = :max [
+          pu lt 90 fd :textLength
+          drawText [_] "draw
+        ]
+      ]
+    ]
+    if (count :string) <> :max [ drawText [_] "draw ]
+  ]
+end
+
+to levelLoop
+  while [ (and (not :quit) (not :reset) (not :gameOver)) ] [
+    initLevel
+
+    ; this block pauses while the objects' positions are selected, then 
+    ; continues pausing until one second has gone by if it hasn't already
+    make "start timemilli
+    ifelse :level < :maxLevel [ displayText ( list "Level  :level ) 0 ] [ displayText [Last Level] 0 ]
+    initObjects
+    make "now timemilli
+    while [ :now - :start < 1000 ] [ make "now timemilli ]
+
+    lifeLoop
+    if :levelIsOver [
+      displayText (list "Level :level "Complete!) 60
+      ifelse ( :timeLeft > 0 ) [ displayText [Adding Bonus...] 0 ] [ displayText [No Bonus] 0 ]
+      
+      make "textCount 1  printText
+      make "textCount 2  printText
+      waitStop 30
+      if( :timeLeft > 0 ) [ addBonus 1 ]
+      waitStop 60
+      make "level :level + 1
+    ]
+    if :level > :maxLevel [
+      make "gameOver "true
+      displayText [Game Complete!] 120
+      ifelse ( :lives > 1 ) [ displayText [Adding Extra Ship Bonus...] 0 ] [ displayText [No Extra Ship Bonus] 30 ]
+      make "textCount 2  printText
+      make "textCount 3  printText
+      waitStop 30
+      if( :lives > 1 ) [ addBonus 2 ]
+      waitStop 30
+    ]
+  ]
+
+  if (and not :quit  not :reset) [
+    scoreCheck
+  ]
+end
+
+to lifeLoop
+
+  while [ (and  not :quit  not :reset  not :gameOver   not :levelIsOver) ] [
+    if :lives > 1 [
+      displayText [Get Ready!] 60
+    ]
+    if :lives = 1 [
+      displayText [Last Ship...Get Ready!] 60
+    ]
+    initLife
+    timerOn
+    playLoop
+    timerOff
+    if( and not :quit  not :reset ) [ waitStop 60 ]
+    if :lives = 0 [
+      make "gameOver "true
+      displayText [Game Over!] 0
+      make "textCount 2 printText
+      waitStop 50
+    ]
+  ]
+end
+
+to loadScores
+  make "hiNames array 10
+  make "AM_Hiscores array 10
+  openread "AM_Hiscores
+  setread "AM_Hiscores
+  make "tempWord readword
+  repeat 10 [
+    make "tempWord1 readword
+    make "tempWord2 "
+    make "add repcount
+    repeat (count :tempWord1) [ make "tempWord2 word :tempWord2 char ((ascii ( item repcount :tempWord1 ))-( 117 + :add )) ]
+    setitem repcount :hiNames :tempWord2
+    make "tempWord1 readword
+    make "tempWord2 "
+    repeat (count :tempWord1) [ make "tempWord2 word :tempWord2 char ((ascii ( item repcount :tempWord1 ))-( 117 + :add )) ]
+    ifelse :tempWord2 = " [
+      setitem repcount :AM_Hiscores 0
+    ][
+      setitem repcount :AM_Hiscores :tempWord2
+    ]
+  ]
+  closeall
+end
+
+to ltCnr
+  lt 45 tfd 1.4 lt 45
+end
+
+to menuOn :action
+  if :action [ buttonOn 1 "false ]
+  buttonOn 2 :action
+  buttonOn 3 :action
+  buttonOn 4 :action
+  buttonOn 5 :action
+  buttonOn 6 :action
+  make "menuOn :action
+  if and not :action  not :playing [ buttonOn 1 "true ]
+end
+
+to obk :d
+  bk :d*:open.scale
+end
+
+to ofd :d
+  fd :d*:open.scale
+end
+
+to ofdd :d
+  fd :d*:open.scale
+  if not :open.quit [wait 4]
+end
+
+to open
+  clearBox
+  window
+  make "playing "false
+  make "open.quit "false
+
+  if :score > 0 [ make "textCount 2 printText ]
+  setpensize round 3*:open.scale
+  setturtle 0
+  open.stars
+
+  menuOn :menuOn
+
+  if not :open.quit [ waitStop 8 ]
+  if :ee2 [open.author]
+  open.ASTEROID
+  open.MINER
+  open.turtleO
+  if not :open.quit [ waitStop 60 ]
+  open.author
+  repeat 7 [ if not :open.quit [ waitStop 30 ] ]
+
+  clearBox
+  setturtle 2 ht
+  if (and not :displayHighScores not :displayInstructions not :open.quit) [ menuOn :menuOn ]
+
+  if not :open.quit [ displayHighScores ]
+
+  ifelse :displayHighScores [
+    displayHighScores
+    buttonOn 7 "true 
+    capturekeyboardinput
+
+    do.while [ waitStop 10 ] [ :displayHighScores ]
+  ][
+    repeat 8 [if not :open.quit [waitStop 30] ]
+  ]
+
+  if :displayHighScores [
+    displayHighScores
+    buttonOn 7 "true 
+    capturekeyboardinput
+
+    do.while [ waitStop 10 ] [ :displayHighScores ]
+  ]
+
+  if :displayInstructions [
+    displayInstructions
+    buttonOn 8 "true 
+    capturekeyboardinput
+
+    do.while [ waitStop 10 ] [ :displayInstructions ]
+  ]
+end
+
+to open.ASTEROID
+  setpc[ 200 120 255 ]
+  ;A
+  pu  setpos :Apos
+  seth 180  obk 7  pd
+  seth 198
+  ofd 55  make "oPos pos  ofdd 105  obk 160
+  lt 30  ofdd 80
+  obk 20
+  seth 270  setpos :oPos  if not :open.quit [wait 4]
+  ;S
+  setpc[ 183 125 255 ]
+  pu  setpos :Apos  seth 90  ofd 70  pd
+  seth 280  ofdd 30  
+  lt 80  ofdd 30
+  lt 115  ofdd 40
+  rt 90  ofdd 40
+  rt 80  ofdd 48
+  ;T
+  setpc[ 166 130 255 ]
+  pu  setpos :Apos  seth 90  ofd 90  pd
+  ofdd 40  obk 20
+  rt 95  ofdd 70
+  ;E
+  setpc[ 149 135 255 ]
+  pu  setpos :Apos  seth 90  ofd 140  pd
+  seth 100  ofdd 40  obk 40
+  rt 85  ofdd 60  obk 30
+  lt 90  ofdd 25  obk 25  rt 90
+  ofd 30
+  lt 95  ofdd 35
+  ;R
+  setpc[ 132 140 255 ]
+  pu  setpos :Apos  seth 90  ofd 190  pd
+  seth 180
+  ofdd 60  obk 60
+  lt 60  ofdd 30
+  rt 120  ofdd 30
+  lt 100  ofdd 50
+  ;O skipped until later but pause like it is being done
+  waitStop 8
+  ;I
+  setpc[ 115 145 255 ]
+  pu  setpos :Apos  seth 90  ofd 290  pd
+  seth 85
+  ofdd 14  obk 7
+  rt 90  ofdd 70
+  lt 80  obk 7  ofdd 14
+  ;D
+  setpc[ 100 150 255 ]
+  pu  setpos :Apos  seth 90  ofd 320  pd
+  seth 175
+  ofdd 75  make "oPos pos  obk 75
+  lt 70  ofdd 40
+  rt 60  ofdd 30
+  setpos :oPos  if not :open.quit [waitStop 4]
+end
+
+to open.author
+  local "fontAttribList
+  setturtle 0
+  pu
+  setpos :Apos
+  seth 180
+  ofd 207
+  rt 90
+  ofd 50
+  rt 180
+  setpc( list 200*.9 120*.9 255*.9 )
+  make "fontAttribList ( list [Times New Roman] round( 13 * :open.scale ) 0 0 400 0 0 0 0 0 0 0 0 )
+  setlabelfont :fontAttribList
+  ifelse :ee2 [
+    label [by Dan Gerhards whose birthday is today!]
+  ][
+    label [by Dan Gerhards]
+  ]
+end
+
+to open.loop
+  open
+  if not :open.quit [ open.loop ]
+end
+
+to open.MINER
+  ;M
+  setpc[ 200 125 255 ]
+  pu  setpos :Mpos  pd
+  seth 195  ofdd 70  obk 70
+  lt 65  ofdd 30
+  lt 80  ofdd 30
+  rt 120  ofdd 70
+  ;I
+  setpc[ 166 130 255 ]
+  pu  setpos :Mpos  seth 90  ofd 75  pd
+  seth 95
+  ofdd 14  obk 7
+  rt 86  ofdd 65
+  lt 85  obk 7  ofdd 14
+  ;N
+  setpc[ 149 135 255 ]
+  pu  setpos :Mpos  seth 90  ofd 110  pd
+  seth 185  ofdd 60  obk 60
+  lt 32  ofdd 72
+  lt 151  ofdd 60
+  ;E
+  setpc[ 132 140 255 ]
+  pu  setpos :Mpos  seth 0  obk 5  seth 90  ofd 165  pd
+  seth 87  ofdd 40  obk 40
+  rt 95  ofdd 55  obk 30
+  lt 90  ofdd 25  obk 25  rt 90
+  ofd 30
+  lt 85  ofdd 35
+  ;R
+  setpc[ 115 145 255 ]
+  pu  setpos :Mpos  seth 90  ofd 220  pd
+  seth 180
+  ofdd 70  obk 40  make "oPos pos  obk 30
+  lt 80  ofdd 30 
+  rt 45  ofdd 15
+  setpos :oPos  if not :open.quit [wait 4]
+  lt 8  ofdd 115
+end
+
+to open.stars
+  pu
+  repeat 400 [
+    make "x random( round :displayWidth )
+    make "y random( round :displayHeight )
+    setxy (:x - :displayWidth / 2) (:y - :displayHeight / 2)
+    setpixel[ 255 255 255 ]
+  ]
+end
+
+to open.turtleO
+  setturtle 2
+  bitmapturtle
+  pu  setxy (( first :Apos ) + 232*:open.scale) (:displayHeight / 2)
+  st
+  make "speed 3
+  make "oy last pos
+  make "ox first pos
+  make "bounce 0
+  if not :open.quit [ open.turtleO.animate ]
+  setxy :ox 40*:open.scale
+end
+
+to open.turtleO.animate
+  waitStop 2
+  make "speed :speed + 3*:open.scale
+  make "oy :oy - :speed 
+  if :oy < 40*:open.scale [
+    make "oy :oy + ( 10*:open.scale - (:oy - 40*:open.scale) )
+    make "speed (:speed - 10*:open.scale) * (-1)
+    make "bounce :bounce + 1
+    setxy :ox 40*:open.scale
+    wait 1
+  ]
+  setxy :ox :oy*:open.scale
+  if( and :bounce < round(3*1.25) not :open.quit ) [ open.turtleO.animate ]
+end
+
+to pauseGame
+  local "keepOff
+  make "keepOff "false
+  make "pauseNow "false
+  setturtle 1
+  setxy -57*:scale -43*:scale
+  setbitindex 20
+  sbitcut round(110*:scale) round(90*:scale)
+
+  buttonOn 9 "true
+  buttonOn 10 "true
+
+  if not :timer [ make "keepOff "true ]
+  timerOff
+  mouseon [ buttonHit ] [] [] [] []
+  make "paused "true
+  do.while [ eventcheck ][ :paused ]
+  mouseoff
+  if not :keepOff [ timerOn ]
+
+  buttonOn 9 "false
+  buttonOn 10 "false
+
+  setturtle 1
+  setxy -57*:scale -43*:scale
+  setbitindex 20
+  bitpaste
+  wait 10
+end
+
+to playLoop
+
+  while [ (and (not :quit) (not :reset) (:expStep < :numExpSteps) (not :levelIsOver)) ] [
+    make "start timemilli
+
+    if (or (:oldShipX <> :shipXInt)
+           (:oldShipY <> :shipYInt)
+           (:oldDr    <> :dr)
+           :shipIsExploding 
+           :isLeaving 
+           :erase 
+           :blink = 0) [
+      if not :isBehindRock [ drawShip :oldShipX :oldShipY :oldDr "erase ]
+    ]
+    if :shipIsExploding [
+      make "expStep :expStep + 1
+      if :expStep = :numExpSteps [ make "lives :lives - 1 ]
+    ]
+    if :isLeaving [
+      make "leaveStep :leaveStep + 1  shrinkShip
+      if :leaveStep = :numLeaveSteps [ make "levelIsOver "true ]
+    ]
+    if (and not :levelIsOver   not :isBehindRock  not (:expStep = :numExpSteps)) [ drawShip :shipXInt :shipYInt :dr "draw ]
+    make "oldIsBehindRock :isBehindRock
+    make "isBehindRock "false
+    setxy :shipX :shipY
+    if not :isLeaving [
+      hitGemCheck
+    ]
+
+    hitRockCheck
+
+    ;if the ship just emerged from behind a rock, draw it now...
+    if (and not :levelIsOver   not :isBehindRock  :oldIsBehindRock) [
+      drawShip :shipXInt :shipYInt :dr "redraw
+    ]
+    ;...and if it just went behind one, erase it now
+    if (and :isBehindRock   not :oldIsBehindRock) [
+      drawShip :shipXInt :shipYInt :dr "erase
+    ]
+
+    ;don't print if they're equal. keeps it from showing the removal of a ship just yet
+    if :expStep < :numExpSteps [ printText ]
+
+    if and :shipIsExploding  (:expStep = 0) [
+      setpos :expCtr
+      setbitindex 1
+      bitpaste
+
+      make "fragments( array :numFrags 1 )
+      repeat :numFrags [
+        setitem repcount :fragments ( list ( (random 3) / 2 )  ( (random 3 + 2) / 2 )  ( random 360 )
+                                             ( (random 61) + 10 )  ( (random 4) * .25 + .5 )  ( (random 6) * .25 )
+                                             ( random 2 )  ( (random 341) + 10 ) ( (random 20) / 10 )
+                                    )
+       ]
+    ]
+    if :expStep = 2 [
+      setpos :expCtr
+      sbitblock (round :shipRad * 2.5 * :scale) (round :shipRad * 2.5 * :scale)
+    ]
+
+    ifelse :glintStep < (20 * :glintSpeed) [
+      make "glintStep :glintStep + 1
+      glint "animate
+    ][
+      make "glint? random 150
+      if :glint? = 0 [ 
+        ;level*2+2 is the number of gems the level started with
+        make "glintGem (random (:level*2+2) ) + 1
+        make "y (last (item :glintGem :gems))
+
+        ; if round :y != :y, then gem is close to a rock
+        if and ((round :y) = :y) (:y <> :offScreenY) [ make "glintStep 0 ]
+      ]
+    ]
+    make "oldShipX :shipXInt
+    make "oldShipY :shipYInt
+    make "oldDr :dr
+
+    if :isLeaving [ make :isThrustOn "true ]
+    processCommand
+    
+
+    make "shipX :shipX + :shipDeltaX
+    make "shipY :shipY + :shipDeltaY
+
+    wrapCheck
+
+    make "shipXInt round :shipX
+    make "shipYInt round :shipY
+    while [ timemilli - :start < :animationDelay ] []
+  ]
+
+end
+
+to printText
+  setturtle 1
+  ;To speed things up, only one of the three objects at the top of the screen is printed at a time.
+  ;They need to be continuously printed though, because the ship can fly through them.
+  if :textCount = 1 [
+    ;paste "Bonus"
+    (setxy (:displayWidth / 2 - :displayWidth + 4 * :scale) 
+           (:displayHeight / 2 - :textBarHeight + ((:textBarHeight-18 * :scale) / 2) ))
+    setbitindex 4
+    bitpaste
+
+    ;paste time left
+    (setxy (:displayWidth / 2 - :displayWidth + :bonusLength + 7 * :scale)
+           (:displayHeight / 2 - :textBarHeight + ((:textBarHeight-18 * :scale) / 2) ))
+    seth 90
+    ;noyield keeps time from changing while it is being printed
+    noyield
+    repeat count (:timeLeft * 5) [
+      setbitindex (item repcount (:timeLeft * 5) ) + 10
+      bitpaste
+      fd round( 13 * :scale )
+    ]
+    yield
+    sbitblock round( 10 * :scale )+1 round( 18 * :scale )+1
+  ]
+
+  if :textCount = 2 [
+    ;paste "Score"
+    (setxy ( -((count :score)*13 + :scoreLength * :scale) / 2 )
+           (:displayHeight / 2 - :textBarHeight + ((:textBarHeight-18 * :scale) / 2) ))
+    seth 90
+    sbitblock round( :scoreLength + :scale)+1+5*:textScale round( 18 * :scale + :scale)+1
+    setbitindex 3
+    bitpaste
+    fd round( :scoreLength + 2 * :scale )
+
+    ;paste score
+    repeat count :score [
+      sbitblock round(13 * :scale + :scale)+1 round(18 * :scale + :scale)+1
+      setbitindex (item repcount :score ) + 10
+      bitpaste
+      fd round( 13 * :scale )
+    ]
+  ]
+
+  if :textCount = 3 [ 
+    ;print extra lives left
+    make "extraLives :lives - 1
+    if :extraLives < 0 [ make "extraLives 0 ]
+    setxy (:displayWidth / 2 - 4) (:displayHeight / 2 - :textBarHeight + ((:textBarHeight-17 *:scale) / 2))
+    seth 270
+    setbitindex 6
+    repeat :extraLives [ fd 20*:scale  bitpaste ]
+    repeat 3 - :extraLives [ fd 20*:scale  sbitblock round( 18 * :scale ) round( 18 * :scale ) ]
+  ]
+
+  make "textCount :textCount + 1
+  if :textCount = 4 [ make "textCount 1 ]
+end
+
+to processCommand
+  if not :shipIsExploding [
+    if :turnLt   [ make "dr :dr - :turnSpeed ]
+    if :turnRt   [ make "dr :dr + :turnSpeed ]
+    if :dr > 360 [ make "dr :dr - 360 ]
+    if :dr < 0   [ make "dr :dr + 360 ]
+
+    if :isThrustOn [
+      ;sin and cos are backwards because Logo calls 0 degrees straight up 
+      make "xAccel ( sin :dr ) * :acceleration
+      make "yAccel ( cos :dr ) * :acceleration
+
+      make "shipDeltaX :shipDeltaX + :xAccel
+      make "shipDeltaY :shipDeltaY + :yAccel
+ 
+      if not :isLeaving [
+        ;If the ship is at maximum speed, get rid of the extra speed, but leave the 
+        ;direction alone. 
+        make "speed2( (:shipDeltaX)*(:shipDeltaX) + (:shipDeltaY)*(:shipDeltaY) )
+        if( :maxSpeed2 - :speed2 < 0 )[
+          make "shipDeltaX (:maxSpeed2 * :shipDeltaX / :speed2)
+          make "shipDeltaY (:maxSpeed2 * :shipDeltaY / :speed2)
+        ]
+      ]
+    ]
+  ]
+  if :pauseNow [ pauseGame ]
+end
+
+to processKey :key :iskeydown
+
+  ;the first key of each pair is querty, the second is Dvorak
+  if :playing [
+    if (or :key=ascii "L :key=ascii "N) [ make "turnRt :iskeydown ]
+    if (or :key=ascii "J :key=ascii "H) [ make "turnLt :iskeydown ]
+
+    if (or :key=ascii "K :key=ascii "T) [
+       ifelse :iskeydown [
+          make "isThrustOn "true
+       ][
+          if not :isLeaving [ make "isThrustOn "false  make "erase "true ]
+       ]
+    ]
+
+    if( and :key=ascii "P    not :iskeydown    not :paused ) [ 
+       make "pauseNow "true 
+    ]
+
+    if :iskeydown [
+       if (or :key=ascii "X :key=ascii "Q) [ 
+          make "quit      "true 
+          make "open.quit "true
+       ]
+
+      if :paused [
+         if :key = ascii "C [ make "paused "false ]
+         if :key = ascii "R [ make "paused "false  make "reset "true ]
+      ]
+    ]
+  ]
+
+  if (and not :playing not :iskeydown) [
+    ifelse :doneButtonOn [
+      if :key = ascii "D [ commandDone ]
+    ][
+      if :key = ascii "P [ commandPlay ]
+      if :key = ascii "I [ commandInstructions ]
+      if :key = ascii "H [ commandHighScores ]
+      if :key = ascii "M [ menuOn not :menuOn ] ; (toggle menu)
+      if or :key=ascii "X :key=ascii "Q [
+         make "quit      "true 
+         make "open.quit "true
+      ]
+    ]
+  ]
+end
+
+to rtCnr
+  rt 45 tfd 1.4 rt 45
+end
+
+to rungame
+  catch "error [ fullscreen ]
+  icon "Commander
+  icon "Editor
+
+  cs
+  setfocus[MSWLogo Screen]
+  setscreencolor[ 0 0 0 ]
+  checkScreen
+  initMain
+
+  gameLoop
+
+  keyboardoff
+  mouseoff
+  bye
+end
+
+to saveScores
+  openwrite "AM_Hiscores
+  setwrite "AM_Hiscores
+  print "AsteroidMinerHS
+  repeat 10 [
+    make "tempWord1 item repcount :hiNames
+    make "tempWord2 "
+    make "add repcount
+    repeat (count :tempWord1) [ make "tempWord2 word :tempWord2 char ((ascii ( item repcount :tempWord1 ))+ 117 + :add ) ]
+    print :tempWord2
+    make "tempWord1 item repcount :AM_Hiscores
+    make "tempWord2 "
+    repeat (count :tempWord1) [ make "tempWord2 word :tempWord2 char ((ascii ( item repcount :tempWord1 ))+ 117 + :add ) ]
+    ifelse :tempWord2 = "0 [
+      print "
+    ][
+      print :tempWord2
+    ]
+  ]
+  print "AsteroidMinerHS
+  closeall
+  setwrite[]
+end
+
+to sbit.position
+  make "sPos pos
+  make "sTurtle turtle
+  make "sHeading heading
+  setturtle 1
+  pu
+  setpos :sPos
+  seth 0
+  bk round( :scale ) - 1
+  rt 90 bk round( :scale ) - 1
+end
+
+to sbitblock :swidth :sheight
+  sbit.position
+  bitblock :swidth + (round( :scale )-1)*2 :sheight + (round( :scale )-1)*2
+  setturtle :sTurtle
+  setpos :sPos
+  seth :sHeading
+end
+
+to sbitcut :swidth :sheight
+  sbit.position
+  bitcut :swidth + (round( :scale )-1)*2 :sheight + (round( :scale )-1)*2
+  setturtle :sTurtle
+  setpos :sPos
+  seth :sHeading
+end
+
+to scoreCheck
+  loadScores
+  ifelse :score > item 10 :AM_Hiscores [
+    displayText [New High Score!] 0
+    ;put the score on top of the screen
+    make "textCount 2
+    printText 
+
+    drawText [Enter your name: Dan_] "getLength  ;get the length with a typical(?) input
+    make "name inputText (list ( 0 - :textLength/2 ) ( 0 - 18*:scale*3 ) ) [Enter your name: ] 11
+    make "index 11
+    make "done "false
+    do.while [
+      make "index :index - 1
+      ifelse :score > item :index - 1 :AM_Hiscores [
+        setitem (:index) (:AM_Hiscores) (item :index - 1 :AM_Hiscores)
+        setitem (:index) (:hiNames) (item :index - 1 :hiNames)
+      ][ setitem (:index) (:AM_Hiscores) (:score)
+         setitem (:index) (:hiNames) (:name)
+         make "done "true
+      ]
+    ][ and (not :done) (:index > 2) ]
+    if not :done [ 
+      setitem 1 (:AM_Hiscores) (:score)
+      setitem 1 (:hiNames) (:name)
+      make "done "true
+    ]
+
+    saveScores
+
+    clearBox
+    setturtle 2 ht
+    make "open.quit "false
+    displayHighScores
+    repeat 3 [if not :open.quit [waitStop 30] ]
+  ][
+    setwrite[]
+    displayText [Final Score] 0
+    ;put the score on top of the screen
+    make "textCount 2
+    printText 
+    waitStop 180
+  ]
+end
+
+to setShipSize :rad
+  make "shipRad :rad
+  make "shipSide ( (sin 22.5) * :shipRad * 2 )
+  make "shipRad3 :shipRad / 3
+  make "shipRad6 :shipRad / 6
+  make "shipRad6Diag :shipRad / 6 * 1.414
+end
+
+to shrinkShip
+  make "shipRad :shipRad - :normalShipRad/:numLeaveSteps
+  if :shipRad < 0 [ make "shipRad 0 ]
+  setShipSize :shipRad
+end
+
+to tbk :dist
+  bk :dist*:textScale
+end
+
+to testt :t
+cs
+lt 90 fd 400 rt 90 fd 170
+make "textScale 1
+drawText :t "draw
+home 
+lt 90 fd 400 rt 90 fd 100
+make "textScale 2
+drawText :t "draw
+home 
+lt 90 fd 400 lt 90 fd 0
+make "textScale 3
+drawText :t "draw
+home
+lt 90 fd 400 lt 90 fd 125
+make "textScale 4
+drawText :t "draw
+end
+
+to tfd :dist
+  fd :dist*:textScale
+end
+
+to timerOff
+  if :timer [ cleartimer 1 ]
+  make "timer "false
+end
+
+to timerOn
+  ;make Windows call this code (timeLeft stuff) every 200 milliseconds
+  settimer 1 200 [ if :timeLeft > 0 [ make "timeLeft :timeLeft - 1 ] ]
+  make "timer "true
+end
+
+to waitStop :delay
+  repeat :delay [
+    wait 1
+    if or :reset :quit [ stop ]
+    if :pauseNow [ pauseGame ]
+  ]
+end
+
+to wrapCheck
+;if the center of the object is out of the box, wrap it around to the other side
+  if :shipX > (:gameWidth / 2 ) [
+    make "shipX (:shipX - :gameWidth)
+  ]
+  if :shipX < (:gameWidth / 2 - :gameWidth )[
+    make "shipX (:shipX + :gameWidth)
+  ]
+  if :shipY < (:displayHeight / 2 - :displayHeight )[
+    make "shipY (:shipY + :displayHeight )
+  ]
+  if :shipY > (:displayHeight / 2 ) [
+    make "shipY (:shipY - :displayHeight )
+  ]
+end
+
+make "startup [ rungame ]
