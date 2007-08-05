@@ -262,6 +262,8 @@ NODE *intern(NODE *nd)
 
 void release_all_objects()
    {
+#ifdef MEM_DEBUG
+
    for (int i = 0; i < HASH_LEN; i++)
       {
       for (NODE * hash_entry = hash_table[i];
@@ -304,4 +306,5 @@ void release_all_objects()
       deref(hash_table[i]);
       hash_table[i] = NIL;
       }
+#endif // MEM_DEBUG
    }
