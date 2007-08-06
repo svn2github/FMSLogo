@@ -205,7 +205,7 @@ extern void keyboard_uninit(void);
 extern void mouse_uninit(void);
 
 
-// File main.cpp
+// File statwind.cpp
 extern void update_status_evals(void);
 extern void update_status_floodcolor(void);
 extern void update_status_memory(void);
@@ -223,6 +223,9 @@ extern void update_status_turtlevisability(void);
 extern void update_status_turtlewhich(void);
 extern void update_status_vectors(void);
 
+
+// File main.cpp
+extern void GetWorkingAreaDimensions(int & workingAreaWidth, int & workingAreaHeight);
 extern void ShowMessageAndStop(const char * Title, const char * Message);
 extern void ShowErrorMessageAndStop(const char * Message);
 extern void MyMessageScan(void);

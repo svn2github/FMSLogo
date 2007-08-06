@@ -1,5 +1,5 @@
 ----------------------------------------------------------------------
-FMSLogo Version 6.16.0 for Microsoft Windows 95/98/ME/NT/2000/XP/Vista
+FMSLogo Version 6.16.0 for Microsoft Windows
 ----------------------------------------------------------------------
 
    I. Kit Description/Location
@@ -21,6 +21,9 @@ I. Kit Description/Location (http://sourceforge.net/projects/fmslogo)
 II. New features/bugs fixed:
 
   * Added for 6.16.0
+    o Fix bug #1765108; MACHINE now outputs the correct working area,
+      even it it changed.  FMSLogo also now positions new windows in the
+      working area, even if the size of the desktop or taskbar has changed.
     o Improve the performance of line drawing by 12% and circle drawing by 60%.
 
   For a complete history of changes across all versions of FMSLogo, see
@@ -59,7 +62,7 @@ III. Special Thanks
 
 IV. Standard features
 
-  * Supports Windows 95/98/ME/NT/2000/XP/Vista.
+  * Supports Windows 95/98/ME/NT/2000/XP/WS03/Vista.
   * Supports TCP/IP WinSock Networking.
   * Supports Text in all available fonts and sizes.
   * Supports 1024 independent Turtles.

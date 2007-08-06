@@ -103,8 +103,6 @@ bool IsOkayToUseCommanderWindow = false; // Flag to signal it's OK to write to r
 bool traceflag = false;                // Flag to signal trace button is active
 bool stepflag = false;                 // Flag to signal step button is active
 bool yield_flag = true;                // Flag to signal yield state
-int MaxWidth = 0;                      // Actual Main window size x
-int MaxHeight = 0;                     // Actual Main window size y
 int xoffset = 0;                       // Used to go from logo to windows coords x
 int yoffset = 0;                       // Used to go from logo to windows coords y
 bool GiveFocusToEditbox = false;       // Flag to signal that focus should go to the editbox
@@ -150,6 +148,19 @@ static const LINE3D turtle_vertices[4] =
       {{  8.0, 0.0, 0.0},{  8.0,  8.0, 0.0}},
    }
 ;
+
+
+// returns the dimensions of the working area, that is
+// the size of the desktop without the task bar.
+void GetWorkingAreaDimensions(int & Width, int & Height)
+   {
+   RECT workingArea;
+
+   SystemParametersInfo(SPI_GETWORKAREA, 0, &workingArea, 0);
+   Width  = workingArea.right  - workingArea.left;
+   Height = workingArea.bottom - workingArea.top;
+   }
+
 
 void cnv_strnode_string(char *textbuf, NODE *arg)
    {
@@ -476,6 +487,11 @@ void TMyApp::InitMainWindow()
    int y = 0;
    int w = BitMapWidth;
    int h = BitMapHeight;
+
+   // The main window should not exceed the size of the working area
+   int maxWidth;
+   int maxHeight;
+   GetWorkingAreaDimensions(maxWidth, maxHeight);
    
    // if fixed mode
    if (bFixed)
@@ -483,23 +499,23 @@ void TMyApp::InitMainWindow()
       if (bHeight)
          {
          // if height specified santize it against screen height
-         h = min(h, MaxHeight);
+         h = min(h, maxHeight);
          }
       else
          {
          // else choose something reasonable
-         h = (int) (MaxHeight * ScreenSz);
+         h = (int) (maxHeight * ScreenSz);
          }
 
       if (bWidth)
          {
          // if width specified santize it against screen width
-         w = min(w, MaxWidth);
+         w = min(w, maxWidth);
          }
       else
          {
          // else choose something reasonable
-         w = MaxWidth;
+         w = maxWidth;
          }
 
       // fit the bitmap to the size of the window
@@ -508,9 +524,9 @@ void TMyApp::InitMainWindow()
       }
    else
       {
-      // sanatize window size we would like against screen screen size
-      w = min(w, MaxWidth);
-      h = min(h, (int) (MaxHeight * ScreenSz));
+      // sanatize window size we would like against screen size
+      w = min(w, maxWidth);
+      h = min(h, (int) (maxHeight * ScreenSz));
 
       GetConfigurationQuadruple("Screen", &x, &y, &w, &h);
 
@@ -844,11 +860,6 @@ WinMain(
 
    // Get video mode parameters
    HDC TempDC = GetDC(0);
-
-   RECT MaxRect;
-   SystemParametersInfo(SPI_GETWORKAREA, 0, &MaxRect, 0);
-   MaxWidth  = MaxRect.right  - MaxRect.left;
-   MaxHeight = MaxRect.bottom - MaxRect.top;
 
    MaxColors = pow(
       2,

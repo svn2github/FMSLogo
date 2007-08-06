@@ -1934,11 +1934,16 @@ TMainFrame::CreateEditWindow(
       args, 
       check_for_errors);
 
-   // Do configuration stuff. Build default coords
-   int x = (int) (MaxWidth * 0.25);
-   int y = (int) (MaxHeight * 0.25);
-   int w = (int) (MaxWidth * 0.75);
-   int h = (int) (MaxHeight * ScreenSz * 0.75);
+   // Construct the default coordinates of the editor's window
+   // to be about 1/2 of the working area and placed in the center.
+   int maxWidth;
+   int maxHeight;
+   GetWorkingAreaDimensions(maxWidth, maxHeight);
+
+   int x = (int) (maxWidth * 0.25);
+   int y = (int) (maxHeight * 0.25);
+   int w = (int) (maxWidth * 0.75);
+   int h = (int) (maxHeight * ScreenSz * 0.75);
 
    GetConfigurationQuadruple("Editor", &x, &y, &w, &h); 
    checkwindow(&x, &y, &w, &h);
@@ -3317,19 +3322,40 @@ void TMainFrame::EvTimer(UINT)
 
 void checkwindow(int *x, int *y, int *w, int *h)
    {
-   RECT MaxRect;
-   SystemParametersInfo(SPI_GETWORKAREA, 0, &MaxRect, 0);
-   int MinX = MaxRect.left;
-   int MinY = MaxRect.top;
+   RECT workingArea;
+   SystemParametersInfo(SPI_GETWORKAREA, 0, &workingArea, 0);
+
+   int minX      = workingArea.left;
+   int minY      = workingArea.top;
+   int maxWidth  = workingArea.right  - workingArea.left;
+   int maxHeight = workingArea.bottom - workingArea.top;
 
    // sanity check window coordinates
+   if (*x < minX)
+      {
+      *x = minX;
+      }
+   if (*y < minY) 
+      {
+      *y = minY;
+      }
+   if (*w > maxWidth) 
+      {
+      *w = maxWidth;
+      }
+   if (*h > maxHeight) 
+      {
+      *h = maxHeight;
+      }
 
-   if (*x < MinX) *x = MinX;
-   if (*y < MinY) *y = MinY;
-   if (*w > MaxWidth) *w = MaxWidth;
-   if (*h > MaxHeight) *h = MaxHeight;
-   if ((*x + *w) > (MaxWidth + MinX)) *x = *x - (*x + *w - (MaxWidth + MinX));
-   if ((*y + *h) > (MaxHeight + MinY)) *y = *y - (*y + *h - (MaxHeight + MinY));
+   if (*x + *w > workingArea.right) 
+      {
+      *x = workingArea.right - *w;
+      }
+   if (*y + *h > workingArea.bottom)
+      {
+      *y = workingArea.bottom - *h;
+      }
    }
 
 

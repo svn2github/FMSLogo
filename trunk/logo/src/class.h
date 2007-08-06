@@ -882,8 +882,6 @@ extern int WorldDepth;
 extern bool EnablePalette;
 extern bool IsOkayToUseCommanderWindow;
 extern bool stepflag;
-extern int MaxWidth;
-extern int MaxHeight;
 extern bool GiveFocusToEditbox;
 extern int BaseUnitsx;
 extern int BaseUnitsy;

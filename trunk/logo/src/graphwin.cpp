@@ -2550,7 +2550,8 @@ NODE *lmachine(NODE *)
    {
    ASSERT_TURTLE_INVARIANT
 
-   // build list with system specific information
+
+   // Get the desktop dimensions
    HDC tempDC = GetDC(0);
 
    int ScreenWidth  = GetDeviceCaps(tempDC, HORZRES);
@@ -2558,9 +2559,19 @@ NODE *lmachine(NODE *)
 
    ReleaseDC(0, tempDC);
 
+
+   // Get the working area dimensions
+   int workingAreaWidth;
+   int workingAreaHeight;
+   GetWorkingAreaDimensions(workingAreaWidth, workingAreaHeight);
+
+
+   // Get FMSLogo's window dimensions
    TRect wrect;
    MainWindowx->GetWindowRect(wrect);
 
+
+   // return a list with system specific information
    return
       cons(make_intnode((FIXNUM) 1),
       cons(make_intnode((FIXNUM) 32),
@@ -2569,8 +2580,8 @@ NODE *lmachine(NODE *)
       cons(make_intnode((FIXNUM) (EnablePalette ? 1 : 0)),
       cons(make_intnode((FIXNUM) (LOBYTE(LOWORD(GetVersion())))),
       cons(make_intnode((FIXNUM) (HIBYTE(LOWORD(GetVersion())))),
-      cons(make_intnode((FIXNUM) MaxWidth),
-      cons(make_intnode((FIXNUM) MaxHeight),
+      cons(make_intnode((FIXNUM) workingAreaWidth),
+      cons(make_intnode((FIXNUM) workingAreaHeight),
       cons(make_intnode((FIXNUM) ScreenWidth),
       cons(make_intnode((FIXNUM) ScreenHeight),
       cons(make_intnode((FIXNUM) (wrect.right - wrect.left)),
