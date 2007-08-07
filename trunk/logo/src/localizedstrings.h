@@ -24,6 +24,10 @@
 
   #include "localizedstrings-fr.h"  // French
 
+#elif LOCALE == 2070
+
+  #include "localizedstrings-pt.h"  // Portuguese
+
 #else
 
   #error LOCALE is an unknown value!

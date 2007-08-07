@@ -25,6 +25,7 @@ II. New features/bugs fixed:
       even it it changed.  FMSLogo also now positions new windows in the
       working area, even if the size of the desktop or taskbar has changed.
     o Improve the performance of line drawing by 12% and circle drawing by 60%.
+    o Add a Portuguese translation of FMSLogo.
 
   For a complete history of changes across all versions of FMSLogo, see
   http://fmslogo.cvs.sourceforge.net/*checkout*/fmslogo/logo/src/CHANGELOG.TXT
@@ -52,6 +53,7 @@ III. Special Thanks
     Mike Sandy
     Bertrand Carette
     Carl Bogardus
+    Alexandre Soares
 
   Special thanks to:
     George Mills
