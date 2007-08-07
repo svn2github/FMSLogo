@@ -28,6 +28,8 @@ II. New features/bugs fixed:
       no longer prevents subsequent calls to BITMAPTURTLE from working.
     o Fix bug #1622721; FMSLogo no longer gets into a bad state when the
       clipboard becomes text.
+    o Fix bug #1609333; "Select Active Area" dialog box no longer loses
+      UI elements after pressing CTRL+ALT+DELETE.
     o Improve the performance of line drawing by 12% and circle drawing by 60%.
     o Add a Portuguese translation of FMSLogo.
 
