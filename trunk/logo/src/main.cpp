@@ -640,6 +640,27 @@ void MyMessageScan()
       }
    }
 
+
+void 
+ShowMessage(
+   const char * Title,
+   const char * Message
+   )
+   {
+   if (MainWindowx->CommandWindow != NULL)
+      {
+      MainWindowx->CommandWindow->MessageBox(Message, Title);
+      }
+   }
+
+void
+ShowErrorMessage(
+   const char * Message
+   )
+   {
+   ShowMessage(LOCALIZED_ERROR, Message);
+   }
+
 // Shows a message box and sets the logo error.
 // This helper was created because these two operations appear next
 // to each other very often, not because coupling the operations is 
@@ -650,10 +671,7 @@ ShowMessageAndStop(
    const char * Message
    )
    {
-   if (MainWindowx->CommandWindow != NULL)
-      {
-      MainWindowx->CommandWindow->MessageBox(Message, Title);
-      }
+   ShowMessage(Title, Message);
    err_logo(STOP_ERROR, NIL);
    }
 
@@ -664,6 +682,7 @@ ShowErrorMessageAndStop(
    {
    ShowMessageAndStop(LOCALIZED_ERROR, Message);
    }
+
 
 // Print page (or pages)
 void TRulerOut::PrintPage(int /* page */, TRect & /* rect */, UINT /* flags */)

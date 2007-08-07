@@ -226,8 +226,10 @@ extern void update_status_vectors(void);
 
 // File main.cpp
 extern void GetWorkingAreaDimensions(int & workingAreaWidth, int & workingAreaHeight);
+extern void ShowMessage(const char * Title, const char * Message);
 extern void ShowMessageAndStop(const char * Title, const char * Message);
 extern void ShowErrorMessageAndStop(const char * Message);
+extern void ShowErrorMessage(const char * Message);
 extern void MyMessageScan(void);
 extern void RunLogoInstructionFromGui(char * LogoInstruction);
 extern void putcombobox(const char *str);

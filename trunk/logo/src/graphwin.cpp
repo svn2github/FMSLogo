@@ -2001,7 +2001,7 @@ void turtlepaste(int TurtleToPaste)
       // notify the user that this turtle has no picture
       char errorMessage[255];
       sprintf(errorMessage, LOCALIZED_ERROR_TURTLEHASNOPICTURE, TurtleToPaste);
-      ShowErrorMessageAndStop(errorMessage);
+      ShowErrorMessage(errorMessage);
 
       // un-bitmap this turtle to prevent future errors
       g_Turtles[TurtleToPaste].Bitmap = 0;
