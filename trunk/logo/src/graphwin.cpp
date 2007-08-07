@@ -1935,80 +1935,76 @@ void turtlepaste(int TurtleToPaste)
       return;
       }
 
-   if (NOT_THROWING)
+   // If ClipBoard check with ClipBoard only
+   if (TurtleToPaste == 0)
+      {
+      PasteFromClipboardToCutIndex(TurtleToPaste);
+      }
+
+   // only if we have something to paste
+   if (CutBmp[TurtleToPaste].CutFlag)
       {
 
-      // If ClipBoard check with ClipBoard only
+      // if clipboard then never leave Cut Flag true
       if (TurtleToPaste == 0)
          {
-         PasteFromClipboardToCutIndex(TurtleToPaste);
+         CutBmp[TurtleToPaste].CutFlag = false;
          }
 
-      // only if we have something to paste
-      if (CutBmp[TurtleToPaste].CutFlag)
+      HDC ScreenDC = MainWindowx->ScreenWindow->GetScreenDeviceContext();
+
+      HDC TempMemDC = CreateCompatibleDC(ScreenDC);
+      HBITMAP oldBitmap2 = (HBITMAP) SelectObject(
+         TempMemDC,
+         CutBmp[TurtleToPaste].CutMemoryBitMap);
+
+      //screen
+
+      if (zoom_flag)
          {
+         SetMapMode(ScreenDC, MM_ANISOTROPIC);
+         SetWindowOrgEx(ScreenDC, 0, 0, 0);
+         SetWindowExtEx(ScreenDC, BitMapWidth, BitMapHeight, 0);
+         SetViewportOrgEx(ScreenDC, 0, 0, 0);
+         SetViewportExtEx(ScreenDC, (int) (BitMapWidth * the_zoom), (int) (BitMapHeight * the_zoom), 0);
 
-         // if clipboard then never leave Cut Flag true
-         if (TurtleToPaste == 0)
-            {
-            CutBmp[TurtleToPaste].CutFlag = false;
-            }
-
-         HDC ScreenDC = GetDC(MainWindowx->ScreenWindow->HWindow);
-
-         HDC TempMemDC = CreateCompatibleDC(ScreenDC);
-         HBITMAP oldBitmap2 = (HBITMAP) SelectObject(
+         BitBlt(
+            ScreenDC,
+            +dest.x - MainWindowx->ScreenWindow->Scroller->XPos / the_zoom + xoffset,
+            -dest.y - MainWindowx->ScreenWindow->Scroller->YPos / the_zoom + yoffset + LL - CutBmp[TurtleToPaste].CutHeight,
+            CutBmp[TurtleToPaste].CutWidth,
+            CutBmp[TurtleToPaste].CutHeight,
             TempMemDC,
-            CutBmp[TurtleToPaste].CutMemoryBitMap);
-
-         //screen
-
-         if (zoom_flag)
-            {
-            SetMapMode(ScreenDC, MM_ANISOTROPIC);
-            SetWindowOrgEx(ScreenDC, 0, 0, 0);
-            SetWindowExtEx(ScreenDC, BitMapWidth, BitMapHeight, 0);
-            SetViewportOrgEx(ScreenDC, 0, 0, 0);
-            SetViewportExtEx(ScreenDC, (int) (BitMapWidth * the_zoom), (int) (BitMapHeight * the_zoom), 0);
-
-            BitBlt(
-               ScreenDC,
-               +dest.x - MainWindowx->ScreenWindow->Scroller->XPos / the_zoom + xoffset,
-               -dest.y - MainWindowx->ScreenWindow->Scroller->YPos / the_zoom + yoffset + LL - CutBmp[TurtleToPaste].CutHeight,
-               CutBmp[TurtleToPaste].CutWidth,
-               CutBmp[TurtleToPaste].CutHeight,
-               TempMemDC,
-               0,
-               0,
-               g_Turtles[TurtleToPaste].Bitmap);
-            }
-         else
-            {
-            BitBlt(
-               ScreenDC,
-               +dest.x - MainWindowx->ScreenWindow->Scroller->XPos + xoffset,
-               -dest.y - MainWindowx->ScreenWindow->Scroller->YPos + yoffset + LL - CutBmp[TurtleToPaste].CutHeight,
-               CutBmp[TurtleToPaste].CutWidth,
-               CutBmp[TurtleToPaste].CutHeight,
-               TempMemDC,
-               0,
-               0,
-               g_Turtles[TurtleToPaste].Bitmap);
-            }
-
-         ReleaseDC(MainWindowx->ScreenWindow->HWindow, ScreenDC);
-
-         SelectObject(TempMemDC, oldBitmap2);
-         DeleteDC(TempMemDC);
+            0,
+            0,
+            g_Turtles[TurtleToPaste].Bitmap);
          }
       else
          {
-         // notify the user that this turtle has no picture
-         g_Turtles[TurtleToPaste].Bitmap = 0;
-         char errorMessage[255];
-         sprintf(errorMessage, LOCALIZED_ERROR_TURTLEHASNOPICTURE, TurtleToPaste);
-         ShowErrorMessageAndStop(errorMessage);
+         BitBlt(
+            ScreenDC,
+            +dest.x - MainWindowx->ScreenWindow->Scroller->XPos + xoffset,
+            -dest.y - MainWindowx->ScreenWindow->Scroller->YPos + yoffset + LL - CutBmp[TurtleToPaste].CutHeight,
+            CutBmp[TurtleToPaste].CutWidth,
+            CutBmp[TurtleToPaste].CutHeight,
+            TempMemDC,
+            0,
+            0,
+            g_Turtles[TurtleToPaste].Bitmap);
          }
+
+      SelectObject(TempMemDC, oldBitmap2);
+      DeleteDC(TempMemDC);
+      }
+   else
+      {
+      // notify the user that this turtle has no picture
+      char errorMessage[255];
+      sprintf(errorMessage, LOCALIZED_ERROR_TURTLEHASNOPICTURE, TurtleToPaste);
+      ShowErrorMessageAndStop(errorMessage);
+
+      // un-bitmap this turtle to prevent future errors
+      g_Turtles[TurtleToPaste].Bitmap = 0;
       }
    }
 
