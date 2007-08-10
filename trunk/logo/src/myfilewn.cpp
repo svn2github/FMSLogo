@@ -253,7 +253,7 @@ void TMyFileWindow::CMSaveToWorkspace()
             LOCALIZED_EDITFAILEDTOLOAD,
             MB_OK | MB_ICONERROR);
 
-         // "force" a change so that we still in "dirty" state
+         // "force" a change so that we're still in a "dirty" state
          error_happen = false;
          Editor->SetSelection(0, 0);
          Editor->Insert(" ");
