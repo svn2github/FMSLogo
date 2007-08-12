@@ -8,7 +8,7 @@
 <listitem>
 <synopsis><command>THROW</command> <parameter>tag</parameter>
 (<command>THROW</command> <parameter>tag</parameter> <parameter>value</parameter>)
-(<command>THROW</command> "ERROR <parameter>errortext</parameter>)</synopsis>
+(<command>THROW</command> "ERROR <parameter>errortext</parameter>)
 (<command>THROW</command> "ERROR <parameter>4</parameter> <parameter>badvalue</parameter>)</synopsis>
 </listitem>
 </varlistentry>
