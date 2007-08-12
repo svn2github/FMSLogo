@@ -61,9 +61,51 @@ NODE *lthrow(NODE *arg)
       {
       if (compare_node(car(arg), Error, true) == 0)
          {
+         // this a THROW "ERROR
          if (cdr(arg) != NIL)
             {
-            err_logo(USER_ERR, cadr(arg));
+            NODE * secondInput = cadr(arg);
+
+            // A third input was specified.
+            // If it's a number, then we may have a special case 
+            // to throw an error as if it were an internal error.
+            NODE * number = cnv_node_to_numnode(secondInput);
+
+            // convert floating point numbers to integers
+            FIXNUM value = -1;
+            FLONUM f;
+            if (nodetype(number) == INTEGER)
+               {
+               value = getint(number);
+               }
+            else if (nodetype(number) == FLOATINGPOINT &&
+                     fmod((f = getfloat(number)), 1.0) == 0.0 && 
+                     f >= -(FLONUM) MAXINT && 
+                     f < (FLONUM) MAXINT)
+               {
+               value = f;
+               }
+
+            gcref(number);
+
+            if (value == BAD_DATA_UNREC)
+               {
+               if (cddr(arg))
+                  {
+                  NODE * thirdInput = car(cddr(arg));
+                  err_logo(BAD_DATA_UNREC, thirdInput, true);
+                  }
+               else
+                  {
+                  // the second input is a simple error text
+                  err_logo(USER_ERR, secondInput);
+                  }
+               }
+            else
+               {
+               // the second input is a simple error text
+               err_logo(USER_ERR, secondInput);
+               }
             }
          else
             {

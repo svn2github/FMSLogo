@@ -533,6 +533,7 @@ extern void uninitialize_eval(void);
 extern void clear_is_running_erract_flag();
 extern void err_print(void);
 extern NODE *err_logo(ERR_TYPES error_type, NODE *error_desc);
+extern NODE *err_logo(ERR_TYPES error_type, NODE *error_desc, bool uplevel);
 extern NODE *lerror(NODE *arg);
 extern NODE *lpause(NODE *arg);
 extern NODE *lhalt(NODE *arg);

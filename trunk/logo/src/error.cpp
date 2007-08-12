@@ -143,13 +143,12 @@ void err_print()
    clear_last_error();
    }
 
-NODE *err_logo(ERR_TYPES error_type, NODE *error_desc)
+NODE *err_logo(ERR_TYPES error_type, NODE *error_desc, bool uplevel)
    {
    clear_last_error();
 
    bool recoverable = false;
    bool warning = false;
-   bool uplevel = false;
 
    NODE * error_message = NIL;
 
@@ -185,7 +184,7 @@ NODE *err_logo(ERR_TYPES error_type, NODE *error_desc)
 
       case BAD_DATA_UNREC:
          g_ErrorFormatString = LOCALIZED_ERROR_BADDATA;
-         error_message = cons_list(fun, error_desc);
+         error_message = cons_list(uplevel ? ufun : fun, error_desc);
          break;
          
       case DIDNT_OUTPUT:
@@ -448,6 +447,11 @@ NODE *err_logo(ERR_TYPES error_type, NODE *error_desc)
    throw_node  = reref(throw_node, new_throw_node);
    output_node = reref(output_node, Unbound);
    return Unbound;
+   }
+
+NODE *err_logo(ERR_TYPES error_type, NODE *error_desc)
+   {
+   return err_logo(error_type, error_desc, false);
    }
 
 NODE *lerror(NODE *)

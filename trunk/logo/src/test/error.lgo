@@ -76,6 +76,10 @@ TO ERRORTEST
    WINDOW 
 
    (RUNEXPECTERRORTEST [1 / 0]                              4  "|/ doesn't like 0 as input|)
+   (RUNEXPECTERRORTEST [(THROW "ERROR 4   [1 2 3])]         4  "|RUNEXPECTERRORTEST doesn't like [1 2 3] as input|)
+   (RUNEXPECTERRORTEST [(THROW "ERROR 4.0 [1 2 3])]         4  "|RUNEXPECTERRORTEST doesn't like [1 2 3] as input|)
+   (RUNEXPECTERRORTEST [(THROW "ERROR "4  [1 2 3])]         4  "|RUNEXPECTERRORTEST doesn't like [1 2 3] as input|)
+
    (RUNEXPECTERRORTEST [IGNORE NO.INPUT.NO.OUTPUT]          5  "|NO.INPUT.NO.OUTPUT didn't output to IGNORE|)
    (RUNEXPECTERRORTEST [(ONE.INPUT.NO.OUTPUT)]              6  "|not enough inputs to ONE.INPUT.NO.OUTPUT|)
    (RUNEXPECTERRORTEST [FORWARD "tensteps]                  7  "|FORWARD doesn't like tensteps as input|)
@@ -109,7 +113,11 @@ TO ERRORTEST
    PROCEDURE.SHADOWS.MYSHADOWEDVAR
    UNSTEP NAMELIST "myshadowedvar
 
+   ; user-defined errors
    (RUNEXPECTERRORTEST [THROW "ERROR]                         21 "|Throw "Error|)
+   (RUNEXPECTERRORTEST [(THROW "ERROR "errormessage)]         21 "errormessage)
+   (RUNEXPECTERRORTEST [(THROW "ERROR 4)]                     21 4)
+
    (RUNEXPECTERRORTEST [DEFINE "forward [[]]]                 22 "|forward is a primitive|)
    (RUNEXPECTERRORTEST [PROCEDURE.WITH.TO.INSIDE.IT]          23 "|Can't use TO inside a procedure|) ; bug 1455201
    (RUNEXPECTERRORTEST [TEXT "NO.SUCH.PROCEDURE.IS.DEFINED]   24 "|I don't know how to NO.SUCH.PROCEDURE.IS.DEFINED|)

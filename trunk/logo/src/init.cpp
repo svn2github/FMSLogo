@@ -584,7 +584,7 @@ const PRIMTYPE prims[] =
       { "text", 1, 1, 1, PREFIX_PRIORITY, ltext, LOCALIZED_ALTERNATE_TEXT },
       { "textscreen", 0, 0, 0, PREFIX_PRIORITY, ltextscreen, LOCALIZED_ALTERNATE_TEXTSCREEN },
       { "thing", 1, 1, 1, PREFIX_PRIORITY, lthing, LOCALIZED_ALTERNATE_THING },
-      { "throw", 1, 1, 2, PREFIX_PRIORITY, lthrow, LOCALIZED_ALTERNATE_THROW },
+      { "throw", 1, 1, 3, PREFIX_PRIORITY, lthrow, LOCALIZED_ALTERNATE_THROW },
       { "time", 0, 0, 0, PREFIX_PRIORITY, ltime, LOCALIZED_ALTERNATE_TIME },
       { "timemilli", 0, 0, 0, PREFIX_PRIORITY, ltimemilli, LOCALIZED_ALTERNATE_TIMEMILLI },
       { "to", -1, -1, -1, PREFIX_PRIORITY, lto, LOCALIZED_ALTERNATE_TO },
