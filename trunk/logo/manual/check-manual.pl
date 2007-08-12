@@ -572,6 +572,7 @@ $Exceptions{'translations-1032.xml'}  = 1;
 $Exceptions{'translations-1033.xml'}  = 1;
 $Exceptions{'translations-1034.xml'}  = 1;
 $Exceptions{'translations-1036.xml'}  = 1;
+$Exceptions{'translations-2070.xml'}  = 1;
 $Exceptions{'translations.xml'}       = 1;
 
 $Exceptions{'windows-commands.xml'}{'allcaps'}{'GUI'}       = 1;
