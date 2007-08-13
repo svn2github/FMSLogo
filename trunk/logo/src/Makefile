@@ -1,7 +1,7 @@
 # A wrapper for the real Makefile, which uses Borland's "make"
 # This wrapper helps integrate the Makefile into an otherwise
 # GNU-based build system
-.PHONY : clean fmslogod.exe
+.PHONY : clean test fmslogod.exe
 
 include ../lcids.mk
 
@@ -49,6 +49,11 @@ clean :
 
 tags : *.cpp *.h *.c
 	etags $(shell /usr/bin/find . -iname '*.cpp' -o -iname '*.h' -o -iname '*.c')
+
+
+test :
+	perl ../../extras/check-extra.pl Logolib/*
+
 
 # a phony target that always gets remade
 FORCE :
