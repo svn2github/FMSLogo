@@ -5,8 +5,8 @@ op "true
 end
 
 to iseq :a :b
-if not iseq.integer? :a [(throw "error (list "iseq "doesn't "like :a "as "input))]
-if not iseq.integer? :b [(throw "error (list "iseq "doesn't "like :b "as "input))]
+if not iseq.integer? :a [(throw "error 4 :a)]
+if not iseq.integer? :b [(throw "error 4 :b)]
 if not (:a > :b) [output iseq1 :a :b]
 output map [-?] iseq1 -:a -:b
 end

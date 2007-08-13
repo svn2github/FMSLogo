@@ -1,8 +1,6 @@
 to cascade :cascade.limit [:cascade.inputs] 3
-if numberp :cascade.limit ~
-   [if lessp :cascade.limit 0 ~
-       [(throw "error (se [cascade doesn't like] :cascade.limit [as input]))] ~
-    make "cascade.limit `[greaterp :template.number ,[int :cascade.limit]]]
+if numberp :cascade.limit [if lessp :cascade.limit 0 [(throw "error 4 :cascade.limit)]
+make "cascade.limit `[greaterp :template.number ,[int :cascade.limit]]]
 local [cascade.templates template.vars cascade.final]
 make "cascade.templates []
 make "template.vars []

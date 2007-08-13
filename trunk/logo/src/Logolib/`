@@ -1,7 +1,7 @@
 ;;; -*- logo -*-
 
 to ` :backq.list
-   if not listp :backq.list [(throw "error (list "` "doesn't "like :backq.list "as "input))]
+   if not listp :backq.list [(throw "error 4 :backq.list)]
    op backq.recursive :backq.list 0
 end
 
