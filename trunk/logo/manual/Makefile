@@ -32,6 +32,10 @@ logohelp-%.chm : htmlhelp-%.hhp logohelp.css
 	perl -W clean-html.pl
 	-$(HHC) htmlhelp-$*.hhp
 
+# Portuguese CHM has been hand-translated so we shouldn't overwrite it
+logohelp-2070.chm : ;
+
+
 # Greek builds requires a different character set
 #logohelp-1032.chm : htmlhelp-1032.hhp logohelp.css
 #	perl -W clean-html.pl windows-1253
@@ -80,7 +84,7 @@ clean :
 	$(RM) $(wildcard *.hhc)
 	$(RM) $(wildcard *.hhk)
 	$(RM) $(wildcard *.chw)
-	$(RM) $(wildcard *.chm)
+	$(RM) $(filter-out logohelp-2070.chm,$(wildcard *.chm))
 	$(RM) $(wildcard *~)
 	$(RM) $(wildcard *.bak)
 
