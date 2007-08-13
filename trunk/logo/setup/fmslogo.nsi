@@ -66,13 +66,13 @@ LoadLanguageFile "${NSISDIR}\Contrib\Language files\Portuguese.nlf"
 
 LangString DesktopShortcut ${LANG_ENGLISH}    "Desktop Shortcut"
 LangString DesktopShortcut ${LANG_SPANISH}    "Desktop Shortcut" ; NOT_YET_LOCALIZED
-LangString DesktopShortcut ${LANG_PORTUGUESE} "Desktop Shortcut" ; NOT_YET_LOCALIZED
+LangString DesktopShortcut ${LANG_PORTUGUESE} "Atalho no Desktop"
 LangString DesktopShortcut ${LANG_FRENCH}     "Raccourci Bureau" 
 LangString DesktopShortcut ${LANG_GREEK}      "Óõíôüìåõóç ÅðéöÜíåéáò Åñãáóßáò"
 
 LangString StartMenuShortcuts ${LANG_ENGLISH}    "Start Menu Shortcuts"
 LangString StartMenuShortcuts ${LANG_SPANISH}    "Start Menu Shortcuts" ; NOT_YET_LOCALIZED
-LangString StartMenuShortcuts ${LANG_PORTUGUESE} "Start Menu Shortcuts" ; NOT_YET_LOCALIZED
+LangString StartMenuShortcuts ${LANG_PORTUGUESE} "Atalho no Menu Iniciar"
 LangString StartMenuShortcuts ${LANG_FRENCH}     "Raccourcis Menu Démarrer" 
 LangString StartMenuShortcuts ${LANG_GREEK}      "Óõíôïìåýóåéò Ìåíïý ¸íáñîç" 
 
@@ -199,7 +199,7 @@ SetupUser.Done:
      MessageBox MB_OK|MB_ICONEXCLAMATION "Either the installer or FMSLogo is currently running.$\nThis installation cannot continue." ; NOT_YET_LOCALIZED
      Abort
   StrCmp $LANGUAGE ${LANG_PORTUGUESE} 0 +3
-     MessageBox MB_OK|MB_ICONEXCLAMATION "Either the installer or FMSLogo is currently running.$\nThis installation cannot continue." ; NOT_YET_LOCALIZED
+     MessageBox MB_OK|MB_ICONEXCLAMATION "O instalador ou o FMSLogo está rodando.$\nEssa instalação não poderá prosseguir."
      Abort
   StrCmp $LANGUAGE ${LANG_FRENCH} 0 +3
      MessageBox MB_OK|MB_ICONEXCLAMATION "L'installateur ou bien FMSLogo est en cours d'exécution.$\nL'installation ne peut continuer." 
@@ -241,7 +241,7 @@ GetPreviousInstall.Done:
   StrCmp $LANGUAGE ${LANG_SPANISH} 0 +2
     MessageBox MB_YESNO "The existing copy of FMSLogo must be uninstalled to continue.$\nDo you want to uninstall it?$\n$\n(Selecting No will abort the installation)" IDYES uninstall IDNO abort ; NOT_YET_LOCALIZED
   StrCmp $LANGUAGE ${LANG_PORTUGUESE} 0 +2
-    MessageBox MB_YESNO "The existing copy of FMSLogo must be uninstalled to continue.$\nDo you want to uninstall it?$\n$\n(Selecting No will abort the installation)" IDYES uninstall IDNO abort ; NOT_YET_LOCALIZED
+    MessageBox MB_YESNO "Já existe uma cópia do FMSLogo e precisa ser desinstalada para prosseguir.$\nDeseja desinstalá-la?$\n$\n(Escolher Não cessará a instalação)" IDYES uninstall IDNO abort 
   StrCmp $LANGUAGE ${LANG_FRENCH} 0 +2
     MessageBox MB_YESNO "La version existante de FMSLogo doit être désinstallée pour continuer.$\nVoulez-vous la désinstaller?$\n$\n(Choisir Non terminera l'installation)" IDYES uninstall IDNO abort 
   StrCmp $LANGUAGE ${LANG_GREEK} 0 +2
@@ -408,7 +408,7 @@ Function un.onInit
      MessageBox MB_OK|MB_ICONEXCLAMATION "Either the installer or FMSLogo is currently running.$\nThis uninstallation cannot continue." ; NOT_YET_LOCALIZED
      Abort
   StrCmp $LANGUAGE ${LANG_PORTUGUESE} 0 +3
-     MessageBox MB_OK|MB_ICONEXCLAMATION "Either the installer or FMSLogo is currently running.$\nThis uninstallation cannot continue." ; NOT_YET_LOCALIZED
+     MessageBox MB_OK|MB_ICONEXCLAMATION "O instalador ou o FMSLogo está rodando.$\n$\nEssa desinstalação não poderá prosseguir." ; NOT_YET_LOCALIZED
      Abort
   StrCmp $LANGUAGE ${LANG_FRENCH} 0 +3
      MessageBox MB_OK|MB_ICONEXCLAMATION "L'installateur ou bien FMSLogo est encours d'exécution.$\nLa désinstallation ne peut continuer." 
@@ -460,7 +460,7 @@ CheckIfInstallExists.ShowError:
      MessageBox MB_OK|MB_ICONEXCLAMATION "Either FMSLogo has already been deleted or you do not have permission to uninstall it.$\nEither way, this uninstallation cannot continue." ; NOT_YET_LOCALIZED
      Abort
   StrCmp $LANGUAGE ${LANG_PORTUGUESE} 0 +3
-     MessageBox MB_OK|MB_ICONEXCLAMATION "Either FMSLogo has already been deleted or you do not have permission to uninstall it.$\nEither way, this uninstallation cannot continue." ; NOT_YET_LOCALIZED
+     MessageBox MB_OK|MB_ICONEXCLAMATION "Ou o FMSLogo já foi deletado ou você não possui permissão para desinstalá-lo.$\nEm ambos os casos, essa desinstalação não poderá continuar." 
      Abort
   StrCmp $LANGUAGE ${LANG_FRENCH} 0 +3
      MessageBox MB_OK|MB_ICONEXCLAMATION "FMSLogo a déjà été supprimé ou vous n'avez pas la permission de le désinstaller.$\nLa désinstallation ne peut continuer." 
