@@ -119,6 +119,7 @@ LOAD "mdarray.lgo
 LOAD "foreach.lgo
 LOAD "bye.lgo
 LOAD "backtick.lgo
+LOAD "cascade.lgo
 
 TO TESTALL
 
@@ -171,6 +172,7 @@ TO TESTALL
   COPYDEFTEST         ; from copydef.lgo
   PLISTTEST           ; from plist.lgo
   CONTROLFLOWTEST     ; from controlflow.lgo
+  CASCADETEST         ; from cascade.lgo
   ACTIVEAREATEST      ; from activearea.lgo
   BITMAPTEST          ; from bitmap.lgo
   BITMODETEST         ; from bitmode.lgo
