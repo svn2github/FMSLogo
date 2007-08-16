@@ -9,7 +9,7 @@ pu
 rt 90
 fd sqrt (:x*:x + :y*:y)
 lt :startang
-if :penstate [pd]
+if :penstate [pendown]
 ellipsearc :ang :radius_x :radius_y :startang
 make "x -(sin :ang+:startang)*:radius_x
 make "y -(cos :ang+:startang)*:radius_y
@@ -17,7 +17,7 @@ pu
 rt :ang+:startang-180
 fd sqrt (:x*:x + :y*:y)
 rt 90
-if :penstate [pd]
+if :penstate [pendown]
 end
 
 bury "ellipsearc2

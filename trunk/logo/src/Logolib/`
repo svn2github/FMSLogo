@@ -60,7 +60,7 @@ output fput (ifelse :unquote.splicing [",@] [",]) ~
 end
 
 to backq.combine :this :those
-output ifelse :unquote.splicing [se :this :those] [fput :this :those]
+output ifelse :unquote.splicing [sentence :this :those] [fput :this :those]
 end
 
 to backq.all.commas :word

@@ -12,8 +12,8 @@ to cm2 :cm.thislist
 if emptyp :cm.thislist [op []]
 local :cm.level
 make :cm.level first :cm.thislist
-op se (cm1 bf :cm.lists :cm.level+1 lput first :cm.thislist :template.vars) ~
-      (cm2 bf :cm.thislist)
+op sentence (cm1 bf :cm.lists :cm.level+1 lput first :cm.thislist :template.vars) ~
+            (cm2 bf :cm.thislist)
 end
 
 bury [crossmap cm1 cm2]

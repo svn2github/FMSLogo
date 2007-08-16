@@ -1,7 +1,7 @@
 to transfer :transfer.limit :transfer.template :transfer.init
 output cascade.2 (ifelse emptyp :transfer.limit ~
                          [[emptyp ?2]] ~
-                         [se [or emptyp ?2] :transfer.limit]) ~
+                         [sentence [or emptyp ?2] :transfer.limit]) ~
                  :transfer.template [] [butfirst ?2] :transfer.init
 end
 
