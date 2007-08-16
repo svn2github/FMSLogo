@@ -7,36 +7,38 @@ foreach my $filename (@ARGV) {
 
   next if -d $filename;
 
-  my $lineNumber = 0;
+  my $lineNumber = 1;
   my $fh = new IO::File "<$filename" or die $!;
   while (<$fh>) {
 
-    if (m/\b(ct)\b/i) {
+    my $logoTokenDelimiter = '[^a-zA-Z0-9_\.~]';
+
+    if (m/$logoTokenDelimiter(ct)$logoTokenDelimiter/i) {
       print "$filename:$lineNumber file uses CT, which means HIDETURTLE in French.\n";
       $exitCode = 1;
     }
 
-    if (m/\b(bl)\b/i) {
+    if (m/$logoTokenDelimiter(bl)$logoTokenDelimiter/i) {
       print "$filename:$lineNumber file uses BL, which means PENDOWN in Spanish.\n";
       $exitCode = 1;
     }
 
-    if (m/\b(rc)\b/i) {
+    if (m/$logoTokenDelimiter(rc)$logoTokenDelimiter/i) {
       print "$filename:$lineNumber file uses RC, which means SQRT in Spanish.\n";
       $exitCode = 1;
     }
 
-    if (m/\b(se)\b/i) {
+    if (m/$logoTokenDelimiter(se)$logoTokenDelimiter/i) {
       print "$filename:$lineNumber file uses SE, which means IF in Portuguese.\n";
       $exitCode = 1;
     }
 
-    if (m/\b(pd)\b/i) {
+    if (m/$logoTokenDelimiter(pd)$logoTokenDelimiter/i) {
       print "$filename:$lineNumber file uses PD, which means RT in Portuguese.\n";
       $exitCode = 1;
     }
 
-    if (m/\b(pe)\b/i) {
+    if (m/$logoTokenDelimiter(pe)$logoTokenDelimiter/i) {
       print "$filename:$lineNumber file uses PE, which means LT in Portuguese.\n";
       $exitCode = 1;
     }
