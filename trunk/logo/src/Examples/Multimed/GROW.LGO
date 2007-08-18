@@ -14,10 +14,10 @@ to aaa
 ;
 ; Example:
 ;
-grow 30 0  ; <P90 Machine <16meg Memory
+; grow 30 0  ; <P90 Machine <16meg Memory
 ; grow 60 0  ; <P90 Machine >16meg Memory
 ; grow 30 10 ; >P90 Machine <16meg Memory
-; grow 60 10 ; >P90 Machine >16meg Memory
+grow 60 10 ; >P90 Machine >16meg Memory
 ;
 ; <Don't stop it, wait for the MessageBox to pop up>
 ;
@@ -58,16 +58,16 @@ arc 360 :center
 ; Petals
 repeat :pets ~
    [
-   pu
+   penup
    ; Move to the edge of Pod then to the center of the petal
    fd :center+:pet2
-   pd
+   pendown
    ; This will draw an ellipse across the turtles heading of radius :pet1
    ; and extend outward (and inward) by radius :pet2. It will be exactly
    ; tangent to the pod because that is exactly how far we moved out to get
    ; to the petal's center.
    ellipse :pet1 :pet2
-   pu
+   penup
    ; Back to the pod
    bk :center+:pet2
    ; Where is that next petal suposed to go
@@ -88,20 +88,25 @@ repeat :years ~
    [
    cs
    ; setheading repcount * (360/:years)
-   pd
+   pendown
+
    ; Flower with center of 1 unit and a Petal with an aspect ratio of 2 to 1
    flower repcount repcount/2 repcount 18
-   pu
+   penup
+
    ; Lets take a picture, get in a good position now.
    setpos (list -repcount*3 -repcount*3)
+
    ; Advance the video camera to the next frame.
    setbitindex repcount
+
    ; Click, for simplicity we used the same size "film" for each frame.
    ; It was easy to know what the largest "film" size we will need.
    ; Where did 6 come from, 1 radius for the pod, 1 diameter (2 radius)
    ; for the petal, all times 2 for a diameter of 6 radius.
    bitcut repcount*6 repcount*6
    setpos [0 0]
+
    ; Another year gone by, how time flys.
    ]
 show (list "End "Recorded :years "Years "in timemilli - :starttime "MilliSeconds)
@@ -110,7 +115,7 @@ cs
 ; That was boring.
 MessageBox [] [Too slow, fasten your seat belts]
 
-; Loop until, the user is hypmotized
+; Loop until, the user is hypnotized
 repeat 1000 ~
    [
    localmake "starttime timemilli
