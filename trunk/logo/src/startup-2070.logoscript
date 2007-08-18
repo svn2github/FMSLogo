@@ -67,7 +67,7 @@ catch "error [ copydef "molps     "popls     ]
 catch "error [ copydef "mops     "pops     ]
 catch "error [ copydef "mostretítulos     "pots     ]
 catch "error [ copydef "inserefila     "push     ]
-catch "error [ copydef "inserepilha     "queue     ] //inserefila
+catch "error [ copydef "inserepilha     "queue     ] ; inserefila
 catch "error [ copydef "aspeado     "quoted     ]
 catch "error [ copydef "reduza     "reduce     ]
 catch "error [ copydef "atualize     "refresh     ]
