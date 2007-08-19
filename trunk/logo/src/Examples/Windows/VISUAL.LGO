@@ -521,14 +521,14 @@ make "boxisselected "false
 make "edgeisselected "false
 make "wholeisselected "false
 make "groupisselected "false
-if equalp :kind "buttoncreate [make "select (se :kind word "" :mastername [[]] [[]] [[]] [[-50 0 50 50]])]
-if equalp :kind "comboboxcreate [make "select (se :kind word "" :mastername [[]] [[-50 0 50 50]])]
-if equalp :kind "groupboxcreate [make "select (se :kind word "" :mastername [[]] [[-50 0 50 50]])]
-if equalp :kind "listboxcreate [make "select (se :kind word "" :mastername [[]] [[-50 0 50 50]])]
-if equalp :kind "scrollbarcreate [make "select (se :kind word "" :mastername [[]] [[]] [[-50 0 50 50]])]
-if equalp :kind "staticcreate [make "select (se :kind word "" :mastername [[]] [[]] [[-50 0 50 50]])]
-if equalp :kind "checkboxcreate [make "select (se :kind word "" :mastername word "" first :groupname [[]] [[]] [[-50 0 50 50]])]
-if equalp :kind "radiobuttoncreate [make "select (se :kind word "" :mastername word "" first :groupname [[]] [[]] [[-50 0 50 50]])]
+if equalp :kind "buttoncreate [make "select (sentence :kind word "" :mastername [[]] [[]] [[]] [[-50 0 50 50]])]
+if equalp :kind "comboboxcreate [make "select (sentence :kind word "" :mastername [[]] [[-50 0 50 50]])]
+if equalp :kind "groupboxcreate [make "select (sentence :kind word "" :mastername [[]] [[-50 0 50 50]])]
+if equalp :kind "listboxcreate [make "select (sentence :kind word "" :mastername [[]] [[-50 0 50 50]])]
+if equalp :kind "scrollbarcreate [make "select (sentence :kind word "" :mastername [[]] [[]] [[-50 0 50 50]])]
+if equalp :kind "staticcreate [make "select (sentence :kind word "" :mastername [[]] [[]] [[-50 0 50 50]])]
+if equalp :kind "checkboxcreate [make "select (sentence :kind word "" :mastername word "" first :groupname [[]] [[]] [[-50 0 50 50]])]
+if equalp :kind "radiobuttoncreate [make "select (sentence :kind word "" :mastername word "" first :groupname [[]] [[]] [[-50 0 50 50]])]
 setpensize [2 2]
 drawbox_detail last :select first :select
 selectabox :select
@@ -734,7 +734,7 @@ end
 
 to vrefresh1 :arg
 if emptyp :arg [stop]
-;print se "drawing last first :arg
+;print sentence "drawing last first :arg
 drawbox_detail last first :arg first first :arg
 vrefresh1 butfirst :arg 
 end
@@ -743,7 +743,7 @@ to vsave
 make "arg :mastermodule
 openwrite "boxes.lg
 setwrite "boxes.lg
-print se [to] :arg
+print sentence [to] :arg
 vsave1 :master_group
 vsave1 :master
 print [end]
