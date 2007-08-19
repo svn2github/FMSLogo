@@ -43,6 +43,11 @@ foreach my $filename (@ARGV) {
       $exitCode = 1;
     }
 
+    if (m/$logoTokenDelimiter(map.sentence)$logoTokenDelimiter/i) {
+      print "$filename:$lineNumber file uses MAP.SENTENCE, which is probably a bug caused by replacing SE with SENTENCE.\n";
+      $exitCode = 1;
+    }
+
     $lineNumber++;
   }
   $fh->close;
