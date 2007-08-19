@@ -61,7 +61,7 @@ end
 to BoxResize :pt
 ; Erase previous box and draw a temperary new one
 penreverse
-pu SetPos :StartPoint pd
+penup SetPos :StartPoint pendown
 make "w (first :StartPoint) - (first :EndPoint) 
 make "h (last :StartPoint) - (last :EndPoint)
 DrawBox (list first :StartPoint last :StartPoint -:w :h)
@@ -76,7 +76,7 @@ to BoxStart :pt
 penreverse
 Make "StartPoint :pt
 Make "EndPoint :pt
-pu SetPos :StartPoint pd
+penup SetPos :StartPoint pendown
 make "w (first :StartPoint) - (first :EndPoint) 
 make "h (last :StartPoint) - (last :EndPoint)
 DrawBox (list first :StartPoint last :StartPoint -:w :h)
@@ -99,7 +99,7 @@ end
 
 to ChooseColor :pt
 ; Choose a New Color
-pu setpos :pt pd
+penup setpos :pt pendown
 setpencolor pixel
 setfloodcolor pixel
 UpdateSelector
@@ -123,7 +123,7 @@ make "x first :box
 make "y first butfirst :box
 make "w first butfirst butfirst :box
 make "h last :box
-pu setxy :x :y pd
+penup setxy :x :y pendown
 setxy :x+:w :y
 setxy :x+:w :y-:h
 setxy :x    :y-:h
@@ -136,7 +136,7 @@ make "x first :box
 make "y first butfirst :box
 make "w first butfirst butfirst :box
 make "h last :box
-pu setxy :x :y pd
+penup setxy :x :y pendown
 setxy :x+:w :y-:h
 end
 
@@ -144,7 +144,7 @@ to DrawPalette :posi :size
 ; Draw the Color Palette
 make "res 6
 clearpalette
-pu
+penup
 ht
 make "z 0
 repeat :res ~
@@ -209,7 +209,7 @@ end
 to EllipseEnd :pt
 ; Erase previous ellipse and draw a permanent one
 penreverse
-pu SetPos :StartPoint pd
+penup SetPos :StartPoint pendown
 make "w (first :StartPoint) - (first :EndPoint) 
 make "h (last :StartPoint) - (last :EndPoint)
 Ellipse :w :h
@@ -223,7 +223,7 @@ end
 to EllipseResize :pt
 ; Erase previous ellipse and draw a temperary new one
 penreverse
-pu SetPos :StartPoint pd
+penup SetPos :StartPoint pendown
 make "w (first :StartPoint) - (first :EndPoint) 
 make "h (last :StartPoint) - (last :EndPoint)
 Ellipse :w :h
@@ -238,7 +238,7 @@ to EllipseStart :pt
 penreverse
 Make "StartPoint :pt
 Make "EndPoint :pt
-pu SetPos :StartPoint pd
+penup SetPos :StartPoint pendown
 make "w (first :StartPoint) - (first :EndPoint) 
 make "h (last :StartPoint) - (last :EndPoint)
 Ellipse :w :h
@@ -260,7 +260,7 @@ end
 to LineResize :pt
 ; Erase previous line and draw a temperary new one
 penreverse
-pu SetPos :StartPoint pd
+penup SetPos :StartPoint pendown
 make "w (first :StartPoint) - (first :EndPoint) 
 make "h (last :StartPoint) - (last :EndPoint)
 DrawLine (list first :StartPoint last :StartPoint -:w :h)
@@ -275,7 +275,7 @@ to LineStart :pt
 penreverse
 Make "StartPoint :pt
 Make "EndPoint :pt
-pu SetPos :StartPoint pd
+penup SetPos :StartPoint pendown
 make "w (first :StartPoint) - (first :EndPoint) 
 make "h (last :StartPoint) - (last :EndPoint)
 DrawLine (list first :StartPoint last :StartPoint -:w :h)
@@ -326,7 +326,7 @@ DrawPalette [200 150] 5
 make "ToolEllipse [200 100 80 40]
 DrawBox :ToolEllipse
 
-pu setpos CenterBox :ToolEllipse pd
+penup setpos CenterBox :ToolEllipse pendown
 ellipse (last butlast :ToolEllipse)/2 (last :ToolEllipse)/2
 
 ; Draw the Box Tool
