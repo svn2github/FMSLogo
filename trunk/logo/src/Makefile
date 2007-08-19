@@ -55,7 +55,8 @@ test :
 	perl ../../extras/check-extra.pl Logolib/*
 	perl ../../extras/check-extra.pl Examples/3d/*.LGO
 	perl ../../extras/check-extra.pl Examples/Misc/*.LGO
-	perl ../../extras/check-extra.pl Examples/Multimedia*.LGO
+	perl ../../extras/check-extra.pl Examples/Multimed/*.LGO
+	perl ../../extras/check-extra.pl Examples/Network/*.LGO
 	perl ../../extras/check-extra.pl Examples/Pascal/*.LGO
 	perl ../../extras/check-extra.pl Examples/UCBLogo/*.LGO
 	perl ../../extras/check-extra.pl Examples/Windows/*.LGO
