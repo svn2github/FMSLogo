@@ -135,46 +135,46 @@ to allsteps
 cs
 perspective
 step1
-window home setbitindex 1 label "Step1 pu setxy -50 -50 pd bitcopy 200 200
+window home setbitindex 1 label "Step1 penup setxy -50 -50 pendown bitcopy 200 200
 ;
 cs
 perspective
 step2
-window home setbitindex 2 label "Step2 pu setxy -50 -50 pd bitcopy 200 200
+window home setbitindex 2 label "Step2 penup setxy -50 -50 pendown bitcopy 200 200
 ;
 cs
 perspective
 step3
-window home setbitindex 3 label "Step3 pu setxy -50 -50 pd bitcopy 200 200
+window home setbitindex 3 label "Step3 penup setxy -50 -50 pendown bitcopy 200 200
 ;
 cs
 perspective
 step4
-window home setbitindex 4 label "Step4 pu setxy -50 -50 pd bitcopy 200 200
+window home setbitindex 4 label "Step4 penup setxy -50 -50 pendown bitcopy 200 200
 ;
 cs
 perspective
 step5
-window home setbitindex 5 label "Step5 pu setxy -50 -50 pd bitcopy 200 200
+window home setbitindex 5 label "Step5 penup setxy -50 -50 pendown bitcopy 200 200
 ;
 cs
 perspective
 step6
-window home setbitindex 6 label "Step6 pu setxy -50 -50 pd bitcopy 200 200
+window home setbitindex 6 label "Step6 penup setxy -50 -50 pendown bitcopy 200 200
 ;
 cs
 perspective
 step7
-window home setbitindex 7 label "Step7 pu setxy -50 -50 pd bitcopy 200 200
+window home setbitindex 7 label "Step7 penup setxy -50 -50 pendown bitcopy 200 200
 ;
 cs
-pu setxy -350 175 pd setbitindex 1 bitpaste
-pu setxy -175 175 pd setbitindex 2 bitpaste
-pu setxy    0 175 pd setbitindex 3 bitpaste
-pu setxy  175 175 pd setbitindex 4 bitpaste
-pu setxy -350   0 pd setbitindex 5 bitpaste
-pu setxy -175   0 pd setbitindex 6 bitpaste
-pu setxy    0   0 pd setbitindex 7 bitpaste
+penup setxy -350 175 pendown setbitindex 1 bitpaste
+penup setxy -175 175 pendown setbitindex 2 bitpaste
+penup setxy    0 175 pendown setbitindex 3 bitpaste
+penup setxy  175 175 pendown setbitindex 4 bitpaste
+penup setxy -350   0 pendown setbitindex 5 bitpaste
+penup setxy -175   0 pendown setbitindex 6 bitpaste
+penup setxy    0   0 pendown setbitindex 7 bitpaste
 end
 
 to step1
@@ -245,18 +245,18 @@ circle 10
 repeat 8 ~
    [
    ; Move to the edge of Pod then to the center of the petal
-   pu
+   penup
    fd 10+20
-   pd
+   pendown
    ; This will draw an ellipse across the turtles heading of radius 10
    ; and extend outward (and inward) by radius 20. It will be exactly
    ; tangent to the pod because that is exactly how far we moved out
    ; to get to the petal's center.
    ellipse 10 20
    ; Back to the pod
-   pu
+   penup
    bk 10+20
-   pd
+   pendown
    ; Where is that next petal suposed to go
    rt 45
    ]
@@ -271,19 +271,19 @@ to step6
 ; draw a square
 step1
 ; move to center of square
-pu
+penup
 fd 50
 rt 90
 fd 50
-pd
+pendown
 ; draw the flower
 step5
 ; back to where we came from
-pu
+penup
 bk 50
 lt 90
 bk 50
-pd
+pendown
 end
 
 to step7

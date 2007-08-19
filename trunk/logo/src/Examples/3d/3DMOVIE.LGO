@@ -43,15 +43,15 @@ polyend
 setpc [255 0 0]
 repeat 8 ~
    [
-   pu
+   penup
    fd 10+20
-   pd
+   pendown
    polystart
    ellipse 10 20
    polyend
-   pu
+   penup
    bk 10+20
-   pd
+   pendown
    rt 45
    ]
 end
@@ -109,17 +109,17 @@ end
 
 to squareflower
 ; This draws one face with a flower placed at the center
-pu
+penup
 fd 50
 rt 90
 fd 50
-pd
+pendown
 flower
-pu
+penup
 bk 50
 lt 90
 bk 50
-pd
+pendown
 square
 end
 

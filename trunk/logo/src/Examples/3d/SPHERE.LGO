@@ -26,7 +26,7 @@ to aaa
    ask -3 [setxyz 207 243 97]
 
    ht
-   pu
+   penup
 
    ; Time drawing
    localmake "start timemilli
@@ -46,7 +46,7 @@ to aaa
 
    stop
    repeat 100 [ask -3 [setxyz random 300 random 300 random 300 show posxyz]]
-   pd
+   pendown
 end
 
 to Sphere.GetPoint :rad
@@ -77,14 +77,14 @@ to Sphere.Slice :rad :step
      lr :step
      make "PointE posxyz
      setposxyz :PointA
-     pd
+     pendown
      polystart
      setposxyz :PointB
      setposxyz :PointC
      setposxyz :PointD
      setposxyz :PointA
      polyend
-     pu
+     penup
      setposxyz :PointE
      make "i :i + :step
      ]

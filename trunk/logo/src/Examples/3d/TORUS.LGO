@@ -17,7 +17,7 @@ to aaa
    setsc [0 0 0]
 
    ht
-   pu
+   penup
 
    ; Time drawing
    localmake "start timemilli
@@ -38,7 +38,7 @@ to aaa
    ; Display elapsed shading
    (print "Render (timemilli - :start) / 1000)
 
-   pd
+   pendown
 end
 
 to Torus.GetPoint :rad
@@ -73,14 +73,14 @@ to Torus.Slice :rad1 :rad2 :step
      lt :step
      make "PointE posxyz
      setposxyz :PointA
-     pd
+     pendown
      polystart
      setposxyz :PointB
      setposxyz :PointC
      setposxyz :PointD
      setposxyz :PointA
      polyend
-     pu
+     penup
      setposxyz :PointE
      make "i :i + :step
    ]

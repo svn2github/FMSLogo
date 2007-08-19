@@ -41,7 +41,7 @@ do.while ~
   localmake "CurrentHeading ingameport 1
   localmake "CurrentSpeed   ingameport 2
   localmake "CurrentSwitch  inportb 513
-  ifelse not ((BitAND :CurrentSwitch 16) = 0) [pu] [pd]
+  ifelse not ((BitAND :CurrentSwitch 16) = 0) [penup] [pendown]
   if         ((BitAND :CurrentSwitch 32) = 0) [cs]
   if :CurrentHeading < :ZeroLeftHeading ~
   [lt :TurnSensitivity  * (:ZeroLeftHeading-:CurrentHeading)  / (:ZeroLeftheading-:FullLeftHeading)]

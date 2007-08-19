@@ -38,12 +38,12 @@ ht
 setturtle -1
 setxyz 1000 1000 2000
 setturtle 0
-pd
+pendown
 
 ; Draw a big sun in yellow
 setpc [255 255 0]
 sphere 200 20
-pu
+penup
 
 ; Now do some random planets oribiting the sun
 repeat 10 [
@@ -53,22 +53,22 @@ repeat 10 [
    ; Random radius of orbit
    make "dist 200 + random 2000
    downpitch 90
-   pd
+   pendown
    setpc (list 56+random 200 56+random 200 56+random 200)
 
    ; Show oribit path
    circle :dist
-   pu
+   penup
 
    ; go to planet position
    rt :angle
    fd :dist
    uppitch 90
-   pd
+   pendown
 
    ; draw planet
    sphere 10 + random 100 20
-   pu
+   penup
    downpitch 90
 
    ; get back to the sun

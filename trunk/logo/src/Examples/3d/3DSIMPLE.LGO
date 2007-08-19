@@ -71,7 +71,7 @@ for [x 1 500 100] ~
    [
    for [y 1 500 100] ~
       [
-      pu setxy :x :y pd
+      pu setxy :x :y pendown
       square
       ]
    ]
@@ -90,7 +90,7 @@ for [x 1 300 100] ~
    [
    for [y 1 300 100] ~
       [
-      pu setxy :x :y pd
+      pu setxy :x :y pendown
       cube
       ]
    ]
@@ -103,7 +103,7 @@ for [x 1 300 100] ~
       [
       for [z 1 300 100] ~
           [
-          pu setxyz :x :y :z pd
+          pu setxyz :x :y :z pendown
           cube
           ]
       ]

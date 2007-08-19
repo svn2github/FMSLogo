@@ -25,9 +25,9 @@ chess :size/2 :level-1 :startheading
 end
 
 to fill_it
-pu rt 45 fd 10 pd
+penup rt 45 fd 10 pendown
 fill        ; Red or Black Checks
-pu bk 10 lt 45 pd
+penup bk 10 lt 45 pendown
 end
 
 to main ; Chessboards

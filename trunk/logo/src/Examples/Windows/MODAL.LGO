@@ -82,15 +82,15 @@ end
 to setup
 staticcreate      "d1 "st2 [Select Pre-Command] :gapx :mary      :cmw :sth
 comboboxcreate    "d1 "c1                       :gapx :sth+:mary :cmw :cmh
-comboboxaddstring "c1 [PU FD 50 PD]
-comboboxaddstring "c1 [PU FD 100 PD]
-comboboxaddstring "c1 [PU FD REPCOUNT PD]
+comboboxaddstring "c1 [PENUP FD 50 PENDOWN]
+comboboxaddstring "c1 [PENUP FD 100 PENDOWN]
+comboboxaddstring "c1 [PENUP FD REPCOUNT PENDOWN]
 
 staticcreate      "d1 "st3 [Select Post-Command] :gapx+:cmw+:gapx :mary      :cmw :sth
 comboboxcreate    "d1 "c2                        :gapx+:cmw+:gapx :sth+:mary :cmw :cmh
-comboboxaddstring "c2 [PU BK 50 PD RT 2]
-comboboxaddstring "c2 [PU BK 100 PD RT 5]
-comboboxaddstring "c2 [PU BK REPCOUNT PD RT 5]
+comboboxaddstring "c2 [PENUP BK 50 PENDOWN RT 2]
+comboboxaddstring "c2 [PENUP BK 100 PENDOWN RT 5]
+comboboxaddstring "c2 [PENUP BK REPCOUNT PENDOWN RT 5]
 comboboxsettext   "c2 [RT 5]
 
 staticcreate      "d1 "st4 [Select Shape] :gapx :row2        :lsw :sth

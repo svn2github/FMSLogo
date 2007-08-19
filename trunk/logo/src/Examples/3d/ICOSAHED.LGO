@@ -36,7 +36,7 @@ local "q1
 local "q2
 local "q3
 local "q4
-pu
+penup
 
 ; Position our selves at one end pointing directly at the other
 setposxyz :p1
@@ -83,19 +83,19 @@ repeat :sides~
 
    ; Now connect the 4 vertices into a polygon
    setposxyz :q1
-   pd
+   pendown
    polystart
    setposxyz :q2
    setposxyz :q4
    setposxyz :q3
    setposxyz :q1
-   pu
+   penup
    polyend
 
    ; Get back into the center for the next panel
    setposxyz :p1
    ]
-pd
+pendown
 end
 
 to connectsets :set1 :set2 :set3
@@ -164,12 +164,12 @@ to goldenrectangle :l
   ; This routine looks more complex because it draws it with respect to
   ; its center and it also records the vertices to be output.
   localmake "vertices []
-  pu
+  penup
   fd :l*goldenratio/2
   lt 90
   fd :l/2
   rt 180
-  pd
+  pendown
   polystart
   repeat 2~
     [
@@ -181,12 +181,12 @@ to goldenrectangle :l
     rt 90
     ]
   polyend
-  pu
+  penup
   rt 180
   bk :l/2
   rt 90
   bk :l*goldenratio/2
-  pd
+  pendown
   output :vertices
 end
 

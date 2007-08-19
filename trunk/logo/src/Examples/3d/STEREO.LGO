@@ -61,8 +61,8 @@ repeat :commands ~
    ; Get the vertex. Format [X Y Z]
    make "vtx (item (item 1 :cmd) :vertex) 
 
-   ; If color 0 then Move else Draw (I'm ingoring the color, not RGB Yuck)
-   ifelse (item 2 :cmd) = 0 [pu] [pd]
+   ; If color 0 then Move else Draw (I'm ignoring the color, not RGB Yuck)
+   ifelse (item 2 :cmd) = 0 [penup] [pendown]
 
    ; Move or draw to the vertex
    setxyz (item 1 :vtx) (item 2 :vtx) (item 3 :vtx)

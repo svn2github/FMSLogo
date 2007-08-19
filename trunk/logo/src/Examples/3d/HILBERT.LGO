@@ -116,9 +116,9 @@ repeat abs :dist ~
       lt 90
       rr 90
       ]
-   pu
+   penup
    fd ((sign :dist) * :size*2)
-   pd
+   pendown
    ]
 ; Get back to where we started
 pu
