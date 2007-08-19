@@ -43,21 +43,21 @@ penpaint
 setpensize [5 5]
 ; first we draw the table and the golden needles
 setpencolor [255 0 0]
-pu
+penup
 setxy -350 -100
-pd
+pendown
 setxy 350 -100
-pu
+penup
 setx -240
-pd
+pendown
 fd 250
-pu
+penup
 setxy -15 -100
-pd
+pendown
 fd 250
-pu
+penup
 setxy 210 -100
-pd
+pendown
 fd 250
 make "tower1 0
 make "tower2 0
@@ -112,7 +112,7 @@ local "tc
 local "halfsize
 make "tc towercnt :tnum
 make "halfsize sum 20 product :dnum 10
-pu
+penup
 ifelse :tnum = 1 ~
    [setxy "-240 "-100] ~
    [ ~
@@ -120,18 +120,18 @@ ifelse :tnum = 1 ~
       [setxy "-15 "-100] ~
       [setxy 210 "-100] ~
    ]
-pe
+penerase
 fd product 30 :tc
-pu
+penup
 setxy xcor - :halfsize ycor
-pd
+pendown
 penpaint
 ifelse :state = "final ~
    [setpencolor [0 255 0]] ~
    [ ~
    ifelse :state = "temp ~
       [setpencolor [0 0 255]] ~
-      [pe] ~
+      [penerase] ~
    ]
 fd 30
 rt 90
@@ -139,18 +139,18 @@ fd product :halfsize 2
 rt 90
 fd 30
 rt 90
-pu
+penup
 fd :halfsize
 rt 90
 setpencolor [255 0 0]
 ifelse :state = "erase ~
    [ ~
-   pd ~
+   pendown ~
    penpaint ~
    fd 30 ~
    ] ~
    [ ~
-   pe ~
+   penerase ~
    fd 30 ~
    ]
 end
