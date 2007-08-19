@@ -155,9 +155,9 @@ bury [[ngx.logoscreen] [] []]
 ; ---------------------------------------------------------------------------
 
 to ngx.goto :xcoord :ycoord
-	pu
+	penup
 	setxy :xcoord :ycoord
-	pd
+	pendown
 End
 bury [[ngx.goto] [] []]
 
@@ -178,11 +178,11 @@ bury [[ngx.goto] [] []]
 ; ---------------------------------------------------------------------------
 
 to ngx.move :direction :distance
-	pu
+	penup
 	rt :direction
 	fd :distance
 	lt :direction
-	pd
+	pendown
 End
 bury [[ngx.move] [] []]
 
@@ -314,7 +314,7 @@ bury [[ngx.textfont] [] []]
 to ngx.text :text
 	localmake "textlen (item 1 (labelsize :text))
 	lt 90
-	pu
+	penup
 	fd :textlen/2
 	rt 180
 	label :text
@@ -479,18 +479,18 @@ bury [[ngx.pentagon] [] []]
 ; ---------------------------------------------------------------------------
 
 to ngx.polygon :sides :length
-	pu
+	penup
 	fd 1 rt 180 fd 1 rt 180
 	rt 180+(180/:sides)
 	fd :length/(2*sin(180/:sides))
 	lt 90+(180/:sides)
-	pd
+	pendown
 	repeat :sides [ fd :length lt 360/:sides ]
-	pu
+	penup
 	lt 90-(180/:sides)
 	fd :length/(2*sin(180/:sides))
 	lt 180/:sides
-	pd
+	pendown
 End
 bury [[ngx.polygon] [] []]
 
@@ -512,19 +512,19 @@ bury [[ngx.polygon] [] []]
 ; ---------------------------------------------------------------------------
 
 to ngx.rectangle :horizontal :vertical
-	pu
+	penup
 	fd :vertical/2
 	lt 90
 	fd :horizontal/2
 	lt 180
-	pd
+	pendown
 	repeat 2 [ fd :horizontal rt 90 fd :vertical rt 90 ]
-	pu
+	penup
 	fd :horizontal/2
 	rt 90
 	fd :vertical/2
 	rt 180
-	pd
+	pendown
 End
 bury [[ngx.rectangle] [] []]
 
