@@ -20,10 +20,10 @@ end
 
 
 to about
- make "msg1 [The Midi Player was brought to you by Hensley Bass]
- make "msg2 [Email: hbass@intnet.mu]
- make "msg3 [Url: http://pages.intnet.mu/jhbpage]
- make "msg (sentence :msg1 char 13 :msg2 char 13 :msg3)
+ localmake "msg1 [The Midi Player was brought to you by Hensley Bass]
+ localmake "msg2 [Email: hbass@intnet.mu]
+ localmake "msg3 [Url: http://pages.intnet.mu/jhbpage]
+ localmake "msg (sentence :msg1 char 13 :msg2 char 13 :msg3)
  messagebox [Midi player] :msg 
 end
 
@@ -341,7 +341,7 @@ end
 to octa
  make "octa (8 - scrollbarget "scocta)*12
  setfocus [MswLogo Screen]
- staticupdate "st6 se [Octave C ] 8 - scrollbarget "scocta
+ staticupdate "st6 sentence [Octave C ] 8 - scrollbarget "scocta
  
 end
 
@@ -484,10 +484,6 @@ Make "file []
 Make "keylist "z_x_cv_b_n_ma_s_df_g_h_jq_w_er_t_y_ui_o_p
 Make "keylist1 "zxcvbnmasdfghjqwertyuiop
 Make "keylist2 "
-Make "msg [The Midi Player was brought to you by Hensley Bass  Email: hbass@intnet.mu  Url: http://pages.intnet.mu/jhbpage]
-Make "msg1 [The Midi Player was brought to you by Hensley Bass]
-Make "msg2 [Email: hbass@intnet.mu]
-Make "msg3 [Url: http://pages.intnet.mu/jhbpage]
 Make "myarray {-10 -10 -10 -10 -10 -10 -10 -10 -10 -10 -10 -10 -10 -10 -10 -10 -10 -10 -10 -10 -10 -10 -10 -10 -10 -10 -10 -10 -10 -10 -10 -10 -10 -10 -10 -10 -10 -10 -10 -10 -10}
 Make "notekey "
 Make "notes "

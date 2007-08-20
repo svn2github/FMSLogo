@@ -1,6 +1,6 @@
 to aaa
 ;--------------- Ludo v0.9 
-;--------------- Developped by Hensley Bass
+;--------------- Developed by Hensley Bass
 ;--------------- Email: hbass@intnet.mu	
 ;--------------- Url: http://pages.intnet.mu/jhbpage
 
@@ -30,10 +30,10 @@ end
 
 to about
  ;------------- Procedure that displays the credits
- make "msg1 [Ludo was brought to you by Hensley Bass]
- make "msg2 [Email: hbass@intnet.mu]
- make "msg3 [Url: http://pages.intnet.mu/jhbpage]
- make "msg (sentence :msg1 char 13 :msg2 char 13 :msg3)
+ localmake "msg1 [Ludo was brought to you by Hensley Bass]
+ localmake "msg2 [Email: hbass@intnet.mu]
+ localmake "msg3 [Url: http://pages.intnet.mu/jhbpage]
+ localmake "msg (sentence :msg1 char 13 :msg2 char 13 :msg3)
  messagebox [Ludo] :msg 
 end
 
@@ -315,7 +315,7 @@ to getmousemove
     make "ydiff abs :ydiff
     make "arg (int (:i - 1) / 4) + 1
 
-    if (and (:xdiff < 5) (:ydiff < 5)) [if (mditem (se :i 1) :arraycurrentpos) = 0 [make "counter :i]]
+    if (and (:xdiff < 5) (:ydiff < 5)) [if (mditem (sentence :i 1) :arraycurrentpos) = 0 [make "counter :i]]
  ]
 
  ;------------------ Checking wheter a counter on track has been selected 
@@ -323,13 +323,13 @@ to getmousemove
 
  if :counter = 0 [
     for [i 1 16 1] [
-        make "localcellstepsmoved mditem (se :i 1) :arraycurrentpos  		
+        make "localcellstepsmoved mditem (sentence :i 1) :arraycurrentpos  		
         if (:localcellstepsmoved > 0) [
             ;------------------ Getting the location of the piece to move
             make "arg (int (:i - 1) / 4) + 1
-            make "localcellontrack mditem (se :localcellstepsmoved :arg ) :colourtrack		
+            make "localcellontrack mditem (sentence :localcellstepsmoved :arg ) :colourtrack		
 
-            make "x1 (first mditem (se :localcellontrack 1) :arraycell)	
+            make "x1 (first mditem (sentence :localcellontrack 1) :arraycell)	
 
             make "x2 (first mousepos) / :x
             make "x2  int :x2 
@@ -337,7 +337,7 @@ to getmousemove
             make "x2 :x2  * :x
             make "xdiff :x1 - :x2
             make "xdiff abs :xdiff
-            make "y1 (last mditem (se :localcellontrack 1) :arraycell)
+            make "y1 (last mditem (sentence :localcellontrack 1) :arraycell)
             make "y2 (last mousepos) / :x
             make "y2 int :y2 
             make "y2 :y2 - (modulo :y2 10)
@@ -347,10 +347,10 @@ to getmousemove
 
             make "ydiff :y1 - :y2
             make "ydiff abs :ydiff
-            ;show (se :xdiff :ydiff [x1: ] :x1 [x2: ] :x2 [y1: ] :y1 [y2: ] :y2 :counter)
-            ;show (se :localcellontrack :i)
-            if (and (:xdiff = 0) (:ydiff = 0) (:counter =0) (((int (:i - 1) / 4) + 1) = :currentplayer)) [if (mditem (se :i 1) :arraycurrentpos) < 57 [make "counter :i]]
-            ;show (se :localcellontrack :i)
+            ;show (sentence :xdiff :ydiff [x1: ] :x1 [x2: ] :x2 [y1: ] :y1 [y2: ] :y2 :counter)
+            ;show (sentence :localcellontrack :i)
+            if (and (:xdiff = 0) (:ydiff = 0) (:counter =0) (((int (:i - 1) / 4) + 1) = :currentplayer)) [if (mditem (sentence :i 1) :arraycurrentpos) < 57 [make "counter :i]]
+            ;show (sentence :localcellontrack :i)
             ]
      ]
  ]
@@ -359,14 +359,14 @@ to getmousemove
 
  if :counter > 0 [
     if (int (:counter - 1) / 4) + 1 = :currentplayer [
-        ;show (se [found] [counter: ] :counter [position: ] mditem (se :counter 1) :arraycurrentpos [dice: ] :randomroll )
+        ;show (sentence [found] [counter: ] :counter [position: ] mditem (sentence :counter 1) :arraycurrentpos [dice: ] :randomroll )
         ;---------------- Checking whether counter is on track
-        if (mditem (se :counter 1) :arraycurrentpos) > 0 [movepiece :counter :randomroll ]
+        if (mditem (sentence :counter 1) :arraycurrentpos) > 0 [movepiece :counter :randomroll ]
 
         ;---------------- Checking whether counter is still in starting position
 
-        if (mditem (se :counter 1) :arraycurrentpos) = 0 [
-            ;show (se :argcm (item :argcm :canmove))
+        if (mditem (sentence :counter 1) :arraycurrentpos) = 0 [
+            ;show (sentence :argcm (item :argcm :canmove))
             if (and ((item :argcm :canmove) = -1  )(:randomroll = 6)) [putontrack :counter getwhoplays] buttonenable "broll "true]
     ]
  ]
@@ -399,7 +399,7 @@ end
 
 to gotocell :tcell :flag
 
- make "z se :tcell 1
+ make "z sentence :tcell 1
  setxy first  mditem :z :arraycell last mditem :z :arraycell 
  
 end
@@ -430,7 +430,7 @@ to ludo :y
  
  ;------------------ Start of temporary codes (labelling the cells)
  repeat 76 [
-    make "z se repcount 1
+    make "z sentence repcount 1
     setxy first  mditem :z :arraycell last mditem :z :arraycell 
     seth 0 fd 10 * :x seth 90 
     ;label repcount
@@ -467,16 +467,16 @@ to movepiece :pieceid :noofsteps
   yield
   make "moveallowed "True
   ;------------------ Getting the location of the piece to move
-  make "cellstepsmoved mditem (se :pieceid 1) :arraycurrentpos  
+  make "cellstepsmoved mditem (sentence :pieceid 1) :arraycurrentpos  
   ;------------------ Getting the location of the piece to move
   make "arg1 (int (:pieceid - 1) / 4) + 1
   make "argcm (remainder :pieceid   4) if :argcm = 0 [ make "argcm 4]
   if (item :argcm :canmove) = 0 [message [counter blocked] stop]
-  make "cellontrack mditem (se :cellstepsmoved  :arg1 ) :colourtrack
+  make "cellontrack mditem (sentence :cellstepsmoved  :arg1 ) :colourtrack
 
   if (57 - (:cellstepsmoved + :noofsteps)) < 0  [make "moveallowed "False]
 
-  ;show (se [piece ] :pieceid [no of steps moved: ] :cellstepsmoved [Cell on track: ] :cellontrack [move allowed: ] :moveallowed )
+  ;show (sentence [piece ] :pieceid [no of steps moved: ] :cellstepsmoved [Cell on track: ] :cellontrack [move allowed: ] :moveallowed )
 
   ifelse :moveallowed [~
      gotocell :cellontrack  0
@@ -487,7 +487,7 @@ to movepiece :pieceid :noofsteps
      repeat :noofsteps [ 
 		
          make "tmp :cellstepsmoved + repcount
-         make "cellontrack mditem (se :cellstepsmoved + repcount :arg1 ) :colourtrack
+         make "cellontrack mditem (sentence :cellstepsmoved + repcount :arg1 ) :colourtrack
 		
          gotocell :cellontrack  0
          playwave "pop.wav 1
@@ -512,15 +512,15 @@ to movepiece :pieceid :noofsteps
      fd 5 * :x rt 90 fd 5 * :x lt 90
      setbitindex :pieceid 	
      ppt circle 4 * :x  pu fill
-     mdsetitem (se :pieceid 1) :arraycurrentpos :cellstepsmoved + :noofsteps
+     mdsetitem (sentence :pieceid 1) :arraycurrentpos :cellstepsmoved + :noofsteps
 
      ;------------------------ Checking whether any counters should be knocked off
      for [i 1 16 1] [
-         make "koarg2 mditem (se :i 1) :arraycurrentpos
+         make "koarg2 mditem (sentence :i 1) :arraycurrentpos
          make "koarg3 (int (:i - 1) / 4) + 1
          make "koarg4 (remainder :i 4) if :koarg4 = 0 [make "koarg4 4]
          if :koarg2 > 0 [
-             if (mditem (se :koarg2  :koarg3 ) :colourtrack) = :cellontrack  [
+             if (mditem (sentence :koarg2  :koarg3 ) :colourtrack) = :cellontrack  [
                  ifelse :arg1 = :koarg3 [
                      ;------- Same counter on cell, create a block
                      ;show [match]
@@ -532,13 +532,13 @@ to movepiece :pieceid :noofsteps
                      putcounterinstartposition :koarg3 :koarg4
                  ]
 
-                 ;show (se [counter: ] :i [position: ] mditem (se :koarg2  :koarg3 ) :colourtrack)
+                 ;show (sentence [counter: ] :i [position: ] mditem (sentence :koarg2  :koarg3 ) :colourtrack)
             ]
         ]
      ]
 
      setitem :currentplayer :arrayattempt 0
-     if (mditem (se :pieceid 1) :arraycurrentpos) = 57 [updatestatus :currentplayer ]
+     if (mditem (sentence :pieceid 1) :arraycurrentpos) = 57 [updatestatus :currentplayer ]
      if :winner = 0 [
          getwhoplays 
          buttonenable "broll "true
@@ -576,8 +576,8 @@ to player :player
 end
 
 to putcounterinstartposition :pcounter :prepcount
- make "z (se ((:pcounter - 1) * 4) + :prepcount 1)
- ;show (se [pcounter:] :pcounter [z: ]  :z :prepcount)
+ make "z (sentence ((:pcounter - 1) * 4) + :prepcount 1)
+ ;show (sentence [pcounter:] :pcounter [z: ]  :z :prepcount)
  ;----------- Setting counter location to position zero
  mdsetitem :z :arraycurrentpos 0	
  make "z ((:pcounter - 1) * 4) + :prepcount
@@ -601,13 +601,13 @@ to putontrack :counter
  setitem :currentplayer :arrayattempt 0
 
 ;----------- Setting counter location to position 1
- mdsetitem (se :counter 1) :arraycurrentpos 1 
+ mdsetitem (sentence :counter 1) :arraycurrentpos 1 
 
  setxy ((first item :counter :arraypos) - 5) * :x  ((last item :counter :arraypos) - 5) * :x
  setbitindex 18
  bitcut 10 * :x 10 * :x
  make "arg1 (int (:counter - 1) / 4) + 1
- make "cellontrack mditem (se 1  :arg1 ) :colourtrack
+ make "cellontrack mditem (sentence 1  :arg1 ) :colourtrack
 
  gotocell :cellontrack  0
  playwave "boing.wav 1
@@ -623,11 +623,11 @@ to putontrack :counter
  make "pieceid :counter
 
  for [i 1 16 1] [
-    make "koarg2 mditem (se :i 1) :arraycurrentpos
+    make "koarg2 mditem (sentence :i 1) :arraycurrentpos
     make "koarg3 (int (:i - 1) / 4) + 1
     make "koarg4 (remainder :i 4) if :koarg4 = 0 [make "koarg4 4]
     if :koarg2 > 0 [
-        if (mditem (se :koarg2  :koarg3 ) :colourtrack) = :cellontrack  [
+        if (mditem (sentence :koarg2  :koarg3 ) :colourtrack) = :cellontrack  [
             ifelse :arg1 = :koarg3 [
                 ;------- Same counter on cell, create a block
                 ;show [match]
@@ -640,7 +640,7 @@ to putontrack :counter
 
             ]
 			
-        ;show (se [counter: ] :i [position: ] mditem (se :koarg2  :koarg3 ) :colourtrack)
+        ;show (sentence [counter: ] :i [position: ] mditem (sentence :koarg2  :koarg3 ) :colourtrack)
         ]
 
     ]
@@ -662,7 +662,7 @@ to rolldice :x
  repeat 4 [ setitem repcount :canmove -1]
  make "Stillatbay 0
  repeat 4 [
-    make "rz mditem (se ((:currentplayer - 1) * 4) + repcount 1) :arraycurrentpos
+    make "rz mditem (sentence ((:currentplayer - 1) * 4) + repcount 1) :arraycurrentpos
     ;-------- Counting the number of counters that can't play according to the output of the dice
     if  (and (:randomroll < 6) (:rz = 0)) [
         setitem repcount  :canmove 0	
@@ -672,21 +672,21 @@ to rolldice :x
     if  (and (:randomroll = 6) (:rz = 0) ) [
         make "c2 repcount
         repeat 4 [
-            if (mditem (se ((:currentplayer - 1) * 4) + repcount 1) :arraycurrentpos) = 1 [
+            if (mditem (sentence ((:currentplayer - 1) * 4) + repcount 1) :arraycurrentpos) = 1 [
                 setitem :c2  :canmove 0	
             ]
         ]
     ]
 
     ;----------------- Dice output + player position > 57
-    if  ((mditem (se ((:currentplayer - 1) * 4) + repcount 1) :arraycurrentpos) + :randomroll) > 57  [
+    if  ((mditem (sentence ((:currentplayer - 1) * 4) + repcount 1) :arraycurrentpos) + :randomroll) > 57  [
         setitem repcount  :canmove 0	
     ]
 
     ;----------------- Dice output will put player on a friendly cell
     make "c2 repcount
     repeat 4 [
-        make "zr (mditem (se ((:currentplayer - 1) * 4) + repcount 1) :arraycurrentpos)
+        make "zr (mditem (sentence ((:currentplayer - 1) * 4) + repcount 1) :arraycurrentpos)
         if (and ((:rz + :randomroll) = (:zr)) (:zr < 57) (:rz >0)) [
             setitem :c2  :canmove 0	
         ]
@@ -695,7 +695,7 @@ to rolldice :x
  ]
 
  repeat 4 [if (item repcount :canmove) = 0 [make "rcount :rcount + 1]]
- ;show (se [rcount] :rcount)
+ ;show (sentence [rcount] :rcount)
  ;------------------- If curentplayer has no counter which can move
  if (and (:rcount = 4) (:randomroll < 6)) [ 
     ifelse (item :currentplayer :arrayattempt) > 1 [
@@ -745,52 +745,52 @@ to setcelllocation
  repeat 6 [
      make "xpos (:startx * :x) + (60 * :x)
      make "ypos :starty * :x + (repcount - 1) * 10 * :x
-     make "z se repcount 1 
-     mdsetitem :z :arraycell se :xpos :ypos 
+     make "z sentence repcount 1 
+     mdsetitem :z :arraycell sentence :xpos :ypos 
  ]
 
  ;-------------- Storing cells 7 to 12 into the memory
  repeat 6 [
      make "xpos (:startx * :x) + (60 * :x) - (repcount * 10 * :x)
      make "ypos (:starty * :x) + (60 * :x)
-     make "z se repcount + 6 1
-     mdsetitem :z :arraycell se :xpos :ypos
+     make "z sentence repcount + 6 1
+     mdsetitem :z :arraycell sentence :xpos :ypos
  ]
 
  ;-------------- Storing cell 13 into the memory
  make "xpos (:startx * :x) 
  make "ypos :starty * :x + 70 * :x
- make "z se 13 1 ~
- mdsetitem :z :arraycell se :xpos :ypos
+ make "z sentence 13 1 ~
+ mdsetitem :z :arraycell sentence :xpos :ypos
 
  ;-------------- Storing cells  14 to  19 into the memory
  repeat 6 [
      make "xpos (:startx * :x) + (-10 * :x) + (repcount * 10 * :x)
      make "ypos (:starty * :x) +   80 * :x
-     make "z se repcount + 13 1
-     mdsetitem :z :arraycell se :xpos :ypos
+     make "z sentence repcount + 13 1
+     mdsetitem :z :arraycell sentence :xpos :ypos
  ]
 
  ;-------------- Storing cells  20 to 25  into the memory
  repeat 6 [
      make "xpos (:startx * :x) + (60 * :x)
      make "ypos (:starty * :x) + (90 * :x) + (repcount - 1) * 10 * :x
-     make "z se repcount + 19 1
-     mdsetitem :z :arraycell se :xpos :ypos
+     make "z sentence repcount + 19 1
+     mdsetitem :z :arraycell sentence :xpos :ypos
  ]
 
  ;-------------- Storing cells  26 to   into the memory
  make "xpos (:startx * :x) + (70 * :x)
  make "ypos :starty * :x + (140 * :x) 
- make "z se 26 1
- mdsetitem :z :arraycell se :xpos :ypos
+ make "z sentence 26 1
+ mdsetitem :z :arraycell sentence :xpos :ypos
 
  ;-------------- Storing cells 27  to 32  into the memory
  repeat 6 [
       make "xpos (:startx * :x) + (80 * :x)
       make "ypos (:starty * :x) + (140 * :x) - (repcount - 1) * 10 * :x
-      make "z se repcount + 26 1
-      mdsetitem :z :arraycell se :xpos :ypos
+      make "z sentence repcount + 26 1
+      mdsetitem :z :arraycell sentence :xpos :ypos
  ]
 
 
@@ -798,68 +798,68 @@ to setcelllocation
  repeat 6 [
       make "xpos (:startx * :x) + (80 * :x) + (repcount * 10 * :x)
       make "ypos (:starty * :x) + (80 * :x)
-      make "z se repcount + 32 1
-      mdsetitem :z :arraycell se :xpos :ypos
+      make "z sentence repcount + 32 1
+      mdsetitem :z :arraycell sentence :xpos :ypos
  ]
 
  ;-------------- Storing cells 39 into the memory
  make "xpos (:startx * :x) + 140 * :x
  make "ypos :starty * :x +    70 * :x 
- make "z se 39 1 ~
- mdsetitem :z :arraycell se :xpos :ypos
+ make "z sentence 39 1 ~
+ mdsetitem :z :arraycell sentence :xpos :ypos
 
  ;-------------- Storing cells  40 to 45  into the memory
  repeat 6 [
       make "xpos (:startx * :x) + (150 * :x) - (repcount * 10 * :x)
       make "ypos (:starty * :x) + ( 60 * :x)
-      make "z se repcount + 39 1
-      mdsetitem :z :arraycell se :xpos :ypos
+      make "z sentence repcount + 39 1
+      mdsetitem :z :arraycell sentence :xpos :ypos
  ]
 
  ;-------------- Storing cells 46  to 51  into the memory
  repeat 6 [
       make "xpos (:startx * :x) + (80 * :x)
       make "ypos (:starty * :x) + (50 * :x) - (repcount - 1) * 10 * :x
-      make "z se repcount + 45 1
-      mdsetitem :z :arraycell se :xpos :ypos
+      make "z sentence repcount + 45 1
+      mdsetitem :z :arraycell sentence :xpos :ypos
  ]
 
  ;-------------- Storing cell 52 into the memory
  make "xpos (:startx * :x) + (70 * :x)
  make "ypos :starty * :x 
- make "z se 52 1 mdsetitem :z :arraycell se :xpos :ypos
+ make "z sentence 52 1 mdsetitem :z :arraycell sentence :xpos :ypos
 
 
  ;-------------- Storing cells  53 to 58  into the memory
  repeat 6 [
       make "xpos (:startx * :x) + (70 * :x)
       make "ypos (:starty * :x) + repcount * 10 * :x
-      make "z se repcount + 52 1
-      mdsetitem :z :arraycell se :xpos :ypos
+      make "z sentence repcount + 52 1
+      mdsetitem :z :arraycell sentence :xpos :ypos
  ]
 
  ;-------------- Storing cells  59 to 64  into the memory
  repeat 6 [
       make "xpos (:startx * :x) +  (repcount * 10 * :x)
       make "ypos (:starty * :x) +             (70 * :x)
-      make "z se repcount + 58 1
-      mdsetitem :z :arraycell se :xpos :ypos
+      make "z sentence repcount + 58 1
+      mdsetitem :z :arraycell sentence :xpos :ypos
  ]
 
  ;-------------- Storing cells 65  to 70  into the memory
  repeat 6 [
       make "xpos (:startx * :x) + (70 * :x)
       make "ypos (:starty * :x) + (130 * :x) - (repcount - 1) * 10 * :x
-      make "z se repcount + 64 1
-      mdsetitem :z :arraycell se :xpos :ypos
+      make "z sentence repcount + 64 1
+      mdsetitem :z :arraycell sentence :xpos :ypos
   ]
 
  ;-------------- Storing cells 71  to 76  into the memory
  repeat 6 [
       make "xpos (:startx * :x) + (140 * :x) - (repcount * 10 * :x)
       make "ypos (:starty * :x) + ( 70 * :x)
-      make "z se repcount + 70 1
-      mdsetitem :z :arraycell se :xpos :ypos
+      make "z sentence repcount + 70 1
+      mdsetitem :z :arraycell sentence :xpos :ypos
   ]
 
 end
@@ -877,8 +877,8 @@ to setpieces
     make "counter repcount
     make "tmp (item repcount :startpos) - 1
     repeat 51 [
-        mdsetitem (se repcount :counter) :colourtrack remainder (:tmp + repcount) 52 
-        if (remainder (:tmp + repcount) 52) = 0 [mdsetitem (se repcount :counter) :colourtrack 52]
+        mdsetitem (sentence repcount :counter) :colourtrack remainder (:tmp + repcount) 52 
+        if (remainder (:tmp + repcount) 52) = 0 [mdsetitem (sentence repcount :counter) :colourtrack 52]
     ]
  ]
 
@@ -887,7 +887,7 @@ to setpieces
     make "counter repcount
     repeat 6 [
         make "tmp :tmp + 1
-        mdsetitem (se repcount + 51 :counter) :colourtrack :tmp
+        mdsetitem (sentence repcount + 51 :counter) :colourtrack :tmp
     ]
  ]
 
@@ -988,10 +988,6 @@ Make "koarg4 4
 Make "localcellontrack 16
 Make "localcellstepsmoved 0
 Make "moveallowed "True
-Make "msg [Ludo was brought to you by Hensley Bass Email: hbass@intnet.mu Url: http://pages.intnet.mu/jhbpage]
-Make "msg1 [Ludo was brought to you by Hensley Bass]
-Make "msg2 [Email: hbass@intnet.mu]
-Make "msg3 [Url: http://pages.intnet.mu/jhbpage]
 Make "newvalue 4
 Make "pieceid 6
 Make "playing 0
