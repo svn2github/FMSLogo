@@ -22,7 +22,7 @@ II. New features/bugs fixed:
 
   * Added for 6.16.0
     o Fix bug #1765108; MACHINE now outputs the correct working area,
-      even it it changed.  FMSLogo also now positions new windows in the
+      even if it changed.  FMSLogo also now positions new windows in the
       working area, even if the size of the desktop or taskbar has changed.
     o Fix bug #1735569; When the clipboard contains text, running BITMAPTURTLE
       no longer prevents subsequent calls to BITMAPTURTLE from working.
