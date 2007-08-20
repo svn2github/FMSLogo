@@ -126,10 +126,10 @@ end
 
 to pentoggle
   ifelse pendown? [
-     tracecommand [PU]
+     tracecommand [PENUP]
      buttonupdate "penbutton "PENDOWN
   ] [
-     tracecommand [PD]
+     tracecommand [PENDOWN]
      buttonupdate "penbutton "PENUP
   ]
 end
