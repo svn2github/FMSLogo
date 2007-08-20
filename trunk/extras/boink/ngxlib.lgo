@@ -202,9 +202,9 @@ bury [[ngx.move] [] []]
 ;
 ; DESCRIPTION : set pen size, pen colour and fill colour
 ;
-; ARGUMENTS   : pensize    (optional pen size, 0 to ignore)
-;               pencolour  (optional pen colour, [] to ignore)
-;               fillcolour (optional fill colour, [] to ignore)
+; ARGUMENTS   : pensize   (optional pen size, 0 to ignore)
+;               pencolor  (optional pen color, [] to ignore)
+;               fillcolor (optional fill color, [] to ignore)
 ;
 ; OUTPUTS     : none
 ;
@@ -214,11 +214,11 @@ bury [[ngx.move] [] []]
 ;
 ; ---------------------------------------------------------------------------
 
-to ngx.setpen :pensize :pencolour :fillcolour
+to ngx.setpen :pensize :pencolor :fillcolor
 
-	if :pensize > 0           [ setpensize (list :pensize :pensize) ]
-	if not emptyp :pencolour  [ setpencolour :pencolour ]
-	if not emptyp :fillcolour [ setfloodcolour :fillcolour ]
+	if :pensize > 0          [ setpensize (list :pensize :pensize) ]
+	if not emptyp :pencolor  [ setpencolor :pencolor ]
+	if not emptyp :fillcolor [ setfloodcolor :fillcolor ]
 
 End
 bury [[ngx.setpen] [] []]
