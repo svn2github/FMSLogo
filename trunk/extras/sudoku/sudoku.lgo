@@ -31,11 +31,11 @@ op :l
 end
 
 to mouse :d :pos
-pu
+penup
 ifelse :what="h [setpos list -2*:d+:d/4 :d*10] [setpos list -2*:d+:d/4 :d*:what]
-pd label :what
+pendown label :what
 make "what ifelse :pos=10 ["h] [:pos]
-pu setpos list -2*:d+:d/4 :d*:pos pd setpc 1 label :what setpc 0
+penup setpos list -2*:d+:d/4 :d*:pos pendown setpc 1 label :what setpc 0
 end
 
 to put :d :pos :w
@@ -44,7 +44,7 @@ if (or (first :pos)<0 not (first :pos)<9*:d (last :pos)<0 not (last :pos)<9*:d) 
 (local "r "c)
 make "r 1+int ((9*:d-last :pos)/:d)
 make "c 1+int ((first :pos)/:d)
-pu setxy (:c-1)*:d+:d/4 9*:d-(:r-1)*:d pd
+penup setxy (:c-1)*:d+:d/4 9*:d-(:r-1)*:d pendown
 if (item :c item :r :p)=0 [
   ifelse :w="h
     [setpencolor 7 label (item :c item :r :q) setpencolor 1 label item :c item :r :sol make "p set :p :r :c item :c item :r :sol make "q set :q :r :c item :c item :r :sol setpencolor 0]
@@ -91,7 +91,7 @@ if (count :sol)=0 [pr [ERROR! Sudoku has no solutions!] wait 180 start stop]
 make "sol first :sol
 setlabelfont [[Arial] 30 0 0 900 0 0 0 0 0 0 0 0]
 table 30 rt 90
-for [i 1 9] [for [j 1 9] [if not (item :j item :i :p)=0 [pu setxy (:j-1)*30+30/4 9*30-(:i-1)*30 pd label item :j item :i :p]]]
+for [i 1 9] [for [j 1 9] [if not (item :j item :i :p)=0 [penup setxy (:j-1)*30+30/4 9*30-(:i-1)*30 pendown label item :j item :i :p]]]
 mouseon [(put 30 mousepos :what)] [] [] [(put 30 mousepos 0)] []
 end
 
@@ -100,7 +100,7 @@ repeat 9[repeat 9[repeat 4[fd :d rt 90] rt 90 fd :d lt 90] lt 90 fd 9*:d rt 90 f
 setpensize [3 3]
 repeat 3[repeat 3[repeat 4[fd 3*:d rt 90] rt 90 fd 3*:d lt 90] lt 90 fd 9*:d rt 90 fd 3*:d] bk 9*:d
 setpensize [1 1]
-pu lt 90 fd :d*2 rt 90 pd
+penup lt 90 fd :d*2 rt 90 pendown
 repeat 9[repeat 4[fd :d rt 90] fd :d rt 90 fd :d/4 label repcount bk :d/4 lt 90]
 repeat 4[fd :d rt 90] fd :d rt 90 fd :d/4 setpencolor 1 label "h setpencolor 0 bk :d/4 lt 90
 make "what "h
