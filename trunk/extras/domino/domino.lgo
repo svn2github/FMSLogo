@@ -101,10 +101,10 @@ to checkstale
     make "total1 0
     for [i 1 :maxloop 1] [
 
-        if (mditem (se :i 2) :player1) = 0 [
-            make "temp (mditem (se :i 1) :player1) 
-            make "domino1 first (mditem (se :temp 1) :arraydomino)
-            make "domino2 last (mditem (se :temp 1) :arraydomino)
+        if (mditem (sentence :i 2) :player1) = 0 [
+            make "temp (mditem (sentence :i 1) :player1) 
+            make "domino1 first (mditem (sentence :temp 1) :arraydomino)
+            make "domino2 last (mditem (sentence :temp 1) :arraydomino)
             make "total1 :total1 + :domino1 + :domino2
         ]
     ]
@@ -112,10 +112,10 @@ to checkstale
 
     make "total2 0
     for [i 1 :maxloop 1] [
-        if (mditem (se :i 2) :player2) = 0 [
-            make "temp (mditem (se :i 1) :player2) 
-            make "domino1 first (mditem (se :temp 1) :arraydomino)
-            make "domino2 last (mditem (se :temp 1) :arraydomino)
+        if (mditem (sentence :i 2) :player2) = 0 [
+            make "temp (mditem (sentence :i 1) :player2) 
+            make "domino1 first (mditem (sentence :temp 1) :arraydomino)
+            make "domino2 last (mditem (sentence :temp 1) :arraydomino)
             make "total2 :total2 + :domino1 + :domino2
         ]
     ]
@@ -135,8 +135,8 @@ to checkstale
     setlabelfont [[Times New Roman] -18 0 0 400 0 0 0 0 3 2 1 18]
     setpc [40 40 40]
 
-    pu setxy 0 0 seth 90 label (se [Player 1:] :total1 ) seth 0
-    pu setxy 0 -20 seth 90 label (se [Player 2:] :total2 ) seth 0
+    pu setxy 0 0 seth 90 label (sentence [Player 1:] :total1 ) seth 0
+    pu setxy 0 -20 seth 90 label (sentence [Player 2:] :total2 ) seth 0
 
  ]
  windowenable "windowdomino "true
@@ -152,10 +152,10 @@ to checkwin
  make "maxloop (:maxtile + :bonesdrawn1)
 
  for [i 1 :maxloop 1] [
-    if (mditem (se :i 2) :player1) = 0 [
-         make "temp (mditem (se :i 1) :player1) 
-         make "domino1 first (mditem (se :temp 1) :arraydomino)
-         make "domino2 last (mditem (se :temp 1) :arraydomino)
+    if (mditem (sentence :i 2) :player1) = 0 [
+         make "temp (mditem (sentence :i 1) :player1) 
+         make "domino1 first (mditem (sentence :temp 1) :arraydomino)
+         make "domino2 last (mditem (sentence :temp 1) :arraydomino)
          make "total1 :total1 + :domino1 + :domino2
      ]
  ]
@@ -163,10 +163,10 @@ to checkwin
  make "total2 0
  make "maxloop (:maxtile + :bonesdrawn2)
  for [i 1 :maxloop 1] [
-    if (mditem (se :i 2) :player2) = 0 [
-        make "temp (mditem (se :i 1) :player2) 
-        make "domino1 first (mditem (se :temp 1) :arraydomino)
-        make "domino2 last (mditem (se :temp 1) :arraydomino)
+    if (mditem (sentence :i 2) :player2) = 0 [
+        make "temp (mditem (sentence :i 1) :player2) 
+        make "domino1 first (mditem (sentence :temp 1) :arraydomino)
+        make "domino2 last (mditem (sentence :temp 1) :arraydomino)
         make "total2 :total2 + :domino1 + :domino2
     ]
  ]
@@ -175,27 +175,27 @@ to checkwin
  make "maxloop (:maxtile + :bonesdrawn1)
 
  for [i 1 :maxloop 1] [
-    if (mditem (se :i 2) :player1) = 0 [make "c1 :c1 + 1]
+    if (mditem (sentence :i 2) :player1) = 0 [make "c1 :c1 + 1]
  ]
 
 
  if :c1 = 0 [
     endofround 1
     setlabelfont [[Times New Roman] -18 0 0 400 0 0 0 0 3 2 1 18]
-    pu setxy 0 0 seth 90 label (se [Player 1:] :total1 ) seth 0
-    pu setxy 0 -20 seth 90 label (se [Player 2:] :total2 ) seth 0
+    pu setxy 0 0 seth 90 label (sentence [Player 1:] :total1 ) seth 0
+    pu setxy 0 -20 seth 90 label (sentence [Player 2:] :total2 ) seth 0
  ]
  make "c2 0
  make "maxloop (:maxtile + :bonesdrawn2)
 
  for [i 1 :maxloop 1] [
-    if (mditem (se :i 2) :player2) = 0 [make "c2 :c2 + 1]
+    if (mditem (sentence :i 2) :player2) = 0 [make "c2 :c2 + 1]
  ]
  if :c2 = 0 [
     endofround 2
     setlabelfont [[Times New Roman] -18 0 0 400 0 0 0 0 3 2 1 18]
-    pu setxy 0 0 seth 90 label (se [Player 1:] :total1 ) seth 0
-    pu setxy 0 -20 seth 90 label (se [Player 2:] :total2 ) seth 0
+    pu setxy 0 0 seth 90 label (sentence [Player 1:] :total1 ) seth 0
+    pu setxy 0 -20 seth 90 label (sentence [Player 2:] :total2 ) seth 0
  ]
 
  windowenable "windowdomino "true
@@ -212,13 +212,13 @@ to computerplays
  make "maxloop (:maxtile + :bonesdrawn2)
  do.until [
     for [i 1 :maxloop 1] [ 
-        if (mditem (se :i 2) :player2) = 0 [
-            make "no mditem (se :i 1) :player2
+        if (mditem (sentence :i 2) :player2) = 0 [
+            make "no mditem (sentence :i 1) :player2
             ;-------------- Checking whether computer can play
-            make "lm1 (first mditem (se :no 1) :arraydomino) = (item :tpls + 1 :tilesplayed)
-            make "lm2 (last mditem (se :no 1) :arraydomino) = (item :tpls + 1 :tilesplayed)
-            make "rm1 (first mditem (se :no 1) :arraydomino) = (item :tprs - 1 :tilesplayed)
-            make "rm2 (last mditem (se :no 1) :arraydomino) = (item :tprs - 1 :tilesplayed)
+            make "lm1 (first mditem (sentence :no 1) :arraydomino) = (item :tpls + 1 :tilesplayed)
+            make "lm2 (last mditem (sentence :no 1) :arraydomino) = (item :tpls + 1 :tilesplayed)
+            make "rm1 (first mditem (sentence :no 1) :arraydomino) = (item :tprs - 1 :tilesplayed)
+            make "rm2 (last mditem (sentence :no 1) :arraydomino) = (item :tprs - 1 :tilesplayed)
 
             if (or (:lm1) (:lm2) (:rm1) (:rm2)) [
 
@@ -241,7 +241,7 @@ to computerplays
         ]
     ]
 
-    ;messagebox [](se :computerplayed :roundvariations :freedomino)
+    ;messagebox [](sentence :computerplayed :roundvariations :freedomino)
     if :computerplayed = "False [
         ifelse :roundvariations  = "draw [drawrandomdomino 2 ][]
         if (or (equalp :roundvariations "block) (:freedomino = "false)) [ showmessage [I pass] make "pass :pass + 1 checkstale]
@@ -264,8 +264,8 @@ to displayopponenttile
  repeat :maxloop  [
     pu 
     setxy (:xxx + (repcount - 1) * 33) :yyy  
-    if (mditem (se repcount 2) :player2) = 0 [
-        drawtile (mditem (se repcount 1) :player2) 0 30 0 0
+    if (mditem (sentence repcount 2) :player2) = 0 [
+        drawtile (mditem (sentence repcount 1) :player2) 0 30 0 0
     ]
  ]
 
@@ -428,7 +428,7 @@ to drawbase :xx :yy :dbplayer :db
 	repeat :maxloop [
 		pu 
 		setxy (:xxx + (repcount - 1) * 33) :yyy  
-		drawtile (mditem (se repcount 1) :player1) 0 30 0 0
+		drawtile (mditem (sentence repcount 1) :player1) 0 30 0 0
 		] 
 	]
 
@@ -469,9 +469,9 @@ to drawrandomdomino :drdplayer
 	 make "freedomino "false
 	 make "maxloop (:maxtile + :bonesdrawn1)
 	 for [i 1 :maxloop  1] [	
-		if (mditem (se :i 2) :player1) = 0 [
+		if (mditem (sentence :i 2) :player1) = 0 [
 
-			make "tempp mditem (se :i 1) :player1
+			make "tempp mditem (sentence :i 1) :player1
 		
 
 			make "drdcounter :drdcounter + 1
@@ -480,50 +480,50 @@ to drawrandomdomino :drdplayer
 
 
 
-	 for [i 1 28 1] [if (mditem (se :i 2) :arraydomino) = 0 [ make "freedomino "True]]
+	 for [i 1 28 1] [if (mditem (sentence :i 2) :arraydomino) = 0 [ make "freedomino "True]]
 	 if :freedomino = "true [
 		make "bonesdrawn1 :bonesdrawn1 + 1
 
-		make "tempdrdplayer (mdarray (se (:maxtile + :bonesdrawn1)  2) 1)
+		make "tempdrdplayer (mdarray (sentence (:maxtile + :bonesdrawn1)  2) 1)
 		make "tempp :maxtile + :bonesdrawn1 
 		for [j 1 :drdcounter 1] [
-			mdsetitem (se :j 1) :tempdrdplayer mditem (se :j 1) :player1
-			mdsetitem (se :j 2) :tempdrdplayer mditem (se :j 2) :player1
+			mdsetitem (sentence :j 1) :tempdrdplayer mditem (sentence :j 1) :player1
+			mdsetitem (sentence :j 2) :tempdrdplayer mditem (sentence :j 2) :player1
 			]
 	
 
 		make "temp2 :drdcounter + 2
 		for [j :temp2 :tempp 1] [
-			mdsetitem (se :j 1) :tempdrdplayer mditem (se :j - 1 1) :player1
-			mdsetitem (se :j 2) :tempdrdplayer mditem (se :j - 1 2) :player1
+			mdsetitem (sentence :j 1) :tempdrdplayer mditem (sentence :j - 1 1) :player1
+			mdsetitem (sentence :j 2) :tempdrdplayer mditem (sentence :j - 1 2) :player1
 			]
 
 		while [:freebone = 0 ] [
 			make "randomdraw (random 28) + 1
  
-			if (mditem (se :randomdraw 2) :arraydomino) = 0 [
-				make "freebone mditem (se :randomdraw 1) :arraydomino
-				mdsetitem (se :randomdraw 2) :arraydomino -1
+			if (mditem (sentence :randomdraw 2) :arraydomino) = 0 [
+				make "freebone mditem (sentence :randomdraw 1) :arraydomino
+				mdsetitem (sentence :randomdraw 2) :arraydomino -1
 			
 				]
 	 		]
 
 
-		mdsetitem (se :drdcounter + 1 1) :tempdrdplayer :randomdraw 
-		mdsetitem (se :drdcounter + 1 2) :tempdrdplayer 0
+		mdsetitem (sentence :drdcounter + 1 1) :tempdrdplayer :randomdraw 
+		mdsetitem (sentence :drdcounter + 1 2) :tempdrdplayer 0
       	make "temp (:maxtile + :bonesdrawn1 )
-	      make "player1 (mdarray (se :temp 2) 1)
+	      make "player1 (mdarray (sentence :temp 2) 1)
 		for [k 1 :temp 1] [
 			
-			mdsetitem (se :k 1) :player1 (mditem (se :k 1) :tempdrdplayer)
-			mdsetitem (se :k 2) :player1 (mditem (se :k 2) :tempdrdplayer)
+			mdsetitem (sentence :k 1) :player1 (mditem (sentence :k 1) :tempdrdplayer)
+			mdsetitem (sentence :k 2) :player1 (mditem (sentence :k 2) :tempdrdplayer)
 		
 
 			]
 		pu
 		setxy (:startx + 150 + (:drdcounter ) * 33) - 5 :starty + 5
 	
-		drawtile (mditem (se :drdcounter + 1 1) :player1) 0 30 0 0
+		drawtile (mditem (sentence :drdcounter + 1 1) :player1) 0 30 0 0
 
 
  
@@ -539,9 +539,9 @@ to drawrandomdomino :drdplayer
 	 make "freedomino "false
 	 make "maxloop (:maxtile + :bonesdrawn2)
 	 for [i 1 :maxloop  1] [	
-		if (mditem (se :i 2) :player2) = 0 [
+		if (mditem (sentence :i 2) :player2) = 0 [
 
-			make "tempp mditem (se :i 1) :player2
+			make "tempp mditem (sentence :i 1) :player2
 		
 
 			make "drdcounter :drdcounter + 1
@@ -549,48 +549,48 @@ to drawrandomdomino :drdplayer
 		]
 
 
-	 for [i 1 28 1] [if (mditem (se :i 2) :arraydomino) = 0 [ make "freedomino "True]]
+	 for [i 1 28 1] [if (mditem (sentence :i 2) :arraydomino) = 0 [ make "freedomino "True]]
 	 if :freedomino = "true [
 		make "bonesdrawn2 :bonesdrawn2 + 1
 
-		make "tempdrdplayer (mdarray (se (:maxtile + :bonesdrawn2)  2) 1)
+		make "tempdrdplayer (mdarray (sentence (:maxtile + :bonesdrawn2)  2) 1)
 		make "tempp :maxtile + :bonesdrawn2 
 		for [j 1 :drdcounter 1] [
-			mdsetitem (se :j 1) :tempdrdplayer mditem (se :j 1) :player2
-			mdsetitem (se :j 2) :tempdrdplayer mditem (se :j 2) :player2
+			mdsetitem (sentence :j 1) :tempdrdplayer mditem (sentence :j 1) :player2
+			mdsetitem (sentence :j 2) :tempdrdplayer mditem (sentence :j 2) :player2
 			]
 		make "temp2 :drdcounter + 2
 		for [j :temp2 :tempp 1] [
-			mdsetitem (se :j 1) :tempdrdplayer mditem (se :j - 1 1) :player2
-			mdsetitem (se :j 2) :tempdrdplayer mditem (se :j - 1 2) :player2
+			mdsetitem (sentence :j 1) :tempdrdplayer mditem (sentence :j - 1 1) :player2
+			mdsetitem (sentence :j 2) :tempdrdplayer mditem (sentence :j - 1 2) :player2
 			]
 	 
 		while [:freebone = 0 ] [
 			make "randomdraw (random 28) + 1
  
-			if (mditem (se :randomdraw 2) :arraydomino) = 0 [
-				make "freebone mditem (se :randomdraw 1) :arraydomino
-				mdsetitem (se :randomdraw 2) :arraydomino -1
+			if (mditem (sentence :randomdraw 2) :arraydomino) = 0 [
+				make "freebone mditem (sentence :randomdraw 1) :arraydomino
+				mdsetitem (sentence :randomdraw 2) :arraydomino -1
 			
 				]
 	 		]
 
-		mdsetitem (se :drdcounter + 1 1) :tempdrdplayer :randomdraw 
-		mdsetitem (se :drdcounter + 1 2) :tempdrdplayer 0
+		mdsetitem (sentence :drdcounter + 1 1) :tempdrdplayer :randomdraw 
+		mdsetitem (sentence :drdcounter + 1 2) :tempdrdplayer 0
       	make "temp (:maxtile + :bonesdrawn2 )
-	      make "player2 (mdarray (se :temp 2) 1)
+	      make "player2 (mdarray (sentence :temp 2) 1)
 
 		for [k 1 :temp 1] [
 			
-			mdsetitem (se :k 1) :player2 (mditem (se :k 1) :tempdrdplayer)
-			mdsetitem (se :k 2) :player2 (mditem (se :k 2) :tempdrdplayer)
+			mdsetitem (sentence :k 1) :player2 (mditem (sentence :k 1) :tempdrdplayer)
+			mdsetitem (sentence :k 2) :player2 (mditem (sentence :k 2) :tempdrdplayer)
 		
 
 			]
 		pu
 		setxy (:startx + 150 + (:drdcounter ) * 33) - 5 :starty + 375
 	
-		;drawtile (mditem (se :drdcounter + 1 1) :player2) 0 30 0 0
+		;drawtile (mditem (sentence :drdcounter + 1 1) :player2) 0 30 0 0
 		ppt seth 0 
 		repeat 2 [ fd 60 rt 90 fd 30 rt 90] 
 		pu rt 45 fd 5 
@@ -621,7 +621,7 @@ to drawtile :tile :xval :yval :h :orientation
  setpc [0 0 0]
  make "xx first pos
  make "yy last pos
- make "leftside (word "draw first (mditem (se :tile 1) :arraydomino) char(32) :h)
+ make "leftside (word "draw first (mditem (sentence :tile 1) :arraydomino) char(32) :h)
  seth :orientation
 
 
@@ -632,7 +632,7 @@ to drawtile :tile :xval :yval :h :orientation
  seth :orientation
 
  
-make "rightside (word "draw last (mditem (se :tile 1) :arraydomino)  char(32) :h)
+make "rightside (word "draw last (mditem (sentence :tile 1) :arraydomino)  char(32) :h)
  run :rightside
  pu
  windowenable "windowdomino "true
@@ -648,14 +648,14 @@ to endofround :winner
 	pu setxy -310 -220 bitcut 100 20
 	setpc [40 40 40]
      	setlabelfont [[Times New Roman] -14 0 0 800 0 0 0 0 3 2 1 18]
-	pu setxy -310 -200 seth 90 label (se [Score: ] :bigtotal1) seth 0
+	pu setxy -310 -200 seth 90 label (sentence [Score: ] :bigtotal1) seth 0
 	][
 	showmessage [player 2 wins] 
 	make "bigtotal2 :bigtotal2 + :total1
 	pu setxy -310 160 bitcut 100 20
 	setpc [40 40 40]
 	setlabelfont [[Times New Roman] -14 0 0 800 0 0 0 0 3 2 1 18]
-     	pu setxy -310 180 seth 90 label (se [Score: ] :bigtotal2) seth 0
+     	pu setxy -310 180 seth 90 label (sentence [Score: ] :bigtotal2) seth 0
 	]
 
 
@@ -757,8 +757,8 @@ to initialise
 	make "start :i - 1
 	 for [j :start 0 -1] [	
 		make "counter :counter + 1
-		mdsetitem (se :counter 1) :arraydomino (se :i - 1 :j)
-		mdsetitem (se :counter 2) :arraydomino 0
+		mdsetitem (sentence :counter 1) :arraydomino (sentence :i - 1 :j)
+		mdsetitem (sentence :counter 2) :arraydomino 0
 		]	
 	]
  windowenable "windowdomino "true
@@ -1144,8 +1144,8 @@ to playerplays :pplays :ptile :side
 
   make "match "True
   if :pplays = 1 [	
-    if (mditem (se :ptile 2) :player1) = -1 [stop]
-    playtile mditem (se :ptile 1) :player1 :side
+    if (mditem (sentence :ptile 2) :player1) = -1 [stop]
+    playtile mditem (sentence :ptile 1) :player1 :side
     if :match = "True [
         make "bonesplayed1 :bonesplayed1 + 1
         pu setxy :startx + 145 + ((:ptile - 1) * 33):starty + 0
@@ -1162,16 +1162,16 @@ to playerplays :pplays :ptile :side
         bitpaste
 			
         make "tmp (mdarray [1 2] 1)
-        mdsetitem [1 1] :tmp mditem (se :ptile 1) :player1
-        mdsetitem [1 2] :tmp mditem (se :ptile 2) :player1
+        mdsetitem [1 1] :tmp mditem (sentence :ptile 1) :player1
+        mdsetitem [1 2] :tmp mditem (sentence :ptile 2) :player1
         make "tmp2 (:maxtile + :bonesdrawn1  - 1)
         for [i :ptile :tmp2 1] [	
-            mdsetitem (se :i 1) :player1 mditem (se :i + 1 1) :player1
-            mdsetitem (se :i 2) :player1 mditem (se :i + 1 2) :player1
+            mdsetitem (sentence :i 1) :player1 mditem (sentence :i + 1 1) :player1
+            mdsetitem (sentence :i 2) :player1 mditem (sentence :i + 1 2) :player1
         ]
 
-        mdsetitem (se :maxtile + :bonesdrawn1 1) :player1 mditem [1 1] :tmp
-        mdsetitem (se :maxtile + :bonesdrawn1 2) :player1 -1
+        mdsetitem (sentence :maxtile + :bonesdrawn1 1) :player1 mditem [1 1] :tmp
+        mdsetitem (sentence :maxtile + :bonesdrawn1 2) :player1 -1
         mouseoff
         checkwin
 
@@ -1180,8 +1180,8 @@ to playerplays :pplays :ptile :side
   ]
 
   if :pplays = 2 [	
-    if (mditem (se :ptile 2) :player2) = -1 [stop]
-    playtile mditem (se :ptile 1) :player2 :side
+    if (mditem (sentence :ptile 2) :player2) = -1 [stop]
+    playtile mditem (sentence :ptile 1) :player2 :side
     if :match = "True [
         make "bonesplayed2 :bonesplayed2 + 1
 
@@ -1200,16 +1200,16 @@ to playerplays :pplays :ptile :side
         bitpaste
 
         make "tmp (mdarray [1 2] 1)
-        mdsetitem [1 1] :tmp mditem (se :ptile 1) :player2
-        mdsetitem [1 2] :tmp mditem (se :ptile 2) :player2
+        mdsetitem [1 1] :tmp mditem (sentence :ptile 1) :player2
+        mdsetitem [1 2] :tmp mditem (sentence :ptile 2) :player2
         make "tmp2 (:maxtile + :bonesdrawn2 - 1)
         for [i :ptile :tmp2 1] [	
-            mdsetitem (se :i 1) :player2 mditem (se :i + 1 1) :player2
-            mdsetitem (se :i 2) :player2 mditem (se :i + 1 2) :player2
+            mdsetitem (sentence :i 1) :player2 mditem (sentence :i + 1 1) :player2
+            mdsetitem (sentence :i 2) :player2 mditem (sentence :i + 1 2) :player2
         ]
 
-        mdsetitem (se :maxtile + :bonesdrawn2 1) :player2 mditem [1 1] :tmp
-        mdsetitem (se :maxtile + :bonesdrawn2 2) :player2 -1
+        mdsetitem (sentence :maxtile + :bonesdrawn2 1) :player2 mditem [1 1] :tmp
+        mdsetitem (sentence :maxtile + :bonesdrawn2 2) :player2 -1
         checkwin
     ]
  ]
@@ -1222,8 +1222,8 @@ to playtile :tileno :side
  make "LinTP (item :tpls + 1 :tilesplayed)
  ;------------- RinTP stands for right in tiles played
  make "RinTP (item :tprs - 1 :tilesplayed)
- make "ls (first mditem (se :tileno 1) :arraydomino)
- make "rs (last mditem (se :tileno 1) :arraydomino)
+ make "ls (first mditem (sentence :tileno 1) :arraydomino)
+ make "rs (last mditem (sentence :tileno 1) :arraydomino)
  if :side = -1 [ 
 
 
@@ -1235,8 +1235,8 @@ to playtile :tileno :side
 
          ;-------- Checking whether tile has to be "rotated/swapped"
          if (not equalp :rs  :LinTP) [
-             make "tmp mditem (se :tileno 1) :arraydomino
-             mdsetitem (se :tileno 1) :arraydomino (se last :tmp first :tmp )
+             make "tmp mditem (sentence :tileno 1) :arraydomino
+             mdsetitem (sentence :tileno 1) :arraydomino (sentence last :tmp first :tmp )
          ]
 
          ;---------- Determining how to place the tile 
@@ -1252,8 +1252,8 @@ to playtile :tileno :side
 		setxy :rx :ry
             ;-------- Checking whether tile has to be "rotated/swapped"
 		if (not equalp :ls  :RinTP) [
-			make "tmp mditem (se :tileno 1) :arraydomino
-			mdsetitem (se :tileno 1) :arraydomino (se last :tmp first :tmp )
+			make "tmp mditem (sentence :tileno 1) :arraydomino
+			mdsetitem (sentence :tileno 1) :arraydomino (sentence last :tmp first :tmp )
 
 			]
             ifelse :ls = :rs [placetile :side 11] [placetile :side 1]
@@ -1264,14 +1264,14 @@ to playtile :tileno :side
 	]
 ;----------------- Recording the move
  if (:side = -1) [ 
-	setitem (:tpls ) :tilesplayed last mditem (se :tileno 1) :arraydomino
-	setitem (:tpls - 1) :tilesplayed first mditem (se :tileno 1) :arraydomino
+	setitem (:tpls ) :tilesplayed last mditem (sentence :tileno 1) :arraydomino
+	setitem (:tpls - 1) :tilesplayed first mditem (sentence :tileno 1) :arraydomino
 	make "tpls :tpls - 2
 		
 		]
  if (:side = 1) [ 
-	setitem :tprs  :tilesplayed (first mditem (se :tileno 1) :arraydomino)
-	setitem (:tprs + 1)  :tilesplayed (last mditem (se :tileno 1) :arraydomino)
+	setitem :tprs  :tilesplayed (first mditem (sentence :tileno 1) :arraydomino)
+	setitem (:tprs + 1)  :tilesplayed (last mditem (sentence :tileno 1) :arraydomino)
 	make "tprs :tprs + 2
 	
 		]
@@ -1358,15 +1358,15 @@ to shuffle
 
  ;------------ Procedure that redistributes the bones at random to the player
  make "counter 0
- make "player1 (mdarray (se :maxtile  2) 1)
- make "player2 (mdarray (se :maxtile  2) 1)
+ make "player1 (mdarray (sentence :maxtile  2) 1)
+ make "player2 (mdarray (sentence :maxtile  2) 1)
  while [:counter < :maxtile ] [
 	make "randomdraw (random 28) + 1
- 	if (mditem (se :randomdraw 2) :arraydomino) = 0 [
+ 	if (mditem (sentence :randomdraw 2) :arraydomino) = 0 [
 		make "counter :counter + 1
-		mdsetitem (se :randomdraw 2) :arraydomino -1
-		mdsetitem (se :counter 1) :player1 :randomdraw 
-		mdsetitem (se :counter 2) :player1 0
+		mdsetitem (sentence :randomdraw 2) :arraydomino -1
+		mdsetitem (sentence :counter 1) :player1 :randomdraw 
+		mdsetitem (sentence :counter 2) :player1 0
 		]
  	]
 
@@ -1374,11 +1374,11 @@ to shuffle
  make "counter 0
  while [:counter < :maxtile ] [
 	make "randomdraw (random 28) + 1
- 	if (mditem (se :randomdraw 2) :arraydomino) = 0 [
+ 	if (mditem (sentence :randomdraw 2) :arraydomino) = 0 [
 		make "counter :counter + 1
-		mdsetitem (se :randomdraw 2) :arraydomino -1
-		mdsetitem (se :counter 1) :player2 :randomdraw 
-		mdsetitem (se :counter 2) :player2 0
+		mdsetitem (sentence :randomdraw 2) :arraydomino -1
+		mdsetitem (sentence :counter 1) :player2 :randomdraw 
+		mdsetitem (sentence :counter 2) :player2 0
 		]
  	]
 end
@@ -1448,9 +1448,9 @@ to startnewround
 
  setlabelfont [[Times New Roman] -14 0 0 800 0 0 0 0 3 2 1 18]
 
- pu setxy -310 -200 seth 90 label (se [Score: ] :bigtotal1) seth 0
+ pu setxy -310 -200 seth 90 label (sentence [Score: ] :bigtotal1) seth 0
 
- pu setxy -310 180 seth 90 label (se [Score: ] :bigtotal2) seth 0
+ pu setxy -310 180 seth 90 label (sentence [Score: ] :bigtotal2) seth 0
 
 
  ;------------ If the player who has the highest doublet or highest value should start
@@ -1461,9 +1461,9 @@ to startnewround
      make "hv1 -1
 
      for [i 1 :maxtile 1] [
-         make "temp (mditem (se :i 1) :player1) 
-         make "domino1 first (mditem (se :temp 1) :arraydomino)
-         make "domino2 last (mditem (se :temp 1) :arraydomino)
+         make "temp (mditem (sentence :i 1) :player1) 
+         make "domino1 first (mditem (sentence :temp 1) :arraydomino)
+         make "domino2 last (mditem (sentence :temp 1) :arraydomino)
          if :domino1 = :domino2 [ 
              if (:domino1 + :domino2) > :highestdoublet1 [
                  make "highestdoublet1 (:domino1 + :domino2)
@@ -1483,9 +1483,9 @@ to startnewround
  make "hd2 -1
  make "hv2 -1
  for [i 1 :maxtile 1] [
-    make "temp (mditem (se :i 1) :player2) 
-    make "domino1 first (mditem (se :temp 1) :arraydomino)
-    make "domino2 last (mditem (se :temp 1) :arraydomino)
+    make "temp (mditem (sentence :i 1) :player2) 
+    make "domino1 first (mditem (sentence :temp 1) :arraydomino)
+    make "domino2 last (mditem (sentence :temp 1) :arraydomino)
     if :domino1 = :domino2 [ 
         if (:domino1 + :domino2) > :highestdoublet2 [ 
             make "highestdoublet2 (:domino1 + :domino2)
