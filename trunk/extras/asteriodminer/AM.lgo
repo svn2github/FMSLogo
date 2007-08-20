@@ -28,20 +28,20 @@ to buttonDraw :num :draw
   make "bdHeading heading
   make "bdPen pen
   setpc[ 255 255 0 ]
-  pu setpos item 3 ( item :num :buttonList )
+  penup setpos item 3 ( item :num :buttonList )
   drawText item 1 ( item :num :buttonList ) "getLength
   seth 270
-  pu fd :textLength/2 tfd 9 rt 90
+  penup fd :textLength/2 tfd 9 rt 90
 
   sbitblock round( :textLength + 13 * :textScale + 2) round( 38 * :textScale + 1 )
 
   if :draw [
-    pd
+    pendown
     repeat 2 [
       tfd 8 fd 22 * :textScale tfd 8 rt 90
       tfd 8 fd :textLength tfd 5 rt 90
     ]
-    pu tfd 9 rt 90 tfd 9
+    penup tfd 9 rt 90 tfd 9
     make "tempPos pos
     drawText item 1 (item :num :buttonList ) "draw
 
@@ -50,11 +50,11 @@ to buttonDraw :num :draw
     make "y round( last :tempPos )
     setxy :x :y
     seth 180 tfd 4 lt 90
-    pd
+    pendown
     ifelse( ( item 1 (item :num :buttonList) ) = [Instructions] ) [ tfd 6 fd 1 ] [ tfd 11 fd 1 ]  ;underline the first letter
   ]
   setturtle 0
-  pu setpos :bdPos
+  penup setpos :bdPos
   seth :bdHeading
   setpen :bdPen
   setturtle :bdTurtle
@@ -125,7 +125,7 @@ to buttonHit
     ]
   ][ and :bhNum < :numButtons not :bhDone ]
   setturtle 0
-  pu setpos :bhPos
+  penup setpos :bhPos
   seth :bhHeading
   setpen :bhPen
   setturtle :bhTurtle
@@ -269,85 +269,85 @@ to drawChar :c :action
   make "y round :y
   setxy :x :y
   setpc [ 255 255 0 ]
-  pd
+  pendown
   if :action <> "getLength [
-    if :c=ascii "A [tfd 11 make "pos1 pos pu tfd 10 rt 90 tfd 5.5 make "pos2 pos tfd 5.5 rt 90 tfd 10 pd rt 90 tfd 11 tbk 11 lt 90 tfd 11 tbk 11 setpos :pos2 setpos :pos1]
-    if :c=ascii "B [pu tfd 21 pd rt 90 tfd 10 rtCnr tfd 7 rtCnr tfd 6 lt 180 tfd 6 rtCnr tfd 10 rtCnr tfd 10 tbk 4 rt 90 tfd 21]
-    if :c=ascii "C [pu rt 90 tfd 11 rt 180 pd tfd 10 rtCnr tfd 19 rtCnr tfd 10]
+    if :c=ascii "A [tfd 11 make "pos1 pos penup tfd 10 rt 90 tfd 5.5 make "pos2 pos tfd 5.5 rt 90 tfd 10 pendown rt 90 tfd 11 tbk 11 lt 90 tfd 11 tbk 11 setpos :pos2 setpos :pos1]
+    if :c=ascii "B [penup tfd 21 pendown rt 90 tfd 10 rtCnr tfd 7 rtCnr tfd 6 lt 180 tfd 6 rtCnr tfd 10 rtCnr tfd 10 tbk 4 rt 90 tfd 21]
+    if :c=ascii "C [penup rt 90 tfd 11 rt 180 pendown tfd 10 rtCnr tfd 19 rtCnr tfd 10]
     if :c=ascii "D [rt 90 tfd 10 ltCnr tfd 19 ltCnr tfd 10 tbk 4 lt 90 tfd 21]
     if :c=ascii "E [rt 90 tfd 11 tbk 11 lt 90 tfd 12 rt 90 tfd 10 tbk 10 lt 90 tfd 9 rt 90 tfd 12]
     if :c=ascii "F [tfd 12 rt 90 tfd 10 tbk 10 lt 90 tfd 9 rt 90 tfd 12]
-    if :c=ascii "G [pu rt 90 tfd 11 lt 90 pd tfd 12 lt 90 tfd 5 tbk 5 rt 90 tbk 12 lt 90 tfd 10 rtCnr tfd 19 rtCnr tfd 10 fd 1]
-    if :c=ascii "H [tfd 12 rt 90 tfd 11 tbk 11 lt 90 tfd 9 fd 1 pu rt 90 tfd 11 rt 90 fd 1 pd tfd 21 fd 1]
-    if :c=ascii "I [pu rt 90 pd tfd 6 tbk 3 lt 90 tfd 21 lt 90 tfd 3 bk 1 tbk 6]
-    if :c=ascii "J [pu tfd 7 rt 180 pd tfd 6 ltCnr tfd 6 ltCnr tfd 20 lt 90 tfd 3 tbk 6 bk 1]
-    if :c=ascii "K [pu rt 90 tfd 11 rt 90 fd 1 make "pos1 pos bk 1 lt 90 tbk 11 lt 90 pd tfd 12 make "pos2 pos tfd 9 fd 1 rt 90 pu tfd 11 rt 90 tfd 1 pd setpos :pos2 setpos :pos1]
+    if :c=ascii "G [penup rt 90 tfd 11 lt 90 pendown tfd 12 lt 90 tfd 5 tbk 5 rt 90 tbk 12 lt 90 tfd 10 rtCnr tfd 19 rtCnr tfd 10 fd 1]
+    if :c=ascii "H [tfd 12 rt 90 tfd 11 tbk 11 lt 90 tfd 9 fd 1 penup rt 90 tfd 11 rt 90 fd 1 pendown tfd 21 fd 1]
+    if :c=ascii "I [penup rt 90 pendown tfd 6 tbk 3 lt 90 tfd 21 lt 90 tfd 3 bk 1 tbk 6]
+    if :c=ascii "J [penup tfd 7 rt 180 pendown tfd 6 ltCnr tfd 6 ltCnr tfd 20 lt 90 tfd 3 tbk 6 bk 1]
+    if :c=ascii "K [penup rt 90 tfd 11 rt 90 fd 1 make "pos1 pos bk 1 lt 90 tbk 11 lt 90 pendown tfd 12 make "pos2 pos tfd 9 fd 1 rt 90 penup tfd 11 rt 90 tfd 1 pendown setpos :pos2 setpos :pos1]
     if :c=ascii "L [rt 90 tfd 11 tbk 11 lt 90 tfd 22]
-    if :c=ascii "M [pu rt 90 tfd 11 lt 90 pd tfd 21 make "pos1 pos tbk 21 lt 90 pu tfd 5.5 rt 90 tfd 12 make "pos2 pos tbk 12 lt 90 tfd 5.5 rt 90 pd tfd 21 setpos :pos2 setpos :pos1]
-    if :c=ascii "N [pu rt 90 tfd 11 pd make "pos1 pos lt 90 tfd 21 tbk 21 pu lt 90 tfd 11 rt 90 pd tfd 21 setpos :pos1]
-    if :c=ascii "O [pu tfd 1 pd repeat 2 [ tfd 19 rtCnr tfd 9 rtCnr]]
+    if :c=ascii "M [penup rt 90 tfd 11 lt 90 pendown tfd 21 make "pos1 pos tbk 21 lt 90 penup tfd 5.5 rt 90 tfd 12 make "pos2 pos tbk 12 lt 90 tfd 5.5 rt 90 pendown tfd 21 setpos :pos2 setpos :pos1]
+    if :c=ascii "N [penup rt 90 tfd 11 pendown make "pos1 pos lt 90 tfd 21 tbk 21 penup lt 90 tfd 11 rt 90 pendown tfd 21 setpos :pos1]
+    if :c=ascii "O [penup tfd 1 pendown repeat 2 [ tfd 19 rtCnr tfd 9 rtCnr]]
     if :c=ascii "P [tfd 21 rt 90 tfd 10 rtCnr tfd 7 rtCnr tfd 10]
-    if :c=ascii "Q [pu make "pos1 pos rt 90 tfd 11 lt 90 lt 45 pd tfd 8 pu setpos :pos1 rt 45 tfd 1 pd repeat 2 [ tfd 19 rtCnr tfd 8 rtCnr]]
-    if :c=ascii "R [pu rt 90 tfd 11 rt 45 fd 1 make "pos1 pos bk 1 lt 45 tbk 11 lt 90 pd tfd 21 rt 90 tfd 10 rtCnr tfd 7 rtCnr tfd 10 setpos :pos1]
+    if :c=ascii "Q [penup make "pos1 pos rt 90 tfd 11 lt 90 lt 45 pendown tfd 8 penup setpos :pos1 rt 45 tfd 1 pendown repeat 2 [ tfd 19 rtCnr tfd 8 rtCnr]]
+    if :c=ascii "R [penup rt 90 tfd 11 rt 45 fd 1 make "pos1 pos bk 1 lt 45 tbk 11 lt 90 pendown tfd 21 rt 90 tfd 10 rtCnr tfd 7 rtCnr tfd 10 setpos :pos1]
     if :c=ascii "S [rt 90 tfd 10 ltCnr tfd 10 ltCnr tfd 9 rtCnr tfd 7 rtCnr tfd 10 fd 1]
-    if :c=ascii "T [pu rt 90 tfd 5.5 pd lt 90 tfd 21 lt 90 tfd 5.5 tbk 11]
-    if :c=ascii "U [pu tfd 1 pd tfd 20 rt 180 tfd 20 ltCnr tfd 9 ltCnr tfd 20 fd 1]
-    if :c=ascii "V [pu rt 90 tfd 11 lt 90 tfd 21 rt 180 pd tfd 11 make "pos1 pos pu tfd 10 rt 90 tfd 5.5 make "pos2 pos tfd 5.5 rt 90 tfd 10 pd tfd 11 tbk 11 setpos :pos2 setpos :pos1 fd 1]
-    if :c=ascii "W [pu rt 90 tfd 11 lt 90 tfd 21 rt 180 rt 90 tfd 11 lt 90 pd tfd 21 make "pos1 pos tbk 21 lt 90 pu tfd 5.5 rt 90 tfd 9 make "pos2 pos tbk 9 lt 90 tfd 5.5 rt 90 pd tfd 21 setpos :pos2 setpos :pos1]
-    if :c=ascii "X [pu rt 90 tfd 11 lt 90 tfd 21 rt 180 pu make "pos1 pos tfd 21 lt 45 fd 1 make "pos2 pos bk 1 rt 45 rt 90 tfd 11 lt 45 fd 1 make "pos3 pos bk 1 rt 45 rt 90 tfd 21 pd setpos :pos2 pu setpos :pos1 pd setpos :pos3]
-    if :c=ascii "Y [pu rt 90 tfd 11 lt 90 tfd 21 rt 45 fd 1 make "pos1 pos bk 1 lt 45 tbk 21 lt 90  tfd 5.5 rt 90 tfd 12 make "pos2 pos tbk 12 lt 90 tfd 5.5 rt 90 tfd 21 pd setpos :pos2 rt 180 tfd 12 tbk 12 setpos :pos1]
-    if :c=ascii "Z [make "pos1 pos rt 90 tfd 12 pu tbk 1 lt 90 tfd 21 pd lt 90 tfd 11 tbk 11 setpos :pos1]
+    if :c=ascii "T [penup rt 90 tfd 5.5 pendown lt 90 tfd 21 lt 90 tfd 5.5 tbk 11]
+    if :c=ascii "U [penup tfd 1 pendown tfd 20 rt 180 tfd 20 ltCnr tfd 9 ltCnr tfd 20 fd 1]
+    if :c=ascii "V [penup rt 90 tfd 11 lt 90 tfd 21 rt 180 pendown tfd 11 make "pos1 pos penup tfd 10 rt 90 tfd 5.5 make "pos2 pos tfd 5.5 rt 90 tfd 10 pendown tfd 11 tbk 11 setpos :pos2 setpos :pos1 fd 1]
+    if :c=ascii "W [penup rt 90 tfd 11 lt 90 tfd 21 rt 180 rt 90 tfd 11 lt 90 pendown tfd 21 make "pos1 pos tbk 21 lt 90 penup tfd 5.5 rt 90 tfd 9 make "pos2 pos tbk 9 lt 90 tfd 5.5 rt 90 pendown tfd 21 setpos :pos2 setpos :pos1]
+    if :c=ascii "X [penup rt 90 tfd 11 lt 90 tfd 21 rt 180 penup make "pos1 pos tfd 21 lt 45 fd 1 make "pos2 pos bk 1 rt 45 rt 90 tfd 11 lt 45 fd 1 make "pos3 pos bk 1 rt 45 rt 90 tfd 21 pendown setpos :pos2 penup setpos :pos1 pendown setpos :pos3]
+    if :c=ascii "Y [penup rt 90 tfd 11 lt 90 tfd 21 rt 45 fd 1 make "pos1 pos bk 1 lt 45 tbk 21 lt 90  tfd 5.5 rt 90 tfd 12 make "pos2 pos tbk 12 lt 90 tfd 5.5 rt 90 tfd 21 pendown setpos :pos2 rt 180 tfd 12 tbk 12 setpos :pos1]
+    if :c=ascii "Z [make "pos1 pos rt 90 tfd 12 penup tbk 1 lt 90 tfd 21 pendown lt 90 tfd 11 tbk 11 setpos :pos1]
 
-    if :c=ascii "a [pu rt 90 tfd 1 pd tfd 8 tbk 2 lt 90 tfd 12 lt 90 tfd 6 ltCnr tfd 10 ltCnr]  ;ugly
-;    if :c=ascii "a [pu rt 90 tfd 1 pd tfd 8 tbk 2 lt 90 tfd 7 make "pos1 pos lt 90 tfd 6 ltCnr tfd 5 ltCnr pu setpos :pos1 pd lt 90 tfd 4 ltCnr tfd 5 ltCnr tfd 1]  ;too pretty
-;    if :c=ascii "a [pu rt 90 tfd 7 lt 90 tfd 1 pd tfd 11 lt 90 tfd 6 ltCnr tfd 10 ltCnr tfd 5 ltCnr lt 180 ltCnr tfd 1 fd 1]  ;also a bit too pretty
-    if :c=ascii "b [pu rt 90 tfd 9 rt 180 tfd 1 pd tfd 8 rt 90 tfd 21 tbk 9 rt 90 tfd 8 rtCnr tfd 10 rtCnr]
-    if :c=ascii "c [pu rt 90 tfd 9 rt 180 pd tfd 8 rtCnr tfd 10 rtCnr tfd 8 fd 1]
-    if :c=ascii "d [pu rt 90 tfd 1 pd tfd 8 lt 90 tfd 21 tbk 9 lt 90 tfd 8 ltCnr tfd 10 lt 45 tfd 1.4]
-    if :c=ascii "e [pu rt 90 tfd 8 rt 180 pd tfd 7 rtCnr tfd 10 rtCnr tfd 7 rtCnr tfd 5 rt 90 tfd 9]
-    if :c=ascii "f [pu rt 90 tfd 4 pd lt 90 tfd 12 lt 90 tfd 4 tbk 8 tfd 4 rt 90 tfd 8 rtCnr tfd 4]
-    if :c=ascii "g [pu rt 90 tfd 9 rt 180 pd tfd 8 rtCnr tfd 10 rtCnr tfd 8 rt 90 tfd 17 rtCnr tfd 7 rtCnr tfd 1]
+    if :c=ascii "a [penup rt 90 tfd 1 pendown tfd 8 tbk 2 lt 90 tfd 12 lt 90 tfd 6 ltCnr tfd 10 ltCnr]  ;ugly
+;    if :c=ascii "a [penup rt 90 tfd 1 pendown tfd 8 tbk 2 lt 90 tfd 7 make "pos1 pos lt 90 tfd 6 ltCnr tfd 5 ltCnr penup setpos :pos1 pendown lt 90 tfd 4 ltCnr tfd 5 ltCnr tfd 1]  ;too pretty
+;    if :c=ascii "a [penup rt 90 tfd 7 lt 90 tfd 1 pendown tfd 11 lt 90 tfd 6 ltCnr tfd 10 ltCnr tfd 5 ltCnr lt 180 ltCnr tfd 1 fd 1]  ;also a bit too pretty
+    if :c=ascii "b [penup rt 90 tfd 9 rt 180 tfd 1 pendown tfd 8 rt 90 tfd 21 tbk 9 rt 90 tfd 8 rtCnr tfd 10 rtCnr]
+    if :c=ascii "c [penup rt 90 tfd 9 rt 180 pendown tfd 8 rtCnr tfd 10 rtCnr tfd 8 fd 1]
+    if :c=ascii "d [penup rt 90 tfd 1 pendown tfd 8 lt 90 tfd 21 tbk 9 lt 90 tfd 8 ltCnr tfd 10 lt 45 tfd 1.4]
+    if :c=ascii "e [penup rt 90 tfd 8 rt 180 pendown tfd 7 rtCnr tfd 10 rtCnr tfd 7 rtCnr tfd 5 rt 90 tfd 9]
+    if :c=ascii "f [penup rt 90 tfd 4 pendown lt 90 tfd 12 lt 90 tfd 4 tbk 8 tfd 4 rt 90 tfd 8 rtCnr tfd 4]
+    if :c=ascii "g [penup rt 90 tfd 9 rt 180 pendown tfd 8 rtCnr tfd 10 rtCnr tfd 8 rt 90 tfd 17 rtCnr tfd 7 rtCnr tfd 1]
     if :c=ascii "h [tfd 21 tbk 9 rt 90 tfd 8 rtCnr tfd 11 fd 1]
-    if :c=ascii "i [tfd 12 fd 1 pu tfd 3 pd tfd 2]
-    if :c=ascii "j [pu rt 90 tfd 4 lt 90 tfd 17 rt 180 pd tfd 2 pu tfd 3 pd tfd 17 rtCnr tfd 4]
-    if :c=ascii "k [tfd 7 make "pos1 pos tfd 14 tbk 21 rt 90 pu tfd 9 fd 1 rt 90 fd 1 make "pos2 pos bk 1 lt 90 bk 1 lt 90 tfd 12 pd setpos :pos1 setpos :pos2]
+    if :c=ascii "i [tfd 12 fd 1 penup tfd 3 pendown tfd 2]
+    if :c=ascii "j [penup rt 90 tfd 4 lt 90 tfd 17 rt 180 pendown tfd 2 penup tfd 3 pendown tfd 17 rtCnr tfd 4]
+    if :c=ascii "k [tfd 7 make "pos1 pos tfd 14 tbk 21 rt 90 penup tfd 9 fd 1 rt 90 fd 1 make "pos2 pos bk 1 lt 90 bk 1 lt 90 tfd 12 pendown setpos :pos1 setpos :pos2]
     if :c=ascii "l [tfd 21 fd 1]
     if :c=ascii "m [tfd 12 rt 90 tfd 4 rtCnr tfd 11 rt 180 tfd 11 rtCnr tfd 3 rtCnr tfd 11 fd 1]
     if :c=ascii "n [tfd 12 rt 90 tfd 8 rtCnr tfd 11 fd 1]
-    if :c=ascii "o [pu tfd 1 pd repeat 2 [tfd 10 rtCnr tfd 7 rtCnr]]
+    if :c=ascii "o [penup tfd 1 pendown repeat 2 [tfd 10 rtCnr tfd 7 rtCnr]]
     if :c=ascii "p [rt 90 tfd 8 ltCnr tfd 10 ltCnr tfd 8 lt 90 tfd 18 fd 1]
-    if :c=ascii "q [pu rt 90 tfd 9 rt 180 pd tfd 8 rtCnr tfd 10 rtCnr tfd 8 rt 90 tfd 18 fd 1]
+    if :c=ascii "q [penup rt 90 tfd 9 rt 180 pendown tfd 8 rtCnr tfd 10 rtCnr tfd 8 rt 90 tfd 18 fd 1]
     if :c=ascii "r [ tfd 11 rtCnr tfd 8]
 ;    if :c=ascii "r [tfd 12 tbk 2 rt 45 tfd 2.828 rt 45 tfd 6]  ;a bit too pretty. goes with nicer "a"
     if :c=ascii "s [rt 90 tfd 8 ltCnr tfd 4 ltCnr tfd 7 rtCnr tfd 4 rtCnr tfd 8 fd 1]
-    if :c=ascii "t [pu rt 90 tfd 4 pd lt 90 tfd 12 lt 90 tfd 4 tbk 8 tfd 4 rt 90 tfd 9 fd 1]
-    if :c=ascii "u [pu tfd 12 rt 180 pd tfd 11 ltCnr tfd 7 ltCnr tfd 11 fd 1]
-    if :c=ascii "v [pu tfd 12 fd 1 make "pos1 pos bk 1 tbk 12 rt 90 tfd 4.5 make "pos2 pos tfd 4.5 lt 90 tfd 12 pd setpos :pos2 setpos :pos1]
-    if :c=ascii "w [pu tfd 6 pd tfd 6 tbk 6 pu make "pos1 pos tbk 6 rt 90 tfd 2 make "pos2 pos tfd 2 lt 90 tfd 6 make "pos3 pos tbk 6 rt 90 tfd 2 make "pos4 pos tfd 2 lt 90 tfd 6 pd tfd 6 tbk 6 setpos :pos4 setpos :pos3 setpos :pos2 setpos :pos1]
-    if :c=ascii "x [pu rt 90 tfd 9 lt 90 tfd 12 rt 180 pu make "pos1 pos tfd 12 lt 45 fd 1.414 make "pos2 pos bk 1.414 rt 45 rt 90 tfd 9 lt 45 fd 1.414 make "pos3 pos bk 1.414 rt 45 rt 90 tfd 12 pd setpos :pos2 pu setpos :pos1 pd setpos :pos3]
-    if :c=ascii "y [pu tfd 12 fd 1 make "pos1 pos bk 1 tbk 12 rt 90 tfd 2 rt 90 tfd 6 make "pos3 pos tbk 6 lt 90 tfd 2.5 make "pos2 pos tfd 4.5 lt 90 tfd 12 pd setpos :pos2 setpos :pos3 setpos :pos2 setpos :pos1]
-    if :c=ascii "z [make "pos1 pos rt 90 tfd 9 fd 1 pu bk 1 lt 90 tfd 12 pd lt 90 tfd 9 tbk 9 setpos :pos1]
+    if :c=ascii "t [penup rt 90 tfd 4 pendown lt 90 tfd 12 lt 90 tfd 4 tbk 8 tfd 4 rt 90 tfd 9 fd 1]
+    if :c=ascii "u [penup tfd 12 rt 180 pendown tfd 11 ltCnr tfd 7 ltCnr tfd 11 fd 1]
+    if :c=ascii "v [penup tfd 12 fd 1 make "pos1 pos bk 1 tbk 12 rt 90 tfd 4.5 make "pos2 pos tfd 4.5 lt 90 tfd 12 pendown setpos :pos2 setpos :pos1]
+    if :c=ascii "w [penup tfd 6 pendown tfd 6 tbk 6 penup make "pos1 pos tbk 6 rt 90 tfd 2 make "pos2 pos tfd 2 lt 90 tfd 6 make "pos3 pos tbk 6 rt 90 tfd 2 make "pos4 pos tfd 2 lt 90 tfd 6 pendown tfd 6 tbk 6 setpos :pos4 setpos :pos3 setpos :pos2 setpos :pos1]
+    if :c=ascii "x [penup rt 90 tfd 9 lt 90 tfd 12 rt 180 penup make "pos1 pos tfd 12 lt 45 fd 1.414 make "pos2 pos bk 1.414 rt 45 rt 90 tfd 9 lt 45 fd 1.414 make "pos3 pos bk 1.414 rt 45 rt 90 tfd 12 pendown setpos :pos2 penup setpos :pos1 pendown setpos :pos3]
+    if :c=ascii "y [penup tfd 12 fd 1 make "pos1 pos bk 1 tbk 12 rt 90 tfd 2 rt 90 tfd 6 make "pos3 pos tbk 6 lt 90 tfd 2.5 make "pos2 pos tfd 4.5 lt 90 tfd 12 pendown setpos :pos2 setpos :pos3 setpos :pos2 setpos :pos1]
+    if :c=ascii "z [make "pos1 pos rt 90 tfd 9 fd 1 penup bk 1 lt 90 tfd 12 pendown lt 90 tfd 9 tbk 9 setpos :pos1]
 
-    if :c=ascii "0 [pu tfd 1 pd repeat 2 [tfd 19 rtCnr tfd 9 rtCnr]]
-    if :c=ascii "1 [pu rt 90 pd tfd 10 tbk 5 lt 90 tfd 21 lt 90 tfd 5 fd 1]
-    if :c=ascii "2 [pu rt 90 tfd 11 lt 90 pd lt 90 tfd 11 rt 90 tfd 10 rtCnr tfd 9 ltCnr tfd 8 ltCnr tfd 10]
+    if :c=ascii "0 [penup tfd 1 pendown repeat 2 [tfd 19 rtCnr tfd 9 rtCnr]]
+    if :c=ascii "1 [penup rt 90 pendown tfd 10 tbk 5 lt 90 tfd 21 lt 90 tfd 5 fd 1]
+    if :c=ascii "2 [penup rt 90 tfd 11 lt 90 pendown lt 90 tfd 11 rt 90 tfd 10 rtCnr tfd 9 ltCnr tfd 8 ltCnr tfd 10]
     if :c=ascii "3 [rt 90 tfd 10 ltCnr tfd 9 ltCnr tfd 10 rt 180 tfd 10 ltCnr tfd 8 ltCnr tfd 10 fd 1]
-    if :c=ascii "4 [pu rt 90 tfd 11 lt 90 pd tfd 21 tbk 10 lt 90 tfd 11 rt 90 tfd 10 fd 1]
+    if :c=ascii "4 [penup rt 90 tfd 11 lt 90 pendown tfd 21 tbk 10 lt 90 tfd 11 rt 90 tfd 10 fd 1]
     if :c=ascii "5 [rt 90 tfd 10 ltCnr tfd 9 ltCnr tfd 9 rtCnr tfd 9 rt 90 tfd 11]
-    if :c=ascii "6 [pu tfd 1 pd tfd 11 pu tbk 11 pd rt 90 rt 45 tfd 1.414 lt 45 tfd 9 ltCnr tfd 9 ltCnr tfd 9 ltCnr lt 180 tfd 10 rtCnr tfd 10]
-    if :c=ascii "7 [pu tfd 21 rt 90 pd tfd 11 rt 90 tfd 21 fd 1]
-    if :c=ascii "8 [pu tfd 1 pd tfd 9 rt 45 tfd 1.414 tbk 1.414 lt 45 pu tbk 9 pd rt 90 rt 45 tfd 1.414 lt 45 tfd 9 ltCnr tfd 9 ltCnr tfd 9 rtCnr tfd 8 rtCnr tfd 9 rtCnr tfd 8 rtCnr]
-    if :c=ascii "9 [pu tfd 21 rt 90 tfd 11 rt 90 tfd 1 pd tfd 11 pu tbk 11 pd rt 90 rt 45 tfd 1.4 lt 45 tfd 9 ltCnr tfd 9 ltCnr tfd 9 ltCnr lt 180 tfd 10 rtCnr tfd 10]
+    if :c=ascii "6 [penup tfd 1 pendown tfd 11 penup tbk 11 pendown rt 90 rt 45 tfd 1.414 lt 45 tfd 9 ltCnr tfd 9 ltCnr tfd 9 ltCnr lt 180 tfd 10 rtCnr tfd 10]
+    if :c=ascii "7 [penup tfd 21 rt 90 pendown tfd 11 rt 90 tfd 21 fd 1]
+    if :c=ascii "8 [penup tfd 1 pendown tfd 9 rt 45 tfd 1.414 tbk 1.414 lt 45 penup tbk 9 pendown rt 90 rt 45 tfd 1.414 lt 45 tfd 9 ltCnr tfd 9 ltCnr tfd 9 rtCnr tfd 8 rtCnr tfd 9 rtCnr tfd 8 rtCnr]
+    if :c=ascii "9 [penup tfd 21 rt 90 tfd 11 rt 90 tfd 1 pendown tfd 11 penup tbk 11 pendown rt 90 rt 45 tfd 1.4 lt 45 tfd 9 ltCnr tfd 9 ltCnr tfd 9 ltCnr lt 180 tfd 10 rtCnr tfd 10]
 
-    if :c=ascii ": [tfd 2 pu tfd 8 fd 1 pd tfd 2]
-    if :c=ascii "- [pu tfd 12 rt 90 pd tfd 10]
-    if :c=ascii "? [pu rt 90 tfd 5 lt 90 pd tfd 2 pu tfd 3 pd tfd 6 rtCnr tfd 4 ltCnr tfd 7 ltCnr tfd 8 ltCnr tfd 4]
-    if :c=ascii "! [tfd 2 pu tfd 3 pd tfd 17]
+    if :c=ascii ": [tfd 2 penup tfd 8 fd 1 pendown tfd 2]
+    if :c=ascii "- [penup tfd 12 rt 90 pendown tfd 10]
+    if :c=ascii "? [penup rt 90 tfd 5 lt 90 pendown tfd 2 penup tfd 3 pendown tfd 6 rtCnr tfd 4 ltCnr tfd 7 ltCnr tfd 8 ltCnr tfd 4]
+    if :c=ascii "! [tfd 2 penup tfd 3 pendown tfd 17]
     if :c=ascii ". [tfd 2]
-    if :c=ascii ", [pu tbk 4 rt 30 pd tfd 3 lt 30 tfd 2 lt 90 tfd 3]
-    if :c=ascii "' [pu tfd 17 rt 30 pd tfd 3 lt 30 tfd 2 lt 90 tfd 3]
-    if :c=ascii "\" [pu tfd 18 pd tfd 4 fd 1 pu rt 90 tfd 4 rt 90 fd 1 pd tfd 4 fd 1] ;actually a double quote
-    if :c=ascii "_ [pu tbk 2 rt 90 pd tfd 11]
+    if :c=ascii ", [penup tbk 4 rt 30 pendown tfd 3 lt 30 tfd 2 lt 90 tfd 3]
+    if :c=ascii "' [penup tfd 17 rt 30 pendown tfd 3 lt 30 tfd 2 lt 90 tfd 3]
+    if :c=ascii "\" [penup tfd 18 pendown tfd 4 fd 1 penup rt 90 tfd 4 rt 90 fd 1 pendown tfd 4 fd 1] ;actually a double quote
+    if :c=ascii "_ [penup tbk 2 rt 90 pendown tfd 11]
  ]
 
   make "charWidth 0
@@ -374,7 +374,7 @@ to drawChar :c :action
   if :c=ascii "_  [make "charWidth 11]
   if :c = 32      [make "charWidth 7]
 
-  pu
+  penup
   setpos :cPos
   seth 0
 
@@ -423,7 +423,7 @@ to drawGem :pos1 :action
     if :action = "erase [ setpc[ 0 0 0 ] ]
 
     repeat 6 [
-      pu setpos :pos1 pd
+      penup setpos :pos1 pendown
       ifelse( or repcount = 1 repcount = 4 ) [
         fd :gemRad
         setitem repcount :points pos
@@ -436,7 +436,7 @@ to drawGem :pos1 :action
     ]
     setpos item 6 :points
     repeat 6 [ setpos item repcount :points ]
-    pu
+    penup
   ]
 end
 
@@ -488,11 +488,11 @@ to drawRock :pos1
   ]
 
   setpos item 1 :points
-  pd
+  pendown
   ;connect the points to draw the rock
   repeat 18 [ setpos item repcount :points ]
   setpos item 1 :points
-  pu
+  penup
 
   setpensize round :scale
 end
@@ -540,12 +540,12 @@ to drawShip :x :y :d :action
       make "fal item repcount :fragments  ;fal stands for fragment attribute list
       fd :shipRad * (item 1 :fal) + :expStep * (item 2 :fal)
       rt (item 3 :fal) + :expStep * (item 4 :fal)
-      pd
+      pendown
       fd :expLen * (item 5 :fal) * :scale
       rt 180
       fd :expLen * (item 6 :fal) * :scale
       if (item 7 :fal) = 1 [ rt (item 8 :fal)  fd :expLen * (item 9 :fal) * :scale ]
-      pu
+      penup
     ]
   ][
     ; draw right side of nose
@@ -553,7 +553,7 @@ to drawShip :x :y :d :action
     seth :d + 67.5
     fd :shipRad3
 
-    pd
+    pendown
     fd :shipRad3 * 2 - :scale
     make "light1Pos pos
     fd :scale
@@ -581,11 +581,11 @@ to drawShip :x :y :d :action
     setpc :pencolor
     setpensize round :scale*:shipRad/:normalShipRad
 
-    pu
+    penup
     fd :shipSide + 2*:scale
     rt 45
     fd :shipSide - 1.414*:scale
-    pd
+    pendown
     rt 45
     fd :shipSide
 
@@ -602,7 +602,7 @@ to drawShip :x :y :d :action
     fd 12.95 * :scale*:shipRad/:normalShipRad
     rt 141.11
     fd 12.95 * :scale*:shipRad/:normalShipRad
-    pu
+    penup
 
     ; draw the first light, now that we won't draw over it
     if (or :leaveStep < :numLeaveSteps * 0.5 not :isLeaving) [ 
@@ -612,7 +612,7 @@ to drawShip :x :y :d :action
 
     setxy :x :y
     seth :d+90
-    pd
+    pendown
 
     ;draw cockpit begin
     fd :shipRad6 / 2
@@ -622,7 +622,7 @@ to drawShip :x :y :d :action
     rt 135 fd :shipRad3
     rt 45  fd :shipRad6Diag
     rt 45  fd :shipRad6 / 2
-    lt 90 pu
+    lt 90 penup
     ;draw cockpit end 
   ]
   if and( :shipGlow > 0 ) ( :action = "draw ) [ make "shipGlow :shipGlow - 1 ]
@@ -668,7 +668,7 @@ to drawText :txt :action
   ]
 
   make "textLength round( :textLength * :textScale  )
-  if :action = "getLength[ pu setpos :tPos seth 0 ]
+  if :action = "getLength[ penup setpos :tPos seth 0 ]
 end 
 
 to findXy :object
@@ -772,10 +772,10 @@ to gameLoop
      levelLoop
   ]
 
-  setturtle 0 ht pu
-  setturtle 1 ht pu
-  setturtle 2 ht pu
-  setturtle 3 ht pu
+  setturtle 0 ht penup
+  setturtle 1 ht penup
+  setturtle 2 ht penup
+  setturtle 3 ht penup
 end
 
 to glint :action
@@ -790,7 +790,7 @@ to glint :action
   if :glintStep = (20 * :glintSpeed) [ drawGem (item :glintGem :gems) "draw ]
   setturtle 3
   setpensize round :scale
-  pu
+  penup
   setpos item :glintGem :gems
   seth 0
   run item :speedUp {
@@ -798,7 +798,7 @@ to glint :action
      [ lt 45  fd :gemRad * 0.75 rt 45  ]
      [ rt 135 fd :gemRad * 0.75 lt 135 ]
   }@0
-  pd
+  pendown
 
   if :glintStep > 0 [
     setpc [ 0 0 0 ]
@@ -820,7 +820,7 @@ to glint :action
     rt :rotateSpeed * :glintStep
     repeat 4[ fd :glintSize bk :glintSize rt 90 ]
   ]
-  pu
+  penup
 
 end
 
@@ -897,10 +897,10 @@ to initGame
   make "gameOver "false
   wrap
 
-  setturtle 0 ht pu
-  setturtle 1 ht pu
-  setturtle 2 ht pu
-  setturtle 3 ht pu
+  setturtle 0 ht penup
+  setturtle 1 ht penup
+  setturtle 2 ht penup
+  setturtle 3 ht penup
 
   setpensize round :scale
 end
@@ -953,10 +953,10 @@ end
 
 to initMain
   make "scale (item 4 machine) / 500  ;sets the game scale based on the height set on the command line
-  setturtle 1 ht pu
-  setturtle 0 ht pu
-  setturtle 2 ht pu
-  setturtle 3 ht pu
+  setturtle 1 ht penup
+  setturtle 0 ht penup
+  setturtle 2 ht penup
+  setturtle 3 ht penup
   make "displayWidth item 3 machine
   make "displayHeight item 4 machine
   make "textLength 0
@@ -1075,7 +1075,7 @@ to initMain
   setShipSize 9 * :scale
   initLife
   drawShip 0 0 0 "draw 
-  pu seth 270 fd :shipRad lt 90 fd :shipRad
+  penup seth 270 fd :shipRad lt 90 fd :shipRad
   sbitcut round( 18 * :scale )+1 round( 18 * :scale )+1 
   setShipSize :normalShipRad
 
@@ -1142,7 +1142,7 @@ to inputText :iPos :txt :max
   drawText :txt "draw
   drawChar 32 "draw
   make "iPos pos
-  pu
+  penup
   drawText [_] "draw
 
   make "key 0
@@ -1157,9 +1157,9 @@ end
 
 to inputText.eraseChar :char
   drawText :char "getLength
-  pu seth 0 tbk 9 lt 90 fd :textLength
+  penup seth 0 tbk 9 lt 90 fd :textLength
   setpc [ 0 0 0 ]
-  pd rt 90 tfd 33 pu tbk 33
+  pendown rt 90 tfd 33 penup tbk 33
   sbitblock round( :textLength + 1 ) round( 33 * :textScale )
   tfd 9
 end
@@ -1200,7 +1200,7 @@ to inputText.keyHit
         make "string word :string (char :key)
         drawText ( char :key ) "draw
         if (count :string) = :max [
-          pu lt 90 fd :textLength
+          penup lt 90 fd :textLength
           drawText [_] "draw
         ]
       ]
@@ -1383,8 +1383,8 @@ end
 to open.ASTEROID
   setpc[ 200 120 255 ]
   ;A
-  pu  setpos :Apos
-  seth 180  obk 7  pd
+  penup  setpos :Apos
+  seth 180  obk 7  pendown
   seth 198
   ofd 55  make "oPos pos  ofdd 105  obk 160
   lt 30  ofdd 80
@@ -1392,7 +1392,7 @@ to open.ASTEROID
   seth 270  setpos :oPos  if not :open.quit [wait 4]
   ;S
   setpc[ 183 125 255 ]
-  pu  setpos :Apos  seth 90  ofd 70  pd
+  penup  setpos :Apos  seth 90  ofd 70  pendown
   seth 280  ofdd 30  
   lt 80  ofdd 30
   lt 115  ofdd 40
@@ -1400,12 +1400,12 @@ to open.ASTEROID
   rt 80  ofdd 48
   ;T
   setpc[ 166 130 255 ]
-  pu  setpos :Apos  seth 90  ofd 90  pd
+  penup  setpos :Apos  seth 90  ofd 90  pendown
   ofdd 40  obk 20
   rt 95  ofdd 70
   ;E
   setpc[ 149 135 255 ]
-  pu  setpos :Apos  seth 90  ofd 140  pd
+  penup  setpos :Apos  seth 90  ofd 140  pendown
   seth 100  ofdd 40  obk 40
   rt 85  ofdd 60  obk 30
   lt 90  ofdd 25  obk 25  rt 90
@@ -1413,7 +1413,7 @@ to open.ASTEROID
   lt 95  ofdd 35
   ;R
   setpc[ 132 140 255 ]
-  pu  setpos :Apos  seth 90  ofd 190  pd
+  penup  setpos :Apos  seth 90  ofd 190  pendown
   seth 180
   ofdd 60  obk 60
   lt 60  ofdd 30
@@ -1423,14 +1423,14 @@ to open.ASTEROID
   waitStop 8
   ;I
   setpc[ 115 145 255 ]
-  pu  setpos :Apos  seth 90  ofd 290  pd
+  penup  setpos :Apos  seth 90  ofd 290  pendown
   seth 85
   ofdd 14  obk 7
   rt 90  ofdd 70
   lt 80  obk 7  ofdd 14
   ;D
   setpc[ 100 150 255 ]
-  pu  setpos :Apos  seth 90  ofd 320  pd
+  penup  setpos :Apos  seth 90  ofd 320  pendown
   seth 175
   ofdd 75  make "oPos pos  obk 75
   lt 70  ofdd 40
@@ -1441,7 +1441,7 @@ end
 to open.author
   local "fontAttribList
   setturtle 0
-  pu
+  penup
   setpos :Apos
   seth 180
   ofd 207
@@ -1466,27 +1466,27 @@ end
 to open.MINER
   ;M
   setpc[ 200 125 255 ]
-  pu  setpos :Mpos  pd
+  penup  setpos :Mpos  pendown
   seth 195  ofdd 70  obk 70
   lt 65  ofdd 30
   lt 80  ofdd 30
   rt 120  ofdd 70
   ;I
   setpc[ 166 130 255 ]
-  pu  setpos :Mpos  seth 90  ofd 75  pd
+  penup  setpos :Mpos  seth 90  ofd 75  pendown
   seth 95
   ofdd 14  obk 7
   rt 86  ofdd 65
   lt 85  obk 7  ofdd 14
   ;N
   setpc[ 149 135 255 ]
-  pu  setpos :Mpos  seth 90  ofd 110  pd
+  penup  setpos :Mpos  seth 90  ofd 110  pendown
   seth 185  ofdd 60  obk 60
   lt 32  ofdd 72
   lt 151  ofdd 60
   ;E
   setpc[ 132 140 255 ]
-  pu  setpos :Mpos  seth 0  obk 5  seth 90  ofd 165  pd
+  penup  setpos :Mpos  seth 0  obk 5  seth 90  ofd 165  pendown
   seth 87  ofdd 40  obk 40
   rt 95  ofdd 55  obk 30
   lt 90  ofdd 25  obk 25  rt 90
@@ -1494,7 +1494,7 @@ to open.MINER
   lt 85  ofdd 35
   ;R
   setpc[ 115 145 255 ]
-  pu  setpos :Mpos  seth 90  ofd 220  pd
+  penup  setpos :Mpos  seth 90  ofd 220  pendown
   seth 180
   ofdd 70  obk 40  make "oPos pos  obk 30
   lt 80  ofdd 30 
@@ -1504,7 +1504,7 @@ to open.MINER
 end
 
 to open.stars
-  pu
+  penup
   repeat 400 [
     make "x random( round :displayWidth )
     make "y random( round :displayHeight )
@@ -1516,7 +1516,7 @@ end
 to open.turtleO
   setturtle 2
   bitmapturtle
-  pu  setxy (( first :Apos ) + 232*:open.scale) (:displayHeight / 2)
+  penup  setxy (( first :Apos ) + 232*:open.scale) (:displayHeight / 2)
   st
   make "speed 3
   make "oy last pos
@@ -1855,7 +1855,7 @@ to sbit.position
   make "sTurtle turtle
   make "sHeading heading
   setturtle 1
-  pu
+  penup
   setpos :sPos
   seth 0
   bk round( :scale ) - 1
