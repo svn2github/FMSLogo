@@ -39,16 +39,29 @@ penup setpos list -2*:d+:d/4 :d*:pos pendown setpc 1 label :what setpc 0
 end
 
 to put :d :pos :w
-if (and not :w="0 (and not (first :pos)>-:d not (first :pos)<-2*:d) (and not (last :pos)<0 not (last :pos)>10*:d)) [mouse :d 1+int (last :pos)/:d]
+if (and :w<>0   -2*:d<=(first :pos) (first :pos)<=-:d   0<=(last :pos)  (last :pos)<=10*:d) [mouse :d 1+int (last :pos)/:d]
 if (or (first :pos)<0 not (first :pos)<9*:d (last :pos)<0 not (last :pos)<9*:d) [stop]
 (local "r "c)
 make "r 1+int ((9*:d-last :pos)/:d)
 make "c 1+int ((first :pos)/:d)
 penup setxy (:c-1)*:d+:d/4 9*:d-(:r-1)*:d pendown
 if (item :c item :r :p)=0 [
-  ifelse :w="h
-    [setpencolor 7 label (item :c item :r :q) setpencolor 1 label item :c item :r :sol make "p set :p :r :c item :c item :r :sol make "q set :q :r :c item :c item :r :sol setpencolor 0]
-    [setpencolor 7 label (item :c item :r :q) setpencolor 15 if not :w=0 [label :w] make "q set :q :r :c :w setpencolor 0]]
+
+  setpencolor 7
+  label (item :c item :r :q)
+
+  ifelse :w="h [
+    setpencolor 1 
+    label item :c item :r :sol 
+    make "p set :p :r :c item :c item :r :sol
+    make "q set :q :r :c item :c item :r :sol
+  ] [
+    setpencolor 15 
+    if not :w=0 [label :w]
+    make "q set :q :r :c :w
+  ]
+  setpencolor 0
+]
 if :q=:sol [pr [You solved it!] mouseoff start stop]
 if (find [not (find [?="0] ?)=[]] :q)=[] [pr [Not correct!]]
 end
@@ -64,9 +77,17 @@ end
 
 to solver :p
 (local "i "j "k "l)
-for [i 1 9] [~
-  for [j 1 9] [if (item :j item :i :p)="0 [make "l get :p :i :j ~
-    for [k 1 [count :l] 1] [solver set :p :i :j item :k :l] stop]]]
+for [i 1 9] [
+  for [j 1 9] [
+    if (item :j item :i :p)="0 [
+      ; this square hasn't be set yet,
+      ; so let's try all possible values
+      make "l get :p :i :j 
+      for [k 1 [count :l] 1] [solver set :p :i :j item :k :l] 
+      stop
+    ]
+  ]
+]
 make "sol lput :p :sol
 end
 
