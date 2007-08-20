@@ -766,47 +766,50 @@ to initialise
 end
 
 to showmessage :message
- wait 1
- windowenable "windowdomino "false
+  wait 1
+  windowenable "windowdomino "false
 
   setlabelfont [[Times New Roman] -24 0 0 400 0 0 0 0 3 2 1 18]
 
   pu
   seth 0
-  make "hdist (first (labelsize :message)) + 30 
-  make "vdist (last (labelsize :message)) + 30 
+  make "hdist (first (labelsize :message)) + 30
+  make "vdist (last  (labelsize :message)) + 30
+
+  ; we use "int" to round this to an integer.
+  ; otherwise drawing the rectangle results in a
+  ; slightly skewed rectangle.
+  make "halfhdist int (:hdist / 2)
+  make "halfvdist int (:vdist / 2)
 
 
-  setxy 0 - (:hdist/2) 0 - (:vdist/2)
+  setxy  -:halfhdist  -:halfvdist
   setbitindex 22
-  setlabelfont [[Times New Roman] -24 0 0 400 0 0 0 0 3 2 1 18]
   bitcopy :hdist + 30 :vdist + 30
   setbitindex 23
   bitcut :hdist + 3  :vdist + 3
   ppt
   repeat 2 [ fd :vdist rt 90 fd :hdist rt 90]
   pu
-  setxy 0 - (:hdist/2) + 20 0 - (:vdist/2) + 40
+  setxy  20 - :halfhdist   40 - :halfvdist
 
-  
   seth 90
 
   Label :message
   seth 0
   pu
   wait 100
-  setxy 0 - (:hdist/2) 0 - (:vdist/2)
+  setxy -:halfhdist  -:halfvdist
 
   bitpaste
   
- windowenable "windowdomino "true
+  windowenable "windowdomino "true
   setbitindex 0
 end
 
 to mousepressed
  if :playing = -1 [ mouseoff mouseon [getmousemove -1] [] [getmousemove 1] [] [] ]
  make "selection 0
-
 end
 
 to passbuttonpressed
