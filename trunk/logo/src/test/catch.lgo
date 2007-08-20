@@ -193,7 +193,7 @@ END
 TO THROWTEST.BADINPUT
 
    RUNNOTENOUGHINPUTSTEST [ (THROW) ]
-   RUNTOOMANYINPUTSTEST   [ (THROW "tag "value "toomany) ]
+   RUNTOOMANYINPUTSTEST   [ (THROW "tag "value "secondvalue "toomany) ]
 END
 
 TO CATCHTEST
