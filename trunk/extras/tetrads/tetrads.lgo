@@ -486,7 +486,10 @@ to ShapeRedraw :OldShape :NewShape
 
   ; Iterate over possible locations on the board.
   ; For each iteration point, figure out the location in 
-  ; OldShape's rotation template can compare them.
+  ; OldShape's rotation template and compare it to
+  ; NewShape's rotation template.
+  ; Erase whatever is in OldShape that isn't in NewShape.
+  ; Draw whatever is in NewShape that isn't in OldShape.
 
   make "board.y :ymin
   while [:board.y < :ymax + 1] [
@@ -503,7 +506,7 @@ to ShapeRedraw :OldShape :NewShape
       ][ ifelse or (:new.y < 0) (count :new.rotationtemplate) - 1 < :new.y [
 
           ; this row isn't covered by the new template
-          ; so we can just draw erase thie old row
+          ; so we can just draw erase the old row
           ShapeEraseRow :OldShape :old.rotationtemplate :old.y
       ][
           ; this row is covered by both templates
@@ -520,13 +523,13 @@ to ShapeRedraw :OldShape :NewShape
               ifelse or (:old.x < 1) (count :old.shaperow) < :old.x [
 
                   ; this square isn't covered by the old template
-                  ; so we can just draw the new shape's sqaure
+                  ; so we can just draw the new shape's square
                   ShapeDrawRowSquare :NewShape :new.shaperow :new.x :new.y
 
               ][ ifelse or (:new.x < 1) (count :new.shaperow) < :new.x [
 
                   ; this square isn't covered by the new template
-                  ; so we can just draw erase the old shape's square
+                  ; so we can just erase the old shape's square
                   ShapeEraseRowSquare :OldShape :old.shaperow :old.x :old.y
               ][
                   make "old.shapesquare item :old.x :old.shaperow
