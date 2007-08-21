@@ -1022,17 +1022,6 @@ NODE *lbitblock(NODE *arg)
             }
 
          //screen
-         HDC screenDC = screen->GetScreenDeviceContext();
-         draw_turtle(false);
-
-         
-         HPALETTE oldPalette2;
-         if (EnablePalette)
-            {
-            oldPalette2 = SelectPalette(screenDC, ThePalette, FALSE);
-            RealizePalette(screenDC);
-            }
-
          if (zoom_flag)
             {
             // It's easier to invalidate the screen and force a 
@@ -1052,17 +1041,15 @@ NODE *lbitblock(NODE *arg)
             screenRect.top    = memoryRect.top    - scrollerY;
             screenRect.bottom = memoryRect.bottom - scrollerY;
 
-            FillRect(screenDC, &screenRect, fillBrush);
+            // Invalidate the portion of the screen that corresponds
+            // to the region of memory that we filled.
+            // Every since we stopped calling GetDC() and ReleaseDC()
+            // to get the screen DC, simply calling FillRect() on the
+            // screen causes repainting problems.
+            // I suspect that calling ReleaseDC() implicitly invalidated
+            // the screen, which may by why is was so much slower.
+            InvalidateRect(screen->HWindow, &screenRect, false);
             }
-
-         if (EnablePalette)
-            {
-            SelectPalette(screenDC, oldPalette2, FALSE);
-            }
-
-         DeleteObject(fillBrush);
-
-         draw_turtle(true);
          }
       }
 
