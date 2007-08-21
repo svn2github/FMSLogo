@@ -1035,7 +1035,7 @@ NODE *lbitblock(NODE *arg)
 
          if (zoom_flag)
             {
-            // It's easier to invalidate the screen and forcing a 
+            // It's easier to invalidate the screen and force a 
             // repaint from the image memory.
             screen->Invalidate(false);
             }
