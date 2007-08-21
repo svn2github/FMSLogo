@@ -1,3 +1,21 @@
+FMSLogo Extras 1.7
+o asteriodminer
+  * Make compatible with Portuguese versions of FMSLogo.
+o boink
+  * Make compatible with non-English versions of FMSLogo.
+o dominos
+  * Make compatible with Portuguese versions of FMSLogo.
+  * Fix an annoyance where the message box was a crooked rectangle.
+o logoui
+  * Make compatible with Portuguese versions of FMSLogo.
+o ludo
+  * Make compatible with Portuguese versions of FMSLogo.
+o midipiano
+  * Make compatible with Portuguese versions of FMSLogo.
+o sudoku
+  * Make compatible with Portuguese versions of FMSLogo.
+
+
 FMSLogo Extras 1.6
 o asteriodminer
   * Improve the font for larger monitors
