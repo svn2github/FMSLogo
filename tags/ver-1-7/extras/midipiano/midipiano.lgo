@@ -1,0 +1,509 @@
+to aaa
+; The author disclaims all copyrights associated with this code 
+; (hereafter referred to as the "Work").
+;
+; The author makes this dedication for the benefit of the public at 
+; large and to the detriment of the author's heirs and successors. The 
+; author intends this dedication to be an overt act of relinquishment in
+; perpetuity of all present and future rights under copyright law,
+; whether vested or contingent, in the Work. The author understands that
+; such relinquishment of all rights includes the relinquishment of all
+; rights to enforce (by lawsuit or otherwise) those copyrights in the
+; Work.
+;
+; The author recognizes that, once placed in the public domain, the
+; Work may be freely reproduced, distributed, transmitted, used,
+; modified, built upon, or otherwise exploited by anyone for any
+; purpose, commercial or non-commercial, and in any way, including by
+; methods that have not yet been invented or conceived.
+end
+
+
+to about
+ localmake "msg1 [The Midi Player was brought to you by Hensley Bass]
+ localmake "msg2 [Email: hbass@intnet.mu]
+ localmake "msg3 [Url: http://pages.intnet.mu/jhbpage]
+ localmake "msg (sentence :msg1 char 13 :msg2 char 13 :msg3)
+ messagebox [Midi player] :msg 
+end
+
+to shutdown
+ Make "file []
+ midiclose 
+ windowdelete "mywindow 
+ keyboardoff
+ cs
+ about
+end
+
+to drawpiano :count
+ setlabelfont [[Times New Roman] -18 0 0 400 0 0 0 0 3 2 1 18] 
+ cs
+ setpensize [ 2 2]
+ setpc 0
+ setfc 0
+ ht
+ pu
+ make "x1 -100
+ make "y1 -70
+ setxy 42 + :x1 180 + :y1
+ seth 90
+ label [Midi Player v1.0]
+ setxy 45 + :x1 160+ :y1
+ label [By Hensley Bass]
+ seth 0
+ setxy -100 + :x1 0+ :y1
+
+ ppt
+ repeat :count [ repeat 2 [fd 100 rt 90 fd 20 rt 90] rt 90 fd 20 lt 90 ]
+ pu 
+ setxy -86 + :x1 50+ :y1
+ make "counter 0
+ repeat :count - 1 [ 
+   make "counter :counter + 1 
+   seth 0 
+   if (and (or :counter < 3 :counter > 3)  (or :counter < 7 :counter > 7) ) [
+     drawsharpnote 
+   ]
+   if (:counter > 7) [
+     make "counter 1 
+   ]
+  pu rt 90 fd 20 
+ ]  ;end repeat
+ pu
+ make "notekey :keylist1
+
+ repeat :count [ 
+   setxy -117 + :x1+(repcount * 20)  :y1
+   seth 90
+   label uppercase first :notekey 
+   seth 0
+   make "notekey butfirst :notekey 
+	
+ ]
+
+ make "notekey :keylist2
+ make "sharp count :keylist2
+ repeat :sharp [ 
+
+    setxy -107 + :x1 + (repcount * 20)  :y1 + 120
+    seth 90
+    label uppercase first :notekey 
+    seth 0
+    make "notekey butfirst :notekey
+		
+  ]
+
+
+end
+
+to drawsharpnote
+ ppt
+ repeat 2 [fd 50 rt 90 fd 12 rt 90]  
+ pu
+ fd 2 rt 90 fd 2 fill fd 6 fill rt 90 fd 2  rt 90 fd 8 rt 90
+end
+
+to editor
+
+ staticcreate "dialogedit "dmystatic [Under Construction] 15 5 90 25
+
+ comboboxcreate "dialogedit "editcombo 10 15 80 50
+ repeat :recordcount [comboboxaddstring "editcombo item repcount :recordnotes]
+ buttoncreate "dialogedit [dbplaynote] [Play current] 10 100 80 15 [				
+  MIDIMESSAGE comboboxgettext "editcombo ~
+ ]
+
+ buttoncreate "dialogedit [dbset] [set text] 10 80 80 15 [
+    ;comboboxsettext "editcombo [3]
+    show numberp comboboxgettext "editcombo 
+ ]
+ buttoncreate "dialogedit [dbclose] [close] 10 120 80 15 [  setfocus [MswLogo Screen]  dialogdelete "dialogedit]
+End
+
+to inst
+
+ local "inst
+ make "inst listboxgetselect "mylist
+ staticupdate "st4 fput "Instrument :inst
+ midimessage (list 192+13 first :inst 0)
+ midimessage (list 192+13 first :inst 0)
+ setfocus [MswLogo Screen]
+end
+
+to instructions
+  pu
+  setxy -60 120
+  label [Press SHIFT to play sharp notes]
+end
+
+to keydown
+ local "noteplayed
+ make "noteplayed Char KeyBoardValue 
+ make "noteplayed lowercase :noteplayed
+
+ if (KeyBoardValue = 16) [Make "playsharpnote -1 make "timeinactive timemilli ]
+ IF MEMBERP :noteplayed :keylist [
+   make "y count :keylist
+   make "tmplist :keylist
+   for [x 1 :y 1] [
+
+     if ((first :tmplist) = :noteplayed) [make "z :x]
+     if :noteplayed = first :tmplist [ifelse :oldnote = :noteplayed [][if (item :z :myarray)=-10 [playtune :z :noteplayed ]]]
+     make "tmplist butfirst :tmplist
+   ]
+]
+end
+
+to keyup
+ local  "noteup 
+ local "x
+ local "y
+ make "noteup Char KeyBoardValue 
+ IF MEMBERP :noteup :keylist [
+  make "y count :keylist
+  make "tmplist :keylist
+  for [x 1 :y 1]
+   [
+     if ((first :tmplist) = :noteup) [make "z :x]
+	 if :noteup = first :tmplist [
+                                     MIDIMESSAGE (LIST 144+13 :z + :octa 0) 
+                                     recordmessage (LIST 144+13 :z + :octa 0) timemilli-:start
+                                     setitem :z :myarray -10]
+       make "tmplist butfirst :tmplist
+   ]
+  ]
+ 
+
+
+make "oldnote [------]
+
+end
+
+to midiinit
+
+make "oldnote [------]
+make "start timemilli
+
+listboxaddstring "mylist [000 Acoustic Grand Piano]
+listboxaddstring "mylist [001 Bright Acoustic Piano]
+listboxaddstring "mylist [002 Electric Grand Piano]
+listboxaddstring "mylist [003 Honky-tonk Piano]
+listboxaddstring "mylist [004 Rhodes Piano]
+listboxaddstring "mylist [005 Chorused Piano]
+listboxaddstring "mylist [006 Harpsichord]
+listboxaddstring "mylist [007 Clavinet]
+listboxaddstring "mylist [008 Celesta]
+listboxaddstring "mylist [009 Glockenspiel]
+listboxaddstring "mylist [010 Music box]
+listboxaddstring "mylist [011 Vibraphone]
+listboxaddstring "mylist [012 Marimba]
+listboxaddstring "mylist [013 Xylophone]
+listboxaddstring "mylist [014 Tubular Bells]
+listboxaddstring "mylist [015 Dulcimer]
+listboxaddstring "mylist [016 Hammond Organ]
+listboxaddstring "mylist [017 Percussive Organ]
+listboxaddstring "mylist [018 Rock Organ]
+listboxaddstring "mylist [019 Church Organ]
+listboxaddstring "mylist [020 Reed Organ]
+listboxaddstring "mylist [021 Accordian]
+listboxaddstring "mylist [022 Harmonica]
+listboxaddstring "mylist [023 Tango Accordian]
+listboxaddstring "mylist [024 Acoustic Guitar (nylon)]
+listboxaddstring "mylist [025 Acoustic Guitar (steel)]
+listboxaddstring "mylist [026 Electric Guitar (jazz)]
+listboxaddstring "mylist [027 Electric Guitar (clean)]
+listboxaddstring "mylist [028 Electric Guitar (muted)]
+listboxaddstring "mylist [029 Overdriven Guitar]
+listboxaddstring "mylist [030 Distortion Guitar]
+listboxaddstring "mylist [031 Guitar Harmonics]
+listboxaddstring "mylist [032 Acoustic Bass]
+listboxaddstring "mylist [033 Electric Bass (finger)]
+listboxaddstring "mylist [034 Electric Bass (pick)]
+listboxaddstring "mylist [035 Fretless Bass]
+listboxaddstring "mylist [036 Slap Bass 1]
+listboxaddstring "mylist [037 Slap Bass 2]
+listboxaddstring "mylist [038 Synth Bass 1]
+listboxaddstring "mylist [039 Synth Bass 2]
+listboxaddstring "mylist [040 Violin]
+listboxaddstring "mylist [041 Viola]
+listboxaddstring "mylist [042 Cello]
+listboxaddstring "mylist [043 Contrabass]
+listboxaddstring "mylist [044 Tremolo Strings]
+listboxaddstring "mylist [045 Pizzicato Strings]
+listboxaddstring "mylist [046 Orchestral Harp]
+listboxaddstring "mylist [047 Timpani]
+listboxaddstring "mylist [048 String Ensemble 1]
+listboxaddstring "mylist [049 String Ensemble 2]
+listboxaddstring "mylist [050 Synth Strings 1]
+listboxaddstring "mylist [051 Synth Strings 2]
+listboxaddstring "mylist [052 Choir Aahs]
+listboxaddstring "mylist [053 Voice Oohs]
+listboxaddstring "mylist [054 Synth Voice]
+listboxaddstring "mylist [055 Orchestra Hit]
+listboxaddstring "mylist [056 Trumpet]
+listboxaddstring "mylist [057 Trombone]
+listboxaddstring "mylist [058 Tuba]
+listboxaddstring "mylist [059 Muted Trumpet]
+listboxaddstring "mylist [060 French Horn]
+listboxaddstring "mylist [061 Brass Section]
+listboxaddstring "mylist [062 Synth Brass 1]
+listboxaddstring "mylist [063 Synth Brass 2]
+listboxaddstring "mylist [064 Soprano Sax]
+listboxaddstring "mylist [065 Alto Sax]
+listboxaddstring "mylist [066 Tenor Sax]
+listboxaddstring "mylist [067 Baritone Sax]
+listboxaddstring "mylist [068 Oboe]
+listboxaddstring "mylist [069 English Horn]
+listboxaddstring "mylist [070 Bassoon]
+listboxaddstring "mylist [071 Clarinet]
+listboxaddstring "mylist [072 Piccolo]
+listboxaddstring "mylist [073 Flute]
+listboxaddstring "mylist [074 Recorder]
+listboxaddstring "mylist [075 Pan Flute]
+listboxaddstring "mylist [076 Bottle Blow]
+listboxaddstring "mylist [077 Shakuhachi]
+listboxaddstring "mylist [078 Whistle]
+listboxaddstring "mylist [079 Ocarina]
+listboxaddstring "mylist [080 Lead 1 (square)]
+listboxaddstring "mylist [081 Lead 2 (sawtooth)]
+listboxaddstring "mylist [082 Lead 3 (caliope lead)]
+listboxaddstring "mylist [083 Lead 4 (chiff lead)]
+listboxaddstring "mylist [084 Lead 5 (charang)]
+listboxaddstring "mylist [085 Lead 6 (voice)]
+listboxaddstring "mylist [086 Lead 7 (fifths)]
+listboxaddstring "mylist [087 Lead 8 (brass + lead)]
+listboxaddstring "mylist [088 Pad 1 (new age)]
+listboxaddstring "mylist [089 Pad 2 (warm)]
+listboxaddstring "mylist [090 Pad 3 (polysynth)]
+listboxaddstring "mylist [091 Pad 4 (choir)]
+listboxaddstring "mylist [092 Pad 5 (bowed)]
+listboxaddstring "mylist [093 Pad 6 (metallic)]
+listboxaddstring "mylist [094 Pad 7 (halo)]
+listboxaddstring "mylist [095 Pad 8 (sweep)]
+listboxaddstring "mylist [096 FX 1 (rain)]
+listboxaddstring "mylist [097 FX 2 (soundtrack)]
+listboxaddstring "mylist [098 FX 3 (crystal)]
+listboxaddstring "mylist [099 FX 4 (atmosphere)]
+listboxaddstring "mylist [100 FX 5 (brightness)]
+listboxaddstring "mylist [101 FX 6 (goblins)]
+listboxaddstring "mylist [102 FX 7 (echoes)]
+listboxaddstring "mylist [103 FX 8 (sci-fi)]
+listboxaddstring "mylist [104 Sitar]
+listboxaddstring "mylist [105 Banjo]
+listboxaddstring "mylist [106 Shamisen]
+listboxaddstring "mylist [107 Koto]
+listboxaddstring "mylist [108 Kalimba]
+listboxaddstring "mylist [109 Bagpipe]
+listboxaddstring "mylist [110 Fiddle]
+listboxaddstring "mylist [111 Shanai]
+listboxaddstring "mylist [112 Tinkle Bell]
+listboxaddstring "mylist [113 Agogo]
+listboxaddstring "mylist [114 Steel Drums]
+listboxaddstring "mylist [115 Woodblock]
+listboxaddstring "mylist [116 Taiko Drum]
+listboxaddstring "mylist [117 Melodic Tom]
+listboxaddstring "mylist [118 Synth Drum]
+listboxaddstring "mylist [119 Reverse Cymbal]
+listboxaddstring "mylist [120 Guitar Fret Noise]
+listboxaddstring "mylist [121 Breath Noise]
+listboxaddstring "mylist [122 Seashore]
+listboxaddstring "mylist [123 Bird Tweet]
+listboxaddstring "mylist [124 Telephone Ring]
+listboxaddstring "mylist [125 Helicopter]
+listboxaddstring "mylist [126 Applause]
+listboxaddstring "mylist [127 Gunshot]
+
+
+end
+
+to mode1
+ make "keylist "z_x_cv_b_n_ma_s_df_g_h_jq_w_er_t_y_ui_o_p
+ make "keylist1 "zxcvbnmasdfghjqwertyuiop
+ make "keylist2 "
+
+  setfocus [MswLogo Screen]
+ drawpiano 24
+
+end
+
+to mode2
+ make "keylist "zsxdcvgbhnjmq2w3er5t6y7ui
+ make "keylist1 "zxcvbnmqwertyui
+ make "keylist2 "sd_ghj_23_567
+
+
+ setfocus [MswLogo Screen]
+ drawpiano 15
+
+end
+
+to octa
+ make "octa (8 - scrollbarget "scocta)*12
+ setfocus [MswLogo Screen]
+ staticupdate "st6 sentence [Octave C ] 8 - scrollbarget "scocta
+ 
+end
+
+to piano
+ cs
+ make "keylist "z_x_cv_b_n_ma_s_df_g_h_jq_w_er_t_y_ui_o_p
+ make "keylist1 "zxcvbnmasdfghjqwertyuiop
+ make "keylist2 "
+
+ make "recording "false
+ make "recordcount 0
+ windowcreate "main "mywindow [Midi Player] 0 0 360 95 []
+ listboxcreate "mywindow "mylist 10 15 130 50
+ midiinit
+ groupboxcreate "mywindow [recordit] 145 10 110 25
+ groupboxcreate "mywindow [mode] 260 10 50 45
+
+ buttoncreate "mywindow [bstart] [start] 150 17 30 15 [recordstart]
+ buttoncreate "mywindow [bplay] [Play] 185 17 30 15 [recordplay]
+ buttoncreate "mywindow [bstop] [stop] 220 17 30 15 [recordstop]    
+ buttoncreate "mywindow [bmode1] [Mode 1] 270 17 30 15 [mode1]    
+ buttoncreate "mywindow [bmode2] [Mode 2] 270 37 30 15 [mode2]    
+
+ buttonenable [bstart] "True 
+ buttonenable [bstop] "False
+
+
+ buttoncreate "mywindow [b1] [Select] 10 58 130 15 [inst]
+ buttoncreate "mywindow [b2] [Close] 145 58 165 15 [shutdown]
+ buttoncreate "mywindow [bload] [Load] 150 38 30 15 [recordload]
+ buttoncreate "mywindow [bedit] [Edit] 185 38 30 15 [dialogcreate "mywindow "dialogedit [editor] 0 0 100 195 [editor] ]
+ buttoncreate "mywindow [bsave] [Save] 220 38 30 15 [recordsave]
+
+
+ staticcreate "mywindow [st4] [Instrument] 10 2 130 10 
+ staticcreate "mywindow [st5] [Recorder is stopped] 155 2 160 10
+ staticcreate "mywindow [st6] [Octave C 3] 305 2 60 10
+ scrollbarcreate "mywindow "scocta 315 15 20 40 [octa]
+ scrollbarset "scocta 1 8 3
+
+ make "octa (8 - scrollbarget "scocta)*12
+ setfocus [MSWLogo Screen]
+ print midiopen
+ midimessage (list 192 61)
+ drawpiano 24
+
+ make "myarray (array 41 1)
+ repeat 41 [setitem repcount :myarray -10]
+ (keyboardon [keydown] [keyup])
+end
+
+to playtune :z :playnote
+ ;--------------------- Procedures that plays a tune and records sound
+ MIDIMESSAGE (LIST 144+13 :z + :octa 127)
+ recordmessage (LIST 144+13 :z + :octa 127) timemilli-:start
+ make "oldnote :noteplayed
+ setitem :z :myarray -5
+
+end
+
+to recordload
+make "file dialogfileopen "*.jhb
+
+openread :file
+setread :file
+make "recordcount 0
+  make "recordnotes array 1000
+  make "recordspeed array 1000
+
+while [not eofp] [
+  make "recordcount :recordcount + 1
+  make "rw readlist
+  setitem :recordcount :recordnotes :rw
+  make "rs readword
+  setitem :recordcount :recordspeed :rs
+]
+
+setread []
+close :file
+
+
+end
+
+to recordmessage :arg1 :arg2
+if :recording [
+ make "recordcount :recordcount + 1
+ setitem :recordcount :recordnotes :arg1
+ setitem :recordcount :recordspeed :arg2
+ make "start timemilli
+]
+end
+
+to recordplay
+if :recording [messagebox [Electronic Piano] [Still recording] setfocus [MswLogo Screen] stop]
+ifelse :recordcount > 0 [
+  repeat :recordcount - 1 [
+  midimessage item repcount :recordnotes
+  wait int (item repcount+1 :recordspeed)/1000 *60]
+  ][messagebox [Electronic Piano] [nothing to play]]
+  setfocus [MswLogo Screen]
+
+end
+
+to recordsave
+make "file dialogfilesave "*.jhb
+openwrite :file 
+setwrite :file 
+repeat :recordcount [
+   pr item repcount :recordnotes ~
+   pr item repcount :recordspeed 
+]
+setwrite []
+close :file 
+end
+
+to recordstart
+  buttonenable [bstart] "False
+  buttonenable [bstop] "True
+  make "recording not :recording
+  make "start timemilli
+  make "recordnotes array 1000
+  make "recordspeed array 1000
+  make "recordcount 0
+  setfocus [MswLogo Screen]
+
+end
+
+to recordstop
+  recordmessage (LIST 144+13 :z + :octa 0) timemilli-:start 
+  recordmessage (LIST 144+13 :z + :octa 0) timemilli-:start 
+  buttonenable [bstart] "True
+  buttonenable [bstop] "False
+  make "recording not :recording
+  setfocus [MswLogo Screen]
+
+end
+
+Make "counter 2
+Make "file []
+Make "keylist "z_x_cv_b_n_ma_s_df_g_h_jq_w_er_t_y_ui_o_p
+Make "keylist1 "zxcvbnmasdfghjqwertyuiop
+Make "keylist2 "
+Make "myarray {-10 -10 -10 -10 -10 -10 -10 -10 -10 -10 -10 -10 -10 -10 -10 -10 -10 -10 -10 -10 -10 -10 -10 -10 -10 -10 -10 -10 -10 -10 -10 -10 -10 -10 -10 -10 -10 -10 -10 -10 -10}
+Make "notekey "
+Make "notes "
+Make "octa 60
+Make "oldnote [------]
+Make "playsharpnote -1
+Make "recordcount 0
+Make "recording "false
+Make "recordnotes {[157 65 100] [157 65 0] [157 65 100] [157 65 0] [157 65 100] [157 70 100] [157 70 0] [157 65 0] [157 72 100] [157 65 100] [157 72 0] [157 65 0] [157 70 100] [157 74 100] [157 70 0] [157 74 0] [157 70 100] [157 74 100] [157 70 0] [157 74 0] [157 74 100] [157 70 100] [157 70 0] [157 74 0] [157 76 100] [157 70 100] [157 70 0] [157 76 0] [157 70 100] [157 70 0] [157 70 100] [157 72 100] [157 70 0] [157 72 0] [157 74 100] [157 70 100] [157 70 0] [157 74 0] [157 74 100] [157 70 100] [157 74 0] [157 70 0] [157 69 100] [157 74 100] [157 69 0] [157 72 100] [157 69 100] [157 74 0] [157 72 0] [157 69 0] [157 69 100] [157 72 100] [157 72 0] [157 69 0] [157 69 100] [157 72 100] [157 69 0] [157 72 0] [157 74 100] [157 69 100] [157 69 0] [157 72 100] [157 69 100] [157 74 0] [157 69 0] [157 72 0] [157 65 100] [157 70 100] [157 70 0] [157 65 0] [157 69 100] [157 69 0] [157 67 100] [157 67 0] [157 65 100] [157 72 100] [157 65 0] [157 72 0] [157 72 100] [157 65 100] [157 65 0] [157 72 0] [157 65 100] [157 65 0] [157 65 100] [157 70 100] [157 65 0] [157 72 100] [157 65 100] [157 70 0] [157 72 0] [157 70 100] [157 74 100] [157 65 0] [157 70 0] [157 74 0] [157 70 100] [157 74 100] [157 74 0] [157 70 0] [157 74 100] [157 70 100] [157 70 0] [157 74 0] [157 70 100] [157 74 100] [157 70 0] [157 74 0] [157 74 100] [157 70 100] [157 70 0] [157 74 0] [157 76 100] [157 70 100] [157 70 0] [157 77 100] [157 76 0] [157 70 100] [157 70 0] [157 77 0] [157 77 100] [157 70 100] [157 70 0] [157 77 0] [157 77 100] [157 76 100] [157 77 0] [157 76 0] [157 69 100] [157 74 100] [157 69 0] [157 67 100] [157 74 0] [157 67 0] [157 72 100] [157 67 100] [157 67 0] [157 70 100] [157 67 100] [157 72 0] [157 67 0] [157 70 0] [157 65 100] [157 69 100] [157 69 0] [157 65 0] [157 74 100] [157 69 100] [157 74 0] [157 69 0] [157 72 100] [157 69 100] [157 72 0] [157 69 0] [157 65 100] [157 70 100] [157 70 0] [157 65 0] [157 65 0] [157 65 0] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] []}
+Make "recordspeed {1512 1102 2002 812 250 20 651 20 150 20 411 310 110 40 661 30 161 20 691 30 80 10 681 10 180 10 751 60 100 641 191 10 691 40 80 30 1542 30 180 20 571 110 181 10 711 120 20 20 751 10 90 10 731 20 40 30 611 100 90 21 620 251 0 70 430 31 360 20 711 130 40 822 50 781 40 30 1542 30 110 10 741 50 151 721 160 20 761 110 10 90 401 501 10 50 691 60 90 10 721 10 100 10 771 30 140 11 731 80 70 30 751 70 110 20 711 150 20 10 1563 20 130 10 781 20 150 932 40 1011 0 10 841 171 30 731 490 40 712 170 10 60 671 100 150 30 411 450 151 10 1432 240 230 10 561 311 60 10 1682 341 1242 0 [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] [] []}
+Make "rs 0
+Make "rw [157 65 0]
+Make "sharp 0
+Make "singlenote "U
+Make "skip 4
+Make "start 352457316
+Make "startup [piano]
+Make "timeinactive 352280652
+Make "tmplist "
+Make "x1 -100
+Make "y 41
+Make "y1 -70
+Make "z 30
