@@ -2501,7 +2501,7 @@ PASS: [SQRT 0] output 0 , as expected.
 PASS: [SQRT 4] output 2 , as expected.
 PASS: [SQRT 9] output 3 , as expected.
 PASS: [SQRT 1.44] output 1.2 , as expected.
-FAIL: [SQRT 2] output 1.4142135623731 . We expected 1.41421356237309 .
+FAIL: [SQRT 2] output 1.4142135623731 . We expected 1.4142135623731 .
 PASS: [SQRT 1e40] output 1e+20 , as expected.
 INFO: Running invalid instruction: [(SQRT)]
 PASS: error code is 6 , as expected.
@@ -2554,7 +2554,7 @@ PASS: [POWER 2 5] output 32 , as expected.
 FAIL: [POWER 1.1 5] output 1.61051 . We expected 1.61051 .
 FAIL: [POWER -1.1 5] output -1.61051 . We expected -1.61051 .
 PASS: [POWER 1e2 5] output 10000000000 , as expected.
-FAIL: [POWER 1e-2 5] output 1e-10 . We expected 1e-10 .
+PASS: [POWER 1e-2 5] output 1e-10 , as expected.
 PASS: [POWER 1 -1] output 1 , as expected.
 PASS: [POWER 2 -1] output 0.5 , as expected.
 PASS: [POWER 0.5 -1] output 2 , as expected.
@@ -4528,7 +4528,7 @@ FAIL: [ACTIVEAREA] output [0 0 0 0] . We expected [1 1 2 2] .
 PASS: Size is [100 100] , as expected.
 PASS: Size is [100 101] , as expected.
 PASS: Size is [101 100] , as expected.
-FAIL: bitpaste-pattern was not drawn correctly.
+PASS: bitpaste-pattern was drawn correctly.
 CALL: SETBITINDEX 1
 CALL: BITCUT 100 100
 INFO: Running invalid instruction: [(BITPASTETOINDEX 1 0)]
@@ -7654,7 +7654,7 @@ CALL: MAKE "version LOGOVERSION
 PASS: [LIST? :version] output true , as expected.
 PASS: [COUNT :version] output 3 , as expected.
 PASS: [ITEM 1 :version] output FMSLogo , as expected.
-PASS: [ITEM 2 :version] output 6.15.0+ , as expected.
+PASS: [ITEM 2 :version] output 6.16.0 , as expected.
 PASS: [ITEM 3 :version] output Windows , as expected.
 INFO: Running invalid instruction: [(LOGOVERSION "toomany)]
 PASS: error code is 8 , as expected.
@@ -9350,17 +9350,17 @@ INFO: Running invalid instruction: [(SLOWDRAW 10 "toomany)]
 PASS: error code is 8 , as expected.
 INFO: error text is too much inside ()'s .
 INFO: Running invalid instruction: [SLOWDRAW -100]
-INFO: error code is 21 .
-INFO: error text is slowdraw doesn't like -100 as input .
+INFO: error code is 4 .
+INFO: error text is SLOWDRAW doesn't like -100 as input .
 INFO: Running invalid instruction: [SLOWDRAW 100.5]
-INFO: error code is 21 .
-INFO: error text is slowdraw doesn't like 100.5 as input .
+INFO: error code is 4 .
+INFO: error text is SLOWDRAW doesn't like 100.5 as input .
 INFO: Running invalid instruction: [SLOWDRAW [100]]
-INFO: error code is 21 .
-INFO: error text is slowdraw doesn't like [100] as input .
+INFO: error code is 4 .
+INFO: error text is SLOWDRAW doesn't like [100] as input .
 INFO: Running invalid instruction: [SLOWDRAW {100}]
-INFO: error code is 21 .
-INFO: error text is slowdraw doesn't like {100} as input .
+INFO: error code is 4 .
+INFO: error text is SLOWDRAW doesn't like {100} as input .
 CALL: SPLITSCREEN
 CALL: PERSPECTIVE
 CALL: PENPAINT
