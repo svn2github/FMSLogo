@@ -1,0 +1,57 @@
+<section id="command-netacceptreceivevalue">
+<title>NETACCEPTRECEIVEVALUE</title>
+<indexterm><primary>NETACCEPTRECEIVEVALUE</primary></indexterm>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>NETACCEPTRECEIVEVALUE</command></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+Outputs the value of the last network data received on the accept socket.
+It is best to call this procedure in your <parameter>receiveready</parameter> callback code of your <link linkend="command-netaccepton">NETACCEPTON</link> command.
+If you don't, then the data will be discarded the next time <parameter>receiveready</parameter> is run.
+</para>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Example</term>
+<listitem>
+<programlisting><userinput>; The Initiator (connector) Sends Data To Who Accepted the connection
+
+NETSTARTUP ; Start up the network
+
+; Wait for someone to connect to you on socket 5124
+SHOW NETACCEPTON 5124 [] [PRINT NETACCEPTRECEIVEVALUE]</userinput>
+true
+
+<userinput>; Connect to MyMachineName on socket 5124 (myself)
+SHOW NETCONNECTON "MyMachineName 5124 [PRINT [Ok to Send Again]] []</userinput>
+true
+
+<userinput>WAIT 100 ; Wait little for connection to establish</userinput>
+Ok to Send Again
+Ok to Send Again
+Ok to Send Again
+<userinput>SHOW NETCONNECTSENDVALUE [Hello thanks for taking my call] ; Send some data</userinput>
+true
+
+<userinput>WAIT 100 ; Wait a little before we shut things down</userinput>
+Hello thanks for taking my call
+
+<userinput>NETCONNECTOFF
+NETACCEPTOFF
+NETSHUTDOWN</userinput>
+</programlisting>
+</listitem>
+</varlistentry>
+
+
+</variablelist>
+
+</section>
