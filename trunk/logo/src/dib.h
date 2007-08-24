@@ -23,12 +23,10 @@ DWORD DIBHeight(LPSTR lpDIB);
 DWORD DIBWidth(LPSTR lpDIB);
 HBITMAP DIBToBitmap(HANDLE hDIB, HPALETTE hPal);
 HANDLE BitmapToDIB(HBITMAP hBitmap, HPALETTE hPal);
-void InitBitmapInfoHeader(LPBITMAPINFOHEADER lpBmInfoHdr,
-         DWORD dwWidth,
-         DWORD dwHeight,
-         int nBPP);
+void InitBitmapInfoHeader(
+    LPBITMAPINFOHEADER lpBmInfoHdr,
+    DWORD dwWidth,
+    DWORD dwHeight,
+    int nBPP);
 
-
-#endif                                 // DIB_INCLUDED
-
-
+#endif // DIB_INCLUDED

@@ -77,9 +77,9 @@ extern HANDLE BitmapToDIB(HBITMAP hBitmap, HPALETTE hPal);
 //---------------------------------------------------------------------
 
 LPSTR FindDIBBits(LPSTR lpbi)
-   {
-   return (lpbi + *(LPDWORD) lpbi + PaletteSize(lpbi));
-   }
+{
+    return (lpbi + *(LPDWORD) lpbi + PaletteSize(lpbi));
+}
 
 //---------------------------------------------------------------------
 //
@@ -97,42 +97,47 @@ LPSTR FindDIBBits(LPSTR lpbi)
 //---------------------------------------------------------------------
 
 WORD DIBNumColors(LPSTR lpbi)
-   {
-   WORD wBitCount;
+{
+    WORD wBitCount;
+
+    // If this is a Windows style DIB, the number of colors in the
+    // color table can be less than the number of bits per pixel
+    // allows for (i.e. lpbi->biClrUsed can be set to some value).
+    // If this is the case, return the appropriate value.
+
+    if (IS_WIN30_DIB(lpbi))
+    {
+        DWORD dwClrUsed;
+
+        dwClrUsed = ((LPBITMAPINFOHEADER) lpbi)->biClrUsed;
+
+        if (dwClrUsed) return (WORD) dwClrUsed;
+    }
 
 
-   // If this is a Windows style DIB, the number of colors in the
-   //  color table can be less than the number of bits per pixel
-   //  allows for (i.e. lpbi->biClrUsed can be set to some value).
-   //  If this is the case, return the appropriate value.
+    // Calculate the number of colors in the color table based on
+    //  the number of bits per pixel for the DIB.
 
-   if (IS_WIN30_DIB(lpbi))
-      {
-      DWORD dwClrUsed;
+    if (IS_WIN30_DIB(lpbi))
+    {
+        wBitCount = ((LPBITMAPINFOHEADER) lpbi)->biBitCount;
+    }
+    else 
+    {
+        wBitCount = ((LPBITMAPCOREHEADER) lpbi)->bcBitCount;
+    }
 
-      dwClrUsed = ((LPBITMAPINFOHEADER) lpbi)->biClrUsed;
+    switch (wBitCount)
+    {
+    case 1: return 2;
 
-      if (dwClrUsed) return (WORD) dwClrUsed;
-      }
+    case 4: return 16;
 
+    case 8: return 256;
 
-   // Calculate the number of colors in the color table based on
-   //  the number of bits per pixel for the DIB.
-
-   if (IS_WIN30_DIB(lpbi)) wBitCount = ((LPBITMAPINFOHEADER) lpbi)->biBitCount;
-   else wBitCount = ((LPBITMAPCOREHEADER) lpbi)->bcBitCount;
-
-   switch (wBitCount)
-      {
-       case 1: return 2;
-
-       case 4: return 16;
-
-       case 8: return 256;
-
-       default: return 0;
-      }
-   }
+    default: return 0;
+    }
+}
 
 //---------------------------------------------------------------------
 //
@@ -150,10 +155,16 @@ WORD DIBNumColors(LPSTR lpbi)
 //---------------------------------------------------------------------
 
 WORD PaletteSize(LPSTR lpbi)
-   {
-   if (IS_WIN30_DIB(lpbi)) return (DIBNumColors(lpbi) * sizeof(RGBQUAD));
-   else return (DIBNumColors(lpbi) * sizeof(RGBTRIPLE));
-   }
+{
+    if (IS_WIN30_DIB(lpbi))
+    {
+        return (DIBNumColors(lpbi) * sizeof(RGBQUAD));
+    }
+    else 
+    {
+        return (DIBNumColors(lpbi) * sizeof(RGBTRIPLE));
+    }
+}
 
 //---------------------------------------------------------------------
 //
@@ -173,16 +184,22 @@ WORD PaletteSize(LPSTR lpbi)
 //---------------------------------------------------------------------
 
 DWORD DIBHeight(LPSTR lpDIB)
-   {
-   LPBITMAPINFOHEADER lpbmi;
-   LPBITMAPCOREHEADER lpbmc;
+{
+    LPBITMAPINFOHEADER lpbmi;
+    LPBITMAPCOREHEADER lpbmc;
 
-   lpbmi = (LPBITMAPINFOHEADER) lpDIB;
-   lpbmc = (LPBITMAPCOREHEADER) lpDIB;
+    lpbmi = (LPBITMAPINFOHEADER) lpDIB;
+    lpbmc = (LPBITMAPCOREHEADER) lpDIB;
 
-   if (lpbmi->biSize == sizeof(BITMAPINFOHEADER)) return lpbmi->biHeight;
-   else return (DWORD) lpbmc->bcHeight;
-   }
+    if (lpbmi->biSize == sizeof(BITMAPINFOHEADER)) 
+    {
+        return lpbmi->biHeight;
+    }
+    else 
+    {
+        return (DWORD) lpbmc->bcHeight;
+    }
+}
 
 //---------------------------------------------------------------------
 //
@@ -202,16 +219,22 @@ DWORD DIBHeight(LPSTR lpDIB)
 //---------------------------------------------------------------------
 
 DWORD DIBWidth(LPSTR lpDIB)
-   {
-   LPBITMAPINFOHEADER lpbmi;
-   LPBITMAPCOREHEADER lpbmc;
+{
+    LPBITMAPINFOHEADER lpbmi;
+    LPBITMAPCOREHEADER lpbmc;
 
-   lpbmi = (LPBITMAPINFOHEADER) lpDIB;
-   lpbmc = (LPBITMAPCOREHEADER) lpDIB;
+    lpbmi = (LPBITMAPINFOHEADER) lpDIB;
+    lpbmc = (LPBITMAPCOREHEADER) lpDIB;
 
-   if (lpbmi->biSize == sizeof(BITMAPINFOHEADER)) return lpbmi->biWidth;
-   else return (DWORD) lpbmc->bcWidth;
-   }
+    if (lpbmi->biSize == sizeof(BITMAPINFOHEADER)) 
+    {
+        return lpbmi->biWidth;
+    }
+    else 
+    {
+        return (DWORD) lpbmc->bcWidth;
+    }
+}
 
 //---------------------------------------------------------------------
 //
@@ -232,55 +255,55 @@ DWORD DIBWidth(LPSTR lpDIB)
 //---------------------------------------------------------------------
 
 HBITMAP DIBToBitmap(HANDLE hDIB, HPALETTE hPal)
-   {
-   if (!hDIB)
-      {
-      return NULL;
-      }
+{
+    if (!hDIB)
+    {
+        return NULL;
+    }
 
 
-   LPSTR lpDIBHdr = (char *) GlobalLock(hDIB);
-   LPSTR lpDIBBits = FindDIBBits(lpDIBHdr);
-   HDC hDC = GetDC(MainWindowx->ScreenWindow->HWindow);
+    LPSTR lpDIBHdr = (char *) GlobalLock(hDIB);
+    LPSTR lpDIBBits = FindDIBBits(lpDIBHdr);
+    HDC hDC = GetDC(MainWindowx->ScreenWindow->HWindow);
 
-   if (!hDC)
-      {
-      GlobalUnlock(hDIB);
-      return NULL;
-      }
+    if (!hDC)
+    {
+        GlobalUnlock(hDIB);
+        return NULL;
+    }
 
-   HPALETTE hOldPal = NULL;
-   if (hPal)
-      {
-      hOldPal = SelectPalette(hDC, hPal, FALSE);
-      }
+    HPALETTE hOldPal = NULL;
+    if (hPal)
+    {
+        hOldPal = SelectPalette(hDC, hPal, FALSE);
+    }
 
-   RealizePalette(hDC);
+    RealizePalette(hDC);
 
-   HBITMAP hBitmap = CreateDIBitmap(
-      hDC,
-      (LPBITMAPINFOHEADER) lpDIBHdr,
-      CBM_INIT,
-      lpDIBBits,
-      (LPBITMAPINFO) lpDIBHdr,
-      DIB_RGB_COLORS);
+    HBITMAP hBitmap = CreateDIBitmap(
+        hDC,
+        (LPBITMAPINFOHEADER) lpDIBHdr,
+        CBM_INIT,
+        lpDIBBits,
+        (LPBITMAPINFO) lpDIBHdr,
+        DIB_RGB_COLORS);
 
-   if (!hBitmap)
-      {
-      ShowErrorMessageAndStop(LOCALIZED_ERROR_OUTOFMEMORY);
-      }
-   // DIBError (ERR_CREATEDDB);
+    if (!hBitmap)
+    {
+        ShowErrorMessageAndStop(LOCALIZED_ERROR_OUTOFMEMORY);
+    }
+    // DIBError (ERR_CREATEDDB);
 
-   if (hOldPal) 
-      {
-      SelectPalette(hDC, hOldPal, FALSE);
-      }
+    if (hOldPal) 
+    {
+        SelectPalette(hDC, hOldPal, FALSE);
+    }
 
-   ReleaseDC(MainWindowx->ScreenWindow->HWindow, hDC);
-   GlobalUnlock(hDIB);
+    ReleaseDC(MainWindowx->ScreenWindow->HWindow, hDC);
+    GlobalUnlock(hDIB);
 
-   return hBitmap;
-   }
+    return hBitmap;
+}
 
 
 
@@ -317,22 +340,22 @@ HBITMAP DIBToBitmap(HANDLE hDIB, HPALETTE hPal)
 //---------------------------------------------------------------------
 
 void InitBitmapInfoHeader(LPBITMAPINFOHEADER lpBmInfoHdr, DWORD dwWidth, DWORD dwHeight, int nBPP)
-   {
-   memset(lpBmInfoHdr, 0, sizeof(BITMAPINFOHEADER));
+{
+    memset(lpBmInfoHdr, 0, sizeof(BITMAPINFOHEADER));
 
-   lpBmInfoHdr->biSize = sizeof(BITMAPINFOHEADER);
-   lpBmInfoHdr->biWidth = dwWidth;
-   lpBmInfoHdr->biHeight = dwHeight;
-   lpBmInfoHdr->biPlanes = 1;
+    lpBmInfoHdr->biSize = sizeof(BITMAPINFOHEADER);
+    lpBmInfoHdr->biWidth = dwWidth;
+    lpBmInfoHdr->biHeight = dwHeight;
+    lpBmInfoHdr->biPlanes = 1;
 
-   if (nBPP <= 1) nBPP = 1;
-   else if (nBPP <= 4) nBPP = 4;
-   else if (nBPP <= 8) nBPP = 8;
-   else nBPP = 24;
+    if (nBPP <= 1) nBPP = 1;
+    else if (nBPP <= 4) nBPP = 4;
+    else if (nBPP <= 8) nBPP = 8;
+    else nBPP = 24;
 
-   lpBmInfoHdr->biBitCount = nBPP;
-   lpBmInfoHdr->biSizeImage = WIDTHBYTES(dwWidth * nBPP) * dwHeight;
-   }
+    lpBmInfoHdr->biBitCount = nBPP;
+    lpBmInfoHdr->biSizeImage = WIDTHBYTES(dwWidth * nBPP) * dwHeight;
+}
 
 //---------------------------------------------------------------------
 //
@@ -355,65 +378,80 @@ void InitBitmapInfoHeader(LPBITMAPINFOHEADER lpBmInfoHdr, DWORD dwWidth, DWORD d
 //---------------------------------------------------------------------
 
 HANDLE BitmapToDIB(HBITMAP hBitmap, HPALETTE hPal)
-   {
-   BITMAP Bitmap;
-   BITMAPINFOHEADER bmInfoHdr;
-   LPBITMAPINFOHEADER lpbmInfoHdr;
-   LPSTR lpBits;
-   HDC hMemDC;
-   HANDLE hDIB;
-   HPALETTE hOldPal = NULL;
+{
+    BITMAP Bitmap;
+    BITMAPINFOHEADER bmInfoHdr;
+    LPBITMAPINFOHEADER lpbmInfoHdr;
+    LPSTR lpBits;
+    HDC hMemDC;
+    HANDLE hDIB;
+    HPALETTE hOldPal = NULL;
 
-   // Do some setup -- make sure the Bitmap passed in is valid,
-   //  get info on the bitmap (like its height, width, etc.),
-   //  then setup a BITMAPINFOHEADER.
+    // Do some setup -- make sure the Bitmap passed in is valid,
+    // get info on the bitmap (like its height, width, etc.),
+    // then setup a BITMAPINFOHEADER.
 
-   if (!hBitmap) return NULL;
+    if (!hBitmap) 
+    {
+        return NULL;
+    }
 
-   if (!GetObject(hBitmap, sizeof(Bitmap), (LPSTR) & Bitmap)) return NULL;
+    if (!GetObject(hBitmap, sizeof(Bitmap), (LPSTR) & Bitmap)) 
+    {
+        return NULL;
+    }
 
-   InitBitmapInfoHeader(&bmInfoHdr, Bitmap.bmWidth, Bitmap.bmHeight, Bitmap.bmPlanes * Bitmap.bmBitsPixel);
+    InitBitmapInfoHeader(&bmInfoHdr, Bitmap.bmWidth, Bitmap.bmHeight, Bitmap.bmPlanes * Bitmap.bmBitsPixel);
 
-   // Now allocate memory for the DIB.  Then, set the BITMAPINFOHEADER
-   //  into this memory, and find out where the bitmap bits go.
+    // Now allocate memory for the DIB.  Then, set the BITMAPINFOHEADER
+    // into this memory, and find out where the bitmap bits go.
 
-   hDIB = GlobalAlloc(GHND, sizeof(BITMAPINFOHEADER) + PaletteSize((LPSTR) & bmInfoHdr) + bmInfoHdr.biSizeImage);
+    hDIB = GlobalAlloc(
+        GHND, 
+        sizeof(BITMAPINFOHEADER) + PaletteSize((LPSTR) & bmInfoHdr) + bmInfoHdr.biSizeImage);
+    if (!hDIB) 
+    {
+        return NULL;
+    }
 
-   if (!hDIB) return NULL;
+    lpbmInfoHdr = (LPBITMAPINFOHEADER) GlobalLock(hDIB);
+    *lpbmInfoHdr = bmInfoHdr;
+    lpBits = FindDIBBits((LPSTR) lpbmInfoHdr);
 
-   lpbmInfoHdr = (LPBITMAPINFOHEADER) GlobalLock(hDIB);
-   *lpbmInfoHdr = bmInfoHdr;
-   lpBits = FindDIBBits((LPSTR) lpbmInfoHdr);
+    // Now, we need a DC to hold our bitmap.  If the app passed us
+    //  a palette, it should be selected into the DC.
 
-   // Now, we need a DC to hold our bitmap.  If the app passed us
-   //  a palette, it should be selected into the DC.
+    hMemDC = GetDC(NULL);
 
-   hMemDC = GetDC(NULL);
+    if (hPal)
+    {
+        hOldPal = SelectPalette(hMemDC, hPal, FALSE);
+        RealizePalette(hMemDC);
+    }
 
-   if (hPal)
-      {
-      hOldPal = SelectPalette(hMemDC, hPal, FALSE);
-      RealizePalette(hMemDC);
-      }
+    // We're finally ready to get the DIB.  Call the driver and let
+    //  it party on our bitmap.  It will fill in the color table,
+    //  and bitmap bits of our global memory block.
 
-   // We're finally ready to get the DIB.  Call the driver and let
-   //  it party on our bitmap.  It will fill in the color table,
-   //  and bitmap bits of our global memory block.
-
-   if (!GetDIBits(hMemDC, hBitmap, 0, Bitmap.bmHeight, lpBits, (LPBITMAPINFO) lpbmInfoHdr, DIB_RGB_COLORS))
-      {
-      GlobalUnlock(hDIB);
-      GlobalFree(hDIB);
-      hDIB = NULL;
-      }
-   else GlobalUnlock(hDIB);
+    if (!GetDIBits(hMemDC, hBitmap, 0, Bitmap.bmHeight, lpBits, (LPBITMAPINFO) lpbmInfoHdr, DIB_RGB_COLORS))
+    {
+        GlobalUnlock(hDIB);
+        GlobalFree(hDIB);
+        hDIB = NULL;
+    }
+    else 
+    {
+        GlobalUnlock(hDIB);
+    }
 
    // Finally, clean up and return.
 
-   if (hOldPal) SelectPalette(hMemDC, hOldPal, FALSE);
+   if (hOldPal)
+   {
+       SelectPalette(hMemDC, hOldPal, FALSE);
+   }
 
    ReleaseDC(NULL, hMemDC);
 
    return hDIB;
-   }
-
+}

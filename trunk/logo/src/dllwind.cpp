@@ -32,234 +32,223 @@ extern "C" void PASCAL pushs(LPCSTR);
 static
 void
 ShowDllErrorAndStop(
-   const char * ErrorMessage
-   )
-   {
-   ShowMessageAndStop(LOCALIZED_ERROR_DLL, ErrorMessage);
-   }
+    const char * ErrorMessage
+    )
+{
+    ShowMessageAndStop(LOCALIZED_ERROR_DLL, ErrorMessage);
+}
 
 NODE *ldllload(NODE *arg)
-   {
-   if (hDLLModule)
-      {
-      ShowDllErrorAndStop(LOCALIZED_ERROR_DLLALREADYLOADED);
-      }
-   else
-      {
-      char dllname[MAX_BUFFER_SIZE];
-      cnv_strnode_string(dllname, arg);
+{
+    if (hDLLModule)
+    {
+        ShowDllErrorAndStop(LOCALIZED_ERROR_DLLALREADYLOADED);
+    }
+    else
+    {
+        char dllname[MAX_BUFFER_SIZE];
+        cnv_strnode_string(dllname, arg);
 
-      hDLLModule = LoadLibrary(dllname);
-      if (hDLLModule == NULL)
-         {
-         ShowDllErrorAndStop(LOCALIZED_ERROR_DLLLOADFAILED);
-         }
-      }
+        hDLLModule = LoadLibrary(dllname);
+        if (hDLLModule == NULL)
+        {
+            ShowDllErrorAndStop(LOCALIZED_ERROR_DLLLOADFAILED);
+        }
+    }
 
-   return Unbound;
-   }
+    return Unbound;
+}
 
 NODE *ldllfree(NODE *)
-   {
-   if (hDLLModule == NULL)
-      {
-      ShowDllErrorAndStop(LOCALIZED_ERROR_DLLNOTLOADED);
-      }
-   else
-      {
-      FreeLibrary(hDLLModule);
-      hDLLModule = 0;
-      }
+{
+    if (hDLLModule == NULL)
+    {
+        ShowDllErrorAndStop(LOCALIZED_ERROR_DLLNOTLOADED);
+    }
+    else
+    {
+        FreeLibrary(hDLLModule);
+        hDLLModule = 0;
+    }
 
-   return Unbound;
-   }
+    return Unbound;
+}
 
 NODE *ldllcall(NODE *arg)
-   {
-   if (hDLLModule == NULL)
-      {
-      ShowDllErrorAndStop(LOCALIZED_ERROR_DLLNOTLOADED);
-      return Unbound;
-      }
+{
+    if (hDLLModule == NULL)
+    {
+        ShowDllErrorAndStop(LOCALIZED_ERROR_DLLNOTLOADED);
+        return Unbound;
+    }
 
-   // get args
-   NODE * args = car(arg);
+    // get args
+    NODE * args = car(arg);
 
-   // must be a list that contains something
-   if (is_list(args) && (args != NIL))
-      {
+    // must be a list that contains something
+    if (is_list(args) && (args != NIL))
+    {
 
-      // count items in list and check that they are pairs
-      int total_args = list_length(args);
-      bool even_args = even_p(total_args);
+        // count items in list and check that they are pairs
+        int total_args = list_length(args);
+        bool even_args = even_p(total_args);
 
-      // if we have pairs continue
-      if (even_args)
-         {
-         arg = args;
+        // if we have pairs continue
+        if (even_args)
+        {
+            arg = args;
 
-         char fkind[MAX_BUFFER_SIZE];
-         cnv_strnode_string(fkind, arg);
-         arg = cdr(arg);
+            char fkind[MAX_BUFFER_SIZE];
+            cnv_strnode_string(fkind, arg);
+            arg = cdr(arg);
 
-         char fname[MAX_BUFFER_SIZE];
-         cnv_strnode_string(fname, arg);
-         arg = cdr(arg);
+            char fname[MAX_BUFFER_SIZE];
+            cnv_strnode_string(fname, arg);
+            arg = cdr(arg);
 
-         FARPROC theFunc = GetProcAddress(hDLLModule, fname);
-         if (!theFunc) 
+            FARPROC theFunc = GetProcAddress(hDLLModule, fname);
+            if (!theFunc) 
             {
-            theFunc = GetProcAddress(hDLLModule, (char *) atol(fname));
+                theFunc = GetProcAddress(hDLLModule, (char *) atol(fname));
             }
 
-         if (theFunc)
+            if (theFunc)
             {
-            char *values[1024];  // strings we must free
+                char *values[1024];  // strings we must free
 
-            /* fill queue with type/data pairs */
-            int i = 0;
-            while (arg != NIL)
-               {
-               char akind[MAX_BUFFER_SIZE];
-               cnv_strnode_string(akind, arg);
-               arg = cdr(arg);
+                /* fill queue with type/data pairs */
+                int i = 0;
+                while (arg != NIL)
+                {
+                    char akind[MAX_BUFFER_SIZE];
+                    cnv_strnode_string(akind, arg);
+                    arg = cdr(arg);
 
-               char avalue[MAX_BUFFER_SIZE];
-               cnv_strnode_string(avalue, arg);
+                    char avalue[MAX_BUFFER_SIZE];
+                    cnv_strnode_string(avalue, arg);
 
-               arg = cdr(arg);
+                    arg = cdr(arg);
 
-               switch (akind[0])
-                  {
-                  case 'w':
-                  case 'W':
-                     {
-                     WORD w = (WORD) atoi(avalue);
-                     pushw(w);
-                     break;
-                     }
+                    switch (akind[0])
+                    {
+                    case 'w':
+                    case 'W':
+                        {
+                            WORD w = (WORD) atoi(avalue);
+                            pushw(w);
+                            break;
+                        }
 
-                  case 'l':
-                  case 'L':
-                     {
-                     DWORD dw = (DWORD) atol(avalue);
-                     pushl(dw);
-                     break;
-                     }
+                    case 'l':
+                    case 'L':
+                        {
+                            DWORD dw = (DWORD) atol(avalue);
+                            pushl(dw);
+                            break;
+                        }
 
-                  case 'f':
-                  case 'F':
-                     {
-                     double df = atof(avalue);
-                     pushf(df);
-                     break;
-                     }
+                    case 'f':
+                    case 'F':
+                        {
+                            double df = atof(avalue);
+                            pushf(df);
+                            break;
+                        }
 
-                  case 's':
-                  case 'S':
-                     {
-                     values[i] = strdup(avalue);
-                     pushs((LPCSTR) values[i]);
-                     i++;
-                     break;
-                     }
+                    case 's':
+                    case 'S':
+                        values[i] = strdup(avalue);
+                        pushs((LPCSTR) values[i]);
+                        i++;
+                        break;
 
-                  case 'v':
-                  case 'V':
-                     {
-                     }
-                     break;
+                    case 'v':
+                    case 'V':
+                        break;
 
-                  default:
-                     {
-                     ShowDllErrorAndStop(LOCALIZED_ERROR_DLLINVALIDDATATYPE);
-                     return Unbound;
-                     }
-                  }
-               }
+                    default:
+                        ShowDllErrorAndStop(LOCALIZED_ERROR_DLLINVALIDDATATYPE);
+                        return Unbound;
+                    }
+                }
 
-            char areturn[MAX_BUFFER_SIZE];
-            switch (fkind[0])
-               {
-               case 'w':
-               case 'W':
-                  {
-                  WORD w = (*(WORD(WINAPI *)()) theFunc)();
-                  sprintf(areturn, "%d", w);
-                  break;
-                  }
+                char areturn[MAX_BUFFER_SIZE];
+                switch (fkind[0])
+                {
+                case 'w':
+                case 'W':
+                    {
+                        WORD w = (*(WORD(WINAPI *)()) theFunc)();
+                        sprintf(areturn, "%d", w);
+                        break;
+                    }
 
-               case 'l':
-               case 'L':
-                  {
-                  DWORD dw = (*(DWORD(WINAPI *)()) theFunc)();
-                  sprintf(areturn, "%ld", dw);
-                  break;
-                  }
+                case 'l':
+                case 'L':
+                    {
+                        DWORD dw = (*(DWORD(WINAPI *)()) theFunc)();
+                        sprintf(areturn, "%ld", dw);
+                        break;
+                    }
 
-               case 'f':
-               case 'F':
-                  {
-                  double dw = (*(double (WINAPI *)()) theFunc)();
-                  sprintf(areturn, "%f", dw);
-                  break;
-                  }
+                case 'f':
+                case 'F':
+                    {
+                        double dw = (*(double (WINAPI *)()) theFunc)();
+                        sprintf(areturn, "%f", dw);
+                        break;
+                    }
 
-               case 's':
-               case 'S':
-                  {
-                  LPSTR lp = (*(LPSTR(WINAPI *)()) theFunc)();
-                  strncpy(areturn, lp, MAX_BUFFER_SIZE);
-                  // free global string mem.
-                  // this should not be like this because lp[]
-                  // can be bigger than resp[] but for now...
-                  GlobalFreePtr(lp);
-                  break;
-                  }
+                case 's':
+                case 'S':
+                    {
+                        LPSTR lp = (*(LPSTR(WINAPI *)()) theFunc)();
+                        strncpy(areturn, lp, MAX_BUFFER_SIZE);
+                        // free global string mem.
+                        // this should not be like this because lp[]
+                        // can be bigger than resp[] but for now...
+                        GlobalFreePtr(lp);
+                        break;
+                    }
 
-               case 'v':
-               case 'V':
-                  {
-                  (*(void (WINAPI *)()) theFunc)();
-                  areturn[0] = 0;
-                  break;
-                  }
+                case 'v':
+                case 'V':
+                    (*(void (WINAPI *)()) theFunc)();
+                    areturn[0] = 0;
+                    break;
                   
-               default:
-                  {
-                  ShowDllErrorAndStop(LOCALIZED_ERROR_DLLINVALIDOUTPUTTYPE);
-                  break;
-                  }
-               }
+                default:
+                    ShowDllErrorAndStop(LOCALIZED_ERROR_DLLINVALIDOUTPUTTYPE);
+                    break;
+                }
 
-            for (int j = 0; j < i; j++) 
-               {
-               free(values[j]);
-               }
+                for (int j = 0; j < i; j++) 
+                {
+                    free(values[j]);
+                }
 
-            if (strlen(areturn))
-               {
-               NODE * targ = make_strnode(areturn);
-               NODE * val = parser(targ, false);
-               return val;
-               }
+                if (strlen(areturn))
+                {
+                    NODE * targ = make_strnode(areturn);
+                    NODE * val = parser(targ, false);
+                    return val;
+                }
 
             }
-         else
+            else
             {
-            ShowDllErrorAndStop(LOCALIZED_ERROR_DLLFUNCTIONNOTFOUND);
+                ShowDllErrorAndStop(LOCALIZED_ERROR_DLLFUNCTIONNOTFOUND);
             }
-         }
-      else
-         {
-         ShowDllErrorAndStop(LOCALIZED_ERROR_DLLTYPEDATANOTPAIRED);
-         }
-      }
-   else
-      {
-      ShowDllErrorAndStop(LOCALIZED_ERROR_BADINPUT);
-      }
+        }
+        else
+        {
+            ShowDllErrorAndStop(LOCALIZED_ERROR_DLLTYPEDATANOTPAIRED);
+        }
+    }
+    else
+    {
+        ShowDllErrorAndStop(LOCALIZED_ERROR_BADINPUT);
+    }
 
-   return Unbound;
-   }
-
+    return Unbound;
+}
