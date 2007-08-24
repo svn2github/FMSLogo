@@ -1,23 +1,19 @@
-/*
-*
-*       Copyright (C) 1995 by the Regents of the University of California
-*       Copyright (C) 1995 by George Mills
-*
-*      This program is free software; you can redistribute it and/or modify
-*      it under the terms of the GNU General Public License as published by
-*      the Free Software Foundation; either version 2 of the License, or
-*      (at your option) any later version.
-*
-*      This program is distributed in the hope that it will be useful,
-*      but WITHOUT ANY WARRANTY; without even the implied warranty of
-*      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-*      GNU General Public License for more details.
-*
-*      You should have received a copy of the GNU General Public License
-*      along with this program; if not, write to the Free Software
-*      Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
-*
-*/
+// Copyright (C) 1995 by the Regents of the University of California
+// Copyright (C) 1995 by George Mills
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
 #include "allwind.h"
 
@@ -29,142 +25,144 @@ int g_PrinterAreaYHigh;
 int g_PrinterAreaPixels;
 
 CPrinterAreaWindow::CPrinterAreaWindow(
-   TWindow * ParentWindow
-   ) : TDialog(ParentWindow, IDD_SELECTACTIVEAREA),
-       m_XLow(g_PrinterAreaXLow),
-       m_XHigh(g_PrinterAreaXHigh),
-       m_YLow(g_PrinterAreaYLow),
-       m_YHigh(g_PrinterAreaYHigh),
-       m_PixelsPerInch(g_PrinterAreaPixels)
-   {
-   SetCaption(LOCALIZED_SELECTACTIVEAREA);
-   }
+    TWindow * ParentWindow
+    ) : 
+    TDialog(ParentWindow, IDD_SELECTACTIVEAREA),
+    m_XLow(g_PrinterAreaXLow),
+    m_XHigh(g_PrinterAreaXHigh),
+    m_YLow(g_PrinterAreaYLow),
+    m_YHigh(g_PrinterAreaYHigh),
+    m_PixelsPerInch(g_PrinterAreaPixels)
+{
+    SetCaption(LOCALIZED_SELECTACTIVEAREA);
+}
 
 void CPrinterAreaWindow::SetupWindow()
-   {
-   TDialog::SetupWindow();
+{
+    TDialog::SetupWindow();
 
-   static const MENUITEM staticText[] = {
-      {LOCALIZED_SELECTACTIVEAREA_EFFECT,       ID_SELECTACTIVEAREA_EFFECT},
-      {LOCALIZED_SELECTACTIVEAREA_YHIGH,        ID_SELECTACTIVEAREA_YHIGH},
-      {LOCALIZED_SELECTACTIVEAREA_YLOW,         ID_SELECTACTIVEAREA_YLOW},
-      {LOCALIZED_SELECTACTIVEAREA_XHIGH,        ID_SELECTACTIVEAREA_XHIGH},
-      {LOCALIZED_SELECTACTIVEAREA_XLOW,         ID_SELECTACTIVEAREA_XLOW},
-      {LOCALIZED_SELECTACTIVEAREA_STEPSPERINCH, ID_SELECTACTIVEAREA_STEPSPERINCH},
-      {LOCALIZED_SELECTACTIVEAREA_RESET,        ID_RESETEXTENT},
-      {LOCALIZED_SELECTACTIVEAREA_CANCEL,       IDCANCEL},
-      {LOCALIZED_SELECTACTIVEAREA_OK,           IDOK},
-   };
+    static const MENUITEM staticText[] = 
+    {
+        {LOCALIZED_SELECTACTIVEAREA_EFFECT,       ID_SELECTACTIVEAREA_EFFECT},
+        {LOCALIZED_SELECTACTIVEAREA_YHIGH,        ID_SELECTACTIVEAREA_YHIGH},
+        {LOCALIZED_SELECTACTIVEAREA_YLOW,         ID_SELECTACTIVEAREA_YLOW},
+        {LOCALIZED_SELECTACTIVEAREA_XHIGH,        ID_SELECTACTIVEAREA_XHIGH},
+        {LOCALIZED_SELECTACTIVEAREA_XLOW,         ID_SELECTACTIVEAREA_XLOW},
+        {LOCALIZED_SELECTACTIVEAREA_STEPSPERINCH, ID_SELECTACTIVEAREA_STEPSPERINCH},
+        {LOCALIZED_SELECTACTIVEAREA_RESET,        ID_RESETEXTENT},
+        {LOCALIZED_SELECTACTIVEAREA_CANCEL,       IDCANCEL},
+        {LOCALIZED_SELECTACTIVEAREA_OK,           IDOK},
+    };
 
-   // set the text in all of the static controls
-   SetTextOnChildWindows(this, staticText, ARRAYSIZE(staticText));
+    // set the text in all of the static controls
+    SetTextOnChildWindows(this, staticText, ARRAYSIZE(staticText));
 
-   // display active parameters
-   ResetWindow();
-   }
+    // display active parameters
+    ResetWindow();
+}
 
 
 // The next 4 routines fetch the active area dimensions 
 void CPrinterAreaWindow::CloseWindow(int arg)
-   {
-   // read from the dialog to the member variables
-   m_XLow  = GetDlgItemInt(ID_XLOW);
-   m_XHigh = GetDlgItemInt(ID_XHIGH);
-   m_YLow  = GetDlgItemInt(ID_YLOW);
-   m_YHigh = GetDlgItemInt(ID_YHIGH);
+{
+    // read from the dialog to the member variables
+    m_XLow  = GetDlgItemInt(ID_XLOW);
+    m_XHigh = GetDlgItemInt(ID_XHIGH);
+    m_YLow  = GetDlgItemInt(ID_YLOW);
+    m_YHigh = GetDlgItemInt(ID_YHIGH);
 
-   m_PixelsPerInch = GetDlgItemInt(ID_PIXELS);
+    m_PixelsPerInch = GetDlgItemInt(ID_PIXELS);
 
-   TDialog::CloseWindow(arg);
-   }
+    TDialog::CloseWindow(arg);
+}
 
 void CPrinterAreaWindow::ResetWindow()
-   {
-   // display active parameters
-   SetDlgItemInt(ID_XLOW,  m_XLow);
-   SetDlgItemInt(ID_XHIGH, m_XHigh);
-   SetDlgItemInt(ID_YLOW,  m_YLow);
-   SetDlgItemInt(ID_YHIGH, m_YHigh);
+{
+    // display active parameters
+    SetDlgItemInt(ID_XLOW,  m_XLow);
+    SetDlgItemInt(ID_XHIGH, m_XHigh);
+    SetDlgItemInt(ID_YLOW,  m_YLow);
+    SetDlgItemInt(ID_YHIGH, m_YHigh);
 
-   SetDlgItemInt(ID_PIXELS, m_PixelsPerInch);
-   }
+    SetDlgItemInt(ID_PIXELS, m_PixelsPerInch);
+}
 
 void CPrinterAreaWindow::DoReset(UINT)
-   {
-   // restore to defaults
-   m_XLow  = -BitMapWidth  / 2;
-   m_XHigh = +BitMapWidth  / 2;
-   m_YLow  = -BitMapHeight / 2;
-   m_YHigh = +BitMapHeight / 2;
+{
+    // restore to defaults
+    m_XLow  = -BitMapWidth  / 2;
+    m_XHigh = +BitMapWidth  / 2;
+    m_YLow  = -BitMapHeight / 2;
+    m_YHigh = +BitMapHeight / 2;
 
-   m_PixelsPerInch = max(BitMapWidth, BitMapHeight) / 8;
+    m_PixelsPerInch = max(BitMapWidth, BitMapHeight) / 8;
 
-   ResetWindow();
-   }
+    ResetWindow();
+}
 
 DEFINE_RESPONSE_TABLE1(CPrinterAreaWindow, TDialog)
-  EV_CHILD_NOTIFY_ALL_CODES(ID_RESETEXTENT, DoReset),
+    EV_CHILD_NOTIFY_ALL_CODES(ID_RESETEXTENT, DoReset),
 END_RESPONSE_TABLE;
 
 
 bool IsActiveAreaOneToOneWithScreen()
-   {
-   bool isOneToOne;
+{
+    bool isOneToOne;
 
-   if ((g_PrinterAreaXLow  == -BitMapWidth  / 2) &&
-       (g_PrinterAreaXHigh == +BitMapWidth  / 2) &&
-       (g_PrinterAreaYLow  == -BitMapHeight / 2) &&
-       (g_PrinterAreaYHigh == +BitMapHeight / 2))
-      {
-      isOneToOne = true;
-      }
-   else
-      {
-      isOneToOne = false;
-      }
+    if ((g_PrinterAreaXLow  == -BitMapWidth  / 2) &&
+        (g_PrinterAreaXHigh == +BitMapWidth  / 2) &&
+        (g_PrinterAreaYLow  == -BitMapHeight / 2) &&
+        (g_PrinterAreaYHigh == +BitMapHeight / 2))
+    {
+        isOneToOne = true;
+    }
+    else
+    {
+        isOneToOne = false;
+    }
 
-   return isOneToOne;
-   }
+    return isOneToOne;
+}
 
 NODE *lsetactivearea(NODE *arg)
-   {
-   NODE * args = vector_4_arg(arg);
+{
+    NODE * args = vector_4_arg(arg);
 
-   if (NOT_THROWING)
-      {
-      // apply all args that are given
-      NODE * xlow  = car(args);
-      NODE * ylow  = car(cdr(args));
-      NODE * xhigh = car(cdr(cdr(args)));
-      NODE * yhigh = car(cdr(cdr(cdr(args))));
+    if (NOT_THROWING)
+    {
+        // apply all args that are given
+        NODE * xlow  = car(args);
+        NODE * ylow  = car(cdr(args));
+        NODE * xhigh = car(cdr(cdr(args)));
+        NODE * yhigh = car(cdr(cdr(cdr(args))));
 
-      g_PrinterAreaXLow  = numeric_node_to_fixnum(xlow);
-      g_PrinterAreaYLow  = numeric_node_to_fixnum(ylow);
-      g_PrinterAreaXHigh = numeric_node_to_fixnum(xhigh); 
-      g_PrinterAreaYHigh = numeric_node_to_fixnum(yhigh); 
+        g_PrinterAreaXLow  = numeric_node_to_fixnum(xlow);
+        g_PrinterAreaYLow  = numeric_node_to_fixnum(ylow);
+        g_PrinterAreaXHigh = numeric_node_to_fixnum(xhigh); 
+        g_PrinterAreaYHigh = numeric_node_to_fixnum(yhigh); 
 
-      if (g_PrinterAreaXLow >= g_PrinterAreaXHigh || 
-          g_PrinterAreaYLow >= g_PrinterAreaYHigh)
-         {
-         ShowMessageAndStop(LOCALIZED_ACTIVEAREA, LOCALIZED_ERROR_BADINPUT);
-         return Unbound;
-         }
+        if (g_PrinterAreaXLow >= g_PrinterAreaXHigh || 
+            g_PrinterAreaYLow >= g_PrinterAreaYHigh)
+        {
+            ShowMessageAndStop(LOCALIZED_ACTIVEAREA, LOCALIZED_ERROR_BADINPUT);
+            return Unbound;
+        }
 
-      SetConfigurationInt("Printer.XLow",   g_PrinterAreaXLow);
-      SetConfigurationInt("Printer.XHigh",  g_PrinterAreaXHigh);
-      SetConfigurationInt("Printer.YLow",   g_PrinterAreaYLow);
-      SetConfigurationInt("Printer.YHigh",  g_PrinterAreaYHigh);
-      SetConfigurationInt("Printer.Pixels", g_PrinterAreaPixels);
-      }
+        SetConfigurationInt("Printer.XLow",   g_PrinterAreaXLow);
+        SetConfigurationInt("Printer.XHigh",  g_PrinterAreaXHigh);
+        SetConfigurationInt("Printer.YLow",   g_PrinterAreaYLow);
+        SetConfigurationInt("Printer.YHigh",  g_PrinterAreaYHigh);
+        SetConfigurationInt("Printer.Pixels", g_PrinterAreaPixels);
+    }
 
-   return Unbound;
-   }
+    return Unbound;
+}
 
 NODE *lactivearea(NODE *)
-   {
-   return cons_list(
-      make_intnode((FIXNUM) g_PrinterAreaXLow),
-      make_intnode((FIXNUM) g_PrinterAreaYLow),
-      make_intnode((FIXNUM) g_PrinterAreaXHigh),
-      make_intnode((FIXNUM) g_PrinterAreaYHigh));
-   }
+{
+    return cons_list(
+        make_intnode((FIXNUM) g_PrinterAreaXLow),
+        make_intnode((FIXNUM) g_PrinterAreaYLow),
+        make_intnode((FIXNUM) g_PrinterAreaXHigh),
+        make_intnode((FIXNUM) g_PrinterAreaYHigh));
+}
