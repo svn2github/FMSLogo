@@ -1,3 +1,4 @@
+// -*- c++ -*-
 // Copyright (C) 1995 by George Mills
 //
 // This program is free software; you can redistribute it and/or modify
@@ -87,7 +88,7 @@ class qlink
 class qlist
 {
     qlink *last;
- public:
+public:
     void insert(void * a);
     void * get();
     void zap();
@@ -115,7 +116,7 @@ class qlist
 
 class CEditors : public qlist
 {
- public:
+public:
     void insert(class TMyFileWindow * Editor)
     {
         qlist::insert(Editor);
@@ -139,7 +140,7 @@ class CEditors : public qlist
 
 class CLocalizedNode
 {
- public:
+public:
     CLocalizedNode();
 
     void Initialize(
@@ -151,14 +152,14 @@ class CLocalizedNode
     const char * GetName() const;
     bool         Equals(NODE * Node) const;
 
- private:
+private:
     NODE * m_Primary;
     NODE * m_Alternate;
 };
 
 class CFileStream
 {
- public:
+public:
     CFileStream(FILE * DefaultStream);
 
     void   SetStreamToOpenFile(NODE * FileName);
@@ -181,7 +182,7 @@ class CFileStream
         assert(m_Stream != NULL);
     }
 
- private:
+private:
     FILE *  m_Stream;
     NODE *  m_Name;
     FILE *  m_DefaultStream;
@@ -207,7 +208,7 @@ public:
 
 class CNetworkConnection 
 {
- public:
+public:
     CNetworkConnection();
 
     void 
@@ -253,26 +254,26 @@ class CNetworkConnection
 
     bool         m_IsConnected;  // socket is connected
     bool         m_IsBusy;       // socket is too busy to send
- private:
+private:
     bool         m_IsEnabled;    // if message processing is enabled for this socket
 
- public:
+public:
     PHOSTENT     m_HostEntry;    // Pointer to Host Entry
 
     char * m_OnReceiveReady;  // Buffer for receive callback
- private:
+private:
     char * m_OnSendReady;     // Buffer for send    callback
 
     char * m_ReceiveValue;    // pointer to the last packet received
 
     CCarryOverBuffer m_CarryOverData;  // a buffer for carrying over partial packets 
-                                      // from one recv() call to the next.
+                                       // from one recv() call to the next.
 };
 
 
 class TMyFileWindow : public TEditWindow
 {
- public:
+public:
 
     TMyFileWindow(TWindow *, LPCSTR, LPCSTR, NODE *, bool);
     ~TMyFileWindow();
@@ -299,12 +300,12 @@ class TMyFileWindow : public TEditWindow
     void CMHelpEdit();
     void CMHelpEditTopic();
 
- protected:
+protected:
     void SetupWindow();
 
     DECLARE_RESPONSE_TABLE(TMyFileWindow);
 
- private:
+private:
     char *FileName;
     NODE *args_list;
     HFONT hEdtFont;
@@ -313,12 +314,11 @@ class TMyFileWindow : public TEditWindow
 
 class TMyEditboxWindow : public TEdit
 {
- public:
-
+public:
     TMyEditboxWindow(TWindow *, int, WORD);
     ~TMyEditboxWindow();
 
- protected:
+protected:
     void EvSetFocus(THandle hWndGetFocus);
     void EvKeyDown(UINT, UINT, UINT);
     void CmSelectAll();
@@ -328,14 +328,14 @@ class TMyEditboxWindow : public TEdit
 
 class TMyListboxWindow : public TRichEditWithPopup
 {
- public:
+public:
     TMyListboxWindow(TWindow *, int);
     ~TMyListboxWindow();
 
     void SetCursorAtBottom();
     bool IsCursorAtBottom() const;
 
- protected:
+protected:
     void EvChar(uint key, uint repeatCount, uint flags);
     bool CanClose();
     void SetupWindow();
@@ -352,7 +352,7 @@ class TMyListboxWindow : public TRichEditWithPopup
 
     DECLARE_RESPONSE_TABLE(TMyListboxWindow);
 
- private:
+private:
     void CopyCurrentLineToEditBox();
 
     bool IsControlKeyDown();
@@ -367,8 +367,7 @@ class TMyListboxWindow : public TRichEditWithPopup
 
 class TMyCommandWindow : public TDialog
 {
- public:
-
+public:
     TMyCommandWindow(TWindow *, TResId);
     ~TMyCommandWindow();
 
@@ -379,7 +378,7 @@ class TMyCommandWindow : public TDialog
 
     void ChooseNewFont();
 
- protected:
+protected:
     void SetupWindow();
     char * GetClassName();
     void RecalculateLayout();
@@ -390,27 +389,27 @@ class TMyCommandWindow : public TDialog
     void CmOk();
     void CmEditAll();
     void EvClose();
- public: // HACK: should be protected
+public: // HACK: should be protected
     void EvSize(UINT, TSize &);
- protected:
+protected:
 
- public: // HACK: should be protected
+public: // HACK: should be protected
     void DoButtonExecute(UINT);
     void DoButtonHalt(UINT);
     void DoButtonYield(UINT);
- protected:
+protected:
     void DoButtonEdall(UINT);
     void DoButtonStatus(UINT);
     void DoButtonPause(UINT);
     void DoButtonTrace(UINT);
     void DoButtonReset(UINT);
 
- public:
+public:
     void UpdateYieldButtonState();
     void UpdateTraceButtonState();
     void UpdateStatusButtonState();
 
- protected:
+protected:
     TCommanderCheckBox TraceButton;
     TCommanderButton   ResetButton;
     TCommanderButton   PauseButton;
@@ -422,11 +421,11 @@ class TMyCommandWindow : public TDialog
 
     HFONT Font;
    
- public: // HACK: should be protected
+public: // HACK: should be protected
     TMyEditboxWindow Editbox;
     TMyListboxWindow Listbox;
 
- private:
+private:
 
     int m_EditboxHeight;
     int m_ButtonWidth;
@@ -436,10 +435,10 @@ class TMyCommandWindow : public TDialog
 
 class CStatusWindow : public TDialog
 {
- public:
+public:
     CStatusWindow(TWindow * Parent);
 
- protected:
+protected:
     void EvDestroy();
     void SetupWindow();
 
@@ -448,7 +447,7 @@ class CStatusWindow : public TDialog
 
 class CPrinterAreaWindow : public TDialog
 {
- public:
+public:
 
     CPrinterAreaWindow(TWindow * Parent);
 
@@ -458,12 +457,12 @@ class CPrinterAreaWindow : public TDialog
     int m_YHigh;
     int m_PixelsPerInch;
 
- protected:
+protected:
     void SetupWindow();
     void CloseWindow(int);
     void DoReset(UINT);
 
- private:
+private:
     void ResetWindow();
 
     DECLARE_RESPONSE_TABLE(CPrinterAreaWindow);
@@ -471,7 +470,7 @@ class CPrinterAreaWindow : public TDialog
 
 class CSelectProcedureWindow : public TDialog
 {
- public:
+public:
 
     CSelectProcedureWindow(
         TWindow *    Parent,
@@ -480,7 +479,7 @@ class CSelectProcedureWindow : public TDialog
 
     void ShowDialog();
 
- protected:
+protected:
     bool CanClose();
     void SetupWindow();
 
@@ -492,33 +491,33 @@ class CSelectProcedureWindow : public TDialog
     bool m_FileEditAll;              // true if all procedures were selected
     char m_SelectedProcedures[256];  // buffer to hold selected functions
 
- private:
+private:
     DECLARE_RESPONSE_TABLE(CSelectProcedureWindow);
 };
 
 // shows a "Select Procedures to Edit" dialog
 class CEditProcedureWindow : public CSelectProcedureWindow
 {
- public:
+public:
     CEditProcedureWindow(TWindow * Parent);
 
- protected:
+protected:
     void OnChoice(NODE * Procedures);
 };
 
 // shows a "Select Procedures to Erase" dialog
 class CEraseProcedureWindow : public CSelectProcedureWindow
 {
- public:
+public:
     CEraseProcedureWindow(TWindow * Parent);
 
- protected:
+protected:
     void OnChoice(NODE * Procedures);
 };
 
 class TMyApp : public TApplication
 {
- public:
+public:
 
     TMyApp(LPCSTR AName, HINSTANCE hInstance, HINSTANCE hPrevInstance, LPCSTR lpCmdLine, int nCmdShow)
         : TApplication(AName, hInstance, hPrevInstance, lpCmdLine, nCmdShow)
@@ -539,7 +538,7 @@ class TMyApp : public TApplication
 
 class TScreenWindow : public TWindow
 {
- public:
+public:
     TScreenWindow(TWindow * AParent, LPCSTR ATitle);
     ~TScreenWindow();
 
@@ -556,7 +555,7 @@ class TScreenWindow : public TWindow
         return m_MemoryDeviceContext;
     }
 
- protected:
+protected:
     void SetupWindow();
 
     void Paint(TDC &, bool, TRect &);
@@ -574,7 +573,7 @@ class TScreenWindow : public TWindow
 
     DECLARE_RESPONSE_TABLE(TScreenWindow);
 
- private:
+private:
     void GetScrollRatios(FLONUM & XRatio, FLONUM & YRatio);
 
     HDC   m_ScreenDeviceContext;
@@ -583,7 +582,7 @@ class TScreenWindow : public TWindow
 
 class TMainFrame : public TDecoratedFrame
 {
- public:
+public:
 
     TMainFrame(TWindow * AParent, LPCSTR ATitle, TPaneSplitter * PaneSplitter);
     ~TMainFrame();
@@ -609,7 +608,7 @@ class TMainFrame : public TDecoratedFrame
     bool DumpBitmapFile(LPCSTR Filename, int MaxBitCount);
     bool WriteDIB(FILE* File, int MaxBitCount);
 
- protected:
+protected:
     void SetupWindow();
     bool CanClose();
     void GetWindowClass(WNDCLASS & WndClass);
@@ -629,13 +628,13 @@ class TMainFrame : public TDecoratedFrame
     void CMFileLoad();
     void CMFileOpen();
 
- public:
+public:
     // The File-Save options are public so that the
     // commander's list box can delegate the message.
     void CMFileSave();
     void CMFileSaveAs();
 
- protected:
+protected:
     void CMFileEdit();
     void CMFileErase();
     void CMExit();
@@ -649,9 +648,9 @@ class TMainFrame : public TDecoratedFrame
     void CMBitmapPrinterSetup();
     void CMBitmapPrinterArea();
 
- public:  //HACK
+public:  //HACK
     void CMHelp();
- protected:
+protected:
     void CMHelpMCI();
     void CMHelpHelp();
     void CMHelpDemo();
@@ -686,7 +685,7 @@ class TMainFrame : public TDecoratedFrame
     LRESULT OnNetworkListenReceiveAck(WPARAM, LPARAM);
     LRESULT OnNetworkListenReceiveFinish(WPARAM, LPARAM);
 
- private:
+private:
 
     void EraseContentsOfWorkspace();
 
@@ -698,14 +697,14 @@ class TMainFrame : public TDecoratedFrame
         const char *           LogoCommand
         );
 
- public:
+public:
     class TPrinter               Printer;
     class TMyCommandWindow     * CommandWindow;
     class CStatusWindow        * StatusWindow;
     class TPaneSplitter        * PaneSplitterWindow;
     class TScreenWindow        * ScreenWindow;
 
- private:
+private:
 
     class TColorDialog  * m_ScreenColorPicker;
     class TColorDialog  * m_PenColorPicker;
@@ -727,7 +726,7 @@ class TMainFrame : public TDecoratedFrame
 
 class TRulerOut : public TPrintout
 {
- public:
+public:
 
     TRulerOut(Pchar ATitle) : TPrintout(ATitle)
     {
@@ -767,7 +766,7 @@ enum EVENTTYPE
 
 class callthing
 {
- private:
+private:
     // Hide the ctor. 
     // All events should be created with CreateEvent*().
     callthing() {};
