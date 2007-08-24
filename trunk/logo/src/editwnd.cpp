@@ -22,91 +22,92 @@
 #include "allwind.h"
 
 TRichEditWithPopup::TRichEditWithPopup(
-   TWindow* parent,
-   int id,
-   const char * text,
-   int x,
-   int y,
-   int w,
-   int h,
-   const char * fileName
-   ) : TRichEdit(parent, id, text, x, y, w, h, fileName)
-   {
-   PopupMenu.AppendMenu(MF_STRING, CM_EDITUNDO,       LOCALIZED_POPUP_UNDO);
-   PopupMenu.AppendMenu(MF_SEPARATOR, 0, NULL);
-   PopupMenu.AppendMenu(MF_STRING, CM_EDITCUT,        LOCALIZED_POPUP_CUT);
-   PopupMenu.AppendMenu(MF_STRING, CM_EDITCOPY,       LOCALIZED_POPUP_COPY);
-   PopupMenu.AppendMenu(MF_STRING, CM_EDITPASTE,      LOCALIZED_POPUP_PASTE);
-   PopupMenu.AppendMenu(MF_STRING, CM_EDITDELETE,     LOCALIZED_POPUP_DELETE);
-   PopupMenu.AppendMenu(MF_STRING, CM_EDITSELECTALL,  LOCALIZED_POPUP_SELECTALL);
-   PopupMenu.AppendMenu(MF_SEPARATOR, 0, NULL);
-   PopupMenu.AppendMenu(MF_STRING, CM_HELPEDIT_TOPIC, LOCALIZED_POPUP_HELP);
-   }
+    TWindow* parent,
+    int id,
+    const char * text,
+    int x,
+    int y,
+    int w,
+    int h,
+    const char * fileName
+    ) : 
+    TRichEdit(parent, id, text, x, y, w, h, fileName)
+{
+    PopupMenu.AppendMenu(MF_STRING, CM_EDITUNDO,       LOCALIZED_POPUP_UNDO);
+    PopupMenu.AppendMenu(MF_SEPARATOR, 0, NULL);
+    PopupMenu.AppendMenu(MF_STRING, CM_EDITCUT,        LOCALIZED_POPUP_CUT);
+    PopupMenu.AppendMenu(MF_STRING, CM_EDITCOPY,       LOCALIZED_POPUP_COPY);
+    PopupMenu.AppendMenu(MF_STRING, CM_EDITPASTE,      LOCALIZED_POPUP_PASTE);
+    PopupMenu.AppendMenu(MF_STRING, CM_EDITDELETE,     LOCALIZED_POPUP_DELETE);
+    PopupMenu.AppendMenu(MF_STRING, CM_EDITSELECTALL,  LOCALIZED_POPUP_SELECTALL);
+    PopupMenu.AppendMenu(MF_SEPARATOR, 0, NULL);
+    PopupMenu.AppendMenu(MF_STRING, CM_HELPEDIT_TOPIC, LOCALIZED_POPUP_HELP);
+}
 
 // protected constructor does not supply a menu
 TRichEditWithPopup::TRichEditWithPopup(
-   TWindow* parent,
-   int      id
-   ) : TRichEdit(parent, id, NULL, 0, 0, 0, 0)
-   {
-   }
+    TWindow* parent,
+    int      id
+    ) : 
+    TRichEdit(parent, id, NULL, 0, 0, 0, 0)
+{
+}
 
 TRichEditWithPopup::~TRichEditWithPopup()
-   {
-   }
+{
+}
 
 void TRichEditWithPopup::CmSelectAll()
-   {
-   int endOfText = GetTextLen();
-   SetSelection(0, endOfText);
-   }
+{
+    int endOfText = GetTextLen();
+    SetSelection(0, endOfText);
+}
 
 void TRichEditWithPopup::CmSelectAllEnable(TCommandEnabler& commandHandler)
-   {
-   UINT textLength = GetTextLen();
-   bool isNotEmpty = textLength != 0;
-   commandHandler.Enable(isNotEmpty);
-   }
+{
+    UINT textLength = GetTextLen();
+    bool isNotEmpty = textLength != 0;
+    commandHandler.Enable(isNotEmpty);
+}
 
 void TRichEditWithPopup::EvRButtonUp(UINT, TPoint & point)
-   {
-   ClientToScreen(point);
-   PopupMenu.TrackPopupMenu(TPM_LEFTBUTTON, point, 0, HWindow);
-   }
+{
+    ClientToScreen(point);
+    PopupMenu.TrackPopupMenu(TPM_LEFTBUTTON, point, 0, HWindow);
+}
 
 // paste as raw text so that we don't preserve any
 // formatting of rich text.
 void TRichEditWithPopup::CmPasteAsText()
-   {
-   OpenClipboard();
+{
+    OpenClipboard();
 
-   HGLOBAL hText = GetClipboardData(CF_TEXT);
+    HGLOBAL hText = GetClipboardData(CF_TEXT);
+    if (hText)
+    {
+        LPCSTR lpText = (LPCSTR) GlobalLock(hText);
+        Insert(lpText);
+        GlobalUnlock(hText);
+    }
 
-   if (hText)
-      {
-      LPCSTR lpText = (LPCSTR) GlobalLock(hText);
-      Insert(lpText);
-      GlobalUnlock(hText);
-      }
-
-   CloseClipboard();
-   }
+    CloseClipboard();
+}
 
 
 // paste as raw text so that we don't preserve any
 // formatting of rich text.
 void TRichEditWithPopup::CmHelpEditTopic()
-   {
-   ContextHelp(this);
-   }
+{
+    ContextHelp(this);
+}
 
 
 DEFINE_RESPONSE_TABLE1(TRichEditWithPopup, TRichEdit)
-   EV_WM_RBUTTONUP,
-   EV_COMMAND(CM_EDITPASTE,            CmPasteAsText),
-   EV_COMMAND(CM_EDITSELECTALL,        CmSelectAll),
-   EV_COMMAND(CM_HELPEDIT_TOPIC,       CmHelpEditTopic),
-   EV_COMMAND_ENABLE(CM_EDITSELECTALL, CmSelectAllEnable),
+    EV_WM_RBUTTONUP,
+    EV_COMMAND(CM_EDITPASTE,            CmPasteAsText),
+    EV_COMMAND(CM_EDITSELECTALL,        CmSelectAll),
+    EV_COMMAND(CM_HELPEDIT_TOPIC,       CmHelpEditTopic),
+    EV_COMMAND_ENABLE(CM_EDITSELECTALL, CmSelectAllEnable),
 END_RESPONSE_TABLE;
 
 
@@ -118,54 +119,55 @@ END_RESPONSE_TABLE;
 // constructs its child edit control
 //
 TEditWindow::TEditWindow(
-   TWindow *    parent,
-   const char *	title
-) : TFrameWindow(parent, title, 0, false)
-   {
-   Editor = new TRichEditWithPopup(this, ID_EDITOR, 0, 0, 0, 0, 0, 0);
-   Editor->Attr.ExStyle |= WS_EX_RIGHTSCROLLBAR;
-   Editor->Attr.Style |= ES_NOHIDESEL | ES_AUTOHSCROLL | ES_AUTOVSCROLL;
-   }
+    TWindow *    parent,
+    const char *	title
+    ) : 
+    TFrameWindow(parent, title, 0, false)
+{
+    Editor = new TRichEditWithPopup(this, ID_EDITOR, 0, 0, 0, 0, 0, 0);
+    Editor->Attr.ExStyle |= WS_EX_RIGHTSCROLLBAR;
+    Editor->Attr.Style |= ES_NOHIDESEL | ES_AUTOHSCROLL | ES_AUTOVSCROLL;
+}
 
 //
 // responds to an incoming WM_SIZE message by resizing the child edit
 // control to fill the TEditWindow's client area
 //
 void TEditWindow::EvSize(UINT sizeType, TSize &size)
-   {
-   TWindow::EvSize(sizeType, size);
-   Editor->SetWindowPos(0, 0, 0, size.cx, size.cy, SWP_NOZORDER);
-   }
+{
+    TWindow::EvSize(sizeType, size);
+    Editor->SetWindowPos(0, 0, 0, size.cx, size.cy, SWP_NOZORDER);
+}
 
 //
 // responds to an incoming WM_SETFOCUS message by setting the focus to
 // the child edit control
 //
 void TEditWindow::EvSetFocus(HWND)
-   {
-   Editor->SetFocus();
-   }
+{
+    Editor->SetFocus();
+}
 
 void TEditWindow::CmFilePrint()
-   {
-   // Create Printout window and set characteristics.
-   TRichEditPrintout printout(MainWindowx->Printer, *Editor, "Logo");
-   printout.SetBanding(false);
+{
+    // Create Printout window and set characteristics.
+    TRichEditPrintout printout(MainWindowx->Printer, *Editor, "Logo");
+    printout.SetBanding(false);
 
-   // Bring up the Print dialog and print the document.
-   MainWindowx->Printer.Print(this, printout, true);
-   }
+    // Bring up the Print dialog and print the document.
+    MainWindowx->Printer.Print(this, printout, true);
+}
 
 void TEditWindow::CmSelectAll()
-   {
-   // delegate to the Editor window
-   Editor->SendMessage(WM_COMMAND, CM_EDITSELECTALL, 0);
-   }
+{
+    // delegate to the Editor window
+    Editor->SendMessage(WM_COMMAND, CM_EDITSELECTALL, 0);
+}
 
 DEFINE_RESPONSE_TABLE1(TEditWindow, TFrameWindow)
-  EV_WM_SIZE,
-  EV_WM_SETFOCUS,
-  EV_COMMAND(CM_FILEPRINT, CmFilePrint),
-  EV_COMMAND(CM_EDITSELECTALL, CmSelectAll),
+    EV_WM_SIZE,
+    EV_WM_SETFOCUS,
+    EV_COMMAND(CM_FILEPRINT, CmFilePrint),
+    EV_COMMAND(CM_EDITSELECTALL, CmSelectAll),
 END_RESPONSE_TABLE;
 
