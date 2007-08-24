@@ -186,7 +186,7 @@ double TThreeDSolid::CalcSign(Point& p, POLYGON* Poly)
     //	if (fabs(value) < epsilon2) return 0.0;  // The point is on the plane
     /*	else */
     return value;   // The sign of the value indicates which side p is on
-}/
+}
 
 // Uses a parameteric equation to determine where a line intersects the
 // plane. The two vertices v1 and v2 are the endpoints of the line.
