@@ -26,11 +26,11 @@ extern int  gbm_file_write (int fd, const void *buf, int len);
 #define	AHEAD_BUF 0x4000
 
 struct AHEAD
-   {
-   byte buf[AHEAD_BUF];
-   int inx, cnt;
-   int fd;
-   };
+{
+    byte buf[AHEAD_BUF];
+    int inx, cnt;
+    int fd;
+};
 
 extern AHEAD *gbm_create_ahead(int fd);
 extern void   gbm_destroy_ahead(AHEAD *ahead);
