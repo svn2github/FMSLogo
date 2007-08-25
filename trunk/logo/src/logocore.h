@@ -43,12 +43,12 @@ void trace_node_change(struct NODE * Node);
 #define check_throwing (check_stop(false) || stopping_flag == THROWING)
 
 enum mode_type
-   {
-   wrapmode, 
-   fencemode, 
-   windowmode, 
-   perspectivemode,
-   };
+{
+    wrapmode, 
+    fencemode, 
+    windowmode, 
+    perspectivemode,
+};
 
 typedef struct NODE * (*logofunc) (struct NODE *);
 
@@ -140,46 +140,46 @@ const NODETYPES NT_FREE          = 0xFFFF;
 // enumerated types, so any new values must be added to the
 // end of the list.
 enum ERR_TYPES
-   {
-   FATAL                = 0, 
-   OUT_OF_MEM           = 1, 
-   STACK_OVERFLOW       = 2, 
-   TURTLE_OUT_OF_BOUNDS = 3,
-   BAD_DATA_UNREC       = 4,
-   DIDNT_OUTPUT         = 5,
-   NOT_ENOUGH           = 6,
-   BAD_DATA             = 7,
-   TOO_MUCH             = 8,
-   DK_WHAT              = 9,
-   PAREN_MISMATCH       = 10,
-   NO_VALUE             = 11,
-   UNEXPECTED_PAREN     = 12,
-   DK_HOW               = 13,
-   NO_CATCH_TAG         = 14,
-   ALREADY_DEFINED      = 15,
-   STOP_ERROR           = 16,
-   ALREADY_DRIBBLING    = 17,
-   FILE_ERROR           = 18,
-   IF_WARNING           = 19,
-   SHADOW_WARN          = 20,
-   USER_ERR             = 21,
-   IS_PRIM              = 22,
-   NOT_INSIDE           = 23,
-   DK_HOW_UNREC         = 24,
-   NO_TEST              = 25,
-   UNEXPECTED_BRACKET   = 26,
-   UNEXPECTED_BRACE     = 27,
-   BAD_GRAPH_INIT       = 28,
-   ERR_MACRO            = 29,
-   DK_WHAT_UP           = 30,
-   AT_TOPLEVEL          = 31,
-   APPLY_BAD_DATA       = 32,
-   DEEPEND              = 33,
-   OUT_OF_MEM_UNREC     = 34,
+{
+    FATAL                = 0, 
+    OUT_OF_MEM           = 1, 
+    STACK_OVERFLOW       = 2, 
+    TURTLE_OUT_OF_BOUNDS = 3,
+    BAD_DATA_UNREC       = 4,
+    DIDNT_OUTPUT         = 5,
+    NOT_ENOUGH           = 6,
+    BAD_DATA             = 7,
+    TOO_MUCH             = 8,
+    DK_WHAT              = 9,
+    PAREN_MISMATCH       = 10,
+    NO_VALUE             = 11,
+    UNEXPECTED_PAREN     = 12,
+    DK_HOW               = 13,
+    NO_CATCH_TAG         = 14,
+    ALREADY_DEFINED      = 15,
+    STOP_ERROR           = 16,
+    ALREADY_DRIBBLING    = 17,
+    FILE_ERROR           = 18,
+    IF_WARNING           = 19,
+    SHADOW_WARN          = 20,
+    USER_ERR             = 21,
+    IS_PRIM              = 22,
+    NOT_INSIDE           = 23,
+    DK_HOW_UNREC         = 24,
+    NO_TEST              = 25,
+    UNEXPECTED_BRACKET   = 26,
+    UNEXPECTED_BRACE     = 27,
+    BAD_GRAPH_INIT       = 28,
+    ERR_MACRO            = 29,
+    DK_WHAT_UP           = 30,
+    AT_TOPLEVEL          = 31,
+    APPLY_BAD_DATA       = 32,
+    DEEPEND              = 33,
+    OUT_OF_MEM_UNREC     = 34,
 
-   // FMSLogo-specific error codes start at 1000
-   WINDOW_NOTING_SELECTED = 1000,
-   };
+    // FMSLogo-specific error codes start at 1000
+    WINDOW_NOTING_SELECTED = 1000,
+};
 
 #define FALSE   0
 #define TRUE    1
@@ -197,51 +197,51 @@ typedef double FLONUM;
 #define FLONUM_EPSILON 1.0e-12 // don't use DLB_EPSILON (see bug #1624729)
 
 struct NODE
-   {
+{
 #ifdef MEM_DEBUG
-   int magic; // set to 'NODE'
+    int magic; // set to 'NODE'
 #endif
 
-   NODETYPES type;
+    NODETYPES type;
 
-   long ref_count;
-   union
-      {
-      struct
-         {
-         NODE * ncar;
-         NODE * ncdr;
-         NODE * nobj;    // used only for oblist
-         }
-         ncons;
-      struct
-         {
-         const char * ptr;
-         char       * head;
-         int          len;
-         }
-         nstring;
-      struct
-         {
-         logofunc fun;
-         short    npriority;
-         short    nmin_args;
-         short    ndef_args;
-         short    nmax_args;
-         }
-         nprim;
-      FIXNUM nint;
-      FLONUM nfloat;
-      struct
-         {
-         int     dim;
-         int     origin;
-         NODE ** data;
-         }
-         narray;
-      }
-      nunion;
-   };
+    long ref_count;
+    union
+    {
+        struct
+        {
+            NODE * ncar;
+            NODE * ncdr;
+            NODE * nobj;    // used only for oblist
+        }
+            ncons;
+        struct
+        {
+            const char * ptr;
+            char       * head;
+            int          len;
+        }
+            nstring;
+        struct
+        {
+            logofunc fun;
+            short    npriority;
+            short    nmin_args;
+            short    ndef_args;
+            short    nmax_args;
+        }
+            nprim;
+        FIXNUM nint;
+        FLONUM nfloat;
+        struct
+        {
+            int     dim;
+            int     origin;
+            NODE ** data;
+        }
+            narray;
+    }
+        nunion;
+};
 
 extern void      gc(NODE* node);
 extern NODETYPES nodetype(const NODE *nd);
@@ -249,77 +249,77 @@ extern NODETYPES nodetype(const NODE *nd);
 inline
 void
 settype(NODE * Node, NODETYPES Type)
-   {
-   Node->type = Type;
-   }
+{
+    Node->type = Type;
+}
 
 inline
 long
 getrefcnt(const NODE * Node)
-   {
-   return Node->ref_count;
-   }
+{
+    return Node->ref_count;
+}
 
 inline
 void increfcnt(NODE * Node)
-   {
-   TRACE_NODE_CHANGE(Node);
-   Node->ref_count++;
-   }
+{
+    TRACE_NODE_CHANGE(Node);
+    Node->ref_count++;
+}
 
 inline
 long
 decrefcnt(NODE * Node)
-   {
-   TRACE_NODE_CHANGE(Node);
-   return --Node->ref_count;
-   }
+{
+    TRACE_NODE_CHANGE(Node);
+    return --Node->ref_count;
+}
 
 inline
 bool
 is_freed(const NODE * node)
-   {
-   return node->type == 0xCCCC || node->type == NT_FREE;
-   }
+{
+    return node->type == 0xCCCC || node->type == NT_FREE;
+}
 
 inline
 NODE*
 car(const NODE * node)
-   {
-   assert(node != NULL);
-   assert(!is_freed(node));
-   assert(node->type != STRING);
-   assert(node->type != INTEGER);
-   assert(node->type != FLOATINGPOINT);
+{
+    assert(node != NULL);
+    assert(!is_freed(node));
+    assert(node->type != STRING);
+    assert(node->type != INTEGER);
+    assert(node->type != FLOATINGPOINT);
 
-   return node->nunion.ncons.ncar;
-   }
+    return node->nunion.ncons.ncar;
+}
 
 inline
 NODE*
 cdr(const NODE * node)
-   {
-   assert(node != NULL);
-   assert(!is_freed(node));
-   assert(node->type != STRING);
-   assert(node->type != INTEGER);
-   assert(node->type != FLOATINGPOINT);
+{
+    assert(node != NULL);
+    assert(!is_freed(node));
+    assert(node->type != STRING);
+    assert(node->type != INTEGER);
+    assert(node->type != FLOATINGPOINT);
 
-   return node->nunion.ncons.ncdr;
-   }
+    return node->nunion.ncons.ncdr;
+}
 
 inline
 NODE*
 getobject(const NODE * node)
-   {
-   assert(node != NULL);
-   assert(!is_freed(node));
-   assert(node->type != STRING);
-   assert(node->type != INTEGER);
-   assert(node->type != FLOATINGPOINT);
+{
+    assert(node != NULL);
+    assert(!is_freed(node));
+    assert(node->type != STRING);
+    assert(node->type != INTEGER);
+    assert(node->type != FLOATINGPOINT);
 
-   return node->nunion.ncons.nobj;
-   }
+    return node->nunion.ncons.nobj;
+}
 
 #define caar(node)              car(car(node))
 #define cadr(node)              car(cdr(node))
@@ -336,137 +336,137 @@ getobject(const NODE * node)
 inline 
 unsigned short
 getstrrefcnt(const unsigned short * refcnt)
-   {
-   return *refcnt;
-   }
+{
+    return *refcnt;
+}
 
 inline 
 void
 setstrrefcnt(unsigned short * refcnt, unsigned short value)
-   {
-   *refcnt = value;
-   }
+{
+    *refcnt = value;
+}
 
 inline 
 unsigned short
 incstrrefcnt(unsigned short * refcnt)
-   {
-   return (*refcnt)++;
-   }
+{
+    return (*refcnt)++;
+}
 
 inline 
 unsigned short
 decstrrefcnt(unsigned short * refcnt)
-   {
-   return --(*refcnt);
-   }
+{
+    return --(*refcnt);
+}
 
 inline FIXNUM 
 getint(const NODE * Node) 
-   {
-   assert(Node != NULL);
-   //assert(Node->type == INTEGER);
-   return Node->nunion.nint;
-   }
+{
+    assert(Node != NULL);
+    //assert(Node->type == INTEGER);
+    return Node->nunion.nint;
+}
 
 inline FLONUM
 getfloat(const NODE * Node)
-   {
-   assert(Node != NULL);
-   //assert(Node->type == FLOATINGPOINT);
-   return Node->nunion.nfloat;
-   }
+{
+    assert(Node != NULL);
+    //assert(Node->type == FLOATINGPOINT);
+    return Node->nunion.nfloat;
+}
 
 inline
 logofunc 
 getprimfun(const NODE * Node)
-   {
-   assert(Node != NULL);
-   assert(is_prim(Node));
-   return Node->nunion.nprim.fun;
-   }
+{
+    assert(Node != NULL);
+    assert(is_prim(Node));
+    return Node->nunion.nprim.fun;
+}
 
 inline 
 void
 setprimfun(NODE * Node, logofunc Func)
-   {
-   assert(Node != NULL);
-   assert(is_prim(Node));
-   Node->nunion.nprim.fun = Func;
-   }
+{
+    assert(Node != NULL);
+    assert(is_prim(Node));
+    Node->nunion.nprim.fun = Func;
+}
 
 inline
 short 
 getprimmin(const NODE * Node)
-   {
-   assert(Node != NULL);
-   assert(is_prim(Node));
-   return Node->nunion.nprim.nmin_args;
-   }
+{
+    assert(Node != NULL);
+    assert(is_prim(Node));
+    return Node->nunion.nprim.nmin_args;
+}
 
 inline
 void 
 setprimmin(NODE * Node, short Min)
-   {
-   assert(Node != NULL);
-   assert(is_prim(Node));
-   Node->nunion.nprim.nmin_args = Min;
-   }
+{
+    assert(Node != NULL);
+    assert(is_prim(Node));
+    Node->nunion.nprim.nmin_args = Min;
+}
 
 
 inline
 short 
 getprimmax(const NODE * Node)
-   {
-   assert(Node != NULL);
-   assert(is_prim(Node));
-   return Node->nunion.nprim.nmax_args;
-   }
+{
+    assert(Node != NULL);
+    assert(is_prim(Node));
+    return Node->nunion.nprim.nmax_args;
+}
 
 inline
 void 
 setprimmax(NODE * Node, short Max)
-   {
-   assert(Node != NULL);
-   assert(is_prim(Node));
-   Node->nunion.nprim.nmax_args = Max;
-   }
+{
+    assert(Node != NULL);
+    assert(is_prim(Node));
+    Node->nunion.nprim.nmax_args = Max;
+}
 
 inline
 short 
 getprimdflt(const NODE * Node)
-   {
-   assert(Node != NULL);
-   assert(is_prim(Node));
-   return Node->nunion.nprim.ndef_args;
-   }
+{
+    assert(Node != NULL);
+    assert(is_prim(Node));
+    return Node->nunion.nprim.ndef_args;
+}
 
 inline
 void 
 setprimdflt(NODE * Node, short Default)
-   {
-   assert(Node != NULL);
-   assert(is_prim(Node));
-   Node->nunion.nprim.ndef_args = Default;
-   }
+{
+    assert(Node != NULL);
+    assert(is_prim(Node));
+    Node->nunion.nprim.ndef_args = Default;
+}
 
 inline
 short 
 getprimpri(const NODE * Node)
-   {
-   assert(Node != NULL);
-   assert(is_prim(Node));
-   return Node->nunion.nprim.npriority;
-   }
+{
+    assert(Node != NULL);
+    assert(is_prim(Node));
+    return Node->nunion.nprim.npriority;
+}
 
 inline
 void
 setprimpri(NODE * Node, short Priority)
-   {
-   assert(Node != NULL);
-   assert(is_prim(Node));
-   Node->nunion.nprim.npriority = Priority;
-   }
+{
+    assert(Node != NULL);
+    assert(is_prim(Node));
+    Node->nunion.nprim.npriority = Priority;
+}
 
 // Special value for pmin, means that it's
 // OK if primitive name on line by itself even though defltargs=1 (ED, CO)
@@ -475,56 +475,56 @@ setprimpri(NODE * Node, short Priority)
 inline
 int 
 getarrdim(const NODE * Node)
-   {
-   assert(Node != NULL);
-   assert(Node->type == ARRAY);
-   return Node->nunion.narray.dim;
-   }
+{
+    assert(Node != NULL);
+    assert(Node->type == ARRAY);
+    return Node->nunion.narray.dim;
+}
 
 inline
 int
 getarrorg(const NODE * Node)
-   {
-   assert(Node != NULL);
-   assert(Node->type == ARRAY);
-   return Node->nunion.narray.origin;
-   }
+{
+    assert(Node != NULL);
+    assert(Node->type == ARRAY);
+    return Node->nunion.narray.origin;
+}
 
 inline
 NODE **
 getarrptr(const NODE * Node)
-   {
-   assert(Node != NULL);
-   assert(Node->type == ARRAY);
-   return Node->nunion.narray.data;
-   }
+{
+    assert(Node != NULL);
+    assert(Node->type == ARRAY);
+    return Node->nunion.narray.data;
+}
 
 inline
 void
 setarrdim(NODE * Node, int Length)
-   {
-   assert(Node != NULL);
-   assert(Node->type == ARRAY);
-   Node->nunion.narray.dim = Length;
-   }
+{
+    assert(Node != NULL);
+    assert(Node->type == ARRAY);
+    Node->nunion.narray.dim = Length;
+}
 
 inline
 void
 setarrorg(NODE * Node, int Origin)
-   {
-   assert(Node != NULL);
-   assert(Node->type == ARRAY);
-   Node->nunion.narray.origin = Origin;
-   }
+{
+    assert(Node != NULL);
+    assert(Node->type == ARRAY);
+    Node->nunion.narray.origin = Origin;
+}
 
 inline
 void
 setarrptr(NODE * Node, NODE ** Ptr)
-   {
-   assert(Node != NULL);
-   assert(Node->type == ARRAY);
-   Node->nunion.narray.data = Ptr;
-   }
+{
+    assert(Node != NULL);
+    assert(Node->type == ARRAY);
+    Node->nunion.narray.data = Ptr;
+}
 
 #ifdef ecma
 #define clearparity(ch)         ecma_clear(ch)
@@ -537,13 +537,13 @@ setarrptr(NODE * Node, NODE ** Ptr)
 #endif
 
 enum CTRLTYPE
-   {
-   RUN, 
-   STOP, 
-   OUTPUT, 
-   THROWING, 
-   MACRO_RETURN,
-   };
+{
+    RUN, 
+    STOP, 
+    OUTPUT, 
+    THROWING, 
+    MACRO_RETURN,
+};
 
 #define NOT_THROWING            (stopping_flag != THROWING)
 #define RUNNING                 (stopping_flag == RUN)
@@ -582,12 +582,12 @@ enum CTRLTYPE
 inline
 NODE*
 parsed__runparse(
-   const NODE * runparsed_node
-)
-   {
-   assert(runparsed_node->type == RUN_PARSE);
-   return getobject(runparsed_node);
-   }
+    const NODE * runparsed_node
+    )
+{
+    assert(runparsed_node->type == RUN_PARSE);
+    return getobject(runparsed_node);
+}
 
 #define node__quote(q)          car(q)
 #define node__colon(c)          car(c)
@@ -630,62 +630,62 @@ parsed__runparse(
 inline
 void
 ref(NODE * object)
-   {
-   if (object != NIL)
-      {
-      assert(!is_freed(object));
-      increfcnt(object);
-      }
-   }
+{
+    if (object != NIL)
+    {
+        assert(!is_freed(object));
+        increfcnt(object);
+    }
+}
 
 inline
 NODE*
 vref(NODE * object)
-   {
-   if (object != NIL)
-      {
-      assert(!is_freed(object));
-      increfcnt(object);
-      }
-   return object;
-   }
+{
+    if (object != NIL)
+    {
+        assert(!is_freed(object));
+        increfcnt(object);
+    }
+    return object;
+}
 
 
 inline 
 void
 deref(NODE * object)
-   {
-   if (object == NIL)
-      {
-      return;
-      }
+{
+    if (object == NIL)
+    {
+        return;
+    }
 
-   assert(!is_freed(object));
-   assert(getrefcnt(object) != 0); // memleak
+    assert(!is_freed(object));
+    assert(getrefcnt(object) != 0); // memleak
 
-   if (decrefcnt(object) == 0)
-      {
-      gc(object);
-      }
-   }
+    if (decrefcnt(object) == 0)
+    {
+        gc(object);
+    }
+}
 
 inline 
 void
 gcref(NODE * object)
-   {
-   if (object == NIL)
-      {
-      return;
-      }
+{
+    if (object == NIL)
+    {
+        return;
+    }
 
-   assert(!is_freed(object));
+    assert(!is_freed(object));
 
-   if (getrefcnt(object) == 0)
-      {
-      TRACE_NODE_CHANGE(object);
-      gc(object);
-      }
-   }
+    if (getrefcnt(object) == 0)
+    {
+        TRACE_NODE_CHANGE(object);
+        gc(object);
+    }
+}
 
 #define push(obj, stack)    spush(obj, &stack)
 #define pop(stack)          spop(&stack)
@@ -716,10 +716,10 @@ gcref(NODE * object)
 #define do_enum(x) x,
 
 enum labels
-   {
+{
    do_list(do_enum)
    NUM_TOKENS
-   };
+};
 
 // write modes (not sure what these numbers mean)
 const int COPY_PUT = 12;
