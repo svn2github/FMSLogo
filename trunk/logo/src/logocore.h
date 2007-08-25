@@ -717,8 +717,8 @@ gcref(NODE * object)
 
 enum labels
 {
-   do_list(do_enum)
-   NUM_TOKENS
+    do_list(do_enum)
+    NUM_TOKENS
 };
 
 // write modes (not sure what these numbers mean)
@@ -728,4 +728,3 @@ const int XOR_PUT  = 199;
 #define ScreenSz 0.70      // Default proportion of screen size
 #define MaxBitCuts 1024    // Max number of bitmaps
 #define MAX_TIMERS 32
-
