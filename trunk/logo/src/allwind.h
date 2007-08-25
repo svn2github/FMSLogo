@@ -67,7 +67,6 @@
 #include "sizedlg.h"
 #include "ctl3d.h"
 #include "dib.h"
-#include "ibmterm.h"
 #include "func.h"
 #include "commanderbutton.h"
 #include "commandercheckbox.h"
