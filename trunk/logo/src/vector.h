@@ -1,27 +1,27 @@
+// -*- c++ -*-
+
 class VECTOR
-   {
+{
 public:
-   double x, y, z;
-   }
-;
+    double x, y, z;
+};
 
 class MATRIX
-   {
+{
 public:
 
-   double e11;
-   double e12;
-   double e13;
+    double e11;
+    double e12;
+    double e13;
 
-   double e21;
-   double e22;
-   double e23;
+    double e21;
+    double e22;
+    double e23;
 
-   double e31;
-   double e32;
-   double e33;
-   }
-;
+    double e31;
+    double e32;
+    double e33;
+};
 
 double Mag(const VECTOR &v);
 const VECTOR Add(const VECTOR &v1, const VECTOR &v2);

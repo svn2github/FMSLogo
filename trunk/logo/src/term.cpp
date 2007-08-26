@@ -1,46 +1,46 @@
 /*
-*       term.c          terminal cursor control                 dvb
-*
-*       Copyright (C) 1995 by the Regents of the University of California
-*       Copyright (C) 1995 by George Mills
-*
-*      This program is free software; you can redistribute it and/or modify
-*      it under the terms of the GNU General Public License as published by
-*      the Free Software Foundation; either version 2 of the License, or
-*      (at your option) any later version.
-*
-*      This program is distributed in the hope that it will be useful,
-*      but WITHOUT ANY WARRANTY; without even the implied warranty of
-*      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-*      GNU General Public License for more details.
-*
-*      You should have received a copy of the GNU General Public License
-*      along with this program; if not, write to the Free Software
-*      Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
-*
-*/
+ *       term.c          terminal cursor control                 dvb
+ *
+ *       Copyright (C) 1995 by the Regents of the University of California
+ *       Copyright (C) 1995 by George Mills
+ *
+ *      This program is free software; you can redistribute it and/or modify
+ *      it under the terms of the GNU General Public License as published by
+ *      the Free Software Foundation; either version 2 of the License, or
+ *      (at your option) any later version.
+ *
+ *      This program is distributed in the hope that it will be useful,
+ *      but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *      GNU General Public License for more details.
+ *
+ *      You should have received a copy of the GNU General Public License
+ *      along with this program; if not, write to the Free Software
+ *      Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ *
+ */
 
 #include "allwind.h"
 
 NODE *lcleartext(NODE *)
-   {
-   clearcombobox();
-   return Unbound;
-   }
+{
+    clearcombobox();
+    return Unbound;
+}
 
 
 NODE *lcursor(NODE *)
-   {
-   // return cons_list(
-   //    make_intnode((FIXNUM)(x_coord-x_margin)),
-   //    make_intnode((FIXNUM)(y_coord-y_margin)));
+{
+    // return cons_list(
+    //    make_intnode((FIXNUM)(x_coord-x_margin)),
+    //    make_intnode((FIXNUM)(y_coord-y_margin)));
 
-   return cons_list(make_intnode(0), make_intnode(0));
-   }
+    return cons_list(make_intnode(0), make_intnode(0));
+}
 
 NODE *lsetcursor(NODE *  /*args*/)
-   {
-   /*
+{
+    /*
       NODE *arg;
 
       arg = pos_int_vector_arg(args); // can now return floats
@@ -53,13 +53,13 @@ NODE *lsetcursor(NODE *  /*args*/)
 
       fflush(stdout);
       }
-   */
-   return Unbound;
-   }
+    */
+    return Unbound;
+}
 
 NODE *lsetmargins(NODE *  /*args*/)
-   {
-   /*
+{
+    /*
       NODE *arg;
 
       arg = pos_int_vector_arg(args); // can now return floats
@@ -70,14 +70,13 @@ NODE *lsetmargins(NODE *  /*args*/)
       lcleartext(NIL);
       }
     */
-   return Unbound;
-   }
+    return Unbound;
+}
 
 NODE *lstandout(NODE *args)
-   {
-   char textbuf[MAX_BUFFER_SIZE];
-   cnv_strnode_string(textbuf, args);
+{
+    char textbuf[MAX_BUFFER_SIZE];
+    cnv_strnode_string(textbuf, args);
 
-   return make_strnode(textbuf);
-   }
-
+    return make_strnode(textbuf);
+}
