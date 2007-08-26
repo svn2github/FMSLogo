@@ -18,10 +18,10 @@
 #include "allwind.h"
 
 TMiniEditorRichEdit::TMiniEditorRichEdit(TWindow * Parent)
-   : TRichEditWithPopup(Parent, ID_MINIEDITCTRL, NULL, 0, 0, 0, 0, 0)
-   {
-   Attr.Style |= ES_WANTRETURN | ES_AUTOVSCROLL | ES_AUTOHSCROLL | ES_SUNKEN;
-   }
+    : TRichEditWithPopup(Parent, ID_MINIEDITCTRL, NULL, 0, 0, 0, 0, 0)
+{
+    Attr.Style |= ES_WANTRETURN | ES_AUTOVSCROLL | ES_AUTOHSCROLL | ES_SUNKEN;
+}
 
 
 //
@@ -31,175 +31,174 @@ TMiniEditorRichEdit::TMiniEditorRichEdit(TWindow * Parent)
 // constructs its child edit control
 //
 TMiniEditor::TMiniEditor(
-   TWindow *    Parent,
-   const char * ToLine
-   ) : TDialog(Parent, IDD_MINIEDITOR),
-       m_TextField(this),
-       m_ToLine(this, ID_TOLINE, 0),
-       m_EndButton(this, IDOK),
-       m_EditorContents(NULL),
-       m_EditorContentsLength(0)
-   {
-   m_ToLineString = strnewdup(ToLine);
+    TWindow *    Parent,
+    const char * ToLine
+    ) : TDialog(Parent, IDD_MINIEDITOR),
+        m_TextField(this),
+        m_ToLine(this, ID_TOLINE, 0),
+        m_EndButton(this, IDOK),
+        m_EditorContents(NULL),
+        m_EditorContentsLength(0)
+{
+    m_ToLineString = strnewdup(ToLine);
 
-   SetCaption(ToLine);
-   }
+    SetCaption(ToLine);
+}
 
 TMiniEditor::~TMiniEditor()
-   {
-   delete [] m_EditorContents;
-   delete [] m_ToLineString;
-   }
+{
+    delete [] m_EditorContents;
+    delete [] m_ToLineString;
+}
 
 // responds to an incoming WM_SETFOCUS message by setting the focus to
 // the child edit control
 //
 void TMiniEditor::EvSetFocus(HWND)
-   {
-   m_TextField.SetFocus();
-   }
+{
+    m_TextField.SetFocus();
+}
 
 void TMiniEditor::CmSelectAll()
-   {
-   // delegate to the Editor window
-   m_TextField.SendMessage(WM_COMMAND, CM_EDITSELECTALL, 0);
-   }
+{
+    // delegate to the Editor window
+    m_TextField.SendMessage(WM_COMMAND, CM_EDITSELECTALL, 0);
+}
 
 void TMiniEditor::SetupWindow()
-   {
-   TDialog::SetupWindow();
+{
+    TDialog::SetupWindow();
 
-   m_ToLine.Create();
-   m_ToLine.SetCaption(m_ToLineString);
+    m_ToLine.Create();
+    m_ToLine.SetCaption(m_ToLineString);
 
-   SetDlgItemText(IDOK, LOCALIZED_ALTERNATE_END);
+    SetDlgItemText(IDOK, LOCALIZED_ALTERNATE_END);
 
-   m_EndButton.Create();
+    m_EndButton.Create();
 
-   m_TextField.Create();
+    m_TextField.Create();
 
-   LOGFONT lf;
-   GetConfigurationFont("CommanderFont", lf);
-   HFONT font = CreateFontIndirect(&lf);
-   if (font != NULL)
-      {
-      m_TextField.SetWindowFont(font, TRUE);
-      DeleteObject(font);
-      }
+    LOGFONT lf;
+    GetConfigurationFont("CommanderFont", lf);
+    HFONT font = CreateFontIndirect(&lf);
+    if (font != NULL)
+    {
+        m_TextField.SetWindowFont(font, TRUE);
+        DeleteObject(font);
+    }
 
-   RecalculateLayout();
+    RecalculateLayout();
 
-   m_TextField.SetFocus();
-   }
+    m_TextField.SetFocus();
+}
 
 
 void TMiniEditor::CmOk()
-   {
-   // Copy from the editor into a buffer
+{
+    // Copy from the editor into a buffer
 
-   // reset any value that may be in the editor
-   delete [] m_EditorContents;
-   m_EditorContentsLength = 0;
+    // reset any value that may be in the editor
+    delete [] m_EditorContents;
+    m_EditorContentsLength = 0;
 
-   // copy the data from the rich edit into a flat buffer
-   m_EditorContentsLength = m_TextField.GetWindowTextLength();
+    // copy the data from the rich edit into a flat buffer
+    m_EditorContentsLength = m_TextField.GetWindowTextLength();
 
-   m_EditorContents = new char [m_EditorContentsLength + 1];
-   if (m_EditorContents != NULL)
-      {
-      memset(m_EditorContents, 0, m_EditorContentsLength + 1);
+    m_EditorContents = new char [m_EditorContentsLength + 1];
+    if (m_EditorContents != NULL)
+    {
+        memset(m_EditorContents, 0, m_EditorContentsLength + 1);
 
-      m_TextField.GetSubText(m_EditorContents, 0, m_EditorContentsLength);
-      }
+        m_TextField.GetSubText(m_EditorContents, 0, m_EditorContentsLength);
+    }
 
-   TDialog::CmOk();
-   }
+    TDialog::CmOk();
+}
 
 
 const char * TMiniEditor::GetText()
-   {
-   return m_EditorContents;
-   }
+{
+    return m_EditorContents;
+}
 
 void TMiniEditor::RecalculateLayout()
-   {
-   TRect windowRect;
-   GetWindowRect(windowRect);
+{
+    TRect windowRect;
+    GetWindowRect(windowRect);
 
 
-   const int minHeight = 200;
-   const int minWidth  = 100;
-   if (windowRect.Width() < minWidth || windowRect.Height() < minHeight)
-      {
-      // don't let the size go below 100x100
-      const int width  = windowRect.Width()  < minWidth  ? minWidth : windowRect.Width();
-      const int height = windowRect.Height() < minHeight ? minHeight : windowRect.Height();
+    const int minHeight = 200;
+    const int minWidth  = 100;
+    if (windowRect.Width() < minWidth || windowRect.Height() < minHeight)
+    {
+        // don't let the size go below 100x100
+        const int width  = windowRect.Width()  < minWidth  ? minWidth : windowRect.Width();
+        const int height = windowRect.Height() < minHeight ? minHeight : windowRect.Height();
 
-      SetWindowPos(NULL, 0, 0, width, height, SWP_NOMOVE);
-      }
+        SetWindowPos(NULL, 0, 0, width, height, SWP_NOMOVE);
+    }
 
-   TRect clientRect;
-   GetClientRect(clientRect);
+    TRect clientRect;
+    GetClientRect(clientRect);
 
-   TRect toLineRect;
-   m_ToLine.GetWindowRect(toLineRect);
+    TRect toLineRect;
+    m_ToLine.GetWindowRect(toLineRect);
 
-   TRect endButtonRect;
-   m_EndButton.GetWindowRect(endButtonRect);
+    TRect endButtonRect;
+    m_EndButton.GetWindowRect(endButtonRect);
 
-   const int totalWidth    = clientRect.Width();
-   const int totalHeight   = clientRect.Height();
+    const int totalWidth    = clientRect.Width();
+    const int totalHeight   = clientRect.Height();
 
-   const int toLineHeight    = toLineRect.Height();
-   const int endButtonHeight = endButtonRect.Height();
-   const int endButtonWidth  = endButtonRect.Width();
+    const int toLineHeight    = toLineRect.Height();
+    const int endButtonHeight = endButtonRect.Height();
+    const int endButtonWidth  = endButtonRect.Width();
 
-   const int xBorder = 4;
-   const int yBorder = 4;
+    const int xBorder = 4;
+    const int yBorder = 4;
    
 
-   // position the "END" button
-   m_EndButton.SetWindowPos(
-      NULL, 
-      xBorder,
-      totalHeight - yBorder - endButtonHeight,
-      endButtonWidth,
-      endButtonHeight,
-      0);
+    // position the "END" button
+    m_EndButton.SetWindowPos(
+        NULL, 
+        xBorder,
+        totalHeight - yBorder - endButtonHeight,
+        endButtonWidth,
+        endButtonHeight,
+        0);
 
-   // position the procedure body
-   m_TextField.SetWindowPos(
-      NULL,
-      xBorder,
-      toLineHeight + 2 * yBorder,
-      totalWidth - xBorder * 2,
-      totalHeight - (4 * yBorder + toLineHeight + endButtonHeight),
-      0);
+    // position the procedure body
+    m_TextField.SetWindowPos(
+        NULL,
+        xBorder,
+        toLineHeight + 2 * yBorder,
+        totalWidth - xBorder * 2,
+        totalHeight - (4 * yBorder + toLineHeight + endButtonHeight),
+        0);
 
-   // position the "TO" line
-   m_ToLine.SetWindowPos(
-      NULL,
-      xBorder,
-      yBorder,
-      totalWidth - xBorder * 2,
-      toLineHeight,
-      0);
-   }
+    // position the "TO" line
+    m_ToLine.SetWindowPos(
+        NULL,
+        xBorder,
+        yBorder,
+        totalWidth - xBorder * 2,
+        toLineHeight,
+        0);
+}
 
 void TMiniEditor::EvSize(UINT Arg1, TSize & NewSize)
-   {
-   TDialog::EvSize(Arg1, NewSize);
+{
+    TDialog::EvSize(Arg1, NewSize);
 
-   RecalculateLayout();
+    RecalculateLayout();
 
-   Invalidate(true);
-   }
+    Invalidate(true);
+}
 
 
 DEFINE_RESPONSE_TABLE1(TMiniEditor, TDialog)
-   EV_WM_SETFOCUS,
-   EV_WM_SIZE,
-   EV_COMMAND(CM_EDITSELECTALL, CmSelectAll),
-   EV_COMMAND(IDOK, CmOk),
+    EV_WM_SETFOCUS,
+    EV_WM_SIZE,
+    EV_COMMAND(CM_EDITSELECTALL, CmSelectAll),
+    EV_COMMAND(IDOK, CmOk),
 END_RESPONSE_TABLE;
-

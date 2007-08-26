@@ -4,7 +4,7 @@
 // ObjectWindows
 // Copyright (c) 1995, 1997 by Borland International, All Rights Reserved
 //
-//$Revision: 1.2 $
+//$Revision: 1.3 $
 //
 // Implementation of support classes for Print/PrintPreview of TRichEdits
 //----------------------------------------------------------------------------
@@ -46,26 +46,26 @@ const int PageIndexDelta = 5;
 // Constructs a Printout object which represent a RICHEDIT's document
 //
 TRichEditPrintout::TRichEditPrintout(
-   TPrinter& printer, 
-   TRichEdit& richEdit,
-   const char *title)
-: 
- TPrintout(title),
- Printer(printer),
- RichEdit(richEdit),
- SizePhysPage(0),
- SizePhysInch(0),
- Margins(0),
- FlushCache(false),
- PageIndices(PageIndexInit, PageIndexDelta)
+    TPrinter& printer, 
+    TRichEdit& richEdit,
+    const char *title
+    ) : 
+    TPrintout(title),
+    Printer(printer),
+    RichEdit(richEdit),
+    SizePhysPage(0),
+    SizePhysInch(0),
+    Margins(0),
+    FlushCache(false),
+    PageIndices(PageIndexInit, PageIndexDelta)
 { 
-  PRECONDITION(HWND(RichEdit));
+    PRECONDITION(HWND(RichEdit));
 
-  // Initialize data members
-  //
-  PageCount      = 0;
-  TextLen        = 0;
-  PageIndices[0] = 0;
+    // Initialize data members
+    //
+    PageCount      = 0;
+    TextLen        = 0;
+    PageIndices[0] = 0;
 }
 
 //
@@ -74,12 +74,13 @@ TRichEditPrintout::TRichEditPrintout(
 //
 TRichEditPrintout::~TRichEditPrintout()
 {
-  // Flush cached format information
-  //
-  if (FlushCache) {
-    CHECK(HWND(RichEdit));
-    RichEdit.FormatRange();
-  }
+    // Flush cached format information
+    //
+    if (FlushCache)
+    {
+        CHECK(HWND(RichEdit));
+        RichEdit.FormatRange();
+    }
 }
 
 //
@@ -90,22 +91,24 @@ void
 TRichEditPrintout::GetDialogInfo(int& minPage, int& maxPage, 
                                  int& selFromPage, int& selToPage)
 {
-  if (PageCount && TextLen) {
-    minPage = 1;
-    maxPage = PageCount;
+    if (PageCount && TextLen)
+    {
+        minPage = 1;
+        maxPage = PageCount;
 
-    CHECK(HWND(RichEdit));
-    uint startSel, endSel;
-    RichEdit.GetSelection(startSel, endSel);
+        CHECK(HWND(RichEdit));
+        uint startSel, endSel;
+        RichEdit.GetSelection(startSel, endSel);
 
-    //
-    selFromPage = startSel != endSel ? PageOfOffset(startSel) : 1;
-    selToPage = PageCount > selFromPage ? selFromPage+1 : 0;
-  }
-  else {
-    minPage = maxPage = 0;
-    selFromPage = selToPage = 0;
-  }
+        //
+        selFromPage = startSel != endSel ? PageOfOffset(startSel) : 1;
+        selToPage = PageCount > selFromPage ? selFromPage+1 : 0;
+    }
+    else
+    {
+        minPage = maxPage = 0;
+        selFromPage = selToPage = 0;
+    }
 }
 
 //
@@ -115,79 +118,79 @@ TRichEditPrintout::GetDialogInfo(int& minPage, int& maxPage,
 void
 TRichEditPrintout::SetPrintParams(TPrintDC* dc, TSize pageSize)
 {
-  PRECONDITION(HWND(RichEdit));
+    PRECONDITION(HWND(RichEdit));
 
-  // Chain call base class' version
-  //
-  TPrintout::SetPrintParams(dc, pageSize);
-
-  // Update size info about printer DC
-  //
-  // *** Changed to always use HORZRES and VERTRES *** GGM
-
-  SizePhysInch = TSize(dc->GetDeviceCaps(LOGPIXELSX),
-                       dc->GetDeviceCaps(LOGPIXELSY));
-  SizePhysPage = TSize(dc->GetDeviceCaps(HORZRES),
-                       dc->GetDeviceCaps(VERTRES));
-//  if (!SizePhysPage.cx)
-//    SizePhysPage.cx = dc->GetDeviceCaps(HORZRES);
-//  if (!SizePhysPage.cy)
-//    SizePhysPage.cy = dc->GetDeviceCaps(VERTRES);
-
-
-  // Set up the target and render DCs
-  // NOTE: In the case of PrintPreview, the two HDCs differ.
-  //       When we're really printing, the attribute DC and
-  //       GetHDC() return the same HDC.
-  //
-  FmtRange.SetTargetDC(dc->GetAttributeHDC()); // Format Device
-  FmtRange.SetRenderDC(dc->GetHDC());          // Render Device
-
-  // Set the page and render rectangles in twips
-  // Handle margins, if requested.
-  //
-  TRect pageRect(0,
-                 0,
-                 MulDiv(SizePhysPage.cx, 1440, SizePhysInch.cx),
-                 MulDiv(SizePhysPage.cy, 1440, SizePhysInch.cy));
-
-  FmtRange.SetPageRect(pageRect);
-
-  // *** Changed to add 1" Margins *** GGM
-
-  TRect renderRect(1440,
-                   1440,
-                   MulDiv(SizePhysPage.cx, 1440, SizePhysInch.cx) - 1440,
-                   MulDiv(SizePhysPage.cy, 1440, SizePhysInch.cy) - 1440);
-
-  FmtRange.SetRenderRect(renderRect);
-
-  // Retrieve length of document and set range
-  //
-  TextLen = RichEdit.GetWindowTextLength();
-
-  // Compute number of pages and cache their offsets
-  //
-  if (TextLen > 0) {
-    PageCount = 1;                  // Pages are not zero-based
-    FmtRange.SetRange(0, TextLen);  // Format entire range.....
-    int endOfRange;
-    do {
-      endOfRange = RichEdit.FormatRange(FmtRange, false);
-      PageIndices[PageCount++] = endOfRange;
-      FmtRange.chrg.cpMin = endOfRange;
-      FmtRange.SetRenderRect(renderRect); // Ctl seems to corrupt the 'rc' member!
-    } while (FmtRange.chrg.cpMin < TextLen);
-
-    PageCount--;
-
-    // Free cached formatting information
+    // Chain call base class' version
     //
-    RichEdit.FormatRange();
-  } 
-  else {
-    PageCount = 0;
-  }
+    TPrintout::SetPrintParams(dc, pageSize);
+
+    // Update size info about printer DC
+    //
+    // *** Changed to always use HORZRES and VERTRES *** GGM
+
+    SizePhysInch = TSize(dc->GetDeviceCaps(LOGPIXELSX),
+                         dc->GetDeviceCaps(LOGPIXELSY));
+    SizePhysPage = TSize(dc->GetDeviceCaps(HORZRES),
+                         dc->GetDeviceCaps(VERTRES));
+    //  if (!SizePhysPage.cx)
+    //    SizePhysPage.cx = dc->GetDeviceCaps(HORZRES);
+    //  if (!SizePhysPage.cy)
+    //    SizePhysPage.cy = dc->GetDeviceCaps(VERTRES);
+
+
+    // Set up the target and render DCs
+    // NOTE: In the case of PrintPreview, the two HDCs differ.
+    //       When we're really printing, the attribute DC and
+    //       GetHDC() return the same HDC.
+    //
+    FmtRange.SetTargetDC(dc->GetAttributeHDC()); // Format Device
+    FmtRange.SetRenderDC(dc->GetHDC());          // Render Device
+
+    // Set the page and render rectangles in twips
+    // Handle margins, if requested.
+    //
+    TRect pageRect(0,
+                   0,
+                   MulDiv(SizePhysPage.cx, 1440, SizePhysInch.cx),
+                   MulDiv(SizePhysPage.cy, 1440, SizePhysInch.cy));
+
+    FmtRange.SetPageRect(pageRect);
+
+    // *** Changed to add 1" Margins *** GGM
+
+    TRect renderRect(1440,
+                     1440,
+                     MulDiv(SizePhysPage.cx, 1440, SizePhysInch.cx) - 1440,
+                     MulDiv(SizePhysPage.cy, 1440, SizePhysInch.cy) - 1440);
+
+    FmtRange.SetRenderRect(renderRect);
+
+    // Retrieve length of document and set range
+    //
+    TextLen = RichEdit.GetWindowTextLength();
+
+    // Compute number of pages and cache their offsets
+    //
+    if (TextLen > 0) {
+        PageCount = 1;                  // Pages are not zero-based
+        FmtRange.SetRange(0, TextLen);  // Format entire range.....
+        int endOfRange;
+        do {
+            endOfRange = RichEdit.FormatRange(FmtRange, false);
+            PageIndices[PageCount++] = endOfRange;
+            FmtRange.chrg.cpMin = endOfRange;
+            FmtRange.SetRenderRect(renderRect); // Ctl seems to corrupt the 'rc' member!
+        } while (FmtRange.chrg.cpMin < TextLen);
+
+        PageCount--;
+
+        // Free cached formatting information
+        //
+        RichEdit.FormatRange();
+    } 
+    else {
+        PageCount = 0;
+    }
 }
 
 //
@@ -214,80 +217,80 @@ TRichEditPrintout::EndPrinting()
 void 
 TRichEditPrintout::PrintPage (int page, TRect& bandRect, unsigned)
 {
-  PRECONDITION(page > 0);
-  PRECONDITION(page <= PageCount);
+    PRECONDITION(page > 0);
+    PRECONDITION(page <= PageCount);
 
-  // Check control's handle is !0
-  //
-  PRECONDITION(HWND(RichEdit));
+    // Check control's handle is !0
+    //
+    PRECONDITION(HWND(RichEdit));
 
-  // These should have been set via a prior call to 'SetPrintParams' 
-  //
-  PRECONDITION(FmtRange.hdcTarget !=0);
-  PRECONDITION(FmtRange.hdc != 0);
+    // These should have been set via a prior call to 'SetPrintParams' 
+    //
+    PRECONDITION(FmtRange.hdcTarget !=0);
+    PRECONDITION(FmtRange.hdc != 0);
 
-  // Check whether we're in 'real' printing mode or just print preview.
-  // In print preview mode the target does not match the render DC.....
-  //
-  if (FmtRange.hdc != FmtRange.hdcTarget) {
+    // Check whether we're in 'real' printing mode or just print preview.
+    // In print preview mode the target does not match the render DC.....
+    //
+    if (FmtRange.hdc != FmtRange.hdcTarget) {
 
-    int saveId = SaveDC(FmtRange.hdc);
-    if (FmtRange.hdc) {
-      TDC dc(FmtRange.hdc);
+        int saveId = SaveDC(FmtRange.hdc);
+        if (FmtRange.hdc) {
+            TDC dc(FmtRange.hdc);
 
-      // Make window DC match target's logical size
-      //
-      dc.SetMapMode(MM_ANISOTROPIC);
-      dc.SetWindowExt(TSize(MulDiv(SizePhysPage.cx, 
-                                  dc.GetDeviceCaps(LOGPIXELSX), 
-                                  SizePhysInch.cx),
-                            MulDiv(SizePhysPage.cy, 
-                                  dc.GetDeviceCaps(LOGPIXELSY), 
-                                  SizePhysInch.cy)));
-      dc.SetViewportExt(TSize(bandRect.Width(), bandRect.Height()));
+            // Make window DC match target's logical size
+            //
+            dc.SetMapMode(MM_ANISOTROPIC);
+            dc.SetWindowExt(TSize(MulDiv(SizePhysPage.cx, 
+                                         dc.GetDeviceCaps(LOGPIXELSX), 
+                                         SizePhysInch.cx),
+                                  MulDiv(SizePhysPage.cy, 
+                                         dc.GetDeviceCaps(LOGPIXELSY), 
+                                         SizePhysInch.cy)));
+            dc.SetViewportExt(TSize(bandRect.Width(), bandRect.Height()));
 
-      // Update character range for specified page
-      //
-      FmtRange.SetRange(PageIndices[page-1], PageIndices[page]);
+            // Update character range for specified page
+            //
+            FmtRange.SetRange(PageIndices[page-1], PageIndices[page]);
 
-      // Have Edit control draw into window
-      //
-      RichEdit.FormatRange(FmtRange);
+            // Have Edit control draw into window
+            //
+            RichEdit.FormatRange(FmtRange);
 
-      // Flag that we need to reset control
-      //
-      FlushCache = true;
+            // Flag that we need to reset control
+            //
+            FlushCache = true;
+        }
+        // Restore the DC
+        //
+        RestoreDC(FmtRange.hdc, saveId);
     }
-    // Restore the DC
-    //
-    RestoreDC(FmtRange.hdc, saveId);
-  }
-  else {
-    // Bumbling idiot Borland forgot to read the RichEdit Doc's GGM
+    else {
+        // Bumbling idiot Borland forgot to read the RichEdit Doc's GGM
 
-    TRect renderRect(1440,
-                     1440,
-                     MulDiv(SizePhysPage.cx, 1440, SizePhysInch.cx) - 1440,
-                     MulDiv(SizePhysPage.cy, 1440, SizePhysInch.cy) - 1440);
+        TRect renderRect(1440,
+                         1440,
+                         MulDiv(SizePhysPage.cx, 1440, SizePhysInch.cx) - 1440,
+                         MulDiv(SizePhysPage.cy, 1440, SizePhysInch.cy) - 1440);
 
-    FmtRange.SetRenderRect(renderRect);
+        FmtRange.SetRenderRect(renderRect);
 
-    // We're really printing! Update character range for specified page
-    //
-    FmtRange.SetRange(PageIndices[page-1], PageIndices[page]);
+        // We're really printing! Update character range for specified page
+        //
+        FmtRange.SetRange(PageIndices[page-1], PageIndices[page]);
 
-    // Have Edit control format data
-    //
-    RichEdit.FormatRange(FmtRange, false);
+        // Have Edit control format data
+        //
+        RichEdit.FormatRange(FmtRange, false);
 
-    // Flag that we need to reset control
-    //
-    FlushCache = true;
+        // Flag that we need to reset control
+        //
+        FlushCache = true;
 
-    // Have Edit control display to render rectangle of device
-    //
-    RichEdit.DisplayBand(*((TRect*)&FmtRange.rc));
-  }
+        // Have Edit control display to render rectangle of device
+        //
+        RichEdit.DisplayBand(*((TRect*)&FmtRange.rc));
+    }
 }
 
 //
@@ -297,7 +300,7 @@ TRichEditPrintout::PrintPage (int page, TRect& bandRect, unsigned)
 bool 
 TRichEditPrintout::HasPage (int pageNumber)
 {
-  return pageNumber > 0 && pageNumber <= PageCount;
+    return pageNumber > 0 && pageNumber <= PageCount;
 }
 
 //
@@ -307,32 +310,33 @@ TRichEditPrintout::HasPage (int pageNumber)
 int
 TRichEditPrintout::PageOfOffset(int offset)
 {
-  PRECONDITION(offset <= TextLen);
+    PRECONDITION(offset <= TextLen);
   
-  int page = 0;
-  if (PageCount > 0) {
-    for (int i=1; i<=PageCount; i++) {
-      if (PageIndices[i] >= offset) {
-        if (PageIndices[i-1] <= offset) {
-          page = i;
-          break;
-        }
-      }    
-    }    
-  }
-  return page;
+    int page = 0;
+    if (PageCount > 0) {
+        for (int i=1; i<=PageCount; i++) {
+            if (PageIndices[i] >= offset) {
+                if (PageIndices[i-1] <= offset) {
+                    page = i;
+                    break;
+                }
+            }    
+        }    
+    }
+    return page;
 }
 
 //
 // Constructor of RichEdit PagePreview object
 //
-TRichEditPagePreview::TRichEditPagePreview(TWindow* parent, 
-                                           TPrintout& printout,
-                                           TPrintDC& prndc,
-                                           TSize& printExtent,
-                                           int pagenum)
-:
-  TPreviewPage(parent, printout, prndc, printExtent, pagenum)
+TRichEditPagePreview::TRichEditPagePreview(
+    TWindow* parent, 
+    TPrintout& printout,
+    TPrintDC& prndc,
+    TSize& printExtent,
+    int pagenum
+    ) :
+    TPreviewPage(parent, printout, prndc, printExtent, pagenum)
 {
 }
 
@@ -344,35 +348,35 @@ TRichEditPagePreview::TRichEditPagePreview(TWindow* parent,
 void
 TRichEditPagePreview::Paint(TDC& dc, bool, TRect& /*clip*/) 
 {
-  TRect client;
-  GetClientRect(client);
+    TRect client;
+    GetClientRect(client);
 
-  TPreviewDCBase pdc(dc, PrintDC);
-  Printout.SetPrintParams(&pdc, PrintExtent);
+    TPreviewDCBase pdc(dc, PrintDC);
+    Printout.SetPrintParams(&pdc, PrintExtent);
 
-  if (Printout.HasPage(PageNum)) {
-    Printout.BeginPrinting();
-    Printout.BeginDocument(PageNum, PageNum, pfBoth);
-    Printout.PrintPage(PageNum, client, pfBoth);
-    Printout.EndDocument();
-    Printout.EndPrinting();
-  }
-  else
-    dc.PatBlt(client, WHITENESS);
+    if (Printout.HasPage(PageNum)) {
+        Printout.BeginPrinting();
+        Printout.BeginDocument(PageNum, PageNum, pfBoth);
+        Printout.PrintPage(PageNum, client, pfBoth);
+        Printout.EndDocument();
+        Printout.EndPrinting();
+    }
+    else
+        dc.PatBlt(client, WHITENESS);
 }
 
 //
 // Constructor of a RichEdit Preview Frame
 //
 TRichEditPreviewFrame::TRichEditPreviewFrame(
-   TWindow* parentWindow, 
-   TPrinter& printer, 
-   TPrintout& printout, 
-   TRichEdit& richEdit, 
-   const char * title, 
-   TLayoutWindow* client)
-:
-  TPreviewWin(parentWindow, printer, printout, richEdit, title, client)
+    TWindow* parentWindow, 
+    TPrinter& printer, 
+    TPrintout& printout, 
+    TRichEdit& richEdit, 
+    const char * title, 
+    TLayoutWindow* client)
+    :
+    TPreviewWin(parentWindow, printer, printout, richEdit, title, client)
 {
 }
 
@@ -380,12 +384,18 @@ TRichEditPreviewFrame::TRichEditPreviewFrame(
 // Return pointer to a preview page object
 //
 TPreviewPage* 
-TRichEditPreviewFrame::GetNewPreviewPage(TWindow* parent, 
-                                         TPrintout& printout,
-                                         TPrintDC&  prndc,
-                                         TSize&     printExtent,
-                                         int        pagenum)
+TRichEditPreviewFrame::GetNewPreviewPage(
+    TWindow* parent, 
+    TPrintout& printout,
+    TPrintDC&  prndc,
+    TSize&     printExtent,
+    int        pagenum
+    )
 {
-  return new TRichEditPagePreview(parent, printout, prndc, 
-                                  printExtent, pagenum);
+    return new TRichEditPagePreview(
+        parent, 
+        printout, 
+        prndc, 
+        printExtent, 
+        pagenum);
 }
