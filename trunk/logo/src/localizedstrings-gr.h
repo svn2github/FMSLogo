@@ -92,10 +92,14 @@
 // There are some special characters that you can add to a string with a 
 // special "escape sequence", which begins with a backslash "\".
 //
-//    Tab         -  \t
-//    Newline     -  \n
-//    Backslash   -  \\
-//    DoubleQuote -  \"
+//             +--------------------------------------+
+//             | Special Character | Escape Sequence  |
+//             +--------------------------------------+
+//             |  Tab              |        \t        |
+//             |  Newline          |        \n        |
+//             |  Backslash        |        \\        |
+//             |  DoubleQuote      |        \"        |
+//             +--------------------------------------+
 //
 // Due to a bug in Borland's resource compiler, two forward slashes cannot
 // appear in a quoted string.  To work around this problem, I "escape" the
