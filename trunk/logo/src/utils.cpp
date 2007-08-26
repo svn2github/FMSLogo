@@ -364,7 +364,7 @@ SetConfigurationFont(
     strcpy(relativeName, FONTPROPERTY_FaceName);
     SetConfigurationString(fullyQualifiedName, LogFont.lfFaceName);
 
-    struct PROPERTY {
+    static const struct PROPERTY {
         const char * Name;
         int          Value;
     } properties[] = {
