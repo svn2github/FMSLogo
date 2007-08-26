@@ -25,7 +25,7 @@ TASM32  = Tasm32
 #
 # Options
 #
-IDE_LinkFLAGS32 =  -LC:\BC5\LIB
+IDE_LinkFLAGS32 = -LC:\BC5\LIB
 IDE_ResFLAGS32 = 
 ResLocalOptsAtW32_fmslogodexe = -l$(LOCALECODE)
 BLocalOptsAtW32_fmslogodexe = 
@@ -34,7 +34,7 @@ IncludePath = -I"C:\Program Files\HTML Help Workshop\include" -IC:\BC5\INCLUDE
 
 !if "$(BUILD)"=="RELEASE"
 
-LinkerLocalOptsAtW32_fmslogodexe =  -wdpl -went -wdup -wdef -wimt -wbdl -wsrf -wmsk -Tpe -aa -V4.0 -c -LC:\BC5\LIB
+LinkerLocalOptsAtW32_fmslogodexe =  -wdpl -went -wdup -wdef -wimt -wbdl -wsrf -wmsk -Tpe -aa -V4.0 -c
 CompInheritOptsAt_fmslogodexe = $(IncludePath) -DSTRICT;_OWLPCH;NDEBUG;LOCALE=$(LOCALECODE)
 LinkerInheritOptsAt_fmslogodexe = -x
 LinkerOptsAt_fmslogodexe = $(LinkerLocalOptsAtW32_fmslogodexe)
@@ -44,13 +44,17 @@ BOptsAt_fmslogodexe = $(BLocalOptsAtW32_fmslogodexe)
 ExecutableName=fmslogo-$(LOCALECODE).exe
 IntermediateDirectory=RELEASE$(LOCALECODE)
 
+OwlLib=owlwf.lib
+
 !else
 
-LinkerLocalOptsAtW32_fmslogodexe =  -v -wdpl -went -wdup -wdef -wimt -wbdl -wsrf -wmsk -L\BC5\LIB -Tpe -aa -V4.0 -c
+LinkerLocalOptsAtW32_fmslogodexe =  -v -wdpl -went -wdup -wdef -wimt -wbdl -wsrf -wmsk -Tpe -aa -V4.0 -c
 CompInheritOptsAt_fmslogodexe = $(IncludePath) -DSTRICT;_OWLPCH;NOASM;DEBUG;MEM_DEBUG;LOCALE=$(LOCALECODE)
 
 ExecutableName=fmslogod.exe
 IntermediateDirectory=DEBUG
+
+OwlLib=owldwf.lib
 
 !endif
 
@@ -190,11 +194,11 @@ $(IntermediateDirectory)\unix.obj+
 $(IntermediateDirectory)\vector.obj+
 $(IntermediateDirectory)\wrksp.obj
 $<,$*
-C:\BC5\LIB\owlwf.lib+
-C:\BC5\LIB\bidsf.lib+
-C:\BC5\LIB\ctl3d32.lib+
-C:\BC5\LIB\import32.lib+
-C:\BC5\LIB\cw32.lib
+$(OwlLib)+
+bidsf.lib+
+ctl3d32.lib+
+import32.lib+
+cw32.lib
 logo32.def
 $(IntermediateDirectory)\logorc.res
 
