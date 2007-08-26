@@ -19,7 +19,8 @@
  *
  */
 
-#include "allwind.h"
+#include <windows.h>
+#include <stdio.h>
 
 // the name of the FMSLogo registry key under HKCU
 const char FMSLOGO_REGISTRY_KEY_NAME[] = "Software\\FMSLogo";
@@ -378,7 +379,7 @@ SetConfigurationFont(
         {FONTPROPERTY_PitchAndFamily,  LogFont.lfPitchAndFamily},
     };
 
-    for (int i = 0; i < sizeof(properties) / sizeof(*properties); i++)
+    for (size_t i = 0; i < sizeof(properties) / sizeof(*properties); i++)
     {
         strcpy(relativeName, properties[i].Name);
         SetConfigurationInt(fullyQualifiedName, properties[i].Value);
