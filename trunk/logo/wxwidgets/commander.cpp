@@ -50,6 +50,20 @@ CCommander::CCommander(wxWindow *parent)
     m_ExecuteButton = new wxButton(this, ID_COMMANDER_EXECUTE, LOCALIZED_COMMANDER_EXECUTE);
     m_EdallButton   = new wxButton(this, ID_COMMANDER_EDALL,   LOCALIZED_COMMANDER_EDALL);
 
+    // set the button font to be 10 points
+    wxFont buttonFont = m_HaltButton->GetFont();
+    buttonFont.SetPointSize(10);
+
+    m_HaltButton->SetFont(buttonFont);
+    m_TraceButton->SetFont(buttonFont);
+    m_PauseButton->SetFont(buttonFont);
+    m_StatusButton->SetFont(buttonFont);
+    m_ResetButton->SetFont(buttonFont);
+    m_ExecuteButton->SetFont(buttonFont);
+    m_EdallButton->SetFont(buttonFont);
+
+    m_ExecuteButton->SetDefault();
+
     // Pick a good size for the buttons.
     // The rest will be re-sized to match it
     m_TraceButton->SetSize(0, 0, 100, 20);
