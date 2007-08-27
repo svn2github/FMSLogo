@@ -12,7 +12,15 @@ public:
     CCommander(wxWindow *parent);
     ~CCommander() {};
 
-    void OnButton(wxCommandEvent& event);
+    void OnHaltButton(wxCommandEvent& event);
+    void OnTraceButton(wxCommandEvent& event);
+    void OnPauseButton(wxCommandEvent& event);
+    void OnStatusButton(wxCommandEvent& event);
+    void OnStepButton(wxCommandEvent& event);
+    void OnResetButton(wxCommandEvent& event);
+    void OnExecuteButton(wxCommandEvent& event);
+    void OnEdallButton(wxCommandEvent& event);
+
     void OnClose(wxCloseEvent& event);
     void OnSize(wxSizeEvent& event);
 

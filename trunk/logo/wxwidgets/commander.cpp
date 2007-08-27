@@ -36,6 +36,11 @@ enum
 CCommander::CCommander(wxWindow *parent)
    : wxWindow(parent, wxID_ANY)
 {
+
+    m_History = new wxRichTextCtrl(this, ID_COMMANDER_HISTORY);
+
+    m_NextInstruction = new wxTextCtrl(this, ID_COMMANDER_NEXTINSTRUCTION);
+
     m_HaltButton    = new wxButton(this, ID_COMMANDER_HALT,    LOCALIZED_COMMANDER_HALT);
     m_TraceButton   = new wxButton(this, ID_COMMANDER_TRACE,   LOCALIZED_COMMANDER_TRACE);
     m_PauseButton   = new wxButton(this, ID_COMMANDER_PAUSE,   LOCALIZED_COMMANDER_PAUSE);
@@ -45,10 +50,8 @@ CCommander::CCommander(wxWindow *parent)
     m_ExecuteButton = new wxButton(this, ID_COMMANDER_EXECUTE, LOCALIZED_COMMANDER_EXECUTE);
     m_EdallButton   = new wxButton(this, ID_COMMANDER_EDALL,   LOCALIZED_COMMANDER_EDALL);
 
-    m_History = new wxRichTextCtrl(this, ID_COMMANDER_HISTORY);
-
-    m_NextInstruction = new wxTextCtrl(this, ID_COMMANDER_NEXTINSTRUCTION);
-
+    // Pick a good size for the buttons.
+    // The rest will be re-sized to match it
     m_TraceButton->SetSize(0, 0, 100, 20);
 
     // HACK: should be:
@@ -122,10 +125,76 @@ CCommander::CCommander(wxWindow *parent)
     m_ButtonWidth = longestWidth + 20;
 }
 
-void CCommander::OnButton(wxCommandEvent& WXUNUSED(event))
+void CCommander::OnHaltButton(wxCommandEvent& WXUNUSED(event))
 {
-    wxMessageBox(_T("Button pressed in modeless dialog"), _T("Info"),
-                 wxOK | wxICON_INFORMATION, this);
+    wxMessageBox(
+        "Halt button pressed", 
+        "Info",
+        wxOK | wxICON_INFORMATION, 
+        this);
+}
+
+void CCommander::OnTraceButton(wxCommandEvent& WXUNUSED(event))
+{
+    wxMessageBox(
+        "Trace button pressed", 
+        "Info",
+        wxOK | wxICON_INFORMATION, 
+        this);
+}
+
+void CCommander::OnPauseButton(wxCommandEvent& WXUNUSED(event))
+{
+    wxMessageBox(
+        "Pause button pressed", 
+        "Info",
+        wxOK | wxICON_INFORMATION, 
+        this);
+}
+
+void CCommander::OnStatusButton(wxCommandEvent& WXUNUSED(event))
+{
+    wxMessageBox(
+        "Status button pressed", 
+        "Info",
+        wxOK | wxICON_INFORMATION, 
+        this);
+}
+
+void CCommander::OnStepButton(wxCommandEvent& WXUNUSED(event))
+{
+    wxMessageBox(
+        "Step button pressed", 
+        "Info",
+        wxOK | wxICON_INFORMATION, 
+        this);
+}
+
+void CCommander::OnResetButton(wxCommandEvent& WXUNUSED(event))
+{
+    wxMessageBox(
+        "Reset button pressed", 
+        "Info",
+        wxOK | wxICON_INFORMATION, 
+        this);
+}
+
+void CCommander::OnExecuteButton(wxCommandEvent& WXUNUSED(event))
+{
+    wxMessageBox(
+        "Execute button pressed", 
+        "Info",
+        wxOK | wxICON_INFORMATION, 
+        this);
+}
+
+void CCommander::OnEdallButton(wxCommandEvent& WXUNUSED(event))
+{
+    wxMessageBox(
+        "Edall button pressed",
+        "Info",
+        wxOK | wxICON_INFORMATION, 
+        this);
 }
 
 void CCommander::OnClose(wxCloseEvent& event)
@@ -237,6 +306,13 @@ void CCommander::OnSize(wxSizeEvent& event)
 }
 
 BEGIN_EVENT_TABLE(CCommander, wxWindow)
-    EVT_BUTTON(wxID_ANY, CCommander::OnButton)
-    EVT_SIZE(            CCommander::OnSize)
+    EVT_BUTTON(ID_COMMANDER_HALT,    CCommander::OnHaltButton)
+    EVT_BUTTON(ID_COMMANDER_TRACE,   CCommander::OnTraceButton)
+    EVT_BUTTON(ID_COMMANDER_PAUSE,   CCommander::OnPauseButton)
+    EVT_BUTTON(ID_COMMANDER_STATUS,  CCommander::OnStatusButton)
+    EVT_BUTTON(ID_COMMANDER_STEP,    CCommander::OnStepButton)
+    EVT_BUTTON(ID_COMMANDER_RESET,   CCommander::OnResetButton)
+    EVT_BUTTON(ID_COMMANDER_EXECUTE, CCommander::OnExecuteButton)
+    EVT_BUTTON(ID_COMMANDER_EDALL,   CCommander::OnEdallButton)
+    EVT_SIZE(                        CCommander::OnSize)
 END_EVENT_TABLE()
