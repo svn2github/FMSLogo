@@ -22,6 +22,9 @@
 #define ecma // for European extended character set using parity bit
 #define ibm
 
+#define ARRAYSIZE(ARRAY)            (sizeof(ARRAY) / sizeof(*(ARRAY)))
+#define STRINGLENGTH(STRINGLITERAL) (sizeof(STRINGLITERAL) - 1)
+
 #ifdef DEBUG
 
 extern struct NODE * tracked_node;
