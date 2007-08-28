@@ -30,6 +30,10 @@
 #include "localizedstrings.h"
 #include "fmslogo.h"
 
+// TODO: move this to a class
+#include "fmslogo-16x16.xpm"
+static wxIcon g_FmsLogoIcon(fmslogo_16x16_xpm);
+
 // ----------------------------------------------------------------------------
 // constants
 // ----------------------------------------------------------------------------
@@ -350,6 +354,8 @@ CMainFrame::CMainFrame()
 #endif // wxUSE_STATUSBAR
 
     m_replacewindow = (wxWindow *)0;
+
+    SetIcon(g_FmsLogoIcon);
 }
 
 CMainFrame::~CMainFrame()
