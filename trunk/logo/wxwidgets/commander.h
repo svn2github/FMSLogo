@@ -1,3 +1,5 @@
+// -*- c++ -*-
+
 #include <windows.h>
 
 #include "wx/window.h"
