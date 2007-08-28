@@ -23,6 +23,7 @@
 
 #include "wx/splitter.h"
 #include "wx/dcmirror.h"
+#include "wx/icon.h"
 
 #include "commander.h"
 #include "aboutmultiplesclerosis.h"
@@ -30,9 +31,8 @@
 #include "localizedstrings.h"
 #include "fmslogo.h"
 
-// TODO: move this to a class
 #include "fmslogo-16x16.xpm"
-static wxIcon g_FmsLogoIcon(fmslogo_16x16_xpm);
+
 
 // ----------------------------------------------------------------------------
 // constants
@@ -69,22 +69,24 @@ public:
 class CMainFrame: public wxFrame
 {
 public:
-   CMainFrame();
-   virtual ~CMainFrame();
+    CMainFrame();
+    virtual ~CMainFrame();
 
-   // Menu commands
-   void AboutMultipleSclerosis(wxCommandEvent& event);
-   void Quit(wxCommandEvent& event);
+    // Menu commands
+    void AboutMultipleSclerosis(wxCommandEvent& event);
+    void Quit(wxCommandEvent& event);
    
 private:
-   wxScrolledWindow *m_Screen;
-   CCommander       *m_Commander;
 
-   wxSplitterWindow* m_splitter;
-   wxWindow        * m_replacewindow;
+    wxIcon           *m_FmsLogoIcon;
+    wxScrolledWindow *m_Screen;
+    CCommander       *m_Commander;
 
-   DECLARE_EVENT_TABLE();
-   DECLARE_NO_COPY_CLASS(CMainFrame);
+    wxSplitterWindow* m_splitter;
+    wxWindow        * m_replacewindow;
+
+    DECLARE_EVENT_TABLE();
+    DECLARE_NO_COPY_CLASS(CMainFrame);
 };
 
 class MySplitterWindow : public wxSplitterWindow
@@ -355,7 +357,8 @@ CMainFrame::CMainFrame()
 
     m_replacewindow = (wxWindow *)0;
 
-    SetIcon(g_FmsLogoIcon);
+    m_FmsLogoIcon = new wxIcon(fmslogo_16x16_xpm);
+    SetIcon(*m_FmsLogoIcon);
 }
 
 CMainFrame::~CMainFrame()
