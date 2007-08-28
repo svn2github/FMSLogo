@@ -1,4 +1,6 @@
-#include <windows.h>
+#ifdef __WXMSW__
+#  include <windows.h>  // for LOGFONT
+#endif
 
 #include "commander.h"
 
@@ -76,6 +78,8 @@ CCommander::CCommander(wxWindow *parent)
     m_ButtonWidth           = 100;
 
 
+#ifdef __WXMSW__
+
     LOGFONT nativeFont;
     GetConfigurationFont("CommanderFont", nativeFont);
 
@@ -102,6 +106,9 @@ CCommander::CCommander(wxWindow *parent)
     wxFont font;
     font.SetNativeFontInfo(nativeInfo);
     UpdateFont(font);
+
+#endif
+
 
     // calculate the desired width for the buttons
     // by iterating through all labels that we put on buttons 
