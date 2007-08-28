@@ -49,6 +49,7 @@ SPLITTER_OBJECTS =  \
 	$(__splitter_os2_lib_res) \
 	splitter_mainframe.o \
 	splitter_commander.o \
+	splitter_aboutmultiplesclerosis.o \
 	splitter_utils.o \
         splitter_fmslogo_rc.o \
 	$(__splitter___win32rc)
@@ -162,10 +163,7 @@ fmslogo$(EXEEXT): $(SPLITTER_OBJECTS) $(__splitter___win32rc)
 
 #splitter_bundle: $(____splitter_BUNDLE_TGT_REF_DEP)
 
-splitter_mainframe.o: $(srcdir)/mainframe.cpp
-	$(CXXC) -c -o $@ $(SPLITTER_CXXFLAGS) $<
-
-splitter_commander.o: $(srcdir)/commander.cpp
+splitter_%.o: $(srcdir)/%.cpp
 	$(CXXC) -c -o $@ $(SPLITTER_CXXFLAGS) $<
 
 splitter_utils.o: $(srcdir)/../src/utils.cpp

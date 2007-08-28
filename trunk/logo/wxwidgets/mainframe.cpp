@@ -18,14 +18,14 @@
 
     #include "wx/scrolwin.h"
     #include "wx/menu.h"
-
-    #include "wx/textdlg.h"       // for wxGetTextFromUser
+    #include "wx/msgdlg.h"
 #endif
 
 #include "wx/splitter.h"
 #include "wx/dcmirror.h"
 
 #include "commander.h"
+#include "aboutmultiplesclerosis.h"
 #include "logocore.h"
 #include "localizedstrings.h"
 #include "fmslogo.h"
@@ -69,26 +69,15 @@ public:
    virtual ~CMainFrame();
 
    // Menu commands
-   void Unsplit(wxCommandEvent& event);
-   void ToggleLive(wxCommandEvent& event);
-   void SetPosition(wxCommandEvent& event);
-   void SetMinSize(wxCommandEvent& event);
-   void SetGravity(wxCommandEvent& event);
-   void Replace(wxCommandEvent &event);
-
+   void AboutMultipleSclerosis(wxCommandEvent& event);
    void Quit(wxCommandEvent& event);
-
-   // Menu command update functions
-   void UpdateUIHorizontal(wxUpdateUIEvent& event);
-   void UpdateUIVertical(wxUpdateUIEvent& event);
-   void UpdateUIUnsplit(wxUpdateUIEvent& event);
    
 private:
    wxScrolledWindow *m_Screen;
    CCommander       *m_Commander;
 
    wxSplitterWindow* m_splitter;
-   wxWindow *m_replacewindow;
+   wxWindow        * m_replacewindow;
 
    DECLARE_EVENT_TABLE();
    DECLARE_NO_COPY_CLASS(CMainFrame);
@@ -112,18 +101,16 @@ private:
     DECLARE_NO_COPY_CLASS(MySplitterWindow)
 };
 
-class MyCanvas: public wxScrolledWindow
+class CScreen: public wxScrolledWindow
 {
 public:
-    MyCanvas(wxWindow* parent, bool mirror);
-    virtual ~MyCanvas(){};
+    CScreen(wxWindow* parent);
+    virtual ~CScreen(){};
 
     virtual void OnDraw(wxDC& dc);
 
 private:
-    bool m_mirror;
-
-    DECLARE_NO_COPY_CLASS(MyCanvas)
+    DECLARE_NO_COPY_CLASS(CScreen)
 };
 
 // ============================================================================
@@ -149,69 +136,6 @@ bool MyApp::OnInit()
 // ----------------------------------------------------------------------------
 // CMainFrame
 // ----------------------------------------------------------------------------
-
-BEGIN_EVENT_TABLE(CMainFrame, wxFrame)
-    EVT_MENU(SPLIT_UNSPLIT, CMainFrame::Unsplit)
-    EVT_MENU(SPLIT_LIVE, CMainFrame::ToggleLive)
-    EVT_MENU(SPLIT_SETPOSITION, CMainFrame::SetPosition)
-    EVT_MENU(SPLIT_SETMINSIZE, CMainFrame::SetMinSize)
-    EVT_MENU(SPLIT_SETGRAVITY, CMainFrame::SetGravity)
-    EVT_MENU(SPLIT_REPLACE, CMainFrame::Replace)
-
-    EVT_MENU(SPLIT_QUIT, CMainFrame::Quit)
-
-    EVT_UPDATE_UI(SPLIT_VERTICAL, CMainFrame::UpdateUIVertical)
-    EVT_UPDATE_UI(SPLIT_HORIZONTAL, CMainFrame::UpdateUIHorizontal)
-    EVT_UPDATE_UI(SPLIT_UNSPLIT, CMainFrame::UpdateUIUnsplit)
-END_EVENT_TABLE()
-
-struct MENUITEM 
-{
-    const char *  MenuText;
-    int           MenuId;
-};
-
-static
-void
-FillMenu(
-    wxMenu *          Menu,
-    const MENUITEM *  MenuItems,
-    size_t            MenuItemsLength
-    )
-{
-    for (size_t i = 0; i < MenuItemsLength; i++)
-    {
-        if (MenuItems[i].MenuText != NULL)
-        {
-            Menu->Append(
-                MenuItems[i].MenuId,
-                MenuItems[i].MenuText);
-        }
-        else
-        {
-            Menu->AppendSeparator();
-        }
-    }
-}
-
-static
-void
-AppendChildMenu(
-    wxMenuBar *       MainMenu,
-    const char *      ChildMenuText,
-    const MENUITEM *  ChildMenuItems,
-    size_t            ChildMenuItemsLength
-    )
-{
-    // create the popup menu
-    wxMenu * childMenu = new wxMenu;
-
-    // fill the child menu with its items
-    FillMenu(childMenu, ChildMenuItems, ChildMenuItemsLength);
-
-    // append the child menu to the main menu
-    MainMenu->Append(childMenu, ChildMenuText);
-}
 
 enum MenuIds
 {
@@ -265,10 +189,64 @@ enum MenuIds
     ID_HELPABOUTMS,
 };
 
+BEGIN_EVENT_TABLE(CMainFrame, wxFrame)
+    EVT_MENU(ID_HELPABOUTMS, CMainFrame::AboutMultipleSclerosis)
+    EVT_MENU(ID_EXIT,        CMainFrame::Quit)
+END_EVENT_TABLE()
+
+struct MENUITEM 
+{
+    const char *  MenuText;
+    int           MenuId;
+};
+
+static
+void
+FillMenu(
+    wxMenu *          Menu,
+    const MENUITEM *  MenuItems,
+    size_t            MenuItemsLength
+    )
+{
+    for (size_t i = 0; i < MenuItemsLength; i++)
+    {
+        if (MenuItems[i].MenuText != NULL)
+        {
+            Menu->Append(
+                MenuItems[i].MenuId,
+                MenuItems[i].MenuText);
+        }
+        else
+        {
+            Menu->AppendSeparator();
+        }
+    }
+}
+
+static
+void
+AppendChildMenu(
+    wxMenuBar *       MainMenu,
+    const char *      ChildMenuText,
+    const MENUITEM *  ChildMenuItems,
+    size_t            ChildMenuItemsLength
+    )
+{
+    // create the popup menu
+    wxMenu * childMenu = new wxMenu;
+
+    // fill the child menu with its items
+    FillMenu(childMenu, ChildMenuItems, ChildMenuItemsLength);
+
+    // append the child menu to the main menu
+    MainMenu->Append(childMenu, ChildMenuText);
+}
+
+
 
 // My frame constructor
 CMainFrame::CMainFrame()
-       : wxFrame(NULL, wxID_ANY, _T("wxSplitterWindow sample"),
+       : wxFrame(NULL, wxID_ANY, LOCALIZED_GENERAL_PRODUCTNAME,
                  wxDefaultPosition, wxSize(420, 300),
                  wxDEFAULT_FRAME_STYLE | wxNO_FULL_REPAINT_ON_RESIZE)
 {
@@ -356,11 +334,11 @@ CMainFrame::CMainFrame()
     
     m_splitter->SetSashGravity(1.0);
 
-    m_Screen = new MyCanvas(m_splitter, true);
+    m_Screen = new CScreen(m_splitter);
     m_Screen->SetBackgroundColour(*wxWHITE);
     m_Screen->SetScrollbars(20, 20, 5, 5);
 
-    //m_Commander = new MyCanvas(m_splitter, false);
+    //m_Commander = new CScreen(m_splitter, false);
     m_Commander = new CCommander(m_splitter);
 
     m_Screen->Show(true);
@@ -383,113 +361,16 @@ CMainFrame::~CMainFrame()
 }
 
 // menu command handlers
-
 void CMainFrame::Quit(wxCommandEvent& WXUNUSED(event) )
 {
     Close(true);
 }
 
-void CMainFrame::Unsplit(wxCommandEvent& WXUNUSED(event) )
+void CMainFrame::AboutMultipleSclerosis(wxCommandEvent& WXUNUSED(event) )
 {
-    if ( m_splitter->IsSplit() )
-        m_splitter->Unsplit();
-#if wxUSE_STATUSBAR
-    SetStatusText(_T("No splitter"));
-#endif // wxUSE_STATUSBAR
-}
-
-void CMainFrame::ToggleLive(wxCommandEvent& event )
-{
-    long style = m_splitter->GetWindowStyleFlag();
-    if ( event.IsChecked() )
-        style |= wxSP_LIVE_UPDATE;
-    else
-        style &= ~wxSP_LIVE_UPDATE;
-
-    m_splitter->SetWindowStyleFlag(style);
-}
-
-void CMainFrame::SetPosition(wxCommandEvent& WXUNUSED(event) )
-{
-    wxString str;
-    str.Printf( wxT("%d"), m_splitter->GetSashPosition());
-    str = wxGetTextFromUser(_T("Enter splitter position:"), _T(""), str, this);
-    if ( str.empty() )
-        return;
-
-    long pos;
-    if ( !str.ToLong(&pos) )
-    {
-        wxLogError(_T("The splitter position should be an integer."));
-        return;
-    }
-
-    m_splitter->SetSashPosition(pos);
-
-    wxLogStatus(this, _T("Splitter position set to %ld"), pos);
-}
-
-void CMainFrame::SetMinSize(wxCommandEvent& WXUNUSED(event) )
-{
-    wxString str;
-    str.Printf( wxT("%d"), m_splitter->GetMinimumPaneSize());
-    str = wxGetTextFromUser(_T("Enter minimal size for panes:"), _T(""), str, this);
-    if ( str.empty() )
-        return;
-
-    int minsize = wxStrtol( str, (wxChar**)NULL, 10 );
-    m_splitter->SetMinimumPaneSize(minsize);
-#if wxUSE_STATUSBAR
-    str.Printf( wxT("Min pane size = %d"), minsize);
-    SetStatusText(str, 1);
-#endif // wxUSE_STATUSBAR
-}
-void CMainFrame::SetGravity(wxCommandEvent& WXUNUSED(event) )
-{
-    wxString str;
-    str.Printf( wxT("%g"), m_splitter->GetSashGravity());
-    str = wxGetTextFromUser(_T("Enter sash gravity (0,1):"), _T(""), str, this);
-    if ( str.empty() )
-        return;
-
-    double gravity = wxStrtod( str, (wxChar**)NULL);
-    m_splitter->SetSashGravity(gravity);
-#if wxUSE_STATUSBAR
-    str.Printf( wxT("Gravity = %g"), gravity);
-    SetStatusText(str, 1);
-#endif // wxUSE_STATUSBAR
-}
-
-void CMainFrame::Replace(wxCommandEvent& WXUNUSED(event) )
-{
-    if (m_replacewindow == 0) {
-        m_replacewindow = m_splitter->GetWindow2();
-        m_splitter->ReplaceWindow(m_replacewindow, new wxPanel(m_splitter, wxID_ANY));
-        m_replacewindow->Hide();
-    } else {
-        wxWindow *empty = m_splitter->GetWindow2();
-        m_splitter->ReplaceWindow(empty, m_replacewindow);
-        m_replacewindow->Show();
-        m_replacewindow = 0;
-        empty->Destroy();
-    }
-}
-
-// Update UI handlers
-
-void CMainFrame::UpdateUIHorizontal(wxUpdateUIEvent& event)
-{
-    event.Enable( (!m_splitter->IsSplit()) || (m_splitter->GetSplitMode() != wxSPLIT_HORIZONTAL) );
-}
-
-void CMainFrame::UpdateUIVertical(wxUpdateUIEvent& event)
-{
-    event.Enable( ( (!m_splitter->IsSplit()) || (m_splitter->GetSplitMode() != wxSPLIT_VERTICAL) ) );
-}
-
-void CMainFrame::UpdateUIUnsplit(wxUpdateUIEvent& event)
-{
-    event.Enable( m_splitter->IsSplit() );
+    // show the "About FMS" dialog box
+    CAboutMultipleSclerosis dlg(this);
+    dlg.ShowModal();
 }
 
 // ----------------------------------------------------------------------------
@@ -551,17 +432,22 @@ void MySplitterWindow::OnUnsplitEvent(wxSplitterEvent& event)
 }
 
 // ----------------------------------------------------------------------------
-// MyCanvas
+// CScreen
 // ----------------------------------------------------------------------------
 
-MyCanvas::MyCanvas(wxWindow* parent, bool mirror)
-        : wxScrolledWindow(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize,
-                           wxHSCROLL | wxVSCROLL | wxNO_FULL_REPAINT_ON_RESIZE)
+CScreen::CScreen(
+    wxWindow* parent
+    ) : 
+    wxScrolledWindow(
+        parent, 
+        wxID_ANY, 
+        wxDefaultPosition, 
+        wxDefaultSize,
+        wxHSCROLL | wxVSCROLL | wxNO_FULL_REPAINT_ON_RESIZE)
 {
-    m_mirror = mirror;
 }
 
-void MyCanvas::OnDraw(wxDC& dcOrig)
+void CScreen::OnDraw(wxDC& dcOrig)
 {
 }
 
