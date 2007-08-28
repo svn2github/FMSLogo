@@ -11,7 +11,9 @@
 #include "wx/richtext/richtextctrl.h"
 
 #include "localizedstrings.h"
-#include "utils.h"
+#ifdef __WXMSW__
+#  include "utils.h"
+#endif
 #include "logocore.h"
 
 
