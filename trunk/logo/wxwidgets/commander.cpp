@@ -58,6 +58,7 @@ CCommander::CCommander(wxWindow *parent)
     m_TraceButton->SetFont(buttonFont);
     m_PauseButton->SetFont(buttonFont);
     m_StatusButton->SetFont(buttonFont);
+    m_StepButton->SetFont(buttonFont);
     m_ResetButton->SetFont(buttonFont);
     m_ExecuteButton->SetFont(buttonFont);
     m_EdallButton->SetFont(buttonFont);
