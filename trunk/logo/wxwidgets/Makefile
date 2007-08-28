@@ -31,13 +31,13 @@ else
 # assume this is my Windows XP box
 
 EXEEXT = .exe
-WINDRES = 
+WINDRES = windres
 
 wx_top_builddir = /cygdrive/c/wxWidgets-2.8.4
 
 CXXFLAGS =
 CPPFLAGS =
-LDFLAGS =  
+LDFLAGS = -mwindows -lwx_msw-2.8 
 
 TOOLKIT = MSW
 TOOLKIT_LOWERCASE = msw
