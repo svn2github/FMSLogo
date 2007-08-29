@@ -77,9 +77,9 @@ SPLITTER_CXXFLAGS = -D__WX$(TOOLKIT)__ $(__WXUNIV_DEFINE_p) \
 	-I$(srcdir) $(__DLLFLAG_p) $(CPPFLAGS) $(CXXFLAGS)
 
 SPLITTER_OBJECTS =  \
-	$(__splitter_os2_lib_res) \
 	splitter_mainframe.o \
 	splitter_commander.o \
+	splitter_aboutfmslogo.o \
 	splitter_aboutmultiplesclerosis.o \
 
 ifeq "$(TOOLKIT)" "MSW"
@@ -129,8 +129,6 @@ __RCDEFDIR_p = -i \
 	$(LIBDIRNAME)/wx/include/$(TOOLCHAIN_FULLNAME)
 __RCDEFDIR_p_1 = --include-dir \
 	$(LIBDIRNAME)/wx/include/$(TOOLCHAIN_FULLNAME)
-#__splitter_os2_lib_res = \
-#	$(top_srcdir)/include/wx/os2/wx.res
 #__splitter_bundle___depname = splitter_bundle
 #____splitter_BUNDLE_TGT_REF_DEP = \
 #	splitter.app/Contents/PkgInfo
