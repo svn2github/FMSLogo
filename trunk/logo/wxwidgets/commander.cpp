@@ -157,7 +157,7 @@ CCommander::CCommander(wxWindow *parent)
     }
 
     m_ButtonWidth  = largestWidth  + 20;
-    m_ButtonHeight = largestHeight + 10;
+    m_ButtonHeight = largestHeight + 8;
 }
 
 void CCommander::OnHaltButton(wxCommandEvent& WXUNUSED(event))
