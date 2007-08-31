@@ -109,6 +109,10 @@ CCommander::CCommander(wxWindow *parent)
     font.SetNativeFontInfo(nativeInfo);
     UpdateFont(font);
 
+#else
+
+    UpdateFont(buttonFont);
+
 #endif
 
 
@@ -129,7 +133,8 @@ CCommander::CCommander(wxWindow *parent)
         LOCALIZED_COMMANDER_EDALL,
     };
 
-    int longestWidth = 0;
+    int largestWidth  = 0;
+    int largestHeight = 0;
 
     for (size_t i = 0; i < ARRAYSIZE(buttonLabels); i++)
     {
@@ -140,13 +145,19 @@ CCommander::CCommander(wxWindow *parent)
             buttonLabels[i],
             &buttonWidth,
             &buttonHeight);
-        if (longestWidth < buttonWidth)
+        if (largestWidth < buttonWidth)
         {
-            longestWidth = buttonWidth;
+            largestWidth = buttonWidth;
+        }
+
+        if (largestHeight < buttonHeight)
+        {
+            largestHeight = buttonHeight;
         }
     }
 
-    m_ButtonWidth = longestWidth + 20;
+    m_ButtonWidth  = largestWidth  + 20;
+    m_ButtonHeight = largestHeight + 10;
 }
 
 void CCommander::OnHaltButton(wxCommandEvent& WXUNUSED(event))
@@ -236,13 +247,11 @@ void CCommander::OnClose(wxCloseEvent& event)
 void CCommander::RecalculateLayout()
 {
     // scale and pos. each sub-window in commander window based on its size
-    const wxSize buttonSize    = m_TraceButton->GetClientSize();
-
     const wxSize commanderSize = GetClientSize();
 
     const int total_width   = commanderSize.GetWidth();
     const int total_height  = commanderSize.GetHeight();
-    const int button_height = buttonSize.GetHeight();
+    const int button_height = m_ButtonHeight;
     const int button_width  = m_ButtonWidth;
 
     const int x_border = 4;

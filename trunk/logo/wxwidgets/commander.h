@@ -38,7 +38,9 @@ private:
     wxTextCtrl    * m_NextInstruction;
 
     int m_NextInstructionHeight;
+
     int m_ButtonWidth;
+    int m_ButtonHeight;
 
     void RecalculateLayout();
     void UpdateFont(const wxFont & NewFont);
