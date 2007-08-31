@@ -18,7 +18,7 @@ CAboutMultipleSclerosis::CAboutMultipleSclerosis(wxWindow *parent)
     wxStaticText *text1 = new wxStaticText(
         this,
         wxID_ANY,
-        "\n  " LOCALIZED_ABOUTMS_FMS "  \n", // add some padding to the sunked border
+        "\n  " LOCALIZED_ABOUTMS_FMS "  \n", // add some padding to the sunken border
         wxDefaultPosition,
         wxDefaultSize, 
         wxALIGN_CENTRE | wxSUNKEN_BORDER);
