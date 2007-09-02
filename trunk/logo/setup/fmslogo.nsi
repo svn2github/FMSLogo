@@ -59,6 +59,7 @@ var UserType           ; "limited" or "power"
 
 ; Languages
 LoadLanguageFile "${NSISDIR}\Contrib\Language files\English.nlf"  ; the default language
+LoadLanguageFile "${NSISDIR}\Contrib\Language files\Italian.nlf"
 LoadLanguageFile "${NSISDIR}\Contrib\Language files\Spanish.nlf"
 LoadLanguageFile "${NSISDIR}\Contrib\Language files\French.nlf"
 LoadLanguageFile "${NSISDIR}\Contrib\Language files\Greek.nlf"
@@ -66,12 +67,14 @@ LoadLanguageFile "${NSISDIR}\Contrib\Language files\Portuguese.nlf"
 
 LangString DesktopShortcut ${LANG_ENGLISH}    "Desktop Shortcut"
 LangString DesktopShortcut ${LANG_SPANISH}    "Desktop Shortcut" ; NOT_YET_LOCALIZED
+LangString DesktopShortcut ${LANG_ITALIAN}    "Desktop Shortcut" ; NOT_YET_LOCALIZED
 LangString DesktopShortcut ${LANG_PORTUGUESE} "Atalho no Desktop"
 LangString DesktopShortcut ${LANG_FRENCH}     "Raccourci Bureau" 
 LangString DesktopShortcut ${LANG_GREEK}      "Óõíôüìåõóç ÅðéöÜíåéáò Åñãáóßáò"
 
 LangString StartMenuShortcuts ${LANG_ENGLISH}    "Start Menu Shortcuts"
 LangString StartMenuShortcuts ${LANG_SPANISH}    "Start Menu Shortcuts" ; NOT_YET_LOCALIZED
+LangString StartMenuShortcuts ${LANG_ITALIAN}    "Start Menu Shortcuts" ; NOT_YET_LOCALIZED
 LangString StartMenuShortcuts ${LANG_PORTUGUESE} "Atalho no Menu Iniciar"
 LangString StartMenuShortcuts ${LANG_FRENCH}     "Raccourcis Menu Démarrer" 
 LangString StartMenuShortcuts ${LANG_GREEK}      "Óõíôïìåýóåéò Ìåíïý ¸íáñîç" 
@@ -87,6 +90,7 @@ Function uninstall
   Delete $previousinstalldir\fmslogo.exe
   Delete $previousinstalldir\fmslogo-${LANG_ENGLISH}.exe
   Delete $previousinstalldir\fmslogo-${LANG_SPANISH}.exe
+  Delete $previousinstalldir\fmslogo-${LANG_ITALIAN}.exe
   Delete $previousinstalldir\fmslogo-${LANG_PORTUGUESE}.exe
   Delete $previousinstalldir\fmslogo-${LANG_GREEK}.exe
   Delete $previousinstalldir\fmslogo-${LANG_FRENCH}.exe
@@ -94,6 +98,7 @@ Function uninstall
   Delete $previousinstalldir\startup.logoscript
   Delete $previousinstalldir\startup-${LANG_ENGLISH}.logoscript
   Delete $previousinstalldir\startup-${LANG_SPANISH}.logoscript
+  Delete $previousinstalldir\startup-${LANG_ITALIAN}.logoscript
   Delete $previousinstalldir\startup-${LANG_PORTUGUESE}.logoscript
   Delete $previousinstalldir\startup-${LANG_GREEK}.logoscript
   Delete $previousinstalldir\startup-${LANG_FRENCH}.logoscript
@@ -101,6 +106,7 @@ Function uninstall
   Delete $previousinstalldir\logohelp.chm
   Delete $previousinstalldir\logohelp-${LANG_ENGLISH}.chm
   Delete $previousinstalldir\logohelp-${LANG_SPANISH}.chm
+  Delete $previousinstalldir\logohelp-${LANG_ITALIAN}.chm
   Delete $previousinstalldir\logohelp-${LANG_PORTUGUESE}.chm
   Delete $previousinstalldir\logohelp-${LANG_GREEK}.chm
   Delete $previousinstalldir\logohelp-${LANG_FRENCH}.chm
@@ -147,6 +153,8 @@ Function .onInit
   Push ${LANG_GREEK}
   Push Greek
   Push ${LANG_PORTUGUESE}
+  Push Italian
+  Push ${LANG_ITALIAN}
   Push Portuguese
   Push ${LANG_SPANISH}
   Push Spanish
@@ -198,6 +206,9 @@ SetupUser.Done:
   StrCmp $LANGUAGE ${LANG_SPANISH} 0 +3
      MessageBox MB_OK|MB_ICONEXCLAMATION "Either the installer or FMSLogo is currently running.$\nThis installation cannot continue." ; NOT_YET_LOCALIZED
      Abort
+  StrCmp $LANGUAGE ${LANG_ITALIAN} 0 +3
+     MessageBox MB_OK|MB_ICONEXCLAMATION "Either the installer or FMSLogo is currently running.$\nThis installation cannot continue." ; NOT_YET_LOCALIZED
+     Abort
   StrCmp $LANGUAGE ${LANG_PORTUGUESE} 0 +3
      MessageBox MB_OK|MB_ICONEXCLAMATION "O instalador ou o FMSLogo está rodando.$\nEssa instalação não poderá prosseguir."
      Abort
@@ -240,6 +251,8 @@ GetPreviousInstall.Done:
   ; We can't use a LangString because those aren't available in .onInit
   StrCmp $LANGUAGE ${LANG_SPANISH} 0 +2
     MessageBox MB_YESNO "The existing copy of FMSLogo must be uninstalled to continue.$\nDo you want to uninstall it?$\n$\n(Selecting No will abort the installation)" IDYES uninstall IDNO abort ; NOT_YET_LOCALIZED
+  StrCmp $LANGUAGE ${LANG_ITALIAN} 0 +2
+    MessageBox MB_YESNO "The existing copy of FMSLogo must be uninstalled to continue.$\nDo you want to uninstall it?$\n$\n(Selecting No will abort the installation)" IDYES uninstall IDNO abort ; NOT_YET_LOCALIZED
   StrCmp $LANGUAGE ${LANG_PORTUGUESE} 0 +2
     MessageBox MB_YESNO "Já existe uma cópia do FMSLogo e precisa ser desinstalada para prosseguir.$\nDeseja desinstalá-la?$\n$\n(Escolher Não cessará a instalação)" IDYES uninstall IDNO abort 
   StrCmp $LANGUAGE ${LANG_FRENCH} 0 +2
@@ -279,18 +292,21 @@ Section "FMSLogo"
   ;
   File "..\src\startup-${LANG_ENGLISH}.logoscript"
   File "..\src\startup-${LANG_SPANISH}.logoscript"
+  File "..\src\startup-${LANG_ITALIAN}.logoscript"
   File "..\src\startup-${LANG_PORTUGUESE}.logoscript"
   File "..\src\startup-${LANG_FRENCH}.logoscript"
   File "..\src\startup-${LANG_GREEK}.logoscript"
 
   File "..\src\fmslogo-${LANG_ENGLISH}.exe"
   File "..\src\fmslogo-${LANG_SPANISH}.exe"
+  File "..\src\fmslogo-${LANG_ITALIAN}.exe"
   File "..\src\fmslogo-${LANG_PORTUGUESE}.exe"
   File "..\src\fmslogo-${LANG_FRENCH}.exe"
   File "..\src\fmslogo-${LANG_GREEK}.exe"
 
   File "..\manual\logohelp-${LANG_ENGLISH}.chm"
   File "..\manual\logohelp-${LANG_SPANISH}.chm"
+  File "..\manual\logohelp-${LANG_ITALIAN}.chm"
   File "..\manual\logohelp-${LANG_PORTUGUESE}.chm"
   File "..\manual\logohelp-${LANG_FRENCH}.chm"
   File "..\manual\logohelp-${LANG_GREEK}.chm"
@@ -308,18 +324,21 @@ Section "FMSLogo"
   ; Remove the unused language files
   Delete $INSTDIR\fmslogo-${LANG_ENGLISH}.exe
   Delete $INSTDIR\fmslogo-${LANG_SPANISH}.exe
+  Delete $INSTDIR\fmslogo-${LANG_ITALIAN}.exe
   Delete $INSTDIR\fmslogo-${LANG_PORTUGUESE}.exe
   Delete $INSTDIR\fmslogo-${LANG_GREEK}.exe
   Delete $INSTDIR\fmslogo-${LANG_FRENCH}.exe
 
   Delete $INSTDIR\startup-${LANG_ENGLISH}.logoscript
   Delete $INSTDIR\startup-${LANG_SPANISH}.logoscript
+  Delete $INSTDIR\startup-${LANG_ITALIAN}.logoscript
   Delete $INSTDIR\startup-${LANG_PORTUGUESE}.logoscript
   Delete $INSTDIR\startup-${LANG_GREEK}.logoscript
   Delete $INSTDIR\startup-${LANG_FRENCH}.logoscript
 
   Delete $INSTDIR\logohelp-${LANG_ENGLISH}.chm
   Delete $INSTDIR\logohelp-${LANG_SPANISH}.chm
+  Delete $INSTDIR\logohelp-${LANG_ITALIAN}.chm
   Delete $INSTDIR\logohelp-${LANG_PORTUGUESE}.chm
   Delete $INSTDIR\logohelp-${LANG_GREEK}.chm
   Delete $INSTDIR\logohelp-${LANG_FRENCH}.chm
@@ -407,6 +426,9 @@ Function un.onInit
   StrCmp $LANGUAGE ${LANG_SPANISH} 0 +3
      MessageBox MB_OK|MB_ICONEXCLAMATION "Either the installer or FMSLogo is currently running.$\nThis uninstallation cannot continue." ; NOT_YET_LOCALIZED
      Abort
+  StrCmp $LANGUAGE ${LANG_ITALIAN} 0 +3
+     MessageBox MB_OK|MB_ICONEXCLAMATION "Either the installer or FMSLogo is currently running.$\nThis uninstallation cannot continue." ; NOT_YET_LOCALIZED
+     Abort
   StrCmp $LANGUAGE ${LANG_PORTUGUESE} 0 +3
      MessageBox MB_OK|MB_ICONEXCLAMATION "O instalador ou o FMSLogo está rodando.$\n$\nEssa desinstalação não poderá prosseguir." ; NOT_YET_LOCALIZED
      Abort
@@ -459,6 +481,9 @@ CheckIfInstallExists.ShowError:
   StrCmp $LANGUAGE ${LANG_SPANISH} 0 +3
      MessageBox MB_OK|MB_ICONEXCLAMATION "Either FMSLogo has already been deleted or you do not have permission to uninstall it.$\nEither way, this uninstallation cannot continue." ; NOT_YET_LOCALIZED
      Abort
+  StrCmp $LANGUAGE ${LANG_ITALIAN} 0 +3
+     MessageBox MB_OK|MB_ICONEXCLAMATION "Either FMSLogo has already been deleted or you do not have permission to uninstall it.$\nEither way, this uninstallation cannot continue." ; NOT_YET_LOCALIZED
+     Abort
   StrCmp $LANGUAGE ${LANG_PORTUGUESE} 0 +3
      MessageBox MB_OK|MB_ICONEXCLAMATION "Ou o FMSLogo já foi deletado ou você não possui permissão para desinstalá-lo.$\nEm ambos os casos, essa desinstalação não poderá continuar." 
      Abort
@@ -486,6 +511,7 @@ Section "Uninstall"
   Delete $INSTDIR\fmslogo.exe
   Delete $INSTDIR\fmslogo-${LANG_ENGLISH}.exe
   Delete $INSTDIR\fmslogo-${LANG_SPANISH}.exe
+  Delete $INSTDIR\fmslogo-${LANG_ITALIAN}.exe
   Delete $INSTDIR\fmslogo-${LANG_PORTUGUESE}.exe
   Delete $INSTDIR\fmslogo-${LANG_GREEK}.exe
   Delete $INSTDIR\fmslogo-${LANG_FRENCH}.exe
@@ -493,6 +519,7 @@ Section "Uninstall"
   Delete $INSTDIR\startup.logoscript
   Delete $INSTDIR\startup-${LANG_ENGLISH}.logoscript
   Delete $INSTDIR\startup-${LANG_SPANISH}.logoscript
+  Delete $INSTDIR\startup-${LANG_ITALIAN}.logoscript
   Delete $INSTDIR\startup-${LANG_PORTUGUESE}.logoscript
   Delete $INSTDIR\startup-${LANG_GREEK}.logoscript
   Delete $INSTDIR\startup-${LANG_FRENCH}.logoscript
@@ -500,6 +527,7 @@ Section "Uninstall"
   Delete $INSTDIR\logohelp.chm
   Delete $INSTDIR\logohelp-${LANG_ENGLISH}.chm
   Delete $INSTDIR\logohelp-${LANG_SPANISH}.chm
+  Delete $INSTDIR\logohelp-${LANG_ITALIAN}.chm
   Delete $INSTDIR\logohelp-${LANG_PORTUGUESE}.chm
   Delete $INSTDIR\logohelp-${LANG_GREEK}.chm
   Delete $INSTDIR\logohelp-${LANG_FRENCH}.chm
