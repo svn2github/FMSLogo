@@ -81,6 +81,7 @@ SPLITTER_OBJECTS =  \
 	splitter_commander.o \
 	splitter_aboutfmslogo.o \
 	splitter_aboutmultiplesclerosis.o \
+	splitter_setactivearea.o \
 
 ifeq "$(TOOLKIT)" "MSW"
 SPLITTER_OBJECTS +=  \

@@ -26,6 +26,7 @@
 #include "wx/icon.h"
 
 #include "commander.h"
+#include "setactivearea.h"
 #include "aboutfmslogo.h"
 #include "aboutmultiplesclerosis.h"
 #include "logocore.h"
@@ -74,6 +75,7 @@ public:
     virtual ~CMainFrame();
 
     // Menu commands
+    void SetActiveArea(wxCommandEvent& event);
     void AboutFmsLogo(wxCommandEvent& event);
     void AboutMultipleSclerosis(wxCommandEvent& event);
     void Quit(wxCommandEvent& event);
@@ -198,9 +200,10 @@ enum MenuIds
 };
 
 BEGIN_EVENT_TABLE(CMainFrame, wxFrame)
-    EVT_MENU(ID_HELPABOUT,    CMainFrame::AboutFmsLogo)
-    EVT_MENU(ID_HELPABOUTMS,  CMainFrame::AboutMultipleSclerosis)
-    EVT_MENU(ID_EXIT,         CMainFrame::Quit)
+    EVT_MENU(ID_BITMAPPRINTERAREA,  CMainFrame::SetActiveArea)
+    EVT_MENU(ID_HELPABOUT,          CMainFrame::AboutFmsLogo)
+    EVT_MENU(ID_HELPABOUTMS,        CMainFrame::AboutMultipleSclerosis)
+    EVT_MENU(ID_EXIT,               CMainFrame::Quit)
 END_EVENT_TABLE()
 
 struct MENUITEM 
@@ -376,6 +379,12 @@ CMainFrame::~CMainFrame()
 void CMainFrame::Quit(wxCommandEvent& WXUNUSED(event) )
 {
     Close(true);
+}
+
+void CMainFrame::SetActiveArea(wxCommandEvent& WXUNUSED(event) )
+{
+    CSetActiveArea dlg(this);
+    dlg.ShowModal();
 }
 
 void CMainFrame::AboutFmsLogo(wxCommandEvent& WXUNUSED(event) )
