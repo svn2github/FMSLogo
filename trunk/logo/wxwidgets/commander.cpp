@@ -10,6 +10,7 @@
 
 #include "wx/richtext/richtextctrl.h"
 
+#include "workspaceeditor.h"
 #include "localizedstrings.h"
 #ifdef __WXMSW__
 #  include "utils.h"
@@ -225,11 +226,8 @@ void CCommander::OnExecuteButton(wxCommandEvent& WXUNUSED(event))
 
 void CCommander::OnEdallButton(wxCommandEvent& WXUNUSED(event))
 {
-    wxMessageBox(
-        "Edall button pressed",
-        "Info",
-        wxOK | wxICON_INFORMATION, 
-        this);
+    CWorkspaceEditor * editor = new CWorkspaceEditor(this);
+    editor->Show();
 }
 
 void CCommander::OnClose(wxCloseEvent& event)

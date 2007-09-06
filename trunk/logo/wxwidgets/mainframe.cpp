@@ -25,6 +25,7 @@
 #include "wx/dcmirror.h"
 #include "wx/icon.h"
 
+#include "guiutils.h"
 #include "commander.h"
 #include "setactivearea.h"
 #include "aboutfmslogo.h"
@@ -147,7 +148,7 @@ bool MyApp::OnInit()
 // CMainFrame
 // ----------------------------------------------------------------------------
 
-enum MenuIds
+enum MainFrameMenuIds
 {
     ID_FILENEW,
     ID_FILELOAD,
@@ -206,61 +207,15 @@ BEGIN_EVENT_TABLE(CMainFrame, wxFrame)
     EVT_MENU(ID_EXIT,               CMainFrame::Quit)
 END_EVENT_TABLE()
 
-struct MENUITEM 
-{
-    const char *  MenuText;
-    int           MenuId;
-};
-
-static
-void
-FillMenu(
-    wxMenu *          Menu,
-    const MENUITEM *  MenuItems,
-    size_t            MenuItemsLength
-    )
-{
-    for (size_t i = 0; i < MenuItemsLength; i++)
-    {
-        if (MenuItems[i].MenuText != NULL)
-        {
-            Menu->Append(
-                MenuItems[i].MenuId,
-                MenuItems[i].MenuText);
-        }
-        else
-        {
-            Menu->AppendSeparator();
-        }
-    }
-}
-
-static
-void
-AppendChildMenu(
-    wxMenuBar *       MainMenu,
-    const char *      ChildMenuText,
-    const MENUITEM *  ChildMenuItems,
-    size_t            ChildMenuItemsLength
-    )
-{
-    // create the popup menu
-    wxMenu * childMenu = new wxMenu;
-
-    // fill the child menu with its items
-    FillMenu(childMenu, ChildMenuItems, ChildMenuItemsLength);
-
-    // append the child menu to the main menu
-    MainMenu->Append(childMenu, ChildMenuText);
-}
-
-
-
 // My frame constructor
 CMainFrame::CMainFrame()
-       : wxFrame(NULL, wxID_ANY, LOCALIZED_GENERAL_PRODUCTNAME,
-                 wxDefaultPosition, wxSize(420, 300),
-                 wxDEFAULT_FRAME_STYLE | wxNO_FULL_REPAINT_ON_RESIZE)
+       : wxFrame(
+           NULL, 
+           wxID_ANY, 
+           LOCALIZED_GENERAL_PRODUCTNAME,
+           wxDefaultPosition,
+           wxSize(420, 300),
+           wxDEFAULT_FRAME_STYLE | wxNO_FULL_REPAINT_ON_RESIZE)
 {
 #if wxUSE_STATUSBAR
     CreateStatusBar(2);
