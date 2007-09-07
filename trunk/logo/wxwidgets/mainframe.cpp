@@ -33,6 +33,7 @@
 #include "logocore.h"
 #include "localizedstrings.h"
 #include "fmslogo.h"
+#include "mainframe.h"
 
 #include "fmslogo-16x16.xpm"
 
@@ -58,41 +59,6 @@ enum
 // ----------------------------------------------------------------------------
 // our classes
 // ----------------------------------------------------------------------------
-
-class MyApp: public wxApp
-{
-public:
-    MyApp() { }
-
-    virtual bool OnInit();
-
-    DECLARE_NO_COPY_CLASS(MyApp)
-};
-
-class CMainFrame: public wxFrame
-{
-public:
-    CMainFrame();
-    virtual ~CMainFrame();
-
-    // Menu commands
-    void SetActiveArea(wxCommandEvent& event);
-    void AboutFmsLogo(wxCommandEvent& event);
-    void AboutMultipleSclerosis(wxCommandEvent& event);
-    void Quit(wxCommandEvent& event);
-   
-private:
-
-    wxIcon           *m_FmsLogoIcon;
-    wxScrolledWindow *m_Screen;
-    CCommander       *m_Commander;
-
-    wxSplitterWindow* m_splitter;
-    wxWindow        * m_replacewindow;
-
-    DECLARE_EVENT_TABLE();
-    DECLARE_NO_COPY_CLASS(CMainFrame);
-};
 
 class MySplitterWindow : public wxSplitterWindow
 {
@@ -123,26 +89,6 @@ public:
 private:
     DECLARE_NO_COPY_CLASS(CScreen)
 };
-
-// ============================================================================
-// implementation
-// ============================================================================
-
-// ----------------------------------------------------------------------------
-// MyApp
-// ----------------------------------------------------------------------------
-
-IMPLEMENT_APP(MyApp)
-
-bool MyApp::OnInit()
-{
-    // create and show the main frame
-    CMainFrame* frame = new CMainFrame;
-
-    frame->Show(true);
-
-    return true;
-}
 
 // ----------------------------------------------------------------------------
 // CMainFrame
@@ -316,18 +262,12 @@ CMainFrame::CMainFrame()
     SetStatusText(_T("Min pane size = 0"), 1);
 #endif // wxUSE_STATUSBAR
 
-    m_replacewindow = (wxWindow *)0;
-
     m_FmsLogoIcon = new wxIcon(fmslogo_16x16_xpm);
     SetIcon(*m_FmsLogoIcon);
 }
 
 CMainFrame::~CMainFrame()
 {
-    if (m_replacewindow) {
-        m_replacewindow->Destroy();
-        m_replacewindow = (wxWindow *)0;
-    }
 }
 
 // menu command handlers
