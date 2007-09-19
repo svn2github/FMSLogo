@@ -17,30 +17,30 @@ to aaa
 ;
 ; This one is still not quite right.
 ;
-;cs pr [Koch]
+;cs print [Koch]
 ;DoFunction [X] [X K P X K M M X K P X K] [] 60 5 4
 ;wait 120
 
-cs pr [Sierpinski arrowhead]
+cs print [Sierpinski arrowhead]
 DoFunction [Y F] [Y F P X F P Y] [X F M Y F M X] 60 5 7
 wait 120
 
-cs pr [Square]
+cs print [Square]
 DoFunction [F P X F P F P X F] [X F M F P F M X F P F P X F M F P F M X] [] 90 5 4
 wait 120
 
-cs pr [Hilbert curve]
+cs print [Hilbert curve]
 DoFunction [X] [P Y F M X F X M F Y P] [M X F P Y F Y P F X M] 90 5 5
 wait 120
 
-cs pr [Dragon]
+cs print [Dragon]
 DoFunction [X] [X P Y F P] [M F X M Y] 90 5 12
 wait 120
 
 pu
 home
 pd
-pr [Done]
+print [Done]
 end
 
 to DoFunction :function_root :function_of_x :function_of_y :angle :siz :lev
