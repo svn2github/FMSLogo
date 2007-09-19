@@ -31,7 +31,7 @@ penup bk 10 lt 45 pendown
 end
 
 to main ; Chessboards
-ht
+hideturtle
 cs
 wrap
 MessageBox [Chessboard] [You can use the same code in 2D]
@@ -57,7 +57,7 @@ rt 90
 lr 90
 ; Draw face 3
 chess 128 4 heading
-st
+showturtle
 end
 
 to zzz
