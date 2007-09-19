@@ -26,9 +26,9 @@ setpc [255 0 0]
 ask -3 [setxyz 0 455 834]
 
 ; Position HilbertCube such that its center ends up at origin
-pu
+penup
 setxyz -50 -50 50
-pd
+pendown
 
 ht
 
@@ -70,17 +70,17 @@ end
 to endbox
 ; Box at end
 down 90
-pu
+penup
 repeat 2 [lt 90 fd :size]
-pd
+pendown
 rt 180
       polystart
       repeat 4 [fd :size*2 rt 90]
       polyend
 lt 180
-pu
+penup
 repeat 2 [bk :size rt 90]
-pd
+pendown
 up 90
 end
 
@@ -95,14 +95,14 @@ to fdbox :dist
 ; Cap the start of the box
 endbox
 ; We are at the center of the duct work go to the edge
-pu
+penup
 up 90
 fd :size
 down 90
 lt 90
 fd :size
 rt 90
-pd
+pendown
 ; Now draw boxes along the path
 repeat abs :dist ~
    [
@@ -121,14 +121,14 @@ repeat abs :dist ~
    pendown
    ]
 ; Get back to where we started
-pu
+penup
 lt 90
 bk :size
 rt 90
 up 90
 bk :size
 down 90
-pd
+pendown
 
 ; Cap the end of the box
 endbox
@@ -175,11 +175,11 @@ rr 90
 end
 
 to rtbox :angle
-pu
+penup
 bk :size
 rt :angle
 fd :size
-pd
+pendown
 end
 
 to U
@@ -187,11 +187,11 @@ upbox 90
 end
 
 to upbox :angle
-pu
+penup
 bk :size
 up :angle
 fd :size
-pd
+pendown
 end
 
 to X
