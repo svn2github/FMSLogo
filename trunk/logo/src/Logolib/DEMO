@@ -85,7 +85,7 @@ wrap
 cs
 scrollx 0
 scrolly 0
-st
+showturtle
 setbitmode 1
 setpensize [1 1]
 setpencolor [0 0 0]
@@ -99,7 +99,7 @@ settimer 1 100 [make "scale :scale+1]
 repeat 60 [rt 6]
 cleartimer 1
 make "scale round 100/:scale 
-st
+showturtle
 end
 
 to demo.01
@@ -132,7 +132,7 @@ end
 to demo.06
 settextfont[[Times New Roman] 50 0 0 400 0 0 0]
 cs
-ht
+hideturtle
 penup
 repeat 36 [fd 175 setpencolor (list 0 repcount*8 0) label heading bk 175 rt 10 wait 2]
 pendown
@@ -219,7 +219,7 @@ end
 to demo.17
 perspective
 cs
-ht
+hideturtle
 setturtle -1
 setxyz 0 0 1000
 setturtle 0
@@ -230,7 +230,7 @@ end
 to demo.18
 perspective
 cs
-ht
+hideturtle
 setturtle -1
 setxyz 0 0 1000
 setturtle 0
@@ -254,7 +254,7 @@ clearpalette
 setturtle -3
 setxyz 207 243 97
 setturtle 0
-ht
+hideturtle
 penup
 Sphere 150 10 [128 0 0]
 polyview
@@ -294,7 +294,7 @@ make "from 1
 make "to 3
 make "other 2
 cs
-ht
+hideturtle
 penpaint
 setpensize [5 5]
 ; first we draw the table and the golden needles
@@ -522,7 +522,7 @@ end
 
 to win.drawthing
 setpencolor (list scrollbarget "s1 scrollbarget "s2 scrollbarget "s3)
-ifelse checkboxget "cb1 [ht] [st]
+ifelse checkboxget "cb1 [hideturtle] [showturtle]
 ifelse checkboxget "cb2 [status] [nostatus]
 repeat scrollbarget "s4 [
   if equalp [HEXAGON] listboxgetselect "l1 [repeat 6 [fd 100 rt 60]]
