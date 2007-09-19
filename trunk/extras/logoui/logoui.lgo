@@ -136,10 +136,10 @@ end
 
 to turtletoggle
   ifelse shown? [
-     tracecommand [HT]
+     tracecommand [HIDETURTLE]
      buttonupdate "turtlebutton "SHOW
   ] [
-     tracecommand [ST]
+     tracecommand [SHOWTURTLE]
      buttonupdate "turtlebutton "HIDE
   ]
 
