@@ -28,6 +28,10 @@
 
   #include "localizedstrings-fr.h"  // French
 
+#elif LOCALE == 1040
+
+  #include "localizedstrings-it.h"  // Italian
+
 #elif LOCALE == 2070
 
   #include "localizedstrings-pt.h"  // Portuguese
