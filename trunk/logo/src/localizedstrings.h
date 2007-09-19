@@ -8,6 +8,10 @@
 
   #error LOCALE is not define
 
+#elif LOCALE == 1031
+  
+  #include "localizedstrings-de.h"  // German
+
 #elif LOCALE == 1032
   
   #include "localizedstrings-gr.h"  // Greek

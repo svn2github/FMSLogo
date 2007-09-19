@@ -65,3 +65,4 @@ UpdateLocalizationFiles('gr', 'Greek');
 UpdateLocalizationFiles('es', 'Spanish');
 UpdateLocalizationFiles('it', 'Italian');
 UpdateLocalizationFiles('pt', 'Portuguese');
+UpdateLocalizationFiles('de', 'German');
