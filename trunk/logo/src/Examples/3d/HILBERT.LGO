@@ -30,7 +30,7 @@ penup
 setxyz -50 -50 50
 pendown
 
-ht
+hideturtle
 
 ; Click, Tic, Tic, Tic
 localmake "start timemilli
@@ -41,7 +41,7 @@ polyview
 ; Click, Cool 3.5 seconds !!! (PII-300)
 show (timemilli - :start) / 1000
 
-st
+showturtle
 stop
 
 messagebox [Shed some light on the subject] []
