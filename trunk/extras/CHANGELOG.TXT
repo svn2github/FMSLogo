@@ -5,6 +5,8 @@ o logoui
   * Make compatible with Italian versions of FMSLogo.
 o midipiano
   * Make compatible with German versions of FMSLogo.
+o sudoku
+  * Make compatible with German versions of FMSLogo.
 
 FMSLogo Extras 1.7
 o asteriodminer
