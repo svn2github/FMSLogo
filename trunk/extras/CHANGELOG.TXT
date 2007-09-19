@@ -1,6 +1,8 @@
 FMSLogo Extras 1.8
 o asteriodminer
   * Make compatible with Italian versions of FMSLogo.
+o logoui
+  * Make compatible with Italian versions of FMSLogo.
 
 FMSLogo Extras 1.7
 o asteriodminer
