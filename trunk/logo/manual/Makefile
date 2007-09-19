@@ -32,6 +32,9 @@ logohelp-%.chm : htmlhelp-%.hhp logohelp.css
 	perl -W clean-html.pl
 	-$(HHC) htmlhelp-$*.hhp
 
+# German CHM has been hand-translated so we shouldn't overwrite it
+logohelp-1031.chm : ;
+
 # Portuguese CHM has been hand-translated so we shouldn't overwrite it
 logohelp-2070.chm : ;
 
@@ -84,7 +87,7 @@ clean :
 	$(RM) $(wildcard *.hhc)
 	$(RM) $(wildcard *.hhk)
 	$(RM) $(wildcard *.chw)
-	$(RM) $(filter-out logohelp-2070.chm,$(wildcard *.chm))
+	$(RM) $(filter-out logohelp-1031.chm,$(filter-out logohelp-2070.chm,$(wildcard *.chm)))
 	$(RM) $(wildcard *~)
 	$(RM) $(wildcard *.bak)
 
