@@ -278,7 +278,7 @@ setxy :x+:w :y
 setxy :x+:w :y-:h
 setxy :x    :y-:h
 setxy :x    :y
-pu
+penup
 end
 
 to drawbox_detail :box :kind
@@ -304,7 +304,7 @@ ifelse equalp :kind "buttoncreate~
       setxy :x+:w75 :y
       penreverse
       setxy :x+:w75 :y-:h
-      pu
+      penup
       ]~
       [
     ifelse equalp :kind "comboboxcreate~
@@ -313,12 +313,12 @@ ifelse equalp :kind "buttoncreate~
       setxy :x+:w75 :y
       penreverse
       setxy :x+:w75 :y-:h
-      pu
+      penup
       make "h25 :h*.25
       setxy :x :y-:h25
       penreverse
       setxy :x+:w :y-:h25
-      pu
+      penup
       ]~
       [
     ifelse equalp :kind "groupboxcreate~
@@ -332,7 +332,7 @@ ifelse equalp :kind "buttoncreate~
       setxy :x+:w25 :y
       penreverse
       setxy :x+:w25 :y-:h
-      pu
+      penup
       ]~
       [
     ifelse equalp :kind "checkboxcreate~
@@ -341,7 +341,7 @@ ifelse equalp :kind "buttoncreate~
       setxy :x+:w25 :y
       penreverse
       setxy :x+:w25 :y-:h
-      pu
+      penup
       ]~
       [
       if equalp :kind "scrollbarcreate~
@@ -352,24 +352,24 @@ ifelse equalp :kind "buttoncreate~
          setxy :x+:w25 :y
          penreverse
          setxy :x+:w25 :y-:h
-         pu
+         penup
          make "w75 :w*.75
          setxy :x+:w75 :y
          penreverse
          setxy :x+:w75 :y-:h
-         pu
+         penup
          ]~
          [
          make "h25 :h*.25
          setxy :x :y-:h25
          penreverse
          setxy :x+:w :y-:h25
-         pu
+         penup
          make "h75 :h*.75
          setxy :x :y-:h75
          penreverse
          setxy :x+:w :y-:h75
-         pu
+         penup
          ]
        ]
      ]
@@ -606,12 +606,12 @@ make "the_scale 2
 cs
 setpensize [2 2]
 ht
-pd
+pendown
 setxy :main_x*:the_scale 0
 setxy :main_x*:the_scale -:main_y*:the_scale
 setxy 0 -:main_y*:the_scale
 setxy 0 0
-pu
+penup
 make "boxisselected "false
 make "edgeisselected "false
 make "wholeisselected "false
