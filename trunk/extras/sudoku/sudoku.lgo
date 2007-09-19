@@ -62,8 +62,8 @@ if (item :c item :r :p)=0 [
   ]
   setpencolor 0
 ]
-if :q=:sol [pr [You solved it!] mouseoff start stop]
-if (find [not (find [?="0] ?)=[]] :q)=[] [pr [Not correct!]]
+if :q=:sol [print [You solved it!] mouseoff start stop]
+if (find [not (find [?="0] ?)=[]] :q)=[] [print [Not correct!]]
 end
 
 to set :p :r :c :w
@@ -97,18 +97,18 @@ make "p :w
 make "q :w
 make "sol []
 cleartext cs ht
-pr [Select a number.]
-pr [Click and put a number.]
-pr [Right click to remove a number.]
-pr [Use "h" for a hint.]
-pr [Solving... Please wait! (around 3 seconds on 3GHz)]
+print [Select a number.]
+print [Click and put a number.]
+print [Right click to remove a number.]
+print [Use "h" for a hint.]
+print [Solving... Please wait! (around 3 seconds on 3GHz)]
 noyield
 make "t timemilli
 solver :w
-(pr [Solved in] (timemilli-:t)/1000 [seconds.])
+(print [Solved in] (timemilli-:t)/1000 [seconds.])
 yield
-if (count :sol)>1 [pr [ERROR! Sudoku has more than one solution!] wait 180 start stop]
-if (count :sol)=0 [pr [ERROR! Sudoku has no solutions!] wait 180 start stop]
+if (count :sol)>1 [print [ERROR! Sudoku has more than one solution!] wait 180 start stop]
+if (count :sol)=0 [print [ERROR! Sudoku has no solutions!] wait 180 start stop]
 make "sol first :sol
 setlabelfont [[Arial] 30 0 0 900 0 0 0 0 0 0 0 0]
 table 30 rt 90
