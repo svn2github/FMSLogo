@@ -30,7 +30,7 @@ end
 
 to drawface
 setheading 30
-pu
+penup
 repeat 12 ~
   [~
   fd 120 ~
@@ -65,9 +65,9 @@ to plottimehour :hour
 penreverse
 setpensize [5 5]
 setheading :hour*30
-pd
+pendown
 fd 50
-pu
+penup
 bk 50
 end
 
@@ -75,9 +75,9 @@ to plottimemin :min
 penreverse
 setpensize [2 2]
 setheading :min*6
-pd
+pendown
 fd 100
-pu
+penup
 bk 100
 end
 
@@ -85,9 +85,9 @@ to plottimesec :sec
 penreverse
 setpensize [1 1]
 setheading :sec*6
-pd
+pendown
 fd 100
-pu
+penup
 bk 100
 end
 

@@ -37,9 +37,9 @@ cs print [Dragon]
 DoFunction [X] [X P Y F P] [M F X M Y] 90 5 12
 wait 120
 
-pu
+penup
 home
-pd
+pendown
 print [Done]
 end
 

@@ -57,9 +57,9 @@ end
 to drawkeys
 cs
 ht
-pu
+penup
 setxy -200 0
-pd
+pendown
 rt 90
 drawkey "A
 drawkey "B
@@ -71,9 +71,9 @@ drawkey "G
 drawkey "A
 drawkey "B
 drawkey "C
-pu
+penup
 setxy -212 25
-pd
+pendown
 drawkey "G#
 drawkey "A#
 drawkey "-
