@@ -772,10 +772,10 @@ to gameLoop
      levelLoop
   ]
 
-  setturtle 0 ht penup
-  setturtle 1 ht penup
-  setturtle 2 ht penup
-  setturtle 3 ht penup
+  setturtle 0 hideturtle penup
+  setturtle 1 hideturtle penup
+  setturtle 2 hideturtle penup
+  setturtle 3 hideturtle penup
 end
 
 to glint :action
@@ -897,10 +897,10 @@ to initGame
   make "gameOver "false
   wrap
 
-  setturtle 0 ht penup
-  setturtle 1 ht penup
-  setturtle 2 ht penup
-  setturtle 3 ht penup
+  setturtle 0 hideturtle penup
+  setturtle 1 hideturtle penup
+  setturtle 2 hideturtle penup
+  setturtle 3 hideturtle penup
 
   setpensize round :scale
 end
@@ -953,10 +953,10 @@ end
 
 to initMain
   make "scale (item 4 machine) / 500  ;sets the game scale based on the height set on the command line
-  setturtle 1 ht penup
-  setturtle 0 ht penup
-  setturtle 2 ht penup
-  setturtle 3 ht penup
+  setturtle 1 hideturtle penup
+  setturtle 0 hideturtle penup
+  setturtle 2 hideturtle penup
+  setturtle 3 hideturtle penup
   make "displayWidth item 3 machine
   make "displayHeight item 4 machine
   make "textLength 0
@@ -1348,7 +1348,7 @@ to open
   repeat 7 [ if not :open.quit [ waitStop 30 ] ]
 
   clearBox
-  setturtle 2 ht
+  setturtle 2 hideturtle
   if (and not :displayHighScores not :displayInstructions not :open.quit) [ menuOn :menuOn ]
 
   if not :open.quit [ displayHighScores ]
@@ -1517,7 +1517,7 @@ to open.turtleO
   setturtle 2
   bitmapturtle
   penup  setxy (( first :Apos ) + 232*:open.scale) (:displayHeight / 2)
-  st
+  showturtle
   make "speed 3
   make "oy last pos
   make "ox first pos
@@ -1909,7 +1909,7 @@ to scoreCheck
     saveScores
 
     clearBox
-    setturtle 2 ht
+    setturtle 2 hideturtle
     make "open.quit "false
     displayHighScores
     repeat 3 [if not :open.quit [waitStop 30] ]
