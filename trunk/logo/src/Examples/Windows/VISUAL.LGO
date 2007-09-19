@@ -605,7 +605,7 @@ to vinit
 make "the_scale 2
 cs
 setpensize [2 2]
-ht
+hideturtle
 pendown
 setxy :main_x*:the_scale 0
 setxy :main_x*:the_scale -:main_y*:the_scale
@@ -630,7 +630,7 @@ end
 to visualend
 windowdelete "dlg
 mouseoff
-st
+showturtle
 cs
 end
 
