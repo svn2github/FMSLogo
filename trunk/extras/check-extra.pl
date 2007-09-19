@@ -11,7 +11,7 @@ foreach my $filename (@ARGV) {
   my $fh = new IO::File "<$filename" or die $!;
   while (<$fh>) {
 
-    my $logoTokenDelimiter = '[^a-zA-Z0-9_\.~]';
+    my $logoTokenDelimiter = '(^|$|[^a-zA-Z0-9_\.~])';
 
     if (m/$logoTokenDelimiter(ct)$logoTokenDelimiter/i) {
       print "$filename:$lineNumber file uses CT, which means HIDETURTLE in French.\n";
@@ -29,7 +29,7 @@ foreach my $filename (@ARGV) {
     }
 
     if (m/$logoTokenDelimiter(se)$logoTokenDelimiter/i) {
-      print "$filename:$lineNumber file uses SE, which means IF in Portuguese.\n";
+      print "$filename:$lineNumber file uses SE, which means IF in Portuguese and Italian.\n";
       $exitCode = 1;
     }
 
@@ -40,6 +40,26 @@ foreach my $filename (@ARGV) {
 
     if (m/$logoTokenDelimiter(pe)$logoTokenDelimiter/i) {
       print "$filename:$lineNumber file uses PE, which means LT in Portuguese.\n";
+      $exitCode = 1;
+    }
+
+    if (m/$logoTokenDelimiter(rw)$logoTokenDelimiter/i) {
+      print "$filename:$lineNumber file uses RW, which means BACK in German.\n";
+      $exitCode = 1;
+    }
+
+    if (m/$logoTokenDelimiter(pr)$logoTokenDelimiter/i) {
+      print "$filename:$lineNumber file uses PR, which means TO in German.\n";
+      $exitCode = 1;
+    }
+
+    if (m/$logoTokenDelimiter(er)$logoTokenDelimiter/i) {
+      print "$filename:$lineNumber file uses ER, which means FIRST in German.\n";
+      $exitCode = 1;
+    }
+
+    if (m/$logoTokenDelimiter(st)$logoTokenDelimiter/i) {
+      print "$filename:$lineNumber file uses ST, which means PR in Italian.\n";
       $exitCode = 1;
     }
 
