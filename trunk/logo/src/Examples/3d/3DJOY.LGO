@@ -20,7 +20,7 @@ localmake "SpeedLimit       :elapse/300
 localmake "CurrentSpeed 0
 perspective
 cs
-pd
+pendown
 localmake "ShouldWe "False
 if not namep "ZeroLeftHeading [localmake "ShouldWe "True]
 if not :ShouldWe [localmake "ShouldWe YesNoBox [Calibrate] [Do you wish to Calibrate?]]
