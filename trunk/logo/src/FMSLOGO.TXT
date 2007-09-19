@@ -62,6 +62,7 @@ III. Special Thanks
     Bertrand Carette
     Carl Bogardus
     Alexandre Soares
+    Stephan Vogel
 
   Special thanks to:
     George Mills
