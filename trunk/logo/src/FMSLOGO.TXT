@@ -1,5 +1,5 @@
 ----------------------------------------------------------------------
-FMSLogo Version 6.16.0 for Microsoft Windows
+FMSLogo Version 6.17.0 for Microsoft Windows
 ----------------------------------------------------------------------
 
    I. Kit Description/Location
@@ -14,26 +14,15 @@ VIII. Minimum System Requirements
 
 I. Kit Description/Location (http://sourceforge.net/projects/fmslogo)
 
-  fmslogo-6.16.0.exe       (binary kit: Windows self-extracting installer)
-  fmslogo-6.16.0.zip       (binary kit: Windows ZIP archive)
-  fmslogo-src-6.16.0.zip   (source kit)
+  fmslogo-6.17.0.exe       (binary kit: Windows self-extracting installer)
+  fmslogo-6.17.0.zip       (binary kit: Windows ZIP archive)
+  fmslogo-src-6.17.0.zip   (source kit)
 
 II. New features/bugs fixed:
 
-  * Added for 6.16.0
-    o Fix bug #1765108; MACHINE now outputs the correct working area,
-      even if it changed.  FMSLogo also now positions new windows in the
-      working area, even if the size of the desktop or taskbar has changed.
-    o Fix bug #1735569; When the clipboard contains text, running BITMAPTURTLE
-      no longer prevents subsequent calls to BITMAPTURTLE from working.
-    o Fix bug #1622721; FMSLogo no longer gets into a bad state when the
-      clipboard becomes text.
-    o Fix bug #1619211; Bad input errors in library routines are now
-      internationalized.
-    o Fix bug #1609333; "Select Active Area" dialog box no longer loses
-      UI elements after pressing CTRL+ALT+DELETE.
-    o Improve the performance of line drawing by 12% and circle drawing by 60%.
-    o Add a Portuguese translation of FMSLogo.
+  * Added for 6.17.0
+    o Fix internationalization problems with the examples.  Some of them didn't
+      work with the Portuguese version of FMSLogo.
 
   For a complete history of changes across all versions of FMSLogo, see
   http://fmslogo.cvs.sourceforge.net/*checkout*/fmslogo/logo/src/CHANGELOG.TXT
@@ -63,6 +52,7 @@ III. Special Thanks
     Carl Bogardus
     Alexandre Soares
     Stephan Vogel
+    Stefano Federici
 
   Special thanks to:
     George Mills
