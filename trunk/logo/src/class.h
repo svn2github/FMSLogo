@@ -690,6 +690,11 @@ private:
     void EraseContentsOfWorkspace();
 
     void
+    InitializeOpenSaveDialogDataForLogoFiles(
+        TOpenSaveDialog::TData & FileData
+        );
+
+    void
     ShowColorPicker(
         class TColorDialog * & ColorPickerDialog,
         COLORREF               InitialColor,

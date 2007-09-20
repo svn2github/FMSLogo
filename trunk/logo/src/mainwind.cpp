@@ -1686,6 +1686,42 @@ void TMainFrame::CMFileNew()
     EraseContentsOfWorkspace();
 }
 
+void
+TMainFrame::InitializeOpenSaveDialogDataForLogoFiles(
+    TOpenSaveDialog::TData & FileData
+    )
+{
+    // Set the file filter.
+    // This looks something like "Logo Files (*.lgo)|*.lgo|All Files (*.*)|*.*|"
+    FileData.SetFilter(LOCALIZED_FILEFILTER_LOGO);
+
+
+    // Now set the filename.
+    // Default to *.lgo, but then overwrite that with everything between
+    // the first two pipe characters in the file filter.
+    // This was done so that the German FMSLogo could see .LOG files,
+    // which, I'm told, is the conventional extension for Logo files
+    // in German.
+
+    strcpy(FileData.FileName, "*.lgo");
+
+    const char * filenameStart = strchr(LOCALIZED_FILEFILTER_LOGO, '|');
+    if (filenameStart != NULL)
+    {
+        filenameStart++;
+
+        const char * filenameEnd = strchr(filenameStart, '|'); 
+        if (filenameEnd != NULL)
+        {
+            strncpy(FileData.FileName, filenameStart, filenameEnd - filenameStart);
+            FileData.FileName[filenameEnd - filenameStart] = '\0';
+        }
+    }
+
+    FileData.DefExt = "lgo";
+}
+
+
 void TMainFrame::CMFileLoad()
 {
     if (IsDirty)
@@ -1704,10 +1740,8 @@ void TMainFrame::CMFileLoad()
 
     // show the user a file-picker dialog
     TOpenSaveDialog::TData FileData;
+    InitializeOpenSaveDialogDataForLogoFiles(FileData);
     FileData.Flags = OFN_FILEMUSTEXIST | OFN_HIDEREADONLY | OFN_EXPLORER;
-    FileData.SetFilter(LOCALIZED_FILEFILTER_LOGO);
-    strcpy(FileData.FileName, "*.lgo");
-    FileData.DefExt = "lgo";
 
     // if user found a file then try to load it
     if (TFileOpenDialog(this, FileData).Execute() == IDOK)
@@ -1750,10 +1784,8 @@ void TMainFrame::CMFileOpen()
 
     // show the user a file-picker dialog
     TOpenSaveDialog::TData FileData;
+    InitializeOpenSaveDialogDataForLogoFiles(FileData);
     FileData.Flags = OFN_FILEMUSTEXIST | OFN_HIDEREADONLY | OFN_EXPLORER;
-    FileData.SetFilter(LOCALIZED_FILEFILTER_LOGO);
-    strcpy(FileData.FileName, "*.lgo");
-    FileData.DefExt = "lgo";
 
     // if user found a file then try to open it
     if (TFileOpenDialog(this, FileData).Execute() == IDOK)
@@ -1799,10 +1831,9 @@ bool TMainFrame::SaveFileAs()
 
     // Get file name from user and then save the file
     TOpenSaveDialog::TData FileData;
+    InitializeOpenSaveDialogDataForLogoFiles(FileData);
     FileData.Flags = OFN_OVERWRITEPROMPT | OFN_HIDEREADONLY | OFN_EXPLORER;
-    FileData.SetFilter(LOCALIZED_FILEFILTER_LOGO);
     strcpy(FileData.FileName, FileName);
-    FileData.DefExt = "lgo";
 
     bool isOk;
     if (TFileSaveDialog(this, FileData).Execute() == IDOK)
