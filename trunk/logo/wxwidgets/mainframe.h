@@ -16,6 +16,7 @@ public:
     virtual ~CMainFrame();
 
     // Menu commands
+    void SetPenSize(wxCommandEvent& event);
     void SetActiveArea(wxCommandEvent& event);
     void AboutFmsLogo(wxCommandEvent& event);
     void AboutMultipleSclerosis(wxCommandEvent& event);

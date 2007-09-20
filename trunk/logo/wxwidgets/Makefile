@@ -85,6 +85,7 @@ SPLITTER_OBJECTS =  \
 	splitter_workspaceeditor.o \
 	splitter_guiutils.o \
 	splitter_fmslogo.o \
+	splitter_setpensize.o \
 
 ifeq "$(TOOLKIT)" "MSW"
 SPLITTER_OBJECTS +=  \

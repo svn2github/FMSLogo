@@ -34,6 +34,7 @@
 #include "localizedstrings.h"
 #include "fmslogo.h"
 #include "mainframe.h"
+#include "setpensize.h"
 
 #include "fmslogo-16x16.xpm"
 
@@ -147,6 +148,7 @@ enum MainFrameMenuIds
 };
 
 BEGIN_EVENT_TABLE(CMainFrame, wxFrame)
+    EVT_MENU(ID_SETPENSIZE,         CMainFrame::SetPenSize)
     EVT_MENU(ID_BITMAPPRINTERAREA,  CMainFrame::SetActiveArea)
     EVT_MENU(ID_HELPABOUT,          CMainFrame::AboutFmsLogo)
     EVT_MENU(ID_HELPABOUTMS,        CMainFrame::AboutMultipleSclerosis)
@@ -274,6 +276,12 @@ CMainFrame::~CMainFrame()
 void CMainFrame::Quit(wxCommandEvent& WXUNUSED(event) )
 {
     Close(true);
+}
+
+void CMainFrame::SetPenSize(wxCommandEvent& WXUNUSED(event) )
+{
+    CSetPenSize * setPenSize = new CSetPenSize(this);
+    setPenSize->Show();
 }
 
 void CMainFrame::SetActiveArea(wxCommandEvent& WXUNUSED(event) )
