@@ -1042,7 +1042,7 @@ NODE *lbitblock(NODE *arg)
                 // to get the screen DC, simply calling FillRect() on the
                 // screen causes repainting problems.
                 // I suspect that calling ReleaseDC() implicitly invalidated
-                // the screen, which may by why is was so much slower.
+                // the screen, which may be why it was so much slower.
                 InvalidateRect(screen->HWindow, &screenRect, false);
             }
         }
