@@ -160,9 +160,9 @@ Function .onInit
   Push German
   Push ${LANG_GREEK}
   Push Greek
-  Push ${LANG_PORTUGUESE}
-  Push Italian
   Push ${LANG_ITALIAN}
+  Push Italian
+  Push ${LANG_PORTUGUESE}
   Push Portuguese
   Push ${LANG_SPANISH}
   Push Spanish
