@@ -1,0 +1,3517 @@
+<appendix id='translations'>
+<title>Commands: English to Portuguese</title>
+<informaltable>
+  <indexterm><primary>From English</primary></indexterm>
+  <tgroup cols='2'>
+   <thead>
+     <row>
+       <entry>English Command</entry>
+       <entry>Portuguese Command</entry>
+     </row>
+   </thead>
+  <tbody>
+     <row>
+       <entry><link linkend='command-.eq'>.eq</link></entry>
+       <entry>.ig</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-.maybeoutput'>.maybeoutput</link></entry>
+       <entry>.talvezEnvie</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-.setbf'>.setbf</link></entry>
+       <entry>.mudeÚltimos</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-.setfirst'>.setfirst</link></entry>
+       <entry>.mudePrimeiro</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-.setitem'>.setitem</link></entry>
+       <entry>.mudeItem</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-activearea'>activearea</link></entry>
+       <entry>áreaAtiva</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-allopen'>allopen</link></entry>
+       <entry>abertos</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-and'>and</link></entry>
+       <entry>e</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-apply'>apply</link></entry>
+       <entry>aplique</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-arcsin'>arcsin</link></entry>
+       <entry>arcsen</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-array'>array</link></entry>
+       <entry>vetor</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-arrayp'>array?</link></entry>
+       <entry>evetor?</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-arrayp'>arrayp</link></entry>
+       <entry>évetor?</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-ashift'>ashift</link></entry>
+       <entry>desloquedireita</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-back'>back</link></entry>
+       <entry>paratrás</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-backslashedp'>backslashed?</link></entry>
+       <entry>tembarrainv?</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-backslashedp'>backslashedp</link></entry>
+       <entry>tembarrainvertida?</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-beforep'>before?</link></entry>
+       <entry>eant?</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-beforep'>beforep</link></entry>
+       <entry>éanterior?</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-bf'>bf</link></entry>
+       <entry>sp</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-bfs'>bfs</link></entry>
+       <entry>sps</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-bitand'>bitand</link></entry>
+       <entry>bitE</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-bitblock'>bitblock</link></entry>
+       <entry>blocobmp</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-bitcopy'>bitcopy</link></entry>
+       <entry>copiebmp</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-bitcut'>bitcut</link></entry>
+       <entry>recortebmp</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-bitfit'>bitfit</link></entry>
+       <entry>mudebmp</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-bitindex'>bitindex</link></entry>
+       <entry>índicebmp</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-bitload'>bitload</link></entry>
+       <entry>carreguebmp</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-bitloadsize'>bitloadsize</link></entry>
+       <entry>tamanhocarreguebmp</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-bitmapturtle'>bitmapturtle</link></entry>
+       <entry>tatbmp</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-bitmode'>bitmode</link></entry>
+       <entry>modobmp</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-bitnot'>bitnot</link></entry>
+       <entry>bitNão</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-bitor'>bitor</link></entry>
+       <entry>bitOu</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-bitpaste'>bitpaste</link></entry>
+       <entry>colebmp</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-bitpastetoindex'>bitpastetoindex</link></entry>
+       <entry>colebmpÍndice</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-bitsave'>bitsave</link></entry>
+       <entry>salvebmp</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-bitsize'>bitsize</link></entry>
+       <entry>tamBmp</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-bitxor'>bitxor</link></entry>
+       <entry>bitXou</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-bk'>bk</link></entry>
+       <entry>pt</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-bl'>bl</link></entry>
+       <entry>su</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-buried'>buried</link></entry>
+       <entry>enterrados</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-bury'>bury</link></entry>
+       <entry>enterre</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-butfirst'>butfirst</link></entry>
+       <entry>semPrimeiro</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-butfirsts'>butfirsts</link></entry>
+       <entry>semPrimeiros</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-butlast'>butlast</link></entry>
+       <entry>semÚltimo</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-buttonp'>button?</link></entry>
+       <entry>ebotao?</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-buttoncreate'>buttoncreate</link></entry>
+       <entry>crieBotão</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-buttondelete'>buttondelete</link></entry>
+       <entry>apagueBotão</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-buttonenable'>buttonenable</link></entry>
+       <entry>ativeBotão</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-buttonupdate'>buttonupdate</link></entry>
+       <entry>atualizeBotão</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-bye'>bye</link></entry>
+       <entry>adeus</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-catch'>catch</link></entry>
+       <entry>pegue</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-char'>char</link></entry>
+       <entry>caractere</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-chdir'>chdir</link></entry>
+       <entry>mudeDir</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-checkboxcreate'>checkboxcreate</link></entry>
+       <entry>crieCaixamarcação</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-checkboxdelete'>checkboxdelete</link></entry>
+       <entry>apagueCaixamarcação</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-checkboxenable'>checkboxenable</link></entry>
+       <entry>ativeCaixamarcação</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-checkboxget'>checkboxget</link></entry>
+       <entry>estadoCaixamarcação</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-checkboxset'>checkboxset</link></entry>
+       <entry>mudeCaixamarcação</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-clean'>clean</link></entry>
+       <entry>apagueDesenho</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-clearpalette'>clearpalette</link></entry>
+       <entry>limpePaleta</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-clearscreen'>clearscreen</link></entry>
+       <entry>tartaruga</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-cleartext'>cleartext</link></entry>
+       <entry>apagueTexto</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-cleartimer'>cleartimer</link></entry>
+       <entry>desativeTemporizador</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-close'>close</link></entry>
+       <entry>fechearq</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-closeall'>closeall</link></entry>
+       <entry>fecheTodosArq</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-comboboxaddstring'>comboboxaddstring</link></entry>
+       <entry>adicionenaCaixaCombo</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-comboboxcreate'>comboboxcreate</link></entry>
+       <entry>crieCaixaCombo</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-comboboxdelete'>comboboxdelete</link></entry>
+       <entry>apagueCaixaCombo</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-comboboxdeletestring'>comboboxdeletestring</link></entry>
+       <entry>retiredaCaixaCombo</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-comboboxenable'>comboboxenable</link></entry>
+       <entry>ativeCaixaCombo</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-comboboxgettext'>comboboxgettext</link></entry>
+       <entry>leiatextoCaixaCombo</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-comboboxsettext'>comboboxsettext</link></entry>
+       <entry>mudetextoCaixaCombo</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-contents'>contents</link></entry>
+       <entry>listaprops</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-copydef'>copydef</link></entry>
+       <entry>copieDef</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-count'>count</link></entry>
+       <entry>conteItem</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-cs'>cs</link></entry>
+       <entry>tat</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-ct'>ct</link></entry>
+       <entry>at</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-debugwindows'>debugwindows</link></entry>
+       <entry>rastreieJanela</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-define'>define</link></entry>
+       <entry>defina</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-definedp'>defined?</link></entry>
+       <entry>edef?</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-definedp'>definedp</link></entry>
+       <entry>édefinido?</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-dialogcreate'>dialogcreate</link></entry>
+       <entry>crieDiálogo</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-dialogdelete'>dialogdelete</link></entry>
+       <entry>apagueDiálogo</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-dialogenable'>dialogenable</link></entry>
+       <entry>ativeDiálogo</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-dialogfileopen'>dialogfileopen</link></entry>
+       <entry>diálogoAbreArq</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-dialogfilesave'>dialogfilesave</link></entry>
+       <entry>diálogoSalveArq</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-difference'>difference</link></entry>
+       <entry>diferença</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-directories'>directories</link></entry>
+       <entry>diretórios</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-dllcall'>dllcall</link></entry>
+       <entry>chameDLL</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-dllfree'>dllfree</link></entry>
+       <entry>libereDLL</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-dllload'>dllload</link></entry>
+       <entry>carregueDLL</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-down'>down</link></entry>
+       <entry>baixenz</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-downpitch'>downpitch</link></entry>
+       <entry>baixeNariz</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-dribble'>dribble</link></entry>
+       <entry>registre</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-edit'>edit</link></entry>
+       <entry>edite</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-ellipsearc'>ellipsearc</link></entry>
+       <entry>arcoElipse</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-emptyp'>empty?</link></entry>
+       <entry>evazia?</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-emptyp'>emptyp</link></entry>
+       <entry>évazia?</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-end'>end</link></entry>
+       <entry>fim</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-eofp'>eof?</link></entry>
+       <entry>éfimarq?</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-eofp'>eofp</link></entry>
+       <entry>efimarq?</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-equalp'>equal?</link></entry>
+       <entry>saoig?</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-equalp'>equalp</link></entry>
+       <entry>sãoiguais?</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-er'>er</link></entry>
+       <entry>el</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-erase'>erase</link></entry>
+       <entry>elimine</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-erasefile'>erasefile</link></entry>
+       <entry>elimineArquivo</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-erf'>erf</link></entry>
+       <entry>elArq</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-error'>error</link></entry>
+       <entry>erro</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-eventcheck'>eventcheck</link></entry>
+       <entry>verifiqueEventos</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-false'>false</link></entry>
+       <entry>falso</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-fd'>fd</link></entry>
+       <entry>pf</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-fence'>fence</link></entry>
+       <entry>ponhalimite</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-files'>files</link></entry>
+       <entry>arquivos</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-fill'>fill</link></entry>
+       <entry>pinte</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-first'>first</link></entry>
+       <entry>primeiro</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-firsts'>firsts</link></entry>
+       <entry>primeiros</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-floodcolor'>floodcolor</link></entry>
+       <entry>cordePreenchimento</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-floodcolor'>floodcolor</link></entry>
+       <entry>floodcolour</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-fontfacenames'>fontfacenames</link></entry>
+       <entry>tiposDeLetra</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-forever'>forever</link></entry>
+       <entry>parasempre</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-form'>form</link></entry>
+       <entry>formatoNúmero</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-forward'>forward</link></entry>
+       <entry>parafrente</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-fput'>fput</link></entry>
+       <entry>juntenoInício</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-fs'>fs</link></entry>
+       <entry>tc</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-fullscreen'>fullscreen</link></entry>
+       <entry>telaCheia</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-fulltext'>fulltext</link></entry>
+       <entry>todoTexto</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-getfocus'>getfocus</link></entry>
+       <entry>foco</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-gifload'>gifload</link></entry>
+       <entry>carregueGif</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-gifsave'>gifsave</link></entry>
+       <entry>salveGif</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-gifsize'>gifsize</link></entry>
+       <entry>tamGif</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-gprop'>gprop</link></entry>
+       <entry>propriedade</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-greaterp'>greater?</link></entry>
+       <entry>emaior?</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-greaterequalp'>greaterequal?</link></entry>
+       <entry>maiorig?</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-greaterequalp'>greaterequalp</link></entry>
+       <entry>maior.ou.igual?</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-greaterp'>greaterp</link></entry>
+       <entry>émaior?</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-groupboxcreate'>groupboxcreate</link></entry>
+       <entry>criecaixagrupo</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-groupboxdelete'>groupboxdelete</link></entry>
+       <entry>apaguecaixagrupo</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-halt'>halt</link></entry>
+       <entry>alto</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-heading'>heading</link></entry>
+       <entry>direção</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-help'>help</link></entry>
+       <entry>ajuda</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-hideturtle'>hideturtle</link></entry>
+       <entry>ot</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-home'>home</link></entry>
+       <entry>centro</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-ht'>ht</link></entry>
+       <entry>oculteTartaruga</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-if'>if</link></entry>
+       <entry>se</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-ifelse'>ifelse</link></entry>
+       <entry>senão</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-iff'>iff</link></entry>
+       <entry>sef</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-iffalse'>iffalse</link></entry>
+       <entry>seFalso</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-ift'>ift</link></entry>
+       <entry>sev</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-iftrue'>iftrue</link></entry>
+       <entry>severd</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-ingameport'>ingameport</link></entry>
+       <entry>portaJoystick</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-inport'>inport</link></entry>
+       <entry>portaEntrada</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-inportb'>inportb</link></entry>
+       <entry>portaEntradab</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-int'>int</link></entry>
+       <entry>inteiro</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-item'>item</link></entry>
+       <entry>elemento</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-keyp'>key?</link></entry>
+       <entry>tecla?</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-keyboardoff'>keyboardoff</link></entry>
+       <entry>desHabilitaTeclado</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-keyboardon'>keyboardon</link></entry>
+       <entry>habilitaTeclado</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-keyboardvalue'>keyboardvalue</link></entry>
+       <entry>leiaTecla</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-keyp'>keyp</link></entry>
+       <entry>tecla?</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-label'>label</link></entry>
+       <entry>rotule</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-labelfont'>labelfont</link></entry>
+       <entry>tiporotule</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-labelsize'>labelsize</link></entry>
+       <entry>tamanhorotule</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-last'>last</link></entry>
+       <entry>último</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-left'>left</link></entry>
+       <entry>paraesquerda</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-leftroll'>leftroll</link></entry>
+       <entry>roleparaesquerda</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-lessp'>less?</link></entry>
+       <entry>emenor?</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-lessequalp'>lessequal?</link></entry>
+       <entry>menorig?</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-lessequalp'>lessequalp</link></entry>
+       <entry>menor.ou.igual?</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-lessp'>lessp</link></entry>
+       <entry>émenor?</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-light'>light</link></entry>
+       <entry>luz</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-list'>list</link></entry>
+       <entry>lista</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-listp'>list?</link></entry>
+       <entry>elista?</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-listboxaddstring'>listboxaddstring</link></entry>
+       <entry>adicioneCaixaListagem</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-listboxcreate'>listboxcreate</link></entry>
+       <entry>crieCaixaListagem</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-listboxdelete'>listboxdelete</link></entry>
+       <entry>apagueCaixaListagem</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-listboxdeletestring'>listboxdeletestring</link></entry>
+       <entry>retiredaCaixaListagem</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-listboxenable'>listboxenable</link></entry>
+       <entry>ativeCaixaListagem</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-listboxgetselect'>listboxgetselect</link></entry>
+       <entry>selecioneCaixaListagem</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-listp'>listp</link></entry>
+       <entry>élista?</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-load'>load</link></entry>
+       <entry>carregue</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-log10'>log10</link></entry>
+       <entry>log</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-logoversion'>logoversion</link></entry>
+       <entry>versãoLogo</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-lowercase'>lowercase</link></entry>
+       <entry>minúsculas</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-lput'>lput</link></entry>
+       <entry>mudeÚltimo</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-lr'>lr</link></entry>
+       <entry>rolepe</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-lshift'>lshift</link></entry>
+       <entry>desloqueesquerda</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-lt'>lt</link></entry>
+       <entry>pe</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-machine'>machine</link></entry>
+       <entry>sistema</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-macrop'>macro?</link></entry>
+       <entry>emacro?</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-macrop'>macrop</link></entry>
+       <entry>émacro?</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-make'>Make</link></entry>
+       <entry>atribua</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-member'>member</link></entry>
+       <entry>membro</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-memberp'>member?</link></entry>
+       <entry>emembro?</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-memberp'>memberp</link></entry>
+       <entry>émembro?</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-messagebox'>messagebox</link></entry>
+       <entry>mensagem</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-midiclose'>midiclose</link></entry>
+       <entry>fecheMidi</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-midimessage'>midimessage</link></entry>
+       <entry>mensagemMidi</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-midiopen'>midiopen</link></entry>
+       <entry>abraMidi</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-minus'>minus</link></entry>
+       <entry>negativo</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-mkdir'>mkdir</link></entry>
+       <entry>crieDir</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-modulo'>modulo</link></entry>
+       <entry>resto</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-mouseoff'>mouseoff</link></entry>
+       <entry>ativeMouse</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-mouseon'>mouseon</link></entry>
+       <entry>desativeMouse</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-mousepos'>mousepos</link></entry>
+       <entry>posMouse</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-namep'>name?</link></entry>
+       <entry>enome?</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-namep'>namep</link></entry>
+       <entry>énome?</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-names'>names</link></entry>
+       <entry>nomes</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-netacceptoff'>netacceptoff</link></entry>
+       <entry>desativeRedeAceita</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-netaccepton'>netaccepton</link></entry>
+       <entry>ativeRedeAceita</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-netacceptreceivevalue'>netacceptreceivevalue</link></entry>
+       <entry>recebaValorRedeAceita</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-netacceptsendvalue'>netacceptsendvalue</link></entry>
+       <entry>envieValorRedeAceita</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-netconnectoff'>netconnectoff</link></entry>
+       <entry>nãoAceiteConectar</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-netconnecton'>netconnecton</link></entry>
+       <entry>ativeConectaRede</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-netconnectreceivevalue'>netconnectreceivevalue</link></entry>
+       <entry>recebeValorConectaRede</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-netconnectsendvalue'>netconnectsendvalue</link></entry>
+       <entry>envieValorConectaRede</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-netshutdown'>netshutdown</link></entry>
+       <entry>termineRede</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-netstartup'>netstartup</link></entry>
+       <entry>inicieRede</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-nobitmapturtle'>nobitmapturtle</link></entry>
+       <entry>semtatbmp</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-nodribble'>nodribble</link></entry>
+       <entry>nãoregistre</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-nostatus'>nostatus</link></entry>
+       <entry>semEstado</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-not'>not</link></entry>
+       <entry>não</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-notequalp'>notequal?</link></entry>
+       <entry>saodif?</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-notequalp'>notequalp</link></entry>
+       <entry>sãodiferentes?</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-noyield'>noyield</link></entry>
+       <entry>monotarefa</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-numberp'>number?</link></entry>
+       <entry>enum?</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-numberp'>numberp</link></entry>
+       <entry>énúmero?</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-op'>op</link></entry>
+       <entry>dev</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-openappend'>openappend</link></entry>
+       <entry>abraparaAdicionar</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-openread'>openread</link></entry>
+       <entry>abraparaLer</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-openupdate'>openupdate</link></entry>
+       <entry>abraparaAtualizar</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-openwrite'>openwrite</link></entry>
+       <entry>abraparaEscrever</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-or'>or</link></entry>
+       <entry>ou</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-outport'>outport</link></entry>
+       <entry>escrevaPorta</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-outportb'>outportb</link></entry>
+       <entry>escrevaPortab</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-output'>output</link></entry>
+       <entry>devolva</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-parse'>parse</link></entry>
+       <entry>analise</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-pause'>pause</link></entry>
+       <entry>pausa</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-pc'>pc</link></entry>
+       <entry>cl</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-pd'>pd</link></entry>
+       <entry>ul</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-pe'>pe</link></entry>
+       <entry>ub</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-pencolor'>pencolor</link></entry>
+       <entry>cordoLápis</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-pencolor'>pencolor</link></entry>
+       <entry>pencolour</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-pendown'>pendown</link></entry>
+       <entry>useLápis</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-pendownp'>pendown?</link></entry>
+       <entry>euseLapis?</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-pendownp'>pendownp</link></entry>
+       <entry>éuseLápis?</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-penerase'>penerase</link></entry>
+       <entry>useborracha</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-penmode'>penmode</link></entry>
+       <entry>modoLápis</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-penpaint'>penpaint</link></entry>
+       <entry>useLápis</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-penpattern'>penpattern</link></entry>
+       <entry>lápis</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-penreverse'>penreverse</link></entry>
+       <entry>useInversor</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-pensize'>pensize</link></entry>
+       <entry>espessura</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-penup'>penup</link></entry>
+       <entry>useNada</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-perspective'>perspective</link></entry>
+       <entry>Logo3D</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-pitch'>pitch</link></entry>
+       <entry>direçãocabeceio</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-playwave'>playwave</link></entry>
+       <entry>toqueWave</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-plist'>Plist</link></entry>
+       <entry>listaProp</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-plists'>plists</link></entry>
+       <entry>listaProps</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-po'>po</link></entry>
+       <entry>moDefs</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-polyend'>polyend</link></entry>
+       <entry>terminePolígono</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-polystart'>polystart</link></entry>
+       <entry>iniciePolígono</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-polyview'>polyview</link></entry>
+       <entry>mostrePoligono</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-popdir'>popdir</link></entry>
+       <entry>voltedir</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-portclose'>portclose</link></entry>
+       <entry>fechePorta</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-portflush'>portflush</link></entry>
+       <entry>descarregaPorta</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-portmode'>portmode</link></entry>
+       <entry>mudemodoPorta</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-portopen'>portopen</link></entry>
+       <entry>abraPorta</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-portreadarray'>portreadarray</link></entry>
+       <entry>leiaVetorPorta</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-portreadchar'>portreadchar</link></entry>
+       <entry>leiaCaracterePorta</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-portwritearray'>portwritearray</link></entry>
+       <entry>escrevaVetorPorta</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-portwritechar'>portwritechar</link></entry>
+       <entry>escrevaCaracterePorta</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-pot'>pot</link></entry>
+       <entry>imTodosTítulos</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-power'>power</link></entry>
+       <entry>potência</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-pprop'>Pprop</link></entry>
+       <entry>mudeprop</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-ppt'>ppt</link></entry>
+       <entry>ul</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-pr'>pr</link></entry>
+       <entry>esc</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-primitivep'>primitive?</link></entry>
+       <entry>eprim?</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-primitivep'>primitivep</link></entry>
+       <entry>éprimitiva?</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-print'>print</link></entry>
+       <entry>escreva</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-procedurep'>procedure?</link></entry>
+       <entry>eproced?</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-procedurep'>procedurep</link></entry>
+       <entry>éprocedimento?</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-procedures'>procedures</link></entry>
+       <entry>lProcs</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-product'>product</link></entry>
+       <entry>produto</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-proplistp'>proplist?</link></entry>
+       <entry>lProp?</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-proplistp'>proplistp</link></entry>
+       <entry>lProp?</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-pu'>pu</link></entry>
+       <entry>un</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-px'>px</link></entry>
+       <entry>ui</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-questionbox'>questionbox</link></entry>
+       <entry>caixadeQuestão</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-quotient'>quotient</link></entry>
+       <entry>quociente</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-radarcsin'>radarcsin</link></entry>
+       <entry>radarcSen</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-radiobuttoncreate'>radiobuttoncreate</link></entry>
+       <entry>crieBotãoRádio</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-radiobuttondelete'>radiobuttondelete</link></entry>
+       <entry>apagueBotãoRádio</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-radiobuttonenable'>radiobuttonenable</link></entry>
+       <entry>ativeBotãoRádio</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-radiobuttonget'>radiobuttonget</link></entry>
+       <entry>botãoRádio</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-radiobuttonset'>radiobuttonset</link></entry>
+       <entry>mudeBotãoRádio</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-radsin'>radsin</link></entry>
+       <entry>radSen</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-random'>random</link></entry>
+       <entry>sorteienúmero</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-rc'>rc</link></entry>
+       <entry>leiac</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-rcs'>rcs</link></entry>
+       <entry>leiacs</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-readchar'>readchar</link></entry>
+       <entry>leiaCaractere</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-readchars'>readchars</link></entry>
+       <entry>leiaCaracteres</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-reader'>reader</link></entry>
+       <entry>arqLeitura</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-readlist'>readlist</link></entry>
+       <entry>leiaLista</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-readpos'>readpos</link></entry>
+       <entry>posLeitura</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-readword'>readword</link></entry>
+       <entry>leiaPalavra</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-remainder'>remainder</link></entry>
+       <entry>resto</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-remprop'>remprop</link></entry>
+       <entry>retireProp</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-repcount'>repcount</link></entry>
+       <entry>conteVezes</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-repeat'>repeat</link></entry>
+       <entry>repita</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-rerandom'>rerandom</link></entry>
+       <entry>resorteieiNúmero</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-right'>right</link></entry>
+       <entry>paradireita</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-rightroll'>rightroll</link></entry>
+       <entry>roleparadireita</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-rl'>rl</link></entry>
+       <entry>rolepd</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-rmdir'>rmdir</link></entry>
+       <entry>apagueDir</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-roll'>roll</link></entry>
+       <entry>direçãoRolagem</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-round'>round</link></entry>
+       <entry>arredonde</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-rr'>rr</link></entry>
+       <entry>rolepd</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-rt'>rt</link></entry>
+       <entry>pd</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-run'>run</link></entry>
+       <entry>faça</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-runparse'>runparse</link></entry>
+       <entry>façaAnalise</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-runresult'>runresult</link></entry>
+       <entry>façaResultado</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-rw'>rw</link></entry>
+       <entry>leiap</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-save'>save</link></entry>
+       <entry>salve</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-screencolor'>screencolor</link></entry>
+       <entry>cordofundo</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-screencolor'>screencolor</link></entry>
+       <entry>screencolour</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-scrollbarcreate'>scrollbarcreate</link></entry>
+       <entry>crieBarraRolagem</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-scrollbardelete'>scrollbardelete</link></entry>
+       <entry>apagueBarraRolagem</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-scrollbarenable'>scrollbarenable</link></entry>
+       <entry>ativeBarraRolagem</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-scrollbarget'>scrollbarget</link></entry>
+       <entry>barraRolagem</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-scrollbarset'>scrollbarset</link></entry>
+       <entry>mudeBarraRolagem</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-scrollx'>scrollx</link></entry>
+       <entry>rolex</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-scrolly'>scrolly</link></entry>
+       <entry>roley</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-scrunch'>scrunch</link></entry>
+       <entry>proporção</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-se'>se</link></entry>
+       <entry>fr</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-selectbox'>selectbox</link></entry>
+       <entry>caixaseleção</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-sentence'>sentence</link></entry>
+       <entry>frase</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-setactivearea'>setactivearea</link></entry>
+       <entry>mudeAreaAtiva</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-setbitindex'>setbitindex</link></entry>
+       <entry>mudeÍndicebmp</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-setbitmode'>setbitmode</link></entry>
+       <entry>mudeModobmp</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-setcursor'>setcursor</link></entry>
+       <entry>mudeCursor</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-setcursornowait'>setcursornowait</link></entry>
+       <entry>mudeCursorSeta</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-setcursorwait'>setcursorwait</link></entry>
+       <entry>mudeCursorEspera</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-setfc'>setfc</link></entry>
+       <entry>mudecp</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-setfloodcolor'>setfloodcolor</link></entry>
+       <entry>mudeCordePreenchimento</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-setfloodcolor'>setfloodcolor</link></entry>
+       <entry>setfloodcolour</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-setfocus'>setfocus</link></entry>
+       <entry>mudeFoco</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-seth'>seth</link></entry>
+       <entry>mudedc</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-setheading'>setheading</link></entry>
+       <entry>mudeDireção</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-setitem'>setitem</link></entry>
+       <entry>mudeItem</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-setlabelfont'>setlabelfont</link></entry>
+       <entry>mudeTipo</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-setlight'>setlight</link></entry>
+       <entry>mudeLuz</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-setmargins'>setmargins</link></entry>
+       <entry>mudeMargens</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-setpc'>setpc</link></entry>
+       <entry>mudeCL</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-setpencolor'>setpencolor</link></entry>
+       <entry>mudeCordoLápis</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-setpencolor'>setpencolor</link></entry>
+       <entry>setpencolour</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-setpenpattern'>setpenpattern</link></entry>
+       <entry>mudePadrãoLápis</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-setpensize'>setpensize</link></entry>
+       <entry>mudeEspessura</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-setpitch'>setpitch</link></entry>
+       <entry>mudeCabeceio</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-setpixel'>setpixel</link></entry>
+       <entry>mudePixel</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-setpos'>setpos</link></entry>
+       <entry>mudePos</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-setposxyz'>setposxyz</link></entry>
+       <entry>mudeposxyz</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-setread'>setread</link></entry>
+       <entry>mudeLeitura</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-setreadpos'>setreadpos</link></entry>
+       <entry>mudePosLeitura</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-setroll'>setroll</link></entry>
+       <entry>mudeDireçãoRolagem</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-setsc'>setsc</link></entry>
+       <entry>mudeCF</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-setscreencolor'>setscreencolor</link></entry>
+       <entry>mudeCordoFundo</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-setscreencolor'>setscreencolor</link></entry>
+       <entry>setscreencolour</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-setscrunch'>setscrunch</link></entry>
+       <entry>mudeProporção</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-settimer'>settimer</link></entry>
+       <entry>mudeTemporizador</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-setturtle'>setturtle</link></entry>
+       <entry>ativetat</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-setturtlemode'>setturtlemode</link></entry>
+       <entry>mudeModoTat</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-setwrite'>setwrite</link></entry>
+       <entry>mudeEscrita</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-setwritepos'>setwritepos</link></entry>
+       <entry>mudePosEscrita</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-setx'>setx</link></entry>
+       <entry>mudex</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-setxy'>setxy</link></entry>
+       <entry>mudexy</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-setxyz'>setxyz</link></entry>
+       <entry>mudexyz</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-sety'>sety</link></entry>
+       <entry>mudey</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-setz'>setz</link></entry>
+       <entry>mudez</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-show'>show</link></entry>
+       <entry>mostre</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-shownp'>shown?</link></entry>
+       <entry>evisivel?</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-shownp'>shownp</link></entry>
+       <entry>évisível?</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-showturtle'>showturtle</link></entry>
+       <entry>mostreTat</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-sin'>sin</link></entry>
+       <entry>sen</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-sound'>sound</link></entry>
+       <entry>som</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-splitscreen'>splitscreen</link></entry>
+       <entry>fixeJaneladeComandos</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-sqrt'>sqrt</link></entry>
+       <entry>raizq</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-ss'>ss</link></entry>
+       <entry>fixeJC</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-st'>st</link></entry>
+       <entry>mt</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-staticcreate'>staticcreate</link></entry>
+       <entry>crieEstático</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-staticdelete'>staticdelete</link></entry>
+       <entry>apagueEstático</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-staticupdate'>staticupdate</link></entry>
+       <entry>mudeEstático</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-status'>status</link></entry>
+       <entry>estado</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-step'>step</link></entry>
+       <entry>passoapasso</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-stepped'>stepped</link></entry>
+       <entry>passeados</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-stop'>stop</link></entry>
+       <entry>pare</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-substringp'>substring?</link></entry>
+       <entry>esubseq?</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-substringp'>substringp</link></entry>
+       <entry>ésubseqüência?</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-sum'>sum</link></entry>
+       <entry>soma</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-test'>test</link></entry>
+       <entry>teste</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-text'>text</link></entry>
+       <entry>texto</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-textscreen'>textscreen</link></entry>
+       <entry>libereJaneladeComandos</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-thing'>thing</link></entry>
+       <entry>valor</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-throw'>throw</link></entry>
+       <entry>lance</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-time'>time</link></entry>
+       <entry>diahora</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-timemilli'>timemilli</link></entry>
+       <entry>tempoMili</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-to'>to</link></entry>
+       <entry>para</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-tone'>tone</link></entry>
+       <entry>tom</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-towards'>towards</link></entry>
+       <entry>direçãopara</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-towardsxyz'>towardsxyz</link></entry>
+       <entry>direçãoparaxyz</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-trace'>trace</link></entry>
+       <entry>rastreie</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-traced'>traced</link></entry>
+       <entry>rastreados</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-true'>true</link></entry>
+       <entry>verd</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-ts'>ts</link></entry>
+       <entry>libereJC</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-turtle'>turtle</link></entry>
+       <entry>tatativa</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-turtlemode'>turtlemode</link></entry>
+       <entry>modoTat</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-turtles'>turtles</link></entry>
+       <entry>tartarugas</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-type'>type</link></entry>
+       <entry>guardeparaescrever</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-unbury'>unbury</link></entry>
+       <entry>desenterre</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-unstep'>unstep</link></entry>
+       <entry>nãoPassoaPasso</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-untrace'>untrace</link></entry>
+       <entry>nãoRastreie</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-up'>up</link></entry>
+       <entry>levantenz</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-uppercase'>uppercase</link></entry>
+       <entry>maiúsculas</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-uppitch'>uppitch</link></entry>
+       <entry>levantenariz</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-wait'>wait</link></entry>
+       <entry>espere</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-window'>window</link></entry>
+       <entry>semlimite</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-windowcreate'>windowcreate</link></entry>
+       <entry>crieJanela</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-windowdelete'>windowdelete</link></entry>
+       <entry>apagueJanela</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-windowenable'>windowenable</link></entry>
+       <entry>ativeJanela</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-windowfileedit'>windowfileedit</link></entry>
+       <entry>editeArquivo</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-windowset'>windowset</link></entry>
+       <entry>mudeJanela</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-winhelp'>winhelp</link></entry>
+       <entry>ajudaDoWindows</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-word'>word</link></entry>
+       <entry>palavra</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-wordp'>word?</link></entry>
+       <entry>epal?</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-wordp'>wordp</link></entry>
+       <entry>épalavra?</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-wrap'>wrap</link></entry>
+       <entry>dobrejanela</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-writepos'>writepos</link></entry>
+       <entry>posLeitura</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-writer'>writer</link></entry>
+       <entry>arqescrita</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-yesnobox'>yesnobox</link></entry>
+       <entry>CaixaSimNão</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-yield'>yield</link></entry>
+       <entry>multiTarefa</entry>
+     </row>
+  </tbody>
+  </tgroup>
+</informaltable>
+</appendix>
+
+<appendix>
+<title>Commands: Portuguese to English</title>
+<indexterm><primary>To English</primary></indexterm>
+<informaltable>
+  <tgroup cols='2'>
+   <thead>
+     <row>
+       <entry>Portuguese Command</entry>
+       <entry>English Command</entry>
+     </row>
+   </thead>
+  <tbody>
+     <row>
+       <entry>.ig</entry>
+       <entry><link linkend='command-.eq'>.eq</link></entry>
+     </row>
+     <row>
+       <entry>.mudeItem</entry>
+       <entry><link linkend='command-.setitem'>.setitem</link></entry>
+     </row>
+     <row>
+       <entry>.mudePrimeiro</entry>
+       <entry><link linkend='command-.setfirst'>.setfirst</link></entry>
+     </row>
+     <row>
+       <entry>.mudeÚltimos</entry>
+       <entry><link linkend='command-.setbf'>.setbf</link></entry>
+     </row>
+     <row>
+       <entry>.talvezEnvie</entry>
+       <entry><link linkend='command-.maybeoutput'>.maybeoutput</link></entry>
+     </row>
+     <row>
+       <entry>abertos</entry>
+       <entry><link linkend='command-allopen'>allopen</link></entry>
+     </row>
+     <row>
+       <entry>abraMidi</entry>
+       <entry><link linkend='command-midiopen'>midiopen</link></entry>
+     </row>
+     <row>
+       <entry>abraparaAdicionar</entry>
+       <entry><link linkend='command-openappend'>openappend</link></entry>
+     </row>
+     <row>
+       <entry>abraparaAtualizar</entry>
+       <entry><link linkend='command-openupdate'>openupdate</link></entry>
+     </row>
+     <row>
+       <entry>abraparaEscrever</entry>
+       <entry><link linkend='command-openwrite'>openwrite</link></entry>
+     </row>
+     <row>
+       <entry>abraparaLer</entry>
+       <entry><link linkend='command-openread'>openread</link></entry>
+     </row>
+     <row>
+       <entry>abraPorta</entry>
+       <entry><link linkend='command-portopen'>portopen</link></entry>
+     </row>
+     <row>
+       <entry>adeus</entry>
+       <entry><link linkend='command-bye'>bye</link></entry>
+     </row>
+     <row>
+       <entry>adicioneCaixaListagem</entry>
+       <entry><link linkend='command-listboxaddstring'>listboxaddstring</link></entry>
+     </row>
+     <row>
+       <entry>adicionenaCaixaCombo</entry>
+       <entry><link linkend='command-comboboxaddstring'>comboboxaddstring</link></entry>
+     </row>
+     <row>
+       <entry>ajuda</entry>
+       <entry><link linkend='command-help'>help</link></entry>
+     </row>
+     <row>
+       <entry>ajudaDoWindows</entry>
+       <entry><link linkend='command-winhelp'>winhelp</link></entry>
+     </row>
+     <row>
+       <entry>alto</entry>
+       <entry><link linkend='command-halt'>halt</link></entry>
+     </row>
+     <row>
+       <entry>analise</entry>
+       <entry><link linkend='command-parse'>parse</link></entry>
+     </row>
+     <row>
+       <entry>apagueBarraRolagem</entry>
+       <entry><link linkend='command-scrollbardelete'>scrollbardelete</link></entry>
+     </row>
+     <row>
+       <entry>apagueBotão</entry>
+       <entry><link linkend='command-buttondelete'>buttondelete</link></entry>
+     </row>
+     <row>
+       <entry>apagueBotãoRádio</entry>
+       <entry><link linkend='command-radiobuttondelete'>radiobuttondelete</link></entry>
+     </row>
+     <row>
+       <entry>apagueCaixaCombo</entry>
+       <entry><link linkend='command-comboboxdelete'>comboboxdelete</link></entry>
+     </row>
+     <row>
+       <entry>apaguecaixagrupo</entry>
+       <entry><link linkend='command-groupboxdelete'>groupboxdelete</link></entry>
+     </row>
+     <row>
+       <entry>apagueCaixaListagem</entry>
+       <entry><link linkend='command-listboxdelete'>listboxdelete</link></entry>
+     </row>
+     <row>
+       <entry>apagueCaixamarcação</entry>
+       <entry><link linkend='command-checkboxdelete'>checkboxdelete</link></entry>
+     </row>
+     <row>
+       <entry>apagueDesenho</entry>
+       <entry><link linkend='command-clean'>clean</link></entry>
+     </row>
+     <row>
+       <entry>apagueDiálogo</entry>
+       <entry><link linkend='command-dialogdelete'>dialogdelete</link></entry>
+     </row>
+     <row>
+       <entry>apagueDir</entry>
+       <entry><link linkend='command-rmdir'>rmdir</link></entry>
+     </row>
+     <row>
+       <entry>apagueEstático</entry>
+       <entry><link linkend='command-staticdelete'>staticdelete</link></entry>
+     </row>
+     <row>
+       <entry>apagueJanela</entry>
+       <entry><link linkend='command-windowdelete'>windowdelete</link></entry>
+     </row>
+     <row>
+       <entry>apagueTexto</entry>
+       <entry><link linkend='command-cleartext'>cleartext</link></entry>
+     </row>
+     <row>
+       <entry>aplique</entry>
+       <entry><link linkend='command-apply'>apply</link></entry>
+     </row>
+     <row>
+       <entry>arcoElipse</entry>
+       <entry><link linkend='command-ellipsearc'>ellipsearc</link></entry>
+     </row>
+     <row>
+       <entry>arcsen</entry>
+       <entry><link linkend='command-arcsin'>arcsin</link></entry>
+     </row>
+     <row>
+       <entry>áreaAtiva</entry>
+       <entry><link linkend='command-activearea'>activearea</link></entry>
+     </row>
+     <row>
+       <entry>arqescrita</entry>
+       <entry><link linkend='command-writer'>writer</link></entry>
+     </row>
+     <row>
+       <entry>arqLeitura</entry>
+       <entry><link linkend='command-reader'>reader</link></entry>
+     </row>
+     <row>
+       <entry>arquivos</entry>
+       <entry><link linkend='command-files'>files</link></entry>
+     </row>
+     <row>
+       <entry>arredonde</entry>
+       <entry><link linkend='command-round'>round</link></entry>
+     </row>
+     <row>
+       <entry>at</entry>
+       <entry><link linkend='command-ct'>ct</link></entry>
+     </row>
+     <row>
+       <entry>ativeBarraRolagem</entry>
+       <entry><link linkend='command-scrollbarenable'>scrollbarenable</link></entry>
+     </row>
+     <row>
+       <entry>ativeBotão</entry>
+       <entry><link linkend='command-buttonenable'>buttonenable</link></entry>
+     </row>
+     <row>
+       <entry>ativeBotãoRádio</entry>
+       <entry><link linkend='command-radiobuttonenable'>radiobuttonenable</link></entry>
+     </row>
+     <row>
+       <entry>ativeCaixaCombo</entry>
+       <entry><link linkend='command-comboboxenable'>comboboxenable</link></entry>
+     </row>
+     <row>
+       <entry>ativeCaixaListagem</entry>
+       <entry><link linkend='command-listboxenable'>listboxenable</link></entry>
+     </row>
+     <row>
+       <entry>ativeCaixamarcação</entry>
+       <entry><link linkend='command-checkboxenable'>checkboxenable</link></entry>
+     </row>
+     <row>
+       <entry>ativeConectaRede</entry>
+       <entry><link linkend='command-netconnecton'>netconnecton</link></entry>
+     </row>
+     <row>
+       <entry>ativeDiálogo</entry>
+       <entry><link linkend='command-dialogenable'>dialogenable</link></entry>
+     </row>
+     <row>
+       <entry>ativeJanela</entry>
+       <entry><link linkend='command-windowenable'>windowenable</link></entry>
+     </row>
+     <row>
+       <entry>ativeMouse</entry>
+       <entry><link linkend='command-mouseoff'>mouseoff</link></entry>
+     </row>
+     <row>
+       <entry>ativeRedeAceita</entry>
+       <entry><link linkend='command-netaccepton'>netaccepton</link></entry>
+     </row>
+     <row>
+       <entry>ativetat</entry>
+       <entry><link linkend='command-setturtle'>setturtle</link></entry>
+     </row>
+     <row>
+       <entry>atribua</entry>
+       <entry><link linkend='command-make'>Make</link></entry>
+     </row>
+     <row>
+       <entry>atualizeBotão</entry>
+       <entry><link linkend='command-buttonupdate'>buttonupdate</link></entry>
+     </row>
+     <row>
+       <entry>baixeNariz</entry>
+       <entry><link linkend='command-downpitch'>downpitch</link></entry>
+     </row>
+     <row>
+       <entry>baixenz</entry>
+       <entry><link linkend='command-down'>down</link></entry>
+     </row>
+     <row>
+       <entry>barraRolagem</entry>
+       <entry><link linkend='command-scrollbarget'>scrollbarget</link></entry>
+     </row>
+     <row>
+       <entry>bitE</entry>
+       <entry><link linkend='command-bitand'>bitand</link></entry>
+     </row>
+     <row>
+       <entry>bitNão</entry>
+       <entry><link linkend='command-bitnot'>bitnot</link></entry>
+     </row>
+     <row>
+       <entry>bitOu</entry>
+       <entry><link linkend='command-bitor'>bitor</link></entry>
+     </row>
+     <row>
+       <entry>bitXou</entry>
+       <entry><link linkend='command-bitxor'>bitxor</link></entry>
+     </row>
+     <row>
+       <entry>blocobmp</entry>
+       <entry><link linkend='command-bitblock'>bitblock</link></entry>
+     </row>
+     <row>
+       <entry>botãoRádio</entry>
+       <entry><link linkend='command-radiobuttonget'>radiobuttonget</link></entry>
+     </row>
+     <row>
+       <entry>caixadeQuestão</entry>
+       <entry><link linkend='command-questionbox'>questionbox</link></entry>
+     </row>
+     <row>
+       <entry>caixaseleção</entry>
+       <entry><link linkend='command-selectbox'>selectbox</link></entry>
+     </row>
+     <row>
+       <entry>CaixaSimNão</entry>
+       <entry><link linkend='command-yesnobox'>yesnobox</link></entry>
+     </row>
+     <row>
+       <entry>caractere</entry>
+       <entry><link linkend='command-char'>char</link></entry>
+     </row>
+     <row>
+       <entry>carregue</entry>
+       <entry><link linkend='command-load'>load</link></entry>
+     </row>
+     <row>
+       <entry>carreguebmp</entry>
+       <entry><link linkend='command-bitload'>bitload</link></entry>
+     </row>
+     <row>
+       <entry>carregueDLL</entry>
+       <entry><link linkend='command-dllload'>dllload</link></entry>
+     </row>
+     <row>
+       <entry>carregueGif</entry>
+       <entry><link linkend='command-gifload'>gifload</link></entry>
+     </row>
+     <row>
+       <entry>centro</entry>
+       <entry><link linkend='command-home'>home</link></entry>
+     </row>
+     <row>
+       <entry>chameDLL</entry>
+       <entry><link linkend='command-dllcall'>dllcall</link></entry>
+     </row>
+     <row>
+       <entry>cl</entry>
+       <entry><link linkend='command-pc'>pc</link></entry>
+     </row>
+     <row>
+       <entry>colebmp</entry>
+       <entry><link linkend='command-bitpaste'>bitpaste</link></entry>
+     </row>
+     <row>
+       <entry>colebmpÍndice</entry>
+       <entry><link linkend='command-bitpastetoindex'>bitpastetoindex</link></entry>
+     </row>
+     <row>
+       <entry>conteItem</entry>
+       <entry><link linkend='command-count'>count</link></entry>
+     </row>
+     <row>
+       <entry>conteVezes</entry>
+       <entry><link linkend='command-repcount'>repcount</link></entry>
+     </row>
+     <row>
+       <entry>copiebmp</entry>
+       <entry><link linkend='command-bitcopy'>bitcopy</link></entry>
+     </row>
+     <row>
+       <entry>copieDef</entry>
+       <entry><link linkend='command-copydef'>copydef</link></entry>
+     </row>
+     <row>
+       <entry>cordePreenchimento</entry>
+       <entry><link linkend='command-floodcolor'>floodcolor</link></entry>
+     </row>
+     <row>
+       <entry>cordofundo</entry>
+       <entry><link linkend='command-screencolor'>screencolor</link></entry>
+     </row>
+     <row>
+       <entry>cordoLápis</entry>
+       <entry><link linkend='command-pencolor'>pencolor</link></entry>
+     </row>
+     <row>
+       <entry>crieBarraRolagem</entry>
+       <entry><link linkend='command-scrollbarcreate'>scrollbarcreate</link></entry>
+     </row>
+     <row>
+       <entry>crieBotão</entry>
+       <entry><link linkend='command-buttoncreate'>buttoncreate</link></entry>
+     </row>
+     <row>
+       <entry>crieBotãoRádio</entry>
+       <entry><link linkend='command-radiobuttoncreate'>radiobuttoncreate</link></entry>
+     </row>
+     <row>
+       <entry>crieCaixaCombo</entry>
+       <entry><link linkend='command-comboboxcreate'>comboboxcreate</link></entry>
+     </row>
+     <row>
+       <entry>criecaixagrupo</entry>
+       <entry><link linkend='command-groupboxcreate'>groupboxcreate</link></entry>
+     </row>
+     <row>
+       <entry>crieCaixaListagem</entry>
+       <entry><link linkend='command-listboxcreate'>listboxcreate</link></entry>
+     </row>
+     <row>
+       <entry>crieCaixamarcação</entry>
+       <entry><link linkend='command-checkboxcreate'>checkboxcreate</link></entry>
+     </row>
+     <row>
+       <entry>crieDiálogo</entry>
+       <entry><link linkend='command-dialogcreate'>dialogcreate</link></entry>
+     </row>
+     <row>
+       <entry>crieDir</entry>
+       <entry><link linkend='command-mkdir'>mkdir</link></entry>
+     </row>
+     <row>
+       <entry>crieEstático</entry>
+       <entry><link linkend='command-staticcreate'>staticcreate</link></entry>
+     </row>
+     <row>
+       <entry>crieJanela</entry>
+       <entry><link linkend='command-windowcreate'>windowcreate</link></entry>
+     </row>
+     <row>
+       <entry>defina</entry>
+       <entry><link linkend='command-define'>define</link></entry>
+     </row>
+     <row>
+       <entry>desativeMouse</entry>
+       <entry><link linkend='command-mouseon'>mouseon</link></entry>
+     </row>
+     <row>
+       <entry>desativeRedeAceita</entry>
+       <entry><link linkend='command-netacceptoff'>netacceptoff</link></entry>
+     </row>
+     <row>
+       <entry>desativeTemporizador</entry>
+       <entry><link linkend='command-cleartimer'>cleartimer</link></entry>
+     </row>
+     <row>
+       <entry>descarregaPorta</entry>
+       <entry><link linkend='command-portflush'>portflush</link></entry>
+     </row>
+     <row>
+       <entry>desenterre</entry>
+       <entry><link linkend='command-unbury'>unbury</link></entry>
+     </row>
+     <row>
+       <entry>desHabilitaTeclado</entry>
+       <entry><link linkend='command-keyboardoff'>keyboardoff</link></entry>
+     </row>
+     <row>
+       <entry>desloquedireita</entry>
+       <entry><link linkend='command-ashift'>ashift</link></entry>
+     </row>
+     <row>
+       <entry>desloqueesquerda</entry>
+       <entry><link linkend='command-lshift'>lshift</link></entry>
+     </row>
+     <row>
+       <entry>dev</entry>
+       <entry><link linkend='command-op'>op</link></entry>
+     </row>
+     <row>
+       <entry>devolva</entry>
+       <entry><link linkend='command-output'>output</link></entry>
+     </row>
+     <row>
+       <entry>diahora</entry>
+       <entry><link linkend='command-time'>time</link></entry>
+     </row>
+     <row>
+       <entry>diálogoAbreArq</entry>
+       <entry><link linkend='command-dialogfileopen'>dialogfileopen</link></entry>
+     </row>
+     <row>
+       <entry>diálogoSalveArq</entry>
+       <entry><link linkend='command-dialogfilesave'>dialogfilesave</link></entry>
+     </row>
+     <row>
+       <entry>diferença</entry>
+       <entry><link linkend='command-difference'>difference</link></entry>
+     </row>
+     <row>
+       <entry>direção</entry>
+       <entry><link linkend='command-heading'>heading</link></entry>
+     </row>
+     <row>
+       <entry>direçãocabeceio</entry>
+       <entry><link linkend='command-pitch'>pitch</link></entry>
+     </row>
+     <row>
+       <entry>direçãopara</entry>
+       <entry><link linkend='command-towards'>towards</link></entry>
+     </row>
+     <row>
+       <entry>direçãoparaxyz</entry>
+       <entry><link linkend='command-towardsxyz'>towardsxyz</link></entry>
+     </row>
+     <row>
+       <entry>direçãoRolagem</entry>
+       <entry><link linkend='command-roll'>roll</link></entry>
+     </row>
+     <row>
+       <entry>diretórios</entry>
+       <entry><link linkend='command-directories'>directories</link></entry>
+     </row>
+     <row>
+       <entry>dobrejanela</entry>
+       <entry><link linkend='command-wrap'>wrap</link></entry>
+     </row>
+     <row>
+       <entry>e</entry>
+       <entry><link linkend='command-and'>and</link></entry>
+     </row>
+     <row>
+       <entry>eant?</entry>
+       <entry><link linkend='command-beforep'>before?</link></entry>
+     </row>
+     <row>
+       <entry>éanterior?</entry>
+       <entry><link linkend='command-beforep'>beforep</link></entry>
+     </row>
+     <row>
+       <entry>ebotao?</entry>
+       <entry><link linkend='command-buttonp'>button?</link></entry>
+     </row>
+     <row>
+       <entry>edef?</entry>
+       <entry><link linkend='command-definedp'>defined?</link></entry>
+     </row>
+     <row>
+       <entry>édefinido?</entry>
+       <entry><link linkend='command-definedp'>definedp</link></entry>
+     </row>
+     <row>
+       <entry>edite</entry>
+       <entry><link linkend='command-edit'>edit</link></entry>
+     </row>
+     <row>
+       <entry>editeArquivo</entry>
+       <entry><link linkend='command-windowfileedit'>windowfileedit</link></entry>
+     </row>
+     <row>
+       <entry>efimarq?</entry>
+       <entry><link linkend='command-eofp'>eofp</link></entry>
+     </row>
+     <row>
+       <entry>éfimarq?</entry>
+       <entry><link linkend='command-eofp'>eof?</link></entry>
+     </row>
+     <row>
+       <entry>el</entry>
+       <entry><link linkend='command-er'>er</link></entry>
+     </row>
+     <row>
+       <entry>elArq</entry>
+       <entry><link linkend='command-erf'>erf</link></entry>
+     </row>
+     <row>
+       <entry>elemento</entry>
+       <entry><link linkend='command-item'>item</link></entry>
+     </row>
+     <row>
+       <entry>elimine</entry>
+       <entry><link linkend='command-erase'>erase</link></entry>
+     </row>
+     <row>
+       <entry>elimineArquivo</entry>
+       <entry><link linkend='command-erasefile'>erasefile</link></entry>
+     </row>
+     <row>
+       <entry>elista?</entry>
+       <entry><link linkend='command-listp'>list?</link></entry>
+     </row>
+     <row>
+       <entry>élista?</entry>
+       <entry><link linkend='command-listp'>listp</link></entry>
+     </row>
+     <row>
+       <entry>emacro?</entry>
+       <entry><link linkend='command-macrop'>macro?</link></entry>
+     </row>
+     <row>
+       <entry>émacro?</entry>
+       <entry><link linkend='command-macrop'>macrop</link></entry>
+     </row>
+     <row>
+       <entry>emaior?</entry>
+       <entry><link linkend='command-greaterp'>greater?</link></entry>
+     </row>
+     <row>
+       <entry>émaior?</entry>
+       <entry><link linkend='command-greaterp'>greaterp</link></entry>
+     </row>
+     <row>
+       <entry>emembro?</entry>
+       <entry><link linkend='command-memberp'>member?</link></entry>
+     </row>
+     <row>
+       <entry>émembro?</entry>
+       <entry><link linkend='command-memberp'>memberp</link></entry>
+     </row>
+     <row>
+       <entry>emenor?</entry>
+       <entry><link linkend='command-lessp'>less?</link></entry>
+     </row>
+     <row>
+       <entry>émenor?</entry>
+       <entry><link linkend='command-lessp'>lessp</link></entry>
+     </row>
+     <row>
+       <entry>enome?</entry>
+       <entry><link linkend='command-namep'>name?</link></entry>
+     </row>
+     <row>
+       <entry>énome?</entry>
+       <entry><link linkend='command-namep'>namep</link></entry>
+     </row>
+     <row>
+       <entry>enterrados</entry>
+       <entry><link linkend='command-buried'>buried</link></entry>
+     </row>
+     <row>
+       <entry>enterre</entry>
+       <entry><link linkend='command-bury'>bury</link></entry>
+     </row>
+     <row>
+       <entry>enum?</entry>
+       <entry><link linkend='command-numberp'>number?</link></entry>
+     </row>
+     <row>
+       <entry>énúmero?</entry>
+       <entry><link linkend='command-numberp'>numberp</link></entry>
+     </row>
+     <row>
+       <entry>envieValorConectaRede</entry>
+       <entry><link linkend='command-netconnectsendvalue'>netconnectsendvalue</link></entry>
+     </row>
+     <row>
+       <entry>envieValorRedeAceita</entry>
+       <entry><link linkend='command-netacceptsendvalue'>netacceptsendvalue</link></entry>
+     </row>
+     <row>
+       <entry>epal?</entry>
+       <entry><link linkend='command-wordp'>word?</link></entry>
+     </row>
+     <row>
+       <entry>épalavra?</entry>
+       <entry><link linkend='command-wordp'>wordp</link></entry>
+     </row>
+     <row>
+       <entry>eprim?</entry>
+       <entry><link linkend='command-primitivep'>primitive?</link></entry>
+     </row>
+     <row>
+       <entry>éprimitiva?</entry>
+       <entry><link linkend='command-primitivep'>primitivep</link></entry>
+     </row>
+     <row>
+       <entry>eproced?</entry>
+       <entry><link linkend='command-procedurep'>procedure?</link></entry>
+     </row>
+     <row>
+       <entry>éprocedimento?</entry>
+       <entry><link linkend='command-procedurep'>procedurep</link></entry>
+     </row>
+     <row>
+       <entry>erro</entry>
+       <entry><link linkend='command-error'>error</link></entry>
+     </row>
+     <row>
+       <entry>esc</entry>
+       <entry><link linkend='command-pr'>pr</link></entry>
+     </row>
+     <row>
+       <entry>escreva</entry>
+       <entry><link linkend='command-print'>print</link></entry>
+     </row>
+     <row>
+       <entry>escrevaCaracterePorta</entry>
+       <entry><link linkend='command-portwritechar'>portwritechar</link></entry>
+     </row>
+     <row>
+       <entry>escrevaPorta</entry>
+       <entry><link linkend='command-outport'>outport</link></entry>
+     </row>
+     <row>
+       <entry>escrevaPortab</entry>
+       <entry><link linkend='command-outportb'>outportb</link></entry>
+     </row>
+     <row>
+       <entry>escrevaVetorPorta</entry>
+       <entry><link linkend='command-portwritearray'>portwritearray</link></entry>
+     </row>
+     <row>
+       <entry>espere</entry>
+       <entry><link linkend='command-wait'>wait</link></entry>
+     </row>
+     <row>
+       <entry>espessura</entry>
+       <entry><link linkend='command-pensize'>pensize</link></entry>
+     </row>
+     <row>
+       <entry>estado</entry>
+       <entry><link linkend='command-status'>status</link></entry>
+     </row>
+     <row>
+       <entry>estadoCaixamarcação</entry>
+       <entry><link linkend='command-checkboxget'>checkboxget</link></entry>
+     </row>
+     <row>
+       <entry>esubseq?</entry>
+       <entry><link linkend='command-substringp'>substring?</link></entry>
+     </row>
+     <row>
+       <entry>ésubseqüência?</entry>
+       <entry><link linkend='command-substringp'>substringp</link></entry>
+     </row>
+     <row>
+       <entry>euseLapis?</entry>
+       <entry><link linkend='command-pendownp'>pendown?</link></entry>
+     </row>
+     <row>
+       <entry>éuseLápis?</entry>
+       <entry><link linkend='command-pendownp'>pendownp</link></entry>
+     </row>
+     <row>
+       <entry>evazia?</entry>
+       <entry><link linkend='command-emptyp'>empty?</link></entry>
+     </row>
+     <row>
+       <entry>évazia?</entry>
+       <entry><link linkend='command-emptyp'>emptyp</link></entry>
+     </row>
+     <row>
+       <entry>evetor?</entry>
+       <entry><link linkend='command-arrayp'>array?</link></entry>
+     </row>
+     <row>
+       <entry>évetor?</entry>
+       <entry><link linkend='command-arrayp'>arrayp</link></entry>
+     </row>
+     <row>
+       <entry>evisivel?</entry>
+       <entry><link linkend='command-shownp'>shown?</link></entry>
+     </row>
+     <row>
+       <entry>évisível?</entry>
+       <entry><link linkend='command-shownp'>shownp</link></entry>
+     </row>
+     <row>
+       <entry>faça</entry>
+       <entry><link linkend='command-run'>run</link></entry>
+     </row>
+     <row>
+       <entry>façaAnalise</entry>
+       <entry><link linkend='command-runparse'>runparse</link></entry>
+     </row>
+     <row>
+       <entry>façaResultado</entry>
+       <entry><link linkend='command-runresult'>runresult</link></entry>
+     </row>
+     <row>
+       <entry>falso</entry>
+       <entry><link linkend='command-false'>false</link></entry>
+     </row>
+     <row>
+       <entry>fechearq</entry>
+       <entry><link linkend='command-close'>close</link></entry>
+     </row>
+     <row>
+       <entry>fecheMidi</entry>
+       <entry><link linkend='command-midiclose'>midiclose</link></entry>
+     </row>
+     <row>
+       <entry>fechePorta</entry>
+       <entry><link linkend='command-portclose'>portclose</link></entry>
+     </row>
+     <row>
+       <entry>fecheTodosArq</entry>
+       <entry><link linkend='command-closeall'>closeall</link></entry>
+     </row>
+     <row>
+       <entry>fim</entry>
+       <entry><link linkend='command-end'>end</link></entry>
+     </row>
+     <row>
+       <entry>fixeJaneladeComandos</entry>
+       <entry><link linkend='command-splitscreen'>splitscreen</link></entry>
+     </row>
+     <row>
+       <entry>fixeJC</entry>
+       <entry><link linkend='command-ss'>ss</link></entry>
+     </row>
+     <row>
+       <entry>floodcolour</entry>
+       <entry><link linkend='command-floodcolor'>floodcolor</link></entry>
+     </row>
+     <row>
+       <entry>foco</entry>
+       <entry><link linkend='command-getfocus'>getfocus</link></entry>
+     </row>
+     <row>
+       <entry>formatoNúmero</entry>
+       <entry><link linkend='command-form'>form</link></entry>
+     </row>
+     <row>
+       <entry>fr</entry>
+       <entry><link linkend='command-se'>se</link></entry>
+     </row>
+     <row>
+       <entry>frase</entry>
+       <entry><link linkend='command-sentence'>sentence</link></entry>
+     </row>
+     <row>
+       <entry>guardeparaescrever</entry>
+       <entry><link linkend='command-type'>type</link></entry>
+     </row>
+     <row>
+       <entry>habilitaTeclado</entry>
+       <entry><link linkend='command-keyboardon'>keyboardon</link></entry>
+     </row>
+     <row>
+       <entry>imTodosTítulos</entry>
+       <entry><link linkend='command-pot'>pot</link></entry>
+     </row>
+     <row>
+       <entry>índicebmp</entry>
+       <entry><link linkend='command-bitindex'>bitindex</link></entry>
+     </row>
+     <row>
+       <entry>iniciePolígono</entry>
+       <entry><link linkend='command-polystart'>polystart</link></entry>
+     </row>
+     <row>
+       <entry>inicieRede</entry>
+       <entry><link linkend='command-netstartup'>netstartup</link></entry>
+     </row>
+     <row>
+       <entry>inteiro</entry>
+       <entry><link linkend='command-int'>int</link></entry>
+     </row>
+     <row>
+       <entry>juntenoInício</entry>
+       <entry><link linkend='command-fput'>fput</link></entry>
+     </row>
+     <row>
+       <entry>lance</entry>
+       <entry><link linkend='command-throw'>throw</link></entry>
+     </row>
+     <row>
+       <entry>lápis</entry>
+       <entry><link linkend='command-penpattern'>penpattern</link></entry>
+     </row>
+     <row>
+       <entry>leiac</entry>
+       <entry><link linkend='command-rc'>rc</link></entry>
+     </row>
+     <row>
+       <entry>leiaCaractere</entry>
+       <entry><link linkend='command-readchar'>readchar</link></entry>
+     </row>
+     <row>
+       <entry>leiaCaracterePorta</entry>
+       <entry><link linkend='command-portreadchar'>portreadchar</link></entry>
+     </row>
+     <row>
+       <entry>leiaCaracteres</entry>
+       <entry><link linkend='command-readchars'>readchars</link></entry>
+     </row>
+     <row>
+       <entry>leiacs</entry>
+       <entry><link linkend='command-rcs'>rcs</link></entry>
+     </row>
+     <row>
+       <entry>leiaLista</entry>
+       <entry><link linkend='command-readlist'>readlist</link></entry>
+     </row>
+     <row>
+       <entry>leiap</entry>
+       <entry><link linkend='command-rw'>rw</link></entry>
+     </row>
+     <row>
+       <entry>leiaPalavra</entry>
+       <entry><link linkend='command-readword'>readword</link></entry>
+     </row>
+     <row>
+       <entry>leiaTecla</entry>
+       <entry><link linkend='command-keyboardvalue'>keyboardvalue</link></entry>
+     </row>
+     <row>
+       <entry>leiatextoCaixaCombo</entry>
+       <entry><link linkend='command-comboboxgettext'>comboboxgettext</link></entry>
+     </row>
+     <row>
+       <entry>leiaVetorPorta</entry>
+       <entry><link linkend='command-portreadarray'>portreadarray</link></entry>
+     </row>
+     <row>
+       <entry>levantenariz</entry>
+       <entry><link linkend='command-uppitch'>uppitch</link></entry>
+     </row>
+     <row>
+       <entry>levantenz</entry>
+       <entry><link linkend='command-up'>up</link></entry>
+     </row>
+     <row>
+       <entry>libereDLL</entry>
+       <entry><link linkend='command-dllfree'>dllfree</link></entry>
+     </row>
+     <row>
+       <entry>libereJaneladeComandos</entry>
+       <entry><link linkend='command-textscreen'>textscreen</link></entry>
+     </row>
+     <row>
+       <entry>libereJC</entry>
+       <entry><link linkend='command-ts'>ts</link></entry>
+     </row>
+     <row>
+       <entry>limpePaleta</entry>
+       <entry><link linkend='command-clearpalette'>clearpalette</link></entry>
+     </row>
+     <row>
+       <entry>lista</entry>
+       <entry><link linkend='command-list'>list</link></entry>
+     </row>
+     <row>
+       <entry>listaProp</entry>
+       <entry><link linkend='command-plist'>Plist</link></entry>
+     </row>
+     <row>
+       <entry>listaprops</entry>
+       <entry><link linkend='command-contents'>contents</link></entry>
+     </row>
+     <row>
+       <entry>listaProps</entry>
+       <entry><link linkend='command-plists'>plists</link></entry>
+     </row>
+     <row>
+       <entry>log</entry>
+       <entry><link linkend='command-log10'>log10</link></entry>
+     </row>
+     <row>
+       <entry>Logo3D</entry>
+       <entry><link linkend='command-perspective'>perspective</link></entry>
+     </row>
+     <row>
+       <entry>lProcs</entry>
+       <entry><link linkend='command-procedures'>procedures</link></entry>
+     </row>
+     <row>
+       <entry>lProp?</entry>
+       <entry><link linkend='command-proplistp'>proplist?</link></entry>
+     </row>
+     <row>
+       <entry>luz</entry>
+       <entry><link linkend='command-light'>light</link></entry>
+     </row>
+     <row>
+       <entry>maior.ou.igual?</entry>
+       <entry><link linkend='command-greaterequalp'>greaterequalp</link></entry>
+     </row>
+     <row>
+       <entry>maiorig?</entry>
+       <entry><link linkend='command-greaterequalp'>greaterequal?</link></entry>
+     </row>
+     <row>
+       <entry>maiúsculas</entry>
+       <entry><link linkend='command-uppercase'>uppercase</link></entry>
+     </row>
+     <row>
+       <entry>membro</entry>
+       <entry><link linkend='command-member'>member</link></entry>
+     </row>
+     <row>
+       <entry>menor.ou.igual?</entry>
+       <entry><link linkend='command-lessequalp'>lessequalp</link></entry>
+     </row>
+     <row>
+       <entry>menorig?</entry>
+       <entry><link linkend='command-lessequalp'>lessequal?</link></entry>
+     </row>
+     <row>
+       <entry>mensagem</entry>
+       <entry><link linkend='command-messagebox'>messagebox</link></entry>
+     </row>
+     <row>
+       <entry>mensagemMidi</entry>
+       <entry><link linkend='command-midimessage'>midimessage</link></entry>
+     </row>
+     <row>
+       <entry>minúsculas</entry>
+       <entry><link linkend='command-lowercase'>lowercase</link></entry>
+     </row>
+     <row>
+       <entry>moDefs</entry>
+       <entry><link linkend='command-po'>po</link></entry>
+     </row>
+     <row>
+       <entry>modobmp</entry>
+       <entry><link linkend='command-bitmode'>bitmode</link></entry>
+     </row>
+     <row>
+       <entry>modoLápis</entry>
+       <entry><link linkend='command-penmode'>penmode</link></entry>
+     </row>
+     <row>
+       <entry>modoTat</entry>
+       <entry><link linkend='command-turtlemode'>turtlemode</link></entry>
+     </row>
+     <row>
+       <entry>monotarefa</entry>
+       <entry><link linkend='command-noyield'>noyield</link></entry>
+     </row>
+     <row>
+       <entry>mostre</entry>
+       <entry><link linkend='command-show'>show</link></entry>
+     </row>
+     <row>
+       <entry>mostrePoligono</entry>
+       <entry><link linkend='command-polyview'>polyview</link></entry>
+     </row>
+     <row>
+       <entry>mostreTat</entry>
+       <entry><link linkend='command-showturtle'>showturtle</link></entry>
+     </row>
+     <row>
+       <entry>mt</entry>
+       <entry><link linkend='command-st'>st</link></entry>
+     </row>
+     <row>
+       <entry>mudeAreaAtiva</entry>
+       <entry><link linkend='command-setactivearea'>setactivearea</link></entry>
+     </row>
+     <row>
+       <entry>mudeBarraRolagem</entry>
+       <entry><link linkend='command-scrollbarset'>scrollbarset</link></entry>
+     </row>
+     <row>
+       <entry>mudebmp</entry>
+       <entry><link linkend='command-bitfit'>bitfit</link></entry>
+     </row>
+     <row>
+       <entry>mudeBotãoRádio</entry>
+       <entry><link linkend='command-radiobuttonset'>radiobuttonset</link></entry>
+     </row>
+     <row>
+       <entry>mudeCabeceio</entry>
+       <entry><link linkend='command-setpitch'>setpitch</link></entry>
+     </row>
+     <row>
+       <entry>mudeCaixamarcação</entry>
+       <entry><link linkend='command-checkboxset'>checkboxset</link></entry>
+     </row>
+     <row>
+       <entry>mudeCF</entry>
+       <entry><link linkend='command-setsc'>setsc</link></entry>
+     </row>
+     <row>
+       <entry>mudeCL</entry>
+       <entry><link linkend='command-setpc'>setpc</link></entry>
+     </row>
+     <row>
+       <entry>mudeCordePreenchimento</entry>
+       <entry><link linkend='command-setfloodcolor'>setfloodcolor</link></entry>
+     </row>
+     <row>
+       <entry>mudeCordoFundo</entry>
+       <entry><link linkend='command-setscreencolor'>setscreencolor</link></entry>
+     </row>
+     <row>
+       <entry>mudeCordoLápis</entry>
+       <entry><link linkend='command-setpencolor'>setpencolor</link></entry>
+     </row>
+     <row>
+       <entry>mudecp</entry>
+       <entry><link linkend='command-setfc'>setfc</link></entry>
+     </row>
+     <row>
+       <entry>mudeCursor</entry>
+       <entry><link linkend='command-setcursor'>setcursor</link></entry>
+     </row>
+     <row>
+       <entry>mudeCursorEspera</entry>
+       <entry><link linkend='command-setcursorwait'>setcursorwait</link></entry>
+     </row>
+     <row>
+       <entry>mudeCursorSeta</entry>
+       <entry><link linkend='command-setcursornowait'>setcursornowait</link></entry>
+     </row>
+     <row>
+       <entry>mudedc</entry>
+       <entry><link linkend='command-seth'>seth</link></entry>
+     </row>
+     <row>
+       <entry>mudeDir</entry>
+       <entry><link linkend='command-chdir'>chdir</link></entry>
+     </row>
+     <row>
+       <entry>mudeDireção</entry>
+       <entry><link linkend='command-setheading'>setheading</link></entry>
+     </row>
+     <row>
+       <entry>mudeDireçãoRolagem</entry>
+       <entry><link linkend='command-setroll'>setroll</link></entry>
+     </row>
+     <row>
+       <entry>mudeEscrita</entry>
+       <entry><link linkend='command-setwrite'>setwrite</link></entry>
+     </row>
+     <row>
+       <entry>mudeEspessura</entry>
+       <entry><link linkend='command-setpensize'>setpensize</link></entry>
+     </row>
+     <row>
+       <entry>mudeEstático</entry>
+       <entry><link linkend='command-staticupdate'>staticupdate</link></entry>
+     </row>
+     <row>
+       <entry>mudeFoco</entry>
+       <entry><link linkend='command-setfocus'>setfocus</link></entry>
+     </row>
+     <row>
+       <entry>mudeÍndicebmp</entry>
+       <entry><link linkend='command-setbitindex'>setbitindex</link></entry>
+     </row>
+     <row>
+       <entry>mudeItem</entry>
+       <entry><link linkend='command-setitem'>setitem</link></entry>
+     </row>
+     <row>
+       <entry>mudeJanela</entry>
+       <entry><link linkend='command-windowset'>windowset</link></entry>
+     </row>
+     <row>
+       <entry>mudeLeitura</entry>
+       <entry><link linkend='command-setread'>setread</link></entry>
+     </row>
+     <row>
+       <entry>mudeLuz</entry>
+       <entry><link linkend='command-setlight'>setlight</link></entry>
+     </row>
+     <row>
+       <entry>mudeMargens</entry>
+       <entry><link linkend='command-setmargins'>setmargins</link></entry>
+     </row>
+     <row>
+       <entry>mudeModobmp</entry>
+       <entry><link linkend='command-setbitmode'>setbitmode</link></entry>
+     </row>
+     <row>
+       <entry>mudemodoPorta</entry>
+       <entry><link linkend='command-portmode'>portmode</link></entry>
+     </row>
+     <row>
+       <entry>mudeModoTat</entry>
+       <entry><link linkend='command-setturtlemode'>setturtlemode</link></entry>
+     </row>
+     <row>
+       <entry>mudePadrãoLápis</entry>
+       <entry><link linkend='command-setpenpattern'>setpenpattern</link></entry>
+     </row>
+     <row>
+       <entry>mudePixel</entry>
+       <entry><link linkend='command-setpixel'>setpixel</link></entry>
+     </row>
+     <row>
+       <entry>mudePos</entry>
+       <entry><link linkend='command-setpos'>setpos</link></entry>
+     </row>
+     <row>
+       <entry>mudePosEscrita</entry>
+       <entry><link linkend='command-setwritepos'>setwritepos</link></entry>
+     </row>
+     <row>
+       <entry>mudePosLeitura</entry>
+       <entry><link linkend='command-setreadpos'>setreadpos</link></entry>
+     </row>
+     <row>
+       <entry>mudeposxyz</entry>
+       <entry><link linkend='command-setposxyz'>setposxyz</link></entry>
+     </row>
+     <row>
+       <entry>mudeprop</entry>
+       <entry><link linkend='command-pprop'>Pprop</link></entry>
+     </row>
+     <row>
+       <entry>mudeProporção</entry>
+       <entry><link linkend='command-setscrunch'>setscrunch</link></entry>
+     </row>
+     <row>
+       <entry>mudeTemporizador</entry>
+       <entry><link linkend='command-settimer'>settimer</link></entry>
+     </row>
+     <row>
+       <entry>mudetextoCaixaCombo</entry>
+       <entry><link linkend='command-comboboxsettext'>comboboxsettext</link></entry>
+     </row>
+     <row>
+       <entry>mudeTipo</entry>
+       <entry><link linkend='command-setlabelfont'>setlabelfont</link></entry>
+     </row>
+     <row>
+       <entry>mudeÚltimo</entry>
+       <entry><link linkend='command-lput'>lput</link></entry>
+     </row>
+     <row>
+       <entry>mudex</entry>
+       <entry><link linkend='command-setx'>setx</link></entry>
+     </row>
+     <row>
+       <entry>mudexy</entry>
+       <entry><link linkend='command-setxy'>setxy</link></entry>
+     </row>
+     <row>
+       <entry>mudexyz</entry>
+       <entry><link linkend='command-setxyz'>setxyz</link></entry>
+     </row>
+     <row>
+       <entry>mudey</entry>
+       <entry><link linkend='command-sety'>sety</link></entry>
+     </row>
+     <row>
+       <entry>mudez</entry>
+       <entry><link linkend='command-setz'>setz</link></entry>
+     </row>
+     <row>
+       <entry>multiTarefa</entry>
+       <entry><link linkend='command-yield'>yield</link></entry>
+     </row>
+     <row>
+       <entry>não</entry>
+       <entry><link linkend='command-not'>not</link></entry>
+     </row>
+     <row>
+       <entry>nãoAceiteConectar</entry>
+       <entry><link linkend='command-netconnectoff'>netconnectoff</link></entry>
+     </row>
+     <row>
+       <entry>nãoPassoaPasso</entry>
+       <entry><link linkend='command-unstep'>unstep</link></entry>
+     </row>
+     <row>
+       <entry>nãoRastreie</entry>
+       <entry><link linkend='command-untrace'>untrace</link></entry>
+     </row>
+     <row>
+       <entry>nãoregistre</entry>
+       <entry><link linkend='command-nodribble'>nodribble</link></entry>
+     </row>
+     <row>
+       <entry>negativo</entry>
+       <entry><link linkend='command-minus'>minus</link></entry>
+     </row>
+     <row>
+       <entry>nomes</entry>
+       <entry><link linkend='command-names'>names</link></entry>
+     </row>
+     <row>
+       <entry>oculteTartaruga</entry>
+       <entry><link linkend='command-ht'>ht</link></entry>
+     </row>
+     <row>
+       <entry>ot</entry>
+       <entry><link linkend='command-hideturtle'>hideturtle</link></entry>
+     </row>
+     <row>
+       <entry>ou</entry>
+       <entry><link linkend='command-or'>or</link></entry>
+     </row>
+     <row>
+       <entry>palavra</entry>
+       <entry><link linkend='command-word'>word</link></entry>
+     </row>
+     <row>
+       <entry>para</entry>
+       <entry><link linkend='command-to'>to</link></entry>
+     </row>
+     <row>
+       <entry>paradireita</entry>
+       <entry><link linkend='command-right'>right</link></entry>
+     </row>
+     <row>
+       <entry>paraesquerda</entry>
+       <entry><link linkend='command-left'>left</link></entry>
+     </row>
+     <row>
+       <entry>parafrente</entry>
+       <entry><link linkend='command-forward'>forward</link></entry>
+     </row>
+     <row>
+       <entry>parasempre</entry>
+       <entry><link linkend='command-forever'>forever</link></entry>
+     </row>
+     <row>
+       <entry>paratrás</entry>
+       <entry><link linkend='command-back'>back</link></entry>
+     </row>
+     <row>
+       <entry>pare</entry>
+       <entry><link linkend='command-stop'>stop</link></entry>
+     </row>
+     <row>
+       <entry>passeados</entry>
+       <entry><link linkend='command-stepped'>stepped</link></entry>
+     </row>
+     <row>
+       <entry>passoapasso</entry>
+       <entry><link linkend='command-step'>step</link></entry>
+     </row>
+     <row>
+       <entry>pausa</entry>
+       <entry><link linkend='command-pause'>pause</link></entry>
+     </row>
+     <row>
+       <entry>pd</entry>
+       <entry><link linkend='command-rt'>rt</link></entry>
+     </row>
+     <row>
+       <entry>pe</entry>
+       <entry><link linkend='command-lt'>lt</link></entry>
+     </row>
+     <row>
+       <entry>pegue</entry>
+       <entry><link linkend='command-catch'>catch</link></entry>
+     </row>
+     <row>
+       <entry>pencolour</entry>
+       <entry><link linkend='command-pencolor'>pencolor</link></entry>
+     </row>
+     <row>
+       <entry>pf</entry>
+       <entry><link linkend='command-fd'>fd</link></entry>
+     </row>
+     <row>
+       <entry>pinte</entry>
+       <entry><link linkend='command-fill'>fill</link></entry>
+     </row>
+     <row>
+       <entry>ponhalimite</entry>
+       <entry><link linkend='command-fence'>fence</link></entry>
+     </row>
+     <row>
+       <entry>portaEntrada</entry>
+       <entry><link linkend='command-inport'>inport</link></entry>
+     </row>
+     <row>
+       <entry>portaEntradab</entry>
+       <entry><link linkend='command-inportb'>inportb</link></entry>
+     </row>
+     <row>
+       <entry>portaJoystick</entry>
+       <entry><link linkend='command-ingameport'>ingameport</link></entry>
+     </row>
+     <row>
+       <entry>posLeitura</entry>
+       <entry><link linkend='command-writepos'>writepos</link></entry>
+     </row>
+     <row>
+       <entry>posMouse</entry>
+       <entry><link linkend='command-mousepos'>mousepos</link></entry>
+     </row>
+     <row>
+       <entry>potência</entry>
+       <entry><link linkend='command-power'>power</link></entry>
+     </row>
+     <row>
+       <entry>primeiro</entry>
+       <entry><link linkend='command-first'>first</link></entry>
+     </row>
+     <row>
+       <entry>primeiros</entry>
+       <entry><link linkend='command-firsts'>firsts</link></entry>
+     </row>
+     <row>
+       <entry>produto</entry>
+       <entry><link linkend='command-product'>product</link></entry>
+     </row>
+     <row>
+       <entry>proporção</entry>
+       <entry><link linkend='command-scrunch'>scrunch</link></entry>
+     </row>
+     <row>
+       <entry>propriedade</entry>
+       <entry><link linkend='command-gprop'>gprop</link></entry>
+     </row>
+     <row>
+       <entry>pt</entry>
+       <entry><link linkend='command-bk'>bk</link></entry>
+     </row>
+     <row>
+       <entry>quociente</entry>
+       <entry><link linkend='command-quotient'>quotient</link></entry>
+     </row>
+     <row>
+       <entry>radarcSen</entry>
+       <entry><link linkend='command-radarcsin'>radarcsin</link></entry>
+     </row>
+     <row>
+       <entry>radSen</entry>
+       <entry><link linkend='command-radsin'>radsin</link></entry>
+     </row>
+     <row>
+       <entry>raizq</entry>
+       <entry><link linkend='command-sqrt'>sqrt</link></entry>
+     </row>
+     <row>
+       <entry>rastreados</entry>
+       <entry><link linkend='command-traced'>traced</link></entry>
+     </row>
+     <row>
+       <entry>rastreie</entry>
+       <entry><link linkend='command-trace'>trace</link></entry>
+     </row>
+     <row>
+       <entry>rastreieJanela</entry>
+       <entry><link linkend='command-debugwindows'>debugwindows</link></entry>
+     </row>
+     <row>
+       <entry>recebaValorRedeAceita</entry>
+       <entry><link linkend='command-netacceptreceivevalue'>netacceptreceivevalue</link></entry>
+     </row>
+     <row>
+       <entry>recebeValorConectaRede</entry>
+       <entry><link linkend='command-netconnectreceivevalue'>netconnectreceivevalue</link></entry>
+     </row>
+     <row>
+       <entry>recortebmp</entry>
+       <entry><link linkend='command-bitcut'>bitcut</link></entry>
+     </row>
+     <row>
+       <entry>registre</entry>
+       <entry><link linkend='command-dribble'>dribble</link></entry>
+     </row>
+     <row>
+       <entry>repita</entry>
+       <entry><link linkend='command-repeat'>repeat</link></entry>
+     </row>
+     <row>
+       <entry>resorteieiNúmero</entry>
+       <entry><link linkend='command-rerandom'>rerandom</link></entry>
+     </row>
+     <row>
+       <entry>resto</entry>
+       <entry><link linkend='command-remainder'>remainder</link></entry>
+     </row>
+     <row>
+       <entry>retiredaCaixaCombo</entry>
+       <entry><link linkend='command-comboboxdeletestring'>comboboxdeletestring</link></entry>
+     </row>
+     <row>
+       <entry>retiredaCaixaListagem</entry>
+       <entry><link linkend='command-listboxdeletestring'>listboxdeletestring</link></entry>
+     </row>
+     <row>
+       <entry>retireProp</entry>
+       <entry><link linkend='command-remprop'>remprop</link></entry>
+     </row>
+     <row>
+       <entry>roleparadireita</entry>
+       <entry><link linkend='command-rightroll'>rightroll</link></entry>
+     </row>
+     <row>
+       <entry>roleparaesquerda</entry>
+       <entry><link linkend='command-leftroll'>leftroll</link></entry>
+     </row>
+     <row>
+       <entry>rolepd</entry>
+       <entry><link linkend='command-rr'>rr</link></entry>
+     </row>
+     <row>
+       <entry>rolepe</entry>
+       <entry><link linkend='command-lr'>lr</link></entry>
+     </row>
+     <row>
+       <entry>rolex</entry>
+       <entry><link linkend='command-scrollx'>scrollx</link></entry>
+     </row>
+     <row>
+       <entry>roley</entry>
+       <entry><link linkend='command-scrolly'>scrolly</link></entry>
+     </row>
+     <row>
+       <entry>rotule</entry>
+       <entry><link linkend='command-label'>label</link></entry>
+     </row>
+     <row>
+       <entry>salve</entry>
+       <entry><link linkend='command-save'>save</link></entry>
+     </row>
+     <row>
+       <entry>salvebmp</entry>
+       <entry><link linkend='command-bitsave'>bitsave</link></entry>
+     </row>
+     <row>
+       <entry>salveGif</entry>
+       <entry><link linkend='command-gifsave'>gifsave</link></entry>
+     </row>
+     <row>
+       <entry>saodif?</entry>
+       <entry><link linkend='command-notequalp'>notequal?</link></entry>
+     </row>
+     <row>
+       <entry>sãodiferentes?</entry>
+       <entry><link linkend='command-notequalp'>notequalp</link></entry>
+     </row>
+     <row>
+       <entry>saoig?</entry>
+       <entry><link linkend='command-equalp'>equal?</link></entry>
+     </row>
+     <row>
+       <entry>sãoiguais?</entry>
+       <entry><link linkend='command-equalp'>equalp</link></entry>
+     </row>
+     <row>
+       <entry>screencolour</entry>
+       <entry><link linkend='command-screencolor'>screencolor</link></entry>
+     </row>
+     <row>
+       <entry>se</entry>
+       <entry><link linkend='command-if'>if</link></entry>
+     </row>
+     <row>
+       <entry>sef</entry>
+       <entry><link linkend='command-iff'>iff</link></entry>
+     </row>
+     <row>
+       <entry>seFalso</entry>
+       <entry><link linkend='command-iffalse'>iffalse</link></entry>
+     </row>
+     <row>
+       <entry>selecioneCaixaListagem</entry>
+       <entry><link linkend='command-listboxgetselect'>listboxgetselect</link></entry>
+     </row>
+     <row>
+       <entry>semEstado</entry>
+       <entry><link linkend='command-nostatus'>nostatus</link></entry>
+     </row>
+     <row>
+       <entry>semlimite</entry>
+       <entry><link linkend='command-window'>window</link></entry>
+     </row>
+     <row>
+       <entry>semPrimeiro</entry>
+       <entry><link linkend='command-butfirst'>butfirst</link></entry>
+     </row>
+     <row>
+       <entry>semPrimeiros</entry>
+       <entry><link linkend='command-butfirsts'>butfirsts</link></entry>
+     </row>
+     <row>
+       <entry>semtatbmp</entry>
+       <entry><link linkend='command-nobitmapturtle'>nobitmapturtle</link></entry>
+     </row>
+     <row>
+       <entry>semÚltimo</entry>
+       <entry><link linkend='command-butlast'>butlast</link></entry>
+     </row>
+     <row>
+       <entry>sen</entry>
+       <entry><link linkend='command-sin'>sin</link></entry>
+     </row>
+     <row>
+       <entry>senão</entry>
+       <entry><link linkend='command-ifelse'>ifelse</link></entry>
+     </row>
+     <row>
+       <entry>setfloodcolour</entry>
+       <entry><link linkend='command-setfloodcolor'>setfloodcolor</link></entry>
+     </row>
+     <row>
+       <entry>setpencolour</entry>
+       <entry><link linkend='command-setpencolor'>setpencolor</link></entry>
+     </row>
+     <row>
+       <entry>setscreencolour</entry>
+       <entry><link linkend='command-setscreencolor'>setscreencolor</link></entry>
+     </row>
+     <row>
+       <entry>sev</entry>
+       <entry><link linkend='command-ift'>ift</link></entry>
+     </row>
+     <row>
+       <entry>severd</entry>
+       <entry><link linkend='command-iftrue'>iftrue</link></entry>
+     </row>
+     <row>
+       <entry>sistema</entry>
+       <entry><link linkend='command-machine'>machine</link></entry>
+     </row>
+     <row>
+       <entry>som</entry>
+       <entry><link linkend='command-sound'>sound</link></entry>
+     </row>
+     <row>
+       <entry>soma</entry>
+       <entry><link linkend='command-sum'>sum</link></entry>
+     </row>
+     <row>
+       <entry>sorteienúmero</entry>
+       <entry><link linkend='command-random'>random</link></entry>
+     </row>
+     <row>
+       <entry>sp</entry>
+       <entry><link linkend='command-bf'>bf</link></entry>
+     </row>
+     <row>
+       <entry>sps</entry>
+       <entry><link linkend='command-bfs'>bfs</link></entry>
+     </row>
+     <row>
+       <entry>su</entry>
+       <entry><link linkend='command-bl'>bl</link></entry>
+     </row>
+     <row>
+       <entry>tamanhocarreguebmp</entry>
+       <entry><link linkend='command-bitloadsize'>bitloadsize</link></entry>
+     </row>
+     <row>
+       <entry>tamanhorotule</entry>
+       <entry><link linkend='command-labelsize'>labelsize</link></entry>
+     </row>
+     <row>
+       <entry>tamBmp</entry>
+       <entry><link linkend='command-bitsize'>bitsize</link></entry>
+     </row>
+     <row>
+       <entry>tamGif</entry>
+       <entry><link linkend='command-gifsize'>gifsize</link></entry>
+     </row>
+     <row>
+       <entry>tartaruga</entry>
+       <entry><link linkend='command-clearscreen'>clearscreen</link></entry>
+     </row>
+     <row>
+       <entry>tartarugas</entry>
+       <entry><link linkend='command-turtles'>turtles</link></entry>
+     </row>
+     <row>
+       <entry>tat</entry>
+       <entry><link linkend='command-cs'>cs</link></entry>
+     </row>
+     <row>
+       <entry>tatativa</entry>
+       <entry><link linkend='command-turtle'>turtle</link></entry>
+     </row>
+     <row>
+       <entry>tatbmp</entry>
+       <entry><link linkend='command-bitmapturtle'>bitmapturtle</link></entry>
+     </row>
+     <row>
+       <entry>tc</entry>
+       <entry><link linkend='command-fs'>fs</link></entry>
+     </row>
+     <row>
+       <entry>tecla?</entry>
+       <entry><link linkend='command-keyp'>key?</link></entry>
+     </row>
+     <row>
+       <entry>telaCheia</entry>
+       <entry><link linkend='command-fullscreen'>fullscreen</link></entry>
+     </row>
+     <row>
+       <entry>tembarrainv?</entry>
+       <entry><link linkend='command-backslashedp'>backslashed?</link></entry>
+     </row>
+     <row>
+       <entry>tembarrainvertida?</entry>
+       <entry><link linkend='command-backslashedp'>backslashedp</link></entry>
+     </row>
+     <row>
+       <entry>tempoMili</entry>
+       <entry><link linkend='command-timemilli'>timemilli</link></entry>
+     </row>
+     <row>
+       <entry>terminePolígono</entry>
+       <entry><link linkend='command-polyend'>polyend</link></entry>
+     </row>
+     <row>
+       <entry>termineRede</entry>
+       <entry><link linkend='command-netshutdown'>netshutdown</link></entry>
+     </row>
+     <row>
+       <entry>teste</entry>
+       <entry><link linkend='command-test'>test</link></entry>
+     </row>
+     <row>
+       <entry>texto</entry>
+       <entry><link linkend='command-text'>text</link></entry>
+     </row>
+     <row>
+       <entry>tiporotule</entry>
+       <entry><link linkend='command-labelfont'>labelfont</link></entry>
+     </row>
+     <row>
+       <entry>tiposDeLetra</entry>
+       <entry><link linkend='command-fontfacenames'>fontfacenames</link></entry>
+     </row>
+     <row>
+       <entry>todoTexto</entry>
+       <entry><link linkend='command-fulltext'>fulltext</link></entry>
+     </row>
+     <row>
+       <entry>tom</entry>
+       <entry><link linkend='command-tone'>tone</link></entry>
+     </row>
+     <row>
+       <entry>toqueWave</entry>
+       <entry><link linkend='command-playwave'>playwave</link></entry>
+     </row>
+     <row>
+       <entry>ub</entry>
+       <entry><link linkend='command-pe'>pe</link></entry>
+     </row>
+     <row>
+       <entry>ui</entry>
+       <entry><link linkend='command-px'>px</link></entry>
+     </row>
+     <row>
+       <entry>ul</entry>
+       <entry><link linkend='command-ppt'>ppt</link></entry>
+     </row>
+     <row>
+       <entry>último</entry>
+       <entry><link linkend='command-last'>last</link></entry>
+     </row>
+     <row>
+       <entry>un</entry>
+       <entry><link linkend='command-pu'>pu</link></entry>
+     </row>
+     <row>
+       <entry>useborracha</entry>
+       <entry><link linkend='command-penerase'>penerase</link></entry>
+     </row>
+     <row>
+       <entry>useInversor</entry>
+       <entry><link linkend='command-penreverse'>penreverse</link></entry>
+     </row>
+     <row>
+       <entry>useLápis</entry>
+       <entry><link linkend='command-penpaint'>penpaint</link></entry>
+     </row>
+     <row>
+       <entry>useNada</entry>
+       <entry><link linkend='command-penup'>penup</link></entry>
+     </row>
+     <row>
+       <entry>valor</entry>
+       <entry><link linkend='command-thing'>thing</link></entry>
+     </row>
+     <row>
+       <entry>verd</entry>
+       <entry><link linkend='command-true'>true</link></entry>
+     </row>
+     <row>
+       <entry>verifiqueEventos</entry>
+       <entry><link linkend='command-eventcheck'>eventcheck</link></entry>
+     </row>
+     <row>
+       <entry>versãoLogo</entry>
+       <entry><link linkend='command-logoversion'>logoversion</link></entry>
+     </row>
+     <row>
+       <entry>vetor</entry>
+       <entry><link linkend='command-array'>array</link></entry>
+     </row>
+     <row>
+       <entry>voltedir</entry>
+       <entry><link linkend='command-popdir'>popdir</link></entry>
+     </row>
+  </tbody>
+  </tgroup>
+</informaltable>
+</appendix>

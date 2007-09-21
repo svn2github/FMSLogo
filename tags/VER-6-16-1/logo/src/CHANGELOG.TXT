@@ -1,0 +1,415 @@
+This file contains the changes that were made in each revision of FMSLogo.
+
+* Added for 6.16.1
+  o Fix bug #1799027; BITBLOCK no longer leaks an HBRUSH.  This resource leak
+    resulted in strange functional behavior when running tetrads, followed by 
+    an access violation.
+  o Fix internationalization problems with the examples.  Some of them didn't
+    work with the Portuguese version of FMSLogo.
+
+* Added for 6.16.0
+  o Fix bug #1765108; MACHINE now outputs the correct working area,
+    even if it changed.  FMSLogo also now positions new windows in the
+    working area, even if the size of the desktop or taskbar has changed.
+  o Fix bug #1735569; When the clipboard contains text, running BITMAPTURTLE
+    no longer prevents subsequent calls to BITMAPTURTLE from working.
+  o Fix bug #1622721; FMSLogo no longer gets into a bad state when the
+    clipboard becomes text.
+  o Fix bug #1619211; Bad input errors in library routines are now
+    internationalized.
+  o Fix bug #1609333; "Select Active Area" dialog box no longer loses
+    UI elements after pressing CTRL+ALT+DELETE.
+  o Improve the performance of line drawing by 12% and circle drawing by 60%.
+  o Add a Portuguese translation of FMSLogo.
+
+* Added for 6.15.0
+  o Fix bug #1732803; TRACE now properly traces "rest" inputs.
+  o Fix bug #1602928; Turtle now draw a dot at both endpoints of a movement,
+    instead of just at one of them.  This fixes little dots that used to
+    get left behind when changing the pen color and moving backward to erase
+    the line you just drew.
+  o Implement request #1700894; "File - Save to Workspace" no longer appears
+    in the editor's menu in non-expert mode.
+  o Implement request #1736883; Updated ` (backtick) to latest from UCBLogo.
+  o Minor updates to the manual.
+
+Added for 6.14.0
+o Fix bug #1688926; '-1e-16 < 0' once again outputs true.
+o Fix bug #1674152; Make, Pprop, and Plist are now properly localized
+  when they are shows in the editor and in the output of PO.
+o Fix bug #1674159; Fixed minor problems in the Spanish translation.
+o Fix bug #1661230; ?REST now loads on its own, instead of loading
+  when other routines that may use it are loaded.
+o Fix bug #1622720; SELECTBOX GUI is now internationalized.
+  This also fixes a related bug where pressing "X" on dialog didn't
+  act the same as pressing the "Cancel" button.
+o Fix bug #1327723; EDIT now finds the editor that belongs to the same
+  instance of FMSLogo, instead of finding it by window caption.
+o Implement request #1662644; CTRL+D now acts like the EDALL button.
+o Implement request #1448007; SETPENCOLOR, SETFLOODCOLOR, and 
+  SETSCREENCOLOR now accept color names like "Yellow and "Blue.
+o Implement request #1615507; The "Set Color" and "Set Pen Size"
+  dialog boxes are now non-modal and have an "Apply" button.
+o Minor updates to the manual.
+
+Added for 6.13.0
+o Fix bug #1661232; FMSLogo can (once again) save the workspace when
+  the commander's history has keyboard focus.
+o Fix bug #1652924; FMSLogo can (once again) start up if the window
+  was made very small before it was last closed.
+o Fix bug #1602862: "File - Exit" no longer quits if you press 
+  "Save and Exit" then press "Cancel" when choosing a filename.
+o Fix bug #1630234: nested APPLY instructions no longer change the 
+  value of ? in the outer APPLY.
+o Fix bug #1624729; the pitch, roll, and heading values now "snap to"
+  values like 0, 90, 180, and 270 as easily as they did in MSWLogo.
+o Fix bug #1625096; the TORUS.LGO and SPHERE.LGO examples no longer
+  prevent the other from working.
+o Fix bug #1625098; French translation tables are now properly collated.
+o Fix bug #1602864; All COPYDEF bad input errors are now recoverable.
+o Fix bug #1600159; 'CLOSE []' now throws a bad input error.
+o Implement request #1631170; COPYDEF, PROCEDUREP, MACROP, and DEFINEDP
+  now load the procedure as a Logolib routine, if is not already defined.
+o Implement request #1542395; LESSEQUALP, GREATEREQUALP, and NOTEQUALP
+  are all supported as primitives and <=, >=, and <> are the respective
+  infix operators.
+o Add a Spanish translation of FMSLogo.
+o Improve the translation of the French FMSLogo.
+o Minor updates to the manual.
+
+Added for 6.12.0
+o The colors in the Set Color dialog boxes now follow the order that
+  setting the color by index follows.
+o SETPENSIZE can now accept just a width input.
+o Fix bug #1605816: SETTURTLE behaves correctly when it inputs a floating
+  point value.
+o Fix bug #1602846: Uninstaller now exits if FMSLogo is running.
+o Fix bug #1602844: Installer/Uninstaller can now uninstall FMSLogo when
+  it's installed in a non-default directory.
+o Fix bug #1602435: Fix memory corruption in directory procedures 
+  (POPDIR, CHDIR, etc.) and make them print to the commander again.
+o Fix bug #1600163: CLOSE READER now resets the READER to [].
+o Fix bug #1599367; SPLITSCREEN no longer moves the X/Y scrollbar position.
+o Fix bug #1599097; ZOOM no longer moves the X/Y scrollbar position.
+o Fix bug #1598768; The text description of an error (ITEM 2 ERROR) 
+  is now a single word, just like in UCBLogo.
+o Fix bug #1590114; EQUALP now compares strings in a manner that
+  is sensitive to the user's default language.
+o Fix bug #1586914; The values in the status window are (once again) 
+  updated while the status window is open.
+o Fix bug #1576430; UPPERCASE and LOWERCASE now correctly handle some 
+  international characters.
+o Fix bug #1584204; SHIFT+DOWN in the commander's history box now never
+  gives focus to the edit control.
+o Fix bug #1584198; Commander selection no longer disappears when FMSLogo
+  loses focus.
+o Fix bug #1586962; EDIT no longer displays editor when given bad input.
+o Fix bug #1583317; [ \{ ] is now parsed correctly.
+o Fix bug #1372200; Scrollbars on screen window now always repaint when 
+  you run SPLITSCREEN.
+o Fix bug #1395739; Comments can now contain a tilde (~).
+o Implement request #1602941; Typing 'TO proc' in the commander uses
+  a multiline mini-editor with an "end" button, instead of the 
+  line-by-line READWORD prompt.
+o Implement request #1592813; SHELL now supports an option to wait for 
+  the program to finish before running the next instruction.
+o Implement request #1480374; There are now separate menu options for
+  loading a file (merging it into the workspace) and opening one
+  (replacing what's in the workspace).
+o Implement request #1327712; FMSLogo is internationalized.  As a 
+  proof-of-concept, a partial localization of French and Greek are
+  included in this release.  The French version translated the GUI and
+  many command names.  The Greek version has only translated the GUI.
+  Neither localization has translated the manual.
+o Minor updates to the manual.
+
+Added for 6.11.0
+o Fix bug #1577528; SLOWDRAW now throws an error when given bad input.
+o Fix bug #1577527: SLOWDRAW no longer modifies the value of :redefp.
+o Fix bug #1577526; SLOWDRAW now buries the commands which it defines.
+o Fix bug #1563318; This is a regression that caused FMSLogo to crash
+  when running procedures with complex inputs that include chains
+  of default values and rest inputs.
+o Fix bug #1547408; 'RUNRESULT {1}' no longer crashes FMSLogo.
+o Fix bug #1327711; Instructions run by GUI elements now also write 
+  to DRIBBLE file.
+o Implement request #1577908; FULLSCREEN and TEXTSCREEN only
+  preserve the size of the "Screen" window in "fixed" mode.
+o Implement request #1577722; WAIT now accepts fractional inputs.
+o Minor updates to the manual, including shading the examples, removing
+  the root node from the table of contents, and adding "See Also" 
+  sections.
+
+Added for 6.10.1
+o Fix bug #1566166 : Running an instruction list of deeply nested 
+  right-associative infix expressions (for example, 'RUN [1+1+1+...+1]') 
+  no longer crashes.
+o Fix bug #1565788: Running long instruction list of unnested expressions
+  (for example, 'RUN [FD 1 FD 1 ... FD 1]') no longer crashes.
+o Fix bug #1545911: The questionmark inputs in template-based iteration
+  are now correctly restored when the template goes out of scope.
+o Fix bug #1543643: FMSLogo is responsive when running 'PR ISEQ 1 100000'.
+o Fix bug #1543354: REVERSE now throws an error when given two inputs.
+o Fix bug #1535582: SELECTBOX now throws an error on bad choicelist input.
+o Minor updates to the manual.
+
+Added for 6.10.0
+o Fix bug #1539716: FMSLogo no longer crashes when procedures have lots 
+  of inputs (>30000).
+o Fix bug #1534923: FMSLogo no longer crashes when the wrong number of
+  inputs is given to an APPLY template (example: APPLY [[A] [FD :A]] []).
+o Fix bug #1531127: ERRACT can now be read/written to from inside the 
+  ERRACT instructionlist.
+o Fix bug #1527547: SHELL now throw error when given too many inputs.
+o Fix bug #1520952: Copying the selected line from the commander's history
+  to the commander's edit box now ignores artifical boundries introduced by
+  word-wrapping.
+o Fix bug #1523549: ERRACT is now preserved inside CATCH "ERROR blocks.
+o Fix bug #1521664: BYE in PAUSE dialog now exits FMSLogo.
+o Fix bug #1520950: 'DEFINE "F [[] APPLY [OP ?] [3]] F' no longer crashes.
+o Fix bug #1519088: 'APPLY [OP ?] [3]' no longer leaks memory.
+o Fix bug #1517326: Bad ERRACT values no longer cause FMSLogo to crash.
+o Fix bug #1517323: Running CONTINUE from ERRACT no longer leaks memory.
+o Fix bug #1519319: FIRST now throws an error when given the empty array.
+o Fix bug #1517301: bitwise operators now treat decimal numbers that are 
+  integers as valid input (for example, 1.0 is treated as 1).
+o Fix bug #1517319: Pressing BACKSPACE/DELETE in the commander history no 
+  longer deletes the history.
+o Fix bug #1516689: BITAND, BITOR, BITXOR now validate input when there is
+  only one input.
+o Fix bug #1516688: REPEAT loops in event callbacks no longer interfere 
+  with REPEAT loops in main evaluator.
+o Fix bug #1511966; LIST now returns the empty list when given no inputs.
+o Fix bug #1508400; SORT no longer goes into infinite loop when given 
+  NOT LESS? as a predicate.
+o Fix bug #1455201: Calling TO from STARTUP no longer hangs FMSLogo.
+o Fix bug #1483191: Cancelling BYE no longer puts Logo in a Stopping state.
+o Fix bug #1497077: SETTIMER now throws bad input error when given a 
+  negative delay input, instead of behaving unpredictably.
+o Fix bug #1471059: value of REPCOUNT is now -1 outside of REPEAT loop.
+o Fix bug #1457755: 'CATCH "ERROR [TO]' now throws meaningful error.
+o Fix bug #1457733: TO 1 now throws meaning error.
+o Fix bug #1395740: '3 ** 4' now throws a meaningful error.
+o Fix bug #1395737: DEFINE now allows empty lines.
+o Fix bug #1384326; 'RIGHT 1.1.' no longer has the baffling error message
+  "RIGHT didn't output to RIGHT".
+o Fix bug #1367386: Networking code no longer goes into an infinite loop 
+  when it receives data that does not contain NUL.
+o Mitigate bug #1327718: Application settings are now stored per-user 
+  so that limited user accounts can write persistent settings.
+o Implement request #1525706; BITPASTETOINDEX supports negative X,Y inputs.
+o Implement request #1492605; SORT is now faster and the design fits
+  better with Logo's LISP heritage.
+o Minor updates to the manual.
+
+Added for 6.9.0
+o Fix bug #1504189: CHECKBOXSET, RADIOBUTTONSET no longer check the button
+  when given bad input.
+o Fix bug #1503862: LISTBOXDELETESTRING no longer deletes 0th string when
+  given bad input.
+o Fix bug #1500675; SCROLLBARSET now throws error if low > high instead
+  of getting into a state where the scrollbar can't be moved.
+o Fix bug #1500670; SCROLLBARSET now allows negative inputs.
+o Fix bug #1503822; SCROLLBARSET no longer has side-effects when given 
+  bad input.
+o Fix bug #1500620; STATICCREATE, LISTBOXCREATE, BUTTONCREATE, etc.
+  now throw a bad input error when given negative width/height.
+o Fix bug #1500320; DEBUGWINDOWS no longer crashes on long window names.
+o Fix bug #1500217; LISTBOXGETSELECT now outputs [] when nothing 
+  is selected (instead of outputting nothing).
+o Fix bug #1500306; BUTTONENABLE, RADIOBUTTONENABLE, CHECKBOXENABLE, etc.
+  no longer enable the widget when given bad input.
+o Fix bug #1500304; WINDOWCREATE, DIALOGCREATE no longer create a window 
+  when given bad input.
+o Fix bug #1499279; GROUPBOXDELETE no longer crashes.
+o Fix bug #1496581; Pressing F1 while selecting a long word in the 
+  commander window no longer crashes.
+o Fix bug #1479111; FMSLogo no longer prints spurious warnings about 
+  using STOP or OUTPUT when not in a procedure after processing event 
+  callbacks.
+o Fix bug #1474902; WINDOWFILEEDIT no longer crashes on long filenames.
+o Fix bug #1472599; BYE immediately exits FMSLogo.
+o Fix bug #1372723; 'THROW "SYSTEM' now exits FMSLogo.
+o Fix bug #1474855; UI doesn't add newlines to the commander 
+  history when prompting for user input.
+o Fix bug #1349368; When a malformed program loaded with the -L 
+  command-line parameter, FMSLogo displays the error and opens it in the 
+  editor.
+o Fix bug #1474490; FMSLogo installs for all users when installed by 
+  an administrator or power user.
+o Fix bug #1462927; BURY (and similar procedures) throws an error when 
+  given a contents lists that contains more than three sublists.
+o Fix bug #1454188; TO/.MACRO now only set the "dirty workspace" 
+  flag if they successfully define a new procedure/macro.
+o Fix bug #1395736; CTRL+A now works in the commander.
+o Mitigate bug #1327718; installer suggests a location in the home 
+  directory when run by a limited user.
+o Implement request #1499893; Add FONTFACENAMES, a primitive for getting
+  the names of all available font typefaces.
+o Implement request #1480371; The save-before-exit dialog now follows
+  Windows convention to prevent accidental data loss.
+o Implement request #1434420; Removed the build-in limit of 4096 chars
+  on the commander history box.
+o Minor updates to the manual.
+
+Added for 6.8.0
+o Fix bug #1465992; PgUp and PgDn now work in the commander history box.
+o Fix bug #1453675; (FD 10 10) no longer leaks memory.
+o Fix bug #1448159; Running # outside of a template outputs REPCOUNT.
+o Fix bug #1448155; Using IF in place of an IFELSE now acts like IFELSE.
+o Fix bug #1448142; A COPYDEF of STOP no longer crashes when run.
+o Fix bug #1450152; SETORIENTATION now throws an error on bad input.
+o Fix bug #1432651; Filenames that match a library procs no longer crash.
+o Fix bug #1438863; Erasing a procedure while running it no longer crashes.
+o Fix bug #1443736; SETFOCUS [FMSLogo] gives focus to the screen window.
+o Fix bug #1443600; using Test! in editor no longer crashes.
+o Fix bug #1434420; running a long command no longer crashes.
+o Fix bug #1438438; DLLLOAD properly handles bad input.
+o Fix bug #1397560; floating point overflow no longer crashes.
+o Fix bug #1397549; math functions now throw errors for domain errors.
+o Fix bug #1395743; domain errors don't display dialog boxes.
+o Fix bug #1395742; Singularity errors don't display dialog boxes.
+o Fix bug #1438909; SETLABELFONT [] no longer crashes.
+o Fix bug #1327784; RAWASCII CHAR 192 = 192, not -64.
+o Fix bug #1361906; PLLIST {a} throws a bad input error.
+o Fix bug #1444960; Example for WHILE is now correct.
+o Fix bug #1448097; SORT handles predicates that have one input by default.
+o Fix bug #1446430; Error codes are now documented correctly.
+o Fix bug #1349264; AND and OR now validate all inputs.
+o Fix bug #1392437; LOAD no longer warns that it can overwrite changes.
+o Fix bug #1389151; MODAL and MODELESS samples look better.
+o Fix numerous memory leaks.
+o Fix minor typos and omissions in documentation.
+o Implement request #1466722; Add the LOGOVERSION command.
+o Implement request #1367379; Files are saved with lower-case extension.
+o Implement request #1473481; CTRL+D does File - Save and Exit in editor.
+o Make CLOSEALL a primitive.
+
+Added for 6.7.2
+o Fix bug #1372489; double-clicking .lgo file starts new FMSLogo process.
+o Fix bug #1416044; FILL now works when run in a callback.
+o Fix bug #1386335; the commander's editbox grows with the font size.
+o Fix bug #1388325; ELLIPSEARC no longer crashes on large angles.
+o Fix bug #1377856; ELLIPSEARC can now be paused/halted.
+o Fix bug #1395734; the editor is no longer double-spaced on error.
+o Fix bug #1429970; WINDOWSET now throws error on bad input.
+o Fix bug #1429960; ICON can minimize the commander when it's docked.
+o Fix bug #1327284; the documentation is now distributed as a .CHM.
+o Fix bug #1399926; SETCURSORNOWAIT is now documented.
+o Fix bug #1399929; TONE is now documented.
+o Fix bug #1397524; the domain/range of inverse trig functions are documented.
+o Fix bug #1392433; the documentation for EDALL is clearer.
+o Fix bug #1327785; the manual and example code no longer refer to MSWLogo.
+o Fix bug #1406412; the documentation for SETTIMER is updated for Win95.
+o Fix bug #1417187; the documentation for ARC and friends is clearer.
+o Mitigate bug #1429938; SETORIENTATION now works better than before.
+o Mitigate bug #1397519; numbers within DBL_EPSILON of each other are equal.
+o Add SORT to Logolib.
+
+Added for 6.7.1
+o Fix bug #1372735; Editor can save large files on Win95.
+o Fix bug #1383281; FMSLogo doesn't crash on FOREACH command.
+o Fix bug #1384267; Turning by a large number in 3D mode doesn't crash.
+
+Added for 6.7.0
+o Improve joystick samples.
+o Improve the SPRITE.LGO sample.
+o Fix typos and inaccuracies in the logo.hlp file.
+o Fix bug #1349374; 'ARRAY 0' now works.
+o Fix bug #1349377; comments may now contain a single '|'.
+o Fix bug #1352838; EDALL can now save files on all Windows systems.
+o Fix bug #1365943; removed EDALLBTN from Logolib.
+o Fix bug #1366700; WAIT no longer takes 100% CPU.
+o Fix bug #1343397; MKDIR, CHDIR, RMDIR don't crash on long directory names.
+o Fix bug #1366856; DIRECTORIES and FILES no longer leak a file handle.
+o Fix bug #1367217; FMSLogo no longer crashes when OPENUPDATE fails.
+o Fix bug #1367352; (NETSTARTUP 1) no longer crashes FSMLogo on shutdown.
+o Implement request #1365734; FULLSCREEN and TEXTSCREEN now undock
+  the commander and SPLITSCREEN now redocks it.
+o Implement request #1327751; the Commander window's Status/NoStatus
+  Trace/UnTrace, and Step/UnStep buttons are now pushbutton checkboxes.
+o Implement request #1349320; the status window can now be closed
+  by clicking on the "X" in its titlebar.
+o Many sweeping internal changes.  Expect regressions.
+
+Added for 6.6b
+o Fix bug #1327817; The editor now only prompts you to save your
+  changes if you actually changed something.
+o Fix bug #1327706; FORM no longer supports the "debugging aid"
+  of passing the parameters to printf when the width is negative.
+o Implement feature request #1327732; FMSLogo now implements
+  ELLIPSEARC2 as a more consistent name for ELLIPSA2.
+o Fix bug #1327719; FMSLogo now uses the registered applicaton
+  for reading the release notes.
+o Fix bug #1330752; FMSLogo no longer appends garbage bytes to 
+  saved files.
+o Add a "Topic Search" item to the editor's context menu.
+o Fix INGAMEPORT to work on Windows XP (instead of crash).
+o Fix bug #1327707; INPORT no longer crashes on Win XP.
+o Fix file corruption in mcistrwh.hlp (was corrupted in 6.6).
+o Add CTRL+F and CTRL+H accelerators to editor.
+o Fix bug #1335260; INGAMEPORT now works under XP.
+  (INPORT 513) and (INPORTB 513) also work in limited capacity.
+
+Added for 6.6a
+o Fix bug #1324580; BITLOADSIZE works correctly again.
+o Mitigate bug #1327300; FMSLogo now verifies %TMP% on startup
+  and warns the user of problems.
+
+Added for 6.6
+o Rename application to FMSLogo for trademark reasons.
+
+Added for 6.5h
+o Fix a regression where SETFOCUS didn't honor "MSWLogo Screen".
+o Rework the way SETLABELFONT works to try to fix a crash on Vista.
+
+Added for 6.5g
+o Separate the screen from the commander with a splitter
+  instead of having separate windows.
+o Get TONE command working.
+o Convert "Examples" index to HTML.
+o Installer Updates
+  * Add Start Menu shortcuts for Logo examples.
+  * Add file association for .LGO files.
+o Many internal changes.
+
+Added for 6.5f
+o Do not start multiple instances of Logo.
+o Fix editor font-changing bug on Windows 95.
+o Many internal changes.
+
+Added for 6.5e
+o Send all key presses to the commander's edit control.
+  * NEW BUG: key presses on buttons currently beep on Win 9x.
+o Pasting to the EDALL window now only pastes plain text.
+o Add the DOS keyboard shortcuts (for example, SHIFT+INS for paste)
+o Many internal changes.
+
+Added for 6.5d
+o Make "Set - Label" Font write Logo command into history.
+o Add a pop-up menu to editor window.
+o Disable commands in menu that are not applicable.
+
+Added for 6.5c
+o Use standard keyboard shortcuts (for example, CTRL+V for paste)
+o Make GUI elements write Logo command into history
+o Fix tab order in some dialog boxes
+
+Added for 6.5b, 
+o Fix MSWLogo using too much CPU when idle.
+
+Added for 6.5a, 
+o Remove OLE server since it broke command line
+
+Added for 6.5
+o Add installation system for Windows XP.
+o Drop support for all systems older than Win95
+o Switch to pentium processor only for higher speed.
+o Fix missing resources for some Borland OWL Exceptions.
+o Fix crash when closing some network connections.
+o Fix crash when moving turtle past the max floating point number.
+o Add proplistp and proplist?.
+o Fix bug with argument to OUTPUT missing causing a crash.
+o Enabled MSWLogo to be an OLE Server (Experimental no docs).
+o Fixed command line version of SETLABELFONT not always
+  finding all fonts.
