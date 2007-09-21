@@ -1,5 +1,12 @@
 This file contains the changes that were made in each revision of FMSLogo.
 
+* Added for 6.16.1
+  o Fix bug #1799027; BITBLOCK no longer leaks an HBRUSH.  This resource leak
+    resulted in strange functional behavior when running tetrads, followed by 
+    an access violation.
+  o Fix internationalization problems with the examples.  Some of them didn't
+    work with the Portuguese version of FMSLogo.
+
 * Added for 6.16.0
   o Fix bug #1765108; MACHINE now outputs the correct working area,
     even if it changed.  FMSLogo also now positions new windows in the
