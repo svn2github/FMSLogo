@@ -1045,6 +1045,8 @@ NODE *lbitblock(NODE *arg)
                 // the screen, which may be why it was so much slower.
                 InvalidateRect(screen->HWindow, &screenRect, false);
             }
+
+            DeleteObject(fillBrush);
         }
     }
 
