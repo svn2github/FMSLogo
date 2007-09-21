@@ -1,2 +1,4 @@
 LCIDS = 1031 1032 1033 1034 1036 1040 2070
-DEFAULT_LCID = 1033 # English
+
+# The default locale is English
+DEFAULT_LCID = 1033

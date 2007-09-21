@@ -39,9 +39,9 @@ $(BINARYEXE) : setup/fmslogo.exe ;
 # make the binary ZIP release
 $(BINARYZIP) : $(MANUALS) $(EXES)
 	mkdir $(BINARYBASENAME)
-	$(foreach LCID,$(LCIDS),cp src/fmslogo-$(LCID).exe        $(BINARYBASENAME) &&) cp src/fmslogo-$(DEFAULT_LCID).exe        $(BINARYBASENAME)/fmslogo.exe)
-	$(foreach LCID,$(LCIDS),cp src/startup-$(LCID).logoscript $(BINARYBASENAME) &&) cp src/startup-$(DEFAULT_LCID).logoscript $(BINARYBASENAME)/startup.logoscript)
-	$(foreach LCID,$(LCIDS),cp manual/logohelp-$(LCID).chm    $(BINARYBASENAME) &&) cp manual/logohelp-$(DEFAULT_LCID).chm    $(BINARYBASENAME)/logohelp.chm)
+	$(foreach LCID,$(LCIDS),cp src/fmslogo-$(LCID).exe        $(BINARYBASENAME) &&) cp src/fmslogo-$(DEFAULT_LCID).exe        $(BINARYBASENAME)/fmslogo.exe
+	$(foreach LCID,$(LCIDS),cp src/startup-$(LCID).logoscript $(BINARYBASENAME) &&) cp src/startup-$(DEFAULT_LCID).logoscript $(BINARYBASENAME)/startup.logoscript
+	$(foreach LCID,$(LCIDS),cp manual/logohelp-$(LCID).chm    $(BINARYBASENAME) &&) cp manual/logohelp-$(DEFAULT_LCID).chm    $(BINARYBASENAME)/logohelp.chm
 	cp src/FMSLOGO.TXT             $(BINARYBASENAME)
 	cp src/LICENSE.TXT             $(BINARYBASENAME)
 	cp src/mcistrwh.hlp            $(BINARYBASENAME)
