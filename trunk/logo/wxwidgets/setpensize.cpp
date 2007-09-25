@@ -172,7 +172,7 @@ CSetPenSize::CSetPenSize(wxWindow *Parent)
         wxALIGN_CENTER_HORIZONTAL | wxALIGN_CENTER_VERTICAL | wxALL,
         5);
 
-    wxSlider * slider = new wxSlider(
+    m_ThicknessSlider = new wxSlider(
         this,
         ID_SETPENSIZE_SLIDER,
         m_PenWidth, 
@@ -182,7 +182,7 @@ CSetPenSize::CSetPenSize(wxWindow *Parent)
         wxSize(250, 24),
         wxSL_HORIZONTAL);
     thicknessBySlider->Add(
-        slider,
+        m_ThicknessSlider,
         0,
         wxALIGN_CENTER_HORIZONTAL | wxALIGN_CENTER_VERTICAL | wxEXPAND | wxALL,
         5);
@@ -248,13 +248,21 @@ void CSetPenSize::SetPenSize(
 {
     m_PenWidth = PenSize;
     m_ThicknessDisplay->SetPenSize(PenSize);
+    m_ThicknessSlider->SetValue(PenSize);
 }
 
 void CSetPenSize::OnOkButton(wxCommandEvent& event)
 {
 }
 
+void CSetPenSize::OnSliderUpdated(wxCommandEvent & WXUNUSED(event))
+{
+    int penSize = m_ThicknessSlider->GetValue();
+    m_ThicknessDisplay->SetPenSize(penSize);
+}
+
 
 BEGIN_EVENT_TABLE(CSetPenSize, wxDialog)
     EVT_BUTTON(ID_SETPENSIZE_OK, CSetPenSize::OnOkButton)
+    EVT_SLIDER(ID_SETPENSIZE_SLIDER, CSetPenSize::OnSliderUpdated)
 END_EVENT_TABLE()

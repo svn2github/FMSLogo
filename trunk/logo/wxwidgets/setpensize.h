@@ -35,11 +35,13 @@ public:
     void SetPenSize(int PenSize);
 
     void OnOkButton(wxCommandEvent& event);
+    void OnSliderUpdated(wxCommandEvent& event);
 
 private:
     int m_PenWidth;
 
     CPenSizeWindow * m_ThicknessDisplay;
+    wxSlider       * m_ThicknessSlider;
 
     DECLARE_EVENT_TABLE()
 };
