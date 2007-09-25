@@ -5,9 +5,72 @@
 #include <wx/sizer.h>
 #include <wx/slider.h>
 #include <wx/stattext.h>
+#include <wx/dcclient.h>
 
 #include "logocore.h"
 #include "localizedstrings.h"
+
+// ----------------------------------------------------------------------------
+// CSetPenSize::CPenSizeWindow
+// ----------------------------------------------------------------------------
+
+CSetPenSize::CPenSizeWindow::CPenSizeWindow(
+    CSetPenSize   * Parent,
+    wxWindowID      Id,
+    const wxPoint & Position,
+    const wxSize  & Size,
+    int             PenWidth
+    )
+    : wxWindow(Parent, wxID_ANY, Position, Size),
+      m_PenWidth(PenWidth)
+{
+    SetBackgroundColour(*wxWHITE);
+}
+
+void CSetPenSize::CPenSizeWindow::SetPenSize(
+    int             PenSize
+    )
+{
+    m_PenWidth = PenSize;
+
+    // since the size changed, we must now repaint the window
+    Refresh();
+}
+
+void CSetPenSize::CPenSizeWindow::OnPaint( wxPaintEvent &WXUNUSED(event) )
+{
+    wxPaintDC dc(this);
+
+    SetBackgroundColour(*wxWHITE);
+
+    dc.SetPen(*wxBLACK_PEN);
+    dc.SetBrush(*wxBLACK_BRUSH);
+
+    const wxCoord yCoord = (GetSize().GetHeight() - m_PenWidth) / 2;
+
+    dc.DrawRectangle(
+        0, 
+        yCoord, 
+        GetSize().GetWidth(), 
+        m_PenWidth);
+}
+
+void CSetPenSize::CPenSizeWindow::OnClick( wxMouseEvent &WXUNUSED(event) )
+{
+    if (GetId() != wxID_ANY)
+    {
+        // This is one of the clickable buttons, not the display-only window,
+        // so we pass the event on to the parent window.
+        CSetPenSize * parent = static_cast<CSetPenSize *>(GetParent());
+
+        parent->SetPenSize(m_PenWidth);
+    }
+}
+
+BEGIN_EVENT_TABLE(CSetPenSize::CPenSizeWindow, wxWindow)
+    EVT_PAINT(CSetPenSize::CPenSizeWindow::OnPaint)
+    EVT_LEFT_DOWN(CSetPenSize::CPenSizeWindow::OnClick)
+END_EVENT_TABLE()
 
 // ----------------------------------------------------------------------------
 // CSetPenSize
@@ -70,18 +133,15 @@ CSetPenSize::CSetPenSize(wxWindow *Parent)
 
     for (size_t i = 0; i < ARRAYSIZE(data); i++)
     {
-        wxWindow * picture = new wxWindow(
+        const int width  = 30;
+        const int height = 30;
+
+        wxWindow * picture = new CPenSizeWindow(
             this,
             data[i].ChildId, 
             wxDefaultPosition,
-            wxSize(30, 30));
-
-        picture->SetBackgroundColour(*wxWHITE);
-
-        wxWindowDC dc(picture);
-        dc.SetPen(*wxBLACK_PEN);
-        dc.SetBrush(*wxGREEN_BRUSH);
-        dc.DrawRectangle(120, 120, 100, 80);
+            wxSize(width, height),
+            data[i].PenWidth);
 
         thicknessByPictures->Add(picture, 0, wxALIGN_CENTER | wxALL, 5);
     }
@@ -140,17 +200,18 @@ CSetPenSize::CSetPenSize(wxWindow *Parent)
     //
     wxBoxSizer *buttonColumn = new wxBoxSizer(wxVERTICAL);
 
-    m_ThicknessDisplay = new wxWindow(
+    m_ThicknessDisplay = new CPenSizeWindow(
         this,
         wxID_ANY,
         wxDefaultPosition,
-        wxSize(40, 40));
+        wxSize(60, 60),
+        m_PenWidth);
     m_ThicknessDisplay->SetBackgroundColour(*wxWHITE);
     buttonColumn->Add(m_ThicknessDisplay, 0, wxALIGN_CENTER | wxALL, 10);
 
     wxButton *ok = new wxButton(
         this, 
-        wxID_ANY, 
+        ID_SETPENSIZE_OK,
         LOCALIZED_SETPENSIZE_OK);
     buttonColumn->Add(ok, 0, wxALIGN_CENTER | wxALL, 5);
 
@@ -181,5 +242,19 @@ CSetPenSize::CSetPenSize(wxWindow *Parent)
     Fit();
 }
 
+void CSetPenSize::SetPenSize(
+    int  PenSize
+    )
+{
+    m_PenWidth = PenSize;
+    m_ThicknessDisplay->SetPenSize(PenSize);
+}
+
+void CSetPenSize::OnOkButton(wxCommandEvent& event)
+{
+}
+
+
 BEGIN_EVENT_TABLE(CSetPenSize, wxDialog)
+    EVT_BUTTON(ID_SETPENSIZE_OK, CSetPenSize::OnOkButton)
 END_EVENT_TABLE()
