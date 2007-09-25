@@ -229,7 +229,6 @@ CSetPenSize::CSetPenSize(wxWindow *Parent)
 
     topLevelSizer->Add(buttonColumn, 0, wxALIGN_CENTER | wxALL, 5);
 
-
     // make the "Ok" button the default
     ok->SetFocus();
     ok->SetDefault();
@@ -240,6 +239,9 @@ CSetPenSize::CSetPenSize(wxWindow *Parent)
     topLevelSizer->Fit(this);
 
     Fit();
+
+    // update the slider's position to match the pen size
+    SetPenSize(m_PenWidth);
 }
 
 void CSetPenSize::SetPenSize(
