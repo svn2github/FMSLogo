@@ -30,18 +30,25 @@ class CSetPenSize : public wxDialog
     };
 
 public:
-    CSetPenSize(wxWindow *parent);
+    CSetPenSize(
+        wxWindow    *   Parent,
+        int             InitialPenSize,
+        CSetPenSize * & ExternalReference
+        );
 
     void SetPenSize(int PenSize);
 
     void OnOkButton(wxCommandEvent& event);
+    void OnCancelButton(wxCommandEvent& event);
     void OnSliderUpdated(wxCommandEvent& event);
+    void OnClose(wxCloseEvent& event);
 
 private:
     int m_PenWidth;
 
-    CPenSizeWindow * m_ThicknessDisplay;
-    wxSlider       * m_ThicknessSlider;
+    CSetPenSize    * & m_ExternalReference;
+    CPenSizeWindow *   m_ThicknessDisplay;
+    wxSlider       *   m_ThicknessSlider;
 
     DECLARE_EVENT_TABLE()
 };

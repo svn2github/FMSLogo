@@ -8,6 +8,7 @@ class wxScrolledWindow;
 class wxIcon;
 
 class CCommander;
+class CSetPenSize;
 
 class CMainFrame : public wxFrame
 {
@@ -24,11 +25,11 @@ public:
    
 private:
 
-    wxIcon           *m_FmsLogoIcon;
-    wxScrolledWindow *m_Screen;
-    CCommander       *m_Commander;
-
-    wxSplitterWindow* m_splitter;
+    wxIcon           * m_FmsLogoIcon;
+    wxScrolledWindow * m_Screen;
+    CCommander       * m_Commander;
+    CSetPenSize      * m_SetPenSizeDialog;
+    wxSplitterWindow * m_Splitter;
 
     DECLARE_EVENT_TABLE();
     DECLARE_NO_COPY_CLASS(CMainFrame);

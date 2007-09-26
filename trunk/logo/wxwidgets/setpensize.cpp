@@ -92,9 +92,14 @@ enum ID_SETPENSIZE
     ID_SETPENSIZE_SIZE8,
 };
 
-CSetPenSize::CSetPenSize(wxWindow *Parent)
+CSetPenSize::CSetPenSize(
+    wxWindow    *   Parent,
+    int             InitialPenSize,
+    CSetPenSize * & ExternalReference
+    )
     : wxDialog(Parent, wxID_ANY, wxString(LOCALIZED_SETPENSIZE)),
-      m_PenWidth(1)
+      m_PenWidth(InitialPenSize),
+      m_ExternalReference(ExternalReference)
 {
     wxBoxSizer *topLevelSizer = new wxBoxSizer(wxHORIZONTAL);
 
@@ -244,6 +249,7 @@ CSetPenSize::CSetPenSize(wxWindow *Parent)
     SetPenSize(m_PenWidth);
 }
 
+
 void CSetPenSize::SetPenSize(
     int  PenSize
     )
@@ -253,8 +259,30 @@ void CSetPenSize::SetPenSize(
     m_ThicknessSlider->SetValue(PenSize);
 }
 
+void CSetPenSize::OnClose(wxCloseEvent& WXUNUSED(event))
+{
+    // NULL-out the reference that CMainFrame is holding
+    // so that it knows the window is no longer valid.
+    // This object will get deleted on its own.
+    m_ExternalReference = NULL;
+
+    // always destroy
+    Destroy();
+}
+
 void CSetPenSize::OnOkButton(wxCommandEvent& event)
 {
+}
+
+void CSetPenSize::OnCancelButton(wxCommandEvent& event)
+{
+    // NULL-out the reference that CMainFrame is holding
+    // so that it knows the window is no longer valid.
+    // This object will get deleted on its own.
+    m_ExternalReference = NULL;
+
+    // always destroy
+    Destroy();
 }
 
 void CSetPenSize::OnSliderUpdated(wxCommandEvent & WXUNUSED(event))
@@ -266,5 +294,7 @@ void CSetPenSize::OnSliderUpdated(wxCommandEvent & WXUNUSED(event))
 
 BEGIN_EVENT_TABLE(CSetPenSize, wxDialog)
     EVT_BUTTON(ID_SETPENSIZE_OK, CSetPenSize::OnOkButton)
+    EVT_BUTTON(wxID_CANCEL, CSetPenSize::OnCancelButton)
     EVT_SLIDER(ID_SETPENSIZE_SLIDER, CSetPenSize::OnSliderUpdated)
+    EVT_CLOSE(CSetPenSize::OnClose)
 END_EVENT_TABLE()

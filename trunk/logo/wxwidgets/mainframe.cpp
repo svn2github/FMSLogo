@@ -157,13 +157,14 @@ END_EVENT_TABLE()
 
 // My frame constructor
 CMainFrame::CMainFrame()
-       : wxFrame(
-           NULL, 
-           wxID_ANY, 
-           LOCALIZED_GENERAL_PRODUCTNAME,
-           wxDefaultPosition,
-           wxSize(420, 300),
-           wxDEFAULT_FRAME_STYLE | wxNO_FULL_REPAINT_ON_RESIZE)
+    : wxFrame(
+        NULL, 
+        wxID_ANY, 
+        LOCALIZED_GENERAL_PRODUCTNAME,
+        wxDefaultPosition,
+        wxSize(420, 300),
+        wxDEFAULT_FRAME_STYLE | wxNO_FULL_REPAINT_ON_RESIZE),
+    m_SetPenSizeDialog(NULL)
 {
 #if wxUSE_STATUSBAR
     CreateStatusBar(2);
@@ -245,20 +246,20 @@ CMainFrame::CMainFrame()
     SetMenuBar(mainMenu);
 
 
-    m_splitter = new MySplitterWindow(this);
+    m_Splitter = new MySplitterWindow(this);
     
-    m_splitter->SetSashGravity(1.0);
+    m_Splitter->SetSashGravity(1.0);
 
-    m_Screen = new CScreen(m_splitter);
+    m_Screen = new CScreen(m_Splitter);
     m_Screen->SetBackgroundColour(*wxWHITE);
     m_Screen->SetScrollbars(20, 20, 5, 5);
 
-    //m_Commander = new CScreen(m_splitter, false);
-    m_Commander = new CCommander(m_splitter);
+    //m_Commander = new CScreen(m_Splitter, false);
+    m_Commander = new CCommander(m_Splitter);
 
     m_Screen->Show(true);
     m_Commander->Show(true);
-    m_splitter->SplitHorizontally(m_Screen, m_Commander);
+    m_Splitter->SplitHorizontally(m_Screen, m_Commander);
 
 #if wxUSE_STATUSBAR
     SetStatusText(_T("Min pane size = 0"), 1);
@@ -280,8 +281,22 @@ void CMainFrame::Quit(wxCommandEvent& WXUNUSED(event) )
 
 void CMainFrame::SetPenSize(wxCommandEvent& WXUNUSED(event) )
 {
-    CSetPenSize * setPenSize = new CSetPenSize(this);
-    setPenSize->Show();
+    if (m_SetPenSizeDialog == NULL)
+    {
+        // TODO: read this from the Logo engine
+        const int initialSize = 2;
+
+        m_SetPenSizeDialog = new CSetPenSize(
+            this,
+            initialSize,
+            m_SetPenSizeDialog);
+
+        m_SetPenSizeDialog->Show();
+    }
+    else
+    {
+        m_SetPenSizeDialog->SetFocus();
+    }
 }
 
 void CMainFrame::SetActiveArea(wxCommandEvent& WXUNUSED(event) )
@@ -381,4 +396,3 @@ CScreen::CScreen(
 void CScreen::OnDraw(wxDC& dcOrig)
 {
 }
-
