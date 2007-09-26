@@ -57,6 +57,7 @@ public:
 
     void OnSize(wxSizeEvent& event);
     void OnDestroy(wxWindowDestroyEvent & event);
+    void OnClose(wxCloseEvent& event);
 
 private:
     CCommander * m_Commander;

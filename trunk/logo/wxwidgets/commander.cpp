@@ -411,7 +411,16 @@ void CCommanderDialog::OnDestroy(wxWindowDestroyEvent & event)
     }
 }
 
+void CCommanderDialog::OnClose(wxCloseEvent& event)
+{
+    if ( event.CanVeto() )
+    {
+        event.Veto();
+    }
+}
+
 BEGIN_EVENT_TABLE(CCommanderDialog, wxDialog)
     EVT_SIZE(CCommanderDialog::OnSize)
+    EVT_CLOSE(CCommanderDialog::OnClose)
     EVT_WINDOW_DESTROY(CCommanderDialog::OnDestroy)
 END_EVENT_TABLE()
