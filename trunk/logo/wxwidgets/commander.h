@@ -7,6 +7,7 @@ class wxButton;
 class wxRichTextCtrl;
 class wxTextCtrl;
 class wxSizer;
+class wxToggleButton;
 
 class CCommander : public wxPanel
 {
@@ -26,18 +27,22 @@ public:
     void OnClose(wxCloseEvent& event);
     void OnSize(wxSizeEvent& event);
 
-private:
-    wxButton *m_HaltButton;
-    wxButton *m_TraceButton;
-    wxButton *m_PauseButton;
-    wxButton *m_StatusButton;
-    wxButton *m_StepButton;
-    wxButton *m_ResetButton;
-    wxButton *m_ExecuteButton;
-    wxButton *m_EdallButton;
+    void UpdateTraceButtonState();
+    void UpdateStepButtonState();
+    void UpdateStatusButtonState();
 
-    wxRichTextCtrl* m_History;
-    wxTextCtrl    * m_NextInstruction;
+private:
+    wxButton       * m_HaltButton;
+    wxToggleButton * m_TraceButton;
+    wxButton       * m_PauseButton;
+    wxToggleButton * m_StatusButton;
+    wxToggleButton * m_StepButton;
+    wxButton       * m_ResetButton;
+    wxButton       * m_ExecuteButton;
+    wxButton       * m_EdallButton;
+
+    wxRichTextCtrl * m_History;
+    wxTextCtrl     * m_NextInstruction;
 
     int m_NextInstructionHeight;
 
