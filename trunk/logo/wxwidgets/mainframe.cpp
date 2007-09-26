@@ -19,11 +19,13 @@
     #include "wx/scrolwin.h"
     #include "wx/menu.h"
     #include "wx/msgdlg.h"
+
+    #include "wx/splitter.h"
+    #include "wx/dcmirror.h"
+    #include "wx/icon.h"
 #endif
 
-#include "wx/splitter.h"
-#include "wx/dcmirror.h"
-#include "wx/icon.h"
+#include <algorithm>
 
 #include "guiutils.h"
 #include "commander.h"
@@ -35,6 +37,7 @@
 #include "fmslogo.h"
 #include "mainframe.h"
 #include "setpensize.h"
+#include "utils.h"
 
 #include "fmslogo-16x16.xpm"
 
@@ -152,6 +155,8 @@ BEGIN_EVENT_TABLE(CMainFrame, wxFrame)
     EVT_MENU(ID_BITMAPPRINTERAREA,  CMainFrame::SetActiveArea)
     EVT_MENU(ID_HELPABOUT,          CMainFrame::AboutFmsLogo)
     EVT_MENU(ID_HELPABOUTMS,        CMainFrame::AboutMultipleSclerosis)
+    EVT_MENU(ID_ZOOMIN,             CMainFrame::ZoomIn)
+    EVT_MENU(ID_ZOOMOUT,            CMainFrame::ZoomOut)
     EVT_MENU(ID_EXIT,               CMainFrame::Quit)
 END_EVENT_TABLE()
 
@@ -164,7 +169,8 @@ CMainFrame::CMainFrame()
         wxDefaultPosition,
         wxSize(420, 300),
         wxDEFAULT_FRAME_STYLE | wxNO_FULL_REPAINT_ON_RESIZE),
-    m_SetPenSizeDialog(NULL)
+      m_SetPenSizeDialog(NULL),
+      m_CommanderIsDocked(false)
 {
 #if wxUSE_STATUSBAR
     CreateStatusBar(2);
@@ -247,19 +253,19 @@ CMainFrame::CMainFrame()
 
 
     m_Splitter = new MySplitterWindow(this);
-    
+
     m_Splitter->SetSashGravity(1.0);
 
     m_Screen = new CScreen(m_Splitter);
     m_Screen->SetBackgroundColour(*wxWHITE);
     m_Screen->SetScrollbars(20, 20, 5, 5);
 
-    //m_Commander = new CScreen(m_Splitter, false);
     m_Commander = new CCommander(m_Splitter);
 
     m_Screen->Show(true);
     m_Commander->Show(true);
     m_Splitter->SplitHorizontally(m_Screen, m_Commander);
+    m_CommanderIsDocked = true;
 
 #if wxUSE_STATUSBAR
     SetStatusText(_T("Min pane size = 0"), 1);
@@ -271,6 +277,160 @@ CMainFrame::CMainFrame()
 
 CMainFrame::~CMainFrame()
 {
+}
+
+
+void CMainFrame::UndockCommanderWindow()
+{
+    if (m_CommanderIsDocked)
+    {
+        CCommanderDialog * newCommander = new CCommanderDialog(this);
+#if 0
+        // TODO: copy over the content/state of the dialog
+        newCommandWindow->Duplicate(m_CommandWindow);
+#endif
+
+#if 0
+        if (bFixed)
+        {
+            // The user requested that we never change the size of the drawing surface,
+            // so we must shrink the main window to hold just the screen.
+            TRect screenWindowRect;
+            screenWindowRect.SetWH(
+                0,
+                0,
+                Attr.W,
+                Attr.H - CommandWindow->GetWindowRect().Height() - PaneSplitterWindow->GetSplitterWidth());
+
+            SetWindowPos(
+                NULL,
+                screenWindowRect,
+                SWP_NOZORDER | SWP_NOMOVE | SWP_NOCOPYBITS);
+        }
+
+#endif 
+        m_Splitter->Unsplit(m_Commander);
+
+
+        // commit to the new commander
+        m_Commander->Destroy();
+        m_Commander = newCommander;
+        m_Commander->Show();
+
+#if 0
+        CommandWindow->Editbox.SetFocus();
+#endif
+        m_CommanderIsDocked = false;
+    }
+}
+
+void CMainFrame::DockCommanderWindow()
+{
+    if (!m_CommanderIsDocked) 
+    {
+        CCommander * newCommander = new CCommander(m_Splitter);
+
+        // restore the commander window's height
+        int commanderWindowX      = 0;
+        int commanderWindowY      = 0;
+        int commanderWindowWidth  = 0;
+        int commanderWindowHeight = DEFAULT_COMMANDER_HEIGHT;
+        GetConfigurationQuadruple(
+            "Commander",
+            &commanderWindowX,
+            &commanderWindowY,
+            &commanderWindowWidth,
+            &commanderWindowHeight);
+
+        // sanity-check the input
+        commanderWindowHeight = std::max(commanderWindowHeight, MIN_COMMANDER_HEIGHT);
+
+#if 0
+        if (bFixed)
+        {
+            // The user requested that we never change the size of the drawing surface,
+            // so we must grow the main window to hold the commander window.
+
+            TRect originalWindowRect;
+            originalWindowRect.SetWH(
+                Attr.X,
+                Attr.Y,
+                Attr.W,
+                Attr.H);
+
+            // grow the main window to hold the splitter and the commander
+            const int totalHeight =
+                originalWindowRect.Height() +
+                PaneSplitterWindow->GetSplitterWidth() +
+                commanderWindowHeight;
+         
+            const TRect newWindowRect(
+                originalWindowRect.Left(),
+                originalWindowRect.Top(),
+                originalWindowRect.Right(),
+                originalWindowRect.Top() + totalHeight);
+
+            SetWindowPos(
+                NULL,
+                newWindowRect,
+                SWP_NOZORDER | SWP_NOMOVE | SWP_NOCOPYBITS);
+        }
+#endif
+
+#if 0  // is this necessary with wxWindows?
+
+        // HACK: Hide the current commander window before adding
+        // the new one to the splitter.  This somehow forces a 
+        // refresh of the entire screen window.  Without it, the
+        // scrollbars sometimes don't show up (I don't know why).
+        // This is a hack because I'm sure there's a more direct
+        // way to force the scrollbars to show up.
+        //
+        // See bug #1372200 for details.
+        CommandWindow->Show(SW_HIDE);
+#endif
+
+
+        int clientWidth;
+        int clientHeight;
+        GetClientSize(&clientWidth, &clientHeight);
+
+        int splitterWidth = m_Splitter->GetSashSize();
+
+        int splitterPosition = clientHeight - commanderWindowHeight - splitterWidth;
+
+        // the splitter can't get too small
+        if (splitterPosition < 20)
+        {
+            splitterPosition = 20;
+        }
+
+        m_Splitter->SetSashPosition(splitterPosition);
+
+        m_Splitter->SplitHorizontally(m_Screen, newCommander);
+
+#if 0
+        // TODO copy the history
+        newCommandWindow->Duplicate(*CommandWindow);
+#endif
+
+#if 0
+        // redraw the entire screen window
+        ScreenWindow->Invalidate(true);
+        newCommandWindow->Invalidate(true);
+#endif
+
+        // commit to the docked commander
+        m_Commander->Destroy();
+        m_Commander = newCommander;
+        m_Commander->Show();
+
+#if 0
+        CommandWindow->Editbox.SetFocus();
+#endif
+
+        m_CommanderIsDocked = true;
+    }
 }
 
 // menu command handlers
@@ -303,6 +463,17 @@ void CMainFrame::SetActiveArea(wxCommandEvent& WXUNUSED(event) )
 {
     CSetActiveArea dlg(this);
     dlg.ShowModal();
+}
+
+
+void CMainFrame::ZoomIn(wxCommandEvent& WXUNUSED(event) )
+{
+    UndockCommanderWindow();
+}
+
+void CMainFrame::ZoomOut(wxCommandEvent& WXUNUSED(event) )
+{
+    DockCommanderWindow();
 }
 
 void CMainFrame::AboutFmsLogo(wxCommandEvent& WXUNUSED(event) )

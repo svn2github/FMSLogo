@@ -38,8 +38,8 @@ enum
 // CCommander
 // ----------------------------------------------------------------------------
 
-CCommander::CCommander(wxWindow *parent)
-   : wxWindow(parent, wxID_ANY)
+CCommander::CCommander(wxWindow *Parent)
+    : wxPanel(Parent, wxID_ANY)
 {
 
     m_History = new wxRichTextCtrl(this, ID_COMMANDER_HISTORY);
@@ -336,7 +336,8 @@ void CCommander::OnSize(wxSizeEvent& event)
     RecalculateLayout();
 }
 
-BEGIN_EVENT_TABLE(CCommander, wxWindow)
+
+BEGIN_EVENT_TABLE(CCommander, wxPanel)
     EVT_BUTTON(ID_COMMANDER_HALT,    CCommander::OnHaltButton)
     EVT_BUTTON(ID_COMMANDER_TRACE,   CCommander::OnTraceButton)
     EVT_BUTTON(ID_COMMANDER_PAUSE,   CCommander::OnPauseButton)
@@ -346,4 +347,71 @@ BEGIN_EVENT_TABLE(CCommander, wxWindow)
     EVT_BUTTON(ID_COMMANDER_EXECUTE, CCommander::OnExecuteButton)
     EVT_BUTTON(ID_COMMANDER_EDALL,   CCommander::OnEdallButton)
     EVT_SIZE(                        CCommander::OnSize)
+END_EVENT_TABLE()
+
+// ----------------------------------------------------------------------------
+// CCommanderDialog
+// ----------------------------------------------------------------------------
+
+CCommanderDialog::CCommanderDialog(wxWindow * Parent)
+    : wxDialog(
+        Parent,
+        wxID_ANY,
+        wxString(LOCALIZED_COMMANDER),
+        wxDefaultPosition,
+        wxDefaultSize,
+#ifdef __WXMSW__
+        wxDEFAULT_DIALOG_STYLE | wxMINIMIZE_BOX | wxMAXIMIZE_BOX | wxRESIZE_BORDER)
+#else
+        wxCAPTION | wxMINIMIZE_BOX | wxMAXIMIZE_BOX | wxRESIZE_BORDER)
+#endif
+{
+    m_Commander = new CCommander(this);
+
+    // restore the commander window's height
+    int x      = 0;
+    int y      = 0;
+    int width  = 0;
+    int height = 0;
+    GetConfigurationQuadruple("Commander", &x, &y, &width, &height);
+    SetSize(x, y, width, height);
+
+    wxSizer * sizer = new wxBoxSizer(wxVERTICAL);
+
+    sizer->Add(m_Commander, 0, wxEXPAND);
+
+    SetSizer(sizer);
+    sizer->Fit(this);
+}
+
+void CCommanderDialog::OnSize(wxSizeEvent& event)
+{
+    int width;
+    int height;
+    GetClientSize(&width, &height);
+
+    m_Commander->SetSize(width, height);
+}
+
+// REVISIT: this never gets called, but I need this logic somewhere.
+void CCommanderDialog::OnDestroy(wxWindowDestroyEvent & event)
+{
+    // Save the location and size of our window so we can
+    // come back up in the same spot next time we are invoked.
+    if (!IsIconized())
+    {
+        const wxRect windowRectangle = GetRect();
+
+        SetConfigurationQuadruple(
+            "Commander",
+            windowRectangle.GetLeft(),
+            windowRectangle.GetTop(),
+            windowRectangle.GetWidth(),
+            windowRectangle.GetHeight());
+    }
+}
+
+BEGIN_EVENT_TABLE(CCommanderDialog, wxDialog)
+    EVT_SIZE(CCommanderDialog::OnSize)
+    EVT_WINDOW_DESTROY(CCommanderDialog::OnDestroy)
 END_EVENT_TABLE()

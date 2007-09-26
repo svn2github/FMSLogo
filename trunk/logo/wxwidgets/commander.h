@@ -1,12 +1,14 @@
 // -*- c++ -*-
 
-#include "wx/window.h"
+#include <wx/panel.h>
+#include <wx/dialog.h>
 
 class wxButton;
 class wxRichTextCtrl;
 class wxTextCtrl;
+class wxSizer;
 
-class CCommander : public wxWindow
+class CCommander : public wxPanel
 {
 public:
     CCommander(wxWindow *parent);
@@ -44,6 +46,20 @@ private:
 
     void RecalculateLayout();
     void UpdateFont(const wxFont & NewFont);
+
+    DECLARE_EVENT_TABLE();
+};
+
+class CCommanderDialog : public wxDialog
+{
+public:
+    CCommanderDialog(wxWindow *parent);
+
+    void OnSize(wxSizeEvent& event);
+    void OnDestroy(wxWindowDestroyEvent & event);
+
+private:
+    CCommander * m_Commander;
 
     DECLARE_EVENT_TABLE();
 };
