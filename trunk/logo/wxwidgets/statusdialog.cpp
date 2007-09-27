@@ -54,6 +54,8 @@ CStatusDialog::CStatusDialog(wxWindow * Parent)
     // update button on the commander
     // TODO: MainWindowx->CommandWindow->UpdateStatusButtonState();
 
+#ifdef __WXMSW__ // utils.cpp only builds on Windows
+
     // build default coords
     int x = 0;
     int y = 0;
@@ -66,31 +68,6 @@ CStatusDialog::CStatusDialog(wxWindow * Parent)
 
     // now set position
     Move(x, y);
-
-#if 0
-    // set the static text fields
-    static const MENUITEM text[] = {
-        {LOCALIZED_STATUS_CONTACT,     ID_STATUS_CONTACT},
-        {LOCALIZED_STATUS_PENCOLOR,    ID_STATUS_PENCOLOR},
-        {LOCALIZED_STATUS_FLOODCOLOR,  ID_STATUS_FLOODCOLOR},
-        {LOCALIZED_STATUS_SCREENCOLOR, ID_STATUS_SCREENCOLOR},
-        {LOCALIZED_STATUS_PALETTE,     ID_STATUS_PALETTE},
-        {LOCALIZED_STATUS_WIDTH,       ID_STATUS_WIDTH},
-        {LOCALIZED_STATUS_POSITION,    ID_STATUS_POSITION},
-        {LOCALIZED_STATUS_WHICH,       ID_STATUS_WHICH},
-        {LOCALIZED_STATUS_VISIBILITY,  ID_STATUS_VISIBILITY},
-        {LOCALIZED_STATUS_STYLE,       ID_STATUS_STYLE},
-        {LOCALIZED_STATUS_HEADING,     ID_STATUS_HEADING},
-        {LOCALIZED_STATUS_PITCH,       ID_STATUS_PITCH},
-        {LOCALIZED_STATUS_ROLL,        ID_STATUS_ROLL},
-        {LOCALIZED_STATUS_PEN,         ID_STATUS_PEN},
-        {LOCALIZED_STATUS_ORIENTATION, ID_STATUS_ORIENTATION},
-        {LOCALIZED_STATUS_TURTLE,      ID_STATUS_TURTLE},
-        {LOCALIZED_STATUS_COLOR,       ID_STATUS_COLOR},
-        {LOCALIZED_STATUS_KERNEL,      ID_STATUS_KERNEL},
-        {LOCALIZED_STATUS_CALLS,       ID_STATUS_CALLS},
-        {LOCALIZED_STATUS_PEAKMEMORY,  ID_STATUS_PEAKMEMORY},
-    };
 #endif
 
     struct STATICBOX

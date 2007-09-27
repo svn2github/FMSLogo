@@ -14,9 +14,7 @@
 #include "statusdialog.h"
 #include "workspaceeditor.h"
 #include "localizedstrings.h"
-#ifdef __WXMSW__
-#  include "utils.h"
-#endif
+#include "utils.h"
 #include "logocore.h"
 
 
@@ -424,6 +422,9 @@ CCommanderDialog::CCommanderDialog(wxWindow * Parent)
 {
     m_Commander = new CCommander(this);
 
+
+#ifdef __WXMSW__ // utils.cpp only builds on Windows
+
     // restore the commander window's height
     int x      = 0;
     int y      = 0;
@@ -431,6 +432,7 @@ CCommanderDialog::CCommanderDialog(wxWindow * Parent)
     int height = 0;
     GetConfigurationQuadruple("Commander", &x, &y, &width, &height);
     SetSize(x, y, width, height);
+#endif
 
     wxSizer * sizer = new wxBoxSizer(wxVERTICAL);
 
@@ -452,6 +454,8 @@ void CCommanderDialog::OnSize(wxSizeEvent& event)
 // REVISIT: this never gets called, but I need this logic somewhere.
 void CCommanderDialog::OnDestroy(wxWindowDestroyEvent & event)
 {
+#ifdef __WXMSW__ // utils.cpp only builds on Windows
+
     // Save the location and size of our window so we can
     // come back up in the same spot next time we are invoked.
     if (!IsIconized())
@@ -465,6 +469,8 @@ void CCommanderDialog::OnDestroy(wxWindowDestroyEvent & event)
             windowRectangle.GetWidth(),
             windowRectangle.GetHeight());
     }
+
+#endif
 }
 
 void CCommanderDialog::OnClose(wxCloseEvent& event)

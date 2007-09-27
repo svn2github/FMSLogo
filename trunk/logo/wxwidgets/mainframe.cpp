@@ -330,6 +330,8 @@ void CMainFrame::DockCommanderWindow()
     {
         CCommander * newCommander = new CCommander(m_Splitter);
 
+#ifdef __WXMSW__ // utils.cpp only builds on Windows
+
         // restore the commander window's height
         int commanderWindowX      = 0;
         int commanderWindowY      = 0;
@@ -344,6 +346,9 @@ void CMainFrame::DockCommanderWindow()
 
         // sanity-check the input
         commanderWindowHeight = std::max(commanderWindowHeight, MIN_COMMANDER_HEIGHT);
+#else
+        int commanderWindowHeight = MIN_COMMANDER_HEIGHT;
+#endif
 
 #if 0
         if (bFixed)

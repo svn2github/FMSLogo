@@ -3,6 +3,7 @@
 #include <wx/dialog.h>
 
 class wxButton;
+class wxSlider;
 
 class CSetPenSize : public wxDialog
 {
