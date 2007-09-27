@@ -11,6 +11,7 @@
 
 #include "wx/richtext/richtextctrl.h"
 
+#include "statusdialog.h"
 #include "workspaceeditor.h"
 #include "localizedstrings.h"
 #ifdef __WXMSW__
@@ -18,9 +19,10 @@
 #endif
 #include "logocore.h"
 
-static bool g_StepFlag   = false;
-static bool g_TraceFlag  = false;
-static bool g_StatusFlag = false;
+
+bool g_StepFlag   = false;
+bool g_TraceFlag  = false;
+bool g_StatusFlag = false;
 
 
 // Menu IDs
@@ -234,6 +236,10 @@ void CCommander::OnPauseButton(wxCommandEvent& WXUNUSED(event))
 
 void CCommander::OnStatusButton(wxCommandEvent& WXUNUSED(event))
 {
+    // HACK: for now just display a new one each time
+    CStatusDialog * dlg = new CStatusDialog(this);
+    dlg->Show();
+
     // toggle status state along with poping up and killing the status window
     if (g_StatusFlag)
     {
