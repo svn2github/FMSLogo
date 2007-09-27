@@ -42,16 +42,17 @@
 
          <li>
            <span class="devplan-item">Write an extensive set of automated tests.</span>
-           <span class="devplan-update">In Progress.</span>
+           <span class="devplan-update">In Progress (ongoing task).</span>
            <br>
            Without a good test suite, I cannot confidently update FMSLogo without introducing regressions.
            Because FMSLogo has a lot of features, writing a comprehensive set of tests is very time consuming.</li>
 
          <li>
-           <span class="devplan-item">Port FMSLogo to gcc and wxWindows.</span>
+           <span class="devplan-item">Port FMSLogo to gcc and wxWidgets.</span>
+           <span class="devplan-update">In Progress.  ETA: late 2009.</span>
            <br>
            Currently FMSLogo is built with a defunct compiler and links to a proprietary window toolkit.
-           Porting FMSLogo to gcc and wxWindows will open up development to more people.</li>
+           Porting FMSLogo to gcc and wxWidgets will open up development to more people.</li>
 
          <li>
            <span class="devplan-item">Use the GNU tools to find performance bottlenecks and fix memory leaks.</span>
