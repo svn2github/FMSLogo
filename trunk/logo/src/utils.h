@@ -66,16 +66,17 @@ SetConfigurationQuadruple(
     int                 Value4
     );
 
+
 void
 GetConfigurationFont(
-    const char * Name,
-    LOGFONT  &   LogFont
+    const char *            Name,
+    struct tagLOGFONTA  &   LogFont
     );
 
 void
 SetConfigurationFont(
-    const char *       Name,
-    const LOGFONT  &   LogFont
+    const char *                 Name,
+    const struct tagLOGFONTA &   LogFont
     );
 
 #endif // __UTILS_H_
