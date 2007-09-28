@@ -87,6 +87,7 @@ SPLITTER_OBJECTS =  \
 	splitter_fmslogo.o \
 	splitter_setpensize.o \
 	splitter_statusdialog.o \
+	splitter_savebeforeexitdialog.o \
 
 ifeq "$(TOOLKIT)" "MSW"
 SPLITTER_OBJECTS +=  \

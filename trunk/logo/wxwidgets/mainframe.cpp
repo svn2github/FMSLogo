@@ -32,6 +32,7 @@
 #include "setactivearea.h"
 #include "aboutfmslogo.h"
 #include "aboutmultiplesclerosis.h"
+#include "savebeforeexitdialog.h"
 #include "logocore.h"
 #include "localizedstrings.h"
 #include "fmslogo.h"
@@ -441,7 +442,14 @@ void CMainFrame::DockCommanderWindow()
 // menu command handlers
 void CMainFrame::Quit(wxCommandEvent& WXUNUSED(event) )
 {
-    Close(true);
+    CSaveBeforeExitDialog dlg(this);
+    dlg.ShowModal();
+    CSaveBeforeExitDialog::SAVEBEFOREEXIT code = dlg.GetExitCode();
+
+    if (code != CSaveBeforeExitDialog::SAVEBEFOREEXIT_Cancel)
+    {
+        Close(true);
+    }
 }
 
 void CMainFrame::SetPenSize(wxCommandEvent& WXUNUSED(event) )
