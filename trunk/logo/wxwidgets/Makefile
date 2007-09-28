@@ -92,6 +92,7 @@ SPLITTER_OBJECTS =  \
 ifeq "$(TOOLKIT)" "MSW"
 SPLITTER_OBJECTS +=  \
 	splitter_utils.o \
+	splitter_debugheap.o \
         splitter_fmslogo_rc.o \
 	$(__splitter___win32rc)
 endif
