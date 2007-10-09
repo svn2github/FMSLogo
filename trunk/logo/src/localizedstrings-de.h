@@ -602,7 +602,7 @@
 //
 #define LOCALIZED_GENERAL_OKBUTTON      "&OK"
 #define LOCALIZED_GENERAL_CANCELBUTTON  "&Abbruch"
-#define LOCALIZED_GENERAL_APPLYBUTTON   "&Apply"
+#define LOCALIZED_GENERAL_APPLYBUTTON   "&Übernahme"
 
 #define LOCALIZED_GENERAL_PRODUCTNAME   "FMSLogo"
 
@@ -614,17 +614,17 @@
 #define LOCALIZED_FILE        "&Datei"
 #define LOCALIZED_FILE_NEW    "&Neu\t(löscht Arbeitsspeicher)"
 #define LOCALIZED_FILE_LOAD   "&Lade...\t(stellt in den Arbeitsspeicher)"
-#define LOCALIZED_FILE_OPEN   "&Öffne...\t(ersetze Arbeitsspeicher)" 
+#define LOCALIZED_FILE_OPEN   "Ö&ffne...\t(ersetze Arbeitsspeicher)" 
 #define LOCALIZED_FILE_SAVE   "&Speichern" 
 #define LOCALIZED_FILE_SAVEAS "Speichern &unter..."
 #define LOCALIZED_FILE_EDIT   "&Edit..."
-#define LOCALIZED_FILE_ERASE  "L&öschen..."
-#define LOCALIZED_FILE_EXIT   "A&de"
+#define LOCALIZED_FILE_ERASE  "&Löschen..."
+#define LOCALIZED_FILE_EXIT   "&Ade"
 
 #define LOCALIZED_BITMAP               "&Bild"
 #define LOCALIZED_BITMAP_NEW           "&Neu"
 #define LOCALIZED_BITMAP_LOAD          "&Lade..."
-#define LOCALIZED_BITMAP_SAVE          "&Speichern"
+#define LOCALIZED_BITMAP_SAVE          "&Bewahre..."
 #define LOCALIZED_BITMAP_SAVEAS        "Speichern &als..."
 #define LOCALIZED_BITMAP_PRINT         "&Drucken..."
 #define LOCALIZED_BITMAP_PRINTERSETUP  "Drucker&setup..."
@@ -736,7 +736,7 @@
 #define LOCALIZED_COMMANDER                     "Kommandos"
 #define LOCALIZED_COMMANDER_HALT                "Halt"
 #define LOCALIZED_COMMANDER_TRACE               "Prot."
-#define LOCALIZED_COMMANDER_NOTRACE             "K.Prot."
+#define LOCALIZED_COMMANDER_NOTRACE             "K. Prot."
 #define LOCALIZED_COMMANDER_PAUSE               "Pause"
 #define LOCALIZED_COMMANDER_STATUS              "Status"
 #define LOCALIZED_COMMANDER_NOSTATUS            "K. Status"
@@ -828,7 +828,7 @@
 #define LOCALIZED_ABOUTFMS_SPECIALTHANKS       "Thanks to Yehuda Katz (yehuka@softhome.net)\nand Erich Neuwirth (erich.neuwirth@univie.ac.at)"
 #define LOCALIZED_ABOUTFMS_GPL                 LOCALIZED_GENERAL_PRODUCTNAME" is free software\nSee GNU Public License"
 #define LOCALIZED_ABOUTFMS_NEWSGROUP           "Internet News Group: comp.lang.logo\nVisit the Logo-Forum at\nhttp:\x2F/groups.yahoo.com/group/LogoForum/"
-#define LOCALIZED_ABOUTFMS_MULTIMEDIALOGIC     "To learn the internals of computers,\ntry MultiMedia Logic from Softronics, Inc.\nVerändert/übersetzt von Stephan Vogel\nAugust-Ruf-Bildungszentrum Ettenheim"
+#define LOCALIZED_ABOUTFMS_MULTIMEDIALOGIC     "To learn the internals of computers,\ntry MultiMedia Logic from Softronics, Inc.\nVerändert/übersetzt von Stephan Vogel\nAugust-Ruf-Bildungszentrum Ettenheim/Südbaden\nSeine Logo-Projekte: http:\x2F/www.lehrer.uni-karlsruhe.de/~za1880/itg/index.htm"
 #define LOCALIZED_ABOUTFMS_OK                  LOCALIZED_GENERAL_OKBUTTON
 
 
@@ -836,8 +836,8 @@
 // Strings on the "About FMS" Dialog box
 //
 #define LOCALIZED_ABOUTMS                      "Über FMS"
-#define LOCALIZED_ABOUTMS_FMS                  "FMS steht für 'Fight Multiple Sclerosis'."
-#define LOCALIZED_ABOUTMS_CONSIDERDONATING     "Please consider donating to the\nNational Multiple Sclerosis Society.\nhttp:\x2F/www.nmss.org\n1-800-FIGHT-MS"
+#define LOCALIZED_ABOUTMS_FMS                  "FMS steht für 'Fight Multiple Sclerosis'. \nRechnen und Steuern in M, Inf, Ph und Te.\nPapert, S.: Gedankenblitze 8126 rororo"
+#define LOCALIZED_ABOUTMS_CONSIDERDONATING     "Bitte erwägen Sie der \nNational Multiple Sclerosis Society zu spenden.\nhttp:\x2F/www.nmss.org\n1-800-FIGHT-MS"
 #define LOCALIZED_ABOUTMS_OK                   LOCALIZED_GENERAL_OKBUTTON
 
 
@@ -855,8 +855,8 @@
 #define LOCALIZED_CHANGESINEDITORMAYBELOST  "Änderungen in dieser Edit-Sitzung können verloren gehen.\n\nWollen Sie wirklich "LOCALIZED_GENERAL_PRODUCTNAME" verlassen?"
 #define LOCALIZED_EDITSESSIONISRUNNING      "Eine Edit-Sitzung läuft gerade"
 
-#define LOCALIZED_NOTHALTEDREALLYEXIT        LOCALIZED_GENERAL_PRODUCTNAME" will nicht schließen solange es nicht angehalten wird.\n\nMöchten Sie wirklich "LOCALIZED_GENERAL_PRODUCTNAME" verlassen?"
-#define LOCALIZED_NOTHALTEDREALLYHALT        LOCALIZED_GENERAL_PRODUCTNAME" will nicht schließen solange es nicht angehalten wird.\n\nMöchten Sie wirklich "LOCALIZED_GENERAL_PRODUCTNAME" anhalten (Halt)?"
+#define LOCALIZED_NOTHALTEDREALLYEXIT        LOCALIZED_GENERAL_PRODUCTNAME" will nicht schließen, solange es nicht angehalten wird.\n\nMöchten Sie wirklich "LOCALIZED_GENERAL_PRODUCTNAME" verlassen?"
+#define LOCALIZED_NOTHALTEDREALLYHALT        LOCALIZED_GENERAL_PRODUCTNAME" will nicht schließen, solange es nicht angehalten wird.\n\nMöchten Sie wirklich "LOCALIZED_GENERAL_PRODUCTNAME" anhalten (Halt)?
 #define LOCALIZED_LOGOISNOTHALTED            LOCALIZED_GENERAL_PRODUCTNAME" wird nicht angehalten (Halt)"
 
 #define LOCALIZED_WRITEFAILEDNOMEMORY         "Schreiben nicht möglich, möglicherweise kein Speicher"
@@ -892,7 +892,7 @@
 //  Strings used in the File-Open filters
 //
 #define LOCALIZED_FILEFILTER_ALLFILES "Alle Dateien (*.*)|*.*|"
-#define LOCALIZED_FILEFILTER_LOGO     "Logo Dateien (*.lgo;*.log)|*.lgo;*.log|"LOCALIZED_FILEFILTER_ALLFILES
+#define LOCALIZED_FILEFILTER_LOGO     "Logo Dateien (*.log)|*.log|"LOCALIZED_FILEFILTER_ALLFILES
 #define LOCALIZED_FILEFILTER_IMAGE    "Bitmap Dateien (*.bmp)|*.bmp|GIF Files (*.gif)|*.gif|"LOCALIZED_FILEFILTER_ALLFILES
 
 
@@ -943,7 +943,7 @@
 #define LOCALIZED_ERROR_UNEXPECTEDPAREN        "unerwartete ')'"
 #define LOCALIZED_ERROR_UNEXPECTEDBRACKET      "unerwartete ']'"
 #define LOCALIZED_ERROR_UNEXPECTEDBRACE        "unerwartete '}'"
-#define LOCALIZED_ERROR_DONTKNOWHOWTO          "Was soll geschehen mit %p"
+#define LOCALIZED_ERROR_DONTKNOWHOWTO          "Was soll geschehen mit %p ?"
 #define LOCALIZED_ERROR_NOCATCHTAG             "Konnte FANGE-Schild für %p nicht finden"
 #define LOCALIZED_ERROR_ALREADYDEFINED         "%p ist schon definiert"
 #define LOCALIZED_ERROR_STOPPING               "Gestoppt..."
@@ -1054,17 +1054,17 @@
 #define LOCALIZED_ERROR_NETWORKHOSTISUNREACHABLE   "Host ist nicht erreichbar"
 #define LOCALIZED_ERROR_NETWORKBADPROTOTYPE        "Protokoll ist falsch gesetzt für Socket"
 #define LOCALIZED_ERROR_NETWORKBADOPNOTSUPPORTED   "Operation wird nicht unterstützt auf dem Socket"
-#define LOCALIZED_ERROR_NETWORKUNREACHABLE         "kein Weg gefunden, um host zu starten (to remote)"
+#define LOCALIZED_ERROR_NETWORKUNREACHABLE         "kein Weg gefunden, um Host zu starten (to remote)"
 #define LOCALIZED_ERROR_NETWORKTOOMANYREFS         "Zu viele Verweisungen"
 
-#define LOCALIZED_ERROR_POLYSTART               "PolyStart Fehler"
+#define LOCALIZED_ERROR_POLYSTART               "PolyStart - Fehler"
 #define LOCALIZED_ERROR_POLYSTARTALREADYSTARTED "Sie haben schon ein Polygon gestartet"
 
 #define LOCALIZED_ERROR_POLYEND                 "PolyEnde (PolyEnd) Fehler"
 #define LOCALIZED_ERROR_POLYENDNOTSTARTED       "Sie haben kein Polygon gestartet"
 #define LOCALIZED_ERROR_POLYENDNEED3VECTORS     "Sie müssen mindestens 3 Vektoren haben, um ein Polygon zu definieren"
 
-#define LOCALIZED_ERROR_SOUND                 "Sound Fehler"
+#define LOCALIZED_ERROR_SOUND                 "Sound - Fehler"
 
 #define LOCALIZED_ERROR_MIDI                  "MIDI Fehler"
 #define LOCALIZED_ERROR_MIDIINVALIDDEVICE     "Ungültiges MIDI-Interface"
@@ -1217,7 +1217,7 @@
 //
 #define LOCALIZED_COLOR_ALICEBLUE             "AliceBlau"
 #define LOCALIZED_COLOR_ANTIQUEWHITE          "AntikWeiß"
-#define LOCALIZED_COLOR_AQUA                  "HellBlau"
+#define LOCALIZED_COLOR_AQUA                  "WasserBlau"
 #define LOCALIZED_COLOR_AQUAMARINE            "Aquamarin"
 #define LOCALIZED_COLOR_AZURE                 "Azur"
 #define LOCALIZED_COLOR_BEIGE                 "Beige"
@@ -1318,7 +1318,7 @@
 #define LOCALIZED_COLOR_NAVAJOWHITE           "NavajoWhite"
 #define LOCALIZED_COLOR_NAVY                  "DunkelBlau"
 #define LOCALIZED_COLOR_OLDLACE               "OldLace"
-#define LOCALIZED_COLOR_OLIVE                 "Olivegrün"
+#define LOCALIZED_COLOR_OLIVE                 "Oliv"
 #define LOCALIZED_COLOR_OLIVEDRAB             "Olivegelb"
 #define LOCALIZED_COLOR_ORANGE                "Orange"
 #define LOCALIZED_COLOR_ORANGERED             "OrangeRot"
@@ -1335,7 +1335,7 @@
 #define LOCALIZED_COLOR_POWDERBLUE            "PuderBlau"
 #define LOCALIZED_COLOR_PURPLE                "Purpurn"
 #define LOCALIZED_COLOR_RED                   "Rot"
-#define LOCALIZED_COLOR_ROSYBROWN             "RosyBrown"
+#define LOCALIZED_COLOR_ROSYBROWN             "PastellBraun"
 #define LOCALIZED_COLOR_ROYALBLUE             "KönigsBlau"
 #define LOCALIZED_COLOR_SADDLEBROWN           "SattelBraun"
 #define LOCALIZED_COLOR_SALMON                "Lachs"
