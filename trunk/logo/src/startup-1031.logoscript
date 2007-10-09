@@ -156,12 +156,14 @@ catch "error [ copydef "solange          "while          ]
 
 
 
+
+
+
+
 catch "error [ copydef "xko		 "xcor           ]
 catch "error [ copydef "yko		 "ycor           ]
 catch "error [ copydef "zko              "zcor           ]
-
-
-
+  
 to PortOutb :adress :num
 dllcall (list "v "PortOut "w :num "w :adress)
 end
@@ -171,3 +173,8 @@ to PortInb :adress
 op (first dllcall (list "w "PortIn "w :adress)) - 768
 end
 bury  [PortInb]
+
+catch "error [ copydef "Ausg    		"PortOutb       ]
+catch "error [ copydef "Ausgang    		"PortOutb       ]
+catch "error [ copydef "Eing    		"PortInb        ]
+catch "error [ copydef "Eingang    		"PortInb        ]
