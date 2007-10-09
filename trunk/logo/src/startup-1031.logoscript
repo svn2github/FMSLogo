@@ -1,11 +1,14 @@
-catch "error [ copydef "alleerstes      "aer        ]
-catch "error [ copydef "ascii?          "asc        ]
-catch "error [ copydef "bb              "Bitblock   ]
-catch "error [ copydef "el              "Element    ]
-catch "error [ copydef "erstes          "er         ]
+; dllload "io.dll
+; show shell [paportmo]
+
+catch "error [ copydef "alleerstes	"aer        ]
+catch "error [ copydef "ascii?		"asc        ]
+catch "error [ copydef "bb		"Bitblock   ]
+catch "error [ copydef "el		"Element    ]
+catch "error [ copydef "erstes		"er         ]
 catch "error [ copydef "ganzzahl        "int        ]
-catch "error [ copydef "gib             "dzl        ]
-catch "error [ copydef "it              "igeltext   ]
+catch "error [ copydef "gib        	"dzl        ]
+catch "error [ copydef "it        	"igeltext   ]
 catch "error [ copydef "keyboardaus     "keyboardoff]
 catch "error [ copydef "Tastaturaus     "keyboardaus]
 catch "error [ copydef "keyboardein     "keyboardon ]
@@ -13,33 +16,151 @@ catch "error [ copydef "Tastaturein     "keyboardein]
 catch "error [ copydef "Tastenwert      "TastEg     ]
 catch "error [ copydef "nimmEg          "vgEg       ]
 catch "error [ copydef "löschebild      "lb         ]
-catch "error [ copydef "NB              "lb         ]
+catch "error [ copydef "NB        	"lb         ]
 catch "error [ copydef "NeuBild         "lb         ]
-catch "error [ copydef "to              "pr         ]
-catch "error [ copydef "lerne           "pr         ]
-catch "error [ copydef "letztes         "lz         ]
-catch "error [ copydef "miterstem       "me         ]
-catch "error [ copydef "mitletztem      "ml         ]
-catch "error [ copydef "or              "eines?     ]
-catch "error [ copydef "^               "Potenz     ]
+catch "error [ copydef "to		"pr         ]
+catch "error [ copydef "lerne		"pr         ]
+catch "error [ copydef "letztes		"lz         ]
+catch "error [ copydef "miterstem	"me         ]
+catch "error [ copydef "mitletztem	"ml         ]
+catch "error [ copydef "or      	"eines?     ]
+catch "error [ copydef "^        	"Potenz     ]
 catch "error [ copydef "SZeichne        "SMale      ]
-catch "error [ copydef "und             "alle?      ]
+catch "error [ copydef "und         	"alle?      ]
 catch "error [ copydef "verstecke       "bury       ]
+catch "error [ copydef "vergrabe        "bury       ]
 catch "error [ copydef "versteckt       "buried     ]
+catch "error [ copydef "vergraben       "buried     ]
 catch "error [ copydef "WertEg          "gibEg      ]
-catch "error [ copydef "wiederhole      "wh         ]
-catch "error [ copydef "ztl             "Titelliste ]
+catch "error [ copydef "wiederhole	"wh         ]
+catch "error [ copydef "ztl        	"Titelliste ]
 
 
 
 
 ; copydef of library routines
-catch "error [ copydef "eda     "edall          ]
-catch "error [ copydef "zgn     "pons           ]
-catch "error [ copydef "zgp     "pops           ]
-catch "error [ copydef "vga     "erall          ]
-catch "error [ copydef "vgn     "erns           ]
-catch "error [ copydef "xko     "xcor           ]
-catch "error [ copydef "yko     "ycor           ]
-catch "error [ copydef "zko     "zcor           ]
+
+
+catch "error [ copydef "ArrayzurListe    	"arraytolist    ]
+catch "error [ copydef "bestellen        	"ask            ]
+catch "error [ copydef "vergrabealles    	"buryall        ]
+catch "error [ copydef "vergrabeName     	"buryname       ]
+catch "error [ copydef "Kreis            	"circle         ]
+catch "error [ copydef "kreis2           	"circle2        ]
+catch "error [ copydef "kombiniere       	"combine        ]
+catch "error [ copydef "verbinde         	"combine        ]
+catch "error [ copydef "erfassealles     	"crossmap       ]
+
+catch "error [ copydef "Inhalt        	 	"dir            ]
+catch "error [ copydef "ih               	"dir            ]
+catch "error [ copydef "Distanz          	"distance       ]
+catch "error [ copydef "Distanzxyz       	"distancexyz    ]
+catch "error [ copydef "führeaus.bis     	"do.until       ]
+catch "error [ copydef "führeaus.solange 	"do.while       ]
+catch "error [ copydef "eda              	"edall          ]
+catch "error [ copydef "edalles          	"edall          ]
+catch "error [ copydef "edName           	"edn            ]
+catch "error [ copydef "edNamen          	"edns           ]
+catch "error [ copydef "edn              	"edns           ]
+catch "error [ copydef "edEgliste        	"edpl           ]
+catch "error [ copydef "edegli           	"edpl           ]
+catch "error [ copydef "edEglisten       	"edpls          ]
+
+catch "error [ copydef "edprn            	"edps           ]
+
+catch "error [ copydef "vga              	"erall          ]
+catch "error [ copydef "vgName           	"ern            ]
+
+catch "error [ copydef "vgNamen          	"erns           ]
+catch "error [ copydef "vgn              	"erns           ]
+catch "error [ copydef "vgpl             	"erpl           ]
+catch "error [ copydef "vgpls            	"erpls          ]
+catch "error [ copydef "vgps             	"erps           ]
+catch "error [ copydef "Datei?           	"filep          ]
+
+catch "error [ copydef "filter           	"filter         ]
+catch "error [ copydef "finde            	"find           ]
+catch "error [ copydef "whfür            	"for            ]
+catch "error [ copydef "wiederholefür    	"for            ]
+catch "error [ copydef "fürjedes         	"foreach        ]
+catch "error [ copydef "GoldenerSchnitt  	"goldenratio    ]
+
+catch "error [ copydef "minimieren       	"icon           ]
+catch "error [ copydef "ignoriere   		"ignore         ]
+catch "error [ copydef "anrufen          	"invoke         ]
+catch "error [ copydef "ListezumArray    	"listtoarray    ]
+catch "error [ copydef "setzelokal       	"localmake      ]
+catch "error [ copydef "entfalteMakro    	"macroexpand    ]
+
+catch "error [ copydef "setzeIgel        	"maketurtle     ]
+catch "error [ copydef "erfasse          	"map            ]
+catch "error [ copydef "erfasse.Satz     	"map.se         ]
+
+catch "error [ copydef "mdfixiereItem        	"mdsetitem      ]
+catch "error [ copydef "kopiereMaus      	"mousecopy      ]
+
+catch "error [ copydef "NamenListe       	"namelist       ]
+catch "error [ copydef "Auffrischenaus   	"norefresh      ]
+catch "error [ copydef "Orientierung   		"orientation    ]
+catch "error [ copydef "Stift            	"pen            ]
+catch "error [ copydef "Normalstift      	"pennormal      ]
+catch "error [ copydef "Zufallswahl      	"pick           ]
+catch "error [ copydef "zglliste         	"pllist         ]
+catch "error [ copydef "zglli            	"pllist         ]
+catch "error [ copydef "zga              	"poall          ]
+catch "error [ copydef "zgname           	"pon            ]
+catch "error [ copydef "zgn              	"pons           ]
+catch "error [ copydef "Stapelwert       	"pop            ]
+catch "error [ copydef "zgEgliste        	"popl           ]
+catch "error [ copydef "zgEglisten       	"popls          ]
+catch "error [ copydef "zgprn            	"pops           ]
+catch "error [ copydef "zgprtitel        	"pots           ]
+catch "error [ copydef "stapeln          	"push           ]
+
+catch "error [ copydef "zitiert          	"quoted         ]
+
+catch "error [ copydef "vermindere       	"reduce         ]
+
+catch "error [ copydef "Auffrischenein   	"refresh        ]
+catch "error [ copydef "rückgängig       	"remdup         ]
+
+catch "error [ copydef "entferne         	"remove         ]
+catch "error [ copydef "lösche           	"remove         ]
+catch "error [ copydef "invers           	"reverse        ]
+catch "error [ copydef "bewahreli        	"savel          ]
+catch "error [ copydef "fixiereOrientierung	"setorientation ]
+catch "error [ copydef "fixiereStift     	"setpen         ]
+catch "error [ copydef "Vorzeichen       	"sign           ]
+catch "error [ copydef "langsammalen     	"slowdraw       ]
+catch "error [ copydef "sortieren        	"sort           ]
+catch "error [ copydef "Soundaus         	"soundoff       ]
+catch "error [ copydef "Tonaus           	"soundoff       ]
+catch "error [ copydef "Ton              	"Tone           ]
+catch "error [ copydef "Soundan          	"soundon        ]
+
+catch "error [ copydef "Tonan            	"soundon        ]
+catch "error [ copydef "Schrift          	"textfont       ]
+catch "error [ copydef "transfer         	"transfer       ]
+
+catch "error [ copydef "allesausgraben   	"unburyall      ]
+
+catch "error [ copydef "Nameausgraben    "unburyname     ]
+
+catch "error [ copydef "restauriere      "unicon         ]
+catch "error [ copydef "bis              "until          ]
+catch "error [ copydef "solange          "while          ]
+
+
+
+
+
+
+
+
+
+
+
+catch "error [ copydef "xko		 "xcor           ]
+catch "error [ copydef "yko		 "ycor           ]
+catch "error [ copydef "zko              "zcor           ]
   
