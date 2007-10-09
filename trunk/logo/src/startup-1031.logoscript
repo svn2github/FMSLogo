@@ -178,3 +178,17 @@ catch "error [ copydef "Ausg    		"PortOutb       ]
 catch "error [ copydef "Ausgang    		"PortOutb       ]
 catch "error [ copydef "Eing    		"PortInb        ]
 catch "error [ copydef "Eingang    		"PortInb        ]
+
+
+to plus :L1 :L2
+op (list (first :L1) + (first :L2) (first bf :L1) + (first bf :L2) ~
+   (first bf bf :L1) + (first bf bf :L2) (last :L1) + (last :L2)) 
+end
+
+to smotor :l :sz :g
+if :g > 100 [pr [speed too fast! (0 < g-value <= 100)] stop]
+if :g = 0 [pr [speed too slow!] stop]
+show shell (list "MotorS 888 :l :sz int (300 / :g))  
+end
+
+bury [plus smotor]
