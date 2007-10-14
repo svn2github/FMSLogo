@@ -3,7 +3,9 @@ LOAD "testlib.lgo
 TO BITLOADSIZETEST :width :height :bitdepth
   ; this is a regression test for bug #1324580
   CLEARSCREEN
+  HIDETURTLE
   REPEAT 500 [ FORWARD REPCOUNT RIGHT 91 ]
+  SHOWTURTLE
   PENUP
   HOME
   PENDOWN
@@ -14,13 +16,9 @@ TO BITLOADSIZETEST :width :height :bitdepth
   (BITSAVE "bitmap-test.bmp :bitdepth)
 
   CLEARSCREEN
-  LOCALMAKE "bitmapsize BITLOADSIZE "bitmap-test.bmp
-  ERASEFILE "bitmap-test.bmp
 
-  REPORTTEST ~
-    (AND (ITEM 1 :bitmapsize) = :width (ITEM 2 :bitmapsize) = :height) ~
-    (list "|Size is| :bitmapsize) ~
-    (list "|[| :width :height "|]|)
+  SIMPLEREPORTTEST [ BITLOADSIZE "bitmap-test.bmp ] (list :width :height)
+  ERASEFILE "bitmap-test.bmp
 
   ; restore the previous active area
   SETACTIVEAREA :oldactivearea
