@@ -59,7 +59,7 @@ NODE *lthrow(NODE *arg)
 {
     if (NOT_THROWING)
     {
-        if (compare_node(car(arg), Error, true) == 0)
+        if (Error.Equals(car(arg)))
         {
             // this a THROW "ERROR
             if (cdr(arg) != NIL)

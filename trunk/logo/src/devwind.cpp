@@ -316,8 +316,8 @@ NODE *lportwritearray(NODE *args)
                 }
 
                 // now write buffer
-                DWORD Error;
-                ClearCommError(ComId, &Error, NULL);
+                DWORD errorCode;
+                ClearCommError(ComId, &errorCode, NULL);
 
                 DWORD actual;
                 int status = WriteFile(ComId, txbuffer, count, &actual, NULL);
@@ -325,7 +325,7 @@ NODE *lportwritearray(NODE *args)
                 // if problem GetComError will Put up Message box
                 if (status == 0)
                 {
-                    ClearCommError(ComId, &Error, NULL);
+                    ClearCommError(ComId, &errorCode, NULL);
                 }
 
                 // return byte count sent
@@ -372,9 +372,9 @@ NODE *lportreadarray(NODE *args)
                 int count = min(min(getarrdim(obj), getint(val)), sizeof(rxbuffer));
 
                 // Clear any errors
-                DWORD Error;
+                DWORD errorCode;
                 COMSTAT Stat;
-                ClearCommError(ComId, &Error, &Stat);
+                ClearCommError(ComId, &errorCode, &Stat);
 
                 // do the read (let it fail if nothing is there, it should not hang)
                 DWORD actual;
@@ -431,8 +431,8 @@ NODE *lportwritechar(NODE *args)
         // if problem GetComError will Put up Message box
         if (status != 1)
         {
-            DWORD Error;
-            ClearCommError(ComId, &Error, NULL);
+            DWORD errorCode;
+            ClearCommError(ComId, &errorCode, NULL);
         }
 
         // return byte count sent
@@ -452,8 +452,8 @@ NODE *lportreadchar(NODE *)
     else
     {
         // Clear Comm Error in case last operation failed otherwise we won't get anything
-        DWORD Error;
-        ClearCommError(ComId, &Error, NULL);
+        DWORD errorCode;
+        ClearCommError(ComId, &errorCode, NULL);
 
         // ReadFile will return immediately even if there is nothing to read
         char rxchar[64];

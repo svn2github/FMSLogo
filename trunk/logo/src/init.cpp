@@ -37,9 +37,9 @@ CLocalizedNode Truex;
 CLocalizedNode Falsex;
 NODE *Right_Paren;
 NODE *Left_Paren;
-NODE *Toplevel;
-NODE *System;
-NODE *Error;
+CLocalizedNode Toplevel;
+CLocalizedNode System;
+CLocalizedNode Error;
 CLocalizedNode End;
 NODE *Redefp;
 NODE *Caseignoredp;
@@ -730,6 +730,10 @@ void init()
     To.Initialize("to",        LOCALIZED_ALTERNATE_TO);
     End.Initialize("end",      LOCALIZED_ALTERNATE_END);
 
+    Toplevel.Initialize("toplevel",  LOCALIZED_ALTERNATE_TOPLEVEL);
+    System.Initialize("system",      LOCALIZED_ALTERNATE_SYSTEM);
+    Error.Initialize("error",        LOCALIZED_ALTERNATE_ERROR);
+
     Left_Paren = intern(make_static_strnode("("));
     Right_Paren = intern(make_static_strnode(")"));
     Minus_Sign = intern(make_static_strnode("-"));
@@ -737,9 +741,6 @@ void init()
     Query = intern(make_static_strnode("?"));
     Null_Word = intern(make_static_strnode(""));
     Macro = intern(make_static_strnode(".macro"));
-    Toplevel = intern(make_static_strnode("toplevel"));
-    System = intern(make_static_strnode("system"));
-    Error = intern(make_static_strnode("error"));
     If = intern(make_static_strnode("if"));
     Ifelse = intern(make_static_strnode("ifelse"));
     Redefp = intern(make_static_strnode("redefp"));

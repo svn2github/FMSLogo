@@ -403,17 +403,17 @@ bool process_special_conditions()
 
     if (stopping_flag == THROWING)
     {
-        if (compare_node(throw_node, Error, true) == 0)
+        if (Error.Equals(throw_node))
         {
             err_print();
             error_happened = true;
         }
-        else if (compare_node(throw_node, System, true) == 0)
+        else if (System.Equals(throw_node))
         {
             PostQuitMessage(1); // set the exit code to 1
             prepare_to_exit(true);
         }
-        else if (compare_node(throw_node, Toplevel, true) != 0)
+        else if (!Toplevel.Equals(throw_node))
         {
             err_logo(NO_CATCH_TAG, throw_node);
             err_print();

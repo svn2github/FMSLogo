@@ -1257,7 +1257,7 @@ NODE *evaluator(NODE *list, enum labels where)
  catch_continuation:
     assign(list, cdr(val));
     assign(catch_tag, car(val));
-    if (compare_node(catch_tag, Error, true) == 0)
+    if (Error.Equals(catch_tag))
     {
         // Increment the number of nested CATCH "ERROR blocks.
         // When an error does occur, this value is used to decide
@@ -1296,7 +1296,7 @@ NODE *evaluator(NODE *list, enum labels where)
         }
     }
 
-    if (compare_node(catch_tag, Error, true) == 0)
+    if (Error.Equals(catch_tag))
     {
         // we have reached the end of a CATCH "ERROR [] block
         assert(0 < g_CatchErrorCount);

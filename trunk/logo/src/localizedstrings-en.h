@@ -112,9 +112,11 @@
 //
 // Localized "alternate" spellings of Logo reserved words
 //
-#define LOCALIZED_ALTERNATE_TRUE    "true"
-#define LOCALIZED_ALTERNATE_FALSE   "false"
-#define LOCALIZED_ALTERNATE_END     "end"
+#define LOCALIZED_ALTERNATE_TRUE     "true"
+#define LOCALIZED_ALTERNATE_FALSE    "false"
+#define LOCALIZED_ALTERNATE_END      "end"
+#define LOCALIZED_ALTERNATE_TOPLEVEL "toplevel"
+#define LOCALIZED_ALTERNATE_SYSTEM   "system"
 
 //
 // Localized "alternate" spellings of Logo primitives.

@@ -419,7 +419,7 @@ NODE *err_logo(ERR_TYPES error_type, NODE *error_desc, bool uplevel)
                 // have output a new value to use.
                 ndprintf(stdout, LOCALIZED_ERROR_DONTSAYWHATTODOWITH"\n", val);
                 deref(val);
-                new_throw_node = Toplevel;
+                new_throw_node = Toplevel.GetNode();
             }
         }
         else
@@ -432,7 +432,7 @@ NODE *err_logo(ERR_TYPES error_type, NODE *error_desc, bool uplevel)
             // If the error is not recoverable, then the Error was not handled.
             //
             // Either way, we throw Error
-            new_throw_node = Error;
+            new_throw_node = Error.GetNode();
         }
     }
     else
@@ -440,7 +440,7 @@ NODE *err_logo(ERR_TYPES error_type, NODE *error_desc, bool uplevel)
         // We're in a catch block, or no erract is defined, or the erract 
         // instruction list that we are currently processing threw an error.
         // Either way, we should throw the error.
-        new_throw_node = Error;
+        new_throw_node = Error.GetNode();
     }
 
     stopping_flag = THROWING;
@@ -549,7 +549,7 @@ NODE *lpause(NODE*)
                 deref(elist);
                 return unref(val);
             }
-            else if (compare_node(throw_node, Error, true) == 0)
+            else if (Error.GetNode())
             {
                 err_print();
                 stopping_flag = RUN;
