@@ -549,7 +549,7 @@ NODE *lpause(NODE*)
                 deref(elist);
                 return unref(val);
             }
-            else if (Error.GetNode())
+            else if (Error.Equals(throw_node))
             {
                 err_print();
                 stopping_flag = RUN;
