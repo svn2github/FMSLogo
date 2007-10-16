@@ -1303,12 +1303,19 @@ NODE *evaluator(NODE *list, enum labels where)
         g_CatchErrorCount--;
     }
 
-    if (stopping_flag == THROWING &&
-        compare_node(throw_node, catch_tag, true) == 0)
+    if (stopping_flag == THROWING)
     {
-        throw_node = reref(throw_node, Unbound);
-        stopping_flag = RUN;
-        assign(val, output_node);
+        // if throw_node=="erreur" and catch_tag=="error", then
+        // compare_node() will return false, even in the French 
+        // version of FMSLogo.  Therefore, we must treat them as 
+        // equal if they both equal Error.
+        if (compare_node(throw_node, catch_tag, true) == 0 ||
+            Error.Equals(catch_tag) && Error.Equals(throw_node))
+            {
+                throw_node = reref(throw_node, Unbound);
+                stopping_flag = RUN;
+                assign(val, output_node);
+            }
     }
     goto fetch_cont;
 
