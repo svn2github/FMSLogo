@@ -1170,11 +1170,11 @@ bool TMainFrame::WriteDIB(FILE* File, int MaxBitCount)
             // BUG: this should error-out
         }
 
-        HDC     memoryDC     = CreateCompatibleDC(screen);
-        HBITMAP memoryBitmap = (HBITMAP) SelectObject(memoryDC, MemoryBitMap);
+        HDC     memoryDC          = MainWindowx->ScreenWindow->GetMemoryDeviceContext();
+        HBITMAP savedMemoryBitmap = (HBITMAP) SelectObject(memoryDC, MemoryBitMap);
 
-        HDC     areaMemoryDC     = CreateCompatibleDC(screen);
-        HBITMAP areaMemoryBitmap = (HBITMAP) SelectObject(areaMemoryDC, areaMemoryBitMap);
+        HDC     areaMemoryDC          = CreateCompatibleDC(screen);
+        HBITMAP savedAreaMemoryBitmap = (HBITMAP) SelectObject(areaMemoryDC, areaMemoryBitMap);
 
         BitBlt(
             areaMemoryDC,
@@ -1187,11 +1187,10 @@ bool TMainFrame::WriteDIB(FILE* File, int MaxBitCount)
             -g_PrinterAreaYHigh + yoffset,
             SRCCOPY);
 
-        SelectObject(areaMemoryDC, areaMemoryBitmap);
+        SelectObject(areaMemoryDC, savedAreaMemoryBitmap);
         DeleteDC(areaMemoryDC);
 
-        SelectObject(memoryDC, memoryBitmap);
-        DeleteDC(memoryDC);
+        SelectObject(memoryDC, savedMemoryBitmap);
 
         // convert logo bitmap to raw DIB in bitsPtr
         GetDIBits(

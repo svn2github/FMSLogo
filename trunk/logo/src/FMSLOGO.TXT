@@ -21,6 +21,8 @@ I. Kit Description/Location (http://sourceforge.net/projects/fmslogo)
 II. New features/bugs fixed:
 
   * Added for 6.17.0
+    o Fix bug #1813051; Saving an image with an non-full active area
+      works once again.  This bug was introduced in 6.16.0.
     o Fix bug #1798216; THROW targets "TOPLEVEL, "ERROR, and "SYSTEM are
       now internationalized.
     o Add a German translation of FMSLogo.
