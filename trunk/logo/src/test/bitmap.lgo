@@ -107,6 +107,8 @@ END
 
 TO BITPASTETOINDEXTEST.SMOKETEST
 
+    LOCALMAKE "savedScreenColor SCREENCOLOR
+
     LOCALMAKE "sprite     1
     LOCALMAKE "background 2
     LOCALMAKE "backbuffer 3
@@ -154,6 +156,7 @@ TO BITPASTETOINDEXTEST.SMOKETEST
 
     TRACEINSTRUCTION [ SHOWTURTLE ]
 
+    SETSCREENCOLOR :savedScreenColor
 END
 
 TO BITPASTETOINDEXTEST.BADINPUT
@@ -184,6 +187,29 @@ TO BITPASTETOINDEXTEST.BADINPUT
 
 END
 
+TO BITSAVE.WITHACTIVEAREA
+    ; this is a regression test for bug #1813051.
+
+    LOCALMAKE "savedActiveArea ACTIVEAREA
+    LOCALMAKE "savedPenColor   PENCOLOR
+
+    CLEARSCREEN
+    REPEAT 500 [ FORWARD REPCOUNT RIGHT 91 SETPENCOLOR REPCOUNT ]
+    
+    SETACTIVEAREA [ 0 0 200 200 ]
+    BITSAVE "bitsave-withactivearea.bmp
+    
+    CLEARSCREEN
+    BITLOAD  "bitsave-withactivearea.bmp
+
+    ; did the image get restored correctly?
+    CHECKSCREEN "bitsave-200x200
+
+    ; cleanup
+    SETACTIVEAREA :savedActiveArea
+    SETPENCOLOR   :savedPenColor
+    ERASEFILE     "bitsave-withactivearea.bmp
+END
 
 TO BITMAPTEST
   BITLOADSIZETEST 100 100 1
@@ -193,5 +219,7 @@ TO BITMAPTEST
 
   BITPASTETOINDEXTEST.BADINPUT
   BITPASTETOINDEXTEST.SMOKETEST
+
+  BITSAVE.WITHACTIVEAREA
 END
 
