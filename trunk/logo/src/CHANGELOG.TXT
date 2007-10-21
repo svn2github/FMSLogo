@@ -1,5 +1,16 @@
 This file contains the changes that were made in each revision of FMSLogo.
 
+* Added for 6.17.0
+  o Fix bug #1813051; Saving an image with an non-full active area
+    works once again.  This bug was introduced in 6.16.0.
+  o Fix bug #1798216; THROW targets "TOPLEVEL, "ERROR, and "SYSTEM are
+    now internationalized.
+  o Fix bug #1713912; Uninstalling FMSLogo as a limited user now
+    unregisters the file association so that double-clicking on .lgo
+    files works if FMSLogo is later installed by an administrator.
+  o Add a German translation of FMSLogo.
+  o Add an Italian translation of FMSLogo.
+
 * Added for 6.16.1
   o Fix bug #1799027; BITBLOCK no longer leaks an HBRUSH.  This resource leak
     resulted in strange functional behavior when running tetrads, followed by 
