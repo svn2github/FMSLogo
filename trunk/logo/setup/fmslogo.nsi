@@ -55,7 +55,6 @@ UninstPage instfiles
 
 ; variables
 var previousinstalldir ; full path to the uninstaller
-var UserType           ; "limited" or "power"
 
 ; Languages
 LoadLanguageFile "${NSISDIR}\Contrib\Language files\English.nlf"  ; the default language
@@ -87,7 +86,7 @@ LangString StartMenuShortcuts ${LANG_GREEK}      "Συντομεύσεις Μενού Έναρξη"
 Function uninstall
 
   ; Remove registry keys
-  DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\FMSLogo"
+  DeleteRegKey SHELL_CONTEXT "Software\Microsoft\Windows\CurrentVersion\Uninstall\FMSLogo"
 
   ; Remove files and uninstaller
   Delete $previousinstalldir\fmslogo.exe
@@ -177,7 +176,6 @@ Function .onInit
   ; assume regular user until we know they are a power user
 SetupUser:
   SetShellVarContext current
-  StrCpy $UserType "limited"
   StrLen $2 "$PROFILE\FMSLogo"
   StrCpy $INSTDIR "$PROFILE\FMSLogo" $2 0
 
@@ -195,7 +193,6 @@ SetupUser:
 SetupUser.Win9x:
 SetupUser.AllUsers:
   SetShellVarContext all
-  StrCpy $UserType "power"
   StrLen $2       "$PROGRAMFILES\FMSLogo"
   StrCpy $INSTDIR "$PROGRAMFILES\FMSLogo" $2 0
   goto SetupUser.Done
@@ -238,17 +235,7 @@ checkifinstalled:
   ;
   ; If FMSLogo is already installed, either uninstall it or abort. 
   ;
-  StrCmp $UserType "power" GetPreviousInstall.AllUsers GetPreviousInstall.CurrentUser
-
-GetPreviousInstall.AllUsers:
-  ReadRegStr $0 HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\FMSLogo" "UninstallString"
-  goto GetPreviousInstall.Done
-
-GetPreviousInstall.CurrentUser:
-  ReadRegStr $0 HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\FMSLogo" "UninstallString"
-  goto GetPreviousInstall.Done
-
-GetPreviousInstall.Done:
+  ReadRegStr $0 SHELL_CONTEXT "Software\Microsoft\Windows\CurrentVersion\Uninstall\FMSLogo" "UninstallString"
 
   ; If no uninstaller was found, then we're done
   StrCmp $0 "" end 0
@@ -364,7 +351,6 @@ Section "FMSLogo"
 
   ;
   ; Write the uninstall keys for Windows
-  ; NOTE: SHELL_CONTEXT expands to HKLM for admins and HKCU for limited users
   ;
 
   ; Write the installation path into the registry
@@ -439,9 +425,6 @@ Function un.onInit
 SetupUser:
   ; assume regular user until we know they are a power user
   SetShellVarContext current
-  StrCpy $UserType "limited"
-  ReadRegStr $1 HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\FMSLogo" "UninstallString"
-  StrCpy $INSTDIR $1 -15 1 ; hack: assumes the string is quoted and ends in `\uninstall.exe"'.
 
   ClearErrors
   UserInfo::GetName
@@ -457,13 +440,12 @@ SetupUser:
 SetupUser.Win9x:
 SetupUser.AllUsers:
   SetShellVarContext all
-  StrCpy $UserType "power"
-  ReadRegStr $1 HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\FMSLogo" "UninstallString"
-  StrCpy $INSTDIR $1 -15 1 ; hack: assumes the string is quoted and ends in `\uninstall.exe"'.
-
   goto SetupUser.Done
 
 SetupUser.Done:
+
+  ReadRegStr $1 SHELL_CONTEXT "Software\Microsoft\Windows\CurrentVersion\Uninstall\FMSLogo" "UninstallString"
+  StrCpy $INSTDIR $1 -15 1 ; hack: assumes the string is quoted and ends in `\uninstall.exe"'.
 
   ; check if FMSLogo exists where we think it does
   StrCmp $INSTDIR "" CheckIfInstallExists.ShowError 0
