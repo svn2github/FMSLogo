@@ -29,7 +29,7 @@ II. New features/bugs fixed:
       unregisters the file association so that double-clicking on .lgo
       files works if FMSLogo is later installed by an administrator.
     o Add a German translation of FMSLogo.
-    o Add a Portuguese translation of FMSLogo.
+    o Add an Italian translation of FMSLogo.
 
   For a complete history of changes across all versions of FMSLogo, see
   http://fmslogo.cvs.sourceforge.net/*checkout*/fmslogo/logo/src/CHANGELOG.TXT
