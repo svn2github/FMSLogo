@@ -25,6 +25,9 @@ II. New features/bugs fixed:
       works once again.  This bug was introduced in 6.16.0.
     o Fix bug #1798216; THROW targets "TOPLEVEL, "ERROR, and "SYSTEM are
       now internationalized.
+    o Fix bug #1713912; Uninstalling FMSLogo as a limited user now
+      unregisters the file association so that double-clicking on .lgo
+      files works if FMSLogo is later installed by an administrator.
     o Add a German translation of FMSLogo.
     o Add a Portuguese translation of FMSLogo.
 

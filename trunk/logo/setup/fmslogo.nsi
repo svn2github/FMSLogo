@@ -141,8 +141,8 @@ Function uninstall
   RMDir "$previousinstalldir"
 
   ; remove the file association for .LGO
-  DeleteRegValue HKCR ".lgo" "Logo program"
-  DeleteRegKey HKCR "Logo program"
+  DeleteRegValue SHELL_CONTEXT "software\classes\.lgo" "Logo program"
+  DeleteRegKey   SHELL_CONTEXT "software\classes\Logo program"
 
 FunctionEnd
 
@@ -364,55 +364,27 @@ Section "FMSLogo"
 
   ;
   ; Write the uninstall keys for Windows
+  ; NOTE: SHELL_CONTEXT expands to HKLM for admins and HKCU for limited users
   ;
-  StrCmp $UserType "power" Uninstaller.AllUsers Uninstaller.CurrentUser
 
-Uninstaller.AllUsers:
   ; Write the installation path into the registry
-  WriteRegStr HKLM "Software\FMSLogo" "Install_Dir" "$INSTDIR"
+  WriteRegStr SHELL_CONTEXT "Software\FMSLogo" "Install_Dir" "$INSTDIR"
 
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\FMSLogo" "DisplayName" "FMSLogo"
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\FMSLogo" "UninstallString" '"$INSTDIR\uninstall.exe"'
-  WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\FMSLogo" "NoModify" 1
-  WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\FMSLogo" "NoRepair" 1
-  goto Uninstaller.Done
+  WriteRegStr   SHELL_CONTEXT "Software\Microsoft\Windows\CurrentVersion\Uninstall\FMSLogo" "DisplayName" "FMSLogo"
+  WriteRegStr   SHELL_CONTEXT "Software\Microsoft\Windows\CurrentVersion\Uninstall\FMSLogo" "UninstallString" '"$INSTDIR\uninstall.exe"'
+  WriteRegDWORD SHELL_CONTEXT "Software\Microsoft\Windows\CurrentVersion\Uninstall\FMSLogo" "NoModify" 1
+  WriteRegDWORD SHELL_CONTEXT "Software\Microsoft\Windows\CurrentVersion\Uninstall\FMSLogo" "NoRepair" 1
 
-Uninstaller.CurrentUser:
-  ; Write the installation path into the registry
-  WriteRegStr HKCU "Software\FMSLogo" "Install_Dir" "$INSTDIR"
-
-  WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\FMSLogo" "DisplayName" "FMSLogo"
-  WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\FMSLogo" "UninstallString" '"$INSTDIR\uninstall.exe"'
-  WriteRegDWORD HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\FMSLogo" "NoModify" 1
-  WriteRegDWORD HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\FMSLogo" "NoRepair" 1
-  goto Uninstaller.Done
-
-Uninstaller.Done:
   WriteUninstaller "uninstall.exe"
-
 
   ;
   ; create a file association for .lgo
   ;
-  StrCmp $UserType "power" FileAssociation.AllUsers FileAssociation.CurrentUser
-
-FileAssociation.AllUsers:
-  WriteRegStr HKCR ".lgo" ""             "Logo program"
-  WriteRegStr HKCR ".lgo" "Logo program" "Logo program"
-  WriteRegStr HKCR "Logo program\shell"              "" "open"
-  WriteRegStr HKCR "Logo program\DefaultIcon"        "" "$INSTDIR\fmslogo.exe,0"
-  WriteRegStr HKCR "Logo program\shell\open\command" "" '$INSTDIR\fmslogo.exe -L%1'
-  goto FileAssociation.Done
-
-FileAssociation.CurrentUser:
-  WriteRegStr HKCU "software\classes\.lgo"      ""             "Logo program"
-  WriteRegStr HKCU "software\classes\.lgo"      "Logo program" "Logo program"
-  WriteRegStr HKCU "software\classes\Logo program\shell"              "" "open"
-  WriteRegStr HKCU "software\classes\Logo program\DefaultIcon"        "" '$INSTDIR\fmslogo.exe,0'
-  WriteRegStr HKCU "software\classes\Logo program\shell\open\command" "" '$INSTDIR\fmslogo.exe -L%1'
-  goto FileAssociation.Done
-
-FileAssociation.Done:
+  WriteRegStr SHELL_CONTEXT "software\classes\.lgo"      ""             "Logo program"
+  WriteRegStr SHELL_CONTEXT "software\classes\.lgo"      "Logo program" "Logo program"
+  WriteRegStr SHELL_CONTEXT "software\classes\Logo program\shell"              "" "open"
+  WriteRegStr SHELL_CONTEXT "software\classes\Logo program\DefaultIcon"        "" '$INSTDIR\fmslogo.exe,0'
+  WriteRegStr SHELL_CONTEXT "software\classes\Logo program\shell\open\command" "" '$INSTDIR\fmslogo.exe -L%1'
 
 SectionEnd
 
@@ -529,8 +501,7 @@ FunctionEnd
 
 Section "Uninstall"
   ; Remove registry keys
-  DeleteRegKey HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\FMSLogo"
-  DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\FMSLogo"
+  DeleteRegKey SHELL_CONTEXT "Software\Microsoft\Windows\CurrentVersion\Uninstall\FMSLogo"
 
   ; Remove files and uninstaller
   Delete $INSTDIR\fmslogo.exe
@@ -580,9 +551,9 @@ Section "Uninstall"
   RMDir /r "$INSTDIR\examples"
   RMDir "$INSTDIR"
 
-  ; remove the file association for .LGO
-  DeleteRegValue HKCR ".lgo" "Logo program"
-  DeleteRegKey HKCR "Logo program"
+  ; remove the file association
+  DeleteRegValue SHELL_CONTEXT "software\classes\.lgo" "Logo program"
+  DeleteRegKey   SHELL_CONTEXT "software\classes\Logo program"
 
 SectionEnd
 
