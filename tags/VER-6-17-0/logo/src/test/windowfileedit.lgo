@@ -1,0 +1,44 @@
+LOAD "testlib.lgo
+
+
+TO WINDOWFILEEDITTEST.BUG1330752
+  ; This is a manual regression test for bug #1330752.
+
+  MESSAGEBOX [Manual Step] [When the editor pops up, write a short Logo command and click "File -> Save and Exit"]
+
+  WINDOWFILEEDIT "sample.lgo [
+    MESSAGEBOX [Manual Step] [Open "sample.lgo" in a text editor and look for errors.
+When you press OK, the file will be deleted.]
+    ERASEFILE "sample.lgo
+  ]
+END
+
+TO WINDOWFILEEDITTEST.LONGFILENAME
+
+  ; this is a regression test for bug #1474902.
+
+  ; create a file with a long name
+  LOCALMAKE "longfilename "||
+  REPEAT 100 [ MAKE "longfilename word :longfilename "A ]
+  OPENWRITE :longfilename
+  CLOSE     :longfilename
+
+  TRACEINSTRUCTION [ 
+    WINDOWFILEEDIT :longfilename (LIST
+       "REPORTTESTPASSED [WINDOWFILEEDIT did not crash on a long filename] 
+       "ERASEFILE QUOTED :longfilename
+    )
+  ]
+
+  ; wait for the editor to be closed
+  MESSAGEBOX [Notice] (list "|The editor should now be shown.  Save the contents of the editor, then press OK.|)
+END
+
+
+TO WINDOWFILEEDITTEST
+
+  ; manual tests
+  ; WINDOWFILEEDITTEST.BUG1330752
+
+  WINDOWFILEEDITTEST.LONGFILENAME
+END
