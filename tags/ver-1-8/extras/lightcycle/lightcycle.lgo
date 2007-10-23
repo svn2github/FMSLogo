@@ -1,0 +1,679 @@
+to aaa
+; The author disclaims all copyrights associated with this code (hereafter
+; referred to as the "Work").
+;
+; The author makes this dedication for the benefit of the public at large
+; and to the detriment of the author's heirs and successors. The author
+; intends this dedication to be an overt act of relinquishment in
+; perpetuity of all present and future rights under copyright law,
+; whether vested or contingent, in the Work. The author understands that
+; such relinquishment of all rights includes the relinquishment of all
+; rights to enforce (by lawsuit or otherwise) those copyrights in the
+; Work.
+;
+; The author recognizes that, once placed in the public domain, the
+; Work may be freely reproduced, distributed, transmitted, used,
+; modified, built upon, or otherwise exploited by anyone for any
+; purpose, commercial or non-commercial, and in any way, including by
+; methods that have not yet been invented or conceived.
+end
+
+to BoardSquareIsBlocked :x :y
+   localmake "square GetBoardSquare :x :y
+
+   output (or (:square = "X) (numberp :square) )
+end
+
+to DrawGameBoard
+   local [gameboard.row boardsquare]
+
+   ; now draw the game board
+   for [j 1 :GameBoardHeight ] [
+      
+      make "gameboard.row item :j :GameBoard
+      for [i 1 :GameBoardWidth ] [
+  
+          make "boardsquare item :i :gameboard.row
+          if :boardsquare = "X [
+            DrawWall :i :j
+          ]
+      ]
+   ]
+
+end
+
+to DrawWall :X :Y
+   MoveToGrid.LowerLeft :X :Y
+
+   setfloodcolor 0
+   bitblock :GridSize :GridSize
+end
+
+to EndKeyboardCapture
+   keyboardoff
+end
+
+to EraseGrid :X :Y
+   MoveToGrid.LowerLeft :X :Y
+
+   setfloodcolor screencolor
+   bitblock :GridSize :GridSize
+end
+
+to GameLoop
+
+   local [GameBoardTemplate GameBoard GameBoardWidth GameBoardHeight]
+   local [Player1 Player2 Player3 Player4]
+   localmake "GridSize 8
+
+   InitGameBoard
+
+   Player.MarkHeadPosition :Player1
+   Player.MarkHeadPosition :Player2
+   Player.MarkHeadPosition :Player3
+   Player.MarkHeadPosition :Player4
+
+   Player.DrawHead :Player1
+   Player.DrawHead :Player2
+   Player.DrawHead :Player3
+   Player.DrawHead :Player4
+
+   Player.MarkPosition :Player1
+   Player.MarkPosition :Player2
+   Player.MarkPosition :Player3
+   Player.MarkPosition :Player4
+
+   DrawGameBoard
+
+   StartKeyboardCapture
+
+   localmake "IsDone "false
+   while [ not :IsDone ] [
+
+      UpdateNextFrame
+      wait 9 ; 15 ms
+   ]
+
+   if Player.IsAlive :Player1 [ (print Player.Name :Player1 "Wins) ]
+   if Player.IsAlive :Player2 [ (print Player.Name :Player2 "Wins) ]
+   if Player.IsAlive :Player3 [ (print Player.Name :Player3 "Wins) ]
+   if Player.IsAlive :Player4 [ (print Player.Name :Player4 "Wins) ]
+
+   if (and (not Player.IsAlive :Player1)
+           (not Player.IsAlive :Player2)
+           (not Player.IsAlive :Player3)
+           (not Player.IsAlive :Player4)) [
+       print [No one wins]
+   ]
+
+   EndKeyboardCapture
+
+end
+
+to GetBoardSquare :x :y
+    output item :x (item :y :GameBoard)
+end
+
+to InitGameBoard
+   local [gameboardtemplate.row row.array boardsquare]
+
+   make "GameBoardTemplate {
+      XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+      X....................................................................X
+      X....................................................................X
+      X....................................................................X
+      X....................................................................X
+      X....................................................................X
+      X...........1............................................4...........X
+      X....................................................................X
+      X....................................................................X
+      X....................................................................X
+      X.................................X..................................X
+      X.................................X..................................X
+      X.................................X..................................X
+      X.................................X..................................X
+      X.................................X..................................X
+      X.................................X..................................X
+      X.................................X..................................X
+      X.................................X..................................X
+      X.................................X..................................X
+      X....................XXXXXXXXXXXXXXXXXXXXXXXXXXX.....................X
+      X.................................X..................................X
+      X.................................X..................................X
+      X.................................X..................................X
+      X.................................X..................................X
+      X.................................X..................................X
+      X.................................X..................................X
+      X.................................X..................................X
+      X.................................X..................................X
+      X.................................X..................................X
+      X....................................................................X
+      X....................................................................X
+      X....................................................................X
+      X....................................................................X
+      X...........3............................................2...........X
+      X....................................................................X
+      X....................................................................X
+      X....................................................................X
+      X....................................................................X
+      X....................................................................X
+      XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+   }
+
+
+   ; Index, Name, X, Y, Direction, Next Direction, Color, IsHuman, IsAlive
+   make "Player1 {1 Red    0 0 right right [255 0     0] false false}
+   make "Player2 {2 Green  0 0 right right [0   255   0] false false}
+   make "Player3 {3 Blue   0 0 right right [0   0   255] false false}
+   make "Player4 {4 Brown  0 0 right right [128 128   0] false false}
+
+
+   ; copy the game board template to the live game board
+   make "GameBoardWidth 0
+   make "GameBoardHeight  count :GameBoardTemplate
+
+   make "GameBoard array :GameBoardHeight
+   for [j 1 :GameBoardHeight ] [
+
+      make "gameboardtemplate.row item :j :GameBoardTemplate
+
+      ; add a new array for this row
+      make "row.array array count :gameboardtemplate.row
+        
+      ; update the board width
+      if :GameBoardWidth < (count :gameboardtemplate.row) [
+          make "GameBoardWidth (count :gameboardtemplate.row)
+      ]
+
+      for [i 1 [count :gameboardtemplate.row] ] [
+
+          make "boardsquare item :i :gameboardtemplate.row
+
+          setitem :i :row.array :boardsquare
+
+          if :boardsquare = "1 [
+             Player.SetX         :Player1 :i
+             Player.SetY         :Player1 :GameBoardHeight + 1 - :j
+             Player.SetDirection :Player1 pick [left right up down]
+             Player.SetIsHuman   :Player1 "false
+             Player.SetIsAlive   :Player1 "true
+          ]
+          if :boardsquare = "2 [
+             Player.SetX         :Player2 :i
+             Player.SetY         :Player2 :GameBoardHeight + 1 - :j
+             Player.SetDirection :Player2 pick [left right up down] 
+             Player.SetIsHuman   :Player2 "false
+             Player.SetIsAlive   :Player2 "true
+          ]
+          if :boardsquare = "3 [
+             Player.SetX         :Player3 :i
+             Player.SetY         :Player3 :GameBoardHeight + 1 - :j
+             Player.SetDirection :Player3 pick [left right up down]
+             Player.SetIsHuman   :Player3 "false
+             Player.SetIsAlive   :Player3 "true
+          ]
+          if :boardsquare = "4 [
+             Player.SetX         :Player4 :i
+             Player.SetY         :Player4 :GameBoardHeight + 1 - :j
+             Player.SetDirection :Player4 pick [left right up down]
+             Player.SetIsHuman   :Player4 "false
+             Player.SetIsAlive   :Player4 "true
+          ]
+      ] 
+
+      ; set this row in the game board (and flip the board vertically)
+      setitem :GameBoardHeight - :j + 1 :GameBoard :row.array
+   ]
+
+end
+
+to MoveToGrid.LowerLeft :X :Y
+    penup
+    setxy :GridSize * (:X  - :GameBoardWidth / 2)            :GridSize * (:Y - :GameBoardHeight / 2)
+    pendown
+end
+
+to MoveToGrid.LowerRight :X :Y
+    penup
+    setxy :GridSize * (:X + 1 - :GameBoardWidth / 2) - 1    :GridSize * (:Y - :GameBoardHeight / 2)
+    pendown
+end
+
+to MoveToGrid.UpperLeft :X :Y
+    penup
+    setxy :GridSize * (:X - :GameBoardWidth / 2)            :GridSize * (:Y + 1 - :GameBoardHeight / 2) - 1
+    pendown
+end
+
+to Player.CheckIfDead :Player
+
+   local [gameboard.row boardsquare]
+
+   ; already dead
+   if not (Player.IsAlive :Player) [
+       stop
+   ]
+   
+   ; if the sqaure is blocked by something other than this player's head
+   if (and (BoardSquareIsBlocked (Player.X :Player) (Player.Y :Player))
+           (not (GetBoardSquare (Player.X :Player) (Player.Y :Player)) = (Player.HeadIndex :Player))) [
+
+      ; just died
+      Player.SetIsAlive :Player "false
+
+      ; remove the player's trail from the board
+      for [j 1 :GameBoardHeight ] [
+
+         make "gameboard.row item :j :GameBoard
+         for [i 1 :GameBoardWidth ] [
+
+            make "boardsquare item :i :gameboard.row
+
+            if (or (:boardsquare = (Player.Index     :Player))
+                   (:boardsquare = (Player.HeadIndex :Player))) [
+               ; this is the dead player's trail.
+               ; remove it by setting it to an empty space
+               setitem :i :gameboard.row ".
+               EraseGrid :i :j
+            ]
+         ]
+      ]
+   ]
+
+end
+
+to Player.Collision :PlayerA :PlayerB
+   output (and (Player.X :PlayerA) = (Player.X :PlayerB) 
+               (Player.Y :PlayerA) = (Player.Y :PlayerB)
+               (Player.IsAlive :PlayerA)
+               (Player.IsAlive :PlayerB))
+end
+
+to Player.Color :Player
+  output item 7 :Player
+end
+
+to Player.ComputerControl :Player
+
+   if Player.IsHuman :Player [
+      ; commit to the direction set by the keyboard.
+      Player.SetDirection :Player (Player.NextDirection :Player)
+      stop
+   ]
+
+   ; 1 in 20 chance of missing the turn
+   ;if (RANDOM 50) = 1 [ stop ]
+
+   ; AI players tend to move in the same direction, unless the path is obstructed
+   if (Player.Direction :Player) = "left [
+
+       if BoardSquareIsBlocked (Player.X :Player) - 1  (Player.Y :Player) [
+           
+           RUN PICK [ 
+             [TryRight :Player TryDown :Player TryUp   :Player ]
+             [TryRight :Player TryUp   :Player TryDown :Player ]
+           ]
+       ]
+       stop
+   ]
+
+   if (Player.Direction :Player) = "up [
+       if BoardSquareIsBlocked (Player.X :Player) (Player.Y :Player) + 1   [
+
+           RUN PICK [ 
+             [TryDown  :Player TryLeft  :Player TryRight :Player ]
+             [TryDown  :Player TryRight :Player TryLeft  :Player ]
+           ]
+       ]
+       stop
+   ]
+
+   if (Player.Direction :Player) = "right [
+       if BoardSquareIsBlocked (Player.X :Player) + 1  (Player.Y :Player)    [
+
+           RUN PICK [ 
+             [TryLeft  :Player TryDown :Player TryUp   :Player ]
+             [TryLeft  :Player TryUp   :Player TryDown :Player ]
+           ]
+       ]
+       stop
+   ]
+
+   if (Player.Direction :Player) = "down [
+       if BoardSquareIsBlocked (Player.X :Player) (Player.Y :Player) - 1   [
+
+           RUN PICK [ 
+             [TryUp :Player  TryLeft  :Player TryRight :Player ]
+             [TryUp :Player  TryRight :Player TryLeft  :Player ]
+           ]
+       ]
+       stop
+   ]
+
+end
+
+to Player.Direction :Player
+  output item 5 :Player
+end
+
+to Player.DownKey :Player
+   ; responds to a "down" direction press
+   Player.SetIsHuman :Player "true  
+
+   ; disallow doubling-back on oneself
+   if not (Player.Direction :Player) = "up [
+      Player.SetNextDirection :Player "down
+   ]
+end
+
+to Player.DrawBody :Player
+
+   if Player.IsAlive :Player [
+          
+      MoveToGrid.LowerLeft (Player.X :Player) (Player.Y :Player)
+
+      setfloodcolor Player.Color :Player
+      bitblock :GridSize :GridSize
+   ]
+end
+
+to Player.DrawHead :Player
+   
+   if Player.IsAlive :Player [
+
+      setpencolor Player.Color :Player
+
+      if (Player.Direction :Player) = "right [
+          MoveToGrid.LowerLeft (Player.X :Player) (Player.Y :Player)
+          setheading 0
+          repeat 3 [ forward :GridSize - 1 right 120 ]
+      ]
+      if (Player.Direction :Player) = "left [
+          MoveToGrid.LowerRight (Player.X :Player) (Player.Y :Player)
+          setheading 0
+          repeat 3 [ forward :GridSize - 1 left 120 ]
+      ]
+      if (Player.Direction :Player) = "up [
+          MoveToGrid.LowerLeft (Player.X :Player) (Player.Y :Player)
+          setheading 90
+          repeat 3 [ forward :GridSize - 1 left 120 ]
+      ]
+      if (Player.Direction :Player) = "down [
+          MoveToGrid.UpperLeft (Player.X :Player) (Player.Y :Player)
+          setheading 90
+          repeat 3 [ forward :GridSize - 1 right 120 ]
+      ]
+   ]
+end
+
+to Player.HeadIndex :Player
+  output (item 1 :Player) + 4
+end
+
+to Player.Index :Player
+  output item 1 :Player
+end
+
+to Player.IsAlive :Player
+  output item 9 :Player
+end
+
+to Player.IsHuman :Player
+  output item 8 :Player
+end
+
+to Player.LeftKey :Player
+   ; responds to a "left" direction press
+   Player.SetIsHuman :Player "true  
+
+   ; disallow doubling-back on oneself
+   if not (Player.Direction :Player) = "right [
+      Player.SetNextDirection :Player "left
+   ]
+end
+
+to Player.MarkHeadPosition :Player
+   ; the head can only move into an open position
+   if Player.IsAlive :Player [
+      if (GetBoardSquare (Player.X :Player) (Player.Y :Player)) = ". [
+         SetBoardSquare (Player.X :Player) (Player.Y :Player) (Player.HeadIndex :Player)
+      ]
+   ]
+end
+
+to Player.MarkPosition :Player
+   if Player.IsAlive :Player [
+      if (GetBoardSquare (Player.X :Player) (Player.Y :Player)) = (Player.HeadIndex :Player) [
+         SetBoardSquare (Player.X :Player) (Player.Y :Player) (Player.Index :Player)
+      ]
+   ]
+end
+
+to Player.Move :Player
+
+   if (Player.Direction :Player) = "left [
+      Player.SetX :Player (Player.X :Player) - 1
+   ]
+   if (Player.Direction :Player) = "right [
+      Player.SetX :Player (Player.X :Player) + 1
+   ]
+   if (Player.Direction :Player) = "up [
+      Player.SetY :Player (Player.Y :Player) + 1
+   ]
+   if (Player.Direction :Player) = "down [
+      Player.SetY :Player (Player.Y :Player) - 1
+   ]
+
+end
+
+to Player.Name :Player
+  output (item 2 :Player)
+end
+
+to Player.NextDirection :Player
+  output item 6 :Player
+end
+
+to Player.RightKey :Player
+   ; responds to a "right" direction press
+   Player.SetIsHuman :Player "true  
+
+   ; disallow doubling-back on oneself
+   if not (Player.Direction :Player) = "left [
+      Player.SetNextDirection :Player "right
+   ]
+end
+
+to Player.SetColor :Player :Color
+  setitem 7 :Player :Color
+end
+
+to Player.SetDirection :Player :Direction
+  setitem 5 :Player :Direction
+end
+
+to Player.SetIsAlive :Player :IsAlive
+  setitem 9 :Player :IsAlive
+end
+
+to Player.SetIsHuman :Player :IsHuman
+  setitem 8 :Player :IsHuman
+end
+
+to Player.SetNextDirection :Player :Direction
+  setitem 6 :Player :Direction
+end
+
+to Player.SetX :Player :X
+  setitem 3 :Player :X
+end
+
+to Player.SetY :Player :Y
+  setitem 4 :Player :Y
+end
+
+to Player.UpKey :Player
+   ; responds to an "up" direction press
+   Player.SetIsHuman :Player "true  
+
+   ; disallow doubling-back on oneself
+   if not (Player.Direction :Player) = "down [
+      Player.SetNextDirection :Player "up   
+   ]
+end
+
+to Player.X :Player
+  output item 3 :Player
+end
+
+to Player.Y :Player
+  output item 4 :Player
+end
+
+to PrintGameBoard
+   ; prints the game board to the commander console
+
+   for [j :GameBoardHeight 1 ] [
+      print item :j :GameBoard
+   ]
+
+end
+
+to ProcessKeyEvent :Key
+
+    if :Key=ascii "W [ Player.UpKey    :Player1 ]
+    if :Key=ascii "A [ Player.LeftKey  :Player1 ]
+    if :Key=ascii "S [ Player.RightKey :Player1 ] 
+    if :Key=ascii "Z [ Player.DownKey  :Player1 ]
+
+    if :Key=ascii "I [ Player.UpKey    :Player2 ]
+    if :Key=ascii "J [ Player.LeftKey  :Player2 ]
+    if :Key=ascii "K [ Player.RightKey :Player2 ]
+    if :Key=ascii "M [ Player.DownKey  :Player2 ]
+
+    ;if :Key=ascii "Q [ make "IsDone "true ]
+
+end
+
+to RunGame
+  catch "error [ fullscreen ]
+  icon "Commander
+  icon "Editor
+
+  clearscreen
+  hideturtle
+  setfocus [MSWLogo Screen]
+
+  ; catch errors so we can dock the commander window
+  ; if the user halts logo by trying to close it.
+  catch "error [ GameLoop ]
+  localmake "lasterror error
+  if not empty? :lasterror [ 
+      (show item 2 :lasterror "in item 3 :lasterror) 
+      show item 4 :lasterror 
+  ]
+
+  unicon "Commander
+  catch "error [ splitscreen ]
+
+end
+
+to SetBoardSquare :x :y :value
+    setitem :x (item :y :GameBoard) :value
+end
+
+to StartKeyboardCapture
+   (keyboardon [ProcessKeyEvent keyboardvalue] [ignore keyboardvalue])
+end
+
+to TryDown :Player
+   if not BoardSquareIsBlocked (Player.X :Player) (Player.Y :Player) - 1 [
+      Player.SetDirection :Player "down
+   ]
+end
+
+to TryLeft :Player
+   if not BoardSquareIsBlocked (Player.X :Player) - 1 (Player.Y :Player) [
+      Player.SetDirection :Player "left
+   ]
+end
+
+to TryRight :Player
+   if not BoardSquareIsBlocked (Player.X :Player) + 1 (Player.Y :Player) [
+     Player.SetDirection :Player "right
+   ]
+end
+
+to TryUp :Player
+   if not BoardSquareIsBlocked (Player.X :Player) (Player.Y :Player) + 1 [
+     Player.SetDirection :Player "up
+   ]
+end
+
+to UpdateNextFrame
+
+   ; control non-human players
+   Player.ComputerControl :Player1
+   Player.ComputerControl :Player2
+   Player.ComputerControl :Player3
+   Player.ComputerControl :Player4
+
+   ; replace the old head with the color of the body
+   Player.DrawBody :Player1
+   Player.DrawBody :Player2
+   Player.DrawBody :Player3
+   Player.DrawBody :Player4
+
+   ; move everyone
+   Player.Move :Player1
+   Player.Move :Player2
+   Player.Move :Player3
+   Player.Move :Player4
+
+   ; draw the snake
+   Player.MarkHeadPosition :Player1
+   Player.MarkHeadPosition :Player2
+   Player.MarkHeadPosition :Player3
+   Player.MarkHeadPosition :Player4
+
+   ; remove the dead snakes
+   Player.CheckIfDead :Player1
+   Player.CheckIfDead :Player2
+   Player.CheckIfDead :Player3
+   Player.CheckIfDead :Player4
+
+   ; draw the snake
+   Player.DrawHead :Player1
+   Player.DrawHead :Player2
+   Player.DrawHead :Player3
+   Player.DrawHead :Player4
+
+   ; draw the snake
+   Player.MarkPosition :Player1
+   Player.MarkPosition :Player2
+   Player.MarkPosition :Player3
+   Player.MarkPosition :Player4
+
+   localmake "TotalLivingPlayers 0
+   if Player.IsAlive :Player1 [make "TotalLivingPlayers :TotalLivingPlayers + 1 ]
+   if Player.IsAlive :Player2 [make "TotalLivingPlayers :TotalLivingPlayers + 1 ]
+   if Player.IsAlive :Player3 [make "TotalLivingPlayers :TotalLivingPlayers + 1 ]
+   if Player.IsAlive :Player4 [make "TotalLivingPlayers :TotalLivingPlayers + 1 ]
+
+   if (:TotalLivingPlayers < 2) [
+       make "IsDone "true
+   ]
+
+end
+
+Make "gameboard {{X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X} {X 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 2 2 2 2 2 2 2 2 2 2 2 2 X} {X 3 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3 2 . . . . . . . . . . 2 X} {X . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3 2 . . . . . . . . . . 2 X} {X . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3 2 . . . . . . . . . . 2 X} {X . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3 2 . . . . . . . . . . 2 X} {X . . . . . . . . . . . 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 2 . . . . . . . . . . 2 X} {X . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2 2 2 2 2 . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2 X} {X . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2 . . . 2 . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2 X} {X . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2 . . . 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 . . . . . . . . 2 X} {X . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2 X} {X . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . X 2 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2 X} {X . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . X 2 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2 X} {X . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . X 2 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2 X} {X . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . X 2 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2 X} {X . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . X 2 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2 X} {X . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . X 2 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2 X} {X . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . X 2 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2 X} {X . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . X 2 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2 X} {X . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . X 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 X} {X . . . . . . . . . . . . . . . . . . . . X X X X X X X X X X X X X X X X X X X X X X X X X X X 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 X} {X . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . X . . . . . . . . . . . . . 4 . . . . . . . . . . . . . . . . . . . 4 X} {X . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . X . . . . . . . . . . . . . 4 . . . . . . . . . . . . . . . . . . . 4 X} {X . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . X . . . . . . . . . . . . . 4 . . . . . . . . . . . . . . . . . . . 4 X} {X . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . X . . . . . . . . . . . . . 4 . . . . . . . . . . . . . . . . . . . 4 X} {X . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . X . . . . . . . . . . . . . 4 . . . . . . . . . . . . . . . . . . . 4 X} {X . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . X . . . . . . . . . . . . . 4 . . . . . . . . . . . . . . . . . . . 4 X} {X . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . X . . . . . . . . . . . . . 4 . . . . . . . . . . . . . . . . . . . 4 X} {X . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . X . . . . . . . . . . . . . 4 . . . . . . . . . . . . . . . . . . . 4 X} {X . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . X . . . . . . . . . . . . . 4 . . . . . . . . . . . . . . . . . . . 4 X} {X . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4 . . . . . . . . . . . . . . . . . . . 4 X} {X . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4 . . . . . . . . . . . . . . . . . . . 4 X} {X . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 X} {X . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4 4 4 4 . . . . . . 4 4 X} {X . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4 4 . . . . . . . . 4 4 X} {X . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4 4 . . . . . . . . 4 4 X} {X . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4 4 . . . . . . . . 4 4 X} {X . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4 4 4 4 4 4 4 4 4 4 4 4 X} {X . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4 4 4 4 4 4 4 4 4 4 4 4 X} {X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X}}
+Make "gameboardheight 40
+Make "gameboardtemplate {XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX X....................................................................X X....................................................................X X....................................................................X X....................................................................X X....................................................................X X...........1............................................4...........X X....................................................................X X....................................................................X X....................................................................X X.................................X..................................X X.................................X..................................X X.................................X..................................X X.................................X..................................X X.................................X..................................X X.................................X..................................X X.................................X..................................X X.................................X..................................X X.................................X..................................X X....................XXXXXXXXXXXXXXXXXXXXXXXXXXX.....................X X.................................X..................................X X.................................X..................................X X.................................X..................................X X.................................X..................................X X.................................X..................................X X.................................X..................................X X.................................X..................................X X.................................X..................................X X.................................X..................................X X....................................................................X X....................................................................X X....................................................................X X....................................................................X X...........3............................................2...........X X....................................................................X X....................................................................X X....................................................................X X....................................................................X X....................................................................X XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX}
+Make "gameboardwidth 70
+Make "gridsize 8
+Make "isdone "false
+Make "player1 {1 Red 37 75 up up [255 0 0] true false}
+Make "player2 {2 Green 60 10 right right [0 255 0] true true}
+Make "player3 {3 Blue 2 3 up right [0 0 255] false true}
+Make "player4 {4 Brown 61 34 right right [128 128 0] false true}
+Make "startup [RunGame]

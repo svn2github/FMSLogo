@@ -1,0 +1,528 @@
+to aaa
+; The author disclaims all copyrights associated with this code (hereafter
+; referred to as the "Work").
+;
+; The author makes this dedication for the benefit of the public at large
+; and to the detriment of the author's heirs and successors. The author
+; intends this dedication to be an overt act of relinquishment in
+; perpetuity of all present and future rights under copyright law,
+; whether vested or contingent, in the Work. The author understands that
+; such relinquishment of all rights includes the relinquishment of all
+; rights to enforce (by lawsuit or otherwise) those copyrights in the
+; Work.
+;
+; The author recognizes that, once placed in the public domain, the
+; Work may be freely reproduced, distributed, transmitted, used,
+; modified, built upon, or otherwise exploited by anyone for any
+; purpose, commercial or non-commercial, and in any way, including by
+; methods that have not yet been invented or conceived.
+end
+
+to BoardSquareIsWall :x :y
+   output (GetBoardSquare :x :y) = "X
+end
+
+to DrawEnemy :Enemy
+   localmake "x item 1 :Enemy
+   localmake "y item 2 :Enemy
+
+   MoveToGridQuarter :x :y
+
+   setpencolor 0
+   repeat 4 [ fd :gridsize / 2 rt 90 ]
+end
+
+to DrawGameBoard
+   local [i j gameboard.row boardsquare]
+
+   ; now draw the game board
+   for [j 1 :GameBoardHeight ] [
+      
+      make "gameboard.row item :j :GameBoard
+      for [i 1 :GameBoardWidth ] [
+  
+          make "boardsquare item :i :gameboard.row
+          if :boardsquare = "X [
+            DrawWall :i :j
+          ]
+          if :boardsquare = ". [
+            DrawPellet :i :j
+          ]
+      ]
+   ]
+
+end
+
+to DrawPellet :X :Y
+   MoveToGridCenter :X :Y
+
+   setpencolor 0
+   setpensize [2 2]
+   fd 1
+   setpensize [1 1]
+end
+
+to DrawPlayer :X :Y
+   MoveToGridCenter :X :Y
+
+   setpencolor 0
+   circle :GridSize / 2 - 2
+end
+
+to DrawWall :X :Y
+   MoveToGrid :X :Y
+
+   setpencolor 0
+   repeat 4 [ fd :gridsize rt 90 ]
+end
+
+to EndKeyboardCapture
+   keyboardoff
+end
+
+to EraseEnemy :Enemy
+   localmake "x item 1 :Enemy
+   localmake "y item 2 :Enemy
+
+   MoveToGridQuarter :x :y
+
+   setpencolor screencolor
+   repeat 4 [ fd :GridSize / 2 rt 90 ]
+end
+
+to ErasePellet :X :Y
+   MoveToGridCenter :X :Y
+
+   setpencolor screencolor
+   setpensize [2 2]
+   fd 1
+   setpensize [1 1]
+end
+
+to ErasePlayer :X :Y
+   MoveToGridCenter :X :Y
+
+   setpencolor screencolor
+   circle :GridSize / 2 - 2
+end
+
+to GameLoop
+
+   localmake "IsGoingUp    "false
+   localmake "IsGoingRight "false
+   localmake "IsGoingLeft  "false
+   localmake "IsGoingDown  "false
+
+   local [GameBoard GameBoardWidth GameBoardHeight]
+   local [PlayerStartX PlayerStartY]
+   local [Enemy1 Enemy2 Enemy3 Enemy4]
+   local [TotalPellets TotalPelletsRemaining]
+   InitGameBoard
+
+   localmake "EnemyWaitCounterMax 2
+   localmake "EnemyWaitCounter    :EnemyWaitCounterMax
+
+   localmake "PlayerX :PlayerStartX
+   localmake "PlayerY :PlayerStartY
+
+   DrawGameBoard
+   DrawPlayer :PlayerX :PlayerY
+   DrawEnemy  :Enemy1
+   DrawEnemy  :Enemy2
+   DrawEnemy  :Enemy3
+   DrawEnemy  :Enemy4
+
+
+   StartKeyboardCapture
+
+   localmake "IsDone "false
+   while [ not :IsDone ] [
+
+      UpdateNextFrame
+      wait 6 ; 10 ms
+   ]
+
+   EndKeyboardCapture
+
+end
+
+to GetBoardSquare :x :y
+    output item :x (item :y :GameBoard)
+end
+
+to InitGameBoard
+   local [i j gameboardtemplate.row row.array boardsquare]
+
+   ; copy the game board template to the live game board
+   make "TotalPellets  0
+
+   
+   make "GameBoardWidth 0
+   make "GameBoardHeight  count :GameBoardTemplate
+
+   make "GameBoard array :GameBoardHeight
+   for [j 1 :GameBoardHeight ] [
+
+      make "gameboardtemplate.row item :j :GameBoardTemplate
+
+      ; add a new array for this row
+      make "row.array array count :gameboardtemplate.row
+        
+      ; update the board width
+      if :GameBoardWidth < (count :gameboardtemplate.row) [
+          make "GameBoardWidth (count :gameboardtemplate.row)
+      ]
+
+      for [i 1 [count :gameboardtemplate.row] ] [
+
+          make "boardsquare item :i :gameboardtemplate.row
+
+          setitem :i :row.array :boardsquare
+
+          if :boardsquare = ". [
+             make "TotalPellets :TotalPellets + 1
+          ]
+          if :boardsquare = "P [
+             Make "PlayerStartX :i
+             Make "PlayerStartY :GameBoardHeight - :j + 1
+
+             ; put an empty space where the player was
+             setitem :i :row.array ",
+          ]
+          if :boardsquare = "1 [
+             make "Enemy1 (list :i :GameBoardHeight - :j + 1 "up)
+
+             ; put a pellet where the enemy was
+             make "TotalPellets :TotalPellets + 1
+             setitem :i :row.array ".
+          ]
+          if :boardsquare = "2 [
+             make "Enemy2 (list :i :GameBoardHeight - :j + 1 "up)
+
+             ; put a pellet where the enemy was
+             make "TotalPellets :TotalPellets + 1
+             setitem :i :row.array ".
+          ]
+          if :boardsquare = "3 [
+             make "Enemy3 (list :i :GameBoardHeight - :j + 1 "up)
+
+             ; put a pellet where the enemy was
+             make "TotalPellets :TotalPellets + 1
+             setitem :i :row.array ".
+          ]
+          if :boardsquare = "4 [
+             make "Enemy4 (list :i :GameBoardHeight - :j + 1 "up)
+
+             ; put a pellet where the enemy was
+             make "TotalPellets :TotalPellets + 1
+             setitem :i :row.array ".
+          ]
+      ] 
+
+      ; set this row in the game board (and flip the board vertically)
+      setitem :GameBoardHeight - :j + 1 :GameBoard :row.array
+   ]
+   make "TotalPelletsRemaining :TotalPellets
+
+end
+
+to InitializeGameData
+
+   make "GameBoardTemplate {
+      XXXXXXXXXXXXXXXXX
+      X3......X......1X
+      X.XXXXX.X.XXXXX.X
+      X...X.......X...X
+      XXX.X.XXXXX.X.XXX
+      X...4.......2...X
+      X.XXXXXXXXXXXXX.X
+      X...X.......X...X
+      X.X.X.XX.XX.X.X.X
+      X.X...X...X...X.X
+      X.XXXXX.X.XXXXX.X
+      X.......X.......X
+      XXX.XXXXXXXXX.XXX
+      X...X.......X...X
+      X.X.X.XXXXX.X.X.X
+      X.X.X.......X.X.X
+      X.X.XXX.X.XXX.X.X
+      X.......X.......X
+      X.XXX.XXXXX.XXX.X
+      XP..............X
+      XXXXXXXXXXXXXXXXX
+   }
+
+   make "GridSize 20
+end
+
+to MoveEnemy :Enemy
+
+   localmake "PositionX item 1 :Enemy
+   localmake "PositionY item 2 :Enemy
+   localmake "Direction item 3 :Enemy
+
+   localmake "NewDirection "still
+
+   ; Choose a new direction for the enemy
+   ; The directions are chosen such that
+   ; 1) The enemy prefers to move in a straight line
+   ; 2) The enemy doubles-back as a last resort
+   ; 3) The enemy moves somewhat randomly
+
+   localmake "DirectionList [left up down right]
+
+   if :Direction = "left [
+      make "DirectionList pick [
+         [left up   down right]
+         [left down up   right]
+         [up   down left right]
+      ]
+   ]
+   if :Direction = "right [
+      make "DirectionList pick [
+         [right up    down  left]
+         [right down  up    left]
+         [down  up    right left]
+      ]
+   ]
+   if :Direction = "up [
+      make "DirectionList pick [
+         [up    left  right down]
+         [up    right left  down]
+         [right up    left  down]
+      ]
+   ]
+   if :Direction = "down [
+      make "DirectionList pick [
+         [down left  right up]
+         [down right left  up]
+         [left down  right up]
+      ]
+   ]
+
+   make "NewDirection TryToMoveInDirection :PositionX :PositionY :DirectionList
+
+
+   if :NewDirection = "left [
+      output (list :PositionX - 1  :PositionY       :NewDirection)
+   ]
+   if :NewDirection = "right [
+      output (list :PositionX + 1  :PositionY       :NewDirection)
+   ]
+   if :NewDirection = "up [
+      output (list :PositionX      :PositionY + 1   :NewDirection)
+   ]
+   if :NewDirection = "down [
+      output (list :PositionX      :PositionY - 1   :NewDirection)
+   ]
+
+   output :Enemy
+end
+
+to MoveToGrid :X :Y
+    penup
+    setxy :GridSize * (:X  - :GameBoardWidth / 2)     :GridSize * (:Y - :GameBoardHeight / 2)
+    pendown
+end
+
+to MoveToGridCenter :X :Y
+    penup
+    MoveToGridPlusOffset :X :Y 2
+    pendown
+end
+
+to MoveToGridPlusOffset :X :Y :Offset
+    penup
+    setxy :GridSize * (:X - :GameBoardWidth / 2 +  1 / :Offset)  :GridSize * (:Y - :GameBoardHeight / 2 + 1 / :Offset)
+    pendown
+end
+
+to MoveToGridQuarter :X :Y
+    penup
+    MoveToGridPlusOffset :X :Y 4
+    pendown
+end
+
+to PlayerEnemyCollision :Enemy 
+   output and (:PlayerX = item 1 :Enemy)  (:PlayerY = item 2 :Enemy)
+end 
+
+to ProcessKeyEvent :Key :IsKeyDown
+
+    if :Key=ascii "I [ make "IsGoingUp    :IsKeyDown ]
+    if :Key=ascii "K [ make "IsGoingRight :IsKeyDown ]
+    if :Key=ascii "J [ make "IsGoingLeft  :IsKeyDown ]
+    if :Key=ascii "M [ make "IsGoingDown  :IsKeyDown ]
+    if :Key=ascii "Q [ make "IsDone       "true      ]
+
+end
+
+to RunGame
+
+  local [GameBoardTemplate GridSize ]
+  InitializeGameData
+
+  catch "error [ fullscreen ]
+  icon "Commander
+  icon "Editor
+
+  clearscreen
+  hideturtle
+  setfocus [MSWLogo Screen]
+
+  ; catch errors so we can dock the commander window
+  ; if the user halts logo by trying to close it.
+  catch "error [ GameLoop ]
+  localmake "lasterror error
+  if not empty? :lasterror [ 
+      (show item 2 :lasterror "in item 3 :lasterror) 
+      show item 4 :lasterror 
+  ]
+
+  unicon "Commander
+  catch "error [ splitscreen ]
+
+end
+
+to SetBoardSquare :x :y :value
+    setitem :x item :y :GameBoard :value
+end
+
+to StartKeyboardCapture
+   (keyboardon [ProcessKeyEvent keyboardvalue "true]
+               [ProcessKeyEvent keyboardvalue "false])
+end
+
+to TryToMoveInDirection :X :Y :DirectionList
+
+  foreach :DirectionList [
+    if and (? = "left)  (not BoardSquareIsWall :X - 1 :Y) [ 
+       output ?
+    ]
+    if and (? = "right) (not BoardSquareIsWall :X + 1 :Y) [ 
+       output ?
+    ]
+    if and (? = "up)    (not BoardSquareIsWall :X     :Y + 1) [ 
+       output ?
+    ]
+    if and (? = "down)  (not BoardSquareIsWall :X     :Y - 1) [ 
+       output ?
+    ]
+  ]
+
+end
+
+to UpdateNextFrame
+
+   localmake "NewPlayerX :PlayerX
+   localmake "NewPlayerY :PlayerY
+
+   if :IsGoingRight [make "NewPlayerX :NewPlayerX + 1]
+   if :IsGoingLeft  [make "NewPlayerX :NewPlayerX - 1]
+
+   if or (:NewPlayerX = :PlayerX) (BoardSquareIsWall :NewPlayerX :NewPlayerY) [
+      ; left-right didn't work out.  Try the up-down 
+      make "NewPlayerX :PlayerX
+      if :IsGoingUp   [make "NewPlayerY :NewPlayerY + 1]
+      if :IsGoingDown [make "NewPlayerY :NewPlayerY - 1]
+   ]
+
+   localmake "currentsquare GetBoardSquare :NewPlayerX :NewPlayerY
+
+   if :currentsquare = ". [
+
+     ErasePlayer :PlayerX :PlayerY
+
+     Make "PlayerX :NewPlayerX
+     Make "PlayerY :NewPlayerY
+
+     ; eat the pellet
+     ErasePellet :PlayerX :PlayerY
+     make "TotalPelletsRemaining :TotalPelletsRemaining - 1
+     SetBoardSquare :PlayerX :PlayerY ",
+     playwave "eat-pellet.wav 1
+
+     ; if we just ate the last pellet, then do something cool
+     if :TotalPelletsRemaining = 0 [ 
+         make "IsDone "true
+
+         playwave "you-win.wav 1
+
+         repeat 20 [
+            ; move outside the game board
+            penup
+            MoveToGrid 0 0
+            pendown
+            setfloodcolor (list random 256 random 256 random 256)
+            fill
+
+            ; move inside the game board
+            MoveToGridCenter :PlayerX :PlayerY
+            setfloodcolor (list random 256 random 256 random 256)
+            fill 
+
+            wait 6
+         ]
+
+
+         stop
+     ]
+
+     ; draw the pac-turtle
+     DrawPlayer :PlayerX :PlayerY
+   ]
+
+   if :currentsquare = ", [
+
+     ErasePlayer :PlayerX :PlayerY
+
+     Make "PlayerX :NewPlayerX
+     Make "PlayerY :NewPlayerY
+     DrawPlayer :PlayerX :PlayerY
+   ]
+
+
+   if (or (PlayerEnemyCollision :Enemy1) 
+          (PlayerEnemyCollision :Enemy2)
+          (PlayerEnemyCollision :Enemy3)
+          (PlayerEnemyCollision :Enemy4)) [
+       make "IsDone "true
+       playwave "you-die.wav 0
+       stop
+   ]
+
+   ; now, move the enemy toward the player
+
+   make "EnemyWaitCounter :EnemyWaitCounter - 1
+   if :EnemyWaitCounter = 0 [ 
+      EraseEnemy :Enemy1
+      EraseEnemy :Enemy2
+      EraseEnemy :Enemy3
+      EraseEnemy :Enemy4
+
+      make "Enemy1 MoveEnemy :Enemy1
+      make "Enemy2 MoveEnemy :Enemy2
+      make "Enemy3 MoveEnemy :Enemy3
+      make "Enemy4 MoveEnemy :Enemy4
+
+      DrawEnemy  :Enemy1
+      DrawEnemy  :Enemy2
+      DrawEnemy  :Enemy3
+      DrawEnemy  :Enemy4
+
+      make "EnemyWaitCounter :EnemyWaitCounterMax
+   ]
+
+
+   if (or (PlayerEnemyCollision :Enemy1) 
+          (PlayerEnemyCollision :Enemy2)
+          (PlayerEnemyCollision :Enemy3)
+          (PlayerEnemyCollision :Enemy4)) [
+       make "IsDone "true
+       playwave "you-die.wav 0
+       stop
+   ]
+
+end
+
+Make "startup [RunGame]

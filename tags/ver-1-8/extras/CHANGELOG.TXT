@@ -1,0 +1,91 @@
+FMSLogo Extras 1.8
+o asteriodminer
+  * Make compatible with Italian versions of FMSLogo.
+o logoui
+  * Make compatible with Italian versions of FMSLogo.
+o midipiano
+  * Make compatible with German versions of FMSLogo.
+o sudoku
+  * Make compatible with German versions of FMSLogo.
+
+FMSLogo Extras 1.7
+o asteriodminer
+  * Make compatible with Portuguese versions of FMSLogo.
+o boink
+  * Make compatible with non-English versions of FMSLogo.
+o dominos
+  * Make compatible with Portuguese versions of FMSLogo.
+  * Fix an annoyance where the message box was a crooked rectangle.
+o logoui
+  * Make compatible with Portuguese versions of FMSLogo.
+o ludo
+  * Make compatible with Portuguese versions of FMSLogo.
+o midipiano
+  * Make compatible with Portuguese versions of FMSLogo.
+o sudoku
+  * Make compatible with Portuguese versions of FMSLogo.
+
+
+FMSLogo Extras 1.6
+o asteriodminer
+  * Improve the font for larger monitors
+  * Make the framerate configurable
+o lightcycle
+  * Add logic to display all errors that are raised
+o pacturtle
+  * Add logic to display all errors that are raised
+o snake
+  * Add logic to display all errors that are raised
+o tetrads
+  * Add logic to display all errors that are raised
+
+
+FMSLogo Extras 1.5
+o asteriodminer
+  * Improve performance, requires FMSLogo 6.13.0
+o dominos
+  * Renamed MESSAGE to SHOWMESSAGE so that it works on the French FMSLogo
+o sudoku
+  * Change CT to CLEARTEXT so that it works on the French FMSLogo
+o tetrads
+  * Dropping a block is much faster
+  * Add uses of NOTEQUAL?, requres FMSLogo 6.13.0
+
+FMSLogo Extras 1.4
+o logoui
+  * new program
+o turtlemaze
+  * new program
+
+FMSLogo Extras 1.3
+o ludo
+  * fix syntax errors that kept it from working in FMSLogo 6.10.0
+  * untabify and reformat source code
+  * remove the "Setup" button, which did nothing
+
+FMSLogo Extras 1.2
+o tetrads
+  * new game, requires FMSLogo 6.9.0
+o lightcycle
+  * always redock the commander when the game is halted
+o pacturtle
+  * always redock the commander when the game is halted
+o snake
+  * always redock the commander when the game is halted
+
+FMSLogo Extras 1.1
+o asteriodminer
+  * remove personal high score list
+o midipiano
+  * rename CLOSEALL to SHUTDOWN to make it compatible with FMSLogo 6.8.0
+
+FMSLogo Extras 1.0
+o asteriodminer
+o boink
+o domino
+o lightcycle
+o ludo
+o midipiano
+o pacturtle
+o snake
+o sudoku

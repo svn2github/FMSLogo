@@ -1,0 +1,850 @@
+; ============================================================================
+;
+; FILE         : boink.lgo
+;
+; AUTHOR       : Nick Rozanski
+;
+; DESCRIPTION  : Boink! a silly Logo game
+;
+;                Boink! is a simple game I wrote to introduce my son, Alex, to
+;                the world of programming.
+;
+;                The objective of Boink! is to get the ball down the plughole (the
+;                coloured square).  Press the / or \ keys to place obstacles in
+;                the room.  The ball will bounce off these until it passes over
+;                the plughole.
+;
+; INSTALLATION : Boink! is written for MSWLogo (a free Windows implementation of
+;                Logo available from http://www.softronix.com/logo.html).
+;
+;                You need my graphics library ngxlib for Boink!  If you don't have
+;                it, you can get it from my Web page http://www.nick.rozanski.com.
+;
+;                To install Boink!, just save this file somewehere you can find it.
+;
+; OPERATION    : To run Boink!, just double-click this file.  MSWLogo should load
+;                automatically.
+;
+; BUGS         : Because Logo is an interpreted rather than a compiled language,
+;                Boink! runs best on a Pentium 90 or above ("best" = "not painfully
+;                slow").
+;
+;                MSWLogo has a bug with fonts which appears if more than 64 fonts
+;                are installed on your computer.  If the Boink! text is very small
+;                or too big, that is probably why.
+;
+; MODIFICATION HISTORY:
+;
+; Version   Date       Author          Comment
+; -------   ----       ------          -------
+;     1.0   30-Sep-00  Nick Rozanski   first version
+;
+; DISTRIBUTION :
+;
+; Copyright (C) 2000 Nick Rozanski (Nick@Rozanski.com)
+;
+; Distributed under the terms of the GNU General Public License
+;  as published by the Free Software Foundation
+;  (675 Mass Ave, Cambridge, MA 02139, USA)
+;
+; Boink! is distributed in the hope that it will be useful, but WITHOUT
+; ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+; or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public
+; License for more details.
+;
+; ============================================================================
+
+; ---------------------------------------------------------------------------
+;
+; PROCEDURE   : boink
+;
+; DESCRIPTION : main Boink! procedure - runs automatically when this file is loaded
+;
+; ARGUMENTS   : none
+;
+; OUTPUTS     : none
+;
+; ---------------------------------------------------------------------------
+
+to boink
+
+	; init ngx library
+	ngxlib
+
+	; play game
+	do.until [ boink.game ] [ :game.another = 1 ]
+
+	; exit
+	bye
+
+End
+bury [[boink] [] []]
+
+; auto-start
+make "STARTUP [boink]
+
+; ---------------------------------------------------------------------------
+;
+; PROCEDURE   : boink.game
+;
+; DESCRIPTION : one round of the Boink! game
+;
+; ARGUMENTS   : none
+;
+; OUTPUTS     : none
+;
+; ---------------------------------------------------------------------------
+
+to boink.game
+
+	; get user info (screen size etc)
+	boink.getuser
+
+	; initialise the Boink! window etc
+	boink.init
+
+	; draw the Boink! room
+	boink.drawroom
+
+	; draw the plughole
+	boink.drawplughole
+
+	; write the the Boink! text
+	boink.writetext
+
+	; draw the Boink! ball
+	boink.drawball
+
+	; move the ball
+	while [ :game.playing ] [ ~
+		boink.checkkeypress   ~
+		boink.drawspeedometer ~
+		boink.checkball       ~
+		boink.moveball        ~
+		boink.drawball        ]
+
+	; finish
+	boink.finish
+
+End
+bury [[boink.game] [] []]
+
+; ---------------------------------------------------------------------------
+;
+; PROCEDURE   : boink.getuser
+;
+; DESCRIPTION : get user info (screen size etc)
+;
+; ARGUMENTS   : none
+;
+; OUTPUTS     : none
+;
+; ---------------------------------------------------------------------------
+
+to boink.getuser
+
+	; set focus to screen etc.
+	ngx.fullscreen
+
+	; get screen resolution
+	localmake "select selectbox ~
+		[Welcome to Boink! Please tell me your screen resolution] ~
+		[640x480 800x600 [1024x768 or larger] [I don\'t know!]]
+
+	make "game.screenwidth 640
+	if :select = 1 [ make "game.screenwidth 640  ]
+	if :select = 2 [ make "game.screenwidth 800  ]
+	if :select = 3 [ make "game.screenwidth 1024 ]
+	if :select = 4 [ make "game.screenwidth 640  ]
+
+	; get difficulty
+	localmake "select selectbox ~
+		[Please tell me how hard do you want Boink! to be] ~
+		[[easy-peasy] [hard as a nut] [mission impossible]]
+
+	make "game.difficulty 0
+	if :select = 1 [ make "game.difficulty 0 ]
+	if :select = 2 [ make "game.difficulty 1 ]
+	if :select = 3 [ make "game.difficulty 2 ]
+
+End
+bury [[boink.getuser] [] []]
+
+; ---------------------------------------------------------------------------
+;
+; PROCEDURE   : boink.init
+;
+; DESCRIPTION : initialise global variables, clear the Boink! window etc
+;
+; ARGUMENTS   : none
+;
+; OUTPUTS     : none
+;
+; ---------------------------------------------------------------------------
+
+to boink.init
+
+	; initialise global variables etc
+	boink.initvars
+
+	; initialise the keyboard routines
+	ngx.kbinit
+
+	; colour the screen
+	ngx.setpen 0 [] :colours.floor
+	fill
+
+End
+bury [[boink.init] [] []]
+
+; ---------------------------------------------------------------------------
+;
+; PROCEDURE   : boink.drawroom
+;
+; DESCRIPTION : draw the Boink! room
+;
+; ARGUMENTS   : none
+;
+; OUTPUTS     : none
+;
+; ---------------------------------------------------------------------------
+
+to boink.drawroom
+
+	; draw the walls
+	ngx.setpen :room.wallwidth :colours.wall []
+	ngx.goto 0 0
+	ngx.rectangle :room.width :room.height
+
+	; draw the garden
+	ngx.setpen 0 [] :colours.garden
+	ngx.goto (:room.width/2+10) 0
+	fill
+
+	; draw the pillars
+	ngx.setpen :room.pillarwidth :colours.pillar []
+	ngx.goto (:room.corridorwidth-(:room.width/2)) ((:room.height/2) - :room.corridorwidth)
+
+	; draw each pillar
+	repeat (:room.height/:room.corridorwidth)-1 ~
+	  	[ repeat (:room.width/:room.corridorwidth)-1 ~
+			[ ngx.cross 5 ngx.move 90 :room.corridorwidth ] ~
+				ngx.move -90 (:room.width - :room.corridorwidth) ~
+				ngx.move 180 :room.corridorwidth ]
+
+End
+bury [[boink.drawroom] [] []]
+
+; ---------------------------------------------------------------------------
+;
+; PROCEDURE   : boink.drawplughole
+;
+; DESCRIPTION : draw the Boink! plughole
+;
+; ARGUMENTS   : none
+;
+; OUTPUTS     : none
+;
+; ---------------------------------------------------------------------------
+
+to boink.drawplughole
+
+	; assign a random plughole position
+	;  (not along the top wall or the game finishes straightaway!)
+	localmake "plughole.column random :room.columns
+	do.while [ localmake "plughole.row random :room.rows ] [ :plughole.row = 0 ]
+
+	; record the plughole position
+	mdsetitem (list :plughole.row :plughole.column ) :obstacles "O
+
+	; move to plughole position
+	ngx.goto ~
+		((:plughole.column+0.5)*:room.corridorwidth-(:room.width/2)) ~
+		(:room.height/2) - (:plughole.row+0.5)*:room.corridorwidth
+
+	; draw the plughole
+	ngx.setpen :plughole.edgewidth :colours.plugholeedge :colours.plugholefill
+	ngx.square :plughole.size
+	fill
+
+End
+bury [[boink.drawplughole] [] []]
+
+; ---------------------------------------------------------------------------
+;
+; PROCEDURE   : boink.writetext
+;
+; DESCRIPTION : write the Boink! title and other text
+;
+; ARGUMENTS   : none
+;
+; OUTPUTS     : none
+;
+; ---------------------------------------------------------------------------
+
+to boink.writetext
+
+	; write the Boink! title at the top of the screen
+	(ngx.textfont :text.titleheight :text.titlewidth :text.titlefont :text.titlecolour "B)
+	ngx.goto 0 ((:room.height/2) + :text.titleheight)
+	ngx.text :text.title
+
+	; write the copyright message at the bottom of the screen
+	(ngx.textfont :text.height*0.5 :text.width :text.font :text.colour)
+	ngx.goto 0 -((:room.height/2) + :text.height*0.5)
+	ngx.text :text.copyright
+
+	; write the instructions underneath the copyright message
+	(ngx.textfont :text.height :text.width :text.font :text.colour "B)
+	ngx.goto 0 -((:room.height/2) + :text.height*1.5)
+	ngx.text :text.instructions
+
+End
+bury [[boink.writetext] [] []]
+
+; ---------------------------------------------------------------------------
+;
+; PROCEDURE   : boink.drawspeedometer
+;
+; DESCRIPTION : draw the Boink! speedometer
+;
+; ARGUMENTS   : none
+;
+; OUTPUTS     : none
+;
+; ---------------------------------------------------------------------------
+
+to boink.drawspeedometer
+
+	; do we need to redraw the speedometer?
+	if not :speedometer.redraw [ stop ]
+
+	; prepare
+	ngx.setpen :speedometer.edgewidth :colours.speedometeredge []
+	ngx.goto (-(:room.width/2 + :speedometer.boxsize*1.1)) (-(:game.maxballdelay*:speedometer.boxsize*1.1/2))
+
+	; draw all the triangles
+	for [ b :game.maxballdelay 1 ] [ ~
+		if :b = :game.balldelay [ ngx.setpen 0 :colours.garden [] ] ~
+		ngx.triangle :speedometer.boxsize/2 ~
+		ngx.move 0 :speedometer.boxsize*1.1 ] 
+
+	; now, we don't need to redraw the speedometer (until something else changes)
+	make "speedometer.redraw "FALSE
+
+End
+bury [[boink.drawspeedometer] [] []]
+
+; ---------------------------------------------------------------------------
+;
+; PROCEDURE   : boink.drawball
+;
+; DESCRIPTION : draw the Boink! ball at its current position
+;
+; ARGUMENTS   : none
+;
+; OUTPUTS     : none
+;
+; ---------------------------------------------------------------------------
+
+to boink.drawball
+
+	; have we finished?
+	if not :game.playing [ stop ]
+
+	; move to position
+	ngx.goto :ball.x :ball.y
+
+	; draw the ball
+	ngx.setpen :ball.pensize :colours.balledge []
+	ngx.circle :ball.radius
+
+End
+bury [[boink.drawball] [] []]
+
+; ---------------------------------------------------------------------------
+;
+; PROCEDURE   : boink.checkball
+;
+; DESCRIPTION : check whether we have hit anything
+;
+; ARGUMENTS   : none
+;
+; OUTPUTS     : none
+;
+; ---------------------------------------------------------------------------
+
+to boink.checkball
+
+	; have we had a collision?
+	localmake "obstacle mditem (list :ball.row :ball.column ) :obstacles
+
+	; are we over the plughole?
+	if :obstacle = "O [ ~
+		make "game.finishtime timemilli ~
+		make "game.playing "FALSE ~
+		make "game.won "TRUE ~
+		boink.downplughole ~
+		stop ]
+
+	; are we at the top wall?
+	if :ball.row = 0 [ ~
+		if AND :ball.direction = 0   :obstacle = "   [ make "obstacle "- ] ~
+		if AND :ball.direction = 90  :obstacle = "/  [ make "obstacle "! ] ~
+		if AND :ball.direction = 270 :obstacle = "\\ [ make "obstacle "! ] ]
+	; are we at the bottom wall?
+	if :ball.row = :room.rows-1 [ ~
+		if AND :ball.direction = 90  :obstacle = "\\ [ make "obstacle "! ] ~
+		if AND :ball.direction = 180 :obstacle = "   [ make "obstacle "- ] ~
+		if AND :ball.direction = 270 :obstacle = "/  [ make "obstacle "! ] ]
+	; are we at the left wall?
+	if :ball.column = 0 [ ~
+		if AND :ball.direction = 0   :obstacle = "\\ [ make "obstacle "- ] ~
+		if AND :ball.direction = 180 :obstacle = "/  [ make "obstacle "- ] ~
+		if AND :ball.direction = 270 :obstacle = "   [ make "obstacle "! ] ]
+	; are we at the right wall?
+	if :ball.column = :room.columns-1 [ ~
+		if AND :ball.direction = 0   :obstacle = "/  [ make "obstacle "- ] ~
+		if AND :ball.direction = 90  :obstacle = "   [ make "obstacle "! ] ~
+		if AND :ball.direction = 180 :obstacle = "\\ [ make "obstacle "- ] ]
+
+	; change direction if necessary
+	localmake "direction :ball.direction
+	if :obstacle = "/  [ ~
+		if :direction = 0   [ make "ball.direction 90  ] ~
+		if :direction = 90  [ make "ball.direction 0   ] ~
+		if :direction = 180 [ make "ball.direction 270 ] ~
+		if :direction = 270 [ make "ball.direction 180 ] ~
+		boink.sound :sounds.obstacle :sounds.duration ]
+
+	if :obstacle = "\\ [ ~
+		if :direction = 0   [ make "ball.direction 270 ] ~
+		if :direction = 90  [ make "ball.direction 180 ] ~
+		if :direction = 180 [ make "ball.direction 90  ] ~
+		if :direction = 270 [ make "ball.direction 0   ] ~
+		boink.sound :sounds.obstacle :sounds.duration ]
+
+	if :obstacle = "! [ ~
+		if :direction = 90  [ make "ball.direction 270 ] ~
+		if :direction = 270 [ make "ball.direction 90  ] ~
+		boink.sound :sounds.wall :sounds.duration ]
+
+	if :obstacle = "- [ ~
+		if :direction = 0   [ make "ball.direction 180 ] ~
+		if :direction = 180 [ make "ball.direction 0   ] ~
+		boink.sound :sounds.wall :sounds.duration ]
+
+End
+bury [[boink.checkball] [] []]
+
+; ---------------------------------------------------------------------------
+;
+; PROCEDURE   : boink.moveball
+;
+; DESCRIPTION : move the ball one step
+;
+; ARGUMENTS   : none
+;
+; OUTPUTS     : none
+;
+; ---------------------------------------------------------------------------
+
+to boink.moveball
+
+	; have we finished?
+	if not :game.playing [ stop ]
+
+	; wait
+	ifelse :sounds.level = 1 ~
+		[ wait :game.balldelay ] ~
+		[ boink.sound :sounds.move 1 ~
+			if :game.balldelay > 0 [ wait :game.balldelay-1 ] ]
+
+	; clear the old ball
+	boink.clearball
+
+	; move
+	if :ball.direction = 0 [ ~
+		make "ball.row :ball.row - 1 make "ball.y :ball.y + :room.corridorwidth ]
+	if :ball.direction = 90 [ ~
+		make "ball.column :ball.column + 1 make "ball.x :ball.x + :room.corridorwidth ]
+	if :ball.direction = 180 [ ~
+		make "ball.row :ball.row + 1 make "ball.y :ball.y - :room.corridorwidth ]
+	if :ball.direction = 270 [ ~
+		make "ball.column :ball.column - 1 make "ball.x :ball.x - :room.corridorwidth ]
+
+	; increment move count
+	make "game.movecount :game.movecount + 1
+
+End
+bury [[boink.moveball] [] []]
+
+; ---------------------------------------------------------------------------
+;
+; PROCEDURE   : boink.clearball
+;
+; DESCRIPTION : clear the ball at current position (ie redraw the floor)
+;
+; ARGUMENTS   : none
+;
+; OUTPUTS     : none
+;
+; ---------------------------------------------------------------------------
+
+to boink.clearball
+
+	; move to new position
+	ngx.goto :ball.x :ball.y
+
+	; draw a floor-coloured ball
+	ngx.setpen :ball.pensize :colours.floor :colours.floor
+	ngx.circle :ball.radius
+
+	; was there an obstacle at this point?
+	localmake "obstacle mditem (list :ball.row :ball.column ) :obstacles
+	ngx.setpen :obstacle.width :colours.obstacle []
+
+	; if so, draw it
+	if :obstacle = "/  [ ~
+		ngx.move 225 :room.corridorwidth/2 ~
+		ngx.line 45  :room.corridorwidth   ~
+		ngx.move 225 :room.corridorwidth/2 ]
+	if :obstacle = "\\ [ ~
+		ngx.move 135 :room.corridorwidth/2 ~
+		ngx.line 315 :room.corridorwidth   ~
+		ngx.move 135 :room.corridorwidth/2 ]
+
+End
+bury [[boink.clearball] [] []]
+
+; ---------------------------------------------------------------------------
+;
+; PROCEDURE   : boink.checkkeypress
+;
+; DESCRIPTION : see what key(s) if any have been pressed
+;
+; ARGUMENTS   : none
+;
+; OUTPUTS     : none
+;
+; ---------------------------------------------------------------------------
+
+to boink.checkkeypress
+
+	; keep reading keys from the keyboard
+	while [ ngx.keypressed ] [ boink.dokey uppercase ngx.getkey ]
+
+End
+bury [[boink.checkkeypress] [] []]
+
+; ---------------------------------------------------------------------------
+;
+; PROCEDURE   : boink.dokey
+;
+; DESCRIPTION : act according to pressed key
+;
+; ARGUMENTS   : key which has been pressed
+;
+; OUTPUTS     : none
+;
+; ---------------------------------------------------------------------------
+
+to boink.dokey :keypressed
+
+	; re-display Commander window?
+	if :keypressed = "$ [ windowset "Commander 7 ]
+
+	; end of game?
+	if :keypressed = "X [~
+		make "game.finishtime timemilli ~
+		make "game.playing "FALSE ~
+		make "game.won "FALSE ~
+		boink.sound :sounds.exit :sounds.exitduration ]
+
+	; obstacle key pressed?
+	if " = mditem (list :ball.row :ball.column ) :obstacles [ ~
+		if :keypressed = "/  [ mdsetitem (list :ball.row :ball.column ) :obstacles "/  ] ~
+		if :keypressed = "\\ [ mdsetitem (list :ball.row :ball.column ) :obstacles "\\ ] ] 
+
+	; ball speed key pressed?
+
+	if :keypressed = "+ [ ~
+		make "game.balldelay :game.balldelay - 1 ~
+		if :game.balldelay < 0 [ make "game.balldelay 0 ] ~
+		make "speedometer.redraw "TRUE ]
+
+	if :keypressed = "- [ ~
+		make "game.balldelay :game.balldelay + 1 ~
+		if :game.balldelay > :game.maxballdelay [ make "game.balldelay :game.maxballdelay ] ~
+		make "speedometer.redraw "TRUE ]
+
+	; sound on/off?
+	if :keypressed = "S [ ~
+		make "sounds.level :sounds.level+1 ~
+		if :sounds.level > 2 [ make "sounds.level 0 ] ]
+
+End
+bury [[boink.dokey] [] []]
+
+; ---------------------------------------------------------------------------
+;
+; PROCEDURE   : boink.downplughole
+;
+; DESCRIPTION : go down plughole
+;
+; ARGUMENTS   : none
+;
+; OUTPUTS     : none
+;
+; ---------------------------------------------------------------------------
+
+to boink.downplughole
+
+	; wait half a second
+	wait 30 cs
+
+	; flash the screen and make noises
+	localmake "basesound 2048
+	localmake "duration  6
+	localmake "fifth     1.49831
+	foreach (list ngx.white ngx.yellow ngx.red ngx.purple ngx.cyan ngx.green ngx.blue) [ ~
+		ngx.setpen 0 [] ngx.black  fill           ~
+		(boink.sound :basesound :duration)        ~
+		ngx.setpen 0 [] ?          fill           ~
+		(boink.sound :basesound/:fifth :duration) ~
+		make "basesound :basesound/2              ]
+
+End
+bury [[boink.downplughole] [] []]
+
+; ---------------------------------------------------------------------------
+;
+; PROCEDURE   : boink.sound
+;
+; DESCRIPTION : play sound if switched on
+;
+; ARGUMENTS   : frequency (frequency of sound)
+;               duration  (duration in 1/60ths of a second)
+;
+; OUTPUTS     : none
+;
+; ---------------------------------------------------------------------------
+
+to boink.sound :frequency :duration
+	if :sounds.level > 0 [ sound (list (round :frequency) :duration) ]
+End
+bury [[boink.sound] [] []]
+
+; ---------------------------------------------------------------------------
+;
+; PROCEDURE   : boink.finish
+;
+; DESCRIPTION : show the turtle and restore the Commander window
+;
+; ARGUMENTS   : none
+;
+; OUTPUTS     : none
+;
+; ---------------------------------------------------------------------------
+
+to boink.finish
+
+	; make screen black
+	cs
+	ngx.goto 0 0
+	ngx.setpen 1 ngx.black ngx.black
+	fill
+
+	; write won/lostmessage
+	ngx.goto 0 ((:room.height/2) + :text.titleheight)
+	(ngx.textfont :text.titleheight :text.titlewidth :text.titlefont :text.titlecolour "B)
+	ifelse :game.won [ ngx.text :text.won ] [ ngx.text :text.lost ]
+
+	; write timing
+	localmake "gameduration round (:game.finishtime - :game.starttime)/1000
+	ngx.goto 0 ((:room.height/2) - :text.titleheight)
+	(ngx.textfont :text.height :text.width :text.font :text.colour "B)
+	ngx.text (list "Game "duration: :gameduration "seconds)
+
+	; write step count
+	ngx.goto 0 ((:room.height/2) - :text.titleheight*2)
+	(ngx.textfont :text.height :text.width :text.font :text.colour "B)
+	ngx.text (list "Number "of "steps: :game.movecount)
+
+	; another game?
+	ngx.goto 0 ((:room.height/2) - (:text.titleheight * 3))
+	(ngx.textfont :text.height :text.width :text.font :text.colour2 "I)
+	ngx.text :text.askanother
+
+	; wait for a key to be pressed
+	ifelse "G = uppercase ngx.getkey [ make "game.another 0 ] [ make "game.another 1 ]
+
+	; switch of keyboard callback
+	ngx.kbreset
+
+End
+bury [[boink.finish] [] []]
+
+; ---------------------------------------------------------------------------
+;
+; PROCEDURE   : boink.DEBUG
+;
+; DESCRIPTION : print debug text in the Commander window
+;               use boink.DEBUG if the program is not working correctly
+;
+; ARGUMENTS   : dbgtxt (debug text to print)
+;
+; OUTPUTS     : none
+;
+; EXAMPLE     : boink.DEBUG [About to paint screen red]
+;
+; ---------------------------------------------------------------------------
+
+to boink.DEBUG :dbgtxt
+	print (sentence "DEBUG: :dbgtxt)
+End
+bury [[boink.DEBUG] [] []]
+
+; ---------------------------------------------------------------------------
+;
+; PROCEDURE   : boink.initvars
+;
+; DESCRIPTION : initialise global variables
+;
+; ARGUMENTS   : none
+;
+; OUTPUTS     : none
+;
+; ---------------------------------------------------------------------------
+
+to boink.initvars
+
+	; game characteristics
+	make "game.playing      "TRUE
+	make "game.won          "FALSE
+	make "game.starttime    timemilli
+	make "game.maxballdelay 12 ; 1/5 second
+	if :game.difficulty = 0 [ make "game.balldelay round :game.maxballdelay*0.75 ]
+	if :game.difficulty = 1 [ make "game.balldelay round :game.maxballdelay*0.5  ]
+	if :game.difficulty = 2 [ make "game.balldelay round :game.maxballdelay*0.25 ]
+	make "game.movecount    0
+
+	; room characteristics
+	boink.initroomvars
+
+	; speedometer
+	make "speedometer.boxsize    round :room.height / (:game.maxballdelay*1.1)
+	make "speedometer.redraw     "TRUE
+	make "speedometer.edgewidth  2
+
+	; text characteristics and content
+	make "text.title       [The Game of BOINK!]
+	make "text.titlecolour ngx.purple
+	make "text.titlefont   [Playbill]
+	if :game.screenwidth = 640  [ make "text.titleheight 48 ]
+	if :game.screenwidth = 800  [ make "text.titleheight 60 ]
+	if :game.screenwidth = 1024 [ make "text.titleheight 72 ]
+	make "text.titlewidth  0
+
+	make "text.instructions [Keyboard: \\ or / (place obstacle) + (go faster) - (go slower) S (toggle sound) X (finish)]
+	make "text.copyright    [Copyright (C) 2000 Nick Rozanski]
+	make "text.colour       ngx.blue
+	make "text.colour2      ngx.red
+	make "text.font         [Garamond]
+	if :game.screenwidth = 640  [ make "text.height 16 ]
+	if :game.screenwidth = 800  [ make "text.height 20 ]
+	if :game.screenwidth = 1024 [ make "text.height 24 ]
+	make "text.width        0
+	make "text.won          [Congratulations! You won the game of BOINK!]
+	make "text.lost         [Hard Luck! You lost the game of BOINK!]
+	make "text.askanother   [Press G for another game, or any other key to exit]
+
+	; sound characteristics
+	make "sounds.level        0
+	make "sounds.wall         256
+	make "sounds.obstacle     512
+	make "sounds.move         1024
+	make "sounds.exit         64
+	make "sounds.duration     2
+	make "sounds.exitduration 90
+
+	; colours
+	make "colours.floor           ngx.gray
+	make "colours.garden          ngx.green
+	make "colours.wall            ngx.black
+	make "colours.pillar          ngx.blue
+	make "colours.plugholeedge    ngx.brown
+	make "colours.plugholefill    ngx.green
+	make "colours.balledge        ngx.purple
+	make "colours.obstacle        ngx.red
+	make "colours.speedometeredge ngx.red
+
+	; what's in the room
+	make "obstacles (mdarray (list :room.rows :room.columns ) 0)
+	for [ row 0 :room.rows-1 ] [ for [ column 0 :room.columns-1 ] ~
+		[ mdsetitem (list :row :column ) :obstacles "  ] ]
+
+	; ball characteristics
+	make "ball.radius    round :room.corridorwidth / 4
+	ifelse :game.screenwidth = 640 ~
+		[ make "ball.pensize 1 ] ~
+		[ make "ball.pensize 2 ]
+	make "ball.row       0
+	make "ball.column    0
+	make "ball.direction 90
+	make "ball.cross     :ball.radius*0.8
+	make "ball.x         ((:ball.column+0.5)*:room.corridorwidth-(:room.width/2))
+	make "ball.y         (:room.height/2) - (:ball.row+0.5)*:room.corridorwidth
+
+	; plughole characteristics
+	make "plughole.edgewidth 2
+	make "plughole.size      :ball.radius*2
+
+	; obstacle
+	make "obstacle.width 2
+
+End
+bury [[boink.initvars] [] []]
+
+; ---------------------------------------------------------------------------
+;
+; PROCEDURE   : boink.initroomvars
+;
+; DESCRIPTION : initialise global variables for room size
+;
+; ARGUMENTS   : none
+;
+; OUTPUTS     : none
+;
+; ---------------------------------------------------------------------------
+
+to boink.initroomvars
+
+	; width, height and corridor width
+	if :game.screenwidth = 640 [ ~
+		make "room.width         480 ~
+		make "room.height        300 ~
+		if :game.difficulty = 0 [ make "room.corridorwidth 60 ] ~
+		if :game.difficulty = 1 [ make "room.corridorwidth 30 ] ~
+		if :game.difficulty = 2 [ make "room.corridorwidth 15 ] ]
+	if :game.screenwidth = 800 [ ~
+		make "room.width         640 ~
+		make "room.height        400 ~
+		if :game.difficulty = 0 [ make "room.corridorwidth 80 ] ~
+		if :game.difficulty = 1 [ make "room.corridorwidth 40 ] ~
+		if :game.difficulty = 2 [ make "room.corridorwidth 20 ] ]
+	if :game.screenwidth = 1024 [ ~
+		make "room.width         800 ~
+		make "room.height        500 ~
+		if :game.difficulty = 0 [ make "room.corridorwidth 100 ] ~
+		if :game.difficulty = 1 [ make "room.corridorwidth 50  ] ~
+		if :game.difficulty = 2 [ make "room.corridorwidth 25  ] ]
+
+	make "room.columns       round :room.width  / :room.corridorwidth
+	make "room.rows          round :room.height  / :room.corridorwidth
+	make "room.wallwidth     5
+	make "room.pillarwidth   2
+
+End
+bury [[boink.initroomvars] [] []]
+
