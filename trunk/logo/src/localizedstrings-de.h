@@ -115,7 +115,7 @@
 #define LOCALIZED_ALTERNATE_TRUE     "wahr"
 #define LOCALIZED_ALTERNATE_FALSE    "falsch"
 #define LOCALIZED_ALTERNATE_END      "ende"
-#define LOCALIZED_ALTERNATE_TOPLEVEL "toplevel" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_TOPLEVEL "Ausstieg" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_SYSTEM   "system" // NOT_YET_LOCALIZED
 
 //
@@ -632,7 +632,7 @@
 #define LOCALIZED_BITMAP_PRINTERSETUP  "Drucker&setup..."
 #define LOCALIZED_BITMAP_ACTIVEAREA    "A&ktiver Bereich..."
 
-#define LOCALIZED_SET                  "&Option"
+#define LOCALIZED_SET                  "&Optionen"
 #define LOCALIZED_SET_PENSIZE          "Stift&dicke..."
 #define LOCALIZED_SET_LABELFONT        "&Grafik-Schrift..."
 #define LOCALIZED_SET_COMMANDERFONT    "&Befehle-Schrift..."
@@ -745,7 +745,7 @@
 #define LOCALIZED_COMMANDER_STEP                "EinS"
 #define LOCALIZED_COMMANDER_UNSTEP              "Turbo"
 #define LOCALIZED_COMMANDER_RESET               "Reset"
-#define LOCALIZED_COMMANDER_EXECUTE             "Tätigen"
+#define LOCALIZED_COMMANDER_EXECUTE             "Ausführen"
 #define LOCALIZED_COMMANDER_EDALL               "E d a"
 
 //
@@ -838,8 +838,8 @@
 // Strings on the "About FMS" Dialog box
 //
 #define LOCALIZED_ABOUTMS                      "Über FMS"
-#define LOCALIZED_ABOUTMS_FMS                  "FMS steht für 'Fight Multiple Sclerosis'. \nRechnen und Steuern in M, Inf, Ph und Te.\nPapert, S.: Gedankenblitze 8126 rororo"
-#define LOCALIZED_ABOUTMS_CONSIDERDONATING     "Bitte erwägen Sie der \nNational Multiple Sclerosis Society zu spenden.\nhttp:\x2F/www.nmss.org\n1-800-FIGHT-MS"
+#define LOCALIZED_ABOUTMS_FMS                  "FMS steht für 'Fight Multiple Sclerosis'." 
+#define LOCALIZED_ABOUTMS_CONSIDERDONATING     "Bitte erwägen Sie, der National Multiple Sclerosis Society \nzu spenden, http:\x2F/www.nmss.org, 1-800-FIGHT-MS\nRechnen und Steuern in M, Inf, Ph und Te.\nPapert, S.: Gedankenblitze 8126 rororo"
 #define LOCALIZED_ABOUTMS_OK                   LOCALIZED_GENERAL_OKBUTTON
 
 
@@ -939,7 +939,7 @@
 #define LOCALIZED_ERROR_DIDNTOUTPUT            "%p gab nicht nach %p aus"
 #define LOCALIZED_ERROR_NOTENOUGHINPUTS        "fehlende Eingaben in %p"
 #define LOCALIZED_ERROR_TOOMUCH                "zu viel innerhalb der ()'n"
-#define LOCALIZED_ERROR_DONTSAYWHATTODOWITH    "Sie sagen nicht was mit %s zu machen ist"
+#define LOCALIZED_ERROR_DONTSAYWHATTODOWITH    "Sie sagen nicht, was mit %s zu machen ist"
 #define LOCALIZED_ERROR_PARENMISMATCH          "zu viele ('n"
 #define LOCALIZED_ERROR_NOVALUE                "%s hat keinen Wert"
 #define LOCALIZED_ERROR_UNEXPECTEDPAREN        "unerwartete ')'"
@@ -1313,7 +1313,7 @@
 #define LOCALIZED_COLOR_MEDIUMSPRINGGREEN     "MittelFrühlingGrün"
 #define LOCALIZED_COLOR_MEDIUMTURQUOISE       "MittelTürkis"
 #define LOCALIZED_COLOR_MEDIUMVIOLETRED       "MittelViolettRot"
-#define LOCALIZED_COLOR_MIDNIGHTBLUE          "MitternachtBlau"
+#define LOCALIZED_COLOR_MIDNIGHTBLUE          "MitternachtsBlau"
 #define LOCALIZED_COLOR_MINTCREAM             "MintCreme"
 #define LOCALIZED_COLOR_MISTYROSE             "MistyRose"
 #define LOCALIZED_COLOR_MOCCASIN              "Mokassin"
@@ -1321,7 +1321,7 @@
 #define LOCALIZED_COLOR_NAVY                  "DunkelBlau"
 #define LOCALIZED_COLOR_OLDLACE               "OldLace"
 #define LOCALIZED_COLOR_OLIVE                 "Oliv"
-#define LOCALIZED_COLOR_OLIVEDRAB             "Olivegelb"
+#define LOCALIZED_COLOR_OLIVEDRAB             "OlivDRAB"
 #define LOCALIZED_COLOR_ORANGE                "Orange"
 #define LOCALIZED_COLOR_ORANGERED             "OrangeRot"
 #define LOCALIZED_COLOR_ORCHID                "Orchidee"
