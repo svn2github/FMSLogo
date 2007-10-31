@@ -112,9 +112,9 @@
 //
 // Localized "alternate" spellings of Logo reserved words
 //
-#define LOCALIZED_ALTERNATE_TRUE     "cierto"
-#define LOCALIZED_ALTERNATE_FALSE    "falso"
-#define LOCALIZED_ALTERNATE_END      "fin"
+#define LOCALIZED_ALTERNATE_TRUE    "cierto"
+#define LOCALIZED_ALTERNATE_FALSE   "falso"
+#define LOCALIZED_ALTERNATE_END     "fin"
 #define LOCALIZED_ALTERNATE_TOPLEVEL "toplevel" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_SYSTEM   "system" // NOT_YET_LOCALIZED
 
@@ -826,10 +826,10 @@
 #define LOCALIZED_ABOUTFMS_GUI                 "GUI por George Mills (mills@softronix.com)\nSoftronics, Inc.\nhttp:\x2F/www.softronix.com/"
 #define LOCALIZED_ABOUTFMS_CORE                "Núcleo por Brian Harvey (bh@eecs.berkeley.edu)\nUniversity of California Berkeley"
 #define LOCALIZED_ABOUTFMS_INSTALLER           "Instalador basado en el Nullsoft Scriptable Install System\nhttp:\x2F/nsis.sourceforge.net/"
-#define LOCALIZED_ABOUTFMS_ADVENTURE           "Recursos para Logo en Español\nDisponibles en http:\x2F/mondragon.angeltowns.net/paradiso/"
+#define LOCALIZED_ABOUTFMS_ADVENTURE           "Recursos para FMSLogo en Español\nDisponibles en http:\x2F/neoparaiso.com/logo/mswlogo.html"
 #define LOCALIZED_ABOUTFMS_SPECIALTHANKS       "Gracias a Yehuda Katz (yehuka@softhome.net)\n y a Erich Neuwirth (erich.neuwirth@univie.ac.at)"
 #define LOCALIZED_ABOUTFMS_GPL                 LOCALIZED_GENERAL_PRODUCTNAME" es software libre\nVer la Licencia Pública de GNU"
-#define LOCALIZED_ABOUTFMS_NEWSGROUP           "¿Preguntas, comentarios, sugerencias?\nParticipa en la lista de Logo\nhttp:\x2F/mondragon.angeltowns.net/paradiso/ListaLogo.html"
+#define LOCALIZED_ABOUTFMS_NEWSGROUP           "¿Preguntas, dudas, comentarios?\nParticipa en la lista de Logo\nhttp:\x2F/neoparaiso.com/logo/lista-logo.html"
 #define LOCALIZED_ABOUTFMS_MULTIMEDIALOGIC     "Traducción hecha por Daniel Ajoy"
 #define LOCALIZED_ABOUTFMS_OK                  LOCALIZED_GENERAL_OKBUTTON
 
