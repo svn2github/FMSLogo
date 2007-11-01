@@ -1,5 +1,5 @@
 ----------------------------------------------------------------------
-FMSLogo Version 6.17.0 for Microsoft Windows
+FMSLogo Version 6.18.0 for Microsoft Windows
 ----------------------------------------------------------------------
 
    I. Kit Description/Location
@@ -14,22 +14,15 @@ VIII. Minimum System Requirements
 
 I. Kit Description/Location (http://sourceforge.net/projects/fmslogo)
 
-  fmslogo-6.17.0.exe       (binary kit: Windows self-extracting installer)
-  fmslogo-6.17.0.zip       (binary kit: Windows ZIP archive)
-  fmslogo-src-6.17.0.zip   (source kit)
+  fmslogo-6.18.0.exe       (binary kit: Windows self-extracting installer)
+  fmslogo-6.18.0.zip       (binary kit: Windows ZIP archive)
+  fmslogo-src-6.18.0.zip   (source kit)
 
 II. New features/bugs fixed:
 
-  * Added for 6.17.0
-    o Fix bug #1813051; Saving an image with an non-full active area
-      works once again.  This bug was introduced in 6.16.0.
-    o Fix bug #1798216; THROW targets "TOPLEVEL, "ERROR, and "SYSTEM are
-      now internationalized.
-    o Fix bug #1713912; Uninstalling FMSLogo as a limited user now
-      unregisters the file association so that double-clicking on .lgo
-      files works if FMSLogo is later installed by an administrator.
-    o Add a German translation of FMSLogo.
-    o Add an Italian translation of FMSLogo.
+  * Added for 6.18.0
+    o Minor improvements to the Portuguese translation.
+    o Minor improvements to the German translation.
 
   For a complete history of changes across all versions of FMSLogo, see
   http://fmslogo.cvs.sourceforge.net/*checkout*/fmslogo/logo/src/CHANGELOG.TXT
