@@ -629,8 +629,8 @@
 #define LOCALIZED_BITMAP_SAVE          "&Guardar"
 #define LOCALIZED_BITMAP_SAVEAS        "G&uardar como..."
 #define LOCALIZED_BITMAP_PRINT         "&Imprimir..."
-#define LOCALIZED_BITMAP_PRINTERSETUP  "C&onfigurar impressora..."
-#define LOCALIZED_BITMAP_ACTIVEAREA    "&Area Ativa..."
+#define LOCALIZED_BITMAP_PRINTERSETUP  "C&onfigurar página..."
+#define LOCALIZED_BITMAP_ACTIVEAREA    "Área &Ativa..."
 
 #define LOCALIZED_SET                  "&Configurar"
 #define LOCALIZED_SET_PENSIZE          "&Tamanho do lápis..."
