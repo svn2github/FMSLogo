@@ -224,7 +224,7 @@ to 8LedTest
   bury "convert
 
   define "control [ []
-    [ windowcreate "main "ControlWindow "Controlboard 30 30 300 100 [] ]
+    [ windowcreate "main "ControlWindow "LEDTestTafel 30 30 300 100 [] ]
     [ groupboxcreate "ControlWindow "groupbox1 10 10 40 22 ]
     [ checkboxcreate "ControlWindow "groupbox1 "data7 [8. LED] 15 15 32 15 ]
     [ groupboxcreate "ControlWindow "groupbox2 60 10 40 22 ]
@@ -241,10 +241,10 @@ to 8LedTest
     [ checkboxcreate "ControlWindow "groupbox7 "data1 [2. LED] 115 45 32 15 ]
     [ groupboxcreate "ControlWindow "groupbox8 160 40 40 22 ]
     [ checkboxcreate "ControlWindow "groupbox8 "data0 [1. LED] 165 45 32 15 ]
-    [ buttoncreate   "ControlWindow "checkbutton [LEDs check] 220 32 60 10 [gather.choices] ]
+    [ buttoncreate   "ControlWindow "checkbutton [LEDs ansteuern] 220 32 60 10 [gather.choices] ]
     [ buttoncreate   "ControlWindow "Close "X 287 0 10 10 [windowdelete "8ledtest.ControlWindow] ]
-    [ buttoncreate   "ControlWindow "OFF [All LEDs off] 220 55 60 10 [turn.off.all] ]
-    [ buttoncreate   "ControlWindow "ON [All LEDs on] 220 10 60 10 [turn.on.all] ]
+    [ buttoncreate   "ControlWindow "OFF [Alle LEDs AUS] 220 55 60 10 [turn.off.all] ]
+    [ buttoncreate   "ControlWindow "ON [Alle LEDs AN] 220 10 60 10 [turn.on.all] ]
   ]
   bury "control
 
@@ -261,7 +261,7 @@ to 8LedTest
     [ localmake "lines [] ]
     [ until [:count=7][read.choice] ]
     [ make "outlines 0 ]
-    [ 8ledtest.turn.on :lines ]
+    [ turn.on :lines ]
   ]
   bury "gather.choices
 
