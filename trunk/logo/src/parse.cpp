@@ -145,7 +145,7 @@ int rd_getc(FILE *strm)
         c = g_ReadBuffer.PopChar();
     }
 
-    return ecma_clear(c);
+    return c;
 }
 
 static
@@ -400,11 +400,13 @@ NODE *list_to_array(NODE *list)
 #define white_space(ch) (ch == ' ' || ch == '\t' || ch == '\n')
 
 // Parses the text from "*inln" to "inlimit", or until the first "endchar" is found.
+// If endchar==-1, then the only limit is inlimit.
 // The parsed text is returned as a NODE* list.
 // Nested arrays and lists are parsed into their structured form.
 // parser_iterate() sets stopping_flag to THROWING if it encounters a syntax error.
 //
 // if "ignore_comments" is true then comments should be ignored
+//
 static
 NODE *
 parser_iterate(
@@ -534,7 +536,7 @@ parser_iterate(
         {
             continue;
         }
-        else if (ch == endchar) 
+        else if (ch == endchar && endchar != -1) 
         {
             break;
         }
