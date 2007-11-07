@@ -7,6 +7,7 @@
   <!ENTITY GENERICNAME  "Logo">
 
   <!ENTITY PRODUCTVERSION            SYSTEM "logoversion.xml">
+  <!ENTITY PRODUCTLOCALE             SYSTEM "locale.xml">
 
   <!ENTITY introduction              SYSTEM "introduction.xml">
   <!ENTITY commandline-options       SYSTEM "commandline-options.xml">

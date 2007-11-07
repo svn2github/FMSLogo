@@ -50,6 +50,7 @@ logohelp-1032.chm : logohelp-1033.chm
 
 htmlhelp-%.hhp : translations-%.xml $(SOURCEFILES) $(HHP_STYLESHEET)
 	cp translations-$*.xml translations.xml
+	echo -n $* > locale.xml
 	$(XSLTPROC) --nonet --param htmlhelp.chm \"'logohelp-$*.chm'\" $(HHP_STYLESHEET) $(ROOTFILE)
 	mv htmlhelp.hhp htmlhelp-$*.hhp
 

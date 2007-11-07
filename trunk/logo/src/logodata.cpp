@@ -952,11 +952,13 @@ NODE * llogoversion(NODE * args)
     NODE * application_name    = make_static_strnode(LOCALIZED_GENERAL_PRODUCTNAME);
     NODE * application_version = make_static_strnode(FMSLOGO_VERSION);
     NODE * os_name             = make_static_strnode("Windows");
+    NODE * locale              = make_intnode(LOCALE);
 
     return cons_list(
         application_name,
         application_version,
-        os_name);
+        os_name,
+        locale);
 }
 
 bool variableIsTrue(NODE *variable) 
