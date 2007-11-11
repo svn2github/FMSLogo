@@ -23,6 +23,7 @@ II. New features/bugs fixed:
   * Added for 6.18.0
     o Implement feature request #1825717; LOGOVERSION now outputs the locale
       FMSLogo was built for.
+    o Fix bug #1825718; DEMO is now internationalized and localized for German.
     o Fix bug #1824438; FMSLogo can now parse words with char 255 in them.
     o Minor improvements to the Portuguese translation.
     o Minor improvements to the German translation.

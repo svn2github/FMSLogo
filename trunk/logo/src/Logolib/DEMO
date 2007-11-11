@@ -33,51 +33,157 @@ repeat 4 [
 ]
 end
 
+
+to demo.choosesentence :englishsentence :germansentence
+  if demo.germanp [ output :germansentence ]
+  output :englishsentence
+end
+
+to demo.germanp
+  output equalp 1031 item 4 logoversion
+end
+
+to demo.prompttostop :englishmessage :germanmessage
+  ifelse demo.germanp [
+    output not yesnobox [Demo] :germanmessage
+  ][
+    output not yesnobox [Demo] :englishmessage
+  ]
+end
+
 to demo
 demo.00
-if not yesnobox [Demo] [Welcome to FMSLogo Demonstration (more?)] [stop]
+
+if demo.prompttostop ~
+  [Welcome to FMSLogo Demonstration (more?)] ~
+  [Willkommen zur FMSLogo-Demo (weiter?)] ~
+  [stop]
 demo.01
-if not yesnobox [Demo] [Up to 1024 independent turtles (more?)] [stop]
+
+if demo.prompttostop ~
+  [Up to 1024 independent turtles (more?)] ~
+  [Bis zu 1024 unabhängige Igel (weiter?)] ~
+  [stop]
 demo.02
-if not yesnobox [Demo] [Each turtle has its own Heading and Pen mode (more?)] [stop]
+
+if demo.prompttostop ~
+  [Each turtle has its own Heading and Pen mode (more?)] ~
+  [Jeder Igel hat seinen eigenen Kurs und Stiftmodus (weiter?)] ~
+  [stop]
 demo.03
-if not yesnobox [Demo] [Each turtle can be mapped to a bitmap (more?)] [stop]
+
+if demo.prompttostop ~
+  [Each turtle can be mapped to a bitmap (more?)] ~
+  [Jeder Igel kann in einem Bild kartiert werden (weiter?)] ~
+  [stop]
 demo.04
-if not yesnobox [Demo] [The numbers you see are bitmaps, they could be anything (more?)] [stop]
+
+if demo.prompttostop ~
+  [The numbers you see are bitmaps, they could be anything (more?)] ~
+  [Die Zahlen, die Sie sehen, sind Bilder, sie könnten für irgendetwas stehen (weiter?)] ~
+  [stop]
 demo.05
-if not yesnobox [Demo] [FMSLogo can do Fonts, at any angle and any color (more?)] [stop]
+
+if demo.prompttostop ~
+  [FMSLogo can do Fonts, at any angle and any color (more?)] ~
+  [FMSLogo kann Schriften unter irgendeinem Winkel und in irgendeiner Farbe (weiter?)] ~
+  [stop]
 demo.06
-if not yesnobox [Demo] [FMSLogo can do Flood Fills (more?)] [stop]
+
+if demo.prompttostop ~
+  [FMSLogo can do Flood Fills (more?)] ~
+  [FMSLogo kann mit Farben ausfüllen (weiter?)] ~
+  [stop]
 demo.07
-if not yesnobox [Demo] [FMSLogo can use the full range of colors (more?)] [stop]
+
+if demo.prompttostop ~
+  [FMSLogo can use the full range of colors (more?)] ~
+  [FMSLogo kann die ganze Farbenreihe nutzen (weiter?)] ~
+  [stop]
 demo.08
-if not yesnobox [Demo] [FMSLogo can cut Bitmaps (more?)] [stop]
+
+if demo.prompttostop ~
+  [FMSLogo can cut Bitmaps (more?)] ~
+  [FMSLogo kann Bilder ausschneiden (weiter?)] ~
+  [stop]
 demo.09
-if not yesnobox [Demo] [FMSLogo can paste Bitmaps (more?)] [stop]
+
+if demo.prompttostop ~
+  [FMSLogo can paste Bitmaps (more?)] ~
+  [FMSLogo kann Bilder einfügen (weiter?)] ~
+  [stop]
 demo.10
-if not yesnobox [Demo] [FMSLogo can even control what you normally control (more?)] [stop]
+
+
+if demo.prompttostop ~
+  [FMSLogo can even control what you normally control (more?)] ~
+  [FMSLogo kann sogar Bildausschnitte miteinander verschieben (weiter?)] ~
+  [stop]
 demo.11
-if not yesnobox [Demo] [You can find out what FMSLogo is up to at any time (more?)] [stop]
+
+if demo.prompttostop ~
+  [You can find out what FMSLogo is up to at any time (more?)] ~
+  [Sie können herausfinden, wo FMSLogo zu jeder Zeit steht (weiter?)] ~
+  [stop]
 demo.12
-if not yesnobox [Demo] [This image will be pasted onto a Neutral background 9 ways (more?)] [stop]
+
+if demo.prompttostop ~
+  [This image will be pasted onto a Neutral background 9 ways (more?)] ~
+  [Dieses Bild wird auf einen neutralen Hintergrund eingefügt - 9 Möglichkeiten (weiter?)] ~
+  [stop]
 demo.13
-if not yesnobox [Demo] [FMSLogo can solve complex problems with your help (more?)] [stop]
+
+if demo.prompttostop ~
+  [FMSLogo can solve complex problems with your help (more?)] ~
+  [FMSLogo kann mit Ihrer Hilfe komplexe Probleme lösen (weiter?)] ~
+  [stop]
 demo.14
-if not yesnobox [Demo] [FMSLogo can make all the sounds you like (more?)] [stop]
+
+if demo.prompttostop ~
+  [FMSLogo can make all the sounds you like (more?)] ~
+  [FMSLogo kann alle Töne erzeugen, die Sie möchten (weiter?)] ~
+  [stop]
 demo.15
-if not yesnobox [Demo] [FMSLogo can even do more than one thing at a time.  Note that the tone you will hear is a timer executing code while the picture is being drawn (more?)] [stop]
+
+if demo.prompttostop ~
+  [FMSLogo can even do more than one thing at a time.\nNote that the tone you will hear is a timer executing code while the picture is being drawn (more?)] ~
+  [FMSLogo kann sogar mehr als eine Sache zur gleichen Zeit machen.\nAchten Sie darauf, dass der Ton, den Sie hören werden, ein auskodierender Timer ist, während ein Bild gezeichnet wird (weiter?)] ~
+  [stop]
 demo.16
-if not yesnobox [Demo] [FMSLogo can even work in 3 dimensions (more?)] [stop]
+
+if demo.prompttostop ~
+  [FMSLogo can even work in 3 dimensions (more?)] ~
+  [FMSLogo kann in drei Dimensionen arbeiten (weiter?)] ~
+  [stop]
 demo.17
-if not yesnobox [Demo] [You can change your vantage point by moving a special turtle (more?)] [stop]
+
+if demo.prompttostop ~
+  [You can change your vantage point by moving a special turtle (more?)] ~
+  [Sie können Ihren Ansichtspunkt verändern, indem Sie einen Igel bewegen (weiter?)] ~
+  [stop]
 demo.18
-if not yesnobox [Demo] [Everything you've learned in 2D applies in 3D [see 3DSTEPS.LGO example] (more?)] [stop]
+
+if demo.prompttostop ~
+  [Everything you've learned in 2D applies in 3D [see 3DSTEPS.LGO example] (more?)] ~
+  [Alles was Sie an 2D-Anwendungen gelernt haben in 3D [s. 3DSTEPS.LOG Beispiel] (weiter?)] ~
+  [stop]
 demo.19
-if not yesnobox [Demo] [You can view your objects as 3D solids (more?)] [stop]
+
+if demo.prompttostop ~
+  [You can view your objects as 3D solids (more?)] ~
+  [Sie können Ihre Objekte in 3D-Koerper betrachten (weiter?)] ~
+  [stop]
 demo.20
-if not yesnobox [Demo] [FMSLogo can even write Windows programs (more?)] [stop]
+
+if demo.prompttostop ~
+  [FMSLogo can even write Windows programs (more?)] ~
+  [FMSLogo kann sogar Windows-Programme schreiben (weiter?)] ~
+  [stop]
 demo.21
-messagebox [Demo] [End of Demonstration and the start of your imagination.]
+
+messagebox [Demo] demo.choosesentence ~
+  [End of Demonstration and the start of your imagination.] ~
+  [Ende der Demonstration und der Beginn Ihrer Vorstellung (weiter?)]
 end
 
 to demo.00
@@ -92,7 +198,9 @@ setpencolor [0 0 0]
 pennormal
 settextfont[[Times New Roman] 20 0 0 400 0 0 0]
 rt 90
-label [I am timing your computer]
+label demo.choosesentence ~
+  [I am timing your computer] ~
+  [Ich stelle die Laufgeschwindigkeit Ihres Computers fest]
 make "scale 4
 buryname "scale
 settimer 1 100 [make "scale :scale+1]
@@ -668,6 +776,9 @@ bury "demo.19
 bury "demo.20
 bury "demo.21
 bury "demo.22
+bury "demo.choosesentence
+bury "demo.germanp
+bury "demo.prompttostop
 bury "hanoi
 bury "hanoi.helper
 bury "hanoi.putdisk
