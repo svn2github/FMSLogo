@@ -718,10 +718,10 @@ staticcreate ~
   :sth
 
 comboboxcreate "d1 "c2 :wnx2+:gapx :sth+:mary :cmw :cmh
-comboboxaddstring "c2 [RT 2]
-comboboxaddstring "c2 [RT 5]
-comboboxaddstring "c2 [RT 10]
-comboboxsettext "c2 [RT 5]
+comboboxaddstring "c2 demo.choosesentence [RT 2]  [RE 2]
+comboboxaddstring "c2 demo.choosesentence [RT 5]  [RE 5]
+comboboxaddstring "c2 demo.choosesentence [RT 10] [RE 10]
+comboboxsettext   "c2 demo.choosesentence [RT 5]  [RE 5]
 
 staticcreate ~
   "d1 ~
