@@ -116,7 +116,7 @@
 #define LOCALIZED_ALTERNATE_FALSE    "falso"
 #define LOCALIZED_ALTERNATE_END      "fim"
 #define LOCALIZED_ALTERNATE_TOPLEVEL "nívelacima"
-#define LOCALIZED_ALTERNATE_SYSTEM   "system" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_SYSTEM   "sistema"
 
 //
 // Localized "alternate" spellings of Logo primitives.
@@ -337,7 +337,7 @@
 #define LOCALIZED_ALTERNATE_LR                     "rolepe"
 #define LOCALIZED_ALTERNATE_LSHIFT                 "desloquebitsl"
 #define LOCALIZED_ALTERNATE_LT                     "pe"
-#define LOCALIZED_ALTERNATE_MACHINE                "sistema"
+#define LOCALIZED_ALTERNATE_MACHINE                "meupc"
 #define LOCALIZED_ALTERNATE_MACROP                 "émacro?"
 #define LOCALIZED_ALTERNATE_MACRO_                 "emacro?"
 #define LOCALIZED_ALTERNATE_MAKE                   "atribua"
