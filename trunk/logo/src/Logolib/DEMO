@@ -621,11 +621,21 @@ buryname "st2w
 buryname "row2
 buryname "row3
 
-windowcreate "main "d1 [This is a Demo Windows Application] 0 0 :wnx+:gapy :wny+:gapy+5 [win.setup]
+windowcreate ~
+  "main ~
+  "d1 ~
+  demo.choosesentence ~
+    [This is a Demo Windows Application] ~
+    [Dies ist eine Demo Windows Anwendung] ~
+  0 ~
+  0 ~
+  :wnx+:gapy ~
+  :wny+:gapy+5 ~
+  [win.setup]
 end
 
 to win.blue
-staticupdate "st13 sentence [Blue] scrollbarget "s3
+staticupdate "st13 sentence demo.choosesentence [Blue] [Blau] scrollbarget "s3
 end
 
 to win.drawthing
@@ -633,11 +643,11 @@ setpencolor (list scrollbarget "s1 scrollbarget "s2 scrollbarget "s3)
 ifelse checkboxget "cb1 [hideturtle] [showturtle]
 ifelse checkboxget "cb2 [status] [nostatus]
 repeat scrollbarget "s4 [
-  if equalp [HEXAGON] listboxgetselect "l1 [repeat 6 [fd 100 rt 60]]
-  if equalp [SQUARE] listboxgetselect "l1 [repeat 4 [fd 100 rt 90]]
-  if equalp [TRIANGLE] listboxgetselect "l1 [repeat 3 [fd 100 rt 120]]
+  if equalp demo.choosesentence [HEXAGON]  [SECHSECK] listboxgetselect "l1 [repeat 6 [fd 100 rt 60]]
+  if equalp demo.choosesentence [SQUARE]   [QUADRAT]  listboxgetselect "l1 [repeat 4 [fd 100 rt 90]]
+  if equalp demo.choosesentence [TRIANGLE] [DREIECK]  listboxgetselect "l1 [repeat 3 [fd 100 rt 120]]
   run comboboxgettext "c2
-  ]
+]
 end
 
 to win.end
@@ -645,62 +655,181 @@ windowdelete "d1
 end
 
 to win.green
-staticupdate "st12 sentence [Grn] scrollbarget "s2
+staticupdate "st12 sentence demo.choosesentence [Grn] [Grün] scrollbarget "s2
 end
 
 to win.nil
 end
 
 to win.red
-staticupdate "st11 sentence [Red] scrollbarget "s1 
+staticupdate "st11 sentence demo.choosesentence [Red] [Rot] scrollbarget "s1 
 end
 
 to win.repeat
-staticupdate "st14 sentence [Repeat Count] scrollbarget "s4 
+staticupdate "st14 sentence demo.choosesentence [Repeat Count] [Wiederholungen] scrollbarget "s4 
 end
 
 to win.setup
-staticcreate "d1 "st2 [Run mode] :gapx :mary :cmw :sth
-groupboxcreate "d1 "g1 :gapx :sth+:mary :cmw :cmh
-checkboxcreate "d1 "g1 "cb1 [Hide Turtle] :gapx+:gapx :sth+:mary+:gapy :btw :bth
-checkboxcreate "d1 "g1 "cb2 [Status]      :gapx+:gapx :sth+:mary+:bth+4 :btw :bth
 
-staticcreate "d1 "st3 [Select Post-Command] :wnx2+:gapx :mary :cmw :sth
+staticcreate ~
+  "d1 ~
+  "st2 ~
+  demo.choosesentence ~
+    [Run mode] ~
+    [Laufmodus] ~
+  :gapx ~
+  :mary ~
+  :cmw ~
+  :sth
+
+groupboxcreate "d1 "g1 :gapx :sth+:mary :cmw :cmh
+
+checkboxcreate ~
+  "d1 ~
+  "g1 ~
+  "cb1 ~
+  demo.choosesentence ~
+    [Hide Turtle] ~
+    [Verstecke Ig.] ~
+  :gapx+:gapx ~
+  :sth+:mary+:gapy ~
+  :btw ~
+  :bth
+
+checkboxcreate ~
+  "d1 ~
+  "g1 ~ 
+  "cb2 ~
+  [Status] ~
+  :gapx+:gapx ~
+  :sth+:mary+:bth+4 ~
+  :btw ~
+  :bth
+
+staticcreate ~
+  "d1 ~
+  "st3 ~
+  demo.choosesentence ~
+    [Select Post-Command] ~
+    [Wahl des Befehls] ~
+  :wnx2+:gapx ~
+  :mary ~
+  :cmw ~
+  :sth
+
 comboboxcreate "d1 "c2 :wnx2+:gapx :sth+:mary :cmw :cmh
 comboboxaddstring "c2 [RT 2]
 comboboxaddstring "c2 [RT 5]
 comboboxaddstring "c2 [RT 10]
 comboboxsettext "c2 [RT 5]
 
-staticcreate "d1 "st4 [Select Shape] :gapx :row2 :lsw :sth
-listboxcreate "d1 "l1 :gapx :row2+:sth+1 :lsw :lsh
-listboxaddstring "l1 "SQUARE
-listboxaddstring "l1 "TRIANGLE
-listboxaddstring "l1 "HEXAGON
+staticcreate ~
+  "d1 ~
+  "st4 ~
+  demo.choosesentence ~
+    [Select Shape] ~
+    [Wahl der Figur] ~
+  :gapx ~
+  :row2 ~
+  :lsw ~
+  :sth
 
-staticcreate "d1 "st11 "Red :wnx6*3+:gapx-5 :row2 :st2w :sth
+listboxcreate "d1 "l1 :gapx :row2+:sth+1 :lsw :lsh
+listboxaddstring "l1 demo.choosesentence "SQUARE   "QUADRAT
+listboxaddstring "l1 demo.choosesentence "TRIANGLE "DREIECK
+listboxaddstring "l1 demo.choosesentence "HEXAGON  "SECHSECK
+
+staticcreate ~
+  "d1 ~
+  "st11 ~
+  demo.choosesentence ~
+    "Red ~
+    "Rot ~
+  :wnx6*3+:gapx-5 ~
+  :row2 ~
+  :st2w ~
+  :sth
 scrollbarcreate "d1 "s1 :wnx6*3+:gapx :row2+:sth :scw :sch [win.red]
 scrollbarset "s1 1 255 125 win.red
 
-staticcreate "d1 "st12 "Grn :wnx6*4+:gapx-5 :row2 :st2w :sth
+staticcreate ~
+  "d1 ~
+  "st12 ~
+  demo.choosesentence ~
+    "Grn ~
+    "Grün ~
+  :wnx6*4+:gapx-5 ~
+  :row2 ~
+  :st2w ~
+  :sth
 scrollbarcreate "d1 "s2 :wnx6*4+:gapx :row2+:sth :scw :sch [win.green]
 scrollbarset "s2 1 255 125 win.green
 
-staticcreate "d1 "st13 "Blue :wnx6*5+:gapx-5 :row2 :st2w :sth
+staticcreate ~
+  "d1 ~
+  "st13 ~
+  demo.choosesentence ~
+    "Blue ~
+    "Blau ~
+  :wnx6*5+:gapx-5 ~
+  :row2 ~
+  :st2w ~
+  :sth
 scrollbarcreate "d1 "s3 :wnx6*5+:gapx :row2+:sth :scw :sch [win.blue]
 scrollbarset "s3 1 255 125 win.blue
 
-staticcreate "d1 "st14 [Repeat Count] :gapx :row3 :sch*2 :sth
+staticcreate ~
+  "d1 ~
+  "st14 ~
+  demo.choosesentence ~
+    [Repeat Count] ~
+    [Wiederholungen] ~
+  :gapx ~
+  :row3 ~
+  :sch*2 ~
+  :sth
 scrollbarcreate "d1 "s4 :gapx :row3+:sth :sch*2 :scw [win.repeat]
 scrollbarset "s4 1 360 72 win.repeat
 
-buttoncreate "d1 "b1 "END :gapx :wny-:bth-:gapy :btw :bth [win.end]
-buttoncreate "d1 "b3 "CLEAR :wnx2-:btw/2 :wny-:bth-:gapy :btw :bth [cs]
-buttoncreate "d1 "b2 "DRAW :wnx-:btw-:gapx :wny-:bth-:gapy :btw :bth [win.drawthing]
+buttoncreate ~
+  "d1 ~
+  "b1 ~
+  demo.choosesentence ~
+    "END ~
+    "ENDE ~
+  :gapx ~
+  :wny-:bth-:gapy ~
+  :btw ~
+  :bth ~
+  [win.end]
+
+buttoncreate ~
+  "d1 ~
+  "b3 ~
+  demo.choosesentence ~
+    "CLEAR ~
+    "LOESCHE ~
+  :wnx2-:btw/2 ~
+  :wny-:bth-:gapy ~
+  :btw ~
+  :bth ~
+  [cs]
+
+buttoncreate ~
+  "d1 ~
+  "b2 ~
+  demo.choosesentence ~
+    "DRAW ~
+    "ZEICHNE ~
+  :wnx-:btw-:gapx ~
+  :wny-:bth-:gapy ~
+  :btw ~
+  :bth ~
+  [win.drawthing]
 end
 
 to win.static
-staticupdate "st14 sentence [Repeat Count] scrollbarget "s4 
+staticupdate "st14 sentence demo.choosesentence [Repeat Count] [Wiederholungen] scrollbarget "s4 
 end
 
 to GetPoint :rad
@@ -741,7 +870,7 @@ to Slice :rad :step
      penup
      setposxyz :PointE
      make "i :i + :step
-     ]
+   ]
 end
 
 to Sphere :rad :step :color
