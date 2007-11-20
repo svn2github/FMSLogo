@@ -1,3 +1,7 @@
+catch "error [ copydef "centro    "home    ]
+catch "error [ copydef "atr    "make    ]
+catch "error [ copydef "éitem?    "memberp    ]
+catch "error [ copydef "editor    "edall    ]
 catch "error [ copydef "sorteie    "random    ]
 catch "error [ copydef "elimine    "erase    ]
 catch "error [ copydef "ji    "fput    ]
