@@ -27,6 +27,7 @@ II. New features/bugs fixed:
     o Fix bug #1824438; FMSLogo can now parse words with char 255 in them.
     o Minor improvements to the Portuguese translation.
     o Minor improvements to the German translation.
+    o Minor improvements to the Spanish translation.
 
   For a complete history of changes across all versions of FMSLogo, see
   http://fmslogo.cvs.sourceforge.net/*checkout*/fmslogo/logo/src/CHANGELOG.TXT
