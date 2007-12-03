@@ -18,117 +18,334 @@ to aaa
 ; methods that have not yet been invented or conceived.
 end
 
-To TurtleMaze
+To Crashed? :oldpos :newpos
 
-  Window ; use window mode to prevent wrap-around
+   ForEach :walls [ 
+      If CrashedInWall? :oldpos :newpos ? [Output "true]
+   ]
+   Output "false
+End
 
-  localmake "redefp "true
+To CrashedInWall? :oldpos :newpos :wall
+   If (Count :wall) < 2 [Output "false]
+   Repeat (Count :wall) - 1 [
+      If Intersect? :oldpos :newpos (item repcount :wall) (item (repcount + 1) :wall) [ 
+         Output "true
+      ]
+   ]
 
-  If Not Primitivep "originalforward [
-    Copydef "originalforward "forward
-    Erase "fd
-    Define "fd  (list [d] (list "MyForward Word ": "d))
-    Copydef "forward "fd
-    Bury "fd
+   Output "false
+End
+
+To DrawGrid :granularity [:oldpen pen] [:oldpos pos] [:oldheading heading]
+
+   HideTurtle ; to speed up drawing
+
+   SetPenSize  [1 1]
+   SetPenColor [125 225 255] ; light blue
+
+   ; draw vertical lines
+   For [i :granularity 500 :granularity] [
+      ; draw a horizontal line in the positive X half
+      MoveTo :i -500
+      SetXY  :i  500
+
+      ; draw a horizontal line in the negative X half
+      MoveTo -:i -500
+      SetXY  -:i  500
+
+      ; draw a vertical line in the positive Y half
+      MoveTo -500 :i
+      SetXY   500 :i
+
+      ; draw a horizontal line in the negative Y half
+      MoveTo -500 -:i
+      SetXY   500 -:i 
+   ]
+
+   SetPenColor [0 180 232] ; darker blue for X/Y axes
+
+   ; draw the X axis
+   MoveTo 0 -500
+   SetXY  0  500
+
+   ; draw the Y axis
+   MoveTo -500 0
+   SetXY   500 0
+
+   ; restore the turtle's original position and heading
+   PenUp
+   SetPos     :oldpos
+   SetHeading :oldheading
+   PenDown
+
+   ; restore the original pen color/size
+   SetPen :oldpen
+
+   ShowTurtle
+End
+
+To DrawWall :wall
+
+   If Not Empty? :wall [ PenUp SetPos First :wall PenDown ]
+   ForEach :wall [ SetPos ? ]
+
+End
+
+To DrawWalls :walls
+
+   SetPenSize  [1 1]
+   SetPenColor [255 0 0] ; red
+
+   ForEach :walls [ DrawWall ? ]
+
+End
+
+To finished? :oldpos :newpos
+   Output inbox? :newpos :finishLowerLeft :finishUpperRight
+End
+
+To InBox? :p :p0 :p1
+  Output (and (InRange? Item 1 :p Item 1 :p0 Item 1 :p1)
+              (InRange? Item 2 :p Item 2 :p0 Item 2 :p1))
+End
+
+To InRange? :x :x0 :x1
+
+  ; allow a tolerance of 1e-5 to account for floating point precision problems
+
+  If :x0 < :x1 [
+     Output And (:x0 - 1e-5 < :x) (:x < :x1 + 1e-5)
   ]
 
-  If Not Primitivep "originalback [
-    Copydef "originalback "back
-    Erase "bk
-    Define "bk (list [d] (list "MyBack Word ": "d))
-    Copydef "back "bk
-    Bury "bk
+  Output And (:x1 - 1e-5 < :x) (:x < :x0 + 1e-5)
+End
+
+To Intersect? :L1P1 :L1P2 :L2P1 :L2P2
+ 
+   Make "L1 normalize :L1P1 :L1P2
+   Make "a1 item 1 :L1
+   Make "b1 item 2 :L1
+   Make "c1 item 3 :L1
+
+   Make "L2 normalize :L2P1 :L2P2
+   Make "a2 item 1 :L2
+   Make "b2 item 2 :L2
+   Make "c2 item 3 :L2
+
+   Make "det (:a1 * :b2) - (:a2 * :b1)
+
+   if :det = 0 [ Output "false ] ; parallel
+
+   Make "x ((:b2 * :c1) - (:b1 * :c2)) / :det
+   Make "y ((:a1 * :c2) - (:a2 * :c1)) / :det
+   Make "p list :x :y
+
+   ; now check if x and y are within both line segments
+   Output and (inbox? :p :L1P1 :L1P2) (inbox? :p :L2P1 :L2P2)
+End
+
+To MoveRacer :oldpos :newpos
+
+  Make "totalMoves :totalMoves + 1
+  UpdateScore
+
+  If Crashed? :oldpos :newpos [ 
+    Make "isCrashed "true
+    (Print [You crashed after] :totalMoves Word Moves ".)
+    PlayCrashSong
+    Stop
   ]
 
-  If Not Primitivep "originalright [
-    Copydef "originalright "right
-    Erase "rt
-    Define "rt (list [angle] (list "MyRight Word ": "angle))
-    Copydef "right "rt
-    Bury "rt
+  If Finished? :oldpos :newpos [ 
+    Make "isFinished "true
+    (Print [You have finished in] :totalMoves Word Moves "!)
+    PlayFinishSong
+    Stop
   ]
 
-  If Not Primitivep "originalleft [
-    Copydef "originalleft "left
-    Erase "lt
-    Define "lt (list [angle] (list "MyLeft Word ": "angle))
-    Copydef "left "lt
-    Bury "lt
+End
+
+To Moves
+  If :totalMoves = 1 [ Output "move ]
+  Output "moves
+End
+
+To MoveTo :x :y
+   PenUp
+   SetXY :x :y
+   PenDown
+End
+
+To MyBack :distance
+
+  If :isCrashed [
+     PlayCrashSong
+     Stop
   ]
 
-  Make "width        100
-  Make "height       140
-  Make "moveDistance 20
+  If :isFinished [
+     PlayFinishSong
+     Stop
+  ]
 
-  Make "currentMaze 1
-  Make "mazes       [UseMazeO UseMazeN UseMaze1]
+  Make "oldpos pos
+  Run (List "OriginalBack :distance)
+  Make "newpos pos
+
+  MoveRacer :oldpos :newpos
+
+End
+
+To MyForward :distance
+
+  If :isCrashed [
+     PlayCrashSong
+     Stop
+  ]
+
+  If :isFinished [
+     PlayFinishSong
+     Stop
+  ]
+
+  Make "oldpos pos
+  Run (List "OriginalForward :distance)
+  Make "newpos pos
+
+  MoveRacer :oldpos :newpos
+
+End
+
+To MyLeft :angle
+
+  If :isCrashed [
+     PlayCrashSong
+     Stop
+  ]
+
+  If :isFinished [
+     PlayFinishSong
+     Stop
+  ]
+
+  Run (List "OriginalLeft :angle)
+  Make "totalmoves :totalmoves + 1
+  UpdateScore
+
+End
+
+To MyRight :angle
+
+  If :isCrashed [
+     PlayCrashSong
+     Stop
+  ]
+
+  If :isFinished [
+     PlayFinishSong
+     Stop
+  ]
+
+  Run (List "OriginalRight :angle)
+  Make "totalmoves :totalmoves + 1
+  UpdateScore
+
+End
+
+To Next
+  ; So that the user can type "NEXT" in addition to pressing it
+  NextBoard
+End
+
+To NextBoard
+
+  ; select the board To use
+  Make "currentMaze :currentMaze + 1
+  If :currentMaze > COUNT :mazes [Make "currentMaze 1]
 
   StartRace
-  WindowCreate "main "window [Control the Turtle] 100 100 :width :height [Setup]
+   
+End
+
+To Normalize :P1 :P2
+
+   ; convert a line of the form [x0 y0] [x1 y1] 
+   ; to [A B C], where Ax + Bx = C describes all points on the line
+
+   Make "a (item 2 :P2) - (item 2 :P1)
+   Make "b (item 1 :P1) - (item 1 :P2)
+   Make "c (:a * item 1 :P1) + (:b * item 2 :P1)
+   Output (list :a :b :c)
 
 End
 
-To UseMazeO
+To PlayCrashSong
+   Tone 50 500
+   Print [Press RESET to try again.]
+End
 
-  Make "walls []
-  Push "walls [ [ 20 -200] [ 200 -200] [ 200 200]  [-200 200] [-200 -200] [-20 -200] 
-                [-20 -100] [-100 -100] [-100 100] [ 100  100] [100 -100]  [20 -100 ]
-                [ 20 -200] ]
+To PlayFinishSong   
+   Repeat 50 [ 
+     Tone (500 + RepCount * 5) 5 
+     OriginalRight 360 / 100
+   ]
+   Repeat 50 [ 
+     Tone (750 - RepCount * 5) 5
+     OriginalRight 360 / 100
+   ]
+   Print [Press RESET to play again.  Press NEXT to move to a new maze.]
+End
 
-  Make "startX       30
-  Make "startY       -150
-  Make "startheading 90
+To Reset
+  ; So that the user can type "RESET" in addition to pressing it
+  StartRace
+End
 
-  Make "finishX     -80
-  Make "finishY     -180
-  Make "finishWidth  60
-  Make "finishHeight 60
+To Setup
+
+  LocalMake "gapx 6
+  LocalMake "gapy 6
+
+  LocalMake "buttonwidthlong  60
+  LocalMake "buttonwidthshort 40
+  LocalMake "buttonheight     12
+
+  LocalMake "onebuttonx  (:width-:gapx-:buttonwidthlong)/2
+  LocalMake "twobuttonx1 :gapx
+  LocalMake "twobuttonx2 :width-:gapx-:buttonwidthshort
+
+  ; row 1
+  LocalMake "ypos :gapy
+  ButtonCreate "window "fdbutton (LIST "|FORWARD| :movedistance) :onebuttonx :ypos :buttonwidthlong  :buttonheight [MyForward :movedistance]
+
+  ; row 2
+  Make "ypos :ypos + :buttonheight + :gapy
+  ButtonCreate "window "rt90button "|LEFT  90|  :twobuttonx1 :ypos :buttonwidthshort :buttonheight [MyLeft  90]
+  ButtonCreate "window "lt90button "|RIGHT 90|  :twobuttonx2 :ypos :buttonwidthshort :buttonheight [MyRight 90]
+
+  ; row 3
+  Make "ypos :ypos + :buttonheight + :gapy
+  ButtonCreate "window "rt30button "|LEFT  30|  :twobuttonx1 :ypos :buttonwidthshort :buttonheight [MyLeft  30]
+  ButtonCreate "window "lt30button "|RIGHT 30|  :twobuttonx2 :ypos :buttonwidthshort :buttonheight [MyRight 30]
+
+  ; row 4
+  Make "ypos :ypos + :buttonheight + :gapy
+  ButtonCreate "window "bkbutton  (LIST "|BACK   | :movedistance)  :onebuttonx  :ypos :buttonwidthlong  :buttonheight [MyBack :movedistance]
+
+  ; row 5
+  Make "ypos :ypos + :buttonheight + :gapy + 10
+  ButtonCreate "window "csbutton   "|RESET| :onebuttonx  :ypos :buttonwidthlong  :buttonheight [Reset]
+
+  ; row 6
+  Make "ypos :ypos + :buttonheight + :gapy
+  ButtonCreate "window "nextbutton "|NEXT|  :onebuttonx  :ypos :buttonwidthlong  :buttonheight [Next]
 
 End
 
-To UseMazeN
-
-  Make "walls []
-  Push "walls [ [-160 -200] [-160  200] [-100  200] [ 100 -100 ] [ 100  200]
-                [ 160  200] [ 160 -200] [ 100 -200] [-100  100 ] [-100 -200]
-                [-160 -200] ]
-
-  Make "startX       -130
-  Make "startY       -190
-  Make "startheading 0
-
-  Make "finishX      110
-  Make "finishY      150
-  Make "finishWidth  40
-  Make "finishHeight 40
-
+To SlowDraw :slowness
+  print [SLOWDRAW is disabled to prevent cheating.]
 End
-
-To UseMaze1
-
-  Make "walls []
-  Push "walls [ [-300  180] [ 300  180] [ 300 -180] [-300 -180] [-300  180] ]
-  Push "walls [ [ -60 -180] [-60     0] [-240    0] [-240 -120] [-120 -120] ]
-  Push "walls [ [ -60 -60 ] [-180  -60]                                     ]
-  Push "walls [ [-300  120] [-120  120]                                     ]
-  Push "walls [ [ -60  120] [ 180  120]                                     ]
-  Push "walls [ [   0  120] [   0   60] [-240   60]                         ]
-  Push "walls [ [ 240  120] [ 240   60] [  60   60] [  60  -60] [ 300  -60] ]
-  Push "walls [ [ 120    0] [ 300    0]                                     ]
-  Push "walls [ [  0     0] [   0 -120] [240 -120] [240 -180 ]              ]
-
-
-  Make "startX       -270
-  Make "startY       150
-  Make "startheading 90
-
-  Make "finishX      255
-  Make "finishY     -165
-  Make "finishWidth  30
-  Make "finishHeight 30
-
-End
-
 
 To StartRace
 
@@ -184,6 +401,56 @@ To StartRace
 
 End
 
+To TurtleMaze
+
+  Window ; use window mode to prevent wrap-around
+
+  localmake "redefp "true
+
+  If Not Primitivep "originalforward [
+    Copydef "originalforward "forward
+    Erase "fd
+    Define "fd  (list [d] (list "MyForward Word ": "d))
+    Copydef "forward "fd
+    Bury "fd
+  ]
+
+  If Not Primitivep "originalback [
+    Copydef "originalback "back
+    Erase "bk
+    Define "bk (list [d] (list "MyBack Word ": "d))
+    Copydef "back "bk
+    Bury "bk
+  ]
+
+  If Not Primitivep "originalright [
+    Copydef "originalright "right
+    Erase "rt
+    Define "rt (list [angle] (list "MyRight Word ": "angle))
+    Copydef "right "rt
+    Bury "rt
+  ]
+
+  If Not Primitivep "originalleft [
+    Copydef "originalleft "left
+    Erase "lt
+    Define "lt (list [angle] (list "MyLeft Word ": "angle))
+    Copydef "left "lt
+    Bury "lt
+  ]
+
+  Make "width        100
+  Make "height       140
+  Make "moveDistance 20
+
+  Make "currentMaze 1
+  Make "mazes       [UseMazeO UseMazeN UseMaze1 UseMazeOcto]
+
+  StartRace
+  WindowCreate "main "window [Control the Turtle] 100 100 :width :height [Setup]
+
+End
+
 To UpdateScore [:PreviousPenColor PenColor] [:PreviousTurtle Turtle]
 
   ; Move the turtle that will keep score in place
@@ -191,7 +458,7 @@ To UpdateScore [:PreviousPenColor PenColor] [:PreviousTurtle Turtle]
   HideTurtle
 
   PenUp
-  SetXY 0 220      ; move above the maze
+  SetXY 200 220      ; move above the maze
   SetHeading 90    ; face right
   PenDown
 
@@ -211,337 +478,102 @@ To UpdateScore [:PreviousPenColor PenColor] [:PreviousTurtle Turtle]
 
 End
 
+To UseMaze1
 
-To MoveTo :x :y
-   PenUp
-   SetXY :x :y
-   PenDown
-End
+  Make "walls []
+  Push "walls [ [-300  180] [ 300  180] [ 300 -180] [-300 -180] [-300  180] ]
+  Push "walls [ [ -60 -180] [-60     0] [-240    0] [-240 -120] [-120 -120] ]
+  Push "walls [ [ -60 -60 ] [-180  -60]                                     ]
+  Push "walls [ [-300  120] [-120  120]                                     ]
+  Push "walls [ [ -60  120] [ 180  120]                                     ]
+  Push "walls [ [   0  120] [   0   60] [-240   60]                         ]
+  Push "walls [ [ 240  120] [ 240   60] [  60   60] [  60  -60] [ 300  -60] ]
+  Push "walls [ [ 120    0] [ 300    0]                                     ]
+  Push "walls [ [  0     0] [   0 -120] [240 -120] [240 -180 ]              ]
 
-To DrawWall :wall
 
-   If Not Empty? :wall [ PenUp SetPos First :wall PenDown ]
-   ForEach :wall [ SetPos ? ]
+  Make "startX       -270
+  Make "startY       150
+  Make "startheading 90
 
-End
-
-To DrawWalls :walls
-
-   SetPenSize  [1 1]
-   SetPenColor [255 0 0] ; red
-
-   ForEach :walls [ DrawWall ? ]
-
-End
-
-To DrawGrid :granularity [:oldpen pen] [:oldpos pos] [:oldheading heading]
-
-   HideTurtle ; to speed up drawing
-
-   SetPenSize  [1 1]
-   SetPenColor [125 225 255] ; light blue
-
-   ; draw vertical lines
-   For [i :granularity 500 :granularity] [
-      ; draw a horizontal line in the positive X half
-      MoveTo :i -500
-      SetXY  :i  500
-
-      ; draw a horizontal line in the negative X half
-      MoveTo -:i -500
-      SetXY  -:i  500
-
-      ; draw a vertical line in the positive Y half
-      MoveTo -500 :i
-      SetXY   500 :i
-
-      ; draw a horizontal line in the negative Y half
-      MoveTo -500 -:i
-      SetXY   500 -:i 
-   ]
-
-   SetPenColor [0 180 232] ; darker blue for X/Y axes
-
-   ; draw the X axis
-   MoveTo 0 -500
-   SetXY  0  500
-
-   ; draw the Y axis
-   MoveTo -500 0
-   SetXY   500 0
-
-   ; restore the turtle's original position and heading
-   PenUp
-   SetPos     :oldpos
-   SetHeading :oldheading
-   PenDown
-
-   ; restore the original pen color/size
-   SetPen :oldpen
-
-   ShowTurtle
-End
-
-To Normalize :P1 :P2
-
-   ; convert a line of the form [x0 y0] [x1 y1] 
-   ; to [A B C], where Ax + Bx = C describes all points on the line
-
-   Make "a (item 2 :P2) - (item 2 :P1)
-   Make "b (item 1 :P1) - (item 1 :P2)
-   Make "c (:a * item 1 :P1) + (:b * item 2 :P1)
-   Output (list :a :b :c)
+  Make "finishX      255
+  Make "finishY     -165
+  Make "finishWidth  30
+  Make "finishHeight 30
 
 End
 
-To InRange? :x :x0 :x1
+To UseMazeN
 
-  ; allow a tolerance of 1e-5 to account for floating point precision problems
+  Make "walls []
+  Push "walls [ [-160 -200] [-160  200] [-100  200] [ 100 -100 ] [ 100  200]
+                [ 160  200] [ 160 -200] [ 100 -200] [-100  100 ] [-100 -200]
+                [-160 -200] ]
 
-  If :x0 < :x1 [
-     Output And (:x0 - 1e-5 < :x) (:x < :x1 + 1e-5)
-  ]
+  Make "startX       -130
+  Make "startY       -190
+  Make "startheading 0
 
-  Output And (:x1 - 1e-5 < :x) (:x < :x0 + 1e-5)
-End
-
-To InBox? :p :p0 :p1
-  Output (and (InRange? Item 1 :p Item 1 :p0 Item 1 :p1)
-              (InRange? Item 2 :p Item 2 :p0 Item 2 :p1))
-End
-
-To Intersect? :L1P1 :L1P2 :L2P1 :L2P2
- 
-   Make "L1 normalize :L1P1 :L1P2
-   Make "a1 item 1 :L1
-   Make "b1 item 2 :L1
-   Make "c1 item 3 :L1
-
-   Make "L2 normalize :L2P1 :L2P2
-   Make "a2 item 1 :L2
-   Make "b2 item 2 :L2
-   Make "c2 item 3 :L2
-
-   Make "det (:a1 * :b2) - (:a2 * :b1)
-
-   if :det = 0 [ Output "false ] ; parallel
-
-   Make "x ((:b2 * :c1) - (:b1 * :c2)) / :det
-   Make "y ((:a1 * :c2) - (:a2 * :c1)) / :det
-   Make "p list :x :y
-
-   ; now check if x and y are within both line segments
-   Output and (inbox? :p :L1P1 :L1P2) (inbox? :p :L2P1 :L2P2)
-End
-
-To CrashedInWall? :oldpos :newpos :wall
-   If (Count :wall) < 2 [Output "false]
-   Repeat (Count :wall) - 1 [
-      If Intersect? :oldpos :newpos (item repcount :wall) (item (repcount + 1) :wall) [ 
-         Output "true
-      ]
-   ]
-
-   Output "false
-End
-
-To Crashed? :oldpos :newpos
-
-   ForEach :walls [ 
-      If CrashedInWall? :oldpos :newpos ? [Output "true]
-   ]
-   Output "false
-End
-
-To finished? :oldpos :newpos
-   Output inbox? :newpos :finishLowerLeft :finishUpperRight
-End
-
-To PlayFinishSong   
-   Repeat 50 [ 
-     Tone (500 + RepCount * 5) 5 
-     OriginalRight 360 / 100
-   ]
-   Repeat 50 [ 
-     Tone (750 - RepCount * 5) 5
-     OriginalRight 360 / 100
-   ]
-   Print [Press RESET to play again.  Press NEXT to move to a new maze.]
-End
-
-To PlayCrashSong
-   Tone 50 500
-   Print [Press RESET to try again.]
-End
-
-
-To Moves
-  If :totalMoves = 1 [ Output "move ]
-  Output "moves
-End
-
-
-To MoveRacer :oldpos :newpos
-
-  Make "totalMoves :totalMoves + 1
-  UpdateScore
-
-  If Crashed? :oldpos :newpos [ 
-    Make "isCrashed "true
-    (Print [You crashed after] :totalMoves Word Moves ".)
-    PlayCrashSong
-    Stop
-  ]
-
-  If Finished? :oldpos :newpos [ 
-    Make "isFinished "true
-    (Print [You have finished in] :totalMoves Word Moves "!)
-    PlayFinishSong
-    Stop
-  ]
+  Make "finishX      110
+  Make "finishY      150
+  Make "finishWidth  40
+  Make "finishHeight 40
 
 End
 
-To MyForward :distance
+To UseMazeO
 
-  If :isCrashed [
-     PlayCrashSong
-     Stop
-  ]
+  Make "walls []
+  Push "walls [ [ 20 -200] [ 200 -200] [ 200 200]  [-200 200] [-200 -200] [-20 -200] 
+                [-20 -100] [-100 -100] [-100 100] [ 100  100] [100 -100]  [20 -100 ]
+                [ 20 -200] ]
 
-  If :isFinished [
-     PlayFinishSong
-     Stop
-  ]
+  Make "startX       30
+  Make "startY       -150
+  Make "startheading 90
 
-  Make "oldpos pos
-  Run (List "OriginalForward :distance)
-  Make "newpos pos
-
-  MoveRacer :oldpos :newpos
+  Make "finishX     -80
+  Make "finishY     -180
+  Make "finishWidth  60
+  Make "finishHeight 60
 
 End
 
-To MyBack :distance
+To UseMazeOcto
 
-  If :isCrashed [
-     PlayCrashSong
-     Stop
-  ]
+  Make "walls []
+  Push "walls [ [ 40 -240 ] [ 120  -240 ] [ 240  -120 ] [ 240 120 ] [ 120  240 ] [ 0 240 ] [ -120 240] [ -240 120] [-240 0 ] [-240 -120] [ -120 -240 ] [-40 -240 ]]
+  Push "walls [ [ 40 160 ] [ 80  160 ] [ 160  80 ] [ 160 -80 ] [ 80 -160 ] [ -80 -160 ] [ -160 -80] [ -160 80] [ -80 160 ] [-40 160] ]
+  Push "walls [ [ 40 -80 ] [ 80  -40 ] [ 80  40 ] [ 40 80 ] [ -40 80 ] [ -80 40 ] [ -80 -40] [ -40 -80] ]
+              
+  Make "startX       -0
+  Make "startY       -260
+  Make "startheading 0
 
-  If :isFinished [
-     PlayFinishSong
-     Stop
-  ]
-
-  Make "oldpos pos
-  Run (List "OriginalBack :distance)
-  Make "newpos pos
-
-  MoveRacer :oldpos :newpos
+  Make "finishX      -20
+  Make "finishY      -20
+  Make "finishWidth  40
+  Make "finishHeight 40
 
 End
 
-To MyRight :angle
-
-  If :isCrashed [
-     PlayCrashSong
-     Stop
-  ]
-
-  If :isFinished [
-     PlayFinishSong
-     Stop
-  ]
-
-  Run (List "OriginalRight :angle)
-  Make "totalmoves :totalmoves + 1
-  UpdateScore
-
-End
-
-To MyLeft :angle
-
-  If :isCrashed [
-     PlayCrashSong
-     Stop
-  ]
-
-  If :isFinished [
-     PlayFinishSong
-     Stop
-  ]
-
-  Run (List "OriginalLeft :angle)
-  Make "totalmoves :totalmoves + 1
-  UpdateScore
-
-End
-
-To NextBoard
-
-  ; select the board To use
-  Make "currentMaze :currentMaze + 1
-  If :currentMaze > COUNT :mazes [Make "currentMaze 1]
-
-  StartRace
-   
-End
-
-To Reset
-  ; So that the user can type "RESET" in addition to pressing it
-  StartRace
-End
-
-To Next
-  ; So that the user can type "NEXT" in addition to pressing it
-  NextBoard
-End
-
-To SlowDraw :slowness
-  print [SLOWDRAW is disabled to prevent cheating.]
-End
-
-To Setup
-
-  LocalMake "gapx 6
-  LocalMake "gapy 6
-
-  LocalMake "buttonwidthlong  60
-  LocalMake "buttonwidthshort 40
-  LocalMake "buttonheight     12
-
-  LocalMake "onebuttonx  (:width-:gapx-:buttonwidthlong)/2
-  LocalMake "twobuttonx1 :gapx
-  LocalMake "twobuttonx2 :width-:gapx-:buttonwidthshort
-
-  ; row 1
-  LocalMake "ypos :gapy
-  ButtonCreate "window "fdbutton (LIST "|FORWARD| :movedistance) :onebuttonx :ypos :buttonwidthlong  :buttonheight [MyForward :movedistance]
-
-  ; row 2
-  Make "ypos :ypos + :buttonheight + :gapy
-  ButtonCreate "window "rt90button "|LEFT  90|  :twobuttonx1 :ypos :buttonwidthshort :buttonheight [MyLeft  90]
-  ButtonCreate "window "lt90button "|RIGHT 90|  :twobuttonx2 :ypos :buttonwidthshort :buttonheight [MyRight 90]
-
-  ; row 3
-  Make "ypos :ypos + :buttonheight + :gapy
-  ButtonCreate "window "rt30button "|LEFT  30|  :twobuttonx1 :ypos :buttonwidthshort :buttonheight [MyLeft  30]
-  ButtonCreate "window "lt30button "|RIGHT 30|  :twobuttonx2 :ypos :buttonwidthshort :buttonheight [MyRight 30]
-
-  ; row 4
-  Make "ypos :ypos + :buttonheight + :gapy
-  ButtonCreate "window "bkbutton  (LIST "|BACK   | :movedistance)  :onebuttonx  :ypos :buttonwidthlong  :buttonheight [MyBack :movedistance]
-
-  ; row 5
-  Make "ypos :ypos + :buttonheight + :gapy + 10
-  ButtonCreate "window "csbutton   "|RESET| :onebuttonx  :ypos :buttonwidthlong  :buttonheight [Reset]
-
-  ; row 6
-  Make "ypos :ypos + :buttonheight + :gapy
-  ButtonCreate "window "nextbutton "|NEXT|  :onebuttonx  :ypos :buttonwidthlong  :buttonheight [Next]
-
-End
-
+Make "currentmaze 4
+Make "finishheight 40
+Make "finishlowerleft [-20 -20]
+Make "finishupperright [20 20]
+Make "finishwall [[-20 -20] [20 -20] [20 20] [-20 20] [-20 -20]]
+Make "finishwidth 40
+Make "finishx -20
+Make "finishy -20
+Make "height 140
+Make "iscrashed "false
+Make "isfinished "false
+Make "mazes [UseMazeO UseMazeN UseMaze1 UseMazeOcto]
+Make "movedistance 20
+Make "startheading 0
 Make "startup [TurtleMaze]
-
+Make "startx 0
+Make "starty -260
+Make "totalmoves 0
+Make "walls [[[40 -80] [80 -40] [80 40] [40 80] [-40 80] [-80 40] [-80 -40] [-40 -80]] [[40 160] [80 160] [160 80] [160 -80] [80 -160] [-80 -160] [-160 -80] [-160 80] [-80 160] [-40 160]] [[40 -240] [120 -240] [240 -120] [240 120] [120 240] [0 240] [-120 240] [-240 120] [-240 0] [-240 -120] [-120 -240] [-40 -240]]]
+Make "width 100
