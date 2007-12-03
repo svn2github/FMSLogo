@@ -557,23 +557,4 @@ To UseMazeOcto
 
 End
 
-Make "currentmaze 4
-Make "finishheight 40
-Make "finishlowerleft [-20 -20]
-Make "finishupperright [20 20]
-Make "finishwall [[-20 -20] [20 -20] [20 20] [-20 20] [-20 -20]]
-Make "finishwidth 40
-Make "finishx -20
-Make "finishy -20
-Make "height 140
-Make "iscrashed "false
-Make "isfinished "false
-Make "mazes [UseMazeO UseMazeN UseMaze1 UseMazeOcto]
-Make "movedistance 20
-Make "startheading 0
 Make "startup [TurtleMaze]
-Make "startx 0
-Make "starty -260
-Make "totalmoves 0
-Make "walls [[[40 -80] [80 -40] [80 40] [40 80] [-40 80] [-80 40] [-80 -40] [-40 -80]] [[40 160] [80 160] [160 80] [160 -80] [80 -160] [-80 -160] [-160 -80] [-160 80] [-80 160] [-40 160]] [[40 -240] [120 -240] [240 -120] [240 120] [120 240] [0 240] [-120 240] [-240 120] [-240 0] [-240 -120] [-120 -240] [-40 -240]]]
-Make "width 100
