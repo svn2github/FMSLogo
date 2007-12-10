@@ -31,11 +31,12 @@ Both the <parameter>title</parameter> and <parameter>choicelist</parameter> inpu
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>SHOW SELECTBOX [Choose Color] [Red Green Blue]
+<programlisting><userinput>SHOW SELECTBOX [Choose Color] [Red Green Blue]
 <replaceable>Select green and hit OK</replaceable>
-2
+2</userinput>
+</programlisting>
 
-SHOW SELECTBOX [Which are colors] [[Red Green Blue] [One Two Three] None]
+<programlisting><userinput>SHOW SELECTBOX [Which are colors] [[Red Green Blue] [One Two Three] None]
 <replaceable>Select "Red Green Blue" and hit OK</replaceable>
 1</userinput>
 </programlisting>
@@ -44,5 +45,4 @@ SHOW SELECTBOX [Which are colors] [[Red Green Blue] [One Two Three] None]
 </varlistentry>
 
 </variablelist>
-
 </section>

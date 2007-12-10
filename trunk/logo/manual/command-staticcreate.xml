@@ -52,13 +52,14 @@ The <parameter>height</parameter> input is the height of the new static control,
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>; create a static in a new window:
+<programlisting><userinput>; create a static in a new window:
 WINDOWCREATE "main "mywindow "mytitle 0 0 100 100 []
 STATICCREATE "mywindow "mystatic [Heading=0] 25 25 50 25
 REPEAT 72 [RIGHT 5 STATICUPDATE "mystatic SENTENCE [Heading=] HEADING WAIT 60]
-WINDOWDELETE "mywindow
+WINDOWDELETE "mywindow</userinput>
+</programlisting>
 
-; create a static on graphics window:
+<programlisting><userinput>; create a static on graphics window:
 STATICCREATE "main "mystatic [Heading=0] 25 25 100 50
 REPEAT 72 [RIGHT 5 STATICUPDATE "mystatic SENTENCE [Heading=] HEADING WAIT 60]
 WINDOWDELETE "mywindow</userinput>
@@ -68,5 +69,4 @@ WINDOWDELETE "mywindow</userinput>
 </varlistentry>
 
 </variablelist>
-
 </section>

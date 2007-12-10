@@ -63,14 +63,15 @@ One common use for the <parameter>callback</parameter> input is to inform the us
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>; create a scrollbar in a new window:
+<programlisting><userinput>; create a scrollbar in a new window:
 WINDOWCREATE "main "mywindow "mytitle 0 0 100 100 []
 SCROLLBARCREATE "mywindow "myscroll 25 25 50 25 [SETHEADING SCROLLBARGET "myscroll]
 SCROLLBARSET "myscroll 0 360 0
 <replaceable>Move the scrollbar and observe what happens to the turtle</replaceable>
-WINDOWDELETE "mywindow
+WINDOWDELETE "mywindow</userinput>
+</programlisting>
 
-; create a scrollbar on graphics window:
+<programlisting><userinput>; create a scrollbar on graphics window:
 SCROLLBARCREATE "main "myscroll 25 25 100 25 [SETHEADING SCROLLBARGET "myscroll]
 SCROLLBARSET "myscroll 0 360 0
 <replaceable>Move the scrollbar and observe what happens to the turtle</replaceable>
@@ -81,5 +82,4 @@ WINDOWDELETE "main</userinput>
 </varlistentry>
 
 </variablelist>
-
 </section>

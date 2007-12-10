@@ -52,12 +52,13 @@ The <parameter>height</parameter> input is the height of the new combobox, in pi
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>; create a combobox in a new window:
+<programlisting><userinput>; create a combobox in a new window:
 WINDOWCREATE "main "mywindow "mytitle 0 0 100 100 []
 COMBOBOXCREATE "mywindow "mycombo 25 25 50 50
-WINDOWDELETE "mywindow
+WINDOWDELETE "mywindow</userinput>
+</programlisting>
 
-; create a combobox on graphics window:
+<programlisting><userinput>; create a combobox on graphics window:
 COMBOBOXCREATE "main "mycombo 25 25 100 100
 WINDOWDELETE "main</userinput>
 </programlisting>
