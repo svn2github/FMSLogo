@@ -220,7 +220,7 @@
      </row>
      <row>
        <entry><link linkend='command-buttonenable'>buttonenable</link></entry>
-       <entry>habilitarBoton</entry>
+       <entry>habilitaBoton</entry>
      </row>
      <row>
        <entry><link linkend='command-buttonupdate'>buttonupdate</link></entry>
@@ -260,7 +260,7 @@
      </row>
      <row>
        <entry><link linkend='command-checkboxenable'>checkboxenable</link></entry>
-       <entry>habilitarCheckbox</entry>
+       <entry>habilitaCheckbox</entry>
      </row>
      <row>
        <entry><link linkend='command-checkboxget'>checkboxget</link></entry>
@@ -296,7 +296,7 @@
      </row>
      <row>
        <entry><link linkend='command-cleartimer'>cleartimer</link></entry>
-       <entry>contadorACero</entry>
+       <entry>temporizadorACero</entry>
      </row>
      <row>
        <entry><link linkend='command-close'>close</link></entry>
@@ -328,7 +328,7 @@
      </row>
      <row>
        <entry><link linkend='command-comboboxenable'>comboboxenable</link></entry>
-       <entry>habilitarCombobox</entry>
+       <entry>habilitaCombobox</entry>
      </row>
      <row>
        <entry><link linkend='command-comboboxgettext'>comboboxgettext</link></entry>
@@ -392,7 +392,7 @@
      </row>
      <row>
        <entry><link linkend='command-dialogenable'>dialogenable</link></entry>
-       <entry>habilitarDialogo</entry>
+       <entry>habilitaDialogo</entry>
      </row>
      <row>
        <entry><link linkend='command-dialogfileopen'>dialogfileopen</link></entry>
@@ -696,11 +696,11 @@
      </row>
      <row>
        <entry><link linkend='command-greaterequalp'>greaterequal?</link></entry>
-       <entry>mayor.o.igual?</entry>
+       <entry>mayorOigual?</entry>
      </row>
      <row>
        <entry><link linkend='command-greaterequalp'>greaterequalp</link></entry>
-       <entry>mayor.o.igual?</entry>
+       <entry>mayorOigual?</entry>
      </row>
      <row>
        <entry><link linkend='command-greaterp'>greaterp</link></entry>
@@ -804,7 +804,7 @@
      </row>
      <row>
        <entry><link linkend='command-keyboardoff'>keyboardoff</link></entry>
-       <entry>desHabilitaTeclado</entry>
+       <entry>inHabilitaTeclado</entry>
      </row>
      <row>
        <entry><link linkend='command-keyboardon'>keyboardon</link></entry>
@@ -852,11 +852,11 @@
      </row>
      <row>
        <entry><link linkend='command-lessequalp'>lessequal?</link></entry>
-       <entry>mejor.o.igual?</entry>
+       <entry>menorOigual?</entry>
      </row>
      <row>
        <entry><link linkend='command-lessequalp'>lessequalp</link></entry>
-       <entry>mejor.o.igual?</entry>
+       <entry>menorOigual?</entry>
      </row>
      <row>
        <entry><link linkend='command-lessp'>lessp</link></entry>
@@ -892,11 +892,11 @@
      </row>
      <row>
        <entry><link linkend='command-listboxenable'>listboxenable</link></entry>
-       <entry>habilitarListbox</entry>
+       <entry>habilitaListbox</entry>
      </row>
      <row>
        <entry><link linkend='command-listboxgetselect'>listboxgetselect</link></entry>
-       <entry>leeseLeccionListbox</entry>
+       <entry>leeSeleccionListbox</entry>
      </row>
      <row>
        <entry><link linkend='command-listp'>listp</link></entry>
@@ -1032,11 +1032,11 @@
      </row>
      <row>
        <entry><link linkend='command-mouseoff'>mouseoff</link></entry>
-       <entry>habilitaRaton</entry>
+       <entry>inHabilitaRaton</entry>
      </row>
      <row>
        <entry><link linkend='command-mouseon'>mouseon</link></entry>
-       <entry>inhabilitaRaton</entry>
+       <entry>habilitaRaton</entry>
      </row>
      <row>
        <entry><link linkend='command-mousepos'>mousepos</link></entry>
@@ -1468,7 +1468,7 @@
      </row>
      <row>
        <entry><link linkend='command-radiobuttonenable'>radiobuttonenable</link></entry>
-       <entry>habilitarBotonRadio</entry>
+       <entry>habilitaBotonRadio</entry>
      </row>
      <row>
        <entry><link linkend='command-radiobuttonget'>radiobuttonget</link></entry>
@@ -1504,7 +1504,7 @@
      </row>
      <row>
        <entry><link linkend='command-readchars'>readchars</link></entry>
-       <entry>leeCarcs</entry>
+       <entry>LeeCars</entry>
      </row>
      <row>
        <entry><link linkend='command-reader'>reader</link></entry>
@@ -1552,7 +1552,7 @@
      </row>
      <row>
        <entry><link linkend='command-rerandom'>rerandom</link></entry>
-       <entry>reazar</entry>
+       <entry>reAzar</entry>
      </row>
      <row>
        <entry><link linkend='command-rest'>rest</link></entry>
@@ -1636,7 +1636,7 @@
      </row>
      <row>
        <entry><link linkend='command-scrollbarenable'>scrollbarenable</link></entry>
-       <entry>habilitarBarraDesplazamiento</entry>
+       <entry>habilitaBarraDesplazamiento</entry>
      </row>
      <row>
        <entry><link linkend='command-scrollbarget'>scrollbarget</link></entry>
@@ -1816,23 +1816,23 @@
      </row>
      <row>
        <entry><link linkend='command-setx'>setx</link></entry>
-       <entry>ponx</entry>
+       <entry>ponX</entry>
      </row>
      <row>
        <entry><link linkend='command-setxy'>setxy</link></entry>
-       <entry>ponxy</entry>
+       <entry>ponXY</entry>
      </row>
      <row>
        <entry><link linkend='command-setxyz'>setxyz</link></entry>
-       <entry>ponxyz</entry>
+       <entry>ponXYZ</entry>
      </row>
      <row>
        <entry><link linkend='command-sety'>sety</link></entry>
-       <entry>pony</entry>
+       <entry>ponY</entry>
      </row>
      <row>
        <entry><link linkend='command-setz'>setz</link></entry>
-       <entry>ponz</entry>
+       <entry>ponZ</entry>
      </row>
      <row>
        <entry><link linkend='command-show'>show</link></entry>
@@ -1920,7 +1920,7 @@
      </row>
      <row>
        <entry><link linkend='command-stepped'>stepped</link></entry>
-       <entry>procs.paso</entry>
+       <entry>listaPaso</entry>
      </row>
      <row>
        <entry><link linkend='command-stop'>stop</link></entry>
@@ -1988,7 +1988,7 @@
      </row>
      <row>
        <entry><link linkend='command-towardsxyz'>towardsxyz</link></entry>
-       <entry>haciaxyz</entry>
+       <entry>haciaXYZ</entry>
      </row>
      <row>
        <entry><link linkend='command-trace'>trace</link></entry>
@@ -2088,7 +2088,7 @@
      </row>
      <row>
        <entry><link linkend='command-windowenable'>windowenable</link></entry>
-       <entry>habilitarVentana</entry>
+       <entry>habilitaVentana</entry>
      </row>
      <row>
        <entry><link linkend='command-windowfileedit'>windowfileedit</link></entry>
@@ -2600,10 +2600,6 @@
        <entry><link linkend='command-combine'>combine</link></entry>
      </row>
      <row>
-       <entry>contadorACero</entry>
-       <entry><link linkend='command-cleartimer'>cleartimer</link></entry>
-     </row>
-     <row>
        <entry>contenido</entry>
        <entry><link linkend='command-contents'>contents</link></entry>
      </row>
@@ -2706,10 +2702,6 @@
      <row>
        <entry>desde</entry>
        <entry><link linkend='command-for'>for</link></entry>
-     </row>
-     <row>
-       <entry>desHabilitaTeclado</entry>
-       <entry><link linkend='command-keyboardoff'>keyboardoff</link></entry>
      </row>
      <row>
        <entry>desplaza</entry>
@@ -3012,55 +3004,55 @@
        <entry><link linkend='command-netaccepton'>netaccepton</link></entry>
      </row>
      <row>
+       <entry>habilitaBarraDesplazamiento</entry>
+       <entry><link linkend='command-scrollbarenable'>scrollbarenable</link></entry>
+     </row>
+     <row>
+       <entry>habilitaBoton</entry>
+       <entry><link linkend='command-buttonenable'>buttonenable</link></entry>
+     </row>
+     <row>
+       <entry>habilitaBotonRadio</entry>
+       <entry><link linkend='command-radiobuttonenable'>radiobuttonenable</link></entry>
+     </row>
+     <row>
+       <entry>habilitaCheckbox</entry>
+       <entry><link linkend='command-checkboxenable'>checkboxenable</link></entry>
+     </row>
+     <row>
+       <entry>habilitaCombobox</entry>
+       <entry><link linkend='command-comboboxenable'>comboboxenable</link></entry>
+     </row>
+     <row>
        <entry>habilitaConectaRed</entry>
        <entry><link linkend='command-netconnecton'>netconnecton</link></entry>
      </row>
      <row>
-       <entry>habilitaRaton</entry>
-       <entry><link linkend='command-mouseoff'>mouseoff</link></entry>
-     </row>
-     <row>
-       <entry>habilitarBarraDesplazamiento</entry>
-       <entry><link linkend='command-scrollbarenable'>scrollbarenable</link></entry>
-     </row>
-     <row>
-       <entry>habilitarBoton</entry>
-       <entry><link linkend='command-buttonenable'>buttonenable</link></entry>
-     </row>
-     <row>
-       <entry>habilitarBotonRadio</entry>
-       <entry><link linkend='command-radiobuttonenable'>radiobuttonenable</link></entry>
-     </row>
-     <row>
-       <entry>habilitarCheckbox</entry>
-       <entry><link linkend='command-checkboxenable'>checkboxenable</link></entry>
-     </row>
-     <row>
-       <entry>habilitarCombobox</entry>
-       <entry><link linkend='command-comboboxenable'>comboboxenable</link></entry>
-     </row>
-     <row>
-       <entry>habilitarDialogo</entry>
+       <entry>habilitaDialogo</entry>
        <entry><link linkend='command-dialogenable'>dialogenable</link></entry>
      </row>
      <row>
-       <entry>habilitarListbox</entry>
+       <entry>habilitaListbox</entry>
        <entry><link linkend='command-listboxenable'>listboxenable</link></entry>
      </row>
      <row>
-       <entry>habilitarVentana</entry>
-       <entry><link linkend='command-windowenable'>windowenable</link></entry>
+       <entry>habilitaRaton</entry>
+       <entry><link linkend='command-mouseon'>mouseon</link></entry>
      </row>
      <row>
        <entry>habilitaTeclado</entry>
        <entry><link linkend='command-keyboardon'>keyboardon</link></entry>
      </row>
      <row>
+       <entry>habilitaVentana</entry>
+       <entry><link linkend='command-windowenable'>windowenable</link></entry>
+     </row>
+     <row>
        <entry>hacia</entry>
        <entry><link linkend='command-towards'>towards</link></entry>
      </row>
      <row>
-       <entry>haciaxyz</entry>
+       <entry>haciaXYZ</entry>
        <entry><link linkend='command-towardsxyz'>towardsxyz</link></entry>
      </row>
      <row>
@@ -3152,8 +3144,12 @@
        <entry><link linkend='command-netconnectoff'>netconnectoff</link></entry>
      </row>
      <row>
-       <entry>inhabilitaRaton</entry>
-       <entry><link linkend='command-mouseon'>mouseon</link></entry>
+       <entry>inHabilitaRaton</entry>
+       <entry><link linkend='command-mouseoff'>mouseoff</link></entry>
+     </row>
+     <row>
+       <entry>inHabilitaTeclado</entry>
+       <entry><link linkend='command-keyboardoff'>keyboardoff</link></entry>
      </row>
      <row>
        <entry>iniciaRed</entry>
@@ -3224,7 +3220,7 @@
        <entry><link linkend='command-portreadchar'>portreadchar</link></entry>
      </row>
      <row>
-       <entry>leeCarcs</entry>
+       <entry>LeeCars</entry>
        <entry><link linkend='command-readchars'>readchars</link></entry>
      </row>
      <row>
@@ -3252,7 +3248,7 @@
        <entry><link linkend='command-ingameport'>ingameport</link></entry>
      </row>
      <row>
-       <entry>leeseLeccionListbox</entry>
+       <entry>leeSeleccionListbox</entry>
        <entry><link linkend='command-listboxgetselect'>listboxgetselect</link></entry>
      </row>
      <row>
@@ -3294,6 +3290,10 @@
      <row>
        <entry>listanombres</entry>
        <entry><link linkend='command-namelist'>namelist</link></entry>
+     </row>
+     <row>
+       <entry>listaPaso</entry>
+       <entry><link linkend='command-stepped'>stepped</link></entry>
      </row>
      <row>
        <entry>listapropiedades</entry>
@@ -3352,24 +3352,24 @@
        <entry><link linkend='command-unicon'>unicon</link></entry>
      </row>
      <row>
-       <entry>mayor.o.igual?</entry>
-       <entry><link linkend='command-greaterequalp'>greaterequal?</link></entry>
-     </row>
-     <row>
        <entry>mayor?</entry>
        <entry><link linkend='command-greaterp'>greater?</link></entry>
+     </row>
+     <row>
+       <entry>mayorOigual?</entry>
+       <entry><link linkend='command-greaterequalp'>greaterequal?</link></entry>
      </row>
      <row>
        <entry>mayusculas</entry>
        <entry><link linkend='command-uppercase'>uppercase</link></entry>
      </row>
      <row>
-       <entry>mejor.o.igual?</entry>
-       <entry><link linkend='command-lessequalp'>lessequal?</link></entry>
-     </row>
-     <row>
        <entry>menor?</entry>
        <entry><link linkend='command-lessp'>less?</link></entry>
+     </row>
+     <row>
+       <entry>menorOigual?</entry>
+       <entry><link linkend='command-lessequalp'>lessequal?</link></entry>
      </row>
      <row>
        <entry>menosPrimero</entry>
@@ -3764,23 +3764,23 @@
        <entry><link linkend='command-lput'>lput</link></entry>
      </row>
      <row>
-       <entry>ponx</entry>
+       <entry>ponX</entry>
        <entry><link linkend='command-setx'>setx</link></entry>
      </row>
      <row>
-       <entry>ponxy</entry>
+       <entry>ponXY</entry>
        <entry><link linkend='command-setxy'>setxy</link></entry>
      </row>
      <row>
-       <entry>ponxyz</entry>
+       <entry>ponXYZ</entry>
        <entry><link linkend='command-setxyz'>setxyz</link></entry>
      </row>
      <row>
-       <entry>pony</entry>
+       <entry>ponY</entry>
        <entry><link linkend='command-sety'>sety</link></entry>
      </row>
      <row>
-       <entry>ponz</entry>
+       <entry>ponZ</entry>
        <entry><link linkend='command-setz'>setz</link></entry>
      </row>
      <row>
@@ -3830,10 +3830,6 @@
      <row>
        <entry>procedimiento?</entry>
        <entry><link linkend='command-procedurep'>procedure?</link></entry>
-     </row>
-     <row>
-       <entry>procs.paso</entry>
-       <entry><link linkend='command-stepped'>stepped</link></entry>
      </row>
      <row>
        <entry>producto</entry>
@@ -3896,7 +3892,7 @@
        <entry><link linkend='command-bk'>bk</link></entry>
      </row>
      <row>
-       <entry>reazar</entry>
+       <entry>reAzar</entry>
        <entry><link linkend='command-rerandom'>rerandom</link></entry>
      </row>
      <row>
@@ -4078,6 +4074,10 @@
      <row>
        <entry>teje.fr</entry>
        <entry><link linkend='command-map.se'>map.se</link></entry>
+     </row>
+     <row>
+       <entry>temporizadorACero</entry>
+       <entry><link linkend='command-cleartimer'>cleartimer</link></entry>
      </row>
      <row>
        <entry>terminaPoligono</entry>

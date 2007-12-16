@@ -451,6 +451,10 @@
        <entry>gleich?</entry>
      </row>
      <row>
+       <entry><link linkend='command-er'>er</link></entry>
+       <entry>erstes</entry>
+     </row>
+     <row>
        <entry><link linkend='command-erall'>erall</link></entry>
        <entry>vga</entry>
      </row>
@@ -525,10 +529,6 @@
      <row>
        <entry><link linkend='command-first'>first</link></entry>
        <entry>er</entry>
-     </row>
-     <row>
-       <entry><link linkend='command-first'>first</link></entry>
-       <entry>erstes</entry>
      </row>
      <row>
        <entry><link linkend='command-firsts'>firsts</link></entry>
@@ -691,7 +691,7 @@
        <entry>tastaturein</entry>
      </row>
      <row>
-       <entry><link linkend='command-keyboardoff]'>keyboardoff]</link></entry>
+       <entry><link linkend='command-keyboardoff'>keyboardoff</link></entry>
        <entry>keyboardaus</entry>
      </row>
      <row>
@@ -705,6 +705,10 @@
      <row>
        <entry><link linkend='command-label'>label</link></entry>
        <entry>Igeltext</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-labelsize'>labelsize</link></entry>
+       <entry>längeigeltext</entry>
      </row>
      <row>
        <entry><link linkend='command-last'>last</link></entry>
@@ -883,6 +887,10 @@
        <entry>nicht?</entry>
      </row>
      <row>
+       <entry><link linkend='command-notequalp'>notequal?</link></entry>
+       <entry>nichtgleich?</entry>
+     </row>
+     <row>
        <entry><link linkend='command-numberp'>number?</link></entry>
        <entry>Zahl?</entry>
      </row>
@@ -965,6 +973,10 @@
      <row>
        <entry><link linkend='command-pick'>pick</link></entry>
        <entry>zufallswahl</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-playwave'>playwave</link></entry>
+       <entry>spielewave</entry>
      </row>
      <row>
        <entry><link linkend='command-plist'>Plist</link></entry>
@@ -1156,7 +1168,7 @@
      </row>
      <row>
        <entry><link linkend='command-readpos'>readpos</link></entry>
-       <entry>Lesepos</entry>
+       <entry>Liespos</entry>
      </row>
      <row>
        <entry><link linkend='command-readword'>readword</link></entry>
@@ -1331,12 +1343,24 @@
        <entry>hg</entry>
      </row>
      <row>
+       <entry><link linkend='command-setscreencolor'>setscreencolor</link></entry>
+       <entry>Hintergrundfarbe</entry>
+     </row>
+     <row>
        <entry><link linkend='command-setscrunch'>setscrunch</link></entry>
        <entry>Skala</entry>
      </row>
      <row>
        <entry><link linkend='command-settimer'>settimer</link></entry>
        <entry>setzeZeitnehmer</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-setturtle'>setturtle</link></entry>
+       <entry>setzeigel</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-setturtlemode'>setturtlemode</link></entry>
+       <entry>setzeigelmodus</entry>
      </row>
      <row>
        <entry><link linkend='command-setwrite'>setwrite</link></entry>
@@ -1479,6 +1503,14 @@
        <entry>wirf</entry>
      </row>
      <row>
+       <entry><link linkend='command-throw'>throw</link></entry>
+       <entry>forme</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-throw'>throw</link></entry>
+       <entry>erziele</entry>
+     </row>
+     <row>
        <entry><link linkend='command-time'>time</link></entry>
        <entry>Zeit</entry>
      </row>
@@ -1525,6 +1557,10 @@
      <row>
        <entry><link linkend='command-turtle'>turtle</link></entry>
        <entry>Igel</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-turtles'>turtles</link></entry>
+       <entry>Igelschar</entry>
      </row>
      <row>
        <entry><link linkend='command-type'>type</link></entry>
@@ -2005,7 +2041,11 @@
      </row>
      <row>
        <entry>erstes</entry>
-       <entry><link linkend='command-first'>first</link></entry>
+       <entry><link linkend='command-er'>er</link></entry>
+     </row>
+     <row>
+       <entry>erziele</entry>
+       <entry><link linkend='command-throw'>throw</link></entry>
      </row>
      <row>
        <entry>falsch</entry>
@@ -2058,6 +2098,10 @@
      <row>
        <entry>fixierestift</entry>
        <entry><link linkend='command-setpen'>setpen</link></entry>
+     </row>
+     <row>
+       <entry>forme</entry>
+       <entry><link linkend='command-throw'>throw</link></entry>
      </row>
      <row>
        <entry>Fragebox</entry>
@@ -2144,8 +2188,16 @@
        <entry><link linkend='command-screencolor'>screencolor</link></entry>
      </row>
      <row>
+       <entry>Hintergrundfarbe</entry>
+       <entry><link linkend='command-setscreencolor'>setscreencolor</link></entry>
+     </row>
+     <row>
        <entry>Igel</entry>
        <entry><link linkend='command-turtle'>turtle</link></entry>
+     </row>
+     <row>
+       <entry>Igelschar</entry>
+       <entry><link linkend='command-turtles'>turtles</link></entry>
      </row>
      <row>
        <entry>Igeltext</entry>
@@ -2181,7 +2233,7 @@
      </row>
      <row>
        <entry>keyboardaus</entry>
-       <entry><link linkend='command-keyboardoff]'>keyboardoff]</link></entry>
+       <entry><link linkend='command-keyboardoff'>keyboardoff</link></entry>
      </row>
      <row>
        <entry>keyboardein</entry>
@@ -2300,6 +2352,10 @@
        <entry><link linkend='command-count'>count</link></entry>
      </row>
      <row>
+       <entry>längeigeltext</entry>
+       <entry><link linkend='command-labelsize'>labelsize</link></entry>
+     </row>
+     <row>
        <entry>langsammalen</entry>
        <entry><link linkend='command-slowdraw'>slowdraw</link></entry>
      </row>
@@ -2316,10 +2372,6 @@
        <entry><link linkend='command-to'>to</link></entry>
      </row>
      <row>
-       <entry>Lesepos</entry>
-       <entry><link linkend='command-readpos'>readpos</link></entry>
-     </row>
-     <row>
        <entry>letztes</entry>
        <entry><link linkend='command-last'>last</link></entry>
      </row>
@@ -2334,6 +2386,10 @@
      <row>
        <entry>liesListe</entry>
        <entry><link linkend='command-readlist'>readlist</link></entry>
+     </row>
+     <row>
+       <entry>Liespos</entry>
+       <entry><link linkend='command-readpos'>readpos</link></entry>
      </row>
      <row>
        <entry>Liestaste</entry>
@@ -2514,6 +2570,10 @@
      <row>
        <entry>nicht?</entry>
        <entry><link linkend='command-not'>not</link></entry>
+     </row>
+     <row>
+       <entry>nichtgleich?</entry>
+       <entry><link linkend='command-notequalp'>notequal?</link></entry>
      </row>
      <row>
        <entry>nimmeg</entry>
@@ -2764,6 +2824,10 @@
        <entry><link linkend='command-maketurtle'>maketurtle</link></entry>
      </row>
      <row>
+       <entry>setzeigelmodus</entry>
+       <entry><link linkend='command-setturtlemode'>setturtlemode</link></entry>
+     </row>
+     <row>
        <entry>setzelokal</entry>
        <entry><link linkend='command-localmake'>localmake</link></entry>
      </row>
@@ -2806,6 +2870,10 @@
      <row>
        <entry>soundaus</entry>
        <entry><link linkend='command-soundoff'>soundoff</link></entry>
+     </row>
+     <row>
+       <entry>spielewave</entry>
+       <entry><link linkend='command-playwave'>playwave</link></entry>
      </row>
      <row>
        <entry>sr</entry>
