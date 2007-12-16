@@ -1,10 +1,11 @@
 use strict;
 use IO::File;
 
-sub UpdateLocalizationFiles($$) {
+sub UpdateLocalizationFiles($$$) {
 
   my $CountryCode = shift or die "too few arguments";
   my $LocaleName  = shift or die "too few arguments";
+  my $Translator  = shift or die "too few arguments";
 
   my %translations = ();
 
@@ -46,7 +47,7 @@ sub UpdateLocalizationFiles($$) {
     }
     elsif ($line =~ m/localized strings for English/) {
       # translate the locale English
-      $line =~ s/English/$LocaleName/;
+      $line =~ s/English/$LocaleName by $Translator/;
       print $newFile "$line\n";
     }
     else {
@@ -60,9 +61,9 @@ sub UpdateLocalizationFiles($$) {
 }
 
 
-UpdateLocalizationFiles('fr', 'French');
-UpdateLocalizationFiles('gr', 'Greek');
-UpdateLocalizationFiles('es', 'Spanish');
-UpdateLocalizationFiles('it', 'Italian');
-UpdateLocalizationFiles('pt', 'Portuguese');
-UpdateLocalizationFiles('de', 'German');
+UpdateLocalizationFiles('fr', 'French',     'Bertrand CARETTE');
+UpdateLocalizationFiles('gr', 'Greek',      'Theodoros Chatzigiannakis');
+UpdateLocalizationFiles('es', 'Spanish',    'Daniel Ajoy');
+UpdateLocalizationFiles('it', 'Italian',    'Stefano Federici');
+UpdateLocalizationFiles('pt', 'Portuguese', 'Alexandre R Soares');
+UpdateLocalizationFiles('de', 'German',     'Stephan Vogel');
