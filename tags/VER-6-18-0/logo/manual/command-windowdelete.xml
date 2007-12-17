@@ -1,0 +1,36 @@
+<section id="command-windowdelete">
+    <title>WINDOWDELETE</title>
+<indexterm><primary>WINDOWDELETE</primary></indexterm>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>WINDOWDELETE</command> <parameter>name</parameter></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+Deletes (closes) the window whose name is <parameter>name</parameter>.
+All child window and controls will be also deleted.
+If no window with the given name exists, then all windows and all controls in the graphics window are deleted.
+</para>
+</listitem>
+</varlistentry>
+
+
+<varlistentry><term>Example</term>
+<listitem>
+    <programlisting><userinput>WINDOWCREATE "main "mywindow "mytitle 0 0 100 100 []
+BUTTONCREATE "mywindow "mybutton "PUSH 25 25 25 25 [PRINT "pushed]
+WINDOWDELETE "mywindow</userinput>
+</programlisting>
+
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</section>

@@ -1,0 +1,31 @@
+LOAD "testlib.lgo
+
+TO CASCADETEST.VOWEL? :letter
+   output (or :letter = "a :letter = "e :letter = "i :letter = "o :letter = "u)
+END
+
+TO CASCADETEST.SMOKETEST
+
+   ; from the manual
+   SIMPLEREPORTTEST [CASCADE 5                   [LPUT # ?] []                   ] [1 2 3 4 5]
+   SIMPLEREPORTTEST [CASCADE [CASCADETEST.VOWEL? FIRST ?]   [BUTFIRST ?] "spring ] "ing
+   SIMPLEREPORTTEST [CASCADE 5                   [# * ?]    1                    ] 120
+
+END
+
+TO CASCADETEST.BADINPUT
+
+   ; unexpected number of inputs
+   RUNNOTENOUGHINPUTSTEST [(CASCADE 5 [LPUT # ?]) ]
+
+   ; bad parameters
+   RUNBADINPUTTEST [CASCADE -1 [LPUT # ?] [] ]
+
+END
+
+TO CASCADETEST
+
+   CASCADETEST.SMOKETEST
+   CASCADETEST.BADINPUT
+
+END
