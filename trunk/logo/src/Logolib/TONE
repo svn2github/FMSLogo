@@ -1,5 +1,0 @@
-to tone :freq :dura
-sound (list :freq :dura)
-end
-
-bury "tone
