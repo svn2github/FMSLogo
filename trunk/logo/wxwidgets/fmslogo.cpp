@@ -17,3 +17,8 @@ bool CFmsLogo::OnInit()
 
     return true;
 }
+
+CMainFrame * CFmsLogo::GetMainFrame()
+{
+    return static_cast<CMainFrame*>(wxTheApp->GetTopWindow());
+}

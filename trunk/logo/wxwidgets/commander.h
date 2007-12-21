@@ -15,6 +15,8 @@ public:
     CCommander(wxWindow *parent);
     ~CCommander() {};
 
+    CCommander * GetCommander();
+
     void OnHaltButton(wxCommandEvent& event);
     void OnTraceButton(wxCommandEvent& event);
     void OnPauseButton(wxCommandEvent& event);
@@ -59,9 +61,9 @@ class CCommanderDialog : public wxDialog
 {
 public:
     CCommanderDialog(wxWindow *parent);
+    CCommander * GetCommander();
 
     void OnSize(wxSizeEvent& event);
-    void OnDestroy(wxWindowDestroyEvent & event);
     void OnClose(wxCloseEvent& event);
 
 private:

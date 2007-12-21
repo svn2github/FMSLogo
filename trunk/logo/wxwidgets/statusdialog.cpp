@@ -5,12 +5,12 @@
 #include <wx/button.h>
 #include <wx/statbox.h>
 
+#include "commander.h"
+#include "fmslogo.h"
+#include "mainframe.h"
 #include "localizedstrings.h"
 #include "logocore.h" // for ARRAYSIZE
 #include "utils.h"
-
-// TODO: move this to a header file
-extern bool g_StatusFlag;
 
 // Menu IDs
 enum
@@ -48,12 +48,6 @@ CStatusDialog::CStatusDialog(wxWindow * Parent)
         wxDefaultSize, 
         wxCAPTION | wxCLOSE_BOX | wxSYSTEM_MENU)
 {
-    // flag so that updates are sent
-    g_StatusFlag = true;
-
-    // update button on the commander
-    // TODO: MainWindowx->CommandWindow->UpdateStatusButtonState();
-
 #ifdef __WXMSW__ // utils.cpp only builds on Windows
 
     // build default coords
@@ -391,6 +385,37 @@ void CStatusDialog::SetPolygons(int TotalPolygons)
     m_TotalPolygons->SetLabel(totalPolygonsString);
 }
 
+void CStatusDialog::OnClose(wxCloseEvent& event)
+{
+#ifdef __WXMSW__ // utils.cpp only builds on Windows
+
+    // Get location of our window on the screen so we can
+    // come back up in the same spot next time we are invoked.
+
+    // build default coords
+    int x = 0;
+    int y = 0;
+    int w = 0;
+    int h = 0;
+
+    GetPosition(&x, &y);
+
+    // save the current location
+    SetConfigurationQuadruple("Status", x, y, w, h);
+
+#endif
+
+    CMainFrame * mainFrame = CFmsLogo::GetMainFrame();
+
+    mainFrame->m_StatusDialog = NULL;
+    mainFrame->GetCommander()->UpdateStatusButtonState();
+
+    Destroy();
+}
+
+BEGIN_EVENT_TABLE(CStatusDialog, wxDialog)
+    EVT_CLOSE(CStatusDialog::OnClose)
+END_EVENT_TABLE()
 
 #if 0
 

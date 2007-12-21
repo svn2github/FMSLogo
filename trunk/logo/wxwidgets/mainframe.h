@@ -6,6 +6,8 @@ class wxSplitterWindow;
 class wxCommandEvent;
 class wxScrolledWindow;
 class wxIcon;
+class CCommander;
+class CStatusDialog;
 
 class CSetPenSize;
 
@@ -27,11 +29,21 @@ public:
     void UndockCommanderWindow();
     void DockCommanderWindow();
 
-private:
+    void ShowStatus();
+    void HideStatus();
+    bool StatusDialogIsShowing();
 
+    CCommander * GetCommander();
+
+
+private:
     wxIcon           * m_FmsLogoIcon;
     wxScrolledWindow * m_Screen;
     wxWindow         * m_Commander;
+    CCommander       * m_RealCommander;
+public:  // HACK: make this private
+    CStatusDialog    * m_StatusDialog;
+private:
     CSetPenSize      * m_SetPenSizeDialog;
     wxSplitterWindow * m_Splitter;
 

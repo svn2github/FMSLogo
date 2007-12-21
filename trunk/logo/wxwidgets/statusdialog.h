@@ -27,6 +27,8 @@ public:
     void SetVectors(int TotalVectors);
     void SetPolygons(int TotalPolygons);
 
+    void OnClose(wxCloseEvent& event);
+
 private:
     wxStaticText * m_PenContact;
     wxStaticText * m_PenWidth;
@@ -49,4 +51,6 @@ private:
     wxStaticText * m_PeakMemory;
     wxStaticText * m_TotalVectors;
     wxStaticText * m_TotalPolygons;
+
+    DECLARE_EVENT_TABLE();
 };

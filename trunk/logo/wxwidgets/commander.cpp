@@ -11,6 +11,8 @@
 
 #include "wx/richtext/richtextctrl.h"
 
+#include "fmslogo.h"
+#include "mainframe.h"
 #include "statusdialog.h"
 #include "workspaceeditor.h"
 #include "localizedstrings.h"
@@ -20,7 +22,6 @@
 
 bool g_StepFlag   = false;
 bool g_TraceFlag  = false;
-bool g_StatusFlag = false;
 
 
 // Menu IDs
@@ -52,10 +53,10 @@ CCommander::CCommander(wxWindow *Parent)
     m_NextInstruction = new wxTextCtrl(this, ID_COMMANDER_NEXTINSTRUCTION);
 
     m_HaltButton    = new wxButton      (this, ID_COMMANDER_HALT,    LOCALIZED_COMMANDER_HALT);
-    m_TraceButton   = new wxToggleButton(this, ID_COMMANDER_TRACE,   LOCALIZED_COMMANDER_TRACE);
+    m_TraceButton   = new wxToggleButton(this, ID_COMMANDER_TRACE,   "");
     m_PauseButton   = new wxButton      (this, ID_COMMANDER_PAUSE,   LOCALIZED_COMMANDER_PAUSE);
-    m_StatusButton  = new wxToggleButton(this, ID_COMMANDER_STATUS,  LOCALIZED_COMMANDER_STATUS);
-    m_StepButton    = new wxToggleButton(this, ID_COMMANDER_STEP,    LOCALIZED_COMMANDER_STEP);
+    m_StatusButton  = new wxToggleButton(this, ID_COMMANDER_STATUS,  "");
+    m_StepButton    = new wxToggleButton(this, ID_COMMANDER_STEP,    "");
     m_ResetButton   = new wxButton      (this, ID_COMMANDER_RESET,   LOCALIZED_COMMANDER_RESET);
     m_ExecuteButton = new wxButton      (this, ID_COMMANDER_EXECUTE, LOCALIZED_COMMANDER_EXECUTE);
     m_EdallButton   = new wxButton      (this, ID_COMMANDER_EDALL,   LOCALIZED_COMMANDER_EDALL);
@@ -164,6 +165,11 @@ CCommander::CCommander(wxWindow *Parent)
 
     m_ButtonWidth  = largestWidth  + 20;
     m_ButtonHeight = largestHeight + 8;
+
+    // now, update the state of all the toggle buttons
+    UpdateStepButtonState();
+    UpdateStatusButtonState();
+    UpdateTraceButtonState();
 }
 
 void CCommander::UpdateStepButtonState()
@@ -194,7 +200,8 @@ void CCommander::UpdateTraceButtonState()
 
 void CCommander::UpdateStatusButtonState()
 {
-    if (g_StatusFlag)
+    bool isShowing = CFmsLogo::GetMainFrame()->StatusDialogIsShowing();
+    if (isShowing)
     {
         m_StatusButton->SetLabel(LOCALIZED_COMMANDER_NOSTATUS);
     }
@@ -202,7 +209,7 @@ void CCommander::UpdateStatusButtonState()
     {
         m_StatusButton->SetLabel(LOCALIZED_COMMANDER_STATUS);
     }
-    m_StatusButton->SetValue(g_StatusFlag);
+    m_StatusButton->SetValue(isShowing);
 }
 
 void CCommander::OnHaltButton(wxCommandEvent& WXUNUSED(event))
@@ -234,20 +241,18 @@ void CCommander::OnPauseButton(wxCommandEvent& WXUNUSED(event))
 
 void CCommander::OnStatusButton(wxCommandEvent& WXUNUSED(event))
 {
-    // HACK: for now just display a new one each time
-    CStatusDialog * dlg = new CStatusDialog(this);
-    dlg->Show();
-
-    // toggle status state along with poping up and killing the status window
-    if (g_StatusFlag)
+    CMainFrame * mainFrame = CFmsLogo::GetMainFrame();
+    if (mainFrame->StatusDialogIsShowing())
     {
-        // TODO: MainWindowx->MyPopupStatusKill();
+        // the status dialog is currently showing, so we want to hide it.
+        mainFrame->HideStatus();
     }
     else
     {
-        // TODO: MainWindowx->MyPopupStatus();
+        // the status dialog is not showing, so we want to show it.
+        mainFrame->ShowStatus();
     }
-
+    UpdateStatusButtonState();
     m_NextInstruction->SetFocus();
 }
 
@@ -294,6 +299,11 @@ void CCommander::OnClose(wxCloseEvent& event)
 
         event.Veto();
     }
+}
+
+CCommander * CCommander::GetCommander()
+{
+    return this;
 }
 
 void CCommander::RecalculateLayout()
@@ -442,6 +452,11 @@ CCommanderDialog::CCommanderDialog(wxWindow * Parent)
     sizer->Fit(this);
 }
 
+CCommander * CCommanderDialog::GetCommander()
+{
+    return m_Commander;
+}
+
 void CCommanderDialog::OnSize(wxSizeEvent& event)
 {
     int width;
@@ -451,38 +466,32 @@ void CCommanderDialog::OnSize(wxSizeEvent& event)
     m_Commander->SetSize(width, height);
 }
 
-// REVISIT: this never gets called, but I need this logic somewhere.
-void CCommanderDialog::OnDestroy(wxWindowDestroyEvent & event)
-{
-#ifdef __WXMSW__ // utils.cpp only builds on Windows
-
-    // Save the location and size of our window so we can
-    // come back up in the same spot next time we are invoked.
-    if (!IsIconized())
-    {
-        const wxRect windowRectangle = GetRect();
-
-        SetConfigurationQuadruple(
-            "Commander",
-            windowRectangle.GetLeft(),
-            windowRectangle.GetTop(),
-            windowRectangle.GetWidth(),
-            windowRectangle.GetHeight());
-    }
-
-#endif
-}
-
 void CCommanderDialog::OnClose(wxCloseEvent& event)
 {
-    if ( event.CanVeto() )
+    if (event.CanVeto())
     {
         event.Veto();
+    }
+    else
+    {
+        // Save the location and size of our window so we can
+        // come back up in the same spot next time we are invoked.
+        if (!IsIconized())
+        {
+            const wxRect windowRectangle = GetRect();
+
+            SetConfigurationQuadruple(
+                "Commander",
+                windowRectangle.GetLeft(),
+                windowRectangle.GetTop(),
+                windowRectangle.GetWidth(),
+                windowRectangle.GetHeight());
+        }
+        Destroy();
     }
 }
 
 BEGIN_EVENT_TABLE(CCommanderDialog, wxDialog)
     EVT_SIZE(CCommanderDialog::OnSize)
     EVT_CLOSE(CCommanderDialog::OnClose)
-    EVT_WINDOW_DESTROY(CCommanderDialog::OnDestroy)
 END_EVENT_TABLE()

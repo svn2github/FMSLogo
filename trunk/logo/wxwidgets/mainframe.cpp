@@ -39,6 +39,7 @@
 #include "mainframe.h"
 #include "setpensize.h"
 #include "utils.h"
+#include "statusdialog.h"
 
 #include "fmslogo-16x16.xpm"
 
@@ -170,7 +171,13 @@ CMainFrame::CMainFrame()
         wxDefaultPosition,
         wxSize(420, 300),
         wxDEFAULT_FRAME_STYLE | wxNO_FULL_REPAINT_ON_RESIZE),
+      m_FmsLogoIcon(NULL),
+      m_Screen(NULL),
+      m_Commander(NULL),
+      m_RealCommander(NULL),
+      m_StatusDialog(NULL),
       m_SetPenSizeDialog(NULL),
+      m_Splitter(NULL),
       m_CommanderIsDocked(false)
 {
 #if wxUSE_STATUSBAR
@@ -261,7 +268,8 @@ CMainFrame::CMainFrame()
     m_Screen->SetBackgroundColour(*wxWHITE);
     m_Screen->SetScrollbars(20, 20, 5, 5);
 
-    m_Commander = new CCommander(m_Splitter);
+    m_RealCommander = new CCommander(m_Splitter);
+    m_Commander = m_RealCommander;
 
     m_Screen->Show(true);
     m_Commander->Show(true);
@@ -315,7 +323,8 @@ void CMainFrame::UndockCommanderWindow()
 
         // commit to the new commander
         m_Commander->Destroy();
-        m_Commander = newCommander;
+        m_Commander     = newCommander;
+        m_RealCommander = newCommander->GetCommander();
         m_Commander->Show();
 
 #if 0
@@ -427,8 +436,9 @@ void CMainFrame::DockCommanderWindow()
 #endif
 
         // commit to the docked commander
-        m_Commander->Destroy();
-        m_Commander = newCommander;
+        m_Commander->Close(true);
+        m_Commander     = newCommander;
+        m_RealCommander = newCommander->GetCommander();
         m_Commander->Show();
 
 #if 0
@@ -452,6 +462,11 @@ void CMainFrame::Quit(wxCommandEvent& WXUNUSED(event) )
     }
 }
 
+CCommander * CMainFrame::GetCommander()
+{
+    return m_RealCommander;
+}
+
 void CMainFrame::SetPenSize(wxCommandEvent& WXUNUSED(event) )
 {
     if (m_SetPenSizeDialog == NULL)
@@ -470,6 +485,31 @@ void CMainFrame::SetPenSize(wxCommandEvent& WXUNUSED(event) )
     {
         m_SetPenSizeDialog->SetFocus();
     }
+}
+
+void CMainFrame::ShowStatus()
+{
+    // create a new status dialog, if necessary
+    if (!StatusDialogIsShowing())
+    {
+        m_StatusDialog = new CStatusDialog(this);
+        m_StatusDialog->Show();
+    }
+}
+
+void CMainFrame::HideStatus()
+{
+    // destroy the status dialog
+    if (StatusDialogIsShowing())
+    {
+        m_StatusDialog->Close();
+        m_StatusDialog = NULL;
+    }
+}
+
+bool CMainFrame::StatusDialogIsShowing()
+{
+    return m_StatusDialog != NULL;
 }
 
 void CMainFrame::SetActiveArea(wxCommandEvent& WXUNUSED(event) )
