@@ -539,7 +539,7 @@
 #define LOCALIZED_ALTERNATE_SHOWN_                 "visible?"
 #define LOCALIZED_ALTERNATE_SHOWTURTLE             "muestraTortuga"
 #define LOCALIZED_ALTERNATE_SIN                    "sen"
-#define LOCALIZED_ALTERNATE_SOUND                  "tono"
+#define LOCALIZED_ALTERNATE_SOUND                  "suena"
 #define LOCALIZED_ALTERNATE_SPLITSCREEN            "pantallaPartida"
 #define LOCALIZED_ALTERNATE_SQRT                   "rc"
 #define LOCALIZED_ALTERNATE_SS                     "pa"
