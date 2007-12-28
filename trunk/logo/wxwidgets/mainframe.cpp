@@ -40,9 +40,10 @@
 #include "setpensize.h"
 #include "utils.h"
 #include "statusdialog.h"
+#include "screen.h"
+#include "help.h"
 
 #include "fmslogo-16x16.xpm"
-
 
 // ----------------------------------------------------------------------------
 // constants
@@ -82,18 +83,6 @@ private:
 
     DECLARE_EVENT_TABLE()
     DECLARE_NO_COPY_CLASS(MySplitterWindow)
-};
-
-class CScreen: public wxScrolledWindow
-{
-public:
-    CScreen(wxWindow* parent);
-    virtual ~CScreen(){};
-
-    virtual void OnDraw(wxDC& dc);
-
-private:
-    DECLARE_NO_COPY_CLASS(CScreen)
 };
 
 // ----------------------------------------------------------------------------
@@ -155,6 +144,7 @@ enum MainFrameMenuIds
 BEGIN_EVENT_TABLE(CMainFrame, wxFrame)
     EVT_MENU(ID_SETPENSIZE,         CMainFrame::SetPenSize)
     EVT_MENU(ID_BITMAPPRINTERAREA,  CMainFrame::SetActiveArea)
+    EVT_MENU(ID_HELP,               CMainFrame::Help)
     EVT_MENU(ID_HELPABOUT,          CMainFrame::AboutFmsLogo)
     EVT_MENU(ID_HELPABOUTMS,        CMainFrame::AboutMultipleSclerosis)
     EVT_MENU(ID_ZOOMIN,             CMainFrame::ZoomIn)
@@ -275,6 +265,13 @@ CMainFrame::CMainFrame()
     m_Commander->Show(true);
     m_Splitter->SplitHorizontally(m_Screen, m_Commander);
     m_CommanderIsDocked = true;
+
+#if 0
+    wxAcceleratorEntry entries[1];
+    entries[0].Set(0,  WXK_F1, ID_HELP);
+    wxAcceleratorTable accel(ARRAYSIZE(entries), entries);
+    SetAcceleratorTable(accel);
+#endif
 
 #if wxUSE_STATUSBAR
     SetStatusText(_T("Min pane size = 0"), 1);
@@ -529,6 +526,11 @@ void CMainFrame::ZoomOut(wxCommandEvent& WXUNUSED(event) )
     DockCommanderWindow();
 }
 
+void CMainFrame::Help(wxCommandEvent& WXUNUSED(event) )
+{
+    OpenHelp(wxEmptyString);
+}
+
 void CMainFrame::AboutFmsLogo(wxCommandEvent& WXUNUSED(event) )
 {
     // show the "About FMSLogo" dialog box
@@ -542,6 +544,8 @@ void CMainFrame::AboutMultipleSclerosis(wxCommandEvent& WXUNUSED(event) )
     CAboutMultipleSclerosis dlg(this);
     dlg.ShowModal();
 }
+
+
 
 // ----------------------------------------------------------------------------
 // MySplitterWindow
@@ -601,22 +605,3 @@ void MySplitterWindow::OnUnsplitEvent(wxSplitterEvent& event)
     event.Skip();
 }
 
-// ----------------------------------------------------------------------------
-// CScreen
-// ----------------------------------------------------------------------------
-
-CScreen::CScreen(
-    wxWindow* parent
-    ) : 
-    wxScrolledWindow(
-        parent, 
-        wxID_ANY, 
-        wxDefaultPosition, 
-        wxDefaultSize,
-        wxHSCROLL | wxVSCROLL | wxNO_FULL_REPAINT_ON_RESIZE)
-{
-}
-
-void CScreen::OnDraw(wxDC& dcOrig)
-{
-}

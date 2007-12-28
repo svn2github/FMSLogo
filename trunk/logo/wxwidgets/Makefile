@@ -25,6 +25,7 @@ CPPFLAGS = -pthread -I/usr/include/gtk-2.0 -I/usr/lib/gtk-2.0/include -I/usr/inc
 
 LDFLAGS = -pthread
 
+MANUAL =
 
 else
 
@@ -36,7 +37,7 @@ WINDRES = windres
 wx_top_builddir = /cygdrive/c/wxWidgets-2.8.4
 
 CXXFLAGS =
-CPPFLAGS =
+CPPFLAGS = 
 LDFLAGS = -mwindows -lwx_msw-2.8 
 
 TOOLKIT = MSW
@@ -45,6 +46,8 @@ TOOLKIT_VERSION =
 TOOLCHAIN_FULLNAME = msw-ansi-release-static-2.8
 EXTRALIBS =   -lz -lrpcrt4 -loleaut32 -lole32 -luuid -lwinspool -lwinmm -lshell32 -lcomctl32 -lcomdlg32 -lctl3d32 -ladvapi32 -lwsock32 -lgdi32 -lkernel32 -luser32 
 EXTRALIBS_GUI = 
+
+MANUAL = logohelp.chm
 
 endif
 
@@ -88,6 +91,13 @@ SPLITTER_OBJECTS =  \
 	splitter_setpensize.o \
 	splitter_statusdialog.o \
 	splitter_savebeforeexitdialog.o \
+	splitter_screen.o \
+	splitter_commanderbutton.o \
+	splitter_commandertogglebutton.o \
+	splitter_commanderinput.o \
+	splitter_commanderhistory.o \
+	splitter_help.o \
+	splitter_dynamicbuffer.o \
 
 ifeq "$(TOOLKIT)" "MSW"
 SPLITTER_OBJECTS +=  \
@@ -179,7 +189,7 @@ COND_TOOLKIT_MAC___MACOSX_RESOURCES_p_1 = $(REZ) -d __DARWIN__ -t APPL -d \
 
 ### Targets: ###
 
-all: fmslogo$(EXEEXT) $(__splitter_bundle___depname)
+all: fmslogo$(EXEEXT) $(__splitter_bundle___depname) $(MANUAL)
 
 install: all
 
@@ -189,8 +199,9 @@ install-strip: install
 
 clean: 
 	rm -rf ./.deps ./.pch
-	rm -f ./*.o
-	rm -f fmslogo$(EXEEXT)
+	$(RM) ./*.o
+	$(RM) fmslogo$(EXEEXT)
+	$(RM) logohelp.chm
 
 
 distclean: clean
@@ -210,9 +221,14 @@ splitter_%.o: $(srcdir)/%.cpp
 splitter_utils.o: $(srcdir)/../src/utils.cpp
 	$(CXXC) -c -o $@ $(SPLITTER_CXXFLAGS) $<
 
+splitter_dynamicbuffer.o: $(srcdir)/../src/dynamicbuffer.cpp
+	$(CXXC) -c -o $@ $(SPLITTER_CXXFLAGS) $<
+
 splitter_fmslogo_rc.o: $(srcdir)/fmslogo.rc
 	$(WINDRES) -i$< -o$@   --define __WX$(TOOLKIT)__ $(__WXUNIV_DEFINE_p_2)  $(__EXCEPTIONS_DEFINE_p_2) $(__RTTI_DEFINE_p_2) $(__THREAD_DEFINE_p_2)   --include-dir $(srcdir) $(__DLLFLAG_p_2) --include-dir $(srcdir)/../../samples $(__RCDEFDIR_p_1) --include-dir $(top_srcdir)/include
 
+logohelp.chm : ../manual/logohelp-1033.chm
+	cp $< $@
 
 # Include dependency info, if present:
 -include .deps/*.d

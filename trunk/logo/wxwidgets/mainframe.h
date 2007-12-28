@@ -22,6 +22,7 @@ public:
     void SetPenSize(wxCommandEvent& event);
     void ZoomIn(wxCommandEvent& event);
     void ZoomOut(wxCommandEvent& event);
+    void Help(wxCommandEvent& event);
     void AboutFmsLogo(wxCommandEvent& event);
     void AboutMultipleSclerosis(wxCommandEvent& event);
     void Quit(wxCommandEvent& event);

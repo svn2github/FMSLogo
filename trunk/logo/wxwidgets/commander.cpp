@@ -5,11 +5,8 @@
 #include "commander.h"
 
 #include <wx/msgdlg.h>
-#include <wx/button.h>
 #include <wx/sizer.h>
-#include <wx/tglbtn.h>
-
-#include "wx/richtext/richtextctrl.h"
+#include <wx/defs.h>
 
 #include "fmslogo.h"
 #include "mainframe.h"
@@ -18,11 +15,20 @@
 #include "localizedstrings.h"
 #include "utils.h"
 #include "logocore.h"
+#include "commanderbutton.h"
+#include "commandertogglebutton.h"
+#include "commanderinput.h"
+#include "commanderhistory.h"
+#include "dynamicbuffer.h"
 
+bool g_GiveFocusToInputControl = false;
+bool g_IsOkayToUseCommanderWindow = true;
 
 bool g_StepFlag   = false;
 bool g_TraceFlag  = false;
 
+// holds the history
+static CDynamicBuffer g_HistoryBuffer;
 
 // Menu IDs
 enum
@@ -47,19 +53,52 @@ enum
 CCommander::CCommander(wxWindow *Parent)
     : wxPanel(Parent, wxID_ANY)
 {
+    m_History = new CCommanderHistory(this, ID_COMMANDER_HISTORY);
 
-    m_History = new wxRichTextCtrl(this, ID_COMMANDER_HISTORY);
+    m_NextInstruction = new CCommanderInput(this, ID_COMMANDER_NEXTINSTRUCTION);
 
-    m_NextInstruction = new wxTextCtrl(this, ID_COMMANDER_NEXTINSTRUCTION);
+    m_HaltButton = new CCommanderButton(
+        this,
+        ID_COMMANDER_HALT,
+        LOCALIZED_COMMANDER_HALT);
 
-    m_HaltButton    = new wxButton      (this, ID_COMMANDER_HALT,    LOCALIZED_COMMANDER_HALT);
-    m_TraceButton   = new wxToggleButton(this, ID_COMMANDER_TRACE,   "");
-    m_PauseButton   = new wxButton      (this, ID_COMMANDER_PAUSE,   LOCALIZED_COMMANDER_PAUSE);
-    m_StatusButton  = new wxToggleButton(this, ID_COMMANDER_STATUS,  "");
-    m_StepButton    = new wxToggleButton(this, ID_COMMANDER_STEP,    "");
-    m_ResetButton   = new wxButton      (this, ID_COMMANDER_RESET,   LOCALIZED_COMMANDER_RESET);
-    m_ExecuteButton = new wxButton      (this, ID_COMMANDER_EXECUTE, LOCALIZED_COMMANDER_EXECUTE);
-    m_EdallButton   = new wxButton      (this, ID_COMMANDER_EDALL,   LOCALIZED_COMMANDER_EDALL);
+    m_TraceButton = new CCommanderToggleButton(
+        this,
+        ID_COMMANDER_TRACE,
+        LOCALIZED_COMMANDER_NOTRACE,
+        LOCALIZED_COMMANDER_TRACE);
+
+    m_PauseButton = new CCommanderButton(
+        this,
+        ID_COMMANDER_PAUSE,
+        LOCALIZED_COMMANDER_PAUSE);
+
+    m_StatusButton = new CCommanderToggleButton(
+        this,
+        ID_COMMANDER_STATUS,
+        LOCALIZED_COMMANDER_NOSTATUS,
+        LOCALIZED_COMMANDER_STATUS);
+
+    m_StepButton = new CCommanderToggleButton(
+        this,
+        ID_COMMANDER_STEP,
+        LOCALIZED_COMMANDER_UNSTEP,
+        LOCALIZED_COMMANDER_STEP);
+
+    m_ResetButton = new CCommanderButton(
+        this,
+        ID_COMMANDER_RESET,
+        LOCALIZED_COMMANDER_RESET);
+
+    m_ExecuteButton = new CCommanderButton(
+        this,
+        ID_COMMANDER_EXECUTE,
+        LOCALIZED_COMMANDER_EXECUTE);
+
+    m_EdallButton = new CCommanderButton(
+        this,
+        ID_COMMANDER_EDALL,
+        LOCALIZED_COMMANDER_EDALL);
 
     // set the button font to be 10 points
     wxFont buttonFont = m_HaltButton->GetFont();
@@ -174,42 +213,18 @@ CCommander::CCommander(wxWindow *Parent)
 
 void CCommander::UpdateStepButtonState()
 {
-    if (g_StepFlag)
-    {
-        m_StepButton->SetLabel(LOCALIZED_COMMANDER_UNSTEP);
-    }
-    else
-    {
-        m_StepButton->SetLabel(LOCALIZED_COMMANDER_STEP);
-    }
-    m_StepButton->SetValue(g_StepFlag);
+    m_StepButton->SetPressedState(g_StepFlag);
 }
 
 void CCommander::UpdateTraceButtonState()
 {
-    if (g_TraceFlag)
-    {
-        m_TraceButton->SetLabel(LOCALIZED_COMMANDER_NOTRACE);
-    }
-    else
-    {
-        m_TraceButton->SetLabel(LOCALIZED_COMMANDER_TRACE);
-    }
-    m_TraceButton->SetValue(g_TraceFlag);
+    m_TraceButton->SetPressedState(g_TraceFlag);
 }
 
 void CCommander::UpdateStatusButtonState()
 {
     bool isShowing = CFmsLogo::GetMainFrame()->StatusDialogIsShowing();
-    if (isShowing)
-    {
-        m_StatusButton->SetLabel(LOCALIZED_COMMANDER_NOSTATUS);
-    }
-    else
-    {
-        m_StatusButton->SetLabel(LOCALIZED_COMMANDER_STATUS);
-    }
-    m_StatusButton->SetValue(isShowing);
+    m_StatusButton->SetPressedState(isShowing);
 }
 
 void CCommander::OnHaltButton(wxCommandEvent& WXUNUSED(event))
@@ -274,13 +289,39 @@ void CCommander::OnResetButton(wxCommandEvent& WXUNUSED(event))
         this);
 }
 
+
+// Process a Logo instruction, as it is processed by the GUI when you click
+// on the "Execute" button.  This can be used by other UI elements, such as
+// the "Reset" button, to teach the user what a UI element is doing.
+void
+RunLogoInstructionFromGui(
+    const char * LogoInstruction
+    )
+{
+    wxString message;
+    message.Printf("Running %s\n", LogoInstruction);
+    wxMessageBox(message, "TODO: Logo Engine", wxOK);
+}
+
 void CCommander::OnExecuteButton(wxCommandEvent& WXUNUSED(event))
 {
-    wxMessageBox(
-        "Execute button pressed", 
-        "Info",
-        wxOK | wxICON_INFORMATION, 
-        this);
+    g_GiveFocusToInputControl = true;
+
+    // read what's in the input control
+    const wxString logoInstruction(m_NextInstruction->GetValue());
+
+    // clear the input control, now that we have read its contents
+    m_NextInstruction->Clear();
+
+    RunLogoInstructionFromGui(logoInstruction.c_str());
+
+    // calling RunLogoInstructionFromGui() can delete the "this" pointer,
+    // if it executes FULLSCREEN, TEXTSCREEN, or SPLITSCREEN.
+    // Therefore, we must not touch any member variable at this point.
+    if (g_GiveFocusToInputControl)
+    {
+        CFmsLogo::GetMainFrame()->GetCommander()->m_NextInstruction->SetFocus();
+    }
 }
 
 void CCommander::OnEdallButton(wxCommandEvent& WXUNUSED(event))
@@ -401,6 +442,188 @@ void CCommander::OnSize(wxSizeEvent& event)
 }
 
 
+// TODO: rename so that it doesn't have "post" in it
+void CCommander::PostKeyDownToInputControl(wxKeyEvent& Event)
+{
+    m_NextInstruction->SetFocus();
+    m_NextInstruction->EmulateKeyPress(Event);
+}
+
+void CCommander::OnKeyDown(wxKeyEvent& Event)
+{
+    if (m_NextInstruction->WantsKeyEvent(Event.GetKeyCode()))
+    {
+        PostKeyDownToInputControl(Event);
+    }
+}
+
+void CCommander::GiveControlToHistoryBox()
+{
+#if 0
+    // advance to the bottom of the listbox
+    MainWindowx->CommandWindow->Listbox.SetCursorAtBottom();
+
+    // give focus to the listbox
+    MainWindowx->CommandWindow->Listbox.SetFocus();
+#endif
+}
+
+#if 0
+
+// Appends "str" to the end of the what is in the Commander's Recall box.
+// If "str" doesn't fit, then some text will be removed from the top to make it fit.
+void putcombobox(const char *str)
+{
+    // only if OK to write to recall box do we do it
+    if (g_IsOkayToUseCommanderWindow)
+    {
+        CCommanderHistory * commanderHistory = CFmsLogo::GetMainFrame()->GetCommander()->m_History;
+
+        for (int i = 0; i < 16; i++)
+        {
+            // remember where we started
+            wxTextPos uBefore = commanderHistory->GetLastPosition();
+
+            // output to list box 
+            commanderHistory.SetSelectionPoint(uBefore);
+            commanderHistory.Insert(str);
+            UINT uCheck = commanderHistory.GetTextLen();
+            commanderHistory.Insert("\r\n");
+            UINT uAfter = commanderHistory.GetTextLen();
+
+            // if last 2 bytes inserted ok get out
+            if (uCheck+2 == uAfter) 
+            {
+                return;
+            }
+
+            // strip what we inserted
+            commanderRecallBox.SetReadOnly(FALSE);
+
+            commanderRecallBox.SetSelection(uBefore, uAfter);
+            commanderRecallBox.DeleteSelection();
+
+            // strip 4k off top
+            commanderRecallBox.SetSelection(0, 4096);
+            commanderRecallBox.DeleteSelection();
+
+            commanderRecallBox.SetReadOnly(TRUE);
+        }
+
+        // if all else fails try this, should never get here
+        clearcombobox();
+        commanderRecallBox.Insert(str);
+        commanderRecallBox.Insert("\r\n");
+    }
+}
+
+
+
+void
+CCommander::AppendToCommanderHistory(
+    const char * String
+    )
+{
+    // Append the string to the buffer
+    g_HistoryBuffer.AppendString(String);
+
+    // process lines
+    char * rawBuffer       = g_HistoryBuffer.GetBuffer();
+    size_t rawBufferLength = g_HistoryBuffer.GetBufferLength();
+
+    char * next_line = rawBuffer;
+    for (size_t i = 0; i < rawBufferLength; i++)
+    {
+        if (rawBuffer[i] == '\n')
+        {
+            // if <lf> pump it out
+            rawBuffer[i] = '\0';
+            putcombobox(next_line);
+            rawBuffer[i] = '\n';
+            next_line = &rawBuffer[i + 1];
+        }
+    }
+
+    // flush the last line (which doesn't end in \n)
+    if (next_line[0] != '\0')
+    {
+        WriteToHistoryWindow(next_line);
+    }
+
+    // clear the contents of the buffer, since we wrote the entire thing
+    g_HistoryBuffer.Empty();
+}
+
+void
+CCommander::AppendToCommanderHistory(
+    char Char
+    )
+{
+    if (Char == '\n')
+    {
+        // if <lf> pump it out
+        putcombobox(g_HistoryBuffer.GetBuffer());
+        g_HistoryBuffer.Empty();
+    }
+    else
+    {
+        g_HistoryBuffer.AppendChar(ch);
+    }
+}
+
+
+// Appends "str" to the end of the what is in the Commander's Recall box.
+// If "str" doesn't fit, then some text will be removed from the top to make it fit.
+void
+CCommander::WriteToHistoryWindow(
+    const char * String
+    )
+{
+    // only if OK to write to recall box do we do it
+    if (IsOkayToUseCommanderWindow)
+    {
+        TMyListboxWindow & commanderRecallBox = MainWindowx->CommandWindow->Listbox;
+
+        for (int i=0;i<16;i++)
+        {
+            // remember where we started
+            UINT uBefore = commanderRecallBox.GetTextLen();
+
+            // output to list box 
+            commanderRecallBox.SetSelection(uBefore, uBefore);
+            commanderRecallBox.Insert(str);
+            UINT uCheck = commanderRecallBox.GetTextLen();
+            commanderRecallBox.Insert("\r\n");
+            UINT uAfter = commanderRecallBox.GetTextLen();
+
+            // if last 2 bytes inserted ok get out
+            if (uCheck+2 == uAfter) 
+            {
+                return;
+            }
+
+            // strip what we inserted
+            commanderRecallBox.SetReadOnly(FALSE);
+
+            commanderRecallBox.SetSelection(uBefore, uAfter);
+            commanderRecallBox.DeleteSelection();
+
+            // strip 4k off top
+            commanderRecallBox.SetSelection(0, 4096);
+            commanderRecallBox.DeleteSelection();
+
+            commanderRecallBox.SetReadOnly(TRUE);
+        }
+
+        // if all else fails try this, should never get here
+        clearcombobox();
+        commanderRecallBox.Insert(str);
+        commanderRecallBox.Insert("\r\n");
+    }
+}
+
+#endif
+
 BEGIN_EVENT_TABLE(CCommander, wxPanel)
     EVT_BUTTON(ID_COMMANDER_HALT,    CCommander::OnHaltButton)
     EVT_BUTTON(ID_COMMANDER_PAUSE,   CCommander::OnPauseButton)
@@ -411,6 +634,7 @@ BEGIN_EVENT_TABLE(CCommander, wxPanel)
     EVT_TOGGLEBUTTON(ID_COMMANDER_STATUS,  CCommander::OnStatusButton)
     EVT_TOGGLEBUTTON(ID_COMMANDER_STEP,    CCommander::OnStepButton)
     EVT_SIZE(CCommander::OnSize)
+    EVT_KEY_DOWN(CCommander::OnKeyDown)
 END_EVENT_TABLE()
 
 // ----------------------------------------------------------------------------

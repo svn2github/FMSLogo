@@ -3,48 +3,57 @@
 #include <wx/panel.h>
 #include <wx/dialog.h>
 
-class wxButton;
-class wxRichTextCtrl;
 class wxTextCtrl;
 class wxSizer;
-class wxToggleButton;
+class CCommanderButton;
+class CCommanderToggleButton;
+class CCommanderHistory;
+class CCommanderInput;
 
 class CCommander : public wxPanel
 {
 public:
-    CCommander(wxWindow *parent);
+    CCommander(wxWindow *Parent);
     ~CCommander() {};
 
     CCommander * GetCommander();
 
-    void OnHaltButton(wxCommandEvent& event);
-    void OnTraceButton(wxCommandEvent& event);
-    void OnPauseButton(wxCommandEvent& event);
-    void OnStatusButton(wxCommandEvent& event);
-    void OnStepButton(wxCommandEvent& event);
-    void OnResetButton(wxCommandEvent& event);
-    void OnExecuteButton(wxCommandEvent& event);
-    void OnEdallButton(wxCommandEvent& event);
+    void OnHaltButton(wxCommandEvent& Event);
+    void OnTraceButton(wxCommandEvent& Event);
+    void OnPauseButton(wxCommandEvent& Event);
+    void OnStatusButton(wxCommandEvent& Event);
+    void OnStepButton(wxCommandEvent& Event);
+    void OnResetButton(wxCommandEvent& Event);
+    void OnExecuteButton(wxCommandEvent& Event);
+    void OnEdallButton(wxCommandEvent& Event);
 
-    void OnClose(wxCloseEvent& event);
-    void OnSize(wxSizeEvent& event);
+    void OnClose(wxCloseEvent& Event);
+    void OnSize(wxSizeEvent& Event);
+    void OnKeyDown(wxKeyEvent& Event);
 
     void UpdateTraceButtonState();
     void UpdateStepButtonState();
     void UpdateStatusButtonState();
 
-private:
-    wxButton       * m_HaltButton;
-    wxToggleButton * m_TraceButton;
-    wxButton       * m_PauseButton;
-    wxToggleButton * m_StatusButton;
-    wxToggleButton * m_StepButton;
-    wxButton       * m_ResetButton;
-    wxButton       * m_ExecuteButton;
-    wxButton       * m_EdallButton;
+    void GiveControlToHistoryBox();
 
-    wxRichTextCtrl * m_History;
-    wxTextCtrl     * m_NextInstruction;
+    void PostKeyDownToInputControl(wxKeyEvent& Event);
+
+    // HACK: friend functions
+    friend void putcombobox(const char *str);
+
+private:
+    CCommanderButton        * m_HaltButton;
+    CCommanderToggleButton  * m_TraceButton;
+    CCommanderButton        * m_PauseButton;
+    CCommanderToggleButton  * m_StatusButton;
+    CCommanderToggleButton  * m_StepButton;
+    CCommanderButton        * m_ResetButton;
+    CCommanderButton        * m_ExecuteButton;
+    CCommanderButton        * m_EdallButton;
+
+    CCommanderHistory * m_History;
+    CCommanderInput   * m_NextInstruction;
 
     int m_NextInstructionHeight;
 
@@ -63,6 +72,8 @@ public:
     CCommanderDialog(wxWindow *parent);
     CCommander * GetCommander();
 
+    bool EditBoxWantsKeyEvent() const;
+
     void OnSize(wxSizeEvent& event);
     void OnClose(wxCloseEvent& event);
 
@@ -71,3 +82,4 @@ private:
 
     DECLARE_EVENT_TABLE();
 };
+
