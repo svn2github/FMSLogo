@@ -21,6 +21,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <algorithm>
+
 const int DEFAULT_BUFFER_SIZE = 256;
 
 #ifdef NDEBUG
@@ -139,7 +141,7 @@ CDynamicBuffer::GrowTo(
         // requiredLength bytes.  If we don't do this, then printing 
         // a long string takes a *very* long time because we repeatedly
         // reallocate the buffer to be one byte larger.
-        size_t newsize = max(m_BufferSize * 2, requiredLength);
+        size_t newsize = std::max(m_BufferSize * 2, requiredLength);
 
         m_Buffer     = (char *) realloc(m_Buffer, newsize);
         m_BufferSize = newsize;
@@ -169,7 +171,7 @@ CDynamicBuffer::GrowBy(
         // requiredLength bytes.  If we don't do this, then printing 
         // a long string takes a *very* long time because we repeatedly
         // reallocate the buffer to be one byte larger.
-        size_t newsize = max(m_BufferSize * 2, requiredLength);
+        size_t newsize = std::max(m_BufferSize * 2, requiredLength);
 
         m_Buffer     = (char *) realloc(m_Buffer, newsize);
         m_BufferSize = newsize;
