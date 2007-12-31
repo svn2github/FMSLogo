@@ -214,6 +214,14 @@ to ProcessKeyEvent :Key :IsKeyDown
 
     if :Key=32 [ make "DropFaster :IsKeyDown ]
 
+    if and :IsKeyDown :Key=ascii "P [
+        ; if we're playing, then flag that we want to pause
+        if :PlayMode = "playing [ make "PlayMode "pausing ]
+
+        ; if we're paused, then flag that we want to start playing again
+        if :PlayMode = "paused  [ make "PlayMode "unpausing ]
+    ]
+
     if :Key=ascii "Q [ make "IsDone "true ]
 end
 
@@ -391,6 +399,8 @@ to ShapeRotateRight :Shape
 end
 
 to MoveTo :X :Y
+   ; moves the turtle to the position on the screen that matches the
+   ; X,Y coordinate on the game board
    penup
    setxy :GridSize * (:X - :GameBoardWidth / 2)  :GridSize * (:Y - :GameBoardHeight / 2)
 end
@@ -678,6 +688,29 @@ to ClearRow :y
 end
 
 
+to RedrawEntireGameBoard
+   ; redraw the board
+   local [shapeindex rotationtemplate color y row]
+   repeat count :GameBoard [
+      make "y repcount - 1
+
+      make "row item :y :GameBoard
+      repeat count :row [
+
+         MoveTo (repcount - 1) :y
+
+         ifelse equal? ". (item repcount :row) [
+           ClearBlock
+         ] [
+           make "shapeindex (item repcount :row) - 1 ; HACK: -1
+           make "rotationtemplate item :shapeindex :GameShapes
+           make "color            item ((count :rotationtemplate) - 1) :rotationtemplate
+           DrawBlock :color
+         ]
+      ]
+  ]
+end
+
 to RemoveFullLines
 
    local [rowtocopyfrom y totalrowscleared]
@@ -714,31 +747,49 @@ to RemoveFullLines
      ]
 
      ; redraw the board
-     local [shapeindex rotationtemplate color]
-     repeat count :GameBoard [
-        make "y repcount - 1
-
-        make "row item :y :GameBoard
-        repeat count :row [
-
-           MoveTo (repcount - 1) :y
-
-           ifelse equal? ". (item repcount :row) [
-             ClearBlock
-           ] [
-             make "shapeindex (item repcount :row) - 1 ; HACK: -1
-             make "rotationtemplate item :shapeindex :GameShapes
-             make "color            item ((count :rotationtemplate) - 1) :rotationtemplate
-             DrawBlock :color
-           ]
-        ]
-    ]
+     RedrawEntireGameBoard
   ]
 
 end
 
+to ShowPauseScreen
+   ; obscure the screen so that you can't use pause to cheat
+   local [pausedsize]
+
+   setfloodcolor  [128 128 128]
+   MoveTo 0 0
+   bitblock :GameBoardWidth * :GridSize  :GameBoardHeight * :GridSize
+  
+   make "pausedsize labelsize "Paused
+   MoveTo (:GameBoardWidth  - ((item 1 :pausedsize) / :GridSize)) / 2  (:GameBoardHeight + ((item 2 :pausedsize) / :GridSize)) / 2
+   setpencolor [255 255 255]
+   label "Paused
+
+end
+
+to HidePauseScreen
+   ; redraw the game board
+   RedrawEntireGameBoard
+end
 
 to UpdateNextFrame
+
+    if :PlayMode = "paused [
+        ; we are paused, so we don't do anything
+        stop
+    ]
+    if :PlayMode = "pausing [
+        ; transition to the paused state
+        ShowPauseScreen
+        make "PlayMode "paused
+        stop
+    ]
+    if :PlayMode = "unpausing [
+        ; transition to the playing state
+        HidePauseScreen
+        make "PlayMode "playing
+        stop
+    ]
 
     ShapeClear :CurrentShape
 
@@ -866,6 +917,7 @@ to GameLoop
    localmake "currentshape    ShapeCreate
    localmake "framesuntildrop :TotalFramesUntilDrop
    localmake "framenumber     0
+   localmake "PlayMode        "playing
 
    MoveTo :GameBoardWidth + 2 :GameBoardHeight - 5
    setpencolor [255 255 255]
