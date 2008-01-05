@@ -1,0 +1,734 @@
+; ============================================================================
+;
+; FILE         : ngxlib
+;
+; AUTHOR       : Nick Rozanski
+;
+; DESCRIPTION  : a Logo graphics library
+;
+;                ngxlib provides some Logo procedures for drawing shapes and text,
+;                over and above those provided by default.  One feature of the
+;                ngxlib procedures is that all objects are centred on the current
+;                position, rather than starting at the bottom left-hand corner.
+;
+; INSTALLATION : ngxlib is written for MSWLogo (a free Windows implementation of
+;                Logo available from http://www.softronix.com/logo.html).  To
+;                install it, copy the ngxlib file into the MSWLogo library
+;                directory (usually ...\MSWLogo\Logolib).
+;
+; OPERATION    : you must load the ngxlib library into memory first, by calling
+;                the procedure ngxlib (NB this procedure name must match the name
+;                of the ngxlib library file).  For example:
+;
+;                         ngxlib
+;                         ngx.circle 25
+;                         ngx.square 40
+;                            - etc.
+;
+; MODIFICATION HISTORY:
+;
+; Version   Date       Author          Comment
+; -------   ----       ------          -------
+;     1.0   30-Sep-00  Nick Rozanski   first version
+;
+; DISTRIBUTION :
+;
+; Copyright (C) 1998-2000 Nick Rozanski (Nick@Rozanski.com)
+; Distributed under the terms of the GNU General Public License
+;  as published by the Free Software Foundation
+;  (675 Mass Ave, Cambridge, MA 02139, USA)
+;
+; ngxlib is distributed in the hope that it will be useful, but WITHOUT
+; ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+; or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public
+; License for more details.
+;
+; ============================================================================
+
+; ---------------------------------------------------------------------------
+;
+; PROCEDURE   : ngx.ngxlib
+;
+; DESCRIPTION : dummy procedure to cause library to be loaded
+;               you MUST call this routine once before calling any of the
+;                other ngxlib procedures
+;
+; ARGUMENTS   : none
+;
+; OUTPUTS     : none
+;
+; EXAMPLE     : ngxlib
+;
+; ---------------------------------------------------------------------------
+
+define "ngxlib [[] []]
+bury [[ngxlib] [] []]
+
+; ============================================================================
+;
+; WINDOW PROCEDURES
+; -----------------
+;
+; ngx.fullscreen
+; ngx.logoscreen
+;
+; ============================================================================
+
+; ---------------------------------------------------------------------------
+;
+; PROCEDURE   : ngx.fullscreen
+;
+; DESCRIPTION : maximise the Logo screen and give it the focus,
+;               minimise the Commander window
+;               clear the screen and hide the turtle
+;
+; ARGUMENTS   : none
+;
+; OUTPUTS     : none
+;
+; EXAMPLES    : ngx.fullscreen
+;
+; ---------------------------------------------------------------------------
+
+to ngx.fullscreen
+
+	windowset "Commander 0
+	windowset [MSWLogo Screen] 3
+	setfocus [MSWLogo Screen]
+	cs
+	hideturtle
+
+End
+bury [[ngx.fullscreen] [] []]
+
+; ---------------------------------------------------------------------------
+;
+; PROCEDURE   : ngx.logoscreen
+;
+; DESCRIPTION : restore the default Logo display
+;
+; ARGUMENTS   : none
+;
+; OUTPUTS     : none
+;
+; EXAMPLES    : ngx.logoscreen
+;
+; ---------------------------------------------------------------------------
+
+to ngx.logoscreen
+
+	windowset "Commander 1
+	windowset [MSWLogo Screen] 1
+	setfocus "Commander
+	showturtle
+
+End
+bury [[ngx.logoscreen] [] []]
+
+; ============================================================================
+;
+; POSITION PROCEDURES
+; -------------------
+;
+; ngx.goto
+; ngx.move
+;
+; ============================================================================
+
+; ---------------------------------------------------------------------------
+;
+; PROCEDURE   : ngx.goto
+;
+; DESCRIPTION : move the turtle to the new position specified by the arguments
+;               (orientation unchanged)
+;
+;               note that 0 0 represents the centre of the window
+;
+; ARGUMENTS   : xcoord (horizontal coordinate to move to)
+;               ycoord (vertical coordinate to move to)
+;
+; OUTPUTS     : none
+;
+; EXAMPLES    : ngx.goto 100 75
+;               ngx.goto -30 55
+;
+; ---------------------------------------------------------------------------
+
+to ngx.goto :xcoord :ycoord
+	penup
+	setxy :xcoord :ycoord
+	pendown
+End
+bury [[ngx.goto] [] []]
+
+; ---------------------------------------------------------------------------
+;
+; PROCEDURE   : ngx.move
+;
+; DESCRIPTION : move the turtle the given distance in the given direction
+;               leave the turtle orientation unchanged
+;
+; ARGUMENTS   : direction (direction to move, 0-359)
+;               distance  (distance to move)
+;
+; OUTPUTS     : none
+;
+; EXAMPLE     : ngx.move 180 65
+;
+; ---------------------------------------------------------------------------
+
+to ngx.move :direction :distance
+	penup
+	rt :direction
+	fd :distance
+	lt :direction
+	pendown
+End
+bury [[ngx.move] [] []]
+
+; ============================================================================
+;
+; PEN PROCEDURES
+; --------------
+;
+; ngx.setpen
+; standard colours
+;
+; ============================================================================
+
+; ---------------------------------------------------------------------------
+;
+; PROCEDURE   : ngx.setpen
+;
+; DESCRIPTION : set pen size, pen colour and fill colour
+;
+; ARGUMENTS   : pensize   (optional pen size, 0 to ignore)
+;               pencolor  (optional pen color, [] to ignore)
+;               fillcolor (optional fill color, [] to ignore)
+;
+; OUTPUTS     : none
+;
+; EXAMPLES    : ngx.setpen 0 ngx.green []
+;               ngx.setpen 1 ngx.red []
+;               ngx.setpen 3 ngx.blue ngx.yellow
+;
+; ---------------------------------------------------------------------------
+
+to ngx.setpen :pensize :pencolor :fillcolor
+
+	if :pensize > 0          [ setpensize (list :pensize :pensize) ]
+	if not emptyp :pencolor  [ setpencolor :pencolor ]
+	if not emptyp :fillcolor [ setfloodcolor :fillcolor ]
+
+End
+bury [[ngx.setpen] [] []]
+
+; ---------------------------------------------------------------------------
+;
+; PROCEDURE   : ngx.xxx (standard colours)
+;
+; ARGUMENTS   : none
+;
+; OUTPUTS     : none
+;
+; DESCRIPTION : return a list specifying the colour in Logo RGB format
+;               (colours in Logo are specified as a list of [red green blue]
+;                intensities 0-255)
+;
+; EXAMPLE     : SETPENCOLOR ngx.green
+;
+; ---------------------------------------------------------------------------
+
+define "ngx.black  [[] [output [ 0 0 0 ]]]
+define "ngx.blue   [[] [output [ 0 0 255 ]]]
+define "ngx.green  [[] [output [ 0 255 0 ]]]
+define "ngx.cyan   [[] [output [ 0 255 255 ]]]
+define "ngx.red    [[] [output [ 255 0 0 ]]]
+define "ngx.purple [[] [output [ 255 0 255 ]]]
+define "ngx.yellow [[] [output [ 255 255 0 ]]]
+define "ngx.white  [[] [output [ 255 255 255 ]]]
+define "ngx.grey   [[] [output [ 127 127 127 ]]]
+define "ngx.gray   [[] [output [ 127 127 127 ]]]
+define "ngx.brown  [[] [output [ 127 0 0 ]]]
+
+bury [[ngx.black ngx.blue ngx.green ngx.cyan ngx.red ngx.purple ngx.yellow ngx.white] [] []]
+bury [[ngx.grey ngx.gray ngx.brown] [] []]
+
+; ============================================================================
+;
+; TEXT PROCEDURES
+; ---------------
+;
+; ngx.textfont
+; ngx.text
+;
+; ============================================================================
+
+; ---------------------------------------------------------------------------
+;
+; PROCEDURE   : ngx.textfont
+;
+; DESCRIPTION : set the font name, size and effects to be used in subsequent
+;                LABEL commands
+;
+; ARGUMENTS   : height  (font height in points)
+;               width   (font width in points)
+;               font    (optional font name, default [Courier])
+;               colour  (optional font colour, default current SETPENCOLOR)
+;               effects (optional word including any of "B, "U or "I, for
+;                           bold, underlined or italic)
+;
+; OUTPUTS     : none
+;
+; EXAMPLES    : (ngx.textfont 30 20)
+;               (ngx.textfont 30 20 [Garamond] ngx.red)
+;               (ngx.textfont 30 20 [Garamond] ngx.red "BI)
+;
+; ---------------------------------------------------------------------------
+
+to ngx.textfont :height :width [:font []] [:colour []] [:effects []]
+	if emptyp :font [ make "font [Courier] ]
+	if not emptyp :colour [setpencolor :colour]
+	ifelse memberp "B :effects [ localmake "bold 900 ] [ localmake "bold 0 ]
+	ifelse memberp "I :effects [ localmake "italic 1 ] [ localmake "italic 0 ]
+	ifelse memberp "U :effects [ localmake "underline 1 ] [ localmake "underline 0 ]
+	setlabelfont (list :font :height :width 0 :bold :italic :underline)
+End
+bury [[ngx.textfont] [] []]
+
+; ---------------------------------------------------------------------------
+;
+; PROCEDURE   : ngx.text
+;
+; DESCRIPTION : write given text at the current position
+;               leave the turtle position and orientation unchanged
+;
+; ARGUMENTS   : text (text to write)
+;
+; OUTPUTS     : none
+;
+; EXAMPLE     : ngx.text [Here is my text.]
+;
+; ---------------------------------------------------------------------------
+
+to ngx.text :text
+	localmake "textlen (item 1 (labelsize :text))
+	lt 90
+	penup
+	fd :textlen/2
+	rt 180
+	label :text
+	fd :textlen/2
+	lt 90
+End
+bury [[ngx.text] [] []]
+
+; ============================================================================
+;
+; DRAWING PROCEDURES
+; ------------------
+;
+; ngx.circle
+; ngx.cross
+; ngx.hexagon
+; ngx.line
+; ngx.pentagon
+; ngx.polygon
+; ngx.rectangle
+; ngx.spiral
+; ngx.square
+; ngx.triangle
+;
+; ============================================================================
+
+; ---------------------------------------------------------------------------
+;
+; PROCEDURE   : ngx.circle
+;
+; DESCRIPTION : draw a circle centred on the current turtle position
+;               use the current SETPENCOLOR and SETPENSIZE
+;               leave the turtle position and orientation unchanged
+;
+; ARGUMENTS   : radius (radius of the circle in turtle steps)
+;
+; OUTPUTS     : none
+;
+; EXAMPLE     : ngx.circle 45
+;
+; ---------------------------------------------------------------------------
+
+to ngx.circle :radius
+	arc 360 :radius
+End
+bury [[ngx.circle] [] []]
+
+; ---------------------------------------------------------------------------
+;
+; PROCEDURE   : ngx.cross
+;
+; DESCRIPTION : draw a cross (plus sign) centred on the current turtle position
+;               use the current SETPENCOLOR and SETPENSIZE
+;               leave the turtle position and orientation unchanged
+;
+; ARGUMENTS   : length (length of one arm of the cross)
+;
+; OUTPUTS     : none
+;
+; EXAMPLE     : ngx.cross 50
+;
+; ---------------------------------------------------------------------------
+
+to ngx.cross :length
+	fd :length
+	rt 180
+	fd :length*2
+	rt 180
+	fd :length
+	rt 90
+	fd :length
+	rt 180
+	fd :length*2
+	rt 180
+	fd :length
+	lt 90
+End
+bury [[ngx.cross] [] []]
+
+; ---------------------------------------------------------------------------
+;
+; PROCEDURE   : ngx.hexagon
+;
+; DESCRIPTION : draw a hexagon centred on the current turtle position
+;               use the current SETPENCOLOR and SETPENSIZE
+;               leave the turtle position and orientation unchanged
+;
+; ARGUMENTS   : length (length of a hexagon side)
+;
+; OUTPUTS     : none
+;
+; EXAMPLE     : ngx.hexagon 90
+;
+; ---------------------------------------------------------------------------
+
+to ngx.hexagon :length
+	ngx.polygon 6 :length
+End
+bury [[ngx.hexagon] [] []]
+
+; ---------------------------------------------------------------------------
+;
+; PROCEDURE   : ngx.line
+;
+; DESCRIPTION : draw a line with given length in the given direction
+;               use the current SETPENCOLOR and SETPENSIZE
+;               leave the turtle positioned at the end of the line, with its
+;                orientation unchanged
+;
+; ARGUMENTS   : direction (direction to draw the line, 0-359)
+;               length    (length of the line)
+;
+; OUTPUTS     : none
+;
+; EXAMPLE     : ngx.line 215 120
+;
+; ---------------------------------------------------------------------------
+
+to ngx.line :direction :length
+	rt :direction
+	fd :length
+	lt :direction
+End
+bury [[ngx.line] [] []]
+
+; ---------------------------------------------------------------------------
+;
+; PROCEDURE   : ngx.pentagon
+;
+; DESCRIPTION : draw a pentagon centred on the current turtle position
+;               use the current SETPENCOLOR and SETPENSIZE
+;               leave the turtle position and orientation unchanged
+;
+; ARGUMENTS   : length (length of a pentagon side)
+;
+; OUTPUTS     : none
+;
+; EXAMPLE     : ngx.pentagon 40
+;
+; ---------------------------------------------------------------------------
+
+to ngx.pentagon :length
+	ngx.polygon 5 :length
+End
+bury [[ngx.pentagon] [] []]
+
+; ---------------------------------------------------------------------------
+;
+; PROCEDURE   : ngx.polygon
+;
+; DESCRIPTION : draw a regular polygon centred on the current turtle position
+;               use the current SETPENCOLOR and SETPENSIZE
+;               leave the turtle position and orientation unchanged
+;
+; ARGUMENTS   : sides  (number of polygon sides)
+;               length (length of a polygon side)
+;
+; OUTPUTS     : none
+;
+; EXAMPLE     : ngx.polygon 11 40
+;
+; ---------------------------------------------------------------------------
+
+to ngx.polygon :sides :length
+	penup
+	fd 1 rt 180 fd 1 rt 180
+	rt 180+(180/:sides)
+	fd :length/(2*sin(180/:sides))
+	lt 90+(180/:sides)
+	pendown
+	repeat :sides [ fd :length lt 360/:sides ]
+	penup
+	lt 90-(180/:sides)
+	fd :length/(2*sin(180/:sides))
+	lt 180/:sides
+	pendown
+End
+bury [[ngx.polygon] [] []]
+
+; ---------------------------------------------------------------------------
+;
+; PROCEDURE   : ngx.rectangle
+;
+; DESCRIPTION : draw a rectangle centred on the current turtle position
+;               use the current SETPENCOLOR and SETPENSIZE
+;               leave the turtle position and orientation unchanged
+;
+; ARGUMENTS   : horizontal (length of rectangle "horizontal" side)
+;               vertical   (length of rectangle "vertical" side)
+;
+; OUTPUTS     : none
+;
+; EXAMPLE     : ngx.rectangle 80 60
+;
+; ---------------------------------------------------------------------------
+
+to ngx.rectangle :horizontal :vertical
+	penup
+	fd :vertical/2
+	lt 90
+	fd :horizontal/2
+	lt 180
+	pendown
+	repeat 2 [ fd :horizontal rt 90 fd :vertical rt 90 ]
+	penup
+	fd :horizontal/2
+	rt 90
+	fd :vertical/2
+	rt 180
+	pendown
+End
+bury [[ngx.rectangle] [] []]
+
+; ---------------------------------------------------------------------------
+;
+; PROCEDURE   : ngx.spiral
+;
+; DESCRIPTION : draw a spiral pattern (try it!)
+;               use the current SETPENCOLOR and SETPENSIZE
+;               leave the turtle position and orientation unchanged
+;
+; ARGUMENTS   : sides     (number of spiral sides)
+;               length    (length of each side)
+;               rotations (number of spiral rotations)
+;
+; OUTPUTS     : none
+;
+; EXAMPLE     : ngx.spiral 3 200 25
+;
+; ---------------------------------------------------------------------------
+
+to ngx.spiral :sides :length :rotations
+	repeat :rotations [ ngx.polygon :sides :length rt 360/:rotations ]
+End
+bury [[ngx.spiral] [] []]
+
+; ---------------------------------------------------------------------------
+;
+; PROCEDURE   : ngx.square
+;
+; DESCRIPTION : draw a square centred on the current turtle position
+;               use the current SETPENCOLOR and SETPENSIZE
+;               leave the turtle position and orientation unchanged
+;
+; ARGUMENTS   : length (length of a square side)
+;
+; OUTPUTS     : none
+;
+; EXAMPLE     : ngx.square 80
+;
+; ---------------------------------------------------------------------------
+
+to ngx.square :length
+	ngx.polygon 4 :length
+End
+bury [[ngx.square] [] []]
+
+; ---------------------------------------------------------------------------
+;
+; PROCEDURE   : ngx.triangle
+;
+; DESCRIPTION : draw a triangle centred on the current turtle position
+;               use the current SETPENCOLOR and SETPENSIZE
+;               leave the turtle position and orientation unchanged
+;
+; ARGUMENTS   : length (length of a triangle side)
+;
+; OUTPUTS     : none
+;
+; EXAMPLE     : ngx.triangle 40
+;
+; ---------------------------------------------------------------------------
+
+to ngx.triangle :length
+	ngx.polygon 3 :length
+End
+bury [[ngx.triangle] [] []]
+
+; ============================================================================
+;
+; KEYBOARD PROCEDURES
+; -------------------
+;
+; ngx.kbinit
+; ngx.kbreset
+; ngx.getkey
+; ngx.keypressed
+; (ngx.keyboard.callback)
+;
+; note that the [MSWLogo Screen] window must have focus to catch key events
+; (see ngx.fullscreen)
+;
+; ============================================================================
+
+; ---------------------------------------------------------------------------
+;
+; PROCEDURE   : ngx.kbinit
+;
+; DESCRIPTION : initialise the keyboard routines
+;               call this once before calling ngx.getkey or ngx.keypressed
+;
+; ARGUMENTS   : none
+;
+; OUTPUTS     : none
+;
+; EXAMPLE     : ngx.kbinit
+;
+; ---------------------------------------------------------------------------
+
+to ngx.kbinit
+
+	make "ngx.keyboard.buffer [ ]
+	keyboardon [ ngx.keyboard.callback ]
+
+End
+bury [[ngx.kbinit] [] []]
+
+; ---------------------------------------------------------------------------
+;
+; PROCEDURE   : ngx.kbreset
+;
+; DESCRIPTION : reset the keyboard routines
+;               after calling this, ngx.getkey and ngx.keypressed are invalid
+;
+; ARGUMENTS   : none
+;
+; OUTPUTS     : none
+;
+; EXAMPLE     : ngx.kbinit
+;
+; ---------------------------------------------------------------------------
+
+to ngx.kbreset
+
+	make "ngx.keyboard.buffer [ ]
+	keyboardoff
+
+End
+bury [[ngx.kbreset] [] []]
+
+; ---------------------------------------------------------------------------
+;
+; PROCEDURE   : ngx.getkey
+;
+; DESCRIPTION : if a key has been pressed since the last call, return it
+;               immediately, otherwise wait for a key to be pressed
+;
+; ARGUMENTS   : none
+;
+; OUTPUTS     : key which was pressed
+;
+; EXAMPLE     : ngx.kbinit
+;               ngx.getkey
+;               ngx.getkey
+;                    ...
+;
+; ---------------------------------------------------------------------------
+
+to ngx.getkey
+
+	do.while [ ~
+		if not 0 = count :ngx.keyboard.buffer [ ~
+			localmake "key char first :ngx.keyboard.buffer ~
+			make "ngx.keyboard.buffer butfirst :ngx.keyboard.buffer ~
+			output :key ] ~
+		wait 1 ] ~
+		[ "TRUE ]
+
+End
+bury [[ngx.getkey] [] []]
+
+; ---------------------------------------------------------------------------
+;
+; PROCEDURE   : ngx.keypressed
+;
+; DESCRIPTION : if a key has been pressed since the last call, return "TRUE
+;
+; ARGUMENTS   : none
+;
+; OUTPUTS     : "TRUE or "FALSE
+;
+; EXAMPLE     : ngx.kbinit
+;               if ngx.keypressed ...
+;
+; ---------------------------------------------------------------------------
+
+to ngx.keypressed
+
+	ifelse 0 = count :ngx.keyboard.buffer [ output "FALSE ] [ output "TRUE ]
+
+End
+bury [[ngx.keypressed] [] []]
+
+; ---------------------------------------------------------------------------
+;
+; PROCEDURE   : ngx.keyboard.callback
+;
+; DESCRIPTION : keyboard callback - do not invoke this function (it is invoked
+;               if a key is pressed)
+;
+; ARGUMENTS   : none
+;
+; OUTPUTS     : none
+;
+; EXAMPLE     : n/a
+;
+; ---------------------------------------------------------------------------
+
+to ngx.keyboard.callback
+
+	noyield
+	make "ngx.keyboard.buffer lput keyboardvalue :ngx.keyboard.buffer
+	yield
+
+End
+bury [[ngx.keyboard.callback] [] []]
+
