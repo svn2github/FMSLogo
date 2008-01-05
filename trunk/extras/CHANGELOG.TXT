@@ -2,7 +2,7 @@ FMSLogo Extras 1.9
 o tetrads
   * Add a pause/unpause feature.
 o turtlemaze
-  * Add a new maze.
+  * Add an octogon-shaped maze.
 
 FMSLogo Extras 1.8
 o asteriodminer
