@@ -278,7 +278,7 @@ RunLogoInstructionFromGui(
     char * LogoInstruction
     )
 {
-    if (strlen(LogoInstruction) != 0)
+    if (LogoInstruction[0] != '\0')
     {
         // The instruction is real.  Do something with it.
 
