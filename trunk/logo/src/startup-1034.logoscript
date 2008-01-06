@@ -1236,14 +1236,6 @@ DEVUELVE 0
 FIN
 TAPA "SIGNO
 
-;copydef "suenatono "tone
-
-PARA SUENATONO :freq :dura
-TONO (LISTA :freq :dura)
-FIN
-
-TAPA "SUENATONO
-
 ;copydef "tapatodo "buryall
 
 PARA TAPATODO
