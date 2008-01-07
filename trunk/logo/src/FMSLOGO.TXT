@@ -21,7 +21,7 @@ I. Kit Description/Location (http://sourceforge.net/projects/fmslogo)
 II. New features/bugs fixed:
 
   * Added for 6.19.0
-    o Minor improvements to the German manual.
+    o Minor improvements to the German translation.
     o Minor improvements to the Spanish translation.
 
   For a complete history of changes across all versions of FMSLogo, see
