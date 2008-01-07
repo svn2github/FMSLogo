@@ -5,8 +5,6 @@ catch "error [ copydef "alleerstes      "aer        ]
 catch "error [ copydef "ascii?          "asc        ]
 catch "error [ copydef "bb              "Bitblock   ]
 catch "error [ copydef "el              "Element    ]
-catch "error [ copydef "forme           "wirf       ]
-catch "error [ copydef "erziele         "wirf       ]
 catch "error [ copydef "gib             "dzl        ]
 catch "error [ copydef "it              "igeltext   ]
 catch "error [ copydef "Tastaturaus     "keyboardaus]
@@ -183,8 +181,7 @@ end
 bury [plus smotor]
 
 
-to 8LedTest
-
+to LedTestTafel
   ;;  Control is both a toolbox and a microworld.
   ;;
   ;;  Control of the eight output line can be either directly 
@@ -207,7 +204,7 @@ to 8LedTest
   ;; using the four new 'primitives' supplied here.
 
   define "bin.to.dec [ [arg]
-    [ localmake "count 8 ]
+    [ localmake "count 12 ]
     [ localmake "result 0 ]
     [ make.decimal ]
     [ rg :result ]
@@ -215,91 +212,129 @@ to 8LedTest
   bury "bin.to.dec
 
   define "convert [ [arg]
-    [ localmake "next first :arg ]
+    [ localmake "next first :arg]
     [ checkboxset word "data :next :state ]
     [ make "total :total + power 2 :next  ]
     [ make "arg bf :arg ]
+    [ifelse :next > 7 [make "total2 :total][]]
     [ ifelse emptyp :arg[stop][convert :arg] ]
+
+
   ]
   bury "convert
 
   define "control [ []
     [ windowcreate "main "ControlWindow "LEDTestTafel 30 30 300 100 [] ]
-    [ groupboxcreate "ControlWindow "groupbox1 10 10 40 22 ]
-    [ checkboxcreate "ControlWindow "groupbox1 "data7 [8. LED] 15 15 32 15 ]
-    [ groupboxcreate "ControlWindow "groupbox2 60 10 40 22 ]
-    [ checkboxcreate "ControlWindow "groupbox2 "data6 [7. LED] 65 15 32 15 ]
-    [ groupboxcreate "ControlWindow "groupbox3 110 10 40 22 ]
-    [ checkboxcreate "ControlWindow "groupbox3 "data5 [6. LED] 115 15 32 15 ]
-    [ groupboxcreate "ControlWindow "groupbox4 160 10 40 22 ]
-    [ checkboxcreate "ControlWindow "groupbox4 "data4 [5. LED] 165 15 32 15 ]
-    [ groupboxcreate "ControlWindow "groupbox5 10 40 40 22 ]
-    [ checkboxcreate "ControlWindow "groupbox5 "data3 [4. LED] 15 45 32 15 ]
-    [ groupboxcreate "ControlWindow "groupbox6 60 40 40 22 ]
-    [ checkboxcreate "ControlWindow "groupbox6 "data2 [3. LED] 65 45 32 15 ]
-    [ groupboxcreate "ControlWindow "groupbox7 110 40 40 22 ]
-    [ checkboxcreate "ControlWindow "groupbox7 "data1 [2. LED] 115 45 32 15 ]
-    [ groupboxcreate "ControlWindow "groupbox8 160 40 40 22 ]
-    [ checkboxcreate "ControlWindow "groupbox8 "data0 [1. LED] 165 45 32 15 ]
+    [ groupboxcreate "ControlWindow "groupbox1 5 1 45 22 ]
+    [ checkboxcreate "ControlWindow "groupbox1 "data0 [1. LED] 10 6 35 15 ]
+    [ groupboxcreate "ControlWindow "groupbox2 55 1 45 22 ]
+    [ checkboxcreate "ControlWindow "groupbox2 "data1 [2. LED] 60 6 35 15 ]
+    [ groupboxcreate "ControlWindow "groupbox3 105 1 45 22 ]
+    [ checkboxcreate "ControlWindow "groupbox3 "data2 [3. LED] 110 6 35 15 ]
+    [ groupboxcreate "ControlWindow "groupbox4 155 1 45 22 ]
+    [ checkboxcreate "ControlWindow "groupbox4 "data3 [4. LED] 160 6 35 15 ]
+    [ groupboxcreate "ControlWindow "groupbox5 5 31 45 22 ]
+    [ checkboxcreate "ControlWindow "groupbox5 "data4 [5. LED] 10 36 35 15 ]
+    [ groupboxcreate "ControlWindow "groupbox6 55 31 45 22 ]
+    [ checkboxcreate "ControlWindow "groupbox6 "data5 [6. LED] 60 36 35 15 ]
+    [ groupboxcreate "ControlWindow "groupbox7 105 31 45 22 ]
+    [ checkboxcreate "ControlWindow "groupbox7 "data6 [7. LED] 110 36 35 15 ]
+    [ groupboxcreate "ControlWindow "groupbox8 155 31 45 22 ]
+    [ checkboxcreate "ControlWindow "groupbox8 "data7 [8. LED] 160 36 35 15 ]
+
+[ groupboxcreate "ControlWindow "groupbox9 5 61 45 22 ]
+[ checkboxcreate "ControlWindow "groupbox9 "data8 [9. LED] 10 66 35 15 ]
+    [ groupboxcreate "ControlWindow "groupbox10 55 61 45 22 ]
+    [ checkboxcreate "ControlWindow "groupbox10 "data9 [10. LED] 60 66 35 15 ]
+    [ groupboxcreate "ControlWindow "groupbox11 105 61 45 22 ]
+    [ checkboxcreate "ControlWindow "groupbox11 "data10 [11. LED] 110 66 35 15 ]
+    [ groupboxcreate "ControlWindow "groupbox12 155 61 45 22 ]
+    [ checkboxcreate "ControlWindow "groupbox12 "data11 [12. LED] 160 66 35 15 ]
+
+
+
     [ buttoncreate   "ControlWindow "checkbutton [LEDs ansteuern] 220 32 60 10 [gather.choices] ]
-    [ buttoncreate   "ControlWindow "Close "X 287 0 10 10 [windowdelete "8ledtest.ControlWindow] ]
+    [ buttoncreate   "ControlWindow "Close "X 287 0 10 10 [windowdelete "LEDTestTafel.ControlWindow] ]
     [ buttoncreate   "ControlWindow "OFF [Alle LEDs AUS] 220 55 60 10 [turn.off.all] ]
     [ buttoncreate   "ControlWindow "ON [Alle LEDs AN] 220 10 60 10 [turn.on.all] ]
   ]
   bury "control
 
   define "dec.to.bin [ [arg]
-    [ localmake "count 8 ]
+    [ localmake "count 12 ]
     [ localmake "result [] ]
     [ until [:count=0][make.binary] ]
-    [ rg :result ]
+    [ rg :result ][if :total2 = 256 [make "outn 10]]
+
   ]
   bury "dec.to.bin
 
   define "gather.choices [ []
     [ localmake "count -1 ]
     [ localmake "lines [] ]
-    [ until [:count=7][read.choice] ]
-    [ make "outlines 0 ]
+    [ until [:count=11][read.choice] ]
+    [ localmake "outlines 0 ]
     [ turn.on :lines ]
   ]
   bury "gather.choices
 
   define "turn.off.all [ []
-    [ localmake "count 8 ]
+    [ localmake "count 12 ]
     [ until [:count=0][make "count :count-1 checkboxset word "data :count "false] ]
-    [ make "outlines 0 ]
-    [ portoutb 888 :outlines ]
+    [ localmake "outlines 0 ]
+    [ portoutb 888 :outlines portoutb 890 :outlines + 11]
   ]
   bury "turn.off.all
 
   define "turn.off [ [lines]
     [ localmake "merge.result [] ]
-    [ localmake "changes [0 0 0 0 0 0 0 0] ]
+    [ localmake "changes [0 0 0 0 0 0 0 0 0 0 0 0] ]
     [ make "changes listtoarray :changes ]
     [ ifelse not emptyp :lines [implement.off][stop] ]
     [ localmake "current dec.to.bin :outlines ]
     [ make "changes arraytolist :changes  ]
     [ merge ]
-    [ make "outlines 8ledtest.bin.to.dec :merge.result ]
+    [ localmake "outlines LEDTestTafel.bin.to.dec :merge.result ]
     [ portoutb 888 :outlines ]
   ]
   bury "turn.off
 
   define "turn.on [ [lines]
-    [ localmake "total 0 ]
+    [ localmake "total 0 localmake "total2 0]
     [ localmake "state "true ]
+    [localmake "outn 11]
     [ if not emptyp :lines [convert :lines] ]
-    [ make "outlines bitor int :outlines int :total ]
-    [ portoutb 888 :outlines ]
+
+    [localmake "outlines bitor int :outlines int :total ]
+[if :total2 = 256 [make "outn 10]]
+[if :total2 = 512 [make "outn 9]]
+[if :total2 = 2816 [make "outn 16]]
+[if :total2 = 1024 [make "outn 15]]
+
+[if :total2 = 1280 [make "outn 14]]
+[if :total2 = 1536 [make "outn 13]]
+[if :total2 = 1792 [make "outn 12]]
+[if :total2 =  768 [make "outn 8]]
+[if :total2 = 3072 [make "outn 7]]
+[if :total2 = 3328 [make "outn 6]]
+[if :total2 = 3584 [make "outn 5]]
+[if :total2 = 3840 [make "outn 4]]
+[if :total2 = 2048 [make "outn 3]]
+[if :total2 = 2304 [make "outn 2]]
+[if :total2 = 2560 [make "outn 1]]
+
+
+
+
+    [ portoutb 888 :outlines portoutb 890 :outn]
   ]
   bury "turn.on
 
   define "turn.on.all [ []
-    [ localmake "count 8 ]
+    [ localmake "count 12 ]
     [ until [:count=0][make "count :count-1 checkboxset word "data :count "true] ]
-    [ make "outlines 255 ]
-    [ portoutb 888 :outlines ]
+    [ localmake "outlines 255 ]
+    [ portoutb 888 :outlines portoutb 890 :outlines - 251]
    ]
   bury "turn.on.all
 
@@ -337,7 +372,7 @@ to 8LedTest
   define "implement.off [ []
     [ localmake "next first :lines ]
     [ checkboxset word "data :next "false ]
-    [ setitem (8 - :next) :changes "1 ]
+    [ setitem (12 - :next) :changes "1 ]
     [ make "lines bf :lines ]
     [ ifelse emptyp :lines [stop][implement.off] ]
   ]
@@ -350,7 +385,92 @@ to 8LedTest
   turn.off.all
 
 end
-bury "8ledtest
+
+
+pr make.binary
+make "count :count - 1
+make "result se :result ( int quotient :arg power 2 :count )
+make "arg remainder :arg power 2 :count
+ende
+
+pr make.decimal
+make "count :count - 1
+localmake "next 0
+if equalp first :arg 1 [make "next power 2 :count]
+make "result :result + :next
+make "arg bf :arg
+ifelse emptyp :arg [stop] [make.decimal]
+ende
+
+pr merge
+ifelse equalp ( sum first :current first :changes ) 2 [make "merge.result se :merge.result 0] [make "merge.result se :merge.result first :current]
+make "current bf :current
+make "changes bf :changes
+ifelse emptyp :current [stop] [merge]
+ende
+
+pr read.choice
+make "count :count + 1
+if checkboxget word "data :count [make "lines se :count :lines]
+ende
+
+pr turn.off :lines
+localmake "merge.result []
+localmake "changes [0 0 0 0 0 0 0 0 0 0 0 0]
+make "changes listtoarray :changes
+ifelse not emptyp :lines [implement.off] [stop]
+localmake "current dec.to.bin :outlines
+make "changes arraytolist :changes
+merge
+localmake "outlines LEDTestTafel.bin.to.dec :merge.result
+portoutb 888 :outlines
+ende
+
+pr turn.off.all
+localmake "count 12
+until [:count=0] [make "count :count-1 checkboxset word "data :count "false]
+localmake "outlines 0
+portoutb 888 :outlines portoutb 890 :outlines + 11
+ende
+
+pr turn.on :lines
+localmake "total 0 localmake "total2 0
+localmake "state "true
+localmake "outn 11
+if not emptyp :lines [convert :lines]
+localmake "outlines bitor int :outlines int :total
+if :total2 = 256 [make "outn 10]
+if :total2 = 512 [make "outn 9]
+if :total2 = 2816 [make "outn 16]
+if :total2 = 1024 [make "outn 15]
+if :total2 = 1280 [make "outn 14]
+if :total2 = 1536 [make "outn 13]
+if :total2 = 1792 [make "outn 12]
+if :total2 = 768 [make "outn 8]
+if :total2 = 3072 [make "outn 7]
+if :total2 = 3328 [make "outn 6]
+if :total2 = 3584 [make "outn 5]
+if :total2 = 3840 [make "outn 4]
+if :total2 = 2048 [make "outn 3]
+if :total2 = 2304 [make "outn 2]
+if :total2 = 2560 [make "outn 1]
+portoutb 888 :outlines portoutb 890 :outn
+ende
+
+pr turn.on.all
+localmake "count 12
+until [:count=0] [make "count :count-1 checkboxset word "data :count "true]
+localmake "outlines 255
+portoutb 888 :outlines portoutb 890 :outlines - 251
+ende
+
+
+bury [LEDTestTafel bin.to.dec dec.to.bin implement.off turn.on.all turn.on turn.off.all turn.off convert make.decimal make.binary merge read.choice gather.choices control]
+make "io.dll.is.loaded "false
+bury [ [] [io.dll.is.loaded]]
+
+
+bury "LEDTestTafel
 
 make "io.dll.is.loaded "false
 bury [ [] [io.dll.is.loaded]]
