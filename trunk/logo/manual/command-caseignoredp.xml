@@ -15,10 +15,6 @@
 <para>
 If CASEIGNOREDP equals TRUE, then lower-case and upper-case letters are considered equal by <link linkend="command-equalp">EQUALP</link>, <link linkend="command-beforep">BEFOREP</link>, <link linkend="command-memberp">MEMBERP</link>, etc.
 </para>
-
-<para>
-CASEIGNOREDP is initially TRUE and buried.
-</para>
 </listitem>
 </varlistentry>
 
