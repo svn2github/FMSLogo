@@ -2243,7 +2243,7 @@ setcolor_helper(
         {
             bool foundIt = false;
 
-            COMPAREFUNC compareFunc = variableIsTrue(Caseignoredp) ? 
+            COMPAREFUNC compareFunc = isCaseIgnored() ? 
                 low_strncmp : 
                 (COMPAREFUNC) strncmp;
 

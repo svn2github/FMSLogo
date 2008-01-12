@@ -119,6 +119,12 @@
 #define LOCALIZED_ALTERNATE_SYSTEM   "system"
 
 //
+// Localized "alternate" names of Logo special variables
+//
+#define LOCALIZED_ALTERNATE_CASEIGNOREDP   "caseignoredp"
+
+
+//
 // Localized "alternate" spellings of Logo primitives.
 // These become the perferred name of the primitives.  For example,
 // when you press the "reset" button, FMSLogo will write the value of

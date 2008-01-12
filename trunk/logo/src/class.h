@@ -152,6 +152,10 @@ public:
     const char * GetName() const;
     bool         Equals(NODE * Node) const;
 
+
+    // used only for special variables, like "caseignorep"
+    NODE * GetValue() const;
+
 private:
     NODE * m_Primary;
     NODE * m_Alternate;

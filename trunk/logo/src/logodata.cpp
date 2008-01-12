@@ -794,7 +794,7 @@ NODE *luppercase(NODE *args)
 /* property list stuff */
 NODE *getprop(NODE *plist, NODE *name, bool before)
 {
-    bool caseig = variableIsTrue(Caseignoredp);
+    bool caseig = isCaseIgnored();
 
     NODE *prev = NIL;
     while (plist != NIL)
@@ -900,7 +900,7 @@ NODE *lremprop(NODE *args)
         NODE * plist = plist__caseobj(plname);
         if (plist != NIL)
         {
-            bool caseig = variableIsTrue(Caseignoredp);
+            bool caseig = isCaseIgnored();
             if (compare_node(car(plist), pname, caseig) == 0)
             {
                 setplist__caseobj(plname, cddr(plist));
@@ -964,4 +964,25 @@ NODE * llogoversion(NODE * args)
 bool variableIsTrue(NODE *variable) 
 {
     return Truex.Equals(valnode__caseobj(variable));
+}
+
+// Returns the value of caseignoredp, according to the following rules
+// If CASEIGNOREDP is defined, then its value is used.
+// Otherwise, if this is a non-English build and the non-English version
+// is defined, then its value is used.
+// Otherwise, it returns true.
+bool isCaseIgnored()
+{
+    // Get the value of the English version or the localized version,
+    // depending on which is defined.
+    NODE * value = Caseignoredp.GetValue();
+    if (value != Unbound)
+    {
+        // CASEIGNOREDP is defined.  Return if it's true.
+        return Truex.Equals(value);
+    }
+
+    // Neither the English nor the alternate is defined,
+    // so we use the default value of true.
+    return true;
 }

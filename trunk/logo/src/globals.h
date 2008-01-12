@@ -100,7 +100,7 @@ extern CLocalizedNode System;
 extern CLocalizedNode Error;
 extern CLocalizedNode End;
 extern NODE *Redefp;
-extern NODE *Caseignoredp;
+extern CLocalizedNode Caseignoredp;
 extern NODE *Erract;
 extern NODE *Printdepthlimit;
 extern NODE *Printwidthlimit;

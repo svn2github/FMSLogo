@@ -42,7 +42,7 @@ CLocalizedNode System;
 CLocalizedNode Error;
 CLocalizedNode End;
 NODE *Redefp;
-NODE *Caseignoredp;
+CLocalizedNode Caseignoredp;
 NODE *Erract;
 NODE *Printdepthlimit;
 NODE *Printwidthlimit;
@@ -144,6 +144,26 @@ CLocalizedNode::Equals(
     return false;
 }
 
+NODE *
+CLocalizedNode::GetValue() const
+{
+    // the primary object always exists
+    NODE * value = valnode__caseobj(m_Primary);
+    if (value != Unbound)
+    {
+        // the value is bound, which means that it has been defined.
+        return value;
+    }
+
+    if (m_Alternate)
+    {
+        // this localized node has an alternate name.
+        return valnode__caseobj(m_Alternate);
+    }
+
+    // neither the primary nor the seconary variables have values.
+    return Unbound;
+}
 
 
 const PRIMTYPE prims[] =
@@ -744,9 +764,7 @@ void init()
     If = intern(make_static_strnode("if"));
     Ifelse = intern(make_static_strnode("ifelse"));
     Redefp = intern(make_static_strnode("redefp"));
-    Caseignoredp = intern(make_static_strnode("caseignoredp"));
-    setvalnode__caseobj(Caseignoredp, Truex.GetNode());
-    setflag__caseobj(Caseignoredp, VAL_BURIED);
+    Caseignoredp.Initialize("caseignoredp", LOCALIZED_ALTERNATE_CASEIGNOREDP);
     Erract = intern(make_static_strnode("erract"));
     Printdepthlimit = intern(make_static_strnode("printdepthlimit"));
     Printwidthlimit = intern(make_static_strnode("printwidthlimit"));
