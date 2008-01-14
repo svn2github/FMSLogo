@@ -16,6 +16,7 @@ CCommanderInput::WantsKeyEvent(
     int KeyCode
     )
 {
+    fprintf(stderr, "WantsKeyEvent called\n");
     // we want the space bar
     if (KeyCode == WXK_SPACE)
     {

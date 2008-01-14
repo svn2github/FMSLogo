@@ -67,6 +67,8 @@ void CScreen::OnKeyDown(wxKeyEvent& event)
         );
 #endif
 
+    fprintf(stderr, "CScreen::OnKeyDown()");
+
     if (CCommanderInput::WantsKeyEvent(keyCode))
     {
         CCommander * commander = CFmsLogo::GetMainFrame()->GetCommander();
@@ -74,14 +76,19 @@ void CScreen::OnKeyDown(wxKeyEvent& event)
         // we don't handle this key.
         // give focus to the edit box and send the press to it.
         commander->PostKeyDownToInputControl(event);
+    }
+    else
+    {
         event.Skip();
     }
+    
 
     // default processing?
 }
 
-void CScreen::OnKeyUp(wxKeyEvent& event)
+void CScreen::OnKeyUp(wxKeyEvent& Event)
 {
+    Event.Skip();
 }
 
 BEGIN_EVENT_TABLE(CScreen, wxScrolledWindow)

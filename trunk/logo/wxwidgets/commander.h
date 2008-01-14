@@ -9,6 +9,7 @@ class CCommanderButton;
 class CCommanderToggleButton;
 class CCommanderHistory;
 class CCommanderInput;
+class wxRichTextEvent;
 
 class CCommander : public wxPanel
 {
@@ -30,7 +31,7 @@ public:
     void OnClose(wxCloseEvent& Event);
     void OnSize(wxSizeEvent& Event);
     void OnKeyDown(wxKeyEvent& Event);
-
+    void OnRichTextChar(wxRichTextEvent & Event);
     void UpdateTraceButtonState();
     void UpdateStepButtonState();
     void UpdateStatusButtonState();
@@ -39,8 +40,15 @@ public:
 
     void PostKeyDownToInputControl(wxKeyEvent& Event);
 
+    void AppendToCommanderHistory(const char * String);
+    void AppendToCommanderHistory(char Char);
+
+    CCommanderHistory * GetHistory();
+    CCommanderInput   * GetInput();
+
     // HACK: friend functions
     friend void putcombobox(const char *str);
+    friend void clearcombobox();
 
 private:
     CCommanderButton        * m_HaltButton;

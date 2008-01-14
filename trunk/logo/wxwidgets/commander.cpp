@@ -7,6 +7,7 @@
 #include <wx/msgdlg.h>
 #include <wx/sizer.h>
 #include <wx/defs.h>
+#include <wx/richtext/richtextctrl.h>
 
 #include "fmslogo.h"
 #include "mainframe.h"
@@ -216,6 +217,17 @@ void CCommander::UpdateStepButtonState()
     m_StepButton->SetPressedState(g_StepFlag);
 }
 
+
+CCommanderHistory * CCommander::GetHistory()
+{
+    return m_History;
+}
+
+CCommanderInput * CCommander::GetInput()
+{
+    return m_NextInstruction;
+}
+
 void CCommander::UpdateTraceButtonState()
 {
     m_TraceButton->SetPressedState(g_TraceFlag);
@@ -289,6 +301,16 @@ void CCommander::OnResetButton(wxCommandEvent& WXUNUSED(event))
         this);
 }
 
+void
+do_execution(
+    const char * LogoInstruction
+    )
+{
+    wxString message;
+    message.Printf("Running %s\n", LogoInstruction);
+    //wxMessageBox(message, "TODO: Logo Engine", wxOK);
+}
+
 
 // Process a Logo instruction, as it is processed by the GUI when you click
 // on the "Execute" button.  This can be used by other UI elements, such as
@@ -298,9 +320,33 @@ RunLogoInstructionFromGui(
     const char * LogoInstruction
     )
 {
-    wxString message;
-    message.Printf("Running %s\n", LogoInstruction);
-    wxMessageBox(message, "TODO: Logo Engine", wxOK);
+    if (LogoInstruction[0] != '\0')
+    {
+        // The instruction is real.  Do something with it.
+
+        // copy to list box for command recall
+        putcombobox(LogoInstruction);
+
+#if 0
+        // if dribble then dribble 
+        if (dribblestream != NULL)
+        {
+            fprintf(dribblestream, "%s\n", LogoInstruction);
+        }
+
+        // reset erract loop error history
+        clear_is_running_erract_flag();
+
+        // reset evaluation counter (call counter) and execute
+        eval_count = 0;
+        update_status_evals();
+
+        vector_count = 0;
+        update_status_vectors();
+#endif
+
+        do_execution(LogoInstruction);
+    }
 }
 
 void CCommander::OnExecuteButton(wxCommandEvent& WXUNUSED(event))
@@ -445,6 +491,7 @@ void CCommander::OnSize(wxSizeEvent& event)
 // TODO: rename so that it doesn't have "post" in it
 void CCommander::PostKeyDownToInputControl(wxKeyEvent& Event)
 {
+    fprintf(stderr, "PostKeyDownToInputControl() called\n");
     m_NextInstruction->SetFocus();
     m_NextInstruction->EmulateKeyPress(Event);
 }
@@ -455,20 +502,34 @@ void CCommander::OnKeyDown(wxKeyEvent& Event)
     {
         PostKeyDownToInputControl(Event);
     }
+    else
+    {
+        fprintf(stderr, "skipping keydown event on CCommander\n");
+        Event.Skip();
+    }
 }
 
 void CCommander::GiveControlToHistoryBox()
 {
-#if 0
     // advance to the bottom of the listbox
-    MainWindowx->CommandWindow->Listbox.SetCursorAtBottom();
+    m_History->MoveEnd();
+    wxTextPos endPosition = m_History->GetLastPosition();
+    m_History->ShowPosition(endPosition);
 
     // give focus to the listbox
-    MainWindowx->CommandWindow->Listbox.SetFocus();
-#endif
+    m_History->SetFocus();
 }
 
-#if 0
+void clearcombobox()
+{
+    // clear the recall box
+    CCommanderHistory * commanderHistory = CFmsLogo::GetMainFrame()->GetCommander()->m_History;
+
+    commanderHistory->Clear();
+
+    // TODO: is it necessary to move the position
+    // commanderHistory->MoveEnd();
+}
 
 // Appends "str" to the end of the what is in the Commander's Recall box.
 // If "str" doesn't fit, then some text will be removed from the top to make it fit.
@@ -485,35 +546,36 @@ void putcombobox(const char *str)
             wxTextPos uBefore = commanderHistory->GetLastPosition();
 
             // output to list box 
-            commanderHistory.SetSelectionPoint(uBefore);
-            commanderHistory.Insert(str);
-            UINT uCheck = commanderHistory.GetTextLen();
-            commanderHistory.Insert("\r\n");
-            UINT uAfter = commanderHistory.GetTextLen();
+            commanderHistory->AppendText(str);
+            wxTextPos uCheck = commanderHistory->GetLastPosition();
+            commanderHistory->AppendText("\n");
+            wxTextPos uAfter = commanderHistory->GetLastPosition();
 
-            // if last 2 bytes inserted ok get out
-            if (uCheck+2 == uAfter) 
+            // if the newline was inserted ok, get out
+            if (uCheck + 1 == uAfter)
             {
+                commanderHistory->ShowPosition(uAfter);
                 return;
             }
 
             // strip what we inserted
-            commanderRecallBox.SetReadOnly(FALSE);
+            commanderHistory->SetEditable(true);
 
-            commanderRecallBox.SetSelection(uBefore, uAfter);
-            commanderRecallBox.DeleteSelection();
+            wxRichTextRange addedRange(uBefore, uAfter);
+            commanderHistory->DeleteSelection();
 
             // strip 4k off top
-            commanderRecallBox.SetSelection(0, 4096);
-            commanderRecallBox.DeleteSelection();
+            wxRichTextRange rangeToRemove(0, 4096);
+            commanderHistory->Delete(rangeToRemove);
 
-            commanderRecallBox.SetReadOnly(TRUE);
+            commanderHistory->SetEditable(false);
         }
 
-        // if all else fails try this, should never get here
+        // If all else fails try erasing everything.
+        // we should never get here.
         clearcombobox();
-        commanderRecallBox.Insert(str);
-        commanderRecallBox.Insert("\r\n");
+        commanderHistory->AppendText(str);
+        commanderHistory->AppendText("\n");
     }
 }
 
@@ -547,7 +609,7 @@ CCommander::AppendToCommanderHistory(
     // flush the last line (which doesn't end in \n)
     if (next_line[0] != '\0')
     {
-        WriteToHistoryWindow(next_line);
+        putcombobox(next_line);
     }
 
     // clear the contents of the buffer, since we wrote the entire thing
@@ -567,62 +629,15 @@ CCommander::AppendToCommanderHistory(
     }
     else
     {
-        g_HistoryBuffer.AppendChar(ch);
+        g_HistoryBuffer.AppendChar(Char);
     }
 }
 
-
-// Appends "str" to the end of the what is in the Commander's Recall box.
-// If "str" doesn't fit, then some text will be removed from the top to make it fit.
-void
-CCommander::WriteToHistoryWindow(
-    const char * String
-    )
+void CCommander::OnRichTextChar(wxRichTextEvent & Event)
 {
-    // only if OK to write to recall box do we do it
-    if (IsOkayToUseCommanderWindow)
-    {
-        TMyListboxWindow & commanderRecallBox = MainWindowx->CommandWindow->Listbox;
-
-        for (int i=0;i<16;i++)
-        {
-            // remember where we started
-            UINT uBefore = commanderRecallBox.GetTextLen();
-
-            // output to list box 
-            commanderRecallBox.SetSelection(uBefore, uBefore);
-            commanderRecallBox.Insert(str);
-            UINT uCheck = commanderRecallBox.GetTextLen();
-            commanderRecallBox.Insert("\r\n");
-            UINT uAfter = commanderRecallBox.GetTextLen();
-
-            // if last 2 bytes inserted ok get out
-            if (uCheck+2 == uAfter) 
-            {
-                return;
-            }
-
-            // strip what we inserted
-            commanderRecallBox.SetReadOnly(FALSE);
-
-            commanderRecallBox.SetSelection(uBefore, uAfter);
-            commanderRecallBox.DeleteSelection();
-
-            // strip 4k off top
-            commanderRecallBox.SetSelection(0, 4096);
-            commanderRecallBox.DeleteSelection();
-
-            commanderRecallBox.SetReadOnly(TRUE);
-        }
-
-        // if all else fails try this, should never get here
-        clearcombobox();
-        commanderRecallBox.Insert(str);
-        commanderRecallBox.Insert("\r\n");
-    }
+    fprintf(stderr, "OnRichTextChar\n");
+    Event.Skip();
 }
-
-#endif
 
 BEGIN_EVENT_TABLE(CCommander, wxPanel)
     EVT_BUTTON(ID_COMMANDER_HALT,    CCommander::OnHaltButton)
@@ -635,6 +650,7 @@ BEGIN_EVENT_TABLE(CCommander, wxPanel)
     EVT_TOGGLEBUTTON(ID_COMMANDER_STEP,    CCommander::OnStepButton)
     EVT_SIZE(CCommander::OnSize)
     EVT_KEY_DOWN(CCommander::OnKeyDown)
+    EVT_RICHTEXT_CHARACTER(ID_COMMANDER_HISTORY, CCommander::OnRichTextChar)
 END_EVENT_TABLE()
 
 // ----------------------------------------------------------------------------
