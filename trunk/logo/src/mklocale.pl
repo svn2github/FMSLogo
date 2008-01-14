@@ -35,14 +35,28 @@ sub UpdateLocalizationFiles($$$) {
     chomp;
     my $line = $_;
 
-    if ($line =~ m/^\#define\s+([\w\d_]+)(\s*).*$/) {
+    if ($line =~ m/^\#define\s+([\w\d_]+)(\s*)(.*)$/) {
+      my $token       = $1;
+      my $space       = $2;
+      my $translation = $3;
+
       if ($translations{$1}) {
         # this has already been localized
-        print $newFile "#define $1$2$translations{$1}\n";
+        print $newFile "#define $token$space$translations{$token}\n";
       }
       else {
         # this has not yet been translated
-        print $newFile "$line // NOT_YET_LOCALIZED\n";
+        if ($CountryCode eq 'ps') {
+          # This is the pseudo locale, which means that the
+          # translation is to added "pseudo-" to the front of the
+          # english translation.
+          $translation =~ s/^("\s*)/$1pseudo-/;
+          print $newFile "#define $token$space$translation\n";
+        }
+        else {
+          # append a stylized comment indicating that this should be localized
+          print $newFile "$line // NOT_YET_LOCALIZED\n";
+        }
       }
     }
     elsif ($line =~ m/localized strings for English/) {
@@ -67,3 +81,4 @@ UpdateLocalizationFiles('es', 'Spanish',    'Daniel Ajoy');
 UpdateLocalizationFiles('it', 'Italian',    'Stefano Federici');
 UpdateLocalizationFiles('pt', 'Portuguese', 'Alexandre R Soares');
 UpdateLocalizationFiles('de', 'German',     'Stephan Vogel');
+UpdateLocalizationFiles('ps', 'Pseudoloc',  'David Costanzo');

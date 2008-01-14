@@ -36,6 +36,10 @@
 
   #include "localizedstrings-pt.h"  // Portuguese
 
+#elif LOCALE == 9999
+
+  #include "localizedstrings-ps.h"  // Pseudoloc
+
 #else
 
   #error LOCALE is an unknown value!
