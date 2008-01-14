@@ -121,7 +121,8 @@
 //
 // Localized "alternate" names of Logo special variables
 //
-#define LOCALIZED_ALTERNATE_CASEIGNOREDP "IgnoraMayusculas?"
+#define LOCALIZED_ALTERNATE_CASEIGNOREDP   "IgnoraMayusculas?"
+#define LOCALIZED_ALTERNATE_ERRACT         "erract" // NOT_YET_LOCALIZED
 
 
 //

@@ -43,7 +43,7 @@ CLocalizedNode Error;
 CLocalizedNode End;
 NODE *Redefp;
 CLocalizedNode Caseignoredp;
-NODE *Erract;
+CLocalizedNode Erract;
 NODE *Printdepthlimit;
 NODE *Printwidthlimit;
 NODE *Pause;
@@ -765,7 +765,7 @@ void init()
     Ifelse = intern(make_static_strnode("ifelse"));
     Redefp = intern(make_static_strnode("redefp"));
     Caseignoredp.Initialize("caseignoredp", LOCALIZED_ALTERNATE_CASEIGNOREDP);
-    Erract = intern(make_static_strnode("erract"));
+    Erract.Initialize("erract",             LOCALIZED_ALTERNATE_ERRACT);
     Printdepthlimit = intern(make_static_strnode("printdepthlimit"));
     Printwidthlimit = intern(make_static_strnode("printwidthlimit"));
     Pause = intern(make_static_strnode("pause"));

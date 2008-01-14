@@ -384,7 +384,7 @@ NODE *err_logo(ERR_TYPES error_type, NODE *error_desc, bool uplevel)
 
     // If this error is recoverable and ERRACT is defined,
     // then we should run :ERRACT to get a new value.
-    NODE * err_act_value = valnode__caseobj(Erract);
+    NODE * err_act_value = Erract.GetValue();
     NODE * new_throw_node;
     
     if (g_CatchErrorCount == 0 && 

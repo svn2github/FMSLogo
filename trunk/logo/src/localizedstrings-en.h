@@ -122,6 +122,7 @@
 // Localized "alternate" names of Logo special variables
 //
 #define LOCALIZED_ALTERNATE_CASEIGNOREDP   "caseignoredp"
+#define LOCALIZED_ALTERNATE_ERRACT         "erract"
 
 
 //
