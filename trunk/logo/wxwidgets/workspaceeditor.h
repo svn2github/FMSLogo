@@ -8,11 +8,10 @@ class CWorkspaceEditor: public wxFrame
 {
 public:
     CWorkspaceEditor(wxWindow * Parent);
-    virtual ~CWorkspaceEditor();
 
     // Menu commands
     void Quit(wxCommandEvent& event);
-   
+
 private:
     wxRichTextCtrl * m_RichTextControl;
 

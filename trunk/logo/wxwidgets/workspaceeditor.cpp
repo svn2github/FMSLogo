@@ -8,6 +8,7 @@
 
 static bool bExpert = false;
 
+
 enum
 {
     ID_FILESAVEANDEXIT = wxID_HIGHEST,
@@ -125,10 +126,6 @@ CWorkspaceEditor::CWorkspaceEditor(wxWindow * Parent)
 
 
     SetMenuBar(mainMenu);
-}
-
-CWorkspaceEditor::~CWorkspaceEditor()
-{
 }
 
 // menu command handlers
