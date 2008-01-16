@@ -1,0 +1,12 @@
+LOAD "testlib.lgo
+
+if (ITEM 4 LOGOVERSION) <> 9999 [
+  REPORTTESTFAILED [You must be using a pseudo-loc build of FMSLogo to run this test]
+]
+
+to ps.startup.routine
+  REPORTTESTPASSED [Pseudo-loc startup routine is working properly]
+end
+
+make "pseudo.startup [ps.startup.routine]
+

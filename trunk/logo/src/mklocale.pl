@@ -48,9 +48,9 @@ sub UpdateLocalizationFiles($$$) {
         # this has not yet been translated
         if ($CountryCode eq 'ps') {
           # This is the pseudo locale, which means that the
-          # translation is to added "pseudo-" to the front of the
+          # translation is to added "pseudo." to the front of the
           # english translation.
-          $translation =~ s/^("\s*)/$1pseudo-/;
+          $translation =~ s/^("\s*)/$1pseudo./;
           print $newFile "#define $token$space$translation\n";
         }
         else {

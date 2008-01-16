@@ -22,73 +22,73 @@
 #include "allwind.h"
 
 void filesave(const char *FileName)
-   {
-   if (MainWindowx != NULL && MainWindowx->IsEditorOpen())
-      {
-      // Notify the user that they have an editor open
-      // and that changes in the editor will not be saved.
-      MainWindowx->CommandWindow->MessageBox(
-         LOCALIZED_EDITORISOPEN,
-         LOCALIZED_INFORMATION,
-         MB_OK | MB_ICONQUESTION);
-      }
+{
+    if (MainWindowx != NULL && MainWindowx->IsEditorOpen())
+    {
+        // Notify the user that they have an editor open
+        // and that changes in the editor will not be saved.
+        MainWindowx->CommandWindow->MessageBox(
+            LOCALIZED_EDITORISOPEN,
+            LOCALIZED_INFORMATION,
+            MB_OK | MB_ICONQUESTION);
+    }
 
-   PrintWorkspaceToFileStream(fopen(FileName, "w+"));
-   }
+    PrintWorkspaceToFileStream(fopen(FileName, "w+"));
+}
 
 
 bool fileload(const char *Filename)
-   {
-   bool isOk;
+{
+    bool isOk;
 
-   FILE * filestream = fopen(Filename, "r");
-   if (filestream != NULL)
-      {
-      // save all global state that may be modified
-      NODE *previous_startup = valnode__caseobj(Startup);
+    FILE * filestream = fopen(Filename, "r");
+    if (filestream != NULL)
+    {
+        // save all global state that may be modified
+        NODE *previous_startup = Startup.GetValue();
 
-      FIXNUM savedValueStatus = g_ValueStatus;
-      bool   savedIsDirty     = IsDirty;
-      bool   savedYieldFlag   = yield_flag;
-      FILE * savedLoadStream  = loadstream;
-      NODE * savedCurrentLine = vref(current_line);
+        FIXNUM savedValueStatus = g_ValueStatus;
+        bool   savedIsDirty     = IsDirty;
+        bool   savedYieldFlag   = yield_flag;
+        FILE * savedLoadStream  = loadstream;
+        NODE * savedCurrentLine = vref(current_line);
 
-      loadstream = filestream;
+        loadstream = filestream;
 
-      yield_flag = false;
-      lsetcursorwait(NIL);
+        yield_flag = false;
+        lsetcursorwait(NIL);
 
-      while (!feof(loadstream) && NOT_THROWING)
-         {
-         current_line = reref(current_line, reader(loadstream, ""));
-         NODE * exec_list = parser(current_line, true);
-         g_ValueStatus = VALUE_STATUS_NotOk;
-         eval_driver(exec_list);
-         }
-      fclose(loadstream);
+        while (!feof(loadstream) && NOT_THROWING)
+        {
+            current_line = reref(current_line, reader(loadstream, ""));
+            NODE * exec_list = parser(current_line, true);
+            g_ValueStatus = VALUE_STATUS_NotOk;
+            eval_driver(exec_list);
+        }
+        fclose(loadstream);
 
-      lsetcursorarrow(NIL);
-      yield_flag = savedYieldFlag;
+        lsetcursorarrow(NIL);
+        yield_flag = savedYieldFlag;
 
-      loadstream = savedLoadStream;
+        loadstream = savedLoadStream;
 
-      // run startup after restoring loadstream so
-      // that we don't confuse to_helper into reading
-      // more data from the current (closed) file stream.
-      runstartup(previous_startup);
+        // run startup after restoring loadstream so
+        // that we don't confuse to_helper into reading
+        // more data from the current (closed) file stream.
+        runstartup(previous_startup);
 
-      // restore the global state
-      g_ValueStatus = savedValueStatus;
-      IsDirty       = savedIsDirty;
-      deref(current_line);
-      current_line = savedCurrentLine;
+        // restore the global state
+        g_ValueStatus = savedValueStatus;
+        IsDirty       = savedIsDirty;
+        deref(current_line);
+        current_line = savedCurrentLine;
 
-      isOk = true;
-      }
-   else
-      {
-      isOk = false;
-      }
+        isOk = true;
+    }
+    else
+    {
+        isOk = false;
+    }
 
-   return isOk;
-   }
+    return isOk;
+}

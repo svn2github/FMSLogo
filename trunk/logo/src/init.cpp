@@ -56,7 +56,7 @@ NODE *Unbound;         // a special node that means nothing (or void) was return
 NODE *Not_Enough_Node;
 NODE *Minus_Sign;
 NODE *Minus_Tight;
-NODE *Startup;
+CLocalizedNode Startup;
 NODE *Query;
 NODE *Output;
 NODE *Stop;
@@ -769,7 +769,7 @@ void init()
     Printdepthlimit = intern(make_static_strnode("printdepthlimit"));
     Printwidthlimit = intern(make_static_strnode("printwidthlimit"));
     Pause = intern(make_static_strnode("pause"));
-    Startup = intern(make_static_strnode("startup"));
+    Startup.Initialize("startup",           LOCALIZED_ALTERNATE_STARTUP);
     Output = intern(make_static_strnode("output"));
     Stop = intern(make_static_strnode("stop"));
     Goto = intern(make_static_strnode("goto"));

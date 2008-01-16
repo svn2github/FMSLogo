@@ -113,7 +113,7 @@ extern NODE *Unbound;
 extern NODE *Not_Enough_Node;
 extern NODE *Minus_Sign;
 extern NODE *Minus_Tight;
-extern NODE *Startup;
+extern CLocalizedNode Startup;
 extern NODE *Query;
 extern NODE *Output;
 extern NODE *Stop;

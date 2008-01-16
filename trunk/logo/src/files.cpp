@@ -470,7 +470,7 @@ NODE *lsave(NODE *arg)
 
 void runstartup(NODE *oldst)
 {
-    NODE* st = valnode__caseobj(Startup);
+    NODE* st = Startup.GetValue();
     if (st != oldst && st != NIL && is_list(st))
     {
         start_execution();
@@ -595,7 +595,7 @@ void silent_load(NODE *arg, const char *prefix)
 // Refactor the common parts of lload() and fileload() into a helper.
 NODE *lload(NODE *arg)
 {
-    NODE *st = valnode__caseobj(Startup);
+    NODE *st = Startup.GetValue();
     FIXNUM saved_value_status = g_ValueStatus;
 
     bool isDirtySave = IsDirty;
