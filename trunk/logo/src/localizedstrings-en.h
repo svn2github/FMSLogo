@@ -124,6 +124,7 @@
 #define LOCALIZED_ALTERNATE_CASEIGNOREDP   "caseignoredp"
 #define LOCALIZED_ALTERNATE_ERRACT         "erract"
 #define LOCALIZED_ALTERNATE_STARTUP        "startup"
+#define LOCALIZED_ALTERNATE_REDEFP         "redefp"
 
 
 //

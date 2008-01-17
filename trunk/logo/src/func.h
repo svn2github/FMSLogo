@@ -333,6 +333,7 @@ extern NODE *lplist(NODE *args);
 extern NODE *llogoversion(NODE *args);
 extern bool variableIsTrue(NODE *variable);
 extern bool isCaseIgnored();
+extern bool canRedefinePrimitives();
 
 // File term.cpp
 extern NODE *lcleartext(NODE *args);

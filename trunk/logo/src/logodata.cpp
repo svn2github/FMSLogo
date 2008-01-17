@@ -966,7 +966,7 @@ bool variableIsTrue(NODE *variable)
     return Truex.Equals(valnode__caseobj(variable));
 }
 
-// Returns the value of caseignoredp, according to the following rules
+// Returns the value of :CASEIGNOREDP, according to the following rules
 // If CASEIGNOREDP is defined, then its value is used.
 // Otherwise, if this is a non-English build and the non-English version
 // is defined, then its value is used.
@@ -985,4 +985,25 @@ bool isCaseIgnored()
     // Neither the English nor the alternate is defined,
     // so we use the default value of true.
     return true;
+}
+
+// Returns the value of :REDEFP, according to the following rules:
+// If REDEFP is defined to be "true, then its value is used.
+// Otherwise, if this is a non-English build and the non-English version
+// is defined, then its value is used.
+// Otherwise, it returns false.
+bool canRedefinePrimitives()
+{
+    // Get the value of the English version or the localized version,
+    // depending on which is defined.
+    NODE * value = Redefp.GetValue();
+    if (value != Unbound)
+    {
+        // REDEFP is defined.  Return if it's true.
+        return Truex.Equals(value);
+    }
+
+    // Neither the English nor the alternate is defined,
+    // so we use the default value of false.
+    return false;
 }

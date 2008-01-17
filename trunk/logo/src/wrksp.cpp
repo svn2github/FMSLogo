@@ -255,7 +255,7 @@ NODE *define_helper(NODE *args, int macro_flag)
         {
             name = intern(name);
             val = procnode__caseobj(name);
-            bool redef = variableIsTrue(Redefp);
+            bool redef = canRedefinePrimitives();
             if (!redef && is_prim(val))
             {
                 err_logo(IS_PRIM, name);
@@ -1251,7 +1251,7 @@ NODE *lerase(NODE *arg)
             break;
         }
         NODE * nd = intern(car(proclst));
-        bool redef = variableIsTrue(Redefp);
+        bool redef = canRedefinePrimitives();
         if (!redef && is_prim(procnode__caseobj(nd)))
         {
             err_logo(IS_PRIM, nd);
@@ -1649,7 +1649,7 @@ NODE *lcopydef(NODE *args)
         return Unbound;
     }
 
-    bool redef = variableIsTrue(Redefp);
+    bool redef = canRedefinePrimitives();
     if (!redef && is_prim(procnode__caseobj(arg1)))
     {
         // attempted to redefine a primitive

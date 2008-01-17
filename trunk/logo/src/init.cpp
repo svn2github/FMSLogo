@@ -41,7 +41,7 @@ CLocalizedNode Toplevel;
 CLocalizedNode System;
 CLocalizedNode Error;
 CLocalizedNode End;
-NODE *Redefp;
+CLocalizedNode Redefp;
 CLocalizedNode Caseignoredp;
 CLocalizedNode Erract;
 NODE *Printdepthlimit;
@@ -763,7 +763,7 @@ void init()
     Macro = intern(make_static_strnode(".macro"));
     If = intern(make_static_strnode("if"));
     Ifelse = intern(make_static_strnode("ifelse"));
-    Redefp = intern(make_static_strnode("redefp"));
+    Redefp.Initialize("redefp",             LOCALIZED_ALTERNATE_REDEFP);
     Caseignoredp.Initialize("caseignoredp", LOCALIZED_ALTERNATE_CASEIGNOREDP);
     Erract.Initialize("erract",             LOCALIZED_ALTERNATE_ERRACT);
     Printdepthlimit = intern(make_static_strnode("printdepthlimit"));
