@@ -1,5 +1,5 @@
 /*
-*      print.c         logo printing module                    dvb
+*      print.cpp         logo printing module                    dvb
 *
 *       Copyright (C) 1995 by the Regents of the University of California
 *       Copyright (C) 1995 by George Mills
@@ -20,6 +20,8 @@
 */
 
 #include "allwind.h"
+
+#include <algorithm>
 
 int print_stringlen;
 char *print_stringptr;
@@ -262,36 +264,36 @@ void real_print_node(FILE *strm, const NODE *nd, int depth, int width)
         assert(is_string(nd));
 
         // figure out how many charaters to print
-        int wid;
+        int totalCharsToPrint;
         if (width < 0) 
         {
-            wid = getstrlen(nd);
+            totalCharsToPrint = getstrlen(nd);
         }
         else
         {
-            wid = (width < 10 ? 10 : width);
-            wid = (wid < getstrlen(nd) ? wid : getstrlen(nd));
+            totalCharsToPrint = std::min(width, 10);
+            totalCharsToPrint = std::min(totalCharsToPrint, getstrlen(nd));
         }
 
         // should we print some elipses at the end?
         bool dots = false;
-        if (wid < getstrlen(nd)) 
+        if (totalCharsToPrint < getstrlen(nd))
         {
             dots = true;
         }
 
-        // print wid characters of nd
+        // print totalCharsToPrint characters of nd
         const char *cp = getstrptr(nd);
         if (!backslashed(nd))
         {
-            for (int i = 0; i < wid; i++)
+            for (int i = 0; i < totalCharsToPrint; i++)
             {
                 print_char(strm, *cp++);
             }
         }
         else if (!print_backslashes)
         {
-            for (int i = 0; i < wid; i++)
+            for (int i = 0; i < totalCharsToPrint; i++)
             {
                 print_char(strm, clearparity(*cp++));
             }
@@ -300,7 +302,7 @@ void real_print_node(FILE *strm, const NODE *nd, int depth, int width)
         {
             // determine if the word was in vbars
             int i;
-            for (i = 0; i < wid; i++)
+            for (i = 0; i < totalCharsToPrint; i++)
             {
                 if (getparity(cp[i])) 
                 {
@@ -308,16 +310,16 @@ void real_print_node(FILE *strm, const NODE *nd, int depth, int width)
                 }
             }
 
-            if (i < wid)
+            if (i < totalCharsToPrint)
             {
                 // word was in vbars
                 if (strchr("\":", *cp))
                 {
                     print_char(strm, *cp++);
-                    wid--;
+                    totalCharsToPrint--;
                 }
                 print_char(strm, '|');
-                for (i = 0; i < wid; i++)
+                for (i = 0; i < totalCharsToPrint; i++)
                 {
                     print_char(strm, clearparity(*cp++));
                 }
@@ -326,7 +328,7 @@ void real_print_node(FILE *strm, const NODE *nd, int depth, int width)
             else 
             {
                 // word was not in vbars
-                for (i = 0; i < wid; i++)
+                for (i = 0; i < totalCharsToPrint; i++)
                 {
                     if (is_special_character(*cp))
                     {
