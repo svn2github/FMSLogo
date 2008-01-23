@@ -21,6 +21,9 @@ I. Kit Description/Location (http://sourceforge.net/projects/fmslogo)
 II. New features/bugs fixed:
 
   * Added for 6.19.0
+    o Fix bug #1867803; The names of the special variables
+      CASEIGNOREDP, ERRACT, STARTUP, REDEFP, PRINTWIDTHLIMIT, and
+      PRINTDEPTHLIMIT are now internationalized.
     o Minor improvements to the German translation.
     o Minor improvements to the Spanish translation.
     o Minor improvements to the manual.
