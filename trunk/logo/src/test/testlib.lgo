@@ -460,6 +460,10 @@ TO RUNPRINTTEST :printinstruction :expectedstring
 
   LOCALMAKE "actualstring READWORD
 
+  ; locally unbind the print width/depth limits so that logging happens as expected
+  LOCAL "printwidthlimit
+  LOCAL "printdepthlimit
+
   IFELSE EQUAL? :actualstring :expectedstring [
       REPORTTESTPASSED (LIST "Running :printinstruction "printed :actualstring "|, as expected.|)
   ][
