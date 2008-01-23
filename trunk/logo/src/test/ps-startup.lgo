@@ -1,6 +1,6 @@
 LOAD "testlib.lgo
 
-if (ITEM 4 LOGOVERSION) <> 9999 [
+if NOT ISPSEUDOLOCBUILD [
   REPORTTESTFAILED [You must be using a pseudo-loc build of FMSLogo to run this test]
 ]
 

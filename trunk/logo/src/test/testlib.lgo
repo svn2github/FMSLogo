@@ -14,13 +14,34 @@ TO LOCALEFALSE
 END
 BURY [LOCALEFALSE]
 
+TO ISPSEUDOLOCBUILD
+  OUTPUT (ITEM 4 LOGOVERSION) = 9999
+END
+BURY [ISPSEUDOLOCBUILD]
+
+TO UNLIMITEDPRINT :listtoprint
+  ; declare printwidthlimit and printdepthlimit local to logging happens as expected
+  local [printdepthlimit printwidthlimit pseudo.printdepthlimit pseudo.printwidthlimit]
+
+  PRINT :listtoprint
+END
+BURY [UNLIMITEDPRINT]
+
+TO UNLIMITEDMESSAGEBOX :caption :message
+  ; declare printwidthlimit and printdepthlimit local to logging happens as expected
+  local [printdepthlimit printwidthlimit pseudo.printdepthlimit pseudo.printwidthlimit]
+
+  MESSAGEBOX :caption :message
+END
+BURY [UNLIMITEDMESSAGEBOX]
+
 TO REPORTTESTINFO :message
 
   ; backup the current writer
   LOCALMAKE "previouswriter WRITER
   SETWRITE :testlog
 
-  PRINT (SENTENCE "INFO: :message)
+  UNLIMITEDPRINT (SENTENCE "INFO: :message)
 
   ; restore the current writer
   SETWRITE :previouswriter
@@ -34,7 +55,7 @@ TO REPORTTESTPASSED :message
   LOCALMAKE "previouswriter WRITER
   SETWRITE :testlog
 
-  PRINT (SENTENCE "PASS: :message)
+  UNLIMITEDPRINT (SENTENCE "PASS: :message)
 
   ; restore the current writer
   SETWRITE :previouswriter
@@ -49,8 +70,8 @@ TO REPORTTESTFAILED :message
   SETWRITE :testlog
 
   LOCALMAKE "result (SENTENCE "FAIL: :message)
-  PRINT :result
-  MESSAGEBOX [Test Failed] :result
+  UNLIMITEDPRINT :result
+  UNLIMITEDMESSAGEBOX [Test Failed] :result
 
   ; restore the current writer
   SETWRITE :previouswriter
@@ -67,14 +88,13 @@ TO REPORTTEST :testpassed :result :expected
 END
 BURY [REPORTTEST]
 
-
 TO TRACEINSTRUCTION :instruction
 
   ; backup the current writer
   LOCALMAKE "previouswriter WRITER
   SETWRITE :testlog
 
-  PRINT (SENTENCE "CALL: :instruction)
+  UNLIMITEDPRINT (SENTENCE "CALL: :instruction)
 
   ; restore the current writer
   SETWRITE :previouswriter
@@ -459,10 +479,6 @@ TO RUNPRINTTEST :printinstruction :expectedstring
   SETREAD  :testfile
 
   LOCALMAKE "actualstring READWORD
-
-  ; locally unbind the print width/depth limits so that logging happens as expected
-  LOCAL "printwidthlimit
-  LOCAL "printdepthlimit
 
   IFELSE EQUAL? :actualstring :expectedstring [
       REPORTTESTPASSED (LIST "Running :printinstruction "printed :actualstring "|, as expected.|)

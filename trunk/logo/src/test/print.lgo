@@ -57,7 +57,7 @@ END
 TO PRINTTEST.RUNPRINTDEPTHLIMITTEST :depthlimit :printfunction :whattoprint :expectedstring
 
    ; declare printdepthlimit local so that there are no side-effects
-   local "printdepthlimit
+   local "printdephlimit
 
    ; trace the value of printdepthlimit
    TRACEINSTRUCTION (list "make QUOTED "printdepthlimit :depthlimit)
@@ -137,13 +137,13 @@ TO PRINTTEST.PRINTWIDTHLIMIT
    PRINTTEST.RUNPRINTWIDTHLIMITTEST 2 "print [[a b c] [1 2 3] [x y z]] "|[a b ...] [1 2 ...] ...|
 
    ; PRINTWIDTHLIMIT should also affect show
-   PRINTTEST.RUNPRINTWIDTHLIMITTEST 0 "show [1 2 3 4] "...
+   PRINTTEST.RUNPRINTWIDTHLIMITTEST 0 "show [1 2 3 4] "|[...]|
    PRINTTEST.RUNPRINTWIDTHLIMITTEST 2 "show [1 2 3 4] "|[1 2 ...]|
    PRINTTEST.RUNPRINTWIDTHLIMITTEST 3 "show [1 2 3 4] "|[1 2 3 ...]|
    PRINTTEST.RUNPRINTWIDTHLIMITTEST 4 "show [1 2 3 4] "|[1 2 3 4]|
 
    ; PRINTWIDTHLIMIT should affect arrays
-   PRINTTEST.RUNPRINTWIDTHLIMITTEST 0 "print {1 2 3 4} "...
+   PRINTTEST.RUNPRINTWIDTHLIMITTEST 0 "print {1 2 3 4} "|{...}|
    PRINTTEST.RUNPRINTWIDTHLIMITTEST 2 "print {1 2 3 4} "|{1 2 ...}|
    PRINTTEST.RUNPRINTWIDTHLIMITTEST 3 "print {1 2 3 4} "|{1 2 3 ...}|
    PRINTTEST.RUNPRINTWIDTHLIMITTEST 4 "print {1 2 3 4} "|{1 2 3 4}|
@@ -188,6 +188,30 @@ TO PRINTTEST.DEEPLYNESTEDARRAY
 
 END
 
+TO PRINTTEST.PSEUDOLOC
+   ; tests that :PRINTDEPTHLIMIT and :PRINTWIDTHLIMIT are internationalized properly
+   IF ISPSEUDOLOCBUILD [
+      local [printdepthlimit pseudo.printdepthlimit]
+      local [printwidthlimit pseudo.printwidthlimit]
+
+      ; test that PRINTDEPTHLIMIT was localized
+      TRACEINSTRUCTION [make "pseudo.printdepthlimit 3]
+      RUNPRINTTEST [print [0 [1 [2 [3 [4]]]]]] "|0 [1 [2 [... ...]]]|
+
+      ; test that the English version shadows the local name
+      TRACEINSTRUCTION [make "printdepthlimit 2]
+      RUNPRINTTEST [print [0 [1 [2 [3 [4]]]]]] "|0 [1 [... ...]]|
+
+      ; test that PRINTWIDTHLIMIT was localized
+      TRACEINSTRUCTION [make "pseudo.printwidthlimit 3]
+      RUNPRINTTEST [print [1 2 3 4 5]] "|1 2 3 ...|
+
+      ; test that the English version shadows the local name
+      TRACEINSTRUCTION [make "printwidthlimit 2]
+      RUNPRINTTEST [print [1 2 3 4 5]] "|1 2 ...|
+   ]
+END
+
 TO PRINTTEST
 
    PRINTTEST.SMOKETEST
@@ -195,6 +219,7 @@ TO PRINTTEST
    PRINTTEST.PRINTDEPTHLIMIT
    PRINTTEST.PRINTWIDTHLIMIT
    PRINTTEST.PRINTDEPTHANDWIDTHLIMIT
+   PRINTTEST.PSEUDOLOC
 
    ; PRINTTEST.DEEPLYNESTEDLIST
    ; PRINTTEST.DEEPLYNESTEDARRAY
