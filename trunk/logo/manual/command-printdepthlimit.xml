@@ -13,7 +13,8 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-If a nonnegative integer, indicates the maximum depth of sublist structure that will be printed by <link linkend="command-print">PRINT</link>, etc.
+PRINTDEPTHLIMIT is a special variable.
+If its value is a nonnegative integer, then &PRODUCTNAME; treats its value as maximum depth of a sublist (or subarray) structure will be printed by <link linkend="command-print">PRINT</link>, etc.
 </para>
 </listitem>
 </varlistentry>
