@@ -121,10 +121,12 @@
 //
 // Localized "alternate" names of Logo special variables
 //
-#define LOCALIZED_ALTERNATE_CASEIGNOREDP   "caseignoredp" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_ERRACT         "erract" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_STARTUP        "startup" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_REDEFP         "redefp" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_CASEIGNOREDP    "caseignoredp" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_ERRACT          "erract" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_STARTUP         "startup" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_REDEFP          "redefp" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_PRINTWIDTHLIMIT "printwidthlimit" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_PRINTDEPTHLIMIT "printdepthlimit" // NOT_YET_LOCALIZED
 
 
 //

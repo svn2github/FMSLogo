@@ -348,14 +348,9 @@ void real_print_node(FILE *strm, const NODE *nd, int depth, int width)
 }
 
 static
-int find_limit(NODE *nd)
+int find_limit(const CLocalizedNode & Node)
 {
-    if (nd == NIL) 
-    {
-        return -1;
-    }
-
-    nd = cnv_node_to_numnode(valnode__caseobj(nd));
+    NODE * nd = cnv_node_to_numnode(Node.GetValue());
 
     int val = -1;
     if (nodetype(nd) == INTEGER) 
