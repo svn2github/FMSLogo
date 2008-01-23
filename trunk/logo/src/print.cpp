@@ -271,7 +271,7 @@ void real_print_node(FILE *strm, const NODE *nd, int depth, int width)
         }
         else
         {
-            totalCharsToPrint = std::min(width, 10);
+            totalCharsToPrint = std::max(width, 10);
             totalCharsToPrint = std::min(totalCharsToPrint, getstrlen(nd));
         }
 
