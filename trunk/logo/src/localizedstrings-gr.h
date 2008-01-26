@@ -784,16 +784,17 @@
 #define LOCALIZED_STATUS_CALLS                  "Κλήσεις:" // 
 #define LOCALIZED_STATUS_PEAKMEMORY             "Μνήμη:" // 
 
-#define LOCALIZED_STATUS_PENREVERSE  "Αντίστροφο" // 
-#define LOCALIZED_STATUS_PENNORMAL   "Κανονικό" // 
-#define LOCALIZED_STATUS_PENERASE    "Σβήσιμο" // 
-#define LOCALIZED_STATUS_PENUP       "Πάνω" // 
-#define LOCALIZED_STATUS_PENDOWN     "Κάτω" // 
-#define LOCALIZED_STATUS_PENSHOWN    "Ορατή" //  
-#define LOCALIZED_STATUS_PENHIDDEN   "Αόρατη" // 
-#define LOCALIZED_STATUS_POLYGONS    "Πολύγωνα" // 
-#define LOCALIZED_STATUS_VECTORS     "Διανύσματα" // 
-#define LOCALIZED_STATUS_NODES       "Κόμβοι" // 
+#define LOCALIZED_STATUS_PENREVERSE     "Αντίστροφο" // 
+#define LOCALIZED_STATUS_PENNORMAL      "Κανονικό" // 
+#define LOCALIZED_STATUS_PENERASE       "Σβήσιμο" // 
+#define LOCALIZED_STATUS_PENUP          "Πάνω" // 
+#define LOCALIZED_STATUS_PENDOWN        "Κάτω" // 
+#define LOCALIZED_STATUS_PENSHOWN       "Ορατή" //  
+#define LOCALIZED_STATUS_PENHIDDEN      "Αόρατη" // 
+#define LOCALIZED_STATUS_POLYGONS       "Πολύγωνα" // 
+#define LOCALIZED_STATUS_VECTORS        "Διανύσματα" // 
+#define LOCALIZED_STATUS_NODES          "Κόμβοι" // 
+#define LOCALIZED_STATUS_NOT_APPLICABLE "N/A" // NOT_YET_LOCALIZED
 
 //
 // Strings on the Erase|Edit Procedure dialog box

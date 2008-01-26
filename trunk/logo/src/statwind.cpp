@@ -196,7 +196,7 @@ void update_status_paletteuse(void)
         }
         else
         {
-            strcpy(text, "N/A");
+            strcpy(text, LOCALIZED_STATUS_NOT_APPLICABLE);
         }
 
         MainWindowx->StatusWindow->SetDlgItemText(ID_PALETTEUSE, text);

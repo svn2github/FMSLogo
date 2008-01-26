@@ -24,6 +24,8 @@ II. New features/bugs fixed:
     o Fix bug #1867803; The names of the special variables
       CASEIGNOREDP, ERRACT, STARTUP, REDEFP, PRINTWIDTHLIMIT, and
       PRINTDEPTHLIMIT are now internationalized.
+    o Fix bug #1803793; The string "N/A" for Palette in Status
+      window is now internationalized.
     o Minor improvements to the German translation.
     o Minor improvements to the Spanish translation.
     o Minor improvements to the manual.

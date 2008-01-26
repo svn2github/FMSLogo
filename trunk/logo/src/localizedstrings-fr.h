@@ -784,16 +784,17 @@
 #define LOCALIZED_STATUS_CALLS                  "Appels:"
 #define LOCALIZED_STATUS_PEAKMEMORY             "Mémoire:"
 
-#define LOCALIZED_STATUS_PENREVERSE  "Inverse"
-#define LOCALIZED_STATUS_PENNORMAL   "Normal"
-#define LOCALIZED_STATUS_PENERASE    "Efface"
-#define LOCALIZED_STATUS_PENUP       "Haut"
-#define LOCALIZED_STATUS_PENDOWN     "Bas"
-#define LOCALIZED_STATUS_PENSHOWN    "Visible"
-#define LOCALIZED_STATUS_PENHIDDEN   "Caché"
-#define LOCALIZED_STATUS_POLYGONS    "Polygones" // 
-#define LOCALIZED_STATUS_VECTORS     "Vecteurs"
-#define LOCALIZED_STATUS_NODES       "Noeuds"
+#define LOCALIZED_STATUS_PENREVERSE     "Inverse"
+#define LOCALIZED_STATUS_PENNORMAL      "Normal"
+#define LOCALIZED_STATUS_PENERASE       "Efface"
+#define LOCALIZED_STATUS_PENUP          "Haut"
+#define LOCALIZED_STATUS_PENDOWN        "Bas"
+#define LOCALIZED_STATUS_PENSHOWN       "Visible"
+#define LOCALIZED_STATUS_PENHIDDEN      "Caché"
+#define LOCALIZED_STATUS_POLYGONS       "Polygones" // 
+#define LOCALIZED_STATUS_VECTORS        "Vecteurs"
+#define LOCALIZED_STATUS_NODES          "Noeuds"
+#define LOCALIZED_STATUS_NOT_APPLICABLE "N/A" // NOT_YET_LOCALIZED
 
 //
 // Strings on the Erase|Edit Procedure dialog box
