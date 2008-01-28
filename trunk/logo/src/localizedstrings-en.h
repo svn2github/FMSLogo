@@ -1376,3 +1376,19 @@
 #define LOCALIZED_COLOR_WHITESMOKE            "WhiteSmoke"
 #define LOCALIZED_COLOR_YELLOW                "Yellow"
 #define LOCALIZED_COLOR_YELLOWGREEN           "YellowGreen"
+
+//
+// The name of each "window class" that DEBUGWINDOWS prints.
+// These should match the cooresponding terms that is used
+// in the  LOCALIZED_ALTERNATE_*CREATE procedures.
+//
+#define LOCALIZED_WINDOWCLASSNAME_WINDOW       "Window"
+#define LOCALIZED_WINDOWCLASSNAME_STATIC       "Static"
+#define LOCALIZED_WINDOWCLASSNAME_LISTBOX      "ListBox"
+#define LOCALIZED_WINDOWCLASSNAME_COMBOBOX     "ComboBox"
+#define LOCALIZED_WINDOWCLASSNAME_BUTTON       "Button"
+#define LOCALIZED_WINDOWCLASSNAME_SCROLLBAR    "ScrollBar"
+#define LOCALIZED_WINDOWCLASSNAME_GROUPBOX     "GroupBox"
+#define LOCALIZED_WINDOWCLASSNAME_RADIOBUTTON  "RadioButton"
+#define LOCALIZED_WINDOWCLASSNAME_CHECKBOX     "CheckBox"
+#define LOCALIZED_WINDOWCLASSNAME_DIALOG       "Dialog"

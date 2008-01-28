@@ -664,19 +664,22 @@ void dialoglist::list(const char *k, int level)
         static const char *Windowname[] =
         {
             "?",
-            "Window",
-            "Static",
-            "ListBox",
-            "ComboBox",
-            "Button",
-            "ScrollBar",
-            "GroupBox",
-            "RadioButton",
-            "CheckBox",
-            "Dialog",
+            LOCALIZED_WINDOWCLASSNAME_WINDOW,
+            LOCALIZED_WINDOWCLASSNAME_STATIC,
+            LOCALIZED_WINDOWCLASSNAME_LISTBOX,
+            LOCALIZED_WINDOWCLASSNAME_COMBOBOX,
+            LOCALIZED_WINDOWCLASSNAME_BUTTON,
+            LOCALIZED_WINDOWCLASSNAME_SCROLLBAR,
+            LOCALIZED_WINDOWCLASSNAME_GROUPBOX,
+            LOCALIZED_WINDOWCLASSNAME_RADIOBUTTON,
+            LOCALIZED_WINDOWCLASSNAME_CHECKBOX,
+            LOCALIZED_WINDOWCLASSNAME_DIALOG,
         };
 
-        const size_t MAX_WINDOWNAME_LENGTH = sizeof("radiobutton");
+        // MAX_WINDOWNAME_LENGTH is the length of the longest string of
+        // in Windowname.  This should be computed dynamically, but choosing
+        // a reasonable upper-bound is easier.
+        const size_t MAX_WINDOWNAME_LENGTH = 256;
 
         if (level == 0)
         {
