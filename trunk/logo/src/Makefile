@@ -25,8 +25,8 @@ fmslogod.exe :
 debug : fmslogod.exe ;
 
 clean :
-	$(RM) version.h
-	$(RM) BccW32.cfg
+	$(RM) $(wildcard version.h)
+	$(RM) $(wildcard BccW32.cfg)
 	$(RM) $(shell /usr/bin/find . -iname '*.obj')
 	$(RM) $(shell /usr/bin/find . -iname '*.res')
 	$(RM) $(shell /usr/bin/find . -iname '*.bak')
@@ -46,6 +46,7 @@ clean :
 	$(RM) $(wildcard *.fts)
 	$(RM) $(wildcard *.gid)
 	$(RM) $(shell /usr/bin/find . -iname 'logo.#*')
+	$(RM) $(wildcard Examples/3d/3dmovie.gif)
 
 tags : *.cpp *.h *.c
 	etags $(shell /usr/bin/find . -iname '*.cpp' -o -iname '*.h' -o -iname '*.c')
