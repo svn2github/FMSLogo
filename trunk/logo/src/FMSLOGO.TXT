@@ -27,6 +27,8 @@ II. New features/bugs fixed:
     o Fix bug #1803793; The string "N/A" for Palette in Status window
       is now internationalized.
     o Fix bug #1803975; Output from DEBUGWINDOWS is now internationalized.
+    o Fix bug #1661228; MDSETITEM now throws an error when the indexlist
+      input is not a list.
     o Minor improvements to the German translation.
     o Minor improvements to the Spanish translation.
     o Minor improvements to the manual.
