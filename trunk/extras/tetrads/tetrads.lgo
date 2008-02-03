@@ -239,20 +239,20 @@ to ShapeCreate
 
    make "newshape array 5
 
-   ; shape
-   setitem 1 :newshape RANDOM 7
+   ; pick a shape at random
+   setitem 1 :newshape random count :gameshapes
 
-   ; color
+   ; set the color
    make "shapedata item (ShapeType :newshape) :gameshapes
    setitem 2 :newshape  item (count :shapedata) - 1 :shapedata
 
-   ; rotation
+   ; set the rotation
    setitem 3 :newshape  0
 
-   ; X
+   ; set the X position
    setitem 4 :newshape  :GameBoardWidth / 2
 
-   ; Y
+   ; set the Y position
    setitem 5 :newshape  :GameBoardHeight - 1
 
    output :newshape

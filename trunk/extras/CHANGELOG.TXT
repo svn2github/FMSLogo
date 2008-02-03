@@ -1,3 +1,7 @@
+FMSLogo Extras 1.10
+o tetrads
+  * Make it easier to change the gameshapes array.
+
 FMSLogo Extras 1.9
 o tetrads
   * Add a pause/unpause feature.
