@@ -743,57 +743,79 @@ FIXNUM int_arg(NODE *args)
 
 NODE *litem(NODE *args)
 {
-    NODE * val = integer_arg(args);
     NODE * obj = cadr(args);
     while ((obj == NIL || obj == Null_Word) && NOT_THROWING)
     {
         setcar(cdr(args), err_logo(BAD_DATA, obj));
         obj = cadr(args);
     }
-    if (NOT_THROWING)
+
+    NODE * val = integer_arg(args);
+    while (NOT_THROWING)
     {
         int i = getint(val);
         if (is_list(obj))
         {
             if (i <= 0)
             {
-                err_logo(BAD_DATA_UNREC, val);
-                return Unbound;
+                // all list indices must be positive
+                setcar(args, err_logo(BAD_DATA, car(args)));
+                val = integer_arg(args);
+                continue;
             }
+
+            // advance item to the ith element in obj
+            NODE * item = obj;
             while (--i > 0)
             {
-                obj = cdr(obj);
-                if (obj == NIL)
+                item = cdr(item);
+                if (item == NIL)
                 {
-                    err_logo(BAD_DATA_UNREC, val);
-                    return Unbound;
+                    // reached the end of the list
+                    break;
                 }
             }
-            return car(obj);
+
+            if (item == NIL)
+            {
+                // the index goes beyond the length of the list
+                setcar(args, err_logo(BAD_DATA, car(args)));
+                val = integer_arg(args);
+                continue;
+            }
+
+            return car(item);
         }
         else if (nodetype(obj) == ARRAY)
         {
             i -= getarrorg(obj);
             if (i < 0 || i >= getarrdim(obj))
             {
-                err_logo(BAD_DATA_UNREC, val);
-                return Unbound;
+                // i is out of range
+                setcar(args, err_logo(BAD_DATA, car(args)));
+                val = integer_arg(args);
+                continue;
             }
-            return (getarrptr(obj))[i];
+            return getarrptr(obj)[i];
         }
         else
         {
+            // we will treat obj as a word
             if (i <= 0)
             {
-                err_logo(BAD_DATA_UNREC, val);
-                return Unbound;
+                // letters of a word are 1-indexed
+                setcar(args, err_logo(BAD_DATA, car(args)));
+                val = integer_arg(args);
+                continue;
             }
             setcar(cdr(args), cnv_node_to_strnode(obj));
             obj = cadr(args);
             if (i > getstrlen(obj))
             {
-                err_logo(BAD_DATA_UNREC, val);
-                return Unbound;
+                // letters of a word are 1-indexed
+                setcar(args, err_logo(BAD_DATA, car(args)));
+                val = integer_arg(args);
+                continue;
             }
             return make_strnode(
                 getstrptr(obj) + i - 1,

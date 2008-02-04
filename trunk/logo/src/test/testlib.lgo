@@ -137,6 +137,24 @@ TO SIMPLEREPORTTEST :instruction :expectedresult
 END
 BURY [SIMPLEREPORTTEST]
 
+; This is just like SIMPLEREPORTTEST except that it does not
+; wrap the instruction in a CATCH "ERROR [] instruction.
+; You should use this form when you want to test that you
+; can recover from errors with ERRACT.
+TO SIMPLEREPORTTESTNOCATCH :instruction :expectedresult
+  LOCAL "result
+
+  MAKE "result RUN :instruction
+
+  IF NOT EQUAL? :result :expectedresult [
+    REPORTTESTFAILED (LIST :instruction "output :result "|. We expected| :expectedresult ".)
+    STOP
+  ]
+
+  REPORTTESTPASSED (LIST :instruction "output :result "|, as expected.|)
+END
+BURY [SIMPLEREPORTTESTNOCATCH]
+
 
 TO FAILIFNOTTRUE :instruction
   SIMPLEREPORTTEST :instruction LOCALETRUE
@@ -255,7 +273,7 @@ BURY [RUNOUTOFBOUNDSTEST]
 TO RUNNONRECOVERABLEDOESNTLIKEINPUTTEST :instructions
   RUNEXPECTERRORTEST :instructions 4
 END
-BURY [RUNDOESNTLIKEINPUTTEST]
+BURY [RUNNONRECOVERABLEDOESNTLIKEINPUTTEST]
 
 TO RUNNOTENOUGHINPUTSTEST :instructions
   RUNEXPECTERRORTEST :instructions 6
