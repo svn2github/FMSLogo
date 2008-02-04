@@ -29,6 +29,7 @@ II. New features/bugs fixed:
     o Fix bug #1803975; Output from DEBUGWINDOWS is now internationalized.
     o Fix bug #1661228; MDSETITEM now throws an error when the indexlist
       input is not a list.
+    o Fix bug #1661226; MDARRAY now throws an error when given bad inputs.
     o Minor improvements to the German translation.
     o Minor improvements to the Spanish translation.
     o Minor improvements to the manual.

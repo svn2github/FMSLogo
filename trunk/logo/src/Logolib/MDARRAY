@@ -1,4 +1,5 @@
 to mdarray :sizes [:origin 1]
+if not list? :sizes [(throw "error 4 :sizes)]
 local "array
 make "array (array first :sizes :origin)
 if not emptyp bf :sizes ~
