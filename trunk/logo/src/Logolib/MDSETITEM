@@ -1,5 +1,6 @@
 to mdsetitem :index :array :val
-if not list? :index [(throw "error 4 :index)]
+if not list?  :index [(throw "error 4 :index)]
+if not array? :index [(throw "error 4 :val)]
 setitem last :index (mditem butlast :index :array) :val
 end
 
