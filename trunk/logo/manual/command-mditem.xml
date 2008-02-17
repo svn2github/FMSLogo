@@ -12,7 +12,7 @@
 
 <varlistentry><term>Description</term>
 <listitem>
-<para>Outputs an element of the multi-dimensional array selected by the list of numbers (an index list).</para>
+<para>Outputs an element of the multi-dimensional array (or multi-dimensional list) selected by the list of numbers (an index list).</para>
 </listitem>
 </varlistentry>
 
