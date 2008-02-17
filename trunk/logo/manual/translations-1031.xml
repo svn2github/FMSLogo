@@ -1503,14 +1503,6 @@
        <entry>wirf</entry>
      </row>
      <row>
-       <entry><link linkend='command-throw'>throw</link></entry>
-       <entry>forme</entry>
-     </row>
-     <row>
-       <entry><link linkend='command-throw'>throw</link></entry>
-       <entry>erziele</entry>
-     </row>
-     <row>
        <entry><link linkend='command-time'>time</link></entry>
        <entry>Zeit</entry>
      </row>
@@ -2044,10 +2036,6 @@
        <entry><link linkend='command-er'>er</link></entry>
      </row>
      <row>
-       <entry>erziele</entry>
-       <entry><link linkend='command-throw'>throw</link></entry>
-     </row>
-     <row>
        <entry>falsch</entry>
        <entry><link linkend='command-false'>false</link></entry>
      </row>
@@ -2098,10 +2086,6 @@
      <row>
        <entry>fixierestift</entry>
        <entry><link linkend='command-setpen'>setpen</link></entry>
-     </row>
-     <row>
-       <entry>forme</entry>
-       <entry><link linkend='command-throw'>throw</link></entry>
      </row>
      <row>
        <entry>Fragebox</entry>

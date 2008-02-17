@@ -239,6 +239,10 @@
        <entry>cascada.2</entry>
      </row>
      <row>
+       <entry><link linkend='command-caseignoredp'>caseignoredp</link></entry>
+       <entry>IgnoraMayusculas?</entry>
+     </row>
+     <row>
        <entry><link linkend='command-catch'>catch</link></entry>
        <entry>atrapa</entry>
      </row>
@@ -1868,7 +1872,7 @@
      </row>
      <row>
        <entry><link linkend='command-sound'>sound</link></entry>
-       <entry>tono</entry>
+       <entry>suena</entry>
      </row>
      <row>
        <entry><link linkend='command-soundoff'>soundoff</link></entry>
@@ -1977,10 +1981,6 @@
      <row>
        <entry><link linkend='command-tone'>tone</link></entry>
        <entry>tono</entry>
-     </row>
-     <row>
-       <entry><link linkend='command-tone'>tone</link></entry>
-       <entry>suenatono</entry>
      </row>
      <row>
        <entry><link linkend='command-towards'>towards</link></entry>
@@ -3092,6 +3092,10 @@
        <entry><link linkend='command-ignore'>ignore</link></entry>
      </row>
      <row>
+       <entry>IgnoraMayusculas?</entry>
+       <entry><link linkend='command-caseignoredp'>caseignoredp</link></entry>
+     </row>
+     <row>
        <entry>iguales?</entry>
        <entry><link linkend='command-equalp'>equal?</link></entry>
      </row>
@@ -4028,8 +4032,8 @@
        <entry><link linkend='command-penup'>penup</link></entry>
      </row>
      <row>
-       <entry>suenatono</entry>
-       <entry><link linkend='command-tone'>tone</link></entry>
+       <entry>suena</entry>
+       <entry><link linkend='command-sound'>sound</link></entry>
      </row>
      <row>
        <entry>suenaWave</entry>
