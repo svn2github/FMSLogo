@@ -1,0 +1,39 @@
+<section id="command-repcount">
+    <title>REPCOUNT</title>
+<indexterm><primary>REPCOUNT</primary></indexterm>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>REPCOUNT</command></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+This operation is only meaningful within the instruction list of a <link linkend="command-repeat">REPEAT</link> command.
+It outputs the number of repetitions that have been done, including the current one.
+That is, it outputs 1 the first time through, 2 the second time, and so on.
+</para>
+
+<para>
+If two REPEAT commands are nested, REPCOUNT will return the repeat count if the innermost REPEAT.
+</para>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Example</term>
+<listitem>
+<programlisting><userinput>REPEAT 3 [PRINT (LIST "This "is "iteration REPCOUNT)]</userinput>
+This is iteration 1
+This is iteration 2
+This is iteration 3
+</programlisting>
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</section>

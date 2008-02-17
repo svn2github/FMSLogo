@@ -1,0 +1,52 @@
+LOAD "testlib.lgo
+
+TO READWORDTEST.SMOKETEST
+
+  ; read a single word
+  RUNPRINTTEST [SHOW "Hello]              "Hello
+
+  ; read two words
+  RUNPRINTTEST [SHOW "|Hello Hello|]      "|Hello Hello|
+
+  ; empty files reads as the empty list
+  RUNPRINTTEST [IGNORE 1]            []
+
+  ; tilde is a line concatenator, but is not removed
+  RUNPRINTTEST [SHOW "|Hello~| SHOW "Hello] "|Hello~\nHello|
+
+  ; linear whitespace after a tilde is ignored
+  RUNPRINTTEST [SHOW "|Hello~   | SHOW "Hello] "|Hello~\nHello|
+
+  ; vertical bars are kept in the input stream
+  RUNPRINTTEST [SHOW "\|ABC\| ] "\|ABC\|
+
+  ; vertical bars allow the text to span newlines
+  RUNPRINTTEST [SHOW "A\|B\nC\| ] "A\|B\nC\|
+
+  ; comments are ignored
+  RUNPRINTTEST [SHOW "AB\;CD ] "AB\;CD
+
+  ; vertical bars in comments are treated normally
+  RUNPRINTTEST [SHOW "A\;B\|C\nD\| ] "A\;B\|C\nD\|
+
+  ; not having a closing vertical bar is like having an empty file
+  RUNPRINTTEST [SHOW "A\|B\nC ]   []
+
+  ; backslashes are not preserved
+  RUNPRINTTEST [SHOW "A\\B\\C ]    "ABC
+
+END
+
+TO READWORDTEST.BADINPUT
+
+   RUNTOOMANYINPUTSTEST [(READWORD "toomany)]
+   RUNTOOMANYINPUTSTEST [(RW       "toomany)]
+
+END
+
+TO READWORDTEST
+
+   READWORDTEST.SMOKETEST
+   READWORDTEST.BADINPUT
+
+END

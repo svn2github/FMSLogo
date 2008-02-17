@@ -1,0 +1,36 @@
+<section id="command-towards">
+    <title>TOWARDS</title>
+<indexterm><primary>TOWARDS</primary></indexterm>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>TOWARDS</command> <parameter>position</parameter></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+Outputs the heading in degrees, at which the turtle should be headed so that it would point from its current position towards the position given as the argument.
+The position must be given as a two element list containing the X and Y coordinates of the position to face.
+</para>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Example</term>
+<listitem>
+    <programlisting><userinput>SETPOS [0 0]
+SHOW TOWARDS [100 100]</userinput>
+45</programlisting>
+
+    <programlisting><userinput>SETORIENTATION TOWARDSXYZ [100 100 100]
+FORWARD DISTANCEXYZ [100 100 100]</userinput>
+</programlisting>
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</section>

@@ -1,0 +1,243 @@
+<preface id="preface">
+   <title>Introduction</title>
+   <indexterm><primary>Introduction</primary></indexterm>
+
+   <section id="tutorial">
+      <title>Why &GENERICNAME;?</title>
+      <indexterm><primary>Why &GENERICNAME;?</primary></indexterm>
+
+<para>
+This introduction does not do &GENERICNAME; justice but it's a start.
+&GENERICNAME; is a programming language, pure and simple.
+There are two models that languages come in, compiled and interpreted.
+</para>
+
+<para>
+What is a compiled language?
+</para>
+
+<para>
+In a compiled language the program is written and fed to a compiler.
+A compiler reads all your code and converts it to an executable form that your computer understands.
+</para>
+
+<para>
+What is an interpreted language?
+</para>
+
+<para>
+An interpreted language does not get compiled; instead, as each line is read by the interpreter it executes it.
+This is a slow process to execute (on the fly) like this, but has the advantage of not requiring a complete compile for each change.
+It's ideal in a learning environment.
+</para>
+
+<para>
+So have guessed what type of language &GENERICNAME; is yet?
+</para>
+
+<para>
+Right, it's an interpreted language; at least &PRODUCTNAME; is, anyway.
+</para>
+
+<para>&GENERICNAME; also has another unique feature not offered in many other languages (none that I know of).
+That is, what's called "Turtle Graphics".
+</para>
+
+<para>
+What is turtle graphics?
+</para>
+
+<para>
+Turtle graphics is a simple and powerful set of commands used to manipulate a screen object called a turtle.
+</para>
+
+<para>
+Why do they call it a "turtle"?
+</para>
+
+<para>
+The first version of &GENERICNAME; used an electronic robot that resembled a turtle.
+The robot drew lines on a big piece of paper that was laid on the floor.
+In the case of a video screen (like this &GENERICNAME;) it's simply a cursor (or pointer) of where the turtle is.
+</para>
+
+<para>
+What does the turtle do?
+</para>
+
+<para>
+It draws, lines mostly, on the screen.
+</para>
+
+<para>
+Turtle graphics fills a gap that most traditional languages do not.
+That is, it gives immediate feedback.
+Immediate feedback makes it fun and easier to learn programming.
+The purpose of &GENERICNAME; is to teach people (children and adults) how to program.
+It is modeled after a popular and powerful language called LISP and is as powerful as any other programming language.
+</para>
+
+    </section>
+
+    <section id="where-to-start">
+      <title>Where to Start</title>
+      <indexterm><primary>Where to Start</primary></indexterm>
+
+<para>
+Novices can start in &GENERICNAME; without having to program at all by just learning how to command the turtle.
+Learning turtle graphics will teach the user about geometry (and they won't even know it).
+It's amazing how soon you can introduce the concept of programming once they grasp the turtle concept.
+Let's look at some simple examples:
+</para>
+
+
+<para>
+Draw a square using the turtle.
+</para>
+
+<programlisting>FORWARD 100
+RIGHT 90
+FORWARD 100
+RIGHT 90
+FORWARD 100
+RIGHT 90
+FORWARD 100
+RIGHT 90</programlisting>
+
+<para>
+That was easy but too much typing, let's try again.
+</para>
+
+<programlisting>REPEAT 4 [FD 100 RT 90]</programlisting>
+
+<para>
+That's it?
+Yes, that's the same square.
+We did two things.
+We noticed too much redundant code in our first example, so we asked &GENERICNAME; to repeat the same sequence 4 times.
+We also used abbreviated forms of the same commands.
+But we can still do better.
+A square is a popular item wouldn't you say?
+Wouldn't it be more useful just to say square when you wanted a square?
+</para>
+
+<programlisting>EDIT "SQUARE
+&lt;Editor will pop up>
+TO SQUARE
+  REPEAT 4 [FORWARD 100 RIGHT 90]
+END
+&lt;Exit Editor and save>
+
+SQUARE</programlisting>
+
+<para>
+What's the TO and END for?
+It's to define a procedure (a small program) for the square.
+The TO can be thought of as "to do something", the END terminates the TO.
+Once SQUARE was "defined" we then called it.
+That's all you need to get a square now, just type SQUARE.
+There is a problem, however.
+SQUARE only draws squares of 100 by 100.
+Wouldn't it be better to draw any size square?
+It sure would and it's easy.
+</para>
+
+<programlisting>EDIT "SQUARE
+
+TO SQUARE :length
+  REPEAT 4 [FORWARD :length RIGHT 90]
+END
+
+SQUARE 100
+SQUARE 200</programlisting>
+
+<para>
+Note all we did is replace 100 with a variable name called :length.
+Now when we call square we must specify how big we want it.
+Above we asked &GENERICNAME; to draw one square at 100x100 and another at 200x200.
+Note the ":" in front of the word length tells &GENERICNAME; that length is a variable.
+However, we can still even do better.
+What's wrong now, you ask.
+Well, wouldn't it be better if we could draw something other than a square, like a triangle?
+</para>
+
+<programlisting>TO TRIANGLE :length
+  REPEAT 3 [FORWARD :length RIGHT 120]
+END
+
+TO SQUARE :length
+  REPEAT 4 [FORWARD :length RIGHT 90]
+END
+
+TO PENTAGON :length
+  REPEAT 5 [FORWARD :length RIGHT 72]
+END
+
+TRIANGLE 100
+SQUARE 100
+PENTAGON 100</programlisting>
+
+<para>
+That's a lot of typing (programmers hate to type).
+Why?
+Because there are more things to break and when a change needs to be made it might have to made in many places.
+Smaller is not always better but it usually helps.
+Let's try again.
+</para>
+
+<programlisting>TO POLYGON :length :sides
+  REPEAT :sides [FORWARD :length RIGHT 360/:sides]
+END
+
+POLYGON 100 3
+POLYGON 100 4
+POLYGON 100 5
+</programlisting>
+
+<para>
+What happened to TRIANGLE, SQUARE and PENTAGON?
+We don't need them because POLYGON can draw every equal-sided polygon possible and with only one line of code!
+We now repeat the sequence based on how many :sides the caller asked for and we turn (RIGHT) the amount of degrees appropriate for that shape.
+You may not realize it but this is <emphasis>programming</emphasis>.
+</para>
+
+<para>
+Now that we have a program, it's a good idea to save it to a file.
+The edits you've made so far are all in &GENERICNAME;'s memory and not on the disk.
+How do you save your work?
+It's easy.
+</para>
+
+<programlisting>SAVE "SHAPES.LGO
+BYE
+</programlisting>
+
+<para>
+If you ever want to use these definitions again you'll have to reload them.
+How do you reload you work from disk?
+</para>
+
+<programlisting>LOAD "SHAPES.LGO</programlisting>
+
+<para>
+I could go on for ever, yes for ever, even to the point of writing &GENERICNAME; within &GENERICNAME;.
+This should get you started.
+Where can I learn more?
+</para>
+
+
+<para>
+Almost every command in this help file has a simple example of using it.
+Check out the examples (see the Help Menu).
+The MSWLogo online Video Tutorial (separate kit) only basics.
+Jim Muller's Great Logo Adventure Book primarily based on MSWLogo.
+Brian Harvey's MIT Press Books for more advanced programming.
+</para>
+
+<para>
+What ever do make sure you have <emphasis>fun</emphasis>.
+</para>
+
+    </section>
+</preface>
+

@@ -1,0 +1,118 @@
+<chapter id="networking-commands">
+   <title>Networking Commands</title>
+
+<para>
+Networking allows &PRODUCTNAME; to communicate with the rest of the world.
+There are numerous forms of networking and &PRODUCTNAME; uses just one form.
+This form is known as TCP/IP sockets (this is primarily what is used to build the Internet).
+&PRODUCTNAME; can receive data from other computers or send data to other computers.
+The other computer does not need to be running &PRODUCTNAME; although it will be likely.
+When you wish &PRODUCTNAME; to initiate a connection use the NETCONNECTxxx commands.
+When you wish &PRODUCTNAME; to accept a connect use NETACCEPTxxx commands.
+You can send and receive data on either type of connection.
+You can at most have 2 connections, one you initiated and one you accepted.
+</para>
+
+<para>
+TCP/IP networks can run over a wide variety of devices even modems (PPP), LapLink cables etc.
+CompuServe, Microsoft Network, America Online and private Internet Service Providers (ISPs) all offer TCP/IP access to the rest of the world.
+What this means is that your friend can be in England and you can be in Canada and both run &PRODUCTNAME; and draw on each other's screen or build games that you can both participate in.
+Assuming you can find one another.
+</para>
+
+<section id="networking-tools">
+  <title>Networking Tools (Outside of &PRODUCTNAME;)</title>
+
+<para>
+In order to use networking within &PRODUCTNAME;, it is helpful to understand the networking tools that the rest of the world uses.
+</para>
+
+<formalpara>
+<title>DNS (Domain Name Service)</title>
+<para>
+DNS is an integral part of using TCP/IP protocols.
+TCP/IP in itself only understands IP addresses that look something like 21.100.200.5 (note each number field must be less than 255).
+These numbers have no intrinsic meaning and are hard for people remember, so machines are usually given names, too.
+DNS is basically a bunch of machines that maintain databases that map these easy-to-remember names to IP addresses.
+DNS machines talk to each other to share information.
+&PRODUCTNAME; uses DNS names when trying to make a connection.
+DNS is not required to setup a small TCP/IP network (keep reading).
+</para>
+</formalpara>
+
+<formalpara>
+<title>PING</title>
+<para>
+Ping is a simple command that is used to test network connectivity.
+It is usually a command line program.
+Most TCP/IP implementations include a PING program.
+To use it just enter "PING remotenode" where remote node is the machine you'd like to test connectivity to.
+PING will tell if it can reach that machine and how long it takes to reach the machine.
+Until PING works don't bother trying any other TCP/IP based software (including &PRODUCTNAME; Network commands).
+PING will accept both forms of the address (the IP address or the name).
+If the PING fails with the name then try the number (if you know it).
+If the IP address works but the domain name does not it, it usually indicates a DNS problem.
+</para>
+</formalpara>
+
+<formalpara>
+<title>HOSTS files</title>
+<para>
+If there is no DNS server, you can use what is known as a <filename>HOSTS</filename> file (usually kept in <filename>C:\Windows\HOSTS</filename>).
+Microsoft frequently installs a sample <filename>HOSTS</filename> file named <filename>HOSTS.SAM</filename> (copy <filename>HOSTS.SAM</filename> to <filename>HOSTS</filename> and edit it).
+The <filename>HOSTS</filename> file is simply a database for mapping domain names to IP addresses.
+If using a <filename>HOSTS</filename> file, then each machine on the network should use a copy of the same <filename>HOSTS</filename> file with the name to mapping of all the machines in the network.
+You can have both DNS and a <filename>HOSTS</filename> file, usually the <filename>HOSTS</filename> file is checked before DNS is attempted.
+</para>
+</formalpara>
+
+<formalpara>
+<title>Sockets and Services</title>
+<para>
+Services is to Sockets as DNS is to Network Addresses.
+Services map "Service Names" like (TELNET, FTP, POPMAIL) to Socket port numbers.
+You may find a SERVICES file in <filename>C:\Windows\SERVICES</filename> and you can browse it if you like.
+&PRODUCTNAME; does not support the Service name to Socket port number it only uses Socket port numbers.
+But if you wish to connect to a service such as TELNET or act as a TELNET server then just look it up in the services file.
+In general, socket numbers under 1024 are reserved for well-known services like TELNET and FTP.
+It is better to use socket numbers greater than 1024 for services that you write.
+</para>
+</formalpara>
+
+
+<formalpara>
+<title>Networks</title>
+<para>
+If you are on a private network that is under your total control, then you can do what ever you want.
+If you are on a network with other Windows PCs then you'll probably have to do without a DNS server (and use <filename>HOSTS</filename> files).
+If you are part of a larger network you should contact your network administrators.
+</para>
+</formalpara>
+
+
+<formalpara>
+<title>Service Providers</title>
+<para>
+Some service providers do not give you a name and assign your IP address "on-the-fly".
+Some service providers completely "wrap" your network access up into one application that gives all the services you need.
+When asking a service providers for help tell them that you want to run a third-party application like Firefox (a Web browser).
+If Firefox works, then &PRODUCTNAME; should also work (for outgoing connections, anyway).
+Allowing you to receive data is more complex because the other application needs to be able to find you by name or at least by a number address if they use a <filename>HOSTS</filename> file.
+You can determine your IP address with a command-line tool called "ipconfig".
+</para>
+</formalpara>
+
+</section>
+
+   &command-netstartup;
+   &command-netshutdown;
+   &command-netaccepton;
+   &command-netacceptoff;
+   &command-netacceptreceivevalue;
+   &command-netacceptsendvalue;
+   &command-netconnecton;
+   &command-netconnectoff;
+   &command-netconnectsendvalue;
+   &command-netconnectreceivevalue;
+
+</chapter>
