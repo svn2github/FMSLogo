@@ -1,5 +1,22 @@
 This file contains the changes that were made in each revision of FMSLogo.
 
+* Added for 6.19.0
+  o Fix bug #1867803; The names of the special variables CASEIGNOREDP,
+    ERRACT, STARTUP, REDEFP, PRINTWIDTHLIMIT, and PRINTDEPTHLIMIT
+    are now internationalized.
+  o Fix bug #1803793; The string "N/A" for Palette in Status window
+    is now internationalized.
+  o Fix bug #1803975; Output from DEBUGWINDOWS is now internationalized.
+  o Fix bug #1661228; MDSETITEM now throws an error when the indexlist
+    input is not a list.
+  o Fix bug #1661229; MDSETITEM now throws an error when given bad inputs.
+  o Fix bug #1661227; MDITEM now throws an error when given bad inputs.
+  o Fix bug #1661226; MDARRAY now throws an error when given bad inputs.
+  o Fix bug #1652783; Out of bounds index errors in ITEM are now recoverable.
+  o Minor improvements to the German translation.
+  o Minor improvements to the Spanish translation.
+  o Minor improvements to the manual.
+
 * Added for 6.18.0
   o Implement feature request #1825717; LOGOVERSION now outputs the locale
     FMSLogo was built for.
