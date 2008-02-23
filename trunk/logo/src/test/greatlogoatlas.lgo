@@ -1,0 +1,19 @@
+LOAD "testlib.lgo
+
+; This file contains several conformance tests that were taken
+; from The Great Logo Atlas.  They are intended to show 
+; conformance with a standard.
+
+TO GREATLOGOATLASTEST.TOK3B
+
+   RUNPRINTTEST [print [line and~
+the~    last~
+line]] "|line andthe~ lastline|
+
+END
+
+TO GREATLOGOATLASTEST
+
+   GREATLOGOATLASTEST.TOK3B
+
+END

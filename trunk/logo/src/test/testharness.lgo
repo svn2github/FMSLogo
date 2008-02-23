@@ -3,6 +3,7 @@
 
 LOAD "testlib.lgo
 
+LOAD "greatlogoatlas.lgo
 LOAD "to.lgo
 LOAD "list.lgo
 LOAD "sentence.lgo
@@ -126,6 +127,7 @@ TO TESTALL
 
   REPORTTESTINITIALIZE
 
+  GREATLOGOATLASTEST  ; from greatlogoatlas.lgo
   PARSETEST           ; from parse.lgo
   LOADTEST            ; from load.lgo
   RUNTEST             ; from run.lgo
