@@ -67,6 +67,7 @@ III. Special Thanks
     Stephan Vogel
     Stefano Federici
     Lion Nik Kucev
+    Pavel Boytchev
 
   Special thanks to:
     George Mills
