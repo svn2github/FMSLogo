@@ -474,8 +474,26 @@ TO CHECKSCREEN :screenname
 END
 BURY [CHECKSCREEN]
 
+TO RUNPRINTTEST.HELPER :printinstruction :expectedword
 
-TO RUNPRINTTEST :printinstruction :expectedstring
+  LOCALMAKE "actualword READWORD
+  IF EQUAL? :actualword [] [
+      REPORTTESTFAILED (LIST "Running :printinstruction "|never printed| :expectedword)
+      STOP
+  ]
+
+  ; require strict case correctness
+  LOCALMAKE "caseignoredp "false
+  IF NOT EQUAL? :actualword :expectedword [
+      REPORTTESTFAILED (LIST "Running :printinstruction "printed :actualword "|.  We expected| :expectedword)
+      STOP
+  ]
+
+  REPORTTESTPASSED (LIST "Running :printinstruction "printed :actualword "|, as expected.|)
+END
+BURY [RUNPRINTTEST.HELPER]
+
+TO RUNPRINTTEST :printinstruction :expectedvalue
 
   LOCALMAKE "testfile  "printtest-output.txt
 
@@ -487,11 +505,17 @@ TO RUNPRINTTEST :printinstruction :expectedstring
   LOCALMAKE "oldwriter WRITER
   SETWRITE :testfile
 
-  RUN :printinstruction
+  CATCH "ERROR [ RUN :printinstruction ]
 
   SETWRITE :oldwriter
   CLOSE :testfile
 
+  ; make sure that the instruction didn't throw an error
+  LOCALMAKE "lasterror ERROR
+  IF NOT EMPTY? :lasterror [
+    REPORTTESTFAILED (LIST :printinstruction "|threw error.  code=| (ITEM 1 :lasterror) ". (ITEM 2 :lasterror)) 
+    STOP
+  ]
 
   ;
   ; now read back the file and ensure that it is as expected
@@ -501,16 +525,22 @@ TO RUNPRINTTEST :printinstruction :expectedstring
   LOCALMAKE "oldreader READER
   SETREAD  :testfile
 
-  LOCALMAKE "actualstring READWORD
+  IFELSE WORD? :expectedvalue [
+      ; we only expect one line to be printed
+      RUNPRINTTEST.HELPER :printinstruction :expectedvalue
 
-  IFELSE EQUAL? :actualstring :expectedstring [
-      REPORTTESTPASSED (LIST "Running :printinstruction "printed :actualstring "|, as expected.|)
+      IF NOT EQUAL? READWORD [] [
+          REPORTTESTFAILED (LIST "Running :printinstruction "|printed more than one line.|)
+      ]
   ][
-      REPORTTESTFAILED (LIST "Running :printinstruction "printed :actualstring "|.  We expected| :expectedstring)
-  ]
+      ; we expect several lines to be printed
+      REPEAT COUNT :expectedvalue [
+          RUNPRINTTEST.HELPER :printinstruction ITEM REPCOUNT :expectedvalue
+      ]
 
-  IF NOT EQUAL? READWORD [] [
-      REPORTTESTFAILED (LIST "Running :printinstruction "|printed more than one line.|)
+      IF NOT EQUAL? READWORD [] [
+          REPORTTESTFAILED (LIST "Running :printinstruction "|printed more than| COUNT :expectedvalue "lines.)
+      ]
   ]
 
   SETREAD :oldreader
