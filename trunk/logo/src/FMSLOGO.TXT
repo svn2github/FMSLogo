@@ -1,5 +1,5 @@
 ----------------------------------------------------------------------
-FMSLogo Version 6.19.0 for Microsoft Windows
+FMSLogo Version 6.20.0 for Microsoft Windows
 ----------------------------------------------------------------------
 
    I. Kit Description/Location
@@ -14,28 +14,15 @@ VIII. Minimum System Requirements
 
 I. Kit Description/Location (http://sourceforge.net/projects/fmslogo)
 
-  fmslogo-6.19.0.exe       (binary kit: Windows self-extracting installer)
-  fmslogo-6.19.0.zip       (binary kit: Windows ZIP archive)
-  fmslogo-src-6.19.0.zip   (source kit)
+  fmslogo-6.20.0.exe       (binary kit: Windows self-extracting installer)
+  fmslogo-6.20.0.zip       (binary kit: Windows ZIP archive)
+  fmslogo-src-6.20.0.zip   (source kit)
 
 II. New features/bugs fixed:
 
-  * Added for 6.19.0
-    o Fix bug #1867803; The names of the special variables CASEIGNOREDP,
-      ERRACT, STARTUP, REDEFP, PRINTWIDTHLIMIT, and PRINTDEPTHLIMIT
-      are now internationalized.
-    o Fix bug #1803793; The string "N/A" for Palette in Status window
-      is now internationalized.
-    o Fix bug #1803975; Output from DEBUGWINDOWS is now internationalized.
-    o Fix bug #1661228; MDSETITEM now throws an error when the indexlist
-      input is not a list.
-    o Fix bug #1661229; MDSETITEM now throws an error when given bad inputs.
-    o Fix bug #1661227; MDITEM now throws an error when given bad inputs.
-    o Fix bug #1661226; MDARRAY now throws an error when given bad inputs.
-    o Fix bug #1652783; Out of bounds index errors in ITEM are now recoverable.
-    o Minor improvements to the German translation.
-    o Minor improvements to the Spanish translation.
-    o Minor improvements to the manual.
+  * Added for 6.20.0
+    o Fix bug #1900691; Whitespace after ~ is now preserved when
+      the ~ is not a continuation character.
 
   For a complete history of changes across all versions of FMSLogo, see
   http://fmslogo.cvs.sourceforge.net/*checkout*/fmslogo/logo/src/CHANGELOG.TXT

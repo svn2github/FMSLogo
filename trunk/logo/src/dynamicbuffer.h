@@ -26,6 +26,7 @@ public:
     friend class CBufferInvariant;
 
     CDynamicBuffer();
+    ~CDynamicBuffer();
 
     bool IsEmpty() const;
     void Empty();

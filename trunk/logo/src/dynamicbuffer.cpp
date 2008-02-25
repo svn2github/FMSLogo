@@ -76,6 +76,12 @@ CDynamicBuffer::CDynamicBuffer() :
     ASSERT_COMBOBUFF_INVARIANT;
 }
 
+CDynamicBuffer::~CDynamicBuffer()
+{
+    ASSERT_COMBOBUFF_INVARIANT;
+    Dispose();
+}
+
 // deletes the contents of the internal buffer
 void CDynamicBuffer::Dispose()
 {
@@ -211,6 +217,9 @@ CDynamicBuffer::AppendChar(
     m_BufferLimit++;
 }
 
+// Returns a pointer to the contents of the buffer.
+// This is always NUL-terminated, but it may be NULL
+// if the string length is 0.
 char *
 CDynamicBuffer::GetBuffer(
     void

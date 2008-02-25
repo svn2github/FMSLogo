@@ -324,13 +324,32 @@ NODE *reader(FILE *strm, const char *prompt)
 
             while (!vbar && c == '~' && (c = rd_getc(strm)) != EOF)
             {
-                // ignore linear whitespace
+                CDynamicBuffer whitespace;
+
+                // Copy linear whitespace to the "whitespace" buffer.
+                // We want to ignore if it the goes to the end of the
+                // line, but we want to keep it if it does not.
                 while (c == ' ' || c == '\t')
                 {
+                    whitespace.AppendChar(c);
                     c = rd_getc(strm);
                 }
 
-                if (dribbling) 
+                if (c != '\n')
+                {
+                    // append the linear whitespace that we skipped (if any)
+                    const char * whitespaceString = whitespace.GetBuffer();
+                    if (whitespaceString != NULL)
+                    {
+                        g_PhysicalLine.AppendString(whitespaceString);
+                        if (dribbling)
+                        {
+                            fprintf(dribblestream, "%s", whitespaceString);
+                        }
+                    }
+                }
+
+                if (dribbling)
                 {
                     putc(c, dribblestream);
                 }
@@ -416,9 +435,11 @@ parser_iterate(
     int         endchar
     )
 {
-    const char *wptr = NULL;
+    const char *word_start = NULL;
     static char terminate = '\0'; // KLUDGE
-    int windex = 0;
+
+    int word_length = 0;
+
     NODETYPES this_type = STRING;
 
     bool broken = false;
@@ -431,9 +452,9 @@ parser_iterate(
     {
         /* get the current character and increase pointer */
         ch = **inln;
-        if (!vbar && windex == 0) 
+        if (!vbar && word_length == 0) 
         {
-            wptr = *inln;
+            word_start = *inln;
         }
         if (++ (*inln) >= inlimit) 
         {
@@ -454,9 +475,9 @@ parser_iterate(
                     *inln = &terminate;
                 }
                 ch = **inln;
-                if (windex == 0)
+                if (word_length == 0)
                 {
-                    wptr = *inln;
+                    word_start = *inln;
                 }
                 else
                 {
@@ -487,9 +508,9 @@ parser_iterate(
                 {
                     // advance to the next character
                     ch = **inln;
-                    if (windex == 0) 
+                    if (word_length == 0) 
                     {
-                        wptr = *inln;
+                        word_start = *inln;
                     }
                     else 
                     {
@@ -527,7 +548,7 @@ parser_iterate(
                           ch != '{' && ch != '}' &&
                           ch != '[' && ch != '\0'))
         {
-            windex++;
+            word_length++;
         }
 
         NODE *tnode = NIL;
@@ -581,7 +602,7 @@ parser_iterate(
                  **inln == '{' || **inln == '}')
         {
             // this character or the next one will terminate string, make the word 
-            if (windex > 0)
+            if (word_length > 0)
             {
 
                 char * (*copyRoutine) (char *, const char *, int);
@@ -600,14 +621,14 @@ parser_iterate(
                 }
 
                 NODE * string_node = make_strnode(
-                    wptr, 
-                    windex, 
+                    word_start, 
+                    word_length, 
                     this_type, 
                     copyRoutine);
 
                 tnode = cons_list(string_node);
                 this_type = STRING;
-                windex = 0;
+                word_length = 0;
                 broken = false;
             }
         }
