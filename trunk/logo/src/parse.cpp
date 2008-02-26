@@ -188,7 +188,7 @@ NODE *reader(FILE *strm, const char *prompt)
         {
             rd_print_prompt(prompt);
 
-            if (dribblestream != NULL)
+            if (dribbling)
             {
                 fprintf(dribblestream, "%s", prompt);
             }
@@ -203,7 +203,7 @@ NODE *reader(FILE *strm, const char *prompt)
     if (!setjmp(iblk_buf))
     {
         int c = rd_getc(strm);
-        while (c != EOF && (vbar || paren || bracket || brace || c != '\n'))
+        while (c != EOF && (c != '\n' || vbar || paren || bracket || brace))
         {
             if (dribbling) 
             {
@@ -211,8 +211,14 @@ NODE *reader(FILE *strm, const char *prompt)
             }
 
             // if c is a backslash, then read the next character and escape it
-            if (c == '\\' && (c = rd_getc(strm)) != EOF)
+            if (c == '\\')
             {
+                c = rd_getc(strm);
+                if (c == EOF)
+                {
+                    break;
+                }
+
                 if (dribbling) 
                 {
                     putc(c, dribblestream);
@@ -239,75 +245,82 @@ NODE *reader(FILE *strm, const char *prompt)
                 }
             }
 
-            if (c != EOF)
-            {
-                g_PhysicalLine.AppendChar(c);
-            }
+            g_PhysicalLine.AppendChar(c);
 
-            if (*prompt && (c & 0x5F) == *lookfor)
+            if (*prompt)
             {
-                lookfor++;
-                if (*lookfor == '\0')
+                // check if we hit the ender
+                // HACK: this isn't right.  We should only
+                // do this if we're parsing a TO, but prompt
+                // may be non-empty in other conditions.
+                if ((c & 0x5F) == *lookfor)
                 {
-                    // We found the ender while still 
-                    // inside a [, |, (, or {.
-                    err_logo(DEEPEND, deepend_proc_name);
-                    break;
+                    lookfor++;
+                    if (*lookfor == '\0')
+                    {
+                        // We found the ender while still 
+                        // inside a [, |, (, or {.
+                        err_logo(DEEPEND, deepend_proc_name);
+                        break;
+                    }
+                }
+                else
+                {
+                    lookfor = ender;
                 }
             }
-            else 
-            {
-                lookfor = ender;
-            }
 
-            if (c == '|' && !incomment) 
+            if (!incomment)
             {
-                vbar = !vbar;
-            }
-            else if (contin && !vbar && !incomment)
-            {
-                switch (c)
+                if (c == '|')
                 {
-                case '(': 
-                    paren++;
-                    break;
+                    vbar = !vbar;
+                }
+                else if (contin && !vbar)
+                {
+                    switch (c)
+                    {
+                    case '(': 
+                        paren++;
+                        break;
               
-                case ')':
-                    if (paren)
-                    {
-                        paren--;
+                    case ')':
+                        if (paren)
+                        {
+                            paren--;
+                        }
+                        break;
+
+                    case '[':
+                        bracket++;
+                        break;
+
+                    case ']':
+                        if (bracket)
+                        {
+                            bracket--;
+                        }
+                        break;
+
+                    case '{':
+                        brace++;
+                        break;
+
+                    case '}':
+                        if (brace)
+                        {
+                            brace--;
+                        }
+                        break;
+
+                    case ';':
+                        incomment = true;
+                        break;
                     }
-                    break;
-
-                case '[':
-                    bracket++;
-                    break;
-
-                case ']':
-                    if (bracket)
-                    {
-                        bracket--;
-                    }
-                    break;
-
-                case '{':
-                    brace++;
-                    break;
-
-                case '}':
-                    if (brace)
-                    {
-                        brace--;
-                    }
-                    break;
-
-                case ';':
-                    incomment = true;
-                    break;
                 }
             }
 
-            if (/* (vbar || paren ...) && */ c == '\n')
+            if (c == '\n')
             {
                 // newlines end comment
                 incomment = false;
@@ -369,10 +382,7 @@ NODE *reader(FILE *strm, const char *prompt)
                 }
             }
 
-            if (c != EOF)
-            {
-                c = rd_getc(strm);
-            }
+            c = rd_getc(strm);
         }
     }
 
