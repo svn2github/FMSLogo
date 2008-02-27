@@ -22,6 +22,8 @@
 
 #include "allwind.h"
 
+#include <algorithm>
+
 FILE *loadstream = stdin;
 FILE *dribblestream = NULL;
 bool input_blocking = false;
@@ -31,7 +33,165 @@ NODE *g_ToLine          = NIL;
 INPUTMODE input_mode = INPUTMODE_None;
 
 static CDynamicBuffer g_ReadBuffer;
-static CDynamicBuffer g_PhysicalLine;
+
+// A class for allocating and manipulating a buffer that
+// is suitable for use with make_strnode_from_allocated_buffer().
+// The intent of this class is to eliminate the need to copy
+// the a buffer when allocating a string node.
+class CStringNodeBuffer
+{
+    friend CBufferInvariant;
+
+public:
+    CStringNodeBuffer();
+    ~CStringNodeBuffer();
+
+    void TakeOwnershipOfBuffer();
+
+    char * GetString();
+    size_t GetStringLength() const;
+
+    void AppendString(const char * ToAppend);
+    void AppendChar(char ToAppend);
+
+private:
+    void GrowBy(size_t ExtraLength);
+
+    char  *  m_Buffer;       // the buffer that holds the string
+    size_t   m_BufferLength; // the size of the allocated buffer
+    char *   m_StringLimit;  // a pointer to one beyond the end of the string
+    bool     m_IsOwner;      // if this object must free m_Buffer
+};
+
+#ifdef NDEBUG
+#  define ASSERT_STRINGNODE_INVARIANT
+#else
+#  define ASSERT_STRINGNODE_INVARIANT CBufferInvariant invariant(*this)
+
+class CBufferInvariant
+{
+public:
+    CBufferInvariant(const CStringNodeBuffer & StringNodeBuffer)
+        : m_StringNodeBuffer(StringNodeBuffer)
+    {
+        AssertInvariant();
+    }
+
+    ~CBufferInvariant()
+    {
+        AssertInvariant();
+    }
+
+    void AssertInvariant() const
+    {
+        assert(m_StringNodeBuffer.m_Buffer != NULL);
+        assert(m_StringNodeBuffer.m_Buffer + sizeof(unsigned short) <= m_StringNodeBuffer.m_StringLimit);
+        assert(m_StringNodeBuffer.m_StringLimit - m_StringNodeBuffer.m_Buffer < (signed)m_StringNodeBuffer.m_BufferLength);
+    }
+
+private:
+    const CStringNodeBuffer & m_StringNodeBuffer;
+};
+
+#endif // NDEBUG
+
+CStringNodeBuffer::CStringNodeBuffer()
+{
+    const size_t DEFAULT_SIZE = 256;
+
+    // allocate enough for the header, the string, and the NUL terminator
+    m_BufferLength = sizeof(unsigned short) + DEFAULT_SIZE + 1;
+    m_Buffer       = static_cast<char *>(malloc(m_BufferLength));
+    m_StringLimit  = m_Buffer + sizeof(unsigned short);
+    m_IsOwner      = true;
+}
+
+CStringNodeBuffer::~CStringNodeBuffer()
+{
+    if (m_IsOwner)
+    {
+        free(m_Buffer);
+    }
+}
+
+void CStringNodeBuffer::TakeOwnershipOfBuffer()
+{
+    ASSERT_STRINGNODE_INVARIANT;
+
+    // Reduce the size of the buffer to only what is needed.
+    realloc(m_Buffer, m_StringLimit - m_Buffer + 1);
+
+    // initialize the reference count to zero.
+    *reinterpret_cast<unsigned short *>(m_Buffer) = 0;
+
+    // set a flag that we don't own m_Buffer.
+    m_IsOwner = false;
+}
+
+char * CStringNodeBuffer::GetString()
+{
+    ASSERT_STRINGNODE_INVARIANT;
+
+    // NUL-terminate the buffer
+    *m_StringLimit = '\0';
+    return m_Buffer;
+}
+
+size_t CStringNodeBuffer::GetStringLength() const
+{
+    ASSERT_STRINGNODE_INVARIANT;
+
+    return m_StringLimit - m_Buffer - sizeof(unsigned short);
+}
+
+void CStringNodeBuffer::GrowBy(size_t ExtraLength)
+{
+    ASSERT_STRINGNODE_INVARIANT;
+
+    // if it won't fit, then make the buffer bigger
+    size_t requiredLength = m_StringLimit - m_Buffer + ExtraLength + 1;
+    if (m_BufferLength < requiredLength)
+    {
+        // Double the size of the buffer, instead of only requesting 
+        // requiredLength bytes.  If we don't do this, then reading
+        // long words takes a *very* long time because we repeatedly
+        // reallocate the buffer to be one byte larger.
+        size_t usedPortion = m_StringLimit - m_Buffer;
+        size_t newsize = std::max(m_BufferLength * 2, requiredLength);
+
+        m_Buffer       = (char *) realloc(m_Buffer, newsize);
+        m_StringLimit  = m_Buffer + usedPortion;
+        m_BufferLength = newsize;
+    }
+}
+
+// Append a NUL-terminated string to the combo buffer
+void CStringNodeBuffer::AppendString(const char * ToAppend)
+{
+    ASSERT_STRINGNODE_INVARIANT;
+
+    // resize combo_buff to be large enough to hold ToAppend
+    size_t toAppendLength = strlen(ToAppend);
+    GrowBy(toAppendLength);
+
+    // append ToAppend
+    memcpy(m_StringLimit, ToAppend, toAppendLength);
+    m_StringLimit += toAppendLength;
+}
+
+void CStringNodeBuffer::AppendChar(char ToAppend)
+{
+    ASSERT_STRINGNODE_INVARIANT;
+
+    // resize combo_buff to be large enough to hold ToAppend
+    GrowBy(1);
+
+    // append ToAppend
+    *m_StringLimit = ToAppend;
+    m_StringLimit++;
+}
+
+
 
 // This is a hack to purge the "INPUTMODE_TO" buffer when
 // loading from the editor.  If this is not done, any unused
@@ -179,9 +339,6 @@ NODE *reader(FILE *strm, const char *prompt)
 
     bool dribbling = (dribblestream != NULL && strm == stdin);
 
-    // clean out the buffer in case it contains data
-    g_PhysicalLine.Empty();
-
     if (strm == stdin)
     {
         if (*prompt)
@@ -197,6 +354,8 @@ NODE *reader(FILE *strm, const char *prompt)
         input_blocking = true;
         clear_is_running_erract_flag();
     }
+
+    CStringNodeBuffer lineBuffer;
 
     // this setjmp matches with the longjmp in unblock_input(), which 
     // is called when a PAUSE continues
@@ -245,7 +404,7 @@ NODE *reader(FILE *strm, const char *prompt)
                 }
             }
 
-            g_PhysicalLine.AppendChar(c);
+            lineBuffer.AppendChar(c);
 
             if (*prompt)
             {
@@ -354,7 +513,7 @@ NODE *reader(FILE *strm, const char *prompt)
                     const char * whitespaceString = whitespace.GetBuffer();
                     if (whitespaceString != NULL)
                     {
-                        g_PhysicalLine.AppendString(whitespaceString);
+                        lineBuffer.AppendString(whitespaceString);
                         if (dribbling)
                         {
                             fprintf(dribblestream, "%s", whitespaceString);
@@ -367,7 +526,7 @@ NODE *reader(FILE *strm, const char *prompt)
                     putc(c, dribblestream);
                 }
 
-                g_PhysicalLine.AppendChar(c);
+                lineBuffer.AppendChar(c);
 
                 if (c == '\n' && strm == stdin)
                 {
@@ -393,16 +552,13 @@ NODE *reader(FILE *strm, const char *prompt)
         putc('\n', dribblestream);
     }
 
-    if (g_PhysicalLine.IsEmpty())
-    {
-        return Null_Word; // so emptyp works
-    }
+    lineBuffer.TakeOwnershipOfBuffer();
 
-    NODE * line = make_strnode(
-        g_PhysicalLine.GetBuffer(),
-        g_PhysicalLine.GetBufferLength(),
-        this_type,
-        strnzcpy);
+    NODE * line = make_strnode_no_copy(
+        lineBuffer.GetString() + sizeof(unsigned short),
+        lineBuffer.GetString(),
+        lineBuffer.GetStringLength(),
+        this_type);
 
     return line;
 }
@@ -808,7 +964,7 @@ NODE *runparse_node(NODE *nd, NODE **ndsptr)
                 else if ((!isdigit(*wptr) && (*wptr != '.' || gotdot)) || isnumb == 1)
                 {
                     // can't be a number
-                    // REVISIT: can be break out of the loop here?
+                    // REVISIT: can we break out of the loop here?
                     isnumb = 2;
                 }
 
@@ -950,5 +1106,4 @@ void uninitialize_parser()
     deepend_proc_name = NIL;
 
     g_ReadBuffer.Dispose();
-    g_PhysicalLine.Dispose();
 }
