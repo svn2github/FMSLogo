@@ -124,36 +124,6 @@ bool CDynamicBuffer::IsEmpty() const
     }
 }
 
-// resizes the buffer to hold a minimum of MinimumLength bytes.
-void 
-CDynamicBuffer::GrowTo(
-    size_t  MinimumLength
-    )
-{
-    ASSERT_COMBOBUFF_INVARIANT;
-
-    // if combo_buff has never been allocated, do so now.
-    if (m_Buffer == NULL)
-    {
-        m_Buffer     = (char *) calloc(DEFAULT_BUFFER_SIZE, sizeof(char));
-        m_BufferSize = DEFAULT_BUFFER_SIZE;
-    }
-
-    // if it won't fit, then make the buffer bigger
-    size_t requiredLength = MinimumLength + 1;
-    if (m_BufferSize < requiredLength)
-    {
-        // Double the size of the buffer, instead of only requesting 
-        // requiredLength bytes.  If we don't do this, then printing 
-        // a long string takes a *very* long time because we repeatedly
-        // reallocate the buffer to be one byte larger.
-        size_t newsize = std::max(m_BufferSize * 2, requiredLength);
-
-        m_Buffer     = (char *) realloc(m_Buffer, newsize);
-        m_BufferSize = newsize;
-    }
-}
-
 // resizes the buffer to hold ExtraLength more bytes.
 void
 CDynamicBuffer::GrowBy(

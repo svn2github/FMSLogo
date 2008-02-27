@@ -33,7 +33,6 @@ public:
     void Dispose();
     void AppendString(const char * ToAppend);
     void AppendChar(char ToAppend);
-    void GrowTo(size_t MinimumSize);
 
     char * GetBuffer();
     size_t GetBufferLength() const;
