@@ -13,7 +13,7 @@ CCommanderHistory::CCommanderHistory(
         wxEmptyString,
         wxDefaultPosition,
         wxDefaultSize,
-        wxRE_READONLY | wxRE_READONLY)
+        wxRE_READONLY | wxWANTS_CHARS)
 {
 }
 
