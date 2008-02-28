@@ -67,7 +67,7 @@ void CScreen::OnKeyDown(wxKeyEvent& event)
         );
 #endif
 
-    fprintf(stderr, "CScreen::OnKeyDown()");
+    fprintf(stderr, "CScreen::OnKeyDown()\n");
 
     if (CCommanderInput::WantsKeyEvent(keyCode))
     {
