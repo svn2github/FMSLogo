@@ -118,24 +118,39 @@ void CCommanderHistory::CopyCurrentLineToCommanderInput() const
         *stringend = '\0';
     }
 #else
-    wxString text = "fake text from history";
+    wxRichTextLine * line = GetVisibleLineForCaretPosition(GetCaretPosition());
+    if (line)
+    {
+        wxRichTextParagraph* para = GetBuffer().GetParagraphForLine(line);
+        if (para)
+        {
+            wxRichTextRange range(para->GetRange());
+
+            wxString text = GetRange(range.GetStart(), range.GetEnd());
+
+            GetCommander()->GetInput()->SetValue(text);
+        }
+    }
 #endif
 
-    GetCommander()->GetInput()->SetValue(text);
 }
 
-// KeyboardNavigate() is a virtual function that is called from the
-// wxEVT_CHAR event handler of wxRichTextCtrl.  Because the navigation 
-// controls are not sent to wxEVT_KEY_DOWN, we must intercept them here.
-bool CCommanderHistory::KeyboardNavigate(int keyCode, int flags)
+void CCommanderHistory::OnKeyDown(wxKeyEvent& Event)
 {
-    fprintf(stderr, "CCommanderHistory::KeyboardNavigate()\n");
+    int keyCode = Event.GetKeyCode();
+    fprintf(stderr, "CCommanderHistory::OnKeyDown()\n");
 
-    bool rval = wxRichTextCtrl::KeyboardNavigate(keyCode, flags);
-
-    if (keyCode == WXK_UP   ||
-        keyCode == WXK_DOWN ||
-        keyCode == WXK_LEFT)
+    if (keyCode == WXK_F1)
+    {
+        OpenHelp(GetStringSelection());
+    }
+    else if (CCommanderInput::WantsKeyEvent(keyCode))
+    {
+        GetCommander()->PostKeyDownToInputControl(Event);
+    }
+    else if (keyCode == WXK_UP   ||
+             keyCode == WXK_DOWN ||
+             keyCode == WXK_LEFT)
     {
         // If the caret moves down off bottom, then give focus to edit box.
         // NOTE: This logic must come before DefaultProcessing() when the cursor 
@@ -145,7 +160,6 @@ bool CCommanderHistory::KeyboardNavigate(int keyCode, int flags)
             if (IsCursorAtBottom())
             {
                 GetCommander()->GetInput()->SetFocus();
-                return rval;
             }
         }
 
@@ -171,24 +185,6 @@ bool CCommanderHistory::KeyboardNavigate(int keyCode, int flags)
             }
         }
 #endif
-
-    }
-
-    return rval;
-}
-
-void CCommanderHistory::OnKeyDown(wxKeyEvent& Event)
-{
-    int keyCode = Event.GetKeyCode();
-    fprintf(stderr, "CCommanderHistory::OnKeyDown()\n");
-
-    if (keyCode == WXK_F1)
-    {
-        OpenHelp(GetStringSelection());
-    }
-    else if (CCommanderInput::WantsKeyEvent(keyCode))
-    {
-        GetCommander()->PostKeyDownToInputControl(Event);
     }
     else
     {

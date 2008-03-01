@@ -15,9 +15,6 @@ public:
     void OnKeyDown(wxKeyEvent& event);
     void OnChar(wxKeyEvent& event);
 
-protected:
-    bool KeyboardNavigate(int keyCode, int flags);
-
 private:
     CCommander * GetCommander() const;
 
