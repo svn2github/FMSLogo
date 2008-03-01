@@ -26,7 +26,8 @@ bool CCommanderHistory::IsCursorAtBottom() const
 {
     long caretPosition = GetCaretPosition();
     long lastPosition  = GetLastPosition();
-    return lastPosition == caretPosition;
+
+    return lastPosition <= caretPosition + 1;
 }
 
 void CCommanderHistory::CopyCurrentLineToCommanderInput() const
@@ -152,21 +153,19 @@ void CCommanderHistory::OnKeyDown(wxKeyEvent& Event)
              keyCode == WXK_DOWN ||
              keyCode == WXK_LEFT)
     {
-        // If the caret moves down off bottom, then give focus to edit box.
-        // NOTE: This logic must come before DefaultProcessing() when the cursor 
-        // is already at the bottom in order to prevent an extra beep.
-        if (keyCode == WXK_DOWN && !HasSelection())
-        {
-            if (IsCursorAtBottom())
-            {
-                GetCommander()->GetInput()->SetFocus();
-            }
-        }
 
         // up&down keys move up and down
         if (keyCode == WXK_DOWN)
         {
-            MoveDown(1);
+            // If the caret is already at the bottom, then give focus to edit box.
+            if (!HasSelection() && IsCursorAtBottom())
+            {
+                GetCommander()->GetInput()->SetFocus();
+            }
+            else
+            {
+                MoveDown(1);
+            }
         }
         else if (keyCode == WXK_UP)
         {
@@ -174,17 +173,6 @@ void CCommanderHistory::OnKeyDown(wxKeyEvent& Event)
         }
 
         CopyCurrentLineToCommanderInput();
-
-#ifndef SELECTBOTTOMLINE
-        // If the caret moves down off bottom, then give focus to edit box.
-        if (keyCode == WXK_DOWN && !HasSelection())
-        {
-            if (IsCursorAtBottom())
-            {
-                GetCommander()->GetInput()->SetFocus();
-            }
-        }
-#endif
     }
     else
     {
