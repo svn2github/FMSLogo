@@ -51,7 +51,7 @@ char TempClipName[MAX_PATH + 1];   // path to temp clipboard file
 char szHelpFileName[MAX_PATH + 1]; // path to help file
 char MCIHelpFileName[MAX_PATH + 1];// path to MCI help file
 
-char commandarg[MAX_BUFFER_SIZE];  // Routine to exec on start
+char commandarg[MAX_BUFFER_SIZE];  // file to load on start
 
 // holds callback code
 
