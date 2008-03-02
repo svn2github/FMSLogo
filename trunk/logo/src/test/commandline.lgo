@@ -1,0 +1,41 @@
+LOAD "testlib.lgo
+
+TO COMMANDLINETEST.ALREADYRUNNING
+
+   ; Spawning another FMSLogo while this one is running.
+   ; This should give focus to the running instance.
+   TRACEINSTRUCTION [WINDOWCREATE "main "mywindow "focuswindow 100 100 100 100 []] 
+   TRACEINSTRUCTION [SETFOCUS "focuswindow] 
+   SIMPLEREPORTTEST [(SHELL [fmslogo] "true)] "true
+   SIMPLEREPORTTEST [GETFOCUS] "FMSLogo
+   TRACEINSTRUCTION [WINDOWDELETE "mywindow] 
+
+END
+
+TO COMMANDLINETEST.PARAMETER.L
+
+   ; Spawn another FMSLogo with the -L parameter using
+   ; a program that creates a file as proof that it ran.
+
+   ; erase the file, if it exists
+   TRACEINSTRUCTION [ERASEFILE "commandline-createfile.txt]
+
+   ; Spawn a new FMSLogo.exe to create the file.
+   ; Note that the logo program is not enclosed in quotes
+   SIMPLEREPORTTEST [(SHELL [fmslogo -L commandline createfile.lgo] "true)] "true
+
+   ; Test that the new instance of FMSLogo was created by testing
+   ; for the existence of the file.
+   SIMPLEREPORTTEST [ FILEEXISTS "commandline-createfile.txt ] "true
+
+   ; cleanup
+   ERASEFILE "commandline-createfile.txt
+
+END
+
+TO COMMANDLINETEST
+
+   COMMANDLINETEST.ALREADYRUNNING
+   COMMANDLINETEST.PARAMETER.L
+
+END

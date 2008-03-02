@@ -122,6 +122,7 @@ LOAD "foreach.lgo
 LOAD "bye.lgo
 LOAD "backtick.lgo
 LOAD "cascade.lgo
+LOAD "commandline.lgo
 
 TO TESTALL
 
@@ -239,6 +240,7 @@ TO TESTALL
   MOUSETEST           ; from mouse.lgo
   MIDITEST            ; from midi.lgo
   SOUNDTEST           ; from sound.lgo
+  COMMANDLINETEST     ; from commandline.lgo
   NETWORKTEST         ; from network.lgo
   SLOWDRAWTEST        ; from slowdraw.lgo
   STATUSTEST          ; from status.lgo

@@ -1,0 +1,4 @@
+; Create a file and exit
+; The file is proof that this program ran.
+OPENWRITE "commandline-createfile.txt
+BYE
