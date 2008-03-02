@@ -51,7 +51,7 @@ char TempClipName[MAX_PATH + 1];   // path to temp clipboard file
 char szHelpFileName[MAX_PATH + 1]; // path to help file
 char MCIHelpFileName[MAX_PATH + 1];// path to MCI help file
 
-char commandarg[MAX_BUFFER_SIZE];  // file to load on start
+static char g_FileToLoad[MAX_BUFFER_SIZE];  // file to load on start
 
 // holds callback code
 
@@ -398,10 +398,10 @@ bool TMyApp::IdleAction(long idleCount)
     }
 
     // if command arg loaded then execute
-    if (commandarg[0] != '\0')
+    if (g_FileToLoad[0] != '\0')
     {
-        silent_load(NIL, commandarg);
-        commandarg[0] = '\0';
+        silent_load(NIL, g_FileToLoad);
+        g_FileToLoad[0] = '\0';
     }
 
     checkqueue();
@@ -745,7 +745,7 @@ WinMain(
     TopOfStack = &i;
 
     // parse the command-line parameters
-    commandarg[0] = '\0';
+    g_FileToLoad[0] = '\0';
     bPerspective = false;
     bExpert      = false;
     bFixed       = false;
@@ -756,7 +756,7 @@ WinMain(
     {
         if (*ptr == '-')
         {
-            *ptr++; // advance beyond the -
+            ptr++; // advance beyond the -
 
             switch (*ptr++)
             {
@@ -795,8 +795,8 @@ WinMain(
                     ptr++;
                 }
 
-                // copy the rest of the line into the commandarg buffer
-                strncpy(commandarg, ptr, ARRAYSIZE(commandarg) - 1);
+                // copy the rest of the line into the g_FileToLoad buffer
+                strncpy(g_FileToLoad, ptr, ARRAYSIZE(g_FileToLoad) - 1);
                 ptr += strlen(ptr);
                 break;
 
@@ -820,7 +820,7 @@ WinMain(
     if (GetLastError() == ERROR_ALREADY_EXISTS)
     {
         // A copy of Logo is already running.
-        if (commandarg[0] == '\0')
+        if (g_FileToLoad[0] == '\0')
         {
             // No logo scripts were specified on the command-line.
             // We should re-use the existing window instead of creating a new 
