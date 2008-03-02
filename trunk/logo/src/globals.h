@@ -24,8 +24,6 @@ extern bool yield_flag;
 extern int GCMAX;
 extern bool bExpert;
 extern bool bFixed;
-extern bool bWidth;
-extern bool bHeight;
 extern NODE **hash_table;
 extern NODE *current_line;
 extern NODE *exec_list;

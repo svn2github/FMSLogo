@@ -26,8 +26,8 @@ CUTMAP *CutBmp;              // Pointer to Bit Cut memory array malloc on init
 
 bool bExpert;                      // Expert mode
 bool bFixed;                       // Fixed mode
-bool bWidth;                       // Width mode
-bool bHeight;                      // Height mode
+static bool bWidth;                // Width mode
+static bool bHeight;               // Height mode
 static bool bPerspective;          // Perspetive mode start up
 
 HBITMAP MemoryBitMap;              // Backing store bitmap
