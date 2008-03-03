@@ -33,6 +33,9 @@ public:
     virtual bool OnInit();
     virtual int  OnExit();
 
+private:
+    void ProcessCommandLine();
+
     DECLARE_NO_COPY_CLASS(CFmsLogo)
 };
 
