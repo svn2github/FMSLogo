@@ -810,6 +810,56 @@ WinMain(
                 break;
             }
         }
+        else if (!isspace(*ptr))
+        {
+            // No switch was used, so this is the name of a file to load.
+            // Copy the rest of the command-line into the g_FileToLoad buffer
+
+            // remove the surrounding quotes, if necessary
+            bool removeQuotes = false;
+
+            if (*ptr == '"')
+            {
+                removeQuotes = true;
+                ptr++;
+            }
+            for (size_t i = 0; i < ARRAYSIZE(g_FileToLoad) - 1; i++)
+            {
+                if (*ptr == '\0')
+                {
+                    break;
+                }
+
+                if (removeQuotes && *ptr == '"')
+                {
+                    // Determine if this is the end quote.
+                    // That is, determine if there's nothing but
+                    // whitespace until the end of the command-line.
+                    const char * cursor;
+                    for (cursor = ptr + 1; *cursor != '\0'; cursor++)
+                    {
+                        if (!isspace(*cursor))
+                        {
+                            break;
+                        }
+                    }
+
+                    if (*cursor == '\0')
+                    {
+                        // ignore the end quote
+                        break;
+                    }
+                }
+
+                g_FileToLoad[i] = *ptr++;
+            }
+
+            // g_FileToLoad is already NUL-terminated because it's a
+            // static buffer and was initialized to all zeros by the compiler.
+
+            // we've processed the entire command-line
+            break;
+        }
     }
 
     // Check to see if another instance of Logo is currently running

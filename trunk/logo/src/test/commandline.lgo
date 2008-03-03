@@ -24,7 +24,29 @@ TO COMMANDLINETEST.PARAMETER.L
    ; Note that the logo program is not enclosed in quotes
    SIMPLEREPORTTEST [(SHELL [fmslogo -L commandline createfile.lgo] "true)] "true
 
-   ; Test that the new instance of FMSLogo was created by testing
+   ; Confirm that the new instance of FMSLogo was created by testing
+   ; for the existence of the file.
+   SIMPLEREPORTTEST [ FILEEXISTS "commandline-createfile.txt ] "true
+
+   ; cleanup
+   ERASEFILE "commandline-createfile.txt
+
+END
+
+TO COMMANDLINETEST.PARAMETER.FILENAME
+
+   ; Spawn another FMSLogo with a Logo program as a
+   ; command-line parameter.
+
+   ; erase the file, if it exists
+   TRACEINSTRUCTION [ERASEFILE "commandline-createfile.txt]
+
+   ; Spawn a new FMSLogo.exe to create the file.
+   ; Note that the logo program is enclosed in quotes and there is
+   ; no -L parameter.
+   SIMPLEREPORTTEST [(SHELL [fmslogo \"commandline createfile.lgo\"] "true)] "true
+
+   ; Confirm that the new instance of FMSLogo was created by testing
    ; for the existence of the file.
    SIMPLEREPORTTEST [ FILEEXISTS "commandline-createfile.txt ] "true
 
@@ -37,5 +59,6 @@ TO COMMANDLINETEST
 
    COMMANDLINETEST.ALREADYRUNNING
    COMMANDLINETEST.PARAMETER.L
+   COMMANDLINETEST.PARAMETER.FILENAME
 
 END

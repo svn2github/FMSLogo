@@ -23,6 +23,10 @@ II. New features/bugs fixed:
   * Added for 6.20.0
     o Fix bug #1900691; Whitespace after ~ is now preserved when
       the ~ is not a continuation character.
+    o Implement request #1423937; FMSLogo no longer requires the -L on the
+      command line to load a logo file on startup.  This makes it easier
+      to create file associations and allows you to drag-and-drop a Logo
+      program on an FMSLogo desktop shortcut.
 
   For a complete history of changes across all versions of FMSLogo, see
   http://fmslogo.cvs.sourceforge.net/*checkout*/fmslogo/logo/src/CHANGELOG.TXT
