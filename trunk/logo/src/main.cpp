@@ -797,7 +797,7 @@ WinMain(
 
                 // copy the rest of the line into the g_FileToLoad buffer
                 strncpy(g_FileToLoad, ptr, ARRAYSIZE(g_FileToLoad) - 1);
-                ptr += strlen(ptr);
+                ptr += strlen(ptr) - 1;
                 break;
 
             default:
