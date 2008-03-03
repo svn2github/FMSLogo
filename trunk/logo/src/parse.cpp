@@ -560,6 +560,13 @@ NODE *reader(FILE *strm, const char *prompt)
         lineBuffer.GetStringLength(),
         this_type);
 
+    if (line == Null_Word)
+    {
+        // make_strnode_no_copy did not reference the
+        // string buffer so we must free it.
+        free(lineBuffer.GetString());
+    }
+
     return line;
 }
 
