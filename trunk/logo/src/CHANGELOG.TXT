@@ -18,8 +18,8 @@ This file contains the changes that were made in each revision of FMSLogo.
   o Minor improvements to the manual.
 
 * Added for 6.18.0
-  o Implement feature request #1825717; LOGOVERSION now outputs the locale
-    FMSLogo was built for.
+  o Implement request #1825717; LOGOVERSION now outputs the locale for
+    which FMSLogo was built.
   o Fix bug #1825718; DEMO is now internationalized and localized for German.
   o Fix bug #1824438; FMSLogo can now parse words with char 255 in them.
   o Minor improvements to the Portuguese translation.
