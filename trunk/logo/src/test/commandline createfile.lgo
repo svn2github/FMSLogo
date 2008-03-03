@@ -1,4 +1,3 @@
-; Create a file and exit
-; The file is proof that this program ran.
-OPENWRITE "commandline-createfile.txt
-BYE
+; This is a helper program for commandline.lgo
+; It should not be invoked directly.
+load "commandline-createfile.lgo
