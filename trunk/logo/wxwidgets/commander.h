@@ -10,6 +10,7 @@ class CCommanderToggleButton;
 class CCommanderHistory;
 class CCommanderInput;
 class wxRichTextEvent;
+class wxButton;
 
 class CCommander : public wxPanel
 {
@@ -45,6 +46,7 @@ public:
 
     CCommanderHistory * GetHistory();
     CCommanderInput   * GetInput();
+    wxButton          * GetEdallButton();
 
     // HACK: friend functions
     friend void putcombobox(const char *str);

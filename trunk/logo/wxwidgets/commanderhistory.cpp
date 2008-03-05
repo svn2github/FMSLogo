@@ -1,6 +1,7 @@
 #include "commanderhistory.h"
 
 #include <wx/settings.h>
+#include <wx/button.h>
 
 #include "help.h"
 #include "commander.h"
@@ -229,6 +230,19 @@ void CCommanderHistory::OnKeyDown(wxKeyEvent& Event)
             MoveLeft(1, flags);
         }
         movedCaret = true;
+    }
+    else if (keyCode == WXK_TAB)
+    {
+        if (Event.ShiftDown())
+        {
+            // the previous control is the execute button
+            GetCommander()->GetEdallButton()->SetFocus();
+        }
+        else
+        {
+            // the next control is the commander input
+            GetCommander()->GetInput()->SetFocus();
+        }
     }
     else if (CCommanderInput::WantsKeyEvent(keyCode))
     {
