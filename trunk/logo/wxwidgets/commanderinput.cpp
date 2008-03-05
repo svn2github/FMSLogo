@@ -16,7 +16,6 @@ CCommanderInput::WantsKeyEvent(
     int KeyCode
     )
 {
-    fprintf(stderr, "WantsKeyEvent called\n");
     // we want the space bar
     if (KeyCode == WXK_SPACE)
     {
@@ -88,6 +87,7 @@ void CCommanderInput::OnKeyDown(wxKeyEvent& Event)
         break;
 
     case WXK_UP:
+    case WXK_NUMPAD_UP:
         static_cast<CCommander*>(GetParent())->GiveControlToHistoryBox();
         break;
 
