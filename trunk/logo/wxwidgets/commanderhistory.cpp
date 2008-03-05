@@ -1,5 +1,7 @@
 #include "commanderhistory.h"
 
+#include <wx/settings.h>
+
 #include "help.h"
 #include "commander.h"
 #include "commanderinput.h"
@@ -15,6 +17,13 @@ CCommanderHistory::CCommanderHistory(
         wxDefaultSize,
         wxRE_READONLY | wxWANTS_CHARS)
 {
+    // The background color should be light gray to indicate that this
+    // is a read-only control.
+    SetBackgroundColour(wxSystemSettings::GetColour(wxSYS_COLOUR_3DLIGHT));
+
+    // Nothing that we write to the control should be undoable by
+    // the user.
+    BeginSuppressUndo();
 }
 
 CCommander * CCommanderHistory::GetCommander() const
@@ -139,56 +148,106 @@ void CCommanderHistory::CopyCurrentLineToCommanderInput() const
 void CCommanderHistory::OnKeyDown(wxKeyEvent& Event)
 {
     int keyCode = Event.GetKeyCode();
-    fprintf(stderr, "CCommanderHistory::OnKeyDown()\n");
 
-    if (keyCode == WXK_F1)
+    int  flags      = (Event.ShiftDown()) ? wxRICHTEXT_SHIFT_DOWN : 0;
+    bool movedCaret = false;
+
+    if (keyCode == WXK_RETURN)
     {
+        Event.Skip();
+    }
+    else if (Event.ControlDown() && keyCode == WXK_HOME)
+    {
+        // CTRL+HOME scrolls to the top
+        MoveHome(flags);
+        movedCaret = true;
+    }
+    else if (Event.ControlDown() && keyCode == WXK_END)
+    {
+        // CTRL+END scrolls to the bottom
+        MoveEnd(flags);
+        movedCaret = true;
+    }
+    else if (Event.GetModifiers() == wxMOD_CONTROL && keyCode == 'C')
+    {
+        // CTRL+C should copy
+        Copy();
+    }
+    else if (Event.GetModifiers() == wxMOD_NONE && keyCode == WXK_F1)
+    {
+        // F1 displays the help
         OpenHelp(GetStringSelection());
+    }
+    else if (keyCode == WXK_PAGEUP || keyCode == WXK_NUMPAD_PAGEUP)
+    {
+        // Page Up moves one screen up
+        PageUp(1, flags);
+        movedCaret = true;
+    }
+    else if (keyCode == WXK_PAGEDOWN || keyCode == WXK_NUMPAD_PAGEDOWN)
+    {
+        // Page Down moves one screen down
+        PageDown(1, flags);
+        movedCaret = true;
+    }
+    else if (keyCode == WXK_DOWN || keyCode == WXK_NUMPAD_DOWN)
+    {
+        // If the caret is already at the bottom, then give focus to edit box.
+        if (!HasSelection() && IsCursorAtBottom())
+        {
+            GetCommander()->GetInput()->SetFocus();
+        }
+        else if (IsCursorAtBottom())
+        {
+            // The cursor is already at the bottom
+            // so we don't have to move it.
+            if (!Event.ControlDown())
+            {
+                // clear the selection to be consistent with MSWLogo
+                SelectNone();
+            }
+        }
+        else
+        {
+            MoveDown(1, flags);
+            movedCaret = true;
+        }
+    }
+    else if (keyCode == WXK_UP || keyCode == WXK_NUMPAD_UP)
+    {
+        MoveUp(1, flags);
+        movedCaret = true;
+    }
+    else if (keyCode == WXK_LEFT || keyCode == WXK_NUMPAD_LEFT)
+    {
+        if (Event.ControlDown())
+        {
+            WordLeft(1, flags);
+        }
+        else
+        {
+            MoveLeft(1, flags);
+        }
+        movedCaret = true;
     }
     else if (CCommanderInput::WantsKeyEvent(keyCode))
     {
         GetCommander()->PostKeyDownToInputControl(Event);
-    }
-    else if (keyCode == WXK_UP   ||
-             keyCode == WXK_DOWN ||
-             keyCode == WXK_LEFT)
-    {
-
-        // up&down keys move up and down
-        if (keyCode == WXK_DOWN)
-        {
-            // If the caret is already at the bottom, then give focus to edit box.
-            if (!HasSelection() && IsCursorAtBottom())
-            {
-                GetCommander()->GetInput()->SetFocus();
-            }
-            else
-            {
-                MoveDown(1);
-            }
-        }
-        else if (keyCode == WXK_UP)
-        {
-            MoveUp(1);
-        }
-
-        CopyCurrentLineToCommanderInput();
     }
     else
     {
         // default processing
         Event.Skip();
     }
-}
 
-void CCommanderHistory::OnChar(wxKeyEvent& Event)
-{
-    fprintf(stderr, "CCommanderHistory::OnChar()\n");
-    Event.Skip();
+    if (movedCaret)
+    {
+        ScrollIntoView(GetCaretPosition(), keyCode);
+        CopyCurrentLineToCommanderInput();
+    }
 }
 
 
 BEGIN_EVENT_TABLE(CCommanderHistory, wxRichTextCtrl)
     EVT_KEY_DOWN(CCommanderHistory::OnKeyDown)
-    EVT_CHAR(CCommanderHistory::OnChar)
 END_EVENT_TABLE()

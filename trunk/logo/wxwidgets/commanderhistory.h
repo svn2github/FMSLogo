@@ -13,7 +13,6 @@ public:
     void CopyCurrentLineToCommanderInput() const;
 
     void OnKeyDown(wxKeyEvent& event);
-    void OnChar(wxKeyEvent& event);
 
 private:
     CCommander * GetCommander() const;
