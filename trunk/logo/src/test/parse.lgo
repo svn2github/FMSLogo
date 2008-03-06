@@ -154,6 +154,43 @@ TO PARSETEST.EXPRESSION
    RUNNOTENOUGHINPUTSTEST [ MODULO 100 * 100 ] ; argument gathering halts at an infix operation
 END
 
+TO PARSETEST.INFIXEXPRESSION.PRIORITY
+   ; tests the priority (precedence) of infix operators
+
+   ; multiplication/division have higher precence than addition/subtraction
+   SIMPLEREPORTTEST [ 1+2*2 ] 5
+   SIMPLEREPORTTEST [ 2*2+1 ] 5
+   SIMPLEREPORTTEST [ 1-2/2 ] 0
+   SIMPLEREPORTTEST [ 2/2+1 ] 2
+
+   ; infix operators have higher precedence than non-infix operators
+   SIMPLEREPORTTEST [ PRODUCT 2 2 + 1 ] 6 ; PRODUCT 2 (2+1)
+   SIMPLEREPORTTEST [ PRODUCT 2 2 - 1 ] 2 ; PRODUCT 2 (2-1)
+
+   ; negatition has the highest precedence
+   SIMPLEREPORTTEST [ 2 - - 1 ] 3  ; 2 - (-1)
+   SIMPLEREPORTTEST [ 2 * - 1 ] -2 ; 2 * (-1)
+   SIMPLEREPORTTEST [ - 2 + 3 ] 1  ; (-2) + 3
+
+   ; arithmetic operators have higher precedence than logical operators
+   SIMPLEREPORTTEST [ 1 + 2 <  3 * 4 ] "true
+   SIMPLEREPORTTEST [ 1 + 2 <= 3 * 4 ] "true
+   SIMPLEREPORTTEST [ 1 + 2 <> 3 * 4 ] "true
+   SIMPLEREPORTTEST [ 1 + 2 >  3 * 4 ] "false
+   SIMPLEREPORTTEST [ 1 + 2 >= 3 * 4 ] "false
+   SIMPLEREPORTTEST [ 1 + 2 =  3 * 4 ] "false
+
+   ; logical operators have higher precedence than procedures
+   SIMPLEREPORTTEST [ FIRST 1 =  2 ] FIRST LOCALEFALSE
+   SIMPLEREPORTTEST [ FIRST 1 <  2 ] FIRST LOCALETRUE
+   SIMPLEREPORTTEST [ FIRST 1 <= 2 ] FIRST LOCALETRUE
+   SIMPLEREPORTTEST [ FIRST 1 <> 2 ] FIRST LOCALETRUE
+   SIMPLEREPORTTEST [ FIRST 1 >  2 ] FIRST LOCALEFALSE
+   SIMPLEREPORTTEST [ FIRST 1 >= 2 ] FIRST LOCALEFALSE
+  
+
+END
+
 TO PARSETEST.INFIXEXPRESSION
    SIMPLEREPORTTEST [ (1 +  2) * 3 ] 9
    SIMPLEREPORTTEST [  1 + (2 * 3) ] 7
@@ -313,6 +350,7 @@ TO PARSETEST
    PARSETEST.SYMBOLSOFINCLUSION
    PARSETEST.EXPRESSION
    PARSETEST.INFIXEXPRESSION
+   PARSETEST.INFIXEXPRESSION.PRIORITY
    PARSETEST.MANYINPUTS
    PARSETEST.DEEPLYNESTEDINFIXEXPRESSION
    PARSETEST.LONGINSTRUCTIONLINEWITHCATCH
