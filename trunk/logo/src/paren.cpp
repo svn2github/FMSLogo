@@ -489,10 +489,19 @@ NODE *paren_infix(NODE *left_arg, NODE **rest, int old_pri, bool inparen)
     NODE *infix_proc;
     int new_pri;
 
-    while (*rest != NIL &&  // not end of expression
-           0 != (new_pri = priority(infix_proc = car(*rest))) &&  // 2nd node is an infix proc
-           old_pri < new_pri) // this infix node has a lower priority than previous node
+    while (*rest != NIL) // not end of expression
     {
+        infix_proc = car(*rest);
+        new_pri    = priority(infix_proc);
+
+        if (new_pri == STOP_PRIORITY || new_pri <= old_pri)
+        {
+            // We've either encountered a STOP or infix_proc
+            // has a higher priority than previous node.
+            // Either way, we want to stop.
+            break;
+        }
+
         ref(infix_proc);
         pop(*rest);
 
