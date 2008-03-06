@@ -127,33 +127,45 @@ bool IsActiveAreaOneToOneWithScreen()
 NODE *lsetactivearea(NODE *arg)
 {
     NODE * args = vector_4_arg(arg);
-
-    if (NOT_THROWING)
+    if (stopping_flag == THROWING)
     {
-        // apply all args that are given
-        NODE * xlow  = car(args);
-        NODE * ylow  = car(cdr(args));
-        NODE * xhigh = car(cdr(cdr(args)));
-        NODE * yhigh = car(cdr(cdr(cdr(args))));
-
-        g_PrinterAreaXLow  = numeric_node_to_fixnum(xlow);
-        g_PrinterAreaYLow  = numeric_node_to_fixnum(ylow);
-        g_PrinterAreaXHigh = numeric_node_to_fixnum(xhigh); 
-        g_PrinterAreaYHigh = numeric_node_to_fixnum(yhigh); 
-
-        if (g_PrinterAreaXLow >= g_PrinterAreaXHigh || 
-            g_PrinterAreaYLow >= g_PrinterAreaYHigh)
-        {
-            ShowMessageAndStop(LOCALIZED_ACTIVEAREA, LOCALIZED_ERROR_BADINPUT);
-            return Unbound;
-        }
-
-        SetConfigurationInt("Printer.XLow",   g_PrinterAreaXLow);
-        SetConfigurationInt("Printer.XHigh",  g_PrinterAreaXHigh);
-        SetConfigurationInt("Printer.YLow",   g_PrinterAreaYLow);
-        SetConfigurationInt("Printer.YHigh",  g_PrinterAreaYHigh);
-        SetConfigurationInt("Printer.Pixels", g_PrinterAreaPixels);
+        return Unbound;
     }
+
+    // apply all args that are given
+    const NODE * xLowNode  = car(args);
+    const NODE * yLowNode  = car(cdr(args));
+    const NODE * xHighNode = car(cdr(cdr(args)));
+    const NODE * yHighNode = car(cdr(cdr(cdr(args))));
+
+    const int xLow  = numeric_node_to_fixnum(xLowNode);
+    const int yLow  = numeric_node_to_fixnum(yLowNode);
+    const int xHigh = numeric_node_to_fixnum(xHighNode); 
+    const int yHigh = numeric_node_to_fixnum(yHighNode); 
+
+    if (stopping_flag == THROWING)
+    {
+        return Unbound;
+    }
+
+    if (xHigh <= xLow || yHigh <= yLow)
+    {
+        // TODO: make this a recoverable error
+        ShowMessageAndStop(LOCALIZED_ACTIVEAREA, LOCALIZED_ERROR_BADINPUT);
+        return Unbound;
+    }
+
+    // now that we have validated the input, we can commit to it
+    g_PrinterAreaXLow  = xLow;
+    g_PrinterAreaYLow  = yLow;
+    g_PrinterAreaXHigh = xHigh; 
+    g_PrinterAreaYHigh = yHigh; 
+
+    SetConfigurationInt("Printer.XLow",   g_PrinterAreaXLow);
+    SetConfigurationInt("Printer.XHigh",  g_PrinterAreaXHigh);
+    SetConfigurationInt("Printer.YLow",   g_PrinterAreaYLow);
+    SetConfigurationInt("Printer.YHigh",  g_PrinterAreaYHigh);
+    SetConfigurationInt("Printer.Pixels", g_PrinterAreaPixels);
 
     return Unbound;
 }

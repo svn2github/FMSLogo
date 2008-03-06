@@ -23,6 +23,8 @@ II. New features/bugs fixed:
   * Added for 6.20.0
     o Fix bug #1900691; Whitespace after ~ is now preserved when
       the ~ is not a continuation character.
+    o Fix bug #1607580; SETACTIVEAREA no longer changes ACTIVEAREA when
+      given bad input.
     o Implement request #1423937; FMSLogo no longer requires the -L on the
       command line to load a logo file on startup.  This makes it easier
       to create file associations and allows you to drag-and-drop a Logo
