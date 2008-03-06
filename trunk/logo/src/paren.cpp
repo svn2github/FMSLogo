@@ -143,7 +143,6 @@ void treeify_body(NODE *body)
 static
 NODE *paren_expr(NODE **expr, bool inparen)
 {
-
     if (*expr == NIL)
     {
         if (inparen) 
@@ -211,7 +210,7 @@ NODE *paren_expr(NODE **expr, bool inparen)
         }
         else if (first == Minus_Sign)
         {
-            // pretend that -X is really 0 - 1
+            // pretend that -X is really 0 - X
             deref(first);
             push(Minus_Tight, *expr);
             retval = paren_infix(make_intnode(0), expr, -1, inparen);
@@ -473,7 +472,7 @@ int priority(NODE *proc_obj)
         (proc = procnode__caseobj(proc_obj)) == UNDEFINED ||
         nodetype(proc) != INFIX)
     {
-        return 0;
+        return STOP_PRIORITY;
     }
 
     return is_prim(proc) ? getprimpri(proc) : PREFIX_PRIORITY;
@@ -486,19 +485,23 @@ int priority(NODE *proc_obj)
 static 
 NODE *paren_infix(NODE *left_arg, NODE **rest, int old_pri, bool inparen)
 {
-    NODE *infix_proc;
-    int new_pri;
-
     while (*rest != NIL) // not end of expression
     {
-        infix_proc = car(*rest);
-        new_pri    = priority(infix_proc);
+        NODE * infix_proc = car(*rest);
+        int    new_pri    = priority(infix_proc);
 
         if (new_pri == STOP_PRIORITY || new_pri <= old_pri)
         {
-            // We've either encountered a STOP or infix_proc
-            // has a higher priority than previous node.
+            // We've either encountered a non-infix procedure
+            // or infix_proc has a higher priority than previous node.
             // Either way, we want to stop.
+            break;
+        }
+
+        if (cdr(*rest) == NIL)
+        {
+            // we have an infix procedure without a right operand.
+            err_logo(NOT_ENOUGH, infix_proc);
             break;
         }
 
