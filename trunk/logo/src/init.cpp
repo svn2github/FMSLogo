@@ -661,6 +661,7 @@ intern_primitive(
     }
     else if (Priority <= TAIL_PRIORITY)
     {
+        // .MAYBEOUTPUT, OUTPUT, or STOP.
         proc = vref(newnode(TAILFORM));
     }
     else if ((Priority & ~4) == (PREFIX_PRIORITY & ~4))
