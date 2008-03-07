@@ -501,7 +501,7 @@ NODE *numeric_arg(NODE *args)
 // If the first element in args can be interpreted as a non-negative number
 // then it is changed into an numeric node and returned.
 // Otherwise it is set to whatever ERRACT returns.
-NODE *pos_numeric_arg(NODE *args)
+NODE *nonnegative_numeric_arg(NODE *args)
 {
     NODE *arg = car(args);
 

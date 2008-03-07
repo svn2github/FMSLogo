@@ -458,7 +458,7 @@ NODE *ltimemilli(NODE *)
 
 NODE *lwait(NODE *args)
 {
-    NODE * num = pos_numeric_arg(args);
+    NODE * num = nonnegative_numeric_arg(args);
     if (NOT_THROWING)
     {
         FLONUM input = numeric_node_to_flonum(num);
