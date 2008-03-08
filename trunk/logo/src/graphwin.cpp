@@ -950,17 +950,13 @@ NODE *lzoom(NODE *arg)
 {
     ASSERT_TURTLE_INVARIANT;
 
-    // get arg
-    NODE *val = numeric_arg(arg);
-
-    FLONUM temp_zoom = numeric_node_to_flonum(val);
-
-    if (temp_zoom <= 0.0)
+    NODE *val = positive_numeric_arg(arg);
+    if (stopping_flag != THROWING)
     {
-        temp_zoom = 1.0;
-    }
+        FLONUM temp_zoom = numeric_node_to_flonum(val);
 
-    zoom_helper(temp_zoom);
+        zoom_helper(temp_zoom);
+    }
 
     return Unbound;
 }

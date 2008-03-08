@@ -25,6 +25,8 @@ II. New features/bugs fixed:
       the ~ is not a continuation character.
     o Fix bug #1607580; SETACTIVEAREA no longer changes ACTIVEAREA when
       given bad input.
+    o Fix bug #1599122; ZOOM now throws a bad input error when it inputs
+      a non-positive value, instead of silently changing it to 1.
     o Fix bug #1518558; Running "5*" now throws a "not enough inputs to *"
       error, instead of a "* doesn't like [] as input" error.
     o Implement request #1423937; FMSLogo no longer requires the -L on the

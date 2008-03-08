@@ -520,6 +520,28 @@ NODE *nonnegative_numeric_arg(NODE *args)
     return val;
 }
 
+// If the first element in args can be interpreted as a positive number
+// then it is changed into an numeric node and returned.
+// Otherwise it is set to whatever ERRACT returns.
+NODE *positive_numeric_arg(NODE *args)
+{
+    NODE *arg = car(args);
+
+    NODE * val = cnv_node_to_numnode(arg);
+    while (NOT_THROWING && 
+           (val == Unbound || numeric_node_to_flonum(val) <= 0))
+    {
+        // The arg node is either non-numeric or not positive.
+        // Try to get a different value.
+        gcref(val);
+        setcar(args, err_logo(BAD_DATA, arg));
+        arg = car(args);
+        val = cnv_node_to_numnode(arg);
+    }
+    setcar(args, val);
+    return val;
+}
+
 NODE *luppitch(NODE *arg)
 {
     NODE* val = numeric_arg(arg);
