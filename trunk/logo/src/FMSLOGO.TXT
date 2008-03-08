@@ -21,6 +21,8 @@ I. Kit Description/Location (http://sourceforge.net/projects/fmslogo)
 II. New features/bugs fixed:
 
   * Added for 6.20.0
+    o Fix bug #1910177; WAIT now throws a bad input error when given input
+      in the range <-1,0>, instead of doing nothing.
     o Fix bug #1900691; Whitespace after ~ is now preserved when
       the ~ is not a continuation character.
     o Fix bug #1607580; SETACTIVEAREA no longer changes ACTIVEAREA when

@@ -507,7 +507,7 @@ NODE *nonnegative_numeric_arg(NODE *args)
 
     NODE * val = cnv_node_to_numnode(arg);
     while (NOT_THROWING && 
-           (val == Unbound || numeric_node_to_fixnum(val) < 0))
+           (val == Unbound || numeric_node_to_flonum(val) < 0))
     {
         // The arg node is either non-numeric or negative.
         // Try to get a different value.
