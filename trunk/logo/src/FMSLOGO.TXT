@@ -35,6 +35,7 @@ II. New features/bugs fixed:
       command line to load a logo file on startup.  This makes it easier
       to create file associations and allows you to drag-and-drop a Logo
       program on an FMSLogo desktop shortcut.
+    o Minor updates to the manual.
 
   For a complete history of changes across all versions of FMSLogo, see
   http://fmslogo.cvs.sourceforge.net/*checkout*/fmslogo/logo/src/CHANGELOG.TXT

@@ -59,7 +59,7 @@ Here's a macro version of REPEAT:
 
 <programlisting>.MACRO MY.REPEAT :num :instructions
   IF :num=0 [OUTPUT []]
-  OUTPUT SENTENCE :instructions (LIST "my.repeat :num-1 :instructions)
+  OUTPUT SENTENCE :instructions (LIST "MY.REPEAT :num-1 :instructions)
 END
 </programlisting>
 </para>
@@ -78,7 +78,7 @@ To see how the MY.REPEAT macro works, let's take the example
 
 <para>
 For this example, MY.REPEAT will output the instruction list
-<programlisting>[PRINT "hello my.repeat 4 [PRINT "hello]]
+<programlisting>[PRINT "hello MY.REPEAT 4 [PRINT "hello]]
 </programlisting>
 </para>
 
@@ -111,7 +111,7 @@ END
 
 <para>
 If the instructions do not include STOP or OUTPUT, then REPEAT1 will reach its base case and invoke <link linkend="command-throw">THROW</link>.
-As a result, my.repeat's last instruction line will output an empty list, so the second evaluation of the macro result will do nothing.
+As a result, MY.REPEAT's last instruction line will output an empty list, so the second evaluation of the macro result will do nothing.
 But if a STOP or OUTPUT happens, then REPEAT.DONE will output a STOP or OUTPUT instruction that will be re-executed in the caller's context.
 </para>
 
