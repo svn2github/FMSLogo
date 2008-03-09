@@ -1,10 +1,14 @@
-.macro foreach [:foreach.inputs] 2
+.macro foreach :foreach.input1 :foreach.input2 [:foreach.input.rest]
 catch "foreach.catchtag [
   op foreach.done runresult [
-    foreach1 butlast :foreach.inputs last :foreach.inputs 1
+    foreach.reassemble.inputs fput :foreach.input1 fput :foreach.input2 :foreach.input.rest
   ]
 ]
 op []
+end
+
+to foreach.reassemble.inputs :foreach.inputs
+foreach1 butlast :foreach.inputs last :foreach.inputs 1
 end
 
 to foreach1 :template.lists :foreach.template :template.number
@@ -18,4 +22,4 @@ if emptyp :foreach.result [op [stop]]
 op list "output quoted first :foreach.result
 end
 
-bury [foreach foreach1 foreach.done]
+bury [foreach foreach.reassemble.inputs foreach1 foreach.done]

@@ -25,6 +25,8 @@ II. New features/bugs fixed:
       in the range <-1,0>, instead of doing nothing.
     o Fix bug #1900691; Whitespace after ~ is now preserved when
       the ~ is not a continuation character.
+    o Fix bug #1669735; FOREACH now throws a "not enough inputs" error when
+      given fewer than two inputs.
     o Fix bug #1607580; SETACTIVEAREA no longer changes ACTIVEAREA when
       given bad input.
     o Fix bug #1599122; ZOOM now throws a bad input error when it inputs
