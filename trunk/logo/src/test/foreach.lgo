@@ -67,9 +67,20 @@ TO FOREACHTEST.BADINPUT
 
 END
 
+TO FOREACHTEST.STOP
+   ; Test that FOREACH is a macro.
+   ; In particular that it will run the STOP instruction in
+   ; in the caller's context.
+
+   REPORTTESTINFO [Running FOREACH [1 2 3] [STOP] ]
+   FOREACH [1 2 3] [STOP]
+   REPORTTESTFAILED [FOREACH [1 2 3] [STOP] failed to stop the caller.]
+END
+
 TO FOREACHTEST
 
    FOREACHTEST.SMOKETEST
+   FOREACHTEST.STOP
    FOREACHTEST.BADINPUT
 
 END
