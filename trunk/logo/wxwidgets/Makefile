@@ -98,6 +98,8 @@ SPLITTER_OBJECTS =  \
 	splitter_commanderhistory.o \
 	splitter_help.o \
 	splitter_dynamicbuffer.o \
+	splitter_selectproceduredialog.o \
+	splitter_editproceduredialog.o \
 
 ifeq "$(TOOLKIT)" "MSW"
 SPLITTER_OBJECTS +=  \

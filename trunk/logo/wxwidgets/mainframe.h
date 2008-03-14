@@ -18,6 +18,7 @@ public:
     virtual ~CMainFrame();
 
     // Menu commands
+    void EditProcedure(wxCommandEvent& event);
     void SetActiveArea(wxCommandEvent& event);
     void SetPenSize(wxCommandEvent& event);
     void ZoomIn(wxCommandEvent& event);

@@ -42,6 +42,7 @@
 #include "statusdialog.h"
 #include "screen.h"
 #include "help.h"
+#include "editproceduredialog.h"
 
 #include "fmslogo-16x16.xpm"
 
@@ -142,6 +143,7 @@ enum MainFrameMenuIds
 };
 
 BEGIN_EVENT_TABLE(CMainFrame, wxFrame)
+    EVT_MENU(ID_FILEEDIT,           CMainFrame::EditProcedure)
     EVT_MENU(ID_SETPENSIZE,         CMainFrame::SetPenSize)
     EVT_MENU(ID_BITMAPPRINTERAREA,  CMainFrame::SetActiveArea)
     EVT_MENU(ID_HELP,               CMainFrame::Help)
@@ -462,6 +464,12 @@ void CMainFrame::Quit(wxCommandEvent& WXUNUSED(event) )
 CCommander * CMainFrame::GetCommander()
 {
     return m_RealCommander;
+}
+
+void CMainFrame::EditProcedure(wxCommandEvent& WXUNUSED(event) )
+{
+    CEditProcedureDialog dlg(this);
+    dlg.ShowModal();
 }
 
 void CMainFrame::SetPenSize(wxCommandEvent& WXUNUSED(event) )
