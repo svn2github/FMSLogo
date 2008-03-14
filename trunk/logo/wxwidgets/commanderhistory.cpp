@@ -233,6 +233,9 @@ void CCommanderHistory::OnKeyDown(wxKeyEvent& Event)
     }
     else if (keyCode == WXK_TAB)
     {
+        // TODO: the documentation for wxWANTS_CHARS says that I should
+        // create and send a wxNavigationKeyEvent, instead of doing it
+        // myself.
         if (Event.ShiftDown())
         {
             // the previous control is the execute button
