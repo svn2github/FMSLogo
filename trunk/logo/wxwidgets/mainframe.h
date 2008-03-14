@@ -19,6 +19,7 @@ public:
 
     // Menu commands
     void EditProcedure(wxCommandEvent& event);
+    void EraseProcedure(wxCommandEvent& event);
     void SetActiveArea(wxCommandEvent& event);
     void SetPenSize(wxCommandEvent& event);
     void ZoomIn(wxCommandEvent& event);

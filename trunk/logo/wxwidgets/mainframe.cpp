@@ -1,8 +1,3 @@
-
-// ============================================================================
-// declarations
-// ============================================================================
-
 // ----------------------------------------------------------------------------
 // headers
 // ----------------------------------------------------------------------------
@@ -43,6 +38,7 @@
 #include "screen.h"
 #include "help.h"
 #include "editproceduredialog.h"
+#include "eraseproceduredialog.h"
 
 #include "fmslogo-16x16.xpm"
 
@@ -144,6 +140,7 @@ enum MainFrameMenuIds
 
 BEGIN_EVENT_TABLE(CMainFrame, wxFrame)
     EVT_MENU(ID_FILEEDIT,           CMainFrame::EditProcedure)
+    EVT_MENU(ID_FILEERASE,          CMainFrame::EraseProcedure)
     EVT_MENU(ID_SETPENSIZE,         CMainFrame::SetPenSize)
     EVT_MENU(ID_BITMAPPRINTERAREA,  CMainFrame::SetActiveArea)
     EVT_MENU(ID_HELP,               CMainFrame::Help)
@@ -469,6 +466,12 @@ CCommander * CMainFrame::GetCommander()
 void CMainFrame::EditProcedure(wxCommandEvent& WXUNUSED(event) )
 {
     CEditProcedureDialog dlg(this);
+    dlg.ShowModal();
+}
+
+void CMainFrame::EraseProcedure(wxCommandEvent& WXUNUSED(event) )
+{
+    CEraseProcedureDialog dlg(this);
     dlg.ShowModal();
 }
 

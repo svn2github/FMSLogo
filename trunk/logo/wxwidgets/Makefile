@@ -100,6 +100,7 @@ SPLITTER_OBJECTS =  \
 	splitter_dynamicbuffer.o \
 	splitter_selectproceduredialog.o \
 	splitter_editproceduredialog.o \
+	splitter_eraseproceduredialog.o \
 
 ifeq "$(TOOLKIT)" "MSW"
 SPLITTER_OBJECTS +=  \
