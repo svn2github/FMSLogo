@@ -638,12 +638,6 @@ CCommander::AppendToCommanderHistory(
     }
 }
 
-void CCommander::OnRichTextChar(wxRichTextEvent & Event)
-{
-    fprintf(stderr, "OnRichTextChar\n");
-    Event.Skip();
-}
-
 BEGIN_EVENT_TABLE(CCommander, wxPanel)
     EVT_BUTTON(ID_COMMANDER_HALT,    CCommander::OnHaltButton)
     EVT_BUTTON(ID_COMMANDER_PAUSE,   CCommander::OnPauseButton)
@@ -655,7 +649,6 @@ BEGIN_EVENT_TABLE(CCommander, wxPanel)
     EVT_TOGGLEBUTTON(ID_COMMANDER_STEP,    CCommander::OnStepButton)
     EVT_SIZE(CCommander::OnSize)
     EVT_KEY_DOWN(CCommander::OnKeyDown)
-    EVT_RICHTEXT_CHARACTER(ID_COMMANDER_HISTORY, CCommander::OnRichTextChar)
 END_EVENT_TABLE()
 
 // ----------------------------------------------------------------------------

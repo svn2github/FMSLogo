@@ -9,7 +9,6 @@ class CCommanderButton;
 class CCommanderToggleButton;
 class CCommanderHistory;
 class CCommanderInput;
-class wxRichTextEvent;
 class wxButton;
 
 class CCommander : public wxPanel
@@ -32,7 +31,6 @@ public:
     void OnClose(wxCloseEvent& Event);
     void OnSize(wxSizeEvent& Event);
     void OnKeyDown(wxKeyEvent& Event);
-    void OnRichTextChar(wxRichTextEvent & Event);
     void UpdateTraceButtonState();
     void UpdateStepButtonState();
     void UpdateStatusButtonState();
