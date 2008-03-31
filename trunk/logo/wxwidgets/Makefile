@@ -101,6 +101,8 @@ SPLITTER_OBJECTS =  \
 	splitter_selectproceduredialog.o \
 	splitter_editproceduredialog.o \
 	splitter_eraseproceduredialog.o \
+	splitter_minieditor.o \
+	splitter_minieditortextctrl.o \
 
 ifeq "$(TOOLKIT)" "MSW"
 SPLITTER_OBJECTS +=  \

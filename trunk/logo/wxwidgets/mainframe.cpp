@@ -39,6 +39,7 @@
 #include "help.h"
 #include "editproceduredialog.h"
 #include "eraseproceduredialog.h"
+#include "minieditor.h"
 
 #include "fmslogo-16x16.xpm"
 
@@ -148,6 +149,7 @@ BEGIN_EVENT_TABLE(CMainFrame, wxFrame)
     EVT_MENU(ID_HELPABOUTMS,        CMainFrame::AboutMultipleSclerosis)
     EVT_MENU(ID_ZOOMIN,             CMainFrame::ZoomIn)
     EVT_MENU(ID_ZOOMOUT,            CMainFrame::ZoomOut)
+    EVT_MENU(ID_ZOOMNORMAL,         CMainFrame::ZoomNormal)
     EVT_MENU(ID_EXIT,               CMainFrame::Quit)
 END_EVENT_TABLE()
 
@@ -535,6 +537,13 @@ void CMainFrame::ZoomIn(wxCommandEvent& WXUNUSED(event) )
 void CMainFrame::ZoomOut(wxCommandEvent& WXUNUSED(event) )
 {
     DockCommanderWindow();
+}
+
+void CMainFrame::ZoomNormal(wxCommandEvent& WXUNUSED(event) )
+{
+    // For now, show the "To" mini-editor as a test hook
+    CMiniEditor dlg(this, "TO SQUARE :length");
+    dlg.ShowModal();
 }
 
 void CMainFrame::Help(wxCommandEvent& WXUNUSED(event) )
