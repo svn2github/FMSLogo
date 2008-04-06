@@ -11,6 +11,7 @@ public:
 
     // Menu commands
     void Quit(wxCommandEvent& event);
+    void SetFont(wxCommandEvent& event);
 
 private:
     wxRichTextCtrl * m_RichTextControl;
