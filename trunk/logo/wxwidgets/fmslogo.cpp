@@ -1,9 +1,5 @@
 #include "fmslogo.h"
 
-#ifdef __WXMSW__
-  #include <windows.h>
-#endif
-
 #include <wx/msgdlg.h>
 #include <wx/filename.h>
 #include <wx/string.h>
