@@ -288,6 +288,65 @@ do_execution(
     //wxMessageBox(message, "TODO: Logo Engine", wxOK);
 }
 
+void clearcombobox()
+{
+    // clear the recall box
+    CCommanderHistory * commanderHistory = CFmsLogo::GetMainFrame()->GetCommander()->m_History;
+
+    commanderHistory->Clear();
+
+    // TODO: is it necessary to move the position
+    // commanderHistory->MoveEnd();
+}
+
+// Appends "str" to the end of the what is in the Commander's Recall box.
+// If "str" doesn't fit, then some text will be removed from the top to make it fit.
+void putcombobox(const char *str)
+{
+    // only if OK to write to recall box do we do it
+    if (g_IsOkayToUseCommanderWindow)
+    {
+        CCommanderHistory * commanderHistory = CFmsLogo::GetMainFrame()->GetCommander()->m_History;
+
+        for (int i = 0; i < 16; i++)
+        {
+            // remember where we started
+            wxTextPos uBefore = commanderHistory->GetLastPosition();
+
+            // output to list box 
+            commanderHistory->AppendText(str);
+            wxTextPos uCheck = commanderHistory->GetLastPosition();
+            commanderHistory->AppendText("\n");
+            wxTextPos uAfter = commanderHistory->GetLastPosition();
+
+            // if the newline was inserted ok, get out
+            if (uCheck + 1 == uAfter)
+            {
+                commanderHistory->ShowPosition(uAfter);
+                return;
+            }
+
+            // strip what we inserted
+            commanderHistory->SetEditable(true);
+
+            wxRichTextRange addedRange(uBefore, uAfter);
+            commanderHistory->DeleteSelection();
+
+            // strip 4k off top
+            wxRichTextRange rangeToRemove(0, 4096);
+            commanderHistory->Delete(rangeToRemove);
+
+            commanderHistory->SetEditable(false);
+        }
+
+        // If all else fails try erasing everything.
+        // we should never get here.
+        clearcombobox();
+        commanderHistory->AppendText(str);
+        commanderHistory->AppendText("\n");
+    }
+}
+
 
 // Process a Logo instruction, as it is processed by the GUI when you click
 // on the "Execute" button.  This can be used by other UI elements, such as
@@ -495,65 +554,6 @@ void CCommander::GiveControlToHistoryBox()
 
     // give focus to the listbox
     m_History->SetFocus();
-}
-
-void clearcombobox()
-{
-    // clear the recall box
-    CCommanderHistory * commanderHistory = CFmsLogo::GetMainFrame()->GetCommander()->m_History;
-
-    commanderHistory->Clear();
-
-    // TODO: is it necessary to move the position
-    // commanderHistory->MoveEnd();
-}
-
-// Appends "str" to the end of the what is in the Commander's Recall box.
-// If "str" doesn't fit, then some text will be removed from the top to make it fit.
-void putcombobox(const char *str)
-{
-    // only if OK to write to recall box do we do it
-    if (g_IsOkayToUseCommanderWindow)
-    {
-        CCommanderHistory * commanderHistory = CFmsLogo::GetMainFrame()->GetCommander()->m_History;
-
-        for (int i = 0; i < 16; i++)
-        {
-            // remember where we started
-            wxTextPos uBefore = commanderHistory->GetLastPosition();
-
-            // output to list box 
-            commanderHistory->AppendText(str);
-            wxTextPos uCheck = commanderHistory->GetLastPosition();
-            commanderHistory->AppendText("\n");
-            wxTextPos uAfter = commanderHistory->GetLastPosition();
-
-            // if the newline was inserted ok, get out
-            if (uCheck + 1 == uAfter)
-            {
-                commanderHistory->ShowPosition(uAfter);
-                return;
-            }
-
-            // strip what we inserted
-            commanderHistory->SetEditable(true);
-
-            wxRichTextRange addedRange(uBefore, uAfter);
-            commanderHistory->DeleteSelection();
-
-            // strip 4k off top
-            wxRichTextRange rangeToRemove(0, 4096);
-            commanderHistory->Delete(rangeToRemove);
-
-            commanderHistory->SetEditable(false);
-        }
-
-        // If all else fails try erasing everything.
-        // we should never get here.
-        clearcombobox();
-        commanderHistory->AppendText(str);
-        commanderHistory->AppendText("\n");
-    }
 }
 
 

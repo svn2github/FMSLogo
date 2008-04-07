@@ -1,7 +1,8 @@
-
 #include "fmslogo.h"
 
-#include <windows.h>
+#ifdef __WXMSW__
+  #include <windows.h>
+#endif
 
 #include <wx/msgdlg.h>
 #include <wx/filename.h>
@@ -196,7 +197,11 @@ bool CFmsLogo::OnInit()
     wxString programFileNameVolume;
 
     wxFileName::SplitPath(
+#ifdef __WXMSW__
         wxGetFullModuleName(),
+#else
+        "", // TODO: figure out how to do this on GNU/Linux
+#endif
         &programFileNameVolume,
         &programFileNamePath,
         NULL, // don't need the name

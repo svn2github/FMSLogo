@@ -104,10 +104,10 @@ SPLITTER_OBJECTS =  \
 	splitter_minieditor.o \
 	splitter_minieditortextctrl.o \
 	splitter_fontutils.o \
+	splitter_utils.o \
 
 ifeq "$(TOOLKIT)" "MSW"
 SPLITTER_OBJECTS +=  \
-	splitter_utils.o \
 	splitter_debugheap.o \
         splitter_fmslogo_rc.o \
 	$(__splitter___win32rc)
@@ -224,8 +224,18 @@ fmslogo$(EXEEXT): $(SPLITTER_OBJECTS) $(__splitter___win32rc)
 splitter_%.o: $(srcdir)/%.cpp
 	$(CXXC) -c -o $@ $(SPLITTER_CXXFLAGS) $<
 
+ifeq "$(TOOLKIT)" "MSW"
+
 splitter_utils.o: $(srcdir)/../src/utils.cpp
 	$(CXXC) -c -o $@ $(SPLITTER_CXXFLAGS) $<
+
+else
+
+splitter_utils.o: $(srcdir)/linux/utils.cpp
+	$(CXXC) -c -o $@ $(SPLITTER_CXXFLAGS) $<
+
+endif
+
 
 splitter_dynamicbuffer.o: $(srcdir)/../src/dynamicbuffer.cpp
 	$(CXXC) -c -o $@ $(SPLITTER_CXXFLAGS) $<
