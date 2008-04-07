@@ -21,6 +21,7 @@
 #include "commanderinput.h"
 #include "commanderhistory.h"
 #include "dynamicbuffer.h"
+#include "fontutils.h"
 
 bool g_GiveFocusToInputControl = false;
 bool g_IsOkayToUseCommanderWindow = true;
@@ -127,40 +128,11 @@ CCommander::CCommander(wxWindow *Parent)
     m_ButtonWidth           = 100;
 
 
-#ifdef __WXMSW__
-
-    LOGFONT nativeFont;
-    GetConfigurationFont("CommanderFont", nativeFont);
-
-    // note: this was copied from wxNativeFontInfo::ToString() in src/msw/font.cpp
-    wxString nativeInfo;
-    nativeInfo.Printf(
-        "%d;%ld;%ld;%ld;%ld;%ld;%d;%d;%d;%d;%d;%d;%d;%d;%s",
-        0, // version
-        nativeFont.lfHeight,
-        nativeFont.lfWidth,
-        nativeFont.lfEscapement,
-        nativeFont.lfOrientation,
-        nativeFont.lfWeight,
-        nativeFont.lfItalic,
-        nativeFont.lfUnderline,
-        nativeFont.lfStrikeOut,
-        nativeFont.lfCharSet,
-        nativeFont.lfOutPrecision,
-        nativeFont.lfClipPrecision,
-        nativeFont.lfQuality,
-        nativeFont.lfPitchAndFamily,
-        nativeFont.lfFaceName);
-
+    // set the font to whatever is defind in the configuraton
     wxFont font;
-    font.SetNativeFontInfo(nativeInfo);
+    font.SetFamily(wxFONTFAMILY_TELETYPE); // default to using a fixed-width font
+    GetConfigurationFont("CommanderFont", font);
     UpdateFont(font);
-
-#else
-
-    UpdateFont(buttonFont);
-
-#endif
 
 
     // calculate the desired width for the buttons

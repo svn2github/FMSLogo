@@ -103,6 +103,7 @@ SPLITTER_OBJECTS =  \
 	splitter_eraseproceduredialog.o \
 	splitter_minieditor.o \
 	splitter_minieditortextctrl.o \
+	splitter_fontutils.o \
 
 ifeq "$(TOOLKIT)" "MSW"
 SPLITTER_OBJECTS +=  \

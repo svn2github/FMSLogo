@@ -5,13 +5,12 @@
 #include <wx/menu.h>
 #include <wx/richtext/richtextctrl.h>
 #include <wx/fontdlg.h>
-#include <wx/fontutil.h>
 
 #include "workspaceeditor.h"
 #include "localizedstrings.h"
 #include "guiutils.h"
 #include "logocore.h" // for ARRAYSIZE
-#include "utils.h"
+#include "fontutils.h"
 
 static bool bExpert = false;
 
@@ -135,40 +134,9 @@ CWorkspaceEditor::CWorkspaceEditor(wxWindow * Parent)
 
     SetMenuBar(mainMenu);
 
-#ifdef __WXMSW__
-
-    LOGFONT nativeFont;
-    GetConfigurationFont("EditFont", nativeFont);
-
-    // note: this was copied from wxNativeFontInfo::ToString() in src/msw/font.cpp
-    wxString nativeInfo;
-    nativeInfo.Printf(
-        "%d;%ld;%ld;%ld;%ld;%ld;%d;%d;%d;%d;%d;%d;%d;%d;%s",
-        0, // version
-        nativeFont.lfHeight,
-        nativeFont.lfWidth,
-        nativeFont.lfEscapement,
-        nativeFont.lfOrientation,
-        nativeFont.lfWeight,
-        nativeFont.lfItalic,
-        nativeFont.lfUnderline,
-        nativeFont.lfStrikeOut,
-        nativeFont.lfCharSet,
-        nativeFont.lfOutPrecision,
-        nativeFont.lfClipPrecision,
-        nativeFont.lfQuality,
-        nativeFont.lfPitchAndFamily,
-        nativeFont.lfFaceName);
-
-    wxFont font;
-    font.SetNativeFontInfo(nativeInfo);
-
-#else
-
     wxFont font;
     font.SetFamily(wxFONTFAMILY_TELETYPE);
-
-#endif
+    GetConfigurationFont("EditFont", font);
 
     m_RichTextControl->SetFont(font);
 }
@@ -177,36 +145,10 @@ void CWorkspaceEditor::SetFont(wxCommandEvent& WXUNUSED(event) )
 {
     wxFont font;
 
-#ifdef __WXMSW__
+    font.SetFamily(wxFONTFAMILY_TELETYPE);
+    GetConfigurationFont("EditFont", font);
 
-    LOGFONT nativeFont;
-    GetConfigurationFont("EditFont", nativeFont);
-
-    // note: this was copied from wxNativeFontInfo::ToString() in src/msw/font.cpp
-    wxString nativeInfo;
-    nativeInfo.Printf(
-        "%d;%ld;%ld;%ld;%ld;%ld;%d;%d;%d;%d;%d;%d;%d;%d;%s",
-        0, // version
-        nativeFont.lfHeight,
-        nativeFont.lfWidth,
-        nativeFont.lfEscapement,
-        nativeFont.lfOrientation,
-        nativeFont.lfWeight,
-        nativeFont.lfItalic,
-        nativeFont.lfUnderline,
-        nativeFont.lfStrikeOut,
-        nativeFont.lfCharSet,
-        nativeFont.lfOutPrecision,
-        nativeFont.lfClipPrecision,
-        nativeFont.lfQuality,
-        nativeFont.lfPitchAndFamily,
-        nativeFont.lfFaceName);
-
-    font.SetNativeFontInfo(nativeInfo);
-#endif
-
-    wxFontDialog  fontChooser;
-
+    wxFontDialog fontChooser;
     fontChooser.GetFontData().SetInitialFont(font);
 
     int rval = fontChooser.ShowModal();
@@ -215,20 +157,11 @@ void CWorkspaceEditor::SetFont(wxCommandEvent& WXUNUSED(event) )
         // the user selected a new font
         font = fontChooser.GetFontData().GetChosenFont();
 
-        // use this font
+        // use this font in the Rich Edit
         m_RichTextControl->SetFont(font);
 
         // Set this as the new default font
-#ifdef __WXMSW__
-
-        // Get the LOGFONT struct from the wxFont
-        const wxNativeFontInfo * nativeFontInfo = font.GetNativeFontInfo();
-        if (nativeFontInfo != NULL)
-        {
-            // save the new font preference to persistent storage
-            SetConfigurationFont("EditFont", nativeFontInfo->lf);
-        }
-#endif
+        SetConfigurationFont("EditFont", font);
 
 #if 0
         // Changing the font counts a modification as far as
