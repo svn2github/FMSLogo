@@ -11,6 +11,9 @@
 #include "guiutils.h"
 #include "logocore.h" // for ARRAYSIZE
 #include "fontutils.h"
+#include "fmslogo.h"
+#include "mainframe.h"
+#include "utils.h"
 
 static bool bExpert = false;
 
@@ -43,6 +46,7 @@ enum
 BEGIN_EVENT_TABLE(CWorkspaceEditor, wxFrame)
     EVT_MENU(ID_EDALLEXIT,    CWorkspaceEditor::Quit)
     EVT_MENU(ID_EDITSETFONT,  CWorkspaceEditor::SetFont)
+    EVT_CLOSE(CWorkspaceEditor::OnClose)
 END_EVENT_TABLE()
 
 
@@ -185,5 +189,28 @@ void CWorkspaceEditor::SetFont(wxCommandEvent& WXUNUSED(event) )
 // menu command handlers
 void CWorkspaceEditor::Quit(wxCommandEvent& WXUNUSED(event))
 {
+    // let the window be destroyed
     Close(true);
+}
+
+void CWorkspaceEditor::OnClose(wxCloseEvent& event)
+{
+    // remove this window from the set of windows that the main window is tracking
+    CFmsLogo::GetMainFrame()->CloseWorkspaceEditor(this);
+
+    // Save the location and size of our window so we can
+    // come back up in the same spot next time we are invoked.
+    if (!IsIconized())
+    {
+        const wxRect windowRectangle = GetRect();
+
+        SetConfigurationQuadruple(
+            "Editor",
+            windowRectangle.GetLeft(),
+            windowRectangle.GetTop(),
+            windowRectangle.GetWidth(),
+            windowRectangle.GetHeight());
+    }
+
+    Destroy();
 }

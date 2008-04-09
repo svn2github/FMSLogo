@@ -10,8 +10,9 @@ public:
     CWorkspaceEditor(wxWindow * Parent);
 
     // Menu commands
-    void Quit(wxCommandEvent& event);
-    void SetFont(wxCommandEvent& event);
+    void Quit(wxCommandEvent& Event);
+    void SetFont(wxCommandEvent& Event);
+    void OnClose(wxCloseEvent& Event);
 
 private:
     wxRichTextCtrl * m_RichTextControl;

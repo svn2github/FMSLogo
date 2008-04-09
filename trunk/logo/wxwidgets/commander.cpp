@@ -408,8 +408,19 @@ void CCommander::OnExecuteButton(wxCommandEvent& WXUNUSED(event))
 
 void CCommander::OnEdallButton(wxCommandEvent& WXUNUSED(event))
 {
-    CWorkspaceEditor * editor = new CWorkspaceEditor(this);
+    CMainFrame * mainFrame = CFmsLogo::GetMainFrame();
+
+    CWorkspaceEditor * editor = mainFrame->GetWorkspaceEditor();
+    if (editor == NULL)
+    {
+        // create an editor
+        editor = mainFrame->CreateWorskpaceEditor();
+    }
+
+    // make sure that the editor is visible
+    editor->Iconize(false);
     editor->Show();
+    editor->Raise();
 }
 
 void CCommander::OnClose(wxCloseEvent& event)

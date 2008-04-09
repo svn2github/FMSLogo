@@ -40,6 +40,7 @@
 #include "editproceduredialog.h"
 #include "eraseproceduredialog.h"
 #include "minieditor.h"
+#include "workspaceeditor.h"
 
 #include "fmslogo-16x16.xpm"
 
@@ -446,6 +447,73 @@ void CMainFrame::DockCommanderWindow()
         m_CommanderIsDocked = true;
     }
 }
+
+CWorkspaceEditor * CMainFrame::GetWorkspaceEditor()
+{
+    if (m_Editors.empty())
+    {
+        return NULL;
+    }
+
+    // return any of the editors (doesn't matter which one)
+    return (*m_Editors.begin()).first;
+}
+
+CWorkspaceEditor * CMainFrame::CreateWorskpaceEditor()
+{
+    CWorkspaceEditor * editor = new CWorkspaceEditor(this);
+
+#if 0
+    TMyFileWindow * editor = new TMyFileWindow(
+        this, 
+        LOCALIZED_EDITOR_TITLE,
+        FileName, 
+        args, 
+        check_for_errors);
+
+    // Construct the default coordinates of the editor's window
+    // to be about 1/2 of the working area and placed in the center.
+    int maxWidth;
+    int maxHeight;
+    GetWorkingAreaDimensions(maxWidth, maxHeight);
+
+    int x = (int) (maxWidth * 0.25);
+    int y = (int) (maxHeight * 0.25);
+    int w = (int) (maxWidth * 0.75);
+    int h = (int) (maxHeight * ScreenSz * 0.75);
+
+    GetConfigurationQuadruple("Editor", &x, &y, &w, &h); 
+    checkwindow(&x, &y, &w, &h);
+
+    // now set them 
+    editor->Attr.Style = WS_VISIBLE | WS_POPUPWINDOW | WS_CAPTION | WS_THICKFRAME | WS_MINIMIZEBOX | WS_MAXIMIZEBOX;
+    editor->Editor->Attr.Style |= ES_NOHIDESEL;
+
+    // let user edit
+    editor->Create();
+
+    // force a resize to fix RichEdit ScrollBar not appearing automatically
+    editor->SetWindowPos(0, x, y, w + 1, h, SWP_NOZORDER);
+    editor->SetWindowPos(0, x, y, w, h, SWP_NOZORDER);
+
+    if (args != NULL || check_for_errors)
+    {
+        // retitle without filename
+        editor->SetWindowText(LOCALIZED_EDITOR_TITLE);
+    }
+#endif
+
+    // add this editor the the list of known editors
+    m_Editors.insert(std::pair<CWorkspaceEditor*,CWorkspaceEditor*>(editor,editor));
+
+    return editor;
+}
+
+void CMainFrame::CloseWorkspaceEditor(CWorkspaceEditor * Editor)
+{
+    m_Editors.erase(Editor);
+}
+
 
 // menu command handlers
 void CMainFrame::Quit(wxCommandEvent& WXUNUSED(event) )

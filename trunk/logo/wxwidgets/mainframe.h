@@ -1,4 +1,5 @@
 // -*- c++ -*-
+#include <map>
 
 #include "wx/frame.h"
 
@@ -6,9 +7,10 @@ class wxSplitterWindow;
 class wxCommandEvent;
 class wxScrolledWindow;
 class wxIcon;
+
 class CCommander;
 class CStatusDialog;
-
+class CWorkspaceEditor;
 class CSetPenSize;
 
 class CMainFrame : public wxFrame
@@ -39,6 +41,10 @@ public:
 
     CCommander * GetCommander();
 
+    CWorkspaceEditor * GetWorkspaceEditor();
+    CWorkspaceEditor * CreateWorskpaceEditor();
+    void CloseWorkspaceEditor(CWorkspaceEditor * Editor);
+
 
 private:
     wxIcon           * m_FmsLogoIcon;
@@ -52,6 +58,8 @@ private:
     wxSplitterWindow * m_Splitter;
 
     bool  m_CommanderIsDocked;
+
+    std::map<CWorkspaceEditor*,CWorkspaceEditor*>  m_Editors;
 
     DECLARE_EVENT_TABLE();
     DECLARE_NO_COPY_CLASS(CMainFrame);
