@@ -15,7 +15,6 @@ sounds
 ;
 ; System requirements:
 ;
-;   You must have the correct driver loaded in Windows for your sound card.
 ;   You must have a sound card.
 ;
 end

@@ -16,9 +16,7 @@ cdrom 3
 ;
 ; System requirements:
 ;
-; You must have Windows 3.1 (or 3.0 with Multi-Media Extentions)
-; You must have the correct driver loaded in Windows for your CD Player.
-; You must have a CD Player.
+; You must have a CD or DVD reader.
 ;
 end
 

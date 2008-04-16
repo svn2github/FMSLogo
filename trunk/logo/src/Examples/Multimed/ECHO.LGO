@@ -18,11 +18,10 @@ echo 2
 ;
 ; System requirements:
 ;
-;   You must have the correct driver loaded in Windows for your sound card.
 ;   You must have a sound card with a microphone input.
 ;   You must have a microphone.
-;   In Win95 Goto ControlPanel->MultiMedia->Advanced->Media Control Devices->WaveAudioDevice
-;   to set maximum recording time.
+;   "Microphone" must be selected as the recording device, must be set to
+;   record at a fairly high volume, and must not be muted.
 end
 
 to echo :arg
