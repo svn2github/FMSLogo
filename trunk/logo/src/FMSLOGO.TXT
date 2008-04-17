@@ -33,7 +33,7 @@ II. New features/bugs fixed:
       a non-positive value, instead of silently changing it to 1.
     o Fix bug #1551634; Integrate some MCI examples into the manual and
       remove the "Help -> MCI" and "Help - Using Help" menu options to
-      remove final remanants of the defunct .hlp format.
+      remove final remnants of the defunct .hlp format.
     o Fix bug #1518558; Running "5*" now throws a "not enough inputs to *"
       error, instead of a "* doesn't like [] as input" error.
     o Implement request #1423937; FMSLogo no longer requires the -L on the
