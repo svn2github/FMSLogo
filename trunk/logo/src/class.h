@@ -655,8 +655,6 @@ protected:
 public:  //HACK
     void CMHelp();
 protected:
-    void CMHelpMCI();
-    void CMHelpHelp();
     void CMHelpDemo();
     void CMHelpExamples();
     void CMHelpReleaseNotes();

@@ -201,17 +201,7 @@ Also see the <link linkend="command-help">HELP</link> command.</para>
 
         <section id="menu-help-index">
           <title>Help - Index</title>
-          <para>This displays the Microsoft Windows Help for &PRODUCTNAME;.</para>
-        </section>
-
-        <section id="menu-help-mci">
-          <title>Help - MCI</title>
-          <para>This displays the MCI help file, which explains the syntax of the arguments to the <link linkend="command-mci">MCI</link> command.</para>
-        </section>
-
-        <section id="menu-help-usinghelp">
-          <title>Help - Using Help</title>
-          <para>This displays a Microsoft Windows Help file on using Microsoft Windows Help files.</para>
+          <para>This displays the manual for &PRODUCTNAME; and presents you with a searchable index.</para>
         </section>
 
         <section id="menu-help-tutorial">

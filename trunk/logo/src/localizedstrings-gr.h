@@ -658,8 +658,6 @@
 
 #define LOCALIZED_HELP                 "&Βοήθεια"  // 
 #define LOCALIZED_HELP_INDEX           "&Θέματα στη βοήθεια" // 
-#define LOCALIZED_HELP_MCI             "Βοήθεια για το &MCI" // 
-#define LOCALIZED_HELP_HELP            "&Χρήση βοήθειας" // 
 #define LOCALIZED_HELP_TUTORIAL        "&Μάθημα" // Perhaps not the best one for "tutorial"
 #define LOCALIZED_HELP_DEMO            "&Επίδειξη"  // 
 #define LOCALIZED_HELP_EXAMPLE         "&Παραδείγματα" // 

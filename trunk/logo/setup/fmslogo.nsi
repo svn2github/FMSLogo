@@ -314,7 +314,6 @@ Section "FMSLogo"
   File "..\manual\logohelp-${LANG_FRENCH}.chm"
   File "..\manual\logohelp-${LANG_GREEK}.chm"
 
-  File "..\src\Mcistrwh.hlp"
   File "..\src\fmslogo.txt"
   File "..\src\license.txt"
   File /r /x CVS "..\src\logolib"
@@ -512,10 +511,6 @@ Section "Uninstall"
   Delete $INSTDIR\logohelp-${LANG_PORTUGUESE}.chm
   Delete $INSTDIR\logohelp-${LANG_GREEK}.chm
   Delete $INSTDIR\logohelp-${LANG_FRENCH}.chm
-
-  Delete $INSTDIR\mcistrwh.hlp
-  Delete $INSTDIR\mcistrwh.gid
-  Delete $INSTDIR\mcistrwh.fts
 
   Delete $INSTDIR\fmslogo.txt
   Delete $INSTDIR\license.txt

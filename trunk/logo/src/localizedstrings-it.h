@@ -658,8 +658,6 @@
 
 #define LOCALIZED_HELP                 "&Aiuto"
 #define LOCALIZED_HELP_INDEX           "&Indice"
-#define LOCALIZED_HELP_MCI             "&MCI"
-#define LOCALIZED_HELP_HELP            "&Uso dell'aiuto"
 #define LOCALIZED_HELP_TUTORIAL        "&Tutorial"
 #define LOCALIZED_HELP_DEMO            "&Dimostrazione"
 #define LOCALIZED_HELP_EXAMPLE         "&Esempi"

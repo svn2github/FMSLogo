@@ -49,7 +49,6 @@ char TempPathName[MAX_PATH + 1];   // path to temp edit file
 char TempBmpName[MAX_PATH + 1];    // path to temp bitmap file
 char TempClipName[MAX_PATH + 1];   // path to temp clipboard file
 char szHelpFileName[MAX_PATH + 1]; // path to help file
-char MCIHelpFileName[MAX_PATH + 1];// path to MCI help file
 
 static char g_FileToLoad[MAX_BUFFER_SIZE];  // file to load on start
 
@@ -565,7 +564,6 @@ void TMyApp::InitMainWindow()
     // init paths to library and help files based on location of .EXE
     MakeHelpPathName(LibPathName,     "logolib\\");
     MakeHelpPathName(szHelpFileName,  "logohelp.chm");
-    MakeHelpPathName(MCIHelpFileName, "mcistrwh.hlp");
 
     DWORD tempPathLength;
     char  tempPath[MAX_PATH];

@@ -2238,8 +2238,6 @@ void TMainFrame::SetupWindow()
         {LOCALIZED_HELP_LANGTOENGLISH, CM_HELPLANGTOENGLISH},
         {LOCALIZED_HELP_ENGLISHTOLANG, CM_HELPENGLISHTOLANG},
 #endif
-        {LOCALIZED_HELP_MCI,           CM_HELPMCI},
-        {LOCALIZED_HELP_HELP,          CM_HELPHELP},
         {0},
         {LOCALIZED_HELP_TUTORIAL,      CM_HELPTUTORIAL},
         {LOCALIZED_HELP_DEMO,          CM_HELPDEMO},
@@ -2703,16 +2701,6 @@ void TMainFrame::CMSetScreenColor()
 void TMainFrame::CMHelp()
 {
     do_help(NULL);
-}
-
-void TMainFrame::CMHelpMCI()
-{
-    WinHelp(MCIHelpFileName, HELP_INDEX, 0);
-}
-
-void TMainFrame::CMHelpHelp()
-{
-    WinHelp("WINHELP.HLP", HELP_FINDER, 0);
 }
 
 void TMainFrame::CMHelpDemo()
@@ -3423,8 +3411,6 @@ DEFINE_RESPONSE_TABLE1(TMainFrame, TDecoratedFrame)
     EV_COMMAND(CM_HELPDEMO, CMHelpDemo),
     EV_COMMAND(CM_HELPEXAMPLES, CMHelpExamples),
     EV_COMMAND(CM_HELPRELEASENOTES, CMHelpReleaseNotes),
-    EV_COMMAND(CM_HELPMCI, CMHelpMCI),
-    EV_COMMAND(CM_HELPHELP, CMHelpHelp),
     EV_COMMAND(CM_HELPABOUT, CMHelpAbout),
     EV_COMMAND(CM_HELPABOUTMS, CMHelpAboutMS),
 #if LOCALE!=1033
