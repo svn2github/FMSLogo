@@ -1,5 +1,27 @@
 This file contains the changes that were made in each revision of FMSLogo.
 
+* Added for 6.20.0
+  o Fix bug #1910177; WAIT now throws a bad input error when given input
+    in the range <-1,0>, instead of doing nothing.
+  o Fix bug #1900691; Whitespace after ~ is now preserved when
+    the ~ is not a continuation character.
+  o Fix bug #1669735; FOREACH now throws a "not enough inputs" error when
+    given fewer than two inputs.
+  o Fix bug #1607580; SETACTIVEAREA no longer changes ACTIVEAREA when
+    given bad input.
+  o Fix bug #1599122; ZOOM now throws a bad input error when it inputs
+    a non-positive value, instead of silently changing it to 1.
+  o Fix bug #1551634; Integrate some MCI examples into the manual and
+    remove the "Help -> MCI" and "Help - Using Help" menu options to
+    remove final remnants of the defunct .hlp format.
+  o Fix bug #1518558; Running "5*" now throws a "not enough inputs to *"
+    error, instead of a "* doesn't like [] as input" error.
+  o Implement request #1423937; FMSLogo no longer requires the -L on the
+    command line to load a logo file on startup.  This makes it easier
+    to create file associations and allows you to drag-and-drop a Logo
+    program on an FMSLogo desktop shortcut.
+  o Minor updates to the manual.
+
 * Added for 6.19.0
   o Fix bug #1867803; The names of the special variables CASEIGNOREDP,
     ERRACT, STARTUP, REDEFP, PRINTWIDTHLIMIT, and PRINTDEPTHLIMIT
