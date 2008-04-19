@@ -91,3 +91,8 @@ private:
     DECLARE_EVENT_TABLE();
 };
 
+
+void
+RunLogoInstructionFromGui(
+    const char * LogoInstruction
+    );

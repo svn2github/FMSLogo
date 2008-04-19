@@ -105,6 +105,7 @@ SPLITTER_OBJECTS =  \
 	splitter_minieditortextctrl.o \
 	splitter_fontutils.o \
 	splitter_utils.o \
+	splitter_logodata.o \
 
 ifeq "$(TOOLKIT)" "MSW"
 SPLITTER_OBJECTS +=  \

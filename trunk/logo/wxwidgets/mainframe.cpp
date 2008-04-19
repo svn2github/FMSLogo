@@ -18,6 +18,9 @@
     #include "wx/splitter.h"
     #include "wx/dcmirror.h"
     #include "wx/icon.h"
+    #include "wx/fontdlg.h"
+
+    #include <wx/fontutil.h> // for wxNativeFontInfo
 #endif
 
 #include <algorithm>
@@ -41,6 +44,7 @@
 #include "eraseproceduredialog.h"
 #include "minieditor.h"
 #include "workspaceeditor.h"
+#include "logodata.h"
 
 #include "fmslogo-16x16.xpm"
 
@@ -61,6 +65,13 @@ enum
     SPLIT_SETGRAVITY,
     SPLIT_REPLACE
 };
+
+// ----------------------------------------------------------------------------
+// Global Variables
+// ----------------------------------------------------------------------------
+
+// TODO: move this someplace sensible
+static wxFont g_LabelFont(18, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL);
 
 // ----------------------------------------------------------------------------
 // our classes
@@ -111,7 +122,7 @@ enum MainFrameMenuIds
 
     ID_SETPENSIZE,
 
-    ID_SETFONT,
+    ID_SETLABELFONT,
     ID_SETCOMMANDERFONT,
 
     ID_SETPENCOLOR,
@@ -145,6 +156,7 @@ BEGIN_EVENT_TABLE(CMainFrame, wxFrame)
     EVT_MENU(ID_FILEERASE,          CMainFrame::EraseProcedure)
     EVT_MENU(ID_SETPENSIZE,         CMainFrame::SetPenSize)
     EVT_MENU(ID_BITMAPPRINTERAREA,  CMainFrame::SetActiveArea)
+    EVT_MENU(ID_SETLABELFONT,       CMainFrame::SetLabelFont)
     EVT_MENU(ID_HELP,               CMainFrame::Help)
     EVT_MENU(ID_HELPABOUT,          CMainFrame::AboutFmsLogo)
     EVT_MENU(ID_HELPABOUTMS,        CMainFrame::AboutMultipleSclerosis)
@@ -207,7 +219,7 @@ CMainFrame::CMainFrame()
     static const MENUITEM setMenuItems[] = {
         {LOCALIZED_SET_PENSIZE,       ID_SETPENSIZE},
         {0},
-        {LOCALIZED_SET_LABELFONT,     ID_SETFONT},
+        {LOCALIZED_SET_LABELFONT,     ID_SETLABELFONT},
         {LOCALIZED_SET_COMMANDERFONT, ID_SETCOMMANDERFONT},
         {0},
         {LOCALIZED_SET_PENCOLOR,      ID_SETPENCOLOR},
@@ -228,8 +240,6 @@ CMainFrame::CMainFrame()
         {LOCALIZED_HELP_LANGTOENGLISH, ID_HELPLANGTOENGLISH},
         {LOCALIZED_HELP_ENGLISHTOLANG, ID_HELPENGLISHTOLANG},
 #endif
-        {LOCALIZED_HELP_MCI,           ID_HELPMCI},
-        {LOCALIZED_HELP_HELP,          ID_HELPHELP},
         {0},
         {LOCALIZED_HELP_TUTORIAL,      ID_HELPTUTORIAL},
         {LOCALIZED_HELP_DEMO,          ID_HELPDEMO},
@@ -590,12 +600,66 @@ bool CMainFrame::StatusDialogIsShowing()
     return m_StatusDialog != NULL;
 }
 
-void CMainFrame::SetActiveArea(wxCommandEvent& WXUNUSED(event) )
+void CMainFrame::SetActiveArea(wxCommandEvent& WXUNUSED(Event))
 {
     CSetActiveArea dlg(this);
     dlg.ShowModal();
 }
 
+void CMainFrame::SetLabelFont(wxCommandEvent& WXUNUSED(Event))
+{
+    wxFontDialog fontChooser;
+    fontChooser.GetFontData().SetInitialFont(g_LabelFont);
+
+    int rval = fontChooser.ShowModal();
+    if (rval == wxID_OK)
+    {
+        // the user selected a new font
+
+        // set the new label font now, just in case running
+        // the instruction doesn't wor for some reason.
+        g_LabelFont = fontChooser.GetFontData().GetChosenFont();
+
+#ifdef __WXMSW__ 
+
+        // Get the LOGFONT struct from the wxFont
+        const struct wxNativeFontInfo * fontInfo = g_LabelFont.GetNativeFontInfo();
+        if (fontInfo != NULL)
+        {
+            const class wxNativeFontInfo * nativeFontInfo = (class wxNativeFontInfo*)fontInfo;
+
+            // commit to the new font
+            char setlabelfont[MAX_BUFFER_SIZE];
+
+            NormalizeCaseForDisplay(
+                setlabelfont,
+                LOCALIZED_ALTERNATE_SETLABELFONT,
+                STRINGLENGTH(LOCALIZED_ALTERNATE_SETLABELFONT));
+
+            char logoInstruction[512];
+            sprintf(
+                logoInstruction,
+                "%s [[%s] %ld %ld %ld %ld %d %d %d %d %d %d %d %d]",
+                setlabelfont,
+                nativeFontInfo->lf.lfFaceName,
+                nativeFontInfo->lf.lfHeight,
+                nativeFontInfo->lf.lfWidth,
+                nativeFontInfo->lf.lfOrientation,
+                nativeFontInfo->lf.lfWeight,
+                nativeFontInfo->lf.lfItalic,
+                nativeFontInfo->lf.lfUnderline,
+                nativeFontInfo->lf.lfStrikeOut,
+                nativeFontInfo->lf.lfCharSet,
+                nativeFontInfo->lf.lfOutPrecision,
+                nativeFontInfo->lf.lfClipPrecision,
+                nativeFontInfo->lf.lfQuality,
+                nativeFontInfo->lf.lfPitchAndFamily);
+
+            RunLogoInstructionFromGui(logoInstruction);
+        }
+#endif
+    }
+}
 
 void CMainFrame::ZoomIn(wxCommandEvent& WXUNUSED(event) )
 {
