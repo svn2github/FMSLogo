@@ -1,0 +1,108 @@
+LOAD "testlib.lgo
+
+TO DIRECTORYSMOKETEST
+
+   MKDIR "mytestdir
+
+   ; make the same directory
+   POPDIR
+   MKDIR "mytestdir
+   CHDIR "mytestdir
+
+   ; the directory should be empty
+   SIMPLEREPORTTEST [FILES]       []
+   SIMPLEREPORTTEST [DIRECTORIES] [.. .]
+   DIR
+
+   OPENWRITE "file1.txt
+   CLOSE     "file1.txt
+   SIMPLEREPORTTEST [FILES]       [file1.txt]
+   SIMPLEREPORTTEST [DIRECTORIES] [.. .]
+
+   OPENWRITE "file2.txt
+   CLOSE     "file2.txt
+   SIMPLEREPORTTEST [FILES]       [file2.txt file1.txt]
+   SIMPLEREPORTTEST [DIRECTORIES] [.. .]
+
+   MKDIR "dir1
+   POPDIR
+   SIMPLEREPORTTEST [FILES]       [file2.txt file1.txt]
+   SIMPLEREPORTTEST [DIRECTORIES] [dir1 .. .]
+
+   MKDIR "dir2
+   POPDIR
+   SIMPLEREPORTTEST [FILES]       [file2.txt file1.txt]
+   SIMPLEREPORTTEST [DIRECTORIES] [dir2 dir1 .. .]
+
+   RMDIR "dir2
+   SIMPLEREPORTTEST [FILES]       [file2.txt file1.txt]
+   SIMPLEREPORTTEST [DIRECTORIES] [dir1 .. .]
+
+   ERASEFILE "file1.txt
+   SIMPLEREPORTTEST [FILES]       [file2.txt]
+   SIMPLEREPORTTEST [DIRECTORIES] [dir1 .. .]
+
+   ERASEFILE "file2.txt
+   RMDIR     "dir1
+   SIMPLEREPORTTEST [FILES]       []
+   SIMPLEREPORTTEST [DIRECTORIES] [.. .]
+
+   CHDIR     "..
+   RMDIR     "mytestdir
+
+   ; make sure it really got removed
+   FAILIFNOTFALSE [MEMBERP "mytestdir DIRECTORIES]
+END
+
+TO MKDIRTEST
+
+  ; bad input tests
+  RUNNOTENOUGHINPUTSTEST [(MKDIR)]
+  RUNTOOMANYINPUTSTEST   [(MKDIR "too "many)]
+
+  ; MKDIR a very long directory name (regression test for bug #1343397)
+  localmake "longdirname "||
+  repeat 5000 [ make "longdirname word :longdirname "A ]
+  MKDIR :longdirname
+
+END
+
+TO RMDIRTEST
+
+  RMDIR "doesnotexist
+
+  ; bad input tests
+  RUNNOTENOUGHINPUTSTEST [(RMDIR)]
+  RUNTOOMANYINPUTSTEST   [(RMDIR "too "many)]
+
+  ; RMDIR a very long directory name (regression test for bug #1343397)
+  localmake "longdirname "||
+  repeat 5000 [ make "longdirname word :longdirname "A ]
+  RMDIR :longdirname
+
+END
+
+TO CHDIRTEST
+
+  CHDIR "doesnotexist
+
+  ; bad input tests
+  RUNNOTENOUGHINPUTSTEST [(CHDIR)]
+  RUNTOOMANYINPUTSTEST   [(CHDIR "too "many)]
+
+  ; CHDIR a very long directory name (regression test for bug #1343397)
+  localmake "longdirname "||
+  repeat 5000 [ make "longdirname word :longdirname "A ]
+  CHDIR :longdirname
+
+END
+
+
+TO DIRECTORYTEST
+
+   DIRECTORYSMOKETEST
+
+   MKDIRTEST
+   RMDIRTEST
+   CHDIRTEST
+END

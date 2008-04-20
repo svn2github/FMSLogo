@@ -1,0 +1,51 @@
+<section id="command-item">
+<title>ITEM</title>
+<indexterm><primary>ITEM</primary></indexterm>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>ITEM</command> <parameter>index</parameter> <parameter>thing</parameter></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+If the input thing is a word, outputs the <parameter>index</parameter>-th character of the word.
+</para>
+
+<para>
+If the input thing is a list, outputs the <parameter>index</parameter>-th member of the list.
+</para>
+
+<para>
+If the input thing is an array, outputs the <parameter>index</parameter>-th element of the array.
+</para>
+
+<para>
+An index starts at 1 for words and lists; the starting index of an array is specified when the array is created.
+</para>
+
+</listitem>
+</varlistentry>
+
+
+
+
+<varlistentry><term>Example</term>
+<listitem>
+
+<programlisting><userinput>SHOW ITEM 2 [a b c]</userinput>
+[b]</programlisting>
+
+<programlisting><userinput>SHOW ITEM 3 "abc</userinput>
+c</programlisting>
+
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</section>
