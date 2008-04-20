@@ -175,6 +175,9 @@ TO REPORTTESTINITIALIZE
   ; close the test log, if it is already open
   CATCH "ERROR [ CLOSE :testlog ]
 
+  ; clear the error, if one happened
+  IGNORE ERROR
+
   ; open (and truncate) the test log
   OPENWRITE :testlog
 END
@@ -504,6 +507,9 @@ TO RUNPRINTTEST :printinstruction :expectedvalue
 
   LOCALMAKE "oldwriter WRITER
   SETWRITE :testfile
+
+  ; clear the last error
+  IGNORE ERROR
 
   CATCH "ERROR [ RUN :printinstruction ]
 
