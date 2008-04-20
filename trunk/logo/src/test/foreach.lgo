@@ -40,7 +40,7 @@ TO FOREACHTEST.SMOKETEST
    SIMPLEREPORTTEST [:restlist]         (LIST "yz "z "||)
 
    ;
-   ; multiple data lists is a word
+   ; multiple data lists
    ;
    MAKE "questionmarklist []
    MAKE "hashlist         []
@@ -77,10 +77,58 @@ TO FOREACHTEST.STOP
    REPORTTESTFAILED [FOREACH [1 2 3] [STOP] failed to stop the caller.]
 END
 
+
+TO FOREACHTEST.OUTPUT.WORKER
+
+   ; Test that FOREACH is a macro.
+   ; In particular that it will run the OUTPUT instruction in
+   ; in the caller's context.
+
+   FOREACH [1 2 3] [
+     if ?=2 [ output ? ]
+     if ?=3 [ output ? ]
+   ]
+
+   ; indicates an error
+   OUTPUT 0
+END
+
+TO FOREACHTEST.OUTPUT
+   REPORTTESTINFO [Running FOREACH with an OUTPUT in the instruction list]
+   SIMPLEREPORTTEST [FOREACHTEST.OUTPUT.WORKER] 2
+END
+
+
+TO FOREACHTEST.OUTPUT.FROM.VARIABLE.WORKER :TestList
+
+   ; I'm not exactly sure what this tests, but I caused a regression
+   ; in this test when I fixed FOREACH to throw a "not enough inputs" error
+   ; when given fewer than two inputs.  I suspect that my fix was correct,
+   ; but that it happened to hit a different bug.
+   ; See bug #1669735.
+
+   FOREACH :TestList [
+     if #=1 [ output ? ]
+     if #=2 [ output ? ]
+     if #=3 [ output ? ]
+   ]
+
+   ; indicates an error
+   OUTPUT 0
+END
+
+TO FOREACHTEST.OUTPUT.FROM.VARIABLE
+   REPORTTESTINFO [Running FOREACH with an OUTPUT ? in the instruction list]
+   SIMPLEREPORTTEST [FOREACHTEST.OUTPUT.FROM.VARIABLE.WORKER [a b c]] "a
+END
+
+
 TO FOREACHTEST
 
    FOREACHTEST.SMOKETEST
    FOREACHTEST.STOP
+   FOREACHTEST.OUTPUT
+   FOREACHTEST.OUTPUT.FROM.VARIABLE
    FOREACHTEST.BADINPUT
 
 END
