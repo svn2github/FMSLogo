@@ -123,6 +123,7 @@ LOAD "bye.lgo
 LOAD "backtick.lgo
 LOAD "cascade.lgo
 LOAD "commandline.lgo
+LOAD "random.lgo
 
 TO TESTALL
 
@@ -169,6 +170,7 @@ TO TESTALL
   REPCOUNTTEST        ; from repcount.lgo
   FOREACHTEST         ; from foreach.lgo
   MATHTEST            ; from math.lgo
+  RANDOMTEST          ; from random.lgo
   BITWISETEST         ; from bitwise.lgo
   PROCEDURETEST       ; from procedure.lgo
   MACROTEST           ; from macro.lgo
