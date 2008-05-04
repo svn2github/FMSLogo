@@ -442,7 +442,7 @@ void TScreenWindow::Paint(TDC &PaintDC, bool /* erase */, TRect &PaintRect)
 
     SetROP2(PaintDC, R2_NOT);
 
-    for (int j = 0; j <= turtle_max; j++)
+    for (int j = 0; j <= g_MaxTurtle; j++)
     {
         if (g_Turtles[j].IsShown)
         {
@@ -454,15 +454,18 @@ void TScreenWindow::Paint(TDC &PaintDC, bool /* erase */, TRect &PaintRect)
             {
                 for (int i = 0; i < 4; i++)
                 {
-                    if (TurtlePoints[j][i].bValid)
+                    if (g_Turtles[j].Points[i].bValid)
                     {
-                        MoveToEx(PaintDC,
-                                 TurtlePoints[j][i].from.x * the_zoom,
-                                 TurtlePoints[j][i].from.y * the_zoom, 0);
+                        MoveToEx(
+                            PaintDC,
+                            g_Turtles[j].Points[i].from.x * the_zoom,
+                            g_Turtles[j].Points[i].from.y * the_zoom,
+                            0);
 
-                        LineTo(PaintDC,
-                               TurtlePoints[j][i].to.x * the_zoom,
-                               TurtlePoints[j][i].to.y * the_zoom);
+                        LineTo(
+                            PaintDC,
+                            g_Turtles[j].Points[i].to.x * the_zoom,
+                            g_Turtles[j].Points[i].to.y * the_zoom);
                     }
                 }
             }
@@ -1427,9 +1430,9 @@ bool TMainFrame::OpenDIB(FILE* File, DWORD &dwPixelWidth, DWORD &dwPixelHeight)
             {
                 VECTOR from3d;
 
-                from3d.x = g_Turtles[turtle_which].Position.x / WorldWidth;
-                from3d.y = g_Turtles[turtle_which].Position.y / WorldHeight;
-                from3d.z = g_Turtles[turtle_which].Position.z / WorldDepth;
+                from3d.x = g_SelectedTurtle->Position.x / WorldWidth;
+                from3d.y = g_SelectedTurtle->Position.y / WorldHeight;
+                from3d.z = g_SelectedTurtle->Position.z / WorldDepth;
 
                 if (!ThreeD.TransformPoint(from3d, dest))
                 {
@@ -1438,8 +1441,8 @@ bool TMainFrame::OpenDIB(FILE* File, DWORD &dwPixelWidth, DWORD &dwPixelHeight)
             }
             else
             {
-                dest.x = g_round(g_Turtles[turtle_which].Position.x);
-                dest.y = g_round(g_Turtles[turtle_which].Position.y);
+                dest.x = g_round(g_SelectedTurtle->Position.x);
+                dest.y = g_round(g_SelectedTurtle->Position.y);
             }
 
             BitBlt(

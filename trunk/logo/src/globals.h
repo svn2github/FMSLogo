@@ -178,21 +178,27 @@ extern VERTEXLIST* ThePolygon;
 extern COLORREF    colortable[];
 
 struct Turtle
-   {
-   MATRIX   Matrix;
-   VECTOR   Position;
-   FLONUM   Heading;
-   DWORD    Bitmap;
-   bool     IsShown;
-   bool     IsPenUp;
-   };
+{
+    MATRIX   Matrix;
+    VECTOR   Position;
+    FLONUM   Heading;
+    DWORD    Bitmap;
+    bool     IsShown;
+    bool     IsPenUp;
+    bool     IsSpecial;
 
-extern Turtle g_Turtles[];
+    // a cache for lines that make up a turtle's body
+    LINEX    Points[4];
+};
+
+extern Turtle   g_Turtles[TURTLES];
+extern Turtle   g_SpecialTurtles[TOTAL_SPECIAL_TURTLES];
+extern Turtle * g_SelectedTurtle;
+extern int      g_MaxTurtle;
+
 extern VECTOR g_Scale;        // used to scale a picture in scrunch mode.
 extern VECTOR g_OneOverScale; // 1 / g_Scale (replaces divides with multiplies)
 extern Point  g_Wanna;        // a point where the turtle wants to go
-extern int turtle_which;
-extern int turtle_max;
 extern TThreeDSolid ThreeD;
 
 // graphwin.cpp

@@ -69,14 +69,14 @@ public:
         void
         )
     {
-        assert(turtle_max < TURTLES);
+        assert(g_MaxTurtle < TURTLES);
 
         // the turtle_which is within range
-        assert(0 <= turtle_which);
-        assert((turtle_which <= turtle_max) ||
-               (TURTLES - TURTLEN <= turtle_which && turtle_which <= TURTLES));
+        assert(
+            (g_Turtles <= g_SelectedTurtle && g_SelectedTurtle <= &g_Turtles[g_MaxTurtle]) || 
+            (g_SpecialTurtles <= g_SelectedTurtle && g_SelectedTurtle < &g_SpecialTurtles[TOTAL_SPECIAL_TURTLES]));
 
-        for (int i = 0; i <= turtle_max; i++)
+        for (int i = 0; i <= g_MaxTurtle; i++)
         {
             assert(
                 g_Turtles[i].IsShown == true ||
@@ -510,7 +510,7 @@ NODE *lsetpixel(NODE *args)
     ASSERT_TURTLE_INVARIANT;
 
     POINT dest;
-    if (!WorldCoordinateToScreenCoordinate(g_Turtles[turtle_which].Position, dest))
+    if (!WorldCoordinateToScreenCoordinate(g_SelectedTurtle->Position, dest))
     {
         return Unbound;
     }
@@ -613,7 +613,7 @@ NODE *lpixel(NODE *)
     ASSERT_TURTLE_INVARIANT;
 
     POINT dest;
-    if (!WorldCoordinateToScreenCoordinate(g_Turtles[turtle_which].Position, dest))
+    if (!WorldCoordinateToScreenCoordinate(g_SelectedTurtle->Position, dest))
     {
         return cons_list(
             make_intnode((FIXNUM) - 1),
@@ -656,7 +656,7 @@ NODE *lpixel(NODE *)
 void logofill(bool bOld)
 {
     POINT dest;
-    if (!WorldCoordinateToScreenCoordinate(g_Turtles[turtle_which].Position, dest))
+    if (!WorldCoordinateToScreenCoordinate(g_SelectedTurtle->Position, dest))
     {
         return;
     }
@@ -968,7 +968,7 @@ NODE *lbitblock(NODE *arg)
 
     POINT turtleLocation;
     if (!WorldCoordinateToScreenCoordinate(
-            g_Turtles[turtle_which].Position, 
+            g_SelectedTurtle->Position, 
             turtleLocation))
     {
         // the turtle is not on the screen
@@ -1164,7 +1164,7 @@ NODE *lturtlemode(NODE *)
     ASSERT_TURTLE_INVARIANT;
 
     // return the logo "code" for the bit mode
-    FIXNUM turtlemode = RasterModeToBitMode(g_Turtles[turtle_which].Bitmap);
+    FIXNUM turtlemode = RasterModeToBitMode(g_SelectedTurtle->Bitmap);
     return make_intnode(turtlemode);
 }
 
@@ -1172,7 +1172,7 @@ NODE *lsetturtlemode(NODE *arg)
 {
     ASSERT_TURTLE_INVARIANT;
 
-    if (g_Turtles[turtle_which].Bitmap)
+    if (g_SelectedTurtle->Bitmap)
     {
         draw_turtle(false);
 
@@ -1180,7 +1180,7 @@ NODE *lsetturtlemode(NODE *arg)
         FIXNUM turtlemode = BitModeToRasterMode(int_arg(arg)); 
         if (NOT_THROWING)
         {
-            g_Turtles[turtle_which].Bitmap = turtlemode;
+            g_SelectedTurtle->Bitmap = turtlemode;
         }
 
         draw_turtle(true);
@@ -1371,7 +1371,7 @@ NODE *
 BitCopyOrCut(NODE *arg, bool IsCut)
 {
     POINT dest;
-    if (!WorldCoordinateToScreenCoordinate(g_Turtles[turtle_which].Position, dest))
+    if (!WorldCoordinateToScreenCoordinate(g_SelectedTurtle->Position, dest))
     {
         return Unbound;
     }
@@ -1474,10 +1474,10 @@ BitCopyOrCut(NODE *arg, bool IsCut)
                     // TRect temp;
                     //
                     // temp.Set(
-                    //   (+g_Turtles[turtle_which].Position.x - MainWindowx->Scroller->XPos / the_zoom + xoffset                                  ) * the_zoom,
-                    //   (-g_Turtles[turtle_which].Position.y - MainWindowx->Scroller->YPos / the_zoom + yoffset + LL - CutBmp[CutIndex].CutHeight) * the_zoom,
-                    //   (+g_Turtles[turtle_which].Position.x - MainWindowx->Scroller->XPos / the_zoom + xoffset + CutBmp[CutIndex].CutWidth      ) * the_zoom,
-                    //    (-g_Turtles[turtle_which].Position.y - MainWindowx->Scroller->YPos / the_zoom + yoffset + LL                             ) * the_zoom);
+                    //   (+g_SelectedTurtle->Position.x - MainWindowx->Scroller->XPos / the_zoom + xoffset                                  ) * the_zoom,
+                    //   (-g_SelectedTurtle->Position.y - MainWindowx->Scroller->YPos / the_zoom + yoffset + LL - CutBmp[CutIndex].CutHeight) * the_zoom,
+                    //   (+g_SelectedTurtle->Position.x - MainWindowx->Scroller->XPos / the_zoom + xoffset + CutBmp[CutIndex].CutWidth      ) * the_zoom,
+                    //   (-g_SelectedTurtle->Position.y - MainWindowx->Scroller->YPos / the_zoom + yoffset + LL                             ) * the_zoom);
                     //
                     // temp.Normalize();
                     // temp.Inflate(1+the_zoom,1+the_zoom);
@@ -1488,10 +1488,10 @@ BitCopyOrCut(NODE *arg, bool IsCut)
                 {
                     SetRect(
                         &TempRect,
-                        +g_Turtles[turtle_which].Position.x - MainWindowx->ScreenWindow->Scroller->XPos + xoffset,
-                        -g_Turtles[turtle_which].Position.y - MainWindowx->ScreenWindow->Scroller->YPos + yoffset + LL - CutBmp[CutIndex].CutHeight,
-                        +g_Turtles[turtle_which].Position.x - MainWindowx->ScreenWindow->Scroller->XPos + xoffset + CutBmp[CutIndex].CutWidth,
-                        -g_Turtles[turtle_which].Position.y - MainWindowx->ScreenWindow->Scroller->YPos + yoffset + LL);
+                        +g_SelectedTurtle->Position.x - MainWindowx->ScreenWindow->Scroller->XPos + xoffset,
+                        -g_SelectedTurtle->Position.y - MainWindowx->ScreenWindow->Scroller->YPos + yoffset + LL - CutBmp[CutIndex].CutHeight,
+                        +g_SelectedTurtle->Position.x - MainWindowx->ScreenWindow->Scroller->XPos + xoffset + CutBmp[CutIndex].CutWidth,
+                        -g_SelectedTurtle->Position.y - MainWindowx->ScreenWindow->Scroller->YPos + yoffset + LL);
 
                     FillRect(ScreenDC, &TempRect, TempBrush);
                 }
@@ -1636,7 +1636,7 @@ NODE *lbitpaste(NODE *)
     ASSERT_TURTLE_INVARIANT;
 
     POINT dest;
-    if (!WorldCoordinateToScreenCoordinate(g_Turtles[turtle_which].Position, dest))
+    if (!WorldCoordinateToScreenCoordinate(g_SelectedTurtle->Position, dest))
     {
         return Unbound;
     }
@@ -1692,10 +1692,10 @@ NODE *lbitpaste(NODE *)
                 // TRect temp;
                 //
                 // temp.Set(
-                //     (+g_Turtles[turtle_which].Position.x - MainWindowx->Scroller->XPos / the_zoom + xoffset                                  ) * the_zoom,
-                //     (-g_Turtles[turtle_which].Position.y - MainWindowx->Scroller->YPos / the_zoom + yoffset + LL - CutBmp[CutIndex].CutHeight) * the_zoom,
-                //     (+g_Turtles[turtle_which].Position.x - MainWindowx->Scroller->XPos / the_zoom + xoffset + CutBmp[CutIndex].CutWidth      ) * the_zoom,
-                //     (-g_Turtles[turtle_which].Position.y - MainWindowx->Scroller->YPos / the_zoom + yoffset + LL                             ) * the_zoom);
+                //     (+g_SelectedTurtle->Position.x - MainWindowx->Scroller->XPos / the_zoom + xoffset                                  ) * the_zoom,
+                //     (-g_SelectedTurtle->Position.y - MainWindowx->Scroller->YPos / the_zoom + yoffset + LL - CutBmp[CutIndex].CutHeight) * the_zoom,
+                //     (+g_SelectedTurtle->Position.x - MainWindowx->Scroller->XPos / the_zoom + xoffset + CutBmp[CutIndex].CutWidth      ) * the_zoom,
+                //     (-g_SelectedTurtle->Position.y - MainWindowx->Scroller->YPos / the_zoom + yoffset + LL                             ) * the_zoom);
                 //
                 // temp.Normalize();
                 // temp.Inflate(1+the_zoom,1+the_zoom);
@@ -1823,43 +1823,60 @@ NODE *lsetturtle(NODE *arg)
     if (NOT_THROWING)
     {
         draw_turtles(false);
-        int temp = getint(val);
-        if ((temp >= (TURTLES - TURTLEN)) || (temp < -TURTLEN))
+        int turtleId = getint(val);
+        if (turtleId >= TURTLES || turtleId < -TOTAL_SPECIAL_TURTLES)
         {
             // notify the user that the turtle ID is out of range
             ShowErrorMessageAndStop(LOCALIZED_ERROR_BADTURTLEID);
         }
         else
         {
-            turtle_which = temp;
-
-            if (turtle_which > turtle_max)
+            if (turtleId < 0)
             {
-                for (int i = turtle_max + 1; i <= turtle_which; i++)
-                {
-                    g_Turtles[i].Position.x = 0.0;
-                    g_Turtles[i].Position.y = 0.0;
-                    g_Turtles[i].Position.z = 0.0;
-                    g_Turtles[i].Heading   = 0.0;
-                    g_Turtles[i].IsShown   = true;
-                    g_Turtles[i].IsPenUp   = false;
-                    g_Turtles[i].Bitmap = 0;
-                    g_Turtles[i].Matrix.e11 = 1.0;
-                    g_Turtles[i].Matrix.e12 = 0.0;
-                    g_Turtles[i].Matrix.e13 = 0.0;
-                    g_Turtles[i].Matrix.e21 = 0.0;
-                    g_Turtles[i].Matrix.e22 = 1.0;
-                    g_Turtles[i].Matrix.e23 = 0.0;
-                    g_Turtles[i].Matrix.e31 = 0.0;
-                    g_Turtles[i].Matrix.e32 = 0.0;
-                    g_Turtles[i].Matrix.e33 = 1.0;
-                }
-                turtle_max = turtle_which;
+                // this is a special turtle.
+                // Remap <-1, -2, -3> to <0, 1, 2>
+                g_SelectedTurtle = g_SpecialTurtles - turtleId - 1;
             }
-
-            if (turtle_which < 0)
+            else
             {
-                turtle_which = (TURTLES - (TURTLEN+1)) - turtle_which;
+                // This is a normal turtle
+                g_SelectedTurtle = &g_Turtles[turtleId];
+                if (turtleId > g_MaxTurtle)
+                {
+                    // This turtle has not yet been created.
+                    // Create this turtle and all of the turtles up to it.
+                    for (int i = g_MaxTurtle + 1; i <= turtleId; i++)
+                    {
+                        g_Turtles[i].Position.x = 0.0;
+                        g_Turtles[i].Position.y = 0.0;
+                        g_Turtles[i].Position.z = 0.0;
+
+                        g_Turtles[i].Heading    = 0.0;
+
+                        g_Turtles[i].Bitmap     = 0;
+
+                        g_Turtles[i].IsShown    = true;
+                        g_Turtles[i].IsPenUp    = false;
+                        g_Turtles[i].IsSpecial  = false;
+
+                        g_Turtles[i].Matrix.e11 = 1.0;
+                        g_Turtles[i].Matrix.e12 = 0.0;
+                        g_Turtles[i].Matrix.e13 = 0.0;
+                        g_Turtles[i].Matrix.e21 = 0.0;
+                        g_Turtles[i].Matrix.e22 = 1.0;
+                        g_Turtles[i].Matrix.e23 = 0.0;
+                        g_Turtles[i].Matrix.e31 = 0.0;
+                        g_Turtles[i].Matrix.e32 = 0.0;
+                        g_Turtles[i].Matrix.e33 = 1.0;
+
+                        g_Turtles[i].Points[0].bValid = false;
+                        g_Turtles[i].Points[1].bValid = false;
+                        g_Turtles[i].Points[2].bValid = false;
+                        g_Turtles[i].Points[3].bValid = false;
+                    }
+
+                    g_MaxTurtle = turtleId;
+                }
             }
 
             update_status_turtleposition();
@@ -1870,7 +1887,7 @@ NODE *lsetturtle(NODE *arg)
             update_status_turtleroll();
             update_status_turtlewhich();
 
-            g_Wanna = g_Turtles[turtle_which].Position;
+            g_Wanna = g_SelectedTurtle->Position;
 
             draw_turtles(true);
         }
@@ -1883,25 +1900,14 @@ NODE *lturtle(NODE *)
 {
     ASSERT_TURTLE_INVARIANT;
 
-    int active_turtle;
-    if (turtle_which >= TURTLES - TURTLEN)
-    {
-        // this is one of the special turtles (below 0)
-        active_turtle = -(turtle_which - (TURTLES - (TURTLEN+1)));
-    }
-    else
-    {
-        // this is a normal turtle
-        active_turtle = turtle_which;
-    }
-
+    int active_turtle = GetSelectedTurtleIndex();
     return make_intnode(active_turtle);
 }
 
 NODE *lturtles(NODE *)
 {
     ASSERT_TURTLE_INVARIANT;
-    return make_intnode(turtle_max);
+    return make_intnode(g_MaxTurtle);
 }
 
 void turtlepaste(int TurtleToPaste)
@@ -2593,7 +2599,7 @@ void label(const char *s)
     ASSERT_TURTLE_INVARIANT;
 
     POINT dest;
-    if (!WorldCoordinateToScreenCoordinate(g_Turtles[turtle_which].Position, dest))
+    if (!WorldCoordinateToScreenCoordinate(g_SelectedTurtle->Position, dest))
     {
         return;
     }
@@ -2621,7 +2627,7 @@ void label(const char *s)
         SetTextColor(MemDC, pcolor);
     }
 
-    FontRec.lfEscapement = (360.0 - (g_Turtles[turtle_which].Heading - 90.0)) * 10;
+    FontRec.lfEscapement = (360.0 - (g_SelectedTurtle->Heading - 90.0)) * 10;
     HFONT tempFont = CreateFontIndirect(&FontRec);
     HFONT oldFont = (HFONT) SelectObject(MemDC, tempFont);
 

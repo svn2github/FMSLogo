@@ -879,8 +879,6 @@ extern long g_PenWidth;
 extern bool zoom_flag;
 extern long MaxColors;
 
-extern LINEX TurtlePoints[][4];
-
 extern void MakeHelpPathName(char *szFileName, LPCSTR);
 extern void ContextHelp(TEdit *Editor);
 

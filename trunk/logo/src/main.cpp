@@ -127,8 +127,6 @@ long g_PenWidth = 1;                   // pen width
 bool zoom_flag = false;                // flag to signal in zoomed state
 long MaxColors = 0;                    // The maximum # of colors available
 
-LINEX TurtlePoints[TURTLES][4];        // used to store 3 vertices of turtle
-
 TThreeDSolid ThreeD;
 
 OSVERSIONINFO g_OsVersionInformation;
@@ -948,7 +946,6 @@ WinMain(
     gctop = gcstack;
 
     // init the timer callback array
-
     for (i = 0; i < MAX_TIMERS; i++)
     {
         timer_callback[i] = NULL;
@@ -956,6 +953,11 @@ WinMain(
 
     // alloc and init the bitmap cut array
     CutBmp = (CUTMAP *) calloc(sizeof(CUTMAP), MaxBitCuts);
+
+    // init the turtles
+    g_SpecialTurtles[SPECIAL_TURTLE_EYE_LOCATION].IsSpecial   = true;
+    g_SpecialTurtles[SPECIAL_TURTLE_LIGHT_LOCATION].IsSpecial = true;
+    g_SpecialTurtles[SPECIAL_TURTLE_EYE_FIXATION].IsSpecial   = true;
 
     // init logo kernel
     init();
@@ -1228,6 +1230,9 @@ void ibmturt(bool erase)
     long maxx = -100000;
     long maxy = -100000;
 
+    // special turtles must not be drawn
+    assert(!g_SelectedTurtle->IsSpecial);
+    
     if (erase)
     {
 
@@ -1236,19 +1241,19 @@ void ibmturt(bool erase)
             // in 3D mode
             for (int j = 0; j < 4; j++)
             {
-                VECTOR rp = MVxyMultiply(g_Turtles[turtle_which].Matrix, turtle_vertices[j].from);
+                VECTOR rp = MVxyMultiply(g_SelectedTurtle->Matrix, turtle_vertices[j].from);
 
                 VECTOR from3d;
-                from3d.x = (g_Turtles[turtle_which].Position.x + rp.x) / BitMapWidth;
-                from3d.y = (g_Turtles[turtle_which].Position.y + rp.y) / BitMapWidth;
-                from3d.z = (g_Turtles[turtle_which].Position.z + rp.z) / BitMapWidth;
+                from3d.x = (g_SelectedTurtle->Position.x + rp.x) / BitMapWidth;
+                from3d.y = (g_SelectedTurtle->Position.y + rp.y) / BitMapWidth;
+                from3d.z = (g_SelectedTurtle->Position.z + rp.z) / BitMapWidth;
 
-                rp = MVxyMultiply(g_Turtles[turtle_which].Matrix, turtle_vertices[j].to);
+                rp = MVxyMultiply(g_SelectedTurtle->Matrix, turtle_vertices[j].to);
 
                 VECTOR to3d;
-                to3d.x = (g_Turtles[turtle_which].Position.x + rp.x) / BitMapWidth;
-                to3d.y = (g_Turtles[turtle_which].Position.y + rp.y) / BitMapWidth;
-                to3d.z = (g_Turtles[turtle_which].Position.z + rp.z) / BitMapWidth;
+                to3d.x = (g_SelectedTurtle->Position.x + rp.x) / BitMapWidth;
+                to3d.y = (g_SelectedTurtle->Position.y + rp.y) / BitMapWidth;
+                to3d.z = (g_SelectedTurtle->Position.z + rp.z) / BitMapWidth;
 
                 POINT from2d;
                 POINT to2d;
@@ -1266,15 +1271,15 @@ void ibmturt(bool erase)
 
                     bMinMax = true;
                
-                    TurtlePoints[turtle_which][j].from.x = iFromx;
-                    TurtlePoints[turtle_which][j].from.y = iFromy;
-                    TurtlePoints[turtle_which][j].to.x   = iTox;
-                    TurtlePoints[turtle_which][j].to.y   = iToy;
-                    TurtlePoints[turtle_which][j].bValid = true;
+                    g_SelectedTurtle->Points[j].from.x = iFromx;
+                    g_SelectedTurtle->Points[j].from.y = iFromy;
+                    g_SelectedTurtle->Points[j].to.x   = iTox;
+                    g_SelectedTurtle->Points[j].to.y   = iToy;
+                    g_SelectedTurtle->Points[j].bValid = true;
                 }
                 else
                 {
-                    TurtlePoints[turtle_which][j].bValid = false;
+                    g_SelectedTurtle->Points[j].bValid = false;
                 }
             }
         }
@@ -1283,20 +1288,20 @@ void ibmturt(bool erase)
             // 2D mode
             for (int j = 0; j < 3; j++)
             {
-                FLONUM Cz = cos(-g_Turtles[turtle_which].Heading * rads_per_degree);
-                FLONUM Sz = sin(-g_Turtles[turtle_which].Heading * rads_per_degree);
+                FLONUM Cz = cos(-g_SelectedTurtle->Heading * rads_per_degree);
+                FLONUM Sz = sin(-g_SelectedTurtle->Heading * rads_per_degree);
 
                 FLONUM rx = Cz * turtle_vertices[j].from.x - Sz * turtle_vertices[j].from.y;
                 FLONUM ry = Sz * turtle_vertices[j].from.x + Cz * turtle_vertices[j].from.y;
 
-                FLONUM oldx = g_Turtles[turtle_which].Position.x + rx;
-                FLONUM oldy = g_Turtles[turtle_which].Position.y + ry;
+                FLONUM oldx = g_SelectedTurtle->Position.x + rx;
+                FLONUM oldy = g_SelectedTurtle->Position.y + ry;
             
                 rx = Cz * turtle_vertices[j].to.x - Sz * turtle_vertices[j].to.y;
                 ry = Sz * turtle_vertices[j].to.x + Cz * turtle_vertices[j].to.y;
             
-                FLONUM newx = g_Turtles[turtle_which].Position.x + rx;
-                FLONUM newy = g_Turtles[turtle_which].Position.y + ry;
+                FLONUM newx = g_SelectedTurtle->Position.x + rx;
+                FLONUM newy = g_SelectedTurtle->Position.y + ry;
             
                 long iOldx = g_round(oldx);
                 long iOldy = g_round(oldy);
@@ -1315,17 +1320,17 @@ void ibmturt(bool erase)
 
                 bMinMax = true;
             
-                TurtlePoints[turtle_which][j].from.x = iFromx;
-                TurtlePoints[turtle_which][j].from.y = iFromy;
-                TurtlePoints[turtle_which][j].to.x   = iTox;
-                TurtlePoints[turtle_which][j].to.y   = iToy;
+                g_SelectedTurtle->Points[j].from.x = iFromx;
+                g_SelectedTurtle->Points[j].from.y = iFromy;
+                g_SelectedTurtle->Points[j].to.x   = iTox;
+                g_SelectedTurtle->Points[j].to.y   = iToy;
 
-                TurtlePoints[turtle_which][j].bValid = true;
+                g_SelectedTurtle->Points[j].bValid = true;
             }
 
             // The line that distingiushes left from right is not needed
             // in 2D modes.
-            TurtlePoints[turtle_which][3].bValid = false;
+            g_SelectedTurtle->Points[3].bValid = false;
         }
     }
     else
@@ -1333,18 +1338,18 @@ void ibmturt(bool erase)
         // consider adding these to turtle points for efficiency
         for (int j = 0; j < 4; j++)
         {
-            if (TurtlePoints[turtle_which][j].bValid)
+            if (g_SelectedTurtle->Points[j].bValid)
             {
-                minx = min(minx, (long) (+(TurtlePoints[turtle_which][j].from.x - xoffset)));
-                miny = min(miny, (long) (-(TurtlePoints[turtle_which][j].from.y - yoffset)));
-                maxx = max(maxx, (long) (+(TurtlePoints[turtle_which][j].from.x - xoffset)));
-                maxy = max(maxy, (long) (-(TurtlePoints[turtle_which][j].from.y - yoffset)));
+                minx = min(minx, (long) (+(g_SelectedTurtle->Points[j].from.x - xoffset)));
+                miny = min(miny, (long) (-(g_SelectedTurtle->Points[j].from.y - yoffset)));
+                maxx = max(maxx, (long) (+(g_SelectedTurtle->Points[j].from.x - xoffset)));
+                maxy = max(maxy, (long) (-(g_SelectedTurtle->Points[j].from.y - yoffset)));
                 bMinMax = true;
             }
         }
     }
    
-    if (g_Turtles[turtle_which].Bitmap)
+    if (g_SelectedTurtle->Bitmap)
     {
         POINT dest;
 
@@ -1352,9 +1357,9 @@ void ibmturt(bool erase)
         {
             VECTOR from3d;
 
-            from3d.x = g_Turtles[turtle_which].Position.x / WorldWidth;
-            from3d.y = g_Turtles[turtle_which].Position.y / WorldHeight;
-            from3d.z = g_Turtles[turtle_which].Position.z / WorldDepth;
+            from3d.x = g_SelectedTurtle->Position.x / WorldWidth;
+            from3d.y = g_SelectedTurtle->Position.y / WorldHeight;
+            from3d.z = g_SelectedTurtle->Position.z / WorldDepth;
 
             if (ThreeD.TransformPoint(from3d, dest))
             {
@@ -1367,16 +1372,19 @@ void ibmturt(bool erase)
         }
         else
         {
-            dest.x = g_round(g_Turtles[turtle_which].Position.x);
-            dest.y = g_round(g_Turtles[turtle_which].Position.y);
+            dest.x = g_round(g_SelectedTurtle->Position.x);
+            dest.y = g_round(g_SelectedTurtle->Position.y);
         }
+        
+        // figure out the index into the Cut map.
+        CUTMAP & turtleBitmap = CutBmp[g_SelectedTurtle - g_Turtles];
 
         TScroller * screenScroller = MainWindowx->ScreenWindow->Scroller;
         screenBoundingBox.Set(
-            (+dest.x - screenScroller->XPos / the_zoom + xoffset                                      ) * the_zoom,
-            (-dest.y - screenScroller->YPos / the_zoom + yoffset + LL - CutBmp[turtle_which].CutHeight) * the_zoom,
-            (+dest.x - screenScroller->XPos / the_zoom + xoffset + CutBmp[turtle_which].CutWidth      ) * the_zoom,
-            (-dest.y - screenScroller->YPos / the_zoom + yoffset + LL                                 ) * the_zoom);
+            (+dest.x - screenScroller->XPos / the_zoom + xoffset                              ) * the_zoom,
+            (-dest.y - screenScroller->YPos / the_zoom + yoffset + LL - turtleBitmap.CutHeight) * the_zoom,
+            (+dest.x - screenScroller->XPos / the_zoom + xoffset + turtleBitmap.CutWidth      ) * the_zoom,
+            (-dest.y - screenScroller->YPos / the_zoom + yoffset + LL                         ) * the_zoom);
 
         screenBoundingBox.Normalize();
     }
@@ -1413,12 +1421,13 @@ void move_to_3d(FLONUM x, FLONUM y, FLONUM z)
 
 void line_to(FLONUM x, FLONUM y)
 {
-    if (turtle_which >= (TURTLES - TURTLEN)) 
+    if (g_SelectedTurtle->IsSpecial)
     {
+        // special turtles don't draw lines when they move
         return;
     }
 
-    if (!g_Turtles[turtle_which].IsPenUp)
+    if (!g_SelectedTurtle->IsPenUp)
     {
         vector_count++;
         update_status_vectors();
@@ -1463,12 +1472,13 @@ void line_to(FLONUM x, FLONUM y)
 
 void line_to_3d(const Point & ToPoint)
 {
-    if (turtle_which >= (TURTLES - TURTLEN)) 
+    if (g_SelectedTurtle->IsSpecial)
     {
+        // special turtles don't draw lines when they move
         return;
     }
 
-    if (!g_Turtles[turtle_which].IsPenUp)
+    if (!g_SelectedTurtle->IsPenUp)
     {
         vector_count++;
         update_status_vectors();

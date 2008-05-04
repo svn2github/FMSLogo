@@ -57,6 +57,8 @@ COLORREF colortable[16] =
 
 mode_type current_mode = wrapmode;
 
+Turtle g_SpecialTurtles[TOTAL_SPECIAL_TURTLES];
+
 Turtle g_Turtles[TURTLES] =
 {
     {
@@ -74,14 +76,16 @@ Turtle g_Turtles[TURTLES] =
 
         true,
         false,
+        false,
     },
 };
 
-int    turtle_which = 0;
-int    turtle_max = 0;
-VECTOR g_Scale        = {1.0, 1.0, 1.0};
-VECTOR g_OneOverScale = {1.0, 1.0, 1.0};
-Point  g_Wanna = {0.0, 0.0, 0.0};
+Turtle * g_SelectedTurtle = &g_Turtles[0];
+int      g_MaxTurtle      = 0;
+
+VECTOR g_Scale         = {1.0, 1.0, 1.0};
+VECTOR g_OneOverScale  = {1.0, 1.0, 1.0};
+Point  g_Wanna         = {0.0, 0.0, 0.0};
 
 static bool out_of_bounds = false;
 
@@ -343,33 +347,58 @@ numeric_node_to_fixnum(
 }
 
 /************************************************************/
+int GetSelectedTurtleIndex()
+{
+    int selectedTurtleIndex;
+
+    if (g_SelectedTurtle->IsSpecial)
+    {
+        // this is one of the special turtles (below 0)
+        // remap the position within the array <0, 1, 2> to <-1, -2, -3>.
+        selectedTurtleIndex = g_SpecialTurtles - g_SelectedTurtle - 1;
+    }
+    else
+    {
+        // this is a normal turtle
+        selectedTurtleIndex = g_SelectedTurtle - g_Turtles;
+    }
+
+    return selectedTurtleIndex;
+}
 
 void draw_turtles(bool erase)
 {
-    int temp = turtle_which;
+    Turtle * savedSelectedTurtle = g_SelectedTurtle;
 
-    for (turtle_which = 0; turtle_which <= turtle_max; turtle_which++)
+    for (g_SelectedTurtle = g_Turtles;
+         g_SelectedTurtle <= g_Turtles + g_MaxTurtle;
+         g_SelectedTurtle++)
     {
         draw_turtle(erase);
     }
 
-    turtle_which = temp;
+    g_SelectedTurtle = savedSelectedTurtle;
 }
 
 void draw_turtle(bool erase)
 {
-    if (turtle_which >= TURTLES - TURTLEN)
+    if (g_SelectedTurtle->IsSpecial)
     {
+        // either the eye, the eye fixation, or the light turtle is selected
+
         ThreeD.SetFrom();
         ThreeD.SetAt();
         ThreeD.SetUp();
         ThreeD.SetVolume();
         ThreeD.SetEye();
         ThreeD.SetLight();
-        //      if (ThreeD.Tree) ThreeD.View();
+        // if (ThreeD.Tree) ThreeD.View();
+
+        // special turtles are never drawn
+        return;
     }
 
-    if (g_Turtles[turtle_which].IsShown) 
+    if (g_SelectedTurtle->IsShown)
     {
         ibmturt(erase);
     }
@@ -398,11 +427,11 @@ void uppitch(FLONUM a)
 
         MATRIX pitch;
         pitch.e11 = 1.0; pitch.e12 = 0.0; pitch.e13 = 0.0;
-        pitch.e21 = 0.0; pitch.e22 = Cx; pitch.e23 = -Sx;
-        pitch.e31 = 0.0; pitch.e32 = Sx; pitch.e33 = Cx;
+        pitch.e21 = 0.0; pitch.e22 = Cx;  pitch.e23 = -Sx;
+        pitch.e31 = 0.0; pitch.e32 = Sx;  pitch.e33 = Cx;
 
-        g_Turtles[turtle_which].Matrix = MMMultiply(
-            g_Turtles[turtle_which].Matrix,
+        g_SelectedTurtle->Matrix = MMMultiply(
+            g_SelectedTurtle->Matrix,
             pitch);
 
         update_status_turtleheading();
@@ -436,8 +465,8 @@ void rightroll(FLONUM a)
         roll.e21 = 0.0; roll.e22 = 1.0; roll.e23 = 0.0;
         roll.e31 = -Sy; roll.e32 = 0.0; roll.e33 = Cy;
 
-        g_Turtles[turtle_which].Matrix = MMMultiply(
-            g_Turtles[turtle_which].Matrix,
+        g_SelectedTurtle->Matrix = MMMultiply(
+            g_SelectedTurtle->Matrix,
             roll);
 
         update_status_turtleheading();
@@ -454,8 +483,8 @@ void right_helper(FLONUM a)
     draw_turtle(false);
    
     a = positive_fmod(a, 360.0);
-    g_Turtles[turtle_which].Heading += a;
-    g_Turtles[turtle_which].Heading = positive_fmod(g_Turtles[turtle_which].Heading, 360.0);
+    g_SelectedTurtle->Heading += a;
+    g_SelectedTurtle->Heading = positive_fmod(g_SelectedTurtle->Heading, 360.0);
 
     if (current_mode == perspectivemode)
     {
@@ -467,8 +496,8 @@ void right_helper(FLONUM a)
         turn.e21 = Sz;  turn.e22 = Cz;  turn.e23 = 0.0;
         turn.e31 = 0.0; turn.e32 = 0.0; turn.e33 = 1.0;
 
-        g_Turtles[turtle_which].Matrix = MMMultiply(
-            g_Turtles[turtle_which].Matrix,
+        g_SelectedTurtle->Matrix = MMMultiply(
+            g_SelectedTurtle->Matrix,
             turn);
     }
 
@@ -651,8 +680,8 @@ setpos_helper_2d(
     assert(current_mode != perspectivemode);
 
     move_to(
-        g_Turtles[turtle_which].Position.x,
-        g_Turtles[turtle_which].Position.y);
+        g_SelectedTurtle->Position.x,
+        g_SelectedTurtle->Position.y);
 
     Point target;
     target.x = x;
@@ -674,9 +703,9 @@ setpos_helper_2d(
     }
     else if ((current_mode == wrapmode) && (wrapping || out_of_bounds))
     {
-        FLONUM save_heading = g_Turtles[turtle_which].Heading;
+        FLONUM save_heading = g_SelectedTurtle->Heading;
 
-        g_Turtles[turtle_which].Heading = towards_helper(
+        g_SelectedTurtle->Heading = towards_helper(
             target.x,
             target.y, 
             g_Wanna.x, 
@@ -686,19 +715,19 @@ setpos_helper_2d(
         FLONUM ty = g_Wanna.y * g_OneOverScale.y;
         forward_helper(sqrt(sq(target.x - tx) + sq(target.y - ty)));
 
-        g_Turtles[turtle_which].Heading = save_heading;
+        g_SelectedTurtle->Heading = save_heading;
         g_Wanna.x = scaled.x;
         g_Wanna.y = scaled.y;
         out_of_bounds = wrapping;
     }
     else
     {
-        g_Wanna.x = g_Turtles[turtle_which].Position.x = scaled.x;
-        g_Wanna.y = g_Turtles[turtle_which].Position.y = scaled.y;
+        g_Wanna.x = g_SelectedTurtle->Position.x = scaled.x;
+        g_Wanna.y = g_SelectedTurtle->Position.y = scaled.y;
         out_of_bounds = false;
         line_to(
-            g_Turtles[turtle_which].Position.x, 
-            g_Turtles[turtle_which].Position.y);
+            g_SelectedTurtle->Position.x, 
+            g_SelectedTurtle->Position.y);
         update_status_turtleposition();
     }
 }
@@ -714,18 +743,18 @@ setpos_helper_3d(
     assert(current_mode == perspectivemode);
 
     move_to_3d(
-        g_Turtles[turtle_which].Position.x,
-        g_Turtles[turtle_which].Position.y,
-        g_Turtles[turtle_which].Position.z);
+        g_SelectedTurtle->Position.x,
+        g_SelectedTurtle->Position.y,
+        g_SelectedTurtle->Position.z);
 
     Point target;
     target.x = x;
     target.y = y;
     target.z = z;
 
-    g_Wanna = g_Turtles[turtle_which].Position = target;
+    g_Wanna = g_SelectedTurtle->Position = target;
     out_of_bounds = false;
-    line_to_3d(g_Turtles[turtle_which].Position);
+    line_to_3d(g_SelectedTurtle->Position);
     update_status_turtleposition();
 }
 
@@ -744,15 +773,15 @@ setpos_helper(
 
         Point target;
         target.x = (xnode == NIL) ?
-            g_Turtles[turtle_which].Position.x :
+            g_SelectedTurtle->Position.x :
             numeric_node_to_flonum(xnode);
 
         target.y = (ynode == NIL) ?
-            g_Turtles[turtle_which].Position.y :
+            g_SelectedTurtle->Position.y :
             numeric_node_to_flonum(ynode);
 
         target.z = (znode == NIL) ?
-            g_Turtles[turtle_which].Position.z :
+            g_SelectedTurtle->Position.z :
             numeric_node_to_flonum(znode);
 
         if (current_mode == perspectivemode)
@@ -770,7 +799,7 @@ setpos_helper(
 
 NODE *lellipsearc(NODE *arg)
 {
-    bool pen_state = g_Turtles[turtle_which].IsPenUp;
+    bool pen_state = g_SelectedTurtle->IsPenUp;
 
     // get args
     NODE * val1 = numeric_arg(arg);
@@ -796,14 +825,14 @@ NODE *lellipsearc(NODE *arg)
         }
 
         // save and force turtle state
-        bool turtle_state = g_Turtles[turtle_which].IsShown;
-        g_Turtles[turtle_which].IsShown = false;
+        bool turtle_state = g_SelectedTurtle->IsShown;
+        g_SelectedTurtle->IsShown = false;
 
         // grab things before they change and use for restore
-        FLONUM th = g_Turtles[turtle_which].Heading;
-        FLONUM tx = g_Turtles[turtle_which].Position.x;
-        FLONUM ty = g_Turtles[turtle_which].Position.y;
-        FLONUM tz = g_Turtles[turtle_which].Position.z;
+        FLONUM th = g_SelectedTurtle->Heading;
+        FLONUM tx = g_SelectedTurtle->Position.x;
+        FLONUM ty = g_SelectedTurtle->Position.y;
+        FLONUM tz = g_SelectedTurtle->Position.z;
 
         // calculate resolution parameters
         FLONUM flt_count = fabs(angle * max(radius_x, radius_y) / 200.0);
@@ -828,7 +857,7 @@ NODE *lellipsearc(NODE *arg)
         FLONUM delta = angle / count;
 
         // jump to begin of first line segment without drawing
-        g_Turtles[turtle_which].IsPenUp = true;
+        g_SelectedTurtle->IsPenUp = true;
 
         if (current_mode == perspectivemode)
         {
@@ -849,7 +878,7 @@ NODE *lellipsearc(NODE *arg)
                 r.x = x;
                 r.y = y;
 
-                rp = MVxyMultiply(g_Turtles[turtle_which].Matrix, r);
+                rp = MVxyMultiply(g_SelectedTurtle->Matrix, r);
 
                 setpos_helper_3d(
                     tx + rp.x,
@@ -857,7 +886,7 @@ NODE *lellipsearc(NODE *arg)
                     tz + rp.z);
             
                 // restore pen (in case saved)
-                g_Turtles[turtle_which].IsPenUp = pen_state;
+                g_SelectedTurtle->IsPenUp = pen_state;
 
                 ang += delta;
 
@@ -869,14 +898,14 @@ NODE *lellipsearc(NODE *arg)
             }
 
             // restore pen (in case saved)
-            g_Turtles[turtle_which].IsPenUp = pen_state;
+            g_SelectedTurtle->IsPenUp = pen_state;
          
             // assure we draw something and end in the exact right place
             FLONUM endangle = startangle + angle;
             r.x = -sin(endangle * rads_per_degree) * radius_x;
             r.y = -cos(endangle * rads_per_degree) * radius_y;
 
-            rp = MVxyMultiply(g_Turtles[turtle_which].Matrix, r);
+            rp = MVxyMultiply(g_SelectedTurtle->Matrix, r);
          
             setpos_helper_3d(
                 tx + rp.x,
@@ -906,7 +935,7 @@ NODE *lellipsearc(NODE *arg)
                     ty + ry);
 
                 // restore pen (in case saved)
-                g_Turtles[turtle_which].IsPenUp = pen_state;
+                g_SelectedTurtle->IsPenUp = pen_state;
 
                 ang += delta;
 
@@ -918,7 +947,7 @@ NODE *lellipsearc(NODE *arg)
             }
 
             // restore pen (in case saved)
-            g_Turtles[turtle_which].IsPenUp = pen_state;
+            g_SelectedTurtle->IsPenUp = pen_state;
 
             // assure we draw something and end in the exact right place
             FLONUM endangle = startangle + angle;
@@ -935,16 +964,16 @@ NODE *lellipsearc(NODE *arg)
         }
 
         // restore state
-        g_Turtles[turtle_which].IsShown = turtle_state;
+        g_SelectedTurtle->IsShown = turtle_state;
 
-        g_Turtles[turtle_which].Position.x = tx;
-        g_Turtles[turtle_which].Position.y = ty;
-        g_Turtles[turtle_which].Position.z = tz;
+        g_SelectedTurtle->Position.x = tx;
+        g_SelectedTurtle->Position.y = ty;
+        g_SelectedTurtle->Position.z = tz;
 
         update_status_turtleposition();
 
         draw_turtle(true);
-        g_Wanna = g_Turtles[turtle_which].Position;
+        g_Wanna = g_SelectedTurtle->Position;
         out_of_bounds = false;
     }
 
@@ -962,14 +991,14 @@ bool wrap_right(FLONUM d, FLONUM x1, FLONUM y1, FLONUM x2, FLONUM y2)
         {
             line_to(screen_right, yi);
             update_status_turtleposition();
-            g_Turtles[turtle_which].Position.x = turtle_left_max;
-            g_Turtles[turtle_which].Position.y = yi;
+            g_SelectedTurtle->Position.x = turtle_left_max;
+            g_SelectedTurtle->Position.y = yi;
             if (current_mode == wrapmode)
             {
                 forward_helper(d * ((x2 - screen_right) / (x2 - x1)));
                 return true;
             }
-            g_Turtles[turtle_which].Position.x = turtle_right_max;
+            g_SelectedTurtle->Position.x = turtle_right_max;
             err_logo(TURTLE_OUT_OF_BOUNDS, NIL);
         }
     }
@@ -986,14 +1015,14 @@ bool wrap_up(FLONUM d, FLONUM x1, FLONUM y1, FLONUM x2, FLONUM y2)
         {
             line_to(xi, screen_top);
             update_status_turtleposition();
-            g_Turtles[turtle_which].Position.x = xi;
-            g_Turtles[turtle_which].Position.y = turtle_bottom_max;
+            g_SelectedTurtle->Position.x = xi;
+            g_SelectedTurtle->Position.y = turtle_bottom_max;
             if (current_mode == wrapmode)
             {
                 forward_helper(d * ((y2 - screen_top) / (y2 - y1)));
                 return true;
             }
-            g_Turtles[turtle_which].Position.y = turtle_top_max;
+            g_SelectedTurtle->Position.y = turtle_top_max;
             err_logo(TURTLE_OUT_OF_BOUNDS, NIL);
         }
     }
@@ -1010,14 +1039,14 @@ bool wrap_left(FLONUM d, FLONUM x1, FLONUM y1, FLONUM x2, FLONUM y2)
         {
             line_to(screen_left, yi);
             update_status_turtleposition();
-            g_Turtles[turtle_which].Position.x = turtle_right_max;
-            g_Turtles[turtle_which].Position.y = yi;
+            g_SelectedTurtle->Position.x = turtle_right_max;
+            g_SelectedTurtle->Position.y = yi;
             if (current_mode == wrapmode)
             {
                 forward_helper(d * ((screen_left - x2) / (x1 - x2)));
                 return true;
             }
-            g_Turtles[turtle_which].Position.x = turtle_left_max;
+            g_SelectedTurtle->Position.x = turtle_left_max;
             err_logo(TURTLE_OUT_OF_BOUNDS, NIL);
         }
     }
@@ -1034,14 +1063,14 @@ bool wrap_down(FLONUM d, FLONUM x1, FLONUM y1, FLONUM x2, FLONUM y2)
         {
             line_to(xi, screen_bottom);
             update_status_turtleposition();
-            g_Turtles[turtle_which].Position.x = xi;
-            g_Turtles[turtle_which].Position.y = turtle_top_max;
+            g_SelectedTurtle->Position.x = xi;
+            g_SelectedTurtle->Position.y = turtle_top_max;
             if (current_mode == wrapmode)
             {
                 forward_helper(d * ((screen_bottom - y2) / (y1 - y2)));
                 return true;
             }
-            g_Turtles[turtle_which].Position.y = turtle_bottom_max;
+            g_SelectedTurtle->Position.y = turtle_bottom_max;
             err_logo(TURTLE_OUT_OF_BOUNDS, NIL);
         }
     }
@@ -1062,10 +1091,10 @@ void forward_helper(FLONUM d)
     // Convert to the "real" heading (the way cos() and sin() want them).
     // Note that we should add 90 degrees, but instead we use trig identities
     // to make that unnecessary.
-    FLONUM heading_minus_ninety = g_Turtles[turtle_which].Heading * rads_per_degree;
+    FLONUM heading_minus_ninety = g_SelectedTurtle->Heading * rads_per_degree;
 
-    FLONUM x1 = g_Turtles[turtle_which].Position.x;
-    FLONUM y1 = g_Turtles[turtle_which].Position.y;
+    FLONUM x1 = g_SelectedTurtle->Position.x;
+    FLONUM y1 = g_SelectedTurtle->Position.y;
     FLONUM dx = sin(heading_minus_ninety) * d * g_Scale.x;
     FLONUM dy = cos(heading_minus_ninety) * d * g_Scale.y;
     FLONUM x2 = x1 + dx;
@@ -1084,8 +1113,8 @@ void forward_helper(FLONUM d)
             y2 <= screen_top
             ))
     {
-        g_Turtles[turtle_which].Position.x = x2;
-        g_Turtles[turtle_which].Position.y = y2;
+        g_SelectedTurtle->Position.x = x2;
+        g_SelectedTurtle->Position.y = y2;
         line_to(x2, y2);
         update_status_turtleposition();
     }
@@ -1106,21 +1135,21 @@ void forward_helper3d(FLONUM d)
     VECTOR direction;
 
     move_to_3d(
-        g_Turtles[turtle_which].Position.x, 
-        g_Turtles[turtle_which].Position.y, 
-        g_Turtles[turtle_which].Position.z);
+        g_SelectedTurtle->Position.x, 
+        g_SelectedTurtle->Position.y, 
+        g_SelectedTurtle->Position.z);
 
     direction.x = 0.0;
     direction.y = d;
     direction.z = 0.0;
 
-    direction = MVyMultiply(g_Turtles[turtle_which].Matrix, direction);
+    direction = MVyMultiply(g_SelectedTurtle->Matrix, direction);
 
-    g_Turtles[turtle_which].Position.x += direction.x;
-    g_Turtles[turtle_which].Position.y += direction.y;
-    g_Turtles[turtle_which].Position.z += direction.z;
+    g_SelectedTurtle->Position.x += direction.x;
+    g_SelectedTurtle->Position.y += direction.y;
+    g_SelectedTurtle->Position.z += direction.z;
 
-    line_to_3d(g_Turtles[turtle_which].Position);
+    line_to_3d(g_SelectedTurtle->Position);
     update_status_turtleposition();
 }
 
@@ -1138,7 +1167,7 @@ void forward(FLONUM d)
     }
 
     draw_turtle(true);
-    g_Wanna = g_Turtles[turtle_which].Position;
+    g_Wanna = g_SelectedTurtle->Position;
     out_of_bounds = false;
 }
 
@@ -1167,7 +1196,7 @@ NODE *lback(NODE *arg)
 NODE *lbitmapturtle(NODE *)
 {
     draw_turtle(false);
-    g_Turtles[turtle_which].Bitmap = SRCCOPY;
+    g_SelectedTurtle->Bitmap = SRCCOPY;
     draw_turtle(true);
     return Unbound;
 }
@@ -1175,16 +1204,16 @@ NODE *lbitmapturtle(NODE *)
 NODE *lnobitmapturtle(NODE *)
 {
     draw_turtle(false);
-    g_Turtles[turtle_which].Bitmap = 0;
+    g_SelectedTurtle->Bitmap = 0;
     draw_turtle(true);
     return Unbound;
 }
 
 NODE *lshowturtle(NODE *)
 {
-    if (!g_Turtles[turtle_which].IsShown)
+    if (!g_SelectedTurtle->IsShown)
     {
-        g_Turtles[turtle_which].IsShown = true;
+        g_SelectedTurtle->IsShown = true;
         update_status_turtlevisability();
         draw_turtle(true);
     }
@@ -1193,10 +1222,10 @@ NODE *lshowturtle(NODE *)
 
 NODE *lhideturtle(NODE *)
 {
-    if (g_Turtles[turtle_which].IsShown)
+    if (g_SelectedTurtle->IsShown)
     {
         draw_turtle(false);
-        g_Turtles[turtle_which].IsShown = false;
+        g_SelectedTurtle->IsShown = false;
         update_status_turtlevisability();
     }
     return Unbound;
@@ -1204,7 +1233,7 @@ NODE *lhideturtle(NODE *)
 
 NODE *lshownp(NODE *)
 {
-    return true_or_false(g_Turtles[turtle_which].IsShown);
+    return true_or_false(g_SelectedTurtle->IsShown);
 }
 
 NODE *lsetheading(NODE *arg)
@@ -1223,7 +1252,7 @@ NODE *lsetheading(NODE *arg)
         }
         else
         {
-            g_Turtles[turtle_which].Heading = a;
+            g_SelectedTurtle->Heading = a;
         }
 
         update_status_turtleheading();
@@ -1327,11 +1356,11 @@ normalize_angle(
 /* rotations such that heading has no dependencies */
 FLONUM rotation_z()
 {
-    FLONUM m11 = g_Turtles[turtle_which].Matrix.e11;
-    FLONUM m12 = g_Turtles[turtle_which].Matrix.e12;
-    FLONUM m21 = g_Turtles[turtle_which].Matrix.e21;
-    FLONUM m22 = g_Turtles[turtle_which].Matrix.e22;
-    FLONUM m23 = g_Turtles[turtle_which].Matrix.e23;
+    FLONUM m11 = g_SelectedTurtle->Matrix.e11;
+    FLONUM m12 = g_SelectedTurtle->Matrix.e12;
+    FLONUM m21 = g_SelectedTurtle->Matrix.e21;
+    FLONUM m22 = g_SelectedTurtle->Matrix.e22;
+    FLONUM m23 = g_SelectedTurtle->Matrix.e23;
 
     FLONUM result;
 
@@ -1349,9 +1378,9 @@ FLONUM rotation_z()
 
 FLONUM rotation_y()
 {
-    FLONUM m13 = g_Turtles[turtle_which].Matrix.e13;
-    FLONUM m23 = g_Turtles[turtle_which].Matrix.e23;
-    FLONUM m33 = g_Turtles[turtle_which].Matrix.e33;
+    FLONUM m13 = g_SelectedTurtle->Matrix.e13;
+    FLONUM m23 = g_SelectedTurtle->Matrix.e23;
+    FLONUM m33 = g_SelectedTurtle->Matrix.e33;
 
     FLONUM result;
 
@@ -1369,9 +1398,9 @@ FLONUM rotation_y()
 
 FLONUM rotation_x()
 {
-    FLONUM m13 = g_Turtles[turtle_which].Matrix.e13;
-    FLONUM m23 = g_Turtles[turtle_which].Matrix.e23;
-    FLONUM m33 = g_Turtles[turtle_which].Matrix.e33;
+    FLONUM m13 = g_SelectedTurtle->Matrix.e13;
+    FLONUM m23 = g_SelectedTurtle->Matrix.e23;
+    FLONUM m33 = g_SelectedTurtle->Matrix.e33;
 
     FLONUM result;
 
@@ -1409,7 +1438,7 @@ NODE *lheading(NODE *)
     }
     else
     {
-        heading = g_Turtles[turtle_which].Heading;
+        heading = g_SelectedTurtle->Heading;
     }
 
     return make_floatnode(heading);
@@ -1632,8 +1661,8 @@ NODE *ltowards(NODE *args)
         FLONUM heading = towards_helper(
             x, 
             y, 
-            g_Turtles[turtle_which].Position.x, 
-            g_Turtles[turtle_which].Position.y);
+            g_SelectedTurtle->Position.x, 
+            g_SelectedTurtle->Position.y);
 
         return make_floatnode(heading);
     }
@@ -1656,7 +1685,7 @@ NODE *ltowardsxyz(NODE *args)
         to.z = numeric_node_to_flonum(znode);
 
         // Generate a Vector to represent direction we need to head
-        VECTOR diff = Subtract(to, g_Turtles[turtle_which].Position);
+        VECTOR diff = Subtract(to, g_SelectedTurtle->Position);
         Normalize(diff);
 
         // Compute angle between Y Axis and Vector [DOT] (Rotation about Z)
@@ -1691,16 +1720,16 @@ NODE *ltowardsxyz(NODE *args)
 NODE *lpos(NODE *)
 {
     return cons_list(
-        make_floatnode(cut_error(g_Turtles[turtle_which].Position.x * g_OneOverScale.x)),
-        make_floatnode(cut_error(g_Turtles[turtle_which].Position.y * g_OneOverScale.y)));
+        make_floatnode(cut_error(g_SelectedTurtle->Position.x * g_OneOverScale.x)),
+        make_floatnode(cut_error(g_SelectedTurtle->Position.y * g_OneOverScale.y)));
 }
 
 NODE *lposxyz(NODE *)
 {
     return cons_list(
-        make_floatnode(cut_error(g_Turtles[turtle_which].Position.x * g_OneOverScale.x)),
-        make_floatnode(cut_error(g_Turtles[turtle_which].Position.y * g_OneOverScale.y)),
-        make_floatnode(cut_error(g_Turtles[turtle_which].Position.z * g_OneOverScale.z)));
+        make_floatnode(cut_error(g_SelectedTurtle->Position.x * g_OneOverScale.x)),
+        make_floatnode(cut_error(g_SelectedTurtle->Position.y * g_OneOverScale.y)),
+        make_floatnode(cut_error(g_SelectedTurtle->Position.z * g_OneOverScale.z)));
 }
 
 NODE *lscrunch(NODE *)
@@ -1720,16 +1749,16 @@ NODE *lhome(NODE *)
     gcref(zero);
 
     draw_turtle(false);
-    g_Turtles[turtle_which].Heading = 0.0;
-    g_Turtles[turtle_which].Matrix.e11 = 1.0;
-    g_Turtles[turtle_which].Matrix.e12 = 0.0;
-    g_Turtles[turtle_which].Matrix.e13 = 0.0;
-    g_Turtles[turtle_which].Matrix.e21 = 0.0;
-    g_Turtles[turtle_which].Matrix.e22 = 1.0;
-    g_Turtles[turtle_which].Matrix.e23 = 0.0;
-    g_Turtles[turtle_which].Matrix.e31 = 0.0;
-    g_Turtles[turtle_which].Matrix.e32 = 0.0;
-    g_Turtles[turtle_which].Matrix.e33 = 1.0;
+    g_SelectedTurtle->Heading = 0.0;
+    g_SelectedTurtle->Matrix.e11 = 1.0;
+    g_SelectedTurtle->Matrix.e12 = 0.0;
+    g_SelectedTurtle->Matrix.e13 = 0.0;
+    g_SelectedTurtle->Matrix.e21 = 0.0;
+    g_SelectedTurtle->Matrix.e22 = 1.0;
+    g_SelectedTurtle->Matrix.e23 = 0.0;
+    g_SelectedTurtle->Matrix.e31 = 0.0;
+    g_SelectedTurtle->Matrix.e32 = 0.0;
+    g_SelectedTurtle->Matrix.e33 = 1.0;
     draw_turtle(true);
 
     update_status_turtleheading();
@@ -1755,25 +1784,26 @@ void cs_helper(bool centerp, bool clearp)
 
     if (centerp)
     {
-        turtle_max = 0;
-        turtle_which = 0;
-        g_Turtles[turtle_which].Bitmap = 0;
+        g_SelectedTurtle = &g_Turtles[0];
+        g_MaxTurtle      = 0;
+
+        g_SelectedTurtle->Bitmap = 0;
         g_Wanna.x = 0.0;
         g_Wanna.y = 0.0;
         g_Wanna.z = 0.0;
-        g_Turtles[turtle_which].Position.x = 0.0;
-        g_Turtles[turtle_which].Position.y = 0.0;
-        g_Turtles[turtle_which].Position.z = 0.0;
-        g_Turtles[turtle_which].Heading = 0.0;
-        g_Turtles[turtle_which].Matrix.e11 = 1.0;
-        g_Turtles[turtle_which].Matrix.e12 = 0.0;
-        g_Turtles[turtle_which].Matrix.e13 = 0.0;
-        g_Turtles[turtle_which].Matrix.e21 = 0.0;
-        g_Turtles[turtle_which].Matrix.e22 = 1.0;
-        g_Turtles[turtle_which].Matrix.e23 = 0.0;
-        g_Turtles[turtle_which].Matrix.e31 = 0.0;
-        g_Turtles[turtle_which].Matrix.e32 = 0.0;
-        g_Turtles[turtle_which].Matrix.e33 = 1.0;
+        g_SelectedTurtle->Position.x = 0.0;
+        g_SelectedTurtle->Position.y = 0.0;
+        g_SelectedTurtle->Position.z = 0.0;
+        g_SelectedTurtle->Heading = 0.0;
+        g_SelectedTurtle->Matrix.e11 = 1.0;
+        g_SelectedTurtle->Matrix.e12 = 0.0;
+        g_SelectedTurtle->Matrix.e13 = 0.0;
+        g_SelectedTurtle->Matrix.e21 = 0.0;
+        g_SelectedTurtle->Matrix.e22 = 1.0;
+        g_SelectedTurtle->Matrix.e23 = 0.0;
+        g_SelectedTurtle->Matrix.e31 = 0.0;
+        g_SelectedTurtle->Matrix.e32 = 0.0;
+        g_SelectedTurtle->Matrix.e33 = 1.0;
 
         update_status_turtleheading();
         update_status_turtleposition();
@@ -1998,49 +2028,49 @@ NODE *lperspective(NODE *)
     current_mode = perspectivemode;
 
     // From
-    g_Turtles[TURTLES - 3].Position.x = 400.0;
-    g_Turtles[TURTLES - 3].Position.y = 400.0;
-    g_Turtles[TURTLES - 3].Position.z = 600.0;
-    g_Turtles[TURTLES - 3].Heading = 0.0;
-    g_Turtles[TURTLES - 3].Matrix.e11 = 1.0;
-    g_Turtles[TURTLES - 3].Matrix.e12 = 0.0;
-    g_Turtles[TURTLES - 3].Matrix.e13 = 0.0;
-    g_Turtles[TURTLES - 3].Matrix.e21 = 0.0;
-    g_Turtles[TURTLES - 3].Matrix.e22 = 1.0;
-    g_Turtles[TURTLES - 3].Matrix.e23 = 0.0;
-    g_Turtles[TURTLES - 3].Matrix.e31 = 0.0;
-    g_Turtles[TURTLES - 3].Matrix.e32 = 0.0;
-    g_Turtles[TURTLES - 3].Matrix.e33 = 1.0;
+    g_SpecialTurtles[SPECIAL_TURTLE_EYE_LOCATION].Position.x = 400.0;
+    g_SpecialTurtles[SPECIAL_TURTLE_EYE_LOCATION].Position.y = 400.0;
+    g_SpecialTurtles[SPECIAL_TURTLE_EYE_LOCATION].Position.z = 600.0;
+    g_SpecialTurtles[SPECIAL_TURTLE_EYE_LOCATION].Heading = 0.0;
+    g_SpecialTurtles[SPECIAL_TURTLE_EYE_LOCATION].Matrix.e11 = 1.0;
+    g_SpecialTurtles[SPECIAL_TURTLE_EYE_LOCATION].Matrix.e12 = 0.0;
+    g_SpecialTurtles[SPECIAL_TURTLE_EYE_LOCATION].Matrix.e13 = 0.0;
+    g_SpecialTurtles[SPECIAL_TURTLE_EYE_LOCATION].Matrix.e21 = 0.0;
+    g_SpecialTurtles[SPECIAL_TURTLE_EYE_LOCATION].Matrix.e22 = 1.0;
+    g_SpecialTurtles[SPECIAL_TURTLE_EYE_LOCATION].Matrix.e23 = 0.0;
+    g_SpecialTurtles[SPECIAL_TURTLE_EYE_LOCATION].Matrix.e31 = 0.0;
+    g_SpecialTurtles[SPECIAL_TURTLE_EYE_LOCATION].Matrix.e32 = 0.0;
+    g_SpecialTurtles[SPECIAL_TURTLE_EYE_LOCATION].Matrix.e33 = 1.0;
 
     // At
-    g_Turtles[TURTLES - 2].Position.x = 0.0;
-    g_Turtles[TURTLES - 2].Position.y = 0.0;
-    g_Turtles[TURTLES - 2].Position.z = 0.0;
-    g_Turtles[TURTLES - 2].Heading = 0.0;
-    g_Turtles[TURTLES - 2].Matrix.e11 = 1.0;
-    g_Turtles[TURTLES - 2].Matrix.e12 = 0.0;
-    g_Turtles[TURTLES - 2].Matrix.e13 = 0.0;
-    g_Turtles[TURTLES - 2].Matrix.e21 = 0.0;
-    g_Turtles[TURTLES - 2].Matrix.e22 = 1.0;
-    g_Turtles[TURTLES - 2].Matrix.e23 = 0.0;
-    g_Turtles[TURTLES - 2].Matrix.e31 = 0.0;
-    g_Turtles[TURTLES - 2].Matrix.e32 = 0.0;
-    g_Turtles[TURTLES - 2].Matrix.e33 = 1.0;
+    g_SpecialTurtles[SPECIAL_TURTLE_EYE_FIXATION].Position.x = 0.0;
+    g_SpecialTurtles[SPECIAL_TURTLE_EYE_FIXATION].Position.y = 0.0;
+    g_SpecialTurtles[SPECIAL_TURTLE_EYE_FIXATION].Position.z = 0.0;
+    g_SpecialTurtles[SPECIAL_TURTLE_EYE_FIXATION].Heading = 0.0;
+    g_SpecialTurtles[SPECIAL_TURTLE_EYE_FIXATION].Matrix.e11 = 1.0;
+    g_SpecialTurtles[SPECIAL_TURTLE_EYE_FIXATION].Matrix.e12 = 0.0;
+    g_SpecialTurtles[SPECIAL_TURTLE_EYE_FIXATION].Matrix.e13 = 0.0;
+    g_SpecialTurtles[SPECIAL_TURTLE_EYE_FIXATION].Matrix.e21 = 0.0;
+    g_SpecialTurtles[SPECIAL_TURTLE_EYE_FIXATION].Matrix.e22 = 1.0;
+    g_SpecialTurtles[SPECIAL_TURTLE_EYE_FIXATION].Matrix.e23 = 0.0;
+    g_SpecialTurtles[SPECIAL_TURTLE_EYE_FIXATION].Matrix.e31 = 0.0;
+    g_SpecialTurtles[SPECIAL_TURTLE_EYE_FIXATION].Matrix.e32 = 0.0;
+    g_SpecialTurtles[SPECIAL_TURTLE_EYE_FIXATION].Matrix.e33 = 1.0;
 
     // Light
-    g_Turtles[TURTLES - 1].Position.x = 0.0;
-    g_Turtles[TURTLES - 1].Position.y = 0.0;
-    g_Turtles[TURTLES - 1].Position.z = 1000.0;
-    g_Turtles[TURTLES - 1].Heading = 0.0;
-    g_Turtles[TURTLES - 1].Matrix.e11 = 1.0;
-    g_Turtles[TURTLES - 1].Matrix.e12 = 0.0;
-    g_Turtles[TURTLES - 1].Matrix.e13 = 0.0;
-    g_Turtles[TURTLES - 1].Matrix.e21 = 0.0;
-    g_Turtles[TURTLES - 1].Matrix.e22 = 1.0;
-    g_Turtles[TURTLES - 1].Matrix.e23 = 0.0;
-    g_Turtles[TURTLES - 1].Matrix.e31 = 0.0;
-    g_Turtles[TURTLES - 1].Matrix.e32 = 0.0;
-    g_Turtles[TURTLES - 1].Matrix.e33 = 1.0;
+    g_SpecialTurtles[SPECIAL_TURTLE_LIGHT_LOCATION].Position.x = 0.0;
+    g_SpecialTurtles[SPECIAL_TURTLE_LIGHT_LOCATION].Position.y = 0.0;
+    g_SpecialTurtles[SPECIAL_TURTLE_LIGHT_LOCATION].Position.z = 1000.0;
+    g_SpecialTurtles[SPECIAL_TURTLE_LIGHT_LOCATION].Heading = 0.0;
+    g_SpecialTurtles[SPECIAL_TURTLE_LIGHT_LOCATION].Matrix.e11 = 1.0;
+    g_SpecialTurtles[SPECIAL_TURTLE_LIGHT_LOCATION].Matrix.e12 = 0.0;
+    g_SpecialTurtles[SPECIAL_TURTLE_LIGHT_LOCATION].Matrix.e13 = 0.0;
+    g_SpecialTurtles[SPECIAL_TURTLE_LIGHT_LOCATION].Matrix.e21 = 0.0;
+    g_SpecialTurtles[SPECIAL_TURTLE_LIGHT_LOCATION].Matrix.e22 = 1.0;
+    g_SpecialTurtles[SPECIAL_TURTLE_LIGHT_LOCATION].Matrix.e23 = 0.0;
+    g_SpecialTurtles[SPECIAL_TURTLE_LIGHT_LOCATION].Matrix.e31 = 0.0;
+    g_SpecialTurtles[SPECIAL_TURTLE_LIGHT_LOCATION].Matrix.e32 = 0.0;
+    g_SpecialTurtles[SPECIAL_TURTLE_LIGHT_LOCATION].Matrix.e33 = 1.0;
 
     ThreeD.SetLight();
     ThreeD.SetFrom();
@@ -2130,7 +2160,7 @@ NODE *lfullscreen(NODE *)
 
 NODE *lpendownp(NODE *)
 {
-    return true_or_false(!g_Turtles[turtle_which].IsPenUp);
+    return true_or_false(!g_SelectedTurtle->IsPenUp);
 }
 
 NODE *lpenmode(NODE *)
@@ -2152,14 +2182,14 @@ NODE *lpenpattern(NODE *)
 
 NODE *lpendown(NODE *)
 {
-    g_Turtles[turtle_which].IsPenUp = false;
+    g_SelectedTurtle->IsPenUp = false;
     update_status_pencontact();
     return Unbound;
 }
 
 NODE *lpenup(NODE *)
 {
-    g_Turtles[turtle_which].IsPenUp = true;
+    g_SelectedTurtle->IsPenUp = true;
     update_status_pencontact();
     return Unbound;
 }

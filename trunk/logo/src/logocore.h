@@ -73,8 +73,12 @@ typedef struct NODE * (*logofunc) (struct NODE *);
 #define MACRO_PRIORITY	3
 #define PREFIX_PRIORITY 4
 
-#define TURTLEN         3 // number of special turtles
-#define TURTLES         1024+TURTLEN
+const int TOTAL_SPECIAL_TURTLES = 3; // number of special turtles
+const int SPECIAL_TURTLE_EYE_LOCATION   = 0;
+const int SPECIAL_TURTLE_EYE_FIXATION   = 1;
+const int SPECIAL_TURTLE_LIGHT_LOCATION = 2;
+
+const int TURTLES = 1024;
 
 typedef unsigned short NODETYPES;
 

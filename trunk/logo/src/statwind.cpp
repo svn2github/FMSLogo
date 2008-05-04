@@ -160,9 +160,9 @@ void update_status_turtleposition(void)
         sprintf(
             text,
             "%1.0f,%1.0f,%1.0f",
-            g_Turtles[turtle_which].Position.x,
-            g_Turtles[turtle_which].Position.y,
-            g_Turtles[turtle_which].Position.z);
+            g_SelectedTurtle->Position.x,
+            g_SelectedTurtle->Position.y,
+            g_SelectedTurtle->Position.z);
 
         MainWindowx->StatusWindow->SetDlgItemText(ID_TURTLEPOSITION, text);
     }
@@ -224,7 +224,7 @@ void update_status_turtleheading(void)
         }
         else
         {
-            sprintf(text, "%1.2f", g_Turtles[turtle_which].Heading);
+            sprintf(text, "%1.2f", g_SelectedTurtle->Heading);
         }
         MainWindowx->StatusWindow->SetDlgItemText(ID_TURTLEHEADING, text);
     }
@@ -259,7 +259,7 @@ void update_status_pencontact(void)
     if (status_flag)
     {
         const char * text;
-        if (g_Turtles[turtle_which].IsPenUp)
+        if (g_SelectedTurtle->IsPenUp)
         {
             text = LOCALIZED_STATUS_PENUP;
         }
@@ -278,7 +278,7 @@ void update_status_turtlevisability(void)
     {
         const char * text;
 
-        if (g_Turtles[turtle_which].IsShown)
+        if (g_SelectedTurtle->IsShown)
         {
             text = LOCALIZED_STATUS_PENSHOWN;
         }
@@ -335,14 +335,7 @@ void update_status_turtlewhich(void)
     {
         char text[256];
 
-        if (turtle_which >= TURTLES - TURTLEN)
-        {
-            sprintf(text, "%ld", (long) (-(turtle_which - (TURTLES - (TURTLEN+1)))));
-        }
-        else
-        {
-            sprintf(text, "%ld", (long) turtle_which);
-        }
+        sprintf(text, "%d", GetSelectedTurtleIndex());
 
         MainWindowx->StatusWindow->SetDlgItemText(ID_TURTLEWHICH, text);
     }
