@@ -59,29 +59,11 @@ mode_type current_mode = wrapmode;
 
 Turtle g_SpecialTurtles[TOTAL_SPECIAL_TURTLES];
 
-Turtle g_Turtles[TURTLES] =
-{
-    {
-        {
-            1.0, 0.0, 0.0,
-            0.0, 1.0, 0.0,
-            0.0, 0.0, 1.0,
-        },
+Turtle * g_Turtles;
+size_t   g_TurtlesLimit;
 
-        {0.0, 0.0, 0.0},
-
-        0.0,
-
-        0,
-
-        true,
-        false,
-        false,
-    },
-};
-
-Turtle * g_SelectedTurtle = &g_Turtles[0];
-int      g_MaxTurtle      = 0;
+Turtle * g_SelectedTurtle;
+int      g_MaxTurtle;
 
 VECTOR g_Scale         = {1.0, 1.0, 1.0};
 VECTOR g_OneOverScale  = {1.0, 1.0, 1.0};
@@ -364,6 +346,36 @@ int GetSelectedTurtleIndex()
     }
 
     return selectedTurtleIndex;
+}
+
+void InitializeTurtle(Turtle * TurtleToInitialize)
+{
+    TurtleToInitialize->Position.x = 0.0;
+    TurtleToInitialize->Position.y = 0.0;
+    TurtleToInitialize->Position.z = 0.0;
+
+    TurtleToInitialize->Heading    = 0.0;
+
+    TurtleToInitialize->Bitmap     = 0;
+
+    TurtleToInitialize->IsShown    = true;
+    TurtleToInitialize->IsPenUp    = false;
+    TurtleToInitialize->IsSpecial  = false;
+
+    TurtleToInitialize->Matrix.e11 = 1.0;
+    TurtleToInitialize->Matrix.e12 = 0.0;
+    TurtleToInitialize->Matrix.e13 = 0.0;
+    TurtleToInitialize->Matrix.e21 = 0.0;
+    TurtleToInitialize->Matrix.e22 = 1.0;
+    TurtleToInitialize->Matrix.e23 = 0.0;
+    TurtleToInitialize->Matrix.e31 = 0.0;
+    TurtleToInitialize->Matrix.e32 = 0.0;
+    TurtleToInitialize->Matrix.e33 = 1.0;
+
+    TurtleToInitialize->Points[0].bValid = false;
+    TurtleToInitialize->Points[1].bValid = false;
+    TurtleToInitialize->Points[2].bValid = false;
+    TurtleToInitialize->Points[3].bValid = false;
 }
 
 void draw_turtles(bool erase)
@@ -1784,26 +1796,23 @@ void cs_helper(bool centerp, bool clearp)
 
     if (centerp)
     {
+        // remove all turtles other than the first one
+        g_Turtles        = (Turtle*) realloc(g_Turtles, sizeof(*g_Turtles));
+        g_TurtlesLimit   = 1;
         g_SelectedTurtle = &g_Turtles[0];
         g_MaxTurtle      = 0;
 
-        g_SelectedTurtle->Bitmap = 0;
+        const bool isShown = g_SelectedTurtle->IsShown;
+        const bool isPenUp = g_SelectedTurtle->IsPenUp;
+
+        InitializeTurtle(g_SelectedTurtle);
+
+        g_SelectedTurtle->IsShown = isShown;
+        g_SelectedTurtle->IsPenUp = isPenUp;
+
         g_Wanna.x = 0.0;
         g_Wanna.y = 0.0;
         g_Wanna.z = 0.0;
-        g_SelectedTurtle->Position.x = 0.0;
-        g_SelectedTurtle->Position.y = 0.0;
-        g_SelectedTurtle->Position.z = 0.0;
-        g_SelectedTurtle->Heading = 0.0;
-        g_SelectedTurtle->Matrix.e11 = 1.0;
-        g_SelectedTurtle->Matrix.e12 = 0.0;
-        g_SelectedTurtle->Matrix.e13 = 0.0;
-        g_SelectedTurtle->Matrix.e21 = 0.0;
-        g_SelectedTurtle->Matrix.e22 = 1.0;
-        g_SelectedTurtle->Matrix.e23 = 0.0;
-        g_SelectedTurtle->Matrix.e31 = 0.0;
-        g_SelectedTurtle->Matrix.e32 = 0.0;
-        g_SelectedTurtle->Matrix.e33 = 1.0;
 
         update_status_turtleheading();
         update_status_turtleposition();

@@ -954,7 +954,15 @@ WinMain(
     // alloc and init the bitmap cut array
     CutBmp = (CUTMAP *) calloc(sizeof(CUTMAP), MaxBitCuts);
 
-    // init the turtles
+    // alloc and init the turtles array
+    g_TurtlesLimit = 1;
+    g_MaxTurtle    = 0;
+    g_Turtles      = (Turtle *) calloc(sizeof(*g_Turtles), g_TurtlesLimit);
+    g_SelectedTurtle = &g_Turtles[g_MaxTurtle];
+
+    InitializeTurtle(g_SelectedTurtle);
+
+    // init the special turtles
     g_SpecialTurtles[SPECIAL_TURTLE_EYE_LOCATION].IsSpecial   = true;
     g_SpecialTurtles[SPECIAL_TURTLE_LIGHT_LOCATION].IsSpecial = true;
     g_SpecialTurtles[SPECIAL_TURTLE_EYE_FIXATION].IsSpecial   = true;
@@ -1001,6 +1009,8 @@ WinMain(
         }
     }
     free(CutBmp);
+
+    free(g_Turtles);
 
     free(gcstack);
 

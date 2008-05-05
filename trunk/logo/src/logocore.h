@@ -78,8 +78,6 @@ const int SPECIAL_TURTLE_EYE_LOCATION   = 0;
 const int SPECIAL_TURTLE_EYE_FIXATION   = 1;
 const int SPECIAL_TURTLE_LIGHT_LOCATION = 2;
 
-const int TURTLES = 1024;
-
 typedef unsigned short NODETYPES;
 
 /* Note that some of these values are used twice; they must be

@@ -191,10 +191,11 @@ struct Turtle
     LINEX    Points[4];
 };
 
-extern Turtle   g_Turtles[TURTLES];
+extern Turtle * g_Turtles;
+extern int      g_MaxTurtle;        // the index of the largest real turtle
+extern size_t   g_TurtlesLimit;     // the physical limit of g_Turtles
 extern Turtle   g_SpecialTurtles[TOTAL_SPECIAL_TURTLES];
 extern Turtle * g_SelectedTurtle;
-extern int      g_MaxTurtle;
 
 extern VECTOR g_Scale;        // used to scale a picture in scrunch mode.
 extern VECTOR g_OneOverScale; // 1 / g_Scale (replaces divides with multiplies)

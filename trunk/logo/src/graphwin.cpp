@@ -69,18 +69,28 @@ public:
         void
         )
     {
-        assert(g_MaxTurtle < TURTLES);
+        // make sure g_MaxTurtle is within range
+        assert(0 <= g_MaxTurtle);
+        assert(g_MaxTurtle < g_TurtlesLimit);
 
-        // the turtle_which is within range
+        // g_SelectedTurtle is in either g_Turtles or g_SpecialTurtles
         assert(
             (g_Turtles <= g_SelectedTurtle && g_SelectedTurtle <= &g_Turtles[g_MaxTurtle]) || 
             (g_SpecialTurtles <= g_SelectedTurtle && g_SelectedTurtle < &g_SpecialTurtles[TOTAL_SPECIAL_TURTLES]));
 
-        for (int i = 0; i <= g_MaxTurtle; i++)
+        for (volatile int i = 0; i <= g_MaxTurtle; i++)
         {
             assert(
                 g_Turtles[i].IsShown == true ||
                 g_Turtles[i].IsShown == false);
+
+            assert(
+                g_Turtles[i].IsPenUp == true ||
+                g_Turtles[i].IsPenUp == false);
+
+            assert(
+                g_Turtles[i].IsSpecial == true ||
+                g_Turtles[i].IsSpecial == false);
 
             assert(
                 g_Turtles[i].Bitmap == 0           ||
@@ -1819,79 +1829,82 @@ NODE *lsetturtle(NODE *arg)
     ASSERT_TURTLE_INVARIANT;
 
     NODE * val = integer_arg(arg);
-
-    if (NOT_THROWING)
+    if (stopping_flag == THROWING)
     {
-        draw_turtles(false);
-        int turtleId = getint(val);
-        if (turtleId >= TURTLES || turtleId < -TOTAL_SPECIAL_TURTLES)
+        return Unbound;
+    }
+
+    int turtleId = getint(val);
+    if (turtleId < -TOTAL_SPECIAL_TURTLES)
+    {
+        // notify the user that the turtle ID is out of range
+        ShowErrorMessageAndStop(LOCALIZED_ERROR_BADTURTLEID);
+        return Unbound;
+    }
+
+    if (turtleId < 0)
+    {
+        // this is a special turtle.
+        // Remap <-1, -2, -3> to <0, 1, 2>
+        g_SelectedTurtle = g_SpecialTurtles - turtleId - 1;
+    }
+    else
+    {
+        // This is a normal turtle
+
+        if (g_TurtlesLimit <= turtleId)
         {
-            // notify the user that the turtle ID is out of range
-            ShowErrorMessageAndStop(LOCALIZED_ERROR_BADTURTLEID);
+            // The physical array is smaller than the requested turtle
+            // index, so we must grow the turtle array.
+
+            if (turtleId + 1 > (size_t)-1 / sizeof(*g_Turtles))
+            {
+                // this allocation would result in an integer overflow
+                err_logo(OUT_OF_MEM, NIL);
+                return Unbound;
+            }
+
+            size_t newSize = (turtleId + 1) * sizeof(*g_Turtles);
+            Turtle * newTurtles = (Turtle*) realloc(g_Turtles, newSize);
+            if (newTurtles == NULL)
+            {
+                // could not grow the turtles array to hold turtleId
+                err_logo(OUT_OF_MEM, NIL);
+                return Unbound;
+            }
+
+            // commit to the new array
+            g_Turtles      = newTurtles;
+            g_TurtlesLimit = turtleId + 1;
         }
-        else
+
+        g_SelectedTurtle = &g_Turtles[turtleId];
+        if (turtleId > g_MaxTurtle)
         {
-            if (turtleId < 0)
+            // This turtle has not yet been created.
+            // Create this turtle and all of the turtles up to it.
+            for (int i = g_MaxTurtle + 1; i <= turtleId; i++)
             {
-                // this is a special turtle.
-                // Remap <-1, -2, -3> to <0, 1, 2>
-                g_SelectedTurtle = g_SpecialTurtles - turtleId - 1;
+                InitializeTurtle(&g_Turtles[i]);
             }
-            else
-            {
-                // This is a normal turtle
-                g_SelectedTurtle = &g_Turtles[turtleId];
-                if (turtleId > g_MaxTurtle)
-                {
-                    // This turtle has not yet been created.
-                    // Create this turtle and all of the turtles up to it.
-                    for (int i = g_MaxTurtle + 1; i <= turtleId; i++)
-                    {
-                        g_Turtles[i].Position.x = 0.0;
-                        g_Turtles[i].Position.y = 0.0;
-                        g_Turtles[i].Position.z = 0.0;
-
-                        g_Turtles[i].Heading    = 0.0;
-
-                        g_Turtles[i].Bitmap     = 0;
-
-                        g_Turtles[i].IsShown    = true;
-                        g_Turtles[i].IsPenUp    = false;
-                        g_Turtles[i].IsSpecial  = false;
-
-                        g_Turtles[i].Matrix.e11 = 1.0;
-                        g_Turtles[i].Matrix.e12 = 0.0;
-                        g_Turtles[i].Matrix.e13 = 0.0;
-                        g_Turtles[i].Matrix.e21 = 0.0;
-                        g_Turtles[i].Matrix.e22 = 1.0;
-                        g_Turtles[i].Matrix.e23 = 0.0;
-                        g_Turtles[i].Matrix.e31 = 0.0;
-                        g_Turtles[i].Matrix.e32 = 0.0;
-                        g_Turtles[i].Matrix.e33 = 1.0;
-
-                        g_Turtles[i].Points[0].bValid = false;
-                        g_Turtles[i].Points[1].bValid = false;
-                        g_Turtles[i].Points[2].bValid = false;
-                        g_Turtles[i].Points[3].bValid = false;
-                    }
-
-                    g_MaxTurtle = turtleId;
-                }
-            }
-
-            update_status_turtleposition();
-            update_status_pencontact();
-            update_status_turtlevisability();
-            update_status_turtleheading();
-            update_status_turtlepitch();
-            update_status_turtleroll();
-            update_status_turtlewhich();
-
-            g_Wanna = g_SelectedTurtle->Position;
-
-            draw_turtles(true);
+            
+            g_MaxTurtle = turtleId;
         }
     }
+
+    draw_turtles(false);
+
+    update_status_turtleposition();
+    update_status_pencontact();
+    update_status_turtlevisability();
+    update_status_turtleheading();
+    update_status_turtlepitch();
+    update_status_turtleroll();
+    update_status_turtlewhich();
+
+    g_Wanna = g_SelectedTurtle->Position;
+
+    draw_turtles(true);
 
     return Unbound;
 }

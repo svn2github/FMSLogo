@@ -75,6 +75,7 @@ extern FIXNUM g_round(FLONUM n);
 extern FLONUM numeric_node_to_flonum(const NODE* numeric_node);
 extern FIXNUM numeric_node_to_fixnum(const NODE* numeric_node);
 extern int GetSelectedTurtleIndex();
+extern void InitializeTurtle(struct Turtle * TurtleToInitialize);
 extern NODE *lscrunch(NODE *arg);
 extern void draw_turtle(bool erase);
 extern void draw_turtles(bool erase);
