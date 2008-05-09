@@ -32,17 +32,17 @@ See <link linkend="using-color">Using Color</link> for details.
        <title>Multiple Turtles</title>
 
 <para>
-&PRODUCTNAME; supports up to 1024 different turtles.
+&PRODUCTNAME; multiple turtles.
 Each turtle maintains its own heading (orientation in 3D), position, and pen control, but not pen color.
 Each turtle can be represented as a <link linkend="command-bitmapturtle">BITMAPTURTLE</link>.
 Note that turtles start at index 0, which is the default turtle.
-Because there is a limit of 1024 turtles, the highest turtle index is 1023.
 All turtles between 0 and the highest turtle ever selected will be "activated", so don't choose turtle 100 and 200 if you only need 2 turtles.
-Click the "Reset" button or executing <link linkend="command-clearscreen">CLEARSCREEN</link> will select turtle 0 and deactivate all other turtles.
+Having thousands of active turtles may slow &PRODUCTNAME; down consideribly as it pauses to redraw every turtle after every instruction.
+Pressing the "Reset" button or running <link linkend="command-clearscreen">CLEARSCREEN</link> will select turtle 0 and deactivate all other turtles.
 </para>
 
 <para>
-In addition to the 1024 turtles that you can create, there are also 3 special turtles used when in <link linkend="command-perspective">PERSPECTIVE</link> mode.
+In addition the turtles that you can create, there are also 3 special turtles used when in <link linkend="command-perspective">PERSPECTIVE</link> mode.
 
 <informaltable frame='all'>
   <tgroup cols='2'>
