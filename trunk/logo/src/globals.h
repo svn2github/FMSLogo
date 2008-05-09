@@ -189,6 +189,8 @@ struct Turtle
 
     // a cache for lines that make up a turtle's body
     LINEX    Points[4];
+
+    bool     Padding;
 };
 
 extern Turtle * g_Turtles;
@@ -196,6 +198,10 @@ extern int      g_MaxTurtle;        // the index of the largest real turtle
 extern size_t   g_TurtlesLimit;     // the physical limit of g_Turtles
 extern Turtle   g_SpecialTurtles[TOTAL_SPECIAL_TURTLES];
 extern Turtle * g_SelectedTurtle;
+
+extern CUTMAP * g_SelectedBitmap;
+extern CUTMAP * g_Bitmaps;
+extern int      g_BitmapsLimit;
 
 extern VECTOR g_Scale;        // used to scale a picture in scrunch mode.
 extern VECTOR g_OneOverScale; // 1 / g_Scale (replaces divides with multiplies)

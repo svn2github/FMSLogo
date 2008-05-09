@@ -588,6 +588,8 @@ extern NODE *lfontfacenames(NODE *arg);
 extern NODE *llabelfont(NODE *arg);
 extern void UpdateErasePen(int Width, COLORREF Color);
 extern void UpdateNormalPen(int Width, COLORREF Color);
+extern void init_bitmaps();
+extern void uninit_bitmaps();
 
 // areawnd.cpp
 extern bool IsActiveAreaOneToOneWithScreen(void);

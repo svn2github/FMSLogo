@@ -63,10 +63,10 @@ struct LINEX
 
 struct CUTMAP
 {
-    HBITMAP CutMemoryBitMap;  // Used to store cut and paste
-    int     CutHeight;        // current cut height
-    int     CutWidth;         // current cut width
-    bool    CutFlag;          // flag to signal something in cut buffer
+    HBITMAP MemoryBitMap;  // Used to store the bitmap
+    int     Height;        // current cut height
+    int     Width;         // current cut width
+    bool    IsValid;       // flag to signal something in cut buffer
 };
 
 class qlink
@@ -855,7 +855,6 @@ extern int g_PrinterAreaYLow;
 extern int g_PrinterAreaYHigh;
 extern int g_PrinterAreaPixels;
 
-extern CUTMAP *CutBmp;
 extern Color dpen;
 extern Color dfld;
 extern Color dscn;

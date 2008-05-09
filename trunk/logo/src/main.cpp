@@ -22,8 +22,6 @@
 #include "allwind.h"
 #include "const.h"
 
-CUTMAP *CutBmp;              // Pointer to Bit Cut memory array malloc on init
-
 bool bExpert;                      // Expert mode
 bool bFixed;                       // Fixed mode
 static bool bWidth;                // Width mode
@@ -952,7 +950,7 @@ WinMain(
     }
 
     // alloc and init the bitmap cut array
-    CutBmp = (CUTMAP *) calloc(sizeof(CUTMAP), MaxBitCuts);
+    init_bitmaps();
 
     // alloc and init the turtles array
     g_TurtlesLimit = 1;
@@ -1000,15 +998,7 @@ WinMain(
     // cleanup all subsystems
     uninit();
 
-    /* Note Bitmap index 0 belongs to Clipboard */
-    for (int i = 1; i < MaxBitCuts; i++)
-    {
-        if (CutBmp[i].CutFlag)
-        {
-            DeleteObject(CutBmp[i].CutMemoryBitMap);
-        }
-    }
-    free(CutBmp);
+    uninit_bitmaps();
 
     free(g_Turtles);
 
@@ -1386,15 +1376,15 @@ void ibmturt(bool erase)
             dest.y = g_round(g_SelectedTurtle->Position.y);
         }
         
-        // figure out the index into the Cut map.
-        CUTMAP & turtleBitmap = CutBmp[g_SelectedTurtle - g_Turtles];
+        // figure out the index into the bitmaps array.
+        CUTMAP & turtleBitmap = g_Bitmaps[g_SelectedTurtle - g_Turtles];
 
         TScroller * screenScroller = MainWindowx->ScreenWindow->Scroller;
         screenBoundingBox.Set(
-            (+dest.x - screenScroller->XPos / the_zoom + xoffset                              ) * the_zoom,
-            (-dest.y - screenScroller->YPos / the_zoom + yoffset + LL - turtleBitmap.CutHeight) * the_zoom,
-            (+dest.x - screenScroller->XPos / the_zoom + xoffset + turtleBitmap.CutWidth      ) * the_zoom,
-            (-dest.y - screenScroller->YPos / the_zoom + yoffset + LL                         ) * the_zoom);
+            (+dest.x - screenScroller->XPos / the_zoom + xoffset                           ) * the_zoom,
+            (-dest.y - screenScroller->YPos / the_zoom + yoffset + LL - turtleBitmap.Height) * the_zoom,
+            (+dest.x - screenScroller->XPos / the_zoom + xoffset + turtleBitmap.Width      ) * the_zoom,
+            (-dest.y - screenScroller->YPos / the_zoom + yoffset + LL                      ) * the_zoom);
 
         screenBoundingBox.Normalize();
     }

@@ -725,5 +725,4 @@ const int COPY_PUT = 12;
 const int XOR_PUT  = 199;
 
 #define ScreenSz 0.70      // Default proportion of screen size
-#define MaxBitCuts 1024    // Max number of bitmaps
 #define MAX_TIMERS 32

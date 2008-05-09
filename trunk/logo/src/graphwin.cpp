@@ -35,7 +35,9 @@ int iTrans;
 HTMLHELPFUNC g_HtmlHelpFunc;
 HMODULE      g_HtmlHelpLib;
 
-static int CutIndex = 0; // Pointer into CutBmp initially "ClipBoard"
+CUTMAP * g_SelectedBitmap;
+CUTMAP * g_Bitmaps;
+int      g_BitmapsLimit;
 
 struct font_find_t
 {
@@ -73,6 +75,9 @@ public:
         assert(0 <= g_MaxTurtle);
         assert(g_MaxTurtle < g_TurtlesLimit);
 
+        // we can never have less than one turtle
+        assert(0 < g_TurtlesLimit);
+
         // g_SelectedTurtle is in either g_Turtles or g_SpecialTurtles
         assert(
             (g_Turtles <= g_SelectedTurtle && g_SelectedTurtle <= &g_Turtles[g_MaxTurtle]) || 
@@ -80,6 +85,7 @@ public:
 
         for (volatile int i = 0; i <= g_MaxTurtle; i++)
         {
+            // test that all values are valid (none are uninitialized)
             assert(
                 g_Turtles[i].IsShown == true ||
                 g_Turtles[i].IsShown == false);
@@ -103,11 +109,19 @@ public:
                 g_Turtles[i].Bitmap == NOTSRCERASE ||
                 g_Turtles[i].Bitmap == MERGEPAINT  ||
                 g_Turtles[i].Bitmap == DSTINVERT);
+
+            if (g_Turtles[i].Bitmap != 0)
+            {
+                // make sure that the bitmap exists.
+                assert(i < g_BitmapsLimit);
+            }
         }
 
-        // the CutIndex is within range
-        assert(0 <= CutIndex);
-        assert(CutIndex < MaxBitCuts);
+        // g_SelectedBitmap is within the g_Bitmaps array
+        assert(g_Bitmaps <= g_SelectedBitmap);
+        assert(g_SelectedBitmap < g_Bitmaps + g_BitmapsLimit);
+
+        assert(0 < g_BitmapsLimit);
 
         assert(
             g_BitMode == SRCCOPY     ||
@@ -123,6 +137,48 @@ public:
 };
 
 #endif
+
+static
+bool
+ClipboardIsSelectedBitmap()
+{
+    return g_SelectedBitmap == &g_Bitmaps[0];
+}
+
+static
+void
+GrowBitmapsArray(int NewSize)
+{
+    // assert that the array needs to grow
+    assert(NewSize > g_BitmapsLimit);
+
+    if (NewSize > (size_t)-1 / sizeof(*g_Bitmaps))
+    {
+        // this allocation would result in an integer overflow
+        err_logo(OUT_OF_MEM, NIL);
+        return;
+    }
+
+    CUTMAP * newBitmaps = (CUTMAP*) realloc(g_Bitmaps, NewSize * sizeof(*g_Bitmaps));
+    if (newBitmaps == NULL)
+    {
+        // could not grow the turtles array to hold turtleId
+        err_logo(OUT_OF_MEM, NIL);
+        return;
+    }
+
+    // initialize the newly allocated bitmap structures
+    for (int i = g_BitmapsLimit; i < NewSize; i++)
+    {
+        newBitmaps[i].MemoryBitMap = NULL;
+        newBitmaps[i].Width        = 0;
+        newBitmaps[i].Height       = 0;
+        newBitmaps[i].IsValid      = false;
+    }
+
+    g_Bitmaps      = newBitmaps;
+    g_BitmapsLimit = NewSize;
+}
 
 static
 void
@@ -427,9 +483,10 @@ NODE *lbitsize(NODE *)
     temp.bmWidth  = 0;
     temp.bmHeight = 0;
 
-    // If ClipBoard check with ClipBoard only
-    if (CutIndex == 0)
+    if (ClipboardIsSelectedBitmap())
     {
+        // The selected bitmap is whatever is on the clipboard
+
         ::OpenClipboard(MainWindowx->HWindow);
 
         // Try a DIB first
@@ -465,10 +522,10 @@ NODE *lbitsize(NODE *)
     else
     {
         // if we have something fetch its size
-        if (CutBmp[CutIndex].CutFlag)
+        if (g_SelectedBitmap->IsValid)
         {
             ::GetObject(
-                CutBmp[CutIndex].CutMemoryBitMap,
+                g_SelectedBitmap->MemoryBitMap,
                 sizeof(BITMAP),
                 (LPSTR)&temp);
         }
@@ -1203,7 +1260,7 @@ NODE *lbitindex(NODE *arg)
 {
     ASSERT_TURTLE_INVARIANT;
     // return the current bitmap index
-    return make_intnode((FIXNUM) CutIndex);
+    return make_intnode((FIXNUM) (g_SelectedBitmap - g_Bitmaps));
 }
 
 NODE *lsetbitindex(NODE *arg)
@@ -1212,16 +1269,21 @@ NODE *lsetbitindex(NODE *arg)
 
     // set the current bitmap index if within range
     int i = getint(pos_int_arg(arg));
+    if (stopping_flag == THROWING)
+    {
+        return Unbound;
+    }
 
-    if (i < MaxBitCuts)
+    if (g_BitmapsLimit <= i)
     {
-        CutIndex = i;
+        GrowBitmapsArray(i + 1);
+        if (stopping_flag == THROWING)
+        {
+            return Unbound;
+        }
     }
-    else
-    {
-        // notify the user that the bit index was out-of-range
-        ShowErrorMessageAndStop(LOCALIZED_ERROR_BITMAPINDEXOUTOFRANGE);
-    }
+
+    g_SelectedBitmap = g_Bitmaps + i;
 
     return Unbound;
 }
@@ -1229,9 +1291,7 @@ NODE *lsetbitindex(NODE *arg)
 
 static
 void
-CopyCutIndexToClipboard(
-    int CutBmpIndex
-    )
+CopyFromBitmapArrayToClipboard()
 {
     // Open, dump what's in there and give him the Bitmap
     ::OpenClipboard(MainWindowx->HWindow);
@@ -1240,7 +1300,7 @@ CopyCutIndexToClipboard(
 
     ::SetClipboardData(
         CF_BITMAP,
-        CutBmp[CutBmpIndex].CutMemoryBitMap);
+        g_Bitmaps[0].MemoryBitMap);
 
     if (EnablePalette)
     {
@@ -1248,7 +1308,7 @@ CopyCutIndexToClipboard(
         ::SetClipboardData(
             CF_DIB,
             BitmapToDIB(
-                CutBmp[CutBmpIndex].CutMemoryBitMap,
+                g_Bitmaps[0].MemoryBitMap,
                 ThePalette));
 
         ::SetClipboardData(
@@ -1261,46 +1321,42 @@ CopyCutIndexToClipboard(
         ::SetClipboardData(
             CF_DIB,
             BitmapToDIB(
-                CutBmp[CutBmpIndex].CutMemoryBitMap,
+                g_Bitmaps[0].MemoryBitMap,
                 NULL));
     }
 
     ::CloseClipboard();
 
     // Never mung with bitmaps that belong to ClipBoard
-
-    CutBmp[CutBmpIndex].CutFlag = false;
+    g_Bitmaps[0].IsValid = false;
 }
 
 
 
 static
 void
-PasteFromClipboardToCutIndex(
-    int CutBmpIndex
-    )
+PasteFromClipboardToBitmapArray()
 {
     ::OpenClipboard(MainWindowx->HWindow);
 
     // Try a DIB first
-    HANDLE TempDIB = (HBITMAP) ::GetClipboardData(CF_DIB);
-
-    if (TempDIB != NULL)
+    HANDLE tempDIB = (HBITMAP) ::GetClipboardData(CF_DIB);
+    if (tempDIB != NULL)
     {
         // The clipboard holds a DIB.  Try to get the palette.
-        HPALETTE TempPal = (HPALETTE) ::GetClipboardData(CF_PALETTE);
+        HPALETTE tempPal = (HPALETTE) ::GetClipboardData(CF_PALETTE);
 
         // we work in bmps here
-        CutBmp[CutBmpIndex].CutMemoryBitMap = ::DIBToBitmap(TempDIB, TempPal);
+        g_Bitmaps[0].MemoryBitMap = ::DIBToBitmap(tempDIB, tempPal);
 
         // Fill our logical palette with the Palette from the clipboard
-        if (EnablePalette && (TempPal != NULL))
+        if (EnablePalette && (tempPal != NULL))
         {
             MyLogPalette->palNumEntries = ::GetPaletteEntries(
-                TempPal,
+                tempPal,
                 0,
                 256,
-                &(MyLogPalette->palPalEntry[0]));
+                &MyLogPalette->palPalEntry[0]);
 
             // now rebuild palette
             ::DeleteObject(ThePalette);
@@ -1309,22 +1365,21 @@ PasteFromClipboardToCutIndex(
         }
 
         // Let code know below that we have something
-
-        CutBmp[CutBmpIndex].CutFlag = true;
+        g_Bitmaps[0].IsValid = true;
 
         // We created a BitMap from the DIB that we only need for the
         // purpose of this "paste", next paste could be something new.
         // so get rid of it once we have pasted it here.
 
         ::EmptyClipboard();
-        ::SetClipboardData(CF_BITMAP, CutBmp[CutBmpIndex].CutMemoryBitMap);
+        ::SetClipboardData(CF_BITMAP, g_Bitmaps[0].MemoryBitMap);
 
         // If we have a palette given him a DIB and a palette too
         if (EnablePalette)
         {
             ::SetClipboardData(
                 CF_DIB,
-                BitmapToDIB(CutBmp[CutBmpIndex].CutMemoryBitMap, ThePalette));
+                BitmapToDIB(g_Bitmaps[0].MemoryBitMap, ThePalette));
 
             ::SetClipboardData(
                 CF_PALETTE,
@@ -1335,40 +1390,40 @@ PasteFromClipboardToCutIndex(
             // else give him a DIB using system palette
             ::SetClipboardData(
                 CF_DIB,
-                BitmapToDIB(CutBmp[CutBmpIndex].CutMemoryBitMap, NULL));
+                BitmapToDIB(g_Bitmaps[0].MemoryBitMap, NULL));
         }
     }
     else
     {
         // else try for a bitmap
-        CutBmp[CutBmpIndex].CutMemoryBitMap = (HBITMAP) ::GetClipboardData(CF_BITMAP);
+        g_Bitmaps[0].MemoryBitMap = (HBITMAP) ::GetClipboardData(CF_BITMAP);
 
         // flag that we have one if it exists, no need to delete the
         // bitmap here because clipboard still owns it.
 
-        if (CutBmp[CutBmpIndex].CutMemoryBitMap != NULL)
+        if (g_Bitmaps[0].MemoryBitMap != NULL)
         {
-            CutBmp[CutBmpIndex].CutFlag = true;
+            g_Bitmaps[0].IsValid = true;
         }
         else
         {
-            CutBmp[CutBmpIndex].CutFlag = false;
+            g_Bitmaps[0].IsValid = false;
         }
     }
 
     // if we have something fetch its size
 
-    if (CutBmp[CutBmpIndex].CutFlag)
+    if (g_Bitmaps[0].IsValid)
     {
         BITMAP temp;
 
         ::GetObject(
-            CutBmp[CutBmpIndex].CutMemoryBitMap,
+            g_Bitmaps[0].MemoryBitMap,
             sizeof(BITMAP),
             (LPSTR) &temp);
 
-        CutBmp[CutBmpIndex].CutWidth = temp.bmWidth;
-        CutBmp[CutBmpIndex].CutHeight = temp.bmHeight;
+        g_Bitmaps[0].Width = temp.bmWidth;
+        g_Bitmaps[0].Height = temp.bmHeight;
     }
 
     // we have everything we need
@@ -1386,95 +1441,95 @@ BitCopyOrCut(NODE *arg, bool IsCut)
         return Unbound;
     }
 
-    int TempWidth = getint(pos_int_arg(arg));
-    int TempHeight = getint(pos_int_arg(cdr(arg)));
+    int tempWidth = getint(pos_int_arg(arg));
+    int tempHeight = getint(pos_int_arg(cdr(arg)));
 
     if (NOT_THROWING)
     {
         bool havebitmap = false;
 
         // if we had a old cut get rid of it, we won't go in for clipboard
-        if (CutBmp[CutIndex].CutFlag)
+        if (g_SelectedBitmap->IsValid)
         {
             // if same size reuse the bitmap
-            if ((TempWidth == CutBmp[CutIndex].CutWidth) &&
-                (TempHeight == CutBmp[CutIndex].CutHeight))
+            if ((tempWidth == g_SelectedBitmap->Width) &&
+                (tempHeight == g_SelectedBitmap->Height))
             {
                 havebitmap = true;
             }
             else
             {
                 // else get rid of it and make a new one later
-                DeleteObject(CutBmp[CutIndex].CutMemoryBitMap);
+                DeleteObject(g_SelectedBitmap->MemoryBitMap);
             }
-            CutBmp[CutIndex].CutFlag = false;
+            g_SelectedBitmap->IsValid = false;
         }
 
-        CutBmp[CutIndex].CutWidth = TempWidth;
-        CutBmp[CutIndex].CutHeight = TempHeight;
+        g_SelectedBitmap->Width  = tempWidth;
+        g_SelectedBitmap->Height = tempHeight;
 
         // only if we have a surface continue
-        if ((CutBmp[CutIndex].CutWidth != 0) && (CutBmp[CutIndex].CutHeight != 0))
+        if ((g_SelectedBitmap->Width != 0) && (g_SelectedBitmap->Height != 0))
         {
             // flag it so we will delete it
-            CutBmp[CutIndex].CutFlag = true;
+            g_SelectedBitmap->IsValid = true;
 
-            HDC ScreenDC = MainWindowx->ScreenWindow->GetScreenDeviceContext();
-            HDC MemDC    = MainWindowx->ScreenWindow->GetMemoryDeviceContext();
+            HDC screenDC = MainWindowx->ScreenWindow->GetScreenDeviceContext();
+            HDC memDC    = MainWindowx->ScreenWindow->GetMemoryDeviceContext();
 
-            HBITMAP oldBitmap = (HBITMAP) SelectObject(MemDC, MemoryBitMap);
+            HBITMAP oldBitmap = (HBITMAP) SelectObject(memDC, MemoryBitMap);
 
             if (!havebitmap)
             {
-                CutBmp[CutIndex].CutMemoryBitMap = CreateCompatibleBitmap(
-                    ScreenDC,
-                    CutBmp[CutIndex].CutWidth,
-                    CutBmp[CutIndex].CutHeight);
+                g_SelectedBitmap->MemoryBitMap = CreateCompatibleBitmap(
+                    screenDC,
+                    g_SelectedBitmap->Width,
+                    g_SelectedBitmap->Height);
             }
 
-            if (!CutBmp[CutIndex].CutMemoryBitMap)
+            if (!g_SelectedBitmap->MemoryBitMap)
             {
                 ShowErrorMessageAndStop(LOCALIZED_ERROR_BITMAPCUTFAILED);
                 return Unbound;
             }
 
 
-            HDC TempMemDC = CreateCompatibleDC(ScreenDC);
+            HDC tempMemDC = CreateCompatibleDC(screenDC);
 
             HBITMAP oldBitmap2 = (HBITMAP) SelectObject(
-                TempMemDC,
-                CutBmp[CutIndex].CutMemoryBitMap);
+                tempMemDC,
+                g_SelectedBitmap->MemoryBitMap);
 
             BitBlt(
-                TempMemDC,
+                tempMemDC,
                 0,
                 0,
-                CutBmp[CutIndex].CutWidth,
-                CutBmp[CutIndex].CutHeight,
-                MemDC,
+                g_SelectedBitmap->Width,
+                g_SelectedBitmap->Height,
+                memDC,
                 +dest.x + xoffset,
-                -dest.y + yoffset + LL - CutBmp[CutIndex].CutHeight,
+                -dest.y + yoffset + LL - g_SelectedBitmap->Height,
                 SRCCOPY);
 
-            SelectObject(TempMemDC, oldBitmap2);
-            DeleteDC(TempMemDC);
+            SelectObject(tempMemDC, oldBitmap2);
+            DeleteDC(tempMemDC);
 
             if (IsCut)
             {
                 // this is a cut operation (as opposed to a copy operation)
 
                 // memory
-                RECT TempRect;
+                RECT tempRect;
                 SetRect(
-                    &TempRect,
+                    &tempRect,
                     +dest.x + xoffset,
-                    -dest.y + yoffset + LL - CutBmp[CutIndex].CutHeight,
-                    +dest.x + xoffset + CutBmp[CutIndex].CutWidth,
+                    -dest.y + yoffset + LL - g_SelectedBitmap->Height,
+                    +dest.x + xoffset + g_SelectedBitmap->Width,
                     -dest.y + yoffset + LL);
 
-                HBRUSH TempBrush = CreateBrushIndirect(&ScreenBrush);
+                HBRUSH tempBrush = CreateBrushIndirect(&ScreenBrush);
 
-                FillRect(MemDC, &TempRect, TempBrush);
+                FillRect(memDC, &tempRect, tempBrush);
 
                 //screen
                 draw_turtle(false);
@@ -1485,8 +1540,8 @@ BitCopyOrCut(NODE *arg, bool IsCut)
                     //
                     // temp.Set(
                     //   (+g_SelectedTurtle->Position.x - MainWindowx->Scroller->XPos / the_zoom + xoffset                                  ) * the_zoom,
-                    //   (-g_SelectedTurtle->Position.y - MainWindowx->Scroller->YPos / the_zoom + yoffset + LL - CutBmp[CutIndex].CutHeight) * the_zoom,
-                    //   (+g_SelectedTurtle->Position.x - MainWindowx->Scroller->XPos / the_zoom + xoffset + CutBmp[CutIndex].CutWidth      ) * the_zoom,
+                    //   (-g_SelectedTurtle->Position.y - MainWindowx->Scroller->YPos / the_zoom + yoffset + LL - g_SelectedBitmap->Height) * the_zoom,
+                    //   (+g_SelectedTurtle->Position.x - MainWindowx->Scroller->XPos / the_zoom + xoffset + g_SelectedBitmap->Width      ) * the_zoom,
                     //   (-g_SelectedTurtle->Position.y - MainWindowx->Scroller->YPos / the_zoom + yoffset + LL                             ) * the_zoom);
                     //
                     // temp.Normalize();
@@ -1496,27 +1551,27 @@ BitCopyOrCut(NODE *arg, bool IsCut)
                 }
                 else
                 {
+                    TScroller * const scroller = MainWindowx->ScreenWindow->Scroller;
                     SetRect(
-                        &TempRect,
-                        +g_SelectedTurtle->Position.x - MainWindowx->ScreenWindow->Scroller->XPos + xoffset,
-                        -g_SelectedTurtle->Position.y - MainWindowx->ScreenWindow->Scroller->YPos + yoffset + LL - CutBmp[CutIndex].CutHeight,
-                        +g_SelectedTurtle->Position.x - MainWindowx->ScreenWindow->Scroller->XPos + xoffset + CutBmp[CutIndex].CutWidth,
-                        -g_SelectedTurtle->Position.y - MainWindowx->ScreenWindow->Scroller->YPos + yoffset + LL);
+                        &tempRect,
+                        +g_SelectedTurtle->Position.x - scroller->XPos + xoffset,
+                        -g_SelectedTurtle->Position.y - scroller->YPos + yoffset + LL - g_SelectedBitmap->Height,
+                        +g_SelectedTurtle->Position.x - scroller->XPos + xoffset + g_SelectedBitmap->Width,
+                        -g_SelectedTurtle->Position.y - scroller->YPos + yoffset + LL);
 
-                    FillRect(ScreenDC, &TempRect, TempBrush);
+                    FillRect(screenDC, &tempRect, tempBrush);
                 }
 
-                DeleteObject(TempBrush);
+                DeleteObject(tempBrush);
 
                 draw_turtle(true);
             }
 
-            SelectObject(MemDC, oldBitmap);
+            SelectObject(memDC, oldBitmap);
 
-            // if CutIndex == 0 then do Clipboard
-            if (CutIndex == 0)
+            if (ClipboardIsSelectedBitmap())
             {
-                CopyCutIndexToClipboard(CutIndex);
+                CopyFromBitmapArrayToClipboard();
             }
         }
     }
@@ -1546,21 +1601,20 @@ NODE *lbitfit(NODE *arg)
 
     if (NOT_THROWING)
     {
-
-        // If ClipBoard check with ClipBoard only
-        if (CutIndex == 0)
+        // If clipboard check with clipboard only
+        if (ClipboardIsSelectedBitmap())
         {
-            PasteFromClipboardToCutIndex(CutIndex);
+            PasteFromClipboardToBitmapArray();
         }
 
         // only if we have a surface to fit to and from continue
-        if ((FitWidth != 0) && (FitHeight != 0) && CutBmp[CutIndex].CutFlag)
+        if ((FitWidth != 0) && (FitHeight != 0) && g_SelectedBitmap->IsValid)
         {
 
             HDC ScreenDC = MainWindowx->ScreenWindow->GetScreenDeviceContext();
             HDC MemDC    = MainWindowx->ScreenWindow->GetMemoryDeviceContext();
 
-            HBITMAP oldBitmap = (HBITMAP) SelectObject(MemDC, CutBmp[CutIndex].CutMemoryBitMap);
+            HBITMAP oldBitmap = (HBITMAP) SelectObject(MemDC, g_SelectedBitmap->MemoryBitMap);
 
             HPALETTE oldPalette2;
             if (EnablePalette)
@@ -1608,8 +1662,8 @@ NODE *lbitfit(NODE *arg)
                 MemDC,
                 0,
                 0,
-                CutBmp[CutIndex].CutWidth,
-                CutBmp[CutIndex].CutHeight,
+                g_SelectedBitmap->Width,
+                g_SelectedBitmap->Height,
                 SRCCOPY);
 
             // Restore the arrow cursor.
@@ -1626,15 +1680,15 @@ NODE *lbitfit(NODE *arg)
 
             SelectObject(MemDC, oldBitmap);
 
-            DeleteObject(CutBmp[CutIndex].CutMemoryBitMap);
-            CutBmp[CutIndex].CutMemoryBitMap = TempMemoryBitMap;
+            DeleteObject(g_SelectedBitmap->MemoryBitMap);
+            g_SelectedBitmap->MemoryBitMap = TempMemoryBitMap;
 
-            CutBmp[CutIndex].CutWidth = FitWidth;
-            CutBmp[CutIndex].CutHeight = FitHeight;
+            g_SelectedBitmap->Width = FitWidth;
+            g_SelectedBitmap->Height = FitHeight;
 
-            if (CutIndex == 0)
+            if (ClipboardIsSelectedBitmap())
             {
-                CopyCutIndexToClipboard(CutIndex);
+                CopyFromBitmapArrayToClipboard();
             }
         }
     }
@@ -1653,20 +1707,20 @@ NODE *lbitpaste(NODE *)
 
     if (NOT_THROWING)
     {
-        // If ClipBoard check with ClipBoard only
-        if (CutIndex == 0)
+        // If clipboard check with clipboard only
+        if (ClipboardIsSelectedBitmap())
         {
-            PasteFromClipboardToCutIndex(CutIndex);
+            PasteFromClipboardToBitmapArray();
         }
 
         // only if we have something to paste
-        if (CutBmp[CutIndex].CutFlag)
+        if (g_SelectedBitmap->IsValid)
         {
 
-            // if clipboard then never leave Cut Flag true
-            if (CutIndex == 0)
+            if (ClipboardIsSelectedBitmap())
             {
-                CutBmp[CutIndex].CutFlag = false;
+                // never leave the clipboard's IsValid flag true
+                g_SelectedBitmap->IsValid = false;
             }
 
             HDC ScreenDC = MainWindowx->ScreenWindow->GetScreenDeviceContext();
@@ -1674,7 +1728,7 @@ NODE *lbitpaste(NODE *)
             HDC TempMemDC = CreateCompatibleDC(ScreenDC);
             HBITMAP oldBitmap2 = (HBITMAP) SelectObject(
                 TempMemDC,
-                CutBmp[CutIndex].CutMemoryBitMap);
+                g_SelectedBitmap->MemoryBitMap);
 
             //memory
             HDC MemDC = MainWindowx->ScreenWindow->GetMemoryDeviceContext();
@@ -1683,9 +1737,9 @@ NODE *lbitpaste(NODE *)
             BitBlt(
                 MemDC,
                 +dest.x + xoffset,
-                -dest.y + yoffset + LL - CutBmp[CutIndex].CutHeight,
-                (int) (CutBmp[CutIndex].CutWidth),
-                (int) (CutBmp[CutIndex].CutHeight),
+                -dest.y + yoffset + LL - g_SelectedBitmap->Height,
+                (int) (g_SelectedBitmap->Width),
+                (int) (g_SelectedBitmap->Height),
                 TempMemDC,
                 0,
                 0,
@@ -1703,8 +1757,8 @@ NODE *lbitpaste(NODE *)
                 //
                 // temp.Set(
                 //     (+g_SelectedTurtle->Position.x - MainWindowx->Scroller->XPos / the_zoom + xoffset                                  ) * the_zoom,
-                //     (-g_SelectedTurtle->Position.y - MainWindowx->Scroller->YPos / the_zoom + yoffset + LL - CutBmp[CutIndex].CutHeight) * the_zoom,
-                //     (+g_SelectedTurtle->Position.x - MainWindowx->Scroller->XPos / the_zoom + xoffset + CutBmp[CutIndex].CutWidth      ) * the_zoom,
+                //     (-g_SelectedTurtle->Position.y - MainWindowx->Scroller->YPos / the_zoom + yoffset + LL - g_SelectedBitmap->Height) * the_zoom,
+                //     (+g_SelectedTurtle->Position.x - MainWindowx->Scroller->XPos / the_zoom + xoffset + g_SelectedBitmap->Width      ) * the_zoom,
                 //     (-g_SelectedTurtle->Position.y - MainWindowx->Scroller->YPos / the_zoom + yoffset + LL                             ) * the_zoom);
                 //
                 // temp.Normalize();
@@ -1717,9 +1771,9 @@ NODE *lbitpaste(NODE *)
                 BitBlt(
                     ScreenDC,
                     +dest.x - MainWindowx->ScreenWindow->Scroller->XPos + xoffset,
-                    -dest.y - MainWindowx->ScreenWindow->Scroller->YPos + yoffset + LL - CutBmp[CutIndex].CutHeight,
-                    (int) (CutBmp[CutIndex].CutWidth),
-                    (int) (CutBmp[CutIndex].CutHeight),
+                    -dest.y - MainWindowx->ScreenWindow->Scroller->YPos + yoffset + LL - g_SelectedBitmap->Height,
+                    (int) (g_SelectedBitmap->Width),
+                    (int) (g_SelectedBitmap->Height),
                     TempMemDC,
                     0,
                     0,
@@ -1752,14 +1806,14 @@ NODE *lbitpastetoindex(NODE *arg)
     int x = int_arg(cdr(arg));
     int y = int_arg(cdr(cdr(arg)));
 
-    if (MaxBitCuts <= i)
+    if (g_BitmapsLimit <= i)
     {
         // notify the user that the bitmap index is out of range
         ShowErrorMessageAndStop(LOCALIZED_ERROR_BITMAPINDEXOUTOFRANGE);
         return Unbound;
     }
-
-    if (!CutBmp[i].CutFlag)
+    
+    if (!g_Bitmaps[i].IsValid)
     {
         // nofity the user that there is no bitmap at this index
         ShowErrorMessageAndStop(LOCALIZED_ERROR_BITMAPINDEXISNOTBITMAP);
@@ -1770,20 +1824,19 @@ NODE *lbitpastetoindex(NODE *arg)
     {
 
         // If ClipBoard check with ClipBoard only
-
-        if (CutIndex == 0)
+        if (ClipboardIsSelectedBitmap())
         {
-            PasteFromClipboardToCutIndex(CutIndex);
+            PasteFromClipboardToBitmapArray();
         }
 
         // only if we have something to paste
-        if (CutBmp[CutIndex].CutFlag)
+        if (g_SelectedBitmap->IsValid)
         {
 
-            // if clipboard then never leave Cut Flag true
-            if (CutIndex == 0)
+            if (ClipboardIsSelectedBitmap())
             {
-                CutBmp[CutIndex].CutFlag = false;
+                // never leave the clipboard's IsValid flag true
+                g_SelectedBitmap->IsValid = false;
             }
 
             HDC ScreenDC = MainWindowx->ScreenWindow->GetScreenDeviceContext();
@@ -1791,18 +1844,18 @@ NODE *lbitpastetoindex(NODE *arg)
             HDC TempMemDC = CreateCompatibleDC(ScreenDC);
             HBITMAP oldBitmap2 = (HBITMAP) SelectObject(
                 TempMemDC,
-                CutBmp[CutIndex].CutMemoryBitMap);
+                g_SelectedBitmap->MemoryBitMap);
 
             //memory
             HDC MemDC = MainWindowx->ScreenWindow->GetMemoryDeviceContext();
-            HBITMAP oldBitmap = (HBITMAP) SelectObject(MemDC, CutBmp[i].CutMemoryBitMap);
+            HBITMAP oldBitmap = (HBITMAP) SelectObject(MemDC, g_Bitmaps[i].MemoryBitMap);
 
             BitBlt(
                 MemDC,
                 +x,
-                CutBmp[i].CutHeight - y - CutBmp[CutIndex].CutHeight,
-                CutBmp[CutIndex].CutWidth,
-                CutBmp[CutIndex].CutHeight,
+                g_Bitmaps[i].Height - y - g_SelectedBitmap->Height,
+                g_SelectedBitmap->Width,
+                g_SelectedBitmap->Height,
                 TempMemDC,
                 0,
                 0,
@@ -1933,20 +1986,20 @@ void turtlepaste(int TurtleToPaste)
         return;
     }
 
-    // If ClipBoard check with ClipBoard only
+    // If clipboard check with clipboard only
     if (TurtleToPaste == 0)
     {
-        PasteFromClipboardToCutIndex(TurtleToPaste);
+        PasteFromClipboardToBitmapArray();
     }
 
     // only if we have something to paste
-    if (CutBmp[TurtleToPaste].CutFlag)
+    if (g_Bitmaps[TurtleToPaste].IsValid)
     {
 
         // if clipboard then never leave Cut Flag true
         if (TurtleToPaste == 0)
         {
-            CutBmp[TurtleToPaste].CutFlag = false;
+            g_Bitmaps[TurtleToPaste].IsValid = false;
         }
 
         HDC ScreenDC = MainWindowx->ScreenWindow->GetScreenDeviceContext();
@@ -1954,7 +2007,7 @@ void turtlepaste(int TurtleToPaste)
         HDC TempMemDC = CreateCompatibleDC(ScreenDC);
         HBITMAP oldBitmap2 = (HBITMAP) SelectObject(
             TempMemDC,
-            CutBmp[TurtleToPaste].CutMemoryBitMap);
+            g_Bitmaps[TurtleToPaste].MemoryBitMap);
 
         //screen
         if (zoom_flag)
@@ -1968,9 +2021,9 @@ void turtlepaste(int TurtleToPaste)
             BitBlt(
                 ScreenDC,
                 +dest.x - MainWindowx->ScreenWindow->Scroller->XPos / the_zoom + xoffset,
-                -dest.y - MainWindowx->ScreenWindow->Scroller->YPos / the_zoom + yoffset + LL - CutBmp[TurtleToPaste].CutHeight,
-                CutBmp[TurtleToPaste].CutWidth,
-                CutBmp[TurtleToPaste].CutHeight,
+                -dest.y - MainWindowx->ScreenWindow->Scroller->YPos / the_zoom + yoffset + LL - g_Bitmaps[TurtleToPaste].Height,
+                g_Bitmaps[TurtleToPaste].Width,
+                g_Bitmaps[TurtleToPaste].Height,
                 TempMemDC,
                 0,
                 0,
@@ -1981,9 +2034,9 @@ void turtlepaste(int TurtleToPaste)
             BitBlt(
                 ScreenDC,
                 +dest.x - MainWindowx->ScreenWindow->Scroller->XPos + xoffset,
-                -dest.y - MainWindowx->ScreenWindow->Scroller->YPos + yoffset + LL - CutBmp[TurtleToPaste].CutHeight,
-                CutBmp[TurtleToPaste].CutWidth,
-                CutBmp[TurtleToPaste].CutHeight,
+                -dest.y - MainWindowx->ScreenWindow->Scroller->YPos + yoffset + LL - g_Bitmaps[TurtleToPaste].Height,
+                g_Bitmaps[TurtleToPaste].Width,
+                g_Bitmaps[TurtleToPaste].Height,
                 TempMemDC,
                 0,
                 0,
@@ -2707,6 +2760,31 @@ void label(const char *s)
 
     DeleteObject(tempFont);
 }
+
+void init_bitmaps()
+{
+    // allocate the array of bitmaps
+    g_BitmapsLimit   = 1;
+    g_Bitmaps        = (CUTMAP *) calloc(sizeof(*g_Bitmaps), g_BitmapsLimit);
+    g_SelectedBitmap = &g_Bitmaps[0];
+}
+
+void uninit_bitmaps()
+{
+    // Note Bitmap index 0 belongs to clipboard
+    for (CUTMAP* bmp = g_Bitmaps + 1;
+         bmp < g_Bitmaps + g_BitmapsLimit;
+         bmp++)
+    {
+        if (bmp->IsValid)
+        {
+            DeleteObject(bmp->MemoryBitMap);
+        }
+    }
+
+    free(g_Bitmaps);
+}
+
 
 void exit_program(void)
 {

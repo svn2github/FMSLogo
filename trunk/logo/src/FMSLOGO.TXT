@@ -21,8 +21,8 @@ I. Kit Description/Location (http://sourceforge.net/projects/fmslogo)
 II. New features/bugs fixed:
 
   * Added for 6.21.0
-    o Implement part of request #1542399; FMSLogo is no longer limited to
-      1024 turtles.
+    o Implement request #1542399; FMSLogo is no longer limited to
+      1024 turtles or 1024 bitmaps.
     o Minor updates to the manual.
 
   For a complete history of changes across all versions of FMSLogo, see
