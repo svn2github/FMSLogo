@@ -1806,6 +1806,11 @@ NODE *lbitpastetoindex(NODE *arg)
     int x = int_arg(cdr(arg));
     int y = int_arg(cdr(cdr(arg)));
 
+    if (stopping_flag == THROWING)
+    {
+        return Unbound;
+    }
+
     if (g_BitmapsLimit <= i)
     {
         // notify the user that the bitmap index is out of range
@@ -1820,60 +1825,57 @@ NODE *lbitpastetoindex(NODE *arg)
         return Unbound;
     }
 
-    if (NOT_THROWING)
+    // If ClipBoard check with ClipBoard only
+    if (ClipboardIsSelectedBitmap())
+    {
+        PasteFromClipboardToBitmapArray();
+    }
+
+    // only if we have something to paste
+    if (g_SelectedBitmap->IsValid)
     {
 
-        // If ClipBoard check with ClipBoard only
         if (ClipboardIsSelectedBitmap())
         {
-            PasteFromClipboardToBitmapArray();
+            // never leave the clipboard's IsValid flag true
+            g_SelectedBitmap->IsValid = false;
         }
 
-        // only if we have something to paste
-        if (g_SelectedBitmap->IsValid)
-        {
+        HDC ScreenDC = MainWindowx->ScreenWindow->GetScreenDeviceContext();
 
-            if (ClipboardIsSelectedBitmap())
-            {
-                // never leave the clipboard's IsValid flag true
-                g_SelectedBitmap->IsValid = false;
-            }
+        HDC TempMemDC = CreateCompatibleDC(ScreenDC);
+        HBITMAP oldBitmap2 = (HBITMAP) SelectObject(
+            TempMemDC,
+            g_SelectedBitmap->MemoryBitMap);
 
-            HDC ScreenDC = MainWindowx->ScreenWindow->GetScreenDeviceContext();
+        //memory
+        HDC MemDC = MainWindowx->ScreenWindow->GetMemoryDeviceContext();
+        HBITMAP oldBitmap = (HBITMAP) SelectObject(MemDC, g_Bitmaps[i].MemoryBitMap);
 
-            HDC TempMemDC = CreateCompatibleDC(ScreenDC);
-            HBITMAP oldBitmap2 = (HBITMAP) SelectObject(
-                TempMemDC,
-                g_SelectedBitmap->MemoryBitMap);
+        BitBlt(
+            MemDC,
+            +x,
+            g_Bitmaps[i].Height - y - g_SelectedBitmap->Height,
+            g_SelectedBitmap->Width,
+            g_SelectedBitmap->Height,
+            TempMemDC,
+            0,
+            0,
+            g_BitMode);
 
-            //memory
-            HDC MemDC = MainWindowx->ScreenWindow->GetMemoryDeviceContext();
-            HBITMAP oldBitmap = (HBITMAP) SelectObject(MemDC, g_Bitmaps[i].MemoryBitMap);
+        SelectObject(MemDC, oldBitmap);
 
-            BitBlt(
-                MemDC,
-                +x,
-                g_Bitmaps[i].Height - y - g_SelectedBitmap->Height,
-                g_SelectedBitmap->Width,
-                g_SelectedBitmap->Height,
-                TempMemDC,
-                0,
-                0,
-                g_BitMode);
+        SelectObject(TempMemDC, oldBitmap2);
+        DeleteDC(TempMemDC);
 
-            SelectObject(MemDC, oldBitmap);
-
-            SelectObject(TempMemDC, oldBitmap2);
-            DeleteDC(TempMemDC);
-
-            // Clipboard owns what we paste in not what we converted
-        }
-        else
-        {
-            // notify the user that the clipboard is empty
-            ShowErrorMessageAndStop(LOCALIZED_ERROR_BITMAPNOTHINGTOPASTE);
-        }
+        // Clipboard owns what we paste in not what we converted
     }
+    else
+    {
+        // notify the user that the clipboard is empty
+        ShowErrorMessageAndStop(LOCALIZED_ERROR_BITMAPNOTHINGTOPASTE);
+    }
+
     return Unbound;
 }
 

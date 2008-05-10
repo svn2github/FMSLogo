@@ -21,6 +21,9 @@ I. Kit Description/Location (http://sourceforge.net/projects/fmslogo)
 II. New features/bugs fixed:
 
   * Added for 6.21.0
+    o Fix bug #1961616; BITPASTETOINDEX now throws a bad input error when
+      the index is not a positive integer, instead of displaying a confusing
+      dialog box and throwing a stoppping error.
     o Fix bug #1959250; SETBITINDEX no longer changes BITINDEX on bad input.
     o Implement request #1542399; FMSLogo is no longer limited to
       1024 turtles or 1024 bitmaps.
