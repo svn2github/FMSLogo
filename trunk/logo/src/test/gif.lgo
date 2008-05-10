@@ -136,7 +136,7 @@ TO GIF.SMOKETEST
     GIFLOAD "gifsave-withactivearea.gif
 
     ; did the image get restored correctly?
-    CHECKSCREEN "gifsmoketest-200x200.gif
+    CHECKSCREEN "gifsmoketest-200x200
 
     ; cleanup
     SETACTIVEAREA :savedActiveArea
