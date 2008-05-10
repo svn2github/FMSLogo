@@ -459,7 +459,11 @@ TO CHECKSCREEN :screenname
       ; do a binary byte-for-byte comparison of the files
       MAKE "isok FILESAREEQUAL :baselinefilename :newfilename
 
-      ERASEFILE :newfilename
+      ; if the image is not correct, then we shouldn't erase
+      ; the file we just wrote because this might be a bug in
+      ; GIFSAVE or the original image might be wrong.  Either
+      ; way, this needs manual investigation.
+      if :isOk [ ERASEFILE :newfilename ]
    ][
 
        ; The baseline file does not exist.
