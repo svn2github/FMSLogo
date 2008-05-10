@@ -145,6 +145,27 @@ TO GIF.SMOKETEST
    
 END
 
+TO GIFSAVE.OVERWRITESFILE
+    LOCALMAKE "savedActiveArea ACTIVEAREA
+    LOCALMAKE "filename        "gifsave-overwritesfile.gif
+
+    ; create a file on disk
+    TRACEINSTRUCTION [ SETACTIVEAREA [ 0 0 100 100 ] ]
+    TRACEINSTRUCTION [ GIFSAVE :filename ]
+
+    ; save the file a second time
+    TRACEINSTRUCTION [ SETACTIVEAREA [ 0 0 150 150 ] ]
+    TRACEINSTRUCTION [ GIFSAVE :filename ]
+    
+    ; confirm that the file on disk is 150x150 (that it was overwritten)
+    SIMPLEREPORTTEST [ GIFSIZE :filename ] [150 150]
+
+    ; cleanup
+    SETACTIVEAREA :savedActiveArea
+    ERASEFILE     :filename
+   
+END
+
 TO GIFTEST
 
   GIF.SMOKETEST
@@ -154,7 +175,8 @@ TO GIFTEST
   GIFSIZE.SMOKETEST 101 100
   GIFSIZE.BADINPUT
 
+  GIFSAVE.OVERWRITESFILE
+
   GIFSAVE.BADINPUT
   GIFLOAD.BADINPUT
 END
-
