@@ -26,11 +26,13 @@ GIFSAVE saves the picture in a format called GIF (Graphics Interchange Format) t
 The format is popular on the Web for several reasons.
 First, it is a compressed format and takes less time to transmit than uncompressed formats.
 Second, it supports "interlacing", which makes the image partially viewable as it's being transmitted (it starts off blurry and comes into focus).
-Third, it supports animation.  Animated GIFs allow multiple images in one file with specified delays between the images.
+Third, it supports animation.
+Animated GIFs allow multiple images in one file with specified delays between the images.
 </para>
 
 <para>
-The <parameter>filename</parameter> input must be a word that is the name of the bitmap file to save.
+The <parameter>filename</parameter> input must be a word that is the name of the file to which the GIF is written.
+If a file by this name already exists, it is ovewritten.
 </para>
 
 <para>
