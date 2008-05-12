@@ -21,7 +21,7 @@ If there is more than one such variable, the innermost local variable of that na
 <para>
 The colon notation for showing variables is an abbreviation for
 <programlisting><userinput>THING "</userinput></programlisting>
-So <userinput>:FOO</userinput> is the same as <userinput>THING "FOO</userinput>.
+So <userinput>:FOO</userinput> is the same as <userinput>(THING "FOO)</userinput>.
 </para>
 </listitem>
 </varlistentry>
