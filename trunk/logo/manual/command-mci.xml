@@ -20,8 +20,7 @@ With it, you can link sounds to the steps of drawing a picture.
 You can narrate your own slide show.
 You can even ask your user questions in your own voice.
 The MCI interface is very powerful.
-It opens the door to letting &GENERICNAME; control any multimedia device.
-This includes sound cards, CD players, video movies, and more.
+It opens the door to letting &GENERICNAME; control any multimedia device, including sound cards, CD players, movies, and more.
 </para>
 
 <para>
@@ -30,11 +29,11 @@ Depending on the command, MCI may (or may not) output a status that indicates if
 
 <para>
 The <parameter>mci-command-list</parameter> input must be a list.
-The format of the list is described in a separate help document, which is accessible through the <link linkend="menu-help-mci">Help - MCI</link> menu.
+The format of the list is described in the section entitled <link linkend="mci">The Media Control Interface</link>.
 </para>
 
 <para>
-The MCI interface allows you to start a device and optionally "wait" for it to finish or to have it "notify" you when it has finished by running the <parameter>callback</parameter> input.
+The MCI allows you to start a device and optionally "wait" for it to finish or to have it "notify" you when it has finished by running the <parameter>callback</parameter> input.
 The <parameter>callback</parameter> input is an instruction list that is run when the MCI command completes if you use the "notify" option.
 The "notify" mechanism allows you, for example, to play a wave file and be notified when it has completed so that you can start another immediately without sitting and "waiting" for it.
 </para>
