@@ -17,13 +17,13 @@ Outputs a four item list that describes the version of &GENERICNAME; which you a
 The first item is the name of the application (&PRODUCTNAME;).
 The second item is the version of &PRODUCTNAME;.
 The third item is the operating system on which you are running.
-The fourth item is an integer that represents the locale for which FMSLogo was built.
+The fourth item is an integer that represents the locale for which &PRODUCTNAME; was built.
 The meaning of this integer is given in the following table.
 
 <informaltable frame='all'>
   <tgroup cols='2'>
     <thead>
-      <row><entry>Locale ID</entry> <entry>Locale Name</entry></row>
+      <row><entry>Locale Identifier</entry> <entry>Locale Name</entry></row>
     </thead>
     <tbody>
       <row><entry>1031</entry>      <entry>German</entry></row>

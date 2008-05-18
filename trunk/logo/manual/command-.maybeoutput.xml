@@ -28,8 +28,8 @@ It's fast and easy to use, at the cost of being an exception to &PRODUCTNAME;'s 
 
 <varlistentry><term>Example</term>
 <listitem>
-<programlisting><userinput>TO INVOKE :function [:inputs] 2
-  .MAYBEOUTPUT APPLY :function :inputs
+<programlisting><userinput>TO INVOKE :procedure [:inputs] 2
+  .MAYBEOUTPUT APPLY :procedure :inputs
 END
 
 (INVOKE "PRINT "a "b "c)</userinput>

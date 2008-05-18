@@ -47,6 +47,7 @@ $main::TotalWarnings = 0;
   'eg',               # use "for example", instead
   'terminal',         # use "the Commander", instead
   'multidimensional', # use "multi-dimensional", instead
+  'function',         # use "procedure", "command", or "operation" instead
 );
 
 my %Commands = ();
@@ -153,6 +154,8 @@ $Exceptions{'command-bitsave.xml'}{'allcaps'}{'BMP'}      = 1;
 $Exceptions{'command-bury.xml'}{'allcaps'}{'BAR'}         = 1;
 $Exceptions{'command-bury.xml'}{'allcaps'}{'FOO'}         = 1;
 
+$Exceptions{'command-buttoncreate.xml'}{'bannedword'}{'function'} = 1;
+
 $Exceptions{'command-buryall.xml'}{'allcaps'}{'BAR'}      = 1;
 $Exceptions{'command-buryall.xml'}{'allcaps'}{'FOO'}      = 1;
 
@@ -206,6 +209,7 @@ $Exceptions{'command-dllcall.xml'}{'allcaps'}{'DOUBLE'} = 1;
 $Exceptions{'command-dllcall.xml'}{'allcaps'}{'DWORD'}  = 1;
 $Exceptions{'command-dllcall.xml'}{'allcaps'}{'LPSTR'}  = 1;
 $Exceptions{'command-dllcall.xml'}{'allcaps'}{'TCHAR'}  = 1;
+$Exceptions{'command-dllcall.xml'}{'bannedword'}{'function'} = 1;
 
 $Exceptions{'command-dllfree.xml'}{'allcaps'}{'DLL'}  = 1;
 
@@ -275,6 +279,8 @@ $Exceptions{'command-iffalse.xml'}{'allcaps'}{'MYTEST'}  = 1;
 $Exceptions{'command-iftrue.xml'}{'allcaps'}{'MYTEST'}  = 1;
 
 $Exceptions{'command-ignore.xml'}{'allcaps'}{'MYPROGRAM'}  = 1;
+
+$Exceptions{'command-keyboardon.xml'}{'bannedword'}{'function'} = 1;
 
 $Exceptions{'command-keyp.xml'}{'allcaps'}{'CBREAK'}  = 1;
 $Exceptions{'command-keyp.xml'}{'allcaps'}{'UNIX'}    = 1;
@@ -495,11 +501,15 @@ $Exceptions{'control-structures.xml'}{'logo'}                      = 1;
 $Exceptions{'editor.xml'}{'allcaps'}{'CTRL'}   = 1;
 $Exceptions{'editor.xml'}{'allcaps'}{'F1'}     = 1;
 
+$Exceptions{'glossary.xml'}{'allcaps'}{'SQUARE'}   = 1;
+$Exceptions{'glossary.xml'}{'allcaps'}{'TRIANGLE'} = 1;
+
 $Exceptions{'error-processing.xml'}{'allcaps'}{'DATUM'}    = 1;
 $Exceptions{'error-processing.xml'}{'allcaps'}{'PROC'}     = 1;
 $Exceptions{'error-processing.xml'}{'allcaps'}{'THROWTAG'} = 1;
 $Exceptions{'error-processing.xml'}{'allcaps'}{'VALUE'}    = 1;
 $Exceptions{'error-processing.xml'}{'allcaps'}{'VAR'}      = 1;
+$Exceptions{'error-processing.xml'}{'bannedword'}{'function'} = 1;
 
 $Exceptions{'environment-commands.xml'}{'logo'} = 1;
 
@@ -529,6 +539,7 @@ $Exceptions{'logohelp.xml'}{'allcaps'}{'MERCHANTABILITY'} = 1;
 $Exceptions{'logohelp.xml'}{'allcaps'}{'OASIS'}           = 1;
 $Exceptions{'logohelp.xml'}{'allcaps'}{'PARTICULAR'}      = 1;
 $Exceptions{'logohelp.xml'}{'allcaps'}{'PRODUCTNAME'}     = 1;
+$Exceptions{'logohelp.xml'}{'allcaps'}{'PRODUCTLOCALE'}   = 1;
 $Exceptions{'logohelp.xml'}{'allcaps'}{'PRODUCTVERSION'}  = 1;
 $Exceptions{'logohelp.xml'}{'allcaps'}{'PUBLIC'}          = 1;
 $Exceptions{'logohelp.xml'}{'allcaps'}{'PURPOSE'}         = 1;
@@ -539,6 +550,17 @@ $Exceptions{'logohelp.xml'}{'allcaps'}{'WARRANTY'}        = 1;
 $Exceptions{'logohelp.xml'}{'allcaps'}{'WITHOUT'}         = 1;
 $Exceptions{'logohelp.xml'}{'allcaps'}{'XML'}             = 1;
 $Exceptions{'logohelp.xml'}{'logo'}                       = 1;
+
+$Exceptions{'media-control-interface.xml'}{'allcaps'}{'BREAK'}           = 1;
+$Exceptions{'media-control-interface.xml'}{'allcaps'}{'CD'}              = 1;
+$Exceptions{'media-control-interface.xml'}{'allcaps'}{'CTRL'}            = 1;
+$Exceptions{'media-control-interface.xml'}{'allcaps'}{'MIDI'}            = 1;
+$Exceptions{'media-control-interface.xml'}{'allcaps'}{'PLAY.AVI'}        = 1;
+$Exceptions{'media-control-interface.xml'}{'allcaps'}{'PLAY.MIDI'}       = 1;
+$Exceptions{'media-control-interface.xml'}{'allcaps'}{'PLAY.TRACK.1'}    = 1;
+$Exceptions{'media-control-interface.xml'}{'allcaps'}{'PLAY.WAVEFORM'}   = 1;
+$Exceptions{'media-control-interface.xml'}{'allcaps'}{'RECORD.WAVEFORM'} = 1;
+$Exceptions{'media-control-interface.xml'}{'allcaps'}{'TMFS'}            = 1;
 
 $Exceptions{'networking-commands.xml'}{'allcaps'}{'DNS'}       = 1;
 $Exceptions{'networking-commands.xml'}{'allcaps'}{'FTP'}       = 1;
@@ -568,19 +590,23 @@ $Exceptions{'multimedia-commands.xml'}{'allcaps'}{'MSB'}  = 1;
 $Exceptions{'tokenization.xml'}{'logo'} = 1;
 
 # translation tables are completely exempt
+$Exceptions{'translations-1031.xml'}  = 1;
 $Exceptions{'translations-1032.xml'}  = 1;
 $Exceptions{'translations-1033.xml'}  = 1;
 $Exceptions{'translations-1034.xml'}  = 1;
 $Exceptions{'translations-1036.xml'}  = 1;
+$Exceptions{'translations-1040.xml'}  = 1;
 $Exceptions{'translations-2070.xml'}  = 1;
+$Exceptions{'translations-9999.xml'}  = 1;
 $Exceptions{'translations.xml'}       = 1;
 
-$Exceptions{'windows-commands.xml'}{'allcaps'}{'GUI'}       = 1;
-$Exceptions{'windows-commands.xml'}{'allcaps'}{'SETUP'}     = 1;
-$Exceptions{'windows-commands.xml'}{'allcaps'}{'WIN'}       = 1;
-$Exceptions{'windows-commands.xml'}{'allcaps'}{'MYRED'}     = 1;
-$Exceptions{'windows-commands.xml'}{'allcaps'}{'MYEND'}     = 1;
-$Exceptions{'windows-commands.xml'}{'allcaps'}{'DRAWTHING'} = 1;
+$Exceptions{'windows-commands.xml'}{'allcaps'}{'GUI'}         = 1;
+$Exceptions{'windows-commands.xml'}{'allcaps'}{'SETUP'}       = 1;
+$Exceptions{'windows-commands.xml'}{'allcaps'}{'WIN'}         = 1;
+$Exceptions{'windows-commands.xml'}{'allcaps'}{'MYRED'}       = 1;
+$Exceptions{'windows-commands.xml'}{'allcaps'}{'MYEND'}       = 1;
+$Exceptions{'windows-commands.xml'}{'allcaps'}{'DRAWTHING'}   = 1;
+$Exceptions{'windows-commands.xml'}{'bannedword'}{'function'} = 1;
 
 $Exceptions{'workspace-management.xml'}{'logo'}             = 1;
 

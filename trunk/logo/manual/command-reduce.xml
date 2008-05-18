@@ -1,5 +1,5 @@
 <section id="command-reduce">
-    <title>REDUCE</title>
+<title>REDUCE</title>
 <indexterm><primary>REDUCE</primary></indexterm>
 
 <variablelist>
@@ -17,8 +17,8 @@ Outputs the result of applying the template to accumulate the elements of the <p
 </para>
 
 <para>
-The <parameter>template</parameter> input must be a two-slot function.
-Typically, <parameter>template</parameter> is an associative function name like "<link linkend="command-sum">SUM</link>.
+The <parameter>template</parameter> input must be a two-slot procedure.
+Typically, <parameter>template</parameter> is the name of an associative operation, like "<link linkend="command-sum">SUM</link>.
 </para>
 
 <para>
