@@ -18,7 +18,7 @@
 Sets the flood color to <parameter>color</parameter>, which can either be a color index or a color vector.
 A color index is a number from 0 - 15.
 A color vector is a list of [red green blue] intensities, each in the range of 0 - 255.
-For an explanation of the <parameter>color</parameter> parameter, see the section on <link linkend="using-color">Using Color</link>.
+For an explanation of the <parameter>color</parameter> input, see the section on <link linkend="using-color">Using Color</link>.
 </para>
 
 <para>

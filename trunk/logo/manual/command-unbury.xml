@@ -22,7 +22,7 @@ UNBURY does not throw an error if it is asked to bury a procedure, variable, or 
 </para>
 
 <para>
-See the <link linkend="workspace-queries">Workspace Queries</link> section for an explanation of the <parameter>contentslist</parameter> parameter.
+See the <link linkend="workspace-queries">Workspace Queries</link> section for an explanation of the <parameter>contentslist</parameter> input.
 </para>
 </listitem>
 </varlistentry>

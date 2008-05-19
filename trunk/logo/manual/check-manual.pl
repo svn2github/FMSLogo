@@ -48,6 +48,8 @@ $main::TotalWarnings = 0;
   'terminal',         # use "the Commander", instead
   'multidimensional', # use "multi-dimensional", instead
   'function',         # use "procedure", "command", or "operation" instead
+  'parameter',        # use "input", instead
+  'argument',         # use "input", instead
 );
 
 my %Commands = ();
@@ -209,7 +211,9 @@ $Exceptions{'command-dllcall.xml'}{'allcaps'}{'DOUBLE'} = 1;
 $Exceptions{'command-dllcall.xml'}{'allcaps'}{'DWORD'}  = 1;
 $Exceptions{'command-dllcall.xml'}{'allcaps'}{'LPSTR'}  = 1;
 $Exceptions{'command-dllcall.xml'}{'allcaps'}{'TCHAR'}  = 1;
-$Exceptions{'command-dllcall.xml'}{'bannedword'}{'function'} = 1;
+$Exceptions{'command-dllcall.xml'}{'bannedword'}{'function'}  = 1;
+$Exceptions{'command-dllcall.xml'}{'bannedword'}{'parameter'} = 1;
+$Exceptions{'command-dllcall.xml'}{'bannedword'}{'argument'}  = 1;
 
 $Exceptions{'command-dllfree.xml'}{'allcaps'}{'DLL'}  = 1;
 
@@ -420,6 +424,8 @@ $Exceptions{'command-settimer.xml'}{'allcaps'}{'OK'} = 1;
 
 $Exceptions{'command-setturtlemode.xml'}{'allcaps'}{'XOR'} = 1;
 
+$Exceptions{'command-shell.xml'}{'bannedword'}{'parameter'} = 1;
+
 $Exceptions{'command-slowdraw.xml'}{'allcaps'}{'BK'} = 1;
 $Exceptions{'command-slowdraw.xml'}{'allcaps'}{'FD'} = 1;
 
@@ -561,6 +567,7 @@ $Exceptions{'media-control-interface.xml'}{'allcaps'}{'PLAY.TRACK.1'}    = 1;
 $Exceptions{'media-control-interface.xml'}{'allcaps'}{'PLAY.WAVEFORM'}   = 1;
 $Exceptions{'media-control-interface.xml'}{'allcaps'}{'RECORD.WAVEFORM'} = 1;
 $Exceptions{'media-control-interface.xml'}{'allcaps'}{'TMFS'}            = 1;
+$Exceptions{'media-control-interface.xml'}{'bannedword'}{'parameter'}    = 1;
 
 $Exceptions{'networking-commands.xml'}{'allcaps'}{'DNS'}       = 1;
 $Exceptions{'networking-commands.xml'}{'allcaps'}{'FTP'}       = 1;
@@ -859,9 +866,18 @@ foreach my $filename (<*.xml>) {
     }
 
 
+    #
     # Find use of banned words
+    #
+
+    # Strip the XML tags from the line, because banned words,
+    # like "parameter" that are DocBook tags are not a violation.
+    my $strippedLine = $line;
+    $strippedLine =~ s/<[^>]+>//g;
+
     foreach my $bannedWord (@main::BannedWords) {
-      while ($line =~ m!\b(\Q$bannedWord\E)\b!gi) {
+
+      while ($strippedLine =~ m!\b(\Q$bannedWord\E)\b!gi) {
 
         if (not $Exceptions{$filename}{bannedword}{$bannedWord}) {
           LogError($filename, $linenumber, "use of banned word: $bannedWord");

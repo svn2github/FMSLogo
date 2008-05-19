@@ -28,7 +28,7 @@ When no <parameter>wait</parameter> input is given, SHELL does not wait for the 
 
 <para>
 If your <parameter>command</parameter> contains spaces in the file path to the executable, it's a good idea to put double-quotes around it, or else you may end up running the wrong program.
-For example, if a file named <userinput>c:\Program.exe</userinput> exists, then the following command runs <userinput>c:\Program.exe</userinput> with the command-line parameter <userinput>Files\Audacity\audacity.exe</userinput>:
+For example, if a file named <userinput>c:\Program.exe</userinput> exists, then the following instruction runs <userinput>c:\Program.exe</userinput> with the command-line parameter <userinput>Files\Audacity\audacity.exe</userinput>:
 
 <programlisting><userinput>SHOW SHELL [c:\\Program Files\\Audacity\\audacity.exe]</userinput>
 </programlisting>

@@ -14,7 +14,7 @@
 <listitem>
 <para>
 Moves the turtle along the Z axis from its current position to a new absolute Z coordinate.
-The argument is the new Z coordinate.
+The <parameter>zcor</parameter> input is the new Z coordinate.
 </para>
 <para>
 This command is designed to run in <link linkend="command-perspective">PERSPECTIVE</link> mode.

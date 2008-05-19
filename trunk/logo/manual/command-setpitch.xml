@@ -14,7 +14,7 @@
 <listitem>
 <para>
 Pitches the turtle to a new absolute pitch.
-The argument is a angle, the pitch in degrees which is positive from the negative Z-Axis to the position Y-Axis rotating about the X-Axis.
+The <parameter>angle</parameter> input is the pitch in degrees which is positive from the negative Z-Axis to the positive Y-Axis rotating about the X-Axis.
 It is important to <link linkend="understand-your-orientation-in-3D">understand your orientation in 3D</link>.
 </para>
 <para>

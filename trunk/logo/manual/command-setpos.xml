@@ -14,7 +14,7 @@
 <listitem>
 <para>
 Moves the turtle to an absolute X,Y coordinate.
-The argument is a list of two numbers, the X and Y coordinates.
+The <parameter>position</parameter> input is a list of two numbers, the X and Y coordinates.
 </para>
 
 <para>

@@ -14,7 +14,7 @@
 <listitem>
 <para>
 Rolls the turtle to a new absolute roll.
-The argument is a angle, the roll in degrees which is positive from the positive X-Axis to the negative Z-Axis rotating about the Y-Axis.
+The <parameter>angle</parameter> input is the roll in degrees which is positive from the positive X-Axis to the negative Z-Axis rotating about the Y-Axis.
 It is important to <link linkend="understand-your-orientation-in-3D">understand your orientation in 3D</link>.
 </para>
 <para>

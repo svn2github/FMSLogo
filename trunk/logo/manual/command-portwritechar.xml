@@ -14,7 +14,7 @@
 <listitem>
 <para>
 Writes one byte to the currently open port and output the actual number of bytes written (0 or 1).
-The <parameter>data</parameter> parameter must be an integer from 0 to 255.
+The <parameter>data</parameter> input must be an integer from 0 to 255.
 </para>
 
 </listitem>

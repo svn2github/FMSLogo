@@ -13,8 +13,8 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-Outputs the distance the turtle must travel along a straight line to reach the position given as the argument.
-The position must be given as a two element list containing the X and Y coordinates.
+Outputs the distance the turtle must travel along a straight line to reach the position given as the <parameter>position</parameter> input.
+The <parameter>position</parameter> input must be a list containing two items, the X and Y coordinates.
 </para>
 </listitem>
 </varlistentry>

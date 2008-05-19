@@ -57,7 +57,7 @@ If the procedure is invoked with
 <programlisting><userinput>PROC [a b c]</userinput></programlisting>
 
 
-then the <parameter>:inlist</parameter> parameter will have the value <userinput>[a b c]</userinput> and the <parameter>:startvalue</parameter> parameter will have the value <userinput>"a</userinput>.
+then the <parameter>:inlist</parameter> input will have the value <userinput>[a b c]</userinput> and the <parameter>:startvalue</parameter> input will have the value <userinput>"a</userinput>.
 If the procedure is invoked with
 
 <programlisting><userinput>(PROC [a b c] "x)</userinput></programlisting>

@@ -31,7 +31,7 @@ If <parameter>condition</parameter> evalutes to FALSE, then IF does nothing.
 
 <listitem>
 <para>
-If given a <parameter>false.instructionlist</parameter> parameter, IF acts like <link linkend="command-ifelse">IFELSE</link>.
+If given a <parameter>false.instructionlist</parameter> input, IF acts like <link linkend="command-ifelse">IFELSE</link>.
 </para>
 </listitem>
 

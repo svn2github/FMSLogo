@@ -52,7 +52,7 @@ The <parameter>height</parameter> input is the height of the new window, in pixe
 <para>
 The <parameter>setup</parameter> input is an instruction list to run when the window is created.
 The most common use of the <parameter>setup</parameter> input is create and add child controls to the window.
-You may give an empty list for this argument and add controls later.
+You may give an empty list for this input and add controls later.
 </para>
 
 </listitem>

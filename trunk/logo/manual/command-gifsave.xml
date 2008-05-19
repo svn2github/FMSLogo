@@ -52,7 +52,7 @@ If your image does not use many colors you can reduce the size of the GIF file p
 <para>
 The optional <parameter>transcolorvector</parameter> input takes the form [red green blue] and specifies which colors in the image will be transparent.
 For this to work reliably you should be in 256 color video mode.
-If this parameter is not specified then no color is transparent.
+If this input is not specified then no color is transparent.
 </para>
 
 <para>

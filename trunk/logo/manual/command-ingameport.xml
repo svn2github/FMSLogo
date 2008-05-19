@@ -14,7 +14,7 @@
 <listitem>
 <para>
 Reads the value (or resistance across) the game port channel specified by <parameter>mask</parameter>.
-The <parameter>mask</parameter> parameter must be either 1, 2, 4, or 8.
+The <parameter>mask</parameter> input must be either 1, 2, 4, or 8.
 If <parameter>mask</parameter> is 1, then INGAMEPORT reads the x-axis.
 If <parameter>mask</parameter> is 1, then INGAMEPORT reads the y-axis.
 You can read the button states using <userinput>INPORT 513</userinput>.

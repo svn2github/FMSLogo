@@ -19,7 +19,7 @@ Don't be confused: OUTPUT itself is a command, but the procedure that invokes OU
 </para>
 
 <para>
-The <parameter>value</parameter> parameter may be any &GENERICNAME; thing (word, list, array, etc.).
+The <parameter>value</parameter> input may be any &GENERICNAME; thing (word, list, array, etc.).
 </para>
 </listitem>
 </varlistentry>

@@ -15,7 +15,7 @@
 <listitem>
 <para>
 Turns the turtle to a new absolute heading.
-The argument is an angle, the heading in degrees clockwise from the positive Y-axis.
+The <parameter>angle</parameter> input is the heading in degrees clockwise from the positive Y-axis.
 If you are in <link linkend="command-perspective">PERSPECTIVE</link> mode then, the heading in degrees which is positive from the positive X-Axis to the positive Y-Axis rotating about the Z-Axis.
 </para>
 </listitem>

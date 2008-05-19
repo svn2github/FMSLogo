@@ -17,7 +17,7 @@ FOR is a flexible tool for iteration.
 </para>
 
 <para>
-The <parameter>controllist</parameter> parameter controls how the iteration occurs.
+The <parameter>controllist</parameter> input controls how the iteration occurs.
 It must be a list containing either three or four members.
 In order, they are:
 
@@ -52,7 +52,7 @@ If the fourth member is missing, the step size will be 1 or -1 depending on whet
 </para>
 
 <para>
-The <parameter>instructionlist</parameter> parameter dictates what FOR should do on each iteration.
+The <parameter>instructionlist</parameter> input dictates what FOR should do on each iteration.
 The effect of FOR is to run <parameter>instructionlist</parameter> repeatedly, assigning a new value to the "control variable" on each iteration.
 First the "starting value" is assigned to the control variable.
 Then the control value is compared to the "limit value".

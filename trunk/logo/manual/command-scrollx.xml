@@ -13,8 +13,8 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-Scrolls the horizontal scrollbar of the "Screen" window by <parameter>deltax</parameter>.
-The argument is the amount to move the scroll position by.
+Scrolls the horizontal scrollbar of the "Screen" window.
+The <parameter>deltax</parameter> input is the amount to move the scroll position by.
 A positive number scrolls to the right and negative number scrolls to the left.
 If <parameter>deltax</parameter> is 0 the scroller will reset to the center position.
 </para>

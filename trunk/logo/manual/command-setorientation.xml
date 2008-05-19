@@ -14,7 +14,7 @@
 <listitem>
 <para>
 Orients the turtle to a new absolute orientation.
-The argument is a list, the [roll pitch heading] in degrees.
+The <parameter>orientation</parameter> input is a list, the [roll pitch heading] in degrees.
 It is important to <link linkend="understand-your-orientation-in-3D">understand your orientation in 3D</link>.
 </para>
 

@@ -23,7 +23,7 @@ If THROW is not given a <parameter>value</parameter> input, then the correspondi
 </para>
 
 <para>
-The <parameter>tag</parameter> parameter must be a word.
+The <parameter>tag</parameter> input must be a word.
 </para>
 
 <para>

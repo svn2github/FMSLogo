@@ -14,7 +14,7 @@
 <listitem>
 <para>
 This command is used to gain access to the serial and parallel ports of your computer.
-The <parameter>port</parameter> parameter is a string that is the name of the port wish to open (for example, COM1-COM4 and LPT1-LPT3).
+The <parameter>port</parameter> input is a string that is the name of the port you wish to open (for example, COM1-COM4 and LPT1-LPT3).
 </para>
 
 <para>

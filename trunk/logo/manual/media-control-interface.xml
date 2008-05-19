@@ -59,7 +59,7 @@ If you specify <userinput>wait</userinput> and then realize that you don't want 
 <para>
 If you don't want to wait for a command to finish, but would like to be notified when it does, you can specify the <userinput>notify</userinput> flag.
 In this case, you must also specify an instruction list as the second input to MCI.
-The following code uses the <userinput>notify</userinput> parameter to print out a message when a CD audio track has stopped playing.
+The following code uses the <userinput>notify</userinput> flag to print out a message when a CD audio track has stopped playing.
 </para>
 
 <programlisting><userinput>(MCI [play cdaudio from 2 to 3 notify] [print [Track 2 has finished playing]])</userinput></programlisting>

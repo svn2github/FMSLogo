@@ -14,7 +14,7 @@
 <listitem>
 <para>
 Outputs a word or list, depending on the type of the <parameter>data</parameter> input, containing a subset of the members (for a list) or characters (for a word) of the input.
-The <parameter>conditiontemplate</parameter> parameter is evaluated once for each member or character of the data, and it must produce a TRUE or FALSE value.
+The <parameter>conditiontemplate</parameter> input is evaluated once for each member or character of the data, and it must produce a TRUE or FALSE value.
 If the value is TRUE, then the corresponding input constituent is included in the output.
 Otherwise, it is omitted.
 </para>

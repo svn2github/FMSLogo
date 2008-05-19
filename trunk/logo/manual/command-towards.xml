@@ -13,8 +13,8 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-Outputs the heading in degrees, at which the turtle should be headed so that it would point from its current position towards the position given as the argument.
-The position must be given as a two element list containing the X and Y coordinates of the position to face.
+Outputs the heading in degrees, at which the turtle should be headed so that it would point from its current position towards the <parameter>position</parameter> input.
+The <parameter>position</parameter> input must be given as a two element list containing the X and Y coordinates of the position to face.
 </para>
 </listitem>
 </varlistentry>

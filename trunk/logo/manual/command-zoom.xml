@@ -14,8 +14,8 @@
 <listitem>
 <para>
 This command allows &PRODUCTNAME; to control the scale of the "Screen" window.
-The argument is the amount to zoom (scale) by.
-A number greater than 1.0 makes things bigger (for example, 2.0 makes it 2 times bigger), a number smaller than 1.0 makes things smaller (0.5 makes it half as big).
+The <parameter>scale</parameter> input is the amount to zoom (scale) by.
+A number greater than 1.0 makes things bigger (for example, 2.0 makes it twice as big), a number smaller than 1.0 makes things smaller (0.5 makes it half as big).
 If an existing image is on the screen when you zoom it will be stretched or squeezed according to the zoom.
 The resulting image may look a little jagged, but if you "draw" while zoomed things will not be as jagged.
 </para>

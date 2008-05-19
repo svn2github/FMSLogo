@@ -13,8 +13,8 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-Sets the pen's position, mode, and hardware-dependent characteristics according to the information in the <parameter>characteristics</parameter> parameter.
-The characteristics parameter is a list with the following members: [PENDOWNP PENMODE PENSIZE PENCOLOR PENPAINT].
+Sets the pen's position, mode, and hardware-dependent characteristics according to the information in the <parameter>characteristics</parameter> input.
+The characteristics input is a list with the following members: [PENDOWNP PENMODE PENSIZE PENCOLOR PENPAINT].
 The format of this list may change in futures version of &PRODUCTNAME;, as additional pen characteristics are added.
 To guarantee portability, the input should be taken from an earlier invocation of <link linkend="command-pen">PEN</link>.
 </para>

@@ -14,7 +14,7 @@
 <listitem>
 <para>
 Reads one byte from the port specified by <parameter>portid</parameter> and output the data as an integer.
-The <parameter>portid</parameter> parameter specifies a "Hardware" port.
+The <parameter>portid</parameter> input specifies a "Hardware" port.
 Do not confuse this command with <link linkend="command-portopen">PORTOPEN</link> and <link linkend="command-portreadchar">PORTREADCHAR</link> which are for communications through the serial and parallel ports.
 </para>
 
