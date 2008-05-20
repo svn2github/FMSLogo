@@ -50,6 +50,7 @@ $main::TotalWarnings = 0;
   'function',         # use "procedure", "command", or "operation" instead
   'parameter',        # use "input", instead
   'argument',         # use "input", instead
+  'execute',          # use "run", instead
 );
 
 my %Commands = ();
@@ -241,6 +242,8 @@ $Exceptions{'command-erps.xml'}{'allcaps'}{'BAR'}  = 1;
 $Exceptions{'command-erps.xml'}{'allcaps'}{'FOO'}  = 1;
 
 $Exceptions{'command-error.xml'}{'allcaps'}{'MYPROGRAM'}   = 1;
+
+$Exceptions{'command-halt.xml'}{'bannedword'}{'execute'}   = 1;
 
 $Exceptions{'command-files.xml'}{'allcaps'}{'LOGO.HLP'}    = 1;
 $Exceptions{'command-files.xml'}{'allcaps'}{'LICENSE.TXT'} = 1;
@@ -489,6 +492,7 @@ $Exceptions{'command-windowset.xml'}{'allcaps'}{'HIDEANDRESTORE'} = 1;
 $Exceptions{'command-yield.xml'}{'allcaps'}{'CPU'}     = 1;
 
 $Exceptions{'commander.xml'}{'allcaps'}{'ENTER'}       = 1;
+$Exceptions{'commander.xml'}{'bannedword'}{'execute'}  = 1;
 
 $Exceptions{'commandline-options.xml'}{'allcaps'}{'OK'}   = 1;
 $Exceptions{'commandline-options.xml'}{'logo'}            = 1;

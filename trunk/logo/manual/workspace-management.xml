@@ -120,7 +120,8 @@ You can use these procedures to erase, bury, unbury, and edit other procedures.
 </para>
 
 <para>
-If a thing is erased, it is completely removed from the workspace.  It is no longer usable or callable.
+If a thing is erased, it is completely removed from the workspace.
+It is no longer usable or callable.
 </para>
 
 <para>
@@ -131,7 +132,7 @@ However, buried things are still usable; a buried procedure can still be called 
 
 <para>
 Typically, items are buried to keep them from cluttering up the workspace.
-For example, all Logolib routines bury themselves after they are called so that they don't show up when you execute <link linkend="command-edall">EDALL</link>.
+For example, all Logolib routines bury themselves after they are called so that they don't show up when you run <link linkend="command-edall">EDALL</link>.
 </para>
 
 <para>

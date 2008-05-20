@@ -41,7 +41,7 @@ After that, <parameter>sendready</parameter> is run when &PRODUCTNAME; is ready 
 </para>
 
 <para>
-The <parameter>receiveready</parameter> input is an instruction list (a list of instructions or a procedure name) to execute when data are available.
+The <parameter>receiveready</parameter> input is an instruction list (a list of instructions or a procedure name) to run when data are available.
 &PRODUCTNAME; runs it whenever data is received and is ready to be read.
 </para>
 

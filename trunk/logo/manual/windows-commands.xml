@@ -298,7 +298,7 @@ TO SETUP
 
 END
 
-; Execute this routine when "Draw" button pushed
+; run this procedure when "Draw" button pushed
 TO DRAWTHING
   SETPENCOLOR (LIST SCROLLBARGET "s1 0 0)  ; Ask scrollbar what to setpencolor to
 
@@ -309,7 +309,7 @@ TO DRAWTHING
   IF EQUALP [Triangle] LISTBOXGETSELECT "l1 [REPEAT 3 [FORWARD 100 RIGHT 120]]
 END
 
-; execute this routine when End button is pushed
+; run this routine when End button is pushed
 TO MYEND
   ; For modeless example use this
   WINDOWDELETE "d1
@@ -318,7 +318,7 @@ TO MYEND
   ; DIALOGDELETE "d1
 END
 
-; execute this routine when red scroll bar is adjusted
+; run this procedure when red scroll bar is adjusted
 TO MYRED
   STATICUPDATE "st11 SENTENCE [Red] SCROLLBARGET "s1 ; Update static label of position
 END

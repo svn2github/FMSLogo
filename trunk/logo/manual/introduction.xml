@@ -26,8 +26,8 @@ What is an interpreted language?
 </para>
 
 <para>
-An interpreted language does not get compiled; instead, as each line is read by the interpreter it executes it.
-This is a slow process to execute (on the fly) like this, but has the advantage of not requiring a complete compile for each change.
+An interpreted language does not get compiled; instead, the interpreter runs each line of code as it reads it.
+This is a slow process, but it has the advantage of not requiring a complete compile for each change.
 It's ideal in a learning environment.
 </para>
 
