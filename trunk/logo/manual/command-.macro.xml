@@ -53,7 +53,7 @@ This procedure works as written, but if MY.REPEAT is used instead of REPEAT, it 
 
 <para>
 The solution is to make MY.REPEAT a macro.
-Instead of carrying out the computation, a macro must return a list containing instructions.
+Instead of carrying out the computation, a macro must output a list containing instructions.
 The contents of that list are evaluated as if they appeared in place of the call to the macro.
 Here's a macro version of REPEAT:
 

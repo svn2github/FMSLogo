@@ -268,7 +268,7 @@ Instead, the logic is broken into small chunks and is executed in response to "e
 <para>
 The example can create both a modal and a modeless window.
 If it uses a modeless window, then SETUP can be called after the WINDOWCREATE returns.
-If it uses a modal window, then SETUP is called during the DIALOGCREATE because DIALOGCREATE does not return until the window is closed.
+If it uses a modal window, then SETUP is called during the DIALOGCREATE because DIALOGCREATE does not stop until the window is closed.
 </para>
 
 <programlisting>TO WIN

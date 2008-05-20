@@ -37,7 +37,7 @@ The meaning is given by the following table:
     <tbody>
       <row>
          <entry><userinput>0</userinput></entry>
-         <entry>Synchronous does not return until completed.</entry>
+         <entry>Synchronous does not stop until completed.</entry>
       </row>
       <row>
          <entry><userinput>1</userinput></entry>

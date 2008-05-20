@@ -16,7 +16,7 @@
 Creates a window that is suitable for use as a dialog box.
 A dialog window is used as the framework to which you add other window objects or controls (sometimes called widgets).
 You can add things such as buttons, scrollbars, listboxes, etc. to the dialog.
-This command is similar to <link linkend="command-windowcreate">WINDOWCREATE</link> except it will not return to the caller until the dialog is closed (see <link linkend="windows-modal-vs-modeless">Modal vs. Modeless</link>).
+This command is similar to <link linkend="command-windowcreate">WINDOWCREATE</link> except that it will not stop until the dialog is closed (see <link linkend="windows-modal-vs-modeless">Modal vs. Modeless</link>).
 </para>
 
 <para>
@@ -50,7 +50,7 @@ The <parameter>height</parameter> input is the height of the new dialog, in pixe
 
 <para>
 The <parameter>setup</parameter> input is an instruction list to run when the dialog is created.
-You should create and add child controls in the <parameter>setup</parameter> instruction list because DIALOGCREATE will not return until the dialog is closed.
+You should create and add child controls in the <parameter>setup</parameter> instruction list because DIALOGCREATE will not stop until the dialog is closed.
 Be sure to add at least one button that will call <link linkend="command-dialogdelete">DIALOGDELETE</link> on this window, such as OK, End, Close, or Cancel.
 </para>
 
@@ -60,7 +60,7 @@ Be sure to add at least one button that will call <link linkend="command-dialogd
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>TO MYSETUP
+<programlisting><userinput>TO MYSETUP
   BUTTONCREATE "mydialog "myok "OK 25 25 50 25 [DIALOGDELETE "mydialog]
 END
 

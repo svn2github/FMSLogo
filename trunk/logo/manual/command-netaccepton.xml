@@ -17,7 +17,7 @@ Enables you to accept a connection over the network on the <parameter>socket</pa
 To obtain the data received call <link linkend="command-netacceptreceivevalue">NETACCEPTRECEIVEVALUE</link> in your <parameter>receiveready</parameter> code.
 To turn off accept call <link linkend="command-netacceptoff">NETACCEPTOFF</link>.
 When data are available, &PRODUCTNAME; will run the <parameter>receiveready</parameter> instruction list.
-When you actually send data with <link linkend="command-netacceptsendvalue">NETACCEPTSENDVALUE</link> it might return false (meaning that it's not ready to send).
+When you actually send data with <link linkend="command-netacceptsendvalue">NETACCEPTSENDVALUE</link> it might output FALSE (meaning that it's not ready to send).
 If this happens you must wait until &PRODUCTNAME; runs the <parameter>sendready</parameter> instruction list before trying to send the data again.
 Note you cannot just send data from the <parameter>sendready</parameter> callback, it won't be run unless the previous send was blocked.
 </para>

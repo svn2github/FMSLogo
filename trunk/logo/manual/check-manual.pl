@@ -52,6 +52,7 @@ $main::TotalWarnings = 0;
   'parameter',        # use "input", instead
   'argument',         # use "input", instead
   'execute',          # use "run", instead
+  'return',           # use "output", instead
 );
 
 my %Commands = ();
@@ -216,6 +217,7 @@ $Exceptions{'command-dllcall.xml'}{'allcaps'}{'TCHAR'}  = 1;
 $Exceptions{'command-dllcall.xml'}{'bannedword'}{'function'}  = 1;
 $Exceptions{'command-dllcall.xml'}{'bannedword'}{'parameter'} = 1;
 $Exceptions{'command-dllcall.xml'}{'bannedword'}{'argument'}  = 1;
+$Exceptions{'command-dllcall.xml'}{'bannedword'}{'return'}    = 1;
 
 $Exceptions{'command-dllfree.xml'}{'allcaps'}{'DLL'}  = 1;
 
@@ -599,7 +601,8 @@ $Exceptions{'multimedia-commands.xml'}{'allcaps'}{'LSB'}  = 1;
 $Exceptions{'multimedia-commands.xml'}{'allcaps'}{'MIDI'} = 1;
 $Exceptions{'multimedia-commands.xml'}{'allcaps'}{'MSB'}  = 1;
 
-$Exceptions{'tokenization.xml'}{'logo'} = 1;
+$Exceptions{'tokenization.xml'}{'logo'}                 = 1;
+$Exceptions{'tokenization.xml'}{'bannedword'}{'return'} = 1;
 
 # translation tables are completely exempt
 $Exceptions{'translations-1031.xml'}  = 1;

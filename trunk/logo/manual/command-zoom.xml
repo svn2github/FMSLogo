@@ -22,7 +22,7 @@ The resulting image may look a little jagged, but if you "draw" while zoomed thi
 
 <para>
 Even though things may appear jagged &PRODUCTNAME; remembers everything as if zoom was normal (1.0) and only prints in normal.
-Once you return to zoom of 1.0 your image will not be stretched or squeezed to fit again.
+Once you zoom back to a scale of 1.0, your image will not be stretched or squeezed to fit again.
 In other words, in a zoom of 1.0 lines never get jagged even if you drew them at zoom 0.5 or 2.0.
 </para>
 

@@ -16,7 +16,7 @@
 Enable you to initiate a connection over the network to the <parameter>socket</parameter> at <parameter>machinename</parameter>.
 To turn off the connection call <link linkend="command-netconnectoff">NETCONNECTOFF</link>.
 To obtain the data received call <link linkend="command-netconnectreceivevalue">NETCONNECTRECEIVEVALUE</link> in your <parameter>receiveready</parameter> instruction list.
-When you actually send data with <link linkend="command-netconnectsendvalue">NETCONNECTSENDVALUE</link> it might return FALSE (meaning that it's not ready to send).
+When you actually send data with <link linkend="command-netconnectsendvalue">NETCONNECTSENDVALUE</link> it might output FALSE (meaning that it's not ready to send).
 If this happens you must wait until the <parameter>sendready</parameter> callback code is run before trying to send the data again.
 Note you cannot just send data from the <parameter>sendready</parameter> callback code, it won't be run unless the previous send was blocked.
 </para>

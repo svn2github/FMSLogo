@@ -16,7 +16,7 @@
 Removes (deletes) a directory named <parameter>directoryname</parameter>.
 The <parameter>directoryname</parameter> input must be a word (a name of an existing directory).
 You cannot remove a directory if it is your working directory.
-You cannot remove a directory that contains files or other directories (both <link linkend="command-files">FILES</link> and <link linkend="command-directories">DIRECTORIES</link> must return the empty list when it is your working directory).
+You cannot remove a directory that contains files or other directories (both <link linkend="command-files">FILES</link> and <link linkend="command-directories">DIRECTORIES</link> must output the empty list when it is your working directory).
 </para>
 </listitem>
 </varlistentry>
