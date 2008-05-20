@@ -16,7 +16,7 @@
 Sets the pixel under the turtle to the color described by <parameter>colorvector</parameter>.
 The <parameter>colorvector</parameter> input must be a three element list of [red green blue] intensities, each of which must be an integer from 0 to 255.
 For an explanation of color vectors see <link linkend="using-color">Using Color</link>.
-SETPIXEL is similar to running <userinput>SETPENSIZE 1 SETPENCOLOR colorvector PENPAINT FORWARD 0</userinput>, except that SETPIXL is faster and doesn't affect the pen state.
+SETPIXEL is similar to running <userinput>SETPENSIZE 1 SETPENCOLOR colorvector PENPAINT FORWARD 0</userinput>, except that SETPIXEL is faster and doesn't affect the pen state.
 </para>
 
 <para>
