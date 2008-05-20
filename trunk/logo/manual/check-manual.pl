@@ -53,6 +53,7 @@ $main::TotalWarnings = 0;
   'argument',         # use "input", instead
   'execute',          # use "run", instead
   'return',           # use "output", instead
+  'constituent',      # use "item" or "member", instead
 );
 
 my %Commands = ();

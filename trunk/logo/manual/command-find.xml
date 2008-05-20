@@ -13,8 +13,8 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-Outputs the first constituent of the <parameter>data</parameter> input (the first member of a list, or the first character of a word) for which the value produced by evaluating <parameter>conditiontemplate</parameter> with that constituent in its slot is TRUE.
-If there is no such constituent, the empty list is output.
+Outputs the first item of the <parameter>data</parameter> input for which the value produced by evaluating <parameter>conditiontemplate</parameter> with that item in its slot is TRUE.
+If there is no such item, then FIND outputs the empty list.
 </para>
 
 <para>
