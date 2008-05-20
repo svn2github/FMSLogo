@@ -48,6 +48,7 @@ $main::TotalWarnings = 0;
   'terminal',         # use "the Commander", instead
   'multidimensional', # use "multi-dimensional", instead
   'function',         # use "procedure", "command", or "operation" instead
+  'routine',          # use "procedure", instead
   'parameter',        # use "input", instead
   'argument',         # use "input", instead
   'execute',          # use "run", instead
