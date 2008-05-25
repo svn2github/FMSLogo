@@ -14,7 +14,7 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-Command that evaluates the <parameter>templatelist</parameter> repeatedly, once for each element of the datalist.
+Command that evaluates the <parameter>templatelist</parameter> repeatedly, once for each item in <parameter>datalist</parameter>.
 If more than one data list is given, each of them must be the same length.
 If the data inputs are words, then the template is evaluated once for each character.
 </para>

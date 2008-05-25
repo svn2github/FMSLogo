@@ -14,7 +14,7 @@
 <listitem>
 <para>
 Outputs a number, the distance the turtle must travel along a straight line to reach a 3D coordinate.
-The position must be given as a three element list containing the X, Y, and Z coordinates of the position to face.
+The <parameter>position</parameter> input must be a three item list containing the position's X, Y, and Z coordinates.
 </para>
 <para>
 This command is designed to run in <link linkend="command-perspective">PERSPECTIVE</link> mode.

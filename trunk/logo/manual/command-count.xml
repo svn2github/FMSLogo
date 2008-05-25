@@ -13,8 +13,8 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-Outputs the number of characters in <parameter>thing</parameter>, if <parameter>thing</parameter> is a word; outputs the number of members or elements in <parameter>thing</parameter>, if it is a list or an array.
-(For an array, this may or may not be the index of the last element, depending on the array's origin.)
+Outputs the number of characters in <parameter>thing</parameter>, if <parameter>thing</parameter> is a word; outputs the number of items in <parameter>thing</parameter>, if it is a list or an array.
+(For an array, this may or may not be the index of the last item, depending on the array's origin.)
 </para>
 </listitem>
 </varlistentry>

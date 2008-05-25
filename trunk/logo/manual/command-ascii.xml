@@ -17,7 +17,7 @@ Outputs the number from 0-255 that represents <parameter>character</parameter> i
 </para>
 
 <para>
-ASCII interprets control characters as representing backslashed punctuation and returns the character code corresponding to the punctuation character without the backslash.
+ASCII interprets control characters as representing backslashed punctuation and outputs the character code corresponding to the punctuation character without the backslash.
 </para>
 
 <para>

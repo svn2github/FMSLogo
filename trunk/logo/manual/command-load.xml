@@ -13,7 +13,7 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-Reads instructions from the file named <parameter>filename</parameter> and executes them.
+Reads instructions from the file named <parameter>filename</parameter> and runs them.
 The file can include procedure definitions with <link linkend="command-to">TO</link>, and these are accepted even if a procedure by the same name already exists.
 If the file assigns a list value to a variable named <link linkend="command-startup">STARTUP</link>, then that list is <link linkend="command-run">RUN</link> as an instruction list after the file is loaded.
 </para>

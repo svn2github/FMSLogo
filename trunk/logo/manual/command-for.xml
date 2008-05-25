@@ -62,7 +62,7 @@ FOR is complete when the sign of (current - limit) is the same as the sign of th
 <para>
 If no "step size" is provided, the <parameter>instructionlist</parameter> is always run at least once.
 An explicit step size can lead to a zero-trip FOR, (for example, <userinput>FOR [I 1 0 1] [<replaceable>...</replaceable>]</userinput>).
-Otherwise, <parameter>instructionlist</parameter> is run, then the step size is added to the current value of the control variable and FOR returns to the comparison step.
+Otherwise, <parameter>instructionlist</parameter> is run, then the control variable is incremented by the step size and FOR returns to the comparison step.
 </para>
 
 <para>

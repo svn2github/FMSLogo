@@ -132,7 +132,7 @@ However, buried things are still usable; a buried procedure can still be called 
 
 <para>
 Typically, items are buried to keep them from cluttering up the workspace.
-For example, all Logolib routines bury themselves after they are called so that they don't show up when you run <link linkend="command-edall">EDALL</link>.
+For example, all Logolib procedures bury themselves after they are called so that they don't show up when you run <link linkend="command-edall">EDALL</link>.
 </para>
 
 <para>

@@ -13,8 +13,8 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-Outputs the size of the pen as a two element list containing [Width Height].
-The width element is ignored by &PRODUCTNAME;.
+Outputs the size of the pen as a list with two items: [Width Height].
+The width item is ignored by &PRODUCTNAME;.
 </para>
 
 </listitem>

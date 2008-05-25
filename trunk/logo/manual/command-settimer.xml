@@ -41,7 +41,7 @@ Each timer <parameter>id</parameter> can have different values for <parameter>ca
 <varlistentry><term>Example</term>
 <listitem>
 <programlisting><userinput>SETTIMER 1 200 [SETPENCOLOR (LIST RANDOM 256 RANDOM 256 RANDOM 256)]</userinput>
-<replaceable>&PRODUCTNAME; returns and the timer changes the pen color randomly every 200 milliseconds.</replaceable>
+<replaceable>&PRODUCTNAME; is ready to run more instructions and the timer changes the pen color randomly every 200 milliseconds.</replaceable>
 <userinput>REPEAT 72 [REPEAT 4 [FORWARD 100 RIGHT 90] RIGHT 5]
 CLEARTIMER 1</userinput>
 </programlisting>

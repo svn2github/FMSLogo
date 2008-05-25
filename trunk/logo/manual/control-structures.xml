@@ -143,8 +143,8 @@ END</userinput></programlisting>
 
 <para>
 The third form of template is "named-slot" or "lambda" form.
-This form is indicated by a template list containing more than one element, whose first element is itself a list.
-The first element is taken as a list of names; local variables are created with those names and given the available data in order as their values.
+This form is indicated by a template list containing more than one item, whose first item is itself a list.
+The first item is taken as a list of names; local variables are created with those names and given the available data in order as their values.
 The number of names must equal the number of available data.
 This form is needed when one iteration tool is used within the template list of another, and the ? notation would be ambiguous in the inner template.
 </para>

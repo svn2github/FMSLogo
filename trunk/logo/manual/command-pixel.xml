@@ -14,7 +14,7 @@
 <listitem>
 
 <para>
-Outputs a three element list of numbers that represent the red, green, and blue intensity of the pixel currently under the turtle.
+Outputs a three item list of numbers that represent the red, green, and blue intensities of the pixel that is currently under the turtle.
 For an explanation of a color vector see <link linkend="using-color">Using Color</link>.
 </para>
 

@@ -19,7 +19,7 @@ Outputs FALSE, otherwise.
 </para>
 
 <para>
-If <parameter>thing2</parameter> is a list or an array, outputs TRUE if <parameter>thing1</parameter> is <link linkend="command-equalp">EQUALP</link> to a member or element of <parameter>thing2</parameter>, FALSE otherwise.
+If <parameter>thing2</parameter> is a list or an array, outputs TRUE if <parameter>thing1</parameter> is <link linkend="command-equalp">EQUALP</link> to an item of <parameter>thing2</parameter>, FALSE otherwise.
 </para>
 
 <para>

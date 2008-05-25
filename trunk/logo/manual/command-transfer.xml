@@ -21,7 +21,7 @@ When all input has been processed, TRANSFER outputs the "out basket".
 </para>
 
 <para>
-In the template, the symbol <userinput>?IN</userinput> represents the current element from <parameter>inbasket</parameter>; the symbol <userinput>?OUT</userinput> represents the entire current "out basket".
+In the template, the symbol <userinput>?IN</userinput> represents the current item from <parameter>inbasket</parameter>; the symbol <userinput>?OUT</userinput> represents the entire current "out basket".
 Other slot symbols should not be used.
 </para>
 

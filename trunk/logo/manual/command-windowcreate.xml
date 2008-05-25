@@ -16,7 +16,7 @@
 Creates a window.
 A window is used as the framework to which you add other window objects or controls (sometimes called widgets).
 You can add things such as buttons, scrollbars, listboxes, etc. to the window.
-The window created by WINDOWCREATE is modeless, which means that it WINDOWCREATE returns before the window is destroyed.
+The window created by WINDOWCREATE is modeless, which means that WINDOWCREATE stops before the window is destroyed.
 See <link linkend="windows-modal-vs-modeless">Modal vs. Modeless</link> for more details.
 </para>
 

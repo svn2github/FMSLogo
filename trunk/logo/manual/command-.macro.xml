@@ -83,7 +83,7 @@ For this example, MY.REPEAT will output the instruction list
 </para>
 
 <para>
-&PRODUCTNAME; then executes these instructions in place of the original invocation of MY.REPEAT; this prints "hello" once and invokes another repetition.
+&PRODUCTNAME; then runs these instructions in place of the original invocation of MY.REPEAT; this prints "hello" once and invokes another repetition.
 </para>
 
 

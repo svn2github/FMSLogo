@@ -12,13 +12,13 @@
 
 <varlistentry><term>Description</term>
 <listitem>
-    <para>Outputs a list equal to <parameter>list</parameter> with <parameter>thing</parameter> added as the last element.</para>
+<para>Outputs a list equal to <parameter>list</parameter> with <parameter>thing</parameter> added as the last item.</para>
 </listitem>
 </varlistentry>
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>SHOW LPUT 4 [1 2 3]</userinput>
+<programlisting><userinput>SHOW LPUT 4 [1 2 3]</userinput>
 [1 2 3 4]</programlisting>
 </listitem>
 </varlistentry>

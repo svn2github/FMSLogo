@@ -27,13 +27,13 @@ The easiest way to use fonts in &PRODUCTNAME; is to set the desired font using t
 
 <para>
 The <parameter>font</parameter> input must be a list of the form: <userinput>[[FaceName] Height Width Orientation Weight Italic Underline StrikeOut CharSet OutPrecision ClipPrecision Quality PitchAndFamily]</userinput>.
-The meaning of each of the list elements is explained in the following table:
+The meaning of each item within the list is explained by the following table:
 
 <informaltable frame='all'>
   <tgroup cols='2'>
     <thead>
       <row>
-        <entry>Element</entry>
+        <entry>Item</entry>
         <entry>Meaning</entry>
       </row>
     </thead>

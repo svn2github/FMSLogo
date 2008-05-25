@@ -15,7 +15,7 @@
 <para>
 Outputs the size (width and height) of the given text if it were rendered with the <link linkend="command-label">LABEL</link> command.
 The input may be a word or a list.
-The output is a two element list [width height].
+The output is a two item list [width height].
 </para>
 
 <para>

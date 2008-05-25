@@ -15,7 +15,7 @@
 
 <para>
 Output the position of the mouse at the time the last mouse event was generated.
-The position is given as a two element list: [X, Y].
+The position is given as a list with two items: [X, Y].
 The mouse must first be turned on by calling <link linkend="command-mouseon">MOUSEON</link>.
 </para>
 

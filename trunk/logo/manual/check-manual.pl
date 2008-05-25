@@ -48,12 +48,21 @@ $main::TotalWarnings = 0;
   'terminal',         # use "the Commander", instead
   'multidimensional', # use "multi-dimensional", instead
   'function',         # use "procedure", "command", or "operation" instead
+  'functions',        # use "procedures", "commands", or "operations" instead
   'routine',          # use "procedure", instead
+  'routines',         # use "procedures", instead
   'parameter',        # use "input", instead
+  'parameters',       # use "inputs", instead
   'argument',         # use "input", instead
+  'arguments',        # use "inputs", instead
   'execute',          # use "run", instead
+  'executes',         # use "runs", instead
   'return',           # use "output", instead
+  'returns',          # use "outputs", instead
   'constituent',      # use "item" or "member", instead
+  'constituents',     # use "items" or "members", instead
+  'element',          # use "item" or "member", instead
+  'elements',         # use "item" or "member", instead
 );
 
 my %Commands = ();
@@ -151,6 +160,10 @@ $Exceptions{'command-.setfirst.xml'}{'allcaps'}{'WARNING'}  = 1;
 
 $Exceptions{'command-.setitem.xml'}{'allcaps'}{'WARNING'}   = 1;
 
+$Exceptions{'command-array.xml'}{'bannedword'}{'element'}        = 1;
+$Exceptions{'command-arraytolist.xml'}{'bannedword'}{'element'}  = 1;
+$Exceptions{'command-arraytolist.xml'}{'bannedword'}{'elements'} = 1;
+
 $Exceptions{'command-backtick.xml'}{'propername'}         = '`';
 
 $Exceptions{'command-beforep.xml'}{'allcaps'}{'ABC'}      = 1;
@@ -215,14 +228,17 @@ $Exceptions{'command-dllcall.xml'}{'allcaps'}{'DOUBLE'} = 1;
 $Exceptions{'command-dllcall.xml'}{'allcaps'}{'DWORD'}  = 1;
 $Exceptions{'command-dllcall.xml'}{'allcaps'}{'LPSTR'}  = 1;
 $Exceptions{'command-dllcall.xml'}{'allcaps'}{'TCHAR'}  = 1;
-$Exceptions{'command-dllcall.xml'}{'bannedword'}{'function'}  = 1;
-$Exceptions{'command-dllcall.xml'}{'bannedword'}{'parameter'} = 1;
-$Exceptions{'command-dllcall.xml'}{'bannedword'}{'argument'}  = 1;
-$Exceptions{'command-dllcall.xml'}{'bannedword'}{'return'}    = 1;
+$Exceptions{'command-dllcall.xml'}{'bannedword'}{'function'}   = 1;
+$Exceptions{'command-dllcall.xml'}{'bannedword'}{'functions'}  = 1;
+$Exceptions{'command-dllcall.xml'}{'bannedword'}{'parameter'}  = 1;
+$Exceptions{'command-dllcall.xml'}{'bannedword'}{'parameters'} = 1;
+$Exceptions{'command-dllcall.xml'}{'bannedword'}{'argument'}   = 1;
+$Exceptions{'command-dllcall.xml'}{'bannedword'}{'return'}     = 1;
 
 $Exceptions{'command-dllfree.xml'}{'allcaps'}{'DLL'}  = 1;
 
-$Exceptions{'command-dllload.xml'}{'allcaps'}{'DLL'}  = 1;
+$Exceptions{'command-dllload.xml'}{'allcaps'}{'DLL'}           = 1;
+$Exceptions{'command-dllload.xml'}{'bannedword'}{'functions'}  = 1;
 
 $Exceptions{'command-edall.xml'}{'allcaps'}{'MYPROGRAM'}  = 1;
 
@@ -259,8 +275,12 @@ $Exceptions{'command-fill.xml'}{'allcaps'}{'SQUARE'}  = 1;
 $Exceptions{'command-filter.xml'}{'allcaps'}{'?REST'}  = 1;
 $Exceptions{'command-filter.xml'}{'allcaps'}{'VOWELP'} = 1;
 
+$Exceptions{'command-first.xml'}{'bannedword'}{'element'} = 1;
+
 $Exceptions{'command-find.xml'}{'allcaps'}{'?REST'}  = 1;
 $Exceptions{'command-find.xml'}{'allcaps'}{'MYFIND'} = 1;
+
+$Exceptions{'command-for.xml'}{'bannedword'}{'returns'} = 1;
 
 $Exceptions{'command-foreach.xml'}{'allcaps'}{'?REST'} = 1;
 
@@ -279,6 +299,8 @@ $Exceptions{'command-goto.xml'}{'allcaps'}{'STATES'} = 1;
 
 $Exceptions{'command-groupboxcreate.xml'}{'allcaps'}{'CHECKONTHINGS'} = 1;
 
+$Exceptions{'command-halt.xml'}{'bannedword'}{'returns'} = 1;
+
 $Exceptions{'command-icon.xml'}{'allcaps'}{'HIDEANDSHOW'}  = 1;
 
 $Exceptions{'command-if.xml'}{'allcaps'}{'MAX'}  = 1;
@@ -290,6 +312,8 @@ $Exceptions{'command-iffalse.xml'}{'allcaps'}{'MYTEST'}  = 1;
 $Exceptions{'command-iftrue.xml'}{'allcaps'}{'MYTEST'}  = 1;
 
 $Exceptions{'command-ignore.xml'}{'allcaps'}{'MYPROGRAM'}  = 1;
+
+$Exceptions{'command-item.xml'}{'bannedword'}{'element'}  = 1;
 
 $Exceptions{'command-keyboardon.xml'}{'bannedword'}{'function'} = 1;
 
@@ -306,6 +330,8 @@ $Exceptions{'command-labelsize.xml'}{'allcaps'}{'VERTICALLABEL'} = 1;
 $Exceptions{'command-listboxaddstring.xml'}{'allcaps'}{'DODRAW'} = 1;
 
 $Exceptions{'command-listboxgetselect.xml'}{'allcaps'}{'DODRAW'} = 1;
+
+$Exceptions{'command-listtoarray.xml'}{'bannedword'}{'elements'} = 1;
 
 $Exceptions{'command-load.xml'}{'allcaps'}{'MYPROGRAM1'} = 1;
 $Exceptions{'command-load.xml'}{'allcaps'}{'MYPROGRAM2'} = 1;
@@ -348,6 +374,8 @@ $Exceptions{'command-netconnecton.xml'}{'allcaps'}{'TCP'}   = 1;
 
 $Exceptions{'command-netstartup.xml'}{'allcaps'}{'DNS'}  = 1;
 
+$Exceptions{'command-notequalp.xml'}{'bannedword'}{'elements'}  = 1;
+
 $Exceptions{'command-noyield.xml'}{'allcaps'}{'CPU'}     = 1;
 
 $Exceptions{'command-openappend.xml'}{'allcaps'}{'LF'}   = 1;
@@ -369,7 +397,8 @@ $Exceptions{'command-pause.xml'}{'allcaps'}{'OK'} = 1;
 
 $Exceptions{'command-perspective.xml'}{'allcaps'}{'GROW.LGO'} = 1;
 
-$Exceptions{'command-playwave.xml'}{'allcaps'}{'WAVE'} = 1;
+$Exceptions{'command-playwave.xml'}{'allcaps'}{'WAVE'}       = 1;
+$Exceptions{'command-playwave.xml'}{'bannedword'}{'returns'} = 1;
 
 $Exceptions{'command-pllist.xml'}{'allcaps'}{'BAR'} = 1;
 $Exceptions{'command-pllist.xml'}{'allcaps'}{'FOO'} = 1;
@@ -466,6 +495,7 @@ $Exceptions{'command-throw.xml'}{'allcaps'}{'MYPROGRAM1'}  = 1;
 $Exceptions{'command-throw.xml'}{'allcaps'}{'MYPROGRAM2'}  = 1;
 $Exceptions{'command-throw.xml'}{'allcaps'}{'SYSTEM'}      = 1;
 $Exceptions{'command-throw.xml'}{'allcaps'}{'TOPLEVEL'}    = 1;
+$Exceptions{'command-throw.xml'}{'bannedword'}{'returns'}  = 1;
 
 $Exceptions{'command-to.xml'}{'allcaps'}{'ECHO'} = 1;
 $Exceptions{'command-to.xml'}{'allcaps'}{'PROC'} = 1;
@@ -526,6 +556,11 @@ $Exceptions{'error-processing.xml'}{'allcaps'}{'VAR'}      = 1;
 $Exceptions{'error-processing.xml'}{'bannedword'}{'function'} = 1;
 
 $Exceptions{'environment-commands.xml'}{'logo'} = 1;
+$Exceptions{'environment-commands.xml'}{'bannedword'}{'elements'} = 1;
+
+$Exceptions{'error-processing.xml'}{'bannedword'}{'returns'} = 1;
+
+$Exceptions{'glossary.xml'}{'bannedword'}{'element'} = 1;
 
 $Exceptions{'introduction.xml'}{'allcaps'}{'FD'}          = 1;
 $Exceptions{'introduction.xml'}{'allcaps'}{'LISP'}        = 1;
@@ -576,6 +611,7 @@ $Exceptions{'media-control-interface.xml'}{'allcaps'}{'PLAY.WAVEFORM'}   = 1;
 $Exceptions{'media-control-interface.xml'}{'allcaps'}{'RECORD.WAVEFORM'} = 1;
 $Exceptions{'media-control-interface.xml'}{'allcaps'}{'TMFS'}            = 1;
 $Exceptions{'media-control-interface.xml'}{'bannedword'}{'parameter'}    = 1;
+$Exceptions{'media-control-interface.xml'}{'bannedword'}{'parameters'}   = 1;
 
 $Exceptions{'networking-commands.xml'}{'allcaps'}{'DNS'}       = 1;
 $Exceptions{'networking-commands.xml'}{'allcaps'}{'FTP'}       = 1;

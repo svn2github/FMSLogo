@@ -13,7 +13,7 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-Outputs the result of applying the template to accumulate the elements of the <parameter>data</parameter> input, two constituents at a time.
+Outputs the result of applying the template to accumulate the items of the <parameter>data</parameter> input, two items at a time.
 </para>
 
 <para>
@@ -25,7 +25,7 @@ Typically, <parameter>template</parameter> is the name of an associative operati
 If the <parameter>data</parameter> input has only one item (member in a list or character in a word), REDUCE outputs that item.
 Otherwise, <parameter>template</parameter> is first applied with <userinput>?1</userinput> filled with the next-to-last item and <userinput>?2</userinput> with the last item.
 Then, if there are more item, the template is applied with <userinput>?1</userinput> filled with the next item to the left and <userinput>?2</userinput> with the result from the previous evaluation.
-This process continues until all constituents have been used.
+This process continues until all items have been used.
 </para>
 
 <para>

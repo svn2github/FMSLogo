@@ -13,8 +13,8 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-Replaces an element in a multi-dimensional array with a new value.
-The element to replace is selected by a list of indices.
+Replaces an item in a multi-dimensional array with a new value.
+The item to replace is selected by a list of indices.
 </para>
 </listitem>
 </varlistentry>

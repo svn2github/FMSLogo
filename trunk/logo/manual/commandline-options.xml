@@ -155,7 +155,7 @@ If procedures are lost or unexpected changes then you should not be using expert
 <para>
 &PRODUCTNAME; allows you to <link linkend="command-load">LOAD</link> one or more filenames on the command line when starting &PRODUCTNAME;.
 These files will be loaded before the interpreter starts reading commands from the commander.
-If you load a file that executes some program that includes a <link linkend="command-bye">BYE</link> command, &PRODUCTNAME; will run that program and exit.
+If you load a file that runs some program that includes a <link linkend="command-bye">BYE</link> instruction, &PRODUCTNAME; will run that program and exit.
 You can therefore write standalone programs in &PRODUCTNAME; and run them as new shortcuts.
 Note, the "-L" switch must follow any other switches.
 </para>

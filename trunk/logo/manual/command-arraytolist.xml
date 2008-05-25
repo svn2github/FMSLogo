@@ -12,8 +12,8 @@
 
 <varlistentry><term>Description</term>
 <listitem>
-   <para>Outputs a list whose members are the elements of the input array.
-The first member of the output is the first element of the array, regardless of the array's origin.</para>
+<para>Outputs a list whose members are the elements of the input array.
+The first item of the output is the first element of the array, regardless of the array's origin.</para>
 </listitem>
 </varlistentry>
 

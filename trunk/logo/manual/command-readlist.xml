@@ -15,7 +15,7 @@
 <listitem>
 <para>
 Reads a line from the read stream (initially the popup dialog) and outputs that line as a list.
-The line is separated into elements as though it were typed in square brackets in an instruction.
+The line is separated into items as though it were typed in square brackets in an instruction.
 If the read stream is a file and the end of file is reached, then READLIST outputs the empty word (not the empty list).
 </para>
 <para>
