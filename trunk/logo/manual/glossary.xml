@@ -49,6 +49,16 @@ You can remove a list that comes after the one you're interested in, so the list
       </glossdef>
     </glossentry>
 
+    <glossentry id="glossary-element">
+      <glossterm>Element</glossterm>
+      <glossdef>
+        <para>
+An item of an array that is indexed based on the physical layout in memory, instead of by its origin.
+For example, in the array <userinput>{a b c}@0</userinput>, <userinput>b</userinput> is the first item, but the second element.
+        </para>
+      </glossdef>
+    </glossentry>
+
     <glossentry id="glossary-expression">
       <glossterm>Expression</glossterm>
       <glossdef>
