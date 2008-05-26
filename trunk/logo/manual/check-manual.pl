@@ -740,6 +740,14 @@ foreach my $filename (<command-*.xml>) {
 
 
 #
+# Create a single regular expression that can locate all banned words.
+# This reduced the time it takes to run this script from 20 seconds to
+# 3.5 seconds.
+#
+my $bannedWordRegExp = '\b(' . join('|', map {quotemeta($_)} @main::BannedWords) . ')\b';
+
+
+#
 # Process each XML file
 #
 foreach my $filename (<*.xml>) {
@@ -918,15 +926,12 @@ foreach my $filename (<*.xml>) {
     # Strip the XML tags from the line, because banned words,
     # like "parameter" that are DocBook tags are not a violation.
     my $strippedLine = $line;
-    $strippedLine =~ s/<[^>]+>//g;
+    $strippedLine =~ s/<[^>]+>//g;   # remove XML tags
+    $strippedLine =~ s/&[-\.\w]+;//g; # remove character entities
 
-    foreach my $bannedWord (@main::BannedWords) {
-
-      while ($strippedLine =~ m!\b(\Q$bannedWord\E)\b!gi) {
-
-        if (not $Exceptions{$filename}{bannedword}{$bannedWord}) {
-          LogError($filename, $linenumber, "use of banned word: $bannedWord");
-        }
+    if ($strippedLine =~ m/$bannedWordRegExp/i) {
+      if (not $Exceptions{$filename}{bannedword}{lc $1}) {
+        LogError($filename, $linenumber, "use of banned word: $1");
       }
     }
 
