@@ -27,6 +27,8 @@ II. New features/bugs fixed:
     o Fix bug #1959250; SETBITINDEX no longer changes BITINDEX on bad input.
     o Implement request #1542399; FMSLogo is no longer limited to
       1024 turtles or 1024 bitmaps.
+    o Implement request #1377915; FMSLogo manual is now consistent in how it
+      uses terms like "command", "instruction", and "item".
     o Minor updates to the manual.
 
   For a complete history of changes across all versions of FMSLogo, see
