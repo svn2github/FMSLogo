@@ -12,9 +12,13 @@
 
 <varlistentry><term>Description</term>
 <listitem>
+
 <para>
 Reads one byte from the port specified by <parameter>portid</parameter> and output the data as an integer.
 The <parameter>portid</parameter> input specifies a "Hardware" port.
+</para>
+
+<para>
 Do not confuse INPORTB with <link linkend="command-portopen">PORTOPEN</link> and <link linkend="command-portreadchar">PORTREADCHAR</link> which are for communications through the serial and parallel ports.
 </para>
 
