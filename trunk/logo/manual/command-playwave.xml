@@ -53,7 +53,7 @@ The meaning is given by the following table:
       </row>
       <row>
          <entry><userinput>8</userinput></entry>
-         <entry>Continue to loop the sound until another sound command is issued.</entry>
+         <entry>Continue to loop the sound until another PLAYWAVE instruction is run.</entry>
       </row>
       <row>
          <entry><userinput>16</userinput></entry>

@@ -18,7 +18,7 @@ The three inputs are numbers, the X, Y, and Z coordinates to move to.
 </para>
 
 <para>
-This command is designed to run in <link linkend="command-perspective">PERSPECTIVE</link> mode.
+SETXYZ is designed to run in <link linkend="command-perspective">PERSPECTIVE</link> mode.
 </para>
 </listitem>
 </varlistentry>

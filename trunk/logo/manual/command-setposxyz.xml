@@ -15,7 +15,9 @@
 <para>
 Moves the turtle to an absolute X,Y,Z coordinate.
 The <parameter>position</parameter> input is a list of three numbers, the X, Y and Z coordinates.
-This command is designed to run in <link linkend="command-perspective">PERSPECTIVE</link> mode.
+</para>
+<para>
+SETPOSXYZ is designed to run in <link linkend="command-perspective">PERSPECTIVE</link> mode.
 </para>
 </listitem>
 </varlistentry>

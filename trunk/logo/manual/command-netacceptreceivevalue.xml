@@ -14,7 +14,7 @@
 <listitem>
 <para>
 Outputs the value of the last network data received on the accept socket.
-It is best to call this procedure in your <parameter>receiveready</parameter> callback code of your <link linkend="command-netaccepton">NETACCEPTON</link> command.
+It is best to call this procedure in your <parameter>receiveready</parameter> callback code of your <link linkend="command-netaccepton">NETACCEPTON</link> instruction.
 If you don't, then the data will be discarded the next time <parameter>receiveready</parameter> is run.
 </para>
 </listitem>

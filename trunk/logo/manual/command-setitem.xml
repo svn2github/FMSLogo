@@ -14,7 +14,7 @@
 <listitem>
 <para>Replaces the <parameter>index</parameter>-th item of an input array with a new value.</para>
 
-<para>This command will ensure that the resulting array is not circular.
+<para>SETITEM ensures that the resulting array is not circular.
 That is, <parameter>value</parameter> may not be a list or array that contains the same array.</para>
 </listitem>
 </varlistentry>

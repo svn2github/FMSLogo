@@ -17,7 +17,7 @@ Outputs the angle of the turtle's pitch in degrees.
 It is important to <link linkend="understand-your-orientation-in-3D">understand your orientation in 3D</link>.
 </para>
 <para>
-This command is designed to run in <link linkend="command-perspective">PERSPECTIVE</link> mode.
+PITCH is designed to run in <link linkend="command-perspective">PERSPECTIVE</link> mode.
 </para>
 </listitem>
 </varlistentry>

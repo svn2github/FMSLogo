@@ -22,8 +22,8 @@ Note you cannot just send data from the <parameter>sendready</parameter> callbac
 </para>
 
 <para>
-NETCONNECTON outputs TRUE if the command was successful.
-Otherwise it outputs, FALSE.
+NETCONNECTON outputs TRUE if the operation was successful.
+Otherwise, it outputs FALSE.
 </para>
 
 <para>

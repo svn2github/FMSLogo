@@ -17,7 +17,7 @@
 Pitches the turtle's nose upward by the specified angle, measured in degrees (1/360 of a circle).
 </para>
 <para>
-This command is designed to run in <link linkend="command-perspective">PERSPECTIVE</link> mode.
+UPPITCH is designed to run in <link linkend="command-perspective">PERSPECTIVE</link> mode.
 </para>
 </listitem>
 </varlistentry>

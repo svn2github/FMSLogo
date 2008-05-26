@@ -58,9 +58,9 @@ If the formal argument list is "void" then use <userinput>["funcname "v 0]</user
 
 
 <para>
-This command is meant for experienced users and you should be familiar with the Windows calling conventions to use it.
+DLLCALL is meant for experienced users who are familiar with the native Windows calling conventions.
 If you do not properly match the argument list the results will be unpredictable (including crashing Windows).
-This function can handle a wide variety of functions but certainly not all.
+DLLCALL can handle a wide variety of function calls but certainly not all.
 </para>
 
 <para>

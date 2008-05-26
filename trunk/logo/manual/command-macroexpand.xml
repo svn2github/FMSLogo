@@ -13,11 +13,11 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-Command that inputs &GENERICNAME; expression (<parameter>macrocall</parameter>) that invokes a macro and outputs the &GENERICNAME; expression into which the macro would translate the input expression.
+Operation that inputs &GENERICNAME; expression (<parameter>macrocall</parameter>) that invokes a macro and outputs the &GENERICNAME; expression into which the macro would translate the input expression.
 </para>
 
 <para>
-The <parameter>macrocall</parameter> input must be a list that begin with the name of a macro.
+The <parameter>macrocall</parameter> input must be a list that begins with the name of a macro.
 </para>
 </listitem>
 </varlistentry>

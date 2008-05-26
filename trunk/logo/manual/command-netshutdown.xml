@@ -14,7 +14,7 @@
 <listitem>
 <para>
 Turns off networking in &PRODUCTNAME;.
-No network command in &PRODUCTNAME; will work until you call <link linkend="command-netstartup">NETSTARTUP</link> again.
+No network procedure in &PRODUCTNAME; will work until you call <link linkend="command-netstartup">NETSTARTUP</link> again.
 </para>
 </listitem>
 </varlistentry>

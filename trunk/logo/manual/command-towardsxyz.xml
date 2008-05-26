@@ -18,7 +18,7 @@ The position must be given as a three item list containing the X, Y, and Z coord
 It is important to <link linkend="understand-your-orientation-in-3D">understand your orientation in 3D</link>.
 </para>
 <para>
-This command is designed to run in <link linkend="command-perspective">PERSPECTIVE</link> mode.
+TOWARDSXYZ is designed to run in <link linkend="command-perspective">PERSPECTIVE</link> mode.
 </para>
 </listitem>
 </varlistentry>

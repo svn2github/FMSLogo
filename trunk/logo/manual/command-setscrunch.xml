@@ -13,11 +13,11 @@
 <varlistentry><term>Description</term>
 <listitem>
 
-<note><para>This command is not needed to correct display problems, but is available for folks who like to deliberately misadjust the aspect ratio.</para></note>
+<note><para>SETSCRUNCH is not needed to correct display problems, but is available for folks who like to deliberately misadjust the aspect ratio.</para></note>
 
 <para>
 Adjusts the aspect ratio and scaling of the graphics display.
-After this command is used, all further turtle motion will be adjusted by multiplying the horizontal and vertical extent of the motion by the two numbers given as inputs.
+After SETSCRUNCH is used, all further turtle motion will be adjusted by multiplying the horizontal and vertical extent of the motion by the two numbers given as inputs.
 For example, after the instruction "<userinput>SETSCRUNCH 2 1</userinput>" motion at a heading of 45 degrees will move twice as far horizontally as vertically.
 If your squares don't come out square, try using this command.
 </para>

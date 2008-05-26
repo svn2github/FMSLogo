@@ -18,7 +18,7 @@ The <parameter>angle</parameter> input is the roll in degrees which is positive 
 It is important to <link linkend="understand-your-orientation-in-3D">understand your orientation in 3D</link>.
 </para>
 <para>
-This command is designed to run in <link linkend="command-perspective">PERSPECTIVE</link> mode.
+SETROLL is designed to run in <link linkend="command-perspective">PERSPECTIVE</link> mode.
 </para>
 </listitem>
 </varlistentry>

@@ -19,7 +19,7 @@ The port characteristics (such as speed and flow control) cannot be set through 
 
 <para>
 The <parameter>modestring</parameter> must be of the form <userinput>"COM<replaceable>n</replaceable>:<replaceable>SPEED</replaceable>,<replaceable>PARITY</replaceable>,<replaceable>DATA</replaceable>,<replaceable>STOP</replaceable></userinput>.
-This is the format as the DOS MODE command.
+This is the same format that is used by MODE, the DOS shell command.
 </para>
 
 </listitem>

@@ -15,7 +15,7 @@
 <para>
 Writes <parameter>data</parameter> to the "hardware" port specified by <parameter>portid</parameter>.
 The <parameter>data</parameter> input must be a one byte integer (a number from 0 to 255).
-Do not confuse this command with <link linkend="command-portopen">PORTOPEN</link> and <link linkend="command-portwritechar">PORTWRITECHAR</link> which are for communications through the serial and parallel ports.
+Do not confuse OUTPORTB with <link linkend="command-portopen">PORTOPEN</link> and <link linkend="command-portwritechar">PORTWRITECHAR</link> which are for communications through the serial and parallel ports.
 </para>
 
 </listitem>

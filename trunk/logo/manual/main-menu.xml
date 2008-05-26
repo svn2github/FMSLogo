@@ -122,7 +122,7 @@ Since &PRODUCTNAME;'s workspace defaults to 1000x1000 turtle steps, that equates
 You may increase this number to take advantage of higher resolution printers but your image will become smaller.
 You can compensate for this by increasing your work space (and your drawing size).</para>
 
-          <para>You can also set the active area with the &GENERICNAME; command <link linkend="command-setactivearea">SETACTIVEAREA</link> and get it with the &GENERICNAME; command <link linkend="command-activearea">ACTIVEAREA</link>.</para>
+          <para>You can also set the active area with the &GENERICNAME; command <link linkend="command-setactivearea">SETACTIVEAREA</link> and get it with the &GENERICNAME; operation <link linkend="command-activearea">ACTIVEAREA</link>.</para>
         </section>
 
       </section>

@@ -41,7 +41,7 @@ If a floating point overflow occurs during an arithmetic operation, or a two-inp
       <indexterm><primary>Error Codes</primary></indexterm>
 
 <para>
-When an error happens, you can use the <link linkend="command-error">ERROR</link> command to figure out what went wrong.
+When an error happens, you can use the <link linkend="command-error">ERROR</link> operation to figure out what went wrong.
 ERROR outputs a list whose items describe the error.
 The first item is a numeric code for the type of error that occurred.
 The second item is a human-readable message that explains the error.

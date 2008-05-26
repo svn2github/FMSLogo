@@ -13,7 +13,8 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-This command outputs the characteristics of the machine in a list with the following format:
+Outputs a list that describes the characteristics of the machine.
+The list has the following format:
 
 <programlisting>[IsWindows Wordsize BitmapWidth BitmapHeight IsPaletteEnable WindowsVersionLoWord WindowsVersionHiWord WorkingAreaWidth WorkingAreaHeight DesktopWidth DesktopHeight WindowWidth WindowHeight]</programlisting>
 

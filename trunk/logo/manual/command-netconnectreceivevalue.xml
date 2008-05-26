@@ -13,7 +13,7 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-This command will output the value of the last network data received on the connect socket.
+This command outputs the value of the last network data received on the connect socket.
 It is best to call this procedure in your <parameter>receiveready</parameter> callback code of your <link linkend="command-netconnecton">NETCONNECTON</link> command.
 If you don't, then the data will be discarded the next time <parameter>receiveready</parameter> is run.
 </para>

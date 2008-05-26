@@ -25,7 +25,7 @@ When you have finished with the port, you should close it with <link linkend="co
 </para>
 
 <para>
-Do not confuse this command with <link linkend="command-inport">INPORT</link> and <link linkend="command-outport">OUTPORT</link> commands which are for "hardware" port communications.
+Do not confuse PORTOPEN with <link linkend="command-inport">INPORT</link> and <link linkend="command-outport">OUTPORT</link>, which are for "hardware" port communications.
 </para>
 
 

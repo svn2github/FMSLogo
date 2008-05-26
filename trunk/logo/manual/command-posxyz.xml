@@ -16,7 +16,7 @@
 Outputs the turtle's current position, as a list of three numbers, the X, Y, and Z coordinates.
 </para>
 <para>
-This command is designed to run in <link linkend="command-perspective">PERSPECTIVE</link> mode.
+POSXYZ is designed to run in <link linkend="command-perspective">PERSPECTIVE</link> mode.
 </para>
 </listitem>
 </varlistentry>

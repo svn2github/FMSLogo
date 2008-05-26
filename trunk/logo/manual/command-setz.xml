@@ -17,7 +17,7 @@ Moves the turtle along the Z axis from its current position to a new absolute Z 
 The <parameter>zcor</parameter> input is the new Z coordinate.
 </para>
 <para>
-This command is designed to run in <link linkend="command-perspective">PERSPECTIVE</link> mode.
+SETZ is designed to run in <link linkend="command-perspective">PERSPECTIVE</link> mode.
 </para>
 </listitem>
 </varlistentry>
