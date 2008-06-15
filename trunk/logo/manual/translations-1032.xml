@@ -10,6 +10,30 @@
      </row>
    </thead>
   <tbody>
+     <row>
+       <entry><link linkend='command-floodcolor'>floodcolor</link></entry>
+       <entry>floodcolour</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-pencolor'>pencolor</link></entry>
+       <entry>pencolour</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-screencolor'>screencolor</link></entry>
+       <entry>screencolour</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-setfloodcolor'>setfloodcolor</link></entry>
+       <entry>setfloodcolour</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-setpencolor'>setpencolor</link></entry>
+       <entry>setpencolour</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-setscreencolor'>setscreencolor</link></entry>
+       <entry>setscreencolour</entry>
+     </row>
   </tbody>
   </tgroup>
 </informaltable>
@@ -27,6 +51,30 @@
      </row>
    </thead>
   <tbody>
+     <row>
+       <entry>floodcolour</entry>
+       <entry><link linkend='command-floodcolor'>floodcolor</link></entry>
+     </row>
+     <row>
+       <entry>pencolour</entry>
+       <entry><link linkend='command-pencolor'>pencolor</link></entry>
+     </row>
+     <row>
+       <entry>screencolour</entry>
+       <entry><link linkend='command-screencolor'>screencolor</link></entry>
+     </row>
+     <row>
+       <entry>setfloodcolour</entry>
+       <entry><link linkend='command-setfloodcolor'>setfloodcolor</link></entry>
+     </row>
+     <row>
+       <entry>setpencolour</entry>
+       <entry><link linkend='command-setpencolor'>setpencolor</link></entry>
+     </row>
+     <row>
+       <entry>setscreencolour</entry>
+       <entry><link linkend='command-setscreencolor'>setscreencolor</link></entry>
+     </row>
   </tbody>
   </tgroup>
 </informaltable>
