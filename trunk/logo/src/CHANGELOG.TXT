@@ -1,5 +1,16 @@
 This file contains the changes that were made in each revision of FMSLogo.
 
+* Added for 6.21.0
+  o Fix bug #1961616; BITPASTETOINDEX now throws a bad input error when
+    the index is not a positive integer, instead of displaying a confusing
+    dialog box and throwing a stoppping error.
+  o Fix bug #1959250; SETBITINDEX no longer changes BITINDEX on bad input.
+  o Implement request #1542399; FMSLogo is no longer limited to
+    1024 turtles or 1024 bitmaps.
+  o Implement request #1377915; FMSLogo manual is now consistent in how it
+    uses terms like "command", "instruction", and "item".
+  o Minor updates to the manual.
+
 * Added for 6.20.0
   o Fix bug #1910177; WAIT now throws a bad input error when given input
     in the range <-1,0>, instead of doing nothing.
