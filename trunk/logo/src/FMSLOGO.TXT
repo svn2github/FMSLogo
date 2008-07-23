@@ -1,5 +1,5 @@
 ----------------------------------------------------------------------
-FMSLogo Version 6.21.0 for Microsoft Windows
+FMSLogo Version 6.22.0 for Microsoft Windows
 ----------------------------------------------------------------------
 
    I. Kit Description/Location
@@ -14,22 +14,14 @@ VIII. Minimum System Requirements
 
 I. Kit Description/Location (http://sourceforge.net/projects/fmslogo)
 
-  fmslogo-6.21.0.exe       (binary kit: Windows self-extracting installer)
-  fmslogo-6.21.0.zip       (binary kit: Windows ZIP archive)
-  fmslogo-src-6.21.0.zip   (source kit)
+  fmslogo-6.22.0.exe       (binary kit: Windows self-extracting installer)
+  fmslogo-6.22.0.zip       (binary kit: Windows ZIP archive)
+  fmslogo-src-6.22.0.zip   (source kit)
 
 II. New features/bugs fixed:
 
-  * Added for 6.21.0
-    o Fix bug #1961616; BITPASTETOINDEX now throws a bad input error when
-      the index is not a positive integer, instead of displaying a confusing
-      dialog box and throwing a stoppping error.
-    o Fix bug #1959250; SETBITINDEX no longer changes BITINDEX on bad input.
-    o Implement request #1542399; FMSLogo is no longer limited to
-      1024 turtles or 1024 bitmaps.
-    o Implement request #1377915; FMSLogo manual is now consistent in how it
-      uses terms like "command", "instruction", and "item".
-    o Minor updates to the manual.
+  * Added for 6.22.0
+    o Minor updates to the Greek translations.
 
   For a complete history of changes across all versions of FMSLogo, see
   http://fmslogo.cvs.sourceforge.net/*checkout*/fmslogo/logo/src/CHANGELOG.TXT

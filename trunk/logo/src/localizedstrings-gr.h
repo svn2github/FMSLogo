@@ -112,21 +112,21 @@
 //
 // Localized "alternate" spellings of Logo reserved words
 //
-#define LOCALIZED_ALTERNATE_TRUE     "true" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_FALSE    "false" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_END      "end" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_TOPLEVEL "toplevel" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_SYSTEM   "system" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_TRUE     "акгхгс" // 
+#define LOCALIZED_ALTERNATE_FALSE    "ьеудгс" // 
+#define LOCALIZED_ALTERNATE_END      "текос" // 
+#define LOCALIZED_ALTERNATE_TOPLEVEL "аявг" // 
+#define LOCALIZED_ALTERNATE_SYSTEM   "сустгла" // 
 
 //
 // Localized "alternate" names of Logo special variables
 //
-#define LOCALIZED_ALTERNATE_CASEIGNOREDP    "caseignoredp" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_ERRACT          "erract" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_STARTUP         "startup" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_REDEFP          "redefp" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_PRINTWIDTHLIMIT "printwidthlimit" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_PRINTDEPTHLIMIT "printdepthlimit" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_CASEIGNOREDP    "caseignoredp" // 
+#define LOCALIZED_ALTERNATE_ERRACT          "одгциес_сжаклатос" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_STARTUP         "еййимгсг" // 
+#define LOCALIZED_ALTERNATE_REDEFP          "епамапяосдиояислос" // 
+#define LOCALIZED_ALTERNATE_PRINTWIDTHLIMIT "пкатос_ейтупысгс" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_PRINTDEPTHLIMIT "бахос_ейтупысгс" // NOT_YET_LOCALIZED
 
 
 //
@@ -148,33 +148,33 @@
 // If you don't know how to translate a particular command, leave it
 // as the English name and it will be ignored.
 //
-#define LOCALIZED_ALTERNATE__DEFMACRO              ".defmacro" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE__EQ                    ".eq" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE__MACRO                 ".macro" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE__MAYBEOUTPUT           ".maybeoutput" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE__DEFMACRO              ".ояислос_лайяоемткг" // 
+#define LOCALIZED_ALTERNATE__EQ                    ".исо" // 
+#define LOCALIZED_ALTERNATE__MACRO                 ".лайяоемтокг" // 
+#define LOCALIZED_ALTERNATE__MAYBEOUTPUT           ".пихамг_енодос" // 
 #define LOCALIZED_ALTERNATE__SETBF                 ".setbf" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE__SETFIRST              ".setfirst" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE__SETITEM               ".setitem" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_ACTIVEAREA             "activearea" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_ALLOPEN                "allopen" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_AND                    "and" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_APPLY                  "apply" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_ACTIVEAREA             "емеяцг_пеяиовг" // 
+#define LOCALIZED_ALTERNATE_ALLOPEN                "амоивта" // 
+#define LOCALIZED_ALTERNATE_AND                    "йаи" // 
+#define LOCALIZED_ALTERNATE_APPLY                  "ежаялоцг" // 
 #define LOCALIZED_ALTERNATE_ARCCOS                 "arccos" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_ARCSIN                 "arcsin" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_ARCTAN                 "arctan" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_ARRAY                  "array" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_ARRAY                  "пимайас" // 
 #define LOCALIZED_ALTERNATE_ARRAYP                 "arrayp" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_ARRAY_                 "array?" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_ARRAY_                 "пимайас?" // 
 #define LOCALIZED_ALTERNATE_ASCII                  "ascii" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_ASHIFT                 "ashift" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_BACK                   "back" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_ASHIFT                 "пяосгласлемг_окисхгсг" // 
+#define LOCALIZED_ALTERNATE_BACK                   "писы" // 
 #define LOCALIZED_ALTERNATE_BACKSLASHEDP           "backslashedp" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_BACKSLASHED_           "backslashed?" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_BEFOREP                "beforep" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_BEFORE_                "before?" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_BEFORE_                "пяим?" // 
 #define LOCALIZED_ALTERNATE_BF                     "bf" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_BFS                    "bfs" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_BITAND                 "bitand" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_BITAND                 "дуадийо_йаи" // 
 #define LOCALIZED_ALTERNATE_BITBLOCK               "bitblock" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_BITCOPY                "bitcopy" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_BITCUT                 "bitcut" // NOT_YET_LOCALIZED
@@ -185,313 +185,313 @@
 #define LOCALIZED_ALTERNATE_BITSIZE                "bitsize" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_BITMAPTURTLE           "bitmapturtle" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_BITMODE                "bitmode" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_BITNOT                 "bitnot" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_BITOR                  "bitor" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_BITNOT                 "дуадийо_ови" // 
+#define LOCALIZED_ALTERNATE_BITOR                  "дуадийо_г" // 
 #define LOCALIZED_ALTERNATE_BITPASTE               "bitpaste" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_BITPASTETOINDEX        "bitpastetoindex" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_BITSAVE                "bitsave" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_BITXOR                 "bitxor" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_BITXOR                 "дуадийо_ап0ойкеистийо_г" // 
 #define LOCALIZED_ALTERNATE_BK                     "bk" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_BL                     "bl" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_BURIED                 "buried" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_BURY                   "bury" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_BUTFIRST               "butfirst" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_BUTFIRSTS              "butfirsts" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_BUTLAST                "butlast" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_BUTTONCREATE           "buttoncreate" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_BUTTONDELETE           "buttondelete" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_BUTTONENABLE           "buttonenable" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_BUTTONUPDATE           "buttonupdate" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_BUTFIRST               "выяис_пяыто" // 
+#define LOCALIZED_ALTERNATE_BUTFIRSTS              "выяис_пяыта" // 
+#define LOCALIZED_ALTERNATE_BUTLAST                "выяис_текеутаио" // 
+#define LOCALIZED_ALTERNATE_BUTTONCREATE           "йоулпи_дглиоуяциа" // 
+#define LOCALIZED_ALTERNATE_BUTTONDELETE           "йоулпи_диацяажг" // 
+#define LOCALIZED_ALTERNATE_BUTTONENABLE           "йоулпи_емеяцопоигсг" // 
+#define LOCALIZED_ALTERNATE_BUTTONUPDATE           "йоулпи_емглеяысг" // 
 #define LOCALIZED_ALTERNATE_BUTTONP                "buttonp" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_BUTTON_                "button?" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_BYE                    "bye" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_BUTTON_                "йоулпи?" // 
+#define LOCALIZED_ALTERNATE_BYE                    "амтио" // 
 #define LOCALIZED_ALTERNATE_CATCH                  "catch" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_CHAR                   "char" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_CHDIR                  "chdir" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_CHECKBOXCREATE         "checkboxcreate" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_CHECKBOXDELETE         "checkboxdelete" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_CHECKBOXENABLE         "checkboxenable" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_CHECKBOXGET            "checkboxget" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_CHECKBOXSET            "checkboxset" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_CLEAN                  "clean" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_CHAR                   "ваяайтгяас" // 
+#define LOCALIZED_ALTERNATE_CHDIR                  "йатакоцос_аккацг" // 
+#define LOCALIZED_ALTERNATE_CHECKBOXCREATE         "пкаисио_екецвоу_дглиоуяциа" // 
+#define LOCALIZED_ALTERNATE_CHECKBOXDELETE         "пкаисио_екецвоу_диацяажг" // 
+#define LOCALIZED_ALTERNATE_CHECKBOXENABLE         "пкаисио_екецвоу_емеяцопоигсг" // 
+#define LOCALIZED_ALTERNATE_CHECKBOXGET            "пкаисио_екецвоу_тилг" // 
+#define LOCALIZED_ALTERNATE_CHECKBOXSET            "пкаисио_екецвоу_ояислос" // 
+#define LOCALIZED_ALTERNATE_CLEAN                  "йахаяислос" // 
 #define LOCALIZED_ALTERNATE_CLEARPALETTE           "clearpalette" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_CLEARSCREEN            "clearscreen" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_CLEARTEXT              "cleartext" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_CLEARTIMER             "cleartimer" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_CLOSE                  "close" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_CLOSEALL               "closeall" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_CLEARSCREEN            "йахаяислос_охомгс" // 
+#define LOCALIZED_ALTERNATE_CLEARTEXT              "йахаяилсос_йеилемоу" // 
+#define LOCALIZED_ALTERNATE_CLEARTIMER             "йахаяислос_вяомолетяоу" // 
+#define LOCALIZED_ALTERNATE_CLOSE                  "йкеисило" // 
+#define LOCALIZED_ALTERNATE_CLOSEALL               "йкеисило_окым" // 
 #define LOCALIZED_ALTERNATE_CO                     "co" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_COMBOBOXADDSTRING      "comboboxaddstring" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_COMBOBOXCREATE         "comboboxcreate" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_COMBOBOXDELETE         "comboboxdelete" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_COMBOBOXENABLE         "comboboxenable" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_COMBOBOXDELETESTRING   "comboboxdeletestring" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_COMBOBOXGETTEXT        "comboboxgettext" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_COMBOBOXSETTEXT        "comboboxsettext" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_CONTENTS               "contents" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_CONTINUE               "continue" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_COPYDEF                "copydef" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_COS                    "cos" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_COUNT                  "count" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_COMBOBOXADDSTRING      "пкаисио_йеилемоу_пяосхгйг" // 
+#define LOCALIZED_ALTERNATE_COMBOBOXCREATE         "пкаисио_йеилемоу_дглиоуяциа" // 
+#define LOCALIZED_ALTERNATE_COMBOBOXDELETE         "пкаисио_йеилемоу_диацяажг" // 
+#define LOCALIZED_ALTERNATE_COMBOBOXENABLE         "пкаисио_йеилемоу_емеяцопоигсг" // 
+#define LOCALIZED_ALTERNATE_COMBOBOXDELETESTRING   "пкаисио_йеилемоу_ажаияесг" // 
+#define LOCALIZED_ALTERNATE_COMBOBOXGETTEXT        "пкаисио_йеилемоу_тилг" // 
+#define LOCALIZED_ALTERNATE_COMBOBOXSETTEXT        "пкаисио_йеилемоу_ояислос" // 
+#define LOCALIZED_ALTERNATE_CONTENTS               "пеяиеволема" // 
+#define LOCALIZED_ALTERNATE_CONTINUE               "сумевеиа" // 
+#define LOCALIZED_ALTERNATE_COPYDEF                "амтицяажг_ояислоу" // 
+#define LOCALIZED_ALTERNATE_COS                    "сумглитомо" // 
+#define LOCALIZED_ALTERNATE_COUNT                  "летягсг" // 
 #define LOCALIZED_ALTERNATE_CS                     "cs" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_CT                     "ct" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_CURSOR                 "cursor" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_DEBUGWINDOWS           "debugwindows" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_DEFINE                 "define" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_DEFINE                 "ояислос" // 
 #define LOCALIZED_ALTERNATE_DEFINEDP               "definedp" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_DEFINED_               "defined?" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_DIALOGCREATE           "dialogcreate" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_DIALOGENABLE           "dialogenable" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_DIALOGDELETE           "dialogdelete" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_DIALOGFILEOPEN         "dialogfileopen" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_DIALOGFILESAVE         "dialogfilesave" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_DIFFERENCE             "difference" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_DIRECTORIES            "directories" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_DLLCALL                "dllcall" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_DLLFREE                "dllfree" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_DLLLOAD                "dllload" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_DOWN                   "down" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_DEFINED_               "ояистгйе?" // 
+#define LOCALIZED_ALTERNATE_DIALOGCREATE           "паяахуяо_диакоцоу_дглиоуяциа" // 
+#define LOCALIZED_ALTERNATE_DIALOGENABLE           "паяахуяо_диакоцоу_емеяцопоигсг" // 
+#define LOCALIZED_ALTERNATE_DIALOGDELETE           "паяахуяо_диакоцоу_диацяажг" // 
+#define LOCALIZED_ALTERNATE_DIALOGFILEOPEN         "паяахуяо_аявеио_амоицла" // 
+#define LOCALIZED_ALTERNATE_DIALOGFILESAVE         "паяахуяо_аявеио_апохгйеусг" // 
+#define LOCALIZED_ALTERNATE_DIFFERENCE             "диажояа" // 
+#define LOCALIZED_ALTERNATE_DIRECTORIES            "йатакоцои" // 
+#define LOCALIZED_ALTERNATE_DLLCALL                "DLL_йкгсг" // 
+#define LOCALIZED_ALTERNATE_DLLFREE                "DLL_йкеисило" // 
+#define LOCALIZED_ALTERNATE_DLLLOAD                "DLL_амоицла" // 
+#define LOCALIZED_ALTERNATE_DOWN                   "йаты" // 
 #define LOCALIZED_ALTERNATE_DOWNPITCH              "downpitch" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_DRIBBLE                "dribble" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_DRIBBLE                "йатацяажг" // 
 #define LOCALIZED_ALTERNATE_ED                     "ed" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_EDIT                   "edit" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_EDIT                   "епенеяцасиа" // 
 #define LOCALIZED_ALTERNATE_ELLIPSEARC             "ellipsearc" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_EMPTYP                 "emptyp" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_EMPTY_                 "empty?" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_EMPTY_                 "адеио?" // 
 #define LOCALIZED_ALTERNATE_EOFP                   "eofp" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_EOF_                   "eof?" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_EOF_                   "текос_аявеиоу?" // 
 #define LOCALIZED_ALTERNATE_EQUALP                 "equalp" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_EQUAL_                 "equal?" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_EQUAL_                 "исо?" // 
 #define LOCALIZED_ALTERNATE_ER                     "er" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_ERASE                  "erase" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_ERASEFILE              "erasefile" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_ERASE                  "сбгсило" // 
+#define LOCALIZED_ALTERNATE_ERASEFILE              "сбгсило_аявеиоу" // 
 #define LOCALIZED_ALTERNATE_ERF                    "erf" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_ERROR                  "error" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_EVENTCHECK             "eventcheck" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_ERROR                  "сжакла" // 
+#define LOCALIZED_ALTERNATE_EVENTCHECK             "екецвос_цецомотым" // 
 #define LOCALIZED_ALTERNATE_EXP                    "exp" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_FD                     "fd" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_FENCE                  "fence" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_FILL                   "fill" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_FILES                  "files" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_FIRST                  "first" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_FIRSTS                 "firsts" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_FLOODCOLOR             "floodcolor" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_FONTFACENAMES          "fontfacenames" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_FILL                   "целисла" // 
+#define LOCALIZED_ALTERNATE_FILES                  "аявеиа" // 
+#define LOCALIZED_ALTERNATE_FIRST                  "пяыто" // 
+#define LOCALIZED_ALTERNATE_FIRSTS                 "пяыта" // 
+#define LOCALIZED_ALTERNATE_FLOODCOLOR             "вяыла_целислатос" // 
+#define LOCALIZED_ALTERNATE_FONTFACENAMES          "цяаллатосеияес" // 
 #define LOCALIZED_ALTERNATE_FOREVER                "forever" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_FORM                   "form" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_FORWARD                "forward" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_FORWARD                "елпяос" // 
 #define LOCALIZED_ALTERNATE_FPUT                   "fput" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_FS                     "fs" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_FULLSCREEN             "fullscreen" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_FULLTEXT               "fulltext" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_GETFOCUS               "getfocus" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_GOTO                   "goto" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_GIFLOAD                "gifload" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_GIFSIZE                "gifsize" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_GIFSAVE                "gifsave" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_GPROP                  "gprop" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_FULLSCREEN             "пкгягс_охомг" // 
+#define LOCALIZED_ALTERNATE_FULLTEXT               "пкгяес_йеилемо" // 
+#define LOCALIZED_ALTERNATE_GETFOCUS               "естиа" // 
+#define LOCALIZED_ALTERNATE_GOTO                   "пгцаиме" // 
+#define LOCALIZED_ALTERNATE_GIFLOAD                "GIF_амоицла" // 
+#define LOCALIZED_ALTERNATE_GIFSIZE                "GIF_лецехос" // 
+#define LOCALIZED_ALTERNATE_GIFSAVE                "GIF_апохгйеусг" // 
+#define LOCALIZED_ALTERNATE_GPROP                  "идиотгта_тилг" // 
 #define LOCALIZED_ALTERNATE_GREATEREQUALP          "greaterequalp" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_GREATEREQUAL_          "greaterequal?" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_GREATEREQUAL_          "лецакутеяо_исо?" // 
 #define LOCALIZED_ALTERNATE_GREATERP               "greaterp" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_GREATER_               "greater?" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_GROUPBOXCREATE         "groupboxcreate" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_GROUPBOXDELETE         "groupboxdelete" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_GREATER_               "лецакутеяо?" // 
+#define LOCALIZED_ALTERNATE_GROUPBOXCREATE         "пкаисио_оладас_дглиоуяциа" // 
+#define LOCALIZED_ALTERNATE_GROUPBOXDELETE         "пкаисио_оладас_диацяажг" // 
 #define LOCALIZED_ALTERNATE_HALT                   "halt" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_HEADING                "heading" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_HELP                   "help" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_HEADING                "йатеухумсг" // 
+#define LOCALIZED_ALTERNATE_HELP                   "богхеиа" // 
 #define LOCALIZED_ALTERNATE_HIDETURTLE             "hideturtle" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_HOME                   "home" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_HOME                   "спити" // 
 #define LOCALIZED_ALTERNATE_HT                     "ht" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_IF                     "if" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_IFELSE                 "ifelse" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_IF                     "ам" // 
+#define LOCALIZED_ALTERNATE_IFELSE                 "ам_аккиыс" // 
 #define LOCALIZED_ALTERNATE_IFF                    "iff" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_IFFALSE                "iffalse" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_IFFALSE                "ам_ьеудгс" // 
 #define LOCALIZED_ALTERNATE_IFT                    "ift" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_IFTRUE                 "iftrue" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_IFTRUE                 "ам_акгхгс" // 
 #define LOCALIZED_ALTERNATE_INGAMEPORT             "ingameport" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_INPORT                 "inport" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_INPORTB                "inportb" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_INT                    "int" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_ITEM                   "item" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_KEYBOARDOFF            "keyboardoff" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_KEYBOARDON             "keyboardon" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_KEYBOARDVALUE          "keyboardvalue" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_INT                    "айеяаиос" // 
+#define LOCALIZED_ALTERNATE_ITEM                   "стоивеио" // 
+#define LOCALIZED_ALTERNATE_KEYBOARDOFF            "пкгйтяокоцио_апемеяцопоигсг" // 
+#define LOCALIZED_ALTERNATE_KEYBOARDON             "пкгйтяокоцио_емеяцопоигсг" // 
+#define LOCALIZED_ALTERNATE_KEYBOARDVALUE          "пкгйтяокоцио_тилг" // 
 #define LOCALIZED_ALTERNATE_KEYP                   "keyp" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_KEY_                   "key?" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_LABEL                  "label" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_LABELFONT              "labelfont" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_LABELSIZE              "labelsize" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_LAST                   "last" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_LEFT                   "left" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_KEY_                   "пкгйтяо?" // 
+#define LOCALIZED_ALTERNATE_LABEL                  "етийета" // 
+#define LOCALIZED_ALTERNATE_LABELFONT              "етийета_цяаллатосеияа" // 
+#define LOCALIZED_ALTERNATE_LABELSIZE              "етийета_лецехос" // 
+#define LOCALIZED_ALTERNATE_LAST                   "текеутаио" // 
+#define LOCALIZED_ALTERNATE_LEFT                   "аяистеяа" // 
 #define LOCALIZED_ALTERNATE_LEFTROLL               "leftroll" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_LESSEQUALP             "lessequalp" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_LESSEQUAL_             "lessequal?" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_LESSEQUAL_             "лийяотеяо_исо?" // 
 #define LOCALIZED_ALTERNATE_LESSP                  "lessp" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_LESS_                  "less?" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_LIGHT                  "light" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_LIST                   "list" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_LISTBOXADDSTRING       "listboxaddstring" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_LISTBOXCREATE          "listboxcreate" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_LISTBOXENABLE          "listboxenable" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_LISTBOXDELETE          "listboxdelete" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_LISTBOXDELETESTRING    "listboxdeletestring" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_LISTBOXGETSELECT       "listboxgetselect" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_LESS_                  "лийяотеяо?" // 
+#define LOCALIZED_ALTERNATE_LIGHT                  "жыс" // 
+#define LOCALIZED_ALTERNATE_LIST                   "киста" // 
+#define LOCALIZED_ALTERNATE_LISTBOXADDSTRING       "пкаисио_кистас_пяосхгйг" // 
+#define LOCALIZED_ALTERNATE_LISTBOXCREATE          "пкаисио_кистас_дглиоуяциа" // 
+#define LOCALIZED_ALTERNATE_LISTBOXENABLE          "пкаисио_кистас_емеяцопиогсг" // 
+#define LOCALIZED_ALTERNATE_LISTBOXDELETE          "пкаисио_кистас_диацяажг" // 
+#define LOCALIZED_ALTERNATE_LISTBOXDELETESTRING    "пкаисио_кистас_ажаияесг" // 
+#define LOCALIZED_ALTERNATE_LISTBOXGETSELECT       "пкаисио_кистас_епикоцг" // 
 #define LOCALIZED_ALTERNATE_LISTP                  "listp" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_LIST_                  "list?" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_LIST_                  "киста?" // 
 #define LOCALIZED_ALTERNATE_LN                     "ln" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_LOAD                   "load" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_LOCAL                  "local" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_LOAD                   "жоятысг" // 
+#define LOCALIZED_ALTERNATE_LOCAL                  "топийо" // 
 #define LOCALIZED_ALTERNATE_LOG10                  "log10" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_LOGOVERSION            "logoversion" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_LOWERCASE              "lowercase" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_LPUT                   "lput" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_LOGOVERSION            "ейдосг" // 
+#define LOCALIZED_ALTERNATE_LOWERCASE              "пефа" // 
+#define LOCALIZED_ALTERNATE_LPUT                   "пяосхгйг_текос" // 
 #define LOCALIZED_ALTERNATE_LR                     "lr" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_LSHIFT                 "lshift" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_LSHIFT                 "окисхгсг" // 
 #define LOCALIZED_ALTERNATE_LT                     "lt" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_MACHINE                "machine" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_MACHINE                "лгвамг" // 
 #define LOCALIZED_ALTERNATE_MACROP                 "macrop" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_MACRO_                 "macro?" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_MAKE                   "make" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_MACRO_                 "лайяоемтокг?" // 
+#define LOCALIZED_ALTERNATE_MAKE                   "летабкгтг" // 
 #define LOCALIZED_ALTERNATE_MCI                    "mci" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_MEMBER                 "member" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_MEMBER                 "лекос" // 
 #define LOCALIZED_ALTERNATE_MEMBERP                "memberp" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_MEMBER_                "member?" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_MESSAGEBOX             "messagebox" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_MIDICLOSE              "midiclose" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_MIDIMESSAGE            "midimessage" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_MIDIOPEN               "midiopen" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_MINUS                  "minus" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_MKDIR                  "mkdir" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_MEMBER_                "лекос?" // 
+#define LOCALIZED_ALTERNATE_MESSAGEBOX             "лгмула" // 
+#define LOCALIZED_ALTERNATE_MIDICLOSE              "MIDI_йкеисило" // 
+#define LOCALIZED_ALTERNATE_MIDIMESSAGE            "MIDI_лгмула" // 
+#define LOCALIZED_ALTERNATE_MIDIOPEN               "MIDI_амоицла" // 
+#define LOCALIZED_ALTERNATE_MINUS                  "леиом" // 
+#define LOCALIZED_ALTERNATE_MKDIR                  "йатакоцос_дглиоуяциа" // 
 #define LOCALIZED_ALTERNATE_MODULO                 "modulo" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_MOUSEOFF               "mouseoff" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_MOUSEON                "mouseon" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_MOUSEPOS               "mousepos" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_MOUSEOFF               "помтийи_апемеяцопоигсг" // 
+#define LOCALIZED_ALTERNATE_MOUSEON                "помтийи_емеяцопоигсг" // 
+#define LOCALIZED_ALTERNATE_MOUSEPOS               "помтийи_хесг" // 
 #define LOCALIZED_ALTERNATE_NAMEP                  "namep" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_NAME_                  "name?" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_NAMES                  "names" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_NETACCEPTOFF           "netacceptoff" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_NETACCEPTON            "netaccepton" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_NETACCEPTRECEIVEVALUE  "netacceptreceivevalue" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_NETACCEPTSENDVALUE     "netacceptsendvalue" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_NETCONNECTOFF          "netconnectoff" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_NETCONNECTON           "netconnecton" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_NETCONNECTRECEIVEVALUE "netconnectreceivevalue" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_NETCONNECTSENDVALUE    "netconnectsendvalue" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_NETSHUTDOWN            "netshutdown" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_NETSTARTUP             "netstartup" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_NAME_                  "омола?" // 
+#define LOCALIZED_ALTERNATE_NAMES                  "омолата" // 
+#define LOCALIZED_ALTERNATE_NETACCEPTOFF           "дийтуо_аподовг_апемеяцопоигсг" // 
+#define LOCALIZED_ALTERNATE_NETACCEPTON            "дийтуо_аподовг_емеяцопоигсг" // 
+#define LOCALIZED_ALTERNATE_NETACCEPTRECEIVEVALUE  "дийтуо_аподовг_тилг_кгьгс" // 
+#define LOCALIZED_ALTERNATE_NETACCEPTSENDVALUE     "дийтуо_аподовг_тилг_апостокгс" // 
+#define LOCALIZED_ALTERNATE_NETCONNECTOFF          "дийтуо_сумдесг_апемеяцопоигсг" // 
+#define LOCALIZED_ALTERNATE_NETCONNECTON           "дийтуо_сумдесг_емеяцопоигсг" // 
+#define LOCALIZED_ALTERNATE_NETCONNECTRECEIVEVALUE "дийтуо_сумдесг_тилг_кгьгс" // 
+#define LOCALIZED_ALTERNATE_NETCONNECTSENDVALUE    "дийтуо_сумдесг_тилг_апостокгс" // 
+#define LOCALIZED_ALTERNATE_NETSHUTDOWN            "дийтуо_апемеяцопоигсг" // 
+#define LOCALIZED_ALTERNATE_NETSTARTUP             "дийтуо_емеяцопоигсг" // 
 #define LOCALIZED_ALTERNATE_NOBITMAPTURTLE         "nobitmapturtle" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_NODES                  "nodes" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_NODES                  "йолбои" // 
 #define LOCALIZED_ALTERNATE_NODRIBBLE              "nodribble" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_NOSTATUS               "nostatus" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_NOT                    "not" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_NOT                    "ови" // 
 #define LOCALIZED_ALTERNATE_NOTEQUALP              "notequalp" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_NOTEQUAL_              "notequal?" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_NOTEQUAL_              "ови_исо?" // 
 #define LOCALIZED_ALTERNATE_NOYIELD                "noyield" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_NUMBERP                "numberp" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_NUMBER_                "number?" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_NUMBER_                "аяихлос?" // 
 #define LOCALIZED_ALTERNATE_OP                     "op" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_OPENAPPEND             "openappend" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_OPENREAD               "openread" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_OPENUPDATE             "openupdate" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_OPENWRITE              "openwrite" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_OR                     "or" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_OPENAPPEND             "амоицла_пяосаятгсг" // 
+#define LOCALIZED_ALTERNATE_OPENREAD               "амоицла_амацмысг" // 
+#define LOCALIZED_ALTERNATE_OPENUPDATE             "амоицла_емглеяысг" // 
+#define LOCALIZED_ALTERNATE_OPENWRITE              "амоицла_еццяажг" // 
+#define LOCALIZED_ALTERNATE_OR                     "г" // 
 #define LOCALIZED_ALTERNATE_OUTPORT                "outport" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_OUTPORTB               "outportb" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_OUTPUT                 "output" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_PARSE                  "parse" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_PAUSE                  "pause" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_OUTPUT                 "енодос" // 
+#define LOCALIZED_ALTERNATE_PARSE                  "епенеяцасиа" // 
+#define LOCALIZED_ALTERNATE_PAUSE                  "паусг" // 
 #define LOCALIZED_ALTERNATE_PC                     "pc" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_PD                     "pd" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_PE                     "pe" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_PENCOLOR               "pencolor" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_PENDOWN                "pendown" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_PENCOLOR               "пема_вяыла" // 
+#define LOCALIZED_ALTERNATE_PENDOWN                "пема_йаты" // 
 #define LOCALIZED_ALTERNATE_PENDOWNP               "pendownp" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_PENDOWN_               "pendown?" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_PENERASE               "penerase" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_PENMODE                "penmode" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_PENPAINT               "penpaint" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_PENPATTERN             "penpattern" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_PENREVERSE             "penreverse" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_PENSIZE                "pensize" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_PENUP                  "penup" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_PERSPECTIVE            "perspective" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_PENDOWN_               "пема_йаты?" // 
+#define LOCALIZED_ALTERNATE_PENERASE               "пема_сбгсило" // 
+#define LOCALIZED_ALTERNATE_PENMODE                "пема_сустгла" // 
+#define LOCALIZED_ALTERNATE_PENPAINT               "пема_сведиасг" // 
+#define LOCALIZED_ALTERNATE_PENPATTERN             "пема_лотибо" // 
+#define LOCALIZED_ALTERNATE_PENREVERSE             "пема_амтистяожг" // 
+#define LOCALIZED_ALTERNATE_PENSIZE                "пема_лецехос" // 
+#define LOCALIZED_ALTERNATE_PENUP                  "пема_памы" // 
+#define LOCALIZED_ALTERNATE_PERSPECTIVE            "пяооптийг" // 
 #define LOCALIZED_ALTERNATE_PITCH                  "pitch" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_PIXEL                  "pixel" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_PLAYWAVE               "playwave" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_PLIST                  "plist" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_PLISTS                 "plists" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_PLAYWAVE               "амапаяацыцг" // 
+#define LOCALIZED_ALTERNATE_PLIST                  "идиотгта_киста" // 
+#define LOCALIZED_ALTERNATE_PLISTS                 "идиотгта_кистес" // 
 #define LOCALIZED_ALTERNATE_PO                     "po" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_POPDIR                 "popdir" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_POLYSTART              "polystart" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_POLYEND                "polyend" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_POLYVIEW               "polyview" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_PORTCLOSE              "portclose" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_PORTFLUSH              "portflush" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_PORTMODE               "portmode" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_PORTOPEN               "portopen" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_PORTREADARRAY          "portreadarray" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_PORTREADCHAR           "portreadchar" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_PORTWRITEARRAY         "portwritearray" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_PORTWRITECHAR          "portwritechar" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_POS                    "pos" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_POSXYZ                 "posxyz" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_POPDIR                 "йатакоцос_памы" // 
+#define LOCALIZED_ALTERNATE_POLYSTART              "покуцымо_аявг" // 
+#define LOCALIZED_ALTERNATE_POLYEND                "покуцымо_текос" // 
+#define LOCALIZED_ALTERNATE_POLYVIEW               "покуцымо_пяобокг" // 
+#define LOCALIZED_ALTERNATE_PORTCLOSE              "хуяа_йкеисило" // 
+#define LOCALIZED_ALTERNATE_PORTFLUSH              "хуяа_йахаяислос" // 
+#define LOCALIZED_ALTERNATE_PORTMODE               "хуяа_сустгла" // 
+#define LOCALIZED_ALTERNATE_PORTOPEN               "хуяа_амоицла" // 
+#define LOCALIZED_ALTERNATE_PORTREADARRAY          "хуяа_амацмысг_пимайа" // 
+#define LOCALIZED_ALTERNATE_PORTREADCHAR           "хуяа_амацмысг_ваяайтгяа" // 
+#define LOCALIZED_ALTERNATE_PORTWRITEARRAY         "хуяа_еццяажг_пимайа" // 
+#define LOCALIZED_ALTERNATE_PORTWRITECHAR          "хуяа_еццяажг_ваяайтгяа" // 
+#define LOCALIZED_ALTERNATE_POS                    "хесг" // 
+#define LOCALIZED_ALTERNATE_POSXYZ                 "хесг_XYZ" // XYZ is Engilsh, copy XYZ in Greek
 #define LOCALIZED_ALTERNATE_POT                    "pot" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_POWER                  "power" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_PPROP                  "pprop" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_POWER                  "думалг" // 
+#define LOCALIZED_ALTERNATE_PPROP                  "идиотгта_ояислос" // 
 #define LOCALIZED_ALTERNATE_PPT                    "ppt" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_PR                     "pr" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_PRIMITIVEP             "primitivep" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_PRIMITIVE_             "primitive?" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_PRINT                  "print" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_PRINT                  "ейтупысг" // 
 #define LOCALIZED_ALTERNATE_PROCEDUREP             "procedurep" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_PROCEDURE_             "procedure?" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_PROPLISTP              "proplistp" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_PROPLIST_              "proplist?" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_PROCEDURES             "procedures" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_PRODUCT                "product" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_PRODUCT                "цимолемо" // 
 #define LOCALIZED_ALTERNATE_PU                     "pu" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_PX                     "px" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_QUESTIONBOX            "questionbox" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_QUOTIENT               "quotient" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_QUESTIONBOX            "лгмула_еяытгсг" // 
+#define LOCALIZED_ALTERNATE_QUOTIENT               "диаияесг" // 
 #define LOCALIZED_ALTERNATE_RADARCCOS              "radarccos" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_RADARCSIN              "radarcsin" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_RADARCTAN              "radarctan" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_RADCOS                 "radcos" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_RADIOBUTTONCREATE      "radiobuttoncreate" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_RADIOBUTTONENABLE      "radiobuttonenable" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_RADIOBUTTONDELETE      "radiobuttondelete" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_RADIOBUTTONGET         "radiobuttonget" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_RADIOBUTTONSET         "radiobuttonset" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_RADIOBUTTONCREATE      "пкаисио_епикоцгс_дглиоуяциа" // 
+#define LOCALIZED_ALTERNATE_RADIOBUTTONENABLE      "пкаисио_епикоцгс_емеяцопоигсг" // 
+#define LOCALIZED_ALTERNATE_RADIOBUTTONDELETE      "пкаисио_епикоцгс_диацяажг" // 
+#define LOCALIZED_ALTERNATE_RADIOBUTTONGET         "пкаисио_епикоцгс_тилг" // 
+#define LOCALIZED_ALTERNATE_RADIOBUTTONSET         "пкаисио_епикоцгс_ояислос" // 
 #define LOCALIZED_ALTERNATE_RADSIN                 "radsin" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_RADTAN                 "radtan" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_RANDOM                 "random" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_RAWASCII               "rawascii" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_RC                     "rc" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_RCS                    "rcs" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_READCHAR               "readchar" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_READCHARS              "readchars" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_READER                 "reader" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_READLIST               "readlist" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_READPOS                "readpos" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_READWORD               "readword" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_REMAINDER              "remainder" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_REMPROP                "remprop" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_REPCOUNT               "repcount" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_REPEAT                 "repeat" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_READCHAR               "амацмысг_ваяайтгяа" // 
+#define LOCALIZED_ALTERNATE_READCHARS              "амацмысг_ваяайтгяым" // 
+#define LOCALIZED_ALTERNATE_READER                 "амацмысг_пгцг" // 
+#define LOCALIZED_ALTERNATE_READLIST               "амацмысг_кистас" // 
+#define LOCALIZED_ALTERNATE_READPOS                "амацмысг_хесг" // 
+#define LOCALIZED_ALTERNATE_READWORD               "амацмысг_кенгс" // 
+#define LOCALIZED_ALTERNATE_REMAINDER              "упокоипо" // 
+#define LOCALIZED_ALTERNATE_REMPROP                "идиотгта_ажаияесг" // 
+#define LOCALIZED_ALTERNATE_REPCOUNT               "епамакгьг_аяихлос" // 
+#define LOCALIZED_ALTERNATE_REPEAT                 "епамакгьг" // 
 #define LOCALIZED_ALTERNATE_RERANDOM               "rerandom" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_RIGHT                  "right" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_RIGHTROLL              "rightroll" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_RL                     "rl" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_RMDIR                  "rmdir" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_RMDIR                  "йатакоцос_диацяажг" // 
 #define LOCALIZED_ALTERNATE_ROLL                   "roll" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_ROUND                  "round" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_ROUND                  "стяоццукопоигсг" // 
 #define LOCALIZED_ALTERNATE_RR                     "rr" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_RT                     "rt" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_RUN                    "run" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_RUNPARSE               "runparse" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_RUNRESULT              "runresult" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_RUN                    "ейтекесг" // 
+#define LOCALIZED_ALTERNATE_RUNPARSE               "ейтекесг_епенеяцасиа" // 
+#define LOCALIZED_ALTERNATE_RUNRESULT              "ейтекесг_апотекесла" // 
 #define LOCALIZED_ALTERNATE_RW                     "rw" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_SAVE                   "save" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_SAVE                   "апохгйеусг" // 
 #define LOCALIZED_ALTERNATE_SCREENCOLOR            "screencolor" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_SCROLLBARCREATE        "scrollbarcreate" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_SCROLLBARENABLE        "scrollbarenable" // NOT_YET_LOCALIZED
@@ -502,9 +502,9 @@
 #define LOCALIZED_ALTERNATE_SCROLLY                "scrolly" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_SCRUNCH                "scrunch" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_SE                     "se" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_SELECTBOX              "selectbox" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_SENTENCE               "sentence" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_SETACTIVEAREA          "setactivearea" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_SELECTBOX              "лгмула_епикоцг" // 
+#define LOCALIZED_ALTERNATE_SENTENCE               "пяотасг" // 
+#define LOCALIZED_ALTERNATE_SETACTIVEAREA          "емеяцг_пеяиовг_ояислос" // 
 #define LOCALIZED_ALTERNATE_SETBITINDEX            "setbitindex" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_SETBITMODE             "setbitmode" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_SETCLIP                "setclip" // NOT_YET_LOCALIZED
@@ -545,14 +545,14 @@
 #define LOCALIZED_ALTERNATE_SETY                   "sety" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_SETZ                   "setz" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_SHELL                  "shell" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_SHOW                   "show" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_SHOW                   "елжамисг" // 
 #define LOCALIZED_ALTERNATE_SHOWNP                 "shownp" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_SHOWN_                 "shown?" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_SHOWTURTLE             "showturtle" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_SIN                    "sin" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_SOUND                  "sound" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_SIN                    "глитомо" // 
+#define LOCALIZED_ALTERNATE_SOUND                  "гвос" // 
 #define LOCALIZED_ALTERNATE_SPLITSCREEN            "splitscreen" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_SQRT                   "sqrt" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_SQRT                   "яифа" // 
 #define LOCALIZED_ALTERNATE_SS                     "ss" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_ST                     "st" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_STANDOUT               "standout" // NOT_YET_LOCALIZED
@@ -560,55 +560,55 @@
 #define LOCALIZED_ALTERNATE_STATICDELETE           "staticdelete" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_STATICUPDATE           "staticupdate" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_STATUS                 "status" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_STEP                   "step" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_STEP                   "бгла" // 
 #define LOCALIZED_ALTERNATE_STEPPED                "stepped" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_STOP                   "stop" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_STOP                   "сталатгла" // 
 #define LOCALIZED_ALTERNATE_SUBSTRINGP             "substringp" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_SUBSTRING_             "substring?" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_SUM                    "sum" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_SUM                    "ахяоисла" // 
 #define LOCALIZED_ALTERNATE_TAG                    "tag" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_TAN                    "tan" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_TEST                   "test" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_TEST                   "дойилг" // 
 #define LOCALIZED_ALTERNATE_TEXT                   "text" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_TEXTSCREEN             "textscreen" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_THING                  "thing" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_THING                  "тилг" // 
 #define LOCALIZED_ALTERNATE_THROW                  "throw" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_TIME                   "time" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_TIMEMILLI              "timemilli" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_TIME                   "ыяа" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_TIMEMILLI              "вяомос" // 
 #define LOCALIZED_ALTERNATE_TO                     "to" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_TONE                   "tone" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_TOWARDS                "towards" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_TOWARDSXYZ             "towardsxyz" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_TOWARDS                "пяос" // 
+#define LOCALIZED_ALTERNATE_TOWARDSXYZ             "пяос_XYZ" // 
 #define LOCALIZED_ALTERNATE_TRACE                  "trace" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_TRACED                 "traced" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_TS                     "ts" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_TURTLE                 "turtle" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_TURTLEMODE             "turtlemode" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_TURTLES                "turtles" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_TURTLE                 "векыма" //
+#define LOCALIZED_ALTERNATE_TURTLEMODE             "векыма_сустгла" // 
+#define LOCALIZED_ALTERNATE_TURTLES                "векымес" // 
 #define LOCALIZED_ALTERNATE_TYPE                   "type" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_UNBURY                 "unbury" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_UNSTEP                 "unstep" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_UNTRACE                "untrace" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_UP                     "up" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_UPPERCASE              "uppercase" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_UPPERCASE              "йежакаиа" // 
 #define LOCALIZED_ALTERNATE_UPPITCH                "uppitch" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_WAIT                   "wait" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_WINDOW                 "window" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_WINDOWCREATE           "windowcreate" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_WINDOWENABLE           "windowenable" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_WINDOWDELETE           "windowdelete" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_WAIT                   "амаломг" // 
+#define LOCALIZED_ALTERNATE_WINDOW                 "паяахуяо" // 
+#define LOCALIZED_ALTERNATE_WINDOWCREATE           "паяахуяо_дглиоуяциа" // 
+#define LOCALIZED_ALTERNATE_WINDOWENABLE           "паяахуяо_емеяцопоигсг" // 
+#define LOCALIZED_ALTERNATE_WINDOWDELETE           "паяахуяо_диацяажг" // 
 #define LOCALIZED_ALTERNATE_WINDOWFILEEDIT         "windowfileedit" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_WINDOWSET              "windowset" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_WINHELP                "winhelp" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_WORD                   "word" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_WORD                   "кенг" // 
 #define LOCALIZED_ALTERNATE_WORDP                  "wordp" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_WORD_                  "word?" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_WORD_                  "кенг?" // 
 #define LOCALIZED_ALTERNATE_WRAP                   "wrap" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_WRITEPOS               "writepos" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_WRITER                 "writer" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_YESNOBOX               "yesnobox" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_WRITEPOS               "еццяажг_хесг" // 
+#define LOCALIZED_ALTERNATE_WRITER                 "еццяажг_пяоояислос" // 
+#define LOCALIZED_ALTERNATE_YESNOBOX               "лгмула_маи_ови" // 
 #define LOCALIZED_ALTERNATE_YIELD                  "yield" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_ZOOM                   "zoom" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_ZOOM                   "лецехумсг" // 
 
 //
 // General localized strings
@@ -658,6 +658,8 @@
 
 #define LOCALIZED_HELP                 "&бОчХЕИА"  // 
 #define LOCALIZED_HELP_INDEX           "&хщЛАТА СТГ БОчХЕИА" // 
+#define LOCALIZED_HELP_MCI             "бОчХЕИА ЦИА ТО &MCI" // 
+#define LOCALIZED_HELP_HELP            "&вЯчСГ БОчХЕИАР" // 
 #define LOCALIZED_HELP_TUTORIAL        "&лэХГЛА" // Perhaps not the best one for "tutorial"
 #define LOCALIZED_HELP_DEMO            "&еПъДЕИНГ"  // 
 #define LOCALIZED_HELP_EXAMPLE         "&пАЯАДЕъЦЛАТА" // 
@@ -946,7 +948,7 @@
 #define LOCALIZED_ERROR_TURTLEOUTOFBOUNDS      "ВЕКЧМА ЕЙТЭР ОЯъЫМ" // 
 #define LOCALIZED_ERROR_BADGRAPHINIT           "АДУМАЛъА ЕЙЙъМГСГР ЦЯАЖИЙЧМ" // 
 #define LOCALIZED_ERROR_BADDATA                "сТО %p ДЕМ АЯщСЕИ ТО %s ЫР ПАЯэЛЕТЯОР" // 
-#define LOCALIZED_ERROR_DIDNTOUTPUT            "тО %p ЕПщСТЯЕЬЕ ТИЛч ЦИА ТО %p" // 
+#define LOCALIZED_ERROR_DIDNTOUTPUT            "тО %p ДЕМ ЕПщСТЯЕЬЕ ТИЛч ЦИА ТО %p" // 
 #define LOCALIZED_ERROR_NOTENOUGHINPUTS        "АМЕПэЯЙЕИА ПАЯАЛщТЯЫМ ЦИА ТО %p" // 
 #define LOCALIZED_ERROR_TOOMUCH                "УПЕЯБОКИЙэ ЛЕЦэКГ ПАЯэСТАСГ АМэЛЕСА СТА ()" // 
 #define LOCALIZED_ERROR_DONTSAYWHATTODOWITH    "дЕМ ЕъПЕР Тъ МА ЙэМЫ ЛЕ ТО %s" // 
