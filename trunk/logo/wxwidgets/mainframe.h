@@ -25,6 +25,9 @@ public:
     void SetLabelFont(wxCommandEvent& event);
     void SetActiveArea(wxCommandEvent& event);
     void SetPenSize(wxCommandEvent& event);
+    void SetPenColor(wxCommandEvent& event);
+    void SetFloodColor(wxCommandEvent& event);
+    void SetScreenColor(wxCommandEvent& event);
     void ZoomIn(wxCommandEvent& event);
     void ZoomOut(wxCommandEvent& event);
     void ZoomNormal(wxCommandEvent& event);
@@ -48,6 +51,13 @@ public:
 
 
 private:
+    void
+    CMainFrame::SetColorHelper(
+        class CSetColor * &   SetColorDialog,
+        const char *          DialogTitle,
+        const class wxColor & InitialColor
+        );
+
     wxIcon           * m_FmsLogoIcon;
     wxScrolledWindow * m_Screen;
     wxWindow         * m_Commander;
@@ -59,6 +69,10 @@ private:
     wxSplitterWindow * m_Splitter;
 
     bool  m_CommanderIsDocked;
+
+    class CSetColor * m_SetPenColorDialog;
+    class CSetColor * m_SetFloodColorDialog;
+    class CSetColor * m_SetScreenColorDialog;
 
     std::map<CWorkspaceEditor*,CWorkspaceEditor*>  m_Editors;
 

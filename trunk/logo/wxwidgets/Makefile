@@ -106,6 +106,7 @@ SPLITTER_OBJECTS =  \
 	splitter_fontutils.o \
 	splitter_utils.o \
 	splitter_logodata.o \
+	splitter_setcolor.o \
 
 ifeq "$(TOOLKIT)" "MSW"
 SPLITTER_OBJECTS +=  \

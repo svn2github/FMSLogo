@@ -45,6 +45,7 @@
 #include "minieditor.h"
 #include "workspaceeditor.h"
 #include "logodata.h"
+#include "setcolor.h"
 
 #include "fmslogo-16x16.xpm"
 
@@ -157,6 +158,9 @@ BEGIN_EVENT_TABLE(CMainFrame, wxFrame)
     EVT_MENU(ID_SETPENSIZE,         CMainFrame::SetPenSize)
     EVT_MENU(ID_BITMAPPRINTERAREA,  CMainFrame::SetActiveArea)
     EVT_MENU(ID_SETLABELFONT,       CMainFrame::SetLabelFont)
+    EVT_MENU(ID_SETPENCOLOR,        CMainFrame::SetPenColor)
+    EVT_MENU(ID_SETSCREENCOLOR,     CMainFrame::SetScreenColor)
+    EVT_MENU(ID_SETFLOODCOLOR,      CMainFrame::SetFloodColor)
     EVT_MENU(ID_HELP,               CMainFrame::Help)
     EVT_MENU(ID_HELPABOUT,          CMainFrame::AboutFmsLogo)
     EVT_MENU(ID_HELPABOUTMS,        CMainFrame::AboutMultipleSclerosis)
@@ -182,7 +186,10 @@ CMainFrame::CMainFrame()
       m_StatusDialog(NULL),
       m_SetPenSizeDialog(NULL),
       m_Splitter(NULL),
-      m_CommanderIsDocked(false)
+      m_CommanderIsDocked(false),
+      m_SetPenColorDialog(NULL),
+      m_SetFloodColorDialog(NULL),
+      m_SetScreenColorDialog(NULL)
 {
 #if wxUSE_STATUSBAR
     CreateStatusBar(2);
@@ -573,6 +580,53 @@ void CMainFrame::SetPenSize(wxCommandEvent& WXUNUSED(event) )
     {
         m_SetPenSizeDialog->SetFocus();
     }
+}
+
+void
+CMainFrame::SetColorHelper(
+    CSetColor * &   SetColorDialog,
+    const char  *   DialogTitle,
+    const wxColor & InitialColor
+    )
+{
+    if (SetColorDialog == NULL)
+    {
+        SetColorDialog = new CSetColor(
+            this,
+            DialogTitle,
+            InitialColor,
+            SetColorDialog);
+
+        SetColorDialog->Show();
+    }
+    else
+    {
+        SetColorDialog->SetFocus();
+    }
+}
+
+void CMainFrame::SetPenColor(wxCommandEvent& WXUNUSED(event) )
+{
+    SetColorHelper(
+        m_SetPenColorDialog,
+        LOCALIZED_SETCOLOR_PENCOLOR,
+        wxColor(0xFF, 0x00, 0x00)); // TODO: read this from the Logo engine
+}
+
+void CMainFrame::SetFloodColor(wxCommandEvent& WXUNUSED(event) )
+{
+    SetColorHelper(
+        m_SetFloodColorDialog,
+        LOCALIZED_SETCOLOR_FLOODCOLOR,
+        wxColor(0x00, 0x00, 0xFF)); // TODO: read this from the Logo engine
+}
+
+void CMainFrame::SetScreenColor(wxCommandEvent& WXUNUSED(event) )
+{
+    SetColorHelper(
+        m_SetScreenColorDialog,
+        LOCALIZED_SETCOLOR_SCREENCOLOR,
+        wxColor(0x00, 0xFF, 0x00)); // TODO: read this from the Logo engine
 }
 
 void CMainFrame::ShowStatus()
