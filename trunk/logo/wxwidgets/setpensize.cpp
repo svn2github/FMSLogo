@@ -80,7 +80,6 @@ enum ID_SETPENSIZE
 {
     ID_SETPENSIZE_PIXELSPERINCH = wxID_HIGHEST,
     ID_SETPENSIZE_SLIDER,
-    ID_SETPENSIZE_OK,
     ID_SETPENSIZE_APPLY,
     ID_SETPENSIZE_SIZE1,
     ID_SETPENSIZE_SIZE2,
@@ -216,7 +215,7 @@ CSetPenSize::CSetPenSize(
 
     wxButton *ok = new wxButton(
         this, 
-        ID_SETPENSIZE_OK,
+        wxID_OK,
         LOCALIZED_SETPENSIZE_OK);
     buttonColumn->Add(ok, 0, wxALIGN_CENTER | wxALL, 5);
 
@@ -293,7 +292,7 @@ void CSetPenSize::OnSliderUpdated(wxCommandEvent & WXUNUSED(event))
 
 
 BEGIN_EVENT_TABLE(CSetPenSize, wxDialog)
-    EVT_BUTTON(ID_SETPENSIZE_OK, CSetPenSize::OnOkButton)
+    EVT_BUTTON(wxID_OK,     CSetPenSize::OnOkButton)
     EVT_BUTTON(wxID_CANCEL, CSetPenSize::OnCancelButton)
     EVT_SLIDER(ID_SETPENSIZE_SLIDER, CSetPenSize::OnSliderUpdated)
     EVT_CLOSE(CSetPenSize::OnClose)
