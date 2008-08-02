@@ -84,9 +84,9 @@ RECT FullRect;                         // Ready rectangle of Full bitmap
 
 TMainFrame *MainWindowx;               // Pointer to the Main window
 
+PENSTATE g_PenState;                   // The state of the current pen (color, mode, etc.)
 
 int GCMAX = 8192;                      // Garbage Collector Stack Size
-Color dpen;                            // Current pen color
 Color dfld;                            // Current flood color
 Color dscn;                            // Current screen color
 bool IsDirty = false;                  // Flag to signal to query user ok to quit
@@ -121,7 +121,6 @@ long vector_count = 0;                 // current count of vectors drawn
 COLORREF scolor;                       // screen color
 COLORREF fcolor;                       // flood color
 COLORREF pcolor;                       // pen color
-long g_PenWidth = 1;                   // pen width
 bool zoom_flag = false;                // flag to signal in zoomed state
 long MaxColors = 0;                    // The maximum # of colors available
 
@@ -434,15 +433,14 @@ void TMyApp::InitMainWindow()
     MainWindowx = new TMainFrame(NULL, Name, paneSpliter);
     SetMainWindow(MainWindowx);
 
-    /* set appropriate default colors */
-
+    // set appropriate default colors
     pcolor = 0x00000000;
     scolor = 0x00FFFFFF;
     fcolor = 0x00000000;
 
-    dpen.red   = 0x00;
-    dpen.green = 0x00;
-    dpen.blue  = 0x00;
+    g_PenState.Color.red   = 0x00;
+    g_PenState.Color.green = 0x00;
+    g_PenState.Color.blue  = 0x00;
 
     dfld.red   = 0x00;
     dfld.green = 0x00;
@@ -452,8 +450,12 @@ void TMyApp::InitMainWindow()
     dscn.green = 0xFF;
     dscn.blue  = 0xFF;
 
-    // init the font structure
+    // initialize the global pen state
+    g_PenState.Width     = 1;
+    g_PenState.Mode      = 0;
+    g_PenState.IsErasing = false;
 
+    // init the font structure
     FontRec.lfHeight         = 24;
     FontRec.lfWidth          = 0;
     FontRec.lfOrientation    = 0;
@@ -1087,7 +1089,7 @@ transline_helper(
     // This isn't necessary when the pensize != 1.
     // This would be bad to do in penreverse mode.
     //
-    if (g_PenWidth < 2 && current_write_mode != XOR_PUT)
+    if (g_PenState.Width < 2 && g_PenState.Mode != XOR_PUT)
     {
         SetPixel(MemDC, ToX, ToY, LogicalPen.lopnColor);
     }
@@ -1129,7 +1131,7 @@ transline_helper(
         MoveToEx(ScreenDC, screenFromX, screenFromY, 0);
         LineTo(ScreenDC, screenToX, screenToY);
 
-        if (g_PenWidth < 2 && current_write_mode != XOR_PUT)
+        if (g_PenState.Width < 2 && g_PenState.Mode != XOR_PUT)
         {
             SetPixel(ScreenDC, screenFromX, screenFromY, LogicalPen.lopnColor);
         }
@@ -1440,7 +1442,7 @@ void line_to(FLONUM x, FLONUM y)
         const LOGPEN * logicalPen;
         int            rasterMode;
 
-        if (in_erase_mode)
+        if (g_PenState.IsErasing)
         {
             pen        = g_ErasePen;
             logicalPen = &g_LogicalErasePen;
@@ -1451,7 +1453,7 @@ void line_to(FLONUM x, FLONUM y)
             pen        = g_NormalPen;
             logicalPen = &g_LogicalNormalPen;
 
-            if (current_write_mode == XOR_PUT)
+            if (g_PenState.Mode == XOR_PUT)
             {
                 rasterMode = R2_NOT;
             }
@@ -1487,7 +1489,7 @@ void line_to_3d(const Point & ToPoint)
         const LOGPEN * logicalPen;
         int            rasterMode;
 
-        if (in_erase_mode)
+        if (g_PenState.IsErasing)
         {
             pen        = g_ErasePen;
             logicalPen = &g_LogicalErasePen;
@@ -1498,7 +1500,7 @@ void line_to_3d(const Point & ToPoint)
             pen        = g_NormalPen;
             logicalPen = &g_LogicalNormalPen;
 
-            if (current_write_mode == XOR_PUT)
+            if (g_PenState.Mode == XOR_PUT)
             {
                 rasterMode = R2_NOT;
             }

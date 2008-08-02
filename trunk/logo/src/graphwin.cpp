@@ -1,23 +1,22 @@
 /*
-*
-*       Copyright (C) 1995 by the Regents of the University of California
-*       Copyright (C) 1995 by George Mills
-*
-*      This program is free software; you can redistribute it and/or modify
-*      it under the terms of the GNU General Public License as published by
-*      the Free Software Foundation; either version 2 of the License, or
-*      (at your option) any later version.
-*
-*      This program is distributed in the hope that it will be useful,
-*      but WITHOUT ANY WARRANTY; without even the implied warranty of
-*      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-*      GNU General Public License for more details.
-*
-*      You should have received a copy of the GNU General Public License
-*      along with this program; if not, write to the Free Software
-*      Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
-*
-*/
+ *  Copyright (C) 1995 by the Regents of the University of California
+ *  Copyright (C) 1995 by George Mills
+ *
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ *
+ */
 
 #include "allwind.h"
 #include "htmlhelp.h"
@@ -798,26 +797,26 @@ NODE *lpencolor(NODE *)
 {
     ASSERT_TURTLE_INVARIANT;
 
-    return color_helper(dpen);
+    return color_helper(g_PenState.Color);
 }
 
 // function to set the pen color while updating palette, if need be
 void thepencolor(int r, int g, int b)
 {
-    dpen.red   = r;
-    dpen.green = g;
-    dpen.blue  = b;
+    g_PenState.Color.red   = r;
+    g_PenState.Color.green = g;
+    g_PenState.Color.blue  = b;
 
     if (EnablePalette)
     {
-        pcolor = LoadColor(dpen.red, dpen.green, dpen.blue);
+        pcolor = LoadColor(r, g, b);
     }
     else
     {
-        pcolor = RGB(dpen.red, dpen.green, dpen.blue);
+        pcolor = RGB(r, g, b);
     }
 
-    UpdateNormalPen(g_PenWidth, pcolor);
+    UpdateNormalPen(g_PenState.Width, pcolor);
 }
 
 // function to return flood color as a RGB list
@@ -878,7 +877,7 @@ void thescreencolor(int r, int g, int b)
 
     // When the screen changes we change the erase pen which basically
     // writes the screen color
-    UpdateErasePen(g_PenWidth, scolor);
+    UpdateErasePen(g_PenState.Width, scolor);
 
     HBRUSH TempBrush = CreateBrushIndirect(&ScreenBrush);
 
@@ -908,7 +907,7 @@ void thescreencolor(int r, int g, int b)
 
 int get_pen_width()
 {
-    return g_PenWidth;
+    return g_PenState.Width;
 }
 
 int get_pen_height()
@@ -918,11 +917,11 @@ int get_pen_height()
 
 void set_pen_width(int w)
 {
-    g_PenWidth = w;
+    g_PenState.Width = w;
 
     // we erase with the same pen width as we write
-    UpdateNormalPen(g_PenWidth, pcolor);
-    UpdateErasePen(g_PenWidth,  scolor);
+    UpdateNormalPen(g_PenState.Width, pcolor);
+    UpdateErasePen(g_PenState.Width,  scolor);
 }
 
 void set_pen_height(int h)
@@ -2686,7 +2685,7 @@ void label(const char *s)
     SetBkColor(MemDC, scolor);
     SetBkMode(MemDC, TRANSPARENT);
 
-    if (in_erase_mode)
+    if (g_PenState.IsErasing)
     {
         SetTextColor(MemDC, scolor);
     }
@@ -2727,7 +2726,7 @@ void label(const char *s)
     SetBkColor(ScreenDC, scolor);
     SetBkMode(ScreenDC, TRANSPARENT);
 
-    if (in_erase_mode)
+    if (g_PenState.IsErasing)
     {
         SetTextColor(ScreenDC, scolor);
     }

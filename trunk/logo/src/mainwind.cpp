@@ -2296,8 +2296,8 @@ void TMainFrame::SetupWindow()
     IsOkayToUseCommanderWindow = true;
 
     // init the pens based on the color
-    UpdateNormalPen(g_PenWidth, pcolor);
-    UpdateErasePen(g_PenWidth,  scolor);
+    UpdateNormalPen(g_PenState.Width, pcolor);
+    UpdateErasePen(g_PenState.Width,  scolor);
 
     // it's show time for our little friend
     draw_turtle(true);

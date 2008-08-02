@@ -69,6 +69,16 @@ struct CUTMAP
     bool    IsValid;       // flag to signal something in cut buffer
 };
 
+struct PENSTATE
+{
+    int      Width;
+    Color    Color;
+
+    // TODO: combine Mode and IsErasing
+    int      Mode;
+    bool     IsErasing;
+};
+
 class qlink
 {
     friend class qlist;
@@ -855,7 +865,6 @@ extern int g_PrinterAreaYLow;
 extern int g_PrinterAreaYHigh;
 extern int g_PrinterAreaPixels;
 
-extern Color dpen;
 extern Color dfld;
 extern Color dscn;
 extern int BitMapWidth;
@@ -869,12 +878,10 @@ extern bool stepflag;
 extern bool GiveFocusToEditbox;
 extern int BaseUnitsx;
 extern int BaseUnitsy;
-extern int current_write_mode;
 
 extern COLORREF scolor;
 extern COLORREF fcolor;
 extern COLORREF pcolor;
-extern long g_PenWidth;
 extern bool zoom_flag;
 extern long MaxColors;
 
