@@ -797,27 +797,36 @@ NODE *lpencolor(NODE *)
 {
     ASSERT_TURTLE_INVARIANT;
 
-    return color_helper(g_PenState.Color);
+    return color_helper(GetPenStateForSelectedTurtle().Color);
 }
 
-// function to set the pen color while updating palette, if need be
-void thepencolor(int r, int g, int b)
+
+// Do all of the things necessary when the pen color changes:
+// * Sets the pen color on the active turtle
+// * Updates the palette, if necessary
+// * Updates the global pen
+// * Updates the values in the status window
+void ChangeActivePenColor(int Red, int Green, int Blue)
 {
-    g_PenState.Color.red   = r;
-    g_PenState.Color.green = g;
-    g_PenState.Color.blue  = b;
+    Color & penColor = GetPenStateForSelectedTurtle().Color;
+    penColor.red   = Red;
+    penColor.green = Green;
+    penColor.blue  = Blue;
 
     if (EnablePalette)
     {
-        pcolor = LoadColor(r, g, b);
+        pcolor = LoadColor(Red, Green, Blue);
     }
     else
     {
-        pcolor = RGB(r, g, b);
+        pcolor = RGB(Red, Green, Blue);
     }
 
-    UpdateNormalPen(g_PenState.Width, pcolor);
+    UpdateNormalPen(GetPenStateForSelectedTurtle().Width, pcolor);
+
+    update_status_pencolor();
 }
+
 
 // function to return flood color as a RGB list
 NODE *lfloodcolor(NODE *)
@@ -827,13 +836,16 @@ NODE *lfloodcolor(NODE *)
     return color_helper(dfld);
 }
 
-// funtion to set the flood color while updating palette if need be
-void thefloodcolor(int r, int g, int b)
+// Do all of the things necessary when the flood color changes:
+// * Sets the global flood color
+// * Updates the palette, if necessary
+// * Updates the global flood color brush
+// * Updates the values in the status window
+void ChangeActiveFloodColor(int Red, int Green, int Blue)
 {
-
-    dfld.red   = r;
-    dfld.green = g;
-    dfld.blue  = b;
+    dfld.red   = Red;
+    dfld.green = Green;
+    dfld.blue  = Blue;
 
     if (EnablePalette)
     {
@@ -847,6 +859,8 @@ void thefloodcolor(int r, int g, int b)
     FloodBrush.lbStyle = BS_SOLID;
     FloodBrush.lbColor = fcolor;
     FloodBrush.lbHatch = HS_VERTICAL;
+
+    update_status_floodcolor();
 }
 
 // function to return screen color as a RGB list
@@ -855,12 +869,16 @@ NODE *lscreencolor(NODE *)
     return color_helper(dscn);
 }
 
-// Set the screen color and update palette, if necessary
-void thescreencolor(int r, int g, int b)
+// Do all of the things necessary when the screen color changes:
+// * Sets the global screen color
+// * Updates the palette, if necessary
+// * Updates the global screen brush (and erase brush)
+// * Updates the values in the status window
+void ChangeActiveScreenColor(int Red, int Green, int Blue)
 {
-    dscn.red   = r;
-    dscn.green = g;
-    dscn.blue  = b;
+    dscn.red   = Red;
+    dscn.green = Green;
+    dscn.blue  = Blue;
 
     if (EnablePalette)
     {
@@ -877,7 +895,7 @@ void thescreencolor(int r, int g, int b)
 
     // When the screen changes we change the erase pen which basically
     // writes the screen color
-    UpdateErasePen(g_PenState.Width, scolor);
+    UpdateErasePen(GetPenStateForSelectedTurtle().Width, scolor);
 
     HBRUSH TempBrush = CreateBrushIndirect(&ScreenBrush);
 
@@ -903,11 +921,13 @@ void thescreencolor(int r, int g, int b)
     DeleteObject(TempBrush);
 
     MainWindowx->ScreenWindow->Invalidate(true);
+
+    update_status_screencolor();
 }
 
 int get_pen_width()
 {
-    return g_PenState.Width;
+    return GetPenStateForSelectedTurtle().Width;
 }
 
 int get_pen_height()
@@ -917,11 +937,11 @@ int get_pen_height()
 
 void set_pen_width(int w)
 {
-    g_PenState.Width = w;
+    GetPenStateForSelectedTurtle().Width = w;
 
     // we erase with the same pen width as we write
-    UpdateNormalPen(g_PenState.Width, pcolor);
-    UpdateErasePen(g_PenState.Width,  scolor);
+    UpdateNormalPen(w, pcolor);
+    UpdateErasePen(w,  scolor);
 }
 
 void set_pen_height(int h)
@@ -1878,11 +1898,11 @@ NODE *lbitpastetoindex(NODE *arg)
     return Unbound;
 }
 
-NODE *lsetturtle(NODE *arg)
+NODE *lsetturtle(NODE *args)
 {
     ASSERT_TURTLE_INVARIANT;
 
-    NODE * val = integer_arg(arg);
+    NODE * val = integer_arg(args);
     if (stopping_flag == THROWING)
     {
         return Unbound;
@@ -1898,6 +1918,14 @@ NODE *lsetturtle(NODE *arg)
 
     if (turtleId < 0)
     {
+        if (cdr(args) != NIL)
+        {
+            // unique pen modes are meaningless for the special
+            // turtles, so we consider this bad input.
+            err_logo(TOO_MUCH, NIL);
+            return Unbound;
+        }
+
         // this is a special turtle.
         // Remap <-1, -2, -3> to <0, 1, 2>
         g_SelectedTurtle = g_SpecialTurtles - turtleId - 1;
@@ -1905,6 +1933,19 @@ NODE *lsetturtle(NODE *arg)
     else
     {
         // This is a normal turtle
+
+        // read the optional "has unique pen" input
+        bool hasUniquePen         = false; // by default, share a global pen
+        bool overrideHasUniquePen = false; // by default, keep the current setting
+        if (cdr(args) != NIL)
+        {
+            hasUniquePen         = boolean_arg(cdr(args));
+            overrideHasUniquePen = true;
+            if (stopping_flag == THROWING)
+            {
+                return Unbound;
+            }
+        }
 
         if (g_TurtlesLimit <= turtleId)
         {
@@ -1940,14 +1981,34 @@ NODE *lsetturtle(NODE *arg)
             for (int i = g_MaxTurtle + 1; i <= turtleId; i++)
             {
                 InitializeTurtle(&g_Turtles[i]);
+                g_Turtles[i].HasOwnPenState = hasUniquePen;
             }
             
             g_MaxTurtle = turtleId;
         }
+
+        if (overrideHasUniquePen)
+        {
+            // The caller specified a UseUniquePen input, so
+            // we override whatever value was set in the turtle.
+            g_SelectedTurtle->HasOwnPenState = hasUniquePen;
+        }
+
+        // Update the current brush.
+        // ChangeActivePenColor() updates the brushes color and width.
+        Color & activePenColor = GetPenStateForSelectedTurtle().Color;
+        ChangeActivePenColor(
+            activePenColor.red,
+            activePenColor.green,
+            activePenColor.blue);
     }
 
     draw_turtles(false);
 
+    // update everything in the status window that can change
+    // when the turtle changes.
+    update_status_penstyle();
+    update_status_penwidth();
     update_status_turtleposition();
     update_status_pencontact();
     update_status_turtlevisability();
@@ -2685,7 +2746,7 @@ void label(const char *s)
     SetBkColor(MemDC, scolor);
     SetBkMode(MemDC, TRANSPARENT);
 
-    if (g_PenState.IsErasing)
+    if (GetPenStateForSelectedTurtle().IsErasing)
     {
         SetTextColor(MemDC, scolor);
     }
@@ -2726,7 +2787,7 @@ void label(const char *s)
     SetBkColor(ScreenDC, scolor);
     SetBkMode(ScreenDC, TRANSPARENT);
 
-    if (g_PenState.IsErasing)
+    if (GetPenStateForSelectedTurtle().IsErasing)
     {
         SetTextColor(ScreenDC, scolor);
     }

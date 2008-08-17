@@ -362,6 +362,16 @@ void InitializeTurtle(Turtle * TurtleToInitialize)
     TurtleToInitialize->IsPenUp    = false;
     TurtleToInitialize->IsSpecial  = false;
 
+    TurtleToInitialize->HasOwnPenState = false;
+
+    // initialize to default color
+    TurtleToInitialize->PenState.Color.red   = 0x00;
+    TurtleToInitialize->PenState.Color.green = 0x00;
+    TurtleToInitialize->PenState.Color.blue  = 0x00;
+    TurtleToInitialize->PenState.Width     = 1;
+    TurtleToInitialize->PenState.Mode      = COPY_PUT;
+    TurtleToInitialize->PenState.IsErasing = false;
+
     TurtleToInitialize->Matrix.e11 = 1.0;
     TurtleToInitialize->Matrix.e12 = 0.0;
     TurtleToInitialize->Matrix.e13 = 0.0;
@@ -2260,8 +2270,7 @@ static
 NODE *
 setcolor_helper(
     NODE *args,
-    void (*setcolorfunc)  (int, int, int),
-    void (*updatecolorfunc) (void)
+    void (*setcolorfunc)  (int, int, int)
     )
 {
     FIXNUM red   = 0;
@@ -2334,10 +2343,9 @@ setcolor_helper(
 
     if (stopping_flag != THROWING)
     {
-        if (!g_PenState.IsErasing)
+        if (!GetPenStateForSelectedTurtle().IsErasing)
         {
             setcolorfunc(red, green, blue);
-            updatecolorfunc();
         }
     }
 
@@ -2347,17 +2355,17 @@ setcolor_helper(
 
 NODE *lsetpencolor(NODE *args)
 {
-    return setcolor_helper(args, thepencolor, update_status_pencolor);
+    return setcolor_helper(args, ChangeActivePenColor);
 }
 
 NODE *lsetfloodcolor(NODE *args)
 {
-    return setcolor_helper(args, thefloodcolor, update_status_floodcolor);
+    return setcolor_helper(args, ChangeActiveFloodColor);
 }
 
 NODE *lsetscreencolor(NODE *args)
 {
-    return setcolor_helper(args, thescreencolor, update_status_screencolor);
+    return setcolor_helper(args, ChangeActiveScreenColor);
 }
 
 NODE *lsetpensize(NODE *args)

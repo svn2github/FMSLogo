@@ -567,7 +567,7 @@ const PRIMTYPE prims[] =
     { "setscreencolor", 1, 1, 1, PREFIX_PRIORITY, lsetscreencolor, LOCALIZED_ALTERNATE_SETSCREENCOLOR },
     { "setscrunch", 2, 2, 2, PREFIX_PRIORITY, lsetscrunch, LOCALIZED_ALTERNATE_SETSCRUNCH },
     { "settimer", 3, 3, 3, PREFIX_PRIORITY, lsettimer, LOCALIZED_ALTERNATE_SETTIMER },
-    { "setturtle", 1, 1, 1, PREFIX_PRIORITY, lsetturtle, LOCALIZED_ALTERNATE_SETTURTLE },
+    { "setturtle", 1, 1, 2, PREFIX_PRIORITY, lsetturtle, LOCALIZED_ALTERNATE_SETTURTLE },
     { "setturtlemode", 1, 1, 1, PREFIX_PRIORITY, lsetturtlemode, LOCALIZED_ALTERNATE_SETTURTLEMODE },
     { "setwrite", 1, 1, 1, PREFIX_PRIORITY, lsetwrite, LOCALIZED_ALTERNATE_SETWRITE },
     { "setwritepos", 1, 1, 1, PREFIX_PRIORITY, lsetwritepos, LOCALIZED_ALTERNATE_SETWRITEPOS },

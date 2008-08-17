@@ -185,6 +185,9 @@ struct Turtle
     bool     IsPenUp;
     bool     IsSpecial;
 
+    bool     HasOwnPenState;
+    PENSTATE PenState;
+
     // a cache for lines that make up a turtle's body
     LINEX    Points[4];
     bool     Padding;

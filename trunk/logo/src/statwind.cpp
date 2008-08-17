@@ -170,7 +170,7 @@ void update_status_turtleposition(void)
 
 void update_status_pencolor(void)
 {
-    update_status_color_helper(ID_PENCOLOR, g_PenState.Color);
+    update_status_color_helper(ID_PENCOLOR, GetPenStateForSelectedTurtle().Color);
 }
 
 void update_status_floodcolor(void)
@@ -207,7 +207,7 @@ void update_status_penwidth(void)
     if (status_flag)
     {
         char text[256];
-        sprintf(text, "%d", g_PenState.Width);
+        sprintf(text, "%d", GetPenStateForSelectedTurtle().Width);
         MainWindowx->StatusWindow->SetDlgItemText(ID_PENWIDTH, text);
     }
 }
@@ -235,7 +235,7 @@ void update_status_penstyle(void)
     {
         // TODO: merge with get_node_pen_mode()
         const char * text;
-        if (g_PenState.Mode == XOR_PUT)
+        if (GetPenStateForSelectedTurtle().Mode == XOR_PUT)
         {
             text = LOCALIZED_STATUS_PENREVERSE;
         }
@@ -244,7 +244,7 @@ void update_status_penstyle(void)
             text = LOCALIZED_STATUS_PENNORMAL;
         }
 
-        if (g_PenState.IsErasing)
+        if (GetPenStateForSelectedTurtle().IsErasing)
         {
             text = LOCALIZED_STATUS_PENERASE;
         }

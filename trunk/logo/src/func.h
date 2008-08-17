@@ -225,6 +225,7 @@ extern void update_status_vectors(void);
 
 
 // File main.cpp
+extern struct PENSTATE & GetPenStateForSelectedTurtle();
 extern void GetWorkingAreaDimensions(int & workingAreaWidth, int & workingAreaHeight);
 extern void ShowMessage(const char * Title, const char * Message);
 extern void ShowMessageAndStop(const char * Title, const char * Message);
@@ -243,9 +244,9 @@ extern void move_to(FLONUM x, FLONUM y);
 extern void line_to(FLONUM x, FLONUM y);
 extern void move_to_3d(FLONUM x, FLONUM y, FLONUM z);
 extern void line_to_3d(const Point & ToPoint);
-extern void thepencolor(int, int, int);
-extern void thefloodcolor(int, int, int);
-extern void thescreencolor(int, int, int);
+extern void ChangeActivePenColor(int Red, int Green, int Blue);
+extern void ChangeActiveFloodColor(int Red, int Green, int Blue);
+extern void ChangeActiveScreenColor(int Red, int Green, int Blue);
 
 // File mainwnd.cpp
 extern void FillMenu(TMenu & Menu, const MENUITEM * MenuItems, size_t MenuItemsLength);

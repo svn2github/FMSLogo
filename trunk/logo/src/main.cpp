@@ -1,21 +1,20 @@
 /*
+ *  Copyright (C) 1995 by the Regents of the University of California
+ *  Copyright (C) 1995 by George Mills
  *
- *       Copyright (C) 1995 by the Regents of the University of California
- *       Copyright (C) 1995 by George Mills
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
  *
- *      This program is free software; you can redistribute it and/or modify
- *      it under the terms of the GNU General Public License as published by
- *      the Free Software Foundation; either version 2 of the License, or
- *      (at your option) any later version.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- *      This program is distributed in the hope that it will be useful,
- *      but WITHOUT ANY WARRANTY; without even the implied warranty of
- *      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *      GNU General Public License for more details.
- *
- *      You should have received a copy of the GNU General Public License
- *      along with this program; if not, write to the Free Software
- *      Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
 
@@ -84,8 +83,6 @@ RECT FullRect;                         // Ready rectangle of Full bitmap
 
 TMainFrame *MainWindowx;               // Pointer to the Main window
 
-PENSTATE g_PenState;                   // The state of the current pen (color, mode, etc.)
-
 int GCMAX = 8192;                      // Garbage Collector Stack Size
 Color dfld;                            // Current flood color
 Color dscn;                            // Current screen color
@@ -124,6 +121,8 @@ COLORREF pcolor;                       // pen color
 bool zoom_flag = false;                // flag to signal in zoomed state
 long MaxColors = 0;                    // The maximum # of colors available
 
+PENSTATE g_PenState;  // The state of the current pen (color, mode, etc.)
+
 TThreeDSolid ThreeD;
 
 OSVERSIONINFO g_OsVersionInformation;
@@ -142,6 +141,16 @@ static const LINE3D turtle_vertices[4] =
     {{  8.0, 0.0, 0.0},{  8.0,  8.0, 0.0}},
 };
 
+PENSTATE & GetPenStateForSelectedTurtle()
+{
+    if (g_SelectedTurtle->HasOwnPenState)
+    {
+        return g_SelectedTurtle->PenState;
+    }
+
+    // the current turtle uses the global pen state
+    return g_PenState;
+}
 
 // returns the dimensions of the working area, that is
 // the size of the desktop without the task bar.
@@ -438,9 +447,6 @@ void TMyApp::InitMainWindow()
     scolor = 0x00FFFFFF;
     fcolor = 0x00000000;
 
-    g_PenState.Color.red   = 0x00;
-    g_PenState.Color.green = 0x00;
-    g_PenState.Color.blue  = 0x00;
 
     dfld.red   = 0x00;
     dfld.green = 0x00;
@@ -451,9 +457,6 @@ void TMyApp::InitMainWindow()
     dscn.blue  = 0xFF;
 
     // initialize the global pen state
-    g_PenState.Width     = 1;
-    g_PenState.Mode      = 0;
-    g_PenState.IsErasing = false;
 
     // init the font structure
     FontRec.lfHeight         = 24;
@@ -967,6 +970,14 @@ WinMain(
     g_SpecialTurtles[SPECIAL_TURTLE_LIGHT_LOCATION].IsSpecial = true;
     g_SpecialTurtles[SPECIAL_TURTLE_EYE_FIXATION].IsSpecial   = true;
 
+    // init global pen state
+    g_PenState.Color.red   = 0x00;
+    g_PenState.Color.green = 0x00;
+    g_PenState.Color.blue  = 0x00;
+    g_PenState.Width     = 1;
+    g_PenState.Mode      = COPY_PUT;
+    g_PenState.IsErasing = false;
+
     // init logo kernel
     init();
 
@@ -1089,7 +1100,8 @@ transline_helper(
     // This isn't necessary when the pensize != 1.
     // This would be bad to do in penreverse mode.
     //
-    if (g_PenState.Width < 2 && g_PenState.Mode != XOR_PUT)
+    PENSTATE & penState = GetPenStateForSelectedTurtle();
+    if (penState.Width < 2 && penState.Mode != XOR_PUT)
     {
         SetPixel(MemDC, ToX, ToY, LogicalPen.lopnColor);
     }
@@ -1131,7 +1143,8 @@ transline_helper(
         MoveToEx(ScreenDC, screenFromX, screenFromY, 0);
         LineTo(ScreenDC, screenToX, screenToY);
 
-        if (g_PenState.Width < 2 && g_PenState.Mode != XOR_PUT)
+        PENSTATE & penState = GetPenStateForSelectedTurtle();
+        if (penState.Width < 2 && penState.Mode != XOR_PUT)
         {
             SetPixel(ScreenDC, screenFromX, screenFromY, LogicalPen.lopnColor);
         }
@@ -1442,7 +1455,7 @@ void line_to(FLONUM x, FLONUM y)
         const LOGPEN * logicalPen;
         int            rasterMode;
 
-        if (g_PenState.IsErasing)
+        if (GetPenStateForSelectedTurtle().IsErasing)
         {
             pen        = g_ErasePen;
             logicalPen = &g_LogicalErasePen;
@@ -1453,7 +1466,7 @@ void line_to(FLONUM x, FLONUM y)
             pen        = g_NormalPen;
             logicalPen = &g_LogicalNormalPen;
 
-            if (g_PenState.Mode == XOR_PUT)
+            if (GetPenStateForSelectedTurtle().Mode == XOR_PUT)
             {
                 rasterMode = R2_NOT;
             }
@@ -1489,7 +1502,7 @@ void line_to_3d(const Point & ToPoint)
         const LOGPEN * logicalPen;
         int            rasterMode;
 
-        if (g_PenState.IsErasing)
+        if (GetPenStateForSelectedTurtle().IsErasing)
         {
             pen        = g_ErasePen;
             logicalPen = &g_LogicalErasePen;
@@ -1500,7 +1513,7 @@ void line_to_3d(const Point & ToPoint)
             pen        = g_NormalPen;
             logicalPen = &g_LogicalNormalPen;
 
-            if (g_PenState.Mode == XOR_PUT)
+            if (GetPenStateForSelectedTurtle().Mode == XOR_PUT)
             {
                 rasterMode = R2_NOT;
             }
