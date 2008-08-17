@@ -32,17 +32,21 @@ See <link linkend="using-color">Using Color</link> for details.
        <title>Multiple Turtles</title>
 
 <para>
-&PRODUCTNAME; multiple turtles.
-Each turtle maintains its own heading (orientation in 3D), position, and pen control, but not pen color.
-Each turtle can be represented as a <link linkend="command-bitmapturtle">BITMAPTURTLE</link>.
-Note that turtles start at index 0, which is the default turtle.
+&PRODUCTNAME; supports multiple turtles.
+Each turtle maintains its own heading (orientation in 3D), position, and pen control.
+Turtles can be individually represented as a picture using <link linkend="command-bitmapturtle">BITMAPTURTLE</link>.
+By default, all turtles share the same pen mode, pen color, and pen size, but you can make individual turtles have their own pen by supplying an optional input to <link linkend="command-setturtle">SETTURTLE</link>.
+</para>
+
+<para>
+Turtles start at index 0, which is the default turtle.
 All turtles between 0 and the highest turtle ever selected will be "activated", so don't choose turtle 100 and 200 if you only need 2 turtles.
-Having thousands of active turtles may slow &PRODUCTNAME; down consideribly as it pauses to redraw every turtle after every instruction.
+Having thousands of active turtles may slow &PRODUCTNAME; down considerably as it pauses to redraw every turtle after every instruction.
 Pressing the "Reset" button or running <link linkend="command-clearscreen">CLEARSCREEN</link> will select turtle 0 and deactivate all other turtles.
 </para>
 
 <para>
-In addition the turtles that you can create, there are also 3 special turtles used when in <link linkend="command-perspective">PERSPECTIVE</link> mode.
+In addition the turtles that you can create, there are also three special turtles used when in <link linkend="command-perspective">PERSPECTIVE</link> mode.
 
 <informaltable frame='all'>
   <tgroup cols='2'>

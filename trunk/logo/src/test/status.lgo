@@ -55,7 +55,8 @@ Screen: 70,80,90|
      REPORTTESTFAILED [The status window did not display the correct info.]
    ]
 
-   TRACEINSTRUCTION [ CS SETTURTLE 1 FD 100 RT 90 FD 50 LR 10 DOWN 20 ]
+   ; Give turtle 1 its own pen and move it someplace new
+   TRACEINSTRUCTION [ (SETTURTLE 1 "true) FD 100 RT 90 FD 50 LR 10 DOWN 20 ]
    TRACEINSTRUCTION [ HT SETPENSIZE [6 6] ]
    TRACEINSTRUCTION [ SETPC [1 2 3] SETFC [4 5 6] SETSC [7 8 9] ]
    TRACEINSTRUCTION [ PENERASE PENUP ]
@@ -80,6 +81,41 @@ Visibility: Hidden
 
 Color
 Pen:    1,2,3
+Flood:  4,5,6
+Screen: 7,8,9|
+   ]
+
+   IFELSE :isok [
+     REPORTTESTPASSED [The status window displayed the correct information.]
+   ][
+     REPORTTESTFAILED [The status window did not display the correct info.]
+   ]
+
+
+   ; Switch back to turtle 0.  This should show the original status
+   TRACEINSTRUCTION [ SETTURTLE 0 ]
+
+   ; make sure that the initial values are correct
+   MAKE "isok YESNOBOX [Question] [
+|Does the status window show:
+
+Pen
+Contact: Down
+Width:   3
+Style:   Reverse
+
+Orientation
+Heading: 266.55
+Pitch:   9.39
+Roll:    20.28
+
+Turtle
+XYZ:        -50,-100,0
+Which:      0
+Visibility: Shown
+
+Color
+Pen:    10,20,30
 Flood:  4,5,6
 Screen: 7,8,9|
    ]
