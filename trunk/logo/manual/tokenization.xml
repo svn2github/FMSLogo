@@ -9,6 +9,13 @@ This chapter explains how the &GENERICNAME; language works.
    <title>Tokenization</title>
    <indexterm><primary>tokenization</primary></indexterm>
 
+   <indexterm><primary>;</primary></indexterm>
+   <indexterm><primary>semicolon</primary></indexterm>
+   <indexterm><primary>comment</primary></indexterm>
+
+   <indexterm><primary>~</primary></indexterm>
+   <indexterm><primary>line continuation</primary></indexterm>
+
    <para>Names of procedures, variables, and property lists are case-insensitive.
 So are the special words <link linkend="command-end">END</link>, <link linkend="command-true">TRUE</link>, and <link linkend="command-false">FALSE</link>.
 Case of letters is preserved in everything you type, however.</para>
