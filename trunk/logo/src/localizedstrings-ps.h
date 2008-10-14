@@ -1005,7 +1005,6 @@
 
 #define LOCALIZED_ERROR_DLL                   "pseudo.DLL Error"
 #define LOCALIZED_ERROR_DLLNOTLOADED          "pseudo.DLL is not loaded"
-#define LOCALIZED_ERROR_DLLALREADYLOADED      "pseudo.DLL is already loaded"
 #define LOCALIZED_ERROR_DLLLOADFAILED         "pseudo.DLL load failed"
 #define LOCALIZED_ERROR_DLLINVALIDDATATYPE    "pseudo.Invalid data type input"
 #define LOCALIZED_ERROR_DLLINVALIDOUTPUTTYPE  "pseudo.Invalid output type"

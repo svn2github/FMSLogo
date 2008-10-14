@@ -7,13 +7,13 @@ TO DLLSMOKETEST
   ; Get Handle to Main Window (Note args are in REVERSE order)
   LOCALMAKE "hwnd DLLCALL [l FindWindowA s FMSLogo l 0]
 
-  ; Resize Main Window
-  LOCALMAKE "status DLLCALL (LIST "l "MoveWindow "w "1 "l "100 "l "100 "l "0 "l "0 "l :hwnd)
+  ; Resize Main Window (should return TRUE)
+  SIMPLEREPORTTEST [ DLLCALL (LIST "l "MoveWindow "w "1 "l "100 "l "100 "l "0 "l "0 "l :hwnd) ] [1]
 
   WAIT 30
 
-  ; Restore Main Window
-  LOCALMAKE "status DLLCALL (LIST "l "MoveWindow "w "1 "l "600 "l "800 "l "0 "l "0 "l :hwnd)
+  ; Restore Main Window (using captial letters for type specifiers)
+  SIMPLEREPORTTEST [ DLLCALL (LIST "L "MoveWindow "W 1 "L 600 "L 800 "L 0 "L 0 "L :hwnd) ] [1]
 
   DLLFREE
 END
@@ -29,39 +29,80 @@ TO DLLCALLTEST
 
   ; invalid calls
   RUNNOTENOUGHINPUTSTEST [(DLLCALL)]
-  RUNTOOMANYINPUTSTEST   [(DLLCALL [L GetTickCount] "toomany)]
+  RUNTOOMANYINPUTSTEST   [(DLLCALL [L GetTickCount] "kernel32.dll "toomany)]
 
   ; invalid inputs
-  RUNBADINPUTTEST [DLLCALL {0}]
+  RUNSTOPPINGTEST [DLLCALL {0}]
 
   ; missing the function type
-  RUNBADINPUTTEST [DLLCALL [0]]
+  RUNSTOPPINGTEST [DLLCALL [0]]
 
   ; missing the function name
-  RUNBADINPUTTEST [DLLCALL [L]]
+  RUNSTOPPINGTEST [DLLCALL [L]]
 
   ; unknown function
-  RUNBADINPUTTEST [DLLCALL [L FunctionDoesNotExist]]
+  RUNSTOPPINGTEST [DLLCALL [L FunctionDoesNotExist]]
 
   ; unknown function type
-  RUNBADINPUTTEST [DLLCALL [E GetTickCount]]
+  RUNSTOPPINGTEST [DLLCALL [E GetTickCount]]
 
   ; unknown function type
-  RUNBADINPUTTEST [DLLCALL [E GetTickCount]]
+  RUNSTOPPINGTEST [DLLCALL [E GetTickCount]]
 
   ; type/values are not paired
-  RUNBADINPUTTEST [DLLCALL [L GetTickCount L ]]
+  RUNSTOPPINGTEST [DLLCALL [L GetTickCount L ]]
 
   ; unknown parameter type
-  RUNBADINPUTTEST [DLLCALL [L GetTickCount E Unknown]]
+  RUNSTOPPINGTEST [DLLCALL [L GetTickCount E Unknown]]
 
   ; wrong number of inputs (DLLCALL may crash on this)
-  ; RUNBADINPUTTEST [DLLCALL [L GetTickCount L 0]]
+  ; RUNSTOPPINGTEST [DLLCALL [L GetTickCount L 0]]
+
+  ; DLL is not loaded
+  RUNSTOPPINGTEST [(DLLCALL [L GetTickCount L 0] "dll-that-is-not-loaded.dll)]
 
   DLLFREE
 
 END
 
+TO MULTIDLLLOADTEST
+
+  ; load two DLLs at once
+  TRACEINSTRUCTION [ DLLLOAD "user32.dll   ]
+  TRACEINSTRUCTION [ DLLLOAD "kernel32.dll ]
+
+  ; call into user32.dll
+  LOCAL "hwnd
+  TRACEINSTRUCTION [ MAKE "hwnd (DLLCALL [l FindWindowA S FMSLogo L 0] "user32.dll) ]
+
+  ; Assuming that a function only exists in one DLL, the DLL name is optional
+  SIMPLEREPORTTEST [ DLLCALL [l FindWindowA S FMSLogo L 0] ] :hwnd
+
+  ; Call a function in the other DLL
+  TRACEINSTRUCTION [ IGNORE (DLLCALL [L GetTickCount] "kernel32.dll) ]
+  TRACEINSTRUCTION [ IGNORE DLLCALL [L GetTickCount] ]
+
+  ; loading an already loaded DLL should simply increment the reference count
+  TRACEINSTRUCTION [ DLLLOAD "user32.dll ]
+  SIMPLEREPORTTEST [ DLLCALL [l FindWindowA S FMSLogo L 0] ] :hwnd
+  TRACEINSTRUCTION [ (DLLFREE "user32.dll) ]
+
+  ; the reference count should still be at one, so the function should still be safe to call
+  SIMPLEREPORTTEST [ DLLCALL [l FindWindowA S FMSLogo L 0] ] :hwnd
+
+  ; release the final reference
+  TRACEINSTRUCTION [ (DLLFREE "user32.dll) ]
+
+  ; now user32 should be freed, so the next call should fail
+  RUNSTOPPINGTEST [ DLLCALL [l FindWindowA S FMSLogo L 0] ] 
+
+  ; now release the reference on kernel32.dll
+  TRACEINSTRUCTION [ DLLFREE ]
+
+  ; now user32 should be freed, so the next call should fail
+  RUNSTOPPINGTEST [ IGNORE DLLCALL [L GetTickCount] ]
+
+END
 
 TO DLLLOADTEST
 
@@ -70,11 +111,11 @@ TO DLLLOADTEST
   RUNTOOMANYINPUTSTEST   [(DLLLOAD "kernel32 "user32)]
 
   ; invalid filenames
-  RUNBADINPUTTEST [DLLLOAD {0}]
-  RUNBADINPUTTEST [DLLLOAD [0]]
-  RUNBADINPUTTEST [DLLLOAD 12345]
-  RUNBADINPUTTEST [DLLLOAD "nonexistent.dll]
-  RUNBADINPUTTEST [DLLLOAD "c:\\]
+  RUNSTOPPINGTEST [DLLLOAD {0}]
+  RUNSTOPPINGTEST [DLLLOAD [0]]
+  RUNSTOPPINGTEST [DLLLOAD 12345]
+  RUNSTOPPINGTEST [DLLLOAD "nonexistent.dll]
+  RUNSTOPPINGTEST [DLLLOAD "c:\\]
 
   ; DLLLOAD a very long filename name
   localmake "longdllname ".dll
@@ -82,15 +123,10 @@ TO DLLLOADTEST
   make "longdllname word "|"| :longdllname
   RUNBADINPUTTEST (list "DLLLOAD :longdllname)
 
-  ; load a DLL when one is already loaded
-  DLLLOAD "kernel32.dll
-  RUNBADINPUTTEST [DLLLOAD "user32.dll]
-  DLLFREE
-
   ; Regression test for bug #1438438 
   ; Call DLLLOAD with invalid input while a DLL is loaded.
   DLLLOAD "kernel32.dll
-  RUNBADINPUTTEST [DLLLOAD {0}]
+  RUNSTOPPINGTEST [DLLLOAD {0}]
   DLLFREE
 
 END
@@ -98,20 +134,27 @@ END
 TO DLLFREETEST
 
   ; can't free a DLL when nothing is loaded
-  RUNBADINPUTTEST [DLLFREE]
+  RUNSTOPPINGTEST [DLLFREE]
+
+  ; free a DLL that is not loaded
+  RUNSTOPPINGTEST [(DLLFREE "dll-that-is-not-loaded.dll)]
 
   ; wrong number of inputs
-  RUNTOOMANYINPUTSTEST [(DLLFREE 0)]
+  RUNTOOMANYINPUTSTEST [(DLLFREE "kernel32.dll "toomany)]
 
 END
 
 
 TO DLLTEST
 
+   ; TODO: test calling a function by ordinal
+
    DLLSMOKETEST
 
    DLLLOADTEST
    DLLCALLTEST
    DLLFREETEST
+
+   MULTIDLLLOADTEST
 END
 

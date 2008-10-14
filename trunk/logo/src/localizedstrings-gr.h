@@ -658,8 +658,6 @@
 
 #define LOCALIZED_HELP                 "&Βοήθεια"  // 
 #define LOCALIZED_HELP_INDEX           "&Θέματα στη βοήθεια" // 
-#define LOCALIZED_HELP_MCI             "Βοήθεια για το &MCI" // 
-#define LOCALIZED_HELP_HELP            "&Χρήση βοήθειας" // 
 #define LOCALIZED_HELP_TUTORIAL        "&Μάθημα" // Perhaps not the best one for "tutorial"
 #define LOCALIZED_HELP_DEMO            "&Επίδειξη"  // 
 #define LOCALIZED_HELP_EXAMPLE         "&Παραδείγματα" // 
@@ -1007,7 +1005,6 @@
 
 #define LOCALIZED_ERROR_DLL                   "Σφάλμα DLL" // 
 #define LOCALIZED_ERROR_DLLNOTLOADED          "Το DLL δεν έχει φορτωθεί" // 
-#define LOCALIZED_ERROR_DLLALREADYLOADED      "Το DLL έχει ήδη φορτωθεί" // 
 #define LOCALIZED_ERROR_DLLLOADFAILED         "Η φόρτωση του DLL απέτυχε" // 
 #define LOCALIZED_ERROR_DLLINVALIDDATATYPE    "’κυρος τύπος δεδομένων" // 
 #define LOCALIZED_ERROR_DLLINVALIDOUTPUTTYPE  "’κυρος τύπος επιστροφής" // 

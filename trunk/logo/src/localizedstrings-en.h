@@ -1005,7 +1005,6 @@
 
 #define LOCALIZED_ERROR_DLL                   "DLL Error"
 #define LOCALIZED_ERROR_DLLNOTLOADED          "DLL is not loaded"
-#define LOCALIZED_ERROR_DLLALREADYLOADED      "DLL is already loaded"
 #define LOCALIZED_ERROR_DLLLOADFAILED         "DLL load failed"
 #define LOCALIZED_ERROR_DLLINVALIDDATATYPE    "Invalid data type input"
 #define LOCALIZED_ERROR_DLLINVALIDOUTPUTTYPE  "Invalid output type"

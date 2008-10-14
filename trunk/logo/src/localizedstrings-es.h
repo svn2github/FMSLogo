@@ -1005,7 +1005,6 @@
 
 #define LOCALIZED_ERROR_DLL                   "Error en DLL"
 #define LOCALIZED_ERROR_DLLNOTLOADED          "La DLL no está cargada"
-#define LOCALIZED_ERROR_DLLALREADYLOADED      "La DLL ya fue cargada"
 #define LOCALIZED_ERROR_DLLLOADFAILED         "Falló la carga de la DLL"
 #define LOCALIZED_ERROR_DLLINVALIDDATATYPE    "Tipo de dato de la entrada inválido"
 #define LOCALIZED_ERROR_DLLINVALIDOUTPUTTYPE  "Tipo de dato de retorno inválido"

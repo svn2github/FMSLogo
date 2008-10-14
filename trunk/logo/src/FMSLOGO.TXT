@@ -23,6 +23,8 @@ II. New features/bugs fixed:
   * Added for 6.22.0
     o Implement request #1955758; turtles may optionally have their own pen
       state.
+    o Implement request #1947329; FMSLogo now supports loading more than one
+      DLL with DLLLOAD.
     o Minor updates to the Greek translations.
     o Minor updates to the manual.
 
