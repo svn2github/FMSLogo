@@ -78,8 +78,9 @@ TO MULTIDLLLOADTEST
   ; Assuming that a function only exists in one DLL, the DLL name is optional
   SIMPLEREPORTTEST [ DLLCALL [l FindWindowA S FMSLogo L 0] ] :hwnd
 
-  ; Call a function in the other DLL
-  TRACEINSTRUCTION [ IGNORE (DLLCALL [L GetTickCount] "kernel32.dll) ]
+  ; Call a function in the other DLL.
+  ; Use all capital letter to make sure that the DLL name is case-insensitive.
+  TRACEINSTRUCTION [ IGNORE (DLLCALL [L GetTickCount] "KERNEL32.DLL) ]
   TRACEINSTRUCTION [ IGNORE DLLCALL [L GetTickCount] ]
 
   ; loading an already loaded DLL should simply increment the reference count
@@ -90,8 +91,9 @@ TO MULTIDLLLOADTEST
   ; the reference count should still be at one, so the function should still be safe to call
   SIMPLEREPORTTEST [ DLLCALL [l FindWindowA S FMSLogo L 0] ] :hwnd
 
-  ; release the final reference
-  TRACEINSTRUCTION [ (DLLFREE "user32.dll) ]
+  ; release the final reference.
+  ; Use uppercase to make sure that unloading a DLL is case-insensitive.
+  TRACEINSTRUCTION [ (DLLFREE "USER32.DLL) ]
 
   ; now user32 should be freed, so the next call should fail
   RUNSTOPPINGTEST [ DLLCALL [l FindWindowA S FMSLogo L 0] ] 
