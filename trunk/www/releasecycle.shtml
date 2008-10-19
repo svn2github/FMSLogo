@@ -80,7 +80,7 @@
         </p>
 
         <p>
-        I release a new minor version of FMSLogo about every two months, somewhere near the middle of the month.
+        I release a new minor version of FMSLogo about every three months, somewhere near the middle of the month.
         I release a new bugfix version only when necessary.
         Due to the amount of time required to test each version of FMSLogo, I only release a bugfix version to address problems that can't wait until the next minor revision.
         In other words, if I release a bugfix version, it's because I did something very bad in the previous release.
