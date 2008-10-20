@@ -6,15 +6,16 @@
 
 <varlistentry><term>Synopsis</term>
 <listitem>
-<synopsis><command>DLLCALL</command> <parameter>function_parameter_list</parameter></synopsis>
+<synopsis><command>DLLCALL</command> <parameter>function_parameter_list</parameter>
+(<command>DLLCALL</command> <parameter>function_parameter_list</parameter> <parameter>dllname</parameter>)</synopsis>
 </listitem>
 </varlistentry>
 
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-Calls a given function with the given parameters and outputs the return value.
-The function must be in the DLL that was loaded with <link linkend="command-dllload">DLLLOAD</link>.
+Calls a native Windows function with the given parameters and outputs the return value.
+The function must be exported by a DLL which was loaded with <link linkend="command-dllload">DLLLOAD</link>.
 </para>
 
 <para>
@@ -56,6 +57,9 @@ It will pass in arg1 as a type1, arg2 as a type2, and so on.
 If the formal argument list is "void" then use <userinput>["funcname "v 0]</userinput>.
 </para>
 
+<para>
+If the optional <parameter>dllname</parameter> input is given, then DLLCALL will only look for the function within that DLL.
+</para>
 
 <para>
 DLLCALL is meant for experienced users who are familiar with the native Windows calling conventions.
