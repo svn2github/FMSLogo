@@ -1,5 +1,13 @@
 This file contains the changes that were made in each revision of FMSLogo.
 
+* Added for 6.22.0
+  o Implement request #1955758; turtles may optionally have their own pen
+    state.
+  o Implement request #1947329; FMSLogo now supports loading more than one
+    DLL with DLLLOAD.
+  o Minor updates to the Greek translations.
+  o Minor updates to the manual.
+
 * Added for 6.21.0
   o Fix bug #1961616; BITPASTETOINDEX now throws a bad input error when
     the index is not a positive integer, instead of displaying a confusing
