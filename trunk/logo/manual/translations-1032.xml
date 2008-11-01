@@ -331,10 +331,6 @@
        <entry>×ÑÙÌÁ_ÃÅÌÉÓÌÁÔÏÓ</entry>
      </row>
      <row>
-       <entry><link linkend='command-floodcolor'>floodcolor</link></entry>
-       <entry>floodcolour</entry>
-     </row>
-     <row>
        <entry><link linkend='command-fontfacenames'>fontfacenames</link></entry>
        <entry>ÃÑÁÌÌÁÔÏÓÅÉÑÅÓ</entry>
      </row>
@@ -679,10 +675,6 @@
        <entry>ÐÅÍÁ_×ÑÙÌÁ</entry>
      </row>
      <row>
-       <entry><link linkend='command-pencolor'>pencolor</link></entry>
-       <entry>pencolour</entry>
-     </row>
-     <row>
        <entry><link linkend='command-pendown'>pendown</link></entry>
        <entry>ÐÅÍÁ_ÊÁÔÙ</entry>
      </row>
@@ -903,10 +895,6 @@
        <entry>ÁÐÏÈÇÊÅÕÓÇ</entry>
      </row>
      <row>
-       <entry><link linkend='command-screencolor'>screencolor</link></entry>
-       <entry>screencolour</entry>
-     </row>
-     <row>
        <entry><link linkend='command-selectbox'>selectbox</link></entry>
        <entry>ÌÇÍÕÌÁ_ÅÐÉËÏÃÇ</entry>
      </row>
@@ -917,18 +905,6 @@
      <row>
        <entry><link linkend='command-setactivearea'>setactivearea</link></entry>
        <entry>ÅÍÅÑÃÇ_ÐÅÑÉÏ×Ç_ÏÑÉÓÌÏÓ</entry>
-     </row>
-     <row>
-       <entry><link linkend='command-setfloodcolor'>setfloodcolor</link></entry>
-       <entry>setfloodcolour</entry>
-     </row>
-     <row>
-       <entry><link linkend='command-setpencolor'>setpencolor</link></entry>
-       <entry>setpencolour</entry>
-     </row>
-     <row>
-       <entry><link linkend='command-setscreencolor'>setscreencolor</link></entry>
-       <entry>setscreencolour</entry>
      </row>
      <row>
        <entry><link linkend='command-show'>show</link></entry>
@@ -1892,10 +1868,6 @@
        <entry><link linkend='command-portmode'>portmode</link></entry>
      </row>
      <row>
-       <entry>floodcolour</entry>
-       <entry><link linkend='command-floodcolor'>floodcolor</link></entry>
-     </row>
-     <row>
        <entry>GIF_ÁÐÏÈÇÊÅÕÓÇ</entry>
        <entry><link linkend='command-gifsave'>gifsave</link></entry>
      </row>
@@ -2090,26 +2062,6 @@
      <row>
        <entry>ÖÙÓ</entry>
        <entry><link linkend='command-light'>light</link></entry>
-     </row>
-     <row>
-       <entry>pencolour</entry>
-       <entry><link linkend='command-pencolor'>pencolor</link></entry>
-     </row>
-     <row>
-       <entry>screencolour</entry>
-       <entry><link linkend='command-screencolor'>screencolor</link></entry>
-     </row>
-     <row>
-       <entry>setfloodcolour</entry>
-       <entry><link linkend='command-setfloodcolor'>setfloodcolor</link></entry>
-     </row>
-     <row>
-       <entry>setpencolour</entry>
-       <entry><link linkend='command-setpencolor'>setpencolor</link></entry>
-     </row>
-     <row>
-       <entry>setscreencolour</entry>
-       <entry><link linkend='command-setscreencolor'>setscreencolor</link></entry>
      </row>
   </tbody>
   </tgroup>
