@@ -40,15 +40,10 @@ logohelp-1031.chm : ;
 # Portuguese CHM has been hand-translated so we shouldn't overwrite it
 logohelp-2070.chm : ;
 
-
 # Greek builds requires a different character set
-#logohelp-1032.chm : htmlhelp-1032.hhp logohelp.css
-#	perl -W clean-html.pl windows-1253
-#	-$(HHC) htmlhelp-1032.hhp
-# The Greek translations have not been completed.
-# When they are complete, the commented-out rule above should be used.
-logohelp-1032.chm : logohelp-1033.chm
-	cp $< $@
+logohelp-1032.chm : htmlhelp-1032.hhp logohelp.css
+	perl -W clean-html.pl windows-1253
+	-$(HHC) htmlhelp-1032.hhp
 
 htmlhelp-%.hhp : translations-%.xml $(SOURCEFILES) $(HHP_STYLESHEET)
 	cp translations-$*.xml translations.xml
