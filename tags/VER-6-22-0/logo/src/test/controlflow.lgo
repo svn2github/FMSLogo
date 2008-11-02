@@ -1,0 +1,189 @@
+LOAD "testlib.lgo
+
+
+TO BUG1383281TEST
+
+  REPORTTESTINFO [executing regression test for bug #1383281]
+  CATCH "ERROR [FOREACH [1] [[][]]]
+  REPORTTESTPASSED [Bug #1382181 is fixed. 'FOREACH [1] [[][]]' did not crash.]
+
+END
+
+TO BUG1448155TEST
+
+  IF "TRUE [IGNORE "TRUE] [IGNORE "FALSE]
+  REPORTTESTPASSED [Bug #1448155 is fixed.  'IF' used the IF->IFELSE mapping.]
+
+END
+
+TO OUTPUT.373
+  OUTPUT 373
+END
+
+TO IFTEST
+
+  ; smoke test
+  if "true [
+    REPORTTESTPASSED ["|if "true ran the "true branch, as expected|]
+  ]
+
+  if "false [
+    REPORTTESTFAILED ["|if "false ran the "true branch|]
+  ]
+
+
+  ; test that "if" can become "ifelse"
+  if "false [
+    REPORTTESTFAILED [if "false ran the "true branch when it should have run the "false branch]
+  ] [
+    REPORTTESTPASSED [if "false ran the "false branch, as expected]
+  ]
+
+  if "true [
+    REPORTTESTPASSED [if "true ran the "true branch, as expected]
+  ] [
+    REPORTTESTFAILED [if "true ran the "false branch when it should have run the "true branch]
+  ]
+
+  ; no-ops are allowed
+  if "true []
+  if "true [] []
+
+  ; single command instructions are allow in words
+  LOCALMAKE "myvar if "true "OUTPUT.373
+  if EQUAL? :myvar 373 [
+    REPORTTESTPASSED [IF could be used as an r-val, as expected.]
+  ] [
+    REPORTTESTFAILED [IF could NOT be used as an r-val.]
+  ]
+  
+
+  ; bad inputs
+  RUNBADINPUTTEST [if 1    []]
+  RUNBADINPUTTEST [if 0    []]
+  RUNBADINPUTTEST [if "yes []]
+  RUNBADINPUTTEST [if "no  []]
+  RUNBADINPUTTEST [if [1]  []]
+  RUNBADINPUTTEST [if {1}  []]
+  RUNBADINPUTTEST [if "true {1}]
+
+  ; wrong number of inputs
+  RUNNOTENOUGHINPUTSTEST [(if)]
+  RUNNOTENOUGHINPUTSTEST [(if "true)]
+  RUNNOTENOUGHINPUTSTEST [(if "false)]
+  RUNTOOMANYINPUTSTEST   [(if "true [] [] "toomany)]
+
+END
+
+TO #TEST
+  ; regression test for bug #1448159 
+  SIMPLEREPORTTEST [#] -1
+  
+  ; bad input test
+  RUNTOOMANYINPUTSTEST [(# "toomany)]
+END
+
+TO TESTTEST.SMOKETEST
+
+  LOCAL [iftrue.was.run iffalse.was.run]
+
+  ;
+  ; TEST with a true condition
+  ;
+
+  ; must call TEST in this procedure or else effects won't be visible.
+  REPORTTESTINFO [Running [TEST "true]]
+  TEST "true 
+
+  TRACEINSTRUCTION [MAKE "iftrue.was.run  "false]
+  TRACEINSTRUCTION [MAKE "iffalse.was.run "false]
+  TRACEINSTRUCTION [ IFTRUE  [MAKE "iftrue.was.run  "true ] ]
+  TRACEINSTRUCTION [ IFFALSE [MAKE "iffalse.was.run "true ] ]
+  SIMPLEREPORTTEST [:iftrue.was.run]  "true
+  SIMPLEREPORTTEST [:iffalse.was.run] "false
+
+  ; the value should persist until another TEST call is made
+  TRACEINSTRUCTION [MAKE "iftrue.was.run  "false]
+  TRACEINSTRUCTION [MAKE "iffalse.was.run "false]
+  TRACEINSTRUCTION [ IFTRUE  [MAKE "iftrue.was.run  "true ] ]
+  TRACEINSTRUCTION [ IFFALSE [MAKE "iffalse.was.run "true ] ]
+  SIMPLEREPORTTEST [:iftrue.was.run]  "true
+  SIMPLEREPORTTEST [:iffalse.was.run] "false
+
+
+  ;
+  ; TEST with a false condition
+  ;
+
+  ; must call TEST in this procedure or else effects won't be visible.
+  REPORTTESTINFO [Running [TEST "false]]
+  TEST "false
+
+  TRACEINSTRUCTION [MAKE "iftrue.was.run  "false]
+  TRACEINSTRUCTION [MAKE "iffalse.was.run "false]
+  TRACEINSTRUCTION [ IFTRUE  [MAKE "iftrue.was.run  "true ] ]
+  TRACEINSTRUCTION [ IFFALSE [MAKE "iffalse.was.run "true ] ]
+  SIMPLEREPORTTEST [:iftrue.was.run]  "false
+  SIMPLEREPORTTEST [:iffalse.was.run] "true
+
+END
+
+TO TESTTEST.BADINPUT
+
+  ;
+  ; bad input
+  ;
+  RUNNOTENOUGHINPUTSTEST [ (TEST)                ]
+  RUNTOOMANYINPUTSTEST   [ (TEST "true "toomany) ]
+  RUNBADINPUTTEST        [ TEST "word  ]
+  RUNBADINPUTTEST        [ TEST 1234   ]
+  RUNBADINPUTTEST        [ TEST [1234] ]
+  RUNBADINPUTTEST        [ TEST {1234} ]
+
+  ; IFTRUE and IFFALSE should throw the "TEST has not been run" error.
+  RUNEXPECTERRORTEST [IFTRUE  []] 25
+  RUNEXPECTERRORTEST [IFFALSE []] 25
+
+  ; make sure that IFTRUE and IFFALSE don't complain 
+  ; because the TEST value wasn't sent
+  TEST "true
+  RUNNOTENOUGHINPUTSTEST [ (IFTRUE)             ]
+  RUNTOOMANYINPUTSTEST   [ (IFTRUE [] "toomany) ]
+  RUNBADINPUTTEST        [ IFTRUE {1234}        ]
+
+  TEST "false
+  RUNNOTENOUGHINPUTSTEST [ (IFFALSE)             ]
+  RUNTOOMANYINPUTSTEST   [ (IFFALSE [] "toomany) ]
+  RUNBADINPUTTEST        [ IFFALSE {1234}        ]
+
+END
+
+TO TESTTEST.SCOPETEST
+
+  ; Run TEST in a child scope.
+  ; This result should not be visible in this scope
+  TRACEINSTRUCTION [TEST "TRUE]
+
+  RUNEXPECTERRORTEST [IFTRUE  []] 25
+  RUNEXPECTERRORTEST [IFFALSE []] 25
+
+END
+
+TO TESTTEST
+
+  TESTTEST.SMOKETEST
+  TESTTEST.BADINPUT
+  TESTTEST.SCOPETEST
+
+END
+
+TO CONTROLFLOWTEST
+
+  IFTEST
+  #TEST
+
+  TESTTEST
+
+  BUG1383281TEST
+  BUG1448155TEST
+END

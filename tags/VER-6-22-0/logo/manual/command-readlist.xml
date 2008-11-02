@@ -1,0 +1,38 @@
+<section id="command-readlist">
+<title>READLIST</title>
+<indexterm><primary>READLIST</primary></indexterm>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>READLIST</command>
+<command>RL</command></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+Reads a line from the read stream (initially the popup dialog) and outputs that line as a list.
+The line is separated into items as though it were typed in square brackets in an instruction.
+If the read stream is a file and the end of file is reached, then READLIST outputs the empty word (not the empty list).
+</para>
+<para>
+READLIST processes backslash, vertical bar, and tilde characters in the read stream; the output list will not contain these characters but they will have had their usual effect.
+READLIST does not, however, treat semicolon as a comment character.
+</para>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Example</term>
+<listitem>
+<programlisting><userinput>SHOW READLIST
+Hello how are you?</userinput>
+[Hello how are you?]
+</programlisting>
+</listitem>
+</varlistentry>
+
+</variablelist>
+</section>

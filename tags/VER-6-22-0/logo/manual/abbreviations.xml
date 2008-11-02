@@ -1,0 +1,392 @@
+<chapter id="abbreviations">
+   <title>Procedure Abbreviations</title>
+
+<para>
+Many procedures can be called with a shortened version of their proper name.
+</para>
+
+<section id="command-plus">
+<title>+</title>
+<indexterm><primary>+</primary></indexterm>
+<para>
++ is an abbreviation for <link linkend="command-sum">SUM</link>.
+</para>
+</section>
+
+<section id="command-dash">
+<title>-</title>
+<indexterm><primary>-</primary></indexterm>
+<para>
+- is an abbreviation for <link linkend="command-difference">DIFFERENCE</link>.
+</para>
+</section>
+
+<section id="command-slash">
+<title>/</title>
+<indexterm><primary>/</primary></indexterm>
+<para>
+/ is an abbreviation for <link linkend="command-quotient">QUOTIENT</link>.
+</para>
+</section>
+
+<section id="command-equal">
+<title>=</title>
+<indexterm><primary>=</primary></indexterm>
+<para>
+= is an abbreviation for <link linkend="command-equalp">EQUALP</link>.
+</para>
+</section>
+
+<section id="command-greater">
+<title>></title>
+<indexterm><primary>></primary></indexterm>
+<para>
+> is an abbreviation for <link linkend="command-greaterp">GREATERP</link>.
+</para>
+</section>
+
+<section id="command-less">
+<title>&lt;</title>
+<indexterm><primary>&lt;</primary></indexterm>
+<para>
+&lt; is an abbreviation for <link linkend="command-lessp">LESSP</link>.
+</para>
+</section>
+
+<section id="command-star">
+<title>*</title>
+<indexterm><primary>*</primary></indexterm>
+<para>
+* is an abbreviation for <link linkend="command-product">PRODUCT</link>.
+</para>
+</section>
+
+<section id="command-bk">
+<title>BK</title>
+<indexterm><primary>BK</primary></indexterm>
+<para>
+BK is an abbreviation for <link linkend="command-back">BACK</link>.
+</para>
+</section>
+
+<section id="command-bf">
+<title>BF</title>
+<indexterm><primary>BF</primary></indexterm>
+<para>
+BF is an abbreviation for <link linkend="command-butfirst">BUTFIRST</link>.
+</para>
+</section>
+
+<section id="command-bfs">
+<title>BFS</title>
+<indexterm><primary>BFS</primary></indexterm>
+<para>
+BFS is an abbreviation for <link linkend="command-butfirsts">BUTFIRSTS</link>.
+</para>
+</section>
+
+<section id="command-bl">
+<title>BL</title>
+<indexterm><primary>BL</primary></indexterm>
+<para>
+BL is an abbreviation for <link linkend="command-butlast">BUTLAST</link>.
+</para>
+</section>
+
+<section id="command-cs">
+<title>CS</title>
+<indexterm><primary>CS</primary></indexterm>
+<para>
+CS is an abbreviation for <link linkend="command-clearscreen">CLEARSCREEN</link>.
+</para>
+</section>
+
+<section id="command-ct">
+<title>CT</title>
+<indexterm><primary>CT</primary></indexterm>
+<para>
+CT is an abbreviation for <link linkend="command-cleartext">CLEARTEXT</link>.
+</para>
+</section>
+
+<section id="command-co">
+<title>CO</title>
+<indexterm><primary>CO</primary></indexterm>
+<para>
+CO is an abbreviation for <link linkend="command-continue">CONTINUE</link>.
+</para>
+</section>
+
+<section id="command-down">
+<title>DOWN</title>
+<indexterm><primary>DOWN</primary></indexterm>
+<para>
+DOWN is an abbreviation for <link linkend="command-downpitch">DOWNPITCH</link>.
+</para>
+</section>
+
+<section id="command-ed">
+<title>ED</title>
+<indexterm><primary>ED</primary></indexterm>
+<para>
+ED is an abbreviation for <link linkend="command-edit">EDIT</link>.
+</para>
+</section>
+
+<section id="command-er">
+<title>ER</title>
+<indexterm><primary>ER</primary></indexterm>
+<para>
+ER is an abbreviation for <link linkend="command-erase">ERASE</link>.
+</para>
+</section>
+
+<section id="command-erf">
+<title>ERF</title>
+<indexterm><primary>ERF</primary></indexterm>
+<para>
+ERF is an abbreviation for <link linkend="command-erasefile">ERASEFILE</link>.
+</para>
+</section>
+
+<section id="command-fd">
+<title>FD</title>
+<indexterm><primary>FD</primary></indexterm>
+<para>
+FD is an abbreviation for <link linkend="command-forward">FORWARD</link>.
+</para>
+</section>
+
+<section id="command-fs">
+<title>FS</title>
+<indexterm><primary>FS</primary></indexterm>
+<para>
+FS is an abbreviation for <link linkend="command-fullscreen">FULLSCREEN</link>.
+</para>
+</section>
+
+<section id="command-ht">
+<title>HT</title>
+<indexterm><primary>HT</primary></indexterm>
+<para>
+HT is an abbreviation for <link linkend="command-hideturtle">HIDETURTLE</link>.
+</para>
+</section>
+
+<section id="command-iff">
+<title>IFF</title>
+<indexterm><primary>IFF</primary></indexterm>
+<para>
+IFF is an abbreviation for <link linkend="command-iffalse">IFFALSE</link>.
+</para>
+</section>
+
+<section id="command-ift">
+<title>IFT</title>
+<indexterm><primary>IFT</primary></indexterm>
+<para>
+IFT is an abbreviation for <link linkend="command-iftrue">IFTRUE</link>.
+</para>
+</section>
+
+<section id="command-lr">
+<title>LR</title>
+<indexterm><primary>LR</primary></indexterm>
+<para>
+LR is an abbreviation for <link linkend="command-leftroll">LEFTROLL</link>.
+</para>
+</section>
+
+<section id="command-lt">
+<title>LT</title>
+<indexterm><primary>LT</primary></indexterm>
+<para>
+LT is an abbreviation for <link linkend="command-left">LEFT</link>.
+</para>
+</section>
+
+<section id="command-op">
+<title>OP</title>
+<indexterm><primary>OP</primary></indexterm>
+<para>
+OP is an abbreviation for <link linkend="command-output">OUTPUT</link>.
+</para>
+</section>
+
+<section id="command-pc">
+<title>PC</title>
+<indexterm><primary>PC</primary></indexterm>
+<para>
+PC is an abbreviation for <link linkend="command-pencolor">PENCOLOR</link>.
+</para>
+</section>
+
+<section id="command-pd">
+<title>PD</title>
+<indexterm><primary>PD</primary></indexterm>
+<para>
+PD is an abbreviation for <link linkend="command-pendown">PENDOWN</link>.
+</para>
+</section>
+
+<section id="command-pe">
+<title>PE</title>
+<indexterm><primary>PE</primary></indexterm>
+<para>
+PE is an abbreviation for <link linkend="command-penerase">PENERASE</link>.
+</para>
+</section>
+
+<section id="command-ppt">
+<title>PPT</title>
+<indexterm><primary>PPT</primary></indexterm>
+<para>
+PPT is an abbreviation for <link linkend="command-penpaint">PENPAINT</link>.
+</para>
+</section>
+
+<section id="command-px">
+<title>PX</title>
+<indexterm><primary>PX</primary></indexterm>
+<para>
+PX is an abbreviation for <link linkend="command-penreverse">PENREVERSE</link>.
+</para>
+</section>
+
+<section id="command-pu">
+<title>PU</title>
+<indexterm><primary>PU</primary></indexterm>
+<para>
+PU is an abbreviation for <link linkend="command-penup">PENUP</link>.
+</para>
+</section>
+
+<section id="command-pr">
+<title>PR</title>
+<indexterm><primary>PR</primary></indexterm>
+<para>
+PR is an abbreviation for <link linkend="command-print">PRINT</link>.
+</para>
+</section>
+
+<section id="command-rc">
+<title>RC</title>
+<indexterm><primary>RC</primary></indexterm>
+<para>
+RC is an abbreviation for <link linkend="command-readchar">READCHAR</link>.
+</para>
+</section>
+
+<section id="command-rcs">
+<title>RCS</title>
+<indexterm><primary>RCS</primary></indexterm>
+<para>
+RCS is an abbreviation for <link linkend="command-readchars">READCHARS</link>.
+</para>
+</section>
+
+<section id="command-rl">
+<title>RL</title>
+<indexterm><primary>RL</primary></indexterm>
+<para>
+RL is an abbreviation for <link linkend="command-readlist">READLIST</link>.
+</para>
+</section>
+
+<section id="command-rr">
+<title>RR</title>
+<indexterm><primary>RR</primary></indexterm>
+<para>
+RR is an abbreviation for <link linkend="command-rightroll">RIGHTROLL</link>.
+</para>
+</section>
+
+<section id="command-rt">
+<title>RT</title>
+<indexterm><primary>RT</primary></indexterm>
+<para>
+RT is an abbreviation for <link linkend="command-right">RIGHT</link>.
+</para>
+</section>
+
+<section id="command-rw">
+<title>RW</title>
+<indexterm><primary>RW</primary></indexterm>
+<para>
+RW is an abbreviation for <link linkend="command-readword">READWORD</link>.
+</para>
+</section>
+
+<section id="command-se">
+<title>SE</title>
+<indexterm><primary>SE</primary></indexterm>
+<para>
+SE is an abbreviation for <link linkend="command-sentence">SENTENCE</link>.
+</para>
+</section>
+
+<section id="command-setfc">
+<title>SETFC</title>
+<indexterm><primary>SETFC</primary></indexterm>
+<para>
+SETFC is an abbreviation for <link linkend="command-setfloodcolor">SETFLOODCOLOR</link>.
+</para>
+</section>
+
+<section id="command-seth">
+<title>SETH</title>
+<indexterm><primary>SETH</primary></indexterm>
+<para>
+SETH is an abbreviation for <link linkend="command-setheading">SETHEADING</link>.
+</para>
+</section>
+
+<section id="command-setpc">
+<title>SETPC</title>
+<indexterm><primary>SETPC</primary></indexterm>
+<para>
+SETPC is an abbreviation for <link linkend="command-setpencolor">SETPENCOLOR</link>.
+</para>
+</section>
+
+<section id="command-setsc">
+<title>SETSC</title>
+<indexterm><primary>SETSC</primary></indexterm>
+<para>
+SETSC is an abbreviation for <link linkend="command-setscreencolor">SETSCREENCOLOR</link>.
+</para>
+</section>
+
+<section id="command-st">
+<title>ST</title>
+<indexterm><primary>ST</primary></indexterm>
+<para>
+ST is an abbreviation for <link linkend="command-showturtle">SHOWTURTLE</link>.
+</para>
+</section>
+
+<section id="command-ss">
+<title>SS</title>
+<indexterm><primary>SS</primary></indexterm>
+<para>
+SS is an abbreviation for <link linkend="command-splitscreen">SPLITSCREEN</link>.
+</para>
+</section>
+
+<section id="command-ts">
+<title>TS</title>
+<indexterm><primary>TS</primary></indexterm>
+<para>
+TS is an abbreviation for <link linkend="command-textscreen">TEXTSCREEN</link>.
+</para>
+</section>
+
+<section id="command-up">
+<title>UP</title>
+<indexterm><primary>UP</primary></indexterm>
+<para>
+UP is an abbreviation for <link linkend="command-uppitch">UPPITCH</link>.
+</para>
+</section>
+
+</chapter>

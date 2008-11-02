@@ -1,0 +1,77 @@
+LOAD "testlib.lgo
+
+TO FENCETEST.BUG1573061
+
+   ; move outside the boundries
+   WINDOW 
+   SETXY 0 1000
+   RT 90 
+
+   ; start enforcing the bounrdies
+   FENCE
+ 
+   ; move paralell to the boundry that the turtle is outside
+   FD 1
+
+   REPORTTESTPASSED [|Bug #1573061 is fixed; Running FENCE while outside the boundries doesn't crash.|]
+END
+
+TO FENCETEST.SMOKETEST
+
+   ; switch to fence mode
+   FENCE
+   CLEARSCREEN
+
+   TRACEINSTRUCTION   [ HOME RT 0   SETPC 1 ]
+   RUNOUTOFBOUNDSTEST [ FD 501 ]
+   TRACEINSTRUCTION   [ HOME RT 90  SETPC 2 ]
+   RUNOUTOFBOUNDSTEST [ FD 501 ]
+   TRACEINSTRUCTION   [ HOME RT 180 SETPC 3 ]
+   RUNOUTOFBOUNDSTEST [ FD 501 ]
+   TRACEINSTRUCTION   [ HOME RT 270 SETPC 4 ]
+   RUNOUTOFBOUNDSTEST [ FD 501 ]
+
+   ; these should be within the boundries 
+   TRACEINSTRUCTION [ SETXY  0    500 ]
+   TRACEINSTRUCTION [ SETXY 500    0  ]
+   TRACEINSTRUCTION [ SETXY  0   -500 ]
+   TRACEINSTRUCTION [ SETXY -500   0  ]
+
+   ; these should be out of bounds
+   RUNOUTOFBOUNDSTEST [ SETXY   0   501 ]
+   RUNOUTOFBOUNDSTEST [ SETXY  501   0  ]
+   RUNOUTOFBOUNDSTEST [ SETXY   0  -501 ]
+   RUNOUTOFBOUNDSTEST [ SETXY -501   0  ]
+
+   CHECKSCREEN "fence-test
+
+   ; go back to the default mode
+   SETPENCOLOR 0
+   CLEARSCREEN
+   WRAP
+END
+
+TO FENCETEST.BADINPUT
+
+   WRAP
+
+   ; bad input tests (shouldn't change modes)
+   RUNTOOMANYINPUTSTEST [(FENCE "toomany)]
+
+   ; The easiest way to test that we're not is fence mode
+   ; is to try to force an out-of-bounds error.
+   HOME
+   FORWARD 1000
+
+   WRAP
+   CLEARSCREEN
+END
+
+TO FENCETEST
+
+   FENCETEST.SMOKETEST
+   ; FENCETEST.BUG1573061
+   FENCETEST.BADINPUT
+
+END
+
