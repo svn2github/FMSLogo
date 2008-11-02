@@ -131,7 +131,8 @@ TO TOTEST
    TOTEST.CHAINEDDEFAULTSTEST
 
    ; the bad input tests at the top level should not result in defining anything
-   SIMPLEREPORTTEST [ DEFINED? TOTEST.BADDEFAULTINPUTS ] "false
+   SIMPLEREPORTTEST [ DEFINED? "TOTEST.BADINPUT ]         "false
+   SIMPLEREPORTTEST [ DEFINED? "TOTEST.BADDEFAULTINPUTS ] "false
 
 END
 
