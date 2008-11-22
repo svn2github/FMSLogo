@@ -1,11 +1,38 @@
 LOAD "testlib.lgo
+LOAD "uiautomationlib.lgo
 
 TO QUESTIONBOXTEST.SMOKETEST
 
-   SIMPLEREPORTTEST  [ QUESTIONBOX [QUESTIONBOX Test] [Press OK without typing anything. ] ] []
-   SIMPLEREPORTTEST  [ QUESTIONBOX [QUESTIONBOX Test] [Enter "Hello" and press OK.       ] ] [Hello]
-   SIMPLEREPORTTEST  [ QUESTIONBOX [QUESTIONBOX Test] [Enter "Hi Bye" and press OK.      ] ] [Hi Bye]
-   RUNSTOPPINGTEST   [ QUESTIONBOX [QUESTIONBOX Test] [Press Cancel.] ]
+   UIAUTOMATION.INITIALIZE
+
+   CATCH "ERROR [
+
+       ; press OK without entering anything
+       UIAUTOMATION.POSTBUTTONPUSHTOWINDOW [QUESTIONBOX Test] "OK
+       SIMPLEREPORTTEST [ QUESTIONBOX [QUESTIONBOX Test] [Press OK without typing anything. ] ] []
+
+       ; enter "Hello" and press OK
+       UIAUTOMATION.POSTSTRINGTOWINDOW     [QUESTIONBOX Test] "Edit "Hello
+       UIAUTOMATION.POSTBUTTONPUSHTOWINDOW [QUESTIONBOX Test] "OK
+       SIMPLEREPORTTEST [ QUESTIONBOX [QUESTIONBOX Test] [Enter "Hello" and press OK. ] ] [Hello]
+
+       ; enter "Hi Bye" and press OK
+       UIAUTOMATION.POSTSTRINGTOWINDOW     [QUESTIONBOX Test] "Edit "|Hi Bye|
+       UIAUTOMATION.POSTBUTTONPUSHTOWINDOW [QUESTIONBOX Test] "OK
+       SIMPLEREPORTTEST [ QUESTIONBOX [QUESTIONBOX Test] [Enter "Hi Bye" and press OK. ] ] [Hi Bye]
+
+       ; press Cancel
+       UIAUTOMATION.POSTSTRINGTOWINDOW     [QUESTIONBOX Test] "Edit "ToBeCancelled
+       UIAUTOMATION.POSTBUTTONPUSHTOWINDOW [QUESTIONBOX Test] "Cancel
+       RUNSTOPPINGTEST  [ QUESTIONBOX [QUESTIONBOX Test] [Press Cancel.] ]
+   ]
+
+   localmake "lasterror ERROR
+   if :lasterror <> [] [
+      REPORTTESTFAILED (list "QUESTIONBOX "test "failed :lasterror)
+   ]
+
+   UIAUTOMATION.UNINITIALIZE
 
 END
 
