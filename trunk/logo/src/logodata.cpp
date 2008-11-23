@@ -239,7 +239,6 @@ char *colon_strnzcpy(char *dst, const char * src, int len)
     return dst;
 }
 
-static
 char
 uncapital(
     char Capital
@@ -281,7 +280,6 @@ char *low_strnzcpy(char *dst, const char * src, int len)
     return dst;
 }
 
-static
 char
 capital(
     char LowerCase

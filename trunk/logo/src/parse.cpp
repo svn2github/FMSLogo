@@ -315,10 +315,8 @@ void rd_print_prompt(const char * /*str*/)
     //ndprintf(stdout,"%t",str);
 }
 
-NODE *reader(FILE *strm, const char *prompt)
+NODE *reader(FILE *FileStream, const char * Prompt)
 {
-    static const char ender[] = "\nEND\n";
-
     int paren   = 0;
     int bracket = 0;
     int brace   = 0;
@@ -327,27 +325,32 @@ NODE *reader(FILE *strm, const char *prompt)
     bool contin    = true;
     bool incomment = false;
 
-    const char *lookfor = ender;
+    static const char ender[] = "\nEND\n";
+    const char *enderProgress = ender;
+
+    static const char localizedEnder[] = "\n" LOCALIZED_ALTERNATE_END "\n";
+    const char *localizedEnderProgress = localizedEnder;
+
     NODETYPES this_type = STRING;
 
-    if (!strcmp(prompt, "RW"))
+    if (!strcmp(Prompt, "RW"))
     {
         /* called by readword */
-        prompt = "";
+        Prompt = "";
         contin = false;
     }
 
-    bool dribbling = (dribblestream != NULL && strm == stdin);
+    bool dribbling = (dribblestream != NULL && FileStream == stdin);
 
-    if (strm == stdin)
+    if (FileStream == stdin)
     {
-        if (*prompt)
+        if (*Prompt != '\0')
         {
-            rd_print_prompt(prompt);
+            rd_print_prompt(Prompt);
 
             if (dribbling)
             {
-                fprintf(dribblestream, "%s", prompt);
+                fprintf(dribblestream, "%s", Prompt);
             }
         }
 
@@ -361,7 +364,7 @@ NODE *reader(FILE *strm, const char *prompt)
     // is called when a PAUSE continues
     if (!setjmp(iblk_buf))
     {
-        int c = rd_getc(strm);
+        int c = rd_getc(FileStream);
         while (c != EOF && (c != '\n' || vbar || paren || bracket || brace))
         {
             if (dribbling) 
@@ -372,7 +375,7 @@ NODE *reader(FILE *strm, const char *prompt)
             // if c is a backslash, then read the next character and escape it
             if (c == '\\')
             {
-                c = rd_getc(strm);
+                c = rd_getc(FileStream);
                 if (c == EOF)
                 {
                     break;
@@ -393,7 +396,7 @@ NODE *reader(FILE *strm, const char *prompt)
                 // the resulting string will be backslashed
                 this_type = BACKSLASH_STRING;
 
-                if (c == setparity('\n') && strm == stdin)
+                if (c == setparity('\n') && FileStream == stdin)
                 {
                     rd_print_prompt("\\ ");
 
@@ -406,16 +409,15 @@ NODE *reader(FILE *strm, const char *prompt)
 
             lineBuffer.AppendChar(c);
 
-            if (*prompt)
+            if (input_mode == INPUTMODE_To)
             {
-                // check if we hit the ender
-                // HACK: this isn't right.  We should only
-                // do this if we're parsing a TO, but prompt
-                // may be non-empty in other conditions.
-                if ((c & 0x5F) == *lookfor)
+                // We are parsing a TO.  Check if we hit the TO ender.
+
+                // Is this the English ender?
+                if (uncapital(c) == uncapital(*enderProgress))
                 {
-                    lookfor++;
-                    if (*lookfor == '\0')
+                    enderProgress++;
+                    if (*enderProgress == '\0')
                     {
                         // We found the ender while still 
                         // inside a [, |, (, or {.
@@ -425,7 +427,26 @@ NODE *reader(FILE *strm, const char *prompt)
                 }
                 else
                 {
-                    lookfor = ender;
+                    // start over on the ender
+                    enderProgress = ender;
+                }
+
+                // Is this the localized (non-English) ender?
+                if (uncapital(c) == uncapital(*localizedEnderProgress))
+                {
+                    localizedEnderProgress++;
+                    if (*localizedEnderProgress == '\0')
+                    {
+                        // We found the ender while still 
+                        // inside a [, |, (, or {.
+                        err_logo(DEEPEND, deepend_proc_name);
+                        break;
+                    }
+                }
+                else
+                {
+                    // start over on the localized ender
+                    localizedEnderProgress = localizedEnder;
                 }
             }
 
@@ -483,7 +504,7 @@ NODE *reader(FILE *strm, const char *prompt)
             {
                 // newlines end comment
                 incomment = false;
-                if (strm == stdin)
+                if (FileStream == stdin)
                 {
                     rd_print_prompt(vbar ? "| " : "~ ");
 
@@ -494,7 +515,7 @@ NODE *reader(FILE *strm, const char *prompt)
                 }
             }
 
-            while (!vbar && c == '~' && (c = rd_getc(strm)) != EOF)
+            while (!vbar && c == '~' && (c = rd_getc(FileStream)) != EOF)
             {
                 CDynamicBuffer whitespace;
 
@@ -504,7 +525,7 @@ NODE *reader(FILE *strm, const char *prompt)
                 while (c == ' ' || c == '\t')
                 {
                     whitespace.AppendChar(c);
-                    c = rd_getc(strm);
+                    c = rd_getc(FileStream);
                 }
 
                 if (c != '\n')
@@ -528,7 +549,7 @@ NODE *reader(FILE *strm, const char *prompt)
 
                 lineBuffer.AppendChar(c);
 
-                if (c == '\n' && strm == stdin)
+                if (c == '\n' && FileStream == stdin)
                 {
                     incomment = false;
 
@@ -541,7 +562,7 @@ NODE *reader(FILE *strm, const char *prompt)
                 }
             }
 
-            c = rd_getc(strm);
+            c = rd_getc(FileStream);
         }
     }
 

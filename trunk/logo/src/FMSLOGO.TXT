@@ -1,5 +1,5 @@
 ----------------------------------------------------------------------
-FMSLogo Version 6.22.0 for Microsoft Windows
+FMSLogo Version 6.23.0 for Microsoft Windows
 ----------------------------------------------------------------------
 
    I. Kit Description/Location
@@ -14,19 +14,14 @@ VIII. Minimum System Requirements
 
 I. Kit Description/Location (http://sourceforge.net/projects/fmslogo)
 
-  fmslogo-6.22.0.exe       (binary kit: Windows self-extracting installer)
-  fmslogo-6.22.0.zip       (binary kit: Windows ZIP archive)
-  fmslogo-src-6.22.0.zip   (source kit)
+  fmslogo-6.23.0.exe       (binary kit: Windows self-extracting installer)
+  fmslogo-6.23.0.zip       (binary kit: Windows ZIP archive)
+  fmslogo-src-6.23.0.zip   (source kit)
 
 II. New features/bugs fixed:
 
-  * Added for 6.22.0
-    o Implement request #1955758; turtles may optionally have their own pen
-      state.
-    o Implement request #1947329; FMSLogo now supports loading more than one
-      DLL with DLLLOAD.
-    o Minor updates to the Greek translations.
-    o Minor updates to the manual.
+  * Added for 6.23.0
+    o Fix bug #1619210; Non-English versions now throw unexpected ender errors.
 
   For a complete history of changes across all versions of FMSLogo, see
   http://fmslogo.cvs.sourceforge.net/*checkout*/fmslogo/logo/src/CHANGELOG.TXT

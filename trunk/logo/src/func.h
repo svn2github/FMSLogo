@@ -298,6 +298,8 @@ extern char *mend_strnzcpy(char * dst, const char * src, int len);
 extern char *mend_nosemi(char * dst, const char * src, int len);
 extern char *quote_strnzcpy(char * dst, const char * src, int len);
 extern char *colon_strnzcpy(char * dst, const char * src, int len);
+extern char capital(char ch);
+extern char uncapital(char ch);
 extern char *low_strnzcpy(char * dst, const char * src, int len);
 extern char *cap_strnzcpy(char * dst, const char * src, int len);
 extern char *noparitylow_strnzcpy(char * dst, const char * src, int len);
