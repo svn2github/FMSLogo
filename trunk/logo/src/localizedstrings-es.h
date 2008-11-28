@@ -1003,7 +1003,6 @@
 #define LOCALIZED_ERROR_WINDOWALREADYEXISTS   "Ya existe"
 #define LOCALIZED_ERROR_WINDOWDOESNOTEXIST    "No existe"
 
-#define LOCALIZED_ERROR_DLL                   "Error en DLL"
 #define LOCALIZED_ERROR_DLLNOTLOADED          "La DLL no está cargada"
 #define LOCALIZED_ERROR_DLLLOADFAILED         "Falló la carga de la DLL"
 #define LOCALIZED_ERROR_DLLINVALIDDATATYPE    "Tipo de dato de la entrada inválido"

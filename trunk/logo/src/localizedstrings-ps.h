@@ -1003,7 +1003,6 @@
 #define LOCALIZED_ERROR_WINDOWALREADYEXISTS   "pseudo.Already exists"
 #define LOCALIZED_ERROR_WINDOWDOESNOTEXIST    "pseudo.Does not exist"
 
-#define LOCALIZED_ERROR_DLL                   "pseudo.DLL Error"
 #define LOCALIZED_ERROR_DLLNOTLOADED          "pseudo.DLL is not loaded"
 #define LOCALIZED_ERROR_DLLLOADFAILED         "pseudo.DLL load failed"
 #define LOCALIZED_ERROR_DLLINVALIDDATATYPE    "pseudo.Invalid data type input"

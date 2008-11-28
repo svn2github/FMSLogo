@@ -1003,7 +1003,6 @@
 #define LOCALIZED_ERROR_WINDOWALREADYEXISTS   "Υπάρχει ήδη" // 
 #define LOCALIZED_ERROR_WINDOWDOESNOTEXIST    "Δεν υπάρχει" // 
 
-#define LOCALIZED_ERROR_DLL                   "Σφάλμα DLL" // 
 #define LOCALIZED_ERROR_DLLNOTLOADED          "Το DLL δεν έχει φορτωθεί" // 
 #define LOCALIZED_ERROR_DLLLOADFAILED         "Η φόρτωση του DLL απέτυχε" // 
 #define LOCALIZED_ERROR_DLLINVALIDDATATYPE    "’κυρος τύπος δεδομένων" // 

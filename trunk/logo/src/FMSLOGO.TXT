@@ -22,6 +22,8 @@ II. New features/bugs fixed:
 
   * Added for 6.23.0
     o Fix bug #1619210; Non-English versions now throw unexpected ender errors.
+    o Fix bug #1448111; DLLLOAD, DLLCALL, and DLLFREE now throw DLL-specific
+      errors and no longer display dialog boxes.
 
   For a complete history of changes across all versions of FMSLogo, see
   http://fmslogo.cvs.sourceforge.net/*checkout*/fmslogo/logo/src/CHANGELOG.TXT

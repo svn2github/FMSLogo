@@ -348,7 +348,31 @@ NODE *err_logo(ERR_TYPES error_type, NODE *error_desc, bool uplevel)
             error_message = cons_list(error_desc);
         }
         break;
-             
+
+    case DLL_LOAD_FAILED:
+        g_ErrorFormatString = LOCALIZED_ERROR_DLLLOADFAILED;
+        break;
+
+    case DLL_NOT_LOADED:
+        g_ErrorFormatString = LOCALIZED_ERROR_DLLNOTLOADED;
+        break;
+
+    case DLL_TYPE_DATA_NOT_PAIRED:
+        g_ErrorFormatString = LOCALIZED_ERROR_DLLTYPEDATANOTPAIRED;
+        break;
+
+    case DLL_FUNCTION_NOT_FOUND:
+        g_ErrorFormatString = LOCALIZED_ERROR_DLLFUNCTIONNOTFOUND;
+        break;
+
+    case DLL_INVALID_DATA_TYPE:
+        g_ErrorFormatString = LOCALIZED_ERROR_DLLINVALIDDATATYPE;
+        break;
+
+    case DLL_INVALID_OUTPUT_TYPE:
+        g_ErrorFormatString = LOCALIZED_ERROR_DLLINVALIDOUTPUTTYPE;
+        break;
+
     default:
         prepare_to_exit(FALSE);
         printfx("%s", LOCALIZED_ERROR_UNKNOWN);

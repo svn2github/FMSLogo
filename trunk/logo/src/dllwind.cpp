@@ -265,15 +265,6 @@ bool CLoadedDlls::IsEmpty() const
 
 static CLoadedDlls g_LoadedDlls;
 
-static
-void
-ShowDllErrorAndStop(
-    const char * ErrorMessage
-    )
-{
-    ShowMessageAndStop(LOCALIZED_ERROR_DLL, ErrorMessage);
-}
-
 NODE *ldllload(NODE *arg)
 {
     // read the name of the DLL that we're supposed to load
@@ -299,7 +290,7 @@ NODE *ldllload(NODE *arg)
         {
             delete dll;
 
-            ShowDllErrorAndStop(LOCALIZED_ERROR_DLLLOADFAILED);
+            err_logo(DLL_LOAD_FAILED, NIL);
             return Unbound;
         }
 
@@ -336,7 +327,7 @@ NODE *ldllfree(NODE * args)
     if (dll == NULL)
     {
         // The DLL wasn't loaded
-        ShowDllErrorAndStop(LOCALIZED_ERROR_DLLNOTLOADED);
+        err_logo(DLL_NOT_LOADED, NIL);
         return Unbound;
     }
 
@@ -371,7 +362,7 @@ NODE *ldllcall(NODE *args)
 {
     if (g_LoadedDlls.IsEmpty())
     {
-        ShowDllErrorAndStop(LOCALIZED_ERROR_DLLNOTLOADED);
+        err_logo(DLL_NOT_LOADED, NIL);
         return Unbound;
     }
 
@@ -381,7 +372,7 @@ NODE *ldllcall(NODE *args)
     // must be a list that contains something
     if (!is_list(functionArgs) || (functionArgs == NIL))
     {
-        ShowDllErrorAndStop(LOCALIZED_ERROR_BADINPUT);
+        err_logo(BAD_DATA_UNREC, functionArgs);
         return Unbound;
     }
 
@@ -392,7 +383,7 @@ NODE *ldllcall(NODE *args)
     // we need pairs of inputs (type/value pairs) to continue
     if (!even_args)
     {
-        ShowDllErrorAndStop(LOCALIZED_ERROR_DLLTYPEDATANOTPAIRED);
+        err_logo(DLL_TYPE_DATA_NOT_PAIRED, NIL);
         return Unbound;
     }
 
@@ -425,7 +416,7 @@ NODE *ldllcall(NODE *args)
         if (dll == NULL)
         {
             // The requested DLL is not loaded.
-            ShowDllErrorAndStop(LOCALIZED_ERROR_DLLNOTLOADED);
+            err_logo(DLL_NOT_LOADED, NIL);
             return Unbound;
         }
 
@@ -450,7 +441,7 @@ NODE *ldllcall(NODE *args)
 
     if (theFunc == NULL)
     {
-        ShowDllErrorAndStop(LOCALIZED_ERROR_DLLFUNCTIONNOTFOUND);
+        err_logo(DLL_FUNCTION_NOT_FOUND, NIL);
         return Unbound;
     }
 
@@ -507,7 +498,7 @@ NODE *ldllcall(NODE *args)
             break;
 
         default:
-            ShowDllErrorAndStop(LOCALIZED_ERROR_DLLINVALIDDATATYPE);
+            err_logo(DLL_INVALID_DATA_TYPE, NIL);
             return Unbound;
         }
     }
@@ -558,7 +549,7 @@ NODE *ldllcall(NODE *args)
         break;
                   
     default:
-        ShowDllErrorAndStop(LOCALIZED_ERROR_DLLINVALIDOUTPUTTYPE);
+        err_logo(DLL_INVALID_OUTPUT_TYPE, NIL);
         break;
     }
 

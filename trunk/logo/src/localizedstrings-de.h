@@ -1003,7 +1003,6 @@
 #define LOCALIZED_ERROR_WINDOWALREADYEXISTS   "Schon existent"
 #define LOCALIZED_ERROR_WINDOWDOESNOTEXIST    "Existiert nicht"
 
-#define LOCALIZED_ERROR_DLL                   "DLL-Fehler"
 #define LOCALIZED_ERROR_DLLNOTLOADED          "DLL ist nicht geladen"
 #define LOCALIZED_ERROR_DLLLOADFAILED         "DLL-Ladevorgang nicht erfolgreich"
 #define LOCALIZED_ERROR_DLLINVALIDDATATYPE    "Ungültiger Dateneingangstyp"

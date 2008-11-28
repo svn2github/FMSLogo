@@ -1003,7 +1003,6 @@
 #define LOCALIZED_ERROR_WINDOWALREADYEXISTS   "Already exists"
 #define LOCALIZED_ERROR_WINDOWDOESNOTEXIST    "Does not exist"
 
-#define LOCALIZED_ERROR_DLL                   "DLL Error"
 #define LOCALIZED_ERROR_DLLNOTLOADED          "DLL is not loaded"
 #define LOCALIZED_ERROR_DLLLOADFAILED         "DLL load failed"
 #define LOCALIZED_ERROR_DLLINVALIDDATATYPE    "Invalid data type input"

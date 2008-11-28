@@ -1003,7 +1003,6 @@
 #define LOCALIZED_ERROR_WINDOWALREADYEXISTS   "Esiste già"
 #define LOCALIZED_ERROR_WINDOWDOESNOTEXIST    "Non esiste"
 
-#define LOCALIZED_ERROR_DLL                   "Errore di DLL"
 #define LOCALIZED_ERROR_DLLNOTLOADED          "La DLL non è stata caricata"
 #define LOCALIZED_ERROR_DLLLOADFAILED         "Il caricamento della DLL è fallito"
 #define LOCALIZED_ERROR_DLLINVALIDDATATYPE    "Il tipo dell'argomento non è valido"
