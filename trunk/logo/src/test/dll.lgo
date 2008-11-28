@@ -22,7 +22,7 @@ END
 TO DLLCALLTEST
 
   ; call a function when no DLL is loaded
-  RUNBADINPUTTEST [DLLCALL [L FindWindowA S FMSLogo L 0]]
+  RUNDLLNOTLOADEDTEST [DLLCALL [L FindWindowA S FMSLogo L 0]]
 
   ; Load the User System Kernel
   DLLLOAD "kernel32.dll
@@ -32,34 +32,31 @@ TO DLLCALLTEST
   RUNTOOMANYINPUTSTEST   [(DLLCALL [L GetTickCount] "kernel32.dll "toomany)]
 
   ; invalid inputs
-  RUNSTOPPINGTEST [DLLCALL {0}]
+  RUNNONRECOVERABLEDOESNTLIKEINPUTTEST [DLLCALL {0}]
 
   ; missing the function type
-  RUNSTOPPINGTEST [DLLCALL [0]]
+  RUNNONRECOVERABLEDOESNTLIKEINPUTTEST [DLLCALL []]
 
   ; missing the function name
-  RUNSTOPPINGTEST [DLLCALL [L]]
+  RUNDLLDATATYPENOTPAIREDTEST [DLLCALL [L]]
 
   ; unknown function
-  RUNSTOPPINGTEST [DLLCALL [L FunctionDoesNotExist]]
+  RUNDLLFUNCTIONNOTFOUNDTEST [DLLCALL [L FunctionDoesNotExist]]
 
   ; unknown function type
-  RUNSTOPPINGTEST [DLLCALL [E GetTickCount]]
-
-  ; unknown function type
-  RUNSTOPPINGTEST [DLLCALL [E GetTickCount]]
+  RUNDLLINVALIDOUTPUTTYPETEST [DLLCALL [E GetTickCount]]
 
   ; type/values are not paired
-  RUNSTOPPINGTEST [DLLCALL [L GetTickCount L ]]
+  RUNDLLDATATYPENOTPAIREDTEST [DLLCALL [L GetTickCount L]]
 
   ; unknown parameter type
-  RUNSTOPPINGTEST [DLLCALL [L GetTickCount E Unknown]]
+  RUNDLLINVALIDDATATYPETEST [DLLCALL [L GetTickCount E Unknown]]
 
   ; wrong number of inputs (DLLCALL may crash on this)
-  ; RUNSTOPPINGTEST [DLLCALL [L GetTickCount L 0]]
+  ; RUNBADINPUTTEST [DLLCALL [L GetTickCount L 0]]
 
   ; DLL is not loaded
-  RUNSTOPPINGTEST [(DLLCALL [L GetTickCount L 0] "dll-that-is-not-loaded.dll)]
+  RUNDLLNOTLOADEDTEST [(DLLCALL [L GetTickCount L 0] "dll-that-is-not-loaded.dll)]
 
   DLLFREE
 
@@ -96,15 +93,17 @@ TO MULTIDLLLOADTEST
   TRACEINSTRUCTION [ (DLLFREE "USER32.DLL) ]
 
   ; now user32 should be freed, so the next call should fail
-  RUNSTOPPINGTEST [ DLLCALL [l FindWindowA S FMSLogo L 0] ] 
+  ; because it does not exist in kernel32.dll
+  RUNDLLFUNCTIONNOTFOUNDTEST [ DLLCALL [l FindWindowA S FMSLogo L 0] ] 
 
   ; now release the reference on kernel32.dll
   TRACEINSTRUCTION [ DLLFREE ]
 
   ; now user32 should be freed, so the next call should fail
-  RUNSTOPPINGTEST [ IGNORE DLLCALL [L GetTickCount] ]
+  RUNDLLNOTLOADEDTEST [ IGNORE DLLCALL [L GetTickCount] ]
 
 END
+
 
 TO DLLLOADTEST
 
@@ -113,22 +112,21 @@ TO DLLLOADTEST
   RUNTOOMANYINPUTSTEST   [(DLLLOAD "kernel32 "user32)]
 
   ; invalid filenames
-  RUNSTOPPINGTEST [DLLLOAD {0}]
-  RUNSTOPPINGTEST [DLLLOAD [0]]
-  RUNSTOPPINGTEST [DLLLOAD 12345]
-  RUNSTOPPINGTEST [DLLLOAD "nonexistent.dll]
-  RUNSTOPPINGTEST [DLLLOAD "c:\\]
+  RUNDLLLOADERRORTEST [DLLLOAD {0}]
+  RUNDLLLOADERRORTEST [DLLLOAD [0]]
+  RUNDLLLOADERRORTEST [DLLLOAD 12345]
+  RUNDLLLOADERRORTEST [DLLLOAD "nonexistent.dll]
+  RUNDLLLOADERRORTEST [DLLLOAD "c:\\]
 
   ; DLLLOAD a very long filename name
   localmake "longdllname ".dll
   repeat 5000 [ make "longdllname word "A :longdllname ]
-  make "longdllname word "|"| :longdllname
-  RUNBADINPUTTEST (list "DLLLOAD :longdllname)
+  RUNDLLLOADERRORTEST (list "DLLLOAD quoted :longdllname)
 
   ; Regression test for bug #1438438 
   ; Call DLLLOAD with invalid input while a DLL is loaded.
   DLLLOAD "kernel32.dll
-  RUNSTOPPINGTEST [DLLLOAD {0}]
+  RUNDLLLOADERRORTEST [DLLLOAD {0}]
   DLLFREE
 
 END
@@ -136,10 +134,10 @@ END
 TO DLLFREETEST
 
   ; can't free a DLL when nothing is loaded
-  RUNSTOPPINGTEST [DLLFREE]
+  RUNDLLNOTLOADEDTEST [DLLFREE]
 
   ; free a DLL that is not loaded
-  RUNSTOPPINGTEST [(DLLFREE "dll-that-is-not-loaded.dll)]
+  RUNDLLNOTLOADEDTEST [(DLLFREE "dll-that-is-not-loaded.dll)]
 
   ; wrong number of inputs
   RUNTOOMANYINPUTSTEST [(DLLFREE "kernel32.dll "toomany)]
