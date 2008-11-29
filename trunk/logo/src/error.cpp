@@ -143,7 +143,12 @@ void err_print()
     clear_last_error();
 }
 
-NODE *err_logo(ERR_TYPES error_type, NODE *error_desc, bool uplevel)
+NODE *
+err_logo(
+    ERR_TYPES ErrorType, 
+    NODE *    ErrorMessageParameters,
+    bool      IsUpLevel
+    )
 {
     clear_last_error();
 
@@ -152,8 +157,8 @@ NODE *err_logo(ERR_TYPES error_type, NODE *error_desc, bool uplevel)
 
     NODE * error_message = NIL;
 
-    ref(error_desc);
-    switch (error_type)
+    ref(ErrorMessageParameters);
+    switch (ErrorType)
     {
     case FATAL:
         prepare_to_exit(FALSE);
@@ -184,7 +189,7 @@ NODE *err_logo(ERR_TYPES error_type, NODE *error_desc, bool uplevel)
 
     case BAD_DATA_UNREC:
         g_ErrorFormatString = LOCALIZED_ERROR_BADDATA;
-        error_message = cons_list(uplevel ? ufun : fun, error_desc);
+        error_message = cons_list(IsUpLevel ? ufun : fun, ErrorMessageParameters);
         break;
          
     case DIDNT_OUTPUT:
@@ -192,32 +197,32 @@ NODE *err_logo(ERR_TYPES error_type, NODE *error_desc, bool uplevel)
         {
             last_call = reref(last_call, didnt_output_name);
         }
-        if (error_desc == NIL)
+        if (ErrorMessageParameters == NIL)
         {
-            error_desc = vref(car(didnt_get_output));
+            ErrorMessageParameters = vref(car(didnt_get_output));
             ufun = reref(ufun, cadr(didnt_get_output));
             this_line = reref(this_line, cadr(cdr(didnt_get_output)));
         }
 
         g_ErrorFormatString = LOCALIZED_ERROR_DIDNTOUTPUT;
-        error_message = cons_list(last_call, error_desc);
+        error_message = cons_list(last_call, ErrorMessageParameters);
         recoverable = true;
         break;
 
     case NOT_ENOUGH:
         g_ErrorFormatString = LOCALIZED_ERROR_NOTENOUGHINPUTS;
-        error_message = cons_list(error_desc == NIL ? fun : error_desc);
+        error_message = cons_list(ErrorMessageParameters == NIL ? fun : ErrorMessageParameters);
         break;
 
     case BAD_DATA:
         g_ErrorFormatString = LOCALIZED_ERROR_BADDATA;
-        error_message = cons_list(fun, error_desc);
+        error_message = cons_list(fun, ErrorMessageParameters);
         recoverable = true;
         break;
 
     case APPLY_BAD_DATA:
         g_ErrorFormatString = LOCALIZED_ERROR_BADDATA;
-        error_message = cons_list(make_static_strnode("APPLY"), error_desc);
+        error_message = cons_list(make_static_strnode("APPLY"), ErrorMessageParameters);
         recoverable = true;
         break;
 
@@ -226,11 +231,11 @@ NODE *err_logo(ERR_TYPES error_type, NODE *error_desc, bool uplevel)
         break;
 
     case DK_WHAT_UP:
-        uplevel = true;
+        IsUpLevel = true;
         // FALLTHROUGH
     case DK_WHAT:
         g_ErrorFormatString = LOCALIZED_ERROR_DONTSAYWHATTODOWITH;
-        error_message = cons_list(error_desc);
+        error_message = cons_list(ErrorMessageParameters);
         break;
 
     case PAREN_MISMATCH:
@@ -239,7 +244,7 @@ NODE *err_logo(ERR_TYPES error_type, NODE *error_desc, bool uplevel)
 
     case NO_VALUE:
         g_ErrorFormatString = LOCALIZED_ERROR_NOVALUE;
-        error_message = cons_list(error_desc);
+        error_message = cons_list(ErrorMessageParameters);
         recoverable = true;
         break;
 
@@ -261,17 +266,17 @@ NODE *err_logo(ERR_TYPES error_type, NODE *error_desc, bool uplevel)
 
     case DK_HOW_UNREC:
         g_ErrorFormatString = LOCALIZED_ERROR_DONTKNOWHOWTO;
-        error_message = cons_list(error_desc);
+        error_message = cons_list(ErrorMessageParameters);
         break;
 
     case NO_CATCH_TAG:
         g_ErrorFormatString = LOCALIZED_ERROR_NOCATCHTAG;
-        error_message = cons_list(error_desc);
+        error_message = cons_list(ErrorMessageParameters);
         break;
 
     case ALREADY_DEFINED:
         g_ErrorFormatString = LOCALIZED_ERROR_ALREADYDEFINED;
-        error_message = cons_list(error_desc);
+        error_message = cons_list(ErrorMessageParameters);
         break;
 
     case STOP_ERROR:
@@ -285,7 +290,7 @@ NODE *err_logo(ERR_TYPES error_type, NODE *error_desc, bool uplevel)
 
     case FILE_ERROR:
         g_ErrorFormatString = LOCALIZED_ERROR_FILESYSTEM;
-        error_message = cons_list(error_desc);
+        error_message = cons_list(ErrorMessageParameters);
         break;
 
     case IF_WARNING:
@@ -295,27 +300,27 @@ NODE *err_logo(ERR_TYPES error_type, NODE *error_desc, bool uplevel)
 
     case SHADOW_WARN:
         g_ErrorFormatString = LOCALIZED_ERROR_SHADOWWARNING;
-        error_message = cons_list(error_desc);
+        error_message = cons_list(ErrorMessageParameters);
         warning = true;
         break;
 
     case USER_ERR:
-        if (error_desc == Unbound)
+        if (ErrorMessageParameters == Unbound)
         {
             g_ErrorFormatString = LOCALIZED_ERROR_USER;
         }
         else
         {
-            uplevel = true;
+            IsUpLevel = true;
 
             g_ErrorFormatString = "%p";
-            error_message = cons_list(error_desc);
+            error_message = cons_list(ErrorMessageParameters);
         }
         break;
          
     case IS_PRIM:
         g_ErrorFormatString = LOCALIZED_ERROR_ISPRIMITIVE;
-        error_message = cons_list(error_desc);
+        error_message = cons_list(ErrorMessageParameters);
         break;
 
     case NOT_INSIDE:
@@ -324,7 +329,7 @@ NODE *err_logo(ERR_TYPES error_type, NODE *error_desc, bool uplevel)
          
     case AT_TOPLEVEL:
         g_ErrorFormatString = LOCALIZED_ERROR_ATTOPLEVEL;
-        error_message = cons_list(error_desc);
+        error_message = cons_list(ErrorMessageParameters);
         break;
 
     case NO_TEST:
@@ -334,18 +339,18 @@ NODE *err_logo(ERR_TYPES error_type, NODE *error_desc, bool uplevel)
 
     case ERR_MACRO:
         g_ErrorFormatString = LOCALIZED_ERROR_BADMACROOUTPUT;
-        error_message = cons_list(error_desc);
+        error_message = cons_list(ErrorMessageParameters);
         break;
 
     case DEEPEND:
-        if (error_desc == NIL)
+        if (ErrorMessageParameters == NIL)
         {
             g_ErrorFormatString = LOCALIZED_ERROR_DEEPEND;
         }
         else
         {
             g_ErrorFormatString = LOCALIZED_ERROR_DEEPENDIN;
-            error_message = cons_list(error_desc);
+            error_message = cons_list(ErrorMessageParameters);
         }
         break;
 
@@ -381,13 +386,13 @@ NODE *err_logo(ERR_TYPES error_type, NODE *error_desc, bool uplevel)
 
     deref(didnt_output_name);
     didnt_output_name = NIL;
-    if (uplevel && ufun != NIL)
+    if (IsUpLevel && ufun != NIL)
     {
         ufun = reref(ufun, last_ufun);
         this_line = reref(this_line, last_line);
     }
 
-    g_ErrorCode = vref(make_intnode((FIXNUM) error_type));
+    g_ErrorCode = vref(make_intnode((FIXNUM) ErrorType));
 
     // replace the old error parameters with the new ones
     g_ErrorArguments = vref(error_message);
@@ -398,7 +403,7 @@ NODE *err_logo(ERR_TYPES error_type, NODE *error_desc, bool uplevel)
         g_ErrorLine     = vref(this_line);
     }
 
-    deref(error_desc);
+    deref(ErrorMessageParameters);
 
     if (warning)
     {
@@ -473,9 +478,9 @@ NODE *err_logo(ERR_TYPES error_type, NODE *error_desc, bool uplevel)
     return Unbound;
 }
 
-NODE *err_logo(ERR_TYPES error_type, NODE *error_desc)
+NODE *err_logo(ERR_TYPES ErrorType, NODE *ErrorMessageParameters)
 {
-    return err_logo(error_type, error_desc, false);
+    return err_logo(ErrorType, ErrorMessageParameters, false);
 }
 
 NODE *lerror(NODE *)
