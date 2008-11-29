@@ -334,32 +334,32 @@ END
 BURY [RUNISAPRIMITIVETEST]
 
 TO RUNDLLLOADERRORTEST :instructions
-  (RUNEXPECTERRORTEST :instructions 1100 "|DLL load failed|)
+  (RUNEXPECTERRORTEST :instructions 1101 "|DLL load failed|)
 END
 BURY [RUNDLLLOADERRORTEST]
 
 TO RUNDLLNOTLOADEDTEST :instructions
-  (RUNEXPECTERRORTEST :instructions 1101 "|DLL is not loaded|)
+  (RUNEXPECTERRORTEST :instructions 1102 "|DLL is not loaded|)
 END
 BURY [RUNDLLNOTLOADEDTEST]
 
 TO RUNDLLDATATYPENOTPAIREDTEST :instructions
-  (RUNEXPECTERRORTEST :instructions 1102 "|Not all Type/Data inputs are paired|)
+  (RUNEXPECTERRORTEST :instructions 1103 "|Not all Type/Data inputs are paired|)
 END
 BURY [RUNDLLDATATYPENOTPAIREDTEST]
 
 TO RUNDLLINVALIDDATATYPETEST :instructions
-  (RUNEXPECTERRORTEST :instructions 1103 "|Invalid data type input|)
+  (RUNEXPECTERRORTEST :instructions 1104 "|Invalid data type input|)
 END
 BURY [RUNDLLINVALIDDATATYPETEST]
 
 TO RUNDLLINVALIDOUTPUTTYPETEST :instructions
-  (RUNEXPECTERRORTEST :instructions 1104 "|Invalid output type|)
+  (RUNEXPECTERRORTEST :instructions 1105 "|Invalid output type|)
 END
 BURY [RUNDLLINVALIDOUTPUTTYPETEST]
 
 TO RUNDLLFUNCTIONNOTFOUNDTEST :instructions
-  (RUNEXPECTERRORTEST :instructions 1105 "|Function not found|)
+  (RUNEXPECTERRORTEST :instructions 1106 "|Function not found|)
 END
 BURY [RUNDLLFUNCTIONNOTFOUNDTEST]
 

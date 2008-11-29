@@ -183,13 +183,15 @@ enum ERR_TYPES
     OUT_OF_MEM_UNREC     = 34,
 
     // FMSLogo-specific error codes start at 1000
-    WINDOW_NOTHING_SELECTED      = 1000,
-    DLL_LOAD_FAILED              = 1100,
-    DLL_NOT_LOADED               = 1101,
-    DLL_TYPE_DATA_NOT_PAIRED     = 1102,
-    DLL_INVALID_DATA_TYPE        = 1103,
-    DLL_INVALID_OUTPUT_TYPE      = 1104,
-    DLL_FUNCTION_NOT_FOUND       = 1105,
+    WINDOW_NOTHING_SELECTED      = 1001,
+
+    DLL_GENERAL                  = 1100,
+    DLL_LOAD_FAILED              = 1101,
+    DLL_NOT_LOADED               = 1102,
+    DLL_TYPE_DATA_NOT_PAIRED     = 1103,
+    DLL_INVALID_DATA_TYPE        = 1104,
+    DLL_INVALID_OUTPUT_TYPE      = 1105,
+    DLL_FUNCTION_NOT_FOUND       = 1106,
 };
 
 #define FALSE   0
