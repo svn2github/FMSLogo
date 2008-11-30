@@ -1089,8 +1089,6 @@
 #define LOCALIZED_ERROR_TIMERBADID            "Λάθος αριθμός χρονοδιακόπτη" // 
 #define LOCALIZED_ERROR_TIMERNOTFOUND         "Ο χρονοδιακόπτης δε βρέθηκε" // 
 
-#define LOCALIZED_ERROR_BITMODEBADBITMODE     "’κυρο BitMode" // 
-
 #define LOCALIZED_ERROR_HHCTRLNOTLOADED       "Η online βοήθεια δεν είναι διαθέσιμη γιατί το hhctrl.ocx δε φορτώθηκε."  // 
 #define LOCALIZED_ERROR_HHCTRLATOMNOTFOUND    "Η online βοήθεια δεν είναι διαθέσιμη γιατί το hhctrl.ocx δεν περιέχει ATOM_HTMLHELP_API_ANSI."  // 
 

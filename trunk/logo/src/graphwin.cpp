@@ -1173,8 +1173,7 @@ BitModeToRasterMode(
         return DSTINVERT;
 
     default:
-        // notify the user that the bitmode was invalid
-        ShowErrorMessageAndStop(LOCALIZED_ERROR_BITMODEBADBITMODE);
+        // notify the caller that the bitmode was invalid
         return 0;
     }
 }
@@ -1202,7 +1201,7 @@ RasterModeToBitMode(
     case SRCINVERT: 
         return 4;
 
-    case SRCERASE: 
+    case SRCERASE:
         return 5;
 
     case NOTSRCCOPY:
@@ -1222,6 +1221,22 @@ RasterModeToBitMode(
     return 0;
 }
 
+static
+DWORD
+BitModeArgsToRasterMode(
+    NODE * BitModeArguments
+    )
+{
+    NODE * bitModeNode = ranged_integer_arg(BitModeArguments, 1, 9);
+    if (stopping_flag == THROWING)
+    {
+        return 0;
+    }
+
+    return BitModeToRasterMode(getint(bitModeNode));
+}
+
+
 NODE *lbitmode(NODE *)
 {
     ASSERT_TURTLE_INVARIANT;
@@ -1237,7 +1252,7 @@ NODE *lsetbitmode(NODE *arg)
     ASSERT_TURTLE_INVARIANT;
 
     // convert from logo "code" to Windows constants
-    FIXNUM bitmode = BitModeToRasterMode(int_arg(arg)); 
+    FIXNUM bitmode = BitModeArgsToRasterMode(arg);
     if (NOT_THROWING)
     {
         g_BitMode = bitmode;
@@ -1263,7 +1278,7 @@ NODE *lsetturtlemode(NODE *arg)
         draw_turtle(false);
 
         // convert from logo "code" to Windows constants
-        FIXNUM turtlemode = BitModeToRasterMode(int_arg(arg)); 
+        FIXNUM turtlemode = BitModeArgsToRasterMode(arg);
         if (NOT_THROWING)
         {
             g_SelectedTurtle->Bitmap = turtlemode;

@@ -469,6 +469,7 @@ extern NODE *lmemberp(NODE *args);
 extern NODE *lsubstringp(NODE *args);
 extern NODE *lmember(NODE *args);
 extern NODE *integer_arg(NODE *args);
+extern NODE *ranged_integer_arg(NODE *args, int MinValue, int MaxValue);
 extern FIXNUM int_arg(NODE *args);
 extern NODE *litem(NODE *args);
 extern NODE *lsetitem(NODE *args);

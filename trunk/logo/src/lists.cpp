@@ -695,7 +695,7 @@ NODE *lmember(NODE *args)
 
 // If the first element in args can be interpreted as an integer
 // then it is changed into an integer node and returned.
-// Otherwise it is set to whatever ERRACT returns.
+// Otherwise, the stopping_flag is set to THROWING.
 NODE *integer_arg(NODE *args)
 {
     NODE *arg = car(args);
@@ -728,6 +728,61 @@ NODE *integer_arg(NODE *args)
     }
 
     return Unbound;
+}
+
+// If the first element in args can be interpreted as an integer
+// within the specified range, then it is changed into an integer
+// node and returned.
+// Otherwise it is set to whatever ERRACT returns.
+NODE *ranged_integer_arg(NODE *args, int MinValue, int MaxValue)
+{
+    NODE * val;
+
+    for (;;)
+    {
+        NODE * arg = car(args);
+        val = cnv_node_to_numnode(arg);
+        if (stopping_flag == THROWING)
+        {
+            // we encountered a hard error
+            return Unbound;
+        }
+
+        if (nodetype(val) == INTEGER && 
+            MinValue <= getint(val) && getint(val) <= MaxValue)
+        {
+            // this is an integer within the requested range
+            break;
+        }
+
+        if (nodetype(val) == FLOATINGPOINT)
+        {
+            FLONUM f = getfloat(val);
+            if (fmod(f, 1.0) == 0.0)
+            {
+                // This is a floating point value that can
+                // be coerced into an integer without a loss
+                // of information.
+                FIXNUM i = f;
+                if (MinValue <= i && i <= MaxValue)
+                {
+                    // The floating point value is equal to an
+                    // integer within the requested range.
+                    gcref(val);
+                    val = make_intnode(i);
+                    break;
+                }
+            }
+        }
+
+        // grab a new value from ERRACT and try again
+        gcref(val);
+        setcar(args, err_logo(BAD_DATA, arg));
+    }
+
+    // update the arguments with the new node and return it
+    setcar(args, val);
+    return val;
 }
 
 FIXNUM int_arg(NODE *args)

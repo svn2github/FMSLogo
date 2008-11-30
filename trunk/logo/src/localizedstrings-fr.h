@@ -1089,8 +1089,6 @@
 #define LOCALIZED_ERROR_TIMERBADID            "Mauvais numéro de chrono"
 #define LOCALIZED_ERROR_TIMERNOTFOUND         "Chrono non trouvé"
 
-#define LOCALIZED_ERROR_BITMODEBADBITMODE     "Mode Bitmap illégal" // 
-
 #define LOCALIZED_ERROR_HHCTRLNOTLOADED       "L'aide en ligne n'est pas disponible car hhctrl.ocx ne peut être chargé."  // 
 #define LOCALIZED_ERROR_HHCTRLATOMNOTFOUND    "L'aide en ligne n'est pas disponible car hhctrl.ocx ne contient pas ATOM_HTMLHELP_API_ANSI."  // 
 

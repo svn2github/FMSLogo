@@ -1089,8 +1089,6 @@
 #define LOCALIZED_ERROR_TIMERBADID            "Falsche Zeitnehmer-Identität"
 #define LOCALIZED_ERROR_TIMERNOTFOUND         "Zeitnehmer nicht gefunden"
 
-#define LOCALIZED_ERROR_BITMODEBADBITMODE     "Illegaler Bitmodus"
-
 #define LOCALIZED_ERROR_HHCTRLNOTLOADED       "Online-Hilfe ist nicht verfügbar, weil hhctrl.ocx nicht geladen werden konnte." 
 #define LOCALIZED_ERROR_HHCTRLATOMNOTFOUND    "Online-Hilfe ist nicht verfügbar, weil hhctrl.ocx nicht ATOM_HTMLHELP_API_ANSI beinhaltet." 
 

@@ -1089,8 +1089,6 @@
 #define LOCALIZED_ERROR_TIMERBADID            "Identificador de temporizador incorreto"
 #define LOCALIZED_ERROR_TIMERNOTFOUND         "Temporizador não encontrado"
 
-#define LOCALIZED_ERROR_BITMODEBADBITMODE     "ModoBitmap incorreto"
-
 #define LOCALIZED_ERROR_HHCTRLNOTLOADED       "Ajuda on line não disponível pois não pude carregar hhctrl.ocx"
 #define LOCALIZED_ERROR_HHCTRLATOMNOTFOUND    "Ajuda on line não disponível pois hhctrl.ocx não contém ATOM_HTMLHELP_API_ANSI"
 

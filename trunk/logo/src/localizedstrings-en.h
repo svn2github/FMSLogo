@@ -1089,8 +1089,6 @@
 #define LOCALIZED_ERROR_TIMERBADID            "Bad Timer Id"
 #define LOCALIZED_ERROR_TIMERNOTFOUND         "Timer not found"
 
-#define LOCALIZED_ERROR_BITMODEBADBITMODE     "Illegal Bitmode"
-
 #define LOCALIZED_ERROR_HHCTRLNOTLOADED       "Online help is unavailable because hhctrl.ocx could not be loaded." 
 #define LOCALIZED_ERROR_HHCTRLATOMNOTFOUND    "Online help is unavailable because hhctrl.ocx does not contain ATOM_HTMLHELP_API_ANSI." 
 

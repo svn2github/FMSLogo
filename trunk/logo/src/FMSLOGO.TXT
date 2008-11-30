@@ -24,6 +24,10 @@ II. New features/bugs fixed:
     o Fix bug #1619210; Non-English versions now throw unexpected ender errors.
     o Fix bug #1448111; DLLLOAD, DLLCALL, and DLLFREE now throw DLL-specific
       errors and no longer display dialog boxes.
+    o Fix bug #1622756; SETBITMODE now throws a recoverable bad input error
+      when given an integer that is out-of-range.
+    o Fix bug #1620964; SETTURTLEMODE now throws a recoverable bad input error
+      when given an integer that is out-of-range.
 
   For a complete history of changes across all versions of FMSLogo, see
   http://fmslogo.cvs.sourceforge.net/*checkout*/fmslogo/logo/src/CHANGELOG.TXT
