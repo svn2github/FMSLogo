@@ -111,6 +111,28 @@ TO TRACEINSTRUCTION :instruction
 END
 BURY [TRACEINSTRUCTION]
 
+; Prints the instruction to the test log and runs it.
+; Does not do a CATCH ERROR, which makes it suitable for
+; recoverable-error testing (onces where ERRACT is defined to
+; be something special).
+TO TRACEINSTRUCTIONNOCATCH :instruction
+
+  ; backup the current writer
+  LOCALMAKE "previouswriter WRITER
+  SETWRITE :testlog
+
+  UNLIMITEDPRINT (SENTENCE "CALL: :instruction)
+
+  ; restore the current writer
+  SETWRITE :previouswriter
+
+  ; run the instructions
+  IGNORE RUNRESULT :instruction
+
+END
+BURY [TRACEINSTRUCTIONNOCATCH]
+
+
 TO SIMPLEREPORTTEST :instruction :expectedresult
   LOCAL "result
 
