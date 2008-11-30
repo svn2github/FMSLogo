@@ -92,7 +92,52 @@ TO BITMODETEST.BADINPUT
    SETBITMODE :savedbitmode
 END
 
+TO SETBITMODETEST.OUTPUT.2
+    OUTPUT 2
+END
+
+TO SETBITMODETEST.BADINPUTISRECOVERABLE
+   LOCALMAKE "erract [SETBITMODETEST.OUTPUT.2]
+
+   LOCALMAKE "savedbitmode BITMODE
+
+   ; change the bitmode to a known setting
+   TRACEINSTRUCTION [ SETBITMODE 3 ]
+
+   ; attempt to set the bit mode to an illegal value
+   TRACEINSTRUCTIONNOCATCH [ SETBITMODE 0 ]
+
+   ; verify that the bit mode was changed by :ERRACT
+   SIMPLEREPORTTEST [BITMODE] 2
+
+   ; restore the previous bitmode
+   SETBITMODE :savedbitmode
+
+END
+
+TO SETBITMODETEST.CONVERTTOINTEGER
+
+   LOCALMAKE "savedbitmode BITMODE
+
+   ; Change the bitmode to a floating point value,
+   ; which must converted to an integer.
+   TRACEINSTRUCTION [ SETBITMODE 3.0 ]
+   SIMPLEREPORTTEST [BITMODE] 3
+
+   ; Change the bitmode to a word,
+   ; which must converted to an integer.
+   TRACEINSTRUCTION [ SETBITMODE "4 ]
+   SIMPLEREPORTTEST [BITMODE] 4
+
+   ; restore the previous bitmode
+   SETBITMODE :savedbitmode
+
+END
+
 TO BITMODETEST
-    BITMODETEST.SMOKETEST
-    BITMODETEST.BADINPUT
+   BITMODETEST.SMOKETEST
+   BITMODETEST.BADINPUT
+
+   SETBITMODETEST.BADINPUTISRECOVERABLE
+   SETBITMODETEST.CONVERTTOINTEGER
 END
