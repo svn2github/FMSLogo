@@ -45,6 +45,7 @@ III. Special Thanks
     Lionel Laske
     Relja Medic
     Daniel Ajoy
+    Hensley Bass
     Narayanan Chitoor
     Jason Gervich
     Andy Owen
