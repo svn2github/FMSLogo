@@ -75,7 +75,7 @@ WINDOWDELETE "mywindow</userinput>
 SCROLLBARCREATE "main "myscroll 25 25 100 25 [SETHEADING SCROLLBARGET "myscroll]
 SCROLLBARSET "myscroll 0 360 0
 <replaceable>Move the scrollbar and observe what happens to the turtle</replaceable>
-WINDOWDELETE "main</userinput>
+SCROLLBARDELETE "myscroll</userinput>
 </programlisting>
 
 </listitem>
