@@ -36,6 +36,7 @@ NODE *make_procnode(NODE *lst, NODE *wrds, short min, short df, short max)
         make_intnode((FIXNUM) max));
 }
 
+
 static
 NODE *get_bodywords(NODE *proc, NODE *name)
 {
@@ -1622,6 +1623,41 @@ NODE *lmacrop(NODE *args)
     return check_proctype(args, PROCTYPE_Macro);
 }
 
+// Copies the title line from a procedure definition
+// while replacing the name of the function.
+static
+NODE *cpdf_newname(NODE * Name, NODE * TitleLine)
+{
+    // Get the string from Name
+    NODE *nname = cnv_node_to_strnode(Name);
+    const char * namestr = getstrptr(nname);
+
+    // For the purpose of this function, the title line
+    // consists of three parts:
+    // (TO|.MACRO) (procname) (args)*
+    const char * titlestr = getstrptr(TitleLine);
+
+    // Set p1 to just before the procedure name
+    // Either "TO" or ".MACRO" comes before it.
+    const char * p1 = titlestr + strcspn(titlestr, " \t");
+    p1 = p1 + strspn(p1, " \t");
+
+    // Set p2 to just after the procedure name.
+    const char * p2 = p1 + strcspn(p1, " \t");
+
+    // Contruct the new title line by replacing only
+    // the name part of the original title line.
+    char newTitleLine[2000];
+    sprintf(
+        newTitleLine,
+        "%.*s%.*s%s",
+        p1-titlestr, titlestr,
+        getstrlen(nname), namestr,
+        p2);
+
+    return make_strnode(newTitleLine);
+}
+
 NODE *lcopydef(NODE *args)
 {
     NODE * arg1 = proc_name_arg(args);
@@ -1673,8 +1709,26 @@ NODE *lcopydef(NODE *args)
         }
     }
 
-    // set the first input to have the same procdure as the second input
+    if (!is_prim(new_proc))
+    {
+        // We are copying a user-defined function.
+        // We must copy the body of the procedure, but change
+        // the name of the procedure in the TO line,
+        // or else the new procedure will have the same name
+        // as the old procudure, which is confusing if the
+        // function is ever printed out.
+        NODE *bwds = get_bodywords(new_proc, arg1);
+        new_proc = make_procnode(
+            text__procnode(new_proc),
+            cons(cpdf_newname(arg1,car(bwds)), cdr(bwds)),
+            getint(minargs__procnode(new_proc)),
+            getint(dfltargs__procnode(new_proc)),
+            getint(maxargs__procnode(new_proc)));
+    }
+
+    // set the first input to have the same procedure as the second input
     setprocnode__caseobj(arg1, new_proc);
+
     setflag__caseobj(arg1, PROC_BURIED);
     if (is_macro(arg2)) 
     {
