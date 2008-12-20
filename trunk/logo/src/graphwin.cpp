@@ -217,14 +217,14 @@ UpdateNormalPen(
     UpdatePen(g_LogicalNormalPen, g_NormalPen, Width, Color);
 }
 
-void
+ERR_TYPES
 gifsave_helper(
-    char *textbuf,
-    int iDelay_,
-    int bAppendMode_,
-    int iLoop_,
-    int iTrans_,
-    int iMaxColorDepth
+    const char *GifFileName,
+    int         iDelay_,
+    int         bAppendMode_,
+    int         iLoop_,
+    int         iTrans_,
+    int         iMaxColorDepth
     )
 {
     iDelay      = iDelay_;
@@ -232,14 +232,22 @@ gifsave_helper(
     iLoop       = iLoop_;
     iTrans      = iTrans_;
 
-    MainWindowx->DumpBitmapFile(TempBmpName, iMaxColorDepth);
-    lsetcursorwait(NIL);
-    if (gbmBmpToGif(TempBmpName, textbuf) != 0)
+    ERR_TYPES status = MainWindowx->DumpBitmapFile(TempBmpName, iMaxColorDepth);
+    if (status != SUCCESS)
     {
-        ShowErrorMessageAndStop(LOCALIZED_ERROR_GIFSAVEFAILED);
+        // an error occured.
+        return status;
+    }
+
+    lsetcursorwait(NIL);
+    if (gbmBmpToGif(TempBmpName, GifFileName) != 0)
+    {
+        status = IMAGE_GIF_SAVE_FAILED;
     }
     lsetcursorarrow(NIL);
     unlink(TempBmpName);
+
+    return status;
 }
 
 
@@ -303,11 +311,11 @@ GetRGBorIndexColor(
 
 NODE *lgifsave(NODE *args)
 {
-    /* same as BITMAP-SAVE but gets file name from logo command */
-    char textbuf[MAX_BUFFER_SIZE];
-    cnv_strnode_string(textbuf, args);
+    // same as BITMAP-SAVE but gets file name from logo command
+    char gifFileName[MAX_BUFFER_SIZE];
+    cnv_strnode_string(gifFileName, args);
 
-    /* check for optional callback routine */
+    // setup default values for the optional inputs
     int  iDelay = -1;
     bool bAppendMode = false;
     int  iLoop = -1;
@@ -357,7 +365,17 @@ NODE *lgifsave(NODE *args)
 
     if (NOT_THROWING)
     {
-        gifsave_helper(textbuf, iDelay, bAppendMode, iLoop, iTrans, iMaxColorDepth);
+        ERR_TYPES status = gifsave_helper(
+            gifFileName,
+            iDelay,
+            bAppendMode,
+            iLoop,
+            iTrans,
+            iMaxColorDepth);
+        if (status != SUCCESS)
+        {
+            err_logo(status, NIL);
+        }
     }
 
     return Unbound;
@@ -365,53 +383,79 @@ NODE *lgifsave(NODE *args)
 
 NODE *lbitsave(NODE *args)
 {
-    /* same as BITMAP-SAVE but gets file name from logo command */
-    char textbuf[MAX_BUFFER_SIZE];
-    cnv_strnode_string(textbuf, args);
-
-    if (NOT_THROWING)
+    // same as BITMAP-SAVE but gets file name from logo instruction
+    char bmpFileName[MAX_BUFFER_SIZE];
+    cnv_strnode_string(bmpFileName, args);
+    if (stopping_flag == THROWING)
     {
-        int iMaxBitCount = 32;
+        return Unbound;
+    }
 
-        if (cdr(args) != NIL)
+    int iMaxBitCount = 32;
+    if (cdr(args) != NIL)
+    {
+        NODE *val1 = integer_arg(cdr(args));
+        if (stopping_flag == THROWING)
         {
-            NODE *val1 = integer_arg(cdr(args));
-            if (NOT_THROWING)
-            {
-                iMaxBitCount = getint(val1);
-            }
+            return Unbound;
         }
+        iMaxBitCount = getint(val1);
+    }
 
-        MainWindowx->DumpBitmapFile(textbuf, iMaxBitCount);
+    ERR_TYPES status = MainWindowx->DumpBitmapFile(bmpFileName, iMaxBitCount);
+    if (status != SUCCESS)
+    {
+        err_logo(status, NIL);
+        return Unbound;
     }
 
     return Unbound;
 }
 
-void gifload_helper(char *textbuf, DWORD &dwPixelWidth, DWORD &dwPixelHeight)
+ERR_TYPES
+gifload_helper(
+    const char * GifFileName,
+    DWORD      & dwPixelWidth,
+    DWORD      & dwPixelHeight
+    )
 {
+    // convert the GIF to a DIB
     lsetcursorwait(NIL);
-    if (gbmGifToBmp(textbuf, TempBmpName) != 0)
-    {
-        ShowErrorMessageAndStop(LOCALIZED_ERROR_GIFREADFAILED);
-    }
+    int rval = gbmGifToBmp(GifFileName, TempBmpName);
     lsetcursorarrow(NIL);
-    MainWindowx->LoadBitmapFile(TempBmpName, dwPixelWidth, dwPixelHeight);
+
+    if (rval != 0)
+    {
+        return IMAGE_GIF_LOAD_FAILED;
+    }
+
+    // load the bitmap
+    ERR_TYPES status = MainWindowx->LoadBitmapFile(
+        TempBmpName,
+        dwPixelWidth,
+        dwPixelHeight);
+
+    // cleanup
     unlink(TempBmpName);
+    return SUCCESS;
 }
 
 NODE *lgifload(NODE *arg)
 {
-    /* same as BITMAP-SAVE but gets file name from logo command */
-
-    char textbuf[MAX_BUFFER_SIZE];
-    cnv_strnode_string(textbuf, arg);
-
-    if (NOT_THROWING)
+    char gifFileName[MAX_BUFFER_SIZE];
+    cnv_strnode_string(gifFileName, arg);
+    if (stopping_flag == THROWING)
     {
-        DWORD dwPixelWidth = 1;
-        DWORD dwPixelHeight = 1;
-        gifload_helper(textbuf, dwPixelWidth, dwPixelHeight);
+        return Unbound;
+    }
+
+    DWORD dwPixelWidth = 1;
+    DWORD dwPixelHeight = 1;
+    ERR_TYPES status = gifload_helper(gifFileName, dwPixelWidth, dwPixelHeight);
+    if (status != SUCCESS)
+    {
+        err_logo(status, NIL);
+        return Unbound;
     }
 
     return Unbound;
@@ -419,37 +463,48 @@ NODE *lgifload(NODE *arg)
 
 NODE *lgifsize(NODE *args)
 {
-    /* same as BITMAP-SAVE but gets file name from logo command */
-
-    char textbuf[MAX_BUFFER_SIZE];
-    cnv_strnode_string(textbuf, args);
-
-    if (NOT_THROWING)
+    char gifFileName[MAX_BUFFER_SIZE];
+    cnv_strnode_string(gifFileName, args);
+    if (stopping_flag == THROWING)
     {
-        DWORD dwPixelWidth = 0;
-        DWORD dwPixelHeight = 0;
-        gifload_helper(textbuf, dwPixelWidth, dwPixelHeight);
-
-        return cons_list(
-            make_intnode((FIXNUM) dwPixelWidth),
-            make_intnode((FIXNUM) dwPixelHeight));
+        return Unbound;
     }
 
-    return Unbound;
+    DWORD dwPixelWidth = 0;
+    DWORD dwPixelHeight = 0;
+    ERR_TYPES status = gifload_helper(gifFileName, dwPixelWidth, dwPixelHeight);
+    if (status != SUCCESS)
+    {
+        err_logo(status, NIL);
+        return Unbound;
+    }
+
+    return cons_list(
+        make_intnode((FIXNUM) dwPixelWidth),
+        make_intnode((FIXNUM) dwPixelHeight));
 }
 
 NODE *lbitload(NODE *arg)
 {
-    /* same as BITMAP-LOAD except callable from logo command */
-
-    char textbuf[MAX_BUFFER_SIZE];
-    cnv_strnode_string(textbuf, arg);
-
-    if (NOT_THROWING)
+    // same as BITMAP-LOAD except callable from logo command
+    char bitmapFileName[MAX_BUFFER_SIZE];
+    cnv_strnode_string(bitmapFileName, arg);
+    if (stopping_flag == THROWING)
     {
-        DWORD dwPixelWidth = 1;
-        DWORD dwPixelHeight = 1;
-        MainWindowx->LoadBitmapFile(textbuf, dwPixelWidth, dwPixelHeight);
+        return Unbound;
+    }
+
+
+    DWORD dwPixelWidth = 1;
+    DWORD dwPixelHeight = 1;
+    ERR_TYPES status = MainWindowx->LoadBitmapFile(
+        bitmapFileName,
+        dwPixelWidth,
+        dwPixelHeight);
+    if (status != SUCCESS)
+    {
+        err_logo(status, NIL);
+        return Unbound;
     }
 
     return Unbound;
@@ -457,23 +512,26 @@ NODE *lbitload(NODE *arg)
 
 NODE *lbitloadsize(NODE *arg)
 {
-    /* same as BITMAP-LOAD except callable from logo command */
-
-    char textbuf[MAX_BUFFER_SIZE];
-    cnv_strnode_string(textbuf, arg);
-
-    if (NOT_THROWING)
+    // same as BITMAP-LOAD except callable from logo command
+    char bitmapFileName[MAX_BUFFER_SIZE];
+    cnv_strnode_string(bitmapFileName, arg);
+    if (stopping_flag == THROWING)
     {
-        DWORD dwPixelWidth = 0;
-        DWORD dwPixelHeight = 0;
-        MainWindowx->LoadBitmapFile(textbuf, dwPixelWidth, dwPixelHeight);
-
-        return cons_list(
-            make_intnode((FIXNUM) dwPixelWidth),
-            make_intnode((FIXNUM) dwPixelHeight));
+        return Unbound;
     }
 
-    return Unbound;
+    DWORD dwPixelWidth = 0;
+    DWORD dwPixelHeight = 0;
+    ERR_TYPES status = MainWindowx->LoadBitmapFile(bitmapFileName, dwPixelWidth, dwPixelHeight);
+    if (status != SUCCESS)
+    {
+        err_logo(status, NIL);
+        return Unbound;
+    }
+
+    return cons_list(
+        make_intnode((FIXNUM) dwPixelWidth),
+        make_intnode((FIXNUM) dwPixelHeight));
 }
 
 NODE *lbitsize(NODE *)

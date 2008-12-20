@@ -146,7 +146,8 @@ const NODETYPES NT_FREE          = 0xFFFF;
 // end of the list.
 enum ERR_TYPES
 {
-    FATAL                = 0, 
+    SUCCESS              = 0, 
+
     OUT_OF_MEM           = 1, 
     STACK_OVERFLOW       = 2, 
     TURTLE_OUT_OF_BOUNDS = 3,
@@ -192,6 +193,16 @@ enum ERR_TYPES
     DLL_INVALID_DATA_TYPE        = 1104,
     DLL_INVALID_OUTPUT_TYPE      = 1105,
     DLL_FUNCTION_NOT_FOUND       = 1106,
+
+    IMAGE_GENERAL                = 1200,
+    IMAGE_GIF_LOAD_FAILED        = 1201,
+    IMAGE_GIF_SAVE_FAILED        = 1202,
+    IMAGE_BMP_OPEN_FAILED        = 1211,
+    IMAGE_BMP_CREATE_FAILED      = 1212,
+    IMAGE_BMP_WRITE_FAILED       = 1213,
+    IMAGE_BMP_INVALID            = 1214,
+
+    FATAL                        = 0xFFFF,
 };
 
 #define FALSE   0

@@ -617,10 +617,10 @@ public:
     void UndockCommanderWindow();
     void DockCommanderWindow();
 
-    bool LoadBitmapFile(LPCSTR, DWORD &, DWORD &);
+    ERR_TYPES LoadBitmapFile(PCSTR, DWORD &, DWORD &);
     bool OpenDIB(FILE* File, DWORD &, DWORD &);
-    bool DumpBitmapFile(LPCSTR Filename, int MaxBitCount);
-    bool WriteDIB(FILE* File, int MaxBitCount);
+    ERR_TYPES DumpBitmapFile(PCSTR Filename, int MaxBitCount);
+    ERR_TYPES WriteDIB(FILE* File, int MaxBitCount);
 
 protected:
     void SetupWindow();

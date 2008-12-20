@@ -659,6 +659,47 @@ ShowErrorMessage(
     ShowMessage(LOCALIZED_ERROR, Message);
 }
 
+// Maps ErrorCode to a string and displays it in a message box
+void
+ShowErrorMessage(
+    ERR_TYPES  ErrorCode
+    )
+{
+    const char * errorMessage = NULL;
+
+    switch (ErrorCode)
+    {
+    case IMAGE_GIF_LOAD_FAILED:
+        errorMessage = LOCALIZED_ERROR_GIFREADFAILED;
+        break;
+
+    case IMAGE_GIF_SAVE_FAILED:
+        errorMessage = LOCALIZED_ERROR_GIFSAVEFAILED;
+        break;
+
+    case IMAGE_BMP_OPEN_FAILED:
+        errorMessage = LOCALIZED_COULDNOTOPENBMP;
+        break;
+
+    case IMAGE_BMP_CREATE_FAILED:
+        errorMessage = LOCALIZED_COULDNOTCREATEBMP;
+        break;
+
+    case IMAGE_BMP_WRITE_FAILED:
+        errorMessage = LOCALIZED_COULDNOTWRITEBMP;
+        break;
+
+    case IMAGE_BMP_INVALID:
+        errorMessage = LOCALIZED_NOTVALIDBMP;
+        break;
+    }
+
+    if (errorMessage != NULL)
+    {
+        ShowErrorMessage(errorMessage);
+    }
+}
+
 // Shows a message box and sets the logo error.
 // This helper was created because these two operations appear next
 // to each other very often, not because coupling the operations is 

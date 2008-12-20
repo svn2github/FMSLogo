@@ -113,6 +113,13 @@ The numeric error codes and their corresponding human-readable messages are give
       <row><entry>1105</entry><entry>Invalid output type</entry></row>
       <row><entry>1106</entry><entry>Function not found</entry></row>
 
+      <row><entry>1201</entry><entry>Problem Reading GIF, check memory and diskspace</entry></row>
+      <row><entry>1202</entry><entry>Problem Generating GIF, check memory and diskspace</entry></row>
+
+      <row><entry>1211</entry><entry>Could not open .bmp</entry></row>
+      <row><entry>1212</entry><entry>Unable to create Windows 3.0 bitmap</entry></row>
+      <row><entry>1213</entry><entry>Could not write .bmp</entry></row>
+      <row><entry>1214</entry><entry>Not a Windows 3.0 bitmap</entry></row>
     </tbody>
   </tgroup>
 </informaltable>

@@ -378,6 +378,30 @@ err_logo(
         g_ErrorFormatString = LOCALIZED_ERROR_DLLINVALIDOUTPUTTYPE;
         break;
 
+    case IMAGE_GIF_LOAD_FAILED:
+        g_ErrorFormatString = LOCALIZED_ERROR_GIFREADFAILED;
+        break;
+
+    case IMAGE_GIF_SAVE_FAILED:
+        g_ErrorFormatString = LOCALIZED_ERROR_GIFSAVEFAILED;
+        break;
+
+    case IMAGE_BMP_OPEN_FAILED:
+        g_ErrorFormatString = LOCALIZED_COULDNOTOPENBMP;
+        break;
+
+    case IMAGE_BMP_CREATE_FAILED:
+        g_ErrorFormatString = LOCALIZED_COULDNOTCREATEBMP;
+        break;
+
+    case IMAGE_BMP_WRITE_FAILED:
+        g_ErrorFormatString = LOCALIZED_COULDNOTWRITEBMP;
+        break;
+
+    case IMAGE_BMP_INVALID:
+        g_ErrorFormatString = LOCALIZED_NOTVALIDBMP;
+        break;
+
     default:
         prepare_to_exit(FALSE);
         printfx("%s", LOCALIZED_ERROR_UNKNOWN);

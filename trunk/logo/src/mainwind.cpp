@@ -1094,8 +1094,10 @@ void TMainFrame::CMExit()
     IsTimeToExit = true;
 }
 
-bool TMainFrame::WriteDIB(FILE* File, int MaxBitCount)
+ERR_TYPES TMainFrame::WriteDIB(FILE* File, int MaxBitCount)
 {
+    ERR_TYPES status = SUCCESS;
+
     // grab a DC 
     HDC screen = CreateDC("DISPLAY", NULL, NULL, NULL);
 
@@ -1168,43 +1170,44 @@ bool TMainFrame::WriteDIB(FILE* File, int MaxBitCount)
 
         if (!areaMemoryBitMap)
         {
-            ShowErrorMessageAndStop(LOCALIZED_WRITEFAILEDNOMEMORY);
-            // BUG: this should error-out
+            status = OUT_OF_MEM;
         }
+        else
+        {
+            HDC     memoryDC          = MainWindowx->ScreenWindow->GetMemoryDeviceContext();
+            HBITMAP savedMemoryBitmap = (HBITMAP) SelectObject(memoryDC, MemoryBitMap);
 
-        HDC     memoryDC          = MainWindowx->ScreenWindow->GetMemoryDeviceContext();
-        HBITMAP savedMemoryBitmap = (HBITMAP) SelectObject(memoryDC, MemoryBitMap);
+            HDC     areaMemoryDC          = CreateCompatibleDC(screen);
+            HBITMAP savedAreaMemoryBitmap = (HBITMAP) SelectObject(areaMemoryDC, areaMemoryBitMap);
 
-        HDC     areaMemoryDC          = CreateCompatibleDC(screen);
-        HBITMAP savedAreaMemoryBitmap = (HBITMAP) SelectObject(areaMemoryDC, areaMemoryBitMap);
+            BitBlt(
+                areaMemoryDC,
+                0,
+                0,
+                g_PrinterAreaXHigh - g_PrinterAreaXLow,
+                g_PrinterAreaYHigh - g_PrinterAreaYLow,
+                memoryDC,
+                +g_PrinterAreaXLow  + xoffset,
+                -g_PrinterAreaYHigh + yoffset,
+                SRCCOPY);
 
-        BitBlt(
-            areaMemoryDC,
-            0,
-            0,
-            g_PrinterAreaXHigh - g_PrinterAreaXLow,
-            g_PrinterAreaYHigh - g_PrinterAreaYLow,
-            memoryDC,
-            +g_PrinterAreaXLow  + xoffset,
-            -g_PrinterAreaYHigh + yoffset,
-            SRCCOPY);
+            SelectObject(areaMemoryDC, savedAreaMemoryBitmap);
+            DeleteDC(areaMemoryDC);
 
-        SelectObject(areaMemoryDC, savedAreaMemoryBitmap);
-        DeleteDC(areaMemoryDC);
+            SelectObject(memoryDC, savedMemoryBitmap);
 
-        SelectObject(memoryDC, savedMemoryBitmap);
+            // convert logo bitmap to raw DIB in bitsPtr
+            GetDIBits(
+                screen,
+                areaMemoryBitMap,
+                0,
+                g_PrinterAreaYHigh - g_PrinterAreaYLow,
+                bitsPtr,
+                SaveBitmapInfo,
+                DIB_RGB_COLORS);
 
-        // convert logo bitmap to raw DIB in bitsPtr
-        GetDIBits(
-            screen,
-            areaMemoryBitMap,
-            0,
-            g_PrinterAreaYHigh - g_PrinterAreaYLow,
-            bitsPtr,
-            SaveBitmapInfo,
-            DIB_RGB_COLORS);
-
-        DeleteObject(areaMemoryBitMap);
+            DeleteObject(areaMemoryBitMap);
+        }
     }
     else
     {
@@ -1229,53 +1232,54 @@ bool TMainFrame::WriteDIB(FILE* File, int MaxBitCount)
     DeleteDC(screen);
 
     // build header
-    BITMAPFILEHEADER BitmapFileHeader;
-    BitmapFileHeader.bfType = 19778;
-    BitmapFileHeader.bfSize = size + sizeof(BITMAPFILEHEADER) + (int) (SaveBitmapInfo->bmiHeader.biWidth * SaveBitmapInfo->bmiHeader.biHeight * (SavebitCount / 8));
-    BitmapFileHeader.bfReserved1 = 0;
-    BitmapFileHeader.bfReserved2 = 0;
-    BitmapFileHeader.bfOffBits = size + sizeof(BITMAPFILEHEADER);
+    if (status == SUCCESS)
+    {
+        BITMAPFILEHEADER BitmapFileHeader;
+        BitmapFileHeader.bfType = 19778;
+        BitmapFileHeader.bfSize = size + sizeof(BITMAPFILEHEADER) + (int) (SaveBitmapInfo->bmiHeader.biWidth * SaveBitmapInfo->bmiHeader.biHeight * (SavebitCount / 8));
+        BitmapFileHeader.bfReserved1 = 0;
+        BitmapFileHeader.bfReserved2 = 0;
+        BitmapFileHeader.bfOffBits = size + sizeof(BITMAPFILEHEADER);
 
-    // write headers
-    fwrite(&BitmapFileHeader, sizeof(char), sizeof(BitmapFileHeader), File);
-    fwrite(SaveBitmapInfo, sizeof(char), size, File);
+        // write headers
+        fwrite(&BitmapFileHeader, sizeof(char), sizeof(BitmapFileHeader), File);
+        fwrite(SaveBitmapInfo, sizeof(char), size, File);
 
-    // write out raw DIB data to file
-    fwrite(bitsPtr, sizeof(char), SaveBitmapInfo->bmiHeader.biSizeImage, File);
+        // write out raw DIB data to file
+        fwrite(bitsPtr, sizeof(char), SaveBitmapInfo->bmiHeader.biSizeImage, File);
+    }
 
     delete [] bitsPtr;
     delete SaveBitmapInfo;
 
-    return true;
+    return status;
 }
 
-bool TMainFrame::DumpBitmapFile(LPCSTR Filename, int MaxBitCount)
+ERR_TYPES TMainFrame::DumpBitmapFile(PCSTR Filename, int MaxBitCount)
 {
-    // open and check if ok 
+    // open and check if ok
     FILE* file = fopen(Filename, "wb");
-    if (file != NULL)
+    if (file == NULL)
     {
-        // Load hour-glass cursor.
-        HCURSOR oldCursor = ::SetCursor(hCursorWait);
-
-        // do it and if error then let user know 
-        if (!WriteDIB(file, MaxBitCount))
-        {
-            ShowErrorMessageAndStop(LOCALIZED_COULDNOTWRITEBMP);
-        }
-
-        // Restore the arrow cursor
-        ::SetCursor(oldCursor);
-
-        fclose(file);
-    }
-    else
-    {
-        // else file never opened
-        ShowErrorMessageAndStop(LOCALIZED_COULDNOTOPENBMP);
+        return IMAGE_BMP_OPEN_FAILED;
     }
 
-    return true;
+    // Load hour-glass cursor.
+    HCURSOR oldCursor = ::SetCursor(hCursorWait);
+
+    // do it and if error then let user know 
+    ERR_TYPES status = WriteDIB(file, MaxBitCount);
+
+    // Restore the arrow cursor
+    ::SetCursor(oldCursor);
+
+    int rval = fclose(file);
+    if (rval != 0)
+    {
+        status = IMAGE_BMP_WRITE_FAILED;
+    }
+
+    return status;
 }
 
 
@@ -1477,65 +1481,49 @@ bool TMainFrame::OpenDIB(FILE* File, DWORD &dwPixelWidth, DWORD &dwPixelHeight)
     return true;
 }
 
-bool TMainFrame::LoadBitmapFile(LPCSTR Filename, DWORD &dwPixelWidth, DWORD &dwPixelHeight)
+ERR_TYPES TMainFrame::LoadBitmapFile(LPCSTR Filename, DWORD &dwPixelWidth, DWORD &dwPixelHeight)
 {
-    // Test if the passed file is a Windows 3.0 DIB bitmap and if so read it
-    const char * errorMessage = NULL;
-    bool retval;
+    // Test if Filename is a Windows 3.0 DIB bitmap and if so read it
 
     // open then check if open 
     FILE* file = fopen(Filename, "rb");
-    if (file != NULL)
+    if (file == NULL)
     {
+        return IMAGE_BMP_OPEN_FAILED;
+    }
 
-        // check if valid bitmap
-        fseek(file, 14, SEEK_SET);
+    // check if valid bitmap
+    ERR_TYPES status = SUCCESS;
+    fseek(file, 14, SEEK_SET);
 
-        long TestWin30Bitmap = 0;
-        fread(&TestWin30Bitmap, sizeof(char), sizeof(TestWin30Bitmap), file);
-        if (TestWin30Bitmap == 40)
+    long TestWin30Bitmap = 0;
+    fread(&TestWin30Bitmap, sizeof(char), sizeof(TestWin30Bitmap), file);
+    if (TestWin30Bitmap == 40)
+    {
+        // Load hour-glass cursor.
+        HCURSOR oldCursor = ::SetCursor(hCursorWait);
+
+        // if loaded ok then invalidate to display 
+        if (OpenDIB(file, dwPixelWidth, dwPixelHeight))
         {
-            // Load hour-glass cursor.
-            HCURSOR oldCursor = ::SetCursor(hCursorWait);
-
-            // if loaded ok then invalidate to display 
-            if (OpenDIB(file, dwPixelWidth, dwPixelHeight))
-            {
-                ScreenWindow->Invalidate(true);
-            }
-            else
-            {
-                errorMessage = LOCALIZED_COULDNOTCREATEBMP;
-            }
-
-            // Restore the arrow cursor.
-            ::SetCursor(oldCursor);
+            ScreenWindow->Invalidate(true);
         }
         else
         {
-            /* not a bitmap */
-            errorMessage = LOCALIZED_NOTVALIDBMP;
+            status = IMAGE_BMP_CREATE_FAILED;
         }
-        fclose(file);
+
+        // Restore the arrow cursor.
+        ::SetCursor(oldCursor);
     }
     else
     {
-        /* else file not there */
-        errorMessage = LOCALIZED_COULDNOTOPENBMP;
+        // not a bitmap
+        status = IMAGE_BMP_INVALID;
     }
+    fclose(file);
 
-    // if no message the we are ok else display error message
-    if (errorMessage == NULL)
-    {
-        retval = true;
-    }
-    else
-    {
-        ShowErrorMessageAndStop(errorMessage);
-        retval = false;
-    }
-
-    return retval;
+    return status;
 }
 
 
@@ -1580,7 +1568,7 @@ void TMainFrame::CMBitmapOpen()
     strcpy(FileData.FileName, "*.bmp");
     FileData.DefExt = "bmp";
 
-    /* if user found a file then try to load it  */
+    // if user found a file then try to load it
 
     if (TFileOpenDialog(this, FileData).Execute() == IDOK)
     {
@@ -1589,14 +1577,21 @@ void TMainFrame::CMBitmapOpen()
         IsNewBitmap = FALSE;
         strcpy(BitmapName, FileData.FileName);
       
+        ERR_TYPES status;
+
         _splitpath(BitmapName, NULL, NULL, NULL, ext);
         if (stricmp(ext, ".gif") == 0)
         {
-            gifload_helper(BitmapName, dwPixelWidth, dwPixelHeight);
+            status = gifload_helper(BitmapName, dwPixelWidth, dwPixelHeight);
         }
         else
         {
-            LoadBitmapFile(BitmapName, dwPixelWidth, dwPixelHeight);
+            status = LoadBitmapFile(BitmapName, dwPixelWidth, dwPixelHeight);
+        }
+
+        if (status != SUCCESS)
+        {
+            ShowErrorMessage(status);
         }
     }
 }
@@ -1644,15 +1639,22 @@ void TMainFrame::CMBitmapSaveAs()
 
 void TMainFrame::SaveBitmap()
 {
+    ERR_TYPES status;
+
     char ext[_MAX_EXT];
     _splitpath(BitmapName, NULL, NULL, NULL, ext);
     if (stricmp(ext, ".gif") == 0)
     {
-        gifsave_helper(BitmapName, -1, 0, -1, -1, 8);
+        status = gifsave_helper(BitmapName, -1, 0, -1, -1, 8);
     }
     else
     {
-        DumpBitmapFile(BitmapName, 32);
+        status = DumpBitmapFile(BitmapName, 32);
+    }
+
+    if (status != SUCCESS)
+    {
+        ShowErrorMessage(status);
     }
 }
 

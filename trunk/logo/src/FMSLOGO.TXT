@@ -21,6 +21,9 @@ I. Kit Description/Location (http://sourceforge.net/projects/fmslogo)
 II. New features/bugs fixed:
 
   * Added for 6.23.0
+    o Fix bug #2452726; BITLOAD, BITSAVE, BITLOADSIZE, GIFLOAD, GIFSAVE, and
+      GIFSIZE now throw image-specific errors and no longer display dialog
+      boxes when given bad input.
     o Fix bug #1619210; Non-English versions now throw unexpected ender errors.
     o Fix bug #1448111; DLLLOAD, DLLCALL, and DLLFREE now throw DLL-specific
       errors and no longer display dialog boxes.
