@@ -52,14 +52,13 @@ TO COPYDEFTEST.PRIMITIVEWITHINPUTS
 
    ; Copydef a primitive that takes two inputs by default.
    ; When this procedure is first tree-ified, the copydef won't exist
-   ; FMSLogo must noticed that something has changed and re-treeify
+   ; FMSLogo must notice that something has changed and re-treeify
    ; the entire procedure.
 
    TRACEINSTRUCTION [ COPYDEF.ALLOW.REDEFINITIONS "COPYDEF.SETXY "SETXY ]
    REPORTTESTINFO   [ Running COPYDEF.SETXY 123 456 ]
    COPYDEF.SETXY 123 456
    SIMPLEREPORTTEST [ POS ] [123 456]
-
 END
 
 
@@ -101,8 +100,8 @@ TO COPYDEFTEST.PRIMITIVE
    SIMPLEREPORTTEST [(SUMCOPY 1 2 3)] 6
    SIMPLEREPORTTEST [(SUMCOPY)      ] 0
 
-   RUNBADINPUTTEST [SUMCOPY 1    "ten]
-   RUNBADINPUTTEST [SUMCOPY "ten 1]
+   RUNDOESNTLIKEINPUTTEST [SUMCOPY 1    "ten]
+   RUNDOESNTLIKEINPUTTEST [SUMCOPY "ten 1]
 
 END
 
@@ -142,8 +141,8 @@ TO COPYDEFTEST.INFIX
    SIMPLEREPORTTEST [1 MYPLUS 2         ] 3
    SIMPLEREPORTTEST [1 MYPLUS 2 MYPLUS 3] 6
 
-   RUNBADINPUTTEST [1    MYPLUS "ten]
-   RUNBADINPUTTEST ["ten MYPLUS 1   ]
+   RUNDOESNTLIKEINPUTTEST [1    MYPLUS "ten]
+   RUNDOESNTLIKEINPUTTEST ["ten MYPLUS 1   ]
    RUNNOTENOUGHINPUTSTEST [(MYPLUS)]
 
 END
@@ -155,6 +154,13 @@ TO COPYDEFTEST.USERDEFINED
    
    ; test that the copy behaves like the original
    SIMPLEREPORTTEST [MYADDCOPY 1 2] 3
+
+   ; test that the copy was buried.
+   FAILIFNOTTRUE [MEMBERP "MYADDCOPY ITEM 1 BURIED ]
+
+   ; test that the copy has the new name, instead of the old one
+   ; See bug #2452240.
+   RUNPRINTTEST [POT "MYADDCOPY ] "|TO MYADDCOPY :a :b|
 
 END
 
