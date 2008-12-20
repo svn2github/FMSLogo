@@ -148,16 +148,10 @@ NODE *lsetactivearea(NODE *arg)
         return Unbound;
     }
 
-    if (xHigh <= xLow)
+    if (xHigh <= xLow || yHigh <= yLow)
     {
         // TODO: make this a recoverable error
-        err_logo(BAD_DATA_UNREC, xHighNode);
-        return Unbound;
-    }
-    if (yHigh <= yLow)
-    {
-        // TODO: make this a recoverable error
-        err_logo(BAD_DATA_UNREC, yHighNode);
+        err_logo(BAD_DATA_UNREC, args);
         return Unbound;
     }
 
