@@ -1,5 +1,6 @@
 to aaa
 ;Copyright © 2005-2006 Relja Medic
+;Copyright © 2008 David Costanzo
 ;
 ;This program is free software; you can redistribute it and/or modify 
 ;it under the terms of the GNU General Public License as published by 
@@ -15,117 +16,188 @@ to aaa
 ;along with this program; if not, write to the Free Software 
 ;Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 ;
-; Program version 0.2
+; Program version 0.3
+;
+; Important global variables
+;  :p     The original, unsolved puzzle.
+;  :q     The partially solved puzzle that the user is working on.
+;  :sol   The fully solved puzzle.
+;  :what  The value that the user has selected to put in the box.
+;         "h means that the user has selected "hint".
+;         0 means that the user wants to erase a value.
+;
+; Puzzle Data Structure
+;  The puzzle is a list of nine words that are each nine characters
+;  long and consist only of numbers from 0-9.
+;  Each member of the table represents a row.
+;  Each character in a row represents a column.
+;  0 represents a value that has not been filled in.
 end
 
 to get :p :r :c
-(local "i "j "l "x "y)
-make "y 1+int((:r-1)/3)
-make "x 1+int((:c-1)/3)
-make "l [1 2 3 4 5 6 7 8 9]
-for [i 1 9] [make "l remove item :c item :i :p :l]
-for [i 1 9] [make "l remove item :i item :r :p :l]
-for [i [1+(:x-1)*3] [:x*3]] [~
-  for [j [1+(:y-1)*3] [:y*3]] [make "l remove item :i item :j :p :l]]
-op :l
+  ; Outputs a list of possible valid choices for the square at
+  ; row :r and column :c within puzzle :p.
+  (local "i "j "l "x "y)
+  make "y 1+int((:r-1)/3)
+  make "x 1+int((:c-1)/3)
+
+  ; start with all possible choices
+  make "l [1 2 3 4 5 6 7 8 9]
+
+  ; eliminate any values in this column
+  for [i 1 9] [make "l remove item :c item :i :p :l]
+
+  ; eliminate any value in this row
+  for [i 1 9] [make "l remove item :i item :r :p :l]
+
+  ; eliminate any values in the current 3x3 square
+  for [i [1+(:x-1)*3] [:x*3]] [
+    for [j [1+(:y-1)*3] [:y*3]] [make "l remove item :i item :j :p :l]
+  ]
+  op :l
 end
 
 to mouse :d :pos
-penup
-ifelse :what="h [setpos list -2*:d+:d/4 :d*10] [setpos list -2*:d+:d/4 :d*:what]
-pendown label :what
-make "what ifelse :pos=10 ["h] [:pos]
-penup setpos list -2*:d+:d/4 :d*:pos pendown setpc 1 label :what setpc 0
+  ; Changes the currently selected value :what into the number that
+  ; cooresponds to the Y coordinate :pos in the mouse selection table
+  ; on the left of the game board.
+
+  ; unselect the previous value
+  penup
+  ifelse :what="h [setpos list -2*:d+:d/4 :d*10] [setpos list -2*:d+:d/4 :d*:what]
+  pendown label :what
+
+  ; select the new value
+  make "what ifelse :pos=10 ["h] [:pos]
+  penup setpos list -2*:d+:d/4 :d*:pos pendown setpc 1 label :what setpc 0
 end
 
 to put :d :pos :w
-if (and :w<>0   -2*:d<=(first :pos) (first :pos)<=-:d   0<=(last :pos)  (last :pos)<=10*:d) [mouse :d 1+int (last :pos)/:d]
-if (or (first :pos)<0 not (first :pos)<9*:d (last :pos)<0 not (last :pos)<9*:d) [stop]
-(local "r "c)
-make "r 1+int ((9*:d-last :pos)/:d)
-make "c 1+int ((first :pos)/:d)
-penup setxy (:c-1)*:d+:d/4 9*:d-(:r-1)*:d pendown
-if (item :c item :r :p)=0 [
+  ; Puts the currently selected value :w into the game
+  ; square at X,Y coordinates :pos.
+  ; :d is the number of pixels in each square.
+  ; If :w=0, then the value is cleared at that location.
 
-  setpencolor 7
-  label (item :c item :r :q)
+  ; if they have clicked on the value selection column, then select a new value
+  if (and :w<>0   -2*:d<=(first :pos) (first :pos)<=-:d   0<=(last :pos)  (last :pos)<=10*:d) [mouse :d 1+int (last :pos)/:d]
 
-  ifelse :w="h [
-    setpencolor 1 
-    label item :c item :r :sol 
-    make "p set :p :r :c item :c item :r :sol
-    make "q set :q :r :c item :c item :r :sol
-  ] [
-    setpencolor 15 
-    if not :w=0 [label :w]
-    make "q set :q :r :c :w
+  ; if this click is not on the game board, then exit
+  if (or (first :pos)<0 not (first :pos)<9*:d (last :pos)<0 not (last :pos)<9*:d) [stop]
+
+  ; map the X,Y coordinates to row,column coordinates
+  (local "r "c)
+  make "r 1+int ((9*:d-last :pos)/:d)
+  make "c 1+int ((first :pos)/:d)
+  penup setxy (:c-1)*:d+:d/4 9*:d-(:r-1)*:d pendown
+
+  ; if this box had no value in it, then select a value
+  if (item :c item :r :p)=0 [
+
+    setpencolor 7
+    label (item :c item :r :q)
+
+    ifelse :w="h [
+      ; The user has selected "hint" so fill in the correct value in blue
+      setpencolor 1 
+      label item :c item :r :sol 
+
+      ; Update the "original" puzzle to include the correct value.
+      ; This makes it so that the user can't change any values
+      ; that were filled in by hint.
+      make "p set :p :r :c item :c item :r :sol
+
+      ; update the user's working solution to include the new value.
+      make "q set :q :r :c item :c item :r :sol
+    ] [
+      ; Change the value in the user's puzzle :q to match what is selected.
+      setpencolor 15 
+      if not :w=0 [label :w]
+      make "q set :q :r :c :w
+    ]
+    setpencolor 0
   ]
-  setpencolor 0
-]
-if :q=:sol [print [You solved it!] mouseoff start stop]
-if (find [not (find [?="0] ?)=[]] :q)=[] [print [Not correct!]]
+
+  ; If the user's board is equal to the solution, then they've won
+  if :q=:sol [print [You solved it!] mouseoff start stop]
+
+  ; If there are no more empty boxes, then the user has to keep playing
+  if (find [not (find [?="0] ?)=[]] :q)=[] [print [Not correct!]]
 end
 
 to set :p :r :c :w
-(local "i "sl "sr)
-make "sr "
-make "sl []
-for [i 1 9] [ifelse :i=:c [make "sr word :sr :w] [make "sr word :sr item :i item :r :p]]
-for [i 1 9] [ifelse :i=:r [make "sl lput :sr :sl] [make "sl lput item :i :p :sl]]
-op :sl
+  ; Outputs a copy of puzzle :p with value :w set as row :r and column :c.
+  (local "i "sl "sr)
+  make "sr "
+  make "sl []
+  for [i 1 9] [ifelse :i=:c [make "sr word :sr :w] [make "sr word :sr item :i item :r :p]]
+  for [i 1 9] [ifelse :i=:r [make "sl lput :sr :sl] [make "sl lput item :i :p :sl]]
+  op :sl
 end
 
 to solver :p
-(local "i "j "k "l)
-for [i 1 9] [
-  for [j 1 9] [
-    if (item :j item :i :p)="0 [
-      ; this square hasn't be set yet,
-      ; so let's try all possible values
-      make "l get :p :i :j 
-      for [k 1 [count :l] 1] [solver set :p :i :j item :k :l] 
-      stop
+  ; Outputs a list of possible solutions for a partially complete puzzle :p
+  (local "i "j "k "l)
+  for [i 1 9] [
+    for [j 1 9] [
+      if (item :j item :i :p)="0 [
+        ; this square hasn't be set yet,
+        ; so let's try all possible values
+        make "l get :p :i :j
+        for [k 1 [count :l] 1] [solver set :p :i :j item :k :l]
+        stop
+      ]
     ]
   ]
-]
-make "sol lput :p :sol
+  make "sol lput :p :sol
 end
 
 to start [:w pick :examples]
-(local "i "t)
-make "p :w
-make "q :w
-make "sol []
-cleartext cs ht
-print [Select a number.]
-print [Click and put a number.]
-print [Right click to remove a number.]
-print [Use "h" for a hint.]
-print [Solving... Please wait! (around 3 seconds on 3GHz)]
-noyield
-make "t timemilli
-solver :w
-(print [Solved in] (timemilli-:t)/1000 [seconds.])
-yield
-if (count :sol)>1 [print [ERROR! Sudoku has more than one solution!] wait 180 start stop]
-if (count :sol)=0 [print [ERROR! Sudoku has no solutions!] wait 180 start stop]
-make "sol first :sol
-setlabelfont [[Arial] 30 0 0 900 0 0 0 0 0 0 0 0]
-table 30 rt 90
-for [i 1 9] [for [j 1 9] [if not (item :j item :i :p)=0 [penup setxy (:j-1)*30+30/4 9*30-(:i-1)*30 pendown label item :j item :i :p]]]
-mouseon [(put 30 mousepos :what)] [] [] [(put 30 mousepos 0)] []
+  ; runs a game of Sudoku on a randomly select game :w from the precomputed examples
+
+  (local "i "t)
+  make "p :w
+  make "q :w
+  make "sol []
+  cleartext cs ht
+  print [Select a number.]
+  print [Click and put a number.]
+  print [Right click to remove a number.]
+  print [Use "h" for a hint.]
+  print [Solving... Please wait! (around 3 seconds on 3GHz)]
+
+  ; solve the puzzle
+  noyield
+  make "t timemilli
+  solver :w
+  (print [Solved in] (timemilli-:t)/1000 [seconds.])
+  yield
+
+  ; make sure the solution is consistent
+  if (count :sol)>1 [print [ERROR! Sudoku has more than one solution!] wait 180 start stop]
+  if (count :sol)=0 [print [ERROR! Sudoku has no solutions!] wait 180 start stop]
+  make "sol first :sol
+
+  ; draw the game board
+  setlabelfont [[Arial] 30 0 0 900 0 0 0 0 0 0 0 0]
+  table 30 rt 90
+  for [i 1 9] [for [j 1 9] [if not (item :j item :i :p)=0 [penup setxy (:j-1)*30+30/4 9*30-(:i-1)*30 pendown label item :j item :i :p]]]
+
+  ; let the user play
+  mouseon [(put 30 mousepos :what)] [] [] [(put 30 mousepos 0)] []
 end
 
 to table :d
-repeat 9[repeat 9[repeat 4[fd :d rt 90] rt 90 fd :d lt 90] lt 90 fd 9*:d rt 90 fd :d] bk 9*:d
-setpensize [3 3]
-repeat 3[repeat 3[repeat 4[fd 3*:d rt 90] rt 90 fd 3*:d lt 90] lt 90 fd 9*:d rt 90 fd 3*:d] bk 9*:d
-setpensize [1 1]
-penup lt 90 fd :d*2 rt 90 pendown
-repeat 9[repeat 4[fd :d rt 90] fd :d rt 90 fd :d/4 label repcount bk :d/4 lt 90]
-repeat 4[fd :d rt 90] fd :d rt 90 fd :d/4 setpencolor 1 label "h setpencolor 0 bk :d/4 lt 90
-make "what "h
-bk :d*10
+  ; Draws the 9x9 game board, where each box is :d pixels
+
+  repeat 9[repeat 9[repeat 4[fd :d rt 90] rt 90 fd :d lt 90] lt 90 fd 9*:d rt 90 fd :d] bk 9*:d
+  setpensize [3 3]
+  repeat 3[repeat 3[repeat 4[fd 3*:d rt 90] rt 90 fd 3*:d lt 90] lt 90 fd 9*:d rt 90 fd 3*:d] bk 9*:d
+  setpensize [1 1]
+  penup lt 90 fd :d*2 rt 90 pendown
+  repeat 9[repeat 4[fd :d rt 90] fd :d rt 90 fd :d/4 label repcount bk :d/4 lt 90]
+  repeat 4[fd :d rt 90] fd :d rt 90 fd :d/4 setpencolor 1 label "h setpencolor 0 bk :d/4 lt 90
+  make "what "h
+  bk :d*10
 end
 
 bury [[] [p q sol what] []]
