@@ -135,8 +135,8 @@ NODE *lsetactivearea(NODE *arg)
     // apply all args that are given
     const NODE * xLowNode  = car(args);
     const NODE * yLowNode  = car(cdr(args));
-    const NODE * xHighNode = car(cdr(cdr(args)));
-    const NODE * yHighNode = car(cdr(cdr(cdr(args))));
+    NODE * xHighNode = car(cdr(cdr(args)));
+    NODE * yHighNode = car(cdr(cdr(cdr(args))));
 
     const int xLow  = numeric_node_to_fixnum(xLowNode);
     const int yLow  = numeric_node_to_fixnum(yLowNode);
@@ -148,10 +148,16 @@ NODE *lsetactivearea(NODE *arg)
         return Unbound;
     }
 
-    if (xHigh <= xLow || yHigh <= yLow)
+    if (xHigh <= xLow)
     {
         // TODO: make this a recoverable error
-        ShowMessageAndStop(LOCALIZED_ACTIVEAREA, LOCALIZED_ERROR_BADINPUT);
+        err_logo(BAD_DATA_UNREC, xHighNode);
+        return Unbound;
+    }
+    if (yHigh <= yLow)
+    {
+        // TODO: make this a recoverable error
+        err_logo(BAD_DATA_UNREC, yHighNode);
         return Unbound;
     }
 
