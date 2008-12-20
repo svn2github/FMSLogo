@@ -228,6 +228,7 @@ TO SETBITINDEX.BADINPUT
     ; initialize bitindex 4
     TRACEINSTRUCTION [ SETBITINDEX 4  ]
 
+
     RUNNOTENOUGHINPUTSTEST [ (SETBITINDEX)            ]
     RUNTOOMANYINPUTSTEST   [ (SETBITINDEX 1 "toomany) ]
 
@@ -246,10 +247,62 @@ TO SETBITINDEX.BADINPUT
     SIMPLEREPORTTEST [ BITINDEX  ] 4
 END
 
+TO BITLOAD.BADINPUT
+   RUNNOTENOUGHINPUTSTEST [(BITLOAD)]
+   RUNTOOMANYINPUTSTEST   [(BITLOAD "file.gif "toomany)]
+
+   ; bad input
+   RUNBITMAPOPENERRORTEST [ BITLOAD "doesnotexist.bmp ]
+   RUNDOESNTLIKEINPUTTEST [ BITLOAD {a b c}           ]
+   RUNDOESNTLIKEINPUTTEST [ BITLOAD [a b c]           ]
+
+   ; try to open something that isn't a BMP as a BMP
+   RUNBITMAPINVALIDERRORTEST [ BITLOAD "bitmap.lgo   ]
+
+   ; try to open a directory as a BMP
+   TRACEINSTRUCTION       [ MKDIR "bmptest.bmp POPDIR ]
+   RUNBITMAPOPENERRORTEST [ BITLOAD "bmptest.bmp      ]
+   TRACEINSTRUCTION       [ RMDIR "bmptest.bmp        ]
+
+END
+
+TO BITSAVE.BADINPUT
+
+   ; bad filename input (must be a word)
+   RUNDOESNTLIKEINPUTTEST [ BITSAVE {1 2 3}       ]
+   RUNDOESNTLIKEINPUTTEST [ BITSAVE [1 2 3]       ]
+   RUNBITMAPOPENERRORTEST [ BITSAVE "||           ]
+   RUNBITMAPOPENERRORTEST [ BITSAVE "bad>file.bmp ]
+
+   ; max color depth (must be a member of {1,2,4,24,32})
+   RUNDOESNTLIKEINPUTTEST [ (BITSAVE "file.bmp 3        ) ]
+   RUNDOESNTLIKEINPUTTEST [ (BITSAVE "file.bmp "nonint  ) ]
+   RUNDOESNTLIKEINPUTTEST [ (BITSAVE "file.bmp [1 2 3]  ) ]
+   RUNDOESNTLIKEINPUTTEST [ (BITSAVE "file.bmp {1 2 3}  ) ]
+   RUNDOESNTLIKEINPUTTEST [ (BITSAVE "file.bmp -1       ) ]
+
+   ; make sure that none of the above created the file
+   SIMPLEREPORTTEST [FILEEXISTS "file.bmp] "false
+
+   ; cleanup, just in case
+   TRACEINSTRUCTION [ ERASEFILE "file.bmp ]
+
+   ; try to save a gif over a directory
+   TRACEINSTRUCTION       [ MKDIR   "bmptest.bmp POPDIR ]
+   RUNBITMAPOPENERRORTEST [ BITSAVE "bmptest.bmp        ]
+   TRACEINSTRUCTION       [ RMDIR   "bmptest.bmp        ]
+
+END
+
+
 TO BITMAPTEST
   BITLOADSIZETEST 100 100 1
   BITLOADSIZETEST 100 101 1
   BITLOADSIZETEST 101 100 1
+
+  BITLOAD.BADINPUT
+  BITSAVE.BADINPUT
+
   BITCOPYTEST
 
   BITPASTETOINDEXTEST.BADINPUT
