@@ -385,6 +385,32 @@ TO RUNDLLFUNCTIONNOTFOUNDTEST :instructions
 END
 BURY [RUNDLLFUNCTIONNOTFOUNDTEST]
 
+TO RUNGIFREADERRORTEST :instructions
+  (RUNEXPECTERRORTEST :instructions 1201 "|Problem Reading GIF, check memory and diskspace|)
+END
+BURY [RUNGIFREADERRORTEST]
+
+TO RUNGIFWRITEERRORTEST :instructions
+  (RUNEXPECTERRORTEST :instructions 1202 "|Problem Generating GIF, check memory and diskspace|)
+END
+BURY [RUNGIFWRITEERRORTEST]
+
+TO RUNBITMAPOPENERRORTEST :instructions
+  (RUNEXPECTERRORTEST :instructions 1211 "|Could not open .bmp|)
+END
+BURY [RUNBITMAPOPENERRORTEST]
+
+TO RUNBITMAPCREATEERRORTEST :instructions
+  (RUNEXPECTERRORTEST :instructions 1212 "|Unable to create Windows 3.0 bitmap|)
+END
+BURY [RUNBITMAPCREATEERRORTEST]
+
+TO RUNBITMAPINVALIDERRORTEST :instructions
+  (RUNEXPECTERRORTEST :instructions 1214 "|Not a Windows 3.0 bitmap|)
+END
+BURY [RUNBITMAPINVALIDERRORTEST]
+
+
 
 TO TIMECOMMAND :instructions
   ; Outputs how long it takes to execute given instructions

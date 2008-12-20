@@ -53,12 +53,12 @@ TO GIFLOAD.BADINPUT
    RUNBADINPUTTEST [ GIFLOAD [1 2 3]           ]
 
    ; try to open something that isn't a GIF as a GIF
-   RUNBADINPUTTEST [ GIFLOAD "gif.lgo          ]
+   RUNGIFREADERRORTEST [ GIFLOAD "gif.lgo          ]
 
    ; try to open a directory as a GIF
-   TRACEINSTRUCTION [ MKDIR "giftest.gif POPDIR ]
-   RUNBADINPUTTEST  [ GIFLOAD "giftest.gif      ]
-   TRACEINSTRUCTION [ RMDIR "giftest.gif        ]
+   TRACEINSTRUCTION    [ MKDIR "giftest.gif POPDIR ]
+   RUNGIFREADERRORTEST [ GIFLOAD "giftest.gif      ]
+   TRACEINSTRUCTION    [ RMDIR "giftest.gif        ]
 END
 
 TO GIFSAVE.BADINPUT
@@ -70,43 +70,43 @@ TO GIFSAVE.BADINPUT
    RUNTOOMANYINPUTSTEST   [(GIFSIZE "file.gif 0 "true 8 [255 0 255] "toomany)]
 
    ; bad filename input (must be a word)
-   RUNBADINPUTTEST [ GIFSAVE {1 2 3}       ]
-   RUNBADINPUTTEST [ GIFSAVE [1 2 3]       ]
-   RUNBADINPUTTEST [ GIFSAVE "||           ]
-   RUNBADINPUTTEST [ GIFSAVE "bad:file.gif ]
+   RUNDOESNTLIKEINPUTTEST [ GIFSAVE {1 2 3}       ]
+   RUNDOESNTLIKEINPUTTEST [ GIFSAVE [1 2 3]       ]
+   RUNGIFWRITEERRORTEST   [ GIFSAVE "||           ]
+   RUNGIFWRITEERRORTEST   [ GIFSAVE "bad>file.gif ]
 
    ; bad delay input (must be an integer)
-   RUNBADINPUTTEST [ (GIFSAVE "file.gif 1.2      ) ]
-   RUNBADINPUTTEST [ (GIFSAVE "file.gif "nonint  ) ]
-   RUNBADINPUTTEST [ (GIFSAVE "file.gif [1 2 3]  ) ]
-   RUNBADINPUTTEST [ (GIFSAVE "file.gif {1 2 3}  ) ]
-   RUNBADINPUTTEST [ (GIFSAVE "file.gif -1       ) ]
+   RUNDOESNTLIKEINPUTTEST [ (GIFSAVE "file.gif 1.2      ) ]
+   RUNDOESNTLIKEINPUTTEST [ (GIFSAVE "file.gif "nonint  ) ]
+   RUNDOESNTLIKEINPUTTEST [ (GIFSAVE "file.gif [1 2 3]  ) ]
+   RUNDOESNTLIKEINPUTTEST [ (GIFSAVE "file.gif {1 2 3}  ) ]
+   RUNDOESNTLIKEINPUTTEST [ (GIFSAVE "file.gif -1       ) ]
 
    ; bad append input (must be "true or "false)
-   RUNBADINPUTTEST [ (GIFSAVE "file.gif 100 1     ) ]
-   RUNBADINPUTTEST [ (GIFSAVE "file.gif 100 1.2   ) ]
-   RUNBADINPUTTEST [ (GIFSAVE "file.gif 100 [1]   ) ]
-   RUNBADINPUTTEST [ (GIFSAVE "file.gif 100 {1}   ) ]
-   RUNBADINPUTTEST [ (GIFSAVE "file.gif 100 "word ) ]
+   RUNDOESNTLIKEINPUTTEST [ (GIFSAVE "file.gif 100 1     ) ]
+   RUNDOESNTLIKEINPUTTEST [ (GIFSAVE "file.gif 100 1.2   ) ]
+   RUNDOESNTLIKEINPUTTEST [ (GIFSAVE "file.gif 100 [1]   ) ]
+   RUNDOESNTLIKEINPUTTEST [ (GIFSAVE "file.gif 100 {1}   ) ]
+   RUNDOESNTLIKEINPUTTEST [ (GIFSAVE "file.gif 100 "word ) ]
 
    ; bad loop input (must be a positive integer or -1)
-   RUNBADINPUTTEST [ (GIFSAVE "file.gif 100 "false [1]  ) ]
-   RUNBADINPUTTEST [ (GIFSAVE "file.gif 100 "false {1}  ) ]
-   RUNBADINPUTTEST [ (GIFSAVE "file.gif 100 "false "one ) ]
-   RUNBADINPUTTEST [ (GIFSAVE "file.gif 100 "false -2   ) ]
+   RUNDOESNTLIKEINPUTTEST [ (GIFSAVE "file.gif 100 "false [1]  ) ]
+   RUNDOESNTLIKEINPUTTEST [ (GIFSAVE "file.gif 100 "false {1}  ) ]
+   RUNDOESNTLIKEINPUTTEST [ (GIFSAVE "file.gif 100 "false "one ) ]
+   RUNDOESNTLIKEINPUTTEST [ (GIFSAVE "file.gif 100 "false -2   ) ]
 
    ; bad maxcolor input (must be a member of {1,4,8})
-   RUNBADINPUTTEST [ (GIFSAVE "file.gif 100 "false 0  0   ) ]
-   RUNBADINPUTTEST [ (GIFSAVE "file.gif 100 "false 0  "one) ]
-   RUNBADINPUTTEST [ (GIFSAVE "file.gif 100 "false 0  [1] ) ]
-   RUNBADINPUTTEST [ (GIFSAVE "file.gif 100 "false 0  {1} ) ]
+   RUNDOESNTLIKEINPUTTEST [ (GIFSAVE "file.gif 100 "false 0  0   ) ]
+   RUNDOESNTLIKEINPUTTEST [ (GIFSAVE "file.gif 100 "false 0  "one) ]
+   RUNDOESNTLIKEINPUTTEST [ (GIFSAVE "file.gif 100 "false 0  [1] ) ]
+   RUNDOESNTLIKEINPUTTEST [ (GIFSAVE "file.gif 100 "false 0  {1} ) ]
 
-   ; bad transcolor input (must be a member of {1,4,8})
-   RUNBADINPUTTEST [ (GIFSAVE "file.gif 100 "false 0  8 [1 2 3 4]     ) ]
-   RUNBADINPUTTEST [ (GIFSAVE "file.gif 100 "false 0  8 [1 2]         ) ]
-   RUNBADINPUTTEST [ (GIFSAVE "file.gif 100 "false 0  8 {255 255 255} ) ]
-   RUNBADINPUTTEST [ (GIFSAVE "file.gif 100 "false 0  8 100           ) ]
-   RUNBADINPUTTEST [ (GIFSAVE "file.gif 100 "false 0  8 "word         ) ]
+   ; bad transcolor input (must be a color vector)
+   RUNDOESNTLIKEINPUTTEST [ (GIFSAVE "file.gif 100 "false 0  8 [1 2 3 4]     ) ]
+   RUNDOESNTLIKEINPUTTEST [ (GIFSAVE "file.gif 100 "false 0  8 [1 2]         ) ]
+   RUNDOESNTLIKEINPUTTEST [ (GIFSAVE "file.gif 100 "false 0  8 {255 255 255} ) ]
+   RUNDOESNTLIKEINPUTTEST [ (GIFSAVE "file.gif 100 "false 0  8 100           ) ]
+   RUNDOESNTLIKEINPUTTEST [ (GIFSAVE "file.gif 100 "false 0  8 "word         ) ]
 
    ; make sure that none of the above created the file
    SIMPLEREPORTTEST [FILEEXISTS "file.gif] "false
@@ -115,9 +115,9 @@ TO GIFSAVE.BADINPUT
    TRACEINSTRUCTION [ ERASEFILE "file.gif ]
 
    ; try to save a gif over a directory
-   TRACEINSTRUCTION [ MKDIR   "giftest.gif POPDIR ]
-   RUNBADINPUTTEST  [ GIFSAVE "giftest.gif        ]
-   TRACEINSTRUCTION [ RMDIR   "giftest.gif        ]
+   TRACEINSTRUCTION     [ MKDIR   "giftest.gif POPDIR ]
+   RUNGIFWRITEERRORTEST [ GIFSAVE "giftest.gif        ]
+   TRACEINSTRUCTION     [ RMDIR   "giftest.gif        ]
 END
 
 TO GIF.SMOKETEST
