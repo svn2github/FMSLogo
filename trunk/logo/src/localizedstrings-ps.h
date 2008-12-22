@@ -871,7 +871,6 @@
 #define LOCALIZED_NOTHALTEDREALLYHALT        LOCALIZED_GENERAL_PRODUCTNAME" does not like exiting while not halted.\n\nDo you really want to Halt "LOCALIZED_GENERAL_PRODUCTNAME"?"
 #define LOCALIZED_LOGOISNOTHALTED            LOCALIZED_GENERAL_PRODUCTNAME" is not Halted"
 
-#define LOCALIZED_WRITEFAILEDNOMEMORY         "pseudo.Write failed, Possibly no Memory"
 #define LOCALIZED_COULDNOTWRITEBMP            "pseudo.Could not write .bmp"
 #define LOCALIZED_COULDNOTOPENBMP             "pseudo.Could not open .bmp"
 #define LOCALIZED_COULDNOTCREATEBMP           "pseudo.Unable to create Windows 3.0 bitmap"
@@ -1010,16 +1009,16 @@
 #define LOCALIZED_ERROR_DLLFUNCTIONNOTFOUND   "pseudo.Function not found"
 #define LOCALIZED_ERROR_DLLTYPEDATANOTPAIRED  "pseudo.Not all Type/Data inputs are paired"
 
-#define LOCALIZED_ERROR_NETWORK                    "pseudo.Network Error"
-#define LOCALIZED_ERROR_NETWORKRECEIVE             "pseudo.Network Receive Error"
-#define LOCALIZED_ERROR_NETWORKSEND                "pseudo.Network Send Error"
-#define LOCALIZED_ERROR_NETWORKSHUTDOWN            "pseudo.Unexpected Error, Network may be shutdown"
-#define LOCALIZED_ERROR_NETWORKNOTSTARTED          "pseudo.Not started"
-#define LOCALIZED_ERROR_NETWORKALREADYSTARTED      "pseudo.Already started"
-#define LOCALIZED_ERROR_NETWORKALREADYON           "pseudo.Already on"
-#define LOCALIZED_ERROR_NETWORKALREADYOFF          "pseudo.Already off"
+#define LOCALIZED_ERROR_NETWORK               "pseudo.Network Error"
+#define LOCALIZED_ERROR_NETWORKRECEIVE        "pseudo.Network Receive Error"
+#define LOCALIZED_ERROR_NETWORKSEND           "pseudo.Network Send Error"
+#define LOCALIZED_ERROR_NETWORKSHUTDOWN       "pseudo.Unexpected Error, Network may be shutdown"
+#define LOCALIZED_ERROR_NETWORKNOTSTARTED     "pseudo.Not started"
+#define LOCALIZED_ERROR_NETWORKALREADYSTARTED "pseudo.Already started"
+#define LOCALIZED_ERROR_NETWORKALREADYON      "pseudo.Already on"
+#define LOCALIZED_ERROR_NETWORKALREADYOFF     "pseudo.Already off"
 
-// The rest of the network errors shouldn't really see -- may be okay not to localize
+// The rest of the network errors shouldn't really be seen -- may be okay not to localize
 #define LOCALIZED_ERROR_NETWORKNAMETOOLONG         "pseudo.Name too long"
 #define LOCALIZED_ERROR_NETWORKNOTINITIALIZED      "pseudo.Not initialized"
 #define LOCALIZED_ERROR_NETWORKSYSTEMNOTREADY      "pseudo.System not ready"

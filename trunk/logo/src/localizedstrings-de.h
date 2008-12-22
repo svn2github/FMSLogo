@@ -871,7 +871,6 @@
 #define LOCALIZED_NOTHALTEDREALLYHALT        LOCALIZED_GENERAL_PRODUCTNAME" will nicht schließen, solange es nicht angehalten wird.\n\nMöchten Sie wirklich "LOCALIZED_GENERAL_PRODUCTNAME" anhalten (Halt)?"
 #define LOCALIZED_LOGOISNOTHALTED            LOCALIZED_GENERAL_PRODUCTNAME" wird nicht angehalten (Halt)"
 
-#define LOCALIZED_WRITEFAILEDNOMEMORY         "Schreiben nicht möglich, möglicherweise kein Speicher"
 #define LOCALIZED_COULDNOTWRITEBMP            "Konnte nicht .bmp schreiben"
 #define LOCALIZED_COULDNOTOPENBMP             "Konnte nicht .bmp öffnen"
 #define LOCALIZED_COULDNOTCREATEBMP           "Unfähig Windows 3.0 Bitmap zu erstellen"
@@ -1000,8 +999,8 @@
 #define LOCALIZED_ERROR_PORTNOTOPEN          "Port ist nicht offen"
 #define LOCALIZED_ERROR_FIRSTINPUTNOTANARRY  "Erste Eingabe muss ein Array sein"
 
-#define LOCALIZED_ERROR_WINDOWALREADYEXISTS   "Schon existent"
-#define LOCALIZED_ERROR_WINDOWDOESNOTEXIST    "Existiert nicht"
+#define LOCALIZED_ERROR_WINDOWALREADYEXISTS   "%s ist bereits vorhanden"
+#define LOCALIZED_ERROR_WINDOWDOESNOTEXIST    "%s ist nicht vorhanden"
 
 #define LOCALIZED_ERROR_DLLNOTLOADED          "DLL ist nicht geladen"
 #define LOCALIZED_ERROR_DLLLOADFAILED         "DLL-Ladevorgang nicht erfolgreich"
@@ -1010,16 +1009,16 @@
 #define LOCALIZED_ERROR_DLLFUNCTIONNOTFOUND   "Funktion nicht gefunden"
 #define LOCALIZED_ERROR_DLLTYPEDATANOTPAIRED  "Nicht alle Typen/Daten Eingaben werden vermittelt"
 
-#define LOCALIZED_ERROR_NETWORK                    "Network Fehler"
-#define LOCALIZED_ERROR_NETWORKRECEIVE             "Network Empfangsfehler"
-#define LOCALIZED_ERROR_NETWORKSEND                "Network Sendefehler"
-#define LOCALIZED_ERROR_NETWORKSHUTDOWN            "Unerwarteter Fehler, Network dürfte heruntergefahren sein"
-#define LOCALIZED_ERROR_NETWORKNOTSTARTED          "Nicht gestartet"
-#define LOCALIZED_ERROR_NETWORKALREADYSTARTED      "Schon gestartet"
-#define LOCALIZED_ERROR_NETWORKALREADYON           "Schon an"
-#define LOCALIZED_ERROR_NETWORKALREADYOFF          "Schon aus"
+#define LOCALIZED_ERROR_NETWORK               "Network Fehler"
+#define LOCALIZED_ERROR_NETWORKRECEIVE        "Network Empfangsfehler"
+#define LOCALIZED_ERROR_NETWORKSEND           "Network Sendefehler"
+#define LOCALIZED_ERROR_NETWORKSHUTDOWN       "Unerwarteter Fehler, Network dürfte heruntergefahren sein"
+#define LOCALIZED_ERROR_NETWORKNOTSTARTED     "Nicht gestartet"
+#define LOCALIZED_ERROR_NETWORKALREADYSTARTED "Schon gestartet"
+#define LOCALIZED_ERROR_NETWORKALREADYON      "Schon an"
+#define LOCALIZED_ERROR_NETWORKALREADYOFF     "Schon aus"
 
-// The rest of the network errors shouldn't really see -- may be okay not to localize
+// The rest of the network errors shouldn't really be seen -- may be okay not to localize
 #define LOCALIZED_ERROR_NETWORKNAMETOOLONG         "Name zu lang"
 #define LOCALIZED_ERROR_NETWORKNOTINITIALIZED      "Nicht initialisiert"
 #define LOCALIZED_ERROR_NETWORKSYSTEMNOTREADY      "System nicht bereit"

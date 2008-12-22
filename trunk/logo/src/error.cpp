@@ -354,6 +354,16 @@ err_logo(
         }
         break;
 
+    case WINDOW_ALREADY_EXISTS:
+        g_ErrorFormatString = LOCALIZED_ERROR_WINDOWALREADYEXISTS;
+        error_message = cons_list(ErrorMessageParameters);
+        break;
+
+    case WINDOW_DOES_NOT_EXIST:
+        g_ErrorFormatString = LOCALIZED_ERROR_WINDOWDOESNOTEXIST;
+        error_message = cons_list(ErrorMessageParameters);
+        break;
+
     case DLL_LOAD_FAILED:
         g_ErrorFormatString = LOCALIZED_ERROR_DLLLOADFAILED;
         break;

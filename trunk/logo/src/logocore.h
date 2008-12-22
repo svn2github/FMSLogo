@@ -184,7 +184,9 @@ enum ERR_TYPES
     OUT_OF_MEM_UNREC     = 34,
 
     // FMSLogo-specific error codes start at 1000
-    WINDOW_NOTHING_SELECTED      = 1001,
+    WINDOW_GENERAL               = 1000,
+    WINDOW_ALREADY_EXISTS        = 1001,
+    WINDOW_DOES_NOT_EXIST        = 1002,
 
     DLL_GENERAL                  = 1100,
     DLL_LOAD_FAILED              = 1101,

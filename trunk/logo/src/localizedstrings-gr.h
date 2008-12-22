@@ -871,7 +871,6 @@
 #define LOCALIZED_NOTHALTEDREALLYHALT        "Στην "LOCALIZED_GENERAL_PRODUCTNAME" δεν αρέσει να κλέινει πριν σταματήσει.\n\nΘέλετε πραγματικά να σταματήσει η "LOCALIZED_GENERAL_PRODUCTNAME"?" // 
 #define LOCALIZED_LOGOISNOTHALTED            "Η "LOCALIZED_GENERAL_PRODUCTNAME" δε σταματάει" // 
 
-#define LOCALIZED_WRITEFAILEDNOMEMORY         "Η εγγραφή απέτυχε. Ίσως δεν υπάρχει αρκετή ελεύθερη μνήμη." // 
 #define LOCALIZED_COULDNOTWRITEBMP            "Αδύνατη η εγγραφή στο .bmp" // 
 #define LOCALIZED_COULDNOTOPENBMP             "Αδύνατη η ανάγνωση από το .bmp" // 
 #define LOCALIZED_COULDNOTCREATEBMP           "Αδύνατο να δημιουργηθεί η εικόνα Windows 3.0 bitmap" // 
@@ -1000,8 +999,8 @@
 #define LOCALIZED_ERROR_PORTNOTOPEN          "Η θύρα δεν είναι ανοιχτή" // 
 #define LOCALIZED_ERROR_FIRSTINPUTNOTANARRY  "Η πρώτη παράγραφος πρέπει να είναι πίνακας (array)" // 
 
-#define LOCALIZED_ERROR_WINDOWALREADYEXISTS   "Υπάρχει ήδη" // 
-#define LOCALIZED_ERROR_WINDOWDOESNOTEXIST    "Δεν υπάρχει" // 
+#define LOCALIZED_ERROR_WINDOWALREADYEXISTS   "Υπάρχει ήδη: %s"
+#define LOCALIZED_ERROR_WINDOWDOESNOTEXIST    "Δεν υπάρχει: %s"
 
 #define LOCALIZED_ERROR_DLLNOTLOADED          "Το DLL δεν έχει φορτωθεί" // 
 #define LOCALIZED_ERROR_DLLLOADFAILED         "Η φόρτωση του DLL απέτυχε" // 
@@ -1010,16 +1009,16 @@
 #define LOCALIZED_ERROR_DLLFUNCTIONNOTFOUND   "Η συνάρτηση δε βρέθηκε" // 
 #define LOCALIZED_ERROR_DLLTYPEDATANOTPAIRED  "Δεν ταιριάζουιν όλες οι παράμετροι Τύπου/Δεδομένων" // 
 
-#define LOCALIZED_ERROR_NETWORK                    "Σφάλμα δικτύου" // 
-#define LOCALIZED_ERROR_NETWORKRECEIVE             "Σφάλμα αποδοχής από το δίκτυο" // 
-#define LOCALIZED_ERROR_NETWORKSEND                "Σφάλμα αποστολής στο δίκτυο" // 
-#define LOCALIZED_ERROR_NETWORKSHUTDOWN            "Μη προβλεπόμενο σφάλμα, ίσως το δίκτυο να έκλεισε" // 
-#define LOCALIZED_ERROR_NETWORKNOTSTARTED          "Δεν άρχισε" // 
-#define LOCALIZED_ERROR_NETWORKALREADYSTARTED      "Έχει ήδη αρχίσει" // 
-#define LOCALIZED_ERROR_NETWORKALREADYON           "Ήδη ανοιχτό" // 
-#define LOCALIZED_ERROR_NETWORKALREADYOFF          "Ήδη κλειστό" // 
+#define LOCALIZED_ERROR_NETWORK               "Σφάλμα δικτύου" // 
+#define LOCALIZED_ERROR_NETWORKRECEIVE        "Σφάλμα αποδοχής από το δίκτυο" // 
+#define LOCALIZED_ERROR_NETWORKSEND           "Σφάλμα αποστολής στο δίκτυο" // 
+#define LOCALIZED_ERROR_NETWORKSHUTDOWN       "Μη προβλεπόμενο σφάλμα, ίσως το δίκτυο να έκλεισε" // 
+#define LOCALIZED_ERROR_NETWORKNOTSTARTED     "Δεν άρχισε" // 
+#define LOCALIZED_ERROR_NETWORKALREADYSTARTED "Έχει ήδη αρχίσει" // 
+#define LOCALIZED_ERROR_NETWORKALREADYON      "Ήδη ανοιχτό" // 
+#define LOCALIZED_ERROR_NETWORKALREADYOFF     "Ήδη κλειστό" // 
 
-// The rest of the network errors shouldn't really see -- may be okay not to localize
+// The rest of the network errors shouldn't really be seen -- may be okay not to localize
 #define LOCALIZED_ERROR_NETWORKNAMETOOLONG         "Πολύ μεγάλο όνομα" // 
 #define LOCALIZED_ERROR_NETWORKNOTINITIALIZED      "Δεν άρχισε" // 
 #define LOCALIZED_ERROR_NETWORKSYSTEMNOTREADY      "Το σύστημα δεν είναι έτοιμο" // 

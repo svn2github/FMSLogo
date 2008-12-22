@@ -38,25 +38,6 @@ enum WINDOWTYPE
 
 static HICON hCursorSave = 0; // handle for saved cursor
 
-static
-void
-ShowWindowDoesNotExistErrorAndStop(
-    const char * WindowName
-    )
-{
-    ShowMessageAndStop(LOCALIZED_ERROR_WINDOWDOESNOTEXIST, WindowName);
-}
-
-static
-void
-ShowWindowAlreadyExistsErrorAndStop(
-    const char * WindowName
-    )
-{
-    ShowMessageAndStop(LOCALIZED_ERROR_WINDOWALREADYEXISTS, WindowName);
-}
-
-
 class TClientRectangle
 {
 public:
@@ -883,26 +864,28 @@ void emptyqueue()
 
 NODE *lwindowcreate(NODE *args)
 {
-    /* get all the args */
+    NODE * nextArg = args;
+
+    // get all the args
     char parentname[MAX_BUFFER_SIZE];
-    cnv_strnode_string(parentname, args);
-    args = cdr(args);
+    cnv_strnode_string(parentname, nextArg);
+    nextArg = cdr(nextArg);
 
     char childname[MAX_BUFFER_SIZE];
-    cnv_strnode_string(childname, args);
-    args = cdr(args);
+    cnv_strnode_string(childname, nextArg);
+    nextArg = cdr(nextArg);
 
     char titlename[MAX_BUFFER_SIZE];
-    cnv_strnode_string(titlename, args);
-    args = cdr(args);
+    cnv_strnode_string(titlename, nextArg);
+    nextArg = cdr(nextArg);
 
     TClientRectangle clientrect;
-    clientrect.InitializeFromInput(args);
+    clientrect.InitializeFromInput(nextArg);
 
     char callback[MAX_BUFFER_SIZE];
-    if (args != NIL) 
+    if (nextArg != NIL) 
     {
-        cnv_strnode_string(callback, args);
+        cnv_strnode_string(callback, nextArg);
     }
     else 
     {
@@ -910,52 +893,53 @@ NODE *lwindowcreate(NODE *args)
     }
 
 
-    if (NOT_THROWING)
+    if (stopping_flag == THROWING)
     {
-        // convert them to "DIALOG" units.
-        // this is the key to making all Graphics Modes work correctly.
-
-        clientrect.ConvertToDialogCoordinates();
-
-        // if not already exist continue
-        if (dialogboxes.get(childname) == NULL)
-        {
-            dialogthing *child = new dialogthing(WINDOWTYPE_Window, childname);
-
-            // if parent exists use it else use main window
-            dialogthing *parent = dialogboxes.get(parentname, WINDOWTYPE_Window);
-            if (parent != NULL)
-            {
-                child->TDmybox = new TMxDialog(parent->TDmybox);
-                child->parent = (char *)parent->TDmybox;
-            }
-            else
-            {
-                child->TDmybox = new TMxDialog(MainWindowx->ScreenWindow);
-                child->parent = (char *)MainWindowx->ScreenWindow;
-            }
-
-            // Modeless windows can have to have a callback to set them up
-            // since it will return
-            strcpy(child->TDmybox->callback, callback);
-            strcpy(child->TDmybox->caption, titlename);
-
-            // Most attributes are set in DIALOGSTUB
-            child->TDmybox->clientrect = clientrect;
-
-            dialogboxes.insert(child);
-
-            child->TDmybox->Create();
-            child->TDmybox->ShowWindow(SW_SHOW);
-
-            // Make sure the window is up before we try to add controls
-            MyMessageScan();
-        }
-        else
-        {     
-            ShowWindowAlreadyExistsErrorAndStop(childname);
-        }
+        return Unbound;
     }
+
+
+    if (dialogboxes.get(childname) != NULL)
+    {
+        // it's an error if this already exists
+        err_logo(WINDOW_ALREADY_EXISTS, cadr(args));
+        return Unbound;
+    }
+
+    // Convert the client rectangle to "DIALOG" units.
+    // This is the key to making all Graphics Modes work correctly.
+    clientrect.ConvertToDialogCoordinates();
+
+    dialogthing *child = new dialogthing(WINDOWTYPE_Window, childname);
+
+    // if parent exists use it else use main window
+    dialogthing *parent = dialogboxes.get(parentname, WINDOWTYPE_Window);
+    if (parent != NULL)
+    {
+        child->TDmybox = new TMxDialog(parent->TDmybox);
+        child->parent = (char *)parent->TDmybox;
+    }
+    else
+    {
+        child->TDmybox = new TMxDialog(MainWindowx->ScreenWindow);
+        child->parent = (char *)MainWindowx->ScreenWindow;
+    }
+
+    // Modeless windows can have to have a callback to set them up
+    // since it will return
+    strcpy(child->TDmybox->callback, callback);
+    strcpy(child->TDmybox->caption, titlename);
+
+    // Most attributes are set in DIALOGSTUB
+    child->TDmybox->clientrect = clientrect;
+
+    dialogboxes.insert(child);
+
+    child->TDmybox->Create();
+    child->TDmybox->ShowWindow(SW_SHOW);
+
+    // Make sure the window is up before we try to add controls
+    MyMessageScan();
 
     return Unbound;
 }
@@ -973,19 +957,19 @@ WindowEnableHelper(
 
     bool bEnable = boolean_arg(cdr(args));
 
-    if (NOT_THROWING)
+    if (stopping_flag == THROWING)
     {
-        dialogthing *window = dialogboxes.get(childname, WindowType);
-        if (window != NULL)
-        {
-            window->GetWindow()->EnableWindow(bEnable);
-        }
-        else
-        {
-            ShowWindowDoesNotExistErrorAndStop(childname);
-        }
+        return Unbound;
     }
 
+    dialogthing *window = dialogboxes.get(childname, WindowType);
+    if (window == NULL)
+    {
+        err_logo(WINDOW_DOES_NOT_EXIST, car(args));
+        return Unbound;
+    }
+
+    window->GetWindow()->EnableWindow(bEnable);
     return Unbound;
 }
 
@@ -1000,24 +984,24 @@ WindowDeleteHelper(
     // get args
     char windowkey[MAX_BUFFER_SIZE];
     cnv_strnode_string(windowkey, args);
-
-    if (NOT_THROWING)
+    if (stopping_flag == THROWING)
     {
-        // if it exists kill it
-        dialogthing *window = dialogboxes.get(windowkey, WindowType);
-        if (window != NULL)
-        {
-            window->GetWindow()->CloseWindow();
-            dialogboxes.zap(windowkey);
-
-            UpdateZoomControlFlag();
-        }
-        else
-        {
-            ShowWindowDoesNotExistErrorAndStop(windowkey);
-        }
+        return Unbound;
     }
 
+    dialogthing *window = dialogboxes.get(windowkey, WindowType);
+    if (window == NULL)
+    {
+        // The window does not exist.  Throw an error.
+        err_logo(WINDOW_DOES_NOT_EXIST, car(args));
+        return Unbound;
+    }
+
+    // The window exists.  Close it.
+    window->GetWindow()->CloseWindow();
+    dialogboxes.zap(windowkey);
+
+    UpdateZoomControlFlag();
     return Unbound;
 }
 
@@ -1068,80 +1052,81 @@ NODE *lwindowdelete(NODE *arg)
 
 NODE *ldialogcreate(NODE *args)
 {
+    NODE * nextArg = args;
+
     // get args
     char parentname[MAX_BUFFER_SIZE];
-    cnv_strnode_string(parentname, args);
-    args = cdr(args);
+    cnv_strnode_string(parentname, nextArg);
+    nextArg = cdr(nextArg);
 
     char childname[MAX_BUFFER_SIZE];
-    cnv_strnode_string(childname, args);
-    args = cdr(args);
+    cnv_strnode_string(childname, nextArg);
+    nextArg = cdr(nextArg);
 
     char titlename[MAX_BUFFER_SIZE];
-    cnv_strnode_string(titlename, args);
-    args = cdr(args);
+    cnv_strnode_string(titlename, nextArg);
+    nextArg = cdr(nextArg);
 
     TClientRectangle clientrect;
-    clientrect.InitializeFromInput(args);
+    clientrect.InitializeFromInput(nextArg);
 
     char callback[MAX_BUFFER_SIZE];
-    if (args != NIL) 
+    if (nextArg != NIL) 
     {
-        cnv_strnode_string(callback, args);
+        cnv_strnode_string(callback, nextArg);
     }
     else 
     {
         callback[0] = '\0';
     }
 
-
-    if (NOT_THROWING)
+    if (stopping_flag == THROWING)
     {
-        // convert to "DIALOG" units. 
-        // This is the key to getting consistent results in all graphics MODEs.
-        clientrect.ConvertToDialogCoordinates();
-
-        // if it does not exist continue
-        if (dialogboxes.get(childname) == NULL)
-        {
-            // make one
-            dialogthing * child = new dialogthing(WINDOWTYPE_Dialog, childname);
-
-            // if parent of corect type exists use it
-            dialogthing *parent = dialogboxes.get(parentname, WINDOWTYPE_Window);
-            if (parent != NULL)
-            {
-                child->TDmybox = new TMxDialog(parent->TDmybox);
-                child->parent = (char *)parent->TDmybox;
-            }
-            else
-            {
-                // else use main window
-                child->TDmybox = new TMxDialog(MainWindowx->ScreenWindow);
-                child->parent = (char *)MainWindowx->ScreenWindow;
-            }
-
-            // Modal windows have to have a callback to set them up
-            // since it will not return until closed
-            strcpy(child->TDmybox->callback, callback);
-            strcpy(child->TDmybox->caption, titlename);
-
-            // Most attributes are set in DIALOGSTUB
-            child->TDmybox->clientrect = clientrect;
-
-            dialogboxes.insert(child);
-
-            // Note will not return until the Window closes
-            // But the LOGO program still has some control through
-            // the callback which is done through OWLs "SetupWindow".
-            child->TDmybox->Execute();
-        }
-        else
-        {
-            ShowWindowAlreadyExistsErrorAndStop(childname);
-        }
+        return Unbound;
     }
 
+    // if it does not exist continue
+    if (dialogboxes.get(childname) != NULL)
+    {
+        err_logo(WINDOW_ALREADY_EXISTS, cadr(args));
+        return Unbound;
+    }
+
+    // convert to "DIALOG" units. 
+    // This is the key to getting consistent results in all graphics MODEs.
+    clientrect.ConvertToDialogCoordinates();
+
+    // make one
+    dialogthing * child = new dialogthing(WINDOWTYPE_Dialog, childname);
+
+    // if parent of corect type exists use it
+    dialogthing *parent = dialogboxes.get(parentname, WINDOWTYPE_Window);
+    if (parent != NULL)
+    {
+        child->TDmybox = new TMxDialog(parent->TDmybox);
+        child->parent = (char *)parent->TDmybox;
+    }
+    else
+    {
+        // else use main window
+        child->TDmybox = new TMxDialog(MainWindowx->ScreenWindow);
+        child->parent = (char *)MainWindowx->ScreenWindow;
+    }
+
+    // Modal windows have to have a callback to set them up
+    // since it will not return until closed
+    strcpy(child->TDmybox->callback, callback);
+    strcpy(child->TDmybox->caption, titlename);
+
+    // Most attributes are set in DIALOGSTUB
+    child->TDmybox->clientrect = clientrect;
+
+    dialogboxes.insert(child);
+
+    // Note will not return until the Window closes
+    // But the LOGO program still has some control through
+    // the callback which is done through OWLs "SetupWindow".
+    child->TDmybox->Execute();
     return Unbound;
 }
 
@@ -1158,60 +1143,61 @@ NODE *ldialogdelete(NODE *args)
 NODE *llistboxcreate(NODE *args)
 {
     // get args
+    NODE * nextArg = args;
+
     char parentname[MAX_BUFFER_SIZE];
-    cnv_strnode_string(parentname, args);
-    args = cdr(args);
+    cnv_strnode_string(parentname, nextArg);
+    nextArg = cdr(nextArg);
 
     char childname[MAX_BUFFER_SIZE];
-    cnv_strnode_string(childname, args);
-    args = cdr(args);
+    cnv_strnode_string(childname, nextArg);
+    nextArg = cdr(nextArg);
 
     TClientRectangle clientrect;
-    clientrect.InitializeFromInput(args);
+    clientrect.InitializeFromInput(nextArg);
 
-    if (NOT_THROWING)
+    if (stopping_flag == THROWING)
     {
-        // if unique continue
+        return Unbound;
+    }
 
-        if (dialogboxes.get(childname) == NULL)
-        {
-            dialogthing * child = new dialogthing(WINDOWTYPE_ListBox, childname);
+    if (dialogboxes.get(childname) != NULL)
+    {
+        err_logo(WINDOW_ALREADY_EXISTS, cadr(args));
+        return Unbound;
+    }
+    
+    dialogthing * child = new dialogthing(WINDOWTYPE_ListBox, childname);
 
-            dialogthing *parent = dialogboxes.get(parentname, WINDOWTYPE_Window, WINDOWTYPE_Dialog);
-            if (parent != NULL)
-            {
-                // The parent is a user-created window
-                clientrect.ConvertToDialogCoordinates();
+    dialogthing *parent = dialogboxes.get(parentname, WINDOWTYPE_Window, WINDOWTYPE_Dialog);
+    if (parent != NULL)
+    {
+        // The parent is a user-created window
+        clientrect.ConvertToDialogCoordinates();
             
-                child->parent = parent->key;
+        child->parent = parent->key;
 
-                child->TLmybox = new TMyListBox(parent->TDmybox, clientrect);
-            }
-            else
-            {
-                // else the parent does not exist -- put the control on the screen
-                clientrect.ConvertToScreenCoordinates();
+        child->TLmybox = new TMyListBox(parent->TDmybox, clientrect);
+    }
+    else
+    {
+        // else the parent does not exist -- put the control on the screen
+        clientrect.ConvertToScreenCoordinates();
 
-                child->parent = (char *)MainWindowx->ScreenWindow;
+        child->parent = (char *)MainWindowx->ScreenWindow;
 
-                child->TLmybox = new TMyListBox(MainWindowx->ScreenWindow, clientrect);
-            }
+        child->TLmybox = new TMyListBox(MainWindowx->ScreenWindow, clientrect);
+    }
 
-            child->TLmybox->Create();
+    child->TLmybox->Create();
 
-            MyMessageScan();
+    MyMessageScan();
 
-            dialogboxes.insert(child);
+    dialogboxes.insert(child);
 
-            if (parent == NULL)
-            {
-                UpdateZoomControlFlag();
-            }
-        }
-        else
-        {
-            ShowWindowAlreadyExistsErrorAndStop(childname);
-        }
+    if (parent == NULL)
+    {
+        UpdateZoomControlFlag();
     }
    
     return Unbound;
@@ -1230,63 +1216,58 @@ NODE *llistboxdelete(NODE *args)
 NODE *llistboxgetselect(NODE *args)
 {
     // get args
-    char parentname[MAX_BUFFER_SIZE];
-    cnv_strnode_string(parentname, args);
-
-    if (NOT_THROWING)
+    char listboxname[MAX_BUFFER_SIZE];
+    cnv_strnode_string(listboxname, args);
+    if (stopping_flag == THROWING)
     {
-        // If it exists continue
-        dialogthing *parent;
-        if ((parent = dialogboxes.get(parentname, WINDOWTYPE_ListBox)) != NULL)
-        {
-            // if success on fetching string return it
-            char stringname[MAX_BUFFER_SIZE];
-            if (parent->TLmybox->GetSelString(stringname, MAX_BUFFER_SIZE) >= 0)
-            {
-                // parsing it basically turns it into a list for us
-                NODE * val = parser(make_strnode(stringname), false);
-                return val;
-            }
-            else
-            {
-                // nothing is selected
-                return NIL;
-            }
-        }
-        else
-        {
-            ShowWindowDoesNotExistErrorAndStop(parentname);
-        }
+        return Unbound;
     }
 
-    return Unbound;
+    dialogthing * listbox = dialogboxes.get(listboxname, WINDOWTYPE_ListBox);
+    if (listbox == NULL)
+    {
+        // the listbox does not exist
+        err_logo(WINDOW_DOES_NOT_EXIST, car(args));
+        return Unbound;
+    }
+
+    // Fetch the selected string from the listbox
+    char stringname[MAX_BUFFER_SIZE];
+    if (listbox->TLmybox->GetSelString(stringname, MAX_BUFFER_SIZE) < 0)
+    {
+        // an error occured
+        return NIL;
+    }
+
+    // Parsing the string turns it into a list for us
+    return parser(make_strnode(stringname), false);
 }
 
 NODE *llistboxaddstring(NODE *args)
 {
     // get args
-    char parentname[MAX_BUFFER_SIZE];
-    cnv_strnode_string(parentname, args);
+    char listboxname[MAX_BUFFER_SIZE];
+    cnv_strnode_string(listboxname, args);
 
     char stringname[MAX_BUFFER_SIZE];
     cnv_strnode_string(stringname, cdr(args));
 
-    if (NOT_THROWING)
+    if (stopping_flag == THROWING)
     {
-        // if exists continue
-        dialogthing *parent = dialogboxes.get(parentname, WINDOWTYPE_ListBox);
-        if (parent != NULL)
-        {
-            // add entry and reset Index for consistency
-            parent->TLmybox->AddString(stringname);
-            parent->TLmybox->SetSelIndex(0);
-        }
-        else
-        {
-            ShowWindowDoesNotExistErrorAndStop(parentname);
-        }
+        return Unbound;
     }
 
+    dialogthing *listbox = dialogboxes.get(listboxname, WINDOWTYPE_ListBox);
+    if (listbox == NULL)
+    {
+        // the list box does not exist.
+        err_logo(WINDOW_DOES_NOT_EXIST, car(args));
+        return Unbound;
+    }
+
+    // add entry and reset Index for consistency
+    listbox->TLmybox->AddString(stringname);
+    listbox->TLmybox->SetSelIndex(0);
     return Unbound;
 }
 
@@ -1298,83 +1279,87 @@ NODE *llistboxdeletestring(NODE *args)
    
     int index = getint(pos_int_arg(cdr(args)));
 
-    if (NOT_THROWING)
+    if (stopping_flag == THROWING)
     {
-        // if exists continue
-        dialogthing *listbox = dialogboxes.get(listboxname, WINDOWTYPE_ListBox);
-        if (listbox != NULL)
-        {
-            // kill entry based on index
-            listbox->TLmybox->DeleteString(index);
-            listbox->TLmybox->SetSelIndex(0);
-        }
-        else
-        {
-            ShowWindowDoesNotExistErrorAndStop(listboxname);
-        }
+        return Unbound;
     }
 
+    // if exists continue
+    dialogthing *listbox = dialogboxes.get(listboxname, WINDOWTYPE_ListBox);
+    if (listbox == NULL)
+    {
+        // the list box does not exist.
+        err_logo(WINDOW_DOES_NOT_EXIST, car(args));
+        return Unbound;
+    }
+
+    // kill entry based on index
+    listbox->TLmybox->DeleteString(index);
+    listbox->TLmybox->SetSelIndex(0);
     return Unbound;
 }
 
 NODE *lcomboboxcreate(NODE *args)
 {
     // get args
+    NODE * nextArg = args;
+
     char parentname[MAX_BUFFER_SIZE];
-    cnv_strnode_string(parentname, args);
-    args = cdr(args);
+    cnv_strnode_string(parentname, nextArg);
+    nextArg = cdr(nextArg);
 
     char childname[MAX_BUFFER_SIZE];
-    cnv_strnode_string(childname, args);
-    args = cdr(args);
+    cnv_strnode_string(childname, nextArg);
+    nextArg = cdr(nextArg);
 
     TClientRectangle clientrect;
-    clientrect.InitializeFromInput(args);
+    clientrect.InitializeFromInput(nextArg);
 
-    if (NOT_THROWING)
+    if (stopping_flag == THROWING)
     {
-        // if unique continue
-        if (dialogboxes.get(childname) == NULL)
-        {
-            dialogthing * child = new dialogthing(WINDOWTYPE_ComboBox, childname);
+        return Unbound;
+    }
 
-            dialogthing *parent = dialogboxes.get(parentname, WINDOWTYPE_Window, WINDOWTYPE_Dialog);
-            if (parent != NULL)
-            {
-                // convert to "DIALOG" units
-                clientrect.ConvertToDialogCoordinates();
+    // if unique continue
+    if (dialogboxes.get(childname) != NULL)
+    {
+        err_logo(WINDOW_ALREADY_EXISTS, cadr(args));
+        return Unbound;
+    }
 
-                child->parent = parent->key;
+    dialogthing * child = new dialogthing(WINDOWTYPE_ComboBox, childname);
 
-                child->TCmybox = new TMxComboBox(parent->TDmybox, clientrect);
-            }
-            else
-            {
-                // else the parent does not exist -- put the control on the screen
-                clientrect.ConvertToScreenCoordinates();
+    dialogthing *parent = dialogboxes.get(parentname, WINDOWTYPE_Window, WINDOWTYPE_Dialog);
+    if (parent != NULL)
+    {
+        // convert to "DIALOG" units
+        clientrect.ConvertToDialogCoordinates();
 
-                child->parent = (char *) MainWindowx->ScreenWindow;
+        child->parent = parent->key;
 
-                child->TCmybox = new TMxComboBox(
-                    MainWindowx->ScreenWindow,
-                    clientrect);
-            }
+        child->TCmybox = new TMxComboBox(parent->TDmybox, clientrect);
+    }
+    else
+    {
+        // else the parent does not exist -- put the control on the screen
+        clientrect.ConvertToScreenCoordinates();
 
-            child->TCmybox->Create();
+        child->parent = (char *) MainWindowx->ScreenWindow;
 
-            MyMessageScan();
+        child->TCmybox = new TMxComboBox(
+            MainWindowx->ScreenWindow,
+            clientrect);
+    }
 
-            dialogboxes.insert(child);
+    child->TCmybox->Create();
 
-            if (parent == NULL)
-            {
-                UpdateZoomControlFlag();
-            }
-        }
-        else
-        {
-            ShowWindowAlreadyExistsErrorAndStop(childname);
-        }
+    MyMessageScan();
+
+    dialogboxes.insert(child);
+
+    if (parent == NULL)
+    {
+        UpdateZoomControlFlag();
     }
 
     return Unbound;
@@ -1393,167 +1378,167 @@ NODE *lcomboboxdelete(NODE *args)
 NODE *lcomboboxgettext(NODE *args)
 {
     // get args
-    char parentname[MAX_BUFFER_SIZE];
-    cnv_strnode_string(parentname, args);
+    char comboboxname[MAX_BUFFER_SIZE];
+    cnv_strnode_string(comboboxname, args);
 
-    // if exists continue
-    dialogthing *parent = dialogboxes.get(parentname, WINDOWTYPE_ComboBox);
-    if (parent != NULL)
+    // get the combobox
+    dialogthing *combobox = dialogboxes.get(comboboxname, WINDOWTYPE_ComboBox);
+    if (combobox == NULL)
     {
-        // if successful getting string return it
-        char stringname[MAX_BUFFER_SIZE];
-        if (parent->TCmybox->GetText(stringname, MAX_BUFFER_SIZE) >= 0)
-        {
-            // parsing it turns it into a list
-            NODE * val = parser(make_strnode(stringname), false);
-            return val;
-        }
-    }
-    else
-    {
-        ShowWindowDoesNotExistErrorAndStop(parentname);
+        // the combobox does not exist
+        err_logo(WINDOW_DOES_NOT_EXIST, car(args));
+        return Unbound;
     }
 
-    return Unbound;
+    // Get the text from the combobox
+    char stringname[MAX_BUFFER_SIZE];
+    if (combobox->TCmybox->GetText(stringname, MAX_BUFFER_SIZE) < 0)
+    {
+        // there was an error
+        return NIL;
+    }
+
+    // parsing it turns it into a list
+    return parser(make_strnode(stringname), false);
 }
 
 NODE *lcomboboxsettext(NODE *args)
 {
     // get args
-    char parentname[MAX_BUFFER_SIZE];
-    cnv_strnode_string(parentname, args);
+    char comboboxname[MAX_BUFFER_SIZE];
+    cnv_strnode_string(comboboxname, args);
 
     char stringname[MAX_BUFFER_SIZE];
     cnv_strnode_string(stringname, cdr(args));
 
     // if exists continue
-    dialogthing *parent = dialogboxes.get(parentname, WINDOWTYPE_ComboBox);
-    if (parent != NULL)
+    dialogthing *combobox = dialogboxes.get(comboboxname, WINDOWTYPE_ComboBox);
+    if (combobox == NULL)
     {
-        // set the editcontrol portion to the user specified text
-        parent->TCmybox->SetText(stringname);
-    }
-    else
-    {
-        ShowWindowDoesNotExistErrorAndStop(parentname);
+        err_logo(WINDOW_DOES_NOT_EXIST, car(args));
+        return Unbound;
     }
 
+    // set the editcontrol portion to the user specified text
+    combobox->TCmybox->SetText(stringname);
     return Unbound;
 }
 
 NODE *lcomboboxaddstring(NODE *args)
 {
     // get args
-    char parentname[MAX_BUFFER_SIZE];
-    cnv_strnode_string(parentname, args);
+    char comboboxname[MAX_BUFFER_SIZE];
+    cnv_strnode_string(comboboxname, args);
 
     char stringname[MAX_BUFFER_SIZE];
     cnv_strnode_string(stringname, cdr(args));
 
-    // if exists continue
-    dialogthing *parent = dialogboxes.get(parentname, WINDOWTYPE_ComboBox);
-    if (parent != NULL)
+    // get the combobox
+    dialogthing *combobox = dialogboxes.get(comboboxname, WINDOWTYPE_ComboBox);
+    if (combobox == NULL)
     {
-        // add string and reset selection
-        parent->TCmybox->AddString(stringname);
-        parent->TCmybox->SetSelIndex(0);
+        // the combobox does not exist
+        err_logo(WINDOW_DOES_NOT_EXIST, car(args));
+        return Unbound;
     }
-    else
-    {
-        ShowWindowDoesNotExistErrorAndStop(parentname);
-    }
-    
+
+    // add string and reset selection
+    combobox->TCmybox->AddString(stringname);
+    combobox->TCmybox->SetSelIndex(0);
     return Unbound;
 }
 
 NODE *lcomboboxdeletestring(NODE *args)
 {
     // get args
-    char parentname[MAX_BUFFER_SIZE];
-    cnv_strnode_string(parentname, args);
+    char comboboxname[MAX_BUFFER_SIZE];
+    cnv_strnode_string(comboboxname, args);
 
     int index = getint(pos_int_arg(cdr(args)));
 
-    // if exists continue
-    dialogthing *parent = dialogboxes.get(parentname, WINDOWTYPE_ComboBox);
-    if (parent != NULL)
+    // get the combobox
+    dialogthing *combobox = dialogboxes.get(comboboxname, WINDOWTYPE_ComboBox);
+    if (combobox == NULL)
     {
-        // kill entry and reset index
-        parent->TCmybox->DeleteString(index);
-        parent->TCmybox->SetSelIndex(0);
-    }
-    else
-    {
-        ShowWindowDoesNotExistErrorAndStop(parentname);
+        err_logo(WINDOW_DOES_NOT_EXIST, car(args));
+        return Unbound;
     }
 
+    // kill entry and reset index
+    combobox->TCmybox->DeleteString(index);
+    combobox->TCmybox->SetSelIndex(0);
     return Unbound;
 }
 
 NODE *lscrollbarcreate(NODE *args)
 {
+    NODE * nextArg = args;
+
     char parentname[MAX_BUFFER_SIZE];
-    cnv_strnode_string(parentname, args);
-    args = cdr(args);
+    cnv_strnode_string(parentname, nextArg);
+    nextArg = cdr(nextArg);
 
     char childname[MAX_BUFFER_SIZE];
-    cnv_strnode_string(childname, args);
-    args = cdr(args);
+    cnv_strnode_string(childname, nextArg);
+    nextArg = cdr(nextArg);
 
     TClientRectangle clientrect;
-    clientrect.InitializeFromInput(args);
+    clientrect.InitializeFromInput(nextArg);
 
     char callback[MAX_BUFFER_SIZE];
-    cnv_strnode_string(callback, args);
-    if (NOT_THROWING)
+    cnv_strnode_string(callback, nextArg);
+
+    if (stopping_flag == THROWING)
     {
-        if (dialogboxes.get(childname) == NULL)
-        {
-            dialogthing * child = new dialogthing(WINDOWTYPE_ScrollBar, childname);
+        // an error occured
+        return Unbound;
+    }
+
+    if (dialogboxes.get(childname) != NULL)
+    {
+        err_logo(WINDOW_ALREADY_EXISTS, cadr(args));
+        return Unbound;
+    }
+
+    dialogthing * child = new dialogthing(WINDOWTYPE_ScrollBar, childname);
          
-            const bool isHorizontalScrollbar = clientrect.GetWidth() > clientrect.GetHeight();
+    const bool isHorizontalScrollbar = clientrect.GetWidth() > clientrect.GetHeight();
 
-            dialogthing *parent = dialogboxes.get(parentname, WINDOWTYPE_Window, WINDOWTYPE_Dialog);
-            if (parent != NULL)
-            {
-                clientrect.ConvertToDialogCoordinates();
+    dialogthing *parent = dialogboxes.get(parentname, WINDOWTYPE_Window, WINDOWTYPE_Dialog);
+    if (parent != NULL)
+    {
+        clientrect.ConvertToDialogCoordinates();
 
-                child->parent = parent->key;
+        child->parent = parent->key;
 
-                child->TSCmybox = new TMyScrollBar(
-                    parent->TDmybox, 
-                    clientrect,
-                    isHorizontalScrollbar);
-            }
-            else
-            {
-                clientrect.ConvertToScreenCoordinates();
+        child->TSCmybox = new TMyScrollBar(
+            parent->TDmybox, 
+            clientrect,
+            isHorizontalScrollbar);
+    }
+    else
+    {
+        clientrect.ConvertToScreenCoordinates();
 
-                child->parent = (char*) MainWindowx->ScreenWindow;
+        child->parent = (char*) MainWindowx->ScreenWindow;
 
-                child->TSCmybox = new TMyScrollBar(
-                    MainWindowx->ScreenWindow,
-                    clientrect,
-                    isHorizontalScrollbar);
-            }
+        child->TSCmybox = new TMyScrollBar(
+            MainWindowx->ScreenWindow,
+            clientrect,
+            isHorizontalScrollbar);
+    }
 
-            strcpy(child->TSCmybox->callback, callback);
+    strcpy(child->TSCmybox->callback, callback);
 
-            child->TSCmybox->Create();
+    child->TSCmybox->Create();
 
-            MyMessageScan();
+    MyMessageScan();
 
-            dialogboxes.insert(child);
+    dialogboxes.insert(child);
 
-            if (parent == NULL)
-            {
-                UpdateZoomControlFlag();
-            }
-        }
-        else
-        {
-            ShowWindowAlreadyExistsErrorAndStop(childname);
-        }
+    if (parent == NULL)
+    {
+        UpdateZoomControlFlag();
     }
 
     return Unbound;
@@ -1561,60 +1546,64 @@ NODE *lscrollbarcreate(NODE *args)
 
 NODE *lscrollbarset(NODE *args)
 {
-    char parentname[MAX_BUFFER_SIZE];
-    cnv_strnode_string(parentname, args);
-    args = cdr(args);
+    NODE * nextArg = args;
 
-    int lo  = int_arg(args);
-    args = cdr(args);
+    char scrollbarname[MAX_BUFFER_SIZE];
+    cnv_strnode_string(scrollbarname, nextArg);
+    nextArg = cdr(nextArg);
 
-    int hi  = int_arg(args);
+    int lo = int_arg(nextArg);
+    nextArg = cdr(nextArg);
+
+    int hi = int_arg(nextArg);
     if (hi < lo)
     {
         // the low value must be less than the high value
-        NODE * node = err_logo(BAD_DATA, car(args));
+        NODE * node = err_logo(BAD_DATA, car(nextArg));
         gcref(node);
     }
-    args = cdr(args);
+    nextArg = cdr(nextArg);
 
-    int pos = int_arg(args);
+    int pos = int_arg(nextArg);
 
-    if (NOT_THROWING)
+    if (stopping_flag == THROWING)
     {
-        dialogthing *parent = dialogboxes.get(parentname, WINDOWTYPE_ScrollBar);
-        if (parent != NULL)
-        {
-            parent->TSCmybox->Set(lo, hi, pos);
-        }
-        else
-        {
-            ShowWindowDoesNotExistErrorAndStop(parentname);
-        }
+        // an error occured
+        return Unbound;
     }
 
+    dialogthing *scrollbar = dialogboxes.get(scrollbarname, WINDOWTYPE_ScrollBar);
+    if (scrollbar == NULL)
+    {
+        err_logo(WINDOW_DOES_NOT_EXIST, car(args));
+        return Unbound;
+    }
+
+    scrollbar->TSCmybox->Set(lo, hi, pos);
     return Unbound;
 }
 
 NODE *lscrollbarget(NODE *args)
 {
-    char parentname[MAX_BUFFER_SIZE];
-    cnv_strnode_string(parentname, args);
+    char scrollbarname[MAX_BUFFER_SIZE];
+    cnv_strnode_string(scrollbarname, args);
 
-    if (NOT_THROWING)
+    if (stopping_flag == THROWING)
     {
-        dialogthing *parent = dialogboxes.get(parentname, WINDOWTYPE_ScrollBar);
-        if (parent != NULL)
-        {
-            int pos = parent->TSCmybox->Get();
-            return make_intnode(pos);
-        }
-        else
-        {
-            ShowWindowDoesNotExistErrorAndStop(parentname);
-        }
+        // an error occured
+        return Unbound;
     }
 
-    return Unbound;
+    dialogthing *scrollbar = dialogboxes.get(scrollbarname, WINDOWTYPE_ScrollBar);
+    if (scrollbar == NULL)
+    {
+        // the scrollbar doesn't exist
+        err_logo(WINDOW_DOES_NOT_EXIST, car(args));
+        return Unbound;
+    }
+
+    int pos = scrollbar->TSCmybox->Get();
+    return make_intnode(pos);
 }
 
 NODE *lscrollbarenable(NODE *args)
@@ -1629,69 +1618,72 @@ NODE *lscrollbardelete(NODE *args)
 
 NODE *lstaticcreate(NODE *args)
 {
+    NODE * nextArg = args;
+
     char parentname[MAX_BUFFER_SIZE];
-    cnv_strnode_string(parentname, args);
-    args = cdr(args);
+    cnv_strnode_string(parentname, nextArg);
+    nextArg = cdr(nextArg);
 
     char childname[MAX_BUFFER_SIZE];
-    cnv_strnode_string(childname, args);
-    args = cdr(args);
+    cnv_strnode_string(childname, nextArg);
+    nextArg = cdr(nextArg);
 
     char titlename[MAX_BUFFER_SIZE];
-    cnv_strnode_string(titlename, args);
-    args = cdr(args);
+    cnv_strnode_string(titlename, nextArg);
+    nextArg = cdr(nextArg);
 
     TClientRectangle clientrect;
-    clientrect.InitializeFromInput(args);
+    clientrect.InitializeFromInput(nextArg);
 
-    if (NOT_THROWING)
+    if (stopping_flag == THROWING)
     {
-        if (dialogboxes.get(childname) == NULL)
-        {
-            dialogthing * child = new dialogthing(WINDOWTYPE_Static, childname);
+        return Unbound;
+    }
 
-            dialogthing *parent = dialogboxes.get(
-                parentname, 
-                WINDOWTYPE_Window, 
-                WINDOWTYPE_Dialog);
-            if (parent != NULL)
-            {
-                clientrect.ConvertToDialogCoordinates();
+    if (dialogboxes.get(childname) != NULL)
+    {
+        err_logo(WINDOW_ALREADY_EXISTS, cadr(args));
+        return Unbound;
+    }
 
-                child->parent = parent->key;
+    dialogthing * child = new dialogthing(WINDOWTYPE_Static, childname);
 
-                child->TSmybox = new TMyStatic(
-                    parent->TDmybox, 
-                    titlename, 
-                    clientrect);
-            }
-            else
-            {
-                clientrect.ConvertToScreenCoordinates();
+    dialogthing *parent = dialogboxes.get(
+        parentname, 
+        WINDOWTYPE_Window, 
+        WINDOWTYPE_Dialog);
+    if (parent != NULL)
+    {
+        clientrect.ConvertToDialogCoordinates();
 
-                child->parent = (char *) MainWindowx->ScreenWindow;
+        child->parent = parent->key;
+
+        child->TSmybox = new TMyStatic(
+            parent->TDmybox, 
+            titlename, 
+            clientrect);
+    }
+    else
+    {
+        clientrect.ConvertToScreenCoordinates();
+
+        child->parent = (char *) MainWindowx->ScreenWindow;
             
-                child->TSmybox = new TMyStatic(
-                    MainWindowx->ScreenWindow,
-                    titlename,
-                    clientrect);
-            }
+        child->TSmybox = new TMyStatic(
+            MainWindowx->ScreenWindow,
+            titlename,
+            clientrect);
+    }
 
-            child->TSmybox->Create();
+    child->TSmybox->Create();
 
-            MyMessageScan();
+    MyMessageScan();
 
-            dialogboxes.insert(child);
+    dialogboxes.insert(child);
 
-            if (parent == NULL)
-            {
-                UpdateZoomControlFlag();
-            }
-        }
-        else
-        {
-            ShowWindowAlreadyExistsErrorAndStop(childname);
-        }
+    if (parent == NULL)
+    {
+        UpdateZoomControlFlag();
     }
    
     return Unbound;
@@ -1706,15 +1698,13 @@ NODE *lstaticupdate(NODE *args)
     cnv_strnode_string(titlename, cdr(args));
 
     dialogthing *temp = dialogboxes.get(childname, WINDOWTYPE_Static);
-    if (temp != NULL)
+    if (temp == NULL)
     {
-        temp->TSmybox->SetText(titlename);
-    }
-    else
-    {
-        ShowWindowDoesNotExistErrorAndStop(childname);
+        err_logo(WINDOW_DOES_NOT_EXIST, car(args));
+        return Unbound;
     }
 
+    temp->TSmybox->SetText(titlename);
     return Unbound;
 }
 
@@ -1725,81 +1715,85 @@ NODE *lstaticdelete(NODE *args)
 
 NODE *lbuttoncreate(NODE *args)
 {
+    NODE * nextArg = args;
+
     char parentname[MAX_BUFFER_SIZE];
-    cnv_strnode_string(parentname, args);
-    args = cdr(args);
+    cnv_strnode_string(parentname, nextArg);
+    nextArg = cdr(nextArg);
 
     char childname[MAX_BUFFER_SIZE];
-    cnv_strnode_string(childname, args);
-    args = cdr(args);
+    cnv_strnode_string(childname, nextArg);
+    nextArg = cdr(nextArg);
 
     char titlename[MAX_BUFFER_SIZE];
-    cnv_strnode_string(titlename, args);
-    args = cdr(args);
+    cnv_strnode_string(titlename, nextArg);
+    nextArg = cdr(nextArg);
 
     TClientRectangle clientrect;
-    clientrect.InitializeFromInput(args);
+    clientrect.InitializeFromInput(nextArg);
 
     char callback[MAX_BUFFER_SIZE];
-    if (args != NIL)
+    if (nextArg != NIL)
     {
-        cnv_strnode_string(callback, args);
+        cnv_strnode_string(callback, nextArg);
     }
     else
     {
         callback[0] = '\0';
     }
 
-    if (NOT_THROWING)
+    if (stopping_flag == THROWING)
     {
-        if (dialogboxes.get(childname) == NULL)
-        {
-            dialogthing * child = new dialogthing(WINDOWTYPE_Button, childname);
+        return Unbound;
+    }
 
-            dialogthing *parent = dialogboxes.get(
-                parentname, 
-                WINDOWTYPE_Window, 
-                WINDOWTYPE_Dialog);
-            if (parent != NULL)
-            {
-                clientrect.ConvertToDialogCoordinates();
+    if (dialogboxes.get(childname) != NULL)
+    {
+        // the button already exists
+        err_logo(WINDOW_ALREADY_EXISTS, cadr(args));
+        return Unbound;
+    }
 
-                child->parent = parent->key;
+    dialogthing * child = new dialogthing(WINDOWTYPE_Button, childname);
 
-                child->TBmybox = new TMyButton(
-                    parent->TDmybox,
-                    titlename,
-                    clientrect);
-            }
-            else
-            {
-                clientrect.ConvertToScreenCoordinates();
+    dialogthing *parent = dialogboxes.get(
+        parentname, 
+        WINDOWTYPE_Window, 
+        WINDOWTYPE_Dialog);
+    if (parent != NULL)
+    {
+        clientrect.ConvertToDialogCoordinates();
 
-                child->parent = (char *) MainWindowx->ScreenWindow;
+        child->parent = parent->key;
 
-                child->TBmybox = new TMyButton(
-                    MainWindowx->ScreenWindow,
-                    titlename,
-                    clientrect);
-            }
+        child->TBmybox = new TMyButton(
+            parent->TDmybox,
+            titlename,
+            clientrect);
+    }
+    else
+    {
+        clientrect.ConvertToScreenCoordinates();
 
-            strcpy(child->TBmybox->callback, callback);
+        child->parent = (char *) MainWindowx->ScreenWindow;
 
-            child->TBmybox->Create();
+        child->TBmybox = new TMyButton(
+            MainWindowx->ScreenWindow,
+            titlename,
+            clientrect);
+    }
 
-            MyMessageScan();
+    strcpy(child->TBmybox->callback, callback);
 
-            dialogboxes.insert(child);
+    child->TBmybox->Create();
 
-            if (parent == NULL)
-            {
-                UpdateZoomControlFlag();
-            }
-        }
-        else
-        {
-            ShowWindowAlreadyExistsErrorAndStop(childname);
-        }
+    MyMessageScan();
+
+    dialogboxes.insert(child);
+
+    if (parent == NULL)
+    {
+        UpdateZoomControlFlag();
     }
       
     return Unbound;
@@ -1807,25 +1801,25 @@ NODE *lbuttoncreate(NODE *args)
 
 NODE *lbuttonupdate(NODE *args)
 {
-    char childname[MAX_BUFFER_SIZE];
-    cnv_strnode_string(childname, args);
+    char buttonname[MAX_BUFFER_SIZE];
+    cnv_strnode_string(buttonname, args);
 
     char titlename[MAX_BUFFER_SIZE];
     cnv_strnode_string(titlename, cdr(args));
 
-    if (NOT_THROWING)
+    if (stopping_flag == THROWING)
     {
-        dialogthing *temp = dialogboxes.get(childname, WINDOWTYPE_Button);
-        if (temp != NULL)
-        {
-            temp->TBmybox->SetWindowText(titlename);
-        }
-        else
-        {
-            ShowWindowDoesNotExistErrorAndStop(childname);
-        }
+        return Unbound;
     }
 
+    dialogthing *button = dialogboxes.get(buttonname, WINDOWTYPE_Button);
+    if (button == NULL)
+    {
+        err_logo(WINDOW_DOES_NOT_EXIST, car(args));
+        return Unbound;
+    }
+
+    button->TBmybox->SetWindowText(titlename);
     return Unbound;
 }
 
@@ -1841,63 +1835,66 @@ NODE *lbuttondelete(NODE *args)
 
 NODE *lgroupboxcreate(NODE *args)
 {
+    NODE * nextArg = args;
+
     char parentname[MAX_BUFFER_SIZE];
-    cnv_strnode_string(parentname, args);
-    args = cdr(args);
+    cnv_strnode_string(parentname, nextArg);
+    nextArg = cdr(nextArg);
 
     char childname[MAX_BUFFER_SIZE];
-    cnv_strnode_string(childname, args);
-    args = cdr(args);
+    cnv_strnode_string(childname, nextArg);
+    nextArg = cdr(nextArg);
 
     TClientRectangle clientrect;
-    clientrect.InitializeFromInput(args);
+    clientrect.InitializeFromInput(nextArg);
 
-    if (NOT_THROWING)
+    if (stopping_flag == THROWING)
     {
-        if (dialogboxes.get(childname) == NULL)
-        {
-            dialogthing * child = new dialogthing(WINDOWTYPE_GroupBox, childname);
+        return Unbound;
+    }
 
-            dialogthing *parent = dialogboxes.get(
-                parentname, 
-                WINDOWTYPE_Window, 
-                WINDOWTYPE_Dialog);
-            if (parent != NULL)
-            {
-                clientrect.ConvertToDialogCoordinates();
+    if (dialogboxes.get(childname) != NULL)
+    {
+        err_logo(WINDOW_ALREADY_EXISTS, cadr(args));
+        return Unbound;
+    }
 
-                child->parent = parent->key;
+    dialogthing * child = new dialogthing(WINDOWTYPE_GroupBox, childname);
 
-                child->TGmybox = new TMyGroupBox(
-                    parent->TDmybox, 
-                    clientrect);
-            }
-            else
-            {
-                clientrect.ConvertToScreenCoordinates();
+    dialogthing *parent = dialogboxes.get(
+        parentname, 
+        WINDOWTYPE_Window, 
+        WINDOWTYPE_Dialog);
+    if (parent != NULL)
+    {
+        clientrect.ConvertToDialogCoordinates();
 
-                child->parent = (char *) MainWindowx->ScreenWindow;
+        child->parent = parent->key;
+
+        child->TGmybox = new TMyGroupBox(
+            parent->TDmybox, 
+            clientrect);
+    }
+    else
+    {
+        clientrect.ConvertToScreenCoordinates();
+
+        child->parent = (char *) MainWindowx->ScreenWindow;
             
-                child->TGmybox = new TMyGroupBox(
-                    MainWindowx->ScreenWindow, 
-                    clientrect);
-            }
+        child->TGmybox = new TMyGroupBox(
+            MainWindowx->ScreenWindow, 
+            clientrect);
+    }
 
-            child->TGmybox->Create();
+    child->TGmybox->Create();
 
-            MyMessageScan();
+    MyMessageScan();
 
-            dialogboxes.insert(child);
+    dialogboxes.insert(child);
 
-            if (parent == NULL)
-            {
-                UpdateZoomControlFlag();
-            }
-        }
-        else
-        {
-            ShowWindowAlreadyExistsErrorAndStop(childname);
-        }
+    if (parent == NULL)
+    {
+        UpdateZoomControlFlag();
     }
 
     return Unbound;
@@ -1910,83 +1907,87 @@ NODE *lgroupboxdelete(NODE *args)
 
 NODE *lradiobuttoncreate(NODE *args)
 {
+    NODE * nextArg = args;
+
     char parentname[MAX_BUFFER_SIZE];
-    cnv_strnode_string(parentname, args);
-    args = cdr(args);
+    cnv_strnode_string(parentname, nextArg);
+    nextArg = cdr(nextArg);
 
     char groupname[MAX_BUFFER_SIZE];
-    cnv_strnode_string(groupname, args);
-    args = cdr(args);
+    cnv_strnode_string(groupname, nextArg);
+    nextArg = cdr(nextArg);
 
     char childname[MAX_BUFFER_SIZE];
-    cnv_strnode_string(childname, args);
-    args = cdr(args);
+    cnv_strnode_string(childname, nextArg);
+    nextArg = cdr(nextArg);
 
     char titlename[MAX_BUFFER_SIZE];
-    cnv_strnode_string(titlename, args);
-    args = cdr(args);
+    cnv_strnode_string(titlename, nextArg);
+    nextArg = cdr(nextArg);
 
     TClientRectangle clientrect;
-    clientrect.InitializeFromInput(args);
+    clientrect.InitializeFromInput(nextArg);
 
-    if (NOT_THROWING)
+    if (stopping_flag == THROWING)
     {
-        dialogthing *group = dialogboxes.get(groupname, WINDOWTYPE_GroupBox);
-        if (group != NULL)
-        {
-            if (dialogboxes.get(childname) == NULL)
-            {
-                dialogthing * child = new dialogthing(WINDOWTYPE_RadioButton, childname);
+        return Unbound;
+    }
 
-                dialogthing *parent = dialogboxes.get(
-                    parentname, 
-                    WINDOWTYPE_Window, 
-                    WINDOWTYPE_Dialog);
-                if (parent != NULL)
-                {
-                    clientrect.ConvertToDialogCoordinates();
+    dialogthing *group = dialogboxes.get(groupname, WINDOWTYPE_GroupBox);
+    if (group == NULL)
+    {
+        // the group does not exist
+        err_logo(WINDOW_DOES_NOT_EXIST, cadr(args));
+        return Unbound;
+    }
 
-                    child->parent = parent->key;
+    if (dialogboxes.get(childname) != NULL)
+    {
+        // a radio button by this name already exists
+        err_logo(WINDOW_ALREADY_EXISTS, car(cdr(cdr(args))));
+        return Unbound;
+    }
+     
+    dialogthing * child = new dialogthing(WINDOWTYPE_RadioButton, childname);
 
-                    child->TRmybox = new TMyRadioButton(
-                        parent->TDmybox, 
-                        titlename, 
-                        clientrect,
-                        group->TGmybox);
-                }
-                else
-                {
-                    clientrect.ConvertToScreenCoordinates();
+    dialogthing *parent = dialogboxes.get(
+        parentname, 
+        WINDOWTYPE_Window, 
+        WINDOWTYPE_Dialog);
+    if (parent != NULL)
+    {
+        clientrect.ConvertToDialogCoordinates();
 
-                    child->parent = (char *) MainWindowx->ScreenWindow;
+        child->parent = parent->key;
 
-                    child->TRmybox = new TMyRadioButton(
-                        MainWindowx->ScreenWindow,
-                        titlename,
-                        clientrect,
-                        group->TGmybox);
-                }
+        child->TRmybox = new TMyRadioButton(
+            parent->TDmybox, 
+            titlename, 
+            clientrect,
+            group->TGmybox);
+    }
+    else
+    {
+        clientrect.ConvertToScreenCoordinates();
 
-                child->TRmybox->Create();
+        child->parent = (char *) MainWindowx->ScreenWindow;
 
-                MyMessageScan();
+        child->TRmybox = new TMyRadioButton(
+            MainWindowx->ScreenWindow,
+            titlename,
+            clientrect,
+            group->TGmybox);
+    }
 
-                dialogboxes.insert(child);
+    child->TRmybox->Create();
 
-                if (parent == NULL)
-                {
-                    UpdateZoomControlFlag();
-                }
-            }
-            else
-            {
-                ShowWindowAlreadyExistsErrorAndStop(childname);
-            }
-        }
-        else
-        {
-            ShowWindowDoesNotExistErrorAndStop(childname);
-        }
+    MyMessageScan();
+
+    dialogboxes.insert(child);
+
+    if (parent == NULL)
+    {
+        UpdateZoomControlFlag();
     }
 
     return Unbound;
@@ -2004,51 +2005,53 @@ NODE *lradiobuttondelete(NODE *args)
 
 NODE *lradiobuttonget(NODE *args)
 {
-    char parentname[MAX_BUFFER_SIZE];
-    cnv_strnode_string(parentname, args);
+    char radiobuttonname[MAX_BUFFER_SIZE];
+    cnv_strnode_string(radiobuttonname, args);
 
-    if (NOT_THROWING)
+    if (stopping_flag == THROWING)
     {
-        dialogthing *parent = dialogboxes.get(parentname, WINDOWTYPE_RadioButton);
-        if (parent != NULL)
-        {
-            uint check = parent->TRmybox->GetCheck();
-            return true_or_false(BF_CHECKED == check);
-        }
-        else
-        {
-            ShowWindowDoesNotExistErrorAndStop(parentname);
-        }
+        return Unbound;
     }
 
-    return Unbound;
+    dialogthing *radiobutton = dialogboxes.get(radiobuttonname, WINDOWTYPE_RadioButton);
+    if (radiobutton == NULL)
+    {
+        // the radio button does not exist
+        err_logo(WINDOW_DOES_NOT_EXIST, car(args));
+        return Unbound;
+    }
+
+    uint check = radiobutton->TRmybox->GetCheck();
+    return true_or_false(BF_CHECKED == check);
 }
 
 NODE *lradiobuttonset(NODE *args)
 {
-    char parentname[MAX_BUFFER_SIZE];
-    cnv_strnode_string(parentname, args);
+    char radiobuttonname[MAX_BUFFER_SIZE];
+    cnv_strnode_string(radiobuttonname, args);
 
-    bool pos = boolean_arg(args = cdr(args));
+    bool pos = boolean_arg(cdr(args));
 
-    if (NOT_THROWING)
+    if (stopping_flag == THROWING)
     {
-        dialogthing *parent = dialogboxes.get(parentname, WINDOWTYPE_RadioButton);
-        if (parent != NULL)
-        {
-            if (pos)
-            {
-                parent->TRmybox->Check();
-            }
-            else
-            {
-                parent->TRmybox->Uncheck();
-            }
-        }
-        else
-        {
-            ShowWindowDoesNotExistErrorAndStop(parentname);
-        }
+        return Unbound;
+    }
+
+    dialogthing *radiobutton = dialogboxes.get(radiobuttonname, WINDOWTYPE_RadioButton);
+    if (radiobutton == NULL)
+    {
+        // the radio button does not exist
+        err_logo(WINDOW_DOES_NOT_EXIST, car(args));
+        return Unbound;
+    }
+
+    if (pos)
+    {
+        radiobutton->TRmybox->Check();
+    }
+    else
+    {
+        radiobutton->TRmybox->Uncheck();
     }
 
     return Unbound;
@@ -2056,84 +2059,87 @@ NODE *lradiobuttonset(NODE *args)
 
 NODE *lcheckboxcreate(NODE *args)
 {
+    NODE * nextArg = args;
+
     char parentname[MAX_BUFFER_SIZE];
-    cnv_strnode_string(parentname, args);
-    args = cdr(args);
+    cnv_strnode_string(parentname, nextArg);
+    nextArg = cdr(nextArg);
 
     char groupname[MAX_BUFFER_SIZE];
-    cnv_strnode_string(groupname, args);
-    args = cdr(args);
+    cnv_strnode_string(groupname, nextArg);
+    nextArg = cdr(nextArg);
 
     char childname[MAX_BUFFER_SIZE];
-    cnv_strnode_string(childname, args);
-    args = cdr(args);
+    cnv_strnode_string(childname, nextArg);
+    nextArg = cdr(nextArg);
 
     char titlename[MAX_BUFFER_SIZE];
-    cnv_strnode_string(titlename, args);
-    args = cdr(args);
+    cnv_strnode_string(titlename, nextArg);
+    nextArg = cdr(nextArg);
 
     TClientRectangle clientrect;
-    clientrect.InitializeFromInput(args);
+    clientrect.InitializeFromInput(nextArg);
 
-    if (NOT_THROWING)
+    if (stopping_flag == THROWING)
     {
-        dialogthing *group = dialogboxes.get(groupname, WINDOWTYPE_GroupBox);
-        if (group != NULL)
-        {
+        return Unbound;
+    }
 
-            if (dialogboxes.get(childname) == NULL)
-            {
-                dialogthing * child = new dialogthing(WINDOWTYPE_CheckBox, childname);
+    dialogthing *group = dialogboxes.get(groupname, WINDOWTYPE_GroupBox);
+    if (group == NULL)
+    {
+        // the group does not exist
+        err_logo(WINDOW_DOES_NOT_EXIST, cadr(args));
+        return Unbound;
+    }
 
-                dialogthing *parent = dialogboxes.get(
-                    parentname, 
-                    WINDOWTYPE_Window, 
-                    WINDOWTYPE_Dialog);
-                if (parent != NULL)
-                {
-                    clientrect.ConvertToDialogCoordinates();
+    if (dialogboxes.get(childname) != NULL)
+    {
+        // the checkbox already exists
+        err_logo(WINDOW_ALREADY_EXISTS, car(cdr(cdr(args))));
+        return Unbound;
+    }
 
-                    child->parent = parent->key;
+    dialogthing * child = new dialogthing(WINDOWTYPE_CheckBox, childname);
 
-                    child->TCBmybox = new TMyCheckBox(
-                        parent->TDmybox, 
-                        titlename, 
-                        clientrect,
-                        group->TGmybox);
-                }
-                else
-                {
-                    clientrect.ConvertToScreenCoordinates();
+    dialogthing * parent = dialogboxes.get(
+        parentname, 
+        WINDOWTYPE_Window, 
+        WINDOWTYPE_Dialog);
+    if (parent != NULL)
+    {
+        clientrect.ConvertToDialogCoordinates();
 
-                    child->parent = (char *) MainWindowx->ScreenWindow;
+        child->parent = parent->key;
 
-                    child->TCBmybox = new TMyCheckBox(
-                        MainWindowx->ScreenWindow,
-                        titlename,
-                        clientrect,
-                        group->TGmybox);
-                }
+        child->TCBmybox = new TMyCheckBox(
+            parent->TDmybox, 
+            titlename, 
+            clientrect,
+            group->TGmybox);
+    }
+    else
+    {
+        clientrect.ConvertToScreenCoordinates();
 
-                child->TCBmybox->Create();
+        child->parent = (char *) MainWindowx->ScreenWindow;
 
-                MyMessageScan();
+        child->TCBmybox = new TMyCheckBox(
+            MainWindowx->ScreenWindow,
+            titlename,
+            clientrect,
+            group->TGmybox);
+    }
 
-                dialogboxes.insert(child);
+    child->TCBmybox->Create();
 
-                if (parent == NULL)
-                {
-                    UpdateZoomControlFlag();
-                }
-            }
-         else
-         {
-             ShowWindowAlreadyExistsErrorAndStop(childname);
-         }
-        }
-        else
-        {
-            ShowWindowDoesNotExistErrorAndStop(groupname);
-        }
+    MyMessageScan();
+
+    dialogboxes.insert(child);
+
+    if (parent == NULL)
+    {
+        UpdateZoomControlFlag();
     }
 
     return Unbound;
@@ -2151,51 +2157,53 @@ NODE *lcheckboxdelete(NODE *args)
 
 NODE *lcheckboxget(NODE *args)
 {
-    char parentname[MAX_BUFFER_SIZE];
-    cnv_strnode_string(parentname, args);
+    char checkboxname[MAX_BUFFER_SIZE];
+    cnv_strnode_string(checkboxname, args);
 
-    if (NOT_THROWING)
+    if (stopping_flag == THROWING)
     {
-        dialogthing *parent = dialogboxes.get(parentname, WINDOWTYPE_CheckBox);
-        if (parent != NULL)
-        {
-            uint check = parent->TCBmybox->GetCheck();
-            return true_or_false(BF_CHECKED == check);
-        }
-        else
-        {
-            ShowWindowDoesNotExistErrorAndStop(parentname);
-        }
+        return Unbound;
     }
 
-    return Unbound;
+    dialogthing *checkbox = dialogboxes.get(checkboxname, WINDOWTYPE_CheckBox);
+    if (checkbox == NULL)
+    {
+        // the checkbox doesn't exist
+        err_logo(WINDOW_DOES_NOT_EXIST, car(args));
+        return Unbound;
+    }
+
+    uint check = checkbox->TCBmybox->GetCheck();
+    return true_or_false(BF_CHECKED == check);
 }
 
 NODE *lcheckboxset(NODE *args)
 {
-    char parentname[MAX_BUFFER_SIZE];
-    cnv_strnode_string(parentname, args);
+    char checkboxname[MAX_BUFFER_SIZE];
+    cnv_strnode_string(checkboxname, args);
 
-    int pos = boolean_arg(args = cdr(args));
+    int pos = boolean_arg(cdr(args));
 
-    if (NOT_THROWING)
+    if (stopping_flag == THROWING)
     {
-        dialogthing *parent = dialogboxes.get(parentname, WINDOWTYPE_CheckBox);
-        if (parent != NULL)
-        {
-            if (pos)
-            {
-                parent->TCBmybox->Check();
-            }
-            else
-            {
-                parent->TCBmybox->Uncheck();
-            }
-        }
-        else
-        {
-            ShowWindowDoesNotExistErrorAndStop(parentname);
-        }
+        return Unbound;
+    }
+
+    dialogthing *checkbox = dialogboxes.get(checkboxname, WINDOWTYPE_CheckBox);
+    if (checkbox == NULL)
+    {
+        // the checkbox doesn't exist
+        err_logo(WINDOW_DOES_NOT_EXIST, car(args));
+        return Unbound;
+    }
+
+    if (pos)
+    {
+        checkbox->TCBmybox->Check();
+    }
+    else
+    {
+        checkbox->TCBmybox->Uncheck();
     }
 
     return Unbound;
@@ -2210,17 +2218,16 @@ NODE *ldebugwindows(NODE *arg)
 {
     if (arg != NIL)
     {
-        char childname[MAX_BUFFER_SIZE];
-        cnv_strnode_string(childname, arg);
+        char windowname[MAX_BUFFER_SIZE];
+        cnv_strnode_string(windowname, arg);
       
-        if (dialogboxes.get(childname) != NULL)
+        if (dialogboxes.get(windowname) == NULL)
         {
-            dialogboxes.list(childname, 0);
+            err_logo(WINDOW_DOES_NOT_EXIST, car(arg));
+            return Unbound;
         }
-        else
-        {
-            ShowWindowDoesNotExistErrorAndStop(childname);
-        }
+
+        dialogboxes.list(windowname, 0);
     }
     else
     {

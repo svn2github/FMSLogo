@@ -871,7 +871,6 @@
 #define LOCALIZED_NOTHALTEDREALLYHALT        LOCALIZED_GENERAL_PRODUCTNAME" does not like exiting while not halted.\n\nDo you really want to Halt "LOCALIZED_GENERAL_PRODUCTNAME"?"
 #define LOCALIZED_LOGOISNOTHALTED            LOCALIZED_GENERAL_PRODUCTNAME" is not Halted"
 
-#define LOCALIZED_WRITEFAILEDNOMEMORY         "Write failed, Possibly no Memory"
 #define LOCALIZED_COULDNOTWRITEBMP            "Could not write .bmp"
 #define LOCALIZED_COULDNOTOPENBMP             "Could not open .bmp"
 #define LOCALIZED_COULDNOTCREATEBMP           "Unable to create Windows 3.0 bitmap"
@@ -1000,8 +999,8 @@
 #define LOCALIZED_ERROR_PORTNOTOPEN          "Port is not open"
 #define LOCALIZED_ERROR_FIRSTINPUTNOTANARRY  "First input must be an array"
 
-#define LOCALIZED_ERROR_WINDOWALREADYEXISTS   "Already exists"
-#define LOCALIZED_ERROR_WINDOWDOESNOTEXIST    "Does not exist"
+#define LOCALIZED_ERROR_WINDOWALREADYEXISTS   "%s already exists"
+#define LOCALIZED_ERROR_WINDOWDOESNOTEXIST    "%s does not exist"
 
 #define LOCALIZED_ERROR_DLLNOTLOADED          "DLL is not loaded"
 #define LOCALIZED_ERROR_DLLLOADFAILED         "DLL load failed"
@@ -1010,16 +1009,16 @@
 #define LOCALIZED_ERROR_DLLFUNCTIONNOTFOUND   "Function not found"
 #define LOCALIZED_ERROR_DLLTYPEDATANOTPAIRED  "Not all Type/Data inputs are paired"
 
-#define LOCALIZED_ERROR_NETWORK                    "Network Error"
-#define LOCALIZED_ERROR_NETWORKRECEIVE             "Network Receive Error"
-#define LOCALIZED_ERROR_NETWORKSEND                "Network Send Error"
-#define LOCALIZED_ERROR_NETWORKSHUTDOWN            "Unexpected Error, Network may be shutdown"
-#define LOCALIZED_ERROR_NETWORKNOTSTARTED          "Not started"
-#define LOCALIZED_ERROR_NETWORKALREADYSTARTED      "Already started"
-#define LOCALIZED_ERROR_NETWORKALREADYON           "Already on"
-#define LOCALIZED_ERROR_NETWORKALREADYOFF          "Already off"
+#define LOCALIZED_ERROR_NETWORK               "Network Error"
+#define LOCALIZED_ERROR_NETWORKRECEIVE        "Network Receive Error"
+#define LOCALIZED_ERROR_NETWORKSEND           "Network Send Error"
+#define LOCALIZED_ERROR_NETWORKSHUTDOWN       "Unexpected Error, Network may be shutdown"
+#define LOCALIZED_ERROR_NETWORKNOTSTARTED     "Not started"
+#define LOCALIZED_ERROR_NETWORKALREADYSTARTED "Already started"
+#define LOCALIZED_ERROR_NETWORKALREADYON      "Already on"
+#define LOCALIZED_ERROR_NETWORKALREADYOFF     "Already off"
 
-// The rest of the network errors shouldn't really see -- may be okay not to localize
+// The rest of the network errors shouldn't really be seen -- may be okay not to localize
 #define LOCALIZED_ERROR_NETWORKNAMETOOLONG         "Name too long"
 #define LOCALIZED_ERROR_NETWORKNOTINITIALIZED      "Not initialized"
 #define LOCALIZED_ERROR_NETWORKSYSTEMNOTREADY      "System not ready"

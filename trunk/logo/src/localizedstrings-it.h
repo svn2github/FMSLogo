@@ -871,7 +871,6 @@
 #define LOCALIZED_NOTHALTEDREALLYHALT        LOCALIZED_GENERAL_PRODUCTNAME" non può terminare prima che sia stato fermato.\n\nVuoi veramente uscire da "LOCALIZED_GENERAL_PRODUCTNAME"?"
 #define LOCALIZED_LOGOISNOTHALTED            LOCALIZED_GENERAL_PRODUCTNAME" non è stato fermato"
 
-#define LOCALIZED_WRITEFAILEDNOMEMORY         "Scrittura fallita, E' probabile che la memoria sia stata esaurita"
 #define LOCALIZED_COULDNOTWRITEBMP            "Impossibile scrivere il file .bmp"
 #define LOCALIZED_COULDNOTOPENBMP             "Impossibile aprire il file .bmp"
 #define LOCALIZED_COULDNOTCREATEBMP           "Impossibile creare una bitmap Windows 3.0"
@@ -1000,8 +999,8 @@
 #define LOCALIZED_ERROR_PORTNOTOPEN          "La porta non è aperta"
 #define LOCALIZED_ERROR_FIRSTINPUTNOTANARRY  "Il primo argomento deve essere un array"
 
-#define LOCALIZED_ERROR_WINDOWALREADYEXISTS   "Esiste già"
-#define LOCALIZED_ERROR_WINDOWDOESNOTEXIST    "Non esiste"
+#define LOCALIZED_ERROR_WINDOWALREADYEXISTS   "%s esiste già"
+#define LOCALIZED_ERROR_WINDOWDOESNOTEXIST    "%s non esiste"
 
 #define LOCALIZED_ERROR_DLLNOTLOADED          "La DLL non è stata caricata"
 #define LOCALIZED_ERROR_DLLLOADFAILED         "Il caricamento della DLL è fallito"
@@ -1010,16 +1009,16 @@
 #define LOCALIZED_ERROR_DLLFUNCTIONNOTFOUND   "Funzione non trovata"
 #define LOCALIZED_ERROR_DLLTYPEDATANOTPAIRED  "Non tutte le coppie Tipo/Dato sono correttamente accoppiate"
 
-#define LOCALIZED_ERROR_NETWORK                    "Errore di rete"
-#define LOCALIZED_ERROR_NETWORKRECEIVE             "Errore di ricezione dalla rete"
-#define LOCALIZED_ERROR_NETWORKSEND                "Errore di invio alla rete"
-#define LOCALIZED_ERROR_NETWORKSHUTDOWN            "Errore inatteso, E' possibile che la connessione di rete sia caduta"
-#define LOCALIZED_ERROR_NETWORKNOTSTARTED          "Non avviata"
-#define LOCALIZED_ERROR_NETWORKALREADYSTARTED      "Già avviata"
-#define LOCALIZED_ERROR_NETWORKALREADYON           "Già attiva"
-#define LOCALIZED_ERROR_NETWORKALREADYOFF          "Già disattivata"
+#define LOCALIZED_ERROR_NETWORK               "Errore di rete"
+#define LOCALIZED_ERROR_NETWORKRECEIVE        "Errore di ricezione dalla rete"
+#define LOCALIZED_ERROR_NETWORKSEND           "Errore di invio alla rete"
+#define LOCALIZED_ERROR_NETWORKSHUTDOWN       "Errore inatteso, E' possibile che la connessione di rete sia caduta"
+#define LOCALIZED_ERROR_NETWORKNOTSTARTED     "Non avviata"
+#define LOCALIZED_ERROR_NETWORKALREADYSTARTED "Già avviata"
+#define LOCALIZED_ERROR_NETWORKALREADYON      "Già attiva"
+#define LOCALIZED_ERROR_NETWORKALREADYOFF     "Già disattivata"
 
-// The rest of the network errors shouldn't really see -- may be okay not to localize
+// The rest of the network errors shouldn't really be seen -- may be okay not to localize
 #define LOCALIZED_ERROR_NETWORKNAMETOOLONG         "Nome troppo lungo"
 #define LOCALIZED_ERROR_NETWORKNOTINITIALIZED      "Non inzializzata"
 #define LOCALIZED_ERROR_NETWORKSYSTEMNOTREADY      "Il sistema non è pronto"

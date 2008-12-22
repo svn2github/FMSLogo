@@ -871,7 +871,6 @@
 #define LOCALIZED_NOTHALTEDREALLYHALT        LOCALIZED_GENERAL_PRODUCTNAME" n'aime pas fermer tant qu'il n'est pas arrêté.\n\nVoulez-vous vraiment arrêter "LOCALIZED_GENERAL_PRODUCTNAME"?" // 
 #define LOCALIZED_LOGOISNOTHALTED            LOCALIZED_GENERAL_PRODUCTNAME" n'est pas arrêté" // 
 
-#define LOCALIZED_WRITEFAILEDNOMEMORY         "Echec écriture, pas assez de mémoire" // 
 #define LOCALIZED_COULDNOTWRITEBMP            "Impossible d'écrire .bmp" //
 #define LOCALIZED_COULDNOTOPENBMP             "Impossible d'ouvrir .bmp" // 
 #define LOCALIZED_COULDNOTCREATEBMP           "Ne peut pas créer un bitmap Windows 3.0" // 
@@ -1000,8 +999,8 @@
 #define LOCALIZED_ERROR_PORTNOTOPEN          "Le port n'est pas ouvert" // 
 #define LOCALIZED_ERROR_FIRSTINPUTNOTANARRY  "Le premier argument doit être un tableau" // 
 
-#define LOCALIZED_ERROR_WINDOWALREADYEXISTS   "Existe déjà" // 
-#define LOCALIZED_ERROR_WINDOWDOESNOTEXIST    "N'existe pas" // 
+#define LOCALIZED_ERROR_WINDOWALREADYEXISTS   "%s existe déjà"
+#define LOCALIZED_ERROR_WINDOWDOESNOTEXIST    "%s n'existe pas"
 
 #define LOCALIZED_ERROR_DLLNOTLOADED          "DLL non chargée" // 
 #define LOCALIZED_ERROR_DLLLOADFAILED         "Echec chargement DLL" // 
@@ -1010,16 +1009,16 @@
 #define LOCALIZED_ERROR_DLLFUNCTIONNOTFOUND   "Fonction introuvable" // 
 #define LOCALIZED_ERROR_DLLTYPEDATANOTPAIRED  "Not all Type/Data inputs are paired" // NOT_YET_LOCALIZED
 
-#define LOCALIZED_ERROR_NETWORK                    "Erreur réseau" // 
-#define LOCALIZED_ERROR_NETWORKRECEIVE             "Erreur réseau en réception" // 
-#define LOCALIZED_ERROR_NETWORKSEND                "Erreur réseau en émission" // 
-#define LOCALIZED_ERROR_NETWORKSHUTDOWN            "Erreur inattendue, coupure du réseau" // 
-#define LOCALIZED_ERROR_NETWORKNOTSTARTED          "Non démarré" // 
-#define LOCALIZED_ERROR_NETWORKALREADYSTARTED      "Déjà démarré" // 
-#define LOCALIZED_ERROR_NETWORKALREADYON           "Déjà connecté" // 
-#define LOCALIZED_ERROR_NETWORKALREADYOFF          "Déjà déconnecté" // 
+#define LOCALIZED_ERROR_NETWORK               "Erreur réseau" // 
+#define LOCALIZED_ERROR_NETWORKRECEIVE        "Erreur réseau en réception" // 
+#define LOCALIZED_ERROR_NETWORKSEND           "Erreur réseau en émission" // 
+#define LOCALIZED_ERROR_NETWORKSHUTDOWN       "Erreur inattendue, coupure du réseau" // 
+#define LOCALIZED_ERROR_NETWORKNOTSTARTED     "Non démarré" // 
+#define LOCALIZED_ERROR_NETWORKALREADYSTARTED "Déjà démarré" // 
+#define LOCALIZED_ERROR_NETWORKALREADYON      "Déjà connecté" // 
+#define LOCALIZED_ERROR_NETWORKALREADYOFF     "Déjà déconnecté" // 
 
-// The rest of the network errors shouldn't really see -- may be okay not to localize
+// The rest of the network errors shouldn't really be seen -- may be okay not to localize
 #define LOCALIZED_ERROR_NETWORKNAMETOOLONG         "Nom trop long" // 
 #define LOCALIZED_ERROR_NETWORKNOTINITIALIZED      "Non initialisé" // 
 #define LOCALIZED_ERROR_NETWORKSYSTEMNOTREADY      "Le système n'est pas prêt" // 

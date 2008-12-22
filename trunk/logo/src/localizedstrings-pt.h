@@ -871,7 +871,6 @@
 #define LOCALIZED_NOTHALTEDREALLYHALT        LOCALIZED_GENERAL_PRODUCTNAME" não é possível sair até estar parado.\n\nRealmente quer Parar "LOCALIZED_GENERAL_PRODUCTNAME"?"
 #define LOCALIZED_LOGOISNOTHALTED            LOCALIZED_GENERAL_PRODUCTNAME" não está parado"
 
-#define LOCALIZED_WRITEFAILEDNOMEMORY         "Falha ao escrever, possível falta de memória"
 #define LOCALIZED_COULDNOTWRITEBMP            "Não pude guardar .bmp"
 #define LOCALIZED_COULDNOTOPENBMP             "Não pude abrir .bmp"
 #define LOCALIZED_COULDNOTCREATEBMP           "Não pude criar bitmat tipo Windows 3.0"
@@ -1000,8 +999,8 @@
 #define LOCALIZED_ERROR_PORTNOTOPEN          "PORTA não aberta"
 #define LOCALIZED_ERROR_FIRSTINPUTNOTANARRY  "O primeiro parâmetro deve ser um vetor"
 
-#define LOCALIZED_ERROR_WINDOWALREADYEXISTS   "Já existe"
-#define LOCALIZED_ERROR_WINDOWDOESNOTEXIST    "Não existe"
+#define LOCALIZED_ERROR_WINDOWALREADYEXISTS   "%s já existe"
+#define LOCALIZED_ERROR_WINDOWDOESNOTEXIST    "%s não existe"
 
 #define LOCALIZED_ERROR_DLLNOTLOADED          "A DLL não está carregada"
 #define LOCALIZED_ERROR_DLLLOADFAILED         "Falha ao carregar a DLL"
@@ -1010,16 +1009,16 @@
 #define LOCALIZED_ERROR_DLLFUNCTIONNOTFOUND   "Função não encontrada"
 #define LOCALIZED_ERROR_DLLTYPEDATANOTPAIRED  "Nem todas as entradas estão emparelhadas"
 
-#define LOCALIZED_ERROR_NETWORK                    "Erro de Rede"
-#define LOCALIZED_ERROR_NETWORKRECEIVE             "Erro de Recepção de Rede"
-#define LOCALIZED_ERROR_NETWORKSEND                "Erro de Envio de Rede"
-#define LOCALIZED_ERROR_NETWORKSHUTDOWN            "Erro Inesperado, a Rede poderia estar inativa"
-#define LOCALIZED_ERROR_NETWORKNOTSTARTED          "Não iniciada"
-#define LOCALIZED_ERROR_NETWORKALREADYSTARTED      "Já iniciada"
-#define LOCALIZED_ERROR_NETWORKALREADYON           "Já está pronta"
-#define LOCALIZED_ERROR_NETWORKALREADYOFF          "Já desligada"
+#define LOCALIZED_ERROR_NETWORK               "Erro de Rede"
+#define LOCALIZED_ERROR_NETWORKRECEIVE        "Erro de Recepção de Rede"
+#define LOCALIZED_ERROR_NETWORKSEND           "Erro de Envio de Rede"
+#define LOCALIZED_ERROR_NETWORKSHUTDOWN       "Erro Inesperado, a Rede poderia estar inativa"
+#define LOCALIZED_ERROR_NETWORKNOTSTARTED     "Não iniciada"
+#define LOCALIZED_ERROR_NETWORKALREADYSTARTED "Já iniciada"
+#define LOCALIZED_ERROR_NETWORKALREADYON      "Já está pronta"
+#define LOCALIZED_ERROR_NETWORKALREADYOFF     "Já desligada"
 
-// The rest of the network errors shouldn't really see -- may be okay not to localize
+// The rest of the network errors shouldn't really be seen -- may be okay not to localize
 #define LOCALIZED_ERROR_NETWORKNAMETOOLONG         "Nome muito longo"
 #define LOCALIZED_ERROR_NETWORKNOTINITIALIZED      "Não inicializado"
 #define LOCALIZED_ERROR_NETWORKSYSTEMNOTREADY      "O sistema não está pronto"
