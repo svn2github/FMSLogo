@@ -106,6 +106,9 @@ The numeric error codes and their corresponding human-readable messages are give
       <row><entry>32</entry><entry><link linkend="command-apply">APPLY</link> doesn't like DATUM as input.</entry></row>
       <row><entry>33</entry><entry><link linkend="command-end">END</link> inside multi-line instruction</entry></row>
 
+      <row><entry>1001</entry><entry>WINDOW already exists</entry></row>
+      <row><entry>1002</entry><entry>WINDOW does not exist</entry></row>
+
       <row><entry>1101</entry><entry>DLL load failed</entry></row>
       <row><entry>1102</entry><entry>DLL is not loaded</entry></row>
       <row><entry>1103</entry><entry>Not all Type/Data inputs are paired</entry></row>
