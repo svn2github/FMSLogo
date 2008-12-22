@@ -86,27 +86,27 @@ TO WINDOWSTEST.WINDOW.BADINPUT
   RUNNOTENOUGHINPUTSTEST [(windowcreate "main "name [caption] 0 0 120 400)]
   RUNTOOMANYINPUTSTEST   [(windowcreate "main "name [caption] 0 0 120 400 [] "toomany)]
 
-  RUNBADINPUTTEST  [windowcreate "main "name10 [caption] [0]  0   120  400  [] ]
-  RUNBADINPUTTEST  [windowcreate "main "name20 [caption] {0}  0   120  400  [] ]
-  RUNBADINPUTTEST  [windowcreate "main "name25 [caption] 10.5 0   120  400  [] ]
-  RUNBADINPUTTEST  [windowcreate "main "name30 [caption]  0  [0]  120  400  [] ]
-  RUNBADINPUTTEST  [windowcreate "main "name40 [caption]  0  {0}  120  400  [] ]
-  RUNBADINPUTTEST  [windowcreate "main "name45 [caption]  0  10.5 120  400  [] ]
-  RUNBADINPUTTEST  [windowcreate "main "name50 [caption]  0   0  [120] 400  [] ]
-  RUNBADINPUTTEST  [windowcreate "main "name60 [caption]  0   0  {120} 400  [] ]
-  RUNBADINPUTTEST  [windowcreate "main "name70 [caption]  0   0  -120  400  [] ]
-  RUNBADINPUTTEST  [windowcreate "main "name75 [caption]  0   0   10.5 400  [] ]
-  RUNBADINPUTTEST  [windowcreate "main "name80 [caption]  0   0   120 [400] [] ]
-  RUNBADINPUTTEST  [windowcreate "main "name90 [caption]  0   0   120 {400} [] ]
-  RUNBADINPUTTEST  [windowcreate "main "name00 [caption]  0   0   120 -400  [] ]
-  RUNBADINPUTTEST  [windowcreate "main "name05 [caption]  0   0   120  10.5 [] ]
+  RUNDOESNTLIKEINPUTTEST  [windowcreate "main "name10 [caption] [0]  0   120  400  [] ]
+  RUNDOESNTLIKEINPUTTEST  [windowcreate "main "name20 [caption] {0}  0   120  400  [] ]
+  RUNDOESNTLIKEINPUTTEST  [windowcreate "main "name25 [caption] 10.5 0   120  400  [] ]
+  RUNDOESNTLIKEINPUTTEST  [windowcreate "main "name30 [caption]  0  [0]  120  400  [] ]
+  RUNDOESNTLIKEINPUTTEST  [windowcreate "main "name40 [caption]  0  {0}  120  400  [] ]
+  RUNDOESNTLIKEINPUTTEST  [windowcreate "main "name45 [caption]  0  10.5 120  400  [] ]
+  RUNDOESNTLIKEINPUTTEST  [windowcreate "main "name50 [caption]  0   0  [120] 400  [] ]
+  RUNDOESNTLIKEINPUTTEST  [windowcreate "main "name60 [caption]  0   0  {120} 400  [] ]
+  RUNDOESNTLIKEINPUTTEST  [windowcreate "main "name70 [caption]  0   0  -120  400  [] ]
+  RUNDOESNTLIKEINPUTTEST  [windowcreate "main "name75 [caption]  0   0   10.5 400  [] ]
+  RUNDOESNTLIKEINPUTTEST  [windowcreate "main "name80 [caption]  0   0   120 [400] [] ]
+  RUNDOESNTLIKEINPUTTEST  [windowcreate "main "name90 [caption]  0   0   120 {400} [] ]
+  RUNDOESNTLIKEINPUTTEST  [windowcreate "main "name00 [caption]  0   0   120 -400  [] ]
+  RUNDOESNTLIKEINPUTTEST  [windowcreate "main "name05 [caption]  0   0   120  10.5 [] ]
 
 
   ; create a good window for the rest of the tests
   TRACEINSTRUCTION [ windowcreate "main "goodwindow [caption] 0 0 100 100 [] ]
 
   ; already exists
-  RUNBADINPUTTEST  [ windowcreate "main "goodwindow [newcaption] 0 0 100 100 [] ]
+  RUNWINDOWALREADYEXISTSTEST "goodwindow [ windowcreate "main "goodwindow [newcaption] 0 0 100 100 [] ]
 
 
   ;
@@ -115,11 +115,11 @@ TO WINDOWSTEST.WINDOW.BADINPUT
   RUNNOTENOUGHINPUTSTEST [ (windowenable "goodwindow) ]
   RUNTOOMANYINPUTSTEST   [ (windowenable "goodwindow LOCALETRUE "toomany) ]
 
-  RUNBADINPUTTEST  [ windowenable "nonexistent LOCALETRUE ]
+  RUNWINDOWDOESNOTEXISTTEST "nonexistent [ windowenable "nonexistent LOCALETRUE ]
 
-  RUNBADINPUTTEST  [ windowenable "goodwindow  1      ]
-  RUNBADINPUTTEST  [ windowenable "goodwindow  [true] ]
-  RUNBADINPUTTEST  [ windowenable "goodwindow  {true} ]
+  RUNDOESNTLIKEINPUTTEST [ windowenable "goodwindow  1      ]
+  RUNDOESNTLIKEINPUTTEST [ windowenable "goodwindow  [true] ]
+  RUNDOESNTLIKEINPUTTEST [ windowenable "goodwindow  {true} ]
 
 
   ;
@@ -149,7 +149,7 @@ TO WINDOWSTEST.DIALOG.BADINPUT.FROMCALLBACK
   TRACEINSTRUCTION [ listboxcreate "main "notadialog 0 100 100 100 ]
 
   ; already exists
-  RUNBADINPUTTEST  [ dialogcreate "main "gooddialog [newcaption] 0 0 100 100 [] ]
+  RUNWINDOWALREADYEXISTSTEST "gooddialog [ dialogcreate "main "gooddialog [newcaption] 0 0 100 100 [] ]
 
   ;
   ; bad input for DIALOGENABLE
@@ -157,12 +157,12 @@ TO WINDOWSTEST.DIALOG.BADINPUT.FROMCALLBACK
   RUNNOTENOUGHINPUTSTEST [ (dialogenable "gooddialog) ]
   RUNTOOMANYINPUTSTEST   [ (dialogenable "gooddialog LOCALETRUE "toomany) ]
 
-  RUNBADINPUTTEST  [ dialogenable "nonexistent LOCALETRUE ]
-  RUNBADINPUTTEST  [ dialogenable "notadialog  LOCALETRUE ]
+  RUNWINDOWDOESNOTEXISTTEST "nonexistent [ dialogenable "nonexistent LOCALETRUE ]
+  RUNWINDOWDOESNOTEXISTTEST "notadialog  [ dialogenable "notadialog  LOCALETRUE ]
 
-  RUNBADINPUTTEST  [ dialogenable "gooddialog  1      ]
-  RUNBADINPUTTEST  [ dialogenable "gooddialog  [true] ]
-  RUNBADINPUTTEST  [ dialogenable "gooddialog  {true} ]
+  RUNDOESNTLIKEINPUTTEST  [ dialogenable "gooddialog  1      ]
+  RUNDOESNTLIKEINPUTTEST  [ dialogenable "gooddialog  [true] ]
+  RUNDOESNTLIKEINPUTTEST  [ dialogenable "gooddialog  {true} ]
 
   ;
   ; bad input for DIALOGDELETE
@@ -170,8 +170,8 @@ TO WINDOWSTEST.DIALOG.BADINPUT.FROMCALLBACK
   RUNNOTENOUGHINPUTSTEST [ (dialogdelete) ]
   RUNTOOMANYINPUTSTEST   [ (dialogdelete "gooddialog "toomany) ]
 
-  RUNBADINPUTTEST [ dialogdelete "nonexistent ]
-  RUNBADINPUTTEST [ dialogdelete "notadialog  ]
+  RUNWINDOWDOESNOTEXISTTEST "nonexistent [ dialogdelete "nonexistent ]
+  RUNWINDOWDOESNOTEXISTTEST "notadialog  [ dialogdelete "notadialog  ]
 
   TRACEINSTRUCTION [ dialogdelete  "gooddialog ]
   TRACEINSTRUCTION [ listboxdelete "notadialog ]
@@ -188,20 +188,20 @@ TO WINDOWSTEST.DIALOG.BADINPUT
   RUNNOTENOUGHINPUTSTEST [(dialogcreate "main "name [caption] 0 0 120 400)]
   RUNTOOMANYINPUTSTEST   [(dialogcreate "main "name [caption] 0 0 120 400 [] "toomany)]
 
-  RUNBADINPUTTEST  [dialogcreate "main "name10 [caption] [0]  0   120   400  [] ]
-  RUNBADINPUTTEST  [dialogcreate "main "name20 [caption] {0}  0   120   400  [] ]
-  RUNBADINPUTTEST  [dialogcreate "main "name25 [caption] 10.5 0   120   400  [] ]
-  RUNBADINPUTTEST  [dialogcreate "main "name30 [caption]  0  [0]  120   400  [] ]
-  RUNBADINPUTTEST  [dialogcreate "main "name40 [caption]  0  {0}  120   400  [] ]
-  RUNBADINPUTTEST  [dialogcreate "main "name45 [caption]  0  10.5 120   400  [] ]
-  RUNBADINPUTTEST  [dialogcreate "main "name50 [caption]  0   0  [120]  400  [] ]
-  RUNBADINPUTTEST  [dialogcreate "main "name60 [caption]  0   0  {120}  400  [] ]
-  RUNBADINPUTTEST  [dialogcreate "main "name70 [caption]  0   0  -120   400  [] ]
-  RUNBADINPUTTEST  [dialogcreate "main "name75 [caption]  0   0   10.5  400  [] ]
-  RUNBADINPUTTEST  [dialogcreate "main "name80 [caption]  0   0   120  [400] [] ]
-  RUNBADINPUTTEST  [dialogcreate "main "name90 [caption]  0   0   120  {400} [] ]
-  RUNBADINPUTTEST  [dialogcreate "main "name00 [caption]  0   0   120  -400  [] ]
-  RUNBADINPUTTEST  [dialogcreate "main "name05 [caption]  0   0   120  400.5 [] ]
+  RUNDOESNTLIKEINPUTTEST [dialogcreate "main "name10 [caption] [0]  0   120   400  [] ]
+  RUNDOESNTLIKEINPUTTEST [dialogcreate "main "name20 [caption] {0}  0   120   400  [] ]
+  RUNDOESNTLIKEINPUTTEST [dialogcreate "main "name25 [caption] 10.5 0   120   400  [] ]
+  RUNDOESNTLIKEINPUTTEST [dialogcreate "main "name30 [caption]  0  [0]  120   400  [] ]
+  RUNDOESNTLIKEINPUTTEST [dialogcreate "main "name40 [caption]  0  {0}  120   400  [] ]
+  RUNDOESNTLIKEINPUTTEST [dialogcreate "main "name45 [caption]  0  10.5 120   400  [] ]
+  RUNDOESNTLIKEINPUTTEST [dialogcreate "main "name50 [caption]  0   0  [120]  400  [] ]
+  RUNDOESNTLIKEINPUTTEST [dialogcreate "main "name60 [caption]  0   0  {120}  400  [] ]
+  RUNDOESNTLIKEINPUTTEST [dialogcreate "main "name70 [caption]  0   0  -120   400  [] ]
+  RUNDOESNTLIKEINPUTTEST [dialogcreate "main "name75 [caption]  0   0   10.5  400  [] ]
+  RUNDOESNTLIKEINPUTTEST [dialogcreate "main "name80 [caption]  0   0   120  [400] [] ]
+  RUNDOESNTLIKEINPUTTEST [dialogcreate "main "name90 [caption]  0   0   120  {400} [] ]
+  RUNDOESNTLIKEINPUTTEST [dialogcreate "main "name00 [caption]  0   0   120  -400  [] ]
+  RUNDOESNTLIKEINPUTTEST [dialogcreate "main "name05 [caption]  0   0   120  400.5 [] ]
 
   ; Create a good dialog for the rest of the tests
   ; Note that, because dialogs are modal, the rest of the tests must be run from
@@ -249,24 +249,24 @@ TO WINDOWSTEST.STATIC.BADINPUT
   RUNNOTENOUGHINPUTSTEST [(staticcreate "main "name [caption] 0 0 120)]
   RUNTOOMANYINPUTSTEST   [(staticcreate "main "name [caption] 0 0 120 400 "toomany)]
 
-  RUNBADINPUTTEST  [staticcreate "main "name10 [caption] [0]  0   120  400  ]
-  RUNBADINPUTTEST  [staticcreate "main "name20 [caption] {0}  0   120  400  ]
-  RUNBADINPUTTEST  [staticcreate "main "name25 [caption] 10.5 0   120  400  ]
-  RUNBADINPUTTEST  [staticcreate "main "name30 [caption]  0  [0]  120  400  ]
-  RUNBADINPUTTEST  [staticcreate "main "name40 [caption]  0  {0}  120  400  ]
-  RUNBADINPUTTEST  [staticcreate "main "name45 [caption]  0  10.5 120  400  ]
-  RUNBADINPUTTEST  [staticcreate "main "name50 [caption]  0   0  [120] 400  ]
-  RUNBADINPUTTEST  [staticcreate "main "name60 [caption]  0   0  {120} 400  ]
-  RUNBADINPUTTEST  [staticcreate "main "name70 [caption]  0   0  -120  400  ]
-  RUNBADINPUTTEST  [staticcreate "main "name75 [caption]  0   0   10.5 400  ]
-  RUNBADINPUTTEST  [staticcreate "main "name80 [caption]  0   0   120 [400] ]
-  RUNBADINPUTTEST  [staticcreate "main "name90 [caption]  0   0   120 {400} ]
-  RUNBADINPUTTEST  [staticcreate "main "name00 [caption]  0   0   120 -400  ]
-  RUNBADINPUTTEST  [staticcreate "main "name05 [caption]  0   0   120  10.5 ]
+  RUNDOESNTLIKEINPUTTEST [staticcreate "main "name10 [caption] [0]  0   120  400  ]
+  RUNDOESNTLIKEINPUTTEST [staticcreate "main "name20 [caption] {0}  0   120  400  ]
+  RUNDOESNTLIKEINPUTTEST [staticcreate "main "name25 [caption] 10.5 0   120  400  ]
+  RUNDOESNTLIKEINPUTTEST [staticcreate "main "name30 [caption]  0  [0]  120  400  ]
+  RUNDOESNTLIKEINPUTTEST [staticcreate "main "name40 [caption]  0  {0}  120  400  ]
+  RUNDOESNTLIKEINPUTTEST [staticcreate "main "name45 [caption]  0  10.5 120  400  ]
+  RUNDOESNTLIKEINPUTTEST [staticcreate "main "name50 [caption]  0   0  [120] 400  ]
+  RUNDOESNTLIKEINPUTTEST [staticcreate "main "name60 [caption]  0   0  {120} 400  ]
+  RUNDOESNTLIKEINPUTTEST [staticcreate "main "name70 [caption]  0   0  -120  400  ]
+  RUNDOESNTLIKEINPUTTEST [staticcreate "main "name75 [caption]  0   0   10.5 400  ]
+  RUNDOESNTLIKEINPUTTEST [staticcreate "main "name80 [caption]  0   0   120 [400] ]
+  RUNDOESNTLIKEINPUTTEST [staticcreate "main "name90 [caption]  0   0   120 {400} ]
+  RUNDOESNTLIKEINPUTTEST [staticcreate "main "name00 [caption]  0   0   120 -400  ]
+  RUNDOESNTLIKEINPUTTEST [staticcreate "main "name05 [caption]  0   0   120  10.5 ]
 
   ; already exists
   TRACEINSTRUCTION [ staticcreate "main "goodstatic [newcaption] 0 0 100 100 ]
-  RUNBADINPUTTEST  [ staticcreate "main "goodstatic [newcaption] 0 0 100 100 ]
+  RUNWINDOWALREADYEXISTSTEST "goodstatic [ staticcreate "main "goodstatic [newcaption] 0 0 100 100 ]
 
   ; create something that is not a static control for bad input tests
   TRACEINSTRUCTION [ listboxcreate "main "notastatic 0 100 100 100 ]
@@ -277,9 +277,8 @@ TO WINDOWSTEST.STATIC.BADINPUT
   RUNNOTENOUGHINPUTSTEST [ (staticupdate "goodstatic) ]
   RUNTOOMANYINPUTSTEST   [ (staticupdate "goodstatic "newtext "toomany) ]
 
-  RUNBADINPUTTEST  [ staticupdate "nonexistent "newtext ]
-  RUNBADINPUTTEST  [ staticupdate "notastatic  "newtext ]
-
+  RUNWINDOWDOESNOTEXISTTEST "nonexistent [ staticupdate "nonexistent "newtext ]
+  RUNWINDOWDOESNOTEXISTTEST "notastatic  [ staticupdate "notastatic  "newtext ]
 
   ;
   ; bad input for STATICDELETE
@@ -287,8 +286,8 @@ TO WINDOWSTEST.STATIC.BADINPUT
   RUNNOTENOUGHINPUTSTEST [ (staticdelete) ]
   RUNTOOMANYINPUTSTEST   [ (staticdelete "goodstatic "toomany) ]
 
-  RUNBADINPUTTEST [ staticdelete "nonexistent ]
-  RUNBADINPUTTEST [ staticdelete "notastatic  ]
+  RUNWINDOWDOESNOTEXISTTEST "nonexistent [ staticdelete "nonexistent ]
+  RUNWINDOWDOESNOTEXISTTEST "notastatic  [ staticdelete "notastatic  ]
 
   ; cleanup
   TRACEINSTRUCTION [ staticdelete  "goodstatic ]
@@ -343,24 +342,24 @@ TO WINDOWSTEST.LISTBOX.BADINPUT
   RUNNOTENOUGHINPUTSTEST [(listboxcreate "main "name 0 0 120)]
   RUNTOOMANYINPUTSTEST   [(listboxcreate "main "name 0 0 120 400 "toomany)]
 
-  RUNBADINPUTTEST  [listboxcreate "main "name10 [0]  0  120  400  ]
-  RUNBADINPUTTEST  [listboxcreate "main "name20 {0}  0  120  400  ]
-  RUNBADINPUTTEST  [listboxcreate "main "name25 10.5 0  120  400  ]
-  RUNBADINPUTTEST  [listboxcreate "main "name30 0  [0]  120  400  ]
-  RUNBADINPUTTEST  [listboxcreate "main "name40 0  {0}  120  400  ]
-  RUNBADINPUTTEST  [listboxcreate "main "name45 0  10.5 120  400  ]
-  RUNBADINPUTTEST  [listboxcreate "main "name50 0   0  [120] 400  ]
-  RUNBADINPUTTEST  [listboxcreate "main "name60 0   0  {120} 400  ]
-  RUNBADINPUTTEST  [listboxcreate "main "name70 0   0  -120  400  ]
-  RUNBADINPUTTEST  [listboxcreate "main "name75 0   0   10.5 400  ]
-  RUNBADINPUTTEST  [listboxcreate "main "name80 0   0   120 [400] ]
-  RUNBADINPUTTEST  [listboxcreate "main "name90 0   0   120 {400} ]
-  RUNBADINPUTTEST  [listboxcreate "main "name00 0   0   120 -400  ]
-  RUNBADINPUTTEST  [listboxcreate "main "name05 0   0   120  10.5 ]
+  RUNDOESNTLIKEINPUTTEST [listboxcreate "main "name10 [0]  0  120  400  ]
+  RUNDOESNTLIKEINPUTTEST [listboxcreate "main "name20 {0}  0  120  400  ]
+  RUNDOESNTLIKEINPUTTEST [listboxcreate "main "name25 10.5 0  120  400  ]
+  RUNDOESNTLIKEINPUTTEST [listboxcreate "main "name30 0  [0]  120  400  ]
+  RUNDOESNTLIKEINPUTTEST [listboxcreate "main "name40 0  {0}  120  400  ]
+  RUNDOESNTLIKEINPUTTEST [listboxcreate "main "name45 0  10.5 120  400  ]
+  RUNDOESNTLIKEINPUTTEST [listboxcreate "main "name50 0   0  [120] 400  ]
+  RUNDOESNTLIKEINPUTTEST [listboxcreate "main "name60 0   0  {120} 400  ]
+  RUNDOESNTLIKEINPUTTEST [listboxcreate "main "name70 0   0  -120  400  ]
+  RUNDOESNTLIKEINPUTTEST [listboxcreate "main "name75 0   0   10.5 400  ]
+  RUNDOESNTLIKEINPUTTEST [listboxcreate "main "name80 0   0   120 [400] ]
+  RUNDOESNTLIKEINPUTTEST [listboxcreate "main "name90 0   0   120 {400} ]
+  RUNDOESNTLIKEINPUTTEST [listboxcreate "main "name00 0   0   120 -400  ]
+  RUNDOESNTLIKEINPUTTEST [listboxcreate "main "name05 0   0   120  10.5 ]
 
   ; already exists
   TRACEINSTRUCTION [ listboxcreate "main "goodlistbox 0 0 100 100 ]
-  RUNBADINPUTTEST  [ listboxcreate "main "goodlistbox 0 0 100 100 ]
+  RUNWINDOWALREADYEXISTSTEST "goodlistbox [ listboxcreate "main "goodlistbox 0 0 100 100 ]
 
   ; create something that is not a listbox for bad input tests
   TRACEINSTRUCTION [ staticcreate  "main "notalistbox [text] 0 100 100 100 ]
@@ -371,12 +370,12 @@ TO WINDOWSTEST.LISTBOX.BADINPUT
   RUNNOTENOUGHINPUTSTEST [ (listboxenable "goodlistbox) ]
   RUNTOOMANYINPUTSTEST   [ (listboxenable "goodlistbox LOCALETRUE "toomany) ]
 
-  RUNBADINPUTTEST  [ listboxenable "doesnotexist LOCALETRUE ]
-  RUNBADINPUTTEST  [ listboxenable "notalistbox  LOCALETRUE ]
+  RUNWINDOWDOESNOTEXISTTEST "doesnotexist [ listboxenable "doesnotexist LOCALETRUE ]
+  RUNWINDOWDOESNOTEXISTTEST "notalistbox  [ listboxenable "notalistbox  LOCALETRUE ]
 
-  RUNBADINPUTTEST  [ listboxenable "goodlistbox  1      ]
-  RUNBADINPUTTEST  [ listboxenable "goodlistbox  [true] ]
-  RUNBADINPUTTEST  [ listboxenable "goodlistbox  {true} ]
+  RUNDOESNTLIKEINPUTTEST  [ listboxenable "goodlistbox  1      ]
+  RUNDOESNTLIKEINPUTTEST  [ listboxenable "goodlistbox  [true] ]
+  RUNDOESNTLIKEINPUTTEST  [ listboxenable "goodlistbox  {true} ]
 
 
   ;
@@ -385,8 +384,8 @@ TO WINDOWSTEST.LISTBOX.BADINPUT
   RUNNOTENOUGHINPUTSTEST [ (listboxaddstring) ]
   RUNTOOMANYINPUTSTEST   [ (listboxaddstring "goodlistbox "item "toomany) ]
 
-  RUNBADINPUTTEST [ listboxaddstring "nonexistent "item ]
-  RUNBADINPUTTEST [ listboxaddstring "notalistbox "item ]
+  RUNWINDOWDOESNOTEXISTTEST "nonexistent [ listboxaddstring "nonexistent "item ]
+  RUNWINDOWDOESNOTEXISTTEST "notalistbox [ listboxaddstring "notalistbox "item ]
 
 
   ;
@@ -397,16 +396,16 @@ TO WINDOWSTEST.LISTBOX.BADINPUT
 
   ; Add a string to make sure we don't delete it.
   ; (regression test for bug #1503862)
-  TRACEINSTRUCTION [ listboxaddstring   "goodlistbox [selection] ]
+  TRACEINSTRUCTION [ listboxaddstring "goodlistbox [selection] ]
 
-  RUNBADINPUTTEST [ listboxdeletestring "doesnotexist 0 ]
-  RUNBADINPUTTEST [ listboxdeletestring "notalistbox  0 ]
+  RUNWINDOWDOESNOTEXISTTEST "doesnotexist [ listboxdeletestring "doesnotexist 0 ]
+  RUNWINDOWDOESNOTEXISTTEST "notalistbox  [ listboxdeletestring "notalistbox  0 ]
 
-  RUNBADINPUTTEST [ listboxdeletestring "goodlistbox  -1    ]
-  RUNBADINPUTTEST [ listboxdeletestring "goodlistbox  10.5  ]
-  RUNBADINPUTTEST [ listboxdeletestring "goodlistbox  [0]   ]
-  RUNBADINPUTTEST [ listboxdeletestring "goodlistbox  {0}   ]
-  RUNBADINPUTTEST [ listboxdeletestring "goodlistbox  "zero ]
+  RUNDOESNTLIKEINPUTTEST [ listboxdeletestring "goodlistbox  -1    ]
+  RUNDOESNTLIKEINPUTTEST [ listboxdeletestring "goodlistbox  10.5  ]
+  RUNDOESNTLIKEINPUTTEST [ listboxdeletestring "goodlistbox  [0]   ]
+  RUNDOESNTLIKEINPUTTEST [ listboxdeletestring "goodlistbox  {0}   ]
+  RUNDOESNTLIKEINPUTTEST [ listboxdeletestring "goodlistbox  "zero ]
 
   ; verify that nothing was deleted
   SIMPLEREPORTTEST [ listboxgetselect "goodlistbox ] [selection]
@@ -417,8 +416,8 @@ TO WINDOWSTEST.LISTBOX.BADINPUT
   RUNNOTENOUGHINPUTSTEST [ (listboxgetselect) ]
   RUNTOOMANYINPUTSTEST   [ (listboxgetselect "goodlistbox "toomany) ]
 
-  RUNBADINPUTTEST   [ ignore listboxgetselect "doesnotexist ]
-  RUNBADINPUTTEST   [ ignore listboxgetselect "notalistbox  ]
+  RUNWINDOWDOESNOTEXISTTEST "doesnotexist [ ignore listboxgetselect "doesnotexist ]
+  RUNWINDOWDOESNOTEXISTTEST "notalistbox  [ ignore listboxgetselect "notalistbox  ]
 
  
 
@@ -426,12 +425,12 @@ TO WINDOWSTEST.LISTBOX.BADINPUT
   ; bad input for LISTBOXDELETE
   ;
 
-  ; LISTBOXDELETE on a widget that is not a listbox control
   RUNNOTENOUGHINPUTSTEST [ (listboxdelete) ]
   RUNTOOMANYINPUTSTEST   [ (listboxdelete "goodlistbox "toomany) ]
 
-  RUNBADINPUTTEST  [ listboxdelete "notalistbox ]
-  RUNBADINPUTTEST  [ listboxdelete "doesnotexist ]
+  ; LISTBOXDELETE on a widget that is not a listbox control
+  RUNWINDOWDOESNOTEXISTTEST "notalistbox  [ listboxdelete "notalistbox ]
+  RUNWINDOWDOESNOTEXISTTEST "doesnotexist [ listboxdelete "doesnotexist ]
 
   ; cleanup
   TRACEINSTRUCTION [ listboxdelete "goodlistbox ]
@@ -487,24 +486,24 @@ TO WINDOWSTEST.COMBOBOX.BADINPUT
   RUNNOTENOUGHINPUTSTEST [(comboboxcreate "main "name 0 0 120)]
   RUNTOOMANYINPUTSTEST   [(comboboxcreate "main "name 0 0 120 400 "toomany)]
 
-  RUNBADINPUTTEST  [comboboxcreate "main "name10 [0]  0  120  400  ]
-  RUNBADINPUTTEST  [comboboxcreate "main "name20 {0}  0  120  400  ]
-  RUNBADINPUTTEST  [comboboxcreate "main "name25 10.5 0  120  400  ]
-  RUNBADINPUTTEST  [comboboxcreate "main "name30 0  [0]  120  400  ]
-  RUNBADINPUTTEST  [comboboxcreate "main "name40 0  {0}  120  400  ]
-  RUNBADINPUTTEST  [comboboxcreate "main "name45 0  10.5 120  400  ]
-  RUNBADINPUTTEST  [comboboxcreate "main "name50 0   0  [120] 400  ]
-  RUNBADINPUTTEST  [comboboxcreate "main "name60 0   0  {120} 400  ]
-  RUNBADINPUTTEST  [comboboxcreate "main "name70 0   0  -120  400  ]
-  RUNBADINPUTTEST  [comboboxcreate "main "name75 0   0   10.5 400  ]
-  RUNBADINPUTTEST  [comboboxcreate "main "name80 0   0   120 [400] ]
-  RUNBADINPUTTEST  [comboboxcreate "main "name90 0   0   120 {400} ]
-  RUNBADINPUTTEST  [comboboxcreate "main "name00 0   0   120 -400  ]
-  RUNBADINPUTTEST  [comboboxcreate "main "name05 0   0   120  10.5 ]
+  RUNDOESNTLIKEINPUTTEST [comboboxcreate "main "name10 [0]  0  120  400  ]
+  RUNDOESNTLIKEINPUTTEST [comboboxcreate "main "name20 {0}  0  120  400  ]
+  RUNDOESNTLIKEINPUTTEST [comboboxcreate "main "name25 10.5 0  120  400  ]
+  RUNDOESNTLIKEINPUTTEST [comboboxcreate "main "name30 0  [0]  120  400  ]
+  RUNDOESNTLIKEINPUTTEST [comboboxcreate "main "name40 0  {0}  120  400  ]
+  RUNDOESNTLIKEINPUTTEST [comboboxcreate "main "name45 0  10.5 120  400  ]
+  RUNDOESNTLIKEINPUTTEST [comboboxcreate "main "name50 0   0  [120] 400  ]
+  RUNDOESNTLIKEINPUTTEST [comboboxcreate "main "name60 0   0  {120} 400  ]
+  RUNDOESNTLIKEINPUTTEST [comboboxcreate "main "name70 0   0  -120  400  ]
+  RUNDOESNTLIKEINPUTTEST [comboboxcreate "main "name75 0   0   10.5 400  ]
+  RUNDOESNTLIKEINPUTTEST [comboboxcreate "main "name80 0   0   120 [400] ]
+  RUNDOESNTLIKEINPUTTEST [comboboxcreate "main "name90 0   0   120 {400} ]
+  RUNDOESNTLIKEINPUTTEST [comboboxcreate "main "name00 0   0   120 -400  ]
+  RUNDOESNTLIKEINPUTTEST [comboboxcreate "main "name05 0   0   120  10.5 ]
 
   ; already exists
   TRACEINSTRUCTION [ comboboxcreate "main "goodcombobox 0 0 100 100 ]
-  RUNBADINPUTTEST  [ comboboxcreate "main "goodcombobox 0 0 100 100 ]
+  RUNWINDOWALREADYEXISTSTEST "goodcombobox [ comboboxcreate "main "goodcombobox 0 0 100 100 ]
 
   ; create something that is not a combobox for bad input tests
   TRACEINSTRUCTION [ staticcreate  "main "notacombobox [text] 0 100 100 100 ]
@@ -515,12 +514,12 @@ TO WINDOWSTEST.COMBOBOX.BADINPUT
   RUNNOTENOUGHINPUTSTEST [ (comboboxenable "goodcombobox) ]
   RUNTOOMANYINPUTSTEST   [ (comboboxenable "goodcombobox LOCALETRUE "toomany) ]
 
-  RUNBADINPUTTEST  [ comboboxenable "doesnotexist LOCALETRUE ]
-  RUNBADINPUTTEST  [ comboboxenable "notacombobox LOCALETRUE ]
+  RUNWINDOWDOESNOTEXISTTEST "doesnotexist [ comboboxenable "doesnotexist LOCALETRUE ]
+  RUNWINDOWDOESNOTEXISTTEST "notacombobox [ comboboxenable "notacombobox LOCALETRUE ]
 
-  RUNBADINPUTTEST  [ comboboxenable "goodcombobox 1      ]
-  RUNBADINPUTTEST  [ comboboxenable "goodcombobox [true] ]
-  RUNBADINPUTTEST  [ comboboxenable "goodcombobox {true} ]
+  RUNDOESNTLIKEINPUTTEST  [ comboboxenable "goodcombobox 1      ]
+  RUNDOESNTLIKEINPUTTEST  [ comboboxenable "goodcombobox [true] ]
+  RUNDOESNTLIKEINPUTTEST  [ comboboxenable "goodcombobox {true} ]
 
 
   ;
@@ -529,8 +528,8 @@ TO WINDOWSTEST.COMBOBOX.BADINPUT
   RUNNOTENOUGHINPUTSTEST [ (comboboxaddstring) ]
   RUNTOOMANYINPUTSTEST   [ (comboboxaddstring "goodcombobox "item "toomany) ]
 
-  RUNBADINPUTTEST [ comboboxaddstring "nonexistent  "item ]
-  RUNBADINPUTTEST [ comboboxaddstring "notacombobox "item ]
+  RUNWINDOWDOESNOTEXISTTEST "nonexistent  [ comboboxaddstring "nonexistent  "item ]
+  RUNWINDOWDOESNOTEXISTTEST "notacombobox [ comboboxaddstring "notacombobox "item ]
 
 
   ;
@@ -539,14 +538,14 @@ TO WINDOWSTEST.COMBOBOX.BADINPUT
   RUNNOTENOUGHINPUTSTEST [ (comboboxdeletestring "goodcombobox) ]
   RUNTOOMANYINPUTSTEST   [ (comboboxdeletestring "goodcombobox 0 "toomany) ]
 
-  RUNBADINPUTTEST [ comboboxdeletestring "doesnotexist 0 ]
-  RUNBADINPUTTEST [ comboboxdeletestring "notacombobox  0 ]
+  RUNWINDOWDOESNOTEXISTTEST "doesnotexist [ comboboxdeletestring "doesnotexist 0 ]
+  RUNWINDOWDOESNOTEXISTTEST "notacombobox [ comboboxdeletestring "notacombobox 0 ]
 
-  RUNBADINPUTTEST [ comboboxdeletestring "goodcombobox  -1    ]
-  RUNBADINPUTTEST [ comboboxdeletestring "goodcombobox  10.5  ]
-  RUNBADINPUTTEST [ comboboxdeletestring "goodcombobox  [0]   ]
-  RUNBADINPUTTEST [ comboboxdeletestring "goodcombobox  {0}   ]
-  RUNBADINPUTTEST [ comboboxdeletestring "goodcombobox  "zero ]
+  RUNDOESNTLIKEINPUTTEST [ comboboxdeletestring "goodcombobox  -1    ]
+  RUNDOESNTLIKEINPUTTEST [ comboboxdeletestring "goodcombobox  10.5  ]
+  RUNDOESNTLIKEINPUTTEST [ comboboxdeletestring "goodcombobox  [0]   ]
+  RUNDOESNTLIKEINPUTTEST [ comboboxdeletestring "goodcombobox  {0}   ]
+  RUNDOESNTLIKEINPUTTEST [ comboboxdeletestring "goodcombobox  "zero ]
 
   ;
   ; bad input for COMBOBOXGETTEXT
@@ -554,8 +553,8 @@ TO WINDOWSTEST.COMBOBOX.BADINPUT
   RUNNOTENOUGHINPUTSTEST [ (comboboxgettext) ]
   RUNTOOMANYINPUTSTEST   [ (comboboxgettext "goodcombobox "toomany) ]
 
-  RUNBADINPUTTEST   [ ignore comboboxgettext "doesnotexist ]
-  RUNBADINPUTTEST   [ ignore comboboxgettext "notacombobox ]
+  RUNWINDOWDOESNOTEXISTTEST "doesnotexist [ ignore comboboxgettext "doesnotexist ]
+  RUNWINDOWDOESNOTEXISTTEST "notacombobox [ ignore comboboxgettext "notacombobox ]
 
 
   ;
@@ -564,8 +563,8 @@ TO WINDOWSTEST.COMBOBOX.BADINPUT
   RUNNOTENOUGHINPUTSTEST [ (comboboxsettext "goodcombobox) ]
   RUNTOOMANYINPUTSTEST   [ (comboboxsettext "goodcombobox "text "toomany) ]
 
-  RUNBADINPUTTEST   [ comboboxsettext "doesnotexist "text ]
-  RUNBADINPUTTEST   [ comboboxsettext "notacombobox "text ]
+  RUNWINDOWDOESNOTEXISTTEST "doesnotexist [ comboboxsettext "doesnotexist "text ]
+  RUNWINDOWDOESNOTEXISTTEST "notacombobox [ comboboxsettext "notacombobox "text ]
  
 
   ;
@@ -576,8 +575,8 @@ TO WINDOWSTEST.COMBOBOX.BADINPUT
   RUNNOTENOUGHINPUTSTEST [ (comboboxdelete) ]
   RUNTOOMANYINPUTSTEST   [ (comboboxdelete "goodcombobox "toomany) ]
 
-  RUNBADINPUTTEST  [ comboboxdelete "notacombobox ]
-  RUNBADINPUTTEST  [ comboboxdelete "doesnotexist ]
+  RUNWINDOWDOESNOTEXISTTEST "notacombobox [ comboboxdelete "notacombobox ]
+  RUNWINDOWDOESNOTEXISTTEST "doesnotexist [ comboboxdelete "doesnotexist ]
 
   ; cleanup
   TRACEINSTRUCTION [ comboboxdelete "goodcombobox ]
@@ -603,24 +602,24 @@ TO WINDOWSTEST.GROUPBOX.BADINPUT
   RUNNOTENOUGHINPUTSTEST [(groupboxcreate "main "name 0 0 120)]
   RUNTOOMANYINPUTSTEST   [(groupboxcreate "main "name 0 0 120 400 "toomany)]
 
-  RUNBADINPUTTEST  [groupboxcreate "main "name10 [0]  0  120  400  ]
-  RUNBADINPUTTEST  [groupboxcreate "main "name20 {0}  0  120  400  ]
-  RUNBADINPUTTEST  [groupboxcreate "main "name25 10.5 0  120  400  ]
-  RUNBADINPUTTEST  [groupboxcreate "main "name30 0  [0]  120  400  ]
-  RUNBADINPUTTEST  [groupboxcreate "main "name40 0  {0}  120  400  ]
-  RUNBADINPUTTEST  [groupboxcreate "main "name45 0  10.5 120  400  ]
-  RUNBADINPUTTEST  [groupboxcreate "main "name50 0   0  [120] 400  ]
-  RUNBADINPUTTEST  [groupboxcreate "main "name60 0   0  {120} 400  ]
-  RUNBADINPUTTEST  [groupboxcreate "main "name70 0   0  -120  400  ]
-  RUNBADINPUTTEST  [groupboxcreate "main "name75 0   0   10.5 400  ]
-  RUNBADINPUTTEST  [groupboxcreate "main "name80 0   0   120 [400] ]
-  RUNBADINPUTTEST  [groupboxcreate "main "name90 0   0   120 {400} ]
-  RUNBADINPUTTEST  [groupboxcreate "main "name00 0   0   120 -400  ]
-  RUNBADINPUTTEST  [groupboxcreate "main "name05 0   0   120  10.5 ]
+  RUNDOESNTLIKEINPUTTEST [groupboxcreate "main "name10 [0]  0  120  400  ]
+  RUNDOESNTLIKEINPUTTEST [groupboxcreate "main "name20 {0}  0  120  400  ]
+  RUNDOESNTLIKEINPUTTEST [groupboxcreate "main "name25 10.5 0  120  400  ]
+  RUNDOESNTLIKEINPUTTEST [groupboxcreate "main "name30 0  [0]  120  400  ]
+  RUNDOESNTLIKEINPUTTEST [groupboxcreate "main "name40 0  {0}  120  400  ]
+  RUNDOESNTLIKEINPUTTEST [groupboxcreate "main "name45 0  10.5 120  400  ]
+  RUNDOESNTLIKEINPUTTEST [groupboxcreate "main "name50 0   0  [120] 400  ]
+  RUNDOESNTLIKEINPUTTEST [groupboxcreate "main "name60 0   0  {120} 400  ]
+  RUNDOESNTLIKEINPUTTEST [groupboxcreate "main "name70 0   0  -120  400  ]
+  RUNDOESNTLIKEINPUTTEST [groupboxcreate "main "name75 0   0   10.5 400  ]
+  RUNDOESNTLIKEINPUTTEST [groupboxcreate "main "name80 0   0   120 [400] ]
+  RUNDOESNTLIKEINPUTTEST [groupboxcreate "main "name90 0   0   120 {400} ]
+  RUNDOESNTLIKEINPUTTEST [groupboxcreate "main "name00 0   0   120 -400  ]
+  RUNDOESNTLIKEINPUTTEST [groupboxcreate "main "name05 0   0   120  10.5 ]
 
   ; already exists
   TRACEINSTRUCTION [ groupboxcreate "main "goodgroupbox 0 0 100 100 ]
-  RUNBADINPUTTEST  [ groupboxcreate "main "goodgroupbox 0 0 100 100 ]
+  RUNWINDOWALREADYEXISTSTEST "goodgroupbox [ groupboxcreate "main "goodgroupbox 0 0 100 100 ]
 
 
   TRACEINSTRUCTION [ listboxcreate  "main "notagroupbox 0 100 100 100 ]
@@ -633,8 +632,8 @@ TO WINDOWSTEST.GROUPBOX.BADINPUT
   RUNNOTENOUGHINPUTSTEST [(groupboxdelete)]
   RUNTOOMANYINPUTSTEST   [(groupboxdelete "groupbox "toomany)]
 
-  RUNBADINPUTTEST  [ groupboxdelete "notagroupbox ]
-  RUNBADINPUTTEST  [ groupboxdelete "doesnotexist ]
+  RUNWINDOWDOESNOTEXISTTEST "notagroupbox [ groupboxdelete "notagroupbox ]
+  RUNWINDOWDOESNOTEXISTTEST "doesnotexist [ groupboxdelete "doesnotexist ]
 
   ; cleanup
   TRACEINSTRUCTION [ listboxdelete  "notagroupbox ]
@@ -685,25 +684,27 @@ TO WINDOWSTEST.RADIOBUTTON.BADINPUT
   RUNNOTENOUGHINPUTSTEST [(radiobuttoncreate "main "groupbox "name "label 0 0 10)]
   RUNTOOMANYINPUTSTEST   [(radiobuttoncreate "main "groupbox "name "label 0 0 10 80 "toomany)]
 
-  RUNBADINPUTTEST  [radiobuttoncreate "main "notfound "name01 "label [10]  10   80   20  ]
-  RUNBADINPUTTEST  [radiobuttoncreate "main "groupbox "name10 "label [10]  10   80   20  ]
-  RUNBADINPUTTEST  [radiobuttoncreate "main "groupbox "name20 "label {10}  10   80   20  ]
-  RUNBADINPUTTEST  [radiobuttoncreate "main "groupbox "name25 "label 10.5  10   80   20  ]
-  RUNBADINPUTTEST  [radiobuttoncreate "main "groupbox "name30 "label  10   [10] 80   20  ]
-  RUNBADINPUTTEST  [radiobuttoncreate "main "groupbox "name40 "label  10   {10} 80   20  ]
-  RUNBADINPUTTEST  [radiobuttoncreate "main "groupbox "name45 "label  10  10.5  80   20  ]
-  RUNBADINPUTTEST  [radiobuttoncreate "main "groupbox "name50 "label  10   10  [80]  20  ]
-  RUNBADINPUTTEST  [radiobuttoncreate "main "groupbox "name60 "label  10   10  {80}  20  ]
-  RUNBADINPUTTEST  [radiobuttoncreate "main "groupbox "name70 "label  10   10  -80   20  ]
-  RUNBADINPUTTEST  [radiobuttoncreate "main "groupbox "name75 "label  10   10   8.5  20  ]
-  RUNBADINPUTTEST  [radiobuttoncreate "main "groupbox "name80 "label  10   10   80  [20] ]
-  RUNBADINPUTTEST  [radiobuttoncreate "main "groupbox "name90 "label  10   10   80  {20} ]
-  RUNBADINPUTTEST  [radiobuttoncreate "main "groupbox "name00 "label  10   10   80  -20  ]
-  RUNBADINPUTTEST  [radiobuttoncreate "main "groupbox "name05 "label  10   10   80  20.5 ]
+  ; group name does not exist
+  RUNWINDOWDOESNOTEXISTTEST "notfound [radiobuttoncreate "main "notfound "name "label 10 10 80 20 ]
+
+  RUNDOESNTLIKEINPUTTEST [radiobuttoncreate "main "groupbox "name10 "label [10]  10   80   20  ]
+  RUNDOESNTLIKEINPUTTEST [radiobuttoncreate "main "groupbox "name20 "label {10}  10   80   20  ]
+  RUNDOESNTLIKEINPUTTEST [radiobuttoncreate "main "groupbox "name25 "label 10.5  10   80   20  ]
+  RUNDOESNTLIKEINPUTTEST [radiobuttoncreate "main "groupbox "name30 "label  10   [10] 80   20  ]
+  RUNDOESNTLIKEINPUTTEST [radiobuttoncreate "main "groupbox "name40 "label  10   {10} 80   20  ]
+  RUNDOESNTLIKEINPUTTEST [radiobuttoncreate "main "groupbox "name45 "label  10  10.5  80   20  ]
+  RUNDOESNTLIKEINPUTTEST [radiobuttoncreate "main "groupbox "name50 "label  10   10  [80]  20  ]
+  RUNDOESNTLIKEINPUTTEST [radiobuttoncreate "main "groupbox "name60 "label  10   10  {80}  20  ]
+  RUNDOESNTLIKEINPUTTEST [radiobuttoncreate "main "groupbox "name70 "label  10   10  -80   20  ]
+  RUNDOESNTLIKEINPUTTEST [radiobuttoncreate "main "groupbox "name75 "label  10   10   8.5  20  ]
+  RUNDOESNTLIKEINPUTTEST [radiobuttoncreate "main "groupbox "name80 "label  10   10   80  [20] ]
+  RUNDOESNTLIKEINPUTTEST [radiobuttoncreate "main "groupbox "name90 "label  10   10   80  {20} ]
+  RUNDOESNTLIKEINPUTTEST [radiobuttoncreate "main "groupbox "name00 "label  10   10   80  -20  ]
+  RUNDOESNTLIKEINPUTTEST [radiobuttoncreate "main "groupbox "name05 "label  10   10   80  20.5 ]
 
   ; already exists
   TRACEINSTRUCTION [ radiobuttoncreate "main "groupbox "goodradiobutton "label 10 10 80 20 ]
-  RUNBADINPUTTEST  [ radiobuttoncreate "main "groupbox "goodradiobutton "label 10 10 80 20 ]
+  RUNWINDOWALREADYEXISTSTEST "goodradiobutton [ radiobuttoncreate "main "groupbox "goodradiobutton "label 10 10 80 20 ]
 
   ; create something that is not a radiobutton for bad input tests
   TRACEINSTRUCTION [ staticcreate  "main "notaradiobutton [text] 0 100 100 100 ]
@@ -714,12 +715,12 @@ TO WINDOWSTEST.RADIOBUTTON.BADINPUT
   RUNNOTENOUGHINPUTSTEST [ (radiobuttonenable "goodradiobutton) ]
   RUNTOOMANYINPUTSTEST   [ (radiobuttonenable "goodradiobutton LOCALETRUE "toomany) ]
 
-  RUNBADINPUTTEST  [ radiobuttonenable "doesnotexist     LOCALETRUE  ]
-  RUNBADINPUTTEST  [ radiobuttonenable "notaradiobutton  LOCALETRUE  ]
+  RUNWINDOWDOESNOTEXISTTEST "doesnotexist    [ radiobuttonenable "doesnotexist    LOCALETRUE ]
+  RUNWINDOWDOESNOTEXISTTEST "notaradiobutton [ radiobuttonenable "notaradiobutton LOCALETRUE ]
 
-  RUNBADINPUTTEST  [ radiobuttonenable "goodradiobutton  1      ]
-  RUNBADINPUTTEST  [ radiobuttonenable "goodradiobutton  [true] ]
-  RUNBADINPUTTEST  [ radiobuttonenable "goodradiobutton  {true} ]
+  RUNDOESNTLIKEINPUTTEST  [ radiobuttonenable "goodradiobutton  1      ]
+  RUNDOESNTLIKEINPUTTEST  [ radiobuttonenable "goodradiobutton  [true] ]
+  RUNDOESNTLIKEINPUTTEST  [ radiobuttonenable "goodradiobutton  {true} ]
 
 
   ;
@@ -728,8 +729,8 @@ TO WINDOWSTEST.RADIOBUTTON.BADINPUT
   RUNNOTENOUGHINPUTSTEST [ (radiobuttonget) ]
   RUNTOOMANYINPUTSTEST   [ (radiobuttonget "goodradiobutton "toomany) ]
 
-  RUNBADINPUTTEST [ radiobuttonget "doesnotexist    "item ]
-  RUNBADINPUTTEST [ radiobuttonget "notaradiobutton "item ]
+  RUNWINDOWDOESNOTEXISTTEST "doesnotexist    [ radiobuttonget "doesnotexist    "item ]
+  RUNWINDOWDOESNOTEXISTTEST "notaradiobutton [ radiobuttonget "notaradiobutton "item ]
 
 
   ;
@@ -744,12 +745,12 @@ TO WINDOWSTEST.RADIOBUTTON.BADINPUT
   RUNNOTENOUGHINPUTSTEST [ (radiobuttonset "goodradiobutton) ]
   RUNTOOMANYINPUTSTEST   [ (radiobuttonset "goodradiobutton LOCALETRUE "toomany) ]
 
-  RUNBADINPUTTEST [ radiobuttonset "doesnotexist     LOCALETRUE ]
-  RUNBADINPUTTEST [ radiobuttonset "notaradiobutton  LOCALETRUE ]
+  RUNWINDOWDOESNOTEXISTTEST "doesnotexist    [ radiobuttonset "doesnotexist    LOCALETRUE ]
+  RUNWINDOWDOESNOTEXISTTEST "notaradiobutton [ radiobuttonset "notaradiobutton LOCALETRUE ]
 
-  RUNBADINPUTTEST [ radiobuttonset "goodradiobutton  1      ]
-  RUNBADINPUTTEST [ radiobuttonset "goodradiobutton  [true] ]
-  RUNBADINPUTTEST [ radiobuttonset "goodradiobutton  {true} ]
+  RUNDOESNTLIKEINPUTTEST [ radiobuttonset "goodradiobutton  1      ]
+  RUNDOESNTLIKEINPUTTEST [ radiobuttonset "goodradiobutton  [true] ]
+  RUNDOESNTLIKEINPUTTEST [ radiobuttonset "goodradiobutton  {true} ]
 
   ; The radio button should still be unchecked
   FAILIFNOTFALSE [ radiobuttonget "goodradiobutton ]
@@ -763,8 +764,8 @@ TO WINDOWSTEST.RADIOBUTTON.BADINPUT
   RUNNOTENOUGHINPUTSTEST [ (radiobuttondelete) ]
   RUNTOOMANYINPUTSTEST   [ (radiobuttondelete "goodradiobutton "toomany) ]
 
-  RUNBADINPUTTEST  [ radiobuttondelete "notaradiobutton ]
-  RUNBADINPUTTEST  [ radiobuttondelete "doesnotexist    ]
+  RUNWINDOWDOESNOTEXISTTEST "notaradiobutton [ radiobuttondelete "notaradiobutton ]
+  RUNWINDOWDOESNOTEXISTTEST "doesnotexist    [ radiobuttondelete "doesnotexist    ]
 
   ; cleanup
   TRACEINSTRUCTION [ radiobuttondelete "goodradiobutton ]
@@ -834,25 +835,26 @@ TO WINDOWSTEST.CHECKBOX.BADINPUT
   RUNNOTENOUGHINPUTSTEST [(checkboxcreate "main "groupbox "name "label 0 0 10)]
   RUNTOOMANYINPUTSTEST   [(checkboxcreate "main "groupbox "name "label 0 0 10 80 "toomany)]
 
-  RUNBADINPUTTEST  [checkboxcreate "main "notfound "name01 "label [10]  10   80   20   ]
-  RUNBADINPUTTEST  [checkboxcreate "main "groupbox "name10 "label [10]  10   80   20   ]
-  RUNBADINPUTTEST  [checkboxcreate "main "groupbox "name20 "label {10}  10   80   20   ]
-  RUNBADINPUTTEST  [checkboxcreate "main "groupbox "name25 "label 10.5  10   80   20   ]
-  RUNBADINPUTTEST  [checkboxcreate "main "groupbox "name30 "label  10   [10] 80   20   ]
-  RUNBADINPUTTEST  [checkboxcreate "main "groupbox "name40 "label  10   {10} 80   20   ]
-  RUNBADINPUTTEST  [checkboxcreate "main "groupbox "name45 "label  10  10.5  80   20   ]
-  RUNBADINPUTTEST  [checkboxcreate "main "groupbox "name50 "label  10   10  [80]  20   ]
-  RUNBADINPUTTEST  [checkboxcreate "main "groupbox "name60 "label  10   10  {80}  20   ]
-  RUNBADINPUTTEST  [checkboxcreate "main "groupbox "name70 "label  10   10  -80   20   ]
-  RUNBADINPUTTEST  [checkboxcreate "main "groupbox "name75 "label  10   10   8.5  20   ]
-  RUNBADINPUTTEST  [checkboxcreate "main "groupbox "name80 "label  10   10   80  [20]  ]
-  RUNBADINPUTTEST  [checkboxcreate "main "groupbox "name90 "label  10   10   80  {20}  ]
-  RUNBADINPUTTEST  [checkboxcreate "main "groupbox "name00 "label  10   10   80  -20   ]
-  RUNBADINPUTTEST  [checkboxcreate "main "groupbox "name05 "label  10   10   80  20.5  ]
+  RUNWINDOWDOESNOTEXISTTEST "notfound [checkboxcreate "main "notfound "name01 "label 10 10 80 20 ]
+
+  RUNDOESNTLIKEINPUTTEST [checkboxcreate "main "groupbox "name10 "label [10]  10   80   20  ]
+  RUNDOESNTLIKEINPUTTEST [checkboxcreate "main "groupbox "name20 "label {10}  10   80   20  ]
+  RUNDOESNTLIKEINPUTTEST [checkboxcreate "main "groupbox "name25 "label 10.5  10   80   20  ]
+  RUNDOESNTLIKEINPUTTEST [checkboxcreate "main "groupbox "name30 "label  10   [10] 80   20  ]
+  RUNDOESNTLIKEINPUTTEST [checkboxcreate "main "groupbox "name40 "label  10   {10} 80   20  ]
+  RUNDOESNTLIKEINPUTTEST [checkboxcreate "main "groupbox "name45 "label  10  10.5  80   20  ]
+  RUNDOESNTLIKEINPUTTEST [checkboxcreate "main "groupbox "name50 "label  10   10  [80]  20  ]
+  RUNDOESNTLIKEINPUTTEST [checkboxcreate "main "groupbox "name60 "label  10   10  {80}  20  ]
+  RUNDOESNTLIKEINPUTTEST [checkboxcreate "main "groupbox "name70 "label  10   10  -80   20  ]
+  RUNDOESNTLIKEINPUTTEST [checkboxcreate "main "groupbox "name75 "label  10   10   8.5  20  ]
+  RUNDOESNTLIKEINPUTTEST [checkboxcreate "main "groupbox "name80 "label  10   10   80  [20] ]
+  RUNDOESNTLIKEINPUTTEST [checkboxcreate "main "groupbox "name90 "label  10   10   80  {20} ]
+  RUNDOESNTLIKEINPUTTEST [checkboxcreate "main "groupbox "name00 "label  10   10   80  -20  ]
+  RUNDOESNTLIKEINPUTTEST [checkboxcreate "main "groupbox "name05 "label  10   10   80  20.5 ]
 
   ; already exists
   TRACEINSTRUCTION [ checkboxcreate "main "groupbox "goodcheckbox "label 10 10 80 20 ]
-  RUNBADINPUTTEST  [ checkboxcreate "main "groupbox "goodcheckbox "label 10 10 80 20 ]
+  RUNWINDOWALREADYEXISTSTEST "goodcheckbox [ checkboxcreate "main "groupbox "goodcheckbox "label 10 10 80 20 ]
 
   ; create something that is not a checkbox for bad input tests
   TRACEINSTRUCTION [ staticcreate  "main "notacheckbox [text] 0 100 100 100 ]
@@ -863,12 +865,12 @@ TO WINDOWSTEST.CHECKBOX.BADINPUT
   RUNNOTENOUGHINPUTSTEST [ (checkboxenable "goodcheckbox) ]
   RUNTOOMANYINPUTSTEST   [ (checkboxenable "goodcheckbox LOCALETRUE "toomany) ]
 
-  RUNBADINPUTTEST  [ checkboxenable "doesnotexist  LOCALETRUE ]
-  RUNBADINPUTTEST  [ checkboxenable "notacheckbox  LOCALETRUE ]
+  RUNWINDOWDOESNOTEXISTTEST "doesnotexist [ checkboxenable "doesnotexist LOCALETRUE ]
+  RUNWINDOWDOESNOTEXISTTEST "notacheckbox [ checkboxenable "notacheckbox LOCALETRUE ]
 
-  RUNBADINPUTTEST  [ checkboxenable "goodcheckbox  1      ]
-  RUNBADINPUTTEST  [ checkboxenable "goodcheckbox  [true] ]
-  RUNBADINPUTTEST  [ checkboxenable "goodcheckbox  {true} ]
+  RUNDOESNTLIKEINPUTTEST  [ checkboxenable "goodcheckbox  1      ]
+  RUNDOESNTLIKEINPUTTEST  [ checkboxenable "goodcheckbox  [true] ]
+  RUNDOESNTLIKEINPUTTEST  [ checkboxenable "goodcheckbox  {true} ]
 
 
   ;
@@ -877,8 +879,8 @@ TO WINDOWSTEST.CHECKBOX.BADINPUT
   RUNNOTENOUGHINPUTSTEST [ (checkboxget) ]
   RUNTOOMANYINPUTSTEST   [ (checkboxget "goodcheckbox "toomany) ]
 
-  RUNBADINPUTTEST [ checkboxget "doesnotexist "item ]
-  RUNBADINPUTTEST [ checkboxget "notacheckbox "item ]
+  RUNWINDOWDOESNOTEXISTTEST "doesnotexist [ checkboxget "doesnotexist "item ]
+  RUNWINDOWDOESNOTEXISTTEST "notacheckbox [ checkboxget "notacheckbox "item ]
 
 
   ;
@@ -892,12 +894,12 @@ TO WINDOWSTEST.CHECKBOX.BADINPUT
   ; (This is a regression test for bug #1504189)
   TRACEINSTRUCTION [ checkboxset "goodcheckbox "false ]
 
-  RUNBADINPUTTEST [ checkboxset "doesnotexist  LOCALETRUE ]
-  RUNBADINPUTTEST [ checkboxset "notacheckbox  LOCALETRUE ]
+  RUNWINDOWDOESNOTEXISTTEST "doesnotexist [ checkboxset "doesnotexist LOCALETRUE ]
+  RUNWINDOWDOESNOTEXISTTEST "notacheckbox [ checkboxset "notacheckbox LOCALETRUE ]
 
-  RUNBADINPUTTEST [ checkboxset "goodcheckbox  1      ]
-  RUNBADINPUTTEST [ checkboxset "goodcheckbox  [true] ]
-  RUNBADINPUTTEST [ checkboxset "goodcheckbox  {true} ]
+  RUNDOESNTLIKEINPUTTEST [ checkboxset "goodcheckbox  1      ]
+  RUNDOESNTLIKEINPUTTEST [ checkboxset "goodcheckbox  [true] ]
+  RUNDOESNTLIKEINPUTTEST [ checkboxset "goodcheckbox  {true} ]
 
   ; The checkbox should still be unchecked
   FAILIFNOTFALSE [ checkboxget "goodcheckbox ]
@@ -911,8 +913,8 @@ TO WINDOWSTEST.CHECKBOX.BADINPUT
   RUNNOTENOUGHINPUTSTEST [ (checkboxdelete) ]
   RUNTOOMANYINPUTSTEST   [ (checkboxdelete "goodcheckbox "toomany) ]
 
-  RUNBADINPUTTEST  [ checkboxdelete "notacheckbox ]
-  RUNBADINPUTTEST  [ checkboxdelete "doesnotexist ]
+  RUNWINDOWDOESNOTEXISTTEST "notacheckbox [ checkboxdelete "notacheckbox ]
+  RUNWINDOWDOESNOTEXISTTEST "doesnotexist [ checkboxdelete "doesnotexist ]
 
   ; cleanup
   TRACEINSTRUCTION [ checkboxdelete "goodcheckbox ]
@@ -991,24 +993,24 @@ TO WINDOWSTEST.SCROLLBAR.BADINPUT
   RUNNOTENOUGHINPUTSTEST [(scrollbarcreate "main "name 0 0 100 10)]
   RUNTOOMANYINPUTSTEST   [(scrollbarcreate "main "name 0 0 100 10 [] "toomany)]
 
-  RUNBADINPUTTEST  [scrollbarcreate "main "name10 [0]  0  120  10   [] ]
-  RUNBADINPUTTEST  [scrollbarcreate "main "name20 {0}  0  120  10   [] ]
-  RUNBADINPUTTEST  [scrollbarcreate "main "name25 10.5 0  120  10   [] ]
-  RUNBADINPUTTEST  [scrollbarcreate "main "name30 0  [0]  120  10   [] ]
-  RUNBADINPUTTEST  [scrollbarcreate "main "name40 0  {0}  120  10   [] ]
-  RUNBADINPUTTEST  [scrollbarcreate "main "name45 0  10.5 120  10   [] ]
-  RUNBADINPUTTEST  [scrollbarcreate "main "name50 0   0  [120] 10   [] ]
-  RUNBADINPUTTEST  [scrollbarcreate "main "name60 0   0  {120} 10   [] ]
-  RUNBADINPUTTEST  [scrollbarcreate "main "name70 0   0  -120  10   [] ]
-  RUNBADINPUTTEST  [scrollbarcreate "main "name75 0   0   10.5 10   [] ]
-  RUNBADINPUTTEST  [scrollbarcreate "main "name80 0   0   120 [10]  [] ]
-  RUNBADINPUTTEST  [scrollbarcreate "main "name90 0   0   120 {10}  [] ]
-  RUNBADINPUTTEST  [scrollbarcreate "main "name00 0   0   120 -10   [] ]
-  RUNBADINPUTTEST  [scrollbarcreate "main "name05 0   0   120  10.5 [] ]
+  RUNDOESNTLIKEINPUTTEST [scrollbarcreate "main "name10 [0]  0  120  10   [] ]
+  RUNDOESNTLIKEINPUTTEST [scrollbarcreate "main "name20 {0}  0  120  10   [] ]
+  RUNDOESNTLIKEINPUTTEST [scrollbarcreate "main "name25 10.5 0  120  10   [] ]
+  RUNDOESNTLIKEINPUTTEST [scrollbarcreate "main "name30 0  [0]  120  10   [] ]
+  RUNDOESNTLIKEINPUTTEST [scrollbarcreate "main "name40 0  {0}  120  10   [] ]
+  RUNDOESNTLIKEINPUTTEST [scrollbarcreate "main "name45 0  10.5 120  10   [] ]
+  RUNDOESNTLIKEINPUTTEST [scrollbarcreate "main "name50 0   0  [120] 10   [] ]
+  RUNDOESNTLIKEINPUTTEST [scrollbarcreate "main "name60 0   0  {120} 10   [] ]
+  RUNDOESNTLIKEINPUTTEST [scrollbarcreate "main "name70 0   0  -120  10   [] ]
+  RUNDOESNTLIKEINPUTTEST [scrollbarcreate "main "name75 0   0   10.5 10   [] ]
+  RUNDOESNTLIKEINPUTTEST [scrollbarcreate "main "name80 0   0   120 [10]  [] ]
+  RUNDOESNTLIKEINPUTTEST [scrollbarcreate "main "name90 0   0   120 {10}  [] ]
+  RUNDOESNTLIKEINPUTTEST [scrollbarcreate "main "name00 0   0   120 -10   [] ]
+  RUNDOESNTLIKEINPUTTEST [scrollbarcreate "main "name05 0   0   120  10.5 [] ]
 
   ; already exists
   TRACEINSTRUCTION [ scrollbarcreate "main "goodscrollbar 0 0 100 10 [] ]
-  RUNBADINPUTTEST  [ scrollbarcreate "main "goodscrollbar 0 0 100 10 [] ]
+  RUNWINDOWALREADYEXISTSTEST "goodscrollbar [ scrollbarcreate "main "goodscrollbar 0 0 100 10 [] ]
 
   ; create something that isn't a scrollbar
   TRACEINSTRUCTION [ staticcreate  "main "notascrollbar [text] 0 100 100 100 ]
@@ -1019,12 +1021,12 @@ TO WINDOWSTEST.SCROLLBAR.BADINPUT
   RUNNOTENOUGHINPUTSTEST [ (scrollbarenable "goodscrollbar) ]
   RUNTOOMANYINPUTSTEST   [ (scrollbarenable "goodscrollbar LOCALETRUE "toomany) ]
 
-  RUNBADINPUTTEST [ scrollbarenable "doesnotexist  LOCALETRUE ]
-  RUNBADINPUTTEST [ scrollbarenable "notascrollbar LOCALETRUE ]
+  RUNWINDOWDOESNOTEXISTTEST "doesnotexist  [ scrollbarenable "doesnotexist  LOCALETRUE ]
+  RUNWINDOWDOESNOTEXISTTEST "notascrollbar [ scrollbarenable "notascrollbar LOCALETRUE ]
 
-  RUNBADINPUTTEST [ scrollbarenable "goodscrollbar 1      ]
-  RUNBADINPUTTEST [ scrollbarenable "goodscrollbar [true] ]
-  RUNBADINPUTTEST [ scrollbarenable "goodscrollbar {true} ]
+  RUNDOESNTLIKEINPUTTEST [ scrollbarenable "goodscrollbar 1      ]
+  RUNDOESNTLIKEINPUTTEST [ scrollbarenable "goodscrollbar [true] ]
+  RUNDOESNTLIKEINPUTTEST [ scrollbarenable "goodscrollbar {true} ]
 
 
   ;
@@ -1033,8 +1035,8 @@ TO WINDOWSTEST.SCROLLBAR.BADINPUT
   RUNNOTENOUGHINPUTSTEST [ (scrollbarget) ]
   RUNTOOMANYINPUTSTEST   [ (scrollbarget "goodscrollbar "toomany) ]
 
-  RUNBADINPUTTEST [ ignore scrollbarget "nonexistent   ]
-  RUNBADINPUTTEST [ ignore scrollbarget "notascrollbar ]
+  RUNWINDOWDOESNOTEXISTTEST "nonexistent   [ ignore scrollbarget "nonexistent   ]
+  RUNWINDOWDOESNOTEXISTTEST "notascrollbar [ ignore scrollbarget "notascrollbar ]
 
 
   ;
@@ -1044,26 +1046,27 @@ TO WINDOWSTEST.SCROLLBAR.BADINPUT
   RUNNOTENOUGHINPUTSTEST [ (scrollbarset "goodscrollbar 0 100) ]
   RUNTOOMANYINPUTSTEST   [ (scrollbarset "goodscrollbar 0 100 50 "toomany) ]
 
-  RUNBADINPUTTEST [ scrollbarset "doesnotexist  0 100 50 ]
-  RUNBADINPUTTEST [ scrollbarset "notascrollbar 0 100 50 ]
+  RUNWINDOWDOESNOTEXISTTEST "doesnotexist  [ scrollbarset "doesnotexist  0 100 50 ]
+  RUNWINDOWDOESNOTEXISTTEST "notascrollbar [ scrollbarset "notascrollbar 0 100 50 ]
   
   ; change the position so that we can detect if any of the bad input 
   ; tests altered the position
   TRACEINSTRUCTION [ scrollbarset "goodscrollbar 110 111 110 ]
 
-  RUNBADINPUTTEST [ scrollbarset "goodscrollbar  [0]  10   5    ]
-  RUNBADINPUTTEST [ scrollbarset "goodscrollbar  {0}  10   5    ]
-  RUNBADINPUTTEST [ scrollbarset "goodscrollbar  0.5  10   5    ]
-  RUNBADINPUTTEST [ scrollbarset "goodscrollbar "zero 10   5    ]
-  RUNBADINPUTTEST [ scrollbarset "goodscrollbar   0  [10]  5    ]
-  RUNBADINPUTTEST [ scrollbarset "goodscrollbar   0  {10}  5    ]
-  RUNBADINPUTTEST [ scrollbarset "goodscrollbar   0  10.5  5    ]
-  RUNBADINPUTTEST [ scrollbarset "goodscrollbar   0  "ten [5]   ]
-  RUNBADINPUTTEST [ scrollbarset "goodscrollbar   0   10  {5}   ]
-  RUNBADINPUTTEST [ scrollbarset "goodscrollbar   0   10  5.5   ]
-  RUNBADINPUTTEST [ scrollbarset "goodscrollbar   0   10  "five ]
+  RUNDOESNTLIKEINPUTTEST [ scrollbarset {not a string}  [0]  10   5    ]
+  RUNDOESNTLIKEINPUTTEST [ scrollbarset "goodscrollbar  [0]  10   5    ]
+  RUNDOESNTLIKEINPUTTEST [ scrollbarset "goodscrollbar  {0}  10   5    ]
+  RUNDOESNTLIKEINPUTTEST [ scrollbarset "goodscrollbar  0.5  10   5    ]
+  RUNDOESNTLIKEINPUTTEST [ scrollbarset "goodscrollbar "zero 10   5    ]
+  RUNDOESNTLIKEINPUTTEST [ scrollbarset "goodscrollbar   0  [10]  5    ]
+  RUNDOESNTLIKEINPUTTEST [ scrollbarset "goodscrollbar   0  {10}  5    ]
+  RUNDOESNTLIKEINPUTTEST [ scrollbarset "goodscrollbar   0  10.5  5    ]
+  RUNDOESNTLIKEINPUTTEST [ scrollbarset "goodscrollbar   0  "ten [5]   ]
+  RUNDOESNTLIKEINPUTTEST [ scrollbarset "goodscrollbar   0   10  {5}   ]
+  RUNDOESNTLIKEINPUTTEST [ scrollbarset "goodscrollbar   0   10  5.5   ]
+  RUNDOESNTLIKEINPUTTEST [ scrollbarset "goodscrollbar   0   10  "five ]
 
-  RUNBADINPUTTEST [ scrollbarset "goodscrollbar   10   0   5    ]
+  RUNDOESNTLIKEINPUTTEST [ scrollbarset "goodscrollbar   10   0   5    ]
 
   ; verify that the scrollbar position did not change
   SIMPLEREPORTTEST [ scrollbarget "goodscrollbar ] 110
@@ -1076,8 +1079,8 @@ TO WINDOWSTEST.SCROLLBAR.BADINPUT
   RUNNOTENOUGHINPUTSTEST [ (scrollbardelete) ]
   RUNTOOMANYINPUTSTEST   [ (scrollbardelete "goodscrollbar "toomany) ]
 
-  RUNBADINPUTTEST  [ scrollbardelete "notascrollbar ]
-  RUNBADINPUTTEST  [ scrollbardelete "doesnotexist  ]
+  RUNWINDOWDOESNOTEXISTTEST "notascrollbar [ scrollbardelete "notascrollbar ]
+  RUNWINDOWDOESNOTEXISTTEST "doesnotexist  [ scrollbardelete "doesnotexist  ]
 
   ; cleanup
   TRACEINSTRUCTION [ staticdelete    "notascrollbar ]
@@ -1111,27 +1114,27 @@ TO WINDOWSTEST.BUTTON.BADINPUT
   RUNNOTENOUGHINPUTSTEST [(buttoncreate "main "name "label 0 0 100 10)]
   RUNTOOMANYINPUTSTEST   [(buttoncreate "main "name "label 0 0 100 10 [] "toomany)]
 
-  RUNBADINPUTTEST  [buttoncreate "main "name10 "label [0]  0  120  10   [] ]
-  RUNBADINPUTTEST  [buttoncreate "main "name20 "label {0}  0  120  10   [] ]
-  RUNBADINPUTTEST  [buttoncreate "main "name25 "label 10.5 0  120  10   [] ]
-  RUNBADINPUTTEST  [buttoncreate "main "name30 "label 0  [0]  120  10   [] ]
-  RUNBADINPUTTEST  [buttoncreate "main "name40 "label 0  {0}  120  10   [] ]
-  RUNBADINPUTTEST  [buttoncreate "main "name45 "label 0  10.5 120  10   [] ]
-  RUNBADINPUTTEST  [buttoncreate "main "name50 "label 0   0  [120] 10   [] ]
-  RUNBADINPUTTEST  [buttoncreate "main "name60 "label 0   0  {120} 10   [] ]
-  RUNBADINPUTTEST  [buttoncreate "main "name70 "label 0   0  -120  10   [] ]
-  RUNBADINPUTTEST  [buttoncreate "main "name75 "label 0   0   10.5 10   [] ]
-  RUNBADINPUTTEST  [buttoncreate "main "name80 "label 0   0   120 [10]  [] ]
-  RUNBADINPUTTEST  [buttoncreate "main "name90 "label 0   0   120 {10}  [] ]
-  RUNBADINPUTTEST  [buttoncreate "main "name00 "label 0   0   120 -10   [] ]
-  RUNBADINPUTTEST  [buttoncreate "main "name05 "label 0   0   120  10.5 [] ]
+  RUNDOESNTLIKEINPUTTEST [buttoncreate "main "name10 "label [0]  0  120  10   [] ]
+  RUNDOESNTLIKEINPUTTEST [buttoncreate "main "name20 "label {0}  0  120  10   [] ]
+  RUNDOESNTLIKEINPUTTEST [buttoncreate "main "name25 "label 10.5 0  120  10   [] ]
+  RUNDOESNTLIKEINPUTTEST [buttoncreate "main "name30 "label 0  [0]  120  10   [] ]
+  RUNDOESNTLIKEINPUTTEST [buttoncreate "main "name40 "label 0  {0}  120  10   [] ]
+  RUNDOESNTLIKEINPUTTEST [buttoncreate "main "name45 "label 0  10.5 120  10   [] ]
+  RUNDOESNTLIKEINPUTTEST [buttoncreate "main "name50 "label 0   0  [120] 10   [] ]
+  RUNDOESNTLIKEINPUTTEST [buttoncreate "main "name60 "label 0   0  {120} 10   [] ]
+  RUNDOESNTLIKEINPUTTEST [buttoncreate "main "name70 "label 0   0  -120  10   [] ]
+  RUNDOESNTLIKEINPUTTEST [buttoncreate "main "name75 "label 0   0   10.5 10   [] ]
+  RUNDOESNTLIKEINPUTTEST [buttoncreate "main "name80 "label 0   0   120 [10]  [] ]
+  RUNDOESNTLIKEINPUTTEST [buttoncreate "main "name90 "label 0   0   120 {10}  [] ]
+  RUNDOESNTLIKEINPUTTEST [buttoncreate "main "name00 "label 0   0   120 -10   [] ]
+  RUNDOESNTLIKEINPUTTEST [buttoncreate "main "name05 "label 0   0   120  10.5 [] ]
 
   ; already exists
   TRACEINSTRUCTION [ buttoncreate "main "goodbutton "label 0 0 100 10 [] ]
-  RUNBADINPUTTEST  [ buttoncreate "main "goodbutton "label 0 0 100 10 [] ]
+  RUNWINDOWALREADYEXISTSTEST "goodbutton [ buttoncreate "main "goodbutton "label 0 0 100 10 [] ]
 
   ; create something that isn't a button
-  TRACEINSTRUCTION [ staticcreate  "main "notabutton [text] 0 100 100 100 ]
+  TRACEINSTRUCTION [ staticcreate "main "notabutton [text] 0 100 100 100 ]
 
   ;
   ; bad input for BUTTONENABLE
@@ -1139,12 +1142,12 @@ TO WINDOWSTEST.BUTTON.BADINPUT
   RUNNOTENOUGHINPUTSTEST [ (buttonenable "goodbutton) ]
   RUNTOOMANYINPUTSTEST   [ (buttonenable "goodbutton "true "toomany) ]
 
-  RUNBADINPUTTEST [ buttonenable "doesnotexist  LOCALETRUE ]
-  RUNBADINPUTTEST [ buttonenable "notabutton    LOCALETRUE ]
+  RUNWINDOWDOESNOTEXISTTEST "doesnotexist [ buttonenable "doesnotexist LOCALETRUE ]
+  RUNWINDOWDOESNOTEXISTTEST "notabutton   [ buttonenable "notabutton   LOCALETRUE ]
 
-  RUNBADINPUTTEST [ buttonenable "goodbutton    1      ]
-  RUNBADINPUTTEST [ buttonenable "goodbutton    [true] ]
-  RUNBADINPUTTEST [ buttonenable "goodbutton    {true} ]
+  RUNDOESNTLIKEINPUTTEST [ buttonenable "goodbutton    1      ]
+  RUNDOESNTLIKEINPUTTEST [ buttonenable "goodbutton    [true] ]
+  RUNDOESNTLIKEINPUTTEST [ buttonenable "goodbutton    {true} ]
 
 
   ;
@@ -1153,8 +1156,8 @@ TO WINDOWSTEST.BUTTON.BADINPUT
   RUNNOTENOUGHINPUTSTEST [ (buttonupdate "goodbutton) ]
   RUNTOOMANYINPUTSTEST   [ (buttonupdate "goodbutton "newlabel "toomany) ]
 
-  RUNBADINPUTTEST [ buttonupdate "nonexistent "newlabel ]
-  RUNBADINPUTTEST [ buttonupdate "notabutton  "newlabel ]
+  RUNWINDOWDOESNOTEXISTTEST "nonexistent [ buttonupdate "nonexistent "newlabel ]
+  RUNWINDOWDOESNOTEXISTTEST "notabutton  [ buttonupdate "notabutton  "newlabel ]
 
 
 
@@ -1166,8 +1169,8 @@ TO WINDOWSTEST.BUTTON.BADINPUT
   RUNNOTENOUGHINPUTSTEST [ (buttondelete) ]
   RUNTOOMANYINPUTSTEST   [ (buttondelete "goodbutton "toomany) ]
 
-  RUNBADINPUTTEST  [ buttondelete "notabutton   ]
-  RUNBADINPUTTEST  [ buttondelete "doesnotexist ]
+  RUNWINDOWDOESNOTEXISTTEST "notabutton   [ buttondelete "notabutton   ]
+  RUNWINDOWDOESNOTEXISTTEST "doesnotexist [ buttondelete "doesnotexist ]
 
   ; cleanup
   TRACEINSTRUCTION [ staticdelete "notabutton ]
@@ -1222,7 +1225,8 @@ TO WINDOWSTEST.DEBUGWINDOWS.BADINPUT
   TRACEINSTRUCTION     [ WINDOWCREATE "root "window "caption 0 0 120 400 [] ]
 
   RUNTOOMANYINPUTSTEST [(DEBUGWINDOWS "window "toomany)]
-  RUNBADINPUTTEST      [(DEBUGWINDOWS "doesnotexist)]
+
+  RUNWINDOWDOESNOTEXISTTEST "doesnotexist [(DEBUGWINDOWS "doesnotexist)]
 
   TRACEINSTRUCTION     [ WINDOWDELETE "window ]
 END

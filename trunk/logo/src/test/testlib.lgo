@@ -355,6 +355,16 @@ TO RUNISAPRIMITIVETEST :instructions
 END
 BURY [RUNISAPRIMITIVETEST]
 
+TO RUNWINDOWALREADYEXISTSTEST :windowname :instructions 
+  (RUNEXPECTERRORTEST :instructions 1001 WORD :windowname "| already exists|)
+END
+BURY [RUNWINDOWALREADYEXISTSTEST]
+
+TO RUNWINDOWDOESNOTEXISTTEST :windowname :instructions 
+  (RUNEXPECTERRORTEST :instructions 1002 WORD :windowname "| does not exist|)
+END
+BURY [RUNWINDOWDOESNOTEXISTTEST]
+
 TO RUNDLLLOADERRORTEST :instructions
   (RUNEXPECTERRORTEST :instructions 1101 "|DLL load failed|)
 END
