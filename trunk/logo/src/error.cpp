@@ -412,6 +412,22 @@ err_logo(
         g_ErrorFormatString = LOCALIZED_NOTVALIDBMP;
         break;
 
+    case MIDI_GENERAL:
+        g_ErrorFormatString = LOCALIZED_ERROR_MIDI": %s";
+        break;
+
+    case MIDI_DEVICE_ALREADY_OPEN:
+        g_ErrorFormatString = LOCALIZED_ERROR_MIDI": "LOCALIZED_ERROR_MIDIALREADYOPEN;
+        break;
+
+    case MIDI_INVALID_DEVICE:
+        g_ErrorFormatString = LOCALIZED_ERROR_MIDI": "LOCALIZED_ERROR_MIDIINVALIDDEVICE;
+        break;
+
+    case MIDI_NOT_OPEN:
+        g_ErrorFormatString = LOCALIZED_ERROR_MIDI": "LOCALIZED_ERROR_MIDINOTOPEN;
+        break;
+
     default:
         prepare_to_exit(FALSE);
         printfx("%s", LOCALIZED_ERROR_UNKNOWN);

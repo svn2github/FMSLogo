@@ -36,6 +36,8 @@ II. New features/bugs fixed:
       errors and no longer display dialog boxes.
     o Fix bug #1448107; SETACTIVEAREA now throws a bad input error when given
       an impossible range and no longer displays a dialog box.
+    o Fix bug #1475223; MIDI procedures now throw MIDI-specific errors and
+      no longer display dialog boxes.
     o Minor updates to the manual.
 
   For a complete history of changes across all versions of FMSLogo, see

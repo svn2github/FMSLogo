@@ -73,72 +73,79 @@ NODE *lsound(NODE *arg)
     return Unbound;
 }
 
+static
+void
+ThrowGeneralMidiError(
+    UINT MidiError
+    )
+{
+    // convert the error into a string
+    char midiErrorBuffer[MAX_BUFFER_SIZE];
+    midiOutGetErrorText(MidiError, midiErrorBuffer, sizeof(midiErrorBuffer));
+
+    // report the error
+    err_logo(MIDI_GENERAL, make_strnode(midiErrorBuffer));
+}
+
+
 NODE *lmidiopen(NODE *args)
 {
-    // if not open open it
-    if (!hMidiOut)
+    if (hMidiOut != NULL)
     {
-        UINT id = MIDIMAPPER;
-
-        if (args != NIL)
-        {
-            id = int_arg(args);
-            if (id > midiOutGetNumDevs())
-            {
-                ShowMessageAndStop(
-                    LOCALIZED_ERROR_MIDI, 
-                    LOCALIZED_ERROR_MIDIINVALIDDEVICE);
-            }
-        }
-
-        MIDIOUTCAPS moc;
-        UINT MidiError = midiOutGetDevCaps(id, &moc, sizeof(moc));
-        if (!MidiError) 
-        {
-            MidiError = midiOutOpen(&hMidiOut, id, NULL, 0L, 0L);
-        }
-
-        if (MidiError)
-        {
-            char MidiErrorBuffer[MAX_BUFFER_SIZE];
-            midiOutGetErrorText(MidiError, MidiErrorBuffer, MAX_BUFFER_SIZE);
-            ShowMessageAndStop(LOCALIZED_ERROR_MIDI, MidiErrorBuffer);
-        }
-        else
-        {
-            NODE * targ = make_strnode(moc.szPname);
-            NODE * val = parser(targ, false);
-            return val;
-        }
-    }
-    else
-    {
-        ShowMessageAndStop(
-            LOCALIZED_ERROR_MIDI, 
-            LOCALIZED_ERROR_MIDIALREADYOPEN);
+        // The device is already open.
+        err_logo(MIDI_DEVICE_ALREADY_OPEN, NIL);
+        return Unbound;
     }
 
-    return Unbound;
+    // The device is not already open, so open it.
+    UINT id = MIDIMAPPER;
+
+    if (args != NIL)
+    {
+        id = int_arg(args);
+        if (id > midiOutGetNumDevs())
+        {
+            err_logo(MIDI_INVALID_DEVICE, NIL);
+            return Unbound;
+        }
+    }
+
+    MIDIOUTCAPS moc;
+    UINT MidiError = midiOutGetDevCaps(id, &moc, sizeof(moc));
+    if (!MidiError) 
+    {
+        MidiError = midiOutOpen(&hMidiOut, id, NULL, 0L, 0L);
+    }
+
+    if (MidiError)
+    {
+        // report the midi error
+        ThrowGeneralMidiError(MidiError);
+        return Unbound;
+    }
+
+    NODE * targ = make_strnode(moc.szPname);
+    NODE * val = parser(targ, false);
+    return val;
 }
 
 NODE *lmidiclose(NODE *  /*args*/)
 {
-    // if open close it 
-    if (hMidiOut)
+    if (hMidiOut == NULL)
     {
-        UINT MidiError = midiOutClose(hMidiOut);
-        hMidiOut = 0;
-
-        if (MidiError)
-        {
-            char MidiErrorBuffer[MAX_BUFFER_SIZE];
-            midiOutGetErrorText(MidiError, MidiErrorBuffer, MAX_BUFFER_SIZE);
-            ShowMessageAndStop(LOCALIZED_ERROR_MIDI, MidiErrorBuffer);
-        }
+        // the MIDI device isn't open
+        err_logo(MIDI_NOT_OPEN, NIL);
+        return Unbound;
     }
-    else
+
+    // Close the device
+    UINT MidiError = midiOutClose(hMidiOut);
+    hMidiOut = 0;
+
+    if (MidiError)
     {
-        ShowMessageAndStop(LOCALIZED_ERROR_MIDI, LOCALIZED_ERROR_MIDINOTOPEN);
+        ThrowGeneralMidiError(MidiError);
+        return Unbound;
     }
 
     return Unbound;
@@ -153,92 +160,89 @@ NODE *lmidimessage(NODE *arg)
     }
     bytetolong;
 
-    /* if midi open continue */
-    if (hMidiOut)
+    if (hMidiOut == NULL)
     {
-        NODE * args = car(arg);
+        // the MIDI device isn't open
+        err_logo(MIDI_NOT_OPEN, NIL);
+        return Unbound;
+    }
 
-        /* if a list with something in it continue */
-        if (is_list(args) && (args != NIL))
+    NODE * args = car(arg);
+
+    if (!is_list(args) || (args == NIL))
+    {
+        // The input must be a list with something in it.
+        err_logo(BAD_DATA_UNREC, args);
+        return Unbound;
+    }
+
+    UINT MidiError;
+
+    // if not system exclusive then use shortmsg else use longmsg
+    if (int_arg(args) != 0xF0)
+    {
+
+        // pack 3 bytes at a time and send them as short messages
+        arg = args;
+
+        while (arg != NIL)
         {
-            UINT MidiError;
-
-            /* if not system exclusive then use shortmsg else use longmsg */
-            if (int_arg(args) != 0xF0)
-            {
-
-                /* pack 3 bytes at a time and send them as short messages */
-                arg = args;
-
-                while (arg != NIL)
-                {
-                    bytetolong.mylong = 0L;
-                    bytetolong.mybyte[0] = int_arg(arg);
-                    if (cdr(arg) != NIL) bytetolong.mybyte[1] = int_arg(arg = cdr(arg));
-                    if (cdr(arg) != NIL) bytetolong.mybyte[2] = int_arg(arg = cdr(arg));
-                    MidiError = midiOutShortMsg(hMidiOut, bytetolong.mylong);
-                    if (MidiError) break;
-                    if (arg != NIL) arg = cdr(arg);
-                }
-
-            }
-            else
-            {
-                /* count elements in list so we can allocate buffer */
-                int i = list_length(args);
-
-                /* allocate structure buffer */
-                // REVISIT: why not use malloc()?
-                HANDLE    HdrHandle = (HANDLE) GlobalAlloc(GMEM_MOVEABLE | GMEM_SHARE | GMEM_ZEROINIT, sizeof(MIDIHDR));
-                MIDIHDR * MidiOutHdr = (MIDIHDR *) GlobalLock((HGLOBAL) HdrHandle);
-
-                HANDLE DataHandle = (HANDLE) GlobalAlloc(GMEM_MOVEABLE | GMEM_SHARE | GMEM_ZEROINIT, i);
-                BYTE * MidiOutData = (BYTE *) GlobalLock((HGLOBAL) DataHandle);
-
-                /* pack the buffer array and set size */
-                arg = args;
-
-                for (int j = 0; j < i; j++)
-                {
-                    MidiOutData[j] = int_arg(arg);
-                    arg = cdr(arg);
-                }
-
-                MidiOutHdr->dwBufferLength = i;
-
-                MidiOutHdr->lpData = MidiOutData;
-
-                /* prepare it, send it out, and unprepare it */
-
-                MidiError = midiOutPrepareHeader(hMidiOut, MidiOutHdr, sizeof(MIDIHDR));
-                if (!MidiError) MidiError = midiOutLongMsg(hMidiOut, MidiOutHdr, sizeof(MIDIHDR));
-                if (!MidiError) MidiError = midiOutUnprepareHeader(hMidiOut, MidiOutHdr, sizeof(MIDIHDR));
-
-                /* free buffer and struct */
-
-                GlobalUnlock(DataHandle);
-                GlobalFree(DataHandle);
-
-                GlobalUnlock(HdrHandle);
-                GlobalFree(HdrHandle);
-            }
-
-            /* if midi error let 'em know */
-            if (MidiError)
-            {
-                char MidiErrorBuffer[MAX_BUFFER_SIZE];
-                midiOutGetErrorText(MidiError, MidiErrorBuffer, MAX_BUFFER_SIZE);
-                ShowMessageAndStop(LOCALIZED_ERROR_MIDI, MidiErrorBuffer);
-            }
+            bytetolong.mylong = 0L;
+            bytetolong.mybyte[0] = int_arg(arg);
+            if (cdr(arg) != NIL) bytetolong.mybyte[1] = int_arg(arg = cdr(arg));
+            if (cdr(arg) != NIL) bytetolong.mybyte[2] = int_arg(arg = cdr(arg));
+            MidiError = midiOutShortMsg(hMidiOut, bytetolong.mylong);
+            if (MidiError) break;
+            if (arg != NIL) arg = cdr(arg);
         }
-        else
-        {
-            ShowMessageAndStop(LOCALIZED_ERROR_MIDI, LOCALIZED_ERROR_BADINPUT);
-        }
+
     }
     else
     {
-        ShowMessageAndStop(LOCALIZED_ERROR_MIDI, LOCALIZED_ERROR_MIDINOTOPEN);
+        // count elements in list so we can allocate buffer 
+        int i = list_length(args);
+
+        /* allocate structure buffer */
+        // REVISIT: why not use malloc()?
+        HANDLE    HdrHandle = (HANDLE) GlobalAlloc(GMEM_MOVEABLE | GMEM_SHARE | GMEM_ZEROINIT, sizeof(MIDIHDR));
+        MIDIHDR * MidiOutHdr = (MIDIHDR *) GlobalLock((HGLOBAL) HdrHandle);
+
+        HANDLE DataHandle = (HANDLE) GlobalAlloc(GMEM_MOVEABLE | GMEM_SHARE | GMEM_ZEROINIT, i);
+        BYTE * MidiOutData = (BYTE *) GlobalLock((HGLOBAL) DataHandle);
+
+        /* pack the buffer array and set size */
+        arg = args;
+
+        for (int j = 0; j < i; j++)
+        {
+            MidiOutData[j] = int_arg(arg);
+            arg = cdr(arg);
+        }
+
+        MidiOutHdr->dwBufferLength = i;
+
+        MidiOutHdr->lpData = MidiOutData;
+
+        /* prepare it, send it out, and unprepare it */
+
+        MidiError = midiOutPrepareHeader(hMidiOut, MidiOutHdr, sizeof(MIDIHDR));
+        if (!MidiError) MidiError = midiOutLongMsg(hMidiOut, MidiOutHdr, sizeof(MIDIHDR));
+        if (!MidiError) MidiError = midiOutUnprepareHeader(hMidiOut, MidiOutHdr, sizeof(MIDIHDR));
+
+        /* free buffer and struct */
+
+        GlobalUnlock(DataHandle);
+        GlobalFree(DataHandle);
+
+        GlobalUnlock(HdrHandle);
+        GlobalFree(HdrHandle);
+    }
+
+    if (MidiError)
+    {
+        // Let the user know that a midi error occured.
+        ThrowGeneralMidiError(MidiError);
+        return Unbound;
     }
 
     return Unbound;

@@ -204,6 +204,11 @@ enum ERR_TYPES
     IMAGE_BMP_WRITE_FAILED       = 1213,
     IMAGE_BMP_INVALID            = 1214,
 
+    MIDI_GENERAL                 = 1300,
+    MIDI_DEVICE_ALREADY_OPEN     = 1301,
+    MIDI_INVALID_DEVICE          = 1302,
+    MIDI_NOT_OPEN                = 1303,
+
     FATAL                        = 0xFFFF,
 };
 
