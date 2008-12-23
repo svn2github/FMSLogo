@@ -103,6 +103,11 @@ NODE *lmidiopen(NODE *args)
     if (args != NIL)
     {
         id = int_arg(args);
+        if (stopping_flag == THROWING)
+        {
+            // non-integer input
+            return Unbound;
+        }
         if (id > midiOutGetNumDevs())
         {
             err_logo(MIDI_INVALID_DEVICE, NIL);

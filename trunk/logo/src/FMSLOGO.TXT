@@ -38,6 +38,8 @@ II. New features/bugs fixed:
       an impossible range and no longer displays a dialog box.
     o Fix bug #1475223; MIDI procedures now throw MIDI-specific errors and
       no longer display dialog boxes.
+    o Fix bug #1475214; MIDIOPEN no longer opens MIDI mapper when given bad
+      input.
     o Minor updates to the manual.
 
   For a complete history of changes across all versions of FMSLogo, see
