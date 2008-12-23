@@ -437,7 +437,7 @@ gifload_helper(
 
     // cleanup
     unlink(TempBmpName);
-    return SUCCESS;
+    return status;
 }
 
 NODE *lgifload(NODE *arg)
