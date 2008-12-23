@@ -414,6 +414,7 @@ err_logo(
 
     case MIDI_GENERAL:
         g_ErrorFormatString = LOCALIZED_ERROR_MIDI": %s";
+        error_message = cons_list(ErrorMessageParameters);
         break;
 
     case MIDI_DEVICE_ALREADY_OPEN:
