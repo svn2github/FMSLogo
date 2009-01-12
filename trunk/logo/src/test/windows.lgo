@@ -985,6 +985,11 @@ TO WINDOWSTEST.SCROLLBAR
   TRACEINSTRUCTION [ WINDOWDELETE "windowstest.scrollbar ]
 END
 
+TO WINDOWSTEST.SCROLLBAR.BADINPUT.OUTPUT.5
+  ; used to test bad input recovery
+  OUTPUT 5
+END
+
 TO WINDOWSTEST.SCROLLBAR.BADINPUT
 
   ;
@@ -1065,11 +1070,17 @@ TO WINDOWSTEST.SCROLLBAR.BADINPUT
   RUNDOESNTLIKEINPUTTEST [ scrollbarset "goodscrollbar   0   10  {5}   ]
   RUNDOESNTLIKEINPUTTEST [ scrollbarset "goodscrollbar   0   10  5.5   ]
   RUNDOESNTLIKEINPUTTEST [ scrollbarset "goodscrollbar   0   10  "five ]
-
-  RUNDOESNTLIKEINPUTTEST [ scrollbarset "goodscrollbar   10   0   5    ]
+  RUNDOESNTLIKEINPUTTEST [ scrollbarset "goodscrollbar   10  0   5     ]
 
   ; verify that the scrollbar position did not change
   SIMPLEREPORTTEST [ scrollbarget "goodscrollbar ] 110
+
+  ; Test that a bad range (max < min) is recoverable
+  local "erract
+  make "erract [WINDOWSTEST.SCROLLBAR.BADINPUT.OUTPUT.5]
+  TRACEINSTRUCTIONNOCATCH [ scrollbarset "goodscrollbar  1 0 2 ]
+  SIMPLEREPORTTEST        [ scrollbarget "goodscrollbar ] 2
+  make "erract []
 
 
 
