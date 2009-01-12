@@ -538,7 +538,15 @@ void CCommander::OnSize(wxSizeEvent& event)
 // TODO: rename so that it doesn't have "post" in it
 void CCommander::PostKeyDownToInputControl(wxKeyEvent& Event)
 {
-    fprintf(stderr, "PostKeyDownToInputControl() called\n");
+    int keyCode = Event.GetKeyCode();
+
+    // Special case for redirecting the right-arrow key press:
+    // Move the insertion point to the far left for compatability
+    // with the OWL-based FMSLogo.
+    if (keyCode == WXK_RIGHT || keyCode == WXK_NUMPAD_RIGHT)
+    {
+        m_NextInstruction->SetInsertionPoint(0);
+    }
     m_NextInstruction->SetFocus();
     m_NextInstruction->EmulateKeyPress(Event);
 }
