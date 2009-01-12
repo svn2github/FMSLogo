@@ -20,6 +20,8 @@
     #include "wx/icon.h"
     #include "wx/fontdlg.h"
 
+    #include "wx/dcmemory.h"
+
     #include <wx/fontutil.h> // for wxNativeFontInfo
 #endif
 
@@ -162,6 +164,7 @@ BEGIN_EVENT_TABLE(CMainFrame, wxFrame)
     EVT_MENU(ID_SETSCREENCOLOR,     CMainFrame::SetScreenColor)
     EVT_MENU(ID_SETFLOODCOLOR,      CMainFrame::SetFloodColor)
     EVT_MENU(ID_HELP,               CMainFrame::Help)
+    EVT_MENU(ID_HELPEXAMPLES,       CMainFrame::Examples)
     EVT_MENU(ID_HELPABOUT,          CMainFrame::AboutFmsLogo)
     EVT_MENU(ID_HELPABOUTMS,        CMainFrame::AboutMultipleSclerosis)
     EVT_MENU(ID_ZOOMIN,             CMainFrame::ZoomIn)
@@ -735,6 +738,26 @@ void CMainFrame::ZoomNormal(wxCommandEvent& WXUNUSED(event) )
 void CMainFrame::Help(wxCommandEvent& WXUNUSED(event) )
 {
     OpenHelp(wxEmptyString);
+}
+
+void CMainFrame::Examples(wxCommandEvent& WXUNUSED(Event))
+{
+    // For now, doodle something on the screen so that we can test
+    // saving the screen as a bitmap.
+    wxMemoryDC & memoryDeviceContext = m_Screen->GetMemoryDeviceContext();
+
+    memoryDeviceContext.SetPen(*wxBLACK_PEN);
+    memoryDeviceContext.DrawLine(0, 0, 100, 200);
+
+    memoryDeviceContext.SetBackgroundMode(wxTRANSPARENT);
+    memoryDeviceContext.DrawText(_T("Testing"), 50, 50);
+
+    memoryDeviceContext.SetPen(*wxRED_PEN);
+    memoryDeviceContext.SetBrush(*wxGREEN_BRUSH);
+    memoryDeviceContext.DrawRectangle(120, 120, 100, 80);
+    
+    // Tell wxWidgets to call CScreen::OnDraw at the next opportunity.
+    m_Screen->Refresh(false);
 }
 
 void CMainFrame::AboutFmsLogo(wxCommandEvent& WXUNUSED(event) )

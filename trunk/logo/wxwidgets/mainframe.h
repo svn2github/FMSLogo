@@ -12,6 +12,7 @@ class CCommander;
 class CStatusDialog;
 class CWorkspaceEditor;
 class CSetPenSize;
+class CScreen;
 
 class CMainFrame : public wxFrame
 {
@@ -32,6 +33,7 @@ public:
     void ZoomOut(wxCommandEvent& event);
     void ZoomNormal(wxCommandEvent& event);
     void Help(wxCommandEvent& event);
+    void Examples(wxCommandEvent& event);
     void AboutFmsLogo(wxCommandEvent& event);
     void AboutMultipleSclerosis(wxCommandEvent& event);
     void Quit(wxCommandEvent& event);
@@ -49,7 +51,6 @@ public:
     CWorkspaceEditor * CreateWorskpaceEditor();
     void CloseWorkspaceEditor(CWorkspaceEditor * Editor);
 
-
 private:
     void
     CMainFrame::SetColorHelper(
@@ -59,7 +60,7 @@ private:
         );
 
     wxIcon           * m_FmsLogoIcon;
-    wxScrolledWindow * m_Screen;
+    CScreen          * m_Screen;
     wxWindow         * m_Commander;
     CCommander       * m_RealCommander;
 public:  // HACK: make this private
