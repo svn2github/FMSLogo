@@ -75,6 +75,7 @@ III. Special Thanks
     Lion Nik Kucev
     Pavel Boytchev
     Ralf Kurth
+    Bob Gorman
 
   Special thanks to:
     George Mills
