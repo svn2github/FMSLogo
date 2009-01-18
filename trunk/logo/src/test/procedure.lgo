@@ -5,7 +5,7 @@ TO SAMPLEPROC  :a  :b
   SHOW  :b ; show
 END
 
-TO PROCEDURETEST.COMPLEXPROC :a :b [:c 1] [:d SUM 1 2] [:e] 2
+TO PROCEDURETEST.COMPLEXPROC :a :b [:c 1] [:d SUM 1 2] [:e] 2  
   PRINT :a ; print
   SHOW  :b ; show
 
@@ -199,7 +199,7 @@ TO FULLTEXTTEST.SMOKETEST
 
   TRACEINSTRUCTION [ MAKE "fulltext FULLTEXT "PROCEDURETEST.COMPLEXPROC]
   FAILIFNOTTRUE    [ LIST?  :fulltext]
-  SIMPLEREPORTTEST [ ITEM 1 :fulltext] "|TO PROCEDURETEST.COMPLEXPROC :a :b [:c 1] [:d SUM 1 2] [:e] 2|
+  SIMPLEREPORTTEST [ ITEM 1 :fulltext] "|TO PROCEDURETEST.COMPLEXPROC :a :b [:c 1] [:d SUM 1 2] [:e] 2  |
   SIMPLEREPORTTEST [ ITEM 2 :fulltext] "|  PRINT :a ; print|
   SIMPLEREPORTTEST [ ITEM 3 :fulltext] "|  SHOW  :b ; show|
   SIMPLEREPORTTEST [ ITEM 4 :fulltext] "||
@@ -263,8 +263,6 @@ TO POTEST.SMOKETEST
 
    LOCALMAKE "namepvariable 0
 
-   ; Just exercise the PO routines for now.
-   ; we'll figure out how to test its output later
    OPENWRITE "po.dump.txt
    LOCALMAKE "previouswriter WRITER
    SETWRITE "po.dump.txt
@@ -281,26 +279,66 @@ TO POTEST.SMOKETEST
    TRACEINSTRUCTION [PONS]
    TRACEINSTRUCTION [POPLS]
 
-   TRACEINSTRUCTION [PON "namepvariable  ]
-   TRACEINSTRUCTION [PON [namepvariable] ]
+   ; test POT
+   RUNPRINTTEST [POT "SAMPLEPROC ] ~
+                "|TO SAMPLEPROC  :a  :b|
+
+   RUNPRINTTEST [POT "PROCEDURETEST.COMPLEXPROC] ~
+                "|TO PROCEDURETEST.COMPLEXPROC :a :b [:c 1] [:d SUM 1 2] [:e] 2  |
+
+   ; test PO
+   RUNPRINTTEST [PO "SAMPLEPROC ] (list
+      "|TO SAMPLEPROC  :a  :b|
+      "|  PRINT :a ; print|
+      "|  SHOW  :b ; show|
+      "|END|
+      "||)
+
+   RUNPRINTTEST [PO "PROCEDURETEST.COMPLEXPROC ] (list
+      "|TO PROCEDURETEST.COMPLEXPROC :a :b [:c 1] [:d SUM 1 2] [:e] 2  |
+      "|  PRINT :a ; print|
+      "|  SHOW  :b ; show|
+      "||
+      "|  OUTPUT SUM :c :d ; output|
+      "|END|
+      "||)
+
+   ; test PON
+   RUNPRINTTEST [PON "namepvariable  ] "|Make "namepvariable 0|
+   RUNPRINTTEST [PON [namepvariable] ] "|Make "namepvariable 0|
 
    ; create some property lists for testing POPL
-   PPROP "wordtonumber "one 1
-   PPROP "wordtonumber "two 2
-   PPROP "numbertoword 1 "one
-   PPROP "numbertoword 2 "two
-   POPL "wordtonumber
-   POPL "numbertoword
-   POPL [wordtonumber numbertoword nonexistent]
+   TRACEINSTRUCTION [ PPROP "wordtonumber "one 1 ]
+   TRACEINSTRUCTION [ PPROP "wordtonumber "two 2 ]
+   TRACEINSTRUCTION [ PPROP "numbertoword 1 "one ]
+   TRACEINSTRUCTION [ PPROP "numbertoword 2 "two ]
+
+   ; test POPL
+   RUNPRINTTEST [POPL "wordtonumber] (list
+      "|Pprop "wordtonumber "two 2|
+      "|Pprop "wordtonumber "one 1| )
+
+   RUNPRINTTEST [POPL "numbertoword] (list
+      "|Pprop "numbertoword 2 "two|
+      "|Pprop "numbertoword 1 "one| )
+
+   RUNPRINTTEST [POPL [wordtonumber numbertoword nonexistent]] (list
+      "|Pprop "wordtonumber "two 2|
+      "|Pprop "wordtonumber "one 1| 
+      "|Pprop "numbertoword 2 "two|
+      "|Pprop "numbertoword 1 "one| )
+
 
    ; remove the property lists
    REMPROP "wordtonumber "one
    REMPROP "wordtonumber "two
    REMPROP "numbertoword 1
    REMPROP "numbertoword 2
-   POPL "wordtonumber
-   POPL "numbertoword
-   POPL [wordtonumber numbertoword nonexistent]
+
+   ; try to print the properly lists, now that all properties have been removed
+   RUNPRINTTEST [POPL "wordtonumber]                           []
+   RUNPRINTTEST [POPL "numbertoword]                           []
+   RUNPRINTTEST [POPL [wordtonumber numbertoword nonexistent]] []
 
    RUNNOTENOUGHINPUTSTEST [(POPL)]
    RUNTOOMANYINPUTSTEST   [(POPL "numbertoword "toomany)]
@@ -319,7 +357,7 @@ TO POTEST.SMOKETEST
    ERASEFILE "po.dump.txt
 
 
-   ; Unlike PRINT and SHOW, the PO primitives print out "backslashed" 
+   ; Unlike PRINT and SHOW, the PO procedures print out "backslashed" 
    ; strings, which means they retain meta-characters like @.
    LOCALMAKE "noindex       {1 2 3}
    LOCALMAKE "positiveindex {1 2 3}@10
