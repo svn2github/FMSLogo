@@ -1,4 +1,41 @@
 LOAD "testlib.lgo
+LOAD "uiautomationlib.lgo
+
+; helper function for reading words from READWORD when the
+; word comes from the UI.
+TO READWORDTEST.READWORDFROMUI :wordtoread
+
+   UIAUTOMATION.INITIALIZE
+ 
+   local "theword
+
+   CATCH "ERROR [
+
+       ; enter the line and press press OK
+       UIAUTOMATION.POSTSTRINGTOWINDOW     [Input Mode (Cancel to Halt)] "Edit :wordtoread
+       UIAUTOMATION.POSTBUTTONPUSHTOWINDOW [Input Mode (Cancel to Halt)] "OK
+
+       make "theword READWORD
+   ]
+
+   localmake "lasterror ERROR
+   if :lasterror <> [] [
+      REPORTTESTFAILED (list "UI "Automation "to "read :wordtoread ": :lasterror)
+   ]
+
+   UIAUTOMATION.UNINITIALIZE
+
+   OUTPUT :theword
+
+END
+
+TO READWORDTEST.2516248
+
+   make "twowords READWORDTEST.READWORDFROMUI "|Two Words|
+
+   RUNPRINTTEST [PO NAMELIST "twowords] "|Make \"twowords \"Two\\ Words|
+
+END
 
 TO READWORDTEST.SMOKETEST
 
@@ -47,6 +84,7 @@ END
 TO READWORDTEST
 
    READWORDTEST.SMOKETEST
+   READWORDTEST.2516248
    READWORDTEST.BADINPUT
 
 END
