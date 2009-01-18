@@ -29,13 +29,37 @@ TO READWORDTEST.READWORDFROMUI :wordtoread
 
 END
 
-TO READWORDTEST.2516248
+TO READWORDTEST.UI
 
-   make "twowords READWORDTEST.READWORDFROMUI "|Two Words|
-
-   RUNPRINTTEST [PO NAMELIST "twowords] "|Make \"twowords \"Two\\ Words|
+   SIMPLEREPORTTEST [READWORDTEST.READWORDFROMUI "easytest]    "easytest
+   SIMPLEREPORTTEST [READWORDTEST.READWORDFROMUI "|Two Words|] "|Two Words|
 
 END
+
+TO READWORDTEST.UICANCEL
+
+   UIAUTOMATION.INITIALIZE
+ 
+   local "theword
+
+   CATCH "ERROR [
+       ; enter the line and press press Cancel
+       UIAUTOMATION.POSTSTRINGTOWINDOW     [Input Mode (Cancel to Halt)] "Edit   "|UI will press Cancel|
+       UIAUTOMATION.POSTBUTTONPUSHTOWINDOW [Input Mode (Cancel to Halt)] "Cancel
+   ]
+
+   localmake "lasterror ERROR
+   if :lasterror <> [] [
+      REPORTTESTFAILED (list "UI "Automation "to "read :wordtoread ": :lasterror)
+   ]
+
+   RUNSTOPPINGTEST [IGNORE READWORD]
+
+   UIAUTOMATION.UNINITIALIZE
+
+END
+
+
 
 TO READWORDTEST.SMOKETEST
 
@@ -84,7 +108,8 @@ END
 TO READWORDTEST
 
    READWORDTEST.SMOKETEST
-   READWORDTEST.2516248
+   READWORDTEST.UI
+   READWORDTEST.UICANCEL
    READWORDTEST.BADINPUT
 
 END
