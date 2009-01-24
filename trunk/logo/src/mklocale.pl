@@ -81,4 +81,5 @@ UpdateLocalizationFiles('es', 'Spanish',    'Daniel Ajoy');
 UpdateLocalizationFiles('it', 'Italian',    'Stefano Federici');
 UpdateLocalizationFiles('pt', 'Portuguese', 'Alexandre R Soares');
 UpdateLocalizationFiles('de', 'German',     'Stephan Vogel');
+UpdateLocalizationFiles('ru', 'Russian',    'Igor Baglaev');
 UpdateLocalizationFiles('ps', 'Pseudoloc',  'David Costanzo');

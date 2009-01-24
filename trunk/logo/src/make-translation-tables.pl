@@ -273,5 +273,6 @@ MakeTranslationTables('Greek',      'gr', 1032);
 MakeTranslationTables('Spanish',    'es', 1034);
 MakeTranslationTables('French',     'fr', 1036);
 MakeTranslationTables('Italian',    'it', 1040);
+MakeTranslationTables('Russian',    'ru', 1049);
 MakeTranslationTables('Portuguese', 'pt', 2070);
 MakeTranslationTables('Pseudoloc',  'ps', 9999);

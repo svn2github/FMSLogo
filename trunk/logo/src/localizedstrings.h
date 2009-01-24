@@ -32,6 +32,10 @@
 
   #include "localizedstrings-it.h"  // Italian
 
+#elif LOCALE == 1049
+
+  #include "localizedstrings-ru.h"  // Russian
+
 #elif LOCALE == 2070
 
   #include "localizedstrings-pt.h"  // Portuguese

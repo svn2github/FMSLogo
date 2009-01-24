@@ -1,0 +1,11 @@
+catch "error [ copydef "абс               "abs        ]
+catch "error [ copydef "окружность        "circle     ]
+catch "error [ copydef "для               "for        ]
+catch "error [ copydef "мнмассив          "mdarray    ]
+catch "error [ copydef "мнэлемент         "mditem     ]
+catch "error [ copydef "мнэлементновый    "mdsetitem  ]
+catch "error [ copydef "сл                "случайный  ]
+catch "error [ copydef "обратный          "reverse    ]
+catch "error [ copydef "нм                "новоеместо ]
+catch "error [ copydef "замедлятьчерчение "slowdraw   ]
+
