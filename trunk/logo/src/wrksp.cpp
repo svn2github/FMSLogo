@@ -1038,6 +1038,7 @@ NODE *po_helper(NODE *arg, int just_titles)  /* >0 for POT, <0 for EDIT       */
     NODE *plistlst;
     three_lists(arg, &proclst, &varlst, &plistlst);
 
+    // print all of the requested procedures
     while (proclst != NIL)
     {
         if (is_aggregate(car(proclst)))
@@ -1050,11 +1051,16 @@ NODE *po_helper(NODE *arg, int just_titles)  /* >0 for POT, <0 for EDIT       */
 
         if (tvar == UNDEFINED)
         {
+            // the procedure hasn't been defined.
+
             if (just_titles < 0)
             {
-                // TO <proc>\n
-                // <procbody>
-                // END
+                // We're doing an EDIT, so it's okay that the
+                // procedure hasn't been defined.
+                // Print the following boilerplate for the user:
+                //   TO <proc>\n
+                //   END\n
+                //   \n
                 ndprintf(
                     g_Writer.GetStream(), 
                     "%t %p\n%t\n\n", 
@@ -1075,22 +1081,35 @@ NODE *po_helper(NODE *arg, int just_titles)  /* >0 for POT, <0 for EDIT       */
         }
         else
         {
-            tvar = get_bodywords(tvar, car(proclst));
+            NODE * bodywords = get_bodywords(tvar, car(proclst));
             if (just_titles > 0)
             {
-                print_nobrak(g_Writer.GetStream(), car(tvar));
+                // only print the title line 
+                NODE * titleline = car(bodywords);
+                if (is_list(titleline))
+                {
+                    print_helper(g_Writer.GetStream(), titleline);
+                }
+                else
+                {
+                    char *str = expand_slash(titleline);
+                    ndprintf(g_Writer.GetStream(), "%t", str);
+                    free(str);
+                }
             }
             else 
             {
-                while (tvar != NIL)
+                // Print the entire procedure definition one line at a time.
+                while (bodywords != NIL)
                 {
-                    if (is_list(car(tvar)))
+                    NODE * currentline = car(bodywords);
+                    if (is_list(currentline))
                     {
-                        print_nobrak(g_Writer.GetStream(), car(tvar));
+                        print_helper(g_Writer.GetStream(), currentline);
                     }
                     else
                     {
-                        char *str = expand_slash(car(tvar));
+                        char *str = expand_slash(currentline);
                         if (g_Writer.GetStream() == stdout)
                         {
                             printfx(str);
@@ -1105,11 +1124,13 @@ NODE *po_helper(NODE *arg, int just_titles)  /* >0 for POT, <0 for EDIT       */
                         }
                         free(str);
                     }
+
                     if (g_Writer.GetStream() != stdout) 
                     {
                         new_line(g_Writer.GetStream());
                     }
-                    tvar = cdr(tvar);
+
+                    bodywords = cdr(bodywords);
                 }
             }
             new_line(g_Writer.GetStream());
@@ -1118,6 +1139,7 @@ NODE *po_helper(NODE *arg, int just_titles)  /* >0 for POT, <0 for EDIT       */
         if (check_throwing) break;
     }
 
+    // print all of the requested variables
     for (NODE * current_varlist_node = varlst;
          current_varlist_node != NIL;
          current_varlist_node = cdr(current_varlist_node))
@@ -1160,6 +1182,7 @@ NODE *po_helper(NODE *arg, int just_titles)  /* >0 for POT, <0 for EDIT       */
         gcref(quoted_value);
     }
 
+    // print all of the requested propery lists
     while (plistlst != NIL && NOT_THROWING)
     {
         if (is_aggregate(car(plistlst)))

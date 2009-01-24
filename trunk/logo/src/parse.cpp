@@ -500,6 +500,14 @@ NODE *reader(FILE *FileStream, const char * Prompt)
                 }
             }
 
+            // any string that contains special characters needs to be
+            // converted to a VBAR string so that it can be printed
+            // out and re-read without a loss of data.  See bug #2516248.
+            if (this_type == STRING && is_special_character(c))
+            {
+                this_type = VBAR_STRING;
+            }
+
             if (c == '\n')
             {
                 // newlines end comment
