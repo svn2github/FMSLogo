@@ -77,6 +77,7 @@ III. Special Thanks
     Pavel Boytchev
     Ralf Kurth
     Bob Gorman
+    Igor Baglaev
 
   Special thanks to:
     George Mills
