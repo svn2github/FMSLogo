@@ -128,6 +128,8 @@ The numeric error codes and their corresponding human-readable messages are give
       <row><entry>1301</entry><entry>MIDI Error: Already open</entry></row>
       <row><entry>1302</entry><entry>MIDI Error: Invalid MIDI device</entry></row>
       <row><entry>1303</entry><entry>MIDI Error: Not open</entry></row>
+
+      <row><entry>1401</entry><entry>Timer not found</entry></row>
     </tbody>
   </tgroup>
 </informaltable>

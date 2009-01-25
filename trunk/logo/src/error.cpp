@@ -429,6 +429,10 @@ err_logo(
         g_ErrorFormatString = LOCALIZED_ERROR_MIDI": "LOCALIZED_ERROR_MIDINOTOPEN;
         break;
 
+    case TIMER_NOT_FOUND:
+        g_ErrorFormatString = LOCALIZED_ERROR_TIMERNOTFOUND;
+        break;
+
     default:
         prepare_to_exit(FALSE);
         printfx("%s", LOCALIZED_ERROR_UNKNOWN);

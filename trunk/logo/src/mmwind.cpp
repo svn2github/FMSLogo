@@ -301,7 +301,7 @@ NODE *lmci(NODE *args)
 NODE *lsettimer(NODE *args)
 {
     // get the timer id 
-    int id = int_arg(args);
+    int id = getint(ranged_integer_arg(args, 1, MAX_TIMERS - 1));
 
     // get delay
     int delay = getint(pos_int_arg(args = cdr(args)));
@@ -312,23 +312,17 @@ NODE *lsettimer(NODE *args)
 
     if (NOT_THROWING)
     {
-        if ((id > 0) && (id < MAX_TIMERS))
+        if (timer_callback[id] == NULL) 
         {
-            if (timer_callback[id] == NULL) 
-            {
-                timer_callback[id] = (char *) malloc(MAX_BUFFER_SIZE);
-            }
-            strcpy(timer_callback[id], callback);
-
-            // if not set sucessfully error
-            if (!::SetTimer(MainWindowx->HWindow, id, delay, NULL))
-            {
-                ShowErrorMessageAndStop(LOCALIZED_ERROR_TIMERTOOMANY);
-            }
+            timer_callback[id] = (char *) malloc(MAX_BUFFER_SIZE);
         }
-        else
+        strcpy(timer_callback[id], callback);
+
+        // if not set sucessfully error
+        if (!::SetTimer(MainWindowx->HWindow, id, delay, NULL))
         {
-            ShowErrorMessageAndStop(LOCALIZED_ERROR_TIMERBADID);
+            err_logo(OUT_OF_MEM, NIL);
+            return Unbound;
         }
     }
 
@@ -338,12 +332,17 @@ NODE *lsettimer(NODE *args)
 NODE *lcleartimer(NODE *args)
 {
     // get args
-    int id = int_arg(args);
+    int id = getint(ranged_integer_arg(args, 1, MAX_TIMERS - 1));
+    if (stopping_flag == THROWING)
+    {
+        return Unbound;
+    }
 
     // if timer was not set let user know
     if (!::KillTimer(MainWindowx->HWindow, id))
     {
-        ShowErrorMessageAndStop(LOCALIZED_ERROR_TIMERNOTFOUND);
+        err_logo(TIMER_NOT_FOUND, NIL);
+        return Unbound;
     }
 
     return Unbound;

@@ -1084,8 +1084,6 @@
 
 #define LOCALIZED_ERROR_MCI                   "Error de MCI"
 
-#define LOCALIZED_ERROR_TIMERTOOMANY          "Demasiados temporizadores"
-#define LOCALIZED_ERROR_TIMERBADID            "Identificador de temporizador incorrecto"
 #define LOCALIZED_ERROR_TIMERNOTFOUND         "Temporizador no encontrado"
 
 #define LOCALIZED_ERROR_HHCTRLNOTLOADED       "Ayuda en línea no disponible porque no se pudo cargar hhctrl.ocx"

@@ -1084,8 +1084,6 @@
 
 #define LOCALIZED_ERROR_MCI                   "Erreur MCI"
 
-#define LOCALIZED_ERROR_TIMERTOOMANY          "Trop de chronos" // 
-#define LOCALIZED_ERROR_TIMERBADID            "Mauvais numéro de chrono"
 #define LOCALIZED_ERROR_TIMERNOTFOUND         "Chrono non trouvé"
 
 #define LOCALIZED_ERROR_HHCTRLNOTLOADED       "L'aide en ligne n'est pas disponible car hhctrl.ocx ne peut être chargé."  // 

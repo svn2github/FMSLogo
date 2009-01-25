@@ -206,6 +206,9 @@ enum ERR_TYPES
     MIDI_INVALID_DEVICE          = 1302,
     MIDI_NOT_OPEN                = 1303,
 
+    TIMER_GENERAL                = 1400,
+    TIMER_NOT_FOUND              = 1401,
+
     FATAL                        = 0xFFFF,
 };
 

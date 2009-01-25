@@ -1084,8 +1084,6 @@
 
 #define LOCALIZED_ERROR_MCI                   "MCI Error" // NOT_YET_LOCALIZED
 
-#define LOCALIZED_ERROR_TIMERTOOMANY          "Too Many Timers" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_TIMERBADID            "Bad Timer Id" // NOT_YET_LOCALIZED
 #define LOCALIZED_ERROR_TIMERNOTFOUND         "Timer not found" // NOT_YET_LOCALIZED
 
 #define LOCALIZED_ERROR_HHCTRLNOTLOADED       "Online help is unavailable because hhctrl.ocx could not be loaded."  // NOT_YET_LOCALIZED

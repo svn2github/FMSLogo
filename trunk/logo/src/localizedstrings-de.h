@@ -1084,8 +1084,6 @@
 
 #define LOCALIZED_ERROR_MCI                   "MCI Fehler"
 
-#define LOCALIZED_ERROR_TIMERTOOMANY          "Zu viele Zeitnehmer"
-#define LOCALIZED_ERROR_TIMERBADID            "Falsche Zeitnehmer-Identität"
 #define LOCALIZED_ERROR_TIMERNOTFOUND         "Zeitnehmer nicht gefunden"
 
 #define LOCALIZED_ERROR_HHCTRLNOTLOADED       "Online-Hilfe ist nicht verfügbar, weil hhctrl.ocx nicht geladen werden konnte." 

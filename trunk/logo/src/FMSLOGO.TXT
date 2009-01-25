@@ -27,20 +27,22 @@ II. New features/bugs fixed:
       boxes when given bad input.
     o Fix bug #2452240; COPYDEF now updates the TO line of new procedure.
     o Fix bug #1619210; Non-English versions now throw unexpected ender errors.
-    o Fix bug #1448111; DLLLOAD, DLLCALL, and DLLFREE now throw DLL-specific
-      errors and no longer display dialog boxes.
     o Fix bug #1622756; SETBITMODE now throws a recoverable bad input error
       when given an integer that is out-of-range.
     o Fix bug #1620964; SETTURTLEMODE now throws a recoverable bad input error
       when given an integer that is out-of-range.
     o Fix bug #1500676; Windowing procedures now throw windowing-specific
       errors and no longer display dialog boxes.
-    o Fix bug #1448107; SETACTIVEAREA now throws a bad input error when given
-      an impossible range and no longer displays a dialog box.
+    o Fix bug #1497079; SETTIMER and CLEARTIMER now throw appropriate errors
+      and no longer display dialog boxes when given bad input.
     o Fix bug #1475223; MIDI procedures now throw MIDI-specific errors and
       no longer display dialog boxes.
     o Fix bug #1475214; MIDIOPEN no longer opens MIDI mapper when given bad
       input.
+    o Fix bug #1448111; DLLLOAD, DLLCALL, and DLLFREE now throw DLL-specific
+      errors and no longer display dialog boxes.
+    o Fix bug #1448107; SETACTIVEAREA now throws a bad input error when given
+      an impossible range and no longer displays a dialog box.
     o Minor updates to the manual.
 
   For a complete history of changes across all versions of FMSLogo, see

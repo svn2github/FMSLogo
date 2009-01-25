@@ -1084,8 +1084,6 @@
 
 #define LOCALIZED_ERROR_MCI                   "Σφάλμα MCI" // 
 
-#define LOCALIZED_ERROR_TIMERTOOMANY          "Υπερβολικά πολλοί χρονοδιακόπτες" // 
-#define LOCALIZED_ERROR_TIMERBADID            "Λάθος αριθμός χρονοδιακόπτη" // 
 #define LOCALIZED_ERROR_TIMERNOTFOUND         "Ο χρονοδιακόπτης δε βρέθηκε" // 
 
 #define LOCALIZED_ERROR_HHCTRLNOTLOADED       "Η online βοήθεια δεν είναι διαθέσιμη γιατί το hhctrl.ocx δε φορτώθηκε."  // 
