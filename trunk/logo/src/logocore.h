@@ -19,8 +19,6 @@
  *
  */
 
-#define ibm
-
 #define ARRAYSIZE(ARRAY)            (sizeof(ARRAY) / sizeof(*(ARRAY)))
 #define STRINGLENGTH(STRINGLITERAL) (sizeof(STRINGLITERAL) - 1)
 
