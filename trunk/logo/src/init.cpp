@@ -700,9 +700,7 @@ void init()
     fill_reserve_tank();
     Unbound = newnode(PUNBOUND);
 
-#ifdef ecma
     init_ecma_array();
-#endif
    
     // intern all of the primitives.
     //

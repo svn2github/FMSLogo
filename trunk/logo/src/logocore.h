@@ -19,7 +19,6 @@
  *
  */
 
-#define ecma // for European extended character set using parity bit
 #define ibm
 
 #define ARRAYSIZE(ARRAY)            (sizeof(ARRAY) / sizeof(*(ARRAY)))
