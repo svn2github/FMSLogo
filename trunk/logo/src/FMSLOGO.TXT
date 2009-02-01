@@ -21,6 +21,7 @@ I. Kit Description/Location (http://sourceforge.net/projects/fmslogo)
 II. New features/bugs fixed:
 
   * Added for 6.23.0
+    o Fix bug #2517774; PO now prints blank lines when printing to commander.
     o Fix bug #2516248; READWORD output can now be safely stored in a variable.
     o Fix bug #2452726; BITLOAD, BITSAVE, BITLOADSIZE, GIFLOAD, GIFSAVE, and
       GIFSIZE now throw image-specific errors and no longer display dialog
