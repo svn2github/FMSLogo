@@ -76,11 +76,11 @@ void putcombochar(char ch)
 }
 
 
-int printfx(const char *fmt)
+int printfx(const char *str)
 {
-    mputcombobox(fmt);
+    mputcombobox(str);
 
-    return strlen(fmt);
+    return strlen(str);
 }
 
 int printfx(const char *fmt, const char *str)
