@@ -112,21 +112,21 @@
 //
 // Localized "alternate" spellings of Logo reserved words
 //
-#define LOCALIZED_ALTERNATE_TRUE     "true" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_FALSE    "false" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_TRUE     "истина" 
+#define LOCALIZED_ALTERNATE_FALSE    "ложь" 
 #define LOCALIZED_ALTERNATE_END      "конец"
-#define LOCALIZED_ALTERNATE_TOPLEVEL "toplevel" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_SYSTEM   "system" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_TOPLEVEL "верхнийуровень" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_SYSTEM   "система" // NOT_YET_LOCALIZED
 
 //
 // Localized "alternate" names of Logo special variables
 //
-#define LOCALIZED_ALTERNATE_CASEIGNOREDP    "caseignoredp" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_ERRACT          "erract" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_STARTUP         "startup" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_REDEFP          "redefp" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_PRINTWIDTHLIMIT "printwidthlimit" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_PRINTDEPTHLIMIT "printdepthlimit" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_CASEIGNOREDP    "игноририроватьрегистрпи" 
+#define LOCALIZED_ALTERNATE_ERRACT          "альтош" 
+#define LOCALIZED_ALTERNATE_STARTUP         "запуск" 
+#define LOCALIZED_ALTERNATE_REDEFP          "переопрпи" 
+#define LOCALIZED_ALTERNATE_PRINTWIDTHLIMIT "максширпеч" 
+#define LOCALIZED_ALTERNATE_PRINTDEPTHLIMIT "максглубпеч"
 
 
 //
@@ -148,716 +148,716 @@
 // If you don't know how to translate a particular command, leave it
 // as the English name and it will be ignored.
 //
-#define LOCALIZED_ALTERNATE__DEFMACRO              ".defmacro" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE__EQ                    ".eq" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE__MACRO                 ".macro" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE__MAYBEOUTPUT           ".maybeoutput" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE__DEFMACRO              ".опрмакрос"
+#define LOCALIZED_ALTERNATE__EQ                    ".равн" 
+#define LOCALIZED_ALTERNATE__MACRO                 ".макрос"
+#define LOCALIZED_ALTERNATE__MAYBEOUTPUT           ".альтвывод" #define LOCALIZED_ALTERNATE__SETBF                 ".вставькпе" 
 #define LOCALIZED_ALTERNATE__SETBF                 ".setbf" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE__SETFIRST              ".setfirst" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE__SETITEM               ".setitem" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_ACTIVEAREA             "activearea" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_ALLOPEN                "allopen" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE__SETFIRST              ".вставьпервым" 
+#define LOCALIZED_ALTERNATE__SETITEM               ".новэлемент" 
+#define LOCALIZED_ALTERNATE_ACTIVEAREA             "активноеполе" 
+#define LOCALIZED_ALTERNATE_ALLOPEN                "откройвсе" 
 #define LOCALIZED_ALTERNATE_AND                    "кон"
-#define LOCALIZED_ALTERNATE_APPLY                  "apply" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_ARCCOS                 "arccos" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_ARCSIN                 "arcsin" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_ARCTAN                 "arctan" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_APPLY                  "применить" 
+#define LOCALIZED_ALTERNATE_ARCCOS                 "arccos" 
+#define LOCALIZED_ALTERNATE_ARCSIN                 "arcsin" 
+#define LOCALIZED_ALTERNATE_ARCTAN                 "arctg" 
 #define LOCALIZED_ALTERNATE_ARRAY                  "массив"
-#define LOCALIZED_ALTERNATE_ARRAYP                 "arrayp" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_ARRAY_                 "array?" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_ASCII                  "код"
-#define LOCALIZED_ALTERNATE_ASHIFT                 "ashift" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_ARRAYP                 "массивпи" 
+#define LOCALIZED_ALTERNATE_ARRAY_                 "массив?" 
+#define LOCALIZED_ALTERNATE_ASCII                  "код" 
+#define LOCALIZED_ALTERNATE_ASHIFT                 "асдвиг" 
 #define LOCALIZED_ALTERNATE_BACK                   "назад"
-#define LOCALIZED_ALTERNATE_BACKSLASHEDP           "backslashedp" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_BACKSLASHED_           "backslashed?" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_BEFOREP                "beforep" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_BEFORE_                "before?" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_BACKSLASHEDP           "спецсимволпи" 
+#define LOCALIZED_ALTERNATE_BACKSLASHED_           "спецсимвол?" 
+#define LOCALIZED_ALTERNATE_BEFOREP                "передпи" 
+#define LOCALIZED_ALTERNATE_BEFORE_                "передпи?" 
 #define LOCALIZED_ALTERNATE_BF                     "кпе"
-#define LOCALIZED_ALTERNATE_BFS                    "bfs" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_BITAND                 "bitand" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_BITBLOCK               "bitblock" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_BITCOPY                "bitcopy" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_BITCUT                 "bitcut" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_BITFIT                 "bitfit" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_BITINDEX               "bitindex" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_BITLOAD                "bitload" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_BITLOADSIZE            "bitloadsize" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_BITSIZE                "bitsize" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_BITMAPTURTLE           "bitmapturtle" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_BITMODE                "bitmode" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_BITNOT                 "bitnot" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_BITOR                  "bitor" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_BITPASTE               "bitpaste" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_BITPASTETOINDEX        "bitpastetoindex" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_BITSAVE                "bitsave" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_BITXOR                 "bitxor" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_BFS                    "кпех" 
+#define LOCALIZED_ALTERNATE_BITAND                 "поразряди" 
+#define LOCALIZED_ALTERNATE_BITBLOCK               "растрблок" 
+#define LOCALIZED_ALTERNATE_BITCOPY                "растркопируй" 
+#define LOCALIZED_ALTERNATE_BITCUT                 "растрвырежи" 
+#define LOCALIZED_ALTERNATE_BITFIT                 "растрподгони" 
+#define LOCALIZED_ALTERNATE_BITINDEX               "растриндекс" 
+#define LOCALIZED_ALTERNATE_BITLOAD                "растрзагрузи" 
+#define LOCALIZED_ALTERNATE_BITLOADSIZE            "размеррастрзагрузки" 
+#define LOCALIZED_ALTERNATE_BITSIZE                "размеррастра" 
+#define LOCALIZED_ALTERNATE_BITMAPTURTLE           "растртортила" 
+#define LOCALIZED_ALTERNATE_BITMODE                "режимрастра" 
+#define LOCALIZED_ALTERNATE_BITNOT                 "поразрнет" 
+#define LOCALIZED_ALTERNATE_BITOR                  "поразрили" 
+#define LOCALIZED_ALTERNATE_BITPASTE               "растрвставь" 
+#define LOCALIZED_ALTERNATE_BITPASTETOINDEX        "растрвставьпоинд" 
+#define LOCALIZED_ALTERNATE_BITSAVE                "растрсохрани" 
+#define LOCALIZED_ALTERNATE_BITXOR                 "поразрисклили" 
 #define LOCALIZED_ALTERNATE_BK                     "нд"
 #define LOCALIZED_ALTERNATE_BL                     "кпо"
-#define LOCALIZED_ALTERNATE_BURIED                 "buried" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_BURY                   "bury" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_BURIED                 "скрытые" 
+#define LOCALIZED_ALTERNATE_BURY                   "скрой" 
 #define LOCALIZED_ALTERNATE_BUTFIRST               "кромепервого"
-#define LOCALIZED_ALTERNATE_BUTFIRSTS              "butfirsts" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_BUTFIRSTS              "кромепервых" 
 #define LOCALIZED_ALTERNATE_BUTLAST                "кромепоследнего"
 #define LOCALIZED_ALTERNATE_BUTTONCREATE           "кнопкусоздай"
-#define LOCALIZED_ALTERNATE_BUTTONDELETE           "buttondelete" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_BUTTONENABLE           "buttonenable" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_BUTTONUPDATE           "buttonupdate" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_BUTTONP                "buttonp" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_BUTTON_                "button?" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_BYE                    "bye" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_CATCH                  "catch" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_BUTTONDELETE           "кнопкуудали" 
+#define LOCALIZED_ALTERNATE_BUTTONENABLE           "кнопкудопусти" 
+#define LOCALIZED_ALTERNATE_BUTTONUPDATE           "кнопкуобнови" 
+#define LOCALIZED_ALTERNATE_BUTTONP                "кнопкапи" 
+#define LOCALIZED_ALTERNATE_BUTTON_                "кнопка?" 
+#define LOCALIZED_ALTERNATE_BYE                    "пока" 
+#define LOCALIZED_ALTERNATE_CATCH                  "захват" 
 #define LOCALIZED_ALTERNATE_CHAR                   "символ"
-#define LOCALIZED_ALTERNATE_CHDIR                  "chdir" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_CHECKBOXCREATE         "checkboxcreate" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_CHECKBOXDELETE         "checkboxdelete" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_CHECKBOXENABLE         "checkboxenable" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_CHECKBOXGET            "checkboxget" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_CHECKBOXSET            "checkboxset" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_CLEAN                  "clean" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_CLEARPALETTE           "clearpalette" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_CLEARSCREEN            "очиститьэкран"
-#define LOCALIZED_ALTERNATE_CLEARTEXT              "cleartext" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_CLEARTIMER             "cleartimer" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_CLOSE                  "close" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_CLOSEALL               "closeall" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_CO                     "co" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_COMBOBOXADDSTRING      "comboboxaddstring" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_COMBOBOXCREATE         "comboboxcreate" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_COMBOBOXDELETE         "comboboxdelete" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_COMBOBOXENABLE         "comboboxenable" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_COMBOBOXDELETESTRING   "comboboxdeletestring" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_COMBOBOXGETTEXT        "comboboxgettext" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_COMBOBOXSETTEXT        "comboboxsettext" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_CONTENTS               "contents" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_CONTINUE               "continue" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_COPYDEF                "copydef" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_COS                    "cos" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_CHDIR                  "измпап" 
+#define LOCALIZED_ALTERNATE_CHECKBOXCREATE         "переключсоздай" 
+#define LOCALIZED_ALTERNATE_CHECKBOXDELETE         "переключудали"
+#define LOCALIZED_ALTERNATE_CHECKBOXENABLE         "переключдопусти" 
+#define LOCALIZED_ALTERNATE_CHECKBOXGET            "переключсост" 
+#define LOCALIZED_ALTERNATE_CHECKBOXSET            "переключзадай" 
+#define LOCALIZED_ALTERNATE_CLEAN                  "очисти" 
+#define LOCALIZED_ALTERNATE_CLEARPALETTE           "сотрипалитру" 
+#define LOCALIZED_ALTERNATE_CLEARSCREEN            "очистиэкран"
+#define LOCALIZED_ALTERNATE_CLEARTEXT              "очиститекст" 
+#define LOCALIZED_ALTERNATE_CLEARTIMER             "очиститаймер" 
+#define LOCALIZED_ALTERNATE_CLOSE                  "закрой" 
+#define LOCALIZED_ALTERNATE_CLOSEALL               "закройвсе" 
+#define LOCALIZED_ALTERNATE_CO                     "прод" 
+#define LOCALIZED_ALTERNATE_COMBOBOXADDSTRING      "добстрвполе" 
+#define LOCALIZED_ALTERNATE_COMBOBOXCREATE         "полесоздай" 
+#define LOCALIZED_ALTERNATE_COMBOBOXDELETE         "полеудали" 
+#define LOCALIZED_ALTERNATE_COMBOBOXENABLE         "поледопусти" 
+#define LOCALIZED_ALTERNATE_COMBOBOXDELETESTRING   "удалистрокуполя" 
+#define LOCALIZED_ALTERNATE_COMBOBOXGETTEXT        "текстполя" 
+#define LOCALIZED_ALTERNATE_COMBOBOXSETTEXT        "задатьтекстполя" 
+#define LOCALIZED_ALTERNATE_CONTENTS               "содержание" 
+#define LOCALIZED_ALTERNATE_CONTINUE               "продолжи" 
+#define LOCALIZED_ALTERNATE_COPYDEF                "переимен" 
+#define LOCALIZED_ALTERNATE_COS                    "cos" 
 #define LOCALIZED_ALTERNATE_COUNT                  "сколько"
 #define LOCALIZED_ALTERNATE_CS                     "оэ"
-#define LOCALIZED_ALTERNATE_CT                     "ct" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_CURSOR                 "cursor" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_DEBUGWINDOWS           "debugwindows" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_DEFINE                 "define" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_DEFINEDP               "definedp" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_DEFINED_               "defined?" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_DIALOGCREATE           "dialogcreate" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_DIALOGENABLE           "dialogenable" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_DIALOGDELETE           "dialogdelete" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_DIALOGFILEOPEN         "dialogfileopen" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_DIALOGFILESAVE         "dialogfilesave" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_CT                     "от" 
+#define LOCALIZED_ALTERNATE_CURSOR                 "курсор" 
+#define LOCALIZED_ALTERNATE_DEBUGWINDOWS           "окноотладки" 
+#define LOCALIZED_ALTERNATE_DEFINE                 "определи" 
+#define LOCALIZED_ALTERNATE_DEFINEDP               "определенпи" 
+#define LOCALIZED_ALTERNATE_DEFINED_               "определен?" 
+#define LOCALIZED_ALTERNATE_DIALOGCREATE           "диалогсоздай" 
+#define LOCALIZED_ALTERNATE_DIALOGENABLE           "диалогдопусти" 
+#define LOCALIZED_ALTERNATE_DIALOGDELETE           "диалогудали" 
+#define LOCALIZED_ALTERNATE_DIALOGFILEOPEN         "окнофайлоткрыть" 
+#define LOCALIZED_ALTERNATE_DIALOGFILESAVE         "окнофайлсохранить" 
 #define LOCALIZED_ALTERNATE_DIFFERENCE             "разность"
-#define LOCALIZED_ALTERNATE_DIRECTORIES            "directories" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_DLLCALL                "dllcall" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_DLLFREE                "dllfree" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_DLLLOAD                "dllload" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_DOWN                   "down" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_DOWNPITCH              "downpitch" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_DRIBBLE                "dribble" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_ED                     "ed" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_EDIT                   "edit" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_ELLIPSEARC             "ellipsearc" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_EMPTYP                 "emptyp" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_EMPTY_                 "empty?" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_EOFP                   "eofp" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_EOF_                   "eof?" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_DIRECTORIES            "папки" 
+#define LOCALIZED_ALTERNATE_DLLCALL                "вызовбдк" 
+#define LOCALIZED_ALTERNATE_DLLFREE                "снимибдк" 
+#define LOCALIZED_ALTERNATE_DLLLOAD                "загрузиьбдк" 
+#define LOCALIZED_ALTERNATE_DOWN                   "вниз" 
+#define LOCALIZED_ALTERNATE_DOWNPITCH              "уклонвниз" 
+#define LOCALIZED_ALTERNATE_DRIBBLE                "протокол" 
+#define LOCALIZED_ALTERNATE_ED                     "ред" 
+#define LOCALIZED_ALTERNATE_EDIT                   "редактировать" 
+#define LOCALIZED_ALTERNATE_ELLIPSEARC             "дугаэллипса" 
+#define LOCALIZED_ALTERNATE_EMPTYP                 "пустойпи" 
+#define LOCALIZED_ALTERNATE_EMPTY_                 "пустой?" 
+#define LOCALIZED_ALTERNATE_EOFP                   "кфлпи" 
+#define LOCALIZED_ALTERNATE_EOF_                   "кфл?" 
 #define LOCALIZED_ALTERNATE_EQUALP                 "равныйпи"
-#define LOCALIZED_ALTERNATE_EQUAL_                 "equal?" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_ER                     "er" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_ERASE                  "erase" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_ERASEFILE              "erasefile" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_ERF                    "erf" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_ERROR                  "error" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_EVENTCHECK             "eventcheck" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_EXP                    "exp" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_EQUAL_                 "equal?" 
+#define LOCALIZED_ALTERNATE_ER                     "уд" 
+#define LOCALIZED_ALTERNATE_ERASE                  "удали" 
+#define LOCALIZED_ALTERNATE_ERASEFILE              "удалифайл" 
+#define LOCALIZED_ALTERNATE_ERF                    "удф" 
+#define LOCALIZED_ALTERNATE_ERROR                  "ошибка" 
+#define LOCALIZED_ALTERNATE_EVENTCHECK             "контрсобытий" 
+#define LOCALIZED_ALTERNATE_EXP                    "exp" 
 #define LOCALIZED_ALTERNATE_FD                     "вп"
-#define LOCALIZED_ALTERNATE_FENCE                  "fence" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_FENCE                  "ограждение" 
 #define LOCALIZED_ALTERNATE_FILL                   "крась"
-#define LOCALIZED_ALTERNATE_FILES                  "files" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_FILES                  "файлы" 
 #define LOCALIZED_ALTERNATE_FIRST                  "первый"
-#define LOCALIZED_ALTERNATE_FIRSTS                 "firsts" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_FLOODCOLOR             "floodcolor" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_FONTFACENAMES          "fontfacenames" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_FOREVER                "forever" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_FORM                   "form" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_FIRSTS                 "первые" 
+#define LOCALIZED_ALTERNATE_FLOODCOLOR             "цветзаливки" 
+#define LOCALIZED_ALTERNATE_FONTFACENAMES          "названиешрифта" 
+#define LOCALIZED_ALTERNATE_FOREVER                "многократно" 
+#define LOCALIZED_ALTERNATE_FORM                   "формат" 
 #define LOCALIZED_ALTERNATE_FORWARD                "вперед"
-#define LOCALIZED_ALTERNATE_FPUT                   "fput" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_FS                     "fs" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_FULLSCREEN             "fullscreen" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_FULLTEXT               "fulltext" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_GETFOCUS               "getfocus" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_GOTO                   "goto" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_GIFLOAD                "gifload" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_GIFSIZE                "gifsize" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_GIFSAVE                "gifsave" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_GPROP                  "gprop" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_GREATEREQUALP          "greaterequalp" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_GREATEREQUAL_          "greaterequal?" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_FPUT                   "пвнач" 
+#define LOCALIZED_ALTERNATE_FS                     "пэ" 
+#define LOCALIZED_ALTERNATE_FULLSCREEN             "полныйэкран" 
+#define LOCALIZED_ALTERNATE_FULLTEXT               "текстпроц" 
+#define LOCALIZED_ALTERNATE_GETFOCUS               "активноеокно" 
+#define LOCALIZED_ALTERNATE_GOTO                   "перейти" 
+#define LOCALIZED_ALTERNATE_GIFLOAD                "загрузирис" 
+#define LOCALIZED_ALTERNATE_GIFSIZE                "размеррис" 
+#define LOCALIZED_ALTERNATE_GIFSAVE                "сохранирис" 
+#define LOCALIZED_ALTERNATE_GPROP                  "выбсв" 
+#define LOCALIZED_ALTERNATE_GREATEREQUALP          "больщеравнопи" 
+#define LOCALIZED_ALTERNATE_GREATEREQUAL_          "большеравно?" 
 #define LOCALIZED_ALTERNATE_GREATERP               "большепи"
-#define LOCALIZED_ALTERNATE_GREATER_               "greater?" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_GROUPBOXCREATE         "groupboxcreate" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_GROUPBOXDELETE         "groupboxdelete" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_HALT                   "halt" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_HEADING                "heading" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_HELP                   "help" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_GREATER_               "больше?" 
+#define LOCALIZED_ALTERNATE_GROUPBOXCREATE         "группусоздай" 
+#define LOCALIZED_ALTERNATE_GROUPBOXDELETE         "группуудали" 
+#define LOCALIZED_ALTERNATE_HALT                   "останов" 
+#define LOCALIZED_ALTERNATE_HEADING                "направление" 
+#define LOCALIZED_ALTERNATE_HELP                   "помощь" 
 #define LOCALIZED_ALTERNATE_HIDETURTLE             "скройчерепаху"
 #define LOCALIZED_ALTERNATE_HOME                   "домой"
 #define LOCALIZED_ALTERNATE_HT                     "сч"
 #define LOCALIZED_ALTERNATE_IF                     "если"
 #define LOCALIZED_ALTERNATE_IFELSE                 "еслииначе"
-#define LOCALIZED_ALTERNATE_IFF                    "iff" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_IFFALSE                "iffalse" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_IFT                    "ift" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_IFTRUE                 "iftrue" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_INGAMEPORT             "ingameport" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_INPORT                 "inport" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_INPORTB                "inportb" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_INT                    "int" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_IFF                    "еслил" 
+#define LOCALIZED_ALTERNATE_IFFALSE                "еслиложь" 
+#define LOCALIZED_ALTERNATE_IFT                    "еслии" 
+#define LOCALIZED_ALTERNATE_IFTRUE                 "еслиистина" 
+#define LOCALIZED_ALTERNATE_INGAMEPORT             "портигры" 
+#define LOCALIZED_ALTERNATE_INPORT                 "впорт" 
+#define LOCALIZED_ALTERNATE_INPORTB                "впортб" 
+#define LOCALIZED_ALTERNATE_INT                    "целое" 
 #define LOCALIZED_ALTERNATE_ITEM                   "элемент"
-#define LOCALIZED_ALTERNATE_KEYBOARDOFF            "keyboardoff" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_KEYBOARDON             "keyboardon" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_KEYBOARDVALUE          "keyboardvalue" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_KEYP                   "keyp" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_KEY_                   "key?" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_KEYBOARDOFF            "клавиатуруотключи" 
+#define LOCALIZED_ALTERNATE_KEYBOARDON             "клавиатурувключи" 
+#define LOCALIZED_ALTERNATE_KEYBOARDVALUE          "клавиатуруоцени" 
+#define LOCALIZED_ALTERNATE_KEYP                   "клавищапи" 
+#define LOCALIZED_ALTERNATE_KEY_                   "клавиша?" 
 #define LOCALIZED_ALTERNATE_LABEL                  "надпись"
-#define LOCALIZED_ALTERNATE_LABELFONT              "надписишрифт"
-#define LOCALIZED_ALTERNATE_LABELSIZE              "labelsize" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_LABELFONT              "шрифтнадписи"
+#define LOCALIZED_ALTERNATE_LABELSIZE              "размернадписи" 
 #define LOCALIZED_ALTERNATE_LAST                   "последний"
 #define LOCALIZED_ALTERNATE_LEFT                   "налево"
-#define LOCALIZED_ALTERNATE_LEFTROLL               "leftroll" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_LESSEQUALP             "lessequalp" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_LESSEQUAL_             "lessequal?" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_LEFTROLL               "левыйкрен" 
+#define LOCALIZED_ALTERNATE_LESSEQUALP             "меньшеравнопи" 
+#define LOCALIZED_ALTERNATE_LESSEQUAL_             "меньшеравно?" 
 #define LOCALIZED_ALTERNATE_LESSP                  "меньшепи"
-#define LOCALIZED_ALTERNATE_LESS_                  "less?" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_LIGHT                  "light" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_LESS_                  "меньше?" 
+#define LOCALIZED_ALTERNATE_LIGHT                  "яркость" 
 #define LOCALIZED_ALTERNATE_LIST                   "список"
-#define LOCALIZED_ALTERNATE_LISTBOXADDSTRING       "listboxaddstring" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_LISTBOXCREATE          "listboxcreate" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_LISTBOXENABLE          "listboxenable" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_LISTBOXDELETE          "listboxdelete" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_LISTBOXDELETESTRING    "listboxdeletestring" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_LISTBOXGETSELECT       "listboxgetselect" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_LISTP                  "listp" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_LIST_                  "list?" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_LN                     "ln" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_LOAD                   "load" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_LOCAL                  "local" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_LOG10                  "log10" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_LOGOVERSION            "logoversion" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_LOWERCASE              "lowercase" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_LISTBOXADDSTRING       "спзапдобавьстроку" 
+#define LOCALIZED_ALTERNATE_LISTBOXCREATE          "спзапсоздай" 
+#define LOCALIZED_ALTERNATE_LISTBOXENABLE          "спзапдопусти" 
+#define LOCALIZED_ALTERNATE_LISTBOXDELETE          "спзапудали" 
+#define LOCALIZED_ALTERNATE_LISTBOXDELETESTRING    "спзапудалистроку" 
+#define LOCALIZED_ALTERNATE_LISTBOXGETSELECT       "спзапвыбор" 
+#define LOCALIZED_ALTERNATE_LISTP                  "списокпи" 
+#define LOCALIZED_ALTERNATE_LIST_                  "списокпи?" 
+#define LOCALIZED_ALTERNATE_LN                     "ln" 
+#define LOCALIZED_ALTERNATE_LOAD                   "загрузи" 
+#define LOCALIZED_ALTERNATE_LOCAL                  "локальный" 
+#define LOCALIZED_ALTERNATE_LOG10                  "lg" 
+#define LOCALIZED_ALTERNATE_LOGOVERSION            "версиялого" 
+#define LOCALIZED_ALTERNATE_LOWERCASE              "строчный" 
 #define LOCALIZED_ALTERNATE_LPUT                   "пвконец"
-#define LOCALIZED_ALTERNATE_LR                     "lr" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_LSHIFT                 "lshift" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_LR                     "лкр" 
+#define LOCALIZED_ALTERNATE_LSHIFT                 "лсдвиг" 
 #define LOCALIZED_ALTERNATE_LT                     "лв"
-#define LOCALIZED_ALTERNATE_MACHINE                "machine" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_MACROP                 "macrop" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_MACRO_                 "macro?" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_MACHINE                "машина" 
+#define LOCALIZED_ALTERNATE_MACROP                 "макроспи" 
+#define LOCALIZED_ALTERNATE_MACRO_                 "макрос?" 
 #define LOCALIZED_ALTERNATE_MAKE                   "пусть"
-#define LOCALIZED_ALTERNATE_MCI                    "mci" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_MCI                    "мки" 
 #define LOCALIZED_ALTERNATE_MEMBER                 "сэлемента"
 #define LOCALIZED_ALTERNATE_MEMBERP                "элементпи"
-#define LOCALIZED_ALTERNATE_MEMBER_                "member?" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_MESSAGEBOX             "messagebox" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_MIDICLOSE              "midiclose" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_MIDIMESSAGE            "midimessage" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_MIDIOPEN               "midiopen" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_MINUS                  "minus" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_MKDIR                  "mkdir" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_MEMBER_                "элемент?" 
+#define LOCALIZED_ALTERNATE_MESSAGEBOX             "окносообщений" 
+#define LOCALIZED_ALTERNATE_MIDICLOSE              "мидизакрой" 
+#define LOCALIZED_ALTERNATE_MIDIMESSAGE            "мидисообщение" 
+#define LOCALIZED_ALTERNATE_MIDIOPEN               "мидиоткрой" 
+#define LOCALIZED_ALTERNATE_MINUS                  "минус" 
+#define LOCALIZED_ALTERNATE_MKDIR                  "сзпапку" 
 #define LOCALIZED_ALTERNATE_MODULO                 "помодулю"
 #define LOCALIZED_ALTERNATE_MOUSEOFF               "мышьвыкл"
 #define LOCALIZED_ALTERNATE_MOUSEON                "мышьвкл"
 #define LOCALIZED_ALTERNATE_MOUSEPOS               "мышьместо"
-#define LOCALIZED_ALTERNATE_NAMEP                  "namep" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_NAME_                  "name?" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_NAMES                  "names" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_NETACCEPTOFF           "netacceptoff" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_NETACCEPTON            "netaccepton" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_NETACCEPTRECEIVEVALUE  "netacceptreceivevalue" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_NETACCEPTSENDVALUE     "netacceptsendvalue" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_NETCONNECTOFF          "netconnectoff" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_NETCONNECTON           "netconnecton" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_NETCONNECTRECEIVEVALUE "netconnectreceivevalue" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_NETCONNECTSENDVALUE    "netconnectsendvalue" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_NETSHUTDOWN            "netshutdown" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_NETSTARTUP             "netstartup" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_NOBITMAPTURTLE         "nobitmapturtle" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_NODES                  "nodes" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_NODRIBBLE              "nodribble" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_NOSTATUS               "nostatus" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_NOT                    "not" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_NOTEQUALP              "notequalp" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_NOTEQUAL_              "notequal?" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_NOYIELD                "noyield" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_NUMBERP                "numberp" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_NUMBER_                "number?" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_NAMEP                  "имяпи" 
+#define LOCALIZED_ALTERNATE_NAME_                  "имя?" 
+#define LOCALIZED_ALTERNATE_NAMES                  "имена" 
+#define LOCALIZED_ALTERNATE_NETACCEPTOFF           "связьпосетивыкл" 
+#define LOCALIZED_ALTERNATE_NETACCEPTON            "связьпосетивкл" 
+#define LOCALIZED_ALTERNATE_NETACCEPTRECEIVEVALUE  "значприемаполуч" 
+#define LOCALIZED_ALTERNATE_NETACCEPTSENDVALUE     "значотправкиполуч" 
+#define LOCALIZED_ALTERNATE_NETCONNECTOFF          "связьпосетивыкл" 
+#define LOCALIZED_ALTERNATE_NETCONNECTON           "связьпосетивкл" 
+#define LOCALIZED_ALTERNATE_NETCONNECTRECEIVEVALUE "значприемасоед" 
+#define LOCALIZED_ALTERNATE_NETCONNECTSENDVALUE    "значотправкисоед" 
+#define LOCALIZED_ALTERNATE_NETSHUTDOWN            "сетьоткл" 
+#define LOCALIZED_ALTERNATE_NETSTARTUP             "сетьзапусти" 
+#define LOCALIZED_ALTERNATE_NOBITMAPTURTLE         "нерастртортила" 
+#define LOCALIZED_ALTERNATE_NODES                  "узлы" 
+#define LOCALIZED_ALTERNATE_NODRIBBLE              "безпротокола" 
+#define LOCALIZED_ALTERNATE_NOSTATUS               "безстатуса" 
+#define LOCALIZED_ALTERNATE_NOT                    "не" 
+#define LOCALIZED_ALTERNATE_NOTEQUALP              "неравнопи" 
+#define LOCALIZED_ALTERNATE_NOTEQUAL_              "неравно?" 
+#define LOCALIZED_ALTERNATE_NOYIELD                "неуступать" 
+#define LOCALIZED_ALTERNATE_NUMBERP                "числопи" 
+#define LOCALIZED_ALTERNATE_NUMBER_                "число?" 
 #define LOCALIZED_ALTERNATE_OP                     "вд"
-#define LOCALIZED_ALTERNATE_OPENAPPEND             "openappend" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_OPENREAD               "openread" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_OPENUPDATE             "openupdate" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_OPENWRITE              "openwrite" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_OR                     "or" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_OUTPORT                "outport" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_OUTPORTB               "outportb" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_OPENAPPEND             "откройдляизм" 
+#define LOCALIZED_ALTERNATE_OPENREAD               "откройдлячт" 
+#define LOCALIZED_ALTERNATE_OPENUPDATE             "откройдляобн" 
+#define LOCALIZED_ALTERNATE_OPENWRITE              "откройдлязап" 
+#define LOCALIZED_ALTERNATE_OR                     "или" 
+#define LOCALIZED_ALTERNATE_OUTPORT                "вдвпорт" 
+#define LOCALIZED_ALTERNATE_OUTPORTB               "вдвпортб" 
 #define LOCALIZED_ALTERNATE_OUTPUT                 "вывод"
-#define LOCALIZED_ALTERNATE_PARSE                  "parse" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_PAUSE                  "pause" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_PC                     "pc" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_PARSE                  "впредл" 
+#define LOCALIZED_ALTERNATE_PAUSE                  "пауза" 
+#define LOCALIZED_ALTERNATE_PC                     "цп" 
 #define LOCALIZED_ALTERNATE_PD                     "по" 
 #define LOCALIZED_ALTERNATE_PE                     "лк"
-#define LOCALIZED_ALTERNATE_PENCOLOR               "pencolor" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_PENCOLOR               "цветпера"  
 #define LOCALIZED_ALTERNATE_PENDOWN                "пероопусти"
-#define LOCALIZED_ALTERNATE_PENDOWNP               "pendownp" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_PENDOWN_               "pendown?" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_PENDOWNP               "пероопущпи" 
+#define LOCALIZED_ALTERNATE_PENDOWN_               "пероопущ?" 
 #define LOCALIZED_ALTERNATE_PENERASE               "ластик"
-#define LOCALIZED_ALTERNATE_PENMODE                "penmode" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_PENMODE                "режимпера" 
 #define LOCALIZED_ALTERNATE_PENPAINT               "пероручка"
-#define LOCALIZED_ALTERNATE_PENPATTERN             "penpattern" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_PENPATTERN             "модельпера" 
 #define LOCALIZED_ALTERNATE_PENREVERSE             "перообратное"
-#define LOCALIZED_ALTERNATE_PENSIZE                "pensize" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_PENSIZE                "размерпера" 
 #define LOCALIZED_ALTERNATE_PENUP                  "пероподними"
-#define LOCALIZED_ALTERNATE_PERSPECTIVE            "perspective" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_PITCH                  "pitch" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_PIXEL                  "pixel" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_PLAYWAVE               "playwave" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_PLIST                  "Plist" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_PLISTS                 "plists" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_PO                     "po" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_POPDIR                 "popdir" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_POLYSTART              "polystart" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_POLYEND                "polyend" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_POLYVIEW               "polyview" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_PORTCLOSE              "portclose" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_PORTFLUSH              "portflush" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_PORTMODE               "portmode" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_PORTOPEN               "portopen" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_PORTREADARRAY          "portreadarray" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_PORTREADCHAR           "portreadchar" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_PORTWRITEARRAY         "portwritearray" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_PORTWRITECHAR          "portwritechar" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_POS                    "pos" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_POSXYZ                 "posxyz" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_POT                    "pot" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_PERSPECTIVE            "пространственный" 
+#define LOCALIZED_ALTERNATE_PITCH                  "уклон" 
+#define LOCALIZED_ALTERNATE_PIXEL                  "пиксель" 
+#define LOCALIZED_ALTERNATE_PLAYWAVE               "воспроизвзвук" 
+#define LOCALIZED_ALTERNATE_PLIST                  "списоксв" 
+#define LOCALIZED_ALTERNATE_PLISTS                 "спискисв" 
+#define LOCALIZED_ALTERNATE_PO                     "ппроц" 
+#define LOCALIZED_ALTERNATE_POPDIR                 "вверхпап" 
+#define LOCALIZED_ALTERNATE_POLYSTART              "начмногоуг" 
+#define LOCALIZED_ALTERNATE_POLYEND                "конмногоуг" 
+#define LOCALIZED_ALTERNATE_POLYVIEW               "показмногоуг" 
+#define LOCALIZED_ALTERNATE_PORTCLOSE              "портзакрой" 
+#define LOCALIZED_ALTERNATE_PORTFLUSH              "портсбр" 
+#define LOCALIZED_ALTERNATE_PORTMODE               "режимпорта" 
+#define LOCALIZED_ALTERNATE_PORTOPEN               "портоткрой" 
+#define LOCALIZED_ALTERNATE_PORTREADARRAY          "читмассизпорта" 
+#define LOCALIZED_ALTERNATE_PORTREADCHAR           "читсимизпорта" 
+#define LOCALIZED_ALTERNATE_PORTWRITEARRAY         "запмассвпорт" 
+#define LOCALIZED_ALTERNATE_PORTWRITECHAR          "запсимвпорт" 
+#define LOCALIZED_ALTERNATE_POS                    "место" 
+#define LOCALIZED_ALTERNATE_POSXYZ                 "место_xyz" 
+#define LOCALIZED_ALTERNATE_POT                    "вдзгстр" 
 #define LOCALIZED_ALTERNATE_POWER                  "степень"
-#define LOCALIZED_ALTERNATE_PPROP                  "Pprop" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_PPROP                  "дсвойство" 
 #define LOCALIZED_ALTERNATE_PPT                    "прк"
 #define LOCALIZED_ALTERNATE_PR                     "пш"
-#define LOCALIZED_ALTERNATE_PRIMITIVEP             "primitivep" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_PRIMITIVE_             "primitive?" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_PRIMITIVEP             "базиснаяпи" 
+#define LOCALIZED_ALTERNATE_PRIMITIVE_             "базисная?" 
 #define LOCALIZED_ALTERNATE_PRINT                  "пиши"
-#define LOCALIZED_ALTERNATE_PROCEDUREP             "procedurep" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_PROCEDURE_             "procedure?" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_PROPLISTP              "proplistp" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_PROPLIST_              "proplist?" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_PROCEDUREP             "процедурапи" 
+#define LOCALIZED_ALTERNATE_PROCEDURE_             "процедура?" 
+#define LOCALIZED_ALTERNATE_PROPLISTP              "спсвойствпи" 
+#define LOCALIZED_ALTERNATE_PROPLIST_              "спсвойств?" 
 #define LOCALIZED_ALTERNATE_PROCEDURES             "процедуры"
 #define LOCALIZED_ALTERNATE_PRODUCT                "произведение"
 #define LOCALIZED_ALTERNATE_PU                     "пп"
 #define LOCALIZED_ALTERNATE_PX                     "поб"
-#define LOCALIZED_ALTERNATE_QUESTIONBOX            "questionbox" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_QUESTIONBOX            "окновопроса" 
 #define LOCALIZED_ALTERNATE_QUOTIENT               "частное"
-#define LOCALIZED_ALTERNATE_RADARCCOS              "radarccos" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_RADARCSIN              "radarcsin" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_RADARCTAN              "radarctan" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_RADCOS                 "radcos" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_RADIOBUTTONCREATE      "radiobuttoncreate" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_RADIOBUTTONENABLE      "radiobuttonenable" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_RADIOBUTTONDELETE      "radiobuttondelete" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_RADIOBUTTONGET         "radiobuttonget" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_RADIOBUTTONSET         "radiobuttonset" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_RADSIN                 "radsin" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_RADTAN                 "radtan" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_RADARCCOS              "radarccos" 
+#define LOCALIZED_ALTERNATE_RADARCSIN              "radarcsin" 
+#define LOCALIZED_ALTERNATE_RADARCTAN              "radarctg" 
+#define LOCALIZED_ALTERNATE_RADCOS                 "radcos" 
+#define LOCALIZED_ALTERNATE_RADIOBUTTONCREATE      "радиопереклсоздай" 
+#define LOCALIZED_ALTERNATE_RADIOBUTTONENABLE      "радиопереклдопусти" 
+#define LOCALIZED_ALTERNATE_RADIOBUTTONDELETE      "радиопереклудали" 
+#define LOCALIZED_ALTERNATE_RADIOBUTTONGET         "радиопереклсобытие" 
+#define LOCALIZED_ALTERNATE_RADIOBUTTONSET         "радиопереклустанови" 
+#define LOCALIZED_ALTERNATE_RADSIN                 "radsin" 
+#define LOCALIZED_ALTERNATE_RADTAN                 "radtg" 
 #define LOCALIZED_ALTERNATE_RANDOM                 "случайный"
-#define LOCALIZED_ALTERNATE_RAWASCII               "rawascii" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_RC                     "rc" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_RCS                    "rcs" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_READCHAR               "readchar" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_READCHARS              "readchars" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_READER                 "reader" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_READLIST               "readlist" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_READPOS                "readpos" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_RAWASCII               "альткод" 
+#define LOCALIZED_ALTERNATE_RC                     "жс" 
+#define LOCALIZED_ALTERNATE_RCS                    "жсы" 
+#define LOCALIZED_ALTERNATE_READCHAR               "ждисимвол" 
+#define LOCALIZED_ALTERNATE_READCHARS              "ждисимволы" 
+#define LOCALIZED_ALTERNATE_READER                 "считыватель" 
+#define LOCALIZED_ALTERNATE_READLIST               "ждисписок" 
+#define LOCALIZED_ALTERNATE_READPOS                "читайкол" 
 #define LOCALIZED_ALTERNATE_READWORD               "ждислово"
 #define LOCALIZED_ALTERNATE_REMAINDER              "остаток"
-#define LOCALIZED_ALTERNATE_REMPROP                "remprop" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_REMPROP                "удалисв" 
 #define LOCALIZED_ALTERNATE_REPCOUNT               "счетчик"
 #define LOCALIZED_ALTERNATE_REPEAT                 "повтори"
-#define LOCALIZED_ALTERNATE_RERANDOM               "rerandom" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_RERANDOM               "повторисл" 
 #define LOCALIZED_ALTERNATE_RIGHT                  "направо"
-#define LOCALIZED_ALTERNATE_RIGHTROLL              "rightroll" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_RL                     "rl" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_RMDIR                  "rmdir" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_ROLL                   "roll" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_RIGHTROLL              "правыйкрен" 
+#define LOCALIZED_ALTERNATE_RL                     "чс" 
+#define LOCALIZED_ALTERNATE_RMDIR                  "удпап" 
+#define LOCALIZED_ALTERNATE_ROLL                   "крен" 
 #define LOCALIZED_ALTERNATE_ROUND                  "целое"
-#define LOCALIZED_ALTERNATE_RR                     "rr" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_RR                     "пкр" 
 #define LOCALIZED_ALTERNATE_RT                     "пр"
-#define LOCALIZED_ALTERNATE_RUN                    "run" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_RUNPARSE               "runparse" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_RUNRESULT              "runresult" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_RUN                    "выполнить" 
+#define LOCALIZED_ALTERNATE_RUNPARSE               "выпвпредл" 
+#define LOCALIZED_ALTERNATE_RUNRESULT              "выпрез" 
 #define LOCALIZED_ALTERNATE_RW                     "жс"
-#define LOCALIZED_ALTERNATE_SAVE                   "save" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_SCREENCOLOR            "screencolor" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_SCROLLBARCREATE        "scrollbarcreate" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_SCROLLBARENABLE        "scrollbarenable" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_SCROLLBARDELETE        "scrollbardelete" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_SCROLLBARGET           "scrollbarget" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_SCROLLBARSET           "scrollbarset" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_SCROLLX                "scrollx" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_SCROLLY                "scrolly" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_SCRUNCH                "scrunch" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_SAVE                   "сохрани" 
+#define LOCALIZED_ALTERNATE_SCREENCOLOR            "цветэкрана" 
+#define LOCALIZED_ALTERNATE_SCROLLBARCREATE        "полпроксоздать" 
+#define LOCALIZED_ALTERNATE_SCROLLBARENABLE        "полпрокдопусти" 
+#define LOCALIZED_ALTERNATE_SCROLLBARDELETE        "полпрокудали" 
+#define LOCALIZED_ALTERNATE_SCROLLBARGET           "полпрокустанови" 
+#define LOCALIZED_ALTERNATE_SCROLLBARSET           "полпрокзадай" 
+#define LOCALIZED_ALTERNATE_SCROLLX                "прокрутка_x" 
+#define LOCALIZED_ALTERNATE_SCROLLY                "прокрутка_y" 
+#define LOCALIZED_ALTERNATE_SCRUNCH                "коррекция" 
 #define LOCALIZED_ALTERNATE_SE                     "пе"
-#define LOCALIZED_ALTERNATE_SELECTBOX              "selectbox" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_SELECTBOX              "окновыбора" 
 #define LOCALIZED_ALTERNATE_SENTENCE               "предложение"
-#define LOCALIZED_ALTERNATE_SETACTIVEAREA          "setactivearea" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_SETBITINDEX            "setbitindex" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_SETBITMODE             "setbitmode" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_SETCLIP                "setclip" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_SETCURSOR              "setcursor" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_SETCURSORNOWAIT        "setcursornowait" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_SETCURSORWAIT          "setcursorwait" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_SETACTIVEAREA          "актполеустанови" 
+#define LOCALIZED_ALTERNATE_SETBITINDEX            "индрастраустанови" 
+#define LOCALIZED_ALTERNATE_SETBITMODE             "режрастраустанови" 
+#define LOCALIZED_ALTERNATE_SETCLIP                "новклип" 
+#define LOCALIZED_ALTERNATE_SETCURSOR              "новкурсор" 
+#define LOCALIZED_ALTERNATE_SETCURSORNOWAIT        "курсорнечасы" 
+#define LOCALIZED_ALTERNATE_SETCURSORWAIT          "курсорчасы" 
 #define LOCALIZED_ALTERNATE_SETFC                  "новцз"
 #define LOCALIZED_ALTERNATE_SETFLOODCOLOR          "новыйцветзаливки" 
-#define LOCALIZED_ALTERNATE_SETFOCUS               "setfocus" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_SETFOCUS               "устактокно" 
 #define LOCALIZED_ALTERNATE_SETH                   "новк"
 #define LOCALIZED_ALTERNATE_SETHEADING             "новыйкурс"
 #define LOCALIZED_ALTERNATE_SETITEM                "новыйэлемент"
-#define LOCALIZED_ALTERNATE_SETLABELFONT           "новыйнадписишрифт"
-#define LOCALIZED_ALTERNATE_SETLIGHT               "setlight" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_SETMARGINS             "setmargins" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_SETLABELFONT           "новшрифтнадписи"
+#define LOCALIZED_ALTERNATE_SETLIGHT               "установияркость" 
+#define LOCALIZED_ALTERNATE_SETMARGINS             "новполя" 
 #define LOCALIZED_ALTERNATE_SETPC                  "нц"
 #define LOCALIZED_ALTERNATE_SETPENCOLOR            "новыйцветпера"
-#define LOCALIZED_ALTERNATE_SETPENPATTERN          "setpenpattern" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_SETPENPATTERN          "новмодельпера" 
 #define LOCALIZED_ALTERNATE_SETPENSIZE             "новыйразмерпера"
-#define LOCALIZED_ALTERNATE_SETPITCH               "setpitch" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_SETPIXEL               "setpixel" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_SETPITCH               "новуклон" 
+#define LOCALIZED_ALTERNATE_SETPIXEL               "новпиксель" 
 #define LOCALIZED_ALTERNATE_SETPOS                 "новоеместо"
-#define LOCALIZED_ALTERNATE_SETPOSXYZ              "setposxyz" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_SETREAD                "setread" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_SETREADPOS             "setreadpos" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_SETROLL                "setroll" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_SETSC                  "setsc" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_SETSCREENCOLOR         "setscreencolor" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_SETSCRUNCH             "setscrunch" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_SETTIMER               "settimer" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_SETTURTLE              "setturtle" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_SETTURTLEMODE          "setturtlemode" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_SETWRITE               "setwrite" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_SETWRITEPOS            "setwritepos" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_SETX                   "setx" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_SETPOSXYZ              "новместо_xyz" 
+#define LOCALIZED_ALTERNATE_SETREAD                "новчтение" 
+#define LOCALIZED_ALTERNATE_SETREADPOS             "чтениесместа" 
+#define LOCALIZED_ALTERNATE_SETROLL                "новкрен" 
+#define LOCALIZED_ALTERNATE_SETSC                  "нцэ" 
+#define LOCALIZED_ALTERNATE_SETSCREENCOLOR         "новцветэкрана" 
+#define LOCALIZED_ALTERNATE_SETSCRUNCH             "установикоррекцию" 
+#define LOCALIZED_ALTERNATE_SETTIMER               "новтаймер" 
+#define LOCALIZED_ALTERNATE_SETTURTLE              "новтортила" 
+#define LOCALIZED_ALTERNATE_SETTURTLEMODE          "новрежимтортилы" 
+#define LOCALIZED_ALTERNATE_SETWRITE               "новзапись" 
+#define LOCALIZED_ALTERNATE_SETWRITEPOS            "записьсместа" 
+#define LOCALIZED_ALTERNATE_SETX                   "нов_x" 
 #define LOCALIZED_ALTERNATE_SETXY                  "нов_xy"
-#define LOCALIZED_ALTERNATE_SETXYZ                 "setxyz" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_SETY                   "sety" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_SETZ                   "setz" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_SHELL                  "shell" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_SETXYZ                 "нов_xyz" 
+#define LOCALIZED_ALTERNATE_SETY                   "нов_y" 
+#define LOCALIZED_ALTERNATE_SETZ                   "нов_z" 
+#define LOCALIZED_ALTERNATE_SHELL                  "оболочка" 
 #define LOCALIZED_ALTERNATE_SHOW                   "покажи"
-#define LOCALIZED_ALTERNATE_SHOWNP                 "shownp" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_SHOWN_                 "shown?" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_SHOWTURTLE             "покажичерепаху"
-#define LOCALIZED_ALTERNATE_SIN                    "sin" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_SOUND                  "sound" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_SPLITSCREEN            "splitscreen" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_SHOWNP                 "видимаяпи" 
+#define LOCALIZED_ALTERNATE_SHOWN_                 "видимая?" 
+#define LOCALIZED_ALTERNATE_SHOWTURTLE             "покажитортилу"
+#define LOCALIZED_ALTERNATE_SIN                    "sin" 
+#define LOCALIZED_ALTERNATE_SOUND                  "звук" 
+#define LOCALIZED_ALTERNATE_SPLITSCREEN            "раздэкран" 
 #define LOCALIZED_ALTERNATE_SQRT                   "корень"
-#define LOCALIZED_ALTERNATE_SS                     "ss" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_ST                     "пч"
-#define LOCALIZED_ALTERNATE_STANDOUT               "standout" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_STATICCREATE           "staticcreate" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_STATICDELETE           "staticdelete" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_STATICUPDATE           "staticupdate" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_STATUS                 "status" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_STEP                   "step" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_STEPPED                "stepped" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_STOP                   "stop" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_SUBSTRINGP             "substringp" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_SUBSTRING_             "substring?" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_SS                     "рэ" 
+#define LOCALIZED_ALTERNATE_ST                     "пт"
+#define LOCALIZED_ALTERNATE_STANDOUT               "выдел" 
+#define LOCALIZED_ALTERNATE_STATICCREATE           "заголовоксоздай" 
+#define LOCALIZED_ALTERNATE_STATICDELETE           "заголовокудали" 
+#define LOCALIZED_ALTERNATE_STATICUPDATE           "заголовокобнови" 
+#define LOCALIZED_ALTERNATE_STATUS                 "статус" 
+#define LOCALIZED_ALTERNATE_STEP                   "шаг" 
+#define LOCALIZED_ALTERNATE_STEPPED                "пройденные" 
+#define LOCALIZED_ALTERNATE_STOP                   "стоп" 
+#define LOCALIZED_ALTERNATE_SUBSTRINGP             "подстрокапи" 
+#define LOCALIZED_ALTERNATE_SUBSTRING_             "подстрока?" 
 #define LOCALIZED_ALTERNATE_SUM                    "сумма"
-#define LOCALIZED_ALTERNATE_TAG                    "tag" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_TAN                    "tan" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_TEST                   "test" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_TEXT                   "text" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_TEXTSCREEN             "textscreen" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_THING                  "thing" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_THROW                  "throw" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_TIME                   "time" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_TIMEMILLI              "timemilli" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_TAG                    "метка" 
+#define LOCALIZED_ALTERNATE_TAN                    "tg" 
+#define LOCALIZED_ALTERNATE_TEST                   "тест" 
+#define LOCALIZED_ALTERNATE_TEXT                   "текст" 
+#define LOCALIZED_ALTERNATE_TEXTSCREEN             "текстовыйэкран" 
+#define LOCALIZED_ALTERNATE_THING                  "объект" 
+#define LOCALIZED_ALTERNATE_THROW                  "перемести" 
+#define LOCALIZED_ALTERNATE_TIME                   "время" 
+#define LOCALIZED_ALTERNATE_TIMEMILLI              "систвремя" 
 #define LOCALIZED_ALTERNATE_TO                     "это"
-#define LOCALIZED_ALTERNATE_TONE                   "tone" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_TOWARDS                "towards" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_TOWARDSXYZ             "towardsxyz" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_TRACE                  "trace" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_TRACED                 "traced" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_TS                     "ts" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_TURTLE                 "turtle" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_TURTLEMODE             "turtlemode" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_TURTLES                "turtles" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_TYPE                   "type" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_UNBURY                 "unbury" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_UNSTEP                 "unstep" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_UNTRACE                "untrace" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_UP                     "up" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_UPPERCASE              "uppercase" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_UPPITCH                "uppitch" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_TONE                   "тон" 
+#define LOCALIZED_ALTERNATE_TOWARDS                "внаправ" 
+#define LOCALIZED_ALTERNATE_TOWARDSXYZ             "внаправ_xyz" 
+#define LOCALIZED_ALTERNATE_TRACE                  "трасс" 
+#define LOCALIZED_ALTERNATE_TRACED                 "трассированные" 
+#define LOCALIZED_ALTERNATE_TS                     "тэ" 
+#define LOCALIZED_ALTERNATE_TURTLE                 "тортила" 
+#define LOCALIZED_ALTERNATE_TURTLEMODE             "режимтортилы" 
+#define LOCALIZED_ALTERNATE_TURTLES                "тортилы" 
+#define LOCALIZED_ALTERNATE_TYPE                   "набери" 
+#define LOCALIZED_ALTERNATE_UNBURY                 "нескрывать" 
+#define LOCALIZED_ALTERNATE_UNSTEP                 "безшага" 
+#define LOCALIZED_ALTERNATE_UNTRACE                "безтрасс" 
+#define LOCALIZED_ALTERNATE_UP                     "вверх" 
+#define LOCALIZED_ALTERNATE_UPPERCASE              "заглавный" 
+#define LOCALIZED_ALTERNATE_UPPITCH                "уклонвверх" 
 #define LOCALIZED_ALTERNATE_WAIT                   "жди"
-#define LOCALIZED_ALTERNATE_WINDOW                 "window" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_WINDOW                 "окно" 
 #define LOCALIZED_ALTERNATE_WINDOWCREATE           "окносоздай"
-#define LOCALIZED_ALTERNATE_WINDOWENABLE           "windowenable" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_WINDOWENABLE           "окнодопусти" 
 #define LOCALIZED_ALTERNATE_WINDOWDELETE           "окноудали"
-#define LOCALIZED_ALTERNATE_WINDOWFILEEDIT         "windowfileedit" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_WINDOWSET              "windowset" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_WINHELP                "winhelp" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_WINDOWFILEEDIT         "окнофайлоткрыть" 
+#define LOCALIZED_ALTERNATE_WINDOWSET              "окнозадать" 
+#define LOCALIZED_ALTERNATE_WINHELP                "окнопомощи" 
 #define LOCALIZED_ALTERNATE_WORD                   "слово"
-#define LOCALIZED_ALTERNATE_WORDP                  "wordp" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_WORD_                  "word?" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_WRAP                   "wrap" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_WRITEPOS               "writepos" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_WRITER                 "writer" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_YESNOBOX               "yesnobox" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_YIELD                  "yield" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_ZOOM                   "zoom" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_WORDP                  "словопи" 
+#define LOCALIZED_ALTERNATE_WORD_                  "слово?" 
+#define LOCALIZED_ALTERNATE_WRAP                   "обертка" 
+#define LOCALIZED_ALTERNATE_WRITEPOS               "пишикол" 
+#define LOCALIZED_ALTERNATE_WRITER                 "пишпоток" 
+#define LOCALIZED_ALTERNATE_YESNOBOX               "данетокно" 
+#define LOCALIZED_ALTERNATE_YIELD                  "уступать" 
+#define LOCALIZED_ALTERNATE_ZOOM                   "масштаб" 
 
 //
 // General localized strings
 //
 #define LOCALIZED_GENERAL_OKBUTTON      "&OK" // NOT_YET_LOCALIZED
-#define LOCALIZED_GENERAL_CANCELBUTTON  "&Cancel" // NOT_YET_LOCALIZED
-#define LOCALIZED_GENERAL_APPLYBUTTON   "&Apply" // NOT_YET_LOCALIZED
+#define LOCALIZED_GENERAL_CANCELBUTTON  "&Отмена" 
+#define LOCALIZED_GENERAL_APPLYBUTTON   "&Применить" 
 
-#define LOCALIZED_GENERAL_PRODUCTNAME   "FMSLogo" // NOT_YET_LOCALIZED
+#define LOCALIZED_GENERAL_PRODUCTNAME   "FMSLogo" 
 
 
 
 //
 // The menu options on the main window 
 //
-#define LOCALIZED_FILE        "&File" // NOT_YET_LOCALIZED
-#define LOCALIZED_FILE_NEW    "&New\t(erase workspace)" // NOT_YET_LOCALIZED
-#define LOCALIZED_FILE_LOAD   "&Load...\t(merge into workspace)" // NOT_YET_LOCALIZED
-#define LOCALIZED_FILE_OPEN   "&Open...\t(replace workspace)"  // NOT_YET_LOCALIZED
-#define LOCALIZED_FILE_SAVE   "&Save"  // NOT_YET_LOCALIZED
-#define LOCALIZED_FILE_SAVEAS "Save &As..." // NOT_YET_LOCALIZED
-#define LOCALIZED_FILE_EDIT   "&Edit..." // NOT_YET_LOCALIZED
-#define LOCALIZED_FILE_ERASE  "E&rase..." // NOT_YET_LOCALIZED
-#define LOCALIZED_FILE_EXIT   "E&xit" // NOT_YET_LOCALIZED
+#define LOCALIZED_FILE        "&Файл" 
+#define LOCALIZED_FILE_NEW    "&Новый" 
+#define LOCALIZED_FILE_LOAD   "&Загрузить..." 
+#define LOCALIZED_FILE_OPEN   "&Открыть..."  
+#define LOCALIZED_FILE_SAVE   "&Сохранить"  
+#define LOCALIZED_FILE_SAVEAS "Сохранить &как..." 
+#define LOCALIZED_FILE_EDIT   "&Редактировать..." 
+#define LOCALIZED_FILE_ERASE  "С&тереть..." 
+#define LOCALIZED_FILE_EXIT   "&Выход" 
 
-#define LOCALIZED_BITMAP               "&Bitmap" // NOT_YET_LOCALIZED
-#define LOCALIZED_BITMAP_NEW           "&New" // NOT_YET_LOCALIZED
-#define LOCALIZED_BITMAP_LOAD          "&Load..." // NOT_YET_LOCALIZED
-#define LOCALIZED_BITMAP_SAVE          "&Save" // NOT_YET_LOCALIZED
-#define LOCALIZED_BITMAP_SAVEAS        "Save &As..." // NOT_YET_LOCALIZED
-#define LOCALIZED_BITMAP_PRINT         "&Print..." // NOT_YET_LOCALIZED
-#define LOCALIZED_BITMAP_PRINTERSETUP  "P&rinter Setup..." // NOT_YET_LOCALIZED
-#define LOCALIZED_BITMAP_ACTIVEAREA    "A&ctive Area..." // NOT_YET_LOCALIZED
+#define LOCALIZED_BITMAP               "&Рисунок" 
+#define LOCALIZED_BITMAP_NEW           "&Новый" 
+#define LOCALIZED_BITMAP_LOAD          "&Загрузить..." 
+#define LOCALIZED_BITMAP_SAVE          "&Сохранить" 
+#define LOCALIZED_BITMAP_SAVEAS        "Сохранить &как..." 
+#define LOCALIZED_BITMAP_PRINT         "&Печать..." 
+#define LOCALIZED_BITMAP_PRINTERSETUP  "С&войства принтера..." 
+#define LOCALIZED_BITMAP_ACTIVEAREA    "&Активная зона..." 
 
-#define LOCALIZED_SET                  "&Set" // NOT_YET_LOCALIZED
-#define LOCALIZED_SET_PENSIZE          "Pen Si&ze..." // NOT_YET_LOCALIZED
-#define LOCALIZED_SET_LABELFONT        "&Label Font..." // NOT_YET_LOCALIZED
-#define LOCALIZED_SET_COMMANDERFONT    "&Commander Font..." // NOT_YET_LOCALIZED
-#define LOCALIZED_SET_PENCOLOR         "&Pen Color..." // NOT_YET_LOCALIZED
-#define LOCALIZED_SET_FLOODCOLOR       "F&lood Color..." // NOT_YET_LOCALIZED
-#define LOCALIZED_SET_SCREENCOLOR      "&Screen Color..." // NOT_YET_LOCALIZED
+#define LOCALIZED_SET                  "&Установить" 
+#define LOCALIZED_SET_PENSIZE          "&Размер пера..." 
+#define LOCALIZED_SET_LABELFONT        "&Шрифт надписей..." 
+#define LOCALIZED_SET_COMMANDERFONT    "Шр&ифт командного окна..." 
+#define LOCALIZED_SET_PENCOLOR         "Цв&ет пера..." 
+#define LOCALIZED_SET_FLOODCOLOR       "Ц&вет заливки..." 
+#define LOCALIZED_SET_SCREENCOLOR      "&Цвет экрана..." 
 
-#define LOCALIZED_ZOOM                 "&Zoom"  // NOT_YET_LOCALIZED
-#define LOCALIZED_ZOOM_IN              "&In" // NOT_YET_LOCALIZED
-#define LOCALIZED_ZOOM_OUT             "&Out" // NOT_YET_LOCALIZED
-#define LOCALIZED_ZOOM_NORMAL          "&Normal" // NOT_YET_LOCALIZED
+#define LOCALIZED_ZOOM                 "&Лупа"  
+#define LOCALIZED_ZOOM_IN              "&Увеличить" 
+#define LOCALIZED_ZOOM_OUT             "У&меньшить" 
+#define LOCALIZED_ZOOM_NORMAL          "&Норма" 
 
-#define LOCALIZED_HELP                 "&Help"  // NOT_YET_LOCALIZED
-#define LOCALIZED_HELP_INDEX           "&Index" // NOT_YET_LOCALIZED
-#define LOCALIZED_HELP_TUTORIAL        "&Tutorial" // NOT_YET_LOCALIZED
-#define LOCALIZED_HELP_DEMO            "&Demo"  // NOT_YET_LOCALIZED
-#define LOCALIZED_HELP_EXAMPLE         "&Examples" // NOT_YET_LOCALIZED
-#define LOCALIZED_HELP_RELEASENOTES    "&Release Notes" // NOT_YET_LOCALIZED
-#define LOCALIZED_HELP_ABOUTFMSLOGO    "&About "LOCALIZED_GENERAL_PRODUCTNAME"..." // NOT_YET_LOCALIZED
-#define LOCALIZED_HELP_MS              "&About MS..." // NOT_YET_LOCALIZED
+#define LOCALIZED_HELP                 "&Помощь"  
+#define LOCALIZED_HELP_INDEX           "&Индекс" 
+#define LOCALIZED_HELP_TUTORIAL        "О&бучающая программа" 
+#define LOCALIZED_HELP_DEMO            "&Демо"  
+#define LOCALIZED_HELP_EXAMPLE         "&Примеры" 
+#define LOCALIZED_HELP_RELEASENOTES    "П&римечания к выпуску" 
+#define LOCALIZED_HELP_ABOUTFMSLOGO    "&О "LOCALIZED_GENERAL_PRODUCTNAME"..."
+#define LOCALIZED_HELP_MS              "&О MS..." 
 // The following two help options display tables for translating to/from English
 // These tables are built from the LOCALIZED_ALTERNATE_* macros above and the
 // and startup-xxxx.logoscript file.
-#define LOCALIZED_HELP_LANGTOENGLISH   "LANGUAGE to English" // NOT_YET_LOCALIZED
-#define LOCALIZED_HELP_ENGLISHTOLANG   "English to LANGUAGE" // NOT_YET_LOCALIZED
+#define LOCALIZED_HELP_LANGTOENGLISH   "Русско-Английский" 
+#define LOCALIZED_HELP_ENGLISHTOLANG   "Англо-Русский" 
 
 // The "Set Active Area" dialog box
-#define LOCALIZED_SELECTACTIVEAREA              "Select Active Area" // NOT_YET_LOCALIZED
-#define LOCALIZED_SELECTACTIVEAREA_EFFECT       "These affect Printing and Saving Bitmaps" // NOT_YET_LOCALIZED
-#define LOCALIZED_SELECTACTIVEAREA_YHIGH        "Y-High" // NOT_YET_LOCALIZED
-#define LOCALIZED_SELECTACTIVEAREA_YLOW         "Y-Low"  // NOT_YET_LOCALIZED
-#define LOCALIZED_SELECTACTIVEAREA_XHIGH        "X-High" // NOT_YET_LOCALIZED
-#define LOCALIZED_SELECTACTIVEAREA_XLOW         "X-Low" // NOT_YET_LOCALIZED
-#define LOCALIZED_SELECTACTIVEAREA_STEPSPERINCH "Turtle steps per inch printed:" // NOT_YET_LOCALIZED
-#define LOCALIZED_SELECTACTIVEAREA_RESET        "&Reset"  // NOT_YET_LOCALIZED
-#define LOCALIZED_SELECTACTIVEAREA_OK           LOCALIZED_GENERAL_OKBUTTON // NOT_YET_LOCALIZED
-#define LOCALIZED_SELECTACTIVEAREA_CANCEL       LOCALIZED_GENERAL_CANCELBUTTON // NOT_YET_LOCALIZED
+#define LOCALIZED_SELECTACTIVEAREA              "Укажите активную зону" 
+#define LOCALIZED_SELECTACTIVEAREA_EFFECT       "Изменение свойств Печати и Сохранения растровых изображений" 
+#define LOCALIZED_SELECTACTIVEAREA_YHIGH        "Y-вверхний" 
+#define LOCALIZED_SELECTACTIVEAREA_YLOW         "Y-нижний"  
+#define LOCALIZED_SELECTACTIVEAREA_XHIGH        "X-левый" 
+#define LOCALIZED_SELECTACTIVEAREA_XLOW         "X-правый" 
+#define LOCALIZED_SELECTACTIVEAREA_STEPSPERINCH "Количество шагов на дюйм:" 
+#define LOCALIZED_SELECTACTIVEAREA_RESET        "&Сброс"  
+#define LOCALIZED_SELECTACTIVEAREA_OK           LOCALIZED_GENERAL_OKBUTTON 
+#define LOCALIZED_SELECTACTIVEAREA_CANCEL       LOCALIZED_GENERAL_CANCELBUTTON 
 
 
 //
 // Menu options in the popup menu
 //
-#define LOCALIZED_POPUP_COPY                     "Copy" // NOT_YET_LOCALIZED
-#define LOCALIZED_POPUP_CUT                      "Cut" // NOT_YET_LOCALIZED
-#define LOCALIZED_POPUP_PASTE                    "Paste" // NOT_YET_LOCALIZED
-#define LOCALIZED_POPUP_DELETE                   "Delete" // NOT_YET_LOCALIZED
-#define LOCALIZED_POPUP_UNDO                     "Undo" // NOT_YET_LOCALIZED
-#define LOCALIZED_POPUP_SELECTALL                "Select All" // NOT_YET_LOCALIZED
-#define LOCALIZED_POPUP_HELP                     "Topic Search" // NOT_YET_LOCALIZED
+#define LOCALIZED_POPUP_COPY                     "Копировать" 
+#define LOCALIZED_POPUP_CUT                      "Вырезать" 
+#define LOCALIZED_POPUP_PASTE                    "Вставить" 
+#define LOCALIZED_POPUP_DELETE                   "Удалить" 
+#define LOCALIZED_POPUP_UNDO                     "Отменить" 
+#define LOCALIZED_POPUP_SELECTALL                "Выделить всё" 
+#define LOCALIZED_POPUP_HELP                     "Поиск по разделу" 
 
 //
 // The menu options on the editor
 //
-#define LOCALIZED_EDITOR_TITLE                   "Editor" // NOT_YET_LOCALIZED
+#define LOCALIZED_EDITOR_TITLE                   "Редактор" 
 
-#define LOCALIZED_EDITOR_FILE                    "&File" // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITOR_FILE_SAVEANDEXIT        "&Save and Exit\tCtrl+D" // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITOR_FILE_SAVETOWORKSPACE    "Save to &Workspace" // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITOR_FILE_PRINT              "&Print..."  // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITOR_FILE_EXIT               "E&xit"  // NOT_YET_LOCALIZED
+#define LOCALIZED_EDITOR_FILE                    "&Файл" 
+#define LOCALIZED_EDITOR_FILE_SAVEANDEXIT        "&Сохранить и выйти\tCtrl+D" 
+#define LOCALIZED_EDITOR_FILE_SAVETOWORKSPACE    "С&охранить" 
+#define LOCALIZED_EDITOR_FILE_PRINT              "&Печать..."  
+#define LOCALIZED_EDITOR_FILE_EXIT               "&Выход"  
 
-#define LOCALIZED_EDITOR_EDIT                    "&Edit" // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITOR_EDIT_UNDO               "&Undo\tCtrl+Z" // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITOR_EDIT_CUT                "&Cut\tCtrl+X" // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITOR_EDIT_COPY               "C&opy\tCtrl+C" // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITOR_EDIT_PASTE              "&Paste\tCtrl+V" // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITOR_EDIT_DELETE             "&Delete\tDel" // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITOR_EDIT_CLEARALL           "C&lear All\tCtrl+Del" // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITOR_EDIT_SELECTALL          "S&elect All\tCtrl+A" // NOT_YET_LOCALIZED
+#define LOCALIZED_EDITOR_EDIT                    "&Редактировать" 
+#define LOCALIZED_EDITOR_EDIT_UNDO               "&Отмена\tCtrl+Z" 
+#define LOCALIZED_EDITOR_EDIT_CUT                "&Вырезать\tCtrl+X" 
+#define LOCALIZED_EDITOR_EDIT_COPY               "&Копировать\tCtrl+C" 
+#define LOCALIZED_EDITOR_EDIT_PASTE              "В&ставить\tCtrl+V" 
+#define LOCALIZED_EDITOR_EDIT_DELETE             "&Удалить\tDel" 
+#define LOCALIZED_EDITOR_EDIT_CLEARALL           "О&чистить всё\tCtrl+Del" 
+#define LOCALIZED_EDITOR_EDIT_SELECTALL          "В&ыделить всё\tCtrl+A" 
 
-#define LOCALIZED_EDITOR_SEARCH                  "&Search" // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITOR_SEARCH_FIND             "&Find...\tCtrl+F" // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITOR_SEARCH_REPLACE          "&Replace...\tCtrl+H"  // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITOR_SEARCH_NEXT             "&Next\tF3"  // NOT_YET_LOCALIZED
+#define LOCALIZED_EDITOR_SEARCH                  "&Поиск" 
+#define LOCALIZED_EDITOR_SEARCH_FIND             "&Найти...\tCtrl+F" 
+#define LOCALIZED_EDITOR_SEARCH_REPLACE          "&Замена...\tCtrl+H"  
+#define LOCALIZED_EDITOR_SEARCH_NEXT             "&Следующий\tF3"  
 
-#define LOCALIZED_EDITOR_SET                     "Se&t"  // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITOR_SET_FONT                "&Font..."  // NOT_YET_LOCALIZED
+#define LOCALIZED_EDITOR_SET                     "&Установить"  
+#define LOCALIZED_EDITOR_SET_FONT                "&Шрифт..."  
 
-#define LOCALIZED_EDITOR_TEST                    "Test!" // NOT_YET_LOCALIZED
+#define LOCALIZED_EDITOR_TEST                    "Тест!" 
 
-#define LOCALIZED_EDITOR_HELP                    "&Help"  // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITOR_HELP_INDEX              "&Index" // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITOR_HELP_EDITOR             "&Editor" // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITOR_HELP_TOPICSEARCH        "&Topic Search\tF1" // NOT_YET_LOCALIZED
+#define LOCALIZED_EDITOR_HELP                    "&Помощь"  
+#define LOCALIZED_EDITOR_HELP_INDEX              "&Индекс" 
+#define LOCALIZED_EDITOR_HELP_EDITOR             "&Редактор" 
+#define LOCALIZED_EDITOR_HELP_TOPICSEARCH        "П&оиск по разделу\tF1"
 
 
 //
 // The strings in the "You have unsaved changes" dialog
 //
 #define LOCALIZED_UNSAVEDCHANGES                LOCALIZED_YOUHAVEUNSAVEDCHANGES // NOT_YET_LOCALIZED
-#define LOCALIZED_UNSAVEDCHANGES_SAVEANDEXIT    "&Save and Exit" // NOT_YET_LOCALIZED
-#define LOCALIZED_UNSAVEDCHANGES_DONTSAVE       "&Don't Save" // NOT_YET_LOCALIZED
-#define LOCALIZED_UNSAVEDCHANGES_CANCEL         LOCALIZED_GENERAL_CANCELBUTTON // NOT_YET_LOCALIZED
-#define LOCALIZED_UNSAVEDCHANGES_MESSAGE1       "There are unsaved changes in the workspace.  If you exit without saving, these changes will be lost.  " // NOT_YET_LOCALIZED
-#define LOCALIZED_UNSAVEDCHANGES_MESSAGE2       "Would you like to save your changes before exiting?"  // NOT_YET_LOCALIZED
+#define LOCALIZED_UNSAVEDCHANGES_SAVEANDEXIT    "&Сохранить и выйти" 
+#define LOCALIZED_UNSAVEDCHANGES_DONTSAVE       "&Не сохранять" 
+#define LOCALIZED_UNSAVEDCHANGES_CANCEL         LOCALIZED_GENERAL_CANCELBUTTON 
+#define LOCALIZED_UNSAVEDCHANGES_MESSAGE1       "В рабочем пространстве есть не сохранённые данные. Если вы выйдете, эти данные будут потеряны.  " 
+#define LOCALIZED_UNSAVEDCHANGES_MESSAGE2       "Сохранить данные перед выходом?"  
 
 
 //
 // Strings on the Commander window
 //
-#define LOCALIZED_COMMANDER                     "Commander" // NOT_YET_LOCALIZED
-#define LOCALIZED_COMMANDER_HALT                "Halt" // NOT_YET_LOCALIZED
-#define LOCALIZED_COMMANDER_TRACE               "Trace" // NOT_YET_LOCALIZED
-#define LOCALIZED_COMMANDER_NOTRACE             "NoTrace" // NOT_YET_LOCALIZED
-#define LOCALIZED_COMMANDER_PAUSE               "Pause" // NOT_YET_LOCALIZED
-#define LOCALIZED_COMMANDER_STATUS              "Status" // NOT_YET_LOCALIZED
-#define LOCALIZED_COMMANDER_NOSTATUS            "NoStatus" // NOT_YET_LOCALIZED
-#define LOCALIZED_COMMANDER_STEP                "Step" // NOT_YET_LOCALIZED
-#define LOCALIZED_COMMANDER_UNSTEP              "UnStep" // NOT_YET_LOCALIZED
-#define LOCALIZED_COMMANDER_RESET               "Reset" // NOT_YET_LOCALIZED
-#define LOCALIZED_COMMANDER_EXECUTE             "Execute" // NOT_YET_LOCALIZED
-#define LOCALIZED_COMMANDER_EDALL               "Edall" // NOT_YET_LOCALIZED
+#define LOCALIZED_COMMANDER                     "Редактор" 
+#define LOCALIZED_COMMANDER_HALT                "Останов" 
+#define LOCALIZED_COMMANDER_TRACE               "Трасс" 
+#define LOCALIZED_COMMANDER_NOTRACE             "Безтрасс" 
+#define LOCALIZED_COMMANDER_PAUSE               "Пауза" 
+#define LOCALIZED_COMMANDER_STATUS              "Статус" 
+#define LOCALIZED_COMMANDER_NOSTATUS            "Безстатуса" 
+#define LOCALIZED_COMMANDER_STEP                "Шаг" 
+#define LOCALIZED_COMMANDER_UNSTEP              "Безшага" 
+#define LOCALIZED_COMMANDER_RESET               "Сброс" 
+#define LOCALIZED_COMMANDER_EXECUTE             "Выполнить" 
+#define LOCALIZED_COMMANDER_EDALL               "Редактор" 
 
 //
 // Strings on the Status window
 //
-#define LOCALIZED_STATUS                        "Status" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_PEN                    "Pen" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_CONTACT                "Contact:" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_WIDTH                  "Width:" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_STYLE                  "Style:" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_ORIENTATION            "Orientation" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_PITCH                  "Pitch:" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_HEADING                "Heading:" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_ROLL                   "Roll:" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_TURTLE                 "Turtle" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_POSITION               "Position(XYZ):" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_WHICH                  "Which:" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_VISIBILITY             "Visibility:" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_COLOR                  "Color" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_PENCOLOR               "Pen(RGB):" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_FLOODCOLOR             "Flood(RGB):" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_SCREENCOLOR            "Screen(RGB):" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_PALETTE                "Palette use:" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_KERNEL                 "Kernel" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_CALLS                  "Calls:" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_PEAKMEMORY             "Peak Memory:" // NOT_YET_LOCALIZED
+#define LOCALIZED_STATUS                        "Статус" 
+#define LOCALIZED_STATUS_PEN                    "Перо" 
+#define LOCALIZED_STATUS_CONTACT                "Сост:" 
+#define LOCALIZED_STATUS_WIDTH                  "Ширина:" 
+#define LOCALIZED_STATUS_STYLE                  "Режим:" 
+#define LOCALIZED_STATUS_ORIENTATION            "Ориентация" 
+#define LOCALIZED_STATUS_PITCH                  "Уклон:" 
+#define LOCALIZED_STATUS_HEADING                "Направление:" 
+#define LOCALIZED_STATUS_ROLL                   "Крен:" 
+#define LOCALIZED_STATUS_TURTLE                 "Тортила" 
+#define LOCALIZED_STATUS_POSITION               "Позиция(XYZ):" 
+#define LOCALIZED_STATUS_WHICH                  "Номер:" 
+#define LOCALIZED_STATUS_VISIBILITY             "Видимость:" 
+#define LOCALIZED_STATUS_COLOR                  "Цвет" 
+#define LOCALIZED_STATUS_PENCOLOR               "Перо(RGB):" 
+#define LOCALIZED_STATUS_FLOODCOLOR             "Заливка(RGB):" 
+#define LOCALIZED_STATUS_SCREENCOLOR            "Экран(RGB):" 
+#define LOCALIZED_STATUS_PALETTE                "Используемая палитра:" 
+#define LOCALIZED_STATUS_KERNEL                 "Ядро" 
+#define LOCALIZED_STATUS_CALLS                  "Вызовы:" 
+#define LOCALIZED_STATUS_PEAKMEMORY             "Пиковая память:" 
 
-#define LOCALIZED_STATUS_PENREVERSE     "Reverse" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_PENNORMAL      "Normal" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_PENERASE       "Erase" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_PENUP          "Up" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_PENDOWN        "Down" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_PENSHOWN       "Shown" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_PENHIDDEN      "Hidden" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_POLYGONS       "Polygons" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_VECTORS        "Vectors" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_NODES          "Nodes" // NOT_YET_LOCALIZED
-#define LOCALIZED_STATUS_NOT_APPLICABLE "N/A" // NOT_YET_LOCALIZED
+#define LOCALIZED_STATUS_PENREVERSE     "Реверс" 
+#define LOCALIZED_STATUS_PENNORMAL      "Норма" 
+#define LOCALIZED_STATUS_PENERASE       "Ластик" 
+#define LOCALIZED_STATUS_PENUP          "Поднято" 
+#define LOCALIZED_STATUS_PENDOWN        "Опущено" 
+#define LOCALIZED_STATUS_PENSHOWN       "Видима" 
+#define LOCALIZED_STATUS_PENHIDDEN      "Не видима" 
+#define LOCALIZED_STATUS_POLYGONS       "Ломаные" 
+#define LOCALIZED_STATUS_VECTORS        "Вектора" 
+#define LOCALIZED_STATUS_NODES          "Записи" 
+#define LOCALIZED_STATUS_NOT_APPLICABLE "N/A" 
 
 //
 // Strings on the Erase|Edit Procedure dialog box
 //
-#define LOCALIZED_SELECTPROCEDURE_OK            LOCALIZED_GENERAL_OKBUTTON // NOT_YET_LOCALIZED
-#define LOCALIZED_SELECTPROCEDURE_CANCEL        LOCALIZED_GENERAL_CANCELBUTTON // NOT_YET_LOCALIZED
-#define LOCALIZED_SELECTPROCEDURE_ALL           "&All" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERASEPROCEDURE                "Erase Procedure" // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITPROCEDURE                 "Edit Procedure" // NOT_YET_LOCALIZED
+#define LOCALIZED_SELECTPROCEDURE_OK            LOCALIZED_GENERAL_OKBUTTON 
+#define LOCALIZED_SELECTPROCEDURE_CANCEL        LOCALIZED_GENERAL_CANCELBUTTON 
+#define LOCALIZED_SELECTPROCEDURE_ALL           "&Все" 
+#define LOCALIZED_ERASEPROCEDURE                "Удалить процедуру" 
+#define LOCALIZED_EDITPROCEDURE                 "Редактировать процедуру" 
 
 
 //
 // Strings on the Color Picker Dialog box
 //
-#define LOCALIZED_SETCOLOR                     "Set Color" // NOT_YET_LOCALIZED
-#define LOCALIZED_SETCOLOR_PENCOLOR            "Pen Color" // NOT_YET_LOCALIZED
-#define LOCALIZED_SETCOLOR_FLOODCOLOR          "Flood Color" // NOT_YET_LOCALIZED
-#define LOCALIZED_SETCOLOR_SCREENCOLOR         "Screen Color" // NOT_YET_LOCALIZED
-#define LOCALIZED_SETCOLOR_RED                 "Red" // NOT_YET_LOCALIZED
-#define LOCALIZED_SETCOLOR_GREEN               "Green" // NOT_YET_LOCALIZED
-#define LOCALIZED_SETCOLOR_BLUE                "Blue" // NOT_YET_LOCALIZED
-#define LOCALIZED_SETCOLOR_OK                  LOCALIZED_GENERAL_OKBUTTON // NOT_YET_LOCALIZED
-#define LOCALIZED_SETCOLOR_CANCEL              LOCALIZED_GENERAL_CANCELBUTTON // NOT_YET_LOCALIZED
-#define LOCALIZED_SETCOLOR_APPLY               LOCALIZED_GENERAL_APPLYBUTTON // NOT_YET_LOCALIZED
+#define LOCALIZED_SETCOLOR                     "Установить цвет" 
+#define LOCALIZED_SETCOLOR_PENCOLOR            "Цвет пера" 
+#define LOCALIZED_SETCOLOR_FLOODCOLOR          "Цвет заливки" 
+#define LOCALIZED_SETCOLOR_SCREENCOLOR         "Цвет экрана" 
+#define LOCALIZED_SETCOLOR_RED                 "Красный" 
+#define LOCALIZED_SETCOLOR_GREEN               "Зелёный" 
+#define LOCALIZED_SETCOLOR_BLUE                "Синий" 
+#define LOCALIZED_SETCOLOR_OK                  LOCALIZED_GENERAL_OKBUTTON 
+#define LOCALIZED_SETCOLOR_CANCEL              LOCALIZED_GENERAL_CANCELBUTTON 
+#define LOCALIZED_SETCOLOR_APPLY               LOCALIZED_GENERAL_APPLYBUTTON 
 
 //
 // Strings on the Pen Size Picker Dialog box
 //
-#define LOCALIZED_SETPENSIZE                   "Pen Size" // NOT_YET_LOCALIZED
-#define LOCALIZED_SETPENSIZE_SIZE              "Thickness" // NOT_YET_LOCALIZED
-#define LOCALIZED_SETPENSIZE_OK                LOCALIZED_GENERAL_OKBUTTON // NOT_YET_LOCALIZED
-#define LOCALIZED_SETPENSIZE_CANCEL            LOCALIZED_GENERAL_CANCELBUTTON // NOT_YET_LOCALIZED
-#define LOCALIZED_SETPENSIZE_APPLY             LOCALIZED_GENERAL_APPLYBUTTON // NOT_YET_LOCALIZED
+#define LOCALIZED_SETPENSIZE                   "Размер пера" 
+#define LOCALIZED_SETPENSIZE_SIZE              "Толщина" 
+#define LOCALIZED_SETPENSIZE_OK                LOCALIZED_GENERAL_OKBUTTON 
+#define LOCALIZED_SETPENSIZE_CANCEL            LOCALIZED_GENERAL_CANCELBUTTON 
+#define LOCALIZED_SETPENSIZE_APPLY             LOCALIZED_GENERAL_APPLYBUTTON 
 
 
 //
 // Strings on the "About FMSLogo" Dialog box
 //
-#define LOCALIZED_ABOUTFMS                     "About "LOCALIZED_GENERAL_PRODUCTNAME // NOT_YET_LOCALIZED
-#define LOCALIZED_ABOUTFMS_VERSION             LOCALIZED_GENERAL_PRODUCTNAME" Version "FMSLOGO_VERSION // NOT_YET_LOCALIZED
-#define LOCALIZED_ABOUTFMS_GUI                 "GUI by George Mills (mills@softronix.com)\nSoftronics, Inc.\nhttp:\x2F/www.softronix.com/" // NOT_YET_LOCALIZED
-#define LOCALIZED_ABOUTFMS_CORE                "Core by Brian Harvey (bh@cs.berkeley.edu)\nUniversity of California Berkeley" // NOT_YET_LOCALIZED
-#define LOCALIZED_ABOUTFMS_INSTALLER           "Installer based on Nullsoft Scriptable Install System\nhttp:\x2F/nsis.sourceforge.net/" // NOT_YET_LOCALIZED
-#define LOCALIZED_ABOUTFMS_ADVENTURE           "The Great Logo Adventure (ISBN 0-9651934-6-2)\nWritten and donated by Jim Muller\nAvailable at http:\x2F/www.softronix.com/" // NOT_YET_LOCALIZED
-#define LOCALIZED_ABOUTFMS_SPECIALTHANKS       "Thanks to Yehuda Katz (yehuka@softhome.net)\nand Erich Neuwirth (erich.neuwirth@univie.ac.at)" // NOT_YET_LOCALIZED
-#define LOCALIZED_ABOUTFMS_GPL                 LOCALIZED_GENERAL_PRODUCTNAME" is free software\nSee GNU Public License" // NOT_YET_LOCALIZED
-#define LOCALIZED_ABOUTFMS_NEWSGROUP           "Internet News Group: comp.lang.logo\nVisit the Logo-Forum at\nhttp:\x2F/groups.yahoo.com/group/LogoForum/" // NOT_YET_LOCALIZED
-#define LOCALIZED_ABOUTFMS_MULTIMEDIALOGIC     "To learn the internals of computers,\ntry MultiMedia Logic from Softronics, Inc." // NOT_YET_LOCALIZED
-#define LOCALIZED_ABOUTFMS_OK                  LOCALIZED_GENERAL_OKBUTTON // NOT_YET_LOCALIZED
+#define LOCALIZED_ABOUTFMS                     "О "LOCALIZED_GENERAL_PRODUCTNAME 
+#define LOCALIZED_ABOUTFMS_VERSION             LOCALIZED_GENERAL_PRODUCTNAME" Версия "FMSLOGO_VERSION 
+#define LOCALIZED_ABOUTFMS_GUI                 "ГИП Джорджа Миллза by George Mills (mills@softronix.com)\nSoftronics, Inc.\nhttp:\x2F/www.softronix.com/" 
+#define LOCALIZED_ABOUTFMS_CORE                "Ядро Брайена Харви (bh@cs.berkeley.edu)\nКалифорнийский университет Беркли" 
+#define LOCALIZED_ABOUTFMS_INSTALLER           "Инсталляция базируется на Nullsoft Scriptable Install \nhttp:\x2F/nsis.sourceforge.net/" 
+#define LOCALIZED_ABOUTFMS_ADVENTURE           "The Great Logo Adventure (ISBN 0-9651934-6-2)\nнаписанная и переданная Джимом Мюллером\nдоступна на http:\x2F/www.softronix.com/" 
+#define LOCALIZED_ABOUTFMS_SPECIALTHANKS       "Благодарим Йегуду Катца (yehuka@softhome.net)\nи Эриха Непйвиртза (erich.neuwirth@univie.ac.at)" 
+#define LOCALIZED_ABOUTFMS_GPL                 LOCALIZED_GENERAL_PRODUCTNAME" распространяется свободно\nСм. лицензию ГНУ" 
+#define LOCALIZED_ABOUTFMS_NEWSGROUP           "Группа новостей в Интернете: comp.lang.logo\nпосетите форум на\nhttp:\x2F/groups.yahoo.com/group/LogoForum/" 
+#define LOCALIZED_ABOUTFMS_MULTIMEDIALOGIC     "Изучение внутренних свойств компьютера,\nот MultiMedia Logic из Softronics, Inc." 
+#define LOCALIZED_ABOUTFMS_OK                  LOCALIZED_GENERAL_OKBUTTON 
 
 
 //
 // Strings on the "About FMS" Dialog box
 //
-#define LOCALIZED_ABOUTMS                      "About FMS" // NOT_YET_LOCALIZED
-#define LOCALIZED_ABOUTMS_FMS                  "FMS stands for Fight Multiple Sclerosis." // NOT_YET_LOCALIZED
-#define LOCALIZED_ABOUTMS_CONSIDERDONATING     "Please consider donating to the\nNational Multiple Sclerosis Society.\nhttp:\x2F/www.nmss.org\n1-800-FIGHT-MS" // NOT_YET_LOCALIZED
-#define LOCALIZED_ABOUTMS_OK                   LOCALIZED_GENERAL_OKBUTTON // NOT_YET_LOCALIZED
+#define LOCALIZED_ABOUTMS                      "О FMS" 
+#define LOCALIZED_ABOUTMS_FMS                  "FMS означает 'Fight Multiple Sclerosis'." 
+#define LOCALIZED_ABOUTMS_CONSIDERDONATING     "Пожалуйста, рассмотрите возможность помощи\nNational Multiple Sclerosis Society.\nhttp:\x2F/www.nmss.org\n1-800-FIGHT-MS" 
+#define LOCALIZED_ABOUTMS_OK                   LOCALIZED_GENERAL_OKBUTTON 
 
 
 //
 // Strings on the SELECTBOX Dialog box
 //
-#define LOCALIZED_SELECTBOX_OK                 LOCALIZED_GENERAL_OKBUTTON // NOT_YET_LOCALIZED
-#define LOCALIZED_SELECTBOX_CANCEL             LOCALIZED_GENERAL_CANCELBUTTON // NOT_YET_LOCALIZED
+#define LOCALIZED_SELECTBOX_OK                 LOCALIZED_GENERAL_OKBUTTON 
+#define LOCALIZED_SELECTBOX_CANCEL             LOCALIZED_GENERAL_CANCELBUTTON
 
 
 // 
