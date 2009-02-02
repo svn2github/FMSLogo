@@ -44,6 +44,8 @@ II. New features/bugs fixed:
       errors and no longer display dialog boxes.
     o Fix bug #1448107; SETACTIVEAREA now throws a bad input error when given
       an impossible range and no longer displays a dialog box.
+    o Fix bug #1452861; Disable data execution prevention on a best-effort
+      basis to prevent FMSLogo from crashing on startup.
     o Minor updates to the manual.
     o Added a Russian translation.
 

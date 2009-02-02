@@ -730,6 +730,50 @@ void TRulerOut::PrintPage(int /* page */, TRect & /* rect */, UINT /* flags */)
 }
 
 
+const DWORD PROCESS_DEP_DISABLE                     = 0x00000000;
+const DWORD PROCESS_DEP_ENABLE                      = 0x00000001;
+const DWORD PROCESS_DEP_DISABLE_ATL_THUNK_EMULATION = 0x00000002;
+
+// Best-effort to disable Data Execution Protection.
+//
+// In general, programs shouldn't disable DEP because that would leave
+// their users prone to some buffer-overflow attacks.  However, OWL
+// uses some self-modifying code its window message handling.  When
+// Windows sees this happening, it assumes the worst--that some buffer
+// overrun has been exploited--and terminates the program.
+//
+// For backward-compatibility reasons, Microsoft published an API that
+// allows 32-bit applications to disable DEP on a per-instance basis.
+// This is not available in all operating systems, so it is called
+// through GetProcAddress() on a best-effort basis.  In the worst case,
+// DEP will be enabled on FMSLogo, FMSLogo won't be able to disable
+// it, and it will crash (that is, we're no worse off than before).
+void DisableDataExecutionProtection()
+{
+    typedef BOOL (WINAPI *SETPROCESSDEPPOLICY) (DWORD);
+
+    HMODULE kernel32 = GetModuleHandleW(L"kernel32.dll");
+    if (kernel32 == NULL)
+    {
+        // somehow this process didn't link to kernel32.dll
+        return;
+    }
+
+    SETPROCESSDEPPOLICY setProcessDepPolicy = (SETPROCESSDEPPOLICY)GetProcAddress(
+        kernel32,
+        "SetProcessDEPPolicy");
+    if (setProcessDepPolicy == NULL)
+    {
+        // SetProcessDEPPolicy was added in XP SP3 and Vista SP1.
+        // Any OS before then either doesn't support DEP or doesn't
+        // provide an API to disable it.
+        return;
+    }
+
+    // Disable the DEP policy on a best-effort basis.
+    setProcessDepPolicy(PROCESS_DEP_DISABLE);
+}
+
 int *TopOfStack;
 
 int WINAPI
@@ -778,6 +822,8 @@ WinMain(
     memset(&g_OsVersionInformation, 0, sizeof g_OsVersionInformation);
     g_OsVersionInformation.dwOSVersionInfoSize = sizeof g_OsVersionInformation;
     GetVersionEx(&g_OsVersionInformation);
+
+    DisableDataExecutionProtection();
 
     _control87(EM_OVERFLOW,  EM_OVERFLOW);
     _control87(EM_UNDERFLOW, EM_UNDERFLOW);
