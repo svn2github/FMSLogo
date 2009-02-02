@@ -613,7 +613,7 @@
 //
 // General localized strings
 //
-#define LOCALIZED_GENERAL_OKBUTTON      "&OK" // NOT_YET_LOCALIZED
+#define LOCALIZED_GENERAL_OKBUTTON      "&ОК" 
 #define LOCALIZED_GENERAL_CANCELBUTTON  "&Отмена" 
 #define LOCALIZED_GENERAL_APPLYBUTTON   "&Применить" 
 
