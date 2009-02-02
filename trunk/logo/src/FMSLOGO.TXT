@@ -45,6 +45,7 @@ II. New features/bugs fixed:
     o Fix bug #1448107; SETACTIVEAREA now throws a bad input error when given
       an impossible range and no longer displays a dialog box.
     o Minor updates to the manual.
+    o Added a Russian translation.
 
   For a complete history of changes across all versions of FMSLogo, see
   http://fmslogo.cvs.sourceforge.net/*checkout*/fmslogo/logo/src/CHANGELOG.TXT
