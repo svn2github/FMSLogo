@@ -151,8 +151,8 @@
 #define LOCALIZED_ALTERNATE__DEFMACRO              ".опрмакрос"
 #define LOCALIZED_ALTERNATE__EQ                    ".равн" 
 #define LOCALIZED_ALTERNATE__MACRO                 ".макрос"
-#define LOCALIZED_ALTERNATE__MAYBEOUTPUT           ".альтвывод" #define LOCALIZED_ALTERNATE__SETBF                 ".вставькпе" 
-#define LOCALIZED_ALTERNATE__SETBF                 ".setbf" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE__MAYBEOUTPUT           ".альтвывод"
+#define LOCALIZED_ALTERNATE__SETBF                 ".вставькпе" 
 #define LOCALIZED_ALTERNATE__SETFIRST              ".вставьпервым" 
 #define LOCALIZED_ALTERNATE__SETITEM               ".новэлемент" 
 #define LOCALIZED_ALTERNATE_ACTIVEAREA             "активноеполе" 
