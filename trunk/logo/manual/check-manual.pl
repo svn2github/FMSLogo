@@ -549,6 +549,9 @@ $Exceptions{'glossary.xml'}{'allcaps'}{'SQUARE'}   = 1;
 $Exceptions{'glossary.xml'}{'allcaps'}{'TRIANGLE'} = 1;
 
 $Exceptions{'error-processing.xml'}{'allcaps'}{'DATUM'}    = 1;
+$Exceptions{'error-processing.xml'}{'allcaps'}{'DLL'}      = 1;
+$Exceptions{'error-processing.xml'}{'allcaps'}{'GIF'}      = 1;
+$Exceptions{'error-processing.xml'}{'allcaps'}{'MIDI'}     = 1;
 $Exceptions{'error-processing.xml'}{'allcaps'}{'PROC'}     = 1;
 $Exceptions{'error-processing.xml'}{'allcaps'}{'THROWTAG'} = 1;
 $Exceptions{'error-processing.xml'}{'allcaps'}{'VALUE'}    = 1;
@@ -648,6 +651,7 @@ $Exceptions{'translations-1033.xml'}  = 1;
 $Exceptions{'translations-1034.xml'}  = 1;
 $Exceptions{'translations-1036.xml'}  = 1;
 $Exceptions{'translations-1040.xml'}  = 1;
+$Exceptions{'translations-1049.xml'}  = 1;
 $Exceptions{'translations-2070.xml'}  = 1;
 $Exceptions{'translations-9999.xml'}  = 1;
 $Exceptions{'translations.xml'}       = 1;
