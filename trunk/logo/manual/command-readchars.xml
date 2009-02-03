@@ -16,7 +16,11 @@
 
 <para>
 Reads <parameter>number</parameter> characters from the read stream and outputs those characters as a word.
-If the read stream is a file and the end of file is reached, READCHARS outputs the empty list (not the empty word).
+If <parameter>number</parameter> is larger than the number of characters remaining in the read stream, then READCHARS outputs the rest of the read stream.
+If the read stream is a file and there are no unread characters in the file, then READCHARS outputs the empty list (not the empty word).
+</para>
+
+<para>
 If the read stream is the Commander, then READCHARS always outputs the empty list.
 </para>
 

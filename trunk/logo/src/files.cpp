@@ -702,10 +702,19 @@ NODE *lreadchars(NODE *args)
 {
     NODETYPES type = STRING;
 
-    unsigned int c = (unsigned int) getint(pos_int_arg(args));
+    size_t totalBytesRequested = (size_t) getint(pos_int_arg(args));
+    size_t totalBytesRead      = 0;
+
     if (stopping_flag == THROWING) 
     {
         return Unbound;
+    }
+
+    // READCHARS is documented to always return [] when the read
+    // stream is set to the commander.
+    if (g_Reader.GetStream() == stdin)
+    {
+        return NIL;
     }
 
     input_blocking = true;
@@ -713,9 +722,9 @@ NODE *lreadchars(NODE *args)
     char *strhead, *strptr;
     if (!setjmp(iblk_buf))
     {
-        strhead = (char *) malloc((size_t) (c + sizeof(short) + 1));
+        strhead = (char *) malloc(totalBytesRequested + sizeof(short) + 1);
         strptr = strhead + sizeof(short);
-        fread(strptr, 1, (int) c, g_Reader.GetStream());
+        totalBytesRead = fread(strptr, 1, totalBytesRequested, g_Reader.GetStream());
         unsigned short * temp = (unsigned short *) strhead;
         setstrrefcnt(temp, 0);
     }
@@ -727,21 +736,37 @@ NODE *lreadchars(NODE *args)
         return Unbound;
     }
 
-    if (feof(g_Reader.GetStream()))
+    if (totalBytesRead == 0)
     {
-        free(strhead);
-        return NIL;
+        // We read zero bytes.  This may be because we hit EOF or
+        // because we requested zero bytes.  If both are true, we
+        // want to return [] when we're at EOF.
+        if (totalBytesRequested == 0)
+        {
+            // Probe to see if we're at the end of the file.
+            // This will update feof().
+            ungetc(getc(g_Reader.GetStream()), g_Reader.GetStream());
+        }
+
+        if (feof(g_Reader.GetStream()))
+        {
+            // We reached the end of the file.
+            free(strhead);
+            return NIL;
+        }
     }
 
-    for (unsigned int i = 0; i < c; i++)
+    // Check if this string has special characters in it
+    for (size_t i = 0; i < totalBytesRead; i++)
     {
         if (getparity(strptr[i])) 
         {
             type = BACKSLASH_STRING;
+            break;
         }
     }
 
-    return make_strnode_no_copy(strptr, strhead, (int) c, type);
+    return make_strnode_no_copy(strptr, strhead, (int) totalBytesRead, type);
 }
 
 NODE *leofp(NODE *)
