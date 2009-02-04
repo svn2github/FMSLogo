@@ -478,16 +478,21 @@ make_strnode_no_copy(
     NODETYPES   typ
     )
 {
-    if (len == 0 && Null_Word != NIL)
-    {
-        return Null_Word;
-    }
-
     // increment the reference count
     unsigned short * header = (unsigned short *) strhead;
-    assert(header != NULL);        // string is in static memory
+    assert(header != NULL);       // string is in static memory
     assert(*header != USHRT_MAX); // ref count would overflow
     incstrrefcnt(header);
+
+    if (len == 0 && Null_Word != NIL)
+    {
+        // we will not take this reference, so we must free it.
+        if (decstrrefcnt(header) == 0) 
+        {
+            free(header);
+        }
+        return Null_Word;
+    }
 
     NODE * strnode = newnode(typ);
     setstrlen(strnode, len);
