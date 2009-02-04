@@ -21,6 +21,7 @@ I. Kit Description/Location (http://sourceforge.net/projects/fmslogo)
 II. New features/bugs fixed:
 
   * Added for 6.23.0
+    o Fix bug #2563317; READCHARS 2000000000 no longer crashes.
     o Fix bug #2559673; READCHARS now outputs the remaining characters in a
       file when asked to read more than the file contains.
     o Fix bug #2517774; PO now prints blank lines when printing to commander.

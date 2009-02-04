@@ -722,7 +722,15 @@ NODE *lreadchars(NODE *args)
     char *strhead, *strptr;
     if (!setjmp(iblk_buf))
     {
+        // TODO: Don't allocate more bytes than the file contains.
+        // This would allow for success when given a very large input.
         strhead = (char *) malloc(totalBytesRequested + sizeof(short) + 1);
+        if (strhead == NULL)
+        {
+            err_logo(OUT_OF_MEM, NIL);
+            return Unbound;
+        }
+
         strptr = strhead + sizeof(short);
         totalBytesRead = fread(strptr, 1, totalBytesRequested, g_Reader.GetStream());
         unsigned short * temp = (unsigned short *) strhead;
