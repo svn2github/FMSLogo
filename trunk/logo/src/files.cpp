@@ -741,6 +741,7 @@ NODE *lreadchars(NODE *args)
 
     if (stopping_flag == THROWING) 
     {
+        free(strhead);
         return Unbound;
     }
 
