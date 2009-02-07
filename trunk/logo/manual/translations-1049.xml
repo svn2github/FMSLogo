@@ -27,6 +27,10 @@
        <entry>.àëüòâûâîä</entry>
      </row>
      <row>
+       <entry><link linkend='command-.setbf'>.setbf</link></entry>
+       <entry>.âñòàâüêïå</entry>
+     </row>
+     <row>
        <entry><link linkend='command-.setfirst'>.setfirst</link></entry>
        <entry>.âñòàâüïåðâûì</entry>
      </row>
@@ -1882,6 +1886,10 @@
      <row>
        <entry>.àëüòâûâîä</entry>
        <entry><link linkend='command-.maybeoutput'>.maybeoutput</link></entry>
+     </row>
+     <row>
+       <entry>.âñòàâüêïå</entry>
+       <entry><link linkend='command-.setbf'>.setbf</link></entry>
      </row>
      <row>
        <entry>.âñòàâüïåðâûì</entry>
