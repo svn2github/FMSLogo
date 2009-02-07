@@ -1,5 +1,37 @@
 This file contains the changes that were made in each revision of FMSLogo.
 
+ * Added for 6.23.0
+  o Fix bug #2563317; READCHARS 2000000000 no longer crashes.
+  o Fix bug #2559673; READCHARS now outputs the remaining characters in a
+    file when asked to read more than the file contains.
+  o Fix bug #2517774; PO now prints blank lines when printing to commander.
+  o Fix bug #2516248; READWORD output can now be safely stored in a variable.
+  o Fix bug #2452726; BITLOAD, BITSAVE, BITLOADSIZE, GIFLOAD, GIFSAVE, and
+    GIFSIZE now throw image-specific errors and no longer display dialog
+    boxes when given bad input.
+  o Fix bug #2452240; COPYDEF now updates the TO line of new procedure.
+  o Fix bug #1619210; Non-English versions now throw unexpected ender errors.
+  o Fix bug #1622756; SETBITMODE now throws a recoverable bad input error
+    when given an integer that is out-of-range.
+  o Fix bug #1620964; SETTURTLEMODE now throws a recoverable bad input error
+    when given an integer that is out-of-range.
+  o Fix bug #1500676; Windowing procedures now throw windowing-specific
+    errors and no longer display dialog boxes.
+  o Fix bug #1497079; SETTIMER and CLEARTIMER now throw appropriate errors
+    and no longer display dialog boxes when given bad input.
+  o Fix bug #1475223; MIDI procedures now throw MIDI-specific errors and
+    no longer display dialog boxes.
+  o Fix bug #1475214; MIDIOPEN no longer opens MIDI mapper when given bad
+    input.
+  o Fix bug #1448111; DLLLOAD, DLLCALL, and DLLFREE now throw DLL-specific
+    errors and no longer display dialog boxes.
+  o Fix bug #1448107; SETACTIVEAREA now throws a bad input error when given
+    an impossible range and no longer displays a dialog box.
+  o Fix bug #1452861; Disable data execution prevention on a best-effort
+    basis to prevent FMSLogo from crashing on startup.
+  o Minor updates to the manual.
+  o Added a Russian translation.
+
 * Added for 6.22.0
   o Implement request #1955758; turtles may optionally have their own pen
     state.
