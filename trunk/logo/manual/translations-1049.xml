@@ -59,6 +59,14 @@
        <entry>ïðèìåíèòü</entry>
      </row>
      <row>
+       <entry><link linkend='command-arc'>arc</link></entry>
+       <entry>äóãà</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-arc2'>arc2</link></entry>
+       <entry>äóãà2</entry>
+     </row>
+     <row>
        <entry><link linkend='command-arctan'>arctan</link></entry>
        <entry>arctg</entry>
      </row>
@@ -75,12 +83,20 @@
        <entry>ìàññèâïè</entry>
      </row>
      <row>
+       <entry><link linkend='command-arraytolist'>arraytolist</link></entry>
+       <entry>ìàññâñï</entry>
+     </row>
+     <row>
        <entry><link linkend='command-ascii'>ascii</link></entry>
        <entry>êîä</entry>
      </row>
      <row>
        <entry><link linkend='command-ashift'>ashift</link></entry>
        <entry>àñäâèã</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-ask'>ask</link></entry>
+       <entry>çàïðîñ</entry>
      </row>
      <row>
        <entry><link linkend='command-back'>back</link></entry>
@@ -195,6 +211,14 @@
        <entry>ñêðîé</entry>
      </row>
      <row>
+       <entry><link linkend='command-buryall'>buryall</link></entry>
+       <entry>ñêðîéâñå</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-buryname'>buryname</link></entry>
+       <entry>ñêðîéèìÿ</entry>
+     </row>
+     <row>
        <entry><link linkend='command-butfirst'>butfirst</link></entry>
        <entry>êðîìåïåðâîãî</entry>
      </row>
@@ -229,6 +253,14 @@
      <row>
        <entry><link linkend='command-bye'>bye</link></entry>
        <entry>ïîêà</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-cascade'>cascade</link></entry>
+       <entry>êàñêàä</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-cascade.2'>cascade.2</link></entry>
+       <entry>êàñêàä.2</entry>
      </row>
      <row>
        <entry><link linkend='command-caseignoredp'>caseignoredp</link></entry>
@@ -271,6 +303,10 @@
        <entry>îêðóæíîñòü</entry>
      </row>
      <row>
+       <entry><link linkend='command-circle2'>circle2</link></entry>
+       <entry>îêðóæíîñòü2</entry>
+     </row>
+     <row>
        <entry><link linkend='command-clean'>clean</link></entry>
        <entry>î÷èñòè</entry>
      </row>
@@ -301,6 +337,10 @@
      <row>
        <entry><link linkend='command-co'>co</link></entry>
        <entry>ïðîä</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-combine'>combine</link></entry>
+       <entry>êîìáèí</entry>
      </row>
      <row>
        <entry><link linkend='command-comboboxaddstring'>comboboxaddstring</link></entry>
@@ -347,6 +387,10 @@
        <entry>ñêîëüêî</entry>
      </row>
      <row>
+       <entry><link linkend='command-crossmap'>crossmap</link></entry>
+       <entry>ïåðåêðåñòîòîáð</entry>
+     </row>
+     <row>
        <entry><link linkend='command-cs'>cs</link></entry>
        <entry>îý</entry>
      </row>
@@ -375,6 +419,14 @@
        <entry>îïðåäåëåíïè</entry>
      </row>
      <row>
+       <entry><link linkend='command-demo'>demo</link></entry>
+       <entry>äåìî</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-dequeue'>dequeue</link></entry>
+       <entry>èçî÷åðåäè</entry>
+     </row>
+     <row>
        <entry><link linkend='command-dialogcreate'>dialogcreate</link></entry>
        <entry>äèàëîãñîçäàé</entry>
      </row>
@@ -399,8 +451,20 @@
        <entry>ðàçíîñòü</entry>
      </row>
      <row>
+       <entry><link linkend='command-dir'>dir</link></entry>
+       <entry>ïàïêà</entry>
+     </row>
+     <row>
        <entry><link linkend='command-directories'>directories</link></entry>
        <entry>ïàïêè</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-distance'>distance</link></entry>
+       <entry>ðàññòîÿíèå</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-distancexyz'>distancexyz</link></entry>
+       <entry>ðàññòîÿíèå_xyz</entry>
      </row>
      <row>
        <entry><link linkend='command-dllcall'>dllcall</link></entry>
@@ -413,6 +477,14 @@
      <row>
        <entry><link linkend='command-dllload'>dllload</link></entry>
        <entry>çàãðóçèüáäê</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-do.until'>do.until</link></entry>
+       <entry>äåë.äî</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-do.while'>do.while</link></entry>
+       <entry>äåë.ïîêà</entry>
      </row>
      <row>
        <entry><link linkend='command-down'>down</link></entry>
@@ -431,12 +503,52 @@
        <entry>ðåä</entry>
      </row>
      <row>
+       <entry><link linkend='command-edall'>edall</link></entry>
+       <entry>ðåäàêòîð</entry>
+     </row>
+     <row>
        <entry><link linkend='command-edit'>edit</link></entry>
        <entry>ðåäàêòèðîâàòü</entry>
      </row>
      <row>
+       <entry><link linkend='command-edn'>edn</link></entry>
+       <entry>ðåäïåð</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-edns'>edns</link></entry>
+       <entry>ðåäïåð_ûå</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-edpl'>edpl</link></entry>
+       <entry>ðåäñâ_âî</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-edpls'>edpls</link></entry>
+       <entry>ðåäñâ_âà</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-edps'>edps</link></entry>
+       <entry>ðåäïðîö</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-ellipsa2'>ellipsa2</link></entry>
+       <entry>äýëëèïñ2</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-ellipse'>ellipse</link></entry>
+       <entry>ýëëèïñ</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-ellipse2'>ellipse2</link></entry>
+       <entry>ýëëèïñ2</entry>
+     </row>
+     <row>
        <entry><link linkend='command-ellipsearc'>ellipsearc</link></entry>
        <entry>äóãàýëëèïñà</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-ellipsearc2'>ellipsearc2</link></entry>
+       <entry>äóãàýëëèïñà2</entry>
      </row>
      <row>
        <entry><link linkend='command-emptyp'>empty?</link></entry>
@@ -467,6 +579,10 @@
        <entry>óä</entry>
      </row>
      <row>
+       <entry><link linkend='command-erall'>erall</link></entry>
+       <entry>óäâñå</entry>
+     </row>
+     <row>
        <entry><link linkend='command-erase'>erase</link></entry>
        <entry>óäàëè</entry>
      </row>
@@ -477,6 +593,26 @@
      <row>
        <entry><link linkend='command-erf'>erf</link></entry>
        <entry>óäô</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-ern'>ern</link></entry>
+       <entry>óäïåð</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-erns'>erns</link></entry>
+       <entry>óäïåð_ûå</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-erpl'>erpl</link></entry>
+       <entry>óäñâ_âî</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-erpls'>erpls</link></entry>
+       <entry>óäñâ_âà</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-erps'>erps</link></entry>
+       <entry>óäïðîö</entry>
      </row>
      <row>
        <entry><link linkend='command-erract'>erract</link></entry>
@@ -503,12 +639,24 @@
        <entry>îãðàæäåíèå</entry>
      </row>
      <row>
+       <entry><link linkend='command-filep'>filep</link></entry>
+       <entry>ôàéëïè</entry>
+     </row>
+     <row>
        <entry><link linkend='command-files'>files</link></entry>
        <entry>ôàéëû</entry>
      </row>
      <row>
        <entry><link linkend='command-fill'>fill</link></entry>
        <entry>êðàñü</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-filter'>filter</link></entry>
+       <entry>ôèëüòð</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-find'>find</link></entry>
+       <entry>íàéòè</entry>
      </row>
      <row>
        <entry><link linkend='command-first'>first</link></entry>
@@ -529,6 +677,10 @@
      <row>
        <entry><link linkend='command-for'>for</link></entry>
        <entry>äëÿ</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-foreach'>foreach</link></entry>
+       <entry>äëÿêàæä</entry>
      </row>
      <row>
        <entry><link linkend='command-forever'>forever</link></entry>
@@ -559,6 +711,10 @@
        <entry>òåêñòïðîö</entry>
      </row>
      <row>
+       <entry><link linkend='command-gensym'>gensym</link></entry>
+       <entry>ãåíïåð</entry>
+     </row>
+     <row>
        <entry><link linkend='command-getfocus'>getfocus</link></entry>
        <entry>àêòèâíîåîêíî</entry>
      </row>
@@ -573,6 +729,10 @@
      <row>
        <entry><link linkend='command-gifsize'>gifsize</link></entry>
        <entry>ðàçìåððèñ</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-goldenratio'>goldenratio</link></entry>
+       <entry>çîëñå÷</entry>
      </row>
      <row>
        <entry><link linkend='command-gprop'>gprop</link></entry>
@@ -627,6 +787,10 @@
        <entry>ñ÷</entry>
      </row>
      <row>
+       <entry><link linkend='command-icon'>icon</link></entry>
+       <entry>èêîíêà</entry>
+     </row>
+     <row>
        <entry><link linkend='command-if'>if</link></entry>
        <entry>åñëè</entry>
      </row>
@@ -651,6 +815,10 @@
        <entry>åñëèèñòèíà</entry>
      </row>
      <row>
+       <entry><link linkend='command-ignore'>ignore</link></entry>
+       <entry>èãíîð</entry>
+     </row>
+     <row>
        <entry><link linkend='command-ingameport'>ingameport</link></entry>
        <entry>ïîðòèãðû</entry>
      </row>
@@ -665,6 +833,14 @@
      <row>
        <entry><link linkend='command-int'>int</link></entry>
        <entry>öåëîå</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-invoke'>invoke</link></entry>
+       <entry>âûçîâ</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-iseq'>iseq</link></entry>
+       <entry>öåëïîñë</entry>
      </row>
      <row>
        <entry><link linkend='command-item'>item</link></entry>
@@ -771,12 +947,20 @@
        <entry>ñïèñîêïè</entry>
      </row>
      <row>
+       <entry><link linkend='command-listtoarray'>listtoarray</link></entry>
+       <entry>ñïâìàññ</entry>
+     </row>
+     <row>
        <entry><link linkend='command-load'>load</link></entry>
        <entry>çàãðóçè</entry>
      </row>
      <row>
        <entry><link linkend='command-local'>local</link></entry>
        <entry>ëîêàëüíûé</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-localmake'>localmake</link></entry>
+       <entry>ïóñòüëîê</entry>
      </row>
      <row>
        <entry><link linkend='command-log10'>log10</link></entry>
@@ -815,12 +999,28 @@
        <entry>ìàêðîñ?</entry>
      </row>
      <row>
+       <entry><link linkend='command-macroexpand'>macroexpand</link></entry>
+       <entry>ðàçâìàêðîñ</entry>
+     </row>
+     <row>
        <entry><link linkend='command-macrop'>macrop</link></entry>
        <entry>ìàêðîñïè</entry>
      </row>
      <row>
        <entry><link linkend='command-make'>Make</link></entry>
        <entry>ïóñòü</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-maketurtle'>maketurtle</link></entry>
+       <entry>çàäàòüòîðòèëó</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-map'>map</link></entry>
+       <entry>îòîáð</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-map.se'>map.se</link></entry>
+       <entry>îòîáð.ïð</entry>
      </row>
      <row>
        <entry><link linkend='command-mci'>mci</link></entry>
@@ -879,6 +1079,10 @@
        <entry>ïîìîäóëþ</entry>
      </row>
      <row>
+       <entry><link linkend='command-mousecopy'>mousecopy</link></entry>
+       <entry>êîïèðìûøüþ</entry>
+     </row>
+     <row>
        <entry><link linkend='command-mouseoff'>mouseoff</link></entry>
        <entry>ìûøüâûêë</entry>
      </row>
@@ -891,8 +1095,16 @@
        <entry>ìûøüìåñòî</entry>
      </row>
      <row>
+       <entry><link linkend='command-name'>name</link></entry>
+       <entry>èìÿ</entry>
+     </row>
+     <row>
        <entry><link linkend='command-namep'>name?</link></entry>
        <entry>èìÿ?</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-namelist'>namelist</link></entry>
+       <entry>èìÿñï</entry>
      </row>
      <row>
        <entry><link linkend='command-namep'>namep</link></entry>
@@ -951,6 +1163,10 @@
        <entry>áåçïðîòîêîëà</entry>
      </row>
      <row>
+       <entry><link linkend='command-norefresh'>norefresh</link></entry>
+       <entry>íåîáíîâ</entry>
+     </row>
+     <row>
        <entry><link linkend='command-nostatus'>nostatus</link></entry>
        <entry>áåçñòàòóñà</entry>
      </row>
@@ -1003,6 +1219,10 @@
        <entry>èëè</entry>
      </row>
      <row>
+       <entry><link linkend='command-orientation'>orientation</link></entry>
+       <entry>îðèåíòàöèÿ</entry>
+     </row>
+     <row>
        <entry><link linkend='command-outport'>outport</link></entry>
        <entry>âäâïîðò</entry>
      </row>
@@ -1035,6 +1255,10 @@
        <entry>ëê</entry>
      </row>
      <row>
+       <entry><link linkend='command-pen'>pen</link></entry>
+       <entry>ïåðî</entry>
+     </row>
+     <row>
        <entry><link linkend='command-pencolor'>pencolor</link></entry>
        <entry>öâåòïåðà</entry>
      </row>
@@ -1057,6 +1281,10 @@
      <row>
        <entry><link linkend='command-penmode'>penmode</link></entry>
        <entry>ðåæèìïåðà</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-pennormal'>pennormal</link></entry>
+       <entry>ïåðîíîðì</entry>
      </row>
      <row>
        <entry><link linkend='command-penpaint'>penpaint</link></entry>
@@ -1083,6 +1311,14 @@
        <entry>ïðîñòðàíñòâåííûé</entry>
      </row>
      <row>
+       <entry><link linkend='command-pi'>pi</link></entry>
+       <entry>ïè</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-pick'>pick</link></entry>
+       <entry>âûáîð</entry>
+     </row>
+     <row>
        <entry><link linkend='command-pitch'>pitch</link></entry>
        <entry>óêëîí</entry>
      </row>
@@ -1103,8 +1339,16 @@
        <entry>ñïèñêèñâ</entry>
      </row>
      <row>
+       <entry><link linkend='command-pllist'>pllist</link></entry>
+       <entry>ñïñïèñêîâ</entry>
+     </row>
+     <row>
        <entry><link linkend='command-po'>po</link></entry>
        <entry>ïïðîö</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-poall'>poall</link></entry>
+       <entry>âñåïïðîö</entry>
      </row>
      <row>
        <entry><link linkend='command-polyend'>polyend</link></entry>
@@ -1119,8 +1363,32 @@
        <entry>ïîêàçìíîãîóã</entry>
      </row>
      <row>
+       <entry><link linkend='command-pon'>pon</link></entry>
+       <entry>ïïåð</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-pons'>pons</link></entry>
+       <entry>ïïåð_ûå</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-pop'>pop</link></entry>
+       <entry>ïïîìåù</entry>
+     </row>
+     <row>
        <entry><link linkend='command-popdir'>popdir</link></entry>
        <entry>ââåðõïàï</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-popl'>popl</link></entry>
+       <entry>ïñïñâ</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-popls'>popls</link></entry>
+       <entry>ïñïñââ</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-pops'>pops</link></entry>
+       <entry>ïïðû</entry>
      </row>
      <row>
        <entry><link linkend='command-portclose'>portclose</link></entry>
@@ -1165,6 +1433,10 @@
      <row>
        <entry><link linkend='command-pot'>pot</link></entry>
        <entry>âäçãñòð</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-pots'>pots</link></entry>
+       <entry>âäçãñòðè</entry>
      </row>
      <row>
        <entry><link linkend='command-power'>power</link></entry>
@@ -1231,12 +1503,24 @@
        <entry>ïï</entry>
      </row>
      <row>
+       <entry><link linkend='command-push'>push</link></entry>
+       <entry>ïîìåñòè</entry>
+     </row>
+     <row>
        <entry><link linkend='command-px'>px</link></entry>
        <entry>ïîá</entry>
      </row>
      <row>
        <entry><link linkend='command-questionbox'>questionbox</link></entry>
        <entry>îêíîâîïðîñà</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-queue'>queue</link></entry>
+       <entry>âî÷åðåäü</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-quoted'>quoted</link></entry>
+       <entry>ñêàâû÷</entry>
      </row>
      <row>
        <entry><link linkend='command-quotient'>quotient</link></entry>
@@ -1319,8 +1603,24 @@
        <entry>ïåðåîïðïè</entry>
      </row>
      <row>
+       <entry><link linkend='command-reduce'>reduce</link></entry>
+       <entry>ïðåîáðàç</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-refresh'>refresh</link></entry>
+       <entry>ðåãåí</entry>
+     </row>
+     <row>
        <entry><link linkend='command-remainder'>remainder</link></entry>
        <entry>îñòàòîê</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-remdup'>remdup</link></entry>
+       <entry>óäïîâò</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-remove'>remove</link></entry>
+       <entry>óäàëè</entry>
      </row>
      <row>
        <entry><link linkend='command-remprop'>remprop</link></entry>
@@ -1371,6 +1671,10 @@
        <entry>ïêð</entry>
      </row>
      <row>
+       <entry><link linkend='command-rseq'>rseq</link></entry>
+       <entry>âåùïîñë</entry>
+     </row>
+     <row>
        <entry><link linkend='command-rt'>rt</link></entry>
        <entry>ïð</entry>
      </row>
@@ -1393,6 +1697,10 @@
      <row>
        <entry><link linkend='command-save'>save</link></entry>
        <entry>ñîõðàíè</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-savel'>savel</link></entry>
+       <entry>ñîõðàíèñï</entry>
      </row>
      <row>
        <entry><link linkend='command-screencolor'>screencolor</link></entry>
@@ -1503,8 +1811,16 @@
        <entry>íîâïîëÿ</entry>
      </row>
      <row>
+       <entry><link linkend='command-setorientation'>setorientation</link></entry>
+       <entry>íîâîðèåíò</entry>
+     </row>
+     <row>
        <entry><link linkend='command-setpc'>setpc</link></entry>
        <entry>íö</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-setpen'>setpen</link></entry>
+       <entry>íîâïåðî</entry>
      </row>
      <row>
        <entry><link linkend='command-setpencolor'>setpencolor</link></entry>
@@ -1561,6 +1877,10 @@
      <row>
        <entry><link linkend='command-setscrunch'>setscrunch</link></entry>
        <entry>óñòàíîâèêîððåêöèþ</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-settextfont'>settextfont</link></entry>
+       <entry>íîâöâòåêñòà</entry>
      </row>
      <row>
        <entry><link linkend='command-settimer'>settimer</link></entry>
@@ -1623,12 +1943,28 @@
        <entry>ïîêàæèòîðòèëó</entry>
      </row>
      <row>
+       <entry><link linkend='command-sign'>sign</link></entry>
+       <entry>çíàê</entry>
+     </row>
+     <row>
        <entry><link linkend='command-slowdraw'>slowdraw</link></entry>
        <entry>çàìåäëÿòü÷åð÷åíèå</entry>
      </row>
      <row>
+       <entry><link linkend='command-sort'>sort</link></entry>
+       <entry>ñîðòèðîâêà</entry>
+     </row>
+     <row>
        <entry><link linkend='command-sound'>sound</link></entry>
        <entry>çâóê</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-soundoff'>soundoff</link></entry>
+       <entry>áåççâóêà</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-soundon'>soundon</link></entry>
+       <entry>ñîçâóêîì</entry>
      </row>
      <row>
        <entry><link linkend='command-splitscreen'>splitscreen</link></entry>
@@ -1707,6 +2043,10 @@
        <entry>òåêñò</entry>
      </row>
      <row>
+       <entry><link linkend='command-textfont'>textfont</link></entry>
+       <entry>øðèôòòåêñòà</entry>
+     </row>
+     <row>
        <entry><link linkend='command-textscreen'>textscreen</link></entry>
        <entry>òåêñòîâûéýêðàí</entry>
      </row>
@@ -1751,6 +2091,10 @@
        <entry>òðàññèðîâàííûå</entry>
      </row>
      <row>
+       <entry><link linkend='command-transfer'>transfer</link></entry>
+       <entry>ïåðåäàòü</entry>
+     </row>
+     <row>
        <entry><link linkend='command-true'>true</link></entry>
        <entry>èñòèíà</entry>
      </row>
@@ -1771,6 +2115,10 @@
        <entry>òîðòèëû</entry>
      </row>
      <row>
+       <entry><link linkend='command-tutor'>tutor</link></entry>
+       <entry>òüþòîð</entry>
+     </row>
+     <row>
        <entry><link linkend='command-type'>type</link></entry>
        <entry>íàáåðè</entry>
      </row>
@@ -1779,8 +2127,24 @@
        <entry>íåñêðûâàòü</entry>
      </row>
      <row>
+       <entry><link linkend='command-unduryall'>unduryall</link></entry>
+       <entry>íåñêðâñå</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-unduryname'>unduryname</link></entry>
+       <entry>íåñêðïåð</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-unicon'>unicon</link></entry>
+       <entry>íåèêîí</entry>
+     </row>
+     <row>
        <entry><link linkend='command-unstep'>unstep</link></entry>
        <entry>áåçøàãà</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-until'>until</link></entry>
+       <entry>äî</entry>
      </row>
      <row>
        <entry><link linkend='command-untrace'>untrace</link></entry>
@@ -1801,6 +2165,10 @@
      <row>
        <entry><link linkend='command-wait'>wait</link></entry>
        <entry>æäè</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-while'>while</link></entry>
+       <entry>ïîêà</entry>
      </row>
      <row>
        <entry><link linkend='command-window'>window</link></entry>
@@ -1855,12 +2223,24 @@
        <entry>ïèøïîòîê</entry>
      </row>
      <row>
+       <entry><link linkend='command-xcor'>xcor</link></entry>
+       <entry>x_êîîð</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-ycor'>ycor</link></entry>
+       <entry>y_êîîð</entry>
+     </row>
+     <row>
        <entry><link linkend='command-yesnobox'>yesnobox</link></entry>
        <entry>äàíåòîêíî</entry>
      </row>
      <row>
        <entry><link linkend='command-yield'>yield</link></entry>
        <entry>óñòóïàòü</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-zcor'>zcor</link></entry>
+       <entry>z_êîîð</entry>
      </row>
      <row>
        <entry><link linkend='command-zoom'>zoom</link></entry>
@@ -1968,6 +2348,14 @@
        <entry><link linkend='command-pot'>pot</link></entry>
      </row>
      <row>
+       <entry>âäçãñòðè</entry>
+       <entry><link linkend='command-pots'>pots</link></entry>
+     </row>
+     <row>
+       <entry>áåççâóêà</entry>
+       <entry><link linkend='command-soundoff'>soundoff</link></entry>
+     </row>
+     <row>
        <entry>áàçèñíàÿ?</entry>
        <entry><link linkend='command-primitivep'>primitive?</link></entry>
      </row>
@@ -1996,12 +2384,32 @@
        <entry><link linkend='command-logoversion'>logoversion</link></entry>
      </row>
      <row>
+       <entry>äåë.äî</entry>
+       <entry><link linkend='command-do.until'>do.until</link></entry>
+     </row>
+     <row>
+       <entry>äåë.ïîêà</entry>
+       <entry><link linkend='command-do.while'>do.while</link></entry>
+     </row>
+     <row>
        <entry>äàíåòîêíî</entry>
        <entry><link linkend='command-yesnobox'>yesnobox</link></entry>
      </row>
      <row>
+       <entry>äåìî</entry>
+       <entry><link linkend='command-demo'>demo</link></entry>
+     </row>
+     <row>
+       <entry>ãåíïåð</entry>
+       <entry><link linkend='command-gensym'>gensym</link></entry>
+     </row>
+     <row>
        <entry>àáñ</entry>
        <entry><link linkend='command-abs'>abs</link></entry>
+     </row>
+     <row>
+       <entry>âåùïîñë</entry>
+       <entry><link linkend='command-rseq'>rseq</link></entry>
      </row>
      <row>
        <entry>âðåìÿ</entry>
@@ -2088,8 +2496,20 @@
        <entry><link linkend='command-for'>for</link></entry>
      </row>
      <row>
+       <entry>äëÿêàæä</entry>
+       <entry><link linkend='command-foreach'>foreach</link></entry>
+     </row>
+     <row>
        <entry>âï</entry>
        <entry><link linkend='command-fd'>fd</link></entry>
+     </row>
+     <row>
+       <entry>äî</entry>
+       <entry><link linkend='command-until'>until</link></entry>
+     </row>
+     <row>
+       <entry>âî÷åðåäü</entry>
+       <entry><link linkend='command-queue'>queue</link></entry>
      </row>
      <row>
        <entry>âïåðåä</entry>
@@ -2156,6 +2576,10 @@
        <entry><link linkend='command-pprop'>Pprop</link></entry>
      </row>
      <row>
+       <entry>âñåïïðîö</entry>
+       <entry><link linkend='command-poall'>poall</link></entry>
+     </row>
+     <row>
        <entry>åñëè</entry>
        <entry><link linkend='command-if'>if</link></entry>
      </row>
@@ -2180,8 +2604,20 @@
        <entry><link linkend='command-iftrue'>iftrue</link></entry>
      </row>
      <row>
+       <entry>äóãà</entry>
+       <entry><link linkend='command-arc'>arc</link></entry>
+     </row>
+     <row>
+       <entry>äóãà2</entry>
+       <entry><link linkend='command-arc2'>arc2</link></entry>
+     </row>
+     <row>
        <entry>äóãàýëëèïñà</entry>
        <entry><link linkend='command-ellipsearc'>ellipsearc</link></entry>
+     </row>
+     <row>
+       <entry>äóãàýëëèïñà2</entry>
+       <entry><link linkend='command-ellipsearc2'>ellipsearc2</link></entry>
      </row>
      <row>
        <entry>arctg</entry>
@@ -2196,8 +2632,16 @@
        <entry><link linkend='command-output'>output</link></entry>
      </row>
      <row>
+       <entry>âûáîð</entry>
+       <entry><link linkend='command-pick'>pick</link></entry>
+     </row>
+     <row>
        <entry>âûáñâ</entry>
        <entry><link linkend='command-gprop'>gprop</link></entry>
+     </row>
+     <row>
+       <entry>âûçîâ</entry>
+       <entry><link linkend='command-invoke'>invoke</link></entry>
      </row>
      <row>
        <entry>âûçîâáäê</entry>
@@ -2216,8 +2660,16 @@
        <entry><link linkend='command-run'>run</link></entry>
      </row>
      <row>
+       <entry>äýëëèïñ2</entry>
+       <entry><link linkend='command-ellipsa2'>ellipsa2</link></entry>
+     </row>
+     <row>
        <entry>çàäàòüòåêñòïîëÿ</entry>
        <entry><link linkend='command-comboboxsettext'>comboboxsettext</link></entry>
+     </row>
+     <row>
+       <entry>çàäàòüòîðòèëó</entry>
+       <entry><link linkend='command-maketurtle'>maketurtle</link></entry>
      </row>
      <row>
        <entry>çàãðóçè</entry>
@@ -2260,6 +2712,10 @@
        <entry><link linkend='command-slowdraw'>slowdraw</link></entry>
      </row>
      <row>
+       <entry>çàïðîñ</entry>
+       <entry><link linkend='command-ask'>ask</link></entry>
+     </row>
+     <row>
        <entry>çàïèñüñìåñòà</entry>
        <entry><link linkend='command-setwritepos'>setwritepos</link></entry>
      </row>
@@ -2300,12 +2756,28 @@
        <entry><link linkend='command-netconnectsendvalue'>netconnectsendvalue</link></entry>
      </row>
      <row>
+       <entry>çíàê</entry>
+       <entry><link linkend='command-sign'>sign</link></entry>
+     </row>
+     <row>
+       <entry>çîëñå÷</entry>
+       <entry><link linkend='command-goldenratio'>goldenratio</link></entry>
+     </row>
+     <row>
        <entry>ðåä</entry>
        <entry><link linkend='command-ed'>ed</link></entry>
      </row>
      <row>
        <entry>ðåäàêòèðîâàòü</entry>
        <entry><link linkend='command-edit'>edit</link></entry>
+     </row>
+     <row>
+       <entry>ðåäàêòîð</entry>
+       <entry><link linkend='command-edall'>edall</link></entry>
+     </row>
+     <row>
+       <entry>ðåãåí</entry>
+       <entry><link linkend='command-refresh'>refresh</link></entry>
      </row>
      <row>
        <entry>ðåæðàñòðàóñòàíîâè</entry>
@@ -2348,8 +2820,32 @@
        <entry><link linkend='command-radiobuttonset'>radiobuttonset</link></entry>
      </row>
      <row>
+       <entry>ðåäïåð</entry>
+       <entry><link linkend='command-edn'>edn</link></entry>
+     </row>
+     <row>
+       <entry>ðåäïåð_ûå</entry>
+       <entry><link linkend='command-edns'>edns</link></entry>
+     </row>
+     <row>
+       <entry>ðåäïðîö</entry>
+       <entry><link linkend='command-edps'>edps</link></entry>
+     </row>
+     <row>
        <entry>ðàâíûéïè</entry>
        <entry><link linkend='command-equalp'>equalp</link></entry>
+     </row>
+     <row>
+       <entry>ðåäñâ_âà</entry>
+       <entry><link linkend='command-edpls'>edpls</link></entry>
+     </row>
+     <row>
+       <entry>ðåäñâ_âî</entry>
+       <entry><link linkend='command-edpl'>edpl</link></entry>
+     </row>
+     <row>
+       <entry>ðàçâìàêðîñ</entry>
+       <entry><link linkend='command-macroexpand'>macroexpand</link></entry>
      </row>
      <row>
        <entry>ðàçäýêðàí</entry>
@@ -2378,6 +2874,14 @@
      <row>
        <entry>ðàçíîñòü</entry>
        <entry><link linkend='command-difference'>difference</link></entry>
+     </row>
+     <row>
+       <entry>ðàññòîÿíèå</entry>
+       <entry><link linkend='command-distance'>distance</link></entry>
+     </row>
+     <row>
+       <entry>ðàññòîÿíèå_xyz</entry>
+       <entry><link linkend='command-distancexyz'>distancexyz</link></entry>
      </row>
      <row>
        <entry>ðàñòðáëîê</entry>
@@ -2432,12 +2936,28 @@
        <entry><link linkend='command-leftroll'>leftroll</link></entry>
      </row>
      <row>
+       <entry>èãíîð</entry>
+       <entry><link linkend='command-ignore'>ignore</link></entry>
+     </row>
+     <row>
        <entry>èãíîðèðèðîâàòüðåãèñòðïè</entry>
        <entry><link linkend='command-caseignoredp'>caseignoredp</link></entry>
      </row>
      <row>
+       <entry>êàñêàä</entry>
+       <entry><link linkend='command-cascade'>cascade</link></entry>
+     </row>
+     <row>
+       <entry>êàñêàä.2</entry>
+       <entry><link linkend='command-cascade.2'>cascade.2</link></entry>
+     </row>
+     <row>
        <entry>ëàñòèê</entry>
        <entry><link linkend='command-penerase'>penerase</link></entry>
+     </row>
+     <row>
+       <entry>èçî÷åðåäè</entry>
+       <entry><link linkend='command-dequeue'>dequeue</link></entry>
      </row>
      <row>
        <entry>èçìïàï</entry>
@@ -2496,6 +3016,10 @@
        <entry><link linkend='command-or'>or</link></entry>
      </row>
      <row>
+       <entry>èêîíêà</entry>
+       <entry><link linkend='command-icon'>icon</link></entry>
+     </row>
+     <row>
        <entry>êîä</entry>
        <entry><link linkend='command-ascii'>ascii</link></entry>
      </row>
@@ -2540,8 +3064,16 @@
        <entry><link linkend='command-bl'>bl</link></entry>
      </row>
      <row>
+       <entry>êîìáèí</entry>
+       <entry><link linkend='command-combine'>combine</link></entry>
+     </row>
+     <row>
        <entry>êîíåö</entry>
        <entry><link linkend='command-end'>end</link></entry>
+     </row>
+     <row>
+       <entry>êîïèðìûøüþ</entry>
+       <entry><link linkend='command-mousecopy'>mousecopy</link></entry>
      </row>
      <row>
        <entry>êíîïêà?</entry>
@@ -2572,12 +3104,20 @@
        <entry><link linkend='command-eventcheck'>eventcheck</link></entry>
      </row>
      <row>
+       <entry>èìÿ</entry>
+       <entry><link linkend='command-name'>name</link></entry>
+     </row>
+     <row>
        <entry>èìÿ?</entry>
        <entry><link linkend='command-namep'>name?</link></entry>
      </row>
      <row>
        <entry>èìÿïè</entry>
        <entry><link linkend='command-namep'>namep</link></entry>
+     </row>
+     <row>
+       <entry>èìÿñï</entry>
+       <entry><link linkend='command-namelist'>namelist</link></entry>
      </row>
      <row>
        <entry>ëñäâèã</entry>
@@ -2660,6 +3200,10 @@
        <entry><link linkend='command-fontfacenames'>fontfacenames</link></entry>
      </row>
      <row>
+       <entry>ïåðåäàòü</entry>
+       <entry><link linkend='command-transfer'>transfer</link></entry>
+     </row>
+     <row>
        <entry>îãðàæäåíèå</entry>
        <entry><link linkend='command-fence'>fence</link></entry>
      </row>
@@ -2678,6 +3222,10 @@
      <row>
        <entry>íåðàâíîïè</entry>
        <entry><link linkend='command-notequalp'>notequalp</link></entry>
+     </row>
+     <row>
+       <entry>ïåðåêðåñòîòîáð</entry>
+       <entry><link linkend='command-crossmap'>crossmap</link></entry>
      </row>
      <row>
        <entry>ïåðåêëþ÷äîïóñòè</entry>
@@ -2728,6 +3276,10 @@
        <entry><link linkend='command-first'>first</link></entry>
      </row>
      <row>
+       <entry>ïåðî</entry>
+       <entry><link linkend='command-pen'>pen</link></entry>
+     </row>
+     <row>
        <entry>ïåðîðó÷êà</entry>
        <entry><link linkend='command-penpaint'>penpaint</link></entry>
      </row>
@@ -2738,6 +3290,10 @@
      <row>
        <entry>ïåðîïîäíèìè</entry>
        <entry><link linkend='command-penup'>penup</link></entry>
+     </row>
+     <row>
+       <entry>ïåðîíîðì</entry>
+       <entry><link linkend='command-pennormal'>pennormal</link></entry>
      </row>
      <row>
        <entry>ïåðîîïóñòè</entry>
@@ -2764,6 +3320,10 @@
        <entry><link linkend='command-macrop'>macrop</link></entry>
      </row>
      <row>
+       <entry>íåèêîí</entry>
+       <entry><link linkend='command-unicon'>unicon</link></entry>
+     </row>
+     <row>
        <entry>ïâêîíåö</entry>
        <entry><link linkend='command-lput'>lput</link></entry>
      </row>
@@ -2776,8 +3336,16 @@
        <entry><link linkend='command-printwidthlimit'>printwidthlimit</link></entry>
      </row>
      <row>
+       <entry>íàéòè</entry>
+       <entry><link linkend='command-find'>find</link></entry>
+     </row>
+     <row>
        <entry>ïâíà÷</entry>
        <entry><link linkend='command-fput'>fput</link></entry>
+     </row>
+     <row>
+       <entry>íåîáíîâ</entry>
+       <entry><link linkend='command-norefresh'>norefresh</link></entry>
      </row>
      <row>
        <entry>íàïðàâëåíèå</entry>
@@ -2786,6 +3354,10 @@
      <row>
        <entry>íàïðàâî</entry>
        <entry><link linkend='command-right'>right</link></entry>
+     </row>
+     <row>
+       <entry>ïàïêà</entry>
+       <entry><link linkend='command-dir'>dir</link></entry>
      </row>
      <row>
        <entry>ïàïêè</entry>
@@ -2812,8 +3384,20 @@
        <entry><link linkend='command-lessp'>lessp</link></entry>
      </row>
      <row>
+       <entry>íåñêðâñå</entry>
+       <entry><link linkend='command-unduryall'>unduryall</link></entry>
+     </row>
+     <row>
+       <entry>íåñêðïåð</entry>
+       <entry><link linkend='command-unduryname'>unduryname</link></entry>
+     </row>
+     <row>
        <entry>íåñêðûâàòü</entry>
        <entry><link linkend='command-unbury'>unbury</link></entry>
+     </row>
+     <row>
+       <entry>ìàññâñï</entry>
+       <entry><link linkend='command-arraytolist'>arraytolist</link></entry>
      </row>
      <row>
        <entry>ìàññèâ</entry>
@@ -2868,8 +3452,16 @@
        <entry><link linkend='command-rightroll'>rightroll</link></entry>
      </row>
      <row>
+       <entry>ïðåîáðàç</entry>
+       <entry><link linkend='command-reduce'>reduce</link></entry>
+     </row>
+     <row>
        <entry>ïðê</entry>
        <entry><link linkend='command-ppt'>ppt</link></entry>
+     </row>
+     <row>
+       <entry>îðèåíòàöèÿ</entry>
+       <entry><link linkend='command-orientation'>orientation</link></entry>
      </row>
      <row>
        <entry>ïðèìåíèòü</entry>
@@ -2920,6 +3512,10 @@
        <entry><link linkend='command-dribble'>dribble</link></entry>
      </row>
      <row>
+       <entry>ïè</entry>
+       <entry><link linkend='command-pi'>pi</link></entry>
+     </row>
+     <row>
        <entry>ìèäèçàêðîé</entry>
        <entry><link linkend='command-midiclose'>midiclose</link></entry>
      </row>
@@ -2938,6 +3534,10 @@
      <row>
        <entry>îêðóæíîñòü</entry>
        <entry><link linkend='command-circle'>circle</link></entry>
+     </row>
+     <row>
+       <entry>îêðóæíîñòü2</entry>
+       <entry><link linkend='command-circle2'>circle2</link></entry>
      </row>
      <row>
        <entry>ìêè</entry>
@@ -3060,6 +3660,14 @@
        <entry><link linkend='command-setwrite'>setwrite</link></entry>
      </row>
      <row>
+       <entry>ïïåð</entry>
+       <entry><link linkend='command-pon'>pon</link></entry>
+     </row>
+     <row>
+       <entry>ïïåð_ûå</entry>
+       <entry><link linkend='command-pons'>pons</link></entry>
+     </row>
+     <row>
        <entry>íîâðåæèìòîðòèëû</entry>
        <entry><link linkend='command-setturtlemode'>setturtlemode</link></entry>
      </row>
@@ -3076,12 +3684,20 @@
        <entry><link linkend='command-setcursor'>setcursor</link></entry>
      </row>
      <row>
+       <entry>íîâïåðî</entry>
+       <entry><link linkend='command-setpen'>setpen</link></entry>
+     </row>
+     <row>
        <entry>íîâîåìåñòî</entry>
        <entry><link linkend='command-setpos'>setpos</link></entry>
      </row>
      <row>
        <entry>íîâìåñòî_xyz</entry>
        <entry><link linkend='command-setposxyz'>setposxyz</link></entry>
+     </row>
+     <row>
+       <entry>íîâîðèåíò</entry>
+       <entry><link linkend='command-setorientation'>setorientation</link></entry>
      </row>
      <row>
        <entry>íîâïèêñåëü</entry>
@@ -3110,6 +3726,10 @@
      <row>
        <entry>íîâòàéìåð</entry>
        <entry><link linkend='command-settimer'>settimer</link></entry>
+     </row>
+     <row>
+       <entry>íîâöâòåêñòà</entry>
+       <entry><link linkend='command-settextfont'>settextfont</link></entry>
      </row>
      <row>
        <entry>íîâöç</entry>
@@ -3204,8 +3824,12 @@
        <entry><link linkend='command-portflush'>portflush</link></entry>
      </row>
      <row>
+       <entry>ïïðû</entry>
+       <entry><link linkend='command-pops'>pops</link></entry>
+     </row>
+     <row>
        <entry>ïîêà</entry>
-       <entry><link linkend='command-bye'>bye</link></entry>
+       <entry><link linkend='command-while'>while</link></entry>
      </row>
      <row>
        <entry>ïîêàæè</entry>
@@ -3264,8 +3888,16 @@
        <entry><link linkend='command-mdarray'>mdarray</link></entry>
      </row>
      <row>
+       <entry>ïîìåñòè</entry>
+       <entry><link linkend='command-push'>push</link></entry>
+     </row>
+     <row>
        <entry>ïîìîäóëþ</entry>
        <entry><link linkend='command-modulo'>modulo</link></entry>
+     </row>
+     <row>
+       <entry>ïïîìåù</entry>
+       <entry><link linkend='command-pop'>pop</link></entry>
      </row>
      <row>
        <entry>ïîìîùü</entry>
@@ -3282,6 +3914,14 @@
      <row>
        <entry>ìíýëåìåíòíîâûé</entry>
        <entry><link linkend='command-mdsetitem'>mdsetitem</link></entry>
+     </row>
+     <row>
+       <entry>ïñïñâ</entry>
+       <entry><link linkend='command-popl'>popl</link></entry>
+     </row>
+     <row>
+       <entry>ïñïñââ</entry>
+       <entry><link linkend='command-popls'>popls</link></entry>
      </row>
      <row>
        <entry>îñòàíîâ</entry>
@@ -3332,6 +3972,14 @@
        <entry><link linkend='command-allopen'>allopen</link></entry>
      </row>
      <row>
+       <entry>îòîáð</entry>
+       <entry><link linkend='command-map'>map</link></entry>
+     </row>
+     <row>
+       <entry>îòîáð.ïð</entry>
+       <entry><link linkend='command-map.se'>map.se</link></entry>
+     </row>
+     <row>
        <entry>ïóñòîé?</entry>
        <entry><link linkend='command-emptyp'>empty?</link></entry>
      </row>
@@ -3342,6 +3990,10 @@
      <row>
        <entry>ïóñòü</entry>
        <entry><link linkend='command-make'>Make</link></entry>
+     </row>
+     <row>
+       <entry>ïóñòüëîê</entry>
+       <entry><link linkend='command-localmake'>localmake</link></entry>
      </row>
      <row>
        <entry>íöý</entry>
@@ -3408,12 +4060,24 @@
        <entry><link linkend='command-random'>random</link></entry>
      </row>
      <row>
+       <entry>ñêàâû÷</entry>
+       <entry><link linkend='command-quoted'>quoted</link></entry>
+     </row>
+     <row>
        <entry>ñêðîé</entry>
        <entry><link linkend='command-bury'>bury</link></entry>
      </row>
      <row>
        <entry>ñêðîé÷åðåïàõó</entry>
        <entry><link linkend='command-hideturtle'>hideturtle</link></entry>
+     </row>
+     <row>
+       <entry>ñêðîéâñå</entry>
+       <entry><link linkend='command-buryall'>buryall</link></entry>
+     </row>
+     <row>
+       <entry>ñêðîéèìÿ</entry>
+       <entry><link linkend='command-buryname'>buryname</link></entry>
      </row>
      <row>
        <entry>ñêðûòûå</entry>
@@ -3452,6 +4116,10 @@
        <entry><link linkend='command-contents'>contents</link></entry>
      </row>
      <row>
+       <entry>ñïâìàññ</entry>
+       <entry><link linkend='command-listtoarray'>listtoarray</link></entry>
+     </row>
+     <row>
        <entry>ñïåöñèìâîë?</entry>
        <entry><link linkend='command-backslashedp'>backslashed?</link></entry>
      </row>
@@ -3482,6 +4150,14 @@
      <row>
        <entry>ñïçàïóäàëèñòðîêó</entry>
        <entry><link linkend='command-listboxdeletestring'>listboxdeletestring</link></entry>
+     </row>
+     <row>
+       <entry>ñîçâóêîì</entry>
+       <entry><link linkend='command-soundon'>soundon</link></entry>
+     </row>
+     <row>
+       <entry>ñîðòèðîâêà</entry>
+       <entry><link linkend='command-sort'>sort</link></entry>
      </row>
      <row>
        <entry>ñíèìèáäê</entry>
@@ -3516,12 +4192,20 @@
        <entry><link linkend='command-proplistp'>proplistp</link></entry>
      </row>
      <row>
+       <entry>ñïñïèñêîâ</entry>
+       <entry><link linkend='command-pllist'>pllist</link></entry>
+     </row>
+     <row>
        <entry>ñîõðàíè</entry>
        <entry><link linkend='command-save'>save</link></entry>
      </row>
      <row>
        <entry>ñîõðàíèðèñ</entry>
        <entry><link linkend='command-gifsave'>gifsave</link></entry>
+     </row>
+     <row>
+       <entry>ñîõðàíèñï</entry>
+       <entry><link linkend='command-savel'>savel</link></entry>
      </row>
      <row>
        <entry>ñîòðèïàëèòðó</entry>
@@ -3561,7 +4245,7 @@
      </row>
      <row>
        <entry>óäàëè</entry>
-       <entry><link linkend='command-erase'>erase</link></entry>
+       <entry><link linkend='command-remove'>remove</link></entry>
      </row>
      <row>
        <entry>óäàëèñâ</entry>
@@ -3576,6 +4260,10 @@
        <entry><link linkend='command-erasefile'>erasefile</link></entry>
      </row>
      <row>
+       <entry>óäâñå</entry>
+       <entry><link linkend='command-erall'>erall</link></entry>
+     </row>
+     <row>
        <entry>öâåòçàëèâêè</entry>
        <entry><link linkend='command-floodcolor'>floodcolor</link></entry>
      </row>
@@ -3588,12 +4276,20 @@
        <entry><link linkend='command-screencolor'>screencolor</link></entry>
      </row>
      <row>
+       <entry>ôàéëïè</entry>
+       <entry><link linkend='command-filep'>filep</link></entry>
+     </row>
+     <row>
        <entry>ôàéëû</entry>
        <entry><link linkend='command-files'>files</link></entry>
      </row>
      <row>
        <entry>öåëîå</entry>
        <entry><link linkend='command-round'>round</link></entry>
+     </row>
+     <row>
+       <entry>öåëïîñë</entry>
+       <entry><link linkend='command-iseq'>iseq</link></entry>
      </row>
      <row>
        <entry>òåêñò</entry>
@@ -3612,8 +4308,32 @@
        <entry><link linkend='command-comboboxgettext'>comboboxgettext</link></entry>
      </row>
      <row>
+       <entry>óäïåð</entry>
+       <entry><link linkend='command-ern'>ern</link></entry>
+     </row>
+     <row>
+       <entry>óäïåð_ûå</entry>
+       <entry><link linkend='command-erns'>erns</link></entry>
+     </row>
+     <row>
        <entry>óäïàï</entry>
        <entry><link linkend='command-rmdir'>rmdir</link></entry>
+     </row>
+     <row>
+       <entry>óäïðîö</entry>
+       <entry><link linkend='command-erps'>erps</link></entry>
+     </row>
+     <row>
+       <entry>óäïîâò</entry>
+       <entry><link linkend='command-remdup'>remdup</link></entry>
+     </row>
+     <row>
+       <entry>óäñâ_âà</entry>
+       <entry><link linkend='command-erpls'>erpls</link></entry>
+     </row>
+     <row>
+       <entry>óäñâ_âî</entry>
+       <entry><link linkend='command-erpl'>erpl</link></entry>
      </row>
      <row>
        <entry>òåñò</entry>
@@ -3636,6 +4356,10 @@
        <entry><link linkend='command-labelfont'>labelfont</link></entry>
      </row>
      <row>
+       <entry>øðèôòòåêñòà</entry>
+       <entry><link linkend='command-textfont'>textfont</link></entry>
+     </row>
+     <row>
        <entry>óêëîí</entry>
        <entry><link linkend='command-pitch'>pitch</link></entry>
      </row>
@@ -3646,6 +4370,10 @@
      <row>
        <entry>óêëîíâíèç</entry>
        <entry><link linkend='command-downpitch'>downpitch</link></entry>
+     </row>
+     <row>
+       <entry>ôèëüòð</entry>
+       <entry><link linkend='command-filter'>filter</link></entry>
      </row>
      <row>
        <entry>öï</entry>
@@ -3684,6 +4412,10 @@
        <entry><link linkend='command-yield'>yield</link></entry>
      </row>
      <row>
+       <entry>òüþòîð</entry>
+       <entry><link linkend='command-tutor'>tutor</link></entry>
+     </row>
+     <row>
        <entry>òý</entry>
        <entry><link linkend='command-ts'>ts</link></entry>
      </row>
@@ -3698,6 +4430,14 @@
      <row>
        <entry>tg</entry>
        <entry><link linkend='command-tan'>tan</link></entry>
+     </row>
+     <row>
+       <entry>x_êîîð</entry>
+       <entry><link linkend='command-xcor'>xcor</link></entry>
+     </row>
+     <row>
+       <entry>y_êîîð</entry>
+       <entry><link linkend='command-ycor'>ycor</link></entry>
      </row>
      <row>
        <entry>ÿðêîñòü</entry>
@@ -3716,8 +4456,20 @@
        <entry><link linkend='command-memberp'>memberp</link></entry>
      </row>
      <row>
+       <entry>ýëëèïñ</entry>
+       <entry><link linkend='command-ellipse'>ellipse</link></entry>
+     </row>
+     <row>
+       <entry>ýëëèïñ2</entry>
+       <entry><link linkend='command-ellipse2'>ellipse2</link></entry>
+     </row>
+     <row>
        <entry>ýòî</entry>
        <entry><link linkend='command-to'>to</link></entry>
+     </row>
+     <row>
+       <entry>z_êîîð</entry>
+       <entry><link linkend='command-zcor'>zcor</link></entry>
      </row>
   </tbody>
   </tgroup>
