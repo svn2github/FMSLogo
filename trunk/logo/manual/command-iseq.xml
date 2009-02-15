@@ -14,7 +14,7 @@
 <listitem>
 <para>
 Outputs a consecutive ordered list of integers starting with <parameter>from</parameter> and ending with <parameter>to</parameter>.
-If <parameter>from</parameter> is less than <parameter>to</parameter>, then ISEQ outputs a sequence that counts backwards.
+If <parameter>from</parameter> is greater than <parameter>to</parameter>, then ISEQ outputs a sequence that counts backwards.
 </para>
 
 <para>

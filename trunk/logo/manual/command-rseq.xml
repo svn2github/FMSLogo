@@ -14,7 +14,7 @@
 <listitem>
 <para>
 Outputs an ordered list of <parameter>count</parameter> equally spaced rational numbers starting with <parameter>from</parameter> and ending with <parameter>to</parameter>.
-If <parameter>from</parameter> is less than <parameter>to</parameter>, then RSEQ outputs a sequence that counts backwards.
+If <parameter>from</parameter> is greater than <parameter>to</parameter>, then RSEQ outputs a sequence that counts backwards.
 </para>
 
 <para>
