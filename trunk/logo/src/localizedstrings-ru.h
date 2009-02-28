@@ -24,6 +24,8 @@
 // Localization Instructions:
 //
 // This file a C++ header file, so if you are familiar with how C++ works, it
+
+
 // will help.
 //
 // Each localized string is a line that takes the following form:
@@ -115,8 +117,8 @@
 #define LOCALIZED_ALTERNATE_TRUE     "истина" 
 #define LOCALIZED_ALTERNATE_FALSE    "ложь" 
 #define LOCALIZED_ALTERNATE_END      "конец"
-#define LOCALIZED_ALTERNATE_TOPLEVEL "верхнийуровень" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_SYSTEM   "система" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_TOPLEVEL "верхнийуровень" 
+#define LOCALIZED_ALTERNATE_SYSTEM   "система" 
 
 //
 // Localized "alternate" names of Logo special variables
@@ -148,10 +150,10 @@
 // If you don't know how to translate a particular command, leave it
 // as the English name and it will be ignored.
 //
-#define LOCALIZED_ALTERNATE__DEFMACRO              ".опрмакрос"
+#define LOCALIZED_ALTERNATE__DEFMACRO             ".опрмакрос"
 #define LOCALIZED_ALTERNATE__EQ                    ".равн" 
 #define LOCALIZED_ALTERNATE__MACRO                 ".макрос"
-#define LOCALIZED_ALTERNATE__MAYBEOUTPUT           ".альтвывод"
+#define LOCALIZED_ALTERNATE__MAYBEOUTPUT           ".альтвывод" 
 #define LOCALIZED_ALTERNATE__SETBF                 ".вставькпе" 
 #define LOCALIZED_ALTERNATE__SETFIRST              ".вставьпервым" 
 #define LOCALIZED_ALTERNATE__SETITEM               ".новэлемент" 
@@ -827,7 +829,6 @@
 #define LOCALIZED_SETPENSIZE_CANCEL            LOCALIZED_GENERAL_CANCELBUTTON 
 #define LOCALIZED_SETPENSIZE_APPLY             LOCALIZED_GENERAL_APPLYBUTTON 
 
-
 //
 // Strings on the "About FMSLogo" Dialog box
 //
@@ -840,7 +841,8 @@
 #define LOCALIZED_ABOUTFMS_SPECIALTHANKS       "Благодарим Йегуду Катца (yehuka@softhome.net)\nи Эриха Непйвиртза (erich.neuwirth@univie.ac.at)" 
 #define LOCALIZED_ABOUTFMS_GPL                 LOCALIZED_GENERAL_PRODUCTNAME" распространяется свободно\nСм. лицензию ГНУ" 
 #define LOCALIZED_ABOUTFMS_NEWSGROUP           "Группа новостей в Интернете: comp.lang.logo\nпосетите форум на\nhttp:\x2F/groups.yahoo.com/group/LogoForum/" 
-#define LOCALIZED_ABOUTFMS_MULTIMEDIALOGIC     "Изучение внутренних свойств компьютера,\nот MultiMedia Logic из Softronics, Inc." 
+#define LOCALIZED_ABOUTFMS_MULTIMEDIALOGIC     "Для Изучение внутренних свойств компьютера,\nиспользуйте  MultiMedia Logic от Softronics, Inc.\nАдаптация и локализация на русский язык Баглаева Игоря \n
+Бурятский государственный университет, Улан-Удэ, bii@bsu.ru " 
 #define LOCALIZED_ABOUTFMS_OK                  LOCALIZED_GENERAL_OKBUTTON 
 
 
@@ -864,162 +866,149 @@
 // Strings in various other dialog boxes
 // 
 
-#define LOCALIZED_CHANGESINEDITORMAYBELOST  "Changes in this edit session may be lost.\n\nDo you really want to exit "LOCALIZED_GENERAL_PRODUCTNAME"?" // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITSESSIONISRUNNING      "An Edit session is running" // NOT_YET_LOCALIZED
+#define LOCALIZED_CHANGESINEDITORMAYBELOST  "Изменения в этом сеансе редактирования могут быть утеряны.\n\nВы действительно хотите выйти из "LOCALIZED_GENERAL_PRODUCTNAME"?" 
+#define LOCALIZED_EDITSESSIONISRUNNING      "Сеанс редактирования запущен" 
 
-#define LOCALIZED_NOTHALTEDREALLYEXIT        LOCALIZED_GENERAL_PRODUCTNAME" does not like exiting while not halted.\n\nDo you really want to exit "LOCALIZED_GENERAL_PRODUCTNAME"?" // NOT_YET_LOCALIZED
-#define LOCALIZED_NOTHALTEDREALLYHALT        LOCALIZED_GENERAL_PRODUCTNAME" does not like exiting while not halted.\n\nDo you really want to Halt "LOCALIZED_GENERAL_PRODUCTNAME"?" // NOT_YET_LOCALIZED
-#define LOCALIZED_LOGOISNOTHALTED            LOCALIZED_GENERAL_PRODUCTNAME" is not Halted" // NOT_YET_LOCALIZED
+#define LOCALIZED_NOTHALTEDREALLYEXIT        LOCALIZED_GENERAL_PRODUCTNAME" не рекомендуется выходить из программы пока нет останова.\n\nВы действительно хотите выйти  "LOCALIZED_GENERAL_PRODUCTNAME"?" 
+#define LOCALIZED_NOTHALTEDREALLYHALT        LOCALIZED_GENERAL_PRODUCTNAME" не рекомендуется выходить из программы пока нет останова.\n\nВы действительно хотите Останов "LOCALIZED_GENERAL_PRODUCTNAME"?" 
+#define LOCALIZED_LOGOISNOTHALTED            LOCALIZED_GENERAL_PRODUCTNAME" не остановлен" 
+#define LOCALIZED_COULDNOTWRITEBMP            "Не могу записать .bmp" 
+#define LOCALIZED_COULDNOTOPENBMP             "Не могу открыть .bmp" 
+#define LOCALIZED_COULDNOTCREATEBMP           "Невозможно создать Windows 3.0 рисунок" 
+#define LOCALIZED_NOTVALIDBMP                 "Не растровый рисунок Windows 3.0" 
+#define LOCALIZED_YOUHAVEUNSAVEDCHANGES         "Не растровый рисунок Windows 3.0" 
+#define LOCALIZED_FILENEWWILLERASEWORKSPACE     "Создание нового сотрет все данные из рабочей области.\n\nПродолжить Новый?" 
+#define LOCALIZED_FILELOADMAYOVERWRITEWORKSPACE "Загружаемый файл будет объединен с данными вашей рабочей области\n и, может изменить ваши несохраненные данные. \n\n Продолжить Загрузить?" 
+#define LOCALIZED_FILEOPENWILLERASEWORKSPACE    "Эта операция сотрет все ваши несохраненные данные.\n\n Продолжить Открыть?" 
+#define LOCALIZED_EDITORISOPEN                  "Вы знаете, что запущен сеанс редактирования? \n\n Все изменения в этом сеансе редактирования не были сохранены
 
-#define LOCALIZED_COULDNOTWRITEBMP            "Could not write .bmp" // NOT_YET_LOCALIZED
-#define LOCALIZED_COULDNOTOPENBMP             "Could not open .bmp" // NOT_YET_LOCALIZED
-#define LOCALIZED_COULDNOTCREATEBMP           "Unable to create Windows 3.0 bitmap" // NOT_YET_LOCALIZED
-#define LOCALIZED_NOTVALIDBMP                 "Not a Windows 3.0 bitmap" // NOT_YET_LOCALIZED
-
-#define LOCALIZED_YOUHAVEUNSAVEDCHANGES         "You have not saved to disk" // NOT_YET_LOCALIZED
-#define LOCALIZED_FILENEWWILLERASEWORKSPACE     "Executing a new will erase all definitions.\n\nContinue with New?" // NOT_YET_LOCALIZED
-#define LOCALIZED_FILELOADMAYOVERWRITEWORKSPACE "The file being loaded will be merged into your workspace\nand may overwrite your unsaved changes.\n\nContinue with Load?" // NOT_YET_LOCALIZED
-#define LOCALIZED_FILEOPENWILLERASEWORKSPACE    "This will erase all of your unsaved changes.\n\nContinue with Open?" // NOT_YET_LOCALIZED
-
-#define LOCALIZED_EDITORISOPEN                  "Did you know you have an edit session running?\n\nAny changes in this edit session are not being saved." // NOT_YET_LOCALIZED
-
-#define LOCALIZED_ERROR_CANTREADFILE            "Unable to read file \"%s\" from disk" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_CANTWRITEFILE           "Unable to write file \"%s\" to disk" // NOT_YET_LOCALIZED
-
-#define LOCALIZED_SAVETOWORKSPACE                "Save to Workspace" // NOT_YET_LOCALIZED
-#define LOCALIZED_CONTENTSCHANGED                "Contents Changed" // NOT_YET_LOCALIZED
-#define LOCALIZED_SAVECHANGEDCONTENTSTOWORKSPACE "The contents have changed.\nWould you like to save the changes to the workspace?" // NOT_YET_LOCALIZED
-
-
-
-#define LOCALIZED_CURSORISATLASTGOODDEFINITION  "There was a problem saving the contents of the editor to the workspace.  The cursor will be positioned just after last successful definition.\n\nCheck the Commander for possible error message." // NOT_YET_LOCALIZED
-#define LOCALIZED_RETURNTOEDIT                  "Return to the editor?" // NOT_YET_LOCALIZED
-
-#define LOCALIZED_EDITFAILEDTOLOAD              LOCALIZED_SAVETOWORKSPACE // NOT_YET_LOCALIZED
+#define LOCALIZED_ERROR_CANTREADFILE            "Невозможно прочитать файл \"%s\" с диска" 
+#define LOCALIZED_ERROR_CANTWRITEFILE           "Невозможно записать файл \"%s\" на диск" 
+#define LOCALIZED_SAVETOWORKSPACE                "Сохраните в рабочую область" 
+#define LOCALIZED_SAVECHANGEDCONTENTSTOWORKSPACE "Содержание изменено.\n Хотите вы сохранить изменения в рабочей области?" 
+#define LOCALIZED_CURSORISATLASTGOODDEFINITION  "Обнаружена проблема сохранения  содержания редактора  в рабочую область. Курсор будет помещен за последним успешным определением. \n\n Для установления возможной ошибки активизируйте Командное окно." 
+#define LOCALIZED_RETURNTOEDIT                  "Вернуться в редактор?" 
+#define LOCALIZED_EDITFAILEDTOLOAD              LOCALIZED_SAVETOWORKSPACE 
 
 
 
 // 
 //  Strings used in the File-Open filters
 //
-#define LOCALIZED_FILEFILTER_ALLFILES "All Files (*.*)|*.*|" // NOT_YET_LOCALIZED
-#define LOCALIZED_FILEFILTER_LOGO     "Logo Files (*.lgo)|*.lgo|"LOCALIZED_FILEFILTER_ALLFILES // NOT_YET_LOCALIZED
-#define LOCALIZED_FILEFILTER_IMAGE    "Bitmap Files (*.bmp)|*.bmp|GIF Files (*.gif)|*.gif|"LOCALIZED_FILEFILTER_ALLFILES // NOT_YET_LOCALIZED
-
+#define LOCALIZED_FILEFILTER_ALLFILES "Все файлы (*.*)|*.*|" 
+#define LOCALIZED_FILEFILTER_LOGO     "Лого-файлы (*.lgo)|*.lgo|"LOCALIZED_FILEFILTER_ALLFILES 
+#define LOCALIZED_FILEFILTER_IMAGE    "Растровые файлы (*.bmp)|*.bmp|GIF-файлы (*.gif)|*.gif|"LOCALIZED_FILEFILTER_ALLFILES 
 
 
 //
 // strings seen when tracing is enabled
 //
-#define LOCALIZED_TRACING_STOPS             " stops\n" // NOT_YET_LOCALIZED
-#define LOCALIZED_TRACING_OUTPUTS           " outputs %s\n" // NOT_YET_LOCALIZED
-#define LOCALIZED_TRACING_MAKE              "Make %s %s" // NOT_YET_LOCALIZED
-#define LOCALIZED_TRACING_PPROP             "Pprop %s %s %s" // NOT_YET_LOCALIZED
-#define LOCALIZED_TRACING_LOCATION          " in %s\n%s" // NOT_YET_LOCALIZED
+#define LOCALIZED_TRACING_STOPS             " останов\n" 
+#define LOCALIZED_TRACING_OUTPUTS           " возвращает %s\n" 
+#define LOCALIZED_TRACING_MAKE              "пусть %s %s" 
+#define LOCALIZED_TRACING_PPROP             "Дсвойство %s %s %s" 
+#define LOCALIZED_TRACING_LOCATION          " в %s\n%s" 
 
 //
 // strings seen when single-stepping execution
 //
-#define LOCALIZED_STEPPING                  "Single Step" // NOT_YET_LOCALIZED
+#define LOCALIZED_STEPPING                  "Отдельный шаг" 
 
 //
 // Notification when defining a procedure with TO in the commander
 //
-#define LOCALIZED_PROCEDUREDEFINED  "%s defined\n" // NOT_YET_LOCALIZED
+#define LOCALIZED_PROCEDUREDEFINED  "%s определена\n" 
 
 
 //
 // Words that represent the pen's mode
 //
-#define LOCALIZED_PENMODE_ERASE    "erase" // NOT_YET_LOCALIZED
-#define LOCALIZED_PENMODE_REVERSE  "reverse" // NOT_YET_LOCALIZED
-#define LOCALIZED_PENMODE_PAINT    "paint" // NOT_YET_LOCALIZED
+#define LOCALIZED_PENMODE_ERASE    "ластик" 
+#define LOCALIZED_PENMODE_REVERSE  "обратное" 
+#define LOCALIZED_PENMODE_PAINT    "ручка" 
 
 //
 // Error message thrown by Logo
 //
-#define LOCALIZED_ERROR_FATALINTERNAL          "Logo: Fatal Internal Error" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_OUTOFMEMORYUNREC       "Logo: Out of memory" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_OUTOFMEMORY            "Out of memory" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_STACKOVERFLOW          "stack overflow" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_TURTLEOUTOFBOUNDS      "turtle out of bounds" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_BADGRAPHINIT           "couldn't initialize graphics" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_BADDATA                "%p doesn't like %s as input" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_DIDNTOUTPUT            "%p didn't output to %p" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_NOTENOUGHINPUTS        "not enough inputs to %p" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_TOOMUCH                "too much inside ()'s" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_DONTSAYWHATTODOWITH    "You don't say what to do with %s" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_PARENMISMATCH          "too many ('s" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_NOVALUE                "%s has no value" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_UNEXPECTEDPAREN        "unexpected ')'" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_UNEXPECTEDBRACKET      "unexpected ']'" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_UNEXPECTEDBRACE        "unexpected '}'" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_DONTKNOWHOWTO          "I don't know how to %p" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_NOCATCHTAG             "Can't find catch tag for %p" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_ALREADYDEFINED         "%p is already defined" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_STOPPING               "Stopping..." // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_ALREADYDRIBBLING       "Already dribbling" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_FILESYSTEM                   "File system error: %p" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_FILESYSTEM_CANTOPEN          "Could not open file" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_FILESYSTEM_CANTOPEN2         "Unable to open file: %t" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_FILESYSTEM_ALREADYOPEN       "File already open" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_FILESYSTEM_NOTOPEN           "File not open" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_FILESYSTEM_CANTCREATEEDITOR  "Could not create editor file" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_FILESYSTEM_CANTSTARTEDITOR   "Could not launch the editor"  // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_FILESYSTEM_CANTREADEDITOR    "Could not read editor file"  // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_IFWARNING              "Assuming you mean IFELSE, not IF" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_SHADOWWARNING          "%p shadowed by local in procedure call" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_USER                   "Throw \"Error" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_ISPRIMITIVE            "%p is a primitive" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_TONOTINSIDE            "Can't use TO inside a procedure" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_ATTOPLEVEL             "Can only use %p inside a procedure" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_ATTOPLEVEL2            "You must be in a procedure to use OUTPUT or STOP" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_NOTEST                 "%p without TEST" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_BADMACROOUTPUT         "Macro output %s instead of a list" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_DEEPEND                "END inside multi-line instruction" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_DEEPENDIN              "END inside multi-line instruction in %p" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_UNKNOWN                "Unknown error condition - internal error." // NOT_YET_LOCALIZED
+#define LOCALIZED_ERROR_FATALINTERNAL          "Лого: Фатальная внутренняя ошибка" 
+#define LOCALIZED_ERROR_OUTOFMEMORYUNREC       "Лого: Недостаточно памяти" 
+#define LOCALIZED_ERROR_OUTOFMEMORY            "Недостаточно памяти" 
 
-#define LOCALIZED_PAUSING                      "Pausing..." // NOT_YET_LOCALIZED
+#define LOCALIZED_ERROR_STACKOVERFLOW          "Переполнение стека" 
+#define LOCALIZED_ERROR_TURTLEOUTOFBOUNDS      "Тортила вышла за границы" 
+#define LOCALIZED_ERROR_BADGRAPHINIT           "не могу инициализировать графику" 
+#define LOCALIZED_ERROR_BADDATA                ""%p не нравится %s как аргумент" 
+#define LOCALIZED_ERROR_DIDNTOUTPUT            "%p не возвращает %p" 
+#define LOCALIZED_ERROR_NOTENOUGHINPUTS        "Не хватает аргументов в %p" 
+#define LOCALIZED_ERROR_TOOMUCH                "Слишком много внутренних ()" 
+#define LOCALIZED_ERROR_DONTSAYWHATTODOWITH    "Вы не сказали что делать с %s" 
+#define LOCALIZED_ERROR_PARENMISMATCH          "Слишком много (" 
+#define LOCALIZED_ERROR_NOVALUE                "%s не имеет значения" 
+#define LOCALIZED_ERROR_UNEXPECTEDPAREN        "неопределенная ')'" 
+#define LOCALIZED_ERROR_UNEXPECTEDBRACKET      "неопределенная ']'" 
+#define LOCALIZED_ERROR_UNEXPECTEDBRACE        "неопределенная '}'" 
+#define LOCALIZED_ERROR_DONTKNOWHOWTO          "Я не знаю что делать с  %p" 
+#define LOCALIZED_ERROR_NOCATCHTAG             "Не найдена метка для %p" 
+#define LOCALIZED_ERROR_ALREADYDEFINED         "%p уже определена" 
 
+#define LOCALIZED_ERROR_STOPPING               "Остановка..." 
+#define LOCALIZED_ERROR_ALREADYDRIBBLING       "Уже запротоколирован" 
+#define LOCALIZED_ERROR_FILESYSTEM                   "Ошибка файловой системы: %p" 
+#define LOCALIZED_ERROR_FILESYSTEM_CANTOPEN          "Не могу открыть файл" 
+#define LOCALIZED_ERROR_FILESYSTEM_CANTOPEN2         "Невозможно открыть файл: %t" 
+#define LOCALIZED_ERROR_FILESYSTEM_ALREADYOPEN       "Файл уже открыт" 
+#define LOCALIZED_ERROR_FILESYSTEM_NOTOPEN           "Файл не открыт" 
+#define LOCALIZED_ERROR_FILESYSTEM_CANTCREATEEDITOR  "Не могу создать редактируемый файл"
+#define LOCALIZED_ERROR_FILESYSTEM_CANTSTARTEDITOR   "Не могу запустить редактор"  
+#define LOCALIZED_ERROR_FILESYSTEM_CANTREADEDITOR    "Не могу прочитать редактируемый файл" 
+#define LOCALIZED_ERROR_IFWARNING              "Возможно вы имели ввиду ЕСЛИИНАЧЕ, а не ЕСЛИ" 
+#define LOCALIZED_ERROR_SHADOWWARNING          "%p затенена локально в вызове процедуры" 
+#define LOCALIZED_ERROR_USER                   "Перемести \"Ошибка" 
+#define LOCALIZED_ERROR_ISPRIMITIVE            "%p базисная" 
+#define LOCALIZED_ERROR_TONOTINSIDE            "Не могу использовать ЭТО внутри процедуры" 
+#define LOCALIZED_ERROR_ATTOPLEVEL             "Можно использовать %p только внутри процедуры" 
+#define LOCALIZED_ERROR_ATTOPLEVEL2            "Вы должны находиться внутри процедуры, чтобы использовать ВЫВОД или СТОП" 
+#define LOCALIZED_ERROR_NOTEST                 "%p без ТЕСТ" 
+#define LOCALIZED_ERROR_BADMACROOUTPUT         "Результат макроса %s вместо списка" 
+#define LOCALIZED_ERROR_DEEPEND                "КОНЕЦ внутри мульти-строковой инструкции" 
+#define LOCALIZED_ERROR_DEEPENDIN              "КОНЕЦ внутри мульти-строковой инструкции в %p" 
+#define LOCALIZED_ERROR_UNKNOWN                "Неизвестное ошибочное условие - внутренняя ошибка." 
+
+#define LOCALIZED_PAUSING                      "Пауза..." 
 
 //
 // Error messages displayed in Message Boxes.
 //
-#define LOCALIZED_ERROR                      "Error" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_BADINPUT             "Bad input" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_BADINPUTNOTPAIRED    "Input is not paired" // NOT_YET_LOCALIZED
-
-#define LOCALIZED_ERROR_CANTOPENPORT         "Could not open port" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_CANTCLOSEPORT        "Could not close port" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_CANTFLUSHPORT        "Could not flush port" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_CANTDCBONPORT        "Could not build dcb on port" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_CANTSETPORT          "Could not set port" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_PORTALREADYOPEN      "Port is already open" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_PORTNOTOPEN          "Port is not open" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_FIRSTINPUTNOTANARRY  "First input must be an array" // NOT_YET_LOCALIZED
-
-#define LOCALIZED_ERROR_WINDOWALREADYEXISTS   "%s already exists" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_WINDOWDOESNOTEXIST    "%s does not exist" // NOT_YET_LOCALIZED
-
-#define LOCALIZED_ERROR_DLLNOTLOADED          "DLL is not loaded" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_DLLLOADFAILED         "DLL load failed" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_DLLINVALIDDATATYPE    "Invalid data type input" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_DLLINVALIDOUTPUTTYPE  "Invalid output type" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_DLLFUNCTIONNOTFOUND   "Function not found" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_DLLTYPEDATANOTPAIRED  "Not all Type/Data inputs are paired" // NOT_YET_LOCALIZED
-
-#define LOCALIZED_ERROR_NETWORK               "Network Error" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_NETWORKRECEIVE        "Network Receive Error" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_NETWORKSEND           "Network Send Error" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_NETWORKSHUTDOWN       "Unexpected Error, Network may be shutdown" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_NETWORKNOTSTARTED     "Not started" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_NETWORKALREADYSTARTED "Already started" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_NETWORKALREADYON      "Already on" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_NETWORKALREADYOFF     "Already off" // NOT_YET_LOCALIZED
+#define LOCALIZED_ERROR                      "Ошибка" 
+#define LOCALIZED_ERROR_BADINPUT             "Неверный аргумент" 
+#define LOCALIZED_ERROR_BADINPUTNOTPAIRED    "Аргументы не сочетаются" 
+#define LOCALIZED_ERROR_CANTOPENPORT         "Невозможно открыть порт" 
+#define LOCALIZED_ERROR_CANTCLOSEPORT        "Невозможно закрыть порт" 
+#define LOCALIZED_ERROR_CANTFLUSHPORT        "Невозможно сбросить порт"                                                                                                                           
+#define LOCALIZED_ERROR_CANTDCBONPORT        "Невозможно настроить структуру dcb на порту" 
+#define LOCALIZED_ERROR_CANTSETPORT          "Невозможно установить порт" 
+#define LOCALIZED_ERROR_PORTALREADYOPEN      "Порт уже открыт" 
+#define LOCALIZED_ERROR_PORTNOTOPEN          "Порт не открыт" 
+#define LOCALIZED_ERROR_FIRSTINPUTNOTANARRY  "Первый аргумент должен быть массивом" 
+#define LOCALIZED_ERROR_WINDOWALREADYEXISTS   "%s уже существует" 
+#define LOCALIZED_ERROR_WINDOWDOESNOTEXIST    "%s не существует" 
+#define LOCALIZED_ERROR_DLLNOTLOADED          "DLL не загружена" 
+#define LOCALIZED_ERROR_DLLLOADFAILED         "DLL загружен неудачно" 
+#define LOCALIZED_ERROR_DLLINVALIDDATATYPE    "Недопустимый тип данных аргумента" 
+#define LOCALIZED_ERROR_DLLINVALIDOUTPUTTYPE  "Недопустимый тип данных результата" 
+#define LOCALIZED_ERROR_DLLFUNCTIONNOTFOUND   "Функция не найдена" 
+#define LOCALIZED_ERROR_DLLTYPEDATANOTPAIRED  "Не все типы/Данные аргументов соединены" 
+#define LOCALIZED_ERROR_NETWORK               "Ошибка сети" 
+#define LOCALIZED_ERROR_NETWORKRECEIVE        "Ошибка загрузки данных" 
+#define LOCALIZED_ERROR_NETWORKSEND           "Ошибка передачи данных" 
+#define LOCALIZED_ERROR_NETWORKSHUTDOWN       "Неизвестная ошибка, Сеть может быть недоступна" 
+#define LOCALIZED_ERROR_NETWORKNOTSTARTED     "Не запущена" 
+#define LOCALIZED_ERROR_NETWORKALREADYSTARTED "Уже запущена" 
+#define LOCALIZED_ERROR_NETWORKALREADYON      "Уже включено" 
+#define LOCALIZED_ERROR_NETWORKALREADYOFF     "Уже выключено" 
 
 // The rest of the network errors shouldn't really be seen -- may be okay not to localize
-#define LOCALIZED_ERROR_NETWORKNAMETOOLONG         "Name too long" // NOT_YET_LOCALIZED
+#define LOCALIZED_ERROR_NETWORKNAMETOOLONG         "Слишком длинное имя" 
 #define LOCALIZED_ERROR_NETWORKNOTINITIALIZED      "Not initialized" // NOT_YET_LOCALIZED
 #define LOCALIZED_ERROR_NETWORKSYSTEMNOTREADY      "System not ready" // NOT_YET_LOCALIZED
 #define LOCALIZED_ERROR_NETWORKVERSIONNOTSUPPORTED "Version is not supported" // NOT_YET_LOCALIZED
@@ -1066,91 +1055,77 @@
 #define LOCALIZED_ERROR_NETWORKUNREACHABLE         "No path to remote host was found" // NOT_YET_LOCALIZED
 #define LOCALIZED_ERROR_NETWORKTOOMANYREFS         "Too many references" // NOT_YET_LOCALIZED
 
-#define LOCALIZED_ERROR_POLYSTART               "PolyStart Error" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_POLYSTARTALREADYSTARTED "You already have a Polygon started" // NOT_YET_LOCALIZED
+#define LOCALIZED_ERROR_POLYSTART               "Ошибка НАЧМНОГОУГ" 
+#define LOCALIZED_ERROR_POLYSTARTALREADYSTARTED "Многоугольник уже начат" 
 
-#define LOCALIZED_ERROR_POLYEND                 "PolyEnd Error" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_POLYENDNOTSTARTED       "You have not started a Polygon" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_POLYENDNEED3VECTORS     "You must have at least 3 vectors to define a polygon" // NOT_YET_LOCALIZED
+#define LOCALIZED_ERROR_POLYEND                 "Ошибка КОНМНОГОУГ" 
+#define LOCALIZED_ERROR_POLYENDNOTSTARTED       "Многоугольник не начат" 
+#define LOCALIZED_ERROR_POLYENDNEED3VECTORS     "Должно быть по крайней мере 3 вектора, чтобы определить многоугольник" 
+#define LOCALIZED_ERROR_SOUND                 "Ошибка звука" 
+#define LOCALIZED_ERROR_MIDI                  "Ошибка MIDI" 
+#define LOCALIZED_ERROR_MIDIINVALIDDEVICE     "Недопустимое MIDI устройство" 
+#define LOCALIZED_ERROR_MIDIALREADYOPEN       "Уже открыто" 
+#define LOCALIZED_ERROR_MIDINOTOPEN           "Не открыто" 
 
-#define LOCALIZED_ERROR_SOUND                 "Sound Error" // NOT_YET_LOCALIZED
-
-#define LOCALIZED_ERROR_MIDI                  "MIDI Error" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_MIDIINVALIDDEVICE     "Invalid MIDI device" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_MIDIALREADYOPEN       "Already open" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_MIDINOTOPEN           "Not open" // NOT_YET_LOCALIZED
-
-#define LOCALIZED_ERROR_CLIPBOARDISEMPTY      "No Text in Clipboard" // NOT_YET_LOCALIZED
-
-#define LOCALIZED_ERROR_MCI                   "MCI Error" // NOT_YET_LOCALIZED
-
-#define LOCALIZED_ERROR_TIMERNOTFOUND         "Timer not found" // NOT_YET_LOCALIZED
-
-#define LOCALIZED_ERROR_HHCTRLNOTLOADED       "Online help is unavailable because hhctrl.ocx could not be loaded."  // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_HHCTRLATOMNOTFOUND    "Online help is unavailable because hhctrl.ocx does not contain ATOM_HTMLHELP_API_ANSI."  // NOT_YET_LOCALIZED
-
-#define LOCALIZED_ERROR_BADCOMMANDLINE        "Invalid Command Line"  // NOT_YET_LOCALIZED
-
-#define LOCALIZED_ERROR_TMPNOTDEFINED         "The environment variable TMP is not defined or invalid.\n"LOCALIZED_GENERAL_PRODUCTNAME" will attempt to use C:\\ for storing temporary files" // NOT_YET_LOCALIZED
-
-#define LOCALIZED_ERROR_GIFSAVEFAILED         "Problem Generating GIF, check memory and diskspace" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_GIFREADFAILED         "Problem Reading GIF, check memory and diskspace" // NOT_YET_LOCALIZED
-
-#define LOCALIZED_ERROR_BITMAPINDEXOUTOFRANGE  "BitMap Index out of range" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_BITMAPCUTFAILED        "Cut failed, Possibly not enough Memory" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_BITMAPFITFAILED        "Fit failed, Possibly not enough Memory" // NOT_YET_LOCALIZED
-
-#define LOCALIZED_ERROR_BITMAPNOTHINGTOPASTE    "Nothing to Paste"  // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_BITMAPINDEXISNOTBITMAP  "BitMap at Index must be initialized with a bitmap"  // NOT_YET_LOCALIZED
-
-#define LOCALIZED_ERROR_BADTURTLEID             "Bad Turtle Id" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_TURTLEHASNOPICTURE      "Turtle %d has no picture, will Halt" // NOT_YET_LOCALIZED
-
-#define LOCALIZED_ERROR_FONTNOTFOUND            "Sorry, no font named %s was found.  Choose one of the following:\n" // NOT_YET_LOCALIZED
-
-#define LOCALIZED_ERROR_PRINTERCANTSCALE        "Print driver does not support this function"  // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_CANTDRAWIMAGE           "Cannot draw image" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_CANTEXTRACTIMAGE        "Cannot extract image" // NOT_YET_LOCALIZED
-#define LOCALIZED_ERROR_SUBCODE                 "Sub Code" // NOT_YET_LOCALIZED
+#define LOCALIZED_ERROR_CLIPBOARDISEMPTY      "В буфере нет текста" 
+#define LOCALIZED_ERROR_MCI                   "Ошибка МКИ" 
+#define LOCALIZED_ERROR_TIMERTOOMANY          "Слишком много таймеров" 
+#define LOCALIZED_ERROR_TIMERBADID            "Неправильный идентификатор таймера" 
+#define LOCALIZED_ERROR_TIMERNOTFOUND         "Таймер не найден" 
+#define LOCALIZED_ERROR_HHCTRLNOTLOADED       "Онлайн-помощь недоступна, т.к. hhctrl.ocx не может быть загружена." 
+#define LOCALIZED_ERROR_HHCTRLATOMNOTFOUND    "Онлайн-помощь недоступна, т.к. hhctrl.ocx не содержит ATOM_HTMLHELP_API_ANSI."
+#define LOCALIZED_ERROR_BADCOMMANDLINE        "Ошибка командной строки"  
+#define LOCALIZED_ERROR_TMPNOTDEFINED         "Переменная среды TMP не определена или не допустима.\n"LOCALIZED_GENERAL_PRODUCTNAME" будет использовать C: \\для хранения временных файлов" 
+#define LOCALIZED_ERROR_GIFSAVEFAILED         "Проблема создания GIF, проверьте память и дисковое пространство" 
+#define LOCALIZED_ERROR_GIFREADFAILED         "Проблема чтения GIF, проверьте память и дисковое пространство" 
+#define LOCALIZED_ERROR_BITMAPINDEXOUTOFRANGE  "Растровый индекс вне диапазона" 
+#define LOCALIZED_ERROR_BITMAPCUTFAILED        "Операция Вырезать не удалась, возможно нехватает памяти" 
+#define LOCALIZED_ERROR_BITMAPFITFAILED        "Операция Вырезать не удалась, возможно нехватает памяти" 
+#define LOCALIZED_ERROR_BITMAPNOTHINGTOPASTE    "Нечего вставить" 
+#define LOCALIZED_ERROR_BITMAPINDEXISNOTBITMAP  "Растровый индекс должен калиброваться с битовым массивом" 
+#define LOCALIZED_ERROR_BADTURTLEID             "Неверный идентификатор тортилы" 
+#define LOCALIZED_ERROR_TURTLEHASNOPICTURE      "Для тортилы %d нет рисунка, остановиться" 
+#define LOCALIZED_ERROR_FONTNOTFOUND            "\nК сожалению, шрифт по имени %s, не найден. Выберите один из следующих:\n" 
+#define LOCALIZED_ERROR_PRINTERCANTSCALE        "Драйвер печати не поддерживает эту функцию"  
+#define LOCALIZED_ERROR_CANTDRAWIMAGE           "Невозможно прорисовать изображение" 
+#define LOCALIZED_ERROR_CANTEXTRACTIMAGE        "Невозможно получить изображение" 
+#define LOCALIZED_ERROR_SUBCODE                 "Дополнительный код" 
 
 //
 // Strings in the dialog box for reading from "stdin"
 //
-#define LOCALIZED_INPUT         "Input:" // NOT_YET_LOCALIZED
-#define LOCALIZED_PROMPT_TO     "To Mode (Cancel to End)" // NOT_YET_LOCALIZED
-#define LOCALIZED_PROMPT_LIST   "List Mode (Cancel to Halt)" // NOT_YET_LOCALIZED
-#define LOCALIZED_PROMPT_PAUSE  "Pause Mode (Cancel to Continue)" // NOT_YET_LOCALIZED
-#define LOCALIZED_PROMPT_INPUT  "Input Mode (Cancel to Halt)" // NOT_YET_LOCALIZED
+#define LOCALIZED_INPUT         "Ввод:" 
+#define LOCALIZED_PROMPT_TO     "Это (Отмена для окончания)" 
+#define LOCALIZED_PROMPT_LIST   "Список (Отмена для останова)" 
+#define LOCALIZED_PROMPT_INPUT  "Ввод (Отмена для останова)" 
 
 //
 // Messages shown by the FILE API.
 //
-#define LOCALIZED_FILE_CHDIRSUCCEEDED      "Changed to \"%s\"" // NOT_YET_LOCALIZED
-#define LOCALIZED_FILE_CHDIRFAILED         "Could not chdir to directory \"%s\"" // NOT_YET_LOCALIZED
-#define LOCALIZED_FILE_POPPEDTO            "Popped to \"%s\"" // NOT_YET_LOCALIZED
-#define LOCALIZED_FILE_MKDIRSUCCEEDED      "Now in newly created directory \"%s\""  // NOT_YET_LOCALIZED
-#define LOCALIZED_FILE_MKDIRFAILED         "Failed to create directory \"%s\""  // NOT_YET_LOCALIZED
-#define LOCALIZED_FILE_RMDIRSUCCEEDED      "Removed directory \"%s\""  // NOT_YET_LOCALIZED
-#define LOCALIZED_FILE_RMDIRFAILED         "Failed to remove directory \"%s\""  // NOT_YET_LOCALIZED
-#define LOCALIZED_FILE_RMDIRFAILEDNOEXIST  "The directory does not exist." // NOT_YET_LOCALIZED
-#define LOCALIZED_FILE_RMDIRFAILEDNOTEMPTY "Make sure the directory is empty before trying to remove it." // NOT_YET_LOCALIZED
-
+#define LOCALIZED_FILE_CHDIRSUCCEEDED      "Измененный на \"%s\"" 
+#define LOCALIZED_FILE_CHDIRFAILED         "Невозможно измпап на папку \"%s\"" 
+#define LOCALIZED_FILE_POPPEDTO            "Выше к \"%s\"" 
+#define LOCALIZED_FILE_MKDIRSUCCEEDED      "Теперь во вновь созданной папке \"%s\""  
+#define LOCALIZED_FILE_MKDIRFAILED         "Невозможно создать папку \"%s\""  
+#define LOCALIZED_FILE_RMDIRSUCCEEDED      "Перемещена папка \"%s\""  
+#define LOCALIZED_FILE_RMDIRFAILED         "Не удалась операция перемещения папки \"%s\""  
+#define LOCALIZED_FILE_RMDIRFAILEDNOEXIST  "Такой папки не существует." 
+#define LOCALIZED_FILE_RMDIRFAILEDNOTEMPTY "Убедитесь в том, что директория пуста перед её перемещением." 
 
 //
 // The default title of a Logo picture when it is printed
 //
-#define LOCALIZED_BITMAPPRINTOUTTITLE       "Logo Picture" // NOT_YET_LOCALIZED
+#define LOCALIZED_BITMAPPRINTOUTTITLE       "Лого-рисунок" 
 
 //
 // Other strings
 //
-#define LOCALIZED_ACTIVEAREA    "Active Area" // NOT_YET_LOCALIZED
-#define LOCALIZED_INFORMATION   "Information" // NOT_YET_LOCALIZED
-#define LOCALIZED_WARNING       "Warning" // NOT_YET_LOCALIZED
-#define LOCALIZED_UNTITLED      "Untitled" // NOT_YET_LOCALIZED
-#define LOCALIZED_UNKNOWN       "Unknown" // NOT_YET_LOCALIZED
-
-#define LOCALIZED_UNBOUND       "Unbound" // NOT_YET_LOCALIZED
+#define LOCALIZED_ACTIVEAREA    "Активная область" 
+#define LOCALIZED_INFORMATION   "Информация" 
+#define LOCALIZED_WARNING       "Предупреждение" 
+#define LOCALIZED_UNTITLED      "Без заголовка" 
+#define LOCALIZED_UNKNOWN       "Неизвестно" 
+#define LOCALIZED_UNBOUND       "Неограниченно" 
 
 //
 // Strings that explain the purpose of each menu option.
@@ -1212,174 +1187,175 @@
 //
 // The text that's displayed when the Editor's Search->Find fails.
 //
-#define LOCALIZED_STRINGTABLE_CANNOTFINDSTRING "Cannot find %s" // NOT_YET_LOCALIZED
-
+#define LOCALIZED_STRINGTABLE_CANNOTFINDSTRING "%s не найден" 
 
 //
 // The words that describe color vectors.
 // These words were selected from a de facto HTML standard, so you may
 // be able to find translations for the entire set on the Web.
 //
-#define LOCALIZED_COLOR_ALICEBLUE             "AliceBlue" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_ANTIQUEWHITE          "AntiqueWhite" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_AQUA                  "Aqua" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_AQUAMARINE            "Aquamarine" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_AZURE                 "Azure" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_BEIGE                 "Beige" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_BISQUE                "Bisque" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_BLACK                 "Black" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_BLANCHEDALMOND        "BlanchedAlmond" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_BLUE                  "Blue" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_BLUEVIOLET            "BlueViolet" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_BROWN                 "Brown" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_BURLYWOOD             "BurlyWood" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_CADETBLUE             "CadetBlue" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_CHARTREUSE            "Chartreuse" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_CHOCOLATE             "Chocolate" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_CORAL                 "Coral" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_CORNFLOWERBLUE        "CornflowerBlue" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_CORNSILK              "Cornsilk" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_CRIMSON               "Crimson" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_CYAN                  "Cyan" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_DARKBLUE              "DarkBlue" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_DARKCYAN              "DarkCyan" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_DARKGOLDENROD         "DarkGoldenRod" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_DARKGRAY              "DarkGray" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_DARKGREEN             "DarkGreen" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_DARKGREY              "DarkGrey" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_DARKKHAKI             "DarkKhaki" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_DARKMAGENTA           "DarkMagenta" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_DARKOLIVEGREEN        "DarkOliveGreen" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_DARKORANGE            "DarkOrange" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_DARKORCHID            "DarkOrchid" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_DARKRED               "DarkRed" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_DARKSALMON            "DarkSalmon" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_DARKSEAGREEN          "DarkSeaGreen" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_DARKSLATEBLUE         "DarkSlateBlue" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_DARKSLATEGRAY         "DarkSlateGray" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_DARKSLATEGREY         "DarkSlateGrey" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_DARKTURQUOISE         "DarkTurquoise" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_DARKVIOLET            "DarkViolet" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_DEEPPINK              "DeepPink" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_DEEPSKYBLUE           "DeepSkyBlue" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_DIMGRAY               "DimGray" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_DIMGREY               "DimGrey" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_DODGERBLUE            "DodgerBlue" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_FIREBRICK             "FireBrick" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_FLORALWHITE           "FloralWhite" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_FORESTGREEN           "ForestGreen" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_FUCHSIA               "Fuchsia" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_GAINSBORO             "Gainsboro" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_GHOSTWHITE            "GhostWhite" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_GOLD                  "Gold" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_GOLDENROD             "GoldenRod" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_GRAY                  "Gray" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_GREEN                 "Green" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_GREENYELLOW           "GreenYellow" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_GREY                  "Grey" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_HONEYDEW              "HoneyDew" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_HOTPINK               "HotPink" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_INDIANRED             "IndianRed" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_INDIGO                "Indigo" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_IVORY                 "Ivory" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_KHAKI                 "Khaki" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_LAVENDER              "Lavender" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_LAVENDERBLUSH         "LavenderBlush" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_LAWNGREEN             "LawnGreen" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_LEMONCHIFFON          "LemonChiffon" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_LIGHTBLUE             "LightBlue" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_LIGHTCORAL            "LightCoral" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_LIGHTCYAN             "LightCyan" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_LIGHTGOLDENRODYELLOW  "LightGoldenRodYellow" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_LIGHTGRAY             "LightGray" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_LIGHTGREEN            "LightGreen" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_LIGHTGREY             "LightGrey" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_LIGHTPINK             "LightPink" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_LIGHTSALMON           "LightSalmon" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_LIGHTSEAGREEN         "LightSeaGreen" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_LIGHTSKYBLUE          "LightSkyBlue" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_LIGHTSLATEGRAY        "LightSlateGray" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_LIGHTSLATEGREY        "LightSlateGrey" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_LIGHTSTEELBLUE        "LightSteelBlue" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_LIGHTYELLOW           "LightYellow" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_LIME                  "Lime" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_LIMEGREEN             "LimeGreen" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_LINEN                 "Linen" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_MAGENTA               "Magenta" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_MAROON                "Maroon" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_MEDIUMAQUAMARINE      "MediumAquaMarine" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_MEDIUMBLUE            "MediumBlue" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_MEDIUMORCHID          "MediumOrchid" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_MEDIUMPURPLE          "MediumPurple" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_MEDIUMSEAGREEN        "MediumSeaGreen" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_MEDIUMSLATEBLUE       "MediumSlateBlue" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_MEDIUMSPRINGGREEN     "MediumSpringGreen" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_MEDIUMTURQUOISE       "MediumTurquoise" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_MEDIUMVIOLETRED       "MediumVioletRed" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_MIDNIGHTBLUE          "MidnightBlue" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_MINTCREAM             "MintCream" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_MISTYROSE             "MistyRose" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_MOCCASIN              "Moccasin" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_NAVAJOWHITE           "NavajoWhite" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_NAVY                  "Navy" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_OLDLACE               "OldLace" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_OLIVE                 "Olive" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_OLIVEDRAB             "OliveDrab" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_ORANGE                "Orange" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_ORANGERED             "OrangeRed" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_ORCHID                "Orchid" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_PALEGOLDENROD         "PaleGoldenRod" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_PALEGREEN             "PaleGreen" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_PALETURQUOISE         "PaleTurquoise" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_PALEVIOLETRED         "PaleVioletRed" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_PAPAYAWHIP            "PapayaWhip" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_PEACHPUFF             "PeachPuff" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_PERU                  "Peru" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_PINK                  "Pink" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_PLUM                  "Plum" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_POWDERBLUE            "PowderBlue" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_PURPLE                "Purple" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_RED                   "Red" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_ROSYBROWN             "RosyBrown" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_ROYALBLUE             "RoyalBlue" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_SADDLEBROWN           "SaddleBrown" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_SALMON                "Salmon" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_SANDYBROWN            "SandyBrown" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_SEAGREEN              "SeaGreen" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_SEASHELL              "SeaShell" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_SIENNA                "Sienna" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_SILVER                "Silver" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_SKYBLUE               "SkyBlue" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_SLATEBLUE             "SlateBlue" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_SLATEGRAY             "SlateGray" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_SLATEGREY             "SlateGrey" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_SNOW                  "Snow" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_SPRINGGREEN           "SpringGreen" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_STEELBLUE             "SteelBlue" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_TAN                   "Tan" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_TEAL                  "Teal" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_THISTLE               "Thistle" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_TOMATO                "Tomato" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_TURQUOISE             "Turquoise" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_VIOLET                "Violet" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_WHEAT                 "Wheat" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_WHITE                 "White" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_WHITESMOKE            "WhiteSmoke" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_YELLOW                "Yellow" // NOT_YET_LOCALIZED
-#define LOCALIZED_COLOR_YELLOWGREEN           "YellowGreen" // NOT_YET_LOCALIZED
+#define LOCALIZED_COLOR_ALICEBLUE             "серебристо-голубой" 
+#define LOCALIZED_COLOR_ANTIQUEWHITE          "белый_антик" 
+#define LOCALIZED_COLOR_AQUA                  "аква" 
+#define LOCALIZED_COLOR_AQUAMARINE            "аквамарин" 
+#define LOCALIZED_COLOR_AZURE                 "лазурный" 
+#define LOCALIZED_COLOR_BEIGE                 "бежевый" 
+#define LOCALIZED_COLOR_BISQUE                "кремовый" 
+#define LOCALIZED_COLOR_BLACK                 "Черный" 
+#define LOCALIZED_COLOR_BLANCHEDALMOND        "бланшминдальный" 
+#define LOCALIZED_COLOR_BLUE                  "синий" 
+#define LOCALIZED_COLOR_BLUEVIOLET            "фиолетово-голубой" 
+#define LOCALIZED_COLOR_BROWN                 "коричневый" 
+#define LOCALIZED_COLOR_BURLYWOOD             "желтый_легкий" 
+#define LOCALIZED_COLOR_CADETBLUE             "голубой_кадет" 
+#define LOCALIZED_COLOR_CHARTREUSE            "шартрез" 
+#define LOCALIZED_COLOR_CHOCOLATE             "шоколадный" 
+#define LOCALIZED_COLOR_CORAL                 "коралл" 
+#define LOCALIZED_COLOR_CORNFLOWERBLUE        "василек" 
+#define LOCALIZED_COLOR_CORNSILK              "шелковистый" 
+#define LOCALIZED_COLOR_CRIMSON               "малиновый" 
+#define LOCALIZED_COLOR_CYAN                  "голубой" 
+#define LOCALIZED_COLOR_DARKBLUE              "темно-синий" 
+#define LOCALIZED_COLOR_DARKCYAN              "темно-голубой" 
+#define LOCALIZED_COLOR_DARKGOLDENROD         "темно-золотистокрасный" 
+#define LOCALIZED_COLOR_DARKGRAY              "темно-серый" 
+#define LOCALIZED_COLOR_DARKGREEN             "темно-зеленый" 
+#define LOCALIZED_COLOR_DARKGREY              "темно-серый" 
+#define LOCALIZED_COLOR_DARKKHAKI             "хаки_темный" 
+#define LOCALIZED_COLOR_DARKMAGENTA           "темно-сиреневый" 
+#define LOCALIZED_COLOR_DARKOLIVEGREEN        "темно-оливкогозеленый" 
+#define LOCALIZED_COLOR_DARKORANGE            "темно-оранжевый" 
+#define LOCALIZED_COLOR_DARKORCHID            "темно-лиловый" 
+#define LOCALIZED_COLOR_DARKRED               "темно-красный" 
+#define LOCALIZED_COLOR_DARKSALMON            "темно-оранжеворозовый" 
+#define LOCALIZED_COLOR_DARKSEAGREEN          "морской_волны_темный" 
+#define LOCALIZED_COLOR_DARKSLATEBLUE         "темно-голубоватосерый" 
+#define LOCALIZED_COLOR_DARKSLATEGRAY         "темно-синеватоватосерый" 
+#define LOCALIZED_COLOR_DARKSLATEGREY         "темно-синеватоватосерый" 
+#define LOCALIZED_COLOR_DARKTURQUOISE         "темно-бирюзовый" 
+#define LOCALIZED_COLOR_DARKVIOLET            "темно-фиолетовый" 
+#define LOCALIZED_COLOR_DEEPPINK              "темно-розовый" 
+#define LOCALIZED_COLOR_DEEPSKYBLUE           "темно-небесносиний" 
+#define LOCALIZED_COLOR_DIMGRAY               "тускло-серый" 
+#define LOCALIZED_COLOR_DIMGREY               "тускло-серый" 
+#define LOCALIZED_COLOR_DODGERBLUE            "тускло-васильковый" 
+#define LOCALIZED_COLOR_FIREBRICK             "кирпичный" 
+#define LOCALIZED_COLOR_FLORALWHITE           "цветочно-белый" 
+#define LOCALIZED_COLOR_FORESTGREEN           "лесной_зелени" 
+#define LOCALIZED_COLOR_FUCHSIA               "фуксия 
+#define LOCALIZED_COLOR_GAINSBORO             "гейнсборо" 
+#define LOCALIZED_COLOR_GHOSTWHITE            "туманно-белый" 
+#define LOCALIZED_COLOR_GOLD                  "золотой" 
+#define LOCALIZED_COLOR_GOLDENROD             "красно-золотой" 
+#define LOCALIZED_COLOR_GRAY                  "серый" 
+#define LOCALIZED_COLOR_GREEN                 "Зелёный" 
+#define LOCALIZED_COLOR_GREENYELLOW           "желто-зеленый" 
+#define LOCALIZED_COLOR_GREY                  "серый" 
+#define LOCALIZED_COLOR_HONEYDEW              "желто-оранжевый" 
+#define LOCALIZED_COLOR_HOTPINK               "ярко-розовый 
+#define LOCALIZED_COLOR_INDIANRED             "ярко-красный" 
+#define LOCALIZED_COLOR_INDIGO                "индиго" 
+#define LOCALIZED_COLOR_IVORY                 "слоновой_кости" 
+#define LOCALIZED_COLOR_KHAKI                 "хаки" 
+#define LOCALIZED_COLOR_LAVENDER              "лавандовый" 
+#define LOCALIZED_COLOR_LAVENDERBLUSH         "красновато-лавандовый" 
+#define LOCALIZED_COLOR_LAWNGREEN             "зеленой_лужайки" 
+#define LOCALIZED_COLOR_LEMONCHIFFON          "лимонный" 
+#define LOCALIZED_COLOR_LIGHTBLUE             "светло-синий" 
+#define LOCALIZED_COLOR_LIGHTCORAL            "светло-коралловый" 
+#define LOCALIZED_COLOR_LIGHTCYAN             "светло-голубой" 
+#define LOCALIZED_COLOR_LIGHTGOLDENRODYELLOW  "светло-жетлтокраснозолотой" 
+#define LOCALIZED_COLOR_LIGHTGRAY             "светло-серый" 
+#define LOCALIZED_COLOR_LIGHTGREEN            "светло-зеленый" 
+#define LOCALIZED_COLOR_LIGHTGREY             "светло-серый" 
+#define LOCALIZED_COLOR_LIGHTPINK             "светло-розовый" 
+#define LOCALIZED_COLOR_LIGHTSALMON           "светло-оранжеворозовый" 
+#define LOCALIZED_COLOR_LIGHTSEAGREEN         "морской_волны_светлый" 
+#define LOCALIZED_COLOR_LIGHTSKYBLUE          "светло-небесносиний" 
+#define LOCALIZED_COLOR_LIGHTSLATEGRAY        "светло-синеватоватосерый" 
+#define LOCALIZED_COLOR_LIGHTSLATEGREY        "светло-синеватоватосерый" 
+#define LOCALIZED_COLOR_LIGHTSTEELBLUE        "светло-стальной" 
+#define LOCALIZED_COLOR_LIGHTYELLOW           "светло-желтый" 
+#define LOCALIZED_COLOR_LIME                  "липовый" 
+#define LOCALIZED_COLOR_LIMEGREEN             "зеленая_липа" 
+#define LOCALIZED_COLOR_LINEN                 "льняной" 
+#define LOCALIZED_COLOR_MAGENTA               "сиреневый" 
+#define LOCALIZED_COLOR_MAROON                "каштановый" 
+#define LOCALIZED_COLOR_MEDIUMAQUAMARINE      "умеренно-аквамариновый" 
+#define LOCALIZED_COLOR_MEDIUMBLUE            "умеренно-синий" 
+#define LOCALIZED_COLOR_MEDIUMORCHID          "умеренно-темнолиловый" 
+#define LOCALIZED_COLOR_MEDIUMPURPLE          "умеренно-пурпурный" 
+#define LOCALIZED_COLOR_MEDIUMSEAGREEN        "морской_волны_умеренный" 
+#define LOCALIZED_COLOR_MEDIUMSLATEBLUE       "умеренно-голубоватосерый" 
+#define LOCALIZED_COLOR_MEDIUMSPRINGGREEN     "весенней_зелени_умеренный " 
+#define LOCALIZED_COLOR_MEDIUMTURQUOISE       "умеренно-бирюзовый" 
+#define LOCALIZED_COLOR_MEDIUMVIOLETRED       "умеренно-фиолетовокрасный" 
+#define LOCALIZED_COLOR_MIDNIGHTBLUE          "черно-синий" 
+#define LOCALIZED_COLOR_MINTCREAM             "мятно-кремовый" 
+#define LOCALIZED_COLOR_MISTYROSE             "туманно-розовый" 
+#define LOCALIZED_COLOR_MOCCASIN              "болотный" 
+#define LOCALIZED_COLOR_NAVAJOWHITE           "грязно-белый" 
+#define LOCALIZED_COLOR_NAVY                  "морской" 
+#define LOCALIZED_COLOR_OLDLACE               "старое_кружево" 
+#define LOCALIZED_COLOR_OLIVE                 "оливковый" 
+#define LOCALIZED_COLOR_OLIVEDRAB             "тускло-оливковый" 
+#define LOCALIZED_COLOR_ORANGE                "оранжевый" 
+#define LOCALIZED_COLOR_ORANGERED             "красно-оранжевый" 
+#define LOCALIZED_COLOR_ORCHID                "лиловый" 
+#define LOCALIZED_COLOR_PALEGOLDENROD         "бледно-золотой" 
+#define LOCALIZED_COLOR_PALEGREEN             "бледно-зеленый" 
+#define LOCALIZED_COLOR_PALETURQUOISE         "бледно-бирюзовый" 
+#define LOCALIZED_COLOR_PALEVIOLETRED         "бледно-фиолетовокрасный" 
+#define LOCALIZED_COLOR_PAPAYAWHIP            "побег_папайи" 
+#define LOCALIZED_COLOR_PEACHPUFF             "персиковый" 
+#define LOCALIZED_COLOR_PERU                  "светло-коричневый" 
+#define LOCALIZED_COLOR_PINK                  "Розовый" 
+#define LOCALIZED_COLOR_PLUM                  "сливовый" 
+#define LOCALIZED_COLOR_POWDERBLUE            "туманно-синий" 
+#define LOCALIZED_COLOR_PURPLE                "пурпурный" 
+#define LOCALIZED_COLOR_RED                   "Красный" 
+#define LOCALIZED_COLOR_ROSYBROWN             "розово-коричневый" 
+#define LOCALIZED_COLOR_ROYALBLUE             "королевский_синий" 
+#define LOCALIZED_COLOR_SADDLEBROWN           "кожаного_седла" 
+#define LOCALIZED_COLOR_SALMON                "оранжево-розовый" 
+#define LOCALIZED_COLOR_SANDYBROWN            "рыжеватый" 
+#define LOCALIZED_COLOR_SEAGREEN              "морской_волны" 
+#define LOCALIZED_COLOR_SEASHELL              "морской_раковины" 
+#define LOCALIZED_COLOR_SIENNA                "охра" 
+#define LOCALIZED_COLOR_SILVER                "серебристый" 
+#define LOCALIZED_COLOR_SKYBLUE               "небесно-синий" 
+#define LOCALIZED_COLOR_SLATEBLUE             "голубовато-серый" 
+#define LOCALIZED_COLOR_SLATEGRAY             "синевато-серый" 
+#define LOCALIZED_COLOR_SLATEGREY             "синевато-серый" 
+#define LOCALIZED_COLOR_SNOW                  "снежный" 
+#define LOCALIZED_COLOR_SPRINGGREEN           "весенней_зелени " 
+#define LOCALIZED_COLOR_STEELBLUE             "синевато-стальной" 
+#define LOCALIZED_COLOR_TAN                   "загар" 
+#define LOCALIZED_COLOR_TEAL                  "зеленовато-голубой" 
+#define LOCALIZED_COLOR_THISTLE               "чертополоха" 
+#define LOCALIZED_COLOR_TOMATO                "томатный" 
+#define LOCALIZED_COLOR_TURQUOISE             "бирюзовый" 
+#define LOCALIZED_COLOR_VIOLET                "фиолетовый" 
+#define LOCALIZED_COLOR_WHEAT                 "пшеничный" 
+#define LOCALIZED_COLOR_WHITE                 "белый" 
+#define LOCALIZED_COLOR_WHITESMOKE            "дымчато-белый" 
+#define LOCALIZED_COLOR_YELLOW                "желтый" 
+#define LOCALIZED_COLOR_YELLOWGREEN           "желто-зеленый" 
+
 
 //
 // The name of each "window class" that DEBUGWINDOWS prints.
 // These should match the cooresponding terms that is used
 // in the  LOCALIZED_ALTERNATE_*CREATE procedures.
 //
-#define LOCALIZED_WINDOWCLASSNAME_WINDOW       "Window" // NOT_YET_LOCALIZED
-#define LOCALIZED_WINDOWCLASSNAME_STATIC       "Static" // NOT_YET_LOCALIZED
-#define LOCALIZED_WINDOWCLASSNAME_LISTBOX      "ListBox" // NOT_YET_LOCALIZED
-#define LOCALIZED_WINDOWCLASSNAME_COMBOBOX     "ComboBox" // NOT_YET_LOCALIZED
-#define LOCALIZED_WINDOWCLASSNAME_BUTTON       "Button" // NOT_YET_LOCALIZED
-#define LOCALIZED_WINDOWCLASSNAME_SCROLLBAR    "ScrollBar" // NOT_YET_LOCALIZED
-#define LOCALIZED_WINDOWCLASSNAME_GROUPBOX     "GroupBox" // NOT_YET_LOCALIZED
-#define LOCALIZED_WINDOWCLASSNAME_RADIOBUTTON  "RadioButton" // NOT_YET_LOCALIZED
-#define LOCALIZED_WINDOWCLASSNAME_CHECKBOX     "CheckBox" // NOT_YET_LOCALIZED
-#define LOCALIZED_WINDOWCLASSNAME_DIALOG       "Dialog" // NOT_YET_LOCALIZED
+#define LOCALIZED_WINDOWCLASSNAME_WINDOW       "Окно" 
+#define LOCALIZED_WINDOWCLASSNAME_STATIC       "Заголовок" 
+#define LOCALIZED_WINDOWCLASSNAME_LISTBOX      "Список_записей" 
+#define LOCALIZED_WINDOWCLASSNAME_COMBOBOX     "Поле" 
+#define LOCALIZED_WINDOWCLASSNAME_BUTTON       "Кнопка" 
+#define LOCALIZED_WINDOWCLASSNAME_SCROLLBAR    "Полоса_прорутки" 
+#define LOCALIZED_WINDOWCLASSNAME_GROUPBOX     "Группа" 
+#define LOCALIZED_WINDOWCLASSNAME_RADIOBUTTON  "Радио_кнопка" 
+#define LOCALIZED_WINDOWCLASSNAME_CHECKBOX     "Переключатель" 
+#define LOCALIZED_WINDOWCLASSNAME_DIALOG       "Диалог" 
+

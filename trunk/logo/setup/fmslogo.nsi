@@ -73,7 +73,7 @@ LangString DesktopShortcut ${LANG_ITALIAN}    "Collegamento sul Desktop"
 LangString DesktopShortcut ${LANG_PORTUGUESE} "Atalho no Desktop"
 LangString DesktopShortcut ${LANG_FRENCH}     "Raccourci Bureau" 
 LangString DesktopShortcut ${LANG_GREEK}      "”хнфьмехуз ≈рйц№нейбт ≈сгбуябт"
-LangString DesktopShortcut ${LANG_RUSSIAN}    "Desktop Shortcut" ; NOT_YET_LOCALIZED
+LangString DesktopShortcut ${LANG_RUSSIAN}    "ярлык рабочего стола" 
 
 LangString StartMenuShortcuts ${LANG_ENGLISH}    "Start Menu Shortcuts"
 LangString StartMenuShortcuts ${LANG_GERMAN}     "Start Menu Shortcuts" ; NOT_YET_LOCALIZED
@@ -82,7 +82,7 @@ LangString StartMenuShortcuts ${LANG_ITALIAN}    "Collegamento nel Menu Start"
 LangString StartMenuShortcuts ${LANG_PORTUGUESE} "Atalho no Menu Iniciar"
 LangString StartMenuShortcuts ${LANG_FRENCH}     "Raccourcis Menu Dйmarrer" 
 LangString StartMenuShortcuts ${LANG_GREEK}      "”хнфпмеэуейт ћенпэ Єнбсоз" 
-LangString StartMenuShortcuts ${LANG_RUSSIAN}    "Start Menu Shortcuts" ; NOT_YET_LOCALIZED
+LangString StartMenuShortcuts ${LANG_RUSSIAN}    "ярлык меню ѕуск" 
 
 
 ; uninstall must be able to remove all traces of any previous installation.
@@ -217,7 +217,7 @@ SetupUser.Done:
   ; Notify the user that the install cannot continue.
   ; We can't use a LangString because those aren't available in .onInit
   StrCmp $LANGUAGE ${LANG_GERMAN} 0 +3
-     MessageBox MB_OK|MB_ICONEXCLAMATION "Either the installer or FMSLogo is currently running.$\nThis installation cannot continue." ; NOT_YET_LOCALIZED
+     MessageBox MB_OK|MB_ICONEXCLAMATION "Either the installer or FMSLogo is currently running.$\nThis installation cannot continue." ; NOT_YET_LOCALIZED 
      Abort
   StrCmp $LANGUAGE ${LANG_SPANISH} 0 +3
      MessageBox MB_OK|MB_ICONEXCLAMATION "Either the installer or FMSLogo is currently running.$\nThis installation cannot continue." ; NOT_YET_LOCALIZED
@@ -235,7 +235,7 @@ SetupUser.Done:
      MessageBox MB_OK|MB_ICONEXCLAMATION "ѕ егкбфбуф№фзт ё з FMSLogo екфелеяфбй ёдз.$\nЅхфё з егкбф№уфбуз де мрпсея нб ухнечйуфея."
      Abort
   StrCmp $LANGUAGE ${LANG_RUSSIAN} 0 +3
-     MessageBox MB_OK|MB_ICONEXCLAMATION "Either the installer or FMSLogo is currently running.$\nThis installation cannot continue." ; NOT_YET_LOCALIZED
+     MessageBox MB_OK|MB_ICONEXCLAMATION "»ли инсталл€тор или FMSLogo в насто€щее врем€ запущены.$\n”становка не может быть продолжена." 
      Abort
   ; default to English
   MessageBox MB_OK|MB_ICONEXCLAMATION "Either the installer or FMSLogo is currently running.$\nThis installation cannot continue."
@@ -271,7 +271,7 @@ checkifinstalled:
   StrCmp $LANGUAGE ${LANG_GREEK} 0 +2
     MessageBox MB_YESNO "‘п хр№счпн бнфягсбцп фзт FMSLogo рсЁрей нб брегкбфбуфбиея рсйн ухнечйуфея бхфё з егкбф№уфбуз.$\n»Ёлефе нб фп егкбфбуфёуефе;$\n$\n(≈рйлЁгпнфбт Љчй з егкбф№уфбуз иб клеяуей.)" IDYES uninstall IDNO abort
   StrCmp $LANGUAGE ${LANG_RUSSIAN} 0 +2
-    MessageBox MB_YESNO "The existing copy of FMSLogo must be uninstalled to continue.$\nDo you want to uninstall it?$\n$\n(Selecting No will abort the installation)" IDYES uninstall IDNO abort ; NOT_YET_LOCALIZED
+    MessageBox MB_YESNO "—уществующа€ копи€ FMSLogo должна быть удалена, чтобы продолжить.$\n¬ы хотите удалить ее?$\n$\n(¬ыбор Ќет прервет установку)" IDYES uninstall IDNO abort 
  ; default to English
  MessageBox MB_YESNO "The existing copy of FMSLogo must be uninstalled to continue.$\nDo you want to uninstall it?$\n$\n(Selecting No will abort the installation)" IDYES uninstall IDNO abort
 
@@ -437,7 +437,7 @@ Function un.onInit
      MessageBox MB_OK|MB_ICONEXCLAMATION "ѕ егкбфбуф№фзт ё з FMSLogo екфелеяфбй ёдз.$\nЅхфё з брегкбф№уфбуз де мрпсея нб ухнечйуфея."
      Abort
   StrCmp $LANGUAGE ${LANG_RUSSIAN} 0 +3
-     MessageBox MB_OK|MB_ICONEXCLAMATION "Either the installer or FMSLogo is currently running.$\nThis uninstallation cannot continue." ; NOT_YET_LOCALIZED
+     MessageBox MB_OK|MB_ICONEXCLAMATION "»ли инсталл€тор или FMSLogo в насто€щее врем€ запущены.$\nн”даление не может быть продолжено."
      Abort
   ; default to English
   MessageBox MB_OK|MB_ICONEXCLAMATION "Either the installer or FMSLogo is currently running.$\nThis uninstallation cannot continue."
@@ -494,7 +494,7 @@ CheckIfInstallExists.ShowError:
      MessageBox MB_OK|MB_ICONEXCLAMATION "Either FMSLogo has already been deleted or you do not have permission to uninstall it.$\nEither way, this uninstallation cannot continue." ; NOT_YET_LOCALIZED
      Abort
   StrCmp $LANGUAGE ${LANG_RUSSIAN} 0 +3
-     MessageBox MB_OK|MB_ICONEXCLAMATION "Either FMSLogo has already been deleted or you do not have permission to uninstall it.$\nEither way, this uninstallation cannot continue." ; NOT_YET_LOCALIZED
+     MessageBox MB_OK|MB_ICONEXCLAMATION "»ли FMSLogo был уже удален, или ¬ы не имеете прав удал€ть ее.$\n¬ любом случае, удаление не может быть продолжено." 
      Abort
   ; default to English
   MessageBox MB_OK|MB_ICONEXCLAMATION "Either FMSLogo has already been deleted or you do not have permission to uninstall it.$\nEither way, this uninstallation cannot continue."

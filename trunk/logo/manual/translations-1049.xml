@@ -2031,6 +2031,10 @@
        <entry>ñóììà</entry>
      </row>
      <row>
+       <entry><link linkend='command-system'>system</link></entry>
+       <entry>ñèñòåìà</entry>
+     </row>
+     <row>
        <entry><link linkend='command-tan'>tan</link></entry>
        <entry>tg</entry>
      </row>
@@ -2073,6 +2077,10 @@
      <row>
        <entry><link linkend='command-tone'>tone</link></entry>
        <entry>òîí</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-toplevel'>toplevel</link></entry>
+       <entry>âåðõíèéóðîâåíü</entry>
      </row>
      <row>
        <entry><link linkend='command-towards'>towards</link></entry>
@@ -2382,6 +2390,10 @@
      <row>
        <entry>âåðñèÿëîãî</entry>
        <entry><link linkend='command-logoversion'>logoversion</link></entry>
+     </row>
+     <row>
+       <entry>âåðõíèéóðîâåíü</entry>
+       <entry><link linkend='command-toplevel'>toplevel</link></entry>
      </row>
      <row>
        <entry>äåë.äî</entry>
@@ -4106,6 +4118,10 @@
      <row>
        <entry>ñèñòâðåìÿ</entry>
        <entry><link linkend='command-timemilli'>timemilli</link></entry>
+     </row>
+     <row>
+       <entry>ñèñòåìà</entry>
+       <entry><link linkend='command-system'>system</link></entry>
      </row>
      <row>
        <entry>ñëó÷àéíûé</entry>
