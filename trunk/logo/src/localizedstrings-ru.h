@@ -878,10 +878,10 @@
 
 #define LOCALIZED_YOUHAVEUNSAVEDCHANGES         "Не растровый рисунок Windows 3.0" 
 #define LOCALIZED_FILENEWWILLERASEWORKSPACE     "Создание нового сотрет все данные из рабочей области.\n\nПродолжить Новый?" 
-#define LOCALIZED_FILELOADMAYOVERWRITEWORKSPACE "Загружаемый файл будет объединен с данными вашей рабочей области\n и, может изменить ваши несохраненные данные. \n\n Продолжить Загрузить?" 
-#define LOCALIZED_FILEOPENWILLERASEWORKSPACE    "Эта операция сотрет все ваши несохраненные данные.\n\n Продолжить Открыть?" 
+#define LOCALIZED_FILELOADMAYOVERWRITEWORKSPACE "Загружаемый файл будет объединен с данными вашей рабочей области\nи, может изменить ваши несохраненные данные.\n\nПродолжить Загрузить?" 
+#define LOCALIZED_FILEOPENWILLERASEWORKSPACE    "Эта операция сотрет все ваши несохраненные данные.\n\nПродолжить Открыть?" 
 
-#define LOCALIZED_EDITORISOPEN                  "Вы знаете, что запущен сеанс редактирования? \n\n Все изменения в этом сеансе редактирования не были сохранены
+#define LOCALIZED_EDITORISOPEN                  "Вы знаете, что запущен сеанс редактирования?\n\nВсе изменения в этом сеансе редактирования не были сохранены"
 
 #define LOCALIZED_ERROR_CANTREADFILE            "Невозможно прочитать файл \"%s\" с диска" 
 #define LOCALIZED_ERROR_CANTWRITEFILE           "Невозможно записать файл \"%s\" на диск" 
@@ -1268,7 +1268,7 @@
 #define LOCALIZED_COLOR_FIREBRICK             "кирпичный" 
 #define LOCALIZED_COLOR_FLORALWHITE           "цветочно-белый" 
 #define LOCALIZED_COLOR_FORESTGREEN           "лесной_зелени" 
-#define LOCALIZED_COLOR_FUCHSIA               "фуксия 
+#define LOCALIZED_COLOR_FUCHSIA               "фуксия"
 #define LOCALIZED_COLOR_GAINSBORO             "гейнсборо" 
 #define LOCALIZED_COLOR_GHOSTWHITE            "туманно-белый" 
 #define LOCALIZED_COLOR_GOLD                  "золотой" 
@@ -1278,7 +1278,7 @@
 #define LOCALIZED_COLOR_GREENYELLOW           "желто-зеленый" 
 #define LOCALIZED_COLOR_GREY                  "серый" 
 #define LOCALIZED_COLOR_HONEYDEW              "желто-оранжевый" 
-#define LOCALIZED_COLOR_HOTPINK               "ярко-розовый 
+#define LOCALIZED_COLOR_HOTPINK               "ярко-розовый"
 #define LOCALIZED_COLOR_INDIANRED             "ярко-красный" 
 #define LOCALIZED_COLOR_INDIGO                "индиго" 
 #define LOCALIZED_COLOR_IVORY                 "слоновой_кости" 
