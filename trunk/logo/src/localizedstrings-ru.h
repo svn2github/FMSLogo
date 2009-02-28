@@ -24,8 +24,6 @@
 // Localization Instructions:
 //
 // This file a C++ header file, so if you are familiar with how C++ works, it
-
-
 // will help.
 //
 // Each localized string is a line that takes the following form:
@@ -150,7 +148,7 @@
 // If you don't know how to translate a particular command, leave it
 // as the English name and it will be ignored.
 //
-#define LOCALIZED_ALTERNATE__DEFMACRO             ".опрмакрос"
+#define LOCALIZED_ALTERNATE__DEFMACRO              ".опрмакрос"
 #define LOCALIZED_ALTERNATE__EQ                    ".равн" 
 #define LOCALIZED_ALTERNATE__MACRO                 ".макрос"
 #define LOCALIZED_ALTERNATE__MAYBEOUTPUT           ".альтвывод" 
@@ -188,11 +186,11 @@
 #define LOCALIZED_ALTERNATE_BITMAPTURTLE           "растртортила" 
 #define LOCALIZED_ALTERNATE_BITMODE                "режимрастра" 
 #define LOCALIZED_ALTERNATE_BITNOT                 "поразрнет" 
-#define LOCALIZED_ALTERNATE_BITOR                  "поразрили" 
-#define LOCALIZED_ALTERNATE_BITPASTE               "растрвставь" 
-#define LOCALIZED_ALTERNATE_BITPASTETOINDEX        "растрвставьпоинд" 
-#define LOCALIZED_ALTERNATE_BITSAVE                "растрсохрани" 
-#define LOCALIZED_ALTERNATE_BITXOR                 "поразрисклили" 
+#define LOCALIZED_ALTERNATE_BITOR                  "поразрили"
+#define LOCALIZED_ALTERNATE_BITPASTE               "растрвставь"
+#define LOCALIZED_ALTERNATE_BITPASTETOINDEX        "растрвставьпоинд"
+#define LOCALIZED_ALTERNATE_BITSAVE                "растрсохрани"
+#define LOCALIZED_ALTERNATE_BITXOR                 "поразрисклили"
 #define LOCALIZED_ALTERNATE_BK                     "нд"
 #define LOCALIZED_ALTERNATE_BL                     "кпо"
 #define LOCALIZED_ALTERNATE_BURIED                 "скрытые" 
@@ -829,6 +827,7 @@
 #define LOCALIZED_SETPENSIZE_CANCEL            LOCALIZED_GENERAL_CANCELBUTTON 
 #define LOCALIZED_SETPENSIZE_APPLY             LOCALIZED_GENERAL_APPLYBUTTON 
 
+
 //
 // Strings on the "About FMSLogo" Dialog box
 //
@@ -841,8 +840,7 @@
 #define LOCALIZED_ABOUTFMS_SPECIALTHANKS       "Благодарим Йегуду Катца (yehuka@softhome.net)\nи Эриха Непйвиртза (erich.neuwirth@univie.ac.at)" 
 #define LOCALIZED_ABOUTFMS_GPL                 LOCALIZED_GENERAL_PRODUCTNAME" распространяется свободно\nСм. лицензию ГНУ" 
 #define LOCALIZED_ABOUTFMS_NEWSGROUP           "Группа новостей в Интернете: comp.lang.logo\nпосетите форум на\nhttp:\x2F/groups.yahoo.com/group/LogoForum/" 
-#define LOCALIZED_ABOUTFMS_MULTIMEDIALOGIC     "Для Изучение внутренних свойств компьютера,\nиспользуйте  MultiMedia Logic от Softronics, Inc.\nАдаптация и локализация на русский язык Баглаева Игоря \n
-Бурятский государственный университет, Улан-Удэ, bii@bsu.ru " 
+#define LOCALIZED_ABOUTFMS_MULTIMEDIALOGIC     "Для Изучение внутренних свойств компьютера,\nиспользуйте  MultiMedia Logic от Softronics, Inc.\nАдаптация и локализация на русский язык Баглаева Игоря\nБурятский государственный университет, Улан-Удэ, bii@bsu.ru"
 #define LOCALIZED_ABOUTFMS_OK                  LOCALIZED_GENERAL_OKBUTTON 
 
 
@@ -872,22 +870,31 @@
 #define LOCALIZED_NOTHALTEDREALLYEXIT        LOCALIZED_GENERAL_PRODUCTNAME" не рекомендуется выходить из программы пока нет останова.\n\nВы действительно хотите выйти  "LOCALIZED_GENERAL_PRODUCTNAME"?" 
 #define LOCALIZED_NOTHALTEDREALLYHALT        LOCALIZED_GENERAL_PRODUCTNAME" не рекомендуется выходить из программы пока нет останова.\n\nВы действительно хотите Останов "LOCALIZED_GENERAL_PRODUCTNAME"?" 
 #define LOCALIZED_LOGOISNOTHALTED            LOCALIZED_GENERAL_PRODUCTNAME" не остановлен" 
+
 #define LOCALIZED_COULDNOTWRITEBMP            "Не могу записать .bmp" 
 #define LOCALIZED_COULDNOTOPENBMP             "Не могу открыть .bmp" 
 #define LOCALIZED_COULDNOTCREATEBMP           "Невозможно создать Windows 3.0 рисунок" 
 #define LOCALIZED_NOTVALIDBMP                 "Не растровый рисунок Windows 3.0" 
+
 #define LOCALIZED_YOUHAVEUNSAVEDCHANGES         "Не растровый рисунок Windows 3.0" 
 #define LOCALIZED_FILENEWWILLERASEWORKSPACE     "Создание нового сотрет все данные из рабочей области.\n\nПродолжить Новый?" 
 #define LOCALIZED_FILELOADMAYOVERWRITEWORKSPACE "Загружаемый файл будет объединен с данными вашей рабочей области\n и, может изменить ваши несохраненные данные. \n\n Продолжить Загрузить?" 
 #define LOCALIZED_FILEOPENWILLERASEWORKSPACE    "Эта операция сотрет все ваши несохраненные данные.\n\n Продолжить Открыть?" 
+
 #define LOCALIZED_EDITORISOPEN                  "Вы знаете, что запущен сеанс редактирования? \n\n Все изменения в этом сеансе редактирования не были сохранены
 
 #define LOCALIZED_ERROR_CANTREADFILE            "Невозможно прочитать файл \"%s\" с диска" 
 #define LOCALIZED_ERROR_CANTWRITEFILE           "Невозможно записать файл \"%s\" на диск" 
+
 #define LOCALIZED_SAVETOWORKSPACE                "Сохраните в рабочую область" 
+#define LOCALIZED_CONTENTSCHANGED                "Contents Changed" // NOT_YET_LOCALIZED
 #define LOCALIZED_SAVECHANGEDCONTENTSTOWORKSPACE "Содержание изменено.\n Хотите вы сохранить изменения в рабочей области?" 
+
+
+
 #define LOCALIZED_CURSORISATLASTGOODDEFINITION  "Обнаружена проблема сохранения  содержания редактора  в рабочую область. Курсор будет помещен за последним успешным определением. \n\n Для установления возможной ошибки активизируйте Командное окно." 
 #define LOCALIZED_RETURNTOEDIT                  "Вернуться в редактор?" 
+
 #define LOCALIZED_EDITFAILEDTOLOAD              LOCALIZED_SAVETOWORKSPACE 
 
 
@@ -898,6 +905,7 @@
 #define LOCALIZED_FILEFILTER_ALLFILES "Все файлы (*.*)|*.*|" 
 #define LOCALIZED_FILEFILTER_LOGO     "Лого-файлы (*.lgo)|*.lgo|"LOCALIZED_FILEFILTER_ALLFILES 
 #define LOCALIZED_FILEFILTER_IMAGE    "Растровые файлы (*.bmp)|*.bmp|GIF-файлы (*.gif)|*.gif|"LOCALIZED_FILEFILTER_ALLFILES 
+
 
 
 //
@@ -933,11 +941,10 @@
 #define LOCALIZED_ERROR_FATALINTERNAL          "Лого: Фатальная внутренняя ошибка" 
 #define LOCALIZED_ERROR_OUTOFMEMORYUNREC       "Лого: Недостаточно памяти" 
 #define LOCALIZED_ERROR_OUTOFMEMORY            "Недостаточно памяти" 
-
 #define LOCALIZED_ERROR_STACKOVERFLOW          "Переполнение стека" 
 #define LOCALIZED_ERROR_TURTLEOUTOFBOUNDS      "Тортила вышла за границы" 
 #define LOCALIZED_ERROR_BADGRAPHINIT           "не могу инициализировать графику" 
-#define LOCALIZED_ERROR_BADDATA                ""%p не нравится %s как аргумент" 
+#define LOCALIZED_ERROR_BADDATA                "%p не нравится %s как аргумент" 
 #define LOCALIZED_ERROR_DIDNTOUTPUT            "%p не возвращает %p" 
 #define LOCALIZED_ERROR_NOTENOUGHINPUTS        "Не хватает аргументов в %p" 
 #define LOCALIZED_ERROR_TOOMUCH                "Слишком много внутренних ()" 
@@ -950,7 +957,6 @@
 #define LOCALIZED_ERROR_DONTKNOWHOWTO          "Я не знаю что делать с  %p" 
 #define LOCALIZED_ERROR_NOCATCHTAG             "Не найдена метка для %p" 
 #define LOCALIZED_ERROR_ALREADYDEFINED         "%p уже определена" 
-
 #define LOCALIZED_ERROR_STOPPING               "Остановка..." 
 #define LOCALIZED_ERROR_ALREADYDRIBBLING       "Уже запротоколирован" 
 #define LOCALIZED_ERROR_FILESYSTEM                   "Ошибка файловой системы: %p" 
@@ -976,12 +982,14 @@
 
 #define LOCALIZED_PAUSING                      "Пауза..." 
 
+
 //
 // Error messages displayed in Message Boxes.
 //
 #define LOCALIZED_ERROR                      "Ошибка" 
 #define LOCALIZED_ERROR_BADINPUT             "Неверный аргумент" 
 #define LOCALIZED_ERROR_BADINPUTNOTPAIRED    "Аргументы не сочетаются" 
+
 #define LOCALIZED_ERROR_CANTOPENPORT         "Невозможно открыть порт" 
 #define LOCALIZED_ERROR_CANTCLOSEPORT        "Невозможно закрыть порт" 
 #define LOCALIZED_ERROR_CANTFLUSHPORT        "Невозможно сбросить порт"                                                                                                                           
@@ -990,14 +998,17 @@
 #define LOCALIZED_ERROR_PORTALREADYOPEN      "Порт уже открыт" 
 #define LOCALIZED_ERROR_PORTNOTOPEN          "Порт не открыт" 
 #define LOCALIZED_ERROR_FIRSTINPUTNOTANARRY  "Первый аргумент должен быть массивом" 
+
 #define LOCALIZED_ERROR_WINDOWALREADYEXISTS   "%s уже существует" 
 #define LOCALIZED_ERROR_WINDOWDOESNOTEXIST    "%s не существует" 
+
 #define LOCALIZED_ERROR_DLLNOTLOADED          "DLL не загружена" 
 #define LOCALIZED_ERROR_DLLLOADFAILED         "DLL загружен неудачно" 
 #define LOCALIZED_ERROR_DLLINVALIDDATATYPE    "Недопустимый тип данных аргумента" 
 #define LOCALIZED_ERROR_DLLINVALIDOUTPUTTYPE  "Недопустимый тип данных результата" 
 #define LOCALIZED_ERROR_DLLFUNCTIONNOTFOUND   "Функция не найдена" 
 #define LOCALIZED_ERROR_DLLTYPEDATANOTPAIRED  "Не все типы/Данные аргументов соединены" 
+
 #define LOCALIZED_ERROR_NETWORK               "Ошибка сети" 
 #define LOCALIZED_ERROR_NETWORKRECEIVE        "Ошибка загрузки данных" 
 #define LOCALIZED_ERROR_NETWORKSEND           "Ошибка передачи данных" 
@@ -1061,31 +1072,42 @@
 #define LOCALIZED_ERROR_POLYEND                 "Ошибка КОНМНОГОУГ" 
 #define LOCALIZED_ERROR_POLYENDNOTSTARTED       "Многоугольник не начат" 
 #define LOCALIZED_ERROR_POLYENDNEED3VECTORS     "Должно быть по крайней мере 3 вектора, чтобы определить многоугольник" 
+
 #define LOCALIZED_ERROR_SOUND                 "Ошибка звука" 
+
 #define LOCALIZED_ERROR_MIDI                  "Ошибка MIDI" 
 #define LOCALIZED_ERROR_MIDIINVALIDDEVICE     "Недопустимое MIDI устройство" 
 #define LOCALIZED_ERROR_MIDIALREADYOPEN       "Уже открыто" 
 #define LOCALIZED_ERROR_MIDINOTOPEN           "Не открыто" 
 
 #define LOCALIZED_ERROR_CLIPBOARDISEMPTY      "В буфере нет текста" 
+
 #define LOCALIZED_ERROR_MCI                   "Ошибка МКИ" 
-#define LOCALIZED_ERROR_TIMERTOOMANY          "Слишком много таймеров" 
-#define LOCALIZED_ERROR_TIMERBADID            "Неправильный идентификатор таймера" 
+
 #define LOCALIZED_ERROR_TIMERNOTFOUND         "Таймер не найден" 
+
 #define LOCALIZED_ERROR_HHCTRLNOTLOADED       "Онлайн-помощь недоступна, т.к. hhctrl.ocx не может быть загружена." 
 #define LOCALIZED_ERROR_HHCTRLATOMNOTFOUND    "Онлайн-помощь недоступна, т.к. hhctrl.ocx не содержит ATOM_HTMLHELP_API_ANSI."
+
 #define LOCALIZED_ERROR_BADCOMMANDLINE        "Ошибка командной строки"  
+
 #define LOCALIZED_ERROR_TMPNOTDEFINED         "Переменная среды TMP не определена или не допустима.\n"LOCALIZED_GENERAL_PRODUCTNAME" будет использовать C: \\для хранения временных файлов" 
+
 #define LOCALIZED_ERROR_GIFSAVEFAILED         "Проблема создания GIF, проверьте память и дисковое пространство" 
 #define LOCALIZED_ERROR_GIFREADFAILED         "Проблема чтения GIF, проверьте память и дисковое пространство" 
+
 #define LOCALIZED_ERROR_BITMAPINDEXOUTOFRANGE  "Растровый индекс вне диапазона" 
 #define LOCALIZED_ERROR_BITMAPCUTFAILED        "Операция Вырезать не удалась, возможно нехватает памяти" 
 #define LOCALIZED_ERROR_BITMAPFITFAILED        "Операция Вырезать не удалась, возможно нехватает памяти" 
+
 #define LOCALIZED_ERROR_BITMAPNOTHINGTOPASTE    "Нечего вставить" 
 #define LOCALIZED_ERROR_BITMAPINDEXISNOTBITMAP  "Растровый индекс должен калиброваться с битовым массивом" 
+
 #define LOCALIZED_ERROR_BADTURTLEID             "Неверный идентификатор тортилы" 
 #define LOCALIZED_ERROR_TURTLEHASNOPICTURE      "Для тортилы %d нет рисунка, остановиться" 
+
 #define LOCALIZED_ERROR_FONTNOTFOUND            "\nК сожалению, шрифт по имени %s, не найден. Выберите один из следующих:\n" 
+
 #define LOCALIZED_ERROR_PRINTERCANTSCALE        "Драйвер печати не поддерживает эту функцию"  
 #define LOCALIZED_ERROR_CANTDRAWIMAGE           "Невозможно прорисовать изображение" 
 #define LOCALIZED_ERROR_CANTEXTRACTIMAGE        "Невозможно получить изображение" 
@@ -1097,6 +1119,7 @@
 #define LOCALIZED_INPUT         "Ввод:" 
 #define LOCALIZED_PROMPT_TO     "Это (Отмена для окончания)" 
 #define LOCALIZED_PROMPT_LIST   "Список (Отмена для останова)" 
+#define LOCALIZED_PROMPT_PAUSE  "Pause Mode (Cancel to Continue)" // NOT_YET_LOCALIZED
 #define LOCALIZED_PROMPT_INPUT  "Ввод (Отмена для останова)" 
 
 //
@@ -1112,6 +1135,7 @@
 #define LOCALIZED_FILE_RMDIRFAILEDNOEXIST  "Такой папки не существует." 
 #define LOCALIZED_FILE_RMDIRFAILEDNOTEMPTY "Убедитесь в том, что директория пуста перед её перемещением." 
 
+
 //
 // The default title of a Logo picture when it is printed
 //
@@ -1125,6 +1149,7 @@
 #define LOCALIZED_WARNING       "Предупреждение" 
 #define LOCALIZED_UNTITLED      "Без заголовка" 
 #define LOCALIZED_UNKNOWN       "Неизвестно" 
+
 #define LOCALIZED_UNBOUND       "Неограниченно" 
 
 //
@@ -1188,6 +1213,7 @@
 // The text that's displayed when the Editor's Search->Find fails.
 //
 #define LOCALIZED_STRINGTABLE_CANNOTFINDSTRING "%s не найден" 
+
 
 //
 // The words that describe color vectors.
@@ -1342,7 +1368,6 @@
 #define LOCALIZED_COLOR_YELLOW                "желтый" 
 #define LOCALIZED_COLOR_YELLOWGREEN           "желто-зеленый" 
 
-
 //
 // The name of each "window class" that DEBUGWINDOWS prints.
 // These should match the cooresponding terms that is used
@@ -1358,4 +1383,3 @@
 #define LOCALIZED_WINDOWCLASSNAME_RADIOBUTTON  "Радио_кнопка" 
 #define LOCALIZED_WINDOWCLASSNAME_CHECKBOX     "Переключатель" 
 #define LOCALIZED_WINDOWCLASSNAME_DIALOG       "Диалог" 
-
