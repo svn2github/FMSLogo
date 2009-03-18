@@ -21,6 +21,8 @@ I. Kit Description/Location (http://sourceforge.net/projects/fmslogo)
 II. New features/bugs fixed:
 
   * Added for 6.24.0
+    o Fix bug #2653504; workspaces arrays with words that contain \ and |
+      can now be saved and loaded.
     o Improvements to the Russian translation.
 
   For a complete history of changes across all versions of FMSLogo, see

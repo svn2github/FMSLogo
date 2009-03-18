@@ -321,7 +321,15 @@ void real_print_node(FILE *strm, const NODE *nd, int depth, int width)
                 print_char(strm, '|');
                 for (i = 0; i < totalCharsToPrint; i++)
                 {
-                    print_char(strm, clearparity(*cp++));
+                    char ch = clearparity(*cp++);
+
+                    // Even in vbars, there are some characters
+                    // that must be escaped.
+                    if (ch == '|' || ch == '\\')
+                    {
+                        print_char(strm, '\\');
+                    }
+                    print_char(strm, ch);
                 }
                 print_char(strm, '|');
             }
