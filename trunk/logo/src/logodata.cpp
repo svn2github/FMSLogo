@@ -29,7 +29,7 @@
 // The series of "+" characters from 0x7 to 0xD (but not 0xB) represent 
 // a hole in the set of backslahed representations.
 //
-// REVISIT: why does ? and the infix operators need to be backslashed?
+// REVISIT: why do "?" and the infix operators need to be backslashed?
 //
 //                                            1         2           3
 //                                   3 4 56789012345678901234 5 678901
