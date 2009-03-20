@@ -289,7 +289,7 @@ extern NODE *lshell(NODE *args);
 // logodata.cpp
 extern char ecma_set(int ch);
 extern char ecma_clear(int ch);
-extern int ecma_get(int ch);
+extern bool ecma_get(int ch);
 extern void init_ecma_array(void);
 extern bool is_special_character(char ch);
 extern char *strnzcpy(char *dst, const char *src, int len);

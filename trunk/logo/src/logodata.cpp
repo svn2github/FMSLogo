@@ -75,10 +75,10 @@ char ecma_clear(int ch)
     return g_SpecialCharacters[ch - ecma_begin];
 }
 
-int ecma_get(int ch)
+bool ecma_get(int ch)
 {
-    // return 1 if "ch" is backslashed.
-    // return 0, otherwise.
+    // return true if "ch" is backslashed.
+    // return false, otherwise.
 
     ch &= 0xFF;
     return 
