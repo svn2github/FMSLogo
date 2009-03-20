@@ -693,7 +693,7 @@ NODE *lreadchar(NODE *)
         return make_strnode(
             &c,
             1,
-            getparity(c) ? STRING : BACKSLASH_STRING,
+            ecma_get(c) ? STRING : BACKSLASH_STRING,
             strnzcpy);
     }
 }
@@ -768,7 +768,7 @@ NODE *lreadchars(NODE *args)
     // Check if this string has special characters in it
     for (size_t i = 0; i < totalBytesRead; i++)
     {
-        if (getparity(strptr[i])) 
+        if (ecma_get(strptr[i])) 
         {
             type = BACKSLASH_STRING;
             break;

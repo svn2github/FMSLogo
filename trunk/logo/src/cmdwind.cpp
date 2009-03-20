@@ -479,7 +479,7 @@ void do_execution(char * logocommand)
         // this code emulates the TTY model used in UCBLOGO main loop
         NODETYPES this_type = STRING;
 
-        // do control character processing processing
+        // do control character processing
         for (char * c = logocommand; *c != '\0'; c++)
         {
             if (*c == '\\')
@@ -491,7 +491,7 @@ void do_execution(char * logocommand)
                     {
                         *c = '\n';
                     }
-                    *c = setparity(*c);
+                    *c = ecma_set(*c);
                 }
                 this_type = BACKSLASH_STRING;
             }

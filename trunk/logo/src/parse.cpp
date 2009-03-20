@@ -391,12 +391,12 @@ NODE *reader(FILE *FileStream, const char * Prompt)
                 }
 
                 // mark this character as being backslashed
-                c = setparity(c);
+                c = ecma_set(c);
 
                 // the resulting string will be backslashed
                 this_type = BACKSLASH_STRING;
 
-                if (c == setparity('\n') && FileStream == stdin)
+                if (c == ecma_set('\n') && FileStream == stdin)
                 {
                     rd_print_prompt("\\ ");
 
@@ -727,7 +727,7 @@ parser_iterate(
         }
 
         // flag that this word will be of BACKSLASH_STRING type
-        if (getparity(ch)) 
+        if (ecma_get(ch)) 
         {
             this_type = BACKSLASH_STRING;
         }
@@ -898,7 +898,7 @@ NODE *runparse_node(NODE *nd, NODE **ndsptr)
             wcnt++;
             while (wcnt < wlen && !parens(*wptr))
             {
-                if (wtyp == BACKSLASH_STRING && getparity(*wptr))
+                if (wtyp == BACKSLASH_STRING && ecma_get(*wptr))
                 {
                     wtyp = PUNBOUND; // flag for "\( case
                 }

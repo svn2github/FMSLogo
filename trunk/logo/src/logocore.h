@@ -557,10 +557,6 @@ setarrptr(NODE * Node, NODE ** Ptr)
     Node->nunion.narray.data = Ptr;
 }
 
-#define clearparity(ch)         ecma_clear(ch)
-#define setparity(ch)           ecma_set(ch)
-#define getparity(ch)           ecma_get(ch)
-
 enum CTRLTYPE
 {
     RUN, 

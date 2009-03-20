@@ -307,7 +307,7 @@ NODE *lascii(NODE *args)
     NODE * arg = char_arg(args);
     if (NOT_THROWING)
     {
-        FIXNUM i = (FIXNUM) clearparity(*getstrptr(arg)) & 0xFF;
+        FIXNUM i = (FIXNUM) ecma_clear(*getstrptr(arg)) & 0xFF;
         val = make_intnode(i);
     }
     return val;
@@ -333,7 +333,7 @@ NODE *lbackslashedp(NODE *args)
     if (NOT_THROWING)
     {
         char i = *getstrptr(arg);
-        return true_or_false(getparity(i));
+        return true_or_false(ecma_get(i));
     }
     return Unbound;
 }
@@ -349,7 +349,7 @@ NODE *lchar(NODE *args)
         val = make_strnode(
             &c, 
             1,
-            (getparity(c) ? STRING : BACKSLASH_STRING), 
+            (ecma_get(c) ? STRING : BACKSLASH_STRING), 
             strnzcpy);
     }
     return val;

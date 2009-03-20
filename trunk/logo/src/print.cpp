@@ -295,7 +295,7 @@ void real_print_node(FILE *strm, const NODE *nd, int depth, int width)
         {
             for (int i = 0; i < totalCharsToPrint; i++)
             {
-                print_char(strm, clearparity(*cp++));
+                print_char(strm, ecma_clear(*cp++));
             }
         }
         else
@@ -304,7 +304,7 @@ void real_print_node(FILE *strm, const NODE *nd, int depth, int width)
             int i;
             for (i = 0; i < totalCharsToPrint; i++)
             {
-                if (getparity(cp[i])) 
+                if (ecma_get(cp[i])) 
                 {
                     break;
                 }
@@ -321,7 +321,7 @@ void real_print_node(FILE *strm, const NODE *nd, int depth, int width)
                 print_char(strm, '|');
                 for (i = 0; i < totalCharsToPrint; i++)
                 {
-                    char ch = clearparity(*cp++);
+                    char ch = ecma_clear(*cp++);
 
                     // Even in vbars, there are some characters
                     // that must be escaped.

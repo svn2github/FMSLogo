@@ -128,7 +128,7 @@ char *noparity_strnzcpy(char *dst, const char * src, int len)
 {
     for (int i = 0; i < len; i++)
     {
-        dst[i] = clearparity(src[i]);
+        dst[i] = ecma_clear(src[i]);
     }
     dst[len] = '\0';
 
@@ -150,7 +150,7 @@ char *mend_strnzcpy(char *dst, const char * src, int len)
         {
             if (is_special_character(*src))
             {
-                dst[i++] = setparity(*src++);
+                dst[i++] = ecma_set(*src++);
             }
             else
             {
@@ -197,7 +197,7 @@ char *mend_nosemi(char *dst, const char * src, int len)
         {
             if (is_special_character(*src))
             {
-                dst[i++] = setparity(*src++);
+                dst[i++] = ecma_set(*src++);
             }
             else
             {
@@ -319,7 +319,7 @@ char *noparitylow_strnzcpy(char *dst, const char *src, int len)
 
     for (int i = 0; i < len; i++)
     {
-        char c = clearparity(*src++);
+        char c = ecma_clear(*src++);
 
         *dst++ = uncapital(c);
     }
@@ -347,9 +347,9 @@ int noparity_strncmp(const char * s1, const char * s2, int len)
 {
     for (int i = 0; i < len; i++)
     {
-        if (clearparity(*s1) != clearparity(*s2))
+        if (ecma_clear(*s1) != ecma_clear(*s2))
         {
-            return (clearparity(*s1) - clearparity(*s2));
+            return (ecma_clear(*s1) - ecma_clear(*s2));
         }
         s1++, s2++;
     }
@@ -360,8 +360,8 @@ int noparitylow_strncmp(const char * s1, const char * s2, int len)
 {
     for (int i = 0; i < len; i++)
     {
-        char c1 = clearparity(*s1);
-        char c2 = clearparity(*s2);
+        char c1 = ecma_clear(*s1);
+        char c2 = ecma_clear(*s2);
         if (c1 != c2)
         {
             int rval = low_strncmp(&c1, &c2, 1);

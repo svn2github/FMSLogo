@@ -995,7 +995,7 @@ char *expand_slash(const NODE *wd)
          --j >= 0;
         )
     {
-        if (getparity(*cp++)) 
+        if (ecma_get(*cp++)) 
         {
             i++;
         }
@@ -1016,12 +1016,12 @@ char *expand_slash(const NODE *wd)
          --j >= 0;
         )
     {
-        if (getparity(*cp))
+        if (ecma_get(*cp))
         {
             // backslash this character
             *cp2++ = '\\';
         }
-        *cp2++ = clearparity(*cp++);
+        *cp2++ = ecma_clear(*cp++);
     }
     *cp2 = '\0';
 
