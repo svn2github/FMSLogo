@@ -1191,7 +1191,7 @@ NODE *po_helper(NODE *arg, int just_titles)  /* >0 for POT, <0 for EDIT       */
         gcref(quoted_value);
     }
 
-    // print all of the requested propery lists
+    // print all of the requested property lists
     while (plistlst != NIL && NOT_THROWING)
     {
         if (is_aggregate(car(plistlst)))
