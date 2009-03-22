@@ -315,6 +315,19 @@ void rd_print_prompt(const char * /*str*/)
     //ndprintf(stdout,"%t",str);
 }
 
+// Reads the next complete line from FileStream into a string node.
+// This may be more than a physical line of text if the line contains
+// an open delimiter, such as "|", "[", or "(",  or if it ends in the
+// line continuation character "~".  In this case, the phsyical lines
+// will be concatenated into a single line.
+//
+// Note that reader() does not parse the line.
+//
+// FileStream - The stream to read the line from.
+// Prompt     - Mostly ignored by FMSLogo.  If it's "RW", then
+//              the characters "(", ")", "{", "}", "[", "]", and ';'
+//              have no special meaning.
+//
 NODE *reader(FILE *FileStream, const char * Prompt)
 {
     int paren   = 0;
@@ -399,11 +412,11 @@ NODE *reader(FILE *FileStream, const char * Prompt)
                 if (c == ecma_set('\n') && FileStream == stdin)
                 {
                     rd_print_prompt("\\ ");
-
                     if (dribbling)
                     {
                         fprintf(dribblestream, "\\ ");
                     }
+
                 }
             }
 
