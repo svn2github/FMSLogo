@@ -180,7 +180,7 @@ struct Turtle
     MATRIX   Matrix;
     VECTOR   Position;
     FLONUM   Heading;
-    DWORD    Bitmap;
+    DWORD    BitmapRasterMode; // 0 if not bitmapped.  Windows raster mode, otherwise.
     bool     IsShown;
     bool     IsPenUp;
     bool     IsSpecial;

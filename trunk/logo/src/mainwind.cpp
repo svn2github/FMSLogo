@@ -445,7 +445,7 @@ void TScreenWindow::Paint(TDC &PaintDC, bool /* erase */, TRect &PaintRect)
     {
         if (g_Turtles[j].IsShown)
         {
-            if (g_Turtles[j].Bitmap)
+            if (g_Turtles[j].BitmapRasterMode)
             {
                 turtlepaste(j);
             }

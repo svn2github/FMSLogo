@@ -356,7 +356,7 @@ void InitializeTurtle(Turtle * TurtleToInitialize)
 
     TurtleToInitialize->Heading    = 0.0;
 
-    TurtleToInitialize->Bitmap     = 0;
+    TurtleToInitialize->BitmapRasterMode = 0;
 
     TurtleToInitialize->IsShown    = true;
     TurtleToInitialize->IsPenUp    = false;
@@ -1218,7 +1218,7 @@ NODE *lback(NODE *arg)
 NODE *lbitmapturtle(NODE *)
 {
     draw_turtle(false);
-    g_SelectedTurtle->Bitmap = SRCCOPY;
+    g_SelectedTurtle->BitmapRasterMode = SRCCOPY;
     draw_turtle(true);
     return Unbound;
 }
@@ -1226,7 +1226,7 @@ NODE *lbitmapturtle(NODE *)
 NODE *lnobitmapturtle(NODE *)
 {
     draw_turtle(false);
-    g_SelectedTurtle->Bitmap = 0;
+    g_SelectedTurtle->BitmapRasterMode = 0;
     draw_turtle(true);
     return Unbound;
 }

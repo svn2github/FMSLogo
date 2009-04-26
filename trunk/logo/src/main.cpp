@@ -1451,7 +1451,7 @@ void ibmturt(bool erase)
         }
     }
    
-    if (g_SelectedTurtle->Bitmap)
+    if (g_SelectedTurtle->BitmapRasterMode != 0)
     {
         POINT dest;
 

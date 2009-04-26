@@ -98,18 +98,18 @@ public:
                 g_Turtles[i].IsSpecial == false);
 
             assert(
-                g_Turtles[i].Bitmap == 0           ||
-                g_Turtles[i].Bitmap == SRCCOPY     ||
-                g_Turtles[i].Bitmap == SRCPAINT    ||
-                g_Turtles[i].Bitmap == SRCAND      ||
-                g_Turtles[i].Bitmap == SRCINVERT   ||
-                g_Turtles[i].Bitmap == SRCERASE    ||
-                g_Turtles[i].Bitmap == NOTSRCCOPY  ||
-                g_Turtles[i].Bitmap == NOTSRCERASE ||
-                g_Turtles[i].Bitmap == MERGEPAINT  ||
-                g_Turtles[i].Bitmap == DSTINVERT);
+                g_Turtles[i].BitmapRasterMode == 0           ||
+                g_Turtles[i].BitmapRasterMode == SRCCOPY     ||
+                g_Turtles[i].BitmapRasterMode == SRCPAINT    ||
+                g_Turtles[i].BitmapRasterMode == SRCAND      ||
+                g_Turtles[i].BitmapRasterMode == SRCINVERT   ||
+                g_Turtles[i].BitmapRasterMode == SRCERASE    ||
+                g_Turtles[i].BitmapRasterMode == NOTSRCCOPY  ||
+                g_Turtles[i].BitmapRasterMode == NOTSRCERASE ||
+                g_Turtles[i].BitmapRasterMode == MERGEPAINT  ||
+                g_Turtles[i].BitmapRasterMode == DSTINVERT);
 
-            if (g_Turtles[i].Bitmap != 0)
+            if (g_Turtles[i].BitmapRasterMode != 0)
             {
                 // make sure that the bitmap exists.
                 assert(i < g_BitmapsLimit);
@@ -1323,7 +1323,7 @@ NODE *lturtlemode(NODE *)
     ASSERT_TURTLE_INVARIANT;
 
     // return the logo "code" for the bit mode
-    FIXNUM turtlemode = RasterModeToBitMode(g_SelectedTurtle->Bitmap);
+    FIXNUM turtlemode = RasterModeToBitMode(g_SelectedTurtle->BitmapRasterMode);
     return make_intnode(turtlemode);
 }
 
@@ -1331,15 +1331,15 @@ NODE *lsetturtlemode(NODE *arg)
 {
     ASSERT_TURTLE_INVARIANT;
 
-    if (g_SelectedTurtle->Bitmap)
+    if (g_SelectedTurtle->BitmapRasterMode)
     {
         draw_turtle(false);
 
         // convert from logo "code" to Windows constants
-        FIXNUM turtlemode = BitModeArgsToRasterMode(arg);
+        FIXNUM rastermode = BitModeArgsToRasterMode(arg);
         if (NOT_THROWING)
         {
-            g_SelectedTurtle->Bitmap = turtlemode;
+            g_SelectedTurtle->BitmapRasterMode = rastermode;
         }
 
         draw_turtle(true);
@@ -2162,7 +2162,7 @@ void turtlepaste(int TurtleToPaste)
                 TempMemDC,
                 0,
                 0,
-                g_Turtles[TurtleToPaste].Bitmap);
+                g_Turtles[TurtleToPaste].BitmapRasterMode);
         }
         else
         {
@@ -2175,7 +2175,7 @@ void turtlepaste(int TurtleToPaste)
                 TempMemDC,
                 0,
                 0,
-                g_Turtles[TurtleToPaste].Bitmap);
+                g_Turtles[TurtleToPaste].BitmapRasterMode);
         }
 
         SelectObject(TempMemDC, oldBitmap2);
@@ -2189,7 +2189,7 @@ void turtlepaste(int TurtleToPaste)
         ShowErrorMessage(errorMessage);
 
         // un-bitmap this turtle to prevent future errors
-        g_Turtles[TurtleToPaste].Bitmap = 0;
+        g_Turtles[TurtleToPaste].BitmapRasterMode = 0;
     }
 }
 
