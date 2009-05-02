@@ -24,7 +24,7 @@ TO DIFFICULTCOMMENTS1 ; comments here should be legal
 
   ; The Great Logo Atlas conformance test:\
   comments can be continued to the next line when\
-  then end in a backslash
+  they end in a backslash.
 
   ; a comment with nothing after it
   ;
