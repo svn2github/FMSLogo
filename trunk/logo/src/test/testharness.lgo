@@ -124,6 +124,7 @@ LOAD "backtick.lgo
 LOAD "cascade.lgo
 LOAD "commandline.lgo
 LOAD "random.lgo
+LOAD "workspace.lgo
 
 TO TESTALL
 
@@ -234,6 +235,7 @@ TO TESTALL
   REFRESHTEST         ; from refresh.lgo
   QUOTEDTEST          ; from quoted.lgo
   BACKTICKTEST        ; from backtick.lgo
+  WORKSPACETEST       ; from workspace.lgo
   MESSAGEBOXTEST      ; from messagebox.lgo
   YESNOBOXTEST        ; from yesnobox.lgo
   SELECTBOXTEST       ; from selectbox.lgo

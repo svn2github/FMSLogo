@@ -16,7 +16,51 @@ TO WORKSPACETEST.SAVEPARTOFWORKSPACE :contentslist :filename
 
 END
 
-TO WORKSPACETEST.WORDWITHBINARYDATA
+
+TO WORKSPACETEST.SAVEANDLOADSHORTWORD :value
+
+   ; save this value in the same way that SAVE would
+   WORKSPACETEST.SAVEPARTOFWORKSPACE NAMELIST "binaryword "testworkspace.lgo
+
+   ; Modify the value of "binaryword so we know that LOAD has the expected effect
+   TRACEINSTRUCTION [ MAKE "binaryword "some-other-value ]
+
+   ; Now load the value back into the workspace.
+   ; This should revert it back to the original value
+   TRACEINSTRUCTION [ LOAD "testworkspace.lgo ]
+
+   ; confirm that saving/loading the variable didn't alter anything
+   SIMPLEREPORTTEST [:binaryword] (WORD "a CHAR :value "z)
+
+   ; cleanup
+   ERASEFILE "testworkspace.lgo
+
+END
+
+
+TO WORKSPACETEST.WORDWITHBINARYDATA.EACHVALUESEPARATELY
+
+   local "binaryword
+
+   ; create and test 256 arrays each with a different character.
+   REPEAT 256 [
+      ; Initialize the word to the expected value.
+      ; We use (LIST) so that the value of REPCOUNT-1 shows up in the test log
+      TRACEINSTRUCTION (LIST "MAKE ""binaryword "WORD ""a "WORD "CHAR (REPCOUNT - 1) ""z  )
+
+      ; Save the array to a workspace, then load it and confirm that it's the same.
+      ; This tests that the saved value can be loaded without a loss of information.
+      WORKSPACETEST.SAVEANDLOADSHORTWORD (REPCOUNT - 1)
+
+      ; Now resave and reload the array.
+      ; This tests that the loaded value can be saved without a loss of information.
+      WORKSPACETEST.SAVEANDLOADSHORTWORD (REPCOUNT - 1)
+   ]
+
+END
+
+
+TO WORKSPACETEST.WORDWITHBINARYDATA.ALLVALUES
 
    local "binaryword
 
@@ -140,7 +184,8 @@ TO WORKSPACETEST.ARRAYWITHBINARYDATA.ALLVALUES
 END
 
 TO WORKSPACETEST
-  WORKSPACETEST.WORDWITHBINARYDATA
+  WORKSPACETEST.WORDWITHBINARYDATA.ALLVALUES
+  WORKSPACETEST.WORDWITHBINARYDATA.EACHVALUESEPARATELY
 
   WORKSPACETEST.ARRAYWITHBINARYDATA.ALLVALUES
   WORKSPACETEST.ARRAYWITHBINARYDATA.EACHVALUESEPARATELY
