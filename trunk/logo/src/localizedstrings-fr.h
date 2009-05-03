@@ -297,6 +297,8 @@
 #define LOCALIZED_ALTERNATE_GROUPBOXCREATE         "créegroupe" // 
 #define LOCALIZED_ALTERNATE_GROUPBOXDELETE         "effacegroupe" // 
 #define LOCALIZED_ALTERNATE_HALT                   "arrêtetout" // 
+#define LOCALIZED_ALTERNATE_HASOWNPENP             "hasownpenp" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_HASOWNPEN_             "hasownpen?" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_HEADING                "cap" //
 #define LOCALIZED_ALTERNATE_HELP                   "aide" // 
 #define LOCALIZED_ALTERNATE_HIDETURTLE             "cachetortue"

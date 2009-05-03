@@ -297,6 +297,8 @@
 #define LOCALIZED_ALTERNATE_GROUPBOXCREATE         "gruppocrea"
 #define LOCALIZED_ALTERNATE_GROUPBOXDELETE         "gruppocancella"
 #define LOCALIZED_ALTERNATE_HALT                   "alt"
+#define LOCALIZED_ALTERNATE_HASOWNPENP             "hasownpenp" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_HASOWNPEN_             "hasownpen?" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_HEADING                "direzione"
 #define LOCALIZED_ALTERNATE_HELP                   "aiuto"
 #define LOCALIZED_ALTERNATE_HIDETURTLE             "nastarta"

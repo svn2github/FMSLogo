@@ -42,6 +42,9 @@ TO TURTLETEST.WITHOWNPEN
    ; reset to 0 turtles
    TRACEINSTRUCTION [ CLEARSCREEN ]
 
+   ; make sure that the default turtle does not have its own pen
+   SIMPLEREPORTTEST [ HASOWNPENP ] LOCALEFALSE
+
    ; set the global pen state to some non-default (recognizable) value
    TRACEINSTRUCTION [ SETPENSIZE  2 ]
    TRACEINSTRUCTION [ SETPENCOLOR 2 ]
@@ -52,6 +55,9 @@ TO TURTLETEST.WITHOWNPEN
 
    ; create two turtles that have their own pen
    TRACEINSTRUCTION [(SETTURTLE 2 "true)]
+
+   ; make sure that the new turtle has its own pen
+   SIMPLEREPORTTEST [ HASOWNPENP ] LOCALETRUE
 
    ; set the TURTLE 2's pen state to some non-default (recognizable) values
    TRACEINSTRUCTION [ SETPENSIZE  3 ]
@@ -66,9 +72,10 @@ TO TURTLETEST.WITHOWNPEN
    TRACEINSTRUCTION [(SETTURTLE 3 "false)]
 
    ; check that this turtle uses the global pen
-   SIMPLEREPORTTEST [ PENSIZE  ] [2 2]
-   SIMPLEREPORTTEST [ PENCOLOR ] 2
-   SIMPLEREPORTTEST [ PENMODE  ] "reverse
+   SIMPLEREPORTTEST [ HASOWNPEN? ] LOCALEFALSE
+   SIMPLEREPORTTEST [ PENSIZE    ] [2 2]
+   SIMPLEREPORTTEST [ PENCOLOR   ] 2
+   SIMPLEREPORTTEST [ PENMODE    ] "reverse
 
    ; move the turtle to draw with its pen
    RIGHT   270
@@ -83,41 +90,46 @@ TO TURTLETEST.WITHOWNPEN
    ; set back to the zeroth turtle (which also uses the global pen)
    TRACEINSTRUCTION [ SETTURTLE 0 ]
 
-   ; check that this uses the same pen as TURTLE 3
-   SIMPLEREPORTTEST [ PENSIZE  ] [4 4]
-   SIMPLEREPORTTEST [ PENCOLOR ] 4
-   SIMPLEREPORTTEST [ PENMODE  ] "paint
+   ; check that TURTLE 0 uses the same pen as TURTLE 3
+   SIMPLEREPORTTEST [ HASOWNPEN? ] LOCALEFALSE
+   SIMPLEREPORTTEST [ PENSIZE    ] [4 4]
+   SIMPLEREPORTTEST [ PENCOLOR   ] 4
+   SIMPLEREPORTTEST [ PENMODE    ] "paint
 
    ; switch to TURTLE 1.  This has its own pen and should still use
    ; the initial values.
    TRACEINSTRUCTION [ SETTURTLE 1 ]
-   SIMPLEREPORTTEST [ PENSIZE  ] [1 1]
-   SIMPLEREPORTTEST [ PENCOLOR ] 0
-   SIMPLEREPORTTEST [ PENMODE  ] "paint
+   SIMPLEREPORTTEST [ HASOWNPEN?  ] LOCALETRUE
+   SIMPLEREPORTTEST [ PENSIZE     ] [1 1]
+   SIMPLEREPORTTEST [ PENCOLOR    ] 0
+   SIMPLEREPORTTEST [ PENMODE     ] "paint
 
    RIGHT   90
    FORWARD 100
 
    ; make TURTLE 2 use the global pen by using the pen mode override
    TRACEINSTRUCTION [ (SETTURTLE 2 "false) ]
-   SIMPLEREPORTTEST [ PENSIZE  ] [4 4]
-   SIMPLEREPORTTEST [ PENCOLOR ] 4
-   SIMPLEREPORTTEST [ PENMODE  ] "paint
+   SIMPLEREPORTTEST [ HASOWNPEN? ] LOCALEFALSE
+   SIMPLEREPORTTEST [ PENSIZE    ] [4 4]
+   SIMPLEREPORTTEST [ PENCOLOR   ] 4
+   SIMPLEREPORTTEST [ PENMODE    ] "paint
    FORWARD 100
 
-   ; Make TURTLE 0 use its own pen pen by using the pen mode override
+   ; Make TURTLE 0 use its own pen by using the pen mode override.
    ; This should no longer use the global pen, but instead use the default values.
    TRACEINSTRUCTION [ (SETTURTLE 0 "true) ]
-   SIMPLEREPORTTEST [ PENSIZE  ] [1 1]
-   SIMPLEREPORTTEST [ PENCOLOR ] 0
-   SIMPLEREPORTTEST [ PENMODE  ] "paint
+   SIMPLEREPORTTEST [ HASOWNPENP ] LOCALETRUE
+   SIMPLEREPORTTEST [ PENSIZE    ] [1 1]
+   SIMPLEREPORTTEST [ PENCOLOR   ] 0
+   SIMPLEREPORTTEST [ PENMODE    ] "paint
    FORWARD 100
 
    ; switch back to TURTLE 3 to check that the global pen state hasn't changed
    TRACEINSTRUCTION [ SETTURTLE 3 ]
-   SIMPLEREPORTTEST [ PENSIZE  ] [4 4]
-   SIMPLEREPORTTEST [ PENCOLOR ] 4
-   SIMPLEREPORTTEST [ PENMODE  ] "paint
+   SIMPLEREPORTTEST [ HASOWNPENP ] LOCALEFALSE
+   SIMPLEREPORTTEST [ PENSIZE    ] [4 4]
+   SIMPLEREPORTTEST [ PENCOLOR   ] 4
+   SIMPLEREPORTTEST [ PENMODE    ] "paint
    FORWARD 100
 
    ; check that the picture was drawn correctly (that the pen was changed, as expected)
@@ -189,6 +201,9 @@ TO TURTLETEST.BADINPUT
 
    ; the special turtles don't support a pen mode
    RUNTOOMANYINPUTSTEST [(SETTURTLE -1 "toomany)]
+
+   RUNTOOMANYINPUTSTEST [(HASOWNPENP "toomany)]
+   RUNTOOMANYINPUTSTEST [(HASOWNPEN? "toomany)]
 
 END
 

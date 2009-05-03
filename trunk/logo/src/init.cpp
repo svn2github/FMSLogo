@@ -329,6 +329,8 @@ const PRIMTYPE prims[] =
     { "groupboxcreate", 6, 6, 6, PREFIX_PRIORITY, lgroupboxcreate, LOCALIZED_ALTERNATE_GROUPBOXCREATE },
     { "groupboxdelete", 1, 1, 1, PREFIX_PRIORITY, lgroupboxdelete, LOCALIZED_ALTERNATE_GROUPBOXDELETE },
     { "halt", 0, 0, 0, PREFIX_PRIORITY, lhalt, LOCALIZED_ALTERNATE_HALT },
+    { "hasownpen?", 0, 0, 0, PREFIX_PRIORITY, lhasownpenp, LOCALIZED_ALTERNATE_HASOWNPEN_ },
+    { "hasownpenp", 0, 0, 0, PREFIX_PRIORITY, lhasownpenp, LOCALIZED_ALTERNATE_HASOWNPENP },
     { "heading", 0, 0, 0, PREFIX_PRIORITY, lheading, LOCALIZED_ALTERNATE_HEADING },
     { "help", OK_NO_ARG, 1, 1, PREFIX_PRIORITY, lhelp, LOCALIZED_ALTERNATE_HELP },
     { "hideturtle", 0, 0, 0, PREFIX_PRIORITY, lhideturtle, LOCALIZED_ALTERNATE_HIDETURTLE },

@@ -2111,6 +2111,11 @@ NODE *lturtles(NODE *)
     return make_intnode(g_MaxTurtle);
 }
 
+NODE *lhasownpenp(NODE*)
+{
+    return true_or_false(g_SelectedTurtle->HasOwnPenState);
+}
+
 void turtlepaste(int TurtleToPaste)
 {
     ASSERT_TURTLE_INVARIANT;

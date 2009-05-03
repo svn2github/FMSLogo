@@ -297,6 +297,8 @@
 #define LOCALIZED_ALTERNATE_GROUPBOXCREATE         "criecaixagrupo"
 #define LOCALIZED_ALTERNATE_GROUPBOXDELETE         "apaguecaixagrupo"
 #define LOCALIZED_ALTERNATE_HALT                   "paretudo"
+#define LOCALIZED_ALTERNATE_HASOWNPENP             "hasownpenp" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_HASOWNPEN_             "hasownpen?" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_HEADING                "direção"
 #define LOCALIZED_ALTERNATE_HELP                   "ajuda"
 #define LOCALIZED_ALTERNATE_HIDETURTLE             "oculteTat"

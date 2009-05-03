@@ -210,6 +210,7 @@
   <!ENTITY command-turtles        SYSTEM "command-turtles.xml">
   <!ENTITY command-bitmapturtle   SYSTEM "command-bitmapturtle.xml">
   <!ENTITY command-nobitmapturtle SYSTEM "command-nobitmapturtle.xml">
+  <!ENTITY command-hasownpenp     SYSTEM "command-hasownpenp.xml">
   <!ENTITY command-turtlemode     SYSTEM "command-turtlemode.xml">
   <!ENTITY command-setturtlemode  SYSTEM "command-setturtlemode.xml">
   <!ENTITY command-ask            SYSTEM "command-ask.xml">

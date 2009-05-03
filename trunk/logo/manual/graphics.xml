@@ -91,6 +91,7 @@ Each time you enter <link linkend="command-perspective">PERSPECTIVE</link> mode 
 
         &command-setturtle;
         &command-turtle;
+        &command-hasownpenp;
         &command-turtles;
         &command-bitmapturtle;
         &command-nobitmapturtle;

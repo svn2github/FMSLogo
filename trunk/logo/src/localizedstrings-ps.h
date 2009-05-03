@@ -297,6 +297,8 @@
 #define LOCALIZED_ALTERNATE_GROUPBOXCREATE         "pseudo.groupboxcreate"
 #define LOCALIZED_ALTERNATE_GROUPBOXDELETE         "pseudo.groupboxdelete"
 #define LOCALIZED_ALTERNATE_HALT                   "pseudo.halt"
+#define LOCALIZED_ALTERNATE_HASOWNPENP             "pseudo.hasownpenp"
+#define LOCALIZED_ALTERNATE_HASOWNPEN_             "pseudo.hasownpen?"
 #define LOCALIZED_ALTERNATE_HEADING                "pseudo.heading"
 #define LOCALIZED_ALTERNATE_HELP                   "pseudo.help"
 #define LOCALIZED_ALTERNATE_HIDETURTLE             "pseudo.hideturtle"

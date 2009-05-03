@@ -297,6 +297,8 @@
 #define LOCALIZED_ALTERNATE_GROUPBOXCREATE         "пкаисио_оладас_дглиоуяциа" // 
 #define LOCALIZED_ALTERNATE_GROUPBOXDELETE         "пкаисио_оладас_диацяажг" // 
 #define LOCALIZED_ALTERNATE_HALT                   "halt" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_HASOWNPENP             "hasownpenp" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_HASOWNPEN_             "hasownpen?" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_HEADING                "йатеухумсг" // 
 #define LOCALIZED_ALTERNATE_HELP                   "богхеиа" // 
 #define LOCALIZED_ALTERNATE_HIDETURTLE             "hideturtle" // NOT_YET_LOCALIZED

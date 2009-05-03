@@ -297,6 +297,8 @@
 #define LOCALIZED_ALTERNATE_GROUPBOXCREATE         "Gruppenboxschaffen"
 #define LOCALIZED_ALTERNATE_GROUPBOXDELETE         "Gruppenboxlöschen"
 #define LOCALIZED_ALTERNATE_HALT                   "halt"
+#define LOCALIZED_ALTERNATE_HASOWNPENP             "hasownpenp" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_HASOWNPEN_             "hasownpen?" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_HEADING                "Kurs"
 #define LOCALIZED_ALTERNATE_HELP                   "help"
 #define LOCALIZED_ALTERNATE_HIDETURTLE             "vergissIgel"

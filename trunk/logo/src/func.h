@@ -105,6 +105,7 @@ extern NODE *lsetpitch(NODE *arg);
 extern NODE *lsetturtle(NODE *arg);
 extern NODE *lturtle(NODE *arg);
 extern NODE *lturtles(NODE *arg);
+extern NODE *lhasownpenp(NODE *arg);
 extern NODE *lheading(NODE *arg);
 extern NODE *lroll(NODE *arg);
 extern NODE *lpitch(NODE *arg);

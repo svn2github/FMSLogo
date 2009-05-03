@@ -297,6 +297,8 @@
 #define LOCALIZED_ALTERNATE_GROUPBOXCREATE         "группусоздай" 
 #define LOCALIZED_ALTERNATE_GROUPBOXDELETE         "группуудали" 
 #define LOCALIZED_ALTERNATE_HALT                   "останов" 
+#define LOCALIZED_ALTERNATE_HASOWNPENP             "hasownpenp" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_HASOWNPEN_             "hasownpen?" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_HEADING                "направление" 
 #define LOCALIZED_ALTERNATE_HELP                   "помощь" 
 #define LOCALIZED_ALTERNATE_HIDETURTLE             "скройчерепаху"
