@@ -722,7 +722,7 @@ void TMyCommandWindow::ChooseNewFont()
 
     if (ChooseFont(&CF))
     {
-        // safe the new font preference to persistent storage
+        // save the new font preference to persistent storage
         SetConfigurationFont("CommanderFont", lf);
 
         UpdateFont(lf);
