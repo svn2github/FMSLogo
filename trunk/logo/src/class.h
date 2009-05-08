@@ -313,6 +313,7 @@ public:
     void CMHelp();
     void CMHelpEdit();
     void CMHelpEditTopic();
+    void CMFindMatchingParen();
 
 protected:
     void SetupWindow();

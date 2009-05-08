@@ -44,6 +44,13 @@ protected:
 
     void EvRButtonUp(UINT, TPoint &);
     void CmPasteAsText();   // CM_PASTE
+    void CmFindMatchingParen();
+
+    int GetCaretPosition();
+    void SetCaretPosition(uint32 CaretCharIndex);
+    void UpdateCaretPosition(uint32 CaretCharIndex);
+    void SearchForwardForMatchingParen(int CaretPosition, char ParenToMatch);
+    void SearchBackwardForMatchingParen(int CaretPosition, char ParenToMatch);
 
     TPopupMenu PopupMenu;
 
@@ -63,7 +70,6 @@ protected:
     //
     void  EvSize(UINT sizeType, TSize &);
     void  EvSetFocus(HWND lostFocus);
-    void  CmSelectAll();
 
     //
     // menu command handlers

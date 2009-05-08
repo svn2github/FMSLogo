@@ -190,6 +190,8 @@
 
 #define CM_EDITALL              CMD_BASE + 100
 
+#define CM_FINDMATCHINGPAREN    CMD_BASE + 110
+
 #define WM_MYSCROLLBARCALLBACK         WM_USER + 0
 #define WM_CHECKQUEUE                  WM_USER + 1
 
@@ -212,3 +214,9 @@
 #define IDD_MINIEDITOR          IDD_BASE + 11
 #define IDD_SELECTBOX           IDD_BASE + 12
 
+
+// some key codes that are missing from Borland's WinUser.h.
+#define VK_OEM_4 0xDB // [{ on US keyboards
+#define VK_OEM_5 0xDC // \| on US keyboards
+#define VK_OEM_6 0xDD // ]} on US keyboards
+#define VK_OEM_7 0xDE // '" on US keyboards
