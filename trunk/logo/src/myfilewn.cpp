@@ -658,17 +658,17 @@ bool TMyFileWindow::CanClose()
     // if changed better ask user
     if (Editor->IsModified())
     {
-        int rslt = MessageBox(
+        int result = MessageBox(
             LOCALIZED_SAVECHANGEDCONTENTSTOWORKSPACE,
             LOCALIZED_CONTENTSCHANGED,
             MB_YESNOCANCEL | MB_ICONQUESTION);
-        if (rslt == IDYES)
+        if (result == IDYES)
         {
             return Save();
         }
         else
         {
-            return rslt != IDCANCEL;
+            return result != IDCANCEL;
         }
     }
 
@@ -676,13 +676,13 @@ bool TMyFileWindow::CanClose()
 }
 
 DEFINE_RESPONSE_TABLE1(TMyFileWindow, TEditWindow)
-    EV_COMMAND(CM_EDALLEXIT, CMExit),
+    EV_COMMAND(CM_EDALLEXIT,           CMExit),
     EV_COMMAND(CM_FILESAVETOWORKSPACE, CMSaveToWorkspace),
-    EV_COMMAND(CM_FILESAVEANDEXIT, CMSaveAndExit),
-    EV_COMMAND(CM_HELP, CMHelp),
-    EV_COMMAND(CM_HELPEDIT, CMHelpEdit),
-    EV_COMMAND(CM_HELPEDIT_TOPIC, CMHelpEditTopic),
-    EV_COMMAND(CM_TEST, CMTest),
-    EV_COMMAND(CM_EDITSETFONT, CMEditSetFont),
+    EV_COMMAND(CM_FILESAVEANDEXIT,     CMSaveAndExit),
+    EV_COMMAND(CM_HELP,                CMHelp),
+    EV_COMMAND(CM_HELPEDIT,            CMHelpEdit),
+    EV_COMMAND(CM_HELPEDIT_TOPIC,      CMHelpEditTopic),
+    EV_COMMAND(CM_TEST,                CMTest),
+    EV_COMMAND(CM_EDITSETFONT,         CMEditSetFont),
     EV_WM_DESTROY,
 END_RESPONSE_TABLE;
