@@ -29,8 +29,6 @@ public:
 
 protected:
     void EvSetFocus(HWND);
-    void CmSelectAll();
-
     void SetupWindow();
     void CmOk();
     void EvSize(UINT arg1, TSize & arg2);

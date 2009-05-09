@@ -59,12 +59,6 @@ void TMiniEditor::EvSetFocus(HWND)
     m_TextField.SetFocus();
 }
 
-void TMiniEditor::CmSelectAll()
-{
-    // delegate to the Editor window
-    m_TextField.SendMessage(WM_COMMAND, CM_EDITSELECTALL, 0);
-}
-
 void TMiniEditor::SetupWindow()
 {
     TDialog::SetupWindow();
@@ -195,10 +189,8 @@ void TMiniEditor::EvSize(UINT Arg1, TSize & NewSize)
     Invalidate(true);
 }
 
-
 DEFINE_RESPONSE_TABLE1(TMiniEditor, TDialog)
     EV_WM_SETFOCUS,
     EV_WM_SIZE,
-    EV_COMMAND(CM_EDITSELECTALL, CmSelectAll),
     EV_COMMAND(IDOK, CmOk),
 END_RESPONSE_TABLE;
