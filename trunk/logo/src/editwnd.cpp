@@ -168,6 +168,7 @@ TRichEditWithPopup::SearchForwardForMatchingParen(
 {
     int bracketCount = 0;
     int parenCount   = 0;
+    int braceCount   = 0;
     char searchChar[2];
 
     // search forward for the matching close bracket/paren
@@ -192,10 +193,19 @@ TRichEditWithPopup::SearchForwardForMatchingParen(
         case '(':
             parenCount++;
             break;
+
+        case '{':
+            braceCount--;
+            break;
+
+        case '}':
+            braceCount++;
+            break;
         }
 
         if (ParenToMatch == '[' && bracketCount == 0 ||
-            ParenToMatch == '(' && parenCount   == 0)
+            ParenToMatch == '(' && parenCount   == 0 ||
+            ParenToMatch == '{' && braceCount   == 0)
         {
             UpdateCaretPosition(searchCharIndex);
             break;
@@ -211,6 +221,7 @@ TRichEditWithPopup::SearchBackwardForMatchingParen(
 {
     int bracketCount = 0;
     int parenCount   = 0;
+    int braceCount   = 0;
     char searchChar[2];
 
     // search backward for the matching bracket/paren
@@ -234,10 +245,19 @@ TRichEditWithPopup::SearchBackwardForMatchingParen(
         case '(':
             parenCount++;
             break;
+
+        case '{':
+            braceCount--;
+            break;
+
+        case '}':
+            braceCount++;
+            break;
         }
 
         if (ParenToMatch == ']' && bracketCount == 0 ||
-            ParenToMatch == ')' && parenCount   == 0)
+            ParenToMatch == ')' && parenCount   == 0 ||
+            ParenToMatch == '}' && braceCount   == 0)
         {
             UpdateCaretPosition(searchCharIndex);
             break;
@@ -247,7 +267,7 @@ TRichEditWithPopup::SearchBackwardForMatchingParen(
 
 // If the cursor is over a paren, bracket, or brace,
 // this will make the cursor jump to the matching paren,
-// brack, or brace.
+// bracket, or brace.
 void TRichEditWithPopup::CmFindMatchingParen()
 {
     int caretPosition = GetCaretPosition();
@@ -265,11 +285,13 @@ void TRichEditWithPopup::CmFindMatchingParen()
     {
     case ']':
     case ')':
+    case '}':
         SearchBackwardForMatchingParen(caretPosition, charUnderCursor[0]);
         break;
 
     case '[':
     case '(':
+    case '{':
         SearchForwardForMatchingParen(caretPosition, charUnderCursor[0]);
         break;
     }
