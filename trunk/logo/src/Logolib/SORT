@@ -1,8 +1,8 @@
-to sort.listtoword :list
+to .fmslogo.sort.listtoword :list
   op apply "word :list
 end
 
-to sort.wordtolist :word
+to .fmslogo.sort.wordtolist :word
   local "list
   make "list []
   repeat count :word [
@@ -11,31 +11,34 @@ to sort.wordtolist :word
   op :list
 end
 
-to sort.merge :sort.list1 :sort.list2 :sort.cmp
-  if empty? :sort.list1 [op :sort.list2]
-  if empty? :sort.list2 [op :sort.list1]
-  if apply :sort.cmp (list first :sort.list1 first :sort.list2) [
-     op fput first :sort.list1 sort.merge butfirst :sort.list1 :sort.list2 :sort.cmp
+to .fmslogo.sort.merge :.fmslogo.sort.list1 :.fmslogo.sort.list2 :.fmslogo.sort.cmp
+  if empty? :.fmslogo.sort.list1 [op :.fmslogo.sort.list2]
+  if empty? :.fmslogo.sort.list2 [op :.fmslogo.sort.list1]
+  if apply :.fmslogo.sort.cmp (list first :.fmslogo.sort.list1 first :.fmslogo.sort.list2) [
+     op fput first :.fmslogo.sort.list1 .fmslogo.sort.merge butfirst :.fmslogo.sort.list1 :.fmslogo.sort.list2 :.fmslogo.sort.cmp
   ]
-  op fput first :sort.list2 sort.merge :sort.list1 butfirst :sort.list2 :sort.cmp
+  op fput first :.fmslogo.sort.list2 .fmslogo.sort.merge :.fmslogo.sort.list1 butfirst :.fmslogo.sort.list2 :.fmslogo.sort.cmp
 end
 
-to sort.mergepairwise :sort.listoflists :sort.cmp
-  if empty? :sort.listoflists          [op :sort.listoflists] 
-  if empty? butfirst :sort.listoflists [op :sort.listoflists]
-  op fput (sort.merge first :sort.listoflists first butfirst :sort.listoflists :sort.cmp) (sort.mergepairwise butfirst butfirst :sort.listoflists :sort.cmp)
+to .fmslogo.sort.mergepairwise :.fmslogo.sort.listoflists :.fmslogo.sort.cmp
+  if empty? :.fmslogo.sort.listoflists          [op :.fmslogo.sort.listoflists] 
+  if empty? butfirst :.fmslogo.sort.listoflists [op :.fmslogo.sort.listoflists]
+  op fput (.fmslogo.sort.merge
+     first :.fmslogo.sort.listoflists
+     first butfirst :.fmslogo.sort.listoflists
+     :.fmslogo.sort.cmp) (.fmslogo.sort.mergepairwise butfirst butfirst :.fmslogo.sort.listoflists :.fmslogo.sort.cmp)
 end
 
-to sort.mergesort :sort.list :sort.cmp
-  if empty? :sort.list [ op :sort.list ]
-  op first cascade [empty? butfirst ?] [sort.mergepairwise ? :sort.cmp] map [(list ?)] :sort.list
+to .fmslogo.sort.mergesort :.fmslogo.sort.list :.fmslogo.sort.cmp
+  if empty? :.fmslogo.sort.list [ op :.fmslogo.sort.list ]
+  op first cascade [empty? butfirst ?] [.fmslogo.sort.mergepairwise ? :.fmslogo.sort.cmp] map [(list ?)] :.fmslogo.sort.list
 end
 
-to sort :sort.seq [:sort.cmp ifelse word? :sort.seq ["before?] ["less?]]
-  if list?  :sort.seq [op                  sort.mergesort                 :sort.seq :sort.cmp]
-  if array? :sort.seq [op listtoarray      sort.mergesort arraytolist     :sort.seq :sort.cmp]
-  if word?  :sort.seq [op sort.listtoword  sort.mergesort sort.wordtolist :sort.seq :sort.cmp]
-  op :sort.seq
+to sort :.fmslogo.sort.seq [:.fmslogo.sort.cmp ifelse word? :.fmslogo.sort.seq ["before?] ["less?]]
+  if list?  :.fmslogo.sort.seq [op                           .fmslogo.sort.mergesort                          :.fmslogo.sort.seq :.fmslogo.sort.cmp]
+  if array? :.fmslogo.sort.seq [op listtoarray               .fmslogo.sort.mergesort arraytolist              :.fmslogo.sort.seq :.fmslogo.sort.cmp]
+  if word?  :.fmslogo.sort.seq [op .fmslogo.sort.listtoword  .fmslogo.sort.mergesort .fmslogo.sort.wordtolist :.fmslogo.sort.seq :.fmslogo.sort.cmp]
+  op :.fmslogo.sort.seq
 end
 
-bury [sort sort.mergesort sort.mergepairwise sort.merge sort.listtoword sort.wordtolist]
+bury [sort .fmslogo.sort.mergesort .fmslogo.sort.mergepairwise .fmslogo.sort.merge .fmslogo.sort.listtoword .fmslogo.sort.wordtolist]

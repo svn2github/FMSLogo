@@ -24,6 +24,9 @@ II. New features/bugs fixed:
     o Fix bug #2653504; workspaces arrays with words that contain \ and |
       can now be saved and loaded.
     o Implement request #2777780; Added HASOWNPENP.
+    o Implement request #2789706; Helper procedures for SORT now begin
+      with ".fmslogo.sort" so that they don't clash with names in a
+      third-party sorting library.
     o Improvements to the Russian translation.
 
   For a complete history of changes across all versions of FMSLogo, see
