@@ -614,7 +614,6 @@ parsed__runparse(
 #define node__colon(c)          car(c)
 #define valnode__colon(c)       valnode__caseobj(node__colon(c))
 
-#define unparsed__tree(t)       t
 #define treepair__tree(t)       getobject(t)
 #define settreepair__tree(t, v) setobject(t, v)
 #define generation__tree(t)     car(treepair__tree(t))
@@ -624,7 +623,6 @@ parsed__runparse(
 
 #define unparsed__line(l)       getobject(l)
 #define generation__line(l)     (generation__tree(unparsed__line(l)))
-#define tree__line(l)           l
 
 #define cont__cont(c)           (int)car(c)
 #define val__cont(c)            cdr(c)
