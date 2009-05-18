@@ -56,16 +56,21 @@ void untreeify_line(NODE *line)
     }
 }
 
-void untreeify_body(NODE *body) {
+void untreeify_body(NODE *body)
+{
     NODE *body_ptr;
 
     for (body_ptr = body; body_ptr != NIL; body_ptr = cdr(body_ptr)) {
-	untreeify_line(car(body_ptr));
+        untreeify_line(car(body_ptr));
     }
     untreeify(body);
 }
 
 // Treeify a procedure's bodylines by appending the trees of the lines.
+//
+// is_tree(body) will return zero on error and if all body lines were empty.
+// is_tree(body) will return non-zero if the body was treeified and there was
+// at least one non-empty line within the body.
 void treeify_body(NODE *body)
 {
     if (body == NIL ||
@@ -83,47 +88,49 @@ void treeify_body(NODE *body)
         untreeify_body(body);
     }
 
-    NODE *end_ptr = NIL;
+    NODE *treelist_end = NIL;
     for (NODE * body_ptr = body; body_ptr != NIL; body_ptr = cdr(body_ptr))
     {
-        NODE * tree = car(body_ptr);
-        if (tree == NIL)
+        NODE * line = car(body_ptr);
+        if (line == NIL)
         {
             // skip blank lines or else we'd error out at is_tree()
             continue;
         }
 
         // store the current line (for error reporting)
-        assign(this_line, tree);
+        assign(this_line, line);
 
         // tree-ify this line
-        treeify_line(tree);
-        if (is_tree(tree))
+        treeify_line(line);
+        if (is_tree(line))
         {
-            tree = tree__tree(tree);
-            make_line(tree, car(body_ptr));
+            NODE * tree = tree__tree(line);
+            make_line(tree, line);
 
-            // append "tree" to the end of body's tree list
-            if (end_ptr == NIL)
+            // append the treeified line to the end of body's tree list
+            if (treelist_end == NIL)
             {
                 settree__tree(body, tree);
             }
             else
             {
-                setcdr(end_ptr, tree);
+                setcdr(treelist_end, tree);
             }
 
-            if (generation__tree(car(body_ptr)) == Unbound)
+            // If the current line needs to be re-treeified later, then
+            // flag the firt line in the tree as needing to be re-treeified.
+            if (generation__tree(line) == Unbound)
             {
                 setgeneration__tree(body, Unbound);
             }
 
-            // advance end_ptr to the end of body's tree list
+            // advance treelist_end to the end of body's tree list
             while (cdr(tree) != NIL)
             {
                 tree = cdr(tree);
             }
-            end_ptr = tree;
+            treelist_end = tree;
         }
         else
         {
@@ -133,8 +140,22 @@ void treeify_body(NODE *body)
         }
     }
 
-    // body is now tree-ified
-    settype(body, TREE);
+    if (treelist_end != NIL)
+    {
+        // body can not be considered "treeified" unless there was at least one
+        // line to treeify so that treepair__tree() is not NIL.
+        // To a caller that only checks the status of this function by calling
+        // is_tree(body), this looks the same as an error.
+        // This is okay because the evaulator considers a treeification error
+        // the same as a body consisting of only empty lines
+        // (there's nothing to evaulate in either case).
+        //
+        // REVISIT: Fix the evaluator to handle when
+        //     is_tree(body) && treepair__tree(body)==NIL
+        // so that we can more clearly distinguish between the error case and
+        // the "empty tree" case.
+        settype(body, TREE);
+    }
 }
 
 
@@ -418,6 +439,7 @@ NODE *gather_args(NODE *proc, NODE **args, bool inparen, NODE **ifnode)
 }
 
 // Treeify a list of tokens (runparsed or not).
+// On success is_tree(newtree) will be non-zero.
 void treeify_line(NODE *newtree)
 {
 

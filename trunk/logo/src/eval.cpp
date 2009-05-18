@@ -751,15 +751,13 @@ NODE *evaluator(NODE *list, enum labels where)
     treeify_body(list);
     if (!is_tree(list))
     {
-        assign(val, Unbound);
-        goto fetch_cont;
-    }
-
-    if (treepair__tree(list) == NIL)
-    {
-        // The function body consisted of nothing by empty lines.
-        // Trying to evaluate this function would crash, but we can
-        // instead ignore this function call, since it is a no-op.
+        // Either there was some error when treeifyng the body
+        // or the body consisted of nothing by empty lines.
+        // In the first case, we want to jump to the next phase
+        // in the evaulator so that we can error-out.
+        // In the second case, trying to evaluate this function
+        // would crash, but we can instead ignore this function
+        // call, since it is a no-op.
         assign(val, Unbound);
         goto fetch_cont;
     }

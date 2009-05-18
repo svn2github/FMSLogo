@@ -23,6 +23,7 @@ II. New features/bugs fixed:
   * Added for 6.24.0
     o Fix bug #2653504; workspaces arrays with words that contain \ and |
       can now be saved and loaded.
+    o Fix bug #2790076; DEFINE "PROC [[][]] PROC PROC no longer crashes.
     o Implement request #2777780; Added HASOWNPENP.
     o Implement request #2789706; Helper procedures for SORT now begin
       with ".fmslogo.sort" so that they don't clash with names in a
