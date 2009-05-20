@@ -191,6 +191,7 @@
 #define CM_EDITALL              CMD_BASE + 100
 
 #define CM_FINDMATCHINGPAREN    CMD_BASE + 110
+#define CM_SELECTMATCHINGPAREN  CMD_BASE + 111
 
 #define WM_MYSCROLLBARCALLBACK         WM_USER + 0
 #define WM_CHECKQUEUE                  WM_USER + 1

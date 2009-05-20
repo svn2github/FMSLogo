@@ -160,7 +160,7 @@ void TRichEditWithPopup::UpdateCaretPosition(uint32 NewCaretIndex)
     SetCaretPosition(NewCaretIndex);
 }
 
-void
+int
 TRichEditWithPopup::SearchForwardForMatchingParen(
     int  CaretPosition,
     char ParenToMatch
@@ -207,13 +207,14 @@ TRichEditWithPopup::SearchForwardForMatchingParen(
             ParenToMatch == '(' && parenCount   == 0 ||
             ParenToMatch == '{' && braceCount   == 0)
         {
-            UpdateCaretPosition(searchCharIndex);
-            break;
+            return searchCharIndex;
         }
     }
+
+    return -1;
 }
 
-void
+int
 TRichEditWithPopup::SearchBackwardForMatchingParen(
     int  CaretPosition,
     char ParenToMatch
@@ -259,10 +260,11 @@ TRichEditWithPopup::SearchBackwardForMatchingParen(
             ParenToMatch == ')' && parenCount   == 0 ||
             ParenToMatch == '}' && braceCount   == 0)
         {
-            UpdateCaretPosition(searchCharIndex);
-            break;
+            return searchCharIndex;
         }
     }
+
+    return -1;
 }
 
 // If the cursor is over a paren, bracket, or brace,
@@ -279,6 +281,8 @@ void TRichEditWithPopup::CmFindMatchingParen()
         return;
     }
 
+    int matchingParenIndex = -1;
+
     char charUnderCursor[2];
     GetSubText(charUnderCursor, caretPosition, caretPosition + 1);
     switch (charUnderCursor[0])
@@ -286,18 +290,71 @@ void TRichEditWithPopup::CmFindMatchingParen()
     case ']':
     case ')':
     case '}':
-        SearchBackwardForMatchingParen(caretPosition, charUnderCursor[0]);
+        matchingParenIndex = SearchBackwardForMatchingParen(
+            caretPosition,
+            charUnderCursor[0]);
         break;
 
     case '[':
     case '(':
     case '{':
-        SearchForwardForMatchingParen(caretPosition, charUnderCursor[0]);
+        matchingParenIndex = SearchForwardForMatchingParen(
+            caretPosition,
+            charUnderCursor[0]);
         break;
+    }
+
+    if (matchingParenIndex != -1)
+    {
+        UpdateCaretPosition(matchingParenIndex);
     }
 }
 
+// If the cursor is over a paren, bracket, or brace,
+// this will set the selection to the include everything
+// between the two parens.
+void TRichEditWithPopup::CmSelectMatchingParen()
+{
+    int caretPosition = GetCaretPosition();
+    if (caretPosition == -1)
+    {
+        // We cannot determine where the caret it,
+        // so it's impossible to determine the paren that
+        // matches the character at the caret.
+        return;
+    }
 
+    int matchingParenIndex = -1;
+
+    char charUnderCursor[2];
+    GetSubText(charUnderCursor, caretPosition, caretPosition + 1);
+    switch (charUnderCursor[0])
+    {
+    case ']':
+    case ')':
+    case '}':
+        matchingParenIndex = SearchBackwardForMatchingParen(
+            caretPosition,
+            charUnderCursor[0]);
+        if (matchingParenIndex != -1)
+        {
+            SetSelection(caretPosition + 1, matchingParenIndex);
+        }
+        break;
+
+    case '[':
+    case '(':
+    case '{':
+        matchingParenIndex = SearchForwardForMatchingParen(
+            caretPosition,
+            charUnderCursor[0]);
+        if (matchingParenIndex != -1)
+        {
+            SetSelection(caretPosition, matchingParenIndex + 1);
+        }
+        break;
+    }
+}
 
 DEFINE_RESPONSE_TABLE1(TRichEditWithPopup, TRichEdit)
     EV_WM_RBUTTONUP,
@@ -305,6 +362,7 @@ DEFINE_RESPONSE_TABLE1(TRichEditWithPopup, TRichEdit)
     EV_COMMAND(CM_EDITSELECTALL,        CmSelectAll),
     EV_COMMAND(CM_HELPEDIT_TOPIC,       CmHelpEditTopic),
     EV_COMMAND(CM_FINDMATCHINGPAREN,    CmFindMatchingParen),
+    EV_COMMAND(CM_SELECTMATCHINGPAREN,  CmSelectMatchingParen),
     EV_COMMAND_ENABLE(CM_EDITSELECTALL, CmSelectAllEnable),
 END_RESPONSE_TABLE;
 

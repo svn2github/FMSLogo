@@ -43,14 +43,15 @@ protected:
     void CmSelectAllEnable(TCommandEnabler& commandHandler);
 
     void EvRButtonUp(UINT, TPoint &);
-    void CmPasteAsText();   // CM_PASTE
-    void CmFindMatchingParen();
+    void CmPasteAsText();         // CM_PASTE
+    void CmFindMatchingParen();   // CM_FINDMATCHINGPAREN 
+    void CmSelectMatchingParen(); // CM_SELECTMATCHINGPAREN 
 
     int GetCaretPosition();
     void SetCaretPosition(uint32 CaretCharIndex);
     void UpdateCaretPosition(uint32 CaretCharIndex);
-    void SearchForwardForMatchingParen(int CaretPosition, char ParenToMatch);
-    void SearchBackwardForMatchingParen(int CaretPosition, char ParenToMatch);
+    int SearchForwardForMatchingParen(int CaretPosition, char ParenToMatch);
+    int SearchBackwardForMatchingParen(int CaretPosition, char ParenToMatch);
 
     TPopupMenu PopupMenu;
 
