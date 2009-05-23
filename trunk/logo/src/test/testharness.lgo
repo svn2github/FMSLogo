@@ -125,6 +125,7 @@ LOAD "cascade.lgo
 LOAD "commandline.lgo
 LOAD "random.lgo
 LOAD "workspace.lgo
+LOAD "runparse.lgo
 
 TO TESTALL
 
@@ -135,6 +136,7 @@ TO TESTALL
   LOADTEST            ; from load.lgo
   RUNTEST             ; from run.lgo
   RUNRESULTTEST       ; from runresult.lgo
+  RUNPARSETEST        ; from runparse.lgo
   TOTEST              ; from to.lgo
   ERRORTEST           ; from error.lgo
   ERRACTTEST          ; from erract.lgo
