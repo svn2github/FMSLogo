@@ -1,14 +1,15 @@
 <section id="command-lessequalp">
 <title>LESSEQUALP</title>
 <indexterm><primary>LESSEQUALP</primary></indexterm>
+<indexterm><primary>&lt;=</primary></indexterm>
 
 <variablelist>
 
 <varlistentry><term>Synopsis</term>
 <listitem>
 <synopsis><command>LESSEQUALP</command> <parameter>num1</parameter> <parameter>num2</parameter>
-<command>LESSEQUAL?</command> <parameter>num1</parameter> <parameter>num2</parameter><!--
-<parameter>num1</parameter> <command>&lt;=</command> <parameter>num2</parameter>--></synopsis>
+<command>LESSEQUAL?</command> <parameter>num1</parameter> <parameter>num2</parameter>
+<parameter>num1</parameter> <command>&lt;=</command> <parameter>num2</parameter></synopsis>
 </listitem>
 </varlistentry>
 
@@ -22,11 +23,10 @@ Outputs FALSE, otherwise.
 </varlistentry>
 
 <varlistentry><term>Example</term>
-<listitem><!--
+<listitem>
 <programlisting><userinput>SHOW 1 &lt;= 2</userinput>
 true
 </programlisting>
-</programlisting>-->
 <programlisting><userinput>SHOW LESSEQUALP 1 2</userinput>
 true
 </programlisting>

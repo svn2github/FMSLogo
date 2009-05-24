@@ -1,14 +1,15 @@
 <section id="command-notequalp">
 <title>NOTEQUALP</title>
 <indexterm><primary>NOTEQUALP</primary></indexterm>
+<indexterm><primary>&lt;></primary></indexterm>
 
 <variablelist>
 
 <varlistentry><term>Synopsis</term>
 <listitem>
 <synopsis><command>NOTEQUALP</command> <parameter>thing1</parameter> <parameter>thing2</parameter>
-<command>NOTEQUAL?</command> <parameter>thing1</parameter> <parameter>thing2</parameter><!--
-<parameter>thing1</parameter> <command>&lt;></command><parameter>thing2</parameter>--></synopsis>
+<command>NOTEQUAL?</command> <parameter>thing1</parameter> <parameter>thing2</parameter>
+<parameter>thing1</parameter> <command>&lt;></command> <parameter>thing2</parameter></synopsis>
 </listitem>
 </varlistentry>
 
@@ -32,6 +33,9 @@ An array is only equal to itself; two separately created arrays are never equal 
 
 <varlistentry><term>Example</term>
 <listitem>
+
+<programlisting><userinput>SHOW 1 &lt;> 1</userinput>
+false</programlisting>
 
 <programlisting><userinput>SHOW NOTEQUALP 1 1</userinput>
 false</programlisting>

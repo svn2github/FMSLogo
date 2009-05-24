@@ -1,14 +1,15 @@
 <section id="command-greaterequalp">
 <title>GREATEREQUALP</title>
 <indexterm><primary>GREATEREQUALP</primary></indexterm>
+<indexterm><primary>>=</primary></indexterm>
 
 <variablelist>
 
 <varlistentry><term>Synopsis</term>
 <listitem>
 <synopsis><command>GREATEREQUALP</command> <parameter>num1</parameter> <parameter>num2</parameter>
-<command>GREATEREQUAL?</command> <parameter>num1</parameter> <parameter>num2</parameter><!--
-<parameter>num1</parameter> <command>&gt;=</command> <parameter>num2</parameter>--></synopsis>
+<command>GREATEREQUAL?</command> <parameter>num1</parameter> <parameter>num2</parameter>
+<parameter>num1</parameter> <command>&gt;=</command> <parameter>num2</parameter></synopsis>
 </listitem>
 </varlistentry>
 
@@ -22,10 +23,10 @@ Outputs FALSE, otherwise.
 </varlistentry>
 
 <varlistentry><term>Example</term>
-<listitem><!--
-<programlisting><userinput>SHOW 1 &gt; 2</userinput>
-false
-</programlisting>-->
+<listitem>
+<programlisting><userinput>SHOW 1 &gt;= 1</userinput>
+true
+</programlisting>
 <programlisting><userinput>SHOW GREATEREQUALP 1 1</userinput>
 true
 </programlisting>
