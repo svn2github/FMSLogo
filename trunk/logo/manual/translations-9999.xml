@@ -619,6 +619,14 @@
        <entry>pseudo.halt</entry>
      </row>
      <row>
+       <entry><link linkend='command-hasownpenp'>hasownpen?</link></entry>
+       <entry>pseudo.hasownpen?</entry>
+     </row>
+     <row>
+       <entry><link linkend='command-hasownpenp'>hasownpenp</link></entry>
+       <entry>pseudo.hasownpenp</entry>
+     </row>
+     <row>
        <entry><link linkend='command-heading'>heading</link></entry>
        <entry>pseudo.heading</entry>
      </row>
@@ -2506,6 +2514,14 @@
      <row>
        <entry>pseudo.halt</entry>
        <entry><link linkend='command-halt'>halt</link></entry>
+     </row>
+     <row>
+       <entry>pseudo.hasownpen?</entry>
+       <entry><link linkend='command-hasownpenp'>hasownpen?</link></entry>
+     </row>
+     <row>
+       <entry>pseudo.hasownpenp</entry>
+       <entry><link linkend='command-hasownpenp'>hasownpenp</link></entry>
      </row>
      <row>
        <entry>pseudo.heading</entry>

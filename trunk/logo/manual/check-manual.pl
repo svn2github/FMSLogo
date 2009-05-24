@@ -92,6 +92,7 @@ $AlternateSpellings{FORWARD}        = ['FD'];
 $AlternateSpellings{FULLSCREEN}     = ['FS'];
 $AlternateSpellings{GREATEREQUALP}  = ['GREATEREQUAL?', '>='];
 $AlternateSpellings{GREATERP}       = ['GREATER?', '>'];
+$AlternateSpellings{HASOWNPENP}     = ['HASOWNPEN?'];
 $AlternateSpellings{HIDETURTLE}     = ['HT'];
 $AlternateSpellings{IFFALSE}        = ['IFF'];
 $AlternateSpellings{IFTRUE}         = ['IFT'];
