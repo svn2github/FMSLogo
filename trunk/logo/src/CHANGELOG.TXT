@@ -1,148 +1,162 @@
 This file contains the changes that were made in each revision of FMSLogo.
 
- * Added for 6.23.0
-  o Fix bug #2563317; READCHARS 2000000000 no longer crashes.
-  o Fix bug #2559673; READCHARS now outputs the remaining characters in a
-    file when asked to read more than the file contains.
-  o Fix bug #2517774; PO now prints blank lines when printing to commander.
-  o Fix bug #2516248; READWORD output can now be safely stored in a variable.
-  o Fix bug #2452726; BITLOAD, BITSAVE, BITLOADSIZE, GIFLOAD, GIFSAVE, and
-    GIFSIZE now throw image-specific errors and no longer display dialog
-    boxes when given bad input.
-  o Fix bug #2452240; COPYDEF now updates the TO line of new procedure.
-  o Fix bug #1619210; Non-English versions now throw unexpected ender errors.
-  o Fix bug #1622756; SETBITMODE now throws a recoverable bad input error
-    when given an integer that is out-of-range.
-  o Fix bug #1620964; SETTURTLEMODE now throws a recoverable bad input error
-    when given an integer that is out-of-range.
-  o Fix bug #1500676; Windowing procedures now throw windowing-specific
-    errors and no longer display dialog boxes.
-  o Fix bug #1497079; SETTIMER and CLEARTIMER now throw appropriate errors
-    and no longer display dialog boxes when given bad input.
-  o Fix bug #1475223; MIDI procedures now throw MIDI-specific errors and
-    no longer display dialog boxes.
-  o Fix bug #1475214; MIDIOPEN no longer opens MIDI mapper when given bad
-    input.
-  o Fix bug #1448111; DLLLOAD, DLLCALL, and DLLFREE now throw DLL-specific
-    errors and no longer display dialog boxes.
-  o Fix bug #1448107; SETACTIVEAREA now throws a bad input error when given
-    an impossible range and no longer displays a dialog box.
-  o Fix bug #1452861; Disable data execution prevention on a best-effort
-    basis to prevent FMSLogo from crashing on startup.
-  o Minor updates to the manual.
-  o Added a Russian translation.
+Added for 6.24.0
+o Fix bug #2653504; workspaces arrays with words that contain \ and |
+  can now be saved and loaded.
+o Fix bug #2790076; DEFINE "PROC [[][]] PROC PROC no longer crashes.
+o Implement request #2777780; Added HASOWNPENP.
+o Implement request #2789706; Helper procedures for SORT now begin
+  with ".fmslogo.sort" so that they don't clash with names in a
+  third-party sorting library.
+o Partially implement request #1828287; CTRL+] in the editor moves
+  the caret to the matching parenthesis.  CTRL+SHIFT+] selects
+  everything through the matching parenthesis.
+o Minor improvements to the manual.
+o Improvements to the Russian translation.
 
-* Added for 6.22.0
-  o Implement request #1955758; turtles may optionally have their own pen
-    state.
-  o Implement request #1947329; FMSLogo now supports loading more than one
-    DLL with DLLLOAD.
-  o Minor updates to the Greek translations.
-  o Minor updates to the manual.
+Added for 6.23.0
+o Fix bug #2563317; READCHARS 2000000000 no longer crashes.
+o Fix bug #2559673; READCHARS now outputs the remaining characters in a
+  file when asked to read more than the file contains.
+o Fix bug #2517774; PO now prints blank lines when printing to commander.
+o Fix bug #2516248; READWORD output can now be safely stored in a variable.
+o Fix bug #2452726; BITLOAD, BITSAVE, BITLOADSIZE, GIFLOAD, GIFSAVE, and
+  GIFSIZE now throw image-specific errors and no longer display dialog
+  boxes when given bad input.
+o Fix bug #2452240; COPYDEF now updates the TO line of new procedure.
+o Fix bug #1619210; Non-English versions now throw unexpected ender errors.
+o Fix bug #1622756; SETBITMODE now throws a recoverable bad input error
+  when given an integer that is out-of-range.
+o Fix bug #1620964; SETTURTLEMODE now throws a recoverable bad input error
+  when given an integer that is out-of-range.
+o Fix bug #1500676; Windowing procedures now throw windowing-specific
+  errors and no longer display dialog boxes.
+o Fix bug #1497079; SETTIMER and CLEARTIMER now throw appropriate errors
+  and no longer display dialog boxes when given bad input.
+o Fix bug #1475223; MIDI procedures now throw MIDI-specific errors and
+  no longer display dialog boxes.
+o Fix bug #1475214; MIDIOPEN no longer opens MIDI mapper when given bad
+  input.
+o Fix bug #1448111; DLLLOAD, DLLCALL, and DLLFREE now throw DLL-specific
+  errors and no longer display dialog boxes.
+o Fix bug #1448107; SETACTIVEAREA now throws a bad input error when given
+  an impossible range and no longer displays a dialog box.
+o Fix bug #1452861; Disable data execution prevention on a best-effort
+  basis to prevent FMSLogo from crashing on startup.
+o Minor updates to the manual.
+o Added a Russian translation.
 
-* Added for 6.21.0
-  o Fix bug #1961616; BITPASTETOINDEX now throws a bad input error when
-    the index is not a positive integer, instead of displaying a confusing
-    dialog box and throwing a stoppping error.
-  o Fix bug #1959250; SETBITINDEX no longer changes BITINDEX on bad input.
-  o Implement request #1542399; FMSLogo is no longer limited to
-    1024 turtles or 1024 bitmaps.
-  o Implement request #1377915; FMSLogo manual is now consistent in how it
-    uses terms like "command", "instruction", and "item".
-  o Minor updates to the manual.
+Added for 6.22.0
+o Implement request #1955758; turtles may optionally have their own pen
+  state.
+o Implement request #1947329; FMSLogo now supports loading more than one
+  DLL with DLLLOAD.
+o Minor updates to the Greek translations.
+o Minor updates to the manual.
 
-* Added for 6.20.0
-  o Fix bug #1910177; WAIT now throws a bad input error when given input
-    in the range <-1,0>, instead of doing nothing.
-  o Fix bug #1900691; Whitespace after ~ is now preserved when
-    the ~ is not a continuation character.
-  o Fix bug #1669735; FOREACH now throws a "not enough inputs" error when
-    given fewer than two inputs.
-  o Fix bug #1607580; SETACTIVEAREA no longer changes ACTIVEAREA when
-    given bad input.
-  o Fix bug #1599122; ZOOM now throws a bad input error when it inputs
-    a non-positive value, instead of silently changing it to 1.
-  o Fix bug #1551634; Integrate some MCI examples into the manual and
-    remove the "Help -> MCI" and "Help - Using Help" menu options to
-    remove final remnants of the defunct .hlp format.
-  o Fix bug #1518558; Running "5*" now throws a "not enough inputs to *"
-    error, instead of a "* doesn't like [] as input" error.
-  o Implement request #1423937; FMSLogo no longer requires the -L on the
-    command line to load a logo file on startup.  This makes it easier
-    to create file associations and allows you to drag-and-drop a Logo
-    program on an FMSLogo desktop shortcut.
-  o Minor updates to the manual.
+Added for 6.21.0
+o Fix bug #1961616; BITPASTETOINDEX now throws a bad input error when
+  the index is not a positive integer, instead of displaying a confusing
+  dialog box and throwing a stoppping error.
+o Fix bug #1959250; SETBITINDEX no longer changes BITINDEX on bad input.
+o Implement request #1542399; FMSLogo is no longer limited to
+  1024 turtles or 1024 bitmaps.
+o Implement request #1377915; FMSLogo manual is now consistent in how it
+  uses terms like "command", "instruction", and "item".
+o Minor updates to the manual.
 
-* Added for 6.19.0
-  o Fix bug #1867803; The names of the special variables CASEIGNOREDP,
-    ERRACT, STARTUP, REDEFP, PRINTWIDTHLIMIT, and PRINTDEPTHLIMIT
-    are now internationalized.
-  o Fix bug #1803793; The string "N/A" for Palette in Status window
-    is now internationalized.
-  o Fix bug #1803975; Output from DEBUGWINDOWS is now internationalized.
-  o Fix bug #1661228; MDSETITEM now throws an error when the indexlist
-    input is not a list.
-  o Fix bug #1661229; MDSETITEM now throws an error when given bad inputs.
-  o Fix bug #1661227; MDITEM now throws an error when given bad inputs.
-  o Fix bug #1661226; MDARRAY now throws an error when given bad inputs.
-  o Fix bug #1652783; Out of bounds index errors in ITEM are now recoverable.
-  o Minor improvements to the German translation.
-  o Minor improvements to the Spanish translation.
-  o Minor improvements to the manual.
+Added for 6.20.0
+o Fix bug #1910177; WAIT now throws a bad input error when given input
+  in the range <-1,0>, instead of doing nothing.
+o Fix bug #1900691; Whitespace after ~ is now preserved when
+  the ~ is not a continuation character.
+o Fix bug #1669735; FOREACH now throws a "not enough inputs" error when
+  given fewer than two inputs.
+o Fix bug #1607580; SETACTIVEAREA no longer changes ACTIVEAREA when
+  given bad input.
+o Fix bug #1599122; ZOOM now throws a bad input error when it inputs
+  a non-positive value, instead of silently changing it to 1.
+o Fix bug #1551634; Integrate some MCI examples into the manual and
+  remove the "Help -> MCI" and "Help - Using Help" menu options to
+  remove final remnants of the defunct .hlp format.
+o Fix bug #1518558; Running "5*" now throws a "not enough inputs to *"
+  error, instead of a "* doesn't like [] as input" error.
+o Implement request #1423937; FMSLogo no longer requires the -L on the
+  command line to load a logo file on startup.  This makes it easier
+  to create file associations and allows you to drag-and-drop a Logo
+  program on an FMSLogo desktop shortcut.
+o Minor updates to the manual.
 
-* Added for 6.18.0
-  o Implement request #1825717; LOGOVERSION now outputs the locale for
-    which FMSLogo was built.
-  o Fix bug #1825718; DEMO is now internationalized and localized for German.
-  o Fix bug #1824438; FMSLogo can now parse words with char 255 in them.
-  o Minor improvements to the Portuguese translation.
-  o Minor improvements to the German translation.
-  o Minor improvements to the Spanish translation.
-  o Minor improvements to the manual.
+Added for 6.19.0
+o Fix bug #1867803; The names of the special variables CASEIGNOREDP,
+  ERRACT, STARTUP, REDEFP, PRINTWIDTHLIMIT, and PRINTDEPTHLIMIT
+  are now internationalized.
+o Fix bug #1803793; The string "N/A" for Palette in Status window
+  is now internationalized.
+o Fix bug #1803975; Output from DEBUGWINDOWS is now internationalized.
+o Fix bug #1661228; MDSETITEM now throws an error when the indexlist
+  input is not a list.
+o Fix bug #1661229; MDSETITEM now throws an error when given bad inputs.
+o Fix bug #1661227; MDITEM now throws an error when given bad inputs.
+o Fix bug #1661226; MDARRAY now throws an error when given bad inputs.
+o Fix bug #1652783; Out of bounds index errors in ITEM are now recoverable.
+o Minor improvements to the German translation.
+o Minor improvements to the Spanish translation.
+o Minor improvements to the manual.
 
-* Added for 6.17.0
-  o Fix bug #1813051; Saving an image with an non-full active area
-    works once again.  This bug was introduced in 6.16.0.
-  o Fix bug #1798216; THROW targets "TOPLEVEL, "ERROR, and "SYSTEM are
-    now internationalized.
-  o Fix bug #1713912; Uninstalling FMSLogo as a limited user now
-    unregisters the file association so that double-clicking on .lgo
-    files works if FMSLogo is later installed by an administrator.
-  o Add a German translation of FMSLogo.
-  o Add an Italian translation of FMSLogo.
+Added for 6.18.0
+o Implement request #1825717; LOGOVERSION now outputs the locale for
+  which FMSLogo was built.
+o Fix bug #1825718; DEMO is now internationalized and localized for German.
+o Fix bug #1824438; FMSLogo can now parse words with char 255 in them.
+o Minor improvements to the Portuguese translation.
+o Minor improvements to the German translation.
+o Minor improvements to the Spanish translation.
+o Minor improvements to the manual.
 
-* Added for 6.16.1
-  o Fix bug #1799027; BITBLOCK no longer leaks an HBRUSH.  This resource leak
-    resulted in strange functional behavior when running tetrads, followed by 
-    an access violation.
-  o Fix internationalization problems with the examples.  Some of them didn't
-    work with the Portuguese version of FMSLogo.
+Added for 6.17.0
+o Fix bug #1813051; Saving an image with an non-full active area
+  works once again.  This bug was introduced in 6.16.0.
+o Fix bug #1798216; THROW targets "TOPLEVEL, "ERROR, and "SYSTEM are
+  now internationalized.
+o Fix bug #1713912; Uninstalling FMSLogo as a limited user now
+  unregisters the file association so that double-clicking on .lgo
+  files works if FMSLogo is later installed by an administrator.
+o Add a German translation of FMSLogo.
+o Add an Italian translation of FMSLogo.
 
-* Added for 6.16.0
-  o Fix bug #1765108; MACHINE now outputs the correct working area,
-    even if it changed.  FMSLogo also now positions new windows in the
-    working area, even if the size of the desktop or taskbar has changed.
-  o Fix bug #1735569; When the clipboard contains text, running BITMAPTURTLE
-    no longer prevents subsequent calls to BITMAPTURTLE from working.
-  o Fix bug #1622721; FMSLogo no longer gets into a bad state when the
-    clipboard becomes text.
-  o Fix bug #1619211; Bad input errors in library routines are now
-    internationalized.
-  o Fix bug #1609333; "Select Active Area" dialog box no longer loses
-    UI elements after pressing CTRL+ALT+DELETE.
-  o Improve the performance of line drawing by 12% and circle drawing by 60%.
-  o Add a Portuguese translation of FMSLogo.
+Added for 6.16.1
+o Fix bug #1799027; BITBLOCK no longer leaks an HBRUSH.  This resource leak
+  resulted in strange functional behavior when running tetrads, followed by 
+  an access violation.
+o Fix internationalization problems with the examples.  Some of them didn't
+  work with the Portuguese version of FMSLogo.
 
-* Added for 6.15.0
-  o Fix bug #1732803; TRACE now properly traces "rest" inputs.
-  o Fix bug #1602928; Turtle now draw a dot at both endpoints of a movement,
-    instead of just at one of them.  This fixes little dots that used to
-    get left behind when changing the pen color and moving backward to erase
-    the line you just drew.
-  o Implement request #1700894; "File - Save to Workspace" no longer appears
-    in the editor's menu in non-expert mode.
-  o Implement request #1736883; Updated ` (backtick) to latest from UCBLogo.
-  o Minor updates to the manual.
+Added for 6.16.0
+o Fix bug #1765108; MACHINE now outputs the correct working area,
+  even if it changed.  FMSLogo also now positions new windows in the
+  working area, even if the size of the desktop or taskbar has changed.
+o Fix bug #1735569; When the clipboard contains text, running BITMAPTURTLE
+  no longer prevents subsequent calls to BITMAPTURTLE from working.
+o Fix bug #1622721; FMSLogo no longer gets into a bad state when the
+  clipboard becomes text.
+o Fix bug #1619211; Bad input errors in library routines are now
+  internationalized.
+o Fix bug #1609333; "Select Active Area" dialog box no longer loses
+  UI elements after pressing CTRL+ALT+DELETE.
+o Improve the performance of line drawing by 12% and circle drawing by 60%.
+o Add a Portuguese translation of FMSLogo.
+
+Added for 6.15.0
+o Fix bug #1732803; TRACE now properly traces "rest" inputs.
+o Fix bug #1602928; Turtle now draw a dot at both endpoints of a movement,
+  instead of just at one of them.  This fixes little dots that used to
+  get left behind when changing the pen color and moving backward to erase
+  the line you just drew.
+o Implement request #1700894; "File - Save to Workspace" no longer appears
+  in the editor's menu in non-expert mode.
+o Implement request #1736883; Updated ` (backtick) to latest from UCBLogo.
+o Minor updates to the manual.
 
 Added for 6.14.0
 o Fix bug #1688926; '-1e-16 < 0' once again outputs true.
