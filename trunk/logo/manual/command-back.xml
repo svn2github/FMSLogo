@@ -1,6 +1,7 @@
 <section id="command-back">
-    <title>BACK</title>
+<title>BACK</title>
 <indexterm><primary>BACK</primary></indexterm>
+<indexterm><primary>BK</primary></indexterm>
 
 <variablelist>
 
@@ -22,7 +23,7 @@ The heading of the turtle does not change.
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>REPEAT 4 [BACK 100 RIGHT 90]</userinput>
+<programlisting><userinput>REPEAT 4 [BACK 100 RIGHT 90]</userinput>
 </programlisting>
 </listitem>
 </varlistentry>
