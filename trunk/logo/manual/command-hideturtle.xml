@@ -1,6 +1,7 @@
 <section id="command-hideturtle">
-    <title>HIDETURTLE</title>
+<title>HIDETURTLE</title>
 <indexterm><primary>HIDETURTLE</primary></indexterm>
+<indexterm><primary>HT</primary></indexterm>
 
 <variablelist>
 
@@ -14,7 +15,8 @@
 <varlistentry><term>Description</term>
 <listitem>
 <para>
-Makes the turtle invisible.  To make the turtle visible again, call <link linkend="command-showturtle">SHOWTURTLE</link>.
+Makes the turtle invisible.
+To make the turtle visible again, call <link linkend="command-showturtle">SHOWTURTLE</link>.
 </para>
 
 <para>
@@ -25,7 +27,7 @@ It's a good idea to hide the turtle just before you start a complicated drawing,
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>HIDETURTLE
+<programlisting><userinput>HIDETURTLE
 SHOWTURTLE</userinput>
 </programlisting>
 
@@ -33,5 +35,4 @@ SHOWTURTLE</userinput>
 </varlistentry>
 
 </variablelist>
-
 </section>

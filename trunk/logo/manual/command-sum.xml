@@ -1,6 +1,7 @@
 <section id="command-sum">
-    <title>SUM</title>
+<title>SUM</title>
 <indexterm><primary>SUM</primary></indexterm>
+<indexterm><primary>+</primary></indexterm>
 
 <variablelist>
 
@@ -22,7 +23,7 @@ Outputs the sum of its inputs.  If no inputs are given, then SUM outputs 0.
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>SHOW 2 + 3</userinput>
+<programlisting><userinput>SHOW 2 + 3</userinput>
 5
 </programlisting>
 <programlisting><userinput>SHOW (SUM 1 2 3)</userinput>

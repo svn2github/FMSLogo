@@ -33,7 +33,6 @@
   <!ENTITY networking-commands       SYSTEM "networking-commands.xml">
   <!ENTITY multimedia-commands       SYSTEM "multimedia-commands.xml">
   <!ENTITY media-control-interface   SYSTEM "media-control-interface.xml">
-  <!ENTITY abbreviations             SYSTEM "abbreviations.xml">
   <!ENTITY glossary                  SYSTEM "glossary.xml">
   <!ENTITY translations              SYSTEM "translations.xml">
 
@@ -635,7 +634,6 @@
   &bitmap-commands;
   &networking-commands;
   &multimedia-commands;
-  &abbreviations;
   &translations;
   &glossary;
 

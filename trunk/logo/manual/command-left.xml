@@ -1,6 +1,7 @@
 <section id="command-left">
-    <title>LEFT</title>
+<title>LEFT</title>
 <indexterm><primary>LEFT</primary></indexterm>
+<indexterm><primary>LT</primary></indexterm>
 
 <variablelist>
 
@@ -21,11 +22,10 @@ Turns the turtle counterclockwise by the specified angle, measured in degrees (1
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>REPEAT 3 [FORWARD 100 LEFT 120]</userinput>
+<programlisting><userinput>REPEAT 3 [FORWARD 100 LEFT 120]</userinput>
 </programlisting>
 </listitem>
 </varlistentry>
 
 </variablelist>
-
 </section>

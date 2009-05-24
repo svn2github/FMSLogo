@@ -1,6 +1,7 @@
 <section id="command-uppitch">
-    <title>UPPITCH</title>
+<title>UPPITCH</title>
 <indexterm><primary>UPPITCH</primary></indexterm>
+<indexterm><primary>UP</primary></indexterm>
 
 <variablelist>
 
@@ -24,7 +25,7 @@ UPPITCH is designed to run in <link linkend="command-perspective">PERSPECTIVE</l
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>PERSPECTIVE
+<programlisting><userinput>PERSPECTIVE
 UPPITCH 45
 REPEAT 3 [FORWARD 100 LEFT 120]</userinput>
 </programlisting>

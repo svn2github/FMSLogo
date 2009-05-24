@@ -1,12 +1,14 @@
 <section id="command-output">
-    <title>OUTPUT</title>
+<title>OUTPUT</title>
 <indexterm><primary>OUTPUT</primary></indexterm>
+<indexterm><primary>OP</primary></indexterm>
 
 <variablelist>
 
 <varlistentry><term>Synopsis</term>
 <listitem>
-<synopsis><command>OUTPUT</command> <parameter>value</parameter></synopsis>
+<synopsis><command>OUTPUT</command> <parameter>value</parameter>
+<command>OP</command> <parameter>value</parameter></synopsis>
 </listitem>
 </varlistentry>
 

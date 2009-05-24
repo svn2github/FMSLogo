@@ -1,6 +1,7 @@
 <section id="command-quotient">
-    <title>QUOTIENT</title>
+<title>QUOTIENT</title>
 <indexterm><primary>QUOTIENT</primary></indexterm>
+<indexterm><primary>/</primary></indexterm>
 
 <variablelist>
 
@@ -34,7 +35,7 @@ It is an error to call QUOTIENT with a <parameter>divisor</parameter> of 0.
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>SHOW 5 / 2</userinput>
+<programlisting><userinput>SHOW 5 / 2</userinput>
 2.5</programlisting>
 <programlisting><userinput>SHOW (QUOTIENT 5 2)</userinput>
 2.5</programlisting>

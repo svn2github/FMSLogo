@@ -1,6 +1,7 @@
 <section id="command-setfloodcolor">
-    <title>SETFLOODCOLOR</title>
+<title>SETFLOODCOLOR</title>
 <indexterm><primary>SETFLOODCOLOR</primary></indexterm>
+<indexterm><primary>SETFC</primary></indexterm>
 
 <variablelist>
 

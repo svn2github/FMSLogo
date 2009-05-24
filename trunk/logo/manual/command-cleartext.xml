@@ -1,6 +1,7 @@
 <section id="command-cleartext">
-    <title>CLEARTEXT</title>
+<title>CLEARTEXT</title>
 <indexterm><primary>CLEARTEXT</primary></indexterm>
+<indexterm><primary>CT</primary></indexterm>
 
 <variablelist>
 
@@ -24,7 +25,7 @@ Clears all text within the command recall box in the commander window.
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>PRINT "Hello</userinput>
+<programlisting><userinput>PRINT "Hello</userinput>
 Hello
 <userinput>CLEARTEXT</userinput>
 </programlisting>

@@ -31,6 +31,7 @@ II. New features/bugs fixed:
     o Partially implement request #1828287; CTRL+] in the editor moves
       the caret to the matching parenthesis.  CTRL+SHIFT+] selects
       everything through the matching parenthesis.
+    o Minor improvements to the manual.
     o Improvements to the Russian translation.
 
   For a complete history of changes across all versions of FMSLogo, see

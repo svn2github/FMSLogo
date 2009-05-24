@@ -1,6 +1,7 @@
 <section id="command-leftroll">
-    <title>LEFTROLL</title>
+<title>LEFTROLL</title>
 <indexterm><primary>LEFTROLL</primary></indexterm>
+<indexterm><primary>LR</primary></indexterm>
 
 <variablelist>
 
@@ -24,7 +25,7 @@ This command is designed to run in <link linkend="command-perspective">PERSPECTI
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>PERSPECTIVE
+<programlisting><userinput>PERSPECTIVE
 LEFTROLL 45
 REPEAT 3 [FORWARD 100 LEFT 120]</userinput>
 </programlisting>
@@ -32,5 +33,4 @@ REPEAT 3 [FORWARD 100 LEFT 120]</userinput>
 </varlistentry>
 
 </variablelist>
-
 </section>

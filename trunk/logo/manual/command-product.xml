@@ -1,6 +1,7 @@
 <section id="command-product">
-    <title>PRODUCT</title>
+<title>PRODUCT</title>
 <indexterm><primary>PRODUCT</primary></indexterm>
+<indexterm><primary>*</primary></indexterm>
 
 <variablelist>
 
@@ -22,7 +23,7 @@ Outputs the product of its inputs.  If no inputs are given, then PRODUCT outputs
 
 <varlistentry><term>Example</term>
 <listitem>
-    <programlisting><userinput>SHOW 2 * 3</userinput>
+<programlisting><userinput>SHOW 2 * 3</userinput>
 6
 </programlisting>
 <programlisting><userinput>SHOW (PRODUCT 2 3 4)</userinput>
