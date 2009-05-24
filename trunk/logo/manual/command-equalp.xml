@@ -1,6 +1,7 @@
 <section id="command-equalp">
 <title>EQUALP</title>
 <indexterm><primary>EQUALP</primary></indexterm>
+<indexterm><primary>=</primary></indexterm>
 
 <variablelist>
 
@@ -32,6 +33,9 @@ An array is only equal to itself; two separately created arrays are never equal 
 
 <varlistentry><term>Example</term>
 <listitem>
+
+<programlisting><userinput>SHOW 1=1</userinput>
+true</programlisting>
 
 <programlisting><userinput>SHOW EQUALP 1 1</userinput>
 true</programlisting>

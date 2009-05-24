@@ -29,30 +29,6 @@ Many procedures can be called with a shortened version of their proper name.
 </para>
 </section>
 
-<section id="command-equal">
-<title>=</title>
-<indexterm><primary>=</primary></indexterm>
-<para>
-= is an abbreviation for <link linkend="command-equalp">EQUALP</link>.
-</para>
-</section>
-
-<section id="command-greater">
-<title>></title>
-<indexterm><primary>></primary></indexterm>
-<para>
-> is an abbreviation for <link linkend="command-greaterp">GREATERP</link>.
-</para>
-</section>
-
-<section id="command-less">
-<title>&lt;</title>
-<indexterm><primary>&lt;</primary></indexterm>
-<para>
-&lt; is an abbreviation for <link linkend="command-lessp">LESSP</link>.
-</para>
-</section>
-
 <section id="command-star">
 <title>*</title>
 <indexterm><primary>*</primary></indexterm>
