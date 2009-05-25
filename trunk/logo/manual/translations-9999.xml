@@ -107,11 +107,11 @@
        <entry>pseudo.beforep</entry>
      </row>
      <row>
-       <entry><link linkend='command-bf'>bf</link></entry>
+       <entry><link linkend='command-butfirst'>bf</link></entry>
        <entry>pseudo.bf</entry>
      </row>
      <row>
-       <entry><link linkend='command-bfs'>bfs</link></entry>
+       <entry><link linkend='command-butfirsts'>bfs</link></entry>
        <entry>pseudo.bfs</entry>
      </row>
      <row>
@@ -183,11 +183,11 @@
        <entry>pseudo.bitxor</entry>
      </row>
      <row>
-       <entry><link linkend='command-bk'>bk</link></entry>
+       <entry><link linkend='command-back'>bk</link></entry>
        <entry>pseudo.bk</entry>
      </row>
      <row>
-       <entry><link linkend='command-bl'>bl</link></entry>
+       <entry><link linkend='command-butlast'>bl</link></entry>
        <entry>pseudo.bl</entry>
      </row>
      <row>
@@ -299,7 +299,7 @@
        <entry>pseudo.closeall</entry>
      </row>
      <row>
-       <entry><link linkend='command-co'>co</link></entry>
+       <entry><link linkend='command-continue'>co</link></entry>
        <entry>pseudo.co</entry>
      </row>
      <row>
@@ -351,11 +351,11 @@
        <entry>pseudo.count</entry>
      </row>
      <row>
-       <entry><link linkend='command-cs'>cs</link></entry>
+       <entry><link linkend='command-clearsreen'>cs</link></entry>
        <entry>pseudo.cs</entry>
      </row>
      <row>
-       <entry><link linkend='command-ct'>ct</link></entry>
+       <entry><link linkend='command-cleartext'>ct</link></entry>
        <entry>pseudo.ct</entry>
      </row>
      <row>
@@ -419,7 +419,7 @@
        <entry>pseudo.dllload</entry>
      </row>
      <row>
-       <entry><link linkend='command-down'>down</link></entry>
+       <entry><link linkend='command-downpitch'>down</link></entry>
        <entry>pseudo.down</entry>
      </row>
      <row>
@@ -431,7 +431,7 @@
        <entry>pseudo.dribble</entry>
      </row>
      <row>
-       <entry><link linkend='command-ed'>ed</link></entry>
+       <entry><link linkend='command-edit'>ed</link></entry>
        <entry>pseudo.ed</entry>
      </row>
      <row>
@@ -471,7 +471,7 @@
        <entry>pseudo.equalp</entry>
      </row>
      <row>
-       <entry><link linkend='command-er'>er</link></entry>
+       <entry><link linkend='command-erase'>er</link></entry>
        <entry>pseudo.er</entry>
      </row>
      <row>
@@ -483,7 +483,7 @@
        <entry>pseudo.erasefile</entry>
      </row>
      <row>
-       <entry><link linkend='command-erf'>erf</link></entry>
+       <entry><link linkend='command-erasefile'>erf</link></entry>
        <entry>pseudo.erf</entry>
      </row>
      <row>
@@ -507,7 +507,7 @@
        <entry>pseudo.false</entry>
      </row>
      <row>
-       <entry><link linkend='command-fd'>fd</link></entry>
+       <entry><link linkend='command-forward'>fd</link></entry>
        <entry>pseudo.fd</entry>
      </row>
      <row>
@@ -559,7 +559,7 @@
        <entry>pseudo.fput</entry>
      </row>
      <row>
-       <entry><link linkend='command-fs'>fs</link></entry>
+       <entry><link linkend='command-fullscreen'>fs</link></entry>
        <entry>pseudo.fs</entry>
      </row>
      <row>
@@ -643,7 +643,7 @@
        <entry>pseudo.home</entry>
      </row>
      <row>
-       <entry><link linkend='command-ht'>ht</link></entry>
+       <entry><link linkend='command-hideturtle'>ht</link></entry>
        <entry>pseudo.ht</entry>
      </row>
      <row>
@@ -655,7 +655,7 @@
        <entry>pseudo.ifelse</entry>
      </row>
      <row>
-       <entry><link linkend='command-iff'>iff</link></entry>
+       <entry><link linkend='command-iffalse'>iff</link></entry>
        <entry>pseudo.iff</entry>
      </row>
      <row>
@@ -663,7 +663,7 @@
        <entry>pseudo.iffalse</entry>
      </row>
      <row>
-       <entry><link linkend='command-ift'>ift</link></entry>
+       <entry><link linkend='command-iftrue'>ift</link></entry>
        <entry>pseudo.ift</entry>
      </row>
      <row>
@@ -819,7 +819,7 @@
        <entry>pseudo.lput</entry>
      </row>
      <row>
-       <entry><link linkend='command-lr'>lr</link></entry>
+       <entry><link linkend='command-leftroll'>lr</link></entry>
        <entry>pseudo.lr</entry>
      </row>
      <row>
@@ -827,7 +827,7 @@
        <entry>pseudo.lshift</entry>
      </row>
      <row>
-       <entry><link linkend='command-lt'>lt</link></entry>
+       <entry><link linkend='command-left'>lt</link></entry>
        <entry>pseudo.lt</entry>
      </row>
      <row>
@@ -1035,7 +1035,7 @@
        <entry>pseudo.pause</entry>
      </row>
      <row>
-       <entry><link linkend='command-pc'>pc</link></entry>
+       <entry><link linkend='command-pencolor'>pc</link></entry>
        <entry>pseudo.pc</entry>
      </row>
      <row>
@@ -1043,7 +1043,7 @@
        <entry>pseudo.pd</entry>
      </row>
      <row>
-       <entry><link linkend='command-pe'>pe</link></entry>
+       <entry><link linkend='command-penerase'>pe</link></entry>
        <entry>pseudo.pe</entry>
      </row>
      <row>
@@ -1187,11 +1187,11 @@
        <entry>pseudo.Pprop</entry>
      </row>
      <row>
-       <entry><link linkend='command-ppt'>ppt</link></entry>
+       <entry><link linkend='command-penpaint'>ppt</link></entry>
        <entry>pseudo.ppt</entry>
      </row>
      <row>
-       <entry><link linkend='command-pr'>pr</link></entry>
+       <entry><link linkend='command-print'>pr</link></entry>
        <entry>pseudo.pr</entry>
      </row>
      <row>
@@ -1239,11 +1239,11 @@
        <entry>pseudo.proplistp</entry>
      </row>
      <row>
-       <entry><link linkend='command-pu'>pu</link></entry>
+       <entry><link linkend='command-penup'>pu</link></entry>
        <entry>pseudo.pu</entry>
      </row>
      <row>
-       <entry><link linkend='command-px'>px</link></entry>
+       <entry><link linkend='command-penreverse'>px</link></entry>
        <entry>pseudo.px</entry>
      </row>
      <row>
@@ -1307,11 +1307,11 @@
        <entry>pseudo.rawascii</entry>
      </row>
      <row>
-       <entry><link linkend='command-rc'>rc</link></entry>
+       <entry><link linkend='command-readchar'>rc</link></entry>
        <entry>pseudo.rc</entry>
      </row>
      <row>
-       <entry><link linkend='command-rcs'>rcs</link></entry>
+       <entry><link linkend='command-readchars'>rcs</link></entry>
        <entry>pseudo.rcs</entry>
      </row>
      <row>
@@ -1371,7 +1371,7 @@
        <entry>pseudo.rightroll</entry>
      </row>
      <row>
-       <entry><link linkend='command-rl'>rl</link></entry>
+       <entry><link linkend='command-readlist'>rl</link></entry>
        <entry>pseudo.rl</entry>
      </row>
      <row>
@@ -1387,11 +1387,11 @@
        <entry>pseudo.round</entry>
      </row>
      <row>
-       <entry><link linkend='command-rr'>rr</link></entry>
+       <entry><link linkend='command-rightroll'>rr</link></entry>
        <entry>pseudo.rr</entry>
      </row>
      <row>
-       <entry><link linkend='command-rt'>rt</link></entry>
+       <entry><link linkend='command-right'>rt</link></entry>
        <entry>pseudo.rt</entry>
      </row>
      <row>
@@ -1407,7 +1407,7 @@
        <entry>pseudo.runresult</entry>
      </row>
      <row>
-       <entry><link linkend='command-rw'>rw</link></entry>
+       <entry><link linkend='command-readword'>rw</link></entry>
        <entry>pseudo.rw</entry>
      </row>
      <row>
@@ -1451,7 +1451,7 @@
        <entry>pseudo.scrunch</entry>
      </row>
      <row>
-       <entry><link linkend='command-se'>se</link></entry>
+       <entry><link linkend='command-sentence'>se</link></entry>
        <entry>pseudo.se</entry>
      </row>
      <row>
@@ -1487,7 +1487,7 @@
        <entry>pseudo.setcursorwait</entry>
      </row>
      <row>
-       <entry><link linkend='command-setfc'>setfc</link></entry>
+       <entry><link linkend='command-setfloodcolor'>setfc</link></entry>
        <entry>pseudo.setfc</entry>
      </row>
      <row>
@@ -1499,7 +1499,7 @@
        <entry>pseudo.setfocus</entry>
      </row>
      <row>
-       <entry><link linkend='command-seth'>seth</link></entry>
+       <entry><link linkend='command-setheading'>seth</link></entry>
        <entry>pseudo.seth</entry>
      </row>
      <row>
@@ -1523,7 +1523,7 @@
        <entry>pseudo.setmargins</entry>
      </row>
      <row>
-       <entry><link linkend='command-setpc'>setpc</link></entry>
+       <entry><link linkend='command-setpencolor'>setpc</link></entry>
        <entry>pseudo.setpc</entry>
      </row>
      <row>
@@ -1567,7 +1567,7 @@
        <entry>pseudo.setroll</entry>
      </row>
      <row>
-       <entry><link linkend='command-setsc'>setsc</link></entry>
+       <entry><link linkend='command-setscreencolor'>setsc</link></entry>
        <entry>pseudo.setsc</entry>
      </row>
      <row>
@@ -1655,11 +1655,11 @@
        <entry>pseudo.sqrt</entry>
      </row>
      <row>
-       <entry><link linkend='command-ss'>ss</link></entry>
+       <entry><link linkend='command-splitscreen'>ss</link></entry>
        <entry>pseudo.ss</entry>
      </row>
      <row>
-       <entry><link linkend='command-st'>st</link></entry>
+       <entry><link linkend='command-showturtle'>st</link></entry>
        <entry>pseudo.st</entry>
      </row>
      <row>
@@ -1779,7 +1779,7 @@
        <entry>pseudo.true</entry>
      </row>
      <row>
-       <entry><link linkend='command-ts'>ts</link></entry>
+       <entry><link linkend='command-textscreen'>ts</link></entry>
        <entry>pseudo.ts</entry>
      </row>
      <row>
@@ -1811,7 +1811,7 @@
        <entry>pseudo.untrace</entry>
      </row>
      <row>
-       <entry><link linkend='command-up'>up</link></entry>
+       <entry><link linkend='command-uppitch'>up</link></entry>
        <entry>pseudo.up</entry>
      </row>
      <row>
@@ -2005,11 +2005,11 @@
      </row>
      <row>
        <entry>pseudo.bf</entry>
-       <entry><link linkend='command-bf'>bf</link></entry>
+       <entry><link linkend='command-butfirst'>bf</link></entry>
      </row>
      <row>
        <entry>pseudo.bfs</entry>
-       <entry><link linkend='command-bfs'>bfs</link></entry>
+       <entry><link linkend='command-butfirsts'>bfs</link></entry>
      </row>
      <row>
        <entry>pseudo.bitand</entry>
@@ -2081,11 +2081,11 @@
      </row>
      <row>
        <entry>pseudo.bk</entry>
-       <entry><link linkend='command-bk'>bk</link></entry>
+       <entry><link linkend='command-back'>bk</link></entry>
      </row>
      <row>
        <entry>pseudo.bl</entry>
-       <entry><link linkend='command-bl'>bl</link></entry>
+       <entry><link linkend='command-butlast'>bl</link></entry>
      </row>
      <row>
        <entry>pseudo.buried</entry>
@@ -2197,7 +2197,7 @@
      </row>
      <row>
        <entry>pseudo.co</entry>
-       <entry><link linkend='command-co'>co</link></entry>
+       <entry><link linkend='command-continue'>co</link></entry>
      </row>
      <row>
        <entry>pseudo.comboboxaddstring</entry>
@@ -2249,11 +2249,11 @@
      </row>
      <row>
        <entry>pseudo.cs</entry>
-       <entry><link linkend='command-cs'>cs</link></entry>
+       <entry><link linkend='command-clearsreen'>cs</link></entry>
      </row>
      <row>
        <entry>pseudo.ct</entry>
-       <entry><link linkend='command-ct'>ct</link></entry>
+       <entry><link linkend='command-cleartext'>ct</link></entry>
      </row>
      <row>
        <entry>pseudo.cursor</entry>
@@ -2317,7 +2317,7 @@
      </row>
      <row>
        <entry>pseudo.down</entry>
-       <entry><link linkend='command-down'>down</link></entry>
+       <entry><link linkend='command-downpitch'>down</link></entry>
      </row>
      <row>
        <entry>pseudo.downpitch</entry>
@@ -2329,7 +2329,7 @@
      </row>
      <row>
        <entry>pseudo.ed</entry>
-       <entry><link linkend='command-ed'>ed</link></entry>
+       <entry><link linkend='command-edit'>ed</link></entry>
      </row>
      <row>
        <entry>pseudo.edit</entry>
@@ -2369,7 +2369,7 @@
      </row>
      <row>
        <entry>pseudo.er</entry>
-       <entry><link linkend='command-er'>er</link></entry>
+       <entry><link linkend='command-erase'>er</link></entry>
      </row>
      <row>
        <entry>pseudo.erase</entry>
@@ -2381,7 +2381,7 @@
      </row>
      <row>
        <entry>pseudo.erf</entry>
-       <entry><link linkend='command-erf'>erf</link></entry>
+       <entry><link linkend='command-erasefile'>erf</link></entry>
      </row>
      <row>
        <entry>pseudo.erract</entry>
@@ -2405,7 +2405,7 @@
      </row>
      <row>
        <entry>pseudo.fd</entry>
-       <entry><link linkend='command-fd'>fd</link></entry>
+       <entry><link linkend='command-forward'>fd</link></entry>
      </row>
      <row>
        <entry>pseudo.fence</entry>
@@ -2457,7 +2457,7 @@
      </row>
      <row>
        <entry>pseudo.fs</entry>
-       <entry><link linkend='command-fs'>fs</link></entry>
+       <entry><link linkend='command-fullscreen'>fs</link></entry>
      </row>
      <row>
        <entry>pseudo.fullscreen</entry>
@@ -2541,7 +2541,7 @@
      </row>
      <row>
        <entry>pseudo.ht</entry>
-       <entry><link linkend='command-ht'>ht</link></entry>
+       <entry><link linkend='command-hideturtle'>ht</link></entry>
      </row>
      <row>
        <entry>pseudo.if</entry>
@@ -2553,7 +2553,7 @@
      </row>
      <row>
        <entry>pseudo.iff</entry>
-       <entry><link linkend='command-iff'>iff</link></entry>
+       <entry><link linkend='command-iffalse'>iff</link></entry>
      </row>
      <row>
        <entry>pseudo.iffalse</entry>
@@ -2561,7 +2561,7 @@
      </row>
      <row>
        <entry>pseudo.ift</entry>
-       <entry><link linkend='command-ift'>ift</link></entry>
+       <entry><link linkend='command-iftrue'>ift</link></entry>
      </row>
      <row>
        <entry>pseudo.iftrue</entry>
@@ -2717,7 +2717,7 @@
      </row>
      <row>
        <entry>pseudo.lr</entry>
-       <entry><link linkend='command-lr'>lr</link></entry>
+       <entry><link linkend='command-leftroll'>lr</link></entry>
      </row>
      <row>
        <entry>pseudo.lshift</entry>
@@ -2725,7 +2725,7 @@
      </row>
      <row>
        <entry>pseudo.lt</entry>
-       <entry><link linkend='command-lt'>lt</link></entry>
+       <entry><link linkend='command-left'>lt</link></entry>
      </row>
      <row>
        <entry>pseudo.machine</entry>
@@ -2933,7 +2933,7 @@
      </row>
      <row>
        <entry>pseudo.pc</entry>
-       <entry><link linkend='command-pc'>pc</link></entry>
+       <entry><link linkend='command-pencolor'>pc</link></entry>
      </row>
      <row>
        <entry>pseudo.pd</entry>
@@ -2941,7 +2941,7 @@
      </row>
      <row>
        <entry>pseudo.pe</entry>
-       <entry><link linkend='command-pe'>pe</link></entry>
+       <entry><link linkend='command-penerase'>pe</link></entry>
      </row>
      <row>
        <entry>pseudo.pencolor</entry>
@@ -3085,11 +3085,11 @@
      </row>
      <row>
        <entry>pseudo.ppt</entry>
-       <entry><link linkend='command-ppt'>ppt</link></entry>
+       <entry><link linkend='command-penpaint'>ppt</link></entry>
      </row>
      <row>
        <entry>pseudo.pr</entry>
-       <entry><link linkend='command-pr'>pr</link></entry>
+       <entry><link linkend='command-print'>pr</link></entry>
      </row>
      <row>
        <entry>pseudo.primitive?</entry>
@@ -3137,11 +3137,11 @@
      </row>
      <row>
        <entry>pseudo.pu</entry>
-       <entry><link linkend='command-pu'>pu</link></entry>
+       <entry><link linkend='command-penup'>pu</link></entry>
      </row>
      <row>
        <entry>pseudo.px</entry>
-       <entry><link linkend='command-px'>px</link></entry>
+       <entry><link linkend='command-penreverse'>px</link></entry>
      </row>
      <row>
        <entry>pseudo.questionbox</entry>
@@ -3205,11 +3205,11 @@
      </row>
      <row>
        <entry>pseudo.rc</entry>
-       <entry><link linkend='command-rc'>rc</link></entry>
+       <entry><link linkend='command-readchar'>rc</link></entry>
      </row>
      <row>
        <entry>pseudo.rcs</entry>
-       <entry><link linkend='command-rcs'>rcs</link></entry>
+       <entry><link linkend='command-readchars'>rcs</link></entry>
      </row>
      <row>
        <entry>pseudo.readchar</entry>
@@ -3269,7 +3269,7 @@
      </row>
      <row>
        <entry>pseudo.rl</entry>
-       <entry><link linkend='command-rl'>rl</link></entry>
+       <entry><link linkend='command-readlist'>rl</link></entry>
      </row>
      <row>
        <entry>pseudo.rmdir</entry>
@@ -3285,11 +3285,11 @@
      </row>
      <row>
        <entry>pseudo.rr</entry>
-       <entry><link linkend='command-rr'>rr</link></entry>
+       <entry><link linkend='command-rightroll'>rr</link></entry>
      </row>
      <row>
        <entry>pseudo.rt</entry>
-       <entry><link linkend='command-rt'>rt</link></entry>
+       <entry><link linkend='command-right'>rt</link></entry>
      </row>
      <row>
        <entry>pseudo.run</entry>
@@ -3305,7 +3305,7 @@
      </row>
      <row>
        <entry>pseudo.rw</entry>
-       <entry><link linkend='command-rw'>rw</link></entry>
+       <entry><link linkend='command-readword'>rw</link></entry>
      </row>
      <row>
        <entry>pseudo.save</entry>
@@ -3349,7 +3349,7 @@
      </row>
      <row>
        <entry>pseudo.se</entry>
-       <entry><link linkend='command-se'>se</link></entry>
+       <entry><link linkend='command-sentence'>se</link></entry>
      </row>
      <row>
        <entry>pseudo.selectbox</entry>
@@ -3385,7 +3385,7 @@
      </row>
      <row>
        <entry>pseudo.setfc</entry>
-       <entry><link linkend='command-setfc'>setfc</link></entry>
+       <entry><link linkend='command-setfloodcolor'>setfc</link></entry>
      </row>
      <row>
        <entry>pseudo.setfloodcolor</entry>
@@ -3397,7 +3397,7 @@
      </row>
      <row>
        <entry>pseudo.seth</entry>
-       <entry><link linkend='command-seth'>seth</link></entry>
+       <entry><link linkend='command-setheading'>seth</link></entry>
      </row>
      <row>
        <entry>pseudo.setheading</entry>
@@ -3421,7 +3421,7 @@
      </row>
      <row>
        <entry>pseudo.setpc</entry>
-       <entry><link linkend='command-setpc'>setpc</link></entry>
+       <entry><link linkend='command-setpencolor'>setpc</link></entry>
      </row>
      <row>
        <entry>pseudo.setpencolor</entry>
@@ -3465,7 +3465,7 @@
      </row>
      <row>
        <entry>pseudo.setsc</entry>
-       <entry><link linkend='command-setsc'>setsc</link></entry>
+       <entry><link linkend='command-setscreencolor'>setsc</link></entry>
      </row>
      <row>
        <entry>pseudo.setscreencolor</entry>
@@ -3553,11 +3553,11 @@
      </row>
      <row>
        <entry>pseudo.ss</entry>
-       <entry><link linkend='command-ss'>ss</link></entry>
+       <entry><link linkend='command-splitscreen'>ss</link></entry>
      </row>
      <row>
        <entry>pseudo.st</entry>
-       <entry><link linkend='command-st'>st</link></entry>
+       <entry><link linkend='command-showturtle'>st</link></entry>
      </row>
      <row>
        <entry>pseudo.standout</entry>
@@ -3677,7 +3677,7 @@
      </row>
      <row>
        <entry>pseudo.ts</entry>
-       <entry><link linkend='command-ts'>ts</link></entry>
+       <entry><link linkend='command-textscreen'>ts</link></entry>
      </row>
      <row>
        <entry>pseudo.turtle</entry>
@@ -3709,7 +3709,7 @@
      </row>
      <row>
        <entry>pseudo.up</entry>
-       <entry><link linkend='command-up'>up</link></entry>
+       <entry><link linkend='command-uppitch'>up</link></entry>
      </row>
      <row>
        <entry>pseudo.uppercase</entry>

@@ -99,11 +99,11 @@
        <entry>primap</entry>
      </row>
      <row>
-       <entry><link linkend='command-bf'>bf</link></entry>
+       <entry><link linkend='command-butfirst'>bf</link></entry>
        <entry>mp</entry>
      </row>
      <row>
-       <entry><link linkend='command-bfs'>bfs</link></entry>
+       <entry><link linkend='command-butfirsts'>bfs</link></entry>
        <entry>mpi</entry>
      </row>
      <row>
@@ -159,11 +159,11 @@
        <entry>dimdis</entry>
      </row>
      <row>
-       <entry><link linkend='command-bk'>bk</link></entry>
+       <entry><link linkend='command-back'>bk</link></entry>
        <entry>i</entry>
      </row>
      <row>
-       <entry><link linkend='command-bl'>bl</link></entry>
+       <entry><link linkend='command-butlast'>bl</link></entry>
        <entry>mu</entry>
      </row>
      <row>
@@ -331,11 +331,11 @@
        <entry>mappaincroci</entry>
      </row>
      <row>
-       <entry><link linkend='command-cs'>cs</link></entry>
+       <entry><link linkend='command-clearsreen'>cs</link></entry>
        <entry>ps</entry>
      </row>
      <row>
-       <entry><link linkend='command-ct'>ct</link></entry>
+       <entry><link linkend='command-cleartext'>ct</link></entry>
        <entry>pt</entry>
      </row>
      <row>
@@ -427,7 +427,7 @@
        <entry>esegui.mentre</entry>
      </row>
      <row>
-       <entry><link linkend='command-down'>down</link></entry>
+       <entry><link linkend='command-downpitch'>down</link></entry>
        <entry>eg</entry>
      </row>
      <row>
@@ -491,7 +491,7 @@
        <entry>ugualep</entry>
      </row>
      <row>
-       <entry><link linkend='command-er'>er</link></entry>
+       <entry><link linkend='command-erase'>er</link></entry>
        <entry>ca</entry>
      </row>
      <row>
@@ -503,7 +503,7 @@
        <entry>cancellafile</entry>
      </row>
      <row>
-       <entry><link linkend='command-erf'>erf</link></entry>
+       <entry><link linkend='command-erasefile'>erf</link></entry>
        <entry>caf</entry>
      </row>
      <row>
@@ -543,7 +543,7 @@
        <entry>falso</entry>
      </row>
      <row>
-       <entry><link linkend='command-fd'>fd</link></entry>
+       <entry><link linkend='command-forward'>fd</link></entry>
        <entry>a</entry>
      </row>
      <row>
@@ -611,7 +611,7 @@
        <entry>inpri</entry>
      </row>
      <row>
-       <entry><link linkend='command-fs'>fs</link></entry>
+       <entry><link linkend='command-fullscreen'>fs</link></entry>
        <entry>sp</entry>
      </row>
      <row>
@@ -679,7 +679,7 @@
        <entry>tana</entry>
      </row>
      <row>
-       <entry><link linkend='command-ht'>ht</link></entry>
+       <entry><link linkend='command-hideturtle'>ht</link></entry>
        <entry>nt</entry>
      </row>
      <row>
@@ -695,7 +695,7 @@
        <entry>seallora</entry>
      </row>
      <row>
-       <entry><link linkend='command-iff'>iff</link></entry>
+       <entry><link linkend='command-iffalse'>iff</link></entry>
        <entry>sef</entry>
      </row>
      <row>
@@ -703,7 +703,7 @@
        <entry>sefalso</entry>
      </row>
      <row>
-       <entry><link linkend='command-ift'>ift</link></entry>
+       <entry><link linkend='command-iftrue'>ift</link></entry>
        <entry>sev</entry>
      </row>
      <row>
@@ -863,7 +863,7 @@
        <entry>inult</entry>
      </row>
      <row>
-       <entry><link linkend='command-lr'>lr</link></entry>
+       <entry><link linkend='command-leftroll'>lr</link></entry>
        <entry>rs</entry>
      </row>
      <row>
@@ -871,7 +871,7 @@
        <entry>scorrisin</entry>
      </row>
      <row>
-       <entry><link linkend='command-lt'>lt</link></entry>
+       <entry><link linkend='command-left'>lt</link></entry>
        <entry>s</entry>
      </row>
      <row>
@@ -1095,7 +1095,7 @@
        <entry>pausa</entry>
      </row>
      <row>
-       <entry><link linkend='command-pc'>pc</link></entry>
+       <entry><link linkend='command-pencolor'>pc</link></entry>
        <entry>cp</entry>
      </row>
      <row>
@@ -1107,7 +1107,7 @@
        <entry>giù</entry>
      </row>
      <row>
-       <entry><link linkend='command-pe'>pe</link></entry>
+       <entry><link linkend='command-penerase'>pe</link></entry>
        <entry>cancepenna</entry>
      </row>
      <row>
@@ -1291,11 +1291,11 @@
        <entry>asprop</entry>
      </row>
      <row>
-       <entry><link linkend='command-ppt'>ppt</link></entry>
+       <entry><link linkend='command-penpaint'>ppt</link></entry>
        <entry>ped</entry>
      </row>
      <row>
-       <entry><link linkend='command-pr'>pr</link></entry>
+       <entry><link linkend='command-print'>pr</link></entry>
        <entry>st</entry>
      </row>
      <row>
@@ -1335,7 +1335,7 @@
        <entry>listapropp</entry>
      </row>
      <row>
-       <entry><link linkend='command-pu'>pu</link></entry>
+       <entry><link linkend='command-penup'>pu</link></entry>
        <entry>su</entry>
      </row>
      <row>
@@ -1343,7 +1343,7 @@
        <entry>infila</entry>
      </row>
      <row>
-       <entry><link linkend='command-px'>px</link></entry>
+       <entry><link linkend='command-penreverse'>px</link></entry>
        <entry>pi</entry>
      </row>
      <row>
@@ -1395,11 +1395,11 @@
        <entry>acaso</entry>
      </row>
      <row>
-       <entry><link linkend='command-rc'>rc</link></entry>
+       <entry><link linkend='command-readchar'>rc</link></entry>
        <entry>lc</entry>
      </row>
      <row>
-       <entry><link linkend='command-rcs'>rcs</link></entry>
+       <entry><link linkend='command-readchars'>rcs</link></entry>
        <entry>lcs</entry>
      </row>
      <row>
@@ -1471,7 +1471,7 @@
        <entry>rolliodestro</entry>
      </row>
      <row>
-       <entry><link linkend='command-rl'>rl</link></entry>
+       <entry><link linkend='command-readlist'>rl</link></entry>
        <entry>rd</entry>
      </row>
      <row>
@@ -1487,11 +1487,11 @@
        <entry>arrotonda</entry>
      </row>
      <row>
-       <entry><link linkend='command-rr'>rr</link></entry>
+       <entry><link linkend='command-rightroll'>rr</link></entry>
        <entry>rd</entry>
      </row>
      <row>
-       <entry><link linkend='command-rt'>rt</link></entry>
+       <entry><link linkend='command-right'>rt</link></entry>
        <entry>d</entry>
      </row>
      <row>
@@ -1507,7 +1507,7 @@
        <entry>risultatoesegui</entry>
      </row>
      <row>
-       <entry><link linkend='command-rw'>rw</link></entry>
+       <entry><link linkend='command-readword'>rw</link></entry>
        <entry>lp</entry>
      </row>
      <row>
@@ -1555,7 +1555,7 @@
        <entry>schia</entry>
      </row>
      <row>
-       <entry><link linkend='command-se'>se</link></entry>
+       <entry><link linkend='command-sentence'>se</link></entry>
        <entry>fr</entry>
      </row>
      <row>
@@ -1587,7 +1587,7 @@
        <entry>ascursoreattesa</entry>
      </row>
      <row>
-       <entry><link linkend='command-setfc'>setfc</link></entry>
+       <entry><link linkend='command-setfloodcolor'>setfc</link></entry>
        <entry>ascr</entry>
      </row>
      <row>
@@ -1599,7 +1599,7 @@
        <entry>asfuoco</entry>
      </row>
      <row>
-       <entry><link linkend='command-seth'>seth</link></entry>
+       <entry><link linkend='command-setheading'>seth</link></entry>
        <entry>asdir</entry>
      </row>
      <row>
@@ -1627,7 +1627,7 @@
        <entry>asorient</entry>
      </row>
      <row>
-       <entry><link linkend='command-setpc'>setpc</link></entry>
+       <entry><link linkend='command-setpencolor'>setpc</link></entry>
        <entry>ascp</entry>
      </row>
      <row>
@@ -1675,7 +1675,7 @@
        <entry>asrollio</entry>
      </row>
      <row>
-       <entry><link linkend='command-setsc'>setsc</link></entry>
+       <entry><link linkend='command-setscreencolor'>setsc</link></entry>
        <entry>ascs</entry>
      </row>
      <row>
@@ -1775,7 +1775,7 @@
        <entry>radq</entry>
      </row>
      <row>
-       <entry><link linkend='command-st'>st</link></entry>
+       <entry><link linkend='command-showturtle'>st</link></entry>
        <entry>mt</entry>
      </row>
      <row>
@@ -1927,7 +1927,7 @@
        <entry>notraccia</entry>
      </row>
      <row>
-       <entry><link linkend='command-up'>up</link></entry>
+       <entry><link linkend='command-uppitch'>up</link></entry>
        <entry>es</entry>
      </row>
      <row>
@@ -2045,7 +2045,7 @@
      </row>
      <row>
        <entry>a</entry>
-       <entry><link linkend='command-fd'>fd</link></entry>
+       <entry><link linkend='command-forward'>fd</link></entry>
      </row>
      <row>
        <entry>acaso</entry>
@@ -2145,15 +2145,15 @@
      </row>
      <row>
        <entry>ascp</entry>
-       <entry><link linkend='command-setpc'>setpc</link></entry>
+       <entry><link linkend='command-setpencolor'>setpc</link></entry>
      </row>
      <row>
        <entry>ascr</entry>
-       <entry><link linkend='command-setfc'>setfc</link></entry>
+       <entry><link linkend='command-setfloodcolor'>setfc</link></entry>
      </row>
      <row>
        <entry>ascs</entry>
-       <entry><link linkend='command-setsc'>setsc</link></entry>
+       <entry><link linkend='command-setscreencolor'>setsc</link></entry>
      </row>
      <row>
        <entry>ascursoreattesa</entry>
@@ -2313,11 +2313,11 @@
      </row>
      <row>
        <entry>ca</entry>
-       <entry><link linkend='command-er'>er</link></entry>
+       <entry><link linkend='command-erase'>er</link></entry>
      </row>
      <row>
        <entry>caf</entry>
-       <entry><link linkend='command-erf'>erf</link></entry>
+       <entry><link linkend='command-erasefile'>erf</link></entry>
      </row>
      <row>
        <entry>calp</entry>
@@ -2537,7 +2537,7 @@
      </row>
      <row>
        <entry>cp</entry>
-       <entry><link linkend='command-pc'>pc</link></entry>
+       <entry><link linkend='command-pencolor'>pc</link></entry>
      </row>
      <row>
        <entry>cursore</entry>
@@ -2545,7 +2545,7 @@
      </row>
      <row>
        <entry>d</entry>
-       <entry><link linkend='command-rt'>rt</link></entry>
+       <entry><link linkend='command-right'>rt</link></entry>
      </row>
      <row>
        <entry>dacheleggi</entry>
@@ -2633,7 +2633,7 @@
      </row>
      <row>
        <entry>eg</entry>
-       <entry><link linkend='command-down'>down</link></entry>
+       <entry><link linkend='command-downpitch'>down</link></entry>
      </row>
      <row>
        <entry>elemento</entry>
@@ -2669,7 +2669,7 @@
      </row>
      <row>
        <entry>es</entry>
-       <entry><link linkend='command-up'>up</link></entry>
+       <entry><link linkend='command-uppitch'>up</link></entry>
      </row>
      <row>
        <entry>esegui</entry>
@@ -2817,7 +2817,7 @@
      </row>
      <row>
        <entry>fr</entry>
-       <entry><link linkend='command-se'>se</link></entry>
+       <entry><link linkend='command-sentence'>se</link></entry>
      </row>
      <row>
        <entry>frase</entry>
@@ -2853,7 +2853,7 @@
      </row>
      <row>
        <entry>i</entry>
-       <entry><link linkend='command-bk'>bk</link></entry>
+       <entry><link linkend='command-back'>bk</link></entry>
      </row>
      <row>
        <entry>icona</entry>
@@ -2933,11 +2933,11 @@
      </row>
      <row>
        <entry>lc</entry>
-       <entry><link linkend='command-rc'>rc</link></entry>
+       <entry><link linkend='command-readchar'>rc</link></entry>
      </row>
      <row>
        <entry>lcs</entry>
-       <entry><link linkend='command-rcs'>rcs</link></entry>
+       <entry><link linkend='command-readchars'>rcs</link></entry>
      </row>
      <row>
        <entry>leggicar</entry>
@@ -3045,7 +3045,7 @@
      </row>
      <row>
        <entry>lp</entry>
-       <entry><link linkend='command-rw'>rw</link></entry>
+       <entry><link linkend='command-readword'>rw</link></entry>
      </row>
      <row>
        <entry>lplista</entry>
@@ -3185,19 +3185,19 @@
      </row>
      <row>
        <entry>mp</entry>
-       <entry><link linkend='command-bf'>bf</link></entry>
+       <entry><link linkend='command-butfirst'>bf</link></entry>
      </row>
      <row>
        <entry>mpi</entry>
-       <entry><link linkend='command-bfs'>bfs</link></entry>
+       <entry><link linkend='command-butfirsts'>bfs</link></entry>
      </row>
      <row>
        <entry>mt</entry>
-       <entry><link linkend='command-st'>st</link></entry>
+       <entry><link linkend='command-showturtle'>st</link></entry>
      </row>
      <row>
        <entry>mu</entry>
-       <entry><link linkend='command-bl'>bl</link></entry>
+       <entry><link linkend='command-butlast'>bl</link></entry>
      </row>
      <row>
        <entry>muro</entry>
@@ -3281,7 +3281,7 @@
      </row>
      <row>
        <entry>nt</entry>
-       <entry><link linkend='command-ht'>ht</link></entry>
+       <entry><link linkend='command-hideturtle'>ht</link></entry>
      </row>
      <row>
        <entry>numero?</entry>
@@ -3317,7 +3317,7 @@
      </row>
      <row>
        <entry>ped</entry>
-       <entry><link linkend='command-ppt'>ppt</link></entry>
+       <entry><link linkend='command-penpaint'>ppt</link></entry>
      </row>
      <row>
        <entry>penna</entry>
@@ -3365,7 +3365,7 @@
      </row>
      <row>
        <entry>pi</entry>
-       <entry><link linkend='command-px'>px</link></entry>
+       <entry><link linkend='command-penreverse'>px</link></entry>
      </row>
      <row>
        <entry>pliste</entry>
@@ -3437,11 +3437,11 @@
      </row>
      <row>
        <entry>ps</entry>
-       <entry><link linkend='command-cs'>cs</link></entry>
+       <entry><link linkend='command-clearsreen'>cs</link></entry>
      </row>
      <row>
        <entry>pt</entry>
-       <entry><link linkend='command-ct'>ct</link></entry>
+       <entry><link linkend='command-cleartext'>ct</link></entry>
      </row>
      <row>
        <entry>pulisci</entry>
@@ -3521,7 +3521,7 @@
      </row>
      <row>
        <entry>rd</entry>
-       <entry><link linkend='command-rr'>rr</link></entry>
+       <entry><link linkend='command-rightroll'>rr</link></entry>
      </row>
      <row>
        <entry>registra</entry>
@@ -3617,11 +3617,11 @@
      </row>
      <row>
        <entry>rs</entry>
-       <entry><link linkend='command-lr'>lr</link></entry>
+       <entry><link linkend='command-leftroll'>lr</link></entry>
      </row>
      <row>
        <entry>s</entry>
-       <entry><link linkend='command-lt'>lt</link></entry>
+       <entry><link linkend='command-left'>lt</link></entry>
      </row>
      <row>
        <entry>salva</entry>
@@ -3757,7 +3757,7 @@
      </row>
      <row>
        <entry>sef</entry>
-       <entry><link linkend='command-iff'>iff</link></entry>
+       <entry><link linkend='command-iffalse'>iff</link></entry>
      </row>
      <row>
        <entry>sefalso</entry>
@@ -3777,7 +3777,7 @@
      </row>
      <row>
        <entry>sev</entry>
-       <entry><link linkend='command-ift'>ift</link></entry>
+       <entry><link linkend='command-iftrue'>ift</link></entry>
      </row>
      <row>
        <entry>severo</entry>
@@ -3801,11 +3801,11 @@
      </row>
      <row>
        <entry>sp</entry>
-       <entry><link linkend='command-fs'>fs</link></entry>
+       <entry><link linkend='command-fullscreen'>fs</link></entry>
      </row>
      <row>
        <entry>st</entry>
-       <entry><link linkend='command-pr'>pr</link></entry>
+       <entry><link linkend='command-print'>pr</link></entry>
      </row>
      <row>
        <entry>stampa</entry>
@@ -3817,7 +3817,7 @@
      </row>
      <row>
        <entry>su</entry>
-       <entry><link linkend='command-pu'>pu</link></entry>
+       <entry><link linkend='command-penup'>pu</link></entry>
      </row>
      <row>
        <entry>sulapenna</entry>

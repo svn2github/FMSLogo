@@ -63,11 +63,11 @@
        <entry>vorher?</entry>
      </row>
      <row>
-       <entry><link linkend='command-bf'>bf</link></entry>
+       <entry><link linkend='command-butfirst'>bf</link></entry>
        <entry>oe</entry>
      </row>
      <row>
-       <entry><link linkend='command-bfs'>bfs</link></entry>
+       <entry><link linkend='command-butfirsts'>bfs</link></entry>
        <entry>oea</entry>
      </row>
      <row>
@@ -123,11 +123,11 @@
        <entry>bitxoder</entry>
      </row>
      <row>
-       <entry><link linkend='command-bk'>bk</link></entry>
+       <entry><link linkend='command-back'>bk</link></entry>
        <entry>rw</entry>
      </row>
      <row>
-       <entry><link linkend='command-bl'>bl</link></entry>
+       <entry><link linkend='command-butlast'>bl</link></entry>
        <entry>ol</entry>
      </row>
      <row>
@@ -263,7 +263,7 @@
        <entry>schließealles</entry>
      </row>
      <row>
-       <entry><link linkend='command-co'>co</link></entry>
+       <entry><link linkend='command-continue'>co</link></entry>
        <entry>wt</entry>
      </row>
      <row>
@@ -319,7 +319,7 @@
        <entry>erfassealles</entry>
      </row>
      <row>
-       <entry><link linkend='command-ct'>ct</link></entry>
+       <entry><link linkend='command-cleartext'>ct</link></entry>
        <entry>ls</entry>
      </row>
      <row>
@@ -451,7 +451,7 @@
        <entry>gleich?</entry>
      </row>
      <row>
-       <entry><link linkend='command-er'>er</link></entry>
+       <entry><link linkend='command-erase'>er</link></entry>
        <entry>erstes</entry>
      </row>
      <row>
@@ -467,7 +467,7 @@
        <entry>vergissDatei</entry>
      </row>
      <row>
-       <entry><link linkend='command-erf'>erf</link></entry>
+       <entry><link linkend='command-erasefile'>erf</link></entry>
        <entry>vd</entry>
      </row>
      <row>
@@ -507,7 +507,7 @@
        <entry>falsch</entry>
      </row>
      <row>
-       <entry><link linkend='command-fd'>fd</link></entry>
+       <entry><link linkend='command-forward'>fd</link></entry>
        <entry>vw</entry>
      </row>
      <row>
@@ -575,7 +575,7 @@
        <entry>miterstem</entry>
      </row>
      <row>
-       <entry><link linkend='command-fs'>fs</link></entry>
+       <entry><link linkend='command-fullscreen'>fs</link></entry>
        <entry>vb</entry>
      </row>
      <row>
@@ -627,7 +627,7 @@
        <entry>Mitte</entry>
      </row>
      <row>
-       <entry><link linkend='command-ht'>ht</link></entry>
+       <entry><link linkend='command-hideturtle'>ht</link></entry>
        <entry>vi</entry>
      </row>
      <row>
@@ -643,7 +643,7 @@
        <entry>wennsonst</entry>
      </row>
      <row>
-       <entry><link linkend='command-iff'>iff</link></entry>
+       <entry><link linkend='command-iffalse'>iff</link></entry>
        <entry>wf</entry>
      </row>
      <row>
@@ -651,7 +651,7 @@
        <entry>wennfalsch</entry>
      </row>
      <row>
-       <entry><link linkend='command-ift'>ift</link></entry>
+       <entry><link linkend='command-iftrue'>ift</link></entry>
        <entry>ww</entry>
      </row>
      <row>
@@ -791,7 +791,7 @@
        <entry>mitletztem</entry>
      </row>
      <row>
-       <entry><link linkend='command-lt'>lt</link></entry>
+       <entry><link linkend='command-left'>lt</link></entry>
        <entry>li</entry>
      </row>
      <row>
@@ -915,7 +915,7 @@
        <entry>sa</entry>
      </row>
      <row>
-       <entry><link linkend='command-pe'>pe</link></entry>
+       <entry><link linkend='command-penerase'>pe</link></entry>
        <entry>rd</entry>
      </row>
      <row>
@@ -1079,11 +1079,11 @@
        <entry>MitEg</entry>
      </row>
      <row>
-       <entry><link linkend='command-ppt'>ppt</link></entry>
+       <entry><link linkend='command-penpaint'>ppt</link></entry>
        <entry>SMale</entry>
      </row>
      <row>
-       <entry><link linkend='command-pr'>pr</link></entry>
+       <entry><link linkend='command-print'>pr</link></entry>
        <entry>dz</entry>
      </row>
      <row>
@@ -1107,7 +1107,7 @@
        <entry>Produkt</entry>
      </row>
      <row>
-       <entry><link linkend='command-pu'>pu</link></entry>
+       <entry><link linkend='command-penup'>pu</link></entry>
        <entry>sh</entry>
      </row>
      <row>
@@ -1115,7 +1115,7 @@
        <entry>stapeln</entry>
      </row>
      <row>
-       <entry><link linkend='command-px'>px</link></entry>
+       <entry><link linkend='command-penreverse'>px</link></entry>
        <entry>sr</entry>
      </row>
      <row>
@@ -1151,11 +1151,11 @@
        <entry>zz</entry>
      </row>
      <row>
-       <entry><link linkend='command-rc'>rc</link></entry>
+       <entry><link linkend='command-readchar'>rc</link></entry>
        <entry>Liestaste</entry>
      </row>
      <row>
-       <entry><link linkend='command-rcs'>rcs</link></entry>
+       <entry><link linkend='command-readchars'>rcs</link></entry>
        <entry>Liestasten</entry>
      </row>
      <row>
@@ -1227,7 +1227,7 @@
        <entry>rechts</entry>
      </row>
      <row>
-       <entry><link linkend='command-rl'>rl</link></entry>
+       <entry><link linkend='command-readlist'>rl</link></entry>
        <entry>ll</entry>
      </row>
      <row>
@@ -1235,7 +1235,7 @@
        <entry>runde</entry>
      </row>
      <row>
-       <entry><link linkend='command-rt'>rt</link></entry>
+       <entry><link linkend='command-right'>rt</link></entry>
        <entry>re</entry>
      </row>
      <row>
@@ -1295,7 +1295,7 @@
        <entry>Füllfarbe</entry>
      </row>
      <row>
-       <entry><link linkend='command-seth'>seth</link></entry>
+       <entry><link linkend='command-setheading'>seth</link></entry>
        <entry>ak</entry>
      </row>
      <row>
@@ -1307,7 +1307,7 @@
        <entry>fixiereorientierung</entry>
      </row>
      <row>
-       <entry><link linkend='command-setpc'>setpc</link></entry>
+       <entry><link linkend='command-setpencolor'>setpc</link></entry>
        <entry>Farbe</entry>
      </row>
      <row>
@@ -1339,7 +1339,7 @@
        <entry>LiesDatei</entry>
      </row>
      <row>
-       <entry><link linkend='command-setsc'>setsc</link></entry>
+       <entry><link linkend='command-setscreencolor'>setsc</link></entry>
        <entry>hg</entry>
      </row>
      <row>
@@ -1443,7 +1443,7 @@
        <entry>qw</entry>
      </row>
      <row>
-       <entry><link linkend='command-st'>st</link></entry>
+       <entry><link linkend='command-showturtle'>st</link></entry>
        <entry>zi</entry>
      </row>
      <row>
@@ -1685,7 +1685,7 @@
      </row>
      <row>
        <entry>ak</entry>
-       <entry><link linkend='command-seth'>seth</link></entry>
+       <entry><link linkend='command-setheading'>seth</link></entry>
      </row>
      <row>
        <entry>aktiverBereich</entry>
@@ -1917,7 +1917,7 @@
      </row>
      <row>
        <entry>dz</entry>
-       <entry><link linkend='command-pr'>pr</link></entry>
+       <entry><link linkend='command-print'>pr</link></entry>
      </row>
      <row>
        <entry>dzl</entry>
@@ -2033,7 +2033,7 @@
      </row>
      <row>
        <entry>erstes</entry>
-       <entry><link linkend='command-er'>er</link></entry>
+       <entry><link linkend='command-erase'>er</link></entry>
      </row>
      <row>
        <entry>falsch</entry>
@@ -2045,7 +2045,7 @@
      </row>
      <row>
        <entry>Farbe</entry>
-       <entry><link linkend='command-setpc'>setpc</link></entry>
+       <entry><link linkend='command-setpencolor'>setpc</link></entry>
      </row>
      <row>
        <entry>FarbeZ</entry>
@@ -2165,7 +2165,7 @@
      </row>
      <row>
        <entry>hg</entry>
-       <entry><link linkend='command-setsc'>setsc</link></entry>
+       <entry><link linkend='command-setscreencolor'>setsc</link></entry>
      </row>
      <row>
        <entry>hgz</entry>
@@ -2361,7 +2361,7 @@
      </row>
      <row>
        <entry>li</entry>
-       <entry><link linkend='command-lt'>lt</link></entry>
+       <entry><link linkend='command-left'>lt</link></entry>
      </row>
      <row>
        <entry>LiesDatei</entry>
@@ -2377,11 +2377,11 @@
      </row>
      <row>
        <entry>Liestaste</entry>
-       <entry><link linkend='command-rc'>rc</link></entry>
+       <entry><link linkend='command-readchar'>rc</link></entry>
      </row>
      <row>
        <entry>Liestasten</entry>
-       <entry><link linkend='command-rcs'>rcs</link></entry>
+       <entry><link linkend='command-readchars'>rcs</link></entry>
      </row>
      <row>
        <entry>liesWort</entry>
@@ -2433,7 +2433,7 @@
      </row>
      <row>
        <entry>ll</entry>
-       <entry><link linkend='command-rl'>rl</link></entry>
+       <entry><link linkend='command-readlist'>rl</link></entry>
      </row>
      <row>
        <entry>lokal</entry>
@@ -2461,7 +2461,7 @@
      </row>
      <row>
        <entry>ls</entry>
-       <entry><link linkend='command-ct'>ct</link></entry>
+       <entry><link linkend='command-cleartext'>ct</link></entry>
      </row>
      <row>
        <entry>lz</entry>
@@ -2573,11 +2573,11 @@
      </row>
      <row>
        <entry>oe</entry>
-       <entry><link linkend='command-bf'>bf</link></entry>
+       <entry><link linkend='command-butfirst'>bf</link></entry>
      </row>
      <row>
        <entry>oea</entry>
-       <entry><link linkend='command-bfs'>bfs</link></entry>
+       <entry><link linkend='command-butfirsts'>bfs</link></entry>
      </row>
      <row>
        <entry>offenZ</entry>
@@ -2593,7 +2593,7 @@
      </row>
      <row>
        <entry>ol</entry>
-       <entry><link linkend='command-bl'>bl</link></entry>
+       <entry><link linkend='command-butlast'>bl</link></entry>
      </row>
      <row>
        <entry>orientierung</entry>
@@ -2705,11 +2705,11 @@
      </row>
      <row>
        <entry>rd</entry>
-       <entry><link linkend='command-pe'>pe</link></entry>
+       <entry><link linkend='command-penerase'>pe</link></entry>
      </row>
      <row>
        <entry>re</entry>
-       <entry><link linkend='command-rt'>rt</link></entry>
+       <entry><link linkend='command-right'>rt</link></entry>
      </row>
      <row>
        <entry>rechts</entry>
@@ -2777,7 +2777,7 @@
      </row>
      <row>
        <entry>rw</entry>
-       <entry><link linkend='command-bk'>bk</link></entry>
+       <entry><link linkend='command-back'>bk</link></entry>
      </row>
      <row>
        <entry>sa</entry>
@@ -2821,7 +2821,7 @@
      </row>
      <row>
        <entry>sh</entry>
-       <entry><link linkend='command-pu'>pu</link></entry>
+       <entry><link linkend='command-penup'>pu</link></entry>
      </row>
      <row>
        <entry>sichtbar?</entry>
@@ -2837,7 +2837,7 @@
      </row>
      <row>
        <entry>SMale</entry>
-       <entry><link linkend='command-ppt'>ppt</link></entry>
+       <entry><link linkend='command-penpaint'>ppt</link></entry>
      </row>
      <row>
        <entry>solange</entry>
@@ -2861,7 +2861,7 @@
      </row>
      <row>
        <entry>sr</entry>
-       <entry><link linkend='command-px'>px</link></entry>
+       <entry><link linkend='command-penreverse'>px</link></entry>
      </row>
      <row>
        <entry>stapeln</entry>
@@ -3001,11 +3001,11 @@
      </row>
      <row>
        <entry>vb</entry>
-       <entry><link linkend='command-fs'>fs</link></entry>
+       <entry><link linkend='command-fullscreen'>fs</link></entry>
      </row>
      <row>
        <entry>vd</entry>
-       <entry><link linkend='command-erf'>erf</link></entry>
+       <entry><link linkend='command-erasefile'>erf</link></entry>
      </row>
      <row>
        <entry>verbinde</entry>
@@ -3085,7 +3085,7 @@
      </row>
      <row>
        <entry>vi</entry>
-       <entry><link linkend='command-ht'>ht</link></entry>
+       <entry><link linkend='command-hideturtle'>ht</link></entry>
      </row>
      <row>
        <entry>Vollbild</entry>
@@ -3105,7 +3105,7 @@
      </row>
      <row>
        <entry>vw</entry>
-       <entry><link linkend='command-fd'>fd</link></entry>
+       <entry><link linkend='command-forward'>fd</link></entry>
      </row>
      <row>
        <entry>wahr</entry>
@@ -3145,7 +3145,7 @@
      </row>
      <row>
        <entry>wf</entry>
-       <entry><link linkend='command-iff'>iff</link></entry>
+       <entry><link linkend='command-iffalse'>iff</link></entry>
      </row>
      <row>
        <entry>wh</entry>
@@ -3185,11 +3185,11 @@
      </row>
      <row>
        <entry>wt</entry>
-       <entry><link linkend='command-co'>co</link></entry>
+       <entry><link linkend='command-continue'>co</link></entry>
      </row>
      <row>
        <entry>ww</entry>
-       <entry><link linkend='command-ift'>ift</link></entry>
+       <entry><link linkend='command-iftrue'>ift</link></entry>
      </row>
      <row>
        <entry>xko</entry>
@@ -3265,7 +3265,7 @@
      </row>
      <row>
        <entry>zi</entry>
-       <entry><link linkend='command-st'>st</link></entry>
+       <entry><link linkend='command-showturtle'>st</link></entry>
      </row>
      <row>
        <entry>zitiert</entry>

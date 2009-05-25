@@ -27,6 +27,49 @@ $main::UndocumentedCommands{tag}         = 1;
 $main::UndocumentedCommands{textfont}    = 1;
 $main::UndocumentedCommands{tutor}       = 1;
 
+
+# Commands whose documentation are location in the documentation
+# for some other function.
+$main::EnglishAbbreviation{bk}    = 'back';
+$main::EnglishAbbreviation{bf}    = 'butfirst';
+$main::EnglishAbbreviation{bfs}   = 'butfirsts';
+$main::EnglishAbbreviation{bl}    = 'butlast';
+$main::EnglishAbbreviation{cs}    = 'clearsreen';
+$main::EnglishAbbreviation{ct}    = 'cleartext';
+$main::EnglishAbbreviation{co}    = 'continue';
+$main::EnglishAbbreviation{down}  = 'downpitch';
+$main::EnglishAbbreviation{ed}    = 'edit';
+$main::EnglishAbbreviation{er}    = 'erase';
+$main::EnglishAbbreviation{erf}   = 'erasefile';
+$main::EnglishAbbreviation{fd}    = 'forward';
+$main::EnglishAbbreviation{fs}    = 'fullscreen';
+$main::EnglishAbbreviation{ht}    = 'hideturtle';
+$main::EnglishAbbreviation{iff}   = 'iffalse';
+$main::EnglishAbbreviation{ift}   = 'iftrue';
+$main::EnglishAbbreviation{lr}    = 'leftroll';
+$main::EnglishAbbreviation{lt}    = 'left';
+$main::EnglishAbbreviation{pc}    = 'pencolor';
+$main::EnglishAbbreviation{pe}    = 'penerase';
+$main::EnglishAbbreviation{ppt}   = 'penpaint';
+$main::EnglishAbbreviation{px}    = 'penreverse';
+$main::EnglishAbbreviation{pu}    = 'penup';
+$main::EnglishAbbreviation{pr}    = 'print';
+$main::EnglishAbbreviation{rc}    = 'readchar';
+$main::EnglishAbbreviation{rcs}   = 'readchars';
+$main::EnglishAbbreviation{rl}    = 'readlist';
+$main::EnglishAbbreviation{rr}    = 'rightroll';
+$main::EnglishAbbreviation{rt}    = 'right';
+$main::EnglishAbbreviation{rw}    = 'readword';
+$main::EnglishAbbreviation{se}    = 'sentence';
+$main::EnglishAbbreviation{setfc} = 'setfloodcolor';
+$main::EnglishAbbreviation{seth}  = 'setheading';
+$main::EnglishAbbreviation{setpc} = 'setpencolor';
+$main::EnglishAbbreviation{setsc} = 'setscreencolor';
+$main::EnglishAbbreviation{st}    = 'showturtle';
+$main::EnglishAbbreviation{ss}    = 'splitscreen';
+$main::EnglishAbbreviation{ts}    = 'textscreen';
+$main::EnglishAbbreviation{up}    = 'uppitch';
+
 sub PrintShadowedProcedures($$$) {
   my $LocaleName         = shift or die "not enough arguments";
   my $English            = shift or die "not enough arguments";
@@ -86,7 +129,14 @@ sub PrintTranslationsAsText($$$) {
 }
 
 sub GetLinkend($) {
+
   my $EnglishCommand = shift or die "not enough arguments";
+
+  if ($main::EnglishAbbreviation{lc $EnglishCommand}) {
+    # This command has an abbreviation, we should link to the
+    # documentation for what it abbreviates.
+    $EnglishCommand = $main::EnglishAbbreviation{lc $EnglishCommand};
+  }
 
   my $linkend = lc "command-$EnglishCommand";
 

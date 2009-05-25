@@ -103,11 +103,11 @@
        <entry>éanterior?</entry>
      </row>
      <row>
-       <entry><link linkend='command-bf'>bf</link></entry>
+       <entry><link linkend='command-butfirst'>bf</link></entry>
        <entry>sp</entry>
      </row>
      <row>
-       <entry><link linkend='command-bfs'>bfs</link></entry>
+       <entry><link linkend='command-butfirsts'>bfs</link></entry>
        <entry>sps</entry>
      </row>
      <row>
@@ -179,11 +179,11 @@
        <entry>bitXou</entry>
      </row>
      <row>
-       <entry><link linkend='command-bk'>bk</link></entry>
+       <entry><link linkend='command-back'>bk</link></entry>
        <entry>pt</entry>
      </row>
      <row>
-       <entry><link linkend='command-bl'>bl</link></entry>
+       <entry><link linkend='command-butlast'>bl</link></entry>
        <entry>su</entry>
      </row>
      <row>
@@ -359,11 +359,11 @@
        <entry>mapeiecruzado</entry>
      </row>
      <row>
-       <entry><link linkend='command-cs'>cs</link></entry>
+       <entry><link linkend='command-clearsreen'>cs</link></entry>
        <entry>tat</entry>
      </row>
      <row>
-       <entry><link linkend='command-ct'>ct</link></entry>
+       <entry><link linkend='command-cleartext'>ct</link></entry>
        <entry>ljc</entry>
      </row>
      <row>
@@ -443,7 +443,7 @@
        <entry>façaenquanto</entry>
      </row>
      <row>
-       <entry><link linkend='command-down'>down</link></entry>
+       <entry><link linkend='command-downpitch'>down</link></entry>
        <entry>baixenz</entry>
      </row>
      <row>
@@ -523,7 +523,7 @@
        <entry>sãoiguais?</entry>
      </row>
      <row>
-       <entry><link linkend='command-er'>er</link></entry>
+       <entry><link linkend='command-erase'>er</link></entry>
        <entry>el</entry>
      </row>
      <row>
@@ -543,7 +543,7 @@
        <entry>apagueArquivo</entry>
      </row>
      <row>
-       <entry><link linkend='command-erf'>erf</link></entry>
+       <entry><link linkend='command-erasefile'>erf</link></entry>
        <entry>apagueArq</entry>
      </row>
      <row>
@@ -575,7 +575,7 @@
        <entry>falso</entry>
      </row>
      <row>
-       <entry><link linkend='command-fd'>fd</link></entry>
+       <entry><link linkend='command-forward'>fd</link></entry>
        <entry>pf</entry>
      </row>
      <row>
@@ -643,7 +643,7 @@
        <entry>ji</entry>
      </row>
      <row>
-       <entry><link linkend='command-fs'>fs</link></entry>
+       <entry><link linkend='command-fullscreen'>fs</link></entry>
        <entry>tc</entry>
      </row>
      <row>
@@ -731,7 +731,7 @@
        <entry>centro</entry>
      </row>
      <row>
-       <entry><link linkend='command-ht'>ht</link></entry>
+       <entry><link linkend='command-hideturtle'>ht</link></entry>
        <entry>ot</entry>
      </row>
      <row>
@@ -751,7 +751,7 @@
        <entry>senão</entry>
      </row>
      <row>
-       <entry><link linkend='command-iff'>iff</link></entry>
+       <entry><link linkend='command-iffalse'>iff</link></entry>
        <entry>sef</entry>
      </row>
      <row>
@@ -759,7 +759,7 @@
        <entry>seFalso</entry>
      </row>
      <row>
-       <entry><link linkend='command-ift'>ift</link></entry>
+       <entry><link linkend='command-iftrue'>ift</link></entry>
        <entry>sev</entry>
      </row>
      <row>
@@ -927,7 +927,7 @@
        <entry>jf</entry>
      </row>
      <row>
-       <entry><link linkend='command-lr'>lr</link></entry>
+       <entry><link linkend='command-leftroll'>lr</link></entry>
        <entry>rolepe</entry>
      </row>
      <row>
@@ -935,7 +935,7 @@
        <entry>desloquebitsl</entry>
      </row>
      <row>
-       <entry><link linkend='command-lt'>lt</link></entry>
+       <entry><link linkend='command-left'>lt</link></entry>
        <entry>pe</entry>
      </row>
      <row>
@@ -1187,7 +1187,7 @@
        <entry>pausa</entry>
      </row>
      <row>
-       <entry><link linkend='command-pc'>pc</link></entry>
+       <entry><link linkend='command-pencolor'>pc</link></entry>
        <entry>cl</entry>
      </row>
      <row>
@@ -1195,7 +1195,7 @@
        <entry>ul</entry>
      </row>
      <row>
-       <entry><link linkend='command-pe'>pe</link></entry>
+       <entry><link linkend='command-penerase'>pe</link></entry>
        <entry>ub</entry>
      </row>
      <row>
@@ -1375,11 +1375,11 @@
        <entry>mudeprop</entry>
      </row>
      <row>
-       <entry><link linkend='command-ppt'>ppt</link></entry>
+       <entry><link linkend='command-penpaint'>ppt</link></entry>
        <entry>ul</entry>
      </row>
      <row>
-       <entry><link linkend='command-pr'>pr</link></entry>
+       <entry><link linkend='command-print'>pr</link></entry>
        <entry>esc</entry>
      </row>
      <row>
@@ -1419,7 +1419,7 @@
        <entry>lProp?</entry>
      </row>
      <row>
-       <entry><link linkend='command-pu'>pu</link></entry>
+       <entry><link linkend='command-penup'>pu</link></entry>
        <entry>un</entry>
      </row>
      <row>
@@ -1427,7 +1427,7 @@
        <entry>inserefila</entry>
      </row>
      <row>
-       <entry><link linkend='command-px'>px</link></entry>
+       <entry><link linkend='command-penreverse'>px</link></entry>
        <entry>ui</entry>
      </row>
      <row>
@@ -1499,11 +1499,11 @@
        <entry>sorteie</entry>
      </row>
      <row>
-       <entry><link linkend='command-rc'>rc</link></entry>
+       <entry><link linkend='command-readchar'>rc</link></entry>
        <entry>leiacar</entry>
      </row>
      <row>
-       <entry><link linkend='command-rcs'>rcs</link></entry>
+       <entry><link linkend='command-readchars'>rcs</link></entry>
        <entry>leiacars</entry>
      </row>
      <row>
@@ -1587,7 +1587,7 @@
        <entry>roleparadireita</entry>
      </row>
      <row>
-       <entry><link linkend='command-rl'>rl</link></entry>
+       <entry><link linkend='command-readlist'>rl</link></entry>
        <entry>rolepd</entry>
      </row>
      <row>
@@ -1603,7 +1603,7 @@
        <entry>arredonde</entry>
      </row>
      <row>
-       <entry><link linkend='command-rr'>rr</link></entry>
+       <entry><link linkend='command-rightroll'>rr</link></entry>
        <entry>rolepd</entry>
      </row>
      <row>
@@ -1611,7 +1611,7 @@
        <entry>seqrac</entry>
      </row>
      <row>
-       <entry><link linkend='command-rt'>rt</link></entry>
+       <entry><link linkend='command-right'>rt</link></entry>
        <entry>pd</entry>
      </row>
      <row>
@@ -1627,7 +1627,7 @@
        <entry>façaDevolva</entry>
      </row>
      <row>
-       <entry><link linkend='command-rw'>rw</link></entry>
+       <entry><link linkend='command-readword'>rw</link></entry>
        <entry>leiap</entry>
      </row>
      <row>
@@ -1675,7 +1675,7 @@
        <entry>proporção</entry>
      </row>
      <row>
-       <entry><link linkend='command-se'>se</link></entry>
+       <entry><link linkend='command-sentence'>se</link></entry>
        <entry>fr</entry>
      </row>
      <row>
@@ -1711,7 +1711,7 @@
        <entry>mudeCursorEspera</entry>
      </row>
      <row>
-       <entry><link linkend='command-setfc'>setfc</link></entry>
+       <entry><link linkend='command-setfloodcolor'>setfc</link></entry>
        <entry>mudecp</entry>
      </row>
      <row>
@@ -1723,7 +1723,7 @@
        <entry>mudeFoco</entry>
      </row>
      <row>
-       <entry><link linkend='command-seth'>seth</link></entry>
+       <entry><link linkend='command-setheading'>seth</link></entry>
        <entry>mudedc</entry>
      </row>
      <row>
@@ -1751,7 +1751,7 @@
        <entry>mudeorientação</entry>
      </row>
      <row>
-       <entry><link linkend='command-setpc'>setpc</link></entry>
+       <entry><link linkend='command-setpencolor'>setpc</link></entry>
        <entry>mudeCL</entry>
      </row>
      <row>
@@ -1799,7 +1799,7 @@
        <entry>mudeDireçãoRolagem</entry>
      </row>
      <row>
-       <entry><link linkend='command-setsc'>setsc</link></entry>
+       <entry><link linkend='command-setscreencolor'>setsc</link></entry>
        <entry>mudeCF</entry>
      </row>
      <row>
@@ -1903,11 +1903,11 @@
        <entry>raizq</entry>
      </row>
      <row>
-       <entry><link linkend='command-ss'>ss</link></entry>
+       <entry><link linkend='command-splitscreen'>ss</link></entry>
        <entry>fixeJC</entry>
      </row>
      <row>
-       <entry><link linkend='command-st'>st</link></entry>
+       <entry><link linkend='command-showturtle'>st</link></entry>
        <entry>mt</entry>
      </row>
      <row>
@@ -2023,7 +2023,7 @@
        <entry>verd</entry>
      </row>
      <row>
-       <entry><link linkend='command-ts'>ts</link></entry>
+       <entry><link linkend='command-textscreen'>ts</link></entry>
        <entry>libereJC</entry>
      </row>
      <row>
@@ -2071,7 +2071,7 @@
        <entry>nãoRastreie</entry>
      </row>
      <row>
-       <entry><link linkend='command-up'>up</link></entry>
+       <entry><link linkend='command-uppitch'>up</link></entry>
        <entry>levantenz</entry>
      </row>
      <row>
@@ -2253,7 +2253,7 @@
      </row>
      <row>
        <entry>apagueArq</entry>
-       <entry><link linkend='command-erf'>erf</link></entry>
+       <entry><link linkend='command-erasefile'>erf</link></entry>
      </row>
      <row>
        <entry>apagueArquivo</entry>
@@ -2453,7 +2453,7 @@
      </row>
      <row>
        <entry>baixenz</entry>
-       <entry><link linkend='command-down'>down</link></entry>
+       <entry><link linkend='command-downpitch'>down</link></entry>
      </row>
      <row>
        <entry>barraRolagem</entry>
@@ -2545,7 +2545,7 @@
      </row>
      <row>
        <entry>cl</entry>
-       <entry><link linkend='command-pc'>pc</link></entry>
+       <entry><link linkend='command-pencolor'>pc</link></entry>
      </row>
      <row>
        <entry>colebmp</entry>
@@ -2821,7 +2821,7 @@
      </row>
      <row>
        <entry>el</entry>
-       <entry><link linkend='command-er'>er</link></entry>
+       <entry><link linkend='command-erase'>er</link></entry>
      </row>
      <row>
        <entry>elimine</entry>
@@ -2961,7 +2961,7 @@
      </row>
      <row>
        <entry>esc</entry>
-       <entry><link linkend='command-pr'>pr</link></entry>
+       <entry><link linkend='command-print'>pr</link></entry>
      </row>
      <row>
        <entry>escolha</entry>
@@ -3105,7 +3105,7 @@
      </row>
      <row>
        <entry>fixeJC</entry>
-       <entry><link linkend='command-ss'>ss</link></entry>
+       <entry><link linkend='command-splitscreen'>ss</link></entry>
      </row>
      <row>
        <entry>foco</entry>
@@ -3117,7 +3117,7 @@
      </row>
      <row>
        <entry>fr</entry>
-       <entry><link linkend='command-se'>se</link></entry>
+       <entry><link linkend='command-sentence'>se</link></entry>
      </row>
      <row>
        <entry>frase</entry>
@@ -3205,7 +3205,7 @@
      </row>
      <row>
        <entry>leiacar</entry>
-       <entry><link linkend='command-rc'>rc</link></entry>
+       <entry><link linkend='command-readchar'>rc</link></entry>
      </row>
      <row>
        <entry>leiaCaractere</entry>
@@ -3221,7 +3221,7 @@
      </row>
      <row>
        <entry>leiacars</entry>
-       <entry><link linkend='command-rcs'>rcs</link></entry>
+       <entry><link linkend='command-readchars'>rcs</link></entry>
      </row>
      <row>
        <entry>leiaLista</entry>
@@ -3229,7 +3229,7 @@
      </row>
      <row>
        <entry>leiap</entry>
-       <entry><link linkend='command-rw'>rw</link></entry>
+       <entry><link linkend='command-readword'>rw</link></entry>
      </row>
      <row>
        <entry>leiaPalavra</entry>
@@ -3249,7 +3249,7 @@
      </row>
      <row>
        <entry>levantenz</entry>
-       <entry><link linkend='command-up'>up</link></entry>
+       <entry><link linkend='command-uppitch'>up</link></entry>
      </row>
      <row>
        <entry>libereDLL</entry>
@@ -3261,7 +3261,7 @@
      </row>
      <row>
        <entry>libereJC</entry>
-       <entry><link linkend='command-ts'>ts</link></entry>
+       <entry><link linkend='command-textscreen'>ts</link></entry>
      </row>
      <row>
        <entry>limpeJanelaComandos</entry>
@@ -3293,7 +3293,7 @@
      </row>
      <row>
        <entry>ljc</entry>
-       <entry><link linkend='command-ct'>ct</link></entry>
+       <entry><link linkend='command-cleartext'>ct</link></entry>
      </row>
      <row>
        <entry>llistaprops</entry>
@@ -3457,7 +3457,7 @@
      </row>
      <row>
        <entry>mt</entry>
-       <entry><link linkend='command-st'>st</link></entry>
+       <entry><link linkend='command-showturtle'>st</link></entry>
      </row>
      <row>
        <entry>mudeÁreaAtiva</entry>
@@ -3481,11 +3481,11 @@
      </row>
      <row>
        <entry>mudeCF</entry>
-       <entry><link linkend='command-setsc'>setsc</link></entry>
+       <entry><link linkend='command-setscreencolor'>setsc</link></entry>
      </row>
      <row>
        <entry>mudeCL</entry>
-       <entry><link linkend='command-setpc'>setpc</link></entry>
+       <entry><link linkend='command-setpencolor'>setpc</link></entry>
      </row>
      <row>
        <entry>mudeCordePreenchimento</entry>
@@ -3501,7 +3501,7 @@
      </row>
      <row>
        <entry>mudecp</entry>
-       <entry><link linkend='command-setfc'>setfc</link></entry>
+       <entry><link linkend='command-setfloodcolor'>setfc</link></entry>
      </row>
      <row>
        <entry>mudeCursor</entry>
@@ -3517,7 +3517,7 @@
      </row>
      <row>
        <entry>mudedc</entry>
-       <entry><link linkend='command-seth'>seth</link></entry>
+       <entry><link linkend='command-setheading'>seth</link></entry>
      </row>
      <row>
        <entry>mudeDir</entry>
@@ -3713,7 +3713,7 @@
      </row>
      <row>
        <entry>ot</entry>
-       <entry><link linkend='command-ht'>ht</link></entry>
+       <entry><link linkend='command-hideturtle'>ht</link></entry>
      </row>
      <row>
        <entry>ou</entry>
@@ -3769,11 +3769,11 @@
      </row>
      <row>
        <entry>pd</entry>
-       <entry><link linkend='command-rt'>rt</link></entry>
+       <entry><link linkend='command-right'>rt</link></entry>
      </row>
      <row>
        <entry>pe</entry>
-       <entry><link linkend='command-lt'>lt</link></entry>
+       <entry><link linkend='command-left'>lt</link></entry>
      </row>
      <row>
        <entry>pede</entry>
@@ -3785,7 +3785,7 @@
      </row>
      <row>
        <entry>pf</entry>
-       <entry><link linkend='command-fd'>fd</link></entry>
+       <entry><link linkend='command-forward'>fd</link></entry>
      </row>
      <row>
        <entry>pinte</entry>
@@ -3841,7 +3841,7 @@
      </row>
      <row>
        <entry>pt</entry>
-       <entry><link linkend='command-bk'>bk</link></entry>
+       <entry><link linkend='command-back'>bk</link></entry>
      </row>
      <row>
        <entry>quociente</entry>
@@ -3949,11 +3949,11 @@
      </row>
      <row>
        <entry>rolepd</entry>
-       <entry><link linkend='command-rr'>rr</link></entry>
+       <entry><link linkend='command-rightroll'>rr</link></entry>
      </row>
      <row>
        <entry>rolepe</entry>
-       <entry><link linkend='command-lr'>lr</link></entry>
+       <entry><link linkend='command-leftroll'>lr</link></entry>
      </row>
      <row>
        <entry>rolex</entry>
@@ -4005,7 +4005,7 @@
      </row>
      <row>
        <entry>sef</entry>
-       <entry><link linkend='command-iff'>iff</link></entry>
+       <entry><link linkend='command-iffalse'>iff</link></entry>
      </row>
      <row>
        <entry>seFalso</entry>
@@ -4073,7 +4073,7 @@
      </row>
      <row>
        <entry>sev</entry>
-       <entry><link linkend='command-ift'>ift</link></entry>
+       <entry><link linkend='command-iftrue'>ift</link></entry>
      </row>
      <row>
        <entry>seVerd</entry>
@@ -4113,15 +4113,15 @@
      </row>
      <row>
        <entry>sp</entry>
-       <entry><link linkend='command-bf'>bf</link></entry>
+       <entry><link linkend='command-butfirst'>bf</link></entry>
      </row>
      <row>
        <entry>sps</entry>
-       <entry><link linkend='command-bfs'>bfs</link></entry>
+       <entry><link linkend='command-butfirsts'>bfs</link></entry>
      </row>
      <row>
        <entry>su</entry>
-       <entry><link linkend='command-bl'>bl</link></entry>
+       <entry><link linkend='command-butlast'>bl</link></entry>
      </row>
      <row>
        <entry>tamanhorotule</entry>
@@ -4153,7 +4153,7 @@
      </row>
      <row>
        <entry>tat</entry>
-       <entry><link linkend='command-cs'>cs</link></entry>
+       <entry><link linkend='command-clearsreen'>cs</link></entry>
      </row>
      <row>
        <entry>tatativa</entry>
@@ -4165,7 +4165,7 @@
      </row>
      <row>
        <entry>tc</entry>
-       <entry><link linkend='command-fs'>fs</link></entry>
+       <entry><link linkend='command-fullscreen'>fs</link></entry>
      </row>
      <row>
        <entry>tecla?</entry>
@@ -4233,15 +4233,15 @@
      </row>
      <row>
        <entry>ub</entry>
-       <entry><link linkend='command-pe'>pe</link></entry>
+       <entry><link linkend='command-penerase'>pe</link></entry>
      </row>
      <row>
        <entry>ui</entry>
-       <entry><link linkend='command-px'>px</link></entry>
+       <entry><link linkend='command-penreverse'>px</link></entry>
      </row>
      <row>
        <entry>ul</entry>
-       <entry><link linkend='command-ppt'>ppt</link></entry>
+       <entry><link linkend='command-penpaint'>ppt</link></entry>
      </row>
      <row>
        <entry>último</entry>
@@ -4249,7 +4249,7 @@
      </row>
      <row>
        <entry>un</entry>
-       <entry><link linkend='command-pu'>pu</link></entry>
+       <entry><link linkend='command-penup'>pu</link></entry>
      </row>
      <row>
        <entry>useborracha</entry>

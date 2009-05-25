@@ -103,11 +103,11 @@
        <entry>anterior?</entry>
      </row>
      <row>
-       <entry><link linkend='command-bf'>bf</link></entry>
+       <entry><link linkend='command-butfirst'>bf</link></entry>
        <entry>mp</entry>
      </row>
      <row>
-       <entry><link linkend='command-bfs'>bfs</link></entry>
+       <entry><link linkend='command-butfirsts'>bfs</link></entry>
        <entry>mps</entry>
      </row>
      <row>
@@ -163,11 +163,11 @@
        <entry>tamañoDibujo</entry>
      </row>
      <row>
-       <entry><link linkend='command-bk'>bk</link></entry>
+       <entry><link linkend='command-back'>bk</link></entry>
        <entry>re</entry>
      </row>
      <row>
-       <entry><link linkend='command-bl'>bl</link></entry>
+       <entry><link linkend='command-butlast'>bl</link></entry>
        <entry>mu</entry>
      </row>
      <row>
@@ -363,11 +363,11 @@
        <entry>entreteje</entry>
      </row>
      <row>
-       <entry><link linkend='command-cs'>cs</link></entry>
+       <entry><link linkend='command-clearsreen'>cs</link></entry>
        <entry>bp</entry>
      </row>
      <row>
-       <entry><link linkend='command-ct'>ct</link></entry>
+       <entry><link linkend='command-cleartext'>ct</link></entry>
        <entry>bt</entry>
      </row>
      <row>
@@ -443,7 +443,7 @@
        <entry>haz.mientras</entry>
      </row>
      <row>
-       <entry><link linkend='command-down'>down</link></entry>
+       <entry><link linkend='command-downpitch'>down</link></entry>
        <entry>abajo</entry>
      </row>
      <row>
@@ -531,7 +531,7 @@
        <entry>iguales?</entry>
      </row>
      <row>
-       <entry><link linkend='command-er'>er</link></entry>
+       <entry><link linkend='command-erase'>er</link></entry>
        <entry>bo</entry>
      </row>
      <row>
@@ -547,7 +547,7 @@
        <entry>borraArchivo</entry>
      </row>
      <row>
-       <entry><link linkend='command-erf'>erf</link></entry>
+       <entry><link linkend='command-erasefile'>erf</link></entry>
        <entry>boArchivo</entry>
      </row>
      <row>
@@ -579,7 +579,7 @@
        <entry>falso</entry>
      </row>
      <row>
-       <entry><link linkend='command-fd'>fd</link></entry>
+       <entry><link linkend='command-forward'>fd</link></entry>
        <entry>av</entry>
      </row>
      <row>
@@ -655,7 +655,7 @@
        <entry>pp</entry>
      </row>
      <row>
-       <entry><link linkend='command-fs'>fs</link></entry>
+       <entry><link linkend='command-fullscreen'>fs</link></entry>
        <entry>pg</entry>
      </row>
      <row>
@@ -739,7 +739,7 @@
        <entry>centro</entry>
      </row>
      <row>
-       <entry><link linkend='command-ht'>ht</link></entry>
+       <entry><link linkend='command-hideturtle'>ht</link></entry>
        <entry>ocultaTortuga</entry>
      </row>
      <row>
@@ -755,7 +755,7 @@
        <entry>siSino</entry>
      </row>
      <row>
-       <entry><link linkend='command-iff'>iff</link></entry>
+       <entry><link linkend='command-iffalse'>iff</link></entry>
        <entry>siFalso</entry>
      </row>
      <row>
@@ -763,7 +763,7 @@
        <entry>siFalso</entry>
      </row>
      <row>
-       <entry><link linkend='command-ift'>ift</link></entry>
+       <entry><link linkend='command-iftrue'>ift</link></entry>
        <entry>sicierto</entry>
      </row>
      <row>
@@ -939,7 +939,7 @@
        <entry>pul</entry>
      </row>
      <row>
-       <entry><link linkend='command-lr'>lr</link></entry>
+       <entry><link linkend='command-leftroll'>lr</link></entry>
        <entry>bi</entry>
      </row>
      <row>
@@ -947,7 +947,7 @@
        <entry>desplazaIzquierda</entry>
      </row>
      <row>
-       <entry><link linkend='command-lt'>lt</link></entry>
+       <entry><link linkend='command-left'>lt</link></entry>
        <entry>gi</entry>
      </row>
      <row>
@@ -1195,7 +1195,7 @@
        <entry>pausa</entry>
      </row>
      <row>
-       <entry><link linkend='command-pc'>pc</link></entry>
+       <entry><link linkend='command-pencolor'>pc</link></entry>
        <entry>cl</entry>
      </row>
      <row>
@@ -1203,7 +1203,7 @@
        <entry>bl</entry>
      </row>
      <row>
-       <entry><link linkend='command-pe'>pe</link></entry>
+       <entry><link linkend='command-penerase'>pe</link></entry>
        <entry>goma</entry>
      </row>
      <row>
@@ -1387,11 +1387,11 @@
        <entry>ponprop</entry>
      </row>
      <row>
-       <entry><link linkend='command-ppt'>ppt</link></entry>
+       <entry><link linkend='command-penpaint'>ppt</link></entry>
        <entry>lNormal</entry>
      </row>
      <row>
-       <entry><link linkend='command-pr'>pr</link></entry>
+       <entry><link linkend='command-print'>pr</link></entry>
        <entry>es</entry>
      </row>
      <row>
@@ -1431,7 +1431,7 @@
        <entry>lProp?</entry>
      </row>
      <row>
-       <entry><link linkend='command-pu'>pu</link></entry>
+       <entry><link linkend='command-penup'>pu</link></entry>
        <entry>sl</entry>
      </row>
      <row>
@@ -1439,7 +1439,7 @@
        <entry>apila</entry>
      </row>
      <row>
-       <entry><link linkend='command-px'>px</link></entry>
+       <entry><link linkend='command-penreverse'>px</link></entry>
        <entry>lInvierte</entry>
      </row>
      <row>
@@ -1495,11 +1495,11 @@
        <entry>asciiPuro</entry>
      </row>
      <row>
-       <entry><link linkend='command-rc'>rc</link></entry>
+       <entry><link linkend='command-readchar'>rc</link></entry>
        <entry>lc</entry>
      </row>
      <row>
-       <entry><link linkend='command-rcs'>rcs</link></entry>
+       <entry><link linkend='command-readchars'>rcs</link></entry>
        <entry>lcs</entry>
      </row>
      <row>
@@ -1575,7 +1575,7 @@
        <entry>balanceaDerecha</entry>
      </row>
      <row>
-       <entry><link linkend='command-rl'>rl</link></entry>
+       <entry><link linkend='command-readlist'>rl</link></entry>
        <entry>ll</entry>
      </row>
      <row>
@@ -1591,7 +1591,7 @@
        <entry>redondea</entry>
      </row>
      <row>
-       <entry><link linkend='command-rr'>rr</link></entry>
+       <entry><link linkend='command-rightroll'>rr</link></entry>
        <entry>bd</entry>
      </row>
      <row>
@@ -1599,7 +1599,7 @@
        <entry>secrac</entry>
      </row>
      <row>
-       <entry><link linkend='command-rt'>rt</link></entry>
+       <entry><link linkend='command-right'>rt</link></entry>
        <entry>gd</entry>
      </row>
      <row>
@@ -1615,7 +1615,7 @@
        <entry>resultadoEjecuta</entry>
      </row>
      <row>
-       <entry><link linkend='command-rw'>rw</link></entry>
+       <entry><link linkend='command-readword'>rw</link></entry>
        <entry>lp</entry>
      </row>
      <row>
@@ -1663,7 +1663,7 @@
        <entry>ronzal</entry>
      </row>
      <row>
-       <entry><link linkend='command-se'>se</link></entry>
+       <entry><link linkend='command-sentence'>se</link></entry>
        <entry>fr</entry>
      </row>
      <row>
@@ -1699,7 +1699,7 @@
        <entry>ponCursorEspera</entry>
      </row>
      <row>
-       <entry><link linkend='command-setfc'>setfc</link></entry>
+       <entry><link linkend='command-setfloodcolor'>setfc</link></entry>
        <entry>poncr</entry>
      </row>
      <row>
@@ -1711,7 +1711,7 @@
        <entry>ponFoco</entry>
      </row>
      <row>
-       <entry><link linkend='command-seth'>seth</link></entry>
+       <entry><link linkend='command-setheading'>seth</link></entry>
        <entry>ponr</entry>
      </row>
      <row>
@@ -1739,7 +1739,7 @@
        <entry>ponorientacion</entry>
      </row>
      <row>
-       <entry><link linkend='command-setpc'>setpc</link></entry>
+       <entry><link linkend='command-setpencolor'>setpc</link></entry>
        <entry>ponCL</entry>
      </row>
      <row>
@@ -1787,7 +1787,7 @@
        <entry>ponBalanceo</entry>
      </row>
      <row>
-       <entry><link linkend='command-setsc'>setsc</link></entry>
+       <entry><link linkend='command-setscreencolor'>setsc</link></entry>
        <entry>ponCF</entry>
      </row>
      <row>
@@ -1895,11 +1895,11 @@
        <entry>raizcuadrada</entry>
      </row>
      <row>
-       <entry><link linkend='command-ss'>ss</link></entry>
+       <entry><link linkend='command-splitscreen'>ss</link></entry>
        <entry>pa</entry>
      </row>
      <row>
-       <entry><link linkend='command-st'>st</link></entry>
+       <entry><link linkend='command-showturtle'>st</link></entry>
        <entry>muestraTortuga</entry>
      </row>
      <row>
@@ -2007,7 +2007,7 @@
        <entry>cierto</entry>
      </row>
      <row>
-       <entry><link linkend='command-ts'>ts</link></entry>
+       <entry><link linkend='command-textscreen'>ts</link></entry>
        <entry>pt</entry>
      </row>
      <row>
@@ -2055,7 +2055,7 @@
        <entry>noTraza</entry>
      </row>
      <row>
-       <entry><link linkend='command-up'>up</link></entry>
+       <entry><link linkend='command-uppitch'>up</link></entry>
        <entry>arriba</entry>
      </row>
      <row>
@@ -2189,7 +2189,7 @@
      </row>
      <row>
        <entry>abajo</entry>
-       <entry><link linkend='command-down'>down</link></entry>
+       <entry><link linkend='command-downpitch'>down</link></entry>
      </row>
      <row>
        <entry>abiertos</entry>
@@ -2313,7 +2313,7 @@
      </row>
      <row>
        <entry>arriba</entry>
-       <entry><link linkend='command-up'>up</link></entry>
+       <entry><link linkend='command-uppitch'>up</link></entry>
      </row>
      <row>
        <entry>asciiPuro</entry>
@@ -2325,7 +2325,7 @@
      </row>
      <row>
        <entry>av</entry>
-       <entry><link linkend='command-fd'>fd</link></entry>
+       <entry><link linkend='command-forward'>fd</link></entry>
      </row>
      <row>
        <entry>avanza</entry>
@@ -2369,11 +2369,11 @@
      </row>
      <row>
        <entry>bd</entry>
-       <entry><link linkend='command-rr'>rr</link></entry>
+       <entry><link linkend='command-rightroll'>rr</link></entry>
      </row>
      <row>
        <entry>bi</entry>
-       <entry><link linkend='command-lr'>lr</link></entry>
+       <entry><link linkend='command-leftroll'>lr</link></entry>
      </row>
      <row>
        <entry>bitPega</entry>
@@ -2393,11 +2393,11 @@
      </row>
      <row>
        <entry>bo</entry>
-       <entry><link linkend='command-er'>er</link></entry>
+       <entry><link linkend='command-erase'>er</link></entry>
      </row>
      <row>
        <entry>boArchivo</entry>
-       <entry><link linkend='command-erf'>erf</link></entry>
+       <entry><link linkend='command-erasefile'>erf</link></entry>
      </row>
      <row>
        <entry>boProp</entry>
@@ -2485,7 +2485,7 @@
      </row>
      <row>
        <entry>bp</entry>
-       <entry><link linkend='command-cs'>cs</link></entry>
+       <entry><link linkend='command-clearsreen'>cs</link></entry>
      </row>
      <row>
        <entry>bprocs</entry>
@@ -2497,7 +2497,7 @@
      </row>
      <row>
        <entry>bt</entry>
-       <entry><link linkend='command-ct'>ct</link></entry>
+       <entry><link linkend='command-cleartext'>ct</link></entry>
      </row>
      <row>
        <entry>btodo</entry>
@@ -2581,7 +2581,7 @@
      </row>
      <row>
        <entry>cl</entry>
-       <entry><link linkend='command-pc'>pc</link></entry>
+       <entry><link linkend='command-pencolor'>pc</link></entry>
      </row>
      <row>
        <entry>cociente</entry>
@@ -2869,7 +2869,7 @@
      </row>
      <row>
        <entry>es</entry>
-       <entry><link linkend='command-pr'>pr</link></entry>
+       <entry><link linkend='command-print'>pr</link></entry>
      </row>
      <row>
        <entry>escribe</entry>
@@ -2945,7 +2945,7 @@
      </row>
      <row>
        <entry>fr</entry>
-       <entry><link linkend='command-se'>se</link></entry>
+       <entry><link linkend='command-sentence'>se</link></entry>
      </row>
      <row>
        <entry>frase</entry>
@@ -2953,7 +2953,7 @@
      </row>
      <row>
        <entry>gd</entry>
-       <entry><link linkend='command-rt'>rt</link></entry>
+       <entry><link linkend='command-right'>rt</link></entry>
      </row>
      <row>
        <entry>gensimbolo</entry>
@@ -2961,7 +2961,7 @@
      </row>
      <row>
        <entry>gi</entry>
-       <entry><link linkend='command-lt'>lt</link></entry>
+       <entry><link linkend='command-left'>lt</link></entry>
      </row>
      <row>
        <entry>giraDerecha</entry>
@@ -3193,11 +3193,11 @@
      </row>
      <row>
        <entry>lc</entry>
-       <entry><link linkend='command-rc'>rc</link></entry>
+       <entry><link linkend='command-readchar'>rc</link></entry>
      </row>
      <row>
        <entry>lcs</entry>
-       <entry><link linkend='command-rcs'>rcs</link></entry>
+       <entry><link linkend='command-readchars'>rcs</link></entry>
      </row>
      <row>
        <entry>lectura</entry>
@@ -3273,7 +3273,7 @@
      </row>
      <row>
        <entry>lInvierte</entry>
-       <entry><link linkend='command-px'>px</link></entry>
+       <entry><link linkend='command-penreverse'>px</link></entry>
      </row>
      <row>
        <entry>lista</entry>
@@ -3305,7 +3305,7 @@
      </row>
      <row>
        <entry>ll</entry>
-       <entry><link linkend='command-rl'>rl</link></entry>
+       <entry><link linkend='command-readlist'>rl</link></entry>
      </row>
      <row>
        <entry>llamaDLL</entry>
@@ -3313,7 +3313,7 @@
      </row>
      <row>
        <entry>lNormal</entry>
-       <entry><link linkend='command-ppt'>ppt</link></entry>
+       <entry><link linkend='command-penpaint'>ppt</link></entry>
      </row>
      <row>
        <entry>log</entry>
@@ -3321,7 +3321,7 @@
      </row>
      <row>
        <entry>lp</entry>
-       <entry><link linkend='command-rw'>rw</link></entry>
+       <entry><link linkend='command-readword'>rw</link></entry>
      </row>
      <row>
        <entry>lProcs</entry>
@@ -3441,7 +3441,7 @@
      </row>
      <row>
        <entry>mp</entry>
-       <entry><link linkend='command-bf'>bf</link></entry>
+       <entry><link linkend='command-butfirst'>bf</link></entry>
      </row>
      <row>
        <entry>mpr</entry>
@@ -3449,11 +3449,11 @@
      </row>
      <row>
        <entry>mps</entry>
-       <entry><link linkend='command-bfs'>bfs</link></entry>
+       <entry><link linkend='command-butfirsts'>bfs</link></entry>
      </row>
      <row>
        <entry>mu</entry>
-       <entry><link linkend='command-bl'>bl</link></entry>
+       <entry><link linkend='command-butlast'>bl</link></entry>
      </row>
      <row>
        <entry>muestra</entry>
@@ -3469,7 +3469,7 @@
      </row>
      <row>
        <entry>muestraTortuga</entry>
-       <entry><link linkend='command-st'>st</link></entry>
+       <entry><link linkend='command-showturtle'>st</link></entry>
      </row>
      <row>
        <entry>mul</entry>
@@ -3521,7 +3521,7 @@
      </row>
      <row>
        <entry>ocultaTortuga</entry>
-       <entry><link linkend='command-ht'>ht</link></entry>
+       <entry><link linkend='command-hideturtle'>ht</link></entry>
      </row>
      <row>
        <entry>ordena</entry>
@@ -3537,7 +3537,7 @@
      </row>
      <row>
        <entry>pa</entry>
-       <entry><link linkend='command-ss'>ss</link></entry>
+       <entry><link linkend='command-splitscreen'>ss</link></entry>
      </row>
      <row>
        <entry>palabra</entry>
@@ -3585,7 +3585,7 @@
      </row>
      <row>
        <entry>pg</entry>
-       <entry><link linkend='command-fs'>fs</link></entry>
+       <entry><link linkend='command-fullscreen'>fs</link></entry>
      </row>
      <row>
        <entry>pide</entry>
@@ -3613,7 +3613,7 @@
      </row>
      <row>
        <entry>ponCF</entry>
-       <entry><link linkend='command-setsc'>setsc</link></entry>
+       <entry><link linkend='command-setscreencolor'>setsc</link></entry>
      </row>
      <row>
        <entry>ponCheckbox</entry>
@@ -3621,7 +3621,7 @@
      </row>
      <row>
        <entry>ponCL</entry>
-       <entry><link linkend='command-setpc'>setpc</link></entry>
+       <entry><link linkend='command-setpencolor'>setpc</link></entry>
      </row>
      <row>
        <entry>ponColorFondo</entry>
@@ -3637,7 +3637,7 @@
      </row>
      <row>
        <entry>poncr</entry>
-       <entry><link linkend='command-setfc'>setfc</link></entry>
+       <entry><link linkend='command-setfloodcolor'>setfc</link></entry>
      </row>
      <row>
        <entry>ponCursor</entry>
@@ -3741,7 +3741,7 @@
      </row>
      <row>
        <entry>ponr</entry>
-       <entry><link linkend='command-seth'>seth</link></entry>
+       <entry><link linkend='command-setheading'>seth</link></entry>
      </row>
      <row>
        <entry>ponRonzal</entry>
@@ -3849,7 +3849,7 @@
      </row>
      <row>
        <entry>pt</entry>
-       <entry><link linkend='command-ts'>ts</link></entry>
+       <entry><link linkend='command-textscreen'>ts</link></entry>
      </row>
      <row>
        <entry>pul</entry>
@@ -3893,7 +3893,7 @@
      </row>
      <row>
        <entry>re</entry>
-       <entry><link linkend='command-bk'>bk</link></entry>
+       <entry><link linkend='command-back'>bk</link></entry>
      </row>
      <row>
        <entry>reAzar</entry>
@@ -4025,7 +4025,7 @@
      </row>
      <row>
        <entry>sl</entry>
-       <entry><link linkend='command-pu'>pu</link></entry>
+       <entry><link linkend='command-penup'>pu</link></entry>
      </row>
      <row>
        <entry>subeLapiz</entry>

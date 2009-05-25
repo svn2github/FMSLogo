@@ -263,7 +263,7 @@
        <entry>DLL_ÁÍÏÉÃÌÁ</entry>
      </row>
      <row>
-       <entry><link linkend='command-down'>down</link></entry>
+       <entry><link linkend='command-downpitch'>down</link></entry>
        <entry>ÊÁÔÙ</entry>
      </row>
      <row>
@@ -1793,7 +1793,7 @@
      </row>
      <row>
        <entry>ÊÁÔÙ</entry>
-       <entry><link linkend='command-down'>down</link></entry>
+       <entry><link linkend='command-downpitch'>down</link></entry>
      </row>
      <row>
        <entry>ÊËÅÉÓÉÌÏ</entry>
