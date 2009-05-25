@@ -5,7 +5,7 @@ Build the Release Files
 
 1) Build the Binary Installer Package
 1.a) Copy the latest changes from FMSLOGO.TXT to CHANGELOG.TXT
-1.b) Update version.mk
+1.b) Update version.mk and logoversion.lgo
 1.c) Update the translation tables in the manual
 1.d) gmake clean (to force a complete rebuild)
 1.e) gmake binaryexe 
