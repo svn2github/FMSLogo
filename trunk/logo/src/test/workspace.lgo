@@ -155,7 +155,7 @@ TO WORKSPACETEST.ARRAYWITHBINARYDATA.ALLVALUES.SAVEANDLOAD
    ; confirm that saving/loading the variable didn't alter anything
    SIMPLEREPORTTEST [ COUNT :binaryarray ] 256
 
-   if (COUNT :binaryword) > 255 [
+   if (COUNT :binaryarray) > 255 [
        ; check each value individually
        REPEAT 256 [ SIMPLEREPORTTEST [ ITEM REPCOUNT :binaryarray ] CHAR (REPCOUNT - 1) ]
    ]
