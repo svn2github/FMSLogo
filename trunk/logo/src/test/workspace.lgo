@@ -23,14 +23,20 @@ TO WORKSPACETEST.SAVEANDLOADSHORTWORD :value
    WORKSPACETEST.SAVEPARTOFWORKSPACE NAMELIST "binaryword "testworkspace.lgo
 
    ; Modify the value of "binaryword so we know that LOAD has the expected effect
-   TRACEINSTRUCTION [ MAKE "binaryword "some-other-value ]
+   MAKE "binaryword "some-other-value
 
    ; Now load the value back into the workspace.
    ; This should revert it back to the original value
    TRACEINSTRUCTION [ LOAD "testworkspace.lgo ]
 
-   ; confirm that saving/loading the variable didn't alter anything
-   SIMPLEREPORTTEST [:binaryword] (WORD "a CHAR :value "z)
+   ; confirm that saving/loading the variable didn't alter anything.
+   ; We cannot use SIMPLEREPORTTEST, because that would put binary
+   ; data into the text log, which most diffing programs cannot handle.
+   ifelse :binaryword = (WORD "a CHAR :value "z) [
+     REPORTTESTPASSED (WORD "|:binaryword is as expected for value | :value ".)
+   ][
+     REPORTTESTFAILED (WORD "|:binaryword is not expected for value | :value ".)
+   ]
 
    ; cleanup
    ERASEFILE "testworkspace.lgo
@@ -72,7 +78,7 @@ TO WORKSPACETEST.WORDWITHBINARYDATA.ALLVALUES
    WORKSPACETEST.SAVEPARTOFWORKSPACE NAMELIST "binaryword "testworkspace.lgo
 
    ; Modify the value of "binaryword so we know that LOAD has the expected effect
-   TRACEINSTRUCTION [ MAKE "binaryword "changed-value ]
+   MAKE "binaryword "changed-value
 
    ; Now load the value back into the workspace.
    ; This should revert it back to the original value
@@ -82,8 +88,18 @@ TO WORKSPACETEST.WORDWITHBINARYDATA.ALLVALUES
    SIMPLEREPORTTEST [ COUNT :binaryword ] 256
 
    if (COUNT :binaryword) > 255 [
+
        ; check each value individually
-       REPEAT 256 [ SIMPLEREPORTTEST [ ITEM REPCOUNT :binaryword ] char REPCOUNT ]
+       REPEAT 256 [
+
+          ; We cannot use SIMPLEREPORTTEST, because that would put binary
+          ; data into the text log, which most diffing programs cannot handle.
+          IFELSE (ITEM REPCOUNT :binaryword) = (CHAR REPCOUNT) [
+             REPORTTESTPASSED (WORD "|ITEM REPCOUNT :binaryword = CHAR | REPCOUNT "|, as expected.|)
+          ][
+             REPORTTESTFAILED (WORD "|ITEM REPCOUNT :binaryword does not equal CHAR | REPCOUNT ".)
+          ]
+       ]
    ]
 
    ; cleanup
@@ -96,17 +112,24 @@ TO WORKSPACETEST.SAVEANDLOADSHORTARRAY :value
    WORKSPACETEST.SAVEPARTOFWORKSPACE NAMELIST "binaryarray "testworkspace.lgo
 
    ; Modify the value of "binaryarray so we know that LOAD has the expected effect
-   TRACEINSTRUCTION [ MAKE "binaryarray "some-other-value ]
+   MAKE "binaryarray "some-other-value
 
    ; Now load the value back into the workspace.
    ; This should revert it back to the original value
    TRACEINSTRUCTION [ LOAD "testworkspace.lgo ]
 
-   ; confirm that saving/loading the variable didn't alter anything
+   ; Confirm that saving/loading the variable didn't alter anything
+   ; Be care not to log any binary data that would confuse our diffing program.
    SIMPLEREPORTTEST [ COUNT :binaryarray ] 2
+
    IF 1 <= COUNT :binaryarray [
-      SIMPLEREPORTTEST [ ITEM 1 :binaryarray ] char :value
+     IFELSE EQUAL? (ITEM 1 :binaryarray) (CHAR :value) [
+       REPORTTESTPASSED (WORD "|ITEM 1 :binaryarray = CHAR | :value "|, as expected.|)
+     ][
+       REPORTTESTFAILED (WORD "|ITEM 1 :binaryarray does not equal CHAR | :value "|.|)
+     ]
    ]
+
    IF 2 <= COUNT :binaryarray [
       SIMPLEREPORTTEST [ ITEM 2 :binaryarray ] []
    ]
@@ -146,7 +169,7 @@ TO WORKSPACETEST.ARRAYWITHBINARYDATA.ALLVALUES.SAVEANDLOAD
    WORKSPACETEST.SAVEPARTOFWORKSPACE NAMELIST "binaryarray "testworkspace.lgo
 
    ; Modify the value of "binaryarray so we know that LOAD has the expected effect
-   TRACEINSTRUCTION [ MAKE "binaryarray {0} ]
+   MAKE "binaryarray {0}
 
    ; Now load the value back into the workspace.
    ; This should revert it back to the original value
@@ -173,8 +196,8 @@ TO WORKSPACETEST.ARRAYWITHBINARYDATA.ALLVALUES
    TRACEINSTRUCTION [ MAKE "binaryarray ARRAY 256 ]
    TRACEINSTRUCTION [ REPEAT 256 [ SETITEM REPCOUNT :binaryarray char (REPCOUNT - 1) ] ]
 
-   ; Save and load a workspace containing the array.
-   ; Then check that the array contains the expected value.
+   ; Save and load a workspace containing the array then
+   ; check that the array contains the expected value.
    ; This tests that an array that was saved can be loaded.
    WORKSPACETEST.ARRAYWITHBINARYDATA.ALLVALUES.SAVEANDLOAD
 
