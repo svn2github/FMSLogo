@@ -1,0 +1,42 @@
+<section id="command-distancexyz">
+    <title>DISTANCEXYZ</title>
+<indexterm><primary>DISTANCEXYZ</primary></indexterm>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>DISTANCEXYZ</command> <parameter>position</parameter></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+Outputs a number, the distance the turtle must travel along a straight line to reach a 3D coordinate.
+The <parameter>position</parameter> input must be a three item list containing the position's X, Y, and Z coordinates.
+</para>
+<para>
+This operation is designed to run in <link linkend="command-perspective">PERSPECTIVE</link> mode.
+</para>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Example</term>
+<listitem>
+    <programlisting><userinput>PERSPECTIVE
+SETPOSXYZ [0 0 0]
+SHOW DISTANCEXYZ [0 100 0]</userinput>
+100
+<userinput>SHOW DISTANCEXYZ [100 100 100]</userinput>
+173.205080756888</programlisting>
+
+<programlisting><userinput>SETHEADING TOWARDS [300 400]
+FORWARD DISTANCE [300 400]</userinput>
+</programlisting>
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</section>

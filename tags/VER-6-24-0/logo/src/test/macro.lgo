@@ -1,0 +1,48 @@
+LOAD "testlib.lgo
+
+
+.MACRO MACROTEST.MYRUN :instructions
+   ; simple macro that just runs its input in the context of the caller
+   OUTPUT :instructions
+END
+
+TO MACROTEST.STOPTEST
+   REPORTTESTINFO  [Running a macro that should stop the caller]
+   MACROTEST.MYRUN [STOP]
+
+   REPORTTESTFAILED [MACROTEST.MYRUN [STOP] failed to stop the caller.]
+END
+
+TO MACROTEST.OUTPUTTEST
+    REPORTTESTINFO  [Running a macro that should output the caller]
+    MACROTEST.MYRUN [OUTPUT 123]
+
+    REPORTTESTFAILED [MACROTEST.MYRUN [OUTPUT 124] failed to stop the caller.]
+    OUTPUT [test failed to output]
+END
+
+TO MACROTEST.SMOKETEST
+    ; run a macro that stops in the caller's context
+    MACROTEST.STOPTEST
+
+    ; run a macro that outputs in the caller's context
+    SIMPLEREPORTTEST [ MACROTEST.OUTPUTTEST ] 123
+END
+
+
+
+.MACRO MACROTEST.OUTPUTNOTHING
+  ; a macro that outputs nothing (instead of a list)
+  ; This is a regression test for bug #1458661 
+  SHOW "|This is a macro that outputs nothing (instead of a list)|
+END
+
+TO BUG1458661TEST
+  RUNEXPECTERRORTEST [MACROTEST.OUTPUTNOTHING] 29
+  REPORTTESTPASSED [Bug #1458661 is fixed.  Running a macro that outputs nothing doesn't crash.]
+END
+
+TO MACROTEST
+   MACROTEST.SMOKETEST
+   ; BUG1458661TEST
+END

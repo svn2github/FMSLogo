@@ -1,0 +1,160 @@
+LOAD "testlib.lgo
+
+TO DLLSMOKETEST
+  ; Load the windowing subsystem library
+  DLLLOAD "user32.dll
+
+  ; Get Handle to Main Window (Note args are in REVERSE order)
+  LOCALMAKE "hwnd DLLCALL [l FindWindowA s FMSLogo l 0]
+
+  ; Resize Main Window (should return TRUE)
+  SIMPLEREPORTTEST [ DLLCALL (LIST "l "MoveWindow "w "1 "l "100 "l "100 "l "0 "l "0 "l :hwnd) ] [1]
+
+  WAIT 30
+
+  ; Restore Main Window (using captial letters for type specifiers)
+  SIMPLEREPORTTEST [ DLLCALL (LIST "L "MoveWindow "W 1 "L 600 "L 800 "L 0 "L 0 "L :hwnd) ] [1]
+
+  DLLFREE
+END
+
+
+TO DLLCALLTEST
+
+  ; call a function when no DLL is loaded
+  RUNDLLNOTLOADEDTEST [DLLCALL [L FindWindowA S FMSLogo L 0]]
+
+  ; Load the User System Kernel
+  DLLLOAD "kernel32.dll
+
+  ; invalid calls
+  RUNNOTENOUGHINPUTSTEST [(DLLCALL)]
+  RUNTOOMANYINPUTSTEST   [(DLLCALL [L GetTickCount] "kernel32.dll "toomany)]
+
+  ; invalid inputs
+  RUNNONRECOVERABLEDOESNTLIKEINPUTTEST [DLLCALL {0}]
+
+  ; missing the function type
+  RUNNONRECOVERABLEDOESNTLIKEINPUTTEST [DLLCALL []]
+
+  ; missing the function name
+  RUNDLLDATATYPENOTPAIREDTEST [DLLCALL [L]]
+
+  ; unknown function
+  RUNDLLFUNCTIONNOTFOUNDTEST [DLLCALL [L FunctionDoesNotExist]]
+
+  ; unknown function type
+  RUNDLLINVALIDOUTPUTTYPETEST [DLLCALL [E GetTickCount]]
+
+  ; type/values are not paired
+  RUNDLLDATATYPENOTPAIREDTEST [DLLCALL [L GetTickCount L]]
+
+  ; unknown parameter type
+  RUNDLLINVALIDDATATYPETEST [DLLCALL [L GetTickCount E Unknown]]
+
+  ; wrong number of inputs (DLLCALL may crash on this)
+  ; RUNBADINPUTTEST [DLLCALL [L GetTickCount L 0]]
+
+  ; DLL is not loaded
+  RUNDLLNOTLOADEDTEST [(DLLCALL [L GetTickCount L 0] "dll-that-is-not-loaded.dll)]
+
+  DLLFREE
+
+END
+
+TO MULTIDLLLOADTEST
+
+  ; load two DLLs at once
+  TRACEINSTRUCTION [ DLLLOAD "user32.dll   ]
+  TRACEINSTRUCTION [ DLLLOAD "kernel32.dll ]
+
+  ; call into user32.dll
+  LOCAL "hwnd
+  TRACEINSTRUCTION [ MAKE "hwnd (DLLCALL [l FindWindowA S FMSLogo L 0] "user32.dll) ]
+
+  ; Assuming that a function only exists in one DLL, the DLL name is optional
+  SIMPLEREPORTTEST [ DLLCALL [l FindWindowA S FMSLogo L 0] ] :hwnd
+
+  ; Call a function in the other DLL.
+  ; Use all capital letter to make sure that the DLL name is case-insensitive.
+  TRACEINSTRUCTION [ IGNORE (DLLCALL [L GetTickCount] "KERNEL32.DLL) ]
+  TRACEINSTRUCTION [ IGNORE DLLCALL [L GetTickCount] ]
+
+  ; loading an already loaded DLL should simply increment the reference count
+  TRACEINSTRUCTION [ DLLLOAD "user32.dll ]
+  SIMPLEREPORTTEST [ DLLCALL [l FindWindowA S FMSLogo L 0] ] :hwnd
+  TRACEINSTRUCTION [ (DLLFREE "user32.dll) ]
+
+  ; the reference count should still be at one, so the function should still be safe to call
+  SIMPLEREPORTTEST [ DLLCALL [l FindWindowA S FMSLogo L 0] ] :hwnd
+
+  ; release the final reference.
+  ; Use uppercase to make sure that unloading a DLL is case-insensitive.
+  TRACEINSTRUCTION [ (DLLFREE "USER32.DLL) ]
+
+  ; now user32 should be freed, so the next call should fail
+  ; because it does not exist in kernel32.dll
+  RUNDLLFUNCTIONNOTFOUNDTEST [ DLLCALL [l FindWindowA S FMSLogo L 0] ] 
+
+  ; now release the reference on kernel32.dll
+  TRACEINSTRUCTION [ DLLFREE ]
+
+  ; now user32 should be freed, so the next call should fail
+  RUNDLLNOTLOADEDTEST [ IGNORE DLLCALL [L GetTickCount] ]
+
+END
+
+
+TO DLLLOADTEST
+
+  ; wrong number of inputs
+  RUNNOTENOUGHINPUTSTEST [(DLLLOAD)]
+  RUNTOOMANYINPUTSTEST   [(DLLLOAD "kernel32 "user32)]
+
+  ; invalid filenames
+  RUNDLLLOADERRORTEST [DLLLOAD {0}]
+  RUNDLLLOADERRORTEST [DLLLOAD [0]]
+  RUNDLLLOADERRORTEST [DLLLOAD 12345]
+  RUNDLLLOADERRORTEST [DLLLOAD "nonexistent.dll]
+  RUNDLLLOADERRORTEST [DLLLOAD "c:\\]
+
+  ; DLLLOAD a very long filename name
+  localmake "longdllname ".dll
+  repeat 5000 [ make "longdllname word "A :longdllname ]
+  RUNDLLLOADERRORTEST (list "DLLLOAD quoted :longdllname)
+
+  ; Regression test for bug #1438438 
+  ; Call DLLLOAD with invalid input while a DLL is loaded.
+  DLLLOAD "kernel32.dll
+  RUNDLLLOADERRORTEST [DLLLOAD {0}]
+  DLLFREE
+
+END
+
+TO DLLFREETEST
+
+  ; can't free a DLL when nothing is loaded
+  RUNDLLNOTLOADEDTEST [DLLFREE]
+
+  ; free a DLL that is not loaded
+  RUNDLLNOTLOADEDTEST [(DLLFREE "dll-that-is-not-loaded.dll)]
+
+  ; wrong number of inputs
+  RUNTOOMANYINPUTSTEST [(DLLFREE "kernel32.dll "toomany)]
+
+END
+
+
+TO DLLTEST
+
+   ; TODO: test calling a function by ordinal
+
+   DLLSMOKETEST
+
+   DLLLOADTEST
+   DLLCALLTEST
+   DLLFREETEST
+
+   MULTIDLLLOADTEST
+END
+
