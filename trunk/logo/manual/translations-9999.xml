@@ -351,7 +351,7 @@
        <entry>pseudo.count</entry>
      </row>
      <row>
-       <entry><link linkend='command-clearsreen'>cs</link></entry>
+       <entry><link linkend='command-clearscreen'>cs</link></entry>
        <entry>pseudo.cs</entry>
      </row>
      <row>
@@ -991,7 +991,7 @@
        <entry>pseudo.numberp</entry>
      </row>
      <row>
-       <entry><link linkend='command-op'>op</link></entry>
+       <entry><link linkend='command-output'>op</link></entry>
        <entry>pseudo.op</entry>
      </row>
      <row>
@@ -1039,7 +1039,7 @@
        <entry>pseudo.pc</entry>
      </row>
      <row>
-       <entry><link linkend='command-pd'>pd</link></entry>
+       <entry><link linkend='command-pendown'>pd</link></entry>
        <entry>pseudo.pd</entry>
      </row>
      <row>
@@ -2249,7 +2249,7 @@
      </row>
      <row>
        <entry>pseudo.cs</entry>
-       <entry><link linkend='command-clearsreen'>cs</link></entry>
+       <entry><link linkend='command-clearscreen'>cs</link></entry>
      </row>
      <row>
        <entry>pseudo.ct</entry>
@@ -2889,7 +2889,7 @@
      </row>
      <row>
        <entry>pseudo.op</entry>
-       <entry><link linkend='command-op'>op</link></entry>
+       <entry><link linkend='command-output'>op</link></entry>
      </row>
      <row>
        <entry>pseudo.openappend</entry>
@@ -2937,7 +2937,7 @@
      </row>
      <row>
        <entry>pseudo.pd</entry>
-       <entry><link linkend='command-pd'>pd</link></entry>
+       <entry><link linkend='command-pendown'>pd</link></entry>
      </row>
      <row>
        <entry>pseudo.pe</entry>

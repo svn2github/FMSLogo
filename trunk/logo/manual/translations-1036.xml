@@ -419,11 +419,11 @@
        <entry>collectetout</entry>
      </row>
      <row>
-       <entry><link linkend='command-clearsreen'>cs</link></entry>
+       <entry><link linkend='command-clearscreen'>cs</link></entry>
        <entry>vé</entry>
      </row>
      <row>
-       <entry><link linkend='command-clearsreen'>cs</link></entry>
+       <entry><link linkend='command-clearscreen'>cs</link></entry>
        <entry>ve</entry>
      </row>
      <row>
@@ -1427,7 +1427,7 @@
        <entry>nombrep</entry>
      </row>
      <row>
-       <entry><link linkend='command-op'>op</link></entry>
+       <entry><link linkend='command-output'>op</link></entry>
        <entry>ret</entry>
      </row>
      <row>
@@ -1483,7 +1483,7 @@
        <entry>cc</entry>
      </row>
      <row>
-       <entry><link linkend='command-pd'>pd</link></entry>
+       <entry><link linkend='command-pendown'>pd</link></entry>
        <entry>bc</entry>
      </row>
      <row>
@@ -2885,7 +2885,7 @@
      </row>
      <row>
        <entry>bc</entry>
-       <entry><link linkend='command-pd'>pd</link></entry>
+       <entry><link linkend='command-pendown'>pd</link></entry>
      </row>
      <row>
        <entry>bc?</entry>
@@ -4921,7 +4921,7 @@
      </row>
      <row>
        <entry>ret</entry>
-       <entry><link linkend='command-op'>op</link></entry>
+       <entry><link linkend='command-output'>op</link></entry>
      </row>
      <row>
        <entry>retire</entry>
@@ -5189,11 +5189,11 @@
      </row>
      <row>
        <entry>ve</entry>
-       <entry><link linkend='command-clearsreen'>cs</link></entry>
+       <entry><link linkend='command-clearscreen'>cs</link></entry>
      </row>
      <row>
        <entry>vé</entry>
-       <entry><link linkend='command-clearsreen'>cs</link></entry>
+       <entry><link linkend='command-clearscreen'>cs</link></entry>
      </row>
      <row>
        <entry>vers</entry>

@@ -359,7 +359,7 @@
        <entry>mapeiecruzado</entry>
      </row>
      <row>
-       <entry><link linkend='command-clearsreen'>cs</link></entry>
+       <entry><link linkend='command-clearscreen'>cs</link></entry>
        <entry>tat</entry>
      </row>
      <row>
@@ -1139,7 +1139,7 @@
        <entry>énúmero?</entry>
      </row>
      <row>
-       <entry><link linkend='command-op'>op</link></entry>
+       <entry><link linkend='command-output'>op</link></entry>
        <entry>dev</entry>
      </row>
      <row>
@@ -1191,7 +1191,7 @@
        <entry>cl</entry>
      </row>
      <row>
-       <entry><link linkend='command-pd'>pd</link></entry>
+       <entry><link linkend='command-pendown'>pd</link></entry>
        <entry>ul</entry>
      </row>
      <row>
@@ -2705,7 +2705,7 @@
      </row>
      <row>
        <entry>dev</entry>
-       <entry><link linkend='command-op'>op</link></entry>
+       <entry><link linkend='command-output'>op</link></entry>
      </row>
      <row>
        <entry>devagar</entry>
@@ -4153,7 +4153,7 @@
      </row>
      <row>
        <entry>tat</entry>
-       <entry><link linkend='command-clearsreen'>cs</link></entry>
+       <entry><link linkend='command-clearscreen'>cs</link></entry>
      </row>
      <row>
        <entry>tatativa</entry>

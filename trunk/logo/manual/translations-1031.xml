@@ -895,7 +895,7 @@
        <entry>Zahl?</entry>
      </row>
      <row>
-       <entry><link linkend='command-op'>op</link></entry>
+       <entry><link linkend='command-output'>op</link></entry>
        <entry>rg</entry>
      </row>
      <row>
@@ -911,7 +911,7 @@
        <entry>Rückgabe</entry>
      </row>
      <row>
-       <entry><link linkend='command-pd'>pd</link></entry>
+       <entry><link linkend='command-pendown'>pd</link></entry>
        <entry>sa</entry>
      </row>
      <row>
@@ -2725,7 +2725,7 @@
      </row>
      <row>
        <entry>rg</entry>
-       <entry><link linkend='command-op'>op</link></entry>
+       <entry><link linkend='command-output'>op</link></entry>
      </row>
      <row>
        <entry>ri</entry>
@@ -2781,7 +2781,7 @@
      </row>
      <row>
        <entry>sa</entry>
-       <entry><link linkend='command-pd'>pd</link></entry>
+       <entry><link linkend='command-pendown'>pd</link></entry>
      </row>
      <row>
        <entry>satz</entry>

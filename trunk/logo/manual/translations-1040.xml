@@ -331,7 +331,7 @@
        <entry>mappaincroci</entry>
      </row>
      <row>
-       <entry><link linkend='command-clearsreen'>cs</link></entry>
+       <entry><link linkend='command-clearscreen'>cs</link></entry>
        <entry>ps</entry>
      </row>
      <row>
@@ -1051,7 +1051,7 @@
        <entry>numerop</entry>
      </row>
      <row>
-       <entry><link linkend='command-op'>op</link></entry>
+       <entry><link linkend='command-output'>op</link></entry>
        <entry>ri</entry>
      </row>
      <row>
@@ -1099,11 +1099,11 @@
        <entry>cp</entry>
      </row>
      <row>
-       <entry><link linkend='command-pd'>pd</link></entry>
+       <entry><link linkend='command-pendown'>pd</link></entry>
        <entry>giu</entry>
      </row>
      <row>
-       <entry><link linkend='command-pd'>pd</link></entry>
+       <entry><link linkend='command-pendown'>pd</link></entry>
        <entry>giù</entry>
      </row>
      <row>
@@ -2829,11 +2829,11 @@
      </row>
      <row>
        <entry>giu</entry>
-       <entry><link linkend='command-pd'>pd</link></entry>
+       <entry><link linkend='command-pendown'>pd</link></entry>
      </row>
      <row>
        <entry>giù</entry>
-       <entry><link linkend='command-pd'>pd</link></entry>
+       <entry><link linkend='command-pendown'>pd</link></entry>
      </row>
      <row>
        <entry>grandezzaetichetta</entry>
@@ -3437,7 +3437,7 @@
      </row>
      <row>
        <entry>ps</entry>
-       <entry><link linkend='command-clearsreen'>cs</link></entry>
+       <entry><link linkend='command-clearscreen'>cs</link></entry>
      </row>
      <row>
        <entry>pt</entry>
@@ -3573,7 +3573,7 @@
      </row>
      <row>
        <entry>ri</entry>
-       <entry><link linkend='command-op'>op</link></entry>
+       <entry><link linkend='command-output'>op</link></entry>
      </row>
      <row>
        <entry>riacaso</entry>

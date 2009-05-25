@@ -363,7 +363,7 @@
        <entry>entreteje</entry>
      </row>
      <row>
-       <entry><link linkend='command-clearsreen'>cs</link></entry>
+       <entry><link linkend='command-clearscreen'>cs</link></entry>
        <entry>bp</entry>
      </row>
      <row>
@@ -1147,7 +1147,7 @@
        <entry>numero?</entry>
      </row>
      <row>
-       <entry><link linkend='command-op'>op</link></entry>
+       <entry><link linkend='command-output'>op</link></entry>
        <entry>dev</entry>
      </row>
      <row>
@@ -1199,7 +1199,7 @@
        <entry>cl</entry>
      </row>
      <row>
-       <entry><link linkend='command-pd'>pd</link></entry>
+       <entry><link linkend='command-pendown'>pd</link></entry>
        <entry>bl</entry>
      </row>
      <row>
@@ -2385,7 +2385,7 @@
      </row>
      <row>
        <entry>bl</entry>
-       <entry><link linkend='command-pd'>pd</link></entry>
+       <entry><link linkend='command-pendown'>pd</link></entry>
      </row>
      <row>
        <entry>bnombres</entry>
@@ -2485,7 +2485,7 @@
      </row>
      <row>
        <entry>bp</entry>
-       <entry><link linkend='command-clearsreen'>cs</link></entry>
+       <entry><link linkend='command-clearscreen'>cs</link></entry>
      </row>
      <row>
        <entry>bprocs</entry>
@@ -2733,7 +2733,7 @@
      </row>
      <row>
        <entry>dev</entry>
-       <entry><link linkend='command-op'>op</link></entry>
+       <entry><link linkend='command-output'>op</link></entry>
      </row>
      <row>
        <entry>devuelve</entry>

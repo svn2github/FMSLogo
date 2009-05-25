@@ -391,7 +391,7 @@
        <entry>ïåðåêðåñòîòîáð</entry>
      </row>
      <row>
-       <entry><link linkend='command-clearsreen'>cs</link></entry>
+       <entry><link linkend='command-clearscreen'>cs</link></entry>
        <entry>îý</entry>
      </row>
      <row>
@@ -1195,7 +1195,7 @@
        <entry>÷èñëîïè</entry>
      </row>
      <row>
-       <entry><link linkend='command-op'>op</link></entry>
+       <entry><link linkend='command-output'>op</link></entry>
        <entry>âä</entry>
      </row>
      <row>
@@ -1247,7 +1247,7 @@
        <entry>öï</entry>
      </row>
      <row>
-       <entry><link linkend='command-pd'>pd</link></entry>
+       <entry><link linkend='command-pendown'>pd</link></entry>
        <entry>ïî</entry>
      </row>
      <row>
@@ -2333,7 +2333,7 @@
      </row>
      <row>
        <entry>âä</entry>
-       <entry><link linkend='command-op'>op</link></entry>
+       <entry><link linkend='command-output'>op</link></entry>
      </row>
      <row>
        <entry>ââåðõ</entry>
@@ -3629,7 +3629,7 @@
      </row>
      <row>
        <entry>ïî</entry>
-       <entry><link linkend='command-pd'>pd</link></entry>
+       <entry><link linkend='command-pendown'>pd</link></entry>
      </row>
      <row>
        <entry>ïï</entry>
@@ -4025,7 +4025,7 @@
      </row>
      <row>
        <entry>îý</entry>
-       <entry><link linkend='command-clearsreen'>cs</link></entry>
+       <entry><link linkend='command-clearscreen'>cs</link></entry>
      </row>
      <row>
        <entry>ïý</entry>
