@@ -330,9 +330,8 @@ protected:
 
     DECLARE_RESPONSE_TABLE(TMyFileWindow);
 
-public:
-    TRichEditWithPopup * Editor;
 private:
+    TRichEditWithPopup * Editor;
     char               * FileName;
     NODE               * args_list;
     HFONT                hEdtFont;
