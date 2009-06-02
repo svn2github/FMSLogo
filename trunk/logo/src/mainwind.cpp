@@ -2017,12 +2017,7 @@ void TMainFrame::MyPopupEdit(const char *FileName, NODE *args, bool check_for_er
         // if an error occured "force" a change so that we still in "dirty" state
         if (error_happen)
         {
-            error_happen = false;
-            editor->Editor->Insert(" ");
-            editor->Editor->DeleteSubText(0, 1);
-            int iLine = editor->Editor->GetLineFromPos(LinesLoadedOnEdit);
-            editor->Editor->Scroll(0, iLine);
-            editor->Editor->SetSelection(LinesLoadedOnEdit, LinesLoadedOnEdit);
+            editor->ReopenAfterError();
         }
     }
 

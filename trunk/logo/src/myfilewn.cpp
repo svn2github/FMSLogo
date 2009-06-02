@@ -257,13 +257,7 @@ void TMyFileWindow::CMSaveToWorkspace()
                 MB_OK | MB_ICONERROR);
 
             // "force" a change so that we're still in a "dirty" state
-            error_happen = false;
-            Editor->SetSelection(0, 0);
-            Editor->Insert(" ");
-            Editor->DeleteSubText(0, 1);
-            int iLine = Editor->GetLineFromPos(LinesLoadedOnEdit);
-            Editor->Scroll(0, iLine);
-            Editor->SetSelection(LinesLoadedOnEdit, LinesLoadedOnEdit);
+            ReopenAfterError();
         }
     }
 }
@@ -666,6 +660,24 @@ void TMyFileWindow::EvDestroy()
     TFrameWindow::DefaultProcessing();
 }
 
+// Forces the child editor into a dirty state,
+// and moves the caret to the line that had the error,
+// and clears the "error_happen" flag for the next time editor
+// is saved.
+void TMyFileWindow::ReopenAfterError()
+{
+    // clear the error flag.
+    error_happen = false;
+
+    // Force the child editor into a dirty state.
+    Editor->Insert(" ");
+    Editor->DeleteSubText(0, 1);
+
+    // Move the caret to the line that had the error
+    int iLine = Editor->GetLineFromPos(LinesLoadedOnEdit);
+    Editor->Scroll(0, iLine);
+    Editor->SetSelection(LinesLoadedOnEdit, LinesLoadedOnEdit);
+}
 
 bool TMyFileWindow::CanClose()
 {

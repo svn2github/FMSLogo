@@ -299,6 +299,7 @@ public:
 
     bool CanClose();
     bool EndEdit();
+    void ReopenAfterError();
 
     //
     // message response functions
