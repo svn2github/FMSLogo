@@ -18,7 +18,7 @@
 #include "allwind.h"
 
 TMiniEditorRichEdit::TMiniEditorRichEdit(TWindow * Parent)
-    : TRichEditWithPopup(Parent, ID_MINIEDITCTRL, NULL, 0, 0, 0, 0, 0)
+    : TRichEditWithPopup(Parent, ID_MINIEDITCTRL)
 {
     Attr.Style |= ES_WANTRETURN | ES_AUTOVSCROLL | ES_AUTOHSCROLL | ES_SUNKEN;
 }

@@ -22,16 +22,10 @@
 #include "allwind.h"
 
 TRichEditWithPopup::TRichEditWithPopup(
-    TWindow* parent,
-    int id,
-    const char * text,
-    int x,
-    int y,
-    int w,
-    int h,
-    const char * fileName
+    TWindow* Parent,
+    int      Id
     ) : 
-    TRichEdit(parent, id, text, x, y, w, h, fileName)
+    TRichEdit(Parent, Id, NULL, 0, 0, 0, 0)
 {
     PopupMenu.AppendMenu(MF_STRING, CM_EDITUNDO,       LOCALIZED_POPUP_UNDO);
     PopupMenu.AppendMenu(MF_SEPARATOR, 0, NULL);
@@ -42,15 +36,6 @@ TRichEditWithPopup::TRichEditWithPopup(
     PopupMenu.AppendMenu(MF_STRING, CM_EDITSELECTALL,  LOCALIZED_POPUP_SELECTALL);
     PopupMenu.AppendMenu(MF_SEPARATOR, 0, NULL);
     PopupMenu.AppendMenu(MF_STRING, CM_HELPEDIT_TOPIC, LOCALIZED_POPUP_HELP);
-}
-
-// protected constructor does not supply a menu
-TRichEditWithPopup::TRichEditWithPopup(
-    TWindow* parent,
-    int      id
-    ) : 
-    TRichEdit(parent, id, NULL, 0, 0, 0, 0)
-{
 }
 
 TRichEditWithPopup::~TRichEditWithPopup()

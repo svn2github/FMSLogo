@@ -38,7 +38,7 @@ TMyFileWindow::TMyFileWindow(
     Attr.Style = WS_VISIBLE | WS_POPUPWINDOW | WS_CAPTION | WS_THICKFRAME | WS_MINIMIZEBOX | WS_MAXIMIZEBOX;
     FileName = TheFilename ? strnewdup(TheFilename) : NULL;
 
-    Editor = new TRichEditWithPopup(this, ID_EDITOR, 0, 0, 0, 0, 0, 0);
+    Editor = new TRichEditWithPopup(this, ID_EDITOR);
     Editor->Attr.ExStyle |= WS_EX_RIGHTSCROLLBAR;
     Editor->Attr.Style |= ES_NOHIDESEL | ES_AUTOHSCROLL | ES_AUTOVSCROLL;
 }

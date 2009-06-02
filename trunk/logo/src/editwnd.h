@@ -23,23 +23,10 @@
 class TRichEditWithPopup : public TRichEdit
 {
 public:
-    TRichEditWithPopup(
-        TWindow* parent,
-        int id,
-        const char * text,
-        int x,
-        int y,
-        int w,
-        int h,
-        const char * fileName = 0
-        );
-
+    TRichEditWithPopup(TWindow* parent, int id);
     ~TRichEditWithPopup();
 
     void  CmHelpEditTopic(); // CM_HELPEDIT_TOPIC
-
-protected:
-    TRichEditWithPopup(TWindow* parent, int id);
 
     // CM_EDITSELECTALL
     void CmSelectAll();       
