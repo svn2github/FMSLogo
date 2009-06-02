@@ -285,7 +285,7 @@ private:
 };
 
 
-class TMyFileWindow : public TEditWindow
+class TMyFileWindow : public TFrameWindow
 {
 public:
 
@@ -300,8 +300,17 @@ public:
     bool CanClose();
     bool EndEdit();
 
+    //
+    // message response functions
+    //
+    void EvSize(UINT sizeType, TSize &);
+    void EvSetFocus(HWND lostFocus);
     void EvDestroy();
 
+    //
+    // menu command handlers
+    //
+    void CMFilePrint();     // CM_FILEPRINT
     void CMExit();
 
     void CMTest();
@@ -320,11 +329,13 @@ protected:
 
     DECLARE_RESPONSE_TABLE(TMyFileWindow);
 
+public:
+    TRichEditWithPopup * Editor;
 private:
-    char *FileName;
-    NODE *args_list;
-    HFONT hEdtFont;
-    bool  check_for_errors;
+    char               * FileName;
+    NODE               * args_list;
+    HFONT                hEdtFont;
+    bool                 check_for_errors;
 };
 
 class TMyEditboxWindow : public TEdit

@@ -1,22 +1,25 @@
 // -*- c++ -*-
-//----------------------------------------------------------------------------
-// ObjectWindows - (C) Copyright 1991, 1993 by Borland International
-//   Definition of class TEditWindow.  This defines the OWL 1.0 compatible
-//   text edit window
-//----------------------------------------------------------------------------
+// Copyright (C) 2009 by David Costanzo
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
 #ifndef __EDITWND_H
 #define __EDITWND_H
 
 #include "owl\richedit.h"
-#include "owl\framewin.h"
 
-//_CLASSDEF(TEditWindow)
-
-//
-//  class TEditWindow
-//  ----- -----------
-//
 class TRichEditWithPopup : public TRichEdit
 {
 public:
@@ -56,28 +59,6 @@ protected:
     TPopupMenu PopupMenu;
 
     DECLARE_RESPONSE_TABLE(TRichEditWithPopup);
-};
-
-class TEditWindow : public TFrameWindow
-{
-public:
-    TRichEditWithPopup *Editor;
-
-    TEditWindow(TWindow * parent, const char * title);
-
-protected:
-    //
-    // message response functions
-    //
-    void  EvSize(UINT sizeType, TSize &);
-    void  EvSetFocus(HWND lostFocus);
-
-    //
-    // menu command handlers
-    //
-    void  CmFilePrint();     // CM_FILEPRINT
-
-    DECLARE_RESPONSE_TABLE(TEditWindow);
 };
 
 #endif //__EDITWND_H

@@ -1981,10 +1981,6 @@ TMainFrame::CreateEditWindow(
     GetConfigurationQuadruple("Editor", &x, &y, &w, &h); 
     checkwindow(&x, &y, &w, &h);
 
-    // now set them 
-    editor->Attr.Style = WS_VISIBLE | WS_POPUPWINDOW | WS_CAPTION | WS_THICKFRAME | WS_MINIMIZEBOX | WS_MAXIMIZEBOX;
-    editor->Editor->Attr.Style |= ES_NOHIDESEL;
-
     // let user edit
     editor->Create();
 

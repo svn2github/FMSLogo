@@ -1,40 +1,46 @@
 /*
+ *   Copyright (C) 1995 by the Regents of the University of California
+ *   Copyright (C) 1995 by George Mills
  *
- *       Copyright (C) 1995 by the Regents of the University of California
- *       Copyright (C) 1995 by George Mills
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
  *
- *      This program is free software; you can redistribute it and/or modify
- *      it under the terms of the GNU General Public License as published by
- *      the Free Software Foundation; either version 2 of the License, or
- *      (at your option) any later version.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- *      This program is distributed in the hope that it will be useful,
- *      but WITHOUT ANY WARRANTY; without even the implied warranty of
- *      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *      GNU General Public License for more details.
- *
- *      You should have received a copy of the GNU General Public License
- *      along with this program; if not, write to the Free Software
- *      Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
 
 #include "allwind.h"
 
 TMyFileWindow::TMyFileWindow(
-    TWindow *AParent,
-    LPCSTR   ATitle,
-    LPCSTR   AFileName,
-    NODE *   args,
-    bool     check_for_errors
-    ) : TEditWindow(AParent, ATitle),
-        hEdtFont(NULL),
-        args_list(args),
-        FileName(NULL),
-        check_for_errors(check_for_errors)
+    TWindow *Parent,
+    LPCSTR   Title,
+    LPCSTR   TheFilename,
+    NODE *   Args,
+    bool     CheckForErrors
+    ) :
+    TFrameWindow(Parent, Title, 0, false),
+    Editor(NULL),
+    hEdtFont(NULL),
+    args_list(Args),
+    FileName(NULL),
+    check_for_errors(CheckForErrors)
 {
     Attr.AccelTable = "IDM_FILECOMMANDS";
-    FileName = AFileName ? strnewdup(AFileName) : NULL;
+    Attr.Style = WS_VISIBLE | WS_POPUPWINDOW | WS_CAPTION | WS_THICKFRAME | WS_MINIMIZEBOX | WS_MAXIMIZEBOX;
+    FileName = TheFilename ? strnewdup(TheFilename) : NULL;
+
+    Editor = new TRichEditWithPopup(this, ID_EDITOR, 0, 0, 0, 0, 0, 0);
+    Editor->Attr.ExStyle |= WS_EX_RIGHTSCROLLBAR;
+    Editor->Attr.Style |= ES_NOHIDESEL | ES_AUTOHSCROLL | ES_AUTOVSCROLL;
 }
 
 TMyFileWindow::~TMyFileWindow()
@@ -81,8 +87,7 @@ bool TMyFileWindow::Save()
 }
 
 //
-// reads the contents of a previously-specified file into the TEdit
-// child control
+// Read the contents of a previously-specified file into the editor
 //
 bool TMyFileWindow::Read(const char *fileName)
 {
@@ -101,8 +106,7 @@ bool TMyFileWindow::Read(const char *fileName)
     }
 
     bool success = false;
-    FILE* file = fopen(fileName, "rb");
-
+    FILE * file = fopen(fileName, "rb");
     if (file != NULL)
     {
         // seek to the end
@@ -146,8 +150,7 @@ bool TMyFileWindow::Read(const char *fileName)
 }
 
 //
-// writes the contents of the TEdit child control to a previously-specified
-// file
+// writes the contents of the editor to a previously-specified file
 //
 bool TMyFileWindow::Write(const char * fileName)
 {
@@ -406,7 +409,7 @@ void TMyFileWindow::SetFileName(const char *fileName)
 
 void TMyFileWindow::SetupWindow()
 {
-    TEditWindow::SetupWindow();
+    TFrameWindow::SetupWindow();
 
     //
     // Construct the main menu
@@ -554,6 +557,17 @@ void TMyFileWindow::CMEditSetFont()
     }
 }
 
+void TMyFileWindow::CMFilePrint()
+{
+    // Create Printout window and set characteristics.
+    TRichEditPrintout printout(MainWindowx->Printer, *Editor, "Logo");
+    printout.SetBanding(false);
+
+    // Bring up the Print dialog and print the document.
+    MainWindowx->Printer.Print(this, printout, true);
+}
+
+
 bool TMyFileWindow::EndEdit()
 {
     bool realsave = endedit();
@@ -649,7 +663,7 @@ void TMyFileWindow::EvDestroy()
             wrect.Height());
     }
 
-    TEditWindow::DefaultProcessing();
+    TFrameWindow::DefaultProcessing();
 }
 
 
@@ -675,7 +689,28 @@ bool TMyFileWindow::CanClose()
     return true;
 }
 
-DEFINE_RESPONSE_TABLE1(TMyFileWindow, TEditWindow)
+
+//
+// responds to an incoming WM_SIZE message by resizing the child edit
+// control to fill the TMyFileWindow's client area
+//
+void TMyFileWindow::EvSize(UINT sizeType, TSize &size)
+{
+    TFrameWindow::EvSize(sizeType, size);
+    Editor->SetWindowPos(0, 0, 0, size.cx, size.cy, SWP_NOZORDER);
+}
+
+//
+// responds to an incoming WM_SETFOCUS message by setting the focus to
+// the child edit control
+//
+void TMyFileWindow::EvSetFocus(HWND)
+{
+    Editor->SetFocus();
+}
+
+
+DEFINE_RESPONSE_TABLE1(TMyFileWindow, TFrameWindow)
     EV_COMMAND(CM_EDALLEXIT,           CMExit),
     EV_COMMAND(CM_FILESAVETOWORKSPACE, CMSaveToWorkspace),
     EV_COMMAND(CM_FILESAVEANDEXIT,     CMSaveAndExit),
@@ -684,5 +719,8 @@ DEFINE_RESPONSE_TABLE1(TMyFileWindow, TEditWindow)
     EV_COMMAND(CM_HELPEDIT_TOPIC,      CMHelpEditTopic),
     EV_COMMAND(CM_TEST,                CMTest),
     EV_COMMAND(CM_EDITSETFONT,         CMEditSetFont),
+    EV_COMMAND(CM_FILEPRINT,           CMFilePrint),
+    EV_WM_SIZE,
+    EV_WM_SETFOCUS,
     EV_WM_DESTROY,
 END_RESPONSE_TABLE;
