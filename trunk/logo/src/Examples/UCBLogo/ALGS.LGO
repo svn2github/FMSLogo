@@ -1,6 +1,6 @@
 to aaa
 ;
-; This appears to be a grabbag of assorted log algorithms
+; This is a collection of loosely related algorithms
 ;
 end
 
@@ -26,14 +26,6 @@ END
 
 TO AEQUALP :ARRAY1 :ARRAY2
 OP EQUALP :ARRAY1 :ARRAY2
-END
-
-TO GARRAY :ARRAY :INDEX
-OP ITEM :INDEX+1 :ARRAY
-END
-
-TO PARRAY :ARRAY :INDEX :VALUE
-SETITEM :INDEX+1 :ARRAY :VALUE
 END
 
 TO AREACODE :PAIR
@@ -86,6 +78,10 @@ END
 TO FINDDATUM :NAME :TREE
 IF EQUALP :NAME DATUM :TREE [OUTPUT :TREE]
 OUTPUT TRANSFER [NOT EMPTYP ?OUT] [FINDDATUM :NAME ?IN] CHILDREN :TREE
+END
+
+TO GARRAY :ARRAY :INDEX
+OP ITEM :INDEX+1 :ARRAY
 END
 
 TO HIGHBRANCH :TREE
@@ -151,6 +147,10 @@ END
 TO NEXTROW :COMBS
 IF EMPTYP BF :COMBS [OUTPUT :COMBS]
 OUTPUT FPUT (SUM FIRST :COMBS FIRST BF :COMBS) NEXTROW BF :COMBS
+END
+
+TO PARRAY :ARRAY :INDEX :VALUE
+SETITEM :INDEX+1 :ARRAY :VALUE
 END
 
 TO PSORT :LIST
@@ -275,7 +275,12 @@ MAKE "CODELIST [[202 WASHINGTON] [206 SEATTLE] [212 NEW YORK] [213 LOS ANGELES] 
                 [808 HONOLULU]]
 
 to zzz
-ifelse YesNoBox [Welcome] [Choose YES to run example now, Choose NO Study it now.] [edall] [edall]
+ifelse ~
+   YesNoBox [Welcome] ~
+            [This example contains a collection of algorithms.\
+Do you want to study them in the editor?] ~
+   [edall] ~
+   []
 end
 
 Make "startup [zzz]
