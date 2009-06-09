@@ -31,7 +31,6 @@ IncludePath = -I"C:\Program Files\HTML Help Workshop\include" -IC:\BC5\INCLUDE
 
 LinkerLocalOptsAtW32_fmslogodexe =  -wdpl -went -wdup -wdef -wimt -wbdl -wsrf -wmsk -Tpe -aa -V4.0 -c
 CompInheritOptsAt_fmslogodexe = $(IncludePath) -DSTRICT;_OWLPCH;NDEBUG;LOCALE=$(LOCALECODE)
-LinkerInheritOptsAt_fmslogodexe = -x
 LinkerOptsAt_fmslogodexe = $(LinkerLocalOptsAtW32_fmslogodexe)
 ResOptsAt_fmslogodexe = $(ResLocalOptsAtW32_fmslogodexe)
 
