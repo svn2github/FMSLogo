@@ -34,7 +34,7 @@ CDefines = $(CDefines) -DFMSLOGO_MAJOR_VERSION=$(FMSLOGO_MAJOR_VERSION)
 CDefines = $(CDefines) -DFMSLOGO_MINOR_VERSION=$(FMSLOGO_MINOR_VERSION)
 CDefines = $(CDefines) -DFMSLOGO_MICRO_VERSION=$(FMSLOGO_MICRO_VERSION)
 !if "$(FMSLOGO_VERSION_SUFFIX)"=="+"
-  $(CDefines) = $(CDefines) -DFMSLOGO_PRIVATE_BUILD
+  CDefines = $(CDefines) -DFMSLOGO_PRIVATE_BUILD
 !endif
 
 CompInheritOptsAt_fmslogodexe = $(IncludePath) $(CDefines) -DNOASM;DEBUG;MEM_DEBUG;TRACE
@@ -223,7 +223,7 @@ $(IntermediateDirectory)\logorc.res
 # rule for compiling .rc files into .res
 {.}.rc{$(IntermediateDirectory)}.res:
   $(BRC32) -R @&&|
- $(IDE_ResFLAGS32) $(ROptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) $(CDefines) -FO$@ $<
+ $(IDE_ResFLAGS32) $(ROptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -FO$@ $<
 |
 
 # dependency information
