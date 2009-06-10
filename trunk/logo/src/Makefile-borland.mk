@@ -27,10 +27,22 @@ ResLocalOptsAtW32_fmslogodexe = -l$(LOCALECODE)
 
 IncludePath = -I"C:\Program Files\HTML Help Workshop\include" -IC:\BC5\INCLUDE
 
+CDefines = -DSTRICT;LOCALE=$(LOCALECODE);STATIC_BUILD;PLAT_WIN=1;_OWLPCH;SCI_NAMESPACE
+
+# add in preprocessor definitions for the version information
+CDefines = $(CDefines) -DFMSLOGO_MAJOR_VERSION=$(FMSLOGO_MAJOR_VERSION)
+CDefines = $(CDefines) -DFMSLOGO_MINOR_VERSION=$(FMSLOGO_MINOR_VERSION)
+CDefines = $(CDefines) -DFMSLOGO_MICRO_VERSION=$(FMSLOGO_MICRO_VERSION)
+!if "$(FMSLOGO_VERSION_SUFFIX)"=="+"
+  $(CDefines) = $(CDefines) -DFMSLOGO_PRIVATE_BUILD
+!endif
+
+CompInheritOptsAt_fmslogodexe = $(IncludePath) $(CDefines) -DNOASM;DEBUG;MEM_DEBUG;TRACE
+
 !if "$(BUILD)"=="RELEASE"
 
 LinkerLocalOptsAtW32_fmslogodexe =  -wdpl -went -wdup -wdef -wimt -wbdl -wsrf -wmsk -Tpe -aa -V4.0 -c
-CompInheritOptsAt_fmslogodexe = $(IncludePath) -DSTRICT;_OWLPCH;NDEBUG;LOCALE=$(LOCALECODE)
+CompInheritOptsAt_fmslogodexe = $(IncludePath) $(CDefines) -DNDEBUG
 LinkerOptsAt_fmslogodexe = $(LinkerLocalOptsAtW32_fmslogodexe)
 ResOptsAt_fmslogodexe = $(ResLocalOptsAtW32_fmslogodexe)
 
@@ -42,7 +54,7 @@ OwlLib=owlwf.lib
 !else
 
 LinkerLocalOptsAtW32_fmslogodexe =  -v -wdpl -went -wdup -wdef -wimt -wbdl -wsrf -wmsk -Tpe -aa -V4.0 -c
-CompInheritOptsAt_fmslogodexe = $(IncludePath) -DSTRICT;_OWLPCH;NOASM;DEBUG;MEM_DEBUG;LOCALE=$(LOCALECODE)
+CompInheritOptsAt_fmslogodexe = $(IncludePath) $(CDefines) -DNOASM;DEBUG;MEM_DEBUG;TRACE
 
 ExecutableName=fmslogod.exe
 IntermediateDirectory=DEBUG
@@ -198,7 +210,7 @@ $(IntermediateDirectory)\logorc.res
 
 # rule for compiling .cpp files into .obj
 {.}.cpp{$(IntermediateDirectory)}.obj:
-  $(BCC32) -c @&&|
+  $(BCC32) -P -c @&&|
  $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ $<
 |
 
@@ -211,7 +223,7 @@ $(IntermediateDirectory)\logorc.res
 # rule for compiling .rc files into .res
 {.}.rc{$(IntermediateDirectory)}.res:
   $(BRC32) -R @&&|
- $(IDE_ResFLAGS32) $(ROptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe)  -FO$@ $<
+ $(IDE_ResFLAGS32) $(ROptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) $(CDefines) -FO$@ $<
 |
 
 # dependency information

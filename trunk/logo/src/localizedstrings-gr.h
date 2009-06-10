@@ -621,7 +621,8 @@
 
 #define LOCALIZED_GENERAL_PRODUCTNAME   "FMSLogo"
 
-
+// Embedded description of fmslogo.exe
+#define LOCALIZED_FMSLOGO_FILE_DESCRIPTION  "An educational programming environment" // NOT_YET_LOCALIZED
 
 //
 // The menu options on the main window 

@@ -1,5 +1,5 @@
 ----------------------------------------------------------------------
-FMSLogo Version 6.24.0 for Microsoft Windows
+FMSLogo Version 6.25.0 for Microsoft Windows
 ----------------------------------------------------------------------
 
    I. Kit Description/Location
@@ -14,25 +14,14 @@ VIII. Acknowledgements
 
 I. Kit Description/Location (http://sourceforge.net/projects/fmslogo)
 
-  fmslogo-6.24.0.exe       (binary kit: Windows self-extracting installer)
-  fmslogo-6.24.0.zip       (binary kit: Windows ZIP archive)
-  fmslogo-src-6.24.0.zip   (source kit)
+  fmslogo-6.25.0.exe       (binary kit: Windows self-extracting installer)
+  fmslogo-6.25.0.zip       (binary kit: Windows ZIP archive)
+  fmslogo-src-6.25.0.zip   (source kit)
 
 II. New features/bugs fixed:
 
-  * Added for 6.24.0
-    o Fix bug #2653504; workspaces arrays with words that contain \ and |
-      can now be saved and loaded.
-    o Fix bug #2790076; DEFINE "PROC [[][]] PROC PROC no longer crashes.
-    o Implement request #2777780; Added HASOWNPENP.
-    o Implement request #2789706; Helper procedures for SORT now begin
-      with ".fmslogo.sort" so that they don't clash with names in a
-      third-party sorting library.
-    o Partially implement request #1828287; CTRL+] in the editor moves
-      the caret to the matching parenthesis.  CTRL+SHIFT+] selects
-      everything through the matching parenthesis.
-    o Minor improvements to the manual.
-    o Improvements to the Russian translation.
+  * Added for 6.25.0
+    o Embedded version information into fmslogo.exe for better bug reporting.
 
   For a complete history of changes across all versions of FMSLogo, see
   http://fmslogo.cvs.sourceforge.net/*checkout*/fmslogo/logo/src/CHANGELOG.TXT

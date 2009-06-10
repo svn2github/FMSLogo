@@ -621,7 +621,8 @@
 
 #define LOCALIZED_GENERAL_PRODUCTNAME   "pseudo.FMSLogo"
 
-
+// Embedded description of fmslogo.exe
+#define LOCALIZED_FMSLOGO_FILE_DESCRIPTION  "pseudo.An educational programming environment"
 
 //
 // The menu options on the main window 
