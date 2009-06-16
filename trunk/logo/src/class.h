@@ -322,6 +322,16 @@ public:
 
     void CMHelp();
     void CMHelpEdit();
+    void CMEditCut();
+    void CMEditCopy();
+    void CMEditPaste();
+    void CMEditDelete();
+    void CMEditClearAll();
+    void CMEditSelectAll();
+    void CMEditUndo();
+    void CMEditRedo();
+    void CMEditUndoEnable(TCommandEnabler& commandHandler);
+    void CMEditRedoEnable(TCommandEnabler& commandHandler);
     void CMHelpEditTopic();
     void CMFindMatchingParen();
 
@@ -331,11 +341,16 @@ protected:
     DECLARE_RESPONSE_TABLE(TMyFileWindow);
 
 private:
-    TRichEditWithPopup * Editor;
+    LRESULT SendEditor(UINT Msg, WPARAM wParam=0, LPARAM lParam=0);
+    void    SetEditorFont(const LOGFONT & LogFont);
+    TResult EvNotify(uint ctlId, TNotify& notifyInfo);
+
+private:
+    HWND                 ScintillaEditor;
     char               * FileName;
     NODE               * args_list;
-    HFONT                hEdtFont;
     bool                 check_for_errors;
+    bool                 IsDirty;
 };
 
 class TMyEditboxWindow : public TEdit

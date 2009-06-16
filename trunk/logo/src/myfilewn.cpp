@@ -18,6 +18,9 @@
  *
  */
 
+#include "Platform.h"
+#include "scintilla.h"
+
 #include "allwind.h"
 
 TMyFileWindow::TMyFileWindow(
@@ -28,28 +31,18 @@ TMyFileWindow::TMyFileWindow(
     bool     CheckForErrors
     ) :
     TFrameWindow(Parent, Title, 0, false),
-    Editor(NULL),
-    hEdtFont(NULL),
     args_list(Args),
     FileName(NULL),
-    check_for_errors(CheckForErrors)
+    check_for_errors(CheckForErrors),
+    IsDirty(false)
 {
     Attr.AccelTable = "IDM_FILECOMMANDS";
     Attr.Style = WS_VISIBLE | WS_POPUPWINDOW | WS_CAPTION | WS_THICKFRAME | WS_MINIMIZEBOX | WS_MAXIMIZEBOX;
     FileName = TheFilename ? strnewdup(TheFilename) : NULL;
-
-    Editor = new TRichEditWithPopup(this, ID_EDITOR);
-    Editor->Attr.ExStyle |= WS_EX_RIGHTSCROLLBAR;
-    Editor->Attr.Style |= ES_NOHIDESEL | ES_AUTOHSCROLL | ES_AUTOVSCROLL;
 }
 
 TMyFileWindow::~TMyFileWindow()
 {
-    if (hEdtFont)
-    {
-        DeleteObject(hEdtFont);
-    }
-      
     if (HWindow)
     {
         HMENU oldMenu = GetMenu();
@@ -62,16 +55,20 @@ TMyFileWindow::~TMyFileWindow()
     delete FileName;
 }
 
+
+LRESULT TMyFileWindow::SendEditor(UINT Msg, WPARAM wParam, LPARAM lParam)
+{
+    return ::SendMessage(ScintillaEditor, Msg, wParam, lParam);
+}
+
 //
-// saves the contents of the TEdit child control into the file currently
-// being editted
+// Saves the contents of the editor to the file currently being edited.
 //
-// returns true if the file was saved or Editor->IsModified returns false
-// (contents already saved)
+// returns true if the file was saved or if the contents were already saved.
 //
 bool TMyFileWindow::Save()
 {
-    if (Editor->IsModified())
+    if (IsDirty)
     {
         if (FileName != NULL)
         {
@@ -80,7 +77,8 @@ bool TMyFileWindow::Save()
     }
     else
     {
-        return true; //editor's contents haven't been changed
+        // the editor's contents haven't been changed
+        return true;
     }
 
     return false;
@@ -91,8 +89,6 @@ bool TMyFileWindow::Save()
 //
 bool TMyFileWindow::Read(const char *fileName)
 {
-    Editor->LimitText(0x7FFFFFF);
-
     if (!fileName)
     {
         if (FileName)
@@ -105,39 +101,43 @@ bool TMyFileWindow::Read(const char *fileName)
         }
     }
 
+    SendEditor(SCI_CLEARALL);
+    SendEditor(SCI_EMPTYUNDOBUFFER);
+    SendEditor(SCI_SETSAVEPOINT);
+    SendEditor(SCI_CANCEL);
+    SendEditor(SCI_SETUNDOCOLLECTION, 0);
+
     bool success = false;
     FILE * file = fopen(fileName, "rb");
     if (file != NULL)
     {
-        // seek to the end
-        fseek(file, 0, SEEK_END);
+        // read the entire file in 1 KB blocks
+        char data[1024];
 
-        long charsToRead = ftell(file);
-
-        rewind(file);
-
-        if (charsToRead < INT_MAX && charsToRead > 0)
+        int blockLength = fread(data, 1, sizeof(data), file);
+        while (blockLength > 0)
         {
-            Editor->Clear();
-            //
-            // Lock and resize Editor's buffer to the size of the file
-            // Then if OK, read the file into editBuffer
-            //
-            char *editBuffer = new char[charsToRead + 1];
-            if (editBuffer)
-            {
-                if (fread(editBuffer, sizeof(char), charsToRead, file) == charsToRead)
-                {
-                    editBuffer[charsToRead] = '\0';
-                    success = true;
-                    Editor->SetWindowText(editBuffer);
-                    Editor->ClearModify();
-                }
-                delete [] editBuffer;
-            }
+            SendEditor(
+                SCI_ADDTEXT,
+                blockLength,
+                reinterpret_cast<LPARAM>(data));
+
+            blockLength = fread(data, 1, sizeof(data), file);
         }
+
+        if (!ferror(file))
+        {
+            success = true;
+        }
+
         fclose(file);
     }
+    
+    SendEditor(SCI_SETUNDOCOLLECTION, 1);
+    ::SetFocus(ScintillaEditor);
+    SendEditor(SCI_EMPTYUNDOBUFFER);
+    SendEditor(SCI_SETSAVEPOINT);
+    SendEditor(SCI_GOTOPOS, 0);
 
     if (!success)
     {
@@ -178,43 +178,36 @@ bool TMyFileWindow::Write(const char * fileName)
 
     bool success = false;
 
-    int    windowTextLength = Editor->GetWindowTextLength();
-    size_t editBufferLength = windowTextLength + 2; // "\r\n"
-    char *editBuffer = new char [editBufferLength];
-    if (editBuffer != NULL)
+    char data[1024];
+    int lengthDoc = SendEditor(SCI_GETLENGTH);
+    for (int i = 0; i < lengthDoc; i += sizeof(data) - 1)
     {
-        memset(editBuffer, 0, editBufferLength);
-
-        Editor->GetSubText(editBuffer, 0, editBufferLength);
-
-        if (windowTextLength != 0 && editBuffer[windowTextLength - 1] != '\n')
+        int grabSize = lengthDoc - i;
+        if (sizeof(data) - 1 < grabSize)
         {
-            editBuffer[windowTextLength + 0] = '\r';
-            editBuffer[windowTextLength + 1] = '\n';
+            grabSize = sizeof(data) - 1;
         }
-        else
-        {
-            editBufferLength = windowTextLength;
-        }
+
+        // get this block from the editor
+        TEXTRANGE tr;
+        tr.chrg.cpMin = i;
+        tr.chrg.cpMax = i + grabSize;
+        tr.lpstrText  = data;
+        SendEditor(SCI_GETTEXTRANGE, 0, reinterpret_cast<LPARAM>(&tr));
 
         size_t bytesWritten = fwrite(
-            editBuffer,
+            data,
             sizeof(char),
-            editBufferLength,
+            grabSize,
             file);
-        if (bytesWritten == editBufferLength)
+        if (bytesWritten == grabSize)
         {
             success = true;
         }
-
-        if (success)
-        {
-            Editor->ClearModify();
-        }
-
-        delete [] editBuffer;
     }
+
     fclose(file);
+    SendEditor(SCI_SETSAVEPOINT);
 
     return success;
 }
@@ -274,13 +267,55 @@ void TMyFileWindow::CMHelp()
 
 void TMyFileWindow::CMHelpEditTopic()
 {
-    Editor->CmHelpEditTopic();
+    bool didHelp = false;
+
+    // get the keyword selected
+    int start = SendEditor(SCI_GETSELECTIONSTART);
+    int end   = SendEditor(SCI_GETSELECTIONEND);
+    if (start < end && end < start + 80)
+    {
+        char buffer[100] = {0}; // NUL-terminate
+
+        SendEditor(SCI_GETSELTEXT, 0, reinterpret_cast<LPARAM>(buffer));
+
+        char * selection = buffer;
+
+        // remove leading whitespace
+        while (isspace(selection[0]))
+        {
+            selection++;
+        }
+
+        // strip off everything after the first word
+        char * ptr = selection;
+        while (*ptr != '\0' && !isspace(*ptr))
+        {
+            ptr++;
+        }
+
+        // if there was some non-space selected,
+        if (ptr != selection)
+        {
+            // truncate the selection after the first word
+            *ptr = '\0';
+
+            // and look it up in the online help
+            do_help(selection);
+            didHelp = true;
+        }
+    }
+
+    if (!didHelp)
+    {
+        do_help(NULL);
+    }
 }
 
 void TMyFileWindow::CMTest()
 {
 
     // get the code selected
+#if 0
     UINT start;
     UINT end;
     Editor->GetSelection(start, end);
@@ -367,6 +402,7 @@ void TMyFileWindow::CMTest()
     }
 
     delete [] theText;
+#endif
 }
 
 //
@@ -400,6 +436,28 @@ void TMyFileWindow::SetFileName(const char *fileName)
     }
 }
 
+void TMyFileWindow::SetEditorFont(const LOGFONT & LogFont)
+{
+    // set the font face name
+    SendEditor(
+        SCI_STYLESETFONT,
+        STYLE_DEFAULT,
+        reinterpret_cast<LPARAM>(LogFont.lfFaceName));
+
+    // set the height in points
+    int logPixelsY = GetDeviceCaps(GetDC(ScintillaEditor), LOGPIXELSY);
+    int PointSize  = (logPixelsY == 0) ? 10 : -72 * LogFont.lfHeight / logPixelsY;
+    SendEditor(SCI_STYLESETSIZE, STYLE_DEFAULT, PointSize);
+
+    // set some of the font's attributes
+    SendEditor(SCI_STYLESETBOLD,      STYLE_DEFAULT, FW_BOLD <= LogFont.lfWeight);
+    SendEditor(SCI_STYLESETITALIC,    STYLE_DEFAULT, LogFont.lfItalic    ? true : false);
+    SendEditor(SCI_STYLESETUNDERLINE, STYLE_DEFAULT, LogFont.lfUnderline ? true : false);
+
+    // apply the font
+    SendEditor(SCI_STYLECLEARALL);
+}
+
 
 void TMyFileWindow::SetupWindow()
 {
@@ -425,6 +483,7 @@ void TMyFileWindow::SetupWindow()
 
     static const MENUITEM editMenuItems[] = {
         {LOCALIZED_EDITOR_EDIT_UNDO,      CM_EDITUNDO},
+        {LOCALIZED_EDITOR_EDIT_REDO,      CM_EDITREDO},
         {0},
         {LOCALIZED_EDITOR_EDIT_CUT,       CM_EDITCUT},
         {LOCALIZED_EDITOR_EDIT_COPY,      CM_EDITCOPY},
@@ -477,23 +536,35 @@ void TMyFileWindow::SetupWindow()
     AppendPopupMenu(mainMenu, LOCALIZED_EDITOR_HELP,   helpMenuItems,   ARRAYSIZE(helpMenuItems));
     SetMenu(mainMenu);
 
-
-
-    SetFileName(FileName);
-
-    if (FileName && !Read())
+    ScintillaEditor = ::CreateWindow(
+        "Scintilla",
+        "Source",
+        WS_CHILD | WS_VSCROLL | WS_HSCROLL | WS_CLIPCHILDREN,
+        0,
+        0,
+        0,
+        0,
+        HWindow,
+        0,
+        GetApplication()->GetInstance(),
+        0);
+    if (ScintillaEditor != NULL)
     {
-        SetFileName(0);
-    }
-   
-    LOGFONT lf;
-    GetConfigurationFont("EditFont", lf);
-    hEdtFont = CreateFontIndirect(&lf);
-    Editor->SetWindowFont(hEdtFont, true);
+        ::ShowWindow(ScintillaEditor, SW_SHOW);
+        ::SetFocus(ScintillaEditor);
 
-    // We must clear the modify flag again, because
-    // updating the font counts as a modification on WinXP
-    Editor->ClearModify();
+        // set the font
+        LOGFONT lf;
+        GetConfigurationFont("EditFont", lf);
+        SetEditorFont(lf);
+
+        SetFileName(FileName);
+
+        if (FileName && !Read())
+        {
+            SetFileName(0);
+        }
+    }
 }
 
 void TMyFileWindow::CMEditSetFont()
@@ -517,50 +588,389 @@ void TMyFileWindow::CMEditSetFont()
         // save the new font preference to persistent storage
         SetConfigurationFont("EditFont", lf);
 
-        // Changing the font counts a modification as far as
-        // the edit control is concerned, but not as far as
-        // Logo is concerned.
-        // Therefore, we must preserve the IsModified() state
-        // ourselves to prevent spurious warnings when closing
-        // an unedited document.
-        bool editorIsModified = Editor->IsModified();
-
-        HFONT hFont = CreateFontIndirect(&lf);
-        Editor->SetWindowFont(hFont, true);
-
-        if (hEdtFont)
-        {
-            DeleteObject(hEdtFont);
-        }
-        hEdtFont = hFont;
-
-        if (!editorIsModified)
-        {
-            Editor->ClearModify();
-        }
-
-        // The next block of code looks like it does nothing,
-        // but it forces a redraw, which forces the existing text
-        // to adopt the new font.
-        // Without this code, you have to change each line of text
-        // in order to update it to the new font.
-        TRect rect;
-        GetWindowRect(rect);
-        SetWindowPos(0, rect.Left(), rect.Top(), rect.Width() + 1, rect.Height(), SWP_NOZORDER);
-        SetWindowPos(0, rect, SWP_NOZORDER);
+        // Start using the new font
+        SetEditorFont(lf);
     }
 }
 
+// Prints the contents of the editor.
+// This was copied from Scite's SciTEWinDlg.cpp.
 void TMyFileWindow::CMFilePrint()
 {
-    // Create Printout window and set characteristics.
-    TRichEditPrintout printout(MainWindowx->Printer, *Editor, "Logo");
-    printout.SetBanding(false);
+    //FMS: RemoveFindMarks();
+    PRINTDLG pdlg = { sizeof pdlg };
 
-    // Bring up the Print dialog and print the document.
-    MainWindowx->Printer.Print(this, printout, true);
+    pdlg.hwndOwner = HWindow;
+    pdlg.hInstance = GetApplication()->GetInstance();
+    pdlg.Flags = PD_USEDEVMODECOPIES | PD_ALLPAGES | PD_NOPAGENUMS | PD_RETURNDC | PD_NOSELECTION;
+    pdlg.nFromPage = 1;
+    pdlg.nToPage = 1;
+    pdlg.nMinPage = 1;
+    pdlg.nMaxPage = 0xffffU; // We do not know how many pages in the
+    // document until the printer is selected and the paper size is known.
+    pdlg.nCopies = 1;
+    //FMS: pdlg.hDC = 0;
+    //FMS: pdlg.hDevMode = hDevMode;
+    //FMS: pdlg.hDevNames = hDevNames;
+
+    if (!::PrintDlg(&pdlg))
+    {
+        return;
+    }
+
+    //FMS: hDevMode  = pdlg.hDevMode;
+    //FMS: hDevNames = pdlg.hDevNames;
+
+    HDC hdc = pdlg.hDC;
+
+    RECT rectMargins;
+    RECT rectPhysMargins;
+    Point ptPage;
+    Point ptDpi;
+
+    // Get printer resolution
+    ptDpi.x = GetDeviceCaps(hdc, LOGPIXELSX);    // dpi in X direction
+    ptDpi.y = GetDeviceCaps(hdc, LOGPIXELSY);    // dpi in Y direction
+
+    // Start by getting the physical page size (in device units).
+    ptPage.x = GetDeviceCaps(hdc, PHYSICALWIDTH);   // device units
+    ptPage.y = GetDeviceCaps(hdc, PHYSICALHEIGHT);  // device units
+
+    // Get the dimensions of the unprintable
+    // part of the page (in device units).
+    rectPhysMargins.left = GetDeviceCaps(hdc, PHYSICALOFFSETX);
+    rectPhysMargins.top  = GetDeviceCaps(hdc, PHYSICALOFFSETY);
+
+    // To get the right and lower unprintable area,
+    // we take the entire width and height of the paper and
+    // subtract everything else.
+    rectPhysMargins.right = ptPage.x  // total paper width
+        - GetDeviceCaps(hdc, HORZRES) // printable width
+        - rectPhysMargins.left;       // left unprintable margin
+
+    rectPhysMargins.bottom = ptPage.y // total paper height
+        - GetDeviceCaps(hdc, VERTRES) // printable height
+        - rectPhysMargins.top;        // right unprintable margin
+
+    // At this point, rectPhysMargins contains the widths of the
+    // unprintable regions on all four sides of the page in device units.
+
+#if 0
+    // Take in account the page setup given by the user (if one value is not null)
+    if (pagesetupMargin.left   != 0 ||
+        pagesetupMargin.right  != 0 ||
+        pagesetupMargin.top    != 0 ||
+        pagesetupMargin.bottom != 0)
+    {
+        PRectangle rectSetup;
+
+        // Convert the hundredths of millimeters (HiMetric) or
+        // thousandths of inches (HiEnglish) margin values
+        // from the Page Setup dialog to device units.
+        // (There are 2540 hundredths of a mm in an inch.)
+
+        char localeInfo[3];
+        GetLocaleInfo(LOCALE_USER_DEFAULT, LOCALE_IMEASURE, localeInfo, 3);
+
+        if (localeInfo[0] == '0') {     // Metric system. '1' is US System
+            rectSetup.left      = MulDiv(pagesetupMargin.left,   ptDpi.x, 2540);
+            rectSetup.top       = MulDiv(pagesetupMargin.top,    ptDpi.y, 2540);
+            rectSetup.right     = MulDiv(pagesetupMargin.right,  ptDpi.x, 2540);
+            rectSetup.bottom    = MulDiv(pagesetupMargin.bottom, ptDpi.y, 2540);
+        }
+        else
+        {
+            rectSetup.left      = MulDiv(pagesetupMargin.left,   ptDpi.x, 1000);
+            rectSetup.top       = MulDiv(pagesetupMargin.top,    ptDpi.y, 1000);
+            rectSetup.right     = MulDiv(pagesetupMargin.right,  ptDpi.x, 1000);
+            rectSetup.bottom    = MulDiv(pagesetupMargin.bottom, ptDpi.y, 1000);
+        }
+
+        // Dont reduce margins below the minimum printable area
+        rectMargins.left        = Platform::Maximum(rectPhysMargins.left, rectSetup.left);
+        rectMargins.top         = Platform::Maximum(rectPhysMargins.top, rectSetup.top);
+        rectMargins.right       = Platform::Maximum(rectPhysMargins.right, rectSetup.right);
+        rectMargins.bottom      = Platform::Maximum(rectPhysMargins.bottom, rectSetup.bottom);
+    }
+    else
+#endif
+    {
+        rectMargins.left    = rectPhysMargins.left;
+        rectMargins.top     = rectPhysMargins.top;
+        rectMargins.right   = rectPhysMargins.right;
+        rectMargins.bottom  = rectPhysMargins.bottom;
+    }
+
+    // rectMargins now contains the values used to shrink the printable
+    // area of the page.
+
+    // Convert device coordinates into logical coordinates
+    DPtoLP(hdc, (LPPOINT) &rectMargins,     2);
+    DPtoLP(hdc, (LPPOINT) &rectPhysMargins, 2);
+
+    // Convert page size to logical units and we're done!
+    DPtoLP(hdc, (LPPOINT) &ptPage, 1);
+
+#if 0
+    SString headerFormat = props.Get("print.header.format");
+    SString footerFormat = props.Get("print.footer.format");
+
+    TEXTMETRIC tm;
+    SString headerOrFooter;     // Usually the path, date and page number
+
+    SString headerStyle = props.Get("print.header.style");
+    StyleDefinition sdHeader(headerStyle.c_str());
+
+    int headerLineHeight = ::MulDiv(
+        (sdHeader.specified & StyleDefinition::sdSize) ? sdHeader.size : 9,
+        ptDpi.y, 72);
+    HFONT fontHeader = ::CreateFont(
+        headerLineHeight,
+        0,
+        0,
+        0,
+        sdHeader.bold ? FW_BOLD : FW_NORMAL,
+        sdHeader.italics,
+        sdHeader.underlined,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        (sdHeader.specified & StyleDefinition::sdFont) ? sdHeader.font.c_str() : "Arial");
+    ::SelectObject(hdc, fontHeader);
+    ::GetTextMetrics(hdc, &tm);
+    headerLineHeight = tm.tmHeight + tm.tmExternalLeading;
+
+    SString footerStyle = props.Get("print.footer.style");
+    StyleDefinition sdFooter(footerStyle.c_str());
+
+    int footerLineHeight = ::MulDiv(
+        (sdFooter.specified & StyleDefinition::sdSize) ? sdFooter.size : 9,
+        ptDpi.y,
+        72);
+    HFONT fontFooter = ::CreateFont(
+        footerLineHeight,
+        0,
+        0,
+        0,
+        sdFooter.bold ? FW_BOLD : FW_NORMAL,
+        sdFooter.italics,
+        sdFooter.underlined,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        (sdFooter.specified & StyleDefinition::sdFont) ? sdFooter.font.c_str() : "Arial");
+    ::SelectObject(hdc, fontFooter);
+    ::GetTextMetrics(hdc, &tm);
+    footerLineHeight = tm.tmHeight + tm.tmExternalLeading;
+#endif
+
+    DOCINFO di = {sizeof(di)};
+    di.lpszDocName  = "Logo";
+    if (::StartDoc(hdc, &di) < 0)
+    {
+#if 0
+        SString msg = LocaliseMessage("Can not start printer document.");
+        WindowMessageBox(wSciTE, msg, MB_OK);
+#endif
+        return;
+    }
+
+    LONG lengthDoc = SendEditor(SCI_GETLENGTH);
+    LONG lengthPrinted = 0;
+
+    // We must subtract the physical margins from the printable area
+    RangeToFormat frPrint;
+    frPrint.hdc = hdc;
+    frPrint.hdcTarget = hdc;
+    frPrint.rc.left = rectMargins.left - rectPhysMargins.left;
+    frPrint.rc.top = rectMargins.top - rectPhysMargins.top;
+    frPrint.rc.right = ptPage.x - rectMargins.right - rectPhysMargins.left;
+    frPrint.rc.bottom = ptPage.y - rectMargins.bottom - rectPhysMargins.top;
+    frPrint.rcPage.left = 0;
+    frPrint.rcPage.top = 0;
+    frPrint.rcPage.right = ptPage.x - rectPhysMargins.left - rectPhysMargins.right - 1;
+    frPrint.rcPage.bottom = ptPage.y - rectPhysMargins.top - rectPhysMargins.bottom - 1;
+#if 0
+    if (headerFormat.size())
+    {
+        frPrint.rc.top += headerLineHeight + headerLineHeight / 2;
+    }
+    if (footerFormat.size())
+    {
+        frPrint.rc.bottom -= footerLineHeight + footerLineHeight / 2;
+    }
+#endif
+
+    // Print each page
+    int pageNum = 1;
+    bool printPage;
+#if 0
+    PropSetFile propsPrint;
+    propsPrint.superPS = &props;
+    SetFileProperties(propsPrint);
+#endif
+
+    while (lengthPrinted < lengthDoc)
+    {
+#if 0
+        printPage = (!(pdlg.Flags & PD_PAGENUMS) ||
+                     (pageNum >= pdlg.nFromPage) && (pageNum <= pdlg.nToPage));
+#else
+        printPage = 1;
+#endif
+
+#if 0
+        char pageString[32];
+        sprintf(pageString, "%0d", pageNum);
+        propsPrint.Set("CurrentPage", pageString);
+#endif
+
+        if (printPage)
+        {
+            ::StartPage(hdc);
+
+#if 0
+            if (headerFormat.size())
+            {
+                SString sHeader = propsPrint.GetExpanded("print.header.format");
+                ::SetTextColor(hdc, sdHeader.ForeAsLong());
+                ::SetBkColor(hdc, sdHeader.BackAsLong());
+                ::SelectObject(hdc, fontHeader);
+                UINT ta = ::SetTextAlign(hdc, TA_BOTTOM);
+                RECT rcw = {frPrint.rc.left, frPrint.rc.top - headerLineHeight - headerLineHeight / 2,
+                            frPrint.rc.right, frPrint.rc.top - headerLineHeight / 2};
+                rcw.bottom = rcw.top + headerLineHeight;
+                ::ExtTextOut(hdc, frPrint.rc.left + 5, frPrint.rc.top - headerLineHeight / 2,
+                             ETO_OPAQUE, &rcw, sHeader.c_str(),
+                             static_cast<int>(sHeader.length()), NULL);
+                ::SetTextAlign(hdc, ta);
+                HPEN pen = ::CreatePen(0, 1, sdHeader.ForeAsLong());
+                HPEN penOld = static_cast<HPEN>(::SelectObject(hdc, pen));
+                ::MoveToEx(hdc, frPrint.rc.left, frPrint.rc.top - headerLineHeight / 4, NULL);
+                ::LineTo(hdc, frPrint.rc.right, frPrint.rc.top - headerLineHeight / 4);
+                ::SelectObject(hdc, penOld);
+                ::DeleteObject(pen);
+            }
+#endif
+        }
+
+        frPrint.chrg.cpMin = lengthPrinted;
+        frPrint.chrg.cpMax = lengthDoc;
+
+        lengthPrinted = SendEditor(
+            SCI_FORMATRANGE,
+            printPage,
+            reinterpret_cast<LPARAM>(&frPrint));
+
+        if (printPage)
+        {
+#if 0
+            if (footerFormat.size())
+            {
+                SString sFooter = propsPrint.GetExpanded("print.footer.format");
+                ::SetTextColor(hdc, sdFooter.ForeAsLong());
+                ::SetBkColor(hdc, sdFooter.BackAsLong());
+                ::SelectObject(hdc, fontFooter);
+                UINT ta = ::SetTextAlign(hdc, TA_TOP);
+                RECT rcw = {frPrint.rc.left, frPrint.rc.bottom + footerLineHeight / 2,
+                            frPrint.rc.right, frPrint.rc.bottom + footerLineHeight + footerLineHeight / 2};
+                ::ExtTextOut(hdc, frPrint.rc.left + 5, frPrint.rc.bottom + footerLineHeight / 2,
+                             ETO_OPAQUE, &rcw, sFooter.c_str(),
+                             static_cast<int>(sFooter.length()), NULL);
+                ::SetTextAlign(hdc, ta);
+                HPEN pen = ::CreatePen(0, 1, sdFooter.ForeAsLong());
+                HPEN penOld = static_cast<HPEN>(::SelectObject(hdc, pen));
+                ::SetBkColor(hdc, sdFooter.ForeAsLong());
+                ::MoveToEx(hdc, frPrint.rc.left, frPrint.rc.bottom + footerLineHeight / 4, NULL);
+                ::LineTo(hdc, frPrint.rc.right, frPrint.rc.bottom + footerLineHeight / 4);
+                ::SelectObject(hdc, penOld);
+                ::DeleteObject(pen);
+            }
+#endif
+
+            ::EndPage(hdc);
+        }
+        pageNum++;
+
+        if ((pdlg.Flags & PD_PAGENUMS) && (pageNum > pdlg.nToPage))
+        {
+            break;
+        }
+    }
+
+    SendEditor(SCI_FORMATRANGE, FALSE, 0);
+
+    ::EndDoc(hdc);
+    ::DeleteDC(hdc);
+#if 0
+    if (fontHeader)
+    {
+        ::DeleteObject(fontHeader);
+    }
+    if (fontFooter)
+    {
+        ::DeleteObject(fontFooter);
+    }
+#endif
 }
 
+void TMyFileWindow::CMEditUndo()
+{
+    SendEditor(SCI_UNDO);
+}
+
+void TMyFileWindow::CMEditUndoEnable(TCommandEnabler& commandHandler)
+{
+    commandHandler.Enable(SendEditor(SCI_CANUNDO));
+}
+
+void TMyFileWindow::CMEditRedo()
+{
+    SendEditor(SCI_REDO);
+}
+
+void TMyFileWindow::CMEditRedoEnable(TCommandEnabler& commandHandler)
+{
+    commandHandler.Enable(SendEditor(SCI_CANREDO));
+}
+
+void TMyFileWindow::CMEditCut()
+{
+    SendEditor(SCI_CUT);
+}
+
+void TMyFileWindow::CMEditCopy()
+{
+    SendEditor(SCI_COPY);
+}
+
+void TMyFileWindow::CMEditPaste()
+{
+    SendEditor(SCI_PASTE);
+}
+
+void TMyFileWindow::CMEditDelete()
+{
+    SendEditor(SCI_CLEAR);
+}
+
+void TMyFileWindow::CMEditSelectAll()
+{
+    SendEditor(SCI_SELECTALL);
+}
+
+void TMyFileWindow::CMEditClearAll()
+{
+    // deletes everything in the editor
+    SendEditor(SCI_SELECTALL);
+    SendEditor(SCI_CLEAR);
+}
 
 bool TMyFileWindow::EndEdit()
 {
@@ -670,19 +1080,16 @@ void TMyFileWindow::ReopenAfterError()
     error_happen = false;
 
     // Force the child editor into a dirty state.
-    Editor->Insert(" ");
-    Editor->DeleteSubText(0, 1);
+    IsDirty = true;
 
     // Move the caret to the line that had the error
-    int iLine = Editor->GetLineFromPos(LinesLoadedOnEdit);
-    Editor->Scroll(0, iLine);
-    Editor->SetSelection(LinesLoadedOnEdit, LinesLoadedOnEdit);
+    SendEditor(SCI_GOTOLINE, LinesLoadedOnEdit);
 }
 
 bool TMyFileWindow::CanClose()
 {
     // if changed better ask user
-    if (Editor->IsModified())
+    if (IsDirty)
     {
         int result = MessageBox(
             LOCALIZED_SAVECHANGEDCONTENTSTOWORKSPACE,
@@ -709,7 +1116,7 @@ bool TMyFileWindow::CanClose()
 void TMyFileWindow::EvSize(UINT sizeType, TSize &size)
 {
     TFrameWindow::EvSize(sizeType, size);
-    Editor->SetWindowPos(0, 0, 0, size.cx, size.cy, SWP_NOZORDER);
+    ::SetWindowPos(ScintillaEditor, 0, 0, 0, size.cx, size.cy, SWP_NOZORDER);
 }
 
 //
@@ -718,20 +1125,48 @@ void TMyFileWindow::EvSize(UINT sizeType, TSize &size)
 //
 void TMyFileWindow::EvSetFocus(HWND)
 {
-    Editor->SetFocus();
+    ::SetFocus(ScintillaEditor);
+}
+
+TResult TMyFileWindow::EvNotify(uint ctlId, TNotify& notifyInfo)
+{
+    switch (notifyInfo.code)
+    {
+    case SCN_SAVEPOINTREACHED:
+        IsDirty = false;
+        // CheckMenus();
+        break;
+
+    case SCN_SAVEPOINTLEFT:
+        IsDirty = true;
+        //CheckMenus();
+        break;
+    }
+
+    return TFrameWindow::EvNotify(ctlId, notifyInfo);
 }
 
 
 DEFINE_RESPONSE_TABLE1(TMyFileWindow, TFrameWindow)
     EV_COMMAND(CM_EDALLEXIT,           CMExit),
     EV_COMMAND(CM_FILESAVETOWORKSPACE, CMSaveToWorkspace),
+    EV_COMMAND(CM_FILEPRINT,           CMFilePrint),
     EV_COMMAND(CM_FILESAVEANDEXIT,     CMSaveAndExit),
     EV_COMMAND(CM_HELP,                CMHelp),
     EV_COMMAND(CM_HELPEDIT,            CMHelpEdit),
     EV_COMMAND(CM_HELPEDIT_TOPIC,      CMHelpEditTopic),
     EV_COMMAND(CM_TEST,                CMTest),
+    EV_COMMAND(CM_EDITUNDO,            CMEditUndo),
+    EV_COMMAND(CM_EDITREDO,            CMEditRedo),
     EV_COMMAND(CM_EDITSETFONT,         CMEditSetFont),
-    EV_COMMAND(CM_FILEPRINT,           CMFilePrint),
+    EV_COMMAND(CM_EDITCUT,             CMEditCut),
+    EV_COMMAND(CM_EDITCOPY,            CMEditCopy),
+    EV_COMMAND(CM_EDITPASTE,           CMEditPaste),
+    EV_COMMAND(CM_EDITDELETE,          CMEditDelete),
+    EV_COMMAND(CM_EDITCLEAR,           CMEditClearAll),
+    EV_COMMAND(CM_EDITSELECTALL,       CMEditSelectAll),
+    EV_COMMAND_ENABLE(CM_EDITUNDO,     CMEditUndoEnable),
+    EV_COMMAND_ENABLE(CM_EDITREDO,     CMEditRedoEnable),
     EV_WM_SIZE,
     EV_WM_SETFOCUS,
     EV_WM_DESTROY,

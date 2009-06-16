@@ -694,6 +694,7 @@
 #define LOCALIZED_POPUP_PASTE                    "Einfügen"
 #define LOCALIZED_POPUP_DELETE                   "Löschen"
 #define LOCALIZED_POPUP_UNDO                     "Rückgängig"
+#define LOCALIZED_POPUP_REDO                     "Redo" // NOT_YET_LOCALIZED
 #define LOCALIZED_POPUP_SELECTALL                "Alles markieren"
 #define LOCALIZED_POPUP_HELP                     "Begriffsuche"
 
@@ -710,6 +711,7 @@
 
 #define LOCALIZED_EDITOR_EDIT                    "&Edit"
 #define LOCALIZED_EDITOR_EDIT_UNDO               "&Rückgängig\tCtrl+Z"
+#define LOCALIZED_EDITOR_EDIT_REDO               "&Redo\tCtrl+Y" // NOT_YET_LOCALIZED
 #define LOCALIZED_EDITOR_EDIT_CUT                "Aus&schneiden\tCtrl+X"
 #define LOCALIZED_EDITOR_EDIT_COPY               "&Kopieren\tCtrl+C"
 #define LOCALIZED_EDITOR_EDIT_PASTE              "&Einfügen\tCtrl+V"

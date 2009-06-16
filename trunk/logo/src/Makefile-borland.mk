@@ -25,17 +25,9 @@ IDE_LinkFLAGS32 = -LC:\BC5\LIB
 IDE_ResFLAGS32 = 
 ResLocalOptsAtW32_fmslogodexe = -l$(LOCALECODE)
 
-IncludePath = -I"C:\Program Files\HTML Help Workshop\include" -IC:\BC5\INCLUDE
+IncludePath = -I"C:\Program Files\HTML Help Workshop\include" -IC:\BC5\INCLUDE -Iscintilla\include -Iscintilla\src -Iscintilla\win32 -I.
 
 CDefines = -DSTRICT;LOCALE=$(LOCALECODE);STATIC_BUILD;PLAT_WIN=1;_OWLPCH;SCI_NAMESPACE
-
-# add in preprocessor definitions for the version information
-CDefines = $(CDefines) -DFMSLOGO_MAJOR_VERSION=$(FMSLOGO_MAJOR_VERSION)
-CDefines = $(CDefines) -DFMSLOGO_MINOR_VERSION=$(FMSLOGO_MINOR_VERSION)
-CDefines = $(CDefines) -DFMSLOGO_MICRO_VERSION=$(FMSLOGO_MICRO_VERSION)
-!if "$(FMSLOGO_VERSION_SUFFIX)"=="+"
-  CDefines = $(CDefines) -DFMSLOGO_PRIVATE_BUILD
-!endif
 
 CompInheritOptsAt_fmslogodexe = $(IncludePath) $(CDefines) -DNOASM;DEBUG;MEM_DEBUG;TRACE
 
@@ -73,9 +65,32 @@ logo32 : BccW32.cfg $(ExecutableName)
   echo MakeNode
 
 version.h : ..\version.mk
-  generate-version.bat $(FMSLOGO_VERSION)
+  generate-version.bat $(FMSLOGO_MAJOR_VERSION) $(FMSLOGO_MINOR_VERSION) $(FMSLOGO_MICRO_VERSION) $(FMSLOGO_VERSION_SUFFIX)
 
 Dep_fmslogodexe = \
+   $(IntermediateDirectory)\AutoComplete.obj\
+   $(IntermediateDirectory)\CallTip.obj\
+   $(IntermediateDirectory)\CellBuffer.obj\
+   $(IntermediateDirectory)\CharClassify.obj\
+   $(IntermediateDirectory)\ContractionState.obj\
+   $(IntermediateDirectory)\Decoration.obj\
+   $(IntermediateDirectory)\Document.obj\
+   $(IntermediateDirectory)\Editor.obj\
+   $(IntermediateDirectory)\Indicator.obj\
+   $(IntermediateDirectory)\KeyMap.obj\
+   $(IntermediateDirectory)\LineMarker.obj\
+   $(IntermediateDirectory)\PerLine.obj\
+   $(IntermediateDirectory)\PlatWin.obj\
+   $(IntermediateDirectory)\PositionCache.obj\
+   $(IntermediateDirectory)\PropSet.obj\
+   $(IntermediateDirectory)\RESearch.obj\
+   $(IntermediateDirectory)\RunStyles.obj\
+   $(IntermediateDirectory)\ScintillaBase.obj\
+   $(IntermediateDirectory)\ScintillaWin.obj\
+   $(IntermediateDirectory)\Style.obj\
+   $(IntermediateDirectory)\UniConversion.obj\
+   $(IntermediateDirectory)\ViewStyle.obj\
+   $(IntermediateDirectory)\XPM.obj\
    $(IntermediateDirectory)\3dsolid.obj\
    $(IntermediateDirectory)\appendablelist.obj\
    $(IntermediateDirectory)\areawind.obj\
@@ -139,6 +154,29 @@ $(ExecutableName) : $(Dep_fmslogodexe)
   $(ILINK32) @&&|
  /v $(IDE_LinkFLAGS32) $(LinkerOptsAt_fmslogodexe) $(LinkerInheritOptsAt_fmslogodexe) +
 C:\BC5\LIB\c0w32.obj+
+$(IntermediateDirectory)\AutoComplete.obj+
+$(IntermediateDirectory)\CallTip.obj+
+$(IntermediateDirectory)\CellBuffer.obj+
+$(IntermediateDirectory)\CharClassify.obj+
+$(IntermediateDirectory)\ContractionState.obj+
+$(IntermediateDirectory)\Decoration.obj+
+$(IntermediateDirectory)\Document.obj+
+$(IntermediateDirectory)\Editor.obj+
+$(IntermediateDirectory)\Indicator.obj+
+$(IntermediateDirectory)\KeyMap.obj+
+$(IntermediateDirectory)\LineMarker.obj+
+$(IntermediateDirectory)\PerLine.obj+
+$(IntermediateDirectory)\PlatWin.obj+
+$(IntermediateDirectory)\PositionCache.obj+
+$(IntermediateDirectory)\PropSet.obj+
+$(IntermediateDirectory)\RESearch.obj+
+$(IntermediateDirectory)\RunStyles.obj+
+$(IntermediateDirectory)\ScintillaBase.obj+
+$(IntermediateDirectory)\ScintillaWin.obj+
+$(IntermediateDirectory)\Style.obj+
+$(IntermediateDirectory)\UniConversion.obj+
+$(IntermediateDirectory)\ViewStyle.obj+
+$(IntermediateDirectory)\XPM.obj+
 $(IntermediateDirectory)\3dsolid.obj+
 $(IntermediateDirectory)\appendablelist.obj+
 $(IntermediateDirectory)\areawind.obj+
@@ -206,6 +244,17 @@ cw32.lib
 logo32.def
 $(IntermediateDirectory)\logorc.res
 
+|
+
+# rule for compiling .cxx files into .obj
+{scintilla\src}.cxx{$(IntermediateDirectory)}.obj:
+  $(BCC32) -P -c @&&|
+ $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ $<
+|
+
+{scintilla\win32}.cxx{$(IntermediateDirectory)}.obj:
+  $(BCC32) -P -c @&&|
+ $(CompOptsAt_fmslogodexe) $(CompInheritOptsAt_fmslogodexe) -o$@ $<
 |
 
 # rule for compiling .cpp files into .obj
@@ -284,6 +333,8 @@ $(IntermediateDirectory)\utils.obj             : version.h
 $(IntermediateDirectory)\unix.obj              : version.h
 $(IntermediateDirectory)\vector.obj            : version.h
 $(IntermediateDirectory)\wrksp.obj             : version.h
+$(IntermediateDirectory)\scintillabase.obj     : version.h
+$(IntermediateDirectory)\scintillawin.obj      : version.h
 
 
 # Compiler configuration file

@@ -694,6 +694,7 @@
 #define LOCALIZED_POPUP_PASTE                    "Coller"
 #define LOCALIZED_POPUP_DELETE                   "Effacer"
 #define LOCALIZED_POPUP_UNDO                     "Annuler" // 
+#define LOCALIZED_POPUP_REDO                     "Redo" // NOT_YET_LOCALIZED
 #define LOCALIZED_POPUP_SELECTALL                "Sélectionner tout" // 
 #define LOCALIZED_POPUP_HELP                     "Recherche thématique" //
 
@@ -710,6 +711,7 @@
 
 #define LOCALIZED_EDITOR_EDIT                    "&Edition"
 #define LOCALIZED_EDITOR_EDIT_UNDO               "&Annuler frappe\tCtrl+Z"
+#define LOCALIZED_EDITOR_EDIT_REDO               "&Redo\tCtrl+Y" // NOT_YET_LOCALIZED
 #define LOCALIZED_EDITOR_EDIT_CUT                "&Couper\tCtrl+X"
 #define LOCALIZED_EDITOR_EDIT_COPY               "C&opier\tCtrl+C"
 #define LOCALIZED_EDITOR_EDIT_PASTE              "&Coller\tCtrl+V"

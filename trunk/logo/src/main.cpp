@@ -18,6 +18,7 @@
  *
  */
 
+#include "Scintilla.h"
 #include "allwind.h"
 #include "const.h"
 
@@ -1065,12 +1066,18 @@ WinMain(
     g_PenState.Mode      = COPY_PUT;
     g_PenState.IsErasing = false;
 
+
     // init logo kernel
     init();
 
     // get an hourglass cursor
     hCursorWait = LoadCursor(NULL, IDC_WAIT);
     hCursorArrow = LoadCursor(NULL, IDC_ARROW);
+
+    if (!Scintilla_RegisterClasses(hInstance))
+    {
+        return 1;
+    }
 
     int exitCode;
     {
@@ -1084,6 +1091,8 @@ WinMain(
         myApp.Run();
         exitCode = myApp.Status;
     }
+
+    Scintilla_ReleaseResources();
 
     if (hCursorWait)
     {

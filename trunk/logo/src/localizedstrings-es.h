@@ -694,6 +694,7 @@
 #define LOCALIZED_POPUP_PASTE                    "Pegar"
 #define LOCALIZED_POPUP_DELETE                   "Borrar"
 #define LOCALIZED_POPUP_UNDO                     "Deshacer"
+#define LOCALIZED_POPUP_REDO                     "Redo" // NOT_YET_LOCALIZED
 #define LOCALIZED_POPUP_SELECTALL                "Seleccionar Todo"
 #define LOCALIZED_POPUP_HELP                     "Búsqueda por Tema"
 
@@ -710,6 +711,7 @@
 
 #define LOCALIZED_EDITOR_EDIT                    "&Edit"
 #define LOCALIZED_EDITOR_EDIT_UNDO               "&Deshacer\tCtrl+Z"
+#define LOCALIZED_EDITOR_EDIT_REDO               "&Redo\tCtrl+Y" // NOT_YET_LOCALIZED
 #define LOCALIZED_EDITOR_EDIT_CUT                "&Cortar\tCtrl+X"
 #define LOCALIZED_EDITOR_EDIT_COPY               "C&opiar\tCtrl+C"
 #define LOCALIZED_EDITOR_EDIT_PASTE              "&Pegar\tCtrl+V"

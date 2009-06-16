@@ -694,6 +694,7 @@
 #define LOCALIZED_POPUP_PASTE                    "Вставить" 
 #define LOCALIZED_POPUP_DELETE                   "Удалить" 
 #define LOCALIZED_POPUP_UNDO                     "Отменить" 
+#define LOCALIZED_POPUP_REDO                     "Redo" // NOT_YET_LOCALIZED
 #define LOCALIZED_POPUP_SELECTALL                "Выделить всё" 
 #define LOCALIZED_POPUP_HELP                     "Поиск по разделу" 
 
@@ -710,6 +711,7 @@
 
 #define LOCALIZED_EDITOR_EDIT                    "&Редактировать" 
 #define LOCALIZED_EDITOR_EDIT_UNDO               "&Отмена\tCtrl+Z" 
+#define LOCALIZED_EDITOR_EDIT_REDO               "&Redo\tCtrl+Y" // NOT_YET_LOCALIZED
 #define LOCALIZED_EDITOR_EDIT_CUT                "&Вырезать\tCtrl+X" 
 #define LOCALIZED_EDITOR_EDIT_COPY               "&Копировать\tCtrl+C" 
 #define LOCALIZED_EDITOR_EDIT_PASTE              "В&ставить\tCtrl+V" 

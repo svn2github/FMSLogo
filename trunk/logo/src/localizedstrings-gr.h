@@ -694,6 +694,7 @@
 #define LOCALIZED_POPUP_PASTE                    "&Επικόλληση" // 
 #define LOCALIZED_POPUP_DELETE                   "&Διαγραφή" // 
 #define LOCALIZED_POPUP_UNDO                     "Α&ναίρεση" // 
+#define LOCALIZED_POPUP_REDO                     "Redo" // NOT_YET_LOCALIZED
 #define LOCALIZED_POPUP_SELECTALL                "Ε&πιλογή όλων" // 
 #define LOCALIZED_POPUP_HELP                     "Ανα&ζήτηση στη βοήθεια" // 
 
@@ -710,6 +711,7 @@
 
 #define LOCALIZED_EDITOR_EDIT                    "&Επεξεργασία" // 
 #define LOCALIZED_EDITOR_EDIT_UNDO               "Αναίρεσ&η\tCtrl+Z" // 
+#define LOCALIZED_EDITOR_EDIT_REDO               "&Redo\tCtrl+Y" // NOT_YET_LOCALIZED
 #define LOCALIZED_EDITOR_EDIT_CUT                "Απ&οκοπή\tCtrl+X" // 
 #define LOCALIZED_EDITOR_EDIT_COPY               "Αντι&γραφή\tCtrl+C" // 
 #define LOCALIZED_EDITOR_EDIT_PASTE              "&Επικόλληση\tCtrl+V" // 

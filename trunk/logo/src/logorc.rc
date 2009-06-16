@@ -1,6 +1,4 @@
 #include <windows.h>
-#include "localizedstrings.h"
-#include "logorc.h"
 
 #include <owl\editfile.rh>
 #include <owl\printer.rc>
@@ -8,6 +6,7 @@
 #include <owl\except.rc>
 
 #include "localizedstrings.h"
+#include "logorc.h"
 
 #include "stdwnds.rc"
 #include "filemenu.rc"
@@ -39,7 +38,7 @@ BEGIN
       VALUE "FileDescription",  LOCALIZED_FMSLOGO_FILE_DESCRIPTION"\0"
       VALUE "FileVersion",      FMSLOGO_VERSION"\0"
       VALUE "InternalName",     "fmslogo\0"
-      VALUE "LegalCopyright",   "Copyright 1995-2009 by Brian Harvey, George Mills, and David Costanzo\0"
+      VALUE "LegalCopyright",   "Copyright 1995-2009 by Brian Harvey, George Mills, David Costanzo, and Niel Hodgeson\0"
       VALUE "OriginalFilename", "fmslogo.exe\0"
       VALUE "ProductName",      LOCALIZED_GENERAL_PRODUCTNAME"\0"
       VALUE "ProductVersion",   FMSLOGO_VERSION"\0"
