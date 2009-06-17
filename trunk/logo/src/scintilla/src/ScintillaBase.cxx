@@ -96,6 +96,8 @@ void ScintillaBase::AddCharUTF(char *s, unsigned int len, bool treatAsDBCS) {
 
 void ScintillaBase::Command(int cmdId) {
 
+	SCNotification scn = {0};
+
 	switch (cmdId) {
 
 	case idAutoComplete:  	// Nothing to do
@@ -132,6 +134,12 @@ void ScintillaBase::Command(int cmdId) {
 
 	case idcmdSelectAll:
 		WndProc(SCI_SELECTALL, 0, 0);
+		break;
+
+	// Added for FMSLogo
+	case idcmdTopicSearch:
+		scn.nmhdr.code = SCN_HELPTOPIC_SEARCH;
+		NotifyParent(scn);
 		break;
 	}
 }
@@ -444,9 +452,9 @@ void ScintillaBase::ContextMenu(Point pt) {
 		AddToPopUp(LOCALIZED_POPUP_COPY,   idcmdCopy, currentPos != anchor);
 		AddToPopUp(LOCALIZED_POPUP_PASTE,  idcmdPaste, writable && WndProc(SCI_CANPASTE, 0, 0));
 		AddToPopUp(LOCALIZED_POPUP_DELETE, idcmdDelete, writable && currentPos != anchor);
-		AddToPopUp(LOCALIZED_POPUP_SELECTALL, idcmdSelectAll);
+		AddToPopUp(LOCALIZED_POPUP_SELECTALL, idcmdSelectAll, pdoc->Length() != 0);
 		AddToPopUp("");
-		AddToPopUp(LOCALIZED_POPUP_HELP, CM_HELPEDIT_TOPIC);
+		AddToPopUp(LOCALIZED_POPUP_HELP, idcmdTopicSearch);
 		popup.Show(pt, wMain);
 	}
 }
