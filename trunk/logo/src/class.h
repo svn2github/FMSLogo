@@ -332,6 +332,9 @@ public:
     void CMEditSelectAll();
     void CMEditUndo();
     void CMEditRedo();
+    void CMEditPasteEnable(TCommandEnabler& commandHandler);
+    void CMEnableIfSelectionExists(TCommandEnabler& commandHandler);
+    void CMEnableIfTextExists(TCommandEnabler& commandHandler);
     void CMEditUndoEnable(TCommandEnabler& commandHandler);
     void CMEditRedoEnable(TCommandEnabler& commandHandler);
 

@@ -782,7 +782,7 @@ void TMyFileWindow::CMFilePrint()
     LONG lengthPrinted = 0;
 
     // We must subtract the physical margins from the printable area
-    RangeToFormat frPrint;
+    Scintilla::RangeToFormat frPrint;
     frPrint.hdc = hdc;
     frPrint.hdcTarget = hdc;
     frPrint.rc.left = rectMargins.left - rectPhysMargins.left;
@@ -947,6 +947,7 @@ void TMyFileWindow::CMEditCopy()
     SendEditor(SCI_COPY);
 }
 
+
 void TMyFileWindow::CMEditPaste()
 {
     SendEditor(SCI_PASTE);
@@ -968,6 +969,25 @@ void TMyFileWindow::CMEditClearAll()
     SendEditor(SCI_SELECTALL);
     SendEditor(SCI_CLEAR);
 }
+
+void TMyFileWindow::CMEnableIfSelectionExists(TCommandEnabler& commandHandler)
+{
+    int start = SendEditor(SCI_GETSELECTIONSTART);
+    int end   = SendEditor(SCI_GETSELECTIONEND);
+    commandHandler.Enable(start != end);
+}
+
+void TMyFileWindow::CMEnableIfTextExists(TCommandEnabler& commandHandler)
+{
+    commandHandler.Enable(SendEditor(SCI_GETLENGTH) != 0);
+}
+
+
+void TMyFileWindow::CMEditPasteEnable(TCommandEnabler& commandHandler)
+{
+    commandHandler.Enable(SendEditor(SCI_CANPASTE));
+}
+
 
 bool TMyFileWindow::EndEdit()
 {
@@ -1147,25 +1167,31 @@ TResult TMyFileWindow::EvNotify(uint ctlId, TNotify& notifyInfo)
 
 
 DEFINE_RESPONSE_TABLE1(TMyFileWindow, TFrameWindow)
-    EV_COMMAND(CM_EDALLEXIT,           CMExit),
-    EV_COMMAND(CM_FILESAVETOWORKSPACE, CMSaveToWorkspace),
-    EV_COMMAND(CM_FILEPRINT,           CMFilePrint),
-    EV_COMMAND(CM_FILESAVEANDEXIT,     CMSaveAndExit),
-    EV_COMMAND(CM_HELP,                CMHelp),
-    EV_COMMAND(CM_HELPEDIT,            CMHelpEditor),
-    EV_COMMAND(CM_HELPEDIT_TOPIC,      CMHelpSelection),
-    EV_COMMAND(CM_TEST,                CMTest),
-    EV_COMMAND(CM_EDITUNDO,            CMEditUndo),
-    EV_COMMAND(CM_EDITREDO,            CMEditRedo),
-    EV_COMMAND(CM_EDITSETFONT,         CMEditSetFont),
-    EV_COMMAND(CM_EDITCUT,             CMEditCut),
-    EV_COMMAND(CM_EDITCOPY,            CMEditCopy),
-    EV_COMMAND(CM_EDITPASTE,           CMEditPaste),
-    EV_COMMAND(CM_EDITDELETE,          CMEditDelete),
-    EV_COMMAND(CM_EDITCLEAR,           CMEditClearAll),
-    EV_COMMAND(CM_EDITSELECTALL,       CMEditSelectAll),
-    EV_COMMAND_ENABLE(CM_EDITUNDO,     CMEditUndoEnable),
-    EV_COMMAND_ENABLE(CM_EDITREDO,     CMEditRedoEnable),
+    EV_COMMAND(CM_EDALLEXIT,            CMExit),
+    EV_COMMAND(CM_FILESAVETOWORKSPACE,  CMSaveToWorkspace),
+    EV_COMMAND(CM_FILEPRINT,            CMFilePrint),
+    EV_COMMAND(CM_FILESAVEANDEXIT,      CMSaveAndExit),
+    EV_COMMAND(CM_HELP,                 CMHelp),
+    EV_COMMAND(CM_HELPEDIT,             CMHelpEditor),
+    EV_COMMAND(CM_HELPEDIT_TOPIC,       CMHelpSelection),
+    EV_COMMAND(CM_EDITSETFONT,          CMEditSetFont),
+    EV_COMMAND(CM_TEST,                 CMTest),
+    EV_COMMAND(CM_EDITUNDO,             CMEditUndo),
+    EV_COMMAND(CM_EDITREDO,             CMEditRedo),
+    EV_COMMAND(CM_EDITCUT,              CMEditCut),
+    EV_COMMAND(CM_EDITCOPY,             CMEditCopy),
+    EV_COMMAND(CM_EDITPASTE,            CMEditPaste),
+    EV_COMMAND(CM_EDITDELETE,           CMEditDelete),
+    EV_COMMAND(CM_EDITCLEAR,            CMEditClearAll),
+    EV_COMMAND(CM_EDITSELECTALL,        CMEditSelectAll),
+    EV_COMMAND_ENABLE(CM_EDITUNDO,      CMEditUndoEnable),
+    EV_COMMAND_ENABLE(CM_EDITREDO,      CMEditRedoEnable),
+    EV_COMMAND_ENABLE(CM_EDITCUT,       CMEnableIfSelectionExists),
+    EV_COMMAND_ENABLE(CM_EDITCOPY,      CMEnableIfSelectionExists),
+    EV_COMMAND_ENABLE(CM_EDITPASTE,     CMEditPasteEnable),
+    EV_COMMAND_ENABLE(CM_EDITDELETE,    CMEnableIfSelectionExists),
+    EV_COMMAND_ENABLE(CM_EDITCLEAR,     CMEnableIfTextExists),
+    EV_COMMAND_ENABLE(CM_EDITSELECTALL, CMEnableIfTextExists),
     EV_WM_SIZE,
     EV_WM_SETFOCUS,
     EV_WM_DESTROY,
