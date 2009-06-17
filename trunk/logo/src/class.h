@@ -321,7 +321,9 @@ public:
     void CMEditSetFont();
 
     void CMHelp();
-    void CMHelpEdit();
+    void CMHelpEditor();
+    void CMHelpSelection();
+
     void CMEditCut();
     void CMEditCopy();
     void CMEditPaste();
@@ -332,7 +334,7 @@ public:
     void CMEditRedo();
     void CMEditUndoEnable(TCommandEnabler& commandHandler);
     void CMEditRedoEnable(TCommandEnabler& commandHandler);
-    void CMHelpEditTopic();
+
     void CMFindMatchingParen();
 
 protected:

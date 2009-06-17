@@ -12,9 +12,6 @@
 #include <assert.h>
 #include <limits.h>
 
-// Added for FMSLogo
-#include <logorc.h>
-
 #define _WIN32_WINNT  0x0500
 #include <windows.h>
 #include <commctrl.h>
@@ -1023,10 +1020,6 @@ sptr_t ScintillaWin::WndProc(unsigned int iMessage, uptr_t wParam, sptr_t lParam
 
 	case SCI_GETKEYSUNICODE:
 		return keysAlwaysUnicode;
-
-	case CM_HELPEDIT_TOPIC:
-		::SendMessage(::GetParent(MainHWND()), iMessage, wParam, lParam);
-		break;
 
 #ifdef SCI_LEXER
 	case SCI_LOADLEXERLIBRARY:

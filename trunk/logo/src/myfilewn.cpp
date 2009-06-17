@@ -255,7 +255,7 @@ void TMyFileWindow::CMSaveToWorkspace()
     }
 }
 
-void TMyFileWindow::CMHelpEdit()
+void TMyFileWindow::CMHelpEditor()
 {
     do_help("Editor");
 }
@@ -265,7 +265,7 @@ void TMyFileWindow::CMHelp()
     MainWindowx->CMHelp();
 }
 
-void TMyFileWindow::CMHelpEditTopic()
+void TMyFileWindow::CMHelpSelection()
 {
     bool didHelp = false;
 
@@ -315,14 +315,12 @@ void TMyFileWindow::CMTest()
 {
 
     // get the code selected
-#if 0
-    UINT start;
-    UINT end;
-    Editor->GetSelection(start, end);
+    int start = SendEditor(SCI_GETSELECTIONSTART);
+    int end   = SendEditor(SCI_GETSELECTIONEND);
 
     size_t theTextLength = abs(end - start);
     char * theText = new char[theTextLength + 1];
-    Editor->GetSubText(theText, start, end);
+    SendEditor(SCI_GETSELTEXT, 0, reinterpret_cast<LPARAM>(theText));
     theText[theTextLength] = '\0';
    
     char * ptr = theText;
@@ -402,7 +400,6 @@ void TMyFileWindow::CMTest()
     }
 
     delete [] theText;
-#endif
 }
 
 //
@@ -1134,12 +1131,14 @@ TResult TMyFileWindow::EvNotify(uint ctlId, TNotify& notifyInfo)
     {
     case SCN_SAVEPOINTREACHED:
         IsDirty = false;
-        // CheckMenus();
         break;
 
     case SCN_SAVEPOINTLEFT:
         IsDirty = true;
-        //CheckMenus();
+        break;
+
+    case SCN_HELPTOPIC_SEARCH:
+        CMHelpSelection();
         break;
     }
 
@@ -1153,8 +1152,8 @@ DEFINE_RESPONSE_TABLE1(TMyFileWindow, TFrameWindow)
     EV_COMMAND(CM_FILEPRINT,           CMFilePrint),
     EV_COMMAND(CM_FILESAVEANDEXIT,     CMSaveAndExit),
     EV_COMMAND(CM_HELP,                CMHelp),
-    EV_COMMAND(CM_HELPEDIT,            CMHelpEdit),
-    EV_COMMAND(CM_HELPEDIT_TOPIC,      CMHelpEditTopic),
+    EV_COMMAND(CM_HELPEDIT,            CMHelpEditor),
+    EV_COMMAND(CM_HELPEDIT_TOPIC,      CMHelpSelection),
     EV_COMMAND(CM_TEST,                CMTest),
     EV_COMMAND(CM_EDITUNDO,            CMEditUndo),
     EV_COMMAND(CM_EDITREDO,            CMEditRedo),
