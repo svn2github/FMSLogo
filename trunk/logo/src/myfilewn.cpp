@@ -34,7 +34,8 @@ TMyFileWindow::TMyFileWindow(
     args_list(Args),
     FileName(NULL),
     check_for_errors(CheckForErrors),
-    IsDirty(false)
+    IsDirty(false),
+    SearchDialog(NULL)
 {
     Attr.AccelTable = "IDM_FILECOMMANDS";
     Attr.Style = WS_VISIBLE | WS_POPUPWINDOW | WS_CAPTION | WS_THICKFRAME | WS_MINIMIZEBOX | WS_MAXIMIZEBOX;
@@ -146,6 +147,7 @@ bool TMyFileWindow::Read(const char *fileName)
         wsprintf(err, LOCALIZED_ERROR_CANTREADFILE, fileName);
         MessageBox(err, GetModule()->GetName(), MB_ICONEXCLAMATION | MB_OK);
     }
+
     return success;
 }
 
@@ -253,6 +255,179 @@ void TMyFileWindow::CMSaveToWorkspace()
             ReopenAfterError();
         }
     }
+}
+
+void TMyFileWindow::DoSearch()
+{
+    // set the search flags (whole word, match case).
+    int searchFlags = 0;
+    if (SearchData.Flags & FR_MATCHCASE)
+    {
+        searchFlags |= SCFIND_MATCHCASE;
+    }
+    if (SearchData.Flags & FR_WHOLEWORD)
+    {
+        searchFlags |= SCFIND_WHOLEWORD;
+    }
+    SendEditor(SCI_SETSEARCHFLAGS, searchFlags);
+
+    if (SearchData.Flags & FR_DOWN)
+    {
+        // We're searching down, so the range goes from the
+        // current position to the end.
+        SendEditor(SCI_SETTARGETSTART, SendEditor(SCI_GETSELECTIONEND));
+        SendEditor(SCI_SETTARGETEND,   SendEditor(SCI_GETLENGTH));
+    }
+    else
+    {
+        // We're searching up, so the range goes from the
+        // current position to the beginning.
+        SendEditor(SCI_SETTARGETSTART, SendEditor(SCI_GETSELECTIONSTART));
+        SendEditor(SCI_SETTARGETEND,   0);
+    }
+
+
+    int searchStringLength = strlen(SearchData.FindWhat);
+
+    if (SearchData.Flags & FR_REPLACEALL)
+    {
+        int replaceWithLength = strlen(SearchData.ReplaceWith);
+        
+        // The user selected "Replace All"
+        int location = SendEditor(
+            SCI_SEARCHINTARGET,
+            searchStringLength,
+            reinterpret_cast<LPARAM>(SearchData.FindWhat));
+        while (location != -1)
+        {
+            // Found it. Replace the string
+            SendEditor(
+                SCI_REPLACETARGET,
+                replaceWithLength,
+                reinterpret_cast<LPARAM>(SearchData.ReplaceWith));
+
+            // Move the selection so that we can repeat the search
+            SendEditor(SCI_SETTARGETSTART, location + replaceWithLength);
+            SendEditor(SCI_SETTARGETEND,   SendEditor(SCI_GETLENGTH));
+                    
+            // Repeat the search
+            location = SendEditor(
+                SCI_SEARCHINTARGET,
+                searchStringLength,
+                reinterpret_cast<LPARAM>(SearchData.FindWhat));
+        }
+    }
+    else
+    {
+        int location = SendEditor(
+            SCI_SEARCHINTARGET,
+            searchStringLength,
+            reinterpret_cast<LPARAM>(SearchData.FindWhat));
+        if (location != -1)
+        {
+            // Found it.  Now figure out what to do with it.
+            if (SearchData.Flags & FR_REPLACE)
+            {
+                int replaceWithLength = strlen(SearchData.ReplaceWith);
+
+                // Replace the string
+                SendEditor(
+                    SCI_REPLACETARGET,
+                    replaceWithLength,
+                    reinterpret_cast<LPARAM>(SearchData.ReplaceWith));
+
+                // select what we just replaced
+                SendEditor(SCI_SETSEL, location, location + replaceWithLength);
+            }
+            else
+            {
+                // Just select the string
+                SendEditor(SCI_SETSEL, location, location + searchStringLength);
+            }
+        }
+        else
+        {
+            // Notify the user that we were unable to find it.
+            char err[MAXPATH + 33];
+            wsprintf(err, LOCALIZED_STRINGTABLE_CANNOTFINDSTRING, SearchData.FindWhat);
+
+            HWND parent;
+            if (SearchDialog)
+            {
+                parent = SearchDialog->HWindow;
+            }
+            else
+            {
+                parent = HWindow;
+            }
+
+            ::MessageBox(parent, err, GetModule()->GetName(), MB_ICONWARNING | MB_OK);
+        }
+    }
+}
+
+LRESULT TMyFileWindow::EvFindMsg(WPARAM, LPARAM lParam)
+{
+    if (SearchDialog != NULL)
+    {
+        // Update SearchData with the latest FINDREPLACE struct
+        SearchDialog->UpdateData(lParam);
+
+        // is the dialog box closing?
+        if (SearchData.Flags & FR_DIALOGTERM)
+        {
+            SearchDialog = NULL;
+        }
+        else
+        {
+            DoSearch();
+        }
+    }
+
+    return 0;
+}
+
+void TMyFileWindow::CMEditFind()
+{
+    // Create and show the search dialog box.
+    // Note that this routine should not be callable if the search
+    // dialog box is already created.
+    if (SearchDialog == NULL)
+    {
+        SearchData.Flags |= FR_DOWN; // default to searching down
+        SearchDialog = new TFindDialog(this, SearchData);
+        SearchDialog->Create();
+    }
+}
+void TMyFileWindow::CMEditReplace()
+{
+  
+    // Create and show the search dialog box.
+    // Note that this routine should not be callable if the search
+    // dialog box is already created.
+    if (SearchDialog == NULL)
+    {
+        SearchData.Flags |= FR_DOWN; // default to searching down
+        SearchDialog = new TReplaceDialog(this, SearchData);
+        SearchDialog->Create();
+    }
+}
+
+void TMyFileWindow::CMEditFindNext()
+{
+    DoSearch();
+}
+
+void TMyFileWindow::CMEditFindReplaceEnable(TCommandEnabler& commandHandler)
+{
+    // once the dialog box is showing, disable selecting it.
+    commandHandler.Enable(SearchDialog == NULL);
+}
+
+void TMyFileWindow::CMEditFindNextEnable(TCommandEnabler& commandHandler)
+{
+    // Enable this if there is a search string
+    commandHandler.Enable(SearchData.FindWhat[0] != '\0');
 }
 
 void TMyFileWindow::CMHelpEditor()
@@ -1171,6 +1346,12 @@ DEFINE_RESPONSE_TABLE1(TMyFileWindow, TFrameWindow)
     EV_COMMAND(CM_FILESAVETOWORKSPACE,  CMSaveToWorkspace),
     EV_COMMAND(CM_FILEPRINT,            CMFilePrint),
     EV_COMMAND(CM_FILESAVEANDEXIT,      CMSaveAndExit),
+    EV_COMMAND(CM_EDITFIND,             CMEditFind),
+    EV_COMMAND(CM_EDITREPLACE,          CMEditReplace),
+    EV_COMMAND(CM_EDITFINDNEXT,         CMEditFindNext),
+    EV_COMMAND_ENABLE(CM_EDITFIND,      CMEditFindReplaceEnable),
+    EV_COMMAND_ENABLE(CM_EDITREPLACE,   CMEditFindReplaceEnable),
+    EV_COMMAND_ENABLE(CM_EDITFINDNEXT,  CMEditFindNextEnable),
     EV_COMMAND(CM_HELP,                 CMHelp),
     EV_COMMAND(CM_HELPEDIT,             CMHelpEditor),
     EV_COMMAND(CM_HELPEDIT_TOPIC,       CMHelpSelection),
@@ -1192,6 +1373,7 @@ DEFINE_RESPONSE_TABLE1(TMyFileWindow, TFrameWindow)
     EV_COMMAND_ENABLE(CM_EDITDELETE,    CMEnableIfSelectionExists),
     EV_COMMAND_ENABLE(CM_EDITCLEAR,     CMEnableIfTextExists),
     EV_COMMAND_ENABLE(CM_EDITSELECTALL, CMEnableIfTextExists),
+    EV_REGISTERED(FINDMSGSTRING,        EvFindMsg),
     EV_WM_SIZE,
     EV_WM_SETFOCUS,
     EV_WM_DESTROY,

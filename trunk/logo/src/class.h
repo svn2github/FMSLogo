@@ -307,6 +307,7 @@ public:
     void EvSize(UINT sizeType, TSize &);
     void EvSetFocus(HWND lostFocus);
     void EvDestroy();
+    LRESULT EvFindMsg(WPARAM, LPARAM lParam);
 
     //
     // menu command handlers
@@ -324,6 +325,10 @@ public:
     void CMHelpEditor();
     void CMHelpSelection();
 
+    void CMEditFind();
+    void CMEditReplace();
+    void CMEditFindNext();
+
     void CMEditCut();
     void CMEditCopy();
     void CMEditPaste();
@@ -337,6 +342,8 @@ public:
     void CMEnableIfTextExists(TCommandEnabler& commandHandler);
     void CMEditUndoEnable(TCommandEnabler& commandHandler);
     void CMEditRedoEnable(TCommandEnabler& commandHandler);
+    void CMEditFindReplaceEnable(TCommandEnabler& commandHandler);
+    void CMEditFindNextEnable(TCommandEnabler& commandHandler);
 
     void CMFindMatchingParen();
 
@@ -346,6 +353,10 @@ protected:
     DECLARE_RESPONSE_TABLE(TMyFileWindow);
 
 private:
+    TFindReplaceDialog::TData SearchData;
+    TFindReplaceDialog*       SearchDialog;
+
+    void    DoSearch();
     LRESULT SendEditor(UINT Msg, WPARAM wParam=0, LPARAM lParam=0);
     void    SetEditorFont(const LOGFONT & LogFont);
     TResult EvNotify(uint ctlId, TNotify& notifyInfo);
