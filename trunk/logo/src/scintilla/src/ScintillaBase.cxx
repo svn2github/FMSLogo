@@ -132,6 +132,7 @@ void ScintillaBase::Command(int cmdId) {
 		WndProc(SCI_CLEAR, 0, 0);
 		break;
 
+	case CM_EDITSELECTALL: // Added for FMSLogo
 	case idcmdSelectAll:
 		WndProc(SCI_SELECTALL, 0, 0);
 		break;
