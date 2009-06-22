@@ -591,7 +591,7 @@ void TMyFileWindow::SetFileName(const char *fileName)
 
     const char *p = FileName ? FileName : "("LOCALIZED_UNTITLED")";
 
-    if (!Title || !*Title)
+    if (Title == NULL || *Title == '\0')
     {
         SetWindowText(p);
     }
@@ -710,7 +710,7 @@ void TMyFileWindow::SetupWindow()
 
     ScintillaEditor = ::CreateWindow(
         "Scintilla",
-        "Source",
+        LOCALIZED_EDITOR_TITLE,
         WS_CHILD | WS_VSCROLL | WS_HSCROLL | WS_CLIPCHILDREN,
         0,
         0,
@@ -735,6 +735,13 @@ void TMyFileWindow::SetupWindow()
         if (FileName && !Read())
         {
             SetFileName(0);
+        }
+
+        // override the CTRL+<LETTER> sequences to do nothing so that they
+        // don't insert control characters.
+        for (int i = 0; i < 26; i++)
+        {
+            SendEditor(SCI_ASSIGNCMDKEY, ('A'+i)|(SCMOD_CTRL<<16), SCI_NULL);
         }
     }
 }
