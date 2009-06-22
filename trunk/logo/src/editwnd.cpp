@@ -78,9 +78,6 @@ void TRichEditWithPopup::CmPasteAsText()
     CloseClipboard();
 }
 
-
-// paste as raw text so that we don't preserve any
-// formatting of rich text.
 void TRichEditWithPopup::CmHelpEditTopic()
 {
     ContextHelp(this);
