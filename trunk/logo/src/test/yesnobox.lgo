@@ -1,10 +1,33 @@
 LOAD "testlib.lgo
+LOAD "uiautomationlib.lgo
 
 TO YESNOBOXTEST.SMOKETEST
 
-   FAILIFNOTTRUE   [ YESNOBOX [YESNOBOX Test] [Press "Yes"]    ]
-   FAILIFNOTFALSE  [ YESNOBOX [YESNOBOX Test] [Press "No"]     ]
-   RUNSTOPPINGTEST [ YESNOBOX [YESNOBOX Test] [Press "Cancel"] ]
+   UIAUTOMATION.INITIALIZE
+
+   CATCH "ERROR [
+
+     localmake "title [YESNOBOX Test]
+
+     ; press YES
+     UIAUTOMATION.POSTBUTTONPUSHTOWINDOW :title "&Yes
+     FAILIFNOTTRUE   (list "YESNOBOX :title [Press "Yes"] )
+
+     ; press NO
+     UIAUTOMATION.POSTBUTTONPUSHTOWINDOW :title "&No
+     FAILIFNOTFALSE  (list "YESNOBOX :title [Press "No"] )
+
+     ; press Cancel
+     UIAUTOMATION.POSTBUTTONPUSHTOWINDOW :title "Cancel
+     RUNSTOPPINGTEST (list "YESNOBOX :title [Press "Cancel"] )
+   ]
+
+   LOCALMAKE "lasterror ERROR
+   IF NOT EMPTY? :lasterror [
+      REPORTTESTFAILED (LIST "|YESNOBOX test failed.  code=| (ITEM 1 :lasterror) ". (ITEM 2 :lasterror)) 
+   ]
+
+   UIAUTOMATION.UNINITIALIZE
 
 END
 
