@@ -54,6 +54,11 @@ Select this option if you want to discard your changes.</para>
           <para>Undoes the previous editor operation.</para>
         </section>
 
+        <section id="editor-menu-edit-redo">
+          <title>Edit - Redo</title>
+          <para>Reverts the previous undo operation.</para>
+        </section>
+
         <section id="editor-menu-edit-cut">
           <title>Edit - Cut</title>
           <para>Copies the selected text to the clipboard and deletes it.  See also <link linkend="editor-clipboard">Editing with the Clipboard</link>.</para>
