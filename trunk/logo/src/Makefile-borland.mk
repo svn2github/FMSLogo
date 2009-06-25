@@ -29,7 +29,7 @@ IncludePath = -I"C:\Program Files\HTML Help Workshop\include" -IC:\BC5\INCLUDE -
 
 CDefines = -DSTRICT;LOCALE=$(LOCALECODE);STATIC_BUILD;PLAT_WIN=1;_OWLPCH;SCI_NAMESPACE
 
-CompInheritOptsAt_fmslogodexe = $(IncludePath) $(CDefines) -DNOASM;DEBUG;MEM_DEBUG;TRACE
+CompInheritOptsAt_fmslogodexe = $(IncludePath) $(CDefines) -DNOASM;DEBUG;MEM_DEBUG;TRACE=1
 
 !if "$(BUILD)"=="RELEASE"
 
