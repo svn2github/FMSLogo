@@ -743,6 +743,10 @@ void TMyFileWindow::SetupWindow()
         {
             SendEditor(SCI_ASSIGNCMDKEY, ('A'+i)|(SCMOD_CTRL<<16), SCI_NULL);
         }
+
+        // Hide the margin that Scintilla creates by default.
+        // We don't use it for anything, so it just looks weird.
+        SendEditor(SCI_SETMARGINWIDTHN, 1, 0);
     }
 }
 
