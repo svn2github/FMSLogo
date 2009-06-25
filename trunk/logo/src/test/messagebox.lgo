@@ -1,9 +1,29 @@
 LOAD "testlib.lgo
+LOAD "uiautomationlib.lgo
 
 TO MESSAGEBOXTEST.SMOKETEST
 
-   TRACEINSTRUCTION [ MESSAGEBOX [MESSAGEBOX Test] [Press "OK" ]    ]
-   RUNSTOPPINGTEST  [ MESSAGEBOX [MESSAGEBOX Test] [Press "Cancel"] ]
+   UIAUTOMATION.INITIALIZE
+
+   CATCH "ERROR [
+
+     localmake "title [YESNOBOX Test]
+
+     ; press OK
+     UIAUTOMATION.POSTBUTTONPUSHTOWINDOW :title "Ok
+     TRACEINSTRUCTION (list "MESSAGEBOX :title [Press "OK" ] )
+
+     ; press Cancel
+     UIAUTOMATION.POSTBUTTONPUSHTOWINDOW :title "Cancel
+     RUNSTOPPINGTEST  (list "MESSAGEBOX :title [Press "Cancel"] )
+   ]
+
+   LOCALMAKE "lasterror ERROR
+   IF NOT EMPTY? :lasterror [
+      REPORTTESTFAILED (LIST "|MESSAGEBOX test failed.  code=| (ITEM 1 :lasterror) ". (ITEM 2 :lasterror)) 
+   ]
+
+   UIAUTOMATION.UNINITIALIZE
 
 END
 
