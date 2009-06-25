@@ -1,3 +1,5 @@
+LOAD "testlib.lgo
+
 TO UIAUTOMATION.INITIALIZE
 
   DLLLOAD "user32.dll
@@ -58,6 +60,7 @@ TO UIAUTOMATION.SENDMESSAGE :HWND :MESSAGEID :WPARAM :LPARAM
         "L :MESSAGEID
         "L :HWND) "user32.dll)
 END
+BURY "UIAUTOMATION.SENDMESSAGE
 
 
 TO UIAUTOMATION.TIMEREVENT
@@ -83,16 +86,33 @@ TO UIAUTOMATION.POSTEVENT :event
 END
 BURY "UIAUTOMATION.POSTEVENT
 
+
+; Gets a child window by its class name
+TO UIAUTOMATION.GETCHILDWINDOWBYCLASS :parentwindowtitle :childwindowclass
+  LOCALMAKE "parenthwnd UIAUTOMATION.FINDWINDOW :parentwindowtitle 0
+  if :parenthwnd = 0 [
+     REPORTTESTINFO (se [TEST BUG: couldn't find parent] :parentwindowtitle)
+     OUTPUT 0
+  ]
+
+  LOCALMAKE "hwnd UIAUTOMATION.FINDCHILDWINDOW :parenthwnd 0 :childwindowclass
+  if :hwnd = 0 [
+     REPORTTESTINFO (se [TEST BUG: couldn't find child] :childwindowclass)
+     OUTPUT 0
+  ]
+
+  OUTPUT :hwnd
+END
+BURY "UIAUTOMATION.GETCHILDWINDOWBYCLASS
+
+
 TO UIAUTOMATION.SENDSTRINGTOWINDOW :parentwindowtitle :childwindowclass :string
 
   localmake "WM_KEYDOWN 256    ; 0x0100
   localmake "WM_KEYUP   256+1  ; 0x0101
   localmake "WM_CHAR    256+2  ; 0x0102
 
-  LOCALMAKE "parenthwnd UIAUTOMATION.FINDWINDOW :parentwindowtitle 0
-  if :parenthwnd = 0 [ STOP ]
-
-  LOCALMAKE "hwnd UIAUTOMATION.FINDCHILDWINDOW :parenthwnd 0 :childwindowclass
+  LOCALMAKE "hwnd UIAUTOMATION.GETCHILDWINDOWBYCLASS :parentwindowtitle :childwindowclass
   if :hwnd = 0 [ STOP ]
 
   repeat count :string [
@@ -121,13 +141,19 @@ TO UIAUTOMATION.SENDBUTTONPUSHTOWINDOW :parentwindowtitle :buttontext
   localmake "WM_LBUTTONUP   512+2  ; 0x0202
 
   LOCALMAKE "parenthwnd UIAUTOMATION.FINDWINDOW :parentwindowtitle 0
-  if :parenthwnd = 0 [ STOP ]
+  if :parenthwnd = 0 [
+     REPORTTESTINFO (se [TEST BUG: couldn't find parent] :parentwindowtitle)
+     STOP
+  ]
 
-  LOCALMAKE "okButton UIAUTOMATION.FINDCHILDWINDOW :parenthwnd :buttontext 0
-  if :okButton = 0 [ STOP ]
+  LOCALMAKE "button UIAUTOMATION.FINDCHILDWINDOW :parenthwnd :buttontext 0
+  if :button = 0 [
+     REPORTTESTINFO (se [TEST BUG: couldn't find button] :buttontext)
+     STOP
+  ]
 
-  IGNORE UIAUTOMATION.SENDMESSAGE :okButton :WM_LBUTTONDOWN 0 0
-  IGNORE UIAUTOMATION.SENDMESSAGE :okButton :WM_LBUTTONUP   0 0
+  IGNORE UIAUTOMATION.SENDMESSAGE :button :WM_LBUTTONDOWN 0 0
+  IGNORE UIAUTOMATION.SENDMESSAGE :button :WM_LBUTTONUP   0 0
 END
 BURY "UIAUTOMATION.SENDBUTTONPUSHTOWINDOW
 
@@ -142,3 +168,31 @@ TO UIAUTOMATION.POSTBUTTONPUSHTOWINDOW :parentwindowtitle :buttontext
   uiautomation.postevent :uievent
 END
 BURY "UIAUTOMATION.POSTBUTTONPUSHTOWINDOW
+
+
+TO UIAUTOMATION.SENDKEYTOWINDOW :parentwindowtitle :childwindowclass :key
+
+  localmake "WM_KEYDOWN 256    ; 0x0100
+  localmake "WM_KEYUP   256+1  ; 0x0101
+  localmake "WM_CHAR    256+2  ; 0x0102
+
+  localmake "hwnd UIAUTOMATION.GETCHILDWINDOWBYCLASS :parentwindowtitle :childwindowclass
+  if :hwnd = 0 [ STOP ]
+
+  IGNORE UIAUTOMATION.SENDMESSAGE :hwnd :WM_KEYDOWN :key 0
+  IGNORE UIAUTOMATION.SENDMESSAGE :hwnd :WM_KEYUP   :key 0
+END
+BURY "UIAUTOMATION.SENDKEYTOWINDOW
+
+
+
+TO UIAUTOMATION.POSTKEYTOWINDOW :parentwindowtitle :childwindowclass :key
+
+  localmake "uievent array 2
+
+  setitem 1 :uievent [UIAUTOMATION.SENDKEYTOWINDOW ?1 ?2 ?3]
+  setitem 2 :uievent (list :parentwindowtitle :childwindowclass :key)
+
+  uiautomation.postevent :uievent
+END
+BURY "UIAUTOMATION.POSTKEYTOWINDOW
