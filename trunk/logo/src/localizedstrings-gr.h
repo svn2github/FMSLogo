@@ -1108,7 +1108,6 @@
 #define LOCALIZED_ERROR_BITMAPNOTHINGTOPASTE    "Δεν υπάρχει τίποτα για επικόλληση"  // 
 #define LOCALIZED_ERROR_BITMAPINDEXISNOTBITMAP  "Το BitMap στον κατάλογο πρέπει να έχει εκκινηθεί με μια εικόνα"  // 
 
-#define LOCALIZED_ERROR_BADTURTLEID             "Λάθος αριθμός χελώνας" // 
 #define LOCALIZED_ERROR_TURTLEHASNOPICTURE      "Η χελώνα %d δεν έχει εικόνα, θα σταματήσει" // 
 
 #define LOCALIZED_ERROR_FONTNOTFOUND            "Η γραμματοσειρά %s δε βρέθηκε.  Επιλέξτε μία από τις παρακάτω:\n" // 

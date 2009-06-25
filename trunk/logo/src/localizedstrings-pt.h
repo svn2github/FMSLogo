@@ -1108,7 +1108,6 @@
 #define LOCALIZED_ERROR_BITMAPNOTHINGTOPASTE    "Nada para Colar"
 #define LOCALIZED_ERROR_BITMAPINDEXISNOTBITMAP  "O BitMap no índice deve ser inicializado com um mapa de bits"
 
-#define LOCALIZED_ERROR_BADTURTLEID             "Identificador de Tat incorreto"
 #define LOCALIZED_ERROR_TURTLEHASNOPICTURE      "A Tat %d não tem figura, farei uma parada"
 
 #define LOCALIZED_ERROR_FONTNOTFOUND            "Não encontrei o tipo de letra chamado %s. Escolhe um dos seguintes:\n"

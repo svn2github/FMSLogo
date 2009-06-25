@@ -1108,7 +1108,6 @@
 #define LOCALIZED_ERROR_BITMAPNOTHINGTOPASTE    "Rien à coller"  // 
 #define LOCALIZED_ERROR_BITMAPINDEXISNOTBITMAP  "BitMap at Index must be initialized with a bitmap"  // NOT_YET_LOCALIZED
 
-#define LOCALIZED_ERROR_BADTURTLEID             "Id Tortue invalide" // 
 #define LOCALIZED_ERROR_TURTLEHASNOPICTURE      "La TortueT %d n'a pas d'image, arrêt" // 
 
 #define LOCALIZED_ERROR_FONTNOTFOUND            "Sorry, no font named %s was found.  Choose one of the following:\n" // NOT_YET_LOCALIZED

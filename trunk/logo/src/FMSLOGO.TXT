@@ -21,6 +21,8 @@ I. Kit Description/Location (http://sourceforge.net/projects/fmslogo)
 II. New features/bugs fixed:
 
   * Added for 6.25.0
+    o Fix bug #1605822; SETTURTLE now throws bad input error when given bad
+      input, instead of display a dialog box and throwing a stopping error.
     o Embedded version information into fmslogo.exe for better bug reporting.
 
   For a complete history of changes across all versions of FMSLogo, see

@@ -1108,7 +1108,6 @@
 #define LOCALIZED_ERROR_BITMAPNOTHINGTOPASTE    "Non c'è niente da incollare"
 #define LOCALIZED_ERROR_BITMAPINDEXISNOTBITMAP  "L'indice fornito non è un indice di BitMap valido"
 
-#define LOCALIZED_ERROR_BADTURTLEID             "ID tartaruga errato"
 #define LOCALIZED_ERROR_TURTLEHASNOPICTURE      "La tartaruga %d non ha una immagine associate e verrà quindi fermata"
 
 #define LOCALIZED_ERROR_FONTNOTFOUND            "Spiacente ma non è stato trovato alcun carattere il cui nome sia %s.  Scegli uno dei seguenti caratteri:\n"

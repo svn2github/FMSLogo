@@ -758,7 +758,7 @@ NODE *ranged_integer_arg(NODE *args, int MinValue, int MaxValue)
         if (nodetype(val) == FLOATINGPOINT)
         {
             FLONUM f = getfloat(val);
-            if (fmod(f, 1.0) == 0.0)
+            if (fmod(f, 1.0) == 0.0 && -MAXINT <= f && f <= MAXINT)
             {
                 // This is a floating point value that can
                 // be coerced into an integer without a loss

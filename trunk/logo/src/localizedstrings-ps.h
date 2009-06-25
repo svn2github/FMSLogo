@@ -1108,7 +1108,6 @@
 #define LOCALIZED_ERROR_BITMAPNOTHINGTOPASTE    "pseudo.Nothing to Paste" 
 #define LOCALIZED_ERROR_BITMAPINDEXISNOTBITMAP  "pseudo.BitMap at Index must be initialized with a bitmap" 
 
-#define LOCALIZED_ERROR_BADTURTLEID             "pseudo.Bad Turtle Id"
 #define LOCALIZED_ERROR_TURTLEHASNOPICTURE      "pseudo.Turtle %d has no picture, will Halt"
 
 #define LOCALIZED_ERROR_FONTNOTFOUND            "pseudo.Sorry, no font named %s was found.  Choose one of the following:\n"

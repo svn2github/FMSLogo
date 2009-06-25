@@ -1108,7 +1108,6 @@
 #define LOCALIZED_ERROR_BITMAPNOTHINGTOPASTE    "Nada para Pegar"
 #define LOCALIZED_ERROR_BITMAPINDEXISNOTBITMAP  "El BitMap en índice debe ser inicializado con un mapa de bits"
 
-#define LOCALIZED_ERROR_BADTURTLEID             "Identificador de Tortuga incorrecto"
 #define LOCALIZED_ERROR_TURTLEHASNOPICTURE      "La tortuga %d no tiene figura, realizaré un Alto"
 
 #define LOCALIZED_ERROR_FONTNOTFOUND            "No encontré el tipo de letra llamado %s. Elige uno de lo siguientes:\n"

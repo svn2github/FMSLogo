@@ -1108,7 +1108,6 @@
 #define LOCALIZED_ERROR_BITMAPNOTHINGTOPASTE    "Нечего вставить" 
 #define LOCALIZED_ERROR_BITMAPINDEXISNOTBITMAP  "Растровый индекс должен калиброваться с битовым массивом" 
 
-#define LOCALIZED_ERROR_BADTURTLEID             "Неверный идентификатор тортилы" 
 #define LOCALIZED_ERROR_TURTLEHASNOPICTURE      "Для тортилы %d нет рисунка, остановиться" 
 
 #define LOCALIZED_ERROR_FONTNOTFOUND            "\nК сожалению, шрифт по имени %s, не найден. Выберите один из следующих:\n" 

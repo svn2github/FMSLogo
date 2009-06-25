@@ -1108,7 +1108,6 @@
 #define LOCALIZED_ERROR_BITMAPNOTHINGTOPASTE    "Nichts einzufügen" 
 #define LOCALIZED_ERROR_BITMAPINDEXISNOTBITMAP  "BitMap im Index muss mit einem Bitmap initialisiert sein" 
 
-#define LOCALIZED_ERROR_BADTURTLEID             "Falsche Igel-Id"
 #define LOCALIZED_ERROR_TURTLEHASNOPICTURE      "Igel %d hat kein Bild, will Halt"
 
 #define LOCALIZED_ERROR_FONTNOTFOUND            "Entschuldigung, es wurde kein Schrifttyp, genannt %s, gefunden.  Wählen Sie einen im folgenden:\n"

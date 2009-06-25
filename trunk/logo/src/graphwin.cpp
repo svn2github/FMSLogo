@@ -1975,20 +1975,13 @@ NODE *lsetturtle(NODE *args)
 {
     ASSERT_TURTLE_INVARIANT;
 
-    NODE * val = integer_arg(args);
+    NODE * val = ranged_integer_arg(args, -TOTAL_SPECIAL_TURTLES, MAXINT);
     if (stopping_flag == THROWING)
     {
         return Unbound;
     }
 
     int turtleId = getint(val);
-    if (turtleId < -TOTAL_SPECIAL_TURTLES)
-    {
-        // notify the user that the turtle ID is out of range
-        ShowErrorMessageAndStop(LOCALIZED_ERROR_BADTURTLEID);
-        return Unbound;
-    }
-
     if (turtleId < 0)
     {
         if (cdr(args) != NIL)
