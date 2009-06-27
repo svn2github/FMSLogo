@@ -32,13 +32,28 @@ TO COLORSETGETTEST :setcolorcommand :getcolorcommand
    RUN (LIST :setcolorcommand ""LightSalmon)
    SIMPLEREPORTTEST (LIST :getcolorcommand) [255 160 122]
 
-   RUNBADINPUTTEST (LIST :setcolorcommand {})
-   RUNBADINPUTTEST (LIST :setcolorcommand [0])
-   RUNBADINPUTTEST (LIST :setcolorcommand [0 0])
-   RUNBADINPUTTEST (LIST :setcolorcommand [0 0 0 0])
-   RUNBADINPUTTEST (LIST :setcolorcommand ""notacolor)
+   RUNDOESNTLIKEINPUTTEST (LIST :setcolorcommand 1e20)
+   RUNDOESNTLIKEINPUTTEST (LIST :setcolorcommand -1)
+   RUNDOESNTLIKEINPUTTEST (LIST :setcolorcommand 4.5)
+   RUNDOESNTLIKEINPUTTEST (LIST :setcolorcommand {})
+   RUNDOESNTLIKEINPUTTEST (LIST :setcolorcommand [0])
+   RUNDOESNTLIKEINPUTTEST (LIST :setcolorcommand [0 0])
+   RUNDOESNTLIKEINPUTTEST (LIST :setcolorcommand [1e20  0   0])
+   RUNDOESNTLIKEINPUTTEST (LIST :setcolorcommand [-1    0   0])
+   RUNDOESNTLIKEINPUTTEST (LIST :setcolorcommand [4.5   0   0])
+   RUNDOESNTLIKEINPUTTEST (LIST :setcolorcommand [0    1e20 0])
+   RUNDOESNTLIKEINPUTTEST (LIST :setcolorcommand [0    -1   0])
+   RUNDOESNTLIKEINPUTTEST (LIST :setcolorcommand [0    4.5  0])
+   RUNDOESNTLIKEINPUTTEST (LIST :setcolorcommand [0     0   1e20])
+   RUNDOESNTLIKEINPUTTEST (LIST :setcolorcommand [0     0   -1])
+   RUNDOESNTLIKEINPUTTEST (LIST :setcolorcommand [0     0   4.5])
+   RUNDOESNTLIKEINPUTTEST (LIST :setcolorcommand [0 0 0 0])
+   RUNDOESNTLIKEINPUTTEST (LIST :setcolorcommand ""notacolor)
    RUNNOTENOUGHINPUTSTEST (LIST "\( :setcolorcommand "\)     )
    RUNTOOMANYINPUTSTEST   (LIST "\( :setcolorcommand 0 0 "\) )
+
+   ; none of the above bad input tests should have changed the color
+   SIMPLEREPORTTEST (LIST :getcolorcommand) [255 160 122]
 END
 
 TO PENCOLORTEST
