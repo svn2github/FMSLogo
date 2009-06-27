@@ -48,6 +48,7 @@ void TSizeControl::EvPaint()
     dc.SelectObject(pen);
     dc.MoveTo(rect.left, (rect.bottom - rect.top) / 2);
     dc.LineTo(rect.right, (rect.bottom - rect.top) / 2);
+    dc.LineTo(rect.left, (rect.bottom - rect.top) / 2);
     // dc.Rectangle(rect);
 }
 
