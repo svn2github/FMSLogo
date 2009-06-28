@@ -106,6 +106,8 @@ TO GIFSAVE.BADINPUT
    RUNDOESNTLIKEINPUTTEST [ (GIFSAVE "file.gif 100 "false 0  8 [1 2]         ) ]
    RUNDOESNTLIKEINPUTTEST [ (GIFSAVE "file.gif 100 "false 0  8 {255 255 255} ) ]
    RUNDOESNTLIKEINPUTTEST [ (GIFSAVE "file.gif 100 "false 0  8 100           ) ]
+   RUNDOESNTLIKEINPUTTEST [ (GIFSAVE "file.gif 100 "false 0  8 1.5           ) ]
+   RUNDOESNTLIKEINPUTTEST [ (GIFSAVE "file.gif 100 "false 0  8 1e20          ) ]
    RUNDOESNTLIKEINPUTTEST [ (GIFSAVE "file.gif 100 "false 0  8 "word         ) ]
 
    ; make sure that none of the above created the file
