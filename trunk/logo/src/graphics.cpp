@@ -322,7 +322,29 @@ numeric_node_to_fixnum(
     else
     {
         assert(nodetype(numeric_node) == FLOATINGPOINT);
-        number = (FIXNUM) getfloat(numeric_node);
+        FLONUM flonum = getfloat(numeric_node);
+
+        // A cast of a large floating point value to a FIXNUM
+        // will crash when compiled with Borland C compiler.
+        // To prevent this, we have special cases for floating
+        // point values outside the range.
+        // It's impossible to give a correct FIXNUM for this
+        // value, so it's a bug if this happens (the caller
+        // should have thrown a "doesn't like input" error.
+        assert(-MAXINT < flonum && flonum < MAXINT);
+
+        if (flonum >= MAXINT)
+        {
+            number = MAXINT;
+        }
+        else if (flonum <= -MAXINT)
+        {
+            number = -MAXINT;
+        }
+        else
+        {
+            number = getfloat(numeric_node);
+        }
     }
 
     return number;
@@ -2466,8 +2488,8 @@ NODE *lbuttonp(NODE *)
 
 NODE *ltone(NODE *args) 
 {
-    NODE * pitchnode    = numeric_arg(args);
-    NODE * durationnode = numeric_arg(cdr(args));
+    NODE * pitchnode    = pos_int_arg(args);
+    NODE * durationnode = pos_int_arg(cdr(args));
 
     if (NOT_THROWING)
     { 

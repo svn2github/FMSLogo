@@ -21,6 +21,9 @@ I. Kit Description/Location (http://sourceforge.net/projects/fmslogo)
 II. New features/bugs fixed:
 
   * Added for 6.25.0
+    o Fix bug #2803946; SETPENCOLOR, SETSCREENCOLOR, SETFLOODCOLOR, SETPIXEL,
+      SETACTIVEAREA, SETPENSIZE, TONE, and GIFSAVE no longer crash when given
+      very large numbers (like 1e20) as input.
     o Fix bug #1605822; SETTURTLE now throws bad input error when given bad
       input, instead of display a dialog box and throwing a stopping error.
     o Fix bug #1602936; the sample turtle trails in the "Pen Size" dialog
