@@ -36,7 +36,7 @@ TO DIFFICULTCOMMENTS1 ; comments here should be legal
 END ; comments here should be legal
 
 TO DIFFICULTCOMMENTS2
-  ; try a comment immediatly followed by a tilde
+  ; try a comment immediately followed by a tilde
   OUTPUT ;~
   2
 END
@@ -45,7 +45,7 @@ TO LINECONTINUATION3
 
   ; a multi-line continuation
 
-  OUTPUT ; commnet ~
+  OUTPUT ; comment ~
   ;~
   ~
 ~
