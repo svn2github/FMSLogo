@@ -786,9 +786,9 @@ void TMyEditboxWindow::EvKeyDown(UINT, UINT, UINT)
         MainWindowx->CommandWindow->Listbox.SetFocus();
         break;
 
-      case VK_F1:
-          ContextHelp(this);
-          break;
+    case VK_F1:
+        ContextHelp(this);
+        break;
     }
 
     DefaultProcessing();
