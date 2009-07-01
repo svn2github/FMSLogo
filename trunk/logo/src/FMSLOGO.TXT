@@ -32,6 +32,7 @@ II. New features/bugs fixed:
       tone when given a negative duration.
     o Fix bug #1438443; the "up" radio button in the editor's find dialog
       box now works.
+    o Added infinite undo/redo to the editor.
     o Embedded version information into fmslogo.exe for better bug reporting.
 
   For a complete history of changes across all versions of FMSLogo, see
