@@ -32,7 +32,7 @@ static inline bool IsAWordStart(const int ch)
 
 static inline bool IsStateString(const int state)
 {
-    return ((state == SCE_FMS_STRING) || (state == SCE_FMS_VBAR));
+    return ((state == SCE_FMS_STRING) || (state == SCE_FMS_STRING_VBAR));
 }
 
 static inline bool IsStateComment(const int state)
@@ -57,8 +57,6 @@ ColorizeFmsLogoDoc(
     WordList &keywords5 = *keywordlists[4];
     WordList dynkeylist;
 
-    int chPrevNonWhite = ' ';
-    int visibleChars = 0;
     char s[100];
 
     StyleContext sc(startPos, length, initStyle, styler);
@@ -167,7 +165,7 @@ ColorizeFmsLogoDoc(
         case SCE_FMS_STRING:
             if (sc.ch == '|')
             {
-                sc.SetState(SCE_FMS_VBAR);
+                sc.SetState(SCE_FMS_STRING_VBAR);
                 sc.Forward();
             }
             else if (sc.ch == '\\') 
@@ -189,12 +187,21 @@ ColorizeFmsLogoDoc(
             }
             break;
 
-        case SCE_FMS_VBAR:
+        case SCE_FMS_STRING_VBAR:
             while (sc.ch != '|' && sc.More())
             {
                 sc.Forward();
             }
             sc.SetState(SCE_FMS_STRING);
+            break;
+
+        case SCE_FMS_VBAR:
+            while (sc.ch != '|' && sc.More())
+            {
+                sc.Forward();
+            }
+            sc.SetState(SCE_FMS_DEFAULT);
+            sc.Forward();
             break;
 
         case SCE_FMS_COMMENT:
@@ -282,7 +289,11 @@ ColorizeFmsLogoDoc(
             {
                 sc.SetState(SCE_FMS_IDENTIFIER);
             }
-            else if (sc.ch == ';' && sc.chPrev!='\\') 
+            else if (sc.ch == '|')
+            {
+                sc.SetState(SCE_FMS_VBAR);
+            }
+            else if (sc.ch == ';' && sc.chPrev != '\\') 
             {
                 sc.SetState(SCE_FMS_COMMENT);
             }
@@ -294,19 +305,6 @@ ColorizeFmsLogoDoc(
             {
                 sc.SetState(SCE_FMS_OPERATOR);
             }
-        }
-
-        if (sc.atLineEnd) 
-        {
-            // Reset states to begining of colourise so no surprises
-            // if different sets of lines lexed.
-            chPrevNonWhite = ' ';
-            visibleChars = 0;
-        }
-        if (!IsASpace(sc.ch)) 
-        {
-            chPrevNonWhite = sc.ch;
-            visibleChars++;
         }
     }
     sc.Complete();
