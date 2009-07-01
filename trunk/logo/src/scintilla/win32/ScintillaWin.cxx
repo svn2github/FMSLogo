@@ -2328,6 +2328,11 @@ bool ScintillaWin::HasCaretSizeChanged() {
 }
 
 BOOL ScintillaWin::CreateSystemCaret() {
+#if 0
+    // Switched out for FMSLogo.
+    // We want to use the existing caret, instead of creating/destroying it.
+    // If Scintilla destroys the caret when the editor is closed, then
+    // the caret won't exist for the commander.
 	sysCaretWidth = vs.caretWidth;
 	if (0 == sysCaretWidth) {
 		sysCaretWidth = 1;
@@ -2345,9 +2350,17 @@ BOOL ScintillaWin::CreateSystemCaret() {
 		sysCaretWidth, sysCaretHeight);
 	::ShowCaret(MainHWND());
 	return retval;
+#else
+	return TRUE;
+#endif
 }
 
 BOOL ScintillaWin::DestroySystemCaret() {
+#if 0
+    // Switched out for FMSLogo.
+    // We want to use the existing caret, instead of creating/destroying it.
+    // If Scintilla destroys the caret when the editor is closed, then
+    // the caret won't exist for the commander.
 	::HideCaret(MainHWND());
 	BOOL retval = ::DestroyCaret();
 	if (sysCaretBitmap) {
@@ -2355,6 +2368,9 @@ BOOL ScintillaWin::DestroySystemCaret() {
 		sysCaretBitmap = 0;
 	}
 	return retval;
+#else
+	return TRUE;
+#endif
 }
 
 // Take care of 32/64 bit pointers
