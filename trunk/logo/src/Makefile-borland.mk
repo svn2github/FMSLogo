@@ -27,7 +27,7 @@ ResLocalOptsAtW32_fmslogodexe = -l$(LOCALECODE)
 
 IncludePath = -I"C:\Program Files\HTML Help Workshop\include" -IC:\BC5\INCLUDE -Iscintilla\include -Iscintilla\src -Iscintilla\win32 -I.
 
-CDefines = -DSTRICT;LOCALE=$(LOCALECODE);STATIC_BUILD;PLAT_WIN=1;_OWLPCH;SCI_NAMESPACE
+CDefines = -DSTRICT;LOCALE=$(LOCALECODE);STATIC_BUILD;PLAT_WIN=1;_OWLPCH;SCI_NAMESPACE;SCI_LEXER
 
 CompInheritOptsAt_fmslogodexe = $(IncludePath) $(CDefines) -DNOASM;DEBUG;MEM_DEBUG;TRACE=1
 
@@ -75,9 +75,13 @@ Dep_fmslogodexe = \
    $(IntermediateDirectory)\ContractionState.obj\
    $(IntermediateDirectory)\Decoration.obj\
    $(IntermediateDirectory)\Document.obj\
+   $(IntermediateDirectory)\DocumentAccessor.obj\
    $(IntermediateDirectory)\Editor.obj\
+   $(IntermediateDirectory)\ExternalLexer.obj\
    $(IntermediateDirectory)\Indicator.obj\
    $(IntermediateDirectory)\KeyMap.obj\
+   $(IntermediateDirectory)\KeyWords.obj\
+   $(IntermediateDirectory)\LexFmsLogo.obj\
    $(IntermediateDirectory)\LineMarker.obj\
    $(IntermediateDirectory)\PerLine.obj\
    $(IntermediateDirectory)\PlatWin.obj\
@@ -88,6 +92,7 @@ Dep_fmslogodexe = \
    $(IntermediateDirectory)\ScintillaBase.obj\
    $(IntermediateDirectory)\ScintillaWin.obj\
    $(IntermediateDirectory)\Style.obj\
+   $(IntermediateDirectory)\StyleContext.obj\
    $(IntermediateDirectory)\UniConversion.obj\
    $(IntermediateDirectory)\ViewStyle.obj\
    $(IntermediateDirectory)\XPM.obj\
@@ -161,9 +166,13 @@ $(IntermediateDirectory)\CharClassify.obj+
 $(IntermediateDirectory)\ContractionState.obj+
 $(IntermediateDirectory)\Decoration.obj+
 $(IntermediateDirectory)\Document.obj+
+$(IntermediateDirectory)\DocumentAccessor.obj+
 $(IntermediateDirectory)\Editor.obj+
+$(IntermediateDirectory)\ExternalLexer.obj+
 $(IntermediateDirectory)\Indicator.obj+
 $(IntermediateDirectory)\KeyMap.obj+
+$(IntermediateDirectory)\KeyWords.obj+
+$(IntermediateDirectory)\LexFmsLogo.obj+
 $(IntermediateDirectory)\LineMarker.obj+
 $(IntermediateDirectory)\PerLine.obj+
 $(IntermediateDirectory)\PlatWin.obj+
@@ -174,6 +183,7 @@ $(IntermediateDirectory)\RunStyles.obj+
 $(IntermediateDirectory)\ScintillaBase.obj+
 $(IntermediateDirectory)\ScintillaWin.obj+
 $(IntermediateDirectory)\Style.obj+
+$(IntermediateDirectory)\StyleContext.obj+
 $(IntermediateDirectory)\UniConversion.obj+
 $(IntermediateDirectory)\ViewStyle.obj+
 $(IntermediateDirectory)\XPM.obj+

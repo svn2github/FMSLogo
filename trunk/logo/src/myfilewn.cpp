@@ -20,6 +20,7 @@
 
 #include "Platform.h"
 #include "scintilla.h"
+#include "SciLexer.h"
 
 #include "allwind.h"
 
@@ -139,6 +140,12 @@ bool TMyFileWindow::Read(const char *fileName)
     SendEditor(SCI_EMPTYUNDOBUFFER);
     SendEditor(SCI_SETSAVEPOINT);
     SendEditor(SCI_GOTOPOS, 0);
+
+    // SCI_GOTOPOS is documented to scroll the position into view, but
+    // after reading a large file, the second line is at the top of the
+    // editor, not the first one.  To fix this, we make another call to
+    // scroll the caret into view.
+    SendEditor(SCI_SCROLLCARET);
 
     if (!success)
     {
@@ -628,6 +635,24 @@ void TMyFileWindow::SetEditorFont(const LOGFONT & LogFont)
 
     // apply the font
     SendEditor(SCI_STYLECLEARALL);
+
+    const COLORREF black   = RGB(0,0,0);
+    const COLORREF white   = RGB(0xff,0xff,0xff);
+    const COLORREF darkgreen = RGB(0,0x80,0);
+    const COLORREF darkred   = RGB(0x80, 0, 0);
+    const COLORREF red       = RGB(0xFF, 0, 0);
+    const COLORREF lightgrey = RGB(0xCC, 0xCC, 0xCC);
+
+    SendEditor(SCI_STYLESETFORE, SCE_FMS_COMMENT,          darkgreen);
+    SendEditor(SCI_STYLESETFORE, SCE_FMS_COMMENTBACKSLASH, darkgreen);
+    SendEditor(SCI_STYLESETFORE, SCE_FMS_STRING,         darkred);
+    SendEditor(SCI_STYLESETFORE, SCE_FMS_STRING_VBAR,    darkred);
+
+    SendEditor(SCI_STYLESETFORE, STYLE_BRACELIGHT,    darkgreen);
+    SendEditor(SCI_STYLESETBACK, STYLE_BRACELIGHT,    lightgrey);
+
+    SendEditor(SCI_STYLESETFORE, STYLE_BRACEBAD,      red);
+    SendEditor(SCI_STYLESETBACK, STYLE_BRACEBAD,      lightgrey);
 }
 
 
@@ -730,12 +755,8 @@ void TMyFileWindow::SetupWindow()
         GetConfigurationFont("EditFont", lf);
         SetEditorFont(lf);
 
-        SetFileName(FileName);
-
-        if (FileName && !Read())
-        {
-            SetFileName(0);
-        }
+        SendEditor(SCI_SETLEXER, SCLEX_FMSLOGO);
+        SendEditor(SCI_COLOURISE, 0, -1);
 
         // override the CTRL+<LETTER> sequences to do nothing so that they
         // don't insert control characters.
@@ -747,6 +768,13 @@ void TMyFileWindow::SetupWindow()
         // Hide the margin that Scintilla creates by default.
         // We don't use it for anything, so it just looks weird.
         SendEditor(SCI_SETMARGINWIDTHN, 1, 0);
+
+        SetFileName(FileName);
+
+        if (FileName && !Read())
+        {
+            SetFileName(0);
+        }
     }
 }
 
@@ -1156,6 +1184,58 @@ void TMyFileWindow::CMEditClearAll()
     SendEditor(SCI_CLEAR);
 }
 
+static bool IsParen(int Char)
+{
+    switch (Char)
+    {
+    case '(':
+    case ')':
+    case '[':
+    case ']':
+    case '{':
+    case '}':
+        return true;
+    }
+
+    return false;
+}
+
+void TMyFileWindow::CMFindMatchingParen()
+{
+    int parenToMatch = LocateParenToMatch();
+    if (parenToMatch != INVALID_POSITION)
+    {
+        // we're close enough to a paren to try to match it
+        int oppositeParen = SendEditor(SCI_BRACEMATCH, parenToMatch);
+        if (oppositeParen != INVALID_POSITION)
+        {
+            // found a match
+            SendEditor(SCI_GOTOPOS, oppositeParen);
+        }
+    }
+}
+
+void TMyFileWindow::CMSelectMatchingParen()
+{
+#if 0
+    // not working quite right (off by one on desired selection)
+
+    int parenToMatch = LocateParenToMatch();
+    if (parenToMatch != INVALID_POSITION)
+    {
+        // we're close enough to a paren to try to match it
+        int oppositeParen = SendEditor(SCI_BRACEMATCH, parenToMatch);
+        if (oppositeParen != INVALID_POSITION)
+        {
+            // found a match
+            SendEditor(SCI_SETANCHOR,     parenToMatch);
+            SendEditor(SCI_SETCURRENTPOS, oppositeParen);
+            SendEditor(SCI_SCROLLCARET);
+        }
+    }
+#endif
+}
+
 void TMyFileWindow::CMEnableIfSelectionExists(TCommandEnabler& commandHandler)
 {
     int start = SendEditor(SCI_GETSELECTIONSTART);
@@ -1331,6 +1411,33 @@ void TMyFileWindow::EvSetFocus(HWND)
     ::SetFocus(ScintillaEditor);
 }
 
+
+int TMyFileWindow::LocateParenToMatch()
+{
+    int currentPosition = SendEditor(SCI_GETCURRENTPOS);
+    int currentChar     = SendEditor(SCI_GETCHARAT, currentPosition);
+    if (IsParen(currentChar))
+    {
+        return currentPosition;
+    }
+
+    // we're not over a paren, so try the position just before the caret
+    if (currentPosition == 0)
+    {
+        // there is no position before the caret.
+        return INVALID_POSITION;
+    }
+
+    currentChar = SendEditor(SCI_GETCHARAT, currentPosition - 1);
+    if (IsParen(currentChar))
+    {
+        return currentPosition - 1;
+    }
+
+    // Neither the caret position nor the one before is a paren
+    return INVALID_POSITION;
+}
+
 TResult TMyFileWindow::EvNotify(uint ctlId, TNotify& notifyInfo)
 {
     switch (notifyInfo.code)
@@ -1343,6 +1450,33 @@ TResult TMyFileWindow::EvNotify(uint ctlId, TNotify& notifyInfo)
         IsDirty = true;
         break;
 
+    case SCN_UPDATEUI:
+        {
+            int parenToMatch = LocateParenToMatch();
+            if (parenToMatch != INVALID_POSITION)
+            {
+                // we're close enough to a paren to try to match it
+                int oppositeParen = SendEditor(SCI_BRACEMATCH, parenToMatch);
+                if (oppositeParen != INVALID_POSITION)
+                {
+                    // found a match
+                    SendEditor(SCI_BRACEHIGHLIGHT, parenToMatch, oppositeParen);
+                }
+                else
+                {
+                    // didn't find a match
+                    SendEditor(SCI_BRACEBADLIGHT, parenToMatch);
+                }
+            }
+            else
+            {
+                // we're not adacent to a paren, so remove the paren highlighting.
+                SendEditor(SCI_BRACEBADLIGHT,  INVALID_POSITION);
+                SendEditor(SCI_BRACEHIGHLIGHT, INVALID_POSITION, INVALID_POSITION);
+            }
+        }
+        break;
+
     case SCN_HELPTOPIC_SEARCH:
         CMHelpSelection();
         break;
@@ -1353,38 +1487,40 @@ TResult TMyFileWindow::EvNotify(uint ctlId, TNotify& notifyInfo)
 
 
 DEFINE_RESPONSE_TABLE1(TMyFileWindow, TFrameWindow)
-    EV_COMMAND(CM_EDALLEXIT,            CMExit),
-    EV_COMMAND(CM_FILESAVETOWORKSPACE,  CMSaveToWorkspace),
-    EV_COMMAND(CM_FILEPRINT,            CMFilePrint),
-    EV_COMMAND(CM_FILESAVEANDEXIT,      CMSaveAndExit),
-    EV_COMMAND(CM_EDITFIND,             CMEditFind),
-    EV_COMMAND(CM_EDITREPLACE,          CMEditReplace),
-    EV_COMMAND(CM_EDITFINDNEXT,         CMEditFindNext),
-    EV_COMMAND_ENABLE(CM_EDITFIND,      CMEditFindReplaceEnable),
-    EV_COMMAND_ENABLE(CM_EDITREPLACE,   CMEditFindReplaceEnable),
-    EV_COMMAND_ENABLE(CM_EDITFINDNEXT,  CMEditFindNextEnable),
-    EV_COMMAND(CM_HELP,                 CMHelp),
-    EV_COMMAND(CM_HELPEDIT,             CMHelpEditor),
-    EV_COMMAND(CM_HELPEDIT_TOPIC,       CMHelpSelection),
-    EV_COMMAND(CM_EDITSETFONT,          CMEditSetFont),
-    EV_COMMAND(CM_TEST,                 CMTest),
-    EV_COMMAND(CM_EDITUNDO,             CMEditUndo),
-    EV_COMMAND(CM_EDITREDO,             CMEditRedo),
-    EV_COMMAND(CM_EDITCUT,              CMEditCut),
-    EV_COMMAND(CM_EDITCOPY,             CMEditCopy),
-    EV_COMMAND(CM_EDITPASTE,            CMEditPaste),
-    EV_COMMAND(CM_EDITDELETE,           CMEditDelete),
-    EV_COMMAND(CM_EDITCLEAR,            CMEditClearAll),
-    EV_COMMAND(CM_EDITSELECTALL,        CMEditSelectAll),
-    EV_COMMAND_ENABLE(CM_EDITUNDO,      CMEditUndoEnable),
-    EV_COMMAND_ENABLE(CM_EDITREDO,      CMEditRedoEnable),
-    EV_COMMAND_ENABLE(CM_EDITCUT,       CMEnableIfSelectionExists),
-    EV_COMMAND_ENABLE(CM_EDITCOPY,      CMEnableIfSelectionExists),
-    EV_COMMAND_ENABLE(CM_EDITPASTE,     CMEditPasteEnable),
-    EV_COMMAND_ENABLE(CM_EDITDELETE,    CMEnableIfSelectionExists),
-    EV_COMMAND_ENABLE(CM_EDITCLEAR,     CMEnableIfTextExists),
-    EV_COMMAND_ENABLE(CM_EDITSELECTALL, CMEnableIfTextExists),
-    EV_REGISTERED(FINDMSGSTRING,        EvFindMsg),
+    EV_COMMAND(CM_EDALLEXIT,                CMExit),
+    EV_COMMAND(CM_FILESAVETOWORKSPACE,      CMSaveToWorkspace),
+    EV_COMMAND(CM_FILEPRINT,                CMFilePrint),
+    EV_COMMAND(CM_FILESAVEANDEXIT,          CMSaveAndExit),
+    EV_COMMAND(CM_EDITFIND,                 CMEditFind),
+    EV_COMMAND(CM_EDITREPLACE,              CMEditReplace),
+    EV_COMMAND(CM_EDITFINDNEXT,             CMEditFindNext),
+    EV_COMMAND_ENABLE(CM_EDITFIND,          CMEditFindReplaceEnable),
+    EV_COMMAND_ENABLE(CM_EDITREPLACE,       CMEditFindReplaceEnable),
+    EV_COMMAND_ENABLE(CM_EDITFINDNEXT,      CMEditFindNextEnable),
+    EV_COMMAND(CM_HELP,                     CMHelp),
+    EV_COMMAND(CM_HELPEDIT,                 CMHelpEditor),
+    EV_COMMAND(CM_HELPEDIT_TOPIC,           CMHelpSelection),
+    EV_COMMAND(CM_EDITSETFONT,              CMEditSetFont),
+    EV_COMMAND(CM_TEST,                     CMTest),
+    EV_COMMAND(CM_EDITUNDO,                 CMEditUndo),
+    EV_COMMAND(CM_EDITREDO,                 CMEditRedo),
+    EV_COMMAND(CM_EDITCUT,                  CMEditCut),
+    EV_COMMAND(CM_EDITCOPY,                 CMEditCopy),
+    EV_COMMAND(CM_EDITPASTE,                CMEditPaste),
+    EV_COMMAND(CM_EDITDELETE,               CMEditDelete),
+    EV_COMMAND(CM_EDITCLEAR,                CMEditClearAll),
+    EV_COMMAND(CM_EDITSELECTALL,            CMEditSelectAll),
+    EV_COMMAND_ENABLE(CM_EDITUNDO,          CMEditUndoEnable),
+    EV_COMMAND_ENABLE(CM_EDITREDO,          CMEditRedoEnable),
+    EV_COMMAND_ENABLE(CM_EDITCUT,           CMEnableIfSelectionExists),
+    EV_COMMAND_ENABLE(CM_EDITCOPY,          CMEnableIfSelectionExists),
+    EV_COMMAND_ENABLE(CM_EDITPASTE,         CMEditPasteEnable),
+    EV_COMMAND_ENABLE(CM_EDITDELETE,        CMEnableIfSelectionExists),
+    EV_COMMAND_ENABLE(CM_EDITCLEAR,         CMEnableIfTextExists),
+    EV_COMMAND_ENABLE(CM_EDITSELECTALL,     CMEnableIfTextExists),
+    EV_COMMAND(CM_FINDMATCHINGPAREN,        CMFindMatchingParen),
+    EV_COMMAND(CM_SELECTMATCHINGPAREN,      CMSelectMatchingParen),
+    EV_REGISTERED(FINDMSGSTRING,            EvFindMsg),
     EV_WM_SIZE,
     EV_WM_SETFOCUS,
     EV_WM_DESTROY,

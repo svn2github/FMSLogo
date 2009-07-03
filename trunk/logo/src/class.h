@@ -346,6 +346,7 @@ public:
     void CMEditFindNextEnable(TCommandEnabler& commandHandler);
 
     void CMFindMatchingParen();
+    void CMSelectMatchingParen();
 
 protected:
     void SetupWindow();
@@ -360,6 +361,7 @@ private:
     LRESULT SendEditor(UINT Msg, WPARAM wParam=0, LPARAM lParam=0);
     void    SetEditorFont(const LOGFONT & LogFont);
     TResult EvNotify(uint ctlId, TNotify& notifyInfo);
+    int     LocateParenToMatch();
 
 private:
     HWND                 ScintillaEditor;
