@@ -642,6 +642,7 @@ void TMyFileWindow::SetEditorFont(const LOGFONT & LogFont)
     const COLORREF darkred   = RGB(0x80, 0, 0);
     const COLORREF red       = RGB(0xFF, 0, 0);
     const COLORREF lightgrey = RGB(0xCC, 0xCC, 0xCC);
+    const COLORREF lightblue = RGB(200, 242, 247);
 
     SendEditor(SCI_STYLESETFORE, SCE_FMS_COMMENT,          darkgreen);
     SendEditor(SCI_STYLESETFORE, SCE_FMS_COMMENTBACKSLASH, darkgreen);
@@ -649,10 +650,10 @@ void TMyFileWindow::SetEditorFont(const LOGFONT & LogFont)
     SendEditor(SCI_STYLESETFORE, SCE_FMS_STRING_VBAR,    darkred);
 
     SendEditor(SCI_STYLESETFORE, STYLE_BRACELIGHT,    darkgreen);
-    SendEditor(SCI_STYLESETBACK, STYLE_BRACELIGHT,    lightgrey);
+    SendEditor(SCI_STYLESETBACK, STYLE_BRACELIGHT,    lightblue);
 
     SendEditor(SCI_STYLESETFORE, STYLE_BRACEBAD,      red);
-    SendEditor(SCI_STYLESETBACK, STYLE_BRACEBAD,      lightgrey);
+    SendEditor(SCI_STYLESETBACK, STYLE_BRACEBAD,      lightblue);
 }
 
 
@@ -1200,40 +1201,103 @@ static bool IsParen(int Char)
     return false;
 }
 
-void TMyFileWindow::CMFindMatchingParen()
+void
+TMyFileWindow::FindMatchingParen(
+    int & CurrentParenPosition,
+    int & MatchingParenPosition
+    )
 {
-    int parenToMatch = LocateParenToMatch();
-    if (parenToMatch != INVALID_POSITION)
+    CurrentParenPosition  = INVALID_POSITION;
+    MatchingParenPosition = INVALID_POSITION;
+
+    int currentPosition = SendEditor(SCI_GETCURRENTPOS);
+    int currentChar     = SendEditor(SCI_GETCHARAT, currentPosition);
+    if (IsParen(currentChar))
     {
         // we're close enough to a paren to try to match it
-        int oppositeParen = SendEditor(SCI_BRACEMATCH, parenToMatch);
-        if (oppositeParen != INVALID_POSITION)
+        int matchingParenPosition = SendEditor(SCI_BRACEMATCH, currentPosition);
+        if (matchingParenPosition != INVALID_POSITION)
         {
             // found a match
-            SendEditor(SCI_GOTOPOS, oppositeParen);
+
+            // If the paren after the caret is an open paren, then
+            // the matching paren will be after it.  In this case, 
+            // we want to jump just after the matching paren's position
+            // to remain on the outside of the parens.
+            // Likewise, if the paren after the caret is a close paren,
+            // then the matching paren will be before it.  In this case,
+            // we also want to jump after the matching paren's position
+            // so that we can remain on the inside of the parens.
+            CurrentParenPosition  = currentPosition;
+            MatchingParenPosition = matchingParenPosition + 1;
         }
+        else
+        {
+            // If paren after the caret has no matching paren,
+            // then mark it as a bad paren, instead of trying to
+            // match the one before the caret.
+            CurrentParenPosition  = currentPosition;
+            MatchingParenPosition = INVALID_POSITION;
+        }
+    }
+    else
+    {
+        // we're not over a paren, so try the position just before the caret
+        if (currentPosition != 0)
+        {
+            int previousChar = SendEditor(SCI_GETCHARAT, currentPosition - 1);
+            if (IsParen(previousChar))
+            {
+                // we're close enough to a paren to try to match it
+                int matchingParenPosition = SendEditor(SCI_BRACEMATCH, currentPosition - 1);
+                if (matchingParenPosition != INVALID_POSITION)
+                {
+                    // found a match
+
+                    // If the paren before the caret is an open paren, then
+                    // the matching paren will be after it.  In this case, 
+                    // we want to jump to the matching paren's position to
+                    // remain on the inside of the parens.
+                    // Likewise, if the paren before the caret is a close paren,
+                    // then the matching paren will be before it.  In this case,
+                    // we also want to jump after the matching paren's position
+                    // so that we can remain on the outside of the parens.
+                    CurrentParenPosition  = currentPosition - 1;
+                    MatchingParenPosition = matchingParenPosition;
+                }
+                else
+                {
+                    CurrentParenPosition  = currentPosition - 1;
+                    MatchingParenPosition = INVALID_POSITION;
+                }
+            }
+        }
+    }
+}
+
+void TMyFileWindow::CMFindMatchingParen()
+{
+    int currentParenPosition;
+    int matchingParenPosition;
+    FindMatchingParen(currentParenPosition, matchingParenPosition);
+    if (matchingParenPosition != INVALID_POSITION)
+    {
+        SendEditor(SCI_GOTOPOS, matchingParenPosition);
     }
 }
 
 void TMyFileWindow::CMSelectMatchingParen()
 {
-#if 0
-    // not working quite right (off by one on desired selection)
-
-    int parenToMatch = LocateParenToMatch();
-    if (parenToMatch != INVALID_POSITION)
+    int currentParenPosition;
+    int matchingParenPosition;
+    FindMatchingParen(currentParenPosition, matchingParenPosition);
+    if (matchingParenPosition != INVALID_POSITION && currentParenPosition != INVALID_POSITION)
     {
-        // we're close enough to a paren to try to match it
-        int oppositeParen = SendEditor(SCI_BRACEMATCH, parenToMatch);
-        if (oppositeParen != INVALID_POSITION)
-        {
-            // found a match
-            SendEditor(SCI_SETANCHOR,     parenToMatch);
-            SendEditor(SCI_SETCURRENTPOS, oppositeParen);
-            SendEditor(SCI_SCROLLCARET);
-        }
+        // found a match
+        SendEditor(SCI_SETANCHOR,     SendEditor(SCI_GETCURRENTPOS));
+        SendEditor(SCI_SETCURRENTPOS, matchingParenPosition);
+        SendEditor(SCI_SCROLLCARET);
     }
-#endif
 }
 
 void TMyFileWindow::CMEnableIfSelectionExists(TCommandEnabler& commandHandler)
@@ -1411,33 +1475,6 @@ void TMyFileWindow::EvSetFocus(HWND)
     ::SetFocus(ScintillaEditor);
 }
 
-
-int TMyFileWindow::LocateParenToMatch()
-{
-    int currentPosition = SendEditor(SCI_GETCURRENTPOS);
-    int currentChar     = SendEditor(SCI_GETCHARAT, currentPosition);
-    if (IsParen(currentChar))
-    {
-        return currentPosition;
-    }
-
-    // we're not over a paren, so try the position just before the caret
-    if (currentPosition == 0)
-    {
-        // there is no position before the caret.
-        return INVALID_POSITION;
-    }
-
-    currentChar = SendEditor(SCI_GETCHARAT, currentPosition - 1);
-    if (IsParen(currentChar))
-    {
-        return currentPosition - 1;
-    }
-
-    // Neither the caret position nor the one before is a paren
-    return INVALID_POSITION;
-}
-
 TResult TMyFileWindow::EvNotify(uint ctlId, TNotify& notifyInfo)
 {
     switch (notifyInfo.code)
@@ -1452,20 +1489,34 @@ TResult TMyFileWindow::EvNotify(uint ctlId, TNotify& notifyInfo)
 
     case SCN_UPDATEUI:
         {
-            int parenToMatch = LocateParenToMatch();
-            if (parenToMatch != INVALID_POSITION)
+            int currentParenPosition;
+            int matchingParenPosition;
+            FindMatchingParen(currentParenPosition, matchingParenPosition);
+            if (currentParenPosition != INVALID_POSITION)
             {
                 // we're close enough to a paren to try to match it
-                int oppositeParen = SendEditor(SCI_BRACEMATCH, parenToMatch);
-                if (oppositeParen != INVALID_POSITION)
+                if (matchingParenPosition != INVALID_POSITION)
                 {
                     // found a match
-                    SendEditor(SCI_BRACEHIGHLIGHT, parenToMatch, oppositeParen);
+                    if (currentParenPosition == SendEditor(SCI_GETCURRENTPOS))
+                    {
+                        SendEditor(
+                            SCI_BRACEHIGHLIGHT,
+                            currentParenPosition,
+                            matchingParenPosition - 1);
+                    }
+                    else
+                    {
+                        SendEditor(
+                            SCI_BRACEHIGHLIGHT,
+                            currentParenPosition,
+                            matchingParenPosition);
+                    }
                 }
                 else
                 {
                     // didn't find a match
-                    SendEditor(SCI_BRACEBADLIGHT, parenToMatch);
+                    SendEditor(SCI_BRACEBADLIGHT, currentParenPosition);
                 }
             }
             else
