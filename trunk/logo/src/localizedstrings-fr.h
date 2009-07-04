@@ -610,7 +610,7 @@
 #define LOCALIZED_ALTERNATE_WRITER                 "fluxécriture"
 #define LOCALIZED_ALTERNATE_YESNOBOX               "choixouinon"
 #define LOCALIZED_ALTERNATE_YIELD                  "partage" // 
-#define LOCALIZED_ALTERNATE_ZOOM                   "zoom" // 
+#define LOCALIZED_ALTERNATE_ZOOM                   "zoom"
 
 //
 // General localized strings
@@ -622,7 +622,7 @@
 #define LOCALIZED_GENERAL_PRODUCTNAME   "FMSLogo"
 
 // Embedded description of fmslogo.exe
-#define LOCALIZED_FMSLOGO_FILE_DESCRIPTION  "The FMSLogo programming environment" // NOT_YET_LOCALIZED
+#define LOCALIZED_FMSLOGO_FILE_DESCRIPTION  "L'environnement de programmation FMSLogo"
 
 //
 // The menu options on the main window 

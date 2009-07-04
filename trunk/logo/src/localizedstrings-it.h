@@ -622,7 +622,7 @@
 #define LOCALIZED_GENERAL_PRODUCTNAME   "FMSLogo"
 
 // Embedded description of fmslogo.exe
-#define LOCALIZED_FMSLOGO_FILE_DESCRIPTION  "The FMSLogo programming environment" // NOT_YET_LOCALIZED
+#define LOCALIZED_FMSLOGO_FILE_DESCRIPTION  "L'ambiente di programmazione FMSLogo"
 
 //
 // The menu options on the main window 
