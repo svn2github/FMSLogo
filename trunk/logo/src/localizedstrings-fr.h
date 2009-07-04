@@ -693,10 +693,10 @@
 #define LOCALIZED_POPUP_CUT                      "Couper"
 #define LOCALIZED_POPUP_PASTE                    "Coller"
 #define LOCALIZED_POPUP_DELETE                   "Effacer"
-#define LOCALIZED_POPUP_UNDO                     "Annuler" // 
-#define LOCALIZED_POPUP_REDO                     "Redo" // NOT_YET_LOCALIZED
-#define LOCALIZED_POPUP_SELECTALL                "Sélectionner tout" // 
-#define LOCALIZED_POPUP_HELP                     "Recherche thématique" //
+#define LOCALIZED_POPUP_UNDO                     "Annuler"
+#define LOCALIZED_POPUP_REDO                     "Rétablir"
+#define LOCALIZED_POPUP_SELECTALL                "Sélectionner tout"
+#define LOCALIZED_POPUP_HELP                     "Recherche thématique"
 
 //
 // The menu options on the editor
@@ -711,13 +711,13 @@
 
 #define LOCALIZED_EDITOR_EDIT                    "&Edition"
 #define LOCALIZED_EDITOR_EDIT_UNDO               "&Annuler frappe\tCtrl+Z"
-#define LOCALIZED_EDITOR_EDIT_REDO               "&Redo\tCtrl+Y" // NOT_YET_LOCALIZED
+#define LOCALIZED_EDITOR_EDIT_REDO               "&Rétablir\tCtrl+Y"
 #define LOCALIZED_EDITOR_EDIT_CUT                "&Couper\tCtrl+X"
 #define LOCALIZED_EDITOR_EDIT_COPY               "C&opier\tCtrl+C"
 #define LOCALIZED_EDITOR_EDIT_PASTE              "&Coller\tCtrl+V"
 #define LOCALIZED_EDITOR_EDIT_DELETE             "&Effacer\tDel"
 #define LOCALIZED_EDITOR_EDIT_CLEARALL           "E&ffacer Tout\tCtrl+Del"
-#define LOCALIZED_EDITOR_EDIT_SELECTALL          "&Sélectionner tout\tCtrl+A" // N
+#define LOCALIZED_EDITOR_EDIT_SELECTALL          "&Sélectionner tout\tCtrl+A"
 
 #define LOCALIZED_EDITOR_SEARCH                  "&Outils"
 #define LOCALIZED_EDITOR_SEARCH_FIND             "Re&chercher...\tCtrl+F"
@@ -731,7 +731,7 @@
 
 #define LOCALIZED_EDITOR_HELP                    "&Aide"  // NOT_YET_LOCALIZED
 #define LOCALIZED_EDITOR_HELP_INDEX              "&Index" // NOT_YET_LOCALIZED
-#define LOCALIZED_EDITOR_HELP_EDITOR             "&Editeurr" // NOT_YET_LOCALIZED
+#define LOCALIZED_EDITOR_HELP_EDITOR             "&Editeur" // NOT_YET_LOCALIZED
 #define LOCALIZED_EDITOR_HELP_TOPICSEARCH        "&Recherche thématique\tF1" // NOT_YET_LOCALIZED
 
 
