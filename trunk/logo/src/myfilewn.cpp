@@ -642,7 +642,7 @@ void TMyFileWindow::SetEditorFont(const LOGFONT & LogFont)
     const COLORREF darkred   = RGB(0x80, 0, 0);
     const COLORREF red       = RGB(0xFF, 0, 0);
     const COLORREF lightgrey = RGB(0xCC, 0xCC, 0xCC);
-    const COLORREF lightblue = RGB(200, 242, 247);
+    const COLORREF lightblue = RGB(200, 242, 255);
 
     SendEditor(SCI_STYLESETFORE, SCE_FMS_COMMENT,          darkgreen);
     SendEditor(SCI_STYLESETFORE, SCE_FMS_COMMENTBACKSLASH, darkgreen);
@@ -763,7 +763,13 @@ void TMyFileWindow::SetupWindow()
         // don't insert control characters.
         for (int i = 0; i < 26; i++)
         {
-            SendEditor(SCI_ASSIGNCMDKEY, ('A'+i)|(SCMOD_CTRL<<16), SCI_NULL);
+            // I'm not sure why, but CTRL+Y for "Redo" is special and if
+            // we set the handler to SCI_NULL, it stops working.
+            const int key = 'A' + i;
+            if (key != 'Y')
+            {
+                SendEditor(SCI_ASSIGNCMDKEY, key|(SCMOD_CTRL<<16), SCI_NULL);
+            }
         }
 
         // Hide the margin that Scintilla creates by default.
