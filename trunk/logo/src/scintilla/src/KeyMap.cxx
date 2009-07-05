@@ -124,7 +124,7 @@ const KeyToCommand KeyMap::MapDefault[] = {
     {SCK_BACK,		SCI_NORM, 	SCI_DELETEBACK},
     {SCK_BACK,		SCI_SHIFT, 	SCI_DELETEBACK},
     {SCK_BACK,		SCI_CTRL, 	SCI_DELWORDLEFT},
-    {SCK_BACK, 		SCI_ALT,	SCI_UNDO}, // FMS:
+    {SCK_BACK, 		SCI_ALT,	SCI_UNDO}, // FMS: added
     {SCK_BACK, 		SCI_ASHIFT,	SCI_REDO},
     {SCK_BACK,		SCI_CSHIFT,	SCI_DELLINELEFT},
     {'Z', 			SCI_CTRL,	SCI_UNDO},
@@ -139,7 +139,7 @@ const KeyToCommand KeyMap::MapDefault[] = {
     {SCK_RETURN, 	SCI_SHIFT,	SCI_NEWLINE},
     {SCK_ADD, 		SCI_CTRL,	SCI_ZOOMIN},
     {SCK_SUBTRACT,	SCI_CTRL,	SCI_ZOOMOUT},
-    {SCK_DIVIDE,	SCI_CTRL,	SCI_SETZOOM},
+    {'0',	SCI_CTRL,	SCI_SETZOOM},  // FMS: make Ctrl+0
     //'L', 			SCI_CTRL,		SCI_FORMFEED,
     {'L', 			SCI_CTRL,	SCI_LINECUT},
     {'L', 			SCI_CSHIFT,	SCI_LINEDELETE},
