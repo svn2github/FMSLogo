@@ -653,6 +653,18 @@ sptr_t ScintillaWin::WndProc(unsigned int iMessage, uptr_t wParam, sptr_t lParam
 				wheelDelta = - (-wheelDelta % WHEEL_DELTA);
 
 			if (wParam & MK_CONTROL) {
+#if 0
+				// FMS: Remove zooming for FMSLogo.
+				// FMS: Rolling the mouse wheel while holding down
+				// FMS: the Ctrl key is too easy to do by accident
+				// FMS: and there's no obvious way to fix the problem.
+				// FMS: Since FMSLogo already provides a menu option
+				// FMS: to configure the base font, it's better to just
+				// FMS: remove this feature.
+				// FMS: Note that zooming can still be done with Ctrl+-
+				// FMS: and Ctrl+=, which is not easy to do by accident.
+
+
 				// Zoom! We play with the font sizes in the styles.
 				// Number of steps/line is ignored, we just care if sizing up or down
 				if (linesToScroll < 0) {
@@ -660,6 +672,7 @@ sptr_t ScintillaWin::WndProc(unsigned int iMessage, uptr_t wParam, sptr_t lParam
 				} else {
 					KeyCommand(SCI_ZOOMOUT);
 				}
+#endif
 			} else {
 				// Scroll
 				ScrollTo(topLine + linesToScroll);
