@@ -94,8 +94,8 @@ int numberp(NODE *snd)
         return 0;
     }
 
-    int dl   = 0; // index of the end of the number before the decimal point
-    int dr   = 0; // index to the end of the number after the decimal point
+    int dl   = 0; // how many digits are to the left of the decimal point
+    int dr   = 0; // how many digits are to the right of the decimal point
     int pcnt = 0; // index of the "current" character
     if (pcnt < plen && *p == '-')
     {
