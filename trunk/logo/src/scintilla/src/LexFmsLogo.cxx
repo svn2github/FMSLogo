@@ -22,7 +22,32 @@ using namespace Scintilla;
 
 static inline bool IsAWordChar(const int ch) 
 {
-    return isalnum(ch) || ch == '_' || ch == '?';
+    switch (ch)
+    {
+    case ' ':
+    case '\t':
+    case '\n':
+    case '\r':
+
+    case '(':
+    case ')':
+    case '{':
+    case '}':
+    case '[':
+    case ']':
+
+    case '+':
+    case '-':
+    case '/':
+    case '*':
+    case '>':
+    case '<':
+    case '=':
+        return false;
+
+    default:
+        return true;
+    }
 }
 
 static inline bool IsAWordStart(const int ch) 
@@ -97,7 +122,7 @@ ColorizeFmsLogoDoc(
             break;
 
         case SCE_FMS_IDENTIFIER:
-            if (!IsAWordChar(sc.ch) || (sc.ch == '.')) 
+            if (!IsAWordChar(sc.ch))
             {
                 sc.GetCurrent(s, sizeof(s));
 				
@@ -236,6 +261,31 @@ ColorizeFmsLogoDoc(
             sc.SetState(SCE_FMS_COMMENT);
             break;
 
+        case SCE_FMS_VARIABLE:
+            if (sc.ch == '|')
+            {
+                sc.SetState(SCE_FMS_VARIABLE_VBAR);
+                sc.Forward();
+            }
+            else if (sc.ch == '\\') 
+            {
+                sc.Forward();
+            }
+            else if (!IsAWordChar(sc.ch))
+            {
+                sc.SetState(SCE_FMS_DEFAULT);
+            }
+            break;
+
+        case SCE_FMS_VARIABLE_VBAR:
+            while (sc.ch != '|' && sc.More())
+            {
+                sc.Forward();
+            }
+            sc.SetState(SCE_FMS_VARIABLE);
+            sc.Forward();
+            break;
+
         default:
             break;
         }
@@ -285,9 +335,9 @@ ColorizeFmsLogoDoc(
             {
                 sc.SetState(SCE_FMS_NUMBER);
             }
-            else if (IsAWordStart(sc.ch) || (sc.ch == '@') || (sc.ch == ':')) 
+            else if (sc.ch == ':')
             {
-                sc.SetState(SCE_FMS_IDENTIFIER);
+                sc.SetState(SCE_FMS_VARIABLE);
             }
             else if (sc.ch == '|')
             {

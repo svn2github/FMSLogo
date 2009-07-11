@@ -26,17 +26,22 @@
 
 #define SCE_FMS_VBAR        5
 
-#define SCE_FMS_OPERATOR    6
-#define SCE_FMS_NUMBER      7
-#define SCE_FMS_IDENTIFIER  8
-#define SCE_FMS_TO          9
-#define SCE_FMS_TODEF      10
-#define SCE_FMS_END        11
-#define SCE_FMS_KEYWORD1   13
-#define SCE_FMS_KEYWORD2   14
-#define SCE_FMS_KEYWORD3   15
-#define SCE_FMS_KEYWORD4   16
-#define SCE_FMS_KEYWORD5   17
-#define SCE_FMS_KEYWORD6   18
+#define SCE_FMS_VARIABLE      6
+#define SCE_FMS_VARIABLE_VBAR 7
+
+#define SCE_FMS_OPERATOR    8
+#define SCE_FMS_NUMBER      9
+#define SCE_FMS_IDENTIFIER  10
+
+#define SCE_FMS_KEYWORD1   20
+#define SCE_FMS_KEYWORD2   21
+#define SCE_FMS_KEYWORD3   22
+#define SCE_FMS_KEYWORD4   23
+#define SCE_FMS_KEYWORD5   24
+#define SCE_FMS_KEYWORD6   25
+
+#define SCE_FMS_TO         30
+#define SCE_FMS_TODEF      31
+#define SCE_FMS_END        32
 
 #endif
