@@ -277,6 +277,15 @@ struct NODE
 extern void      gc(NODE* node);
 extern NODETYPES nodetype(const NODE *nd);
 
+// Do not use isdigit() because Borland's version does not work properly
+// for non-ASCII characters.  See bug #2819806 for details.
+inline
+bool
+IsDigit(char ch)
+{
+    return '0' <= ch && ch <= '9';
+}
+
 inline
 void
 settype(NODE * Node, NODETYPES Type)

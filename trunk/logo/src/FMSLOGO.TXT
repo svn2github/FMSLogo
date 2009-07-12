@@ -21,6 +21,7 @@ I. Kit Description/Location (http://sourceforge.net/projects/fmslogo)
 II. New features/bugs fixed:
 
   * Added for 6.25.0
+    o Fix bug #2819806; NUMBERP on a non-ASCII word now outputs FALSE.
     o Fix bug #2803946; SETPENCOLOR, SETSCREENCOLOR, SETFLOODCOLOR, SETPIXEL,
       SETACTIVEAREA, SETPENSIZE, TONE, and GIFSAVE no longer crash when given
       very large numbers (like 1e20) as input.

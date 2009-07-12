@@ -102,7 +102,7 @@ int numberp(NODE *snd)
         p++, pcnt++;
     }
 
-    while (pcnt < plen && isdigit(*p))
+    while (pcnt < plen && IsDigit(*p))
     {
         p++, pcnt++, dl++;
     }
@@ -110,7 +110,7 @@ int numberp(NODE *snd)
     if (pcnt < plen && *p == '.')
     {
         p++, pcnt++;
-        while (pcnt < plen && isdigit(*p))
+        while (pcnt < plen && IsDigit(*p))
         {
             p++, pcnt++, dr++;
         }
@@ -125,7 +125,7 @@ int numberp(NODE *snd)
             p++, pcnt++;
         }
 
-        while (pcnt < plen && isdigit(*p))
+        while (pcnt < plen && IsDigit(*p))
         {
             p++, pcnt++, dr++;
         }

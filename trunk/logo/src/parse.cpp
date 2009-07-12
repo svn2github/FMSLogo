@@ -992,7 +992,7 @@ NODE *runparse_node(NODE *nd, NODE **ndsptr)
                    !parens(*wptr) &&
                    (!infixs(*wptr) || (isnumb == 1 && (*wptr == '-' || *wptr == '+'))))
             {
-                if (isnumb == 4 && isdigit(*wptr)) 
+                if (isnumb == 4 && IsDigit(*wptr))
                 {
                     // could be a number
                     isnumb = 0;
@@ -1003,7 +1003,7 @@ NODE *runparse_node(NODE *nd, NODE **ndsptr)
                     // just saw an 'e', so a '-' or '+' could be next
                     isnumb = 1;
                 }
-                else if ((!isdigit(*wptr) && (*wptr != '.' || gotdot)) || isnumb == 1)
+                else if ((!IsDigit(*wptr) && (*wptr != '.' || gotdot)) || isnumb == 1)
                 {
                     // can't be a number
                     // REVISIT: can we break out of the loop here?
