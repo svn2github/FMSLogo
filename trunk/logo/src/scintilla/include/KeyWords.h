@@ -67,17 +67,7 @@ inline bool isspacechar(unsigned char ch) {
     return (ch == ' ') || ((ch >= 0x09) && (ch <= 0x0d));
 }
 
-inline bool iswordchar(char ch) {
-	return isascii(ch) && (isalnum(ch) || ch == '.' || ch == '_');
-}
-
-inline bool iswordstart(char ch) {
-	return isascii(ch) && (isalnum(ch) || ch == '_');
-}
-
 inline bool isoperator(char ch) {
-	if (isascii(ch) && isalnum(ch))
-		return false;
 	// '.' left out as it is used to make up numbers
 	if (ch == '%' || ch == '^' || ch == '&' || ch == '*' ||
 	        ch == '(' || ch == ')' || ch == '-' || ch == '+' ||
