@@ -50,16 +50,6 @@ static inline bool IsAWordChar(const int ch)
     }
 }
 
-static inline bool IsAWordStart(const int ch) 
-{
-    return isalnum(ch) || ch == '_' || ch == '?';
-}
-
-static inline bool IsStateString(const int state)
-{
-    return ((state == SCE_FMS_STRING) || (state == SCE_FMS_STRING_VBAR));
-}
-
 static inline bool IsStateComment(const int state)
 {
     return ((state == SCE_FMS_COMMENT) || (state == SCE_FMS_COMMENTBACKSLASH));
@@ -191,7 +181,6 @@ ColorizeFmsLogoDoc(
             if (sc.ch == '|')
             {
                 sc.SetState(SCE_FMS_STRING_VBAR);
-                sc.Forward();
             }
             else if (sc.ch == '\\') 
             {
@@ -265,9 +254,8 @@ ColorizeFmsLogoDoc(
             if (sc.ch == '|')
             {
                 sc.SetState(SCE_FMS_VARIABLE_VBAR);
-                sc.Forward();
             }
-            else if (sc.ch == '\\') 
+            else if (sc.ch == '\\')
             {
                 sc.Forward();
             }
