@@ -897,7 +897,7 @@ WinMain(
                 break;
             }
         }
-        else if (!isspace(*ptr))
+        else if (!IsSpace(*ptr))
         {
             // No switch was used, so this is the name of a file to load.
             // Copy the rest of the command-line into the g_FileToLoad buffer
@@ -925,7 +925,7 @@ WinMain(
                     const char * cursor;
                     for (cursor = ptr + 1; *cursor != '\0'; cursor++)
                     {
-                        if (!isspace(*cursor))
+                        if (!IsSpace(*cursor))
                         {
                             break;
                         }
@@ -1669,14 +1669,14 @@ void ContextHelp(TEdit *Editor)
         char * selection = buffer;
 
         // remove leading whitespace
-        while (isspace(selection[0]))
+        while (IsSpace(selection[0]))
         {
             selection++;
         }
 
         // strip off everything after the first word
         char * ptr = selection;
-        while (*ptr != '\0' && !isspace(*ptr))
+        while (*ptr != '\0' && !IsSpace(*ptr))
         {
             ptr++;
         }

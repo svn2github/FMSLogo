@@ -277,13 +277,37 @@ struct NODE
 extern void      gc(NODE* node);
 extern NODETYPES nodetype(const NODE *nd);
 
-// Do not use isdigit() because Borland's version does not work properly
-// for non-ASCII characters.  See bug #2819806 for details.
+// Do not use isdigit() or isspace() because Borland's version does
+// not work properly for non-ASCII characters.
+// See bug #2819806 for details.
 inline
 bool
 IsDigit(char ch)
 {
     return '0' <= ch && ch <= '9';
+}
+
+// Do not use isspace() because Borland's version does not work properly
+// for non-ASCII characters.  See bug #2819806 for details.
+inline
+bool
+IsSpace(char ch)
+{
+    switch (ch)
+    {
+    case ' ':
+    case '\t':
+    case '\n':
+    case '\r':
+    case '\f':
+    case '\v':
+        return true;
+        break;
+
+    default:
+        return false;
+        break;
+    }
 }
 
 inline

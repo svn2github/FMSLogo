@@ -955,7 +955,7 @@ void TMyListboxWindow::CopyCurrentLineToEditBox()
 
     // remove trailing whitespace
     for (char * stringend = buf + strlen(buf) - 1;
-         buf <= stringend && isspace(*stringend);
+         buf <= stringend && IsSpace(*stringend);
          stringend--)
     {
         *stringend = '\0';

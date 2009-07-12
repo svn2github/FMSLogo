@@ -463,14 +463,14 @@ void TMyFileWindow::CMHelpSelection()
         char * selection = buffer;
 
         // remove leading whitespace
-        while (isspace(selection[0]))
+        while (IsSpace(selection[0]))
         {
             selection++;
         }
 
         // strip off everything after the first word
         char * ptr = selection;
-        while (*ptr != '\0' && !isspace(*ptr))
+        while (*ptr != '\0' && !IsSpace(*ptr))
         {
             ptr++;
         }
