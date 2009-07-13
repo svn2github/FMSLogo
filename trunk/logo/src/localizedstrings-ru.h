@@ -301,9 +301,9 @@
 #define LOCALIZED_ALTERNATE_HASOWNPEN_             "hasownpen?" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_HEADING                "направление" 
 #define LOCALIZED_ALTERNATE_HELP                   "помощь" 
-#define LOCALIZED_ALTERNATE_HIDETURTLE             "скройчерепаху"
+#define LOCALIZED_ALTERNATE_HIDETURTLE             "скройтортилу"
 #define LOCALIZED_ALTERNATE_HOME                   "домой"
-#define LOCALIZED_ALTERNATE_HT                     "сч"
+#define LOCALIZED_ALTERNATE_HT                     "ст"
 #define LOCALIZED_ALTERNATE_IF                     "если"
 #define LOCALIZED_ALTERNATE_IFELSE                 "еслииначе"
 #define LOCALIZED_ALTERNATE_IFF                    "еслил" 
@@ -622,7 +622,7 @@
 #define LOCALIZED_GENERAL_PRODUCTNAME   "FMSLogo" 
 
 // Embedded description of fmslogo.exe
-#define LOCALIZED_FMSLOGO_FILE_DESCRIPTION  "The FMSLogo programming environment" // NOT_YET_LOCALIZED
+#define LOCALIZED_FMSLOGO_FILE_DESCRIPTION  "Среда программирования FMSLogo" 
 
 //
 // The menu options on the main window 
@@ -678,8 +678,8 @@
 #define LOCALIZED_SELECTACTIVEAREA_EFFECT       "Изменение свойств Печати и Сохранения растровых изображений" 
 #define LOCALIZED_SELECTACTIVEAREA_YHIGH        "Y-вверхний" 
 #define LOCALIZED_SELECTACTIVEAREA_YLOW         "Y-нижний"  
-#define LOCALIZED_SELECTACTIVEAREA_XHIGH        "X-левый" 
-#define LOCALIZED_SELECTACTIVEAREA_XLOW         "X-правый" 
+#define LOCALIZED_SELECTACTIVEAREA_XHIGH        "X-правый" 
+#define LOCALIZED_SELECTACTIVEAREA_XLOW         "X-левый" 
 #define LOCALIZED_SELECTACTIVEAREA_STEPSPERINCH "Количество шагов на дюйм:" 
 #define LOCALIZED_SELECTACTIVEAREA_RESET        "&Сброс"  
 #define LOCALIZED_SELECTACTIVEAREA_OK           LOCALIZED_GENERAL_OKBUTTON 
@@ -694,7 +694,7 @@
 #define LOCALIZED_POPUP_PASTE                    "Вставить" 
 #define LOCALIZED_POPUP_DELETE                   "Удалить" 
 #define LOCALIZED_POPUP_UNDO                     "Отменить" 
-#define LOCALIZED_POPUP_REDO                     "Redo" // NOT_YET_LOCALIZED
+#define LOCALIZED_POPUP_REDO                     "Вернуть" 
 #define LOCALIZED_POPUP_SELECTALL                "Выделить всё" 
 #define LOCALIZED_POPUP_HELP                     "Поиск по разделу" 
 
@@ -710,8 +710,8 @@
 #define LOCALIZED_EDITOR_FILE_EXIT               "&Выход"  
 
 #define LOCALIZED_EDITOR_EDIT                    "&Редактировать" 
-#define LOCALIZED_EDITOR_EDIT_UNDO               "&Отмена\tCtrl+Z" 
-#define LOCALIZED_EDITOR_EDIT_REDO               "&Redo\tCtrl+Y" // NOT_YET_LOCALIZED
+#define LOCALIZED_EDITOR_EDIT_UNDO               "&Отменить\tCtrl+Z" 
+#define LOCALIZED_EDITOR_EDIT_REDO               "&Вернуть\tCtrl+Y" 
 #define LOCALIZED_EDITOR_EDIT_CUT                "&Вырезать\tCtrl+X" 
 #define LOCALIZED_EDITOR_EDIT_COPY               "&Копировать\tCtrl+C" 
 #define LOCALIZED_EDITOR_EDIT_PASTE              "В&ставить\tCtrl+V" 
@@ -738,7 +738,7 @@
 //
 // The strings in the "You have unsaved changes" dialog
 //
-#define LOCALIZED_UNSAVEDCHANGES                LOCALIZED_YOUHAVEUNSAVEDCHANGES // NOT_YET_LOCALIZED
+#define LOCALIZED_UNSAVEDCHANGES                LOCALIZED_YOUHAVEUNSAVEDCHANGES  // NOT_YET_LOCALIZED
 #define LOCALIZED_UNSAVEDCHANGES_SAVEANDEXIT    "&Сохранить и выйти" 
 #define LOCALIZED_UNSAVEDCHANGES_DONTSAVE       "&Не сохранять" 
 #define LOCALIZED_UNSAVEDCHANGES_CANCEL         LOCALIZED_GENERAL_CANCELBUTTON 
@@ -838,11 +838,11 @@
 //
 #define LOCALIZED_ABOUTFMS                     "О "LOCALIZED_GENERAL_PRODUCTNAME 
 #define LOCALIZED_ABOUTFMS_VERSION             LOCALIZED_GENERAL_PRODUCTNAME" Версия "FMSLOGO_VERSION 
-#define LOCALIZED_ABOUTFMS_GUI                 "ГИП Джорджа Миллза by George Mills (mills@softronix.com)\nSoftronics, Inc.\nhttp:\x2F/www.softronix.com/" 
+#define LOCALIZED_ABOUTFMS_GUI                 "ГИП Джорджа Миллза (mills@softronix.com)\nSoftronics, Inc.\nhttp:\x2F/www.softronix.com/" 
 #define LOCALIZED_ABOUTFMS_CORE                "Ядро Брайена Харви (bh@cs.berkeley.edu)\nКалифорнийский университет Беркли" 
 #define LOCALIZED_ABOUTFMS_INSTALLER           "Инсталляция базируется на Nullsoft Scriptable Install \nhttp:\x2F/nsis.sourceforge.net/" 
 #define LOCALIZED_ABOUTFMS_ADVENTURE           "The Great Logo Adventure (ISBN 0-9651934-6-2)\nнаписанная и переданная Джимом Мюллером\nдоступна на http:\x2F/www.softronix.com/" 
-#define LOCALIZED_ABOUTFMS_SPECIALTHANKS       "Благодарим Йегуду Катца (yehuka@softhome.net)\nи Эриха Непйвиртза (erich.neuwirth@univie.ac.at)" 
+#define LOCALIZED_ABOUTFMS_SPECIALTHANKS       "Благодарим Йегуду Катца (yehuka@softhome.net)\nи Эриха Нейвиртза (erich.neuwirth@univie.ac.at)" 
 #define LOCALIZED_ABOUTFMS_GPL                 LOCALIZED_GENERAL_PRODUCTNAME" распространяется свободно\nСм. лицензию ГНУ" 
 #define LOCALIZED_ABOUTFMS_NEWSGROUP           "Группа новостей в Интернете: comp.lang.logo\nпосетите форум на\nhttp:\x2F/groups.yahoo.com/group/LogoForum/" 
 #define LOCALIZED_ABOUTFMS_MULTIMEDIALOGIC     "Для Изучение внутренних свойств компьютера,\nиспользуйте  MultiMedia Logic от Softronics, Inc.\nАдаптация и локализация на русский язык Баглаева Игоря\nБурятский государственный университет, Улан-Удэ, bii@bsu.ru"
@@ -881,7 +881,7 @@
 #define LOCALIZED_COULDNOTCREATEBMP           "Невозможно создать Windows 3.0 рисунок" 
 #define LOCALIZED_NOTVALIDBMP                 "Не растровый рисунок Windows 3.0" 
 
-#define LOCALIZED_YOUHAVEUNSAVEDCHANGES         "Не растровый рисунок Windows 3.0" 
+#define LOCALIZED_YOUHAVEUNSAVEDCHANGES         "Вы не сохранили на диск" 
 #define LOCALIZED_FILENEWWILLERASEWORKSPACE     "Создание нового сотрет все данные из рабочей области.\n\nПродолжить Новый?" 
 #define LOCALIZED_FILELOADMAYOVERWRITEWORKSPACE "Загружаемый файл будет объединен с данными вашей рабочей области\nи, может изменить ваши несохраненные данные.\n\nПродолжить Загрузить?" 
 #define LOCALIZED_FILEOPENWILLERASEWORKSPACE    "Эта операция сотрет все ваши несохраненные данные.\n\nПродолжить Открыть?" 
