@@ -1,4 +1,5 @@
 LOAD "testlib.lgo
+LOAD "uiautomationlib.lgo
 
 TO WINDOWSTEST.SETUP :toplevelwindow
 
@@ -1102,19 +1103,46 @@ END
 
 TO WINDOWSTEST.BUTTON
 
-  TRACEINSTRUCTION [ WINDOWCREATE "main "windowstest.button "mytitle 0 0 100 100 [] ]
-  TRACEINSTRUCTION [ BUTTONCREATE "windowstest.button "button [initial text] 10 40 20 80 [] ]
+   UIAUTOMATION.INITIALIZE
 
-  ; Replace the text on the button
-  TRACEINSTRUCTION [ BUTTONUPDATE "button [new text] ]
+   CATCH "ERROR [
 
-  ; test enabling/disabling the button
-  TRACEINSTRUCTION [ BUTTONENABLE "button  "false ]
-  TRACEINSTRUCTION [ BUTTONENABLE "button  "false ]
-  TRACEINSTRUCTION [ BUTTONENABLE "button  "true  ]
+     localmake "value 0
 
-  TRACEINSTRUCTION [ BUTTONDELETE "button ]
-  TRACEINSTRUCTION [ WINDOWDELETE "windowstest.button ]
+     ; create a window with a button on it
+     TRACEINSTRUCTION [ WINDOWCREATE "main "windowstest.button "mytitle 0 0 100 100 [] ]
+     TRACEINSTRUCTION [ BUTTONCREATE "windowstest.button "button [initial text] 10 40 80 20 [make "value :value + 1] ]
+
+     ; press the button with the spacebar.
+     ; This should run the instruction list and increment :value.
+     localmake "VK_SPACE 32
+     TRACEINSTRUCTION [ UIAUTOMATION.SENDKEYTOWINDOW "mytitle "Button :VK_SPACE ]
+     SIMPLEREPORTTEST [ :value ] 1
+
+     ; Replace the text on the button
+     TRACEINSTRUCTION [ BUTTONUPDATE "button [new text] ]
+
+     ; press the button with the spacebar
+     TRACEINSTRUCTION [ UIAUTOMATION.SENDFOCUSTOWINDOW      "mytitle "Button ]
+     TRACEINSTRUCTION [ UIAUTOMATION.SENDBUTTONPUSHTOWINDOW "mytitle [new text] ]
+     SIMPLEREPORTTEST [ :value ] 2
+
+     ; test enabling/disabling the button
+     TRACEINSTRUCTION [ BUTTONENABLE "button  "false ]
+     TRACEINSTRUCTION [ BUTTONENABLE "button  "false ]
+     TRACEINSTRUCTION [ BUTTONENABLE "button  "true  ]
+
+     TRACEINSTRUCTION [ BUTTONDELETE "button ]
+     TRACEINSTRUCTION [ WINDOWDELETE "windowstest.button ]
+   ]
+
+   LOCALMAKE "lasterror ERROR
+   IF NOT EMPTY? :lasterror [
+      REPORTTESTFAILED (LIST "|YESNOBOX test failed.  code=| (ITEM 1 :lasterror) ". (ITEM 2 :lasterror)) 
+   ]
+
+   UIAUTOMATION.UNINITIALIZE
+
 END
 
 TO WINDOWSTEST.BUTTON.BADINPUT

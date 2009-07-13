@@ -63,6 +63,12 @@ END
 BURY "UIAUTOMATION.SENDMESSAGE
 
 
+TO UIAUTOMATION.SETFOCUS :HWND
+    OUTPUT (DLLCALL (LIST "L "SetFocus "L :HWND) "user32.dll)
+END
+BURY "UIAUTOMATION.SETFOCUS
+
+
 TO UIAUTOMATION.TIMEREVENT
 
   if not namep "uiautomation.eventqueue [ STOP ]
@@ -170,6 +176,8 @@ END
 BURY "UIAUTOMATION.POSTBUTTONPUSHTOWINDOW
 
 
+
+
 TO UIAUTOMATION.SENDKEYTOWINDOW :parentwindowtitle :childwindowclass :key
 
   localmake "WM_KEYDOWN 256    ; 0x0100
@@ -184,8 +192,6 @@ TO UIAUTOMATION.SENDKEYTOWINDOW :parentwindowtitle :childwindowclass :key
 END
 BURY "UIAUTOMATION.SENDKEYTOWINDOW
 
-
-
 TO UIAUTOMATION.POSTKEYTOWINDOW :parentwindowtitle :childwindowclass :key
 
   localmake "uievent array 2
@@ -196,3 +202,26 @@ TO UIAUTOMATION.POSTKEYTOWINDOW :parentwindowtitle :childwindowclass :key
   uiautomation.postevent :uievent
 END
 BURY "UIAUTOMATION.POSTKEYTOWINDOW
+
+
+
+
+TO UIAUTOMATION.SENDFOCUSTOWINDOW :parentwindowtitle :childwindowclass
+
+  localmake "hwnd UIAUTOMATION.GETCHILDWINDOWBYCLASS :parentwindowtitle :childwindowclass
+  if :hwnd = 0 [ STOP ]
+
+  IGNORE UIAUTOMATION.SETFOCUS :hwnd
+END
+BURY "UIAUTOMATION.SENDFOCUSTOWINDOW
+
+TO UIAUTOMATION.POSTFOCUSTOWINDOW :parentwindowtitle :childwindowclass
+
+  localmake "uievent array 2
+
+  setitem 1 :uievent [UIAUTOMATION.SENDFOCUSTOWINDOW ?1 ?2]
+  setitem 2 :uievent (list :parentwindowtitle :childwindowclass)
+
+  uiautomation.postevent :uievent
+END
+BURY "UIAUTOMATION.POSTFOCUSTOWINDOW
