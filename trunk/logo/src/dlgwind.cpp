@@ -127,7 +127,7 @@ protected:
         // no cancel
     }
 
-   void CmOk()
+    void CmOk()
     {
         // no close
     }
@@ -140,10 +140,10 @@ void TMxDialog::SetupWindow()
 {
     SetWindowPos(
         NULL, 
-        clientrect.GetX(), 
+        clientrect.GetX(),
         clientrect.GetY(),
-        clientrect.GetWidth(), 
-        clientrect.GetHeight(), 
+        clientrect.GetWidth(),
+        clientrect.GetHeight(),
         0);
 
     SetCaption(caption);
@@ -237,27 +237,25 @@ public:
             Parent, 
             MYBUTTON_ID, 
             Text, 
-            ClientRect.GetX(), 
-            ClientRect.GetY(), 
-            ClientRect.GetWidth(), 
+            ClientRect.GetX(),
+            ClientRect.GetY(),
+            ClientRect.GetWidth(),
             ClientRect.GetHeight())
     {
     }
 
-    void EvLButtonUp(UINT modKeys, TPoint &point);
+    void EvButtonClick();
     DECLARE_RESPONSE_TABLE(TMyButton);
 };
 
 DEFINE_RESPONSE_TABLE1(TMyButton, TButton)
-    EV_WM_LBUTTONUP,
+    EV_NOTIFY_AT_CHILD(BN_CLICKED, EvButtonClick),
 END_RESPONSE_TABLE;
 
 
 // if the button gets clicked we end up here and queue the event 
-void TMyButton::EvLButtonUp(UINT /* modKeys */, TPoint & /* point */)
+void TMyButton::EvButtonClick()
 {
-    DefaultProcessing();
-
     callthing *callevent = callthing::CreateFunctionEvent(callback);
     calllists.insert(callevent);
     checkqueue();
