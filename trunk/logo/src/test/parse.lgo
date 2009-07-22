@@ -1,5 +1,42 @@
 LOAD "testlib.lgo
 
+TO A.COLORIZATION.TEST :darkblue [:alsodarkblue 123] ; comment
+  THIS.SHOULD.BE.NORMAL ; this should be green, but the tilde should be black->~
+  THIS.SHOULD.BE.NORMAL ; ~ all of ~ this should be ~ green
+
+  NORMAL :darkblue "darkred
+  NORMAL "|dark red dark red|
+  NORMAL "|dark red dark red
+dark red ; dark red
+dark red | NORMAL
+
+  ; vbars hold their syntactic value
+  |
+  "still black
+  ;still black
+  |
+
+  "|
+  red
+  "still red
+  |
+
+  ; the ~ character continues the line
+  "darkred;green~
+still-dark-red
+
+  ; backslash'd space
+  "dark\ red
+
+  ; backslashed vbar in vbar
+  "|dark red \| dark read \| dark red|
+
+  ; quoted tilde is part of a word
+  "darkred\~
+black
+
+END
+
 TO ~IGNOREME
    MAKE "~IGNOREMEWASCALLED 1
 END
