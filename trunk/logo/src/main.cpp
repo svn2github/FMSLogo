@@ -351,14 +351,6 @@ void single_step_box(NODE *the_line)
     }
 }
 
-void getcombobox(char *str)
-{
-    // read the combobox and clear it
-    MainWindowx->CommandWindow->Editbox.GetText(str, MAX_BUFFER_SIZE);
-    MainWindowx->CommandWindow->Editbox.Clear();
-}
-
-
 bool TMyApp::ProcessAppMsg(MSG &msg)
 {
     if (MainWindow && TranslateAccelerator(MainWindow->HWindow, HAccTable, &msg))

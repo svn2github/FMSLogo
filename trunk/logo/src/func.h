@@ -240,7 +240,6 @@ extern void clearcombobox(void);
 extern COLORREF LoadColor(int dpenr, int dpeng, int dpenb);
 extern void exit_program(void);
 extern bool promptuser(char *str, const char *prompt);
-extern void getcombobox(char *str);
 extern void ibmturt(bool hide);
 extern void move_to(FLONUM x, FLONUM y);
 extern void line_to(FLONUM x, FLONUM y);

@@ -552,13 +552,35 @@ void TMyCommandWindow::DoButtonExecute(UINT)
 {
     GiveFocusToEditbox = true;
 
-    char selectedtext[MAX_BUFFER_SIZE];
-    selectedtext[0] = '\0';
+    char   buffer[MAX_BUFFER_SIZE];
+    char * text;
 
-    // get what's in the edit box
-    getcombobox(selectedtext);
+    // figure out how many characters are in the combobox
+    int textLength = Editbox.GetLineLength(0);
+    if (textLength < MAX_BUFFER_SIZE)
+    {
+        // this is small enough that we don't need an allocation
+        text = buffer;
+    }
+    else
+    {
+        // this is too large to hold in our static buffer,
+        // so we must dynamically allocate the memory.
+        text = new char[textLength + sizeof(char)];
+    }
 
-    RunLogoInstructionFromGui(selectedtext);
+    // GetText() always appends the NUL terminator
+    Editbox.GetText(text, textLength + 1);
+    Editbox.Clear();
+
+    RunLogoInstructionFromGui(text);
+
+    if (text != buffer)
+    {
+        // we must delete what we allocated
+        delete [] text;
+    }
+
 
     // calling RunLogoInstructionFromGui() can delete the "this" pointer,
     // if it executes FULLSCREEN, TEXTSCREEN, or SPLITSCREEN.
