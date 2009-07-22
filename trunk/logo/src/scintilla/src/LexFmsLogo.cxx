@@ -65,15 +65,6 @@ ColorizeFmsLogoDoc(
     Accessor    &  styler
     ) 
 {
-    WordList &keywords  = *keywordlists[0];
-    WordList &keywords2 = *keywordlists[1];
-    WordList &keywords3 = *keywordlists[2];
-    WordList &keywords4 = *keywordlists[3];
-    WordList &keywords5 = *keywordlists[4];
-    WordList dynkeylist;
-
-    char s[100];
-
     StyleContext sc(startPos, length, initStyle, styler);
     for (; sc.More(); sc.Forward()) 
     {
@@ -104,79 +95,13 @@ ColorizeFmsLogoDoc(
             sc.SetState(SCE_FMS_DEFAULT);
             break;
 
+
         case SCE_FMS_NUMBER:
             if (!IsAWordChar(sc.ch)) 
             {
                 sc.SetState(SCE_FMS_DEFAULT);
             }
             break;
-
-        case SCE_FMS_IDENTIFIER:
-            if (!IsAWordChar(sc.ch))
-            {
-                sc.GetCurrent(s, sizeof(s));
-				
-                if (keywords.InList(s)) 
-                {
-                    sc.ChangeState(SCE_FMS_KEYWORD1);
-                }
-                else if (keywords2.InList(s)) 
-                {
-                    sc.ChangeState(SCE_FMS_KEYWORD2);
-                }
-                else if (keywords3.InList(s)) 
-                {
-                    sc.ChangeState(SCE_FMS_KEYWORD3);
-                }
-                else if (keywords4.InList(s)) 
-                {
-                    sc.ChangeState(SCE_FMS_KEYWORD4);
-                }
-                else if (keywords5.InList(s)) 
-                {
-                    sc.ChangeState(SCE_FMS_KEYWORD5);
-                }
-                else if (dynkeylist.InList(s)) 
-                {
-                    sc.ChangeState(SCE_FMS_KEYWORD6);
-                }
-                sc.SetState(SCE_FMS_DEFAULT);
-            }
-            break;
-
-        case SCE_FMS_TO:
-            char s[100];
-            sc.GetCurrent(s, sizeof(s));
-            sc.ChangeState(SCE_FMS_TO);
-            sc.ForwardSetState(SCE_FMS_TODEF);
-            break;
-
-        case SCE_FMS_TODEF:
-            if (IsASpace(sc.ch))
-            {
-                char s[100];
-                sc.GetCurrent(s, sizeof(s));
-#if 0				
-                if (!dynkeylist.InList(s))
-                {
-                    aUCBLogo_dynkeystring+=wxString(s)+" ";
-                    dynkeylist.Clear();
-                    dynkeylist.Set(aUCBLogo_dynkeystring);
-                    sc.ChangeState(SCE_FMS_KEYWORD6);
-                }
-#endif
-                sc.ChangeState(SCE_FMS_KEYWORD6);
-                sc.SetState(SCE_FMS_DEFAULT);
-            }
-            break;
-
-        case SCE_FMS_END:
-            sc.GetCurrent(s, sizeof(s));
-			
-            sc.ChangeState(SCE_FMS_END);
-            sc.SetState(SCE_FMS_DEFAULT);
-            break;
-		
         case SCE_FMS_STRING:
             if (sc.ch == '|')
             {
@@ -281,45 +206,7 @@ ColorizeFmsLogoDoc(
         // Determine if a new state should be entered.
         if (sc.state == SCE_FMS_DEFAULT) 
         {
-            if (sc.atLineStart 
-                && (sc.ch==' ' ||
-                    sc.ch=='\t' ||
-                    toupper(sc.ch)=='T' ||
-                    toupper(sc.ch)=='B' ||
-                    toupper(sc.ch)=='E'))
-            {
-                int opos=sc.currentPos;
-                while ((sc.ch==' ' || sc.ch=='\t') && sc.More())
-                {
-                    sc.Forward();
-                }
-
-                if (sc.Match("to ")) 
-                {
-                    sc.SetState(SCE_FMS_TO);
-                    sc.Forward();
-                }
-                else if (sc.Match("be ")) 
-                {
-                    sc.SetState(SCE_FMS_TO);
-                    sc.Forward();
-                }
-                else if (sc.Match("end")) 
-                {
-                    sc.SetState(SCE_FMS_END);
-                    sc.Forward();
-                    sc.Forward();
-                }
-                else
-                {
-                    if (opos >= 1)
-                    {
-                        sc.currentPos=opos-1;
-                    }
-                    sc.Forward();
-                }
-            }
-            else if (IsADigit(sc.ch) || (sc.ch == '.' && IsADigit(sc.chNext))) 
+            if (IsADigit(sc.ch) || (sc.ch == '.' && IsADigit(sc.chNext))) 
             {
                 sc.SetState(SCE_FMS_NUMBER);
             }
