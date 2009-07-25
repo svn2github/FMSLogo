@@ -410,7 +410,7 @@ void InitializeTurtle(Turtle * TurtleToInitialize)
     TurtleToInitialize->Points[3].bValid = false;
 }
 
-void draw_turtles(bool erase)
+void draw_turtles(bool draw)
 {
     Turtle * savedSelectedTurtle = g_SelectedTurtle;
 
@@ -418,13 +418,13 @@ void draw_turtles(bool erase)
          g_SelectedTurtle <= g_Turtles + g_MaxTurtle;
          g_SelectedTurtle++)
     {
-        draw_turtle(erase);
+        draw_turtle(draw);
     }
 
     g_SelectedTurtle = savedSelectedTurtle;
 }
 
-void draw_turtle(bool erase)
+void draw_turtle(bool draw)
 {
     if (g_SelectedTurtle->IsSpecial)
     {
@@ -444,7 +444,7 @@ void draw_turtle(bool erase)
 
     if (g_SelectedTurtle->IsShown)
     {
-        ibmturt(erase);
+        ibmturt(draw);
     }
 }
 
