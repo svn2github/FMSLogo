@@ -1322,10 +1322,13 @@ transline(
 }
 
 
-void ibmturt(bool erase)
+// ibmturt() calculates what needs to be done to either draw or erase
+// the turte, but it does not actually do either of these operations.
+// If draw==true, then the points of the turtle's vertices are computed.
+// If draw==false, then the points of the turtle's vertices are simply used
+// to invalidate the turtle's bounding box (so it will get erased).
+void ibmturt(bool draw)
 {
-    TRect screenBoundingBox;
-
     bool bMinMax = false;
 
     long minx = 100000;
@@ -1336,9 +1339,8 @@ void ibmturt(bool erase)
     // special turtles must not be drawn
     assert(!g_SelectedTurtle->IsSpecial);
     
-    if (erase)
+    if (draw)
     {
-
         if (current_mode == perspectivemode)
         {
             // in 3D mode
@@ -1420,8 +1422,6 @@ void ibmturt(bool erase)
                 miny = min(miny, iOldy);
                 maxx = max(maxx, iOldx);
                 maxy = max(maxy, iOldy);
-
-                bMinMax = true;
             
                 g_SelectedTurtle->Points[j].from.x = iFromx;
                 g_SelectedTurtle->Points[j].from.y = iFromy;
@@ -1434,11 +1434,15 @@ void ibmturt(bool erase)
             // The line that distingiushes left from right is not needed
             // in 2D modes.
             g_SelectedTurtle->Points[3].bValid = false;
+            bMinMax = true;
         }
     }
     else
     {
-        // consider adding these to turtle points for efficiency
+        // We are supposed to erase the turtle, so we only need to
+        // invalidate the turtle's bounding box.
+
+        // consider adding the min/max to turtle points for efficiency
         for (int j = 0; j < 4; j++)
         {
             if (g_SelectedTurtle->Points[j].bValid)
@@ -1452,8 +1456,11 @@ void ibmturt(bool erase)
         }
     }
    
+    TRect screenBoundingBox;
+
     if (g_SelectedTurtle->BitmapRasterMode != 0)
     {
+        // The turtle is bitmapped, so the min/max is the bounding box of the bitmap.
         POINT dest;
 
         if (current_mode == perspectivemode)
@@ -1493,6 +1500,7 @@ void ibmturt(bool erase)
     }
     else
     {
+        // The turtle is draw with lines
         TScroller * screenScroller = MainWindowx->ScreenWindow->Scroller;
         screenBoundingBox.left   = (+minx - screenScroller->XPos / the_zoom + xoffset) * the_zoom;
         screenBoundingBox.top    = (-maxy - screenScroller->YPos / the_zoom + yoffset) * the_zoom;
