@@ -143,7 +143,6 @@ Dep_fmslogodexe = \
    $(IntermediateDirectory)\paren.obj\
    $(IntermediateDirectory)\parse.obj\
    $(IntermediateDirectory)\print.obj\
-   $(IntermediateDirectory)\richedpr.obj\
    $(IntermediateDirectory)\savebeforeexitdialog.obj\
    $(IntermediateDirectory)\selectbox.obj\
    $(IntermediateDirectory)\sizedlg.obj\
@@ -234,7 +233,6 @@ $(IntermediateDirectory)\netwind.obj+
 $(IntermediateDirectory)\paren.obj+
 $(IntermediateDirectory)\parse.obj+
 $(IntermediateDirectory)\print.obj+
-$(IntermediateDirectory)\richedpr.obj+
 $(IntermediateDirectory)\savebeforeexitdialog.obj+
 $(IntermediateDirectory)\selectbox.obj+
 $(IntermediateDirectory)\sizedlg.obj+
@@ -332,7 +330,6 @@ $(IntermediateDirectory)\netwind.obj           : version.h
 $(IntermediateDirectory)\paren.obj             : version.h
 $(IntermediateDirectory)\parse.obj             : version.h
 $(IntermediateDirectory)\print.obj             : version.h
-$(IntermediateDirectory)\richedpr.obj          : version.h
 $(IntermediateDirectory)\savebeforeexitdialog.obj : version.h
 $(IntermediateDirectory)\selectbox.obj         : version.h
 $(IntermediateDirectory)\sizedlg.obj           : version.h
