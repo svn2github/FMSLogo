@@ -1103,7 +1103,6 @@
 
 #define LOCALIZED_ERROR_BITMAPINDEXOUTOFRANGE  "BitMap-Index liegt außerhalb des Bereiches"
 #define LOCALIZED_ERROR_BITMAPCUTFAILED        "Ausschneiden ohne Erfolg, möglicherweise nicht genügend Speicher vorhanden"
-#define LOCALIZED_ERROR_BITMAPFITFAILED        "Einpassen ohne Erfolg, möglicherweise nicht genügend Speicher vorhanden"
 
 #define LOCALIZED_ERROR_BITMAPNOTHINGTOPASTE    "Nichts einzufügen" 
 #define LOCALIZED_ERROR_BITMAPINDEXISNOTBITMAP  "BitMap im Index muss mit einem Bitmap initialisiert sein" 

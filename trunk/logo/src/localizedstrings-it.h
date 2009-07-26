@@ -1103,7 +1103,6 @@
 
 #define LOCALIZED_ERROR_BITMAPINDEXOUTOFRANGE  "Indice BitMap fuori dall'intervallo"
 #define LOCALIZED_ERROR_BITMAPCUTFAILED        "Taglia fallito, E' possibile che non ci sia abbastanza memoria disponibile"
-#define LOCALIZED_ERROR_BITMAPFITFAILED        "Adatta fallito, E' possibile che non ci sia abbastanza memoria disponibile"
 
 #define LOCALIZED_ERROR_BITMAPNOTHINGTOPASTE    "Non c'è niente da incollare"
 #define LOCALIZED_ERROR_BITMAPINDEXISNOTBITMAP  "L'indice fornito non è un indice di BitMap valido"

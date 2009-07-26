@@ -1103,7 +1103,6 @@
 
 #define LOCALIZED_ERROR_BITMAPINDEXOUTOFRANGE  "Índice de BitMap fora do campo"
 #define LOCALIZED_ERROR_BITMAPCUTFAILED        "Recortar falhou, possivelmente não haja memória suficiente"
-#define LOCALIZED_ERROR_BITMAPFITFAILED        "Ajustar falhou, possivelmente não haja memória suficiente"
 
 #define LOCALIZED_ERROR_BITMAPNOTHINGTOPASTE    "Nada para Colar"
 #define LOCALIZED_ERROR_BITMAPINDEXISNOTBITMAP  "O BitMap no índice deve ser inicializado com um mapa de bits"

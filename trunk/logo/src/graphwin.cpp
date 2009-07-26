@@ -1717,15 +1717,15 @@ NODE *lbitfit(NODE *arg)
                 RealizePalette(MemDC);
             }
 
-            HBITMAP TempMemoryBitMap = CreateCompatibleBitmap(ScreenDC, newWidth, newHeight);
-            if (!TempMemoryBitMap)
+            HBITMAP newMemoryBitmap = CreateCompatibleBitmap(ScreenDC, newWidth, newHeight);
+            if (newMemoryBitmap == NULL)
             {
-                ShowErrorMessageAndStop(LOCALIZED_ERROR_BITMAPFITFAILED);
+                err_logo(OUT_OF_MEM, NIL);
                 return Unbound;
             }
 
             HDC TempMemDC = CreateCompatibleDC(ScreenDC);
-            HBITMAP oldBitmap2 = (HBITMAP) SelectObject(TempMemDC, TempMemoryBitMap);
+            HBITMAP oldBitmap2 = (HBITMAP) SelectObject(TempMemDC, newMemoryBitmap);
 
             if (EnablePalette)
             {
@@ -1780,7 +1780,7 @@ NODE *lbitfit(NODE *arg)
             SelectObject(MemDC, oldBitmap);
 
             DeleteObject(g_SelectedBitmap->MemoryBitMap);
-            g_SelectedBitmap->MemoryBitMap = TempMemoryBitMap;
+            g_SelectedBitmap->MemoryBitMap = newMemoryBitmap;
 
             g_SelectedBitmap->Width  = newWidth;
             g_SelectedBitmap->Height = newHeight;

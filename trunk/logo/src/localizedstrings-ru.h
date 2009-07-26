@@ -1103,7 +1103,6 @@
 
 #define LOCALIZED_ERROR_BITMAPINDEXOUTOFRANGE  "Растровый индекс вне диапазона" 
 #define LOCALIZED_ERROR_BITMAPCUTFAILED        "Операция Вырезать не удалась, возможно нехватает памяти" 
-#define LOCALIZED_ERROR_BITMAPFITFAILED        "Операция Вырезать не удалась, возможно нехватает памяти" 
 
 #define LOCALIZED_ERROR_BITMAPNOTHINGTOPASTE    "Нечего вставить" 
 #define LOCALIZED_ERROR_BITMAPINDEXISNOTBITMAP  "Растровый индекс должен калиброваться с битовым массивом" 

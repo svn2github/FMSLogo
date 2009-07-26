@@ -1103,7 +1103,6 @@
 
 #define LOCALIZED_ERROR_BITMAPINDEXOUTOFRANGE  "pseudo.BitMap Index out of range"
 #define LOCALIZED_ERROR_BITMAPCUTFAILED        "pseudo.Cut failed, Possibly not enough Memory"
-#define LOCALIZED_ERROR_BITMAPFITFAILED        "pseudo.Fit failed, Possibly not enough Memory"
 
 #define LOCALIZED_ERROR_BITMAPNOTHINGTOPASTE    "pseudo.Nothing to Paste" 
 #define LOCALIZED_ERROR_BITMAPINDEXISNOTBITMAP  "pseudo.BitMap at Index must be initialized with a bitmap" 

@@ -1103,7 +1103,6 @@
 
 #define LOCALIZED_ERROR_BITMAPINDEXOUTOFRANGE  "Index BitMap hors limite" // 
 #define LOCALIZED_ERROR_BITMAPCUTFAILED        "Echec Coupe, probablement pas assez de mémoire" // 
-#define LOCALIZED_ERROR_BITMAPFITFAILED        "Fit failed, Possibly not enough Memory" // NOT_YET_LOCALIZED
 
 #define LOCALIZED_ERROR_BITMAPNOTHINGTOPASTE    "Rien à coller"  // 
 #define LOCALIZED_ERROR_BITMAPINDEXISNOTBITMAP  "BitMap at Index must be initialized with a bitmap"  // NOT_YET_LOCALIZED

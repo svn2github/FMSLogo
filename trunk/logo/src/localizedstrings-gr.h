@@ -1103,7 +1103,6 @@
 
 #define LOCALIZED_ERROR_BITMAPINDEXOUTOFRANGE  "Ο δείκτης BitMap είναι εκτός ορίου" // 
 #define LOCALIZED_ERROR_BITMAPCUTFAILED        "Η αποκοπή (cut) απέτυχε, ίσως δεν υπάρχει αρκετή μνήμη" // 
-#define LOCALIZED_ERROR_BITMAPFITFAILED        "Η προσαρμογή (fit) απέτυχε, ίσως δεν υπάρχει αρκετή μνήμη" // 
 
 #define LOCALIZED_ERROR_BITMAPNOTHINGTOPASTE    "Δεν υπάρχει τίποτα για επικόλληση"  // 
 #define LOCALIZED_ERROR_BITMAPINDEXISNOTBITMAP  "Το BitMap στον κατάλογο πρέπει να έχει εκκινηθεί με μια εικόνα"  // 
