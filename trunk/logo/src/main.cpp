@@ -1157,7 +1157,6 @@ transline_helper(
     int            ToY
     )
 {
-
     // Convert from Cartesian coordinates to logical window coordinates.
     FromX =  FromX + xoffset;
     FromY = -FromY + yoffset;
@@ -1202,24 +1201,70 @@ transline_helper(
     // restore the previous bitmap and pen
     SelectObject(MemDC, oldPen);
 
-    // screen
-    HDC ScreenDC = MainWindowx->ScreenWindow->GetScreenDeviceContext();
-    SetROP2(ScreenDC, LineMode);
 
-    if (EnablePalette)
-    {
-        OldPalette = SelectPalette(ScreenDC, ThePalette, FALSE);
-        RealizePalette(ScreenDC);
-    }
-
-    oldPen = (HPEN) SelectObject(ScreenDC, Pen);
-
+    // update the screen
     if (zoom_flag)
     {
-        MainWindowx->ScreenWindow->Invalidate(false);
+        // We are zoomed, so it would be very difficult to just
+        // draw the line on the screen.  Instead, invalidate the
+        // portion of the screen window that corresponds
+        // to the region containing the line which we just drew.
+        TRect screenRect;
+        if (FromX < ToX)
+        {
+            screenRect.left   = FromX - penState.Width;
+            screenRect.right  = ToX   + penState.Width;
+        }
+        else
+        {
+            screenRect.left   = ToX    - penState.Width;
+            screenRect.right  = FromX  + penState.Width;
+        }
+
+        if (FromY < ToY)
+        {
+            screenRect.top    = FromY - penState.Width;
+            screenRect.bottom = ToY   + penState.Width;
+        }
+        else
+        {
+            screenRect.top    = ToY   - penState.Width;
+            screenRect.bottom = FromY + penState.Width;
+        }
+
+        // remap the screen rectangle based on the zoom factor
+        screenRect.left   *= the_zoom;
+        screenRect.right  *= the_zoom;
+        screenRect.top    *= the_zoom;
+        screenRect.bottom *= the_zoom;
+
+        const UINT scrollerX = MainWindowx->ScreenWindow->Scroller->XPos;
+        const UINT scrollerY = MainWindowx->ScreenWindow->Scroller->YPos;
+
+        screenRect.left   -= scrollerX;
+        screenRect.right  -= scrollerX;
+        screenRect.top    -= scrollerY;
+        screenRect.bottom -= scrollerY;
+
+        MainWindowx->ScreenWindow->InvalidateRect(screenRect, false);
     }
     else
     {
+        // We are not zoomed.
+        // Draw the line directly on the screen, rather than invalidating
+        // the region containing the line because doing is 400% faster
+        // on the squiral benchmark.
+        HDC ScreenDC = MainWindowx->ScreenWindow->GetScreenDeviceContext();
+        SetROP2(ScreenDC, LineMode);
+
+        if (EnablePalette)
+        {
+            OldPalette = SelectPalette(ScreenDC, ThePalette, FALSE);
+            RealizePalette(ScreenDC);
+        }
+
+        oldPen = (HPEN) SelectObject(ScreenDC, Pen);
+
         TScroller * scroller = MainWindowx->ScreenWindow->Scroller;
 
         UINT screenFromX = FromX - scroller->XPos;
@@ -1236,15 +1281,15 @@ transline_helper(
         {
             SetPixel(ScreenDC, screenFromX, screenFromY, LogicalPen.lopnColor);
         }
-    }
 
-    if (EnablePalette)
-    {
-        SelectPalette(ScreenDC, OldPalette, FALSE);
-    }
+        if (EnablePalette)
+        {
+            SelectPalette(ScreenDC, OldPalette, FALSE);
+        }
 
-    // restore the previous pen
-    SelectObject(ScreenDC, oldPen);
+        // restore the previous pen
+        SelectObject(ScreenDC, oldPen);
+    }
 }
 
 
