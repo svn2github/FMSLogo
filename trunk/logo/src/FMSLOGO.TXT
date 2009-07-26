@@ -37,6 +37,8 @@ II. New features/bugs fixed:
       tone when given a negative duration.
     o Fix bug #1438443; the "up" radio button in the editor's find dialog
       box now works.
+    o Fix bug #1327775; FMSLogo now cleans up the "turtle traces" (when parts
+      of the turtle are drawn outside the turtle's drawable area).
     o Implement request #1828287; The editor now support automatic paren
       highlighting and CTRL+/ moves the caret to the matching paren.
     o Interpolate colors when zoomed out or using BITFIT to shrink an image.

@@ -359,7 +359,7 @@ void TScreenWindow::Paint(TDC &PaintDC, bool /* erase */, TRect &PaintRect)
     }
 
 
-    if (the_zoom == 1.0)
+    if (!zoom_flag)
     {
         // fill the part to the right of the screen.
         if (BitMapWidth < PaintRect.Right())
@@ -421,6 +421,29 @@ void TScreenWindow::Paint(TDC &PaintDC, bool /* erase */, TRect &PaintRect)
         sourceRect.right  /= the_zoom;
         sourceRect.bottom /= the_zoom;
 
+        // fill the part to the right of the screen.
+        if (BitMapWidth < sourceRect.Right())
+        {
+            RECT toFill;
+            toFill.left   = BitMapWidth        * the_zoom;
+            toFill.right  = sourceRect.Right() * the_zoom;
+            toFill.top    = 0;
+            toFill.bottom = BitMapHeight * the_zoom;
+
+            FillRect(PaintDC, &toFill, m_WhiteBrush);
+        }
+        // fill the part below the screen.
+        if (BitMapHeight < sourceRect.Bottom())
+        {
+            RECT toFill;
+            toFill.left   = sourceRect.Left()   * the_zoom;
+            toFill.right  = sourceRect.Right()  * the_zoom;
+            toFill.top    = BitMapHeight        * the_zoom;
+            toFill.bottom = sourceRect.Bottom() * the_zoom;
+
+            FillRect(PaintDC, &toFill, m_WhiteBrush);
+        }
+
         // Make sure that none of rectangle's borders are off-screen
         // after we inflated it.
         if (sourceRect.left < 0)
@@ -440,12 +463,18 @@ void TScreenWindow::Paint(TDC &PaintDC, bool /* erase */, TRect &PaintRect)
             sourceRect.bottom = BitMapHeight;
         }
 
+        TRect destRect;
+        destRect.left   = sourceRect.left   * the_zoom;
+        destRect.top    = sourceRect.top    * the_zoom;
+        destRect.right  = sourceRect.right  * the_zoom;
+        destRect.bottom = sourceRect.bottom * the_zoom;
+
         StretchBlt(
             PaintDC,
-            sourceRect.Left() * the_zoom,
-            sourceRect.Top() * the_zoom,
-            sourceRect.Width() * the_zoom,
-            sourceRect.Height() * the_zoom,
+            destRect.Left(),
+            destRect.Top(),
+            destRect.Width(),
+            destRect.Height(),
             memoryDC,
             sourceRect.Left(),
             sourceRect.Top(),
