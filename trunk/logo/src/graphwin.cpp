@@ -1178,7 +1178,7 @@ NODE *lbitblock(NODE *arg)
 
                 // Invalidate the portion of the screen that corresponds
                 // to the region of memory that we filled.
-                // Every since we stopped calling GetDC() and ReleaseDC()
+                // Ever since we stopped calling GetDC() and ReleaseDC()
                 // to get the screen DC, simply calling FillRect() on the
                 // screen causes repainting problems.
                 // I suspect that calling ReleaseDC() implicitly invalidated
