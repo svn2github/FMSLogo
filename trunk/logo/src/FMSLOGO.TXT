@@ -26,6 +26,9 @@ II. New features/bugs fixed:
     o Fix bug #2819812; Buttons created with BUTTONCREATE now respond to
       being pressed with the keyboard.
     o Fix bug #2819806; NUMBERP on a non-ASCII word now outputs FALSE.
+    o Fix bug #2813670; OK and Cancel buttons for SELECTBOX no longer have
+      access keys.  This was unnecessary because they have shortcuts (Enter
+      and Esc).
     o Fix bug #2803946; SETPENCOLOR, SETSCREENCOLOR, SETFLOODCOLOR, SETPIXEL,
       SETACTIVEAREA, SETPENSIZE, TONE, and GIFSAVE no longer crash when given
       very large numbers (like 1e20) as input.

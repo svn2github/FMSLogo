@@ -615,8 +615,8 @@
 //
 // General localized strings
 //
-#define LOCALIZED_GENERAL_OKBUTTON      "&Valider"
-#define LOCALIZED_GENERAL_CANCELBUTTON  "&Annuler"
+#define LOCALIZED_GENERAL_OKBUTTON      "Valider"
+#define LOCALIZED_GENERAL_CANCELBUTTON  "Annuler"
 #define LOCALIZED_GENERAL_APPLYBUTTON   "&Appliquer"
 
 #define LOCALIZED_GENERAL_PRODUCTNAME   "FMSLogo"

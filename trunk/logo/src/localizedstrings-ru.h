@@ -615,8 +615,8 @@
 //
 // General localized strings
 //
-#define LOCALIZED_GENERAL_OKBUTTON      "&ОК" 
-#define LOCALIZED_GENERAL_CANCELBUTTON  "&Отмена" 
+#define LOCALIZED_GENERAL_OKBUTTON      "ОК" 
+#define LOCALIZED_GENERAL_CANCELBUTTON  "Отмена" 
 #define LOCALIZED_GENERAL_APPLYBUTTON   "&Применить" 
 
 #define LOCALIZED_GENERAL_PRODUCTNAME   "FMSLogo" 
