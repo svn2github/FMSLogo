@@ -884,7 +884,6 @@ extern char TempPathName[];
 extern char TempBmpName[];
 extern char TempClipName[];
 extern char szHelpFileName[];
-extern char MCIHelpFileName[];
 
 extern HINSTANCE ModulehInstance;
 
