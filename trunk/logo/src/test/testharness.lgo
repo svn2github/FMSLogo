@@ -32,6 +32,7 @@ LOAD "bitwise.lgo
 LOAD "reduce.lgo
 LOAD "activearea.lgo
 LOAD "bitmap.lgo
+LOAD "bitfit.lgo
 LOAD "gif.lgo
 LOAD "form.lgo
 LOAD "plist.lgo
@@ -185,6 +186,7 @@ TO TESTALL
   CASCADETEST         ; from cascade.lgo
   ACTIVEAREATEST      ; from activearea.lgo
   BITMAPTEST          ; from bitmap.lgo
+  BITFITTEST          ; from bitfit.lgo
   GIFTEST             ; from gif.lgo
   BITMODETEST         ; from bitmode.lgo
   BITBLOCKTEST        ; from bitblock.lgo
