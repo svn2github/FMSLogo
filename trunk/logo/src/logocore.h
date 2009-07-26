@@ -302,11 +302,9 @@ IsSpace(char ch)
     case '\f':
     case '\v':
         return true;
-        break;
 
     default:
         return false;
-        break;
     }
 }
 
