@@ -1086,7 +1086,7 @@ void zoom_helper(FLONUM NewZoomFactor)
         draw_turtle(true);
 
         // paint
-        screen->Invalidate(true);
+        screen->Invalidate();
     }
 }
 
