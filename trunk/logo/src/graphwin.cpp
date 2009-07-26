@@ -1054,15 +1054,6 @@ void UpdateZoomControlFlag()
     {
         zoom_flag = false;
     }
-
-    if (the_zoom != 1.0)
-    {
-        MainWindowx->ScreenWindow->Scroller->TrackMode = FALSE;
-    }
-    else
-    {
-        MainWindowx->ScreenWindow->Scroller->TrackMode = TRUE;
-    }
 }
 
 // The real work of zooming is done in Paint this just adjusts the scroller

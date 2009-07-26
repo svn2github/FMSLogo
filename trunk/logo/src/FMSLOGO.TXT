@@ -36,6 +36,8 @@ II. New features/bugs fixed:
       input, instead of display a dialog box and throwing a stopping error.
     o Fix bug #1602936; the sample turtle trails in the "Pen Size" dialog
       no longer have beveled corners.
+    o Fix bug #1602855; Scolling the main window when zoomed now tracks the
+      scrollbar's position (the screen slides as you scroll the tracker).
     o Fix bug #1576435; TONE no longer indefinately locks up while playing a
       tone when given a negative duration.
     o Fix bug #1438443; the "up" radio button in the editor's find dialog
