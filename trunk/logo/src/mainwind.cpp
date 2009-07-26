@@ -396,77 +396,86 @@ void TScreenWindow::Paint(TDC &PaintDC, bool /* erase */, TRect &PaintRect)
             PaintRect.Top(),
             SRCCOPY);
     }
-    else if (the_zoom > 1.0)
-    {
-        // We are zoomed in.  Compute scaling and then display
-        TRect sourceRect(PaintRect);
-
-        // Expand the source rectangle a little bit based zoom factor 
-        // (rounding to the nearest integer, as necessary)
-        const int inflateIncrement = ((int)(the_zoom+0.5))*2;
-        sourceRect.Inflate(inflateIncrement, inflateIncrement);
-
-        sourceRect.left   /= the_zoom;
-        sourceRect.top    /= the_zoom;
-        sourceRect.right  /= the_zoom;
-        sourceRect.bottom /= the_zoom;
-
-        // Make sure that none of rectangle's borders are off-screen
-        // after we inflated it.
-        if (sourceRect.left < 0)
-        {
-            sourceRect.left = 0;
-        }
-        if (sourceRect.top < 0)
-        {
-            sourceRect.top = 0;
-        }
-        if (sourceRect.right > BitMapWidth)
-        {
-            sourceRect.right = BitMapWidth;
-        }
-        if (sourceRect.bottom > BitMapHeight)
-        {
-            sourceRect.bottom = BitMapHeight;
-        }
-
-
-        SetStretchBltMode(PaintDC, COLORONCOLOR);
-
-        StretchBlt(
-            PaintDC,
-            sourceRect.Left() * the_zoom,
-            sourceRect.Top() * the_zoom,
-            sourceRect.Width() * the_zoom,
-            sourceRect.Height() * the_zoom,
-            memoryDC,
-            sourceRect.Left(),
-            sourceRect.Top(),
-            sourceRect.Width(),
-            sourceRect.Height(),
-            SRCCOPY);
-    }
     else
     {
-        // We are zoomed out.  Compute scaling and then display
-        SetStretchBltMode(PaintDC, COLORONCOLOR);
+        // We are zoomed in.  Compute scaling and then display
+        if (g_OsVersionInformation.dwPlatformId == VER_PLATFORM_WIN32_NT)
+        {
+            SetStretchBltMode(PaintDC, HALFTONE);
+        }
+        else
+        {
+            // HALFTONE is not supported on Win 95/98/ME
+            SetStretchBltMode(PaintDC, COLORONCOLOR);
+        }
 
-        StretchBlt(
-            PaintDC,
-            0,
-            0,
-            BitMapWidth * the_zoom,
-            BitMapHeight * the_zoom,
-            memoryDC,
-            0,
-            0,
-            BitMapWidth,
-            BitMapHeight,
-            SRCCOPY);
+        if (the_zoom > 1.0) 
+        {
+            TRect sourceRect(PaintRect);
+
+            // Expand the source rectangle a little bit based zoom factor 
+            // (rounding to the nearest integer, as necessary)
+            const int inflateIncrement = ((int)(the_zoom+0.5))*2;
+            sourceRect.Inflate(inflateIncrement, inflateIncrement);
+
+            sourceRect.left   /= the_zoom;
+            sourceRect.top    /= the_zoom;
+            sourceRect.right  /= the_zoom;
+            sourceRect.bottom /= the_zoom;
+
+            // Make sure that none of rectangle's borders are off-screen
+            // after we inflated it.
+            if (sourceRect.left < 0)
+            {
+                sourceRect.left = 0;
+            }
+            if (sourceRect.top < 0)
+            {
+                sourceRect.top = 0;
+            }
+            if (sourceRect.right > BitMapWidth)
+            {
+                sourceRect.right = BitMapWidth;
+            }
+            if (sourceRect.bottom > BitMapHeight)
+            {
+                sourceRect.bottom = BitMapHeight;
+            }
+
+
+            StretchBlt(
+                PaintDC,
+                sourceRect.Left() * the_zoom,
+                sourceRect.Top() * the_zoom,
+                sourceRect.Width() * the_zoom,
+                sourceRect.Height() * the_zoom,
+                memoryDC,
+                sourceRect.Left(),
+                sourceRect.Top(),
+                sourceRect.Width(),
+                sourceRect.Height(),
+                SRCCOPY);
+        }
+        else
+        {
+            // We are zoomed out, we we always copy the full memory bitmap,
+            // into the upper-left corner of the screen.
+            StretchBlt(
+                PaintDC,
+                0,
+                0,
+                BitMapWidth * the_zoom,
+                BitMapHeight * the_zoom,
+                memoryDC,
+                0,
+                0,
+                BitMapWidth,
+                BitMapHeight,
+                SRCCOPY);
+        }
     }
 
-    /* restore resources */
-
+    // restore resources
     if (EnablePalette)
     {
         SelectPalette(memoryDC, oldPalette2, FALSE);

@@ -1740,7 +1740,15 @@ NODE *lbitfit(NODE *arg)
                 RealizePalette(TempMemDC);
             }
 
-            SetStretchBltMode(TempMemDC, COLORONCOLOR);
+            if (g_OsVersionInformation.dwPlatformId == VER_PLATFORM_WIN32_NT)
+            {
+                SetStretchBltMode(TempMemDC, HALFTONE);
+            }
+            else
+            {
+                // HALFTONE is not supported on Win 95/98/ME
+                SetStretchBltMode(TempMemDC, COLORONCOLOR);
+            }
 
             // Load hour-glass cursor.
             HCURSOR oldCursor =::SetCursor(hCursorWait);
