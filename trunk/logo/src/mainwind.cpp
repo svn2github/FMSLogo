@@ -240,20 +240,33 @@ TScreenWindow::TScreenWindow(
     LPCSTR   ATitle
     ) : TWindow(AParent, ATitle),
         m_ScreenDeviceContext(NULL),
-        m_MemoryDeviceContext(NULL)
+        m_MemoryDeviceContext(NULL),
+        m_WhiteBrush(NULL)
 {
     if (!bFixed)
     {
         Attr.Style |= WS_VSCROLL | WS_HSCROLL;
     }
     Attr.Style |= WS_BORDER;
-   	
+
+    // create the brush that we use to wipe the screen with.
+    LOGBRUSH whiteBrushLog;
+    whiteBrushLog.lbStyle = BS_SOLID;
+    whiteBrushLog.lbColor = RGB(255, 255, 255);
+    whiteBrushLog.lbHatch = HS_VERTICAL;
+    m_WhiteBrush = CreateBrushIndirect(&whiteBrushLog);
+
     Scroller = new TScroller(this, 1, 1, BitMapWidth, BitMapHeight);
 }
 
 TScreenWindow::~TScreenWindow()
 {
     delete Scroller;
+
+    if (m_WhiteBrush != NULL)
+    {
+        DeleteObject(m_WhiteBrush);
+    }
 }
 
 void TScreenWindow::SetupWindow()
@@ -345,10 +358,33 @@ void TScreenWindow::Paint(TDC &PaintDC, bool /* erase */, TRect &PaintRect)
         RealizePalette(memoryDC);
     }
 
-    /* if 1 to 1 the just do normal paint */
 
     if (the_zoom == 1.0)
     {
+        // fill the part to the right of the screen.
+        if (BitMapWidth < PaintRect.Right())
+        {
+            RECT toFill;
+            toFill.left   = BitMapWidth;
+            toFill.right  = PaintRect.Right();
+            toFill.top    = 0;
+            toFill.bottom = BitMapHeight;
+
+            FillRect(PaintDC, &toFill, m_WhiteBrush);
+        }
+        // fill the part below the screen.
+        if (BitMapHeight < PaintRect.Bottom())
+        {
+            RECT toFill;
+            toFill.left   = PaintRect.Left();
+            toFill.right  = PaintRect.Right();
+            toFill.top    = BitMapHeight;
+            toFill.bottom = PaintRect.Bottom();
+
+            FillRect(PaintDC, &toFill, m_WhiteBrush);
+        }
+
+        // The zoom is 1:1.  Just do a 1:1 BLIT (no scaling).
         BitBlt(
             PaintDC,
             PaintRect.Left(),
@@ -360,57 +396,59 @@ void TScreenWindow::Paint(TDC &PaintDC, bool /* erase */, TRect &PaintRect)
             PaintRect.Top(),
             SRCCOPY);
     }
-
-    /* else compute scaling and then display */
-
     else if (the_zoom > 1.0)
     {
-        TRect TempRect;
+        // We are zoomed in.  Compute scaling and then display
+        TRect sourceRect(PaintRect);
 
-        TempRect = PaintRect;
+        // Expand the source rectangle a little bit based zoom factor 
+        // (rounding to the nearest integer, as necessary)
+        const int inflateIncrement = ((int)(the_zoom+0.5))*2;
+        sourceRect.Inflate(inflateIncrement, inflateIncrement);
 
-        TempRect.Inflate(((int) (the_zoom+0.5))*2, ((int) (the_zoom+0.5))*2);
+        sourceRect.left   /= the_zoom;
+        sourceRect.top    /= the_zoom;
+        sourceRect.right  /= the_zoom;
+        sourceRect.bottom /= the_zoom;
 
-        TempRect.left   /= the_zoom;
-        TempRect.top    /= the_zoom;
-        TempRect.right  /= the_zoom;
-        TempRect.bottom /= the_zoom;
+        // Make sure that none of rectangle's borders are off-screen
+        // after we inflated it.
+        if (sourceRect.left < 0)
+        {
+            sourceRect.left = 0;
+        }
+        if (sourceRect.top < 0)
+        {
+            sourceRect.top = 0;
+        }
+        if (sourceRect.right > BitMapWidth)
+        {
+            sourceRect.right = BitMapWidth;
+        }
+        if (sourceRect.bottom > BitMapHeight)
+        {
+            sourceRect.bottom = BitMapHeight;
+        }
 
-        if (TempRect.left < 0)
-        {
-            TempRect.left = 0;
-        }
-        if (TempRect.top < 0)
-        {
-            TempRect.top = 0;
-        }
-        if (TempRect.right > BitMapWidth)
-        {
-            TempRect.right = BitMapWidth;
-        }
-        if (TempRect.bottom > BitMapHeight)
-        {
-            TempRect.bottom = BitMapHeight;
-        }
 
         SetStretchBltMode(PaintDC, COLORONCOLOR);
 
         StretchBlt(
             PaintDC,
-            TempRect.Left()   * the_zoom,
-            TempRect.Top()    * the_zoom,
-            TempRect.Width()  * the_zoom,
-            TempRect.Height() * the_zoom,
+            sourceRect.Left() * the_zoom,
+            sourceRect.Top() * the_zoom,
+            sourceRect.Width() * the_zoom,
+            sourceRect.Height() * the_zoom,
             memoryDC,
-            TempRect.Left()  ,
-            TempRect.Top()   ,
-            TempRect.Width() ,
-            TempRect.Height(),
+            sourceRect.Left(),
+            sourceRect.Top(),
+            sourceRect.Width(),
+            sourceRect.Height(),
             SRCCOPY);
     }
     else
     {
-        /* else compute scaling and then display */
+        // We are zoomed out.  Compute scaling and then display
         SetStretchBltMode(PaintDC, COLORONCOLOR);
 
         StretchBlt(
@@ -437,8 +475,7 @@ void TScreenWindow::Paint(TDC &PaintDC, bool /* erase */, TRect &PaintRect)
 
     SelectObject(memoryDC, oldBitmap);
 
-    /* if turtle do it */
-
+    // draw the turtles on top of the image
     SetROP2(PaintDC, R2_NOT);
 
     for (int j = 0; j <= g_MaxTurtle; j++)
@@ -950,7 +987,6 @@ TMainFrame::~TMainFrame()
 {
     /* clean things up */
     delete CommandWindow;
-
     delete ScreenWindow;
 
     /* if palette clean it too */
