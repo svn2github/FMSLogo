@@ -635,8 +635,9 @@ protected:
 private:
     void GetScrollRatios(FLONUM & XRatio, FLONUM & YRatio);
 
-    HDC   m_ScreenDeviceContext;
-    HDC   m_MemoryDeviceContext;
+    HDC    m_ScreenDeviceContext;
+    HDC    m_MemoryDeviceContext;
+    HBRUSH m_WhiteBrush;
 };
 
 class TMainFrame : public TDecoratedFrame
