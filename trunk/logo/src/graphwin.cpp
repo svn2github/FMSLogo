@@ -1688,8 +1688,8 @@ NODE *lbitfit(NODE *arg)
 {
     ASSERT_TURTLE_INVARIANT;
 
-    FLONUM FitWidth = getint(pos_int_arg(arg));
-    FLONUM FitHeight = getint(pos_int_arg(cdr(arg)));
+    FIXNUM newWidth  = getint(pos_int_arg(arg));
+    FIXNUM newHeight = getint(pos_int_arg(cdr(arg)));
 
     if (NOT_THROWING)
     {
@@ -1699,10 +1699,9 @@ NODE *lbitfit(NODE *arg)
             PasteFromClipboardToBitmapArray();
         }
 
-        // only if we have a surface to fit to and from continue
-        if ((FitWidth != 0) && (FitHeight != 0) && g_SelectedBitmap->IsValid)
+        // resize the bitmap if we have a surface to fit to and from
+        if (newWidth != 0 && newHeight != 0 && g_SelectedBitmap->IsValid)
         {
-
             HDC ScreenDC = MainWindowx->ScreenWindow->GetScreenDeviceContext();
             HDC MemDC    = MainWindowx->ScreenWindow->GetMemoryDeviceContext();
 
@@ -1718,7 +1717,7 @@ NODE *lbitfit(NODE *arg)
                 RealizePalette(MemDC);
             }
 
-            HBITMAP TempMemoryBitMap = CreateCompatibleBitmap(ScreenDC, (int) FitWidth, (int) FitHeight);
+            HBITMAP TempMemoryBitMap = CreateCompatibleBitmap(ScreenDC, newWidth, newHeight);
             if (!TempMemoryBitMap)
             {
                 ShowErrorMessageAndStop(LOCALIZED_ERROR_BITMAPFITFAILED);
@@ -1757,8 +1756,8 @@ NODE *lbitfit(NODE *arg)
                 TempMemDC,
                 0,
                 0,
-                FitWidth,
-                FitHeight,
+                newWidth,
+                newHeight,
                 MemDC,
                 0,
                 0,
@@ -1783,8 +1782,8 @@ NODE *lbitfit(NODE *arg)
             DeleteObject(g_SelectedBitmap->MemoryBitMap);
             g_SelectedBitmap->MemoryBitMap = TempMemoryBitMap;
 
-            g_SelectedBitmap->Width = FitWidth;
-            g_SelectedBitmap->Height = FitHeight;
+            g_SelectedBitmap->Width  = newWidth;
+            g_SelectedBitmap->Height = newHeight;
 
             if (ClipboardIsSelectedBitmap())
             {
