@@ -601,7 +601,7 @@
 #define LOCALIZED_ALTERNATE_WINDOWDELETE           "ΠΑΡΑΘΥΡΟ_ΔΙΑΓΡΑΦΗ" // 
 #define LOCALIZED_ALTERNATE_WINDOWFILEEDIT         "windowfileedit" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_WINDOWSET              "windowset" // NOT_YET_LOCALIZED
-#define LOCALIZED_ALTERNATE_WINHELP                "winhelp" // NOT_YET_LOCALIZED
+#define LOCALIZED_ALTERNATE_WINHELP                "BOHUEIA" // 
 #define LOCALIZED_ALTERNATE_WORD                   "ΛΕΞΗ" // 
 #define LOCALIZED_ALTERNATE_WORDP                  "wordp" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_WORD_                  "ΛΕΞΗ?" // 
@@ -661,11 +661,11 @@
 
 #define LOCALIZED_HELP                 "&Βοήθεια"  // 
 #define LOCALIZED_HELP_INDEX           "&Θέματα στη βοήθεια" // 
-#define LOCALIZED_HELP_TUTORIAL        "&Μάθημα" // Perhaps not the best one for "tutorial"
+#define LOCALIZED_HELP_TUTORIAL        "&Μάθημα" // 
 #define LOCALIZED_HELP_DEMO            "&Επίδειξη"  // 
 #define LOCALIZED_HELP_EXAMPLE         "&Παραδείγματα" // 
 #define LOCALIZED_HELP_RELEASENOTES    "&Σημειώσεις έκδοσης" // 
-#define LOCALIZED_HELP_ABOUTFMSLOGO    "&Πληροφορίες για την "LOCALIZED_GENERAL_PRODUCTNAME"..." // I have assumed here that FMSLogo would be female grammatically, as are all the programming languages in Greek
+#define LOCALIZED_HELP_ABOUTFMSLOGO    "&Πληροφορίες για την "LOCALIZED_GENERAL_PRODUCTNAME"..." 
 #define LOCALIZED_HELP_MS              "&Πληροφορίες για την MS..." // 
 // The following two help options display tables for translating to/from English
 // These tables are built from the LOCALIZED_ALTERNATE_* macros above and the
@@ -694,7 +694,7 @@
 #define LOCALIZED_POPUP_PASTE                    "&Επικόλληση" // 
 #define LOCALIZED_POPUP_DELETE                   "&Διαγραφή" // 
 #define LOCALIZED_POPUP_UNDO                     "Α&ναίρεση" // 
-#define LOCALIZED_POPUP_REDO                     "Redo" // NOT_YET_LOCALIZED
+#define LOCALIZED_POPUP_REDO                     "Ακύρωση αναίρεσης" // 
 #define LOCALIZED_POPUP_SELECTALL                "Ε&πιλογή όλων" // 
 #define LOCALIZED_POPUP_HELP                     "Ανα&ζήτηση στη βοήθεια" // 
 
@@ -711,7 +711,7 @@
 
 #define LOCALIZED_EDITOR_EDIT                    "&Επεξεργασία" // 
 #define LOCALIZED_EDITOR_EDIT_UNDO               "Αναίρεσ&η\tCtrl+Z" // 
-#define LOCALIZED_EDITOR_EDIT_REDO               "&Redo\tCtrl+Y" // NOT_YET_LOCALIZED
+#define LOCALIZED_EDITOR_EDIT_REDO               "Ακύρωση αναίρεσης\tCtrl+Y" // 
 #define LOCALIZED_EDITOR_EDIT_CUT                "Απ&οκοπή\tCtrl+X" // 
 #define LOCALIZED_EDITOR_EDIT_COPY               "Αντι&γραφή\tCtrl+C" // 
 #define LOCALIZED_EDITOR_EDIT_PASTE              "&Επικόλληση\tCtrl+V" // 
@@ -775,13 +775,13 @@
 #define LOCALIZED_STATUS_HEADING                "Κατεύθυνση:" // 
 #define LOCALIZED_STATUS_ROLL                   "Στροφή:" // 
 #define LOCALIZED_STATUS_TURTLE                 "Χελώνα" // 
-#define LOCALIZED_STATUS_POSITION               "Θέση (XYZ):" // XYZ is fine :P
+#define LOCALIZED_STATUS_POSITION               "Θέση (XYZ):" //
 #define LOCALIZED_STATUS_WHICH                  "Χελώνα:" // 
 #define LOCALIZED_STATUS_VISIBILITY             "Ορατότητα:" // 
 #define LOCALIZED_STATUS_COLOR                  "Χρώμα" // 
-#define LOCALIZED_STATUS_PENCOLOR               "Πένα (ΚΠΓ):" // Maybe a teacher would recognize RGB more easily than the Greek equivalent, but I've translated it anyway.
-#define LOCALIZED_STATUS_FLOODCOLOR             "Γέμισμα (ΚΠΓ):" // 
-#define LOCALIZED_STATUS_SCREENCOLOR            "Οθόνη (ΚΠΓ):" // 
+#define LOCALIZED_STATUS_PENCOLOR               "Πένα (ΚΠΓ/RGB):" //
+#define LOCALIZED_STATUS_FLOODCOLOR             "Γέμισμα (ΚΠΓ/RGB):" // 
+#define LOCALIZED_STATUS_SCREENCOLOR            "Οθόνη (ΚΠΓ/RGB):" // 
 #define LOCALIZED_STATUS_PALETTE                "Παλέτα:" // 
 #define LOCALIZED_STATUS_KERNEL                 "Πυρήνας" // 
 #define LOCALIZED_STATUS_CALLS                  "Κλήσεις:" // 
@@ -813,9 +813,9 @@
 // Strings on the Color Picker Dialog box
 //
 #define LOCALIZED_SETCOLOR                     "Ρύθμιση χρώματος" // 
-#define LOCALIZED_SETCOLOR_PENCOLOR            "Pen Color" // NOT_YET_LOCALIZED
-#define LOCALIZED_SETCOLOR_FLOODCOLOR          "Flood Color" // NOT_YET_LOCALIZED
-#define LOCALIZED_SETCOLOR_SCREENCOLOR         "Screen Color" // NOT_YET_LOCALIZED
+#define LOCALIZED_SETCOLOR_PENCOLOR            "Χρώμα πένας" // 
+#define LOCALIZED_SETCOLOR_FLOODCOLOR          "Χρώμα γεμίσματος" // 
+#define LOCALIZED_SETCOLOR_SCREENCOLOR         "Χρώμα οθόνης" // 
 #define LOCALIZED_SETCOLOR_RED                 "Κόκκινο" // 
 #define LOCALIZED_SETCOLOR_GREEN               "Πράσινο" // 
 #define LOCALIZED_SETCOLOR_BLUE                "Γαλάζιο" // 
@@ -853,7 +853,7 @@
 // Strings on the "About FMS" Dialog box
 //
 #define LOCALIZED_ABOUTMS                      "Πληροφορίες για το FMS" // 
-#define LOCALIZED_ABOUTMS_FMS                  "FMS σημαίνει Fight Multiple Sclerosis." // Maybe someone should give an accurate translation of Multiple Sclerosis
+#define LOCALIZED_ABOUTMS_FMS                  "FMS σημαίνει Fight Multiple Sclerosis." //
 #define LOCALIZED_ABOUTMS_CONSIDERDONATING     "Please consider donating to the\nNational Multiple Sclerosis Society.\nhttp:\x2F/www.nmss.org\n1-800-FIGHT-MS" // NOT_YET_LOCALIZED
 #define LOCALIZED_ABOUTMS_OK                   LOCALIZED_GENERAL_OKBUTTON // 
 
