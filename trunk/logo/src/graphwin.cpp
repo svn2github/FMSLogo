@@ -2328,6 +2328,14 @@ NODE *lhasownpenp(NODE*)
     return true_or_false(g_SelectedTurtle->HasOwnPenState);
 }
 
+static double linearInterpolate(double a, double b, double alpha)
+{
+    assert(0.0 <= alpha);
+    assert(alpha <= 1.0);
+
+    return a * (1 - alpha) + b * alpha;
+}
+
 void turtlepaste(int TurtleToPaste)
 {
     ASSERT_TURTLE_INVARIANT;
@@ -2424,24 +2432,182 @@ void turtlepaste(int TurtleToPaste)
             // Now do the rotating, one pixel at a time.
             // Find the pixel that cooresponds to each point in the destination
             // rectangle to guarantee that each pixel gets covered.
-            for (int y = miny; y < maxy; y++)
+            const TRANSPARENT_COLOR = RGB(255, 255, 255);
+            if (EnablePalette)
             {
-                for (int x = minx; x < maxx; x++)
+                // The display has a palette, so bilinear interpolation would not work.
+                for (int y = miny; y < maxy; y++)
                 {
-                    int sourcex = (int)((X_ROTATED(x, y, cosine, sine) / the_zoom + xOrigin));
-                    int sourcey = (int)((Y_ROTATED(x, y, cosine, sine) / the_zoom + yOrigin));
-
-                    if (0 <= sourcex && sourcex < g_Bitmaps[TurtleToPaste].Width &&
-                        0 <= sourcey && sourcey < g_Bitmaps[TurtleToPaste].Height)
+                    for (int x = minx; x < maxx; x++)
                     {
-                        const COLORREF pixel = ::GetPixel(TempMemDC, sourcex, sourcey);
-                        if (pixel != RGB(255,255,255))
+                        int sourcex = (int)((X_ROTATED(x, y, cosine, sine) / the_zoom + xOrigin));
+                        int sourcey = (int)((Y_ROTATED(x, y, cosine, sine) / the_zoom + yOrigin));
+
+                        if (0 <= sourcex && sourcex < g_Bitmaps[TurtleToPaste].Width &&
+                            0 <= sourcey && sourcey < g_Bitmaps[TurtleToPaste].Height)
                         {
-                            SetPixelV(
-                                ScreenDC,
-                                x + xScreenOffset,
-                                y + yScreenOffset,
-                                pixel);
+                            const COLORREF pixel = ::GetPixel(TempMemDC, sourcex, sourcey);
+                            if (pixel != TRANSPARENT_COLOR)
+                            {
+                                SetPixelV(
+                                    ScreenDC,
+                                    x + xScreenOffset,
+                                    y + yScreenOffset,
+                                    pixel);
+                            }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                // Use bilinear interpolation to make the picture look nice at rough angles.
+                for (int y = miny; y < maxy; y++)
+                {
+                    for (int x = minx; x < maxx; x++)
+                    {
+                        FLONUM sourcex = ((X_ROTATED(x, y, cosine, sine) / the_zoom + xOrigin));
+                        FLONUM sourcey = ((Y_ROTATED(x, y, cosine, sine) / the_zoom + yOrigin));
+
+                        if (0 <= sourcex && 0 <= sourcey)
+                        {
+                            if (sourcex < g_Bitmaps[TurtleToPaste].Width  - 1 &&
+                                sourcey < g_Bitmaps[TurtleToPaste].Height - 1)
+                            {
+                                // full bilinear interpolation is necessary
+                                FLONUM xFraction = modf(sourcex, &sourcex);
+                                FLONUM yFraction = modf(sourcey, &sourcey);
+
+                                COLORREF pixelx0y0 = ::GetPixel(TempMemDC, sourcex,     sourcey);
+                                COLORREF pixelx0y1 = ::GetPixel(TempMemDC, sourcex,     sourcey + 1);
+                                COLORREF pixelx1y0 = ::GetPixel(TempMemDC, sourcex + 1, sourcey);
+                                COLORREF pixelx1y1 = ::GetPixel(TempMemDC, sourcex + 1, sourcey + 1);
+
+                                // get the screen's value for each of the transparent pixels
+                                const COLORREF screenPixel = GetPixel(ScreenDC, x + xScreenOffset, y + yScreenOffset);
+
+                                if (pixelx0y0 == TRANSPARENT_COLOR)
+                                {
+                                    pixelx0y0 = screenPixel;
+                                }
+                                if (pixelx1y0 == TRANSPARENT_COLOR)
+                                {
+                                    pixelx1y0 = screenPixel;
+                                }
+                                if (pixelx0y1 == TRANSPARENT_COLOR)
+                                {
+                                    pixelx0y1 = screenPixel;
+                                }
+                                if (pixelx1y1 == TRANSPARENT_COLOR)
+                                {
+                                    pixelx1y1 = screenPixel;
+                                }
+
+                                // interpolate red in the X direction, then the Y direction
+                                FLONUM redy0 = linearInterpolate(GetRValue(pixelx0y0), GetRValue(pixelx1y0), xFraction);
+                                FLONUM redy1 = linearInterpolate(GetRValue(pixelx0y1), GetRValue(pixelx1y1), xFraction);
+                                FLONUM red   = linearInterpolate(redy0, redy1, yFraction);
+
+                                // interpolate green in the X direction, then the Y direction
+                                FLONUM greeny0 = linearInterpolate(GetGValue(pixelx0y0), GetGValue(pixelx1y0), xFraction);
+                                FLONUM greeny1 = linearInterpolate(GetGValue(pixelx0y1), GetGValue(pixelx1y1), xFraction);
+                                FLONUM green   = linearInterpolate(greeny0, greeny1, yFraction);
+
+                                // interpolate blue in the X direction, then the Y direction
+                                FLONUM bluey0 = linearInterpolate(GetBValue(pixelx0y0), GetBValue(pixelx1y0), xFraction);
+                                FLONUM bluey1 = linearInterpolate(GetBValue(pixelx0y1), GetBValue(pixelx1y1), xFraction);
+                                FLONUM blue   = linearInterpolate(bluey0, bluey1, yFraction);
+
+                                // compose the red, green, and blue value into a color
+                                COLORREF pixel = RGB(g_round(red), g_round(green), g_round(blue));
+                                SetPixelV(
+                                    ScreenDC,
+                                    x + xScreenOffset,
+                                    y + yScreenOffset,
+                                    pixel);
+                            }
+                            else if (sourcex < g_Bitmaps[TurtleToPaste].Width &&
+                                     sourcey < g_Bitmaps[TurtleToPaste].Height - 1)
+                            {
+                                // We're at the right edge, so linear interpolation in Y is sufficient.
+                                FLONUM yFraction = modf(sourcey, &sourcey);
+
+                                COLORREF pixely0 = ::GetPixel(TempMemDC, g_Bitmaps[TurtleToPaste].Width - 1, sourcey);
+                                COLORREF pixely1 = ::GetPixel(TempMemDC, g_Bitmaps[TurtleToPaste].Width - 1, sourcey + 1);
+
+                                // get the screen's value for each of the transparent pixels
+                                const COLORREF screenPixel = GetPixel(ScreenDC, x + xScreenOffset, y + yScreenOffset);
+
+                                if (pixely0 == TRANSPARENT_COLOR)
+                                {
+                                    pixely0 = screenPixel;
+                                }
+                                if (pixely1 == TRANSPARENT_COLOR)
+                                {
+                                    pixely1 = screenPixel;
+                                }
+
+                                // interpolate red in the Y direction
+                                FLONUM red   = linearInterpolate(GetRValue(pixely0), GetRValue(pixely1), yFraction);
+                                FLONUM green = linearInterpolate(GetGValue(pixely0), GetGValue(pixely1), yFraction);
+                                FLONUM blue  = linearInterpolate(GetBValue(pixely0), GetBValue(pixely1), yFraction);
+
+                                // compose the red, green, and blue value into a color
+                                COLORREF pixel = RGB(g_round(red), g_round(green), g_round(blue));
+                                SetPixelV(
+                                    ScreenDC,
+                                    x + xScreenOffset,
+                                    y + yScreenOffset,
+                                    pixel);
+                            }
+                            else if (sourcex < g_Bitmaps[TurtleToPaste].Width - 1 &&
+                                     sourcey < g_Bitmaps[TurtleToPaste].Height)
+                            {
+                                // We're at the bottom edge, so linear interpolation in X is sufficient.
+                                FLONUM xFraction = modf(sourcex, &sourcex);
+
+                                COLORREF pixelx0 = ::GetPixel(TempMemDC, sourcex,     g_Bitmaps[TurtleToPaste].Height - 1);
+                                COLORREF pixelx1 = ::GetPixel(TempMemDC, sourcex + 1, g_Bitmaps[TurtleToPaste].Height - 1);
+
+                                // get the screen's value for each of the transparent pixels
+                                const COLORREF screenPixel = GetPixel(ScreenDC, x + xScreenOffset, y + yScreenOffset);
+
+                                if (pixelx0 == TRANSPARENT_COLOR)
+                                {
+                                    pixelx0 = screenPixel;
+                                }
+                                if (pixelx1 == TRANSPARENT_COLOR)
+                                {
+                                    pixelx1 = screenPixel;
+                                }
+
+                                // interpolate in the X direction
+                                FLONUM red   = linearInterpolate(GetRValue(pixelx0), GetRValue(pixelx1), xFraction);
+                                FLONUM green = linearInterpolate(GetGValue(pixelx0), GetGValue(pixelx1), xFraction);
+                                FLONUM blue  = linearInterpolate(GetBValue(pixelx0), GetBValue(pixelx1), xFraction);
+
+                                // compose the red, green, and blue value into a color
+                                COLORREF pixel = RGB(g_round(red), g_round(green), g_round(blue));
+                                SetPixelV(
+                                    ScreenDC,
+                                    x + xScreenOffset,
+                                    y + yScreenOffset,
+                                    pixel);
+                            }
+                            else if (sourcex < g_Bitmaps[TurtleToPaste].Width &&
+                                     sourcey < g_Bitmaps[TurtleToPaste].Height)
+                            {
+                                // we're at the corner, so we don't need any interpolation
+                                const COLORREF pixel = ::GetPixel(TempMemDC, sourcex, sourcey);
+                                if (pixel != TRANSPARENT_COLOR)
+                                {
+                                    SetPixelV(
+                                        ScreenDC,
+                                        x + xScreenOffset,
+                                        y + yScreenOffset,
+                                        pixel);
+                                }
+                            }
                         }
                     }
                 }
