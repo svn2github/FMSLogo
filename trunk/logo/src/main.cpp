@@ -1374,18 +1374,14 @@ transline(
 // to invalidate the turtle's bounding box (so it will get erased).
 void ibmturt(bool draw)
 {
-    bool bMinMax = false;
-
-    long minx = 100000;
-    long miny = 100000;
-    long maxx = -100000;
-    long maxy = -100000;
-
     // special turtles must not be drawn
     assert(!g_SelectedTurtle->IsSpecial);
     
     if (draw)
     {
+        // We are supposed to draw the turtle in a new position, we
+        // we need to re-calculate its points.
+
         if (current_mode == perspectivemode)
         {
             // in 3D mode
@@ -1413,13 +1409,6 @@ void ibmturt(bool draw)
                     long iFromy = -from2d.y + yoffset;
                     long iTox   =  to2d.x   + xoffset;
                     long iToy   = -to2d.y   + yoffset;
-               
-                    minx = min(minx, iFromx);
-                    miny = min(miny, iFromy);
-                    maxx = max(maxx, iFromx);
-                    maxy = max(maxy, iFromy);
-
-                    bMinMax = true;
                
                     g_SelectedTurtle->Points[j].from.x = iFromx;
                     g_SelectedTurtle->Points[j].from.y = iFromy;
@@ -1463,11 +1452,6 @@ void ibmturt(bool draw)
                 long iTox   =  iNewx + xoffset;
                 long iToy   = -iNewy + yoffset;
 
-                minx = min(minx, iFromx);
-                miny = min(miny, iFromy);
-                maxx = max(maxx, iFromx);
-                maxy = max(maxy, iFromy);
-
                 g_SelectedTurtle->Points[j].from.x = iFromx;
                 g_SelectedTurtle->Points[j].from.y = iFromy;
                 g_SelectedTurtle->Points[j].to.x   = iTox;
@@ -1479,35 +1463,16 @@ void ibmturt(bool draw)
             // The line that distingiushes left from right is not needed
             // in 2D modes.
             g_SelectedTurtle->Points[3].bValid = false;
-            bMinMax = true;
-        }
-    }
-    else
-    {
-        // We are supposed to erase the turtle, so we only need to
-        // invalidate the turtle's bounding box.
-
-        // consider adding the min/max to turtle points for efficiency
-        for (int j = 0; j < 4; j++)
-        {
-            if (g_SelectedTurtle->Points[j].bValid)
-            {
-                minx = min(minx, (long) (g_SelectedTurtle->Points[j].from.x));
-                miny = min(miny, (long) (g_SelectedTurtle->Points[j].from.y));
-                maxx = max(maxx, (long) (g_SelectedTurtle->Points[j].from.x));
-                maxy = max(maxy, (long) (g_SelectedTurtle->Points[j].from.y));
-                bMinMax = true;
-            }
         }
     }
    
+    bool  needsInvalidation = false;
     TRect screenBoundingBox;
 
     if (g_SelectedTurtle->BitmapRasterMode != 0)
     {
-        // The turtle is bitmapped, so the min/max is the bounding box of the bitmap.
+        // The turtle is bitmapped, we need to invalidate the bounding box of the bitmap.
         POINT dest;
-
         if (current_mode == perspectivemode)
         {
             VECTOR from3d;
@@ -1516,48 +1481,68 @@ void ibmturt(bool draw)
             from3d.y = g_SelectedTurtle->Position.y / WorldHeight;
             from3d.z = g_SelectedTurtle->Position.z / WorldDepth;
 
-            if (ThreeD.TransformPoint(from3d, dest))
-            {
-                bMinMax = true;
-            }
-            else
-            {
-                bMinMax = false;
-            }
+            needsInvalidation = ThreeD.TransformPoint(from3d, dest);
         }
         else
         {
             dest.x = g_round(g_SelectedTurtle->Position.x);
             dest.y = g_round(g_SelectedTurtle->Position.y);
+            needsInvalidation = true;
         }
         
-        // figure out the index into the bitmaps array.
-        CUTMAP & turtleBitmap = g_Bitmaps[g_SelectedTurtle - g_Turtles];
+        // If the turtle is on the screen, then calculate the bounding box.
+        if (needsInvalidation)
+        {
+            // figure out the index into the bitmaps array.
+            CUTMAP & turtleBitmap = g_Bitmaps[g_SelectedTurtle - g_Turtles];
 
-        TScroller * screenScroller = MainWindowx->ScreenWindow->Scroller;
-        screenBoundingBox.Set(
-            (+dest.x - screenScroller->XPos / the_zoom + xoffset                           ) * the_zoom,
-            (-dest.y - screenScroller->YPos / the_zoom + yoffset + LL - turtleBitmap.Height) * the_zoom,
-            (+dest.x - screenScroller->XPos / the_zoom + xoffset + turtleBitmap.Width      ) * the_zoom,
-            (-dest.y - screenScroller->YPos / the_zoom + yoffset + LL                      ) * the_zoom);
+            TScroller * screenScroller = MainWindowx->ScreenWindow->Scroller;
+            screenBoundingBox.Set(
+                (+dest.x - screenScroller->XPos / the_zoom + xoffset                           ) * the_zoom,
+                (-dest.y - screenScroller->YPos / the_zoom + yoffset + LL - turtleBitmap.Height) * the_zoom,
+                (+dest.x - screenScroller->XPos / the_zoom + xoffset + turtleBitmap.Width      ) * the_zoom,
+                (-dest.y - screenScroller->YPos / the_zoom + yoffset + LL                      ) * the_zoom);
 
-        screenBoundingBox.Normalize();
+            screenBoundingBox.Normalize();
+        }
     }
     else
     {
-        // The turtle is draw with lines
-        TScroller * screenScroller = MainWindowx->ScreenWindow->Scroller;
-        screenBoundingBox.left   = (minx - screenScroller->XPos / the_zoom) * the_zoom;
-        screenBoundingBox.top    = (miny - screenScroller->YPos / the_zoom) * the_zoom;
-        screenBoundingBox.right  = (maxx - screenScroller->XPos / the_zoom) * the_zoom;
-        screenBoundingBox.bottom = (maxy - screenScroller->YPos / the_zoom) * the_zoom;
+        // The turtle is drawn with lines, so we need to calculate the bounding box
+        // of these lines.
+
+        // First calculate the bounding box independent of zoom and scroll position.
+        long minx = 100000;
+        long miny = 100000;
+        long maxx = -100000;
+        long maxy = -100000;
+        for (int j = 0; j < 4; j++)
+        {
+            if (g_SelectedTurtle->Points[j].bValid)
+            {
+                minx = min(minx, (long) (g_SelectedTurtle->Points[j].from.x));
+                miny = min(miny, (long) (g_SelectedTurtle->Points[j].from.y));
+                maxx = max(maxx, (long) (g_SelectedTurtle->Points[j].from.x));
+                maxy = max(maxy, (long) (g_SelectedTurtle->Points[j].from.y));
+                needsInvalidation = true;
+            }
+        }
+
+        if (needsInvalidation)
+        {
+            // Adjust the bounding box based on zoom and scroll position.
+            TScroller * screenScroller = MainWindowx->ScreenWindow->Scroller;
+            screenBoundingBox.Set(
+                (minx - screenScroller->XPos / the_zoom) * the_zoom,
+                (miny - screenScroller->YPos / the_zoom) * the_zoom,
+                (maxx - screenScroller->XPos / the_zoom) * the_zoom,
+                (maxy - screenScroller->YPos / the_zoom) * the_zoom);
+        }
     }
 
-
-    screenBoundingBox.Inflate(1+the_zoom,1+the_zoom);
-   
-    if (bMinMax)
+    if (needsInvalidation)
     {
+        screenBoundingBox.Inflate(1+the_zoom,1+the_zoom);
         MainWindowx->ScreenWindow->InvalidateRect(screenBoundingBox, false);
     }
 }
