@@ -2328,12 +2328,25 @@ NODE *lhasownpenp(NODE*)
     return true_or_false(g_SelectedTurtle->HasOwnPenState);
 }
 
-static double linearInterpolate(double a, double b, double alpha)
+static COLORREF InterpolateColors(COLORREF A, COLORREF B, double Alpha)
 {
-    assert(0.0 <= alpha);
-    assert(alpha <= 1.0);
+    if (A == B)
+    {
+        return A;
+    }
 
-    return a * (1 - alpha) + b * alpha;
+    // Alpha used to go from 0 -> 1.
+    // The domain of each color component is only 0-255, so
+    // without a loss of precision, we can change this to integral
+    // math.
+    const int alphaInt         = (int)(Alpha * 4096.5);
+    const int oneMinusAlphaInt = 4096 - alphaInt;
+
+    BYTE red   = (GetRValue(A) * oneMinusAlphaInt + GetRValue(B) * alphaInt) / 4096;
+    BYTE green = (GetGValue(A) * oneMinusAlphaInt + GetGValue(B) * alphaInt) / 4096;
+    BYTE blue  = (GetBValue(A) * oneMinusAlphaInt + GetBValue(B) * alphaInt) / 4096;
+
+    return RGB(red, green, blue);
 }
 
 void turtlepaste(int TurtleToPaste)
@@ -2522,23 +2535,11 @@ void turtlepaste(int TurtleToPaste)
                                         pixelx1y1 = screenPixel;
                                     }
 
-                                    // interpolate red in the X direction, then the Y direction
-                                    FLONUM redy0 = linearInterpolate(GetRValue(pixelx0y0), GetRValue(pixelx1y0), xFraction);
-                                    FLONUM redy1 = linearInterpolate(GetRValue(pixelx0y1), GetRValue(pixelx1y1), xFraction);
-                                    FLONUM red   = linearInterpolate(redy0, redy1, yFraction);
+                                    // interpolate in the X direction, then the Y direction
+                                    COLORREF pixely0 = InterpolateColors(pixelx0y0, pixelx1y0, xFraction);
+                                    COLORREF pixely1 = InterpolateColors(pixelx0y1, pixelx1y1, xFraction);
+                                    COLORREF pixel   = InterpolateColors(pixely0, pixely1, yFraction);
 
-                                    // interpolate green in the X direction, then the Y direction
-                                    FLONUM greeny0 = linearInterpolate(GetGValue(pixelx0y0), GetGValue(pixelx1y0), xFraction);
-                                    FLONUM greeny1 = linearInterpolate(GetGValue(pixelx0y1), GetGValue(pixelx1y1), xFraction);
-                                    FLONUM green   = linearInterpolate(greeny0, greeny1, yFraction);
-
-                                    // interpolate blue in the X direction, then the Y direction
-                                    FLONUM bluey0 = linearInterpolate(GetBValue(pixelx0y0), GetBValue(pixelx1y0), xFraction);
-                                    FLONUM bluey1 = linearInterpolate(GetBValue(pixelx0y1), GetBValue(pixelx1y1), xFraction);
-                                    FLONUM blue   = linearInterpolate(bluey0, bluey1, yFraction);
-
-                                    // compose the red, green, and blue value into a color
-                                    COLORREF pixel = RGB(g_round(red), g_round(green), g_round(blue));
                                     SetPixelV(
                                         ScreenDC,
                                         x + xScreenOffset,
@@ -2567,13 +2568,8 @@ void turtlepaste(int TurtleToPaste)
                                     pixely1 = screenPixel;
                                 }
 
-                                // interpolate red in the Y direction
-                                FLONUM red   = linearInterpolate(GetRValue(pixely0), GetRValue(pixely1), yFraction);
-                                FLONUM green = linearInterpolate(GetGValue(pixely0), GetGValue(pixely1), yFraction);
-                                FLONUM blue  = linearInterpolate(GetBValue(pixely0), GetBValue(pixely1), yFraction);
-
-                                // compose the red, green, and blue value into a color
-                                COLORREF pixel = RGB(g_round(red), g_round(green), g_round(blue));
+                                // interpolate in the Y direction
+                                COLORREF pixel = InterpolateColors(pixely0, pixely1, yFraction);
                                 SetPixelV(
                                     ScreenDC,
                                     x + xScreenOffset,
@@ -2602,12 +2598,7 @@ void turtlepaste(int TurtleToPaste)
                                 }
 
                                 // interpolate in the X direction
-                                FLONUM red   = linearInterpolate(GetRValue(pixelx0), GetRValue(pixelx1), xFraction);
-                                FLONUM green = linearInterpolate(GetGValue(pixelx0), GetGValue(pixelx1), xFraction);
-                                FLONUM blue  = linearInterpolate(GetBValue(pixelx0), GetBValue(pixelx1), xFraction);
-
-                                // compose the red, green, and blue value into a color
-                                COLORREF pixel = RGB(g_round(red), g_round(green), g_round(blue));
+                                COLORREF pixel = InterpolateColors(pixelx0, pixelx1, xFraction);
                                 SetPixelV(
                                     ScreenDC,
                                     x + xScreenOffset,
