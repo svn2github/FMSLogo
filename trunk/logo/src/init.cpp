@@ -215,7 +215,7 @@ const PRIMTYPE prims[] =
     { "bitload", 1, 1, 1, PREFIX_PRIORITY, lbitload, LOCALIZED_ALTERNATE_BITLOAD },
     { "bitloadsize", 1, 1, 1, PREFIX_PRIORITY, lbitloadsize, LOCALIZED_ALTERNATE_BITLOADSIZE },
     { "bitsize", 0, 0, 0, PREFIX_PRIORITY, lbitsize, LOCALIZED_ALTERNATE_BITSIZE },
-    { "bitmapturtle", 0, 0, 0, PREFIX_PRIORITY, lbitmapturtle, LOCALIZED_ALTERNATE_BITMAPTURTLE },
+    { "bitmapturtle", 0, 0, 1, PREFIX_PRIORITY, lbitmapturtle, LOCALIZED_ALTERNATE_BITMAPTURTLE },
     { "bitmode", 0, 0, 0, PREFIX_PRIORITY, lbitmode, LOCALIZED_ALTERNATE_BITMODE },
     { "bitnot", 1, 1, 1, PREFIX_PRIORITY, lbitnot, LOCALIZED_ALTERNATE_BITNOT },
     { "bitor", 0, 2, -1, PREFIX_PRIORITY, lbitor, LOCALIZED_ALTERNATE_BITOR },

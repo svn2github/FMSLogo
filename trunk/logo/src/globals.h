@@ -185,6 +185,8 @@ struct Turtle
     bool     IsPenUp;
     bool     IsSpecial;
 
+    bool     IsSprite;
+
     bool     HasOwnPenState;
     PENSTATE PenState;
 

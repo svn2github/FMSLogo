@@ -20,6 +20,10 @@
 
 #include "allwind.h"
 #include "htmlhelp.h"
+#include "const.h"
+
+#define X_ROTATED(X, Y, COSINE, SINE) ((X)*(COSINE) + (Y)*(SINE))
+#define Y_ROTATED(X, Y, COSINE, SINE) ((Y)*(COSINE) - (X)*(SINE))
 
 extern bool bIndexMode;
 
@@ -42,6 +46,20 @@ struct font_find_t
 {
     const char *fontname;
     bool        found;
+};
+
+struct LINE3D
+{
+    VECTOR from;
+    VECTOR to;
+};
+
+static const LINE3D turtle_vertices[4] =
+{
+    {{-16.0, 0.0, 0.0}, { 16.0,  0.0, 0.0}},
+    {{ 16.0, 0.0, 0.0}, {  0.0, 16.0, 0.0}},
+    {{  0.0,16.0, 0.0}, {-16.0,  0.0, 0.0}},
+    {{  8.0, 0.0, 0.0}, {  8.0,  8.0, 0.0}},
 };
 
 static DWORD g_BitMode = SRCCOPY;
@@ -594,7 +612,7 @@ NODE *lbitsize(NODE *)
 }
 
 // Fills TurtlePoint with the location of the current
-// turtle on the 2D screen.
+// turtle on the 2D screen (before zooming and scrolling)
 //
 // returns true on success.
 // returns false on error.
@@ -627,6 +645,209 @@ WorldCoordinateToScreenCoordinate(
     return true;
 }
 
+// ibmturt() calculates what needs to be done to either draw or erase
+// the turte, but it does not actually do either of these operations.
+// If draw==true, then the points of the turtle's vertices are computed.
+// If draw==false, then the points of the turtle's vertices are simply used
+// to invalidate the turtle's bounding box (so it will get erased).
+void ibmturt(bool draw)
+{
+    // special turtles must not be drawn
+    assert(!g_SelectedTurtle->IsSpecial);
+    
+    if (draw)
+    {
+        // We are supposed to draw the turtle in a new position, we
+        // we need to re-calculate its points.
+
+        if (current_mode == perspectivemode)
+        {
+            // in 3D mode
+            for (int j = 0; j < 4; j++)
+            {
+                VECTOR rp = MVxyMultiply(g_SelectedTurtle->Matrix, turtle_vertices[j].from);
+
+                VECTOR from3d;
+                from3d.x = (g_SelectedTurtle->Position.x + rp.x) / BitMapWidth;
+                from3d.y = (g_SelectedTurtle->Position.y + rp.y) / BitMapWidth;
+                from3d.z = (g_SelectedTurtle->Position.z + rp.z) / BitMapWidth;
+
+                rp = MVxyMultiply(g_SelectedTurtle->Matrix, turtle_vertices[j].to);
+
+                VECTOR to3d;
+                to3d.x = (g_SelectedTurtle->Position.x + rp.x) / BitMapWidth;
+                to3d.y = (g_SelectedTurtle->Position.y + rp.y) / BitMapWidth;
+                to3d.z = (g_SelectedTurtle->Position.z + rp.z) / BitMapWidth;
+
+                POINT from2d;
+                POINT to2d;
+                if (ThreeD.TransformSegment(from3d, to3d, from2d, to2d))
+                {
+                    long iFromx =  from2d.x + xoffset;
+                    long iFromy = -from2d.y + yoffset;
+                    long iTox   =  to2d.x   + xoffset;
+                    long iToy   = -to2d.y   + yoffset;
+               
+                    g_SelectedTurtle->Points[j].from.x = iFromx;
+                    g_SelectedTurtle->Points[j].from.y = iFromy;
+                    g_SelectedTurtle->Points[j].to.x   = iTox;
+                    g_SelectedTurtle->Points[j].to.y   = iToy;
+                    g_SelectedTurtle->Points[j].bValid = true;
+                }
+                else
+                {
+                    g_SelectedTurtle->Points[j].bValid = false;
+                }
+            }
+        }
+        else
+        {
+            // 2D mode
+            for (int j = 0; j < 3; j++)
+            {
+                FLONUM cosine = cos(g_SelectedTurtle->Heading * rads_per_degree);
+                FLONUM sine   = sin(g_SelectedTurtle->Heading * rads_per_degree);
+
+                FLONUM rx = X_ROTATED(turtle_vertices[j].from.x, turtle_vertices[j].from.y, cosine, sine);
+                FLONUM ry = Y_ROTATED(turtle_vertices[j].from.x, turtle_vertices[j].from.y, cosine, sine);
+
+                FLONUM oldx = g_SelectedTurtle->Position.x + rx;
+                FLONUM oldy = g_SelectedTurtle->Position.y + ry;
+
+                rx = X_ROTATED(turtle_vertices[j].to.x, turtle_vertices[j].to.y, cosine, sine);
+                ry = Y_ROTATED(turtle_vertices[j].to.x, turtle_vertices[j].to.y, cosine, sine);
+
+                FLONUM newx = g_SelectedTurtle->Position.x + rx;
+                FLONUM newy = g_SelectedTurtle->Position.y + ry;
+
+                long iOldx = g_round(oldx);
+                long iOldy = g_round(oldy);
+                long iNewx = g_round(newx);
+                long iNewy = g_round(newy);
+
+                long iFromx =  iOldx + xoffset;
+                long iFromy = -iOldy + yoffset;
+                long iTox   =  iNewx + xoffset;
+                long iToy   = -iNewy + yoffset;
+
+                g_SelectedTurtle->Points[j].from.x = iFromx;
+                g_SelectedTurtle->Points[j].from.y = iFromy;
+                g_SelectedTurtle->Points[j].to.x   = iTox;
+                g_SelectedTurtle->Points[j].to.y   = iToy;
+
+                g_SelectedTurtle->Points[j].bValid = true;
+            }
+
+            // The line that distingiushes left from right is not needed
+            // in 2D modes.
+            g_SelectedTurtle->Points[3].bValid = false;
+        }
+    }
+   
+    bool  needsInvalidation = false;
+    TRect screenBoundingBox;
+
+    if (g_SelectedTurtle->BitmapRasterMode != 0)
+    {
+        // The turtle is bitmapped, we need to invalidate the bounding box of the bitmap.
+        POINT dest;
+        needsInvalidation = WorldCoordinateToScreenCoordinate(
+            g_SelectedTurtle->Position,
+            dest);
+
+        // If the turtle is on the screen, then calculate the bounding box.
+        if (needsInvalidation)
+        {
+            // figure out the index into the bitmaps array.
+            const CUTMAP    & turtleBitmap   = g_Bitmaps[g_SelectedTurtle - g_Turtles];
+            const TScroller * screenScroller = MainWindowx->ScreenWindow->Scroller;
+
+            FLONUM leftOffset;
+            FLONUM rightOffset;
+            FLONUM topOffset;
+            FLONUM bottomOffset;
+
+            if (g_SelectedTurtle->IsSprite)
+            {
+                FLONUM cosine = cos(g_SelectedTurtle->Heading * rads_per_degree);
+                FLONUM sine   = sin(g_SelectedTurtle->Heading * rads_per_degree);
+
+                // Compute points of the image rotated about its center.
+                FLONUM x0 = X_ROTATED(-turtleBitmap.Width/2, -turtleBitmap.Height/2, cosine, sine);
+                FLONUM y0 = Y_ROTATED(-turtleBitmap.Width/2, -turtleBitmap.Height/2, cosine, sine);
+
+                FLONUM x1 = X_ROTATED(-turtleBitmap.Width/2, turtleBitmap.Height/2, cosine, sine);
+                FLONUM y1 = Y_ROTATED(-turtleBitmap.Width/2, turtleBitmap.Height/2, cosine, sine);
+
+                FLONUM x2 = X_ROTATED(turtleBitmap.Width/2, turtleBitmap.Height/2, cosine, sine);
+                FLONUM y2 = Y_ROTATED(turtleBitmap.Width/2, turtleBitmap.Height/2, cosine, sine);
+
+                FLONUM x3 = X_ROTATED(turtleBitmap.Width/2, -turtleBitmap.Height/2, cosine, sine);
+                FLONUM y3 = Y_ROTATED(turtleBitmap.Width/2, -turtleBitmap.Height/2, cosine, sine);
+
+                // Compute the bounding box.  We grow the box by one to account for rounding errors.
+                leftOffset   = min(x0,min(x1, min(x2,x3))) - 1;
+                topOffset    = min(y0,min(y1, min(y2,y3))) - 1;
+                rightOffset  = max(x0,max(x1, max(x2,x3))) + 1;
+                bottomOffset = max(y0,max(y1, max(y2,y3))) + 1;
+            }
+            else
+            {
+                leftOffset   = 0;
+                topOffset    = LL - turtleBitmap.Height;
+                rightOffset  = turtleBitmap.Width;
+                bottomOffset = LL;
+            }
+
+            screenBoundingBox.Set(
+                (+dest.x + xoffset + leftOffset)   * the_zoom - screenScroller->XPos,
+                (-dest.y + yoffset + topOffset)    * the_zoom - screenScroller->YPos,
+                (+dest.x + xoffset + rightOffset)  * the_zoom - screenScroller->XPos,
+                (-dest.y + yoffset + bottomOffset) * the_zoom - screenScroller->YPos);
+
+            screenBoundingBox.Normalize();
+        }
+    }
+    else
+    {
+        // The turtle is drawn with lines, so we need to calculate the bounding box
+        // of these lines.
+
+        // First calculate the bounding box independent of zoom and scroll position.
+        long minx = 100000;
+        long miny = 100000;
+        long maxx = -100000;
+        long maxy = -100000;
+        for (int j = 0; j < 4; j++)
+        {
+            if (g_SelectedTurtle->Points[j].bValid)
+            {
+                minx = min(minx, (long) (g_SelectedTurtle->Points[j].from.x));
+                miny = min(miny, (long) (g_SelectedTurtle->Points[j].from.y));
+                maxx = max(maxx, (long) (g_SelectedTurtle->Points[j].from.x));
+                maxy = max(maxy, (long) (g_SelectedTurtle->Points[j].from.y));
+                needsInvalidation = true;
+            }
+        }
+
+        if (needsInvalidation)
+        {
+            // Adjust the bounding box based on zoom and scroll position.
+            TScroller * screenScroller = MainWindowx->ScreenWindow->Scroller;
+            screenBoundingBox.Set(
+                minx * the_zoom - screenScroller->XPos,
+                miny * the_zoom - screenScroller->YPos,
+                maxx * the_zoom - screenScroller->XPos,
+                maxy * the_zoom - screenScroller->YPos);
+        }
+    }
+
+    if (needsInvalidation)
+    {
+        screenBoundingBox.Inflate(1+the_zoom,1+the_zoom);
+        MainWindowx->ScreenWindow->InvalidateRect(screenBoundingBox, false);
+    }
+}
 
 
 NODE *lsetpixel(NODE *args)
@@ -685,10 +906,10 @@ NODE *lsetpixel(NODE *args)
 
             SetRect(
                 &temprect,
-                (+dest.x - MainWindowx->ScreenWindow->Scroller->XPos / the_zoom + xoffset) * the_zoom,
-                (-dest.y - MainWindowx->ScreenWindow->Scroller->YPos / the_zoom + yoffset) * the_zoom,
-                (+dest.x - MainWindowx->ScreenWindow->Scroller->XPos / the_zoom + xoffset) * the_zoom,
-                (-dest.y - MainWindowx->ScreenWindow->Scroller->YPos / the_zoom + yoffset) * the_zoom);
+                (+dest.x + xoffset) * the_zoom - MainWindowx->ScreenWindow->Scroller->XPos,
+                (-dest.y + yoffset) * the_zoom - MainWindowx->ScreenWindow->Scroller->YPos,
+                (+dest.x + xoffset) * the_zoom - MainWindowx->ScreenWindow->Scroller->XPos,
+                (-dest.y + yoffset) * the_zoom - MainWindowx->ScreenWindow->Scroller->YPos);
 
             temprect.Inflate(1+the_zoom,1+the_zoom);
 
@@ -2134,44 +2355,107 @@ void turtlepaste(int TurtleToPaste)
         }
 
         HDC ScreenDC = MainWindowx->ScreenWindow->GetScreenDeviceContext();
-
         HDC TempMemDC = CreateCompatibleDC(ScreenDC);
+
         HBITMAP oldBitmap2 = (HBITMAP) SelectObject(
             TempMemDC,
             g_Bitmaps[TurtleToPaste].MemoryBitMap);
 
-        //screen
-        if (zoom_flag)
+        if (g_SelectedTurtle->IsSprite)
         {
-            SetMapMode(ScreenDC, MM_ANISOTROPIC);
-            SetWindowOrgEx(ScreenDC, 0, 0, 0);
-            SetWindowExtEx(ScreenDC, BitMapWidth, BitMapHeight, 0);
-            SetViewportOrgEx(ScreenDC, 0, 0, 0);
-            SetViewportExtEx(ScreenDC, (int) (BitMapWidth * the_zoom), (int) (BitMapHeight * the_zoom), 0);
+            // TODO: figure out how to merge this with the bounding box
+            // computation logic in ibmturt()
+            FLONUM cosine = cos(g_Turtles[TurtleToPaste].Heading * rads_per_degree);
+            FLONUM sine   = sin(g_Turtles[TurtleToPaste].Heading * rads_per_degree);
 
-            BitBlt(
-                ScreenDC,
-                +dest.x - MainWindowx->ScreenWindow->Scroller->XPos / the_zoom + xoffset,
-                -dest.y - MainWindowx->ScreenWindow->Scroller->YPos / the_zoom + yoffset + LL - g_Bitmaps[TurtleToPaste].Height,
-                g_Bitmaps[TurtleToPaste].Width,
-                g_Bitmaps[TurtleToPaste].Height,
-                TempMemDC,
-                0,
-                0,
-                g_Turtles[TurtleToPaste].BitmapRasterMode);
+            // The location of the centerpoint (or origin) of the turtle's bitmap about which to rotate
+            const FLONUM xOrigin = g_Bitmaps[TurtleToPaste].Width  / 2.0;
+            const FLONUM yOrigin = g_Bitmaps[TurtleToPaste].Height / 2.0;
+
+            // Compute points of the image rotated about its center.
+            FLONUM x0 = X_ROTATED(-xOrigin, -yOrigin, cosine, sine);
+            FLONUM y0 = Y_ROTATED(-xOrigin, -yOrigin, cosine, sine);
+
+            FLONUM x1 = X_ROTATED(-xOrigin, yOrigin, cosine, sine);
+            FLONUM y1 = Y_ROTATED(-xOrigin, yOrigin, cosine, sine);
+
+            FLONUM x2 = X_ROTATED(xOrigin, yOrigin, cosine, sine);
+            FLONUM y2 = Y_ROTATED(xOrigin, yOrigin, cosine, sine);
+
+            FLONUM x3 = X_ROTATED(xOrigin, -yOrigin, cosine, sine);
+            FLONUM y3 = Y_ROTATED(xOrigin, -yOrigin, cosine, sine);
+
+            // Compute the bounding box.  We grow the box by one to account for rounding errors.
+            const int minx = (int) ((min(x0,min(x1, min(x2,x3))) - 1) * the_zoom);
+            const int miny = (int) ((min(y0,min(y1, min(y2,y3))) - 1) * the_zoom);
+            const int maxx = (int) ((max(x0,max(x1, max(x2,x3))) + 1) * the_zoom);
+            const int maxy = (int) ((max(y0,max(y1, max(y2,y3))) + 1) * the_zoom);
+
+            // Figure out where on the screen window the turtle belongs.
+            const int xScreenOffset = (+dest.x + xoffset) * the_zoom - MainWindowx->ScreenWindow->Scroller->XPos;
+            const int yScreenOffset = (-dest.y + yoffset) * the_zoom - MainWindowx->ScreenWindow->Scroller->YPos;
+
+            // Now do the rotating, one pixel at a time.
+            // Find the pixel that cooresponds to each point in the destination
+            // rectangle to guarantee that each pixel gets covered.
+            for (int y = miny; y < maxy; y++)
+            {
+                for (int x = minx; x < maxx; x++)
+                {
+                    int sourcex = (int)((X_ROTATED(x, y, cosine, sine) / the_zoom + xOrigin));
+                    int sourcey = (int)((Y_ROTATED(x, y, cosine, sine) / the_zoom + yOrigin));
+
+                    if (0 <= sourcex && sourcex < g_Bitmaps[TurtleToPaste].Width &&
+                        0 <= sourcey && sourcey < g_Bitmaps[TurtleToPaste].Height)
+                    {
+                        const COLORREF pixel = ::GetPixel(TempMemDC, sourcex, sourcey);
+                        if (pixel != RGB(255,255,255))
+                        {
+                            SetPixelV(
+                                ScreenDC,
+                                x + xScreenOffset,
+                                y + yScreenOffset,
+                                pixel);
+                        }
+                    }
+                }
+            }
         }
         else
         {
-            BitBlt(
-                ScreenDC,
-                +dest.x - MainWindowx->ScreenWindow->Scroller->XPos + xoffset,
-                -dest.y - MainWindowx->ScreenWindow->Scroller->YPos + yoffset + LL - g_Bitmaps[TurtleToPaste].Height,
-                g_Bitmaps[TurtleToPaste].Width,
-                g_Bitmaps[TurtleToPaste].Height,
-                TempMemDC,
-                0,
-                0,
-                g_Turtles[TurtleToPaste].BitmapRasterMode);
+            //screen
+            if (zoom_flag)
+            {
+                SetMapMode(ScreenDC, MM_ANISOTROPIC);
+                SetWindowOrgEx(ScreenDC, 0, 0, 0);
+                SetWindowExtEx(ScreenDC, BitMapWidth, BitMapHeight, 0);
+                SetViewportOrgEx(ScreenDC, 0, 0, 0);
+                SetViewportExtEx(ScreenDC, (int) (BitMapWidth * the_zoom), (int) (BitMapHeight * the_zoom), 0);
+
+                BitBlt(
+                    ScreenDC,
+                    +dest.x - MainWindowx->ScreenWindow->Scroller->XPos / the_zoom + xoffset,
+                    -dest.y - MainWindowx->ScreenWindow->Scroller->YPos / the_zoom + yoffset + LL - g_Bitmaps[TurtleToPaste].Height,
+                    g_Bitmaps[TurtleToPaste].Width,
+                    g_Bitmaps[TurtleToPaste].Height,
+                    TempMemDC,
+                    0,
+                    0,
+                    g_Turtles[TurtleToPaste].BitmapRasterMode);
+            }
+            else
+            {
+                BitBlt(
+                    ScreenDC,
+                    +dest.x - MainWindowx->ScreenWindow->Scroller->XPos + xoffset,
+                    -dest.y - MainWindowx->ScreenWindow->Scroller->YPos + yoffset + LL - g_Bitmaps[TurtleToPaste].Height,
+                    g_Bitmaps[TurtleToPaste].Width,
+                    g_Bitmaps[TurtleToPaste].Height,
+                    TempMemDC,
+                    0,
+                    0,
+                    g_Turtles[TurtleToPaste].BitmapRasterMode);
+            }
         }
 
         SelectObject(TempMemDC, oldBitmap2);

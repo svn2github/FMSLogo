@@ -384,6 +384,7 @@ void InitializeTurtle(Turtle * TurtleToInitialize)
     TurtleToInitialize->IsPenUp    = false;
     TurtleToInitialize->IsSpecial  = false;
 
+    TurtleToInitialize->IsSprite   = false;
     TurtleToInitialize->HasOwnPenState = false;
 
     // initialize to default color
@@ -1237,10 +1238,22 @@ NODE *lback(NODE *arg)
     return Unbound;
 }
 
-NODE *lbitmapturtle(NODE *)
+NODE *lbitmapturtle(NODE * arg)
 {
+    bool rotatingBitmap = false;
+    if (arg != NULL)
+    {
+        rotatingBitmap = boolean_arg(arg);
+    }
+
+    if (stopping_flag == THROWING)
+    {
+        return Unbound;
+    }
+
     draw_turtle(false);
     g_SelectedTurtle->BitmapRasterMode = SRCCOPY;
+    g_SelectedTurtle->IsSprite         = rotatingBitmap;
     draw_turtle(true);
     return Unbound;
 }
@@ -1249,6 +1262,7 @@ NODE *lnobitmapturtle(NODE *)
 {
     draw_turtle(false);
     g_SelectedTurtle->BitmapRasterMode = 0;
+    g_SelectedTurtle->IsSprite         = false;
     draw_turtle(true);
     return Unbound;
 }

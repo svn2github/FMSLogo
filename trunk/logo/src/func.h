@@ -240,7 +240,6 @@ extern void clearcombobox(void);
 extern COLORREF LoadColor(int dpenr, int dpeng, int dpenb);
 extern void exit_program(void);
 extern bool promptuser(char *str, const char *prompt);
-extern void ibmturt(bool hide);
 extern void move_to(FLONUM x, FLONUM y);
 extern void line_to(FLONUM x, FLONUM y);
 extern void move_to_3d(FLONUM x, FLONUM y, FLONUM z);
@@ -579,8 +578,8 @@ extern NODE *ldllcall(NODE *arg);
 extern NODE *ldllfree(NODE *arg);
 
 // graphwin.cpp
-bool HtmlHelpInitialize();
-void HtmlHelpUninitialize();
+extern bool HtmlHelpInitialize();
+extern void HtmlHelpUninitialize();
 extern NODE *lstatus(NODE *arg);
 extern NODE *lnostatus(NODE *arg);
 extern void zoom_helper(FLONUM temp_zoom);
@@ -595,6 +594,7 @@ extern void UpdateErasePen(int Width, COLORREF Color);
 extern void UpdateNormalPen(int Width, COLORREF Color);
 extern void init_bitmaps();
 extern void uninit_bitmaps();
+extern void ibmturt(bool hide);
 
 // areawnd.cpp
 extern bool IsActiveAreaOneToOneWithScreen(void);
