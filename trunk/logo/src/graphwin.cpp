@@ -2365,13 +2365,39 @@ void turtlepaste(int TurtleToPaste)
         {
             // TODO: figure out how to merge this with the bounding box
             // computation logic in ibmturt()
-            FLONUM cosine = cos(g_Turtles[TurtleToPaste].Heading * rads_per_degree);
-            FLONUM sine   = sin(g_Turtles[TurtleToPaste].Heading * rads_per_degree);
 
+            // Compute the sine and cosine of the heading, but add special cases
+            // for the multiples of 90 degress so that we get a crisp square
+            // rotation instead of a slight deviation due to the imprecision
+            // of sin() and cos() functions.
+            FLONUM cosine;
+            FLONUM sine;
+
+            if (g_Turtles[TurtleToPaste].Heading == 90)
+            {
+                cosine = 0;
+                sine   = 1;
+            }
+            else if (g_Turtles[TurtleToPaste].Heading == 180)
+            {
+                cosine = -1;
+                sine   = 0;
+            }
+            else if (g_Turtles[TurtleToPaste].Heading == 270)
+            {
+                cosine = 0;
+                sine   = -1;
+            }
+            else
+            {
+                cosine = cos(g_Turtles[TurtleToPaste].Heading * rads_per_degree);
+                sine   = sin(g_Turtles[TurtleToPaste].Heading * rads_per_degree);
+            }
+            
             // The location of the centerpoint (or origin) of the turtle's bitmap about which to rotate
             const FLONUM xOrigin = g_Bitmaps[TurtleToPaste].Width  / 2.0;
             const FLONUM yOrigin = g_Bitmaps[TurtleToPaste].Height / 2.0;
-
+                
             // Compute points of the image rotated about its center.
             FLONUM x0 = X_ROTATED(-xOrigin, -yOrigin, cosine, sine);
             FLONUM y0 = Y_ROTATED(-xOrigin, -yOrigin, cosine, sine);
@@ -2470,6 +2496,7 @@ void turtlepaste(int TurtleToPaste)
 
         // un-bitmap this turtle to prevent future errors
         g_Turtles[TurtleToPaste].BitmapRasterMode = 0;
+        g_Turtles[TurtleToPaste].IsSprite         = false;
     }
 }
 
