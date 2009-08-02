@@ -1414,10 +1414,10 @@ void ibmturt(bool draw)
                     long iTox   =  to2d.x   + xoffset;
                     long iToy   = -to2d.y   + yoffset;
                
-                    minx = min(minx, (long) from2d.x);
-                    miny = min(miny, (long) from2d.y);
-                    maxx = max(maxx, (long) from2d.x);
-                    maxy = max(maxy, (long) from2d.y);
+                    minx = min(minx, iFromx);
+                    miny = min(miny, iFromy);
+                    maxx = max(maxx, iFromx);
+                    maxy = max(maxy, iFromy);
 
                     bMinMax = true;
                
@@ -1438,36 +1438,36 @@ void ibmturt(bool draw)
             // 2D mode
             for (int j = 0; j < 3; j++)
             {
-                FLONUM Cz = cos(-g_SelectedTurtle->Heading * rads_per_degree);
-                FLONUM Sz = sin(-g_SelectedTurtle->Heading * rads_per_degree);
+                FLONUM Cz = cos(g_SelectedTurtle->Heading * rads_per_degree);
+                FLONUM Sz = sin(g_SelectedTurtle->Heading * rads_per_degree);
 
-                FLONUM rx = Cz * turtle_vertices[j].from.x - Sz * turtle_vertices[j].from.y;
-                FLONUM ry = Sz * turtle_vertices[j].from.x + Cz * turtle_vertices[j].from.y;
+                FLONUM rx =  Cz * turtle_vertices[j].from.x + Sz * turtle_vertices[j].from.y;
+                FLONUM ry =  Cz * turtle_vertices[j].from.y - Sz * turtle_vertices[j].from.x;
 
                 FLONUM oldx = g_SelectedTurtle->Position.x + rx;
                 FLONUM oldy = g_SelectedTurtle->Position.y + ry;
-            
-                rx = Cz * turtle_vertices[j].to.x - Sz * turtle_vertices[j].to.y;
-                ry = Sz * turtle_vertices[j].to.x + Cz * turtle_vertices[j].to.y;
-            
+
+                rx = Cz * turtle_vertices[j].to.x + Sz * turtle_vertices[j].to.y;
+                ry = Cz * turtle_vertices[j].to.y - Sz * turtle_vertices[j].to.x;
+
                 FLONUM newx = g_SelectedTurtle->Position.x + rx;
                 FLONUM newy = g_SelectedTurtle->Position.y + ry;
-            
+
                 long iOldx = g_round(oldx);
                 long iOldy = g_round(oldy);
                 long iNewx = g_round(newx);
                 long iNewy = g_round(newy);
-            
+
                 long iFromx =  iOldx + xoffset;
                 long iFromy = -iOldy + yoffset;
                 long iTox   =  iNewx + xoffset;
                 long iToy   = -iNewy + yoffset;
-                        
-                minx = min(minx, iOldx);
-                miny = min(miny, iOldy);
-                maxx = max(maxx, iOldx);
-                maxy = max(maxy, iOldy);
-            
+
+                minx = min(minx, iFromx);
+                miny = min(miny, iFromy);
+                maxx = max(maxx, iFromx);
+                maxy = max(maxy, iFromy);
+
                 g_SelectedTurtle->Points[j].from.x = iFromx;
                 g_SelectedTurtle->Points[j].from.y = iFromy;
                 g_SelectedTurtle->Points[j].to.x   = iTox;
@@ -1492,10 +1492,10 @@ void ibmturt(bool draw)
         {
             if (g_SelectedTurtle->Points[j].bValid)
             {
-                minx = min(minx, (long) (+(g_SelectedTurtle->Points[j].from.x - xoffset)));
-                miny = min(miny, (long) (-(g_SelectedTurtle->Points[j].from.y - yoffset)));
-                maxx = max(maxx, (long) (+(g_SelectedTurtle->Points[j].from.x - xoffset)));
-                maxy = max(maxy, (long) (-(g_SelectedTurtle->Points[j].from.y - yoffset)));
+                minx = min(minx, (long) (g_SelectedTurtle->Points[j].from.x));
+                miny = min(miny, (long) (g_SelectedTurtle->Points[j].from.y));
+                maxx = max(maxx, (long) (g_SelectedTurtle->Points[j].from.x));
+                maxy = max(maxy, (long) (g_SelectedTurtle->Points[j].from.y));
                 bMinMax = true;
             }
         }
@@ -1547,10 +1547,10 @@ void ibmturt(bool draw)
     {
         // The turtle is draw with lines
         TScroller * screenScroller = MainWindowx->ScreenWindow->Scroller;
-        screenBoundingBox.left   = (+minx - screenScroller->XPos / the_zoom + xoffset) * the_zoom;
-        screenBoundingBox.top    = (-maxy - screenScroller->YPos / the_zoom + yoffset) * the_zoom;
-        screenBoundingBox.right  = (+maxx - screenScroller->XPos / the_zoom + xoffset) * the_zoom;
-        screenBoundingBox.bottom = (-miny - screenScroller->YPos / the_zoom + yoffset) * the_zoom;
+        screenBoundingBox.left   = (minx - screenScroller->XPos / the_zoom) * the_zoom;
+        screenBoundingBox.top    = (miny - screenScroller->YPos / the_zoom) * the_zoom;
+        screenBoundingBox.right  = (maxx - screenScroller->XPos / the_zoom) * the_zoom;
+        screenBoundingBox.bottom = (maxy - screenScroller->YPos / the_zoom) * the_zoom;
     }
 
 
