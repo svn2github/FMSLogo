@@ -132,6 +132,7 @@ Function uninstall
 
   Delete $previousinstalldir\fmslogo.txt
   Delete $previousinstalldir\license.txt
+  Delete $previousinstalldir\turtle.bmp
 
   Delete $previousinstalldir\uninstall.exe
 
@@ -332,6 +333,7 @@ Section "FMSLogo"
 
   File "..\src\fmslogo.txt"
   File "..\src\license.txt"
+  File "..\src\turtle.bmp"
   File /r /x CVS "..\src\logolib"
   File /r /x CVS "..\src\examples"
 
@@ -542,6 +544,7 @@ Section "Uninstall"
 
   Delete $INSTDIR\fmslogo.txt
   Delete $INSTDIR\license.txt
+  Delete $INSTDIR\turtle.bmp
 
   Delete $INSTDIR\uninstall.exe
 
