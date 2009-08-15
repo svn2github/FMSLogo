@@ -57,6 +57,31 @@ static inline bool IsStateComment(const int state)
 
 static
 void
+AdvanceWithinVbar(
+    StyleContext & Context
+    )
+{
+    while (Context.ch != '|' && Context.More())
+    {
+        // Make sure to advance over
+        // any escaped vbars.
+        if (Context.ch == '\\')
+        {
+            Context.Forward();
+            if (Context.ch == '|')
+            {
+                Context.Forward();
+            }
+        }
+        else
+        {
+            Context.Forward();
+        }
+    }
+}
+
+static
+void
 ColorizeFmsLogoDoc(
     unsigned int   startPos,
     int            length, 
@@ -127,18 +152,12 @@ ColorizeFmsLogoDoc(
             break;
 
         case SCE_FMS_STRING_VBAR:
-            while (sc.ch != '|' && sc.More())
-            {
-                sc.Forward();
-            }
+            AdvanceWithinVbar(sc);
             sc.SetState(SCE_FMS_STRING);
             break;
 
         case SCE_FMS_VBAR:
-            while (sc.ch != '|' && sc.More())
-            {
-                sc.Forward();
-            }
+            AdvanceWithinVbar(sc);
             sc.SetState(SCE_FMS_DEFAULT);
             sc.Forward();
             break;
@@ -191,10 +210,7 @@ ColorizeFmsLogoDoc(
             break;
 
         case SCE_FMS_VARIABLE_VBAR:
-            while (sc.ch != '|' && sc.More())
-            {
-                sc.Forward();
-            }
+            AdvanceWithinVbar(sc);
             sc.SetState(SCE_FMS_VARIABLE);
             sc.Forward();
             break;
