@@ -120,13 +120,13 @@ ColorizeFmsLogoDoc(
             sc.SetState(SCE_FMS_DEFAULT);
             break;
 
-
         case SCE_FMS_NUMBER:
             if (!IsAWordChar(sc.ch)) 
             {
                 sc.SetState(SCE_FMS_DEFAULT);
             }
             break;
+
         case SCE_FMS_STRING:
             if (sc.ch == '|')
             {
@@ -215,6 +215,11 @@ ColorizeFmsLogoDoc(
             sc.Forward();
             break;
 
+        case SCE_FMS_DEFAULT_BACKSLASH:
+            sc.Forward();
+            sc.SetState(SCE_FMS_DEFAULT);
+            break;
+
         default:
             break;
         }
@@ -234,7 +239,7 @@ ColorizeFmsLogoDoc(
             {
                 sc.SetState(SCE_FMS_VBAR);
             }
-            else if (sc.ch == ';' && sc.chPrev != '\\') 
+            else if (sc.ch == ';') 
             {
                 sc.SetState(SCE_FMS_COMMENT);
             }
@@ -245,6 +250,10 @@ ColorizeFmsLogoDoc(
             else if (isoperator(static_cast<char>(sc.ch)))
             {
                 sc.SetState(SCE_FMS_OPERATOR);
+            }
+            else if (sc.ch == '\\')
+            {
+                sc.SetState(SCE_FMS_DEFAULT_BACKSLASH);
             }
         }
     }
