@@ -8,7 +8,7 @@ Build the Release Files
 1.b) Update version.mk and logoversion.lgo
 1.c) Update the translation tables in the manual
 1.d) gmake clean (to force a complete rebuild)
-1.e) gmake binaryexe 
+1.e) gmake binaryexe
      (This builds fmslogo.exe, the documentation, and the installer)
 1.f) Copy resulting fmslogo-X-Y-Z.exe to \\dcostanz\dcostanz\logo
 1.g) Checkin all changes, "cvs up -APd", and tag the tree VER-X-Y-Z
