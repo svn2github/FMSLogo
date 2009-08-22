@@ -4,7 +4,7 @@ TO TURTLEMODETEST.SMOKETEST
 
    CLEARSCREEN
 
-   ; TURLTEMODE does nothing when the turtle is not bitmapped
+   ; TURTLEMODE does nothing when the turtle is not bitmapped
    TRACEINSTRUCTION [ NOBITMAPTURTLE  ]
    TRACEINSTRUCTION [ SETTURTLEMODE 3 ]
    SIMPLEREPORTTEST [ TURTLEMODE ] 1
