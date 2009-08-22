@@ -21,6 +21,8 @@ I. Kit Description/Location (http://sourceforge.net/projects/fmslogo)
 II. New features/bugs fixed:
 
   * Added for 6.25.0
+    o Fix bug #2842770; FMSLogo continues to draw properly after BITFIT is
+      called with very large inputs.
     o Fix bug #2825102; The full contents of the commander's input is
       now run when Execute is pressed, instead of only the first 255 chars.
     o Fix bug #2819812; Buttons created with BUTTONCREATE now respond to

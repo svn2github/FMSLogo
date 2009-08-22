@@ -1917,85 +1917,89 @@ NODE *lbitfit(NODE *arg)
             HDC ScreenDC = MainWindowx->ScreenWindow->GetScreenDeviceContext();
             HDC MemDC    = MainWindowx->ScreenWindow->GetMemoryDeviceContext();
 
-            HBITMAP oldBitmap = (HBITMAP) SelectObject(MemDC, g_SelectedBitmap->MemoryBitMap);
+            HBITMAP savedMemBitmap = (HBITMAP) SelectObject(MemDC, g_SelectedBitmap->MemoryBitMap);
 
-            HPALETTE oldPalette2;
+            HPALETTE savedScreenPalette;
+            HPALETTE savedMemoryPalette;
             if (EnablePalette)
             {
-                oldPalette2 = SelectPalette(ScreenDC, ThePalette, FALSE);
+                savedScreenPalette = SelectPalette(ScreenDC, ThePalette, FALSE);
                 RealizePalette(ScreenDC);
 
-                OldPalette = SelectPalette(MemDC, ThePalette, FALSE);
+                savedMemoryPalette = SelectPalette(MemDC, ThePalette, FALSE);
                 RealizePalette(MemDC);
             }
 
             HBITMAP newMemoryBitmap = CreateCompatibleBitmap(ScreenDC, newWidth, newHeight);
-            if (newMemoryBitmap == NULL)
+            if (newMemoryBitmap != NULL)
             {
-                err_logo(OUT_OF_MEM, NIL);
-                return Unbound;
-            }
+                HDC tempMemDC = CreateCompatibleDC(ScreenDC);
+                HBITMAP savedTempMemoryBitmap = (HBITMAP) SelectObject(tempMemDC, newMemoryBitmap);
 
-            HDC TempMemDC = CreateCompatibleDC(ScreenDC);
-            HBITMAP oldBitmap2 = (HBITMAP) SelectObject(TempMemDC, newMemoryBitmap);
+                HPALETTE savedTempMemoryPalette;
+                if (EnablePalette)
+                {
+                    savedTempMemoryPalette = SelectPalette(tempMemDC, ThePalette, FALSE);
+                    RealizePalette(tempMemDC);
+                }
 
-            if (EnablePalette)
-            {
-                SelectPalette(ScreenDC, oldPalette2, FALSE);
-            }
+                if (g_OsVersionInformation.dwPlatformId == VER_PLATFORM_WIN32_NT)
+                {
+                    SetStretchBltMode(tempMemDC, HALFTONE);
+                }
+                else
+                {
+                    // HALFTONE is not supported on Win 95/98/ME
+                    SetStretchBltMode(tempMemDC, COLORONCOLOR);
+                }
 
+                // Load hour-glass cursor.
+                HCURSOR oldCursor =::SetCursor(hCursorWait);
 
-            if (EnablePalette)
-            {
-                oldPalette2 = SelectPalette(TempMemDC, ThePalette, FALSE);
-                RealizePalette(TempMemDC);
-            }
+                StretchBlt(
+                    tempMemDC,
+                    0,
+                    0,
+                    newWidth,
+                    newHeight,
+                    MemDC,
+                    0,
+                    0,
+                    g_SelectedBitmap->Width,
+                    g_SelectedBitmap->Height,
+                    SRCCOPY);
 
-            if (g_OsVersionInformation.dwPlatformId == VER_PLATFORM_WIN32_NT)
-            {
-                SetStretchBltMode(TempMemDC, HALFTONE);
+                // Restore the arrow cursor.
+                ::SetCursor(oldCursor);
+
+                if (EnablePalette)
+                {
+                    SelectPalette(tempMemDC, savedTempMemoryPalette, FALSE);
+                }
+
+                SelectObject(tempMemDC, savedTempMemoryBitmap);
+                DeleteDC(tempMemDC);
+
+                // commit to using the new "bitfitted" bitmap
+                DeleteObject(g_SelectedBitmap->MemoryBitMap);
+                g_SelectedBitmap->MemoryBitMap = newMemoryBitmap;
+
+                g_SelectedBitmap->Width  = newWidth;
+                g_SelectedBitmap->Height = newHeight;
             }
             else
             {
-                // HALFTONE is not supported on Win 95/98/ME
-                SetStretchBltMode(TempMemDC, COLORONCOLOR);
+                err_logo(OUT_OF_MEM, NIL);
             }
 
-            // Load hour-glass cursor.
-            HCURSOR oldCursor =::SetCursor(hCursorWait);
-
-            StretchBlt(
-                TempMemDC,
-                0,
-                0,
-                newWidth,
-                newHeight,
-                MemDC,
-                0,
-                0,
-                g_SelectedBitmap->Width,
-                g_SelectedBitmap->Height,
-                SRCCOPY);
-
-            // Restore the arrow cursor.
-            ::SetCursor(oldCursor);
 
             if (EnablePalette)
             {
-                SelectPalette(MemDC, OldPalette, FALSE);
-                SelectPalette(TempMemDC, oldPalette2, FALSE);
+                SelectPalette(MemDC,    savedMemoryPalette, FALSE);
+                SelectPalette(ScreenDC, savedScreenPalette, FALSE);
             }
 
-            SelectObject(TempMemDC, oldBitmap2);
-            DeleteDC(TempMemDC);
-
-            SelectObject(MemDC, oldBitmap);
-
-            DeleteObject(g_SelectedBitmap->MemoryBitMap);
-            g_SelectedBitmap->MemoryBitMap = newMemoryBitmap;
-
-            g_SelectedBitmap->Width  = newWidth;
-            g_SelectedBitmap->Height = newHeight;
+            SelectObject(MemDC, savedMemBitmap);
 
             if (ClipboardIsSelectedBitmap())
             {
