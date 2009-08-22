@@ -46,12 +46,16 @@ II. New features/bugs fixed:
       of the turtle are drawn outside the turtle's drawable area).
     o Implement request #1828287; The editor now supports automatic paren
       highlighting and CTRL+/ moves the caret to the matching paren.
+    o Implement request #2827560; BITMAPTURTLE now supports an optional input
+      that makes the bitmap rotate with the turtle.  This enables a school
+      in Sri Lanka to use a picture of a turtle, instead of a triangle.
     o Interpolate colors when zoomed out or using BITFIT to shrink an image.
       This makes the picture look better and removes the confusion behavior
       where a picture might disappear when zoomed out.
-      This change does not apply to Win 95/98/ME experience.
-    o Added infinite undo/redo to the editor.
-    o Embedded version information into fmslogo.exe for better bug reporting.
+      This change does not apply to Win 95/98/ME.
+    o Add infinite undo/redo to the editor.
+    o Add rudimentary syntax coloring to the editor.
+    o Embed version information into fmslogo.exe for better bug reporting.
 
   For a complete history of changes across all versions of FMSLogo, see
   http://fmslogo.cvs.sourceforge.net/*checkout*/fmslogo/logo/src/CHANGELOG.TXT
