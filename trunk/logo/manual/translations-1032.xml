@@ -1007,6 +1007,10 @@
        <entry>ÐÁÑÁÈÕÑÏ_ÅÍÅÑÃÏÐÏÉÇÓÇ</entry>
      </row>
      <row>
+       <entry><link linkend='command-winhelp'>winhelp</link></entry>
+       <entry>BOHUEIA</entry>
+     </row>
+     <row>
        <entry><link linkend='command-word'>word</link></entry>
        <entry>ËÅÎÇ</entry>
      </row>
@@ -1394,6 +1398,10 @@
      <row>
        <entry>ÅÓÔÉÁ</entry>
        <entry><link linkend='command-getfocus'>getfocus</link></entry>
+     </row>
+     <row>
+       <entry>BOHUEIA</entry>
+       <entry><link linkend='command-winhelp'>winhelp</link></entry>
      </row>
      <row>
        <entry>Ç</entry>

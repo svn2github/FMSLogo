@@ -776,7 +776,7 @@
      </row>
      <row>
        <entry><link linkend='command-hideturtle'>hideturtle</link></entry>
-       <entry>ñêðîé÷åðåïàõó</entry>
+       <entry>ñêðîéòîðòèëó</entry>
      </row>
      <row>
        <entry><link linkend='command-home'>home</link></entry>
@@ -784,7 +784,7 @@
      </row>
      <row>
        <entry><link linkend='command-hideturtle'>ht</link></entry>
-       <entry>ñ÷</entry>
+       <entry>ñò</entry>
      </row>
      <row>
        <entry><link linkend='command-icon'>icon</link></entry>
@@ -4036,10 +4036,6 @@
        <entry><link linkend='command-log10'>log10</link></entry>
      </row>
      <row>
-       <entry>ñ÷</entry>
-       <entry><link linkend='command-hideturtle'>ht</link></entry>
-     </row>
-     <row>
        <entry>ñ÷åò÷èê</entry>
        <entry><link linkend='command-repcount'>repcount</link></entry>
      </row>
@@ -4080,16 +4076,16 @@
        <entry><link linkend='command-bury'>bury</link></entry>
      </row>
      <row>
-       <entry>ñêðîé÷åðåïàõó</entry>
-       <entry><link linkend='command-hideturtle'>hideturtle</link></entry>
-     </row>
-     <row>
        <entry>ñêðîéâñå</entry>
        <entry><link linkend='command-buryall'>buryall</link></entry>
      </row>
      <row>
        <entry>ñêðîéèìÿ</entry>
        <entry><link linkend='command-buryname'>buryname</link></entry>
+     </row>
+     <row>
+       <entry>ñêðîéòîðòèëó</entry>
+       <entry><link linkend='command-hideturtle'>hideturtle</link></entry>
      </row>
      <row>
        <entry>ñêðûòûå</entry>
@@ -4226,6 +4222,10 @@
      <row>
        <entry>ñîòðèïàëèòðó</entry>
        <entry><link linkend='command-clearpalette'>clearpalette</link></entry>
+     </row>
+     <row>
+       <entry>ñò</entry>
+       <entry><link linkend='command-hideturtle'>ht</link></entry>
      </row>
      <row>
        <entry>ñòåïåíü</entry>
