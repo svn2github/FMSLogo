@@ -409,59 +409,54 @@ void TScreenWindow::Paint(TDC &PaintDC, bool /* erase */, TRect &PaintRect)
             SetStretchBltMode(PaintDC, COLORONCOLOR);
         }
 
-        TRect sourceRect(PaintRect);
+        FLONUM sourceRectLeft   = PaintRect.left;
+        FLONUM sourceRectTop    = PaintRect.top;
+        FLONUM sourceRectRight  = PaintRect.right;
+        FLONUM sourceRectBottom = PaintRect.bottom;
 
         // Expand the source rectangle a little bit based zoom factor 
         // (rounding to the nearest integer, as necessary)
-        const int inflateIncrement = ((int)(the_zoom+0.5))*2;
-        sourceRect.Inflate(inflateIncrement, inflateIncrement);
+        const FLONUM inflateIncrement = (the_zoom+0.5)*2.0;
+        sourceRectLeft   -= inflateIncrement;
+        sourceRectTop    -= inflateIncrement;
+        sourceRectRight  += inflateIncrement;
+        sourceRectBottom += inflateIncrement;
 
-        sourceRect.left   /= the_zoom;
-        sourceRect.top    /= the_zoom;
-        sourceRect.right  /= the_zoom;
-        sourceRect.bottom /= the_zoom;
+        FLONUM scaledSourceRectLeft   = sourceRectLeft   / the_zoom;
+        FLONUM scaledSourceRectTop    = sourceRectTop    / the_zoom;
+        FLONUM scaledSourceRectRight  = sourceRectRight  / the_zoom;
+        FLONUM scaledSourceRectBottom = sourceRectBottom / the_zoom;
 
         // fill the part to the right of the screen.
-        if (BitMapWidth < sourceRect.Right())
+        if (BitMapWidth < scaledSourceRectRight)
         {
             RECT toFill;
-            toFill.left   = BitMapWidth        * the_zoom;
-            toFill.right  = sourceRect.Right() * the_zoom;
+            toFill.left   = BitMapWidth * the_zoom;
+            toFill.right  = sourceRectRight;
             toFill.top    = 0;
             toFill.bottom = BitMapHeight * the_zoom;
 
             FillRect(PaintDC, &toFill, m_WhiteBrush);
         }
         // fill the part below the screen.
-        if (BitMapHeight < sourceRect.Bottom())
+        if (BitMapHeight < scaledSourceRectBottom)
         {
             RECT toFill;
-            toFill.left   = sourceRect.Left()   * the_zoom;
-            toFill.right  = sourceRect.Right()  * the_zoom;
-            toFill.top    = BitMapHeight        * the_zoom;
-            toFill.bottom = sourceRect.Bottom() * the_zoom;
+            toFill.left   = sourceRectLeft;
+            toFill.right  = sourceRectRight;
+            toFill.top    = BitMapHeight * the_zoom;
+            toFill.bottom = sourceRectBottom;
 
             FillRect(PaintDC, &toFill, m_WhiteBrush);
         }
 
         // Make sure that none of rectangle's borders are off-screen
         // after we inflated it.
-        if (sourceRect.left < 0)
-        {
-            sourceRect.left = 0;
-        }
-        if (sourceRect.top < 0)
-        {
-            sourceRect.top = 0;
-        }
-        if (sourceRect.right > BitMapWidth)
-        {
-            sourceRect.right = BitMapWidth;
-        }
-        if (sourceRect.bottom > BitMapHeight)
-        {
-            sourceRect.bottom = BitMapHeight;
-        }
+        TRect sourceRect;
+        sourceRect.left   = (int) (min(max(scaledSourceRectLeft,   0.0), (double)BitMapWidth));
+        sourceRect.top    = (int) (min(max(scaledSourceRectTop,    0.0), (double)BitMapHeight));
+        sourceRect.right  = (int) (min(max(scaledSourceRectRight,  0.0), (double)BitMapWidth));
+        sourceRect.bottom = (int) (min(max(scaledSourceRectBottom, 0.0), (double)BitMapHeight));
 
         TRect destRect;
         destRect.left   = sourceRect.left   * the_zoom;
