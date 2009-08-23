@@ -44,6 +44,7 @@ $(BINARYZIP) : $(MANUALS) $(EXES)
 	$(foreach LCID,$(LCIDS),cp manual/logohelp-$(LCID).chm    $(BINARYBASENAME) &&) cp manual/logohelp-$(DEFAULT_LCID).chm    $(BINARYBASENAME)/logohelp.chm
 	cp src/FMSLOGO.TXT             $(BINARYBASENAME)
 	cp src/LICENSE.TXT             $(BINARYBASENAME)
+	cp src/turtle.bmp              $(BINARYBASENAME)
 	cp --recursive src/Logolib     $(BINARYBASENAME)
 	cp --recursive src/Examples    $(BINARYBASENAME)
 	chmod --recursive a+rx $(BINARYBASENAME)
