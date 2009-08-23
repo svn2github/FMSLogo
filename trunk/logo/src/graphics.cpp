@@ -2424,7 +2424,7 @@ NODE *lsetpensize(NODE *args)
     else
     {
         // the input is just the width
-        NODE * arg = pos_int_arg(args);
+        NODE * arg = nonnegative_int_arg(args);
         if (stopping_flag == THROWING)
         {
             return Unbound;
@@ -2502,8 +2502,8 @@ NODE *lbuttonp(NODE *)
 
 NODE *ltone(NODE *args) 
 {
-    NODE * pitchnode    = pos_int_arg(args);
-    NODE * durationnode = pos_int_arg(cdr(args));
+    NODE * pitchnode    = nonnegative_int_arg(args);
+    NODE * durationnode = nonnegative_int_arg(cdr(args));
 
     if (NOT_THROWING)
     { 

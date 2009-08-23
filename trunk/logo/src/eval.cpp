@@ -1576,7 +1576,7 @@ NODE *lqm(NODE *args)
     if (args != NIL) 
     {
         // ?# was given
-        argnum = getint(pos_int_arg(args));
+        argnum = getint(nonnegative_int_arg(args));
     }
     if (stopping_flag == THROWING) 
     {

@@ -305,9 +305,9 @@ NODE *lrunresult(NODE *args)
     return make_cont(runresult_continuation, lrun(args));
 }
 
-// returns an integer node if args can be interpreted as a postive integer.
+// Returns an integer node if args can be interpreted as a non-negative integer.
 // otherwise sets an error in args and returns Unbound.
-NODE *pos_int_arg(NODE *args)
+NODE *nonnegative_int_arg(NODE *args)
 {
     NODE *arg = car(args);
 
@@ -340,7 +340,7 @@ NODE *pos_int_arg(NODE *args)
 
 NODE *lrepeat(NODE *args)
 {
-    NODE * cnt       = pos_int_arg(args);
+    NODE * cnt       = nonnegative_int_arg(args);
     NODE * to_repeat = lrun(cdr(args));
 
     if (stopping_flag == THROWING)

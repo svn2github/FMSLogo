@@ -304,7 +304,7 @@ NODE *lsettimer(NODE *args)
     int id = getint(ranged_integer_arg(args, 1, MAX_TIMERS - 1));
 
     // get delay
-    int delay = getint(pos_int_arg(args = cdr(args)));
+    int delay = getint(nonnegative_int_arg(args = cdr(args)));
 
     // get callback
     char callback[MAX_BUFFER_SIZE];
@@ -362,7 +362,7 @@ NODE *lplaywave(NODE *args)
     char name[MAX_BUFFER_SIZE];
     cnv_strnode_string(name, args);
 
-    int flag = getint(pos_int_arg(args = cdr(args)));
+    int flag = getint(nonnegative_int_arg(args = cdr(args)));
 
     if (strlen(name) == 0)
     {

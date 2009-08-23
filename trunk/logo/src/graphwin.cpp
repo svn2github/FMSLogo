@@ -1332,8 +1332,8 @@ NODE *lbitblock(NODE *arg)
     }
 
     // get args
-    int cutWidth = getint(pos_int_arg(arg));
-    int cutHeight = getint(pos_int_arg(cdr(arg)));
+    int cutWidth  = getint(nonnegative_int_arg(arg));
+    int cutHeight = getint(nonnegative_int_arg(cdr(arg)));
 
     if (NOT_THROWING)
     {
@@ -1572,7 +1572,7 @@ NODE *lsetbitindex(NODE *arg)
     ASSERT_TURTLE_INVARIANT;
 
     // set the current bitmap index if within range
-    int i = getint(pos_int_arg(arg));
+    int i = getint(nonnegative_int_arg(arg));
     if (stopping_flag == THROWING)
     {
         return Unbound;
@@ -1745,8 +1745,8 @@ BitCopyOrCut(NODE *arg, bool IsCut)
         return Unbound;
     }
 
-    int tempWidth = getint(pos_int_arg(arg));
-    int tempHeight = getint(pos_int_arg(cdr(arg)));
+    int tempWidth = getint(nonnegative_int_arg(arg));
+    int tempHeight = getint(nonnegative_int_arg(cdr(arg)));
 
     if (NOT_THROWING)
     {
@@ -1900,8 +1900,8 @@ NODE *lbitfit(NODE *arg)
 {
     ASSERT_TURTLE_INVARIANT;
 
-    FIXNUM newWidth  = getint(pos_int_arg(arg));
-    FIXNUM newHeight = getint(pos_int_arg(cdr(arg)));
+    FIXNUM newWidth  = getint(nonnegative_int_arg(arg));
+    FIXNUM newHeight = getint(nonnegative_int_arg(cdr(arg)));
 
     if (NOT_THROWING)
     {
@@ -2117,7 +2117,7 @@ NODE *lbitpastetoindex(NODE *arg)
     ASSERT_TURTLE_INVARIANT;
 
     // set the current bitmap index if within range
-    int i = getint(pos_int_arg(arg));
+    int i = getint(nonnegative_int_arg(arg));
     int x = int_arg(cdr(arg));
     int y = int_arg(cdr(cdr(arg)));
 
@@ -2803,7 +2803,7 @@ NODE *lwindowset(NODE *args)
     char caption[MAX_BUFFER_SIZE];
     cnv_strnode_string(caption, args);
 
-    int mode = getint(pos_int_arg(cdr(args)));
+    int mode = getint(nonnegative_int_arg(cdr(args)));
 
     if (NOT_THROWING)
     {
@@ -3135,47 +3135,47 @@ NODE *lsetlabelfont(NODE *arg)
         }
         if (cdr(args) != NIL)
         {
-            FontRec.lfWidth = getint(pos_int_arg(args = cdr(args)));
+            FontRec.lfWidth = getint(nonnegative_int_arg(args = cdr(args)));
         }
         if (cdr(args) != NIL)
         {
-            FontRec.lfOrientation = getint(pos_int_arg(args = cdr(args)));
+            FontRec.lfOrientation = getint(nonnegative_int_arg(args = cdr(args)));
         }
         if (cdr(args) != NIL)
         {
-            FontRec.lfWeight = getint(pos_int_arg(args = cdr(args)));
+            FontRec.lfWeight = getint(nonnegative_int_arg(args = cdr(args)));
         }
         if (cdr(args) != NIL)
         {
-            FontRec.lfItalic = getint(pos_int_arg(args = cdr(args)));
+            FontRec.lfItalic = getint(nonnegative_int_arg(args = cdr(args)));
         }
         if (cdr(args) != NIL)
         {
-            FontRec.lfUnderline = getint(pos_int_arg(args = cdr(args)));
+            FontRec.lfUnderline = getint(nonnegative_int_arg(args = cdr(args)));
         }
         if (cdr(args) != NIL)
         {
-            FontRec.lfStrikeOut = getint(pos_int_arg(args = cdr(args)));
+            FontRec.lfStrikeOut = getint(nonnegative_int_arg(args = cdr(args)));
         }
         if (cdr(args) != NIL)
         {
-            FontRec.lfCharSet = getint(pos_int_arg(args = cdr(args)));
+            FontRec.lfCharSet = getint(nonnegative_int_arg(args = cdr(args)));
         }
         if (cdr(args) != NIL)
         {
-            FontRec.lfOutPrecision = getint(pos_int_arg(args = cdr(args)));
+            FontRec.lfOutPrecision = getint(nonnegative_int_arg(args = cdr(args)));
         }
         if (cdr(args) != NIL)
         {
-            FontRec.lfClipPrecision = getint(pos_int_arg(args = cdr(args)));
+            FontRec.lfClipPrecision = getint(nonnegative_int_arg(args = cdr(args)));
         }
         if (cdr(args) != NIL)
         {
-            FontRec.lfQuality = getint(pos_int_arg(args = cdr(args)));
+            FontRec.lfQuality = getint(nonnegative_int_arg(args = cdr(args)));
         }
         if (cdr(args) != NIL)
         {
-            FontRec.lfPitchAndFamily = getint(pos_int_arg(args = cdr(args)));
+            FontRec.lfPitchAndFamily = getint(nonnegative_int_arg(args = cdr(args)));
         }
 
         // update status window

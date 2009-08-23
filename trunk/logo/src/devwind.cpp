@@ -283,7 +283,7 @@ NODE *lportmode(NODE *args)
 
 NODE *lportwritearray(NODE *args)
 {
-    NODE * val = pos_int_arg(args);
+    NODE * val = nonnegative_int_arg(args);
     NODE * obj = cadr(args);
 
     while ((obj == NIL || obj == Null_Word) && NOT_THROWING)
@@ -345,7 +345,7 @@ NODE *lportwritearray(NODE *args)
 
 NODE *lportreadarray(NODE *args)
 {
-    NODE * val = pos_int_arg(args);
+    NODE * val = nonnegative_int_arg(args);
     NODE * obj = cadr(args);
 
     while ((obj == NIL || obj == Null_Word) && NOT_THROWING)
@@ -411,7 +411,7 @@ NODE *lportwritechar(NODE *args)
 {
     // get arg
     char txchar[1];
-    txchar[0] = getint(pos_int_arg(args));
+    txchar[0] = getint(nonnegative_int_arg(args));
 
     // if not open output error, else continue
 
@@ -477,8 +477,8 @@ NODE *lportreadchar(NODE *)
 NODE *loutportb(NODE *args)
 {
     // get args
-    int portid = getint(pos_int_arg(args));
-    int value = getint(pos_int_arg(cdr(args)));
+    int portid = getint(nonnegative_int_arg(args));
+    int value = getint(nonnegative_int_arg(cdr(args)));
 
     Myoutportb(portid, value);
 
@@ -487,7 +487,7 @@ NODE *loutportb(NODE *args)
 
 NODE *linportb(NODE *args)
 {
-    int portid = getint(pos_int_arg(args));
+    int portid = getint(nonnegative_int_arg(args));
     int value = Myinportb(portid);
 
     return make_intnode(value);
@@ -496,8 +496,8 @@ NODE *linportb(NODE *args)
 NODE *loutport(NODE *args)
 {
     // get args
-    int portid = getint(pos_int_arg(args));
-    int value = getint(pos_int_arg(cdr(args)));
+    int portid = getint(nonnegative_int_arg(args));
+    int value = getint(nonnegative_int_arg(cdr(args)));
 
     Myoutport(portid, value);
 
@@ -506,7 +506,7 @@ NODE *loutport(NODE *args)
 
 NODE *linport(NODE *args)
 {
-    int portid = getint(pos_int_arg(args));
+    int portid = getint(nonnegative_int_arg(args));
     int value = Myinport(portid);
 
     return make_intnode(value);
@@ -516,7 +516,7 @@ NODE *lingameport(NODE *args)
 {
     int portid;
 
-    int mask = getint(pos_int_arg(args));
+    int mask = getint(nonnegative_int_arg(args));
 
     if (cdr(args) == NIL)
     {
@@ -524,7 +524,7 @@ NODE *lingameport(NODE *args)
     }
     else
     {
-        portid = getint(pos_int_arg(cdr(args)));
+        portid = getint(nonnegative_int_arg(cdr(args)));
     }
 
     int value = Myingameport(portid, mask);

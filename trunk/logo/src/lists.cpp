@@ -342,7 +342,7 @@ NODE *lchar(NODE *args)
 {
     NODE *val = Unbound;
 
-    NODE * arg = pos_int_arg(args);
+    NODE * arg = nonnegative_int_arg(args);
     if (NOT_THROWING)
     {
         char c = getint(arg);
@@ -978,7 +978,7 @@ NODE *larray(NODE *args)
 {
     int o;
 
-    NODE * arg = pos_int_arg(args);
+    NODE * arg = nonnegative_int_arg(args);
     if (cdr(args) != NIL)
     {
         o = int_arg(cdr(args));

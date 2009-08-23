@@ -365,7 +365,7 @@ CFileStream::SetPosition(
     NODE * Arguments
     )
 {
-    NODE *val = pos_int_arg(Arguments);
+    NODE *val = nonnegative_int_arg(Arguments);
 
     if (NOT_THROWING)
     {
@@ -702,7 +702,7 @@ NODE *lreadchars(NODE *args)
 {
     NODETYPES type = STRING;
 
-    size_t totalBytesRequested = (size_t) getint(pos_int_arg(args));
+    size_t totalBytesRequested = (size_t) getint(nonnegative_int_arg(args));
     size_t totalBytesRead      = 0;
 
     if (stopping_flag == THROWING) 

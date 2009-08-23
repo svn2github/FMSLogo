@@ -151,7 +151,7 @@ int numberp(NODE *snd)
 
 NODE *lrandom(NODE *arg)
 {
-    NODE *val = pos_int_arg(arg);
+    NODE *val = nonnegative_int_arg(arg);
     if (NOT_THROWING)
     {
         long r;

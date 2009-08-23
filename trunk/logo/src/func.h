@@ -271,7 +271,7 @@ extern NODE *lif(NODE *args);
 extern NODE *lifelse(NODE *args);
 extern NODE *lrun(NODE *args);
 extern NODE *lrunresult(NODE *args);
-extern NODE *pos_int_arg(NODE *args);
+extern NODE *nonnegative_int_arg(NODE *args);
 extern NODE *lrepeat(NODE *args);
 extern NODE *lrepcount(NODE *args);
 extern NODE *lforever(NODE *args);

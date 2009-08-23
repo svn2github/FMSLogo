@@ -78,10 +78,10 @@ void TClientRectangle::InitializeFromInput(NODE * & Args)
     m_Y = int_arg(nextinput);
     nextinput = cdr(nextinput);
 
-    m_Width = getint(pos_int_arg(nextinput));
+    m_Width = getint(nonnegative_int_arg(nextinput));
     nextinput = cdr(nextinput);
 
-    m_Height = getint(pos_int_arg(nextinput));
+    m_Height = getint(nonnegative_int_arg(nextinput));
     nextinput = cdr(nextinput);
    
     Args = nextinput;
@@ -1275,7 +1275,7 @@ NODE *llistboxdeletestring(NODE *args)
     char listboxname[MAX_BUFFER_SIZE];
     cnv_strnode_string(listboxname, args);
    
-    int index = getint(pos_int_arg(cdr(args)));
+    int index = getint(nonnegative_int_arg(cdr(args)));
 
     if (stopping_flag == THROWING)
     {
@@ -1452,7 +1452,7 @@ NODE *lcomboboxdeletestring(NODE *args)
     char comboboxname[MAX_BUFFER_SIZE];
     cnv_strnode_string(comboboxname, args);
 
-    int index = getint(pos_int_arg(cdr(args)));
+    int index = getint(nonnegative_int_arg(cdr(args)));
 
     // get the combobox
     dialogthing *combobox = dialogboxes.get(comboboxname, WINDOWTYPE_ComboBox);

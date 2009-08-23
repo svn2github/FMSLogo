@@ -598,7 +598,7 @@ NODE *lnetaccepton(NODE *args)
     }
 
     // get args (socket and callback)
-    int port = getint(pos_int_arg(args));
+    int port = getint(nonnegative_int_arg(args));
 
     char networksend[MAX_BUFFER_SIZE];
     cnv_strnode_string(networksend, cdr(args));
@@ -690,7 +690,7 @@ NODE *lnetconnecton(NODE *args)
     char remotehostname[MAX_BUFFER_SIZE];
     cnv_strnode_string(remotehostname, args);
 
-    int remote_port = getint(pos_int_arg(cdr(args)));
+    int remote_port = getint(nonnegative_int_arg(cdr(args)));
 
     char networksend[MAX_BUFFER_SIZE];
     cnv_strnode_string(networksend, cdr(cdr(args)));
