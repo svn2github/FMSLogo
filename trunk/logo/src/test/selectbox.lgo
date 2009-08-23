@@ -10,23 +10,23 @@ TO SELECTBOXTEST.SMOKETEST
      localmake "downarrow 40
 
      ; Select the first value.  (no keypresses).
-     UIAUTOMATION.POSTBUTTONPUSHTOWINDOW [SELECTBOX Test: Select First] "&OK
+     UIAUTOMATION.POSTBUTTONPUSHTOWINDOW [SELECTBOX Test: Select First] "OK
      SIMPLEREPORTTEST  [ SELECTBOX [SELECTBOX Test: Select First]  [First Second Third] ] 1
 
      ; Select the second value.  (one down arrow presses).
      UIAUTOMATION.POSTKEYTOWINDOW        [SELECTBOX Test: Select Second] "Listbox :downarrow
-     UIAUTOMATION.POSTBUTTONPUSHTOWINDOW [SELECTBOX Test: Select Second] "&OK
+     UIAUTOMATION.POSTBUTTONPUSHTOWINDOW [SELECTBOX Test: Select Second] "OK
      SIMPLEREPORTTEST [ SELECTBOX [SELECTBOX Test: Select Second] [First Second Third] ] 2
 
      ; Select the third value.  (two down arrow presses)
      UIAUTOMATION.POSTKEYTOWINDOW        [SELECTBOX Test: Select Third] "Listbox :downarrow
      UIAUTOMATION.POSTKEYTOWINDOW        [SELECTBOX Test: Select Third] "Listbox :downarrow
-     UIAUTOMATION.POSTBUTTONPUSHTOWINDOW [SELECTBOX Test: Select Third] "&OK
+     UIAUTOMATION.POSTBUTTONPUSHTOWINDOW [SELECTBOX Test: Select Third] "OK
      SIMPLEREPORTTEST  [ SELECTBOX [SELECTBOX Test: Select Third]  [First Second Third] ] 3
 
      ; Press cancel
      UIAUTOMATION.POSTKEYTOWINDOW        [SELECTBOX Test: Press Cancel] "Listbox :downarrow
-     UIAUTOMATION.POSTBUTTONPUSHTOWINDOW [SELECTBOX Test: Press Cancel] "&Cancel
+     UIAUTOMATION.POSTBUTTONPUSHTOWINDOW [SELECTBOX Test: Press Cancel] "Cancel
      RUNSTOPPINGTEST  [ SELECTBOX [SELECTBOX Test: Press Cancel]  [First Second Third] ]
 
      ; Press ESC (can't be automated)
@@ -36,7 +36,7 @@ TO SELECTBOXTEST.SMOKETEST
      RUNSTOPPINGTEST  [ SELECTBOX [SELECTBOX Test: Press the X] [First Second Third] ]
 
      ; the choicelist input is empty
-     UIAUTOMATION.POSTBUTTONPUSHTOWINDOW [SELECTBOX Test: No Choice (press ok)] "&OK
+     UIAUTOMATION.POSTBUTTONPUSHTOWINDOW [SELECTBOX Test: No Choice (press ok)] "OK
      SIMPLEREPORTTEST [ SELECTBOX [SELECTBOX Test: No Choice (press ok)] [] ] 1
    ]
 
