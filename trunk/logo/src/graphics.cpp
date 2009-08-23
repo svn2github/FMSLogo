@@ -618,10 +618,9 @@ NODE *positive_numeric_arg(NODE *args)
 
 NODE *luppitch(NODE *arg)
 {
-    NODE* val = numeric_arg(arg);
+    FLONUM a = float_arg(arg);
     if (NOT_THROWING)
     {
-        FLONUM a = numeric_node_to_flonum(val);
         uppitch(a);
     }
     return Unbound;
@@ -629,10 +628,9 @@ NODE *luppitch(NODE *arg)
 
 NODE *ldownpitch(NODE *arg)
 {
-    NODE* val = numeric_arg(arg);
+    FLONUM a = float_arg(arg);
     if (NOT_THROWING)
     {
-        FLONUM a = numeric_node_to_flonum(val);
         uppitch(-a);
     }
 
@@ -641,10 +639,9 @@ NODE *ldownpitch(NODE *arg)
 
 NODE *lrightroll(NODE *arg)
 {
-    NODE* val = numeric_arg(arg);
+    FLONUM a = float_arg(arg);
     if (NOT_THROWING)
     {
-        FLONUM a = numeric_node_to_flonum(val);
         rightroll(a);
     }
 
@@ -653,10 +650,9 @@ NODE *lrightroll(NODE *arg)
 
 NODE *lleftroll(NODE *arg)
 {
-    NODE* val = numeric_arg(arg);
+    FLONUM a = float_arg(arg);
     if (NOT_THROWING)
     {
-        FLONUM a = numeric_node_to_flonum(val);
         rightroll(-a);
     }
     return Unbound;
@@ -664,10 +660,9 @@ NODE *lleftroll(NODE *arg)
 
 NODE *lright(NODE *arg)
 {
-    NODE* val = numeric_arg(arg);
+    FLONUM a = float_arg(arg);
     if (NOT_THROWING)
     {
-        FLONUM a = numeric_node_to_flonum(val);
         right_helper(a);
     }
 
@@ -676,10 +671,9 @@ NODE *lright(NODE *arg)
 
 NODE *lleft(NODE *arg)
 {
-    NODE* val = numeric_arg(arg);
+    FLONUM a = float_arg(arg);
     if (NOT_THROWING)
     {
-        FLONUM a = numeric_node_to_flonum(val);
         right_helper(-a);
     }
 
@@ -847,18 +841,13 @@ NODE *lellipsearc(NODE *arg)
     bool pen_state = g_SelectedTurtle->IsPenUp;
 
     // get args
-    NODE * val1 = numeric_arg(arg);
-    NODE * val2 = numeric_arg(cdr(arg));
-    NODE * val3 = numeric_arg(cdr(cdr(arg)));
-    NODE * val4 = numeric_arg(cdr(cdr(cdr(arg))));
+    FLONUM angle      = float_arg(arg);
+    FLONUM radius_x   = float_arg(cdr(arg));
+    FLONUM radius_y   = float_arg(cdr(cdr(arg)));
+    FLONUM startangle = float_arg(cdr(cdr(cdr(arg))));
 
     if (NOT_THROWING)
     {
-        FLONUM angle      = numeric_node_to_flonum(val1);
-        FLONUM radius_x   = numeric_node_to_flonum(val2);
-        FLONUM radius_y   = numeric_node_to_flonum(val3);
-        FLONUM startangle = numeric_node_to_flonum(val4);
-
         draw_turtle(false);
 
         if (360.0 < fabs(angle))
@@ -1218,10 +1207,9 @@ void forward(FLONUM d)
 
 NODE *lforward(NODE *arg)
 {
-    NODE * val = numeric_arg(arg);
+    FLONUM d = float_arg(arg);
     if (NOT_THROWING)
     {
-        FLONUM d = numeric_node_to_flonum(val);
         forward(d);
     }
     return Unbound;
@@ -1229,10 +1217,9 @@ NODE *lforward(NODE *arg)
 
 NODE *lback(NODE *arg)
 {
-    NODE* val = numeric_arg(arg);
+    FLONUM d = float_arg(arg);
     if (NOT_THROWING)
     {
-        FLONUM d = numeric_node_to_flonum(val);
         forward(-d);
     }
     return Unbound;
@@ -1296,12 +1283,11 @@ NODE *lshownp(NODE *)
 
 NODE *lsetheading(NODE *arg)
 {
-    NODE *val = numeric_arg(arg);
+    FLONUM a = float_arg(arg);
     if (NOT_THROWING)
     {
         draw_turtle(false);
 
-        FLONUM a = numeric_node_to_flonum(val);
         a = positive_fmod(a, 360.0);
 
         if (current_mode == perspectivemode)
@@ -1324,12 +1310,11 @@ NODE *lsetheading(NODE *arg)
 
 NODE *lsetroll(NODE *arg)
 {
-    NODE* val = numeric_arg(arg);
+    FLONUM a = float_arg(arg);
     if (NOT_THROWING)
     {
         draw_turtle(false);
 
-        FLONUM a = numeric_node_to_flonum(val);
         a -= rotation_y();
         a = positive_fmod(a, 360.0);
         rightroll(a);
@@ -1345,12 +1330,11 @@ NODE *lsetroll(NODE *arg)
 
 NODE *lsetpitch(NODE *arg)
 {
-    NODE * val = numeric_arg(arg);
+    FLONUM a = float_arg(arg);
     if (NOT_THROWING)
     {
         draw_turtle(false);
 
-        FLONUM a = numeric_node_to_flonum(val);
         a -= rotation_x();
         a = positive_fmod(a, 360.0);
         uppitch(a);
@@ -1366,19 +1350,15 @@ NODE *lsetpitch(NODE *arg)
 
 NODE *lsetclip(NODE *args)
 {
-    NODE* angle = numeric_arg(args);
-    NODE* zmin = numeric_arg(cdr(args));
-    NODE* zmax = numeric_arg(cdr(cdr(args)));
+    FLONUM angle = float_arg(args);
+    FLONUM zmin = float_arg(cdr(args));
+    FLONUM zmax = float_arg(cdr(cdr(args)));
 
     if (NOT_THROWING)
     {
         draw_turtle(false);
 
-        FLONUM _Angle = numeric_node_to_flonum(angle);
-        FLONUM _Zmin  = numeric_node_to_flonum(zmin);
-        FLONUM _Zmax  = numeric_node_to_flonum(zmax);
-
-        ThreeD.SetClip(_Angle, _Zmin, _Zmax);
+        ThreeD.SetClip(angle, zmin, zmax);
 
         draw_turtle(true);
     }
