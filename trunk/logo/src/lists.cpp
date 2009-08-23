@@ -1000,24 +1000,29 @@ NODE *larray(NODE *args)
 
 FLONUM float_arg(NODE *args)
 {
-    NODE *arg = car(args);
-    NODE *val = cnv_node_to_numnode(arg);
-    while (!is_number(val) && NOT_THROWING)
+    for (;;)
     {
+        NODE *arg = car(args);
+        NODE *val = cnv_node_to_numnode(arg);
+
+        if (stopping_flag == THROWING)
+        {
+            // Encountered an error.  Stop processing.
+            return 0.0;
+        }
+
+        if (is_number(val))
+        {
+            // got a number, just like we wanted
+            return numeric_node_to_flonum(val);
+        }
+
+        // try to get a new value from ERRACT
         gcref(val);
         setcar(args, err_logo(BAD_DATA, arg));
-        arg = car(args);
-        val = cnv_node_to_numnode(arg);
     }
-    setcar(args, val);
-    if (nodetype(val) == FLOATINGPOINT)
-    {
-        return getfloat(val);
-    }
-    if (nodetype(val) == INTEGER)
-    {
-        return (FLONUM) getint(val);
-    }
+
+    // shouldn't be reachable
     return 0.0;
 }
 
