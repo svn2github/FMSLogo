@@ -1,5 +1,44 @@
 This file contains the changes that were made in each revision of FMSLogo.
 
+Added for 6.25.0
+o Fix bug #2842770; FMSLogo continues to draw properly after BITFIT is
+  called with very large inputs.
+o Fix bug #2825102; The full contents of the commander's input is
+  now run when Execute is pressed, instead of only the first 255 chars.
+o Fix bug #2819812; Buttons created with BUTTONCREATE now respond to
+  being pressed with the keyboard.
+o Fix bug #2819806; NUMBERP on a non-ASCII word now outputs FALSE.
+o Fix bug #2813670; OK and Cancel buttons for SELECTBOX no longer have
+  access keys.  This was unnecessary because they have shortcuts (Enter
+  and Esc).
+o Fix bug #2803946; SETPENCOLOR, SETSCREENCOLOR, SETFLOODCOLOR, SETPIXEL,
+  SETACTIVEAREA, SETPENSIZE, TONE, and GIFSAVE no longer crash when given
+  very large numbers (like 1e20) as input.
+o Fix bug #1605822; SETTURTLE now throws bad input error when given bad
+  input, instead of display a dialog box and throwing a stopping error.
+o Fix bug #1602936; the sample turtle trails in the "Pen Size" dialog
+  no longer have beveled corners.
+o Fix bug #1602855; Scolling the main window when zoomed now tracks the
+  scrollbar's position (the screen slides as you scroll the tracker).
+o Fix bug #1576435; TONE no longer indefinately locks up while playing a
+  tone when given a negative duration.
+o Fix bug #1438443; the "up" radio button in the editor's find dialog
+  box now works.
+o Fix bug #1327775; FMSLogo now cleans up the "turtle traces" (when parts
+  of the turtle are drawn outside the turtle's drawable area).
+o Implement request #1828287; The editor now supports automatic paren
+  highlighting and CTRL+/ moves the caret to the matching paren.
+o Implement request #2827560; BITMAPTURTLE now supports an optional input
+  that makes the bitmap rotate with the turtle.  This enables a school
+  in Sri Lanka to use a picture of a turtle, instead of a triangle.
+o Interpolate colors when zoomed out or using BITFIT to shrink an image.
+  This makes the picture look better and removes the confusion behavior
+  where a picture might disappear when zoomed out.
+  This change does not apply to Win 95/98/ME.
+o Add infinite undo/redo to the editor.
+o Add rudimentary syntax coloring to the editor.
+o Embed version information into fmslogo.exe for better bug reporting.
+
 Added for 6.24.0
 o Fix bug #2653504; workspaces arrays with words that contain \ and |
   can now be saved and loaded.
