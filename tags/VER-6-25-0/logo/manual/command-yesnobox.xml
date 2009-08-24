@@ -1,0 +1,46 @@
+<section id="command-yesnobox">
+    <title>YESNOBOX</title>
+<indexterm><primary>YESNOBOX</primary></indexterm>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>YESNOBOX</command> <parameter>title</parameter> <parameter>question</parameter></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+Displays a dialog box with <parameter>title</parameter> in the title bar and <parameter>question</parameter> as the message.
+The dialog also has "Yes", "No", and "Cancel" buttons.
+Processing will not continue until the user clicks one of these buttons.
+The commander window is also disabled until dialog is dismissed.
+If the user presses "Yes", then YESNOBOX outputs the TRUE and processing continues.
+If the user presses "No", then YESNOBOX outputs the FALSE and processing continues.
+If the user presses "Cancel", then processing will be halted, as if by the <link linkend="command-halt">HALT</link> command.
+</para>
+
+<para>
+Both the <parameter>title</parameter> and <parameter>question</parameter> inputs must be lists.
+The yes/no box will be automatically sized to fit <parameter>question</parameter>.
+The question will not be word-wrapped, so if you have a long question, you may want to put in some line breaks.
+</para>
+
+</listitem>
+</varlistentry>
+
+
+<varlistentry><term>Example</term>
+<listitem>
+    <programlisting><userinput>SHOW YESNOBOX [Question] [Do you like &PRODUCTNAME;?]</userinput>
+true
+</programlisting>
+
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</section>

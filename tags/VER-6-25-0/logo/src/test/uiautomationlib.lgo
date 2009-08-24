@@ -1,0 +1,227 @@
+LOAD "testlib.lgo
+
+TO UIAUTOMATION.INITIALIZE
+
+  DLLLOAD "user32.dll
+
+  SETTIMER 31 1000 [UIAUTOMATION.TIMEREVENT]
+END
+BURY "UIAUTOMATION.INITIALIZE
+
+
+
+TO UIAUTOMATION.UNINITIALIZE
+
+  ERASE NAMELIST [uiautomation.windowtitle uiautomation.letter]
+
+  CLEARTIMER 31
+
+  (DLLFREE "user32.dll)
+
+END
+BURY "UIAUTOMATION.UNINITIALIZE
+
+
+TO UIAUTOMATION.FINDWINDOW :windowtitle :windowclass
+  localmake "windowclasstype "S
+  localmake "windowtitletype "S
+
+  if :windowclass = 0 [ make "windowclasstype "L ]
+  if :windowtitle = 0 [ make "windowtitletype "L ]
+
+  OUTPUT ITEM 1 (DLLCALL (list "L "FindWindowA 
+    :windowtitletype :windowtitle
+    :windowclasstype :windowclass) "user32.dll)
+END
+BURY "UIAUTOMATION.FINDWINDOW
+
+
+TO UIAUTOMATION.FINDCHILDWINDOW :parenthwnd :childtitle :childclass
+
+  localmake "windowclasstype "S
+  localmake "windowtitletype "S
+
+  if :childclass = 0 [ make "windowclasstype "L ]
+  if :childtitle = 0 [ make "windowtitletype "L ]
+
+  output item 1 (DLLCALL (list "L "FindWindowExA 
+    :windowtitletype :childtitle
+    :windowclasstype :childclass
+    "L               0
+    "L               :parenthwnd) "user32.dll)
+END
+BURY "UIAUTOMATION.FINDCHILDWINDOW
+
+
+TO UIAUTOMATION.SENDMESSAGE :HWND :MESSAGEID :WPARAM :LPARAM
+    OUTPUT (DLLCALL (LIST "L "SendMessageA
+        "L :LPARAM
+        "W :WPARAM
+        "L :MESSAGEID
+        "L :HWND) "user32.dll)
+END
+BURY "UIAUTOMATION.SENDMESSAGE
+
+
+TO UIAUTOMATION.SETFOCUS :HWND
+    OUTPUT (DLLCALL (LIST "L "SetFocus "L :HWND) "user32.dll)
+END
+BURY "UIAUTOMATION.SETFOCUS
+
+
+TO UIAUTOMATION.TIMEREVENT
+
+  if not namep "uiautomation.eventqueue [ STOP ]
+  if empty?    :uiautomation.eventqueue [ STOP ]
+
+  localmake "event DEQUEUE "uiautomation.eventqueue
+
+  apply (item 1 :event) (item 2 :event)
+END
+BURY "UIAUTOMATION.TIMEREVENT
+
+TO UIAUTOMATION.POSTEVENT :event
+
+  if not namep "uiautomation.eventqueue [
+    make "uiautomation.eventqueue []
+    bury "uiautomation.eventqueue
+  ]
+
+  ; add this item to the end of the queue
+  QUEUE "uiautomation.eventqueue :event
+END
+BURY "UIAUTOMATION.POSTEVENT
+
+
+; Gets a child window by its class name
+TO UIAUTOMATION.GETCHILDWINDOWBYCLASS :parentwindowtitle :childwindowclass
+  LOCALMAKE "parenthwnd UIAUTOMATION.FINDWINDOW :parentwindowtitle 0
+  if :parenthwnd = 0 [
+     REPORTTESTINFO (se [TEST BUG: couldn't find parent] :parentwindowtitle)
+     OUTPUT 0
+  ]
+
+  LOCALMAKE "hwnd UIAUTOMATION.FINDCHILDWINDOW :parenthwnd 0 :childwindowclass
+  if :hwnd = 0 [
+     REPORTTESTINFO (se [TEST BUG: couldn't find child] :childwindowclass)
+     OUTPUT 0
+  ]
+
+  OUTPUT :hwnd
+END
+BURY "UIAUTOMATION.GETCHILDWINDOWBYCLASS
+
+
+TO UIAUTOMATION.SENDSTRINGTOWINDOW :parentwindowtitle :childwindowclass :string
+
+  localmake "WM_KEYDOWN 256    ; 0x0100
+  localmake "WM_KEYUP   256+1  ; 0x0101
+  localmake "WM_CHAR    256+2  ; 0x0102
+
+  LOCALMAKE "hwnd UIAUTOMATION.GETCHILDWINDOWBYCLASS :parentwindowtitle :childwindowclass
+  if :hwnd = 0 [ STOP ]
+
+  repeat count :string [
+    IGNORE UIAUTOMATION.SENDMESSAGE :hwnd :WM_CHAR ASCII ITEM REPCOUNT :string 0
+  ]
+
+END
+BURY "UIAUTOMATION.SENDSTRINGTOWINDOW
+
+
+TO UIAUTOMATION.POSTSTRINGTOWINDOW :parentwindow :childwindowclass :string
+
+  localmake "uievent array 2
+
+  setitem 1 :uievent [UIAUTOMATION.SENDSTRINGTOWINDOW ?1 ?2 ?3]
+  setitem 2 :uievent (list :parentwindow :childwindowclass :string)
+
+  uiautomation.postevent :uievent
+END
+BURY "UIAUTOMATION.POSTSTRINGTOWINDOW
+
+
+TO UIAUTOMATION.SENDBUTTONPUSHTOWINDOW :parentwindowtitle :buttontext
+
+  localmake "WM_LBUTTONDOWN 512+1  ; 0x0201
+  localmake "WM_LBUTTONUP   512+2  ; 0x0202
+
+  LOCALMAKE "parenthwnd UIAUTOMATION.FINDWINDOW :parentwindowtitle 0
+  if :parenthwnd = 0 [
+     REPORTTESTINFO (se [TEST BUG: couldn't find parent] :parentwindowtitle)
+     STOP
+  ]
+
+  LOCALMAKE "button UIAUTOMATION.FINDCHILDWINDOW :parenthwnd :buttontext 0
+  if :button = 0 [
+     REPORTTESTINFO (se [TEST BUG: couldn't find button] :buttontext)
+     STOP
+  ]
+
+  IGNORE UIAUTOMATION.SENDMESSAGE :button :WM_LBUTTONDOWN 0 0
+  IGNORE UIAUTOMATION.SENDMESSAGE :button :WM_LBUTTONUP   0 0
+END
+BURY "UIAUTOMATION.SENDBUTTONPUSHTOWINDOW
+
+
+TO UIAUTOMATION.POSTBUTTONPUSHTOWINDOW :parentwindowtitle :buttontext
+
+  localmake "uievent array 2
+
+  setitem 1 :uievent [UIAUTOMATION.SENDBUTTONPUSHTOWINDOW ?1 ?2]
+  setitem 2 :uievent (list :parentwindowtitle :buttontext)
+
+  uiautomation.postevent :uievent
+END
+BURY "UIAUTOMATION.POSTBUTTONPUSHTOWINDOW
+
+
+
+
+TO UIAUTOMATION.SENDKEYTOWINDOW :parentwindowtitle :childwindowclass :key
+
+  localmake "WM_KEYDOWN 256    ; 0x0100
+  localmake "WM_KEYUP   256+1  ; 0x0101
+  localmake "WM_CHAR    256+2  ; 0x0102
+
+  localmake "hwnd UIAUTOMATION.GETCHILDWINDOWBYCLASS :parentwindowtitle :childwindowclass
+  if :hwnd = 0 [ STOP ]
+
+  IGNORE UIAUTOMATION.SENDMESSAGE :hwnd :WM_KEYDOWN :key 0
+  IGNORE UIAUTOMATION.SENDMESSAGE :hwnd :WM_KEYUP   :key 0
+END
+BURY "UIAUTOMATION.SENDKEYTOWINDOW
+
+TO UIAUTOMATION.POSTKEYTOWINDOW :parentwindowtitle :childwindowclass :key
+
+  localmake "uievent array 2
+
+  setitem 1 :uievent [UIAUTOMATION.SENDKEYTOWINDOW ?1 ?2 ?3]
+  setitem 2 :uievent (list :parentwindowtitle :childwindowclass :key)
+
+  uiautomation.postevent :uievent
+END
+BURY "UIAUTOMATION.POSTKEYTOWINDOW
+
+
+
+
+TO UIAUTOMATION.SENDFOCUSTOWINDOW :parentwindowtitle :childwindowclass
+
+  localmake "hwnd UIAUTOMATION.GETCHILDWINDOWBYCLASS :parentwindowtitle :childwindowclass
+  if :hwnd = 0 [ STOP ]
+
+  IGNORE UIAUTOMATION.SETFOCUS :hwnd
+END
+BURY "UIAUTOMATION.SENDFOCUSTOWINDOW
+
+TO UIAUTOMATION.POSTFOCUSTOWINDOW :parentwindowtitle :childwindowclass
+
+  localmake "uievent array 2
+
+  setitem 1 :uievent [UIAUTOMATION.SENDFOCUSTOWINDOW ?1 ?2]
+  setitem 2 :uievent (list :parentwindowtitle :childwindowclass)
+
+  uiautomation.postevent :uievent
+END
+BURY "UIAUTOMATION.POSTFOCUSTOWINDOW
