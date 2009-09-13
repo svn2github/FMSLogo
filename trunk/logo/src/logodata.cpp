@@ -584,6 +584,7 @@ NODE *make_floatnode(FLONUM f)
     return nd;
 }
 
+// Caller must call gcref() on the returned value
 NODE *cnv_node_to_numnode(NODE *ndi)
 {
     if (is_number(ndi))

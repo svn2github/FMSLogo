@@ -268,65 +268,6 @@ gifsave_helper(
     return status;
 }
 
-
-static
-COLORREF
-GetRGBorIndexColor(
-    NODE* args
-    )
-{
-    COLORREF color = (COLORREF) -1;
-
-    // get args
-    if (is_list(car(args)))
-    {
-        NODE * arg = pos_int_vector_3_arg(args);
-
-        if (NOT_THROWING)
-        {
-            const int red   = numeric_node_to_fixnum(car(arg));
-            const int green = numeric_node_to_fixnum(cadr(arg));
-            const int blue  = numeric_node_to_fixnum(cadr(cdr(arg)));
-
-            if (EnablePalette)
-            {
-                color = LoadColor(red, green, blue);
-            }
-            else
-            {
-                color = RGB(red, green, blue);
-            }
-        }
-
-        bIndexMode = false;
-    }
-    else
-    {
-        NODE * cnode = numeric_arg(args);
-
-        if (NOT_THROWING)
-        {
-            const int color_index = numeric_node_to_fixnum(cnode) % 16;
-
-            if (EnablePalette)
-            {
-                color = LoadColor(
-                    GetRValue(colortable[color_index]),
-                    GetGValue(colortable[color_index]),
-                    GetBValue(colortable[color_index]));
-            }
-            else
-            {
-                color = colortable[color_index];
-            }
-        }
-
-        bIndexMode = true;
-    }
-
-    return color;
-}
-
 NODE *lgifsave(NODE *args)
 {
     // same as BITMAP-SAVE but gets file name from logo command
@@ -370,7 +311,7 @@ NODE *lgifsave(NODE *args)
 
                                     if (cdr(cdr(cdr(cdr(cdr(args))))) != NIL)
                                     {
-                                        iTrans = GetRGBorIndexColor(cdr(cdr(cdr(cdr(cdr(args))))));
+                                        iTrans = GetColorArgument(cdr(cdr(cdr(cdr(cdr(args))))));
                                     }
                                 }
                             }
@@ -861,7 +802,7 @@ NODE *lsetpixel(NODE *args)
     }
 
     // get args
-    COLORREF color = GetRGBorIndexColor(args);
+    COLORREF color = GetColorArgument(args);
 
     if (NOT_THROWING)
     {

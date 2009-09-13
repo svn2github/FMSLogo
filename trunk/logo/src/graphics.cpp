@@ -1571,44 +1571,6 @@ NODE *vec_arg_helper(NODE *Arguments, bool NegativeIsOk)
     return Unbound;
 }
 
-NODE *vec_3_arg_helper(NODE *Arguments, bool NegativeIsOk)
-{
-    NODE *arg = car(Arguments);
-
-    while (NOT_THROWING)
-    {
-        if (arg != NIL &&
-            is_list(arg) &&
-            cdr(arg) != NIL &&
-            cddr(arg) != NIL &&
-            cddr(cdr(arg)) == NIL)
-        {
-            NODE * val1 = cnv_node_to_numnode(car(arg));
-            NODE * val2 = cnv_node_to_numnode(cadr(arg));
-            NODE * val3 = cnv_node_to_numnode(cadr(cdr(arg)));
-            if (val1 != Unbound &&
-                val2 != Unbound &&
-                val3 != Unbound && (
-                    NegativeIsOk || (
-                        NumericNodeIsNotNegative(val1) && 
-                        NumericNodeIsNotNegative(val2) &&
-                        NumericNodeIsNotNegative(val3)))) 
-            {
-                setcar(arg, val1);
-                setcar(cdr(arg), val2);
-                setcar(cddr(arg), val3);
-                return arg;
-            }
-
-            gcref(val1);
-            gcref(val2);
-            gcref(val3);
-        }
-        setcar(Arguments, err_logo(BAD_DATA, arg));
-        arg = car(Arguments);
-    }
-    return Unbound;
-}
 
 NODE *vec_4_arg_helper(NODE *Arguments, bool NegativeIsOk)
 {
@@ -1661,7 +1623,36 @@ NODE *vector_arg(NODE *args)
 
 NODE *vector_3_arg(NODE *args)
 {
-    return vec_3_arg_helper(args, true);
+    NODE *arg = car(args);
+
+    while (NOT_THROWING)
+    {
+        if (arg != NIL &&
+            is_list(arg) &&
+            cdr(arg) != NIL &&
+            cddr(arg) != NIL &&
+            cddr(cdr(arg)) == NIL)
+        {
+            NODE * val1 = cnv_node_to_numnode(car(arg));
+            NODE * val2 = cnv_node_to_numnode(cadr(arg));
+            NODE * val3 = cnv_node_to_numnode(cadr(cdr(arg)));
+            if (val1 != Unbound && val2 != Unbound && val3 != Unbound)
+            {
+                setcar(arg, val1);
+                setcar(cdr(arg), val2);
+                setcar(cddr(arg), val3);
+                return arg;
+            }
+
+            gcref(val1);
+            gcref(val2);
+            gcref(val3);
+        }
+        setcar(args, err_logo(BAD_DATA, arg));
+        arg = car(args);
+    }
+
+    return Unbound;
 }
 
 NODE *vector_4_arg(NODE *args)
@@ -1672,11 +1663,6 @@ NODE *vector_4_arg(NODE *args)
 NODE *pos_int_vector_arg(NODE *args)
 {
     return vec_arg_helper(args, false);
-}
-
-NODE *pos_int_vector_3_arg(NODE *args)
-{
-    return vec_3_arg_helper(args, false);
 }
 
 NODE *pos_int_vector_4_arg(NODE *args)
@@ -2282,6 +2268,183 @@ StringNodeEqualsString(
     }
 }
 
+// Gets an integral value from 0-255 from Node, or returns
+// -1 if this cannot be done.
+static
+int
+GetUnsignedChar(
+    NODE * Node
+    )
+{
+    if (Node == NIL)
+    {
+        return -1;
+    }
+
+    NODE * value = cnv_node_to_numnode(Node);
+    if (value == Unbound)
+    {
+        return -1;
+    }
+
+    if (nodetype(value) == FLOATINGPOINT)
+    {
+        // We got a floating point value.
+        // See if it can be converted into a small integer.
+        FLONUM f = getfloat(value);
+        if (0 <= f && f <= 255 && fmod(f, 1.0) == 0.0)
+        {
+            gcref(value);
+            return (int) f;
+        }
+    }
+    else if (nodetype(value) == INTEGER)
+    {
+        int i = getint(value);
+        if (0 <= i && i <= 255)
+        {
+            gcref(value);
+            return i;
+        }
+    }
+
+    gcref(value);
+    return -1;
+}
+
+COLORREF
+GetColorArgument(
+    NODE* args
+    )
+{
+    NODE * arg = car(args);
+
+    int red;
+    int green;
+    int blue;
+
+    bool haveColor = false;
+    while (stopping_flag != THROWING && !haveColor)
+    {
+        if (arg == NIL)
+        {
+        }
+        else if (is_list(arg))
+        {
+            // check to see if this is a three member list
+            if (cdr(arg)       != NIL &&
+                cddr(arg)      != NIL &&
+                cdr(cddr(arg)) == NIL)
+            {
+                // check to see if this is a color vector
+                red = GetUnsignedChar(car(arg));
+                if (red != -1)
+                {
+                    green = GetUnsignedChar(car(cdr(arg)));
+                    if (green != -1)
+                    {
+                        blue = GetUnsignedChar(car(cddr(arg)));
+                        if (blue != -1)
+                        {
+                            // got a value color vector
+                            haveColor  = true;
+                            bIndexMode = false;
+                        }
+                    }
+                }
+            }
+        }
+        else if (numberp(arg))
+        {
+            // this is a number, so it may be a valid index
+            NODE * cnode = cnv_node_to_numnode(arg);
+
+            int colorIndex = -1;
+            if (nodetype(cnode) == INTEGER)
+            {
+                colorIndex = getint(cnode) % 16;
+            }
+            else
+            {
+                // We got a floating point value.
+                // See if it can be converted into a small integer.
+                FLONUM f = getfloat(cnode);
+                if (0 <= f && f <= MAXINT && fmod(f, 1.0) == 0.0)
+                {
+                    colorIndex = ((int) f) % 16;
+                }
+            }
+
+            if (colorIndex != -1)
+            {
+                // REVISIT: unnecessary to split to RGB because
+                // we just rejoin it back into a COLORREF below.                
+                red   = GetRValue(colortable[colorIndex]); 
+                green = GetGValue(colortable[colorIndex]); 
+                blue  = GetBValue(colortable[colorIndex]);
+
+                haveColor  = true;
+                bIndexMode = true;
+            }
+
+            gcref(cnode);
+        }
+        else
+        {
+            // Try to convert this to a string, then see
+            // if it matches.
+            NODE * strnode = cnv_node_to_strnode(arg);
+            if (strnode != Unbound)
+            {
+                COMPAREFUNC compareFunc = isCaseIgnored() ? 
+                    low_strncmp : 
+                    (COMPAREFUNC) strncmp;
+
+                // search for the color name in g_NamedColors
+                for (size_t i = 0; i < ARRAYSIZE(g_NamedColors); i++)
+                {
+                    if (StringNodeEqualsString(strnode, g_NamedColors[i].EnglishName,   compareFunc) ||
+                        StringNodeEqualsString(strnode, g_NamedColors[i].LocalizedName, compareFunc))
+                    {
+                        // REVISIT: unnecessary to split to RGB because
+                        // we just rejoin it back into a COLORREF below.
+                        red   = GetRValue(g_NamedColors[i].Color);
+                        green = GetGValue(g_NamedColors[i].Color); 
+                        blue  = GetBValue(g_NamedColors[i].Color);
+
+                        haveColor  = true;
+                        bIndexMode = false;
+                        break;
+                    }
+                }
+
+                gcref(strnode);
+            }
+        }
+
+        if (!haveColor)
+        {
+            // The argument isn't a valid color.
+            // Throw a recoverable error and try again.
+            setcar(args, err_logo(BAD_DATA, arg));
+            arg = car(args);
+        }
+    }
+
+    COLORREF color;
+
+    if (EnablePalette)
+    {
+        color = LoadColor(red, green, blue);
+    }
+    else
+    {
+        color = RGB(red, green, blue);
+    }
+
+    return color;
+}
+
 static
 NODE *
 setcolor_helper(
@@ -2289,79 +2452,16 @@ setcolor_helper(
     void (*setcolorfunc)  (int, int, int)
     )
 {
-    FIXNUM red   = 0;
-    FIXNUM green = 0;
-    FIXNUM blue  = 0;
-
-    if (is_list(car(args)))
-    {
-        NODE * arg = pos_int_vector_3_arg(args);
-        if (stopping_flag != THROWING)
-        {
-            red   = numeric_node_to_fixnum(car(arg));
-            green = numeric_node_to_fixnum(cadr(arg));
-            blue  = numeric_node_to_fixnum(cadr(cdr(arg)));
-
-            bIndexMode = false;
-        }
-    }
-    else
-    {
-        NODE * strnode = string_arg(args);
-        if (stopping_flag == THROWING)
-        {
-        }
-        else if (numberp(strnode))
-        {
-            // this is a number, so it may be a valid index 
-            NODE * cnode = cnv_node_to_numnode(strnode);
-            int icolor = numeric_node_to_fixnum(cnode) % 16;
-
-            red   = GetRValue(colortable[icolor]); 
-            green = GetGValue(colortable[icolor]); 
-            blue  = GetBValue(colortable[icolor]);
-
-            bIndexMode = true;
-
-            gcref(cnode);
-        }
-        else
-        {
-            bool foundIt = false;
-
-            COMPAREFUNC compareFunc = isCaseIgnored() ? 
-                low_strncmp : 
-                (COMPAREFUNC) strncmp;
-
-            // search for the color name in g_NamedColors
-            for (size_t i = 0; i < ARRAYSIZE(g_NamedColors); i++)
-            {
-                if (StringNodeEqualsString(strnode, g_NamedColors[i].EnglishName,   compareFunc) ||
-                    StringNodeEqualsString(strnode, g_NamedColors[i].LocalizedName, compareFunc))
-                {
-                    red   = GetRValue(g_NamedColors[i].Color);
-                    green = GetGValue(g_NamedColors[i].Color); 
-                    blue  = GetBValue(g_NamedColors[i].Color);
-
-                    foundIt = true;
-                    break;
-                }
-            }
-
-            if (!foundIt)
-            {
-                err_logo(BAD_DATA_UNREC, car(args));
-            }
-
-            bIndexMode = false;
-        }
-    }
+    COLORREF color = GetColorArgument(args);
 
     if (stopping_flag != THROWING)
     {
         if (!GetPenStateForSelectedTurtle().IsErasing)
         {
-            setcolorfunc(red, green, blue);
+            setcolorfunc(
+                GetRValue(color),
+                GetGValue(color),
+                GetBValue(color));
         }
     }
 

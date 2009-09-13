@@ -10,19 +10,11 @@ TO COLORSETGETTEST :setcolorcommand :getcolorcommand
    RUN (LIST :setcolorcommand 15)
    SIMPLEREPORTTEST (LIST :getcolorcommand) 15
 
-   ; test float-to-int conversion for color-by-index
-   RUN (LIST :setcolorcommand 7.5090212)
-   SIMPLEREPORTTEST (LIST :getcolorcommand) 7
-
    ; test that color-by-index is always mod 16.
    RUN (LIST :setcolorcommand 17)
    SIMPLEREPORTTEST (LIST :getcolorcommand) 1
 
    RUN (LIST :setcolorcommand [128 64 32])
-   SIMPLEREPORTTEST (LIST :getcolorcommand) [128 64 32]
-
-   ; test float-to-int conversion
-   RUN (LIST :setcolorcommand [128.0 64.3 32.9])
    SIMPLEREPORTTEST (LIST :getcolorcommand) [128 64 32]
 
    RUN (LIST :setcolorcommand [255 255 255])
@@ -285,14 +277,15 @@ TO COLORERRACTTEST
    SIMPLEREPORTTEST [ PENCOLOR ] 5
 
    ; make sure that an unknown string throws a recoverable error
-   ;SETPENCOLOR 1
-   ;SETPENCOLOR "badinput
-   ;SIMPLEREPORTTEST [ PENCOLOR ] 5
+   SETPENCOLOR 1
+   SETPENCOLOR "badinput
+   SIMPLEREPORTTEST [ PENCOLOR ] 5
 
    ; make sure that [12] throws a recoverable error
-   ;SETPENCOLOR 1
-   ;SETPENCOLOR [12]
-   ;SIMPLEREPORTTEST [ PENCOLOR ] 5
+   ; that can be recovered with an integer.
+   SETPENCOLOR 1
+   SETPENCOLOR [12]
+   SIMPLEREPORTTEST [ PENCOLOR ] 5
 
    ; restore the previous value of :ERRACT
    MAKE "ERRACT :savederract
