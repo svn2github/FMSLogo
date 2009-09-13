@@ -1537,7 +1537,7 @@ NumericNodeIsNotNegative(
     return false;
 }
 
-NODE *vec_arg_helper(NODE *Arguments, bool NegativeIsOk)
+static NODE *vec_arg_helper(NODE *Arguments, bool NegativeIsOk)
 {
     NODE *arg = car(Arguments);
 
@@ -1572,9 +1572,9 @@ NODE *vec_arg_helper(NODE *Arguments, bool NegativeIsOk)
 }
 
 
-NODE *vec_4_arg_helper(NODE *Arguments, bool NegativeIsOk)
+NODE *vector_4_arg(NODE *args)
 {
-    NODE *arg = car(Arguments);
+    NODE *arg = car(args);
 
     while (NOT_THROWING)
     {
@@ -1592,12 +1592,7 @@ NODE *vec_4_arg_helper(NODE *Arguments, bool NegativeIsOk)
             if (val1 != Unbound &&
                 val2 != Unbound &&
                 val3 != Unbound &&
-                val4 != Unbound &&
-                (NegativeIsOk || (
-                     NumericNodeIsNotNegative(val1) && 
-                     NumericNodeIsNotNegative(val2) &&
-                     NumericNodeIsNotNegative(val3) &&
-                     NumericNodeIsNotNegative(val4))))
+                val4 != Unbound)
             {
                 setcar(arg, val1);
                 setcar(cdr(arg), val2);
@@ -1610,8 +1605,8 @@ NODE *vec_4_arg_helper(NODE *Arguments, bool NegativeIsOk)
             gcref(val3);
             gcref(val4);
         }
-        setcar(Arguments, err_logo(BAD_DATA, arg));
-        arg = car(Arguments);
+        setcar(args, err_logo(BAD_DATA, arg));
+        arg = car(args);
     }
     return Unbound;
 }
@@ -1621,7 +1616,7 @@ NODE *vector_arg(NODE *args)
     return vec_arg_helper(args, true);
 }
 
-NODE *vector_3_arg(NODE *args)
+static NODE *vector_3_arg(NODE *args)
 {
     NODE *arg = car(args);
 
@@ -1655,21 +1650,10 @@ NODE *vector_3_arg(NODE *args)
     return Unbound;
 }
 
-NODE *vector_4_arg(NODE *args)
-{
-    return vec_4_arg_helper(args, true);
-}
-
-NODE *pos_int_vector_arg(NODE *args)
+static NODE *pos_int_vector_arg(NODE *args)
 {
     return vec_arg_helper(args, false);
 }
-
-NODE *pos_int_vector_4_arg(NODE *args)
-{
-    return vec_4_arg_helper(args, false);
-}
-
 
 NODE *ltowards(NODE *args)
 {
