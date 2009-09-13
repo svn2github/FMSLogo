@@ -2319,9 +2319,7 @@ GetColorArgument(
 {
     NODE * arg = car(args);
 
-    int red;
-    int green;
-    int blue;
+    COLORREF color;
 
     bool haveColor = false;
     while (stopping_flag != THROWING && !haveColor)
@@ -2337,16 +2335,17 @@ GetColorArgument(
                 cdr(cddr(arg)) == NIL)
             {
                 // check to see if this is a color vector
-                red = GetUnsignedChar(car(arg));
+                int red = GetUnsignedChar(car(arg));
                 if (red != -1)
                 {
-                    green = GetUnsignedChar(car(cdr(arg)));
+                    int green = GetUnsignedChar(car(cdr(arg)));
                     if (green != -1)
                     {
-                        blue = GetUnsignedChar(car(cddr(arg)));
+                        int blue = GetUnsignedChar(car(cddr(arg)));
                         if (blue != -1)
                         {
                             // got a value color vector
+                            color = RGB(red, green, blue);
                             haveColor  = true;
                             bIndexMode = false;
                         }
@@ -2377,12 +2376,7 @@ GetColorArgument(
 
             if (colorIndex != -1)
             {
-                // REVISIT: unnecessary to split to RGB because
-                // we just rejoin it back into a COLORREF below.                
-                red   = GetRValue(colortable[colorIndex]); 
-                green = GetGValue(colortable[colorIndex]); 
-                blue  = GetBValue(colortable[colorIndex]);
-
+                color = colortable[colorIndex];
                 haveColor  = true;
                 bIndexMode = true;
             }
@@ -2406,12 +2400,7 @@ GetColorArgument(
                     if (StringNodeEqualsString(strnode, g_NamedColors[i].EnglishName,   compareFunc) ||
                         StringNodeEqualsString(strnode, g_NamedColors[i].LocalizedName, compareFunc))
                     {
-                        // REVISIT: unnecessary to split to RGB because
-                        // we just rejoin it back into a COLORREF below.
-                        red   = GetRValue(g_NamedColors[i].Color);
-                        green = GetGValue(g_NamedColors[i].Color); 
-                        blue  = GetBValue(g_NamedColors[i].Color);
-
+                        color      = g_NamedColors[i].Color;
                         haveColor  = true;
                         bIndexMode = false;
                         break;
@@ -2431,15 +2420,11 @@ GetColorArgument(
         }
     }
 
-    COLORREF color;
-
     if (EnablePalette)
     {
-        color = LoadColor(red, green, blue);
-    }
-    else
-    {
-        color = RGB(red, green, blue);
+        // We're using a palette, so use the closes matching
+        // color that is available.
+        color = LoadColor(GetRValue(color), GetGValue(color), GetBValue(color));
     }
 
     return color;
