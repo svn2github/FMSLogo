@@ -23,6 +23,7 @@ II. New features/bugs fixed:
   * Added for 6.26.0
     o Fix bug #2813364; SETPENCOLOR and other commands that input a color
       now throw recoverable bad input errors on more bad input.
+    o Minor improvements to the manual.
 
   For a complete history of changes across all versions of FMSLogo, see
   http://fmslogo.cvs.sourceforge.net/*checkout*/fmslogo/logo/src/CHANGELOG.TXT

@@ -39,7 +39,7 @@ An index starts at 1 for words and lists; the starting index of an array is spec
 <listitem>
 
 <programlisting><userinput>SHOW ITEM 2 [a b c]</userinput>
-[b]</programlisting>
+b</programlisting>
 
 <programlisting><userinput>SHOW ITEM 3 "abc</userinput>
 c</programlisting>
