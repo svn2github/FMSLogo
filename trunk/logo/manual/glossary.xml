@@ -1,8 +1,6 @@
 <glossary id='glossary'>
 <title>Glossary</title>
 
-  <glosslist>
-
     <glossentry id="glossary-array">
       <glossterm>Array</glossterm>
       <glossdef>
@@ -160,5 +158,4 @@ This includes constants, like <userinput>"foo</userinput> and numbers, like <use
       </glossdef>
     </glossentry>
 
-  </glosslist>
 </glossary>
