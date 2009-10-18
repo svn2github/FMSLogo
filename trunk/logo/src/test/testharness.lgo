@@ -108,6 +108,7 @@ LOAD "zoom.lgo
 LOAD "bitblock.lgo
 LOAD "turtle.lgo
 LOAD "readword.lgo
+LOAD "readrawline.lgo
 LOAD "readchar.lgo
 LOAD "readchars.lgo
 LOAD "bitmode.lgo
@@ -195,6 +196,7 @@ TO TESTALL
   FORMTEST            ; from form.lgo
   PRINTTEST           ; from print.lgo
   READWORDTEST        ; from readword.lgo
+  READRAWLINETEST     ; from readrawline.lgo
   READCHARTEST        ; from readchar.lgo
   READCHARSTEST       ; from readchars.lgo
   EDITORTEST          ; from editor.lgo 

@@ -105,6 +105,7 @@
   <!ENTITY command-readword     SYSTEM "command-readword.xml">
   <!ENTITY command-readchar     SYSTEM "command-readchar.xml">
   <!ENTITY command-readchars    SYSTEM "command-readchars.xml">
+  <!ENTITY command-readrawline  SYSTEM "command-readrawline.xml">
 
   <!ENTITY command-openread     SYSTEM "command-openread.xml">
   <!ENTITY command-openwrite    SYSTEM "command-openwrite.xml">

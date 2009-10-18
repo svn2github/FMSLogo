@@ -1,0 +1,94 @@
+LOAD "testlib.lgo
+LOAD "uiautomationlib.lgo
+
+; helper function for reading words from READRAWLINE when the
+; word comes from the UI.
+TO READRAWLINETEST.READRAWLINEFROMUI :wordtoread
+
+   UIAUTOMATION.INITIALIZE
+ 
+   local "theword
+
+   CATCH "ERROR [
+
+       ; enter the line and press press OK
+       UIAUTOMATION.POSTSTRINGTOWINDOW     [Input Mode (Cancel to Halt)] "Edit :wordtoread
+       UIAUTOMATION.POSTBUTTONPUSHTOWINDOW [Input Mode (Cancel to Halt)] "OK
+
+       make "theword READRAWLINE
+   ]
+
+   localmake "lasterror ERROR
+   if :lasterror <> [] [
+      REPORTTESTFAILED (list "UI "Automation "to "read :wordtoread ": :lasterror)
+   ]
+
+   UIAUTOMATION.UNINITIALIZE
+
+   OUTPUT :theword
+
+END
+
+TO READRAWLINETEST.UI
+
+   SIMPLEREPORTTEST [READRAWLINETEST.READRAWLINEFROMUI "Special\ Characters\ \|\;\\\(]  "Special\ Characters\ \|\;\\\(
+
+END
+
+TO READRAWLINETEST.UICANCEL
+
+   UIAUTOMATION.INITIALIZE
+ 
+   local "theword
+
+   CATCH "ERROR [
+       ; enter the line and press press Cancel
+       UIAUTOMATION.POSTSTRINGTOWINDOW     [Input Mode (Cancel to Halt)] "Edit   "|UI will press Cancel|
+       UIAUTOMATION.POSTBUTTONPUSHTOWINDOW [Input Mode (Cancel to Halt)] "Cancel
+   ]
+
+   localmake "lasterror ERROR
+   if :lasterror <> [] [
+      REPORTTESTFAILED (list "UI "Automation "to "read :wordtoread ": :lasterror)
+   ]
+
+   RUNSTOPPINGTEST [IGNORE READRAWLINE]
+
+   UIAUTOMATION.UNINITIALIZE
+
+END
+
+
+
+TO READRAWLINETEST.SMOKETEST
+
+  make "previousreader reader
+
+  TRACEINSTRUCTION [ OPENREAD "readrawlinetestfile.txt ]
+  TRACEINSTRUCTION [ SETREAD  "readrawlinetestfile.txt ]
+
+  ; readrawlinetestfile.txt contains the following lines
+  SIMPLEREPORTTEST [ READRAWLINE ] "|Simple|
+  SIMPLEREPORTTEST [ READRAWLINE ] "|Two Words|
+  SIMPLEREPORTTEST [ READRAWLINE ] "|Line \| With \; Special ( Characters ) [ ]|
+  SIMPLEREPORTTEST [ READRAWLINE ] "|Line \\ With \\\\ Backslashes|
+  SIMPLEREPORTTEST [ READRAWLINE ] []
+
+  SETREAD :previousreader
+
+END
+
+TO READRAWLINETEST.BADINPUT
+
+   RUNTOOMANYINPUTSTEST [(READRAWLINE "toomany)]
+
+END
+
+TO READRAWLINETEST
+
+   READRAWLINETEST.SMOKETEST
+   READRAWLINETEST.UI
+   READRAWLINETEST.UICANCEL
+   READRAWLINETEST.BADINPUT
+
+END

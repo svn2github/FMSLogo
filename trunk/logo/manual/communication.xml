@@ -32,6 +32,7 @@ This limit applies not only to the top-level printed object but to any substruct
       &command-readword;
       &command-readchar;
       &command-readchars;
+      &command-readrawline;
    </section>
 
    <section id="file-access">
