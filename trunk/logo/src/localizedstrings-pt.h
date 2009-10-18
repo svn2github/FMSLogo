@@ -837,12 +837,12 @@
 // Strings on the "About FMSLogo" Dialog box
 //
 #define LOCALIZED_ABOUTFMS                     "Sobre o "LOCALIZED_GENERAL_PRODUCTNAME
-#define LOCALIZED_ABOUTFMS_VERSION             LOCALIZED_GENERAL_PRODUCTNAME" Versão "FMSLOGO_VERSION
-#define LOCALIZED_ABOUTFMS_GUI                 "GUI por George Mills (mills@softronix.com)\nSoftronics, Inc.\nhttp:\x2F/www.softronix.com/"
-#define LOCALIZED_ABOUTFMS_CORE                "Núcleo por Brian Harvey (bh@eecs.berkeley.edu)\nUniversity of California Berkeley"
+#define LOCALIZED_ABOUTFMS_VERSION             LOCALIZED_GENERAL_PRODUCTNAME" Versão "FMSLOGO_VERSION"\nhttp:\x2F/sourceforge.net/projects/fmslogo"
+#define LOCALIZED_ABOUTFMS_GUI                 "GUI por George Mills\nSoftronics, Inc.\nhttp:\x2F/www.softronix.com/"
+#define LOCALIZED_ABOUTFMS_CORE                "Núcleo por Brian Harvey\nUniversity of California Berkeley"
 #define LOCALIZED_ABOUTFMS_INSTALLER           "Instalador baseado no Nullsoft Scriptable Install System\nhttp:\x2F/nsis.sourceforge.net/"
 #define LOCALIZED_ABOUTFMS_ADVENTURE           "Recursos para Logo em Português\nDisponíveis em http:\x2F/mondragon.angeltowns.net/paradiso/"
-#define LOCALIZED_ABOUTFMS_SPECIALTHANKS       "Agradecimento a Yehuda Katz (yehuka@softhome.net)\n e a Erich Neuwirth (erich.neuwirth@univie.ac.at)"
+#define LOCALIZED_ABOUTFMS_SPECIALTHANKS       "Agradecimento a Yehuda Katz e a Erich Neuwirth"
 #define LOCALIZED_ABOUTFMS_GPL                 LOCALIZED_GENERAL_PRODUCTNAME" é software livre\nVer a Licença Pública GNU"
 #define LOCALIZED_ABOUTFMS_NEWSGROUP           "Perguntas, comentários, sugestões?\nParticipe da lista Logo em Espanhol\nhttp:\x2F/mondragon.angeltowns.net/paradiso/ListaLogo.html"
 #define LOCALIZED_ABOUTFMS_MULTIMEDIALOGIC     "Tradução feita por Alexandre R. Soares"

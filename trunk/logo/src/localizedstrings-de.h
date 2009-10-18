@@ -837,15 +837,15 @@
 // Strings on the "About FMSLogo" Dialog box
 //
 #define LOCALIZED_ABOUTFMS                     "Über "LOCALIZED_GENERAL_PRODUCTNAME
-#define LOCALIZED_ABOUTFMS_VERSION             LOCALIZED_GENERAL_PRODUCTNAME" Version "FMSLOGO_VERSION
-#define LOCALIZED_ABOUTFMS_GUI                 "GUI by George Mills (mills@softronix.com)\nSoftronics, Inc.\nhttp:\x2F/www.softronix.com/"
-#define LOCALIZED_ABOUTFMS_CORE                "Core by Brian Harvey (bh@cs.berkeley.edu)\nUniversity of California Berkeley"
+#define LOCALIZED_ABOUTFMS_VERSION             LOCALIZED_GENERAL_PRODUCTNAME" Version "FMSLOGO_VERSION"\nhttp:\x2F/sourceforge.net/projects/fmslogo"
+#define LOCALIZED_ABOUTFMS_GUI                 "GUI by George Mills\nSoftronics, Inc.\nhttp:\x2F/www.softronix.com/"
+#define LOCALIZED_ABOUTFMS_CORE                "Core by Brian Harvey\nUniversity of California Berkeley"
 #define LOCALIZED_ABOUTFMS_INSTALLER           "Installer based on Nullsoft Scriptable Install System\nhttp:\x2F/nsis.sourceforge.net/"
 #define LOCALIZED_ABOUTFMS_ADVENTURE           "The Great Logo Adventure (ISBN 0-9651934-6-2)\nWritten and donated by Jim Muller\nAvailable at http:\x2F/www.softronix.com/\nPapert, Seymour: Gedankenblitze 8126 rororo"
-#define LOCALIZED_ABOUTFMS_SPECIALTHANKS       "Thanks to Yehuda Katz (yehuka@softhome.net)\nand Erich Neuwirth (erich.neuwirth@univie.ac.at)"
+#define LOCALIZED_ABOUTFMS_SPECIALTHANKS       "Special Thanks to Yehuda Katz and Erich Neuwirth"
 #define LOCALIZED_ABOUTFMS_GPL                 LOCALIZED_GENERAL_PRODUCTNAME" is free software\nSee GNU Public License"
 #define LOCALIZED_ABOUTFMS_NEWSGROUP           "Internet News Group: comp.lang.logo\nVisit the Logo-Forum at\nhttp:\x2F/groups.yahoo.com/group/LogoForum/"
-#define LOCALIZED_ABOUTFMS_MULTIMEDIALOGIC     "To learn the internals of computers,\ntry MultiMedia Logic from Softronics, Inc.\nVerändert/übersetzt von Stephan Vogel\nAugust-Ruf-Bildungszentrum Ettenheim/Südbaden\nSeine Logo-Projekte: http:\x2F/www.lehrer.uni-karlsruhe.de/~za1880/itg/index.htm"
+#define LOCALIZED_ABOUTFMS_MULTIMEDIALOGIC     "Verändert/übersetzt von Stephan Vogel\nAugust-Ruf-Bildungszentrum Ettenheim/Südbaden\nSeine Logo-Projekte: http:\x2F/www.lehrer.uni-karlsruhe.de/~za1880/itg/index.htm"
 #define LOCALIZED_ABOUTFMS_OK                  LOCALIZED_GENERAL_OKBUTTON
 
 

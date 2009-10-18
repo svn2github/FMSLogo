@@ -837,13 +837,13 @@
 // Strings on the "About FMSLogo" Dialog box
 //
 #define LOCALIZED_ABOUTFMS                     "О "LOCALIZED_GENERAL_PRODUCTNAME 
-#define LOCALIZED_ABOUTFMS_VERSION             LOCALIZED_GENERAL_PRODUCTNAME" Версия "FMSLOGO_VERSION 
-#define LOCALIZED_ABOUTFMS_GUI                 "ГИП Джорджа Миллза (mills@softronix.com)\nSoftronics, Inc.\nhttp:\x2F/www.softronix.com/" 
-#define LOCALIZED_ABOUTFMS_CORE                "Ядро Брайена Харви (bh@cs.berkeley.edu)\nКалифорнийский университет Беркли" 
+#define LOCALIZED_ABOUTFMS_VERSION             LOCALIZED_GENERAL_PRODUCTNAME" Версия "FMSLOGO_VERSION"\nhttp:\x2F/sourceforge.net/projects/fmslogo"
+#define LOCALIZED_ABOUTFMS_GUI                 "ГИП Джорджа Миллза\nSoftronics, Inc.\nhttp:\x2F/www.softronix.com/" 
+#define LOCALIZED_ABOUTFMS_CORE                "Ядро Брайена Харви\nКалифорнийский университет Беркли" 
 #define LOCALIZED_ABOUTFMS_INSTALLER           "Инсталляция базируется на Nullsoft Scriptable Install \nhttp:\x2F/nsis.sourceforge.net/" 
 #define LOCALIZED_ABOUTFMS_ADVENTURE           "The Great Logo Adventure (ISBN 0-9651934-6-2)\nнаписанная и переданная Джимом Мюллером\nдоступна на http:\x2F/www.softronix.com/" 
-#define LOCALIZED_ABOUTFMS_SPECIALTHANKS       "Благодарим Йегуду Катца (yehuka@softhome.net)\nи Эриха Нейвиртза (erich.neuwirth@univie.ac.at)" 
-#define LOCALIZED_ABOUTFMS_GPL                 LOCALIZED_GENERAL_PRODUCTNAME" распространяется свободно\nСм. лицензию ГНУ" 
+#define LOCALIZED_ABOUTFMS_SPECIALTHANKS       "Благодарим Йегуду Катца и Эриха Нейвиртза" 
+#define LOCALIZED_ABOUTFMS_GPL                 LOCALIZED_GENERAL_PRODUCTNAME" распространяется свободно\nСм. лицензию ГНУ"
 #define LOCALIZED_ABOUTFMS_NEWSGROUP           "Группа новостей в Интернете: comp.lang.logo\nпосетите форум на\nhttp:\x2F/groups.yahoo.com/group/LogoForum/" 
 #define LOCALIZED_ABOUTFMS_MULTIMEDIALOGIC     "Для Изучение внутренних свойств компьютера,\nиспользуйте  MultiMedia Logic от Softronics, Inc.\nАдаптация и локализация на русский язык Баглаева Игоря\nБурятский государственный университет, Улан-Удэ, bii@bsu.ru"
 #define LOCALIZED_ABOUTFMS_OK                  LOCALIZED_GENERAL_OKBUTTON 

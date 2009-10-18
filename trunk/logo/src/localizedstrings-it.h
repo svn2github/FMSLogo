@@ -837,12 +837,12 @@
 // Strings on the "About FMSLogo" Dialog box
 //
 #define LOCALIZED_ABOUTFMS                     "Informazioni su "LOCALIZED_GENERAL_PRODUCTNAME
-#define LOCALIZED_ABOUTFMS_VERSION             LOCALIZED_GENERAL_PRODUCTNAME" Versione "FMSLOGO_VERSION
-#define LOCALIZED_ABOUTFMS_GUI                 "GUI di George Mills (mills@softronix.com)\nSoftronics, Inc.\nhttp:\x2F/www.softronix.com/"
-#define LOCALIZED_ABOUTFMS_CORE                "Core di Brian Harvey (bh@cs.berkeley.edu)\nUniversity of California Berkeley"
+#define LOCALIZED_ABOUTFMS_VERSION             LOCALIZED_GENERAL_PRODUCTNAME" Versione "FMSLOGO_VERSION"\nhttp:\x2F/sourceforge.net/projects/fmslogo"
+#define LOCALIZED_ABOUTFMS_GUI                 "GUI di George Mills\nSoftronics, Inc.\nhttp:\x2F/www.softronix.com/"
+#define LOCALIZED_ABOUTFMS_CORE                "Core di Brian Harvey\nUniversity of California Berkeley"
 #define LOCALIZED_ABOUTFMS_INSTALLER           "Installatore basato su Nullsoft Scriptable Install System\nhttp:\x2F/nsis.sourceforge.net/"
 #define LOCALIZED_ABOUTFMS_ADVENTURE           "The Great Logo Adventure (ISBN 0-9651934-6-2)\nScritto e donato da Jim Muller\nDisponibile a http:\x2F/www.softronix.com/"
-#define LOCALIZED_ABOUTFMS_SPECIALTHANKS       "Ringrazimenti a Yehuda Katz (yehuka@softhome.net)\ne Erich Neuwirth (erich.neuwirth@univie.ac.at)"
+#define LOCALIZED_ABOUTFMS_SPECIALTHANKS       "Ringrazimenti a Yehuda Katz e Erich Neuwirth"
 #define LOCALIZED_ABOUTFMS_GPL                 LOCALIZED_GENERAL_PRODUCTNAME" è free software\nVedere la Licenza Pubblica GNU"
 #define LOCALIZED_ABOUTFMS_NEWSGROUP           "Internet News Group: comp.lang.logo\nVisita il Forum Logo a\nhttp:\x2F/groups.yahoo.com/group/LogoForum/"
 #define LOCALIZED_ABOUTFMS_MULTIMEDIALOGIC     "Traduzione italiana di Stefano Federici"

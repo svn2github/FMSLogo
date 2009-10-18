@@ -836,17 +836,17 @@
 //
 // Strings on the "About FMSLogo" Dialog box
 //
-#define LOCALIZED_ABOUTFMS                     "Πληροφορίες για την "LOCALIZED_GENERAL_PRODUCTNAME // 
-#define LOCALIZED_ABOUTFMS_VERSION             LOCALIZED_GENERAL_PRODUCTNAME", έκδοση "FMSLOGO_VERSION // 
-#define LOCALIZED_ABOUTFMS_GUI                 "GUI από τον George Mills (mills@softronix.com)\nSoftronics, Inc.\nhttp:\x2F/www.softronix.com/" // 
-#define LOCALIZED_ABOUTFMS_CORE                "Πυρήνας από τον Brian Harvey (bh@cs.berkeley.edu)\nUniversity of California Berkeley" // 
-#define LOCALIZED_ABOUTFMS_INSTALLER           "Εγκαταστάτης βασισμένος στο Nullsoft Scriptable Install System\nhttp:\x2F/nsis.sourceforge.net" // 
-#define LOCALIZED_ABOUTFMS_ADVENTURE           "The Great Logo Adventure (ISBN 0-9651934-6-2)\nΓράφτηκε και δωρίστηκε από τον Jim Muller\nΔιαθέσιμο στο http:\x2F/www.softronix.com/" // 
-#define LOCALIZED_ABOUTFMS_SPECIALTHANKS       "Ευχαριστούμε τους Yehuda Katz (yehuka@softhome.net)\nκαι Erich Neuwirth (erich.neuwirth@univie.ac.at)" // 
-#define LOCALIZED_ABOUTFMS_GPL                 "Η "LOCALIZED_GENERAL_PRODUCTNAME" είναι ελεύθερο λογισμικό\nΔείτε τη GNU Public License" // I dared to add a string ("H ") before the PRODUCTNAME constant :P
-#define LOCALIZED_ABOUTFMS_NEWSGROUP           "News Group στο Διαδίκτυο: comp.lang.logo\nΕπισκεφθείτε το Logo-Forum στο\nhttp:\x2F/groups.yahoo.com/group/LogoForum/" // 
-#define LOCALIZED_ABOUTFMS_MULTIMEDIALOGIC     "Μετάφραση στα Ελληνικά:\nΘοδωρής Χατζηγιαννάκης (teo64x@yahoo.gr)" // 
-#define LOCALIZED_ABOUTFMS_OK                  LOCALIZED_GENERAL_OKBUTTON // 
+#define LOCALIZED_ABOUTFMS                     "Πληροφορίες για την "LOCALIZED_GENERAL_PRODUCTNAME 
+#define LOCALIZED_ABOUTFMS_VERSION             LOCALIZED_GENERAL_PRODUCTNAME", έκδοση "FMSLOGO_VERSION"\nhttp:\x2F/sourceforge.net/projects/fmslogo"
+#define LOCALIZED_ABOUTFMS_GUI                 "GUI από τον George Mills\nSoftronics, Inc.\nhttp:\x2F/www.softronix.com/"
+#define LOCALIZED_ABOUTFMS_CORE                "Πυρήνας από τον Brian Harvey\nUniversity of California Berkeley"
+#define LOCALIZED_ABOUTFMS_INSTALLER           "Εγκαταστάτης βασισμένος στο Nullsoft Scriptable Install System\nhttp:\x2F/nsis.sourceforge.net"
+#define LOCALIZED_ABOUTFMS_ADVENTURE           "The Great Logo Adventure (ISBN 0-9651934-6-2)\nΓράφτηκε και δωρίστηκε από τον Jim Muller\nΔιαθέσιμο στο http:\x2F/www.softronix.com/"
+#define LOCALIZED_ABOUTFMS_SPECIALTHANKS       "Ευχαριστούμε τους Yehuda Katz και Erich Neuwirth"
+#define LOCALIZED_ABOUTFMS_GPL                 "Η "LOCALIZED_GENERAL_PRODUCTNAME" είναι ελεύθερο λογισμικό\nΔείτε τη GNU Public License"
+#define LOCALIZED_ABOUTFMS_NEWSGROUP           "News Group στο Διαδίκτυο: comp.lang.logo\nΕπισκεφθείτε το Logo-Forum στο\nhttp:\x2F/groups.yahoo.com/group/LogoForum/"
+#define LOCALIZED_ABOUTFMS_MULTIMEDIALOGIC     "Μετάφραση στα Ελληνικά:\nΘοδωρής Χατζηγιαννάκης (teo64x@yahoo.gr)"
+#define LOCALIZED_ABOUTFMS_OK                  LOCALIZED_GENERAL_OKBUTTON
 
 
 //
