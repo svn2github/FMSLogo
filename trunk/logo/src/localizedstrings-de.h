@@ -475,6 +475,7 @@
 #define LOCALIZED_ALTERNATE_READER                 "reader"
 #define LOCALIZED_ALTERNATE_READLIST               "liesListe"
 #define LOCALIZED_ALTERNATE_READPOS                "Liespos"
+#define LOCALIZED_ALTERNATE_READRAWLINE            "readrawline" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_READWORD               "liesWort"
 #define LOCALIZED_ALTERNATE_REMAINDER              "Rest"
 #define LOCALIZED_ALTERNATE_REMPROP                "vgEg"

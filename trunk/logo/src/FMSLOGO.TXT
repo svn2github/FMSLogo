@@ -23,6 +23,8 @@ II. New features/bugs fixed:
   * Added for 6.26.0
     o Fix bug #2813364; SETPENCOLOR and other commands that input a color
       now throw recoverable bad input errors on more bad input.
+    o Implement request #2872454; FMSLogo now supports READRAWLINE to read
+      a line from a text file that may contain special characters (to logo).
     o Minor improvements to the manual.
 
   For a complete history of changes across all versions of FMSLogo, see

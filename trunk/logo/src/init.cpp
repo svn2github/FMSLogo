@@ -507,6 +507,7 @@ const PRIMTYPE prims[] =
     { "reader", 0, 0, 0, PREFIX_PRIORITY, lreader, LOCALIZED_ALTERNATE_READER },
     { "readlist", 0, 0, 0, PREFIX_PRIORITY, lreadlist, LOCALIZED_ALTERNATE_READLIST },
     { "readpos", 0, 0, 0, PREFIX_PRIORITY, lreadpos, LOCALIZED_ALTERNATE_READPOS },
+    { "readrawline", 0, 0, 0, PREFIX_PRIORITY, lreadrawline, LOCALIZED_ALTERNATE_READRAWLINE },
     { "readword", 0, 0, 0, PREFIX_PRIORITY, lreadword, LOCALIZED_ALTERNATE_READWORD },
     { "remainder", 2, 2, 2, PREFIX_PRIORITY, lremainder, LOCALIZED_ALTERNATE_REMAINDER },
     { "remprop", 2, 2, 2, PREFIX_PRIORITY, lremprop, LOCALIZED_ALTERNATE_REMPROP },

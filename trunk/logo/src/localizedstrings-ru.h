@@ -475,6 +475,7 @@
 #define LOCALIZED_ALTERNATE_READER                 "считыватель" 
 #define LOCALIZED_ALTERNATE_READLIST               "ждисписок" 
 #define LOCALIZED_ALTERNATE_READPOS                "читайкол" 
+#define LOCALIZED_ALTERNATE_READRAWLINE            "readrawline" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_READWORD               "ждислово"
 #define LOCALIZED_ALTERNATE_REMAINDER              "остаток"
 #define LOCALIZED_ALTERNATE_REMPROP                "удалисв" 

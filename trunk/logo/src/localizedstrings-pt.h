@@ -475,6 +475,7 @@
 #define LOCALIZED_ALTERNATE_READER                 "arqLeitura"
 #define LOCALIZED_ALTERNATE_READLIST               "leiaLista"
 #define LOCALIZED_ALTERNATE_READPOS                "posLeitura"
+#define LOCALIZED_ALTERNATE_READRAWLINE            "readrawline" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_READWORD               "leiaPalavra"
 #define LOCALIZED_ALTERNATE_REMAINDER              "resto"
 #define LOCALIZED_ALTERNATE_REMPROP                "retireProp"

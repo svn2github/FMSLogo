@@ -475,6 +475,7 @@
 #define LOCALIZED_ALTERNATE_READER                 "dacheleggi"
 #define LOCALIZED_ALTERNATE_READLIST               "leggilista"
 #define LOCALIZED_ALTERNATE_READPOS                "poslettura"
+#define LOCALIZED_ALTERNATE_READRAWLINE            "readrawline" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_READWORD               "leggiparola"
 #define LOCALIZED_ALTERNATE_REMAINDER              "resto"
 #define LOCALIZED_ALTERNATE_REMPROP                "togliprop"

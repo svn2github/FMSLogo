@@ -337,6 +337,7 @@ NODE *reader(FILE *FileStream, const char * Prompt)
     bool vbar      = false;
     bool contin    = true;
     bool incomment = false;
+    bool raw       = false;
 
     static const char ender[] = "\nEND\n";
     const char *enderProgress = ender;
@@ -351,6 +352,13 @@ NODE *reader(FILE *FileStream, const char * Prompt)
         /* called by readword */
         Prompt = "";
         contin = false;
+    }
+    else if (!strcmp(Prompt, "RAW"))
+    {
+        /* called by readrawline */
+        Prompt = "";
+        contin = false;
+        raw = true;
     }
 
     bool dribbling = (dribblestream != NULL && FileStream == stdin);
@@ -386,7 +394,7 @@ NODE *reader(FILE *FileStream, const char * Prompt)
             }
 
             // if c is a backslash, then read the next character and escape it
-            if (c == '\\')
+            if (!raw && c == '\\')
             {
                 c = rd_getc(FileStream);
                 if (c == EOF)
@@ -416,11 +424,16 @@ NODE *reader(FILE *FileStream, const char * Prompt)
                     {
                         fprintf(dribblestream, "\\ ");
                     }
-
                 }
             }
 
             lineBuffer.AppendChar(c);
+
+            if (raw)
+            {
+                c = rd_getc(FileStream);
+                continue;
+            }
 
             if (input_mode == INPUTMODE_To)
             {

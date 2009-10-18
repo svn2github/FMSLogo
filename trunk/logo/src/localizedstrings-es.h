@@ -475,6 +475,7 @@
 #define LOCALIZED_ALTERNATE_READER                 "lectura"
 #define LOCALIZED_ALTERNATE_READLIST               "leeLista"
 #define LOCALIZED_ALTERNATE_READPOS                "posLectura"
+#define LOCALIZED_ALTERNATE_READRAWLINE            "readrawline" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_READWORD               "leePalabra"
 #define LOCALIZED_ALTERNATE_REMAINDER              "resto"
 #define LOCALIZED_ALTERNATE_REMPROP                "boProp"

@@ -661,6 +661,18 @@ NODE *lreadword(NODE *)
     return val;
 }
 
+NODE *lreadrawline(NODE *)
+{
+    NODE *val = reader(g_Reader.GetStream(), "RAW"); // fake prompt flags no specials
+    if (feof(g_Reader.GetStream()))
+    {
+        gcref(val);
+        return NIL;
+    }
+
+    return val;
+}
+
 NODE *lreadchar(NODE *)
 {
     input_blocking = true;

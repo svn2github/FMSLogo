@@ -510,6 +510,7 @@ extern NODE *lload(NODE *arg);
 extern bool fileload(const char *Filename);
 extern NODE *lreadlist(NODE *arg);
 extern NODE *lreadword(NODE *arg);
+extern NODE *lreadrawline(NODE *arg);
 extern NODE *lreadchar(NODE *arg);
 extern NODE *lreadchars(NODE *args);
 extern NODE *leofp(NODE *arg);

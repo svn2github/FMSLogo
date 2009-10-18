@@ -475,6 +475,7 @@
 #define LOCALIZED_ALTERNATE_READER                 "pseudo.reader"
 #define LOCALIZED_ALTERNATE_READLIST               "pseudo.readlist"
 #define LOCALIZED_ALTERNATE_READPOS                "pseudo.readpos"
+#define LOCALIZED_ALTERNATE_READRAWLINE            "pseudo.readrawline"
 #define LOCALIZED_ALTERNATE_READWORD               "pseudo.readword"
 #define LOCALIZED_ALTERNATE_REMAINDER              "pseudo.remainder"
 #define LOCALIZED_ALTERNATE_REMPROP                "pseudo.remprop"

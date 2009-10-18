@@ -475,6 +475,7 @@
 #define LOCALIZED_ALTERNATE_READER                 "амацмысг_пгцг" // 
 #define LOCALIZED_ALTERNATE_READLIST               "амацмысг_кистас" // 
 #define LOCALIZED_ALTERNATE_READPOS                "амацмысг_хесг" // 
+#define LOCALIZED_ALTERNATE_READRAWLINE            "readrawline" // NOT_YET_LOCALIZED
 #define LOCALIZED_ALTERNATE_READWORD               "амацмысг_кенгс" // 
 #define LOCALIZED_ALTERNATE_REMAINDER              "упокоипо" // 
 #define LOCALIZED_ALTERNATE_REMPROP                "идиотгта_ажаияесг" // 
