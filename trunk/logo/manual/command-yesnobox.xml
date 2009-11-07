@@ -23,7 +23,8 @@ If the user presses "Cancel", then processing will be halted, as if by the <link
 </para>
 
 <para>
-Both the <parameter>title</parameter> and <parameter>question</parameter> inputs must be lists.
+Both the <parameter>title</parameter> and <parameter>question</parameter> inputs should be either lists or words.
+For list inputs, the contents of the list is used (not the list, itself).
 The yes/no box will be automatically sized to fit <parameter>question</parameter>.
 The question will not be word-wrapped, so if you have a long question, you may want to put in some line breaks.
 </para>
