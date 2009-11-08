@@ -616,8 +616,8 @@
 //
 // General localized strings
 //
-#define LOCALIZED_GENERAL_OKBUTTON      "pseudo.&OK"
-#define LOCALIZED_GENERAL_CANCELBUTTON  "pseudo.&Cancel"
+#define LOCALIZED_GENERAL_OKBUTTON      "pseudo.OK"
+#define LOCALIZED_GENERAL_CANCELBUTTON  "pseudo.Cancel"
 #define LOCALIZED_GENERAL_APPLYBUTTON   "pseudo.&Apply"
 
 #define LOCALIZED_GENERAL_PRODUCTNAME   "pseudo.FMSLogo"
@@ -838,12 +838,12 @@
 // Strings on the "About FMSLogo" Dialog box
 //
 #define LOCALIZED_ABOUTFMS                     "pseudo.About "LOCALIZED_GENERAL_PRODUCTNAME
-#define LOCALIZED_ABOUTFMS_VERSION             LOCALIZED_GENERAL_PRODUCTNAME" Version "FMSLOGO_VERSION
-#define LOCALIZED_ABOUTFMS_GUI                 "pseudo.GUI by George Mills (mills@softronix.com)\nSoftronics, Inc.\nhttp:\x2F/www.softronix.com/"
-#define LOCALIZED_ABOUTFMS_CORE                "pseudo.Core by Brian Harvey (bh@cs.berkeley.edu)\nUniversity of California Berkeley"
+#define LOCALIZED_ABOUTFMS_VERSION             LOCALIZED_GENERAL_PRODUCTNAME" Version "FMSLOGO_VERSION"\nhttp:\x2F/sourceforge.net/projects/fmslogo"
+#define LOCALIZED_ABOUTFMS_GUI                 "pseudo.GUI by George Mills\nSoftronics, Inc.\nhttp:\x2F/www.softronix.com/"
+#define LOCALIZED_ABOUTFMS_CORE                "pseudo.Core by Brian Harvey\nUniversity of California Berkeley"
 #define LOCALIZED_ABOUTFMS_INSTALLER           "pseudo.Installer based on Nullsoft Scriptable Install System\nhttp:\x2F/nsis.sourceforge.net/"
 #define LOCALIZED_ABOUTFMS_ADVENTURE           "pseudo.The Great Logo Adventure (ISBN 0-9651934-6-2)\nWritten and donated by Jim Muller\nAvailable at http:\x2F/www.softronix.com/"
-#define LOCALIZED_ABOUTFMS_SPECIALTHANKS       "pseudo.Thanks to Yehuda Katz (yehuka@softhome.net)\nand Erich Neuwirth (erich.neuwirth@univie.ac.at)"
+#define LOCALIZED_ABOUTFMS_SPECIALTHANKS       "pseudo.Special thanks to Yehuda Katz and Erich Neuwirth"
 #define LOCALIZED_ABOUTFMS_GPL                 LOCALIZED_GENERAL_PRODUCTNAME" is free software\nSee GNU Public License"
 #define LOCALIZED_ABOUTFMS_NEWSGROUP           "pseudo.Internet News Group: comp.lang.logo\nVisit the Logo-Forum at\nhttp:\x2F/groups.yahoo.com/group/LogoForum/"
 #define LOCALIZED_ABOUTFMS_MULTIMEDIALOGIC     "pseudo.To learn the internals of computers,\ntry MultiMedia Logic from Softronics, Inc."
@@ -1005,8 +1005,8 @@
 #define LOCALIZED_ERROR_PORTNOTOPEN          "pseudo.Port is not open"
 #define LOCALIZED_ERROR_FIRSTINPUTNOTANARRY  "pseudo.First input must be an array"
 
-#define LOCALIZED_ERROR_WINDOWALREADYEXISTS   "pseudo.Already exists"
-#define LOCALIZED_ERROR_WINDOWDOESNOTEXIST    "pseudo.Does not exist"
+#define LOCALIZED_ERROR_WINDOWALREADYEXISTS   "pseudo.%s already exists"
+#define LOCALIZED_ERROR_WINDOWDOESNOTEXIST    "pseudo.%s does not exist"
 
 #define LOCALIZED_ERROR_DLLNOTLOADED          "pseudo.DLL is not loaded"
 #define LOCALIZED_ERROR_DLLLOADFAILED         "pseudo.DLL load failed"
