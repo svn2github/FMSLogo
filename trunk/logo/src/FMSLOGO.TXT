@@ -25,6 +25,9 @@ II. New features/bugs fixed:
       now throw recoverable bad input errors on more bad input.
     o Implement request #2872454; FMSLogo now supports READRAWLINE to read
       a line from a text file that may contain special characters (to logo).
+    o Implement request #2892210; The FMSLogo installer now supports silent
+      installation when given the "/S" command-line option.  The language
+      can be set with "/LCID=####".
     o Minor improvements to the manual.
 
   For a complete history of changes across all versions of FMSLogo, see

@@ -153,10 +153,33 @@ Function uninstall
 FunctionEnd
 
 
+!include FileFunc.nsh
+!insertmacro GetParameters
+!insertmacro GetOptions
+
 Function .onInit
 
-  ;Language selection dialog
+  ${GetParameters} $R0
+  ClearErrors
+  ${GetOptions} $R0 /LCID= $LANGUAGE
+  StrCmp $LANGUAGE ${LANG_ENGLISH}    SetupUser
+  StrCmp $LANGUAGE ${LANG_FRENCH}     SetupUser
+  StrCmp $LANGUAGE ${LANG_GERMAN}     SetupUser
+  StrCmp $LANGUAGE ${LANG_GREEK}      SetupUser
+  StrCmp $LANGUAGE ${LANG_ITALIAN}    SetupUser
+  StrCmp $LANGUAGE ${LANG_PORTUGUESE} SetupUser
+  StrCmp $LANGUAGE ${LANG_RUSSIAN}    SetupUser
+  StrCmp $LANGUAGE ${LANG_SPANISH}    SetupUser
+  IfSilent SetupUser
 
+  ; An LCID was specified, but it's not one that we support
+
+  StrCmp $LANGUAGE "" SelectLanguage
+  MessageBox MB_OK|MB_ICONEXCLAMATION "Unrecognized LCID $LANGUAGE.$\nLCID must be one of the following:$\n  ${LANG_ENGLISH} (English),$\n  ${LANG_FRENCH} (French),$\n  ${LANG_GERMAN} (German),$\n  ${LANG_GREEK} (Greek),$\n  ${LANG_ITALIAN} (Italian),$\n  ${LANG_PORTUGUESE} (Portuguese),$\n  ${LANG_RUSSIAN} (Russian), and$\n  ${LANG_SPANISH} (Spanish).$\n"
+  Abort
+
+SelectLanguage:
+  ; Language selection dialog
   Push ""
   Push ${LANG_ENGLISH}
   Push English
@@ -215,6 +238,9 @@ SetupUser.Done:
   Pop $R0 
   StrCmp $R0 0 checkifinstalled
 
+  ; Silent installs should abort without a dialog box
+  IfSilent Abort
+
   ; Notify the user that the install cannot continue.
   ; We can't use a LangString because those aren't available in .onInit
   StrCmp $LANGUAGE ${LANG_GERMAN} 0 +3
@@ -247,6 +273,11 @@ checkifinstalled:
   ;
   ; If FMSLogo is already installed, either uninstall it or abort. 
   ;
+
+  ; If this is a silent install, assume that the user wants it
+  ; to succeed (unintall the previous instance of logo).
+  IfSilent uninstall
+
   ReadRegStr $0 SHELL_CONTEXT "Software\Microsoft\Windows\CurrentVersion\Uninstall\FMSLogo" "UninstallString"
 
   ; If no uninstaller was found, then we're done
