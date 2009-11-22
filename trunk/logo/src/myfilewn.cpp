@@ -278,29 +278,17 @@ void TMyFileWindow::DoSearch()
     }
     SendEditor(SCI_SETSEARCHFLAGS, searchFlags);
 
-    if (SearchData.Flags & FR_DOWN)
-    {
-        // We're searching down, so the range goes from the
-        // current position to the end.
-        SendEditor(SCI_SETTARGETSTART, SendEditor(SCI_GETSELECTIONEND));
-        SendEditor(SCI_SETTARGETEND,   SendEditor(SCI_GETLENGTH));
-    }
-    else
-    {
-        // We're searching up, so the range goes from the
-        // current position to the beginning.
-        SendEditor(SCI_SETTARGETSTART, SendEditor(SCI_GETSELECTIONSTART));
-        SendEditor(SCI_SETTARGETEND,   0);
-    }
-
-
     int searchStringLength = strlen(SearchData.FindWhat);
 
     if (SearchData.Flags & FR_REPLACEALL)
     {
+        // The user selected "Replace All", so the selection
+        // goes from the beginning to the end of the document.
+        SendEditor(SCI_SETTARGETSTART, 0);
+        SendEditor(SCI_SETTARGETEND,   SendEditor(SCI_GETLENGTH));
+
         int replaceWithLength = strlen(SearchData.ReplaceWith);
-        
-        // The user selected "Replace All"
+
         int location = SendEditor(
             SCI_SEARCHINTARGET,
             searchStringLength,
@@ -316,7 +304,7 @@ void TMyFileWindow::DoSearch()
             // Move the selection so that we can repeat the search
             SendEditor(SCI_SETTARGETSTART, location + replaceWithLength);
             SendEditor(SCI_SETTARGETEND,   SendEditor(SCI_GETLENGTH));
-                    
+
             // Repeat the search
             location = SendEditor(
                 SCI_SEARCHINTARGET,
@@ -326,6 +314,21 @@ void TMyFileWindow::DoSearch()
     }
     else
     {
+        if (SearchData.Flags & FR_DOWN)
+        {
+            // We're searching down, so the range goes from the
+            // current position to the end.
+            SendEditor(SCI_SETTARGETSTART, SendEditor(SCI_GETSELECTIONEND));
+            SendEditor(SCI_SETTARGETEND,   SendEditor(SCI_GETLENGTH));
+        }
+        else
+        {
+            // We're searching up, so the range goes from the
+            // current position to the beginning.
+            SendEditor(SCI_SETTARGETSTART, SendEditor(SCI_GETSELECTIONSTART));
+            SendEditor(SCI_SETTARGETEND,   0);
+        }
+
         int location = SendEditor(
             SCI_SEARCHINTARGET,
             searchStringLength,
