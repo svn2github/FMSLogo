@@ -86,6 +86,24 @@ bool TMyFileWindow::Save()
     return false;
 }
 
+// Allocates a buffer and returns the selected text.
+// The buffer must be deallocated with delete [].
+char * TMyFileWindow::GetSelectedText()
+{
+    const int start = SendEditor(SCI_GETSELECTIONSTART);
+    const int end   = SendEditor(SCI_GETSELECTIONEND);
+
+    size_t selectedTextLength = abs(end - start);
+    char * selectedText = new char[selectedTextLength + 1];
+    if (selectedText != NULL)
+    {
+        SendEditor(SCI_GETSELTEXT, 0, reinterpret_cast<LPARAM>(selectedText));
+        selectedText[selectedTextLength] = '\0';
+    }
+
+    return selectedText;
+}
+
 //
 // Read the contents of a previously-specified file into the editor
 //
@@ -314,6 +332,50 @@ void TMyFileWindow::DoSearch()
     }
     else
     {
+        if (SearchData.Flags & FR_REPLACE)
+        {
+            // We are doing a find&replace operation.
+            // If the string to be replaced is currently selected, then replace it.
+            // After the replacement is performed, search for the next occurence.
+            char * selectedText = GetSelectedText();
+            if (selectedText != NULL)
+            {
+                // Found it.  Now figure out what to do with it.
+                int cmp;
+                if (SearchData.Flags & FR_MATCHCASE)
+                {
+                    // Do a case-sensitive comparison
+                    cmp = strcmp(selectedText, SearchData.FindWhat);
+                }
+                else
+                {
+                    // Do a case-insensitive comparison
+                    cmp = stricmp(selectedText, SearchData.FindWhat);
+                }
+
+                if (cmp == 0)
+                {
+                    int selectionStart = SendEditor(SCI_GETSELECTIONSTART);
+                    int selectionEnd   = SendEditor(SCI_GETSELECTIONEND);
+
+                    // This is a match.  Replace the string.
+                    SendEditor(SCI_SETTARGETSTART, selectionStart);
+                    SendEditor(SCI_SETTARGETEND,   selectionEnd);
+
+                    int replaceWithLength = strlen(SearchData.ReplaceWith);
+                    SendEditor(
+                        SCI_REPLACETARGET,
+                        replaceWithLength,
+                        reinterpret_cast<LPARAM>(SearchData.ReplaceWith));
+
+                    // update the selection to be what we just inserted.
+                    SendEditor(SCI_SETSEL, selectionStart, selectionStart + replaceWithLength);
+                }
+
+                delete [] selectedText;
+            }
+        }
+
         if (SearchData.Flags & FR_DOWN)
         {
             // We're searching down, so the range goes from the
@@ -329,31 +391,15 @@ void TMyFileWindow::DoSearch()
             SendEditor(SCI_SETTARGETEND,   0);
         }
 
+        // Perform the search.
         int location = SendEditor(
             SCI_SEARCHINTARGET,
             searchStringLength,
             reinterpret_cast<LPARAM>(SearchData.FindWhat));
         if (location != -1)
         {
-            // Found it.  Now figure out what to do with it.
-            if (SearchData.Flags & FR_REPLACE)
-            {
-                int replaceWithLength = strlen(SearchData.ReplaceWith);
-
-                // Replace the string
-                SendEditor(
-                    SCI_REPLACETARGET,
-                    replaceWithLength,
-                    reinterpret_cast<LPARAM>(SearchData.ReplaceWith));
-
-                // select what we just replaced
-                SendEditor(SCI_SETSEL, location, location + replaceWithLength);
-            }
-            else
-            {
-                // Just select the string
-                SendEditor(SCI_SETSEL, location, location + searchStringLength);
-            }
+            // Found it.  Select the string.
+            SendEditor(SCI_SETSEL, location, location + searchStringLength);
         }
         else
         {
@@ -498,16 +544,8 @@ void TMyFileWindow::CMHelpSelection()
 
 void TMyFileWindow::CMTest()
 {
+    char * theText = GetSelectedText();
 
-    // get the code selected
-    int start = SendEditor(SCI_GETSELECTIONSTART);
-    int end   = SendEditor(SCI_GETSELECTIONEND);
-
-    size_t theTextLength = abs(end - start);
-    char * theText = new char[theTextLength + 1];
-    SendEditor(SCI_GETSELTEXT, 0, reinterpret_cast<LPARAM>(theText));
-    theText[theTextLength] = '\0';
-   
     char * ptr = theText;
 
     // strip comments

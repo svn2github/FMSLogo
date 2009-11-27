@@ -26,6 +26,9 @@ II. New features/bugs fixed:
     o Fix bug #2813359; Checking "Replace All" in the editor's find and
       replace window now works over the entire contents of the editor,
       instead of from the caret to the end.
+    o Fix bug #2813357; Search and replace now works like other Windows
+      programs (it replaces the current selection, then advances to the
+      next match).
     o Implement request #2872454; FMSLogo now supports READRAWLINE to read
       a line from a text file that may contain special characters (to logo).
     o Implement request #2892210; The FMSLogo installer now supports silent

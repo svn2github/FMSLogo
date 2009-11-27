@@ -357,6 +357,7 @@ private:
     TFindReplaceDialog::TData SearchData;
     TFindReplaceDialog*       SearchDialog;
 
+    char *  GetSelectedText();
     void    DoSearch();
     LRESULT SendEditor(UINT Msg, WPARAM wParam=0, LPARAM lParam=0);
     void    SetEditorFont(const LOGFONT & LogFont);
