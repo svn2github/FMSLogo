@@ -1335,6 +1335,10 @@
        <entry>pseudo.readpos</entry>
      </row>
      <row>
+       <entry><link linkend='command-readrawline'>readrawline</link></entry>
+       <entry>pseudo.readrawline</entry>
+     </row>
+     <row>
        <entry><link linkend='command-readword'>readword</link></entry>
        <entry>pseudo.readword</entry>
      </row>
@@ -3230,6 +3234,10 @@
      <row>
        <entry>pseudo.readpos</entry>
        <entry><link linkend='command-readpos'>readpos</link></entry>
+     </row>
+     <row>
+       <entry>pseudo.readrawline</entry>
+       <entry><link linkend='command-readrawline'>readrawline</link></entry>
      </row>
      <row>
        <entry>pseudo.readword</entry>
