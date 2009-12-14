@@ -77,6 +77,8 @@ TO APPLYTEST.BADINPUT
    ; questionmark template has bad inputs
    RUNBADINPUTTEST        [APPLY [IGNORE ?2] [1] ]
 
+   ; ?0 should return a bad input error (bug #2843375)
+   RUNDOESNTLIKEINPUTTEST [APPLY [SHOW ?0] [a b c]
 
    ; fill the questionmark list
    TRACEINSTRUCTION [ APPLY [] [1 2 3 4 5] ]
