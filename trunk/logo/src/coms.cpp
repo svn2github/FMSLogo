@@ -305,39 +305,6 @@ NODE *lrunresult(NODE *args)
     return make_cont(runresult_continuation, lrun(args));
 }
 
-// Returns an integer node if args can be interpreted as a non-negative integer.
-// otherwise sets an error in args and returns Unbound.
-NODE *nonnegative_int_arg(NODE *args)
-{
-    NODE *arg = car(args);
-
-    NODE * val = cnv_node_to_numnode(arg);
-    while ((nodetype(val) != INTEGER || getint(val) < 0) && NOT_THROWING)
-    {
-        FLONUM f;
-        if (nodetype(val) == FLOATINGPOINT &&
-            fmod((f = getfloat(val)), 1.0) == 0.0 &&
-            f >= 0.0 && f < (FLONUM) MAXINT)
-        {
-            FIXNUM i = f;
-
-            gcref(val);
-            val = make_intnode(i);
-            break;
-        }
-        gcref(val);
-        setcar(args, err_logo(BAD_DATA, arg));
-        arg = car(args);
-        val = cnv_node_to_numnode(arg);
-    }
-    setcar(args, val);
-    if (nodetype(val) == INTEGER)
-    {
-        return val;
-    }
-    return Unbound;
-}
-
 NODE *lrepeat(NODE *args)
 {
     NODE * cnt       = nonnegative_int_arg(args);

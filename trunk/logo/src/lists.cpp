@@ -785,6 +785,13 @@ NODE *ranged_integer_arg(NODE *args, int MinValue, int MaxValue)
     return val;
 }
 
+// Returns an integer node if args can be interpreted as a non-negative integer.
+// otherwise sets an error in args and returns Unbound.
+NODE *nonnegative_int_arg(NODE *args)
+{
+    return ranged_integer_arg(args, 0, MAXINT);
+}
+
 FIXNUM int_arg(NODE *args)
 {
     NODE *arg = integer_arg(args);
