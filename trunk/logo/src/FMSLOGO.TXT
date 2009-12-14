@@ -21,6 +21,8 @@ I. Kit Description/Location (http://sourceforge.net/projects/fmslogo)
 II. New features/bugs fixed:
 
   * Added for 6.26.0
+    o Fix bug #2843375; ?0 now throws a bad input error, instead of
+      behaving like ?1.
     o Fix bug #2813364; SETPENCOLOR and other commands that input a color
       now throw recoverable bad input errors on more bad input.
     o Fix bug #2813359; Checking "Replace All" in the editor's find and
