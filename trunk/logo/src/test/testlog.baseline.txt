@@ -6559,27 +6559,18 @@ INFO: error text is SETPENCOLOR doesn't like [1e20 0 0] as input .
 INFO: Running invalid instruction: [SETPENCOLOR [-1 0 0]]
 PASS: error code is 7 , as expected.
 INFO: error text is SETPENCOLOR doesn't like [-1 0 0] as input .
-INFO: Running invalid instruction: [SETPENCOLOR [4.5 0 0]]
-PASS: error code is 7 , as expected.
-INFO: error text is SETPENCOLOR doesn't like [4.5 0 0] as input .
 INFO: Running invalid instruction: [SETPENCOLOR [0 1e20 0]]
 PASS: error code is 7 , as expected.
 INFO: error text is SETPENCOLOR doesn't like [0 1e20 0] as input .
 INFO: Running invalid instruction: [SETPENCOLOR [0 -1 0]]
 PASS: error code is 7 , as expected.
 INFO: error text is SETPENCOLOR doesn't like [0 -1 0] as input .
-INFO: Running invalid instruction: [SETPENCOLOR [0 4.5 0]]
-PASS: error code is 7 , as expected.
-INFO: error text is SETPENCOLOR doesn't like [0 4.5 0] as input .
 INFO: Running invalid instruction: [SETPENCOLOR [0 0 1e20]]
 PASS: error code is 7 , as expected.
 INFO: error text is SETPENCOLOR doesn't like [0 0 1e20] as input .
 INFO: Running invalid instruction: [SETPENCOLOR [0 0 -1]]
 PASS: error code is 7 , as expected.
 INFO: error text is SETPENCOLOR doesn't like [0 0 -1] as input .
-INFO: Running invalid instruction: [SETPENCOLOR [0 0 4.5]]
-PASS: error code is 7 , as expected.
-INFO: error text is SETPENCOLOR doesn't like [0 0 4.5] as input .
 INFO: Running invalid instruction: [SETPENCOLOR [0 0 0 0]]
 PASS: error code is 7 , as expected.
 INFO: error text is SETPENCOLOR doesn't like [0 0 0 0] as input .
@@ -6593,6 +6584,10 @@ INFO: Running invalid instruction: [( SETPENCOLOR 0 0 )]
 PASS: error code is 8 , as expected.
 INFO: error text is too much inside ()'s .
 PASS: [PENCOLOR] output [255 160 122] , as expected.
+CALL: SETPENCOLOR [4.5 10.2 15.7]
+PASS: [PENCOLOR] output [5 10 16] , as expected.
+CALL: SETPENCOLOR [256 522 1023.2]
+PASS: [PENCOLOR] output [0 10 255] , as expected.
 PASS: [PENCOLOUR] output 0 , as expected.
 PASS: [PENCOLOUR] output 15 , as expected.
 PASS: [PENCOLOUR] output 1 , as expected.
@@ -6623,27 +6618,18 @@ INFO: error text is SETPENCOLOUR doesn't like [1e20 0 0] as input .
 INFO: Running invalid instruction: [SETPENCOLOUR [-1 0 0]]
 PASS: error code is 7 , as expected.
 INFO: error text is SETPENCOLOUR doesn't like [-1 0 0] as input .
-INFO: Running invalid instruction: [SETPENCOLOUR [4.5 0 0]]
-PASS: error code is 7 , as expected.
-INFO: error text is SETPENCOLOUR doesn't like [4.5 0 0] as input .
 INFO: Running invalid instruction: [SETPENCOLOUR [0 1e20 0]]
 PASS: error code is 7 , as expected.
 INFO: error text is SETPENCOLOUR doesn't like [0 1e20 0] as input .
 INFO: Running invalid instruction: [SETPENCOLOUR [0 -1 0]]
 PASS: error code is 7 , as expected.
 INFO: error text is SETPENCOLOUR doesn't like [0 -1 0] as input .
-INFO: Running invalid instruction: [SETPENCOLOUR [0 4.5 0]]
-PASS: error code is 7 , as expected.
-INFO: error text is SETPENCOLOUR doesn't like [0 4.5 0] as input .
 INFO: Running invalid instruction: [SETPENCOLOUR [0 0 1e20]]
 PASS: error code is 7 , as expected.
 INFO: error text is SETPENCOLOUR doesn't like [0 0 1e20] as input .
 INFO: Running invalid instruction: [SETPENCOLOUR [0 0 -1]]
 PASS: error code is 7 , as expected.
 INFO: error text is SETPENCOLOUR doesn't like [0 0 -1] as input .
-INFO: Running invalid instruction: [SETPENCOLOUR [0 0 4.5]]
-PASS: error code is 7 , as expected.
-INFO: error text is SETPENCOLOUR doesn't like [0 0 4.5] as input .
 INFO: Running invalid instruction: [SETPENCOLOUR [0 0 0 0]]
 PASS: error code is 7 , as expected.
 INFO: error text is SETPENCOLOUR doesn't like [0 0 0 0] as input .
@@ -6657,6 +6643,10 @@ INFO: Running invalid instruction: [( SETPENCOLOUR 0 0 )]
 PASS: error code is 8 , as expected.
 INFO: error text is too much inside ()'s .
 PASS: [PENCOLOUR] output [255 160 122] , as expected.
+CALL: SETPENCOLOUR [4.5 10.2 15.7]
+PASS: [PENCOLOUR] output [5 10 16] , as expected.
+CALL: SETPENCOLOUR [256 522 1023.2]
+PASS: [PENCOLOUR] output [0 10 255] , as expected.
 PASS: [PENCOLOR] output 0 , as expected.
 PASS: [PENCOLOR] output 15 , as expected.
 PASS: [PENCOLOR] output 1 , as expected.
@@ -6687,27 +6677,18 @@ INFO: error text is SETPC doesn't like [1e20 0 0] as input .
 INFO: Running invalid instruction: [SETPC [-1 0 0]]
 PASS: error code is 7 , as expected.
 INFO: error text is SETPC doesn't like [-1 0 0] as input .
-INFO: Running invalid instruction: [SETPC [4.5 0 0]]
-PASS: error code is 7 , as expected.
-INFO: error text is SETPC doesn't like [4.5 0 0] as input .
 INFO: Running invalid instruction: [SETPC [0 1e20 0]]
 PASS: error code is 7 , as expected.
 INFO: error text is SETPC doesn't like [0 1e20 0] as input .
 INFO: Running invalid instruction: [SETPC [0 -1 0]]
 PASS: error code is 7 , as expected.
 INFO: error text is SETPC doesn't like [0 -1 0] as input .
-INFO: Running invalid instruction: [SETPC [0 4.5 0]]
-PASS: error code is 7 , as expected.
-INFO: error text is SETPC doesn't like [0 4.5 0] as input .
 INFO: Running invalid instruction: [SETPC [0 0 1e20]]
 PASS: error code is 7 , as expected.
 INFO: error text is SETPC doesn't like [0 0 1e20] as input .
 INFO: Running invalid instruction: [SETPC [0 0 -1]]
 PASS: error code is 7 , as expected.
 INFO: error text is SETPC doesn't like [0 0 -1] as input .
-INFO: Running invalid instruction: [SETPC [0 0 4.5]]
-PASS: error code is 7 , as expected.
-INFO: error text is SETPC doesn't like [0 0 4.5] as input .
 INFO: Running invalid instruction: [SETPC [0 0 0 0]]
 PASS: error code is 7 , as expected.
 INFO: error text is SETPC doesn't like [0 0 0 0] as input .
@@ -6721,6 +6702,10 @@ INFO: Running invalid instruction: [( SETPC 0 0 )]
 PASS: error code is 8 , as expected.
 INFO: error text is too much inside ()'s .
 PASS: [PENCOLOR] output [255 160 122] , as expected.
+CALL: SETPC [4.5 10.2 15.7]
+PASS: [PENCOLOR] output [5 10 16] , as expected.
+CALL: SETPC [256 522 1023.2]
+PASS: [PENCOLOR] output [0 10 255] , as expected.
 PASS: [FLOODCOLOR] output 0 , as expected.
 PASS: [FLOODCOLOR] output 15 , as expected.
 PASS: [FLOODCOLOR] output 1 , as expected.
@@ -6751,27 +6736,18 @@ INFO: error text is SETFLOODCOLOR doesn't like [1e20 0 0] as input .
 INFO: Running invalid instruction: [SETFLOODCOLOR [-1 0 0]]
 PASS: error code is 7 , as expected.
 INFO: error text is SETFLOODCOLOR doesn't like [-1 0 0] as input .
-INFO: Running invalid instruction: [SETFLOODCOLOR [4.5 0 0]]
-PASS: error code is 7 , as expected.
-INFO: error text is SETFLOODCOLOR doesn't like [4.5 0 0] as input .
 INFO: Running invalid instruction: [SETFLOODCOLOR [0 1e20 0]]
 PASS: error code is 7 , as expected.
 INFO: error text is SETFLOODCOLOR doesn't like [0 1e20 0] as input .
 INFO: Running invalid instruction: [SETFLOODCOLOR [0 -1 0]]
 PASS: error code is 7 , as expected.
 INFO: error text is SETFLOODCOLOR doesn't like [0 -1 0] as input .
-INFO: Running invalid instruction: [SETFLOODCOLOR [0 4.5 0]]
-PASS: error code is 7 , as expected.
-INFO: error text is SETFLOODCOLOR doesn't like [0 4.5 0] as input .
 INFO: Running invalid instruction: [SETFLOODCOLOR [0 0 1e20]]
 PASS: error code is 7 , as expected.
 INFO: error text is SETFLOODCOLOR doesn't like [0 0 1e20] as input .
 INFO: Running invalid instruction: [SETFLOODCOLOR [0 0 -1]]
 PASS: error code is 7 , as expected.
 INFO: error text is SETFLOODCOLOR doesn't like [0 0 -1] as input .
-INFO: Running invalid instruction: [SETFLOODCOLOR [0 0 4.5]]
-PASS: error code is 7 , as expected.
-INFO: error text is SETFLOODCOLOR doesn't like [0 0 4.5] as input .
 INFO: Running invalid instruction: [SETFLOODCOLOR [0 0 0 0]]
 PASS: error code is 7 , as expected.
 INFO: error text is SETFLOODCOLOR doesn't like [0 0 0 0] as input .
@@ -6785,6 +6761,10 @@ INFO: Running invalid instruction: [( SETFLOODCOLOR 0 0 )]
 PASS: error code is 8 , as expected.
 INFO: error text is too much inside ()'s .
 PASS: [FLOODCOLOR] output [255 160 122] , as expected.
+CALL: SETFLOODCOLOR [4.5 10.2 15.7]
+PASS: [FLOODCOLOR] output [5 10 16] , as expected.
+CALL: SETFLOODCOLOR [256 522 1023.2]
+PASS: [FLOODCOLOR] output [0 10 255] , as expected.
 PASS: [FLOODCOLOUR] output 0 , as expected.
 PASS: [FLOODCOLOUR] output 15 , as expected.
 PASS: [FLOODCOLOUR] output 1 , as expected.
@@ -6815,27 +6795,18 @@ INFO: error text is SETFLOODCOLOUR doesn't like [1e20 0 0] as input .
 INFO: Running invalid instruction: [SETFLOODCOLOUR [-1 0 0]]
 PASS: error code is 7 , as expected.
 INFO: error text is SETFLOODCOLOUR doesn't like [-1 0 0] as input .
-INFO: Running invalid instruction: [SETFLOODCOLOUR [4.5 0 0]]
-PASS: error code is 7 , as expected.
-INFO: error text is SETFLOODCOLOUR doesn't like [4.5 0 0] as input .
 INFO: Running invalid instruction: [SETFLOODCOLOUR [0 1e20 0]]
 PASS: error code is 7 , as expected.
 INFO: error text is SETFLOODCOLOUR doesn't like [0 1e20 0] as input .
 INFO: Running invalid instruction: [SETFLOODCOLOUR [0 -1 0]]
 PASS: error code is 7 , as expected.
 INFO: error text is SETFLOODCOLOUR doesn't like [0 -1 0] as input .
-INFO: Running invalid instruction: [SETFLOODCOLOUR [0 4.5 0]]
-PASS: error code is 7 , as expected.
-INFO: error text is SETFLOODCOLOUR doesn't like [0 4.5 0] as input .
 INFO: Running invalid instruction: [SETFLOODCOLOUR [0 0 1e20]]
 PASS: error code is 7 , as expected.
 INFO: error text is SETFLOODCOLOUR doesn't like [0 0 1e20] as input .
 INFO: Running invalid instruction: [SETFLOODCOLOUR [0 0 -1]]
 PASS: error code is 7 , as expected.
 INFO: error text is SETFLOODCOLOUR doesn't like [0 0 -1] as input .
-INFO: Running invalid instruction: [SETFLOODCOLOUR [0 0 4.5]]
-PASS: error code is 7 , as expected.
-INFO: error text is SETFLOODCOLOUR doesn't like [0 0 4.5] as input .
 INFO: Running invalid instruction: [SETFLOODCOLOUR [0 0 0 0]]
 PASS: error code is 7 , as expected.
 INFO: error text is SETFLOODCOLOUR doesn't like [0 0 0 0] as input .
@@ -6849,6 +6820,10 @@ INFO: Running invalid instruction: [( SETFLOODCOLOUR 0 0 )]
 PASS: error code is 8 , as expected.
 INFO: error text is too much inside ()'s .
 PASS: [FLOODCOLOUR] output [255 160 122] , as expected.
+CALL: SETFLOODCOLOUR [4.5 10.2 15.7]
+PASS: [FLOODCOLOUR] output [5 10 16] , as expected.
+CALL: SETFLOODCOLOUR [256 522 1023.2]
+PASS: [FLOODCOLOUR] output [0 10 255] , as expected.
 PASS: [FLOODCOLOR] output 0 , as expected.
 PASS: [FLOODCOLOR] output 15 , as expected.
 PASS: [FLOODCOLOR] output 1 , as expected.
@@ -6879,27 +6854,18 @@ INFO: error text is SETFC doesn't like [1e20 0 0] as input .
 INFO: Running invalid instruction: [SETFC [-1 0 0]]
 PASS: error code is 7 , as expected.
 INFO: error text is SETFC doesn't like [-1 0 0] as input .
-INFO: Running invalid instruction: [SETFC [4.5 0 0]]
-PASS: error code is 7 , as expected.
-INFO: error text is SETFC doesn't like [4.5 0 0] as input .
 INFO: Running invalid instruction: [SETFC [0 1e20 0]]
 PASS: error code is 7 , as expected.
 INFO: error text is SETFC doesn't like [0 1e20 0] as input .
 INFO: Running invalid instruction: [SETFC [0 -1 0]]
 PASS: error code is 7 , as expected.
 INFO: error text is SETFC doesn't like [0 -1 0] as input .
-INFO: Running invalid instruction: [SETFC [0 4.5 0]]
-PASS: error code is 7 , as expected.
-INFO: error text is SETFC doesn't like [0 4.5 0] as input .
 INFO: Running invalid instruction: [SETFC [0 0 1e20]]
 PASS: error code is 7 , as expected.
 INFO: error text is SETFC doesn't like [0 0 1e20] as input .
 INFO: Running invalid instruction: [SETFC [0 0 -1]]
 PASS: error code is 7 , as expected.
 INFO: error text is SETFC doesn't like [0 0 -1] as input .
-INFO: Running invalid instruction: [SETFC [0 0 4.5]]
-PASS: error code is 7 , as expected.
-INFO: error text is SETFC doesn't like [0 0 4.5] as input .
 INFO: Running invalid instruction: [SETFC [0 0 0 0]]
 PASS: error code is 7 , as expected.
 INFO: error text is SETFC doesn't like [0 0 0 0] as input .
@@ -6913,6 +6879,10 @@ INFO: Running invalid instruction: [( SETFC 0 0 )]
 PASS: error code is 8 , as expected.
 INFO: error text is too much inside ()'s .
 PASS: [FLOODCOLOR] output [255 160 122] , as expected.
+CALL: SETFC [4.5 10.2 15.7]
+PASS: [FLOODCOLOR] output [5 10 16] , as expected.
+CALL: SETFC [256 522 1023.2]
+PASS: [FLOODCOLOR] output [0 10 255] , as expected.
 PASS: [SCREENCOLOR] output 0 , as expected.
 PASS: [SCREENCOLOR] output 15 , as expected.
 PASS: [SCREENCOLOR] output 1 , as expected.
@@ -6943,27 +6913,18 @@ INFO: error text is SETSCREENCOLOR doesn't like [1e20 0 0] as input .
 INFO: Running invalid instruction: [SETSCREENCOLOR [-1 0 0]]
 PASS: error code is 7 , as expected.
 INFO: error text is SETSCREENCOLOR doesn't like [-1 0 0] as input .
-INFO: Running invalid instruction: [SETSCREENCOLOR [4.5 0 0]]
-PASS: error code is 7 , as expected.
-INFO: error text is SETSCREENCOLOR doesn't like [4.5 0 0] as input .
 INFO: Running invalid instruction: [SETSCREENCOLOR [0 1e20 0]]
 PASS: error code is 7 , as expected.
 INFO: error text is SETSCREENCOLOR doesn't like [0 1e20 0] as input .
 INFO: Running invalid instruction: [SETSCREENCOLOR [0 -1 0]]
 PASS: error code is 7 , as expected.
 INFO: error text is SETSCREENCOLOR doesn't like [0 -1 0] as input .
-INFO: Running invalid instruction: [SETSCREENCOLOR [0 4.5 0]]
-PASS: error code is 7 , as expected.
-INFO: error text is SETSCREENCOLOR doesn't like [0 4.5 0] as input .
 INFO: Running invalid instruction: [SETSCREENCOLOR [0 0 1e20]]
 PASS: error code is 7 , as expected.
 INFO: error text is SETSCREENCOLOR doesn't like [0 0 1e20] as input .
 INFO: Running invalid instruction: [SETSCREENCOLOR [0 0 -1]]
 PASS: error code is 7 , as expected.
 INFO: error text is SETSCREENCOLOR doesn't like [0 0 -1] as input .
-INFO: Running invalid instruction: [SETSCREENCOLOR [0 0 4.5]]
-PASS: error code is 7 , as expected.
-INFO: error text is SETSCREENCOLOR doesn't like [0 0 4.5] as input .
 INFO: Running invalid instruction: [SETSCREENCOLOR [0 0 0 0]]
 PASS: error code is 7 , as expected.
 INFO: error text is SETSCREENCOLOR doesn't like [0 0 0 0] as input .
@@ -6977,6 +6938,10 @@ INFO: Running invalid instruction: [( SETSCREENCOLOR 0 0 )]
 PASS: error code is 8 , as expected.
 INFO: error text is too much inside ()'s .
 PASS: [SCREENCOLOR] output [255 160 122] , as expected.
+CALL: SETSCREENCOLOR [4.5 10.2 15.7]
+PASS: [SCREENCOLOR] output [5 10 16] , as expected.
+CALL: SETSCREENCOLOR [256 522 1023.2]
+PASS: [SCREENCOLOR] output [0 10 255] , as expected.
 PASS: [SCREENCOLOUR] output 0 , as expected.
 PASS: [SCREENCOLOUR] output 15 , as expected.
 PASS: [SCREENCOLOUR] output 1 , as expected.
@@ -7007,27 +6972,18 @@ INFO: error text is SETSCREENCOLOUR doesn't like [1e20 0 0] as input .
 INFO: Running invalid instruction: [SETSCREENCOLOUR [-1 0 0]]
 PASS: error code is 7 , as expected.
 INFO: error text is SETSCREENCOLOUR doesn't like [-1 0 0] as input .
-INFO: Running invalid instruction: [SETSCREENCOLOUR [4.5 0 0]]
-PASS: error code is 7 , as expected.
-INFO: error text is SETSCREENCOLOUR doesn't like [4.5 0 0] as input .
 INFO: Running invalid instruction: [SETSCREENCOLOUR [0 1e20 0]]
 PASS: error code is 7 , as expected.
 INFO: error text is SETSCREENCOLOUR doesn't like [0 1e20 0] as input .
 INFO: Running invalid instruction: [SETSCREENCOLOUR [0 -1 0]]
 PASS: error code is 7 , as expected.
 INFO: error text is SETSCREENCOLOUR doesn't like [0 -1 0] as input .
-INFO: Running invalid instruction: [SETSCREENCOLOUR [0 4.5 0]]
-PASS: error code is 7 , as expected.
-INFO: error text is SETSCREENCOLOUR doesn't like [0 4.5 0] as input .
 INFO: Running invalid instruction: [SETSCREENCOLOUR [0 0 1e20]]
 PASS: error code is 7 , as expected.
 INFO: error text is SETSCREENCOLOUR doesn't like [0 0 1e20] as input .
 INFO: Running invalid instruction: [SETSCREENCOLOUR [0 0 -1]]
 PASS: error code is 7 , as expected.
 INFO: error text is SETSCREENCOLOUR doesn't like [0 0 -1] as input .
-INFO: Running invalid instruction: [SETSCREENCOLOUR [0 0 4.5]]
-PASS: error code is 7 , as expected.
-INFO: error text is SETSCREENCOLOUR doesn't like [0 0 4.5] as input .
 INFO: Running invalid instruction: [SETSCREENCOLOUR [0 0 0 0]]
 PASS: error code is 7 , as expected.
 INFO: error text is SETSCREENCOLOUR doesn't like [0 0 0 0] as input .
@@ -7041,6 +6997,10 @@ INFO: Running invalid instruction: [( SETSCREENCOLOUR 0 0 )]
 PASS: error code is 8 , as expected.
 INFO: error text is too much inside ()'s .
 PASS: [SCREENCOLOUR] output [255 160 122] , as expected.
+CALL: SETSCREENCOLOUR [4.5 10.2 15.7]
+PASS: [SCREENCOLOUR] output [5 10 16] , as expected.
+CALL: SETSCREENCOLOUR [256 522 1023.2]
+PASS: [SCREENCOLOUR] output [0 10 255] , as expected.
 PASS: [SCREENCOLOR] output 0 , as expected.
 PASS: [SCREENCOLOR] output 15 , as expected.
 PASS: [SCREENCOLOR] output 1 , as expected.
@@ -7071,27 +7031,18 @@ INFO: error text is SETSC doesn't like [1e20 0 0] as input .
 INFO: Running invalid instruction: [SETSC [-1 0 0]]
 PASS: error code is 7 , as expected.
 INFO: error text is SETSC doesn't like [-1 0 0] as input .
-INFO: Running invalid instruction: [SETSC [4.5 0 0]]
-PASS: error code is 7 , as expected.
-INFO: error text is SETSC doesn't like [4.5 0 0] as input .
 INFO: Running invalid instruction: [SETSC [0 1e20 0]]
 PASS: error code is 7 , as expected.
 INFO: error text is SETSC doesn't like [0 1e20 0] as input .
 INFO: Running invalid instruction: [SETSC [0 -1 0]]
 PASS: error code is 7 , as expected.
 INFO: error text is SETSC doesn't like [0 -1 0] as input .
-INFO: Running invalid instruction: [SETSC [0 4.5 0]]
-PASS: error code is 7 , as expected.
-INFO: error text is SETSC doesn't like [0 4.5 0] as input .
 INFO: Running invalid instruction: [SETSC [0 0 1e20]]
 PASS: error code is 7 , as expected.
 INFO: error text is SETSC doesn't like [0 0 1e20] as input .
 INFO: Running invalid instruction: [SETSC [0 0 -1]]
 PASS: error code is 7 , as expected.
 INFO: error text is SETSC doesn't like [0 0 -1] as input .
-INFO: Running invalid instruction: [SETSC [0 0 4.5]]
-PASS: error code is 7 , as expected.
-INFO: error text is SETSC doesn't like [0 0 4.5] as input .
 INFO: Running invalid instruction: [SETSC [0 0 0 0]]
 PASS: error code is 7 , as expected.
 INFO: error text is SETSC doesn't like [0 0 0 0] as input .
@@ -7105,6 +7056,10 @@ INFO: Running invalid instruction: [( SETSC 0 0 )]
 PASS: error code is 8 , as expected.
 INFO: error text is too much inside ()'s .
 PASS: [SCREENCOLOR] output [255 160 122] , as expected.
+CALL: SETSC [4.5 10.2 15.7]
+PASS: [SCREENCOLOR] output [5 10 16] , as expected.
+CALL: SETSC [256 522 1023.2]
+PASS: [SCREENCOLOR] output [0 10 255] , as expected.
 CALL: SETPENCOLOR 0
 PASS: [PENCOLOR] output [0 0 0] , as expected.
 CALL: SETPENCOLOR 1
@@ -7519,6 +7474,10 @@ CALL: SETPIXEL [0 0 255]
 PASS: [PIXEL] output [0 0 255] , as expected.
 CALL: SETPIXEL "blue
 PASS: [PIXEL] output [0 0 255] , as expected.
+CALL: SETPIXEL [10.5 20.3 30.7]
+PASS: [PIXEL] output [11 20 31] , as expected.
+CALL: SETPIXEL [256 522 1023.2]
+PASS: [PIXEL] output [0 10 255] , as expected.
 CALL: SETPIXEL [1 2 3]
 INFO: Running invalid instruction: [(SETPIXEL)]
 PASS: error code is 6 , as expected.
@@ -7550,27 +7509,18 @@ INFO: error text is SETPIXEL doesn't like [-1 0 0] as input .
 INFO: Running invalid instruction: [SETPIXEL [1e20 0 0]]
 INFO: error code is 7 .
 INFO: error text is SETPIXEL doesn't like [1e20 0 0] as input .
-INFO: Running invalid instruction: [SETPIXEL [4.5 0 0]]
-INFO: error code is 7 .
-INFO: error text is SETPIXEL doesn't like [4.5 0 0] as input .
 INFO: Running invalid instruction: [SETPIXEL [0 -1 0]]
 INFO: error code is 7 .
 INFO: error text is SETPIXEL doesn't like [0 -1 0] as input .
 INFO: Running invalid instruction: [SETPIXEL [0 1e20 0]]
 INFO: error code is 7 .
 INFO: error text is SETPIXEL doesn't like [0 1e20 0] as input .
-INFO: Running invalid instruction: [SETPIXEL [0 4.5 0]]
-INFO: error code is 7 .
-INFO: error text is SETPIXEL doesn't like [0 4.5 0] as input .
 INFO: Running invalid instruction: [SETPIXEL [0 0 -1]]
 INFO: error code is 7 .
 INFO: error text is SETPIXEL doesn't like [0 0 -1] as input .
 INFO: Running invalid instruction: [SETPIXEL [0 0 1e20]]
 INFO: error code is 7 .
 INFO: error text is SETPIXEL doesn't like [0 0 1e20] as input .
-INFO: Running invalid instruction: [SETPIXEL [0 0 4.5]]
-INFO: error code is 7 .
-INFO: error text is SETPIXEL doesn't like [0 0 4.5] as input .
 INFO: Running invalid instruction: [SETPIXEL [255 255 255 255]]
 INFO: error code is 7 .
 INFO: error text is SETPIXEL doesn't like [255 255 255 255] as input .
