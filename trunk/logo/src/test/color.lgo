@@ -32,13 +32,10 @@ TO COLORSETGETTEST :setcolorcommand :getcolorcommand
    RUNDOESNTLIKEINPUTTEST (LIST :setcolorcommand [0 0])
    RUNDOESNTLIKEINPUTTEST (LIST :setcolorcommand [1e20  0   0])
    RUNDOESNTLIKEINPUTTEST (LIST :setcolorcommand [-1    0   0])
-   RUNDOESNTLIKEINPUTTEST (LIST :setcolorcommand [256   0   0])
    RUNDOESNTLIKEINPUTTEST (LIST :setcolorcommand [0    1e20 0])
    RUNDOESNTLIKEINPUTTEST (LIST :setcolorcommand [0    -1   0])
-   RUNDOESNTLIKEINPUTTEST (LIST :setcolorcommand [0    256  0])
    RUNDOESNTLIKEINPUTTEST (LIST :setcolorcommand [0     0   1e20])
    RUNDOESNTLIKEINPUTTEST (LIST :setcolorcommand [0     0   -1])
-   RUNDOESNTLIKEINPUTTEST (LIST :setcolorcommand [0     0   256])
    RUNDOESNTLIKEINPUTTEST (LIST :setcolorcommand [0 0 0 0])
    RUNDOESNTLIKEINPUTTEST (LIST :setcolorcommand ""notacolor)
    RUNNOTENOUGHINPUTSTEST (LIST "\( :setcolorcommand "\)     )
@@ -50,24 +47,40 @@ TO COLORSETGETTEST :setcolorcommand :getcolorcommand
    ; Test that rounding works
    TRACEINSTRUCTION (LIST :setcolorcommand  [4.5 10.2 15.7])
    SIMPLEREPORTTEST (LIST :getcolorcommand) [5   10     16]
+
+   ; Test that modulo works
+   TRACEINSTRUCTION (LIST :setcolorcommand  [ 256 522 1023.2 ])
+   SIMPLEREPORTTEST (LIST :getcolorcommand) [  0   10  255 ]
 END
 
 TO PENCOLORTEST
+   localmake "savedpencolor pencolor
+
    COLORSETGETTEST "SETPENCOLOR  "PENCOLOR
    COLORSETGETTEST "SETPENCOLOUR "PENCOLOUR
    COLORSETGETTEST "SETPC        "PENCOLOR
+
+   setpencolor :savedpencolor
 END
 
 TO FLOODCOLORTEST
+   localmake "savedfloodcolor floodcolor
+
    COLORSETGETTEST "SETFLOODCOLOR  "FLOODCOLOR
    COLORSETGETTEST "SETFLOODCOLOUR "FLOODCOLOUR
    COLORSETGETTEST "SETFC          "FLOODCOLOR
+
+   setfloodcolor :savedfloodcolor
 END
 
 TO SCREENCOLORTEST
+   localmake "savedscreencolor screencolor
+
    COLORSETGETTEST "SETSCREENCOLOR  "SCREENCOLOR
    COLORSETGETTEST "SETSCREENCOLOUR "SCREENCOLOUR
    COLORSETGETTEST "SETSC           "SCREENCOLOR
+
+   setscreencolor :savedscreencolor
 END
 
 TO COLORINDEXTEST

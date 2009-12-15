@@ -2277,20 +2277,19 @@ GetColorComponent(
     if (nodetype(value) == FLOATINGPOINT)
     {
         // We got a floating point value.
-        // See if it can be converted into a small integer.
         FLONUM flonum = getfloat(value);
-        if (0 <= flonum && flonum < 255.5)
+        if (0 <= flonum && flonum <= MAXINT)
         {
-            colorComponent = (int) g_round(flonum);
+            colorComponent = g_round(flonum) % 256;
         }
     }
     else if (nodetype(value) == INTEGER)
     {
+        // We got an integer.
         int i = getint(value);
-        if (0 <= i && i <= 255)
+        if (0 <= i)
         {
-            // integer between 0 and 255
-            colorComponent = i;
+            colorComponent = i % 256;
         }
     }
 
