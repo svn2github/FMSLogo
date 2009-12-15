@@ -32,13 +32,13 @@ TO COLORSETGETTEST :setcolorcommand :getcolorcommand
    RUNDOESNTLIKEINPUTTEST (LIST :setcolorcommand [0 0])
    RUNDOESNTLIKEINPUTTEST (LIST :setcolorcommand [1e20  0   0])
    RUNDOESNTLIKEINPUTTEST (LIST :setcolorcommand [-1    0   0])
-   RUNDOESNTLIKEINPUTTEST (LIST :setcolorcommand [4.5   0   0])
+   RUNDOESNTLIKEINPUTTEST (LIST :setcolorcommand [256   0   0])
    RUNDOESNTLIKEINPUTTEST (LIST :setcolorcommand [0    1e20 0])
    RUNDOESNTLIKEINPUTTEST (LIST :setcolorcommand [0    -1   0])
-   RUNDOESNTLIKEINPUTTEST (LIST :setcolorcommand [0    4.5  0])
+   RUNDOESNTLIKEINPUTTEST (LIST :setcolorcommand [0    256  0])
    RUNDOESNTLIKEINPUTTEST (LIST :setcolorcommand [0     0   1e20])
    RUNDOESNTLIKEINPUTTEST (LIST :setcolorcommand [0     0   -1])
-   RUNDOESNTLIKEINPUTTEST (LIST :setcolorcommand [0     0   4.5])
+   RUNDOESNTLIKEINPUTTEST (LIST :setcolorcommand [0     0   256])
    RUNDOESNTLIKEINPUTTEST (LIST :setcolorcommand [0 0 0 0])
    RUNDOESNTLIKEINPUTTEST (LIST :setcolorcommand ""notacolor)
    RUNNOTENOUGHINPUTSTEST (LIST "\( :setcolorcommand "\)     )
@@ -46,6 +46,10 @@ TO COLORSETGETTEST :setcolorcommand :getcolorcommand
 
    ; none of the above bad input tests should have changed the color
    SIMPLEREPORTTEST (LIST :getcolorcommand) [255 160 122]
+
+   ; Test that rounding works
+   TRACEINSTRUCTION (LIST :setcolorcommand  [4.5 10.2 15.7])
+   SIMPLEREPORTTEST (LIST :getcolorcommand) [5   10     16]
 END
 
 TO PENCOLORTEST
