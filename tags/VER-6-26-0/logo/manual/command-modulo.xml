@@ -1,0 +1,39 @@
+<section id="command-modulo">
+    <title>MODULO</title>
+<indexterm><primary>MODULO</primary></indexterm>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>MODULO</command> <parameter>dividend</parameter> <parameter>divisor</parameter></synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+<para>
+Outputs the remainder of dividing <parameter>dividend</parameter> divided by <parameter>divisor</parameter>.
+Both <parameter>dividend</parameter> and <parameter>divisor</parameter> must be integers.
+The result is an integer with the same sign as <parameter>divisor</parameter> (unlike <link linkend="command-remainder">REMAINDER</link>, which uses the sign of <parameter>dividend</parameter>).
+</para>
+
+<para>
+It is an error to call MODULO with a <parameter>divisor</parameter> of 0.
+</para>
+
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Example</term>
+<listitem>
+    <programlisting><userinput>SHOW MODULO 6 4</userinput>
+2</programlisting>
+<programlisting><userinput>SHOW MODULO 6 2</userinput>
+0</programlisting>
+</listitem>
+</varlistentry>
+
+</variablelist>
+
+</section>

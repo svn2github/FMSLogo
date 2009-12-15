@@ -1,0 +1,15 @@
+LOAD "testlib.lgo
+
+TO LOADTEST
+
+   ; bad number of inputs
+   RUNNOTENOUGHINPUTSTEST [(LOAD)]
+   RUNTOOMANYINPUTSTEST   [(LOAD "testlib.lgo "toomany)]
+
+   ; bad inputs
+   RUNFILESYSTEMERRORTEST [LOAD  "doesnotexist.lgo ]
+
+   ; load a file by running a procedure with the same name
+   TRACEINSTRUCTION [ERASE "procedureinworkingdirectory]
+   SIMPLEREPORTTEST [procedureinworkingdirectory] 123
+END
