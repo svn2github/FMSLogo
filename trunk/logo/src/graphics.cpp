@@ -2256,7 +2256,7 @@ StringNodeEqualsString(
 // -1 if this cannot be done.
 static
 int
-GetUnsignedChar(
+GetColorComponent(
     NODE * Node
     )
 {
@@ -2270,16 +2270,18 @@ GetUnsignedChar(
     {
         return -1;
     }
+ 
+    // initialize the return value to indicates an error.
+    int colorComponent = -1;
 
     if (nodetype(value) == FLOATINGPOINT)
     {
         // We got a floating point value.
         // See if it can be converted into a small integer.
-        FLONUM f = getfloat(value);
-        if (0 <= f && f <= 255 && fmod(f, 1.0) == 0.0)
+        FLONUM flonum = getfloat(value);
+        if (0 <= flonum && flonum < 255.5)
         {
-            gcref(value);
-            return (int) f;
+            colorComponent = (int) g_round(flonum);
         }
     }
     else if (nodetype(value) == INTEGER)
@@ -2287,13 +2289,13 @@ GetUnsignedChar(
         int i = getint(value);
         if (0 <= i && i <= 255)
         {
-            gcref(value);
-            return i;
+            // integer between 0 and 255
+            colorComponent = i;
         }
     }
 
     gcref(value);
-    return -1;
+    return colorComponent;
 }
 
 COLORREF
@@ -2319,13 +2321,13 @@ GetColorArgument(
                 cdr(cddr(arg)) == NIL)
             {
                 // check to see if this is a color vector
-                int red = GetUnsignedChar(car(arg));
+                int red = GetColorComponent(car(arg));
                 if (red != -1)
                 {
-                    int green = GetUnsignedChar(car(cdr(arg)));
+                    int green = GetColorComponent(car(cdr(arg)));
                     if (green != -1)
                     {
-                        int blue = GetUnsignedChar(car(cddr(arg)));
+                        int blue = GetColorComponent(car(cddr(arg)));
                         if (blue != -1)
                         {
                             // got a value color vector
