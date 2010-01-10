@@ -1,5 +1,3 @@
-#include "owlrc.h"
-
 #define ID_STATIC               -1
 
 #define IDC_BASE 1000
