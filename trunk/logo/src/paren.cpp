@@ -26,7 +26,7 @@
 #include "init.h"
 #include "error.h"
 #include "lists.h"
-#include "math.h"
+#include "logomath.h"
 #include "appendablelist.h"
 #include "logocore.h"
 

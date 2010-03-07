@@ -34,7 +34,7 @@
 #include "error.h"
 #include "ibmturt.h"
 #include "coms.h"
-#include "math.h"
+#include "logomath.h"
 #include "const.h"
 
 #include "graphwin.h"

@@ -29,7 +29,7 @@
 #include "mem.h"
 #include "error.h"
 #include "print.h"
-#include "math.h"
+#include "logomath.h"
 #include "coms.h"
 #include "paren.h"
 #include "statwind.h"

@@ -26,7 +26,7 @@
 #include "logocore.h"
 #include "intern.h"
 #include "logodata.h"
-#include "math.h"
+#include "logomath.h"
 #include "init.h"
 
 CLocalizedNode::CLocalizedNode() :

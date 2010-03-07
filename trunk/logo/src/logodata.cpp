@@ -30,7 +30,7 @@
 #include "error.h"
 #include "mem.h"
 #include "parse.h"
-#include "math.h"
+#include "logomath.h"
 #include "lists.h"
 #include "eval.h"
 #include "intern.h"

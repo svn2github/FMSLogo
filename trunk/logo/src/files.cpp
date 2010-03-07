@@ -32,7 +32,7 @@
 #include "main.h"
 #include "parse.h"
 #include "error.h"
-#include "math.h"
+#include "logomath.h"
 #include "eval.h"
 #include "coms.h"
 #include "lists.h"

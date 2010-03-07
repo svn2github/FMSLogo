@@ -28,7 +28,7 @@
 #include "mem.h"
 #include "error.h"
 #include "ibmturt.h"
-#include "math.h"
+#include "logomath.h"
 #include "lists.h"
 #include "appendablelist.h"
 #include "graphics.h"

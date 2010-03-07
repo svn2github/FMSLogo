@@ -44,7 +44,7 @@
 #include "graphwin.h"
 #include "parse.h"
 #include "logodata.h"
-#include "math.h"
+#include "logomath.h"
 #include "cmdwind.h"
 #include "selectbox.h"
 

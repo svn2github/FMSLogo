@@ -28,7 +28,7 @@
 #include "eval.h"
 #include "init.h"
 #include "error.h"
-#include "math.h"
+#include "logomath.h"
 #include "parse.h"
 #include "lists.h"
 #include "main.h"

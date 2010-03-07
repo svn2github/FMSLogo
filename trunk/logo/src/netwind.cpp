@@ -28,7 +28,7 @@
 #include "logorc.h"
 #include "lists.h"
 #include "eval.h"
-#include "math.h"
+#include "logomath.h"
 #include "parse.h"
 #include "localizedstrings.h"
 

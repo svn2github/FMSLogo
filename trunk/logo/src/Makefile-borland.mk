@@ -134,7 +134,7 @@ Dep_fmslogodexe = \
    $(IntermediateDirectory)\logorc.res\
    $(IntermediateDirectory)\main.obj\
    $(IntermediateDirectory)\mainwind.obj\
-   $(IntermediateDirectory)\math.obj\
+   $(IntermediateDirectory)\logomath.obj\
    $(IntermediateDirectory)\mem.obj\
    $(IntermediateDirectory)\minieditor.obj\
    $(IntermediateDirectory)\mmwind.obj\
@@ -225,7 +225,7 @@ $(IntermediateDirectory)\localizednode.obj+
 $(IntermediateDirectory)\logodata.obj+
 $(IntermediateDirectory)\main.obj+
 $(IntermediateDirectory)\mainwind.obj+
-$(IntermediateDirectory)\math.obj+
+$(IntermediateDirectory)\logomath.obj+
 $(IntermediateDirectory)\mem.obj+
 $(IntermediateDirectory)\minieditor.obj+
 $(IntermediateDirectory)\mmwind.obj+
@@ -323,7 +323,7 @@ $(IntermediateDirectory)\logodata.obj          : version.h
 $(IntermediateDirectory)\logorc.res            : version.h localizedstrings*.h
 $(IntermediateDirectory)\main.obj              : version.h
 $(IntermediateDirectory)\mainwind.obj          : version.h
-$(IntermediateDirectory)\math.obj              : version.h
+$(IntermediateDirectory)\logomath.obj          : version.h
 $(IntermediateDirectory)\mem.obj               : version.h
 $(IntermediateDirectory)\minieditor.obj        : version.h
 $(IntermediateDirectory)\mmwind.obj            : version.h

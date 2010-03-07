@@ -29,7 +29,7 @@
 #include "parse.h"
 #include "eval.h"
 #include "error.h"
-#include "math.h"
+#include "logomath.h"
 #include "paren.h"
 #include "ibmturt.h"
 #include "main.h"

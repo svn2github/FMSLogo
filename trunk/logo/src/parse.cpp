@@ -36,7 +36,7 @@
 #include "eval.h"
 #include "intern.h"
 #include "mem.h"
-#include "math.h"
+#include "logomath.h"
 #include "appendablelist.h"
 #include "localizedstrings.h"
 

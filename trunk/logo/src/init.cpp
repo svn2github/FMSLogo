@@ -26,7 +26,7 @@
 #include "paren.h"
 #include "intern.h"
 #include "logodata.h"
-#include "math.h"
+#include "logomath.h"
 #include "wrksp.h"
 #include "coms.h"
 #include "lists.h"

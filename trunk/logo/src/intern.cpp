@@ -25,7 +25,7 @@
 #include "logodata.h"
 #include "mem.h"
 #include "init.h"
-#include "math.h"
+#include "logomath.h"
 #include "wrksp.h"
 
 

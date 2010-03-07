@@ -32,7 +32,7 @@
 
 #include "appendablelist.h"
 #include "mem.h"
-#include "math.h"
+#include "logomath.h"
 #include "dib.h"
 #include "logodata.h"
 #include "vector.h"
