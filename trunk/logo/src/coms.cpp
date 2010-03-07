@@ -1,5 +1,5 @@
 /*
-*      coms.c     program execution control module      dvb
+*      coms.cpp     program execution control module      dvb
 *
 *       Copyright (C) 1995 by the Regents of the University of California
 *       Copyright (C) 1995 by George Mills
@@ -19,8 +19,19 @@
 *      Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 *
 */
+#include <math.h>
+#include <time.h>
 
-#include "allwind.h"
+#include "coms.h"
+#include "logocore.h"
+#include "mem.h"
+#include "eval.h"
+#include "init.h"
+#include "error.h"
+#include "math.h"
+#include "parse.h"
+#include "lists.h"
+#include "main.h"
 
 // ift_iff_flag: flag for if TEST has been called within the scope
 // -1 : TEST has not been called.

@@ -20,9 +20,28 @@
  *
  */
 
-#include "allwind.h"
-
+#include <stdio.h>
+#include <setjmp.h>
 #include <algorithm>
+
+#include "main.h"
+#include "logocore.h"
+#include "dynamicbuffer.h"
+#include "error.h"
+#include "init.h"
+#include "ibmturt.h"
+#include "unix.h"
+#include "logodata.h"
+#include "lists.h"
+#include "eval.h"
+#include "intern.h"
+#include "mem.h"
+#include "math.h"
+#include "appendablelist.h"
+#include "localizedstrings.h"
+
+#include "minieditor.h"
+#include "mainwind.h"
 
 FILE *loadstream = stdin;
 FILE *dribblestream = NULL;

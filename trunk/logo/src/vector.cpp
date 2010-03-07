@@ -1,4 +1,6 @@
-#include "allwind.h"
+#include "vector.h"
+
+#include <math.h>
 
 // Magnitude of a vector
 double Mag(const VECTOR &v)

@@ -20,8 +20,25 @@
  *
  */
 
-#include "allwind.h"
+#include <windows.h>
+#include <string.h>
+#include <limits.h>
+
+#include "logodata.h"
 #include "version.h"
+#include "init.h"
+#include "error.h"
+#include "mem.h"
+#include "parse.h"
+#include "math.h"
+#include "lists.h"
+#include "eval.h"
+#include "intern.h"
+#include "print.h"
+#include "files.h"
+#include "appendablelist.h"
+
+#include "localizedstrings.h"
 
 // g_SpecialCharacters[] is an array of characters that must be escaped
 // with a backslash when put in a string.

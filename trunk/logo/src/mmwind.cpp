@@ -18,8 +18,24 @@
  *      Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
+#include <windows.h>
 
-#include "allwind.h"
+#include "mmwind.h"
+#include "logocore.h"
+#include "logodata.h"
+#include "lists.h"
+#include "main.h"
+#include "graphics.h"
+#include "error.h"
+#include "init.h"
+#include "eval.h"
+#include "parse.h"
+#include "ibmturt.h"
+
+#include "devwind.h"
+#include "mainwind.h"
+
+#include "localizedstrings.h"
 
 static HMIDIOUT hMidiOut = 0;
 

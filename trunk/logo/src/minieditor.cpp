@@ -15,7 +15,11 @@
 // Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 //
 
-#include "allwind.h"
+#include "minieditor.h"
+
+#include "utils.h"
+#include "logorc.h"
+#include "localizedstrings.h"
 
 TMiniEditorRichEdit::TMiniEditorRichEdit(TWindow * Parent)
     : TRichEditWithPopup(Parent, ID_MINIEDITCTRL)

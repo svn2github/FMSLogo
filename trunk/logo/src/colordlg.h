@@ -1,6 +1,10 @@
 #ifndef __COLORDLG_H
 #define __COLORDLG_H
 
+#include <owl\control.h>
+#include <owl\dialog.h>
+#include <owl\scrollba.h>
+
 class TColorControl : public TControl
 {
  public:

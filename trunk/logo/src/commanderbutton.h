@@ -22,7 +22,7 @@
 #ifndef __COMMANDERBUTTON_H
 #define __COMMANDERBUTTON_H
 
-#include "owl\button.h"
+#include <owl/button.h>
 
 class TCommanderButton : public TButton
 {

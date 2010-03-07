@@ -15,7 +15,13 @@
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
-#include "allwind.h"
+#include "colordlg.h"
+#include "main.h"
+#include "statwind.h"
+#include "logorc.h"
+#include "mainwind.h"
+#include "localizedstrings.h"
+#include "logodata.h"
 
 const unsigned int CN_CLICKED = 1;     // color control notifications
 

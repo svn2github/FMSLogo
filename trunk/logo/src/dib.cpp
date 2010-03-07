@@ -48,7 +48,10 @@
 // is a great example of how to go about doing this.
 //-----------------------------------------------------------------------------
 
-#include "allwind.h"
+#include "dib.h"
+#include "main.h"
+#include "mainwind.h"
+#include "localizedstrings.h"
 
 #define PALVERSION 0x300
 

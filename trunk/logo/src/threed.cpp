@@ -18,7 +18,12 @@
  *      Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
-#include "allwind.h"
+#include "threed.h"
+
+#include <math.h>
+
+#include "graphics.h"
+#include "main.h"
 #include "const.h"
 
 

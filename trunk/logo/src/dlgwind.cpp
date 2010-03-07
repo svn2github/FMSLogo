@@ -19,7 +19,34 @@
 *
 */
 
-#include "allwind.h"
+#include <owl/scroller.h>
+#include <owl/dialog.h>
+#include <owl/combobox.h>
+#include <owl/listbox.h>
+#include <owl/radiobut.h>
+#include <owl/groupbox.h>
+#include <owl/checkbox.h>
+#include <owl/static.h>
+#include <owl/scrollba.h>
+#include <owl/inputdia.h>
+
+#include "main.h"
+#include "mainwind.h"
+#include "lists.h"
+#include "logorc.h"
+#include "localizedstrings.h"
+#include "ibmturt.h"
+#include "init.h"
+#include "eval.h"
+#include "netwind.h"
+#include "error.h"
+#include "coms.h"
+#include "graphwin.h"
+#include "parse.h"
+#include "logodata.h"
+#include "math.h"
+#include "cmdwind.h"
+#include "selectbox.h"
 
 enum WINDOWTYPE 
 {

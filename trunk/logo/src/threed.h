@@ -1,6 +1,12 @@
 // -*- c++ -*-
 // Threed: Three dimensional viewer.
 
+#ifndef __THREED_H_
+#define __THREED_H_
+
+#include <windows.h>
+#include "vector.h"
+
 // Three dimensional viewing class
 class TThreeD
 {
@@ -47,3 +53,6 @@ private:
     double Zmin;
     double Zmax;
 };
+
+#endif //  __THREED_H_
+

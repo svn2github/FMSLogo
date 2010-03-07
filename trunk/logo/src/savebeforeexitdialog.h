@@ -19,6 +19,9 @@
 #ifndef _SAVEBEFOREEXITDIALOG_H_
 #define _SAVEBEFOREEXITDIALOG_H_
 
+#include <owl/window.h>
+#include <owl/dialog.h>
+
 class CSaveBeforeExitDialog : public TDialog
 {
 public:

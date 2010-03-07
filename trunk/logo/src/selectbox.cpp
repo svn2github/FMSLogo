@@ -17,7 +17,12 @@
  *
  */
 
-#include "allwind.h"
+#include "selectbox.h"
+#include "mainwind.h"
+#include "logorc.h"
+#include "graphics.h"
+
+#include "localizedstrings.h"
 
 const int DOUBLECLICK = 2;
 

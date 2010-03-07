@@ -129,6 +129,7 @@ Dep_fmslogodexe = \
    $(IntermediateDirectory)\intern.obj\
    $(IntermediateDirectory)\lists.obj\
    logo32.def\
+   $(IntermediateDirectory)\localizednode.obj\
    $(IntermediateDirectory)\logodata.obj\
    $(IntermediateDirectory)\logorc.res\
    $(IntermediateDirectory)\main.obj\
@@ -220,6 +221,7 @@ $(IntermediateDirectory)\ibmterm.obj+
 $(IntermediateDirectory)\init.obj+
 $(IntermediateDirectory)\intern.obj+
 $(IntermediateDirectory)\lists.obj+
+$(IntermediateDirectory)\localizednode.obj+
 $(IntermediateDirectory)\logodata.obj+
 $(IntermediateDirectory)\main.obj+
 $(IntermediateDirectory)\mainwind.obj+
@@ -316,6 +318,7 @@ $(IntermediateDirectory)\ibmterm.obj           : version.h
 $(IntermediateDirectory)\init.obj              : version.h
 $(IntermediateDirectory)\intern.obj            : version.h
 $(IntermediateDirectory)\lists.obj             : version.h
+$(IntermediateDirectory)\localizednode.obj     : version.h
 $(IntermediateDirectory)\logodata.obj          : version.h
 $(IntermediateDirectory)\logorc.res            : version.h localizedstrings*.h
 $(IntermediateDirectory)\main.obj              : version.h

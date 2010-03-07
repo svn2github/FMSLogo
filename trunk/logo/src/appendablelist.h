@@ -17,6 +17,8 @@
 #ifndef __APPENDABLE_LIST_H_
 #define __APPENDABLE_LIST_H_
 
+struct NODE;
+
 class CAppendableList
 {
  public:

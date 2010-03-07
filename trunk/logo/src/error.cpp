@@ -20,7 +20,24 @@
 *
 */
 
-#include "allwind.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <setjmp.h>
+
+#include "error.h"
+#include "logocore.h"
+#include "print.h"
+#include "eval.h"
+#include "localizedstrings.h"
+#include "coms.h"
+#include "unix.h"
+#include "mem.h"
+#include "main.h"
+#include "init.h"
+#include "parse.h"
+#include "math.h"
+#include "ibmturt.h"
 
 NODE *    throw_node = NIL;
 

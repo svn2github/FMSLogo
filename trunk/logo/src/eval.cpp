@@ -19,8 +19,27 @@
 *      Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 *
 */
+#include <stdio.h>
+#include <setjmp.h>
 
-#include "allwind.h"
+#include "eval.h"
+#include "init.h"
+#include "files.h"
+#include "main.h"
+#include "mem.h"
+#include "error.h"
+#include "print.h"
+#include "math.h"
+#include "coms.h"
+#include "paren.h"
+#include "statwind.h"
+#include "ibmturt.h"
+#include "localizedstrings.h"
+#include "wrksp.h"
+#include "parse.h"
+#include "unix.h"
+#include "intern.h"
+#include "lists.h"
 
 #define assign(to, from)    (to = reref(to, from))
 

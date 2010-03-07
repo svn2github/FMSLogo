@@ -1,5 +1,5 @@
 /*
- *       term.c          terminal cursor control                 dvb
+ *       term.cpp        terminal cursor control                 dvb
  *
  *       Copyright (C) 1995 by the Regents of the University of California
  *       Copyright (C) 1995 by George Mills
@@ -20,7 +20,9 @@
  *
  */
 
-#include "allwind.h"
+#include "main.h"
+#include "init.h"
+#include "logodata.h"
 
 NODE *lcleartext(NODE *)
 {

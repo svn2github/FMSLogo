@@ -25,6 +25,7 @@ SRCS += ibmterm.cpp
 SRCS += init.cpp 
 SRCS += intern.cpp 
 SRCS += lists.cpp 
+SRCS += localizednode.cpp 
 SRCS += logodata.cpp 
 SRCS += main.cpp 
 SRCS += mainwind.cpp 

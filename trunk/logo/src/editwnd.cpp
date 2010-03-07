@@ -19,7 +19,10 @@
 *
 */
 
-#include "allwind.h"
+#include "editwnd.h"
+#include "localizedstrings.h"
+#include "logorc.h"
+#include "main.h"
 
 TRichEditWithPopup::TRichEditWithPopup(
     TWindow* Parent,

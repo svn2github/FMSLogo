@@ -20,7 +20,15 @@
  *
  */
 
-#include "allwind.h"
+#include "paren.h"
+#include "mem.h"
+#include "eval.h"
+#include "init.h"
+#include "error.h"
+#include "lists.h"
+#include "math.h"
+#include "appendablelist.h"
+#include "logocore.h"
 
 #define assign(to, from)    to = reref(to, from)
 

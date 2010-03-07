@@ -17,10 +17,34 @@
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
+#include "main.h"
+
+#include <windows.h>
+#include <float.h>
+#include <math.h>
+
+#include <owl/scroller.h>
 
 #include "Scintilla.h"
-#include "allwind.h"
+#include "3dsolid.h"
 #include "const.h"
+#include "graphics.h"
+#include "print.h"
+#include "parse.h"
+#include "error.h"
+#include "files.h"
+#include "ibmturt.h"
+#include "utils.h"
+#include "mem.h"
+#include "init.h"
+
+#include "areawind.h"
+#include "mainwind.h"
+#include "cmdwind.h"
+#include "statwind.h"
+#include "graphwin.h"
+
+#include "localizedstrings.h"
 
 bool bExpert;                      // Expert mode
 bool bFixed;                       // Fixed mode
@@ -63,7 +87,7 @@ char *mouse_mousemove = NULL;          /* Mouse Move cb                       */
 char *keyboard_keydown = NULL;         /* KeyBoard key down                   */
 char *keyboard_keyup = NULL;           /* KeyBoard key up                     */
 
-HINSTANCE ModulehInstance;             // FMSLogo instance handle
+static char g_FmslogoBaseDirectory[MAX_PATH+1]; // The directory that contains FMSLogo.exe
 
 /* place holders for windows resources */
 HPALETTE OldPalette;
@@ -122,7 +146,7 @@ COLORREF pcolor;                       // pen color
 bool zoom_flag = false;                // flag to signal in zoomed state
 long MaxColors = 0;                    // The maximum # of colors available
 
-PENSTATE g_PenState;  // The state of the current pen (color, mode, etc.)
+static PENSTATE g_PenState;  // The state of the current pen (color, mode, etc.)
 
 TThreeDSolid ThreeD;
 
@@ -539,7 +563,25 @@ void TMyApp::InitMainWindow()
 
     g_PrinterAreaPixels = max(BitMapWidth, BitMapHeight) / 8;
 
-    ModulehInstance = HInstance;
+    // Figure out the path that contains fmslogo.exe
+    DWORD nFileNameLength = ::GetModuleFileName(
+        HInstance,
+        g_FmslogoBaseDirectory,
+        ARRAYSIZE(g_FmslogoBaseDirectory));
+
+    // start at the end of the full path of fmslogo.exe and walk
+    // backwards in the string until we find the final directory delimiter
+    for (char * charPtr = g_FmslogoBaseDirectory + nFileNameLength;
+         charPtr > g_FmslogoBaseDirectory;
+         charPtr--)
+    {
+        if (*charPtr == '\\')
+        {
+            // found the last backlash
+            break;
+        }
+        *charPtr = '\0';
+    }
 
     // init paths to library and help files based on location of .EXE
     MakeHelpPathName(LibPathName,     "logolib\\");
@@ -1467,24 +1509,8 @@ void line_to_3d(const Point & ToPoint)
 // Creates path relative to the directory from to which FMSLogo is installed.
 void MakeHelpPathName(char *OutBuffer, const char * TheFileName)
 {
-    // get the path name of fmslogo.exe
-    int nFileNameLen = GetModuleFileName(ModulehInstance, OutBuffer, MAX_PATH);
-
-    // start at the end of the full path to fmslogo.exe and walk
-    // backwards in the string until we find the final directory delimiter
-    char * pcFileName = OutBuffer + nFileNameLen;
-    while (pcFileName > OutBuffer)
-    {
-        if (*pcFileName == '\\' || *pcFileName == ':')
-        {
-            pcFileName++;
-            break;
-        }
-        pcFileName--;
-    }
-
-    // Append the filename to the relative path
-    strcpy(pcFileName, TheFileName);
+    strncpy(OutBuffer, g_FmslogoBaseDirectory, MAX_PATH);
+    strncat(OutBuffer, TheFileName,            MAX_PATH - strlen(OutBuffer));
 }
 
 

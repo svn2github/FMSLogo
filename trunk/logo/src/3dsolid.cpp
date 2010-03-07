@@ -7,7 +7,16 @@
 // object. Implements the BSP algorithm described in Chapter 17 in order
 // to display the surfaces of objects correctly. Compile with VECTOR.CPP,
 // 3DSOLID.RC, and THREED.CPP.
-#include "allwind.h"
+
+#include "3dsolid.h"
+#include "mainwind.h"
+#include "statwind.h"
+#include "graphics.h"
+#include "main.h"
+#include "ibmturt.h"
+#include "unix.h"
+
+#include "localizedstrings.h"
 
 const double epsilon2=0.001;
 // const double epsilon3=0.001;

@@ -19,7 +19,18 @@
  *
  */
 
-#include "allwind.h"
+#include "netwind.h"
+#include "mainwind.h"
+
+#include "init.h"
+#include "main.h"
+#include "logodata.h"
+#include "logorc.h"
+#include "lists.h"
+#include "eval.h"
+#include "math.h"
+#include "parse.h"
+#include "localizedstrings.h"
 
 CNetworkConnection g_ClientConnection;
 CNetworkConnection g_ServerConnection;

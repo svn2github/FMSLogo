@@ -20,9 +20,28 @@
  *
  */
 
-#include "allwind.h"
+#include <math.h>
+#include <float.h>
+#include <windows.h>
 
+#include "graphics.h"
+#include "main.h"
+#include "logodata.h"
+#include "init.h"
+#include "eval.h"
+#include "mem.h"
+#include "lists.h"
+#include "error.h"
+#include "ibmturt.h"
+#include "coms.h"
+#include "math.h"
 #include "const.h"
+
+#include "graphwin.h"
+#include "statwind.h"
+#include "mainwind.h"
+
+#include "localizedstrings.h"
 
 #define screen_left   (-BitMapWidth/2)
 #define screen_right  ( BitMapWidth/2)
@@ -65,9 +84,15 @@ size_t   g_TurtlesLimit;
 Turtle * g_SelectedTurtle;
 int      g_MaxTurtle;
 
-VECTOR g_Scale         = {1.0, 1.0, 1.0};
-VECTOR g_OneOverScale  = {1.0, 1.0, 1.0};
-Point  g_Wanna         = {0.0, 0.0, 0.0};
+// a point where the turtle wants to go
+Point  g_Wanna = {0.0, 0.0, 0.0};
+
+// used to scale a picture in scrunch mode.
+static VECTOR g_Scale = {1.0, 1.0, 1.0};
+
+// 1 / g_Scale (replaces divides with multiplies)
+static VECTOR g_OneOverScale  = {1.0, 1.0, 1.0}; 
+
 
 static bool out_of_bounds = false;
 

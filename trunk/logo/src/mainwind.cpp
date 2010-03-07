@@ -18,7 +18,39 @@
  *
  */
 
-#include "allwind.h"
+#include <owl/compat.h>
+#include <owl/scroller.h>
+#include <owl/inputdia.h>
+
+#include "main.h"
+#include "utils.h"
+#include "ibmturt.h"
+#include "logorc.h"
+#include "eval.h"
+#include "const.h"
+#include "wrksp.h"
+#include "files.h"
+#include "error.h"
+#include "init.h"
+#include "logodata.h"
+
+#include "mainwind.h"
+#include "netwind.h"
+#include "areawind.h"
+#include "cmdwind.h"
+#include "myfilewn.h"
+#include "myfileed.h"
+#include "graphwin.h"
+#include "statwind.h"
+#include "colordlg.h"
+#include "sizedlg.h"
+#include "savebeforeexitdialog.h"
+
+#include "localizedstrings.h"
+
+const int DEFAULT_COMMANDER_HEIGHT = 150;
+const int MIN_COMMANDER_HEIGHT     = 100;
+const int DEFAULT_SPLITTER_WIDTH   = 5;
 
 const int MAX_PENDING_CONNECTS = 4;  // The backlog allowed for listen()
 

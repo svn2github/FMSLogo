@@ -2,6 +2,9 @@
 #ifndef _MINIEDITOR_H_
 #define _MINIEDITOR_H_
 
+#include <owl/button.h>
+#include <owl/edit.h>
+
 #include "editwnd.h"
 
 class TMiniEditorRichEdit : public TRichEditWithPopup

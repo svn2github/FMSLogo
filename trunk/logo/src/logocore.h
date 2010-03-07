@@ -19,6 +19,12 @@
  *
  */
 
+#ifndef __LOGOCORE_H_
+#define __LOGOCORE_H_
+
+#include <stddef.h>
+#include <assert.h>
+
 #define ARRAYSIZE(ARRAY)            (sizeof(ARRAY) / sizeof(*(ARRAY)))
 #define STRINGLENGTH(STRINGLITERAL) (sizeof(STRINGLITERAL) - 1)
 
@@ -777,3 +783,5 @@ const int XOR_PUT  = 199;
 
 #define ScreenSz 0.70      // Default proportion of screen size
 #define MAX_TIMERS 32
+
+#endif // __LOGOCORE_H_

@@ -27,6 +27,7 @@
 #define _SELECTBOX_H_
 
 #include <owl/listbox.h>
+#include <owl/dialog.h>
 
 class CSelectBox : public TDialog 
 {

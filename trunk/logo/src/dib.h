@@ -1,6 +1,7 @@
-
 #ifndef DIB_INCLUDED
 #define DIB_INCLUDED
+
+#include <windows.h>
 
 // WIDTHBYTES takes # of bits in a scan line and rounds up to nearest
 //  word.

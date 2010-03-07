@@ -1,5 +1,5 @@
 /*
- *      intern.c        logo data interning module              dvb
+ *      intern.cpp        logo data interning module              dvb
  *
  *       Copyright (C) 1995 by the Regents of the University of California
  *       Copyright (C) 1995 by George Mills
@@ -20,7 +20,14 @@
  *
  */
 
-#include "allwind.h"
+#include <string.h>
+
+#include "logodata.h"
+#include "mem.h"
+#include "init.h"
+#include "math.h"
+#include "wrksp.h"
+
 
 // hash_table is an array of NODE*.
 // Each of the NODE* in the array is a list of "objects" that hashes 

@@ -1,5 +1,5 @@
 /*
- *      lists.c         logo list functions module              dvb
+ *      lists.cpp       logo list functions module              dvb
  *
  *       Copyright (C) 1995 by the Regents of the University of California
  *       Copyright (C) 1995 by George Mills
@@ -19,7 +19,19 @@
  *      Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-#include "allwind.h"
+#include <math.h>
+#include <stdio.h>
+
+#include "logodata.h"
+#include "init.h"
+#include "eval.h"
+#include "mem.h"
+#include "error.h"
+#include "ibmturt.h"
+#include "math.h"
+#include "lists.h"
+#include "appendablelist.h"
+#include "graphics.h"
 
 static
 NODE *bfable_arg(NODE *args)

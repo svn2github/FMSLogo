@@ -1,5 +1,8 @@
 // -*- c++ -*-
 
+#ifndef __VECTOR_H_
+#define __VECTOR_H_
+
 class VECTOR
 {
 public:
@@ -39,3 +42,4 @@ const VECTOR MVy1Multiply(const MATRIX &m, const VECTOR &v);
 const VECTOR MVzMultiply(const MATRIX &m, const VECTOR &v);
 const MATRIX MMMultiply(const MATRIX &m1, const MATRIX &m2);
 
+#endif // __VECTOR_H_

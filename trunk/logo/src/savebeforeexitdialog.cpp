@@ -17,7 +17,15 @@
  *
  */
 
-#include "allwind.h"
+#include <windows.h>
+
+#include "savebeforeexitdialog.h"
+
+#include "main.h"
+#include "logorc.h"
+#include "localizedstrings.h"
+
+#include "mainwind.h"
 
 CSaveBeforeExitDialog::CSaveBeforeExitDialog(
     TWindow *Parent

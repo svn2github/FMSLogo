@@ -18,11 +18,16 @@
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-#include "allwind.h"
+#include "main.h"
+#include "ibmturt.h"
+#include "error.h"
+#include "wrksp.h"
+#include "logodata.h"
+#include "assembly.h"
+
+#include "localizedstrings.h"
 
 /************************************************************/
-
-extern int *TopOfStack;
 
 bool check_stop(bool scan_for_messages)
 {

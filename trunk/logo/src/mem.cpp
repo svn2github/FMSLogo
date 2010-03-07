@@ -19,7 +19,13 @@
  *      Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-#include "allwind.h"
+#include <stdio.h>
+
+#include "logodata.h"
+#include "main.h"
+#include "error.h"
+
+#include "statwind.h"
 
 // a segment is a pool of nodes that is allocated in a single malloc.
 struct segment

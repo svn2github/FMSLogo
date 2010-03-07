@@ -18,11 +18,29 @@
  *
  */
 
+#include <stdio.h>
+#include <dir.h>
+
+#include "myfilewn.h"
+
 #include "Platform.h"
 #include "scintilla.h"
 #include "SciLexer.h"
 
-#include "allwind.h"
+#include <owl/richedit.h>
+
+#include "error.h"
+#include "main.h"
+#include "ibmturt.h"
+#include "logorc.h"
+#include "utils.h"
+#include "localizedstrings.h"
+#include "wrksp.h"
+#include "mem.h"
+
+#include "mainwind.h"
+#include "cmdwind.h"
+
 
 TMyFileWindow::TMyFileWindow(
     TWindow *Parent,

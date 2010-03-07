@@ -18,7 +18,8 @@
 #ifndef __EDITWND_H
 #define __EDITWND_H
 
-#include "owl\richedit.h"
+#include <owl\window.h>
+#include <owl\richedit.h>
 
 class TRichEditWithPopup : public TRichEdit
 {

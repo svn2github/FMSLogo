@@ -15,8 +15,23 @@
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
+#include <owl/compat.h>
 
-#include "allwind.h"
+#include "cmdwind.h"
+#include "logorc.h"
+#include "localizedstrings.h"
+#include "main.h"
+#include "utils.h"
+#include "statwind.h"
+#include "eval.h"
+#include "init.h"
+#include "error.h"
+#include "coms.h"
+#include "print.h"
+#include "logodata.h"
+#include "mem.h"
+#include "parse.h"
+#include "mainwind.h"
 
 #define SELECTBOTTOMLINE
 

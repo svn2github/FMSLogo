@@ -20,7 +20,27 @@
  *
  */
 
-#include "allwind.h"
+#include "wrksp.h"
+#include "logodata.h"
+#include "appendablelist.h"
+#include "intern.h"
+#include "init.h"
+#include "mem.h"
+#include "parse.h"
+#include "eval.h"
+#include "error.h"
+#include "math.h"
+#include "paren.h"
+#include "ibmturt.h"
+#include "main.h"
+#include "print.h"
+#include "files.h"
+#include "unix.h"
+
+#include "localizedstrings.h"
+#include "devwind.h"
+#include "myfilewn.h"
+#include "mainwind.h"
 
 bool to_pending = false;
 fpos_t LinesLoadedOnEdit;

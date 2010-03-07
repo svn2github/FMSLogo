@@ -19,9 +19,21 @@
 *      Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 */
 
-#include "allwind.h"
-
+#include <stdarg.h>
+#include <stdio.h>
 #include <algorithm>
+
+#include "unix.h"
+#include "parse.h"
+#include "print.h"
+#include "logocore.h"
+#include "logodata.h"
+#include "ibmturt.h"
+#include "init.h"
+#include "eval.h"
+#include "files.h"
+
+#include "localizedstrings.h"
 
 int print_stringlen;
 char *print_stringptr;

@@ -1,6 +1,10 @@
 #ifndef _3DSOLID_H_
 #define _3DSOLID_H_
 
+#include <windows.h> // for COLORREF
+#include "vector.h"
+#include "threed.h"
+
 #define NUM_SHADES 255
 #define SHARE
 

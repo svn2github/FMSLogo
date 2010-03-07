@@ -18,8 +18,18 @@
  *      Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
+#include <stdio.h>
+#include <dir.h>
+#include <errno.h>
 
-#include "allwind.h"
+#include "unix.h"
+#include "main.h"
+#include "init.h"
+#include "logodata.h"
+#include "mem.h"
+#include "parse.h"
+#include "dynamicbuffer.h"
+#include "localizedstrings.h"
 
 jmp_buf iblk_buf;
 

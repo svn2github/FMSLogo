@@ -20,7 +20,29 @@
  *
  */
 
-#include "allwind.h"
+#include <stdlib.h>
+#include <string.h>
+#include <windows.h>
+#include <setjmp.h>
+
+#include "files.h"
+#include "logocore.h"
+#include "mem.h"
+#include "init.h"
+#include "main.h"
+#include "parse.h"
+#include "error.h"
+#include "math.h"
+#include "eval.h"
+#include "coms.h"
+#include "lists.h"
+#include "wrksp.h"
+#include "print.h"
+#include "unix.h"
+#include "cmdwind.h"
+#include "devwind.h"
+#include "mainwind.h"
+#include "localizedstrings.h"
 
 static NODE *g_OpenFiles = NULL;
 

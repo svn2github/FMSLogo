@@ -18,7 +18,18 @@
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-#include "allwind.h"
+#include <windows.h>
+#include <windowsx.h> // for GlobalFreePtr()
+#include <assert.h>
+#include <stdio.h>
+
+#include "logocore.h"
+#include "graphics.h"
+#include "eval.h"
+#include "init.h"
+#include "error.h"
+#include "logodata.h"
+#include "parse.h"
 
 extern "C" void PASCAL pushw(WORD);
 extern "C" void PASCAL pushl(DWORD);

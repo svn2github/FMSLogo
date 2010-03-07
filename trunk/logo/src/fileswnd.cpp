@@ -19,7 +19,18 @@
 *
 */
 
-#include "allwind.h"
+#include "main.h"
+#include "files.h"
+#include "init.h"
+#include "eval.h"
+#include "parse.h"
+#include "mem.h"
+
+#include "mainwind.h"
+#include "cmdwind.h"
+#include "devwind.h"
+
+#include "localizedstrings.h"
 
 void filesave(const char *FileName)
 {

@@ -18,9 +18,44 @@
  *
  */
 
-#include "allwind.h"
-#include "htmlhelp.h"
+#include <math.h>
+#include <windows.h>
+#include <htmlhelp.h>
+
+#include <owl/scroller.h>
+
+#include "graphwin.h"
+#include "mainwind.h"
+#include "devwind.h"
+#include "statwind.h"
+#include "cmdwind.h"
+
+#include "appendablelist.h"
+#include "mem.h"
+#include "math.h"
+#include "dib.h"
+#include "logodata.h"
+#include "vector.h"
+#include "parse.h"
+#include "error.h"
+#include "main.h"
+#include "lists.h"
+#include "eval.h"
+#include "init.h"
+#include "coms.h"
+#include "unix.h"
 #include "const.h"
+
+#include "localizedstrings.h"
+
+struct CUTMAP
+{
+    HBITMAP MemoryBitMap;  // Used to store the bitmap
+    int     Height;        // current cut height
+    int     Width;         // current cut width
+    bool    IsValid;       // flag to signal something in cut buffer
+};
+
 
 #define X_ROTATED(X, Y, COSINE, SINE) ((X)*(COSINE) + (Y)*(SINE))
 #define Y_ROTATED(X, Y, COSINE, SINE) ((Y)*(COSINE) - (X)*(SINE))
@@ -38,9 +73,9 @@ int iTrans;
 HTMLHELPFUNC g_HtmlHelpFunc;
 HMODULE      g_HtmlHelpLib;
 
-CUTMAP * g_SelectedBitmap;
-CUTMAP * g_Bitmaps;
-int      g_BitmapsLimit;
+static CUTMAP * g_SelectedBitmap;
+static CUTMAP * g_Bitmaps;
+static int      g_BitmapsLimit;
 
 struct font_find_t
 {

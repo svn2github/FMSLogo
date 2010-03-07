@@ -15,7 +15,16 @@
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
-#include "allwind.h"
+#include "areawind.h"
+#include "logorc.h"
+#include "localizedstrings.h"
+#include "mainwind.h"
+#include "main.h"
+#include "eval.h"
+#include "init.h"
+#include "error.h"
+#include "utils.h"
+#include "logodata.h"
 
 // Active area dimensions
 int g_PrinterAreaXLow;

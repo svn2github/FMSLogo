@@ -19,7 +19,17 @@
  *
  */
 
-#include "allwind.h"
+#include <owl/compat.h>
+
+#include "myfileed.h"
+#include "logocore.h"
+#include "logodata.h"
+#include "logorc.h"
+#include "wrksp.h"
+#include "graphics.h"
+#include "localizedstrings.h"
+
+#include "mainwind.h"
 
 CSelectProcedureWindow::CSelectProcedureWindow(
     TWindow    * Parent, 

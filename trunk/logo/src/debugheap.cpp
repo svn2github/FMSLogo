@@ -14,7 +14,14 @@
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
-#include "allwind.h"
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+
+#include "debugheap.h"
+#include "logocore.h"
+#include "main.h"
+#include "print.h"
 
 // ASSUME_NO_INVALID_FREES
 // false - Check that each block is in our list before freeing it.

@@ -3,6 +3,10 @@
 #ifndef __SIZEDLG_H
 #define __SIZEDLG_H
 
+#include <owl/control.h>
+#include <owl/dialog.h>
+#include <owl/scrollba.h>
+
 class TSizeControl : public TControl
 {
 public:

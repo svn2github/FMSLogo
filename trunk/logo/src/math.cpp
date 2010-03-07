@@ -20,8 +20,19 @@
  *
  */
 
-#include "allwind.h"
+#include <setjmp.h>
+#include <math.h>
+#include <stdlib.h>
+#include <signal.h>
+#include <float.h>
 
+#include "logodata.h"
+#include "init.h"
+#include "lists.h"
+#include "eval.h"
+#include "graphics.h"
+#include "error.h"
+#include "ibmturt.h"
 #include "const.h"
 
 const char MATHFUNC_Sum        = '+';
