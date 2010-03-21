@@ -56,7 +56,7 @@ $(BINARYZIP) : $(MANUALS) $(EXES)
 $(SOURCEZIP) :
 	$(RM) $(shell /usr/bin/find -name '*~')
 	$(RM) $(shell /usr/bin/find -name '*.obj')
-	zip -r -9 -X $@ Makefile version.mk src manual setup -x $(ZIPEXCLUDE)
+	zip -r -9 -X $@ Makefile lcids.mk version.mk HOWTO-BUILD.txt src manual setup -x $(ZIPEXCLUDE)
 
 clean :
 	-$(MAKE) -C src    $@
