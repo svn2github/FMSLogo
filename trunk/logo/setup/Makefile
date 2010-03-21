@@ -13,3 +13,5 @@ fmslogo.exe : fmslogo.nsi ../version.mk $(EXECUTABLES) $(STARTUPFILES) $(HELPFIL
 
 clean :
 	$(RM) fmslogo.exe
+	$(RM) *.bak
+	$(RM) *.~
