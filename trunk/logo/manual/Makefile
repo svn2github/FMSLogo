@@ -93,6 +93,8 @@ clean :
 	$(RM) $(filter-out logohelp-1031.chm,$(filter-out logohelp-2070.chm,$(wildcard *.chm)))
 	$(RM) $(wildcard *~)
 	$(RM) $(wildcard *.bak)
+	$(RM) $(wildcard www/*.html)
+	$(RM) $(wildcard www/*.css)
 
 test :
 	perl -W check-manual.pl
