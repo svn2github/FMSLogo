@@ -356,15 +356,15 @@ numeric_node_to_fixnum(
         // It's impossible to give a correct FIXNUM for this
         // value, so it's a bug if this happens (the caller
         // should have thrown a "doesn't like input" error.
-        assert(-MAXINT < flonum && flonum < MAXINT);
+        assert(-FIXNUM_MAX < flonum && flonum < FIXNUM_MAX);
 
-        if (flonum >= MAXINT)
+        if (flonum >= FIXNUM_MAX)
         {
-            number = MAXINT;
+            number = FIXNUM_MAX;
         }
-        else if (flonum <= -MAXINT)
+        else if (flonum <= -FIXNUM_MAX)
         {
-            number = -MAXINT;
+            number = -FIXNUM_MAX;
         }
         else
         {
@@ -901,12 +901,12 @@ NODE *lellipsearc(NODE *arg)
             // very small radius or angle
             count = 1;
         }
-        else if (flt_count > (FLONUM)(MAXINT))
+        else if (flt_count > (FLONUM)(FIXNUM_MAX))
         {
             // a degenerate case - very large radius
             // it's okay to limit the count because the arc is 
             // too large to draw correctly, anyway.
-            count = MAXINT;
+            count = FIXNUM_MAX;
         }
         else
         { 
@@ -2303,7 +2303,7 @@ GetColorComponent(
     {
         // We got a floating point value.
         FLONUM flonum = getfloat(value);
-        if (0 <= flonum && flonum <= MAXINT)
+        if (0 <= flonum && flonum <= FIXNUM_MAX)
         {
             colorComponent = g_round(flonum) % 256;
         }
@@ -2378,7 +2378,7 @@ GetColorArgument(
                 // We got a floating point value.
                 // See if it can be converted into a small integer.
                 FLONUM f = getfloat(cnode);
-                if (0 <= f && f <= MAXINT && fmod(f, 1.0) == 0.0)
+                if (0 <= f && f <= FIXNUM_MAX && fmod(f, 1.0) == 0.0)
                 {
                     colorIndex = ((int) f) % 16;
                 }

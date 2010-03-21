@@ -25,7 +25,10 @@
 #include <stddef.h>
 #include <assert.h>
 
-#define ARRAYSIZE(ARRAY)            (sizeof(ARRAY) / sizeof(*(ARRAY)))
+#ifndef ARRAYSIZE
+    #define ARRAYSIZE(ARRAY)        (sizeof(ARRAY) / sizeof(*(ARRAY)))
+#endif
+
 #define STRINGLENGTH(STRINGLITERAL) (sizeof(STRINGLITERAL) - 1)
 
 #ifdef DEBUG
@@ -225,8 +228,9 @@ enum ERR_TYPES
 #define odd_p(x)   ((x % 2) != 0)
 
 typedef long    FIXNUM;
-// typedef __int64 FIXNUM  
-#define MAXINT  0x7fffffffL
+// typedef __int64 FIXNUM 
+#define FIXNUM_MAX 0x7fffffffL
+
 #define SAFEINT 0x00003fff   // safe to multiply w/o overflow
 
 typedef double FLONUM;

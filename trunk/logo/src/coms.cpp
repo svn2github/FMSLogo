@@ -91,8 +91,8 @@ NODE *lthrow(NODE *arg)
                 }
                 else if (nodetype(number) == FLOATINGPOINT &&
                          fmod((f = getfloat(number)), 1.0) == 0.0 && 
-                         f >= -(FLONUM) MAXINT && 
-                         f < (FLONUM) MAXINT)
+                         f >= -(FLONUM) FIXNUM_MAX && 
+                         f < (FLONUM) FIXNUM_MAX)
                 {
                     value = f;
                 }

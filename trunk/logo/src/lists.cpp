@@ -719,8 +719,8 @@ NODE *integer_arg(NODE *args)
         FLONUM f;
         if (nodetype(val) == FLOATINGPOINT && 
             fmod((f = getfloat(val)), 1.0) == 0.0 && 
-            f >= -(FLONUM) MAXINT && 
-            f < (FLONUM) MAXINT)
+            f >= -(FLONUM) FIXNUM_MAX && 
+            f < (FLONUM) FIXNUM_MAX)
         {
             FIXNUM i = f;
             gcref(val);
@@ -770,7 +770,7 @@ NODE *ranged_integer_arg(NODE *args, int MinValue, int MaxValue)
         if (nodetype(val) == FLOATINGPOINT)
         {
             FLONUM f = getfloat(val);
-            if (fmod(f, 1.0) == 0.0 && -MAXINT <= f && f <= MAXINT)
+            if (fmod(f, 1.0) == 0.0 && -FIXNUM_MAX <= f && f <= FIXNUM_MAX)
             {
                 // This is a floating point value that can
                 // be coerced into an integer without a loss
@@ -801,14 +801,14 @@ NODE *ranged_integer_arg(NODE *args, int MinValue, int MaxValue)
 // otherwise sets an error in args and returns Unbound.
 NODE *nonnegative_int_arg(NODE *args)
 {
-    return ranged_integer_arg(args, 0, MAXINT);
+    return ranged_integer_arg(args, 0, FIXNUM_MAX);
 }
 
 // Returns an integer node if args can be interpreted as a positive integer.
 // otherwise sets an error in args and returns Unbound.
 NODE *positive_int_arg(NODE *args)
 {
-    return ranged_integer_arg(args, 1, MAXINT);
+    return ranged_integer_arg(args, 1, FIXNUM_MAX);
 }
 
 FIXNUM int_arg(NODE *args)

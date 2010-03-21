@@ -410,7 +410,7 @@ NODE *binary(NODE *args, char fcn)
                     fval += (fval < 0 ? -0.5 : 0.5);
                     // FALLTHROUGH
                 case MATHFUNC_Integer:
-                    if (fval > (FLONUM) MAXINT || fval < -(FLONUM) MAXINT)
+                    if (fval > (FLONUM) FIXNUM_MAX || fval < -(FLONUM) FIXNUM_MAX)
                     {
                         handle_oflo(sig_arg);
                     }
@@ -657,7 +657,7 @@ NODE *binary(NODE *args, char fcn)
                         if (wantint)
                         {
                             wantint = false;
-                            if (fval <= MAXINT && fval >= -MAXINT)
+                            if (fval <= FIXNUM_MAX && fval >= -FIXNUM_MAX)
                             {
                                 imode = true;
                                 ival = fval;

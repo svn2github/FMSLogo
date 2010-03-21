@@ -2174,7 +2174,7 @@ NODE *lsetturtle(NODE *args)
 {
     ASSERT_TURTLE_INVARIANT;
 
-    NODE * val = ranged_integer_arg(args, -TOTAL_SPECIAL_TURTLES, MAXINT);
+    NODE * val = ranged_integer_arg(args, -TOTAL_SPECIAL_TURTLES, FIXNUM_MAX);
     if (stopping_flag == THROWING)
     {
         return Unbound;
