@@ -6,7 +6,7 @@
 // This file includes the proper header file for this locale.
 #ifndef LOCALE
 
-  #error LOCALE is not define
+  #error LOCALE is not defined
 
 #elif LOCALE == 1031
   
