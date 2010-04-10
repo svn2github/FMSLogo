@@ -27,6 +27,7 @@
 #include "graphwin.h"
 #include "mainwind.h"
 #include "devwind.h"
+#include "dlgwind.h"
 #include "statwind.h"
 #include "cmdwind.h"
 

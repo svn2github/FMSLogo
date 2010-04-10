@@ -39,10 +39,11 @@
 #include "wrksp.h"
 #include "print.h"
 #include "unix.h"
-#include "cmdwind.h"
-#include "devwind.h"
-#include "mainwind.h"
 #include "localizedstrings.h"
+
+#include "cmdwind.h"
+#include "dlgwind.h"
+#include "mainwind.h"
 
 static NODE *g_OpenFiles = NULL;
 

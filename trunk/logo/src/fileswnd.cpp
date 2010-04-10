@@ -26,11 +26,11 @@
 #include "parse.h"
 #include "mem.h"
 
+#include "localizedstrings.h"
+
 #include "mainwind.h"
 #include "cmdwind.h"
-#include "devwind.h"
-
-#include "localizedstrings.h"
+#include "dlgwind.h"
 
 void filesave(const char *FileName)
 {

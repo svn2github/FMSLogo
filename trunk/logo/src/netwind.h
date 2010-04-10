@@ -105,8 +105,19 @@ private:
                                        // from one recv() call to the next.
 };
 
-// function devlarations
+// function declarations
 extern LPCSTR WSAGetLastErrorString(int);
+
+extern NODE *lnetaccepton(NODE *args);
+extern NODE *lnetacceptoff(NODE *arg);
+extern NODE *lnetacceptsendvalue(NODE *args);
+extern NODE *lnetacceptreceivevalue(NODE *arg);
+extern NODE *lnetconnecton(NODE *args);
+extern NODE *lnetconnectoff(NODE *arg);
+extern NODE *lnetconnectsendvalue(NODE *args);
+extern NODE *lnetconnectreceivevalue(NODE *arg);
+extern NODE *lnetstartup(NODE *args);
+extern NODE *lnetshutdown(NODE *arg);
 
 // global variables
 extern CNetworkConnection g_ClientConnection;

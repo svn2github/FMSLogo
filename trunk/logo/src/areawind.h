@@ -70,18 +70,6 @@ extern NODE *lsetfocus(NODE *args);
 extern NODE *lgetfocus(NODE *arg);
 extern NODE *lwindowset(NODE *args);
 
-extern NODE *lnetaccepton(NODE *args);
-extern NODE *lnetacceptoff(NODE *arg);
-extern NODE *lnetacceptsendvalue(NODE *args);
-extern NODE *lnetacceptreceivevalue(NODE *arg);
-extern NODE *lnetconnecton(NODE *args);
-extern NODE *lnetconnectoff(NODE *arg);
-extern NODE *lnetconnectsendvalue(NODE *args);
-extern NODE *lnetconnectreceivevalue(NODE *arg);
-extern NODE *lnetstartup(NODE *args);
-extern NODE *lnetshutdown(NODE *arg);
-
-
 // global variables
 extern int g_PrinterAreaXLow;
 extern int g_PrinterAreaXHigh;

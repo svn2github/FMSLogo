@@ -38,7 +38,7 @@
 #include "unix.h"
 
 #include "localizedstrings.h"
-#include "devwind.h"
+#include "dlgwind.h"
 #include "myfilewn.h"
 #include "mainwind.h"
 

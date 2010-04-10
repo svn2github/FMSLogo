@@ -20,7 +20,6 @@
  *
  */
 
-#include "logocore.h"
 #include "localizednode.h"
 #include "eval.h"
 #include "paren.h"
@@ -39,10 +38,13 @@
 #include "parse.h"
 #include "print.h"
 #include "term.h"
+#include "logocore.h"
 
 #include "mmwind.h"
 #include "dllwind.h"
 #include "devwind.h"
+#include "dlgwind.h"
+#include "netwind.h"
 #include "graphwin.h"
 
 #include "localizedstrings.h"
