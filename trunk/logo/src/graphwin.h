@@ -19,6 +19,7 @@
 #ifndef __GRAPHWIN_H_
 #define __GRAPHWIN_H_
 
+#include <windows.h> // for HWND, WINAPI
 #include "logocore.h"
 
 // function declarations
@@ -34,6 +35,9 @@ extern NODE *lhelp(NODE *arg);
 extern NODE *lsetlabelfont(NODE *arg);
 extern NODE *lfontfacenames(NODE *arg);
 extern NODE *llabelfont(NODE *arg);
+extern NODE *lsetfocus(NODE *args);
+extern NODE *lgetfocus(NODE *arg);
+extern NODE *lwindowset(NODE *args);
 extern void UpdateErasePen(int Width, COLORREF Color);
 extern void UpdateNormalPen(int Width, COLORREF Color);
 extern void init_bitmaps();
@@ -41,7 +45,7 @@ extern void uninit_bitmaps();
 extern void ibmturt(bool hide);
 
 // global variables
-typedef HWND WINAPI (*HTMLHELPFUNC)(HWND, LPCSTR, UINT, DWORD);
+typedef HWND WINAPI (*HTMLHELPFUNC)(HWND, PCSTR, UINT, DWORD);
 extern HTMLHELPFUNC g_HtmlHelpFunc;
 extern HMODULE      g_HtmlHelpLib;
 

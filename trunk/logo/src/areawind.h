@@ -52,24 +52,6 @@ extern bool IsActiveAreaOneToOneWithScreen(void);
 extern NODE *lsetactivearea(NODE *arg);
 extern NODE *lactivearea(NODE *arg);
 
-extern NODE *lportopen(NODE *args);
-extern NODE *lportclose(NODE *arg);
-extern NODE *lportreadchar(NODE *arg);
-extern NODE *lportwritechar(NODE *args);
-extern NODE *lportreadarray(NODE *args);
-extern NODE *lportwritearray(NODE *args);
-extern NODE *lportflush(NODE *args);
-extern NODE *lportmode(NODE *args);
-extern NODE *linportb(NODE *args);
-extern NODE *loutportb(NODE *args);
-extern NODE *linport(NODE *args);
-extern NODE *loutport(NODE *args);
-extern NODE *lingameport(NODE *args);
-
-extern NODE *lsetfocus(NODE *args);
-extern NODE *lgetfocus(NODE *arg);
-extern NODE *lwindowset(NODE *args);
-
 // global variables
 extern int g_PrinterAreaXLow;
 extern int g_PrinterAreaXHigh;

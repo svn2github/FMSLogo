@@ -27,4 +27,18 @@ extern NODE *lmouseoff(NODE *arg);
 extern NODE *lkeyboardon(NODE *args);
 extern NODE *lkeyboardoff(NODE *arg);
 
+extern NODE *lportopen(NODE *args);
+extern NODE *lportclose(NODE *arg);
+extern NODE *lportreadchar(NODE *arg);
+extern NODE *lportwritechar(NODE *args);
+extern NODE *lportreadarray(NODE *args);
+extern NODE *lportwritearray(NODE *args);
+extern NODE *lportflush(NODE *args);
+extern NODE *lportmode(NODE *args);
+extern NODE *linportb(NODE *args);
+extern NODE *loutportb(NODE *args);
+extern NODE *linport(NODE *args);
+extern NODE *loutport(NODE *args);
+extern NODE *lingameport(NODE *args);
+
 #endif // __DEVWIND_H_
