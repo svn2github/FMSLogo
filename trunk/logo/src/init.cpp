@@ -29,7 +29,7 @@
 #include "wrksp.h"
 #include "coms.h"
 #include "lists.h"
-#include "areawind.h"
+#include "activearea.h"
 #include "files.h"
 #include "graphics.h"
 #include "unix.h"

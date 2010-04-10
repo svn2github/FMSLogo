@@ -16,22 +16,12 @@
 // Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
 #include "areawind.h"
+#include "activearea.h"
 #include "logorc.h"
 #include "localizedstrings.h"
 #include "mainwind.h"
 #include "main.h"
-#include "eval.h"
-#include "init.h"
-#include "error.h"
-#include "utils.h"
-#include "logodata.h"
 
-// Active area dimensions
-int g_PrinterAreaXLow;
-int g_PrinterAreaXHigh;
-int g_PrinterAreaYLow;
-int g_PrinterAreaYHigh;
-int g_PrinterAreaPixels;
 
 CPrinterAreaWindow::CPrinterAreaWindow(
     TWindow * ParentWindow
@@ -113,77 +103,3 @@ DEFINE_RESPONSE_TABLE1(CPrinterAreaWindow, TDialog)
     EV_CHILD_NOTIFY_ALL_CODES(ID_RESETEXTENT, DoReset),
 END_RESPONSE_TABLE;
 
-
-bool IsActiveAreaOneToOneWithScreen()
-{
-    bool isOneToOne;
-
-    if ((g_PrinterAreaXLow  == -BitMapWidth  / 2) &&
-        (g_PrinterAreaXHigh == +BitMapWidth  / 2) &&
-        (g_PrinterAreaYLow  == -BitMapHeight / 2) &&
-        (g_PrinterAreaYHigh == +BitMapHeight / 2))
-    {
-        isOneToOne = true;
-    }
-    else
-    {
-        isOneToOne = false;
-    }
-
-    return isOneToOne;
-}
-
-NODE *lsetactivearea(NODE *arg)
-{
-    NODE * args = vector_4_arg(arg);
-    if (stopping_flag == THROWING)
-    {
-        return Unbound;
-    }
-
-    // apply all args that are given
-    const NODE * xLowNode  = car(args);
-    const NODE * yLowNode  = car(cdr(args));
-    NODE * xHighNode = car(cdr(cdr(args)));
-    NODE * yHighNode = car(cdr(cdr(cdr(args))));
-
-    const int xLow  = numeric_node_to_fixnum(xLowNode);
-    const int yLow  = numeric_node_to_fixnum(yLowNode);
-    const int xHigh = numeric_node_to_fixnum(xHighNode); 
-    const int yHigh = numeric_node_to_fixnum(yHighNode); 
-
-    if (stopping_flag == THROWING)
-    {
-        return Unbound;
-    }
-
-    if (xHigh <= xLow || yHigh <= yLow)
-    {
-        // TODO: make this a recoverable error
-        err_logo(BAD_DATA_UNREC, args);
-        return Unbound;
-    }
-
-    // now that we have validated the input, we can commit to it
-    g_PrinterAreaXLow  = xLow;
-    g_PrinterAreaYLow  = yLow;
-    g_PrinterAreaXHigh = xHigh; 
-    g_PrinterAreaYHigh = yHigh; 
-
-    SetConfigurationInt("Printer.XLow",   g_PrinterAreaXLow);
-    SetConfigurationInt("Printer.XHigh",  g_PrinterAreaXHigh);
-    SetConfigurationInt("Printer.YLow",   g_PrinterAreaYLow);
-    SetConfigurationInt("Printer.YHigh",  g_PrinterAreaYHigh);
-    SetConfigurationInt("Printer.Pixels", g_PrinterAreaPixels);
-
-    return Unbound;
-}
-
-NODE *lactivearea(NODE *)
-{
-    return cons_list(
-        make_intnode((FIXNUM) g_PrinterAreaXLow),
-        make_intnode((FIXNUM) g_PrinterAreaYLow),
-        make_intnode((FIXNUM) g_PrinterAreaXHigh),
-        make_intnode((FIXNUM) g_PrinterAreaYHigh));
-}

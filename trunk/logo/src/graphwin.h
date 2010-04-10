@@ -19,7 +19,6 @@
 #ifndef __GRAPHWIN_H_
 #define __GRAPHWIN_H_
 
-#include <windows.h> // for HWND, WINAPI
 #include "logocore.h"
 
 // function declarations
@@ -43,11 +42,6 @@ extern void UpdateNormalPen(int Width, COLORREF Color);
 extern void init_bitmaps();
 extern void uninit_bitmaps();
 extern void ibmturt(bool hide);
-
-// global variables
-typedef HWND WINAPI (*HTMLHELPFUNC)(HWND, PCSTR, UINT, DWORD);
-extern HTMLHELPFUNC g_HtmlHelpFunc;
-extern HMODULE      g_HtmlHelpLib;
 
 #endif // __GRAPHWIN_H_
 

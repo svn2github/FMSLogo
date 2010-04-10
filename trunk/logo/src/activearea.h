@@ -16,34 +16,22 @@
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
-#ifndef __AREAWND_H_
-#define __AREAWND_H_
+#ifndef __ACTIVEAREA_H_
+#define __ACTIVEAREA_H_
 
-#include <owl\dialog.h>
-#include <owl\printer.h>
+struct NODE;
 
-class CPrinterAreaWindow : public TDialog
-{
-public:
+// function definitions
+extern bool IsActiveAreaOneToOneWithScreen(void);
+extern NODE *lsetactivearea(NODE *arg);
+extern NODE *lactivearea(NODE *arg);
 
-    CPrinterAreaWindow(TWindow * Parent);
+// global variables
+extern int g_PrinterAreaXLow;
+extern int g_PrinterAreaXHigh;
+extern int g_PrinterAreaYLow;
+extern int g_PrinterAreaYHigh;
+extern int g_PrinterAreaPixels;
 
-    int m_XLow;
-    int m_XHigh;
-    int m_YLow;
-    int m_YHigh;
-    int m_PixelsPerInch;
-
-protected:
-    void SetupWindow();
-    void CloseWindow(int);
-    void DoReset(UINT);
-
-private:
-    void ResetWindow();
-
-    DECLARE_RESPONSE_TABLE(CPrinterAreaWindow);
-};
-
-#endif // __AREAWND_H_
+#endif // __ACTIVEAREA_H_
 

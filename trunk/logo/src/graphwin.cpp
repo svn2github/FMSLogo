@@ -71,8 +71,10 @@ int bAppendMode;
 int iLoop;
 int iTrans;
 
-HTMLHELPFUNC g_HtmlHelpFunc;
-HMODULE      g_HtmlHelpLib;
+// global variables
+typedef HWND WINAPI (*HTMLHELPFUNC)(HWND, PCSTR, UINT, DWORD);
+static HTMLHELPFUNC g_HtmlHelpFunc;
+static HMODULE      g_HtmlHelpLib;
 
 static CUTMAP * g_SelectedBitmap;
 static CUTMAP * g_Bitmaps;

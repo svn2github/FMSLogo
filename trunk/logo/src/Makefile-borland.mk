@@ -98,6 +98,7 @@ Dep_fmslogodexe = \
    $(IntermediateDirectory)\XPM.obj\
    $(IntermediateDirectory)\3dsolid.obj\
    $(IntermediateDirectory)\appendablelist.obj\
+   $(IntermediateDirectory)\activearea.obj\
    $(IntermediateDirectory)\areawind.obj\
    $(IntermediateDirectory)\assembly.obj\
    $(IntermediateDirectory)\cmdwind.obj\
@@ -189,6 +190,7 @@ $(IntermediateDirectory)\ViewStyle.obj+
 $(IntermediateDirectory)\XPM.obj+
 $(IntermediateDirectory)\3dsolid.obj+
 $(IntermediateDirectory)\appendablelist.obj+
+$(IntermediateDirectory)\activearea.obj+
 $(IntermediateDirectory)\areawind.obj+
 $(IntermediateDirectory)\assembly.obj+
 $(IntermediateDirectory)\cmdwind.obj+
@@ -289,6 +291,7 @@ $(IntermediateDirectory)\logorc.res
 $(IntermediateDirectory)\3dsolid.obj           : version.h
 $(IntermediateDirectory)\appendablelist.obj    : version.h
 $(IntermediateDirectory)\assembly.obj          : version.h
+$(IntermediateDirectory)\activearea.obj        : version.h
 $(IntermediateDirectory)\areawind.obj          : version.h
 $(IntermediateDirectory)\cmdwind.obj           : version.h
 $(IntermediateDirectory)\colordlg.obj          : version.h

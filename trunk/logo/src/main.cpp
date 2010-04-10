@@ -37,8 +37,8 @@
 #include "utils.h"
 #include "mem.h"
 #include "init.h"
+#include "activearea.h"
 
-#include "areawind.h"
 #include "mainwind.h"
 #include "cmdwind.h"
 #include "statwind.h"

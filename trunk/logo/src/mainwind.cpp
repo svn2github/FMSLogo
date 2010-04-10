@@ -33,6 +33,7 @@
 #include "error.h"
 #include "init.h"
 #include "logodata.h"
+#include "activearea.h"
 
 #include "mainwind.h"
 #include "netwind.h"
