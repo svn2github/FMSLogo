@@ -268,6 +268,13 @@ callthing::~callthing()
     }
 }
 
+// Print page (or pages)
+void TRulerOut::PrintPage(int /* page */, TRect & /* rect */, UINT /* flags */)
+{
+    MainWindowx->ScreenWindow->Printit(*DC);
+}
+
+
 TScreenWindow::TScreenWindow(
     TWindow *AParent,
     LPCSTR   ATitle

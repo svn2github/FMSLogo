@@ -28,6 +28,58 @@
 #include "logocore.h"
 #include "dir.h"
 
+
+class TMyApp : public TApplication
+{
+public:
+
+    TMyApp(LPCSTR AName, HINSTANCE hInstance, HINSTANCE hPrevInstance, LPCSTR lpCmdLine, int nCmdShow)
+        : TApplication(AName, hInstance, hPrevInstance, lpCmdLine, nCmdShow)
+    {
+    }
+        
+    ~TMyApp();
+
+    void InitMainWindow();
+    void InitInstance();
+    bool IdleAction(long idleCount);
+    bool ProcessAppMsg(MSG & msg);
+
+    void EvSysColorChange();
+
+    DECLARE_RESPONSE_TABLE(TMyApp);
+};
+
+class TRulerOut : public TPrintout
+{
+public:
+
+    TRulerOut(const char * ATitle) : TPrintout(ATitle)
+    {
+    }
+
+    void PrintPage(int Page, TRect & Rect, UINT Flags);
+
+    void GetDialogInfo(int &minPage, int &maxPage, int &selFromPage, int &selToPage)
+    {
+        minPage = 1;
+        maxPage = 1;
+        selFromPage = 1;
+        selToPage = 1;
+    }
+
+    void SetBanding(BOOL b)
+    {
+        Banding = b;
+    }
+
+    bool HasPage(int pageNumber)
+    {
+        return pageNumber == 1;
+    }
+};
+
+
 class TScreenWindow : public TWindow
 {
 public:

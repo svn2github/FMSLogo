@@ -494,7 +494,7 @@ void TMyApp::InitMainWindow()
     int maxWidth;
     int maxHeight;
     GetWorkingAreaDimensions(maxWidth, maxHeight);
-   
+
     // if fixed mode
     if (bFixed)
     {
@@ -741,13 +741,6 @@ ShowErrorMessageAndStop(
     )
 {
     ShowMessageAndStop(LOCALIZED_ERROR, Message);
-}
-
-
-// Print page (or pages)
-void TRulerOut::PrintPage(int /* page */, TRect & /* rect */, UINT /* flags */)
-{
-    MainWindowx->ScreenWindow->Printit(*DC);
 }
 
 
