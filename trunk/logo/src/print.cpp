@@ -22,6 +22,7 @@
 #include <stdarg.h>
 #include <stdio.h>
 #include <algorithm>
+using namespace std;
 
 #include "unix.h"
 #include "parse.h"
@@ -283,8 +284,8 @@ void real_print_node(FILE *strm, const NODE *nd, int depth, int width)
         }
         else
         {
-            totalCharsToPrint = std::max(width, 10);
-            totalCharsToPrint = std::min(totalCharsToPrint, getstrlen(nd));
+            totalCharsToPrint = max(width, 10);
+            totalCharsToPrint = min(totalCharsToPrint, getstrlen(nd));
         }
 
         // should we print some elipses at the end?

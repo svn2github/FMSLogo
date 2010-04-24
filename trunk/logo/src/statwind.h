@@ -18,6 +18,29 @@
 #ifndef __STATWIND_H_
 #define __STATWIND_H_
 
+#ifdef FMSLOGO_SCREENSAVER
+
+// stub out status updates
+#define update_status_evals()
+#define update_status_floodcolor()
+#define update_status_memory()
+#define update_status_paletteuse()
+#define update_status_pencolor()
+#define update_status_pencontact()
+#define update_status_penstyle()
+#define update_status_penwidth()
+#define update_status_screencolor()
+#define update_status_turtleheading()
+#define update_status_turtlepitch()
+#define update_status_turtleposition()
+#define update_status_turtleroll()
+#define update_status_turtlevisability()
+#define update_status_turtlewhich()
+#define update_status_vectors()
+static bool status_flag;
+
+#else
+
 #include <owl/dialog.h>
 
 class CStatusWindow : public TDialog
@@ -52,5 +75,7 @@ extern void update_status_vectors(void);
 
 // global variables
 extern bool status_flag;
+
+#endif // FMSLOGO_SCREENSAVER
 
 #endif // __STATWIND_H_

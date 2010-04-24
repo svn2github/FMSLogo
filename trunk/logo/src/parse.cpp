@@ -23,6 +23,7 @@
 #include <stdio.h>
 #include <setjmp.h>
 #include <algorithm>
+using namespace std;
 
 #include "main.h"
 #include "logocore.h"
@@ -40,8 +41,10 @@
 #include "appendablelist.h"
 #include "localizedstrings.h"
 
-#include "minieditor.h"
-#include "mainwind.h"
+#ifndef FMSLOGO_SCREENSAVER
+    #include "minieditor.h"
+    #include "mainwind.h"
+#endif
 
 FILE *loadstream = stdin;
 FILE *dribblestream = NULL;
@@ -176,7 +179,7 @@ void CStringNodeBuffer::GrowBy(size_t ExtraLength)
         // long words takes a *very* long time because we repeatedly
         // reallocate the buffer to be one byte larger.
         size_t usedPortion = m_StringLimit - m_Buffer;
-        size_t newsize = std::max(m_BufferLength * 2, requiredLength);
+        size_t newsize = max(m_BufferLength * 2, requiredLength);
 
         m_Buffer       = (char *) realloc(m_Buffer, newsize);
         m_StringLimit  = m_Buffer + usedPortion;
@@ -242,6 +245,10 @@ int rd_getc(FILE *strm)
                 char tmpbuffer[MAX_BUFFER_SIZE];
 
             case INPUTMODE_To:
+#ifdef FMSLOGO_SCREENSAVER
+                // Reading from stdin is not supported in the screensaver
+                err_logo(STOP_ERROR, NIL);
+#else // FMSLOGO_SCREENSAVER
                 {
                     char toline[MAX_BUFFER_SIZE];
                     cnv_strnode_string(toline, g_ToLine);
@@ -283,6 +290,7 @@ int rd_getc(FILE *strm)
                     // and I can't figure out how to tell it that it's not.
                     MainWindowx->FixWindowTitle();
                 }
+#endif // FMSLOGO_SCREENSAVER
                 break;
 
             case INPUTMODE_List:
