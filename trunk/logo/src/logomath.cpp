@@ -1,22 +1,22 @@
 /*
- *      math.cpp          logo math functions module              dvb
+ *  logomath.cpp          logo math functions module              dvb
  *
- *       Copyright (C) 1995 by the Regents of the University of California
- *       Copyright (C) 1995 by George Mills
+ *   Copyright (C) 1995 by the Regents of the University of California
+ *   Copyright (C) 1995 by George Mills
  *
- *      This program is free software; you can redistribute it and/or modify
- *      it under the terms of the GNU General Public License as published by
- *      the Free Software Foundation; either version 2 of the License, or
- *      (at your option) any later version.
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
  *
- *      This program is distributed in the hope that it will be useful,
- *      but WITHOUT ANY WARRANTY; without even the implied warranty of
- *      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *      GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- *      You should have received a copy of the GNU General Public License
- *      along with this program; if not, write to the Free Software
- *      Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
 
@@ -212,6 +212,8 @@ void handle_oflo(int /*sig*/)
     longjmp(oflo_buf, 1);
 }
 
+#ifdef BORLAND
+
 // Override the default Borland math error handling, which
 // displays a dialog box whenever a trig function is given
 // bad input.  This is not Logo-like--it should throw a Logo
@@ -224,6 +226,9 @@ int _RTLENTRY _matherr (struct exception *e)
     longjmp(oflo_buf, 1);
     return 1;
 }
+
+#endif
+
 
 //#define errchk(x) x
 #define errchk(x) { errno = 0; x; if (errno) err_logo(BAD_DATA_UNREC,arg); }/*ignore*/
