@@ -624,6 +624,42 @@ WorldCoordinateToScreenCoordinate(
     return true;
 }
 
+
+// Invalidates a rectangle on the screen.
+// It adjusts for the zoom factor and scroll position.
+static void InvalidateRectangleOnScreen(const RECT & ScreenRectangle)
+{
+    RECT adjustedRectangle;
+
+    // Expand the bounding box a little to make sure that it covers everything
+    adjustedRectangle.left   = ScreenRectangle.left   - 2;
+    adjustedRectangle.top    = ScreenRectangle.top    - 2;
+    adjustedRectangle.right  = ScreenRectangle.right  + 2;
+    adjustedRectangle.bottom = ScreenRectangle.bottom + 2;
+
+    // Expand/contract the bounding box based on the zoom
+    if (zoom_flag)
+    {
+        adjustedRectangle.left   *= the_zoom;
+        adjustedRectangle.top    *= the_zoom;
+        adjustedRectangle.right  *= the_zoom;
+        adjustedRectangle.bottom *= the_zoom;
+    }
+
+    TScreenWindow * const screen = MainWindowx->ScreenWindow;
+
+    const UINT scrollerX = screen->Scroller->XPos;
+    const UINT scrollerY = screen->Scroller->YPos;
+
+    // Move the bounding box based on scroll position.
+    adjustedRectangle.left   -= scrollerX;
+    adjustedRectangle.right  -= scrollerX;
+    adjustedRectangle.top    -= scrollerY;
+    adjustedRectangle.bottom -= scrollerY;
+
+    ::InvalidateRect(screen->HWindow, &adjustedRectangle, false);
+}
+
 // ibmturt() calculates what needs to be done to either draw or erase
 // the turte, but it does not actually do either of these operations.
 // If draw==true, then the points of the turtle's vertices are computed.
@@ -722,9 +758,9 @@ void ibmturt(bool draw)
             g_SelectedTurtle->Points[3].bValid = false;
         }
     }
-   
+
     bool  needsInvalidation = false;
-    TRect screenBoundingBox;
+    RECT  invalidationBoundingBox;
 
     if (g_SelectedTurtle->BitmapRasterMode != 0)
     {
@@ -738,8 +774,7 @@ void ibmturt(bool draw)
         if (needsInvalidation)
         {
             // figure out the index into the bitmaps array.
-            const CUTMAP    & turtleBitmap   = g_Bitmaps[g_SelectedTurtle - g_Turtles];
-            const TScroller * screenScroller = MainWindowx->ScreenWindow->Scroller;
+            const CUTMAP & turtleBitmap = g_Bitmaps[g_SelectedTurtle - g_Turtles];
 
             FLONUM leftOffset;
             FLONUM rightOffset;
@@ -778,13 +813,28 @@ void ibmturt(bool draw)
                 bottomOffset = LL;
             }
 
-            screenBoundingBox.Set(
-                (+dest.x + xoffset + leftOffset)   * the_zoom - screenScroller->XPos,
-                (-dest.y + yoffset + topOffset)    * the_zoom - screenScroller->YPos,
-                (+dest.x + xoffset + rightOffset)  * the_zoom - screenScroller->XPos,
-                (-dest.y + yoffset + bottomOffset) * the_zoom - screenScroller->YPos);
+            invalidationBoundingBox.left   = +dest.x + xoffset + leftOffset;
+            invalidationBoundingBox.top    = -dest.y + yoffset + topOffset;
+            invalidationBoundingBox.right  = +dest.x + xoffset + rightOffset;
+            invalidationBoundingBox.bottom = -dest.y + yoffset + bottomOffset;
 
-            screenBoundingBox.Normalize();
+            // Make sure that the left side of the rectangle is less than the right side
+            if (invalidationBoundingBox.right < invalidationBoundingBox.left)
+            {
+                const LONG oldLeftValue = invalidationBoundingBox.left;
+
+                invalidationBoundingBox.left  = invalidationBoundingBox.right;
+                invalidationBoundingBox.right = oldLeftValue;
+            }
+
+            // Make sure that the top of the rectangle is above (less than) the bottom side
+            if (invalidationBoundingBox.bottom < invalidationBoundingBox.top)
+            {
+                const LONG oldBottomValue = invalidationBoundingBox.bottom;
+
+                invalidationBoundingBox.bottom = invalidationBoundingBox.top;
+                invalidationBoundingBox.top    = oldBottomValue;
+            }
         }
     }
     else
@@ -793,38 +843,26 @@ void ibmturt(bool draw)
         // of these lines.
 
         // First calculate the bounding box independent of zoom and scroll position.
-        long minx = 100000;
-        long miny = 100000;
-        long maxx = -100000;
-        long maxy = -100000;
+        invalidationBoundingBox.left   =  100000;
+        invalidationBoundingBox.top    =  100000;
+        invalidationBoundingBox.right  = -100000;
+        invalidationBoundingBox.bottom = -100000;
         for (int j = 0; j < 4; j++)
         {
             if (g_SelectedTurtle->Points[j].bValid)
             {
-                minx = min(minx, (long) (g_SelectedTurtle->Points[j].from.x));
-                miny = min(miny, (long) (g_SelectedTurtle->Points[j].from.y));
-                maxx = max(maxx, (long) (g_SelectedTurtle->Points[j].from.x));
-                maxy = max(maxy, (long) (g_SelectedTurtle->Points[j].from.y));
+                invalidationBoundingBox.left   = min(invalidationBoundingBox.left,   (long) (g_SelectedTurtle->Points[j].from.x));
+                invalidationBoundingBox.top    = min(invalidationBoundingBox.top,    (long) (g_SelectedTurtle->Points[j].from.y));
+                invalidationBoundingBox.right  = max(invalidationBoundingBox.right,  (long) (g_SelectedTurtle->Points[j].from.x));
+                invalidationBoundingBox.bottom = max(invalidationBoundingBox.bottom, (long) (g_SelectedTurtle->Points[j].from.y));
                 needsInvalidation = true;
             }
-        }
-
-        if (needsInvalidation)
-        {
-            // Adjust the bounding box based on zoom and scroll position.
-            TScroller * screenScroller = MainWindowx->ScreenWindow->Scroller;
-            screenBoundingBox.Set(
-                minx * the_zoom - screenScroller->XPos,
-                miny * the_zoom - screenScroller->YPos,
-                maxx * the_zoom - screenScroller->XPos,
-                maxy * the_zoom - screenScroller->YPos);
         }
     }
 
     if (needsInvalidation)
     {
-        screenBoundingBox.Inflate(1+the_zoom,1+the_zoom);
-        MainWindowx->ScreenWindow->InvalidateRect(screenBoundingBox, false);
+        InvalidateRectangleOnScreen(invalidationBoundingBox);
     }
 }
 
@@ -881,18 +919,14 @@ NODE *lsetpixel(NODE *args)
 
         if (zoom_flag)
         {
-            TRect temprect;
+            RECT temprect;
 
-            SetRect(
-                &temprect,
-                (+dest.x + xoffset) * the_zoom - MainWindowx->ScreenWindow->Scroller->XPos,
-                (-dest.y + yoffset) * the_zoom - MainWindowx->ScreenWindow->Scroller->YPos,
-                (+dest.x + xoffset) * the_zoom - MainWindowx->ScreenWindow->Scroller->XPos,
-                (-dest.y + yoffset) * the_zoom - MainWindowx->ScreenWindow->Scroller->YPos);
+            temprect.left   = +dest.x + xoffset;
+            temprect.top    = -dest.y + yoffset;
+            temprect.right  = +dest.x + xoffset;
+            temprect.bottom = -dest.y + yoffset;
 
-            temprect.Inflate(1+the_zoom,1+the_zoom);
-
-            MainWindowx->ScreenWindow->InvalidateRect(temprect, false);
+            InvalidateRectangleOnScreen(temprect);
         }
         else
         {
@@ -1356,17 +1390,6 @@ NODE *lbitblock(NODE *arg)
             }
             else
             {
-                // Shift the coordinates of the memory rectange by how
-                // much the screen is scrolled to get the screen coordinates.
-                const UINT scrollerX = screen->Scroller->XPos;
-                const UINT scrollerY = screen->Scroller->YPos;
-
-                RECT screenRect;
-                screenRect.left   = memoryRect.left   - scrollerX;
-                screenRect.right  = memoryRect.right  - scrollerX;
-                screenRect.top    = memoryRect.top    - scrollerY;
-                screenRect.bottom = memoryRect.bottom - scrollerY;
-
                 // Invalidate the portion of the screen that corresponds
                 // to the region of memory that we filled.
                 // Ever since we stopped calling GetDC() and ReleaseDC()
@@ -1374,7 +1397,7 @@ NODE *lbitblock(NODE *arg)
                 // screen causes repainting problems.
                 // I suspect that calling ReleaseDC() implicitly invalidated
                 // the screen, which may be why it was so much slower.
-                InvalidateRect(screen->HWindow, &screenRect, false);
+                InvalidateRectangleOnScreen(memoryRect);
             }
 
             DeleteObject(fillBrush);
