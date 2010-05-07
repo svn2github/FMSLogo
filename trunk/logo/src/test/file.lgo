@@ -340,26 +340,41 @@ TO FILETEST.ERASEFILE
    ERASEFILE :longfilename
 END
 
+TO FILETEST.OPENOPENFILE.HELPER
+
+   ; We can't open a file that is already open
+   RUNFILESYSTEMERRORTEST [ OPENREAD   "my-test-file ]
+   RUNFILESYSTEMERRORTEST [ OPENWRITE  "my-test-file ]
+   RUNFILESYSTEMERRORTEST [ OPENAPPEND "my-test-file ]
+   RUNFILESYSTEMERRORTEST [ OPENUPDATE "my-test-file ]
+
+   ; ...unless we change the case of the filename
+   TRACEINSTRUCTION [ OPENREAD   "my-Test-file ]
+   TRACEINSTRUCTION [ OPENWRITE  "my-tEst-file ]
+   TRACEINSTRUCTION [ OPENAPPEND "my-teSt-file ]
+   TRACEINSTRUCTION [ OPENUPDATE "my-tesT-file ]
+   
+   ; cleanup
+   TRACEINSTRUCTION [ CLOSE "my-test-file ]
+   TRACEINSTRUCTION [ CLOSE "my-Test-file ]
+   TRACEINSTRUCTION [ CLOSE "my-tEst-file ]
+   TRACEINSTRUCTION [ CLOSE "my-teSt-file ]
+   TRACEINSTRUCTION [ CLOSE "my-tesT-file ]
+END
+
 TO FILETEST.OPENOPENFILE
 
-   ; can't open a file that is already open for writing 
-   OPENWRITE  "mytestfile
-   RUNFILESYSTEMERRORTEST [OPENREAD   "mytestfile]
-   RUNFILESYSTEMERRORTEST [OPENWRITE  "mytestfile]
-   RUNFILESYSTEMERRORTEST [OPENAPPEND "mytestfile]
-   RUNFILESYSTEMERRORTEST [OPENUPDATE "mytestfile]
-   CLOSE     "mytestfile
+   ; Test opening a file that has been opened with OPENWRITE
+   TRACEINSTRUCTION [OPENWRITE "my-test-file]
+   FILETEST.OPENOPENFILE.HELPER
 
-   ; can't open a file that is already open for reading
-   OPENREAD "mytestfile
-   RUNFILESYSTEMERRORTEST [OPENREAD   "mytestfile]
-   RUNFILESYSTEMERRORTEST [OPENWRITE  "mytestfile]
-   RUNFILESYSTEMERRORTEST [OPENAPPEND "mytestfile]
-   RUNFILESYSTEMERRORTEST [OPENUPDATE "mytestfile]
-   CLOSE     "mytestfile
+   ; Test opening a file that has been opened with OPENREAD
+   TRACEINSTRUCTION [OPENREAD "my-test-file]
+   FILETEST.OPENOPENFILE.HELPER
 
-   ERASEFILE "mytestfile
-   FAILIFNOTFALSE [MEMBERP "mytestfile FILES]
+   ; cleanup
+   ERASEFILE "my-test-file
+   FAILIFNOTFALSE [MEMBERP "my-test-file FILES]
 
 END
 
