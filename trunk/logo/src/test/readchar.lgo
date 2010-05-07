@@ -1,10 +1,9 @@
 LOAD "testlib.lgo
 
-TO READCHARTEST.READBINARYDATA :filename :data
+TO READCHARTEST.READDATA :filename :data
 
    LOCALMAKE "previousreader READER
 
-   (OPENREAD :filename LOCALETRUE)
    SETREAD   :filename
 
    WHILE [ NOT EMPTY? :data ] [
@@ -13,20 +12,33 @@ TO READCHARTEST.READBINARYDATA :filename :data
    ]
    SIMPLEREPORTTEST [READCHAR] []
 
-   CLOSE :filename
-
+   SETREAD   :previousreader
 END
 
 TO READCHARTEST.SMOKETEST
+
+   LOCALMAKE "filename "readchartest.txt
+
    ; note: FMSLogo provides no way to write binary values smaller
    ; than 32 because it implicitly "backslashes" them to a different
    ; value.
-   LOCALMAKE "data ISEQ 32 255
-   LOCALMAKE "filename "readchar-test.txt
+   LOCALMAKE "binarydata ISEQ 32 255
+   LOCALMAKE "textdata   APPLY "WORD MAP "CHAR :binarydata
 
-   WRITEBINARYDATA              :filename APPLY "WORD MAP "CHAR :data
-   READCHARTEST.READBINARYDATA  :filename :data
-   ERASEFILE                    :filename
+   WRITEBINARYDATA :filename :textdata
+
+   ; Test calling READCHAR on a file that is opened in binary mode.
+   ; Note that in binary mode, the data is expected to be numbers.
+   (OPENREAD              :filename LOCALETRUE)
+   READCHARTEST.READDATA  :filename :binarydata
+   CLOSE                  :filename
+
+   ; Test calling READCHAR on a file that is opened in ASCII mode
+   OPENREAD               :filename
+   READCHARTEST.READDATA  :filename :textdata
+   CLOSE                  :filename
+
+   ERASEFILE :filename
 END
 
 TO READCHARTEST.BADINPUT
