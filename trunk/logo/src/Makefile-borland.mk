@@ -134,6 +134,7 @@ Dep_fmslogodexe = \
    $(IntermediateDirectory)\logodata.obj\
    $(IntermediateDirectory)\logorc.res\
    $(IntermediateDirectory)\main.obj\
+   $(IntermediateDirectory)\mainframe.obj\
    $(IntermediateDirectory)\mainwind.obj\
    $(IntermediateDirectory)\logomath.obj\
    $(IntermediateDirectory)\mem.obj\
@@ -146,6 +147,7 @@ Dep_fmslogodexe = \
    $(IntermediateDirectory)\parse.obj\
    $(IntermediateDirectory)\print.obj\
    $(IntermediateDirectory)\savebeforeexitdialog.obj\
+   $(IntermediateDirectory)\screenwindow.obj\
    $(IntermediateDirectory)\selectbox.obj\
    $(IntermediateDirectory)\sizedlg.obj\
    $(IntermediateDirectory)\statwind.obj\
@@ -226,6 +228,7 @@ $(IntermediateDirectory)\lists.obj+
 $(IntermediateDirectory)\localizednode.obj+
 $(IntermediateDirectory)\logodata.obj+
 $(IntermediateDirectory)\main.obj+
+$(IntermediateDirectory)\mainframe.obj+
 $(IntermediateDirectory)\mainwind.obj+
 $(IntermediateDirectory)\logomath.obj+
 $(IntermediateDirectory)\mem.obj+
@@ -238,6 +241,7 @@ $(IntermediateDirectory)\paren.obj+
 $(IntermediateDirectory)\parse.obj+
 $(IntermediateDirectory)\print.obj+
 $(IntermediateDirectory)\savebeforeexitdialog.obj+
+$(IntermediateDirectory)\screenwindow.obj+
 $(IntermediateDirectory)\selectbox.obj+
 $(IntermediateDirectory)\sizedlg.obj+
 $(IntermediateDirectory)\statwind.obj+
@@ -325,6 +329,7 @@ $(IntermediateDirectory)\localizednode.obj     : version.h
 $(IntermediateDirectory)\logodata.obj          : version.h
 $(IntermediateDirectory)\logorc.res            : version.h localizedstrings*.h
 $(IntermediateDirectory)\main.obj              : version.h
+$(IntermediateDirectory)\mainframe.obj         : version.h
 $(IntermediateDirectory)\mainwind.obj          : version.h
 $(IntermediateDirectory)\logomath.obj          : version.h
 $(IntermediateDirectory)\mem.obj               : version.h
@@ -337,6 +342,7 @@ $(IntermediateDirectory)\paren.obj             : version.h
 $(IntermediateDirectory)\parse.obj             : version.h
 $(IntermediateDirectory)\print.obj             : version.h
 $(IntermediateDirectory)\savebeforeexitdialog.obj : version.h
+$(IntermediateDirectory)\screenwindow.obj      : version.h
 $(IntermediateDirectory)\selectbox.obj         : version.h
 $(IntermediateDirectory)\sizedlg.obj           : version.h
 $(IntermediateDirectory)\statwind.obj          : version.h

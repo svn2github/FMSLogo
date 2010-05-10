@@ -21,6 +21,7 @@
 
 struct NODE;
 
+extern void checkqueue(void);
 extern NODE *lmessagebox(NODE *args);
 extern NODE *lquestionbox(NODE *args);
 extern NODE *lyesnobox(NODE *args);

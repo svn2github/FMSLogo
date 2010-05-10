@@ -29,7 +29,7 @@ using namespace std;
 #include "print.h"
 #include "logocore.h"
 #include "logodata.h"
-#include "ibmturt.h"
+#include "ibmterm.h"
 #include "init.h"
 #include "eval.h"
 #include "files.h"

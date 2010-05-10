@@ -15,37 +15,24 @@
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
-#ifndef __IBMTURT_H_
-#define __IBMTURT_H_
+#ifndef __IBMTERM_H_
+#define __IBMTERM_H_
 
-#include <windows.h>
+#include "logocore.h"
 
-
-// File ibmterm.cpp
-extern void single_step_box(NODE *the_line);
-extern void checkqueue(void);
+// Functions
 extern void emptyqueue(void);
-extern void do_help(const char *arg);
-extern void checkwindow(int *x, int *y, int *w, int *h);
 extern bool check_stop(bool scan_for_messages);
-extern void ibm_clear_screen(void);
 extern void pen_down(void);
 extern void pen_reverse(void);
 extern void pen_erase(void);
-extern int get_pen_width(void);
-extern void set_pen_width(int w);
-extern int get_pen_height(void);
-extern void set_pen_height(int h);
 extern void set_list_pen_pattern(NODE *arg);
 extern void get_pen_pattern(char *pat);
 extern NODE *get_node_pen_pattern(void);
 extern NODE *get_node_pen_mode(void);
-extern void label(const char *s);
-extern SIZE labelsize(const char *s);
-extern void logofill(bool bOld);
 extern void erase_screen(void);
 extern bool button(void);
 extern void tone(FIXNUM pitch, FIXNUM duration);
 
-#endif // __IBMTURT_H_
+#endif // __IBMTERM_H_
 

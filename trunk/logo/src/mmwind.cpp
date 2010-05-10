@@ -30,10 +30,10 @@
 #include "init.h"
 #include "eval.h"
 #include "parse.h"
-#include "ibmturt.h"
+#include "ibmterm.h"
+#include "screenwindow.h"
 
 #include "devwind.h"
-#include "mainwind.h"
 
 #include "localizedstrings.h"
 
@@ -229,7 +229,7 @@ NODE *lmidimessage(NODE *arg)
         MIDIHDR * MidiOutHdr = (MIDIHDR *) GlobalLock((HGLOBAL) HdrHandle);
 
         HANDLE DataHandle = (HANDLE) GlobalAlloc(GMEM_MOVEABLE | GMEM_SHARE | GMEM_ZEROINIT, i);
-        BYTE * MidiOutData = (BYTE *) GlobalLock((HGLOBAL) DataHandle);
+        LPSTR  MidiOutData = (CHAR *) GlobalLock((HGLOBAL) DataHandle);
 
         /* pack the buffer array and set size */
         arg = args;
@@ -291,7 +291,7 @@ NODE *lmci(NODE *args)
         textbuf,
         MciReturnBuffer,
         MAX_BUFFER_SIZE,
-        MainWindowx->HWindow);
+        GetMainWindow());
 
     if (MciError)
     {
@@ -335,7 +335,7 @@ NODE *lsettimer(NODE *args)
         strcpy(timer_callback[id], callback);
 
         // if not set sucessfully error
-        if (!::SetTimer(MainWindowx->HWindow, id, delay, NULL))
+        if (!::SetTimer(GetMainWindow(), id, delay, NULL))
         {
             err_logo(OUT_OF_MEM, NIL);
             return Unbound;
@@ -355,7 +355,7 @@ NODE *lcleartimer(NODE *args)
     }
 
     // if timer was not set let user know
-    if (!::KillTimer(MainWindowx->HWindow, id))
+    if (!::KillTimer(GetMainWindow(), id))
     {
         err_logo(TIMER_NOT_FOUND, NIL);
         return Unbound;

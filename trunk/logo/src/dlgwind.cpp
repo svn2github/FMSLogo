@@ -31,11 +31,11 @@
 #include <owl/inputdia.h>
 
 #include "main.h"
-#include "mainwind.h"
+#include "mainframe.h"
 #include "lists.h"
 #include "logorc.h"
 #include "localizedstrings.h"
-#include "ibmturt.h"
+#include "dlgwind.h"
 #include "init.h"
 #include "eval.h"
 #include "netwind.h"
@@ -47,6 +47,7 @@
 #include "logomath.h"
 #include "cmdwind.h"
 #include "selectbox.h"
+#include "screenwindow.h"
 
 enum WINDOWTYPE 
 {
@@ -125,8 +126,8 @@ void TClientRectangle::ConvertToDialogCoordinates()
 
 void TClientRectangle::ConvertToScreenCoordinates()
 {
-    m_X =  m_X - MainWindowx->ScreenWindow->Scroller->XPos + xoffset;
-    m_Y = -m_Y - MainWindowx->ScreenWindow->Scroller->YPos + yoffset;
+    m_X =  m_X - GetScreenHorizontalScrollPosition() + xoffset;
+    m_Y = -m_Y - GetScreenVerticalScrollPosition()   + yoffset;
 }
 
 // class structures for the controls we support, for the most part they

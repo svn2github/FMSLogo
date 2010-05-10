@@ -31,7 +31,7 @@
 #include "error.h"
 #include "logomath.h"
 #include "paren.h"
-#include "ibmturt.h"
+#include "ibmterm.h"
 #include "main.h"
 #include "print.h"
 #include "files.h"
@@ -40,7 +40,7 @@
 #include "localizedstrings.h"
 #include "dlgwind.h"
 #include "myfilewn.h"
-#include "mainwind.h"
+#include "mainframe.h"
 
 bool to_pending = false;
 fpos_t LinesLoadedOnEdit;

@@ -31,14 +31,14 @@
 
 #include "error.h"
 #include "main.h"
-#include "ibmturt.h"
+#include "graphwin.h"
 #include "logorc.h"
 #include "utils.h"
 #include "localizedstrings.h"
 #include "wrksp.h"
 #include "mem.h"
 
-#include "mainwind.h"
+#include "mainframe.h"
 #include "cmdwind.h"
 
 

@@ -32,16 +32,21 @@
 #include "mem.h"
 #include "lists.h"
 #include "error.h"
-#include "ibmturt.h"
+#include "ibmterm.h"
+#include "graphwin.h"
 #include "coms.h"
 #include "logomath.h"
 #include "const.h"
+#include "screenwindow.h"
 
 #include "graphwin.h"
 #include "statwind.h"
-#include "mainwind.h"
 
 #include "localizedstrings.h"
+
+#ifndef FMSLOGO_SCREENSAVER
+#include "mainframe.h"  // for docking/undocking commander
+#endif
 
 #define screen_left   (-BitMapWidth/2)
 #define screen_right  ( BitMapWidth/2)
@@ -368,7 +373,7 @@ numeric_node_to_fixnum(
         }
         else
         {
-            number = getfloat(numeric_node);
+            number = static_cast<FIXNUM>(getfloat(numeric_node));
         }
     }
 
@@ -911,7 +916,7 @@ NODE *lellipsearc(NODE *arg)
         else
         { 
             // a normal radius/angle.
-            count = flt_count;
+            count = static_cast<FIXNUM>(flt_count);
         }
         FLONUM delta = angle / count;
 
@@ -1675,7 +1680,7 @@ static NODE *vector_3_arg(NODE *args)
     return Unbound;
 }
 
-static NODE *pos_int_vector_arg(NODE *args)
+NODE *pos_int_vector_arg(NODE *args)
 {
     return vec_arg_helper(args, false);
 }
@@ -2121,9 +2126,6 @@ NODE *lperspective(NODE *)
 NODE *lfill(NODE *arg)
 {
     bool bOld;
-
-    draw_turtles(false);
-    MainWindowx->ScreenWindow->UpdateWindow();
     if (arg != NIL)
     {
         bOld = boolean_arg(arg);
@@ -2133,9 +2135,14 @@ NODE *lfill(NODE *arg)
         bOld = false;
     }
 
+    HWND screen = GetScreenWindow();
+
+    draw_turtles(false);
+    ::UpdateWindow(screen);
+
     logofill(bOld);
-    MainWindowx->ScreenWindow->Invalidate(false);
-    MainWindowx->ScreenWindow->UpdateWindow();
+    ::InvalidateRect(screen, NULL, FALSE);
+    ::UpdateWindow(screen);
     draw_turtles(true);
     return Unbound;
 }
@@ -2172,19 +2179,25 @@ NODE *llabel(NODE *arg)
 
 NODE *ltextscreen(NODE *)
 {
+#ifndef FMSLOGO_SCREENSAVER
     MainWindowx->UndockCommanderWindow();
+#endif
     return Unbound;
 }
 
 NODE *lsplitscreen(NODE *)
 {
+#ifndef FMSLOGO_SCREENSAVER
     MainWindowx->DockCommanderWindow();
+#endif
     return Unbound;
 }
 
 NODE *lfullscreen(NODE *)
 {
+#ifndef FMSLOGO_SCREENSAVER
     MainWindowx->UndockCommanderWindow();
+#endif
     return Unbound;
 }
 

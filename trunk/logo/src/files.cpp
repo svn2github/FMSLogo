@@ -41,14 +41,52 @@
 #include "unix.h"
 #include "localizedstrings.h"
 
-#include "cmdwind.h"
+#include "screenwindow.h"
 #include "dlgwind.h"
-#include "mainwind.h"
 
-static NODE *g_OpenFiles = NULL;
+class CFileListNode
+{
+public:
+    CFileListNode * m_Next;
+    NODE          * m_FileNameNode;
+    bool            m_IsBinaryStream;
+    FILE *          m_FilePtr;
+
+    CFileListNode(NODE * FileNameNode, FILE * FilePtr, bool IsBinaryStream);
+    ~CFileListNode();
+
+private:
+    CFileListNode();
+};
+
+static CFileListNode * g_OpenFiles;
 
 CFileStream g_Reader(stdin);
 CFileStream g_Writer(stdout);
+
+CFileListNode::CFileListNode(
+    NODE * FileNameNode,
+    FILE * FilePtr,
+    bool   IsBinaryStream
+    ) :
+    m_Next(NULL),
+    m_FileNameNode(vref(FileNameNode)),
+    m_IsBinaryStream(IsBinaryStream),
+    m_FilePtr(FilePtr)
+{
+}
+
+CFileListNode::~CFileListNode()
+{
+    // close the file, if it's still open
+    if (m_FilePtr != NULL)
+    {
+        fclose(m_FilePtr);
+    }
+
+    // release the filename
+    deref(m_FileNameNode);
+}
 
 FILE *open_file(NODE *arg, const char *access)
 {
@@ -67,7 +105,7 @@ FILE *open_file(NODE *arg, const char *access)
     {
         if (stricmp(access, "r") == 0)
         {
-            ::OpenClipboard(MainWindowx->HWindow);
+            ::OpenClipboard(GetMainWindow());
 
             HANDLE HText = ::GetClipboardData(CF_TEXT);
 
@@ -152,36 +190,84 @@ NODE *lnodribble(NODE *)
     return Unbound;
 }
 
+// Searches the list of open files for the node that matches
+// the given filename.
+// FileNameNode - The name of the file stream to look for.
+// Remove       - true, if the file should be removed from the
+//                list of open files.  false, otherwise.
+// IsBinary     - If not NULL and a file is found, this is set to whether
+//                or not the file was opened as a binary stream.
 static
-FILE *find_file(NODE *arg, bool remove)
+FILE *
+FindOrRemoveFile(
+    NODE * FileNameNode,
+    bool   Remove,
+    bool * IsBinary
+    )
 {
-    NODE *prev = NIL;
     FILE *fp = NULL;
 
-    for (NODE * t = g_OpenFiles; t != NIL; t = cdr(t))
+    for (CFileListNode ** nodePtr = &g_OpenFiles;
+         (*nodePtr) != NULL;
+         nodePtr = &(*nodePtr)->m_Next)
     {
-        if (compare_node(arg, car(t), false) == 0)
+        CFileListNode * node = *nodePtr;
+        if (compare_node(FileNameNode, node->m_FileNameNode, false) == 0)
         {
-            fp = (FILE *) t->nunion.ncons.nobj;
-            if (remove)
+            // found it.
+            // Return the FILE* and whether or not it's a binary stream.
+            fp = node->m_FilePtr;
+            if (IsBinary != NULL)
             {
-                t->nunion.ncons.nobj = NIL;
-                if (prev == NIL)
-                {
-                    g_OpenFiles = reref(g_OpenFiles, cdr(t));
-                }
-                else
-                {
-                    setcdr(prev, cdr(t));
-                }
+                *IsBinary = node->m_IsBinaryStream;
+            }
+
+            if (Remove)
+            {
+                node->m_FilePtr = NULL;
+                *nodePtr = node->m_Next;
+                delete node;
             }
             break;
         }
-        prev = t;
     }
+
     return fp;
 }
 
+static
+FILE *
+FindFile(
+    NODE * FileNameNode,
+    bool * IsBinary
+    )
+{
+    return FindOrRemoveFile(FileNameNode, false, IsBinary);
+}
+
+static
+FILE *
+FindFile(
+    NODE * FileNameNode
+    )
+{
+    return FindOrRemoveFile(FileNameNode, false, NULL);
+}
+
+static
+FILE *
+RemoveFile(
+    NODE * FileNameNode
+    )
+{
+    return FindOrRemoveFile(FileNameNode, true, NULL);
+}
+
+// Arguments   - The Logo arguments passed into the file operation.
+//               The first argument is the filename.
+//               The first argument is the optional "BinaryMode" argument.
+// DefaultMode - The mode to use if Arguments does not indicate to use a binary mode
+// BinaryMode  - The mode to use if Arguments does indicates to use a binary mode
 static
 NODE *
 open_helper(
@@ -205,18 +291,25 @@ open_helper(
             mode = BinaryMode;
         }
 
-        FILE* tmp;
-        Arguments = car(Arguments);
-        if (find_file(Arguments, false) != NULL)
+        FILE * newFileStream;
+        NODE * fileNameNode = car(Arguments);
+        if (FindFile(fileNameNode) != NULL)
         {
             err_logo(
                 FILE_ERROR, 
                 make_static_strnode(LOCALIZED_ERROR_FILESYSTEM_ALREADYOPEN));
         }
-        else if ((tmp = open_file(Arguments, mode)) != NULL)
+        else if ((newFileStream = open_file(fileNameNode, mode)) != NULL)
         {
-            push(Arguments, g_OpenFiles);
-            g_OpenFiles->nunion.ncons.nobj = (NODE *) tmp;
+            // create a new node for this file
+            CFileListNode * newNode = new CFileListNode(
+                fileNameNode,
+                newFileStream,
+                useBinaryMode);
+
+            // add this to the front of the list
+            newNode->m_Next = g_OpenFiles;
+            g_OpenFiles     = newNode;
         }
         else
         {
@@ -250,7 +343,13 @@ NODE *lopenupdate(NODE *args)
 
 NODE *lallopen(NODE *)
 {
-    return g_OpenFiles;
+    NODE * allopen = NIL;
+    for (CFileListNode * node = g_OpenFiles; node != NULL; node = node->m_Next)
+    {
+        push(node->m_FileNameNode, allopen);
+    }
+
+    return allopen;
 }
 
 NODE *lclose(NODE *arg)
@@ -261,50 +360,57 @@ NODE *lclose(NODE *arg)
         return Unbound;
     }
 
-    char * fnstr = (char *) malloc((size_t) getstrlen(filename) + 1);
-    strnzcpy(fnstr, getstrptr(filename), getstrlen(filename));
-
-    FILE *tmp;
-    if ((tmp = find_file(filename, true)) == NULL)
+    FILE *filePtr = RemoveFile(filename);
+    if (filePtr == NULL)
     {
         err_logo(
             FILE_ERROR, 
             make_static_strnode(LOCALIZED_ERROR_FILESYSTEM_NOTOPEN));
+
+        return Unbound;
     }
-    else
+
+    // close the file stream
+    fclose(filePtr);
+
+    char * fnstr = (char *) malloc((size_t) getstrlen(filename) + 1);
+    strnzcpy(fnstr, getstrptr(filename), getstrlen(filename));
+
+    if (stricmp(fnstr, "clipboard") == 0)
     {
-        fclose(tmp);
+        ::OpenClipboard(GetMainWindow());
 
-        if (stricmp(fnstr, "clipboard") == 0)
+        ::EmptyClipboard();
+
+        FILE *clipstrm = fopen(TempClipName, "rb");
+        if (clipstrm != NULL)
         {
-            ::OpenClipboard(MainWindowx->HWindow);
+            fseek(clipstrm, 0, SEEK_END);
+            LONG iSize = ftell(clipstrm);
+            fseek(clipstrm, 0, SEEK_SET);
 
-            ::EmptyClipboard();
+            HGLOBAL HText = GlobalAlloc(GMEM_MOVEABLE | GMEM_ZEROINIT, iSize);
+            LPSTR lpText = (LPSTR) GlobalLock(HText);
 
-            FILE *clipstrm = fopen(TempClipName, "rb");
-            if (clipstrm != NULL)
-            {
-                fseek(clipstrm, 0, SEEK_END);
-                LONG iSize = ftell(clipstrm);
-                fseek(clipstrm, 0, SEEK_SET);
-
-                HGLOBAL HText = GlobalAlloc(GMEM_MOVEABLE | GMEM_ZEROINIT, iSize);
-                LPSTR lpText = (LPSTR) GlobalLock(HText);
-
-                fread( lpText, sizeof(char), GlobalSize(HText), clipstrm);
-                fclose(clipstrm);
+            fread( lpText, sizeof(char), GlobalSize(HText), clipstrm);
+            fclose(clipstrm);
             
-                GlobalUnlock(HText);
+            GlobalUnlock(HText);
             
-                ::SetClipboardData(CF_TEXT, HText);
+            ::SetClipboardData(CF_TEXT, HText);
 
-                ::CloseClipboard();
-            }
-
-            unlink(TempClipName);
+            ::CloseClipboard();
         }
+
+        unlink(TempClipName);
     }
 
+    free(fnstr);
+
+    // If we closed the active reader or write stream,
+    // then we should reset the stream to the default
+    // (either stdin or stdout) to so that future
+    // reads/writes won't crash.
     if (g_Writer.IsNamed(filename))
     {
         g_Writer.ResetToDefaultStream();
@@ -314,8 +420,6 @@ NODE *lclose(NODE *arg)
     {
         g_Reader.ResetToDefaultStream();
     }
-
-    free(fnstr);
 
     return Unbound;
 }
@@ -343,17 +447,19 @@ CFileStream::SetStreamToOpenFile(
     NODE * FileName
     )
 {
-    FILE *tmp;
+    bool   filePtrIsBinaryStream;
+    FILE * filePtr;
 
     if (FileName == NIL)
     {
         // reset to the default stream
         ResetToDefaultStream();
     }
-    else if ((tmp = find_file(FileName, false)) != NULL)
+    else if ((filePtr = FindFile(FileName, &filePtrIsBinaryStream)) != NULL)
     {
-        m_Stream = tmp;
-        m_Name = reref(m_Name, FileName);
+        m_Stream         = filePtr;
+        m_StreamIsBinary = filePtrIsBinaryStream;
+        m_Name           = reref(m_Name, FileName);
     }
     else
     {
@@ -369,6 +475,12 @@ CFileStream::IsNamed(
     ) const
 {
     return compare_node(FileName, m_Name, false) == 0;
+}
+
+bool
+CFileStream::IsBinary() const
+{
+    return m_StreamIsBinary;
 }
 
 NODE *
@@ -474,11 +586,12 @@ PrintWorkspaceToFileStream(
 
 NODE *lsave(NODE *arg)
 {
-    if (MainWindowx != NULL && MainWindowx->IsEditorOpen())
+    if (IsEditorOpen())
     {
         // Notify the user that the editor is open and that 
         // the changes made in that editor won't be saved.
-        MainWindowx->CommandWindow->MessageBox(
+        ::MessageBox(
+            GetCommanderWindow(),
             LOCALIZED_EDITORISOPEN,
             LOCALIZED_INFORMATION,
             MB_OK | MB_ICONQUESTION);
@@ -599,7 +712,7 @@ void silent_load(NODE *arg, const char *prefix)
             // There was an error parsing this file.
             // Open it in the editor so that it can be debugged.
             stopping_flag = RUN;
-            MainWindowx->MyPopupEditToError(filename);
+            OpenEditorToLocationOfFirstError(filename);
         }
     }
     else 
@@ -719,7 +832,7 @@ NODE *lreadchar(NODE *)
         return NIL;
     }
 
-    if (g_Reader.GetStream()->flags & _F_BIN)
+    if (g_Reader.IsBinary())
     {
         return make_intnode(((unsigned char) c));
     }
@@ -855,19 +968,12 @@ NODE *lsetwritepos(NODE *arg)
 NODE *lcloseall(NODE *)
 {
     // close all open file pointers
-    for (NODE * current_file = g_OpenFiles;
-         current_file != NIL;
-         current_file = cdr(current_file))
+    while (g_OpenFiles != NULL)
     {
-        FILE * fp = reinterpret_cast<FILE *>(current_file->nunion.ncons.nobj);
-        fclose(fp);
-
-        current_file->nunion.ncons.nobj = NIL;
+        CFileListNode * nextNode = g_OpenFiles->m_Next;
+        delete g_OpenFiles;
+        g_OpenFiles = nextNode;
     }
-
-    // empty the file list
-    deref(g_OpenFiles);
-    g_OpenFiles = NIL;
 
     return Unbound;
 }

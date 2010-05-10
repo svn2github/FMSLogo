@@ -22,14 +22,12 @@
 #include <windows.h>
 #include <htmlhelp.h>
 
-#include <owl/scroller.h>
-
 #include "graphwin.h"
 #include "mainwind.h"
+
 #include "devwind.h"
 #include "dlgwind.h"
 #include "statwind.h"
-#include "cmdwind.h"
 
 #include "appendablelist.h"
 #include "mem.h"
@@ -46,6 +44,7 @@
 #include "coms.h"
 #include "unix.h"
 #include "const.h"
+#include "screenwindow.h"
 
 #include "localizedstrings.h"
 
@@ -72,7 +71,7 @@ int iLoop;
 int iTrans;
 
 // global variables
-typedef HWND WINAPI (*HTMLHELPFUNC)(HWND, PCSTR, UINT, DWORD);
+typedef HWND ( __stdcall *HTMLHELPFUNC)(HWND, PCSTR, UINT, DWORD);
 static HTMLHELPFUNC g_HtmlHelpFunc;
 static HMODULE      g_HtmlHelpLib;
 
@@ -288,7 +287,7 @@ gifsave_helper(
     iLoop       = iLoop_;
     iTrans      = iTrans_;
 
-    ERR_TYPES status = MainWindowx->DumpBitmapFile(TempBmpName, iMaxColorDepth);
+    ERR_TYPES status = DumpBitmapFile(TempBmpName, iMaxColorDepth);
     if (status != SUCCESS)
     {
         // an error occured.
@@ -399,7 +398,7 @@ NODE *lbitsave(NODE *args)
         iMaxBitCount = getint(val1);
     }
 
-    ERR_TYPES status = MainWindowx->DumpBitmapFile(bmpFileName, iMaxBitCount);
+    ERR_TYPES status = DumpBitmapFile(bmpFileName, iMaxBitCount);
     if (status != SUCCESS)
     {
         err_logo(status, NIL);
@@ -427,7 +426,7 @@ gifload_helper(
     }
 
     // load the bitmap
-    ERR_TYPES status = MainWindowx->LoadBitmapFile(
+    ERR_TYPES status = LoadBitmapFile(
         TempBmpName,
         dwPixelWidth,
         dwPixelHeight);
@@ -494,7 +493,7 @@ NODE *lbitload(NODE *arg)
 
     DWORD dwPixelWidth = 1;
     DWORD dwPixelHeight = 1;
-    ERR_TYPES status = MainWindowx->LoadBitmapFile(
+    ERR_TYPES status = LoadBitmapFile(
         bitmapFileName,
         dwPixelWidth,
         dwPixelHeight);
@@ -519,7 +518,7 @@ NODE *lbitloadsize(NODE *arg)
 
     DWORD dwPixelWidth = 0;
     DWORD dwPixelHeight = 0;
-    ERR_TYPES status = MainWindowx->LoadBitmapFile(bitmapFileName, dwPixelWidth, dwPixelHeight);
+    ERR_TYPES status = LoadBitmapFile(bitmapFileName, dwPixelWidth, dwPixelHeight);
     if (status != SUCCESS)
     {
         err_logo(status, NIL);
@@ -540,8 +539,7 @@ NODE *lbitsize(NODE *)
     if (ClipboardIsSelectedBitmap())
     {
         // The selected bitmap is whatever is on the clipboard
-
-        ::OpenClipboard(MainWindowx->HWindow);
+        ::OpenClipboard(GetMainWindow());
 
         // Try a DIB first
         HANDLE hDIB = (HBITMAP) ::GetClipboardData(CF_DIB);
@@ -646,10 +644,8 @@ static void InvalidateRectangleOnScreen(const RECT & ScreenRectangle)
         adjustedRectangle.bottom *= the_zoom;
     }
 
-    TScreenWindow * const screen = MainWindowx->ScreenWindow;
-
-    const UINT scrollerX = screen->Scroller->XPos;
-    const UINT scrollerY = screen->Scroller->YPos;
+    const UINT scrollerX = GetScreenHorizontalScrollPosition();
+    const UINT scrollerY = GetScreenVerticalScrollPosition();
 
     // Move the bounding box based on scroll position.
     adjustedRectangle.left   -= scrollerX;
@@ -657,7 +653,7 @@ static void InvalidateRectangleOnScreen(const RECT & ScreenRectangle)
     adjustedRectangle.top    -= scrollerY;
     adjustedRectangle.bottom -= scrollerY;
 
-    ::InvalidateRect(screen->HWindow, &adjustedRectangle, false);
+    ::InvalidateRect(GetScreenWindow(), &adjustedRectangle, FALSE);
 }
 
 // ibmturt() calculates what needs to be done to either draw or erase
@@ -883,7 +879,7 @@ NODE *lsetpixel(NODE *args)
     if (NOT_THROWING)
     {
         // memory
-        HDC MemDC = MainWindowx->ScreenWindow->GetMemoryDeviceContext();
+        HDC MemDC = GetMemoryDeviceContext();
 
         HBITMAP oldBitmap = (HBITMAP) SelectObject(MemDC, MemoryBitMap);
 
@@ -906,7 +902,7 @@ NODE *lsetpixel(NODE *args)
         }
 
         //screen
-        HDC ScreenDC = MainWindowx->ScreenWindow->GetScreenDeviceContext();
+        HDC ScreenDC = GetScreenDeviceContext();
 
         draw_turtle(false);
 
@@ -932,8 +928,8 @@ NODE *lsetpixel(NODE *args)
         {
             SetPixel(
                 ScreenDC,
-                +dest.x - MainWindowx->ScreenWindow->Scroller->XPos + xoffset,
-                -dest.y - MainWindowx->ScreenWindow->Scroller->YPos + yoffset,
+                +dest.x - GetScreenHorizontalScrollPosition() + xoffset,
+                -dest.y - GetScreenVerticalScrollPosition()   + yoffset,
                 color);
         }
 
@@ -980,7 +976,7 @@ NODE *lpixel(NODE *)
     }
 
     // memory
-    HDC MemDC = MainWindowx->ScreenWindow->GetMemoryDeviceContext();
+    HDC MemDC = GetMemoryDeviceContext();
     HBITMAP oldBitmap = (HBITMAP) SelectObject(MemDC, MemoryBitMap);
 
     if (EnablePalette)
@@ -1022,7 +1018,7 @@ void logofill(bool bOld)
     HBRUSH JunkBrush = CreateBrushIndirect(&FloodBrush);
 
     // memory
-    HDC MemDC = MainWindowx->ScreenWindow->GetMemoryDeviceContext();
+    HDC MemDC = GetMemoryDeviceContext();
     HBITMAP oldBitmap = (HBITMAP) SelectObject(MemDC, MemoryBitMap);
 
     if (EnablePalette)
@@ -1192,7 +1188,7 @@ void ChangeActiveScreenColor(int Red, int Green, int Blue)
     HBRUSH TempBrush = CreateBrushIndirect(&ScreenBrush);
 
     // memory
-    HDC MemDC = MainWindowx->ScreenWindow->GetMemoryDeviceContext();
+    HDC MemDC = GetMemoryDeviceContext();
 
     HBITMAP oldBitmap = (HBITMAP) SelectObject(MemDC, MemoryBitMap);
 
@@ -1212,7 +1208,7 @@ void ChangeActiveScreenColor(int Red, int Green, int Blue)
     SelectObject(MemDC, oldBitmap);
     DeleteObject(TempBrush);
 
-    MainWindowx->ScreenWindow->Invalidate(true);
+    ::InvalidateRect(GetScreenWindow(), NULL, TRUE);
 
     update_status_screencolor();
 }
@@ -1244,20 +1240,17 @@ void set_pen_height(int h)
 NODE *lclearpalette(NODE *)
 {
     // kill the palette and recreate it with just black and white
-    if (NOT_THROWING)
+    if (EnablePalette)
     {
-        if (EnablePalette)
-        {
-            DeleteObject(ThePalette);
+        DeleteObject(ThePalette);
 
-            MyLogPalette->palNumEntries = 2;
+        MyLogPalette->palNumEntries = 2;
 
-            update_status_paletteuse();
+        update_status_paletteuse();
 
-            ThePalette = CreatePalette(MyLogPalette);
+        ThePalette = CreatePalette(MyLogPalette);
 
-            ::InvalidateRect(MainWindowx->HWindow, NULL, TRUE);
-        }
+        ::InvalidateRect(GetMainWindow(), NULL, TRUE);
     }
 
     return Unbound;
@@ -1267,13 +1260,13 @@ NODE *lstatus(NODE *)
 {
     ASSERT_TURTLE_INVARIANT;
 
-    MainWindowx->MyPopupStatus();
+    OpenStatusWindow();
     return Unbound;
 }
 
 NODE *lnostatus(NODE *)
 {
-    MainWindowx->MyPopupStatusKill();
+    CloseStatusWindow();
     return Unbound;
 }
 
@@ -1299,9 +1292,7 @@ void zoom_helper(FLONUM NewZoomFactor)
     {
         the_zoom = NewZoomFactor;
 
-        TScreenWindow * const screen = MainWindowx->ScreenWindow;
-
-        screen->AdjustScrollPositionToZoomFactor(NewZoomFactor);
+        AdjustScrollPositionToZoomFactor(NewZoomFactor);
 
         // hide turtle while we do this
         draw_turtle(false);
@@ -1310,8 +1301,8 @@ void zoom_helper(FLONUM NewZoomFactor)
 
         draw_turtle(true);
 
-        // paint
-        screen->Invalidate();
+        // paint the entire window
+        InvalidateRect(GetScreenWindow(), NULL, TRUE);
     }
 }
 
@@ -1355,10 +1346,8 @@ NODE *lbitblock(NODE *arg)
         {
             HBRUSH fillBrush = CreateBrushIndirect(&FloodBrush);
 
-            TScreenWindow * const screen = MainWindowx->ScreenWindow;
-
             // memory
-            HDC memDC = screen->GetMemoryDeviceContext();
+            HDC     memDC     = GetMemoryDeviceContext();
             HBITMAP oldBitmap = (HBITMAP) SelectObject(memDC, MemoryBitMap);
 
             if (EnablePalette)
@@ -1386,7 +1375,7 @@ NODE *lbitblock(NODE *arg)
             {
                 // It's easier to invalidate the screen and force a 
                 // repaint from the image memory.
-                screen->Invalidate(false);
+                InvalidateRect(GetScreenWindow(), NULL, FALSE);
             }
             else
             {
@@ -1599,8 +1588,8 @@ static
 void
 CopyFromBitmapArrayToClipboard()
 {
-    // Open, dump what's in there and give him the Bitmap
-    ::OpenClipboard(MainWindowx->HWindow);
+    // Open the clipboard, dump what's in there and return the Bitmap
+    ::OpenClipboard(GetMainWindow());
 
     ::EmptyClipboard();
 
@@ -1643,7 +1632,7 @@ static
 void
 PasteFromClipboardToBitmapArray()
 {
-    ::OpenClipboard(MainWindowx->HWindow);
+    ::OpenClipboard(GetMainWindow());
 
     // Try a DIB first
     HANDLE tempDIB = (HBITMAP) ::GetClipboardData(CF_DIB);
@@ -1780,8 +1769,8 @@ BitCopyOrCut(NODE *arg, bool IsCut)
             // flag it so we will delete it
             g_SelectedBitmap->IsValid = true;
 
-            HDC screenDC = MainWindowx->ScreenWindow->GetScreenDeviceContext();
-            HDC memDC    = MainWindowx->ScreenWindow->GetMemoryDeviceContext();
+            HDC screenDC = GetScreenDeviceContext();
+            HDC memDC    = GetMemoryDeviceContext();
 
             HBITMAP oldBitmap = (HBITMAP) SelectObject(memDC, MemoryBitMap);
 
@@ -1852,18 +1841,17 @@ BitCopyOrCut(NODE *arg, bool IsCut)
                     //
                     // temp.Normalize();
                     // temp.Inflate(1+the_zoom,1+the_zoom);
-
-                    MainWindowx->ScreenWindow->Invalidate(false);
+                    InvalidateRect(GetScreenWindow(), NULL, FALSE);
                 }
                 else
                 {
-                    TScroller * const scroller = MainWindowx->ScreenWindow->Scroller;
+                    RECT tempRect;
                     SetRect(
                         &tempRect,
-                        +g_SelectedTurtle->Position.x - scroller->XPos + xoffset,
-                        -g_SelectedTurtle->Position.y - scroller->YPos + yoffset + LL - g_SelectedBitmap->Height,
-                        +g_SelectedTurtle->Position.x - scroller->XPos + xoffset + g_SelectedBitmap->Width,
-                        -g_SelectedTurtle->Position.y - scroller->YPos + yoffset + LL);
+                        +g_SelectedTurtle->Position.x - GetScreenHorizontalScrollPosition() + xoffset,
+                        -g_SelectedTurtle->Position.y - GetScreenVerticalScrollPosition()   + yoffset + LL - g_SelectedBitmap->Height,
+                        +g_SelectedTurtle->Position.x - GetScreenHorizontalScrollPosition() + xoffset + g_SelectedBitmap->Width,
+                        -g_SelectedTurtle->Position.y - GetScreenVerticalScrollPosition()   + yoffset + LL);
 
                     FillRect(screenDC, &tempRect, tempBrush);
                 }
@@ -1916,8 +1904,8 @@ NODE *lbitfit(NODE *arg)
         // resize the bitmap if we have a surface to fit to and from
         if (newWidth != 0 && newHeight != 0 && g_SelectedBitmap->IsValid)
         {
-            HDC ScreenDC = MainWindowx->ScreenWindow->GetScreenDeviceContext();
-            HDC MemDC    = MainWindowx->ScreenWindow->GetMemoryDeviceContext();
+            HDC ScreenDC = GetScreenDeviceContext();
+            HDC MemDC    = GetMemoryDeviceContext();
 
             HBITMAP savedMemBitmap = (HBITMAP) SelectObject(MemDC, g_SelectedBitmap->MemoryBitMap);
 
@@ -2040,7 +2028,7 @@ NODE *lbitpaste(NODE *)
                 g_SelectedBitmap->IsValid = false;
             }
 
-            HDC ScreenDC = MainWindowx->ScreenWindow->GetScreenDeviceContext();
+            HDC ScreenDC = GetScreenDeviceContext();
 
             HDC TempMemDC = CreateCompatibleDC(ScreenDC);
             HBITMAP oldBitmap2 = (HBITMAP) SelectObject(
@@ -2048,7 +2036,7 @@ NODE *lbitpaste(NODE *)
                 g_SelectedBitmap->MemoryBitMap);
 
             //memory
-            HDC MemDC = MainWindowx->ScreenWindow->GetMemoryDeviceContext();
+            HDC MemDC = GetMemoryDeviceContext();
             HBITMAP oldBitmap = (HBITMAP) SelectObject(MemDC, MemoryBitMap);
 
             BitBlt(
@@ -2081,14 +2069,14 @@ NODE *lbitpaste(NODE *)
                 // temp.Normalize();
                 // temp.Inflate(1+the_zoom,1+the_zoom);
 
-                MainWindowx->ScreenWindow->Invalidate(false);
+                InvalidateRect(GetScreenWindow(), NULL, FALSE);
             }
             else
             {
                 BitBlt(
                     ScreenDC,
-                    +dest.x - MainWindowx->ScreenWindow->Scroller->XPos + xoffset,
-                    -dest.y - MainWindowx->ScreenWindow->Scroller->YPos + yoffset + LL - g_SelectedBitmap->Height,
+                    +dest.x - GetScreenHorizontalScrollPosition() + xoffset,
+                    -dest.y - GetScreenVerticalScrollPosition()   + yoffset + LL - g_SelectedBitmap->Height,
                     (int) (g_SelectedBitmap->Width),
                     (int) (g_SelectedBitmap->Height),
                     TempMemDC,
@@ -2158,7 +2146,7 @@ NODE *lbitpastetoindex(NODE *arg)
             g_SelectedBitmap->IsValid = false;
         }
 
-        HDC ScreenDC = MainWindowx->ScreenWindow->GetScreenDeviceContext();
+        HDC ScreenDC = GetScreenDeviceContext();
 
         HDC TempMemDC = CreateCompatibleDC(ScreenDC);
         HBITMAP oldBitmap2 = (HBITMAP) SelectObject(
@@ -2166,7 +2154,7 @@ NODE *lbitpastetoindex(NODE *arg)
             g_SelectedBitmap->MemoryBitMap);
 
         //memory
-        HDC MemDC = MainWindowx->ScreenWindow->GetMemoryDeviceContext();
+        HDC     MemDC     = GetMemoryDeviceContext();
         HBITMAP oldBitmap = (HBITMAP) SelectObject(MemDC, g_Bitmaps[i].MemoryBitMap);
 
         BitBlt(
@@ -2381,7 +2369,7 @@ void turtlepaste(int TurtleToPaste)
             g_Bitmaps[TurtleToPaste].IsValid = false;
         }
 
-        HDC ScreenDC = MainWindowx->ScreenWindow->GetScreenDeviceContext();
+        HDC ScreenDC  = GetScreenDeviceContext();
         HDC TempMemDC = CreateCompatibleDC(ScreenDC);
 
         HBITMAP oldBitmap2 = (HBITMAP) SelectObject(
@@ -2445,13 +2433,13 @@ void turtlepaste(int TurtleToPaste)
             const int maxy = (int) ((max(y0,max(y1, max(y2,y3))) + 1) * the_zoom);
 
             // Figure out where on the screen window the turtle belongs.
-            const int xScreenOffset = (+dest.x + xoffset) * the_zoom - MainWindowx->ScreenWindow->Scroller->XPos;
-            const int yScreenOffset = (-dest.y + yoffset) * the_zoom - MainWindowx->ScreenWindow->Scroller->YPos;
+            const int xScreenOffset = (+dest.x + xoffset) * the_zoom - GetScreenHorizontalScrollPosition();
+            const int yScreenOffset = (-dest.y + yoffset) * the_zoom - GetScreenVerticalScrollPosition();
 
             // Now do the rotating, one pixel at a time.
             // Find the pixel that cooresponds to each point in the destination
             // rectangle to guarantee that each pixel gets covered.
-            const TRANSPARENT_COLOR = RGB(255, 255, 255);
+            const COLORREF TRANSPARENT_COLOR = RGB(255, 255, 255);
             if (EnablePalette)
             {
                 // The display has a palette, so bilinear interpolation would not work.
@@ -2643,8 +2631,8 @@ void turtlepaste(int TurtleToPaste)
 
                 BitBlt(
                     ScreenDC,
-                    +dest.x - MainWindowx->ScreenWindow->Scroller->XPos / the_zoom + xoffset,
-                    -dest.y - MainWindowx->ScreenWindow->Scroller->YPos / the_zoom + yoffset + LL - g_Bitmaps[TurtleToPaste].Height,
+                    +dest.x - GetScreenHorizontalScrollPosition() / the_zoom + xoffset,
+                    -dest.y - GetScreenVerticalScrollPosition() / the_zoom + yoffset + LL - g_Bitmaps[TurtleToPaste].Height,
                     g_Bitmaps[TurtleToPaste].Width,
                     g_Bitmaps[TurtleToPaste].Height,
                     TempMemDC,
@@ -2656,8 +2644,8 @@ void turtlepaste(int TurtleToPaste)
             {
                 BitBlt(
                     ScreenDC,
-                    +dest.x - MainWindowx->ScreenWindow->Scroller->XPos + xoffset,
-                    -dest.y - MainWindowx->ScreenWindow->Scroller->YPos + yoffset + LL - g_Bitmaps[TurtleToPaste].Height,
+                    +dest.x - GetScreenHorizontalScrollPosition() + xoffset,
+                    -dest.y - GetScreenVerticalScrollPosition() + yoffset + LL - g_Bitmaps[TurtleToPaste].Height,
                     g_Bitmaps[TurtleToPaste].Width,
                     g_Bitmaps[TurtleToPaste].Height,
                     TempMemDC,
@@ -2696,18 +2684,18 @@ NODE *lscrollx(NODE *arg)
 
         if (delta == 0)
         {
-            TRect screenRect;
-            MainWindowx->ScreenWindow->GetClientRect(screenRect);
+            RECT screenRect;
+            GetClientRect(GetScreenWindow(), &screenRect);
 
-            MainWindowx->ScreenWindow->Scroller->ScrollTo(
+            SetScreenScrollPosition(
                 ((BitMapWidth * the_zoom) / 2) - (0.5 * screenRect.right),
-                MainWindowx->ScreenWindow->Scroller->YPos);
+                GetScreenVerticalScrollPosition());
         }
         else
         {
-            MainWindowx->ScreenWindow->Scroller->ScrollTo(
-                MainWindowx->ScreenWindow->Scroller->XPos + delta,
-                MainWindowx->ScreenWindow->Scroller->YPos);
+            SetScreenScrollPosition(
+                GetScreenHorizontalScrollPosition() + delta,
+                GetScreenVerticalScrollPosition());
         }
     }
 
@@ -2727,18 +2715,18 @@ NODE *lscrolly(NODE *arg)
 
         if (delta == 0)
         {
-            TRect screenRect;
-            MainWindowx->ScreenWindow->GetClientRect(screenRect);
+            RECT screenRect;
+            GetClientRect(GetScreenWindow(), &screenRect);
 
-            MainWindowx->ScreenWindow->Scroller->ScrollTo(
-                MainWindowx->ScreenWindow->Scroller->XPos,
+            SetScreenScrollPosition(
+                GetScreenHorizontalScrollPosition(),
                 ((BitMapHeight * the_zoom)/ 2) - (0.5 * screenRect.bottom));
         }
         else
         {
-            MainWindowx->ScreenWindow->Scroller->ScrollTo(
-                MainWindowx->ScreenWindow->Scroller->XPos,
-                MainWindowx->ScreenWindow->Scroller->YPos + delta);
+            SetScreenScrollPosition(
+                GetScreenHorizontalScrollPosition(),
+                GetScreenVerticalScrollPosition() + delta);
         }
     }
 
@@ -2752,23 +2740,25 @@ NODE *lsetfocus(NODE *arg)
     char textbuf[MAX_BUFFER_SIZE];
     cnv_strnode_string(textbuf, arg);
 
+    HWND window;
+
     if (0 == stricmp("FMSLogo", textbuf) ||
         0 == stricmp("MSWLogo Screen", textbuf) ||
         0 == stricmp("FMSLogo Screen", textbuf))
     {
         // special-case: set the focus on the screen
-        MainWindowx->ScreenWindow->SetFocus();
+        window = GetScreenWindow();
     }
     else
     {
         // get handle to Window with arg as Caption
-        HWND window = FindWindow(NULL, textbuf);
+        window = FindWindow(NULL, textbuf);
+    }
 
-        // Now set focus to it, if it exists
-        if (window != NULL)
-        {
-            ::SetFocus(window);
-        }
+    // Now set focus to it, if it exists
+    if (window != NULL)
+    {
+        ::SetFocus(window);
     }
 
     GiveFocusToEditbox = false;
@@ -2819,9 +2809,9 @@ NODE *lwindowset(NODE *args)
             // For backward compatibility with MSWLogo, we must undock
             // the commander into its own window so that window operations
             // on it have the expected effect.
-            MainWindowx->UndockCommanderWindow();
+            UndockCommanderWindow();
 
-            window = MainWindowx->CommandWindow->HWindow;
+            window = GetCommanderWindow();
         }
         else
         {
@@ -2848,7 +2838,7 @@ void ibm_clear_screen(void)
     if (tempBrush != NULL)
     {
         // memory
-        HDC memoryDC = MainWindowx->ScreenWindow->GetMemoryDeviceContext();
+        HDC     memoryDC  = GetMemoryDeviceContext();
         HBITMAP oldBitmap = (HBITMAP) ::SelectObject(memoryDC, MemoryBitMap);
 
         ::FillRect(memoryDC, &FullRect, tempBrush);
@@ -2861,7 +2851,7 @@ void ibm_clear_screen(void)
         ::DeleteObject(tempBrush);
     }
 
-    MainWindowx->ScreenWindow->Invalidate(false);
+    InvalidateRect(GetScreenWindow(), NULL, FALSE);
 }
 
 
@@ -3082,12 +3072,12 @@ NODE *lwinhelp(NODE *arg)
     {
         char textbuf2[MAX_BUFFER_SIZE];
         cnv_strnode_string(textbuf2, cdr(arg));
-        MainWindowx->WinHelp(textbuf, HELP_PARTIALKEY, (DWORD) textbuf2);
+        WinHelp(GetMainWindow(), textbuf, HELP_PARTIALKEY, (DWORD) textbuf2);
     }
     else
     {
         // else just give help on file (arg 1)
-        MainWindowx->WinHelp(textbuf, HELP_INDEX, 0L);
+        WinHelp(GetMainWindow(), textbuf, HELP_INDEX, 0L);
     }
 
     return Unbound;
@@ -3238,9 +3228,8 @@ NODE *lmachine(NODE *)
 
 
     // Get FMSLogo's window dimensions
-    TRect wrect;
-    MainWindowx->GetWindowRect(wrect);
-
+    RECT wrect;
+    GetWindowRect(GetMainWindow(), &wrect);
 
     // return a list with system specific information
     return
@@ -3266,7 +3255,7 @@ SIZE labelsize(const char *s)
 
     SIZE size = {0};
 
-    HDC screen = MainWindowx->ScreenWindow->GetScreenDeviceContext();
+    HDC screen = GetScreenDeviceContext();
 
     // get a handle to the label's font
     HFONT tempFont = CreateFontIndirect(&FontRec);
@@ -3296,8 +3285,7 @@ void label(const char *s)
     }
 
     // memory
-    HDC MemDC = MainWindowx->ScreenWindow->GetMemoryDeviceContext();
-
+    HDC     MemDC     = GetMemoryDeviceContext();
     HBITMAP oldBitmap = (HBITMAP) SelectObject(MemDC, MemoryBitMap);
 
     if (EnablePalette)
@@ -3339,7 +3327,7 @@ void label(const char *s)
 
 
     // screen
-    HDC ScreenDC = MainWindowx->ScreenWindow->GetScreenDeviceContext();
+    HDC ScreenDC = GetScreenDeviceContext();
 
     if (EnablePalette)
     {
@@ -3364,14 +3352,14 @@ void label(const char *s)
     if (zoom_flag)
     {
         // no need to erase, we're just drawing over it
-        MainWindowx->ScreenWindow->Invalidate(false);
+        InvalidateRect(GetScreenWindow(), NULL, FALSE);
     }
     else
     {
         TextOut(
             ScreenDC,
-            +dest.x - MainWindowx->ScreenWindow->Scroller->XPos + xoffset,
-            -dest.y - MainWindowx->ScreenWindow->Scroller->YPos + yoffset,
+            +dest.x - GetScreenHorizontalScrollPosition() + xoffset,
+            -dest.y - GetScreenVerticalScrollPosition()   + yoffset,
             s,
             strlen(s));
     }

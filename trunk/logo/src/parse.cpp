@@ -30,7 +30,7 @@ using namespace std;
 #include "dynamicbuffer.h"
 #include "error.h"
 #include "init.h"
-#include "ibmturt.h"
+#include "ibmterm.h"
 #include "unix.h"
 #include "logodata.h"
 #include "lists.h"
@@ -43,7 +43,7 @@ using namespace std;
 
 #ifndef FMSLOGO_SCREENSAVER
     #include "minieditor.h"
-    #include "mainwind.h"
+    #include "mainframe.h"
 #endif
 
 FILE *loadstream = stdin;

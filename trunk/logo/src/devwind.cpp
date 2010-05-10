@@ -20,8 +20,8 @@
 *
 */
 #include <windows.h>
-
-#include <owl/scroller.h>
+#include <algorithm>
+using namespace std;
 
 #include "devwind.h"
 #include "logocore.h"
@@ -29,12 +29,12 @@
 #include "main.h"
 #include "init.h"
 #include "logodata.h"
-#include "mainwind.h"
 #include "localizedstrings.h"
 #include "lists.h"
 #include "eval.h"
 #include "mem.h"
 #include "error.h"
+#include "screenwindow.h"
 #include "assembly.h"
 
 static HANDLE ComId;
@@ -164,33 +164,15 @@ void keyboard_uninit()
 NODE *lmousepos(NODE *)
 {
     // return current mouse position
-
-    // return cons_list(
-    //    make_intnode(  mouse_posx+MainWindowx->Scroller->XPos-xoffset*the_zoom),
-    //    make_intnode(-(mouse_posy+MainWindowx->Scroller->YPos-yoffset*the_zoom)));
-
     return cons_list(
-        make_intnode(  (mouse_posx + MainWindowx->ScreenWindow->Scroller->XPos) / the_zoom - xoffset),
-        make_intnode(-((mouse_posy + MainWindowx->ScreenWindow->Scroller->YPos) / the_zoom - yoffset)));
+        make_intnode(  (mouse_posx + GetScreenHorizontalScrollPosition()) / the_zoom - xoffset),
+        make_intnode(-((mouse_posy + GetScreenVerticalScrollPosition())   / the_zoom - yoffset)));
 }
 
 NODE *lkeyboardvalue(NODE *)
 {
     // return current keyboard value
     return make_intnode(keyboard_value);
-}
-
-static
-int min(int a, int b)
-{
-    if (a < b)
-    {
-        return a; 
-    }
-    else 
-    {
-        return b;
-    }
 }
 
 NODE *lportclose(NODE *)
@@ -254,7 +236,7 @@ NODE *lportopen(NODE *args)
     return Unbound;
 }
 
-NODE *lportflush(NODE */* args */)
+NODE *lportflush(NODE * /* args */)
 {
     if (!ComIsOpen)
     {
@@ -317,6 +299,12 @@ NODE *lportmode(NODE *args)
     return Unbound;
 }
 
+static
+int min3(int a, int b, int c)
+{
+    return min(min(a, b), c);
+}
+
 NODE *lportwritearray(NODE *args)
 {
     NODE * val = nonnegative_int_arg(args);
@@ -342,7 +330,7 @@ NODE *lportwritearray(NODE *args)
             {
                 // get min of max array and the array
                 char txbuffer[MAX_BUFFER_SIZE];
-                DWORD count = min(min(getint(val), getarrdim(obj)), sizeof(txbuffer));
+                DWORD count = min3(getint(val), getarrdim(obj), sizeof(txbuffer));
 
                 // fill buffer with elements of the array
                 for (int i = 0; i < count; i++)

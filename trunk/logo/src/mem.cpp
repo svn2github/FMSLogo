@@ -1,5 +1,5 @@
 /*
- *      mem.c           logo memory management module           dvb 6/28/88
+ *      mem.cpp         logo memory management module           dvb 6/28/88
  *
  *       Copyright (C) 1995 by the Regents of the University of California
  *       Copyright (C) 1995 by George Mills

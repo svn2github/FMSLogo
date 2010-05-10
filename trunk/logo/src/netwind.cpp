@@ -20,7 +20,7 @@
  */
 
 #include "netwind.h"
-#include "mainwind.h"
+#include "mainframe.h"
 
 #include "init.h"
 #include "main.h"

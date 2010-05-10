@@ -33,18 +33,41 @@
 #include "parse.h"
 #include "error.h"
 #include "files.h"
-#include "ibmturt.h"
+#include "ibmterm.h"
 #include "utils.h"
 #include "mem.h"
 #include "init.h"
 #include "activearea.h"
 
 #include "mainwind.h"
+#include "mainframe.h"
 #include "cmdwind.h"
 #include "statwind.h"
 #include "graphwin.h"
+#include "dlgwind.h"
 
 #include "localizedstrings.h"
+
+class TMyApp : public TApplication
+{
+public:
+
+    TMyApp(LPCSTR AName, HINSTANCE hInstance, HINSTANCE hPrevInstance, LPCSTR lpCmdLine, int nCmdShow)
+        : TApplication(AName, hInstance, hPrevInstance, lpCmdLine, nCmdShow)
+    {
+    }
+        
+    ~TMyApp();
+
+    void InitMainWindow();
+    void InitInstance();
+    bool IdleAction(long idleCount);
+    bool ProcessAppMsg(MSG & msg);
+
+    void EvSysColorChange();
+
+    DECLARE_RESPONSE_TABLE(TMyApp);
+};
 
 bool bExpert;                      // Expert mode
 bool bFixed;                       // Fixed mode

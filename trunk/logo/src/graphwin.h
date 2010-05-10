@@ -37,11 +37,20 @@ extern NODE *llabelfont(NODE *arg);
 extern NODE *lsetfocus(NODE *args);
 extern NODE *lgetfocus(NODE *arg);
 extern NODE *lwindowset(NODE *args);
+extern void logofill(bool bOld);
+extern SIZE labelsize(const char *s);
+extern void label(const char *s);
 extern void UpdateErasePen(int Width, COLORREF Color);
 extern void UpdateNormalPen(int Width, COLORREF Color);
 extern void init_bitmaps();
 extern void uninit_bitmaps();
 extern void ibmturt(bool hide);
+extern void do_help(const char *arg);
+extern void ibm_clear_screen(void);
+extern int get_pen_width(void);
+extern void set_pen_width(int w);
+extern int get_pen_height(void);
+extern void set_pen_height(int h);
 
 #endif // __GRAPHWIN_H_
 

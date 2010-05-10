@@ -27,7 +27,7 @@
 #include "eval.h"
 #include "mem.h"
 #include "error.h"
-#include "ibmturt.h"
+#include "ibmterm.h"
 #include "logomath.h"
 #include "lists.h"
 #include "appendablelist.h"

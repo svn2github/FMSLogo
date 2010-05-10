@@ -39,7 +39,9 @@ enum INPUTMODE
 };
 
 
+
 // Functions
+extern void single_step_box(NODE *the_line);
 extern struct PENSTATE & GetPenStateForSelectedTurtle();
 extern void GetWorkingAreaDimensions(int & workingAreaWidth, int & workingAreaHeight);
 extern void ShowMessage(const char * Title, const char * Message);

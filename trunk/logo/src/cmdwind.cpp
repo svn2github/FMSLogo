@@ -32,6 +32,7 @@
 #include "mem.h"
 #include "parse.h"
 #include "mainwind.h"
+#include "mainframe.h"
 
 #define SELECTBOTTOMLINE
 

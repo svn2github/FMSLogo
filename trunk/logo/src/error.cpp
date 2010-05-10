@@ -37,7 +37,7 @@
 #include "init.h"
 #include "parse.h"
 #include "logomath.h"
-#include "ibmturt.h"
+#include "ibmterm.h"
 
 NODE *    throw_node = NIL;
 

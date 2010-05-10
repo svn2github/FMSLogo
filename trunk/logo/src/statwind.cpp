@@ -19,12 +19,12 @@
  */
 
 #include "statwind.h"
-#include "mainwind.h"
+#include "mainframe.h"
 #include "cmdwind.h"
 #include "logorc.h"
 #include "main.h"
 #include "utils.h"
-#include "ibmturt.h"
+#include "ibmterm.h"
 #include "localizedstrings.h"
 
 bool status_flag = false;   // Flag to signal status box is popped up

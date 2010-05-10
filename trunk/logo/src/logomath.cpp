@@ -32,7 +32,7 @@
 #include "eval.h"
 #include "graphics.h"
 #include "error.h"
-#include "ibmturt.h"
+#include "ibmterm.h"
 #include "const.h"
 
 const char MATHFUNC_Sum        = '+';

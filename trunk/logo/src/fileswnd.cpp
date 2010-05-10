@@ -28,7 +28,7 @@
 
 #include "localizedstrings.h"
 
-#include "mainwind.h"
+#include "mainframe.h"
 #include "cmdwind.h"
 #include "dlgwind.h"
 

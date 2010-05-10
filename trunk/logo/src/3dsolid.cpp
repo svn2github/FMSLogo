@@ -13,8 +13,9 @@
 #include "statwind.h"
 #include "graphics.h"
 #include "main.h"
-#include "ibmturt.h"
+#include "ibmterm.h"
 #include "unix.h"
+#include "screenwindow.h"
 
 #include "localizedstrings.h"
 
@@ -1100,7 +1101,7 @@ void TThreeDSolid::View()
     erase_screen();
 
     // memory
-    m_MemDC = MainWindowx->ScreenWindow->GetMemoryDeviceContext();
+    m_MemDC = GetMemoryDeviceContext();
     HBITMAP oldBitmap = (HBITMAP) SelectObject(m_MemDC, MemoryBitMap);
 
     if (EnablePalette)
@@ -1125,7 +1126,7 @@ void TThreeDSolid::View()
 
     SelectObject(m_MemDC, oldBitmap);
 
-    MainWindowx->ScreenWindow->Invalidate(FALSE);
+    ::InvalidateRect(GetScreenWindow(), NULL, FALSE);
 }
 
 // Traverse a BSP tree, rendering a three-dimensional scene

@@ -50,7 +50,7 @@
 
 #include "dib.h"
 #include "main.h"
-#include "mainwind.h"
+#include "screenwindow.h"
 #include "localizedstrings.h"
 
 #define PALVERSION 0x300
@@ -264,11 +264,9 @@ HBITMAP DIBToBitmap(HANDLE hDIB, HPALETTE hPal)
         return NULL;
     }
 
-
     LPSTR lpDIBHdr = (char *) GlobalLock(hDIB);
     LPSTR lpDIBBits = FindDIBBits(lpDIBHdr);
-    HDC hDC = GetDC(MainWindowx->ScreenWindow->HWindow);
-
+    HDC hDC = GetDC(GetScreenWindow());
     if (!hDC)
     {
         GlobalUnlock(hDIB);
@@ -302,7 +300,7 @@ HBITMAP DIBToBitmap(HANDLE hDIB, HPALETTE hPal)
         SelectPalette(hDC, hOldPal, FALSE);
     }
 
-    ReleaseDC(MainWindowx->ScreenWindow->HWindow, hDC);
+    ReleaseDC(GetScreenWindow(), hDC);
     GlobalUnlock(hDIB);
 
     return hBitmap;

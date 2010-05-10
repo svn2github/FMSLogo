@@ -32,6 +32,7 @@ public:
     void   SetStreamToOpenFile(NODE * FileName);
     void   ResetToDefaultStream();
     bool   IsNamed(NODE * FileName) const;
+    bool   IsBinary() const;
     NODE * GetName() const;
     NODE * GetPosition() const;
     void   SetPosition(NODE * Arguments);
@@ -51,6 +52,7 @@ public:
 
 private:
     FILE *  m_Stream;
+    bool    m_StreamIsBinary;
     NODE *  m_Name;
     FILE *  m_DefaultStream;
 };
