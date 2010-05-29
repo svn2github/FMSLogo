@@ -39,8 +39,8 @@
 
 #include "localizedstrings.h"
 #include "dlgwind.h"
-#include "myfilewn.h"
-#include "mainframe.h"
+#include "mainwind.h"
+#include "screenwindow.h"
 
 bool to_pending = false;
 fpos_t LinesLoadedOnEdit;
@@ -1440,12 +1440,12 @@ NODE *ledit(NODE *args)
         // it focus instead of opening a new one.
         if (MainWindowx != NULL)
         {
-            TMyFileWindow * editor = MainWindowx->GetEditor();
+            HWND editor = GetEditorWindow();
             if (editor != NULL)
             {
-                editor->ShowWindow(SW_SHOWNORMAL);
-                editor->SetWindowPos(HWND_TOP, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
-                editor->SetFocus();
+                ShowWindow(editor, SW_SHOWNORMAL);
+                SetWindowPos(editor, HWND_TOP, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
+                SetFocus(editor);
                 return Unbound;
             }
         }
@@ -1484,7 +1484,7 @@ NODE *ledit(NODE *args)
     if (NOT_THROWING)
     {
         NODE * args_list = vref(args);
-        if (TMainFrame::PopupEditorForFile(TempPathName, args_list))
+        if (ShowEditorForFile(TempPathName, args_list))
         {
             err_logo(
                 FILE_ERROR, 

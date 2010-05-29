@@ -23,6 +23,7 @@
 
 HWND GetScreenWindow();
 HWND GetMainWindow();
+HWND GetEditorWindow();
 HWND GetCommanderWindow();
 UINT GetScreenHorizontalScrollPosition();
 UINT GetScreenVerticalScrollPosition();
@@ -38,5 +39,6 @@ void CloseStatusWindow();
 
 void AdjustScrollPositionToZoomFactor(FLONUM NewZoomFactor);
 void UndockCommanderWindow();
+int ShowEditorForFile(const char *FileName, NODE *args);
 
 #endif // __SCREENWINDOW_H_

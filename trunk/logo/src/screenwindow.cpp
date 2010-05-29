@@ -24,6 +24,7 @@
 #include "main.h"
 #include "mainframe.h"
 #include "cmdwind.h"
+#include "myfilewn.h"
 #include <owl/scroller.h>
 
 HWND GetScreenWindow()
@@ -39,6 +40,17 @@ HWND GetMainWindow()
 HWND GetCommanderWindow()
 {
     return MainWindowx->CommandWindow->HWindow;
+}
+
+HWND GetEditorWindow()
+{
+    TMyFileWindow * editor = MainWindowx->GetEditor();
+    if (editor == NULL)
+    {
+        return NULL;
+    }
+
+    return editor->HWindow;
 }
 
 UINT GetScreenHorizontalScrollPosition()
@@ -95,4 +107,9 @@ void AdjustScrollPositionToZoomFactor(FLONUM NewZoomFactor)
 void UndockCommanderWindow()
 {
     MainWindowx->UndockCommanderWindow();
+}
+
+int ShowEditorForFile(const char *FileName, NODE *args)
+{
+    return TMainFrame::PopupEditorForFile(TempPathName, args);
 }
