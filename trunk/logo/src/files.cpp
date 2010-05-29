@@ -429,7 +429,8 @@ CFileStream::CFileStream(
     ) :
     m_Name(NIL),
     m_Stream(DefaultFileStream),
-    m_DefaultStream(DefaultFileStream)
+    m_DefaultStream(DefaultFileStream),
+    m_StreamIsBinary(false)
 {
 }
 
@@ -440,6 +441,7 @@ CFileStream::ResetToDefaultStream()
     m_Name = NIL;
 
     m_Stream = m_DefaultStream;
+    m_StreamIsBinary = false;
 }
 
 void
