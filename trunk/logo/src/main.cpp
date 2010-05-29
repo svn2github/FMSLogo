@@ -157,7 +157,6 @@ int keyboard_value = 0;                // Value of Keyboard key
 bool MouseCaptureIsEnabled = false;    // Flag to signal Mouse is enabled
 int mouse_posx = 0;                    // Value of Mouse position x
 int mouse_posy = 0;                    // Value of Mouse position y
-int memory_count = 0;                  // Current amount of logo segments malloc'd
 int BaseUnitsx = 0;                    // X Units Windows uses to for units in dialog
 int BaseUnitsy = 0;                    // Y Units Windows uses to for units in dialog
 

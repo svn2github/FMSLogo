@@ -83,7 +83,6 @@ extern bool IsDirty;
 extern bool error_happen;
 extern long eval_count;
 extern long vector_count;
-extern int memory_count;
 extern enum KEYBOARDCAPTURE KeyboardCapture;
 extern int keyboard_value;
 extern bool MouseCaptureIsEnabled;

@@ -34,6 +34,7 @@ struct segment
     NODE      nodes[SEG_SIZE];
 };
 
+int memory_count = 0;                  // Current amount of logo segments malloc'd
 NODE **gcstack;
 NODE **gctop;
 

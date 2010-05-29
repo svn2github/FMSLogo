@@ -23,6 +23,7 @@
 #include "cmdwind.h"
 #include "logorc.h"
 #include "main.h"
+#include "mem.h"
 #include "utils.h"
 #include "ibmterm.h"
 #include "localizedstrings.h"

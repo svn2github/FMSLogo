@@ -19,9 +19,12 @@
 
 #include "logodata.h"
 
+// global variables
 extern NODE **gcstack;
 extern NODE **gctop;
+extern int memory_count;
 
+// function declarations
 extern NODETYPES nodetype(const NODE *nd);
 extern void setobject(NODE *nd, NODE *newobj);
 extern void setcar(NODE *nd, NODE *newcar);
@@ -36,11 +39,5 @@ extern void fill_reserve_tank(void);
 extern void use_reserve_tank(void);
 extern void check_reserve_tank(void);
 extern void free_segment_list(void);
-extern void spush(NODE *obj, NODE **stack);
-extern void eval_driver(NODE *line);
-extern NODE *lapply(NODE *args);
-extern NODE *lqm(NODE *args);
-extern NODE *llocal(NODE *args);
-extern void uninitialize_eval(void);
 
 #endif // __MEM_H_
