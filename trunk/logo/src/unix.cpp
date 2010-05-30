@@ -19,7 +19,7 @@
  *
  */
 #include <stdio.h>
-#include <dir.h>
+#include <direct.h>
 #include <errno.h>
 
 #include "unix.h"
