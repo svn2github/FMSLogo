@@ -150,14 +150,16 @@ BSPNode* TThreeDSolid::MakeBSPNode(POLYGON* Poly)
 // Add the POLYGON to the POLYGON list
 void TThreeDSolid::AddList(PLIST** tlist, POLYGON* Poly)
 {
-    PLIST *l = *tlist, *nuL, *back = *tlist;
-    nuL = new PLIST;
+    PLIST *l    = *tlist;
+    PLIST *back = *tlist;
+
+    PLIST *nuL = new PLIST;
     if (!nuL)
     {
         MessageBox(
             GetActiveWindow(), 
             LOCALIZED_ERROR_OUTOFMEMORY,
-            GetApplicationObject()->GetName(), 
+            LOCALIZED_GENERAL_PRODUCTNAME, 
             MB_OK | MB_ICONEXCLAMATION);
         return;
     }
