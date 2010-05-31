@@ -2490,7 +2490,7 @@ LRESULT TMainFrame::OnNetworkConnectSendAck(WPARAM /* wParam */, LPARAM lParam)
     switch (WSAGETSELECTEVENT(lParam))
     {
     case FD_READ:
-        g_ClientConnection.AsyncReceive(this, "recv(sendsock)");
+        g_ClientConnection.AsyncReceive(HWindow, "recv(sendsock)");
         return 0;
 
     case FD_WRITE:
@@ -2505,12 +2505,12 @@ LRESULT TMainFrame::OnNetworkConnectSendAck(WPARAM /* wParam */, LPARAM lParam)
 
     case FD_CLOSE:
         // done
-        g_ClientConnection.AsyncClose(this);
+        g_ClientConnection.AsyncClose(HWindow);
         break;
     }
 
     // we don't distinguish between all event types
-    g_ClientConnection.PostOnSendReadyEvent(this);
+    g_ClientConnection.PostOnSendReadyEvent(HWindow);
     return 0;
 }
 
@@ -2592,7 +2592,7 @@ LRESULT TMainFrame::OnNetworkConnectSendFinish(WPARAM /* wParam */, LPARAM lPara
 #endif
 
     // fire event that connection is made
-    g_ClientConnection.PostOnSendReadyEvent(this);
+    g_ClientConnection.PostOnSendReadyEvent(HWindow);
     return 0;
 }
 
@@ -2624,7 +2624,7 @@ LRESULT TMainFrame::OnNetworkListenReceiveAck(WPARAM /* wParam */, LPARAM lParam
     switch (WSAGETSELECTEVENT(lParam))
     {
     case FD_READ:
-        g_ServerConnection.AsyncReceive(this, "recv(receivesock)");
+        g_ServerConnection.AsyncReceive(HWindow, "recv(receivesock)");
         return 0;
 
     case FD_ACCEPT:
@@ -2649,7 +2649,7 @@ LRESULT TMainFrame::OnNetworkListenReceiveAck(WPARAM /* wParam */, LPARAM lParam
 
     case FD_CLOSE:
 
-        g_ServerConnection.AsyncClose(this);
+        g_ServerConnection.AsyncClose(HWindow);
         break;
 
     case FD_WRITE:
@@ -2660,7 +2660,7 @@ LRESULT TMainFrame::OnNetworkListenReceiveAck(WPARAM /* wParam */, LPARAM lParam
     }
 
     // all other events just queue the event
-    g_ServerConnection.PostOnSendReadyEvent(this);
+    g_ServerConnection.PostOnSendReadyEvent(HWindow);
     return 0;
 }
 
@@ -2733,7 +2733,7 @@ LRESULT TMainFrame::OnNetworkListenReceiveFinish(WPARAM /* wParam */, LPARAM lPa
 #endif
 
     // queue this event
-    g_ServerConnection.PostOnSendReadyEvent(this);
+    g_ServerConnection.PostOnSendReadyEvent(HWindow);
     return 0;
 }
 

@@ -20,7 +20,7 @@
  */
 
 #include "netwind.h"
-#include "mainframe.h"
+#include "mainwind.h"
 
 #include "init.h"
 #include "main.h"
@@ -30,6 +30,7 @@
 #include "eval.h"
 #include "logomath.h"
 #include "parse.h"
+#include "screenwindow.h"
 #include "localizedstrings.h"
 
 CNetworkConnection g_ClientConnection;
@@ -211,7 +212,7 @@ CNetworkConnection::Enable(
         }
 
         m_IsEnabled = true;
-        MainWindowx->SendMessage(ResolvedHostNameMessage, 0, 0);
+        SendMessage(GetMainWindow(), ResolvedHostNameMessage, 0, 0);
     }
     else
     {
@@ -222,7 +223,7 @@ CNetworkConnection::Enable(
 
         // get address of remote machine
         HANDLE getHostByNameHandle = WSAAsyncGetHostByName(
-            MainWindowx->HWindow, 
+            GetMainWindow(),
             ResolvedHostNameMessage, 
             HostName, 
             (LPSTR) m_HostEntry, 
@@ -271,7 +272,7 @@ CNetworkConnection::SendValue(
 
 void
 CNetworkConnection::AsyncReceive(
-    TWindow    *         Window,
+    HWND                 WindowHandle,
     const char *         ErrorMessage
     )
 {
@@ -285,7 +286,11 @@ CNetworkConnection::AsyncReceive(
         // if this would block, we just wait until we get called again
         if (WSAGetLastError() != WSAEWOULDBLOCK) 
         {
-            Window->MessageBox(WSAGetLastErrorString(0), ErrorMessage);
+            MessageBox(
+                WindowHandle,
+                WSAGetLastErrorString(0),
+                ErrorMessage,
+                MB_OK);
             // err_logo(STOP_ERROR,NIL);
         }
     }
@@ -311,7 +316,7 @@ CNetworkConnection::AsyncReceive(
                 m_CarryOverData.m_Buffer + begin);
 
             calllists.insert(callevent);
-            Window->PostMessage(WM_CHECKQUEUE, 0, 0);
+            PostMessage(WindowHandle, WM_CHECKQUEUE, 0, 0);
 
             begin = end + 1;
             end   = begin + strlen(m_CarryOverData.m_Buffer + begin);
@@ -324,7 +329,7 @@ CNetworkConnection::AsyncReceive(
 
 void
 CNetworkConnection::AsyncClose(
-    TWindow    *         Window
+    HWND             WindowHandle
     )
 {
     // send any data in the carry-over buffer upwards
@@ -336,7 +341,7 @@ CNetworkConnection::AsyncClose(
             
         calllists.insert(callevent);
                
-        Window->PostMessage(WM_CHECKQUEUE, 0, 0);
+        PostMessage(WindowHandle, WM_CHECKQUEUE, 0, 0);
     }
 
     m_CarryOverData.ReleaseBuffer();
@@ -357,14 +362,14 @@ CNetworkConnection::Shutdown()
 
 void
 CNetworkConnection::PostOnSendReadyEvent(
-    TWindow  *  Window
+    HWND       WindowHandle
     )
 {
     // we don't distinguish between all event types
     callthing *callevent = callthing::CreateNoYieldFunctionEvent(m_OnSendReady);
 
     calllists.insert(callevent);
-    Window->PostMessage(WM_CHECKQUEUE, 0, 0);
+    PostMessage(WindowHandle, WM_CHECKQUEUE, 0, 0);
 }
 
 

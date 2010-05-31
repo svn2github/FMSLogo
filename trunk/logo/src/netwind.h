@@ -63,20 +63,20 @@ public:
 
     void
     AsyncReceive(
-        class TWindow    *     Window,
-        const char *           ErrorMessage
+        HWND                 WindowHandle,
+        const char *         ErrorMessage
         );
 
     void
     AsyncClose(
-        class TWindow    *      Window
+        HWND                 WindowHandle
         );
 
     void Shutdown();
 
     void
     PostOnSendReadyEvent(
-        class TWindow  *  Window
+        HWND                 WindowHandle
         );
 
     bool
