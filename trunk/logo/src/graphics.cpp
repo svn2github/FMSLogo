@@ -24,7 +24,9 @@
 #include <float.h>
 #include <windows.h>
 
+#include "wrksp.h"
 #include "graphics.h"
+#include "argumentutils.h"
 #include "main.h"
 #include "logodata.h"
 #include "init.h"
@@ -91,6 +93,11 @@ int      g_MaxTurtle;
 
 // a point where the turtle wants to go
 Point  g_Wanna = {0.0, 0.0, 0.0};
+
+long vector_count = 0;                 // current count of vectors drawn
+
+// global store for x,y,z "From" routine
+static Point  g_OldPos = {0.0, 0.0, 0.0};
 
 // used to scale a picture in scrunch mode.
 static VECTOR g_Scale = {1.0, 1.0, 1.0};
@@ -480,6 +487,342 @@ void draw_turtle(bool draw)
 }
 
 /************************************************************/
+
+static
+void
+transline_helper(
+    const LOGPEN & LogicalPen,
+    HPEN           Pen,
+    int            LineMode,
+    int            FromX,
+    int            FromY,
+    int            ToX,
+    int            ToY
+    )
+{
+    // Convert from Cartesian coordinates to logical window coordinates.
+    FromX =  FromX + xoffset;
+    FromY = -FromY + yoffset;
+    ToX   =  ToX   + xoffset;
+    ToY   = -ToY   + yoffset;
+
+    HDC MemDC = GetMemoryDeviceContext();
+
+    if (EnablePalette)
+    {
+        OldPalette = SelectPalette(MemDC, ThePalette, FALSE);
+        RealizePalette(MemDC);
+    }
+
+    SetROP2(MemDC, LineMode);
+
+    HPEN oldPen = (HPEN) SelectObject(MemDC, Pen);
+
+    MoveToEx(MemDC, FromX, FromY, 0);
+    LineTo(MemDC, ToX, ToY);
+
+    // HACK:
+    // LineTo() API does not draw a pixel in the location where it moves to.
+    // As a result, moving forward changing colors, then moving backward leaves
+    // a dot of the previous color at the location where the direction changed.
+    // To address this, we SetPixel to color the end point.
+    //
+    // This isn't necessary when the pensize != 1.
+    // This would be bad to do in penreverse mode.
+    //
+    PENSTATE & penState = GetPenStateForSelectedTurtle();
+    if (penState.Width < 2 && penState.Mode != XOR_PUT)
+    {
+        SetPixel(MemDC, ToX, ToY, LogicalPen.lopnColor);
+    }
+
+    if (EnablePalette)
+    {
+        SelectPalette(MemDC, OldPalette, FALSE);
+    }
+
+    // restore the previous bitmap and pen
+    SelectObject(MemDC, oldPen);
+
+
+    // update the screen
+    if (zoom_flag)
+    {
+        // We are zoomed, so it would be very difficult to just
+        // draw the line on the screen.  Instead, invalidate the
+        // portion of the screen window that corresponds
+        // to the region containing the line which we just drew.
+        RECT screenRect;
+        if (FromX < ToX)
+        {
+            screenRect.left   = FromX - penState.Width;
+            screenRect.right  = ToX   + penState.Width;
+        }
+        else
+        {
+            screenRect.left   = ToX    - penState.Width;
+            screenRect.right  = FromX  + penState.Width;
+        }
+
+        if (FromY < ToY)
+        {
+            screenRect.top    = FromY - penState.Width;
+            screenRect.bottom = ToY   + penState.Width;
+        }
+        else
+        {
+            screenRect.top    = ToY   - penState.Width;
+            screenRect.bottom = FromY + penState.Width;
+        }
+
+        // remap the screen rectangle based on the zoom factor
+        screenRect.left   *= the_zoom;
+        screenRect.right  *= the_zoom;
+        screenRect.top    *= the_zoom;
+        screenRect.bottom *= the_zoom;
+
+        const UINT scrollerX = GetScreenHorizontalScrollPosition();
+        const UINT scrollerY = GetScreenVerticalScrollPosition();
+
+        screenRect.left   -= scrollerX;
+        screenRect.right  -= scrollerX;
+        screenRect.top    -= scrollerY;
+        screenRect.bottom -= scrollerY;
+
+        InvalidateRect(GetScreenWindow(), &screenRect, false);
+    }
+    else
+    {
+        // We are not zoomed.
+        // Draw the line directly on the screen, rather than invalidating
+        // the region containing the line because doing is 400% faster
+        // on the squiral benchmark.
+        HDC ScreenDC = GetScreenDeviceContext();
+        SetROP2(ScreenDC, LineMode);
+
+        if (EnablePalette)
+        {
+            OldPalette = SelectPalette(ScreenDC, ThePalette, FALSE);
+            RealizePalette(ScreenDC);
+        }
+
+        oldPen = (HPEN) SelectObject(ScreenDC, Pen);
+
+        UINT screenFromX = FromX - GetScreenHorizontalScrollPosition();
+        UINT screenFromY = FromY - GetScreenVerticalScrollPosition();
+
+        UINT screenToX   = ToX   - GetScreenHorizontalScrollPosition();
+        UINT screenToY   = ToY   - GetScreenVerticalScrollPosition();
+
+        MoveToEx(ScreenDC, screenFromX, screenFromY, 0);
+        LineTo(ScreenDC, screenToX, screenToY);
+
+        PENSTATE & penState = GetPenStateForSelectedTurtle();
+        if (penState.Width < 2 && penState.Mode != XOR_PUT)
+        {
+            SetPixel(ScreenDC, screenFromX, screenFromY, LogicalPen.lopnColor);
+        }
+
+        if (EnablePalette)
+        {
+            SelectPalette(ScreenDC, OldPalette, FALSE);
+        }
+
+        // restore the previous pen
+        SelectObject(ScreenDC, oldPen);
+    }
+}
+
+
+static
+void 
+transline3d(
+    const LOGPEN &logPen, 
+    HPEN         &pen, 
+    long          modex, 
+    const Point & from,
+    const Point & to
+    )
+{
+    // First, project the point from world coordinates to
+    // window coordinates.
+    VECTOR from3d;
+    from3d.x = from.x / WorldWidth;
+    from3d.y = from.y / WorldHeight;
+    from3d.z = from.z / WorldDepth;
+
+    VECTOR to3d;
+    to3d.x = to.x / WorldWidth;
+    to3d.y = to.y / WorldHeight;
+    to3d.z = to.z / WorldDepth;
+
+    if (bPolyFlag)
+    {
+        if (!ThePolygon ||
+            (fabs(ThePolygon->Vertex.x - to3d.x) > FLONUM_EPSILON) ||
+            (fabs(ThePolygon->Vertex.y - to3d.y) > FLONUM_EPSILON) ||
+            (fabs(ThePolygon->Vertex.z - to3d.z) > FLONUM_EPSILON))
+        {
+            ThreeD.AddPoint(&ThePolygon, to3d);
+        }
+    }
+
+    POINT from2d;
+    POINT to2d;
+    if (!ThreeD.TransformSegment(from3d, to3d, from2d, to2d))
+    {
+        return;
+    }
+
+    // Now that we have projected this line into the
+    // window coordinates, we can call the 2D version to
+    // actually draw the line.
+    transline_helper(
+        logPen,
+        pen,
+        modex,
+        from2d.x,
+        from2d.y,
+        to2d.x,
+        to2d.y);
+}
+
+static
+void 
+transline(
+    const LOGPEN &logPen, 
+    HPEN         &pen, 
+    long          modex, 
+    const Point & from,
+    const Point & to
+    )
+{
+    transline_helper(
+        logPen,
+        pen,
+        modex,
+        g_round(from.x),
+        g_round(from.y),
+        g_round(to.x),
+        g_round(to.y));
+}
+
+
+static
+void move_to(FLONUM x, FLONUM y)
+{
+    g_OldPos.x = x;
+    g_OldPos.y = y;
+}
+
+static
+void move_to_3d(FLONUM x, FLONUM y, FLONUM z)
+{
+    g_OldPos.x = x;
+    g_OldPos.y = y;
+    g_OldPos.z = z;
+}
+
+static
+void line_to(FLONUM x, FLONUM y)
+{
+    if (g_SelectedTurtle->IsSpecial)
+    {
+        // special turtles don't draw lines when they move
+        return;
+    }
+
+    if (!g_SelectedTurtle->IsPenUp)
+    {
+        vector_count++;
+        update_status_vectors();
+
+        Point toPoint;
+        toPoint.x = x;
+        toPoint.y = y;
+
+        HPEN           pen;
+        const LOGPEN * logicalPen;
+        int            rasterMode;
+
+        if (GetPenStateForSelectedTurtle().IsErasing)
+        {
+            pen        = g_ErasePen;
+            logicalPen = &g_LogicalErasePen;
+            rasterMode = R2_COPYPEN;
+        }
+        else
+        {
+            pen        = g_NormalPen;
+            logicalPen = &g_LogicalNormalPen;
+
+            if (GetPenStateForSelectedTurtle().Mode == XOR_PUT)
+            {
+                rasterMode = R2_NOT;
+            }
+            else
+            {
+                rasterMode = R2_COPYPEN;
+            }
+        }
+
+        transline(
+            *logicalPen,
+            pen,
+            rasterMode,
+            g_OldPos,
+            toPoint);
+    }
+}
+
+static
+void line_to_3d(const Point & ToPoint)
+{
+    if (g_SelectedTurtle->IsSpecial)
+    {
+        // special turtles don't draw lines when they move
+        return;
+    }
+
+    if (!g_SelectedTurtle->IsPenUp)
+    {
+        vector_count++;
+        update_status_vectors();
+
+        HPEN           pen;
+        const LOGPEN * logicalPen;
+        int            rasterMode;
+
+        if (GetPenStateForSelectedTurtle().IsErasing)
+        {
+            pen        = g_ErasePen;
+            logicalPen = &g_LogicalErasePen;
+            rasterMode = R2_COPYPEN;
+        }
+        else
+        {
+            pen        = g_NormalPen;
+            logicalPen = &g_LogicalNormalPen;
+
+            if (GetPenStateForSelectedTurtle().Mode == XOR_PUT)
+            {
+                rasterMode = R2_NOT;
+            }
+            else
+            {
+                rasterMode = R2_COPYPEN;
+            }
+        }
+
+        transline3d(
+            *logicalPen,
+            pen,
+            rasterMode,
+            g_OldPos,
+            ToPoint);
+    }
+}
+
 
 static
 void uppitch(FLONUM a)

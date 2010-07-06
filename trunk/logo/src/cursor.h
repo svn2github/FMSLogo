@@ -1,4 +1,5 @@
 // -*- c++ -*-
+// Copyright (C) 1995 by the Regents of the University of California
 // Copyright (C) 1995 by George Mills
 //
 // This program is free software; you can redistribute it and/or modify
@@ -15,26 +16,16 @@
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
-#ifndef __MULTIMEDIA_WINDOW_H_
-#define __MULTIMEDIA_WINDOW_H_
+#ifndef __CURSOR_H_
+#define __CURSOR_H_
 
-// types
-struct NODE;
+#include <windows.h>
 
-// global variables
-extern char mci_callback[];
-extern char *timer_callback[];
+// global variable declarations
+extern HCURSOR hCursorWait;
+extern HCURSOR hCursorArrow;
 
 // function declarations
-extern NODE *lmci(NODE *arg);
-extern NODE *lmidiopen(NODE *arg);
-extern NODE *lmidiclose(NODE *arg);
-extern NODE *lmidimessage(NODE *arg);
-extern NODE *lsound(NODE *arg);
-extern NODE *lplaywave(NODE *args);
-extern NODE *lsettimer(NODE *arg);
-extern NODE *lcleartimer(NODE *arg);
-extern void init_timers();
-extern void uninitialize_timers();
+extern void init_cursors();
 
-#endif // __MULTIMEDIA_WINDOW_H_
+#endif // __CURSOR_H_

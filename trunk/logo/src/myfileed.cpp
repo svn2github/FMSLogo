@@ -23,6 +23,7 @@
 
 #include "myfileed.h"
 #include "logocore.h"
+#include "argumentutils.h"
 #include "logodata.h"
 #include "logorc.h"
 #include "wrksp.h"

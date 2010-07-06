@@ -19,6 +19,17 @@
 
 #include <stdio.h>
 
+// types
+struct NODE;
+
+enum INPUTMODE
+{
+    INPUTMODE_None,
+    INPUTMODE_To,
+    INPUTMODE_List,
+    INPUTMODE_Pause,
+};
+
 // function variables
 extern int rd_getc(FILE *strm);
 extern void rd_clearbuffer(FILE *strm);

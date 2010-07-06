@@ -20,6 +20,51 @@
 #define __GRAPHWIN_H_
 
 #include "logocore.h"
+#include "graphics.h"
+
+// global variable declarations
+extern Color dfld;
+extern Color dscn;
+extern RECT FullRect;
+
+extern LOGFONT FontRec;
+
+extern LOGPEN g_LogicalNormalPen;
+extern HPEN   g_NormalPen;
+
+extern LOGPEN g_LogicalErasePen;
+extern HPEN   g_ErasePen;
+
+extern LOGBRUSH FloodBrush;
+extern LOGBRUSH ScreenBrush;
+
+extern bool EnablePalette;
+extern HPALETTE OldPalette;
+extern HPALETTE ThePalette;
+
+extern int xoffset;
+extern int yoffset;
+
+extern int BaseUnitsx;
+extern int BaseUnitsy;
+
+extern bool IsTimeToExit;
+extern bool IsTimeToPause;
+extern bool IsTimeToHalt;
+
+extern HBITMAP MemoryBitMap;
+
+extern PLOGPALETTE MyLogPalette;
+
+extern COLORREF scolor;
+extern COLORREF fcolor;
+extern COLORREF pcolor;
+extern bool zoom_flag;
+
+extern FLONUM the_zoom;
+extern Point  g_OldPos;
+
+extern bool GiveFocusToEditbox;
 
 // function declarations
 extern bool HtmlHelpInitialize();
@@ -42,8 +87,12 @@ extern SIZE labelsize(const char *s);
 extern void label(const char *s);
 extern void UpdateErasePen(int Width, COLORREF Color);
 extern void UpdateNormalPen(int Width, COLORREF Color);
+extern void init_penstate();
 extern void init_bitmaps();
 extern void uninit_bitmaps();
+extern void init_turtles();
+extern void uninit_turtles();
+extern void init_videomode();
 extern void ibmturt(bool hide);
 extern void do_help(const char *arg);
 extern void ibm_clear_screen(void);
@@ -51,6 +100,12 @@ extern int get_pen_width(void);
 extern void set_pen_width(int w);
 extern int get_pen_height(void);
 extern void set_pen_height(int h);
+extern void MakeHelpPathName(char *szFileName, PCSTR);
+extern void GetWorkingAreaDimensions(int & workingAreaWidth, int & workingAreaHeight);
+extern COLORREF LoadColor(int dpenr, int dpeng, int dpenb);
+extern struct PENSTATE & GetPenStateForSelectedTurtle();
+extern void exit_program(void);
+extern void MyMessageScan(void);
 
 #endif // __GRAPHWIN_H_
 

@@ -21,6 +21,7 @@
 #include <windows.h>
 
 #include "mmwind.h"
+#include "argumentutils.h"
 #include "logocore.h"
 #include "logodata.h"
 #include "lists.h"
@@ -36,6 +37,10 @@
 #include "devwind.h"
 
 #include "localizedstrings.h"
+
+// global variables
+char mci_callback[MAX_BUFFER_SIZE];    // MCI callback code
+char *timer_callback[MAX_TIMERS];      // timer cb malloc'd as needed
 
 static HMIDIOUT hMidiOut = 0;
 
@@ -362,6 +367,14 @@ NODE *lcleartimer(NODE *args)
     }
 
     return Unbound;
+}
+
+void init_timers()
+{
+    for (size_t i = 0; i < MAX_TIMERS; i++)
+    {
+        timer_callback[i] = NULL;
+    }
 }
 
 void uninitialize_timers()

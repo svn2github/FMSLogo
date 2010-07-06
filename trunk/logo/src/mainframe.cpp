@@ -38,6 +38,7 @@
 #include "activearea.h"
 #include "screenwindow.h"
 
+#include "devwind.h"
 #include "dlgwind.h"
 #include "netwind.h"
 #include "areawind.h"
@@ -49,6 +50,8 @@
 #include "colordlg.h"
 #include "sizedlg.h"
 #include "savebeforeexitdialog.h"
+#include "startup.h"
+#include "mmwind.h"
 
 #include "localizedstrings.h"
 
@@ -786,43 +789,6 @@ TMainFrame::TMainFrame(
     /* main window initialization */
     strcpy(BitmapName, "logo.bmp");
     strcpy(FileName, "logo.lgo");
-
-
-    /* check if a palette exists */
-    HDC screen = CreateDC("DISPLAY", NULL, NULL, NULL);
-    if (screen != NULL)
-    {
-        if ((GetDeviceCaps(screen, RASTERCAPS) & RC_PALETTE) == 0)
-        {
-            EnablePalette = false;
-        }
-        else
-        {
-            EnablePalette = true;
-        }
-
-        DeleteDC(screen);
-    }
-
-    /* If palette then build one */
-    if (EnablePalette)
-    {
-        MyLogPalette = (LPLOGPALETTE) new char[sizeof(LOGPALETTE) + sizeof(PALETTEENTRY) * MaxColors];
-        MyLogPalette->palVersion = 0x300;
-        MyLogPalette->palNumEntries = 2;
-
-        MyLogPalette->palPalEntry[0].peRed = 0;
-        MyLogPalette->palPalEntry[0].peGreen = 0;
-        MyLogPalette->palPalEntry[0].peBlue = 0;
-        MyLogPalette->palPalEntry[0].peFlags = 0;
-
-        MyLogPalette->palPalEntry[1].peRed = 255;
-        MyLogPalette->palPalEntry[1].peGreen = 255;
-        MyLogPalette->palPalEntry[1].peBlue = 255;
-        MyLogPalette->palPalEntry[1].peFlags = 0;
-
-        ThePalette = CreatePalette(MyLogPalette);
-    }
 }
 
 TMainFrame::~TMainFrame()

@@ -31,18 +31,12 @@
 #include "logodata.h"
 #include "activearea.h"
 #include "screenwindow.h"
+#include "startup.h"
 
 #include "mainwind.h"
 #include "netwind.h"
-#include "areawind.h"
-#include "cmdwind.h"
-#include "myfilewn.h"
-#include "myfileed.h"
 #include "graphwin.h"
 #include "statwind.h"
-#include "colordlg.h"
-#include "sizedlg.h"
-#include "savebeforeexitdialog.h"
 
 #include "localizedstrings.h"
 

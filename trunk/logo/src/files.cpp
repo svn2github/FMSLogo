@@ -39,10 +39,12 @@
 #include "wrksp.h"
 #include "print.h"
 #include "unix.h"
-#include "localizedstrings.h"
-
+#include "graphics.h"
+#include "startup.h"
 #include "screenwindow.h"
 #include "dlgwind.h"
+
+#include "localizedstrings.h"
 
 class CFileListNode
 {
@@ -58,6 +60,8 @@ public:
 private:
     CFileListNode();
 };
+
+NODE *current_line = NIL;       // current line to be parsed
 
 static CFileListNode * g_OpenFiles;
 

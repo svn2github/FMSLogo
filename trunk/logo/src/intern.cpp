@@ -21,6 +21,7 @@
  */
 
 #include <string.h>
+#include <stdlib.h>
 
 #include "logodata.h"
 #include "mem.h"
@@ -272,6 +273,11 @@ NODE *intern(NODE *nd)
     return casedes;
 }
 
+void init_intern()
+{
+    // alloc and init hash table
+    hash_table = (NODE **) calloc(sizeof(NODE *), HASH_LEN);
+}
 
 void release_all_objects()
 {
@@ -320,4 +326,6 @@ void release_all_objects()
        hash_table[i] = NIL;
    }
 #endif // MEM_DEBUG
+
+    free(hash_table);
 }

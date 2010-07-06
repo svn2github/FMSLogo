@@ -31,7 +31,9 @@
 
 #include "error.h"
 #include "main.h"
+#include "startup.h"
 #include "graphwin.h"
+#include "eval.h"
 #include "logorc.h"
 #include "utils.h"
 #include "localizedstrings.h"

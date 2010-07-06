@@ -93,6 +93,9 @@ NODE *Null_Word = NIL;
 
 const PRIMTYPE prims[] =
 {
+#ifdef FMSLOGO_SCREENSAVER
+    { "fd", 1, 1, 1, PREFIX_PRIORITY, lforward, LOCALIZED_ALTERNATE_FD },
+#else
     { "*", 1, 1, 1, PREFIX_PRIORITY + 3, lmul },
     { "+", 1, 1, 1, PREFIX_PRIORITY + 2, ladd },
     { "-", 1, 1, 1, PREFIX_PRIORITY + 2, lsub },
@@ -569,6 +572,7 @@ const PRIMTYPE prims[] =
     { "yesnobox", 2, 2, 2, PREFIX_PRIORITY, lyesnobox, LOCALIZED_ALTERNATE_YESNOBOX },
     { "yield", 0, 0, 0, PREFIX_PRIORITY, lyield, LOCALIZED_ALTERNATE_YIELD },
     { "zoom", 1, 1, 1, PREFIX_PRIORITY, lzoom, LOCALIZED_ALTERNATE_ZOOM },
+#endif
 };
 
 static
@@ -627,6 +631,8 @@ intern_primitive(
 // Initialize the language engine and all associated variables.
 void init()
 {
+    init_intern();
+
     fill_reserve_tank();
     Unbound = newnode(PUNBOUND);
 

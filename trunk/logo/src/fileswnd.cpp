@@ -19,26 +19,27 @@
 *
 */
 
-#include "main.h"
+#include "wrksp.h"
 #include "files.h"
 #include "init.h"
 #include "eval.h"
 #include "parse.h"
 #include "mem.h"
+#include "main.h" // for current_line
 
 #include "localizedstrings.h"
 
-#include "mainframe.h"
-#include "cmdwind.h"
+#include "screenwindow.h"
 #include "dlgwind.h"
 
 void filesave(const char *FileName)
 {
-    if (MainWindowx != NULL && MainWindowx->IsEditorOpen())
+    if (IsEditorOpen())
     {
         // Notify the user that they have an editor open
         // and that changes in the editor will not be saved.
-        MainWindowx->CommandWindow->MessageBox(
+        MessageBox(
+            GetCommanderWindow(),
             LOCALIZED_EDITORISOPEN,
             LOCALIZED_INFORMATION,
             MB_OK | MB_ICONQUESTION);

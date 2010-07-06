@@ -23,12 +23,10 @@
 #include <float.h>
 #include <math.h>
 
-#include <owl/scroller.h>
-
 #include "Scintilla.h"
 #include "3dsolid.h"
 #include "const.h"
-#include "graphics.h"
+#include "eval.h"
 #include "print.h"
 #include "parse.h"
 #include "error.h"
@@ -37,14 +35,18 @@
 #include "utils.h"
 #include "mem.h"
 #include "init.h"
-#include "activearea.h"
+#include "graphwin.h"
+#include "wrksp.h"
 
+#include "mmwind.h"
 #include "mainwind.h"
 #include "mainframe.h"
 #include "cmdwind.h"
 #include "statwind.h"
 #include "graphwin.h"
 #include "dlgwind.h"
+#include "startup.h"
+#include "screenwindow.h"
 
 #include "localizedstrings.h"
 
@@ -69,183 +71,24 @@ public:
     DECLARE_RESPONSE_TABLE(TMyApp);
 };
 
-bool bExpert;                      // Expert mode
 bool bFixed;                       // Fixed mode
 static bool bWidth;                // Width mode
 static bool bHeight;               // Height mode
 static bool bPerspective;          // Perspetive mode start up
-
-HBITMAP MemoryBitMap;              // Backing store bitmap
-
-HCURSOR hCursorWait;               /* handle for hourglass cursor    */
-HCURSOR hCursorArrow;              /* handle for normal cursor       */
-
-HPALETTE ThePalette;                   /* Handle for the single color palette */
-
-LPLOGPALETTE MyLogPalette;      /* Handle for the single logical color palette*/
-
-FLONUM the_zoom = 1.0;             // current zoom factor
-Point  g_OldPos = {0.0, 0.0, 0.0}; // global store for x,y,z "From" routine
-
-NODE *current_line = NIL;       // current line to be parsed
-
-char LibPathName[MAX_PATH + 1];    // path to library
-char TempPathName[MAX_PATH + 1];   // path to temp edit file
-char TempBmpName[MAX_PATH + 1];    // path to temp bitmap file
-char TempClipName[MAX_PATH + 1];   // path to temp clipboard file
-char szHelpFileName[MAX_PATH + 1]; // path to help file
 
 static char g_FileToLoad[MAX_BUFFER_SIZE];  // file to load on start
 
 // holds callback code
 
 char edit_editexit[MAX_BUFFER_SIZE];   /* callable editor cb                  */
-char mci_callback[MAX_BUFFER_SIZE];    /* MCI callback code                   */
-char *timer_callback[MAX_TIMERS];      /* timer cb malloc'd as needed         */
-char *mouse_lbuttondown = NULL;        /* Mouse Left button down cb           */
-char *mouse_lbuttonup = NULL;          /* Mouse Right button up cb            */
-char *mouse_rbuttondown = NULL;        /* Mouse Left button down cb           */
-char *mouse_rbuttonup = NULL;          /* Mouse Right button up cb            */
-char *mouse_mousemove = NULL;          /* Mouse Move cb                       */
-char *keyboard_keydown = NULL;         /* KeyBoard key down                   */
-char *keyboard_keyup = NULL;           /* KeyBoard key up                     */
-
-static char g_FmslogoBaseDirectory[MAX_PATH+1]; // The directory that contains FMSLogo.exe
-
-/* place holders for windows resources */
-HPALETTE OldPalette;
-
-LOGFONT FontRec;
-LOGFONT EditFontRec;
-
-LOGPEN g_LogicalNormalPen;             // Handle to "Normal" logical Pen
-HPEN   g_NormalPen;                    // Handle to "Normal" Pen
-
-LOGPEN g_LogicalErasePen;              // Handle to "Erase" logical Pen
-HPEN   g_ErasePen;                     // Handle to "Erase" Pen
-
-LOGBRUSH FloodBrush;                   // Handle to the "floodfill" brush
-LOGBRUSH ScreenBrush;                  // Handle to the "screen" background brush
-
-RECT FullRect;                         // Ready rectangle of Full bitmap
 
 TMainFrame *MainWindowx;               // Pointer to the Main window
 
 int GCMAX = 8192;                      // Garbage Collector Stack Size
-Color dfld;                            // Current flood color
-Color dscn;                            // Current screen color
-bool IsDirty = false;                  // Flag to signal to query user ok to quit
 int BitMapWidth = 1000;                // Current bitmap size in X
 int BitMapHeight = 1000;               // Current bitmap size in Y
-int WorldWidth = 1000;                 // Current World size in X
-int WorldHeight = 1000;                // Current World size in Y
-int WorldDepth = 1000;                 // Current World size in Z
-bool EnablePalette;                    // Flag to signal 256 color mode with palette
 bool IsOkayToUseCommanderWindow = false; // Flag to signal it's OK to write to recall box
-bool traceflag = false;                // Flag to signal trace button is active
-bool stepflag = false;                 // Flag to signal step button is active
-bool yield_flag = true;                // Flag to signal yield state
-int xoffset = 0;                       // Used to go from logo to windows coords x
-int yoffset = 0;                       // Used to go from logo to windows coords y
-bool GiveFocusToEditbox = false;       // Flag to signal that focus should go to the editbox
-bool IsTimeToExit = false;             // Flag to signal it's time to exit
-bool IsTimeToPause = false;            // UCBLOGO? pause flag
-bool IsTimeToHalt = false;             // UCBLOGO? halt flag
-bool error_happen;                     // Flag to signal Error happened on edit reload
-KEYBOARDCAPTURE KeyboardCapture = KEYBOARDCAPTURE_Off; // Flag to signal Keyboard is enabled
-int keyboard_value = 0;                // Value of Keyboard key
-bool MouseCaptureIsEnabled = false;    // Flag to signal Mouse is enabled
-int mouse_posx = 0;                    // Value of Mouse position x
-int mouse_posy = 0;                    // Value of Mouse position y
-int BaseUnitsx = 0;                    // X Units Windows uses to for units in dialog
-int BaseUnitsy = 0;                    // Y Units Windows uses to for units in dialog
-
-long eval_count = 0;                   // current count of "evaluations" calls
-long vector_count = 0;                 // current count of vectors drawn
-COLORREF scolor;                       // screen color
-COLORREF fcolor;                       // flood color
-COLORREF pcolor;                       // pen color
-bool zoom_flag = false;                // flag to signal in zoomed state
-long MaxColors = 0;                    // The maximum # of colors available
-
-static PENSTATE g_PenState;  // The state of the current pen (color, mode, etc.)
-
-TThreeDSolid ThreeD;
-
-OSVERSIONINFO g_OsVersionInformation;
-
-PENSTATE & GetPenStateForSelectedTurtle()
-{
-    if (g_SelectedTurtle->HasOwnPenState)
-    {
-        return g_SelectedTurtle->PenState;
-    }
-
-    // the current turtle uses the global pen state
-    return g_PenState;
-}
-
-// returns the dimensions of the working area, that is
-// the size of the desktop without the task bar.
-void GetWorkingAreaDimensions(int & Width, int & Height)
-{
-    RECT workingArea;
-
-    SystemParametersInfo(SPI_GETWORKAREA, 0, &workingArea, 0);
-    Width  = workingArea.right  - workingArea.left;
-    Height = workingArea.bottom - workingArea.top;
-}
-
-
-void cnv_strnode_string(char *textbuf, NODE *arg)
-{
-    print_stringptr = textbuf;
-    print_stringlen = MAX_BUFFER_SIZE;
-    ndprintf((FILE *) NULL, "%p", car(arg));
-    assert(print_stringptr - textbuf < MAX_BUFFER_SIZE); // buffer overrun
-    *print_stringptr = '\0';
-}
-
-/* adds color to palette */
-COLORREF LoadColor(int dpenr, int dpeng, int dpenb)
-{
-
-    /* convert to color and find nearest match */
-    COLORREF color = PALETTERGB(dpenr, dpeng, dpenb);
-    int Index = GetNearestPaletteIndex(ThePalette, color);
-
-    /* if not exact and room for more then allocate it */
-    if ((PALETTERGB(
-             MyLogPalette->palPalEntry[Index].peRed,
-             MyLogPalette->palPalEntry[Index].peGreen,
-             MyLogPalette->palPalEntry[Index].peBlue) != color) && 
-        (MyLogPalette->palNumEntries < (MaxColors - 1)))
-    {
-
-        /* Why do check again? */
-        if (MyLogPalette->palNumEntries < 255)
-        {
-
-            // kill old palette
-            DeleteObject(ThePalette);
-
-            MyLogPalette->palPalEntry[MyLogPalette->palNumEntries].peRed = dpenr;
-            MyLogPalette->palPalEntry[MyLogPalette->palNumEntries].peGreen = dpeng;
-            MyLogPalette->palPalEntry[MyLogPalette->palNumEntries].peBlue = dpenb;
-            MyLogPalette->palPalEntry[MyLogPalette->palNumEntries].peFlags = 0;
-            MyLogPalette->palNumEntries++;
-
-            // if status window then update palette usage
-            update_status_paletteuse();
-
-            // make new palette with added color
-            ThePalette = CreatePalette(MyLogPalette);
-        }
-    }
-
-    /* return color new, matched or close */
-    return color;
-}
+bool error_happen;                       // Flag to signal Error happened on edit reload
 
 
 void clearcombobox()
@@ -437,28 +280,6 @@ bool TMyApp::IdleAction(long idleCount)
     return TApplication::IdleAction(idleCount);
 }
 
-// Creates a unique filename relative to TempPath
-static
-void MakeTempFilename(char *OutBuffer, const char * TempPath, const char * FileName)
-{
-    // the first part of the temp filename is TempPath
-    char * ptr       = OutBuffer;
-    const char * src = TempPath;
-    while (*src != '\0')
-    {
-        *ptr++ = *src++;
-    }
-
-    // make sure that the path ends in a directory delimiter
-    if (*ptr != '\\')
-    {
-        *ptr++ = '\\';
-    }
-   
-    // append the filename
-    strcpy(ptr, FileName);
-}
-
 
 void TMyApp::InitMainWindow()
 {
@@ -467,44 +288,6 @@ void TMyApp::InitMainWindow()
     MainWindowx = new TMainFrame(NULL, Name, paneSpliter);
     SetMainWindow(MainWindowx);
 
-    // set appropriate default colors
-    pcolor = 0x00000000;
-    scolor = 0x00FFFFFF;
-    fcolor = 0x00000000;
-
-
-    dfld.red   = 0x00;
-    dfld.green = 0x00;
-    dfld.blue  = 0x00;
-
-    dscn.red   = 0xFF;
-    dscn.green = 0xFF;
-    dscn.blue  = 0xFF;
-
-    // initialize the global pen state
-
-    // init the font structure
-    FontRec.lfHeight         = 24;
-    FontRec.lfWidth          = 0;
-    FontRec.lfOrientation    = 0;
-    FontRec.lfWeight         = 400;
-    FontRec.lfItalic         = 0;
-    FontRec.lfUnderline      = 0;
-    FontRec.lfStrikeOut      = 0;
-    FontRec.lfCharSet        = ANSI_CHARSET;
-    FontRec.lfOutPrecision   = OUT_DEFAULT_PRECIS;
-    FontRec.lfClipPrecision  = CLIP_DEFAULT_PRECIS;
-    FontRec.lfQuality        = DEFAULT_QUALITY;
-    FontRec.lfPitchAndFamily = DEFAULT_PITCH;
-    strcpy(FontRec.lfFaceName, "Arial");
-
-    FloodBrush.lbStyle = BS_SOLID;
-    FloodBrush.lbColor = fcolor;
-    FloodBrush.lbHatch = HS_VERTICAL;
-
-    ScreenBrush.lbStyle = BS_SOLID;
-    ScreenBrush.lbColor = scolor;
-    ScreenBrush.lbHatch = HS_VERTICAL;
 
     // determine how big a window we would like
     int x = 0;
@@ -570,92 +353,7 @@ void TMyApp::InitMainWindow()
         h,
         SWP_NOZORDER);
 
-    // Set handy rectangle of full bitmap
-    SetRect(&FullRect, 0, 0, BitMapWidth, BitMapHeight);
-
-    // turtle coords are in center
-    xoffset = BitMapWidth  / 2;
-    yoffset = BitMapHeight / 2;
-
-    // Init active area even if off
-    g_PrinterAreaXLow  = -BitMapWidth  / 2;
-    g_PrinterAreaXHigh = +BitMapWidth  / 2;
-    g_PrinterAreaYLow  = -BitMapHeight / 2;
-    g_PrinterAreaYHigh = +BitMapHeight / 2;
-
-    g_PrinterAreaPixels = max(BitMapWidth, BitMapHeight) / 8;
-
-    // Figure out the path that contains fmslogo.exe
-    DWORD nFileNameLength = ::GetModuleFileName(
-        HInstance,
-        g_FmslogoBaseDirectory,
-        ARRAYSIZE(g_FmslogoBaseDirectory));
-
-    // start at the end of the full path of fmslogo.exe and walk
-    // backwards in the string until we find the final directory delimiter
-    for (char * charPtr = g_FmslogoBaseDirectory + nFileNameLength;
-         charPtr > g_FmslogoBaseDirectory;
-         charPtr--)
-    {
-        if (*charPtr == '\\')
-        {
-            // found the last backlash
-            break;
-        }
-        *charPtr = '\0';
-    }
-
-    // init paths to library and help files based on location of .EXE
-    MakeHelpPathName(LibPathName,     "logolib\\");
-    MakeHelpPathName(szHelpFileName,  "logohelp.chm");
-
-    DWORD tempPathLength;
-    char  tempPath[MAX_PATH];
-    bool  tempPathIsValid = false;
-
-    tempPathLength = GetTempPath(
-        sizeof tempPath,
-        tempPath);
-    if (tempPathLength != 0)
-    {
-        DWORD tempPathAttributes = GetFileAttributes(tempPath);
-        if (tempPathAttributes != 0xFFFFFFFF)
-        {
-            // tempPath must be a directory that we can write to
-            if ( (tempPathAttributes & FILE_ATTRIBUTE_DIRECTORY) &&
-                 !(tempPathAttributes & FILE_ATTRIBUTE_READONLY))
-            {
-                tempPathIsValid = true;
-            }
-        }
-    }
-
-    if (!tempPathIsValid)
-    {
-        // warn the user that no TMP variable was defined.
-        MessageBox(
-            0,
-            LOCALIZED_ERROR_TMPNOTDEFINED,
-            LOCALIZED_WARNING,
-            MB_OK);
-
-        strcpy(tempPath, "C:");
-    }
-
-    // construct the name of the temporary editor file
-    MakeTempFilename(TempPathName, tempPath, "mswlogo.tmp");
-
-    // construct the name of the temporary bitmap file
-    MakeTempFilename(TempBmpName, tempPath, "mswlogo.bmp");
-
-    // construct the name of the clipboard file
-    MakeTempFilename(TempClipName, tempPath, "mswlogo.clp");
-
-    g_PrinterAreaXLow   = GetConfigurationInt("Printer.Xlow",  -BitMapWidth  / 2);
-    g_PrinterAreaXHigh  = GetConfigurationInt("Printer.XHigh", +BitMapWidth  / 2);
-    g_PrinterAreaYLow   = GetConfigurationInt("Printer.Ylow",  -BitMapHeight / 2);
-    g_PrinterAreaYHigh  = GetConfigurationInt("Printer.YHigh", +BitMapHeight / 2);
-    g_PrinterAreaPixels = GetConfigurationInt("Printer.Pixels", max(BitMapWidth, BitMapHeight) / 8);
+    init_graphics();
 }
 
 TMyApp::~TMyApp()
@@ -664,150 +362,6 @@ TMyApp::~TMyApp()
 
 void TMyApp::EvSysColorChange()
 {
-}
-
-void MyMessageScan()
-{
-    /* depending on yield flag check for messages */
-
-    if (yield_flag)
-    {
-        MSG msg;
-        while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
-        {
-            TranslateMessage(&msg);
-            DispatchMessage(&msg);
-        }
-    }
-}
-
-
-void 
-ShowMessage(
-    const char * Title,
-    const char * Message
-    )
-{
-    if (MainWindowx->CommandWindow != NULL)
-    {
-        MainWindowx->CommandWindow->MessageBox(Message, Title);
-    }
-}
-
-void
-ShowErrorMessage(
-    const char * Message
-    )
-{
-    ShowMessage(LOCALIZED_ERROR, Message);
-}
-
-// Maps ErrorCode to a string and displays it in a message box
-void
-ShowErrorMessage(
-    ERR_TYPES  ErrorCode
-    )
-{
-    const char * errorMessage = NULL;
-
-    switch (ErrorCode)
-    {
-    case IMAGE_GIF_LOAD_FAILED:
-        errorMessage = LOCALIZED_ERROR_GIFREADFAILED;
-        break;
-
-    case IMAGE_GIF_SAVE_FAILED:
-        errorMessage = LOCALIZED_ERROR_GIFSAVEFAILED;
-        break;
-
-    case IMAGE_BMP_OPEN_FAILED:
-        errorMessage = LOCALIZED_COULDNOTOPENBMP;
-        break;
-
-    case IMAGE_BMP_CREATE_FAILED:
-        errorMessage = LOCALIZED_COULDNOTCREATEBMP;
-        break;
-
-    case IMAGE_BMP_WRITE_FAILED:
-        errorMessage = LOCALIZED_COULDNOTWRITEBMP;
-        break;
-
-    case IMAGE_BMP_INVALID:
-        errorMessage = LOCALIZED_NOTVALIDBMP;
-        break;
-    }
-
-    if (errorMessage != NULL)
-    {
-        ShowErrorMessage(errorMessage);
-    }
-}
-
-// Shows a message box and sets the logo error.
-// This helper was created because these two operations appear next
-// to each other very often, not because coupling the operations is 
-// good design.
-void 
-ShowMessageAndStop(
-    const char * Title,
-    const char * Message
-    )
-{
-    ShowMessage(Title, Message);
-    err_logo(STOP_ERROR, NIL);
-}
-
-void
-ShowErrorMessageAndStop(
-    const char * Message
-    )
-{
-    ShowMessageAndStop(LOCALIZED_ERROR, Message);
-}
-
-
-const DWORD PROCESS_DEP_DISABLE                     = 0x00000000;
-const DWORD PROCESS_DEP_ENABLE                      = 0x00000001;
-const DWORD PROCESS_DEP_DISABLE_ATL_THUNK_EMULATION = 0x00000002;
-
-// Best-effort to disable Data Execution Protection.
-//
-// In general, programs shouldn't disable DEP because that would leave
-// their users prone to some buffer-overflow attacks.  However, OWL
-// uses some self-modifying code its window message handling.  When
-// Windows sees this happening, it assumes the worst--that some buffer
-// overrun has been exploited--and terminates the program.
-//
-// For backward-compatibility reasons, Microsoft published an API that
-// allows 32-bit applications to disable DEP on a per-instance basis.
-// This is not available in all operating systems, so it is called
-// through GetProcAddress() on a best-effort basis.  In the worst case,
-// DEP will be enabled on FMSLogo, FMSLogo won't be able to disable
-// it, and it will crash (that is, we're no worse off than before).
-void DisableDataExecutionProtection()
-{
-    typedef BOOL (WINAPI *SETPROCESSDEPPOLICY) (DWORD);
-
-    HMODULE kernel32 = GetModuleHandleW(L"kernel32.dll");
-    if (kernel32 == NULL)
-    {
-        // somehow this process didn't link to kernel32.dll
-        return;
-    }
-
-    SETPROCESSDEPPOLICY setProcessDepPolicy = (SETPROCESSDEPPOLICY)GetProcAddress(
-        kernel32,
-        "SetProcessDEPPolicy");
-    if (setProcessDepPolicy == NULL)
-    {
-        // SetProcessDEPPolicy was added in XP SP3 and Vista SP1.
-        // Any OS before then either doesn't support DEP or doesn't
-        // provide an API to disable it.
-        return;
-    }
-
-    // Disable the DEP policy on a best-effort basis.
-    setProcessDepPolicy(PROCESS_DEP_DISABLE);
 }
 
 int *TopOfStack;
@@ -854,10 +408,7 @@ WinMain(
 
 #endif // MEM_DEBUG
 
-
-    memset(&g_OsVersionInformation, 0, sizeof g_OsVersionInformation);
-    g_OsVersionInformation.dwOSVersionInfoSize = sizeof g_OsVersionInformation;
-    GetVersionEx(&g_OsVersionInformation);
+    init_osversion();
 
     DisableDataExecutionProtection();
 
@@ -1049,22 +600,9 @@ WinMain(
     GCMAX = GetConfigurationInt("GCStackSize", 8192);
 
     // Get video mode parameters
-    HDC TempDC = GetDC(0);
-
-    MaxColors = pow(
-        2,
-        GetDeviceCaps(TempDC, BITSPIXEL) + GetDeviceCaps(TempDC, PLANES));
-
-    ReleaseDC(0, TempDC);
-
-    // Get Dialog Units for Controls
-    BaseUnitsx = LOWORD(GetDialogBaseUnits());
-    BaseUnitsy = HIWORD(GetDialogBaseUnits());
+    init_videomode();
 
     srand(time(NULL));
-
-    // alloc and init hash table
-    hash_table = (NODE **) calloc(sizeof(NODE *), HASH_LEN);
 
     // alloc garbage collector stack
     gcstack = (NODE **) malloc(sizeof(NODE *) *GCMAX);
@@ -1072,42 +610,21 @@ WinMain(
     gctop = gcstack;
 
     // init the timer callback array
-    for (i = 0; i < MAX_TIMERS; i++)
-    {
-        timer_callback[i] = NULL;
-    }
+    init_timers();
 
     // alloc and init the bitmap cut array
     init_bitmaps();
 
     // alloc and init the turtles array
-    g_TurtlesLimit = 1;
-    g_MaxTurtle    = 0;
-    g_Turtles      = (Turtle *) calloc(sizeof(*g_Turtles), g_TurtlesLimit);
-    g_SelectedTurtle = &g_Turtles[g_MaxTurtle];
-
-    InitializeTurtle(g_SelectedTurtle);
-
-    // init the special turtles
-    g_SpecialTurtles[SPECIAL_TURTLE_EYE_LOCATION].IsSpecial   = true;
-    g_SpecialTurtles[SPECIAL_TURTLE_LIGHT_LOCATION].IsSpecial = true;
-    g_SpecialTurtles[SPECIAL_TURTLE_EYE_FIXATION].IsSpecial   = true;
+    init_turtles();
 
     // init global pen state
-    g_PenState.Color.red   = 0x00;
-    g_PenState.Color.green = 0x00;
-    g_PenState.Color.blue  = 0x00;
-    g_PenState.Width     = 1;
-    g_PenState.Mode      = COPY_PUT;
-    g_PenState.IsErasing = false;
-
+    init_penstate();
 
     // init logo kernel
     init();
 
-    // get an hourglass cursor
-    hCursorWait = LoadCursor(NULL, IDC_WAIT);
-    hCursorArrow = LoadCursor(NULL, IDC_ARROW);
+    init_cursors();
 
     if (!Scintilla_RegisterClasses(hInstance))
     {
@@ -1144,12 +661,9 @@ WinMain(
 
     uninit_bitmaps();
 
-    free(g_Turtles);
+    uninit_turtles();
 
     free(gcstack);
-
-    free(hash_table);
-
 
     // release the HTML Help subsystem
     HtmlHelpUninitialize();
@@ -1186,346 +700,6 @@ WinMain(
 #endif // MEM_DEBUG
 
     return exitCode;
-}
-
-static
-void
-transline_helper(
-    const LOGPEN & LogicalPen,
-    HPEN           Pen,
-    int            LineMode,
-    int            FromX,
-    int            FromY,
-    int            ToX,
-    int            ToY
-    )
-{
-    // Convert from Cartesian coordinates to logical window coordinates.
-    FromX =  FromX + xoffset;
-    FromY = -FromY + yoffset;
-    ToX   =  ToX   + xoffset;
-    ToY   = -ToY   + yoffset;
-
-    HDC MemDC = MainWindowx->ScreenWindow->GetMemoryDeviceContext();
-
-    if (EnablePalette)
-    {
-        OldPalette = SelectPalette(MemDC, ThePalette, FALSE);
-        RealizePalette(MemDC);
-    }
-
-    SetROP2(MemDC, LineMode);
-
-    HPEN oldPen = (HPEN) SelectObject(MemDC, Pen);
-
-    MoveToEx(MemDC, FromX, FromY, 0);
-    LineTo(MemDC, ToX, ToY);
-
-    // HACK:
-    // LineTo() API does not draw a pixel in the location where it moves to.
-    // As a result, moving forward changing colors, then moving backward leaves
-    // a dot of the previous color at the location where the direction changed.
-    // To address this, we SetPixel to color the end point.
-    //
-    // This isn't necessary when the pensize != 1.
-    // This would be bad to do in penreverse mode.
-    //
-    PENSTATE & penState = GetPenStateForSelectedTurtle();
-    if (penState.Width < 2 && penState.Mode != XOR_PUT)
-    {
-        SetPixel(MemDC, ToX, ToY, LogicalPen.lopnColor);
-    }
-
-    if (EnablePalette)
-    {
-        SelectPalette(MemDC, OldPalette, FALSE);
-    }
-
-    // restore the previous bitmap and pen
-    SelectObject(MemDC, oldPen);
-
-
-    // update the screen
-    if (zoom_flag)
-    {
-        // We are zoomed, so it would be very difficult to just
-        // draw the line on the screen.  Instead, invalidate the
-        // portion of the screen window that corresponds
-        // to the region containing the line which we just drew.
-        TRect screenRect;
-        if (FromX < ToX)
-        {
-            screenRect.left   = FromX - penState.Width;
-            screenRect.right  = ToX   + penState.Width;
-        }
-        else
-        {
-            screenRect.left   = ToX    - penState.Width;
-            screenRect.right  = FromX  + penState.Width;
-        }
-
-        if (FromY < ToY)
-        {
-            screenRect.top    = FromY - penState.Width;
-            screenRect.bottom = ToY   + penState.Width;
-        }
-        else
-        {
-            screenRect.top    = ToY   - penState.Width;
-            screenRect.bottom = FromY + penState.Width;
-        }
-
-        // remap the screen rectangle based on the zoom factor
-        screenRect.left   *= the_zoom;
-        screenRect.right  *= the_zoom;
-        screenRect.top    *= the_zoom;
-        screenRect.bottom *= the_zoom;
-
-        const UINT scrollerX = MainWindowx->ScreenWindow->Scroller->XPos;
-        const UINT scrollerY = MainWindowx->ScreenWindow->Scroller->YPos;
-
-        screenRect.left   -= scrollerX;
-        screenRect.right  -= scrollerX;
-        screenRect.top    -= scrollerY;
-        screenRect.bottom -= scrollerY;
-
-        MainWindowx->ScreenWindow->InvalidateRect(screenRect, false);
-    }
-    else
-    {
-        // We are not zoomed.
-        // Draw the line directly on the screen, rather than invalidating
-        // the region containing the line because doing is 400% faster
-        // on the squiral benchmark.
-        HDC ScreenDC = MainWindowx->ScreenWindow->GetScreenDeviceContext();
-        SetROP2(ScreenDC, LineMode);
-
-        if (EnablePalette)
-        {
-            OldPalette = SelectPalette(ScreenDC, ThePalette, FALSE);
-            RealizePalette(ScreenDC);
-        }
-
-        oldPen = (HPEN) SelectObject(ScreenDC, Pen);
-
-        TScroller * scroller = MainWindowx->ScreenWindow->Scroller;
-
-        UINT screenFromX = FromX - scroller->XPos;
-        UINT screenFromY = FromY - scroller->YPos;
-
-        UINT screenToX   = ToX   - scroller->XPos;
-        UINT screenToY   = ToY   - scroller->YPos;
-
-        MoveToEx(ScreenDC, screenFromX, screenFromY, 0);
-        LineTo(ScreenDC, screenToX, screenToY);
-
-        PENSTATE & penState = GetPenStateForSelectedTurtle();
-        if (penState.Width < 2 && penState.Mode != XOR_PUT)
-        {
-            SetPixel(ScreenDC, screenFromX, screenFromY, LogicalPen.lopnColor);
-        }
-
-        if (EnablePalette)
-        {
-            SelectPalette(ScreenDC, OldPalette, FALSE);
-        }
-
-        // restore the previous pen
-        SelectObject(ScreenDC, oldPen);
-    }
-}
-
-
-static
-void 
-transline3d(
-    const LOGPEN &logPen, 
-    HPEN         &pen, 
-    long          modex, 
-    const Point & from,
-    const Point & to
-    )
-{
-    // First, project the point from world coordinates to
-    // window coordinates.
-    VECTOR from3d;
-    from3d.x = from.x / WorldWidth;
-    from3d.y = from.y / WorldHeight;
-    from3d.z = from.z / WorldDepth;
-
-    VECTOR to3d;
-    to3d.x = to.x / WorldWidth;
-    to3d.y = to.y / WorldHeight;
-    to3d.z = to.z / WorldDepth;
-
-    if (bPolyFlag)
-    {
-        if (!ThePolygon ||
-            (fabs(ThePolygon->Vertex.x - to3d.x) > FLONUM_EPSILON) ||
-            (fabs(ThePolygon->Vertex.y - to3d.y) > FLONUM_EPSILON) ||
-            (fabs(ThePolygon->Vertex.z - to3d.z) > FLONUM_EPSILON))
-        {
-            ThreeD.AddPoint(&ThePolygon, to3d);
-        }
-    }
-
-    POINT from2d;
-    POINT to2d;
-    if (!ThreeD.TransformSegment(from3d, to3d, from2d, to2d))
-    {
-        return;
-    }
-
-    // Now that we have projected this line into the
-    // window coordinates, we can call the 2D version to
-    // actually draw the line.
-    transline_helper(
-        logPen,
-        pen,
-        modex,
-        from2d.x,
-        from2d.y,
-        to2d.x,
-        to2d.y);
-}
-
-static
-void 
-transline(
-    const LOGPEN &logPen, 
-    HPEN         &pen, 
-    long          modex, 
-    const Point & from,
-    const Point & to
-    )
-{
-    transline_helper(
-        logPen,
-        pen,
-        modex,
-        g_round(from.x),
-        g_round(from.y),
-        g_round(to.x),
-        g_round(to.y));
-}
-
-
-void move_to(FLONUM x, FLONUM y)
-{
-    g_OldPos.x = x;
-    g_OldPos.y = y;
-}
-
-void move_to_3d(FLONUM x, FLONUM y, FLONUM z)
-{
-    g_OldPos.x = x;
-    g_OldPos.y = y;
-    g_OldPos.z = z;
-}
-
-void line_to(FLONUM x, FLONUM y)
-{
-    if (g_SelectedTurtle->IsSpecial)
-    {
-        // special turtles don't draw lines when they move
-        return;
-    }
-
-    if (!g_SelectedTurtle->IsPenUp)
-    {
-        vector_count++;
-        update_status_vectors();
-
-        Point toPoint;
-        toPoint.x = x;
-        toPoint.y = y;
-
-        HPEN           pen;
-        const LOGPEN * logicalPen;
-        int            rasterMode;
-
-        if (GetPenStateForSelectedTurtle().IsErasing)
-        {
-            pen        = g_ErasePen;
-            logicalPen = &g_LogicalErasePen;
-            rasterMode = R2_COPYPEN;
-        }
-        else
-        {
-            pen        = g_NormalPen;
-            logicalPen = &g_LogicalNormalPen;
-
-            if (GetPenStateForSelectedTurtle().Mode == XOR_PUT)
-            {
-                rasterMode = R2_NOT;
-            }
-            else
-            {
-                rasterMode = R2_COPYPEN;
-            }
-        }
-
-        transline(
-            *logicalPen,
-            pen,
-            rasterMode,
-            g_OldPos,
-            toPoint);
-    }
-}
-
-void line_to_3d(const Point & ToPoint)
-{
-    if (g_SelectedTurtle->IsSpecial)
-    {
-        // special turtles don't draw lines when they move
-        return;
-    }
-
-    if (!g_SelectedTurtle->IsPenUp)
-    {
-        vector_count++;
-        update_status_vectors();
-
-        HPEN           pen;
-        const LOGPEN * logicalPen;
-        int            rasterMode;
-
-        if (GetPenStateForSelectedTurtle().IsErasing)
-        {
-            pen        = g_ErasePen;
-            logicalPen = &g_LogicalErasePen;
-            rasterMode = R2_COPYPEN;
-        }
-        else
-        {
-            pen        = g_NormalPen;
-            logicalPen = &g_LogicalNormalPen;
-
-            if (GetPenStateForSelectedTurtle().Mode == XOR_PUT)
-            {
-                rasterMode = R2_NOT;
-            }
-            else
-            {
-                rasterMode = R2_COPYPEN;
-            }
-        }
-
-        transline3d(
-            *logicalPen,
-            pen,
-            rasterMode,
-            g_OldPos,
-            ToPoint);
-    }
-}
-
-// Creates path relative to the directory from to which FMSLogo is installed.
-void MakeHelpPathName(char *OutBuffer, const char * TheFileName)
-{
-    strncpy(OutBuffer, g_FmslogoBaseDirectory, MAX_PATH);
-    strncat(OutBuffer, TheFileName,            MAX_PATH - strlen(OutBuffer));
 }
 
 

@@ -28,6 +28,7 @@
 #include "logodata.h"
 #include "mem.h"
 #include "parse.h"
+#include "argumentutils.h"
 #include "dynamicbuffer.h"
 #include "localizedstrings.h"
 

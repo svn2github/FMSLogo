@@ -7,6 +7,11 @@
 #include <windows.h>
 #include "vector.h"
 
+// manifest constants
+const int WorldWidth = 1000;       // Current World size in X
+const int WorldHeight = 1000;      // Current World size in Y
+const int WorldDepth = 1000;       // Current World size in Z
+
 // Three dimensional viewing class
 class TThreeD
 {

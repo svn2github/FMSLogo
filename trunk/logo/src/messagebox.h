@@ -15,26 +15,16 @@
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
-#ifndef __MULTIMEDIA_WINDOW_H_
-#define __MULTIMEDIA_WINDOW_H_
+#ifndef __MESSAGEBOX_H_
+#define __MESSAGEBOX_H_
 
-// types
-struct NODE;
+enum ERR_TYPES;
 
-// global variables
-extern char mci_callback[];
-extern char *timer_callback[];
+// Functions
+extern void ShowMessage(const char * Title, const char * Message);
+extern void ShowMessageAndStop(const char * Title, const char * Message);
+extern void ShowErrorMessageAndStop(const char * Message);
+extern void ShowErrorMessage(const char * Message);
+extern void ShowErrorMessage(ERR_TYPES ErrorCode);
 
-// function declarations
-extern NODE *lmci(NODE *arg);
-extern NODE *lmidiopen(NODE *arg);
-extern NODE *lmidiclose(NODE *arg);
-extern NODE *lmidimessage(NODE *arg);
-extern NODE *lsound(NODE *arg);
-extern NODE *lplaywave(NODE *args);
-extern NODE *lsettimer(NODE *arg);
-extern NODE *lcleartimer(NODE *arg);
-extern void init_timers();
-extern void uninitialize_timers();
-
-#endif // __MULTIMEDIA_WINDOW_H_
+#endif // _MESSAGEBOX_H_

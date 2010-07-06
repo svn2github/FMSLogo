@@ -15,26 +15,12 @@
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
-#ifndef __MULTIMEDIA_WINDOW_H_
-#define __MULTIMEDIA_WINDOW_H_
+#ifndef __ARGUMENT_UTILS_H_
+#define __ARGUMENT_UTILS_H_
 
-// types
 struct NODE;
 
-// global variables
-extern char mci_callback[];
-extern char *timer_callback[];
+// Functions
+extern void cnv_strnode_string(char *textbuf, NODE *arg);
 
-// function declarations
-extern NODE *lmci(NODE *arg);
-extern NODE *lmidiopen(NODE *arg);
-extern NODE *lmidiclose(NODE *arg);
-extern NODE *lmidimessage(NODE *arg);
-extern NODE *lsound(NODE *arg);
-extern NODE *lplaywave(NODE *args);
-extern NODE *lsettimer(NODE *arg);
-extern NODE *lcleartimer(NODE *arg);
-extern void init_timers();
-extern void uninitialize_timers();
-
-#endif // __MULTIMEDIA_WINDOW_H_
+#endif // _ARGUMENT_UTILS_H_

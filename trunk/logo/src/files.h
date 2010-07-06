@@ -57,6 +57,8 @@ private:
     FILE *  m_DefaultStream;
 };
 
+// global variables
+extern NODE *current_line;
 
 // function declarations
 extern void PrintWorkspaceToFileStream(FILE * FileStream);

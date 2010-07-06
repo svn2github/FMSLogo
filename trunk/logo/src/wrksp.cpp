@@ -32,7 +32,7 @@
 #include "logomath.h"
 #include "paren.h"
 #include "ibmterm.h"
-#include "main.h"
+#include "startup.h"
 #include "print.h"
 #include "files.h"
 #include "unix.h"
@@ -42,6 +42,9 @@
 #include "mainwind.h"
 #include "screenwindow.h"
 
+bool bExpert    = false;               // Expert mode
+bool yield_flag = true;                // Flag to signal yield state
+bool IsDirty    = false;               // Flag to signal to query user ok to quit
 bool to_pending = false;
 fpos_t LinesLoadedOnEdit;
 
@@ -1438,7 +1441,7 @@ NODE *ledit(NODE *args)
         // non-experts shouldn't have to understand the complexities of 
         // having multiple editors open.  So if an editor is open, give
         // it focus instead of opening a new one.
-        if (MainWindowx != NULL)
+        if (GetMainWindow() != NULL)
         {
             HWND editor = GetEditorWindow();
             if (editor != NULL)

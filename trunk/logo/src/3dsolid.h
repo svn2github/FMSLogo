@@ -132,5 +132,7 @@ class TThreeDSolid : public TThreeD
     void TraverseTree(BSPNode* tree);
 };
 
+// global variables
+extern TThreeDSolid ThreeD;
 
 #endif // _3DSOLID_H_

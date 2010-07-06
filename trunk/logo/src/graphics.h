@@ -22,6 +22,7 @@
 #include "vector.h"
 #include "3dsolid.h"
 
+// types
 struct Color
 {
     int   red;
@@ -66,6 +67,10 @@ struct Turtle
     bool     Padding;
 };
 
+// global variables
+extern long vector_count;
+
+// function declarations
 extern COLORREF GetColorArgument(NODE* args);
 extern FIXNUM g_round(FLONUM n);
 extern FLONUM numeric_node_to_flonum(const NODE* numeric_node);
@@ -156,12 +161,6 @@ extern NODE *lclearpalette(NODE *arg);
 extern NODE *lbitload(NODE *arg);
 extern NODE *lbitloadsize(NODE *arg);
 extern NODE *lbitsize(NODE *arg);
-extern void cnv_strnode_string(char *textbuf, NODE *arg);
-extern bool process_special_conditions(void);
-extern void do_execution(char *string);
-extern void start_execution(void);
-extern void stop_execution(void);
-extern bool is_executing(void);
 extern NODE *lbitsave(NODE *arg);
 extern NODE *lgifsave(NODE *arg);
 extern NODE *lgifload(NODE *arg);

@@ -32,11 +32,19 @@ extern void eval_driver(NODE *line);
 extern NODE *lapply(NODE *args);
 extern NODE *lqm(NODE *args);
 extern NODE *llocal(NODE *args);
+extern bool process_special_conditions(void);
+extern void do_execution(char *string);
+extern void start_execution(void);
+extern void stop_execution(void);
+extern bool is_executing(void);
 extern void uninitialize_eval(void);
 
 
 // global variables
 extern FIXNUM repcountup;
+extern long eval_count;
+extern bool stepflag;
+extern bool traceflag;
 
 extern NODE *fun;
 extern NODE *ufun;

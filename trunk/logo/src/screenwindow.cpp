@@ -25,6 +25,7 @@
 #include "mainframe.h"
 #include "cmdwind.h"
 #include "myfilewn.h"
+#include "startup.h"
 #include <owl/scroller.h>
 
 HWND GetScreenWindow()

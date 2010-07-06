@@ -24,6 +24,8 @@
 
 #include "init.h"
 #include "main.h"
+#include "graphics.h"
+#include "argumentutils.h"
 #include "logodata.h"
 #include "logorc.h"
 #include "lists.h"

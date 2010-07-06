@@ -51,6 +51,8 @@ clean :
 tags : *.cpp *.h *.c
 	etags $(shell /usr/bin/find . -iname '*.cpp' -o -iname '*.h' -o -iname '*.c' -o -iname '*.cxx')
 
+screensaver :
+	$(MAKE) -C ../screensaver
 
 test :
 	perl ../../extras/check-extra.pl Logolib/*

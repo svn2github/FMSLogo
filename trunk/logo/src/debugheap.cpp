@@ -20,7 +20,7 @@
 
 #include "debugheap.h"
 #include "logocore.h"
-#include "main.h"
+#include "graphwin.h"
 #include "print.h"
 
 // ASSUME_NO_INVALID_FREES

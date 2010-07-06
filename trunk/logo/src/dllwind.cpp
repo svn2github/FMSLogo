@@ -24,7 +24,7 @@
 #include <stdio.h>
 
 #include "logocore.h"
-#include "graphics.h"
+#include "argumentutils.h"
 #include "eval.h"
 #include "init.h"
 #include "error.h"

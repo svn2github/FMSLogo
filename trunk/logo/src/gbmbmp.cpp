@@ -559,9 +559,9 @@ static int bright(const GBMRGB *gbmrgb)
     return gbmrgb->r*30+gbmrgb->g*60+gbmrgb->b*10;
 }
 
-static int write_inv(int fd, const char *buffer, int count)
+static int write_inv(int fd, const byte *buffer, int count)
 {
-    char small_buf[1024];
+    byte small_buf[1024];
     int so_far = 0, this_go, written;
 
     while ( so_far < count )

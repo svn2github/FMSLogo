@@ -25,6 +25,8 @@
 #include <algorithm>
 using namespace std;
 
+#include "parse.h"
+#include "argumentutils.h"
 #include "main.h"
 #include "logocore.h"
 #include "dynamicbuffer.h"
@@ -39,6 +41,7 @@ using namespace std;
 #include "mem.h"
 #include "logomath.h"
 #include "appendablelist.h"
+#include "graphics.h"
 #include "localizedstrings.h"
 
 #ifndef FMSLOGO_SCREENSAVER

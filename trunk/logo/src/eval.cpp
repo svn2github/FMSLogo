@@ -26,6 +26,7 @@
 #include "init.h"
 #include "files.h"
 #include "main.h"
+#include "graphwin.h"
 #include "mem.h"
 #include "error.h"
 #include "print.h"
@@ -40,6 +41,7 @@
 #include "unix.h"
 #include "intern.h"
 #include "lists.h"
+#include "startup.h"
 
 #define assign(to, from)    (to = reref(to, from))
 
@@ -99,14 +101,21 @@ FIXNUM g_ValueStatus;
 
 FIXNUM dont_fix_ift = 0;
 
+long eval_count = 0;             // current count of "evaluations" calls
+
 int g_CatchErrorCount = 0;       // the number of nested blocks of CATCH "ERROR
                                  // This is used to disable "ERRACT processing.
+
+bool traceflag = false;          // Flag to signal trace button is active
+bool stepflag = false;           // Flag to signal step button is active
 
 static NODE *qm_list = NIL;      // question mark list
 static int trace_level = 0;      // indentation level when tracing
 
 static NODE *var       = NIL;    // frame pointer into var_stack
 static NODE *var_stack = NIL;    // the stack of variables and their bindings
+
+static int halt_flag = 0;        // Flag to signal it's OK to halt
 
 
 // Load the definition of ProcNode if the definition of ProcNode
@@ -1668,6 +1677,156 @@ NODE *llocal(NODE *args)
     return Unbound;
 }
 
+bool process_special_conditions()
+{
+    bool error_happened = false;
+
+    if (stopping_flag == THROWING)
+    {
+        if (Error.Equals(throw_node))
+        {
+            err_print();
+            error_happened = true;
+        }
+        else if (System.Equals(throw_node))
+        {
+            PostQuitMessage(1); // set the exit code to 1
+            prepare_to_exit(true);
+        }
+        else if (!Toplevel.Equals(throw_node))
+        {
+            err_logo(NO_CATCH_TAG, throw_node);
+            err_print();
+            error_happened = true;
+        }
+
+        stopping_flag = RUN;
+    }
+
+    if (stopping_flag == STOP || stopping_flag == OUTPUT)
+    {
+        // This is probably a bug, not a user error.
+        // We shouldn't be able to get here without throwing
+        // an AT_TOPLEVEL error, which would result in a 
+        // stopping_flag of THROWING.
+        ndprintf(
+            stdout, 
+            "%t.\n"
+            LOCALIZED_ERROR_ATTOPLEVEL2);
+        stopping_flag = RUN;
+    }
+
+    return error_happened;
+}
+
+void start_execution()
+{
+    // if executing then it's ok to halt
+    assert(0 <= halt_flag);
+
+    halt_flag++;
+    if (halt_flag < 1)
+    {
+        halt_flag = 1;
+    }
+}
+
+void stop_execution()
+{
+    // not ok to halt now
+    assert(1 <= halt_flag);
+
+    halt_flag--;
+    if (halt_flag < 0)
+    {
+        halt_flag = 0;
+    }
+}
+
+bool is_executing()
+{
+    assert(0 <= halt_flag);
+    return halt_flag != 0;
+}
+
+void do_execution(char * logocommand)
+{
+    // if something there continue
+    if (strlen(logocommand) != 0)
+    {
+        start_execution();
+
+        // this code emulates the TTY model used in UCBLOGO main loop
+        NODETYPES this_type = STRING;
+
+        // do control character processing
+        for (char * c = logocommand; *c != '\0'; c++)
+        {
+            if (*c == '\\')
+            {
+                strcpy(c, c + 1);
+                if (*c)
+                {
+                    if (*c == 'n') 
+                    {
+                        *c = '\n';
+                    }
+                    *c = ecma_set(*c);
+                }
+                this_type = BACKSLASH_STRING;
+            }
+        }
+
+        check_reserve_tank();
+
+        // Set the stopping_flag to RUN so that we don't print any spurious 
+        // warnings about using OUTPUT or STOP while not in a procedure.
+        // This is important because do_execution() can be called to process
+        // event handlers while evaluator() is running.
+        // See bug #1479111 for details.
+        FIXNUM   saved_value_status  = g_ValueStatus;
+        CTRLTYPE saved_stopping_flag = stopping_flag;
+        NODE *   saved_output_node   = vref(output_node);
+        NODE *   saved_current_line  = current_line;
+
+        stopping_flag = RUN;
+
+        // turn text into a NODE and parse it
+        current_line = vref(make_strnode(
+         logocommand, 
+         (int) strlen(logocommand), 
+         this_type, 
+         strnzcpy));
+
+        NODE * exec_list = vref(parser(current_line, true));
+
+        // now process it
+        g_ValueStatus = VALUE_STATUS_NotOk;
+        eval_driver(exec_list);
+
+        process_special_conditions();
+
+        // restore the stopping flag
+        stopping_flag = saved_stopping_flag;
+        g_ValueStatus = saved_value_status;
+
+        deref(output_node);
+        output_node = saved_output_node;
+
+        // deallocate the line
+        deref(current_line);
+        current_line = saved_current_line;
+
+        // this is a hack to force garbage collector to properly clean up
+        if (exec_list != NIL)
+        {
+            settype(exec_list, CONS);
+            deref(exec_list);
+        }
+
+        stop_execution();
+    }
+}
 
 void uninitialize_eval()
 {

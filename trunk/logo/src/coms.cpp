@@ -31,7 +31,9 @@
 #include "logomath.h"
 #include "parse.h"
 #include "lists.h"
-#include "main.h"
+#include "graphwin.h"
+#include "graphics.h"
+#include "argumentutils.h"
 
 // ift_iff_flag: flag for if TEST has been called within the scope
 // -1 : TEST has not been called.

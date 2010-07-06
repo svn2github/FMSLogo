@@ -65,5 +65,8 @@ extern NODE *lcopydef(NODE *args);
 // global variables
 extern bool   to_pending;
 extern fpos_t LinesLoadedOnEdit;
+extern bool   yield_flag;
+extern bool   IsDirty;
+extern bool   bExpert;
 
 #endif // __WORKSPACE_H_

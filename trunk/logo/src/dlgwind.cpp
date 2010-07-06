@@ -30,12 +30,16 @@
 #include <owl/scrollba.h>
 #include <owl/inputdia.h>
 
+#include "dlgwind.h"
+
 #include "main.h"
+#include "devwind.h"
+#include "wrksp.h"
+#include "argumentutils.h"
 #include "mainframe.h"
 #include "lists.h"
 #include "logorc.h"
 #include "localizedstrings.h"
-#include "dlgwind.h"
 #include "init.h"
 #include "eval.h"
 #include "netwind.h"
@@ -63,8 +67,6 @@ enum WINDOWTYPE
     WINDOWTYPE_CheckBox,
     WINDOWTYPE_Dialog,
 };
-
-static HICON hCursorSave = 0; // handle for saved cursor
 
 class TClientRectangle
 {
@@ -2377,28 +2379,6 @@ NODE *lyesnobox(NODE *args)
             err_logo(STOP_ERROR, NIL);
             return Falsex.GetNode();
         }
-    }
-
-    return Unbound;
-}
-
-NODE *lsetcursorwait(NODE *)
-{
-    hCursorSave = ::SetCursor(hCursorWait);
-
-    return Unbound;
-}
-
-NODE *lsetcursorarrow(NODE *)
-{
-    if (hCursorSave)
-    {
-        ::SetCursor(hCursorSave);
-        hCursorSave = 0;
-    }
-    else
-    {
-        ::SetCursor(hCursorArrow);
     }
 
     return Unbound;

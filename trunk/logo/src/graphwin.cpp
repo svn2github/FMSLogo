@@ -22,6 +22,7 @@
 #include <windows.h>
 #include <htmlhelp.h>
 
+#include "activearea.h"
 #include "graphwin.h"
 #include "mainwind.h"
 
@@ -29,6 +30,8 @@
 #include "dlgwind.h"
 #include "statwind.h"
 
+#include "utils.h"
+#include "argumentutils.h"
 #include "appendablelist.h"
 #include "mem.h"
 #include "logomath.h"
@@ -38,6 +41,7 @@
 #include "parse.h"
 #include "error.h"
 #include "main.h"
+#include "wrksp.h"
 #include "lists.h"
 #include "eval.h"
 #include "init.h"
@@ -45,6 +49,7 @@
 #include "unix.h"
 #include "const.h"
 #include "screenwindow.h"
+#include "startup.h"
 
 #include "localizedstrings.h"
 
@@ -65,12 +70,47 @@ extern bool bIndexMode;
 extern int gbmBmpToGif(const char *BmpName, const char *GifName);
 extern int gbmGifToBmp(const char *GifName, const char *BmpName);
 
+// global variables
 int iDelay;
 int bAppendMode;
 int iLoop;
 int iTrans;
 
-// global variables
+RECT FullRect;                         // rectangle of the full bitmap
+
+LOGFONT FontRec;                       // record for label font
+
+LOGPEN g_LogicalNormalPen;             // Handle to "Normal" logical Pen
+HPEN   g_NormalPen;                    // Handle to "Normal" Pen
+
+LOGPEN g_LogicalErasePen;              // Handle to "Erase" logical Pen
+HPEN   g_ErasePen;                     // Handle to "Erase" Pen
+
+LOGBRUSH FloodBrush;                   // Handle to the "floodfill" brush
+LOGBRUSH ScreenBrush;                  // Handle to the "screen" background brush
+
+bool EnablePalette;                    // Flag to signal 256 color mode with palette
+HPALETTE OldPalette;                   // place holder for windows resources
+HPALETTE ThePalette;                   // Handle for the single color palette
+
+int xoffset = 0;                       // Used to go from logo to windows coords x
+int yoffset = 0;                       // Used to go from logo to windows coords y
+
+int BaseUnitsx = 0;                    // X Units Windows uses to for units in dialog
+int BaseUnitsy = 0;                    // Y Units Windows uses to for units in dialog
+
+bool IsTimeToExit = false;             // Flag to signal it's time to exit
+bool IsTimeToPause = false;            // UCBLOGO? pause flag
+bool IsTimeToHalt = false;             // UCBLOGO? halt flag
+bool zoom_flag = false;                // flag to signal in zoomed state
+FLONUM the_zoom = 1.0;                 // current zoom factor
+
+HBITMAP MemoryBitMap;                  // Backing store bitmap
+
+PLOGPALETTE MyLogPalette;              // Handle for the single logical color palette
+
+bool GiveFocusToEditbox = false;       // Flag to signal that focus should go to the editbox
+
 typedef HWND ( __stdcall *HTMLHELPFUNC)(HWND, PCSTR, UINT, DWORD);
 static HTMLHELPFUNC g_HtmlHelpFunc;
 static HMODULE      g_HtmlHelpLib;
@@ -78,6 +118,9 @@ static HMODULE      g_HtmlHelpLib;
 static CUTMAP * g_SelectedBitmap;
 static CUTMAP * g_Bitmaps;
 static int      g_BitmapsLimit;
+
+static PENSTATE g_PenState;              // The state of the current pen (color, mode, etc.)
+static long     MaxColors = 0;           // The maximum # of colors available
 
 struct font_find_t
 {
@@ -303,6 +346,69 @@ gifsave_helper(
     unlink(TempBmpName);
 
     return status;
+}
+
+PENSTATE & GetPenStateForSelectedTurtle()
+{
+    if (g_SelectedTurtle->HasOwnPenState)
+    {
+        return g_SelectedTurtle->PenState;
+    }
+
+    // the current turtle uses the global pen state
+    return g_PenState;
+}
+
+
+/* adds color to palette */
+COLORREF LoadColor(int dpenr, int dpeng, int dpenb)
+{
+    /* convert to color and find nearest match */
+    COLORREF color = PALETTERGB(dpenr, dpeng, dpenb);
+    int Index = GetNearestPaletteIndex(ThePalette, color);
+
+    /* if not exact and room for more then allocate it */
+    if ((PALETTERGB(
+             MyLogPalette->palPalEntry[Index].peRed,
+             MyLogPalette->palPalEntry[Index].peGreen,
+             MyLogPalette->palPalEntry[Index].peBlue) != color) && 
+        (MyLogPalette->palNumEntries < (MaxColors - 1)))
+    {
+
+        /* Why do check again? */
+        if (MyLogPalette->palNumEntries < 255)
+        {
+
+            // kill old palette
+            DeleteObject(ThePalette);
+
+            MyLogPalette->palPalEntry[MyLogPalette->palNumEntries].peRed = dpenr;
+            MyLogPalette->palPalEntry[MyLogPalette->palNumEntries].peGreen = dpeng;
+            MyLogPalette->palPalEntry[MyLogPalette->palNumEntries].peBlue = dpenb;
+            MyLogPalette->palPalEntry[MyLogPalette->palNumEntries].peFlags = 0;
+            MyLogPalette->palNumEntries++;
+
+            // if status window then update palette usage
+            update_status_paletteuse();
+
+            // make new palette with added color
+            ThePalette = CreatePalette(MyLogPalette);
+        }
+    }
+
+    /* return color new, matched or close */
+    return color;
+}
+
+// returns the dimensions of the working area, that is
+// the size of the desktop without the task bar.
+void GetWorkingAreaDimensions(int & Width, int & Height)
+{
+    RECT workingArea;
+
+    SystemParametersInfo(SPI_GETWORKAREA, 0, &workingArea, 0);
+    Width  = workingArea.right  - workingArea.left;
+    Height = workingArea.bottom - workingArea.top;
 }
 
 NODE *lgifsave(NODE *args)
@@ -3374,6 +3480,76 @@ void label(const char *s)
     DeleteObject(tempFont);
 }
 
+void MyMessageScan()
+{
+    // depending on yield flag check for messages
+    if (yield_flag)
+    {
+        MSG msg;
+        while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+        {
+            TranslateMessage(&msg);
+            DispatchMessage(&msg);
+        }
+    }
+}
+
+
+void init_videomode()
+{
+    // Get video mode parameters
+    HDC screenDeviceContext = GetDC(0);
+    if (screenDeviceContext)
+    {
+        int bitsPerPixel = GetDeviceCaps(screenDeviceContext, BITSPIXEL);
+        int totalPlanes  = GetDeviceCaps(screenDeviceContext, PLANES);
+
+        MaxColors = pow(2.0, bitsPerPixel + totalPlanes);
+
+        ReleaseDC(0, screenDeviceContext);
+    }
+
+    // Get Dialog Units for Controls
+    BaseUnitsx = LOWORD(GetDialogBaseUnits());
+    BaseUnitsy = HIWORD(GetDialogBaseUnits());
+
+    // check if a palette exists
+    HDC screen = CreateDC("DISPLAY", NULL, NULL, NULL);
+    if (screen != NULL)
+    {
+        if ((GetDeviceCaps(screen, RASTERCAPS) & RC_PALETTE) == 0)
+        {
+            EnablePalette = false;
+        }
+        else
+        {
+            EnablePalette = true;
+        }
+
+        DeleteDC(screen);
+    }
+
+    /* If palette then build one */
+    if (EnablePalette)
+    {
+        MyLogPalette = (LPLOGPALETTE) new char[sizeof(LOGPALETTE) + sizeof(PALETTEENTRY) * MaxColors];
+        MyLogPalette->palVersion = 0x300;
+        MyLogPalette->palNumEntries = 2;
+
+        MyLogPalette->palPalEntry[0].peRed = 0;
+        MyLogPalette->palPalEntry[0].peGreen = 0;
+        MyLogPalette->palPalEntry[0].peBlue = 0;
+        MyLogPalette->palPalEntry[0].peFlags = 0;
+
+        MyLogPalette->palPalEntry[1].peRed = 255;
+        MyLogPalette->palPalEntry[1].peGreen = 255;
+        MyLogPalette->palPalEntry[1].peBlue = 255;
+        MyLogPalette->palPalEntry[1].peFlags = 0;
+
+        ThePalette = CreatePalette(MyLogPalette);
+    }
+}
+
 void init_bitmaps()
 {
     // allocate the array of bitmaps
@@ -3398,6 +3574,36 @@ void uninit_bitmaps()
     free(g_Bitmaps);
 }
 
+void init_penstate()
+{
+    g_PenState.Color.red   = 0x00;
+    g_PenState.Color.green = 0x00;
+    g_PenState.Color.blue  = 0x00;
+    g_PenState.Width     = 1;
+    g_PenState.Mode      = COPY_PUT;
+    g_PenState.IsErasing = false;
+}
+
+
+void init_turtles()
+{
+    g_TurtlesLimit = 1;
+    g_MaxTurtle    = 0;
+    g_Turtles      = (Turtle *) calloc(sizeof(*g_Turtles), g_TurtlesLimit);
+    g_SelectedTurtle = &g_Turtles[g_MaxTurtle];
+
+    InitializeTurtle(g_SelectedTurtle);
+
+    // init the special turtles
+    g_SpecialTurtles[SPECIAL_TURTLE_EYE_LOCATION].IsSpecial   = true;
+    g_SpecialTurtles[SPECIAL_TURTLE_LIGHT_LOCATION].IsSpecial = true;
+    g_SpecialTurtles[SPECIAL_TURTLE_EYE_FIXATION].IsSpecial   = true;
+}
+
+void uninit_turtles()
+{
+    free(g_Turtles);
+}
 
 void exit_program(void)
 {

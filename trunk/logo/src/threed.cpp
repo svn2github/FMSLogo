@@ -23,9 +23,10 @@
 #include <math.h>
 
 #include "graphics.h"
-#include "main.h"
+#include "graphwin.h"
 #include "const.h"
 
+TThreeDSolid ThreeD;
 
 TThreeD::TThreeD()
 {

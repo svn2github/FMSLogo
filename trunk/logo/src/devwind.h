@@ -19,6 +19,29 @@
 
 struct NODE;
 
+enum KEYBOARDCAPTURE
+{
+    KEYBOARDCAPTURE_Off,
+    KEYBOARDCAPTURE_KeyDown,
+    KEYBOARDCAPTURE_KeyDownKeyUp,
+};
+
+// global variables
+extern char *keyboard_status;
+extern char *keyboard_keydown;
+extern char *keyboard_keyup;
+extern char *mouse_lbuttondown;
+extern char *mouse_lbuttonup;
+extern char *mouse_rbuttondown;
+extern char *mouse_rbuttonup;
+extern char *mouse_mousemove;
+
+extern enum KEYBOARDCAPTURE KeyboardCapture;
+extern int keyboard_value;
+extern bool MouseCaptureIsEnabled;
+extern int mouse_posx;
+extern int mouse_posy;
+
 // function declarations
 extern bool CheckOnScreenControls();
 extern NODE *ldebugwindows(NODE *args);

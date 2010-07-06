@@ -21,6 +21,7 @@
  */
 
 #include "main.h"
+#include "argumentutils.h"
 #include "init.h"
 #include "logodata.h"
 

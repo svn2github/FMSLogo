@@ -23,6 +23,8 @@
 #include "cmdwind.h"
 #include "logorc.h"
 #include "main.h"
+#include "eval.h"
+#include "graphwin.h"
 #include "mem.h"
 #include "utils.h"
 #include "ibmterm.h"

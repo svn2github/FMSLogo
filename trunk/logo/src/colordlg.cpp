@@ -17,6 +17,8 @@
 
 #include "colordlg.h"
 #include "main.h"
+#include "graphwin.h"
+#include "graphics.h"
 #include "statwind.h"
 #include "logorc.h"
 #include "mainwind.h"

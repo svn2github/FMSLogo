@@ -100,12 +100,14 @@ Dep_fmslogodexe = \
    $(IntermediateDirectory)\appendablelist.obj\
    $(IntermediateDirectory)\activearea.obj\
    $(IntermediateDirectory)\areawind.obj\
+   $(IntermediateDirectory)\argumentutils.obj\
    $(IntermediateDirectory)\assembly.obj\
    $(IntermediateDirectory)\cmdwind.obj\
    $(IntermediateDirectory)\colordlg.obj\
    $(IntermediateDirectory)\commanderbutton.obj\
    $(IntermediateDirectory)\commandercheckbox.obj\
    $(IntermediateDirectory)\coms.obj\
+   $(IntermediateDirectory)\cursor.obj\
    $(IntermediateDirectory)\debugheap.obj\
    $(IntermediateDirectory)\devwind.obj\
    $(IntermediateDirectory)\dib.obj\
@@ -138,6 +140,7 @@ Dep_fmslogodexe = \
    $(IntermediateDirectory)\mainwind.obj\
    $(IntermediateDirectory)\logomath.obj\
    $(IntermediateDirectory)\mem.obj\
+   $(IntermediateDirectory)\messagebox.obj\
    $(IntermediateDirectory)\minieditor.obj\
    $(IntermediateDirectory)\mmwind.obj\
    $(IntermediateDirectory)\myfileed.obj\
@@ -150,6 +153,7 @@ Dep_fmslogodexe = \
    $(IntermediateDirectory)\screenwindow.obj\
    $(IntermediateDirectory)\selectbox.obj\
    $(IntermediateDirectory)\sizedlg.obj\
+   $(IntermediateDirectory)\startup.obj\
    $(IntermediateDirectory)\statwind.obj\
    $(IntermediateDirectory)\term.obj\
    $(IntermediateDirectory)\threed.obj\
@@ -194,12 +198,14 @@ $(IntermediateDirectory)\3dsolid.obj+
 $(IntermediateDirectory)\appendablelist.obj+
 $(IntermediateDirectory)\activearea.obj+
 $(IntermediateDirectory)\areawind.obj+
+$(IntermediateDirectory)\argumentutils.obj+
 $(IntermediateDirectory)\assembly.obj+
 $(IntermediateDirectory)\cmdwind.obj+
 $(IntermediateDirectory)\colordlg.obj+
 $(IntermediateDirectory)\commanderbutton.obj+
 $(IntermediateDirectory)\commandercheckbox.obj+
 $(IntermediateDirectory)\coms.obj+
+$(IntermediateDirectory)\cursor.obj+
 !if "$(BUILD)"=="DEBUG"
 $(IntermediateDirectory)\debugheap.obj+
 !endif
@@ -232,6 +238,7 @@ $(IntermediateDirectory)\mainframe.obj+
 $(IntermediateDirectory)\mainwind.obj+
 $(IntermediateDirectory)\logomath.obj+
 $(IntermediateDirectory)\mem.obj+
+$(IntermediateDirectory)\messagebox.obj+
 $(IntermediateDirectory)\minieditor.obj+
 $(IntermediateDirectory)\mmwind.obj+
 $(IntermediateDirectory)\myfileed.obj+
@@ -244,6 +251,7 @@ $(IntermediateDirectory)\savebeforeexitdialog.obj+
 $(IntermediateDirectory)\screenwindow.obj+
 $(IntermediateDirectory)\selectbox.obj+
 $(IntermediateDirectory)\sizedlg.obj+
+$(IntermediateDirectory)\startup.obj+
 $(IntermediateDirectory)\statwind.obj+
 $(IntermediateDirectory)\term.obj+
 $(IntermediateDirectory)\threed.obj+
@@ -294,6 +302,7 @@ $(IntermediateDirectory)\logorc.res
 # dependency information
 $(IntermediateDirectory)\3dsolid.obj           : version.h
 $(IntermediateDirectory)\appendablelist.obj    : version.h
+$(IntermediateDirectory)\argumentutils.obj     : version.h
 $(IntermediateDirectory)\assembly.obj          : version.h
 $(IntermediateDirectory)\activearea.obj        : version.h
 $(IntermediateDirectory)\areawind.obj          : version.h
@@ -302,6 +311,7 @@ $(IntermediateDirectory)\colordlg.obj          : version.h
 $(IntermediateDirectory)\commanderbutton.obj   : version.h
 $(IntermediateDirectory)\commandercheckbox.obj : version.h
 $(IntermediateDirectory)\coms.obj              : version.h
+$(IntermediateDirectory)\cursor.obj            : version.h
 $(IntermediateDirectory)\debugheap.obj         : version.h
 $(IntermediateDirectory)\devwind.obj           : version.h
 $(IntermediateDirectory)\dib.obj               : version.h
@@ -333,6 +343,7 @@ $(IntermediateDirectory)\mainframe.obj         : version.h
 $(IntermediateDirectory)\mainwind.obj          : version.h
 $(IntermediateDirectory)\logomath.obj          : version.h
 $(IntermediateDirectory)\mem.obj               : version.h
+$(IntermediateDirectory)\messagebox.obj        : version.h
 $(IntermediateDirectory)\minieditor.obj        : version.h
 $(IntermediateDirectory)\mmwind.obj            : version.h
 $(IntermediateDirectory)\myfileed.obj          : version.h
@@ -345,6 +356,7 @@ $(IntermediateDirectory)\savebeforeexitdialog.obj : version.h
 $(IntermediateDirectory)\screenwindow.obj      : version.h
 $(IntermediateDirectory)\selectbox.obj         : version.h
 $(IntermediateDirectory)\sizedlg.obj           : version.h
+$(IntermediateDirectory)\startup.obj           : version.h
 $(IntermediateDirectory)\statwind.obj          : version.h
 $(IntermediateDirectory)\term.obj              : version.h
 $(IntermediateDirectory)\threed.obj            : version.h

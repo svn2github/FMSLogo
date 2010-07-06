@@ -16,7 +16,7 @@
 // Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
 #include <time.h>
-#include "main.h"
+#include "startup.h"
 
 BOOL MyBeep(DWORD frequency, DWORD duration)
 {

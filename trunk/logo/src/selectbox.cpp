@@ -20,7 +20,7 @@
 #include "selectbox.h"
 #include "mainwind.h"
 #include "logorc.h"
-#include "graphics.h"
+#include "argumentutils.h"
 
 #include "localizedstrings.h"
 

@@ -21,7 +21,7 @@
 
 #include "savebeforeexitdialog.h"
 
-#include "main.h"
+#include "graphwin.h"
 #include "logorc.h"
 #include "localizedstrings.h"
 

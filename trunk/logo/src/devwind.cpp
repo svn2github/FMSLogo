@@ -24,8 +24,10 @@
 using namespace std;
 
 #include "devwind.h"
+#include "argumentutils.h"
 #include "logocore.h"
 #include "graphics.h"
+#include "graphwin.h"
 #include "main.h"
 #include "init.h"
 #include "logodata.h"
@@ -37,8 +39,26 @@ using namespace std;
 #include "screenwindow.h"
 #include "assembly.h"
 
+// global variables
+KEYBOARDCAPTURE KeyboardCapture = KEYBOARDCAPTURE_Off; // Flag to signal Keyboard is enabled
+
+int keyboard_value = 0;                // Value of Keyboard key
+bool MouseCaptureIsEnabled = false;    // Flag to signal Mouse is enabled
+int mouse_posx = 0;                    // Value of Mouse position x
+int mouse_posy = 0;                    // Value of Mouse position y
+
+char *mouse_lbuttondown = NULL;        // Mouse Left button down cb
+char *mouse_lbuttonup = NULL;          // Mouse Right button up cb
+char *mouse_rbuttondown = NULL;        // Mouse Left button down cb
+char *mouse_rbuttonup = NULL;          // Mouse Right button up cb
+char *mouse_mousemove = NULL;          // Mouse Move cb
+char *keyboard_keydown = NULL;         // KeyBoard key down
+char *keyboard_keyup = NULL;           // KeyBoard key up
+
 static HANDLE ComId;
 static bool   ComIsOpen = false;
+
+// function definitions
 
 NODE *lmouseon(NODE *args)
 {

@@ -21,7 +21,6 @@
 #include "logocore.h"
 
 // Functions
-extern void emptyqueue(void);
 extern bool check_stop(bool scan_for_messages);
 extern void pen_down(void);
 extern void pen_reverse(void);
