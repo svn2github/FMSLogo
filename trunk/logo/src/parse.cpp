@@ -65,7 +65,7 @@ static CDynamicBuffer g_ReadBuffer;
 // the a buffer when allocating a string node.
 class CStringNodeBuffer
 {
-    friend CBufferInvariant;
+    friend class CStringNodeBufferInvariant;
 
 public:
     CStringNodeBuffer();
@@ -91,18 +91,18 @@ private:
 #ifdef NDEBUG
 #  define ASSERT_STRINGNODE_INVARIANT
 #else
-#  define ASSERT_STRINGNODE_INVARIANT CBufferInvariant invariant(*this)
+#  define ASSERT_STRINGNODE_INVARIANT CStringNodeBufferInvariant invariant(*this)
 
-class CBufferInvariant
+class CStringNodeBufferInvariant
 {
 public:
-    CBufferInvariant(const CStringNodeBuffer & StringNodeBuffer)
+    CStringNodeBufferInvariant(const CStringNodeBuffer & StringNodeBuffer)
         : m_StringNodeBuffer(StringNodeBuffer)
     {
         AssertInvariant();
     }
 
-    ~CBufferInvariant()
+    ~CStringNodeBufferInvariant()
     {
         AssertInvariant();
     }

@@ -23,7 +23,7 @@
 class CDynamicBuffer
 {
 public:
-    friend class CBufferInvariant;
+    friend class CDynamicBufferInvariant;
 
     CDynamicBuffer();
     ~CDynamicBuffer();

@@ -28,18 +28,18 @@ const int DEFAULT_BUFFER_SIZE = 256;
 #ifdef NDEBUG
 #  define ASSERT_COMBOBUFF_INVARIANT
 #else
-#  define ASSERT_COMBOBUFF_INVARIANT CBufferInvariant invariant(*this)
+#  define ASSERT_COMBOBUFF_INVARIANT CDynamicBufferInvariant invariant(*this)
 
-class CBufferInvariant
+class CDynamicBufferInvariant
 {
 public:
-    CBufferInvariant(const CDynamicBuffer & DynamicBuffer)
+    CDynamicBufferInvariant(const CDynamicBuffer & DynamicBuffer)
         : m_DynamicBuffer(DynamicBuffer)
     {
         AssertInvariant();
     }
 
-    ~CBufferInvariant()
+    ~CDynamicBufferInvariant()
     {
         AssertInvariant();
     }
