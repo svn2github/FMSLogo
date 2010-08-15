@@ -1,0 +1,6 @@
+NAME        fmslogo.scr
+
+EXPORTS
+    ScreenSaverProc
+    ScreenSaverConfigureDialog
+    RegisterDialogClasses
