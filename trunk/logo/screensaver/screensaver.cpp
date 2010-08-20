@@ -22,7 +22,6 @@ int GCMAX = 1024*8;
 static UINT   g_Timer;
 static CHAR   g_FileToLoad[MAX_PATH] = "C:\\Documents and Settings\\Dave\\My Documents\\saver.lgo";
 static HANDLE g_SingleInstanceMutex = NULL;
-static int    g_FileIsLoaded = false;
 
 #ifdef MEM_DEBUG
 // define values that didn't exist when Borland C++ was written
@@ -40,6 +39,10 @@ static HMODULE         g_User32              = NULL;
 static HWND g_ScreenWindow = NULL;
 static HDC  g_ScreenDeviceContext = NULL;
 static HDC  g_MemoryDeviceContext = NULL;
+
+static DWORD g_TickCountOfMostRecentLoad = 0;
+
+const DWORD DELAYTIME_MILLISECONDS = 10000;
 
 LRESULT WINAPI ScreenSaverProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -101,7 +104,7 @@ LRESULT WINAPI ScreenSaverProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lP
 
         // Grab the single instance lock.
         // We don't want to fail if Logo is running, since we are a screen saver.
-        // But we do want to prevent Logo from being unintalled.
+        // But we do want to prevent Logo from being uninstalled.
         g_SingleInstanceMutex = CreateMutex(
             NULL,  // default security attributes
             FALSE, // no initial owner
@@ -135,10 +138,17 @@ LRESULT WINAPI ScreenSaverProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lP
         // init logo kernel
         init();
 
+        // initialize the hourglass and arrow cursors
         init_cursors();
 
+        // initialize the values for some of the graphics-related
+        // global variables.
         init_graphics();
 
+        // run the startup script that localizes logo
+        char startupScript[MAX_PATH + 1];
+        MakeHelpPathName(startupScript, "startup.logoscript");
+        silent_load(NIL, startupScript);
         break;
 
     case WM_ERASEBKGND:
@@ -150,26 +160,14 @@ LRESULT WINAPI ScreenSaverProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lP
         break;
 
     case WM_TIMER:
+
+        // Run the file to load it it's been more than DELAYTIME
+        // milliseconds since the last time we ran it.
+        if (g_TickCountOfMostRecentLoad + DELAYTIME_MILLISECONDS <= GetTickCount())
         {
-            // this is the time to exit, when things are settled down
-
-            // run the script that localizes FMSLogo
-            static bool hasRunStartup = false;
-            if (!hasRunStartup)
-            {
-                char startupScript[MAX_PATH + 1];
-                MakeHelpPathName(startupScript, "startup.logoscript");
-                silent_load(NIL, startupScript);
-
-                hasRunStartup = true;
-            }
-
-            // if command arg loaded then execute
-            if (!g_FileIsLoaded)
-            {
-                silent_load(NIL, g_FileToLoad);
-                g_FileIsLoaded = true;
-            }
+            lclearscreen(NULL);
+            silent_load(NIL, g_FileToLoad);
+            g_TickCountOfMostRecentLoad = GetTickCount();
         }
         break;
 
