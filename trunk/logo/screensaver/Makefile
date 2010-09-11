@@ -11,12 +11,14 @@ endif
 # so this requires the Microsoft SDK.
 CXX=cl.exe
 LINK=link.exe
+RC=rc.exe
 
+INCLUDES = -I"$(PROGRAMFILES)\Microsoft SDKs\Windows\v7.0\Include" -I"$(PROGRAMFILES)\Microsoft Visual Studio 9.0\VC\include" -I../src
 DEFINES=FMSLOGO_SCREENSAVER LOCALE=$(LOCALECODE) _CRT_SECURE_NO_WARNINGS
-CPPFLAGS=-I"$(PROGRAMFILES)\Microsoft SDKs\Windows\v7.0\Include" -I"$(PROGRAMFILES)\Microsoft Visual Studio 9.0\VC\include" -I../src $(addprefix -D,$(DEFINES))
+CPPFLAGS=$(INCLUDES) $(addprefix -D,$(DEFINES))
 
 # TODO: debug and release modes
-CXXFLAGS=/Od /Zi /W4
+CXXFLAGS=/Od /Zi /W4 /EHsc
 
 LDFLAGS=/LIBPATH:"$(PROGRAMFILES)\Microsoft SDKs\Windows\v7.0\lib" /LIBPATH:"$(PROGRAMFILES)\Microsoft Visual Studio 9.0\VC\lib" /subsystem:windows /machine:I386
 
@@ -64,6 +66,7 @@ OBJECTS=\
     unix.o           \
     vector.o         \
     wrksp.o          \
+    screensaver.res  \
 
 
 LIBS=\
@@ -77,6 +80,7 @@ LIBS=\
     libcmt   \
     winmm    \
     ws2_32   \
+    comdlg32 \
 
 TARGET=fmslogo
 
@@ -89,9 +93,11 @@ $(TARGET).scr : $(OBJECTS)
 %.o: ../src/%.cpp
 	$(CXX) /c /nologo -Fo$@ $(CXXFLAGS) $(CPPFLAGS) $<
 
+%.res : %.rc
+	$(RC) $(CPPFLAGS) $<
 
 clean :
-	$(RM) $(OBJECTS) $(TARGET).scr $(TARGET).exp $(TARGET).lib $(TARGET).scr.manifest vc90.pdb $(TARGET).pdb
+	$(RM) $(OBJECTS) $(TARGET).scr $(TARGET).exp $(TARGET).lib $(TARGET).scr.manifest vc90.pdb $(TARGET).pdb RCa*
 
-test :
+test : $(TARGET).scr
 	rundll32.exe desk.cpl,InstallScreenSaver "C:\Documents and Settings\Dave\My Documents\logo-cvs\logo\screensaver\$(TARGET).scr"

@@ -1,5 +1,6 @@
 #include <windows.h>
 #include <time.h>
+#include <string>
 #include <scrnsave.h>
 
 #include "init.h"
@@ -11,17 +12,22 @@
 #include "wrksp.h"
 #include "utils.h"
 #include "files.h"
-#include "screenwindow.h"
+#include "localizedstrings.h"
+#include "mainwind.h"
+#include "logorc.h"
+
+#include "resource.h"
 
 int *TopOfStack  = NULL;
 int BitMapWidth  = 0;
 int BitMapHeight = 0;
+bool g_IsLoadingFile = false;
 
 int GCMAX = 1024*8;
 
 static UINT   g_Timer;
-static CHAR   g_FileToLoad[MAX_PATH] = "C:\\Documents and Settings\\Dave\\My Documents\\saver.lgo";
-static HANDLE g_SingleInstanceMutex = NULL;
+static CHAR   g_FileToLoad[MAX_PATH] = "";
+static HANDLE g_SingleInstanceMutex  = NULL;
 
 #ifdef MEM_DEBUG
 // define values that didn't exist when Borland C++ was written
@@ -51,15 +57,6 @@ LRESULT WINAPI ScreenSaverProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lP
     switch(message)
     {
     case WM_CREATE:
-
-        // Start the timer.
-        // Use the minimum timer tick time so that we can run
-        // the next instruction as soon as the previous one completes.
-        g_Timer = SetTimer(
-            hwnd,
-            33,
-            USER_TIMER_MINIMUM,
-            NULL);
 
         g_ScreenWindow = hwnd;
         GetClientRect(g_ScreenWindow, &FullRect);
@@ -149,6 +146,18 @@ LRESULT WINAPI ScreenSaverProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lP
         char startupScript[MAX_PATH + 1];
         MakeHelpPathName(startupScript, "startup.logoscript");
         silent_load(NIL, startupScript);
+
+        // force the next WM_TIMER update to run the program
+        g_TickCountOfMostRecentLoad = 0;
+
+        // Start the timer.
+        // Use the minimum timer tick time so that we can run
+        // the next instruction as soon as the previous one completes.
+        g_Timer = SetTimer(
+            hwnd,
+            33,
+            USER_TIMER_MINIMUM,
+            NULL);
         break;
 
     case WM_ERASEBKGND:
@@ -157,18 +166,62 @@ LRESULT WINAPI ScreenSaverProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lP
             g_ScreenDeviceContext,
             &FullRect,
             (HBRUSH) GetStockObject(WHITE_BRUSH));
+
+        // force the next WM_TIMER update to run the program
+        g_TickCountOfMostRecentLoad = 0;
         break;
 
     case WM_TIMER:
 
-        // Run the file to load it it's been more than DELAYTIME
-        // milliseconds since the last time we ran it.
-        if (g_TickCountOfMostRecentLoad + DELAYTIME_MILLISECONDS <= GetTickCount())
+        if (wParam < 16)
         {
-            lclearscreen(NULL);
-            silent_load(NIL, g_FileToLoad);
-            g_TickCountOfMostRecentLoad = GetTickCount();
+            // not safe to yield
+            callthing * callevent = callthing::CreateNoYieldFunctionEvent(timer_callback[wParam]);
+            calllists.insert(callevent);
+            PostMessage(hwnd, WM_CHECKQUEUE, 0, 0);
         }
+        else if (wParam < 32)
+        {
+            // yieldable
+            callthing * callevent = callthing::CreateFunctionEvent(timer_callback[wParam]);
+            calllists.insert(callevent);
+            PostMessage(hwnd, WM_CHECKQUEUE, 0, 0);
+        }
+        else if (wParam == 33)
+        {
+            // this is the screen saver's event
+            if (!g_IsLoadingFile)
+            {
+                // Run the file to load it it's been more than DELAYTIME
+                // milliseconds since the last time we ran it.
+                if (g_TickCountOfMostRecentLoad + DELAYTIME_MILLISECONDS <= GetTickCount())
+                {
+                    lclearscreen(NULL);
+
+                    // Always re-read the file to load from the registry, in case it changed.
+                    GetConfigurationString(
+                        "ScreenSaverFile",
+                        g_FileToLoad,
+                        ARRAYSIZE(g_FileToLoad),
+                        "");
+                    if (g_FileToLoad[0] != '\0')
+                    {
+                        g_IsLoadingFile = true;
+                        silent_load(NIL, g_FileToLoad);
+                        g_TickCountOfMostRecentLoad = GetTickCount();
+                        g_IsLoadingFile = false;
+                    }
+                }
+            }
+        }
+        else
+        {
+            // this is an unknown event
+        }
+        break;
+
+    case WM_CHECKQUEUE:
+        checkqueue();
         break;
 
     case WM_DESTROY:
@@ -252,9 +305,119 @@ LRESULT WINAPI ScreenSaverProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lP
     return 0;
 }
 
+// This is the function Windows calls to launch our dialog box.
 BOOL WINAPI ScreenSaverConfigureDialog(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
-    return TRUE;
+    DWORD        bytesWritten;
+    OPENFILENAME openFileName;
+    char         logoFileFilter[256];
+
+    switch (message)
+    {
+    case WM_INITDIALOG:
+        // WM_INITDIALOG - initialize the dialog box with values.
+
+        // Read which file to use from the registry.
+        GetConfigurationString(
+            "ScreenSaverFile",
+            g_FileToLoad,
+            ARRAYSIZE(g_FileToLoad),
+            "");
+
+        // Update the field in the dialog box to reflect this
+        return ::SetDlgItemText(hDlg, IDC_LOGOFILEEDIT, g_FileToLoad);
+
+    case WM_COMMAND:
+        // WM_COMMAND will be given to us as the message for the main execution of the
+        // dialog box.  This happens when the user hits a button, like OK, Cancel, Reset, etc.
+
+        switch LOWORD(wParam)
+        {
+        case IDOK:
+            // The use pressed the OK button.
+            // Copy all of the values which the user entered into the dialog box
+            // and transfer it to the all the values from each control and store them in global variables
+            // so that we can later persist them to the registry.
+            bytesWritten = GetDlgItemText(
+                hDlg,
+                IDC_LOGOFILEEDIT,
+                g_FileToLoad,
+                ARRAYSIZE(g_FileToLoad));
+            if (bytesWritten != 0)
+            {
+                // Persist the values
+                SetConfigurationString(
+                    "ScreenSaverFile",
+                    g_FileToLoad);
+            }
+
+            EndDialog(hDlg, TRUE);
+            return TRUE;
+
+        case IDCANCEL:
+            // They hit the Cancel button, so ignore what they put into the
+            // dialog box and just exit.
+            EndDialog(hDlg, FALSE);
+            return TRUE;
+   
+            // They hit the Reset to Defaults button, so set all the edit boxes to good defaults.
+        case IDC_LOCATE:
+            ZeroMemory(&openFileName, sizeof openFileName);
+
+            // translate from the file filter format which
+            // Borland uses to the one which the screensaver uses.
+            // This saves the translators time in that they don't have
+            // to localize two strings.
+            size_t srcIndex  = 0;
+            size_t destIndex = 0;
+            while (destIndex < ARRAYSIZE(logoFileFilter))
+            {
+                logoFileFilter[destIndex] = LOCALIZED_FILEFILTER_LOGO[srcIndex];
+                if (logoFileFilter[destIndex] == '|')
+                {
+                    // map all | characters to \0
+                    logoFileFilter[destIndex] = '\0';
+                }
+                srcIndex++;
+                destIndex++;
+            }
+            // add another NULL terminator
+            logoFileFilter[destIndex] = '\0';
+
+            openFileName.lStructSize       = sizeof openFileName;
+            openFileName.hwndOwner         = hDlg;
+            openFileName.hInstance         = NULL;
+            openFileName.lpstrFilter       = logoFileFilter;
+            openFileName.lpstrCustomFilter = NULL;
+            openFileName.nMaxCustFilter    = 0;
+            openFileName.nFilterIndex      = 0;
+            openFileName.lpstrFile         = g_FileToLoad;
+            openFileName.nMaxFile          = ARRAYSIZE(g_FileToLoad);
+            openFileName.lpstrFileTitle    = NULL;
+            openFileName.nMaxFileTitle     = 0;
+            openFileName.lpstrInitialDir   = NULL;
+            openFileName.lpstrTitle        = NULL;
+            openFileName.Flags             = OFN_FILEMUSTEXIST | OFN_PATHMUSTEXIST | OFN_HIDEREADONLY;
+            openFileName.nFileOffset       = 0;
+            openFileName.nFileExtension    = NULL;
+            openFileName.lpstrDefExt       = NULL;
+            openFileName.lCustData         = NULL;
+            openFileName.lpfnHook          = NULL;
+            openFileName.lpTemplateName    = NULL;
+            openFileName.pvReserved        = NULL;
+            openFileName.dwReserved        = NULL;
+            openFileName.FlagsEx           = 0;
+
+            if (GetOpenFileName(&openFileName))
+            {
+                // update the dialog box item
+                ::SetDlgItemText(hDlg, IDC_LOGOFILEEDIT, openFileName.lpstrFile);
+            }
+            return TRUE;
+        }
+        return FALSE;
+    }
+    return FALSE;
 }
 
 BOOL WINAPI RegisterDialogClasses(HANDLE hInst)
@@ -279,10 +442,6 @@ void putcombobox(const char *str)
 bool promptuser(char *str, const char *prompt)
 {
     return false;
-}
-
-void emptyqueue()
-{
 }
 
 void uninitialize_windows()
