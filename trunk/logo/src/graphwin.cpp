@@ -27,7 +27,7 @@
 #include "mainwind.h"
 
 #include "devwind.h"
-#include "dlgwind.h"
+#include "cursor.h"
 #include "statwind.h"
 
 #include "utils.h"

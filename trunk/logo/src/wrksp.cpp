@@ -38,7 +38,7 @@
 #include "unix.h"
 
 #include "localizedstrings.h"
-#include "dlgwind.h"
+#include "cursor.h"
 #include "mainwind.h"
 #include "screenwindow.h"
 

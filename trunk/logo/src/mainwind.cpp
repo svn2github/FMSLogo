@@ -37,6 +37,7 @@
 #include "netwind.h"
 #include "graphwin.h"
 #include "statwind.h"
+#include "devwind.h"
 
 #include "localizedstrings.h"
 
@@ -724,3 +725,88 @@ void checkwindow(int *x, int *y, int *w, int *h)
     }
 }
 
+NODE *leventcheck(NODE *)
+{
+    // checkqueue();
+
+    MSG msg;
+    while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+    {
+        TranslateMessage(&msg);
+        DispatchMessage(&msg);
+    }
+
+    return Unbound;
+}
+
+// function that processes our own queued events 
+void checkqueue()
+{
+    while (callthing * thing = calllists.get())
+    {
+        bool    save_yield_flag   = yield_flag;
+        FIXNUM  save_value_status = g_ValueStatus;
+
+        calllists.zap();
+        switch (thing->kind)
+        {
+        case EVENTTYPE_Mouse:
+            // mouse event must not yield while processing
+            yield_flag = false;
+            mouse_posx = thing->arg1;
+            mouse_posy = thing->arg2;
+            do_execution(thing->func);
+            break;
+
+          case EVENTTYPE_Keyboard:
+              // keyboard event must not yield while processing
+              yield_flag = false;
+              keyboard_value = thing->arg1;
+              do_execution(thing->func);
+              break;
+
+          case EVENTTYPE_YieldFunction:
+              // Button, timer or other event ok to yield while processing
+              do_execution(thing->func);
+              break;
+
+          case EVENTTYPE_NoYieldFunction:
+              // Scrollbar, MCI, Net, timer or other event must not yield while processing
+              yield_flag = false;
+              do_execution(thing->func);
+              break;
+
+          case EVENTTYPE_NetworkReceiveReady:
+              // Network events must not yield while processing
+              yield_flag = false;
+
+              // use the new value
+              thing->networkconnection->SetLastPacketReceived(thing->networkpacket);
+              thing->networkpacket = NULL;
+
+              do_execution(thing->func);
+              break;
+
+        default:
+            assert(0 && "bad callthing type");
+            break;
+        }
+
+        delete thing;
+
+        yield_flag    = save_yield_flag;
+        g_ValueStatus = save_value_status;
+    }
+}
+
+/* function to dump the queue */
+
+void emptyqueue()
+{
+    while (callthing * thing = calllists.get())
+    {
+        calllists.zap();
+
+        delete thing;
+    }
+}

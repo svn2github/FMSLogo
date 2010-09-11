@@ -123,7 +123,11 @@ struct MENUITEM
 };
 
 
-// File mainwnd.cpp
+// function declarations
+extern NODE *leventcheck(NODE *args);
+extern void emptyqueue(void);
+extern void checkqueue(void);
+
 extern void FillMenu(
     class TMenu           & Menu, 
     const struct MENUITEM * MenuItems,

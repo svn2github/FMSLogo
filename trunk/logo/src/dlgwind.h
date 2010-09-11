@@ -21,14 +21,10 @@
 
 struct NODE;
 
-extern void emptyqueue(void);
-extern void checkqueue(void);
 extern NODE *lmessagebox(NODE *args);
 extern NODE *lquestionbox(NODE *args);
 extern NODE *lyesnobox(NODE *args);
 extern NODE *lselectbox(NODE *args);
-extern NODE *lsetcursorwait(NODE *arg);
-extern NODE *lsetcursorarrow(NODE *arg);
 extern NODE *ldialogcreate(NODE *args);
 extern NODE *ldialogenable(NODE *args);
 extern NODE *ldialogdelete(NODE *arg);

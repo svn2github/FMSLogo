@@ -2721,7 +2721,8 @@ void TMainFrame::EvTimer(UINT)
 {
     TMessage msg = __GetTMessage();
 
-    // if user fired up a callback mci event the queue it up here
+    // One of the user's timer event notifications has fired.
+    // Queue it up here.
 
     callthing *callevent;
     // The ID can only be 1-31.

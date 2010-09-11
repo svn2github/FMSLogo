@@ -46,7 +46,6 @@ extern NODE *liftrue(NODE *args);
 extern NODE *liffalse(NODE *args);
 extern NODE *lbye(NODE *args);
 extern NODE *lwait(NODE *args);
-extern NODE *leventcheck(NODE *args);
 extern NODE *ltime(NODE *args);
 extern NODE *ltimemilli(NODE *args);
 extern NODE *lshell(NODE *args);

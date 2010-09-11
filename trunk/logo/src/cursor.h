@@ -21,11 +21,15 @@
 
 #include <windows.h>
 
+struct NODE;
+
 // global variable declarations
 extern HCURSOR hCursorWait;
 extern HCURSOR hCursorArrow;
 
 // function declarations
 extern void init_cursors();
+extern NODE *lsetcursorwait(NODE *);
+extern NODE *lsetcursorarrow(NODE *);
 
 #endif // __CURSOR_H_

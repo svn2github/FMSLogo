@@ -30,7 +30,7 @@
 #include "localizedstrings.h"
 
 #include "screenwindow.h"
-#include "dlgwind.h"
+#include "cursor.h"
 
 void filesave(const char *FileName)
 {

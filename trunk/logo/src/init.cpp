@@ -43,9 +43,11 @@
 #include "mmwind.h"
 #include "dllwind.h"
 #include "devwind.h"
-#include "dlgwind.h"
+#include "mainwind.h"
 #include "netwind.h"
 #include "graphwin.h"
+#include "dlgwind.h"
+#include "cursor.h"
 
 #include "localizedstrings.h"
 

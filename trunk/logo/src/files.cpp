@@ -42,7 +42,7 @@
 #include "graphics.h"
 #include "startup.h"
 #include "screenwindow.h"
-#include "dlgwind.h"
+#include "cursor.h"
 
 #include "localizedstrings.h"
 

@@ -25,7 +25,7 @@
 #include "logodata.h"
 #include "assembly.h"
 #include "graphwin.h"
-#include "dlgwind.h"
+#include "mainwind.h"
 
 #include "localizedstrings.h"
 
