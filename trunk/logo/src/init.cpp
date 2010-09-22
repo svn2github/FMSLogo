@@ -240,9 +240,7 @@ const PRIMTYPE prims[] =
     { "erasefile", 1, 1, 1, PREFIX_PRIORITY, lerasefile, LOCALIZED_ALTERNATE_ERASEFILE },
     { "erf", 1, 1, 1, PREFIX_PRIORITY, lerasefile, LOCALIZED_ALTERNATE_ERF },
     { "error", 0, 0, 0, PREFIX_PRIORITY, lerror, LOCALIZED_ALTERNATE_ERROR },
-#ifndef FMSLOGO_SCREENSAVER
     { "eventcheck", 0, 0, 0, PREFIX_PRIORITY, leventcheck, LOCALIZED_ALTERNATE_EVENTCHECK },
-#endif
     { "exp", 1, 1, 1, PREFIX_PRIORITY, lexp, LOCALIZED_ALTERNATE_EXP },
     { "fd", 1, 1, 1, PREFIX_PRIORITY, lforward, LOCALIZED_ALTERNATE_FD },
     { "fence", 0, 0, 0, PREFIX_PRIORITY, lfence, LOCALIZED_ALTERNATE_FENCE },
