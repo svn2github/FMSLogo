@@ -100,7 +100,6 @@ extern int get_pen_width(void);
 extern void set_pen_width(int w);
 extern int get_pen_height(void);
 extern void set_pen_height(int h);
-extern void MakeHelpPathName(char *szFileName, PCSTR);
 extern void GetWorkingAreaDimensions(int & workingAreaWidth, int & workingAreaHeight);
 extern COLORREF LoadColor(int dpenr, int dpeng, int dpenb);
 extern struct PENSTATE & GetPenStateForSelectedTurtle();
