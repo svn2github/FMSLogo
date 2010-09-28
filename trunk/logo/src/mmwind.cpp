@@ -381,8 +381,13 @@ void uninitialize_timers()
 {
     for (int id = 0; id < MAX_TIMERS; id++)
     {
-        free(timer_callback[id]);
-        timer_callback[id] = NULL;
+        if (timer_callback[id] != NULL)
+        {
+            KillTimer(GetMainWindow(), id);
+
+            free(timer_callback[id]);
+            timer_callback[id] = NULL;
+        }
     }
 }
 
