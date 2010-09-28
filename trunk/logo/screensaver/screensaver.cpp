@@ -14,6 +14,8 @@
 #include "files.h"
 #include "localizedstrings.h"
 #include "mainwind.h"
+#include "devwind.h"
+#include "eval.h"
 #include "logorc.h"
 
 #include "resource.h"
@@ -21,13 +23,14 @@
 int *TopOfStack  = NULL;
 int BitMapWidth  = 0;
 int BitMapHeight = 0;
-bool g_IsLoadingFile = false;
 
 int GCMAX = 1024*8;
 
 static UINT   g_Timer;
 static CHAR   g_FileToLoad[MAX_PATH] = "";
 static HANDLE g_SingleInstanceMutex  = NULL;
+
+static bool g_IsLoadingFile          = false;
 
 #ifdef MEM_DEBUG
 // define values that didn't exist when Borland C++ was written
@@ -50,9 +53,72 @@ static DWORD g_TickCountOfMostRecentLoad = 0;
 
 const DWORD DELAYTIME_MILLISECONDS = 10000;
 
+static
+void
+UninitializeLogoEngine()
+{
+    if (hCursorWait)
+    {
+        DestroyCursor(hCursorWait);
+    }
+
+    if (hCursorArrow)
+    {
+        DestroyCursor(hCursorArrow);
+    }
+
+    // cleanup all subsystems
+    uninit();
+
+    uninit_bitmaps();
+
+    uninit_turtles();
+
+    free(gcstack);
+
+    // release the HTML Help subsystem
+    HtmlHelpUninitialize();
+
+    CloseHandle(g_SingleInstanceMutex);
+    g_SingleInstanceMutex = NULL;
+
+#ifdef MEM_DEBUG
+    if (g_Fmslogo != NULL)
+    {
+        // Check if any GUI objects were leaked
+        DWORD currentGuiObjects = getGuiResources(fmslogo, GR_GDIOBJECTS);
+        if (g_OriginalGuiObjects < currentGuiObjects)
+        {
+            fprintf(
+                stderr, 
+                "%d GUI objects were leaked.\n",
+                currentGuiObjects - originalUserObjects);
+        }
+
+        // Check if any USER objects were leaked
+        DWORD currentUserObjects = getGuiResources(fmslogo, GR_USEROBJECTS);
+        if (g_OriginalUserObjects < currentUserObjects)
+        {
+            fprintf(
+                stderr, 
+                "%d USER objects were leaked.\n",
+                currentUserObjects - originalUserObjects);
+        }
+
+        CloseHandle(g_Fmslogo);
+    }
+#endif // MEM_DEBUG
+
+}
+
 LRESULT WINAPI ScreenSaverProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-    int i;
+    LRESULT     rval = 0;
+    callthing * callevent;
+
+    // used for WM_PAINT
+    BOOL updateRectangleExists;
+    RECT updateRectangle;
 
     switch(message)
     {
@@ -61,13 +127,22 @@ LRESULT WINAPI ScreenSaverProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lP
         g_ScreenWindow = hwnd;
         GetClientRect(g_ScreenWindow, &FullRect);
 
-        // Fill the screen with blackness.
-        g_ScreenDeviceContext = GetDC(g_ScreenWindow);
-        g_MemoryDeviceContext = CreateCompatibleDC(g_ScreenDeviceContext);
-        
         // Size-to-fit
         BitMapHeight = FullRect.bottom;
         BitMapWidth  = FullRect.right;
+
+        // Fill the screen with blackness.
+        g_ScreenDeviceContext = GetDC(g_ScreenWindow);
+        g_MemoryDeviceContext = CreateCompatibleDC(g_ScreenDeviceContext);
+
+        // create the in-memory image of the bitmap
+        MemoryBitMap = CreateCompatibleBitmap(
+            g_ScreenDeviceContext,
+            BitMapWidth,
+            BitMapHeight);
+
+        // set the bitmap object of the screen
+        SelectObject(g_MemoryDeviceContext, MemoryBitMap);
 
 #ifdef MEM_DEBUG
         g_Fmslogo = NULL;
@@ -94,10 +169,48 @@ LRESULT WINAPI ScreenSaverProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lP
 
         DisableDataExecutionProtection();
 
+        // Figure out the path that contains fmslogo.exe
+        HKEY fmslogoKey;
+        LONG result;
+        result = RegOpenKeyEx(
+            HKEY_LOCAL_MACHINE,
+            "Software\\FMSLogo",
+            0, // reserved
+            KEY_QUERY_VALUE,
+            &fmslogoKey);
+        if (result == ERROR_SUCCESS)
+        {
+            DWORD valueSize = ARRAYSIZE(g_FmslogoBaseDirectory) - 2;  // leave room for the backslash and NUL
+            BYTE *valuePtr  = reinterpret_cast<BYTE*>(g_FmslogoBaseDirectory);
+            DWORD valueType;
+
+            LONG result = RegQueryValueEx(
+                fmslogoKey,
+                "Install_Dir",
+                0,   // reserved
+                &valueType,
+                valuePtr,
+                &valueSize);
+            if (result == ERROR_SUCCESS && 
+                valueType == REG_SZ     &&
+                valueSize < ARRAYSIZE(g_FmslogoBaseDirectory) - 2)
+            {
+                // we successfully read the value as a string.
+                // Append the missing backslash
+                if (valueSize != 0 && g_FmslogoBaseDirectory[valueSize] == '\0')
+                {
+                    valueSize--;
+                }
+                g_FmslogoBaseDirectory[valueSize + 0] = '\\';
+                g_FmslogoBaseDirectory[valueSize + 1] = '\0';
+            }
+
+            RegCloseKey(fmslogoKey);
+        }
+
         //_control87(EM_OVERFLOW,  EM_OVERFLOW);
         //_control87(EM_UNDERFLOW, EM_UNDERFLOW);
-
-        TopOfStack = &i;
+        TopOfStack = (int*) &rval;
 
         // Grab the single instance lock.
         // We don't want to fail if Logo is running, since we are a screen saver.
@@ -160,6 +273,32 @@ LRESULT WINAPI ScreenSaverProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lP
             NULL);
         break;
 
+    case WM_PAINT:
+
+        updateRectangleExists = GetUpdateRect(hwnd, &updateRectangle, FALSE);
+        if (updateRectangleExists)
+        {
+            // There is a dirty rectangle that needs to be redrawn.
+            PAINTSTRUCT repaintInfo = {0};
+            HDC         deviceContext;
+
+            repaintInfo.rcPaint = updateRectangle;
+
+            deviceContext = BeginPaint(hwnd, &repaintInfo);
+            if (deviceContext)
+            {
+                PaintToScreenWindow(
+                    deviceContext,
+                    FullRect);
+                    //repaintInfo.rcPaint);
+                    //updateRectangle);
+
+                EndPaint(hwnd, &repaintInfo);
+            }
+        }
+
+        break;
+
     case WM_ERASEBKGND:
         // Fill the screen with whiteness.
         FillRect(
@@ -167,8 +306,36 @@ LRESULT WINAPI ScreenSaverProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lP
             &FullRect,
             (HBRUSH) GetStockObject(WHITE_BRUSH));
 
-        // force the next WM_TIMER update to run the program
-        g_TickCountOfMostRecentLoad = 0;
+        // mark the background as being erased
+        rval = 1;
+        break;
+
+    case WM_KEYUP:
+        if (keyboard_keyup != NULL)
+        {
+            callevent = callthing::CreateKeyboardEvent(keyboard_keyup, wParam);
+
+            calllists.insert(callevent);
+            checkqueue();
+        }
+        else
+        {
+            rval = DefScreenSaverProc(hwnd, message, wParam, lParam);
+        }
+        break;
+
+    case WM_KEYDOWN:
+        if (keyboard_keydown != NULL)
+        {
+            callevent = callthing::CreateKeyboardEvent(keyboard_keydown, wParam);
+
+            calllists.insert(callevent);
+            checkqueue();
+        }
+        else
+        {
+            rval = DefScreenSaverProc(hwnd, message, wParam, lParam);
+        }
         break;
 
     case WM_TIMER:
@@ -183,13 +350,13 @@ LRESULT WINAPI ScreenSaverProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lP
         else if (wParam < 32)
         {
             // yieldable
-            callthing * callevent = callthing::CreateFunctionEvent(timer_callback[wParam]);
+            callevent = callthing::CreateFunctionEvent(timer_callback[wParam]);
             calllists.insert(callevent);
             PostMessage(hwnd, WM_CHECKQUEUE, 0, 0);
         }
         else if (wParam == 33)
         {
-            // this is the screen saver's event
+            // This is the screen saver's event
             if (!g_IsLoadingFile)
             {
                 // Run the file to load it it's been more than DELAYTIME
@@ -210,6 +377,13 @@ LRESULT WINAPI ScreenSaverProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lP
                         silent_load(NIL, g_FileToLoad);
                         g_TickCountOfMostRecentLoad = GetTickCount();
                         g_IsLoadingFile = false;
+
+                        if (IsTimeToExit)
+                        {
+                            // The window has already been destroyed,
+                            // so we should quit Logo.
+                            UninitializeLogoEngine();
+                        }
                     }
                 }
             }
@@ -225,63 +399,29 @@ LRESULT WINAPI ScreenSaverProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lP
         break;
 
     case WM_DESTROY:
-
-        if (hCursorWait)
+    
+        if (is_executing())
         {
-            DestroyCursor(hCursorWait);
+            IsTimeToHalt = true;
+        }
+        IsTimeToExit = true;
+
+        if (!g_IsLoadingFile)
+        {
+            // We are not in the Logo evaluator, so we can cleanup here.
+            UninitializeLogoEngine();
         }
 
-        if (hCursorArrow)
+        if (g_Timer != 0)
         {
-            DestroyCursor(hCursorArrow);
-        }
-
-        // cleanup all subsystems
-        uninit();
-
-        uninit_bitmaps();
-
-        uninit_turtles();
-
-        free(gcstack);
-
-        // release the HTML Help subsystem
-        HtmlHelpUninitialize();
-
-        CloseHandle(g_SingleInstanceMutex);
-        g_SingleInstanceMutex = NULL;
-
-#ifdef MEM_DEBUG
-        if (g_Fmslogo != NULL)
-        {
-            // Check if any GUI objects were leaked
-            DWORD currentGuiObjects = getGuiResources(fmslogo, GR_GDIOBJECTS);
-            if (g_OriginalGuiObjects < currentGuiObjects)
-            {
-                fprintf(
-                    stderr, 
-                    "%d GUI objects were leaked.\n",
-                    currentGuiObjects - originalUserObjects);
-            }
-
-            // Check if any USER objects were leaked
-            DWORD currentUserObjects = getGuiResources(fmslogo, GR_USEROBJECTS);
-            if (g_OriginalUserObjects < currentUserObjects)
-            {
-                fprintf(
-                    stderr, 
-                    "%d USER objects were leaked.\n",
-                    currentUserObjects - originalUserObjects);
-            }
-
-            CloseHandle(g_Fmslogo);
-        }
-#endif // MEM_DEBUG
-
-        if (g_Timer == 0)
-        {
-            KillTimer(hwnd, g_Timer);
+            KillTimer(g_ScreenWindow, g_Timer);
             g_Timer = 0;
+        }
+
+        if (MemoryBitMap != NULL)
+        {
+            DeleteObject(MemoryBitMap);
+            MemoryBitMap = NULL;
         }
 
         if (g_MemoryDeviceContext != NULL)
@@ -300,9 +440,10 @@ LRESULT WINAPI ScreenSaverProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lP
         break;
 
     default: 
-        return DefScreenSaverProc(hwnd, message, wParam, lParam);
+        rval = DefScreenSaverProc(hwnd, message, wParam, lParam);
     }
-    return 0;
+
+    return rval;
 }
 
 // This is the function Windows calls to launch our dialog box.
