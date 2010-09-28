@@ -74,8 +74,7 @@ TScreenWindow::TScreenWindow(
     LPCSTR   ATitle
     ) : TWindow(AParent, ATitle),
         m_ScreenDeviceContext(NULL),
-        m_MemoryDeviceContext(NULL),
-        m_WhiteBrush(NULL)
+        m_MemoryDeviceContext(NULL)
 {
     if (!bFixed)
     {
@@ -83,24 +82,12 @@ TScreenWindow::TScreenWindow(
     }
     Attr.Style |= WS_BORDER;
 
-    // create the brush that we use to wipe the screen with.
-    LOGBRUSH whiteBrushLog;
-    whiteBrushLog.lbStyle = BS_SOLID;
-    whiteBrushLog.lbColor = RGB(255, 255, 255);
-    whiteBrushLog.lbHatch = HS_VERTICAL;
-    m_WhiteBrush = CreateBrushIndirect(&whiteBrushLog);
-
     Scroller = new TScroller(this, 1, 1, BitMapWidth, BitMapHeight);
 }
 
 TScreenWindow::~TScreenWindow()
 {
     delete Scroller;
-
-    if (m_WhiteBrush != NULL)
-    {
-        DeleteObject(m_WhiteBrush);
-    }
 }
 
 void TScreenWindow::SetupWindow()
@@ -161,198 +148,7 @@ void TScreenWindow::EvDestroy()
 
 void TScreenWindow::Paint(TDC &PaintDC, bool /* erase */, TRect &PaintRect)
 {
-
-    /*
-      This is a compromise between speed and memory (as is most code).
-      All drawing is written to the backing store 1 to 1 even when zoomed.
-      When zoomed all drawing and painting is scaled to the display on the fly.
-      Painting can be a bit slow while zoomed. It also can be inaccurate when
-      mixing scaled painting and scaled drawing. Printing is never zoomed.
-      User can use Bitfit if he/she wants data scaled.
-
-      Must of rewrote this routine 20 times, at least.
-    */
-
-    // grab the client area's backing store (a bitmap)
-    HDC memoryDC = m_MemoryDeviceContext;
-
-    HBITMAP oldBitmap = (HBITMAP) SelectObject(memoryDC, MemoryBitMap);
-
-    HPALETTE oldPalette  = NULL;
-    HPALETTE oldPalette2 = NULL;
-
-    /* if palette allocate it */
-
-    if (EnablePalette)
-    {
-        oldPalette = SelectPalette(PaintDC, ThePalette, FALSE);
-        RealizePalette(PaintDC);
-
-        oldPalette2 = SelectPalette(memoryDC, ThePalette, FALSE);
-        RealizePalette(memoryDC);
-    }
-
-
-    if (!zoom_flag)
-    {
-        // fill the part to the right of the screen.
-        if (BitMapWidth < PaintRect.Right())
-        {
-            RECT toFill;
-            toFill.left   = BitMapWidth;
-            toFill.right  = PaintRect.Right();
-            toFill.top    = 0;
-            toFill.bottom = BitMapHeight;
-
-            FillRect(PaintDC, &toFill, m_WhiteBrush);
-        }
-        // fill the part below the screen.
-        if (BitMapHeight < PaintRect.Bottom())
-        {
-            RECT toFill;
-            toFill.left   = PaintRect.Left();
-            toFill.right  = PaintRect.Right();
-            toFill.top    = BitMapHeight;
-            toFill.bottom = PaintRect.Bottom();
-
-            FillRect(PaintDC, &toFill, m_WhiteBrush);
-        }
-
-        // The zoom is 1:1.  Just do a 1:1 BLIT (no scaling).
-        BitBlt(
-            PaintDC,
-            PaintRect.Left(),
-            PaintRect.Top(),
-            PaintRect.Width(),
-            PaintRect.Height(),
-            memoryDC,
-            PaintRect.Left(),
-            PaintRect.Top(),
-            SRCCOPY);
-    }
-    else
-    {
-        // We are zoomed in.  Compute scaling and then display
-        if (g_OsVersionInformation.dwPlatformId == VER_PLATFORM_WIN32_NT)
-        {
-            SetStretchBltMode(PaintDC, HALFTONE);
-        }
-        else
-        {
-            // HALFTONE is not supported on Win 95/98/ME
-            SetStretchBltMode(PaintDC, COLORONCOLOR);
-        }
-
-        FLONUM sourceRectLeft   = PaintRect.left;
-        FLONUM sourceRectTop    = PaintRect.top;
-        FLONUM sourceRectRight  = PaintRect.right;
-        FLONUM sourceRectBottom = PaintRect.bottom;
-
-        // Expand the source rectangle a little bit based zoom factor 
-        // (rounding to the nearest integer, as necessary)
-        const FLONUM inflateIncrement = (the_zoom+0.5)*2.0;
-        sourceRectLeft   -= inflateIncrement;
-        sourceRectTop    -= inflateIncrement;
-        sourceRectRight  += inflateIncrement;
-        sourceRectBottom += inflateIncrement;
-
-        FLONUM scaledSourceRectLeft   = sourceRectLeft   / the_zoom;
-        FLONUM scaledSourceRectTop    = sourceRectTop    / the_zoom;
-        FLONUM scaledSourceRectRight  = sourceRectRight  / the_zoom;
-        FLONUM scaledSourceRectBottom = sourceRectBottom / the_zoom;
-
-        // fill the part to the right of the screen.
-        if (BitMapWidth < scaledSourceRectRight)
-        {
-            RECT toFill;
-            toFill.left   = BitMapWidth * the_zoom;
-            toFill.right  = sourceRectRight;
-            toFill.top    = 0;
-            toFill.bottom = BitMapHeight * the_zoom;
-
-            FillRect(PaintDC, &toFill, m_WhiteBrush);
-        }
-        // fill the part below the screen.
-        if (BitMapHeight < scaledSourceRectBottom)
-        {
-            RECT toFill;
-            toFill.left   = sourceRectLeft;
-            toFill.right  = sourceRectRight;
-            toFill.top    = BitMapHeight * the_zoom;
-            toFill.bottom = sourceRectBottom;
-
-            FillRect(PaintDC, &toFill, m_WhiteBrush);
-        }
-
-        // Make sure that none of rectangle's borders are off-screen
-        // after we inflated it.
-        TRect sourceRect;
-        sourceRect.left   = (int) (min(max(scaledSourceRectLeft,   0.0), (double)BitMapWidth));
-        sourceRect.top    = (int) (min(max(scaledSourceRectTop,    0.0), (double)BitMapHeight));
-        sourceRect.right  = (int) (min(max(scaledSourceRectRight,  0.0), (double)BitMapWidth));
-        sourceRect.bottom = (int) (min(max(scaledSourceRectBottom, 0.0), (double)BitMapHeight));
-
-        TRect destRect;
-        destRect.left   = sourceRect.left   * the_zoom;
-        destRect.top    = sourceRect.top    * the_zoom;
-        destRect.right  = sourceRect.right  * the_zoom;
-        destRect.bottom = sourceRect.bottom * the_zoom;
-
-        StretchBlt(
-            PaintDC,
-            destRect.Left(),
-            destRect.Top(),
-            destRect.Width(),
-            destRect.Height(),
-            memoryDC,
-            sourceRect.Left(),
-            sourceRect.Top(),
-            sourceRect.Width(),
-            sourceRect.Height(),
-            SRCCOPY);
-    }
-
-    // restore resources
-    if (EnablePalette)
-    {
-        SelectPalette(memoryDC, oldPalette2, FALSE);
-        SelectPalette(PaintDC, oldPalette, FALSE);
-    }
-
-    SelectObject(memoryDC, oldBitmap);
-
-    // draw the turtles on top of the image
-    SetROP2(PaintDC, R2_NOT);
-
-    for (int j = 0; j <= g_MaxTurtle; j++)
-    {
-        if (g_Turtles[j].IsShown)
-        {
-            if (g_Turtles[j].BitmapRasterMode)
-            {
-                turtlepaste(j);
-            }
-            else
-            {
-                for (int i = 0; i < 4; i++)
-                {
-                    if (g_Turtles[j].Points[i].bValid)
-                    {
-                        MoveToEx(
-                            PaintDC,
-                            g_Turtles[j].Points[i].from.x * the_zoom,
-                            g_Turtles[j].Points[i].from.y * the_zoom,
-                            0);
-
-                        LineTo(
-                            PaintDC,
-                            g_Turtles[j].Points[i].to.x * the_zoom,
-                            g_Turtles[j].Points[i].to.y * the_zoom);
-                    }
-                }
-            }
-        }
-    }
+    PaintToScreenWindow(PaintDC, PaintRect);
 }
 
 void TScreenWindow::Printit(TDC &PrintDC)

@@ -97,7 +97,6 @@ private:
 
     HDC    m_ScreenDeviceContext;
     HDC    m_MemoryDeviceContext;
-    HBRUSH m_WhiteBrush;
 };
 
 class CEditors : public qlist

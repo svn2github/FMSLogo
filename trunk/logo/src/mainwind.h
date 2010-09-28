@@ -180,6 +180,11 @@ OpenDIB(
     DWORD &
     );
 
+void
+PaintToScreenWindow(
+    HDC          PaintDC,
+    const RECT & PaintRect
+    );
 
 // global variables
 extern calllist calllists;
