@@ -43,7 +43,7 @@ COLORREF pcolor;                   // pen color
 
 OSVERSIONINFO g_OsVersionInformation;
 
-static char g_FmslogoBaseDirectory[MAX_PATH+1]; // The directory that contains FMSLogo.exe
+char g_FmslogoBaseDirectory[MAX_PATH+1]; // The directory that contains FMSLogo.exe
 
 // Creates path relative to the directory from to which FMSLogo is installed.
 void MakeHelpPathName(char *OutBuffer, const char * TheFileName)
@@ -137,26 +137,6 @@ void init_graphics()
     g_PrinterAreaYHigh = +BitMapHeight / 2;
 
     g_PrinterAreaPixels = max(BitMapWidth, BitMapHeight) / 8;
-
-    // Figure out the path that contains fmslogo.exe
-    DWORD nFileNameLength = ::GetModuleFileName(
-        GetModuleHandle(NULL),
-        g_FmslogoBaseDirectory,
-        ARRAYSIZE(g_FmslogoBaseDirectory));
-
-    // start at the end of the full path of fmslogo.exe and walk
-    // backwards in the string until we find the final directory delimiter
-    for (char * charPtr = g_FmslogoBaseDirectory + nFileNameLength;
-         charPtr > g_FmslogoBaseDirectory;
-         charPtr--)
-    {
-        if (*charPtr == '\\')
-        {
-            // found the last backlash
-            break;
-        }
-        *charPtr = '\0';
-    }
 
     // init paths to library and help files based on location of .EXE
     MakeHelpPathName(LibPathName,     "logolib\\");

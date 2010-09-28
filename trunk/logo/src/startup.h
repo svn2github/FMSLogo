@@ -35,6 +35,7 @@ extern char TempClipName[];
 extern char szHelpFileName[];
 
 extern OSVERSIONINFO g_OsVersionInformation;
+extern char          g_FmslogoBaseDirectory[MAX_PATH+1];
 
 
 extern void DisableDataExecutionProtection();

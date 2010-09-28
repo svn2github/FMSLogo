@@ -580,7 +580,26 @@ WinMain(
         }
     }
 
-      
+    // Figure out the path that contains fmslogo.exe
+    DWORD nFileNameLength = ::GetModuleFileName(
+        GetModuleHandle(NULL),
+        g_FmslogoBaseDirectory,
+        ARRAYSIZE(g_FmslogoBaseDirectory));
+
+    // start at the end of the full path of fmslogo.exe and walk
+    // backwards in the string until we find the final directory delimiter
+    for (char * charPtr = g_FmslogoBaseDirectory + nFileNameLength;
+         charPtr > g_FmslogoBaseDirectory;
+         charPtr--)
+    {
+        if (*charPtr == '\\')
+        {
+            // found the last backslash
+            break;
+        }
+        *charPtr = '\0';
+    }
+
     // if fixed mode then make unspecified dimensions
     // really large (shrink to fit)
     if (bFixed)
