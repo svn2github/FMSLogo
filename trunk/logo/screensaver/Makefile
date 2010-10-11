@@ -1,12 +1,9 @@
+.PHONY : all clean test
+
 include ../version.mk
+include ../lcids.mk
 
-ifndef LOCALECODE
-   # English-US
-   LOCALECODE=1033
-endif
-
-
-# I couldn't figure out how to get this to build under
+# I couldn't figure out how to get the screensaver to build under
 # cygwin (I wasn't able to link to functions within scrnsave.lib),
 # so this requires the Microsoft SDK.
 CXX=cl.exe
@@ -17,8 +14,8 @@ INCLUDES = -I"$(PROGRAMFILES)\Microsoft SDKs\Windows\v7.0\Include" -I"$(PROGRAMF
 DEFINES=FMSLOGO_SCREENSAVER LOCALE=$(LOCALECODE) _CRT_SECURE_NO_WARNINGS
 CPPFLAGS=$(INCLUDES) $(addprefix -D,$(DEFINES))
 
-# TODO: debug and release modes
-CXXFLAGS=/Od /Zi /W4 /EHsc
+DEBUG_CXXFLAGS=/Od /Zi /W4 /EHsc -DDEBUG
+RELEASE_CXXFLAGS=/O2 /Zi /W4 /EHsc -DNDEBUG
 
 LDFLAGS=/LIBPATH:"$(PROGRAMFILES)\Microsoft SDKs\Windows\v7.0\lib" /LIBPATH:"$(PROGRAMFILES)\Microsoft Visual Studio 9.0\VC\lib" /subsystem:windows /machine:I386
 
@@ -84,20 +81,61 @@ LIBS=\
 
 TARGET=fmslogo
 
-$(TARGET).scr : $(OBJECTS)
+$(TARGET).scr : $(TARGET)-$(DEFAULT_LCID).scr
+	cp $< $@
+
+all : $(addsuffix .scr,$(addprefix $(TARGET)-,$(LCIDS)));
+
+debug : $(TARGET)d.scr ;
+
+#
+# Rules for building the debug version of the screensaver
+#
+$(TARGET)d.scr : $(addprefix obj/debug-,$(OBJECTS))
 	$(LINK) /nologo /OUT:$@ /DEBUG $(LDFLAGS) $(addsuffix .lib,$(LIBS)) -def:screensaver.def $^
 
-%.o: %.cpp
-	$(CXX) /c /nologo -Fo$@ $(CXXFLAGS) $(CPPFLAGS) $<
+obj/debug-%.o: ../src/%.cpp
+	$(CXX) /c /nologo -Fo$@ $(DEBUG_CXXFLAGS) $(CPPFLAGS) -DLOCALE=$(DEFAULT_LCID) $<
 
-%.o: ../src/%.cpp
-	$(CXX) /c /nologo -Fo$@ $(CXXFLAGS) $(CPPFLAGS) $<
+obj/debug-%.o: %.cpp
+	$(CXX) /c /nologo -Fo$@ $(DEBUG_CXXFLAGS) $(CPPFLAGS) -DLOCALE=$(DEFAULT_LCID) $<
 
-%.res : %.rc
-	$(RC) $(CPPFLAGS) $<
+obj/debug-%.res : %.rc
+	$(RC) $(CPPFLAGS) -DLOCALE=$(DEFAULT_LCID) /fo $@ $<
+
+#
+# Generate the rules to build the release version of the screensaver for each locale
+#
+define FMSLOGO_SCREENSAVER_template
+$$(TARGET)-$(1).scr : $$(addprefix obj/$(1)-,$$(OBJECTS))
+	$$(LINK) /nologo /OUT:$$@ $$(LDFLAGS) $$(addsuffix .lib,$$(LIBS)) -def:screensaver.def $$^
+
+obj/$(1)-%.o: ../src/%.cpp
+	$(CXX) /c /nologo -Fo$$@ $(RELEASE_CXXFLAGS) $(CPPFLAGS) -DLOCALE=$(1) $$<
+
+obj/$(1)-%.o: %.cpp
+	$(CXX) /c /nologo -Fo$$@ $(RELEASE_CXXFLAGS) $(CPPFLAGS) -DLOCALE=$(1) $$<
+
+obj/$(1)-%.res : %.rc
+	$(RC) /fo $$@ $(CPPFLAGS) -DLOCALE=$(1) $$<
+
+endef
+
+$(foreach lcid,$(LCIDS),$(eval $(call FMSLOGO_SCREENSAVER_template,$(lcid))))
 
 clean :
-	$(RM) $(OBJECTS) $(TARGET).scr $(TARGET).exp $(TARGET).lib $(TARGET).scr.manifest vc90.pdb $(TARGET).pdb RCa*
+	$(RM) obj/*.o
+	$(RM) obj/*screensaver.res
+	$(RM) $(TARGET).scr $(TARGET)*.scr
+	$(RM) $(TARGET).ilk $(TARGET)d.ilk
+	$(RM) $(TARGET)*.exp
+	$(RM) $(TARGET)*.lib 
+	$(RM) $(TARGET)*.scr.manifest
+	$(RM) vc90.pdb
+	$(RM) $(TARGET)*.pdb
+	$(RM) RCa*
+	$(RM) *~
+	$(RM) logohelp.chm
 
-test : $(TARGET).scr
-	rundll32.exe desk.cpl,InstallScreenSaver "C:\Documents and Settings\Dave\My Documents\logo-cvs\logo\screensaver\$(TARGET).scr"
+test : $(TARGET)d.scr
+	rundll32.exe desk.cpl,InstallScreenSaver "C:\Documents and Settings\Dave\My Documents\logo-cvs\logo\screensaver\$(TARGET)d.scr"
