@@ -33,10 +33,7 @@ static HANDLE g_SingleInstanceMutex  = NULL;
 static bool g_IsLoadingFile          = false;
 
 #ifdef MEM_DEBUG
-// define values that didn't exist when Borland C++ was written
-const DWORD GR_GDIOBJECTS  = 0;
-const DWORD GR_USEROBJECTS = 1;
-typedef DWORD WINAPI (*GETGUIRESOURCES)(HANDLE, DWORD);
+typedef DWORD (WINAPI *GETGUIRESOURCES)(HANDLE, DWORD);
 
 static GETGUIRESOURCES g_GetGuiResources     = NULL;
 static DWORD           g_OriginalGuiObjects  = 0;
@@ -86,23 +83,23 @@ UninitializeLogoEngine()
     if (g_Fmslogo != NULL)
     {
         // Check if any GUI objects were leaked
-        DWORD currentGuiObjects = getGuiResources(fmslogo, GR_GDIOBJECTS);
+        DWORD currentGuiObjects = g_GetGuiResources(g_Fmslogo, GR_GDIOBJECTS);
         if (g_OriginalGuiObjects < currentGuiObjects)
         {
             fprintf(
                 stderr, 
                 "%d GUI objects were leaked.\n",
-                currentGuiObjects - originalUserObjects);
+                currentGuiObjects - g_OriginalUserObjects);
         }
 
         // Check if any USER objects were leaked
-        DWORD currentUserObjects = getGuiResources(fmslogo, GR_USEROBJECTS);
+        DWORD currentUserObjects = g_GetGuiResources(g_Fmslogo, GR_USEROBJECTS);
         if (g_OriginalUserObjects < currentUserObjects)
         {
             fprintf(
                 stderr, 
                 "%d USER objects were leaked.\n",
-                currentUserObjects - originalUserObjects);
+                currentUserObjects - g_OriginalUserObjects);
         }
 
         CloseHandle(g_Fmslogo);
@@ -147,10 +144,10 @@ LRESULT WINAPI ScreenSaverProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lP
 #ifdef MEM_DEBUG
         g_Fmslogo = NULL;
         g_User32  = GetModuleHandle("user32.dll");
-        if (user32 != NULL)
+        if (g_User32 != NULL)
         {
-            g_GetGuiResources = (GETGUIRESOURCES) GetProcAddress(user32, "GetGuiResources");
-            if (g_etGuiResources != NULL)
+            g_GetGuiResources = (GETGUIRESOURCES) GetProcAddress(g_User32, "GetGuiResources");
+            if (g_GetGuiResources != NULL)
             {
                 g_Fmslogo = OpenProcess(
                     PROCESS_QUERY_INFORMATION, 
@@ -158,8 +155,8 @@ LRESULT WINAPI ScreenSaverProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lP
                     GetCurrentProcessId());
                 if (g_Fmslogo != NULL)
                 {
-                    g_OriginalGuiObjects  = getGuiResources(fmslogo, GR_GDIOBJECTS);
-                    g_OriginalUserObjects = getGuiResources(fmslogo, GR_USEROBJECTS);
+                    g_OriginalGuiObjects  = g_GetGuiResources(g_Fmslogo, GR_GDIOBJECTS);
+                    g_OriginalUserObjects = g_GetGuiResources(g_Fmslogo, GR_USEROBJECTS);
                 }
             }
         }
