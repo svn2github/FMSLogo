@@ -22,6 +22,7 @@
 #include "logocore.h"
 #include "graphwin.h"
 #include "print.h"
+#include "screenwindow.h" // for TraceOutput
 
 // ASSUME_NO_INVALID_FREES
 // false - Check that each block is in our list before freeing it.
@@ -116,7 +117,7 @@ debug_report_leaks(void)
         IsTimeToPause = false;
 
         // the list is not empty
-        fprintf(stderr, "Memory Leaks detected!\n");
+        TraceOutput("Memory Leaks detected!\n");
 
         // dump each memory block
         long total_blocks_leaked = 0;
@@ -129,8 +130,7 @@ debug_report_leaks(void)
             total_blocks_leaked++;
         }
 
-        fprintf(
-            stderr, 
+        TraceOutput(
             "Leaked %lu bytes in %lu blocks\n",
             total_bytes_leaked,
             total_blocks_leaked);
@@ -143,8 +143,7 @@ debug_report_leaks(void)
             void * userptr      = debug_header_to_userptr(current_block);
             unsigned char * ptr = static_cast<unsigned char*>(userptr);
 
-            fprintf(
-                stderr,
+            TraceOutput(
                 "(id=%8lu) %8u bytes at 0x%X: <", 
                 current_block->id,
                 current_block->blocksize,
@@ -164,37 +163,36 @@ debug_report_leaks(void)
             {
                 if (isprint(ptr[i]))
                 {
-                    fprintf(stderr, "%c", ptr[i]);
+                    TraceOutput("%c", ptr[i]);
                 }
                 else
                 {
-                    fprintf(stderr, " ");
+                    TraceOutput(" ");
                 }
             }
             for (int i = dumpbytes; i < MAX_BYTES_TO_DUMP; i++)
             {
-                fprintf(stderr, " ");
+                TraceOutput(" ");
             }
 
-            fprintf(stderr, "> ");
+            TraceOutput("> ");
 
             // dump the first eight bytes as binary octets
             for (int i = 0; i < dumpbytes; i++)
             {
                 char nibbletohex[] = "0123456789ABCDEF";
-                fprintf(
-                    stderr, 
+                TraceOutput(
                     "%c%c ", 
                     nibbletohex[0xF & (ptr[i] >> 4)],
                     nibbletohex[0xF & (ptr[i] >> 0)]);
             }
 
-            fprintf(stderr, "\n");
+            TraceOutput("\n");
         }
     }
 
-    fprintf(stderr, "\n");
-    fprintf(stderr, "Dumping leaked NODEs\n");
+    TraceOutput("\n");
+    TraceOutput("Dumping leaked NODEs\n");
     for (struct memory_header_t * current_block = g_allocated_blocks.next; 
          current_block != &g_allocated_blocks;
          current_block = current_block->next)
@@ -206,8 +204,7 @@ debug_report_leaks(void)
         {
             NODE * current_node = static_cast<NODE*>(userptr);
 
-            fprintf(
-                stderr,
+            TraceOutput(
                 "(id=%8lu) at 0x%X %s ref=%d:\n  ",
                 current_block->id,
                 current_node,
@@ -220,7 +217,7 @@ debug_report_leaks(void)
                 -1,
                 -1);
 
-            fprintf(stderr, "\n\n");
+            TraceOutput("\n\n");
         }
     }
 }
