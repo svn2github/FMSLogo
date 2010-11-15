@@ -24,6 +24,7 @@
 #include <math.h>
 
 #include "Scintilla.h"
+#include "debugheap.h"
 #include "3dsolid.h"
 #include "const.h"
 #include "eval.h"

@@ -40,6 +40,7 @@
 #include "logomath.h"
 #include "const.h"
 #include "screenwindow.h"
+#include "debugheap.h"
 
 #include "graphwin.h"
 #include "statwind.h"

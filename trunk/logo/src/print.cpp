@@ -33,6 +33,7 @@ using namespace std;
 #include "init.h"
 #include "eval.h"
 #include "files.h"
+#include "debugheap.h"
 
 #include "localizedstrings.h"
 

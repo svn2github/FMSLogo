@@ -24,6 +24,7 @@
 #include "utils.h"
 #include "logodata.h"
 #include "init.h"
+#include "debugheap.h"
 
 // Active area dimensions
 int g_PrinterAreaXLow;

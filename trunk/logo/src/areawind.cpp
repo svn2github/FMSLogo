@@ -21,6 +21,7 @@
 #include "localizedstrings.h"
 #include "mainwind.h"
 #include "main.h"
+#include "debugheap.h"
 
 
 CPrinterAreaWindow::CPrinterAreaWindow(

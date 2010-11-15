@@ -42,6 +42,7 @@
 #include "intern.h"
 #include "lists.h"
 #include "startup.h"
+#include "debugheap.h"
 
 #define assign(to, from)    (to = reref(to, from))
 

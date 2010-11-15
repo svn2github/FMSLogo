@@ -29,6 +29,7 @@
 #include "logomath.h"
 #include "appendablelist.h"
 #include "logocore.h"
+#include "debugheap.h"
 
 #define assign(to, from)    to = reref(to, from)
 

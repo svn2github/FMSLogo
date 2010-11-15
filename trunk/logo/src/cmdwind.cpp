@@ -37,6 +37,7 @@
 #include "parse.h"
 #include "mainwind.h"
 #include "mainframe.h"
+#include "debugheap.h"
 
 #define SELECTBOTTOMLINE
 

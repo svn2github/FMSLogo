@@ -25,6 +25,7 @@
 #include "main.h"
 #include "logodata.h"
 #include "mainwind.h"
+#include "debugheap.h"
 
 const unsigned int CN_CLICKED = 1;     // size control notifications
 

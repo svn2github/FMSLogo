@@ -21,6 +21,7 @@
 
 #include <windows.h>
 #include <stdio.h>
+#include "debugheap.h"
 
 // the name of the FMSLogo registry key under HKCU
 const char FMSLOGO_REGISTRY_KEY_NAME[] = "Software\\FMSLogo";

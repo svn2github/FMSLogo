@@ -30,6 +30,7 @@
 #include "error.h"
 #include "logodata.h"
 #include "parse.h"
+#include "debugheap.h"
 
 extern "C" void PASCAL pushw(WORD);
 extern "C" void PASCAL pushl(DWORD);

@@ -29,6 +29,7 @@
 #include "wrksp.h"
 #include "graphics.h"
 #include "localizedstrings.h"
+#include "debugheap.h"
 
 #include "mainwind.h"
 

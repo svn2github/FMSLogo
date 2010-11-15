@@ -22,6 +22,7 @@
 #include "cursor.h"
 #include "init.h"
 #include "logocore.h"
+#include "debugheap.h"
 
 HCURSOR hCursorWait;               // handle for hourglass cursor
 HCURSOR hCursorArrow;              // handle for normal cursor

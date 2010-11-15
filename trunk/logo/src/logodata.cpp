@@ -37,6 +37,7 @@
 #include "print.h"
 #include "files.h"
 #include "appendablelist.h"
+#include "debugheap.h"
 
 #include "localizedstrings.h"
 

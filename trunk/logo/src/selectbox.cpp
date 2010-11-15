@@ -21,6 +21,7 @@
 #include "mainwind.h"
 #include "logorc.h"
 #include "argumentutils.h"
+#include "debugheap.h"
 
 #include "localizedstrings.h"
 

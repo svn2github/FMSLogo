@@ -24,6 +24,7 @@
 #include "argumentutils.h"
 #include "init.h"
 #include "logodata.h"
+#include "debugheap.h"
 
 NODE *lcleartext(NODE *)
 {

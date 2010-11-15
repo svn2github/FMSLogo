@@ -5,6 +5,7 @@
 #include <fcntl.h>
 
 #include "gbm.h"
+#include "debugheap.h"
 
 const int FILETYPE_BMP = 0;
 const int FILETYPE_GIF = 1;

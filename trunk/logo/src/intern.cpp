@@ -29,6 +29,7 @@
 #include "init.h"
 #include "logomath.h"
 #include "wrksp.h"
+#include "debugheap.h"
 
 
 // hash_table is an array of NODE*.

@@ -17,6 +17,7 @@
 #include "ibmterm.h"
 #include "unix.h"
 #include "screenwindow.h"
+#include "debugheap.h"
 
 #include "localizedstrings.h"
 

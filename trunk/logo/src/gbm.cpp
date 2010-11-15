@@ -24,6 +24,7 @@ gbm.c - Generalised Bitmap Module
 
 #include "gbmbmp.h"
 #include "gbmgif.h"
+#include "debugheap.h"
 
 struct FT
 {

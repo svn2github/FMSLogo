@@ -21,6 +21,7 @@
 
 #include "logocore.h"
 #include "print.h"
+#include "debugheap.h"
 
 void cnv_strnode_string(char *textbuf, NODE *arg)
 {

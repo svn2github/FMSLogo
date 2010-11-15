@@ -42,6 +42,7 @@
 
 #include "mainframe.h"
 #include "cmdwind.h"
+#include "debugheap.h"
 
 
 TMyFileWindow::TMyFileWindow(

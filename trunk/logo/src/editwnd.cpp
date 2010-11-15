@@ -23,6 +23,7 @@
 #include "localizedstrings.h"
 #include "logorc.h"
 #include "main.h"
+#include "debugheap.h"
 
 TRichEditWithPopup::TRichEditWithPopup(
     TWindow* Parent,

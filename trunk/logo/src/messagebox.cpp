@@ -22,6 +22,7 @@
 #include "messagebox.h"
 #include "screenwindow.h"
 #include "error.h"
+#include "debugheap.h"
 
 #include "localizedstrings.h"
 

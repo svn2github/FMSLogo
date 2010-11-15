@@ -52,6 +52,7 @@
 #include "main.h"
 #include "screenwindow.h"
 #include "localizedstrings.h"
+#include "debugheap.h"
 
 #define PALVERSION 0x300
 

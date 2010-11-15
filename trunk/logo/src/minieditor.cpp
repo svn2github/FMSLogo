@@ -20,6 +20,7 @@
 #include "utils.h"
 #include "logorc.h"
 #include "localizedstrings.h"
+#include "debugheap.h"
 
 TMiniEditorRichEdit::TMiniEditorRichEdit(TWindow * Parent)
     : TRichEditWithPopup(Parent, ID_MINIEDITCTRL)

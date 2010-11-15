@@ -23,6 +23,7 @@
 
 #include "graphwin.h"
 #include "logorc.h"
+#include "debugheap.h"
 #include "localizedstrings.h"
 
 #include "mainwind.h"

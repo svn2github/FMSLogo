@@ -52,6 +52,7 @@
 #include "cmdwind.h"
 #include "selectbox.h"
 #include "screenwindow.h"
+#include "debugheap.h"
 
 enum WINDOWTYPE 
 {

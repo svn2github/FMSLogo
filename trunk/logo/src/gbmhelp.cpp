@@ -20,6 +20,7 @@ gbmhelp.c - Helpers for GBM file I/O stuff
 #include <sys/types.h>
 #include <sys/stat.h>
 #include "gbm.h"
+#include "debugheap.h"
 
 BOOLEAN gbm_same(const char *s1, const char *s2, int n)
 {

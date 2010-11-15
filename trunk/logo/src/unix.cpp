@@ -30,6 +30,7 @@
 #include "parse.h"
 #include "argumentutils.h"
 #include "dynamicbuffer.h"
+#include "debugheap.h"
 #include "localizedstrings.h"
 
 jmp_buf iblk_buf;

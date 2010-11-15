@@ -24,6 +24,7 @@
 #include "logodata.h"
 #include "main.h"
 #include "error.h"
+#include "debugheap.h"
 
 #include "statwind.h"
 

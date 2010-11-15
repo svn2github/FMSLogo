@@ -34,6 +34,7 @@
 #include "error.h"
 #include "ibmterm.h"
 #include "const.h"
+#include "debugheap.h"
 
 const char MATHFUNC_Sum        = '+';
 const char MATHFUNC_Difference = '-';

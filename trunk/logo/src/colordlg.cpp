@@ -24,6 +24,7 @@
 #include "mainwind.h"
 #include "localizedstrings.h"
 #include "logodata.h"
+#include "debugheap.h"
 
 const unsigned int CN_CLICKED = 1;     // color control notifications
 

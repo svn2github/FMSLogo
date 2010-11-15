@@ -20,6 +20,7 @@ Input options: index=# (default: 0)
 #include <malloc.h>
 #include "gbm.h"
 #include "gbmhelp.h"
+#include "debugheap.h"
 
 #ifndef min
 #define min(a,b)        (((a)<(b))?(a):(b))

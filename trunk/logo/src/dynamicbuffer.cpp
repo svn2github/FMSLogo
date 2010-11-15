@@ -20,8 +20,9 @@
 #include <assert.h>
 #include <stdlib.h>
 #include <string.h>
-
 #include <algorithm>
+
+#include "debugheap.h"
 
 const int DEFAULT_BUFFER_SIZE = 256;
 

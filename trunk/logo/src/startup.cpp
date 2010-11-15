@@ -25,6 +25,7 @@
 #include "graphwin.h"
 #include "utils.h"
 #include "main.h"
+#include "debugheap.h"
 
 #include "localizedstrings.h"
 

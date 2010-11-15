@@ -34,6 +34,7 @@
 #include "graphwin.h"
 #include "graphics.h"
 #include "argumentutils.h"
+#include "debugheap.h"
 
 // ift_iff_flag: flag for if TEST has been called within the scope
 // -1 : TEST has not been called.

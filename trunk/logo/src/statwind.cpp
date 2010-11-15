@@ -29,6 +29,7 @@
 #include "utils.h"
 #include "ibmterm.h"
 #include "localizedstrings.h"
+#include "debugheap.h"
 
 bool status_flag = false;   // Flag to signal status box is popped up
 

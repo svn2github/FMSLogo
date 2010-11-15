@@ -33,6 +33,7 @@
 #include "logomath.h"
 #include "parse.h"
 #include "screenwindow.h"
+#include "debugheap.h"
 #include "localizedstrings.h"
 
 CNetworkConnection g_ClientConnection;

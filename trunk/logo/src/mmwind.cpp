@@ -33,6 +33,7 @@
 #include "parse.h"
 #include "ibmterm.h"
 #include "screenwindow.h"
+#include "debugheap.h"
 
 #include "devwind.h"
 

@@ -42,6 +42,7 @@ using namespace std;
 #include "logomath.h"
 #include "appendablelist.h"
 #include "graphics.h"
+#include "debugheap.h"
 #include "localizedstrings.h"
 
 #ifndef FMSLOGO_SCREENSAVER

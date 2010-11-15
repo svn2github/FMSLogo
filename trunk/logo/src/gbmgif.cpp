@@ -12,6 +12,7 @@ Output options: xscreen=#,yscreen=#,background=#,xpos=#,ypos=#,transcol=#,ilace.
 #include <string.h>
 #include "gbm.h"
 #include "gbmhelp.h"
+#include "debugheap.h"
 
 
 #define low_byte(w)     ((byte)  (          (w)&0x00ffU)    )

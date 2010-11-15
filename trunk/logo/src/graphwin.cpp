@@ -50,6 +50,7 @@
 #include "const.h"
 #include "screenwindow.h"
 #include "startup.h"
+#include "debugheap.h"
 
 #include "localizedstrings.h"
 

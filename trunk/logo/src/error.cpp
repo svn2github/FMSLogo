@@ -39,6 +39,7 @@
 #include "parse.h"
 #include "logomath.h"
 #include "ibmterm.h"
+#include "debugheap.h"
 
 NODE *    throw_node = NIL;
 

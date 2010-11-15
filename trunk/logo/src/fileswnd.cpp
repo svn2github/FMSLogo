@@ -26,6 +26,7 @@
 #include "parse.h"
 #include "mem.h"
 #include "main.h" // for current_line
+#include "debugheap.h"
 
 #include "localizedstrings.h"
 

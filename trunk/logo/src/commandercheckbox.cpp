@@ -18,6 +18,7 @@
 
 #include "commandercheckbox.h"
 #include "cmdwind.h"
+#include "debugheap.h"
 
 TCommanderCheckBox::TCommanderCheckBox(
     TMyCommandWindow* parent,

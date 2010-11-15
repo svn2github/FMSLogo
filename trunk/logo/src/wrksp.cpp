@@ -36,6 +36,7 @@
 #include "print.h"
 #include "files.h"
 #include "unix.h"
+#include "debugheap.h"
 
 #include "localizedstrings.h"
 #include "cursor.h"

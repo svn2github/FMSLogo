@@ -38,6 +38,7 @@ using namespace std;
 #include "error.h"
 #include "screenwindow.h"
 #include "assembly.h"
+#include "debugheap.h"
 
 // global variables
 KEYBOARDCAPTURE KeyboardCapture = KEYBOARDCAPTURE_Off; // Flag to signal Keyboard is enabled

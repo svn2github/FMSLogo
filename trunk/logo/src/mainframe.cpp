@@ -52,6 +52,7 @@
 #include "savebeforeexitdialog.h"
 #include "startup.h"
 #include "mmwind.h"
+#include "debugheap.h"
 
 #include "localizedstrings.h"
 

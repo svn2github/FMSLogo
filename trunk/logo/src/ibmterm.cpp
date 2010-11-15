@@ -26,6 +26,7 @@
 #include "assembly.h"
 #include "graphwin.h"
 #include "mainwind.h"
+#include "debugheap.h"
 
 #include "localizedstrings.h"
 

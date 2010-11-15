@@ -28,6 +28,7 @@
 #include "logodata.h"
 #include "logomath.h"
 #include "init.h"
+#include "debugheap.h"
 
 CLocalizedNode::CLocalizedNode() :
     m_Primary(NIL),

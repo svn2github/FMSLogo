@@ -32,6 +32,7 @@
 #include "lists.h"
 #include "appendablelist.h"
 #include "graphics.h"
+#include "debugheap.h"
 
 static
 NODE *bfable_arg(NODE *args)

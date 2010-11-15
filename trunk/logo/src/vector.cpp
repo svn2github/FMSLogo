@@ -1,6 +1,7 @@
-#include "vector.h"
-
 #include <math.h>
+
+#include "vector.h"
+#include "debugheap.h"
 
 // Magnitude of a vector
 double Mag(const VECTOR &v)

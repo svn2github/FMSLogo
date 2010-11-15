@@ -18,6 +18,7 @@
 
 #include "commanderbutton.h"
 #include "cmdwind.h"
+#include "debugheap.h"
 
 TCommanderButton::TCommanderButton(
     TMyCommandWindow* parent,
