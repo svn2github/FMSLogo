@@ -114,3 +114,18 @@ int ShowEditorForFile(const char *FileName, NODE *args)
 {
     return TMainFrame::PopupEditorForFile(TempPathName, args);
 }
+
+void
+TraceOutput(
+    const char * FormatString,
+    ...
+    )
+{
+    char formattedString[256];
+
+    va_list args;
+
+    va_start(args, FormatString);
+    vfprintf(stderr, FormatString, args);
+    va_end(args);
+}

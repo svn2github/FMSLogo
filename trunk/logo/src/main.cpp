@@ -697,8 +697,7 @@ WinMain(
         DWORD currentGuiObjects = getGuiResources(fmslogo, GR_GDIOBJECTS);
         if (originalGuiObjects < currentGuiObjects)
         {
-            fprintf(
-                stderr, 
+            TraceOutput(
                 "%d GUI objects were leaked.\n",
                 currentGuiObjects - originalUserObjects);
         }
@@ -707,8 +706,7 @@ WinMain(
         DWORD currentUserObjects = getGuiResources(fmslogo, GR_USEROBJECTS);
         if (originalUserObjects < currentUserObjects)
         {
-            fprintf(
-                stderr, 
+            TraceOutput(
                 "%d USER objects were leaked.\n",
                 currentUserObjects - originalUserObjects);
         }

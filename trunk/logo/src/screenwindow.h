@@ -41,4 +41,6 @@ void AdjustScrollPositionToZoomFactor(FLONUM NewZoomFactor);
 void UndockCommanderWindow();
 int ShowEditorForFile(const char *FileName, NODE *args);
 
+void TraceOutput(const char * FormatString, ...);
+
 #endif // __SCREENWINDOW_H_
