@@ -115,6 +115,7 @@ VIII. Acknowledgements
     Igor Baglaev
     Tankhasaev Ayur
     Ayurzanaeva Aryuna
+    Bruce Mardle
 
   Special thanks to:
     George Mills

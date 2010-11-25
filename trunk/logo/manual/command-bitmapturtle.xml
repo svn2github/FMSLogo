@@ -37,7 +37,10 @@ Both <link linkend="command-nobitmapturtle">NOBITMAPTURTLE</link> and <link link
 
 <programlisting><userinput>CLEARSCREEN
 LABEL "+
+SETBITINDEX 1
 BITCUT 20 20
+HIDETURTLE
+SETTURTLE 1
 BITMAPTURTLE
 FORWARD 100</userinput>
 </programlisting>
