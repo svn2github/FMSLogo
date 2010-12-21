@@ -2,6 +2,8 @@
 #include <time.h>
 #include <string>
 #include <scrnsave.h>
+#include <strsafe.h>
+#include <stdlib.h>
 
 #include "init.h"
 #include "graphwin.h"
@@ -17,6 +19,7 @@
 #include "devwind.h"
 #include "eval.h"
 #include "logorc.h"
+#include "screenwindow.h"
 
 #include "resource.h"
 
@@ -49,6 +52,7 @@ static HDC  g_MemoryDeviceContext = NULL;
 static DWORD g_TickCountOfMostRecentLoad = 0;
 
 const DWORD DELAYTIME_MILLISECONDS = 10000;
+
 
 static
 void
@@ -86,8 +90,7 @@ UninitializeLogoEngine()
         DWORD currentGuiObjects = g_GetGuiResources(g_Fmslogo, GR_GDIOBJECTS);
         if (g_OriginalGuiObjects < currentGuiObjects)
         {
-            fprintf(
-                stderr, 
+            TraceOutput(
                 "%d GUI objects were leaked.\n",
                 currentGuiObjects - g_OriginalUserObjects);
         }
@@ -96,8 +99,7 @@ UninitializeLogoEngine()
         DWORD currentUserObjects = g_GetGuiResources(g_Fmslogo, GR_USEROBJECTS);
         if (g_OriginalUserObjects < currentUserObjects)
         {
-            fprintf(
-                stderr, 
+            TraceOutput(
                 "%d USER objects were leaked.\n",
                 currentUserObjects - g_OriginalUserObjects);
         }
@@ -105,7 +107,6 @@ UninitializeLogoEngine()
         CloseHandle(g_Fmslogo);
     }
 #endif // MEM_DEBUG
-
 }
 
 LRESULT WINAPI ScreenSaverProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
@@ -263,11 +264,7 @@ LRESULT WINAPI ScreenSaverProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lP
         // Start the timer.
         // Use the minimum timer tick time so that we can run
         // the next instruction as soon as the previous one completes.
-        g_Timer = SetTimer(
-            hwnd,
-            33,
-            USER_TIMER_MINIMUM,
-            NULL);
+        g_Timer = SetTimer(hwnd, 33, USER_TIMER_MINIMUM, NULL);
         break;
 
     case WM_PAINT:
@@ -287,8 +284,6 @@ LRESULT WINAPI ScreenSaverProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lP
                 PaintToScreenWindow(
                     deviceContext,
                     FullRect);
-                    //repaintInfo.rcPaint);
-                    //updateRectangle);
 
                 EndPaint(hwnd, &repaintInfo);
             }
@@ -396,18 +391,12 @@ LRESULT WINAPI ScreenSaverProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lP
         break;
 
     case WM_DESTROY:
-    
+
         if (is_executing())
         {
             IsTimeToHalt = true;
         }
         IsTimeToExit = true;
-
-        if (!g_IsLoadingFile)
-        {
-            // We are not in the Logo evaluator, so we can cleanup here.
-            UninitializeLogoEngine();
-        }
 
         if (g_Timer != 0)
         {
@@ -434,6 +423,19 @@ LRESULT WINAPI ScreenSaverProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lP
         }
 
         g_ScreenWindow = NULL;
+ 
+        if (g_IsLoadingFile)
+        {
+            // Something prevents the screensaver process
+            // from terminating if WM_DESTROY is sent while 
+            // the logo engine is running from a WM_TIMER.
+            exit(EXIT_SUCCESS);
+        }
+        else
+        {
+            // We are not in the Logo evaluator, so we can cleanup here.
+            UninitializeLogoEngine();
+        }
         break;
 
     default: 
@@ -659,4 +661,29 @@ void UndockCommanderWindow()
 int ShowEditorForFile(const char *FileName, NODE *args)
 {
     return 0;
+}
+
+void
+TraceOutput(
+    const char * FormatString,
+    ...
+    )
+{
+    char formattedString[256];
+
+    va_list args;
+
+    va_start(args, FormatString);
+
+    HRESULT hr = StringCchVPrintf(
+        formattedString,
+        ARRAYSIZE(formattedString),
+        FormatString,
+        args);
+    if (SUCCEEDED(hr))
+    {
+        OutputDebugString(formattedString);
+    }
+
+    va_end(args);
 }
