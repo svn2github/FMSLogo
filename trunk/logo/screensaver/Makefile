@@ -65,6 +65,9 @@ OBJECTS=\
     wrksp.o          \
     screensaver.res  \
 
+DEBUG_OBJECTS=       \
+    $(OBJECTS)       \
+    debugheap.o      \
 
 LIBS=\
     gdi32    \
@@ -91,7 +94,7 @@ debug : $(TARGET)d.scr ;
 #
 # Rules for building the debug version of the screensaver
 #
-$(TARGET)d.scr : $(addprefix obj/debug-,$(OBJECTS))
+$(TARGET)d.scr : $(addprefix obj/debug-,$(DEBUG_OBJECTS))
 	$(LINK) /nologo /OUT:$@ /DEBUG $(LDFLAGS) $(addsuffix .lib,$(LIBS)) -def:screensaver.def $^
 
 obj/debug-%.o: ../src/%.cpp
