@@ -51,6 +51,9 @@ static HDC  g_MemoryDeviceContext = NULL;
 
 static DWORD g_TickCountOfMostRecentLoad = 0;
 
+static int   g_NextTextLine = 0;
+
+
 const DWORD DELAYTIME_MILLISECONDS = 10000;
 
 
@@ -355,7 +358,9 @@ LRESULT WINAPI ScreenSaverProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lP
                 // milliseconds since the last time we ran it.
                 if (g_TickCountOfMostRecentLoad + DELAYTIME_MILLISECONDS <= GetTickCount())
                 {
+                    // reset the screen and text area
                     lclearscreen(NULL);
+                    g_NextTextLine = 0;
 
                     // Always re-read the file to load from the registry, in case it changed.
                     GetConfigurationString(
@@ -369,7 +374,6 @@ LRESULT WINAPI ScreenSaverProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lP
                         silent_load(NIL, g_FileToLoad);
                         g_TickCountOfMostRecentLoad = GetTickCount();
                         g_IsLoadingFile = false;
-
                         if (IsTimeToExit)
                         {
                             // The window has already been destroyed,
@@ -508,21 +512,21 @@ BOOL WINAPI ScreenSaverConfigureDialog(HWND hDlg, UINT message, WPARAM wParam, L
             // Borland uses to the one which the screensaver uses.
             // This saves the translators time in that they don't have
             // to localize two strings.
-            size_t srcIndex  = 0;
-            size_t destIndex = 0;
-            while (destIndex < ARRAYSIZE(logoFileFilter))
+            size_t i = 0;
+            while (i < ARRAYSIZE(logoFileFilter) &&
+                   LOCALIZED_FILEFILTER_LOGO[i] != '\0')
             {
-                logoFileFilter[destIndex] = LOCALIZED_FILEFILTER_LOGO[srcIndex];
-                if (logoFileFilter[destIndex] == '|')
+                logoFileFilter[i] = LOCALIZED_FILEFILTER_LOGO[i];
+                if (logoFileFilter[i] == '|')
                 {
                     // map all | characters to \0
-                    logoFileFilter[destIndex] = '\0';
+                    logoFileFilter[i] = '\0';
                 }
-                srcIndex++;
-                destIndex++;
+
+                i++;
             }
-            // add another NULL terminator
-            logoFileFilter[destIndex] = '\0';
+            // Add another NULL terminator
+            logoFileFilter[i] = '\0';
 
             openFileName.lStructSize       = sizeof openFileName;
             openFileName.hwndOwner         = hDlg;
@@ -575,8 +579,67 @@ void single_step_box(NODE *the_line)
 {
 }
 
+// This function is called when Logo wants to write a line of text to the commander's
+// recall box.  Since we don't have a recall box, we instead write directly to the
+// screen.
 void putcombobox(const char *str)
 {
+    HDC     memoryDeviceContext = GetMemoryDeviceContext();
+    HBITMAP oldBitmap           = (HBITMAP) SelectObject(memoryDeviceContext, MemoryBitMap);
+
+    if (EnablePalette)
+    {
+        OldPalette = SelectPalette(memoryDeviceContext, ThePalette, FALSE);
+        RealizePalette(memoryDeviceContext);
+    }
+
+    SetBkColor(memoryDeviceContext, scolor);
+    SetBkMode(memoryDeviceContext, TRANSPARENT);
+    SetTextColor(memoryDeviceContext, pcolor);
+
+    FontRec.lfEscapement = 0;
+    HFONT tempFont = CreateFontIndirect(&FontRec);
+    HFONT oldFont = (HFONT) SelectObject(memoryDeviceContext, tempFont);
+
+    // figure out how much space this text will take up
+    SIZE size;
+    GetTextExtentPoint(memoryDeviceContext, str, strlen(str), &size);
+
+    if (BitMapHeight < g_NextTextLine + size.cy)
+    {
+        // The text won't fit on the screen,
+        // so wrap it back to the beginning.
+        g_NextTextLine = 0;
+    }
+
+    TextOut(
+        memoryDeviceContext,
+        0,
+        g_NextTextLine,
+        str,
+        strlen(str));
+
+    if (EnablePalette)
+    {
+        SelectPalette(memoryDeviceContext, OldPalette, FALSE);
+    }
+
+    SelectObject(memoryDeviceContext, oldFont);
+    SelectObject(memoryDeviceContext, oldBitmap);
+
+    DeleteObject(tempFont);
+
+    // Update the screen to show the text.
+    RECT textRect;
+    textRect.left   = 0;
+    textRect.top    = g_NextTextLine;
+    textRect.right  = size.cx;
+    textRect.bottom = g_NextTextLine + size.cy;
+
+    InvalidateRect(GetScreenWindow(), &textRect, TRUE);
+
+    // Move to the next line
+    g_NextTextLine += size.cy + 10;
 }
 
 bool promptuser(char *str, const char *prompt)
