@@ -37,6 +37,11 @@ See also the <link linkend="command-save">SAVE</link> command.</para>
           <para>This is the same as <link linkend="menu-file-save">File - Save</link>, except that it prompts you for a file name.</para>
         </section>
 
+        <section id="menu-file-setasscreensaver">
+          <title>File - Set As Screen Saver</title>
+          <para>This saves the current workspace to a file, configures the &PRODUCTNAME; screen saver to load this file, and sets the &PRODUCTNAME; screen saver as the active screen saver.  If the &PRODUCTNAME; screen saver is not installed, then this option is disabled.</para>
+        </section>
+
         <section id="menu-file-edit">
           <title>File - Edit...</title>
           <para>This is how you edit procedures that have already been loaded (or developed) in memory.

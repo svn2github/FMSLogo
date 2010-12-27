@@ -1,5 +1,5 @@
 ----------------------------------------------------------------------
-FMSLogo Version 6.26.0 for Microsoft Windows
+FMSLogo Version 6.27.0 for Microsoft Windows
 ----------------------------------------------------------------------
 
    I. Kit Description/Location
@@ -21,6 +21,8 @@ I. Kit Description/Location (http://sourceforge.net/projects/fmslogo)
 II. New features/bugs fixed:
 
   * Added for 6.27.0
+    o Implement request #2914634; Provide an option to set a Logo program
+      as a screen saver.
     o Minor improvements to the manual.
 
   For a complete history of changes across all versions of FMSLogo, see
