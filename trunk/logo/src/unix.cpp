@@ -102,6 +102,9 @@ int printfx(const char *fmt, const char *str)
     char buff[MAX_BUFFER_SIZE * 2];
     int cnt = sprintf(buff, fmt, str);
 
+    // check for a buffer overflow
+    assert(cnt < ARRAYSIZE(buff));
+
     mputcombobox(buff);
 
     return cnt;
@@ -173,7 +176,7 @@ NODE *lrmdir(NODE *arg)
         }
         else
         {
-            printfx("%s", strerror(errno));
+            printfx(strerror(errno));
         }
     }
     else

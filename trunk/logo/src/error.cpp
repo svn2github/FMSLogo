@@ -181,12 +181,12 @@ err_logo(
     {
     case FATAL:
         prepare_to_exit(FALSE);
-        printfx("%s", LOCALIZED_ERROR_FATALINTERNAL);
+        printfx(LOCALIZED_ERROR_FATALINTERNAL);
         exit(1);
 
     case OUT_OF_MEM_UNREC:
         prepare_to_exit(FALSE);
-        printfx("%s", LOCALIZED_ERROR_OUTOFMEMORY);
+        printfx(LOCALIZED_ERROR_OUTOFMEMORY);
         exit(1);
 
     case OUT_OF_MEM:
@@ -454,7 +454,7 @@ err_logo(
 
     default:
         prepare_to_exit(FALSE);
-        printfx("%s", LOCALIZED_ERROR_UNKNOWN);
+        printfx(LOCALIZED_ERROR_UNKNOWN);
         exit(1);
     }
 
