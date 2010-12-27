@@ -383,6 +383,74 @@ TO POTEST.SMOKETEST
 
 END
 
+TO POTEST.LONGINPUT.PROCEDUREWITHLONGLINE
+   ; This is a procedure with a line of code that is long
+   ; enough to overflow an internal buffer on PO.
+   local [a]
+   repeat 1 [
+      make "a [1234567890 1234567890 1234567890]
+      make "a [1234567890 1234567890 1234567890]
+      make "a [1234567890 1234567890 1234567890]
+      make "a [1234567890 1234567890 1234567890]
+      make "a [1234567890 1234567890 1234567890]
+      make "a [1234567890 1234567890 1234567890]
+      make "a [1234567890 1234567890 1234567890]
+      make "a [1234567890 1234567890 1234567890]
+      make "a [1234567890 1234567890 1234567890]
+      make "a [1234567890 1234567890 1234567890]
+      make "a [1234567890 1234567890 1234567890]
+      make "a [1234567890 1234567890 1234567890]
+      make "a [1234567890 1234567890 1234567890]
+      make "a [1234567890 1234567890 1234567890]
+      make "a [1234567890 1234567890 1234567890]
+      make "a [1234567890 1234567890 1234567890]
+      make "a [1234567890 1234567890 1234567890]
+      make "a [1234567890 1234567890 1234567890]
+      make "a [1234567890 1234567890 1234567890]
+      make "a [1234567890 1234567890 1234567890]
+      make "a [1234567890 1234567890 1234567890]
+      make "a [1234567890 1234567890 1234567890]
+      make "a [1234567890 1234567890 1234567890]
+      make "a [1234567890 1234567890 1234567890]
+      make "a [1234567890 1234567890 1234567890]
+      make "a [1234567890 1234567890 1234567890]
+      make "a [1234567890 1234567890 1234567890]
+      make "a [1234567890 1234567890 1234567890]
+      make "a [1234567890 1234567890 1234567890]
+   ]
+END
+
+TO POTEST.LONGINPUT
+   ; Prints some long lines to the commander.
+   ; This is a regression test for bug #3146515.
+
+   ; Create a variable with a long value.
+   localmake "longvalue "A
+   repeat 10 [ make "longvalue word :longvalue :longvalue ]
+
+   DEFINE "POTEST.LONGINPUT.DEFINEDPROCEDUREWITHLONGLINE (list 
+     [] ; no inputs
+     (list "localmake ""longline :longvalue)
+   )
+
+   ; Write to the commander
+   LOCALMAKE "previouswriter WRITER
+   SETWRITE []
+
+   ; Print the variable.
+   PON "longvalue
+
+   ; Print the procedure
+   PO "POTEST.LONGINPUT.PROCEDUREWITHLONGLINE
+
+   ; Print the procedure
+   PO "POTEST.LONGINPUT.DEFINEDPROCEDUREWITHLONGVALUE
+
+   ; restore the current writer
+   SETWRITE :previouswriter
+
+END
+
 TO POTEST.BADINPUT
 
    RUNNOTENOUGHINPUTSTEST               [(PO)]
@@ -417,6 +485,7 @@ END
 
 TO POTEST
    POTEST.SMOKETEST
+   POTEST.LONGINPUT
    POTEST.BADINPUT
 END
 
