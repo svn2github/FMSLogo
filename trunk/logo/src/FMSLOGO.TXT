@@ -21,6 +21,8 @@ I. Kit Description/Location (http://sourceforge.net/projects/fmslogo)
 II. New features/bugs fixed:
 
   * Added for 6.27.0
+    o Fix bug #3146515; PO no longer crashes when printing a procedure
+      that has a long line to the commander.
     o Implement request #2914634; Provide an option to set a Logo program
       as a screen saver.
     o Minor improvements to the manual.

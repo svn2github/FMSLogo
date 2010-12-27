@@ -1136,16 +1136,29 @@ NODE *po_helper(NODE *arg, int just_titles)  /* >0 for POT, <0 for EDIT       */
                         char *str = expand_slash(currentline);
                         if (g_Writer.GetStream() == stdout)
                         {
-                            // str doesn't end in a newline.  printfx() always
-                            // writes a newline to the commander history,
-                            // regardless of if the string ends in a newline
-                            // (in eseence, the newlineis optional).  However,
-                            // it doesn't write anything whengiven the empty
-                            // string, which is what happens when there's a
-                            // blank line in the procedure definition.  To 
-                            // ensure that blank lines are preserved, we append
-                            // a newline.
-                            printfx("%s\n", str);
+                            if (str[0] == '\0')
+                            {
+                                // str doesn't end in a newline.  
+                                // printfx() always writes a newline to the
+                                // commander history, regardless of if the 
+                                // string ends in a newline (in essence, the 
+                                // newline is optional).  However, it doesn't
+                                // write anything when given the empty
+                                // string, which is what happens when there's a
+                                // blank line in the procedure definition.
+                                // To ensure that blank lines are preserved, we
+                                // write a newline.
+                                // Note that we can't just call 
+                                //   printfx("%s\n", str);
+                                // because that could overflow the buffer in
+                                // printfx()
+                                printfx("\n");
+                            }
+                            else
+                            {
+                                printfx(str);
+                            }
+
                             if (dribblestream != NULL)
                             {
                                 fprintf(dribblestream, "%s\n", str);
