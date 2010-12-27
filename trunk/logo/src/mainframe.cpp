@@ -872,9 +872,17 @@ void TMainFrame::SaveBitmap()
 
 void TMainFrame::EraseContentsOfWorkspace()
 {
-    NODE * workspace_contents = vref(lcontents(NIL));
+    NODE * workspace_contents;
+
+    // erase the unburied contents of the workspace
+    workspace_contents = cons_list(lcontents(NIL));
     lerase(workspace_contents);
-    deref(workspace_contents);
+    gcref(workspace_contents);
+
+    // erase the buried contents of the workspace
+    workspace_contents = cons_list(lburied(NIL));
+    lerase(workspace_contents);
+    gcref(workspace_contents);
 }
 
 void TMainFrame::CMFileNew()

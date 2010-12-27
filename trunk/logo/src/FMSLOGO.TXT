@@ -25,6 +25,8 @@ II. New features/bugs fixed:
       that has a long line to the commander.
     o Implement request #2914634; Provide an option to set a Logo program
       as a screen saver.
+    o Fix bug #1483185; File - New now erases property lists, variables,
+      and buried procedures.
     o Minor improvements to the manual.
 
   For a complete history of changes across all versions of FMSLogo, see

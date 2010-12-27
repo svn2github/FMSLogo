@@ -9,7 +9,7 @@ Note that, as a side effect, any selection in this menu that has a directory in 
 
         <section id="menu-file-new">
           <title>File - New</title>
-          <para>This will <link linkend="command-erase">ERASE</link> all procedures currently loaded in memory.
+          <para>This will <link linkend="command-erase">ERASE</link> all procedures, variables, and property lists in the workspace.
 It's like starting with a "new" session.</para>
         </section>
 
