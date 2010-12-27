@@ -628,15 +628,16 @@
 //
 // The menu options on the main window 
 //
-#define LOCALIZED_FILE        "&Αρχείο" // 
-#define LOCALIZED_FILE_NEW    "&Νέο\t(διαγράφει εντολές και μεταβλητές)" // I'm sure "workspace" can have a better translation.
-#define LOCALIZED_FILE_LOAD   "&Φόρτωση...\t(προσθέτει εντολές και μεταβλητές από αρχείο)" // 
-#define LOCALIZED_FILE_OPEN   "’ν&οιγμα...\t(διαγράφει εντολές και μεταβλητές και ανοίγει ένα νέο αρχείο)" // 
-#define LOCALIZED_FILE_SAVE   "&Αποθήκευση"  // 
-#define LOCALIZED_FILE_SAVEAS "Αποθήκευση &ως..." // 
-#define LOCALIZED_FILE_EDIT   "&Επεξεργασία..." // 
-#define LOCALIZED_FILE_ERASE  "&Σβήσιμο..." // 
-#define LOCALIZED_FILE_EXIT   "Έ&ξοδος" // 
+#define LOCALIZED_FILE                  "&Αρχείο" // 
+#define LOCALIZED_FILE_NEW              "&Νέο\t(διαγράφει εντολές και μεταβλητές)" // I'm sure "workspace" can have a better translation.
+#define LOCALIZED_FILE_LOAD             "&Φόρτωση...\t(προσθέτει εντολές και μεταβλητές από αρχείο)" // 
+#define LOCALIZED_FILE_OPEN             "’ν&οιγμα...\t(διαγράφει εντολές και μεταβλητές και ανοίγει ένα νέο αρχείο)" // 
+#define LOCALIZED_FILE_SAVE             "&Αποθήκευση"  // 
+#define LOCALIZED_FILE_SAVEAS           "Αποθήκευση &ως..." // 
+#define LOCALIZED_FILE_SETASSCREENSAVER "Se&t As Screen Saver" // NOT_YET_LOCALIZED
+#define LOCALIZED_FILE_EDIT             "&Επεξεργασία..." // 
+#define LOCALIZED_FILE_ERASE            "&Σβήσιμο..." // 
+#define LOCALIZED_FILE_EXIT             "Έ&ξοδος" // 
 
 #define LOCALIZED_BITMAP               "Ει&κόνα" // 
 #define LOCALIZED_BITMAP_NEW           "&Νέο" // 
@@ -1177,6 +1178,7 @@
 #define LOCALIZED_STRINGTABLE_FILESAVE "Αποθηκεύει όλο τον κώδικα" // 
 #define LOCALIZED_STRINGTABLE_FILEEDIT "Επιλογή μιας εντολής προς επεξεργασία" // 
 #define LOCALIZED_STRINGTABLE_FILEERASE "Επιλογή μιας εντολής προς διαγραφή" // 
+#define LOCALIZED_STRINGTABLE_SETASSCREENSAVER "Saves the contents of the workspace as the screen saver" // NOT_YET_LOCALIZED
 #define LOCALIZED_STRINGTABLE_EXIT "Κλείνει τη Logo" // 
 #define LOCALIZED_STRINGTABLE_BITMAPNEW "Καθαρίζει τη οθόνη" // 
 #define LOCALIZED_STRINGTABLE_BITMAPOPEN "Φορτώνει μια εικόνα Windows bitmap" // 

@@ -628,15 +628,16 @@
 //
 // The menu options on the main window 
 //
-#define LOCALIZED_FILE        "&Arquivo"
-#define LOCALIZED_FILE_NEW    "&Novo\t(apaga o trabalho atual)"
-#define LOCALIZED_FILE_LOAD   "&Carregar...\t(une ao trabalho atual)"
-#define LOCALIZED_FILE_OPEN   "A&brir...\t(substitui o trabalho atual)"
-#define LOCALIZED_FILE_SAVE   "&Guardar"
-#define LOCALIZED_FILE_SAVEAS "G&uardar como..."
-#define LOCALIZED_FILE_EDIT   "&Editar..."
-#define LOCALIZED_FILE_ERASE  "A&pagar..."
-#define LOCALIZED_FILE_EXIT   "&Sair"
+#define LOCALIZED_FILE                  "&Arquivo"
+#define LOCALIZED_FILE_NEW              "&Novo\t(apaga o trabalho atual)"
+#define LOCALIZED_FILE_LOAD             "&Carregar...\t(une ao trabalho atual)"
+#define LOCALIZED_FILE_OPEN             "A&brir...\t(substitui o trabalho atual)"
+#define LOCALIZED_FILE_SAVE             "&Guardar"
+#define LOCALIZED_FILE_SAVEAS           "G&uardar como..."
+#define LOCALIZED_FILE_SETASSCREENSAVER "Coloque como Protetor de &Tela"
+#define LOCALIZED_FILE_EDIT             "&Editar..."
+#define LOCALIZED_FILE_ERASE            "A&pagar..."
+#define LOCALIZED_FILE_EXIT             "&Sair"
 
 #define LOCALIZED_BITMAP               "&Bitmap"
 #define LOCALIZED_BITMAP_NEW           "&Novo"
@@ -1177,6 +1178,7 @@
 #define LOCALIZED_STRINGTABLE_FILESAVE "Salva o conteúdo da área de trabalho"
 #define LOCALIZED_STRINGTABLE_FILEEDIT "Seleciona um procedimento a editar"
 #define LOCALIZED_STRINGTABLE_FILEERASE "Seleciona um procedimento a apagar"
+#define LOCALIZED_STRINGTABLE_SETASSCREENSAVER "Saves the contents of the workspace as the screen saver" // NOT_YET_LOCALIZED
 #define LOCALIZED_STRINGTABLE_EXIT "Sai do Logo"
 #define LOCALIZED_STRINGTABLE_BITMAPNEW "Limpa a tela"
 #define LOCALIZED_STRINGTABLE_BITMAPOPEN "Loads a new screen from a Windows bitmap file" // NOT_YET_LOCALIZED

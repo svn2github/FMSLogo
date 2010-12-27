@@ -175,6 +175,8 @@ public:
 protected:
     void CMFileEdit();
     void CMFileErase();
+    void CMFileSetAsScreenSaverEnable(TCommandEnabler& commandHandler);
+    void CMFileSetAsScreenSaver();
     void CMExit();
     void CmSelectAll();
 

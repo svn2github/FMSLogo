@@ -21,6 +21,11 @@
 #include <owl/compat.h>
 #include <owl/scroller.h>
 #include <owl/inputdia.h>
+#include <shlobj.h>
+
+#ifndef INVALID_FILE_ATTRIBUTES
+const DWORD INVALID_FILE_ATTRIBUTES = 0xFFFFFFFF;
+#endif
 
 #include "mainframe.h"
 
@@ -1147,6 +1152,138 @@ void TMainFrame::CMBitmapPrinterArea()
     } while (!bAok);
 }
 
+// Gets the full path to where the FMSLogo screensaver
+// should be located (if it's installed).
+static
+bool
+GetScreenSaverFilePath(
+    char * ScreenSaverPath,
+    size_t ScreenSaverPathLength
+    )
+{
+    static const char screenSaverFileName[] = "\\fmslogo.scr";
+
+    // Using GetSystemDirectory() instead of SHGetFolderPath
+    // for compatibility with Windows 95.
+    UINT totalChars = GetSystemDirectory(
+        ScreenSaverPath,
+        ScreenSaverPathLength);
+    if (totalChars == 0)
+    {
+        // an error occurred.
+        return false;
+    }
+    if (ScreenSaverPathLength <= totalChars + ARRAYSIZE(screenSaverFileName))
+    {
+        // More space is needed to hold
+        // the path to the screensaver.
+        // This should never happen.
+        return false;
+    }
+
+    // concatenate %windir%\fmslogo.scr
+    strcpy(ScreenSaverPath + totalChars, screenSaverFileName);
+    return true;
+}
+
+static
+bool ScreenSaverIsInstalled()
+{
+    char screenSaverPath[MAX_PATH];
+
+    if (!GetScreenSaverFilePath(screenSaverPath, ARRAYSIZE(screenSaverPath)))
+    {
+        // an error occurred.
+        return false;
+    }
+
+    // check for the file's existence
+    DWORD fileAttributes = GetFileAttributes(screenSaverPath);
+    if (fileAttributes == INVALID_FILE_ATTRIBUTES)
+    {
+        // The screen saver does not exist.
+        return false;
+    }
+
+    // The screen saver exists.
+    return true;
+}
+
+void TMainFrame::CMFileSetAsScreenSaverEnable(TCommandEnabler& commandHandler)
+{
+    // Enable this option if a screen saver is installed.
+    commandHandler.Enable(ScreenSaverIsInstalled());
+}
+
+void TMainFrame::CMFileSetAsScreenSaver()
+{
+    char screenSaverProgramName[MAX_PATH] = "";
+
+    LPITEMIDLIST itemIdList;
+
+    // Get a handle to a folder where we can store personal documents.
+    // Note that we call the defunct SHGetSpecialFolderLocation()
+    // because it is supported as far back as Windows 95.
+    HRESULT hr = SHGetSpecialFolderLocation(
+        NULL,
+        CSIDL_PERSONAL,
+        &itemIdList);
+    if (SUCCEEDED(hr))
+    {
+        // Get a handle to a folder where we can store personal documents.
+        BOOL isOk = SHGetPathFromIDList(
+            itemIdList,
+            screenSaverProgramName);
+        if (isOk)
+        {
+            // Append "screesaver.lgo" to the path
+            size_t screenSaverProgramNameLength = strlen(screenSaverProgramName);
+
+            strcpy(
+                &screenSaverProgramName[screenSaverProgramNameLength],
+                "\\screensaver.lgo");
+
+            filesave(screenSaverProgramName);
+
+            // handle any error that may have occured
+            process_special_conditions();
+
+            // Configure this file as the screensaver
+            SetConfigurationString("ScreenSaverFile", screenSaverProgramName);
+
+            // Best-effort to set the Logo screensaver 
+            // to be the active screensaver
+            char screenSaverPath[MAX_PATH];
+            if (GetScreenSaverFilePath(
+                    screenSaverPath,
+                    ARRAYSIZE(screenSaverPath)))
+            {
+                HKEY desktopKey = NULL;
+
+                LONG result = RegOpenKeyEx(
+                    HKEY_CURRENT_USER,
+                    "Control Panel\\Desktop",
+                    0,      // reserved
+                    KEY_SET_VALUE,
+                    &desktopKey);
+                if (result == ERROR_SUCCESS)
+                {
+                    result = RegSetValueEx(
+                        desktopKey,
+                        "SCRNSAVE.EXE",
+                        0,
+                        REG_SZ,
+                        screenSaverPath,
+                        strlen(screenSaverPath) + 1);
+
+                    RegCloseKey(desktopKey);
+                }
+            }
+        }
+        CoTaskMemFree(itemIdList);
+    }
+}
+
 void TMainFrame::CMFileEdit()
 {
     // create and show a dialog for which procedure to edit
@@ -1384,6 +1521,7 @@ SetTextOnChildWindows(
     }
 }
 
+
 void TMainFrame::SetupWindow()
 {
     TDecoratedFrame::SetupWindow();
@@ -1392,11 +1530,12 @@ void TMainFrame::SetupWindow()
     // Construct the main menu
     //
     static const MENUITEM fileMenuItems[] = {
-        {LOCALIZED_FILE_NEW,    CM_FILENEW},
-        {LOCALIZED_FILE_LOAD,   CM_FILELOAD},
-        {LOCALIZED_FILE_OPEN,   CM_FILEOPEN},
-        {LOCALIZED_FILE_SAVE,   CM_FILESAVE},
-        {LOCALIZED_FILE_SAVEAS, CM_FILESAVEAS},
+        {LOCALIZED_FILE_NEW,              CM_FILENEW},
+        {LOCALIZED_FILE_LOAD,             CM_FILELOAD},
+        {LOCALIZED_FILE_OPEN,             CM_FILEOPEN},
+        {LOCALIZED_FILE_SAVE,             CM_FILESAVE},
+        {LOCALIZED_FILE_SAVEAS,           CM_FILESAVEAS},
+        {LOCALIZED_FILE_SETASSCREENSAVER, CM_FILESETASSCREENSAVER},
         {0},
         {LOCALIZED_FILE_EDIT,   CM_FILEEDIT},
         {LOCALIZED_FILE_ERASE,  CM_FILEERASE},
@@ -2560,6 +2699,8 @@ DEFINE_RESPONSE_TABLE1(TMainFrame, TDecoratedFrame)
     EV_COMMAND(CM_FILESAVEAS, CMFileSaveAs),
     EV_COMMAND(CM_FILEEDIT, CMFileEdit),
     EV_COMMAND(CM_FILEERASE, CMFileErase),
+    EV_COMMAND(CM_FILESETASSCREENSAVER,        CMFileSetAsScreenSaver),
+    EV_COMMAND_ENABLE(CM_FILESETASSCREENSAVER, CMFileSetAsScreenSaverEnable),
     EV_COMMAND(CM_EDITSELECTALL, CmSelectAll),
     EV_COMMAND(CM_EXIT, CMExit),
     EV_COMMAND(CM_BITMAPNEW, CMBitmapNew),

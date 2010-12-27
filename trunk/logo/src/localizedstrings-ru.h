@@ -628,15 +628,16 @@
 //
 // The menu options on the main window 
 //
-#define LOCALIZED_FILE        "&Файл" 
-#define LOCALIZED_FILE_NEW    "&Новый" 
-#define LOCALIZED_FILE_LOAD   "&Загрузить..." 
-#define LOCALIZED_FILE_OPEN   "&Открыть..."  
-#define LOCALIZED_FILE_SAVE   "&Сохранить"  
-#define LOCALIZED_FILE_SAVEAS "Сохранить &как..." 
-#define LOCALIZED_FILE_EDIT   "&Редактировать..." 
-#define LOCALIZED_FILE_ERASE  "С&тереть..." 
-#define LOCALIZED_FILE_EXIT   "&Выход" 
+#define LOCALIZED_FILE                  "&Файл" 
+#define LOCALIZED_FILE_NEW              "&Новый" 
+#define LOCALIZED_FILE_LOAD             "&Загрузить..." 
+#define LOCALIZED_FILE_OPEN             "&Открыть..."  
+#define LOCALIZED_FILE_SAVE             "&Сохранить"  
+#define LOCALIZED_FILE_SAVEAS           "Сохранить &как..." 
+#define LOCALIZED_FILE_SETASSCREENSAVER "Se&t As Screen Saver" // NOT_YET_LOCALIZED
+#define LOCALIZED_FILE_EDIT             "&Редактировать..." 
+#define LOCALIZED_FILE_ERASE            "С&тереть..." 
+#define LOCALIZED_FILE_EXIT             "&Выход" 
 
 #define LOCALIZED_BITMAP               "&Рисунок" 
 #define LOCALIZED_BITMAP_NEW           "&Новый" 
@@ -1177,6 +1178,7 @@
 #define LOCALIZED_STRINGTABLE_FILESAVE "Saves the contents of the workspace" // NOT_YET_LOCALIZED
 #define LOCALIZED_STRINGTABLE_FILEEDIT "Selects a procedure to edit" // NOT_YET_LOCALIZED
 #define LOCALIZED_STRINGTABLE_FILEERASE "Selects a procedure to erase" // NOT_YET_LOCALIZED
+#define LOCALIZED_STRINGTABLE_SETASSCREENSAVER "Saves the contents of the workspace as the screen saver" // NOT_YET_LOCALIZED
 #define LOCALIZED_STRINGTABLE_EXIT "Exits Logo" // NOT_YET_LOCALIZED
 #define LOCALIZED_STRINGTABLE_BITMAPNEW "Clears the screen" // NOT_YET_LOCALIZED
 #define LOCALIZED_STRINGTABLE_BITMAPOPEN "Loads a new screen from a Windows bitmap file" // NOT_YET_LOCALIZED

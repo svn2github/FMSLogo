@@ -628,15 +628,16 @@
 //
 // The menu options on the main window 
 //
-#define LOCALIZED_FILE        "&Fichier"
-#define LOCALIZED_FILE_NEW    "&Nouveau\t(supprime l'espace de travail)"
-#define LOCALIZED_FILE_LOAD   "&Ramène...\t(fusionne avec l'espace de travail)"
-#define LOCALIZED_FILE_OPEN   "&Ouvrir...\t(remplace l'espace de travail)"
-#define LOCALIZED_FILE_SAVE   "&Enregistrer"
-#define LOCALIZED_FILE_SAVEAS "En&registrer sous..."
-#define LOCALIZED_FILE_EDIT   "E&diter..."
-#define LOCALIZED_FILE_ERASE  "E&ffacer..."
-#define LOCALIZED_FILE_EXIT   "&Quitter"
+#define LOCALIZED_FILE                  "&Fichier"
+#define LOCALIZED_FILE_NEW              "&Nouveau\t(supprime l'espace de travail)"
+#define LOCALIZED_FILE_LOAD             "&Ramène...\t(fusionne avec l'espace de travail)"
+#define LOCALIZED_FILE_OPEN             "&Ouvrir...\t(remplace l'espace de travail)"
+#define LOCALIZED_FILE_SAVE             "&Enregistrer"
+#define LOCALIZED_FILE_SAVEAS           "En&registrer sous..."
+#define LOCALIZED_FILE_SETASSCREENSAVER "&Mettre comme Économiseur d'Écran"
+#define LOCALIZED_FILE_EDIT             "E&diter..."
+#define LOCALIZED_FILE_ERASE            "E&ffacer..."
+#define LOCALIZED_FILE_EXIT             "&Quitter"
 
 #define LOCALIZED_BITMAP               "&Dessin"
 #define LOCALIZED_BITMAP_NEW           "&Nouveau"
@@ -1177,6 +1178,7 @@
 #define LOCALIZED_STRINGTABLE_FILESAVE "Saves the contents of the EDALL window" // NOT_YET_LOCALIZED
 #define LOCALIZED_STRINGTABLE_FILEEDIT "Selects a procedure to edit" // NOT_YET_LOCALIZED
 #define LOCALIZED_STRINGTABLE_FILEERASE "Selects a procedure to erase" // NOT_YET_LOCALIZED
+#define LOCALIZED_STRINGTABLE_SETASSCREENSAVER "Saves the contents of the workspace as the screen saver" // NOT_YET_LOCALIZED
 #define LOCALIZED_STRINGTABLE_EXIT "Exits Logo" // NOT_YET_LOCALIZED
 #define LOCALIZED_STRINGTABLE_BITMAPNEW "Clears the screen" // NOT_YET_LOCALIZED
 #define LOCALIZED_STRINGTABLE_BITMAPOPEN "Loads a new screen from a Windows bitmap file" // NOT_YET_LOCALIZED

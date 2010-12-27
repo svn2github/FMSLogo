@@ -143,6 +143,7 @@
 #define CM_FILEEDIT             CMD_BASE + 10
 #define CM_FILEERASE            CMD_BASE + 11
 #define CM_FILELOAD             CMD_BASE + 12
+#define CM_FILESETASSCREENSAVER CMD_BASE + 13
 
 #define CM_HELPEDIT             CMD_BASE + 20
 #define CM_HELPEDIT_TOPIC       CMD_BASE + 21

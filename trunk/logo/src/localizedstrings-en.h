@@ -628,15 +628,16 @@
 //
 // The menu options on the main window 
 //
-#define LOCALIZED_FILE        "&File"
-#define LOCALIZED_FILE_NEW    "&New\t(erase workspace)"
-#define LOCALIZED_FILE_LOAD   "&Load...\t(merge into workspace)"
-#define LOCALIZED_FILE_OPEN   "&Open...\t(replace workspace)" 
-#define LOCALIZED_FILE_SAVE   "&Save" 
-#define LOCALIZED_FILE_SAVEAS "Save &As..."
-#define LOCALIZED_FILE_EDIT   "&Edit..."
-#define LOCALIZED_FILE_ERASE  "E&rase..."
-#define LOCALIZED_FILE_EXIT   "E&xit"
+#define LOCALIZED_FILE                  "&File"
+#define LOCALIZED_FILE_NEW              "&New\t(erase workspace)"
+#define LOCALIZED_FILE_LOAD             "&Load...\t(merge into workspace)"
+#define LOCALIZED_FILE_OPEN             "&Open...\t(replace workspace)" 
+#define LOCALIZED_FILE_SAVE             "&Save" 
+#define LOCALIZED_FILE_SAVEAS           "Save &As..."
+#define LOCALIZED_FILE_SETASSCREENSAVER "Se&t As Screen Saver"
+#define LOCALIZED_FILE_EDIT             "&Edit..."
+#define LOCALIZED_FILE_ERASE            "E&rase..."
+#define LOCALIZED_FILE_EXIT             "E&xit"
 
 #define LOCALIZED_BITMAP               "&Bitmap"
 #define LOCALIZED_BITMAP_NEW           "&New"
@@ -1177,6 +1178,7 @@
 #define LOCALIZED_STRINGTABLE_FILESAVE "Saves the contents of the workspace"
 #define LOCALIZED_STRINGTABLE_FILEEDIT "Selects a procedure to edit"
 #define LOCALIZED_STRINGTABLE_FILEERASE "Selects a procedure to erase"
+#define LOCALIZED_STRINGTABLE_SETASSCREENSAVER "Saves the contents of the workspace as the screen saver"
 #define LOCALIZED_STRINGTABLE_EXIT "Exits Logo"
 #define LOCALIZED_STRINGTABLE_BITMAPNEW "Clears the screen"
 #define LOCALIZED_STRINGTABLE_BITMAPOPEN "Loads a new screen from a Windows bitmap file"
