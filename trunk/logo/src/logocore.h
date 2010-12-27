@@ -687,6 +687,7 @@ parsed__runparse(
 #define flag__object(o,f) (int)((obflags__object(o))->nunion.nint & (f))
 #define is_macro(c) (flag__caseobj(c, PROC_MACRO))
 
+// Increments the reference count on a NODE.
 inline
 void
 ref(NODE * object)
@@ -698,6 +699,7 @@ ref(NODE * object)
     }
 }
 
+// Increments the reference count on a node and returns it.
 inline
 NODE*
 vref(NODE * object)
@@ -711,6 +713,9 @@ vref(NODE * object)
 }
 
 
+// Decrements the reference count on a node and deletes it if
+// the reference count reaches 0.
+// This should be called on referenced objects.
 inline 
 void
 deref(NODE * object)
@@ -729,6 +734,7 @@ deref(NODE * object)
     }
 }
 
+// Deletes an object if its reference count is 0.
 inline 
 void
 gcref(NODE * object)
