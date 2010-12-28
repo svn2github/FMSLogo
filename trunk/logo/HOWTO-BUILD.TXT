@@ -37,6 +37,6 @@ Install the Nullsoft Scriptable Installation System (NSIS) to C:\Program Files\N
 You can download this from http://sourceforge.net/projects/nsis.
 This is needed to build the self-extracting installer executable.
 
+Install Microsoft's Windows SDK to %PROGRAMFILES%\Microsoft SDKs\Windows\v7.0.
 
-Once these steps are complete, you can build the entire FMSLogo package by running
-"gmake all" in the current directory.
+Once these steps are complete, you can build the entire FMSLogo package by running "gmake all" in the current directory.
