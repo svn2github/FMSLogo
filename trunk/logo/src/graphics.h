@@ -32,12 +32,12 @@ struct Color
 
 struct PENSTATE
 {
-    int      Width;
-    Color    Color;
+    int          Width;
+    struct Color Color;
 
     // TODO: combine Mode and IsErasing
-    int      Mode;
-    bool     IsErasing;
+    int          Mode;
+    bool         IsErasing;
 };
 
 struct LINEX

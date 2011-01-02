@@ -25,6 +25,11 @@
 #include <stdlib.h>
 #include <signal.h>
 #include <float.h>
+#include <errno.h>
+
+#ifdef __GNUC__
+#define _isnan(D) isnan(D)
+#endif
 
 #include "logodata.h"
 #include "init.h"

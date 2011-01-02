@@ -1509,7 +1509,7 @@ NODE *ledit(NODE *args)
         }
         else
         {
-            unlink(TempPathName);
+            remove(TempPathName);
             IsDirty = true;
         }
     }

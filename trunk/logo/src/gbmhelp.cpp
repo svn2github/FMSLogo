@@ -11,7 +11,7 @@ gbmhelp.c - Helpers for GBM file I/O stuff
 #include <string.h>
 #include <memory.h>
 #include <malloc.h>
-#ifdef AIX
+#ifdef __GNUC__
 #include <unistd.h>
 #else
 #include <io.h>

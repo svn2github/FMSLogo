@@ -37,7 +37,7 @@
 #define update_status_turtlevisability()
 #define update_status_turtlewhich()
 #define update_status_vectors()
-static bool status_flag;
+extern bool status_flag;
 
 #else
 

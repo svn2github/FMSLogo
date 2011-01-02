@@ -22,7 +22,12 @@
 
 #include <math.h>
 #include <float.h>
+#include <limits.h>
 #include <windows.h>
+
+#ifdef __GNUC__
+#define _finite(D) isfinite(D)
+#endif
 
 #include "wrksp.h"
 #include "graphics.h"

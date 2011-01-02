@@ -407,7 +407,7 @@ NODE *lclose(NODE *arg)
             ::CloseClipboard();
         }
 
-        unlink(TempClipName);
+        remove(TempClipName);
     }
 
     free(fnstr);
@@ -548,7 +548,7 @@ NODE *lerasefile(NODE *arg)
 
     char * fnstr = (char *) malloc((size_t) getstrlen(arg) + 1);
     strnzcpy(fnstr, getstrptr(arg), getstrlen(arg));
-    unlink(fnstr);
+    remove(fnstr);
     free(fnstr);
     return Unbound;
 }

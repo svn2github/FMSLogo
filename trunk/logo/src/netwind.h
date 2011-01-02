@@ -20,6 +20,7 @@
 #define __NETWND_H_
 
 #include <windows.h>
+#include <winsock.h>
 
 struct NODE;
 

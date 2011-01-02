@@ -62,7 +62,6 @@ extern COLORREF pcolor;
 extern bool zoom_flag;
 
 extern FLONUM the_zoom;
-extern Point  g_OldPos;
 
 extern bool GiveFocusToEditbox;
 

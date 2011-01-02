@@ -344,7 +344,7 @@ gifsave_helper(
         status = IMAGE_GIF_SAVE_FAILED;
     }
     lsetcursorarrow(NIL);
-    unlink(TempBmpName);
+    remove(TempBmpName);
 
     return status;
 }
@@ -539,7 +539,7 @@ gifload_helper(
         dwPixelHeight);
 
     // cleanup
-    unlink(TempBmpName);
+    remove(TempBmpName);
     return status;
 }
 

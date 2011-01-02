@@ -18,8 +18,7 @@
 #ifndef __ERROR_H_
 #define __ERROR_H_
 
-struct NODE;
-enum   ERR_TYPES;
+#include "logocore.h"
 
 extern void clear_is_running_erract_flag();
 extern void err_print(void);

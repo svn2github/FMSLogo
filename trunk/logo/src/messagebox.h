@@ -18,7 +18,7 @@
 #ifndef __MESSAGEBOX_H_
 #define __MESSAGEBOX_H_
 
-enum ERR_TYPES;
+#include "logocore.h"
 
 // Functions
 extern void ShowMessage(const char * Title, const char * Message);

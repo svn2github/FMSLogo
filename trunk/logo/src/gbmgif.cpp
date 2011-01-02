@@ -595,7 +595,7 @@ GBM_ERR gif_w(const char *fn, int fd, const GBM *gbm, const GBMRGB *gbmrgb, cons
         if (!bAppendMode)
         {
 
-            char *sig = ((inx_transcol != -1) || (iTrans != -1) || (iDelay != -1)) ? "GIF89a" : "GIF87a";
+            const char *sig = ((inx_transcol != -1) || (iTrans != -1) || (iDelay != -1)) ? "GIF89a" : "GIF87a";
 
             /* Write signiture */
 
@@ -635,8 +635,8 @@ GBM_ERR gif_w(const char *fn, int fd, const GBM *gbm, const GBMRGB *gbmrgb, cons
                 /* Do GIF89a "Graphic Application Extension" application extension block */
                 char gae[19];
                 gae[0]  = 0x21;             /* Extension Introducer */
-                gae[1]  = 0xFF; (char)      /* Graphic Control Label */
-                                    gae[2]  = 0x0B;             /* Block size */
+                gae[1]  = 0xFF;             /* Graphic Control Label */
+                gae[2]  = 0x0B;             /* Block size */
                 gae[3]  = 'N';              /* Identifier */
                 gae[4]  = 'E';
                 gae[5]  = 'T';

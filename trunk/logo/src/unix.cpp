@@ -19,8 +19,14 @@
  *
  */
 #include <stdio.h>
-#include <direct.h>
 #include <errno.h>
+
+#ifdef __GNUC__
+#include <unistd.h>
+#include <sys/stat.h>
+#else
+#include <direct.h>
+#endif
 
 #include "unix.h"
 #include "main.h"

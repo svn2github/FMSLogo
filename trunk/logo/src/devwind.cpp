@@ -21,7 +21,6 @@
 */
 #include <windows.h>
 #include <algorithm>
-using namespace std;
 
 #include "devwind.h"
 #include "argumentutils.h"
@@ -323,7 +322,7 @@ NODE *lportmode(NODE *args)
 static
 int min3(int a, int b, int c)
 {
-    return min(min(a, b), c);
+    return std::min(std::min(a, b), c);
 }
 
 NODE *lportwritearray(NODE *args)
@@ -414,7 +413,7 @@ NODE *lportreadarray(NODE *args)
             {
                 // don't overflow buffer
                 char rxbuffer[MAX_BUFFER_SIZE];
-                int count = min(min(getarrdim(obj), getint(val)), sizeof(rxbuffer));
+                int count = min3(getarrdim(obj), getint(val), sizeof(rxbuffer));
 
                 // Clear any errors
                 DWORD errorCode;
