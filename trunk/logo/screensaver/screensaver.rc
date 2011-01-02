@@ -35,8 +35,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
-FILEVERSION     FMSLOGO_MAJOR_VERSION, FMSLOGO_MINOR_VERSION, FMSLOGO_MICRO_VERSION
-PRODUCTVERSION  FMSLOGO_MAJOR_VERSION, FMSLOGO_MINOR_VERSION, FMSLOGO_MICRO_VERSION
+FILEVERSION     FMSLOGO_MAJOR_VERSION, FMSLOGO_MINOR_VERSION, FMSLOGO_MICRO_VERSION, 0
+PRODUCTVERSION  FMSLOGO_MAJOR_VERSION, FMSLOGO_MINOR_VERSION, FMSLOGO_MICRO_VERSION, 0
 FILEFLAGSMASK   0x3fL
 
 #ifdef DEBUG
@@ -97,7 +97,7 @@ END
 
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
-ID_APP                  ICON    DISCARDABLE     "..\src\logo.ico"
+ID_APP                  ICON    DISCARDABLE     "../src/logo.ico"
 
 /////////////////////////////////////////////////////////////////////////////
 //

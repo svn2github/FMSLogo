@@ -2,7 +2,6 @@
 #include <time.h>
 #include <string>
 #include <scrnsave.h>
-#include <strsafe.h>
 #include <stdlib.h>
 
 #include "init.h"
@@ -22,6 +21,12 @@
 #include "screenwindow.h"
 
 #include "resource.h"
+
+#ifdef __GNUC__
+#define USER_TIMER_MINIMUM (0x0000000A)
+#define GR_GDIOBJECTS      0
+#define GR_USEROBJECTS     1
+#endif
 
 int *TopOfStack  = NULL;
 int BitMapWidth  = 0;
@@ -506,7 +511,6 @@ BOOL WINAPI ScreenSaverConfigureDialog(HWND hDlg, UINT message, WPARAM wParam, L
    
             // They hit the Reset to Defaults button, so set all the edit boxes to good defaults.
         case IDC_LOCATE:
-            ZeroMemory(&openFileName, sizeof openFileName);
 
             // translate from the file filter format which
             // Borland uses to the one which the screensaver uses.
@@ -528,6 +532,7 @@ BOOL WINAPI ScreenSaverConfigureDialog(HWND hDlg, UINT message, WPARAM wParam, L
             // Add another NULL terminator
             logoFileFilter[i] = '\0';
 
+            ZeroMemory(&openFileName, sizeof openFileName);
             openFileName.lStructSize       = sizeof openFileName;
             openFileName.hwndOwner         = hDlg;
             openFileName.hInstance         = NULL;
@@ -548,9 +553,6 @@ BOOL WINAPI ScreenSaverConfigureDialog(HWND hDlg, UINT message, WPARAM wParam, L
             openFileName.lCustData         = NULL;
             openFileName.lpfnHook          = NULL;
             openFileName.lpTemplateName    = NULL;
-            openFileName.pvReserved        = NULL;
-            openFileName.dwReserved        = NULL;
-            openFileName.FlagsEx           = 0;
 
             if (GetOpenFileName(&openFileName))
             {
@@ -732,18 +734,18 @@ TraceOutput(
     ...
     )
 {
-    char formattedString[256];
+    char formattedString[256] = {0};
 
     va_list args;
 
     va_start(args, FormatString);
 
-    HRESULT hr = StringCchVPrintf(
+    int bytesNeeded = vsnprintf(
         formattedString,
-        ARRAYSIZE(formattedString),
+        ARRAYSIZE(formattedString) - 1,
         FormatString,
         args);
-    if (SUCCEEDED(hr))
+    if (0 <= bytesNeeded)
     {
         OutputDebugString(formattedString);
     }
