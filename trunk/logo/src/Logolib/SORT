@@ -34,11 +34,37 @@ to .fmslogo.sort.mergesort :.fmslogo.sort.list :.fmslogo.sort.cmp
   op first cascade [empty? butfirst ?] [.fmslogo.sort.mergepairwise ? :.fmslogo.sort.cmp] map [(list ?)] :.fmslogo.sort.list
 end
 
-to sort :.fmslogo.sort.seq [:.fmslogo.sort.cmp ifelse word? :.fmslogo.sort.seq ["before?] ["less?]]
+to .fmslogo.sort.defaultsortpredicate :.fmslogo.sort.seq
+  if word? :.fmslogo.sort.seq [op "before?]
+
+  if list? :.fmslogo.sort.seq [
+    if empty? :.fmslogo.sort.seq        [op "before?]
+    if number? first :.fmslogo.sort.seq [op "less?]
+    op "before?
+  ]
+
+  if array? :.fmslogo.sort.seq [
+    if equalp 0 count :.fmslogo.sort.seq                        [op "before?]
+    if number? item first :.fmslogo.sort.seq :.fmslogo.sort.seq [op "less?]
+    op "before?
+  ]
+
+  op "less?
+end
+
+to sort :.fmslogo.sort.seq [:.fmslogo.sort.cmp .fmslogo.sort.defaultsortpredicate :.fmslogo.sort.seq]
   if list?  :.fmslogo.sort.seq [op                           .fmslogo.sort.mergesort                          :.fmslogo.sort.seq :.fmslogo.sort.cmp]
   if array? :.fmslogo.sort.seq [op listtoarray               .fmslogo.sort.mergesort arraytolist              :.fmslogo.sort.seq :.fmslogo.sort.cmp]
   if word?  :.fmslogo.sort.seq [op .fmslogo.sort.listtoword  .fmslogo.sort.mergesort .fmslogo.sort.wordtolist :.fmslogo.sort.seq :.fmslogo.sort.cmp]
   op :.fmslogo.sort.seq
 end
 
-bury [sort .fmslogo.sort.mergesort .fmslogo.sort.mergepairwise .fmslogo.sort.merge .fmslogo.sort.listtoword .fmslogo.sort.wordtolist]
+bury [
+  sort
+  .fmslogo.sort.mergesort
+  .fmslogo.sort.mergepairwise
+  .fmslogo.sort.merge
+  .fmslogo.sort.listtoword
+  .fmslogo.sort.wordtolist
+  .fmslogo.sort.defaultsortpredicate
+]

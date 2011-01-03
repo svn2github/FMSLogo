@@ -24,15 +24,37 @@ The <parameter>predicate</parameter> input must be a procedure that inputs two v
 </para>
 
 <para>
-If the <parameter>sequence</parameter> input is a list and no <parameter>predicate</parameter> input is given, then the output is a list that is sorted by <link linkend="command-lessp">LESSP</link>.
-</para>
+If no <parameter>predicate</parameter> input is given, then the predicate used depends on the <parameter>sequence</parameter> input, as defined by the following table.
 
-<para>
-If the <parameter>sequence</parameter> input is an array and no <parameter>predicate</parameter> input is given, then the output is a new array that is sorted by <link linkend="command-lessp">LESSP</link>.
-</para>
-
-<para>
-If the <parameter>sequence</parameter> input is a word and no <parameter>predicate</parameter> input is given, then the output is a word that is sorted by <link linkend="command-beforep">BEFOREP</link>.
+<informaltable frame='all'>
+  <tgroup cols='2'>
+    <thead>
+      <row><entry><parameter>sequence</parameter> type</entry> <entry>output</entry></row>
+    </thead>
+    <tbody>
+      <row>
+        <entry>A list of numbers</entry>
+        <entry>A list sorted by <link linkend="command-lessp">LESSP</link></entry>
+      </row>
+      <row>
+         <entry>A list of non-numbers</entry>
+         <entry>A list sorted by <link linkend="command-beforep">BEFOREP</link></entry>
+      </row>
+      <row>
+         <entry>An array of numbers</entry>
+         <entry>An array sorted by <link linkend="command-lessp">LESSP</link></entry>
+      </row>
+      <row>
+         <entry>An array of non-numbers</entry>
+         <entry>An array sorted by <link linkend="command-beforep">BEFOREP</link></entry>
+      </row>
+      <row>
+         <entry>A word</entry>
+         <entry>A word whose characters are sorted by <link linkend="command-beforep">BEFOREP</link></entry>
+      </row>
+    </tbody>
+  </tgroup>
+</informaltable>
 </para>
 
 </listitem>
