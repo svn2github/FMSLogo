@@ -44,9 +44,13 @@ TO SORTTEST.REGRESSION
   SIMPLEREPORTTEST [SORT [1 2 3]] [1 2 3]
   SIMPLEREPORTTEST [SORT [3 2 1]] [1 2 3]
 
-  SIMPLEREPORTTEST [(SORT [c   b   a  ] "beforep) ]  [a b c]
-  SIMPLEREPORTTEST [(SORT ["c  "b "a  ] "beforep) ]  ["a "b "c]
-  SIMPLEREPORTTEST [(SORT [efg abc hij] "beforep) ]  [abc efg hij]
+  SIMPLEREPORTTEST [SORT [c   b   a  ] ] [a b c]
+  SIMPLEREPORTTEST [SORT ["c  "b "a  ] ] ["a "b "c]
+  SIMPLEREPORTTEST [SORT [efg abc hij] ] [abc efg hij]
+
+  SIMPLEREPORTTEST [(SORT [c   b   a  ] "SORTTEST.AFTER?) ]   [c b a]
+  SIMPLEREPORTTEST [(SORT ["c  "b "a  ] "SORTTEST.AFTER?) ]   ["c "b "a]
+  SIMPLEREPORTTEST [(SORT [efg abc hij] "SORTTEST.AFTER?) ]   [hij efg abc]
 
   SIMPLEREPORTTEST [SORT [1 2 3 1 2 3 1 2 3]] [1 1 1 2 2 2 3 3 3]
 
@@ -95,6 +99,21 @@ TO SORTTEST.REGRESSION
   SIMPLEREPORTTEST [ITEM 7 :sortedarray] 3
   SIMPLEREPORTTEST [ITEM 8 :sortedarray] 3
   SIMPLEREPORTTEST [ITEM 9 :sortedarray] 3
+
+  ;
+  ; sort an array of words
+  ;
+  TRACEINSTRUCTION [make "sortedarray SORT {ghi abc def}]
+  FAILIFNOTTRUE    [ARRAY? :sortedarray]
+  SIMPLEREPORTTEST [COUNT  :sortedarray] 3
+  SIMPLEREPORTTEST [ITEM 1 :sortedarray] "abc
+  SIMPLEREPORTTEST [ITEM 2 :sortedarray] "def
+  SIMPLEREPORTTEST [ITEM 3 :sortedarray] "ghi
+
+  ; Sort the empty array
+  TRACEINSTRUCTION [make "sortedarray SORT {}]
+  SIMPLEREPORTTEST [COUNT  :sortedarray] 0
+  SIMPLEREPORTTEST [array? :sortedarray] LOCALETRUE
 
   ;
   ; sort a long list in reverse order
