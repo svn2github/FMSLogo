@@ -54,8 +54,16 @@ end
 
 to sort :.fmslogo.sort.seq [:.fmslogo.sort.cmp .fmslogo.sort.defaultsortpredicate :.fmslogo.sort.seq]
   if list?  :.fmslogo.sort.seq [op                           .fmslogo.sort.mergesort                          :.fmslogo.sort.seq :.fmslogo.sort.cmp]
-  if array? :.fmslogo.sort.seq [op listtoarray               .fmslogo.sort.mergesort arraytolist              :.fmslogo.sort.seq :.fmslogo.sort.cmp]
   if word?  :.fmslogo.sort.seq [op .fmslogo.sort.listtoword  .fmslogo.sort.mergesort .fmslogo.sort.wordtolist :.fmslogo.sort.seq :.fmslogo.sort.cmp]
+
+  if array? :.fmslogo.sort.seq [
+    ifelse equalp 0 count :.fmslogo.sort.seq [
+      op :.fmslogo.sort.seq
+    ][
+      op listtoarray .fmslogo.sort.mergesort arraytolist :.fmslogo.sort.seq :.fmslogo.sort.cmp
+    ]
+  ]
+
   op :.fmslogo.sort.seq
 end
 
