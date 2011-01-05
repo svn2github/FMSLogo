@@ -344,7 +344,6 @@ NODE *evaluator(NODE *list, enum labels where)
     bool tracing;                 // are we tracing the current procedure?
     FIXNUM oldtailcall;           // in case of reentrant use of evaluator
     FIXNUM repcount;              // count for repeat
-    FIXNUM repcountuppoint = 0;   // up count for repeat
     FIXNUM old_ift_iff;
 
     oldtailcall = tailcall;
