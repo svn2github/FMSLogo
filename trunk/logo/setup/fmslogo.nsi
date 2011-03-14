@@ -84,14 +84,14 @@ LangString StartMenuShortcuts ${LANG_FRENCH}     "Raccourcis Menu Dιmarrer"
 LangString StartMenuShortcuts ${LANG_GREEK}      "Συντομεύσεις Μενού Έναρξη" 
 LangString StartMenuShortcuts ${LANG_RUSSIAN}    "ίπλϋκ μενώ Οσρκ" 
 
-LangString ScreenSaver ${LANG_ENGLISH}    "Install Screen Saver"
-LangString ScreenSaver ${LANG_GERMAN}     "Install Screen Saver" ; NOT_YET_LOCALIZED
-LangString ScreenSaver ${LANG_SPANISH}    "Install Screen Saver" ; NOT_YET_LOCALIZED
-LangString ScreenSaver ${LANG_ITALIAN}    "Install Screen Saver" ; NOT_YET_LOCALIZED
-LangString ScreenSaver ${LANG_PORTUGUESE} "Install Screen Saver" ; NOT_YET_LOCALIZED
-LangString ScreenSaver ${LANG_FRENCH}     "Install Screen Saver" ; NOT_YET_LOCALIZED 
-LangString ScreenSaver ${LANG_GREEK}      "Install Screen Saver" ; NOT_YET_LOCALIZED 
-LangString ScreenSaver ${LANG_RUSSIAN}    "Install Screen Saver" ; NOT_YET_LOCALIZED 
+LangString ScreenSaver ${LANG_ENGLISH}    "Screen Saver"
+LangString ScreenSaver ${LANG_GERMAN}     "Screen Saver" ; NOT_YET_LOCALIZED
+LangString ScreenSaver ${LANG_SPANISH}    "Screen Saver" ; NOT_YET_LOCALIZED
+LangString ScreenSaver ${LANG_ITALIAN}    "Screen Saver" ; NOT_YET_LOCALIZED
+LangString ScreenSaver ${LANG_PORTUGUESE} "Screen Saver" ; NOT_YET_LOCALIZED
+LangString ScreenSaver ${LANG_FRENCH}     "Screen Saver" ; NOT_YET_LOCALIZED 
+LangString ScreenSaver ${LANG_GREEK}      "Screen Saver" ; NOT_YET_LOCALIZED 
+LangString ScreenSaver ${LANG_RUSSIAN}    "Screen Saver" ; NOT_YET_LOCALIZED 
 
 ; uninstall must be able to remove all traces of any previous installation.
 Function uninstall
@@ -130,7 +130,7 @@ Function uninstall
   Delete $previousinstalldir\logohelp-${LANG_FRENCH}.chm
   Delete $previousinstalldir\logohelp-${LANG_RUSSIAN}.chm
 
-  Delete $SYSDIR\fmslogo.scr
+  Delete $SYSDIR\FMSLogo.scr
   Delete $previousinstalldir\fmslogo-${LANG_ENGLISH}.scr
   Delete $previousinstalldir\fmslogo-${LANG_GERMAN}.scr
   Delete $previousinstalldir\fmslogo-${LANG_SPANISH}.scr
@@ -467,7 +467,7 @@ Section $(ScreenSaver)
   File "..\screensaver\fmslogo-${LANG_GREEK}.scr"
   File "..\screensaver\fmslogo-${LANG_RUSSIAN}.scr"
 
-  CopyFiles "$INSTDIR\fmslogo-$LANGUAGE.scr" "$SYSDIR\fmslogo.scr"
+  CopyFiles "$INSTDIR\fmslogo-$LANGUAGE.scr" "$SYSDIR\FMSLogo.scr"
 
   Delete $INSTDIR\fmslogo-${LANG_ENGLISH}.scr
   Delete $INSTDIR\fmslogo-${LANG_GERMAN}.scr
