@@ -21,6 +21,7 @@
 */
 #include <windows.h>
 #include <algorithm>
+using namespace std;
 
 #include "devwind.h"
 #include "argumentutils.h"
@@ -322,7 +323,7 @@ NODE *lportmode(NODE *args)
 static
 int min3(int a, int b, int c)
 {
-    return std::min(std::min(a, b), c);
+    return min(min(a, b), c);
 }
 
 NODE *lportwritearray(NODE *args)
