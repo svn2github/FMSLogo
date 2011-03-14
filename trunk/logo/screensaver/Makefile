@@ -104,6 +104,27 @@ obj/debug-%res.o : %.rc
 	$(WINDRES) $(CPPFLAGS) -DLOCALE=$(DEFAULT_LCID) --output=$@ $<
 
 #
+# Rules for building a debug version of the screensaver with Microsoft's
+# compilers so that .PDB files exist for debugging with windbg.exe.
+#
+msdbg : $(TARGET)msdbg.scr ;
+MSLIBS     = $(subst stdc++,,$(LIBS))
+MSCPPFLAGS = $(CPPFLAGS) -I"$(PROGRAMFILES)\Microsoft SDKs\Windows\v7.0\Include" -I"$(PROGRAMFILES)\Microsoft Visual Studio 9.0\VC\include" -D_CRT_SECURE_NO_WARNINGS
+
+$(TARGET)msdbg.scr : $(addprefix obj/msdbg-,$(DEBUG_OBJECTS))
+	link.exe /nologo /OUT:$@ /DEBUG /LIBPATH:"$(PROGRAMFILES)\Microsoft SDKs\Windows\v7.0\lib" /LIBPATH:"$(PROGRAMFILES)\Microsoft Visual Studio 9.0\VC\lib" /NODEFAULTLIB:libcmt /subsystem:windows /machine:I386 $(addsuffix .lib,$(MSLIBS)) -def:screensaver.def $^
+
+obj/msdbg-%.o: ../src/%.cpp
+	cl.exe /c /nologo -Fo$@ /Od /Zi /W4 /EHsc -DDEBUG -DMEM_DEBUG $(MSCPPFLAGS) -DLOCALE=$(DEFAULT_LCID) $<
+
+obj/msdbg-%.o: %.cpp
+	cl.exe /c /nologo -Fo$@ /Od /Zi /W4 /EHsc -DDEBUG -DMEM_DEBUG $(MSCPPFLAGS) -DLOCALE=$(DEFAULT_LCID) $<
+
+obj/msdbg-%res.o : %.rc
+	rc.exe $(MSCPPFLAGS) -DLOCALE=$(DEFAULT_LCID) /fo $@ $<
+
+
+#
 # Generate the rules to build the release version of the screensaver for each locale
 #
 define FMSLOGO_SCREENSAVER_template
@@ -126,6 +147,7 @@ $(foreach lcid,$(LCIDS),$(eval $(call FMSLOGO_SCREENSAVER_template,$(lcid))))
 clean :
 	$(RM) obj/*.o
 	$(RM) $(TARGET).scr $(TARGET)*.scr
+	$(RM) $(TARGET)msdbg.*
 	$(RM) *~
 
 test : $(TARGET)d.scr
