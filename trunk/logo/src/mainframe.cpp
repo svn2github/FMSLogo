@@ -588,9 +588,9 @@ TMainFrame::TMainFrame(
         m_FloodColorPicker(NULL),
         m_PenSizePicker(NULL)
 {
-    /* main window initialization */
-    strcpy(BitmapName, "logo.bmp");
-    strcpy(FileName, "logo.lgo");
+    // main window initialization
+    FileName[0]   = '\0';
+    BitmapName[0] = '\0';
 }
 
 TMainFrame::~TMainFrame()
@@ -771,26 +771,39 @@ void TMainFrame::CMBitmapNew()
 
 void TMainFrame::CMBitmapOpen()
 {
-    DWORD dwPixelWidth = 1;
-    DWORD dwPixelHeight = 1;
-
-    TOpenSaveDialog::TData FileData;
-    FileData.Flags = OFN_FILEMUSTEXIST | OFN_HIDEREADONLY | OFN_EXPLORER;
-    FileData.SetFilter(LOCALIZED_FILEFILTER_IMAGE);
-    strcpy(FileData.FileName, "*.bmp");
-    FileData.DefExt = "bmp";
+    OPENFILENAME openFileName;
+    ZeroMemory(&openFileName, sizeof openFileName);
+    openFileName.lStructSize       = sizeof openFileName;
+    openFileName.hwndOwner         = HWindow;
+    openFileName.hInstance         = NULL;
+    openFileName.lpstrFilter       = LOCALIZED_FILEFILTER_IMAGE;
+    openFileName.lpstrCustomFilter = NULL;
+    openFileName.nMaxCustFilter    = 0;
+    openFileName.nFilterIndex      = 0;
+    openFileName.lpstrFile         = BitmapName;
+    openFileName.nMaxFile          = ARRAYSIZE(BitmapName);
+    openFileName.lpstrFileTitle    = NULL;
+    openFileName.nMaxFileTitle     = 0;
+    openFileName.lpstrInitialDir   = NULL;
+    openFileName.lpstrTitle        = NULL;
+    openFileName.Flags             = OFN_FILEMUSTEXIST | OFN_HIDEREADONLY | OFN_EXPLORER;
+    openFileName.nFileOffset       = 0;
+    openFileName.nFileExtension    = 0;
+    openFileName.lpstrDefExt       = "bmp";
+    openFileName.lCustData         = NULL;
+    openFileName.lpfnHook          = NULL;
+    openFileName.lpTemplateName    = NULL;
 
     // if user found a file then try to load it
-
-    if (TFileOpenDialog(this, FileData).Execute() == IDOK)
+    if (GetOpenFileName(&openFileName))
     {
-        char ext[_MAX_EXT];
-      
-        IsNewBitmap = FALSE;
-        strcpy(BitmapName, FileData.FileName);
-      
-        ERR_TYPES status;
+        DWORD dwPixelWidth  = 1;
+        DWORD dwPixelHeight = 1;
 
+        IsNewBitmap = FALSE;
+
+        ERR_TYPES status;
+        char ext[_MAX_EXT];
         _splitpath(BitmapName, NULL, NULL, NULL, ext);
         if (stricmp(ext, ".gif") == 0)
         {
@@ -829,17 +842,34 @@ void TMainFrame::SaveBitmapAs()
         BitmapName[0] = '\0';
     }
 
-    // Get file name from user and then save the file
-    TOpenSaveDialog::TData FileData;
-    FileData.Flags = OFN_OVERWRITEPROMPT | OFN_HIDEREADONLY | OFN_EXPLORER;
-    FileData.SetFilter(LOCALIZED_FILEFILTER_IMAGE);
-    strcpy(FileData.FileName, BitmapName);
-    FileData.DefExt = "bmp";
+    // Get file name from user
+    OPENFILENAME openFileName;
+    ZeroMemory(&openFileName, sizeof openFileName);
+    openFileName.lStructSize       = sizeof openFileName;
+    openFileName.hwndOwner         = HWindow;
+    openFileName.hInstance         = NULL;
+    openFileName.lpstrFilter       = LOCALIZED_FILEFILTER_IMAGE;
+    openFileName.lpstrCustomFilter = NULL;
+    openFileName.nMaxCustFilter    = 0;
+    openFileName.nFilterIndex      = 0;
+    openFileName.lpstrFile         = BitmapName;
+    openFileName.nMaxFile          = ARRAYSIZE(BitmapName);
+    openFileName.lpstrFileTitle    = NULL;
+    openFileName.nMaxFileTitle     = 0;
+    openFileName.lpstrInitialDir   = NULL;
+    openFileName.lpstrTitle        = NULL;
+    openFileName.Flags             = OFN_OVERWRITEPROMPT | OFN_HIDEREADONLY | OFN_EXPLORER;
+    openFileName.nFileOffset       = 0;
+    openFileName.nFileExtension    = 0;
+    openFileName.lpstrDefExt       = "bmp";
+    openFileName.lCustData         = NULL;
+    openFileName.lpfnHook          = NULL;
+    openFileName.lpTemplateName    = NULL;
 
-    if (TFileSaveDialog(this, FileData).Execute() == IDOK)
+    if (GetSaveFileName(&openFileName))
     {
+        // save the bitmap
         IsNewBitmap = false;
-        strcpy(BitmapName, FileData.FileName);
         SaveBitmap();
     }
 }
@@ -910,38 +940,31 @@ void TMainFrame::CMFileNew()
 }
 
 void
-TMainFrame::InitializeOpenSaveDialogDataForLogoFiles(
-    TOpenSaveDialog::TData & FileData
+TMainFrame::InitializeOpenFileNameForLogoFiles(
+    OPENFILENAME & OpenFileData
     )
 {
-    // Set the file filter.
-    // This looks something like "Logo Files (*.lgo)|*.lgo|All Files (*.*)|*.*|"
-    FileData.SetFilter(LOCALIZED_FILEFILTER_LOGO);
-
-
-    // Now set the filename.
-    // Default to *.lgo, but then overwrite that with everything between
-    // the first two pipe characters in the file filter.
-    // This was done so that the German FMSLogo could see .LOG files,
-    // which, I'm told, is the conventional extension for Logo files
-    // in German.
-
-    strcpy(FileData.FileName, "*.lgo");
-
-    const char * filenameStart = strchr(LOCALIZED_FILEFILTER_LOGO, '|');
-    if (filenameStart != NULL)
-    {
-        filenameStart++;
-
-        const char * filenameEnd = strchr(filenameStart, '|'); 
-        if (filenameEnd != NULL)
-        {
-            strncpy(FileData.FileName, filenameStart, filenameEnd - filenameStart);
-            FileData.FileName[filenameEnd - filenameStart] = '\0';
-        }
-    }
-
-    FileData.DefExt = "lgo";
+    ZeroMemory(&OpenFileData, sizeof OpenFileData);
+    OpenFileData.lStructSize       = sizeof OpenFileData;
+    OpenFileData.hwndOwner         = HWindow;
+    OpenFileData.hInstance         = NULL;
+    OpenFileData.lpstrFilter       = LOCALIZED_FILEFILTER_LOGO;
+    OpenFileData.lpstrCustomFilter = NULL;
+    OpenFileData.nMaxCustFilter    = 0;
+    OpenFileData.nFilterIndex      = 0;
+    OpenFileData.lpstrFile         = FileName;
+    OpenFileData.nMaxFile          = ARRAYSIZE(FileName);
+    OpenFileData.lpstrFileTitle    = NULL;
+    OpenFileData.nMaxFileTitle     = 0;
+    OpenFileData.lpstrInitialDir   = NULL;
+    OpenFileData.lpstrTitle        = NULL;
+    OpenFileData.Flags             = OFN_HIDEREADONLY | OFN_EXPLORER;
+    OpenFileData.nFileOffset       = 0;
+    OpenFileData.nFileExtension    = 0;
+    OpenFileData.lpstrDefExt       = LOCALIZED_LOGO_FILE_EXTENSION;
+    OpenFileData.lCustData         = NULL;
+    OpenFileData.lpfnHook          = NULL;
+    OpenFileData.lpTemplateName    = NULL;
 }
 
 
@@ -962,18 +985,17 @@ void TMainFrame::CMFileLoad()
     }
 
     // show the user a file-picker dialog
-    TOpenSaveDialog::TData FileData;
-    InitializeOpenSaveDialogDataForLogoFiles(FileData);
-    FileData.Flags = OFN_FILEMUSTEXIST | OFN_HIDEREADONLY | OFN_EXPLORER;
+    OPENFILENAME openFileName;
+    InitializeOpenFileNameForLogoFiles(openFileName);
+    openFileName.Flags |= OFN_FILEMUSTEXIST;
 
     // if user found a file then try to load it
-    if (TFileOpenDialog(this, FileData).Execute() == IDOK)
+    if (GetOpenFileName(&openFileName))
     {
         IsNewFile = false;
 
         start_execution();
 
-        strcpy(FileName, FileData.FileName);
         bool isOk = fileload(FileName);
         if (!isOk) 
         {
@@ -1006,12 +1028,12 @@ void TMainFrame::CMFileOpen()
     }
 
     // show the user a file-picker dialog
-    TOpenSaveDialog::TData FileData;
-    InitializeOpenSaveDialogDataForLogoFiles(FileData);
-    FileData.Flags = OFN_FILEMUSTEXIST | OFN_HIDEREADONLY | OFN_EXPLORER;
+    OPENFILENAME openFileName;
+    InitializeOpenFileNameForLogoFiles(openFileName);
+    openFileName.Flags |= OFN_FILEMUSTEXIST;
 
     // if user found a file then try to open it
-    if (TFileOpenDialog(this, FileData).Execute() == IDOK)
+    if (GetOpenFileName(&openFileName))
     {
         // start with a clean plate
         IsNewFile = false;
@@ -1022,7 +1044,6 @@ void TMainFrame::CMFileOpen()
 
         start_execution();
 
-        strcpy(FileName, FileData.FileName);
         bool isOk = fileload(FileName);
         if (!isOk) 
         {
@@ -1053,16 +1074,14 @@ bool TMainFrame::SaveFileAs()
     }
 
     // Get file name from user and then save the file
-    TOpenSaveDialog::TData FileData;
-    InitializeOpenSaveDialogDataForLogoFiles(FileData);
-    FileData.Flags = OFN_OVERWRITEPROMPT | OFN_HIDEREADONLY | OFN_EXPLORER;
-    strcpy(FileData.FileName, FileName);
+    OPENFILENAME openFileName;
+    InitializeOpenFileNameForLogoFiles(openFileName);
+    openFileName.Flags |= OFN_OVERWRITEPROMPT;
 
     bool isOk;
-    if (TFileSaveDialog(this, FileData).Execute() == IDOK)
+    if (GetSaveFileName(&openFileName))
     {
         IsNewFile = false;
-        strcpy(FileName, FileData.FileName);
         isOk = SaveFile();
     }
     else

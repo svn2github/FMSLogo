@@ -918,9 +918,10 @@
 // 
 //  Strings used in the File-Open filters
 //
-#define LOCALIZED_FILEFILTER_ALLFILES "Tutti i File (*.*)|*.*|"
-#define LOCALIZED_FILEFILTER_LOGO     "File Logo (*.lgo)|*.lgo|"LOCALIZED_FILEFILTER_ALLFILES
-#define LOCALIZED_FILEFILTER_IMAGE    "File Bitmap (*.bmp)|*.bmp|File GIF (*.gif)|*.gif|"LOCALIZED_FILEFILTER_ALLFILES
+#define LOCALIZED_LOGO_FILE_EXTENSION "lgo"
+#define LOCALIZED_FILEFILTER_ALLFILES "Tutti i File (*.*)\0*.*\0"
+#define LOCALIZED_FILEFILTER_LOGO     "File Logo (*.lgo)\0*.lgo\0"LOCALIZED_FILEFILTER_ALLFILES
+#define LOCALIZED_FILEFILTER_IMAGE    "File Bitmap (*.bmp)\0*.bmp\0File GIF (*.gif)\0*.gif\0"LOCALIZED_FILEFILTER_ALLFILES
 
 
 

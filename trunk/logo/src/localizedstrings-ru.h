@@ -918,9 +918,10 @@
 // 
 //  Strings used in the File-Open filters
 //
-#define LOCALIZED_FILEFILTER_ALLFILES "ֲסו פאיכû (*.*)|*.*|" 
-#define LOCALIZED_FILEFILTER_LOGO     "ֻמדמ-פאיכû (*.lgo)|*.lgo|"LOCALIZED_FILEFILTER_ALLFILES 
-#define LOCALIZED_FILEFILTER_IMAGE    "׀אסענמגûו פאיכû (*.bmp)|*.bmp|GIF-פאיכû (*.gif)|*.gif|"LOCALIZED_FILEFILTER_ALLFILES 
+#define LOCALIZED_LOGO_FILE_EXTENSION "lgo"
+#define LOCALIZED_FILEFILTER_ALLFILES "ֲסו פאיכû (*.*)\0*.*\0" 
+#define LOCALIZED_FILEFILTER_LOGO     "ֻמדמ-פאיכû (*.lgo)\0*.lgo\0"LOCALIZED_FILEFILTER_ALLFILES 
+#define LOCALIZED_FILEFILTER_IMAGE    "׀אסענמגûו פאיכû (*.bmp)\0*.bmp\0GIF-פאיכû (*.gif)\0*.gif\0"LOCALIZED_FILEFILTER_ALLFILES 
 
 
 

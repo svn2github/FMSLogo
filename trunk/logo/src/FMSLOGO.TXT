@@ -27,6 +27,7 @@ II. New features/bugs fixed:
     o Fix bug #2992154; SORT can now sort lists of words.
     o Fix bug #1483185; File - New now erases property lists, variables,
       and buried procedures.
+    o Implement request #3173392; File Open/Save dialog boxes are resizable.
     o Implement request #2914634; Provide an option to set a Logo program
       as a screen saver.
     o Minor improvements to the manual.

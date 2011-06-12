@@ -2304,15 +2304,32 @@ NODE *ldialogfileopen(NODE *args)
     char filename[MAX_BUFFER_SIZE];
     cnv_strnode_string(filename, args);
 
-    TOpenSaveDialog::TData FileData;
-    FileData.Flags = OFN_HIDEREADONLY | OFN_EXPLORER;
-    FileData.SetFilter(LOCALIZED_FILEFILTER_ALLFILES);
-    strcpy(FileData.FileName, filename);
+    OPENFILENAME openFileName;
+    ZeroMemory(&openFileName, sizeof openFileName);
+    openFileName.lStructSize       = sizeof openFileName;
+    openFileName.hwndOwner         = NULL;
+    openFileName.hInstance         = NULL;
+    openFileName.lpstrFilter       = LOCALIZED_FILEFILTER_ALLFILES;
+    openFileName.lpstrCustomFilter = NULL;
+    openFileName.nMaxCustFilter    = 0;
+    openFileName.nFilterIndex      = 0;
+    openFileName.lpstrFile         = filename;
+    openFileName.nMaxFile          = ARRAYSIZE(filename);
+    openFileName.lpstrFileTitle    = NULL;
+    openFileName.nMaxFileTitle     = 0;
+    openFileName.lpstrInitialDir   = NULL;
+    openFileName.lpstrTitle        = NULL;
+    openFileName.Flags             = OFN_FILEMUSTEXIST | OFN_HIDEREADONLY | OFN_EXPLORER;
+    openFileName.nFileOffset       = 0;
+    openFileName.nFileExtension    = 0;
+    openFileName.lpstrDefExt       = NULL;
+    openFileName.lCustData         = NULL;
+    openFileName.lpfnHook          = NULL;
+    openFileName.lpTemplateName    = NULL;
 
     // if user found a file then try to load it
-    if (TFileOpenDialog(MainWindowx, FileData).Execute() == IDOK)
+    if (GetOpenFileName(&openFileName))
     {
-        strcpy(filename, FileData.FileName);
         return make_strnode(filename);
     }
     else
@@ -2326,17 +2343,33 @@ NODE *ldialogfilesave(NODE *args)
     char filename[MAX_BUFFER_SIZE];
     cnv_strnode_string(filename, args);
 
-    // Get file name from user and then save the file
-    TOpenSaveDialog::TData FileData;
-    FileData.SetFilter(LOCALIZED_FILEFILTER_ALLFILES);
-    strcpy(FileData.FileName, filename);
+    OPENFILENAME openFileName;
+    ZeroMemory(&openFileName, sizeof openFileName);
+    openFileName.lStructSize       = sizeof openFileName;
+    openFileName.hwndOwner         = NULL;
+    openFileName.hInstance         = NULL;
+    openFileName.lpstrFilter       = LOCALIZED_FILEFILTER_ALLFILES;
+    openFileName.lpstrCustomFilter = NULL;
+    openFileName.nMaxCustFilter    = 0;
+    openFileName.nFilterIndex      = 0;
+    openFileName.lpstrFile         = filename;
+    openFileName.nMaxFile          = ARRAYSIZE(filename);
+    openFileName.lpstrFileTitle    = NULL;
+    openFileName.nMaxFileTitle     = 0;
+    openFileName.lpstrInitialDir   = NULL;
+    openFileName.lpstrTitle        = NULL;
+    openFileName.Flags             = OFN_FILEMUSTEXIST | OFN_HIDEREADONLY | OFN_EXPLORER;
+    openFileName.nFileOffset       = 0;
+    openFileName.nFileExtension    = 0;
+    openFileName.lpstrDefExt       = NULL;
+    openFileName.lCustData         = NULL;
+    openFileName.lpfnHook          = NULL;
+    openFileName.lpTemplateName    = NULL;
 
-    if (TFileSaveDialog(MainWindowx, FileData).Execute() == IDOK)
+    // if user found a file then try to load it
+    if (GetSaveFileName(&openFileName))
     {
-        strcpy(filename, FileData.FileName);
-        NODE * arg = make_strnode(filename, strlen(filename), STRING, strnzcpy);
-        NODE * val = arg; // parser(arg, FALSE);
-        return val;
+        return make_strnode(filename, strlen(filename), STRING, strnzcpy);
     }
     else
     {

@@ -918,20 +918,21 @@
 // 
 //  Strings used in the File-Open filters
 //
-#define LOCALIZED_FILEFILTER_ALLFILES "Όλα τα αρχεία (*.*)|*.*|" // 
-#define LOCALIZED_FILEFILTER_LOGO     "Αρχεία Logo (*.lgo)|*.lgo|"LOCALIZED_FILEFILTER_ALLFILES // 
-#define LOCALIZED_FILEFILTER_IMAGE    "Αρχεία εικόνας Bitmap (*.bmp)|*.bmp|Αρχεία εικόνας GIF (*.gif)|*.gif|"LOCALIZED_FILEFILTER_ALLFILES // 
+#define LOCALIZED_LOGO_FILE_EXTENSION "lgo"
+#define LOCALIZED_FILEFILTER_ALLFILES "Όλα τα αρχεία (*.*)\0*.*\0"
+#define LOCALIZED_FILEFILTER_LOGO     "Αρχεία Logo (*.lgo)\0*.lgo\0"LOCALIZED_FILEFILTER_ALLFILES
+#define LOCALIZED_FILEFILTER_IMAGE    "Αρχεία εικόνας Bitmap (*.bmp)\0*.bmp\0Αρχεία εικόνας GIF (*.gif)\0*.gif\0"LOCALIZED_FILEFILTER_ALLFILES
 
 
 
 //
 // strings seen when tracing is enabled
 //
-#define LOCALIZED_TRACING_STOPS             " σταματάει\n" // 
-#define LOCALIZED_TRACING_OUTPUTS           " επιστρέφει %s\n" // 
-#define LOCALIZED_TRACING_MAKE              "Μεταβλητή %s %s"  // 
-#define LOCALIZED_TRACING_PPROP             "Ιδιότητα %s %s %s" // 
-#define LOCALIZED_TRACING_LOCATION          " στο %s\n%s" // 
+#define LOCALIZED_TRACING_STOPS             " σταματάει\n"
+#define LOCALIZED_TRACING_OUTPUTS           " επιστρέφει %s\n"
+#define LOCALIZED_TRACING_MAKE              "Μεταβλητή %s %s"
+#define LOCALIZED_TRACING_PPROP             "Ιδιότητα %s %s %s"
+#define LOCALIZED_TRACING_LOCATION          " στο %s\n%s"
 
 //
 // strings seen when single-stepping execution

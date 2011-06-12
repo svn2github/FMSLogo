@@ -21,7 +21,6 @@
 #include <owl\decframe.h>
 #include <owl\panespli.h>
 #include <owl\printer.h>
-#include <owl\opensave.h>
 
 #include "mainwind.h" // for qlist
 
@@ -228,8 +227,8 @@ private:
     void EraseContentsOfWorkspace();
 
     void
-    InitializeOpenSaveDialogDataForLogoFiles(
-        TOpenSaveDialog::TData & FileData
+    InitializeOpenFileNameForLogoFiles(
+        OPENFILENAME & OpenFileData
         );
 
     void
