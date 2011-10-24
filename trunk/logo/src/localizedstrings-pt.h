@@ -688,13 +688,19 @@
 #define LOCALIZED_SELECTACTIVEAREA_CANCEL       LOCALIZED_GENERAL_CANCELBUTTON
 
 // The screensaver strings
-#define LOCALIZED_SCREENSAVER_NAME              LOCALIZED_GENERAL_PRODUCTNAME // NOT_YET_LOCALIZED
-#define LOCALIZED_SCREENSAVER_DESCRIPTION       "FMSLogo Screensaver" // NOT_YET_LOCALIZED
-#define LOCALIZED_SCREENSAVER_SETTINGS_TITLE    "FMSLogo Screensaver Settings" // NOT_YET_LOCALIZED
-#define LOCALIZED_SCREENSAVER_LOCATE            "&Locate ..."  // NOT_YET_LOCALIZED
-#define LOCALIZED_SCREENSAVER_FILE              "Logo &File:"  // NOT_YET_LOCALIZED
-#define LOCALIZED_SCREENSAVER_OK                LOCALIZED_GENERAL_OKBUTTON // NOT_YET_LOCALIZED
-#define LOCALIZED_SCREENSAVER_CANCEL            LOCALIZED_GENERAL_CANCELBUTTON // NOT_YET_LOCALIZED
+#define LOCALIZED_SCREENSAVER_NAME              LOCALIZED_GENERAL_PRODUCTNAME
+#define LOCALIZED_SCREENSAVER_DESCRIPTION       "Protetor de tela de FMSLogo"
+#define LOCALIZED_SCREENSAVER_SETTINGS_TITLE    "Protetor de tela de FMSLogo"
+#define LOCALIZED_SCREENSAVER_LOCATE            "&Localize ..."
+#define LOCALIZED_SCREENSAVER_FILE              "Logo &Arquivo:"
+#define LOCALIZED_SCREENSAVER_OK                LOCALIZED_GENERAL_OKBUTTON
+#define LOCALIZED_SCREENSAVER_CANCEL            LOCALIZED_GENERAL_CANCELBUTTON
+
+// The dialog box for selecting a Startup procedure
+#define LOCALIZED_SELECTSTARTUP_CAPTION               "Selecione uma instrução de " LOCALIZED_ALTERNATE_STARTUP
+#define LOCALIZED_SELECTSTARTUP_EXPLAINTEXT_UNDEFINED "O espaço de trabalho não possui uma lista de instrução de "LOCALIZED_ALTERNATE_STARTUP" definida, nada vai\nacontecer quando o protetor de tela é carregado.\nPor favor, selecione um procedimento para executar quando o programa é carregado."
+#define LOCALIZED_SELECTSTARTUP_EXPLAINTEXT_NOTLIST   "A variável "LOCALIZED_ALTERNATE_STARTUP" não é uma lista, nada vai\nacontecer quando o protetor de tela é carregado.\nPor favor, selecione um procedimento para executar quando o programa é carregado."
+#define LOCALIZED_SELECTSTARTUP_EXPLAINTEXT_EMPTY     "Seu espaço de trabalho tem uma lista de instrução de vazio "LOCALIZED_ALTERNATE_STARTUP" definida, nada vai\nacontecer quando o protetor de tela é carregado.\nPor favor, selecione um procedimento para executar quando o programa é carregado."
 
 
 //

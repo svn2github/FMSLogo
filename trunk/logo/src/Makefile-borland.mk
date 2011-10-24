@@ -152,6 +152,7 @@ Dep_fmslogodexe = \
    $(IntermediateDirectory)\savebeforeexitdialog.obj\
    $(IntermediateDirectory)\screenwindow.obj\
    $(IntermediateDirectory)\selectbox.obj\
+   $(IntermediateDirectory)\selectstartupinstruction.obj\
    $(IntermediateDirectory)\sizedlg.obj\
    $(IntermediateDirectory)\startup.obj\
    $(IntermediateDirectory)\statwind.obj\
@@ -250,6 +251,7 @@ $(IntermediateDirectory)\print.obj+
 $(IntermediateDirectory)\savebeforeexitdialog.obj+
 $(IntermediateDirectory)\screenwindow.obj+
 $(IntermediateDirectory)\selectbox.obj+
+$(IntermediateDirectory)\selectstartupinstruction.obj+
 $(IntermediateDirectory)\sizedlg.obj+
 $(IntermediateDirectory)\startup.obj+
 $(IntermediateDirectory)\statwind.obj+
@@ -300,72 +302,73 @@ $(IntermediateDirectory)\logorc.res
 |
 
 # dependency information
-$(IntermediateDirectory)\3dsolid.obj           : version.h
-$(IntermediateDirectory)\appendablelist.obj    : version.h
-$(IntermediateDirectory)\argumentutils.obj     : version.h
-$(IntermediateDirectory)\assembly.obj          : version.h
-$(IntermediateDirectory)\activearea.obj        : version.h
-$(IntermediateDirectory)\areawind.obj          : version.h
-$(IntermediateDirectory)\cmdwind.obj           : version.h
-$(IntermediateDirectory)\colordlg.obj          : version.h
-$(IntermediateDirectory)\commanderbutton.obj   : version.h
-$(IntermediateDirectory)\commandercheckbox.obj : version.h
-$(IntermediateDirectory)\coms.obj              : version.h
-$(IntermediateDirectory)\cursor.obj            : version.h
-$(IntermediateDirectory)\debugheap.obj         : version.h
-$(IntermediateDirectory)\devwind.obj           : version.h
-$(IntermediateDirectory)\dib.obj               : version.h
-$(IntermediateDirectory)\dlgwind.obj           : version.h
-$(IntermediateDirectory)\dllstack.obj          : version.h
-$(IntermediateDirectory)\dllwind.obj           : version.h
-$(IntermediateDirectory)\dynamicbuffer.obj     : version.h
-$(IntermediateDirectory)\editwnd.obj           : version.h
-$(IntermediateDirectory)\error.obj             : version.h
-$(IntermediateDirectory)\eval.obj              : version.h
-$(IntermediateDirectory)\files.obj             : version.h
-$(IntermediateDirectory)\fileswnd.obj          : version.h
-$(IntermediateDirectory)\gbm.obj               : version.h
-$(IntermediateDirectory)\gbmbmp.obj            : version.h
-$(IntermediateDirectory)\gbmhelp.obj           : version.h
-$(IntermediateDirectory)\gbmgif.obj            : version.h
-$(IntermediateDirectory)\gbmsize.obj           : version.h
-$(IntermediateDirectory)\graphics.obj          : version.h
-$(IntermediateDirectory)\graphwin.obj          : version.h
-$(IntermediateDirectory)\ibmterm.obj           : version.h
-$(IntermediateDirectory)\init.obj              : version.h
-$(IntermediateDirectory)\intern.obj            : version.h
-$(IntermediateDirectory)\lists.obj             : version.h
-$(IntermediateDirectory)\localizednode.obj     : version.h
-$(IntermediateDirectory)\logodata.obj          : version.h
-$(IntermediateDirectory)\logorc.res            : version.h localizedstrings*.h
-$(IntermediateDirectory)\main.obj              : version.h
-$(IntermediateDirectory)\mainframe.obj         : version.h
-$(IntermediateDirectory)\mainwind.obj          : version.h
-$(IntermediateDirectory)\logomath.obj          : version.h
-$(IntermediateDirectory)\mem.obj               : version.h
-$(IntermediateDirectory)\messagebox.obj        : version.h
-$(IntermediateDirectory)\minieditor.obj        : version.h
-$(IntermediateDirectory)\mmwind.obj            : version.h
-$(IntermediateDirectory)\myfileed.obj          : version.h
-$(IntermediateDirectory)\myfilewn.obj          : version.h
-$(IntermediateDirectory)\netwind.obj           : version.h
-$(IntermediateDirectory)\paren.obj             : version.h
-$(IntermediateDirectory)\parse.obj             : version.h
-$(IntermediateDirectory)\print.obj             : version.h
-$(IntermediateDirectory)\savebeforeexitdialog.obj : version.h
-$(IntermediateDirectory)\screenwindow.obj      : version.h
-$(IntermediateDirectory)\selectbox.obj         : version.h
-$(IntermediateDirectory)\sizedlg.obj           : version.h
-$(IntermediateDirectory)\startup.obj           : version.h
-$(IntermediateDirectory)\statwind.obj          : version.h
-$(IntermediateDirectory)\term.obj              : version.h
-$(IntermediateDirectory)\threed.obj            : version.h
-$(IntermediateDirectory)\utils.obj             : version.h
-$(IntermediateDirectory)\unix.obj              : version.h
-$(IntermediateDirectory)\vector.obj            : version.h
-$(IntermediateDirectory)\wrksp.obj             : version.h
-$(IntermediateDirectory)\scintillabase.obj     : version.h
-$(IntermediateDirectory)\scintillawin.obj      : version.h
+$(IntermediateDirectory)\3dsolid.obj                  : version.h
+$(IntermediateDirectory)\appendablelist.obj           : version.h
+$(IntermediateDirectory)\argumentutils.obj            : version.h
+$(IntermediateDirectory)\assembly.obj                 : version.h
+$(IntermediateDirectory)\activearea.obj               : version.h
+$(IntermediateDirectory)\areawind.obj                 : version.h
+$(IntermediateDirectory)\cmdwind.obj                  : version.h
+$(IntermediateDirectory)\colordlg.obj                 : version.h
+$(IntermediateDirectory)\commanderbutton.obj          : version.h
+$(IntermediateDirectory)\commandercheckbox.obj        : version.h
+$(IntermediateDirectory)\coms.obj                     : version.h
+$(IntermediateDirectory)\cursor.obj                   : version.h
+$(IntermediateDirectory)\debugheap.obj                : version.h
+$(IntermediateDirectory)\devwind.obj                  : version.h
+$(IntermediateDirectory)\dib.obj                      : version.h
+$(IntermediateDirectory)\dlgwind.obj                  : version.h
+$(IntermediateDirectory)\dllstack.obj                 : version.h
+$(IntermediateDirectory)\dllwind.obj                  : version.h
+$(IntermediateDirectory)\dynamicbuffer.obj            : version.h
+$(IntermediateDirectory)\editwnd.obj                  : version.h
+$(IntermediateDirectory)\error.obj                    : version.h
+$(IntermediateDirectory)\eval.obj                     : version.h
+$(IntermediateDirectory)\files.obj                    : version.h
+$(IntermediateDirectory)\fileswnd.obj                 : version.h
+$(IntermediateDirectory)\gbm.obj                      : version.h
+$(IntermediateDirectory)\gbmbmp.obj                   : version.h
+$(IntermediateDirectory)\gbmhelp.obj                  : version.h
+$(IntermediateDirectory)\gbmgif.obj                   : version.h
+$(IntermediateDirectory)\gbmsize.obj                  : version.h
+$(IntermediateDirectory)\graphics.obj                 : version.h
+$(IntermediateDirectory)\graphwin.obj                 : version.h
+$(IntermediateDirectory)\ibmterm.obj                  : version.h
+$(IntermediateDirectory)\init.obj                     : version.h
+$(IntermediateDirectory)\intern.obj                   : version.h
+$(IntermediateDirectory)\lists.obj                    : version.h
+$(IntermediateDirectory)\localizednode.obj            : version.h
+$(IntermediateDirectory)\logodata.obj                 : version.h
+$(IntermediateDirectory)\logorc.res                   : version.h localizedstrings*.h
+$(IntermediateDirectory)\main.obj                     : version.h
+$(IntermediateDirectory)\mainframe.obj                : version.h
+$(IntermediateDirectory)\mainwind.obj                 : version.h
+$(IntermediateDirectory)\logomath.obj                 : version.h
+$(IntermediateDirectory)\mem.obj                      : version.h
+$(IntermediateDirectory)\messagebox.obj               : version.h
+$(IntermediateDirectory)\minieditor.obj               : version.h
+$(IntermediateDirectory)\mmwind.obj                   : version.h
+$(IntermediateDirectory)\myfileed.obj                 : version.h
+$(IntermediateDirectory)\myfilewn.obj                 : version.h
+$(IntermediateDirectory)\netwind.obj                  : version.h
+$(IntermediateDirectory)\paren.obj                    : version.h
+$(IntermediateDirectory)\parse.obj                    : version.h
+$(IntermediateDirectory)\print.obj                    : version.h
+$(IntermediateDirectory)\savebeforeexitdialog.obj     : version.h
+$(IntermediateDirectory)\screenwindow.obj             : version.h
+$(IntermediateDirectory)\selectbox.obj                : version.h
+$(IntermediateDirectory)\selectstartupinstruction.obj : version.h
+$(IntermediateDirectory)\sizedlg.obj                  : version.h
+$(IntermediateDirectory)\startup.obj                  : version.h
+$(IntermediateDirectory)\statwind.obj                 : version.h
+$(IntermediateDirectory)\term.obj                     : version.h
+$(IntermediateDirectory)\threed.obj                   : version.h
+$(IntermediateDirectory)\utils.obj                    : version.h
+$(IntermediateDirectory)\unix.obj                     : version.h
+$(IntermediateDirectory)\vector.obj                   : version.h
+$(IntermediateDirectory)\wrksp.obj                    : version.h
+$(IntermediateDirectory)\scintillabase.obj            : version.h
+$(IntermediateDirectory)\scintillawin.obj             : version.h
 
 
 # Compiler configuration file

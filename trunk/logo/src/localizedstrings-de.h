@@ -688,13 +688,19 @@
 #define LOCALIZED_SELECTACTIVEAREA_CANCEL       LOCALIZED_GENERAL_CANCELBUTTON
 
 // The screensaver strings
-#define LOCALIZED_SCREENSAVER_NAME              LOCALIZED_GENERAL_PRODUCTNAME // NOT_YET_LOCALIZED
-#define LOCALIZED_SCREENSAVER_DESCRIPTION       "FMSLogo Screensaver" // NOT_YET_LOCALIZED
-#define LOCALIZED_SCREENSAVER_SETTINGS_TITLE    "FMSLogo Screensaver Settings" // NOT_YET_LOCALIZED
-#define LOCALIZED_SCREENSAVER_LOCATE            "&Locate ..."  // NOT_YET_LOCALIZED
-#define LOCALIZED_SCREENSAVER_FILE              "Logo &File:"  // NOT_YET_LOCALIZED
-#define LOCALIZED_SCREENSAVER_OK                LOCALIZED_GENERAL_OKBUTTON // NOT_YET_LOCALIZED
-#define LOCALIZED_SCREENSAVER_CANCEL            LOCALIZED_GENERAL_CANCELBUTTON // NOT_YET_LOCALIZED
+#define LOCALIZED_SCREENSAVER_NAME              LOCALIZED_GENERAL_PRODUCTNAME
+#define LOCALIZED_SCREENSAVER_DESCRIPTION       "FMSLogo Screensaver"
+#define LOCALIZED_SCREENSAVER_SETTINGS_TITLE    "FMSLogo Bildschirmschoner-Einstellungen"
+#define LOCALIZED_SCREENSAVER_LOCATE            "&Suchen Sie ..."
+#define LOCALIZED_SCREENSAVER_FILE              "Logo &Datei:"
+#define LOCALIZED_SCREENSAVER_OK                LOCALIZED_GENERAL_OKBUTTON
+#define LOCALIZED_SCREENSAVER_CANCEL            LOCALIZED_GENERAL_CANCELBUTTON
+
+// The dialog box for selecting a Startup procedure
+#define LOCALIZED_SELECTSTARTUP_CAPTION               "W‰hlen Sie eine "LOCALIZED_ALTERNATE_STARTUP"-Anweisung"
+#define LOCALIZED_SELECTSTARTUP_EXPLAINTEXT_UNDEFINED "Der Arbeitsbereich hat keine Anweisungsliste "LOCALIZED_ALTERNATE_STARTUP" definiert, so dass nichts passieren wird,\nwenn der Bildschirmschoner geladen wird. Bitte w‰hlen Sie eine Prozedur aus, wenn das Programm geladen wird."
+#define LOCALIZED_SELECTSTARTUP_EXPLAINTEXT_NOTLIST   "Die Variable "LOCALIZED_ALTERNATE_STARTUP" ist keine Liste, so dass nichts passieren wird,\nwenn der Bildschirmschoner geladen wird. Bitte w‰hlen Sie eine Prozedur aus, wenn das Programm geladen wird."
+#define LOCALIZED_SELECTSTARTUP_EXPLAINTEXT_EMPTY     "Arbeitsbereich hat eine leere "LOCALIZED_ALTERNATE_STARTUP"-Anweisungsliste definiert,\nwenn der Bildschirmschoner geladen wird. Bitte wÅ‰hlen Sie eine Prozedur aus, wenn das Programm geladen wird."
 
 
 //

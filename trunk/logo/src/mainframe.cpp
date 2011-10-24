@@ -55,6 +55,7 @@ const DWORD INVALID_FILE_ATTRIBUTES = 0xFFFFFFFF;
 #include "colordlg.h"
 #include "sizedlg.h"
 #include "savebeforeexitdialog.h"
+#include "selectstartupinstruction.h"
 #include "startup.h"
 #include "mmwind.h"
 #include "debugheap.h"
@@ -1244,6 +1245,54 @@ void TMainFrame::CMFileSetAsScreenSaverEnable(TCommandEnabler& commandHandler)
 
 void TMainFrame::CMFileSetAsScreenSaver()
 {
+    // Before we save the workspace, we should ensure that a
+    // startup procedure exists.  If not, their screen saver won't
+    // do anything.
+    NODE * startup = Startup.GetValue();
+
+    CSelectStartupInstructionDialog::EXPLAINTEXT explainText;
+    if (startup == Unbound)
+    {
+        explainText = CSelectStartupInstructionDialog::EXPLAINTEXT_StartupNotDefined;
+    }
+    else if (startup == NIL)
+    {
+        explainText = CSelectStartupInstructionDialog::EXPLAINTEXT_StartupEmpty;
+    }
+    else if (!is_list(startup))
+    {
+        explainText = CSelectStartupInstructionDialog::EXPLAINTEXT_StartupNotList;
+    }
+    else
+    {
+        explainText = CSelectStartupInstructionDialog::EXPLAINTEXT_None;
+    }
+
+    if (explainText != CSelectStartupInstructionDialog::EXPLAINTEXT_None)
+    {
+        CSelectStartupInstructionDialog dialog(this, explainText);
+        UINT exitCode = dialog.Execute();
+        if (exitCode == IDCANCEL)
+        {
+            // The user hasn't selected a startup instruction list,
+            // so there's no sense in setting this program to
+            // be a screen saver.
+            return;
+        }
+
+        char makeInstruction[512] = {0};
+
+        sprintf(
+            makeInstruction,
+            "%s \"%s [%s]",
+            LOCALIZED_ALTERNATE_MAKE,
+            LOCALIZED_ALTERNATE_STARTUP,
+            dialog.GetSelectedInstruction());
+
+        RunLogoInstructionFromGui(makeInstruction);
+    }
+
+
     char screenSaverProgramName[MAX_PATH] = "";
 
     LPITEMIDLIST itemIdList;

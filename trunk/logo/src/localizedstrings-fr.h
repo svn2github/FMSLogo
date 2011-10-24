@@ -688,14 +688,19 @@
 #define LOCALIZED_SELECTACTIVEAREA_CANCEL       LOCALIZED_GENERAL_CANCELBUTTON
 
 // The screensaver strings
-#define LOCALIZED_SCREENSAVER_NAME              LOCALIZED_GENERAL_PRODUCTNAME // NOT_YET_LOCALIZED
-#define LOCALIZED_SCREENSAVER_DESCRIPTION       "FMSLogo Screensaver" // NOT_YET_LOCALIZED
-#define LOCALIZED_SCREENSAVER_SETTINGS_TITLE    "FMSLogo Screensaver Settings" // NOT_YET_LOCALIZED
-#define LOCALIZED_SCREENSAVER_LOCATE            "&Locate ..."  // NOT_YET_LOCALIZED
-#define LOCALIZED_SCREENSAVER_FILE              "Logo &File:"  // NOT_YET_LOCALIZED
-#define LOCALIZED_SCREENSAVER_OK                LOCALIZED_GENERAL_OKBUTTON // NOT_YET_LOCALIZED
-#define LOCALIZED_SCREENSAVER_CANCEL            LOCALIZED_GENERAL_CANCELBUTTON // NOT_YET_LOCALIZED
+#define LOCALIZED_SCREENSAVER_NAME              LOCALIZED_GENERAL_PRODUCTNAME
+#define LOCALIZED_SCREENSAVER_DESCRIPTION       "L'économiseur d'écran de FMSLogo"
+#define LOCALIZED_SCREENSAVER_SETTINGS_TITLE    "Paramètres de l'économiseur d'écran de FMSLogo"
+#define LOCALIZED_SCREENSAVER_LOCATE            "&Recherchez ..."
+#define LOCALIZED_SCREENSAVER_FILE              "Logo &fichier:"
+#define LOCALIZED_SCREENSAVER_OK                LOCALIZED_GENERAL_OKBUTTON
+#define LOCALIZED_SCREENSAVER_CANCEL            LOCALIZED_GENERAL_CANCELBUTTON
 
+// The dialog box for selecting a Startup procedure
+#define LOCALIZED_SELECTSTARTUP_CAPTION               "Sélectionnez une instruction de " LOCALIZED_ALTERNATE_STARTUP
+#define LOCALIZED_SELECTSTARTUP_EXPLAINTEXT_UNDEFINED "L'espace de travail n'a pas d'une liste d'instructions de " LOCALIZED_ALTERNATE_STARTUP " définie, donc rien\nne se passera lorsque l'économiseur d'écran est chargé.\nVeuillez sélectionner une procédure à exécuter lorsque le programme est chargé."
+#define LOCALIZED_SELECTSTARTUP_EXPLAINTEXT_NOTLIST   "La variable " LOCALIZED_ALTERNATE_STARTUP " n'est pas une liste, donc rien\nne se passera lorsque l'économiseur d'écran est chargé.\nVeuillez sélectionner une procédure à exécuter lorsque le programme est chargé."
+#define LOCALIZED_SELECTSTARTUP_EXPLAINTEXT_EMPTY     "Votre espace de travail a une liste d'instructions vide " LOCALIZED_ALTERNATE_STARTUP " définie, donc rien\nne se passera lorsque l'économiseur d'écran est chargé.\nVeuillez sélectionner une procédure à exécuter lorsque le programme est chargé."
 
 //
 // Menu options in the popup menu

@@ -688,14 +688,19 @@
 #define LOCALIZED_SELECTACTIVEAREA_CANCEL       LOCALIZED_GENERAL_CANCELBUTTON
 
 // The screensaver strings
-#define LOCALIZED_SCREENSAVER_NAME              LOCALIZED_GENERAL_PRODUCTNAME // NOT_YET_LOCALIZED
-#define LOCALIZED_SCREENSAVER_DESCRIPTION       "FMSLogo Screensaver" // NOT_YET_LOCALIZED
-#define LOCALIZED_SCREENSAVER_SETTINGS_TITLE    "FMSLogo Screensaver Settings" // NOT_YET_LOCALIZED
-#define LOCALIZED_SCREENSAVER_LOCATE            "&Locate ..."  // NOT_YET_LOCALIZED
-#define LOCALIZED_SCREENSAVER_FILE              "Logo &File:"  // NOT_YET_LOCALIZED
-#define LOCALIZED_SCREENSAVER_OK                LOCALIZED_GENERAL_OKBUTTON // NOT_YET_LOCALIZED
-#define LOCALIZED_SCREENSAVER_CANCEL            LOCALIZED_GENERAL_CANCELBUTTON // NOT_YET_LOCALIZED
+#define LOCALIZED_SCREENSAVER_NAME              LOCALIZED_GENERAL_PRODUCTNAME
+#define LOCALIZED_SCREENSAVER_DESCRIPTION       "FMSLogo Screensaver"
+#define LOCALIZED_SCREENSAVER_SETTINGS_TITLE    "FMSLogo Screensaver Impostazioni"
+#define LOCALIZED_SCREENSAVER_LOCATE            "&Individuare ..."
+#define LOCALIZED_SCREENSAVER_FILE              "Logo &File:"
+#define LOCALIZED_SCREENSAVER_OK                LOCALIZED_GENERAL_OKBUTTON
+#define LOCALIZED_SCREENSAVER_CANCEL            LOCALIZED_GENERAL_CANCELBUTTON
 
+// The dialog box for selecting a Startup procedure
+#define LOCALIZED_SELECTSTARTUP_CAPTION               "Selezionare un'istruzione " LOCALIZED_ALTERNATE_STARTUP
+#define LOCALIZED_SELECTSTARTUP_EXPLAINTEXT_UNDEFINED "L'area di lavoro non ha una lista di istruzioni "LOCALIZED_ALTERNATE_STARTUP" definita,\nquindi non succeder‡ nulla quando viene caricato il salvaschermo.\nSi prega di selezionare una procedura da eseguire quando viene caricato il programma."
+#define LOCALIZED_SELECTSTARTUP_EXPLAINTEXT_NOTLIST   "La variabile "LOCALIZED_ALTERNATE_STARTUP" non Ë un elenco,\nquindi non succeder‡ nulla quando viene caricato il salvaschermo.\nSi prega di selezionare una procedura da eseguire quando viene caricato il programma."
+#define LOCALIZED_SELECTSTARTUP_EXPLAINTEXT_EMPTY     "Area di lavoro ha definita in lista istruzioni una vuoto "LOCALIZED_ALTERNATE_STARTUP", quindi non succederÅ‡ nulla quando viene caricato il salvaschermo.\nSi prega di selezionare una procedura da eseguire quando viene caricato il programma."
 
 //
 // Menu options in the popup menu

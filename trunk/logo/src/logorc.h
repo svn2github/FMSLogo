@@ -135,7 +135,11 @@
 #define ID_SELECTACTIVEAREA_XLOW         IDC_BASE + 135
 #define ID_SELECTACTIVEAREA_STEPSPERINCH IDC_BASE + 136
 
-#define ID_CHOICES              IDC_BASE + 140
+#define ID_CHOICES                       IDC_BASE + 140
+
+#define ID_SELECTSTARTUPINSTRUCTION_EXPLAINTEXT IDC_BASE + 150
+#define ID_SELECTSTARTUPINSTRUCTION_EDIT        IDC_BASE + 151
+#define ID_SELECTSTARTUPINSTRUCTION_LISTBOX     IDC_BASE + 152
 
 #define CM_CONTROLHALT          CMD_BASE + 0
 #define CM_CONTROLEXECUTE       CMD_BASE + 1
@@ -200,19 +204,20 @@
 #define WM_NETWORK_LISTENRECEIVEACK    WM_USER + 4
 #define WM_NETWORK_LISTENRECEIVEFINISH WM_USER + 5
 
-#define IDD_SELECTACTIVEAREA    IDD_BASE + 0
-#define IDD_DOCKEDCOMMANDER     IDD_BASE + 1
-#define IDD_UNDOCKEDCOMMANDER   IDD_BASE + 2
-#define IDD_STATUS              IDD_BASE + 3
-#define IDD_SELECTPROCEDURE     IDD_BASE + 4
-#define IDD_STUB                IDD_BASE + 5
-#define IDD_SETCOLOR            IDD_BASE + 6
-#define IDD_SETPENSIZE          IDD_BASE + 7
-#define IDD_ABOUTFMS            IDD_BASE + 8
-#define IDD_ABOUTMS             IDD_BASE + 9
-#define IDD_SAVEBEFOREEXIT      IDD_BASE + 10
-#define IDD_MINIEDITOR          IDD_BASE + 11
-#define IDD_SELECTBOX           IDD_BASE + 12
+#define IDD_SELECTACTIVEAREA          IDD_BASE + 0
+#define IDD_DOCKEDCOMMANDER           IDD_BASE + 1
+#define IDD_UNDOCKEDCOMMANDER         IDD_BASE + 2
+#define IDD_STATUS                    IDD_BASE + 3
+#define IDD_SELECTPROCEDURE           IDD_BASE + 4
+#define IDD_STUB                      IDD_BASE + 5
+#define IDD_SETCOLOR                  IDD_BASE + 6
+#define IDD_SETPENSIZE                IDD_BASE + 7
+#define IDD_ABOUTFMS                  IDD_BASE + 8
+#define IDD_ABOUTMS                   IDD_BASE + 9
+#define IDD_SAVEBEFOREEXIT            IDD_BASE + 10
+#define IDD_MINIEDITOR                IDD_BASE + 11
+#define IDD_SELECTBOX                 IDD_BASE + 12
+#define IDD_SELECTSTARTUPINSTRUCTION  IDD_BASE + 13
 
 
 // some key codes that are missing from Borland's WinUser.h.
