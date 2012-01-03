@@ -4,6 +4,11 @@ TO UIAUTOMATION.INITIALIZE
 
   DLLLOAD "user32.dll
 
+  ; empty the event queue, if any exists
+  if namep "uiautomation.eventqueue [
+    make "uiautomation.eventqueue []
+  ]
+
   SETTIMER 31 1000 [UIAUTOMATION.TIMEREVENT]
 END
 BURY "UIAUTOMATION.INITIALIZE
@@ -84,7 +89,7 @@ TO UIAUTOMATION.POSTEVENT :event
 
   if not namep "uiautomation.eventqueue [
     make "uiautomation.eventqueue []
-    bury "uiautomation.eventqueue
+    bury namelist "uiautomation.eventqueue
   ]
 
   ; add this item to the end of the queue
@@ -101,6 +106,8 @@ TO UIAUTOMATION.GETCHILDWINDOWBYCLASS :parentwindowtitle :childwindowclass
      OUTPUT 0
   ]
 
+  if :childwindowclass = 0 [ OUTPUT :parenthwnd ]
+
   LOCALMAKE "hwnd UIAUTOMATION.FINDCHILDWINDOW :parenthwnd 0 :childwindowclass
   if :hwnd = 0 [
      REPORTTESTINFO (se [TEST BUG: couldn't find child] :childwindowclass)
@@ -112,17 +119,54 @@ END
 BURY "UIAUTOMATION.GETCHILDWINDOWBYCLASS
 
 
-TO UIAUTOMATION.SENDSTRINGTOWINDOW :parentwindowtitle :childwindowclass :string
 
-  localmake "WM_KEYDOWN 256    ; 0x0100
-  localmake "WM_KEYUP   256+1  ; 0x0101
-  localmake "WM_CHAR    256+2  ; 0x0102
+TO UIAUTOMATION.SENDMESSAGETOWINDOW :parentwindowtitle :childwindowclass :message :wparam :lparam
 
-  LOCALMAKE "hwnd UIAUTOMATION.GETCHILDWINDOWBYCLASS :parentwindowtitle :childwindowclass
+  localmake "hwnd UIAUTOMATION.GETCHILDWINDOWBYCLASS :parentwindowtitle :childwindowclass
   if :hwnd = 0 [ STOP ]
 
+  IGNORE UIAUTOMATION.SENDMESSAGE :hwnd :message :wparam :lparam
+END
+BURY "UIAUTOMATION.SENDMESSAGETOWINDOW
+
+TO UIAUTOMATION.POSTMESSAGETOWINDOW :parentwindowtitle :childwindowclass :message :wparam :lparam
+
+  localmake "uievent array 2
+
+  setitem 1 :uievent [UIAUTOMATION.SENDMESSAGETOWINDOW ?1 ?2 ?3 ?4 ?5]
+  setitem 2 :uievent (list :parentwindowtitle :childwindowclass :message :wparam :lparam)
+
+  uiautomation.postevent :uievent
+END
+BURY "UIAUTOMATION.POSTMESSAGETOWINDOW
+
+
+TO UIAUTOMATION.SENDSTRINGTOWINDOW :parentwindowtitle :childwindowclass :string
+
+  localmake "WM_KEYDOWN    256+0  ; 0x0100
+  localmake "WM_KEYUP      256+1  ; 0x0101
+  localmake "WM_CHAR       256+2  ; 0x0102
+  localmake "WM_SYSKEYDOWN 256+4  ; 0x0104
+  localmake "WM_SYSKEYUP   256+5  ; 0x0105
+
+  LOCALMAKE "hwnd UIAUTOMATION.GETCHILDWINDOWBYCLASS :parentwindowtitle :childwindowclass
+  if :hwnd = 0 [STOP ]
+
   repeat count :string [
-    IGNORE UIAUTOMATION.SENDMESSAGE :hwnd :WM_CHAR ASCII ITEM REPCOUNT :string 0
+
+    IFELSE "^ = ITEM REPCOUNT :string [
+      ; This is an escape sequence that means Alt
+
+      ; In LPARAM: repeat=1 scancode=0x38 extended=1 alt=1 previous_down=0 (0x213800001)
+      IGNORE UIAUTOMATION.SENDMESSAGE :hwnd :WM_SYSKEYDOWN 18 (SUM 1 (LSHIFT (16*3+8) 16) (LSHIFT 1 24) (LSHIFT 1 29))
+
+      ; In LPARAM: repeat=1 scancode=0x38 extended=1 alt=1 previous_down=1 (0xC13800001)
+      IGNORE UIAUTOMATION.SENDMESSAGE :hwnd :WM_SYSKEYUP   18 (SUM 1 (LSHIFT (16*3+8) 16) (LSHIFT 1 24) (LSHIFT 1 30) (LSHIFT 1 31))
+    ][
+      ;IGNORE UIAUTOMATION.SENDMESSAGE :hwnd :WM_CHAR ASCII ITEM REPCOUNT :string 0
+      IGNORE UIAUTOMATION.SENDMESSAGE :hwnd :WM_KEYDOWN ASCII ITEM REPCOUNT :string 1
+      IGNORE UIAUTOMATION.SENDMESSAGE :hwnd :WM_KEYUP   ASCII ITEM REPCOUNT :string (SUM 1 (LSHIFT 1 31))
+    ]
   ]
 
 END
@@ -202,7 +246,6 @@ TO UIAUTOMATION.POSTKEYTOWINDOW :parentwindowtitle :childwindowclass :key
   uiautomation.postevent :uievent
 END
 BURY "UIAUTOMATION.POSTKEYTOWINDOW
-
 
 
 
