@@ -69,6 +69,7 @@ class TColorDialog : public TDialog
     void ClickFmControl8();
     void SetColorFmControl(UINT Id);
     void SetColorFmSlider();
+    void EvVScroll(uint scrollCode, uint thumbPos, HWND hWndCtl);
 
     void CmOk();
     void DoApply(UINT);

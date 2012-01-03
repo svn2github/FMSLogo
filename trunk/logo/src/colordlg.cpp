@@ -224,6 +224,12 @@ const TColor & TColorDialog::GetSelectedColor() const
     return m_SelColor.GetColor();
 }
 
+void TColorDialog::EvVScroll(uint scrollCode, uint thumbPos, HWND hWndCtl)
+{
+    // Handle and ignore WM_VSCROLL messages so that
+    // OWL doesn't go into an infinite regress trying
+    // to foward the message to itself on Lenovo laptops.
+}
 void TColorDialog::DoApply(UINT)
 {
     const TColor & color = GetSelectedColor();
@@ -277,6 +283,7 @@ DEFINE_RESPONSE_TABLE1(TColorDialog, TDialog)
     EV_SB_ENDSCROLL(ID_COLORBAR1, SetColorFmSlider),
     EV_SB_ENDSCROLL(ID_COLORBAR2, SetColorFmSlider),
     EV_SB_ENDSCROLL(ID_COLORBAR3, SetColorFmSlider),
+    EV_WM_VSCROLL,
     EV_CHILD_NOTIFY_ALL_CODES(ID_APPLY, DoApply),
     EV_COMMAND(IDOK, CmOk),
 END_RESPONSE_TABLE;

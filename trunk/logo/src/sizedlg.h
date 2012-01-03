@@ -64,6 +64,7 @@ protected:
     void CmOk();
     void DoApply(UINT);
     void EvDestroy();
+    void EvVScroll(uint scrollCode, uint thumbPos, HWND hWndCtl);
 
     DECLARE_RESPONSE_TABLE(TSizeDialog);
 };

@@ -195,6 +195,13 @@ const TSize & TSizeDialog::GetSelectedSize() const
     return m_SelSize.GetSize();
 }
 
+void TSizeDialog::EvVScroll(uint scrollCode, uint thumbPos, HWND hWndCtl)
+{
+    // Handle and ignore WM_VSCROLL messages so that
+    // OWL doesn't go into an infinite regress trying
+    // to foward the message to itself on Lenovo laptops.
+}
+
 void TSizeDialog::DoApply(UINT)
 {
     const TSize & size = GetSelectedSize();
@@ -243,6 +250,7 @@ DEFINE_RESPONSE_TABLE1(TSizeDialog, TDialog)
     EV_CHILD_NOTIFY(ID_SIZE6, CN_CLICKED, ClickFmControl6),
     EV_CHILD_NOTIFY(ID_SIZE7, CN_CLICKED, ClickFmControl7),
     EV_CHILD_NOTIFY(ID_SIZE8, CN_CLICKED, ClickFmControl8),
+    EV_WM_VSCROLL,
     EV_SB_ENDSCROLL(ID_SIZEBAR, SetSizeFmSlider),
     EV_CHILD_NOTIFY_ALL_CODES(ID_APPLY, DoApply),
     EV_COMMAND(IDOK, CmOk),
