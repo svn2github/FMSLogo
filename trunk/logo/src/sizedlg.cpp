@@ -115,41 +115,41 @@ TSizeDialog::TSizeDialog(
 }
 
 // Handlers for each custom control
-void TSizeDialog::ClickFmControl1()
+void TSizeDialog::ClickControl1()
 {
-    SetSizeFmControl(ID_SIZE1);
+    SetSizeFromControl(ID_SIZE1);
 }
-void TSizeDialog::ClickFmControl2()
+void TSizeDialog::ClickControl2()
 {
-    SetSizeFmControl(ID_SIZE2);
+    SetSizeFromControl(ID_SIZE2);
 }
-void TSizeDialog::ClickFmControl3()
+void TSizeDialog::ClickControl3()
 {
-    SetSizeFmControl(ID_SIZE3);
+    SetSizeFromControl(ID_SIZE3);
 }
-void TSizeDialog::ClickFmControl4()
+void TSizeDialog::ClickControl4()
 {
-    SetSizeFmControl(ID_SIZE4);
+    SetSizeFromControl(ID_SIZE4);
 }
-void TSizeDialog::ClickFmControl5()
+void TSizeDialog::ClickControl5()
 {
-    SetSizeFmControl(ID_SIZE5);
+    SetSizeFromControl(ID_SIZE5);
 }
-void TSizeDialog::ClickFmControl6()
+void TSizeDialog::ClickControl6()
 {
-    SetSizeFmControl(ID_SIZE6);
+    SetSizeFromControl(ID_SIZE6);
 }
-void TSizeDialog::ClickFmControl7()
+void TSizeDialog::ClickControl7()
 {
-    SetSizeFmControl(ID_SIZE7);
+    SetSizeFromControl(ID_SIZE7);
 }
-void TSizeDialog::ClickFmControl8()
+void TSizeDialog::ClickControl8()
 {
-    SetSizeFmControl(ID_SIZE8);
+    SetSizeFromControl(ID_SIZE8);
 }
 
 // Update the selected size control and bars with the chosen size
-void TSizeDialog::SetSizeFmControl(UINT Id)
+void TSizeDialog::SetSizeFromControl(UINT Id)
 {
     TSizeControl *control = TYPESAFE_DOWNCAST(ChildWithId(Id), TSizeControl);
     if (control)
@@ -161,7 +161,7 @@ void TSizeDialog::SetSizeFmControl(UINT Id)
 }
 
 // Update the selected size control with the current slider values
-void TSizeDialog::SetSizeFmSlider()
+void TSizeDialog::SetSizeFromSlider()
 {
     int width = m_SizeBar.GetPosition();
     m_SelSize.SetSize(TSize(width, width));
@@ -200,6 +200,25 @@ void TSizeDialog::EvVScroll(uint scrollCode, uint thumbPos, HWND hWndCtl)
     // Handle and ignore WM_VSCROLL messages so that
     // OWL doesn't go into an infinite regress trying
     // to foward the message to itself on Lenovo laptops.
+}
+
+void TSizeDialog::EvHScroll(uint scrollCode, uint thumbPos, HWND hWndCtl)
+{
+    switch (scrollCode)
+    {
+    case SB_THUMBTRACK:
+    case SB_THUMBPOSITION:
+        // Update the position of the scrollbar
+        // to match the positition of the thumb.
+        if (hWndCtl == m_SizeBar.HWindow)
+        {
+            m_SizeBar.SetPosition(thumbPos);
+            SetSizeFromSlider();
+            return;
+        }
+    }
+
+    TDialog::EvHScroll(scrollCode, thumbPos, hWndCtl);
 }
 
 void TSizeDialog::DoApply(UINT)
@@ -242,16 +261,21 @@ void TSizeDialog::EvDestroy()
 
 DEFINE_RESPONSE_TABLE1(TSizeDialog, TDialog)
     EV_WM_DESTROY,
-    EV_CHILD_NOTIFY(ID_SIZE1, CN_CLICKED, ClickFmControl1),
-    EV_CHILD_NOTIFY(ID_SIZE2, CN_CLICKED, ClickFmControl2),
-    EV_CHILD_NOTIFY(ID_SIZE3, CN_CLICKED, ClickFmControl3),
-    EV_CHILD_NOTIFY(ID_SIZE4, CN_CLICKED, ClickFmControl4),
-    EV_CHILD_NOTIFY(ID_SIZE5, CN_CLICKED, ClickFmControl5),
-    EV_CHILD_NOTIFY(ID_SIZE6, CN_CLICKED, ClickFmControl6),
-    EV_CHILD_NOTIFY(ID_SIZE7, CN_CLICKED, ClickFmControl7),
-    EV_CHILD_NOTIFY(ID_SIZE8, CN_CLICKED, ClickFmControl8),
+    EV_CHILD_NOTIFY(ID_SIZE1, CN_CLICKED, ClickControl1),
+    EV_CHILD_NOTIFY(ID_SIZE2, CN_CLICKED, ClickControl2),
+    EV_CHILD_NOTIFY(ID_SIZE3, CN_CLICKED, ClickControl3),
+    EV_CHILD_NOTIFY(ID_SIZE4, CN_CLICKED, ClickControl4),
+    EV_CHILD_NOTIFY(ID_SIZE5, CN_CLICKED, ClickControl5),
+    EV_CHILD_NOTIFY(ID_SIZE6, CN_CLICKED, ClickControl6),
+    EV_CHILD_NOTIFY(ID_SIZE7, CN_CLICKED, ClickControl7),
+    EV_CHILD_NOTIFY(ID_SIZE8, CN_CLICKED, ClickControl8),
     EV_WM_VSCROLL,
-    EV_SB_ENDSCROLL(ID_SIZEBAR, SetSizeFmSlider),
+    EV_WM_HSCROLL,
+    EV_SB_LINEDOWN (ID_SIZEBAR, SetSizeFromSlider),
+    EV_SB_LINEUP   (ID_SIZEBAR, SetSizeFromSlider),
+    EV_SB_PAGEUP   (ID_SIZEBAR, SetSizeFromSlider),
+    EV_SB_PAGEDOWN (ID_SIZEBAR, SetSizeFromSlider),
+    EV_SB_ENDSCROLL(ID_SIZEBAR, SetSizeFromSlider),
     EV_CHILD_NOTIFY_ALL_CODES(ID_APPLY, DoApply),
     EV_COMMAND(IDOK, CmOk),
 END_RESPONSE_TABLE;

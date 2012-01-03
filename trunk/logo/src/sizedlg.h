@@ -50,21 +50,22 @@ protected:
 
     void UpdateBars(const TSize & Size);
 
-    void ClickFmControl1();
-    void ClickFmControl2();
-    void ClickFmControl3();
-    void ClickFmControl4();
-    void ClickFmControl5();
-    void ClickFmControl6();
-    void ClickFmControl7();
-    void ClickFmControl8();
-    void SetSizeFmControl(UINT Id);
-    void SetSizeFmSlider();
+    void ClickControl1();
+    void ClickControl2();
+    void ClickControl3();
+    void ClickControl4();
+    void ClickControl5();
+    void ClickControl6();
+    void ClickControl7();
+    void ClickControl8();
+    void SetSizeFromControl(UINT Id);
+    void SetSizeFromSlider();
 
     void CmOk();
     void DoApply(UINT);
     void EvDestroy();
     void EvVScroll(uint scrollCode, uint thumbPos, HWND hWndCtl);
+    void EvHScroll(uint scrollCode, uint thumbPos, HWND hWndCtl);
 
     DECLARE_RESPONSE_TABLE(TSizeDialog);
 };

@@ -32,6 +32,8 @@ II. New features/bugs fixed:
     o Implement request #3173392; File Open/Save dialog boxes are resizable.
     o Implement request #2914634; Provide an option to set a Logo program
       as a screen saver.
+    o Update the size/color preview box while the scrollbars in the size/color
+      pickers are scrolled, instead of waiting until the scrolling is complete.
     o Minor improvements to the manual.
 
   For a complete history of changes across all versions of FMSLogo, see

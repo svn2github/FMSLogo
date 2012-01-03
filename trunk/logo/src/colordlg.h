@@ -59,17 +59,18 @@ class TColorDialog : public TDialog
 
     void UpdateBars(const TColor & NewColor);
 
-    void ClickFmControl1();
-    void ClickFmControl2();
-    void ClickFmControl3();
-    void ClickFmControl4();
-    void ClickFmControl5();
-    void ClickFmControl6();
-    void ClickFmControl7();
-    void ClickFmControl8();
-    void SetColorFmControl(UINT Id);
-    void SetColorFmSlider();
+    void ClickControl1();
+    void ClickControl2();
+    void ClickControl3();
+    void ClickControl4();
+    void ClickControl5();
+    void ClickControl6();
+    void ClickControl7();
+    void ClickControl8();
+    void SetColorFromControl(UINT Id);
+    void SetColorFromSlider();
     void EvVScroll(uint scrollCode, uint thumbPos, HWND hWndCtl);
+    void EvHScroll(uint scrollCode, uint thumbPos, HWND hWndCtl);
 
     void CmOk();
     void DoApply(UINT);

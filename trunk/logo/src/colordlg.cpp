@@ -132,41 +132,41 @@ TColorDialog::TColorDialog(
 }
 
 // Handlers for each custom control
-void TColorDialog::ClickFmControl1()
+void TColorDialog::ClickControl1()
 {
-    SetColorFmControl(ID_COLOR1);
+    SetColorFromControl(ID_COLOR1);
 }
-void TColorDialog::ClickFmControl2()
+void TColorDialog::ClickControl2()
 {
-    SetColorFmControl(ID_COLOR2);
+    SetColorFromControl(ID_COLOR2);
 }
-void TColorDialog::ClickFmControl3()
+void TColorDialog::ClickControl3()
 {
-    SetColorFmControl(ID_COLOR3);
+    SetColorFromControl(ID_COLOR3);
 }
-void TColorDialog::ClickFmControl4()
+void TColorDialog::ClickControl4()
 {
-    SetColorFmControl(ID_COLOR4);
+    SetColorFromControl(ID_COLOR4);
 }
-void TColorDialog::ClickFmControl5()
+void TColorDialog::ClickControl5()
 {
-    SetColorFmControl(ID_COLOR5);
+    SetColorFromControl(ID_COLOR5);
 }
-void TColorDialog::ClickFmControl6()
+void TColorDialog::ClickControl6()
 {
-    SetColorFmControl(ID_COLOR6);
+    SetColorFromControl(ID_COLOR6);
 }
-void TColorDialog::ClickFmControl7()
+void TColorDialog::ClickControl7()
 {
-    SetColorFmControl(ID_COLOR7);
+    SetColorFromControl(ID_COLOR7);
 }
-void TColorDialog::ClickFmControl8()
+void TColorDialog::ClickControl8()
 {
-    SetColorFmControl(ID_COLOR8);
+    SetColorFromControl(ID_COLOR8);
 }
 
 // Update the selected color control and bars with the chosen color
-void TColorDialog::SetColorFmControl(UINT Id)
+void TColorDialog::SetColorFromControl(UINT Id)
 {
     TColorControl *control = TYPESAFE_DOWNCAST(ChildWithId(Id), TColorControl);
     if (control)
@@ -178,7 +178,7 @@ void TColorDialog::SetColorFmControl(UINT Id)
 }
 
 // Update the selected color control with the current slider values
-void TColorDialog::SetColorFmSlider()
+void TColorDialog::SetColorFromSlider()
 {
     TColor newColor(
         m_ColorBar1.GetPosition(),
@@ -230,6 +230,34 @@ void TColorDialog::EvVScroll(uint scrollCode, uint thumbPos, HWND hWndCtl)
     // OWL doesn't go into an infinite regress trying
     // to foward the message to itself on Lenovo laptops.
 }
+
+void TColorDialog::EvHScroll(uint scrollCode, uint thumbPos, HWND hWndCtl)
+{
+    switch (scrollCode)
+    {
+    case SB_THUMBTRACK:
+    case SB_THUMBPOSITION:
+        // Update the position of the scrollbar
+        // to match the positition of the thumb.
+        if (hWndCtl == m_ColorBar1.HWindow)
+        {
+            m_ColorBar1.SetPosition(thumbPos);
+        }
+        else if (hWndCtl == m_ColorBar2.HWindow)
+        {
+            m_ColorBar2.SetPosition(thumbPos);
+        }
+        else if (hWndCtl == m_ColorBar3.HWindow)
+        {
+            m_ColorBar3.SetPosition(thumbPos);
+        }
+        SetColorFromSlider();
+        return;
+    }
+
+    TDialog::EvHScroll(scrollCode, thumbPos, hWndCtl);
+}
+
 void TColorDialog::DoApply(UINT)
 {
     const TColor & color = GetSelectedColor();
@@ -272,18 +300,31 @@ void TColorDialog::EvDestroy()
 
 DEFINE_RESPONSE_TABLE1(TColorDialog, TDialog)
     EV_WM_DESTROY,
-    EV_CHILD_NOTIFY(ID_COLOR1, CN_CLICKED, ClickFmControl1),
-    EV_CHILD_NOTIFY(ID_COLOR2, CN_CLICKED, ClickFmControl2),
-    EV_CHILD_NOTIFY(ID_COLOR3, CN_CLICKED, ClickFmControl3),
-    EV_CHILD_NOTIFY(ID_COLOR4, CN_CLICKED, ClickFmControl4),
-    EV_CHILD_NOTIFY(ID_COLOR5, CN_CLICKED, ClickFmControl5),
-    EV_CHILD_NOTIFY(ID_COLOR6, CN_CLICKED, ClickFmControl6),
-    EV_CHILD_NOTIFY(ID_COLOR7, CN_CLICKED, ClickFmControl7),
-    EV_CHILD_NOTIFY(ID_COLOR8, CN_CLICKED, ClickFmControl8),
-    EV_SB_ENDSCROLL(ID_COLORBAR1, SetColorFmSlider),
-    EV_SB_ENDSCROLL(ID_COLORBAR2, SetColorFmSlider),
-    EV_SB_ENDSCROLL(ID_COLORBAR3, SetColorFmSlider),
+    EV_CHILD_NOTIFY(ID_COLOR1, CN_CLICKED, ClickControl1),
+    EV_CHILD_NOTIFY(ID_COLOR2, CN_CLICKED, ClickControl2),
+    EV_CHILD_NOTIFY(ID_COLOR3, CN_CLICKED, ClickControl3),
+    EV_CHILD_NOTIFY(ID_COLOR4, CN_CLICKED, ClickControl4),
+    EV_CHILD_NOTIFY(ID_COLOR5, CN_CLICKED, ClickControl5),
+    EV_CHILD_NOTIFY(ID_COLOR6, CN_CLICKED, ClickControl6),
+    EV_CHILD_NOTIFY(ID_COLOR7, CN_CLICKED, ClickControl7),
+    EV_CHILD_NOTIFY(ID_COLOR8, CN_CLICKED, ClickControl8),
+    EV_SB_LINEDOWN (ID_COLORBAR1, SetColorFromSlider),
+    EV_SB_LINEUP   (ID_COLORBAR1, SetColorFromSlider),
+    EV_SB_PAGEUP   (ID_COLORBAR1, SetColorFromSlider),
+    EV_SB_PAGEDOWN (ID_COLORBAR1, SetColorFromSlider),
+    EV_SB_ENDSCROLL(ID_COLORBAR1, SetColorFromSlider),
+    EV_SB_LINEDOWN (ID_COLORBAR2, SetColorFromSlider),
+    EV_SB_LINEUP   (ID_COLORBAR2, SetColorFromSlider),
+    EV_SB_PAGEUP   (ID_COLORBAR2, SetColorFromSlider),
+    EV_SB_PAGEDOWN (ID_COLORBAR2, SetColorFromSlider),
+    EV_SB_ENDSCROLL(ID_COLORBAR2, SetColorFromSlider),
+    EV_SB_LINEDOWN (ID_COLORBAR3, SetColorFromSlider),
+    EV_SB_LINEUP   (ID_COLORBAR3, SetColorFromSlider),
+    EV_SB_PAGEUP   (ID_COLORBAR3, SetColorFromSlider),
+    EV_SB_PAGEDOWN (ID_COLORBAR3, SetColorFromSlider),
+    EV_SB_ENDSCROLL(ID_COLORBAR3, SetColorFromSlider),
     EV_WM_VSCROLL,
+    EV_WM_HSCROLL,
     EV_CHILD_NOTIFY_ALL_CODES(ID_APPLY, DoApply),
     EV_COMMAND(IDOK, CmOk),
 END_RESPONSE_TABLE;
