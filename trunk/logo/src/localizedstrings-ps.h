@@ -701,6 +701,7 @@
 #define LOCALIZED_SELECTSTARTUP_EXPLAINTEXT_UNDEFINED "pseudo.The workspace does not have a " LOCALIZED_ALTERNATE_STARTUP " instruction list defined, so nothing\nwill happen when the screensaver is loaded.\nPlease select a procedure to run when the program is loaded."
 #define LOCALIZED_SELECTSTARTUP_EXPLAINTEXT_NOTLIST   "pseudo.The " LOCALIZED_ALTERNATE_STARTUP " variable is not a list, so nothing will happen when the screensaver\nis loaded.\nPlease select a procedure to run when the program is loaded."
 #define LOCALIZED_SELECTSTARTUP_EXPLAINTEXT_EMPTY     "pseudo.Your workspace has an empty " LOCALIZED_ALTERNATE_STARTUP " instruction list defined, so nothing will\nhappen when the screensaver is loaded.\nPlease select a procedure to run when the program is loaded."
+#define LOCALIZED_SELECTSTARTUP_NOPROCEDURESDEFINED   "pseudo.No procedures are defined"
 
 
 //

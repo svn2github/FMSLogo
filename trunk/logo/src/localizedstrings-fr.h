@@ -701,6 +701,8 @@
 #define LOCALIZED_SELECTSTARTUP_EXPLAINTEXT_UNDEFINED "L'espace de travail n'a pas d'une liste d'instructions de " LOCALIZED_ALTERNATE_STARTUP " définie, donc rien\nne se passera lorsque l'économiseur d'écran est chargé.\nVeuillez sélectionner une procédure à exécuter lorsque le programme est chargé."
 #define LOCALIZED_SELECTSTARTUP_EXPLAINTEXT_NOTLIST   "La variable " LOCALIZED_ALTERNATE_STARTUP " n'est pas une liste, donc rien\nne se passera lorsque l'économiseur d'écran est chargé.\nVeuillez sélectionner une procédure à exécuter lorsque le programme est chargé."
 #define LOCALIZED_SELECTSTARTUP_EXPLAINTEXT_EMPTY     "Votre espace de travail a une liste d'instructions vide " LOCALIZED_ALTERNATE_STARTUP " définie, donc rien\nne se passera lorsque l'économiseur d'écran est chargé.\nVeuillez sélectionner une procédure à exécuter lorsque le programme est chargé."
+#define LOCALIZED_SELECTSTARTUP_NOPROCEDURESDEFINED   "Aucuns procédures ne sont définis"
+
 
 //
 // Menu options in the popup menu

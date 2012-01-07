@@ -701,6 +701,7 @@
 #define LOCALIZED_SELECTSTARTUP_EXPLAINTEXT_UNDEFINED "O espaço de trabalho não possui uma lista de instrução de "LOCALIZED_ALTERNATE_STARTUP" definida, nada vai\nacontecer quando o protetor de tela é carregado.\nPor favor, selecione um procedimento para executar quando o programa é carregado."
 #define LOCALIZED_SELECTSTARTUP_EXPLAINTEXT_NOTLIST   "A variável "LOCALIZED_ALTERNATE_STARTUP" não é uma lista, nada vai\nacontecer quando o protetor de tela é carregado.\nPor favor, selecione um procedimento para executar quando o programa é carregado."
 #define LOCALIZED_SELECTSTARTUP_EXPLAINTEXT_EMPTY     "Seu espaço de trabalho tem uma lista de instrução de vazio "LOCALIZED_ALTERNATE_STARTUP" definida, nada vai\nacontecer quando o protetor de tela é carregado.\nPor favor, selecione um procedimento para executar quando o programa é carregado."
+#define LOCALIZED_SELECTSTARTUP_NOPROCEDURESDEFINED   "Não há procedimentos definidos"
 
 
 //

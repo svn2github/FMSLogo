@@ -103,7 +103,6 @@ const char * CSelectStartupInstructionDialog::GetSelectedInstruction() const
 
 bool CSelectStartupInstructionDialog::CanClose()
 {
-
     if (m_SelectedInstruction[0] == '\0')
     {
         // Until something is entered into the list
@@ -159,7 +158,7 @@ void CSelectStartupInstructionDialog::SetupWindow()
             ID_SELECTSTARTUPINSTRUCTION_LISTBOX,
             LB_ADDSTRING, 
             0, 
-            (LONG) "No procedures are defined");
+            (LONG) LOCALIZED_SELECTSTARTUP_NOPROCEDURESDEFINED);
         
         ::EnableWindow(
             GetDlgItem(ID_SELECTSTARTUPINSTRUCTION_LISTBOX),

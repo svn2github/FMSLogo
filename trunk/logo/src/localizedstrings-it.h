@@ -701,6 +701,8 @@
 #define LOCALIZED_SELECTSTARTUP_EXPLAINTEXT_UNDEFINED "L'area di lavoro non ha una lista di istruzioni "LOCALIZED_ALTERNATE_STARTUP" definita,\nquindi non succeder‡ nulla quando viene caricato il salvaschermo.\nSi prega di selezionare una procedura da eseguire quando viene caricato il programma."
 #define LOCALIZED_SELECTSTARTUP_EXPLAINTEXT_NOTLIST   "La variabile "LOCALIZED_ALTERNATE_STARTUP" non Ë un elenco,\nquindi non succeder‡ nulla quando viene caricato il salvaschermo.\nSi prega di selezionare una procedura da eseguire quando viene caricato il programma."
 #define LOCALIZED_SELECTSTARTUP_EXPLAINTEXT_EMPTY     "Area di lavoro ha definita in lista istruzioni una vuoto "LOCALIZED_ALTERNATE_STARTUP", quindi non succederÅ‡ nulla quando viene caricato il salvaschermo.\nSi prega di selezionare una procedura da eseguire quando viene caricato il programma."
+#define LOCALIZED_SELECTSTARTUP_NOPROCEDURESDEFINED   "Nessuna procedura Ë definita"
+
 
 //
 // Menu options in the popup menu

@@ -701,6 +701,7 @@
 #define LOCALIZED_SELECTSTARTUP_EXPLAINTEXT_UNDEFINED "Der Arbeitsbereich hat keine Anweisungsliste "LOCALIZED_ALTERNATE_STARTUP" definiert, so dass nichts passieren wird,\nwenn der Bildschirmschoner geladen wird. Bitte w‰hlen Sie eine Prozedur aus, wenn das Programm geladen wird."
 #define LOCALIZED_SELECTSTARTUP_EXPLAINTEXT_NOTLIST   "Die Variable "LOCALIZED_ALTERNATE_STARTUP" ist keine Liste, so dass nichts passieren wird,\nwenn der Bildschirmschoner geladen wird. Bitte w‰hlen Sie eine Prozedur aus, wenn das Programm geladen wird."
 #define LOCALIZED_SELECTSTARTUP_EXPLAINTEXT_EMPTY     "Arbeitsbereich hat eine leere "LOCALIZED_ALTERNATE_STARTUP"-Anweisungsliste definiert,\nwenn der Bildschirmschoner geladen wird. Bitte wÅ‰hlen Sie eine Prozedur aus, wenn das Programm geladen wird."
+#define LOCALIZED_SELECTSTARTUP_NOPROCEDURESDEFINED   "Keine Prozeduren sind definiert"
 
 
 //
