@@ -666,8 +666,17 @@ NODE *lmake(NODE *args)
     return Unbound;
 }
 
+// cnt_list is an accumulator for one part of a contents list
+// that is appeneded to as selected objects are found.
+// cnt_list is the final NODE* in the list.
 static NODE *cnt_list = NIL;
 static NODE *cnt_last = NIL;
+
+// want_buried can be one of four values:
+//  0            - get unburied objects
+//  PROC_BURIED  - get buried objects
+//  PROC_STEPPED - get stepped objects
+//  PROC_TRACED  - get traced objects
 static int want_buried = 0;
 
 enum CNTLSTTYP
@@ -684,6 +693,11 @@ int bck(int flag)
     return (want_buried ? !flag : flag);
 }
 
+// Appends the canonical form of sym into cnt_list
+// if it matches the given filter.
+//
+// sym                - The object from the symbol table
+// contents_list_type - The type of object we're looking for.
 static
 void 
 contents_map(
@@ -691,47 +705,71 @@ contents_map(
     CNTLSTTYP contents_list_type
     )
 {
+    // flag_check starts out as one of three values,
+    // PROC_BURIED, PROC_TRACED, or PROC_STEPPED.
     int flag_check = PROC_BURIED;
 	
-    if (want_buried) 
+    if (want_buried != 0)
     {
+        // The caller has specified that they want
+        // something specific: either BURIED, TRACED,
+        // or STEPPED.
         flag_check = want_buried;
     }
 	
     switch (contents_list_type)
     {
     case c_PROCS:
+        // We're looking for procedures.
+
         if (procnode__object(sym) == UNDEFINED ||
             is_prim(procnode__object(sym)))
         {
+            // Either symbol doesn't have a procedure
+            // definition, or its a primative, so it
+            // cannot be UNBURIED, BURIED, STEPPED, or TRACED.
             return;
         }
+
+        // Check if the procedure matches
+        // what we're looking for.
         if (bck(flag__object(sym, flag_check)))
         {
+            // The procedure doesn't match the filter.
             return;
         }
         break;
 
     case c_VARS:
-        flag_check <<= 1;
         if (valnode__object(sym) == Unbound) 
         {
+            // The symbol doesn't have a variable.
             return;
         }
+
+        // shift up one bit to the corresonding
+        // flag for variables.
+        flag_check <<= 1;
         if (bck(flag__object(sym, flag_check))) 
         {
+            // The variable doesn't match the filter.
             return;
         }
         break;
 
     case c_PLISTS:
-        flag_check <<= 2;
         if (plist__object(sym) == NIL) 
         {
+            // The symbol doesn't have a property list.
             return;
         }
+
+        // shift up one bit to the corresonding
+        // flag for property lists.
+        flag_check <<= 2;
         if (bck(flag__object(sym, flag_check))) 
         {
+            // The propery list doesn't match the filter.
             return;
         }
         break;
@@ -739,11 +777,13 @@ contents_map(
 
     if (cnt_list == NIL)
     {
+        // create the contents list and append the symbol
         cnt_list = cons_list(canonical__object(sym));
         cnt_last = vref(cnt_list);
     }
     else
     {
+        // append the object to the contents list
         setcdr(cnt_last, cons_list(canonical__object(sym)));
         cnt_last = cdr(cnt_last);
     }
@@ -876,9 +916,15 @@ get_contents(
     }
 
     cnt_list = mergesort(cnt_list);
-    return (cnt_list);
+    return cnt_list;
 }
 
+// Return a contents list (a list of three lists)
+// that match the given filter: PROC_BURIED, PROC_TRACED,
+// or PROC_STEPPED.  The returned list takes the following
+// form.
+//  [ [matching procs] [matching variables] [maching plists] ]
+//
 static
 NODE *get_contents_list(int filter)
 {
@@ -886,10 +932,16 @@ NODE *get_contents_list(int filter)
 
     NODE *ret = NIL;
 
+    // Get all property lists that match the filter
+    // and wrap them in a list.
     ret = cons(get_contents(c_PLISTS), ret);
 
+    // Get all variables that match the filter
+    // and prepend them to the contents list
     ret = cons(get_contents(c_VARS), ret);
 
+    // Get all procedures that match the filter
+    // and prepend them to the contents list
     ret = cons(get_contents(c_PROCS), ret);
 	
     deref(cnt_list);
@@ -1393,6 +1445,16 @@ void bury_or_unbury_list(NODE * list, int flag, bool setflag)
     }
 }
 
+// Buries, unburies, steps, unsteps, traces, or untraces
+// all objects in the workspace that are in the contents
+// list.
+//
+// arg     - The contents list of objects to modify.
+// flag    - PROC_BURIED to bury or unbury the objects in arg.
+//           PROC_STEPPED to step or unstep the objects in arg.
+//           PROC_TRACED to trace or untrace the objects in arg.
+// setflag - true, if the contents should be buried, stepped, or traced.
+//           false, if the contents should be unburied, unstepped, or untraced.
 static
 NODE *bury_helper(NODE *arg, int flag, bool setflag)
 {
@@ -1403,11 +1465,14 @@ NODE *bury_helper(NODE *arg, int flag, bool setflag)
 
     if (NOT_THROWING)
     {
+        // first bury/unbury procedures
         bury_or_unbury_list(proclst, flag, setflag);
 
+        // Left-shifting the flag now refers to variables
         flag <<= 1;
         bury_or_unbury_list(varlst, flag, setflag);
 
+        // Left-shifting the flag now refers propery lists
         flag <<= 1;
         bury_or_unbury_list(plistlst, flag, setflag);
     }
