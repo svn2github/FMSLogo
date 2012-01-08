@@ -52,6 +52,7 @@ extern NODE *luntrace(NODE *arg);
 extern NODE *lunstep(NODE *arg);
 extern NODE *ledit(NODE *args);
 extern bool endedit(void);
+extern bool something_is_unburied();
 extern NODE *lthing(NODE *args);
 extern NODE *lnamep(NODE *args);
 extern NODE *lprocedurep(NODE *args);

@@ -1513,6 +1513,45 @@ NODE *lunstep(NODE *arg)
     return bury_helper(arg, PROC_STEPPED, false);
 }
 
+// returns true iff something would appear in a workspace
+// if it were opened with EDALL.
+bool something_is_unburied()
+{
+    for (int i = 0; i < HASH_LEN; i++)
+    {
+        for (NODE * nd = hash_table[i]; nd != NIL; nd = cdr(nd))
+        {
+            NODE * symbol = car(nd);
+
+            if (procnode__object(symbol) != UNDEFINED &&
+                !is_prim(procnode__object(symbol)) &&
+                !flag__object(symbol, PROC_BURIED))
+            {
+                // We found a procedure that's not buried.
+                return true;
+            }
+
+            if (valnode__object(symbol) != Unbound &&
+                !flag__object(symbol, VAL_BURIED))
+            {
+                // We found a variable that's not buried.
+                return true;
+            }
+
+            if (plist__object(symbol) != NIL &&
+                !flag__object(symbol, PLIST_BURIED))
+            {
+                // We found a property list that isn't buried
+                return true;
+            }
+        }
+    }
+
+    // We walked through all symbols and didn't
+    // find one that would appear in the workspace.
+    return false;
+}
+
 NODE *ledit(NODE *args)
 {
     if (!bExpert)

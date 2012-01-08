@@ -1060,6 +1060,30 @@ void TMainFrame::CMFileOpen()
     }
 }
 
+// Displays a warning if the workspace is empty
+// and therefore if saving it would save an empty
+// file, which is probably not what the user expects.
+//
+// returns true, if we should continue to save the workspace.
+// returns false, if we should not save the workspace.
+bool TMainFrame::WarnIfSavingEmptyWorkspace()
+{
+    // Check if there's something in the workspace that
+    // isn't buried (which would be saved).
+    if (!something_is_unburied())
+    {
+        if (MessageBox(
+                LOCALIZED_EMPTYWORKSPACE_MESSAGE,
+                LOCALIZED_EMPTYWORKSPACE_TITLE,
+                MB_YESNO | MB_ICONWARNING | MB_DEFBUTTON2) == IDNO)
+        {
+            return false;
+        }
+    }
+
+    return true;
+}
+
 // Prompts the user for the name of the file to save
 // the contents as, then saves the file.
 //
@@ -1127,11 +1151,21 @@ bool TMainFrame::FileSave()
 
 void TMainFrame::CMFileSave()
 {
+    if (!WarnIfSavingEmptyWorkspace())
+    {
+        return;
+    }
+
     FileSave();
 }
 
 void TMainFrame::CMFileSaveAs()
 {
+    if (!WarnIfSavingEmptyWorkspace())
+    {
+        return;
+    }
+
     SaveFileAs();
 }
 

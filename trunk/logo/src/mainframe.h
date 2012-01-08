@@ -224,6 +224,7 @@ protected:
 
 private:
 
+    bool WarnIfSavingEmptyWorkspace();
     void EraseContentsOfWorkspace();
 
     void

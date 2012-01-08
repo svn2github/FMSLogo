@@ -703,6 +703,9 @@
 #define LOCALIZED_SELECTSTARTUP_EXPLAINTEXT_EMPTY     "Votre espace de travail a une liste d'instructions vide " LOCALIZED_ALTERNATE_STARTUP " définie, donc rien\nne se passera lorsque l'économiseur d'écran est chargé.\nVeuillez sélectionner une procédure à exécuter lorsque le programme est chargé."
 #define LOCALIZED_SELECTSTARTUP_NOPROCEDURESDEFINED   "Aucuns procédures ne sont définis"
 
+// The warning dialog box when the user saves an empty workspace
+#define LOCALIZED_EMPTYWORKSPACE_TITLE                LOCALIZED_GENERAL_PRODUCTNAME
+#define LOCALIZED_EMPTYWORKSPACE_MESSAGE              "Il n'y a aucune procédures, variables ou des listes de propriété définies,\ndonc l'espace de travail sera enregistré comme un fichier vide.\n\nVous voulez enregistrer l'espace de travail de toute façon?"
 
 //
 // Menu options in the popup menu

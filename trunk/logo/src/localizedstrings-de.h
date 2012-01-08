@@ -703,6 +703,9 @@
 #define LOCALIZED_SELECTSTARTUP_EXPLAINTEXT_EMPTY     "Arbeitsbereich hat eine leere "LOCALIZED_ALTERNATE_STARTUP"-Anweisungsliste definiert,\nwenn der Bildschirmschoner geladen wird. Bitte wÅ‰hlen Sie eine Prozedur aus, wenn das Programm geladen wird."
 #define LOCALIZED_SELECTSTARTUP_NOPROCEDURESDEFINED   "Keine Prozeduren sind definiert"
 
+// The warning dialog box when the user saves an empty workspace
+#define LOCALIZED_EMPTYWORKSPACE_TITLE                LOCALIZED_GENERAL_PRODUCTNAME
+#define LOCALIZED_EMPTYWORKSPACE_MESSAGE              "Es gibt keine Prozeduren, Variablen oder Eigenschaftslisten definiert,\nso der Arbeitsbereich als eine leere Datei gespeichert werden soll.\n\nMˆchten Sie den Arbeitsbereich trotzdem speichern?"
 
 //
 // Menu options in the popup menu

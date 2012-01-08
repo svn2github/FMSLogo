@@ -703,6 +703,9 @@
 #define LOCALIZED_SELECTSTARTUP_EXPLAINTEXT_EMPTY     "pseudo.Your workspace has an empty " LOCALIZED_ALTERNATE_STARTUP " instruction list defined, so nothing will\nhappen when the screensaver is loaded.\nPlease select a procedure to run when the program is loaded."
 #define LOCALIZED_SELECTSTARTUP_NOPROCEDURESDEFINED   "pseudo.No procedures are defined"
 
+// The warning dialog box when the user saves an empty workspace
+#define LOCALIZED_EMPTYWORKSPACE_TITLE                LOCALIZED_GENERAL_PRODUCTNAME
+#define LOCALIZED_EMPTYWORKSPACE_MESSAGE              "pseudo.There are no procedures, variables, or property lists defined,\nso the workspace will be saved as an empty file.\n\nDo you want to save the workspace anyway?"
 
 //
 // Menu options in the popup menu

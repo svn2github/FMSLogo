@@ -703,6 +703,9 @@
 #define LOCALIZED_SELECTSTARTUP_EXPLAINTEXT_EMPTY     "Seu espaço de trabalho tem uma lista de instrução de vazio "LOCALIZED_ALTERNATE_STARTUP" definida, nada vai\nacontecer quando o protetor de tela é carregado.\nPor favor, selecione um procedimento para executar quando o programa é carregado."
 #define LOCALIZED_SELECTSTARTUP_NOPROCEDURESDEFINED   "Não há procedimentos definidos"
 
+// The warning dialog box when the user saves an empty workspace
+#define LOCALIZED_EMPTYWORKSPACE_TITLE                LOCALIZED_GENERAL_PRODUCTNAME
+#define LOCALIZED_EMPTYWORKSPACE_MESSAGE              "Não há nenhum procedimentos, variáveis ou listas de propriedades definidas,\nassim que o espaço de trabalho será salvo como um arquivo vazio.\n\nVocê quer salvar o espaço de trabalho de qualquer maneira?"
 
 //
 // Menu options in the popup menu

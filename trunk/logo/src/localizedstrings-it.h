@@ -703,6 +703,9 @@
 #define LOCALIZED_SELECTSTARTUP_EXPLAINTEXT_EMPTY     "Area di lavoro ha definita in lista istruzioni una vuoto "LOCALIZED_ALTERNATE_STARTUP", quindi non succederÅ‡ nulla quando viene caricato il salvaschermo.\nSi prega di selezionare una procedura da eseguire quando viene caricato il programma."
 #define LOCALIZED_SELECTSTARTUP_NOPROCEDURESDEFINED   "Nessuna procedura Ë definita"
 
+// The warning dialog box when the user saves an empty workspace
+#define LOCALIZED_EMPTYWORKSPACE_TITLE                LOCALIZED_GENERAL_PRODUCTNAME
+#define LOCALIZED_EMPTYWORKSPACE_MESSAGE              "Non esistono procedure, variabili o elenchi di propriet‡ definiti,\nquindi l'area di lavoro verr‡ salvato come un file vuoto.\n\nVuoi salvare l'area di lavoro comunque?"
 
 //
 // Menu options in the popup menu
