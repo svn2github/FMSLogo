@@ -1,0 +1,44 @@
+This file lists the steps for setting up a build environment for FMSLogo.
+
+
+Install Borland C++ Compiler 5.02 to C:\BC5 and add C:\BC5\BIN to your PATH.
+Borland does not sell this compiler anymore, so you'll have to find it at
+a used software store (try eBay).
+
+Install Borland's Turbo Assembler 4.1.  Add TASM32.EXE to the PATH.
+If you skip this step, you will still be able to build the debug
+version of FMSLogo.
+
+Install cygwin (from http://cygnus.org/) to c:\cygwin, including all of the 
+following optional packages:
+- zip
+- make
+- docbook-xsl
+- docbook-xml412
+- docbook-xml42
+- libxslt
+
+Add c:\cygwin\bin to the PATH.
+
+Rename c:\cygwin\bin\make.exe to c:\cygwin\gmake.exe to avoid conflicts with
+Borland's MAKE utility.
+
+Install Microsoft HTML Help Workshop to "C:\Program Files\HTML Help Workshop".
+You can download this from http://microsoft.com/.
+This is needed both to compile the source code (for htmlhelp.h) and to build
+the .CHM for the online manual (for hhc.exe).
+If you do not install HTML Help Workshop to the default location, then you 
+will have to modify some Makefiles.
+
+Install Perl.  I use the Perl from http://activestate.com but any Perl
+distribution should suffice.  Add perl.exe to your PATH.
+
+Install the Nullsoft Scriptable Installation System (NSIS) to C:\Program Files\NSIS.
+You can download this from http://sourceforge.net/projects/nsis.
+This is needed to build the self-extracting installer executable.
+
+Install MinGW C:\MinGW and put C:\MingGW\bin in the PATH before c:\cygwin\bin.
+This is needed to build the FMSLogo screen saver.
+
+Once these steps are complete, you can build the entire FMSLogo package by running
+"gmake binaryexe" in the current directory.

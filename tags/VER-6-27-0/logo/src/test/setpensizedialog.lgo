@@ -1,0 +1,32 @@
+LOAD "testlib.lgo
+LOAD "uiautomationlib.lgo
+
+TO SETPENSIZEDIALOGTEST.SMOKETEST
+
+   UIAUTOMATION.INITIALIZE
+
+   CATCH "ERROR [
+
+     ; Use access keys to open the Pen Size dialog box
+     ;UIAUTOMATION.POSTSTRINGTOWINDOW "FMSLogo 0 "^
+     ;UIAUTOMATION.POSTSTRINGTOWINDOW "|FMSLogo Commander| "Edit "SZ
+
+     localmake "WM_VSCROLL  277
+     localmake "SB_LINEDOWN 3
+     localmake "hwnd        UIAUTOMATION.FINDWINDOW [Pen Size] 0
+     UIAUTOMATION.POSTMESSAGETOWINDOW [Pen Size] [SizeControl] :WM_VSCROLL :SB_LINEDOWN :hwnd
+
+     WAIT 600
+   ]
+
+   LOCALMAKE "lasterror ERROR
+   IF NOT EMPTY? :lasterror [
+      REPORTTESTFAILED (LIST "|SETPENSIZEDIALOGTEST.SMOKETEST test failed.  code=| (ITEM 1 :lasterror) ". (ITEM 2 :lasterror)) 
+   ]
+
+   UIAUTOMATION.UNINITIALIZE
+END
+
+TO SETPENSIZEDIALOGTEST
+  SETPENSIZEDIALOGTEST.SMOKETEST
+END
