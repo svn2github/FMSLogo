@@ -53,13 +53,15 @@ endif
 
 CPPFLAGS += -DLOCALE=1033 -D_FILE_OFFSET_BITS=64 -D_LARGE_FILES -I$(wx_top_builddir)/lib/wx/include/$(TOOLCHAIN_FULLNAME) -I$(wx_top_builddir)/include -I../src
 CXXFLAGS += -Wall -Wundef -Wno-ctor-dtor-privacy -O0 -g -fno-strict-aliasing
+CXXFLAGS += -DFMSLOGO_SCREENSAVER -DNOASM
+CXXFLAGS += -I"C:\Program Files\HTML Help Workshop\include"
 
 prefix = /usr/local
 exec_prefix = ${prefix}
 INSTALL = /usr/bin/install -c
 REZ = 
 SETFILE = 
-BK_DEPS = $(wx_top_builddir)/bk-deps
+#BK_DEPS = $(wx_top_builddir)/bk-deps
 NM = nm
 srcdir = .
 LIBS = -lz -ldl -lm
@@ -80,33 +82,72 @@ SPLITTER_CXXFLAGS = -D__WX$(TOOLKIT)__ $(__WXUNIV_DEFINE_p) \
 	-I$(srcdir) $(__DLLFLAG_p) $(CPPFLAGS) $(CXXFLAGS)
 
 SPLITTER_OBJECTS =  \
-	splitter_mainframe.o \
-	splitter_commander.o \
-	splitter_aboutfmslogo.o \
-	splitter_aboutmultiplesclerosis.o \
-	splitter_setactivearea.o \
-	splitter_workspaceeditor.o \
-	splitter_guiutils.o \
-	splitter_fmslogo.o \
-	splitter_setpensize.o \
-	splitter_statusdialog.o \
-	splitter_savebeforeexitdialog.o \
-	splitter_screen.o \
-	splitter_commanderbutton.o \
-	splitter_commandertogglebutton.o \
-	splitter_commanderinput.o \
-	splitter_commanderhistory.o \
-	splitter_help.o \
-	splitter_dynamicbuffer.o \
-	splitter_selectproceduredialog.o \
-	splitter_editproceduredialog.o \
-	splitter_eraseproceduredialog.o \
-	splitter_minieditor.o \
-	splitter_minieditortextctrl.o \
-	splitter_fontutils.o \
-	splitter_utils.o \
-	splitter_logodata.o \
-	splitter_setcolor.o \
+        splitter_mainframe.o \
+        splitter_commander.o \
+        splitter_aboutfmslogo.o \
+        splitter_aboutmultiplesclerosis.o \
+        splitter_setactivearea.o \
+        splitter_workspaceeditor.o \
+        splitter_guiutils.o \
+        splitter_fmslogo.o \
+        splitter_setpensize.o \
+        splitter_statusdialog.o \
+        splitter_savebeforeexitdialog.o \
+        splitter_screen.o \
+        splitter_commanderbutton.o \
+        splitter_commandertogglebutton.o \
+        splitter_commanderinput.o \
+        splitter_commanderhistory.o \
+        splitter_help.o \
+        splitter_selectproceduredialog.o \
+        splitter_editproceduredialog.o \
+        splitter_eraseproceduredialog.o \
+        splitter_minieditor.o \
+        splitter_minieditortextctrl.o \
+        splitter_fontutils.o \
+        platform_utils.o \
+        splitter_setcolor.o \
+        core_3dsolid.o        \
+        core_activearea.o     \
+        core_appendablelist.o \
+        core_argumentutils.o  \
+        core_assembly.o       \
+        core_coms.o           \
+        core_cursor.o         \
+        core_devwind.o        \
+        core_dib.o            \
+        core_dynamicbuffer.o  \
+        core_error.o          \
+        core_eval.o           \
+        core_files.o          \
+        core_fileswnd.o       \
+        core_gbm.o            \
+        core_gbmbmp.o         \
+        core_gbmhelp.o        \
+        core_gbmgif.o         \
+        core_gbmsize.o        \
+        core_graphics.o       \
+        core_graphwin.o       \
+        core_ibmterm.o        \
+        core_init.o           \
+        core_intern.o         \
+        core_lists.o          \
+        core_localizednode.o  \
+        core_logodata.o       \
+        core_logomath.o       \
+        core_mainwind.o       \
+        core_mem.o            \
+        core_messagebox.o     \
+        core_mmwind.o         \
+        core_netwind.o        \
+        core_paren.o          \
+        core_parse.o          \
+        core_print.o          \
+        core_startup.o        \
+        core_threed.o         \
+        core_unix.o           \
+        core_vector.o         \
+        core_wrksp.o          \
 
 ifeq "$(TOOLKIT)" "MSW"
 SPLITTER_OBJECTS +=  \
@@ -226,21 +267,21 @@ fmslogo$(EXEEXT): $(SPLITTER_OBJECTS) $(__splitter___win32rc)
 splitter_%.o: $(srcdir)/%.cpp
 	$(CXXC) -c -o $@ $(SPLITTER_CXXFLAGS) $<
 
+core_%.o: $(srcdir)/../src/%.cpp
+	$(CXXC) -c -o $@ $(SPLITTER_CXXFLAGS) $<
+
 ifeq "$(TOOLKIT)" "MSW"
 
-splitter_utils.o: $(srcdir)/../src/utils.cpp
+platform_%.o: $(srcdir)/../src/%.cpp
 	$(CXXC) -c -o $@ $(SPLITTER_CXXFLAGS) $<
 
 else
 
-splitter_utils.o: $(srcdir)/linux/utils.cpp
+platform_%.o: $(srcdir)/linux/%.cpp
 	$(CXXC) -c -o $@ $(SPLITTER_CXXFLAGS) $<
 
 endif
 
-
-splitter_dynamicbuffer.o: $(srcdir)/../src/dynamicbuffer.cpp
-	$(CXXC) -c -o $@ $(SPLITTER_CXXFLAGS) $<
 
 splitter_fmslogo_rc.o: $(srcdir)/fmslogo.rc
 	$(WINDRES) -i$< -o$@   --define __WX$(TOOLKIT)__ $(__WXUNIV_DEFINE_p_2)  $(__EXCEPTIONS_DEFINE_p_2) $(__RTTI_DEFINE_p_2) $(__THREAD_DEFINE_p_2)   --include-dir $(srcdir) $(__DLLFLAG_p_2) --include-dir $(srcdir)/../../samples $(__RCDEFDIR_p_1) --include-dir $(top_srcdir)/include --include-dir $(wx_top_builddir)/include

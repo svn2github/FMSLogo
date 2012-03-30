@@ -174,8 +174,10 @@ BEGIN_EVENT_TABLE(CMainFrame, wxFrame)
 END_EVENT_TABLE()
 
 // My frame constructor
-CMainFrame::CMainFrame()
-    : wxFrame(
+CMainFrame::CMainFrame(
+    int screenWidth,
+    int screenHeight
+    ) : wxFrame(
         NULL, 
         wxID_ANY, 
         LOCALIZED_GENERAL_PRODUCTNAME,
@@ -276,7 +278,7 @@ CMainFrame::CMainFrame()
 
     m_Splitter->SetSashGravity(1.0);
 
-    m_Screen = new CScreen(m_Splitter);
+    m_Screen = new CScreen(m_Splitter, screenWidth, screenHeight);
     m_Screen->SetBackgroundColour(*wxWHITE);
     m_Screen->SetScrollbars(20, 20, 5, 5);
 
@@ -305,6 +307,7 @@ CMainFrame::CMainFrame()
 
 CMainFrame::~CMainFrame()
 {
+    delete m_FmsLogoIcon;
 }
 
 
@@ -546,6 +549,11 @@ void CMainFrame::Quit(wxCommandEvent& WXUNUSED(event) )
     {
         Close(true);
     }
+}
+
+CScreen * CMainFrame::GetScreen()
+{
+    return m_Screen;
 }
 
 CCommander * CMainFrame::GetCommander()

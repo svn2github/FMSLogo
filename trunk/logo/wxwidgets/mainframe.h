@@ -17,7 +17,7 @@ class CScreen;
 class CMainFrame : public wxFrame
 {
 public:
-    CMainFrame();
+    CMainFrame(int screenWidth, int screenHeight);
     virtual ~CMainFrame();
 
     // Menu commands
@@ -46,6 +46,7 @@ public:
     bool StatusDialogIsShowing();
 
     CCommander * GetCommander();
+    CScreen    * GetScreen();
 
     CWorkspaceEditor * GetWorkspaceEditor();
     CWorkspaceEditor * CreateWorskpaceEditor();

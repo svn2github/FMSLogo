@@ -13,29 +13,41 @@
 #include <commander.h>
 #include <commanderinput.h>
 #include <mainframe.h>
+#include <graphwin.h>
+#include <screenwindow.h>
 
 // ----------------------------------------------------------------------------
 // CScreen
 // ----------------------------------------------------------------------------
 
 CScreen::CScreen(
-    wxWindow* parent
+    wxWindow* parent,
+    int       logicalScreenWidth,
+    int       logicalScreenHeight
     ) : 
     wxScrolledWindow(
         parent, 
         wxID_ANY, 
         wxDefaultPosition, 
         wxDefaultSize,
-        wxHSCROLL | wxVSCROLL | wxNO_FULL_REPAINT_ON_RESIZE)
+        wxHSCROLL | wxVSCROLL | wxNO_FULL_REPAINT_ON_RESIZE),
+    m_ScreenDeviceContext(0),
+    m_MemoryDeviceContext(0),
+    m_ScreenBitmap(0)
 {
-    // TODO: 1000x1000 should be passed in
-    m_ScreenBitmap        = new wxBitmap(1000, 1000);
+    SetVirtualSize(logicalScreenWidth, logicalScreenHeight);
+
+    m_ScreenDeviceContext = new wxClientDC(this);
+    m_ScreenBitmap        = new wxBitmap(logicalScreenWidth, logicalScreenHeight);
     m_MemoryDeviceContext = new wxMemoryDC(*m_ScreenBitmap);
 
     if (!m_MemoryDeviceContext->IsOk())
     {
         // TODO: report an error
     }
+
+    // Get a pointer to the native in-memory image of the screen
+    MemoryBitMap = static_cast<HBITMAP>(m_ScreenBitmap->GetHBITMAP());
 
     // clear the bitmap to all white
     m_MemoryDeviceContext->SetBrush(*wxWHITE_BRUSH);
@@ -44,33 +56,35 @@ CScreen::CScreen(
 
 CScreen::~CScreen()
 {
+    if (m_MemoryDeviceContext)
+    {
+        m_MemoryDeviceContext->SelectObject(wxNullBitmap);
+        MemoryBitMap = NULL;
+    }
+
+    delete m_ScreenDeviceContext;
     delete m_ScreenBitmap;
     delete m_MemoryDeviceContext;
 }
 
-void CScreen::OnDraw(wxDC& DeviceContext)
+void CScreen::OnPaint(wxPaintEvent& PaintEvent)
 {
+    wxPaintDC DeviceContext(this);
+    PrepareDC(DeviceContext);
+
     // This is a compromise between speed and memory (as is most code).
     // All drawing is written to the backing store 1 to 1 even when zoomed.
     // When zoomed all drawing and painting is scaled to the display on the fly.
     // Painting can be a bit slow while zoomed. It also can be inaccurate when
     // mixing scaled painting and scaled drawing. Printing is never zoomed.
     // User can use Bitfit if he/she wants data scaled.
+    HDC PaintDC = static_cast<HDC>(DeviceContext.GetHDC());
 
-    bool isOk = DeviceContext.Blit(
-        0,                           // destination X
-        0,                           // destination Y
-        m_ScreenBitmap->GetWidth(),  // width
-        m_ScreenBitmap->GetHeight(), // height
-        m_MemoryDeviceContext,       // source DC
-        0,                           // source X
-        0);                          // source Y
-
-#if 0
     // grab the client area's backing store (a bitmap)
-    HDC memoryDC = m_MemoryDeviceContext;
+    HDC memoryDC = static_cast<HDC>(m_MemoryDeviceContext->GetHDC());
 
-    HBITMAP oldBitmap = (HBITMAP) SelectObject(memoryDC, MemoryBitMap);
+    //HBITMAP oldBitmap = (HBITMAP) SelectObject(memoryDC, MemoryBitMap);
+    m_MemoryDeviceContext->SelectObject(*m_ScreenBitmap);
 
     HPALETTE oldPalette  = NULL;
     HPALETTE oldPalette2 = NULL;
@@ -90,17 +104,37 @@ void CScreen::OnDraw(wxDC& DeviceContext)
 
     if (the_zoom == 1.0)
     {
-        BitBlt(
-            PaintDC,
-            PaintRect.Left(),
-            PaintRect.Top(),
-            PaintRect.Width(),
-            PaintRect.Height(),
-            memoryDC,
-            PaintRect.Left(),
-            PaintRect.Top(),
-            SRCCOPY);
+        // Determine the top left corner of where the window is scrolled
+        int vbX;
+        int vbY; 
+        GetViewStart(&vbX, &vbY);
+
+        for (wxRegionIterator regionIterator(GetUpdateRegion());
+             regionIterator;
+             regionIterator++)
+        {
+            wxCoord x      = regionIterator.GetX();
+            wxCoord y      = regionIterator.GetY();
+            wxCoord width  = regionIterator.GetW();
+            wxCoord height = regionIterator.GetH();
+
+            DeviceContext.Blit(
+                x,
+                y,
+                width,
+                height,
+                m_MemoryDeviceContext,
+                x,
+                y,
+                wxCOPY);
+        }
     }
+#if 1
+    else
+    {
+        TraceOutput("fixme: Painting with zoom not implemented.\n");
+    }
+#else
 
     /* else compute scaling and then display */
 
@@ -167,6 +201,7 @@ void CScreen::OnDraw(wxDC& DeviceContext)
             BitMapHeight,
             SRCCOPY);
     }
+#endif
 
     /* restore resources */
 
@@ -176,7 +211,7 @@ void CScreen::OnDraw(wxDC& DeviceContext)
         SelectPalette(PaintDC, oldPalette, FALSE);
     }
 
-    SelectObject(memoryDC, oldBitmap);
+    //SelectObject(memoryDC, oldBitmap);
 
     /* if turtle do it */
 
@@ -186,7 +221,7 @@ void CScreen::OnDraw(wxDC& DeviceContext)
     {
         if (g_Turtles[j].IsShown)
         {
-            if (g_Turtles[j].Bitmap)
+            if (g_Turtles[j].BitmapRasterMode)
             {
                 turtlepaste(j);
             }
@@ -196,14 +231,9 @@ void CScreen::OnDraw(wxDC& DeviceContext)
                 {
                     if (g_Turtles[j].Points[i].bValid)
                     {
-                        MoveToEx(
-                            PaintDC,
+                        DeviceContext.DrawLine(
                             g_Turtles[j].Points[i].from.x * the_zoom,
                             g_Turtles[j].Points[i].from.y * the_zoom,
-                            0);
-
-                        LineTo(
-                            PaintDC,
                             g_Turtles[j].Points[i].to.x * the_zoom,
                             g_Turtles[j].Points[i].to.y * the_zoom);
                     }
@@ -211,7 +241,11 @@ void CScreen::OnDraw(wxDC& DeviceContext)
             }
         }
     }
-#endif
+}
+
+wxClientDC & CScreen::GetScreenDeviceContext()
+{
+    return *m_ScreenDeviceContext;
 }
 
 wxMemoryDC & CScreen::GetMemoryDeviceContext()
@@ -259,7 +293,7 @@ void CScreen::OnKeyDown(wxKeyEvent& event)
         );
 #endif
 
-    fprintf(stderr, "CScreen::OnKeyDown()\n");
+    TraceOutput("CScreen::OnKeyDown()\n");
 
     if (CCommanderInput::WantsKeyEvent(keyCode))
     {
@@ -286,4 +320,5 @@ void CScreen::OnKeyUp(wxKeyEvent& Event)
 BEGIN_EVENT_TABLE(CScreen, wxScrolledWindow)
     EVT_KEY_DOWN(CScreen::OnKeyDown)
     EVT_KEY_UP(CScreen::OnKeyUp)
+    EVT_PAINT(CScreen::OnPaint)
 END_EVENT_TABLE()

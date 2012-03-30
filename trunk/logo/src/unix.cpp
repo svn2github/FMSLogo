@@ -24,6 +24,17 @@
 #ifdef __GNUC__
 #include <unistd.h>
 #include <sys/stat.h>
+
+#ifdef __WXMSW__
+// The wxWidgets project links to a POSIX-compliant mkdir, so we must
+// translate our call into a POSIX-compliant form.
+static int mkdir(const char * dirname)
+{
+    return mkdir(dirname, S_IRWXU);
+}
+
+#endif
+
 #else
 #include <direct.h>
 #endif
@@ -109,7 +120,7 @@ int printfx(const char *fmt, const char *str)
     int cnt = sprintf(buff, fmt, str);
 
     // check for a buffer overflow
-    assert(cnt < ARRAYSIZE(buff));
+    assert(cnt < (int)ARRAYSIZE(buff));
 
     mputcombobox(buff);
 
@@ -153,10 +164,12 @@ NODE *lmkdir(NODE *arg)
 
     if (mkdir(fname))
     {
+        // mkdir returns -1 on error
         printfx(LOCALIZED_FILE_MKDIRFAILED, fname);
     }
     else
     {
+        // mkdir returns 0 on success
         chdir(fname);
         printfx(LOCALIZED_FILE_MKDIRSUCCEEDED, fname);
     }

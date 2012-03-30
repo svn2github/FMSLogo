@@ -2,24 +2,27 @@
     #include "wx/scrolwin.h"
 #endif
 
+class wxClientDC;
 class wxMemoryDC;
 class wxBitMap;
 
 class CScreen: public wxScrolledWindow
 {
 public:
-    CScreen(wxWindow* parent);
+    CScreen(wxWindow* parent, int width, int height);
     virtual ~CScreen();
 
-    void OnKeyDown(wxKeyEvent& event);
-    void OnKeyUp(wxKeyEvent& event);
+    void OnKeyDown(wxKeyEvent& Event);
+    void OnKeyUp(wxKeyEvent& Event);
 
-    virtual void OnDraw(wxDC& dc);
+    void OnPaint(wxPaintEvent& PaintEvent);
 
+    wxClientDC & GetScreenDeviceContext();
     wxMemoryDC & GetMemoryDeviceContext();
 
 private:
 
+    wxClientDC * m_ScreenDeviceContext;
     wxMemoryDC * m_MemoryDeviceContext;
     wxBitmap   * m_ScreenBitmap;
 

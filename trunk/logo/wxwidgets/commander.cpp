@@ -21,6 +21,11 @@
 #include "commanderinput.h"
 #include "commanderhistory.h"
 #include "dynamicbuffer.h"
+#include "parse.h"
+#include "error.h"
+#include "eval.h"
+#include "graphics.h"
+#include "statwind.h"
 #include "fontutils.h"
 
 bool g_GiveFocusToInputControl = false;
@@ -278,16 +283,6 @@ void CCommander::OnResetButton(wxCommandEvent& WXUNUSED(event))
         this);
 }
 
-void
-do_execution(
-    const char * LogoInstruction
-    )
-{
-    wxString message;
-    message.Printf("Running %s\n", LogoInstruction);
-    //wxMessageBox(message, "TODO: Logo Engine", wxOK);
-}
-
 void clearcombobox()
 {
     // clear the recall box
@@ -353,7 +348,7 @@ void putcombobox(const char *str)
 // the "Reset" button, to teach the user what a UI element is doing.
 void
 RunLogoInstructionFromGui(
-    const char * LogoInstruction
+    char * LogoInstruction
     )
 {
     if (LogoInstruction[0] != '\0')
@@ -363,7 +358,6 @@ RunLogoInstructionFromGui(
         // copy to list box for command recall
         putcombobox(LogoInstruction);
 
-#if 0
         // if dribble then dribble 
         if (dribblestream != NULL)
         {
@@ -379,7 +373,6 @@ RunLogoInstructionFromGui(
 
         vector_count = 0;
         update_status_vectors();
-#endif
 
         do_execution(LogoInstruction);
     }
@@ -390,12 +383,13 @@ void CCommander::OnExecuteButton(wxCommandEvent& WXUNUSED(event))
     g_GiveFocusToInputControl = true;
 
     // read what's in the input control
-    const wxString logoInstruction(m_NextInstruction->GetValue());
+    wxString logoInstruction(m_NextInstruction->GetValue());
 
     // clear the input control, now that we have read its contents
     m_NextInstruction->Clear();
 
-    RunLogoInstructionFromGui(logoInstruction.c_str());
+    // BUG: This can potentially modify the contents of wxString's buffer
+    RunLogoInstructionFromGui(const_cast<char*>(logoInstruction.c_str()));
 
     // calling RunLogoInstructionFromGui() can delete the "this" pointer,
     // if it executes FULLSCREEN, TEXTSCREEN, or SPLITSCREEN.

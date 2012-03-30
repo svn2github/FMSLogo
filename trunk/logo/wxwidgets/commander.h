@@ -94,5 +94,5 @@ private:
 
 void
 RunLogoInstructionFromGui(
-    const char * LogoInstruction
+    char * LogoInstruction
     );

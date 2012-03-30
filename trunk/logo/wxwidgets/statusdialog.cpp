@@ -10,6 +10,7 @@
 #include "mainframe.h"
 #include "localizedstrings.h"
 #include "logocore.h" // for ARRAYSIZE
+#include "mainwind.h" // for checkwindow()
 #include "utils.h"
 
 // Menu IDs
@@ -58,7 +59,7 @@ CStatusDialog::CStatusDialog(wxWindow * Parent)
 
     // Get last location and size of command window from configuration settings.
     GetConfigurationQuadruple("Status", &x, &y, &w, &h); 
-    // TODO: checkwindow(&x, &y, &w, &h);
+    checkwindow(&x, &y, &w, &h);
 
     // now set position
     Move(x, y);

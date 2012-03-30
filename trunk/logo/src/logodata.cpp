@@ -331,6 +331,11 @@ char *cap_strnzcpy(char *dst, const char * src, int len)
     return dst;
 }
 
+char * NormalizeCaseForDisplay(char *dst, const char * src, int len)
+{
+    return cap_strnzcpy(dst, src, len);
+}
+
 char *noparitylow_strnzcpy(char *dst, const char *src, int len)
 {
     char *temp = dst;
