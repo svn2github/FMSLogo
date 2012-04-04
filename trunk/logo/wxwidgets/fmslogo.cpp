@@ -331,13 +331,6 @@ bool CFmsLogo::OnInit()
     // initialize the hourglass and arrow cursors
     init_cursors();
 
-    // If -P was specified on the command line, enter perspective mode.
-    if (g_EnterPerspectiveMode)
-    {
-        g_EnterPerspectiveMode = false;
-        lperspective(NIL);
-    }
-
     // determine how big a window we would like
     int x = 0;
     int y = 0;
@@ -403,11 +396,6 @@ bool CFmsLogo::OnInit()
 
     frame->GetScreen()->SetSize(x, y, w, h);
     frame->Show(true);
-
-    // run the startup script that localizes logo
-    char startupScript[MAX_PATH + 1];
-    MakeHelpPathName(startupScript, "startup.logoscript");
-    silent_load(NIL, startupScript);
 
     //
     // initialize paths to library and help files based on location of executable
@@ -571,6 +559,51 @@ CMainFrame * CFmsLogo::GetMainFrame()
 {
     return static_cast<CMainFrame*>(wxTheApp->GetTopWindow());
 }
+
+void CFmsLogo::OnIdle(wxIdleEvent & IdleEvent)
+{
+    // this is the time to exit, when things are settled down
+    if (IsTimeToExit)
+    {
+        IsTimeToExit = false;
+        wxTheApp->GetTopWindow()->Close();
+    }
+
+    // If -P was specified on the command line, enter perspective mode.
+    if (g_EnterPerspectiveMode)
+    {
+        g_EnterPerspectiveMode = false;
+        lperspective(NIL);
+    }
+
+    // run the script that localizes FMSLogo
+    static bool hasRunStartup = false;
+    if (!hasRunStartup)
+    {
+        char startupScript[MAX_PATH + 1];
+        MakeHelpPathName(startupScript, "startup.logoscript");
+        silent_load(NIL, startupScript);
+
+        hasRunStartup = true;
+    }
+
+    // if command arg loaded then execute
+    if (g_FileToLoad[0] != '\0')
+    {
+        silent_load(NIL, g_FileToLoad);
+        g_FileToLoad[0] = '\0';
+    }
+
+    // Process logo events
+    checkqueue();
+
+    // Continue with the default processing
+    IdleEvent.Skip();
+}
+
+BEGIN_EVENT_TABLE(CFmsLogo, wxApp)
+    EVT_IDLE(CFmsLogo::OnIdle)
+END_EVENT_TABLE()
 
 
 // stubs that abstract the logo engine from the window toolkit

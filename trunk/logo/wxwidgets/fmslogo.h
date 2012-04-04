@@ -33,9 +33,12 @@ public:
     virtual bool OnInit();
     virtual int  OnExit();
 
+    void OnIdle(wxIdleEvent & Event);
+
 private:
     void ProcessCommandLine();
 
     DECLARE_NO_COPY_CLASS(CFmsLogo)
+    DECLARE_EVENT_TABLE();
 };
 
