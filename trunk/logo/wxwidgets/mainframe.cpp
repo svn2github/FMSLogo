@@ -48,6 +48,7 @@
 #include "workspaceeditor.h"
 #include "logodata.h"
 #include "setcolor.h"
+#include "graphwin.h"
 
 #include "fmslogo-16x16.xpm"
 
@@ -279,8 +280,6 @@ CMainFrame::CMainFrame(
     m_Splitter->SetSashGravity(1.0);
 
     m_Screen = new CScreen(m_Splitter, screenWidth, screenHeight);
-    m_Screen->SetBackgroundColour(*wxWHITE);
-    m_Screen->SetScrollbars(20, 20, 5, 5);
 
     m_RealCommander = new CCommander(m_Splitter);
     m_Commander = m_RealCommander;
@@ -303,6 +302,13 @@ CMainFrame::CMainFrame(
 
     m_FmsLogoIcon = new wxIcon(fmslogo_16x16_xpm);
     SetIcon(*m_FmsLogoIcon);
+
+    // init the pens based on the color
+    UpdateNormalPen(GetPenStateForSelectedTurtle().Width, pcolor);
+    UpdateErasePen(GetPenStateForSelectedTurtle().Width,  scolor);
+
+    // it's show time for our little friend
+    draw_turtle(true);
 }
 
 CMainFrame::~CMainFrame()

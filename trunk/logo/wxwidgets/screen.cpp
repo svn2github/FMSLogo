@@ -1,7 +1,9 @@
-#include <screen.h>
+#include "screen.h"
 
 // For compilers that support precompilation, includes "wx/wx.h".
 #include "wx/wxprec.h"
+
+#include <algorithm>
 
 #ifndef WX_PRECOMP
     #include <wx/event.h>
@@ -15,6 +17,7 @@
 #include <mainframe.h>
 #include <graphwin.h>
 #include <screenwindow.h>
+#include <main.h>
 
 // ----------------------------------------------------------------------------
 // CScreen
@@ -33,13 +36,28 @@ CScreen::CScreen(
         wxHSCROLL | wxVSCROLL | wxNO_FULL_REPAINT_ON_RESIZE),
     m_ScreenDeviceContext(0),
     m_MemoryDeviceContext(0),
-    m_ScreenBitmap(0)
+    m_MemoryBitmap(0)
 {
-    SetVirtualSize(logicalScreenWidth, logicalScreenHeight);
+    if (!bFixed)
+    {
+        SetVirtualSize(logicalScreenWidth, logicalScreenHeight);
+
+        int clientWidth;
+        int clientHeight;
+        GetClientSize(&clientWidth, &clientHeight);
+
+        SetScrollbars(
+            1,
+            1,
+            std::max(0, logicalScreenWidth - clientWidth), 
+            std::max(0, logicalScreenHeight - clientHeight),
+            (logicalScreenWidth - clientWidth) / 2,
+            (logicalScreenHeight - clientHeight) / 2);
+    }
 
     m_ScreenDeviceContext = new wxClientDC(this);
-    m_ScreenBitmap        = new wxBitmap(logicalScreenWidth, logicalScreenHeight);
-    m_MemoryDeviceContext = new wxMemoryDC(*m_ScreenBitmap);
+    m_MemoryBitmap        = new wxBitmap(logicalScreenWidth, logicalScreenHeight);
+    m_MemoryDeviceContext = new wxMemoryDC(*m_MemoryBitmap);
 
     if (!m_MemoryDeviceContext->IsOk())
     {
@@ -47,9 +65,10 @@ CScreen::CScreen(
     }
 
     // Get a pointer to the native in-memory image of the screen
-    MemoryBitMap = static_cast<HBITMAP>(m_ScreenBitmap->GetHBITMAP());
+    MemoryBitMap = static_cast<HBITMAP>(m_MemoryBitmap->GetHBITMAP());
 
     // clear the bitmap to all white
+    SetBackgroundColour(*wxWHITE);
     m_MemoryDeviceContext->SetBrush(*wxWHITE_BRUSH);
     m_MemoryDeviceContext->Clear();
 }
@@ -63,14 +82,14 @@ CScreen::~CScreen()
     }
 
     delete m_ScreenDeviceContext;
-    delete m_ScreenBitmap;
+    delete m_MemoryBitmap;
     delete m_MemoryDeviceContext;
 }
 
 void CScreen::OnPaint(wxPaintEvent& PaintEvent)
 {
-    wxPaintDC DeviceContext(this);
-    PrepareDC(DeviceContext);
+    wxPaintDC paintContext(this);
+    PrepareDC(paintContext);
 
     // This is a compromise between speed and memory (as is most code).
     // All drawing is written to the backing store 1 to 1 even when zoomed.
@@ -78,13 +97,13 @@ void CScreen::OnPaint(wxPaintEvent& PaintEvent)
     // Painting can be a bit slow while zoomed. It also can be inaccurate when
     // mixing scaled painting and scaled drawing. Printing is never zoomed.
     // User can use Bitfit if he/she wants data scaled.
-    HDC PaintDC = static_cast<HDC>(DeviceContext.GetHDC());
+    HDC PaintDC = static_cast<HDC>(paintContext.GetHDC());
 
     // grab the client area's backing store (a bitmap)
     HDC memoryDC = static_cast<HDC>(m_MemoryDeviceContext->GetHDC());
 
     //HBITMAP oldBitmap = (HBITMAP) SelectObject(memoryDC, MemoryBitMap);
-    m_MemoryDeviceContext->SelectObject(*m_ScreenBitmap);
+    //m_MemoryDeviceContext->SelectObject(*m_MemoryBitmap);
 
     HPALETTE oldPalette  = NULL;
     HPALETTE oldPalette2 = NULL;
@@ -109,24 +128,55 @@ void CScreen::OnPaint(wxPaintEvent& PaintEvent)
         int vbY; 
         GetViewStart(&vbX, &vbY);
 
+        // Determine the size of the viewable area
+        int clientWidth;
+        int clientHeight;
+        GetClientSize(&clientWidth, &clientHeight);
+
         for (wxRegionIterator regionIterator(GetUpdateRegion());
              regionIterator;
              regionIterator++)
         {
+            // The x,y coordinates are on the client area
             wxCoord x      = regionIterator.GetX();
             wxCoord y      = regionIterator.GetY();
-            wxCoord width  = regionIterator.GetW();
-            wxCoord height = regionIterator.GetH();
+            wxCoord width  = regionIterator.GetWidth();
+            wxCoord height = regionIterator.GetHeight();
 
-            DeviceContext.Blit(
-                x,
-                y,
+            // Fill the part to the right of the screen.
+            if (BitMapWidth <= x + width)
+            {
+                paintContext.SetBrush(*wxWHITE_BRUSH);
+                paintContext.SetPen(*wxWHITE_PEN);
+
+                paintContext.DrawRectangle(
+                    BitMapWidth,
+                    0,
+                    clientWidth - BitMapWidth,
+                    BitMapHeight);
+            }
+
+            // Fill the part below the screen.
+            if (BitMapHeight <= y + height)
+            {
+                paintContext.SetBrush(*wxWHITE_BRUSH);
+                paintContext.SetPen(*wxWHITE_PEN);
+
+                paintContext.DrawRectangle(
+                    x,
+                    BitMapHeight,
+                    BitMapWidth,
+                    clientHeight - BitMapHeight);
+            }
+
+            paintContext.Blit(
+                x + vbX,
+                y + vbY,
                 width,
                 height,
                 m_MemoryDeviceContext,
-                x,
-                y,
-                wxCOPY);
+                x + vbX,
+                y + vbY);
         }
     }
 #if 1
@@ -231,7 +281,7 @@ void CScreen::OnPaint(wxPaintEvent& PaintEvent)
                 {
                     if (g_Turtles[j].Points[i].bValid)
                     {
-                        DeviceContext.DrawLine(
+                        paintContext.DrawLine(
                             g_Turtles[j].Points[i].from.x * the_zoom,
                             g_Turtles[j].Points[i].from.y * the_zoom,
                             g_Turtles[j].Points[i].to.x * the_zoom,
@@ -253,9 +303,18 @@ wxMemoryDC & CScreen::GetMemoryDeviceContext()
     return *m_MemoryDeviceContext;
 }
 
-void CScreen::OnKeyDown(wxKeyEvent& event)
+void CScreen::OnScroll(wxScrollWinEvent& Event)
 {
-    int keyCode = event.GetKeyCode();
+    // Force a screen repaint
+    Update();
+
+    // continue with the default processing
+    Event.Skip();
+}
+
+void CScreen::OnKeyDown(wxKeyEvent& Event)
+{
+    int keyCode = Event.GetKeyCode();
 
 #if 0
     // if keyboard was on and up and down is enabled then continue
@@ -301,11 +360,11 @@ void CScreen::OnKeyDown(wxKeyEvent& event)
 
         // we don't handle this key.
         // give focus to the edit box and send the press to it.
-        commander->PostKeyDownToInputControl(event);
+        commander->PostKeyDownToInputControl(Event);
     }
     else
     {
-        event.Skip();
+        Event.Skip();
     }
     
 
@@ -321,4 +380,5 @@ BEGIN_EVENT_TABLE(CScreen, wxScrolledWindow)
     EVT_KEY_DOWN(CScreen::OnKeyDown)
     EVT_KEY_UP(CScreen::OnKeyUp)
     EVT_PAINT(CScreen::OnPaint)
+    EVT_SCROLLWIN(CScreen::OnScroll)
 END_EVENT_TABLE()

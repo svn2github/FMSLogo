@@ -399,7 +399,7 @@ bool CFmsLogo::OnInit()
     init_graphics();
 
     // create and show the main frame
-    CMainFrame * frame = new CMainFrame(w, h);
+    CMainFrame * frame = new CMainFrame(BitMapWidth, BitMapHeight);
 
     frame->GetScreen()->SetSize(x, y, w, h);
     frame->Show(true);
@@ -616,12 +616,15 @@ HWND GetEditorWindow()
 
 UINT GetScreenHorizontalScrollPosition()
 {
-    return 0;
+    CMainFrame* mainFrame = static_cast<CMainFrame*>(wxTheApp->GetTopWindow());
+    return mainFrame->GetScreen()->GetScrollPos(wxHORIZONTAL);
 }
+
 
 UINT GetScreenVerticalScrollPosition()
 {
-    return 0;
+    CMainFrame* mainFrame = static_cast<CMainFrame*>(wxTheApp->GetTopWindow());
+    return mainFrame->GetScreen()->GetScrollPos(wxVERTICAL);
 }
 
 void SetScreenScrollPosition(UINT x, UINT y)
