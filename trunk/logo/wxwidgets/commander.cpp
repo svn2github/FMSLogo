@@ -25,6 +25,7 @@
 #include "error.h"
 #include "eval.h"
 #include "graphics.h"
+#include "graphwin.h"
 #include "statwind.h"
 #include "fontutils.h"
 
@@ -126,12 +127,8 @@ CCommander::CCommander(wxWindow *Parent)
     // The rest will be re-sized to match it
     m_TraceButton->SetSize(0, 0, 100, 20);
 
-    // HACK: should be:
-    //  m_NextInstructionHeight(10 * BaseUnitsy / 8),
-    //  m_ButtonWidth(34 * BaseUnitsx / 4)
-    m_NextInstructionHeight = 10;
-    m_ButtonWidth           = 100;
-
+    m_NextInstructionHeight = 10 * BaseUnitsy / 8;
+    m_ButtonWidth           = 34 * BaseUnitsx / 4;
 
     // set the font to whatever is defind in the configuraton
     wxFont font;
