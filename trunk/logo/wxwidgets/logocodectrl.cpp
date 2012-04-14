@@ -6,6 +6,10 @@
 #include "scintilla/include/SciLexer.h"
 #include "scintilla/include/Scintilla.h"
 
+BEGIN_EVENT_TABLE(CLogoCodeCtrl, wxStyledTextCtrl)
+    EVT_STC_UPDATEUI(wxID_ANY, CLogoCodeCtrl::OnUpdateUi)
+END_EVENT_TABLE()
+
 CLogoCodeCtrl::CLogoCodeCtrl(
     wxWindow *      Parent,
     wxWindowID      Id
@@ -43,14 +47,14 @@ CLogoCodeCtrl::SetFont(wxFont & font)
     // Apply the font
     StyleClearAll();
 
-    const COLORREF black   = RGB(0,0,0);
-    const COLORREF white   = RGB(0xff,0xff,0xff);
-    const COLORREF darkgreen = RGB(0,0x80,0);
-    const COLORREF darkred   = RGB(0x80, 0, 0);
-    const COLORREF red       = RGB(0xFF, 0, 0);
-    const COLORREF lightgrey = RGB(0xCC, 0xCC, 0xCC);
-    const COLORREF lightblue = RGB(200,  242,  255);
-    const COLORREF darkblue  = RGB(  0,  0,   0x80);
+    const wxColor black     = RGB(0,0,0);
+    const wxColor white     = RGB(0XFF, 0XFF, 0XFF);
+    const wxColor darkgreen = RGB(0,    0x80, 0);
+    const wxColor darkred   = RGB(0x80,    0, 0);
+    const wxColor red       = RGB(0xFF,    0, 0);
+    const wxColor lightgrey = RGB(0xCC, 0xCC, 0xCC);
+    const wxColor lightblue = RGB(200,   242, 255);
+    const wxColor darkblue  = RGB(  0,    0,  0x80);
 
     StyleSetForeground(SCE_FMS_COMMENT,          darkgreen);
     StyleSetForeground(SCE_FMS_COMMENTBACKSLASH, darkgreen);
@@ -61,10 +65,10 @@ CLogoCodeCtrl::SetFont(wxFont & font)
     StyleSetForeground(SCE_FMS_VARIABLE_VBAR,  darkblue);
 
     StyleSetForeground(STYLE_BRACELIGHT,    darkgreen);
-    StyleSetForeground(STYLE_BRACELIGHT,    lightblue);
+    StyleSetBackground(STYLE_BRACELIGHT,    lightblue);
 
     StyleSetForeground(STYLE_BRACEBAD,      red);
-    StyleSetForeground(STYLE_BRACEBAD,      lightblue);
+    StyleSetBackground(STYLE_BRACEBAD,      lightblue);
 }
 
 bool
@@ -205,4 +209,38 @@ void CLogoCodeCtrl::SelectMatchingParen()
 void CLogoCodeCtrl::ScrollCaret()
 {
     SendMsg(SCI_SCROLLCARET);
+}
+
+void CLogoCodeCtrl::OnUpdateUi(wxStyledTextEvent& event)
+{
+    int currentParenPosition;
+    int matchingParenPosition;
+    FindMatchingParen(currentParenPosition, matchingParenPosition);
+    if (currentParenPosition != INVALID_POSITION)
+    {
+        // We're close enough to a paren to try to match it
+        if (matchingParenPosition != INVALID_POSITION)
+        {
+            // found a match
+            if (currentParenPosition == GetCurrentPos())
+            {
+                BraceHighlight(currentParenPosition, matchingParenPosition - 1);
+            }
+            else
+            {
+                BraceHighlight(currentParenPosition, matchingParenPosition);
+            }
+        }
+        else
+        {
+            // didn't find a match
+            BraceBadLight(currentParenPosition);
+        }
+    }
+    else
+    {
+        // We're not adacent to a paren, so remove the paren highlighting.
+        BraceBadLight(INVALID_POSITION);
+        BraceHighlight(INVALID_POSITION, INVALID_POSITION);
+    }
 }

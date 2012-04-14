@@ -18,6 +18,8 @@ public:
 
 private:
 
+    void OnUpdateUi(wxStyledTextEvent& event);
+
     void ScrollCaret();
 
     void
@@ -26,6 +28,6 @@ private:
         int & MatchingParenPosition
         );
 
-    //DECLARE_EVENT_TABLE();
+    DECLARE_EVENT_TABLE();
     DECLARE_NO_COPY_CLASS(CLogoCodeCtrl);
 };
