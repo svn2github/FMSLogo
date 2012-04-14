@@ -14,6 +14,7 @@ public:
 
     void FindMatchingParen();
     void SelectMatchingParen();
+    bool IsTextSelected();
 
 private:
 

@@ -1,6 +1,7 @@
 #include "logocodectrl.h"
 #include "localizedstrings.h"
 #include "logocore.h"  // for ARRAYSIZE
+#include "screenwindow.h"  // for TraceOutput
 
 #include "scintilla/include/SciLexer.h"
 #include "scintilla/include/Scintilla.h"
@@ -66,6 +67,17 @@ CLogoCodeCtrl::SetFont(wxFont & font)
     StyleSetForeground(STYLE_BRACEBAD,      lightblue);
 }
 
+bool
+CLogoCodeCtrl::IsTextSelected()
+{
+    // Get whatever is selected
+    int selectionStart = -1;
+    int selectionEnd   = -1;
+    GetSelection(&selectionStart, &selectionEnd);
+
+    // Determine if the selection is non-empty
+    return selectionStart != selectionEnd;
+}
 
 static bool IsParen(int Char)
 {

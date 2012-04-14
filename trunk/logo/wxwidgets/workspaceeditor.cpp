@@ -29,6 +29,7 @@ enum
     ID_EDALLEXIT,
     ID_FILESAVETOWORKSPACE,
     ID_EDITUNDO,
+    ID_EDITREDO,
     ID_EDITCUT,
     ID_EDITCOPY,
     ID_EDITPASTE,
@@ -54,12 +55,21 @@ BEGIN_EVENT_TABLE(CWorkspaceEditor, wxFrame)
     EVT_MENU(ID_EDALLEXIT,           CWorkspaceEditor::OnQuit)
     EVT_MENU(ID_EDITSETFONT,         CWorkspaceEditor::OnSetFont)
     EVT_MENU(ID_EDITUNDO,            CWorkspaceEditor::OnUndo)
+    EVT_UPDATE_UI(ID_EDITUNDO,       CWorkspaceEditor::OnUpdateUndo)
+    EVT_MENU(ID_EDITREDO,            CWorkspaceEditor::OnRedo)
+    EVT_UPDATE_UI(ID_EDITREDO,       CWorkspaceEditor::OnUpdateRedo)
     EVT_MENU(ID_EDITCUT,             CWorkspaceEditor::OnCut)
+    EVT_UPDATE_UI(ID_EDITCUT,        CWorkspaceEditor::OnUpdateCut)
     EVT_MENU(ID_EDITCOPY,            CWorkspaceEditor::OnCopy)
+    EVT_UPDATE_UI(ID_EDITCOPY,       CWorkspaceEditor::OnUpdateCopy)
     EVT_MENU(ID_EDITPASTE,           CWorkspaceEditor::OnPaste)
+    EVT_UPDATE_UI(ID_EDITPASTE,      CWorkspaceEditor::OnUpdatePaste)
     EVT_MENU(ID_EDITDELETE,          CWorkspaceEditor::OnDelete)
+    EVT_UPDATE_UI(ID_EDITDELETE,     CWorkspaceEditor::OnUpdateDelete)
     EVT_MENU(ID_EDITCLEAR,           CWorkspaceEditor::OnClear)
+    EVT_UPDATE_UI(ID_EDITCLEAR,      CWorkspaceEditor::OnUpdateClear)
     EVT_MENU(ID_EDITSELECTALL,       CWorkspaceEditor::OnSelectAll)
+    EVT_UPDATE_UI(ID_EDITSELECTALL,  CWorkspaceEditor::OnUpdateSelectAll)
     EVT_MENU(ID_FINDMATCHINGPAREN,   CWorkspaceEditor::OnFindMatchingParen)
     EVT_MENU(ID_SELECTMATCHINGPAREN, CWorkspaceEditor::OnSelectMatchingParen)
     EVT_CLOSE(CWorkspaceEditor::OnClose)
@@ -106,6 +116,7 @@ CWorkspaceEditor::CWorkspaceEditor(wxWindow * Parent)
 
     static const MENUITEM editMenuItems[] = {
         {LOCALIZED_EDITOR_EDIT_UNDO,      ID_EDITUNDO},
+        {LOCALIZED_EDITOR_EDIT_REDO,      ID_EDITREDO},
         {0},
         {LOCALIZED_EDITOR_EDIT_CUT,       ID_EDITCUT},
         {LOCALIZED_EDITOR_EDIT_COPY,      ID_EDITCOPY},
@@ -172,6 +183,7 @@ CWorkspaceEditor::CWorkspaceEditor(wxWindow * Parent)
         "  ;; makes a square\n"
         "  repeat 4 [ fd 100 rt 90 ]\n"
         "end\n");
+    m_LogoCodeControl->EmptyUndoBuffer();
 
     wxAcceleratorEntry accelleratorEntries[2];
 
@@ -238,9 +250,29 @@ void CWorkspaceEditor::OnUndo(wxCommandEvent& WXUNUSED(event))
     m_LogoCodeControl->Undo();
 }
 
+void CWorkspaceEditor::OnUpdateUndo(wxUpdateUIEvent& Event)
+{
+    Event.Enable(m_LogoCodeControl->CanUndo());
+}
+
+void CWorkspaceEditor::OnRedo(wxCommandEvent& WXUNUSED(event))
+{
+    m_LogoCodeControl->Redo();
+}
+
+void CWorkspaceEditor::OnUpdateRedo(wxUpdateUIEvent& Event)
+{
+    Event.Enable(m_LogoCodeControl->CanRedo());
+}
+
 void CWorkspaceEditor::OnCut(wxCommandEvent& WXUNUSED(event))
 {
     m_LogoCodeControl->Cut();
+}
+
+void CWorkspaceEditor::OnUpdateCut(wxUpdateUIEvent& Event)
+{
+    Event.Enable(m_LogoCodeControl->IsTextSelected());
 }
 
 void CWorkspaceEditor::OnCopy(wxCommandEvent& WXUNUSED(event))
@@ -248,14 +280,29 @@ void CWorkspaceEditor::OnCopy(wxCommandEvent& WXUNUSED(event))
     m_LogoCodeControl->Copy();
 }
 
+void CWorkspaceEditor::OnUpdateCopy(wxUpdateUIEvent& Event)
+{
+    Event.Enable(m_LogoCodeControl->IsTextSelected());
+}
+
 void CWorkspaceEditor::OnPaste(wxCommandEvent& WXUNUSED(event))
 {
     m_LogoCodeControl->Paste();
 }
 
+void CWorkspaceEditor::OnUpdatePaste(wxUpdateUIEvent& Event)
+{
+    Event.Enable(m_LogoCodeControl->CanPaste());
+}
+
 void CWorkspaceEditor::OnDelete(wxCommandEvent& WXUNUSED(event))
 {
     m_LogoCodeControl->Clear();
+}
+
+void CWorkspaceEditor::OnUpdateDelete(wxUpdateUIEvent& Event)
+{
+    Event.Enable(m_LogoCodeControl->IsTextSelected());
 }
 
 void CWorkspaceEditor::OnClear(wxCommandEvent& WXUNUSED(event))
@@ -265,9 +312,21 @@ void CWorkspaceEditor::OnClear(wxCommandEvent& WXUNUSED(event))
     m_LogoCodeControl->Clear();
 }
 
+void CWorkspaceEditor::OnUpdateClear(wxUpdateUIEvent& Event)
+{
+    // Enable if text exists
+    Event.Enable(m_LogoCodeControl->GetLength() != 0);
+}
+
 void CWorkspaceEditor::OnSelectAll(wxCommandEvent& WXUNUSED(event))
 {
     m_LogoCodeControl->SelectAll();
+}
+
+void CWorkspaceEditor::OnUpdateSelectAll(wxUpdateUIEvent& Event)
+{
+    // Enable if text exists
+    Event.Enable(m_LogoCodeControl->GetLength() != 0);
 }
 
 void CWorkspaceEditor::OnFindMatchingParen(wxCommandEvent& WXUNUSED(event))

@@ -13,12 +13,21 @@ public:
     void OnQuit(wxCommandEvent& Event);
 
     void OnUndo(wxCommandEvent& Event);
+    void OnUpdateUndo(wxUpdateUIEvent& Event);
+    void OnRedo(wxCommandEvent& Event);
+    void OnUpdateRedo(wxUpdateUIEvent& Event);
     void OnCut(wxCommandEvent& Event);
+    void OnUpdateCut(wxUpdateUIEvent& Event);
     void OnCopy(wxCommandEvent& Event);
+    void OnUpdateCopy(wxUpdateUIEvent& Event);
     void OnPaste(wxCommandEvent& Event);
+    void OnUpdatePaste(wxUpdateUIEvent& Event);
     void OnDelete(wxCommandEvent& Event);
+    void OnUpdateDelete(wxUpdateUIEvent& Event);
     void OnClear(wxCommandEvent& Event);
+    void OnUpdateClear(wxUpdateUIEvent& Event);
     void OnSelectAll(wxCommandEvent& Event);
+    void OnUpdateSelectAll(wxUpdateUIEvent& Event);
 
     void OnSetFont(wxCommandEvent& Event);
     void OnFindMatchingParen(wxCommandEvent& Event);
