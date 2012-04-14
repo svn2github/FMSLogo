@@ -1,3 +1,4 @@
+#ifndef _WINGDI_H
 
 typedef struct _BLENDFUNCTION
 {
@@ -6,3 +7,5 @@ typedef struct _BLENDFUNCTION
     unsigned char SourceConstantAlpha;
     unsigned char AlphaFormat;
 }BLENDFUNCTION,*PBLENDFUNCTION;
+
+#endif

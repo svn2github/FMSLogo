@@ -3,10 +3,10 @@
 #endif
 
 #include <wx/menu.h>
-#include <wx/richtext/richtextctrl.h>
 #include <wx/fontdlg.h>
 
 #include "workspaceeditor.h"
+#include "logocodectrl.h"
 #include "localizedstrings.h"
 #include "guiutils.h"
 #include "logocore.h" // for ARRAYSIZE
@@ -14,9 +14,13 @@
 #include "fmslogo.h"
 #include "mainframe.h"
 #include "utils.h"
+#include "wrksp.h" // for bExpert
+#include "screenwindow.h" // for TraceOutput
 
-static bool bExpert = false;
-
+enum
+{
+    KEY_CODE_CLOSE_BRACKET = 0xDD,
+};
 
 enum
 {
@@ -40,12 +44,18 @@ enum
     ID_HELPEDIT,
     ID_HELPEDIT_TOPIC,
 
-    ID_RICHTEXTCONTROL,
+    ID_LOGOCODECONTROL,
+
+    ID_FINDMATCHINGPAREN,
+    ID_SELECTMATCHINGPAREN,
 };
 
 BEGIN_EVENT_TABLE(CWorkspaceEditor, wxFrame)
-    EVT_MENU(ID_EDALLEXIT,    CWorkspaceEditor::Quit)
-    EVT_MENU(ID_EDITSETFONT,  CWorkspaceEditor::SetFont)
+    EVT_MENU(ID_EDALLEXIT,           CWorkspaceEditor::OnQuit)
+    EVT_MENU(ID_EDITSETFONT,         CWorkspaceEditor::OnSetFont)
+    EVT_MENU(ID_EDITCUT,             CWorkspaceEditor::OnCut)
+    EVT_MENU(ID_FINDMATCHINGPAREN,   CWorkspaceEditor::OnFindMatchingParen)
+    EVT_MENU(ID_SELECTMATCHINGPAREN, CWorkspaceEditor::OnSelectMatchingParen)
     EVT_CLOSE(CWorkspaceEditor::OnClose)
 END_EVENT_TABLE()
 
@@ -62,7 +72,13 @@ CWorkspaceEditor::CWorkspaceEditor(wxWindow * Parent)
 {
     CreateStatusBar(1);
 
-    m_RichTextControl = new wxRichTextCtrl(this, ID_RICHTEXTCONTROL);
+    m_LogoCodeControl = new CLogoCodeCtrl(this, ID_LOGOCODECONTROL);
+ 
+    // Make sure that the Logo code edit control expands
+    // to fill all available space
+    wxBoxSizer* sizer = new wxBoxSizer(wxVERTICAL);
+    sizer->Add(m_LogoCodeControl, 1, wxEXPAND);
+    SetSizer(sizer);
 
     //
     // Construct the main menu
@@ -110,7 +126,6 @@ CWorkspaceEditor::CWorkspaceEditor(wxWindow * Parent)
         {LOCALIZED_EDITOR_HELP_TOPICSEARCH, ID_HELPEDIT_TOPIC},
     };
 
-
     wxMenuBar * mainMenu = new wxMenuBar;
 
     if (bExpert)
@@ -138,14 +153,33 @@ CWorkspaceEditor::CWorkspaceEditor(wxWindow * Parent)
 
     SetMenuBar(mainMenu);
 
+    // set the font
     wxFont font;
     font.SetFamily(wxFONTFAMILY_TELETYPE);
     GetConfigurationFont("EditFont", font);
+    m_LogoCodeControl->SetFont(font);
 
-    m_RichTextControl->SetFont(font);
+    // HACK: fill with some sample text until we can read
+    // the text from the workspace.
+    m_LogoCodeControl->SetText(
+        "to square\n"
+        "  ;; makes a square\n"
+        "  repeat 4 [ fd 100 rt 90 ]\n"
+        "end\n");
+
+    wxAcceleratorEntry accelleratorEntries[2];
+
+    // Ctrl+] moves to matching paren
+    accelleratorEntries[0].Set(wxACCEL_CTRL, KEY_CODE_CLOSE_BRACKET, ID_FINDMATCHINGPAREN);
+
+    // Ctrl+Shift+] selects to matching paren
+    accelleratorEntries[1].Set(wxACCEL_CTRL | wxACCEL_SHIFT, KEY_CODE_CLOSE_BRACKET, ID_SELECTMATCHINGPAREN);
+
+    wxAcceleratorTable acceleratorTable(ARRAYSIZE(accelleratorEntries), accelleratorEntries);
+    SetAcceleratorTable(acceleratorTable);
 }
 
-void CWorkspaceEditor::SetFont(wxCommandEvent& WXUNUSED(event) )
+void CWorkspaceEditor::OnSetFont(wxCommandEvent& WXUNUSED(event) )
 {
     wxFont font;
 
@@ -162,7 +196,7 @@ void CWorkspaceEditor::SetFont(wxCommandEvent& WXUNUSED(event) )
         font = fontChooser.GetFontData().GetChosenFont();
 
         // use this font in the Rich Edit
-        m_RichTextControl->SetFont(font);
+        m_LogoCodeControl->SetFont(font);
 
         // Set this as the new default font
         SetConfigurationFont("EditFont", font);
@@ -187,10 +221,25 @@ void CWorkspaceEditor::SetFont(wxCommandEvent& WXUNUSED(event) )
 }
 
 // menu command handlers
-void CWorkspaceEditor::Quit(wxCommandEvent& WXUNUSED(event))
+void CWorkspaceEditor::OnQuit(wxCommandEvent& WXUNUSED(event))
 {
     // let the window be destroyed
     Close(true);
+}
+
+void CWorkspaceEditor::OnCut(wxCommandEvent& WXUNUSED(event))
+{
+    m_LogoCodeControl->Cut();
+}
+
+void CWorkspaceEditor::OnFindMatchingParen(wxCommandEvent& WXUNUSED(event))
+{
+    m_LogoCodeControl->FindMatchingParen();
+}
+
+void CWorkspaceEditor::OnSelectMatchingParen(wxCommandEvent& WXUNUSED(event))
+{
+    m_LogoCodeControl->SelectMatchingParen();
 }
 
 void CWorkspaceEditor::OnClose(wxCloseEvent& event)
