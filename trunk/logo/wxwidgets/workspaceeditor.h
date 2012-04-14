@@ -9,7 +9,9 @@ class CWorkspaceEditor: public wxFrame
 public:
     CWorkspaceEditor(wxWindow * Parent);
 
-    // Menu commands
+private:
+
+    // Menu commands event handlers
     void OnQuit(wxCommandEvent& Event);
 
     void OnUndo(wxCommandEvent& Event);
@@ -35,7 +37,7 @@ public:
 
     void OnClose(wxCloseEvent& Event);
 
-private:
+    // member variables
     CLogoCodeCtrl * m_LogoCodeControl;
 
     DECLARE_EVENT_TABLE();
