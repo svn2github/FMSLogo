@@ -53,7 +53,13 @@ enum
 BEGIN_EVENT_TABLE(CWorkspaceEditor, wxFrame)
     EVT_MENU(ID_EDALLEXIT,           CWorkspaceEditor::OnQuit)
     EVT_MENU(ID_EDITSETFONT,         CWorkspaceEditor::OnSetFont)
+    EVT_MENU(ID_EDITUNDO,            CWorkspaceEditor::OnUndo)
     EVT_MENU(ID_EDITCUT,             CWorkspaceEditor::OnCut)
+    EVT_MENU(ID_EDITCOPY,            CWorkspaceEditor::OnCopy)
+    EVT_MENU(ID_EDITPASTE,           CWorkspaceEditor::OnPaste)
+    EVT_MENU(ID_EDITDELETE,          CWorkspaceEditor::OnDelete)
+    EVT_MENU(ID_EDITCLEAR,           CWorkspaceEditor::OnClear)
+    EVT_MENU(ID_EDITSELECTALL,       CWorkspaceEditor::OnSelectAll)
     EVT_MENU(ID_FINDMATCHINGPAREN,   CWorkspaceEditor::OnFindMatchingParen)
     EVT_MENU(ID_SELECTMATCHINGPAREN, CWorkspaceEditor::OnSelectMatchingParen)
     EVT_CLOSE(CWorkspaceEditor::OnClose)
@@ -227,9 +233,41 @@ void CWorkspaceEditor::OnQuit(wxCommandEvent& WXUNUSED(event))
     Close(true);
 }
 
+void CWorkspaceEditor::OnUndo(wxCommandEvent& WXUNUSED(event))
+{
+    m_LogoCodeControl->Undo();
+}
+
 void CWorkspaceEditor::OnCut(wxCommandEvent& WXUNUSED(event))
 {
     m_LogoCodeControl->Cut();
+}
+
+void CWorkspaceEditor::OnCopy(wxCommandEvent& WXUNUSED(event))
+{
+    m_LogoCodeControl->Copy();
+}
+
+void CWorkspaceEditor::OnPaste(wxCommandEvent& WXUNUSED(event))
+{
+    m_LogoCodeControl->Paste();
+}
+
+void CWorkspaceEditor::OnDelete(wxCommandEvent& WXUNUSED(event))
+{
+    m_LogoCodeControl->Clear();
+}
+
+void CWorkspaceEditor::OnClear(wxCommandEvent& WXUNUSED(event))
+{
+    // Delete everything in the editor
+    m_LogoCodeControl->SelectAll();
+    m_LogoCodeControl->Clear();
+}
+
+void CWorkspaceEditor::OnSelectAll(wxCommandEvent& WXUNUSED(event))
+{
+    m_LogoCodeControl->SelectAll();
 }
 
 void CWorkspaceEditor::OnFindMatchingParen(wxCommandEvent& WXUNUSED(event))
