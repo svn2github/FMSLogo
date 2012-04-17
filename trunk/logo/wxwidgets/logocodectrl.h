@@ -1,6 +1,7 @@
 // -*- c++ -*-
 
 #include <wx/stc/stc.h>
+#include <wx/fdrepdlg.h>
 
 class CLogoCodeCtrl : public wxStyledTextCtrl
 {
@@ -16,11 +17,53 @@ public:
     void SelectMatchingParen();
     bool IsTextSelected();
 
+    void
+    Find(
+        wxFindReplaceFlags WxSearchFlags,
+        const wxString &   StringToFind
+        );
+
+    void
+    Replace(
+        wxFindReplaceFlags WxSearchFlags,
+        const wxString &   StringToFind,
+        const wxString &   ReplacementString
+        );
+
+    void
+    ReplaceAll(
+        wxFindReplaceFlags WxSearchFlags,
+        const wxString &   StringToFind,
+        const wxString &   ReplacementString
+        );
+
 private:
 
+    // Event handlers
     void OnUpdateUi(wxStyledTextEvent& event);
 
+
+    // Helper functions
     void ScrollCaret();
+
+    void
+    SetScintillaSearchFlags(
+        wxFindReplaceFlags WxSearchFlags
+        );
+
+    enum SEARCH_OPERATION
+    {
+        SEARCH_OPERATION_FindAndReplace,
+        SEARCH_OPERATION_Find,
+    };
+
+    void
+    DoSearchOperation(
+        SEARCH_OPERATION   SearchOperation,
+        wxFindReplaceFlags WxSearchFlags,
+        const wxString &   StringToFind,
+        const wxString &   ReplacementString
+        );
 
     void
     FindMatchingParen(

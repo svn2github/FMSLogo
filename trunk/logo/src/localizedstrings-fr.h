@@ -1235,6 +1235,10 @@
 #define LOCALIZED_STRINGTABLE_FILEPRINT "Prints the current EDALL session" // NOT_YET_LOCALIZED
 #define LOCALIZED_STRINGTABLE_EDALLEXIT "Closes the EDALL session" // NOT_YET_LOCALIZED
 
+// The title of the Editor's Find/Replace dialog box
+#define LOCALIZED_EDITOR_TITLE_FIND     "Rechercher"
+#define LOCALIZED_EDITOR_TITLE_REPLACE  "Remplacer"
+
 //
 // The text that's displayed when the Editor's Search->Find fails.
 //

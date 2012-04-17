@@ -1235,6 +1235,10 @@
 #define LOCALIZED_STRINGTABLE_FILEPRINT "pseudo.Prints the current workspace"
 #define LOCALIZED_STRINGTABLE_EDALLEXIT "pseudo.Closes the workspace"
 
+// The title of the Editor's Find/Replace dialog box
+#define LOCALIZED_EDITOR_TITLE_FIND     "pseudo.Find"
+#define LOCALIZED_EDITOR_TITLE_REPLACE  "pseudo.Replace" 
+
 //
 // The text that's displayed when the Editor's Search->Find fails.
 //

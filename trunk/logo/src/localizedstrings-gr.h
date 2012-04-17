@@ -1235,6 +1235,10 @@
 #define LOCALIZED_STRINGTABLE_FILEPRINT "Εκτυπώνει τον κώδικα" // 
 #define LOCALIZED_STRINGTABLE_EDALLEXIT "Κλείνει τον επεξεργαστή κώδικα" // 
 
+// The title of the Editor's Find/Replace dialog box
+#define LOCALIZED_EDITOR_TITLE_FIND     "Εύρεση"
+#define LOCALIZED_EDITOR_TITLE_REPLACE  "Αντικατάσταση"
+
 //
 // The text that's displayed when the Editor's Search->Find fails.
 //

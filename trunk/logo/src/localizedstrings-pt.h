@@ -1235,6 +1235,10 @@
 #define LOCALIZED_STRINGTABLE_FILEPRINT "Prints the current workspace" // NOT_YET_LOCALIZED
 #define LOCALIZED_STRINGTABLE_EDALLEXIT "Closes the workspace" // NOT_YET_LOCALIZED
 
+// The title of the Editor's Find/Replace dialog box
+#define LOCALIZED_EDITOR_TITLE_FIND     "Localizar"
+#define LOCALIZED_EDITOR_TITLE_REPLACE  "Substituir"
+
 //
 // The text that's displayed when the Editor's Search->Find fails.
 //

@@ -36,9 +36,9 @@ enum
     ID_EDITDELETE,
     ID_EDITCLEAR,
     ID_EDITSELECTALL,
-    ID_EDITFIND,
-    ID_EDITREPLACE,
-    ID_EDITFINDNEXT,
+    ID_SEARCHFIND,
+    ID_SEARCHREPLACE,
+    ID_SEARCHFINDNEXT,
     ID_EDITSETFONT,
     ID_HELP,
     ID_TEST,
@@ -52,6 +52,7 @@ enum
 };
 
 BEGIN_EVENT_TABLE(CWorkspaceEditor, wxFrame)
+
     EVT_MENU(ID_EDALLEXIT,           CWorkspaceEditor::OnQuit)
     EVT_MENU(ID_EDITSETFONT,         CWorkspaceEditor::OnSetFont)
     EVT_MENU(ID_EDITUNDO,            CWorkspaceEditor::OnUndo)
@@ -70,9 +71,25 @@ BEGIN_EVENT_TABLE(CWorkspaceEditor, wxFrame)
     EVT_UPDATE_UI(ID_EDITCLEAR,      CWorkspaceEditor::OnUpdateClear)
     EVT_MENU(ID_EDITSELECTALL,       CWorkspaceEditor::OnSelectAll)
     EVT_UPDATE_UI(ID_EDITSELECTALL,  CWorkspaceEditor::OnUpdateSelectAll)
+    EVT_MENU(ID_EDITSELECTALL,       CWorkspaceEditor::OnSelectAll)
+    EVT_UPDATE_UI(ID_EDITSELECTALL,  CWorkspaceEditor::OnUpdateSelectAll)
+
+    EVT_MENU(ID_SEARCHFIND,          CWorkspaceEditor::OnFind)
+    EVT_UPDATE_UI(ID_SEARCHFIND,     CWorkspaceEditor::OnUpdateFind)
+    EVT_MENU(ID_SEARCHREPLACE,       CWorkspaceEditor::OnReplace)
+    EVT_UPDATE_UI(ID_SEARCHREPLACE,  CWorkspaceEditor::OnUpdateReplace)
+    EVT_MENU(ID_SEARCHFINDNEXT,      CWorkspaceEditor::OnFindNext)
+    EVT_UPDATE_UI(ID_SEARCHFINDNEXT, CWorkspaceEditor::OnUpdateFindNext)
+
     EVT_MENU(ID_FINDMATCHINGPAREN,   CWorkspaceEditor::OnFindMatchingParen)
     EVT_MENU(ID_SELECTMATCHINGPAREN, CWorkspaceEditor::OnSelectMatchingParen)
     EVT_CLOSE(CWorkspaceEditor::OnClose)
+
+    EVT_FIND(wxID_ANY,             CWorkspaceEditor::OnFindDialog)
+    EVT_FIND_NEXT(wxID_ANY,        CWorkspaceEditor::OnFindDialog)
+    EVT_FIND_REPLACE(wxID_ANY,     CWorkspaceEditor::OnFindDialogReplace)
+    EVT_FIND_REPLACE_ALL(wxID_ANY, CWorkspaceEditor::OnFindDialogReplaceAll)
+    EVT_FIND_CLOSE(wxID_ANY,       CWorkspaceEditor::OnFindDialogClose)
 END_EVENT_TABLE()
 
 
@@ -84,7 +101,9 @@ CWorkspaceEditor::CWorkspaceEditor(wxWindow * Parent)
         LOCALIZED_EDITOR_TITLE,
         wxDefaultPosition, 
         wxSize(420, 300),
-        wxDEFAULT_FRAME_STYLE | wxNO_FULL_REPAINT_ON_RESIZE)
+        wxDEFAULT_FRAME_STYLE | wxNO_FULL_REPAINT_ON_RESIZE),
+      m_LogoCodeControl(NULL),
+      m_FindReplaceDialog(NULL)
 {
     CreateStatusBar(1);
 
@@ -128,9 +147,9 @@ CWorkspaceEditor::CWorkspaceEditor(wxWindow * Parent)
     };
 
     static const MENUITEM searchMenuItems[] = {
-        {LOCALIZED_EDITOR_SEARCH_FIND,    ID_EDITFIND},
-        {LOCALIZED_EDITOR_SEARCH_REPLACE, ID_EDITREPLACE},
-        {LOCALIZED_EDITOR_SEARCH_NEXT,    ID_EDITFINDNEXT},
+        {LOCALIZED_EDITOR_SEARCH_FIND,    ID_SEARCHFIND},
+        {LOCALIZED_EDITOR_SEARCH_REPLACE, ID_SEARCHREPLACE},
+        {LOCALIZED_EDITOR_SEARCH_NEXT,    ID_SEARCHFINDNEXT},
     };
 
     static const MENUITEM setMenuItems[] = {
@@ -185,15 +204,15 @@ CWorkspaceEditor::CWorkspaceEditor(wxWindow * Parent)
         "end\n");
     m_LogoCodeControl->EmptyUndoBuffer();
 
-    wxAcceleratorEntry accelleratorEntries[2];
+    wxAcceleratorEntry acceleratorEntries[2];
 
     // Ctrl+] moves to matching paren
-    accelleratorEntries[0].Set(wxACCEL_CTRL, KEY_CODE_CLOSE_BRACKET, ID_FINDMATCHINGPAREN);
+    acceleratorEntries[0].Set(wxACCEL_CTRL, KEY_CODE_CLOSE_BRACKET, ID_FINDMATCHINGPAREN);
 
     // Ctrl+Shift+] selects to matching paren
-    accelleratorEntries[1].Set(wxACCEL_CTRL | wxACCEL_SHIFT, KEY_CODE_CLOSE_BRACKET, ID_SELECTMATCHINGPAREN);
+    acceleratorEntries[1].Set(wxACCEL_CTRL | wxACCEL_SHIFT, KEY_CODE_CLOSE_BRACKET, ID_SELECTMATCHINGPAREN);
 
-    wxAcceleratorTable acceleratorTable(ARRAYSIZE(accelleratorEntries), accelleratorEntries);
+    wxAcceleratorTable acceleratorTable(ARRAYSIZE(acceleratorEntries), acceleratorEntries);
     SetAcceleratorTable(acceleratorTable);
 }
 
@@ -329,6 +348,95 @@ void CWorkspaceEditor::OnUpdateSelectAll(wxUpdateUIEvent& Event)
     Event.Enable(m_LogoCodeControl->GetLength() != 0);
 }
 
+void CWorkspaceEditor::OnFind(wxCommandEvent& WXUNUSED(event))
+{
+    // Create and show the search dialog box.
+    // Note that this routine should not be callable if the search
+    // dialog box is already created.
+    if (m_FindReplaceDialog == NULL)
+    {
+        m_FindReplaceData.SetFlags(wxFR_DOWN); // default to searching down
+        m_FindReplaceDialog = new wxFindReplaceDialog(
+            this,
+            &m_FindReplaceData,
+            LOCALIZED_EDITOR_TITLE_FIND);
+
+        m_FindReplaceDialog->Show();
+    }
+}
+
+void CWorkspaceEditor::OnUpdateFind(wxUpdateUIEvent& Event)
+{
+    // Once the dialog box is showing, disable selecting it.
+    Event.Enable(m_FindReplaceDialog == NULL);
+}
+
+void CWorkspaceEditor::OnReplace(wxCommandEvent& WXUNUSED(event))
+{
+    // Create and show the search dialog box.
+    // Note that this routine should not be callable if the search
+    // dialog box is already created.
+    if (m_FindReplaceDialog == NULL)
+    {
+        m_FindReplaceData.SetFlags(wxFR_DOWN); // default to searching down
+        m_FindReplaceDialog = new wxFindReplaceDialog(
+            this,
+            &m_FindReplaceData,
+            LOCALIZED_EDITOR_TITLE_REPLACE,
+            wxFR_REPLACEDIALOG);
+
+        m_FindReplaceDialog->Show();
+    }
+}
+
+void CWorkspaceEditor::OnUpdateReplace(wxUpdateUIEvent& Event)
+{
+    // Once the dialog box is showing, disable selecting it.
+    Event.Enable(m_FindReplaceDialog == NULL);
+}
+
+void CWorkspaceEditor::OnFindNext(wxCommandEvent& WXUNUSED(event))
+{
+    m_LogoCodeControl->Find(
+        static_cast<wxFindReplaceFlags>(m_FindReplaceData.GetFlags()),
+        m_FindReplaceData.GetFindString());
+}
+
+void CWorkspaceEditor::OnUpdateFindNext(wxUpdateUIEvent& Event)
+{
+    // Enable the option if we have a string to look for.
+    Event.Enable(!m_FindReplaceData.GetFindString().IsEmpty());
+}
+
+void CWorkspaceEditor::OnFindDialog(wxFindDialogEvent & WXUNUSED(Event))
+{
+    m_LogoCodeControl->Find(
+        static_cast<wxFindReplaceFlags>(m_FindReplaceData.GetFlags()),
+        m_FindReplaceData.GetFindString());
+}
+
+void CWorkspaceEditor::OnFindDialogReplace(wxFindDialogEvent& WXUNUSED(Event))
+{
+    m_LogoCodeControl->Replace(
+        static_cast<wxFindReplaceFlags>(m_FindReplaceData.GetFlags()),
+        m_FindReplaceData.GetFindString(),
+        m_FindReplaceData.GetReplaceString());
+}
+
+void CWorkspaceEditor::OnFindDialogReplaceAll(wxFindDialogEvent& WXUNUSED(Event))
+{
+    m_LogoCodeControl->ReplaceAll(
+        static_cast<wxFindReplaceFlags>(m_FindReplaceData.GetFlags()),
+        m_FindReplaceData.GetFindString(),
+        m_FindReplaceData.GetReplaceString());
+}
+
+void CWorkspaceEditor::OnFindDialogClose(wxFindDialogEvent& WXUNUSED(Event))
+{
+    m_FindReplaceDialog->Destroy();
+    m_FindReplaceDialog = NULL;
+}
+
 void CWorkspaceEditor::OnFindMatchingParen(wxCommandEvent& WXUNUSED(event))
 {
     m_LogoCodeControl->FindMatchingParen();
@@ -339,10 +447,74 @@ void CWorkspaceEditor::OnSelectMatchingParen(wxCommandEvent& WXUNUSED(event))
     m_LogoCodeControl->SelectMatchingParen();
 }
 
-void CWorkspaceEditor::OnClose(wxCloseEvent& event)
+void CWorkspaceEditor::OnClose(wxCloseEvent& Event)
 {
     // remove this window from the set of windows that the main window is tracking
     CFmsLogo::GetMainFrame()->CloseWorkspaceEditor(this);
+
+#if 0
+    if (args_list != NIL || check_for_errors)
+    {
+        error_happen = false;
+
+        int realsave = EndEdit();
+
+        if (error_happen)
+        {
+            // Notify the user that:
+            // 1) The changes in the editor failed to load
+            // 2) The cursor is positioned just after the last 
+            //    successful definition
+            //
+            // Ask if they want to reedit.
+
+            if (MainWindowx->CommandWindow->MessageBox(
+                    LOCALIZED_CURSORISATLASTGOODDEFINITION"\n"
+                    "\n"
+                    LOCALIZED_RETURNTOEDIT,
+                    LOCALIZED_EDITFAILEDTOLOAD,
+                    MB_YESNO | MB_ICONERROR) == IDYES)
+            {
+                // open up another editor
+                MainWindowx->MyPopupEdit(TempPathName, args_list, check_for_errors);
+                unlink(TempPathName);
+                IsDirty = true;
+            }
+            else
+            {
+                error_happen = false;
+                MainWindowx->CommandWindow->Editbox.SetFocus();
+            }
+        }
+        else
+        {
+            // no errors happened
+            if (args_list != NIL)
+            {
+                // check for quit before erasing
+                if (realsave)
+                {
+                    lerase(args_list);
+
+                    // Since we erased we must load again, but no errors
+                    endedit();
+                }
+
+                // free up args_list
+                args_list = reref(args_list, NIL);
+            }
+
+            unlink(TempPathName);
+            MainWindowx->CommandWindow->Editbox.SetFocus();
+        }
+    }
+    else
+    {
+        // else execute callback for user callable editor
+        callthing *callevent = callthing::CreateFunctionEvent(edit_editexit);
+        calllists.insert(callevent);
+    }
+#endif
 
     // Save the location and size of our window so we can
     // come back up in the same spot next time we are invoked.

@@ -211,7 +211,7 @@ void CLogoCodeCtrl::ScrollCaret()
     SendMsg(SCI_SCROLLCARET);
 }
 
-void CLogoCodeCtrl::OnUpdateUi(wxStyledTextEvent& event)
+void CLogoCodeCtrl::OnUpdateUi(wxStyledTextEvent& Event)
 {
     int currentParenPosition;
     int matchingParenPosition;
@@ -242,5 +242,172 @@ void CLogoCodeCtrl::OnUpdateUi(wxStyledTextEvent& event)
         // We're not adacent to a paren, so remove the paren highlighting.
         BraceBadLight(INVALID_POSITION);
         BraceHighlight(INVALID_POSITION, INVALID_POSITION);
+    }
+}
+
+void
+CLogoCodeCtrl::SetScintillaSearchFlags(
+    wxFindReplaceFlags WxSearchFlags
+    )
+{
+    // Map the wxWidgets flags to the Scintilla flags
+    int scintillaSearchFlags = 0;
+    
+    if (WxSearchFlags & wxFR_MATCHCASE)
+    {
+        scintillaSearchFlags |= SCFIND_MATCHCASE;
+    }
+    if (WxSearchFlags & wxFR_WHOLEWORD)
+    {
+        scintillaSearchFlags |= SCFIND_WHOLEWORD;
+    }
+
+    // Set the scintilla search flags.
+    SetSearchFlags(scintillaSearchFlags);
+}
+
+void
+CLogoCodeCtrl::DoSearchOperation(
+    SEARCH_OPERATION   SearchOperation,
+    wxFindReplaceFlags WxSearchFlags,
+    const wxString &   StringToFind,
+    const wxString &   ReplacementString
+    )
+{
+    // Configure Scintilla to search as requested
+    SetScintillaSearchFlags(WxSearchFlags);
+
+    if (SearchOperation == SEARCH_OPERATION_FindAndReplace)
+    {
+        // We are doing a find&replace operation.
+        // If the string to be replaced is currently selected, then replace it.
+        // After the replacement is performed, search for the next occurence.
+        const wxString & selectedText = GetSelectedText();
+
+        // Now figure out what to do with it.
+        int cmp;
+        if (WxSearchFlags & wxFR_MATCHCASE)
+        {
+            // Do a case-sensitive comparison
+            cmp = selectedText.Cmp(StringToFind);
+        }
+        else
+        {
+            // Do a case-insensitive comparison
+            cmp = selectedText.CmpNoCase(StringToFind);
+        }
+
+        if (cmp == 0)
+        {
+            // This is a match.  Replace the string.
+            int selectionStart = GetSelectionStart();
+            int selectionEnd   = GetSelectionEnd();
+
+            // Move the target to the selection
+            SetTargetStart(selectionStart);
+            SetTargetEnd(selectionEnd);
+
+            // Perform the replacement
+            ReplaceTarget(ReplacementString);
+
+            // Update the selection to be what we just inserted.
+            SetSelection(
+                selectionStart,
+                selectionStart + ReplacementString.Length());
+        }
+    }
+
+    // Now search for the next occurance
+    if (WxSearchFlags & wxFR_DOWN)
+    {
+        // We're searching down, so the range goes from the
+        // current position to the end.
+        SetTargetStart(GetSelectionEnd());
+        SetTargetEnd(GetTextLength());
+    }
+    else
+    {
+        // We're searching up, so the range goes from the
+        // current position to the beginning.
+        SetTargetStart(GetSelectionStart());
+        SetTargetEnd(0);
+    }
+
+    // Perform the search.
+    int location = SearchInTarget(StringToFind);
+    if (location != -1)
+    {
+        // Found it.  Select the string.
+        SetSelection(location, location + StringToFind.Length());
+    }
+    else
+    {
+        // Notify the user that we were unable to find it.
+        const wxString & notFoundMessage = wxString::Format(
+            LOCALIZED_STRINGTABLE_CANNOTFINDSTRING,
+            StringToFind.c_str());
+
+        ::wxMessageBox(
+            notFoundMessage,
+            LOCALIZED_GENERAL_PRODUCTNAME,
+            MB_ICONWARNING | MB_OK,
+            this);
+    }
+}
+
+void
+CLogoCodeCtrl::Find(
+    wxFindReplaceFlags WxSearchFlags,
+    const wxString &   StringToFind
+    )
+{
+    DoSearchOperation(
+        SEARCH_OPERATION_Find,
+        WxSearchFlags,
+        StringToFind,
+        wxEmptyString);
+}
+
+void
+CLogoCodeCtrl::Replace(
+    wxFindReplaceFlags WxSearchFlags,
+    const wxString &   StringToFind,
+    const wxString &   ReplacementString
+    )
+{
+    DoSearchOperation(
+        SEARCH_OPERATION_FindAndReplace,
+        WxSearchFlags,
+        StringToFind,
+        ReplacementString);
+}
+
+void
+CLogoCodeCtrl::ReplaceAll(
+    wxFindReplaceFlags WxSearchFlags,
+    const wxString &   StringToFind,
+    const wxString &   ReplacementString
+    )
+{
+    // Configure Scintilla to search as requested
+    SetScintillaSearchFlags(WxSearchFlags);
+
+    // The user selected "Replace All", so the selection
+    // goes from the beginning to the end of the document.
+    SetTargetStart(0);
+    SetTargetEnd(GetTextLength());
+
+    int location = SearchInTarget(StringToFind);
+    while (location != -1)
+    {
+        // Found it. Replace the string
+        ReplaceTarget(ReplacementString);
+
+        // Move the selection so that we can repeat the search
+        SetTargetStart(location + ReplacementString.Length());
+        SetTargetEnd(GetTextLength());
+
+        // Repeat the search
+        location = SearchInTarget(StringToFind);
     }
 }

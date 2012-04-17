@@ -1,6 +1,7 @@
 // -*- c++ -*-
 
-#include "wx/frame.h"
+#include <wx/frame.h>
+#include <wx/fdrepdlg.h>
 
 class CLogoCodeCtrl;
 
@@ -31,14 +32,32 @@ private:
     void OnSelectAll(wxCommandEvent& Event);
     void OnUpdateSelectAll(wxUpdateUIEvent& Event);
 
+    void OnFind(wxCommandEvent& Event);
+    void OnUpdateFind(wxUpdateUIEvent& Event);
+    void OnReplace(wxCommandEvent& Event);
+    void OnUpdateReplace(wxUpdateUIEvent& Event);
+    void OnFindNext(wxCommandEvent& Event);
+    void OnUpdateFindNext(wxUpdateUIEvent& Event);
+
     void OnSetFont(wxCommandEvent& Event);
     void OnFindMatchingParen(wxCommandEvent& Event);
     void OnSelectMatchingParen(wxCommandEvent& Event);
 
+    void OnFindDialog(wxFindDialogEvent& Event);
+    void OnFindDialogNext(wxFindDialogEvent& Event);
+    void OnFindDialogReplace(wxFindDialogEvent& Event);
+    void OnFindDialogReplaceAll(wxFindDialogEvent& Event);
+    void OnFindDialogClose(wxFindDialogEvent& Event);
+
     void OnClose(wxCloseEvent& Event);
 
+    // Helper functions
+    void SetScintillaSearchFlags();
+
     // member variables
-    CLogoCodeCtrl * m_LogoCodeControl;
+    CLogoCodeCtrl       * m_LogoCodeControl;
+    wxFindReplaceDialog * m_FindReplaceDialog;
+    wxFindReplaceData     m_FindReplaceData;
 
     DECLARE_EVENT_TABLE();
     DECLARE_NO_COPY_CLASS(CWorkspaceEditor);
