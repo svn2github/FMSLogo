@@ -1,4 +1,3 @@
-
 #include <wx/menu.h>
 
 #include "guiutils.h"
@@ -42,6 +41,3 @@ AppendChildMenu(
     // append the child menu to the main menu
     MainMenu->Append(childMenu, ChildMenuText);
 }
-
-
-
