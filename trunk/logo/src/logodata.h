@@ -39,6 +39,7 @@ extern char capital(char ch);
 extern char uncapital(char ch);
 extern char *low_strnzcpy(char * dst, const char * src, int len);
 extern char *cap_strnzcpy(char * dst, const char * src, int len);
+extern char * NormalizeCaseForDisplay(char *dst, const char * src, int len);
 extern char *noparitylow_strnzcpy(char * dst, const char * src, int len);
 extern int low_strncmp(const char * s1, const char * s2, int len);
 extern int noparity_strncmp(const char * s1, const char * s2, int len);

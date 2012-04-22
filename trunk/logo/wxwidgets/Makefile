@@ -104,7 +104,6 @@ SPLITTER_OBJECTS =  \
         splitter_commandertogglebutton.o \
         splitter_commanderinput.o \
         splitter_commanderhistory.o \
-        splitter_help.o \
         splitter_selectproceduredialog.o \
         splitter_editproceduredialog.o \
         splitter_eraseproceduredialog.o \
@@ -158,9 +157,9 @@ SPLITTER_OBJECTS =  \
 
 ifeq "$(TOOLKIT)" "MSW"
 SPLITTER_OBJECTS +=  \
-	splitter_debugheap.o \
+        core_debugheap.o \
         splitter_fmslogo_rc.o \
-	$(__splitter___win32rc)
+
 endif
 
 ### Conditionally set variables: ###
@@ -174,7 +173,7 @@ __RCDEFDIR_p_1 = --include-dir \
 
 ### Targets: ###
 
-all: fmslogo$(EXEEXT) $(__splitter_bundle___depname) $(MANUAL)
+all: fmslogo$(EXEEXT) $(MANUAL)
 
 install: all
 
@@ -190,10 +189,7 @@ clean:
 	$(RM) fmslogo$(EXEEXT)
 	$(RM) logohelp.chm
 
-distclean: clean
-	rm -f config.cache config.log config.status bk-deps bk-make-pch shared-ld-sh Makefile
-
-fmslogo$(EXEEXT): $(SPLITTER_OBJECTS) $(__splitter___win32rc)
+fmslogo$(EXEEXT): $(SPLITTER_OBJECTS)
 	$(CXX) -o $@ $(SPLITTER_OBJECTS) $(LDFLAGS) -L$(LIBDIRNAME) $(LIBS) $(EXTRALIBS)
 
 splitter_%.o: $(srcdir)/%.cpp
@@ -227,4 +223,5 @@ logohelp.chm : ../manual/logohelp-1033.chm
 # Include dependency info, if present:
 -include .deps/*.d
 
-.PHONY: all install uninstall clean distclean splitter_bundle
+.PHONY: all install uninstall clean
+

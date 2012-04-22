@@ -18,7 +18,6 @@
 #include "mainframe.h"
 #include "graphwin.h"
 #include "wrksp.h"
-#include "help.h"
 #include "main.h"
 #include "startup.h"
 #include "utils.h"
@@ -31,13 +30,6 @@
 
 #include "screen.h"
 #include "commander.h"
-
-wxFileName * g_LibPathName;     // path to library
-wxFileName * g_TempPathName;    // path to temp edit file
-wxFileName * g_TempBmpName;     // path to temp bitmap file
-wxFileName * g_TempClipName;    // path to temp clipboard file
-wxFileName * g_HelpFileName;    // path to help file
-wxFileName * g_MciHelpFileName; // path to MCI help file
 
 // global variables declared in main.h
 int  GCMAX        = 8192;
@@ -62,33 +54,6 @@ static DWORD           g_OriginalUserObjects = 0;
 static HANDLE          g_Fmslogo             = NULL;
 static HMODULE         g_User32              = NULL;
 #endif // MEM_DEBUG
-
-
-
-////////////////////////////////////////////////////////////////////
-// Helper Functions
-
-// Creates a unique filename relative to TempPath
-static
-void ConcatenatePath(char *OutBuffer, const char * BasePath, const char * FileName)
-{
-    // the first part of the new filename is BasePath
-    char * ptr       = OutBuffer;
-    const char * src = BasePath;
-    while (*src != '\0')
-    {
-        *ptr++ = *src++;
-    }
-
-    // make sure that the path ends in a directory delimiter
-    if (*ptr != '\\')
-    {
-        *ptr++ = '\\';
-    }
-   
-    // append FileName
-    strcpy(ptr, FileName);
-}
 
 
 ////////////////////////////////////////////////////////////////////
@@ -248,6 +213,12 @@ bool CFmsLogo::OnInit()
     DisableDataExecutionProtection();
 
     // Figure out the path that contains fmslogo.exe
+    //
+    // TODO: Once wxWidgets becomes the main logo project,
+    // we will be able to assume that Logolib is in whatever
+    // directory holds fmslogo.
+    // In the meantime, we use the path that holds the 
+    // latest installed version.
     HKEY fmslogoKey;
     LONG result;
     result = RegOpenKeyEx(
@@ -285,6 +256,29 @@ bool CFmsLogo::OnInit()
 
         RegCloseKey(fmslogoKey);
     }
+    else
+    {
+        // FMSLogo was not installed through the normal means.
+        // Figure out the path that contains fmslogo.exe.
+        DWORD nFileNameLength = ::GetModuleFileName(
+            GetModuleHandle(NULL),
+            g_FmslogoBaseDirectory,
+            ARRAYSIZE(g_FmslogoBaseDirectory));
+
+        // start at the end of the full path of fmslogo.exe and walk
+        // backwards in the string until we find the final directory delimiter
+        for (char * charPtr = g_FmslogoBaseDirectory + nFileNameLength;
+             charPtr > g_FmslogoBaseDirectory;
+             charPtr--)
+        {
+            if (*charPtr == '\\')
+            {
+                // found the last backslash
+                break;
+            }
+            *charPtr = '\0';
+        }
+    }
 
     //_control87(EM_OVERFLOW,  EM_OVERFLOW);
     //_control87(EM_UNDERFLOW, EM_UNDERFLOW);
@@ -297,7 +291,7 @@ bool CFmsLogo::OnInit()
         NULL,  // default security attributes
         FALSE, // no initial owner
         "LogoForWindowsMutex");
-      
+
     // Get garbage collector stack size from the configuration settings
     GCMAX = GetConfigurationInt("GCStackSize", 8192);
 
@@ -397,88 +391,6 @@ bool CFmsLogo::OnInit()
     frame->GetScreen()->SetSize(x, y, w, h);
     frame->Show(true);
 
-    //
-    // initialize paths to library and help files based on location of executable
-    //
-
-    // get the path name of fmslogo.exe
-    wxString programFileNamePath;
-    wxString programFileNameVolume;
-
-    wxFileName::SplitPath(
-#ifdef __WXMSW__
-        wxGetFullModuleName(),
-#else
-        "", // TODO: figure out how to do this on GNU/Linux
-#endif
-        &programFileNameVolume,
-        &programFileNamePath,
-        NULL, // don't need the name
-        NULL, // don't need the extension
-        wxPATH_NATIVE);
-
-    g_LibPathName = new wxFileName(
-        programFileNameVolume,
-        programFileNamePath + "logolib\\",
-        "",
-        "");
-
-    g_HelpFileName = new wxFileName(
-        programFileNameVolume,
-        programFileNamePath,
-        "logohelp",
-        "chm");
-
-    g_MciHelpFileName = new wxFileName(
-        programFileNameVolume,
-        programFileNamePath,
-        "mcistrwh",
-        "hlp");
-
-#if 0
-    DWORD tempPathLength;
-    char  tempPath[MAX_PATH];
-    bool  tempPathIsValid = false;
-
-    tempPathLength = GetTempPath(
-        sizeof tempPath,
-        tempPath);
-    if (tempPathLength != 0)
-    {
-        DWORD tempPathAttributes = GetFileAttributes(tempPath);
-        if (tempPathAttributes != 0xFFFFFFFF)
-        {
-            // tempPath must be a directory that we can write to
-            if ( (tempPathAttributes & FILE_ATTRIBUTE_DIRECTORY) &&
-                 !(tempPathAttributes & FILE_ATTRIBUTE_READONLY))
-            {
-                tempPathIsValid = true;
-            }
-        }
-    }
-
-    if (!tempPathIsValid)
-    {
-        // warn the user that no TMP variable was defined.
-        MessageBox(
-            0,
-            LOCALIZED_ERROR_TMPNOTDEFINED,
-            LOCALIZED_WARNING,
-            MB_OK);
-
-        strcpy(tempPath, "C:");
-    }
-
-    // construct the name of the temporary editor file
-    ConcatenatePath(TempPathName, tempPath, "mswlogo.tmp");
-
-    // construct the name of the temporary bitmap file
-    ConcatenatePath(TempBmpName, tempPath, "mswlogo.bmp");
-
-    // construct the name of the clipboard file
-    ConcatenatePath(TempClipName, tempPath, "mswlogo.clp");
-#endif
-
     return rval;
 }
 
@@ -543,14 +455,8 @@ int CFmsLogo::OnExit()
     }
 #endif // MEM_DEBUG
 
-    delete g_LibPathName;
-    delete g_TempPathName;
-    delete g_TempBmpName;
-    delete g_TempClipName;
-    delete g_HelpFileName;
-    delete g_MciHelpFileName;
 
-    HelpUninitialize();
+    HtmlHelpUninitialize();
 
     return wxApp::OnExit();
 }

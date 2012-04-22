@@ -41,7 +41,6 @@
 #include "utils.h"
 #include "statusdialog.h"
 #include "screen.h"
-#include "help.h"
 #include "editproceduredialog.h"
 #include "eraseproceduredialog.h"
 #include "minieditor.h"
@@ -751,7 +750,7 @@ void CMainFrame::ZoomNormal(wxCommandEvent& WXUNUSED(event) )
 
 void CMainFrame::Help(wxCommandEvent& WXUNUSED(event) )
 {
-    OpenHelp(wxEmptyString);
+    do_help(NULL);
 }
 
 void CMainFrame::Examples(wxCommandEvent& WXUNUSED(Event))

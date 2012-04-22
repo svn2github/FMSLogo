@@ -3,9 +3,9 @@
 #include <wx/settings.h>
 #include <wx/button.h>
 
-#include "help.h"
 #include "commander.h"
 #include "commanderinput.h"
+#include "graphwin.h" // for do_help
 
 CCommanderHistory::CCommanderHistory(
     CCommander *    Parent, 
@@ -177,7 +177,7 @@ void CCommanderHistory::OnKeyDown(wxKeyEvent& Event)
     else if (Event.GetModifiers() == wxMOD_NONE && keyCode == WXK_F1)
     {
         // F1 displays the help
-        OpenHelp(GetStringSelection());
+        do_help(GetStringSelection().c_str());
     }
     else if (keyCode == WXK_PAGEUP || keyCode == WXK_NUMPAD_PAGEUP)
     {
