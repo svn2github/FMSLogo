@@ -114,21 +114,30 @@ debug_report_leaks(void)
     if (g_allocated_blocks.next != &g_allocated_blocks)
     {
         // clear these flags so that real_print_node doesn't crash
-        IsTimeToHalt = false;
+        IsTimeToHalt  = false;
         IsTimeToPause = false;
 
         // the list is not empty
         TraceOutput("Memory Leaks detected!\n");
 
-        // dump each memory block
+        // count the number of leaked memory blocks
         long total_blocks_leaked = 0;
         long total_bytes_leaked  = 0;
+        long total_nodes_leaked  = 0;
         for (struct memory_header_t * current_block = g_allocated_blocks.next; 
              current_block != &g_allocated_blocks;
              current_block = current_block->next)
         {
             total_bytes_leaked += current_block->blocksize;
             total_blocks_leaked++;
+
+            void * userptr = debug_header_to_userptr(current_block);
+
+            if (current_block->blocksize == sizeof(NODE) &&
+                0 == memcmp(userptr, "NODE", 4))
+            {
+                total_nodes_leaked++;
+            }
         }
 
         TraceOutput(
@@ -136,7 +145,7 @@ debug_report_leaks(void)
             total_bytes_leaked,
             total_blocks_leaked);
 
-        // dump each memory block
+        // dump each leaked memory block
         for (struct memory_header_t * current_block = g_allocated_blocks.next; 
              current_block != &g_allocated_blocks;
              current_block = current_block->next)
@@ -190,35 +199,38 @@ debug_report_leaks(void)
 
             TraceOutput("\n");
         }
-    }
 
-    TraceOutput("\n");
-    TraceOutput("Dumping leaked NODEs\n");
-    for (struct memory_header_t * current_block = g_allocated_blocks.next; 
-         current_block != &g_allocated_blocks;
-         current_block = current_block->next)
-    {
-        void * userptr = debug_header_to_userptr(current_block);
-
-        if (current_block->blocksize == sizeof(NODE) &&
-            0 == memcmp(userptr, "NODE", 4))
+        if (total_nodes_leaked != 0)
         {
-            NODE * current_node = static_cast<NODE*>(userptr);
+            TraceOutput("\n");
+            TraceOutput("Dumping leaked NODEs\n");
+            for (struct memory_header_t * current_block = g_allocated_blocks.next;
+                 current_block != &g_allocated_blocks;
+                 current_block = current_block->next)
+            {
+                void * userptr = debug_header_to_userptr(current_block);
 
-            TraceOutput(
-                "(id=%8lu) at 0x%X %s ref=%d:\n  ",
-                current_block->id,
-                current_node,
-                debug_typename_to_string(current_node),
-                getrefcnt(current_node));
+                if (current_block->blocksize == sizeof(NODE) &&
+                    0 == memcmp(userptr, "NODE", 4))
+                {
+                    NODE * current_node = static_cast<NODE*>(userptr);
 
-            real_print_node(
-                stderr,
-                static_cast<NODE*>(userptr),
-                -1,
-                -1);
+                    TraceOutput(
+                        "(id=%8lu) at 0x%X %s ref=%d:\n  ",
+                        current_block->id,
+                        current_node,
+                        debug_typename_to_string(current_node),
+                        getrefcnt(current_node));
 
-            TraceOutput("\n\n");
+                    real_print_node(
+                        stderr,
+                        static_cast<NODE*>(userptr),
+                        -1,
+                        -1);
+
+                    TraceOutput("\n\n");
+                }
+            }
         }
     }
 }
