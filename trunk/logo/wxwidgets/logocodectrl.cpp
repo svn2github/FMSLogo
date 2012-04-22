@@ -1,10 +1,15 @@
+#include <wx/msw/private.h> // for wxGetInstance()
+#include <wx/gdicmn.h>      // for wxPoint
+#include <wx/printdlg.h>
+
 #include "logocodectrl.h"
 #include "localizedstrings.h"
 #include "logocore.h"  // for ARRAYSIZE
 #include "screenwindow.h"  // for TraceOutput
 
-#include "scintilla/include/SciLexer.h"
+#include "scintilla/include/Platform.h"
 #include "scintilla/include/Scintilla.h"
+#include "scintilla/include/SciLexer.h"
 
 BEGIN_EVENT_TABLE(CLogoCodeCtrl, wxStyledTextCtrl)
     EVT_STC_UPDATEUI(wxID_ANY, CLogoCodeCtrl::OnUpdateUi)
@@ -410,4 +415,234 @@ CLogoCodeCtrl::ReplaceAll(
         // Repeat the search
         location = SearchInTarget(StringToFind);
     }
+}
+
+
+CLogoCodeCtrl::CLogoCodePrintout::CLogoCodePrintout(
+    const wxString        & Title,
+    wxStyledTextCtrl      & EditControl,
+    wxPageSetupDialogData & PageSetup
+    ) :
+    wxPrintout(Title),
+    m_EditControl(EditControl),
+    m_PageSetup(PageSetup),
+    m_NextPrintStartPosition(0)
+{
+}
+
+void CLogoCodeCtrl::CLogoCodePrintout::ScaleForPrinting(wxDC * DeviceContext)
+{
+    // get printer and screen sizing values
+    wxSize ppiScr;
+    GetPPIScreen(&ppiScr.x, &ppiScr.y);
+    if (ppiScr.x == 0)  // most possible guess 96 dpi
+    {	ppiScr.x = 96;
+        ppiScr.y = 96;
+    }
+
+    wxSize ppiPrt;
+    GetPPIPrinter (&ppiPrt.x, &ppiPrt.y);
+    if (ppiPrt.x == 0)  // scaling factor to 1
+    {	ppiPrt.x = ppiScr.x;
+        ppiPrt.y = ppiScr.y;
+    }
+    wxSize dcSize = DeviceContext->GetSize();
+    wxSize pageSize;
+    GetPageSizePixels(&pageSize.x, &pageSize.y);
+
+    // set user scale
+    float scale_x = 
+        (float)(ppiPrt.x * dcSize.x) /
+        (float)(ppiScr.x * pageSize.x);
+    float scale_y = 
+        (float)(ppiPrt.y * dcSize.y) /
+        (float)(ppiScr.y * pageSize.y);
+    DeviceContext->SetUserScale(scale_x, scale_y);
+}
+
+bool CLogoCodeCtrl::CLogoCodePrintout::OnPrintPage(int page)
+{
+    wxDC * dc = GetDC();
+    if (dc == NULL)
+    {
+        return false;
+    }
+
+    // Scale the DC
+    ScaleForPrinting(dc);
+
+    // If we're starting from page 1, then set the
+    // position back to the beginning.
+    // BUG: This assumes that the user always starts
+    // printing from page 1.
+    if (page == 1) 
+    {
+        m_NextPrintStartPosition = 0; // start at the beginning
+    }
+
+    int nextStartPosition = m_EditControl.FormatRange(
+        true,                          // print
+        m_NextPrintStartPosition,      // start position
+        m_EditControl.GetTextLength(), // end position
+        dc,
+        dc,
+        m_RenderRectangle,
+        m_PageRectangle);
+
+    if (nextStartPosition <= m_NextPrintStartPosition)
+    {
+        // There was no forward progress made when printing.
+        // Something is wrong.  This should not happen in
+        // practice, but if it does, we should return an error
+        // rather than risk going into an infinite loop.
+        assert(!"No progress made when printing.");
+        return false;
+    }
+
+    m_NextPrintStartPosition = nextStartPosition;
+    return true;
+}
+
+bool
+CLogoCodeCtrl::CLogoCodePrintout::OnBeginDocument(
+    int startPage,
+    int endPage
+    )
+{
+    if (!wxPrintout::OnBeginDocument(startPage, endPage))
+    {
+        return false;
+    }
+
+    // TODO: Compute page-to-offset mapping so that we
+    // always know how to print each page, instead of
+    // assuming that all pages are printed.
+    // See the comment in CLogoCodeCtrl::Print().
+    return true;
+}
+
+void
+CLogoCodeCtrl::CLogoCodePrintout::GetPageInfo(
+    int *minPage,
+    int *maxPage,
+    int *selPageFrom,
+    int *selPageTo
+    )
+{
+    // initialize values
+    *minPage = 0;
+    *maxPage = 0;
+
+    *selPageFrom = 0;
+    *selPageTo   = 0;
+
+    wxDC *dc = GetDC();
+    if (dc == NULL) 
+    {
+        return;
+    }
+
+    // Scale DC if possible
+    ScaleForPrinting(dc);
+
+    // get printer and screen sizing values
+    m_RenderRectangle = GetLogicalPageRect();
+    m_PageRectangle   = GetLogicalPageMarginsRect(m_PageSetup);
+
+    // Now that the page and render rectangles are set to a single page,
+    // we can count all the pages by asking Scintilla to "print" all
+    // pages consecutively (without actually printing anything).
+    while (HasPage(*maxPage))
+    {
+        int nextStartPosition = m_EditControl.FormatRange(
+            false,                         // don't really print
+            m_NextPrintStartPosition,      // start position
+            m_EditControl.GetTextLength(), // end position
+            dc,
+            dc,
+            m_RenderRectangle,
+            m_PageRectangle);
+
+        if (nextStartPosition <= m_NextPrintStartPosition)
+        {
+            // There was no forward progress made when printing.
+            // Something is wrong.  This should not happen in
+            // practice, but if it does, we should return an error
+            // rather than risk going into an infinite loop.
+            assert(!"No progress made when printing.");
+            return;
+        }
+
+        m_NextPrintStartPosition = nextStartPosition;
+        *maxPage += 1;
+    }
+
+    // Reset the state that has been printed
+    m_NextPrintStartPosition = 0;
+    if (*maxPage > 0) 
+    {
+        *minPage = 1;
+    }
+    *selPageFrom = *minPage;
+    *selPageTo   = *maxPage;
+}
+
+bool CLogoCodeCtrl::CLogoCodePrintout::HasPage(int pageNum)
+{
+    return m_NextPrintStartPosition < m_EditControl.GetTextLength();
+}
+
+
+// Prints the contents of the editor.
+void CLogoCodeCtrl::Print()
+{
+    // Note: printData and pageSetupData are normally global variables
+    // that preserve printer preferences across printouts.  Since
+    // FMSLogo's editor doesn't support advanced printer options,
+    // we just create new variables each time.
+    wxPrintData       printData;
+    wxPrintDialogData printDialogData(printData);
+
+    // Disable the selection of page numbers to shield the user
+    // from a bug in CLogoCodePrintout where it assumes that
+    // the user always prints from page 1.  This could be fixed
+    // by creating a page-to-offset mapping in the OnBeginDocument
+    // handler, then using that instead of letting Scintilla do the
+    // calculation in iterative calls to FormatRange() in OnPrint().
+    printDialogData.EnablePageNumbers(false);
+
+    // Show the printer selection dialog box.
+    wxPrinter printer(&printDialogData);
+
+    // Read the default page settings.
+    // On Windows, even though we call ShowModal, no
+    // dialog box is displayed because we set the
+    // default info to true.
+    wxPageSetupDialogData pageSetupData;
+    pageSetupData.SetDefaultInfo(true);
+    wxPageSetupDialog pageSetup(this, &pageSetupData);
+    pageSetup.ShowModal();
+
+    CLogoCodePrintout printout(
+        LOCALIZED_GENERAL_PRODUCTNAME,
+        *this,
+        pageSetupData);
+
+    if (!printer.Print(this, &printout, true))
+    {
+        // This can happen in two cases:
+        // 1) If there was an error while printing, in which
+        //    case the operating system will have communicated
+        //    the problem to the user, so we don't need to.
+        // 2) If the print job was cancelled by the user,
+        //    in which case we don't need to tell the user
+        //    that they cancelled the job.
+        //
+        // Therefore, all we need to do is exit.
+        return;
+    }
+
+    // If we preserved the global settings, we'd update the
+    // printing preferences here.
+    //printData = printer.GetPrintDialogData().GetPrintData();
 }

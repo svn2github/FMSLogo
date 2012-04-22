@@ -61,7 +61,7 @@ endif
 CPPFLAGS += -DLOCALE=1033 -D_FILE_OFFSET_BITS=64 -D_LARGE_FILES -I$(wx_top_builddir)/lib/wx/include/$(TOOLCHAIN_FULLNAME) -I$(wx_top_builddir)/include -I$(wx_top_builddir)/contrib/include -I../src 
 CXXFLAGS += -Wall -Wundef -Wno-ctor-dtor-privacy  -fno-strict-aliasing
 CXXFLAGS += -DFMSLOGO_SCREENSAVER -DNOASM
-CXXFLAGS += -DPLAT_WIN -DSCI_LEXER -DLCCWIN=0 # used by Scintilla.h
+CXXFLAGS += -DSCI_LEXER -DLCCWIN=0 # used by Scintilla.h
 CXXFLAGS += -I"C:\Program Files\HTML Help Workshop\include"
 
 prefix = /usr/local
@@ -185,6 +185,8 @@ install-strip: install
 clean: 
 	rm -rf ./.deps ./.pch
 	$(RM) ./*.o
+	$(RM) ./*.bak
+	$(RM) ./*~
 	$(RM) fmslogo$(EXEEXT)
 	$(RM) logohelp.chm
 

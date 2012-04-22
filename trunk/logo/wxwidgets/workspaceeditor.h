@@ -14,6 +14,7 @@ private:
 
     // Menu commands event handlers
     void OnQuit(wxCommandEvent& Event);
+    void OnPrint(wxCommandEvent& Event);
 
     void OnUndo(wxCommandEvent& Event);
     void OnUpdateUndo(wxUpdateUIEvent& Event);

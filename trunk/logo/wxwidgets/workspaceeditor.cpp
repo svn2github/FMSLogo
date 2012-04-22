@@ -26,7 +26,7 @@ enum
 {
     ID_FILESAVEANDEXIT = wxID_HIGHEST,
     ID_FILEPRINT,
-    ID_EDALLEXIT,
+    ID_FILEEXIT,
     ID_FILESAVETOWORKSPACE,
     ID_EDITUNDO,
     ID_EDITREDO,
@@ -53,8 +53,13 @@ enum
 
 BEGIN_EVENT_TABLE(CWorkspaceEditor, wxFrame)
 
-    EVT_MENU(ID_EDALLEXIT,           CWorkspaceEditor::OnQuit)
-    EVT_MENU(ID_EDITSETFONT,         CWorkspaceEditor::OnSetFont)
+    EVT_MENU(ID_FILEEXIT,            CWorkspaceEditor::OnQuit)
+    EVT_MENU(ID_FILEPRINT,           CWorkspaceEditor::OnPrint)
+
+
+    EVT_MENU(ID_EDITUNDO,            CWorkspaceEditor::OnUndo)
+    EVT_UPDATE_UI(ID_EDITUNDO,       CWorkspaceEditor::OnUpdateUndo)
+
     EVT_MENU(ID_EDITUNDO,            CWorkspaceEditor::OnUndo)
     EVT_UPDATE_UI(ID_EDITUNDO,       CWorkspaceEditor::OnUpdateUndo)
     EVT_MENU(ID_EDITREDO,            CWorkspaceEditor::OnRedo)
@@ -80,6 +85,8 @@ BEGIN_EVENT_TABLE(CWorkspaceEditor, wxFrame)
     EVT_UPDATE_UI(ID_SEARCHREPLACE,  CWorkspaceEditor::OnUpdateReplace)
     EVT_MENU(ID_SEARCHFINDNEXT,      CWorkspaceEditor::OnFindNext)
     EVT_UPDATE_UI(ID_SEARCHFINDNEXT, CWorkspaceEditor::OnUpdateFindNext)
+
+    EVT_MENU(ID_EDITSETFONT,         CWorkspaceEditor::OnSetFont)
 
     EVT_MENU(ID_FINDMATCHINGPAREN,   CWorkspaceEditor::OnFindMatchingParen)
     EVT_MENU(ID_SELECTMATCHINGPAREN, CWorkspaceEditor::OnSelectMatchingParen)
@@ -122,7 +129,7 @@ CWorkspaceEditor::CWorkspaceEditor(wxWindow * Parent)
         {LOCALIZED_EDITOR_FILE_SAVEANDEXIT,     ID_FILESAVEANDEXIT},
         {LOCALIZED_EDITOR_FILE_PRINT,           ID_FILEPRINT},
         {0},
-        {LOCALIZED_EDITOR_FILE_EXIT,            ID_EDALLEXIT},
+        {LOCALIZED_EDITOR_FILE_EXIT,            ID_FILEEXIT},
     };
 
     static const MENUITEM expertFileMenuItems[] = {
@@ -130,7 +137,7 @@ CWorkspaceEditor::CWorkspaceEditor(wxWindow * Parent)
         {LOCALIZED_EDITOR_FILE_SAVETOWORKSPACE, ID_FILESAVETOWORKSPACE},
         {LOCALIZED_EDITOR_FILE_PRINT,           ID_FILEPRINT},
         {0},
-        {LOCALIZED_EDITOR_FILE_EXIT,            ID_EDALLEXIT},
+        {LOCALIZED_EDITOR_FILE_EXIT,            ID_FILEEXIT},
     };
 
     static const MENUITEM editMenuItems[] = {
@@ -262,6 +269,12 @@ void CWorkspaceEditor::OnQuit(wxCommandEvent& WXUNUSED(event))
 {
     // let the window be destroyed
     Close(true);
+}
+
+// Prints the contents of the editor
+void CWorkspaceEditor::OnPrint(wxCommandEvent& WXUNUSED(event))
+{
+    m_LogoCodeControl->Print();
 }
 
 void CWorkspaceEditor::OnUndo(wxCommandEvent& WXUNUSED(event))
