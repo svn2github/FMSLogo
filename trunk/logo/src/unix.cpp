@@ -24,17 +24,6 @@
 #ifdef __GNUC__
 #include <unistd.h>
 #include <sys/stat.h>
-
-#ifdef __WXMSW__
-// The wxWidgets project links to a POSIX-compliant mkdir, so we must
-// translate our call into a POSIX-compliant form.
-static int mkdir(const char * dirname)
-{
-    return mkdir(dirname, S_IRWXU);
-}
-
-#endif
-
 #else
 #include <direct.h>
 #endif
