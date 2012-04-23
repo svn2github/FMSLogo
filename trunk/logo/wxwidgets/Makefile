@@ -47,12 +47,14 @@ LDFLAGS  = -lwx_msw-2.8 -lwx_msw_stc-2.8
 TOOLCHAIN_FULLNAME = msw-ansi-release-static-2.8
 endif
 
-LDFLAGS += -mwindows
+TARGET_PREFIX=i686-pc-mingw32-
+
+LDFLAGS  += -mwindows 
 
 TOOLKIT = MSW
 TOOLKIT_LOWERCASE = msw
 TOOLKIT_VERSION = 
-EXTRALIBS = -lz -lrpcrt4 -loleaut32 -lole32 -luuid -lwinspool -lwinmm -lshell32 -lcomctl32 -lcomdlg32 -lctl3d32 -ladvapi32 -lwsock32 -lgdi32 -lkernel32 -luser32 -limm32 
+EXTRALIBS = -lrpcrt4 -loleaut32 -lole32 -luuid -lwinspool -lwinmm -lshell32 -lcomctl32 -lcomdlg32 -lctl3d32 -ladvapi32 -lwsock32 -lgdi32 -lkernel32 -luser32 -limm32 -static-libgcc -static-libstdc++
 
 MANUAL = logohelp.chm
 
@@ -64,6 +66,8 @@ CXXFLAGS += -DFMSLOGO_SCREENSAVER -DNOASM
 CXXFLAGS += -DSCI_LEXER -DLCCWIN=0 # used by Scintilla.h
 CXXFLAGS += -I"C:\Program Files\HTML Help Workshop\include"
 
+
+
 prefix = /usr/local
 exec_prefix = ${prefix}
 INSTALL = /usr/bin/install -c
@@ -72,8 +76,8 @@ SETFILE =
 #BK_DEPS = $(wx_top_builddir)/bk-deps
 NM = nm
 srcdir = .
-LIBS = -lz -ldl -lm
-CXX = g++
+LIBS = -lm
+CXX = $(TARGET_PREFIX)g++
 HOST_SUFFIX = 
 
 ### Variables: ###
