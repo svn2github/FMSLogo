@@ -9,14 +9,15 @@ Install Borland's Turbo Assembler 4.1.  Add TASM32.EXE to the PATH.
 If you skip this step, you will still be able to build the debug
 version of FMSLogo.
 
-Install cygwin (from http://cygnus.org/) to c:\cygwin, including all of the 
-following optional packages:
+Install cygwin 1.7 (from http://cygnus.org/) to c:\cygwin.  Install all of the
+following packages (and their dependencies):
 - zip
 - make
-- docbook-xsl
-- docbook-xml412
-- docbook-xml42
+- docbook-xml45 
+- docbook-utils
 - libxslt
+- gcc-g++
+- mingw-gcc-g++
 
 Add c:\cygwin\bin to the PATH.
 
@@ -37,8 +38,7 @@ Install the Nullsoft Scriptable Installation System (NSIS) to C:\Program Files\N
 You can download this from http://sourceforge.net/projects/nsis.
 This is needed to build the self-extracting installer executable.
 
-Install MinGW C:\MinGW and put C:\MingGW\bin in the PATH before c:\cygwin\bin.
-This is needed to build the FMSLogo screen saver.
+Install MinGW C:\MinGW.  This is needed to build the FMSLogo screen saver.
 
 Once these steps are complete, you can build the entire FMSLogo package by running
 "gmake binaryexe" in the current directory.
