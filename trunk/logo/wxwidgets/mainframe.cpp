@@ -82,22 +82,22 @@ static wxFont g_LabelFont(18, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWE
 // our classes
 // ----------------------------------------------------------------------------
 
-class MySplitterWindow : public wxSplitterWindow
+class MainSplitterWindow : public wxSplitterWindow
 {
 public:
-    MySplitterWindow(wxFrame *parent);
-
-    // event handlers
-    void OnPositionChanged(wxSplitterEvent& event);
-    void OnPositionChanging(wxSplitterEvent& event);
-    void OnDClick(wxSplitterEvent& event);
-    void OnUnsplitEvent(wxSplitterEvent& event);
+    MainSplitterWindow(wxFrame *Parent);
 
 private:
+    // event handlers
+    void OnPositionChanged(wxSplitterEvent& Event);
+    void OnPositionChanging(wxSplitterEvent& Event);
+    void OnDClick(wxSplitterEvent& Event);
+    void OnUnsplitEvent(wxSplitterEvent& Event);
+
     wxFrame *m_frame;
 
     DECLARE_EVENT_TABLE()
-    DECLARE_NO_COPY_CLASS(MySplitterWindow)
+    DECLARE_NO_COPY_CLASS(MainSplitterWindow)
 };
 
 // ----------------------------------------------------------------------------
@@ -157,22 +157,22 @@ enum MainFrameMenuIds
 };
 
 BEGIN_EVENT_TABLE(CMainFrame, wxFrame)
-    EVT_MENU(ID_FILEEDIT,           CMainFrame::EditProcedure)
-    EVT_MENU(ID_FILEERASE,          CMainFrame::EraseProcedure)
-    EVT_MENU(ID_SETPENSIZE,         CMainFrame::SetPenSize)
-    EVT_MENU(ID_BITMAPPRINTERAREA,  CMainFrame::SetActiveArea)
-    EVT_MENU(ID_SETLABELFONT,       CMainFrame::SetLabelFont)
-    EVT_MENU(ID_SETPENCOLOR,        CMainFrame::SetPenColor)
-    EVT_MENU(ID_SETSCREENCOLOR,     CMainFrame::SetScreenColor)
-    EVT_MENU(ID_SETFLOODCOLOR,      CMainFrame::SetFloodColor)
-    EVT_MENU(ID_HELP,               CMainFrame::Help)
-    EVT_MENU(ID_HELPEXAMPLES,       CMainFrame::Examples)
-    EVT_MENU(ID_HELPABOUT,          CMainFrame::AboutFmsLogo)
-    EVT_MENU(ID_HELPABOUTMS,        CMainFrame::AboutMultipleSclerosis)
-    EVT_MENU(ID_ZOOMIN,             CMainFrame::ZoomIn)
-    EVT_MENU(ID_ZOOMOUT,            CMainFrame::ZoomOut)
-    EVT_MENU(ID_ZOOMNORMAL,         CMainFrame::ZoomNormal)
-    EVT_MENU(ID_EXIT,               CMainFrame::Quit)
+    EVT_MENU(ID_FILEEDIT,           CMainFrame::OnEditProcedure)
+    EVT_MENU(ID_FILEERASE,          CMainFrame::OnEraseProcedure)
+    EVT_MENU(ID_SETPENSIZE,         CMainFrame::OnSetPenSize)
+    EVT_MENU(ID_BITMAPPRINTERAREA,  CMainFrame::OnSetActiveArea)
+    EVT_MENU(ID_SETLABELFONT,       CMainFrame::OnSetLabelFont)
+    EVT_MENU(ID_SETPENCOLOR,        CMainFrame::OnSetPenColor)
+    EVT_MENU(ID_SETSCREENCOLOR,     CMainFrame::OnSetScreenColor)
+    EVT_MENU(ID_SETFLOODCOLOR,      CMainFrame::OnSetFloodColor)
+    EVT_MENU(ID_HELP,               CMainFrame::OnHelp)
+    EVT_MENU(ID_HELPEXAMPLES,       CMainFrame::OnExamples)
+    EVT_MENU(ID_HELPABOUT,          CMainFrame::OnAboutFmsLogo)
+    EVT_MENU(ID_HELPABOUTMS,        CMainFrame::OnAboutMultipleSclerosis)
+    EVT_MENU(ID_ZOOMIN,             CMainFrame::OnZoomIn)
+    EVT_MENU(ID_ZOOMOUT,            CMainFrame::OnZoomOut)
+    EVT_MENU(ID_ZOOMNORMAL,         CMainFrame::OnZoomNormal)
+    EVT_MENU(ID_EXIT,               CMainFrame::OnQuit)
 END_EVENT_TABLE()
 
 // My frame constructor
@@ -276,7 +276,7 @@ CMainFrame::CMainFrame(
     SetMenuBar(mainMenu);
 
     // Add the splitter to separate the screen from the commander
-    m_Splitter = new MySplitterWindow(this);
+    m_Splitter = new MainSplitterWindow(this);
 
     m_Splitter->SetSashGravity(1.0);
 
@@ -638,9 +638,18 @@ void CMainFrame::CloseWorkspaceEditor(CWorkspaceEditor * Editor)
     m_Editors.erase(Editor);
 }
 
+CScreen * CMainFrame::GetScreen()
+{
+    return m_Screen;
+}
+
+CCommander * CMainFrame::GetCommander()
+{
+    return m_RealCommander;
+}
 
 // menu command handlers
-void CMainFrame::Quit(wxCommandEvent& WXUNUSED(event) )
+void CMainFrame::OnQuit(wxCommandEvent& WXUNUSED(Event))
 {
     CSaveBeforeExitDialog dlg(this);
     dlg.ShowModal();
@@ -652,29 +661,19 @@ void CMainFrame::Quit(wxCommandEvent& WXUNUSED(event) )
     }
 }
 
-CScreen * CMainFrame::GetScreen()
-{
-    return m_Screen;
-}
-
-CCommander * CMainFrame::GetCommander()
-{
-    return m_RealCommander;
-}
-
-void CMainFrame::EditProcedure(wxCommandEvent& WXUNUSED(event) )
+void CMainFrame::OnEditProcedure(wxCommandEvent& WXUNUSED(Event))
 {
     CEditProcedureDialog dlg(this);
     dlg.ShowModal();
 }
 
-void CMainFrame::EraseProcedure(wxCommandEvent& WXUNUSED(event) )
+void CMainFrame::OnEraseProcedure(wxCommandEvent& WXUNUSED(Event))
 {
     CEraseProcedureDialog dlg(this);
     dlg.ShowModal();
 }
 
-void CMainFrame::SetPenSize(wxCommandEvent& WXUNUSED(event) )
+void CMainFrame::OnSetPenSize(wxCommandEvent& WXUNUSED(Event))
 {
     if (m_SetPenSizeDialog == NULL)
     {
@@ -717,7 +716,7 @@ CMainFrame::SetColorHelper(
     }
 }
 
-void CMainFrame::SetPenColor(wxCommandEvent& WXUNUSED(event) )
+void CMainFrame::OnSetPenColor(wxCommandEvent& WXUNUSED(Event))
 {
     SetColorHelper(
         m_SetPenColorDialog,
@@ -725,7 +724,7 @@ void CMainFrame::SetPenColor(wxCommandEvent& WXUNUSED(event) )
         wxColor(0xFF, 0x00, 0x00)); // TODO: read this from the Logo engine
 }
 
-void CMainFrame::SetFloodColor(wxCommandEvent& WXUNUSED(event) )
+void CMainFrame::OnSetFloodColor(wxCommandEvent& WXUNUSED(Event))
 {
     SetColorHelper(
         m_SetFloodColorDialog,
@@ -733,7 +732,7 @@ void CMainFrame::SetFloodColor(wxCommandEvent& WXUNUSED(event) )
         wxColor(0x00, 0x00, 0xFF)); // TODO: read this from the Logo engine
 }
 
-void CMainFrame::SetScreenColor(wxCommandEvent& WXUNUSED(event) )
+void CMainFrame::OnSetScreenColor(wxCommandEvent& WXUNUSED(Event))
 {
     SetColorHelper(
         m_SetScreenColorDialog,
@@ -766,13 +765,13 @@ bool CMainFrame::StatusDialogIsShowing()
     return m_StatusDialog != NULL;
 }
 
-void CMainFrame::SetActiveArea(wxCommandEvent& WXUNUSED(Event))
+void CMainFrame::OnSetActiveArea(wxCommandEvent& WXUNUSED(Event))
 {
     CSetActiveArea dlg(this);
     dlg.ShowModal();
 }
 
-void CMainFrame::SetLabelFont(wxCommandEvent& WXUNUSED(Event))
+void CMainFrame::OnSetLabelFont(wxCommandEvent& WXUNUSED(Event))
 {
     wxFontDialog fontChooser;
     fontChooser.GetFontData().SetInitialFont(g_LabelFont);
@@ -827,29 +826,29 @@ void CMainFrame::SetLabelFont(wxCommandEvent& WXUNUSED(Event))
     }
 }
 
-void CMainFrame::ZoomIn(wxCommandEvent& WXUNUSED(event) )
+void CMainFrame::OnZoomIn(wxCommandEvent& WXUNUSED(Event))
 {
     UndockCommanderWindow();
 }
 
-void CMainFrame::ZoomOut(wxCommandEvent& WXUNUSED(event) )
+void CMainFrame::OnZoomOut(wxCommandEvent& WXUNUSED(Event))
 {
     DockCommanderWindow();
 }
 
-void CMainFrame::ZoomNormal(wxCommandEvent& WXUNUSED(event) )
+void CMainFrame::OnZoomNormal(wxCommandEvent& WXUNUSED(Event))
 {
     // For now, show the "To" mini-editor as a test hook
     CMiniEditor dlg(this, "TO SQUARE :length");
     dlg.ShowModal();
 }
 
-void CMainFrame::Help(wxCommandEvent& WXUNUSED(event) )
+void CMainFrame::OnHelp(wxCommandEvent& WXUNUSED(Event))
 {
     do_help(NULL);
 }
 
-void CMainFrame::Examples(wxCommandEvent& WXUNUSED(Event))
+void CMainFrame::OnExamples(wxCommandEvent& WXUNUSED(Event))
 {
     // For now, doodle something on the screen so that we can test
     // saving the screen as a bitmap.
@@ -869,14 +868,14 @@ void CMainFrame::Examples(wxCommandEvent& WXUNUSED(Event))
     m_Screen->Refresh(false);
 }
 
-void CMainFrame::AboutFmsLogo(wxCommandEvent& WXUNUSED(event) )
+void CMainFrame::OnAboutFmsLogo(wxCommandEvent& WXUNUSED(Event))
 {
     // show the "About FMSLogo" dialog box
     CAboutFmsLogo dlg(this);
     dlg.ShowModal();
 }
 
-void CMainFrame::AboutMultipleSclerosis(wxCommandEvent& WXUNUSED(event) )
+void CMainFrame::OnAboutMultipleSclerosis(wxCommandEvent& WXUNUSED(Event))
 {
     // show the "About FMS" dialog box
     CAboutMultipleSclerosis dlg(this);
@@ -886,60 +885,68 @@ void CMainFrame::AboutMultipleSclerosis(wxCommandEvent& WXUNUSED(event) )
 
 
 // ----------------------------------------------------------------------------
-// MySplitterWindow
+// MainSplitterWindow
 // ----------------------------------------------------------------------------
 
-BEGIN_EVENT_TABLE(MySplitterWindow, wxSplitterWindow)
-    EVT_SPLITTER_SASH_POS_CHANGED(wxID_ANY, MySplitterWindow::OnPositionChanged)
-    EVT_SPLITTER_SASH_POS_CHANGING(wxID_ANY, MySplitterWindow::OnPositionChanging)
+BEGIN_EVENT_TABLE(MainSplitterWindow, wxSplitterWindow)
+    EVT_SPLITTER_SASH_POS_CHANGED(wxID_ANY, MainSplitterWindow::OnPositionChanged)
+    EVT_SPLITTER_SASH_POS_CHANGING(wxID_ANY, MainSplitterWindow::OnPositionChanging)
 
-    EVT_SPLITTER_DCLICK(wxID_ANY, MySplitterWindow::OnDClick)
+    EVT_SPLITTER_DCLICK(wxID_ANY, MainSplitterWindow::OnDClick)
 
-    EVT_SPLITTER_UNSPLIT(wxID_ANY, MySplitterWindow::OnUnsplitEvent)
+    EVT_SPLITTER_UNSPLIT(wxID_ANY, MainSplitterWindow::OnUnsplitEvent)
 END_EVENT_TABLE()
 
-MySplitterWindow::MySplitterWindow(wxFrame *parent)
-                : wxSplitterWindow(parent, wxID_ANY,
-                                   wxDefaultPosition, wxDefaultSize,
-                                   wxSP_3D | wxSP_LIVE_UPDATE |
-                                   wxCLIP_CHILDREN /* | wxSP_NO_XP_THEME */ )
+MainSplitterWindow::MainSplitterWindow(
+    wxFrame *Parent
+    ) : wxSplitterWindow(
+        Parent,
+        wxID_ANY,
+        wxDefaultPosition,
+        wxDefaultSize,
+        wxSP_3D | wxSP_LIVE_UPDATE | wxCLIP_CHILDREN /* | wxSP_NO_XP_THEME */)
 {
     SetMinimumPaneSize(MIN_COMMANDER_HEIGHT);
 
-    m_frame = parent;
+    m_frame = Parent;
 }
 
-void MySplitterWindow::OnPositionChanged(wxSplitterEvent& event)
+void MainSplitterWindow::OnPositionChanged(wxSplitterEvent& event)
 {
-    wxLogStatus(m_frame, _T("Position has changed, now = %d (or %d)"),
-                event.GetSashPosition(), GetSashPosition());
+    wxLogStatus(
+        m_frame,
+        "Position has changed, now = %d (or %d)",
+        event.GetSashPosition(),
+        GetSashPosition());
 
     event.Skip();
 }
 
-void MySplitterWindow::OnPositionChanging(wxSplitterEvent& event)
+void MainSplitterWindow::OnPositionChanging(wxSplitterEvent& event)
 {
-    wxLogStatus(m_frame, _T("Position is changing, now = %d (or %d)"),
-                event.GetSashPosition(), GetSashPosition());
+    wxLogStatus(
+        m_frame,
+        "Position is changing, now = %d (or %d)",
+        event.GetSashPosition(),
+        GetSashPosition());
 
     event.Skip();
 }
 
-void MySplitterWindow::OnDClick(wxSplitterEvent& event)
-{
-#if wxUSE_STATUSBAR
-    m_frame->SetStatusText(_T("Splitter double clicked"), 1);
-#endif // wxUSE_STATUSBAR
-
-    event.Skip();
-}
-
-void MySplitterWindow::OnUnsplitEvent(wxSplitterEvent& event)
+void MainSplitterWindow::OnDClick(wxSplitterEvent& Event)
 {
 #if wxUSE_STATUSBAR
-    m_frame->SetStatusText(_T("Splitter unsplit"), 1);
+    m_frame->SetStatusText("Splitter double clicked", 1);
 #endif // wxUSE_STATUSBAR
 
-    event.Skip();
+    Event.Skip();
 }
 
+void MainSplitterWindow::OnUnsplitEvent(wxSplitterEvent& Event)
+{
+#if wxUSE_STATUSBAR
+    m_frame->SetStatusText("Splitter unsplit", 1);
+#endif // wxUSE_STATUSBAR
+
+    Event.Skip();
+}

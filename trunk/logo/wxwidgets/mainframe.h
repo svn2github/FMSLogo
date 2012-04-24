@@ -19,26 +19,8 @@ struct NODE;
 class CMainFrame : public wxFrame
 {
 public:
-    CMainFrame(int screenWidth, int screenHeight);
+    CMainFrame(int ScreenWidth, int ScreenHeight);
     virtual ~CMainFrame();
-
-    // Menu commands
-    void EditProcedure(wxCommandEvent& event);
-    void EraseProcedure(wxCommandEvent& event);
-    void SetLabelFont(wxCommandEvent& event);
-    void SetActiveArea(wxCommandEvent& event);
-    void SetPenSize(wxCommandEvent& event);
-    void SetPenColor(wxCommandEvent& event);
-    void SetFloodColor(wxCommandEvent& event);
-    void SetScreenColor(wxCommandEvent& event);
-    void ZoomIn(wxCommandEvent& event);
-    void ZoomOut(wxCommandEvent& event);
-    void ZoomNormal(wxCommandEvent& event);
-    void Help(wxCommandEvent& event);
-    void Examples(wxCommandEvent& event);
-    void AboutFmsLogo(wxCommandEvent& event);
-    void AboutMultipleSclerosis(wxCommandEvent& event);
-    void Quit(wxCommandEvent& event);
 
     void UndockCommanderWindow();
     void DockCommanderWindow();
@@ -69,6 +51,24 @@ public:
     void CloseWorkspaceEditor(CWorkspaceEditor * Editor);
 
 private:
+
+    // Menu commands handlers
+    void OnEditProcedure(wxCommandEvent& Event);
+    void OnEraseProcedure(wxCommandEvent& Event);
+    void OnSetLabelFont(wxCommandEvent& Event);
+    void OnSetActiveArea(wxCommandEvent& Event);
+    void OnSetPenSize(wxCommandEvent& Event);
+    void OnSetPenColor(wxCommandEvent& Event);
+    void OnSetFloodColor(wxCommandEvent& Event);
+    void OnSetScreenColor(wxCommandEvent& Event);
+    void OnZoomIn(wxCommandEvent& Event);
+    void OnZoomOut(wxCommandEvent& Event);
+    void OnZoomNormal(wxCommandEvent& Event);
+    void OnHelp(wxCommandEvent& Event);
+    void OnExamples(wxCommandEvent& Event);
+    void OnAboutFmsLogo(wxCommandEvent& Event);
+    void OnAboutMultipleSclerosis(wxCommandEvent& Event);
+    void OnQuit(wxCommandEvent& Event);
 
     CWorkspaceEditor *
     CreateWorkspaceEditor(
