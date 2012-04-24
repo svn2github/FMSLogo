@@ -184,6 +184,19 @@ CCommander::CCommander(wxWindow *Parent)
     UpdateStepButtonState();
     UpdateStatusButtonState();
     UpdateTraceButtonState();
+
+    // Configure the keyboard shortcuts
+    wxAcceleratorEntry acceleratorEntries[1];
+
+    // Ctrl+D is identical to EDALL
+    acceleratorEntries[0].Set(wxACCEL_CTRL, 'D', ID_COMMANDER_EDALL);
+
+    wxAcceleratorTable acceleratorTable(
+        ARRAYSIZE(acceleratorEntries),
+        acceleratorEntries);
+
+    SetAcceleratorTable(acceleratorTable);
+
 }
 
 void CCommander::UpdateStepButtonState()
@@ -399,19 +412,7 @@ void CCommander::OnExecuteButton(wxCommandEvent& WXUNUSED(event))
 
 void CCommander::OnEdallButton(wxCommandEvent& WXUNUSED(event))
 {
-    CMainFrame * mainFrame = CFmsLogo::GetMainFrame();
-
-    CWorkspaceEditor * editor = mainFrame->GetWorkspaceEditor();
-    if (editor == NULL)
-    {
-        // create an editor
-        editor = mainFrame->CreateWorskpaceEditor();
-    }
-
-    // make sure that the editor is visible
-    editor->Iconize(false);
-    editor->Show();
-    editor->Raise();
+    do_execution("EDALL");
 }
 
 void CCommander::OnClose(wxCloseEvent& event)
@@ -555,6 +556,12 @@ void CCommander::OnKeyDown(wxKeyEvent& Event)
     }
 }
 
+void CCommander::GiveControlToInputBox()
+{
+    // Give focus to the input edit control
+    m_NextInstruction->SetFocus();
+}
+
 void CCommander::GiveControlToHistoryBox()
 {
     // advance to the bottom of the listbox
@@ -565,8 +572,6 @@ void CCommander::GiveControlToHistoryBox()
     // give focus to the listbox
     m_History->SetFocus();
 }
-
-
 
 void
 CCommander::AppendToCommanderHistory(

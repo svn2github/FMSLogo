@@ -14,6 +14,8 @@ class CWorkspaceEditor;
 class CSetPenSize;
 class CScreen;
 
+struct NODE;
+
 class CMainFrame : public wxFrame
 {
 public:
@@ -49,12 +51,34 @@ public:
     CScreen    * GetScreen();
 
     CWorkspaceEditor * GetWorkspaceEditor();
-    CWorkspaceEditor * CreateWorskpaceEditor();
+
+    void
+    PopupEditor(
+        const wxString & FileName,
+        NODE           * EditArguments,
+        bool             CheckForErrors
+        );
+
+    static
+    int
+    PopupEditorForFile(
+        const wxString & FileName,
+        NODE           * EditArguments
+        );
+
     void CloseWorkspaceEditor(CWorkspaceEditor * Editor);
 
 private:
+
+    CWorkspaceEditor *
+    CreateWorkspaceEditor(
+        const wxString & FileName,
+        NODE           * EditArguments,
+        bool             CheckForErrors
+        );
+
     void
-    CMainFrame::SetColorHelper(
+    SetColorHelper(
         class CSetColor * &   SetColorDialog,
         const char *          DialogTitle,
         const class wxColor & InitialColor

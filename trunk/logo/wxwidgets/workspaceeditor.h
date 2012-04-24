@@ -3,17 +3,35 @@
 #include <wx/frame.h>
 #include <wx/fdrepdlg.h>
 
-class CLogoCodeCtrl;
+class  CLogoCodeCtrl;
+struct NODE;
 
 class CWorkspaceEditor: public wxFrame
 {
 public:
-    CWorkspaceEditor(wxWindow * Parent);
+    CWorkspaceEditor(
+        wxWindow       * Parent,
+        const wxString & Title,
+        const wxString & FileName,
+        NODE           * EditArguments,
+        bool             CheckForErrors
+        );
+
+    bool IsErrorDetected() const;
 
 private:
 
+    // Helpers for reading/writing the contents of the editor
+    // to and from a file.
+    bool Save();
+    bool Read(const wxString & FileName = wxEmptyString);
+    bool Write(const wxString & FileName = wxEmptyString);
+    void SetFileName(const wxString & FileName = wxEmptyString);
+    const wxChar * SelectFile(const wxString & GivenFileName) const;
+
     // Menu commands event handlers
-    void OnQuit(wxCommandEvent& Event);
+    void OnExit(wxCommandEvent& Event);
+    void OnSaveAndExit(wxCommandEvent& Event);
     void OnPrint(wxCommandEvent& Event);
 
     void OnUndo(wxCommandEvent& Event);
@@ -52,13 +70,28 @@ private:
 
     void OnClose(wxCloseEvent& Event);
 
-    // Helper functions
-    void SetScintillaSearchFlags();
+    // Internal helper functions
+    bool EndEdit();
 
     // member variables
     CLogoCodeCtrl       * m_LogoCodeControl;
     wxFindReplaceDialog * m_FindReplaceDialog;
     wxFindReplaceData     m_FindReplaceData;
+
+    // The file that is associated with the editor.
+    wxString m_FileName;
+
+    // The arguments that were passed to Edit.
+    // This contains the parts of the workspace that are being
+    // edited.
+    NODE * m_EditArguments;
+
+    // Whether or not the editor should check for errors when
+    // saving and re-launch itself on error.
+    bool m_CheckForErrors;
+
+    // If an error was detected when evaluating the workspace.
+    bool m_ErrorDetected;
 
     DECLARE_EVENT_TABLE();
     DECLARE_NO_COPY_CLASS(CWorkspaceEditor);

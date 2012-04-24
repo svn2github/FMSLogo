@@ -12,13 +12,17 @@
 #include "scintilla/include/SciLexer.h"
 
 BEGIN_EVENT_TABLE(CLogoCodeCtrl, wxStyledTextCtrl)
-    EVT_STC_UPDATEUI(wxID_ANY, CLogoCodeCtrl::OnUpdateUi)
+    EVT_STC_UPDATEUI(wxID_ANY,         CLogoCodeCtrl::OnUpdateUi)
+    EVT_STC_SAVEPOINTREACHED(wxID_ANY, CLogoCodeCtrl::OnSavePointReached)
+    EVT_STC_SAVEPOINTLEFT(wxID_ANY,    CLogoCodeCtrl::OnSavePointLeft)
 END_EVENT_TABLE()
 
 CLogoCodeCtrl::CLogoCodeCtrl(
     wxWindow *      Parent,
     wxWindowID      Id
-    ) : wxStyledTextCtrl(Parent, Id)
+    ) : 
+    wxStyledTextCtrl(Parent, Id),
+    m_IsDirty(false)
 {
     // Hide the margin that Scintilla creates by default.
     // We don't use it for anything, so it just looks weird.
@@ -248,6 +252,16 @@ void CLogoCodeCtrl::OnUpdateUi(wxStyledTextEvent& Event)
         BraceBadLight(INVALID_POSITION);
         BraceHighlight(INVALID_POSITION, INVALID_POSITION);
     }
+}
+
+void CLogoCodeCtrl::OnSavePointReached(wxStyledTextEvent& Event)
+{
+    m_IsDirty = false;
+}
+
+void CLogoCodeCtrl::OnSavePointLeft(wxStyledTextEvent& Event)
+{
+    m_IsDirty = true;
 }
 
 void
@@ -645,4 +659,10 @@ void CLogoCodeCtrl::Print()
     // If we preserved the global settings, we'd update the
     // printing preferences here.
     //printData = printer.GetPrintDialogData().GetPrintData();
+}
+
+bool
+CLogoCodeCtrl::IsDirty() const
+{
+    return m_IsDirty;
 }

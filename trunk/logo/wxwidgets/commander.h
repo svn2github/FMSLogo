@@ -35,6 +35,7 @@ public:
     void UpdateStepButtonState();
     void UpdateStatusButtonState();
 
+    void GiveControlToInputBox();
     void GiveControlToHistoryBox();
 
     void PostKeyDownToInputControl(wxKeyEvent& Event);

@@ -27,6 +27,7 @@
 #include "mainwind.h"
 #include "eval.h"
 #include "screenwindow.h"
+#include "workspaceeditor.h"
 
 #include "screen.h"
 #include "commander.h"
@@ -533,37 +534,41 @@ void uninitialize_windows()
 
 HWND GetScreenWindow()
 {
-    CMainFrame* mainFrame = static_cast<CMainFrame*>(wxTheApp->GetTopWindow());
+    CMainFrame* mainFrame = CFmsLogo::GetMainFrame();
     return reinterpret_cast<HWND>(mainFrame->GetScreen()->GetHandle());
 }
 
 HWND GetMainWindow()
 {
-    return static_cast<HWND>(wxTheApp->GetTopWindow()->GetHandle());
+    return static_cast<HWND>(CFmsLogo::GetMainFrame()->GetHandle());
 }
 
 HWND GetCommanderWindow()
 {
-    CMainFrame* mainFrame = static_cast<CMainFrame*>(wxTheApp->GetTopWindow());
+    CMainFrame* mainFrame = CFmsLogo::GetMainFrame();
     return reinterpret_cast<HWND>(mainFrame->GetCommander()->GetHandle());
 }
 
 HWND GetEditorWindow()
 {
-    return NULL;
+    CWorkspaceEditor * editor = CFmsLogo::GetMainFrame()->GetWorkspaceEditor();
+    if (editor == NULL)
+    {
+        return NULL;
+    }
+
+    return reinterpret_cast<HWND>(editor->GetHandle());
 }
 
 UINT GetScreenHorizontalScrollPosition()
 {
-    CMainFrame* mainFrame = static_cast<CMainFrame*>(wxTheApp->GetTopWindow());
-    return mainFrame->GetScreen()->GetScrollPos(wxHORIZONTAL);
+    return CFmsLogo::GetMainFrame()->GetScreen()->GetScrollPos(wxHORIZONTAL);
 }
 
 
 UINT GetScreenVerticalScrollPosition()
 {
-    CMainFrame* mainFrame = static_cast<CMainFrame*>(wxTheApp->GetTopWindow());
-    return mainFrame->GetScreen()->GetScrollPos(wxVERTICAL);
+    return CFmsLogo::GetMainFrame()->GetScreen()->GetScrollPos(wxVERTICAL);
 }
 
 void SetScreenScrollPosition(UINT x, UINT y)
@@ -581,13 +586,13 @@ void OpenEditorToLocationOfFirstError(const char *FileName)
 
 HDC GetScreenDeviceContext()
 {
-    CMainFrame* mainFrame = static_cast<CMainFrame*>(wxTheApp->GetTopWindow());
+    CMainFrame* mainFrame = CFmsLogo::GetMainFrame();
     return static_cast<HDC>(mainFrame->GetScreen()->GetScreenDeviceContext().GetHDC());
 }
 
 HDC GetMemoryDeviceContext()
 {
-    CMainFrame* mainFrame = static_cast<CMainFrame*>(wxTheApp->GetTopWindow());
+    CMainFrame* mainFrame = CFmsLogo::GetMainFrame();
     return static_cast<HDC>(mainFrame->GetScreen()->GetMemoryDeviceContext().GetHDC());
 }
 
@@ -607,9 +612,9 @@ void UndockCommanderWindow()
 {
 }
 
-int ShowEditorForFile(const char *FileName, NODE *args)
+int ShowEditorForFile(const char *FileName, NODE * EditArguments)
 {
-    return 0;
+    return CMainFrame::PopupEditorForFile(FileName, EditArguments);
 }
 
 void

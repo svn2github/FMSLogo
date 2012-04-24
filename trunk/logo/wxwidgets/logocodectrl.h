@@ -40,6 +40,8 @@ public:
 
     void Print();
 
+    bool IsDirty() const;
+
 private:
 
     // A private helper class for printing
@@ -88,6 +90,8 @@ private:
 
     // Event handlers
     void OnUpdateUi(wxStyledTextEvent& event);
+    void OnSavePointReached(wxStyledTextEvent& event);
+    void OnSavePointLeft(wxStyledTextEvent& event);
 
 
     // Helper functions
@@ -120,4 +124,8 @@ private:
 
     DECLARE_EVENT_TABLE();
     DECLARE_NO_COPY_CLASS(CLogoCodeCtrl);
+
+    // Whether or not the contents of the editor have changed
+    // since they were last synchronized with the file.
+    bool m_IsDirty;
 };

@@ -48,6 +48,8 @@
 #include "logodata.h"
 #include "setcolor.h"
 #include "graphwin.h"
+#include "init.h"
+#include "main.h"
 
 #include "fmslogo-16x16.xpm"
 
@@ -273,7 +275,7 @@ CMainFrame::CMainFrame(
 
     SetMenuBar(mainMenu);
 
-
+    // Add the splitter to separate the screen from the commander
     m_Splitter = new MySplitterWindow(this);
 
     m_Splitter->SetSashGravity(1.0);
@@ -487,18 +489,21 @@ CWorkspaceEditor * CMainFrame::GetWorkspaceEditor()
     return (*m_Editors.begin()).first;
 }
 
-CWorkspaceEditor * CMainFrame::CreateWorskpaceEditor()
+CWorkspaceEditor *
+CMainFrame::CreateWorkspaceEditor(
+    const wxString & FileName,
+    NODE           * EditArguments,
+    bool             CheckForErrors
+    )
 {
-    CWorkspaceEditor * editor = new CWorkspaceEditor(this);
+    CWorkspaceEditor * editor = new CWorkspaceEditor(
+        this,
+        LOCALIZED_EDITOR_TITLE,
+        FileName,
+        EditArguments,
+        CheckForErrors);
 
 #if 0
-    TMyFileWindow * editor = new TMyFileWindow(
-        this, 
-        LOCALIZED_EDITOR_TITLE,
-        FileName, 
-        args, 
-        check_for_errors);
-
     // Construct the default coordinates of the editor's window
     // to be about 1/2 of the working area and placed in the center.
     int maxWidth;
@@ -536,6 +541,97 @@ CWorkspaceEditor * CMainFrame::CreateWorskpaceEditor()
 
     return editor;
 }
+
+void
+CMainFrame::PopupEditor(
+    const wxString & FileName,
+    NODE           * EditArguments,
+    bool             CheckForErrors
+    )
+{
+    CWorkspaceEditor * editor = CreateWorkspaceEditor(
+        FileName,
+        EditArguments,
+        CheckForErrors);
+
+    if (EditArguments != NIL || CheckForErrors)
+    {
+        // If an error occured "force" a change so that we're
+        // still in "dirty" state.
+        if (editor->IsErrorDetected())
+        {
+            //TODO: Implement this
+            //editor->ReopenAfterError();
+        }
+    }
+
+    // TODO: m_GiveFocusToEditbox = false;
+}
+
+static
+void
+CreateTemplateLogoFileForEditor(
+    const wxString & FileName,
+    NODE           * EditArguments
+    )
+{
+    // TODO: Use wxWidgets class for File I/O
+    FILE* logoFile = fopen(FileName.c_str(), "w");
+    if (logoFile != NULL)
+    {
+        if (EditArguments != NIL)
+        {
+            // Arguments were given to EDIT and the workspace was empty.
+            // So show a "TO" and "END" to help guide the user to their
+            // next action.
+            fprintf(logoFile, "%s\n", To.GetName());
+            fprintf(logoFile, "%s\n", End.GetName());
+        }
+        else
+        {
+            // No arguments were passed to EDIT, so we opened
+            // an empty workspace.
+            fprintf(logoFile, "\n");
+        }
+    }
+
+    fclose(logoFile);
+}
+
+
+int
+CMainFrame::PopupEditorForFile(
+    const wxString & FileName,
+    NODE           * EditArguments
+    )
+{
+    // If no file (or empty) create template
+    // TODO: Use a wxWidgets class for the file I/O.
+    FILE * logoFile = fopen(FileName, "r");
+    if (logoFile != NULL)
+    {
+        // file exists.  check if it's empty.
+        bool fileIsEmpty = getc(logoFile) == EOF;
+        fclose(logoFile);
+
+        if (fileIsEmpty)
+        {
+            CreateTemplateLogoFileForEditor(FileName, EditArguments);
+        }
+    }
+    else
+    {
+        // file doesn't exist.  Create it.
+        CreateTemplateLogoFileForEditor(FileName, EditArguments);
+    }
+
+    CFmsLogo::GetMainFrame()->PopupEditor(
+        FileName,
+        EditArguments,
+        false);
+    return 0;
+}
+
 
 void CMainFrame::CloseWorkspaceEditor(CWorkspaceEditor * Editor)
 {
