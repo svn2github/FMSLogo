@@ -64,7 +64,7 @@ CPPFLAGS += -DLOCALE=1033 -D_FILE_OFFSET_BITS=64 -D_LARGE_FILES -I$(wx_top_build
 CXXFLAGS += -Wall -Wundef -Wno-ctor-dtor-privacy  -fno-strict-aliasing
 CXXFLAGS += -DFMSLOGO_SCREENSAVER -DNOASM
 CXXFLAGS += -DSCI_LEXER -DLCCWIN=0 # used by Scintilla.h
-CXXFLAGS += -I"C:\Program Files\HTML Help Workshop\include"
+CXXFLAGS += -I"/cygdrive/c/Program Files/HTML Help Workshop/include"
 
 
 
