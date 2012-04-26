@@ -12,6 +12,11 @@ struct MENUITEM
 };
 
 void
+SetFmsLogoIcon(
+    wxTopLevelWindow & TopLevelWindow
+    );
+
+void
 FillMenu(
     wxMenu *          Menu,
     const MENUITEM *  MenuItems,
