@@ -108,15 +108,31 @@ const char *debug_typename_to_string(const NODE *nd)
 }
 
 static
+void
+debug_print_node(const NODE* node)
+{
+    // Preserve the machine state
+    bool savedIsTimeToHalt  = IsTimeToHalt;
+    bool savedIsTimeToPause = IsTimeToPause;
+
+    // Clear these flags so that real_print_node doesn't crash
+    IsTimeToHalt  = false;
+    IsTimeToPause = false;
+
+    real_print_node(stderr, node, -1, -1);
+    fprintf(stderr, "\n");
+
+    // Restore the machine state
+    IsTimeToHalt  = savedIsTimeToHalt;
+    IsTimeToPause = savedIsTimeToPause;
+}
+
+static
 void 
 debug_report_leaks(void)
 {
     if (g_allocated_blocks.next != &g_allocated_blocks)
     {
-        // clear these flags so that real_print_node doesn't crash
-        IsTimeToHalt  = false;
-        IsTimeToPause = false;
-
         // the list is not empty
         TraceOutput("Memory Leaks detected!\n");
 
@@ -222,13 +238,9 @@ debug_report_leaks(void)
                         debug_typename_to_string(current_node),
                         getrefcnt(current_node));
 
-                    real_print_node(
-                        stderr,
-                        static_cast<NODE*>(userptr),
-                        -1,
-                        -1);
+                    debug_print_node(current_node);
 
-                    TraceOutput("\n\n");
+                    TraceOutput("\n");
                 }
             }
         }
