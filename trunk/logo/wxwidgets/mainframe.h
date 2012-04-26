@@ -53,8 +53,14 @@ public:
 private:
 
     // Menu commands handlers
+    void OnFileNew(wxCommandEvent& Event);
+    void OnFileLoad(wxCommandEvent& Event);
+    void OnFileOpen(wxCommandEvent& Event);
+    void OnFileSave(wxCommandEvent& Event);
+    void OnFileSaveAs(wxCommandEvent& Event);
     void OnEditProcedure(wxCommandEvent& Event);
     void OnEraseProcedure(wxCommandEvent& Event);
+    void OnQuit(wxCommandEvent& Event);
     void OnSetLabelFont(wxCommandEvent& Event);
     void OnSetActiveArea(wxCommandEvent& Event);
     void OnSetPenSize(wxCommandEvent& Event);
@@ -68,7 +74,6 @@ private:
     void OnExamples(wxCommandEvent& Event);
     void OnAboutFmsLogo(wxCommandEvent& Event);
     void OnAboutMultipleSclerosis(wxCommandEvent& Event);
-    void OnQuit(wxCommandEvent& Event);
 
     CWorkspaceEditor *
     CreateWorkspaceEditor(
@@ -84,6 +89,16 @@ private:
         const class wxColor & InitialColor
         );
 
+    void
+    InitializeOpenFileNameForLogoFiles(
+        OPENFILENAME & OpenFileData
+        );
+
+    bool WarnIfSavingEmptyWorkspace();
+    bool FileSave();
+    bool SaveFile();
+    bool SaveFileAs();
+
     wxIcon           * m_FmsLogoIcon;
     CScreen          * m_Screen;
     wxWindow         * m_Commander;
@@ -95,6 +110,10 @@ private:
     wxSplitterWindow * m_Splitter;
 
     bool  m_CommanderIsDocked;
+    bool  m_IsNewFile;
+
+    // TODO: Make this a wxString
+    char m_FileName[MAX_PATH];
 
     class CSetColor * m_SetPenColorDialog;
     class CSetColor * m_SetFloodColorDialog;

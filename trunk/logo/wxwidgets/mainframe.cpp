@@ -50,6 +50,10 @@
 #include "graphwin.h"
 #include "init.h"
 #include "main.h"
+#include "screenwindow.h" // for TraceOutput
+#include "wrksp.h"
+#include "eval.h"
+#include "fileswnd.h"
 
 #include "fmslogo-16x16.xpm"
 
@@ -157,8 +161,14 @@ enum MainFrameMenuIds
 };
 
 BEGIN_EVENT_TABLE(CMainFrame, wxFrame)
+    EVT_MENU(ID_FILENEW,            CMainFrame::OnFileNew)
+    EVT_MENU(ID_FILELOAD,           CMainFrame::OnFileLoad)
+    EVT_MENU(ID_FILEOPEN,           CMainFrame::OnFileOpen)
+    EVT_MENU(ID_FILESAVE,           CMainFrame::OnFileSave)
+    EVT_MENU(ID_FILESAVEAS,         CMainFrame::OnFileSaveAs)
     EVT_MENU(ID_FILEEDIT,           CMainFrame::OnEditProcedure)
     EVT_MENU(ID_FILEERASE,          CMainFrame::OnEraseProcedure)
+    EVT_MENU(ID_EXIT,               CMainFrame::OnQuit)
     EVT_MENU(ID_SETPENSIZE,         CMainFrame::OnSetPenSize)
     EVT_MENU(ID_BITMAPPRINTERAREA,  CMainFrame::OnSetActiveArea)
     EVT_MENU(ID_SETLABELFONT,       CMainFrame::OnSetLabelFont)
@@ -172,7 +182,6 @@ BEGIN_EVENT_TABLE(CMainFrame, wxFrame)
     EVT_MENU(ID_ZOOMIN,             CMainFrame::OnZoomIn)
     EVT_MENU(ID_ZOOMOUT,            CMainFrame::OnZoomOut)
     EVT_MENU(ID_ZOOMNORMAL,         CMainFrame::OnZoomNormal)
-    EVT_MENU(ID_EXIT,               CMainFrame::OnQuit)
 END_EVENT_TABLE()
 
 // My frame constructor
@@ -194,10 +203,13 @@ CMainFrame::CMainFrame(
       m_SetPenSizeDialog(NULL),
       m_Splitter(NULL),
       m_CommanderIsDocked(false),
+      m_IsNewFile(true),
       m_SetPenColorDialog(NULL),
       m_SetFloodColorDialog(NULL),
       m_SetScreenColorDialog(NULL)
 {
+    m_FileName[0] = '\0';
+
 #if wxUSE_STATUSBAR
     CreateStatusBar(2);
 #endif // wxUSE_STATUSBAR
@@ -659,6 +671,279 @@ void CMainFrame::OnQuit(wxCommandEvent& WXUNUSED(Event))
     {
         Close(true);
     }
+}
+
+// CONSIDER: move this to wrksp.c, since it has no coheasion
+// with the UI.
+static void EraseContentsOfWorkspace()
+{
+    NODE * workspace_contents;
+
+    // erase the unburied contents of the workspace
+    workspace_contents = cons_list(lcontents(NIL));
+    lerase(workspace_contents);
+    gcref(workspace_contents);
+
+    // erase the buried contents of the workspace
+    workspace_contents = cons_list(lburied(NIL));
+    lerase(workspace_contents);
+    gcref(workspace_contents);
+
+    IsDirty = false;
+}
+
+void CMainFrame::OnFileNew(wxCommandEvent& WXUNUSED(Event))
+{
+    if (IsDirty)
+    {
+        // Warn the user that File-New will erase the contents 
+        // of the workspace and give them a chance to cancel the
+        // operation.
+        if (wxMessageBox(
+                LOCALIZED_FILENEWWILLERASEWORKSPACE,
+                LOCALIZED_YOUHAVEUNSAVEDCHANGES,
+                wxOK | wxCANCEL | wxICON_QUESTION,
+                GetCommander()) == wxCANCEL)
+        {
+            return;
+        }
+    }
+
+    // else start with a clean plate
+    m_IsNewFile = true;
+    EraseContentsOfWorkspace();
+}
+
+void
+CMainFrame::InitializeOpenFileNameForLogoFiles(
+    OPENFILENAME & OpenFileData
+    )
+{
+    ZeroMemory(&OpenFileData, sizeof OpenFileData);
+    OpenFileData.lStructSize       = sizeof OpenFileData;
+    OpenFileData.hwndOwner         = static_cast<HWND>(GetHandle());
+    OpenFileData.hInstance         = NULL;
+    OpenFileData.lpstrFilter       = LOCALIZED_FILEFILTER_LOGO;
+    OpenFileData.lpstrCustomFilter = NULL;
+    OpenFileData.nMaxCustFilter    = 0;
+    OpenFileData.nFilterIndex      = 0;
+    OpenFileData.lpstrFile         = m_FileName;
+    OpenFileData.nMaxFile          = ARRAYSIZE(m_FileName);
+    OpenFileData.lpstrFileTitle    = NULL;
+    OpenFileData.nMaxFileTitle     = 0;
+    OpenFileData.lpstrInitialDir   = NULL;
+    OpenFileData.lpstrTitle        = NULL;
+    OpenFileData.Flags             = OFN_HIDEREADONLY | OFN_EXPLORER;
+    OpenFileData.nFileOffset       = 0;
+    OpenFileData.nFileExtension    = 0;
+    OpenFileData.lpstrDefExt       = LOCALIZED_LOGO_FILE_EXTENSION;
+    OpenFileData.lCustData         = 0;
+    OpenFileData.lpfnHook          = NULL;
+    OpenFileData.lpTemplateName    = NULL;
+}
+
+void CMainFrame::OnFileLoad(wxCommandEvent& WXUNUSED(Event))
+{
+    if (IsDirty)
+    {
+        // Warn the user that File-Load may erase the contents 
+        // of the workspace and give them a chance to cancel the
+        // operation.
+        if (wxMessageBox(
+                LOCALIZED_FILELOADMAYOVERWRITEWORKSPACE,
+                LOCALIZED_YOUHAVEUNSAVEDCHANGES,
+                wxOK | wxCANCEL | wxICON_QUESTION,
+                GetCommander()) == wxCANCEL)
+        {
+            return;
+        }
+    }
+
+    // show the user a file-picker dialog
+    // TODO: switch to use wxFileSelector
+    OPENFILENAME openFileName;
+    InitializeOpenFileNameForLogoFiles(openFileName);
+    openFileName.Flags |= OFN_FILEMUSTEXIST;
+
+    // if user found a file then try to load it
+    if (GetOpenFileName(&openFileName))
+    {
+        m_IsNewFile = false;
+
+        start_execution();
+
+        bool isOk = fileload(m_FileName);
+        if (!isOk) 
+        {
+            err_logo(
+                FILE_ERROR, 
+                make_static_strnode(LOCALIZED_ERROR_FILESYSTEM_CANTOPEN));
+        }
+
+        // handle any error that may have occured
+        process_special_conditions();
+
+        stop_execution();
+    }
+}
+
+void CMainFrame::OnFileOpen(wxCommandEvent& WXUNUSED(Event))
+{
+    if (IsDirty)
+    {
+        // Warn the user that File-Open will erase the contents 
+        // of the workspace and give them a chance to cancel the
+        // operation.
+        if (wxMessageBox(
+                LOCALIZED_FILEOPENWILLERASEWORKSPACE,
+                LOCALIZED_YOUHAVEUNSAVEDCHANGES,
+                wxOK | wxCANCEL | wxICON_QUESTION,
+                GetCommander()) == wxCANCEL)
+        {
+            return;
+        }
+    }
+
+    // show the user a file-picker dialog
+    OPENFILENAME openFileName;
+    InitializeOpenFileNameForLogoFiles(openFileName);
+    openFileName.Flags |= OFN_FILEMUSTEXIST;
+
+    // if user found a file then try to open it
+    if (GetOpenFileName(&openFileName))
+    {
+        // start with a clean plate
+        m_IsNewFile = false;
+
+        // erase the contents of the workspace
+        EraseContentsOfWorkspace();
+
+        start_execution();
+
+        bool isOk = fileload(m_FileName);
+        if (!isOk) 
+        {
+            err_logo(
+                FILE_ERROR, 
+                make_static_strnode(LOCALIZED_ERROR_FILESYSTEM_CANTOPEN));
+        }
+
+        // handle any error that may have occured
+        process_special_conditions();
+
+        stop_execution();
+    }
+}
+
+// Displays a warning if the workspace is empty
+// and therefore if saving it would save an empty
+// file, which is probably not what the user expects.
+//
+// returns true, if we should continue to save the workspace.
+// returns false, if we should not save the workspace.
+bool CMainFrame::WarnIfSavingEmptyWorkspace()
+{
+    // Check if there's something in the workspace that
+    // isn't buried (which would be saved).
+    if (!something_is_unburied())
+    {
+        // TODO: use wxMessageBox if it supports default buttons
+        if (MessageBox(
+                static_cast<HWND>(GetHandle()),
+                LOCALIZED_EMPTYWORKSPACE_MESSAGE,
+                LOCALIZED_EMPTYWORKSPACE_TITLE,
+                MB_YESNO | MB_ICONWARNING | MB_DEFBUTTON2) == IDNO)
+        {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+// Prompts the user for the name of the file to save
+// the contents as, then saves the file.
+//
+// Returns "true" if the user saves the file.
+// Returns "false" if the user cancels the save or if the 
+// file couldn't be saved for other reasons.
+bool CMainFrame::SaveFileAs()
+{
+    // if new the nulify File name
+    if (m_IsNewFile)
+    {
+        m_FileName[0] = '\0';
+    }
+
+    // Get file name from user and then save the file
+    OPENFILENAME openFileName;
+    InitializeOpenFileNameForLogoFiles(openFileName);
+    openFileName.Flags |= OFN_OVERWRITEPROMPT;
+
+    bool isOk;
+    if (GetSaveFileName(&openFileName))
+    {
+        m_IsNewFile = false;
+        isOk = SaveFile();
+    }
+    else
+    {
+        isOk = false;
+    }
+
+    return isOk;
+}
+
+bool CMainFrame::SaveFile()
+{
+    filesave(m_FileName);
+
+    // handle any error that may have occured
+    process_special_conditions();
+
+    // BUG: don't assume the file was saved
+    return true;
+}
+
+
+bool CMainFrame::FileSave()
+{
+    bool isOk;
+
+    if (m_IsNewFile)
+    {
+        // The file has never been saved, so we don't know
+        // what file we should save it to.
+        // Ask the user with a "Save As" dialog.
+        isOk = SaveFileAs();
+    }
+    else
+    {
+        // Save the file
+        isOk = SaveFile();
+    }
+
+    return isOk;
+}
+
+void CMainFrame::OnFileSave(wxCommandEvent& WXUNUSED(Event))
+{
+    if (!WarnIfSavingEmptyWorkspace())
+    {
+        return;
+    }
+
+    FileSave();
+}
+
+void CMainFrame::OnFileSaveAs(wxCommandEvent& WXUNUSED(Event))
+{
+    if (!WarnIfSavingEmptyWorkspace())
+    {
+        return;
+    }
+
+    SaveFileAs();
 }
 
 void CMainFrame::OnEditProcedure(wxCommandEvent& WXUNUSED(Event))
