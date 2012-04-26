@@ -300,12 +300,16 @@ CMainFrame::CMainFrame(
     m_Splitter->SplitHorizontally(m_Screen, m_Commander);
     m_CommanderIsDocked = true;
 
-#if 0
-    wxAcceleratorEntry entries[1];
-    entries[0].Set(0,  WXK_F1, ID_HELP);
-    wxAcceleratorTable accel(ARRAYSIZE(entries), entries);
-    SetAcceleratorTable(accel);
-#endif
+    // Configure the keyboard shortcuts
+    wxAcceleratorEntry acceleratorEntries[1];
+
+    // F1 opens help
+    acceleratorEntries[0].Set(wxACCEL_NORMAL, WXK_F1, ID_HELP);
+
+    wxAcceleratorTable acceleratorTable(
+        ARRAYSIZE(acceleratorEntries),
+        acceleratorEntries);
+    SetAcceleratorTable(acceleratorTable);
 
 #if wxUSE_STATUSBAR
     SetStatusText(_T("Min pane size = 0"), 1);
