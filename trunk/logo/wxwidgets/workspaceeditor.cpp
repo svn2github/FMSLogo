@@ -752,7 +752,8 @@ void CWorkspaceEditor::OnClose(wxCloseEvent& Event)
                         "\n"
                         LOCALIZED_RETURNTOEDIT,
                     LOCALIZED_EDITFAILEDTOLOAD,
-                    wxYES_NO | wxICON_ERROR) == wxYES)
+                    wxYES_NO | wxICON_ERROR,
+                    commander) == wxYES)
             {
                 // Open up another editor
                 CFmsLogo::GetMainFrame()->PopupEditor(
