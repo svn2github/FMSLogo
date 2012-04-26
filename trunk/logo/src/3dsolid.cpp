@@ -449,7 +449,7 @@ void TThreeDSolid::AddToBSPTree(POLYGON* Poly, BSPNode** Root)
                       char buffer[256];
                       sprintf(
                           buffer,
-                          "SplitA: %08X ptA %6.3f %6.3f %6.3f %08X ptB %6.3f %6.3f %6.3f pt %6.3f %6.3f %6.3f", 
+                          "SplitA: %p ptA %6.3f %6.3f %6.3f %p ptB %6.3f %6.3f %6.3f pt %6.3f %6.3f %6.3f", 
                           m_Vertices,
                           m_PtA.x, 
                           m_PtA.y, 
@@ -546,7 +546,7 @@ void TThreeDSolid::AddToBSPTree(POLYGON* Poly, BSPNode** Root)
                       char buffer[256];
                       sprintf(
                           buffer,
-                          "SplitB: %08X ptA %6.3f %6.3f %6.3f %08X ptB %6.3f %6.3f %6.3f pt %6.3f %6.3f %6.3f", 
+                          "SplitB: %p ptA %6.3f %6.3f %6.3f %p ptB %6.3f %6.3f %6.3f pt %6.3f %6.3f %6.3f", 
                           m_Vertices, 
                           m_PtA.x, 
                           m_PtA.y, 
@@ -630,11 +630,11 @@ void TThreeDSolid::AddToBSPTree(POLYGON* Poly, BSPNode** Root)
                   {
                       char buffer[256];
                       sprintf(
-                          buffer, 
-                          "ShareB: %08X ptB %6.3f %6.3f %6.3f", 
-                          m_ShareB, 
-                          m_PtB.x, 
-                          m_PtB.y, 
+                          buffer,
+                          "ShareB: %p ptB %6.3f %6.3f %6.3f",
+                          m_ShareB,
+                          m_PtB.x,
+                          m_PtB.y,
                           m_PtB.z);
                       printfx(buffer);
                   }
@@ -810,7 +810,7 @@ void TThreeDSolid::AddToBSPTree(POLYGON* Poly, BSPNode** Root)
                   char buffer[80];
                   sprintf(
                       buffer,
-                      "Poly: %08X %6.3f %6.3f %6.3f %08X", 
+                      "Poly: %p %6.3f %6.3f %6.3f %p", 
                       m_Vertices, 
                       m_Vertices->Vertex.x, 
                       m_Vertices->Vertex.y, 
@@ -828,11 +828,11 @@ void TThreeDSolid::AddToBSPTree(POLYGON* Poly, BSPNode** Root)
                   char buffer[80];
                   sprintf(
                       buffer,
-                      " Out: %08X %6.3f %6.3f %6.3f %08X", 
-                      m_Vertices, 
-                      m_Vertices->Vertex.x, 
+                      " Out: %p %6.3f %6.3f %6.3f %p",
+                      m_Vertices,
+                      m_Vertices->Vertex.x,
                       m_Vertices->Vertex.y, 
-                      m_Vertices->Vertex.z, 
+                      m_Vertices->Vertex.z,
                       m_Vertices->Share);
                   printfx(buffer);
 
@@ -847,11 +847,11 @@ void TThreeDSolid::AddToBSPTree(POLYGON* Poly, BSPNode** Root)
                   char buffer[80];
                   sprintf(
                       buffer,
-                      "  In: %08X %6.3f %6.3f %6.3f %08X", 
-                      m_Vertices, 
-                      m_Vertices->Vertex.x, 
-                      m_Vertices->Vertex.y, 
-                      m_Vertices->Vertex.z, 
+                      "  In: %p %6.3f %6.3f %6.3f %p", 
+                      m_Vertices,
+                      m_Vertices->Vertex.x,
+                      m_Vertices->Vertex.y,
+                      m_Vertices->Vertex.z,
                       m_Vertices->Share);
                   printfx(buffer);
                   m_Vertices->Hack = 2;
@@ -866,7 +866,7 @@ void TThreeDSolid::AddToBSPTree(POLYGON* Poly, BSPNode** Root)
               do
               {
                   char buffer[80];
-                  sprintf(buffer," Out: %08X %6.3f %6.3f %6.3f %08X", Vertices, Vertices->Vertex.x, Vertices->Vertex.y, Vertices->Vertex.z, Vertices->Share);
+                  sprintf(buffer," Out: %p %6.3f %6.3f %6.3f %08X", Vertices, Vertices->Vertex.x, Vertices->Vertex.y, Vertices->Vertex.z, Vertices->Share);
                   printfx(buffer);
                   Vertices = Vertices->Next;
               } while (Vertices != Save2);
@@ -875,7 +875,7 @@ void TThreeDSolid::AddToBSPTree(POLYGON* Poly, BSPNode** Root)
               do
               {
                   char buffer[80];
-                  sprintf(buffer,"  In: %08X %6.3f %6.3f %6.3f %08X", Vertices, Vertices->Vertex.x, Vertices->Vertex.y, Vertices->Vertex.z, Vertices->Share);
+                  sprintf(buffer,"  In: %p %6.3f %6.3f %6.3f %p", Vertices, Vertices->Vertex.x, Vertices->Vertex.y, Vertices->Vertex.z, Vertices->Share);
                   printfx(buffer);
                   Vertices = Vertices->Next;
               } while (Vertices != Save3);
