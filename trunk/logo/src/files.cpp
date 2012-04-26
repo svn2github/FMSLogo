@@ -26,6 +26,7 @@
 #include <setjmp.h>
 
 #include "files.h"
+#include "fileswnd.h"
 #include "logocore.h"
 #include "mem.h"
 #include "init.h"

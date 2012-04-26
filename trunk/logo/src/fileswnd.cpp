@@ -19,6 +19,7 @@
 *
 */
 
+#include "fileswnd.h"
 #include "wrksp.h"
 #include "files.h"
 #include "init.h"

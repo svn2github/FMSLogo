@@ -36,7 +36,7 @@ const DWORD INVALID_FILE_ATTRIBUTES = 0xFFFFFFFF;
 #include "eval.h"
 #include "const.h"
 #include "wrksp.h"
-#include "files.h"
+#include "fileswnd.h"
 #include "error.h"
 #include "init.h"
 #include "logodata.h"
