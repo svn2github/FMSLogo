@@ -42,8 +42,8 @@ LDFLAGS  = -lwx_mswd_stc-2.8 -lwx_mswd-2.8
 TOOLCHAIN_FULLNAME = msw-ansi-debug-static-2.8
 else
 CPPFLAGS =
-CXXFLAGS = -Os
-LDFLAGS  = -lwx_msw-2.8 -lwx_msw_stc-2.8
+CXXFLAGS = -O2
+LDFLAGS  = -lwx_msw_stc-2.8 -lwx_msw-2.8 
 TOOLCHAIN_FULLNAME = msw-ansi-release-static-2.8
 endif
 
