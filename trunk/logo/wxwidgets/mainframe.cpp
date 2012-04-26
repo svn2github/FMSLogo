@@ -17,7 +17,6 @@
 
     #include "wx/splitter.h"
     #include "wx/dcmirror.h"
-    #include "wx/icon.h"
     #include "wx/fontdlg.h"
 
     #include "wx/dcmemory.h"
@@ -54,8 +53,6 @@
 #include "wrksp.h"
 #include "eval.h"
 #include "fileswnd.h"
-
-#include "fmslogo-16x16.xpm"
 
 // ----------------------------------------------------------------------------
 // constants
@@ -186,8 +183,8 @@ END_EVENT_TABLE()
 
 // My frame constructor
 CMainFrame::CMainFrame(
-    int screenWidth,
-    int screenHeight
+    int ScreenWidth,
+    int ScreenHeight
     ) : wxFrame(
         NULL, 
         wxID_ANY, 
@@ -195,7 +192,6 @@ CMainFrame::CMainFrame(
         wxDefaultPosition,
         wxSize(420, 300),
         wxDEFAULT_FRAME_STYLE | wxNO_FULL_REPAINT_ON_RESIZE),
-      m_FmsLogoIcon(NULL),
       m_Screen(NULL),
       m_Commander(NULL),
       m_RealCommander(NULL),
@@ -287,12 +283,14 @@ CMainFrame::CMainFrame(
 
     SetMenuBar(mainMenu);
 
+    SetFmsLogoIcon(*this);
+
     // Add the splitter to separate the screen from the commander
     m_Splitter = new MainSplitterWindow(this);
 
     m_Splitter->SetSashGravity(1.0);
 
-    m_Screen = new CScreen(m_Splitter, screenWidth, screenHeight);
+    m_Screen = new CScreen(m_Splitter, ScreenWidth, ScreenHeight);
 
     m_RealCommander = new CCommander(m_Splitter);
     m_Commander = m_RealCommander;
@@ -313,9 +311,6 @@ CMainFrame::CMainFrame(
     SetStatusText(_T("Min pane size = 0"), 1);
 #endif // wxUSE_STATUSBAR
 
-    m_FmsLogoIcon = new wxIcon(fmslogo_16x16_xpm);
-    SetIcon(*m_FmsLogoIcon);
-
     // init the pens based on the color
     UpdateNormalPen(GetPenStateForSelectedTurtle().Width, pcolor);
     UpdateErasePen(GetPenStateForSelectedTurtle().Width,  scolor);
@@ -326,7 +321,6 @@ CMainFrame::CMainFrame(
 
 CMainFrame::~CMainFrame()
 {
-    delete m_FmsLogoIcon;
 }
 
 

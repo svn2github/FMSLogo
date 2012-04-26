@@ -118,7 +118,7 @@ CWorkspaceEditor::CWorkspaceEditor(
         Parent,
         wxID_ANY, 
         Title,
-        wxDefaultPosition, 
+        wxDefaultPosition,
         wxSize(420, 300),
         wxDEFAULT_FRAME_STYLE | wxNO_FULL_REPAINT_ON_RESIZE),
     m_LogoCodeControl(NULL),
@@ -129,6 +129,7 @@ CWorkspaceEditor::CWorkspaceEditor(
     m_ErrorDetected(false)
 {
     CreateStatusBar(1);
+    SetFmsLogoIcon(*this);
 
     m_LogoCodeControl = new CLogoCodeCtrl(this, ID_LOGOCODECONTROL);
  

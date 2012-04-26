@@ -99,7 +99,6 @@ private:
     bool SaveFile();
     bool SaveFileAs();
 
-    wxIcon           * m_FmsLogoIcon;
     CScreen          * m_Screen;
     wxWindow         * m_Commander;
     CCommander       * m_RealCommander;
