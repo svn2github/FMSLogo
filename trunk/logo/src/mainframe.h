@@ -20,39 +20,8 @@
 
 #include <owl\decframe.h>
 #include <owl\panespli.h>
-#include <owl\printer.h>
 
 #include "mainwind.h" // for qlist
-
-class TRulerOut : public TPrintout
-{
-public:
-
-    TRulerOut(const char * ATitle) : TPrintout(ATitle)
-    {
-    }
-
-    void PrintPage(int Page, TRect & Rect, UINT Flags);
-
-    void GetDialogInfo(int &minPage, int &maxPage, int &selFromPage, int &selToPage)
-    {
-        minPage = 1;
-        maxPage = 1;
-        selFromPage = 1;
-        selToPage = 1;
-    }
-
-    void SetBanding(BOOL b)
-    {
-        Banding = b;
-    }
-
-    bool HasPage(int pageNumber)
-    {
-        return pageNumber == 1;
-    }
-};
-
 
 class TScreenWindow : public TWindow
 {
@@ -241,7 +210,6 @@ private:
         );
 
 public:
-    class TPrinter               Printer;
     class TMyCommandWindow     * CommandWindow;
     class CStatusWindow        * StatusWindow;
     class TPaneSplitter        * PaneSplitterWindow;
@@ -249,6 +217,7 @@ public:
 
 private:
 
+    class TPrinter      * m_Printer;
     class TColorDialog  * m_ScreenColorPicker;
     class TColorDialog  * m_PenColorPicker;
     class TColorDialog  * m_FloodColorPicker;

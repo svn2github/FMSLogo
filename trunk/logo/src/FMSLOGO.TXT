@@ -21,6 +21,8 @@ I. Kit Description/Location (http://sourceforge.net/projects/fmslogo)
 II. New features/bugs fixed:
 
   * Changed in 6.28.0
+    o Fix bug #3521812; FMSLogo now starts up quickly when the operating system
+      has an unresponsive printer.
     o Remove CRYPTO.LGO and PLAYFAIR.LGO examples so that I can mark FMSLogo as
       not being subject to U.S. export controls.
 

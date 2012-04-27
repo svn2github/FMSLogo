@@ -21,6 +21,7 @@
 #include <owl/compat.h>
 #include <owl/scroller.h>
 #include <owl/inputdia.h>
+#include <owl/printer.h>
 #include <shlobj.h>
 
 #ifndef INVALID_FILE_ATTRIBUTES
@@ -68,6 +69,35 @@ const int DEFAULT_SPLITTER_WIDTH   = 5;
 
 const int MAX_PENDING_CONNECTS = 4;  // The backlog allowed for listen()
 
+
+class TRulerOut : public TPrintout
+{
+public:
+
+    TRulerOut(const char * ATitle) : TPrintout(ATitle)
+    {
+    }
+
+    void PrintPage(int Page, TRect & Rect, UINT Flags);
+
+    void GetDialogInfo(int &minPage, int &maxPage, int &selFromPage, int &selToPage)
+    {
+        minPage = 1;
+        maxPage = 1;
+        selFromPage = 1;
+        selToPage = 1;
+    }
+
+    void SetBanding(BOOL b)
+    {
+        Banding = b;
+    }
+
+    bool HasPage(int pageNumber)
+    {
+        return pageNumber == 1;
+    }
+};
 
 // Print page (or pages)
 void TRulerOut::PrintPage(int /* page */, TRect & /* rect */, UINT /* flags */)
@@ -584,6 +614,7 @@ TMainFrame::TMainFrame(
         IsNewFile(true),
         IsNewBitmap(true),
         IsCommanderDocked(false),
+        m_Printer(NULL),
         m_ScreenColorPicker(NULL),
         m_PenColorPicker(NULL),
         m_FloodColorPicker(NULL),
@@ -597,6 +628,7 @@ TMainFrame::TMainFrame(
 TMainFrame::~TMainFrame()
 {
     /* clean things up */
+    delete m_Printer;
     delete CommandWindow;
     delete ScreenWindow;
 
@@ -2417,21 +2449,38 @@ void TMainFrame::CMHelpAboutMS()
     CAboutMultipleSclerosisDialog(this).Execute();
 }
 
-
 // Execute File:Print command
 void TMainFrame::CMBitmapPrint()
 {
     TRulerOut Printout(LOCALIZED_BITMAPPRINTOUTTITLE);
     Printout.SetBanding(false);
-    Printer.Print(this, Printout, true);
+
+    // Delay the initialization of m_Printer until it is used.
+    // This is because calling TPrinter() can potentially hang
+    // for 20 seconds if the default printer is unresponsive
+    // (for example, if it's a network printer that's been powered
+    // off).
+    if (m_Printer == NULL)
+    {
+        m_Printer = new TPrinter();
+    }
+    m_Printer->Print(this, Printout, true);
 }
 
 
 // Execute File:Printer-setup command
-
 void TMainFrame::CMBitmapPrinterSetup()
 {
-    Printer.Setup(this);
+    // Delay the initialization of m_Printer until it is used.
+    // This is because calling TPrinter() can potentially hang
+    // for 20 seconds if the default printer is unresponsive
+    // (for example, if it's a network printer that's been powered
+    // off).
+    if (m_Printer == NULL)
+    {
+        m_Printer = new TPrinter();
+    }
+    m_Printer->Setup(this);
 }
 
 void TMainFrame::EvDestroy()
