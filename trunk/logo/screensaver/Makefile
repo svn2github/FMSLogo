@@ -130,6 +130,7 @@ obj/msdbg-%res.o : %.rc
 define FMSLOGO_SCREENSAVER_template
 $$(TARGET)-$(1).scr : $$(addprefix obj/$(1)-,$$(OBJECTS))
 	$(CXX) -o$$@ $(LDFLAGS) -def:screensaver.def $$^ $(addprefix -l,$(LIBS))
+	strip $$@
 
 obj/$(1)-%.o: ../src/%.cpp
 	$(CXX) -c -o$$@ $(RELEASE_CXXFLAGS) $(CPPFLAGS) -DLOCALE=$1 $$<
