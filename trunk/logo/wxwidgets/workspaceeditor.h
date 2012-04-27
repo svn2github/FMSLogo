@@ -71,6 +71,7 @@ private:
     void OnClose(wxCloseEvent& Event);
 
     // Internal helper functions
+    bool CanClose();
     bool EndEdit();
 
     // member variables

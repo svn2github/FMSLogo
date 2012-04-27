@@ -528,11 +528,49 @@ CWorkspaceEditor::Write(
     return success;
 }
 
+bool CWorkspaceEditor::CanClose()
+{
+    bool canClose;
+
+    if (m_LogoCodeControl->IsDirty())
+    {
+        // if changed better ask user
+        int result = wxMessageBox(
+            LOCALIZED_SAVECHANGEDCONTENTSTOWORKSPACE,
+            LOCALIZED_CONTENTSCHANGED,
+            wxYES_NO | wxCANCEL | wxICON_QUESTION);
+        switch (result)
+        {
+        case wxYES:
+            // The user wants to save then exit.
+            canClose = Save();
+            break;
+
+        case wxCANCEL:
+            // The user wants doesn't want to close.
+            canClose = false;
+            break;
+
+        default:
+            // The user wants to close without saving.
+            canClose = true;
+        }
+    }
+    else
+    {
+        // There's nothing to save, so it's safe to close.
+        canClose = true;
+    }
+
+    return canClose;
+}
+
 // menu command handlers
 void CWorkspaceEditor::OnExit(wxCommandEvent& WXUNUSED(Event))
 {
-    // let the window be destroyed
-    Close(true);
+    // Close the window, but give the user the
+    // opportunity to save all unsaved changes.
+    Close(false);
 }
 
 void CWorkspaceEditor::OnSaveAndExit(wxCommandEvent& Event)
@@ -732,6 +770,12 @@ void CWorkspaceEditor::OnSelectMatchingParen(wxCommandEvent& WXUNUSED(Event))
 
 void CWorkspaceEditor::OnClose(wxCloseEvent& Event)
 {
+    if (Event.CanVeto() && !CanClose())
+    {
+        // The user doesn't want to close.
+        return;
+    }
+
     // remove this window from the set of windows that the main window is tracking
     CFmsLogo::GetMainFrame()->CloseWorkspaceEditor(this);
 
@@ -822,5 +866,6 @@ void CWorkspaceEditor::OnClose(wxCloseEvent& Event)
             windowRectangle.GetHeight());
     }
 
-    Destroy();
+    // Perform the default processing, which will destroy the window.
+    Event.Skip();
 }
