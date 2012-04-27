@@ -19,21 +19,11 @@ public:
 
     CCommander * GetCommander();
 
-    void OnHaltButton(wxCommandEvent& Event);
-    void OnTraceButton(wxCommandEvent& Event);
-    void OnPauseButton(wxCommandEvent& Event);
-    void OnStatusButton(wxCommandEvent& Event);
-    void OnStepButton(wxCommandEvent& Event);
-    void OnResetButton(wxCommandEvent& Event);
-    void OnExecuteButton(wxCommandEvent& Event);
-    void OnEdallButton(wxCommandEvent& Event);
-
-    void OnClose(wxCloseEvent& Event);
-    void OnSize(wxSizeEvent& Event);
-    void OnKeyDown(wxKeyEvent& Event);
     void UpdateTraceButtonState();
     void UpdateStepButtonState();
     void UpdateStatusButtonState();
+
+    void Halt();
 
     void GiveControlToInputBox();
     void GiveControlToHistoryBox();
@@ -52,6 +42,21 @@ public:
     friend void clearcombobox();
 
 private:
+
+    // Event handlers
+    void OnHaltButton(wxCommandEvent& Event);
+    void OnTraceButton(wxCommandEvent& Event);
+    void OnPauseButton(wxCommandEvent& Event);
+    void OnStatusButton(wxCommandEvent& Event);
+    void OnStepButton(wxCommandEvent& Event);
+    void OnResetButton(wxCommandEvent& Event);
+    void OnExecuteButton(wxCommandEvent& Event);
+    void OnEdallButton(wxCommandEvent& Event);
+
+    void OnClose(wxCloseEvent& Event);
+    void OnSize(wxSizeEvent& Event);
+    void OnKeyDown(wxKeyEvent& Event);
+
     CCommanderButton        * m_HaltButton;
     CCommanderToggleButton  * m_TraceButton;
     CCommanderButton        * m_PauseButton;

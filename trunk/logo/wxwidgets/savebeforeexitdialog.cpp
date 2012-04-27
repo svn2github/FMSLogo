@@ -17,8 +17,7 @@ enum
 };
 
 CSaveBeforeExitDialog::CSaveBeforeExitDialog(wxWindow *Parent)
-    : wxDialog(Parent, wxID_ANY, wxString(LOCALIZED_UNSAVEDCHANGES)),
-      m_ExitStatus(SAVEBEFOREEXIT_Cancel)
+    : wxDialog(Parent, wxID_ANY, wxString(LOCALIZED_UNSAVEDCHANGES))
 {
     wxBoxSizer *topLevelSizer = new wxBoxSizer(wxVERTICAL);
 
@@ -67,7 +66,7 @@ CSaveBeforeExitDialog::CSaveBeforeExitDialog(wxWindow *Parent)
     topLevelSizer->SetSizeHints(this);
     topLevelSizer->Fit(this);
 
-    // make the "Save and Exit" button the default
+    // Make the "Save and Exit" button the default.
     saveAndExitButton->SetDefault();
     saveAndExitButton->SetFocus();
 }
@@ -75,25 +74,20 @@ CSaveBeforeExitDialog::CSaveBeforeExitDialog(wxWindow *Parent)
 
 void CSaveBeforeExitDialog::OnExitWithoutSaving(wxCommandEvent& WXUNUSED(event))
 {
-    m_ExitStatus = SAVEBEFOREEXIT_ExitWithoutSaving;
+    SetReturnCode(SAVEBEFOREEXIT_ExitWithoutSaving);
     Destroy();
 }
 
 void CSaveBeforeExitDialog::OnSaveBeforeExit(wxCommandEvent& WXUNUSED(event))
 {
-    m_ExitStatus = SAVEBEFOREEXIT_SaveAndExit;
+    SetReturnCode(SAVEBEFOREEXIT_SaveAndExit);
     Destroy();
 }
 
 void CSaveBeforeExitDialog::OnCancel(wxCommandEvent& WXUNUSED(event))
 {
-    m_ExitStatus = SAVEBEFOREEXIT_Cancel;
+    SetReturnCode(SAVEBEFOREEXIT_Cancel);
     Destroy();
-}
-
-CSaveBeforeExitDialog::SAVEBEFOREEXIT CSaveBeforeExitDialog::GetExitCode()
-{
-    return m_ExitStatus;
 }
 
 BEGIN_EVENT_TABLE(CSaveBeforeExitDialog, wxDialog)

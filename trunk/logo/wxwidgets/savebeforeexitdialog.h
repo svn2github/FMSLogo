@@ -2,27 +2,20 @@
 
 #include <wx/dialog.h>
 
-class wxButton;
-
 class CSaveBeforeExitDialog : public wxDialog
 {
 public:
     CSaveBeforeExitDialog(wxWindow *Parent);
 
-    enum SAVEBEFOREEXIT
-    {
-        SAVEBEFOREEXIT_Cancel,
-        SAVEBEFOREEXIT_ExitWithoutSaving,
-        SAVEBEFOREEXIT_SaveAndExit,
-    };
-
-    void OnExitWithoutSaving(wxCommandEvent& event);
-    void OnSaveBeforeExit(wxCommandEvent& event);
-    void OnCancel(wxCommandEvent& event);
-    SAVEBEFOREEXIT GetExitCode();
+    static const int SAVEBEFOREEXIT_Cancel            = 0;
+    static const int SAVEBEFOREEXIT_ExitWithoutSaving = 1;
+    static const int SAVEBEFOREEXIT_SaveAndExit       = 2;
 
 private:
-    SAVEBEFOREEXIT m_ExitStatus;
+    // event handlers
+    void OnExitWithoutSaving(wxCommandEvent& Event);
+    void OnSaveBeforeExit(wxCommandEvent& Event);
+    void OnCancel(wxCommandEvent& Event);
 
     DECLARE_EVENT_TABLE();
 };

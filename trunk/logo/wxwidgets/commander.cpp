@@ -29,7 +29,6 @@
 #include "statwind.h"
 #include "fontutils.h"
 
-bool g_GiveFocusToInputControl = false;
 bool g_IsOkayToUseCommanderWindow = true;
 
 bool g_StepFlag   = false;
@@ -231,13 +230,25 @@ void CCommander::UpdateStatusButtonState()
     m_StatusButton->SetPressedState(isShowing);
 }
 
+void CCommander::Halt()
+{
+#if 0 // TODO
+    for (int i = 1; i < 32; i++)
+    {
+        MainWindowx->KillTimer(i);
+    }
+#endif
+
+    m_NextInstruction->SetFocus();
+    if (is_executing())
+    {
+        IsTimeToHalt = true;
+    }
+}
+
 void CCommander::OnHaltButton(wxCommandEvent& WXUNUSED(event))
 {
-    wxMessageBox(
-        "Halt button pressed", 
-        "Info",
-        wxOK | wxICON_INFORMATION, 
-        this);
+    Halt();
 }
 
 void CCommander::OnTraceButton(wxCommandEvent& WXUNUSED(event))
@@ -388,9 +399,15 @@ RunLogoInstructionFromGui(
     }
 }
 
-void CCommander::OnExecuteButton(wxCommandEvent& WXUNUSED(event))
+void CCommander::OnExecuteButton(wxCommandEvent& WXUNUSED(Event))
 {
-    g_GiveFocusToInputControl = true;
+    // REVISIT:
+    // GiveFocusToEditbox initially starts off as true,
+    // but can get set to false if executing a command opens
+    // an editor.  This logic dates back to MSWLogo and there may
+    // be other ways to accomplish the same thing that don't
+    // involve global variables.
+    GiveFocusToEditbox = true;
 
     // read what's in the input control
     wxString logoInstruction(m_NextInstruction->GetValue());
@@ -404,26 +421,26 @@ void CCommander::OnExecuteButton(wxCommandEvent& WXUNUSED(event))
     // calling RunLogoInstructionFromGui() can delete the "this" pointer,
     // if it executes FULLSCREEN, TEXTSCREEN, or SPLITSCREEN.
     // Therefore, we must not touch any member variable at this point.
-    if (g_GiveFocusToInputControl)
+    if (GiveFocusToEditbox)
     {
         CFmsLogo::GetMainFrame()->GetCommander()->m_NextInstruction->SetFocus();
     }
 }
 
-void CCommander::OnEdallButton(wxCommandEvent& WXUNUSED(event))
+void CCommander::OnEdallButton(wxCommandEvent& WXUNUSED(Event))
 {
     do_execution("EDALL");
 }
 
-void CCommander::OnClose(wxCloseEvent& event)
+void CCommander::OnClose(wxCloseEvent& Event)
 {
-    if ( event.CanVeto() )
+    if (Event.CanVeto())
     {
         wxMessageBox(_T("Use the menu item to close this dialog"),
                      _T("Modeless dialog"),
                      wxOK | wxICON_INFORMATION, this);
 
-        event.Veto();
+        Event.Veto();
     }
 }
 

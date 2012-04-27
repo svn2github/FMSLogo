@@ -53,6 +53,7 @@
 #include "wrksp.h"
 #include "eval.h"
 #include "fileswnd.h"
+#include "graphwin.h"
 
 // ----------------------------------------------------------------------------
 // constants
@@ -165,7 +166,7 @@ BEGIN_EVENT_TABLE(CMainFrame, wxFrame)
     EVT_MENU(ID_FILESAVEAS,         CMainFrame::OnFileSaveAs)
     EVT_MENU(ID_FILEEDIT,           CMainFrame::OnEditProcedure)
     EVT_MENU(ID_FILEERASE,          CMainFrame::OnEraseProcedure)
-    EVT_MENU(ID_EXIT,               CMainFrame::OnQuit)
+    EVT_MENU(ID_EXIT,               CMainFrame::OnExit)
     EVT_MENU(ID_SETPENSIZE,         CMainFrame::OnSetPenSize)
     EVT_MENU(ID_BITMAPPRINTERAREA,  CMainFrame::OnSetActiveArea)
     EVT_MENU(ID_SETLABELFONT,       CMainFrame::OnSetLabelFont)
@@ -179,6 +180,7 @@ BEGIN_EVENT_TABLE(CMainFrame, wxFrame)
     EVT_MENU(ID_ZOOMIN,             CMainFrame::OnZoomIn)
     EVT_MENU(ID_ZOOMOUT,            CMainFrame::OnZoomOut)
     EVT_MENU(ID_ZOOMNORMAL,         CMainFrame::OnZoomNormal)
+    EVT_CLOSE(CMainFrame::OnClose)
 END_EVENT_TABLE()
 
 // My frame constructor
@@ -575,7 +577,7 @@ CMainFrame::PopupEditor(
         }
     }
 
-    // TODO: m_GiveFocusToEditbox = false;
+    GiveFocusToEditbox = false;
 }
 
 static
@@ -658,17 +660,129 @@ CCommander * CMainFrame::GetCommander()
     return m_RealCommander;
 }
 
-// menu command handlers
-void CMainFrame::OnQuit(wxCommandEvent& WXUNUSED(Event))
+void CMainFrame::OnClose(wxCloseEvent& Event)
 {
-    CSaveBeforeExitDialog dlg(this);
-    dlg.ShowModal();
-    CSaveBeforeExitDialog::SAVEBEFOREEXIT code = dlg.GetExitCode();
-
-    if (code != CSaveBeforeExitDialog::SAVEBEFOREEXIT_Cancel)
+    if (Event.CanVeto())
     {
-        Close(true);
+        // If an editor is running we could lose unsaved changes
+        CWorkspaceEditor * editor = GetWorkspaceEditor();
+        if (editor != NULL)
+        {
+            // make sure that the editor is visible
+            editor->Iconize(false);
+            editor->Show();
+            editor->Raise();
+            GiveFocusToEditbox = false;
+
+            if (wxMessageBox(
+                    LOCALIZED_CHANGESINEDITORMAYBELOST,
+                    LOCALIZED_EDITSESSIONISRUNNING,
+                    wxOK | wxCANCEL | wxICON_QUESTION) != wxOK)
+            {
+                // The user doesn't want to shutdown.
+                Event.Veto();
+                return;
+            }
+        }
+
+
+        if (is_executing())
+        {
+            // The language engine is not halted.
+            // Warn user and give chance to abort shutdown.
+            if (IsTimeToHalt)
+            {
+                // we already tried warn user of doom
+                if (wxMessageBox(
+                        LOCALIZED_NOTHALTEDREALLYEXIT,
+                        LOCALIZED_LOGOISNOTHALTED,
+                        wxOK | wxCANCEL | wxICON_QUESTION) != wxOK)
+                {
+                    // The user doesn't want to shutdown.
+                    Event.Veto();
+                    return;
+                }
+            }
+            else
+            {
+                // let the user optionally halt first
+                if (wxMessageBox(
+                        LOCALIZED_NOTHALTEDREALLYHALT,
+                        LOCALIZED_LOGOISNOTHALTED,
+                        wxOK | wxCANCEL | wxICON_QUESTION) == wxOK)
+                {
+                    m_RealCommander->Halt();
+                }
+                Event.Veto();
+                return;
+            }
+        }
+
+        // If the workspace has unsaved changes, then give the
+        // user a chance to abort shutdown.
+        if (IsDirty)
+        {
+            CSaveBeforeExitDialog saveChangesDialog(this);
+
+            saveChangesDialog.ShowModal();
+            int exitCode = saveChangesDialog.GetReturnCode();
+            switch (exitCode)
+            {
+            case CSaveBeforeExitDialog::SAVEBEFOREEXIT_Cancel:
+                // Don't exit FMSLogo
+                IsTimeToHalt  = false;
+                IsTimeToExit  = false;
+                stopping_flag = RUN;
+                Event.Veto();
+                return;
+
+            case CSaveBeforeExitDialog::SAVEBEFOREEXIT_SaveAndExit:
+                // save and then exit
+
+                // HACK: Set TimeToExit and TimeToHalt to false
+                // so that writing the file to disk doesn't abort.
+                // This is hack because the code should not modify
+                // global variables--there should be a way to tell 
+                // CMFileSave to ignore errors.
+                bool savedIsTimeToExit = IsTimeToExit;
+                bool savedIsTimeToHalt = IsTimeToHalt;
+
+                IsTimeToExit = false;
+                IsTimeToHalt = false;
+                bool isOk = FileSave();
+                if (!isOk)
+                {
+                    // Something went wrong (most likely, the user 
+                    // pressed "Cancel" when asked to choose a filename).
+                    // Give the user a chance to fix the problem.
+                    IsTimeToHalt  = false;
+                    IsTimeToExit  = false;
+                    stopping_flag = RUN;
+                    Event.Veto();
+                    return;
+                }
+
+                IsTimeToExit = savedIsTimeToExit;
+                IsTimeToHalt = savedIsTimeToHalt;
+                break;
+            }
+        }
     }
+
+    // If we made it here we are OK to exit.
+    // Invoke the default handler, which is to destroy
+    // the window and shut down.
+    Event.Skip();
+}
+
+
+// menu command handlers
+void CMainFrame::OnExit(wxCommandEvent& WXUNUSED(Event))
+{
+    // Attempt to close the application while
+    // giving the user an opportunity to abort
+    // the operation.
+    Close(false);
 }
 
 // CONSIDER: move this to wrksp.c, since it has no coheasion

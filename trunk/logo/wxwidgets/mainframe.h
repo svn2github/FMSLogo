@@ -60,7 +60,7 @@ private:
     void OnFileSaveAs(wxCommandEvent& Event);
     void OnEditProcedure(wxCommandEvent& Event);
     void OnEraseProcedure(wxCommandEvent& Event);
-    void OnQuit(wxCommandEvent& Event);
+    void OnExit(wxCommandEvent& Event);
     void OnSetLabelFont(wxCommandEvent& Event);
     void OnSetActiveArea(wxCommandEvent& Event);
     void OnSetPenSize(wxCommandEvent& Event);
@@ -74,6 +74,8 @@ private:
     void OnExamples(wxCommandEvent& Event);
     void OnAboutFmsLogo(wxCommandEvent& Event);
     void OnAboutMultipleSclerosis(wxCommandEvent& Event);
+
+    void OnClose(wxCloseEvent& Event);
 
     CWorkspaceEditor *
     CreateWorkspaceEditor(
@@ -98,6 +100,7 @@ private:
     bool FileSave();
     bool SaveFile();
     bool SaveFileAs();
+    bool CanClose();
 
     CScreen          * m_Screen;
     wxWindow         * m_Commander;
