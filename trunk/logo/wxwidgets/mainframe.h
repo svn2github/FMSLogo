@@ -34,6 +34,12 @@ public:
 
     CWorkspaceEditor * GetWorkspaceEditor();
 
+    bool
+    PromptUserForInput(
+        char       * Output,
+        const char * Prompt
+        );
+
     void
     PopupEditor(
         const wxString & FileName,

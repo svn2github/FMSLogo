@@ -15,7 +15,6 @@ class CCommander : public wxPanel
 {
 public:
     CCommander(wxWindow *Parent);
-    ~CCommander() {};
 
     CCommander * GetCommander();
 
@@ -23,6 +22,7 @@ public:
     void UpdateStepButtonState();
     void UpdateStatusButtonState();
 
+    void ToggleStep();
     void Halt();
 
     void GiveControlToInputBox();
@@ -53,7 +53,6 @@ private:
     void OnExecuteButton(wxCommandEvent& Event);
     void OnEdallButton(wxCommandEvent& Event);
 
-    void OnClose(wxCloseEvent& Event);
     void OnSize(wxSizeEvent& Event);
     void OnKeyDown(wxKeyEvent& Event);
 

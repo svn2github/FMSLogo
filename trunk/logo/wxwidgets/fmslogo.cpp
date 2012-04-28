@@ -26,6 +26,7 @@
 #include "files.h"
 #include "mainwind.h"
 #include "eval.h"
+#include "print.h"
 #include "screenwindow.h"
 #include "workspaceeditor.h"
 
@@ -521,10 +522,44 @@ bool CheckOnScreenControls()
 
 void single_step_box(NODE *the_line)
 {
+    char textbuf[MAX_BUFFER_SIZE];
+
+    // pop up single step box showing line of code
+    print_stringptr = textbuf;
+    print_stringlen = MAX_BUFFER_SIZE;
+    ndprintf((FILE *) NULL, "%p", the_line);
+    *print_stringptr = '\0';
+
+    if (wxMessageBox(
+            textbuf,
+            LOCALIZED_STEPPING,
+            wxOK | wxCANCEL) == wxCANCEL)
+    {
+        if (stepflag)
+        {
+            // Act like someone pressed the "UnStep" button
+            CFmsLogo::GetMainFrame()->GetCommander()->ToggleStep();
+        }
+        else
+        {
+            err_logo(STOP_ERROR, NIL);
+        }
+    }
 }
 
 bool promptuser(char *str, const char *prompt)
 {
+    *str = '\0';
+    if (CFmsLogo::GetMainFrame()->PromptUserForInput(str, prompt))
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+        // if (!is_executing()) IsTimeToHalt = true;
+        // MainWindowx->CommandWindow->PostMessage(WM_COMMAND, ID_HALT, ID_HALT);
+    }
     return false;
 }
 

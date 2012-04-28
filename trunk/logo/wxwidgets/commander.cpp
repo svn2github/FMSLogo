@@ -16,6 +16,7 @@
 #include "localizedstrings.h"
 #include "utils.h"
 #include "logocore.h"
+#include "logodata.h"
 #include "commanderbutton.h"
 #include "commandertogglebutton.h"
 #include "commanderinput.h"
@@ -28,11 +29,9 @@
 #include "graphwin.h"
 #include "statwind.h"
 #include "fontutils.h"
+#include "screenwindow.h"
 
 bool g_IsOkayToUseCommanderWindow = true;
-
-bool g_StepFlag   = false;
-bool g_TraceFlag  = false;
 
 // holds the history
 static CDynamicBuffer g_HistoryBuffer;
@@ -200,7 +199,7 @@ CCommander::CCommander(wxWindow *Parent)
 
 void CCommander::UpdateStepButtonState()
 {
-    m_StepButton->SetPressedState(g_StepFlag);
+    m_StepButton->SetPressedState(stepflag);
 }
 
 
@@ -221,7 +220,7 @@ wxButton * CCommander::GetEdallButton()
 
 void CCommander::UpdateTraceButtonState()
 {
-    m_TraceButton->SetPressedState(g_TraceFlag);
+    m_TraceButton->SetPressedState(traceflag);
 }
 
 void CCommander::UpdateStatusButtonState()
@@ -246,30 +245,31 @@ void CCommander::Halt()
     }
 }
 
-void CCommander::OnHaltButton(wxCommandEvent& WXUNUSED(event))
+void CCommander::OnHaltButton(wxCommandEvent& WXUNUSED(Event))
 {
     Halt();
 }
 
-void CCommander::OnTraceButton(wxCommandEvent& WXUNUSED(event))
+void CCommander::OnTraceButton(wxCommandEvent& WXUNUSED(Event))
 {
     // toggle trace state 
-    g_TraceFlag = !g_TraceFlag;
+    traceflag = !traceflag;
     UpdateTraceButtonState();
 
     m_NextInstruction->SetFocus();
 }
 
-void CCommander::OnPauseButton(wxCommandEvent& WXUNUSED(event))
+void CCommander::OnPauseButton(wxCommandEvent& WXUNUSED(Event))
 {
-    wxMessageBox(
-        "Pause button pressed", 
-        "Info",
-        wxOK | wxICON_INFORMATION, 
-        this);
+    // If it's ok to halt then it's ok to pause.
+    m_NextInstruction->SetFocus();
+    if (is_executing())
+    {
+        IsTimeToPause = true;
+    }
 }
 
-void CCommander::OnStatusButton(wxCommandEvent& WXUNUSED(event))
+void CCommander::OnStatusButton(wxCommandEvent& WXUNUSED(Event))
 {
     CMainFrame * mainFrame = CFmsLogo::GetMainFrame();
     if (mainFrame->StatusDialogIsShowing())
@@ -286,22 +286,33 @@ void CCommander::OnStatusButton(wxCommandEvent& WXUNUSED(event))
     m_NextInstruction->SetFocus();
 }
 
-void CCommander::OnStepButton(wxCommandEvent& WXUNUSED(event))
+void CCommander::ToggleStep()
 {
     // toggle yield state
-    g_StepFlag = !g_StepFlag;
+    stepflag = !stepflag;
     UpdateStepButtonState();
 
     m_NextInstruction->SetFocus();
 }
 
-void CCommander::OnResetButton(wxCommandEvent& WXUNUSED(event))
+void CCommander::OnStepButton(wxCommandEvent& WXUNUSED(Event))
 {
-    wxMessageBox(
-        "Reset button pressed", 
-        "Info",
-        wxOK | wxICON_INFORMATION, 
-        this);
+    ToggleStep();
+}
+
+void CCommander::OnResetButton(wxCommandEvent& WXUNUSED(Event))
+{
+    // run 'CLEARSCREEN' and return focus
+    char instruction[MAX_BUFFER_SIZE];
+   
+    cap_strnzcpy(
+        instruction,
+        LOCALIZED_ALTERNATE_CLEARSCREEN, 
+        STRINGLENGTH(LOCALIZED_ALTERNATE_CLEARSCREEN));
+    
+    RunLogoInstructionFromGui(instruction);
+
+    m_NextInstruction->SetFocus();
 }
 
 void clearcombobox()
@@ -432,18 +443,6 @@ void CCommander::OnEdallButton(wxCommandEvent& WXUNUSED(Event))
     do_execution("EDALL");
 }
 
-void CCommander::OnClose(wxCloseEvent& Event)
-{
-    if (Event.CanVeto())
-    {
-        wxMessageBox(_T("Use the menu item to close this dialog"),
-                     _T("Modeless dialog"),
-                     wxOK | wxICON_INFORMATION, this);
-
-        Event.Veto();
-    }
-}
-
 CCommander * CCommander::GetCommander()
 {
     return this;
@@ -568,7 +567,7 @@ void CCommander::OnKeyDown(wxKeyEvent& Event)
     }
     else
     {
-        fprintf(stderr, "skipping keydown event on CCommander\n");
+        TraceOutput("Skipping keydown event on CCommander\n");
         Event.Skip();
     }
 }

@@ -3,24 +3,25 @@
 // ----------------------------------------------------------------------------
 
 // For compilers that support precompilation, includes "wx/wx.h".
-#include "wx/wxprec.h"
+#include <wx/wxprec.h>
 
 #ifndef WX_PRECOMP
-    #include "wx/log.h"
+    #include <wx/log.h>
 
-    #include "wx/app.h"
-    #include "wx/frame.h"
+    #include <wx/app.h>
+    #include <wx/frame.h>
 
-    #include "wx/scrolwin.h"
-    #include "wx/menu.h"
-    #include "wx/msgdlg.h"
+    #include <wx/scrolwin.h>
+    #include <wx/menu.h>
+    #include <wx/msgdlg.h>
 
-    #include "wx/splitter.h"
-    #include "wx/dcmirror.h"
-    #include "wx/fontdlg.h"
+    #include <wx/splitter.h>
+    #include <wx/dcmirror.h>
+    #include <wx/fontdlg.h>
 
-    #include "wx/dcmemory.h"
+    #include <wx/dcmemory.h>
 
+    #include <wx/textdlg.h>  // for wxGetTextFromUser
     #include <wx/fontutil.h> // for wxNativeFontInfo
 #endif
 
@@ -552,6 +553,28 @@ CMainFrame::CreateWorkspaceEditor(
     m_Editors.insert(std::pair<CWorkspaceEditor*,CWorkspaceEditor*>(editor,editor));
 
     return editor;
+}
+
+bool CMainFrame::PromptUserForInput(char *Output, const char *Prompt)
+{
+    // get user input
+    const wxString userInput = wxGetTextFromUser(
+        LOCALIZED_INPUT,
+        Prompt,
+        wxEmptyString,
+        this);
+    if (userInput.IsEmpty())
+    {
+        return false;
+    }
+
+    // Copy the user input to the Output string
+    strncpy(
+        Output,
+        userInput.c_str(),
+        MAX_BUFFER_SIZE - 1);
+    Output[MAX_BUFFER_SIZE - 1] = '\0';
+    return true;
 }
 
 void
