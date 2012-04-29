@@ -36,12 +36,12 @@ WINDRES = windres
 wx_top_builddir = /cygdrive/c/wxMSW-2.8.12
 
 ifeq "$(DEBUG)" "1"
-CPPFLAGS = -D__WXDEBUG__
+CPPFLAGS = -D__WXDEBUG__ -DMEM_DEBUG -DDEBUG
 CXXFLAGS = -O0 -g -ggdb
 LDFLAGS  = -lwx_mswd_stc-2.8 -lwx_mswd-2.8
 TOOLCHAIN_FULLNAME = msw-ansi-debug-static-2.8
 else
-CPPFLAGS =
+CPPFLAGS = -DNDEBUG
 CXXFLAGS = -O2
 LDFLAGS  = -lwx_msw_stc-2.8 -lwx_msw-2.8 
 TOOLCHAIN_FULLNAME = msw-ansi-release-static-2.8
