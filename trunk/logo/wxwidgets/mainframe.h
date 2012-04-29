@@ -19,7 +19,13 @@ struct NODE;
 class CMainFrame : public wxFrame
 {
 public:
-    CMainFrame(int ScreenWidth, int ScreenHeight);
+    CMainFrame(
+        int             ScreenWidth,
+        int             ScreenHeight,
+        const wxPoint & Position = wxDefaultPosition,
+        const wxSize  & Size     = wxDefaultSize
+        );
+
     virtual ~CMainFrame();
 
     void UndockCommanderWindow();

@@ -186,14 +186,16 @@ END_EVENT_TABLE()
 
 // My frame constructor
 CMainFrame::CMainFrame(
-    int ScreenWidth,
-    int ScreenHeight
+    int             ScreenWidth,
+    int             ScreenHeight,
+    const wxPoint & Position,
+    const wxSize  & Size
     ) : wxFrame(
         NULL, 
         wxID_ANY, 
         LOCALIZED_GENERAL_PRODUCTNAME,
-        wxDefaultPosition,
-        wxSize(420, 300),
+        Position,
+        Size,
         wxDEFAULT_FRAME_STYLE | wxNO_FULL_REPAINT_ON_RESIZE),
       m_Screen(NULL),
       m_Commander(NULL),
@@ -295,13 +297,10 @@ CMainFrame::CMainFrame(
 
     m_Screen = new CScreen(m_Splitter, ScreenWidth, ScreenHeight);
 
-    m_RealCommander = new CCommander(m_Splitter);
-    m_Commander = m_RealCommander;
+    DockCommanderWindow();
 
-    m_Screen->Show(true);
-    m_Commander->Show(true);
-    m_Splitter->SplitHorizontally(m_Screen, m_Commander);
-    m_CommanderIsDocked = true;
+    m_Screen->Show();
+    m_Commander->Show();
 
     // Configure the keyboard shortcuts
     wxAcceleratorEntry acceleratorEntries[1];
@@ -369,9 +368,7 @@ void CMainFrame::UndockCommanderWindow()
         m_RealCommander = newCommander->GetCommander();
         m_Commander->Show();
 
-#if 0
-        CommandWindow->Editbox.SetFocus();
-#endif
+        m_RealCommander->GiveControlToInputBox();
         m_CommanderIsDocked = false;
     }
 }
@@ -462,30 +459,32 @@ void CMainFrame::DockCommanderWindow()
             splitterPosition = 20;
         }
 
-        m_Splitter->SetSashPosition(splitterPosition);
-
         m_Splitter->SplitHorizontally(m_Screen, newCommander);
+        m_Splitter->SetSashPosition(splitterPosition);
 
 #if 0
         // TODO copy the history
         newCommandWindow->Duplicate(*CommandWindow);
 #endif
 
-#if 0
+
+#if 0 // is this necessary with wxWidgets?
         // redraw the entire screen window
-        ScreenWindow->Invalidate(true);
-        newCommandWindow->Invalidate(true);
+        m_Screen->Update();
+        newCommander->Update();
 #endif
 
         // commit to the docked commander
-        m_Commander->Close(true);
+        if (m_Commander != NULL)
+        {
+            // m_Commander is NULL when this is called from the constructor
+            m_Commander->Destroy();
+        }
         m_Commander     = newCommander;
         m_RealCommander = newCommander->GetCommander();
         m_Commander->Show();
 
-#if 0
-        CommandWindow->Editbox.SetFocus();
-#endif
+        m_RealCommander->GiveControlToInputBox();
 
         m_CommanderIsDocked = true;
     }
@@ -516,7 +515,7 @@ CMainFrame::CreateWorkspaceEditor(
         EditArguments,
         CheckForErrors);
 
-#if 0
+#if 0 // TODO
     // Construct the default coordinates of the editor's window
     // to be about 1/2 of the working area and placed in the center.
     int maxWidth;
@@ -793,6 +792,52 @@ void CMainFrame::OnClose(wxCloseEvent& Event)
     }
 
     // If we made it here we are OK to exit.
+
+    // Don't save the window size if it's minimized, the commander is undocked,
+    // or if FMSLogo was started with the -F option.
+    if (!IsIconized() && m_CommanderIsDocked && !bFixed)
+    {
+        // Get location and size of our window on the screen so we can
+        // come back up in the same spot next time we are invoked.
+        const wxRect mainWindowRect = GetRect();
+
+        // save the current location of the screen
+        SetConfigurationQuadruple(
+            "Screen",
+            mainWindowRect.GetLeft(),
+            mainWindowRect.GetTop(),
+            mainWindowRect.GetWidth(),
+            mainWindowRect.GetHeight());
+
+        // Save the current location of the commander.
+        // When the comander is docked, only the height
+        // is relevant, but we must save all parts.
+        const wxRect commanderRectangle = m_RealCommander->GetScreenRect();
+
+        SetConfigurationQuadruple(
+            "Commander",
+            commanderRectangle.GetLeft(),
+            commanderRectangle.GetTop(),
+            commanderRectangle.GetWidth(),
+            commanderRectangle.GetHeight());
+    }
+
+    // Cleanup the pens
+    // REVISIT: This is where the pens were destroyed in the OWL
+    // implementation, but it doesn't seem like the right place
+    // for it.
+    if (g_NormalPen != NULL)
+    {
+        DeleteObject(g_NormalPen);
+        g_NormalPen = NULL;
+    }
+
+    if (g_ErasePen != NULL)
+    {
+        DeleteObject(g_ErasePen);
+        g_ErasePen = NULL;
+    }
+
     // Invoke the default handler, which is to destroy
     // the window and shut down.
     Event.Skip();
@@ -1248,16 +1293,19 @@ void CMainFrame::OnSetLabelFont(wxCommandEvent& WXUNUSED(Event))
 
 void CMainFrame::OnZoomIn(wxCommandEvent& WXUNUSED(Event))
 {
+    // TODO
     UndockCommanderWindow();
 }
 
 void CMainFrame::OnZoomOut(wxCommandEvent& WXUNUSED(Event))
 {
+    // TODO
     DockCommanderWindow();
 }
 
 void CMainFrame::OnZoomNormal(wxCommandEvent& WXUNUSED(Event))
 {
+    // TODO
     // For now, show the "To" mini-editor as a test hook
     CMiniEditor dlg(this, "TO SQUARE :length");
     dlg.ShowModal();

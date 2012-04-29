@@ -388,10 +388,13 @@ bool CFmsLogo::OnInit()
     init_graphics();
 
     // create and show the main frame
-    CMainFrame * frame = new CMainFrame(BitMapWidth, BitMapHeight);
+    CMainFrame * frame = new CMainFrame(
+        BitMapWidth,
+        BitMapHeight,
+        wxPoint(x, y),
+        wxSize(w, h));
 
-    frame->GetScreen()->SetSize(x, y, w, h);
-    frame->Show(true);
+    frame->Show();
 
     return rval;
 }
