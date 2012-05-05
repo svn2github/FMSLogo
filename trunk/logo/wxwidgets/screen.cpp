@@ -11,13 +11,14 @@
     #include <wx/dcmemory.h>
 #endif
 
-#include <fmslogo.h>
-#include <commander.h>
-#include <commanderinput.h>
-#include <mainframe.h>
-#include <graphwin.h>
-#include <screenwindow.h>
-#include <main.h>
+#include "fmslogo.h"
+#include "commander.h"
+#include "commanderinput.h"
+#include "mainframe.h"
+#include "graphwin.h"
+#include "screenwindow.h"
+#include "main.h"
+#include "logocore.h"
 
 // ----------------------------------------------------------------------------
 // CScreen
@@ -31,28 +32,23 @@ CScreen::CScreen(
     wxScrolledWindow(
         parent, 
         wxID_ANY, 
-        wxDefaultPosition, 
+        wxDefaultPosition,
         wxDefaultSize,
         wxHSCROLL | wxVSCROLL | wxNO_FULL_REPAINT_ON_RESIZE),
     m_ScreenDeviceContext(0),
     m_MemoryDeviceContext(0),
-    m_MemoryBitmap(0)
+    m_MemoryBitmap(0),
+    m_XScrollRatio(0.5),
+    m_YScrollRatio(0.5)
 {
     if (!bFixed)
     {
+        // Prepare the scrollbars
         SetVirtualSize(logicalScreenWidth, logicalScreenHeight);
+        SetScrollRate(1, 1);
 
-        int clientWidth;
-        int clientHeight;
-        GetClientSize(&clientWidth, &clientHeight);
-
-        SetScrollbars(
-            1,
-            1,
-            std::max(0, logicalScreenWidth - clientWidth), 
-            std::max(0, logicalScreenHeight - clientHeight),
-            (logicalScreenWidth - clientWidth) / 2,
-            (logicalScreenHeight - clientHeight) / 2);
+        // Scroll to the center
+        ScrollToRatio();
     }
 
     m_ScreenDeviceContext = new wxClientDC(this);
@@ -84,6 +80,56 @@ CScreen::~CScreen()
     delete m_ScreenDeviceContext;
     delete m_MemoryBitmap;
     delete m_MemoryDeviceContext;
+}
+
+static
+FLONUM
+GetScrollRatio(int CurrentPosition, int TotalLength)
+{
+    FLONUM ratio;
+
+    if (TotalLength <= 1)
+    {
+        ratio = 0;
+    }
+    else
+    {
+        ratio = (FLONUM) CurrentPosition / (FLONUM) (TotalLength);
+    }
+
+    return ratio;
+}
+
+void CScreen::ScrollToRatio()
+{
+    // Get the virtual size.
+    // This is the size of the drawable areas scaled to the
+    // current zoom factor.
+    int virtualWidth;
+    int virtualHeight;
+    GetVirtualSize(&virtualWidth, &virtualHeight);
+
+    // Get the size of the viewable area.
+    const wxRect & screenRect = GetClientSize();
+
+    // Calculate the scroll positions that correspond to
+    // the scroll ratios.
+    int newXScrollPosition = -1;
+    if (screenRect.GetWidth() <= virtualWidth)
+    {
+        int totalRange = virtualWidth - screenRect.GetWidth();
+        newXScrollPosition = static_cast<int>(totalRange * m_XScrollRatio);
+    }
+
+    int newYScrollPosition = -1;
+    if (screenRect.GetHeight() <= virtualHeight)
+    {
+        int totalRange = virtualHeight - screenRect.GetHeight();
+        newYScrollPosition = static_cast<int>(totalRange * m_YScrollRatio);
+    }
+
+    // Scroll to the new location
+    Scroll(newXScrollPosition, newYScrollPosition);
 }
 
 void CScreen::OnPaint(wxPaintEvent& PaintEvent)
@@ -305,6 +351,36 @@ wxMemoryDC & CScreen::GetMemoryDeviceContext()
 
 void CScreen::OnScroll(wxScrollWinEvent& Event)
 {
+    if (Event.GetEventType() == wxEVT_SCROLLWIN_THUMBRELEASE)
+    {
+        // The user has just let go of the mouse after scrolling.
+
+        // Get the virtual size.
+        // This is the size of the drawable areas scaled to the
+        // current zoom factor.
+        int virtualWidth;
+        int virtualHeight;
+        GetVirtualSize(&virtualWidth, &virtualHeight);
+
+        // Get the size of the viewable area, which is also
+        // the scroll range, since we scroll 1:1 with pixels.
+        int viewWidth;
+        int viewHeight;
+        GetClientSize(&viewWidth, &viewHeight);
+
+        // Update the scroll ratio that corresponds to this event.
+        switch (Event.GetOrientation())
+        {
+        case wxHORIZONTAL:
+            m_XScrollRatio = GetScrollRatio(Event.GetPosition(), virtualWidth - viewWidth);
+            break;
+
+        case wxVERTICAL:
+            m_YScrollRatio = GetScrollRatio(Event.GetPosition(), virtualHeight - viewHeight);
+            break;
+        }
+    }
+
     // Force a screen repaint
     Update();
 
@@ -376,9 +452,17 @@ void CScreen::OnKeyUp(wxKeyEvent& Event)
     Event.Skip();
 }
 
+void CScreen::OnSize(wxSizeEvent& Event)
+{
+    ScrollToRatio();
+    Event.Skip();
+    Refresh();
+}
+
 BEGIN_EVENT_TABLE(CScreen, wxScrolledWindow)
     EVT_KEY_DOWN(CScreen::OnKeyDown)
     EVT_KEY_UP(CScreen::OnKeyUp)
     EVT_PAINT(CScreen::OnPaint)
+    EVT_SIZE(CScreen::OnSize)
     EVT_SCROLLWIN(CScreen::OnScroll)
 END_EVENT_TABLE()

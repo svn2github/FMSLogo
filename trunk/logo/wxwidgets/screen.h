@@ -12,19 +12,25 @@ public:
     CScreen(wxWindow* parent, int width, int height);
     virtual ~CScreen();
 
-    void OnKeyDown(wxKeyEvent& Event);
-    void OnKeyUp(wxKeyEvent& Event);
-    void OnScroll(wxScrollWinEvent & Event);
-    void OnPaint(wxPaintEvent& PaintEvent);
-
     wxClientDC & GetScreenDeviceContext();
     wxMemoryDC & GetMemoryDeviceContext();
 
 private:
+    // event handlers
+    void OnKeyDown(wxKeyEvent& Event);
+    void OnKeyUp(wxKeyEvent& Event);
+    void OnScroll(wxScrollWinEvent & Event);
+    void OnPaint(wxPaintEvent& PaintEvent);
+    void OnSize(wxSizeEvent& Event);
+
+    void ScrollToRatio();
 
     wxClientDC * m_ScreenDeviceContext;
     wxMemoryDC * m_MemoryDeviceContext;
     wxBitmap   * m_MemoryBitmap;
+
+    double       m_XScrollRatio;
+    double       m_YScrollRatio;
 
     DECLARE_NO_COPY_CLASS(CScreen)
     DECLARE_EVENT_TABLE();
