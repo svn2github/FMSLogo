@@ -8,6 +8,7 @@ class CStatusDialog : public wxDialog
 {
 public:
     CStatusDialog(wxWindow *Parent);
+    void PopulateAllFields();
 
     void SetPenContact(bool PenIsUp);
     void SetPenWidth(int PenWidth);
@@ -27,9 +28,9 @@ public:
     void SetVectors(int TotalVectors);
     void SetPolygons(int TotalPolygons);
 
+private:
     void OnClose(wxCloseEvent& event);
 
-private:
     wxStaticText * m_PenContact;
     wxStaticText * m_PenWidth;
     wxStaticText * m_PenStyle;

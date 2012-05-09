@@ -12,6 +12,13 @@
 #include "logocore.h" // for ARRAYSIZE
 #include "mainwind.h" // for checkwindow()
 #include "utils.h"
+#include "status.h"
+#include "graphics.h"
+#include "graphwin.h"
+#include "eval.h"
+#include "mem.h"
+
+bool status_flag = false;   // Flag to signal status box is popped up
 
 // Menu IDs
 enum
@@ -204,27 +211,53 @@ CStatusDialog::CStatusDialog(wxWindow * Parent)
 
     SetSizer(topLevelSizer);
 
-    // TODO: make this dynamic
+    // Populate with long data to determine the maximum
+    // extents which we'll need to show the data without
+    // truncation.
     SetPenContact(true);
-    SetPenWidth(5);
-    SetPenStyle("normal");
-    SetTurtleHeading(90.5);
-    SetTurtlePitch(0.0);
-    SetTurtleRoll(0.0);
-    SetTurtlePosition(100, 200, 0);
-    SetTurtleId(1);
+    SetPenWidth(100);
+    SetPenStyle(LOCALIZED_STATUS_PENREVERSE);
+    SetTurtleHeading(350.1234);
+    SetTurtlePitch(350.1234);
+    SetTurtleRoll(350.1234);
+    SetTurtlePosition(8888, 8888, 8888);
+    SetTurtleId(1000);
     SetTurtleVisibility(true);
-    SetPenColor(0, 0, 0);
-    SetFloodColor(0, 0, 0);
+    SetPenColor(255, 255, 255);
+    SetFloodColor(255, 255, 255);
     SetScreenColor(255, 255, 255);
     SetPaletteUse(-1);
-    SetCalls(123);
-    SetPeakMemory(6000);
-    SetVectors(0);
-    SetPolygons(0);
+    SetCalls(8888888);
+    SetPeakMemory(8888888);
+    SetVectors(8888888);
+    SetPolygons(8888888);
 
     topLevelSizer->SetSizeHints(this);
     topLevelSizer->Fit(this);
+}
+
+void CStatusDialog::PopulateAllFields()
+{
+    // flag so that updates are sent
+    status_flag = true;
+
+    // update all fields
+    update_status_evals();
+    update_status_floodcolor();
+    update_status_memory();
+    update_status_paletteuse();
+    update_status_pencolor();
+    update_status_pencontact();
+    update_status_penstyle();
+    update_status_penwidth();
+    update_status_screencolor();
+    update_status_turtleheading();
+    update_status_turtlepitch();
+    update_status_turtleposition();
+    update_status_turtleroll();
+    update_status_turtlevisability();
+    update_status_turtlewhich();
+    update_status_vectors();
 }
 
 void CStatusDialog::SetPenContact(bool PenIsUp)
@@ -344,7 +377,7 @@ void CStatusDialog::SetPaletteUse(int ColorsUsed)
 
     if (ColorsUsed < 0)
     {
-        paletteUseString = "N/A";
+        paletteUseString = LOCALIZED_STATUS_NOT_APPLICABLE;
     }
     else
     {
@@ -373,7 +406,14 @@ void CStatusDialog::SetPeakMemory(int TotalNodes)
 void CStatusDialog::SetVectors(int TotalVectors)
 {
     wxString totalVectorsString;
-    totalVectorsString.Printf("%d", TotalVectors);
+    if (TotalVectors < 0)
+    {
+        totalVectorsString = LOCALIZED_STATUS_NOT_APPLICABLE;
+    }
+    else
+    {
+        totalVectorsString.Printf("%d", TotalVectors);
+    }
 
     m_TotalVectors->SetLabel(totalVectorsString);
 }
@@ -381,13 +421,24 @@ void CStatusDialog::SetVectors(int TotalVectors)
 void CStatusDialog::SetPolygons(int TotalPolygons)
 {
     wxString totalPolygonsString;
-    totalPolygonsString.Printf("%d", TotalPolygons);
+
+    if (TotalPolygons < 0)
+    {
+        totalPolygonsString = LOCALIZED_STATUS_NOT_APPLICABLE;
+    }
+    else
+    {
+        totalPolygonsString.Printf("%d", TotalPolygons);
+    }
 
     m_TotalPolygons->SetLabel(totalPolygonsString);
 }
 
-void CStatusDialog::OnClose(wxCloseEvent& event)
+void CStatusDialog::OnClose(wxCloseEvent& Event)
 {
+    // No longer accept updates to the status fields
+    status_flag = false;
+
 #ifdef __WXMSW__ // utils.cpp only builds on Windows
 
     // Get location of our window on the screen so we can
@@ -408,89 +459,91 @@ void CStatusDialog::OnClose(wxCloseEvent& event)
 
     CMainFrame * mainFrame = CFmsLogo::GetMainFrame();
 
-    mainFrame->m_StatusDialog = NULL;
+    mainFrame->ClearStatusDialog();
     mainFrame->GetCommander()->UpdateStatusButtonState();
 
-    Destroy();
+    // default processing will destroy the dialog box
+    Event.Skip();
 }
 
 BEGIN_EVENT_TABLE(CStatusDialog, wxDialog)
     EVT_CLOSE(CStatusDialog::OnClose)
 END_EVENT_TABLE()
 
-#if 0
-
 static
-void 
-update_status_color_helper(
-    int           ChildDialogId,
-    const Color & TheColor
-    )
+CStatusDialog * GetStatusDialog()
 {
-    if (status_flag)
-    {
-        char colortext[256];
-
-        sprintf(
-            colortext,
-            "%d,%d,%d",
-            TheColor.red,
-            TheColor.green,
-            TheColor.blue);
-
-        MainWindowx->StatusWindow->SetDlgItemText(ChildDialogId, colortext);
-    }
+    CStatusDialog * statusDialog = CFmsLogo::GetMainFrame()->GetStatusDialog();
+    assert(statusDialog != NULL);
+    return statusDialog;
 }
 
 void update_status_turtleposition(void)
 {
     if (status_flag)
     {
-        char text[256];
-
-        sprintf(
-            text,
-            "%1.0f,%1.0f,%1.0f",
-            g_Turtles[turtle_which].Position.x,
-            g_Turtles[turtle_which].Position.y,
-            g_Turtles[turtle_which].Position.z);
-
-        MainWindowx->StatusWindow->SetDlgItemText(ID_TURTLEPOSITION, text);
+        GetStatusDialog()->SetTurtlePosition(
+            g_SelectedTurtle->Position.x,
+            g_SelectedTurtle->Position.y,
+            g_SelectedTurtle->Position.z);
     }
 }
 
 
 void update_status_pencolor(void)
 {
-    update_status_color_helper(ID_PENCOLOR, dpen);
+    if (status_flag)
+    {
+        const Color & penColor = GetPenStateForSelectedTurtle().Color;
+
+        GetStatusDialog()->SetPenColor(
+            penColor.red,
+            penColor.green,
+            penColor.blue);
+    }
 }
 
 void update_status_floodcolor(void)
 {
-    update_status_color_helper(ID_FLOODCOLOR, dfld);
+    if (status_flag)
+    {
+        GetStatusDialog()->SetFloodColor(dfld.red, dfld.green, dfld.blue);
+    }
 }
 
 void update_status_screencolor(void)
 {
-    update_status_color_helper(ID_SCREENCOLOR, dscn);
+    if (status_flag)
+    {
+        GetStatusDialog()->SetScreenColor(dscn.red, dscn.green, dscn.blue);
+    }
 }
 
 void update_status_paletteuse(void)
 {
     if (status_flag)
     {
-        char text[256];
+        int totalColorsUsed;
 
         if (EnablePalette)
         {
-            sprintf(text, "%d", MyLogPalette->palNumEntries);
+            totalColorsUsed = MyLogPalette->palNumEntries;
         }
         else
         {
-            strcpy(text, "N/A");
+            totalColorsUsed = -1;
         }
 
-        MainWindowx->StatusWindow->SetDlgItemText(ID_PALETTEUSE, text);
+        GetStatusDialog()->SetPaletteUse(totalColorsUsed);
+    }
+}
+
+
+void update_status_penwidth(void)
+{
+    if (status_flag)
+    {
+        GetStatusDialog()->SetPenWidth(GetPenStateForSelectedTurtle().Width);
     }
 }
 
@@ -499,16 +552,17 @@ void update_status_turtleheading(void)
 {
     if (status_flag)
     {
-        char text[256];
+        FLONUM heading;
         if (current_mode == perspectivemode)
         {
-            sprintf(text, "%1.2f", rotation_z());
+            heading = rotation_z();
         }
         else
         {
-            sprintf(text, "%1.2f", g_Turtles[turtle_which].Heading);
+            heading = g_SelectedTurtle->Heading;
         }
-        MainWindowx->StatusWindow->SetDlgItemText(ID_TURTLEHEADING, text);
+
+        GetStatusDialog()->SetTurtleHeading(heading);
     }
 }
 
@@ -517,22 +571,22 @@ void update_status_penstyle(void)
     if (status_flag)
     {
         // TODO: merge with get_node_pen_mode()
-        const char * text;
-        if (current_write_mode == XOR_PUT)
+        const char * penStyle;
+        if (GetPenStateForSelectedTurtle().Mode == XOR_PUT)
         {
-            text = LOCALIZED_STATUS_PENREVERSE;
+            penStyle = LOCALIZED_STATUS_PENREVERSE;
         }
         else
         {
-            text = LOCALIZED_STATUS_PENNORMAL;
+            penStyle = LOCALIZED_STATUS_PENNORMAL;
         }
 
-        if (in_erase_mode)
+        if (GetPenStateForSelectedTurtle().IsErasing)
         {
-            text = LOCALIZED_STATUS_PENERASE;
+            penStyle = LOCALIZED_STATUS_PENERASE;
         }
 
-        MainWindowx->StatusWindow->SetDlgItemText(ID_PENSTYLE, text);
+        GetStatusDialog()->SetPenStyle(penStyle);
     }
 }
 
@@ -540,17 +594,7 @@ void update_status_pencontact(void)
 {
     if (status_flag)
     {
-        const char * text;
-        if (g_Turtles[turtle_which].IsPenUp)
-        {
-            text = LOCALIZED_STATUS_PENUP;
-        }
-        else
-        {
-            text = LOCALIZED_STATUS_PENDOWN;
-        }
-
-        MainWindowx->StatusWindow->SetDlgItemText(ID_PENCONTACT, text);
+        GetStatusDialog()->SetPenContact(g_SelectedTurtle->IsPenUp);
     }
 }
 
@@ -558,18 +602,7 @@ void update_status_turtlevisability(void)
 {
     if (status_flag)
     {
-        const char * text;
-
-        if (g_Turtles[turtle_which].IsShown)
-        {
-            text = LOCALIZED_STATUS_PENSHOWN;
-        }
-        else
-        {
-            text = LOCALIZED_STATUS_PENHIDDEN;
-        }
-
-        MainWindowx->StatusWindow->SetDlgItemText(ID_TURTLEVISABILITY, text);
+        GetStatusDialog()->SetTurtleVisibility(g_SelectedTurtle->IsShown);
     }
 }
 
@@ -577,18 +610,18 @@ void update_status_turtlepitch(void)
 {
     if (status_flag)
     {
-        char text[256];
+        FLONUM pitch;
 
         if (current_mode == perspectivemode)
         {
-            sprintf(text, "%1.2f", rotation_x());
+            pitch = rotation_x();
         }
         else
         {
-            sprintf(text, "%1.2f", 0.0);
+            pitch = 0.0;
         }
 
-        MainWindowx->StatusWindow->SetDlgItemText(ID_TURTLEPITCH, text);
+        GetStatusDialog()->SetTurtlePitch(pitch);
     }
 }
 
@@ -596,18 +629,18 @@ void update_status_turtleroll(void)
 {
     if (status_flag)
     {
-        char text[256];
+        FLONUM roll;
 
         if (current_mode == perspectivemode)
         {
-            sprintf(text, "%1.2f", rotation_y());
+            roll = rotation_y();
         }
         else
         {
-            sprintf(text, "%1.2f", 0.0);
+            roll = 0.0;
         }
 
-        MainWindowx->StatusWindow->SetDlgItemText(ID_TURTLEROLL, text);
+        GetStatusDialog()->SetTurtleRoll(roll);
     }
 }
 
@@ -615,18 +648,8 @@ void update_status_turtlewhich(void)
 {
     if (status_flag)
     {
-        char text[256];
-
-        if (turtle_which >= TURTLES - TURTLEN)
-        {
-            sprintf(text, "%ld", (long) (-(turtle_which - (TURTLES - (TURTLEN+1)))));
-        }
-        else
-        {
-            sprintf(text, "%ld", (long) turtle_which);
-        }
-
-        MainWindowx->StatusWindow->SetDlgItemText(ID_TURTLEWHICH, text);
+        int turtleId = GetSelectedTurtleIndex();
+        GetStatusDialog()->SetTurtleId(turtleId);
     }
 }
 
@@ -634,10 +657,7 @@ void update_status_evals(void)
 {
     if (status_flag)
     {
-        char text[256];
-        sprintf(text, "%ld", eval_count);
-
-        MainWindowx->StatusWindow->SetDlgItemText(ID_EVALS, text);
+        GetStatusDialog()->SetCalls(eval_count);
     }
 }
 
@@ -645,28 +665,16 @@ void update_status_vectors(void)
 {
     if (status_flag)
     {
-        char text[256];
-
         if (ThreeD.m_iPolyCount)
         {
-#ifdef NOASM
-            sprintf(text, "%ld/%ld", ThreeD.m_iPolyCount, ThreeD.m_iSplitPolyCount);
-#else
-            sprintf(text, "%ld", ThreeD.m_iPolyCount);
-#endif
-            MainWindowx->StatusWindow->SetDlgItemText(
-                ID_THINGS, 
-                LOCALIZED_STATUS_POLYGONS":");
+            GetStatusDialog()->SetPolygons(ThreeD.m_iPolyCount);
+            GetStatusDialog()->SetVectors(-1);
         }
         else
         {
-            sprintf(text, "%ld", vector_count);
-            MainWindowx->StatusWindow->SetDlgItemText(
-                ID_THINGS, 
-                LOCALIZED_STATUS_VECTORS":");
+            GetStatusDialog()->SetPolygons(-1);
+            GetStatusDialog()->SetVectors(vector_count);
         }
-
-        MainWindowx->StatusWindow->SetDlgItemText(ID_VECTORS, text);
     }
 }
 
@@ -674,11 +682,6 @@ void update_status_memory(void)
 {
     if (status_flag)
     {
-        char text[256];
-        sprintf(text, "%ld "LOCALIZED_STATUS_NODES, memory_count * SEG_SIZE);
-
-        MainWindowx->StatusWindow->SetDlgItemText(ID_MEMORY, text);
+        GetStatusDialog()->SetPeakMemory(memory_count * SEG_SIZE);
     }
 }
-
-#endif

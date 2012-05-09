@@ -62,6 +62,9 @@ public:
 
     void CloseWorkspaceEditor(CWorkspaceEditor * Editor);
 
+    CStatusDialog * GetStatusDialog();
+    void            ClearStatusDialog();
+
 private:
 
     // Menu commands handlers
@@ -117,9 +120,7 @@ private:
     CScreen          * m_Screen;
     wxWindow         * m_Commander;
     CCommander       * m_RealCommander;
-public:  // HACK: make this private
     CStatusDialog    * m_StatusDialog;
-private:
     CSetPenSize      * m_SetPenSizeDialog;
     wxSplitterWindow * m_Splitter;
 

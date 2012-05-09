@@ -672,6 +672,18 @@ void CMainFrame::CloseWorkspaceEditor(CWorkspaceEditor * Editor)
     m_Editors.erase(Editor);
 }
 
+CStatusDialog *
+CMainFrame::GetStatusDialog()
+{
+    return m_StatusDialog;
+}
+
+void
+CMainFrame::ClearStatusDialog()
+{
+    m_StatusDialog = NULL;
+}
+
 CScreen * CMainFrame::GetScreen()
 {
     return m_Screen;
@@ -1211,6 +1223,7 @@ void CMainFrame::ShowStatus()
     if (!StatusDialogIsShowing())
     {
         m_StatusDialog = new CStatusDialog(this);
+        m_StatusDialog->PopulateAllFields();
         m_StatusDialog->Show();
     }
 }
