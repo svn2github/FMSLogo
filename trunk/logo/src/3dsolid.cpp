@@ -10,7 +10,7 @@
 
 #include "3dsolid.h"
 #include "mainwind.h"
-#include "statwind.h"
+#include "status.h"
 #include "graphics.h"
 #include "graphwin.h"
 #include "main.h"

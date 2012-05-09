@@ -36,7 +36,6 @@
 #include "mainwind.h"
 #include "netwind.h"
 #include "graphwin.h"
-#include "statwind.h"
 #include "devwind.h"
 #include "debugheap.h"
 

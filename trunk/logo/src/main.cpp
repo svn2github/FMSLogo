@@ -43,7 +43,7 @@
 #include "mainwind.h"
 #include "mainframe.h"
 #include "cmdwind.h"
-#include "statwind.h"
+#include "status.h"
 #include "graphwin.h"
 #include "dlgwind.h"
 #include "startup.h"

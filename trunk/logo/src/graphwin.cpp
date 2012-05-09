@@ -28,7 +28,7 @@
 
 #include "devwind.h"
 #include "cursor.h"
-#include "statwind.h"
+#include "status.h"
 
 #include "utils.h"
 #include "argumentutils.h"

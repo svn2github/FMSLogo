@@ -53,6 +53,7 @@ OBJECTS=\
     parse.o          \
     print.o          \
     startup.o        \
+    status.o         \
     screensaver.o    \
     threed.o         \
     utils.o          \
@@ -94,10 +95,10 @@ debug : $(TARGET)d.scr ;
 $(TARGET)d.scr : $(addprefix obj/debug-,$(DEBUG_OBJECTS))
 	$(CXX) -o$@ $(LDFLAGS) -def:screensaver.def $^ $(addprefix -l,$(LIBS))
 
-obj/debug-%.o: ../src/%.cpp
+obj/debug-%.o: %.cpp
 	$(CXX) -c -o$@ $(DEBUG_CXXFLAGS) $(CPPFLAGS) -DLOCALE=$(DEFAULT_LCID) $<
 
-obj/debug-%.o: %.cpp
+obj/debug-%.o: ../src/%.cpp
 	$(CXX) -c -o$@ $(DEBUG_CXXFLAGS) $(CPPFLAGS) -DLOCALE=$(DEFAULT_LCID) $<
 
 obj/debug-%res.o : %.rc
@@ -114,10 +115,10 @@ MSCPPFLAGS = $(CPPFLAGS) -I"$(PROGRAMFILES)\Microsoft SDKs\Windows\v7.0\Include"
 $(TARGET)msdbg.scr : $(addprefix obj/msdbg-,$(DEBUG_OBJECTS))
 	link.exe /nologo /OUT:$@ /DEBUG /LIBPATH:"$(PROGRAMFILES)\Microsoft SDKs\Windows\v7.0\lib" /LIBPATH:"$(PROGRAMFILES)\Microsoft Visual Studio 9.0\VC\lib" /NODEFAULTLIB:libcmt /subsystem:windows /machine:I386 $(addsuffix .lib,$(MSLIBS)) -def:screensaver.def $^
 
-obj/msdbg-%.o: ../src/%.cpp
+obj/msdbg-%.o: %.cpp
 	cl.exe /c /nologo -Fo$@ /Od /Zi /W4 /EHsc -DDEBUG -DMEM_DEBUG $(MSCPPFLAGS) -DLOCALE=$(DEFAULT_LCID) $<
 
-obj/msdbg-%.o: %.cpp
+obj/msdbg-%.o: ../src/%.cpp
 	cl.exe /c /nologo -Fo$@ /Od /Zi /W4 /EHsc -DDEBUG -DMEM_DEBUG $(MSCPPFLAGS) -DLOCALE=$(DEFAULT_LCID) $<
 
 obj/msdbg-%res.o : %.rc
@@ -132,10 +133,10 @@ $$(TARGET)-$(1).scr : $$(addprefix obj/$(1)-,$$(OBJECTS))
 	$(CXX) -o$$@ $(LDFLAGS) -def:screensaver.def $$^ $(addprefix -l,$(LIBS))
 	strip $$@
 
-obj/$(1)-%.o: ../src/%.cpp
+obj/$(1)-%.o: %.cpp
 	$(CXX) -c -o$$@ $(RELEASE_CXXFLAGS) $(CPPFLAGS) -DLOCALE=$1 $$<
 
-obj/$(1)-%.o: %.cpp
+obj/$(1)-%.o: ../src/%.cpp
 	$(CXX) -c -o$$@ $(RELEASE_CXXFLAGS) $(CPPFLAGS) -DLOCALE=$1 $$<
 
 obj/$(1)-%res.o : %.rc

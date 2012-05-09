@@ -19,7 +19,7 @@
 #include "main.h"
 #include "graphwin.h"
 #include "graphics.h"
-#include "statwind.h"
+#include "status.h"
 #include "logorc.h"
 #include "mainwind.h"
 #include "localizedstrings.h"

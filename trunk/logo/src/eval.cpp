@@ -33,7 +33,7 @@
 #include "logomath.h"
 #include "coms.h"
 #include "paren.h"
-#include "statwind.h"
+#include "status.h"
 #include "ibmterm.h"
 #include "localizedstrings.h"
 #include "wrksp.h"

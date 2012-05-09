@@ -26,7 +26,7 @@
 #include "wrksp.h"
 #include "graphwin.h"
 #include "utils.h"
-#include "statwind.h"
+#include "status.h"
 #include "eval.h"
 #include "init.h"
 #include "error.h"

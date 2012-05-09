@@ -48,7 +48,7 @@
 #include "debugheap.h"
 
 #include "graphwin.h"
-#include "statwind.h"
+#include "status.h"
 
 #include "localizedstrings.h"
 

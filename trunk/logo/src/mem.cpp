@@ -24,9 +24,9 @@
 #include "logodata.h"
 #include "main.h"
 #include "error.h"
+#include "status.h"
 #include "debugheap.h"
 
-#include "statwind.h"
 
 // a segment is a pool of nodes that is allocated in a single malloc.
 struct segment
