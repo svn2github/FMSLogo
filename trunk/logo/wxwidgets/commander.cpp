@@ -27,7 +27,7 @@
 #include "eval.h"
 #include "graphics.h"
 #include "graphwin.h"
-#include "statwind.h"
+#include "status.h"
 #include "fontutils.h"
 #include "screenwindow.h"
 
