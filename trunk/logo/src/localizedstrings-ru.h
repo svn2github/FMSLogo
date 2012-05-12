@@ -748,7 +748,9 @@
 #define LOCALIZED_EDITOR_SET                     "&Установить"  
 #define LOCALIZED_EDITOR_SET_FONT                "&Шрифт..."  
 
-#define LOCALIZED_EDITOR_TEST                    "Тест!" 
+#define LOCALIZED_EDITOR_TEST_BUTTON             "Тест!" 
+#define LOCALIZED_EDITOR_TEST                    "Тест"
+#define LOCALIZED_EDITOR_TEST_RUN_SELECTION      "&Run Selection\tCtrl+R" // NOT_YET_LOCALIZED
 
 #define LOCALIZED_EDITOR_HELP                    "&Помощь"  
 #define LOCALIZED_EDITOR_HELP_INDEX              "&Индекс" 

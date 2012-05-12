@@ -796,7 +796,7 @@ void TMyFileWindow::SetupWindow()
     AppendPopupMenu(mainMenu, LOCALIZED_EDITOR_EDIT,   editMenuItems,   ARRAYSIZE(editMenuItems));
     AppendPopupMenu(mainMenu, LOCALIZED_EDITOR_SEARCH, searchMenuItems, ARRAYSIZE(searchMenuItems));
     AppendPopupMenu(mainMenu, LOCALIZED_EDITOR_SET,    setMenuItems,    ARRAYSIZE(setMenuItems));
-    mainMenu.AppendMenu(MF_STRING, CM_TEST, LOCALIZED_EDITOR_TEST);
+    mainMenu.AppendMenu(MF_STRING, CM_TEST, LOCALIZED_EDITOR_TEST_BUTTON);
     AppendPopupMenu(mainMenu, LOCALIZED_EDITOR_HELP,   helpMenuItems,   ARRAYSIZE(helpMenuItems));
     SetMenu(mainMenu);
 

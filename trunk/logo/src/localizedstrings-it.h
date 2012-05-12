@@ -748,7 +748,9 @@
 #define LOCALIZED_EDITOR_SET                     "&Opzioni"
 #define LOCALIZED_EDITOR_SET_FONT                "&Carattere..."
 
-#define LOCALIZED_EDITOR_TEST                    "&Prova!"
+#define LOCALIZED_EDITOR_TEST_BUTTON             "&Prova!"
+#define LOCALIZED_EDITOR_TEST                    "Prova"
+#define LOCALIZED_EDITOR_TEST_RUN_SELECTION      "&Run Selection\tCtrl+R" // NOT_YET_LOCALIZED
 
 #define LOCALIZED_EDITOR_HELP                    "&Aiuto"
 #define LOCALIZED_EDITOR_HELP_INDEX              "&Indice"

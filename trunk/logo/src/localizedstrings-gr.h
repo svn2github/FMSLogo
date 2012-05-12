@@ -748,7 +748,9 @@
 #define LOCALIZED_EDITOR_SET                     "&Ρυθμίση"  // 
 #define LOCALIZED_EDITOR_SET_FONT                "&Γραμματοσειρά..."  // 
 
-#define LOCALIZED_EDITOR_TEST                    "Δοκιμή!" // 
+#define LOCALIZED_EDITOR_TEST_BUTTON             "Δοκιμή!"
+#define LOCALIZED_EDITOR_TEST                    "Δοκιμή"
+#define LOCALIZED_EDITOR_TEST_RUN_SELECTION      "&Run Selection\tCtrl+R" // NOT_YET_LOCALIZED
 
 #define LOCALIZED_EDITOR_HELP                    "&Βοήθεια"  // 
 #define LOCALIZED_EDITOR_HELP_INDEX              "&Θέματα στη βοήθεια" // 

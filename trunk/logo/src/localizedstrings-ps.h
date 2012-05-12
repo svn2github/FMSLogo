@@ -748,7 +748,9 @@
 #define LOCALIZED_EDITOR_SET                     "pseudo.Se&t" 
 #define LOCALIZED_EDITOR_SET_FONT                "pseudo.&Font..." 
 
-#define LOCALIZED_EDITOR_TEST                    "pseudo.Test!"
+#define LOCALIZED_EDITOR_TEST_BUTTON             "pseudo.Test!"
+#define LOCALIZED_EDITOR_TEST_MENU               "pseudo.Test"
+#define LOCALIZED_EDITOR_TEST_RUN_SELECTION      "pseudo.&Run Selection\tCtrl+R"
 
 #define LOCALIZED_EDITOR_HELP                    "pseudo.&Help" 
 #define LOCALIZED_EDITOR_HELP_INDEX              "pseudo.&Index"
