@@ -21,6 +21,7 @@
 #include "eval.h"         // for process_special_conditions
 #include "startup.h"      // for TempPathName
 #include "mem.h"          // for reref
+#include "main.h"         // for putcombobox
 
 enum
 {
@@ -46,7 +47,7 @@ enum
     ID_SEARCHFINDNEXT,
     ID_EDITSETFONT,
     ID_HELP,
-    ID_TEST,
+    ID_TESTRUNSELECTION,
     ID_HELPEDIT,
     ID_HELPEDIT_TOPIC,
 
@@ -93,6 +94,9 @@ BEGIN_EVENT_TABLE(CWorkspaceEditor, wxFrame)
     EVT_UPDATE_UI(ID_SEARCHFINDNEXT, CWorkspaceEditor::OnUpdateFindNext)
 
     EVT_MENU(ID_EDITSETFONT,         CWorkspaceEditor::OnSetFont)
+
+    EVT_MENU(ID_TESTRUNSELECTION,      CWorkspaceEditor::OnRunSelection)
+    EVT_UPDATE_UI(ID_TESTRUNSELECTION, CWorkspaceEditor::OnUpdateRunSelection)
 
     EVT_MENU(ID_FINDMATCHINGPAREN,   CWorkspaceEditor::OnFindMatchingParen)
     EVT_MENU(ID_SELECTMATCHINGPAREN, CWorkspaceEditor::OnSelectMatchingParen)
@@ -177,7 +181,11 @@ CWorkspaceEditor::CWorkspaceEditor(
     };
 
     static const MENUITEM setMenuItems[] = {
-        {LOCALIZED_EDITOR_SET_FONT,       ID_EDITSETFONT}
+        {LOCALIZED_EDITOR_SET_FONT,       ID_EDITSETFONT},
+    };
+
+    static const MENUITEM testMenuItems[] = {
+        {LOCALIZED_EDITOR_TEST_RUN_SELECTION, ID_TESTRUNSELECTION},
     };
  
     static const MENUITEM helpMenuItems[] = {
@@ -207,7 +215,7 @@ CWorkspaceEditor::CWorkspaceEditor(
     AppendChildMenu(mainMenu, LOCALIZED_EDITOR_EDIT,   editMenuItems,   ARRAYSIZE(editMenuItems));
     AppendChildMenu(mainMenu, LOCALIZED_EDITOR_SEARCH, searchMenuItems, ARRAYSIZE(searchMenuItems));
     AppendChildMenu(mainMenu, LOCALIZED_EDITOR_SET,    setMenuItems,    ARRAYSIZE(setMenuItems));
-    mainMenu->Append(new wxMenu, LOCALIZED_EDITOR_TEST);
+    AppendChildMenu(mainMenu, LOCALIZED_EDITOR_TEST,   testMenuItems,   ARRAYSIZE(testMenuItems));
     AppendChildMenu(mainMenu, LOCALIZED_EDITOR_HELP,   helpMenuItems,   ARRAYSIZE(helpMenuItems));
 
 
@@ -220,7 +228,7 @@ CWorkspaceEditor::CWorkspaceEditor(
     m_LogoCodeControl->SetFont(font);
 
     // Configure the keyboard shortcuts
-    wxAcceleratorEntry acceleratorEntries[3];
+    wxAcceleratorEntry acceleratorEntries[2];
 
     // Ctrl+] moves to matching paren
     acceleratorEntries[0].Set(
@@ -233,12 +241,6 @@ CWorkspaceEditor::CWorkspaceEditor(
         wxACCEL_CTRL | wxACCEL_SHIFT,
         KEY_CODE_CLOSE_BRACKET,
         ID_SELECTMATCHINGPAREN);
-
-    // Ctrl+D saves and closes the editor
-    acceleratorEntries[2].Set(
-        wxACCEL_CTRL,
-        'D',
-        ID_FILESAVEANDEXIT);
 
     wxAcceleratorTable acceleratorTable(
         ARRAYSIZE(acceleratorEntries),
@@ -766,6 +768,101 @@ void CWorkspaceEditor::OnFindMatchingParen(wxCommandEvent& WXUNUSED(Event))
 void CWorkspaceEditor::OnSelectMatchingParen(wxCommandEvent& WXUNUSED(Event))
 {
     m_LogoCodeControl->SelectMatchingParen();
+}
+
+void CWorkspaceEditor::OnRunSelection(wxCommandEvent& WXUNUSED(Event))
+{
+    wxString selectedText = m_LogoCodeControl->GetSelectedText();
+
+    // This method could be written using wxString methods, but it was easier
+    // to copy the working code from the OWL-based implementation, which
+    // uses direct string manipulation.
+    size_t theTextSize = selectedText.Len() + 1;
+    char * theText = new char[theTextSize];
+    memcpy(theText, selectedText.c_str(), theTextSize);
+
+    char * ptr = theText;
+
+    // strip comments
+    bool more = true;
+    while (more)
+    {
+        char * ptr2 = strchr(ptr, ';');
+
+        if (ptr2 != NULL)
+        {
+            // overwrite the comment character with a space
+            *ptr2 = ' ';
+
+            // put whitespace over everything until the end-of-string
+            // the end-of-line, or a comment continuer
+            while (*ptr2 != '\0' &&
+                   *ptr2 != '\n' &&
+                   *ptr2 != '\r' &&
+                   *ptr2 != '~')
+            {
+                *ptr2++ = ' ';
+            }
+        }
+        else
+        {
+            more = false;
+        }
+    }
+
+    // paste continuation
+    more = true;
+    while (more)
+    {
+        char * ptr2 = strchr(ptr, '~');
+
+        if (ptr2 != NULL)
+        {
+            *ptr2 = ' ';
+            char * ptr3 = strchr(ptr2, '\n');
+            if (ptr3 != NULL)
+            {
+                *ptr3 = ' ';
+                *(ptr3 - 1) = ' ';
+            }
+        }
+        else
+        {
+            more = false;
+        }
+    }
+
+    // for each real line left execute it
+    more = true;
+    while (more)
+    {
+        char * ptr2 = strchr(ptr, '\n');
+
+        if (ptr2 != NULL)
+        {
+            *ptr2 = '\0';
+            *(ptr2 - 1) = '\0';
+        }
+
+        putcombobox(ptr);
+        do_execution(ptr);
+
+        if (ptr2 != NULL)
+        {
+            ptr = ptr2 + 1;
+        }
+        else
+        {
+            more = false;
+        }
+    }
+
+    delete [] theText;
+}
+
+void CWorkspaceEditor::OnUpdateRunSelection(wxUpdateUIEvent& Event)
+{
+    Event.Enable(m_LogoCodeControl->IsTextSelected());
 }
 
 void CWorkspaceEditor::OnClose(wxCloseEvent& Event)

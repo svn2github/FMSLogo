@@ -62,6 +62,9 @@ private:
     void OnFindMatchingParen(wxCommandEvent& Event);
     void OnSelectMatchingParen(wxCommandEvent& Event);
 
+    void OnRunSelection(wxCommandEvent& Event);
+    void OnUpdateRunSelection(wxUpdateUIEvent& Event);
+
     void OnFindDialog(wxFindDialogEvent& Event);
     void OnFindDialogNext(wxFindDialogEvent& Event);
     void OnFindDialogReplace(wxFindDialogEvent& Event);
