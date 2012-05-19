@@ -22,7 +22,7 @@ Deletes (closes) the scrollbar that is identified by <parameter>name</parameter>
 <varlistentry><term>Example</term>
 <listitem>
     <programlisting><userinput>WINDOWCREATE "main "mywindow "mytitle 0 0 100 100 []
-SCROLLBARCREATE "mywindow "myscroll 25 25 50 25
+SCROLLBARCREATE "mywindow "myscroll 25 25 50 25 []
 SCROLLBARDELETE "myscroll
 WINDOWDELETE "mywindow</userinput>
 </programlisting>
