@@ -25,6 +25,7 @@ II. New features/bugs fixed:
       has an unresponsive printer.
     o Remove CRYPTO.LGO and PLAYFAIR.LGO examples so that I can mark FMSLogo as
       not being subject to U.S. export controls.
+    o Minor improvements to the manual.
 
   For a complete history of changes across all versions of FMSLogo, see
   http://fmslogo.cvs.sourceforge.net/*checkout*/fmslogo/logo/src/CHANGELOG.TXT
