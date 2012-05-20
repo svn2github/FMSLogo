@@ -31,7 +31,7 @@ Wildcard characters ("*") are permitted as the filename or extension.
 <varlistentry><term>Example</term>
 <listitem>
     <programlisting><userinput>SHOW DIALOGFILEOPEN "|c:\\Program Files\\&PRODUCTNAME;\\Examples\\Windows\\*.lgo|</userinput>
-<replaceable>This list all files ending in ".lgo" in the specified directory.</replaceable>
+<replaceable>The dialog box shows all files ending in ".lgo" in the specified directory.</replaceable>
 c:\Program Files\&PRODUCTNAME;\Examples\Windows\Visual.lgo
 </programlisting>
 
