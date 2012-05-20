@@ -34,11 +34,11 @@ WINDOWCREATE "main "mywindow "mytitle 0 0 100 100 []
 LISTBOXCREATE "mywindow "mylist 25 0 50 50
 LISTBOXADDSTRING "mylist [Triangle]
 LISTBOXADDSTRING "mylist [Square]
-BUTTONCREATE "mywindow "mydraw "Draw 25 50 50 25 [DODRAW]
+BUTTONCREATE "mywindow "mydraw "Draw 25 50 50 25 [DODRAW]</userinput>
 
 <replaceable>Select an item from the listbox and then click the Draw button.</replaceable>
 
-WINDOWDELETE "mywindow</userinput>
+<userinput>WINDOWDELETE "mywindow</userinput>
 </programlisting>
 
 </listitem>

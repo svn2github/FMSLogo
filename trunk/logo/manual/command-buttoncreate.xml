@@ -58,16 +58,16 @@ The <parameter>callback</parameter> input is an instruction list that is run whe
 <programlisting><userinput>; create a button in a new window:
 WINDOWCREATE "main "mywindow "mytitle 0 0 100 100 []
 BUTTONCREATE "mywindow "myleft "Left 25 25 25 25 [FORWARD 2 LEFT 1]
-BUTTONCREATE "mywindow "myright "Right 50 25 25 25 [FORWARD 2 RIGHT 1]
+BUTTONCREATE "mywindow "myright "Right 50 25 25 25 [FORWARD 2 RIGHT 1]</userinput>
 <replaceable>Click left or right repeatedly and watch the turtle</replaceable>
-WINDOWDELETE "mywindow</userinput>
+<userinput>WINDOWDELETE "mywindow</userinput>
 </programlisting>
 
 <programlisting><userinput>; create a button on graphics window:
 BUTTONCREATE "main "myleft "Left 50 50 50 25 [FORWARD 2 LEFT 1]
-BUTTONCREATE "main "myright "Right 100 50 50 25 [FORWARD 2 RIGHT 1]
+BUTTONCREATE "main "myright "Right 100 50 50 25 [FORWARD 2 RIGHT 1]</userinput>
 <replaceable>Click left or right repeatedly and watch the turtle</replaceable>
-WINDOWDELETE "main</userinput>
+<userinput>WINDOWDELETE "main</userinput>
 </programlisting>
 
 </listitem>

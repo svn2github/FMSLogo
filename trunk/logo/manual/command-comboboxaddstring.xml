@@ -33,9 +33,9 @@ COMBOBOXADDSTRING "mycombo [3]
 COMBOBOXADDSTRING "mycombo [4]
 COMBOBOXADDSTRING "mycombo [5]
 COMBOBOXADDSTRING "mycombo [6]
-BUTTONCREATE "mywindow "mydraw "Draw 25 50 50 25 [DODRAW]
+BUTTONCREATE "mywindow "mydraw "Draw 25 50 50 25 [DODRAW]</userinput>
 <replaceable>Select or enter number of sides from combobox and then click the Draw button</replaceable>
-WINDOWDELETE "mywindow</userinput>
+<userinput>WINDOWDELETE "mywindow</userinput>
 </programlisting>
 
 </listitem>

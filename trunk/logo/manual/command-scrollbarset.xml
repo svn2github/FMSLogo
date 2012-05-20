@@ -40,9 +40,9 @@ If <parameter>position</parameter> is not between <parameter>min</parameter> and
 <listitem>
     <programlisting><userinput>WINDOWCREATE "main "mywindow "mytitle 0 0 100 100 []
 SCROLLBARCREATE "mywindow "myscroll 25 25 50 25 [SETHEADING SCROLLBARGET "myscroll]
-SCROLLBARSET "myscroll 0 360 0
+SCROLLBARSET "myscroll 0 360 0</userinput>
 <replaceable>Move the scrollbar and observe what happens to the turtle</replaceable>
-WINDOWDELETE "mywindow</userinput>
+<userinput>WINDOWDELETE "mywindow</userinput>
 </programlisting>
 
 </listitem>
