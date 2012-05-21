@@ -30,8 +30,7 @@
 #include "graphics.h"
 #include "localizedstrings.h"
 #include "debugheap.h"
-
-#include "mainwind.h"
+#include "mainframe.h"
 
 CSelectProcedureWindow::CSelectProcedureWindow(
     TWindow    * Parent, 

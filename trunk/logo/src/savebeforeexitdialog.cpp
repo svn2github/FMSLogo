@@ -25,8 +25,7 @@
 #include "logorc.h"
 #include "debugheap.h"
 #include "localizedstrings.h"
-
-#include "mainwind.h"
+#include "mainframe.h"
 
 CSaveBeforeExitDialog::CSaveBeforeExitDialog(
     TWindow *Parent

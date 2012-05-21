@@ -236,5 +236,29 @@ private:
     DECLARE_RESPONSE_TABLE(TMainFrame);
 };
 
+struct MENUITEM 
+{
+    const char *  MenuText;
+    UINT          MenuId;
+};
+
+extern void FillMenu(
+    class TMenu           & Menu, 
+    const struct MENUITEM * MenuItems,
+    size_t                  MenuItemsLength
+    );
+
+extern void AppendPopupMenu(
+    class TMenu           & Menu,
+    const char            * PopupMenuText,
+    const struct MENUITEM * PopupMenuItems,
+    size_t                  PopupMenuItemsLength
+    );
+
+extern void SetTextOnChildWindows(
+    class TWindow *  Parent,
+    const MENUITEM * ChildText,
+    size_t           ChildTextLength
+    );
 
 #endif // __MAINFRAME_H_

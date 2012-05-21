@@ -21,7 +21,7 @@
 #include "graphics.h"
 #include "status.h"
 #include "logorc.h"
-#include "mainwind.h"
+#include "mainframe.h"
 #include "localizedstrings.h"
 #include "logodata.h"
 #include "debugheap.h"

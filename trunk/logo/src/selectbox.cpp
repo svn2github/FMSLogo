@@ -18,7 +18,7 @@
  */
 
 #include "selectbox.h"
-#include "mainwind.h"
+#include "mainframe.h"
 #include "logorc.h"
 #include "argumentutils.h"
 #include "debugheap.h"

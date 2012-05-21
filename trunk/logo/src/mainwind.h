@@ -116,36 +116,11 @@ struct calllist : public qlist
     }
 };
 
-struct MENUITEM 
-{
-    const char *  MenuText;
-    UINT          MenuId;
-};
-
 
 // function declarations
 extern NODE *leventcheck(NODE *args);
 extern void emptyqueue(void);
 extern void checkqueue(void);
-
-extern void FillMenu(
-    class TMenu           & Menu, 
-    const struct MENUITEM * MenuItems,
-    size_t                  MenuItemsLength
-    );
-
-extern void AppendPopupMenu(
-    class TMenu           & Menu,
-    const char            * PopupMenuText,
-    const struct MENUITEM * PopupMenuItems,
-    size_t                  PopupMenuItemsLength
-    );
-
-extern void SetTextOnChildWindows(
-    class TWindow *  Parent,
-    const MENUITEM * ChildText,
-    size_t           ChildTextLength
-    );
 
 extern void checkwindow(
     int *x,

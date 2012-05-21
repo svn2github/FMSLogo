@@ -19,7 +19,7 @@
 #include "selectstartupinstruction.h"
 #include "localizedstrings.h"
 #include "logorc.h"
-#include "mainwind.h"
+#include "mainframe.h"
 
 #include "wrksp.h"
 #include "argumentutils.h"

@@ -19,7 +19,7 @@
 #include "activearea.h"
 #include "logorc.h"
 #include "localizedstrings.h"
-#include "mainwind.h"
+#include "mainframe.h"
 #include "main.h"
 #include "debugheap.h"
 
