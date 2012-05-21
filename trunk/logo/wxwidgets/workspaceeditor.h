@@ -6,12 +6,14 @@
 class  CLogoCodeCtrl;
 struct NODE;
 
-class CWorkspaceEditor: public wxFrame
+class CWorkspaceEditor : public wxFrame
 {
 public:
     CWorkspaceEditor(
         wxWindow       * Parent,
         const wxString & Title,
+        const wxPoint  & Position,
+        const wxSize   & Size,
         const wxString & FileName,
         NODE           * EditArguments,
         bool             CheckForErrors

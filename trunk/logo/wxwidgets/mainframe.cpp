@@ -51,6 +51,7 @@
 #include "init.h"
 #include "main.h"
 #include "screenwindow.h" // for TraceOutput
+#include "mainwind.h" // for checkwindow()
 #include "wrksp.h"
 #include "eval.h"
 #include "fileswnd.h"
@@ -508,14 +509,6 @@ CMainFrame::CreateWorkspaceEditor(
     bool             CheckForErrors
     )
 {
-    CWorkspaceEditor * editor = new CWorkspaceEditor(
-        this,
-        LOCALIZED_EDITOR_TITLE,
-        FileName,
-        EditArguments,
-        CheckForErrors);
-
-#if 0 // TODO
     // Construct the default coordinates of the editor's window
     // to be about 1/2 of the working area and placed in the center.
     int maxWidth;
@@ -527,26 +520,29 @@ CMainFrame::CreateWorkspaceEditor(
     int w = (int) (maxWidth * 0.75);
     int h = (int) (maxHeight * ScreenSz * 0.75);
 
+    // If the user has some coordinates saved, use them, instead.
     GetConfigurationQuadruple("Editor", &x, &y, &w, &h); 
     checkwindow(&x, &y, &w, &h);
 
-    // now set them 
-    editor->Attr.Style = WS_VISIBLE | WS_POPUPWINDOW | WS_CAPTION | WS_THICKFRAME | WS_MINIMIZEBOX | WS_MAXIMIZEBOX;
-    editor->Editor->Attr.Style |= ES_NOHIDESEL;
-
-    // let user edit
-    editor->Create();
-
-    // force a resize to fix RichEdit ScrollBar not appearing automatically
-    editor->SetWindowPos(0, x, y, w + 1, h, SWP_NOZORDER);
-    editor->SetWindowPos(0, x, y, w, h, SWP_NOZORDER);
-
-    if (args != NULL || check_for_errors)
+    // Determine the title
+    const char * editorWindowTitle;
+    if (EditArguments != NIL || CheckForErrors)
     {
-        // retitle without filename
-        editor->SetWindowText(LOCALIZED_EDITOR_TITLE);
+        editorWindowTitle = LOCALIZED_EDITOR_TITLE;
     }
-#endif
+    else
+    {
+        editorWindowTitle = FileName.c_str();
+    }
+
+    CWorkspaceEditor * editor = new CWorkspaceEditor(
+        this,
+        editorWindowTitle,
+        wxPoint(x, y),
+        wxSize(w, h),
+        FileName,
+        EditArguments,
+        CheckForErrors);
 
     // add this editor the the list of known editors
     m_Editors.insert(std::pair<CWorkspaceEditor*,CWorkspaceEditor*>(editor,editor));

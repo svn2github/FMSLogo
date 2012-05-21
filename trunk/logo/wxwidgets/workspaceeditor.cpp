@@ -114,6 +114,8 @@ END_EVENT_TABLE()
 CWorkspaceEditor::CWorkspaceEditor(
     wxWindow       * Parent,
     const wxString & Title,
+    const wxPoint  & Position,
+    const wxSize   & Size,
     const wxString & FileName,
     NODE           * EditArguments,
     bool             CheckForErrors
@@ -122,9 +124,9 @@ CWorkspaceEditor::CWorkspaceEditor(
         Parent,
         wxID_ANY, 
         Title,
-        wxDefaultPosition,
-        wxSize(420, 300),
-        wxDEFAULT_FRAME_STYLE | wxNO_FULL_REPAINT_ON_RESIZE),
+        Position,
+        Size,
+        wxDEFAULT_FRAME_STYLE | wxNO_FULL_REPAINT_ON_RESIZE | wxFRAME_NO_TASKBAR),
     m_LogoCodeControl(NULL),
     m_FindReplaceDialog(NULL),
     m_FileName(FileName),
