@@ -1,19 +1,42 @@
 // -*- c++ -*-
 
 #include <wx/dialog.h>
+#include <wx/textctrl.h>
 
-class wxButton;
 
 class CSetActiveArea : public wxDialog
 {
 public:
-    CSetActiveArea(wxWindow *parent);
+    CSetActiveArea(wxWindow *Parent);
+
+    void GetActiveArea(int & XLow, int & XHigh, int & YLow, int & YHigh) const;
+    void GetPixelsPerInch(int & PixelsPerInch) const;
 
 private:
-    int m_XLow;
-    int m_XHigh;
-    int m_YLow;
-    int m_YHigh;
+    // A thin wrapper on wxTextCtrl for storing the integers.
+    class CSmallIntegerCtrl : public wxTextCtrl
+    {
+    public:
+        CSmallIntegerCtrl(
+            wxWindow *      Parent,
+            wxWindowID      Id,
+            int             Value,
+            const wxPoint & Position = wxDefaultPosition
+            );
 
-    int m_PixelsPerInch;
+        int  GetIntegerValue() const;
+        void SetIntegerValue(int NewValue);
+    };
+
+    // event handlers
+    void OnReset(wxCommandEvent& Event);
+
+    // member variables
+    CSmallIntegerCtrl * m_XLow;
+    CSmallIntegerCtrl * m_XHigh;
+    CSmallIntegerCtrl * m_YLow;
+    CSmallIntegerCtrl * m_YHigh;
+    CSmallIntegerCtrl * m_PixelsPerInch;
+
+    DECLARE_EVENT_TABLE();
 };
