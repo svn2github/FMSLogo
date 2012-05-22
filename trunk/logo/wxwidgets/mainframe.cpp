@@ -29,6 +29,7 @@
 
 #include "guiutils.h"
 #include "commander.h"
+#include "activearea.h"
 #include "setactivearea.h"
 #include "aboutfmslogo.h"
 #include "aboutmultiplesclerosis.h"
@@ -1241,8 +1242,61 @@ bool CMainFrame::StatusDialogIsShowing()
 
 void CMainFrame::OnSetActiveArea(wxCommandEvent& WXUNUSED(Event))
 {
-    CSetActiveArea dlg(this);
-    dlg.ShowModal();
+    bool isOk;
+
+    do
+    {
+        isOk = true;
+
+        CSetActiveArea printerArea(
+            this,
+            g_PrinterAreaXLow,
+            g_PrinterAreaXHigh,
+            g_PrinterAreaYLow,
+            g_PrinterAreaYHigh,
+            g_PrinterAreaPixels);
+        if (printerArea.ShowModal() == wxID_OK)
+        {
+            // the user did not cancel, so commit to the new settings
+            int xLow;
+            int xHigh;
+            int yLow;
+            int yHigh;
+            printerArea.GetActiveArea(xLow, xHigh, yLow, yHigh);
+
+            // Validate the area
+            if (xLow >= xHigh || yLow >= yHigh)
+            {
+                // The settings are no good.  Notify the user and try again.
+                wxMessageBox(LOCALIZED_ERROR_BADINPUT, LOCALIZED_ACTIVEAREA);
+                isOk = false;
+            }
+            else
+            {
+                // The settings are ok.
+                // Use them.
+                int pixelsPerInch;
+                printerArea.GetPixelsPerInch(pixelsPerInch);
+
+                g_PrinterAreaXLow   = xLow;
+                g_PrinterAreaXHigh  = xHigh;
+                g_PrinterAreaYLow   = yLow;
+                g_PrinterAreaYHigh  = yHigh;
+                g_PrinterAreaPixels = pixelsPerInch;
+                if (g_PrinterAreaPixels < 1)
+                {
+                    g_PrinterAreaPixels = 1;
+                }
+
+                // Persist the new settings
+                SetConfigurationInt("Printer.XLow",   g_PrinterAreaXLow);
+                SetConfigurationInt("Printer.XHigh",  g_PrinterAreaXHigh);
+                SetConfigurationInt("Printer.YLow",   g_PrinterAreaYLow);
+                SetConfigurationInt("Printer.YHigh",  g_PrinterAreaYHigh);
+                SetConfigurationInt("Printer.Pixels", g_PrinterAreaPixels);
+            }
+        }
+    } while (!isOk);
 }
 
 void CMainFrame::OnSetLabelFont(wxCommandEvent& WXUNUSED(Event))

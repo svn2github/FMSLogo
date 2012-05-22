@@ -8,32 +8,72 @@
 #include <wx/stattext.h>
 #include <wx/textctrl.h>
 
+#include "main.h"
 #include "localizedstrings.h"
+
+// ----------------------------------------------------------------------------
+// CSetActiveArea::CSmallIntegerCtrl
+// ----------------------------------------------------------------------------
+CSetActiveArea::CSmallIntegerCtrl::CSmallIntegerCtrl(
+    wxWindow *      Parent,
+    wxWindowID      Id,
+    int             InitialValue,
+    const wxPoint & Position
+    ) : wxTextCtrl(
+        Parent,
+        Id,
+        wxString::Format("%d", InitialValue),
+        Position)
+{
+    // keep this input small--it should only hold 3-4 characters
+    SetSize(50, GetSize().GetHeight());
+}
+
+int CSetActiveArea::CSmallIntegerCtrl::GetIntegerValue() const
+{
+    long value;
+    if (!GetValue().ToLong(&value))
+    {
+        // Compatible with MSWLogo behavior
+        return 0;
+    }
+
+    return value;
+}
+
+void CSetActiveArea::CSmallIntegerCtrl::SetIntegerValue(int NewValue)
+{
+    ChangeValue(wxString::Format("%d", NewValue));
+}
 
 // ----------------------------------------------------------------------------
 // CSetActiveArea
 // ----------------------------------------------------------------------------
 
-static int g_PrinterAreaXLow   = -500;
-static int g_PrinterAreaXHigh  =  500;
-static int g_PrinterAreaYLow   = -500;
-static int g_PrinterAreaYHigh  =  500;
-static int g_PrinterAreaPixels =  125;
-
-enum ID_COMMANDER
+enum ID_SETACTIVEAREA
 {
     ID_PIXELSPERINCH = wxID_HIGHEST,
+    ID_XLOW,
+    ID_XHIGH,
+    ID_YLOW,
+    ID_YHIGH,
+    ID_RESET,
 };
 
-CSetActiveArea::CSetActiveArea(wxWindow *parent)
-    : wxDialog(parent, wxID_ANY, wxString(LOCALIZED_SELECTACTIVEAREA)),
-      m_XLow(g_PrinterAreaXLow),
-      m_XHigh(g_PrinterAreaXHigh),
-      m_YLow(g_PrinterAreaYLow),
-      m_YHigh(g_PrinterAreaYHigh),
-      m_PixelsPerInch(g_PrinterAreaPixels)
+CSetActiveArea::CSetActiveArea(
+    wxWindow * Parent,
+    int        XLow,
+    int        XHigh,
+    int        YLow,
+    int        YHigh,
+    int        PixelsPerInch
+    ) : wxDialog(Parent, wxID_ANY, wxString(LOCALIZED_SELECTACTIVEAREA)),
+      m_XLow(NULL),
+      m_XHigh(NULL),
+      m_YLow(NULL),
+      m_YHigh(NULL),
+      m_PixelsPerInch(NULL)
 {
-
     wxBoxSizer *topLevelSizer = new wxBoxSizer(wxVERTICAL);
 
     // The "body" of this dialog box: 
@@ -117,65 +157,29 @@ CSetActiveArea::CSetActiveArea(wxWindow *parent)
         wxALIGN_CENTRE);
 
 
-
-    wxString yHighInputValue;
-    yHighInputValue.Printf("%d", m_YHigh);
-
-    const wxPoint yHighInputPosition(effectPosition.x + 80, effectPosition.y + 35);
-    wxTextCtrl *yHighInput = new wxTextCtrl(
+    m_YHigh = new CSmallIntegerCtrl(
         this,
-        wxID_ANY,
-        yHighInputValue,
-        yHighInputPosition,
-        wxDefaultSize);
-    // keep this input small--it should only hold 3-4 characters
-    yHighInput->SetSize(50, yHighInput->GetSize().GetHeight());
+        ID_YHIGH,
+        YHigh,
+        wxPoint(effectPosition.x + 80, effectPosition.y + 35));
 
-
-    wxString xLowInputValue;
-    xLowInputValue.Printf("%d", m_XLow);
-
-    const wxPoint xLowInputPosition(effectPosition.x + 8, effectPosition.y + 68);
-    wxTextCtrl *xLowInput = new wxTextCtrl(
+    m_XLow = new CSmallIntegerCtrl(
         this,
-        wxID_ANY,
-        xLowInputValue,
-        xLowInputPosition,
-        wxDefaultSize);
-    // keep this input small--it should only hold 3-4 characters
-    xLowInput->SetSize(50, xLowInput->GetSize().GetHeight());
+        ID_XLOW,
+        XLow,
+        wxPoint(effectPosition.x + 8, effectPosition.y + 68));
 
-
-    wxString xHighInputValue;
-    xHighInputValue.Printf("%d", m_XHigh);
-
-    const wxPoint xHighInputPosition(effectPosition.x + 150, effectPosition.y + 68);
-    wxTextCtrl *xHighInput = new wxTextCtrl(
+    m_XHigh = new CSmallIntegerCtrl(
         this,
-        wxID_ANY,
-        xHighInputValue,
-        xHighInputPosition,
-        wxDefaultSize);
-    // keep this input small--it should only hold 3-4 characters
-    xHighInput->SetSize(50, xHighInput->GetSize().GetHeight());
+        ID_XHIGH,
+        XHigh,
+        wxPoint(effectPosition.x + 150, effectPosition.y + 68));
 
-
-
-    wxString yLowInputValue;
-    yLowInputValue.Printf("%d", m_YLow);
-
-    const wxPoint yLowInputPosition(effectPosition.x + 80, effectPosition.y + 103);
-    wxTextCtrl *yLowInput = new wxTextCtrl(
+    m_YLow = new CSmallIntegerCtrl(
         this,
-        wxID_ANY,
-        yLowInputValue,
-        yLowInputPosition,
-        wxDefaultSize);
-    // keep this input small--it should only hold 3-4 characters
-    yLowInput->SetSize(50, yLowInput->GetSize().GetHeight());
-
-
-
+        ID_YLOW,
+        YLow,
+        wxPoint(effectPosition.x + 80, effectPosition.y + 103));
 
 
 
@@ -188,15 +192,20 @@ CSetActiveArea::CSetActiveArea(wxWindow *parent)
         this,
         wxID_ANY,
         LOCALIZED_SELECTACTIVEAREA_STEPSPERINCH);
-    pixelsPerInchRow->Add(pixelsPerInchLabel, 0, wxALIGN_RIGHT | wxFIXED_MINSIZE | wxALIGN_CENTER_VERTICAL, 5);
+    pixelsPerInchRow->Add(
+        pixelsPerInchLabel,
+        0, wxALIGN_RIGHT | wxFIXED_MINSIZE | wxALIGN_CENTER_VERTICAL,
+        5);
 
-    wxTextCtrl *pixelsPerInchInput = new wxTextCtrl(
+    m_PixelsPerInch = new CSmallIntegerCtrl(
         this,
         ID_PIXELSPERINCH,
-        "");
-    // keep this input small--it should only hold 3-4 characters
-    pixelsPerInchInput->SetSize(50, pixelsPerInchInput->GetSize().GetHeight());
-    pixelsPerInchRow->Add(pixelsPerInchInput, 0, wxALIGN_RIGHT | wxFIXED_MINSIZE  | wxALIGN_CENTER_VERTICAL | wxALL, 5);
+        PixelsPerInch);
+    pixelsPerInchRow->Add(
+        m_PixelsPerInch,
+        0,
+        wxALIGN_RIGHT | wxFIXED_MINSIZE | wxALIGN_CENTER_VERTICAL | wxALL,
+        5);
 
     topLevelSizer->Add(pixelsPerInchRow, 0, wxALIGN_RIGHT);
 
@@ -208,7 +217,7 @@ CSetActiveArea::CSetActiveArea(wxWindow *parent)
 
     wxButton *reset = new wxButton(
         this, 
-        wxID_ANY, 
+        ID_RESET, 
         LOCALIZED_SELECTACTIVEAREA_RESET);
     buttonRow->Add(reset, 0, wxALIGN_CENTER | wxALL, 10);
 
@@ -219,8 +228,8 @@ CSetActiveArea::CSetActiveArea(wxWindow *parent)
     buttonRow->Add(cancel, 0, wxALIGN_CENTER | wxALL, 10);
 
     wxButton *ok = new wxButton(
-        this, 
-        wxID_ANY,
+        this,
+        wxID_OK,
         LOCALIZED_SELECTACTIVEAREA_OK);
     buttonRow->Add(ok, 0, wxALIGN_CENTER | wxALL, 10);
 
@@ -229,7 +238,6 @@ CSetActiveArea::CSetActiveArea(wxWindow *parent)
 
 
     // make the "Ok" button the default
-    ok->SetFocus();
     ok->SetDefault();
 
     SetSizer(topLevelSizer);
@@ -239,3 +247,38 @@ CSetActiveArea::CSetActiveArea(wxWindow *parent)
 
     Fit();
 }
+
+void CSetActiveArea::OnReset(wxCommandEvent& Event)
+{
+    // Restore to defaults -- defined in init_graphics()
+    m_XLow->SetIntegerValue(  -BitMapWidth  / 2);
+    m_XHigh->SetIntegerValue( +BitMapWidth  / 2);
+    m_YLow->SetIntegerValue(  -BitMapHeight / 2);
+    m_YHigh->SetIntegerValue( +BitMapHeight / 2);
+
+    m_PixelsPerInch->SetIntegerValue(std::max(BitMapWidth, BitMapHeight) / 8);
+}
+
+void
+CSetActiveArea::GetActiveArea(
+    int & XLow,
+    int & XHigh,
+    int & YLow,
+    int & YHigh
+    ) const
+{
+    XLow  = m_XLow->GetIntegerValue();
+    XHigh = m_XHigh->GetIntegerValue();
+    YLow  = m_YLow->GetIntegerValue();
+    YHigh = m_YHigh->GetIntegerValue();
+}
+
+void
+CSetActiveArea::GetPixelsPerInch(int & PixelsPerInch) const
+{
+    PixelsPerInch = m_PixelsPerInch->GetIntegerValue();
+}
+
+BEGIN_EVENT_TABLE(CSetActiveArea, wxDialog)
+    EVT_BUTTON(ID_RESET,     CSetActiveArea::OnReset)
+END_EVENT_TABLE()
