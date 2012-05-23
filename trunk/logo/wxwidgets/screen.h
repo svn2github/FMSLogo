@@ -23,8 +23,10 @@ private:
     void OnPaint(wxPaintEvent& PaintEvent);
     void OnSize(wxSizeEvent& Event);
 
+    // helper functions
     void ScrollToRatio();
 
+    // member variables
     wxClientDC * m_ScreenDeviceContext;
     wxMemoryDC * m_MemoryDeviceContext;
     wxBitmap   * m_MemoryBitmap;
