@@ -76,6 +76,7 @@ private:
     void RecalculateLayout();
     void UpdateFont(const wxFont & NewFont);
 
+    DECLARE_NO_COPY_CLASS(CCommander);
     DECLARE_EVENT_TABLE();
 };
 
@@ -87,12 +88,15 @@ public:
 
     bool EditBoxWantsKeyEvent() const;
 
+private:
+    // event handlers
     void OnSize(wxSizeEvent& event);
     void OnClose(wxCloseEvent& event);
 
-private:
+    // member variables
     CCommander * m_Commander;
 
+    DECLARE_NO_COPY_CLASS(CCommanderDialog);
     DECLARE_EVENT_TABLE();
 };
 
