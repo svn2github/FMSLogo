@@ -1,25 +1,22 @@
 /*
+ *  Copyright (C) 1995 by the Regents of the University of California
+ *  Copyright (C) 1995 by George Mills
  *
- *       Copyright (C) 1995 by the Regents of the University of California
- *       Copyright (C) 1995 by George Mills
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
  *
- *      This program is free software; you can redistribute it and/or modify
- *      it under the terms of the GNU General Public License as published by
- *      the Free Software Foundation; either version 2 of the License, or
- *      (at your option) any later version.
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
  *
- *      This program is distributed in the hope that it will be useful,
- *      but WITHOUT ANY WARRANTY; without even the implied warranty of
- *      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *      GNU General Public License for more details.
- *
- *      You should have received a copy of the GNU General Public License
- *      along with this program; if not, write to the Free Software
- *      Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  */
-
-#include <owl/compat.h>
 
 #include "myfileed.h"
 #include "logocore.h"
@@ -44,20 +41,15 @@ CSelectProcedureWindow::CSelectProcedureWindow(
     SetCaption(Caption);
 }
 
-void CSelectProcedureWindow::DoAll(UINT)
+void CSelectProcedureWindow::DoAll()
 {
     m_FileEditAll = true;
     CloseWindow(TRUE);
 }
 
-void CSelectProcedureWindow::DoCombo(UINT)
+void CSelectProcedureWindow::DoDoubleClickProcedure()
 {
-    TMessage Msg = __GetTMessage();
-
-    if (Msg.LP.Hi == CBN_DBLCLK)
-    {
-        CloseWindow(TRUE);
-    }
+    CloseWindow(TRUE);
 }
 
 bool CSelectProcedureWindow::CanClose()
@@ -125,8 +117,8 @@ void CSelectProcedureWindow::ShowDialog()
 }
 
 DEFINE_RESPONSE_TABLE1(CSelectProcedureWindow, TDialog)
-    EV_CHILD_NOTIFY_ALL_CODES(ID_SELECTPROCEDURE_ALL,   DoAll),
-    EV_CHILD_NOTIFY_ALL_CODES(ID_SELECTPROCEDURE_COMBO, DoCombo),
+    EV_BN_CLICKED(ID_SELECTPROCEDURE_ALL,     DoAll),
+    EV_CHILD_NOTIFY(ID_SELECTPROCEDURE_COMBO, CBN_DBLCLK, DoDoubleClickProcedure),
 END_RESPONSE_TABLE;
 
 
