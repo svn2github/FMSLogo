@@ -1434,7 +1434,7 @@ void TMainFrame::CMFileEdit()
 
 void TMainFrame::CMFileErase()
 {
-    // create and show a dialog for which procedure to edit
+    // create and show a dialog for which procedure to erase
     CEraseProcedureWindow(this).ShowDialog();
 }
 
