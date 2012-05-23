@@ -25,8 +25,6 @@
 
 #include "localizedstrings.h"
 
-const int DOUBLECLICK = 2;
-
 CSelectBox::CSelectBox(
     TWindow     * Parent,
     const char  * Title,
@@ -110,6 +108,6 @@ CSelectBox::GetSelection() const
 }
 
 DEFINE_RESPONSE_TABLE1(CSelectBox, TDialog)
-    EV_CHILD_NOTIFY(ID_CHOICES, DOUBLECLICK, OnDoubleClick),
+    EV_CHILD_NOTIFY(ID_CHOICES, CBN_DBLCLK, OnDoubleClick),
     EV_COMMAND(IDOK, CmOk),
 END_RESPONSE_TABLE;
