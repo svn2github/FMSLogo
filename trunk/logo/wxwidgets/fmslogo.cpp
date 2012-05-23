@@ -573,17 +573,21 @@ void uninitialize_windows()
 HWND GetScreenWindow()
 {
     CMainFrame* mainFrame = CFmsLogo::GetMainFrame();
+    assert(mainFrame != NULL);
     return reinterpret_cast<HWND>(mainFrame->GetScreen()->GetHandle());
 }
 
 HWND GetMainWindow()
 {
-    return static_cast<HWND>(CFmsLogo::GetMainFrame()->GetHandle());
+    CMainFrame* mainFrame = CFmsLogo::GetMainFrame();
+    assert(mainFrame != NULL);
+    return static_cast<HWND>(mainFrame->GetHandle());
 }
 
 HWND GetCommanderWindow()
 {
     CMainFrame* mainFrame = CFmsLogo::GetMainFrame();
+    assert(mainFrame != NULL);
     return reinterpret_cast<HWND>(mainFrame->GetCommander()->GetHandle());
 }
 
