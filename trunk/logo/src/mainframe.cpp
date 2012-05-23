@@ -2515,6 +2515,11 @@ void TMainFrame::EvDestroy()
         g_ErasePen = NULL;
     }
 
+    // Because the timer events are scheduled on
+    // the main window's HWND, we must uninitialize them
+    // before the main window is destroyed.
+    uninitialize_timers();
+
     TWindow::EvDestroy();
 }
 

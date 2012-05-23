@@ -57,6 +57,7 @@
 #include "eval.h"
 #include "fileswnd.h"
 #include "graphwin.h"
+#include "mmwind.h" // for uninitialize_timers()
 
 // ----------------------------------------------------------------------------
 // constants
@@ -846,6 +847,11 @@ void CMainFrame::OnClose(wxCloseEvent& Event)
         DeleteObject(g_ErasePen);
         g_ErasePen = NULL;
     }
+
+    // Because the timer events are scheduled on
+    // the main window's HWND, we must uninitialize them
+    // before the main window is destroyed.
+    uninitialize_timers();
 
     // Invoke the default handler, which is to destroy
     // the window and shut down.
