@@ -1,6 +1,8 @@
 #include "editproceduredialog.h"
 
 #include "localizedstrings.h"
+#include "wrksp.h"  // for ledit
+
 // ----------------------------------------------------------------------------
 // CEditProcedureDialog
 // ----------------------------------------------------------------------------
@@ -15,6 +17,8 @@ CEditProcedureDialog::CEditProcedureDialog(
 void
 CEditProcedureDialog::OnChoice(struct NODE * Procedures)
 {
-    // TODO: ledit(Procedures);
+    ledit(Procedures);
 }
 
+BEGIN_EVENT_TABLE(CEditProcedureDialog, CSelectProcedureDialog)
+END_EVENT_TABLE()

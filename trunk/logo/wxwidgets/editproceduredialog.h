@@ -7,7 +7,10 @@ class CEditProcedureDialog : public CSelectProcedureDialog
 public:
     CEditProcedureDialog(wxWindow *Parent);
 
-    void OnClose(wxCloseEvent& event);
-
+protected:
     virtual void OnChoice(struct NODE * Procedures);
+
+private:
+    DECLARE_NO_COPY_CLASS(CEditProcedureDialog);
+    DECLARE_EVENT_TABLE();
 };

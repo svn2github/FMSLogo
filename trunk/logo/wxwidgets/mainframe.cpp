@@ -1144,13 +1144,13 @@ void CMainFrame::OnFileSaveAs(wxCommandEvent& WXUNUSED(Event))
 void CMainFrame::OnEditProcedure(wxCommandEvent& WXUNUSED(Event))
 {
     CEditProcedureDialog dlg(this);
-    dlg.ShowModal();
+    dlg.DoDialog();
 }
 
 void CMainFrame::OnEraseProcedure(wxCommandEvent& WXUNUSED(Event))
 {
     CEraseProcedureDialog dlg(this);
-    dlg.ShowModal();
+    dlg.DoDialog();
 }
 
 void CMainFrame::OnSetPenSize(wxCommandEvent& WXUNUSED(Event))

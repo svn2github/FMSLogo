@@ -1,6 +1,8 @@
 #include "eraseproceduredialog.h"
 
 #include "localizedstrings.h"
+#include "wrksp.h"  // for lerase
+
 // ----------------------------------------------------------------------------
 // CEraseProcedureDialog
 // ----------------------------------------------------------------------------
@@ -15,6 +17,8 @@ CEraseProcedureDialog::CEraseProcedureDialog(
 void
 CEraseProcedureDialog::OnChoice(struct NODE * Procedures)
 {
-    // TODO: lerase(Procedures);
+    lerase(Procedures);
 }
 
+BEGIN_EVENT_TABLE(CEraseProcedureDialog, CSelectProcedureDialog)
+END_EVENT_TABLE()

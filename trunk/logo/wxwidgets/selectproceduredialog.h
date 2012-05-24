@@ -11,14 +11,23 @@ public:
     CSelectProcedureDialog(wxWindow *Parent, const char * Caption);
     ~CSelectProcedureDialog();
 
-    void OnClose(wxCloseEvent& event);
+    void DoDialog();
 
 protected:
     virtual void OnChoice(struct NODE * Procedures) = 0;
 
 private:
-    bool m_FileEditAll;              // true if all procedures were selected
-    char m_SelectedProcedures[256];  // buffer to hold selected procedure names
+    // event handlers
+    void OnAll(wxCommandEvent& Event);
+    void OnProcedureSelect(wxCommandEvent& Event);
+    void OnProcedureDoubleClick(wxCommandEvent& Event);
+
+    // member variables
+    class wxTextCtrl * m_SelectedProcedures;
+    class wxListBox  * m_ProcedureList;
+
+    DECLARE_NO_COPY_CLASS(CSelectProcedureDialog);
+    DECLARE_EVENT_TABLE();
 };
 
 #endif // _SELECTPROCEDUREDIALOG_H_
