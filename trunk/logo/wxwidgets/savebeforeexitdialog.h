@@ -17,5 +17,6 @@ private:
     void OnSaveBeforeExit(wxCommandEvent& Event);
     void OnCancel(wxCommandEvent& Event);
 
+    DECLARE_NO_COPY_CLASS(CSaveBeforeExitDialog);
     DECLARE_EVENT_TABLE();
 };
