@@ -19,11 +19,17 @@ protected:
 private:
     // event handlers
     void OnAll(wxCommandEvent& Event);
+    void OnProcedureTextChange(wxCommandEvent& Event);
     void OnProcedureSelect(wxCommandEvent& Event);
     void OnProcedureDoubleClick(wxCommandEvent& Event);
 
     // member variables
-    class wxTextCtrl * m_SelectedProcedures;
+
+    // In MSWLogo, the procedure selection was a combobox with
+    // a simple listbox.  We use two separate controls because
+    // wxWidgets doesn't support this sort of combobox cross-platform
+    // and doesn't support a double-click event on the listbox portion.
+    class wxTextCtrl * m_SelectedProcedure;
     class wxListBox  * m_ProcedureList;
 
     DECLARE_NO_COPY_CLASS(CSelectProcedureDialog);

@@ -36,21 +36,21 @@ CSelectProcedureDialog::CSelectProcedureDialog(
         wxDefaultPosition,
         wxDefaultSize, 
         wxCAPTION | wxCLOSE_BOX | wxDEFAULT_DIALOG_STYLE),
-      m_SelectedProcedures(NULL),
+      m_SelectedProcedure(NULL),
       m_ProcedureList(NULL)
 {
     wxBoxSizer *topLevelSizer = new wxBoxSizer(wxVERTICAL);
 
     // add the text input
-    m_SelectedProcedures = new wxTextCtrl(this, ID_PROCEDURETEXT);
+    m_SelectedProcedure = new wxTextCtrl(this, ID_PROCEDURETEXT);
     topLevelSizer->Add(
-        m_SelectedProcedures,
+        m_SelectedProcedure,
         0,
         wxALIGN_CENTER | wxTOP | wxLEFT | wxRIGHT | wxEXPAND,
         15);
 
     // add the procedures list
-    wxListBox * m_ProcedureList = new wxListBox(this, ID_PROCEDURELIST);
+    m_ProcedureList = new wxListBox(this, ID_PROCEDURELIST);
 
     // get procedures
     NODE * proclist = lprocedures(NIL);
@@ -172,7 +172,7 @@ void CSelectProcedureDialog::DoDialog()
         else
         {
             // else find what user selected
-            arg = cons_list(make_strnode(m_SelectedProcedures->GetValue().c_str()));
+            arg = cons_list(make_strnode(m_SelectedProcedure->GetValue().c_str()));
         }
 
         // if something edit it
@@ -196,16 +196,58 @@ void CSelectProcedureDialog::OnAll(wxCommandEvent& Event)
     Destroy();
 }
 
+void CSelectProcedureDialog::OnProcedureTextChange(wxCommandEvent& Event)
+{
+    // The user changed the text within the text box.
+    // To be compatible with the MSWLogo behavior, we scroll the listbox to
+    // the location of the typed text.
+    const wxString      & newProcedure  = m_SelectedProcedure->GetValue();
+    const wxArrayString & allProcedures = m_ProcedureList->GetStrings();
+
+    for (int i = 0; i < static_cast<int>(allProcedures.GetCount()); i++)
+    {
+        int comparison = allProcedures[i].Cmp(newProcedure);
+        if (0 <= comparison)
+        {
+            // We have found the item in the list box that is greater than
+            // what the user has typed.  We want to scroll the listbox so
+            // that this item is at the top.
+            m_ProcedureList->SetFirstItem(i);
+
+            if (comparison == 0)
+            {
+                // The user has typed a perfect match for
+                // this item.  Select it.
+                m_ProcedureList->Select(i);
+            }
+            else
+            {
+                // The text doesn't match any item.
+                // Make sure that none are selected.
+                m_ProcedureList->Select(wxNOT_FOUND);
+            }
+            break;
+        }
+    }
+}
+
 void CSelectProcedureDialog::OnProcedureSelect(wxCommandEvent& Event)
 {
+    // Copy the selection to the text control
+    const wxString & selectedProcedure = m_ProcedureList->GetStringSelection();
+    m_SelectedProcedure->ChangeValue(selectedProcedure);
 }
 
 void CSelectProcedureDialog::OnProcedureDoubleClick(wxCommandEvent& Event)
 {
+    // A double-click is the same as pressing OK
+    SetReturnCode(wxID_OK);
+    Destroy();
 }
 
 BEGIN_EVENT_TABLE(CSelectProcedureDialog, wxDialog)
     EVT_BUTTON(ID_ALL,                   CSelectProcedureDialog::OnAll)
+    EVT_TEXT(ID_PROCEDURETEXT,           CSelectProcedureDialog::OnProcedureTextChange)
     EVT_LISTBOX(ID_PROCEDURELIST,        CSelectProcedureDialog::OnProcedureSelect)
     EVT_LISTBOX_DCLICK(ID_PROCEDURELIST, CSelectProcedureDialog::OnProcedureDoubleClick)
 END_EVENT_TABLE()
