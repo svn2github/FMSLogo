@@ -735,6 +735,7 @@ deref(NODE * object)
 }
 
 // Deletes an object if its reference count is 0.
+// Does nothting, otherwise.
 inline 
 void
 gcref(NODE * object)

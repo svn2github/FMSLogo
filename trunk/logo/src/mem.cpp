@@ -196,6 +196,8 @@ NODE *newnode(NODETYPES type)
     return newnd;
 }
 
+// Returns a NODE with refcount=0.
+// Caller must free.
 NODE *cons(NODE *x, NODE *y)
 {
     NODE *val = newnode(CONS);
