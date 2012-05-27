@@ -167,21 +167,25 @@ void CSelectProcedureDialog::DoDialog()
         if (returnCode == ID_ALL)
         {
             // The user clicked ALL get all procedures
-            arg = lprocedures(NIL);
+            arg = vref(lprocedures(NIL));
         }
         else
         {
             // else find what user selected
-            arg = cons_list(make_strnode(m_SelectedProcedure->GetValue().c_str()));
+            const wxString & procedure = m_SelectedProcedure->GetValue();
+            arg = vref(cons_list(make_strnode(procedure.c_str())));
         }
 
-        // if something edit it
+        // if something edit/erase it
         if (arg != NIL) 
         {
+            // Dispatch to the subclass to process the procedure.
             OnChoice(arg);
+
+            // Release the reference from the vref, above
+            deref(arg);
         }
 
-        gcref(arg);
         break;
 
     default:
