@@ -28,6 +28,7 @@
 #include "localizedstrings.h"
 #include "debugheap.h"
 #include "mainframe.h"
+#include "eval.h"
 
 CSelectProcedureWindow::CSelectProcedureWindow(
     TWindow    * Parent, 
@@ -98,21 +99,24 @@ void CSelectProcedureWindow::ShowDialog()
         if (m_FileEditAll)
         {
             // the user clicked ALL get all procedures
-            arg = lprocedures(NIL);
+            arg = vref(lprocedures(NIL));
         }
         else
         {
             // else find what user selected
-            arg = cons_list(make_strnode(m_SelectedProcedures));
+            arg = vref(cons_list(make_strnode(m_SelectedProcedures)));
         }
 
-        // if something edit it
+        // if something was selected, edit/erase it
         if (arg != NIL) 
         {
             OnChoice(arg);
+
+            // Handle any errors that were encountered.
+            process_special_conditions();
         }
 
-        gcref(arg);
+        deref(arg);
     }
 }
 
