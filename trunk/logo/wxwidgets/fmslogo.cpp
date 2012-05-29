@@ -640,10 +640,16 @@ HDC GetMemoryDeviceContext()
 
 void OpenStatusWindow()
 {
+    CMainFrame * mainFrame = CFmsLogo::GetMainFrame();
+    mainFrame->ShowStatus();
+    mainFrame->GetCommander()->UpdateStatusButtonState();
 }
 
 void CloseStatusWindow()
 {
+    CMainFrame * mainFrame = CFmsLogo::GetMainFrame();
+    mainFrame->HideStatus();
+    mainFrame->GetCommander()->UpdateStatusButtonState();
 }
 
 void AdjustScrollPositionToZoomFactor(FLONUM NewZoomFactor)
