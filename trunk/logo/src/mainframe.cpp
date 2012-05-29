@@ -785,7 +785,7 @@ void TMainFrame::CMBitmapNew()
     HBRUSH brush = ::CreateBrushIndirect(&ScreenBrush);
     if (brush != NULL)
     {
-        HDC memoryDC = MainWindowx->ScreenWindow->GetMemoryDeviceContext();
+        HDC memoryDC = ScreenWindow->GetMemoryDeviceContext();
 
         ::SelectObject(memoryDC, MemoryBitMap);
 
@@ -798,7 +798,7 @@ void TMainFrame::CMBitmapNew()
     }
 
     // mark the screen window as invalid
-    MainWindowx->ScreenWindow->Invalidate(true);
+    ScreenWindow->Invalidate(true);
     IsNewBitmap = true;
 }
 
