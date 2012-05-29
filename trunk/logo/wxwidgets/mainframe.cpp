@@ -171,8 +171,12 @@ BEGIN_EVENT_TABLE(CMainFrame, wxFrame)
     EVT_MENU(ID_FILEEDIT,           CMainFrame::OnEditProcedure)
     EVT_MENU(ID_FILEERASE,          CMainFrame::OnEraseProcedure)
     EVT_MENU(ID_EXIT,               CMainFrame::OnExit)
-    EVT_MENU(ID_SETPENSIZE,         CMainFrame::OnSetPenSize)
+    EVT_MENU(ID_BITMAPNEW,          CMainFrame::OnBitmapNew)
+    EVT_MENU(ID_BITMAPOPEN,         CMainFrame::OnBitmapOpen)
+    EVT_MENU(ID_BITMAPSAVE,         CMainFrame::OnBitmapSave)
+    EVT_MENU(ID_BITMAPSAVEAS,       CMainFrame::OnBitmapSaveAs)
     EVT_MENU(ID_BITMAPPRINTERAREA,  CMainFrame::OnSetActiveArea)
+    EVT_MENU(ID_SETPENSIZE,         CMainFrame::OnSetPenSize)
     EVT_MENU(ID_SETLABELFONT,       CMainFrame::OnSetLabelFont)
     EVT_MENU(ID_SETPENCOLOR,        CMainFrame::OnSetPenColor)
     EVT_MENU(ID_SETSCREENCOLOR,     CMainFrame::OnSetScreenColor)
@@ -208,11 +212,13 @@ CMainFrame::CMainFrame(
       m_Splitter(NULL),
       m_CommanderIsDocked(false),
       m_IsNewFile(true),
+      m_IsNewBitmap(true),
       m_SetPenColorDialog(NULL),
       m_SetFloodColorDialog(NULL),
       m_SetScreenColorDialog(NULL)
 {
-    m_FileName[0] = '\0';
+    m_FileName[0]   = '\0';
+    m_BitmapName[0] = '\0';
 
 #if wxUSE_STATUSBAR
     CreateStatusBar(2);
@@ -1151,6 +1157,163 @@ void CMainFrame::OnEraseProcedure(wxCommandEvent& WXUNUSED(Event))
 {
     CEraseProcedureDialog dlg(this);
     dlg.DoDialog();
+}
+
+void CMainFrame::OnBitmapNew(wxCommandEvent& WXUNUSED(Event))
+{
+    // Reset the on-screen bitmap.
+    HBRUSH brush = ::CreateBrushIndirect(&ScreenBrush);
+    if (brush != NULL)
+    {
+        HDC memoryDC = static_cast<HDC>(m_Screen->GetMemoryDeviceContext().GetHDC());
+
+        ::SelectObject(memoryDC, MemoryBitMap);
+
+        ::FillRect(memoryDC, &FullRect, brush);
+
+        ::SetBkColor(memoryDC, scolor);
+        ::SetBkMode(memoryDC, TRANSPARENT);
+
+        ::DeleteObject(brush);
+    }
+
+    // Refresh the screen window so that it will repainted
+    // to match the memory device context.
+    m_Screen->Refresh(true);
+
+    // Mark the bitmap as not ever having been saved.
+    m_IsNewBitmap = true;
+}
+
+void CMainFrame::OnBitmapOpen(wxCommandEvent& WXUNUSED(Event))
+{
+    OPENFILENAME openFileName;
+    ZeroMemory(&openFileName, sizeof openFileName);
+    openFileName.lStructSize       = sizeof openFileName;
+    openFileName.hwndOwner         = static_cast<HWND>(GetHandle());
+    openFileName.hInstance         = NULL;
+    openFileName.lpstrFilter       = LOCALIZED_FILEFILTER_IMAGE;
+    openFileName.lpstrCustomFilter = NULL;
+    openFileName.nMaxCustFilter    = 0;
+    openFileName.nFilterIndex      = 0;
+    openFileName.lpstrFile         = m_BitmapName;
+    openFileName.nMaxFile          = ARRAYSIZE(m_BitmapName);
+    openFileName.lpstrFileTitle    = NULL;
+    openFileName.nMaxFileTitle     = 0;
+    openFileName.lpstrInitialDir   = NULL;
+    openFileName.lpstrTitle        = NULL;
+    openFileName.Flags             = OFN_FILEMUSTEXIST | OFN_HIDEREADONLY | OFN_EXPLORER;
+    openFileName.nFileOffset       = 0;
+    openFileName.nFileExtension    = 0;
+    openFileName.lpstrDefExt       = "bmp";
+    openFileName.lCustData         = 0;
+    openFileName.lpfnHook          = NULL;
+    openFileName.lpTemplateName    = NULL;
+
+    // if user found a file then try to load it
+    if (GetOpenFileName(&openFileName))
+    {
+        DWORD dwPixelWidth  = 1;
+        DWORD dwPixelHeight = 1;
+
+        m_IsNewBitmap = false;
+
+        ERR_TYPES status;
+        char ext[_MAX_EXT];
+        _splitpath(m_BitmapName, NULL, NULL, NULL, ext);
+        if (stricmp(ext, ".gif") == 0)
+        {
+            status = gifload_helper(m_BitmapName, dwPixelWidth, dwPixelHeight);
+        }
+        else
+        {
+            status = LoadBitmapFile(m_BitmapName, dwPixelWidth, dwPixelHeight);
+        }
+
+        if (status != SUCCESS)
+        {
+            ShowErrorMessage(status);
+        }
+    }
+}
+
+void CMainFrame::SaveBitmap()
+{
+    ERR_TYPES status;
+
+    char ext[_MAX_EXT];
+    _splitpath(m_BitmapName, NULL, NULL, NULL, ext);
+    if (stricmp(ext, ".gif") == 0)
+    {
+        status = gifsave_helper(m_BitmapName, -1, 0, -1, -1, 8);
+    }
+    else
+    {
+        status = DumpBitmapFile(m_BitmapName, 32);
+    }
+
+    if (status != SUCCESS)
+    {
+        ShowErrorMessage(status);
+    }
+}
+
+void CMainFrame::SaveBitmapAs()
+{
+    // if new then nulify File name
+    if (m_IsNewBitmap)
+    {
+        m_BitmapName[0] = '\0';
+    }
+
+    // Get file name from user
+    OPENFILENAME openFileName;
+    ZeroMemory(&openFileName, sizeof openFileName);
+    openFileName.lStructSize       = sizeof openFileName;
+    openFileName.hwndOwner         = static_cast<HWND>(GetHandle());
+    openFileName.hInstance         = NULL;
+    openFileName.lpstrFilter       = LOCALIZED_FILEFILTER_IMAGE;
+    openFileName.lpstrCustomFilter = NULL;
+    openFileName.nMaxCustFilter    = 0;
+    openFileName.nFilterIndex      = 0;
+    openFileName.lpstrFile         = m_BitmapName;
+    openFileName.nMaxFile          = ARRAYSIZE(m_BitmapName);
+    openFileName.lpstrFileTitle    = NULL;
+    openFileName.nMaxFileTitle     = 0;
+    openFileName.lpstrInitialDir   = NULL;
+    openFileName.lpstrTitle        = NULL;
+    openFileName.Flags             = OFN_OVERWRITEPROMPT | OFN_HIDEREADONLY | OFN_EXPLORER;
+    openFileName.nFileOffset       = 0;
+    openFileName.nFileExtension    = 0;
+    openFileName.lpstrDefExt       = "bmp";
+    openFileName.lCustData         = 0;
+    openFileName.lpfnHook          = NULL;
+    openFileName.lpTemplateName    = NULL;
+
+    if (GetSaveFileName(&openFileName))
+    {
+        // Save the bitmap using the new file name
+        m_IsNewBitmap = false;
+        SaveBitmap();
+    }
+}
+
+void CMainFrame::OnBitmapSave(wxCommandEvent& WXUNUSED(Event))
+{
+    // if new file then switch to save file as, else save
+    if (m_IsNewBitmap)
+    {
+        SaveBitmapAs();
+    }
+    else
+    {
+        SaveBitmap();
+    }
+}
+
+void CMainFrame::OnBitmapSaveAs(wxCommandEvent& WXUNUSED(Event))
+{
+    SaveBitmapAs();
 }
 
 void CMainFrame::OnSetPenSize(wxCommandEvent& WXUNUSED(Event))

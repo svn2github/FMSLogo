@@ -76,6 +76,10 @@ private:
     void OnEditProcedure(wxCommandEvent& Event);
     void OnEraseProcedure(wxCommandEvent& Event);
     void OnExit(wxCommandEvent& Event);
+    void OnBitmapNew(wxCommandEvent& Event);
+    void OnBitmapOpen(wxCommandEvent& Event);
+    void OnBitmapSave(wxCommandEvent& Event);
+    void OnBitmapSaveAs(wxCommandEvent& Event);
     void OnSetLabelFont(wxCommandEvent& Event);
     void OnSetActiveArea(wxCommandEvent& Event);
     void OnSetPenSize(wxCommandEvent& Event);
@@ -92,6 +96,7 @@ private:
 
     void OnClose(wxCloseEvent& Event);
 
+    // Private helper functions
     CWorkspaceEditor *
     CreateWorkspaceEditor(
         const wxString & FileName,
@@ -117,6 +122,10 @@ private:
     bool SaveFileAs();
     bool CanClose();
 
+    void SaveBitmap();
+    void SaveBitmapAs();
+
+    // Member variables
     CScreen          * m_Screen;
     wxWindow         * m_Commander;
     CCommander       * m_RealCommander;
@@ -126,9 +135,11 @@ private:
 
     bool  m_CommanderIsDocked;
     bool  m_IsNewFile;
+    bool  m_IsNewBitmap;
 
-    // TODO: Make this a wxString
+    // TODO: Make these wxString objects
     char m_FileName[MAX_PATH];
+    char m_BitmapName[MAX_PATH];
 
     class CSetColor * m_SetPenColorDialog;
     class CSetColor * m_SetFloodColorDialog;
