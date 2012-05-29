@@ -110,9 +110,14 @@ void UndockCommanderWindow()
     MainWindowx->UndockCommanderWindow();
 }
 
+void DockCommanderWindow()
+{
+    MainWindowx->DockCommanderWindow();
+}
+
 int ShowEditorForFile(const char *FileName, NODE *args)
 {
-    return TMainFrame::PopupEditorForFile(TempPathName, args);
+    return TMainFrame::PopupEditorForFile(FileName, args);
 }
 
 void
@@ -121,8 +126,6 @@ TraceOutput(
     ...
     )
 {
-    char formattedString[256];
-
     va_list args;
 
     va_start(args, FormatString);

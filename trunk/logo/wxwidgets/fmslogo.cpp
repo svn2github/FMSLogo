@@ -652,6 +652,12 @@ void AdjustScrollPositionToZoomFactor(FLONUM NewZoomFactor)
 
 void UndockCommanderWindow()
 {
+    CFmsLogo::GetMainFrame()->UndockCommanderWindow();
+}
+
+void DockCommanderWindow()
+{
+    CFmsLogo::GetMainFrame()->DockCommanderWindow();
 }
 
 int ShowEditorForFile(const char *FileName, NODE * EditArguments)

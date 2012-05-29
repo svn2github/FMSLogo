@@ -548,9 +548,9 @@ BOOL WINAPI ScreenSaverConfigureDialog(HWND hDlg, UINT message, WPARAM wParam, L
             openFileName.lpstrTitle        = NULL;
             openFileName.Flags             = OFN_FILEMUSTEXIST | OFN_PATHMUSTEXIST | OFN_HIDEREADONLY;
             openFileName.nFileOffset       = 0;
-            openFileName.nFileExtension    = NULL;
+            openFileName.nFileExtension    = 0;
             openFileName.lpstrDefExt       = NULL;
-            openFileName.lCustData         = NULL;
+            openFileName.lCustData         = 0;
             openFileName.lpfnHook          = NULL;
             openFileName.lpTemplateName    = NULL;
 
@@ -721,6 +721,14 @@ void AdjustScrollPositionToZoomFactor(FLONUM NewZoomFactor)
 
 void UndockCommanderWindow()
 {
+    // The screen saver doesn't have a commander window,
+    // so there is nothing to undock.
+}
+
+void DockCommanderWindow()
+{
+    // The screen saver doesn't have a commander window,
+    // so there is nothing to dock.
 }
 
 int ShowEditorForFile(const char *FileName, NODE *args)

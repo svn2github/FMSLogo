@@ -39,6 +39,7 @@ void CloseStatusWindow();
 
 void AdjustScrollPositionToZoomFactor(FLONUM NewZoomFactor);
 void UndockCommanderWindow();
+void DockCommanderWindow();
 int ShowEditorForFile(const char *FileName, NODE *args);
 
 void TraceOutput(const char * FormatString, ...);

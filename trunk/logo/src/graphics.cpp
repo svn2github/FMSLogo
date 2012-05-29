@@ -2528,25 +2528,19 @@ NODE *llabel(NODE *arg)
 
 NODE *ltextscreen(NODE *)
 {
-#ifndef FMSLOGO_SCREENSAVER
-    MainWindowx->UndockCommanderWindow();
-#endif
+    UndockCommanderWindow();
     return Unbound;
 }
 
 NODE *lsplitscreen(NODE *)
 {
-#ifndef FMSLOGO_SCREENSAVER
-    MainWindowx->DockCommanderWindow();
-#endif
+    DockCommanderWindow();
     return Unbound;
 }
 
 NODE *lfullscreen(NODE *)
 {
-#ifndef FMSLOGO_SCREENSAVER
-    MainWindowx->UndockCommanderWindow();
-#endif
+    UndockCommanderWindow();
     return Unbound;
 }
 
@@ -2794,7 +2788,7 @@ GetColorArgument(
 
     if (EnablePalette)
     {
-        // We're using a palette, so use the closes matching
+        // We're using a palette, so use the closest matching
         // color that is available.
         color = LoadColor(GetRValue(color), GetGValue(color), GetBValue(color));
     }
