@@ -1321,7 +1321,7 @@ void CMainFrame::OnSetPenSize(wxCommandEvent& WXUNUSED(Event))
     if (m_SetPenSizeDialog == NULL)
     {
         // TODO: read this from the Logo engine
-        const int initialSize = 2;
+        const int initialSize = get_pen_width();
 
         m_SetPenSizeDialog = new CSetPenSize(
             this,

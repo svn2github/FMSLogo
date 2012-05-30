@@ -7,7 +7,9 @@
 #include <wx/stattext.h>
 #include <wx/dcclient.h>
 
+#include "logodata.h"
 #include "logocore.h"
+#include "main.h"
 #include "localizedstrings.h"
 
 // ----------------------------------------------------------------------------
@@ -227,15 +229,18 @@ CSetPenSize::CSetPenSize(
 
     wxButton *apply = new wxButton(
         this, 
-        wxID_ANY,
+        ID_SETPENSIZE_APPLY,
         LOCALIZED_SETPENSIZE_APPLY);
     buttonColumn->Add(apply, 0, wxALIGN_CENTER | wxALL, 5);
 
     topLevelSizer->Add(buttonColumn, 0, wxALIGN_CENTER | wxALL, 5);
 
     // make the "Ok" button the default
-    ok->SetFocus();
     ok->SetDefault();
+
+    // Give focus to the slider, since that's the control
+    // the user is mostly likely to manipulate first.
+    m_ThicknessSlider->SetFocus();
 
     SetSizer(topLevelSizer);
 
@@ -258,30 +263,49 @@ void CSetPenSize::SetPenSize(
     m_ThicknessSlider->SetValue(PenSize);
 }
 
-void CSetPenSize::OnClose(wxCloseEvent& WXUNUSED(event))
+void CSetPenSize::OnApplyButton(wxCommandEvent& Event)
+{
+    // Get the uppercase form of SETPENSIZE
+    char setpensize[MAX_BUFFER_SIZE];
+    cap_strnzcpy(
+        setpensize,
+        LOCALIZED_ALTERNATE_SETPENSIZE,
+        STRINGLENGTH(LOCALIZED_ALTERNATE_SETPENSIZE));
+
+    // Run "SETPENSIZE <PENSIZE>"
+    char logoInstruction[256];
+
+    sprintf(
+        logoInstruction,
+        "%s %d",
+        setpensize,
+        m_PenWidth);
+
+    RunLogoInstructionFromGui(logoInstruction);
+}
+
+void CSetPenSize::OnOkButton(wxCommandEvent& Event)
+{
+    OnApplyButton(Event);
+
+    // NULL-out the reference that CMainFrame is holding
+    // so that it knows the window is no longer valid.
+    // This object will get deleted on its own.
+    m_ExternalReference = NULL;
+
+    // Let the window close
+    Event.Skip();
+}
+
+void CSetPenSize::OnCancelButton(wxCommandEvent & Event)
 {
     // NULL-out the reference that CMainFrame is holding
     // so that it knows the window is no longer valid.
     // This object will get deleted on its own.
     m_ExternalReference = NULL;
 
-    // always destroy
-    Destroy();
-}
-
-void CSetPenSize::OnOkButton(wxCommandEvent& event)
-{
-}
-
-void CSetPenSize::OnCancelButton(wxCommandEvent& event)
-{
-    // NULL-out the reference that CMainFrame is holding
-    // so that it knows the window is no longer valid.
-    // This object will get deleted on its own.
-    m_ExternalReference = NULL;
-
-    // always destroy
-    Destroy();
+    // Let the window close
+    Event.Skip();
 }
 
 void CSetPenSize::OnSliderUpdated(wxCommandEvent & WXUNUSED(event))
@@ -292,8 +316,8 @@ void CSetPenSize::OnSliderUpdated(wxCommandEvent & WXUNUSED(event))
 
 
 BEGIN_EVENT_TABLE(CSetPenSize, wxDialog)
-    EVT_BUTTON(wxID_OK,     CSetPenSize::OnOkButton)
-    EVT_BUTTON(wxID_CANCEL, CSetPenSize::OnCancelButton)
+    EVT_BUTTON(wxID_OK,              CSetPenSize::OnOkButton)
+    EVT_BUTTON(wxID_CANCEL,          CSetPenSize::OnCancelButton)
+    EVT_BUTTON(ID_SETPENSIZE_APPLY,  CSetPenSize::OnApplyButton)
     EVT_SLIDER(ID_SETPENSIZE_SLIDER, CSetPenSize::OnSliderUpdated)
-    EVT_CLOSE(CSetPenSize::OnClose)
 END_EVENT_TABLE()

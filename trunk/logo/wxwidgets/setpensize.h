@@ -19,14 +19,17 @@ class CSetPenSize : public wxDialog
             int             PenSize
            );
 
-        void OnPaint(wxPaintEvent & event);
-        void OnClick(wxMouseEvent & event);
-
         void SetPenSize(int PenSize);
 
     private:
+        // event handlers
+        void OnPaint(wxPaintEvent & event);
+        void OnClick(wxMouseEvent & event);
+
+        // member variables
         int m_PenWidth;
 
+        DECLARE_NO_COPY_CLASS(CPenSizeWindow);
         DECLARE_EVENT_TABLE()
     };
 
@@ -37,19 +40,24 @@ public:
         CSetPenSize * & ExternalReference
         );
 
+private:
+
+    // Private helper funtions
     void SetPenSize(int PenSize);
 
+    // Event handlers
     void OnOkButton(wxCommandEvent& event);
     void OnCancelButton(wxCommandEvent& event);
+    void OnApplyButton(wxCommandEvent& event);
     void OnSliderUpdated(wxCommandEvent& event);
-    void OnClose(wxCloseEvent& event);
 
-private:
+    // Member variables
     int m_PenWidth;
 
     CSetPenSize    * & m_ExternalReference;
     CPenSizeWindow *   m_ThicknessDisplay;
     wxSlider       *   m_ThicknessSlider;
 
+    DECLARE_NO_COPY_CLASS(CSetPenSize);
     DECLARE_EVENT_TABLE()
 };
