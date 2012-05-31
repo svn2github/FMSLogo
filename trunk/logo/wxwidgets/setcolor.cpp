@@ -8,29 +8,10 @@
 #include <wx/dcclient.h>
 
 #include "logocore.h"
+#include "graphics.h"
+#include "logodata.h"
+#include "main.h"
 #include "localizedstrings.h"
-
-
-// TODO: move this someplace centralized
-unsigned long g_IndexToColorTable[16] =
-{
-    0x00000000, // black
-    0x00FF0000, // blue
-    0x0000FF00, // green
-    0x00FFFF00, // cyan
-    0x000000FF, // red
-    0x00FF00FF, // magenta
-    0x0000FFFF, // yellow
-    0x00FFFFFF, // white
-    0x003B609B, // brown
-    0x001288C5, // tan
-    0x0040A264, // forest
-    0x00BBBB78, // aqua
-    0x007795FF, // salmon
-    0x00D07190, // purple
-    0x0000A3FF, // orange
-    0x00B7B7B7, // grey
-};
 
 // ----------------------------------------------------------------------------
 // CSetColor::CColorWindow
@@ -43,7 +24,7 @@ CSetColor::CColorWindow::CColorWindow(
     const wxSize   & Size,
     const wxColour & Color
     )
-    : wxWindow(Parent, wxID_ANY, Position, Size)
+    : wxWindow(Parent, Id, Position, Size)
 {
     SetBackgroundColour(Color);
 }
@@ -84,7 +65,6 @@ enum ID_SETCOLOR
     ID_SETCOLOR_SLIDER_RED,
     ID_SETCOLOR_SLIDER_GREEN,
     ID_SETCOLOR_SLIDER_BLUE,
-    ID_SETCOLOR_OK,
     ID_SETCOLOR_APPLY,
     ID_SETCOLOR_COLOR1,
     ID_SETCOLOR_COLOR2,
@@ -100,13 +80,15 @@ CSetColor::CSetColor(
     wxWindow    *    Parent,
     const char  *    Title,
     const wxColour & InitialColor,
+    const char  *    LogoCommand,
     CSetColor   *  & ExternalReference
     )
     : wxDialog(Parent, wxID_ANY, wxString(Title)),
       m_ExternalReference(ExternalReference),
       m_RedSlider(NULL),
       m_GreenSlider(NULL),
-      m_BlueSlider(NULL)
+      m_BlueSlider(NULL),
+      m_LogoCommand(LogoCommand)
 {
     wxBoxSizer *topLevelSizer = new wxBoxSizer(wxHORIZONTAL);
 
@@ -139,7 +121,7 @@ CSetColor::CSetColor(
             ID_SETCOLOR_COLOR1 + i,
             wxDefaultPosition,
             wxSize(width, height),
-            wxColor(g_IndexToColorTable[i]));
+            wxColor(colortable[i]));
 
         colorByPictures->Add(picture, 0, wxALIGN_CENTER | wxALL, 5);
     }
@@ -227,7 +209,7 @@ CSetColor::CSetColor(
 
     wxButton *ok = new wxButton(
         this, 
-        ID_SETCOLOR_OK,
+        wxID_OK,
         LOCALIZED_SETCOLOR_OK);
     buttonColumn->Add(ok, 0, wxALIGN_CENTER | wxALL, 5);
 
@@ -239,15 +221,19 @@ CSetColor::CSetColor(
 
     wxButton *apply = new wxButton(
         this, 
-        wxID_ANY,
+        ID_SETCOLOR_APPLY,
         LOCALIZED_SETCOLOR_APPLY);
     buttonColumn->Add(apply, 0, wxALIGN_CENTER | wxALL, 5);
 
     topLevelSizer->Add(buttonColumn, 0, wxALIGN_CENTER | wxALL, 5);
 
     // make the "Ok" button the default
-    ok->SetFocus();
     ok->SetDefault();
+
+    // Give the red slider focus, since it's the first one
+    // that the user is likely to interact with when using
+    // only the keyboard.
+    m_RedSlider->SetFocus();
 
     SetSizer(topLevelSizer);
 
@@ -256,7 +242,7 @@ CSetColor::CSetColor(
 
     Fit();
 
-    // update the slider's position to match the pen size
+    // Update the slider positions to match the current color.
     SetColor(InitialColor);
 }
 
@@ -271,30 +257,60 @@ void CSetColor::SetColor(
     m_BlueSlider->SetValue(NewColor.Blue());
 }
 
-void CSetColor::OnClose(wxCloseEvent& WXUNUSED(event))
+void CSetColor::OnApplyButton(wxCommandEvent& event)
+{
+    // Get the color from the sliders
+    int red   = m_RedSlider->GetValue();
+    int green = m_GreenSlider->GetValue();
+    int blue  = m_BlueSlider->GetValue();
+
+    // Get the uppercase form of the logo command
+    // so that it looks consistent in the commaner's
+    // history.
+    char upperCaseCommand[MAX_BUFFER_SIZE];
+
+    cap_strnzcpy(
+        upperCaseCommand,
+        m_LogoCommand,
+        strlen(m_LogoCommand));
+
+    char logoInstruction[256];
+
+    sprintf(
+        logoInstruction,
+        "%s [%d %d %d]",
+        upperCaseCommand,
+        red,
+        green,
+        blue);
+
+    // Run the color setting instruction
+    RunLogoInstructionFromGui(logoInstruction);
+}
+
+void CSetColor::OnOkButton(wxCommandEvent& Event)
+{
+    // Do whatever we do when we apply the changes
+    OnApplyButton(Event);
+
+    // NULL-out the reference that CMainFrame is holding
+    // so that it knows the window is no longer valid.
+    // This object will get deleted on its own.
+    m_ExternalReference = NULL;
+
+    // Let the window close
+    Event.Skip();
+}
+
+void CSetColor::OnCancelButton(wxCommandEvent& Event)
 {
     // NULL-out the reference that CMainFrame is holding
     // so that it knows the window is no longer valid.
     // This object will get deleted on its own.
     m_ExternalReference = NULL;
 
-    // always destroy
-    Destroy();
-}
-
-void CSetColor::OnOkButton(wxCommandEvent& event)
-{
-}
-
-void CSetColor::OnCancelButton(wxCommandEvent& event)
-{
-    // NULL-out the reference that CMainFrame is holding
-    // so that it knows the window is no longer valid.
-    // This object will get deleted on its own.
-    m_ExternalReference = NULL;
-
-    // always destroy
-    Destroy();
+    // Let the window close
+    Event.Skip();
 }
 
 void CSetColor::OnSliderUpdated(wxCommandEvent & WXUNUSED(event))
@@ -311,10 +327,10 @@ void CSetColor::OnSliderUpdated(wxCommandEvent & WXUNUSED(event))
 
 
 BEGIN_EVENT_TABLE(CSetColor, wxDialog)
-    EVT_BUTTON(wxID_OK,               CSetColor::OnOkButton)
-    EVT_BUTTON(wxID_CANCEL,           CSetColor::OnCancelButton)
+    EVT_BUTTON(wxID_OK,                  CSetColor::OnOkButton)
+    EVT_BUTTON(wxID_CANCEL,              CSetColor::OnCancelButton)
+    EVT_BUTTON(ID_SETCOLOR_APPLY,        CSetColor::OnApplyButton)
     EVT_SLIDER(ID_SETCOLOR_SLIDER_RED,   CSetColor::OnSliderUpdated)
     EVT_SLIDER(ID_SETCOLOR_SLIDER_GREEN, CSetColor::OnSliderUpdated)
     EVT_SLIDER(ID_SETCOLOR_SLIDER_BLUE,  CSetColor::OnSliderUpdated)
-    EVT_CLOSE(CSetColor::OnClose)
 END_EVENT_TABLE()

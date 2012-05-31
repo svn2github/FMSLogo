@@ -108,7 +108,8 @@ private:
     SetColorHelper(
         class CSetColor * &   SetColorDialog,
         const char *          DialogTitle,
-        const class wxColor & InitialColor
+        COLORREF              InitialColor,
+        const char *          LogoCommand
         );
 
     void

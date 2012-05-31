@@ -1320,7 +1320,6 @@ void CMainFrame::OnSetPenSize(wxCommandEvent& WXUNUSED(Event))
 {
     if (m_SetPenSizeDialog == NULL)
     {
-        // TODO: read this from the Logo engine
         const int initialSize = get_pen_width();
 
         m_SetPenSizeDialog = new CSetPenSize(
@@ -1340,15 +1339,22 @@ void
 CMainFrame::SetColorHelper(
     CSetColor * &   SetColorDialog,
     const char  *   DialogTitle,
-    const wxColor & InitialColor
+    COLORREF        InitialColor,
+    const char  *   LogoCommand
     )
 {
     if (SetColorDialog == NULL)
     {
+        const wxColor initialColor(
+            GetRValue(InitialColor),
+            GetGValue(InitialColor),
+            GetBValue(InitialColor));
+
         SetColorDialog = new CSetColor(
             this,
             DialogTitle,
-            InitialColor,
+            initialColor,
+            LogoCommand,
             SetColorDialog);
 
         SetColorDialog->Show();
@@ -1364,7 +1370,8 @@ void CMainFrame::OnSetPenColor(wxCommandEvent& WXUNUSED(Event))
     SetColorHelper(
         m_SetPenColorDialog,
         LOCALIZED_SETCOLOR_PENCOLOR,
-        wxColor(0xFF, 0x00, 0x00)); // TODO: read this from the Logo engine
+        pcolor,
+        LOCALIZED_ALTERNATE_SETPENCOLOR);
 }
 
 void CMainFrame::OnSetFloodColor(wxCommandEvent& WXUNUSED(Event))
@@ -1372,7 +1379,8 @@ void CMainFrame::OnSetFloodColor(wxCommandEvent& WXUNUSED(Event))
     SetColorHelper(
         m_SetFloodColorDialog,
         LOCALIZED_SETCOLOR_FLOODCOLOR,
-        wxColor(0x00, 0x00, 0xFF)); // TODO: read this from the Logo engine
+        fcolor,
+        LOCALIZED_ALTERNATE_SETFLOODCOLOR);
 }
 
 void CMainFrame::OnSetScreenColor(wxCommandEvent& WXUNUSED(Event))
@@ -1380,7 +1388,8 @@ void CMainFrame::OnSetScreenColor(wxCommandEvent& WXUNUSED(Event))
     SetColorHelper(
         m_SetScreenColorDialog,
         LOCALIZED_SETCOLOR_SCREENCOLOR,
-        wxColor(0x00, 0xFF, 0x00)); // TODO: read this from the Logo engine
+        scolor,
+        LOCALIZED_ALTERNATE_SETSCREENCOLOR);
 }
 
 void CMainFrame::ShowStatus()

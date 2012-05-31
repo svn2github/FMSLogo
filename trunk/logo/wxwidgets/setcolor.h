@@ -20,11 +20,13 @@ class CSetColor : public wxDialog
             const wxColour & Color
            );
 
-        void OnClick(wxMouseEvent & Event);
-
         void SetColor(const wxColour & NewColor);
 
     private:
+        // event handlers
+        void OnClick(wxMouseEvent & Event);
+
+        DECLARE_NO_COPY_CLASS(CColorWindow);
         DECLARE_EVENT_TABLE()
     };
 
@@ -33,17 +35,21 @@ public:
         wxWindow  *     Parent,
         const char *    WindowTitle,
         const wxColor & InitialColor,
+        const char *    LogoCommand,
         CSetColor * &   ExternalReference
         );
 
-    void SetColor(const wxColor & NewColor);
-
+private:
+    // event handlers
     void OnOkButton(wxCommandEvent& Event);
+    void OnApplyButton(wxCommandEvent& Event);
     void OnCancelButton(wxCommandEvent& Event);
     void OnSliderUpdated(wxCommandEvent& Event);
-    void OnClose(wxCloseEvent& Event);
 
-private:
+    // private helper functions
+    void SetColor(const wxColor & NewColor);
+
+    // member variables
     CSetColor    * & m_ExternalReference;
 
     wxSlider     * m_RedSlider;
@@ -52,5 +58,6 @@ private:
     CColorWindow * m_SelectedColor;
     const char   * m_LogoCommand;
 
+    DECLARE_NO_COPY_CLASS(CSetColor);
     DECLARE_EVENT_TABLE()
 };
