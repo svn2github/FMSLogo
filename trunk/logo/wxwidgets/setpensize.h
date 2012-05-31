@@ -52,6 +52,11 @@ private:
     void OnSliderUpdated(wxCommandEvent& event);
 
     // Member variables
+
+    // Even though the slider can hold the pen width, we
+    // store it separately in case the initial pen width
+    // is one that doesn't fall within the range of the
+    // slider.
     int m_PenWidth;
 
     CSetPenSize    * & m_ExternalReference;

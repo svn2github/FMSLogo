@@ -308,10 +308,11 @@ void CSetPenSize::OnCancelButton(wxCommandEvent & Event)
     Event.Skip();
 }
 
-void CSetPenSize::OnSliderUpdated(wxCommandEvent & WXUNUSED(event))
+void CSetPenSize::OnSliderUpdated(wxCommandEvent & WXUNUSED(Event))
 {
-    int penSize = m_ThicknessSlider->GetValue();
-    m_ThicknessDisplay->SetPenSize(penSize);
+    // Update the pen's preview to match the new slider value.
+    m_PenWidth = m_ThicknessSlider->GetValue();
+    m_ThicknessDisplay->SetPenSize(m_PenWidth);
 }
 
 
