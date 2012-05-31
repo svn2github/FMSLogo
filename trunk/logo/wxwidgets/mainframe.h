@@ -90,7 +90,14 @@ private:
     void OnZoomOut(wxCommandEvent& Event);
     void OnZoomNormal(wxCommandEvent& Event);
     void OnHelp(wxCommandEvent& Event);
-    void OnExamples(wxCommandEvent& Event);
+#if LOCALE!=1033
+    void OnHelpLanguageToEnglish(wxCommandEvent& Event);
+    void OnHelpEnglishToLanguage(wxCommandEvent& Event);
+#endif
+    void OnHelpTutorial(wxCommandEvent& Event);
+    void OnHelpDemo(wxCommandEvent& Event);
+    void OnHelpExamples(wxCommandEvent& Event);
+    void OnHelpReleaseNotes(wxCommandEvent& Event);
     void OnAboutFmsLogo(wxCommandEvent& Event);
     void OnAboutMultipleSclerosis(wxCommandEvent& Event);
 
@@ -125,6 +132,11 @@ private:
 
     void SaveBitmap();
     void SaveBitmapAs();
+
+    void
+    OpenFileWithDefaultApplication(
+        const char * FileName
+        );
 
     // Member variables
     CScreen          * m_Screen;

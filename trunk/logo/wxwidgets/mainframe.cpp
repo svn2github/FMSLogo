@@ -58,6 +58,7 @@
 #include "fileswnd.h"
 #include "graphwin.h"
 #include "mmwind.h" // for uninitialize_timers()
+#include "startup.h"
 
 // ----------------------------------------------------------------------------
 // constants
@@ -150,8 +151,6 @@ enum MainFrameMenuIds
     ID_HELPLANGTOENGLISH,
     ID_HELPENGLISHTOLANG,
 #endif
-    ID_HELPMCI,
-    ID_HELPHELP,
 
     ID_HELPTUTORIAL,
     ID_HELPDEMO,
@@ -182,7 +181,15 @@ BEGIN_EVENT_TABLE(CMainFrame, wxFrame)
     EVT_MENU(ID_SETSCREENCOLOR,     CMainFrame::OnSetScreenColor)
     EVT_MENU(ID_SETFLOODCOLOR,      CMainFrame::OnSetFloodColor)
     EVT_MENU(ID_HELP,               CMainFrame::OnHelp)
-    EVT_MENU(ID_HELPEXAMPLES,       CMainFrame::OnExamples)
+#if LOCALE!=1033
+    // options for translating to/from English
+    EVT_MENU(ID_HELPLANGTOENGLISH,  CMainFrame::OnHelpLanguageToEnglish)
+    EVT_MENU(ID_HELPENGLISHTOLANG,  CMainFrame::OnHelpEnglishToLanguage)
+#endif
+    EVT_MENU(ID_HELPTUTORIAL,       CMainFrame::OnHelpTutorial)
+    EVT_MENU(ID_HELPDEMO,           CMainFrame::OnHelpDemo)
+    EVT_MENU(ID_HELPEXAMPLES,       CMainFrame::OnHelpExamples)
+    EVT_MENU(ID_HELPRELEASENOTES,   CMainFrame::OnHelpReleaseNotes)
     EVT_MENU(ID_HELPABOUT,          CMainFrame::OnAboutFmsLogo)
     EVT_MENU(ID_HELPABOUTMS,        CMainFrame::OnAboutMultipleSclerosis)
     EVT_MENU(ID_ZOOMIN,             CMainFrame::OnZoomIn)
@@ -1557,24 +1564,62 @@ void CMainFrame::OnHelp(wxCommandEvent& WXUNUSED(Event))
     do_help(NULL);
 }
 
-void CMainFrame::OnExamples(wxCommandEvent& WXUNUSED(Event))
+#if LOCALE!=1033
+
+void CMainFrame::OnHelpLanguageToEnglish(wxCommandEvent& WXUNUSED(Event))
 {
-    // For now, doodle something on the screen so that we can test
-    // saving the screen as a bitmap.
-    wxMemoryDC & memoryDeviceContext = m_Screen->GetMemoryDeviceContext();
+    do_help("To English");
+}
 
-    memoryDeviceContext.SetPen(*wxBLACK_PEN);
-    memoryDeviceContext.DrawLine(0, 0, 100, 200);
+void CMainFrame::OnHelpEnglishToLanguage(wxCommandEvent& WXUNUSED(Event))
+{
+    do_help("From English");
+}
 
-    memoryDeviceContext.SetBackgroundMode(wxTRANSPARENT);
-    memoryDeviceContext.DrawText(_T("Testing"), 50, 50);
+#endif // LOCALE!=1033
 
-    memoryDeviceContext.SetPen(*wxRED_PEN);
-    memoryDeviceContext.SetBrush(*wxGREEN_BRUSH);
-    memoryDeviceContext.DrawRectangle(120, 120, 100, 80);
-    
-    // Tell wxWidgets to call CScreen::OnDraw at the next opportunity.
-    m_Screen->Refresh(false);
+void CMainFrame::OnHelpTutorial(wxCommandEvent& WXUNUSED(Event))
+{
+    do_help("Where to Start");
+}
+
+void CMainFrame::OnHelpDemo(wxCommandEvent& WXUNUSED(Event))
+{
+    do_execution("demo");
+}
+
+void
+CMainFrame::OpenFileWithDefaultApplication(
+    const char *  FileName
+    )
+{
+    HINSTANCE childApplication = ShellExecute(
+        static_cast<HWND>(GetHandle()), // handle to parent window
+        "open",                         // operation to perform
+        FileName,                       // pointer to filename string
+        NULL,                           // pointer to string that specifies executable-file parameters
+        NULL,                           // pointer to string that specifies default directory
+        SW_SHOWNORMAL);                 // whether file is shown when opened
+    if (childApplication != NULL)
+    {
+        CloseHandle(childApplication);
+    }
+}
+
+void CMainFrame::OnHelpExamples(wxCommandEvent& WXUNUSED(Event))
+{
+    char szFileName[MAX_PATH + 1];
+    MakeHelpPathName(szFileName, "EXAMPLES\\INDEX.HTML");
+
+    OpenFileWithDefaultApplication(szFileName);
+}
+
+void CMainFrame::OnHelpReleaseNotes(wxCommandEvent& WXUNUSED(Event))
+{
+    char szFileName[MAX_PATH + 1];
+    MakeHelpPathName(szFileName, "FMSLOGO.TXT");
+
+    OpenFileWithDefaultApplication(szFileName);
 }
 
 void CMainFrame::OnAboutFmsLogo(wxCommandEvent& WXUNUSED(Event))
