@@ -1,8 +1,10 @@
 FMSLogo Extras 1.10
-o tetrads
-  * Make it easier to change the gameshapes array.
 o sudoku
   * Add comments to make it easier to understand how the code works.
+o tetrads
+  * Make it easier to change the gameshapes array.
+o turtlemaze
+  * Add the zebra maze.
 
 FMSLogo Extras 1.9
 o tetrads

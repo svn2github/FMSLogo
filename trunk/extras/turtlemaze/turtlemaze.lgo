@@ -444,7 +444,7 @@ To TurtleMaze
   Make "moveDistance 20
 
   Make "currentMaze 1
-  Make "mazes       [UseMazeO UseMazeN UseMaze1 UseMazeOcto]
+  Make "mazes       [UseMazeO UseMazeN UseMaze1 UseMazeOcto UseMazeZebra]
 
   StartRace
   WindowCreate "main "window [Control the Turtle] 100 100 :width :height [Setup]
@@ -542,16 +542,46 @@ End
 To UseMazeOcto
 
   Make "walls []
-  Push "walls [ [ 40 -240 ] [ 120  -240 ] [ 240  -120 ] [ 240 120 ] [ 120  240 ] [ 0 240 ] [ -120 240] [ -240 120] [-240 0 ] [-240 -120] [ -120 -240 ] [-40 -240 ]]
-  Push "walls [ [ 40 160 ] [ 80  160 ] [ 160  80 ] [ 160 -80 ] [ 80 -160 ] [ -80 -160 ] [ -160 -80] [ -160 80] [ -80 160 ] [-40 160] ]
-  Push "walls [ [ 40 -80 ] [ 80  -40 ] [ 80  40 ] [ 40 80 ] [ -40 80 ] [ -80 40 ] [ -80 -40] [ -40 -80] ]
-              
-  Make "startX       -0
+  Push "walls [ [  40  -240 ] [ 120  -240 ] [ 240  -120 ] [ 240 120 ] [ 120  240 ]
+                [    0  240 ] [ -120  240 ] [ -240  120 ] [-240   0 ] [-240 -120 ] 
+                [ -120 -240 ] [ -40  -240 ] ]
+  Push "walls [ [  40  160 ] [  80  160 ] [  160 80 ] [ 160 -80 ] [ 80 -160 ] 
+                [ -80 -160 ] [ -160 -80 ] [ -160 80 ] [ -80 160 ] [-40  160 ] ]
+  Push "walls [ [  40 -80 ] [  80 -40 ] [  80  40 ] [ 40 80 ] [ -40 80 ]
+                [ -80  40 ] [ -80 -40]  [ -40 -80 ] ]
+
+  Make "startX       0
   Make "startY       -260
   Make "startheading 0
 
   Make "finishX      -20
   Make "finishY      -20
+  Make "finishWidth  40
+  Make "finishHeight 40
+
+End
+
+To UseMazeZebra 
+
+  Make "walls []
+  Push "walls [ [ -100 -20  ] [-120  -40 ] [-120 -200] [-200 -200] [-200 -200]
+                [ -200 -160 ] [-160 -160 ] [-160   60] [-240  160] [-300  140]
+                [ -320  160 ] [-260  240 ] [-260  280] [-260  280] [-240  240]
+                [ -220  280 ] [-200  240 ] [-100  120] [ 180  120] [ 220   80]
+                [  220 -200 ] [ 140 -200 ] [ 140 -160] [ 180 -160] [ 180  -40]
+                [ 160  -20  ] [-100  -20 ] ]
+  Push "walls [ [  220   80 ] [ 260  -20 ] [ 280 -40] ]
+  Push "walls [ [  120  -20 ] [ 100   80 ] ]
+  Push "walls [ [   40   20 ] [  20  120 ] ]
+  Push "walls [ [  -20  -20 ] [ -40   80 ] ]
+  Push "walls [ [  -80   20 ] [-100  120 ] ]
+
+  Make "startX       160
+  Make "startY      -180
+  Make "startheading 90
+
+  Make "finishX     -280
+  Make "finishY      160
   Make "finishWidth  40
   Make "finishHeight 40
 
