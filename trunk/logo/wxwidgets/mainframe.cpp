@@ -177,6 +177,7 @@ BEGIN_EVENT_TABLE(CMainFrame, wxFrame)
     EVT_MENU(ID_BITMAPPRINTERAREA,  CMainFrame::OnSetActiveArea)
     EVT_MENU(ID_SETPENSIZE,         CMainFrame::OnSetPenSize)
     EVT_MENU(ID_SETLABELFONT,       CMainFrame::OnSetLabelFont)
+    EVT_MENU(ID_SETCOMMANDERFONT,   CMainFrame::OnSetCommanderFont)
     EVT_MENU(ID_SETPENCOLOR,        CMainFrame::OnSetPenColor)
     EVT_MENU(ID_SETSCREENCOLOR,     CMainFrame::OnSetScreenColor)
     EVT_MENU(ID_SETFLOODCOLOR,      CMainFrame::OnSetFloodColor)
@@ -1537,6 +1538,11 @@ void CMainFrame::OnSetLabelFont(wxCommandEvent& WXUNUSED(Event))
         }
 #endif
     }
+}
+
+void CMainFrame::OnSetCommanderFont(wxCommandEvent& WXUNUSED(Event))
+{
+    m_RealCommander->ChooseNewFont();
 }
 
 void CMainFrame::OnZoomIn(wxCommandEvent& WXUNUSED(Event))

@@ -81,6 +81,7 @@ private:
     void OnBitmapSave(wxCommandEvent& Event);
     void OnBitmapSaveAs(wxCommandEvent& Event);
     void OnSetLabelFont(wxCommandEvent& Event);
+    void OnSetCommanderFont(wxCommandEvent& Event);
     void OnSetActiveArea(wxCommandEvent& Event);
     void OnSetPenSize(wxCommandEvent& Event);
     void OnSetPenColor(wxCommandEvent& Event);

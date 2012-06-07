@@ -18,6 +18,8 @@ public:
 
     CCommander * GetCommander();
 
+    void ChooseNewFont();
+
     void UpdateTraceButtonState();
     void UpdateStepButtonState();
     void UpdateStatusButtonState();

@@ -7,6 +7,7 @@
 #include <wx/msgdlg.h>
 #include <wx/sizer.h>
 #include <wx/defs.h>
+#include <wx/fontdlg.h>
 #include <wx/richtext/richtextctrl.h>
 
 #include "fmslogo.h"
@@ -128,7 +129,7 @@ CCommander::CCommander(wxWindow *Parent)
     m_NextInstructionHeight = 10 * BaseUnitsy / 8;
     m_ButtonWidth           = 34 * BaseUnitsx / 4;
 
-    // set the font to whatever is defind in the configuraton
+    // set the font to whatever is defined in the configuraton
     wxFont font;
     font.SetFamily(wxFONTFAMILY_TELETYPE); // default to using a fixed-width font
     GetConfigurationFont("CommanderFont", font);
@@ -195,6 +196,35 @@ CCommander::CCommander(wxWindow *Parent)
 
     SetAcceleratorTable(acceleratorTable);
 
+}
+
+void CCommander::ChooseNewFont()
+{
+    wxFontDialog fontChooser;
+
+    // Seed the font picker with the current configuration
+    wxFont currentCommanderFont;
+    currentCommanderFont.SetFamily(wxFONTFAMILY_TELETYPE);
+    GetConfigurationFont("CommanderFont", currentCommanderFont);
+    fontChooser.GetFontData().SetInitialFont(currentCommanderFont);
+
+    // Show the font picker
+    int rval = fontChooser.ShowModal();
+    if (rval == wxID_OK)
+    {
+        // Get the font which the user selected.
+        const wxFont & newCommanderFont = fontChooser.GetFontData().GetChosenFont();
+
+        // Save the new font preference to persistent storage.
+        SetConfigurationFont("CommanderFont", newCommanderFont);
+
+        // Update the font which the UI is using.
+        UpdateFont(newCommanderFont);
+
+        // Resize the UI controls to account for the new font.
+        RecalculateLayout();
+        Refresh(true);
+    }
 }
 
 void CCommander::UpdateStepButtonState()
