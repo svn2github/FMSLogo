@@ -2111,7 +2111,7 @@ void TMainFrame::CMSetPenSize()
     if (m_PenSizePicker == NULL)
     {
         const TSize initialSize(get_pen_width(), get_pen_height());
-           
+
         m_PenSizePicker = new TSizeDialog(
             this, 
             initialSize, 
