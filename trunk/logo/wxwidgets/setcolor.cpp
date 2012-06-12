@@ -269,7 +269,7 @@ void CSetColor::OnApplyButton(wxCommandEvent& event)
     // history.
     char upperCaseCommand[MAX_BUFFER_SIZE];
 
-    cap_strnzcpy(
+    NormalizeCaseForDisplay(
         upperCaseCommand,
         m_LogoCommand,
         strlen(m_LogoCommand));

@@ -267,7 +267,7 @@ void CSetPenSize::OnApplyButton(wxCommandEvent& Event)
 {
     // Get the uppercase form of SETPENSIZE
     char setpensize[MAX_BUFFER_SIZE];
-    cap_strnzcpy(
+    NormalizeCaseForDisplay(
         setpensize,
         LOCALIZED_ALTERNATE_SETPENSIZE,
         STRINGLENGTH(LOCALIZED_ALTERNATE_SETPENSIZE));
