@@ -1,7 +1,7 @@
 #ifndef _FONTUTILS_H_
 #define _FONTUTILS_H_
 
-class wxFont;
+#include <wx/font.h>
 
 void
 GetConfigurationFont(
@@ -15,5 +15,7 @@ SetConfigurationFont(
     const wxFont & Font
     );
 
-#endif // _FONTUTILS_H_
+const wxFont
+GetLabelFont();
 
+#endif // _FONTUTILS_H_

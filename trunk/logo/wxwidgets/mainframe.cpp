@@ -60,13 +60,7 @@
 #include "graphwin.h"
 #include "mmwind.h" // for uninitialize_timers()
 #include "startup.h"
-
-// ----------------------------------------------------------------------------
-// Global Variables
-// ----------------------------------------------------------------------------
-
-// TODO: Use FontRec instead
-static wxFont g_LabelFont(18, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL);
+#include "fontutils.h"
 
 // ----------------------------------------------------------------------------
 // our classes
@@ -1760,21 +1754,21 @@ void CMainFrame::OnSetActiveArea(wxCommandEvent& WXUNUSED(Event))
 void CMainFrame::OnSetLabelFont(wxCommandEvent& WXUNUSED(Event))
 {
     wxFontDialog fontChooser;
-    fontChooser.GetFontData().SetInitialFont(g_LabelFont);
+
+    // Seed the font picker with the current label font
+    const wxFont labelFont = GetLabelFont();
+    fontChooser.GetFontData().SetInitialFont(labelFont);
 
     int rval = fontChooser.ShowModal();
     if (rval == wxID_OK)
     {
-        // the user selected a new font
-
-        // Set the new label font now, just in case running
-        // the instruction doesn't work for some reason.
-        g_LabelFont = fontChooser.GetFontData().GetChosenFont();
+        // The user selected a new font.
 
 #ifdef __WXMSW__ 
 
         // Get the LOGFONT struct from the wxFont
-        const struct wxNativeFontInfo * fontInfo = g_LabelFont.GetNativeFontInfo();
+        const wxFont newFont = fontChooser.GetFontData().GetChosenFont();
+        const struct wxNativeFontInfo * fontInfo = newFont.GetNativeFontInfo();
         if (fontInfo != NULL)
         {
             const class wxNativeFontInfo * nativeFontInfo = (class wxNativeFontInfo*)fontInfo;
