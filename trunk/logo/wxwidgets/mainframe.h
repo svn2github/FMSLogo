@@ -1,7 +1,8 @@
 // -*- c++ -*-
 #include <map>
 
-#include "wx/frame.h"
+#include <wx/frame.h>
+#include <wx/print.h>
 
 class wxSplitterWindow;
 class wxCommandEvent;
@@ -67,6 +68,32 @@ public:
 
 private:
 
+    // A private helper class for printing
+    class CLogoPicturePrintout : public wxPrintout
+    {
+    public:
+        CLogoPicturePrintout(
+            const wxString        & Title,
+            wxWindow              & Screen,
+            wxPageSetupDialogData & PageSetup
+            );
+
+        bool OnPrintPage(int Page);
+        bool HasPage(int Page);
+
+        void
+        GetPageInfo(
+            int *MinPage,
+            int *MaxPage,
+            int *SelPageFrom,
+            int *SelPageTo
+            );
+
+    private:
+        wxWindow              & m_Screen;
+        wxPageSetupDialogData & m_PageSetup;
+    };
+
     // Menu commands handlers
     void OnFileNew(wxCommandEvent& Event);
     void OnFileLoad(wxCommandEvent& Event);
@@ -80,6 +107,8 @@ private:
     void OnBitmapOpen(wxCommandEvent& Event);
     void OnBitmapSave(wxCommandEvent& Event);
     void OnBitmapSaveAs(wxCommandEvent& Event);
+    void OnBitmapPrint(wxCommandEvent& Event);
+    void OnBitmapPrinterSetup(wxCommandEvent& Event);
     void OnSetLabelFont(wxCommandEvent& Event);
     void OnSetCommanderFont(wxCommandEvent& Event);
     void OnSetActiveArea(wxCommandEvent& Event);
@@ -139,6 +168,8 @@ private:
         const char * FileName
         );
 
+    void InitializePrinter();
+
     // Member variables
     CScreen          * m_Screen;
     wxWindow         * m_Commander;
@@ -150,6 +181,9 @@ private:
     bool  m_CommanderIsDocked;
     bool  m_IsNewFile;
     bool  m_IsNewBitmap;
+
+    // m_PageSetupData stores printer preferences across printouts.
+    wxPageSetupDialogData m_PageSetupData;
 
     // TODO: Make these wxString objects
     char m_FileName[MAX_PATH];

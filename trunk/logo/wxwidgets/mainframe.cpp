@@ -18,6 +18,7 @@
     #include <wx/splitter.h>
     #include <wx/dcmirror.h>
     #include <wx/fontdlg.h>
+    #include <wx/printdlg.h>
 
     #include <wx/dcmemory.h>
 
@@ -61,34 +62,17 @@
 #include "startup.h"
 
 // ----------------------------------------------------------------------------
-// constants
-// ----------------------------------------------------------------------------
-
-// ID for the menu commands
-enum
-{
-    SPLIT_QUIT = 1,
-    SPLIT_HORIZONTAL,
-    SPLIT_VERTICAL,
-    SPLIT_UNSPLIT,
-    SPLIT_LIVE,
-    SPLIT_SETPOSITION,
-    SPLIT_SETMINSIZE,
-    SPLIT_SETGRAVITY,
-    SPLIT_REPLACE
-};
-
-// ----------------------------------------------------------------------------
 // Global Variables
 // ----------------------------------------------------------------------------
 
-// TODO: move this someplace sensible
+// TODO: Use FontRec instead
 static wxFont g_LabelFont(18, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL);
 
 // ----------------------------------------------------------------------------
 // our classes
 // ----------------------------------------------------------------------------
 
+// TODO: move to separate file
 class MainSplitterWindow : public wxSplitterWindow
 {
 public:
@@ -106,6 +90,214 @@ private:
     DECLARE_EVENT_TABLE()
     DECLARE_NO_COPY_CLASS(MainSplitterWindow)
 };
+
+// ----------------------------------------------------------------------------
+// CMainFrame::CLogoPicturePrintout
+// ----------------------------------------------------------------------------
+
+CMainFrame::CLogoPicturePrintout::CLogoPicturePrintout(
+    const wxString        & Title,
+    wxWindow              & Screen,
+    wxPageSetupDialogData & PageSetup
+    ) :
+    wxPrintout(Title),
+    m_Screen(Screen),
+    m_PageSetup(PageSetup)
+{
+}
+
+bool
+CMainFrame::CLogoPicturePrintout::OnPrintPage(
+    int Page
+    )
+{
+    // Must of rewrote this at least 26 times and it still does not
+    // Work in some situations. This is just the "Paint" of printing.
+    // See the print module for all the other stuff.
+    wxDC * dc = GetDC();
+    if (dc == NULL)
+    {
+        return false;
+    }
+
+    HDC PrintDC = static_cast<HDC>(dc->GetHDC());
+
+    // do we even have a chance?
+    if ((GetDeviceCaps(PrintDC, RASTERCAPS) & RC_STRETCHDIB) == 0)
+    {
+        // notify the user that the printer does not support scaling
+        wxMessageBox(
+            LOCALIZED_ERROR_PRINTERCANTSCALE, 
+            LOCALIZED_ERROR,
+            wxICON_ERROR);
+        return false;
+    }
+
+    int printBitCount = GetDeviceCaps(PrintDC, BITSPIXEL);
+    printBitCount *= GetDeviceCaps(PrintDC, PLANES);
+
+    if (printBitCount == 1)
+    {
+        // This is a monochrome mono printer.
+        // Let's let it try to dither a 256 grey scale image
+        printBitCount = 8;
+    }
+
+    // Get screen bitCount
+    wxClientDC * screenDeviceContext = new wxClientDC(&m_Screen);
+    HDC screenDc = static_cast<HDC>(screenDeviceContext->GetHDC());
+
+    int screenBitCount = GetDeviceCaps(screenDc, BITSPIXEL);
+    screenBitCount *= GetDeviceCaps(screenDc, PLANES);
+
+    // Don't bother creating a DIB with more colors than we have
+    if (screenBitCount < printBitCount) 
+    {
+        printBitCount = screenBitCount;
+    }
+
+    // Round to nearest legal bitmap color depth
+    if      (                        (printBitCount <  1)) printBitCount =  1;
+    else if ((printBitCount >  1) && (printBitCount <  4)) printBitCount =  4;
+    else if ((printBitCount >  4) && (printBitCount <  8)) printBitCount =  8;
+    else if ((printBitCount >  8) && (printBitCount < 16)) printBitCount = 16;
+    else if ((printBitCount > 16) && (printBitCount < 24)) printBitCount = 24;
+    else if ((printBitCount > 24)                        ) printBitCount = 32;
+
+    printBitCount = GetConfigurationInt("PrintColorDepth", printBitCount);
+
+    size_t size;
+    if (printBitCount <= 8)
+    {
+        size = sizeof(BITMAPINFOHEADER) + ((1 << printBitCount) * sizeof(RGBQUAD));
+    }
+    else
+    {
+        size = sizeof(BITMAPINFOHEADER);
+    }
+
+    BITMAPINFO * bitmapInfo = (BITMAPINFO *) new char[size];
+
+    bitmapInfo->bmiHeader.biSize     = sizeof(BITMAPINFOHEADER);
+    bitmapInfo->bmiHeader.biWidth    = BitMapWidth;
+    bitmapInfo->bmiHeader.biHeight   = BitMapHeight;
+    bitmapInfo->bmiHeader.biPlanes   = 1;
+    bitmapInfo->bmiHeader.biBitCount = printBitCount;
+    bitmapInfo->bmiHeader.biCompression = BI_RGB;
+    bitmapInfo->bmiHeader.biSizeImage   = ((((bitmapInfo->bmiHeader.biWidth * bitmapInfo->bmiHeader.biBitCount) + 31) / 32) * 4) * bitmapInfo->bmiHeader.biHeight;
+    bitmapInfo->bmiHeader.biXPelsPerMeter = 0;
+    bitmapInfo->bmiHeader.biYPelsPerMeter = 0;
+    bitmapInfo->bmiHeader.biClrUsed       = 0;
+    bitmapInfo->bmiHeader.biClrImportant  = 0;
+
+    // we don't need hour glass here because print module takes care of it 
+
+    // allocate space for the raw DIB data
+    unsigned char * bitsPtr = new unsigned char [bitmapInfo->bmiHeader.biSizeImage];
+    memset(bitsPtr, 0x00, bitmapInfo->bmiHeader.biSizeImage);
+
+    // get printer size per inch 
+    int tempWidth  = GetDeviceCaps(PrintDC, LOGPIXELSX);
+    int tempHeight = GetDeviceCaps(PrintDC, LOGPIXELSY);
+
+    // if palette allocate it
+    if (EnablePalette)
+    {
+        OldPalette = SelectPalette(screenDc, ThePalette, FALSE);
+        RealizePalette(screenDc);
+    }
+
+    // set up an assured contrast ?
+    SetTextColor(PrintDC, 0x00000000L);
+    SetBkColor(PrintDC, 0x00ffffffL);
+
+    bool isOk = true;
+
+    int scanLines = GetDIBits(
+        screenDc,
+        MemoryBitMap,
+        0,
+        BitMapHeight,
+        bitsPtr,
+        bitmapInfo,
+        DIB_RGB_COLORS);
+    if (scanLines != 0)
+    {
+        // there is something to print.
+
+        // print only the active area
+        int status = StretchDIBits(
+            PrintDC,
+            0,
+            0,
+            (tempWidth  * (g_PrinterAreaXHigh - g_PrinterAreaXLow)) / g_PrinterAreaPixels,
+            (tempHeight * (g_PrinterAreaYHigh - g_PrinterAreaYLow)) / g_PrinterAreaPixels,
+            +g_PrinterAreaXLow + xoffset,
+            BitMapHeight - (-g_PrinterAreaYLow + yoffset),
+            g_PrinterAreaXHigh - g_PrinterAreaXLow,
+            g_PrinterAreaYHigh - g_PrinterAreaYLow,
+            bitsPtr,
+            bitmapInfo,
+            DIB_RGB_COLORS,
+            SRCCOPY);
+        if (status <= 0)
+        {
+            // TODO: message the last error into the current locale
+            DWORD lastError = GetLastError();
+            const wxString & message = wxString::Format(
+                "%s\n%s: %lu",
+                LOCALIZED_ERROR_CANTDRAWIMAGE,
+                LOCALIZED_ERROR_SUBCODE,
+                lastError);
+
+            wxMessageBox(message, LOCALIZED_ERROR, wxICON_ERROR);
+            isOk = false;
+        }
+    }
+    else
+    {
+        // can't do it
+        wxMessageBox(
+            LOCALIZED_ERROR_CANTEXTRACTIMAGE,
+            LOCALIZED_ERROR,
+            wxICON_ERROR);
+        isOk = false;
+    }
+
+    // restore resources 
+    if (EnablePalette)
+    {
+        SelectPalette(screenDc, OldPalette, FALSE);
+    }
+
+    delete [] bitsPtr;
+
+    delete bitmapInfo;
+    delete screenDeviceContext;
+
+    return isOk;
+}
+
+void
+CMainFrame::CLogoPicturePrintout::GetPageInfo(
+    int *MinPage,
+    int *MaxPage,
+    int *SelPageFrom,
+    int *SelPageTo
+    )
+{
+    *MinPage     = 1;
+    *MaxPage     = 1;
+    *SelPageFrom = 1;
+    *SelPageTo   = 1;
+}
+
+bool
+CMainFrame::CLogoPicturePrintout::HasPage(int Page)
+{
+    return Page == 1;
+}
+
 
 // ----------------------------------------------------------------------------
 // CMainFrame
@@ -174,6 +366,8 @@ BEGIN_EVENT_TABLE(CMainFrame, wxFrame)
     EVT_MENU(ID_BITMAPOPEN,         CMainFrame::OnBitmapOpen)
     EVT_MENU(ID_BITMAPSAVE,         CMainFrame::OnBitmapSave)
     EVT_MENU(ID_BITMAPSAVEAS,       CMainFrame::OnBitmapSaveAs)
+    EVT_MENU(ID_BITMAPPRINT,        CMainFrame::OnBitmapPrint)
+    EVT_MENU(ID_BITMAPPRINTERSETUP, CMainFrame::OnBitmapPrinterSetup)
     EVT_MENU(ID_BITMAPPRINTERAREA,  CMainFrame::OnSetActiveArea)
     EVT_MENU(ID_SETPENSIZE,         CMainFrame::OnSetPenSize)
     EVT_MENU(ID_SETLABELFONT,       CMainFrame::OnSetLabelFont)
@@ -333,6 +527,11 @@ CMainFrame::CMainFrame(
 #if wxUSE_STATUSBAR
     SetStatusText(_T("Min pane size = 0"), 1);
 #endif // wxUSE_STATUSBAR
+
+    // Set a flag that the printer data needs to be initialized.
+    // We delay the initialization because it can be block
+    // if the default printer is an offline network printer.
+    m_PageSetupData.SetDefaultInfo(true);
 
     // init the pens based on the color
     UpdateNormalPen(GetPenStateForSelectedTurtle().Width, pcolor);
@@ -1324,6 +1523,79 @@ void CMainFrame::OnBitmapSaveAs(wxCommandEvent& WXUNUSED(Event))
     SaveBitmapAs();
 }
 
+void CMainFrame::InitializePrinter()
+{
+    // Read the default page settings.
+    // On Windows, even though we call ShowModal, no
+    // dialog box is displayed because we set the
+    // default info to true.
+    if (m_PageSetupData.GetDefaultInfo())
+    {
+#ifdef __WXMSW__
+        m_PageSetupData.SetDefaultMinMargins(true);
+        wxPageSetupDialog pageSetup(this, &m_PageSetupData);
+        if (pageSetup.ShowModal() == wxID_OK)
+        {
+            // Save the updated preferences.
+            m_PageSetupData = pageSetup.GetPageSetupData();
+        }
+#endif
+
+        // Mark the printer data as having been initialized.
+        m_PageSetupData.SetDefaultInfo(false);
+    }
+}
+
+void CMainFrame::OnBitmapPrint(wxCommandEvent& WXUNUSED(Event))
+{
+    InitializePrinter();
+
+    wxPrintDialogData printDialogData(m_PageSetupData.GetPrintData());
+
+    // Show the printer selection dialog box.
+    wxPrinter printer(&printDialogData);
+
+    // FMSLogo always scales the active area of the screen to fit on a
+    // single page, so we disable page number selection to prevent confusion.
+    printDialogData.EnablePageNumbers(false);
+
+    CLogoPicturePrintout printout(
+        LOCALIZED_GENERAL_PRODUCTNAME,
+        *m_Screen,
+        m_PageSetupData);
+
+    if (!printer.Print(this, &printout, true))
+    {
+        // This can happen in two cases:
+        // 1) If there was an error while printing, in which
+        //    case the operating system will have communicated
+        //    the problem to the user, so we don't need to.
+        // 2) If the print job was cancelled by the user,
+        //    in which case we don't need to tell the user
+        //    that they cancelled the job.
+        //
+        // Therefore, all we need to do is exit.
+        return;
+    }
+
+    // Preserve the printr settings for the next time.
+    m_PageSetupData.SetPrintData(printer.GetPrintDialogData().GetPrintData());
+}
+
+void CMainFrame::OnBitmapPrinterSetup(wxCommandEvent& WXUNUSED(Event))
+{
+    InitializePrinter();
+
+    // Show a dialog box for updating the page setup
+    wxPageSetupDialog pageSetup(this, &m_PageSetupData);
+    if (pageSetup.ShowModal() == wxID_OK)
+    {
+        // The user pressed OK on the dialog box.
+        // Save the updated preferences.
+        m_PageSetupData = pageSetup.GetPageSetupData();
+    }
+}
+
 void CMainFrame::OnSetPenSize(wxCommandEvent& WXUNUSED(Event))
 {
     if (m_SetPenSizeDialog == NULL)
@@ -1495,8 +1767,8 @@ void CMainFrame::OnSetLabelFont(wxCommandEvent& WXUNUSED(Event))
     {
         // the user selected a new font
 
-        // set the new label font now, just in case running
-        // the instruction doesn't wor for some reason.
+        // Set the new label font now, just in case running
+        // the instruction doesn't work for some reason.
         g_LabelFont = fontChooser.GetFontData().GetChosenFont();
 
 #ifdef __WXMSW__ 
