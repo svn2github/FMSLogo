@@ -24,6 +24,8 @@ II. New features/bugs fixed:
     o Fix bug #3529633; File->Edit no longer crashes if you specify a primitive.
     o Fix bug #3521812; FMSLogo now starts up quickly when the operating system
       has an unresponsive printer.
+    o Fix bug #3514978; The option to install the screen saver is now unchecked
+      by default when run as a standard user.
     o Fix bug #1607629; File->Edit dialog now lets you double-click to select
       a procedure.
     o Remove CRYPTO.LGO and PLAYFAIR.LGO examples so that I can mark FMSLogo as

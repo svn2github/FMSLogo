@@ -171,171 +171,10 @@ Function uninstall
 FunctionEnd
 
 
+!include Sections.nsh
 !include FileFunc.nsh
 !insertmacro GetParameters
 !insertmacro GetOptions
-
-Function .onInit
-
-  ${GetParameters} $R0
-  ClearErrors
-  ${GetOptions} $R0 /LCID= $LANGUAGE
-  StrCmp $LANGUAGE ${LANG_ENGLISH}    SetupUser
-  StrCmp $LANGUAGE ${LANG_FRENCH}     SetupUser
-  StrCmp $LANGUAGE ${LANG_GERMAN}     SetupUser
-  StrCmp $LANGUAGE ${LANG_GREEK}      SetupUser
-  StrCmp $LANGUAGE ${LANG_ITALIAN}    SetupUser
-  StrCmp $LANGUAGE ${LANG_PORTUGUESE} SetupUser
-  StrCmp $LANGUAGE ${LANG_RUSSIAN}    SetupUser
-  StrCmp $LANGUAGE ${LANG_SPANISH}    SetupUser
-  IfSilent SetupUser
-
-  ; An LCID was specified, but it's not one that we support
-
-  StrCmp $LANGUAGE "" SelectLanguage
-  MessageBox MB_OK|MB_ICONEXCLAMATION "Unrecognized LCID $LANGUAGE.$\nLCID must be one of the following:$\n  ${LANG_ENGLISH} (English),$\n  ${LANG_FRENCH} (French),$\n  ${LANG_GERMAN} (German),$\n  ${LANG_GREEK} (Greek),$\n  ${LANG_ITALIAN} (Italian),$\n  ${LANG_PORTUGUESE} (Portuguese),$\n  ${LANG_RUSSIAN} (Russian), and$\n  ${LANG_SPANISH} (Spanish).$\n"
-  Abort
-
-SelectLanguage:
-  ; Language selection dialog
-  Push ""
-  Push ${LANG_ENGLISH}
-  Push English
-  Push ${LANG_FRENCH}
-  Push French
-  Push ${LANG_GERMAN}
-  Push German
-  Push ${LANG_GREEK}
-  Push Greek
-  Push ${LANG_ITALIAN}
-  Push Italian
-  Push ${LANG_PORTUGUESE}
-  Push Portuguese
-  Push ${LANG_RUSSIAN}
-  Push Russian
-  Push ${LANG_SPANISH}
-  Push Spanish
-  Push A ; A means auto count languages
-         ; for the auto count to work the first empty push (Push "") must remain
-  LangDLL::LangDialog "Installer Language" "Please select the language to install"
-
-  Pop $LANGUAGE
-  StrCmp $LANGUAGE "cancel" 0 SetupUser
-    Abort
-
-  ; assume regular user until we know they are a power user
-SetupUser:
-  SetShellVarContext current
-  StrLen $2 "$PROFILE\FMSLogo"
-  StrCpy $INSTDIR "$PROFILE\FMSLogo" $2 0
-
-  ClearErrors
-  UserInfo::GetName
-  IfErrors SetupUser.Win9x
-  Pop $0
-  UserInfo::GetAccountType
-  Pop $1
-
-  StrCmp $1 "Admin" SetupUser.AllUsers +1
-  StrCmp $1 "Power" SetupUser.AllUsers +1
-  goto SetupUser.Done
-
-SetupUser.Win9x:
-SetupUser.AllUsers:
-  SetShellVarContext all
-  StrLen $2       "$PROGRAMFILES\FMSLogo"
-  StrCpy $INSTDIR "$PROGRAMFILES\FMSLogo" $2 0
-  goto SetupUser.Done
-
-SetupUser.Done:
-
-  ;
-  ; Abort if another instance of the installer is running
-  ; 
-  System::Call 'kernel32::CreateMutexA(i 0, i 0, t "LogoForWindowsMutex") i .r1 ?e'
-  Pop $R0 
-  StrCmp $R0 0 checkifinstalled
-
-  ; Silent installs should abort without a dialog box
-  IfSilent Abort
-
-  ; Notify the user that the install cannot continue.
-  ; We can't use a LangString because those aren't available in .onInit
-  StrCmp $LANGUAGE ${LANG_GERMAN} 0 +3
-     MessageBox MB_OK|MB_ICONEXCLAMATION "Either the installer or FMSLogo is currently running.$\nThis installation cannot continue." ; NOT_YET_LOCALIZED 
-     Abort
-  StrCmp $LANGUAGE ${LANG_SPANISH} 0 +3
-     MessageBox MB_OK|MB_ICONEXCLAMATION "Either the installer or FMSLogo is currently running.$\nThis installation cannot continue." ; NOT_YET_LOCALIZED
-     Abort
-  StrCmp $LANGUAGE ${LANG_ITALIAN} 0 +3
-     MessageBox MB_OK|MB_ICONEXCLAMATION "L'installatore o FMSLogo sono giΰ in esecuzione.$\nL'installazione non puς continuare."
-     Abort
-  StrCmp $LANGUAGE ${LANG_PORTUGUESE} 0 +3
-     MessageBox MB_OK|MB_ICONEXCLAMATION "O instalador ou o FMSLogo estα rodando.$\nEssa instalaηγo nγo poderα prosseguir."
-     Abort
-  StrCmp $LANGUAGE ${LANG_FRENCH} 0 +3
-     MessageBox MB_OK|MB_ICONEXCLAMATION "L'installateur ou bien FMSLogo est en cours d'exιcution.$\nL'installation ne peut continuer." 
-     Abort
-  StrCmp $LANGUAGE ${LANG_GREEK} 0 +3
-     MessageBox MB_OK|MB_ICONEXCLAMATION "Ο εγκαταστάτης ή η FMSLogo εκτελείται ήδη.$\nΑυτή η εγκατάσταση δε μπορεί να συνεχιστεί."
-     Abort
-  StrCmp $LANGUAGE ${LANG_RUSSIAN} 0 +3
-     MessageBox MB_OK|MB_ICONEXCLAMATION "Θλθ θνρςΰλλÿςξπ θλθ FMSLogo β νΰρςξÿωεε βπεμÿ ηΰοσωενϋ.$\nΣρςΰνξβκΰ νε μξζες αϋςό οπξδξλζενΰ." 
-     Abort
-  ; default to English
-  MessageBox MB_OK|MB_ICONEXCLAMATION "Either the installer or FMSLogo is currently running.$\nThis installation cannot continue."
-  Abort
-
-checkifinstalled:
-
-  ;
-  ; If FMSLogo is already installed, either uninstall it or abort. 
-  ;
-
-  ; If this is a silent install, assume that the user wants it
-  ; to succeed (unintall the previous instance of logo).
-  IfSilent uninstall
-
-  ReadRegStr $0 SHELL_CONTEXT "Software\Microsoft\Windows\CurrentVersion\Uninstall\FMSLogo" "UninstallString"
-
-  ; If no uninstaller was found, then we're done
-  StrCmp $0 "" end 0
-
-  ; Extract the file path from the full path to the uninstaller.
-  ; hack: assumes the string is quoted and ends in `\uninstall.exe"'.
-  StrCpy $previousinstalldir $0 -15 1
-  IfFileExists "$previousinstalldir\*.*" 0 end
-
-  ; Notify the user that the install cannot continue until the existing FMSLogo is uninstalled
-  ; We can't use a LangString because those aren't available in .onInit
-  StrCmp $LANGUAGE ${LANG_GERMAN} 0 +2
-    MessageBox MB_YESNO "The existing copy of FMSLogo must be uninstalled to continue.$\nDo you want to uninstall it?$\n$\n(Selecting No will abort the installation)" IDYES uninstall IDNO abort ; NOT_YET_LOCALIZED
-  StrCmp $LANGUAGE ${LANG_SPANISH} 0 +2
-    MessageBox MB_YESNO "The existing copy of FMSLogo must be uninstalled to continue.$\nDo you want to uninstall it?$\n$\n(Selecting No will abort the installation)" IDYES uninstall IDNO abort ; NOT_YET_LOCALIZED
-  StrCmp $LANGUAGE ${LANG_ITALIAN} 0 +2
-    MessageBox MB_YESNO "La versione attualmente installata di FMSLogo deve essere disinstallata prima di procedere.$\nVuoi procedere con la disinstallazione?$\n$\n(Selezionando No verrΰ interrotta l'installazione)" IDYES uninstall IDNO abort
-  StrCmp $LANGUAGE ${LANG_PORTUGUESE} 0 +2
-    MessageBox MB_YESNO "Jα existe uma cσpia do FMSLogo e precisa ser desinstalada para prosseguir.$\nDeseja desinstalα-la?$\n$\n(Escolher Nγo cessarα a instalaηγo)" IDYES uninstall IDNO abort 
-  StrCmp $LANGUAGE ${LANG_FRENCH} 0 +2
-    MessageBox MB_YESNO "La version existante de FMSLogo doit κtre dιsinstallιe pour continuer.$\nVoulez-vous la dιsinstaller?$\n$\n(Choisir Non terminera l'installation)" IDYES uninstall IDNO abort 
-  StrCmp $LANGUAGE ${LANG_GREEK} 0 +2
-    MessageBox MB_YESNO "Το υπάρχον αντίγραφο της FMSLogo πρέπει να απεγκατασταθεί πριν συνεχιστεί αυτή η εγκατάσταση.$\nΘέλετε να το εγκαταστήσετε;$\n$\n(Επιλέγοντας Όχι η εγκατάσταση θα κλείσει.)" IDYES uninstall IDNO abort
-  StrCmp $LANGUAGE ${LANG_RUSSIAN} 0 +2
-    MessageBox MB_YESNO "Ρσωερςβσώωΰÿ κξοθÿ FMSLogo δξλζνΰ αϋςό σδΰλενΰ, χςξαϋ οπξδξλζθςό.$\nΒϋ υξςθςε σδΰλθςό εε?$\n$\n(Βϋαξπ Νες οπεπβες σρςΰνξβκσ)" IDYES uninstall IDNO abort 
- ; default to English
- MessageBox MB_YESNO "The existing copy of FMSLogo must be uninstalled to continue.$\nDo you want to uninstall it?$\n$\n(Selecting No will abort the installation)" IDYES uninstall IDNO abort
-
-abort:
-    Abort
-
-uninstall:
-    ; uninstall the old version of Logo
-    Call uninstall
-
-end:
-
-FunctionEnd
-
 
 ;
 ; InstallLanguageFile - build_path filename_stem filename_extension
@@ -438,27 +277,182 @@ Section $(DesktopShortcut)
   CreateShortCut "$DESKTOP\FMSLogo.lnk" "$INSTDIR\fmslogo.exe" "" "$INSTDIR\fmslogo.exe" 0 
 SectionEnd
 
-Section $(ScreenSaver)
-  File "..\screensaver\fmslogo-${LANG_ENGLISH}.scr"
-  File "..\screensaver\fmslogo-${LANG_GERMAN}.scr"
-  File "..\screensaver\fmslogo-${LANG_SPANISH}.scr"
-  File "..\screensaver\fmslogo-${LANG_ITALIAN}.scr"
-  File "..\screensaver\fmslogo-${LANG_PORTUGUESE}.scr"
-  File "..\screensaver\fmslogo-${LANG_FRENCH}.scr"
-  File "..\screensaver\fmslogo-${LANG_GREEK}.scr"
-  File "..\screensaver\fmslogo-${LANG_RUSSIAN}.scr"
 
-  CopyFiles "$INSTDIR\fmslogo-$LANGUAGE.scr" "$SYSDIR\FMSLogo.scr"
-
-  Delete $INSTDIR\fmslogo-${LANG_ENGLISH}.scr
-  Delete $INSTDIR\fmslogo-${LANG_GERMAN}.scr
-  Delete $INSTDIR\fmslogo-${LANG_SPANISH}.scr
-  Delete $INSTDIR\fmslogo-${LANG_ITALIAN}.scr
-  Delete $INSTDIR\fmslogo-${LANG_PORTUGUESE}.scr
-  Delete $INSTDIR\fmslogo-${LANG_GREEK}.scr
-  Delete $INSTDIR\fmslogo-${LANG_FRENCH}.scr
-  Delete $INSTDIR\fmslogo-${LANG_RUSSIAN}.scr
+Section /o $(ScreenSaver) sectionid_screensaver
+  ; Install the screen saver to the system directory.
+  SetOutPath $SYSDIR
+  !insertmacro InstallLanguageFile ..\screensaver\ fmslogo .scr
 SectionEnd
+
+
+Function .onInit
+
+  ${GetParameters} $R0
+  ClearErrors
+  ${GetOptions} $R0 /LCID= $LANGUAGE
+  StrCmp $LANGUAGE ${LANG_ENGLISH}    SetupUser
+  StrCmp $LANGUAGE ${LANG_FRENCH}     SetupUser
+  StrCmp $LANGUAGE ${LANG_GERMAN}     SetupUser
+  StrCmp $LANGUAGE ${LANG_GREEK}      SetupUser
+  StrCmp $LANGUAGE ${LANG_ITALIAN}    SetupUser
+  StrCmp $LANGUAGE ${LANG_PORTUGUESE} SetupUser
+  StrCmp $LANGUAGE ${LANG_RUSSIAN}    SetupUser
+  StrCmp $LANGUAGE ${LANG_SPANISH}    SetupUser
+  IfSilent SetupUser
+
+  ; An LCID was specified, but it's not one that we support
+
+  StrCmp $LANGUAGE "" SelectLanguage
+  MessageBox MB_OK|MB_ICONEXCLAMATION "Unrecognized LCID $LANGUAGE.$\nLCID must be one of the following:$\n  ${LANG_ENGLISH} (English),$\n  ${LANG_FRENCH} (French),$\n  ${LANG_GERMAN} (German),$\n  ${LANG_GREEK} (Greek),$\n  ${LANG_ITALIAN} (Italian),$\n  ${LANG_PORTUGUESE} (Portuguese),$\n  ${LANG_RUSSIAN} (Russian), and$\n  ${LANG_SPANISH} (Spanish).$\n"
+  Abort
+
+SelectLanguage:
+  ; Language selection dialog
+  Push ""
+  Push ${LANG_ENGLISH}
+  Push English
+  Push ${LANG_FRENCH}
+  Push French
+  Push ${LANG_GERMAN}
+  Push German
+  Push ${LANG_GREEK}
+  Push Greek
+  Push ${LANG_ITALIAN}
+  Push Italian
+  Push ${LANG_PORTUGUESE}
+  Push Portuguese
+  Push ${LANG_RUSSIAN}
+  Push Russian
+  Push ${LANG_SPANISH}
+  Push Spanish
+  Push A ; A means auto count languages
+         ; for the auto count to work the first empty push (Push "") must remain
+  LangDLL::LangDialog "Installer Language" "Please select the language to install"
+
+  Pop $LANGUAGE
+  StrCmp $LANGUAGE "cancel" 0 SetupUser
+    Abort
+
+  ; assume regular user until we know they are a power user
+SetupUser:
+  SetShellVarContext current
+  StrLen $2 "$PROFILE\FMSLogo"
+  StrCpy $INSTDIR "$PROFILE\FMSLogo" $2 0
+
+  ClearErrors
+  UserInfo::GetName
+  IfErrors SetupUser.Win9x
+  Pop $0
+  UserInfo::GetAccountType
+  Pop $1
+
+  StrCmp $1 "Admin" SetupUser.AllUsers +1
+  StrCmp $1 "Power" SetupUser.AllUsers +1
+  goto SetupUser.Done
+
+SetupUser.Win9x:
+SetupUser.AllUsers:
+  SetShellVarContext all
+  StrLen $2       "$PROGRAMFILES\FMSLogo"
+  StrCpy $INSTDIR "$PROGRAMFILES\FMSLogo" $2 0
+
+  ; We can write to the system directory, so enable the screen saver
+  SectionGetFlags ${sectionid_screensaver} $3
+  IntOp $3 $3 | ${SF_SELECTED}
+  SectionSetFlags ${sectionid_screensaver} $3
+
+  goto SetupUser.Done
+
+SetupUser.Done:
+
+  ;
+  ; Abort if another instance of the installer is running
+  ; 
+  System::Call 'kernel32::CreateMutexA(i 0, i 0, t "LogoForWindowsMutex") i .r1 ?e'
+  Pop $R0 
+  StrCmp $R0 0 checkifinstalled
+
+  ; Silent installs should abort without a dialog box
+  IfSilent Abort
+
+  ; Notify the user that the install cannot continue.
+  ; We can't use a LangString because those aren't available in .onInit
+  StrCmp $LANGUAGE ${LANG_GERMAN} 0 +3
+     MessageBox MB_OK|MB_ICONEXCLAMATION "Either the installer or FMSLogo is currently running.$\nThis installation cannot continue." ; NOT_YET_LOCALIZED 
+     Abort
+  StrCmp $LANGUAGE ${LANG_SPANISH} 0 +3
+     MessageBox MB_OK|MB_ICONEXCLAMATION "Either the installer or FMSLogo is currently running.$\nThis installation cannot continue." ; NOT_YET_LOCALIZED
+     Abort
+  StrCmp $LANGUAGE ${LANG_ITALIAN} 0 +3
+     MessageBox MB_OK|MB_ICONEXCLAMATION "L'installatore o FMSLogo sono giΰ in esecuzione.$\nL'installazione non puς continuare."
+     Abort
+  StrCmp $LANGUAGE ${LANG_PORTUGUESE} 0 +3
+     MessageBox MB_OK|MB_ICONEXCLAMATION "O instalador ou o FMSLogo estα rodando.$\nEssa instalaηγo nγo poderα prosseguir."
+     Abort
+  StrCmp $LANGUAGE ${LANG_FRENCH} 0 +3
+     MessageBox MB_OK|MB_ICONEXCLAMATION "L'installateur ou bien FMSLogo est en cours d'exιcution.$\nL'installation ne peut continuer." 
+     Abort
+  StrCmp $LANGUAGE ${LANG_GREEK} 0 +3
+     MessageBox MB_OK|MB_ICONEXCLAMATION "Ο εγκαταστάτης ή η FMSLogo εκτελείται ήδη.$\nΑυτή η εγκατάσταση δε μπορεί να συνεχιστεί."
+     Abort
+  StrCmp $LANGUAGE ${LANG_RUSSIAN} 0 +3
+     MessageBox MB_OK|MB_ICONEXCLAMATION "Θλθ θνρςΰλλÿςξπ θλθ FMSLogo β νΰρςξÿωεε βπεμÿ ηΰοσωενϋ.$\nΣρςΰνξβκΰ νε μξζες αϋςό οπξδξλζενΰ." 
+     Abort
+  ; default to English
+  MessageBox MB_OK|MB_ICONEXCLAMATION "Either the installer or FMSLogo is currently running.$\nThis installation cannot continue."
+  Abort
+
+checkifinstalled:
+
+  ;
+  ; If FMSLogo is already installed, either uninstall it or abort. 
+  ;
+
+  ; If this is a silent install, assume that the user wants it
+  ; to succeed (unintall the previous instance of logo).
+  IfSilent uninstall
+
+  ReadRegStr $0 SHELL_CONTEXT "Software\Microsoft\Windows\CurrentVersion\Uninstall\FMSLogo" "UninstallString"
+
+  ; If no uninstaller was found, then we're done
+  StrCmp $0 "" end 0
+
+  ; Extract the file path from the full path to the uninstaller.
+  ; hack: assumes the string is quoted and ends in `\uninstall.exe"'.
+  StrCpy $previousinstalldir $0 -15 1
+  IfFileExists "$previousinstalldir\*.*" 0 end
+
+  ; Notify the user that the install cannot continue until the existing FMSLogo is uninstalled
+  ; We can't use a LangString because those aren't available in .onInit
+  StrCmp $LANGUAGE ${LANG_GERMAN} 0 +2
+    MessageBox MB_YESNO "The existing copy of FMSLogo must be uninstalled to continue.$\nDo you want to uninstall it?$\n$\n(Selecting No will abort the installation)" IDYES uninstall IDNO abort ; NOT_YET_LOCALIZED
+  StrCmp $LANGUAGE ${LANG_SPANISH} 0 +2
+    MessageBox MB_YESNO "The existing copy of FMSLogo must be uninstalled to continue.$\nDo you want to uninstall it?$\n$\n(Selecting No will abort the installation)" IDYES uninstall IDNO abort ; NOT_YET_LOCALIZED
+  StrCmp $LANGUAGE ${LANG_ITALIAN} 0 +2
+    MessageBox MB_YESNO "La versione attualmente installata di FMSLogo deve essere disinstallata prima di procedere.$\nVuoi procedere con la disinstallazione?$\n$\n(Selezionando No verrΰ interrotta l'installazione)" IDYES uninstall IDNO abort
+  StrCmp $LANGUAGE ${LANG_PORTUGUESE} 0 +2
+    MessageBox MB_YESNO "Jα existe uma cσpia do FMSLogo e precisa ser desinstalada para prosseguir.$\nDeseja desinstalα-la?$\n$\n(Escolher Nγo cessarα a instalaηγo)" IDYES uninstall IDNO abort 
+  StrCmp $LANGUAGE ${LANG_FRENCH} 0 +2
+    MessageBox MB_YESNO "La version existante de FMSLogo doit κtre dιsinstallιe pour continuer.$\nVoulez-vous la dιsinstaller?$\n$\n(Choisir Non terminera l'installation)" IDYES uninstall IDNO abort 
+  StrCmp $LANGUAGE ${LANG_GREEK} 0 +2
+    MessageBox MB_YESNO "Το υπάρχον αντίγραφο της FMSLogo πρέπει να απεγκατασταθεί πριν συνεχιστεί αυτή η εγκατάσταση.$\nΘέλετε να το εγκαταστήσετε;$\n$\n(Επιλέγοντας Όχι η εγκατάσταση θα κλείσει.)" IDYES uninstall IDNO abort
+  StrCmp $LANGUAGE ${LANG_RUSSIAN} 0 +2
+    MessageBox MB_YESNO "Ρσωερςβσώωΰÿ κξοθÿ FMSLogo δξλζνΰ αϋςό σδΰλενΰ, χςξαϋ οπξδξλζθςό.$\nΒϋ υξςθςε σδΰλθςό εε?$\n$\n(Βϋαξπ Νες οπεπβες σρςΰνξβκσ)" IDYES uninstall IDNO abort 
+ ; default to English
+ MessageBox MB_YESNO "The existing copy of FMSLogo must be uninstalled to continue.$\nDo you want to uninstall it?$\n$\n(Selecting No will abort the installation)" IDYES uninstall IDNO abort
+
+abort:
+    Abort
+
+uninstall:
+    ; uninstall the old version of Logo
+    Call uninstall
+
+end:
+
+FunctionEnd
+
+
 
 
 ;--------------------------------
