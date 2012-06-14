@@ -6,19 +6,26 @@ to ` :backq.list
 end
 
 to backq.recursive :backq.list :backq.depth
+
 if emptyp :backq.list [op []]
+
 if equalp first :backq.list "` ~
    [op fput "`
-            fput  (backq.recursive first bf :backq.list :backq.depth+1)
-                  (backq.recursive bf bf :backq.list :backq.depth)]
-if equalp first first :backq.list ", ~
-   [op backq.unquote (bf first :backq.list) (bf :backq.list) :backq.depth]
-if memberp first first :backq.list [" :] ~
-   [op backq.word (first first :backq.list) (bf first :backq.list)
-                  (bf :backq.list) :backq.depth]
-if wordp first :backq.list ~
-   [op fput first :backq.list (backq.recursive bf :backq.list :backq.depth)]
-op fput (backq.recursive first :backq.list :backq.depth) (backq.recursive bf :backq.list :backq.depth)
+            fput (backq.recursive first bf :backq.list :backq.depth+1)
+                 (backq.recursive bf bf :backq.list :backq.depth)]
+
+if wordp first :backq.list [
+   if equalp first first :backq.list ", ~
+     [op backq.unquote (bf first :backq.list) (bf :backq.list) :backq.depth]
+
+   if memberp first first :backq.list [" :] ~
+     [op backq.word (first first :backq.list) (bf first :backq.list)
+                    (bf :backq.list) :backq.depth]
+
+   op fput first :backq.list (backq.recursive bf :backq.list :backq.depth)
+]
+op fput (backq.recursive first :backq.list :backq.depth) ~
+        (backq.recursive bf    :backq.list :backq.depth)
 end
 
 to backq.word :backq.symbol :backq.word :backq.rest :backq.depth
@@ -72,4 +79,4 @@ if equalp first :word ", ~
 output "false
 end
 
-bury [` backq.recursive backq.recursive backq.word backq.unquote backq.combine backq.all.commas]
+bury [` backq.recursive backq.word backq.unquote backq.combine backq.all.commas]

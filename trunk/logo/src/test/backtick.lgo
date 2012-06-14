@@ -21,6 +21,16 @@ TO BACKTICKTEST.SMOKETEST
    ; spliced numbers are treated literally
    SIMPLEREPORTTEST [`[1 ,@[2] ,@[3]]] [1 2 3]
 
+   ; multiple splices are supported (bug #3535265)
+   LOCAL [name1 name2]
+   TRACEINSTRUCTION [MAKE "name1 "x]
+   TRACEINSTRUCTION [MAKE "name2 "y]
+   SIMPLEREPORTTEST [ `[,:name1 ,:name2] ] [X Y]
+
+   ; lists don't get removed unexpectedly when the FIRST member is a comma
+   SIMPLEREPORTTEST [ `[   , :name1   ] ]   [x]
+   SIMPLEREPORTTEST [ `[ [ , :name1 ] ] ]  [[x]] 
+
 END
 
 TO BACKTICKTEST.EXAMPLESFROMMANUAL
@@ -51,10 +61,10 @@ TO BACKTICKTEST.WORDSHORTHAND
    ; ,:foo is equivalent to ,[:foo]
    SIMPLEREPORTTEST [` [,:foo]]   [[a b c]] 
 
-   ; ,@:foo is equiavlent to ,@[:foo]
+   ; ,@:foo is equivalent to ,@[:foo]
    SIMPLEREPORTTEST [` [,@:foo]]   [a b c]
 
-   ; ,1+2 is equiavlent to ,[ 1 + 2 ]
+   ; ,1+2 is equivalent to ,[ 1 + 2 ]
    SIMPLEREPORTTEST [` [,1+2] ]   [3]
 
    ; define a function that simply outputs [a b c] for the next two tests

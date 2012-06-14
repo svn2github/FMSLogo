@@ -32,6 +32,8 @@ II. New features/bugs fixed:
       not being subject to U.S. export controls.
     o Improve the efficiency of the installer by only extracting the files that
       which need to be installed.
+    o Fix a bug in the ` operator which could remove nesting levels from the
+      output in some cases.
     o Minor improvements to the manual.
 
   For a complete history of changes across all versions of FMSLogo, see
