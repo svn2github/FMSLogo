@@ -30,7 +30,7 @@ This is called splicing.
 
 <para>
 A word starting with <userinput>,</userinput> or <userinput>,@</userinput> is treated as if the rest of the were were a one-word list.
-For example, <userinput>,:foo</userinput> is equiavlent to <userinput>,[:foo]</userinput>.
+For example, <userinput>,:foo</userinput> is equivalent to <userinput>,[:foo]</userinput>.
 </para>
 
 <para>
