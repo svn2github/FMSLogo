@@ -337,6 +337,42 @@ end:
 FunctionEnd
 
 
+;
+; InstallLanguageFile - build_path filename_stem filename_extension
+;   Used to install a language-specific file to a well-known location.
+;   The filename must be of the form:
+;
+;        <stem>-<LCID>.<extension>
+;
+;   and will be installed as:
+;
+;        <stem>.<extension>
+;
+;   All of the files with the LCID are packed into the installer, but
+;   only the file that corresponds to the selected language is unpacked.
+;
+; Example Usage:
+;  
+;    !insertmacro InstallLanguageFile ..\src\ startup .logoscript
+;
+; This packs ..\src\startup-1031.logoscript, ..\src\startup-1033.logoscript, etc.
+; into the installer, and unpacks the correct file as startup.logoscript.
+;
+!macro InstallLanguageFile.PerLanguage language_id build_path filename_stem filename_extension
+  StrCmp $LANGUAGE ${language_id} 0 +2
+     File /oname=${filename_stem}${filename_extension} ${build_path}${filename_stem}-${language_id}${filename_extension}
+!macroend
+
+!macro InstallLanguageFile build_path filename_stem filename_extension
+  !insertmacro InstallLanguageFile.PerLanguage ${LANG_ENGLISH}    ${build_path} ${filename_stem} ${filename_extension}
+  !insertmacro InstallLanguageFile.PerLanguage ${LANG_GERMAN}     ${build_path} ${filename_stem} ${filename_extension}
+  !insertmacro InstallLanguageFile.PerLanguage ${LANG_SPANISH}    ${build_path} ${filename_stem} ${filename_extension}
+  !insertmacro InstallLanguageFile.PerLanguage ${LANG_ITALIAN}    ${build_path} ${filename_stem} ${filename_extension}
+  !insertmacro InstallLanguageFile.PerLanguage ${LANG_PORTUGUESE} ${build_path} ${filename_stem} ${filename_extension}
+  !insertmacro InstallLanguageFile.PerLanguage ${LANG_FRENCH}     ${build_path} ${filename_stem} ${filename_extension}
+  !insertmacro InstallLanguageFile.PerLanguage ${LANG_GREEK}      ${build_path} ${filename_stem} ${filename_extension}
+  !insertmacro InstallLanguageFile.PerLanguage ${LANG_RUSSIAN}    ${build_path} ${filename_stem} ${filename_extension}
+!macroend
 
 ;--------------------------------
 
@@ -349,74 +385,19 @@ Section "FMSLogo"
   ; Set output path to the installation directory.
   ;
   SetOutPath $INSTDIR
-  
-  ;
-  ; Put file there
-  ;
-  File "..\src\startup-${LANG_ENGLISH}.logoscript"
-  File "..\src\startup-${LANG_GERMAN}.logoscript"
-  File "..\src\startup-${LANG_SPANISH}.logoscript"
-  File "..\src\startup-${LANG_ITALIAN}.logoscript"
-  File "..\src\startup-${LANG_PORTUGUESE}.logoscript"
-  File "..\src\startup-${LANG_FRENCH}.logoscript"
-  File "..\src\startup-${LANG_GREEK}.logoscript"
-  File "..\src\startup-${LANG_RUSSIAN}.logoscript"
 
-  File "..\src\fmslogo-${LANG_ENGLISH}.exe"
-  File "..\src\fmslogo-${LANG_GERMAN}.exe"
-  File "..\src\fmslogo-${LANG_SPANISH}.exe"
-  File "..\src\fmslogo-${LANG_ITALIAN}.exe"
-  File "..\src\fmslogo-${LANG_PORTUGUESE}.exe"
-  File "..\src\fmslogo-${LANG_FRENCH}.exe"
-  File "..\src\fmslogo-${LANG_GREEK}.exe"
-  File "..\src\fmslogo-${LANG_RUSSIAN}.exe"
-
-  File "..\manual\logohelp-${LANG_ENGLISH}.chm"
-  File "..\manual\logohelp-${LANG_GERMAN}.chm"
-  File "..\manual\logohelp-${LANG_SPANISH}.chm"
-  File "..\manual\logohelp-${LANG_ITALIAN}.chm"
-  File "..\manual\logohelp-${LANG_PORTUGUESE}.chm"
-  File "..\manual\logohelp-${LANG_FRENCH}.chm"
-  File "..\manual\logohelp-${LANG_GREEK}.chm"
-  File "..\manual\logohelp-${LANG_RUSSIAN}.chm"
+  ;
+  ; Put files there
+  ;
+  !insertmacro InstallLanguageFile ..\src\    startup   .logoscript
+  !insertmacro InstallLanguageFile ..\src\    fmslogo   .exe
+  !insertmacro InstallLanguageFile ..\manual\ logohelp  .chm
 
   File "..\src\fmslogo.txt"
   File "..\src\license.txt"
   File "..\src\turtle.bmp"
   File /r /x CVS "..\src\logolib"
   File /r /x CVS "..\src\examples"
-
-  CopyFiles "$INSTDIR\startup-$LANGUAGE.logoscript" "$INSTDIR\startup.logoscript"
-  CopyFiles "$INSTDIR\fmslogo-$LANGUAGE.exe"        "$INSTDIR\fmslogo.exe"
-  CopyFiles "$INSTDIR\logohelp-$LANGUAGE.chm"       "$INSTDIR\logohelp.chm"
-
-  ; Remove the unused language files
-  Delete $INSTDIR\fmslogo-${LANG_ENGLISH}.exe
-  Delete $INSTDIR\fmslogo-${LANG_GERMAN}.exe
-  Delete $INSTDIR\fmslogo-${LANG_SPANISH}.exe
-  Delete $INSTDIR\fmslogo-${LANG_ITALIAN}.exe
-  Delete $INSTDIR\fmslogo-${LANG_PORTUGUESE}.exe
-  Delete $INSTDIR\fmslogo-${LANG_GREEK}.exe
-  Delete $INSTDIR\fmslogo-${LANG_FRENCH}.exe
-  Delete $INSTDIR\fmslogo-${LANG_RUSSIAN}.exe
-
-  Delete $INSTDIR\startup-${LANG_ENGLISH}.logoscript
-  Delete $INSTDIR\startup-${LANG_GERMAN}.logoscript
-  Delete $INSTDIR\startup-${LANG_SPANISH}.logoscript
-  Delete $INSTDIR\startup-${LANG_ITALIAN}.logoscript
-  Delete $INSTDIR\startup-${LANG_PORTUGUESE}.logoscript
-  Delete $INSTDIR\startup-${LANG_GREEK}.logoscript
-  Delete $INSTDIR\startup-${LANG_FRENCH}.logoscript
-  Delete $INSTDIR\startup-${LANG_RUSSIAN}.logoscript
-
-  Delete $INSTDIR\logohelp-${LANG_ENGLISH}.chm
-  Delete $INSTDIR\logohelp-${LANG_GERMAN}.chm
-  Delete $INSTDIR\logohelp-${LANG_SPANISH}.chm
-  Delete $INSTDIR\logohelp-${LANG_ITALIAN}.chm
-  Delete $INSTDIR\logohelp-${LANG_PORTUGUESE}.chm
-  Delete $INSTDIR\logohelp-${LANG_GREEK}.chm
-  Delete $INSTDIR\logohelp-${LANG_FRENCH}.chm
-  Delete $INSTDIR\logohelp-${LANG_RUSSIAN}.chm
 
   ;
   ; Write the uninstall keys for Windows

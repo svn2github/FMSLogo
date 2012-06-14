@@ -28,6 +28,8 @@ II. New features/bugs fixed:
       a procedure.
     o Remove CRYPTO.LGO and PLAYFAIR.LGO examples so that I can mark FMSLogo as
       not being subject to U.S. export controls.
+    o Improve the efficiency of the installer by only extracting the files that
+      which need to be installed.
     o Minor improvements to the manual.
 
   For a complete history of changes across all versions of FMSLogo, see
