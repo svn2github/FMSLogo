@@ -98,6 +98,7 @@ VIII. Acknowledgements
     Alexandre Soares
     Andreas Micheler
     Andy Owen
+    Anthony Barnett
     Ayurzanaeva Aryuna
     Bertrand Carette
     Bob Gorman
