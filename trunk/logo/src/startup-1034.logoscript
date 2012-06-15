@@ -10,17 +10,86 @@ TAPA "#
 
 ;copydef "` "`
 
-PARA ` :backq.list
-SI VACIO? :backq.list [DEV []]
-SI IGUALES? PRIMERO :backq.list ", ~
-   [DEV PONPRIMERO EJECUTA PRIMERO MP :backq.list ` MP MP :backq.list]
-SI IGUALES? PRIMERO :backq.list ",@ ~
-   [DEV FR EJECUTA PRIMERO MP :backq.list ` MP MP :backq.list]
-SI PALABRA? PRIMERO :backq.list [DEV PONPRIMERO PRIMERO :backq.list ` MP :backq.list]
-DEV PONPRIMERO ` PRIMERO :backq.list ` MP :backq.list
+PARA ` :backq.lista
+   SI NO LISTA? :backq.lista [(LANZA "error 4 :backq.lista)]
+   DEVUELVE backq.recursive :backq.lista 0
 FIN
 
-TAPA "`
+PARA backq.recursive :backq.lista :backq.depth
+
+SI VACIO? :backq.lista [DEVUELVE []]
+
+SI IGUALES? PRIMERO :backq.lista "` ~
+   [DEVUELVE PONPRIMERO "`
+            PONPRIMERO (backq.recursive PRIMERO MENOSPRIMERO :backq.lista :backq.depth+1)
+                 (backq.recursive MENOSPRIMERO MENOSPRIMERO :backq.lista :backq.depth)]
+
+SI PALABRA? PRIMERO :backq.lista [
+   SI IGUALES? PRIMERO PRIMERO :backq.lista ", ~
+     [DEVUELVE backq.unquote (MENOSPRIMERO PRIMERO :backq.lista) (MENOSPRIMERO :backq.lista) :backq.depth]
+
+   SI MIEMBRO? PRIMERO PRIMERO :backq.lista [" :] ~
+     [DEVUELVE backq.palabra (PRIMERO PRIMERO :backq.lista) (MENOSPRIMERO PRIMERO :backq.lista)
+                    (MENOSPRIMERO :backq.lista) :backq.depth]
+
+   DEVUELVE PONPRIMERO PRIMERO :backq.lista (backq.recursive MENOSPRIMERO :backq.lista :backq.depth)
+]
+DEVUELVE PONPRIMERO (backq.recursive PRIMERO :backq.lista :backq.depth) ~
+        (backq.recursive MENOSPRIMERO :backq.lista :backq.depth)
+FIN
+
+PARA backq.palabra :backq.symbol :backq.palabra :backq.rest :backq.depth
+SI VACIO? :backq.palabra ~
+   [DEVUELVE PONPRIMERO :backq.symbol (backq.recursive :backq.rest :backq.depth)]
+SI NO IGUALES? PRIMERO :backq.palabra ", ~
+   [DEVUELVE PONPRIMERO (PALABRA :backq.symbol :backq.palabra)
+                (backq.recursive :backq.rest :backq.depth)]
+HAZLOCAL "result backq.unquote (MENOSPRIMERO :backq.palabra) :backq.rest :backq.depth
+SI PALABRA? :result [DEVUELVE PALABRA :backq.symbol :result]
+DEVUELVE PONPRIMERO (PALABRA :backq.symbol PRIMERO :result) MENOSPRIMERO :result
+FIN
+
+PARA backq.unquote :unquote.symbol :unquote.rest :unquote.depth
+HAZLOCAL "unquote.splicing "falso
+SI NO VACIO? :unquote.symbol [
+   SI IGUALES? PRIMERO :unquote.symbol "@ [
+      HAZ "unquote.splicing "cierto
+      HAZ "unquote.symbol MENOSPRIMERO :unquote.symbol
+]]
+SI :unquote.depth=0 [
+  SI VACIO? :unquote.symbol
+     [DEVUELVE backq.combine run PRIMERO :unquote.rest
+                           (backq.recursive MENOSPRIMERO :unquote.rest :unquote.depth)]
+  DEVUELVE backq.combine run :unquote.symbol (backq.recursive :unquote.rest :unquote.depth)
+]
+SI VACIO? :unquote.symbol ~
+   [DEVUELVE PONPRIMERO (SISINO :unquote.splicing [",@] [",])
+                PONPRIMERO (backq.recursive PRIMERO :unquote.rest :unquote.depth-1)
+                     (backq.recursive MENOSPRIMERO :unquote.rest :unquote.depth)]
+SI backq.all.commas :unquote.symbol ~
+   [DEVUELVE PONPRIMERO (SISINO :unquote.splicing [",@] [",])
+                PONPRIMERO (backq.recursive (LISTA :unquote.symbol PRIMERO :unquote.rest)
+                        :unquote.depth-1)
+                     (backq.recursive MENOSPRIMERO :unquote.rest :unquote.depth)]
+DEVUELVE PONPRIMERO (SISINO :unquote.splicing [",@] [",]) ~
+            PONPRIMERO (backq.recursive (LISTA :unquote.symbol) :unquote.depth-1) ~
+                 (backq.recursive :unquote.rest :unquote.depth)
+FIN
+
+PARA backq.combine :esto :aquellos
+DEVUELVE SISINO :unquote.splicing [frase :esto :aquellos] [PONPRIMERO :esto :aquellos]
+FIN
+
+PARA backq.all.commas :palabra
+SI VACIO? :palabra [DEVUELVE "cierto]
+SI IGUALES? PRIMERO :palabra ", ~
+   [SI VACIO? MENOSPRIMERO :palabra [DEVUELVE "cierto]
+    SI IGUALES? PRIMERO MENOSPRIMERO :palabra "@ [DEVUELVE backq.all.commas MENOSPRIMERO MENOSPRIMERO :palabra]
+    DEVUELVE backq.all.commas MENOSPRIMERO :palabra]
+DEVUELVE "falso
+FIN
+
+TAPA [` backq.recursive backq.palabra backq.unquote backq.combine backq.all.commas]
 
 
 ;copydef "abs "abs
@@ -393,7 +462,7 @@ FIN
 
 PARA DESDE.done :for.result
 SI VACIO? :for.result [DEV [ALTO]]
-DEV LISTA "output ENTRECOMILLAS PRIMERO :for.result
+DEV LISTA "DEVUELVE ENTRECOMILLAS PRIMERO :for.result
 FIN
 
 PARA forstep
@@ -1070,7 +1139,7 @@ FIN
 
 PARA PARACADA.done :foreach.result
 SI VACIO? :foreach.result [DEV [ALTO]]
-DEV LISTA "output ENTRECOMILLAS PRIMERO :foreach.result
+DEV LISTA "DEVUELVE ENTRECOMILLAS PRIMERO :foreach.result
 FIN
 
 PARA ?RESTANTE [:which 1]
