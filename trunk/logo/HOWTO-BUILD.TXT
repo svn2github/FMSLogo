@@ -24,6 +24,9 @@ Add c:\cygwin\bin to the PATH.
 Rename c:\cygwin\bin\make.exe to c:\cygwin\gmake.exe to avoid conflicts with
 Borland's MAKE utility.
 
+Delete c:\cygbin\bin\link.exe to avoid conflicts with the link.exe from
+Microsoft's SDK.
+
 Install Microsoft HTML Help Workshop to "C:\Program Files\HTML Help Workshop".
 You can download this from http://microsoft.com/.
 This is needed both to compile the source code (for htmlhelp.h) and to build
