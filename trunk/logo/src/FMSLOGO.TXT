@@ -21,6 +21,8 @@ I. Kit Description/Location (http://sourceforge.net/projects/fmslogo)
 II. New features/bugs fixed:
 
   * Changed in 6.28.0
+    o Fix bug #3535603; File->Set as screen saver is now enabled on 64-bit
+      versions of Windows.
     o Fix bug #3535265; The Spanish version of the ` operation now behaves the
       same as the English version.
     o Fix bug #3529633; File->Edit no longer crashes if you specify a primitive.

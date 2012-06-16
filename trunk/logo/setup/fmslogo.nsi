@@ -23,6 +23,9 @@
 ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+!include LogicLib.nsh
+!include x64.nsh
+
 ; Compiler Flags
 SetCompressor /SOLID lzma
 
@@ -35,12 +38,25 @@ OutFile "fmslogo.exe"
 ; Use an XP manifest
 XPStyle on
 
+; Add a Vista manifest for UAC that requests admin rights, if available.
+RequestExecutionLevel highest
+
 ; The default installation directory
 InstallDir "$PROGRAMFILES\FMSLogo"
 
 ; Registry key to check for directory 
 ; (so if you install again, it will overwrite the old one automatically)
 InstallDirRegKey HKLM "Software\FMSLogo" "Install_Dir"
+
+!define /date COPYRIGHT_YEAR "%Y"
+VIAddVersionKey "ProductName"     "FMSLogo"
+VIAddVersionKey "ProductVersion"  "${FMSLOGO_VERSION}"
+VIAddVersionKey "FileDescription" "FMSLogo installer"
+VIAddVersionKey "LegalCopyright"  "Copyright (C) ${COPYRIGHT_YEAR} by David Costanzo"
+VIAddVersionKey "CompanyName"     "David Costanzo"
+VIAddVersionKey "FileVersion"     "${FMSLOGO_VERSION}"
+
+VIProductVersion ${FMSLOGO_MAJOR_VERSION}.${FMSLOGO_MINOR_VERSION}.${FMSLOGO_MICRO_VERSION}.0
 
 ;--------------------------------
 
@@ -130,7 +146,7 @@ Function uninstall
   Delete $previousinstalldir\logohelp-${LANG_FRENCH}.chm
   Delete $previousinstalldir\logohelp-${LANG_RUSSIAN}.chm
 
-  Delete $SYSDIR\FMSLogo.scr
+  Delete $SYSDIR\fmslogo.scr
   Delete $previousinstalldir\fmslogo-${LANG_ENGLISH}.scr
   Delete $previousinstalldir\fmslogo-${LANG_GERMAN}.scr
   Delete $previousinstalldir\fmslogo-${LANG_SPANISH}.scr
@@ -139,6 +155,19 @@ Function uninstall
   Delete $previousinstalldir\fmslogo-${LANG_GREEK}.scr
   Delete $previousinstalldir\fmslogo-${LANG_FRENCH}.scr
   Delete $previousinstalldir\fmslogo-${LANG_RUSSIAN}.scr
+
+  ; For FMSLogo 6.27.0, Windows applied a compatibility shim that disabled
+  ; file system redirection, resulting in FMSLogo.scr, the screen saver
+  ; binary, being written to the real system32 directory, instead of
+  ; to syswow64, like most 32-bit programs.  In FMSLogo 6.28.0 or later,
+  ; Windows no longer does this.  In order to be able to clean up for
+  ; for 6.27.0, we must disable file system redirection, then re-delete
+  ; the screensaver.
+  ${If} ${RunningX64}
+    ${DisableX64FSRedirection}
+    Delete $SYSDIR\fmslogo.scr
+    ${EnableX64FSRedirection}
+  ${EndIf}
 
   Delete $previousinstalldir\logo.hlp
   Delete $previousinstalldir\logo.gid
