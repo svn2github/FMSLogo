@@ -1716,7 +1716,7 @@ void TMainFrame::SetupWindow()
  
     static const MENUITEM helpMenuItems[] = {
         {LOCALIZED_HELP_INDEX,         CM_HELP},
-#if LOCALE!=1033
+#if MANUAL_HAS_TRANSLATION_TABLES
         // options for translating to/from English
         {LOCALIZED_HELP_LANGTOENGLISH, CM_HELPLANGTOENGLISH},
         {LOCALIZED_HELP_ENGLISHTOLANG, CM_HELPENGLISHTOLANG},
@@ -2196,7 +2196,7 @@ void TMainFrame::CMHelpTutorial()
     do_help("Where to Start");
 }
 
-#if LOCALE!=1033
+#if MANUAL_HAS_TRANSLATION_TABLES
 
 void TMainFrame::CMHelpLangToEnglish()
 {
@@ -2881,7 +2881,7 @@ DEFINE_RESPONSE_TABLE1(TMainFrame, TDecoratedFrame)
     EV_COMMAND(CM_HELPRELEASENOTES, CMHelpReleaseNotes),
     EV_COMMAND(CM_HELPABOUT, CMHelpAbout),
     EV_COMMAND(CM_HELPABOUTMS, CMHelpAboutMS),
-#if LOCALE!=1033
+#if MANUAL_HAS_TRANSLATION_TABLES
     EV_COMMAND(CM_HELPLANGTOENGLISH, CMHelpLangToEnglish),
     EV_COMMAND(CM_HELPENGLISHTOLANG, CMHelpEnglishToLang),
 #endif

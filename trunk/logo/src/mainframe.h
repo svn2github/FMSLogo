@@ -21,7 +21,8 @@
 #include <owl\decframe.h>
 #include <owl\panespli.h>
 
-#include "mainwind.h" // for qlist
+#include "mainwind.h"         // for qlist
+#include "localizedstrings.h" // for MANUAL_HAS_TRANSLATION_TABLES
 
 class TScreenWindow : public TWindow
 {
@@ -166,7 +167,7 @@ protected:
     void CMHelpAbout();
     void CMHelpAboutMS();
 
-#if LOCALE!=1033
+#if MANUAL_HAS_TRANSLATION_TABLES
     void CMHelpLangToEnglish();
     void CMHelpEnglishToLang();
 #endif

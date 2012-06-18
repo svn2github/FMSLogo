@@ -38,6 +38,8 @@ II. New features/bugs fixed:
       which need to be installed.
     o Fix a bug in the ` operation which could remove nesting levels from the
       output in some cases.
+    o Remove the menu options for English-to-locale and locale-to-English
+      in locales where no translation tables are provided.
     o Minor improvements to the manual.
 
   For a complete history of changes across all versions of FMSLogo, see
