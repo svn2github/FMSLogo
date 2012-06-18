@@ -1,5 +1,27 @@
 This file contains the changes that were made in each revision of FMSLogo.
 
+Added for 6.28.0
+o Fix bug #3535603; File->Set as screen saver is now enabled on 64-bit
+  versions of Windows.
+o Fix bug #3535265; The Spanish version of the ` operation now behaves the
+  same as the English version.
+o Fix bug #3529633; File->Edit no longer crashes if you specify a primitive.
+o Fix bug #3521812; FMSLogo now starts up quickly when the operating system
+  has an unresponsive printer.
+o Fix bug #3514978; The option to install the screen saver is now unchecked
+  by default when run as a standard user.
+o Fix bug #1607629; File->Edit dialog now lets you double-click to select
+  a procedure.
+o Remove CRYPTO.LGO and PLAYFAIR.LGO examples so that I can mark FMSLogo as
+  not being subject to U.S. export controls.
+o Improve the efficiency of the installer by only extracting the files that
+  which need to be installed.
+o Fix a bug in the ` operation which could remove nesting levels from the
+  output in some cases.
+o Remove the menu options for English-to-locale and locale-to-English
+  in locales where no translation tables are provided.
+o Minor improvements to the manual.
+
 Added for 6.27.0
 o Fix bug #3418522; Size and color picker dialog boxes no longer crash
   on Lenovo laptops when they are scrolled using the touchpad.
