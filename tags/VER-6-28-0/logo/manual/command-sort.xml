@@ -1,0 +1,75 @@
+<section id="command-sort">
+    <title>SORT</title>
+<indexterm><primary>SORT</primary></indexterm>
+
+<variablelist>
+
+<varlistentry><term>Synopsis</term>
+<listitem>
+<synopsis><command>SORT</command> <parameter>sequence</parameter>
+(<command>SORT</command> <parameter>sequence</parameter> <parameter>predicate</parameter>)</synopsis>
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Description</term>
+<listitem>
+
+<para>
+Sorts a sequence (list, array, or word) in ascending order, or according to a given predicate.
+The output is a new sequence of the same type as <parameter>sequence</parameter> that contains the same items ordered such that there are no two successive items, a and b, where <userinput>(<parameter>predicate</parameter> a b)</userinput> is FALSE and <userinput>(<parameter>predicate</parameter> b a)</userinput> is TRUE.
+</para>
+
+<para>
+The <parameter>predicate</parameter> input must be a procedure that inputs two values and outputs either TRUE or FALSE.
+</para>
+
+<para>
+If no <parameter>predicate</parameter> input is given, then the predicate used depends on the <parameter>sequence</parameter> input, as defined by the following table.
+
+<informaltable frame='all'>
+  <tgroup cols='2'>
+    <thead>
+      <row><entry><parameter>sequence</parameter> type</entry> <entry>output</entry></row>
+    </thead>
+    <tbody>
+      <row>
+        <entry>A list of numbers</entry>
+        <entry>A list sorted by <link linkend="command-lessp">LESSP</link></entry>
+      </row>
+      <row>
+         <entry>A list of non-numbers</entry>
+         <entry>A list sorted by <link linkend="command-beforep">BEFOREP</link></entry>
+      </row>
+      <row>
+         <entry>An array of numbers</entry>
+         <entry>An array sorted by <link linkend="command-lessp">LESSP</link></entry>
+      </row>
+      <row>
+         <entry>An array of non-numbers</entry>
+         <entry>An array sorted by <link linkend="command-beforep">BEFOREP</link></entry>
+      </row>
+      <row>
+         <entry>A word</entry>
+         <entry>A word whose characters are sorted by <link linkend="command-beforep">BEFOREP</link></entry>
+      </row>
+    </tbody>
+  </tgroup>
+</informaltable>
+</para>
+
+</listitem>
+</varlistentry>
+
+<varlistentry><term>Example</term>
+<listitem>
+<programlisting><userinput>SORT [3 1 2]</userinput>
+[1 2 3]
+
+<userinput>(SORT [3 1 2] "GREATERP)</userinput>
+[3 2 1]
+</programlisting>
+</listitem>
+</varlistentry>
+
+</variablelist>
+</section>

@@ -1,0 +1,65 @@
+LOAD "testlib.lgo
+LOAD "uiautomationlib.lgo
+
+TO SELECTBOXTEST.SMOKETEST
+
+   UIAUTOMATION.INITIALIZE
+
+   CATCH "ERROR [
+
+     localmake "downarrow 40
+
+     ; Select the first value.  (no keypresses).
+     UIAUTOMATION.POSTBUTTONPUSHTOWINDOW [SELECTBOX Test: Select First] "OK
+     SIMPLEREPORTTEST  [ SELECTBOX [SELECTBOX Test: Select First]  [First Second Third] ] 1
+
+     ; Select the second value.  (one down arrow presses).
+     UIAUTOMATION.POSTKEYTOWINDOW        [SELECTBOX Test: Select Second] "Listbox :downarrow
+     UIAUTOMATION.POSTBUTTONPUSHTOWINDOW [SELECTBOX Test: Select Second] "OK
+     SIMPLEREPORTTEST [ SELECTBOX [SELECTBOX Test: Select Second] [First Second Third] ] 2
+
+     ; Select the third value.  (two down arrow presses)
+     UIAUTOMATION.POSTKEYTOWINDOW        [SELECTBOX Test: Select Third] "Listbox :downarrow
+     UIAUTOMATION.POSTKEYTOWINDOW        [SELECTBOX Test: Select Third] "Listbox :downarrow
+     UIAUTOMATION.POSTBUTTONPUSHTOWINDOW [SELECTBOX Test: Select Third] "OK
+     SIMPLEREPORTTEST  [ SELECTBOX [SELECTBOX Test: Select Third]  [First Second Third] ] 3
+
+     ; Press cancel
+     UIAUTOMATION.POSTKEYTOWINDOW        [SELECTBOX Test: Press Cancel] "Listbox :downarrow
+     UIAUTOMATION.POSTBUTTONPUSHTOWINDOW [SELECTBOX Test: Press Cancel] "Cancel
+     RUNSTOPPINGTEST  [ SELECTBOX [SELECTBOX Test: Press Cancel]  [First Second Third] ]
+
+     ; Press ESC (can't be automated)
+     RUNSTOPPINGTEST  [ SELECTBOX [SELECTBOX Test: Press ESC]   [First Second Third] ]
+
+     ; Press the X (can't be automated)
+     RUNSTOPPINGTEST  [ SELECTBOX [SELECTBOX Test: Press the X] [First Second Third] ]
+
+     ; the choicelist input is empty
+     UIAUTOMATION.POSTBUTTONPUSHTOWINDOW [SELECTBOX Test: No Choice (press ok)] "OK
+     SIMPLEREPORTTEST [ SELECTBOX [SELECTBOX Test: No Choice (press ok)] [] ] 1
+   ]
+
+   LOCALMAKE "lasterror ERROR
+   IF NOT EMPTY? :lasterror [
+      REPORTTESTFAILED (LIST "|SELECTBOX test failed.  code=| (ITEM 1 :lasterror) ". (ITEM 2 :lasterror)) 
+   ]
+
+   UIAUTOMATION.UNINITIALIZE
+
+END
+
+TO SELECTBOXTEST.BADINPUT
+   RUNNOTENOUGHINPUTSTEST [ IGNORE (SELECTBOX [Title]) ]
+   RUNTOOMANYINPUTSTEST   [ IGNORE (SELECTBOX [Title] [1 2 3] "toomany) ]
+
+   RUNBADINPUTTEST [ IGNORE SELECTBOX [Title] {1 2 3}  ]
+   RUNBADINPUTTEST [ IGNORE SELECTBOX [Title] "choices ]
+   RUNBADINPUTTEST [ IGNORE SELECTBOX [Title] 12345    ]
+END
+
+TO SELECTBOXTEST
+
+  SELECTBOXTEST.SMOKETEST
+  SELECTBOXTEST.BADINPUT
+END
