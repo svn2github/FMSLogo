@@ -4,6 +4,8 @@
 #include <wx/frame.h>
 #include <wx/print.h>
 
+#include "localizedstrings.h" // for MANUAL_HAS_TRANSLATION_TABLES
+
 class wxSplitterWindow;
 class wxCommandEvent;
 class wxScrolledWindow;
@@ -120,7 +122,7 @@ private:
     void OnZoomOut(wxCommandEvent& Event);
     void OnZoomNormal(wxCommandEvent& Event);
     void OnHelp(wxCommandEvent& Event);
-#if LOCALE!=1033
+#if MANUAL_HAS_TRANSLATION_TABLES
     void OnHelpLanguageToEnglish(wxCommandEvent& Event);
     void OnHelpEnglishToLanguage(wxCommandEvent& Event);
 #endif

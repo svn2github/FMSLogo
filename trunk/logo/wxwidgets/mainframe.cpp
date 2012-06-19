@@ -332,7 +332,7 @@ enum MainFrameMenuIds
     ID_ZOOMNORMAL,
 
     ID_HELP,
-#if LOCALE!=1033
+#if MANUAL_HAS_TRANSLATION_TABLES
     // options for translating to/from English
     ID_HELPLANGTOENGLISH,
     ID_HELPENGLISHTOLANG,
@@ -370,7 +370,7 @@ BEGIN_EVENT_TABLE(CMainFrame, wxFrame)
     EVT_MENU(ID_SETSCREENCOLOR,     CMainFrame::OnSetScreenColor)
     EVT_MENU(ID_SETFLOODCOLOR,      CMainFrame::OnSetFloodColor)
     EVT_MENU(ID_HELP,               CMainFrame::OnHelp)
-#if LOCALE!=1033
+#if MANUAL_HAS_TRANSLATION_TABLES
     // options for translating to/from English
     EVT_MENU(ID_HELPLANGTOENGLISH,  CMainFrame::OnHelpLanguageToEnglish)
     EVT_MENU(ID_HELPENGLISHTOLANG,  CMainFrame::OnHelpEnglishToLanguage)
@@ -467,7 +467,7 @@ CMainFrame::CMainFrame(
  
     static const MENUITEM helpMenuItems[] = {
         {LOCALIZED_HELP_INDEX,         ID_HELP},
-#if LOCALE!=1033
+#if MANUAL_HAS_TRANSLATION_TABLES
         // options for translating to/from English
         {LOCALIZED_HELP_LANGTOENGLISH, ID_HELPLANGTOENGLISH},
         {LOCALIZED_HELP_ENGLISHTOLANG, ID_HELPENGLISHTOLANG},
@@ -1836,7 +1836,7 @@ void CMainFrame::OnHelp(wxCommandEvent& WXUNUSED(Event))
     do_help(NULL);
 }
 
-#if LOCALE!=1033
+#if MANUAL_HAS_TRANSLATION_TABLES
 
 void CMainFrame::OnHelpLanguageToEnglish(wxCommandEvent& WXUNUSED(Event))
 {
@@ -1848,7 +1848,7 @@ void CMainFrame::OnHelpEnglishToLanguage(wxCommandEvent& WXUNUSED(Event))
     do_help("From English");
 }
 
-#endif // LOCALE!=1033
+#endif // MANUAL_HAS_TRANSLATION_TABLES
 
 void CMainFrame::OnHelpTutorial(wxCommandEvent& WXUNUSED(Event))
 {
