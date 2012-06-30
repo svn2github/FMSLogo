@@ -22,7 +22,7 @@ The order in which the files are listed is undefined.
 <varlistentry><term>Example</term>
 <listitem>
 <programlisting><userinput>SHOW FILES</userinput>
-[uninstall.exe mcistrwh.hlp LOGO.HLP LICENSE.TXT FMSLOGO.TXT fmslogo.exe]
+[uninstall.exe turtle.bmp startup.logoscript README.TXT logohelp.chm LICENSE.TXT fmslogo.exe]
 </programlisting>
 </listitem>
 </varlistentry>

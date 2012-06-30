@@ -23,10 +23,11 @@ It prints out the <link linkend="command-files">FILES</link> list and <link link
 <listitem>
 <programlisting><userinput>DIR</userinput>
 File uninstall.exe
-File mcistrwh.hlp
-File LOGO.HLP
+File turtle.bmp
+File startup.logoscript
+File README.TXT
+File logohelp.chm
 File LICENSE.TXT
-File FMSLOGO.TXT
 File fmslogo.exe
 Directory Logolib
 Directory Examples

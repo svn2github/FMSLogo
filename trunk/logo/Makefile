@@ -48,7 +48,7 @@ $(BINARYZIP) : $(MANUALS) $(EXES) $(SCREENSAVERS)
 	$(foreach LCID,$(LCIDS),cp src/startup-$(LCID).logoscript $(BINARYBASENAME) &&) cp src/startup-$(DEFAULT_LCID).logoscript  $(BINARYBASENAME)/startup.logoscript
 	$(foreach MANUAL,$(MANUALS),          cp $(MANUAL)        $(BINARYBASENAME) &&) cp manual/logohelp-$(DEFAULT_LCID).chm     $(BINARYBASENAME)/logohelp.chm
 	$(foreach SCREENSAVER,$(SCREENSAVERS),cp $(SCREENSAVER)   $(BINARYBASENAME) &&) cp screensaver/fmslogo-$(DEFAULT_LCID).scr $(BINARYBASENAME)/fmslogo.scr
-	cp src/FMSLOGO.TXT             $(BINARYBASENAME)
+	cp src/README.TXT              $(BINARYBASENAME)
 	cp src/LICENSE.TXT             $(BINARYBASENAME)
 	cp src/turtle.bmp              $(BINARYBASENAME)
 	cp --recursive src/Logolib     $(BINARYBASENAME)

@@ -1,5 +1,5 @@
 ----------------------------------------------------------------------
-FMSLogo Version 6.28.0 for Microsoft Windows
+FMSLogo Version 6.29.0 for Microsoft Windows
 ----------------------------------------------------------------------
 
    I. Kit Description/Location
@@ -14,33 +14,12 @@ VIII. Acknowledgements
 
 I. Kit Description/Location (http://sourceforge.net/projects/fmslogo)
 
-  fmslogo-6.28.0.exe       (binary kit: Windows self-extracting installer)
-  fmslogo-6.28.0.zip       (binary kit: Windows ZIP archive)
-  fmslogo-src-6.28.0.zip   (source kit)
+  fmslogo-6.29.0.exe       (binary kit: Windows self-extracting installer)
+  fmslogo-6.29.0.zip       (binary kit: Windows ZIP archive)
 
 II. New features/bugs fixed:
 
-  * Changed in 6.28.0
-    o Fix bug #3535603; File->Set as screen saver is now enabled on 64-bit
-      versions of Windows.
-    o Fix bug #3535265; The Spanish version of the ` operation now behaves the
-      same as the English version.
-    o Fix bug #3529633; File->Edit no longer crashes if you specify a primitive.
-    o Fix bug #3521812; FMSLogo now starts up quickly when the operating system
-      has an unresponsive printer.
-    o Fix bug #3514978; The option to install the screen saver is now unchecked
-      by default when run as a standard user.
-    o Fix bug #1607629; File->Edit dialog now lets you double-click to select
-      a procedure.
-    o Remove CRYPTO.LGO and PLAYFAIR.LGO examples so that I can mark FMSLogo as
-      not being subject to U.S. export controls.
-    o Improve the efficiency of the installer by only extracting the files that
-      which need to be installed.
-    o Fix a bug in the ` operation which could remove nesting levels from the
-      output in some cases.
-    o Remove the menu options for English-to-locale and locale-to-English
-      in locales where no translation tables are provided.
-    o Minor improvements to the manual.
+  * Changed in 6.29.0
 
   For a complete history of changes across all versions of FMSLogo, see
   http://fmslogo.cvs.sourceforge.net/*checkout*/fmslogo/logo/src/CHANGELOG.TXT

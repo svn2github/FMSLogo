@@ -2243,7 +2243,7 @@ void TMainFrame::CMHelpExamples()
 void TMainFrame::CMHelpReleaseNotes()
 {
     char szFileName[MAX_PATH + 1];
-    MakeHelpPathName(szFileName, "FMSLOGO.TXT");
+    MakeHelpPathName(szFileName, "README.TXT");
 
     OpenFileWithDefaultApplication(HWindow, szFileName);
 }

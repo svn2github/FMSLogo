@@ -177,7 +177,8 @@ Function uninstall
   Delete $previousinstalldir\mcistrwh.gid
   Delete $previousinstalldir\mcistrwh.fts
 
-  Delete $previousinstalldir\fmslogo.txt
+  Delete $previousinstalldir\README.TXT
+  Delete $previousinstalldir\FMSLOGO.TXT
   Delete $previousinstalldir\license.txt
   Delete $previousinstalldir\turtle.bmp
 
@@ -261,8 +262,8 @@ Section "FMSLogo"
   !insertmacro InstallLanguageFile ..\src\    fmslogo   .exe
   !insertmacro InstallLanguageFile ..\manual\ logohelp  .chm
 
-  File "..\src\fmslogo.txt"
-  File "..\src\license.txt"
+  File "..\src\README.TXT"
+  File "..\src\LICENSE.TXT"
   File "..\src\turtle.bmp"
   File /r /x CVS "..\src\logolib"
   File /r /x CVS "..\src\examples"
@@ -627,8 +628,8 @@ Section "Uninstall"
   Delete $INSTDIR\fmslogo-${LANG_FRENCH}.scr
   Delete $INSTDIR\fmslogo-${LANG_RUSSIAN}.scr
 
-  Delete $INSTDIR\fmslogo.txt
-  Delete $INSTDIR\license.txt
+  Delete $INSTDIR\README.TXT
+  Delete $INSTDIR\LICENSE.TXT
   Delete $INSTDIR\turtle.bmp
 
   Delete $INSTDIR\uninstall.exe

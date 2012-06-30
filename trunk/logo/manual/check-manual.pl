@@ -217,9 +217,8 @@ $Exceptions{'command-dialogdelete.xml'}{'allcaps'}{'OK'}      = 1;
 $Exceptions{'command-dialogenable.xml'}{'allcaps'}{'MYSETUP'} = 1;
 $Exceptions{'command-dialogenable.xml'}{'allcaps'}{'OK'}      = 1;
 
-$Exceptions{'command-dir.xml'}{'allcaps'}{'LOGO.HLP'}    = 1;
 $Exceptions{'command-dir.xml'}{'allcaps'}{'LICENSE.TXT'} = 1;
-$Exceptions{'command-dir.xml'}{'allcaps'}{'FMSLOGO.TXT'} = 1;
+$Exceptions{'command-dir.xml'}{'allcaps'}{'README.TXT'}  = 1;
 $Exceptions{'command-dir.xml'}{'logo'}                   = 1;
 
 $Exceptions{'command-directories.xml'}{'logo'}           = 1;
@@ -266,9 +265,8 @@ $Exceptions{'command-error.xml'}{'allcaps'}{'MYPROGRAM'}   = 1;
 
 $Exceptions{'command-halt.xml'}{'bannedword'}{'execute'}   = 1;
 
-$Exceptions{'command-files.xml'}{'allcaps'}{'LOGO.HLP'}    = 1;
 $Exceptions{'command-files.xml'}{'allcaps'}{'LICENSE.TXT'} = 1;
-$Exceptions{'command-files.xml'}{'allcaps'}{'FMSLOGO.TXT'} = 1;
+$Exceptions{'command-files.xml'}{'allcaps'}{'README.TXT'}  = 1;
 $Exceptions{'command-files.xml'}{'logo'}                   = 1;
 
 $Exceptions{'command-fill.xml'}{'allcaps'}{'SQUARE'}  = 1;
