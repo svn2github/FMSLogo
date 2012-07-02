@@ -91,78 +91,78 @@ SPLITTER_CXXFLAGS = -D__WX$(TOOLKIT)__ $(__WXUNIV_DEFINE_p) \
 	-I$(srcdir) $(__DLLFLAG_p) $(CPPFLAGS) $(CXXFLAGS)
 
 SPLITTER_OBJECTS =  \
-        splitter_mainframe.o \
-        splitter_commander.o \
-        splitter_aboutfmslogo.o \
-        splitter_aboutmultiplesclerosis.o \
-        splitter_setactivearea.o \
-        splitter_workspaceeditor.o \
-        splitter_guiutils.o \
-        splitter_fmslogo.o \
-        splitter_logocodectrl.o \
-        splitter_setpensize.o \
-        splitter_statusdialog.o \
-        splitter_savebeforeexitdialog.o \
-        splitter_screen.o \
-        splitter_commanderbutton.o \
-        splitter_commandertogglebutton.o \
-        splitter_commanderinput.o \
-        splitter_commanderhistory.o \
-        splitter_selectproceduredialog.o \
-        splitter_editproceduredialog.o \
-        splitter_eraseproceduredialog.o \
-        splitter_minieditor.o \
-        splitter_minieditortextctrl.o \
-        splitter_fontutils.o \
-        platform_utils.o \
-        splitter_setcolor.o \
-        core_3dsolid.o        \
-        core_activearea.o     \
-        core_appendablelist.o \
-        core_argumentutils.o  \
-        core_assembly.o       \
-        core_coms.o           \
-        core_cursor.o         \
-        core_devwind.o        \
-        core_dib.o            \
-        core_dynamicbuffer.o  \
-        core_error.o          \
-        core_eval.o           \
-        core_files.o          \
-        core_fileswnd.o       \
-        core_gbm.o            \
-        core_gbmbmp.o         \
-        core_gbmhelp.o        \
-        core_gbmgif.o         \
-        core_gbmsize.o        \
-        core_graphics.o       \
-        core_graphwin.o       \
-        core_ibmterm.o        \
-        core_init.o           \
-        core_intern.o         \
-        core_lists.o          \
-        core_localizednode.o  \
-        core_logodata.o       \
-        core_logomath.o       \
-        core_mainwind.o       \
-        core_mem.o            \
-        core_messagebox.o     \
-        core_mmwind.o         \
-        core_netwind.o        \
-        core_paren.o          \
-        core_parse.o          \
-        core_print.o          \
-        core_startup.o        \
-        core_threed.o         \
-        core_unix.o           \
-        core_vector.o         \
-        core_wrksp.o          \
-        scintilla_LexFmsLogo.o \
+        mainframe.o \
+        commander.o \
+        aboutfmslogo.o \
+        aboutmultiplesclerosis.o \
+        setactivearea.o \
+        workspaceeditor.o \
+        guiutils.o \
+        fmslogo.o \
+        logocodectrl.o \
+        setpensize.o \
+        statusdialog.o \
+        savebeforeexitdialog.o \
+        screen.o \
+        commanderbutton.o \
+        commandertogglebutton.o \
+        commanderinput.o \
+        commanderhistory.o \
+        selectproceduredialog.o \
+        editproceduredialog.o \
+        eraseproceduredialog.o \
+        minieditor.o \
+        minieditortextctrl.o \
+        fontutils.o \
+        utils.o \
+        setcolor.o \
+        3dsolid.o        \
+        activearea.o     \
+        appendablelist.o \
+        argumentutils.o  \
+        assembly.o       \
+        coms.o           \
+        cursor.o         \
+        devwind.o        \
+        dib.o            \
+        dynamicbuffer.o  \
+        error.o          \
+        eval.o           \
+        files.o          \
+        fileswnd.o       \
+        gbm.o            \
+        gbmbmp.o         \
+        gbmhelp.o        \
+        gbmgif.o         \
+        gbmsize.o        \
+        graphics.o       \
+        graphwin.o       \
+        ibmterm.o        \
+        init.o           \
+        intern.o         \
+        lists.o          \
+        localizednode.o  \
+        logodata.o       \
+        logomath.o       \
+        mainwind.o       \
+        mem.o            \
+        messagebox.o     \
+        mmwind.o         \
+        netwind.o        \
+        paren.o          \
+        parse.o          \
+        print.o          \
+        startup.o        \
+        threed.o         \
+        unix.o           \
+        vector.o         \
+        wrksp.o          \
+        LexFmsLogo.o \
 
 ifeq "$(TOOLKIT)" "MSW"
 SPLITTER_OBJECTS +=  \
-        core_debugheap.o \
-        splitter_fmslogo_rc.o \
+        debugheap.o \
+        fmslogo_rc.o \
 
 endif
 
@@ -193,32 +193,28 @@ clean:
 	$(RM) fmslogo$(EXEEXT)
 	$(RM) logohelp.chm
 
+
 fmslogo$(EXEEXT): $(SPLITTER_OBJECTS)
 	$(CXX) -o $@ $(SPLITTER_OBJECTS) $(LDFLAGS) -L$(LIBDIRNAME) $(LIBS) $(EXTRALIBS)
 
-splitter_%.o: $(srcdir)/%.cpp
+%.o: $(srcdir)/%.cpp
 	$(CXXC) -c -o $@ $(SPLITTER_CXXFLAGS) $<
 
-core_%.o: $(srcdir)/../src/%.cpp
+%.o: $(srcdir)/../src/%.cpp
 	$(CXXC) -c -o $@ $(SPLITTER_CXXFLAGS) $<
 
-scintilla_%.o: $(srcdir)/../src/scintilla/src/%.cxx
+%.o: $(srcdir)/../src/scintilla/src/%.cxx
 	$(CXXC) -c -o $@ $(SPLITTER_CXXFLAGS) -I$(srcdir)/../src/scintilla/include $<
 
-ifeq "$(TOOLKIT)" "MSW"
+ifeq "$(TOOLKIT)" "GTK"
 
-platform_%.o: $(srcdir)/../src/%.cpp
-	$(CXXC) -c -o $@ $(SPLITTER_CXXFLAGS) $<
-
-else
-
-platform_%.o: $(srcdir)/linux/%.cpp
+%.o: $(srcdir)/linux/%.cpp
 	$(CXXC) -c -o $@ $(SPLITTER_CXXFLAGS) $<
 
 endif
 
 
-splitter_fmslogo_rc.o: $(srcdir)/fmslogo.rc
+fmslogo_rc.o: $(srcdir)/fmslogo.rc
 	$(WINDRES) -i$< -o$@   --define __WX$(TOOLKIT)__ $(__WXUNIV_DEFINE_p_2)  $(__EXCEPTIONS_DEFINE_p_2) $(__RTTI_DEFINE_p_2) $(__THREAD_DEFINE_p_2)   --include-dir $(srcdir) $(__DLLFLAG_p_2) $(__RCDEFDIR_p_1) --include-dir $(top_srcdir)/include --include-dir $(wx_top_builddir)/include
 
 logohelp.chm : ../manual/logohelp-1033.chm
