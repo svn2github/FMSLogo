@@ -1889,7 +1889,7 @@ void CMainFrame::OnHelpExamples(wxCommandEvent& WXUNUSED(Event))
 void CMainFrame::OnHelpReleaseNotes(wxCommandEvent& WXUNUSED(Event))
 {
     char szFileName[MAX_PATH + 1];
-    MakeHelpPathName(szFileName, "FMSLOGO.TXT");
+    MakeHelpPathName(szFileName, "README.TXT");
 
     OpenFileWithDefaultApplication(szFileName);
 }
