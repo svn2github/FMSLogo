@@ -3,6 +3,8 @@
 # to build the experimental wxWidgets on my two dev boxes.  I don't expect
 # this to work for anyone else.
 # =========================================================================
+include ../version.mk
+include ../lcids.mk
 
 ifeq "$(HOSTNAME)" "dcostanz.davidcostanzo.com"
 
@@ -60,7 +62,7 @@ MANUAL = logohelp.chm
 
 endif
 
-CPPFLAGS += -DLOCALE=1033 -D_FILE_OFFSET_BITS=64 -D_LARGE_FILES -I$(wx_top_builddir)/lib/wx/include/$(TOOLCHAIN_FULLNAME) -I$(wx_top_builddir)/include -I$(wx_top_builddir)/contrib/include -I../src 
+CPPFLAGS += -D_FILE_OFFSET_BITS=64 -D_LARGE_FILES -I$(wx_top_builddir)/lib/wx/include/$(TOOLCHAIN_FULLNAME) -I$(wx_top_builddir)/include -I$(wx_top_builddir)/contrib/include -I../src 
 CXXFLAGS += -Wall -Wundef -Wno-ctor-dtor-privacy  -fno-strict-aliasing
 CXXFLAGS += -DFMSLOGO_SCREENSAVER -DNOASM
 CXXFLAGS += -DSCI_LEXER -DLCCWIN=0 # used by Scintilla.h
@@ -86,11 +88,9 @@ DESTDIR =
 WX_RELEASE = 2.8
 WX_VERSION = $(WX_RELEASE).4
 LIBDIRNAME = $(wx_top_builddir)/lib
-SPLITTER_CXXFLAGS = -D__WX$(TOOLKIT)__ $(__WXUNIV_DEFINE_p) \
-	$(__EXCEPTIONS_DEFINE_p) $(__RTTI_DEFINE_p) $(__THREAD_DEFINE_p) \
-	-I$(srcdir) $(__DLLFLAG_p) $(CPPFLAGS) $(CXXFLAGS)
+CXXFLAGS  += -D__WX$(TOOLKIT)__ -I$(srcdir) $(CPPFLAGS)
 
-SPLITTER_OBJECTS =  \
+OBJECTS =  \
         mainframe.o \
         commander.o \
         aboutfmslogo.o \
@@ -157,10 +157,10 @@ SPLITTER_OBJECTS =  \
         unix.o           \
         vector.o         \
         wrksp.o          \
-        LexFmsLogo.o \
+        LexFmsLogo.o     \
 
 ifeq "$(TOOLKIT)" "MSW"
-SPLITTER_OBJECTS +=  \
+OBJECTS +=  \
         debugheap.o \
         fmslogo_rc.o \
 
@@ -172,12 +172,22 @@ endif
 CXXC = $(BK_DEPS) $(CXX)
 #PORTNAME = base
 PORTNAME = $(TOOLKIT_LOWERCASE)$(TOOLKIT_VERSION)
-__RCDEFDIR_p_1 = --include-dir \
-	$(LIBDIRNAME)/wx/include/$(TOOLCHAIN_FULLNAME)
+RCDEFDIR = --include-dir $(LIBDIRNAME)/wx/include/$(TOOLCHAIN_FULLNAME)
 
 ### Targets: ###
 
-all: fmslogo$(EXEEXT) $(MANUAL)
+# Set the English version as the first target, which will get
+# built if no target is provided to gmake.
+default : fmslogo$(EXEEXT) logohelp.chm
+
+fmslogo$(EXEEXT) : fmslogo-$(DEFAULT_LCID)$(EXEEXT)
+	cp $< $@
+
+logohelp.chm : ../manual/logohelp-1033.chm
+	cp $< $@
+
+# The "all" target is used to build all locales.
+all : $(addsuffix $(EXEEXT),$(addprefix fmslogo-,$(LCIDS)));
 
 install: all
 
@@ -187,41 +197,51 @@ install-strip: install
 
 clean: 
 	rm -rf ./.deps ./.pch
-	$(RM) ./*.o
+	$(RM) obj/*.o
 	$(RM) ./*.bak
 	$(RM) ./*~
+	$(RM) ./*.stackdump
+	$(RM) fmslogo-*$(EXEEXT)
 	$(RM) fmslogo$(EXEEXT)
 	$(RM) logohelp.chm
 
 
-fmslogo$(EXEEXT): $(SPLITTER_OBJECTS)
-	$(CXX) -o $@ $(SPLITTER_OBJECTS) $(LDFLAGS) -L$(LIBDIRNAME) $(LIBS) $(EXTRALIBS)
+#
+# Generate the rules to build the release version of the screensaver for each locale
+#
+define FMSLOGO_template
 
-%.o: $(srcdir)/%.cpp
-	$(CXXC) -c -o $@ $(SPLITTER_CXXFLAGS) $<
+fmslogo-$(1)$$(EXEEXT) : $$(addprefix obj/$(1)-,$$(OBJECTS))
+	$(CXX) -o $$@ $$^ $(LDFLAGS) -L$(LIBDIRNAME) $(LIBS) $(EXTRALIBS)
 
-%.o: $(srcdir)/../src/%.cpp
-	$(CXXC) -c -o $@ $(SPLITTER_CXXFLAGS) $<
+obj/$(1)-%.o : $(srcdir)/%.cpp
+	$(CXXC) -c -o $$@ $(CXXFLAGS) -DLOCALE=$1 $$<
 
-%.o: $(srcdir)/../src/scintilla/src/%.cxx
-	$(CXXC) -c -o $@ $(SPLITTER_CXXFLAGS) -I$(srcdir)/../src/scintilla/include $<
+obj/$(1)-%.o : $(srcdir)/../src/%.cpp
+	$(CXXC) -c -o $$@ $(CXXFLAGS) -DLOCALE=$1 $$<
+
+obj/$(1)-%.o : $(srcdir)/../src/scintilla/src/%.cxx
+	$(CXXC) -c -o $$@ $(CXXFLAGS) -DLOCALE=$1 -I$(srcdir)/../src/scintilla/include $$<
+
+obj/$(1)-%_rc.o : %.rc
+	$(WINDRES) -i$$< -o$$@ -DLOCALE=$1 --define __WX$(TOOLKIT)__ $(RCDEFDIR) --include-dir $(srcdir) --include-dir $(top_srcdir)/include --include-dir $(wx_top_builddir)/include
+
 
 ifeq "$(TOOLKIT)" "GTK"
 
-%.o: $(srcdir)/linux/%.cpp
-	$(CXXC) -c -o $@ $(SPLITTER_CXXFLAGS) $<
+obj/$(1)-%.o: $(srcdir)/linux/%.cpp
+	$(CXXC) -c -o $$@ $(CXXFLAGS) -DLOCALE=$1 $$<
 
 endif
 
-
 fmslogo_rc.o: $(srcdir)/fmslogo.rc
-	$(WINDRES) -i$< -o$@   --define __WX$(TOOLKIT)__ $(__WXUNIV_DEFINE_p_2)  $(__EXCEPTIONS_DEFINE_p_2) $(__RTTI_DEFINE_p_2) $(__THREAD_DEFINE_p_2)   --include-dir $(srcdir) $(__DLLFLAG_p_2) $(__RCDEFDIR_p_1) --include-dir $(top_srcdir)/include --include-dir $(wx_top_builddir)/include
 
-logohelp.chm : ../manual/logohelp-1033.chm
-	cp $< $@
+endef
+
+$(foreach lcid,$(LCIDS),$(eval $(call FMSLOGO_template,$(lcid))))
+
 
 # Include dependency info, if present:
 -include .deps/*.d
 
-.PHONY: all install uninstall clean
-
+.PHONY: all install uninstall clean default
