@@ -5,8 +5,10 @@ TO WINDOWTEST.SMOKETEST
    ; switch to window mode
    WINDOW
    CLEARSCREEN
+   CLEARPALETTE
 
    ; draw a circle whose edges are just barely visible
+   SETPENCOLOR 0
    CIRCLE 600
 
    ; draw a diamond-like shape that falls mostly outside of the screen
