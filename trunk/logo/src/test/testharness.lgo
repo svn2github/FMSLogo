@@ -114,6 +114,7 @@ LOAD "readchars.lgo
 LOAD "bitmode.lgo
 LOAD "turtlemode.lgo
 LOAD "map.lgo
+LOAD "crossmap.lgo
 LOAD "polygon.lgo
 LOAD "item.lgo
 LOAD "listtoarray.lgo
@@ -231,6 +232,7 @@ TO TESTALL
   WINDOWSETTEST       ; from windowset.lgo
   DLLTEST             ; from dll.lgo
   MAPTEST             ; from map.lgo
+  CROSSMAPTEST        ; from crossmap.lgo
   SORTTEST            ; from sort.lgo
   ISEQTEST            ; from iseq.lgo
   MDARRAYTEST         ; from mdarray.lgo
