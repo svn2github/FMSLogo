@@ -43,12 +43,8 @@ using namespace std;
 #include "appendablelist.h"
 #include "graphics.h"
 #include "debugheap.h"
+#include "screenwindow.h"
 #include "localizedstrings.h"
-
-#ifndef FMSLOGO_SCREENSAVER
-    #include "minieditor.h"
-    #include "mainframe.h"
-#endif
 
 FILE *loadstream = stdin;
 FILE *dribblestream = NULL;
@@ -249,52 +245,8 @@ int rd_getc(FILE *strm)
                 char tmpbuffer[MAX_BUFFER_SIZE];
 
             case INPUTMODE_To:
-#ifdef FMSLOGO_SCREENSAVER
-                // Reading from stdin is not supported in the screensaver
-                err_logo(STOP_ERROR, NIL);
-#else // FMSLOGO_SCREENSAVER
-                {
-                    char toline[MAX_BUFFER_SIZE];
-                    cnv_strnode_string(toline, g_ToLine);
-
-                    TMiniEditor editor(MainWindowx, toline);
-
-                    if (IDOK != editor.Execute())
-                    {
-                        // the user cancelled the definition
-                        err_logo(STOP_ERROR, NIL);
-                    }
-                    else
-                    {
-                        const char * definition = editor.GetText();
-
-                        // copy the new definition into the read buffer.
-                        const char * src = definition;
-                        while (*src != '\0')
-                        {
-                            if (src[0] == '\r' && src[1] == '\n')
-                            {
-                                // Skip past the CR in a CRLF sequence because 
-                                // the caller expects a UNIX EOL sequence.
-                                src++;
-                            }
-
-                            g_ReadBuffer.AppendChar(*src);
-                            *src++;
-                        }
-
-                        g_ReadBuffer.AppendChar('\n');
-                        g_ReadBuffer.AppendString(End.GetName());
-                    }
-                }
-                if (MainWindowx != NULL)
-                {
-                    // HACK: Reset the window title because the mini-editor's
-                    // edit box appends a "-" (it thinks it's tied to a file 
-                    // and I can't figure out how to tell it that it's not.
-                    MainWindowx->FixWindowTitle();
-                }
-#endif // FMSLOGO_SCREENSAVER
+                cnv_strnode_string(tmpbuffer, g_ToLine);
+                ShowProcedureMiniEditor(tmpbuffer, g_ReadBuffer);
                 break;
 
             case INPUTMODE_List:

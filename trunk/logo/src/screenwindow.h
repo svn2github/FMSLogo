@@ -40,7 +40,21 @@ void CloseStatusWindow();
 void AdjustScrollPositionToZoomFactor(FLONUM NewZoomFactor);
 void UndockCommanderWindow();
 void DockCommanderWindow();
-int ShowEditorForFile(const char *FileName, NODE *args);
+int  ShowEditorForFile(const char *FileName, NODE *args);
+
+// ShowProcedureMiniEditor is called when TO is executed and
+// the input is expected to come from stdin (which is typically
+// implemented as a modal dialog box.
+//
+// ToLine     - A text buffer that holds the TO instruction that
+//              is being executed.
+// ReadBuffer - A buffer to hold a new definition that was read.
+//
+void
+ShowProcedureMiniEditor(
+    const char           * ToLine,
+    class CDynamicBuffer & ReadBuffer
+    );
 
 void TraceOutput(const char * FormatString, ...);
 

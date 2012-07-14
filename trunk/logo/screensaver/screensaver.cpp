@@ -737,6 +737,16 @@ int ShowEditorForFile(const char *FileName, NODE *args)
 }
 
 void
+ShowProcedureMiniEditor(
+    const char           * ToLine,
+    class CDynamicBuffer & ReadBuffer
+    )
+{
+    // Reading from stdin is not supported in the screensaver
+    err_logo(STOP_ERROR, NIL);
+}
+
+void
 TraceOutput(
     const char * FormatString,
     ...

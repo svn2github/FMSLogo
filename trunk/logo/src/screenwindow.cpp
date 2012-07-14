@@ -21,12 +21,16 @@
 
 #include "screenwindow.h"
 
+#include <owl/scroller.h>
+
 #include "main.h"
 #include "mainframe.h"
 #include "cmdwind.h"
 #include "myfilewn.h"
 #include "startup.h"
-#include <owl/scroller.h>
+#include "minieditor.h"
+#include "init.h"
+#include "dynamicbuffer.h"
 
 HWND GetScreenWindow()
 {
@@ -119,6 +123,53 @@ int ShowEditorForFile(const char *FileName, NODE *args)
 {
     return TMainFrame::PopupEditorForFile(FileName, args);
 }
+
+
+void 
+ShowProcedureMiniEditor(
+    const char     * ToLine,
+    CDynamicBuffer & ReadBuffer
+    )
+{
+    TMiniEditor editor(MainWindowx, ToLine);
+
+    if (IDOK != editor.Execute())
+    {
+        // The user cancelled the definition
+        err_logo(STOP_ERROR, NIL);
+    }
+    else
+    {
+        const char * definition = editor.GetText();
+
+        // copy the new definition into the read buffer.
+        const char * src = definition;
+        while (*src != '\0')
+        {
+            if (src[0] == '\r' && src[1] == '\n')
+            {
+                // Skip past the CR in a CRLF sequence because 
+                // the caller expects a UNIX EOL sequence.
+                src++;
+            }
+
+            ReadBuffer.AppendChar(*src);
+            src++;
+        }
+
+        ReadBuffer.AppendChar('\n');
+        ReadBuffer.AppendString(End.GetName());
+    }
+
+    if (MainWindowx != NULL)
+    {
+        // HACK: Reset the window title because the mini-editor's
+        // edit box appends a "-" (it thinks it's tied to a file 
+        // and I can't figure out how to tell it that it's not.
+        MainWindowx->FixWindowTitle();
+    }
+}
+
 
 void
 TraceOutput(
