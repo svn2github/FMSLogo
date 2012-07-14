@@ -29,6 +29,8 @@
 #include "print.h"
 #include "screenwindow.h"
 #include "workspaceeditor.h"
+#include "minieditor.h"
+#include "dynamicbuffer.h"
 
 #include "screen.h"
 #include "commander.h"
@@ -669,6 +671,41 @@ void DockCommanderWindow()
 int ShowEditorForFile(const char *FileName, NODE * EditArguments)
 {
     return CMainFrame::PopupEditorForFile(FileName, EditArguments);
+}
+
+void 
+ShowProcedureMiniEditor(
+    const char     * ToLine,
+    CDynamicBuffer & ReadBuffer
+    )
+{
+    CMiniEditor miniEditor(CFmsLogo::GetMainFrame(), ToLine);
+
+    if (wxID_OK != miniEditor.ShowModal())
+    {
+        // The user cancelled the definition
+        err_logo(STOP_ERROR, NIL);
+    }
+    else
+    {
+        // copy the new definition into the read buffer.
+        const char * src = miniEditor.GetProcedureBody().c_str();
+        while (*src != '\0')
+        {
+            if (src[0] == '\r' && src[1] == '\n')
+            {
+                // Skip past the CR in a CRLF sequence because 
+                // the caller expects a UNIX EOL sequence.
+                src++;
+            }
+
+            ReadBuffer.AppendChar(*src);
+            src++;
+        }
+
+        ReadBuffer.AppendChar('\n');
+        ReadBuffer.AppendString(End.GetName());
+    }
 }
 
 void

@@ -7,6 +7,7 @@
 
 #include "minieditortextctrl.h"
 #include "logocore.h"  // for ARRAYSIZE
+#include "fontutils.h"
 #include "localizedstrings.h"
 
 // Menu IDs
@@ -20,35 +21,36 @@ enum
 // ----------------------------------------------------------------------------
 
 CMiniEditor::CMiniEditor(
-    wxWindow * Parent, 
-    const char * ToLine
+    wxWindow   * Parent, 
+    const char * ToLineString
     )
     : wxDialog(
         Parent,
         wxID_ANY,
-        wxString(ToLine),
+        wxString(ToLineString),
         wxDefaultPosition,
-        wxDefaultSize,
-        wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
+        wxSize(240, 212),
+        wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER),
+      m_TextField(NULL)
 {
-    wxBoxSizer *topLevelSizer = new wxBoxSizer(wxVERTICAL);
+    wxBoxSizer * topLevelSizer = new wxBoxSizer(wxVERTICAL);
 
     // add the To Line input
-    m_ToLine = new wxTextCtrl(
+    wxTextCtrl * toLine = new wxTextCtrl(
         this,
         wxID_ANY,
-        ToLine,
+        ToLineString,
         wxDefaultPosition,
         wxDefaultSize,
         wxTE_READONLY);
 
     // The background color should be light gray to indicate that this
     // is a read-only control.
-    m_ToLine->SetBackgroundColour(
+    toLine->SetBackgroundColour(
         wxSystemSettings::GetColour(wxSYS_COLOUR_3DLIGHT));
 
     topLevelSizer->Add(
-        m_ToLine,
+        toLine,
         0,
         wxALIGN_CENTER | wxTOP | wxLEFT | wxRIGHT | wxEXPAND,
         10);
@@ -64,8 +66,13 @@ CMiniEditor::CMiniEditor(
         wxALIGN_CENTER | wxBOTTOM | wxLEFT | wxRIGHT | wxEXPAND,
         10);
 
+    // Set the font to whatever is defined in the configuraton
+    wxFont font;
+    font.SetFamily(wxFONTFAMILY_TELETYPE); // default to using a fixed-width font
+    GetConfigurationFont("CommanderFont", font);
+    m_TextField->SetFont(font);
 
-    // add the "end" button
+    // Add the "end" button
     wxButton * endButton = new wxButton(
         this,
         wxID_OK,
@@ -75,6 +82,7 @@ CMiniEditor::CMiniEditor(
         0,
         wxALIGN_LEFT | wxBOTTOM | wxLEFT | wxRIGHT,
         10);
+    endButton->SetDefault();
 
     SetSizer(topLevelSizer);
     topLevelSizer->Fit(this);
@@ -82,4 +90,10 @@ CMiniEditor::CMiniEditor(
 
 CMiniEditor::~CMiniEditor()
 {
+}
+
+const wxString
+CMiniEditor::GetProcedureBody() const
+{
+    return m_TextField->GetValue();
 }
