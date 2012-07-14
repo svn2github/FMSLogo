@@ -206,7 +206,7 @@ $Exceptions{'command-continue.xml'}{'allcaps'}{'OK'}        = 1;
 $Exceptions{'command-copydef.xml'}{'allcaps'}{'SAYHELLO'} = 1;
 $Exceptions{'command-copydef.xml'}{'allcaps'}{'WELCOME'}  = 1;
 
-$Exceptions{'command-crossmap.xml'}{'allcaps'}{'CSLS'} = 1;
+$Exceptions{'command-crossmap.xml'}{'logo'}               = 1;
 
 $Exceptions{'command-dialogcreate.xml'}{'allcaps'}{'MYSETUP'} = 1;
 $Exceptions{'command-dialogcreate.xml'}{'allcaps'}{'OK'}      = 1;

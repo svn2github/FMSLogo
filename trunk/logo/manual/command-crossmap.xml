@@ -24,7 +24,7 @@ CROSSMAP differs from <link linkend="command-map">MAP</link> in that, instead of
 </para>
 
 <para>
-For compatibility with the version in CSLS, CROSSMAP templates may use the notation :1 instead of ?1 to indicate slots.
+For compatibility with program listings in Brian Harvey's textbook series "Computer Science Logo Style", &PRODUCTNAME;'s CROSSMAP templates may use the notation :1 instead of ?1 to indicate slots.
 </para>
 
 </listitem>
