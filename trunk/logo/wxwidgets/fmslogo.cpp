@@ -620,6 +620,7 @@ UINT GetScreenVerticalScrollPosition()
 
 void SetScreenScrollPosition(UINT x, UINT y)
 {
+    CFmsLogo::GetMainFrame()->GetScreen()->Scroll(x, y);
 }
 
 bool IsEditorOpen()
